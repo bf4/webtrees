@@ -222,8 +222,14 @@ class AdvancedSearchController extends SearchController {
 							$sqlwhere .= " AND i_file=n_file AND i_id=n_gid";
 							$datesTable = true;
 						}
-						if ($parts[1]=="GIVN") {
+						if (!isset($parts[1])) {
 							$sqlwhere .= " AND n_name LIKE '%".$DBCONN->escapeSimple($value)."%'";
+						}
+						else if ($parts[1]=="GIVN") {
+							$sqlwhere .= " AND n_name LIKE '%".$DBCONN->escapeSimple($value)."%'";
+						}
+						else if ($parts[1]=="SURN") {
+							$sqlwhere .= " AND n_surname LIKE '%".$DBCONN->escapeSimple($value)."%'";
 						}
 					}
 				}

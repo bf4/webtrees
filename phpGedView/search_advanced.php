@@ -209,7 +209,7 @@ print_header($pgv_lang["advanced_search"]);
 	<?php } ?>
 	<tr>
 		<td class="list_value" style="vertical-align: middle; text-align: center; padding: 5px;"  colspan="3">
-			<input type="button" value="<?php print $pgv_lang['more_fields']; ?>" onclick="addFields();" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<a href="#" onclick="addFields();"><?php print $pgv_lang['more_fields']; ?></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 			<input tabindex="<?php print $i+1; ?>" type="submit" value="<?php print $pgv_lang["search"]; ?>" />
 		</td>
 	</tr>
