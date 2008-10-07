@@ -175,6 +175,7 @@ $factarray["FAMC:MARR:PLAC"] = "Miejsce ślubu rodziców";
 $factarray["FAMC:HUSB:OCCU"] = "Zawód ojca";
 $factarray[":BIRT:PLAC"] = "Miejsce urodzenia";
 $factarray["FAMS:MARR:PLAC"] = "Miejsce ślubu";
+$factarray["FAMS:MARR:DATE"] = "Data ślubu";
 $factarray["FAMS:SPOUSE:DEAT:PLAC"] = "Miejsce śmierci małżonka";
 $factarray["FAMC:HUSB:GIVN"] = "Imię ojca";
 $factarray["FAMS:SPOUSE:BIRT:PLAC"] = "Miejsce urodzenia małżonka";
