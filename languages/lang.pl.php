@@ -1664,4 +1664,8 @@ $pgv_lang["step_parent_family"]		= "Przyrodni rodzice i rodzeństwo";
 $pgv_lang["immediate_family"]		= "Najbliższa rodzina";
 
 $pgv_lang["install_step_8"] 		= "Rozpocznij korzystanie";
+
+$pgv_lang["exact"]					= "Dokładny tekst";
+$pgv_lang["advanced_search"]		= "Wyszukiwanie zaawansowane";
+$pgv_lang["more_fields"]			= "Dodaj więcej pól";
 ?>
