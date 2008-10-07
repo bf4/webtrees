@@ -167,7 +167,7 @@ print_header($pgv_lang["advanced_search"]);
 		</td>
 		<?php
 		//-- relative fields 
-		if ($i==0) { 
+		if ($i==0 && $fct>4) { 
 			$j=$fct;
 			?>
 			<td rowspan="100" class="list_value">

@@ -218,18 +218,17 @@ class AdvancedSearchController extends SearchController {
 					//-- exact name search
 					if (!empty($value)) {
 						if (!$namesTable) {
-							$sqltables.=", ".$TBLPREFIX."names";
-							$sqlwhere .= " AND i_file=n_file AND i_id=n_gid";
-							$datesTable = true;
+							$sqltables.=" LEFT JOIN ".$TBLPREFIX."names ON (i_file=n_file AND i_id=n_gid) ";
+							$namesTable = true;
 						}
 						if (!isset($parts[1])) {
-							$sqlwhere .= " AND n_name LIKE '%".$DBCONN->escapeSimple($value)."%'";
+							$sqlwhere .= " AND (n_name LIKE '%".$DBCONN->escapeSimple($value)."%' OR i_name LIKE '%".$DBCONN->escapeSimple($value)."%')";
 						}
 						else if ($parts[1]=="GIVN") {
-							$sqlwhere .= " AND n_name LIKE '%".$DBCONN->escapeSimple($value)."%'";
+							$sqlwhere .= " AND (n_name LIKE '%".$DBCONN->escapeSimple($value)."%' OR i_name LIKE '%".$DBCONN->escapeSimple($value)."%')";
 						}
 						else if ($parts[1]=="SURN") {
-							$sqlwhere .= " AND n_surname LIKE '%".$DBCONN->escapeSimple($value)."%'";
+							$sqlwhere .= " AND (n_surname LIKE '%".$DBCONN->escapeSimple($value)."%' OR i_surname LIKE '%".$DBCONN->escapeSimple($value)."%')";
 						}
 					}
 				}
