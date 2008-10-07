@@ -29,7 +29,6 @@
  *
  * Each line is a GEDCOM style record to describe an event, including newline chars (\n)
  * File to be renamed : histo.xx.php where xx is language code
- * File included in : person_class.php
  */
 
 if (!defined('PGV_PHPGEDVIEW')) {
