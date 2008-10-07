@@ -54,9 +54,30 @@ class TreeNav {
 			$this->rootPerson = Person::getInstance($rootid);
 			if (is_null($this->rootPerson)) $this->rootPerson = new Person('');
 		}
+		
 		$this->name = $name;
 		//-- handle AJAX requests
 		if (!empty($_REQUEST['navAjax'])) {
+			//-- embedded tree for mashups
+			if ($_REQUEST['navAjax']=='embed') {
+				global $SERVER_URL;
+				global $stylesheet;
+				?>
+				document.writeln('<link rel="stylesheet" href="<?php print $SERVER_URL.$stylesheet; ?>" type="text/css" media="all" />');
+				document.writeln('<script type="text/javascript" src="<?php print $SERVER_URL; ?>/phpgedview.js"></script>');
+				<?php
+				ob_start();
+				$w = safe_GET('width', PGV_REGEX_INTEGER, '');
+				$h = safe_GET('height', PGV_REGEX_INTEGER, '');
+				if (!empty($w)) $w.="px";
+				if (!empty($h)) $h.="px";
+				$this->drawViewport($rootid, $w, $h);
+				$output = ob_get_clean();
+				$lines = preg_split("/\r?\n/", $output);
+				foreach($lines as $line)
+					print "document.writeln('".preg_replace("/'/", "\\'", $line)."');\n";
+				exit;
+			}
 			if (isset($_REQUEST['allSpouses'])) {
 				if ($_REQUEST['allSpouses']=='false' || $_REQUEST['allSpouses']==false) $this->allSpouses = false;
 				else $this->allSpouses = true;
@@ -123,7 +144,7 @@ class TreeNav {
 	 * @param string $height	the height parameter for the outer style  
 	 */
 	function drawViewport($id='', $width='', $height='') {
-		global $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $pgv_lang, $CONTACT_EMAIL;
+		global $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $pgv_lang, $CONTACT_EMAIL, $SERVER_URL;
 		if (empty($id)) $id = $this->rootPerson->getXref();
 		$widthS = "";
 		$heightS = "";
@@ -141,12 +162,12 @@ class TreeNav {
 			</div>
 			<div id="controls" style="position: absolute; left: 0px; top: 0px; z-index: 100; background-color: #EEEEEE">
 			<table>
-				<tr><td><a href="#" onclick="<?php print $this->name; ?>.zoomIn(); return false;"><img src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES['zoomin']['other'];?>" border="0" alt="zoomin" /></a></td></tr>
-				<tr><td><a href="#" onclick="<?php print $this->name; ?>.zoomOut(); return false;"><img src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES['zoomout']['other'];?>" border="0" alt="zoomout" /></a></td></tr>
-				<tr><td <?php if (is_null($this->rootPerson) || preg_match("/treenav.php$/", $_SERVER['PHP_SELF'])>0) print "style=\"display: none;\"";?>><a id="biglink" href="#" onclick="<?php print $this->name; ?>.loadBigTree('<?php if (!is_null($this->rootPerson)) print $this->rootPerson->getXref();?>','<?php print htmlentities($GEDCOM,ENT_COMPAT,'UTF-8');?>'); return false;" title="<?php print $pgv_lang["load_full_tree"]; ?>"><img src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES['gedcom']['small'];?>" border="0" alt="" /></a></td></tr>
-				<tr><td><a href="#" onclick="<?php print $this->name; ?>.toggleSpouses('<?php if ($this->rootPerson!=null) print $this->rootPerson->getXref(); ?>'); return false;" title="<?php print $pgv_lang["hide_show_spouses"]; ?>"><img src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES['sfamily']['small']; ?>" border="0" alt="" /></a></td></tr>
+				<tr><td><a href="#" onclick="<?php print $this->name; ?>.zoomIn(); return false;"><img src="<?php print $SERVER_URL.$PGV_IMAGE_DIR."/".$PGV_IMAGES['zoomin']['other'];?>" border="0" alt="zoomin" /></a></td></tr>
+				<tr><td><a href="#" onclick="<?php print $this->name; ?>.zoomOut(); return false;"><img src="<?php print $SERVER_URL.$PGV_IMAGE_DIR."/".$PGV_IMAGES['zoomout']['other'];?>" border="0" alt="zoomout" /></a></td></tr>
+				<tr><td <?php if (is_null($this->rootPerson) || preg_match("/treenav.php$/", $_SERVER['PHP_SELF'])>0) print "style=\"display: none;\"";?>><a id="biglink" href="#" onclick="<?php print $this->name; ?>.loadBigTree('<?php if (!is_null($this->rootPerson)) print $this->rootPerson->getXref();?>','<?php print htmlentities($GEDCOM,ENT_COMPAT,'UTF-8');?>'); return false;" title="<?php print $pgv_lang["load_full_tree"]; ?>"><img src="<?php print $SERVER_URL.$PGV_IMAGE_DIR."/".$PGV_IMAGES['gedcom']['small'];?>" border="0" alt="" /></a></td></tr>
+				<tr><td><a href="#" onclick="<?php print $this->name; ?>.toggleSpouses('<?php if ($this->rootPerson!=null) print $this->rootPerson->getXref(); ?>'); return false;" title="<?php print $pgv_lang["hide_show_spouses"]; ?>"><img src="<?php print $SERVER_URL.$PGV_IMAGE_DIR."/".$PGV_IMAGES['sfamily']['small']; ?>" border="0" alt="" /></a></td></tr>
 				<tr><td><?php print_help_link('help_treenav.php','qm'); ?></td></tr>
-				<tr><td><img id="<?php print $this->name; ?>_loading" src="images/loading.gif" style="display: none;" alt="Loading..." /></td></tr>
+				<tr><td><img id="<?php print $this->name; ?>_loading" src="<?php print $SERVER_URL; ?>images/loading.gif" style="display: none;" alt="Loading..." /></td></tr>
 			</table>
 			</div>
 		</div>
@@ -164,12 +185,13 @@ class TreeNav {
 	 * Setup the JavaScript for the tree navigator
 	 */
 	function setupJS() {
+		global $SERVER_URL;
 		require_once("js/prototype.js.htm");
 		require_once("js/behaviour.js.htm");
 		require_once("js/overlib.js.htm");
 		require_once("js/scriptaculous.js.htm");
 		?>
-	<script type="text/javascript" src="js/treenav.js"></script>
+	<script type="text/javascript" src="<?php print $SERVER_URL; ?>js/treenav.js"></script>
 	<script type="text/javascript">
 	<!--
 		var myrules = {
@@ -221,7 +243,7 @@ class TreeNav {
 	 * @param Person $person	the person to print the details for
 	 */
 	function getDetails(&$person) {
-		global $factarray, $factAbbrev, $SHOW_ID_NUMBERS, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM;
+		global $factarray, $factAbbrev, $SHOW_ID_NUMBERS, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $SERVER_URL;
 		
 		if (empty($person)) $person = $this->rootPerson;
 		if (!$person->canDisplayDetails()) return;
@@ -261,7 +283,7 @@ class TreeNav {
 		<span class="name1">
 		<?php print $this->getThumbnail($person); ?>
 		<a href="individual.php?pid=<?php print $person->getXref(); ?>&amp;ged=<?php print $GEDCOM; ?>" onclick="if (!<?php print $this->name;?>.collapseBox) return false;"><?php print $person->getSexImage().PrintReady($name); ?></a>
-		<img src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES["gedcom"]["small"];?>" border="0" width="15" onclick="<?php print $this->name;?>.newRoot('<?php print $person->getXref();?>', <?php print $this->name;?>.innerPort, '<?php print htmlentities($GEDCOM,ENT_COMPAT,'UTF-8'); ?>');" /> 
+		<img src="<?php print $SERVER_URL.$PGV_IMAGE_DIR."/".$PGV_IMAGES["gedcom"]["small"];?>" border="0" width="15" onclick="<?php print $this->name;?>.newRoot('<?php print $person->getXref();?>', <?php print $this->name;?>.innerPort, '<?php print htmlentities($GEDCOM,ENT_COMPAT,'UTF-8'); ?>');" /> 
 		</span><br />
 		<div class="details1 indent">
 			<b><?php
@@ -298,7 +320,7 @@ class TreeNav {
 				<?php print $this->getThumbnail($spouse); ?>
 				<a href="individual.php?pid=<?php print $spouse->getXref(); ?>&amp;ged=<?php print $GEDCOM; ?>" onclick="if (!<?php print $this->name;?>.collapseBox) return false;"> 
 				<?php print $spouse->getSexImage().PrintReady($name); ?></a>
-				<img src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES["gedcom"]["small"];?>" border="0" width="15" onclick="<?php print $this->name;?>.newRoot('<?php print $spouse->getXref();?>', <?php print $this->name;?>.innerPort, '<?php print htmlentities($GEDCOM,ENT_COMPAT,'UTF-8'); ?>');" />
+				<img src="<?php print $SERVER_URL.$PGV_IMAGE_DIR."/".$PGV_IMAGES["gedcom"]["small"];?>" border="0" width="15" onclick="<?php print $this->name;?>.newRoot('<?php print $spouse->getXref();?>', <?php print $this->name;?>.innerPort, '<?php print htmlentities($GEDCOM,ENT_COMPAT,'UTF-8'); ?>');" />
 				<br />
 				<div class="details1 indent">
 				<b><?php 
@@ -321,7 +343,7 @@ class TreeNav {
 					$place=''; 
 					$place = $family->getMarriagePlace();  
 					if (!empty($place)) print PrintReady($place); ?>
-					<a href="family.php?famid=<?php print $family->getXref(); ?>" onclick="if (!<?php print $this->name;?>.collapseBox) return false;"><img id="d_<?php print $family->getXref(); ?>" alt="<?php print $family->getXref(); ?>" class="draggable" src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES['family']['button']; ?>" border="0" /></a>
+					<a href="family.php?famid=<?php print $family->getXref(); ?>" onclick="if (!<?php print $this->name;?>.collapseBox) return false;"><img id="d_<?php print $family->getXref(); ?>" alt="<?php print $family->getXref(); ?>" class="draggable" src="<?php print $SERVER_URL.$PGV_IMAGE_DIR."/".$PGV_IMAGES['family']['button']; ?>" border="0" /></a>
 				<br />
 				<b><?php
 				if ($spouse->isDead()) {
@@ -383,7 +405,7 @@ class TreeNav {
 	 * @return string
 	 */
 	function getThumbnail(&$person) {
-		global $MULTI_MEDIA, $SHOW_HIGHLIGHT_IMAGES, $TEXT_DIRECTION, $USE_MEDIA_VIEWER;
+		global $MULTI_MEDIA, $SHOW_HIGHLIGHT_IMAGES, $TEXT_DIRECTION, $USE_MEDIA_VIEWER, $SERVER_URL;
 		$thumbnail = "";
 		if ($MULTI_MEDIA && $SHOW_HIGHLIGHT_IMAGES && showFact("OBJE", $person->getXref())) {
 			$object = $person->findHighlightedMedia();
@@ -402,7 +424,7 @@ class TreeNav {
 				}else{
 					$thumbnail .= "<a href=\"javascript:;\" onclick=\"return openImage('".rawurlencode($object["file"])."',$imgwidth, $imgheight);\">";
 				}
-				$thumbnail .= "<img src=\"".$object["thumb"]."\" vspace=\"0\" hspace=\"0\" class=\"$class\" alt=\"\" title=\"\"";
+				$thumbnail .= "<img src=\"".$SERVER_URL.$object["thumb"]."\" vspace=\"0\" hspace=\"0\" class=\"$class\" alt=\"\" title=\"\"";
 				if ($imgsize) $thumbnail .= " /></a>";
 				else $thumbnail .= " />";
 			}
@@ -417,7 +439,7 @@ class TreeNav {
 	 * @param int $state			Whether we are going up or down the tree, -1 for descendents +1 for ancestors
 	 */
 	function drawPersonAllSpouses(&$person, $gen, $state) {
-		global $SHOW_ID_NUMBERS, $PGV_IMAGE_DIR, $PGV_IMAGES, $TEXT_DIRECTION;
+		global $SHOW_ID_NUMBERS, $PGV_IMAGE_DIR, $PGV_IMAGES, $TEXT_DIRECTION, $SERVER_URL;
 		
 		if ($gen<0) {
 			return;
@@ -468,10 +490,10 @@ class TreeNav {
 						?>
 					</td>
 					<?php  
-					if ($hasChildren && $person->getNumberOfChildren()>1) { ?><td valign="top"><img style="position: absolute;" id="cline_<?php print $person->getXref();?>" name="vertline" src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES['vline']['other']; ?>" width="3" /></td><?php }
+					if ($hasChildren && $person->getNumberOfChildren()>1) { ?><td valign="top"><img style="position: absolute;" id="cline_<?php print $person->getXref();?>" name="vertline" src="<?php print $SERVER_URL.$PGV_IMAGE_DIR."/".$PGV_IMAGES['vline']['other']; ?>" width="3" /></td><?php }
 					}
 					if ($state>0) {
-						?><td><img src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES['hline']['other']; ?>" width="8" height="3" /></td><?php
+						?><td><img src="<?php print $SERVER_URL.$PGV_IMAGE_DIR."/".$PGV_IMAGES['hline']['other']; ?>" width="8" height="3" /></td><?php
 					}
 					/* print the person */ ?>
 					<td>
@@ -498,7 +520,7 @@ class TreeNav {
 					</td>
 					<?php 
 					if ($state<0) {
-						?><td><img src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES['hline']['other']; ?>" width="8" height="3" /></td><?php
+						?><td><img src="<?php print $SERVER_URL.$PGV_IMAGE_DIR."/".$PGV_IMAGES['hline']['other']; ?>" width="8" height="3" /></td><?php
 					}
 					/* print the father */ 
 					if ($state>=0 && (!empty($father) || !empty($mother))) {
@@ -507,7 +529,7 @@ class TreeNav {
 						$lineid.="_";
 						if (!empty($mother)) $lineid.=$mother->getXref();
 						?>
-					<?php if (!empty($father) && (!empty($mother))) { ?><td><img style="position: absolute;" id="<?php print $lineid;?>" name="pvertline" src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES['vline']['other']; ?>" width="3" /></td><?php } ?>
+					<?php if (!empty($father) && (!empty($mother))) { ?><td><img style="position: absolute;" id="<?php print $lineid;?>" name="pvertline" src="<?php print $SERVER_URL.$PGV_IMAGE_DIR."/".$PGV_IMAGES['vline']['other']; ?>" width="3" /></td><?php } ?>
 					<td align="left">
 						<table cellpadding="0" cellspacing="0" border="0">
 							<tbody>
@@ -555,7 +577,7 @@ class TreeNav {
 	 * @param Family $pfamily
 	 */
 	function drawPerson(&$person, $gen, $state, &$pfamily) {
-		global $SHOW_ID_NUMBERS, $PGV_IMAGE_DIR, $PGV_IMAGES, $TEXT_DIRECTION;
+		global $SHOW_ID_NUMBERS, $PGV_IMAGE_DIR, $PGV_IMAGES, $TEXT_DIRECTION, $SERVER_URL;
 		
 		if ($gen<0) {
 			return;
@@ -606,10 +628,10 @@ class TreeNav {
 						?>
 					</td>
 					<?php  
-					if ($hasChildren && $family->getNumberOfChildren()>1) { ?><td valign="top"><img style="position: absolute;" id="cline_<?php print $person->getXref();?>" name="vertline" src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES['vline']['other']; ?>" width="3" /></td><?php }
+					if ($hasChildren && $family->getNumberOfChildren()>1) { ?><td valign="top"><img style="position: absolute;" id="cline_<?php print $person->getXref();?>" name="vertline" src="<?php print $SERVER_URL.$PGV_IMAGE_DIR."/".$PGV_IMAGES['vline']['other']; ?>" width="3" /></td><?php }
 					}
 					if ($state>0) {
-						?><td><img src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES['hline']['other']; ?>" width="8" height="3" /></td><?php
+						?><td><img src="<?php print $SERVER_URL.$PGV_IMAGE_DIR."/".$PGV_IMAGES['hline']['other']; ?>" width="8" height="3" /></td><?php
 					}
 					/* print the person */ ?>
 					<td>
@@ -628,7 +650,7 @@ class TreeNav {
 					</td>
 					<?php 
 					if ($state<0) {
-						?><td><img src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES['hline']['other']; ?>" width="8" height="3" /></td><?php
+						?><td><img src="<?php print $SERVER_URL.$PGV_IMAGE_DIR."/".$PGV_IMAGES['hline']['other']; ?>" width="8" height="3" /></td><?php
 					}
 					/* print the father */ 
 					if ($state>=0 && (!empty($father) || !empty($mother))) {
@@ -637,7 +659,7 @@ class TreeNav {
 						$lineid.="_";
 						if (!empty($mother)) $lineid.=$mother->getXref();
 						?>
-					<?php if (!empty($father) && (!empty($mother))) { ?><td><img style="position: absolute;" id="<?php print $lineid;?>" name="pvertline" src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES['vline']['other']; ?>" width="3" /></td><?php } ?>
+					<?php if (!empty($father) && (!empty($mother))) { ?><td><img style="position: absolute;" id="<?php print $lineid;?>" name="pvertline" src="<?php print $SERVER_URL.$PGV_IMAGE_DIR."/".$PGV_IMAGES['vline']['other']; ?>" width="3" /></td><?php } ?>
 					<td align="left">
 						<table cellpadding="0" cellspacing="0" border="0">
 							<tbody>
