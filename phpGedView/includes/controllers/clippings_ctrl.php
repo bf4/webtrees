@@ -32,7 +32,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 define('PGV_CLIPPINGS_CTRL', '');
 
 require_once 'includes/GrampsExport.php';
-require_once 'includes/person_class.php';
+require_once 'includes/class_person.php';
 require_once 'includes/functions.php';
 require_once 'includes/controllers/basecontrol.php';
 require_once 'includes/pclzip.lib.php';

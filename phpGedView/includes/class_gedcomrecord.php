@@ -29,15 +29,15 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
-define('PGV_GEDCOMRECORD_PHP', '');
+define('PGV_CLASS_GEDCOMRECORD_PHP', '');
 
-require_once 'includes/person_class.php';
-require_once 'includes/family_class.php';
-require_once 'includes/source_class.php';
-require_once 'includes/repository_class.php';
-require_once 'includes/media_class.php';
-require_once 'includes/event_class.php';
-require_once 'includes/serviceclient_class.php';
+require_once 'includes/class_person.php';
+require_once 'includes/class_family.php';
+require_once 'includes/class_source.php';
+require_once 'includes/class_repository.php';
+require_once 'includes/class_media.php';
+require_once 'includes/class_event.php';
+require_once 'includes/class_serviceclient.php';
 
 class GedcomRecord {
 	var $gedrec     =null;  // Raw gedcom text (privatised)
@@ -769,6 +769,29 @@ class GedcomRecord {
 				$this->facts[]=$newevent;
 			}
 		}
+	}
+
+	function getEventDate($event) {
+	  $srec = $this->getAllEvents($event);
+	  if (!$srec) return "";
+	  $srec = $srec[0];
+	  return get_gedcom_value("DATE", 2, $srec);
+	  //return get_gedcom_value("PAGE", 3, $srec);
+	}
+	function getEventSource($event) {
+	  $srec = $this->getAllEvents($event);
+	  if (!$srec) return "";
+	  $srec = $srec[0];
+	  return get_sub_record("SOUR", 2, $srec);
+	  //return get_gedcom_value("PAGE", 3, $srec);
+	}
+	function getEventSourcePage($event) {
+	  /*$srec = $this->getAllEvents($event);
+	  if (!$srec) return "";
+	  $srec = $srec[0];
+	  $srec = get_sub_record("SOUR", 2, $srec);
+	  return get_gedcom_value("PAGE", 3, $srec);*/
+	  return get_gedcom_value("PAGE", 3, getEventSource($event));
 	}
 
 	//////////////////////////////////////////////////////////////////////////////

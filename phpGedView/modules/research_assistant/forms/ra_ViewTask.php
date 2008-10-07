@@ -34,7 +34,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
-require_once("includes/person_class.php");
+require_once("includes/class_person.php");
 global $pgv_lang;
  
  	/**

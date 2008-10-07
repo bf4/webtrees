@@ -36,7 +36,7 @@ define('PGV_FAMILY_CTRL_PHP', '');
 require_once 'includes/functions_print_facts.php';
 require_once 'includes/controllers/basecontrol.php';
 require_once 'includes/functions_charts.php';
-require_once 'includes/family_class.php';
+require_once 'includes/class_family.php';
 require_once 'includes/menu.php';
 
 class FamilyRoot extends BaseController
@@ -95,7 +95,7 @@ class FamilyRoot extends BaseController
 			if ($ct>0) {
 				$servid = trim($match[1]);
 				$remoteid = trim($match[2]);
-				include_once('includes/serviceclient_class.php');
+				include_once('includes/class_serviceclient.php');
 				$service = ServiceClient::getInstance($servid);
 				if (!is_null($service)) {
 					$newrec= $service->mergeGedcomRecord($remoteid, "0 @".$this->famid."@ FAM\r\n1 RFN ".$this->famid, false);

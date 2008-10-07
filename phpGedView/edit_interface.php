@@ -1996,7 +1996,7 @@ case 'reorder_children':
 	break;
 //------------------------------------------------------------------------------
 case 'changefamily':
-	require_once 'includes/family_class.php';
+	require_once 'includes/class_family.php';
 	$family = new Family($gedrec);
 	$father = $family->getHusband();
 	$mother = $family->getWife();
@@ -2127,7 +2127,7 @@ case 'changefamily':
 	break;
 //------------------------------------------------------------------------------
 case 'changefamily_update':
-	require_once 'includes/family_class.php';
+	require_once 'includes/class_family.php';
 	$family = new Family($gedrec);
 	$father = $family->getHusband();
 	$mother = $family->getWife();

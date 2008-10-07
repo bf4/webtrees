@@ -29,9 +29,9 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
-define('PGV_FAMILY_CLASS_PHP', '');
+define('PGV_CLASS_FAMILY_PHP', '');
 
-require_once 'includes/gedcomrecord.php';
+require_once 'includes/class_gedcomrecord.php';
 
 class Family extends GedcomRecord {
 	var $husb = null;

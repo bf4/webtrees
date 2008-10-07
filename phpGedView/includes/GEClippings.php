@@ -191,7 +191,7 @@ class GEClippings extends GrampsExport {
 	*/
 	function create_lds_event($indirec, $eventName, $eventABV, $eParent) {
 		global $ePerson, $TEMPLE_CODES, $clipping;
-		require_once("includes/person_class.php");
+		require_once("includes/class_person.php");
 		if (($hasldsevent = get_sub_record(1, "1 " . $eventABV, $indirec)) != null) {
 
 			// Create <lds_ord> and attaches the type attribute

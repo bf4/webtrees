@@ -29,10 +29,10 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
-define('PGV_SERVICECLIENT_CLASS_PHP', '');
+define('PGV_CLASS_SERVICECLIENT_PHP', '');
 
-require_once('includes/gedcomrecord.php');
-include_once('includes/family_class.php');
+require_once('includes/class_gedcomrecord.php');
+include_once('includes/class_family.php');
 
 class ServiceClient extends GedcomRecord {
 	var $url = "";
@@ -962,7 +962,7 @@ if ($this->DEBUG) print __LINE__."adding record to the database ".$localrec;
 				$server = new ServiceClient($gedrec);
 			}
 			else {
-				include_once('includes/localclient_class.php');
+				include_once('includes/class_localclient.php');
 				$server = new LocalClient($gedrec);
 			}
 			$PGV_SERVERS[$id] = $server;

@@ -31,7 +31,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 }
 
 global $LANGUAGE, $factarray;
-require_once "includes/person_class.php";
+require_once "includes/class_person.php";
 
 /**
  * Base class for Research Assistant forms
