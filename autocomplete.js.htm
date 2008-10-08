@@ -1,3 +1,4 @@
+<!-- @version $Id$ -->
 <script type="text/javascript" src="js/jquery/jquery.min.js"></script>
 <script type="text/javascript" src="js/jquery/jquery.autocomplete.js"></script>
 <script type="text/javascript" src="js/jquery/jquery.ajaxQueue.js"></script>
@@ -21,7 +22,7 @@ jQuery(document).ready(function($){
 	$(".ASSO").autocomplete("autocomplete.php", {
 		extraParams: {
 			field:'INDI',
-			option: function() { return $("input[name=pid]").val(); }
+			option: function() { return $("input[name=pid]").val() + "|" + $("input[id$=_DATE]").val(); }
 		},
 		formatItem: function(row, i) {
 			return row[0] + " (" + row[1] + ")";
@@ -63,6 +64,7 @@ jQuery(document).ready(function($){
 		minChars: 0
 	});
 	// SOUR*:PAGE*
+	/*
 	$("input[id^=PAGE]").autocomplete("autocomplete.php", {
 		extraParams: {
 			field: 'SOUR_PAGE',
@@ -83,6 +85,7 @@ jQuery(document).ready(function($){
 	// Reset PAGE autocomplete cache when SOUR is changed
 	$("input[id^=SOUR]").change( function() { $("input[id^=PAGE]").flushCache(); } );
 	$("input[id$=SOUR]").change( function() { $("input[id$=PAGE]").flushCache(); } );
+	*/
 	// REPO
 	$(".REPO, #REPO").autocomplete("autocomplete.php", {
 		extraParams: {field:'REPO'},
