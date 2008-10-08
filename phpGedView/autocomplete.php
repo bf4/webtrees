@@ -59,6 +59,32 @@ exit;
 function autocomplete_INDI() {
 	global $TBLPREFIX, $DBTYPE, $DBCONN;
 	global $FILTER, $OPTION;
+	global $pgv_lang, $MAX_ALIVE_AGE;
+
+	// when adding ASSOciate $OPTION may contain :
+	// current INDI/FAM [, current event date]
+	if ($OPTION) {
+		list($pid, $event_date) = explode("|", $OPTION."|");
+		$record = GedcomRecord::getInstance($pid); // INDI or FAM
+		$event = new Event("1 EVEN\n2 DATE ".$event_date);
+		$event_date = $event->getDate();
+		$event_year = $event_date->date1->y;
+		// INDI
+		$indi_birth_year = 0;
+		if ($record && $record->getType()=="INDI")
+			$indi_birth_year = $record->getBirthYear();
+		// HUSB & WIFE
+		$husb_birth_year = 0;
+		$wife_birth_year = 0;
+		if ($record && $record->getType()=="FAM") {
+			$husb = $record->getHusband();
+			if ($husb)
+				$husb_birth_year = $husb->getBirthYear();
+			$wife = $record->getWife();
+			if ($wife)
+				$wife_birth_year = $wife->getBirthYear();
+		}
+	}
 
 	$sql = "SELECT i_id".
 				" FROM {$TBLPREFIX}individuals".
@@ -72,15 +98,73 @@ function autocomplete_INDI() {
 	while ($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)) {
 		$person = Person::getInstance($row["i_id"]);
 		// check privacy
-		if ($person->canDisplayName()) {
-			$data[$row["i_id"]] =
-				$person->getListName().
-				" <u>".
-				ltrim($person->getBirthYear(), "0").
-				"-".
-				ltrim($person->getDeathYear(), "0").
-				"</u>";
+		if (!$person->canDisplayName())
+		  continue;
+		// filter ASSOciate
+		if ($OPTION) {
+			// no self-ASSOciate
+			if ($pid && $row["i_id"]==$pid)
+				continue;
+			// filter by birth date
+			$person_birth_year = $person->getBirthYear();
+			if (!$person_birth_year) {
+				$estim_date = $person->getEstimatedBirthDate();
+				$person_birth_year = $estim_date->date1->y;
+			}
+			if ($person_birth_year) {
+				// born after event
+				if ($event_year && $person_birth_year>$event_year)
+					continue;
+				// not a contemporary
+				if ($indi_birth_year
+				&& abs($indi_birth_year-$person_birth_year)>$MAX_ALIVE_AGE)
+					continue;
+				if ($husb_birth_year && $wife_birth_year
+				&& abs($husb_birth_year-$person_birth_year)>$MAX_ALIVE_AGE
+				&& abs($wife_birth_year-$person_birth_year)>$MAX_ALIVE_AGE)
+					continue;
+				elseif ($husb_birth_year
+				&& abs($husb_birth_year-$person_birth_year)>$MAX_ALIVE_AGE)
+					continue;
+				elseif ($wife_birth_year
+				&& abs($wife_birth_year-$person_birth_year)>$MAX_ALIVE_AGE)
+					continue;
+			}
+			// filter by death date
+			$person_death_year = $person->getDeathYear();
+			if (!$person_death_year) {
+				$estim_date = $person->getEstimatedDeathDate();
+				$person_death_year = $estim_date->date1->y;
+			}
+			if ($person_death_year) {
+				// dead before event
+				if ($event_year && $person_death_year<$event_year)
+					continue;
+				// not a contemporary
+				if ($indi_birth_year && $person_death_year<$indi_birth_year)
+					continue;
+				if ($husb_birth_year && $wife_birth_year
+				&& $person_death_year<$husb_birth_year
+				&& $person_death_year<$wife_birth_year)
+					continue;
+				elseif ($husb_birth_year && $person_death_year<$husb_birth_year)
+					continue;
+				elseif ($wife_birth_year && $person_death_year<$wife_birth_year)
+					continue;
+			}
 		}
+		// display
+		$data[$row["i_id"]] = $person->getListName();
+		if ($OPTION && $event_date && $person->getBirthDate())
+			$data[$row["i_id"]] .= " <span class=\"age\">(".$pgv_lang["age"]." ".
+														GedcomDate::GetAgeYears($person->getBirthDate(), $event_date).
+														")</span>";
+		else
+			$data[$row["i_id"]] .= " <u>".
+														ltrim($person->getBirthYear(), "0").
+														"-".
+														ltrim($person->getDeathYear(), "0").
+														"</u>";
 	}
 	$res->free();
 	return $data;
@@ -197,22 +281,16 @@ function autocomplete_INDI_SOUR_PAGE() {
 	while ($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)) {
 		$person = Person::getInstance($row["i_id"]);
 		if ($person->canDisplayDetails()) {
-			// a single INDI may have multiple level 1 sources
-			$i = 1;
-			do {
-				$srec = get_sub_record("SOUR @{$OPTION}@", 1, $person->gedrec, $i++);
-				$page = get_gedcom_value("PAGE", 2, $srec);
-				if (stripos($page, $FILTER)!==false || empty($FILTER))
-					$data[] = $page;
-			} while ($srec);
-			// a single event may have multiple level 2 sources
-			$i = 1;
-			do {
-				$srec = get_sub_record("SOUR @{$OPTION}@", 2, $person->gedrec, $i++);
-				$page = get_gedcom_value("PAGE", 3, $srec);
-				if (stripos($page, $FILTER)!==false || empty($FILTER))
-					$data[] = $page;
-			} while ($srec);
+			// a single INDI may have multiple level 1 and level 2 sources
+			for ($level=1; $level<=2; $level++) {
+				$i = 1;
+				do {
+					$srec = get_sub_record("SOUR @{$OPTION}@", $level, $person->gedrec, $i++);
+					$page = get_gedcom_value("PAGE", $level+1, $srec);
+					if (stripos($page, $FILTER)!==false || empty($FILTER))
+						$data[] = $page;
+				} while ($srec);
+			}
 		}
 	}
 	$res->free();
@@ -239,22 +317,16 @@ function autocomplete_FAM_SOUR_PAGE() {
 	while ($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)) {
 		$family = Family::getInstance($row["f_id"]);
 		if ($family->canDisplayDetails()) {
-			// a single FAM may have multiple level 1 sources
-			$i = 1;
-			do {
-				$srec = get_sub_record("SOUR @{$OPTION}@", 1, $family->gedrec, $i++);
-				$page = get_gedcom_value("PAGE", 2, $srec);
-				if (stripos($page, $FILTER)!==false || empty($FILTER))
-					$data[] = $page;
-			} while ($srec);
-			// a single event may have multiple level 2 sources
-			$i = 1;
-			do {
-				$srec = get_sub_record("SOUR @{$OPTION}@", 2, $family->gedrec, $i++);
-				$page = get_gedcom_value("PAGE", 3, $srec);
-				if (stripos($page, $FILTER)!==false || empty($FILTER))
-					$data[] = $page;
-			} while ($srec);
+			// a single FAM may have multiple level 1 and level 2 sources
+			for ($level=1; $level<=2; $level++) {
+				$i = 1;
+				do {
+					$srec = get_sub_record("SOUR @{$OPTION}@", $level, $family->gedrec, $i++);
+					$page = get_gedcom_value("PAGE", $level+1, $srec);
+					if (stripos($page, $FILTER)!==false || empty($FILTER))
+						$data[] = $page;
+				} while ($srec);
+			}
 		}
 	}
 	$res->free();
