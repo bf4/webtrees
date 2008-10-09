@@ -90,7 +90,7 @@ $factarray["EVEN"] 	= "Wydarzenie";
 $factarray["FAM"] 	= "Rodzina";
 $factarray["FAMC"] 	= "W rodzinie jako dziecko";
 $factarray["FAMF"] 	= "Plik rodziny";
-$factarray["FAMS"] 	= "W rodzinie jako małżonek";
+$factarray["FAMS"] 	= "Małżeństwo";
 $factarray["FCOM"] 	= "Pierwsza Komunia";
 $factarray["FILE"] 	= "Plik zewnętrzny";
 $factarray["FORM"] 	= "Format";
@@ -188,10 +188,15 @@ $factarray["FAMS:CHIL:BIRT:PLAC"] = "Miejsce urodzin dziecka";
 
 // These facts are all colon delimited
 $factarray["BIRT:PLAC"] = "Miejsce urodzenia";
+$factarray["BIRT:DATE"] = "Data urodzenia";
 $factarray["DEAT:PLAC"] = "Miejsce śmierci";
+$factarray["DEAT:DATE"] = "Data śmierci";
 $factarray["CHR:PLAC"]  = "Miejsce chrztu";
+$factarray["CHR:DATE"]  = "Data chrztu";
 $factarray["BAPM:PLAC"] = "Miejsce chrztu";
+$factarray["BAPM:DATE"] = "Data chrztu";
 $factarray["BURI:PLAC"] = "Miejsce pochówku";
+$factarray["BURI:DATE"] = "Data pochówku";
 $factarray["MARR:PLAC"] = "Miejsce ślubu";
 
 // Fakty specyficzne dla eksportu GedCom z programu Family Tree Maker
@@ -221,7 +226,7 @@ $factarray["_MEND"]	= "Status na końcu małżeństwa";
 $factarray["_NAMS"]	= "Imiennik";
 
 // Fakty związane z GedCom 5.5.1 
-$factarray["FAX"] 	= "Fax";
+$factarray["FAX"] 	= "Faks";
 $factarray["FACT"] 	= "Fakt";
 $factarray["WWW"] 	= "Strona WWW";
 $factarray["MAP"] 	= "Mapa";

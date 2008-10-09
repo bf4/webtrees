@@ -365,6 +365,7 @@ $pgv_lang["at_death_day"]      		= "w dniu śmierci";
 $pgv_lang["year1"]					= "rok";
 $pgv_lang["month1"]					= "miesiąc";
 $pgv_lang["day1"]					= "dzień";
+$pgv_lang["years2"]					= "lata";
 $pgv_lang["years"]					= "lat";
 $pgv_lang["months"]					= "miesięcy";
 $pgv_lang["days"]					= "dni";
@@ -1665,7 +1666,7 @@ $pgv_lang["immediate_family"]		= "Najbliższa rodzina";
 
 $pgv_lang["install_step_8"] 		= "Rozpocznij korzystanie";
 
-$pgv_lang["exact"]					= "Dokładny tekst";
+$pgv_lang["exact"]					= "Dokładna data";
 $pgv_lang["advanced_search"]		= "Wyszukiwanie zaawansowane";
 $pgv_lang["more_fields"]			= "Dodaj więcej pól";
 ?>

@@ -1,10 +1,10 @@
 <?php
 
 /**
- * Controller for the Search Page
+ * Controller for the Advanced Search Page
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008	PGV Development Team.  All rights reserved.
+ * Copyright (C) 2002 to 2008	PGV Development Team. All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,7 +23,7 @@
  *
  * @package PhpGedView
  * @subpackage Display
- * @version $Id: search_ctrl.php 3583 2008-07-18 23:12:36Z canajun2eh $
+ * @version $Id$
  */
 
 if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
@@ -33,10 +33,6 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 
 require_once ("config.php");
 require_once ("includes/controllers/search_ctrl.php");
-
-$pgv_lang["advanced_search"] 	= "Advanced Search";
-$pgv_lang["more_fields"]		= "Add More Fields";
-
 
 /**
  * Main controller class for the search page.
@@ -78,14 +74,30 @@ class AdvancedSearchController extends SearchController {
 	}
 	
 	function getOtherFields() {
-		$ofields = array("ADDR","ADDR:CITY","ADDR:STAE","ADDR:CTRY","ADDR:ZIP", "AFN", "CHR:DATE", "CHR:PLAC", "BURI:DATE", "BURI:PLAC", "CREM:DATE","CREM:PLAC",
-			"ADOP:DATE","ADOP:PLAC","BAPM:DATE","BAPM:PLAC","BARM:DATE","BARM:PLAC","BASM:DATE","BASM:PLAC","BLES:DATE","BLES:PLAC","EVEN","EVEN:DATE","EVEN:PLAC", "EMAIL","FAX","FCOM:DATE",
-			"_MILI","_MILI:DATE","_MILI:PLAC","FCOM:PLAC","ORDN:DATE","ORDN:PLAC","NATU:DATE","NATU:PLAC","EMIG:DATE","EMIG:PLAC", "IMIG:DATE","IMIG:PLAC","CENS:DATE","CENS:PLAC","CAST","DSCR",
-			"NATI","OCCU","RELI","TITL","RESI","RESI:DATE","RESI:PLAC",
+		$ofields = array("ADDR","ADDR:CITY","ADDR:STAE","ADDR:CTRY","ADDR:POST",
+			"AFN","EMAIL","FAX",
+			"CHR:DATE","CHR:PLAC",
+			"BURI:DATE","BURI:PLAC",
+			"CREM:DATE","CREM:PLAC",
+			"ADOP:DATE","ADOP:PLAC",
+			"BAPM:DATE","BAPM:PLAC","BARM:DATE","BARM:PLAC","BASM:DATE","BASM:PLAC","BLES:DATE","BLES:PLAC",
+			"EVEN","EVEN:DATE","EVEN:PLAC",
+			"FCOM:DATE","FCOM:PLAC",
+			"_MILI","_MILI:DATE","_MILI:PLAC",
+			"ORDN:DATE","ORDN:PLAC",
+			"NATU:DATE","NATU:PLAC","EMIG:DATE","EMIG:PLAC","IMMI:DATE","IMMI:PLAC",
+			"CENS:DATE","CENS:PLAC",
+			"CAST","DSCR",
+			"NATI","OCCU","RELI","TITL",
+			"RESI","RESI:DATE","RESI:PLAC",
 			"NAME:NICK","NAME:_MARNM","NAME:_HEB","NAME:ROMN",
 			"FAMS:CENS:DATE","FAMS:CENS:PLAC","FAMS:DIV:DATE","FAMS:DIV:PLAC",
 			"NOTE","FAMS:NOTE",
-			"BAPL:DATE","BAPL:PLAC","BAPL:TEMP","ENDL:DATE","ENDL:PLAC","ENDL:TEMP","SLGC:DATE","SLGC:PLAC","SLGC:TEMP","FAMS:SLGS:DATE","FAMS:SLGS:PLAC","FAMS:SLGS:TEMP");
+			"BAPL:DATE","BAPL:PLAC","BAPL:TEMP",
+			"ENDL:DATE","ENDL:PLAC","ENDL:TEMP",
+			"SLGC:DATE","SLGC:PLAC","SLGC:TEMP",
+			"FAMS:SLGS:DATE","FAMS:SLGS:PLAC","FAMS:SLGS:TEMP"
+		);
 		return $ofields;
 	}
 

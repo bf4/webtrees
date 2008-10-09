@@ -3,7 +3,7 @@
  * English Language file for PhpGedView.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team
+ * Copyright (C) 2002 to 2008 PGV Development Team. All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -183,10 +183,15 @@ $factarray["FAMS:CHIL:BIRT:PLAC"] = "Child's Birth Place";
 
 // These facts are all colon delimited
 $factarray["BIRT:PLAC"] = "Birth Place";
+$factarray["BIRT:DATE"] = "Birth Date";
 $factarray["DEAT:PLAC"] = "Death Place";
+$factarray["DEAT:DATE"] = "Death Date";
 $factarray["CHR:PLAC"] = "Christening Place";
+$factarray["CHR:DATE"] = "Christening Date";
 $factarray["BAPM:PLAC"] = "Baptism Place";
+$factarray["BAPM:DATE"] = "Baptism Date";
 $factarray["BURI:PLAC"] = "Burial Place";
+$factarray["BURI:DATE"] = "Burial Date";
 $factarray["MARR:PLAC"] = "Marriage Place";
 
 // These facts are specific to GEDCOM exports from Family Tree Maker
