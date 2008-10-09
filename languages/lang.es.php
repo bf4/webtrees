@@ -32,6 +32,10 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
+$pgv_lang["exact"]				= "Exacto";
+$pgv_lang["advanced_search"] 	= "Búsqueda avanzada";
+$pgv_lang["more_fields"]		= "Añadir más campos";
+$pgv_lang["install_step_8"] 		= "Comienzo";
 $pgv_lang["parent_family"]			= "Familia de los padres";
 $pgv_lang["step_parent_family"]		= "Familia del padrastro o madrastra";
 $pgv_lang["immediate_family"]		= "Familia inmediata";
@@ -196,10 +200,10 @@ $pgv_lang["cookie_help"]			= "Esto sitio utiliza <i>cookies</i> para llevar la p
 //new stuff
 //Individual
 $pgv_lang["indi_is_remote"]			= "La información de esta persona se vinculó desde un sitio remoto.";
-$pgv_lang["link_remote"]            = "Vincular persona remota";
+$pgv_lang["link_remote"]			= "Vincular persona remota";
 //Add Remote Link
-$pgv_lang["title_search_link"]      = "Agregar vínculo local";
-$pgv_lang["label_site_url2"]        = "URL del sitio";
+$pgv_lang["title_search_link"]		= "Agregar vínculo local";
+$pgv_lang["label_site_url2"]		= "URL del sitio";
 //new stuff
 
 $pgv_lang["delete_family_confirm"]	= "Borrar la familia preservará las personas, pero las dejará desconectadas unas de otras. ¿Está seguro de que desea borrar esta familia?";
@@ -521,6 +525,7 @@ $pgv_lang["download_file"]			= "Descargar archivo #GLOBALS[whichFile]#";
 $pgv_lang["indi_downloaded_from"]	= "La información de esta persona se descargó desde:";
 $pgv_lang["family_downloaded_from"] = "La información de esta familia se descargó desde:";
 $pgv_lang["source_downloaded_from"] = "La información de esta fuente se descargó desde:";
+$pgv_lang["enter_person_generations"] = "Número de generaciones:";
 
 //-- PLACELIST FILE MESSAGES
 $pgv_lang["connections"]			= "Conexiones de lugar encontradas";
@@ -643,8 +648,8 @@ $pgv_lang["years"]					= "años";
 $pgv_lang["day1"]					= "día";
 $pgv_lang["month1"]					= "mes";
 $pgv_lang["year1"]					= "año";
-$pgv_lang["after_death"]        	= "tras la defunción";
-$pgv_lang["at_death_day"]      		= "el día de su defunción";
+$pgv_lang["after_death"]			= "tras la defunción";
+$pgv_lang["at_death_day"]			= "el día de su defunción";
 $pgv_lang["timeline_title"] 		= "Cronograma";
 $pgv_lang["timeline_chart"] 		= "Cronograma";
 $pgv_lang["remove_person"]			= "Borrar persona";
@@ -1471,7 +1476,7 @@ $pgv_lang["ancestry_chart"] 		= "Diagrama de ascendencia";
 $pgv_lang["gen_ancestry_chart"]		= "Diagrama de ascendencia de #PEDIGREE_GENERATIONS# generaciones";
 $pgv_lang["chart_style"]			= "Estilo del diagrama";
 $pgv_lang["chart_list"]				= "Lista";
-$pgv_lang["chart_booklet"]   		= "Libreta";
+$pgv_lang["chart_booklet"]			= "Libreta";
 $pgv_lang["show_cousins"]			= "Mostrar primos";
 // 1st generation
 $pgv_lang["sosa_2"] 				= "Padre";
