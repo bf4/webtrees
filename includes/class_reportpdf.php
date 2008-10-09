@@ -31,11 +31,11 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
-define('PGV_REPORTPDF_PHP', '');
+define('PGV_CLASS_REPORTPDF_PHP', '');
 
-require_once("includes/reportbase.php");
-require_once('tcpdf/config/lang/eng.php');
-require_once("tcpdf/tcpdf.php");
+require_once 'includes/class_reportbase.php';
+require_once 'tcpdf/config/lang/eng.php';
+require_once 'tcpdf/tcpdf.php';
 
 /**
  * main PGV Report Class

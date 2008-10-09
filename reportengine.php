@@ -131,7 +131,7 @@ else if ($action=="setup") {
 		print "<span class=\"error\">".$pgv_lang["file_not_found"]."</span> ".$report."\n";
 	}
 	else {
-		require_once("includes/reportheader.php");
+		require_once 'includes/reportheader.php';
 		$report_array = array();
 		//-- start the sax parser
 		$xml_parser = xml_parser_create();
@@ -302,9 +302,18 @@ function paste_id(value) {
 //-- run the report
 else if ($action=="run") {
 	//-- load the report generator
-	if ($output=="HTML") require("includes/reporthtml.php");
-	else if ($output=="TEX") require("includes/reportlatex.php");
-	else require("includes/reportpdf.php");
+	switch ($output) {
+	case 'HTML':
+		require 'includes/class_reporthtml.php';
+		break;
+	case 'TEXT':
+		require 'includes/class_reportlatex.php';
+		break;
+	case 'PDF':
+	default:
+		require 'includes/class_reportpdf.php';
+		break;
+	}
 
 	//-- start the sax parser
 	$xml_parser = xml_parser_create();

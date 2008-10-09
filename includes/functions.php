@@ -3317,7 +3317,7 @@ function add_ancestors(&$list, $pid, $children=false, $generations=-1, $show_emp
 	}
 }
 
-//--- copied from reportpdf.php
+//--- copied from class_reportpdf.php
 function add_descendancy(&$list, $pid, $parents=false, $generations=-1) {
 	global $indilist;
 
