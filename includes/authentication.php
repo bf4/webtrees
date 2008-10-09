@@ -549,7 +549,7 @@ function checkTableExists() {
 			"CREATE TABLE {$TBLPREFIX}favorites (".
 			" fv_id       INT         NOT NULL,".
 		 	" fv_username VARCHAR(30)     NULL,".
-			" fv_gid      VARCHAR(10)     NULL,".
+			" fv_gid      VARCHAR(255)    NULL,".
 			" fv_type     VARCHAR(10)     NULL,".
 			" fv_file     VARCHAR(100)    NULL,".
 			" fv_url      VARCHAR(255)    NULL,".
