@@ -288,7 +288,7 @@ if ($showList) {
 			foreach ($person->getAllNames() as $n=>$name) {
 				if ($SHOW_MARRIED_NAMES || $name['type']!='_MARNM') {
 					$givn_alpha=get_first_letter($name['givn']);
-					if ((!$surname || $surname==UTF8_strtoupper($name['surn'])) &&
+					if (strpos($name['sort'], $surname.',')===0 &&
 					    (!$alpha   || $alpha==get_first_letter($name['sort']))) {
 						$givn_initials[$givn_alpha]=$givn_alpha;
 						if (!$falpha || $falpha==$givn_alpha) {
