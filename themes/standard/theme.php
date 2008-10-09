@@ -59,6 +59,9 @@ $PGV_IMAGES["repository"]["large"] = "repository.gif";
 $PGV_IMAGES["search"]["large"] = "search.gif";
 $PGV_IMAGES["sfamily"]["large"] = "sfamily.gif";
 $PGV_IMAGES["source"]["large"] = "source.gif";
+$PGV_IMAGES["sex"]["large"] = "male.gif";
+$PGV_IMAGES["sexf"]["large"] = "female.gif";
+$PGV_IMAGES["sexn"]["large"] = "fe_male.gif";
 
 //- PGV main icons for optional modules
 $PGV_IMAGES["menu_gallery"]["large"] = "menu_gallery.gif";

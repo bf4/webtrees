@@ -484,17 +484,19 @@ class IndividualControllerRoot extends BaseController {
 	 * @param Event $event	the Event object
 	 */
 	function print_sex_record(&$event) {
-	   global $pgv_lang, $sex, $PGV_IMAGE_DIR, $PGV_IMAGES;
+		global $pgv_lang, $sex;
 
-	   if (!$event->canShowDetails()) return false;
-	   $sex = $event->getDetail();
-	   if (empty($sex)) $sex = "U";
+		if (!$event->canShowDetails()) return false;
+		$sex = $event->getDetail();
+		if (empty($sex)) $sex = "U";
 		print "<td valign=\"top\"><span class=\"label\">".$pgv_lang["sex"].":    </span><span class=\"field\">".$this->sexarray[$sex];
-		print " <img src=\"$PGV_IMAGE_DIR/";
-		if ($sex=="M") print $PGV_IMAGES["sex"]["small"]."\" title=\"".$pgv_lang["male"]."\" alt=\"".$pgv_lang["male"];
-		else if ($sex=="F") print $PGV_IMAGES["sexf"]["small"]."\" title=\"".$pgv_lang["female"]."\" alt=\"".$pgv_lang["female"];
-		else print $PGV_IMAGES["sexn"]["small"]."\" title=\"".$pgv_lang["unknown"]."\" alt=\"".$pgv_lang["unknown"];
-		print "\" width=\"0\" height=\"0\" class=\"gender_image\" border=\"0\" />";
+		if ($sex=='M') {
+			echo Person::sexImage('M', 'small', '', $pgv_lang['male']);
+		} elseif ($sex=='F') {
+			echo Person::sexImage('F', 'small', '', $pgv_lang['female']);
+		} else {
+			echo Person::sexImage('U', 'small', '', $pgv_lang['unknown']);
+		}
 		if ($this->SEX_COUNT>1) {
 			if ((!$this->isPrintPreview()) && ($this->userCanEdit()) && (preg_match("/PGV_OLD/", $event->getGedComRecord())==0)) {
 			    if ($event->getLineNumber()=="new") print "<br /><a class=\"font9\" href=\"javascript:;\" onclick=\"add_new_record('".$this->pid."', 'SEX'); return false;\">".$pgv_lang["edit"]."</a>";

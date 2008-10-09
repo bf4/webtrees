@@ -56,9 +56,11 @@ define('PGV_REGEX_EMAIL',     '[^\s<>"&%{};@]+@[^\s<>"&%{};@]+');
 define('PGV_REGEX_UNSAFE',    '(.|[\n])*'); // Use with care and apply additional validation!
 
 // UTF8 representation of various characters
-define('PGV_UTF8_BOM', "\xEF\xBB\xBF"); // U+FEFF
-define('PGV_UTF8_LRM', "\xE2\x80\x8E"); // U+200E
-define('PGV_UTF8_RLM', "\xE2\x80\x8F"); // U+200F
+define('PGV_UTF8_BOM',    "\xEF\xBB\xBF"); // U+FEFF
+define('PGV_UTF8_LRM',    "\xE2\x80\x8E"); // U+200E
+define('PGV_UTF8_RLM',    "\xE2\x80\x8F"); // U+200F
+define('PGV_UTF8_MALE',   "\xE2\x99\x82"); // U+2642
+define('PGV_UTF8_FEMALE', "\xE2\x99\x80"); // U+2640
 
 // Alternatives to BMD events for lists, charts, etc.
 define('PGV_EVENTS_BIRT', 'BIRT|CHR|BAPM|_BRTM|ADOP');
