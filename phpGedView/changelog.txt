@@ -10,6 +10,18 @@
 
 
 Version 4.1.6
+ - Fixed: [ 2131257 ] 4.1.5rel places list misreads gedcom notes (fisharebest)
+ - Fixed: [ 2025978 ] Changes Report (SVN 3591) (fisharebest)
+ - Fixed: [ 2125739 ] 3913 Individual list (fisharebest)
+ - Fixed: [ 2154489 ] [4030] Notes not saved (fisharebest)
+ - Fixed: [ 1835731 ] Favorites summary doesn't work -> fv_gid too short (fisharebest)
+ - Fixed: [ 2129466 ] [3931] Check GEDCOM (fisharebest)
+ - Fixed: [ 2152310 ] [4030] or earlier- Events of Close relatives (fisharebest)
+ - Fixed: [ 2152909 ] Pedigree Tree - problem with PEDIGREE_GENERATIONS (fisharebest)
+ - Fixed: [ 2149514 ] [4018] email messages gives error (fisharebest)
+ - Fixed: [ 2143803 ] [3964] media list error (fisharebest)
+ - Fixed: [ 2127393 ] [3921] placelist.php can't cope with " quotes in placenames (fisharebest)
+ - Fixed: [ 2131763 ] First Names Block (fisharebest)
  - Fixed [ 2134663 ] ALL CAPS surnames (opus27)
  - Added Advanced Search (yalnifj)
  - Changed: JWplayer : Corrected wrong path to Reorder option, now incudes correct thumbnail (windmillway)
