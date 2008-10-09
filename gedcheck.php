@@ -787,6 +787,9 @@ function check_indi($id)
 	$gedrec=$indi_list[$id]["gedcom"];
 	$errors="";
 
+	$indi=Person::getInstance($id);
+	$name=$indi->getFullName();
+
 	if ($err_level>=$error)
 		foreach ($indi_facts_unique as $fact)
 			if (get_sub_record(1, "1 $fact", $gedrec, 2)!="")
@@ -896,10 +899,8 @@ function check_fam($id)
 	$fam_list[$id]["checked"]=true;
 	$gedrec=$fam_list[$id]["gedcom"];
 	$errors="";
-	if (isset($fam_list[$id]["name"]))
-		$name=$fam_list[$id]["name"];
-	else
-		$name="???";
+	$fam=Family::getInstance($id);
+	$name=$fam->getFullName();
 
 	if ($err_level>=$error)
 		foreach ($fam_facts_unique as $fact)
