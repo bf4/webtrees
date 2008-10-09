@@ -4,7 +4,7 @@
  * Searches based on user query.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  John Finlay and Others
+ * Copyright (C) 2002 to 2008	PGV Development Team. All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,7 +22,7 @@
  *
  * @package PhpGedView
  * @subpackage Display
- * @version $Id: search.php 3282 2008-06-16 11:11:00Z canajun2eh $
+ * @version $Id$
  */
 // Include the search controller from now on refered to as $controller
 require_once ("includes/controllers/advancedsearch_ctrl.php");
@@ -112,15 +112,15 @@ print_header($pgv_lang["advanced_search"]);
 		sel.appendChild(opt);
 		opt = document.createElement('option');
 		opt.value='';
-		opt.text='+- 2 <?php print $pgv_lang['years']; ?>';
+		opt.text='+/- 2 <?php print $pgv_lang['years2']; ?>';
 		sel.appendChild(opt);
 		opt = document.createElement('option');
 		opt.value='5';
-		opt.text='+- 5 <?php print $pgv_lang['years']; ?>';
+		opt.text='+/- 5 <?php print $pgv_lang['years']; ?>';
 		sel.appendChild(opt);
 		opt = document.createElement('option');
 		opt.value='10';
-		opt.text='+- 10 <?php print $pgv_lang['years']; ?>';
+		opt.text='+/- 10 <?php print $pgv_lang['years']; ?>';
 		sel.appendChild(opt);
 		var spc = document.createTextNode(' ');
 		elm.appendChild(spc);
@@ -159,9 +159,9 @@ print_header($pgv_lang["advanced_search"]);
 				?>
 				<select name="plusminus[<?php print $i ?>]">
 					<option value=""><?php print $pgv_lang["exact"]; ?></option>
-					<option value="2" <?php if (!empty($controller->plusminus[$i]) && $controller->plusminus[$i]==2) print "selected=\"selected\""; ?>>+- 2 <?php print $pgv_lang['years']; ?></option>
-					<option value="5" <?php if (!empty($controller->plusminus[$i]) && $controller->plusminus[$i]==5) print "selected=\"selected\""; ?>>+- 5 <?php print $pgv_lang['years']; ?></option>
-					<option value="10" <?php if (!empty($controller->plusminus[$i]) && $controller->plusminus[$i]==10) print "selected=\"selected\""; ?>>+- 10 <?php print $pgv_lang['years']; ?></option>
+					<option value="2" <?php if (!empty($controller->plusminus[$i]) && $controller->plusminus[$i]==2) print "selected=\"selected\""; ?>>+/- 2 <?php print $pgv_lang['years2']; ?></option>
+					<option value="5" <?php if (!empty($controller->plusminus[$i]) && $controller->plusminus[$i]==5) print "selected=\"selected\""; ?>>+/- 5 <?php print $pgv_lang['years']; ?></option>
+					<option value="10" <?php if (!empty($controller->plusminus[$i]) && $controller->plusminus[$i]==10) print "selected=\"selected\""; ?>>+/- 10 <?php print $pgv_lang['years']; ?></option>
 				</select>
 			<?php }?>
 		</td>
