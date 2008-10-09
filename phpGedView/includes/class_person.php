@@ -1042,8 +1042,7 @@ class Person extends GedcomRecord {
 						if (GedcomDate::Compare($bDate, $sEvent->getDate())<0 && GedcomDate::Compare($sEvent->getDate(), $dDate)<=0) {
 							if ($sfamid==$famid) $fact="_MARR_FAMC";
 							$factrec = "1 ".$fact;
-							$sdate = get_sub_record(2, "2 DATE", $srec);
-							$factrec .= "\n".trim($sdate);
+							$factrec.="\n".get_sub_record(2, '2 DATE', $srec)."\n".get_sub_record(2, '2 PLAC', $srec);
 							if (!$sEvent->canShow()) $factrec .= "\n2 RESN privacy";
 							$factrec .= "\n2 ASSO @".$parent->getXref()."@";
 							$factrec .= "\n3 RELA *".$rela;
@@ -1153,7 +1152,7 @@ class Person extends GedcomRecord {
 						$sgdate=$sEvent->getDate();
 						if ($option=='_CHIL' || $sgdate->isOK() && GedcomDate::Compare($this->getEstimatedBirthDate(), $sgdate)<=0 && GedcomDate::Compare($sgdate, $this->getEstimatedDeathDate())<=0) {
 							$factrec='1 _'.$sEvent->getTag().$option;
-							$factrec.="\n".get_sub_record(2, '2 DATE', $srec);
+							$factrec.="\n".get_sub_record(2, '2 DATE', $srec)."\n".get_sub_record(2, '2 PLAC', $srec);
 							if (!$sEvent->canShow()) {
 								$factrec.='\n2 RESN privacy';
 							}
@@ -1194,7 +1193,7 @@ class Person extends GedcomRecord {
 						$srec = $sEvent->getGedComRecord();
 						if ($sgdate->isOK() && GedcomDate::Compare($this->getEstimatedBirthDate(), $sgdate)<=0 && GedcomDate::Compare($sgdate, $this->getEstimatedDeathDate())<=0) {
 							$factrec='1 _'.$sEvent->getTag().$option;
-							$factrec.="\n".get_sub_record(2, '2 DATE', $srec);
+							$factrec.="\n".get_sub_record(2, '2 DATE', $srec)."\n".get_sub_record(2, '2 PLAC', $srec);
 							if (!$sEvent->canShow()) {
 								$factrec.='\n2 RESN privacy';
 							}
@@ -1214,7 +1213,7 @@ class Person extends GedcomRecord {
 						$srec = $sEvent->getGedComRecord();
 						if ($sgdate->isOK() && GedcomDate::Compare($this->getEstimatedBirthDate(), $sgdate)<=0 && GedcomDate::Compare($sgdate, $this->getEstimatedDeathDate())<=0) {
 							$factrec='1 _'.$sEvent->getTag().$option;
-							$factrec.="\n".get_sub_record(2, '2 DATE', $srec);
+							$factrec.="\n".get_sub_record(2, '2 DATE', $srec)."\n".get_sub_record(2, '2 PLAC', $srec);
 							if (!$sEvent->canShow()) {
 								$factrec.='\n2 RESN privacy';
 							}
@@ -1385,7 +1384,6 @@ class Person extends GedcomRecord {
 					if ($arec) {
 						$fact = $event->getTag();
 						$label = $event->getLabel();
-						$sdate = get_sub_record(2, "2 DATE", $srec);
 						// relationship ?
 						$rrec = get_sub_record(3, "3 RELA", $arec);
 						$rela = trim(substr($rrec, 7));
@@ -1394,7 +1392,7 @@ class Person extends GedcomRecord {
 						$factrec = "1 EVEN\n2 TYPE ".$label."<br/>[ <span class=\"details_label\">";
 						if (isset($pgv_lang[strtolower($rela)])) $factrec .= $pgv_lang[strtolower($rela)]."</span> ]";
 						else if (isset($factarray[$rela])) $factrec .= $factarray[$rela]."</span> ]";
-						$factrec .= "\n".trim($sdate);
+						$factrec.="\n".get_sub_record(2, '2 DATE', $srec)."\n".get_sub_record(2, '2 PLAC', $srec);
 						if (!$event->canShow()) $factrec .= "\n2 RESN privacy";
 						if ($typ=='FAM') {
 							$famrec = find_family_record($rid);
