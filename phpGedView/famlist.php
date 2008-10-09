@@ -223,47 +223,49 @@ if ($showList) {
 			foreach (array($family->husb, $family->wife) as $person) {
 				if (!is_object($person)) continue;
 				foreach ($person->getAllNames() as $name) {
-					list($surn)=explode(',', $name['sort']);
-					// Ignore diacritics - need to use the same logic as get_fam_alpha()
-					// TODO: This ought to be a language-dependent conversion, as in some
-					// languages, letters with diacritics are regarded as separate letters.
-					$initial=get_first_letter($surn);
-					if ($DICTIONARY_SORT[$LANGUAGE]) {
-						$position = strpos($UCDiacritWhole, $initial);
-						if ($position!==false) {
-							$position = $position >> 1;
-							$initial = substr($UCDiacritStrip, $position, 1);
-						} else {
-							$position = strpos($LCDiacritWhole, $initial);
+					if ($SHOW_MARRIED_NAMES || $name['type']!='_MARNM') {
+						list($surn)=explode(',', $name['sort']);
+						// Ignore diacritics - need to use the same logic as get_fam_alpha()
+						// TODO: This ought to be a language-dependent conversion, as in some
+						// languages, letters with diacritics are regarded as separate letters.
+						$initial=get_first_letter($surn);
+						if ($DICTIONARY_SORT[$LANGUAGE]) {
+							$position = strpos($UCDiacritWhole, $initial);
 							if ($position!==false) {
 								$position = $position >> 1;
-								$initial = substr($LCDiacritStrip, $position, 1);
+								$initial = substr($UCDiacritStrip, $position, 1);
+							} else {
+								$position = strpos($LCDiacritWhole, $initial);
+								if ($position!==false) {
+									$position = $position >> 1;
+									$initial = substr($LCDiacritStrip, $position, 1);
+								}
 							}
 						}
-					}
-					if ($show_all=='yes' || $surname && $surname==$surn || !$surname && $alpha==$initial) {
-						switch ($surn) {
-						case '@N.N.':
-							$spfxsurn=$pgv_lang['NN'];
-							break;
-						case '':
-							$spfxsurn='('.$pgv_lang['none'].')';
-							break;
-						default:
-							$spfxsurn=$name['spfx'] ? $name['spfx'].' '.$name['surn'] : $name['surn'];
-							break;
+						if ($show_all=='yes' || $surname && $surname==$surn || !$surname && $alpha==$initial) {
+							switch ($surn) {
+							case '@N.N.':
+								$spfxsurn=$pgv_lang['NN'];
+								break;
+							case '':
+								$spfxsurn='('.$pgv_lang['none'].')';
+								break;
+							default:
+								$spfxsurn=$name['spfx'] ? $name['spfx'].' '.$name['surn'] : $name['surn'];
+								break;
+							}
+							if (! array_key_exists($surn, $surnames)) {
+								$surnames[$surn]=array();
+							}
+							if (! array_key_exists($spfxsurn, $surnames[$surn])) {
+								$surnames[$surn][$spfxsurn]=array();
+							}
+							// $surn is the base surname, e.g. GOGH
+							// $spfxsurn is the full surname, e.g. van GOGH
+							// $pid allows us to count fams as well as surnames, for fams that
+							// appear twice in this list.
+							$surnames[$surn][$spfxsurn][$pid]=true;
 						}
-						if (! array_key_exists($surn, $surnames)) {
-							$surnames[$surn]=array();
-						}
-						if (! array_key_exists($spfxsurn, $surnames[$surn])) {
-							$surnames[$surn][$spfxsurn]=array();
-						}
-						// $surn is the base surname, e.g. GOGH
-						// $spfxsurn is the full surname, e.g. van GOGH
-						// $pid allows us to count fams as well as surnames, for fams that
-						// appear twice in this list.
-						$surnames[$surn][$spfxsurn][$pid]=true;
 					}
 				}
 			}
