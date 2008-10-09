@@ -10,6 +10,7 @@
 
 
 Version 4.1.6
+ - Fixed [ 2134663 ] ALL CAPS surnames (opus27)
  - Added Advanced Search (yalnifj)
  - Changed: JWplayer : Corrected wrong path to Reorder option, now incudes correct thumbnail (windmillway)
  - Added: JW flash video player support whether Lightbox module installed or not. 

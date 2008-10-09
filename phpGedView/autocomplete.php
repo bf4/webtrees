@@ -465,7 +465,7 @@ function autocomplete_SURN() {
 	global $TBLPREFIX, $DBTYPE, $DBCONN;
 	global $FILTER;
 
-	$sql = "SELECT i_id, i_surname".
+	$sql = "SELECT i_id".
 				" FROM {$TBLPREFIX}individuals".
 				" WHERE i_surname ".PGV_DB_LIKE." '".$FILTER."%'".
 				" AND i_file=".PGV_GED_ID. // comment this line to search all Gedcoms
@@ -475,8 +475,11 @@ function autocomplete_SURN() {
 	$data = array();
 	while ($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)) {
 		$person = Person::getInstance($row["i_id"]);
-		if ($person->canDisplayName())
-			$data[] = $row["i_surname"];
+		if ($person->canDisplayName()) {
+			// get exact surn (i_surname db field is capitalized)
+			$names = $person->getAllNames();
+			$data[] = $names[$person->getPrimaryName()]['surn'];
+		}
 	}
 	$res->free();
 	return $data;
@@ -543,7 +546,7 @@ function autocomplete_PLAC() {
 				$missing[] = $v;
 		}
 		if (count($missing)==0)
-		  break;
+			break;
 		$sql = "SELECT p_id, p_place, p_parent_id".
 					" FROM {$TBLPREFIX}places".
 					" WHERE p_id IN (".join(',', $missing).")".
@@ -607,8 +610,8 @@ function autocomplete_PLAC() {
 
 	// split ?
 	if ($OPTION=="split") {
-	  foreach ($data as $k=>$v)
-	    list($data[$k]) = explode(",", $v);
+		foreach ($data as $k=>$v)
+			list($data[$k]) = explode(",", $v);
 		$data = array_filter($data, "place_ok");
 	}
 	
