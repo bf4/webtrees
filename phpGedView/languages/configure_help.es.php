@@ -183,8 +183,10 @@ $pgv_lang["server_url_note"]	= "Esto debería ser la URL de su carpeta PhpGedVie
 
 $pgv_lang["DBTYPE"]			= "Tipo de base de datos";
 $pgv_lang["DBTYPE_help"]		= "~#pgv_lang[DBTYPE]#~<br /><br />El tipo de base de datos accesible por PEAR con la que se debe conectar.<br /><br />PhpGedView puede utilizar bases de datos MySQL, PostgreSQL y SQLite.  Tanto MySQL como PostgreSQL necesitan que se instalen bibliotecas específicas en PHP.  SQLite viene instalado por omisión en PHP 5.<br /><br />Con SQLite no es necesario que configure #pgv_lang[DBHOST]#, #pgv_lang[DBUSER]# o #pgv_lang[DBPASS]#, pero tendrá que introducir una ruta de archivo para su base de datos en el campo #pgv_lang[DBNAME]#.<br />";
-$pgv_lang["DBHOST"]			= "Servidor de Base de Datos";
+$pgv_lang["DBHOST"]			= "Servidor de base de datos";
 $pgv_lang["DBHOST_help"]		= "~#pgv_lang[DBHOST]#~<br /><br />La dirección DNS o IP del servidor de su base de datos.  Este ajuste se ignora si está utilizando una base de datos SQLite.<br />";
+$pgv_lang["DBPORT"]			= "Puerto de base de datos";
+$pgv_lang["DBPORT_help"]		= "~#pgv_lang[DBPORT]#~<br /><br />El puerto TCP a utilizar para conectar con el servidor de base de datos.  Deje este ajuste en balnco para utilizar el puerto por omisión de su tipo de base de datos en particular.  Este ajuste se ignora si utiliza una base de datos SQLite.<br />";
 $pgv_lang["DBUSER"]			= "Nombre de usuario de la base de datos";
 $pgv_lang["DBUSER_help"]		= "~#pgv_lang[DBUSER]#~<br /><br />El nombre de usuario de la base de datos requerido para conectar con la base de datos.  Este ajuste se ignora si está utilizando una base de datos SQLite.<br />";
 $pgv_lang["DBPASS"]			= "Contraseña para la base de datos";

@@ -174,6 +174,7 @@ $factarray["FAMC:MARR:PLAC"] = "Lugar de matrimonio de los padres";
 $factarray["FAMC:HUSB:OCCU"] = "Ocupación del padre";
 $factarray[":BIRT:PLAC"] = "Lugar de nacimiento";
 $factarray["FAMS:MARR:PLAC"] = "Lugar de matrimonio";
+$factarray["FAMS:MARR:DATE"] = "Fecha de matrimonio";
 $factarray["FAMS:SPOUSE:DEAT:PLAC"] = "Lugar de defunción del cónyuge";
 $factarray["FAMC:HUSB:GIVN"] = "Nombre de pila del padre";
 $factarray["FAMS:SPOUSE:BIRT:PLAC"] = "Lugar de nacimiento del cónyuge";
