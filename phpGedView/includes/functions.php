@@ -2170,7 +2170,7 @@ function compare_date($a, $b) {
 	}
 	if (!empty($adate) && !empty($bdate)){
 		$adate=new GedcomDate($adate);
-		$bdate=new GedcomDate($adate);
+		$bdate=new GedcomDate($bdate);
 		$cmp=GedcomDate::Compare($adate, $bdate);
 		if ($cmp!=0)
 			return $cmp;
