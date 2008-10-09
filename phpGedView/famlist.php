@@ -294,7 +294,7 @@ if ($showList) {
 				// Check for husband name
 				list($husb_surn,$husb_givn)=explode(',', $husb_name);
 				$givn_alpha=get_first_letter($husb_givn);
-				if (strpos($husb_name, $surname.',')===0 &&
+				if ((!$surname || strpos($husb_name, $surname.',')===0) &&
 					(!$alpha   || $alpha==get_first_letter($husb_name))) {
 					$givn_initials[$givn_alpha]=$givn_alpha;
 					if (!$falpha || $falpha==$givn_alpha) {
@@ -306,7 +306,7 @@ if ($showList) {
 				// Check for wife name
 				list($wife_surn,$wife_givn)=explode(',', $wife_name);
 				$givn_alpha=get_first_letter($wife_givn);
-				if (strpos($wife_name, $surname.',')===0 &&
+				if (($surname || strpos($wife_name, $surname.',')===0) &&
 					(!$alpha   || $alpha==get_first_letter($wife_name))) {
 					$givn_initials[$givn_alpha]=$givn_alpha;
 					if (!$falpha || $falpha==$givn_alpha) {
