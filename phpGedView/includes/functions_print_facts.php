@@ -1550,7 +1550,11 @@ function print_main_media_row($rtype, $rowm, $pid) {
 			//LBox --------  Addition for Lightbox Album --------------------------------------------
 				// if Lightbox installed
 				if (file_exists("modules/lightbox/album.php") ) {
-					include('modules/lightbox/lb_config.php');
+					if (file_exists("modules/lightbox/lb_config.php") ) {
+						include('modules/lightbox/lb_config.php');
+					}else{
+						include('modules/lightbox/lb_defaultconfig.php');
+					}
 					// Check Filetype of media item ( Regular, URL, or Not supported by lightbox at the moment )
 					// Regular ----------------------------------
 					if (eregi("\.jpg" ,$rowm['m_file']) ||

@@ -10,6 +10,7 @@
 
 
 Version 4.1.6
+ - Fixed: [ 2145398 ] [ 2148349 ] Incorrect call to lb_config.php if it does not exist. (windmillway)
  - Fixed: [ 2046123 ] 4.1.5 ... link to gedrecord.php (fisharebest)
  - Fixed: [ 2044219 ] Editing records - Case sensitivity of PID (fisharebest)
  - Fixed: [ 2131257 ] 4.1.5rel places list misreads gedcom notes (fisharebest)
