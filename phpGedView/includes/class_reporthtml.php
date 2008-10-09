@@ -31,9 +31,9 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
-define('PGV_REPORTHTML_PHP', '');
+define('PGV_CLASS_REPORTHTML_PHP', '');
 
-require_once("includes/reportbase.php");
+require_once 'includes/class_reportbase.php';
 
 /**
  * main PGV Report Class
