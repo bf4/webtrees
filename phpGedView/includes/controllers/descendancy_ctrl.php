@@ -36,7 +36,6 @@ require_once 'includes/functions_charts.php';
 
 loadLangFile("pgv_confighelp");
 
-require_once 'includes/menu.php';
 require_once 'includes/class_person.php';
 
 $indifacts = array();			 // -- array to store the fact records in for sorting and displaying

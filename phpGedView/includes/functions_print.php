@@ -34,7 +34,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 define('PGV_FUNCTIONS_PRINT_PHP', '');
 
 require_once 'includes/functions_charts.php';
-require_once 'includes/menu.php';
+require_once 'includes/class_menubar.php';
 
 /**
  * print the information for an individual chart box
@@ -1481,7 +1481,6 @@ function print_help_index($help){
  * @param array $menu the menuitems array to print
  */
 function print_menu($menu, $parentmenu="") {
-	include_once 'includes/menu.php';
 	$conv = array(
 		'label'=>'label',
 		'labelpos'=>'labelpos',
