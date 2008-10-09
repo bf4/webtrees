@@ -81,6 +81,11 @@ class PedigreeControllerRoot extends BaseController {
 		$this->talloffset=safe_GET('talloffset', array('0', '1'), $PEDIGREE_LAYOUT);
 		$this->PEDIGREE_GENERATIONS=safe_GET_integer('PEDIGREE_GENERATIONS', 2, $MAX_PEDIGREE_GENERATIONS, $DEFAULT_PEDIGREE_GENERATIONS);
 
+		// TODO: some library functions expect this as a global.
+		// Passing a function parameter would be much better.
+		global $PEDIGREE_GENERATIONS;
+		$PEDIGREE_GENERATIONS=$this->PEDIGREE_GENERATIONS;
+
 		// This is passed as a global.  A parameter would be better...
 		$this->show_full = ($this->show_full) ? 1 : 0;		// Make SURE this is an integer
 		$this->talloffset = ($this->talloffset) ? 1 : 0;
@@ -232,7 +237,7 @@ class PedigreeControllerRoot extends BaseController {
 	}
 
 	function adjust_subtree($index, $diff) {
-		global $offsetarray, $treeid, $PEDIGREE_GENERATIONS, $log2, $talloffset,$boxspacing, $mdiff, $SHOW_EMPTY_BOXES;
+		global $offsetarray, $treeid, $log2, $talloffset,$boxspacing, $mdiff, $SHOW_EMPTY_BOXES;
 		$f = ($index*2)+1; //-- father index
 		$m = $f+1; //-- mother index
 
@@ -244,7 +249,7 @@ class PedigreeControllerRoot extends BaseController {
 	}
 
 	function collapse_tree($index, $curgen, $diff) {
-		global $offsetarray, $treeid, $PEDIGREE_GENERATIONS, $log2, $talloffset,$boxspacing, $mdiff, $minyoffset;
+		global $offsetarray, $treeid, $log2, $talloffset,$boxspacing, $mdiff, $minyoffset;
 
 		//print "$index:$curgen:$diff<br />\n";
 		$f = ($index*2)+1; //-- father index
@@ -252,8 +257,8 @@ class PedigreeControllerRoot extends BaseController {
 		if (empty($treeid[$index])) {
 			$pgen=$curgen;
 			$genoffset=0;
-			while($pgen<=$PEDIGREE_GENERATIONS) {
-				$genoffset += pow(2, ($PEDIGREE_GENERATIONS-$pgen));
+			while($pgen<=$this->PEDIGREE_GENERATIONS) {
+				$genoffset += pow(2, ($this->PEDIGREE_GENERATIONS-$pgen));
 				$pgen++;
 			}
 			if ($talloffset==1) $diff+=.5*$genoffset;
@@ -261,19 +266,19 @@ class PedigreeControllerRoot extends BaseController {
 			if (isset($offsetarray[$index]["y"])) $offsetarray[$index]["y"]-=($boxspacing*$diff)/2;
 			return $diff;
 		}
-		if ($curgen==$PEDIGREE_GENERATIONS) {
+		if ($curgen==$this->PEDIGREE_GENERATIONS) {
 			$offsetarray[$index]["y"] -= $boxspacing*$diff;
 			//print "UP $index BY $diff<br />\n";
 			return $diff;
 		}
 		$odiff=$diff;
 		$fdiff = collapse_tree($f, $curgen+1, $diff);
-		if (($curgen<($PEDIGREE_GENERATIONS-1))||($index%2==1)) $diff=$fdiff;
+		if (($curgen<($this->PEDIGREE_GENERATIONS-1))||($index%2==1)) $diff=$fdiff;
 		if (isset($offsetarray[$index]["y"])) $offsetarray[$index]["y"] -= $boxspacing*$diff;
 		//print "UP $index BY $diff<br />\n";
 		$mdiff = collapse_tree($m, $curgen+1, $diff);
 		$zdiff = $mdiff - $fdiff;
-		if (($zdiff>0)&&($curgen<$PEDIGREE_GENERATIONS-2)) {
+		if (($zdiff>0)&&($curgen<$this->PEDIGREE_GENERATIONS-2)) {
 			$offsetarray[$index]["y"] -= $boxspacing*$zdiff/2;
 			//print "UP $index BY ".($zdiff/2)."<br />\n";
 			if ((empty($treeid[$m]))&&(!empty($treeid[$f]))) adjust_subtree($f, -1*($boxspacing*$zdiff/4));
