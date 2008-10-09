@@ -34,9 +34,9 @@
  *
  * Please note:
  * This menu is NEVER visible when a Search robot is accessing the site.  This is controlled by
- * "includes/menu.php".
+ * "includes/class_menubar.php".
  *
- * Use the code in "includes/menu.php" as a guide to how valid menus and sub-menus should be
+ * Use the code in "includes/class_menubar.php" as a guide to how valid menus and sub-menus should be
  * constructed.
  */
  /*

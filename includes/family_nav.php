@@ -518,7 +518,6 @@ if (file_exists('modules/googlemap/defaultconfig.php')) {
 
 // ==================================================================
 require_once 'includes/functions_charts.php';
-require_once 'includes/menu.php';
 /**
  * print the information for an individual chart box
  *

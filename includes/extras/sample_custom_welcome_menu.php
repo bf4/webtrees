@@ -31,7 +31,7 @@
  * be valid.  You can remove the extra comments but, for copyright reasons, the first comment
  * block at the top of this file should be retained.
  *
- * Use the code in "includes/menu.php" as a guide to how valid sub-menus should be constructed.
+ * Use the code in "includes/menubar.php" as a guide to how valid sub-menus should be constructed.
  */
  /*
  * Explanation of the '$submenu = new Menu("whatever 1", "whatever 2")' line:
