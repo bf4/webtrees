@@ -10,6 +10,7 @@
 
 
 Version 4.1.6
+ - Fixed: [ 2044219 ] Editing records - Case sensitivity of PID (fisharebest)
  - Fixed: [ 2131257 ] 4.1.5rel places list misreads gedcom notes (fisharebest)
  - Fixed: [ 2025978 ] Changes Report (SVN 3591) (fisharebest)
  - Fixed: [ 2125739 ] 3913 Individual list (fisharebest)
