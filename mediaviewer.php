@@ -150,7 +150,11 @@ loadLangFile("lightbox:lang");
 								
 							// Else If url filetype (Lightbox)
 							}elseif ( file_exists("modules/lightbox/album.php") && ( eregi("\http", $filename) ) ) {
-								include ('modules/lightbox/lb_config.php');
+								if (file_exists("modules/lightbox/lb_config.php") ) {
+									include('modules/lightbox/lb_config.php');
+								}else{
+									include('modules/lightbox/lb_defaultconfig.php');
+								}
 								print "<a 
 									href=\"" . $filename . "\" 
 									rel='clearbox(" . $LB_URL_WIDTH . "," . $LB_URL_HEIGHT . ",click)' rev=\"" . $controller->pid . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($controller->mediaobject->getFullName(),ENT_COMPAT,'UTF-8')) . "\">" . "\n";
