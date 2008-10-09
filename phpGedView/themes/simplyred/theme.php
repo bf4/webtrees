@@ -55,6 +55,9 @@ $PGV_IMAGES["pedigree"]["large"] = "pedigree.gif";
 $PGV_IMAGES["reports"]["large"] = "reports.gif";
 $PGV_IMAGES["sfamily"]["large"] = "sfamily.gif";
 $PGV_IMAGES["source"]["large"] = "source.gif";
+$PGV_IMAGES["sex"]["large"] = "male.gif";
+$PGV_IMAGES["sexf"]["large"] = "female.gif";
+$PGV_IMAGES["sexn"]["large"] = "fe_male.gif";
 
 //- PGV small icons
 $PGV_IMAGES["admin"]["small"] = "small/admin.gif";

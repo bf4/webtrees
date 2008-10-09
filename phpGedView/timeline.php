@@ -258,7 +258,6 @@ $controller->checkPrivacy();
 	if ($count>5) $half = ceil($count/2);
 	if (!$controller->isPrintPreview()) $half++;
 	foreach($controller->people as $p=>$indi) {
-		$sex = $indi->getSex();
 		$pid = $indi->getXref();
 		$col = $p % 6;
 		if ($i==$half) print "</tr><tr>";
@@ -266,27 +265,8 @@ $controller->checkPrivacy();
 		?>
 		<td class="person<?php print $col; ?>" style="padding: 5px;">
 		<?php
-		if ((!is_null($indi))&&($indi->canDisplayDetails())) {
-			switch($sex) {
-			case "M":
-				$seximage = $PGV_IMAGE_DIR."/".$PGV_IMAGES["sex"]["small"];
-				?>
-				<img src="<?php print $seximage; ?>" title="<?php print $pgv_lang["male"]; ?>" alt="<?php print $pgv_lang["male"]; ?>" vspace="0" hspace="0" class="gender_image" border="0" />
-				<?php
-				break;
-			case "F":
-				$seximage = $PGV_IMAGE_DIR."/".$PGV_IMAGES["sexf"]["small"];
-				?>
-				<img src="<?php print $seximage; ?>" title="<?php print $pgv_lang["female"]; ?>" alt="<?php print $pgv_lang["female"]; ?>" vspace="0" hspace="0" class="gender_image" border="0" />
-				<?php
-				break;
-			default:
-				$seximage = $PGV_IMAGE_DIR."/".$PGV_IMAGES["sexn"]["small"];
-				?>
-				<img src="<?php print $seximage; ?>" title="<?php print $pgv_lang["sex"]." ".$pgv_lang["unknown"]; ?>" alt="<?php print $pgv_lang["sex"]." ".$pgv_lang["unknown"]; ?>" vspace="0" hspace="0" class="gender_image" border="0" />
-				<?php
-				break;
-			}
+		if ($indi && $indi->canDisplayDetails()) {
+			echo $indi->getSexImage('large', '', $pgv_lang['male']);
 		?>
  			<a href="individual.php?pid=<?php print $pid; ?>">&nbsp;<?php print PrintReady($indi->getFullName()); ?><br />
  			<?php $addname = $indi->getAddName(); if (strlen($addname) > 0) print PrintReady($addname); ?>

@@ -421,8 +421,8 @@ function print_family_children($famid, $childid = "", $sosa = 0, $label="", $per
 	   print_help_link("add_child_help", "qm", "add_child_to_family");
 		print "<a href=\"javascript:;\" onclick=\"return addnewchild('$famid','');\">" . $pgv_lang["add_child_to_family"] . "</a>";
 		print "<span style='white-space:nowrap;'>";
-		print " <a href=\"javascript:;\" onclick=\"return addnewchild('$famid','M');\">[<img src=\"$PGV_IMAGE_DIR/" . $PGV_IMAGES["sex"]["small"] . "\" title=\"" . $pgv_lang["son"] . "\" alt=\"" . $pgv_lang["son"] . "\" class=\"gender_image\" />]</a>";
-		print " <a href=\"javascript:;\" onclick=\"return addnewchild('$famid','F');\">[<img src=\"$PGV_IMAGE_DIR/" . $PGV_IMAGES["sexf"]["small"] . "\" title=\"" . $pgv_lang["daughter"] . "\" alt=\"" . $pgv_lang["daughter"] . "\" class=\"gender_image\" />]</a>";
+		print " <a href=\"javascript:;\" onclick=\"return addnewchild('$famid','M');\">[".Person::sexImage('M', '', $pgv_lang['son'     ])."]</a>";
+		print " <a href=\"javascript:;\" onclick=\"return addnewchild('$famid','F');\">[".Person::sexImage('F', '', $pgv_lang['daughter'])."]</a>";
 		print "</span>";
    }
 }

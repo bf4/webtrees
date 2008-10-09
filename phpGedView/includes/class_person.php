@@ -511,15 +511,31 @@ class Person extends GedcomRecord {
 	 * NOTE: It would have been nice if we'd called the images sexM, sexF and sexU
 	 * @return string 	<img ... />
 	 */
-	function getSexImage($style='') {
+	function getSexImage($size='small', $style='', $title='') {
+		return self::sexImage($this->getSex(), $size, $style, $title);
+	}
+
+	static function sexImage($sex, $size='small', $style='', $title='') {
 		global $PGV_IMAGE_DIR, $PGV_IMAGES;
-		switch ($this->getSex()) {
-			case 'M':
-				return '<img src="'.$PGV_IMAGE_DIR.'/'.$PGV_IMAGES['sex']['small'].'" class="gender_image" alt="" style="'.$style.'" />';
-			case 'F':
-				return '<img src="'.$PGV_IMAGE_DIR.'/'.$PGV_IMAGES['sexf']['small'].'" class="gender_image" alt="" style="'.$style.'" />';
-			default:
-				return '<img src="'.$PGV_IMAGE_DIR.'/'.$PGV_IMAGES['sexn']['small'].'" class="gender_image" alt="" style="'.$style.'" />';
+		switch ($sex) {
+		case 'M':
+			if (isset($PGV_IMAGES['sex'][$size])) {
+				return "<img src=\"{$PGV_IMAGE_DIR}/{$PGV_IMAGES['sex'][$size]}\" class=\"gender_image\" style=\"{$style}\" alt=\"{$title}\" title=\"{$title}\" />";
+			} else {
+				return '<span style="size:'.$size.'">'.PGV_UTF8_MALE.'</span>';
+			}
+		case 'F':
+			if (isset($PGV_IMAGES['sex'][$size])) {
+				return "<img src=\"{$PGV_IMAGE_DIR}/{$PGV_IMAGES['sexf'][$size]}\" class=\"gender_image\" style=\"{$style}\" alt=\"{$title}\" title=\"{$title}\" />";
+			} else {
+				return '<span style="size:'.$size.'">'.PGV_UTF8_FEMALE.'</span>';
+			}
+		default:
+			if (isset($PGV_IMAGES['sex'][$size])) {
+				return "<img src=\"{$PGV_IMAGE_DIR}/{$PGV_IMAGES['sexn'][$size]}\" class=\"gender_image\" style=\"{$style}\" alt=\"{$title}\" title=\"{$title}\" />";
+			} else {
+				return '<span style="size:'.$size.'">?</span>';
+			}
 		}
 	}
 

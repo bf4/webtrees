@@ -52,7 +52,6 @@ function print_indi_table($datalist, $legend="", $option="") {
 	$name_subtags = array("", "_AKA", "_HEB", "ROMN");
 	if ($SHOW_MARRIED_NAMES) $name_subtags[] = "_MARNM";
 	require_once 'js/sorttable.js.htm';
-	require_once 'includes/class_person.php';
 	//-- init chart data
 	for ($age=0; $age<=$MAX_ALIVE_AGE; $age++) $deat_by_age[$age]="";
 	for ($year=1550; $year<2030; $year+=10) $birt_by_decade[$year]="";
@@ -68,15 +67,12 @@ function print_indi_table($datalist, $legend="", $option="") {
 	$table_id = "ID".floor(microtime()*1000000); // sorttable requires a unique ID
 	echo '<div id="'.$table_id.'-table" class="center">';
 	//-- filter buttons
-	$personM = new Person("1 SEX M");
-	$personF = new Person("1 SEX F");
-	$personU = new Person("1 SEX U");
 	echo "<button type=\"button\" class=\"SEX_M\" title=\"".$pgv_lang["button_SEX_M"]."\" >";
-	echo $personM->getSexImage()."&nbsp;</button> ";
+	echo Person::sexImage('M', 'large')."&nbsp;</button> ";
 	echo "<button type=\"button\" class=\"SEX_F\" title=\"".$pgv_lang["button_SEX_F"]."\" >";
-	echo $personF->getSexImage()."&nbsp;</button> ";
+	echo Person::sexImage('F', 'large')."&nbsp;</button> ";
 	echo "<button type=\"button\" class=\"SEX_U\" title=\"".$pgv_lang["button_SEX_U"]."\" >";
-	echo $personU->getSexImage()."&nbsp;</button> ";
+	echo Person::sexImage('U', 'large')."&nbsp;</button> ";
 	echo " <input type=\"text\" size=\"4\" id=\"aliveyear\" value=\"".date('Y')."\" /> ";
 	echo "<button type=\"button\" class=\"alive_in_year\" title=\"".$pgv_lang["button_alive_in_year"]."\" >";
 	echo $pgv_lang["alive_in_year"]."</button> ";
