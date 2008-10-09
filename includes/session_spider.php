@@ -302,6 +302,7 @@ $worms = array(
 	'/includes/',
 	'config',
 	'clippings',
+	'gedrecord.php'
 	);
 	if (!empty($SEARCH_SPIDER)) {
 		foreach($bots_not_allowed as $place) {
