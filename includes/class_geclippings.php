@@ -27,9 +27,10 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
-define('PGV_GECLIPPINGS_PHP', '');
+define('PGV_CLASS_GECLIPPINGS_PHP', '');
 
-require_once("includes/GrampsExport.php");
+require_once 'includes/class_grampsexport.php';
+
 class GEClippings extends GrampsExport {
 /**
  * This function creates a family relation for a person and appends the relation

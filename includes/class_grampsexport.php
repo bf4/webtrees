@@ -33,9 +33,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
-define('PGV_GRAMPSEXPORT_PHP', '');
-
-global $LANGUAGE;
+define('PGV_CLASS_GRAMPSEXPORT_PHP', '');
 
  /*
   * This is an abstract class and should only be used through its subclasses, all

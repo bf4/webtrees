@@ -31,6 +31,8 @@ if (!defined('PGV_PHPGEDVIEW')) {
 
 define('PGV_FUNCTIONS_EXPORT_PHP', '');
 
+require_once 'includes/class_gedownloadgedcom.php';
+
 /*
  * Create a header for a (newly-created or already-imported) gedcom file.
  */
@@ -239,7 +241,6 @@ function print_gramps($privatize_export, $privatize_export_level, $convert, $rem
 	global $TBLPREFIX;
 	global $CRLF;
 
-	require_once ("includes/GEDownloadGedcom.php");
 	$geDownloadGedcom = new GEDownloadGedcom();
 	$geDownloadGedcom->begin_xml();
 
