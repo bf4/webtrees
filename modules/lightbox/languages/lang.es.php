@@ -102,8 +102,8 @@ $pgv_lang["lb_help"] 		 = "Ayuda de Álbum";
 $pgv_lang["lightbox"]		 = "Álbum";
 $pgv_lang["showmenu"] 		 = "Mostrar menú:";
 
-$pgv_lang["TYPE__other"] 	 = "Otro";
-$pgv_lang["TYPE__footnotes"] = "Notas al pie";
+// $pgv_lang["TYPE__other"] 			= "Other";
+$pgv_lang["TYPE__footnotes"]		= "Notas al pie";
 
 $pgv_lang["ROW_TYPE__photo"] 		= $pgv_lang["TYPE__photo"];
 $pgv_lang["ROW_TYPE__document"] 	= $pgv_lang["TYPE__document"];
@@ -111,10 +111,11 @@ $pgv_lang["ROW_TYPE__census"] 		= $factarray["CENS"];
 $pgv_lang["ROW_TYPE__other"] 		= $pgv_lang["TYPE__other"];
 $pgv_lang["ROW_TYPE__footnotes"]	= $pgv_lang["TYPE__footnotes"];
 
-$pgv_lang["census_text"]  	 = "\"Estas imágenes del censo se han obtenido de \"Archivos Nacionales\", custodio de los registros originales, ";
-$pgv_lang["census_text"] 	.= "and appear here with their approval on the condition that no commercial use is made of them without permission." . "\n" ;
-$pgv_lang["census_text"] 	.= "Requests for commercial publication of these or other UK census images appearing on this website should be directed to: ";
-$pgv_lang["census_text"] 	.= "Image Library, The National Archives, Kew, Surrey, TW9 4DU, United Kingdom.\"" . "\n" ;
+ $pgv_lang["census_text"]  	 = "\"UK census images have been obtained from \"The National Archives\", the custodian of the original records, ";
+ $pgv_lang["census_text"] 	.= "and appear here with their approval on the condition that no commercial use is made of them without permission." . "\n" ;
+ $pgv_lang["census_text"] 	.= "Requests for commercial publication of these or other UK census images appearing on this website should be directed to: ";
+ $pgv_lang["census_text"] 	.= "Image Library, The National Archives, Kew, Surrey, TW9 4DU, United Kingdom.\"" . "\n" ;
+// $pgv_lang["census_text"]  	 = "";
 
 $pgv_lang["lb_edit_details"] 	= "Editar detalles";
 $pgv_lang["lb_view_details"] 	= "Ver detalles";
