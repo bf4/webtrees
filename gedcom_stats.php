@@ -106,12 +106,12 @@ function print_gedcom_stats($block = true, $config="", $side, $index) {
 			$content .= $text;
 		}
 	}
-	$ct=preg_match("/1 DATE (.+)/", $head, $match);
-	if ($ct>0) {
-		$date = new GedcomDate($match[1]);
-		if (empty($software)) $text = str_replace(array("#DATE#", "#CREATED_DATE#"), $date->Display(false), $pgv_lang["gedcom_created_on"]);
-		else $text = $text = str_replace(array("#DATE#", "#CREATED_DATE#"), $date->Display(false), $pgv_lang["gedcom_created_on2"]);
-		$content .= $text;
+	if (preg_match("/1 DATE (.+)/", $head, $match)) {
+		if (empty($software)) {
+			$content.=str_replace(array("#DATE#", "#CREATED_DATE#"), $stats->gedcomDate(), $pgv_lang["gedcom_created_on"]);
+		} else {
+			$content.=str_replace(array("#DATE#", "#CREATED_DATE#"), $stats->gedcomDate(), $pgv_lang["gedcom_created_on2"]);
+		}
 	}
 
 	$content .= "<br />\n";
