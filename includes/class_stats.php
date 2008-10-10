@@ -306,12 +306,13 @@ class stats {
 		return $head[1];
 	}
 
-	static function gedcomDate()
-	{
+	static function gedcomDate() {
+		global $DATE_FORMAT;
+
 		$head=find_other_record('HEAD');
 		if (preg_match("/1 DATE (.+)/", $head, $match)) {
 			$date=new GedcomDate($match[1]);
-			return $date->Display(false);
+			return $date->Display(false, $DATE_FORMAT); // Override $PUBLIC_DATE_FORMAT
 		}
 		return '';
 	}

@@ -29,10 +29,10 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
-global $SEARCH_SPIDER, $TEXT_DIRECTION;
+global $SEARCH_SPIDER, $TEXT_DIRECTION, $DATE_FORMAT;
 
 $date=new GedcomDate(date('j M Y', client_time()));
-$displayDate = $date->Display(false);
+$displayDate = $date->Display(false, $DATE_FORMAT); // Override $PUBLIC_DATE_FORMAT
 
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
