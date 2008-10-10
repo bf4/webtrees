@@ -1120,18 +1120,17 @@ class GedcomDate {
 	function Display($url=false, $date_fmt=null, $cal_fmts=null) {
 		global $pgv_lang, $lang_short_cut, $LANGUAGE, $TEXT_DIRECTION, $DATE_FORMAT, $CALENDAR_FORMAT;
 
+		// EXPERIMENTAL CODE for [ 1050249 ] Privacy: year instead of complete date in public views
+		// TODO If feedback is positive, create a GUI option to edit it.
+		global $PUBLIC_DATE_FORMAT;
+		if (!empty($PUBLIC_DATE_FORMAT) && is_null($date_fmt) && !PGV_USER_ID)
+			$date_fmt=$PUBLIC_DATE_FORMAT;
+
 		// Convert dates to given calendars and given formats
 		if (!$date_fmt)
 			$date_fmt=$DATE_FORMAT;
 		if (is_null($cal_fmts))
 			$cal_fmts=explode('_and_', $CALENDAR_FORMAT);
-
-		// EXPERIMENTAL CODE for [ 1050249 ] Privacy: year instead of complete date in public views
-		// TODO If feedback is positive, create a GUI option to edit it.
-		global $PUBLIC_DATE_FORMAT;
-		
-		if (!empty($PUBLIC_DATE_FORMAT) && $date_fmt==$DATE_FORMAT && !PGV_USER_ID)
-			$date_fmt=$PUBLIC_DATE_FORMAT;
 
 		// Allow special processing for different languages
 		$func="date_localisation_{$lang_short_cut[$LANGUAGE]}";
