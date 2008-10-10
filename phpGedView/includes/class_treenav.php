@@ -502,7 +502,7 @@ class TreeNav {
 							$name = $person->getFullName(); 
 //							if ($SHOW_ID_NUMBERS) $name.=" (".$person->getXref().")"; 
 							
-							print PrintReady($person->getSexImage($style)." ".$name); 
+							print PrintReady($person->getSexImage('small', $style)." ".$name); 
 						?><br />
 						<?php 
 						$fams = $person->getSpouseFamilies();
@@ -511,7 +511,7 @@ class TreeNav {
 							if (!is_null($spouse)) {
 								$name = $spouse->getFullName(); 
 //								if ($SHOW_ID_NUMBERS) $name.=" (".$spouse->getXref().")"; 
-								print PrintReady("&nbsp;&nbsp;".$spouse->getSexImage($style)." ".$name); 
+								print PrintReady("&nbsp;&nbsp;".$spouse->getSexImage('small', $style)." ".$name); 
 								print "<br />\n";
 							} else print "<br />\n"; 
 						}
@@ -639,11 +639,11 @@ class TreeNav {
 						<?php 
 							$name = $person->getFullName(); 
 //							if ($SHOW_ID_NUMBERS) $name.=" (".$person->getXref().")"; 
-							print PrintReady($person->getSexImage($style)." ".$name); 
+							print PrintReady($person->getSexImage('small', $style)." ".$name); 
 						?><br />
 						<?php if (!is_null($spouse)) {$name = $spouse->getFullName(); 
 //						if ($SHOW_ID_NUMBERS) $name.=" (".$spouse->getXref().")";
-						print PrintReady($spouse->getSexImage($style)." ".$name); 
+						print PrintReady($spouse->getSexImage('small', $style)." ".$name); 
 						} else print "<br />\n"; ?>
 						
 						</div>
