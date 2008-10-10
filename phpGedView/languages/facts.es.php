@@ -187,10 +187,15 @@ $factarray["FAMS:CHIL:BIRT:PLAC"] = "Lugar de nacimiento del hijo/a";
 
 // These facts are all colon delimited
 $factarray["BIRT:PLAC"] = "Lugar de nacimiento";
+$factarray["BIRT:DATE"] = "Fecha de nacimiento";
 $factarray["DEAT:PLAC"] = "Lugar de defunción";
+$factarray["DEAT:DATE"] = "Fecha de defunción";
 $factarray["CHR:PLAC"] = "Lugar del bautismo";
+$factarray["CHR:DATE"] = "Fecha de bautismo";
 $factarray["BAPM:PLAC"] = "Lugar del bautismo adulto";
+$factarray["BAPM:DATE"] = "Fecha del bautismo adulto";
 $factarray["BURI:PLAC"] = "Lugar del entierro";
+$factarray["BURI:DATE"] = "Fecha del entierro";
 $factarray["MARR:PLAC"] = "Lugar del matrimonio";
 
 // These facts are specific to GEDCOM exports from Family Tree Maker
