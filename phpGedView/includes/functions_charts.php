@@ -421,8 +421,8 @@ function print_family_children($famid, $childid = "", $sosa = 0, $label="", $per
 	   print_help_link("add_child_help", "qm", "add_child_to_family");
 		print "<a href=\"javascript:;\" onclick=\"return addnewchild('$famid','');\">" . $pgv_lang["add_child_to_family"] . "</a>";
 		print "<span style='white-space:nowrap;'>";
-		print " <a href=\"javascript:;\" onclick=\"return addnewchild('$famid','M');\">[".Person::sexImage('M', '', $pgv_lang['son'     ])."]</a>";
-		print " <a href=\"javascript:;\" onclick=\"return addnewchild('$famid','F');\">[".Person::sexImage('F', '', $pgv_lang['daughter'])."]</a>";
+		print " <a href=\"javascript:;\" onclick=\"return addnewchild('$famid','M');\">[".Person::sexImage('M', 'small', $pgv_lang['son'     ])."]</a>";
+		print " <a href=\"javascript:;\" onclick=\"return addnewchild('$famid','F');\">[".Person::sexImage('F', 'small', $pgv_lang['daughter'])."]</a>";
 		print "</span>";
    }
 }
