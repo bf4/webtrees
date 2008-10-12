@@ -135,14 +135,3 @@ $pgv_lang["lb_view_source_tip"] 		= "Näytä lähde: ";
 $pgv_lang["lb_view_details_tip"] 		= "Näytä median tiedot: ";
 
 ?>
-lang["lb_slide_show"] 		= "Diaesitys";
-$pgv_lang["turn_edit_ON"] 			= "Avaa editiomuoto"; 
-$pgv_lang["turn_edit_OFF"] 		= "Sulje editiomuoto"; 
-
-$pgv_lang["lb_source_avail"] 		= "Lähdetietoa olemassa - näpäytä tästä.";
-
-$pgv_lang["lb_private"] 			= "Kuva linkitetty <br />yksityiseen henkilöön";
-$pgv_lang["lb_view_source_tip"] 		= "Näytä lähde: ";
-$pgv_lang["lb_view_details_tip"] 		= "Näytä median tiedot: ";
-
-?>
