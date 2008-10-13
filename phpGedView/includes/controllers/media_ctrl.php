@@ -36,6 +36,7 @@ define('PGV_MEDIA_CTRL_PHP', '');
 
 require_once 'includes/controllers/individual_ctrl.php';
 require_once 'includes/class_media.php';
+require_once 'includes/functions_import.php';
 
 class MediaControllerRoot extends IndividualController{
 
@@ -151,7 +152,6 @@ class MediaControllerRoot extends IndividualController{
 	function acceptChanges() {
 		global $GEDCOM, $medialist;
 		if (!PGV_USER_CAN_ACCEPT) return;
-		require_once("includes/functions_import.php");
 		if (accept_changes($this->pid."_".$GEDCOM)) {
 			$this->show_changes=false;
 			$this->accept_success=true;

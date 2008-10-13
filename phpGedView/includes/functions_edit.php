@@ -32,6 +32,8 @@ if (!defined('PGV_PHPGEDVIEW')) {
 
 define('PGV_FUNCTIONS_EDIT_PHP', '');
 
+require_once 'functions_import.php';
+
 /**
  * The DEBUG variable allows you to turn on debugging
  * which will write all communication output to the pgv log files
@@ -200,7 +202,6 @@ function replace_gedrec($gid, $gedrec, $chan=true, $linkpid='') {
 			$pgv_changes[$gid."_".$GEDCOM][] = $change;
 
 		if (PGV_USER_AUTO_ACCEPT) {
-			require_once("includes/functions_import.php");
 			accept_changes($gid."_".$GEDCOM);
 		}
 		else {
@@ -246,7 +247,6 @@ function append_gedrec($gedrec, $chan=true, $linkpid='') {
 		$pgv_changes[$xref."_".$GEDCOM][] = $change;
 
 		if (PGV_USER_AUTO_ACCEPT) {
-			require_once("includes/functions_import.php");
 			accept_changes($xref."_".$GEDCOM);
 		}
 		else {
@@ -291,7 +291,6 @@ function delete_gedrec($gid, $linkpid='') {
 		$pgv_changes[$gid."_".$GEDCOM][] = $change;
 
 	if (PGV_USER_AUTO_ACCEPT) {
-		require_once("includes/functions_import.php");
 		accept_changes($gid."_".$GEDCOM);
 	}
 	else {
@@ -1972,7 +1971,6 @@ function create_add_form($fact) {
 	else {
 		$tags[0] = $fact;
 		if ($fact=='_UID') {
-			require_once ("functions_import.php");
 			$fact.=" ".uuid();
 		}
 		add_simple_tag("1 ".$fact);

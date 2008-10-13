@@ -35,6 +35,7 @@ require_once 'includes/functions_print_facts.php';
 require_once 'includes/controllers/basecontrol.php';
 require_once 'includes/class_repository.php';
 require_once 'includes/class_menu.php';
+require_once 'includes/functions_import.php';
 
 $nonfacts = array();
 /**
@@ -141,7 +142,6 @@ class RepositoryControllerRoot extends BaseController {
 		global $GEDCOM;
 
 		if (!PGV_USER_CAN_ACCEPT) return;
-		require_once("includes/functions_import.php");
 		if (accept_changes($this->rid."_".$GEDCOM)) {
 			$this->show_changes=false;
 			$this->accept_success=true;
