@@ -399,15 +399,6 @@ class GedcomRecord {
 		return $place;
 	}
 
-	/**
-	 * get the name
-	 * This method should overridden in child sub-classes
-	 * @return string
-	 */
-	function getName() {
-		return get_gedcom_value("NAME", 1, $this->gedrec);
-	}
-
 	// Convert a name record into sortable and listable versions.  This default
 	// should be OK for simple record types.  INDI records will need to redefine it.
 	function _addName($type, $value, $gedrec) {

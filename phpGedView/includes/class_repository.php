@@ -96,14 +96,6 @@ class Repository extends GedcomRecord {
 	}
 
 	/**
-	 * get the repository name
-	 * @return string
-	 */
-	function getName() {
-		return $this->name;
-	}
-
-	/**
 	 * get repository facts array
 	 * @return array
 	 */
