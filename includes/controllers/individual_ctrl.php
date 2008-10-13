@@ -36,6 +36,7 @@ require_once 'includes/controllers/basecontrol.php';
 require_once 'includes/class_menu.php';
 require_once 'includes/class_person.php';
 require_once 'includes/class_family.php';
+require_once 'includes/functions_import.php';
 
 $indifacts = array();			 // -- array to store the fact records in for sorting and displaying
 $globalfacts = array();
@@ -284,7 +285,6 @@ class IndividualControllerRoot extends BaseController {
 	function acceptChanges() {
 		global $GEDCOM;
 		if (!PGV_USER_CAN_ACCEPT) return;
-		require_once("includes/functions_import.php");
 		if (accept_changes($this->pid."_".$GEDCOM)) {
 			$this->show_changes=false;
 			$this->accept_success=true;

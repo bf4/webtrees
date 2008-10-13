@@ -31,8 +31,9 @@ if (!defined('PGV_PHPGEDVIEW')) {
 
 define('PGV_CLASS_SERVICECLIENT_PHP', '');
 
-require_once('includes/class_gedcomrecord.php');
-include_once('includes/class_family.php');
+require_once 'includes/class_gedcomrecord.php';
+require_once 'includes/class_family.php';
+require_once 'includes/functions_import.php';
 
 class ServiceClient extends GedcomRecord {
 	var $url = "";
@@ -828,7 +829,6 @@ if ($this->DEBUG) print_r($result);
 					replace_gedrec($pid,$localrec);
 				}
 				else {
-					require_once("includes/functions_import.php");
 if ($this->DEBUG) debug_print_backtrace();
 if ($this->DEBUG) print "\r\n".__LINE__." adding record to the database ".$localrec;
 					update_record($localrec);
@@ -874,7 +874,6 @@ if ($this->DEBUG) print __LINE__."Old change date... check for updates";
 						$newgedrec .= "2 _PGVU @".$this->xref."@";
 						$localrec .= $newgedrec;
 					}
-					require_once("includes/functions_import.php");
 if ($this->DEBUG) print __LINE__."adding record to the database ".$localrec;
 					update_record($localrec);
 				}
@@ -896,7 +895,6 @@ if ($this->DEBUG) print __LINE__."adding record to the database ".$localrec;
 							replace_gedrec($pid,$localrec);
 						}
 						else {
-							require_once("includes/functions_import.php");
 if ($this->DEBUG) print __LINE__."adding record to the database ".$localrec;
 							update_record($localrec);
 						}

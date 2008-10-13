@@ -38,6 +38,7 @@ require_once 'includes/controllers/basecontrol.php';
 require_once 'includes/functions_charts.php';
 require_once 'includes/class_family.php';
 require_once 'includes/class_menu.php';
+require_once 'includes/functions_import.php';
 
 class FamilyRoot extends BaseController
 {
@@ -153,7 +154,6 @@ class FamilyRoot extends BaseController
 		{
 			if ($this->action=='accept')
 			{
-				require_once("includes/functions_import.php");
 				if (accept_changes($_REQUEST['famid'].'_'.$GEDCOM))
 				{
 					$this->show_changes = false;

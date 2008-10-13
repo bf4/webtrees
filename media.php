@@ -44,9 +44,10 @@
 
 require './config.php';
 
-require_once("includes/functions_print_lists.php");
-require_once("includes/functions_print_facts.php");
-require_once("includes/functions_edit.php");
+require_once 'includes/functions_print_lists.php';
+require_once 'includes/functions_print_facts.php';
+require_once 'includes/functions_edit.php';
+require_once 'includes/functions_import.php';
 
 if (isset($_REQUEST['DEBUG'])) $DEBUG = $_REQUEST['DEBUG'];
 else $DEBUG = false;
@@ -617,7 +618,6 @@ if (check_media_structure()) {
 						// This can't be undone through the normal "reject change",
 						// so we'll auto-accept all changes to this media object
 						// regardless of config settings
-						include_once('includes/functions_import.php');
 						accept_changes($_REQUEST['xref']."_".$GEDCOM);
 					}
 				}
@@ -1111,7 +1111,6 @@ if (check_media_structure()) {
 
 				// Record changes to the Media object
 					//-- why do we accept changes just to delete the item?
-					include_once('includes/functions_import.php');
 					accept_changes($xref."_".$GEDCOM);
 					$objerec = find_gedcom_record($xref);
 
