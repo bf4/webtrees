@@ -174,6 +174,7 @@ $factarray["FAMC:MARR:PLAC"] = "Eheort der Eltern";
 $factarray["FAMC:HUSB:OCCU"] = "Beruf des Vaters";
 $factarray[":BIRT:PLAC"] = "Geburtsort";
 $factarray["FAMS:MARR:PLAC"] = "Eheort";
+$factarray["FAMS:MARR:DATE"] = "Ehedatum";
 $factarray["FAMS:SPOUSE:DEAT:PLAC"] = "Todesort des Ehepartners";
 $factarray["FAMC:HUSB:GIVN"] = "Vornamen des Vaters";
 $factarray["FAMS:SPOUSE:BIRT:PLAC"] = "Geburtsort des Ehepartners";
@@ -187,11 +188,17 @@ $factarray["FAMS:CHIL:BIRT:PLAC"] = "Geburtsort des Kindes";
 
 // These facts are all colon delimited
 $factarray["BIRT:PLAC"] = "Geburtsort";
+$factarray["BIRT:DATE"] = "Geburtsdatum";
 $factarray["DEAT:PLAC"] = "Todesort";
+$factarray["DEAT:DATE"] = "Todesdatum";
 $factarray["CHR:PLAC"] = "Taufort";
+$factarray["CHR:DATE"] = "Taufdatum";
 $factarray["BAPM:PLAC"] = "Taufort";
+$factarray["BAPM:DATE"] = "Taufdatum";
 $factarray["BURI:PLAC"] = "Beerdigungsort";
+$factarray["BURI:DATE"] = "Beerdigungsdatum";
 $factarray["MARR:PLAC"] = "Eheort";
+$factarray["MARR:DATE"] = "Ehedatum";
 
 // These facts are specific to GEDCOM exports from Family Tree Maker
 $factarray["_MDCL"]	= "Medizinische Information";
@@ -217,6 +224,7 @@ $factarray["_MREL"]	= "Verwandtschaft zur Mutter";
 $factarray["_FREL"]	= "Verwandtschaft zum Vater";
 $factarray["_MSTAT"]	= "Familienstand seit";
 $factarray["_MEND"]	= "Heutiger Familienstand";
+$factarray["_NAMS"]	= "Namensvetter";
 
 // GEDCOM 5.5.1 related facts
 $factarray["FAX"] = "FAX";

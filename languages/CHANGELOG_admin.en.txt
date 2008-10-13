@@ -45,6 +45,10 @@ VERSION 4.1.6
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 -----------------------------------------------------------------------------------------
+*$pgv_lang["cannot_change_timelimit_instr"]			13 Oct 2008				w	GEDCOM --> database;  more than 3000 --> many
+*$pgv_lang["cannot_change_memlimit_instr"]			13 Oct 2008				w	GEDCOM --> database;  more than 3000 --> many
+*$pgv_lang["cannot_use_sax"]						13 Oct 2008				wS
+*$pgv_lang["config_saved"]							13 Oct 2008				C	(doesn't affect translations)
 +$pgv_lang["admin_users_exists"]					2 Oct 2008				A
 +$pgv_lang["upload_a_gedcom"] 						2 Oct 2008				A
 +$pgv_lang["start_entering"]						2 Oct 2008				A
