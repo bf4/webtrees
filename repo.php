@@ -139,15 +139,7 @@ if ((!$controller->isPrintPreview())&&($controller->userCanEdit())) {
 		<tr class="center"><td colspan="2">
 <?php
 
-$query = "REPO @".$controller->rid."@";
-// -- array of sources
-$mysourcelist = array();
-
-$mysourcelist = search_sources($query);
-uasort($mysourcelist, "itemsort");
-$cs=count($mysourcelist);
-
-print_sour_table($mysourcelist);
+print_sour_table($controller->repository->fetchLinkedSources());
 
 ?>
 	<br />
