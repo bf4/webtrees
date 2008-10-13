@@ -602,30 +602,30 @@ class GedcomRecord {
 
 	// Count the number of records that link to this one
 	function countLinkedIndividuals() {
-		return count_linked_indi($this->getXref(), $this->getType(), $this->ged_id);
+		return count_linked_indi($this->getXref(), $this->getType(), PGV_GED_ID);
 	}
 	function countLinkedFamilies() {
-		return count_linked_fam($this->getXref(), $this->getType(), $this->ged_id);
+		return count_linked_fam($this->getXref(), $this->getType(), PGV_GED_ID);
 	}
 	function countLinkedSources() {
-		return count_linked_sour($this->getXref(), $this->getType(), $this->ged_id);
+		return count_linked_sour($this->getXref(), $this->getType(), PGV_GED_ID);
 	}
 	function countLinkedMedia() {
-		return count_linked_obje($this->getXref(), $this->getType(), $this->ged_id);
+		return count_linked_obje($this->getXref(), $this->getType(), PGV_GED_ID);
 	}
 
 	// Fetch the records that link to this one
 	function fetchLinkedIndividuals() {
-		return fetch_linked_indi($this->getXref(), $this->getType(), $this->ged_id);
+		return fetch_linked_indi($this->getXref(), $this->getType(), PGV_GED_ID);
 	}
 	function fetchLinkedFamilies() {
-		return fetch_linked_fam($this->getXref(), $this->getType(), $this->ged_id);
+		return fetch_linked_fam($this->getXref(), $this->getType(), PGV_GED_ID);
 	}
 	function fetchLinkedSources() {
-		return count_linked_sour($this->getXref(), $this->getType(), $this->ged_id);
+		return count_linked_sour($this->getXref(), $this->getType(), PGV_GED_ID);
 	}
 	function fetchLinkedMedia() {
-		return count_linked_obje($this->getXref(), $this->getType(), $this->ged_id);
+		return count_linked_obje($this->getXref(), $this->getType(), PGV_GED_ID);
 	}
 
 	// Get all attributes (e.g. DATE or PLAC) from an event (e.g. BIRT or MARR).
