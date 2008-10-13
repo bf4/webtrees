@@ -101,6 +101,7 @@ class MediaControllerRoot extends IndividualController{
 		//   if the server did not set the environmental variables correctly for the media firewall
 		//   if media firewall is being called from outside the media directory
 		if (is_null($this->mediaobject)) $this->mediaobject = new Media("0 @"."0"."@ OBJE");
+		$this->mediaobject->ged_id=PGV_GED_ID; // This record is from a file
 
 		//-- perform the desired action
 		switch($this->action) {

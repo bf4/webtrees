@@ -72,6 +72,7 @@ class SourceControllerRoot extends BaseController {
 		if (!$sourcerec) $sourcerec = "0 @".$this->sid."@ SOUR\r\n";
 
 		$this->source = new Source($sourcerec);
+		$this->source->ged_id=PGV_GED_ID; // This record is from a file
 
 		if (!$this->source->canDisplayDetails()) {
 			print_header($pgv_lang["private"]." ".$pgv_lang["source_info"]);
