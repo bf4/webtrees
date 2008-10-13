@@ -134,10 +134,6 @@ class Media extends GedcomRecord {
 		return $this->note;
 	}
 
-	function getName() {
-		return $this->getFullName();
-	}
-
 	/**
 	 * get the thumbnail filename
 	 * @return string

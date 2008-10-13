@@ -179,14 +179,6 @@ class Source extends GedcomRecord {
 	}
 
 	/**
-	 * get the source name
-	 * @return string
-	 */
-	function getName() {
-		return $this->getFullName();
-	}
-
-	/**
 	 * get the repository of this source record
 	 * @return string
 	 */
