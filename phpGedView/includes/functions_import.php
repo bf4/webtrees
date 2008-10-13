@@ -75,10 +75,10 @@ $TRANSLATE_TAGS=array(
  * import record into database
  *
  * this function will parse the given gedcom record and add it to the database
- * @param string $indirec the raw gedcom record to parse
+ * @param string $gedrec the raw gedcom record to parse
  * @param boolean $update whether or not this is an updated record that has been accepted
  */
-function import_record($indirec, $update) {
+function import_record($gedrec, $update) {
 	global $DBCONN, $gid, $type, $TOTAL_QUERIES, $prepared_statement;
 	global $TBLPREFIX, $GEDCOM_FILE, $FILE, $pgv_lang, $USE_RIN, $gdfp, $placecache;
 	global $ALPHABET_upper, $ALPHABET_lower, $place_id, $WORD_WRAPPED_NOTES, $GEDCOMS;
@@ -88,44 +88,41 @@ function import_record($indirec, $update) {
 	$FILE = $GEDCOM;
 
 	// Clean input record
-	$indirec=preg_replace('/[\x00-\x09\x0B-\x0C\x0E-\x1F\x7F]+/', ' ', $indirec); // Illegal control characters
-	$indirec=preg_replace('/[\r\n]+/', "\n", $indirec); // Standardise line endings
+	$gedrec=preg_replace('/[\x00-\x09\x0B-\x0C\x0E-\x1F\x7F]+/', ' ', $gedrec); // Illegal control characters
+	$gedrec=preg_replace('/[\r\n]+/', "\n", $gedrec); // Standardise line endings
 	// EEK! We only need to remove repeated spaces in certain circumstances.
 	// This global replace breaks various other things, so take it out
-	//$indirec=preg_replace('/ {2,}/', ' ', $indirec); // Repeated spaces
-	$indirec=preg_replace('/(^ +| +$)/m', '', $indirec); // Leading/trailing space
-	$indirec=preg_replace('/\n{2,}/', "\n", $indirec); // Blank lines
-	if (!$update) $indirec=str_replace('@@', '@', $indirec); // Escaped @ signs (only if importing from file)
+	//$gedrec=preg_replace('/ {2,}/', ' ', $gedrec); // Repeated spaces
+	$gedrec=preg_replace('/(^ +| +$)/m', '', $gedrec); // Leading/trailing space
+	$gedrec=preg_replace('/\n{2,}/', "\n", $gedrec); // Blank lines
+	if (!$update) {
+		$gedrec=str_replace('@@', '@', $gedrec); // Escaped @ signs (only if importing from file)
+	}
 
 	// Replace TAG_FORMAL_NAME (as sometimes created by FTM) with TAG
-	if (is_array($TRANSLATE_TAGS)) {
-		foreach ($TRANSLATE_TAGS as $tag_full=>$tag_abbr)
-			$indirec=preg_replace("/^(\d+ (@[^@]+@ )?){$tag_full}\b/m", '$1'.$tag_abbr, $indirec);
+	foreach ($TRANSLATE_TAGS as $tag_full=>$tag_abbr) {
+		$gedrec=preg_replace("/^(\d+ (@[^@]+@ )?){$tag_full}\b/m", '$1'.$tag_abbr, $gedrec);
 	}
 
 	//-- import different types of records
-	$ct = preg_match("/0 @(.*)@ ([a-zA-Z_]+)/", $indirec, $match);
+	$ct = preg_match("/0 @(.*)@ ([a-zA-Z_]+)/", $gedrec, $match);
 	if ($ct > 0) {
 		$gid = $match[1];
 		$type = trim($match[2]);
 	} else {
-		$ct = preg_match("/0 (.*)/", $indirec, $match);
+		$ct = preg_match("/0 (.*)/", $gedrec, $match);
 		if ($ct > 0) {
 			$gid = trim($match[1]);
 			$type = trim($match[1]);
 		} else {
-			print $pgv_lang["invalid_gedformat"] . "<br /><pre>$indirec</pre>\n";
+			print $pgv_lang["invalid_gedformat"] . "<br /><pre>$gedrec</pre>\n";
 		}
 	}
 
 	//-- check for a _UID, if the record doesn't have one, add one
-	if ($GENERATE_UIDS && $type != "HEAD" && $type != "TRLR" && preg_match("/1 _UID /", $indirec) == 0) {
-		$indirec = trim($indirec) . "\r\n1 _UID " . uuid();
+	if ($GENERATE_UIDS && $type != "HEAD" && $type != "TRLR" && preg_match("/1 _UID /", $gedrec) == 0) {
+		$gedrec = trim($gedrec) . "\r\n1 _UID " . uuid();
 	}
-	//-- uncomment to replace existing _UID, normally we want them to stay the same
-	//	else {
-	//		$indirec = preg_replace("/1 _UID (.*)/", "1 _UID ".uuid(), $indirec);
-	//	}
 
 	//-- keep track of the max id for each type as they are imported
 	if (!isset ($MAX_IDS))
@@ -141,19 +138,17 @@ function import_record($indirec, $update) {
 			$MAX_IDS[$type] = $idnum;
 
 	//-- replace any added ltr processing codes
-	// HTML entity &rlm; is the 3-byte UTF8 character 0xE2808F
-	// HTML entity &lrm; is the 3-byte UTF8 character 0xE2808E
-	$indirec = str_replace(array(PGV_UTF8_LRM,PGV_UTF8_RLM), "", $indirec);
+	$gedrec = str_replace(array(PGV_UTF8_LRM, PGV_UTF8_RLM), "", $gedrec);
 
 	// Update the dates and places tables.
-	update_places($gid, $indirec);
-	update_dates($gid, $indirec);
+	update_places($gid, $gedrec);
+	update_dates($gid, $gedrec);
 
-	$newrec = update_media($gid, $indirec, $update);
-	if ($newrec != $indirec) {
-		$indirec = $newrec;
+	$newrec = update_media($gid, $gedrec, $update);
+	if ($newrec != $gedrec) {
+		$gedrec = $newrec;
 		//-- make sure we have the correct media id
-		$ct = preg_match("/0 @(.*)@ ([a-zA-Z_]+)/", $indirec, $match);
+		$ct = preg_match("/0 @(.*)@ ([a-zA-Z_]+)/", $gedrec, $match);
 		if ($ct > 0) {
 			$gid = $match[1];
 			$type = trim($match[2]);
@@ -162,7 +157,7 @@ function import_record($indirec, $update) {
 	}
 
 	//-- set all remote link ids
-	$ct = preg_match("/1 RFN (.*)/", $indirec, $rmatch);
+	$ct = preg_match("/1 RFN (.*)/", $gedrec, $rmatch);
 	if ($ct) {
 		$rfn = trim($rmatch[1]);
 		$sql = "INSERT INTO {$TBLPREFIX}remotelinks VALUES ('" . $DBCONN->escapeSimple($gid) . "','" . $DBCONN->escapeSimple($rfn) . "','" . $DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"]) . "')";
@@ -171,15 +166,15 @@ function import_record($indirec, $update) {
 
 	switch ($type) {
 	case 'INDI':
-		cleanup_tags_y($indirec);
-		$person=new Person($indirec);
+		cleanup_tags_y($gedrec);
+		$person=new Person($gedrec);
 		$person->dispname=true; // Just in case the admin has blocked themself from seeing names!
-		$ct = preg_match_all("/1 FAMS @(.*)@/", $indirec, $match, PREG_SET_ORDER);
+		$ct = preg_match_all("/1 FAMS @(.*)@/", $gedrec, $match, PREG_SET_ORDER);
 		$sfams = "";
 		for ($j = 0; $j < $ct; $j++) {
 			$sfams .= $match[$j][1] . ";";
 		}
-		$ct = preg_match_all("/1 FAMC @(.*)@/", $indirec, $match, PREG_SET_ORDER);
+		$ct = preg_match_all("/1 FAMC @(.*)@/", $gedrec, $match, PREG_SET_ORDER);
 		$cfams = "";
 		for ($j = 0; $j < $ct; $j++) {
 			$cfams .= $match[$j][1] . ";";
@@ -273,10 +268,10 @@ function import_record($indirec, $update) {
 
 		}
 		$indi["isdead"] = $isdead;
-		$indi["gedcom"] = $indirec;
+		$indi["gedcom"] = $gedrec;
 		$indi["gedfile"] = $GEDCOMS[$FILE]["id"];
 		if ($USE_RIN) {
-			$ct = preg_match("/1 RIN (.*)/", $indirec, $match);
+			$ct = preg_match("/1 RIN (.*)/", $gedrec, $match);
 			if ($ct > 0)
 				$rin = trim($match[1]);
 			else
@@ -285,7 +280,7 @@ function import_record($indirec, $update) {
 		} else
 			$indi["rin"] = $gid;
 
-		$isdead = (int)is_dead($indirec, '', true);
+		$isdead = (int)is_dead($gedrec, '', true);
 		list($surn, $givn)=explode(',', $names[0]['sort']);
 		$initial=get_first_letter($names[0]['sort']);
 		$sql = "INSERT INTO {$TBLPREFIX}individuals (i_id, i_file, i_rin, i_name, i_isdead, i_gedcom, i_letter, i_surname) VALUES ('".$DBCONN->escapeSimple($gid)."','".$DBCONN->escapeSimple($indi["gedfile"])."','".$DBCONN->escapeSimple($indi["rin"])."','".$DBCONN->escapeSimple($names[0]['full'])."',".$DBCONN->escapeSimple($isdead).",'".$DBCONN->escapeSimple($indi["gedcom"])."','".$DBCONN->escapeSimple($initial)."','".$DBCONN->escapeSimple($surn)."')";
@@ -301,44 +296,44 @@ function import_record($indirec, $update) {
 		}
 		break;
 	case 'FAM':
-		cleanup_tags_y($indirec);
+		cleanup_tags_y($gedrec);
 		$parents = array ();
-		$ct = preg_match("/1 HUSB @(.*)@/", $indirec, $match);
+		$ct = preg_match("/1 HUSB @(.*)@/", $gedrec, $match);
 		if ($ct > 0)
 			$parents["HUSB"] = $match[1];
 		else
 			$parents["HUSB"] = false;
-		$ct = preg_match("/1 WIFE @(.*)@/", $indirec, $match);
+		$ct = preg_match("/1 WIFE @(.*)@/", $gedrec, $match);
 		if ($ct > 0)
 			$parents["WIFE"] = $match[1];
 		else
 			$parents["WIFE"] = false;
-		$ct = preg_match_all("/\d CHIL @(.*)@/", $indirec, $match, PREG_SET_ORDER);
+		$ct = preg_match_all("/\d CHIL @(.*)@/", $gedrec, $match, PREG_SET_ORDER);
 		$chil = "";
 		for ($j = 0; $j < $ct; $j++) {
 			$chil .= $match[$j][1] . ";";
 		}
-		$nchi = get_gedcom_value("NCHI", 1, $indirec);
+		$nchi = get_gedcom_value("NCHI", 1, $gedrec);
 		if (!empty($nchi)) $ct = $nchi;
 		$fam = array ();
 		$fam["HUSB"] = $parents["HUSB"];
 		$fam["WIFE"] = $parents["WIFE"];
 		$fam["CHIL"] = $chil;
-		$fam["gedcom"] = $indirec;
+		$fam["gedcom"] = $gedrec;
 		$fam["gedfile"] = $GEDCOMS[$FILE]["id"];
 		$sql = "INSERT INTO {$TBLPREFIX}families (f_id, f_file, f_husb, f_wife, f_chil, f_gedcom, f_numchil) VALUES ('" . $DBCONN->escapeSimple($gid) . "','" . $DBCONN->escapeSimple($fam["gedfile"]) . "','" . $DBCONN->escapeSimple($fam["HUSB"]) . "','" . $DBCONN->escapeSimple($fam["WIFE"]) . "','" . $DBCONN->escapeSimple($fam["CHIL"]) . "','" . $DBCONN->escapeSimple($fam["gedcom"]) . "','" . $DBCONN->escapeSimple($ct) . "')";
 		$res = dbquery($sql);
 		break;
 	case 'SOUR':
-		$et = preg_match("/1 ABBR (.*)/", $indirec, $smatch);
+		$et = preg_match("/1 ABBR (.*)/", $gedrec, $smatch);
 		if ($et > 0)
 			$name = $smatch[1];
-		$tt = preg_match("/1 TITL (.*)/", $indirec, $smatch);
+		$tt = preg_match("/1 TITL (.*)/", $gedrec, $smatch);
 		if ($tt > 0)
 			$name = $smatch[1];
 		if (empty ($name))
 			$name = $gid;
-		$subindi = explode("1 TITL ", $indirec);
+		$subindi = explode("1 TITL ", $gedrec);
 		if (count($subindi) > 1) {
 			$pos = strpos($subindi[1], "\n1", 0);
 			if ($pos)
@@ -352,7 +347,7 @@ function import_record($indirec, $update) {
 					$name .= $match[$i][1];
 			}
 		}
-		$sql = "INSERT INTO {$TBLPREFIX}sources VALUES ('" . $DBCONN->escapeSimple($gid) . "','" . $DBCONN->escapeSimple($GEDCOMS[$FILE]["id"]) . "','" . $DBCONN->escapeSimple($name) . "','" . $DBCONN->escapeSimple($indirec) . "')";
+		$sql = "INSERT INTO {$TBLPREFIX}sources VALUES ('" . $DBCONN->escapeSimple($gid) . "','" . $DBCONN->escapeSimple($GEDCOMS[$FILE]["id"]) . "','" . $DBCONN->escapeSimple($name) . "','" . $DBCONN->escapeSimple($gedrec) . "')";
 		$res = dbquery($sql);
 		break;
 	case 'OBJE':
@@ -362,37 +357,37 @@ function import_record($indirec, $update) {
 	default:
 		if (preg_match("/_/", $type) == 0) {
 			if ($type == "HEAD") {
-				$ct = preg_match("/1 DATE (.*)/", $indirec, $match);
+				$ct = preg_match("/1 DATE (.*)/", $gedrec, $match);
 				if ($ct == 0) {
-					$indirec = trim($indirec);
-					$indirec .= "\r\n1 DATE " . date("d") . " " . date("M") . " " . date("Y");
+					$gedrec = trim($gedrec);
+					$gedrec .= "\r\n1 DATE " . date("d") . " " . date("M") . " " . date("Y");
 				}
 			}
 			if ($gid=="") $gid = $type;
-			$sql = "INSERT INTO {$TBLPREFIX}other VALUES ('" . $DBCONN->escapeSimple($gid) . "','" . $DBCONN->escapeSimple($GEDCOMS[$FILE]["id"]) . "','" . $DBCONN->escapeSimple($type) . "','" . $DBCONN->escapeSimple($indirec) . "')";
+			$sql = "INSERT INTO {$TBLPREFIX}other VALUES ('" . $DBCONN->escapeSimple($gid) . "','" . $DBCONN->escapeSimple($GEDCOMS[$FILE]["id"]) . "','" . $DBCONN->escapeSimple($type) . "','" . $DBCONN->escapeSimple($gedrec) . "')";
 			$res = dbquery($sql);
 		}
 		break;
 	} // switch
 
 	//-- if this is not an update then write it to the new gedcom file
-	if (!$update && !empty ($fpnewged) && !(empty ($indirec)))
-		fwrite($fpnewged, trim($indirec) . "\r\n");
+	if (!$update && !empty ($fpnewged) && !(empty ($gedrec)))
+		fwrite($fpnewged, trim($gedrec) . "\r\n");
 }
 
 /**
  * extract all places from the given record and insert them
  * into the places table
- * @param string $indirec
+ * @param string $gedrec
  */
-function update_places($gid, $indirec) {
+function update_places($gid, $gedrec) {
 	global $FILE, $placecache, $TBLPREFIX, $DBCONN, $GEDCOMS;
 
 	if (!isset($placecache)) $placecache = array();
 	$personplace = array();
 	// import all place locations, but not control info such as
 	// 0 HEAD/1 PLAC or 0 _EVDEF/1 PLAC
-	$pt = preg_match_all("/^[2-9] PLAC (.+)/m", $indirec, $match, PREG_SET_ORDER);
+	$pt = preg_match_all("/^[2-9] PLAC (.+)/m", $gedrec, $match, PREG_SET_ORDER);
 	for ($i = 0; $i < $pt; $i++) {
 		$place = trim($match[$i][1]);
 		$lowplace = UTF8_strtolower($place);
@@ -459,14 +454,14 @@ function update_places($gid, $indirec) {
 /**
  * extract all date info from the given record and insert them
  * into the dates table
- * @param string $indirec
+ * @param string $gedrec
  */
-function update_dates($gid, $indirec) {
+function update_dates($gid, $gedrec) {
 	global $FILE, $TBLPREFIX, $DBCONN, $GEDCOMS, $factarray;
-	$pt = preg_match("/\d DATE (.*)/", $indirec, $match);
+	$pt = preg_match("/\d DATE (.*)/", $gedrec, $match);
 	if ($pt == 0)
 		return 0;
-	$facts = get_all_subrecords($indirec, "", false, false);
+	$facts = get_all_subrecords($gedrec, "", false, false);
 	foreach ($facts as $f => $factrec) {
 		if (preg_match("/1 (\w+)/", $factrec, $match)) {
 			$fact = trim($match[1]);
@@ -577,7 +572,7 @@ function insert_media($objrec, $objlevel, $update, $gid, $count) {
  * @todo Decide whether or not to update the original gedcom file
  * @return string	an updated record
  */
-function update_media($gid, $indirec, $update = false) {
+function update_media($gid, $gedrec, $update = false) {
 	global $GEDCOMS, $FILE, $TBLPREFIX, $DBCONN, $media_count, $found_ids;
 	global $zero_level_media, $fpnewged, $MAX_IDS, $keepmedia;
 
@@ -598,9 +593,9 @@ function update_media($gid, $indirec, $update = false) {
 		}
 	}
 
-//		print substr($indirec, 0, 15)."<br />\n";
+//		print substr($gedrec, 0, 15)."<br />\n";
 	//-- handle level 0 media OBJE seperately
-	$ct = preg_match("/0 @(.*)@ OBJE/", $indirec, $match);
+	$ct = preg_match("/0 @(.*)@ OBJE/", $gedrec, $match);
 	if ($ct > 0) {
 		$old_m_media = $match[1];
 		$m_id = get_next_id("media", "m_id");
@@ -624,24 +619,24 @@ function update_media($gid, $indirec, $update = false) {
 		**/
 		$new_m_media = $old_m_media;
 		//print "RECORD: old $old_m_media new $new_m_media<br />";
-		$indirec = preg_replace("/@" . $old_m_media . "@/", "@" . $new_m_media . "@", $indirec);
-		$media = new Media($indirec);
+		$gedrec = preg_replace("/@" . $old_m_media . "@/", "@" . $new_m_media . "@", $gedrec);
+		$media = new Media($gedrec);
 		//--check if we already have a similar object
 		$new_media = Media::in_obje_list($media);
 		if ($new_media === false) {
 			$sql = "INSERT INTO {$TBLPREFIX}media (m_id, m_media, m_ext, m_titl, m_file, m_gedfile, m_gedrec)";
-			$sql .= " VALUES('" . $DBCONN->escapeSimple($m_id) . "', '" . $DBCONN->escapeSimple($new_m_media) . "', '" . $DBCONN->escapeSimple($media->ext) . "', '" . $DBCONN->escapeSimple($media->title) . "', '" . $DBCONN->escapeSimple($media->file) . "', '" . $DBCONN->escapeSimple($GEDCOMS[$FILE]["id"]) . "', '" . $DBCONN->escapeSimple($indirec) . "')";
+			$sql .= " VALUES('" . $DBCONN->escapeSimple($m_id) . "', '" . $DBCONN->escapeSimple($new_m_media) . "', '" . $DBCONN->escapeSimple($media->ext) . "', '" . $DBCONN->escapeSimple($media->title) . "', '" . $DBCONN->escapeSimple($media->file) . "', '" . $DBCONN->escapeSimple($GEDCOMS[$FILE]["id"]) . "', '" . $DBCONN->escapeSimple($gedrec) . "')";
 			$res = dbquery($sql);
 			$media_count++;
 		} else {
 			$new_m_media = $new_media;
 			$found_ids[$old_m_media]["old_id"] = $old_m_media;
 			$found_ids[$old_m_media]["new_id"] = $new_media;
-			//$indirec = preg_replace("/0 @(.*)@ OBJE/", "0 @$new_media@ OBJE", $indirec);
+			//$gedrec = preg_replace("/0 @(.*)@ OBJE/", "0 @$new_media@ OBJE", $gedrec);
 			//-- record was replaced by a duplicate record so leave it out.
 			return '';
 		}
-		return $indirec;
+		return $gedrec;
 	}
 
 	if ($keepmedia) {
@@ -656,12 +651,12 @@ function update_media($gid, $indirec, $update = false) {
 
 	//-- check to see if there are any media records
 	//-- if there aren't any media records then don't look for them just return
-	$pt = preg_match("/\d OBJE/", $indirec, $match);
+	$pt = preg_match("/\d OBJE/", $gedrec, $match);
 	if ($pt > 0) {
 	//-- go through all of the lines and replace any local
 	//--- OBJE to referenced OBJEs
 	$newrec = "";
-	$lines = preg_split("/[\r\n]+/", trim($indirec));
+	$lines = preg_split("/[\r\n]+/", trim($gedrec));
 	$ct_lines = count($lines);
 	$inobj = false;
 	$processed = false;
@@ -720,7 +715,7 @@ function update_media($gid, $indirec, $update = false) {
 		$inobj = false;
 	}
 	}
-	else $newrec = $indirec;
+	else $newrec = $gedrec;
 
 	if ($keepmedia) {
 		$newrec = trim($newrec)."\r\n";
@@ -1454,12 +1449,12 @@ function accept_changes($cid) {
 		}
 		$FILE = $GEDCOM;
 		$gid = $change["gid"];
-		$indirec = $change["undo"];
-		if (empty($indirec)) {
-			$indirec = find_gedcom_record($gid);
+		$gedrec = $change["undo"];
+		if (empty($gedrec)) {
+			$gedrec = find_gedcom_record($gid);
 		}
 
-		update_record($indirec, $change["type"]=="delete");
+		update_record($gedrec, $change["type"]=="delete");
 
 		//-- write the changes back to the gedcom file
 		if ($SYNC_GEDCOM_FILE) {
@@ -1486,7 +1481,7 @@ function accept_changes($cid) {
 			}
 			else if ($change["type"]=="append") {
 				$pos1 = strpos($fcontents, "\n0 TRLR");
-				$fcontents = substr($fcontents, 0, $pos1+1).trim($indirec)."\r\n0 TRLR";
+				$fcontents = substr($fcontents, 0, $pos1+1).trim($gedrec)."\r\n0 TRLR";
 			}
 			else if ($change["type"]=="replace") {
 				$pos1 = strpos($fcontents, "\n0 @".$gid."@");
@@ -1496,13 +1491,13 @@ function accept_changes($cid) {
 						$fcontents = substr($fcontents, 0, $pos1+1)."0 TRLR";
 						AddToLog("Corruption found in GEDCOM $GEDCOM Attempted to correct");
 					}
-					else $fcontents = substr($fcontents, 0, $pos1+1).trim($indirec)."\r\n".substr($fcontents, $pos2+1);
+					else $fcontents = substr($fcontents, 0, $pos1+1).trim($gedrec)."\r\n".substr($fcontents, $pos2+1);
 				}
 				else {
 					//-- attempted to replace a record that doesn't exist
 					AddToLog("Corruption found in GEDCOM $GEDCOM Attempted to correct.  Replaced gedcom record $gid was not found in the gedcom file.");
 					$pos1 = strpos($fcontents, "\n0 TRLR");
-					$fcontents = substr($fcontents, 0, $pos1+1).trim($indirec)."\r\n0 TRLR";
+					$fcontents = substr($fcontents, 0, $pos1+1).trim($gedrec)."\r\n0 TRLR";
 					AddToLog("Gedcom record $gid was appended back to the GEDCOM file.");
 				}
 			}
@@ -1516,10 +1511,10 @@ function accept_changes($cid) {
 			//-- synchronize the gedcom record with any user account
 			$username = get_user_from_gedcom_xref($GEDCOM, $gid);
 			if ($username && get_user_setting($username, 'sync_gedcom')=='Y') {
-				$firstname = get_gedcom_value("GIVN", 2, $indirec);
-				$lastname = get_gedcom_value("SURN", 2, $indirec);
+				$firstname = get_gedcom_value("GIVN", 2, $gedrec);
+				$lastname = get_gedcom_value("SURN", 2, $gedrec);
 				if (empty ($lastname)) {
-					$fullname = get_gedcom_value("NAME", 1, $indirec, "", false);
+					$fullname = get_gedcom_value("NAME", 1, $gedrec, "", false);
 					$ct = preg_match("~(.*)/(.*)/~", $fullname, $match);
 					if ($ct > 0) {
 						$firstname = $match[1];
@@ -1528,9 +1523,9 @@ function accept_changes($cid) {
 						$firstname = $fullname;
 				}
 				//-- SEE [ 1753047 ] Email/sync with account
-				$email = get_gedcom_value("EMAIL", 1, $indirec);
+				$email = get_gedcom_value("EMAIL", 1, $gedrec);
 				if (empty($email)) {
-					$email = get_gedcom_value("_EMAIL", 1, $indirec);
+					$email = get_gedcom_value("_EMAIL", 1, $gedrec);
 				}
 				if (!empty($email)) {
 					set_user_setting($username, 'email', $email);
@@ -1557,15 +1552,15 @@ function accept_changes($cid) {
 
 /**
  * update a record in the database
- * @param string $indirec
+ * @param string $gedrec
  */
-function update_record($indirec, $delete = false) {
+function update_record($gedrec, $delete = false) {
 	global $TBLPREFIX, $GEDCOM, $DBCONN, $GEDCOMS, $FILE;
 
 	if (empty ($FILE))
 		$FILE = $GEDCOM;
 
-	$tt = preg_match("/0 @(.+)@ (.+)/", $indirec, $match);
+	$tt = preg_match("/0 @(.+)@ (.+)/", $gedrec, $match);
 	if ($tt > 0) {
 		$gid = trim($match[1]);
 		$type = trim($match[2]);
@@ -1637,7 +1632,7 @@ function update_record($indirec, $delete = false) {
 
 				}
 	if (!$delete) {
-		import_record($indirec, true);
+		import_record($gedrec, true);
 	}
 }
 
