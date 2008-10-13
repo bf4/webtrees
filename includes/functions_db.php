@@ -442,7 +442,6 @@ function fetch_linked_indi($xref, $link, $ged_id) {
 	$ged_id=(int)$ged_id;
 	$like=$link.' '.str_replace(array('@', '%', '_'), array('@@', '@%', '@_'), '@'.$xref.'@');
 	$res=dbquery("SELECT 'INDI' AS type, i_id AS xref, {$ged_id} AS ged_id, i_gedcom AS gedrec, i_isdead FROM pgv_individuals WHERE i_file={$ged_id} AND i_gedcom LIKE '%{$like}%' ESCAPE '@'");
-	var_dump("SELECT 'INDI' AS type, i_id AS xref, {$ged_id} AS ged_id, i_gedcom AS gedrec, i_isdead FROM pgv_individuals WHERE i_file={$ged_id} AND i_gedcom LIKE '%{$like}%' ESCAPE '@'");
 	$list=array();
 	while ($row=$res->fetchRow(DB_FETCHMODE_ASSOC)) {
 		$list[]=Person::getInstance($row);
