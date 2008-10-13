@@ -149,21 +149,18 @@ if (file_exists("modules/research_assistant/research_assistant.php") && ($SHOW_R
 	echo "<tr class=\"center\"><td colspan=\"2\">";
 }
 
+// Individuals linked to this source
+if ($controller->source->countLinkedIndividuals()) {
+	print_indi_table($controller->source->fetchLinkedIndividuals(), $controller->source->getFullName());
+}
 
-// -- array of names
-$myindilist = $controller->source->getSourceIndis();
-$myfamlist = $controller->source->getSourceFams();
-$ci=count($myindilist);
-$cf=count($myfamlist);
-
-if ($ci>0) print_indi_table($myindilist, $controller->source->getFullName());
-if ($cf>0) print_fam_table($myfamlist, $controller->source->getFullName());
+// Families linked to this source
+if ($controller->source->countLinkedFamilies()) {
+	print_fam_table($controller->source->fetchLinkedFamilies(), $controller->source->getFullName());
+}
 
 ?>
-	<br />
-	<br />
 	</td>
 </tr>
 </table>
-<br /><br />
 <?php print_footer(); ?>
