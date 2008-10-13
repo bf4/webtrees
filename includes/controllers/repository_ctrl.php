@@ -71,6 +71,7 @@ class RepositoryControllerRoot extends BaseController {
 		if (!$repositoryrec) $repositoryrec = "0 @".$this->rid."@ REPO\r\n";
 
 		$this->repository = new Repository($repositoryrec);
+		$this->repository->ged_id=PGV_GED_ID; // This record is from a file
 
 		if (!$this->repository->canDisplayDetails()) {
 			print_header($pgv_lang["private"]." ".$pgv_lang["repo_info"]);
