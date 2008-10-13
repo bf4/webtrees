@@ -30,7 +30,7 @@ require_once 'includes/functions_print_lists.php';
 
 print_header($pgv_lang['repo_list']);
 echo '<div class="center"><h2>'.$pgv_lang['repo_list'].'</h2>';
-print_repo_table(get_repo_list());
+print_repo_table(get_repo_list(PGV_GED_ID));
 echo '</div>';
 print_footer();
 ?>

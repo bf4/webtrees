@@ -718,15 +718,24 @@ if ($action=="filter") {
 	// Output Sources
 	if ($type == "source") {
 		print "\n\t<table class=\"tabs_table $TEXT_DIRECTION width90\">\n\t\t<tr>\n\t\t<td class=\"list_value\"><tr>";
-		if (!$filter) $mysourcelist = get_source_list();
-		else $mysourcelist = search_sources($filter);
-		uasort($mysourcelist, "itemsort");
+		if (!$filter) {
+			$mysourcelist = get_source_list(PGV_GED_ID);
+		} else {
+			$mysourcelist = search_sources($filter);
+			uasort($mysourcelist, "itemsort");
+		}
 		$cts=count($mysourcelist);
 		if ($cts>0) {
 			print "\n\t\t<td class=\"list_value_wrap\"><ul>";
 			foreach ($mysourcelist as $key => $value) {
+				if (is_object($value)) {
+					$key=$value->getXref();
+					$name=$value->getFullName();
+				} else {
+					$name=$value["name"];
+				}
 				print "<li>";
-				print "<a href=\"javascript:;\" onclick=\"pasteid('$key', '".preg_replace("/(['\"])/", "\\$1", PrintReady($value["name"]))."'); return false;\"><span class=\"list_item\">".PrintReady($value["name"])."</span></a>\n";
+				print "<a href=\"javascript:;\" onclick=\"pasteid('$key', '".preg_replace("/(['\"])/", "\\$1", PrintReady($name))."'); return false;\"><span class=\"list_item\">".PrintReady($name)."</span></a>\n";
 				print "</li>\n";
 			}
 			print "</ul></td></tr>";

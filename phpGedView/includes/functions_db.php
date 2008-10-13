@@ -905,64 +905,23 @@ function reset_isdead($ged_id=PGV_GED_ID) {
 }
 
 /**
- * get a list of all the source titles
- *
- * returns an array of all of the sourcetitles in the database.
- * @link http://phpgedview.sourceforge.net/devdocs/arrays.php#sources
- * @return array the array of source-titles
- */
-function get_source_add_title_list() {
-	global $sourcelist, $TBLPREFIX;
-
-	$sourcelist = array();
-
- 	$sql = "SELECT s_id, s_file, s_gedcom FROM ".$TBLPREFIX."sources WHERE s_file=".PGV_GED_ID." AND ((s_gedcom LIKE '% _HEB %') OR (s_gedcom LIKE '% ROMN %'));";
-
-	$res = dbquery($sql);
-
-	$ct = $res->numRows();
-	while ($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)){
-		$source = array();
-		$row = db_cleanup($row);
-		$ct = preg_match("/\d ROMN (.*)/", $row["s_gedcom"], $match);
- 		if ($ct==0) $ct = preg_match("/\d _HEB (.*)/", $row["s_gedcom"], $match);
-		$source["name"] = $match[1];
-		$source["gedcom"] = $row["s_gedcom"];
-		$source["gedfile"] = $row["s_file"];
-		$sourcelist[$row["s_id"]] = $source;
-	}
-	$res->free();
-
-	return $sourcelist;
-}
-
-/**
  * get a list of all the sources
  *
  * returns an array of all of the sources in the database.
  * @link http://phpgedview.sourceforge.net/devdocs/arrays.php#sources
  * @return array the array of sources
  */
-function get_source_list() {
-	global $sourcelist, $TBLPREFIX;
-
-	$sourcelist = array();
-
-	$sql = "SELECT s_id, s_name, s_gedcom FROM ".$TBLPREFIX."sources WHERE s_file=".PGV_GED_ID." ORDER BY s_name";
-	$res = dbquery($sql);
-
-	$ct = $res->numRows();
-	while ($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)){
-		$source = array();
-		$source["name"] = $row["s_name"];
-		$source["gedcom"] = $row["s_gedcom"];
-		$row = db_cleanup($row);
-		$source["gedfile"] = PGV_GED_ID;
-		$sourcelist[$row["s_id"]] = $source;
+function get_source_list($ged_id) {
+	global $TBL_PREFIX, $DBCONN;
+	$ged_id=(int)$ged_id;
+	$res=dbquery("SELECT 'SOUR' AS type, s_id AS xref, {$ged_id} AS ged_id, s_gedcom AS gedrec FROM pgv_sources s WHERE s_file={$ged_id}");
+	$list=array();
+	while ($row=$res->fetchRow(DB_FETCHMODE_ASSOC)) {
+		$list[]=Source::getInstance($row);
 	}
 	$res->free();
-
-	return $sourcelist;
+	uasort($list, array('GedcomRecord', 'Compare'));
+	return $list;
 }
 
 // Get a list of repositories from the database

@@ -26,26 +26,11 @@
 
 require './config.php';
 
-require_once("includes/functions_print_lists.php");
+require_once 'includes/functions_print_lists.php';
 
-print_header($pgv_lang["source_list"]);
-
-$addsourcelist = get_source_add_title_list();  //-- array of additional source titlesadd
-$sourcelist = get_source_list();               //-- array of regular source titles
-
-uasort($sourcelist, "source_sort");
-uasort($addsourcelist, "source_sort");
-
-$ca = count($addsourcelist);
-$cs = count($sourcelist);
-$ctot = $ca + $cs;
-
-print "<div class=\"center\">";
-print "<h2>".$pgv_lang["source_list"]."</h2>\n\t";
-
-print_sour_table(array_merge($sourcelist, $addsourcelist));
-
-print "</div>";
-print "<br /><br />";
+print_header($pgv_lang['source_list']);
+echo '<div class="center"><h2>'.$pgv_lang['source_list'].'</h2>';
+print_sour_table(get_source_list(PGV_GED_ID));
+echo '</div>';
 print_footer();
 ?>
