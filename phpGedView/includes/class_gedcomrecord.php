@@ -600,6 +600,34 @@ class GedcomRecord {
 		return '';
 	}
 
+	// Count the number of records that link to this one
+	function countLinkedIndividuals() {
+		return count_linked_indi($this->getXref(), $this->getType(), $this->ged_id);
+	}
+	function countLinkedFamilies() {
+		return count_linked_fam($this->getXref(), $this->getType(), $this->ged_id);
+	}
+	function countLinkedSources() {
+		return count_linked_sour($this->getXref(), $this->getType(), $this->ged_id);
+	}
+	function countLinkedMedia() {
+		return count_linked_obje($this->getXref(), $this->getType(), $this->ged_id);
+	}
+
+	// Fetch the records that link to this one
+	function fetchLinkedIndividuals() {
+		return fetch_linked_indi($this->getXref(), $this->getType(), $this->ged_id);
+	}
+	function fetchLinkedFamilies() {
+		return fetch_linked_fam($this->getXref(), $this->getType(), $this->ged_id);
+	}
+	function fetchLinkedSources() {
+		return count_linked_sour($this->getXref(), $this->getType(), $this->ged_id);
+	}
+	function fetchLinkedMedia() {
+		return count_linked_obje($this->getXref(), $this->getType(), $this->ged_id);
+	}
+
 	// Get all attributes (e.g. DATE or PLAC) from an event (e.g. BIRT or MARR).
 	// This is used to display multiple events on the individual/family lists.
 	// Multiple events can exist because of uncertainty in dates, dates in different

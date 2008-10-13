@@ -795,7 +795,6 @@ function print_sour_table($datalist, $legend="") {
 	global $PGV_IMAGE_DIR, $PGV_IMAGES;
 
 	if (count($datalist)<1) return;
-	$tiny = (count($datalist)<=500);
 	$name_subtags = array("_HEB", "ROMN");
 	require_once 'js/sorttable.js.htm';
 	require_once 'includes/class_source.php';
@@ -812,14 +811,10 @@ function print_sour_table($datalist, $legend="") {
 	echo "<th class=\"list_label\">".$factarray["TITL"]."</th>";
 	$t2 = false; echo "<td class=\"list_label t2\">".$factarray["TITL"]."2</td>";
 	echo "<th class=\"list_label\">".$factarray["AUTH"]."</th>";
-	//-- only show the count of linked records if the DB is sufficiently small to handle the load
-	$show_details = (get_list_size("indilist")<1000);
-	if ($tiny && $show_details) {
-		echo "<th class=\"list_label\">".$pgv_lang["individuals"]."</th>";
-		echo "<th class=\"list_label\">".$pgv_lang["families"]."</th>";
-		echo "<th class=\"list_label\">".$pgv_lang["media"]."</th>";
-	}
-	if ($tiny && $SHOW_LAST_CHANGE) echo "<th class=\"list_label rela\">".$factarray["CHAN"]."</th>";
+	echo "<th class=\"list_label\">".$pgv_lang["individuals"]."</th>";
+	echo "<th class=\"list_label\">".$pgv_lang["families"]."</th>";
+	echo "<th class=\"list_label\">".$pgv_lang["media"]."</th>";
+	if ($SHOW_LAST_CHANGE) echo "<th class=\"list_label rela\">".$factarray["CHAN"]."</th>";
 	echo "</tr>\n";
 	//-- table body
 	$hidden = 0;
@@ -866,22 +861,21 @@ function print_sour_table($datalist, $legend="") {
 		echo "<a href=\"".encode_url($source->getLinkUrl())."\" class=\"list_item\">".PrintReady($source->getAuth())."</a>";
 		echo "&nbsp;</td>";
 
-		if ($tiny && $show_details) { // $source->countSourceXXXX() is very slow.
-			//-- Linked INDIs
-			echo "<td class=\"list_value_wrap\">";
-			echo "<a href=\"".encode_url($source->getLinkUrl())."\" class=\"list_item\">".$source->countSourceIndis()."</a>";
-			echo "</td>";
-			//-- Linked FAMs
-			echo "<td class=\"list_value_wrap\">";
-			echo "<a href=\"".encode_url($source->getLinkUrl())."\" class=\"list_item\">".$source->countSourceFams()."</a>";
-			echo "</td>";
-			//-- Linked OBJEcts
-			echo "<td class=\"list_value_wrap\">";
-			echo "<a href=\"".encode_url($source->getLinkUrl())."\" class=\"list_item\">".$source->countSourceObjects()."</a>";
-			echo "</td>";
-		}
+		//-- Linked INDIs
+		echo "<td class=\"list_value_wrap\">";
+		echo "<a href=\"".encode_url($source->getLinkUrl())."\" class=\"list_item\">".$source->countLinkedIndividuals()."</a>";
+		echo "</td>";
+		//-- Linked FAMs
+		echo "<td class=\"list_value_wrap\">";
+		echo "<a href=\"".encode_url($source->getLinkUrl())."\" class=\"list_item\">".$source->countLinkedfamilies()."</a>";
+		echo "</td>";
+		//-- Linked OBJEcts
+		echo "<td class=\"list_value_wrap\">";
+		echo "<a href=\"".encode_url($source->getLinkUrl())."\" class=\"list_item\">".$source->countLinkedMedia()."</a>";
+		echo "</td>";
+
 		//-- Last change
-		if ($tiny && $SHOW_LAST_CHANGE)
+		if ($SHOW_LAST_CHANGE)
 			print '<td class="'.strrev($TEXT_DIRECTION).' list_value_wrap rela">'.$source->LastChangeTimestamp(empty($SEARCH_SPIDER)).'</td>';
 		echo "</tr>\n";
 	}
@@ -896,12 +890,10 @@ function print_sour_table($datalist, $legend="") {
 	echo "<td></td>";
 	echo "<td class=\"t2\"></td>";
 	echo "<td></td>";
-	if ($tiny && $show_details) {
-		echo "<td></td>";
-		echo "<td></td>";
-		echo "<td></td>";
-	}
-	if ($tiny && $SHOW_LAST_CHANGE) echo "<td></td>";
+	echo "<td></td>";
+	echo "<td></td>";
+	echo "<td></td>";
+	if ($SHOW_LAST_CHANGE) echo "<td></td>";
 	echo "</tr>";
 	echo "</table>\n";
 	echo "</fieldset>\n";
