@@ -622,10 +622,10 @@ class GedcomRecord {
 		return fetch_linked_fam($this->getXref(), $this->getType(), PGV_GED_ID);
 	}
 	function fetchLinkedSources() {
-		return count_linked_sour($this->getXref(), $this->getType(), PGV_GED_ID);
+		return fetch_linked_sour($this->getXref(), $this->getType(), PGV_GED_ID);
 	}
 	function fetchLinkedMedia() {
-		return count_linked_obje($this->getXref(), $this->getType(), PGV_GED_ID);
+		return fetch_linked_obje($this->getXref(), $this->getType(), PGV_GED_ID);
 	}
 
 	// Get all attributes (e.g. DATE or PLAC) from an event (e.g. BIRT or MARR).

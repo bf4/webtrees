@@ -57,7 +57,7 @@ loadLangFile("lightbox:lang");
 		var recwin = window.open("gedrecord.php?pid=<?php print $controller->rid ?>", "_blank", "top=0,left=0,width=600,height=400,scrollbars=1,scrollable=1,resizable=1");
 	}
 	function showchanges() {
-		window.location = '<?php print $SCRIPT_NAME.normalize_query_string($QUERY_STRING."&show_changes=yes"); ?>';
+		window.location = 'repo.php?rid=<?php print $controller->rid; ?>&show_changes=yes';
 	}
 //-->
 </script>
