@@ -28,8 +28,8 @@
 
 require './config.php';
 
-require("includes/functions_edit.php");
-require("includes/functions_import.php");
+require_once 'includes/functions_edit.php';
+require_once 'includes/functions_import.php';
 
 $ged=$GEDCOM;
 $gid1=safe_POST_xref('gid1');

@@ -48,8 +48,8 @@
 
 require './config.php';
 
-require_once "includes/functions_import.php";
-require_once "includes/functions_export.php";
+require_once 'includes/functions_import.php';
+require_once 'includes/functions_export.php';
 
 loadLangFile("pgv_confighelp");
 

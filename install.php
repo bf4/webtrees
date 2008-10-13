@@ -41,7 +41,7 @@
 if (file_exists('config.php')) require_once('config.php');
 else require_once('config.dist');
 
-require_once('includes/functions_import.php');
+require_once 'includes/functions_import.php';
 
 //-- if we are configured, then make sure that only admins access this page
 if (!empty($PGV_DB_CONNECTED) && adminUserExists()) {
