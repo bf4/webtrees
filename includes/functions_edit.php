@@ -937,7 +937,7 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 	// If the name isn't initially formed from the components in a standard way,
 	// then don't automatically update it.
 	if (document.getElementById("NAME").value!=generate_name() && document.getElementById("NAME").value!="//") convertHidden("NAME");
-
+	//-->
 	</script>
 	<?php
 }
