@@ -29,10 +29,10 @@
 
 require './config.php';
 
-require_once("includes/functions.php");
-require_once("includes/functions_edit.php");
-require_once("includes/functions_import.php");
-require_once("includes/class_serviceclient.php");
+require_once 'includes/functions.php';
+require_once 'includes/functions_edit.php';
+require_once 'includes/functions_import.php';
+require_once 'includes/class_serviceclient.php';
 
 print_header($pgv_lang["title_manage_servers"]);
 //-- only allow gedcom admins here
