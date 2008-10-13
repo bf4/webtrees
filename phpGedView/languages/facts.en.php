@@ -193,6 +193,7 @@ $factarray["BAPM:DATE"] = "Baptism Date";
 $factarray["BURI:PLAC"] = "Burial Place";
 $factarray["BURI:DATE"] = "Burial Date";
 $factarray["MARR:PLAC"] = "Marriage Place";
+$factarray["MARR:DATE"] = "Marriage Date";
 
 // These facts are specific to GEDCOM exports from Family Tree Maker
 $factarray["_MDCL"]	= "Medical";

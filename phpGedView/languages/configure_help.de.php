@@ -32,7 +32,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 }
 
 $pgv_lang["SHOW_LIST_PLACES"]	= "In Listen zu zeigende Ebenen von Ortsangaben";
-$pgv_lang["SHOW_LIST_PLACES_help"]	= "~#pgv_lang[SHOW_LIST_PLACES]#~<br /><br />Diese Option bestimmt, wie viele Ebenen der Ortsangaben in Listen zu zeigen sind.<br /><br />Die Wahl <b>9</b> bestimmt, dass alle Ortsangaben gezeigt werden.  Wenn Sie <b>0</b> (Null) wählen, werden keine Orte gezeigt.  Die Wahl <b>1</b> bedeutet dass nur die höchste Ebene (normalerweise das Land) gezeigt wird.  Wenn Sie <b>2</b> wählen, werden die zwei höchsten Ebenen gezeigt.  Die zweit-höchste Ebene (unter dem Land) könnte Staat, Bundesland oder Provinz sein.  Etc.<br />";
+$pgv_lang["SHOW_LIST_PLACES_help"]	= "~#pgv_lang[SHOW_LIST_PLACES]#~<br /><br />Diese Option bestimmt, wie viele Ebenen der Ortsangaben in Listen zu zeigen sind.<br /><br />Die Wahl <b>9</b> bestimmt, dass alle Ortsangaben gezeigt werden.  Wenn Sie <b>0</b> (Null) wählen, werden keine Orte gezeigt.  Die Wahl <b>1</b> bedeutet, dass nur die höchste Ebene (normalerweise das Land) gezeigt wird.  Wenn Sie <b>2</b> wählen, werden die zwei höchsten Ebenen gezeigt.  Die zweit-höchste Ebene (unter dem Land) könnte Staat, Bundesland oder Provinz sein.  Usw.<br />";
 
 //-- CONFIGURE FILE MESSAGES
 $pgv_lang["gedcom_conf"]		= "GEDCOM Grundlagen";
@@ -77,6 +77,8 @@ $pgv_lang["DBTYPE"]			= "Datenbank-Typ";
 $pgv_lang["DBTYPE_help"]		= "~#pgv_lang[DBTYPE]#~<br /><br />Der Typ der Datenbank (PEAR-Unterstützung) die genutzt werden soll. Möglich sind: MySQL, PostgreSQL, Oracle und SQLite.<br />";
 $pgv_lang["DBHOST"]			= "Datenbank-Host";
 $pgv_lang["DBHOST_help"]		= "~#pgv_lang[DBHOST]#~<br /><br />Die DNS- oder IP-Adresse Ihres Datenbank-Servers.<br />";
+##$pgv_lang["DBPORT"]			= "Database Port";
+##$pgv_lang["DBPORT_help"]		= "~#pgv_lang[DBPORT]#~<br /><br />The TCP Port that should be used when connecting to your database server.  Leave this setting blank to use the default port for your particular type of database.  This setting is ignored if you are using an SQLite database.<br />";
 $pgv_lang["DBUSER"]			= "Datenbank-Benutzername";
 $pgv_lang["DBUSER_help"]		= "~#pgv_lang[DBUSER]#~<br /><br />Der Benutzername der benötigt wird, um eine Verbindung zu Ihrer Datenbank herzustellen.<br />";
 $pgv_lang["DBPASS"]			= "Datenbank-Kennwort";

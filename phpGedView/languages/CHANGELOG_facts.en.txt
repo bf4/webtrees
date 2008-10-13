@@ -45,6 +45,7 @@ VERSION 4.1.6
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 -------------------------------------------------------------------------------------------
++$factarray["MARR:DATE"]							13 Oct 2008				A
 +$factarray["BIRT:DATE"]							8 Oct 2008				A
 +$factarray["DEAT:DATE"]							8 Oct 2008				A
 +$factarray["CHR:DATE"]								8 Oct 2008				A
