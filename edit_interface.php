@@ -866,15 +866,39 @@ case 'update':
 		while(($i<count($gedlines))&&($gedlines[$i]{0}>$glevel)) $i++;
 	}
 	if (!isset($glevels)) $glevels = array();
+	if (isset($_REQUEST['NAME'])) $NAME = $_REQUEST['NAME'];
+	if (isset($_REQUEST['TYPE'])) $TYPE = $_REQUEST['TYPE'];
+	if (isset($_REQUEST['NPFX'])) $NPFX = $_REQUEST['NPFX'];
+	if (isset($_REQUEST['GIVN'])) $GIVN = $_REQUEST['GIVN'];
+	if (isset($_REQUEST['NICK'])) $NICK = $_REQUEST['NICK'];
+	if (isset($_REQUEST['SPFX'])) $SPFX = $_REQUEST['SPFX'];
+	if (isset($_REQUEST['SURN'])) $SURN = $_REQUEST['SURN'];
+	if (isset($_REQUEST['NSFX'])) $NSFX = $_REQUEST['NSFX'];
+	if (isset($_REQUEST['ROMN'])) $ROMN = $_REQUEST['ROMN'];
+	if (isset($_REQUEST['FONE'])) $FONE = $_REQUEST['FONE'];
+	if (isset($_REQUEST['_HEB'])) $_HEB = $_REQUEST['_HEB'];
+	if (isset($_REQUEST['_AKA'])) $_AKA = $_REQUEST['_AKA'];
+	if (isset($_REQUEST['_MARNM'])) $_MARNM = $_REQUEST['_MARNM'];
 
-	$newged.=addNewName(false);
-	$newged=handle_updates($newged);
-	// Add new _MARNM records at the end.
-	// [ 1329644 ] Add Married Name - Wrong Sequence
-	$marnm=safe_POST('_MARNM', PGV_REGEX_UNSAFE);
-	if ($marnm) {
-		$newged.="2 _MARNM {$marnm}\n";
-	}
+	if (!empty($NAME)) $newged .= "1 NAME $NAME\r\n";
+	if (!empty($TYPE)) $newged .= "2 TYPE $TYPE\r\n";
+	if (!empty($NPFX)) $newged .= "2 NPFX $NPFX\r\n";
+	if (!empty($GIVN)) $newged .= "2 GIVN $GIVN\r\n";
+	if (!empty($NICK)) $newged .= "2 NICK $NICK\r\n";
+	if (!empty($SPFX)) $newged .= "2 SPFX $SPFX\r\n";
+	if (!empty($SURN)) $newged .= "2 SURN $SURN\r\n";
+	if (!empty($NSFX)) $newged .= "2 NSFX $NSFX\r\n";
+
+	//-- Refer to Bug [ 1329644 ] Add Married Name - Wrong Sequence
+	//-- _HEB/ROMN/FONE have to be before _AKA, even if _AKA exists in input and the others are now added
+	if (!empty($ROMN)) $newged .= "2 ROMN $ROMN\r\n";
+	if (!empty($FONE)) $newged .= "2 FONE $FONE\r\n";
+	if (!empty($_HEB)) $newged .= "2 _HEB $_HEB\r\n";
+
+	$newged = handle_updates($newged);
+
+	if (!empty($_AKA)) $newged .= "2 _AKA $_AKA\r\n";
+	if (!empty($_MARNM)) $newged .= "2 _MARNM $_MARNM\r\n";
 
 	while($i<count($gedlines)) {
 		$newged .= trim($gedlines[$i])."\n";
