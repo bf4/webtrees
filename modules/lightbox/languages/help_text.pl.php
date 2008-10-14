@@ -33,6 +33,10 @@ if (!defined('PGV_PHPGEDVIEW')) {
 }
 
 // Added in VERSION 4.1.6
+
+$pgv_lang["LIGHTBOX_CONFIG"]		= "Konfiguracja Lightbox-Album";
+$pgv_lang["LIGHTBOX_CONFIG_help"]	= "~#pgv_lang[LIGHTBOX_CONFIG]#~<br /><br />W tym miejscu możesz skonfigurować wszystkie aspekty modułu  Lightbox-Album.";
+
 // Lightbox general help file  ---------------------------------------------------------------------------------------------------------
 $pgv_lang["lb_generalLegend"]		 = "Album Lightbox - Pomoc Ogólna";
 $pgv_lang["lb_general_help"]		 = "~#pgv_lang[lb_generalLegend]#~<br /><br /><ul>#pgv_lang[lb_general_help1]##pgv_lang[lb_general_help2]##pgv_lang[lb_general_help3]##pgv_lang[lb_general_help4]##pgv_lang[lb_general_help5]##pgv_lang[lb_general_help6]##pgv_lang[lb_general_help7]##pgv_lang[lb_general_help8]##pgv_lang[lb_general_help9]##pgv_lang[lb_general_help10]#</ul>";
@@ -52,7 +56,7 @@ $pgv_lang["lb_tt_balloon_help"]			= "~#pgv_lang[lb_tt_balloonLegend]#~<br />Ta o
 
 // VERSION 4.1.3 
 $pgv_lang["mediatabLegend"]				= "Właściwości zakładki Multimedia";
-$pgv_lang["mediatab_help"]				= "~#pgv_lang[mediatab]#~<br />Ta opcja pozwala na określenie czy zakładka Multimediów ma być widoczna na stronie #pgv_lang[indi_info]#.<br /><br />Jeśli ta opcja jest ustawiona na <b>#pgv_lang[hide]#</b>, tylko zakładka <b>#pgv_lang[lightbox]#</b> będzie widoczna i będzie jej nazwa zmieniona na <b>#pgv_lang[media]#</b>.<br />";
+$pgv_lang["mediatab_help"]				= "~#pgv_lang[mediatab]#~<br />Ta opcja pozwala na określenie czy zakładka Multimediów ma być widoczna na stronie #pgv_lang[indi_info]#.<br /><br />Jeśli ta opcja jest ustawiona na <b>#pgv_lang[hide]#</b>, tylko zakładka <b>#pgv_lang[lightbox]#</b> będzie widoczna.<br />";
 $pgv_lang["lb_al_head_linksLegend"]		= "Właściwości zakładki Album";
 $pgv_lang["lb_al_head_links_help"]		= "~#pgv_lang[lb_al_head_linksLegend]#~<br />Ta opcja pozwala na określenie czy nagłowek zakładki #pgv_lang[lightbox]#, który zawiera odnośniki kontroli różnych opcji Albumu, powinien zawierać tylko ikony, tylko tekst, czy ikony wraz z tekstem.<br /><br />Opcja <b>#pgv_lang[lb_icon]#</b> raczej nie jest bardzo pomocna dopóki nie zobaczysz podpisów gdy najedziesz kursorem na nie.<br />";
 $pgv_lang["lb_al_thumb_linksLegend"]	= "Wygląd odnośnika";

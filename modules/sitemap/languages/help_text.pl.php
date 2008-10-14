@@ -3,7 +3,7 @@
  * English Language file for PhpGedView.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team. All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,7 +21,7 @@
  *
  * @package PhpGedView
  * @subpackage SiteMap
- * @version $Id: help_text.en.php 1380 2007-08-03 14:27:47Z canajun2eh $
+ * @version $Id$
  */
 
 if (!defined('PGV_PHPGEDVIEW')) {

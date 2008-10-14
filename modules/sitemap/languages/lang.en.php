@@ -3,7 +3,7 @@
  * English Language file for PhpGedView.
  *
  * PhpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team. All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -30,6 +30,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 }
 
 // Admin menu
+$pgv_lang["sitemap"]       			= "Sitemap";
 $pgv_lang["generate_sitemap"]       = "Generate Sitemap files";
 
 // Sitemap pages
