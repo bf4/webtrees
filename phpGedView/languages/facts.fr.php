@@ -3,7 +3,7 @@
  * French Language file for PhpGedView.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team. All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -272,7 +272,7 @@ $factarray["COMM"]                      = "Commentaire";
 $factarray["MARR_CIVIL"]                = "Mariage civil";
 $factarray["MARR_RELIGIOUS"]            = "Mariage religieux";
 $factarray["MARR_PARTNERS"]             = "Partenaires";
-$factarray["MARR_UNKNOWN"]              = "";
+$factarray["MARR_UNKNOWN"]              = "Type de mariage inconnu";
 
 $factarray["_HNM"]                      = "Nom hébreu";
 
@@ -361,4 +361,65 @@ $factarray["_THUM"]                     = "Vignette";
 $factarray["_PGVU"]                     = "par";
 $factarray["SERV"]                      = "Serveur distant";
 $factarray["_GEDF"]                     = "Fichier GEDCOM";
+
+
+$factarray["FAMS:MARR:DATE"] = "Date de mariage";
+$factarray["BIRT:DATE"] = "Date de naissance";
+$factarray["DEAT:DATE"] = "Date du décès";
+$factarray["CHR:DATE"] = "Date de baptême";
+$factarray["BAPM:DATE"] = "Date de baptême";
+$factarray["BURI:DATE"] = "Date des obsèques";
+$factarray["MARR:DATE"] = "Date de mariage";
+$factarray["_NAMS"]	= "Homonyme";
+
+$factarray["_CHR_CHIL" ] = "Baptême d'un enfant";
+$factarray["_BAPM_CHIL"] = "Baptême d'un enfant";
+$factarray["__BRTM_CHIL"] = "Brit Mila d'un enfant";
+$factarray["_ADOP_CHIL"] = "Adoption d'un enfant";
+$factarray["_MARB_CHIL"] = "Bans de mariage d'un enfant";
+$factarray["_CHR_GCHI" ] = "Baptême d'un petit-enfant";
+$factarray["_BAPM_GCHI"] = "Baptême d'un petit-enfant";
+$factarray["__BRTM_GCHI"] = "Brit Mila d'un petit-enfant";
+$factarray["_ADOP_GCHI"] = "Adoption d'un petit-enfant";
+$factarray["_MARB_GCHI"] = "Ban de mariage d'un petit-enfant";
+$factarray["_CHR_GGCH" ] = "Baptême d'un arrière petit enfant";
+$factarray["_BAPM_GGCH"] = "Baptême d'un arrière petit enfant";
+$factarray["__BRTM_GGCH"] = "Brit Mila d'un arrière petit enfant";
+$factarray["_ADOP_GGCH"] = "Adoption d'un arrière petit enfant";
+$factarray["_MARB_GGCH"] = "Bans de mariage d'un arrière petit enfant";
+$factarray["_MARB_FATH"] = "Bans de mariage du père";
+$factarray["_MARR_FAMC"] = "Mariage des parents";
+$factarray["_MARB_FAMC"] = "Bans de mariage des parents";
+$factarray["_MARB_MOTH"] = "Bans de mariage de la mère";
+$factarray["_CHR_SIBL" ] = "Baptême d'un frère ou d'une soeur";
+$factarray["_BAPM_SIBL"] = "Baptême d'un frère ou d'une soeur";
+$factarray["__BRTM_SIBL"] = "Brit Mila d'un frère ou d'une soeur";
+$factarray["_ADOP_SIBL"] = "Adoption d'un frère ou d'une soeur";
+$factarray["_MARB_SIBL"] = "Bans de mariage d'un frère ou d'une soeur";
+$factarray["_CHR_HSIB" ] = "Baptême d'un demi-frère ou d'une demi-soeur";
+$factarray["_BAPM_HSIB"] = "Baptême d'un demi-frère ou d'une demi-soeur";
+$factarray["__BRTM_HSIB"] = "Brit Mila d'un demi-frère ou d'une demi-soeur";
+$factarray["_ADOP_HSIB"] = "Adoption d'un demi-frère ou d'une demi-soeur";
+$factarray["_MARB_HSIB"] = "Bans de mariage d'un demi-frère ou d'une demi-soeur";
+$factarray["_CHR_NEPH" ] = "Baptême d'un neveu ou nièce";
+$factarray["_BAPM_NEPH"] = "Baptême d'un neveu ou nièce";
+$factarray["__BRTM_NEPH"] = "Brit Mila d'un neveu";
+$factarray["_ADOP_NEPH"] = "Adoption d'un neveu ou nièce";
+$factarray["_MARB_NEPH"] = "Bans de mariage d'un neveu ou d'une nièce";
+$factarray["_CHR_FSIB" ] = "Baptême d'un ";
+$factarray["_CHR_FSIB" ] = "Baptême d'un frère ou d'une soeur du père";
+$factarray["_BAPM_FSIB"] = "Baptême d'un frère ou d'une soeur du père";
+$factarray["__BRTM_FSIB"] = "Brit Mila d'un frère ou d'une soeur du père";
+$factarray["_ADOP_FSIB"] = "Adoption d'un frère ou d'une soeur du père";
+$factarray["_MARB_FSIB"] = "Bans de mariage d'un frère ou d'une soeur du père";
+$factarray["_CHR_MSIB" ] = "Baptême d'un frère ou d'une soeur de la mère";
+$factarray["_BAPM_MSIB"] = "Baptême d'un frère ou d'une soeur de la mère";
+$factarray["__BRTM_MSIB"] = "Brit Mila d'un frère ou d'une soeur de la mère";
+$factarray["_ADOP_MSIB"] = "Adoption d'un frère ou d'une soeur de la mère";
+$factarray["_MARB_MSIB"] = "Bans de mariage d'un frère ou d'une soeur de la mère";
+$factarray["_CHR_COUS"]  = "Baptême d'un(e) cousin(e) germain(e)";
+$factarray["_BAPM_COUS"] = "Baptême d'un(e) cousin(e) germain(e)";
+$factarray["__BRTM_COUS"] = "Brit Mila d'un(e) cousin(e) germain(e)";
+$factarray["_ADOP_COUS"] = "Adoption d'un(e) cousin(e) germain(e)";
+$factarray["_MARB_COUS"] = "Bans de mariage d'un(e) cousin(e) germain(e)";
 ?>

@@ -3,7 +3,7 @@
  * French Language file for PhpGedView.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team. All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -220,4 +220,16 @@ $pgv_lang["upload_media_help"]          = "~#pgv_lang[upload_media]#~<br /><br /
 $pgv_lang["upload_successful"]          = "Téléchargement réussi";
 $pgv_lang["view_change_diff"]           = "Voir les différences";
 
+$pgv_lang["edit_repo"]				= "Modifier le dépôt";
+$pgv_lang["reorder_media"]					= "Réordonner les media";
+$pgv_lang["reorder_media_title"]			= "Cliquez et glissez-déposez les vignettes pour réordonner les media";
+$pgv_lang["reorder_media_window"]			= "Réordonnez les media ";
+$pgv_lang["reorder_media_window_title"]		= "Cliquez sur une rangée, puis glissez-déposez les vignettes pour réordonner les media";
+$pgv_lang["reorder_media_save"]				= "Sauvegarde les media réordonnés dans la base de données";
+$pgv_lang["reorder_media_reset"]			= "Revenir à l'ordonnancement initial";
+$pgv_lang["reorder_media_cancel"]			= "Quittez et retour";
+$pgv_lang["file_no_temp_dir"]		= "Répertoire temporaire PHP manquant";
+$pgv_lang["file_cant_write"]		= "PHP n'a pas pu écrire sur le disque";
+$pgv_lang["file_bad_extension"]		= "PHP a bloqué le fichier à cause de son extension";
+$pgv_lang["file_unkown_err"]		= "Erreur de téléchargement de fichier inconnu (code #pgv_lang[global_num1]#). Rapportez cette information comme un bug.";
 ?>
