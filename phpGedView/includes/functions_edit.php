@@ -1438,26 +1438,22 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 			//print_autopaste_link($element_id, array("S1", "S2"), false, false, true);
 			//-- checkboxes to apply '1 SOUR' to BIRT/MARR/DEAT as '2 SOUR'
 			if ($level==1) {
-				echo "<br />";
-				echo "<input type=\"hidden\" id=\"SOUR_BIRT\" name=\"SOUR_BIRT\" value=\"\" />";
-				echo "<input type=\"hidden\" id=\"SOUR_MARR\" name=\"SOUR_MARR\" value=\"\" />";
-				echo "<input type=\"hidden\" id=\"SOUR_FAM\" name=\"SOUR_FAM\" value=\"\" />";
-				echo "<input type=\"hidden\" id=\"SOUR_DEAT\" name=\"SOUR_DEAT\" value=\"\" />";
-				if (strpos($bdm, "B")!==false) {
-					echo "&nbsp;<input type=\"checkbox\" name=\"SOUR_INDI\" checked=\"checked\" value=\"Y\" />";
+				echo '<br />';
+				if (strpos($bdm, 'B')!==false) {
+					echo '&nbsp;<input type="checkbox" name="SOUR_INDI" checked="checked" value="Y" />';
 					echo $pgv_lang['individual'];
-					echo "&nbsp;<input type=\"checkbox\" onclick=\"if (this.checked) SOUR_BIRT.value='Y'; else SOUR_BIRT.value='';\" />";
-					echo $factarray["BIRT"];
+					echo '&nbsp;<input type="checkbox" name="SOUR_BIRT" value="Y" />';
+					echo $factarray['BIRT'];
 				}
-				if (strpos($bdm, "M")!==false) {
-					echo "&nbsp;<input type=\"checkbox\" onclick=\"if (this.checked) SOUR_MARR.value='Y'; else SOUR_MARR.value='';\" />";
-					echo $factarray["MARR"];
-					echo "&nbsp;<input type=\"checkbox\" onclick=\"if (this.checked) SOUR_FAM.value='Y'; else SOUR_FAM.value='';\" />";
+				if (strpos($bdm, 'M')!==false) {
+					echo '&nbsp;<input type="checkbox" name="SOUR_MARR" value="Y" />';
+					echo $factarray['MARR'];
+					echo '&nbsp;<input type="checkbox" name="SOUR_FAM" value="Y" />';
 					echo $pgv_lang["family"];
 				}
-				if (strpos($bdm, "D")!==false) {
-					echo "&nbsp;<input type=\"checkbox\" onclick=\"if (this.checked) SOUR_DEAT.value='Y'; else SOUR_DEAT.value='';\" />";
-					echo $factarray["DEAT"];
+				if (strpos($bdm, 'D')!==false) {
+					echo '&nbsp;<input type="checkbox" name="SOUR_DEAT" value="Y" />';
+					echo $factarray['DEAT'];
 				}
 			}
 		}
@@ -1604,6 +1600,79 @@ function print_add_layer($tag, $level=2, $printSaveButton=true) {
 		}
 	}
 }
+
+// Assemble the pieces of a newly created record into gedcom
+function addNewName($marnm=true) {
+	global $ADVANCED_NAME_FACTS;
+
+	$gedrec='1 NAME '.safe_POST('NAME', PGV_REGEX_UNSAFE, '//')."\n";
+
+	$tags=array('TYPE', 'NPFX', 'GIVN', 'SPFX', 'SURN', 'NSFX');
+	if ($marnm) {
+		$tags[]='_MARNM';
+	}
+	if (preg_match_all('/([A-Z0-9_]+)/', $ADVANCED_NAME_FACTS, $match)) {
+		$tags=array_merge($tags, $match[1]);
+	}
+	foreach ($tags as $tag) {
+		$TAG=safe_POST($tag, PGV_REGEX_UNSAFE);
+		if ($TAG) {
+			$gedrec.="2 {$tag} {$TAG}\n";
+		}
+	}
+	return $gedrec;
+}
+function addNewSex() {
+	switch (safe_POST('SEX', '[MF]', 'U')) {
+	case 'M':
+		return "1 SEX M\n";
+	case 'F':
+		return "1 SEX F\n";
+	default:
+		return "1 SEX U\n";
+	}
+}
+function addNewFact($fact) {
+	global $tagSOUR, $ADVANCED_PLAC_FACTS;
+	
+	$FACT=safe_POST($fact,          PGV_REGEX_UNSAFE);
+	$DATE=safe_POST("{$fact}_DATE", PGV_REGEX_UNSAFE);
+	$PLAC=safe_POST("{$fact}_PLAC", PGV_REGEX_UNSAFE);
+	if ($DATE || $PLAC) {
+		$gedrec="1 {$fact}\n";
+		if ($DATE) {
+			$DATE=check_input_date($DATE);
+			$gedrec.="2 DATE {$DATE}\n";
+		}
+		if ($PLAC) {
+			$gedrec.="2 PLAC {$PLAC}\n";
+
+			if (preg_match_all('/([A-Z0-9_]+)/', $ADVANCED_PLAC_FACTS, $match)) {
+				foreach ($match[1] as $tag) {
+					$TAG=safe_POST("{$fact}_{$tag}", PGV_REGEX_UNSAFE);
+					if ($TAG) {
+						$gedrec.="3 {$tag} {$TAG}\n";
+					}
+				}
+			}
+			$LATI=safe_POST("{$fact}_LATI", PGV_REGEX_UNSAFE);
+			$LONG=safe_POST("{$fact}_LONG", PGV_REGEX_UNSAFE);
+			if ($LATI || $LONG) {
+				$gedrec.="3 MAP\n4 LATI {$LATI}\n4 LONG {$LONG}\n";
+			}
+		}
+		$SOUR=safe_POST_bool("SOUR_{$fact}");
+		if ($SOUR && count($tagSOUR)>0) {
+			$gedrec=updateSOUR($gedrec, 2);
+		}
+		return $gedrec;
+	} elseif ($FACT) {
+		return "1 {$fact} Y\n";
+	} else {
+		return '';
+	}
+}
+
 /**
  * Add Debug Log
  *
