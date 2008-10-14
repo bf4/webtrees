@@ -33,6 +33,8 @@ if (!defined('PGV_PHPGEDVIEW')) {
 }
 
 // Added in VERSION 4.1.6
+$pgv_lang["lb_toAdminConfigPage"]	= "חזור לדף ניהול"; 
+$pgv_lang["lb_manage"]		= "ניהול הגדרות Lightbox"; 
 $pgv_lang["lb_generalhelp"]     	= "דף אישי - עזרה כללית של Lightbox"; 
 $pgv_lang["lb_viewedit"]		= "ראה/ערוך"; 
 $pgv_lang["lb_viewnotes"]		= "ראה הערות"; 

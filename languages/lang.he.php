@@ -31,6 +31,9 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
+$pgv_lang["exact"]				= "בדיוק";
+$pgv_lang["advanced_search"] 		= "חיפוש מתקדם"; 
+$pgv_lang["more_fields"]			= "הוסף עוד שדות"; 
 $pgv_lang["install_step_8"] 			= "התחל"; 
 $pgv_lang["parent_family"]			= "משפחה של הורים"; 
 $pgv_lang["step_parent_family"]		= "משפחה של הורה חורג";
@@ -642,7 +645,8 @@ $pgv_lang["husb_age"]		= "גיל הבעל";
 $pgv_lang["wife_age"]			= "גיל האישה"; 
 $pgv_lang["days"]			= "ימים";
 $pgv_lang["months"]			= "חודשים";
-$pgv_lang["years"]			= "שנים";
+$pgv_lang["years"]			= "שנים"; // >2 שנים
+$pgv_lang["years2"]			= "שנים";	// 2 שנים  
 $pgv_lang["day1"]			= "יום";
 $pgv_lang["month1"]			= "חודש";
 $pgv_lang["year1"]			= "שנה";
