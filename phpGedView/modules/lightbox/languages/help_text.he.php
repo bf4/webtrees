@@ -34,9 +34,13 @@ if (!defined('PGV_PHPGEDVIEW')) {
 
 // Added in VERSION 4.1.6
 
+$pgv_lang["LIGHTBOX_CONFIG"]           	= "הגדרות Lightbox";
+$pgv_lang["LIGHTBOX_CONFIG_help"]      	= "~#pgv_lang[LIGHTBOX_CONFIG]#~<br /><br />הגדר כאן את כל ההיבטים של המודול Lightbox."; 
+
+
 // Lightbox general help file  ---------------------------------------------------------------------------------------------------------
-$pgv_lang["lb_generalLegend"]		 = "עזרה כללית לאלבום-Lightbox"; 
-$pgv_lang["lb_general_help"]		 = "~#pgv_lang[lb_generalLegend]#~<br /><br /><ul>#pgv_lang[lb_general_help1]##pgv_lang[lb_general_help2]##pgv_lang[lb_general_help3]##pgv_lang[lb_general_help4]##pgv_lang[lb_general_help5]##pgv_lang[lb_general_help6]##pgv_lang[lb_general_help7]##pgv_lang[lb_general_help8]##pgv_lang[lb_general_help9]##pgv_lang[lb_general_help10]#</ul>"; 
+$pgv_lang["lb_generalLegend"]		= "עזרה כללית לאלבום-Lightbox"; 
+$pgv_lang["lb_general_help"]		 	= "~#pgv_lang[lb_generalLegend]#~<br /><br /><ul>#pgv_lang[lb_general_help1]##pgv_lang[lb_general_help2]##pgv_lang[lb_general_help3]##pgv_lang[lb_general_help4]##pgv_lang[lb_general_help5]##pgv_lang[lb_general_help6]##pgv_lang[lb_general_help7]##pgv_lang[lb_general_help8]##pgv_lang[lb_general_help9]##pgv_lang[lb_general_help10]#</ul>"; 
 $pgv_lang["lb_general_help1"]		 = "<li>~כדי לראות הערות או פירוט, או מקור קשור לתמונה~<br /><b>תפריט נפתח:</b><br />רחף מעל הקישור <b>#pgv_lang[lb_viewedit]#</b> מתחת לתמונה הממוזערת ויופיע תפריט נפתח. הברירות הן <b>#pgv_lang[lb_viewnotes]#</b> (אם קיימים), <b>#pgv_lang[lb_viewdetails]#</b> וגם <b>#pgv_lang[lb_viewsource]#</b>.<br /><br /><b>צפיה:</b><br />לחיצה על <b>#pgv_lang[lb_viewnotes]#</b> מציגה <b>#pgv_lang[lb_balloon_true]#</b> עם נתוני ההערה בתוכה. לחץ שנית כדי לסגור את ה<b>#pgv_lang[lb_balloon_true]#</b>.<br />לחיצה על <b>#pgv_lang[lb_viewdetails]#</b> מעבירה אותך לדף מבט מדיה (Mediaviewer), ו<b>#pgv_lang[lb_viewsource]#</b> יקח אותך (אם מורשה) אל דף המקור של פריט המדיה.<br /><br /><b>עריכה:</b><br />(קיימות אופציות עריכה נוספות החל מרמת עורכים)<br /><br /><b>תמונת Lightbox פתוחה:</b><br />כאשר מסתכלים על תמונת Lightbox פתוחה, ניתן ללחוץ על צלמיות <b>#pgv_lang[lb_viewnotes]#</b> ו<b>#pgv_lang[lb_viewdetails]#</b> על הגבול מתחת לתמונה.<br /><br /></li>";
 $pgv_lang["lb_general_help2"]		 = "<li>~לראות תמונה~<br />לחץ על תמונה ממוזערת כלשהי. כותרת התמונה תופיע בחלק העליון של התמונה המכסה.<br /><br /></li>"; 
 $pgv_lang["lb_general_help3"]		 = "<li>~להשתמש בצורת זום~<br /><b>הערה:</b><br />יש לעצור את מצגת השקפים כדי לראות את צלמיות הזום.<br /><br /><b>אפשר זום:</b><br />כאשר רואים את הצלמית הירוקה של פלוס בתחתית התמונה בצד ימין, הזום כבר פעיל. השתמש בגלגל העכבר למעלה ולמטה כדי לשנות את הגודל. (או השתמש במקשי <b>i</b> ו-<b>o</b>). הצלמית תשתנה למינוס אדום.<br />כאשר התמונה תשונה לגודל גדול מהדף המוצג, גרור ושחרר את התמונה, או השתמש במקשי החצים להזיז את התמונה.<br /><br /><b>מנע זום:</b><br />לחץ פעמיים בתוך התמונה, או לחץ על הצלמית מינוס האדומה בתחתית מימין כדי לצאת מאופן הזום. (או השתמש במקש <b>z</b>)<br /><br /></li>"; 
@@ -55,9 +59,9 @@ $pgv_lang["lb_tt_balloon_help"]	= "~#pgv_lang[lb_tt_balloonLegend]#~<br />האו
 
 // VERSION 4.1.3 
 $pgv_lang["mediatabLegend"]		= "הופעת חוצץ מדיה";
-$pgv_lang["mediatab_help"]		= "~#pgv_lang[mediatabLegend]#~<br />הבחירה מאפשרת לך לקבוע אם להראות את חוצץ המדיה על דף #pgv_lang[indi_info]#.<br /><br />כאשר הערך הוא <b>#pgv_lang[hide]#</b>, מראים רק את החוצץ <b>#pgv_lang[lightbox]#</b>, והוא יקרא גם כן <b>#pgv_lang[media]#</b>.<br />";
+$pgv_lang["mediatab_help"]		= "~#pgv_lang[mediatab]#~<br />הבחירה מאפשרת לך לקבוע אם להראות את חוצץ המדיה על דף #pgv_lang[indi_info]#.<br /><br />כאשר הערך הוא <b>#pgv_lang[hide]#</b>, מראים רק את החוצץ <b>#pgv_lang[lightbox]#</b>.<br />";
 $pgv_lang["lb_al_head_linksLegend"]	= "הופעת קישור חוצץ כותרת של אלבום";
-$pgv_lang["lb_al_head_links_help"]		= "~#pgv_lang[lb_al_head_linksLegend]#~<br />הבחירה מאפשרת לקבוע אם אזור הכותרת של ה#pgv_lang[lightbox]# tab, אשר מכילה קישורים לשליטת הבטים שונים של מודול ה-Lightbox, תכלול רק צלמיות, רק טכסט או שניהם.<br /><br />בחירה <b>#pgv_lang[lb_icon]#</b> אינה שימושית מאוד, מכיוון שלא רואים שום סימן לשימוש של הצלמיות עד שהעכבר מרחף מעל הצלמית.<br />"; //@@
+$pgv_lang["lb_al_head_links_help"]		= "~#pgv_lang[lb_al_head_linksLegend]#~<br />הבחירה מאפשרת לקבוע אם אזור הכותרת של ה#pgv_lang[lightbox]# tab, אשר מכיל קישורים לשליטת היבטים שונים של מודול ה-Lightbox, יכלול רק צלמיות, רק טכסט או שניהם.<br /><br />הבחירה <b>#pgv_lang[lb_icon]#</b> אינה שימושית מאוד, מכיוון שלא רואים שום סימן לשימוש של הצלמיות עד שהעכבר מרחף מעל הצלמית.<br />";
 $pgv_lang["lb_al_thumb_linksLegend"]	= "הופעת קישור חוצץ עמוד תמונות ממוזערות של אלבום ";
 $pgv_lang["lb_al_thumb_links_help"]		= "~#pgv_lang[lb_al_thumb_linksLegend]#~<br />הבחירה מאפשרת לקבוע אם אזור הקישורים מתחת לכל תמונה ממוזערת יראה צלמית או טכסט.  הקישורים שאותם רואים כאן מאפשרים עריכה של פירטי ישות מדיה או מחיקתה.<br />";
 $pgv_lang["lb_ml_thumb_linksLegend"]	= "הופעת קישור תמונות ממוזערות";

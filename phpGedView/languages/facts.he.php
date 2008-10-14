@@ -172,6 +172,7 @@ $factarray["FAMC:WIFE:BIRT:PLAC"] = "מקום הלידה של האם";
 $factarray["FAMC:MARR:PLAC"] = "מקום הנישואין של ההורים";
 $factarray["FAMC:HUSB:OCCU"] = "המקצוע של האב";
 $factarray[":BIRT:PLAC"] = "מקום הלידה";
+$factarray["FAMS:MARR:DATE"] = "תאריך נישואין"; 
 $factarray["FAMS:MARR:PLAC"] = "מקום הנישואין";
 $factarray["FAMS:SPOUSE:DEAT:PLAC"] = "מקום הפטירה של בן/בת הזוג";
 $factarray["FAMC:HUSB:GIVN"] = "שם פרטי של האב";
@@ -184,16 +185,22 @@ $factarray["FAMC:HUSB:FAMC:WIFE:GIVN"] = "שם פרטי של הסבתא מצד �
 $factarray["FAMS:CHIL:BIRT:PLAC"] = "מקום הלידה של בן/בת";
 // These facts are all colon delimited
 $factarray["BIRT:PLAC"] = "מקום לידה";
+$factarray["BIRT:DATE"] = "תאריך לידה";
 $factarray["DEAT:PLAC"] = "מקום פטירה";
+$factarray["DEAT:DATE"] = "תאריך פטירה";
 $factarray["CHR:PLAC"] = "מקום טבילה";
+$factarray["CHR:DATE"] = "תאריך טבילה"; 
 $factarray["BAPM:PLAC"] = "מקום הטבלה";
+$factarray["BAPM:DATE"] = "תאריך הטבלה";
 $factarray["BURI:PLAC"] = "מקום קבורה";
+$factarray["BURI:DATE"] = "תאריך קבורה";
 $factarray["MARR:PLAC"] = "מקום נישואין"; 
+$factarray["MARR:DATE"] = "תאריך נישואין"; 
 
 // These facts are specific to GEDCOM exports from Family Tree Maker
-$factarray["_MDCL"] = "רפואי";
+$factarray["_MDCL"] 	= "רפואי";
 $factarray["_DEG"]	= "דרגה";
-$factarray["_MILT"] = "שרות צבאי";
+$factarray["_MILT"] 	= "שרות צבאי";
 $factarray["_SEPR"]	= "פרוד";
 $factarray["_DETS"]	= "מוות של אחד מבני הזוג";
 $factarray["CITN"]	= "אזרחות";
@@ -206,14 +213,15 @@ $factarray["_FA6"] 	= "עובדה 6";
 $factarray["_FA7"] 	= "עובדה 7";
 $factarray["_FA8"] 	= "עובדה 8";
 $factarray["_FA9"] 	= "עובדה 9";
-$factarray["_FA10"] = "עובדה 10";
-$factarray["_FA11"] = "עובדה 11";
-$factarray["_FA12"] = "עובדה 12";
-$factarray["_FA13"] = "עובדה 13";
-$factarray["_MREL"] = "קשר אל אמא";
-$factarray["_FREL"] = "קשר אל אבא";
-$factarray["_MSTAT"] = "מעמד תחילת נישואין";
-$factarray["_MEND"]  = "מעמד סיום נישואין";
+$factarray["_FA10"] 	= "עובדה 10";
+$factarray["_FA11"] 	= "עובדה 11";
+$factarray["_FA12"] 	= "עובדה 12";
+$factarray["_FA13"] 	= "עובדה 13";
+$factarray["_MREL"] 	= "קשר אל אמא";
+$factarray["_FREL"] 	= "קשר אל אבא";
+$factarray["_MSTAT"] 	= "מעמד תחילת נישואין";
+$factarray["_MEND"]  	= "מעמד סיום נישואין";
+$factarray["_NAMS"]	= "נקרא על שם"; 
 
 // GEDCOM 5.5.1 related facts
 $factarray["FAX"] 	= "פקס";
