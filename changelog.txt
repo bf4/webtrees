@@ -10,6 +10,7 @@
 
 
 Version 4.1.6
+ - Changed: Small change to "return button" link on admin page Lightbox configuration (windmillway)
  - Added: [ 2145398 ] [ 2148349 ] Admin Config Page Link to Lightbox configuration (windmillway)
  - Fixed: [ 1985973 ] ASSO tag GUI doesn't work (fisharebest)
  - Fixed: [ 1876508 ] gender icon distorted (fisharebest)
