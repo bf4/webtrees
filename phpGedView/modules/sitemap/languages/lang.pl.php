@@ -1,9 +1,9 @@
 <?php
 /**
- * English Language file for PhpGedView.
+ * Polish Language file for PhpGedView.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team. All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,7 +21,7 @@
  *
  * @package PhpGedView
  * @subpackage SiteMap
- * @version $Id: lang.en.php 1380 2007-12-22 21:27:47Z wooc $
+ * @version $Id$
  */
 
 if (!defined('PGV_PHPGEDVIEW')) {
@@ -30,10 +30,11 @@ if (!defined('PGV_PHPGEDVIEW')) {
 }
 
 // Admin menu
+$pgv_lang["sitemap"]       			= "Mapa strony";
 $pgv_lang["generate_sitemap"]       = "Generuj pliki mapy strony";
 
 // Sitemap pages
-$pgv_lang["selected_item"]          = "Zaznacz pozycje, które mają być<br />zmieszczone w pliku mapy strony:";
+$pgv_lang["selected_item"]          = "Zaznacz pozycje, które mają być<br />zamieszczone w pliku mapy strony:";
 $pgv_lang["gedcoms_selected"]       = "Pliki GEDCOM do zamieszczenia<br />w pliku mapy strony:";
 $pgv_lang["sitemaps_generated"]     = "Następujące pliki mapy strony zostały wygenerowane i mogą być pobrane:";
 $pgv_lang["sitemaps_placement"]     = "Zamieść wszystkie pliki znajdujące się w katalogu głównym phpGedView.";
@@ -53,6 +54,5 @@ $pgv_lang["sm_yearly"]              = "rocznie";
 $pgv_lang["sm_never"]               = "nigdy";
 $pgv_lang["sm_generate"]            = "Generuj";
 $pgv_lang["gedcoms_privacy"]        = "Brak linków do prywatnych informacji";
-
 
 ?>

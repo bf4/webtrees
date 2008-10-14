@@ -1,11 +1,11 @@
 <?php
 /**
- * Googlemap configuration User Interface.
+ * Sitemap configuration User Interface.
  *
  * Provides links for administrators to get to other administrative areas of the site
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team. All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -36,6 +36,9 @@ if (!defined('PGV_PHPGEDVIEW')) {
 loadLangFile("sitemap:lang, sitemap:help_text");
 
 if (PGV_USER_IS_ADMIN) { ?>
+   <tr>
+	  <td colspan="2" class="topbottombar" style="text-align:center; "><?php echo $pgv_lang["sitemap"]; ?></td>
+   </tr>
    <tr>
       <td class="optionbox"><?php print_help_link("SITEMAP_help", "qm", "SITEMAP");?><a href="module.php?mod=sitemap"><?php print $pgv_lang["generate_sitemap"];?></a>
 	  </td>

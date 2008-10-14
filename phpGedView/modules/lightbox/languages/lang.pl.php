@@ -33,6 +33,8 @@ if (!defined('PGV_PHPGEDVIEW')) {
 }
 
 // Added in VERSION 4.1.6
+$pgv_lang["lb_toAdminConfigPage"]	= "Wróć do poprzedniej strony";
+$pgv_lang["lb_manage"]				= "Zarządzaj konfiguracją Lightbox-Album";
 $pgv_lang["lb_generalhelp"]     = "Strona informacji o osobie - Pomoc Ogólna - Lightbox";
 $pgv_lang["lb_viewedit"]		= "Zobacz/Edytuj";
 $pgv_lang["lb_viewnotes"]		= "Zobacz notatki";
