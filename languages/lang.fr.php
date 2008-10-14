@@ -1792,8 +1792,11 @@ $pgv_lang["removed_descending_20"] = "Déplacé vingt fois dans le sens descenda
 $pgv_lang["block_givn_top10_title"]		= "Top 10 des prénoms";
 $pgv_lang["block_givn_top10"]			= "Top 10 des prénoms";
 $pgv_lang["block_givn_top10_descr"]		= "Ce bloc affiche une table des 10 prénoms les plus fréquents présents dans la base de données. Le nombre de prénoms affiché dans ce bloc est configurable.";
-$pgv_lang["godson"]		= "Filleul";
-$pgv_lang["goddaughter"] = "Filleule";
-$pgv_lang["godchild"]	= "Filleul / filleule";
+$pgv_lang["godson"]				= "Filleul";
+$pgv_lang["goddaughter"]		= "Filleule";
+$pgv_lang["godchild"]			= "Filleul / filleule";
+$pgv_lang["exact"]				= "Exact";
+$pgv_lang["advanced_search"] 	= "Recherche avancée";
+$pgv_lang["more_fields"]		= "Ajouter d'autres champs";
 
 ?>
