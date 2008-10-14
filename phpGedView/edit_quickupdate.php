@@ -2344,14 +2344,15 @@ for($j=1; $j<=count($cfams); $j++) {
 	$famreqdfacts = preg_split("/[,; ]/", $QUICK_REQUIRED_FAMFACTS);
 	$parents = find_parents($cfams[$j-1]);
 	$famid = $cfams[$j-1];
+	$family=Family::getInstance($famid);
 	if (!isset($pgv_changes[$famid."_".$GEDCOM])) $famrec = find_family_record($famid);
 	else $famrec = find_updated_record($famid);
 
-    $subrecords = $family->getFacts(array("HUSB","WIFE","CHIL"));
+	$subrecords = $family->getFacts(array("HUSB","WIFE","CHIL"));
 	$famfacts = array();
 	foreach($subrecords as $ind=>$eventObj) {
-        $fact = $eventObj->getTag();
-        $event = $eventObj->getDetail();    
+		$fact = $eventObj->getTag();
+		$event = $eventObj->getDetail();    
 		if ($fact=="EVEN" || $fact=="FACT") $fact = $eventObj->getValue("TYPE");
 
 		if (in_array($fact, $famaddfacts)) {
@@ -2360,13 +2361,12 @@ for($j=1; $j<=count($cfams); $j++) {
 				if ($rfact!=$fact) $newreqd[] = $rfact;
 			}
 			$famreqdfacts = $newreqd;
-			
-            $famfacts[] = $eventObj;
+			$famfacts[] = $eventObj;
 		}
 	}
 	foreach($famreqdfacts as $ind=>$fact) {
-        $newEvent = new Event("1 $fact\r\n");
-        $famfacts[] = $newEvent;
+		$newEvent = new Event("1 $fact\r\n");
+		$famfacts[] = $newEvent;
 	}
 	sort_facts($famfacts);
 	$spid = "";
