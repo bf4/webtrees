@@ -266,7 +266,12 @@ $controller->checkPrivacy();
 		<td class="person<?php print $col; ?>" style="padding: 5px;">
 		<?php
 		if ($indi && $indi->canDisplayDetails()) {
-			echo $indi->getSexImage('large', '', $pgv_lang['male']);
+			if ($indi->getSex()=="M")
+				echo $indi->getSexImage('large', '', $pgv_lang['male']);
+			else if ($indi->getSex()=="F")
+				echo $indi->getSexImage('large', '', $pgv_lang['female']);
+			else
+				echo $indi->getSexImage('large', '', $pgv_lang['unknown']);
 		?>
  			<a href="individual.php?pid=<?php print $pid; ?>">&nbsp;<?php print PrintReady($indi->getFullName()); ?><br />
  			<?php $addname = $indi->getAddName(); if (strlen($addname) > 0) print PrintReady($addname); ?>
