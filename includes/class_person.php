@@ -1400,6 +1400,7 @@ class Person extends GedcomRecord {
 					if ($arec) {
 						$fact = $event->getTag();
 						$label = $event->getLabel();
+						$sdate = get_sub_record(2, "2 DATE", $srec);
 						// relationship ?
 						$rrec = get_sub_record(3, "3 RELA", $arec);
 						$rela = trim(substr($rrec, 7));
@@ -1408,7 +1409,7 @@ class Person extends GedcomRecord {
 						$factrec = "1 EVEN\n2 TYPE ".$label."<br/>[ <span class=\"details_label\">";
 						if (isset($pgv_lang[strtolower($rela)])) $factrec .= $pgv_lang[strtolower($rela)]."</span> ]";
 						else if (isset($factarray[$rela])) $factrec .= $factarray[$rela]."</span> ]";
-						$factrec.="\n".get_sub_record(2, '2 DATE', $srec)."\n".get_sub_record(2, '2 PLAC', $srec);
+						$factrec.="\n".$sdate."\n".get_sub_record(2, '2 PLAC', $srec);
 						if (!$event->canShow()) $factrec .= "\n2 RESN privacy";
 						if ($typ=='FAM') {
 							$famrec = find_family_record($rid);
