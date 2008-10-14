@@ -34,6 +34,10 @@ if (!defined('PGV_PHPGEDVIEW')) {
 
 // Added in VERSION 4.1.6
 
+$pgv_lang["LIGHTBOX_CONFIG"]           = "Configure Lightbox";
+$pgv_lang["LIGHTBOX_CONFIG_help"]      = "~#pgv_lang[LIGHTBOX_CONFIG]#~<br /><br />Configure all aspects of the Lightbox module here.";
+
+
 // Lightbox general help file  ---------------------------------------------------------------------------------------------------------
 $pgv_lang["lb_generalLegend"]		 = "Lightbox Album - General Help";
 $pgv_lang["lb_general_help"]		 = "~#pgv_lang[lb_generalLegend]#~<br /><br /><ul>#pgv_lang[lb_general_help1]##pgv_lang[lb_general_help2]##pgv_lang[lb_general_help3]##pgv_lang[lb_general_help4]##pgv_lang[lb_general_help5]##pgv_lang[lb_general_help6]##pgv_lang[lb_general_help7]##pgv_lang[lb_general_help8]##pgv_lang[lb_general_help9]##pgv_lang[lb_general_help10]#</ul>";
@@ -55,7 +59,7 @@ $pgv_lang["lb_tt_balloon_help"]			= "~#pgv_lang[lb_tt_balloonLegend]#~<br />This
 
 // VERSION 4.1.3 
 $pgv_lang["mediatabLegend"]				= "Media Tab Appearance";
-$pgv_lang["mediatab_help"]				= "~#pgv_lang[mediatab]#~<br />This option lets you determine whether the Media tab should be shown on the #pgv_lang[indi_info]# page.<br /><br />When this option is set to <b>#pgv_lang[hide]#</b>, only the <b>#pgv_lang[lightbox]#</b> tab will be shown, and it will also be re-named to <b>#pgv_lang[media]#</b>.<br />";
+$pgv_lang["mediatab_help"]				= "~#pgv_lang[mediatab]#~<br />This option lets you determine whether the Media tab should be shown on the #pgv_lang[indi_info]# page.<br /><br />When this option is set to <b>#pgv_lang[hide]#</b>, only the <b>#pgv_lang[lightbox]#</b> tab will be shown.<br />";
 $pgv_lang["lb_al_head_linksLegend"]		= "Album Tab Header Link appearance";
 $pgv_lang["lb_al_head_links_help"]		= "~#pgv_lang[lb_al_head_linksLegend]#~<br />This option lets you determine whether the header area of the #pgv_lang[lightbox]# tab, which contains links to control various aspects of the Lightbox module, should contain only icons, only text, or both.<br /><br />The <b>#pgv_lang[lb_icon]#</b> option is probably not very useful, since you won't see any indication of each icon's function until your mouse hovers over the icon.<br />";
 $pgv_lang["lb_al_thumb_linksLegend"]	= "Album Tab Thumbnails Link appearance";
