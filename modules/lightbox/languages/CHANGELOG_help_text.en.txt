@@ -34,6 +34,10 @@ occur in the respective language files.
 // Added in VERSION 4.1.6
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 ----------------------------------------------------------------------------------------
+*$pgv_lang["mediatab_help"]							14 Oct 2008				w
++$pgv_lang["LIGHTBOX_CONFIG"]						14 Oct 2008				A 
++$pgv_lang["LIGHTBOX_CONFIG_help"]					14 Oct 2008				A 
+
 *$pgv_lang["lb_general_help1"] 						27 Jun 2008				w 
 *$pgv_lang["lb_general_help"] 						26 Jun 2008				W 
 *$pgv_lang["lb_general_help1"] 						26 Jun 2008				W 

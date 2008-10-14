@@ -33,7 +33,10 @@ occur in the respective language files.
 
 VERSION 4.1.6
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
+
 ----------------------------------------------------------------------------------------
++$pgv_lang["lb_toAdminConfigPage"]					14 Oct 2008				A
++$pgv_lang["lb_manage"]								14 Oct 2008				A
 +$pgv_lang["lb_generalhelp"]						24 Jun 2008				A
 +$pgv_lang["lb_view_notes"]							24 Jun 2008				A
 +$pgv_lang["lb_view_details"]						24 Jun 2008				A
