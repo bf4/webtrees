@@ -917,8 +917,11 @@ case 'addchildaction':
 	$gedrec ="0 @REF@ INDI\n";
 	$gedrec.=addNewName();
 	$gedrec.=addNewSex ();
-	$gedrec.=addNewFact('BIRT');
-	$gedrec.=addNewFact('DEAT');
+	if (preg_match_all('/([A-Z0-9_]+)/', $QUICK_REQUIRED_FACTS, $matches)) {
+		foreach ($matches[1] as $match) {
+			$gedrec.=addNewFact($match);
+		}
+	}
 
 	if (!empty($famid)) {
 		$gedrec .= "\n";
@@ -996,8 +999,11 @@ case 'addspouseaction':
 	$gedrec ="0 @REF@ INDI\n";
 	$gedrec.=addNewName();
 	$gedrec.=addNewSex ();
-	$gedrec.=addNewFact('BIRT');
-	$gedrec.=addNewFact('DEAT');
+	if (preg_match_all('/([A-Z0-9_]+)/', $QUICK_REQUIRED_FACTS, $matches)) {
+		foreach ($matches[1] as $match) {
+			$gedrec.=addNewFact($match);
+		}
+	}
 
 	if (safe_POST_bool('SOUR_INDI')) {
 		$gedrec = handle_updates($gedrec);
@@ -1026,7 +1032,11 @@ case 'addspouseaction':
 			$famrec .= "1 HUSB @$pid@\n";
 		}
 
-		$famrec.=addNewFact('MARR');
+		if (preg_match_all('/([A-Z0-9_]+)/', $QUICK_REQUIRED_FAMFACTS, $matches)) {
+			foreach ($matches[1] as $match) {
+				$famrec.=addNewFact($match);
+			}
+		}
 
 		if (safe_POST_bool('SOUR_FAM')) {
 			$famrec = handle_updates($famrec);
@@ -1043,7 +1053,12 @@ case 'addspouseaction':
 		else $famrec = find_family_record($famid);
 		if (!empty($famrec)) {
 			$famrec = trim($famrec) . "\n1 $famtag @$xref@\n";
-			$famrec.=addNewFact('MARR');
+
+			if (preg_match_all('/([A-Z0-9_]+)/', $QUICK_REQUIRED_FAMFACTS, $matches)) {
+				foreach ($matches[1] as $match) {
+					$famrec.=addNewFact($match);
+				}
+			}
 
 			if (safe_POST_bool('SOUR_FAM')) {
 				$famrec = handle_updates($famrec);
@@ -1139,8 +1154,11 @@ case 'addnewparentaction':
 	$gedrec ="0 @REF@ INDI\n";
 	$gedrec.=addNewName();
 	$gedrec.=addNewSex ();
-	$gedrec.=addNewFact('BIRT');
-	$gedrec.=addNewFact('DEAT');
+	if (preg_match_all('/([A-Z0-9_]+)/', $QUICK_REQUIRED_FACTS, $matches)) {
+		foreach ($matches[1] as $match) {
+			$gedrec.=addNewFact($match);
+		}
+	}
 
 	if (safe_POST_bool('SOUR_INDI')) {
 		$gedrec = handle_updates($gedrec);
@@ -1166,7 +1184,11 @@ case 'addnewparentaction':
 			$famrec .= "1 CHIL @$pid@\n";
 		}
 
-		$famrec.=addNewFact('MARR');
+		if (preg_match_all('/([A-Z0-9_]+)/', $QUICK_REQUIRED_FAMFACTS, $matches)) {
+			foreach ($matches[1] as $match) {
+				$famrec.=addNewFact($match);
+			}
+		}
 
 		if (safe_POST_bool('SOUR_FAM')) {
 			$famrec = handle_updates($famrec);
@@ -1184,7 +1206,11 @@ case 'addnewparentaction':
 		if (!empty($famrec)) {
 			$famrec = trim($famrec) . "\n1 $famtag @$xref@\n";
 
-			$famrec.=addNewFact('MARR');
+			if (preg_match_all('/([A-Z0-9_]+)/', $QUICK_REQUIRED_FAMFACTS, $matches)) {
+				foreach ($matches[1] as $match) {
+					$famrec.=addNewFact($match);
+				}
+			}
 
 			if (safe_POST_bool('SOUR_FAM')) {
 				$famrec = handle_updates($famrec);
