@@ -467,6 +467,7 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 	global $pgv_lang, $factarray, $pid, $PGV_IMAGE_DIR, $PGV_IMAGES, $WORD_WRAPPED_NOTES;
 	global $NPFX_accept, $SPFX_accept, $NSFX_accept, $FILE_FORM_accept, $USE_RTL_FUNCTIONS, $GEDCOM;
 	global $bdm, $TEXT_DIRECTION, $STANDARD_NAME_FACTS, $ADVANCED_NAME_FACTS, $ADVANCED_PLAC_FACTS, $SURNAME_TRADITION;
+	global $QUICK_REQUIRED_FACTS, $QUICK_REQUIRED_FAMFACTS;
 
 	$bdm = ""; // used to copy '1 SOUR' to '2 SOUR' for BIRT DEAT MARR
 	init_calendar_popup();
@@ -718,37 +719,29 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 		else if ($famtag=="WIFE" or $sextag=="F") add_simple_tag("0 SEX F");
 		else add_simple_tag("0 SEX");
 		$bdm = "BD";
-		add_simple_tag("0 BIRT");
-		add_simple_tag("0 DATE", "BIRT");
-		add_simple_tag("0 PLAC", "BIRT");
-		if (preg_match_all('/([A-Z0-9_]+)/', $ADVANCED_PLAC_FACTS, $match))
-			foreach ($match[1] as $tag)
-				add_simple_tag("0 $tag", 'BIRT');
-		add_simple_tag("0 MAP", "BIRT");
-		add_simple_tag("0 LATI", "BIRT");
-		add_simple_tag("0 LONG", "BIRT");
+		if (preg_match_all('/([A-Z0-9_]+)/', $QUICK_REQUIRED_FACTS, $matches)) {
+			foreach ($matches[1] as $match) {
+				if (!in_array($match, explode('|', PGV_EVENTS_DEAT))) {
+					addSimpleTags($match);
+				}
+			}
+		}
 		//-- if adding a spouse add the option to add a marriage fact to the new family
 		if ($nextaction=='addspouseaction' || ($nextaction=='addnewparentaction' && $famid!='new')) {
 			$bdm .= "M";
-			add_simple_tag("0 MARR");
-			add_simple_tag("0 DATE", "MARR");
-			add_simple_tag("0 PLAC", "MARR");
-			if (preg_match_all('/([A-Z0-9_]+)/', $ADVANCED_PLAC_FACTS, $match))
-				foreach ($match[1] as $tag)
-					add_simple_tag("0 $tag", 'MARR');
-			add_simple_tag("0 MAP", "MARR");
-			add_simple_tag("0 LATI", "MARR");
-			add_simple_tag("0 LONG", "MARR");
+			if (preg_match_all('/([A-Z0-9_]+)/', $QUICK_REQUIRED_FAMFACTS, $matches)) {
+				foreach ($matches[1] as $match) {
+					addSimpleTags($match);
+				}
+			}
 		}
-		add_simple_tag("0 DEAT");
-		add_simple_tag("0 DATE", "DEAT");
-		add_simple_tag("0 PLAC", "DEAT");
-		if (preg_match_all('/([A-Z0-9_]+)/', $ADVANCED_PLAC_FACTS, $match))
-			foreach ($match[1] as $tag)
-				add_simple_tag("3 $tag", 'DEAT');
-		add_simple_tag("0 MAP", "DEAT");
-		add_simple_tag("0 LATI", "DEAT");
-		add_simple_tag("0 LONG", "DEAT");
+		if (preg_match_all('/([A-Z0-9_]+)/', $QUICK_REQUIRED_FACTS, $matches)) {
+			foreach ($matches[1] as $match) {
+				if (in_array($match, explode('|', PGV_EVENTS_DEAT))) {
+					addSimpleTags($match);
+				}
+			}
+		}
 	}
 	if (PGV_USER_IS_ADMIN) {
 		print "<tr><td class=\"descriptionbox ".$TEXT_DIRECTION." wrap width25\">";
@@ -1040,6 +1033,7 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 	global $tabkey, $STATUS_CODES, $SPLIT_PLACES, $pid, $linkToID;
 	global $bdm, $PRIVACY_BY_RESN;
 	global $lang_short_cut, $LANGUAGE;
+	global $QUICK_REQUIRED_FACTS, $QUICK_REQUIRED_FAMFACTS;
 
 	if (substr($tag, 0, strpos($tag, "PLAC"))) {
 		?>
@@ -1463,18 +1457,34 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 				if (strpos($bdm, 'B')!==false) {
 					echo '&nbsp;<input type="checkbox" name="SOUR_INDI" checked="checked" value="Y" />';
 					echo $pgv_lang['individual'];
-					echo '&nbsp;<input type="checkbox" name="SOUR_BIRT" value="Y" />';
-					echo $factarray['BIRT'];
-				}
-				if (strpos($bdm, 'M')!==false) {
-					echo '&nbsp;<input type="checkbox" name="SOUR_MARR" value="Y" />';
-					echo $factarray['MARR'];
-					echo '&nbsp;<input type="checkbox" name="SOUR_FAM" value="Y" />';
-					echo $pgv_lang["family"];
+					if (preg_match_all('/([A-Z0-9_]+)/', $QUICK_REQUIRED_FACTS, $matches)) {
+						foreach ($matches[1] as $match) {
+							if (!in_array($match, explode('|', PGV_EVENTS_DEAT))) {
+								echo '&nbsp;<input type="checkbox" name="SOUR_', $match, '" value="Y" />';
+								echo $factarray[$match];
+							}
+						}
+					}	
 				}
 				if (strpos($bdm, 'D')!==false) {
-					echo '&nbsp;<input type="checkbox" name="SOUR_DEAT" value="Y" />';
-					echo $factarray['DEAT'];
+					if (preg_match_all('/([A-Z0-9_]+)/', $QUICK_REQUIRED_FACTS, $matches)) {
+						foreach ($matches[1] as $match) {
+							if (in_array($match, explode('|', PGV_EVENTS_DEAT))) {
+								echo '&nbsp;<input type="checkbox" name="SOUR_', $match, '" value="Y" />';
+								echo $factarray[$match];
+							}
+						}
+					}	
+				}
+				if (strpos($bdm, 'M')!==false) {
+					echo '&nbsp;<input type="checkbox" name="SOUR_FAM" checked="checked" value="Y" />';
+					echo $pgv_lang["family"];
+					if (preg_match_all('/([A-Z0-9_]+)/', $QUICK_REQUIRED_FAMFACTS, $matches)) {
+						foreach ($matches[1] as $match) {
+							echo '&nbsp;<input type="checkbox" name="SOUR_', $match, '" value="Y" />';
+							echo $factarray[$match];
+						}
+					}	
 				}
 			}
 		}
@@ -1622,16 +1632,29 @@ function print_add_layer($tag, $level=2, $printSaveButton=true) {
 	}
 }
 
+// Add some empty tags to create a new fact
+function addSimpleTags($fact) {
+	global $ADVANCED_PLAC_FACTS;
+
+	add_simple_tag("0 {$fact}");
+	add_simple_tag("0 DATE", $fact);
+	add_simple_tag("0 PLAC", $fact);
+	if (preg_match_all('/([A-Z0-9_]+)/', $ADVANCED_PLAC_FACTS, $match))
+		foreach ($match[1] as $tag)
+			add_simple_tag("0 {$tag}", $fact);
+	add_simple_tag("0 MAP", $fact);
+	add_simple_tag("0 LATI", $fact);
+	add_simple_tag("0 LONG", $fact);
+}
+
 // Assemble the pieces of a newly created record into gedcom
-function addNewName($marnm=true) {
+function addNewName() {
 	global $ADVANCED_NAME_FACTS;
 
 	$gedrec='1 NAME '.safe_POST('NAME', PGV_REGEX_UNSAFE, '//')."\n";
 
-	$tags=array('TYPE', 'NPFX', 'GIVN', 'SPFX', 'SURN', 'NSFX');
-	if ($marnm) {
-		$tags[]='_MARNM';
-	}
+	$tags=array('TYPE', 'NPFX', 'GIVN', 'SPFX', 'SURN', 'NSFX', '_MARNM');
+
 	if (preg_match_all('/([A-Z0-9_]+)/', $ADVANCED_NAME_FACTS, $match)) {
 		$tags=array_merge($tags, $match[1]);
 	}
