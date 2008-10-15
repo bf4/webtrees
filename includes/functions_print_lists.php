@@ -188,7 +188,7 @@ function print_indi_table($datalist, $legend="", $option="") {
 			}
 			if ($num==$primary) {
 				$class='list_item name2';
-				$sex_image=$tiny ? $person->getSexImage() : '';
+				$sex_image=$person->getSexImage();
 				list($surn, $givn)=explode(',', $name['sort']);
 			} else {
 				$class='list_item';
