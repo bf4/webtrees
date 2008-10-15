@@ -523,14 +523,20 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 			switch ($nextaction) {
 			case 'addchildaction':
 				if (preg_match('/\/(\S+)\s+\S+\//', $mother_name, $matchm) &&
-				    preg_match('/\/(\S+)\s+\S+\//', $father_name, $matchf))
-				$name_fields['SURN']=$matchf[1].' '.$matchm[1];
+				    preg_match('/\/(\S+)\s+\S+\//', $father_name, $matchf)) {
+					$name_fields['SURN']=$matchf[1].' '.$matchm[1];
+					$name_fields['NAME']='/'.$name_fields['SURN'].'/';
+				}
 				break;
 			case 'addnewparentaction':
-				if ($famtag=='HUSB' && preg_match('/\/(\S+)\s+\S+\//', $indi_name, $match))
+				if ($famtag=='HUSB' && preg_match('/\/(\S+)\s+\S+\//', $indi_name, $match)) {
 					$name_fields['SURN']=$match[1].' ';
-				if ($famtag=='WIFE' && preg_match('/\/\S+\s+(\S+)\//', $indi_name, $match))
+					$name_fields['NAME']='/'.$name_fields['SURN'].'/';
+				}
+				if ($famtag=='WIFE' && preg_match('/\/\S+\s+(\S+)\//', $indi_name, $match)) {
 					$name_fields['SURN']=$match[1].' ';
+					$name_fields['NAME']='/'.$name_fields['SURN'].'/';
+				}
 				break;
 			}
 			break;
@@ -541,14 +547,20 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 			switch ($nextaction) {
 			case 'addchildaction':
 				if (preg_match('/\/\S+\s+(\S+)\//', $mother_name, $matchm) &&
-				    preg_match('/\/\S+\s+(\S+)\//', $father_name, $matchf))
-				$name_fields['SURN']=$matchf[1].' '.$matchm[1];
+				    preg_match('/\/\S+\s+(\S+)\//', $father_name, $matchf)) {
+					$name_fields['SURN']=$matchf[1].' '.$matchm[1];
+					$name_fields['NAME']='/'.$name_fields['SURN'].'/';
+				}
 				break;
 			case 'addnewparentaction':
-				if ($famtag=='HUSB' && preg_match('/\/\S+\s+(\S+)\//', $indi_name, $match))
+				if ($famtag=='HUSB' && preg_match('/\/\S+\s+(\S+)\//', $indi_name, $match)) {
 					$name_fields['SURN']=' '.$match[1];
-				if ($famtag=='WIFE' && preg_match('/\/(\S+)\s+\S+\//', $indi_name, $match))
+					$name_fields['NAME']='/'.$name_fields['SURN'].'/';
+				}
+				if ($famtag=='WIFE' && preg_match('/\/(\S+)\s+\S+\//', $indi_name, $match)) {
 					$name_fields['SURN']=' '.$match[1];
+					$name_fields['NAME']='/'.$name_fields['SURN'].'/';
+				}
 				break;
 			}
 			break;
@@ -557,16 +569,24 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 			// Daughters get their mother's given name plus "sdottir"
 			switch ($nextaction) {
 			case 'addchildaction':
-				if ($sextag=='M' && preg_match('/(\S+)\s+\/.*\//', $father_name, $match))
+				if ($sextag=='M' && preg_match('/(\S+)\s+\/.*\//', $father_name, $match)) {
 					$name_fields['SURN']=preg_replace('/s$/', '', $match[1]).'sson';
-				if ($sextag=='F' && preg_match('/(\S+)\s+\/.*\//', $mother_name, $match))
+					$name_fields['NAME']='/'.$name_fields['SURN'].'/';
+				}
+				if ($sextag=='F' && preg_match('/(\S+)\s+\/.*\//', $mother_name, $match)) {
 					$name_fields['SURN']=preg_replace('/s$/', '', $match[1]).'sdottir';
+					$name_fields['NAME']='/'.$name_fields['SURN'].'/';
+				}
 				break;
 			case 'addnewparentaction':
-				if ($famtag=='HUSB' && preg_match('/(\S+)sson\s+\/.*\//i', $indi_name, $match))
+				if ($famtag=='HUSB' && preg_match('/(\S+)sson\s+\/.*\//i', $indi_name, $match)) {
 					$name_fields['GIVN']=$match[1];
-				if ($famtag=='WIFE' && preg_match('/(\S+)sdottir\s+\/.*\//i', $indi_name, $match))
+					$name_fields['NAME']=$name_fields['GIVN'].' //';
+				}
+				if ($famtag=='WIFE' && preg_match('/(\S+)sdottir\s+\/.*\//i', $indi_name, $match)) {
 					$name_fields['GIVN']=$match[1];
+					$name_fields['NAME']=$name_fields['GIVN'].' //';
+				}
 				break;
 			}
 			break;
@@ -581,12 +601,14 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 				if (preg_match('/\/([a-z]{2,3}\s+)*(.*)\//i', $father_name, $match)) {
 					$name_fields['SPFX']=trim($match[1]);
 					$name_fields['SURN']=$match[2];
+					$name_fields['NAME']="/{$match[1]}{$match[2]}/";
 				}
 				break;
 			case 'addnewparentaction':
 				if ($famtag=='HUSB' && preg_match('/\/([a-z]{2,3}\s+)*(.*)\//i', $indi_name, $match)) {
 					$name_fields['SPFX']=trim($match[1]);
 					$name_fields['SURN']=$match[2];
+					$name_fields['NAME']="/{$match[1]}{$match[2]}/";
 				}
 				break;
 			}
@@ -1385,7 +1407,6 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 			print "<input tabindex=\"".$tabkey."\" type=\"text\" id=\"".$element_id."\" name=\"".$element_name."\" value=\"".PrintReady(htmlspecialchars($value,ENT_COMPAT,'UTF-8'))."\" size=\"".$cols."\" dir=\"ltr\"";
 			echo " class=\"{$fact}\"";
 			echo " autocomplete=\"off\"";
-			// onkeyup should suffice.  Why the others?
 			if (in_array($fact, $subnamefacts)) print " onblur=\"updatewholename();\" onkeyup=\"updatewholename();\"";
 			if ($fact=="DATE") print " onblur=\"valid_date(this);\" onmouseout=\"valid_date(this);\"";
 			if ($fact=="LATI") print " onblur=\"valid_lati_long(this, 'N', 'S');\" onmouseout=\"valid_lati_long(this, 'N', 'S');\"";
