@@ -72,8 +72,13 @@ define('PGV_EVENTS_DIV',  'DIV|ANUL|_SEPR');
 @ini_set('display_errors', '1');
 @error_reporting(0);
 
-//-- required for running PHP in CGI Mode on Windows
-if (!isset($_SERVER['REQUEST_URI'])) $_SERVER['REQUEST_URI'] = "";
+// Microsoft IIS servers don't set REQUEST_URI, so generate it for them.
+if (!isset($_SERVER['REQUEST_URI']))  {
+	$_SERVER['REQUEST_URI']=substr($_SERVER['PHP_SELF'], 1);
+	if (isset($_SERVER['QUERY_STRING'])) {
+		$_SERVER['REQUEST_URI'].='?'.$_SERVER['QUERY_STRING'];
+	}
+}
 
 //-- list of critical configuration variables
 $CONFIG_VARS = array(
