@@ -285,9 +285,9 @@ function tempObj(tab, oXmlHttp) {
 			}
 			//-- initialize lightbox tabs if lightbox installed
 			<?php if (file_exists("modules/lightbox/album.php")) { ?>
-				if (tabid[tab]=='lightbox2' || tabid[tab]=='facts' || tabid[tab]=='media' || tabid[tab]=='relatives') {
-					CB_Init();
-				}
+				// if (tabid[tab]=='lightbox2' || tabid[tab]=='facts' || tabid[tab]=='media' || tabid[tab]=='relatives') {
+				CB_Init();
+				// }
 			<?php } ?>
 			loadedTabs[tab] = true;
 		}
