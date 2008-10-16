@@ -2,7 +2,7 @@
 /**
  * Chinese FAQ texts
  *
- * phpGedView: Genealogy Viewer
+ * PhpGedView: Genealogy Viewer
  * Copyright (C) 2002 to 2008  PGV Development Team
  *
  * This program is free software; you can redistribute it and/or modify
