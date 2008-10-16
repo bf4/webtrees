@@ -464,7 +464,7 @@ function fetch_linked_fam($xref, $link, $ged_id) {
 	return $list;
 }
 function fetch_linked_sour($xref, $link, $ged_id) {
-	global $TBL_PREFIX, $DBCONN;
+	global $TBLPREFIX, $DBCONN; 
 	$xref=$DBCONN->escapeSimple($xref);
 	$link=$DBCONN->escapeSimple($link);
 	$ged_id=(int)$ged_id;
@@ -478,7 +478,7 @@ function fetch_linked_sour($xref, $link, $ged_id) {
 	return $list;
 }
 function fetch_linked_obje($xref, $link, $ged_id) {
-	global $TBL_PREFIX, $DBCONN;	
+	global $TBLPREFIX, $DBCONN;
 	$xref=$DBCONN->escapeSimple($xref);
 	$link=$DBCONN->escapeSimple($link);
 	$ged_id=(int)$ged_id;
@@ -1020,13 +1020,11 @@ function reset_isdead($ged_id=PGV_GED_ID) {
  * @return array the array of sources
  */
 function get_source_list($ged_id) {
-//	global $TBL_PREFIX, $DBCONN;
 	global $TBLPREFIX, $DBCONN;
 	
 	$ged_id=(int)$ged_id;
 	
 	$res=dbquery("SELECT 'SOUR' AS type, s_id AS xref, {$ged_id} AS ged_id, s_gedcom AS gedrec FROM {$TBLPREFIX}sources s WHERE s_file={$ged_id}");
-//	$res=dbquery("SELECT 'SOUR' AS type, s_id AS xref, {$ged_id} AS ged_id, s_gedcom AS gedrec FROM pgv_sources s WHERE s_file={$ged_id}");
 	$list=array();
 	while ($row=$res->fetchRow(DB_FETCHMODE_ASSOC)) {
 		$list[]=Source::getInstance($row);
