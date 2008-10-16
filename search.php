@@ -430,7 +430,7 @@ if ($controller->action == "multisite") {
 			<input tabindex="<?php print $i ?>" type="text" name="multiquery" value="<?php print $controller->mymultiquery; ?>" />
 		</td>
 		<td class="list_value" style="vertical-align: middle; text-align: center; padding: 5px;"  rowspan="1">
-			<input tabindex="<?php print ($i+2); ?>" type="submit" value="<?print $pgv_lang["search"]; ?>" onclick="document.searchform.subaction.value='basic';"/>
+			<input tabindex="<?php print ($i+2); ?>" type="submit" value="<?php print $pgv_lang["search"]; ?>" onclick="document.searchform.subaction.value='basic';"/>
 		</td>
 	</tr>
 	<!-- // this is for the advanced site search -->
