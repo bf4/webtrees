@@ -594,7 +594,7 @@ if(empty($SEARCH_SPIDER)) {
 						print "<tr><td valign=\"top\">\n";
 						print "<div id=\"googlemap_left\">\n";
 						print "<img src=\"images/hline.gif\" width=\"".$GOOGLEMAP_XSIZE."\" height=\"0\" alt=\"\" /><br/>";
-						print "<div id=\"map_pane\" style=\"border: 1px solid gray; width: 100%; height: ".$GOOGLEMAP_YSIZE."px\"></div>\n";
+						print "<div id=\"map_pane\" style=\"border: 1px solid gray; color:black; width: 100%; height: ".$GOOGLEMAP_YSIZE."px\"></div>\n";
 						if (PGV_USER_IS_ADMIN) {
 							print "<table width=\"100%\"><tr>\n";
 							print "<td width=\"33%\" align=\"left\">\n";

@@ -1228,16 +1228,19 @@ a.showit:hover span {
 	top: -60px; 
 	z-index: 1;
 }
+
 .iwstyle {
-	     background-image: url("images/bluegradiant.gif");
-	     padding:10px;
-	     width:360px; /*this is from the original googlemap.php file so should be left in */
-	     /*background-color: #FFFFFF;*/
+	color: white;
+	background-image: url("images/bluegradiant.gif");
+	padding:10px;
+	width:360px; /*this is from the original googlemap.php file so should be left in */
+	/*background-color: #FFFFFF;*/
 }
 .iwstyle a {
 } 
 .iwstyle a:hover {
 }
+
 /* Tag Cloud styles*/
 .tag_cloud_table {
 	width:70%;
