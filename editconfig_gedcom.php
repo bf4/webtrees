@@ -305,6 +305,7 @@ if ($action=="update") {
 	$configtext = preg_replace('/\$FAM_FACTS_UNIQUE\s*=\s*".*";/', "\$FAM_FACTS_UNIQUE = \"".$_POST["NEW_FAM_FACTS_UNIQUE"]."\";", $configtext);
 	$configtext = preg_replace('/\$FAM_ID_PREFIX\s*=\s*".*";/', "\$FAM_ID_PREFIX = \"".$_POST["NEW_FAM_ID_PREFIX"]."\";", $configtext);
 	$configtext = preg_replace('/\$FAVICON\s*=\s*".*";/', "\$FAVICON = \"".$_POST["NEW_FAVICON"]."\";", $configtext);
+	$configtext = preg_replace('/\$FULL_SOURCES\s*=\s*.*;/', "\$FULL_SOURCES = ".$boolarray[$_POST["NEW_FULL_SOURCES"]].";", $configtext);
 	$configtext = preg_replace('/\$GEDCOM_DEFAULT_TAB\s*=\s*".*";/', "\$GEDCOM_DEFAULT_TAB = \"".$_POST["NEW_GEDCOM_DEFAULT_TAB"]."\";", $configtext);
 	$configtext = preg_replace('/\$GEDCOM_ID_PREFIX\s*=\s*".*";/', "\$GEDCOM_ID_PREFIX = \"".$_POST["NEW_GEDCOM_ID_PREFIX"]."\";", $configtext);
 	$configtext = preg_replace('/\$GENERATE_UIDS\s*=\s*.*;/', "\$GENERATE_UIDS = ".$boolarray[$_POST["NEW_GENERATE_UIDS"]].";", $configtext);
@@ -342,6 +343,7 @@ if ($action=="update") {
 	$configtext = preg_replace('/\$PEDIGREE_LAYOUT\s*=\s*.*;/', "\$PEDIGREE_LAYOUT = ".$boolarray[$_POST["NEW_PEDIGREE_LAYOUT"]].";", $configtext);
 	$configtext = preg_replace('/\$PEDIGREE_ROOT_ID\s*=\s*".*";/', "\$PEDIGREE_ROOT_ID = \"".$_POST["NEW_PEDIGREE_ROOT_ID"]."\";", $configtext);
 	$configtext = preg_replace('/\$POSTAL_CODE\s*=\s*.*;/', "\$POSTAL_CODE = ".$boolarray[$_POST["NEW_POSTAL_CODE"]].";", $configtext);
+	$configtext = preg_replace('/\$PREFER_LEVEL2_SOURCES\s*=\s*.*;/', "\$PREFER_LEVEL2_SOURCES = ".$boolarray[$_POST["NEW_PREFER_LEVEL2_SOURCES"]].";", $configtext);
 	$configtext = preg_replace('/\$QUICK_ADD_FACTS\s*=\s*".*";/', "\$QUICK_ADD_FACTS = \"".$_POST["NEW_QUICK_ADD_FACTS"]."\";", $configtext);
 	$configtext = preg_replace('/\$QUICK_ADD_FAMFACTS\s*=\s*".*";/', "\$QUICK_ADD_FAMFACTS = \"".$_POST["NEW_QUICK_ADD_FAMFACTS"]."\";", $configtext);
 	$configtext = preg_replace('/\$QUICK_REQUIRED_FACTS\s*=\s*".*";/', "\$QUICK_REQUIRED_FACTS = \"".$_POST["NEW_QUICK_REQUIRED_FACTS"]."\";", $configtext);
@@ -1919,6 +1921,25 @@ print "&nbsp;<a href=\"javascript: ".$pgv_lang["editopt_conf"]."\" onclick=\"exp
 		<td class="descriptionbox wrap width20"><?php print_help_link("ADVANCED_PLAC_FACTS_help", "qm", "ADVANCED_PLAC_FACTS"); print $pgv_lang["ADVANCED_PLAC_FACTS"]; ?></td>
 		<td class="optionbox"><input type="text" name="NEW_ADVANCED_PLAC_FACTS" value="<?php print $ADVANCED_PLAC_FACTS; ?>" size="40" dir="ltr" tabindex="<?php $i++; print $i; ?>" onfocus="getHelp('ADVANCED_PLAC_FACTS_help');" /></td>
 	</tr>
+
+	<tr>
+		<td class="descriptionbox wrap width20"><?php print_help_link("FULL_SOURCES_help", "qm", "FULL_SOURCES"); print $pgv_lang["FULL_SOURCES"]; ?></td>
+		<td class="optionbox"><select name="NEW_FULL_SOURCES" tabindex="<?php $i++; print $i; ?>" onfocus="getHelp('FULL_SOURCES_help');">
+				<option value="yes" <?php if ($FULL_SOURCES) print "selected=\"selected\""; ?>><?php print $pgv_lang["yes"]; ?></option>
+				<option value="no" <?php if (!$FULL_SOURCES) print "selected=\"selected\""; ?>><?php print $pgv_lang["no"]; ?></option>
+			</select>
+		</td>
+	</tr>
+
+	<tr>
+		<td class="descriptionbox wrap width20"><?php print_help_link("PREFER_LEVEL2_SOURCES_help", "qm", "PREFER_LEVEL2_SOURCES"); print $pgv_lang["PREFER_LEVEL2_SOURCES"]; ?></td>
+		<td class="optionbox"><select name="NEW_PREFER_LEVEL2_SOURCES" tabindex="<?php $i++; print $i; ?>" onfocus="getHelp('PREFER_LEVEL2_SOURCES_help');">
+				<option value="yes" <?php if ($PREFER_LEVEL2_SOURCES) print "selected=\"selected\""; ?>><?php print $pgv_lang["yes"]; ?></option>
+				<option value="no" <?php if (!$PREFER_LEVEL2_SOURCES) print "selected=\"selected\""; ?>><?php print $pgv_lang["no"]; ?></option>
+			</select>
+		</td>
+	</tr>
+
 </table>
 <table class="facts_table" border="0">
 <tr><td style="padding: 5px" class="topbottombar">
