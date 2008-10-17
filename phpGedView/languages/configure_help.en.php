@@ -135,6 +135,10 @@ $pgv_lang["CHANGELOG_CREATE"]		= "Archive ChangeLog files";
 $pgv_lang["CHANGELOG_CREATE_help"]	= "~#pgv_lang[CHANGELOG_CREATE]#~<br /><br />How often should the program archive Changelog files.<br />";
 $pgv_lang["CHART_BOX_TAGS"]		= "Other facts to show in charts";
 $pgv_lang["CHART_BOX_TAGS_help"]		= "~#pgv_lang[CHART_BOX_TAGS]#~<br /><br />This should be a comma or space separated list of facts, in addition to Birth and Death, that you want to appear in chart boxes such as the Pedigree chart.  This list requires you to use fact tags as defined in the GEDCOM 5.5.1 Standard.  For example, if you wanted the occupation to show up in the box, you would add \"OCCU\" to this field.<br />";
+$pgv_lang["FULL_SOURCES"]		= "Use full source citations";
+$pgv_lang["FULL_SOURCES_help"]		= "~#pgv_lang[FULL_SOURCES]#~<br /><br />Source citations can include fields to record the quality of the data (primary, secondary, etc.) and the date the event was recorded in the source.  If you don't use these fields, you can disable them when creating new source citations<br />";
+$pgv_lang["PREFER_LEVEL2_SOURCES"]		= "Prefer fact sources";
+$pgv_lang["PREFER_LEVEL2_SOURCES_help"]		= "~#pgv_lang[PREFER_LEVEL2_SOURCES]#~<br /><br />When adding new close relatives, you can add source citations to the records (e.g. INDI, FAM) or the facts (BIRT, MARR, DEAT).  This option controls which checkboxes are ticked by default.<br />";
 
 
 //-- CONFIGURE FILE MESSAGES

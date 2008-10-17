@@ -10,6 +10,7 @@
 
 
 Version 4.1.6
+ - Added: [ 1810145 ] Simple Sources
  - Added: Enabled re-intialisation of Lightbox (if installed) on any tab on Indi page (windmillway)
  - Fixed: Illegible text on Googlemap GInfoWindowTabs with Themes simplyxxx. (windmillway)
  - Changed: Small change to "return button" link on admin page Lightbox configuration (windmillway)

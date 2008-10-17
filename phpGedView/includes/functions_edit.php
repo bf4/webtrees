@@ -1033,7 +1033,7 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 	global $tabkey, $STATUS_CODES, $SPLIT_PLACES, $pid, $linkToID;
 	global $bdm, $PRIVACY_BY_RESN;
 	global $lang_short_cut, $LANGUAGE;
-	global $QUICK_REQUIRED_FACTS, $QUICK_REQUIRED_FAMFACTS;
+	global $QUICK_REQUIRED_FACTS, $QUICK_REQUIRED_FAMFACTS, $PREFER_LEVEL2_SOURCES;
 
 	if (substr($tag, 0, strpos($tag, "PLAC"))) {
 		?>
@@ -1454,13 +1454,21 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 			//-- checkboxes to apply '1 SOUR' to BIRT/MARR/DEAT as '2 SOUR'
 			if ($level==1) {
 				echo '<br />';
+				if ($PREFER_LEVEL2_SOURCES) {
+					$level1_checked='';
+					$level2_checked=' checked="checked"';
+				} else {
+					$level1_checked=' checked="checked"';
+					$level2_checked='';
+
+				}
 				if (strpos($bdm, 'B')!==false) {
-					echo '&nbsp;<input type="checkbox" name="SOUR_INDI" checked="checked" value="Y" />';
+					echo '&nbsp;<input type="checkbox" name="SOUR_INDI" ', $level1_checked, ' value="Y" />';
 					echo $pgv_lang['individual'];
 					if (preg_match_all('/([A-Z0-9_]+)/', $QUICK_REQUIRED_FACTS, $matches)) {
 						foreach ($matches[1] as $match) {
 							if (!in_array($match, explode('|', PGV_EVENTS_DEAT))) {
-								echo '&nbsp;<input type="checkbox" name="SOUR_', $match, '" value="Y" />';
+								echo '&nbsp;<input type="checkbox" name="SOUR_', $match, '"', $level2_checked, ' value="Y" />';
 								echo $factarray[$match];
 							}
 						}
@@ -1470,18 +1478,18 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 					if (preg_match_all('/([A-Z0-9_]+)/', $QUICK_REQUIRED_FACTS, $matches)) {
 						foreach ($matches[1] as $match) {
 							if (in_array($match, explode('|', PGV_EVENTS_DEAT))) {
-								echo '&nbsp;<input type="checkbox" name="SOUR_', $match, '" value="Y" />';
+								echo '&nbsp;<input type="checkbox" name="SOUR_', $match, '"', $level2_checked, ' value="Y" />';
 								echo $factarray[$match];
 							}
 						}
 					}	
 				}
 				if (strpos($bdm, 'M')!==false) {
-					echo '&nbsp;<input type="checkbox" name="SOUR_FAM" checked="checked" value="Y" />';
+					echo '&nbsp;<input type="checkbox" name="SOUR_FAM" ', $level1_checked, ' value="Y" />';
 					echo $pgv_lang["family"];
 					if (preg_match_all('/([A-Z0-9_]+)/', $QUICK_REQUIRED_FAMFACTS, $matches)) {
 						foreach ($matches[1] as $match) {
-							echo '&nbsp;<input type="checkbox" name="SOUR_', $match, '" value="Y" />';
+							echo '&nbsp;<input type="checkbox" name="SOUR_', $match, '"', $level2_checked, ' value="Y" />';
 							echo $factarray[$match];
 						}
 					}	
@@ -1545,7 +1553,7 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 function print_add_layer($tag, $level=2, $printSaveButton=true) {
 	global $factarray, $pgv_lang, $PGV_IMAGE_DIR, $PGV_IMAGES;
 	global $MEDIA_DIRECTORY, $TEXT_DIRECTION, $PRIVACY_BY_RESN;
-	global $gedrec;
+	global $gedrec, $FULL_SOURCES;
 	if ($tag=="SOUR") {
 		//-- Add new source to fact
 		print "<a href=\"javascript:;\" onclick=\"return expand_layer('newsource');\"><img id=\"newsource_img\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["plus"]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" title=\"\" /> ".$pgv_lang["add_source"]."</a>";
@@ -1562,12 +1570,14 @@ function print_add_layer($tag, $level=2, $printSaveButton=true) {
 		add_simple_tag(($level+1)." $page");
 		// 3 DATA
 		// 4 TEXT
-		// 4 DATE
 		$text = "TEXT";
 		add_simple_tag(($level+2)." $text");
-		add_simple_tag(($level+2)." DATE", "", $pgv_lang["date_of_entry"]);
-		// 3 QUAY
-		add_simple_tag(($level+1)." QUAY");
+		if ($FULL_SOURCES) {
+			// 4 DATE
+			add_simple_tag(($level+2)." DATE", "", $pgv_lang["date_of_entry"]);
+			// 3 QUAY
+			add_simple_tag(($level+1)." QUAY");
+		}
 		// 3 OBJE
 		add_simple_tag(($level+1)." OBJE");
 		print "</table></div>";
@@ -2072,7 +2082,7 @@ function linkMedia($mediaid, $linktoid, $level=1) {
  * @param string $fact	the new fact we are adding
  */
 function create_add_form($fact) {
-	global $tags, $pgv_lang;
+	global $tags, $pgv_lang, $FULL_SOURCES;
 
 	$tags = array();
 
@@ -2093,8 +2103,10 @@ function create_add_form($fact) {
 		if ($fact=="SOUR") {
 			add_simple_tag("2 PAGE");
 			add_simple_tag("3 TEXT");
-			add_simple_tag("3 DATE", "", $pgv_lang["date_of_entry"]);
-			add_simple_tag("2 QUAY");
+			if ($FULL_SOURCES) {
+				add_simple_tag("3 DATE", "", $pgv_lang["date_of_entry"]);
+				add_simple_tag("2 QUAY");
+			}
 		}
 	}
 }
@@ -2109,7 +2121,7 @@ function create_add_form($fact) {
 function create_edit_form($gedrec, $linenum, $level0type) {
 	global $WORD_WRAPPED_NOTES, $pgv_lang, $factarray;
 	global $pid, $tags, $ADVANCED_PLAC_FACTS, $date_and_time, $templefacts;
-	global $lang_short_cut, $LANGUAGE;
+	global $lang_short_cut, $LANGUAGE, $FULL_SOURCES;
 
 	$tags=array();
 	$gedlines = split("\n", $gedrec);	// -- find the number of lines in the record
@@ -2141,11 +2153,15 @@ function create_edit_form($gedrec, $linenum, $level0type) {
 	// where a level 1 tag is missing a level 2 tag.  Here we only need to
 	// handle the more complicated cases.
 	$expected_subtags=array(
-		'SOUR'=>array('PAGE', 'DATA', 'QUAY'),
-		'DATA'=>array('TEXT', 'DATE'),
+		'SOUR'=>array('PAGE', 'DATA'),
+		'DATA'=>array('TEXT'),
 		'PLAC'=>array('MAP'),
 		'MAP' =>array('LATI', 'LONG')
 	);
+	if ($FULL_SOURCES) {
+		$expected_subtags['SOUR'][]='QUAY';
+		$expected_subtags['DATA'][]='DATE';
+	}
 	if (preg_match_all('/([A-Z0-9_]+)/', $ADVANCED_PLAC_FACTS, $match))
 		$expected_subtags['PLAC']=array_merge($match[1], $expected_subtags['PLAC']);
 

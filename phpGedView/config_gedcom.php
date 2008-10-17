@@ -200,6 +200,8 @@ $GENERATE_UIDS = false;		//-- automatically generate _UID fields for records tha
 $ADVANCED_NAME_FACTS = "NICK,_HEB,ROMN";
 $ADVANCED_PLAC_FACTS = "";
 $SURNAME_TRADITION = "paternal";
+$FULL_SOURCES=true; // Include the quality-of-data and date-of-entry-in-original-source fields
+$PREFER_LEVEL2_SOURCES=false; // Default for checkboxes when adding close relatives
 
 $ENABLE_RSS = true;
 $RSS_FORMAT = "ATOM";		//-- default feed format.
