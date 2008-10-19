@@ -31,8 +31,8 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
-$pgv_lang["SHOW_LIST_PLACES"]	= "In Listen zu zeigende Ebenen von Ortsangaben";
-$pgv_lang["SHOW_LIST_PLACES_help"]	= "~#pgv_lang[SHOW_LIST_PLACES]#~<br /><br />Diese Option bestimmt, wie viele Ebenen der Ortsangaben in Listen zu zeigen sind.<br /><br />Die Wahl <b>9</b> bestimmt, dass alle Ortsangaben gezeigt werden.  Wenn Sie <b>0</b> (Null) wählen, werden keine Orte gezeigt.  Die Wahl <b>1</b> bedeutet, dass nur die höchste Ebene (normalerweise das Land) gezeigt wird.  Wenn Sie <b>2</b> wählen, werden die zwei höchsten Ebenen gezeigt.  Die zweit-höchste Ebene (unter dem Land) könnte Staat, Bundesland oder Provinz sein.  Usw.<br />";
+$pgv_lang["SHOW_LIST_PLACES"]	= "In Listen zu zeigende Ebenen der Ortsangaben";
+$pgv_lang["SHOW_LIST_PLACES_help"]	= "~#pgv_lang[SHOW_LIST_PLACES]#~<br /><br />Diese Option bestimmt, wie viele Ebenen der Ortsangaben in Listen zu zeigen sind.<br /><br />Die Wahl <b>9</b> bestimmt, dass alle Ortsangaben gezeigt werden.  Wenn Sie <b>0</b> (Null) wählen, werden keine Orte gezeigt.  Die Wahl <b>1</b> bedeutet, dass nur die höchste Ebene (normalerweise das Land) gezeigt wird.  Wenn Sie <b>2</b> wählen, werden die zwei höchsten Ebenen gezeigt.  Die zweit-höchste Ebene (unter dem Land) knnte Staat, Bundesland oder Provinz sein.  Usw.<br />";
 
 //-- CONFIGURE FILE MESSAGES
 $pgv_lang["gedcom_conf"]		= "GEDCOM Grundlagen";
@@ -519,22 +519,27 @@ $pgv_lang["um_bu_usinfo"] = "Benutzer-Dateien, Konfiguration der Blöcke, Leseze
 $pgv_lang["um_bu_media"]	= "Medien-Dateien";
 $pgv_lang["um_mk_bu"] = "Erstelle Backup";
 $pgv_lang["um_nofiles"] = "Keine Dateien für Sicherheitskopie gefunden.<br />";
-$pgv_lang["um_files_exist"] = "Möchten Sie bereits bestehenden Ausgangs-Dateien überschreiben?";
-$pgv_lang["um_results"]		= "Ergebnis";
-$pgv_lang["time_limit_help"]			= "~#pgv_lang[time_limit]#~<br /><br />Maximale Import-Laufzeit.<br />";
-$pgv_lang["THUMBNAIL_WIDTH"]			= "Breite des erstellten Miniaturbildes";
+$pgv_lang["um_files_exist"] 		= "Möchten Sie bereits bestehenden Ausgangs-Dateien überschreiben?";
+$pgv_lang["um_results"]				= "Ergebnis";
+$pgv_lang["time_limit_help"]		= "~#pgv_lang[time_limit]#~<br /><br />Maximale Import-Laufzeit.<br />";
+$pgv_lang["THUMBNAIL_WIDTH"]		= "Breite des erstellten Miniaturbildes";
 $pgv_lang["SHOW_SOURCES"]			= "Zeige Quellen";
 $pgv_lang["SPLIT_PLACES"]			= "Orte im Bearbeitungsmodus teilen";
 $pgv_lang["UNDERLINE_NAME_QUOTES"]	= "Namen zwischen Anführungszeichen unterstreichen";
 $pgv_lang["PRIVACY_BY_RESN"]		= "Datenschutz je GEDCOM (RESN) benutzen";
-$pgv_lang["SHOW_LDS_AT_GLANCE"]			= "HLT Ordinanz-Codes in Boxen zeigen";
-$pgv_lang["GEDCOM_DEFAULT_TAB"]			= "Auf der «Persönliche Informationen» Seite zu zeigender Standard-Ordner";
+$pgv_lang["SHOW_LDS_AT_GLANCE"]		= "HLT Ordinanz-Codes in Boxen zeigen";
+$pgv_lang["GEDCOM_DEFAULT_TAB"]		= "Auf der «Persönliche Informationen» Seite zu zeigender Standard-Ordner";
 $pgv_lang["SHOW_MARRIED_NAMES"]		= "Ehenamen in der Personenliste zeigen";
 $pgv_lang["SHOW_QUICK_RESN"]		= "Datenschutz-Felder im Schnell-Edit Formular zeigen";
 $pgv_lang["USE_QUICK_UPDATE"]		= "Schnell-Edit Formular benutzen";
 $pgv_lang["SEARCHLOG_CREATE"]		= "SearchLog-Dateien Archiv";
 $pgv_lang["CHANGELOG_CREATE"]		= "ChangeLog-Dateien Archiv";
-$pgv_lang["CHART_BOX_TAGS"]		= "Andere auf Diagrammen zu zeigende Ereignisse";
+$pgv_lang["CHART_BOX_TAGS"]			= "Andere auf Diagrammen zu zeigende Ereignisse";
+$pgv_lang["CHART_BOX_TAGS_help"]	= "~#pgv_lang[CHART_BOX_TAGS]#~<br /><br />Diese Liste, dessen Einträge durch Komma oder Leerzeichen getrennt sind, bestimmt die Ereignisse oder Fakten die in Boxen in Diagrammen auftreten dürfen.  Alle Einträge in dieser Liste müssen Fakten, wie sie im GEDCOM 5.5.1 Standard bestimmt sind, sein.  Zum Beispiel, falls der Beruf der Person in dessen Box zu zeigen ist, muß dieses Feld den Eintrag <b>OCCU</b> enthalten.<br />";
+$pgv_lang["FULL_SOURCES"]			= "Vollständige Quellen-Zitate benutzen";
+$pgv_lang["FULL_SOURCES_help"]		= "~#pgv_lang[FULL_SOURCES]#~<br /><br />Quellen-Zitate können Felder enthalten, die die Qualität der Daten oder das Datum des Eintrages in der Quelle beschreiben.  Wenn Sie solche Felder nicht benutzen, können Sie sie in neuen Quellen-Zitaten verbergen.<br />";
+$pgv_lang["PREFER_LEVEL2_SOURCES"]	= "Quellen-Zitate mit Fakten verbinden";
+$pgv_lang["PREFER_LEVEL2_SOURCES_help"]	= "~#pgv_lang[PREFER_LEVEL2_SOURCES]#~<br /><br />Wenn Sie neue nahe Verwandte in die Datenbank eintragen, können Sie auch Quellen-Zitate den Datensätzen (INDI, FAM) hinzufügen.  Quellen-Zitate können auch den verschiedenen Fakten (BIRT, MARR, DEAT) hinzugefügt werden.  Diese Option bestimmt die ursprünglich angekreuzten Boxen.<br />";
 $pgv_lang["FAM_FACTS_ADD"] 			= "Familienereignisse hinzufügen";
 $pgv_lang["FAM_FACTS_ADD_help"]		= "~#pgv_lang[FAM_FACTS_ADD]#~<br /><br />Diese Liste enthält alle Ereignisse die diesem Familien-Datensatz hinzugefügt werden können.  Sie können diese Liste durch Entfernen oder Hinzufügen von Ereignis-Codes nach Ihren Wünschen ändern.  Ereignis-Codes dieser Liste dürfen <u>nicht</u> in der <i>#pgv_lang[FAM_FACTS_UNIQUE]#</i> Liste vorkommen.  D.h., jedes Ereignis-Code darf in nur einer Liste vorkommen.<br />";
 $pgv_lang["FAM_FACTS_UNIQUE"] 		= "Einmal vorkommende Familienereignisse";
