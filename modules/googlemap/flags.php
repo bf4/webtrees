@@ -105,7 +105,6 @@ if ($action == "ChangeFlag") {
 			window.opener.document.editplaces.icon.value = "places/<?php echo $countrySelected."/flags/".$flags[$_POST["FLAGS"]];?>.gif";
 			window.opener.document.getElementById('flagsDiv').innerHTML = "<img src=\"places/<?php echo $countrySelected."/flags/".$flags[$_POST["FLAGS"]];?>.gif\">&nbsp;&nbsp;<a href=\"javascript:;\" onclick=\"change_icon();return false;\"><?php echo $pgv_lang["pl_change_flag"]?></a>&nbsp;&nbsp;<a href=\"javascript:;\" onclick=\"remove_icon();return false;\"><?php echo $pgv_lang["pl_remove_flag"]?></a>";
 <?php } ?>
-			if (window.opener.showchanges) window.opener.showchanges();
 			window.close();
 		}
 	//-->
@@ -135,7 +134,6 @@ else {
 	}
 
 	function edit_close() {
-		if (window.opener.showchanges) window.opener.showchanges();
 		window.close();
 	}
 
