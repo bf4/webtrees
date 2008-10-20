@@ -2348,7 +2348,7 @@ for($j=1; $j<=count($cfams); $j++) {
 	if (!isset($pgv_changes[$famid."_".$GEDCOM])) $famrec = find_family_record($famid);
 	else $famrec = find_updated_record($famid);
 
-	$subrecords = $family->getFacts(array("HUSB","WIFE","CHIL"));
+	if (isset($family)) $subrecords = $family->getFacts(array("HUSB","WIFE","CHIL"));
 	$famfacts = array();
 	foreach($subrecords as $ind=>$eventObj) {
 		$fact = $eventObj->getTag();
