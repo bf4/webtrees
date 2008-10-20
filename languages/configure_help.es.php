@@ -139,6 +139,10 @@ $pgv_lang["CHANGELOG_CREATE"]		= "Archivar los ficheros ChangeLog";
 $pgv_lang["CHANGELOG_CREATE_help"]	= "~#pgv_lang[CHANGELOG_CREATE]#~<br /><br />Frecuencia con la que debe el programa archivar los ficheros ChangeLog.<br />";
 $pgv_lang["CHART_BOX_TAGS"]		= "Otros hechos a mostrar en los diagramas";
 $pgv_lang["CHART_BOX_TAGS_help"]		= "~#pgv_lang[CHART_BOX_TAGS]#~<br /><br />Esto debería ser una lista de los hechos separados por comas o espacios que, además del nacimiento y defunción, desea que aparezcan en las cajas de los diagramas como el Árbol de Ascendientes.  Esta lista requiere que utilice para los hechos las etiquetas definidas en el Estándar GEDCOM 5.5.1.  Por ejemplo, si deseara que se mostrara la profesión, añadiría \"OCCU\" a este campo.<br />";
+$pgv_lang["FULL_SOURCES"]		= "Usar citas extendidas de fuentes";
+$pgv_lang["FULL_SOURCES_help"]		= "~#pgv_lang[FULL_SOURCES]#~<br /><br />Las citas de fuentes pueden incluir campos para registrar la calidad del dato (primario, secundario, etc.) y la fecha en que se registró el dato en la fuente.  Si no usa estos campos, puede deshabilitarlos al crear nuevas citas de fuentes<br />";
+$pgv_lang["PREFER_LEVEL2_SOURCES"]		= "Preferir fuentes en los hechos";
+$pgv_lang["PREFER_LEVEL2_SOURCES_help"]		= "~#pgv_lang[PREFER_LEVEL2_SOURCES]#~<br /><br />Al crear nuevos parientes cercanos, puede añadir citas de fuentes a los registros (p. ej. INDI, FAM) o a los hechos (BIRT, MARR, DEAT).  Esta opción controla qué casillas se marcan por omisión.<br />";
 
 
 //-- CONFIGURE FILE MESSAGES

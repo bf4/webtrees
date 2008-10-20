@@ -34,20 +34,24 @@ if (!defined('PGV_PHPGEDVIEW')) {
 }
 
 // Added in VERSION 4.1.6
-$pgv_lang["lb_generalhelp"]     = "Página personal - Ayuda general de Lightbox";
-$pgv_lang["lb_viewedit"]		= "Ver/Modificar";
-$pgv_lang["lb_viewnotes"]		= "Ver notas";
-$pgv_lang["lb_viewdetails"]		= "Ver detalles";
-$pgv_lang["lb_viewsource"]		= "Ver fuente";
-$pgv_lang["lb_editmedia"]		= "Modificar objeto";
-$pgv_lang["lb_unlinkmedia"]		= "Desvincular objeto";
-$pgv_lang["lb_balloon_true"]	= "Globo";
-$pgv_lang["lb_balloon_false"]	= "Normal";
-$pgv_lang["lb_tt_balloon"]		= "Página personal - Miniatura de pestaña de álbum - Ayuda de los enlaces superiores";
-$pgv_lang["lb_ttAppearance"]	= "Notas - Apariencia de la ayuda";
-$pgv_lang["view_lightbox"]		= "Ver álbum de ...";
-$pgv_lang["lb_notes"]			= "Notas";
-// $pgv_lang["lb_notes_info"]		= "";
+// $pgv_lang["lb_toAdminConfigPage"]	= "Return to Admin Page";
+// $pgv_lang["lb_toAdminConfigPage"]	= "Return to Admin Page";
+// $pgv_lang["lb_toAdminConfigPage"]	= "Return to Admin Page";
+$pgv_lang["lb_manage"]				= "Gestionar la configuración de Lightbox";
+$pgv_lang["lb_generalhelp"]			= "Página personal - Ayuda general de Lightbox";
+$pgv_lang["lb_viewedit"]			= "Ver/Modificar";
+$pgv_lang["lb_viewnotes"]			= "Ver notas";
+$pgv_lang["lb_viewdetails"]			= "Ver detalles";
+$pgv_lang["lb_viewsource"]			= "Ver fuente";
+$pgv_lang["lb_editmedia"]			= "Modificar objeto";
+$pgv_lang["lb_unlinkmedia"]			= "Desvincular objeto";
+$pgv_lang["lb_balloon_true"]		= "Globo";
+$pgv_lang["lb_balloon_false"]		= "Normal";
+$pgv_lang["lb_tt_balloon"]			= "Página personal - Miniatura de pestaña de álbum - Ayuda de los enlaces superiores";
+$pgv_lang["lb_ttAppearance"]		= "Notas - Apariencia de la ayuda";
+$pgv_lang["view_lightbox"]			= "Ver álbum de ...";
+$pgv_lang["lb_notes"]				= "Notas";
+// $pgv_lang["lb_notes_info"]			= "";
  
 
 // Added in VERSION 4.1.4 
