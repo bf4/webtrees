@@ -31,7 +31,7 @@ The above list of codes may be amended as new situations arise.
 For massive changes, the variable names should be listed in the order in which they
 occur in the respective language files.
 
-VERSION 4.1.4
+VERSION 4.1.6
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 -----------------------------------------------------------------------------------------

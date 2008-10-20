@@ -36,6 +36,11 @@ if (!defined('PGV_PHPGEDVIEW')) {
 // Added in VERSION 4.1.6
 
 // Lightbox general help file  ---------------------------------------------------------------------------------------------------------
+$pgv_lang["LIGHTBOX_CONFIG"]           = "Configuración de Lightbox";
+$pgv_lang["LIGHTBOX_CONFIG_help"]      = "~#pgv_lang[GOOGLEMAP_CONFIG]#~<br /><br />Configure todos los aspectos del módulo Lightbox aquí.";
+
+
+// Lightbox general help file  ---------------------------------------------------------------------------------------------------------
 $pgv_lang["lb_generalLegend"]		 = "Álbum Lightbox - Ayuda general";
 $pgv_lang["lb_general_help"]		 = "~#pgv_lang[lb_generalLegend]#~<br /><br /><ul>#pgv_lang[lb_general_help1]##pgv_lang[lb_general_help2]##pgv_lang[lb_general_help3]##pgv_lang[lb_general_help4]##pgv_lang[lb_general_help5]##pgv_lang[lb_general_help6]##pgv_lang[lb_general_help7]##pgv_lang[lb_general_help8]##pgv_lang[lb_general_help9]##pgv_lang[lb_general_help10]#</ul>";
 $pgv_lang["lb_general_help1"]		 = "<li>~Ver notas o detalles asociados a una imagen~<br /><b>Menú desplegable:</b><br />Deje flotar el puntero sobre el vínculo <b>#pgv_lang[lb_viewedit]#</b> bajo la miniatura y aparecerá un menú desplegable. Las opciones son <b>#pgv_lang[lb_viewnotes]#</b> (Si hay alguna), <b>#pgv_lang[lb_viewdetails]#</b> (predeterminado) y también <b>#pgv_lang[lb_viewsource]#</b> (si se ha identificado y hay una fuente).<br /><br /><b>Ver:</b><br />Al hacer clic en <b>#pgv_lang[lb_viewnotes]#</b> se mostrará un <b>#pgv_lang[lb_balloon_true]#</b> con la información de la nota en su interior. Haga clic de nuevo para hacer desaparecer el <b>#pgv_lang[lb_balloon_true]#</b>.<br />Al hacer clic en <b>#pgv_lang[lb_viewdetails]#</b> se pasará a la página del visor de objetos y <b>#pgv_lang[lb_viewsource]#</b> le llevará (si está autorizado) a la página de la fuente para el objeto.<br /><br /><b>Modificar:</b><br />(Hay opciones adicionales para modificación para los usuarios con privilegios apropiados)<br /><br /><b>Imagen abierta de Lightbox:</b><br />Al ver una imagen abierta de Lightbox, se puede hacer clic en los iconos <b>#pgv_lang[lb_viewnotes]#</b> y <b>#pgv_lang[lb_viewdetails]#</b> en el marco bajo la imagen.<br /><br /></li>";
