@@ -491,7 +491,7 @@ function checkEnvironment() {
 	$success = true;
 	print "<h4>".$pgv_lang["checking_errors"]."</h4>";
 	print "<table border=\"0\" cellpadding=\"2\" cellspacing=\"0\">";
-	$phpcheck = (version_compare(phpversion(), PGV_REQUIRED_PHP_VERSION)<0);
+	$phpcheck = (version_compare(PHP_VERSION, PGV_REQUIRED_PHP_VERSION)<0);
 	if ($phpcheck) { 
 		print "<tr><td valign=\"top\">";
 		print $pgv_lang["checking_php_version"]."<br />";
