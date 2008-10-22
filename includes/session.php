@@ -38,7 +38,7 @@ define('PGV_PHPGEDVIEW_URL',  'http://www.phpgedview.net');
 define('PGV_PHPGEDVIEW_WIKI', 'http://wiki.phpgedview.net');
 
 // Environmental requirements
-define('PGV_REQUIRED_PHP_VERSION',     '4.3.5');
+define('PGV_REQUIRED_PHP_VERSION',     '5.0.0'); // 5.1.4 ???
 define('PGV_REQUIRED_MYSQL_VERSION',   '4.1');   // Not currently enforced
 define('PGV_REQUIRED_SQLITE_VERSION',  '3.2.6'); // Not currently enforced
 define('PGV_REQUIRED_PRIVACY_VERSION', '3.1');
