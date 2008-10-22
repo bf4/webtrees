@@ -701,7 +701,7 @@ function google_analytics() {
  */
 function print_execution_stats() {
 	global $start_time, $pgv_lang, $TOTAL_QUERIES, $PRIVACY_CHECKS;
-	$end_time = getmicrotime();
+	$end_time = microtime(true);
 	$exectime = $end_time - $start_time;
 	print "<br /><br />".$pgv_lang["exec_time"];
 	printf(" %.3f ".$pgv_lang["sec"], $exectime);

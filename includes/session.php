@@ -251,7 +251,7 @@ require_once("includes/functions_db.php");
 require_once("includes/authentication.php");
 
 //-- setup execution timer
-$start_time = getmicrotime();
+$start_time = microtime(true);
 
 //-- start the php session
 $time = time()+$PGV_SESSION_TIME;

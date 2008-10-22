@@ -164,7 +164,7 @@ function &dbquery($sql, $show_error=true, $count=0) {
 	*/
 
 	if (!empty($SQL_LOG))
-		$start_time2 = getmicrotime();
+		$start_time2 = microtime(true);
 	if ($count == 0)
 		$res =& $DBCONN->query($sql);
 	else
@@ -174,7 +174,7 @@ function &dbquery($sql, $show_error=true, $count=0) {
 	$TOTAL_QUERIES++;
 	if (!empty($SQL_LOG)) {
 		global $start_time;
-		$end_time = getmicrotime();
+		$end_time = microtime(true);
 		$exectime = $end_time - $start_time;
 		$exectime2 = $end_time - $start_time2;
 
