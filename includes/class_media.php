@@ -70,7 +70,7 @@ class Media extends GedcomRecord {
 	// an XREF (in the current gedcom), or we can provide a row
 	// from the database (if we anticipate the record hasn't
 	// been fetched previously).
-	static function &getInstance($data, $simple=true) {
+	function &getInstance($data, $simple=true) {
 		global $gedcom_record_cache, $GEDCOM, $pgv_changes;
 
 		if (is_array($data)) {
@@ -318,7 +318,7 @@ class Media extends GedcomRecord {
 	 * @param Media $obje
 	 * @return mixed  returns the ID for the for the matching media or false if not found
 	 */
-	static function in_obje_list(&$obje) {
+	function in_obje_list(&$obje) {
 		global $TBLPREFIX, $GEDCOMS, $GEDCOM, $FILE, $DBCONN;
 
 		if (is_null($obje)) return false;

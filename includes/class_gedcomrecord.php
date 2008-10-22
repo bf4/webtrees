@@ -103,7 +103,7 @@ class GedcomRecord {
 	// an XREF (in the current gedcom), or we can provide a row
 	// from the database (if we anticipate the record hasn't
 	// been fetched previously).
-	static function &getInstance($data, $simple=true) {
+	function &getInstance($data, $simple=true) {
 		global $gedcom_record_cache, $GEDCOM, $pgv_changes;
 
 		if (is_array($data)) {
@@ -369,7 +369,7 @@ class GedcomRecord {
 	 * get the URL to link to a place
 	 * @string a url that can be used to link to placelist
 	 */
-	static function getPlaceUrl($gedcom_place) {
+	function getPlaceUrl($gedcom_place) {
 		global $GEDCOM;
 		$exp = explode(",", $gedcom_place);
 		$level = count($exp);
@@ -386,7 +386,7 @@ class GedcomRecord {
 	 * @param string $gedcom_place	The original place to shorten
 	 * @return string 	a shortened version of the place
 	 */
-	static function getPlaceShort($gedcom_place) {
+	function getPlaceShort($gedcom_place) {
 		global $GEDCOM, $SHOW_LIST_PLACES;
 		if ($SHOW_LIST_PLACES==9) return $gedcom_place;
 		$gedcom_place = trim($gedcom_place, " ,");

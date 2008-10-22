@@ -30,11 +30,11 @@ if (!defined('PGV_PHPGEDVIEW')) {
 }
 
 class plugin extends base_plugin {
-	static function doesRecordNeedUpdate($xref, $gedrec) {
+	function doesRecordNeedUpdate($xref, $gedrec) {
 		return !preg_match('/^1\s+'.PGV_EVENTS_BIRT.'\b/m', $gedrec);
 	}
 
-	static function updateRecord($xref, $gedrec) {
+	function updateRecord($xref, $gedrec) {
 		return $gedrec."\n1 BIRT Y";
 	}
 }

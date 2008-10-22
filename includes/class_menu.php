@@ -365,7 +365,7 @@ class Menu {
 	 * convert an old array style menu to an object
 	 * @static
 	 */
-	static function convertMenu($menu) {
+	function convertMenu($menu) {
 		$conv = array(
 			'label'=>'label',
 			'labelpos'=>'labelpos',

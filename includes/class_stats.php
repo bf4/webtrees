@@ -247,7 +247,7 @@ class stats {
 
 	function gedcomTitle() {return PrintReady(get_gedcom_setting($this->_ged_id, 'title'));}
 
-	static function _gedcomHead()
+	function _gedcomHead()
 	{
 		static $cache=null;
 		if (is_array($cache)) {
@@ -284,13 +284,13 @@ class stats {
 		return $cache;
 	}
 
-	static function gedcomCreatedSoftware()
+	function gedcomCreatedSoftware()
 	{
 		$head=self::_gedcomHead();
 		return $head[0];
 	}
 
-	static function gedcomCreatedVersion()
+	function gedcomCreatedVersion()
 	{
 		$head=self::_gedcomHead();
 		// fix broken version string in Family Tree Maker
@@ -306,7 +306,7 @@ class stats {
 		return $head[1];
 	}
 
-	static function gedcomDate() {
+	function gedcomDate() {
 		global $DATE_FORMAT;
 
 		$head=find_other_record('HEAD');
@@ -656,14 +656,14 @@ class stats {
 		return "<img src=\"".encode_url("http://chart.apis.google.com/chart?cht=p3&chd=e:{$chd}&chs={$size}&chco={$color_unknown},{$color_living},{$color_dead}&chf=bg,s,ffffff00&chl={$chl}")."\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" alt=\"\" />";
 	}
 
-	static function totalUsers($params=null)
+	function totalUsers($params=null)
 	{
 		$adj = 0;
 		if(isset($params[0]) && $params[0] != '') {$adj = (integer)$params[0];}else{$adj = 0;}
 		return get_user_count() + $adj;
 	}
 
-	static function totalAdmins()
+	function totalAdmins()
 	{
 		global $TBLPREFIX;
 		$rows = self::_runSQL("SELECT COUNT(u_username) AS tot FROM {$TBLPREFIX}users WHERE u_canadmin='Y'");
@@ -671,7 +671,7 @@ class stats {
 		return $rows[0]['tot'];
 	}
 
-	static function totalNonAdmins()
+	function totalNonAdmins()
 	{
 		global $TBLPREFIX;
 		$rows = self::_runSQL("SELECT COUNT(u_username) AS tot FROM {$TBLPREFIX}users WHERE u_canadmin!='Y'");
@@ -1470,7 +1470,7 @@ class stats {
 // Surnames                                                                  //
 ///////////////////////////////////////////////////////////////////////////////
 
-	static function _commonSurnamesQuery($type='list', $show_tot=false, $params=null) {
+	function _commonSurnamesQuery($type='list', $show_tot=false, $params=null) {
 		global $TEXT_DIRECTION, $COMMON_NAMES_THRESHOLD, $SURNAME_LIST_STYLE;
 
 		if (is_array($params) && isset($params[0]) && $params[0] != '') {$threshold = strtolower($params[0]);}else{$threshold = $COMMON_NAMES_THRESHOLD;}
@@ -1531,10 +1531,10 @@ class stats {
 		//}
 	}
 
-	static function commonSurnames($params=array('','','alpha')) {return self::_commonSurnamesQuery('nolist', false, $params);}
-	static function commonSurnamesTotals($params=array('','','rcount')) {return self::_commonSurnamesQuery('nolist', true, $params);}
-	static function commonSurnamesList($params=array('','','alpha')) {return self::_commonSurnamesQuery('list', false, $params);}
-	static function commonSurnamesListTotals($params=array('','','rcount')) {return self::_commonSurnamesQuery('list', true, $params);}
+	function commonSurnames($params=array('','','alpha')) {return self::_commonSurnamesQuery('nolist', false, $params);}
+	function commonSurnamesTotals($params=array('','','rcount')) {return self::_commonSurnamesQuery('nolist', true, $params);}
+	function commonSurnamesList($params=array('','','alpha')) {return self::_commonSurnamesQuery('list', false, $params);}
+	function commonSurnamesListTotals($params=array('','','rcount')) {return self::_commonSurnamesQuery('list', true, $params);}
 
 	function chartCommonSurnames($params=null)
 	{
@@ -1574,7 +1574,7 @@ class stats {
 	 * [ 1977282 ] Most Common Given Names Block
 	 * Original block created by kiwi_pgv
 	 */
-	static function _commonGivenQuery($sex='B', $type='list', $show_tot=false, $params=null)
+	function _commonGivenQuery($sex='B', $type='list', $show_tot=false, $params=null)
 	{
 		global $TEXT_DIRECTION, $DEBUG, $GEDCOMS, $GEDCOM, $DBCONN, $TBLPREFIX, $pgv_lang;
 		static $sort_types = array('count'=>'asort', 'rcount'=>'arsort', 'alpha'=>'ksort', 'ralpha'=>'krsort');
@@ -1706,35 +1706,35 @@ class stats {
 		}
 	}
 
-	static function commonGiven($params=array(1,10,'alpha')){return self::_commonGivenQuery('B', 'nolist', false, $params);}
-	static function commonGivenTotals($params=array(1,10,'rcount')){return self::_commonGivenQuery('B', 'nolist', true, $params);}
-	static function commonGivenList($params=array(1,10,'alpha')){return self::_commonGivenQuery('B', 'list', false, $params);}
-	static function commonGivenListTotals($params=array(1,10,'rcount')){return self::_commonGivenQuery('B', 'list', true, $params);}
-	static function commonGivenTable($params=array(1,10,'rcount')){return self::_commonGivenQuery('B', 'table', false, $params);}
+	function commonGiven($params=array(1,10,'alpha')){return self::_commonGivenQuery('B', 'nolist', false, $params);}
+	function commonGivenTotals($params=array(1,10,'rcount')){return self::_commonGivenQuery('B', 'nolist', true, $params);}
+	function commonGivenList($params=array(1,10,'alpha')){return self::_commonGivenQuery('B', 'list', false, $params);}
+	function commonGivenListTotals($params=array(1,10,'rcount')){return self::_commonGivenQuery('B', 'list', true, $params);}
+	function commonGivenTable($params=array(1,10,'rcount')){return self::_commonGivenQuery('B', 'table', false, $params);}
 
-	static function commonGivenFemale($params=array(1,10,'alpha')){return self::_commonGivenQuery('F', 'nolist', false, $params);}
-	static function commonGivenFemaleTotals($params=array(1,10,'rcount')){return self::_commonGivenQuery('F', 'nolist', true, $params);}
-	static function commonGivenFemaleList($params=array(1,10,'alpha')){return self::_commonGivenQuery('F', 'list', false, $params);}
-	static function commonGivenFemaleListTotals($params=array(1,10,'rcount')){return self::_commonGivenQuery('F', 'list', true, $params);}
-	static function commonGivenFemaleTable($params=array(1,10,'rcount')){return self::_commonGivenQuery('F', 'table', false, $params);}
+	function commonGivenFemale($params=array(1,10,'alpha')){return self::_commonGivenQuery('F', 'nolist', false, $params);}
+	function commonGivenFemaleTotals($params=array(1,10,'rcount')){return self::_commonGivenQuery('F', 'nolist', true, $params);}
+	function commonGivenFemaleList($params=array(1,10,'alpha')){return self::_commonGivenQuery('F', 'list', false, $params);}
+	function commonGivenFemaleListTotals($params=array(1,10,'rcount')){return self::_commonGivenQuery('F', 'list', true, $params);}
+	function commonGivenFemaleTable($params=array(1,10,'rcount')){return self::_commonGivenQuery('F', 'table', false, $params);}
 
-	static function commonGivenMale($params=array(1,10,'alpha')){return self::_commonGivenQuery('M', 'nolist', false, $params);}
-	static function commonGivenMaleTotals($params=array(1,10,'rcount')){return self::_commonGivenQuery('M', 'nolist', true, $params);}
-	static function commonGivenMaleList($params=array(1,10,'alpha')){return self::_commonGivenQuery('M', 'list', false, $params);}
-	static function commonGivenMaleListTotals($params=array(1,10,'rcount')){return self::_commonGivenQuery('M', 'list', true, $params);}
-	static function commonGivenMaleTable($params=array(1,10,'rcount')){return self::_commonGivenQuery('M', 'table', false, $params);}
+	function commonGivenMale($params=array(1,10,'alpha')){return self::_commonGivenQuery('M', 'nolist', false, $params);}
+	function commonGivenMaleTotals($params=array(1,10,'rcount')){return self::_commonGivenQuery('M', 'nolist', true, $params);}
+	function commonGivenMaleList($params=array(1,10,'alpha')){return self::_commonGivenQuery('M', 'list', false, $params);}
+	function commonGivenMaleListTotals($params=array(1,10,'rcount')){return self::_commonGivenQuery('M', 'list', true, $params);}
+	function commonGivenMaleTable($params=array(1,10,'rcount')){return self::_commonGivenQuery('M', 'table', false, $params);}
 
-	static function commonGivenUnknown($params=array(1,10,'alpha')){return self::_commonGivenQuery('U', 'nolist', false, $params);}
-	static function commonGivenUnknownTotals($params=array(1,10,'rcount')){return self::_commonGivenQuery('U', 'nolist', true, $params);}
-	static function commonGivenUnknownList($params=array(1,10,'alpha')){return self::_commonGivenQuery('U', 'list', false, $params);}
-	static function commonGivenUnknownListTotals($params=array(1,10,'rcount')){return self::_commonGivenQuery('U', 'list', true, $params);}
-	static function commonGivenUnknownTable($params=array(1,10,'rcount')){return self::_commonGivenQuery('U', 'table', false, $params);}
+	function commonGivenUnknown($params=array(1,10,'alpha')){return self::_commonGivenQuery('U', 'nolist', false, $params);}
+	function commonGivenUnknownTotals($params=array(1,10,'rcount')){return self::_commonGivenQuery('U', 'nolist', true, $params);}
+	function commonGivenUnknownList($params=array(1,10,'alpha')){return self::_commonGivenQuery('U', 'list', false, $params);}
+	function commonGivenUnknownListTotals($params=array(1,10,'rcount')){return self::_commonGivenQuery('U', 'list', true, $params);}
+	function commonGivenUnknownTable($params=array(1,10,'rcount')){return self::_commonGivenQuery('U', 'table', false, $params);}
 
 ///////////////////////////////////////////////////////////////////////////////
 // Users                                                                     //
 ///////////////////////////////////////////////////////////////////////////////
 
-	static function _usersLoggedIn($type='nolist')
+	function _usersLoggedIn($type='nolist')
 	{
 		global $PGV_SESSION_TIME, $pgv_lang;
 		// Log out inactive users
@@ -1836,7 +1836,7 @@ class stats {
 		return $content;
 	}
 
-	static function _usersLoggedInTotal($type='all')
+	function _usersLoggedInTotal($type='all')
 	{
 		global $PGV_SESSION_TIME;
 
@@ -1857,20 +1857,20 @@ class stats {
 		else{return $visible + $anon;}
 	}
 
-	static function usersLoggedIn() {return self::_usersLoggedIn('nolist');}
-	static function usersLoggedInList() {return self::_usersLoggedIn('list');}
+	function usersLoggedIn() {return self::_usersLoggedIn('nolist');}
+	function usersLoggedInList() {return self::_usersLoggedIn('list');}
 
-	static function usersLoggedInTotal() {return self::_usersLoggedInTotal('all');}
-	static function usersLoggedInTotalAnon() {return self::_usersLoggedInTotal('anon');}
-	static function usersLoggedInTotalVisible() {return self::_usersLoggedInTotal('visible');}
+	function usersLoggedInTotal() {return self::_usersLoggedInTotal('all');}
+	function usersLoggedInTotalAnon() {return self::_usersLoggedInTotal('anon');}
+	function usersLoggedInTotalVisible() {return self::_usersLoggedInTotal('visible');}
 
-	static function userID() {return getUserId();}
-	static function userName() {return getUserName();}
-	static function userFullName() {return getUserFullName(getUserId());}
-	static function userFirstName() {return get_user_setting(getUserId(), 'firstname');}
-	static function userLastName() {return get_user_setting(getUserId(), 'lastname');}
+	function userID() {return getUserId();}
+	function userName() {return getUserName();}
+	function userFullName() {return getUserFullName(getUserId());}
+	function userFirstName() {return get_user_setting(getUserId(), 'firstname');}
+	function userLastName() {return get_user_setting(getUserId(), 'lastname');}
 
-	static function _getLatestUserData($type='userid', $params=null)
+	function _getLatestUserData($type='userid', $params=null)
 	{
 		global $DATE_FORMAT, $TIME_FORMAT, $pgv_lang;
 		static $user = null;
@@ -1926,41 +1926,41 @@ class stats {
 		}
 	}
 
-	static function latestUserId(){return self::_getLatestUserData('userid');}
-	static function latestUserName(){return self::_getLatestUserData('username');}
-	static function latestUserFullName(){return self::_getLatestUserData('fullname');}
-	static function latestUserFirstName(){return self::_getLatestUserData('firstname');}
-	static function latestUserLastName(){return self::_getLatestUserData('lastname');}
-	static function latestUserRegDate($params=null){return self::_getLatestUserData('regdate', $params);}
-	static function latestUserRegTime($params=null){return self::_getLatestUserData('regtime', $params);}
-	static function latestUserLoggedin($params=null){return self::_getLatestUserData('loggedin', $params);}
+	function latestUserId(){return self::_getLatestUserData('userid');}
+	function latestUserName(){return self::_getLatestUserData('username');}
+	function latestUserFullName(){return self::_getLatestUserData('fullname');}
+	function latestUserFirstName(){return self::_getLatestUserData('firstname');}
+	function latestUserLastName(){return self::_getLatestUserData('lastname');}
+	function latestUserRegDate($params=null){return self::_getLatestUserData('regdate', $params);}
+	function latestUserRegTime($params=null){return self::_getLatestUserData('regtime', $params);}
+	function latestUserLoggedin($params=null){return self::_getLatestUserData('loggedin', $params);}
 
 ///////////////////////////////////////////////////////////////////////////////
 // Contact                                                                   //
 ///////////////////////////////////////////////////////////////////////////////
 
-	static function contactWebmaster() {return user_contact_link($GLOBALS['WEBMASTER_EMAIL'], $GLOBALS['SUPPORT_METHOD']);}
-	static function contactGedcom() {return user_contact_link($GLOBALS['CONTACT_EMAIL'], $GLOBALS['CONTACT_METHOD']);}
+	function contactWebmaster() {return user_contact_link($GLOBALS['WEBMASTER_EMAIL'], $GLOBALS['SUPPORT_METHOD']);}
+	function contactGedcom() {return user_contact_link($GLOBALS['CONTACT_EMAIL'], $GLOBALS['CONTACT_METHOD']);}
 
 ///////////////////////////////////////////////////////////////////////////////
 // Date & Time                                                               //
 ///////////////////////////////////////////////////////////////////////////////
 
-	static function serverDate() {$today=new GedcomDate(date('j M Y')); return $today->Display(false);}
+	function serverDate() {$today=new GedcomDate(date('j M Y')); return $today->Display(false);}
 
-	static function serverTime() {return date('g:i a');}
+	function serverTime() {return date('g:i a');}
 
-	static function serverTime24() {return date('G:i');}
+	function serverTime24() {return date('G:i');}
 
-	static function serverTimezone() {return date('T');}
+	function serverTimezone() {return date('T');}
 
-	static function browserDate() {$today=new GedcomDate(date('j M Y'), client_time()); return $today->Display(false);}
+	function browserDate() {$today=new GedcomDate(date('j M Y'), client_time()); return $today->Display(false);}
 
-	static function browserTime() {return date('g:i a', client_time());}
+	function browserTime() {return date('g:i a', client_time());}
 
-	static function browserTime24() {return date('G:i', client_time());}
+	function browserTime24() {return date('G:i', client_time());}
 
-	static function browserTimezone() {return date('T', client_time());}
+	function browserTimezone() {return date('T', client_time());}
 
 ///////////////////////////////////////////////////////////////////////////////
 // Tools                                                                     //
@@ -1969,7 +1969,7 @@ class stats {
 	/*
 	 * Leave for backwards compatability? Anybody using this?
 	 */
-	static function _getEventType($type)
+	function _getEventType($type)
 	{
 		global $pgv_lang;
 		$eventTypes=array(
@@ -1987,7 +1987,7 @@ class stats {
 	}
 
 	// http://bendodson.com/news/google-extended-encoding-made-easy/
-	static function _array_to_extended_encoding($a)
+	function _array_to_extended_encoding($a)
 	{
 		if (!is_array($a)) {$a = array($a);}
 		$encoding = '';
@@ -2000,25 +2000,25 @@ class stats {
 		return $encoding;
 	}
 
-	static function _name_name_sort($a, $b) {
+	function _name_name_sort($a, $b) {
 		return compareStrings(strip_prefix($a['name']), strip_prefix($b['name']), true);		// Case-insensitive compare
 	}
 
-	static function _name_name_rsort($a, $b) {
+	function _name_name_rsort($a, $b) {
 		return compareStrings(strip_prefix($b['name']), strip_prefix($a['name']), true);		// Case-insensitive compare
 	}
 
-	static function _name_total_sort($a, $b)
+	function _name_total_sort($a, $b)
 	{
 		return $a['match']-$b['match'];
 	}
 
-	static function _name_total_rsort($a, $b)
+	function _name_total_rsort($a, $b)
 	{
 		return $b['match']-$a['match'];
 	}
 
-	static function _runSQL($sql, $count=0)
+	function _runSQL($sql, $count=0)
 	{
 		global $DBTYPE;
 		static $cache = array();

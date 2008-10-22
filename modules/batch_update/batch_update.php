@@ -261,7 +261,7 @@ class batch_update {
 	}
 
 	// Scan the plugin directory for a list of plugins
-	static function getPluginList() {
+	function getPluginList() {
 		$array=array();
 		$dir=dirname(__FILE__).'/plugins/';
 		$dir_handle=opendir($dir);
@@ -275,7 +275,7 @@ class batch_update {
 	}
 
 	// Javascript that gets included on every page
-	static function getJavascript() {
+	function getJavascript() {
 		return
 			'<script type="text/javascript">'.
 			'function reset_reload() {'.
@@ -289,7 +289,7 @@ class batch_update {
 	}
 
 	// Create a submit button for our form
-	static function createSubmitButton($text, $xref, $action='', $data='') {
+	function createSubmitButton($text, $xref, $action='', $data='') {
 		return
 			'<input type="submit" value="'.$text.'" onclick="'.
 			'this.form.xref.value=\''.htmlspecialchars($xref).'\';'.
@@ -300,7 +300,7 @@ class batch_update {
 	}
 
 	// Get the current view of a record, allowing for pending changes
-	static function getLatestRecord($xref, $type) {
+	function getLatestRecord($xref, $type) {
 		global $GEDCOM, $pgv_changes;
 
 		if (isset($pgv_changes[$xref.'_'.$GEDCOM])) {
@@ -390,7 +390,7 @@ class base_plugin {
 	}
 
 	// Longest Common Subsequence.
-	static function LCS($X, $Y, $x1, $x2, $y1, $y2) {
+	function LCS($X, $Y, $x1, $x2, $y1, $y2) {
 		if ($x2-$x1>=0 && $y2-$y1>=0) {
 			if ($X[$x1]==$Y[$y1]) {
 				// Match at start of sequence
@@ -419,15 +419,15 @@ class base_plugin {
 	}
 
 	// Decorate inserted/deleted text
-	static function decorateInsertedText($text) {
+	function decorateInsertedText($text) {
 		return '<span class="search_hit">'.$text.'</span>';
 	}
-	static function decorateDeletedText($text) {
+	function decorateDeletedText($text) {
 		return '<span style="text-decoration:line-through;">'.$text.'</span>';
 	}
 
 	// Converted gedcom links into editable links
-	static function createEditLinks($gedrec) {
+	function createEditLinks($gedrec) {
 		return preg_replace(
 			"/@([^#@\n]+)@/m",
 			'<a href="javascript:;" onclick="return edit_raw(\'\\1\');">@\\1@</a>',

@@ -53,7 +53,7 @@ class plugin extends base_plugin {
 		return preg_replace('/(^1 NAME .*([\r\n]+[2-9].*)*)/m', '\\1'.implode('', $married_names), $gedrec, 1);
 	}
 
-	static function _surnames_to_add($xref, $gedrec) {
+	function _surnames_to_add($xref, $gedrec) {
 		$wife_surnames=self::_surnames($xref, $gedrec);
 		$husb_surnames=array();
 		$missing_surnames=array();
@@ -73,7 +73,7 @@ class plugin extends base_plugin {
 		return $missing_surnames;
 	}
 
-	static function _surnames($xref, $gedrec) {
+	function _surnames($xref, $gedrec) {
 		if (preg_match_all('/^(?:1 NAME|2 _MARNM) .*\/(.+)\//m', $gedrec, $match)) {
 			return $match[1];
 		} else {

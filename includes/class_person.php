@@ -90,7 +90,7 @@ class Person extends GedcomRecord {
 	// an XREF (in the current gedcom), or we can provide a row
 	// from the database (if we anticipate the record hasn't
 	// been fetched previously).
-	static function &getInstance($data, $simple=true) {
+	function &getInstance($data, $simple=true) {
 		global $gedcom_record_cache, $GEDCOM, $pgv_changes;
 
 		if (is_array($data)) {
@@ -515,7 +515,7 @@ class Person extends GedcomRecord {
 		return self::sexImage($this->getSex(), $size, $style, $title);
 	}
 
-	static function sexImage($sex, $size='small', $style='', $title='') {
+	function sexImage($sex, $size='small', $style='', $title='') {
 		global $PGV_IMAGE_DIR, $PGV_IMAGES;
 		switch ($sex) {
 		case 'M':

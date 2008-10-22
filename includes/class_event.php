@@ -389,7 +389,7 @@ class Event {
 	 * @param Event $b
 	 * @return int
 	 */
-	static function CompareDate(&$a, &$b) {
+	function CompareDate(&$a, &$b) {
 		$adate = $a->getDate();
 		$bdate = $b->getDate();
 		//-- non-dated events should sort according to the preferred sort order
@@ -412,7 +412,7 @@ class Event {
 	 * @param Event $b
 	 * @return int
 	 */
-	static function CompareType(&$a, &$b) {
+	function CompareType(&$a, &$b) {
 		global $factsort;
 
 		if (empty($factsort))

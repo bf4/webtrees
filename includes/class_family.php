@@ -90,7 +90,7 @@ class Family extends GedcomRecord {
 	// an XREF (in the current gedcom), or we can provide a row
 	// from the database (if we anticipate the record hasn't
 	// been fetched previously).
-	static function &getInstance($data, $simple=true) {
+	function &getInstance($data, $simple=true) {
 		global $gedcom_record_cache, $GEDCOM, $pgv_changes;
 
 		if (is_array($data)) {
