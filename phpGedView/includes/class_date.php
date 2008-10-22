@@ -475,7 +475,7 @@ class CalendarDate {
 		return $this->JDtoYMD(GregorianDate::YMDtoJD(date('Y'), date('n'), date('j')));
 	}
 	function Today() {
-		$tmp=(PHP_VERSION<5)? $this : clone($this);
+		$tmp=clone $this;
 		$ymd=$tmp->TodayYMD();
 		$tmp->y=$ymd[0];
 		$tmp->m=$ymd[1];
@@ -1028,9 +1028,9 @@ class GedcomDate {
 
 	// Need to "deep-clone" nested objects
 	function __clone() {
-		$this->date1=clone($this->date1);
+		$this->date1=clone $this->date1;
 		if (is_object($this->date2)) {
-			$this->date2=clone($this->date2);
+			$this->date2=clone $this->date2;
 		}
 	}
 
@@ -1228,7 +1228,7 @@ class GedcomDate {
 
 	// Offset this date by N years, and round to the whole year
 	function AddYears($n, $qual='') {
-		$tmp=(PHP_VERSION<5)? $this : clone($this);
+		$tmp=clone $this;
 		$tmp->date1->y+=$n;
 		$tmp->date1->m=0;
 		$tmp->date1->d=0;
