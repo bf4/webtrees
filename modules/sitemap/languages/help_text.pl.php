@@ -3,7 +3,7 @@
  * English Language file for PhpGedView.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team. All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,10 +21,11 @@
  *
  * @package PhpGedView
  * @subpackage SiteMap
- * @version $Id: help_text.en.php 1380 2007-08-03 14:27:47Z canajun2eh $
+ * @version $Id$
  */
-if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
-	print "Nie można uzyskać bezpośrednego dostępu.";
+
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
@@ -32,7 +33,7 @@ $pgv_lang["SITEMAP"]                = "Mapa strony - informacje";
 $pgv_lang["SITEMAP_help"]           = "~#pgv_lang[SITEMAP]#~<br /><br />Używając tej strony możesz wygenerować plik mapy strony. Mapa strony może być używana przez wyszukiwarki do optymalnego indeksowania tej strony. Wygenerowany zostanie plik zawierający odnośniki do wszystkich stron, które chcesz aby były pokazane przez wyszukiwaki. (np. Google)<br/>To narzędzie generuje plik mapy strony dla danego pliku GEDCOM i (jeśli więcej niż jeden plik mapy strony jest wygenerowany) plik indeksów strony. Wygenerowany plik powinien być umieszczony w katalogu głównym phpGedView.<br/>Obecnie tylko Google używa plików mapy strony. Więcej informacji dostępnych jest na stronie: <br/><a href=\"https://www.google.com/webmasters/sitemaps/docs/en/about.html\">About Google webmaster tools</a>";
 
 $pgv_lang["SM_GEDCOM_SELECT"]       = "Wybierz pliki GEDCOM";
-$pgv_lang["SM_GEDCOM_SELECT_help"]  = "~#pgv_lang[SM_GEDCOM_SELECT]#~<br /><br />Wybierz pliki GEDCOM, dla których chcesz wygenerować plik mapy strony. Wybierz co najmniej jeden.<br/>Gdy będzie zaznaczona opcja \"No links to private information\", tylko odnośniki do informacji dostępnych publicznie będą załączone.";
+$pgv_lang["SM_GEDCOM_SELECT_help"]  = "~#pgv_lang[SM_GEDCOM_SELECT]#~<br /><br />Wybierz pliki GEDCOM, dla których chcesz wygenerować plik mapy strony. Wybierz co najmniej jeden.<br/>Gdy będzie zaznaczona opcja \"Brak linków do prywatnych informacji\", tylko odnośniki do informacji dostępnych publicznie będą załączone.";
 
 $pgv_lang["SM_ITEM_SELECT"]         = "Wbierz informacje do zamieszczenia";
 $pgv_lang["SM_ITEM_SELECT_help"]    = "~#pgv_lang[SM_ITEM_SELECT]#~<br /><br />Wybierz elementy, które będą zamieszczone w pliku mapy strony. Dla wszystkich zaznaczonych elementów wybierz priorytet. Ten priorytet odnosi się do innych priorytetów w pliku.<br/>Również możesz określić częstotliwość zmian na stronie. Jest to częstotliwość z jaką mogą być zmieniane informacje na stronie. Ta opcja wpływa na czas pomiędzy kolejnymi wizytami mechanizmów wyszukiwarek i może mieć wpływ na ruch jaki ta strona generuje.";

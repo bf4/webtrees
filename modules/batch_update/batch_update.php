@@ -24,8 +24,9 @@
  * $Id$
  */
 
-if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
-	die ('Access denied.');
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
+	exit;
 }
 
 if (!PGV_USER_GEDCOM_ADMIN) {
@@ -33,12 +34,7 @@ if (!PGV_USER_GEDCOM_ADMIN) {
 	exit;
 }
 
-if (file_exists('modules/batch_update/languages/help.'.$lang_short_cut[$LANGUAGE].'.php')) {
-	require 'modules/batch_update/languages/lang.'.$code.'.php';
-} else {
-	require 'modules/batch_update/languages/lang.en.php';
-}
-
+loadLangFile('batch_update:lang');
 require 'includes/functions_edit.php';
 
 class batch_update {
@@ -105,7 +101,7 @@ class batch_update {
 						'</h1></td>'.
 						'</tr><tr><td valign="top" class="list_label center width20">'.
 						'<br/>'.implode('<br/>',$this->PLUGIN->getActionButtons($this->curr_xref, $this->record)).'<br/>'.
-						'</td><td class="optionbox width80">'.
+						'</td><td dir="ltr" align="left" class="optionbox width80">'.
 						$this->PLUGIN->getActionPreview($this->curr_xref, $this->record);
 						'</td></tr>';
 				} else {
@@ -142,7 +138,7 @@ class batch_update {
 					$newrecord=$this->PLUGIN->updateRecord($this->xref, $record);
 					if ($newrecord!=$record) {
 						if ($newrecord) {
-							replace_gedrec($this->xref, $newrecord, $this->PLUGIN->chan=='yes');
+							replace_gedrec($this->xref, $newrecord, $this->PLUGIN->chan);
 						} else {
 							delete_gedrec($this->xref);
 						}
@@ -157,7 +153,7 @@ class batch_update {
 						$newrecord=$this->PLUGIN->updateRecord($xref, $record);
 						if ($newrecord!=$record) {
 							if ($newrecord) {
-								replace_gedrec($xref, $newrecord, $this->PLUGIN->chan=='yes');
+								replace_gedrec($xref, $newrecord, $this->PLUGIN->chan);
 							} else {
 								delete_gedrec($xref);
 							}
@@ -190,7 +186,7 @@ class batch_update {
 
 			// Make sure that our requested record really does need updating.
 			// It may have been updated in another session, or may not have
-			// been specified at all. 
+			// been specified at all.
 			if (array_key_exists($this->xref, $this->all_xrefs) &&
 				$this->PLUGIN->doesRecordNeedUpdate($this->xref, self::getLatestRecord($this->xref, $this->all_xrefs[$this->xref]))) {
 				$this->curr_xref=$this->xref;
@@ -294,7 +290,7 @@ class batch_update {
 
 	// Create a submit button for our form
 	static function createSubmitButton($text, $xref, $action='', $data='') {
-		return 
+		return
 			'<input type="submit" value="'.$text.'" onclick="'.
 			'this.form.xref.value=\''.htmlspecialchars($xref).'\';'.
 			'this.form.action.value=\''.htmlspecialchars($action).'\';'.
@@ -314,9 +310,8 @@ class batch_update {
 			case 'INDI': return find_person_record($xref);
 			case 'FAM':  return find_family_record($xref);
 			case 'SOUR': return find_source_record($xref);
-			case 'REPO': return find_repo_record  ($xref);
 			case 'OBJE': return find_media_record ($xref);
-			default:     return find_gedcom_record($xref);
+			default:     return find_other_record ($xref);
 			}
 		}
 	}
@@ -329,8 +324,8 @@ class batch_update {
 //  string updateRecord($xref, $gedrec)
 //
 class base_plugin {
-	var $chan='yes'; // User option; update change record
-	
+	var $chan=false; // User option; update change record
+
 	// Default is to operate on INDI records
 	function getRecordTypesToUpdate() {
 		return array('INDI');
@@ -338,7 +333,7 @@ class base_plugin {
 
 	// Default option is just the "don't update CHAN record"
 	function getOptions() {
-		$this->update_chan=safe_GET_bool('chan');
+		$this->chan=safe_GET_bool('chan');
 	}
 
 	// Default option is just the "don't update CHAN record"
@@ -347,8 +342,8 @@ class base_plugin {
 		return
 			'<tr valign="top"><td class="list_label width20">'.$pgv_lang['bu_update_chan'].':</td>'.
 			'<td class="optionbox wrap"><select name="chan" onchange="this.form.submit();">'.
-			'<option value="no"' .($this->update_chan ? ' selected="selected"' : '').'>'.$pgv_lang['no'] .'</option>'.
-			'<option value="yes"'.($this->update_chan ? ' selected="selected"' : '').'>'.$pgv_lang['yes'].'</option>'.
+			'<option value="no"' .($this->chan ? '' : ' selected="selected"').'>'.$pgv_lang['no'] .'</option>'.
+			'<option value="yes"'.($this->chan ? ' selected="selected"' : '').'>'.$pgv_lang['yes'].'</option>'.
 			'</select></td></tr>';
 	}
 
@@ -363,32 +358,60 @@ class base_plugin {
 	}
 
 	// Default previewer for plugins with no custom preview.
-	// Simple diff - assumes only one change.
-	// TODO - implement a full diff algorithm.
 	function getActionPreview($xref, $gedrec) {
 		$old_lines=preg_split('/[\r\n]+/', $gedrec);
 		$new_lines=preg_split('/[\r\n]+/', $this->updateRecord($xref, $gedrec));
-		// Find matching lines at the start
-		$match1=array();
-		while ($old_lines && $new_lines && reset($old_lines)==reset($new_lines)) {
-			$match1[]=array_shift($old_lines);
-			array_shift($new_lines);
+		// Find matching lines using longest-common-subsequence algorithm.
+		$lcs=self::LCS($old_lines, $new_lines, 0, count($old_lines)-1, 0, count($new_lines)-1);
+
+		$diff_lines=array();
+		$last_old=-1;
+		$last_new=-1;
+		while ($lcs) {
+			list($old, $new)=array_shift($lcs);
+			while ($last_old<$old-1) {
+				$diff_lines[]=self::decorateDeletedText($old_lines[++$last_old]);
+			}
+			while ($last_new<$new-1) {
+				$diff_lines[]=self::decorateInsertedText($new_lines[++$last_new]);
+			}
+			$diff_lines[]=$new_lines[$new];
+			$last_old=$old;
+			$last_new=$new;
 		}
-		// Find matching lines at the end
-		$match2=array();
-		while ($old_lines && $new_lines && end($old_lines)==end($new_lines)) {
-			array_unshift($match2, array_pop($old_lines));
-			array_pop($new_lines);
+		while ($last_old<count($old_lines)-1) {
+			$diff_lines[]=self::decorateDeletedText($old_lines[++$last_old]);
 		}
-		// Mark old lines as deleted
-		foreach ($old_lines as $key=>$value) {
-			$old_lines[$key]=self::decorateDeletedText($value);
+		while ($last_new<count($new_lines)-1) {
+			$diff_lines[]=self::decorateInsertedText($new_lines[++$last_new]);
 		}
-		// Mark new lines as inserted
-		foreach ($new_lines as $key=>$value) {
-			$new_lines[$key]=self::decorateInsertedText($value);
+
+		return '<pre>'.self::createEditLinks(implode("\n", $diff_lines)).'</pre>';
+	}
+
+	// Longest Common Subsequence.
+	static function LCS($X, $Y, $x1, $x2, $y1, $y2) {
+		if ($x2-$x1>=0 && $y2-$y1>=0) {
+			if ($X[$x1]==$Y[$y1]) {
+				// Match at start of sequence
+				$tmp=self::LCS($X, $Y, $x1+1, $x2, $y1+1, $y2);
+				array_unshift($tmp, array($x1, $y1));
+				return $tmp;
+			} elseif ($X[$x2]==$Y[$y2]) {
+				// Match at end of sequence
+				$tmp=self::LCS($X, $Y, $x1, $x2-1, $y1, $y2-1);
+				array_push($tmp, array($x2, $y2));
+				return $tmp;
+			} else {
+				// No match.  Look for subsequences
+				$tmp1=self::LCS($X, $Y, $x1, $x2, $y1, $y2-1);
+				$tmp2=self::LCS($X, $Y, $x1, $x2-1, $y1, $y2);
+				return count($tmp1) > count($tmp2) ? $tmp1 : $tmp2;
+			}
+		} else {
+			// One array is empty - end recursion
+			return array();
 		}
-		return '<pre>'.self::createEditLinks(implode("\n", array_merge($match1, $old_lines, $new_lines, $match2))).'</pre>';
 	}
 
 	// Default handler for plugin with no custom actions.

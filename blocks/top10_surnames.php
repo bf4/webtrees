@@ -26,12 +26,19 @@
  * @subpackage Blocks
  */
 
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
+	exit;
+}
+
+define('PGV_TOP10SURNAMES_PHP', '');
+
 $PGV_BLOCKS["print_block_name_top10"]["name"]		= $pgv_lang["block_top10"];
 $PGV_BLOCKS["print_block_name_top10"]["descr"]		= "block_top10_descr";
 $PGV_BLOCKS["print_block_name_top10"]["canconfig"]	= true;
 $PGV_BLOCKS["print_block_name_top10"]["config"]		= array(
 	"cache"=>7,
-	"num"=>10, 
+	"num"=>10,
 	);
 
 function top_surname_sort($a, $b) {
@@ -105,9 +112,9 @@ function print_block_name_top10($block=true, $config="", $side, $index) {
 			foreach (array_keys(get_surname_indis($surname)) as $pid) {
 				$person=Person::getInstance($pid);
 				foreach ($person->getAllNames() as $name) {
-					$surn=reset(explode(',', $name['sort']));
+					$surn=UTF8_strtoupper($name['surn']);
 					if ($surn && $surn!='@N.N.' && $surname==$surn) {
-						$spfxsurn=reset(explode(',', $name['list']));
+						$spfxsurn=$name['spfx'].($name['spfx'] ? ' ' : '').$name['surn'];
 						if (! array_key_exists($surn, $all_surnames)) {
 							$all_surnames[$surn]=array();
 						}

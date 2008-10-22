@@ -24,12 +24,14 @@
  * @version $Id$
  */
 
-if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
-	print "You cannot access an include file directly.";
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
-require_once("includes/person_class.php");
+define('PGV_FUNCTIONS_CHARTS_PHP', '');
+
+require_once("includes/class_person.php");
 
 /**
  * print a table cell with sosa number
@@ -160,7 +162,7 @@ function print_family_parents($famid, $sosa = 0, $label="", $parid="", $gparid="
 	}
 	if (!empty($upfamid) and ($sosa!=-1) and ($view != "preview")) {
 		print "<td valign=\"middle\" rowspan=\"2\">";
-		print_url_arrow($upfamid, encode_url(($sosa==0 ? "?famid={$upfamid}&show_full={$show_full}" : "#{$upfamid}")), "$upfamid", 1);
+		print_url_arrow($upfamid, ($sosa==0 ? "?famid=$upfamid&amp;show_full=$show_full" : "#$upfamid"), "$upfamid", 1);
 		print "</td>\n";
 	}
 	if ($hparents or ($sosa != 0 and $SHOW_EMPTY_BOXES)) {
@@ -176,12 +178,12 @@ function print_family_parents($famid, $sosa = 0, $label="", $parid="", $gparid="
 	}
 	print "</tr></table>\n\n";
 	if ($sosa!=0) {
-		print "<a href=\"".encode_url("family.php?famid={$famid}")."\" class=\"details1\">";
+		print "<a href=\"family.php?famid=$famid\" class=\"details1\">";
 		if ($SHOW_ID_NUMBERS) print getLRM() . "($famid)" . getLRM() . "&nbsp;&nbsp;";
 		else print str_repeat("&nbsp;", 10);
 		$marriage = $family->getMarriage();
 		if ($marriage->canShow()) {
-			$marriage->print_simple_fact(); 
+			$marriage->print_simple_fact();
 		} else print $pgv_lang["private"];
 		print "</a>";
 	}
@@ -235,7 +237,7 @@ function print_family_parents($famid, $sosa = 0, $label="", $parid="", $gparid="
 	}
 	if (!empty($upfamid) and ($sosa!=-1) and ($view != "preview")) {
 		print "<td valign=\"middle\" rowspan=\"2\">";
-		print_url_arrow($upfamid.$label, encode_url(($sosa==0 ? "?famid={$upfamid}&show_full={$show_full}" : "#{$upfamid}")), "$upfamid", 1);
+		print_url_arrow($upfamid, ($sosa==0 ? "?famid=$upfamid&amp;show_full=$show_full" : "#$upfamid"), "$upfamid", 1);
 		print "</td>\n";
 	}
 	if ($hparents or ($sosa != 0 and $SHOW_EMPTY_BOXES)) {
@@ -350,7 +352,7 @@ function print_family_children($famid, $childid = "", $sosa = 0, $label="", $per
 						// family link
 						if ($famid) {
 							print "<br />";
-							print "<a class=\"details1\" href=\"".encode_url("family.php?famid={$famid}")."\">";
+							print "<a class=\"details1\" href=\"family.php?famid=$famid\">";
 							if ($SHOW_ID_NUMBERS) print getLRM() . "&nbsp;($famid)&nbsp;" . getLRM();
 							print "</a>";
 						}
@@ -419,8 +421,8 @@ function print_family_children($famid, $childid = "", $sosa = 0, $label="", $per
 	   print_help_link("add_child_help", "qm", "add_child_to_family");
 		print "<a href=\"javascript:;\" onclick=\"return addnewchild('$famid','');\">" . $pgv_lang["add_child_to_family"] . "</a>";
 		print "<span style='white-space:nowrap;'>";
-		print " <a href=\"javascript:;\" onclick=\"return addnewchild('$famid','M');\">[<img src=\"$PGV_IMAGE_DIR/" . $PGV_IMAGES["sex"]["small"] . "\" title=\"" . $pgv_lang["son"] . "\" alt=\"" . $pgv_lang["son"] . "\" class=\"gender_image\" />]</a>";
-		print " <a href=\"javascript:;\" onclick=\"return addnewchild('$famid','F');\">[<img src=\"$PGV_IMAGE_DIR/" . $PGV_IMAGES["sexf"]["small"] . "\" title=\"" . $pgv_lang["daughter"] . "\" alt=\"" . $pgv_lang["daughter"] . "\" class=\"gender_image\" />]</a>";
+		print " <a href=\"javascript:;\" onclick=\"return addnewchild('$famid','M');\">[".Person::sexImage('M', 'small', $pgv_lang['son'     ])."]</a>";
+		print " <a href=\"javascript:;\" onclick=\"return addnewchild('$famid','F');\">[".Person::sexImage('F', 'small', $pgv_lang['daughter'])."]</a>";
 		print "</span>";
    }
 }
@@ -443,10 +445,10 @@ function print_family_facts(&$family, $sosa = 0) {
 		$linkToID = $famid;		// -- Tell addmedia.php what to link to
 		// -- array of GEDCOM elements that will be found but should not be displayed
 		$nonfacts = array("FAMS", "FAMC", "MAY", "BLOB", "HUSB", "WIFE", "CHIL", "");
-		
+
 		// -- find all the fact information
 		$indifacts = $family->getFacts();
-		
+
 		if (count($indifacts) > 0) {
 			sort_facts($indifacts);
 			print "\n\t<span class=\"subheaders\">" . $pgv_lang["family_group_info"];
@@ -727,7 +729,7 @@ function get_sosa_name($sosa) {
 			}
 			if ($gen >= 2) $sosaname .= $great;
 			if ($gen == 1) $sosaname .= $grand;
-	
+
 			for ($i=$gen; $i>0; $i--){
 				if (!(floor($sosa/(pow(2,$i)))%2)) $addname .= $father;
 				else $addname .= $mother;
@@ -746,7 +748,7 @@ function get_sosa_name($sosa) {
 			$sosaname = implode('', $sosaname);
 			if ($LANGUAGE != "swedish") if (!empty($addname)) $sosaname .= ($gen>5?"<br />&nbsp;&nbsp;&nbsp;&nbsp;":"")." <small>(".$addname.")</small>";
 			break;
-	
+
 		case "dutch":
 			// reference: http://nl.wikipedia.org/wiki/Voorouder
 			// Our numbers are 2 less than those shown in the article.  We number parents
@@ -769,7 +771,7 @@ function get_sosa_name($sosa) {
 			else $sosaname .= $pgv_lang["mother"];
 			$sosaname = strtolower($sosaname);
 			break;
-	
+
 		case "finnish":
 		    $sosaname = "";
 			$father = UTF8_strtolower($pgv_lang["father"]);
@@ -788,7 +790,7 @@ function get_sosa_name($sosa) {
 			$sosaname[0] = UTF8_strtoupper($sosaname[0]);
 			$sosaname = implode('',$sosaname);
 			break;
-	
+
 		case "hebrew":
 		    $sosaname = "";
 			$addname = "";
@@ -831,7 +833,7 @@ function get_sosa_name($sosa) {
 				}
 			}
 			break;
-	
+
 		default:
 			$paternal = (floor($sosa/pow(2,$gen)) == 2) ? "paternal" : "maternal";
 			$male = ($sosa%2==0) ? "male" : "female";

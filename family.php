@@ -26,11 +26,16 @@
  * @version $Id$
  */
 
+require './config.php';
+
 require_once 'includes/controllers/family_ctrl.php';
+
+$controller = new FamilyController();
+$controller->init();
 
 print_header($controller->getPageTitle());
 // completely prevent display if privacy dictates so
-if (!$controller->family->disp) {
+if (!$controller->family->canDisplayDetails()) {
 	print_privacy_error($CONTACT_EMAIL);
 	print_footer();
 	exit;
@@ -41,11 +46,11 @@ if ($MULTI_MEDIA && file_exists("modules/lightbox/album.php")) {
 	include('modules/lightbox/lb_defaultconfig.php');
 	if (file_exists('modules/lightbox/lb_config.php')) include('modules/lightbox/lb_config.php');
 	include_once('modules/lightbox/functions/lb_call_js.php');
-}	
+}
 // LB ======================================================================================
 
 $PEDIGREE_FULL_DETAILS = "1";		// Override GEDCOM configuration
-$show_full = "1"; 
+$show_full = "1";
 
 ?>
 <?php if ($controller->family->isMarkedDeleted()) print "<span class=\"error\">".$pgv_lang["record_marked_deleted"]."</span>"; ?>
@@ -82,8 +87,8 @@ $show_full = "1";
 		<td valign="top" class="noprint">
 			<div class="accesskeys">
 			<?php
-                        if (empty($SEARCH_SPIDER)) {
-                        ?>
+				if (empty($SEARCH_SPIDER)) {
+				?>
 				<a class="accesskeys" href="<?php print 'timeline.php?pids[0]=' . $controller->parents['HUSB'].'&amp;pids[1]='.$controller->parents['WIFE'];?>" title="<?php print $pgv_lang['parents_timeline'] ?>" tabindex="-1" accesskey="<?php print $pgv_lang['accesskey_family_parents_timeline']; ?>"><?php print $pgv_lang['parents_timeline'] ?></a>
 				<a class="accesskeys" href="<?php print 'timeline.php?' . $controller->getChildrenUrlTimeline();?>" title="<?php print $pgv_lang["children_timeline"] ?>" tabindex="-1" accesskey="<?php print $pgv_lang['accesskey_family_children_timeline']; ?>"><?php print $pgv_lang['children_timeline'] ?></a>
 				<a class="accesskeys" href="<?php print 'timeline.php?pids[0]=' .$controller->getHusband().'&amp;pids[1]='.$controller->getWife().'&amp;'.$controller->getChildrenUrlTimeline(2);?>" title="<?php print $pgv_lang['family_timeline'] ?>" tabindex="-1" accesskey="<?php print $pgv_lang['accesskey_family_timeline']; ?>"><?php print $pgv_lang['family_timeline'] ?></a>
@@ -93,7 +98,7 @@ $show_full = "1";
 			<?php } ?>
 			</div>
 			<?php
-			if (empty($SEARCH_SPIDER) && ($_REQUEST['view'] != 'preview')) :
+			if (empty($SEARCH_SPIDER) && !$controller->isPrintPreview()) :
 			?>
 			<table class="sublinks_table" cellspacing="4" cellpadding="0">
 				<tr>
@@ -155,9 +160,9 @@ $show_full = "1";
 <br />
 <?php
 if(empty($SEARCH_SPIDER))
-        print_footer();
+	print_footer();
 else {
-        if($SHOW_SPIDER_TAGLINE)
-                print $pgv_lang["label_search_engine_detected"].": ".$SEARCH_SPIDER;
-        print "\n</div>\n\t</body>\n</html>";
+	if($SHOW_SPIDER_TAGLINE)
+		print $pgv_lang["label_search_engine_detected"].": ".$SEARCH_SPIDER;
+	print "\n</div>\n\t</body>\n</html>";
 }

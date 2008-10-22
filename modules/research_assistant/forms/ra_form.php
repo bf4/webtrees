@@ -24,13 +24,14 @@
  * @version $Id$
  * @author Jason Porter
  */
-//-- security check, only allow access from module.php
-if (strstr($_SERVER["SCRIPT_NAME"],"module.php")===false) {
-	print "Now, why would you want to do that.  You're not hacking are you?";
+
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
+
 global $LANGUAGE, $factarray;
-require_once "includes/person_class.php";
+require_once "includes/class_person.php";
 
 /**
  * Base class for Research Assistant forms
@@ -338,7 +339,7 @@ class ra_form {
 		$res = dbquery($sql);
 		
 		if (isset ($_REQUEST['personid'])) {
-			$people = preg_split("/;/", $_REQUEST['personid']);
+			$people = explode(';', $_REQUEST['personid']);
 			//-- delete any existing facts from old people
 			foreach($oldpeople as $pid=>$person) {
 				if (!isset($people[$pid])) {
@@ -372,7 +373,7 @@ class ra_form {
 		$this->people = null;
 		$citation = $this->processSimpleCitation();
 		if (isset ($_REQUEST['sourceid'])) {
-			$sources = preg_split("/;/", $_REQUEST['sourceid']);
+			$sources = explode(';', $_REQUEST['sourceid']);
 			foreach($sources as $i=>$sid) {
 				if (!empty($sid)) {
 					$sql = 'INSERT INTO '.$TBLPREFIX.'tasksource (ts_t_id, ts_s_id, ts_page, ts_quay, ts_date, ts_text, ts_obje, ts_array) '."VALUES ('" . $DBCONN->escapeSimple($_REQUEST["taskid"]) . "', '".$DBCONN->escapeSimple($sid)."'" .

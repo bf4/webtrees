@@ -26,12 +26,14 @@
  * @version $Id$
  */
 
-if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
-	print "You cannot access an include file directly.";
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
-require_once('includes/date_class.php');
+define('PGV_FUNCTIONS_DATE_PHP', '');
+
+require_once('includes/class_date.php');
 
 /**
  * translate gedcom age string
@@ -48,7 +50,7 @@ require_once('includes/date_class.php');
  */
 function get_age_at_event($agestring, $show_years) {
 	global $pgv_lang, $lang_short_cut, $LANGUAGE;
-	
+
 	// Allow special processing for different languages
 	$func="age_localisation_{$lang_short_cut[$LANGUAGE]}";
 	if (!function_exists($func))
@@ -79,13 +81,13 @@ function DefaultAgeLocalisation(&$agestring, &$show_years) {
 		),
 		array(
 			$pgv_lang['child'],
-			$pgv_lang['infant'],  
+			$pgv_lang['infant'],
 	 		$pgv_lang['stillborn'],
 			($show_years || preg_match('/[dm]/', $agestring)) ? '1 '.$pgv_lang['year1'] : '1',
 			($show_years || preg_match('/[dm]/', $agestring)) ? '$1 '.$pgv_lang['years'] : '$1',
 	  	'1 '.$pgv_lang['month1'],
 	 		'$1 '.$pgv_lang['months'],
-	  	'1 '.$pgv_lang['day1'],  
+	  	'1 '.$pgv_lang['day1'],
 			'$1 '.$pgv_lang['days']
 		),
 		$agestring
@@ -99,7 +101,7 @@ function DefaultAgeLocalisation(&$agestring, &$show_years) {
  */
 function parse_time($timestr)
 {
-	$time = preg_split("/:/", $timestr.":0:0");
+	$time = explode(':', $timestr.':0:0');
 	$time[0] = min(((int) $time[0]), 23);	// Hours: integer, 0 to 23
 	$time[1] = min(((int) $time[1]), 59);	// Minutes: integer, 0 to 59
 	$time[2] = min(((int) $time[2]), 59);	// Seconds: integer, 0 to 59

@@ -27,10 +27,18 @@
  * @version $Id$
  */
 
-if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
-	print "Direkter Sprach-Dateien Zugriff ist nicht erlaubt.";
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
+
+$pgv_lang["exact"]					= "Genaue";
+$pgv_lang["advanced_search"]		= "Erweiterte Suche";
+$pgv_lang["more_fields"]			= "Mehr Felder hinzufügen";
+$pgv_lang["install_step_8"] 		= "Hier beginnen";
+$pgv_lang["parent_family"]			= "Familie der Eltern";
+$pgv_lang["step_parent_family"]		= "Familie der Stiefeltern";
+$pgv_lang["immediate_family"]		= "Eigene Familie";
 
 $pgv_lang["load_full_tree"]			= "Diesen Stammbaum im vollen interaktiven Baumdiagramm zeigen";
 $pgv_lang["hide_show_spouses"]		= "Alle oder nur den letzten Partner zeigen";
@@ -380,9 +388,11 @@ $pgv_lang["remove"]						= "löschen";
 $pgv_lang["empty_cart"]					= "Sammelbehälter leeren";
 $pgv_lang["download_now"]				= "Jetzt herunterladen";
 $pgv_lang["download_file"]				= "Datei #GLOBAL[whichFile]# herunterladen";
-$pgv_lang["indi_downloaded_from"]		= "Daten dieser Person wurden geladen von:";
-$pgv_lang["family_downloaded_from"]		= "Daten dieser Familie wurden geladen von:";
-$pgv_lang["source_downloaded_from"]		= "Daten dieser Quelle wurden geladen von:";
+$pgv_lang["indi_downloaded_from"]		= "Angaben zu dieser Person wurden geladen von:";
+$pgv_lang["family_downloaded_from"]		= "Angaben zu dieser Familie wurden geladen von:";
+$pgv_lang["source_downloaded_from"]		= "Angaben zu dieser Quelle wurden geladen von:";
+$pgv_lang["enter_person_generations"]	= "Anzahl der Generationen:";
+
 //-- PLACELIST FILE MESSAGES
 $pgv_lang["connections"]				= "Orts-Verbindungen gefunden";
 $pgv_lang["top_level"]					= "Höchste Stufe";
@@ -515,7 +525,8 @@ $pgv_lang["husb_age"]					= "Alter, Gatte";
 $pgv_lang["wife_age"]					= "Alter, Gattin";
 $pgv_lang["days"]						= "Tage";
 $pgv_lang["months"]						= "Monate";
-$pgv_lang["years"]						= "Jahre";
+$pgv_lang["years"]						= "Jahre";	// >2 years
+$pgv_lang["years2"]						= "Jahre";	// 2 years
 $pgv_lang["day1"]						= "Tag";
 $pgv_lang["month1"]						= "Monat";
 $pgv_lang["year1"]						= "Jahr";

@@ -26,13 +26,15 @@
  * @version $Id$
  */
 
-if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
-	print "You cannot access an include file directly.";
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
+define('PGV_FUNCTIONS_PRINT_PHP', '');
+
 require_once 'includes/functions_charts.php';
-require_once 'includes/menu.php';
+require_once 'includes/class_menubar.php';
 
 /**
  * print the information for an individual chart box
@@ -69,7 +71,7 @@ function print_pedigree_person($pid, $style=1, $show_famlink=true, $count=0, $pe
 	if ($count==0) $count = rand();
 	$lbwidth = $bwidth*.75;
 	if ($lbwidth < 150) $lbwidth = 150;
-	
+
 	$tmp=array('M'=>'','F'=>'F', 'U'=>'NN');
 	$isF=$tmp[$person->getSex()];
 
@@ -136,13 +138,13 @@ function print_pedigree_person($pid, $style=1, $show_famlink=true, $count=0, $pe
 					else $title = $pid." :".$pgv_lang["hourglass_chart"];
 					$personlinks .= "<a href=\"".encode_url("hourglass.php?pid={$pid}&show_full={$PEDIGREE_FULL_DETAILS}&chart_style={$chart_style}&PEDIGREE_GENERATIONS={$OLD_PGENS}&box_width={$box_width}&ged={$GEDCOM}&show_spouse={$show_spouse}")."\" title=\"$title\" ".$mouseAction1."><b>".$pgv_lang["hourglass_chart"]."</b></a><br />";
 				}
-					
+
 				$fams = $person->getSpouseFamilies();
 				/* @var $family Family */
 				foreach($fams as $famid=>$family) {
 					if (!is_null($family)) {
 						$spouse = $family->getSpouse($person);
-							
+
 						$children = $family->getChildren();
 						$num = count($children);
 						if ((!empty($spouse))||($num>0)) {
@@ -285,13 +287,13 @@ function print_pedigree_person($pid, $style=1, $show_famlink=true, $count=0, $pe
 			$imgsize = findImageSize($object["file"]);
 			$imgwidth = $imgsize[0]+50;
 			$imgheight = $imgsize[1]+150;
-		
+
 			//LBox --------  change for Lightbox Album --------------------------------------------
 			if (file_exists("modules/lightbox/album.php")) {
 				$thumbnail .= "<a href=\"" . $object["file"] . "\" rel=\"clearbox[general_2]\" rev=\"" . $object['mid'] . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name,ENT_QUOTES,'UTF-8')) . "\">";
 			}else
 			// ---------------------------------------------------------------------------------------------
-			
+
 			if (!empty($object['mid']) && $USE_MEDIA_VIEWER) {
 				$thumbnail .= "<a href=\"".encode_url("mediaviewer.php?mid=".$object['mid'])."\" >";
 			}else{
@@ -305,7 +307,8 @@ function print_pedigree_person($pid, $style=1, $show_famlink=true, $count=0, $pe
 	}
 	//-- find additional name
 	$addname=$person->getAddName();
-	$name = PrintReady(htmlspecialchars(strip_tags($name),ENT_QUOTES,'UTF-8'));
+	//$name = PrintReady(htmlspecialchars(strip_tags($name),ENT_QUOTES,'UTF-8'));
+	$name = PrintReady($name);
 
 	if ($TEXT_DIRECTION=="ltr") $title = $pgv_lang["indi_info"].": ".$pid;
 	else $title = $pid." :".$pgv_lang["indi_info"];
@@ -318,7 +321,7 @@ function print_pedigree_person($pid, $style=1, $show_famlink=true, $count=0, $pe
 		if ($ct>0) $classfacts .= " $fact";
 	}
 	if ($PEDIGREE_SHOW_GENDER)
-		$genderImage = " ".$person->getSexImage('', "box-$boxID-gender");
+		$genderImage = " ".$person->getSexImage('small', "box-$boxID-gender");
 	if ($SHOW_ID_NUMBERS) {
 		if ($TEXT_DIRECTION=="ltr") $showid .= "<span class=\"details$style\">" . getLRM() . "($pid)" . getLRM() . " </span>";
 		else $showid .= "<span class=\"details$style\">" . getRLM() . "($pid)" . getRLM() . " </span>";
@@ -440,9 +443,9 @@ function print_header($title, $head="",$use_alternate_styles=true) {
 
 	if (empty($META_TITLE)) $metaTitle = ' - '.PGV_PHPGEDVIEW;
 	else $metaTitle = " - ".$META_TITLE.' - '.PGV_PHPGEDVIEW;
-	
+
 	$title = PrintReady(strip_tags($title.$metaTitle), TRUE);
-	
+
 	$GEDCOM_TITLE = get_gedcom_setting(PGV_GED_ID, 'title');
 	if ($ENABLE_RSS){
 		$applicationType = "application/rss+xml";
@@ -479,6 +482,9 @@ function print_header($title, $head="",$use_alternate_styles=true) {
 					$surnameList .= $surname;
 				}
 			}
+		} else {
+			$surnames = array();
+			$surnameList = '';
 		}
 		if ((empty($META_DESCRIPTION))&&(!empty($GEDCOM_TITLE))) $META_DESCRIPTION = $GEDCOM_TITLE;
 		if ((empty($META_PAGE_TOPIC))&&(!empty($GEDCOM_TITLE))) $META_PAGE_TOPIC = $GEDCOM_TITLE;
@@ -553,7 +559,7 @@ function print_header($title, $head="",$use_alternate_styles=true) {
 		arrows[3].src = "'.$PGV_IMAGE_DIR."/".$PGV_IMAGES["darrow2"]["other"].'";
 	';
 	if (PGV_USER_CAN_EDIT) {
-	
+
 	$javascript .= 'function delete_record(pid, linenum, mediaid) {
 		if (!mediaid) mediaid="";
 		if (confirm(\''.$pgv_lang["check_delete"].'\')) {
@@ -567,7 +573,7 @@ function print_header($title, $head="",$use_alternate_styles=true) {
 		}
 		return false;
 	}
-	
+
 	function deleterepository(pid) {
 		if (confirm(\''.$pgv_lang["confirm_delete_repo"].'\')) {
 			window.open(\'edit_interface.php?action=deleterepo&pid=\'+pid+"&"+sessionname+"="+sessionid, \'_blank\', \'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1\');
@@ -631,12 +637,15 @@ function print_footer() {
 	global $without_close, $pgv_lang, $view, $buildindex, $DBTYPE;
 	global $SHOW_STATS, $SCRIPT_NAME, $QUERY_STRING, $footerfile, $print_footerfile, $GEDCOMS, $ALLOW_CHANGE_GEDCOM, $printlink;
 	global $PGV_IMAGE_DIR, $theme_name, $PGV_IMAGES, $TEXT_DIRECTION, $footer_count, $DEBUG;
-
+	
+	$view = safe_get('view');
+	
 	if (!isset($footer_count)) $footer_count = 1;
 	else $footer_count++;
 	print "<!-- begin footer -->";
 	if ($view!="preview") {
 		include($footerfile);
+		echo "<br />";
 	}
 	else {
 		include($print_footerfile);
@@ -648,6 +657,7 @@ function print_footer() {
 		}
 		$printlink = true;
 		print "</div>";
+		echo "<br />";
 	}
 	if (function_exists("load_behaviour")) {
 		load_behaviour();  // @see function_print_lists.php
@@ -691,7 +701,7 @@ function google_analytics() {
  */
 function print_execution_stats() {
 	global $start_time, $pgv_lang, $TOTAL_QUERIES, $PRIVACY_CHECKS;
-	$end_time = getmicrotime();
+	$end_time = microtime(true);
 	$exectime = $end_time - $start_time;
 	print "<br /><br />".$pgv_lang["exec_time"];
 	printf(" %.3f ".$pgv_lang["sec"], $exectime);
@@ -879,7 +889,7 @@ function contact_menus() {
 
 //-- print user favorites
 function print_favorite_selector($option=0) {
-	global $pgv_lang, $GEDCOM, $SCRIPT_NAME, $SHOW_ID_NUMBERS, $pid, $INDEX_DIRECTORY, $indilist, $famlist, $sourcelist, $medialist, $QUERY_STRING, $famid, $sid;
+	global $pgv_lang, $GEDCOM, $SCRIPT_NAME, $SHOW_ID_NUMBERS, $pid, $INDEX_DIRECTORY, $QUERY_STRING, $famid, $sid;
 	global $TEXT_DIRECTION, $REQUIRE_AUTHENTICATION, $PGV_IMAGE_DIR, $PGV_IMAGES, $SEARCH_SPIDER;
 	$username = PGV_USER_NAME;
 	if (!empty($username)) $userfavs = getUserFavorites($username);
@@ -1034,7 +1044,26 @@ function print_favorite_selector($option=0) {
 					print "<option value=\"".encode_url($favorite["url"])."\">".PrintReady($favorite["title"]);
 					print "</option>";
 				} else {
-					$record=GedcomRecord::getInstance($pid);
+					switch ($favorite['type']) {
+					case 'INDI':
+						$record=Person::getInstance($pid);
+						break;
+					case 'FAM':
+						$record=Family::getInstance($pid);
+						break;
+					case 'SOUR':
+						$record=Source::getInstance($pid);
+						break;
+					case 'REPO':
+						$record=Repository::getInstance($pid);
+						break;
+					case 'OBJE':
+						$record=Media::getInstance($pid);
+						break;
+					default:
+						$record=GedcomRecord::getInstance($pid);
+						break;
+					}
 					if ($record && $record->canDisplayName()) {
 						$name=$record->getFullName();
 						if ($SHOW_ID_NUMBERS) {
@@ -1173,7 +1202,7 @@ function print_fact_notes($factrec, $level, $textOnly=false, $return=false) {
 			$closeSpan = print_note_record($match[$j][1], $nlevel, $nrec, $textOnly, true);
 			$data .= $closeSpan;
 		} else {
-			if (displayDetailsByID($nmatch[1], "NOTE")) {
+			if (displayDetailsById($nmatch[1], "NOTE")) {
 				//-- print linked note records
 				$noterec = find_gedcom_record($nmatch[1]);
 				$nt = preg_match("/0 @$nmatch[1]@ NOTE (.*)/", $noterec, $n1match);
@@ -1199,7 +1228,7 @@ function print_fact_notes($factrec, $level, $textOnly=false, $return=false) {
 		}
 		$printDone = true;
 	}
-	if ($printDone) $data .= "<br />"; 
+	if ($printDone) $data .= "<br />";
 	if (!$return) print $data;
 	else return $data;
 }
@@ -1403,12 +1432,12 @@ function print_help_index($help){
 		$replace = substr($sentence, ($pos1+1), ($pos2-$pos1-1));
 		$sub = preg_replace(array("/pgv_lang\\[/","/\]/"), array("",""), $replace);
 		if (isset($pgv_lang[$sub])) {
-			$items = preg_split("/,/", $pgv_lang[$sub]);
+			$items = explode(',', $pgv_lang[$sub]);
 			$var = $pgv_lang[$items[1]];
 		}
 		$sub = preg_replace(array("/factarray\\[/","/\]/"), array("",""), $replace);
 		if (isset($factarray[$sub])) {
-			$items = preg_split("/,/", $factarray[$sub]);
+			$items = explode(',', $factarray[$sub]);
 			$var = $factarray[$items[1]];
 		}
 		if (substr($var,0,1)=="_") {
@@ -1452,7 +1481,6 @@ function print_help_index($help){
  * @param array $menu the menuitems array to print
  */
 function print_menu($menu, $parentmenu="") {
-	include_once 'includes/menu.php';
 	$conv = array(
 		'label'=>'label',
 		'labelpos'=>'labelpos',
@@ -1770,7 +1798,7 @@ function print_asso_rela_record($pid, $factrec, $linebr=false, $type='INDI') {
 				if (substr($key,0,1)=='*') {
 					$autoRela = true;
 					$key = substr($key,1);
-					
+
 				}
 				$cr = preg_match_all("/sosa_(.*)/", $key, $relamatch, PREG_SET_ORDER);
 				if ($cr > 0) {
@@ -1883,7 +1911,8 @@ function print_asso_rela_record($pid, $factrec, $linebr=false, $type='INDI') {
 			if ($TEXT_DIRECTION == "ltr") print getLRM() . "]</a>"; else print getRLM() . "]</a>";
 		}
 		else {
-			print $pgv_lang["unknown"];
+			if (strstr($pid2, " ")) print $pid2;
+			else print $pgv_lang["unknown"];
 			if ($SHOW_ID_NUMBERS) {
 				print "&nbsp;&nbsp;";
 				if ($TEXT_DIRECTION=="rtl") print getRLM();
@@ -2003,16 +2032,16 @@ function format_fact_date(&$eventObj, $anchor=false, $time=false) {
 				$birth_date=$person->getBirthDate(false);
 				$death_date=$person->getDeathDate(false);
 				$ageText = '';
-				if ((GedcomDate::Compare($date, $death_date)<0 || !$person->isDead()) || $fact=='DEAT') {
+				if ((GedcomDate::Compare($date, $death_date)<=0 || !$person->isDead()) || $fact=='DEAT') {
 					// Before death, print age
 					$age=GedcomDate::GetAgeGedcom($birth_date, $date);
 					// Only show calculated age if it differs from recorded age
 					if (!empty($age)) {
 						if (!empty($fact_age) && $fact_age!=$age ||
 						    empty($fact_age) && empty($husb_age) && empty($wife_age) ||
-						    !empty($husb_age) && $person->getSex()=='M' && $husb_age!= $age ||
+						    !empty($husb_age) && $person->getSex()=='M' && $husb_age!=$age ||
 						    !empty($wife_age) && $person->getSex()=='F' && $wife_age!=$age)
-							$ageText = '('.$pgv_lang['age'].' '.get_age_at_event($age, false).')';
+							if ($age!="0d") $ageText = '('.$pgv_lang['age'].' '.get_age_at_event($age, false).')';
 					}
 				}
 				if ($fact!='DEAT' && GedcomDate::Compare($date, $death_date)>=0) {
@@ -2050,7 +2079,7 @@ function format_fact_date(&$eventObj, $anchor=false, $time=false) {
 		// It is not proper GEDCOM form to use a N(o) value with an event tag to infer that it did not happen.
 		$factrec = str_replace("\r\nPGV_OLD\r\n", '', $factrec);
 		$factrec = str_replace("\r\nPGV_NEW\r\n", '', $factrec);
-		$factdetail = preg_split('/ /', trim($factrec));
+		$factdetail = explode(' ', trim($factrec));
 		if (isset($factdetail)) if (count($factdetail) == 3) if (strtoupper($factdetail[2]) == 'Y') {
 			$html.=$pgv_lang['yes'];
 		}
@@ -2084,7 +2113,7 @@ function format_fact_place(&$eventObj, $anchor=false, $sub=false, $lds=false) {
 	$ct = preg_match("/2 PLAC (.*)/", $factrec, $match);
 	if ($ct>0) {
 		$html.=' ';
-		$levels = preg_split("/,/", $match[1]);
+		$levels = explode(',', $match[1]);
 		if ($anchor && (empty($SEARCH_SPIDER))) {
 			$place = trim($match[1]);
 			// reverse the array so that we get the top level first
@@ -2213,7 +2242,7 @@ function CheckFactUnique($uniquefacts, $recfacts, $type) {
 		else {
 			if (($type == "SOUR") || ($type == "REPO")) $factrec = $factarray[0];
 			if (($type == "FAM") || ($type == "INDI")) $factrec = $factarray[1];
-			 
+
 		$ft = preg_match("/1 (\w+)(.*)/", $factrec, $match);
 		if ($ft>0) {
 			$fact = trim($match[1]);

@@ -27,12 +27,15 @@
  * @version $Id$
  */
 
-if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
-	print "Usted no puede acceder a este archivo de idioma directamente.";
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
 // Admin menu
+// $pgv_lang["sitemap"]       			= "Sitemap";
+// $pgv_lang["sitemap"]       			= "Sitemap";
+// $pgv_lang["sitemap"]       			= "Sitemap";
 $pgv_lang["generate_sitemap"]       = "Generar archivos de mapa del sitio";
 
 // Sitemap pages

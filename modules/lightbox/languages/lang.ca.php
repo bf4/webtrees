@@ -25,9 +25,8 @@
  * @version $Id$
  */
 
-//-- security check, only allow access from module.php
-if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
-	print "No podeu accedir directament a aquest arxiu d'idioma.";
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
@@ -88,8 +87,13 @@ $pgv_lang["lightbox"]		 = "Àlbum";
 $pgv_lang["showmenu"] 		 = "Mostra Menú:";
 
 $pgv_lang["TYPE__other"] 	 = "Un altre";
-
 $pgv_lang["TYPE__footnotes"] = "Notes al peu";
+
+$pgv_lang["ROW_TYPE__photo"] 		= $pgv_lang["TYPE__photo"];
+$pgv_lang["ROW_TYPE__document"] 	= $pgv_lang["TYPE__document"];
+$pgv_lang["ROW_TYPE__census"] 		= $factarray["CENS"];
+$pgv_lang["ROW_TYPE__other"] 		= $pgv_lang["TYPE__other"];
+$pgv_lang["ROW_TYPE__footnotes"]	= $pgv_lang["TYPE__footnotes"];
 
 $pgv_lang["census_text"]  	 = "\"Aquestes imatges del cens s'han obtingut d'\"Arxius Oficials\", custodis dels registres originals, ";
 $pgv_lang["census_text"] 	.= "i surten aquí amb llur autorització sota la condició de que no se'n faci ús comercial sense llur permís." . "\n" ;

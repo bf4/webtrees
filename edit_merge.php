@@ -26,18 +26,23 @@
  * @version $Id$
  */
 
-require("config.php");
-require("includes/functions_edit.php");
-require("includes/functions_import.php");
+require './config.php';
 
-if (empty($action)) $action="choose";
-if (empty($gid1)) $gid1="";
-if (empty($gid2)) $gid2="";
-if (empty($ged2)) $ged2=$GEDCOM;
+require_once 'includes/functions_edit.php';
+require_once 'includes/functions_import.php';
+
+$ged=$GEDCOM;
+$gid1=safe_POST_xref('gid1');
+$gid2=safe_POST_xref('gid2');
+$action=safe_POST('action', PGV_REGEX_ALPHA, 'choose');
+$ged2=safe_POST('ged2', PGV_REGEX_NOSCRIPT, $GEDCOM);
+$keep1=safe_POST('keep1', PGV_REGEX_UNSAFE);
+$keep2=safe_POST('keep2', PGV_REGEX_UNSAFE);
 if (empty($keep1)) $keep1=array();
 if (empty($keep2)) $keep2=array();
 
 print_header($pgv_lang["merge_records"]);
+require 'js/autocomplete.js.htm';
 
 //-- make sure they have accept access privileges
 if (!PGV_USER_CAN_ACCEPT) {
@@ -163,7 +168,7 @@ if ($action!="choose") {
 					if ($GEDCOM==$ged2) {
 						$success = delete_gedrec($gid2);
 						if ($success) print "<br />".$pgv_lang["gedrec_deleted"]."<br />\n";
-						
+
 						//-- replace all the records that link to gid2
 						$sql = "SELECT i_id, i_gedcom FROM ".$TBLPREFIX."individuals WHERE i_file=".PGV_GED_ID." AND i_gedcom LIKE '%@$gid2@%'";
 						$res = dbquery($sql);
@@ -231,7 +236,7 @@ if ($action!="choose") {
 							}
 						}
 					}
-					
+
 					replace_gedrec($gid1, $newgedrec);
 					if ($SYNC_GEDCOM_FILE) write_file();
 					write_changes();

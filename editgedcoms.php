@@ -28,9 +28,13 @@
  * @version $Id$
  */
 
-require "config.php";
+require './config.php';
 
 loadLangFile("pgv_confighelp");
+
+$action     =safe_GET('action', array('delete', 'setdefault'));
+$ged        =safe_GET('ged',         get_all_gedcoms());
+$default_ged=safe_GET('default_ged', get_all_gedcoms());
 
 /**
  * Check if a gedcom file is downloadable over the internet
@@ -57,9 +61,6 @@ function check_gedcom_downloadable($gedfile) {
 	return $url;
 }
 
-if (!isset($action)) $action="";
-if (!isset($ged)) $ged = "";
-
 //-- make sure that they have admin status before they can use this page
 //-- otherwise have them login again
 if (!PGV_USER_GEDCOM_ADMIN) {
@@ -75,9 +76,10 @@ if ($action=="delete") {
 	print "<br />".str_replace("#GED#", $ged, $pgv_lang["gedcom_deleted"])."<br />\n";
 }
 
-if (($action=="setdefault") && isset($default_ged)) {
+if (($action=="setdefault") && $default_ged) {
+	$DEFAULT_GEDCOM = $default_ged;
 	$configtext = implode('', file($INDEX_DIRECTORY."gedcoms.php"));
-	$configtext = preg_replace('/\$DEFAULT_GEDCOM\s*=\s*".*";/', "\$DEFAULT_GEDCOM = \"".urldecode($_POST["default_ged"])."\";", $configtext);
+	$configtext = preg_replace('/\$DEFAULT_GEDCOM\s*=\s*".*";/', "\$DEFAULT_GEDCOM = \"".$default_ged."\";", $configtext);
 	$fp = @fopen($INDEX_DIRECTORY."gedcoms.php", "wb");
 	if (!$fp) {
 		global $whichFile;
@@ -85,7 +87,6 @@ if (($action=="setdefault") && isset($default_ged)) {
 		print "<span class=\"error\">".print_text("gedcom_config_write_error",0,1)."<br /></span>\n";
 	}
 	else {
-		$DEFAULT_GEDCOM = urldecode($_POST["default_ged"]);
 		fwrite($fp, $configtext);
 		fclose($fp);
 		$logline = AddToLog("gedcoms.php updated");
@@ -96,7 +97,7 @@ if (($action=="setdefault") && isset($default_ged)) {
 print "<br /><br />";
 ?>
 <span class="subheaders"><?php print_text("current_gedcoms"); ?></span><br />
-<form name="defaultform" method="post" action="editgedcoms.php">
+<form name="defaultform" method="get" action="editgedcoms.php">
 <input type="hidden" name="action" value="setdefault" />
 <?php
 // Default gedcom choice

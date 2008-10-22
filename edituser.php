@@ -19,15 +19,15 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * This Page Is Valid XHTML 1.0 Transitional! > 19 August 2005
- *
  * @package PhpGedView
  * @subpackage Admin
  * @version $Id$
  */
 
-require 'config.php';
-require_once 'includes/functions_print_lists.php';
+require './config.php';
+
+require 'includes/functions_print_lists.php';
+include 'includes/functions_edit.php';
 
 // cannot edit account using a cookie login - login with password first
 if (!PGV_USER_ID || $_SESSION['cookie_login']) {
@@ -43,7 +43,7 @@ if (get_user_setting(PGV_USER_ID, 'editaccount')!='Y') {
 
 // Load language variables
 loadLangFile('pgv_confighelp, pgv_admin, pgv_editor');
-	
+
 // Valid values for form variables
 $ALL_ACTIONS=array('update');
 $ALL_CONTACT_METHODS=array('messaging', 'messaging2', 'messaging3', 'mailto', 'none');
@@ -113,23 +113,17 @@ if ($form_action=='update') {
 					foreach (get_all_gedcoms() as $ged_id=>$ged_name) {
 						$myid=get_user_gedcom_setting(PGV_USER_ID, $ged_id, 'gedcomid');
 						if ($myid) {
-							include_once 'includes/functions_edit.php';
-							$indirec=find_updated_record($myid, $ged_name);
-							if (!$indirec) {
-								$indirec=find_person_record($myid, $ged_name);
-							}
-							if ($indirec) {
-								$OLDGEDCOM=$GEDCOM;
-								$GEDCOM=$ged_name;
-								if (preg_match('/\d _?EMAIL/', $indirec)) {
-									$indirec= preg_replace("/(\d _?EMAIL)[^\r\n]*/", '$1 '.$form_email, $indirec);
-									replace_gedrec($myid, $indirec);
+							$OLDGEDCOM=$GEDCOM;
+							$GEDCOM=$ged_name;
+							$person=Person::getInstance($myid);
+							if ($person) {
+								if (preg_match('/\d _?EMAIL/', $person->getGedcomRecord())) {
+									replace_gedrec($myid, preg_replace("/(\d _?EMAIL)[^\r\n]*/", '$1 '.$form_email, $person->getGedcomRecord()));
 								} else {
-									$indirec.="\r\n1 EMAIL ".$form_email;
-									replace_gedrec($myid, $indirec);
+									replace_gedrec($myid, $person->getGedcomRecord()."\r\n1 EMAIL ".$form_email);
 								}
-								$GEDCOM=$OLDGEDCOM;
 							}
+							$GEDCOM=$OLDGEDCOM;
 						}
 					}
 				}
@@ -151,6 +145,7 @@ if ($form_action=='update') {
 	}
 } else {
 	print_header($pgv_lang['user_admin']);
+	require 'js/autocomplete.js.htm';
 }
 
 // Form validation
@@ -169,22 +164,22 @@ function checkform(frm) {
 		return false;
 	}
 	if (frm.form_lastname.value=="") {
-		alert("<?php print $pgv_lang['enter_fullname'];?>);
+		alert("<?php print $pgv_lang['enter_fullname'];?>");
 		frm.form_lastname.focus();
 		return false;
 	}
 	if (frm.form_email.value.indexOf("@")==-1) {
-		alert("<?php print $pgv_lang['enter_email'];?>);
+		alert("<?php print $pgv_lang['enter_email'];?>");
 		frm.user_email.focus();
 		return false;
 	}
 	if (frm.form_pass1.value!=frm.form_pass2.value) {
-		alert("<?php print $pgv_lang['password_mismatch'];?>);
+		alert("<?php print $pgv_lang['password_mismatch'];?>");
 		frm.form_pass1.focus();
 		return false;
 	}
 	if (frm.form_pass1.value.length > 0 && frm.form_pass1.value.length < 6) {
-		alert("<?php print $pgv_lang['passwordlength'];?>);
+		alert("<?php print $pgv_lang['passwordlength'];?>");
 		frm.form_pass1.focus();
 		return false;
 	}
@@ -225,7 +220,7 @@ echo print_help_link('edituser_lastname_help', 'qm', '', false, true);
 echo $pgv_lang['lastname'], '</td><td class="optionbox">';
 echo '<input type="text" name="form_lastname" tabindex="', ++$tab, '" value="', get_user_setting(PGV_USER_ID, 'lastname'), '" />';
 echo '</td></tr>';
-	
+
 $person=Person::getInstance(PGV_USER_GEDCOM_ID);
 if ($person) {
 	echo '<tr><td class="descriptionbox wrap">';
@@ -234,7 +229,7 @@ if ($person) {
 	echo $person->format_list('span');
 	echo '</td></tr>';
 }
-	
+
 $person=Person::getInstance(PGV_USER_ROOT_ID);
 echo '<tr><td class="descriptionbox wrap">';
 echo print_help_link('edituser_rootid_help', 'qm', '', false, true);

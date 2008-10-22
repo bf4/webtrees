@@ -25,25 +25,29 @@
  * @version $Id$
  */
 
-require("config.php");
-require_once("includes/functions_print_lists.php");
-require_once("includes/controllers/source_ctrl.php");
+require './config.php';
+
+require_once 'includes/functions_print_lists.php';
+require_once 'includes/controllers/source_ctrl.php';
+
+$controller = new SourceController();
+$controller->init();
 
 global $linkToID;
 
 print_header($controller->getPageTitle());
 $linkToID = $controller->sid;	// -- Tell addmedia.php what to link to
 
-// LBox ============================================================================= 
-// Get Javascript variables from lb_config.php --------------------------- 
+// LBox =============================================================================
+// Get Javascript variables from lb_config.php ---------------------------
  if (file_exists("modules/lightbox/album.php")) {
 	include('modules/lightbox/lb_defaultconfig.php');
 	if (file_exists('modules/lightbox/lb_config.php')) include('modules/lightbox/lb_config.php');
-	include('modules/lightbox/functions/lb_call_js.php');	
+	include('modules/lightbox/functions/lb_call_js.php');
 }
-// LBox  ============================================================================	
+// LBox  ============================================================================
 
-loadLangFile("lb_lang");	// Load Lightbox language file	
+loadLangFile("lightbox:lang");
 
 ?>
 <?php if ($controller->source->isMarkedDeleted()) print "<span class=\"error\">".$pgv_lang["record_marked_deleted"]."</span>"; ?>
@@ -53,7 +57,7 @@ loadLangFile("lb_lang");	// Load Lightbox language file
 		var recwin = window.open("gedrecord.php?pid=<?php print $controller->sid ?>", "_blank", "top=0,left=0,width=600,height=400,scrollbars=1,scrollable=1,resizable=1");
 	}
 	function showchanges() {
-		window.location = '<?php print $SCRIPT_NAME.normalize_query_string($QUERY_STRING."&show_changes=yes"); ?>';
+		window.location = 'source.php?sid=<?php print $controller->sid; ?>&show_changes=yes';
 	}
 //-->
 </script>
@@ -67,9 +71,9 @@ loadLangFile("lb_lang");	// Load Lightbox language file
 		</td>
 		<td valign="top" class="noprint">
 		<?php if (!$controller->isPrintPreview()) {
-			 $editmenu = $controller->getEditMenu();
-			 $othermenu = $controller->getOtherMenu();
-			 if ($editmenu!==false || $othermenu!==false) {
+			$editmenu = $controller->getEditMenu();
+			$othermenu = $controller->getOtherMenu();
+			if ($editmenu!==false || $othermenu!==false) {
 		?>
 			<table class="sublinks_table" cellspacing="4" cellpadding="0">
 				<tr>
@@ -145,21 +149,18 @@ if (file_exists("modules/research_assistant/research_assistant.php") && ($SHOW_R
 	echo "<tr class=\"center\"><td colspan=\"2\">";
 }
 
+// Individuals linked to this source
+if ($controller->source->countLinkedIndividuals()) {
+	print_indi_table($controller->source->fetchLinkedIndividuals(), $controller->source->getFullName());
+}
 
-// -- array of names
-$myindilist = $controller->source->getSourceIndis();
-$myfamlist = $controller->source->getSourceFams();
-$ci=count($myindilist);
-$cf=count($myfamlist);
-
-if ($ci>0) print_indi_table($myindilist, $controller->source->getFullName());
-if ($cf>0) print_fam_table($myfamlist, $controller->source->getFullName());
+// Families linked to this source
+if ($controller->source->countLinkedFamilies()) {
+	print_fam_table($controller->source->fetchLinkedFamilies(), $controller->source->getFullName());
+}
 
 ?>
-	<br />
-	<br />
 	</td>
 </tr>
 </table>
-<br /><br />
 <?php print_footer(); ?>

@@ -26,10 +26,12 @@
  * @subpackage Privacy
  */
 
-if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
-	print "You cannot access an include file directly.";
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
+
+define('PGV_FUNCTIONS_PRIVACY_PHP', '');
 
 if ($USE_RELATIONSHIP_PRIVACY) {
 	/**
@@ -74,6 +76,7 @@ function is_dead($indirec, $cyear="", $import=false) {
 	global $PRIVACY_BY_YEAR;
 	global $pgv_lang;
 	global $BUILDING_INDEX;
+	global $GEDCOM;
 
 	$ct = preg_match("/0 @(.*)@ INDI/", $indirec, $match);
 	if ($ct>0) {
@@ -85,35 +88,35 @@ function is_dead($indirec, $cyear="", $import=false) {
 	if (empty($cyear)) $cyear = date("Y");
 
 	// -- check for a death record
-	$deathrec = get_sub_record(1, "1 DEAT", $indirec);
-	if (!empty($deathrec)) {
-		if ($cyear==date("Y")) {
-			$resn = get_gedcom_value("RESN", 2, $deathrec);
-			if (empty($resn) || ($resn!='confidential' && $resn!='privacy')) {
-				$lines = preg_split("/\n/", $deathrec);
-				if (count($lines)>1) return true;
-				if (preg_match("/1 DEAT Y/", $deathrec)>0) return true;
-			}
-		}
-		else {
-			$ct = preg_match("/\d DATE.*\s(\d{3,4})\s/", $deathrec, $match);
-			if ($ct>0) {
-				$dyear = $match[1];
-				if ($dyear<$cyear) return true;
-				else return false;
+	foreach (explode('|', PGV_EVENTS_DEAT) as $tag) {
+		$deathrec = get_sub_record(1, "1 ".$tag, $indirec);
+		if ($deathrec) {
+			if ($cyear==date("Y")) {
+				$resn = get_gedcom_value("RESN", 2, $deathrec);
+				if (empty($resn) || ($resn!='confidential' && $resn!='privacy')) {
+					if (preg_match("/^1 {$tag}\s*(\n|Y)/", $deathrec)>0) {
+						return update_isdead($pid, get_id_from_gedcom($GEDCOM), true);
+					}
+				}
+			} else {
+				if (preg_match("/\d DATE.*\s(\d{3,4})\s/", $deathrec, $match)) {
+					return update_isdead($pid, get_id_from_gedcom($GEDCOM), $match[1] + $cyear < date("Y"));
+				}
 			}
 		}
 	}
 
 	//-- if birthdate less than $MAX_ALIVE_AGE return false
-	$birthrec = get_sub_record(1, "1 BIRT", $indirec);
-	if (!empty($birthrec)) {
-		$ct = preg_match("/\d DATE.*\s(\d{3,4})\s/", $birthrec, $match);
-		if ($ct>0) {
-			$byear = $match[1];
-			if (($cyear-$byear) < $MAX_ALIVE_AGE) {
-				//print "found birth record less that $MAX_ALIVE_AGE\n";
-				return false;
+	foreach (explode('|', PGV_EVENTS_BIRT) as $tag) {
+		$birthrec = get_sub_record(1, "1 ".$tag, $indirec);
+		if ($birthrec) {
+			$ct = preg_match("/\d DATE.*\s(\d{3,4})\s/", $birthrec, $match);
+			if ($ct>0) {
+				$byear = $match[1];
+				if (($cyear-$byear) < $MAX_ALIVE_AGE) {
+					//print "found birth record less that $MAX_ALIVE_AGE\n";
+					return update_isdead($pid, get_id_from_gedcom($GEDCOM), false);
+				}
 			}
 		}
 	}
@@ -126,13 +129,15 @@ function is_dead($indirec, $cyear="", $import=false) {
 			// If any date is prior to than MAX_ALIVE_AGE years ago assume they are dead
 			if (($cyear-$byear) > $MAX_ALIVE_AGE) {
 				//print "older than $MAX_ALIVE_AGE (".$match[$i][0].") year is $byear\n";
-				return true;
+				return update_isdead($pid, get_id_from_gedcom($GEDCOM), true);
 			}
 		}
 	}
 
 	//-- during import we can't check child dates
-	if ($import) return -1;
+	if ($import) {
+		return -1;
+	}
 
 	// If we found no dates then check the dates of close relatives.
 	if($CHECK_CHILD_DATES ) {
@@ -149,7 +154,7 @@ function is_dead($indirec, $cyear="", $import=false) {
 						// If any date is prior to than MAX_ALIVE_AGE years ago assume they are dead
 						if (($cyear-$byear) > $MAX_ALIVE_AGE+40) {
 							//print "father older than $MAX_ALIVE_AGE+40 (".$match[$i][0].") year is $byear\n";
-							return true;
+							return update_isdead($pid, get_id_from_gedcom($GEDCOM), true);
 						}
 					}
 				}
@@ -161,7 +166,7 @@ function is_dead($indirec, $cyear="", $import=false) {
 						// If any date is prior to than MAX_ALIVE_AGE years ago assume they are dead
 						if (($cyear-$byear) > $MAX_ALIVE_AGE+40) {
 							//print "mother older than $MAX_ALIVE_AGE+40 (".$match[$i][0].") year is $byear\n";
-							return true;
+							return update_isdead($pid, get_id_from_gedcom($GEDCOM), true);
 						}
 					}
 				}
@@ -183,7 +188,7 @@ function is_dead($indirec, $cyear="", $import=false) {
 					// if marriage was more than MAX_ALIVE_AGE-10 years ago assume the person has died
 					if (($cyear-$byear) > ($MAX_ALIVE_AGE-10)) {
 						//print "marriage older than $MAX_ALIVE_AGE-10 (".$bmatch[$h][0].") year is $byear\n";
-						return true;
+						return update_isdead($pid, get_id_from_gedcom($GEDCOM), true);
 					}
 				}
 			}
@@ -200,7 +205,7 @@ function is_dead($indirec, $cyear="", $import=false) {
 					// if the spouse is > $MAX_ALIVE_AGE assume the individual is dead
 					if (($cyear-$byear) > $MAX_ALIVE_AGE) {
 						//print "spouse older than $MAX_ALIVE_AGE (".$bmatch[$h][0].") year is $byear\n";
-						return true;
+						return update_isdead($pid, get_id_from_gedcom($GEDCOM), true);
 					}
 				}
 			}
@@ -218,7 +223,7 @@ function is_dead($indirec, $cyear="", $import=false) {
 					// if any child was born more than MAX_ALIVE_AGE-10 years ago assume the parent has died
 					if (($cyear-$byear) > ($MAX_ALIVE_AGE-10)) {
 						//print "child older than $MAX_ALIVE_AGE-10 (".$bmatch[$h][0].") year is $byear\n";
-						return true;
+						return update_isdead($pid, get_id_from_gedcom($GEDCOM), true);
 					}
 				}
 			}
@@ -244,14 +249,14 @@ function is_dead($indirec, $cyear="", $import=false) {
 						// if any grandchild was born more than MAX_ALIVE_AGE-30 years ago assume the grandparent has died
 						if (($cyear-$byear) > ($MAX_ALIVE_AGE-30)) {
 							//print "grandchild older than $MAX_ALIVE_AGE-30 (".$bmatch[$h][0].") year is $byear\n";
-							return true;
+							return update_isdead($pid, get_id_from_gedcom($GEDCOM), true);
 						}
 					}
 				}
 			}
 		}
 	}
-	return false;
+	return update_isdead($pid, get_id_from_gedcom($GEDCOM), false);
 }
 }
 
@@ -264,9 +269,9 @@ if (!function_exists("displayDetails")) {
  * This function checks if the details of the given GEDCOM record represented by <var>$indirec</var>
  * should be shown.  This function has been depricated and now all it does is looks up the GEDCOM
  * XRef ID and type from the gedcom record and pass them as parameters to the
- * <var>displayDetailsByID</var> function.
+ * <var>displayDetailsById</var> function.
  *
- * @deprecated	This function has been deprecated by the displayDetailsByID function, it is still
+ * @deprecated	This function has been deprecated by the displayDetailsById function, it is still
  *				provided for backwards compatibility but it should no longer be used in new code
  * @param	string $indirec the raw gedcom record to check privacy settings for
  * @return	boolean return true to show the persons details, return false to keep them private
@@ -286,13 +291,13 @@ function displayDetails($indirec) {
 		$type = "INDI";
 	}
 
-	return displayDetailsByID($pid, $type);
+	return displayDetailsById($pid, $type);
 }
 }
 
 //-- allow users to overide functions in privacy file
-if (!function_exists("displayDetailsByID")) {
-	
+if (!function_exists("displayDetailsById")) {
+
 /**
  * checks if the person has died recently before showing their data
  * @param string $pid	the id of the person to check
@@ -300,7 +305,7 @@ if (!function_exists("displayDetailsByID")) {
  */
 function checkPrivacyByYear($pid) {
 	global $MAX_ALIVE_AGE;
-	
+
 	$cyear = date("Y");
 	$indirec = find_person_record($pid);
 	//-- check death record
@@ -337,11 +342,11 @@ function checkPrivacyByYear($pid) {
 			return false;
 		}
 	}
-	
+
 	return true;
 }
 
-	
+
 /**
  * check if details for a GEDCOM XRef ID should be shown
  *
@@ -359,12 +364,12 @@ function checkPrivacyByYear($pid) {
  *          - "REPO" record is a repository
  * @return	boolean return true to show the persons details, return false to keep them private
  */
-function displayDetailsByID($pid, $type = "INDI") {
+function displayDetailsById($pid, $type = "INDI") {
 	global $PRIV_PUBLIC, $PRIV_USER, $PRIV_NONE, $PRIV_HIDE, $USE_RELATIONSHIP_PRIVACY, $CHECK_MARRIAGE_RELATIONS, $MAX_RELATION_PATH_LENGTH;
 	global $global_facts, $person_privacy, $user_privacy, $HIDE_LIVE_PEOPLE, $GEDCOM, $SHOW_DEAD_PEOPLE, $MAX_ALIVE_AGE, $PRIVACY_BY_YEAR;
 	global $PRIVACY_CHECKS, $PRIVACY_BY_RESN, $SHOW_SOURCES, $SHOW_LIVING_NAMES;
 	global $indilist, $GEDCOMS, $SQL_LOG, $INDEX_DIRECTORY;
-	
+
 	static $privacy_cache = array();
 
 	if (!$HIDE_LIVE_PEOPLE) return true;
@@ -414,7 +419,7 @@ function displayDetailsByID($pid, $type = "INDI") {
 				return false;
 			}
 		}
-		
+
 		if (isset($person_privacy[$pid])) {
 			if ($person_privacy[$pid]>=PGV_USER_ACCESS_LEVEL) {
 				if ($cache_privacy) $privacy_cache[$pkey] = true;
@@ -429,7 +434,7 @@ function displayDetailsByID($pid, $type = "INDI") {
 			if ($cache_privacy) $privacy_cache[$pkey] = true;
 			return true;
 		}
-		
+
 		//-- look for an Ancestral File RESN (restriction) tag
 		if (isset($PRIVACY_BY_RESN) && ($PRIVACY_BY_RESN==true)) {
 			$gedrec = find_gedcom_record($pid);
@@ -444,10 +449,11 @@ function displayDetailsByID($pid, $type = "INDI") {
 				}
 			}
 		}
-	
+
 		if (PGV_USER_CAN_ACCESS) {
 			if ($type=="INDI") {
-				$isdead = is_dead_id($pid);
+				$gedrec = find_person_record($pid);
+				$isdead = is_dead($gedrec);
 				if ($USE_RELATIONSHIP_PRIVACY || get_user_setting($username, 'relationship_privacy')=="Y") {
 					if ($isdead) {
 						if ($SHOW_DEAD_PEOPLE>=PGV_USER_ACCESS_LEVEL) {
@@ -509,7 +515,7 @@ function displayDetailsByID($pid, $type = "INDI") {
 			}
 		}
 	} //-- end the user specif privacy settings
-	
+
 	//-- check the person privacy array for an exception
 	if (isset($person_privacy[$pid])) {
 		if ($person_privacy[$pid]>=PGV_USER_ACCESS_LEVEL) {
@@ -551,8 +557,9 @@ function displayDetailsByID($pid, $type = "INDI") {
 				return false;
 			}
 		}
-		
-		$disp = is_dead_id($pid);
+
+		$gedrec = find_person_record($pid);
+		$disp = is_dead($gedrec);
 		if ($disp) {
 			if ($SHOW_DEAD_PEOPLE>=PGV_USER_ACCESS_LEVEL) {
 				if ($cache_privacy) {
@@ -593,7 +600,7 @@ function displayDetailsByID($pid, $type = "INDI") {
 	if ($type=="FAM") {
 		//-- check if we can display at least one parent
 		$parents = find_parents($pid);
-		$display = displayDetailsByID($parents["HUSB"]) || displayDetailsByID($parents["WIFE"]);
+		$display = displayDetailsById($parents["HUSB"]) || displayDetailsById($parents["WIFE"]);
 		$privacy_cache[$pkey] = $display;
 		return $display;
 	}
@@ -603,7 +610,7 @@ function displayDetailsByID($pid, $type = "INDI") {
 			$sourcerec = find_source_record($pid);
 			if (!empty($sourcerec)) {
 				$repoid = get_gedcom_value("REPO", 1, $sourcerec);
-				$disp = displayDetailsByID($repoid, "REPO");
+				$disp = displayDetailsById($repoid, "REPO");
 			}
 			$privacy_cache[$pkey] = $disp;
 			return $disp;
@@ -649,9 +656,9 @@ if (!function_exists("showLivingName")) {
  * This function checks if the name of the given GEDCOM record represented by <var>$indirec</var>
  * should be shown.  This function has been depricated and now all it does is looks up the GEDCOM
  * XRef ID and type from the gedcom record and pass them as parameters to the
- * <code>showLivingNameByID</code> function.
+ * <code>showLivingNameById</code> function.
  *
- * @deprecated	This function has been deprecated by the showLivingNameByID function, it is still
+ * @deprecated	This function has been deprecated by the showLivingNameById function, it is still
  *				provided for backwards compatibility but it should no longer be used in new code
  * @param	string $indirec the raw gedcom record to check privacy settings for
  * @return	boolean return true to show the persons details, return false to keep them private
@@ -664,12 +671,12 @@ function showLivingName($indirec) {
 	if ($ct>0) $pid = $match[1];
 	else $pid=0;
 
-	return showLivingNameByID($pid);
+	return showLivingNameById($pid);
 }
 }
 
 //-- allow users to overide functions in privacy file
-if (!function_exists("showLivingNameByID")) {
+if (!function_exists("showLivingNameById")) {
 /**
  * check if the name for a GEDCOM XRef ID should be shown
  *
@@ -684,7 +691,7 @@ if (!function_exists("showLivingNameByID")) {
  * @param	string $pid the GEDCOM XRef ID for the entity to check privacy settings for
  * @return	boolean return true to show the person's name, return false to keep it private
  */
-function showLivingNameByID($pid) {
+function showLivingNameById($pid) {
 	global $SHOW_LIVING_NAMES, $person_privacy, $user_privacy;
 
 	if (displayDetailsById($pid)) return true;
@@ -793,7 +800,7 @@ function showFactDetails($fact, $pid) {
 function privatize_gedcom($gedrec) {
 	global $pgv_lang, $factarray, $GEDCOM, $SHOW_PRIVATE_RELATIONSHIPS, $pgv_private_records;
 	global $global_facts, $person_facts;
-	
+
 	$gt = preg_match("/0 @(.+)@ (.+)/", $gedrec, $gmatch);
 	if ($gt > 0) {
 		$gid = trim($gmatch[1]);
@@ -882,10 +889,10 @@ function privatize_gedcom($gedrec) {
 			}
 			//-- if no fact privacy then return the record
 			if (!$resn && !$ppriv && !$gpriv) return $gedrec;
-			
+
 			$newrec = "0 @".$gid."@ $type\r\n";
 			//-- check all of the sub facts for access
-			$subs = get_all_subrecords($gedrec, "", false, false, false);
+			$subs = get_all_subrecords($gedrec, "", false, false);
 			foreach($subs as $indexval => $sub) {
 				$ct = preg_match("/1 (\w+)/", $sub, $match);
 				if ($ct > 0) $type = trim($match[1]);
@@ -950,7 +957,7 @@ function FactEditRestricted($pid, $factrec) {
 	if (PGV_USER_GEDCOM_ADMIN) {
 		return false;
 	}
-	
+
 	if (preg_match("/2 RESN (.*)/", $factrec, $match)) {
 		$match[1] = strtolower(trim($match[1]));
 		if ($match[1] == "privacy" || $match[1]=="locked") {
@@ -983,7 +990,7 @@ function FactViewRestricted($pid, $factrec) {
 	if (PGV_USER_GEDCOM_ADMIN) {
 		return false;
 	}
-	
+
 	if (preg_match("/2 RESN (.*)/", $factrec, $match)) {
 		$match[1] = strtolower(trim($match[1]));
 		if ($match[1] == "confidential") return true;

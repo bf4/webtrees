@@ -22,10 +22,12 @@
  * @version $Id$
  */
 
-if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
-	print "You cannot access an include file directly.";
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
+
+define('PGV_FUNCTIONS_EN_PHP', '');
 
 ////////////////////////////////////////////////////////////////////////////////
 // Create an ordinal suffix for a number.
@@ -107,7 +109,7 @@ function getRelationshipText_en($relationshipDescription, $node, $pid1, $pid2) {
 			$finished = true;
 			break;
 		}
-		
+
 	}
 	// sanity check
 	if (!$started || !$finished) {
@@ -141,7 +143,7 @@ function getRelationshipText_en($relationshipDescription, $node, $pid1, $pid2) {
 			}
 		}
 	}
-	
+
 
 	if ($relationshipDescription != false) {
 		return strtolower($relationshipDescription);

@@ -27,6 +27,13 @@
  * @version $Id$
  */
 
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
+	exit;
+}
+
+define('PGV_YAHRZEIT_PHP', '');
+
 $PGV_BLOCKS['print_yahrzeit']['name']     =$pgv_lang['yahrzeit_block'];
 $PGV_BLOCKS['print_yahrzeit']['descr']    ='yahrzeit_descr';
 $PGV_BLOCKS['print_yahrzeit']['canconfig']=true;
@@ -86,9 +93,9 @@ function print_yahrzeit($block=true, $config='', $side, $index) {
 	for ($jd=$startjd-1; $jd<=$endjd+30;++$jd) {
 		foreach (get_anniversary_events($jd, 'DEAT _YART') as $fact) {
 			// Extract hebrew dates only
-			if ($fact['date']->date1->CALENDAR_ESCAPE=='@#DHEBREW@' && $fact['date']->MinJD()==$fact['date']->MaxJD()) {
+			if ($fact['date']->date1->CALENDAR_ESCAPE()=='@#DHEBREW@' && $fact['date']->MinJD()==$fact['date']->MaxJD()) {
 				// Apply privacy
-				if (displayDetailsByID($fact['id']) && showFactDetails($fact['fact'], $fact['id']) && !FactViewRestricted($fact['id'], $fact['factrec'])) {
+				if (displayDetailsById($fact['id']) && showFactDetails($fact['fact'], $fact['id']) && !FactViewRestricted($fact['id'], $fact['factrec'])) {
 					$yahrzeits[]=$fact;
 				} else {
 					++$hidden;
@@ -137,7 +144,7 @@ function print_yahrzeit($block=true, $config='', $side, $index) {
 		break;
 	case "style2": // Table style
 		require_once("js/sorttable.js.htm");
-		require_once("includes/gedcomrecord.php");
+		require_once("includes/class_gedcomrecord.php");
 		$table_id = "ID".floor(microtime()*1000000); // sorttable requires a unique ID
 		$content .= "<table id=\"{$table_id}\" class=\"sortable list_table center\">";
 		$content .= "<tr>";
@@ -282,7 +289,7 @@ function print_yahrzeit_config($config) {
 
 	// Cache file life is not configurable by user:  anything other than 1 day doesn't make sense
 	print '<input type="hidden" name="cache" value="1" />';
-	
+
 	print '</td></tr>';
 }
 ?>

@@ -26,20 +26,20 @@
  * @version $Id$
  */
 
-if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
-	print "You cannot access an include file directly.";
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
-require_once("config.php");
+define('PGV_REMOTELINK_CTRL_PHP', '');
+
 require_once('includes/controllers/basecontrol.php');
 require_once("includes/functions_edit.php");
-require_once("includes/serviceclient_class.php");
+require_once("includes/class_serviceclient.php");
 
 class RemoteLinkController extends BaseController {
 	var $has_familysearch = false;
 	var $pid="";
-	var $action="";
 	var $success = false;
 	var $person = null;
 	var $server_list = array();
@@ -50,7 +50,7 @@ class RemoteLinkController extends BaseController {
 	 */
 	function init() {
 		global $GEDCOM;
-		
+
 		if (file_exists("modules/FamilySearch/familySearchWrapper.php")) {
 			$this->has_familysearch = true;
 			require_once("modules/FamilySearch/familySearchWrapper.php");
@@ -61,17 +61,13 @@ class RemoteLinkController extends BaseController {
 			header('Location: '.encode_url("login.php?type=simple&ged={$GEDCOM}&url=".urlencode("edit_interface.php?".decode_url($QUERY_STRING)), false));
 			exit;
 		}
-
-		if (isset($_REQUEST['pid'])) $this->pid = $_REQUEST['pid'];
-		if (isset($_REQUEST['action'])) $this->action = $_REQUEST['action'];
+		
+		$this->pid   =safe_GET('pid', PGV_REGEX_XREF);
 
 		//check for pid
 		if (empty($this->pid)) {
 			$name="no name passed";
-			$this->disp = false;
 		} else{
-			$this->pid = clean_input($this->pid);
-
 			if (!isset($pgv_changes[$this->pid."_".$GEDCOM])) $this->person = Person::getInstance($this->pid);
 			else {
 				$gedrec = find_updated_record($this->pid);
@@ -80,9 +76,9 @@ class RemoteLinkController extends BaseController {
 			$this->server_list = get_server_list();
 		}
 	}
-	
+
 	/**
-	 * Perform the desired action 
+	 * Perform the desired action
 	 *
 	 */
 	function runAction() {
@@ -117,7 +113,7 @@ class RemoteLinkController extends BaseController {
 						$gedcom_id = trim(stripslashes(safe_POST('txtFS_GID', PGV_REGEX_NOSCRIPT, '')));
 						$username = trim(stripslashes(safe_POST('txtFS_Username', PGV_REGEX_NOSCRIPT, '')));
 						$password = trim(stripslashes(safe_POST('txtFS_Password', PGV_REGEX_NOSCRIPT, '')));
-							
+
 						$serverID = $this->addFamilySearchServer($server_title, $server_URL, $gedcom_id, $username, $password);
 					}
 					break;
@@ -388,7 +384,7 @@ class RemoteLinkController extends BaseController {
 				return $id;
 			}
 		}
-		
+
 		//-- check for recent additions
 		foreach ($pgv_changes as $cid=>$changes) {
 			$change = $changes[count($changes) - 1];

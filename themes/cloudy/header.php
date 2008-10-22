@@ -25,8 +25,8 @@
  * @version $Id$
  */
 
-if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
-	print "You cannot access an include file directly.";
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
@@ -38,7 +38,7 @@ $menubar = new MenuBar();
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=<?php print $CHARACTER_SET; ?>" />
 		<?php if( $FAVICON ) { ?><link rel="shortcut icon" href="<?php print $FAVICON; ?>" type="image/x-icon" /> <?php	} ?>
-	
+
 		<title><?php print $title; ?></title>
 		<?php if ($ENABLE_RSS && !$REQUIRE_AUTHENTICATION){ ?>
 			<link href="<?php print encode_url("{$SERVER_URL}rss.php?ged={$GEDCOM}"); ?>" rel="alternate" type="<?php print $applicationType; ?>" title=" <?php print PrintReady(strip_tags($GEDCOM_TITLE), TRUE); ?>" />
@@ -61,7 +61,7 @@ $menubar = new MenuBar();
 	<style type="text/css">
 		FORM { margin-top: 0px; margin-bottom: 0px; }
 	</style>
-	<?php } 
+	<?php }
 	if ($view!="preview") { ?>
 		<?php if (!empty($META_AUTHOR)) { ?><meta name="author" content="<?php print PrintReady(strip_tags($META_AUTHOR), TRUE); ?>" /><?php } ?>
 		<?php if (!empty($META_PUBLISHER)) { ?><meta name="publisher" content="<?php print PrintReady(strip_tags($META_PUBLISHER), TRUE); ?>" /><?php } ?>
@@ -75,14 +75,14 @@ $menubar = new MenuBar();
 		<?php if (!empty($META_REVISIT)) {?><meta name="revisit-after" content="<?php print PrintReady(strip_tags($META_REVISIT), TRUE);?>" /><?php } ?>
 		<meta name="generator" content="<?php echo PGV_PHPGEDVIEW." - ".PGV_PHPGEDVIEW_URL;?>" />
 	<?php }	?>
-	<?php print $javascript; ?> 
+	<?php print $javascript; ?>
 	<?php print $head; //-- additional header information ?>
 </head>
 <body id="body" <?php print $bodyOnLoad; ?>>
 <!-- begin header section -->
 <?php
-if ($view!='simple') 
-if ($view=='preview') include($print_headerfile); 
+if ($view!='simple')
+if ($view=='preview') include($print_headerfile);
 else {?>
 <div id="header" class="<?php print $TEXT_DIRECTION; ?>">
 	<?php if(empty($SEARCH_SPIDER)) { ?>
@@ -117,8 +117,8 @@ else {?>
 										<form action="search.php" method="post">
 											<input type="hidden" name="action" value="general" />
 											<input type="hidden" name="topsearch" value="yes" />
-											<input type="text" class="formbut" accesskey="<?php print $pgv_lang["accesskey_search"]?>" name="query" size="15" value="<?php print $pgv_lang['search']?>" 
-												onfocus="if (this.value == '<?php print $pgv_lang['search']?>') this.value=''; focusHandler();" 
+											<input type="text" class="formbut" accesskey="<?php print $pgv_lang["accesskey_search"]?>" name="query" size="15" value="<?php print $pgv_lang['search']?>"
+												onfocus="if (this.value == '<?php print $pgv_lang['search']?>') this.value=''; focusHandler();"
 												onblur="if (this.value == '') this.value='<?php print $pgv_lang['search']?>';" />
 											<input type="image" src="<?php print $THEME_DIR ?>/images/go.gif" align="top" title="<?php print $pgv_lang['search']?>
 											" />
@@ -148,7 +148,7 @@ else {?>
 									<td>
 										<img src="<?php print $PGV_IMAGE_DIR; ?>/pixel.gif" width="1" height="1" alt="" />
 									</td>
-									
+
 								<?php
 									$menu = $menubar->getHomeMenu();
 									if($menu->link != "") {
@@ -223,7 +223,7 @@ else {?>
 										print "\t</td>\n";
 									}
 									$menus = $menubar->getModuleMenus();
-									foreach($menus as $m=>$menu) { 
+									foreach($menus as $m=>$menu) {
 										if($menu->link != "") {
 											print "\t<td width=\"1\">\n";
 											$menu->addLabel("", "none");
@@ -264,8 +264,7 @@ else {?>
 						</td>
 					</tr>
 				</table>
-<?php include($toplinks); 
+<?php include($toplinks);
 } ?>
 <!-- end header section -->
 <!-- begin content section -->
-				

@@ -27,8 +27,8 @@
  * @version $Id$
  */
 
-if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
-	print "Usted no puede acceder a este archivo de idioma directamente.";
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
@@ -174,6 +174,7 @@ $factarray["FAMC:MARR:PLAC"] = "Lugar de matrimonio de los padres";
 $factarray["FAMC:HUSB:OCCU"] = "Ocupación del padre";
 $factarray[":BIRT:PLAC"] = "Lugar de nacimiento";
 $factarray["FAMS:MARR:PLAC"] = "Lugar de matrimonio";
+$factarray["FAMS:MARR:DATE"] = "Fecha de matrimonio";
 $factarray["FAMS:SPOUSE:DEAT:PLAC"] = "Lugar de defunción del cónyuge";
 $factarray["FAMC:HUSB:GIVN"] = "Nombre de pila del padre";
 $factarray["FAMS:SPOUSE:BIRT:PLAC"] = "Lugar de nacimiento del cónyuge";
@@ -186,11 +187,17 @@ $factarray["FAMS:CHIL:BIRT:PLAC"] = "Lugar de nacimiento del hijo/a";
 
 // These facts are all colon delimited
 $factarray["BIRT:PLAC"] = "Lugar de nacimiento";
+$factarray["BIRT:DATE"] = "Fecha de nacimiento";
 $factarray["DEAT:PLAC"] = "Lugar de defunción";
+$factarray["DEAT:DATE"] = "Fecha de defunción";
 $factarray["CHR:PLAC"] = "Lugar del bautismo";
+$factarray["CHR:DATE"] = "Fecha de bautismo";
 $factarray["BAPM:PLAC"] = "Lugar del bautismo adulto";
+$factarray["BAPM:DATE"] = "Fecha del bautismo adulto";
 $factarray["BURI:PLAC"] = "Lugar del entierro";
+$factarray["BURI:DATE"] = "Fecha del entierro";
 $factarray["MARR:PLAC"] = "Lugar del matrimonio";
+$factarray["MARR:DATE"] = "Fecha del matrimonio";
 
 // These facts are specific to GEDCOM exports from Family Tree Maker
 $factarray["_MDCL"]	= "Médico";
@@ -216,6 +223,7 @@ $factarray["_MREL"]	= "Relación con la madre";
 $factarray["_FREL"]	= "Relación con el padre";
 $factarray["_MSTAT"]	= "Comienzo del matrimonio";
 $factarray["_MEND"]	= "Final del matrimonio";
+$factarray["_NAMS"]	= "Tocayo/a";
 
 // GEDCOM 5.5.1 related facts
 $factarray["FAX"] = "FAX";

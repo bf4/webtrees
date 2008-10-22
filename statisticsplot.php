@@ -26,7 +26,8 @@
  * @package PhpGedView
  * @subpackage Lists
  */
-require("config.php");
+
+require './config.php';
 
 //-- You should install jpgraph routines on your computer. I implemented them in phpgedview/jpgraph/
 //=== You have to check if the reference to internal subroutines (like plotmark.inc) has the right path
@@ -342,7 +343,7 @@ function myplot($mytitle,$n,$xdata,$xtitle,$ydata,$ytitle,$legend) {
 }
 
 function get_plot_data() {
-	global $GEDCOM, $GEDCOMS, $INDEX_DIRECTORY, $BUILDING_INDEX, $indilist, $famlist, $sourcelist, $otherlist;
+	global $GEDCOM, $GEDCOMS, $INDEX_DIRECTORY, $BUILDING_INDEX;
 	global $x_as, $y_as, $z_as, $nrfam, $famgeg, $nrpers, $persgeg, $key2ind, $n1;
 	global $legend, $xdata, $ydata, $xmax, $xgrenzen, $zmax, $zgrenzen, $xgiven, $zgiven, $percentage, $man_vrouw;
 	global $pgv_lang;
@@ -538,7 +539,7 @@ if ($action=="update") {
 	$xas_grenzen_maanden= $_POST["xas-grenzen-maanden"];
 	$xas_grenzen_aantallen= $_POST["xas-grenzen-aantallen"];
 	$zas_grenzen_periode= $_POST["zas-grenzen-periode"];
-	
+
 	$_SESSION[$GEDCOM."statTicks"]["xasGrLeeftijden"] = $xas_grenzen_leeftijden;
 	$_SESSION[$GEDCOM."statTicks"]["xasGrMaanden"] = $xas_grenzen_maanden;
 	$_SESSION[$GEDCOM."statTicks"]["xasGrAantallen"] = $xas_grenzen_aantallen;

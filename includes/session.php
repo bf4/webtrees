@@ -44,7 +44,7 @@ define('PGV_REQUIRED_SQLITE_VERSION',  '3.2.6'); // Not currently enforced
 define('PGV_REQUIRED_PRIVACY_VERSION', '3.1');
 
 // Regular expressions for validating user input, etc.
-define('PGV_REGEX_XREF',      '[A-Za-z0-9:-]+');
+define('PGV_REGEX_XREF',      '[A-Za-z0-9:-_]+');
 define('PGV_REGEX_INTEGER',   '-?\d+');
 define('PGV_REGEX_ALPHA',     '[a-zA-Z]+');
 define('PGV_REGEX_ALPHANUM',  '[a-zA-Z0-9]+');
@@ -53,24 +53,32 @@ define('PGV_REGEX_PASSWORD',  '.{6,}');
 define('PGV_REGEX_NOSCRIPT',  '[^<>"&%{};]+');
 define('PGV_REGEX_URL',       '[\/0-9A-Za-z_!~*\'().;?:@&=+$,%#-]+'); // Simple list of valid chars
 define('PGV_REGEX_EMAIL',     '[^\s<>"&%{};@]+@[^\s<>"&%{};@]+');
+define('PGV_REGEX_UNSAFE',    '(.|[\n])*'); // Use with care and apply additional validation!
 
 // UTF8 representation of various characters
-define('PGV_UTF8_BOM', "\xEF\xBB\xBF"); // U+FEFF
-define('PGV_UTF8_LRM', "\xE2\x80\x8E"); // U+200E
-define('PGV_UTF8_RLM', "\xE2\x80\x8F"); // U+200F
+define('PGV_UTF8_BOM',    "\xEF\xBB\xBF"); // U+FEFF
+define('PGV_UTF8_LRM',    "\xE2\x80\x8E"); // U+200E
+define('PGV_UTF8_RLM',    "\xE2\x80\x8F"); // U+200F
+define('PGV_UTF8_MALE',   "\xE2\x99\x82"); // U+2642
+define('PGV_UTF8_FEMALE', "\xE2\x99\x80"); // U+2640
 
 // Alternatives to BMD events for lists, charts, etc.
 define('PGV_EVENTS_BIRT', 'BIRT|CHR|BAPM|_BRTM|ADOP');
 define('PGV_EVENTS_DEAT', 'DEAT|BURI|CREM');
 define('PGV_EVENTS_MARR', 'MARR|MARB');
-define('PGV_EVENTS_DIV',  'DIV|ANUL');
+define('PGV_EVENTS_DIV',  'DIV|ANUL|_SEPR');
 @ini_set('arg_separator.output', '&amp;');
 @ini_set('error_reporting', 0);
 @ini_set('display_errors', '1');
 @error_reporting(0);
 
-//-- required for running PHP in CGI Mode on Windows
-if (!isset($_SERVER['REQUEST_URI'])) $_SERVER['REQUEST_URI'] = "";
+// Microsoft IIS servers don't set REQUEST_URI, so generate it for them.
+if (!isset($_SERVER['REQUEST_URI']))  {
+	$_SERVER['REQUEST_URI']=substr($_SERVER['PHP_SELF'], 1);
+	if (isset($_SERVER['QUERY_STRING'])) {
+		$_SERVER['REQUEST_URI'].='?'.$_SERVER['QUERY_STRING'];
+	}
+}
 
 //-- list of critical configuration variables
 $CONFIG_VARS = array(
@@ -105,70 +113,33 @@ $CONFIG_VARS = array(
 	'COMMIT_COMMAND'
 	);
 
-
-//-- Detect and report Windows or OS/2 Server environment
-//  Windows and OS/2 use the semi-colon as a separator in the "include_path",
-//    *NIX uses a colon
-//  Windows and OS/2 use the ISO character set in the server-side file system,
-//    *NIX and PhpGedView use UTF-8.  Consequently, PGV needs to translate
-//    from UTF-8 to ISO when handing a file/folder name to Windows and OS/2,
-//    and all file/folder names received from Windows and OS/2 must be
-//    translated from ISO to UTF-8 before they can be processed by PGV.
-$WIN32 = false;
-if(substr(PHP_OS, 0, 3) == 'WIN') $WIN32 = true;
-if(substr(PHP_OS, 0, 4) == 'OS/2') $WIN32 = true;
-if(substr(PHP_OS, 0, 7) == 'NetWare') $WIN32 = true;
-if($WIN32) $seperator=";"; else $seperator = ":";
 //-- append our 'includes/' path to the include_path ini setting for ease of use.
 $ini_include_path = @ini_get('include_path');
 $includes_dir = dirname(@realpath(__FILE__));
-$includes_dir .= $seperator.dirname($includes_dir);
-@ini_set('include_path', ".{$seperator}{$includes_dir}{$seperator}{$ini_include_path}");
+$includes_dir .= PATH_SEPARATOR.dirname($includes_dir);
+@ini_set('include_path', '.'.PATH_SEPARATOR.$includes_dir.PATH_SEPARATOR.$ini_include_path);
 unset($ini_include_path, $includes_dir); // destroy some variables for security reasons.
 
 set_magic_quotes_runtime(0);
 
 // magic_quotes_gpc can't be disabled at run-time, so clean them up as necessary.
+function stripslashes_recursive($var) {
+	if (is_array($var)) {
+		foreach ($var as $k=>$v) {
+			$var[$k]=stripslashes_recursive($v);
+		}
+	}
+	return $var;
+}
 if (function_exists('get_magic_quotes_gpc') && get_magic_quotes_gpc() ||
     ini_get('magic_quotes_sybase') && strtolower(ini_get('magic_quotes_sybase'))!='off') {
 	foreach (array('_GET', '_POST', '_COOKIE', '_REQUEST') as $var) {
-		foreach (array_keys($$var) as $key) {
-			if (is_array($$var[$key])) {
-				$$var[$key]=array_map('stripslashes', $$var[$key]);
-			} else {
-				$$var[$key]=stripslashes($$var[$key]);
-			}
-		}
+		$GLOBALS[$var]=stripslashes_recursive($GLOBALS[$var]);
 	}
 }
 
-if (version_compare(phpversion(), PGV_REQUIRED_PHP_VERSION)<0) {
-	die ('<html><body><p style="color: red;">PhpGedView requires PHP version '.PGV_REQUIRED_PHP_VERSION.' or later.</p><p>Your server is running PHP version '.phpversion().'.  Please ask your server\'s Administrator to upgrade the PHP installation.</p></body></html>');
-}
-
-//-- load file for language settings
-require_once( "includes/lang_settings_std.php");
-$Languages_Default = true;
-if (!strstr($_SERVER["REQUEST_URI"], "INDEX_DIRECTORY=") && file_exists($INDEX_DIRECTORY . "lang_settings.php")) {
-	$DefaultSettings = $language_settings;  // Save default settings, so we can merge properly
-	require_once($INDEX_DIRECTORY . "lang_settings.php");
-	$ConfiguredSettings = $language_settings; // Save configured settings, same reason
-	$language_settings = array_merge($DefaultSettings, $ConfiguredSettings); // Copy new langs into config
-	// Now copy new language settings into existing configuration
-	foreach ($DefaultSettings as $lang => $settings) {
-		foreach ($settings as $key => $value) {
-			if (!isset($language_settings[$lang][$key])) $language_settings[$lang][$key] = $value;
-		}
-	}
-	unset($DefaultSettings);
-	unset($ConfiguredSettings);  // We don't need these any more
-	$Languages_Default = false;
-}
-
-//-- build array of active languages (required for config override check)
-$pgv_lang_use = array();
-foreach ($language_settings as $key => $value) {
-	$pgv_lang_use[$key] = $value["pgv_lang_use"];
+if (version_compare(PHP_VERSION, PGV_REQUIRED_PHP_VERSION)<0) {
+	die ('<html><body><p style="color: red;">PhpGedView requires PHP version '.PGV_REQUIRED_PHP_VERSION.' or later.</p><p>Your server is running PHP version '.PHP_VERSION.'.  Please ask your server\'s Administrator to upgrade the PHP installation.</p></body></html>');
 }
 
 /**
@@ -185,21 +156,17 @@ if (isset($_REQUEST["CONFIG_VARS"])) $configOverride = true;
 	// $CONFIG_VARS is safe: now check for any in its list
 	foreach($CONFIG_VARS as $VAR) {
 	if (isset($_REQUEST[$VAR])) {
-		$configOverride = true; 
-		break ; 
+		$configOverride = true;
+		break ;
 	}
 	}
 
 //-- check if they are trying to hack
 if ($configOverride) {
-	if ((!ini_get('register_globals'))||(strtolower(ini_get('register_globals'))=="off")) {
-		//-- load common functions
-		require_once("includes/functions.php");
-		//-- load db specific functions
-		require_once("includes/functions_db.php");
-		require_once("includes/authentication.php");      // -- load the authentication system
+	if (!ini_get('register_globals') || strtolower(ini_get('register_globals'))=="off") {
+		require_once("includes/authentication.php");
 		AddToLog("MSG>Configuration override detected; script terminated.");
-		AddToLog("UA>{$ua}<");
+		AddToLog("UA>{$_SERVER["HTTP_USER_AGENT"]}<");
 		AddToLog("URI>{$_SERVER["REQUEST_URI"]}<");
 	}
 	header("HTTP/1.0 403 Forbidden");
@@ -219,7 +186,7 @@ if (!strstr($_SERVER["REQUEST_URI"], "INDEX_DIRECTORY=") && file_exists($INDEX_D
 	foreach ($DefaultSettings as $lang => $settings) {
 		foreach ($settings as $key => $value) {
 			if (!isset($language_settings[$lang][$key])) $language_settings[$lang][$key] = $value;
-	}
+		}
 	}
 	unset($DefaultSettings);
 	unset($ConfiguredSettings);		// We don't need these any more
@@ -252,10 +219,9 @@ $QUERY_STRING = preg_replace("/show_context_help=(no|yes)/", "", $QUERY_STRING);
 if (!$CONFIGURED) {
    if ((strstr($SCRIPT_NAME, "admin.php")===false)
    &&(strstr($SCRIPT_NAME, "login.php")===false)
-   &&(strstr($SCRIPT_NAME, "editconfig.php")===false)
-   &&(strstr($SCRIPT_NAME, "config_download.php")===false)
+   &&(strstr($SCRIPT_NAME, "install.php")===false)
    &&(strstr($SCRIPT_NAME, "editconfig_help.php")===false)) {
-      header("Location: editconfig.php");
+      header("Location: install.php");
       exit;
    }
 }
@@ -283,7 +249,7 @@ $OLD_HANDLER = set_error_handler("pgv_error_handler");
 //-- load db specific functions
 require_once("includes/functions_db.php");
 // -- load the authentication system, also logging
-require_once("includes/authentication.php");      
+require_once("includes/authentication.php");
 
 //-- setup execution timer
 $start_time = microtime(true);
@@ -348,11 +314,16 @@ if ((empty($GEDCOM))&&(count($GEDCOMS)>0)) {
       }
 $_SESSION["GEDCOM"] = $GEDCOM;
 
-// privacy constants moved from privacy.php
-$PRIV_HIDE = -1; //  Global constant privacy level to hide the item to all users including the admin
-$PRIV_PUBLIC = 2; //  Global constant privacy level that allows non-authenticated public visitors to view the marked information
-$PRIV_USER = 1; //  Global constant privacy level that only allows authenticated users to access the marked information
-$PRIV_NONE = 0; //  Global constant privacy level that only allows admin users to access the marked information
+// Privacy constants
+define('PGV_PRIV_PUBLIC',  2); // Allows non-authenticated public visitors to view the marked information
+define('PGV_PRIV_USER',    1); // Allows authenticated users to access the marked information
+define('PGV_PRIV_NONE',    0); // Allows admin users to access the marked information
+define('PGV_PRIV_HIDE',   -1); // Hide the item to all users including the admin
+// Older code uses variables instead of constants
+$PRIV_PUBLIC = PGV_PRIV_PUBLIC;
+$PRIV_USER   = PGV_PRIV_USER;
+$PRIV_NONE   = PGV_PRIV_NONE;
+$PRIV_HIDE   = PGV_PRIV_HIDE; 
 
 /**
  * Load GEDCOM configuration
@@ -444,7 +415,7 @@ foreach ($language_settings as $key => $value) {
  * 1. Use the language in visitor's browser settings if it is supported in the PGV site.
  *    If it is not supported, use the GEDCOM configuration setting.
  * 2. If the user has chosen a language from the list or the flags, use their choice.
- * 3. When the user logs in, switch to the language in their user profile unless the 
+ * 3. When the user logs in, switch to the language in their user profile unless the
  *    user made a language choice prior to logging in.
  * 4. When a user logs out their current language choice is ignored and the site will
  *    revert back to the language they first saw when arriving at the site according to
@@ -495,10 +466,8 @@ if (($ENABLE_MULTI_LANGUAGE) && (empty($SEARCH_SPIDER))) {
 
 require_once("includes/templecodes.php");  //-- load in the LDS temple code translations
 
-require_once("privacy.php");
-//-- load the privacy file
-require_once(get_privacy_file());
 //-- load the privacy functions
+load_privacy_file(get_id_from_gedcom($GEDCOM));
 require_once("includes/functions_privacy.php");
 
 //-----------------------------------
@@ -509,6 +478,8 @@ if ($logout) {
 		header("Location: {$SERVER_URL}");
 		exit;
 	}
+	// Logging out may change gedcom, so reload
+	load_privacy_file(get_id_from_gedcom($GEDCOM));
 }
 
 // Define some constants to save calculating the same value repeatedly.
@@ -545,15 +516,15 @@ if (!isset($_SESSION["cookie_login"])) $_SESSION["cookie_login"] = false;
 if (isset($SHOW_CONTEXT_HELP) && $show_context_help==='yes') $_SESSION["show_context_help"] = true;
 if (isset($SHOW_CONTEXT_HELP) && $show_context_help==='no') $_SESSION["show_context_help"] = false;
 if (!isset($USE_THUMBS_MAIN)) $USE_THUMBS_MAIN = false;
-if ((strstr($SCRIPT_NAME, "editconfig.php")===false)
+if ((strstr($SCRIPT_NAME, "install.php")===false)
 	&&(strstr($SCRIPT_NAME, "editconfig_help.php")===false)) {
 	if (!$PGV_DB_CONNECTED || !adminUserExists()) {
-		header("Location: editconfig.php");
+		header("Location: install.php");
 		exit;
 	}
-	
+
 	if ((count($GEDCOMS)==0)||(!check_for_import($GEDCOM))) {
-		$scriptList = array("editconfig_gedcom.php", "help_text.php", "editconfig_help.php", "editgedcoms.php", "uploadgedcom.php", "login.php", "admin.php", "config_download.php", "addnewgedcom.php", "validategedcom.php", "addmedia.php", "importgedcom.php", "client.php", "edit_privacy.php", "upgrade33-40.php", "gedcheck.php", "printlog.php", "editlang.php", "editlang_edit.php" ,"useradmin.php");
+		$scriptList = array("editconfig_gedcom.php", "help_text.php", "editconfig_help.php", "editgedcoms.php", "downloadgedcom.php", "uploadgedcom.php", "login.php", "admin.php", "config_download.php", "addnewgedcom.php", "validategedcom.php", "addmedia.php", "importgedcom.php", "client.php", "edit_privacy.php", "upgrade33-40.php", "gedcheck.php", "printlog.php", "editlang.php", "editlang_edit.php" ,"useradmin.php");
 		$inList = false;
 		foreach ($scriptList as $key => $listEntry) {
 			if (strstr($SCRIPT_NAME, $listEntry)) {
@@ -670,6 +641,4 @@ if ($TEXT_DIRECTION=='ltr') {
 	define ('PGV_RPARENS', ')&rlm;');
 }
 
-//-- temporarily adding back in
-@import_request_variables('gcp');
 ?>

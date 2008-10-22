@@ -19,59 +19,59 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * This Page Is Valid XHTML 1.0 Transitional! > 12 September 2005
- *
  * @author PGV Development Team
  * @package PhpGedView
  * @subpackage Privacy
  * @version $Id$
  */
 
-require "config.php";
-require_once("includes/gedcomrecord.php");
+require './config.php';
 
-loadLangFile("pgv_confighelp, pgv_help");
+require 'includes/functions_print_facts.php';
+
+loadLangFile('pgv_confighelp, pgv_help');
 
 if (empty($ged)) $ged = $GEDCOM;
 
 if (!userGedcomAdmin(PGV_USER_ID, $ged) || empty($ged)) {
-	header("Location: editgedcoms.php");
+	header('Location: editgedcoms.php');
 	exit;
 }
 
 if (isset($_REQUEST['action'])) $action = $_REQUEST['action'];
 
-$PRIVACY_CONSTANTS = array();
-$PRIVACY_CONSTANTS[$PRIV_HIDE] = "\$PRIV_HIDE";
-$PRIVACY_CONSTANTS[$PRIV_PUBLIC] = "\$PRIV_PUBLIC";
-$PRIVACY_CONSTANTS[$PRIV_USER] = "\$PRIV_USER";
-$PRIVACY_CONSTANTS[$PRIV_NONE] = "\$PRIV_NONE";
+if (isset($_REQUEST['v_new_person_privacy_access_ID']))    $v_new_person_privacy_access_ID=$_REQUEST['v_new_person_privacy_access_ID'];
+if (isset($_REQUEST['v_new_person_privacy_acess_option'])) $v_new_person_privacy_acess_option=$_REQUEST['v_new_person_privacy_acess_option'];
+if (isset($_REQUEST['v_person_privacy_del']))              $v_person_privacy_del=$_REQUEST['v_person_privacy_del'];
+
+
+if (isset($_REQUEST['v_new_user_privacy_username']))     $v_new_user_privacy_username=$_REQUEST['v_new_user_privacy_username'];
+if (isset($_REQUEST['v_new_user_privacy_access_ID']))    $v_new_user_privacy_access_ID=$_REQUEST['v_new_user_privacy_access_ID'];
+if (isset($_REQUEST['v_new_user_privacy_acess_option'])) $v_new_user_privacy_acess_option=$_REQUEST['v_new_user_privacy_acess_option'];
+if (isset($_REQUEST['v_user_privacy_del']))              $v_user_privacy_del=$_REQUEST['v_user_privacy_del'];
+
+
+if (isset($_REQUEST['v_new_global_facts_abbr']))         $v_new_global_facts_abbr=$_REQUEST['v_new_global_facts_abbr'];
+if (isset($_REQUEST['v_new_global_facts_choice']))       $v_new_global_facts_choice=$_REQUEST['v_new_global_facts_choice'];
+if (isset($_REQUEST['v_new_global_facts_acess_option'])) $v_new_global_facts_acess_option=$_REQUEST['v_new_global_facts_acess_option'];
+if (isset($_REQUEST['v_global_facts_del']))              $v_global_facts_del=$_REQUEST['v_global_facts_del'];
+
+
+if (isset($_REQUEST['v_new_person_facts_access_ID']))    $v_new_person_facts_access_ID=$_REQUEST['v_new_person_facts_access_ID'];
+if (isset($_REQUEST['v_new_person_facts_abbr']))         $v_new_person_facts_abbr=$_REQUEST['v_new_person_facts_abbr'];
+if (isset($_REQUEST['v_new_person_facts_choice']))       $v_new_person_facts_choice=$_REQUEST['v_new_person_facts_choice'];
+if (isset($_REQUEST['v_new_person_facts_acess_option'])) $v_new_person_facts_acess_option=$_REQUEST['v_new_person_facts_acess_option'];
+if (isset($_REQUEST['v_person_facts_del']))              $v_person_facts_del=$_REQUEST['v_person_facts_del'];
 
 if (!isset($PRIVACY_BY_YEAR)) $PRIVACY_BY_YEAR = false;
 if (!isset($MAX_ALIVE_AGE)) $MAX_ALIVE_AGE = 120;
 
-/**
- * print write_access option
- *
- * @param string $checkVar
- */
-function write_access_option($checkVar) {
-	global $PRIV_HIDE, $PRIV_PUBLIC, $PRIV_USER, $PRIV_NONE;
-	global $pgv_lang;
-
-	print "<option value=\"\$PRIV_PUBLIC\"";
-	if ($checkVar==$PRIV_PUBLIC) print " selected=\"selected\"";
-	print ">".$pgv_lang["PRIV_PUBLIC"]."</option>\n";
-	print "<option value=\"\$PRIV_USER\"";
-	if ($checkVar==$PRIV_USER) print " selected=\"selected\"";
-	print ">".$pgv_lang["PRIV_USER"]."</option>\n";
-	print "<option value=\"\$PRIV_NONE\"";
-	if ($checkVar==$PRIV_NONE) print " selected=\"selected\"";
-	print ">".$pgv_lang["PRIV_NONE"]."</option>\n";
-	print "<option value=\"\$PRIV_HIDE\"";
-	if ($checkVar==$PRIV_HIDE) print " selected=\"selected\"";
-	print ">".$pgv_lang["PRIV_HIDE"]."</option>\n";
-}
+$PRIVACY_CONSTANTS=array(
+	PGV_PRIV_NONE  =>'PGV_PRIV_NONE',
+	PGV_PRIV_USER  =>'PGV_PRIV_USER',
+	PGV_PRIV_PUBLIC=>'PGV_PRIV_PUBLIC',
+	PGV_PRIV_HIDE  =>'PGV_PRIV_HIDE'
+);
 
 /**
  * print yes/no select option
@@ -124,6 +124,7 @@ if (empty($action)) $action="";
 $PRIVACY_MODULE = get_privacy_file();
 
 print_header($pgv_lang["privacy_header"]);
+require 'js/autocomplete.js.htm';
 ?>
 <table class="facts_table <?php print $TEXT_DIRECTION; ?>">
 	<tr>
@@ -155,7 +156,7 @@ if ($action=="update") {
 	$configtext = preg_replace('/\$SHOW_LIVING_NAMES\s*=\s*.*;/', "\$SHOW_LIVING_NAMES = ".$_POST["v_SHOW_LIVING_NAMES"].";", $configtext);
 	$configtext = preg_replace('/\$SHOW_SOURCES\s*=\s*.*;/', "\$SHOW_SOURCES = ".$_POST["v_SHOW_SOURCES"].";", $configtext);
 	$configtext = preg_replace('/\$MAX_ALIVE_AGE\s*=\s*".*";/', "\$MAX_ALIVE_AGE = \"".$_POST["v_MAX_ALIVE_AGE"]."\";", $configtext);
-	if ($MAX_ALIVE_AGE!=$_POST["v_MAX_ALIVE_AGE"]) reset_isdead();
+	if ($MAX_ALIVE_AGE!=$_POST["v_MAX_ALIVE_AGE"]) reset_isdead(get_id_from_gedcom($ged));
 	if (file_exists("modules/research_assistant.php")) {
 		$configtext = preg_replace('/\$SHOW_RESEARCH_ASSISTANT\s*=\s*.*;/', "\$SHOW_RESEARCH_ASSISTANT = ".$_POST["v_SHOW_RESEARCH_ASSISTANT"].";", $configtext);
 	}

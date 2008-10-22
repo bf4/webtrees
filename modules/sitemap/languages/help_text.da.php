@@ -23,9 +23,10 @@
  * @subpackage SiteMap
  * @version $Id$
  */
-if (preg_match("/help_text\...\.php$/", $_SERVER["SCRIPT_NAME"])>0) {
-  print "Du kan ikke tilgå en sprogfil direkte.";
-  exit;
+
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
+	exit;
 }
 
 $pgv_lang["SITEMAP"]                = "Sitemap information";

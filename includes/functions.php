@@ -26,13 +26,15 @@
  * @version $Id$
  */
 
-if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
-	print "You cannot access an include file directly.";
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
-require_once('includes/mutex_class.php');
-require_once('includes/media_class.php');
+define('PGV_FUNCTIONS_PHP', '');
+
+require_once('includes/class_mutex.php');
+require_once('includes/class_media.php');
 require_once('includes/functions_UTF8.php');
 
 /**
@@ -49,7 +51,7 @@ if (isset($DEBUG)) $ERROR_LEVEL = 2;
  * initialize and check the database
  *
  * this function will create a database connection and return false if any errors occurred
- * @param boolean $ignore_previous	whether or not to ignore a previous connection , this parameter is used mainly for the editconfig.php page when setting everything up
+ * @param boolean $ignore_previous	whether or not to ignore a previous connection , this parameter is used mainly for the install.php page when setting everything up
  * @return boolean true if database successfully connected, false if there was an error
  */
 function check_db($ignore_previous=false) {
@@ -145,8 +147,7 @@ function check_db($ignore_previous=false) {
 	}
 
 	//-- protect the username and password on pages other than the Configuration page
-	if (strpos($_SERVER["PHP_SELF"], "editconfig.php") === false
-		&& strpos($_SERVER["PHP_SELF"], "sanity_check.php") === false) {
+	if (strpos($_SERVER["PHP_SELF"], "install.php") === false) {
 		$DBUSER = "";
 		$DBPASS = "";
 	}
@@ -214,7 +215,7 @@ function safe_POST_xref($var, $default=null) {
 	return safe_POST($var, PGV_REGEX_XREF, $default);
 }
 
-function safe_REQUEST($arr, $var, $regex, $default) {
+function safe_REQUEST($arr, $var, $regex=PGV_REGEX_NOSCRIPT, $default=null) {
 	if (is_array($regex)) {
 		$regex='(?:'.join('|', $regex).')';
 	}
@@ -343,6 +344,31 @@ function get_config_file($ged="") {
 }
 
 /**
+ * print write_access option
+ *
+ * @param string $checkVar
+ */
+function write_access_option($checkVar) {
+  global $pgv_lang, $PRIV_HIDE, $PRIV_PUBLIC, $PRIV_USER, $PRIV_NONE;
+
+  echo "<option value=\"\$PRIV_PUBLIC\"";
+  echo ($checkVar==$PRIV_PUBLIC) ? " selected=\"selected\"" : '';
+  echo ">".$pgv_lang["PRIV_PUBLIC"]."</option>\n";
+
+  echo "<option value=\"\$PRIV_USER\"";
+  echo ($checkVar==$PRIV_USER) ? " selected=\"selected\"" : '';
+  echo ">".$pgv_lang["PRIV_USER"]."</option>\n";
+
+  echo "<option value=\"\$PRIV_NONE\"";
+  echo ($checkVar==$PRIV_NONE) ? " selected=\"selected\"" : '';
+  echo ">".$pgv_lang["PRIV_NONE"]."</option>\n";
+
+  echo "<option value=\"\$PRIV_HIDE\"";
+  echo ($checkVar==$PRIV_HIDE) ? " selected=\"selected\"" : '';
+  echo ">".$pgv_lang["PRIV_HIDE"]."</option>\n";
+}
+
+/**
  * Get the version of the privacy file
  *
  * This function opens the given privacy file and returns the privacy version from the file
@@ -396,6 +422,30 @@ function get_privacy_file() {
 	}
 
 	return $privfile;
+}
+
+function load_privacy_file($ged_id=PGV_GED_ID) {
+	global $PRIV_HIDE, $PRIV_PUBLIC, $PRIV_USER, $PRIV_NONE;
+
+	// Load the privacy settings into global scope
+	global $SHOW_DEAD_PEOPLE, $SHOW_LIVING_NAMES, $SHOW_SOURCES, $MAX_ALIVE_AGE;
+	global $SHOW_RESEARCH_ASSISTANT, $ENABLE_CLIPPINGS_CART, $SHOW_MULTISITE_SEARCH;
+	global $USE_RELATIONSHIP_PRIVACY, $MAX_RELATION_PATH_LENGTH, $CHECK_MARRIAGE_RELATIONS;
+	global $PRIVACY_BY_YEAR, $PRIVACY_BY_RESN, $SHOW_PRIVATE_RELATIONSHIPS;
+	global $person_privacy, $user_privacy, $global_facts, $person_facts;
+
+	// Load default settings
+	require 'privacy.php';
+
+	// Load settings for the specified gedcom
+	$privacy_file=get_gedcom_setting($ged_id, 'privacy');
+	if (
+		$privacy_file &&
+		file_exists($privacy_file) &&
+		version_compare(get_privacy_file_version($privacy_file), PGV_REQUIRED_PRIVACY_VERSION)>=0
+	) {
+		require $privacy_file;
+	}
 }
 
 /**
@@ -481,6 +531,118 @@ function store_gedcoms() {
 	$mutex->Release();
 	$IN_STORE_GEDCOMS = false;
 	return true;
+}
+
+/**
+ * Update the site configuration settings
+ * New settings are passed in as an array of key value pairs
+ * The key in the array should be the name of the setting to change
+ * the value should be the new value
+ * $newconfig['CONFIGURED'] = true;
+ *
+ * @param array	$newconfig
+ * @param boolean $return	return the text or try to write the file
+ * @return mixed	returns true on success, or returns an array of error messages on failure
+ */
+function update_site_config($newconfig, $return = false) {
+	global $pgv_lang, $COMMIT_COMMAND;
+	
+	$errors = array();
+	
+	//-- load the configuration file text
+	if (file_exists("config.php")) $configtext = file_get_contents("config.php");
+	else $configtext = file_get_contents("config.dist");
+	
+	foreach($newconfig as $setting=>$value) {
+		update_config($configtext, $setting, $value);
+	}
+	
+	//-- check if the configtext is valid PHP
+	$res = @eval($configtext);
+	if ($res===false) {
+		if ($return) return $configtext;
+		 
+		$fp = fopen("config.php", "wb");
+		if (!$fp) {
+			$error['msg'] = $pgv_lang["pgv_config_write_error"];
+			$errors[] = $error;
+		}
+		else {
+			fwrite($fp, $configtext);
+			fclose($fp);
+			$logline = AddToLog("config.php updated by >".getUserName()."<");
+ 			if (!empty($COMMIT_COMMAND)) check_in($logline, "config.php", "");	
+		}
+	}
+	else {
+		$error['msg'] = "There was an error in the generated config.php. ".htmlentities($configtext);
+		$errors[] = $error;
+	}
+	
+	if (count($errors)>0) return $errors;
+	return true;
+}
+
+// Save the languages the user has chosen to have active on the website
+function update_lang_settings() {
+	global $INDEX_DIRECTORY, $language_settings, $languages, $pgv_language, $lang_short_cut, $pgv_lang_self, $pgv_lang_use, $confighelpfile, $helptextfile, $factsfile;
+	global $flagsfile, $adminfile, $countryfile, $faqlistfile, $extrafile, $ALPHABET_lower, $ALPHABET_upper, $DATE_FORMAT_array, $editorfile, $lang_langcode;
+	global $DICTIONARY_SORT, $MULTI_LETTER_ALPHABET, $NAME_REVERSE_array, $TEXT_DIRECTION_array, $TIME_FORMAT_array, $WEEK_START_array;
+	
+	$Filename = $INDEX_DIRECTORY . "lang_settings.php";
+	if (!file_exists($Filename)) copy("includes/lang_settings_std.php", $Filename);
+
+	$error = "";
+	if ($file_array = file($Filename)) {
+		@copy($Filename, $Filename . ".old");
+		if ($fp = @fopen($Filename, "w")) {
+			for ($x = 0; $x < count($file_array); $x++) {
+				fwrite($fp, $file_array[$x]);
+				$dDummy00 = trim($file_array[$x]);
+				if ($dDummy00 == "//-- NEVER manually delete or edit this entry and every line below this entry! --START--//") break;
+			}
+			fwrite($fp, "\r\n");
+			fwrite($fp, "// Array definition of language_settings\r\n");
+			fwrite($fp, "\$language_settings = array();\r\n");
+			foreach ($language_settings as $key => $value) {
+			if (!isset($languages[$key]) || (isset($pgv_language[$key]) && !file_exists($pgv_language[$key]))) continue;
+				fwrite($fp, "\r\n");
+				fwrite($fp, "//-- settings for {$languages[$key]}\r\n");
+				fwrite($fp, "\$language_settings['{$languages[$key]}']=array(\r\n");
+				fwrite($fp, "'pgv_langname'=>'{$languages[$key]}',\r\n");
+				fwrite($fp, "'pgv_lang_use'=>".($pgv_lang_use[$key]?'true':'false').",\r\n");
+				fwrite($fp, "'pgv_lang_self'=>'{$pgv_lang_self[$key]}',\r\n");
+				fwrite($fp, "'lang_short_cut'=>'{$lang_short_cut[$key]}',\r\n");
+				fwrite($fp, "'langcode'=>'{$lang_langcode[$key]}',\r\n");
+				fwrite($fp, "'pgv_language'=>'{$pgv_language[$key]}',\r\n");
+				fwrite($fp, "'confighelpfile'=>'{$confighelpfile[$key]}',\r\n");
+				fwrite($fp, "'helptextfile'=>'{$helptextfile[$key]}',\r\n");
+				fwrite($fp, "'flagsfile'=>'{$flagsfile[$key]}',\r\n");
+				fwrite($fp, "'factsfile'=>'{$factsfile[$key]}',\r\n");
+				fwrite($fp, "'adminfile'=>'{$adminfile[$key]}',\r\n");
+				fwrite($fp, "'editorfile'=>'{$editorfile[$key]}',\r\n");
+				fwrite($fp, "'countryfile'=>'{$countryfile[$key]}',\r\n");
+				fwrite($fp, "'faqlistfile'=>'{$faqlistfile[$key]}',\r\n");
+				fwrite($fp, "'extrafile'=>'{$extrafile[$key]}',\r\n");
+				fwrite($fp, "'DATE_FORMAT'=>'{$DATE_FORMAT_array[$key]}',\r\n");
+				fwrite($fp, "'TIME_FORMAT'=>'{$TIME_FORMAT_array[$key]}',\r\n");
+				fwrite($fp, "'WEEK_START'=>'{$WEEK_START_array[$key]}',\r\n");
+				fwrite($fp, "'TEXT_DIRECTION'=>'{$TEXT_DIRECTION_array[$key]}',\r\n");
+				fwrite($fp, "'NAME_REVERSE'=>".($NAME_REVERSE_array[$key]?'true':'false').",\r\n");
+				fwrite($fp, "'ALPHABET_upper'=>'{$ALPHABET_upper[$key]}',\r\n");
+				fwrite($fp, "'ALPHABET_lower'=>'{$ALPHABET_lower[$key]}',\r\n");
+				fwrite($fp, "'MULTI_LETTER_ALPHABET'=>'{$MULTI_LETTER_ALPHABET[$key]}',\r\n");
+				fwrite($fp, "'DICTIONARY_SORT'=>".($DICTIONARY_SORT[$key]?'true':'false')."\r\n");
+				fwrite($fp, ");\r\n");
+			}
+			fwrite($fp, "\r\n");
+			fwrite($fp, "?>");
+			fclose($fp);
+		$logline = AddToLog("lang_settings.php updated");
+ 		check_in($logline, $Filename, $INDEX_DIRECTORY);
+		} else $error = "lang_config_write_error";
+	} else $error = "lang_set_file_read_error";
+	return $error;
 }
 
 /**
@@ -660,7 +822,7 @@ function get_sub_record($level, $tag, $gedrec, $num=1) {
  * @param boolean $ApplyPriv whether to apply privacy right now or later
  * @return array an array of the raw subrecords to return
  */
-function get_all_subrecords($gedrec, $ignore="", $families=true, $sort=true, $ApplyPriv=true) {
+function get_all_subrecords($gedrec, $ignore="", $families=true, $ApplyPriv=true) {
 	$repeats = array();
 
 	$id = "";
@@ -707,7 +869,7 @@ function get_all_subrecords($gedrec, $ignore="", $families=true, $sort=true, $Ap
 		$ft = preg_match_all("/1 FAMS @(.+)@/", $gedrec, $fmatch, PREG_SET_ORDER);
 		for ($f=0; $f<$ft; $f++) {
 			$famid = $fmatch[$f][1];
-			$famrec = find_gedcom_record($fmatch[$f][1]);
+			$famrec = find_family_record($fmatch[$f][1]);
 			$parents = find_parents_in_record($famrec);
 			if ($id==$parents["HUSB"])
 				$spid = $parents["WIFE"];
@@ -742,8 +904,6 @@ function get_all_subrecords($gedrec, $ignore="", $families=true, $sort=true, $Ap
 		}
 	}
 
-	if ($sort)
-		sort_facts_old($repeats);
 	return $repeats;
 }
 
@@ -763,7 +923,7 @@ function get_gedcom_value($tag, $level, $gedrec, $truncate='', $convert=true) {
 
 	if (empty($gedrec))
 		return "";
-	$tags = preg_split("/:/", $tag);
+	$tags = explode(':', $tag);
 	$origlevel = $level;
 	if ($level==0) {
 		$level = $gedrec{0} + 1;
@@ -805,7 +965,26 @@ function get_gedcom_value($tag, $level, $gedrec, $truncate='', $convert=true) {
 		$ct = preg_match("/@(.*)@/", $value, $match);
 		if (($ct > 0 ) && ($t!="DATE")) {
 			$oldsub = $subrec;
+			switch ($t) {
+			case 'HUSB':
+			case 'WIFE':
+			case 'CHIL':
+				$subrec = find_person_record($match[1]);
+				break;
+			case 'FAMC':
+			case 'FAMS':
+				$subrec = find_family_record($match[1]);
+				break;
+			case 'SOUR':
+				$subrec = find_source_record($match[1]);
+				break;
+			case 'REPO':
+				$subrec = find_other_record($match[1]);
+				break;
+			default:
 			$subrec = find_gedcom_record($match[1]);
+				break;
+			}
 			if ($subrec) {
 				$value=$match[1];
 				$ct = preg_match("/0 @$match[1]@ $t (.+)/", $subrec, $match);
@@ -839,7 +1018,7 @@ function get_gedcom_value($tag, $level, $gedrec, $truncate='', $convert=true) {
 			//-- if it is a place value then apply the pedigree place limit
 			if ($convert && $t=="PLAC") {
 				if ($SHOW_PEDIGREE_PLACES>0) {
-					$plevels = preg_split("/,/", $value);
+					$plevels = explode(',', $value);
 					$value = "";
 					for ($plevel=0; $plevel<$SHOW_PEDIGREE_PLACES; $plevel++) {
 						if (!empty($plevels[$plevel])) {
@@ -851,7 +1030,7 @@ function get_gedcom_value($tag, $level, $gedrec, $truncate='', $convert=true) {
 				}
 				if (!empty($truncate)) {
 					if (strlen($value)>$truncate) {
-						$plevels = preg_split("/,/", $value);
+						$plevels = explode(',', $value);
 						$value = "";
 						for ($plevel=0; $plevel<count($plevels); $plevel++) {
 							if (!empty($plevels[$plevel])) {
@@ -877,7 +1056,7 @@ function get_gedcom_value($tag, $level, $gedrec, $truncate='', $convert=true) {
 				} else {
 					if (!empty($truncate)) {
 						if (strlen($value)>$truncate) {
-							$plevels = preg_split("/ /", $value);
+							$plevels = explode(' ', $value);
 							$value = "";
 							for ($plevel=0; $plevel<count($plevels); $plevel++) {
 								if (!empty($plevels[$plevel])) {
@@ -1195,7 +1374,6 @@ function find_record_in_file($gid) {
 				//-- add record to indilist for caching
 				if ($type=="INDI") {
 					$indilist[$gid]["gedcom"]=$indirec;
-					$indilist[$gid]["names"]=get_indi_names($indirec);
 					$indilist[$gid]["gedfile"]=$GEDCOM;
 					$indilist[$gid]["isdead"] = -1;
 				}
@@ -1269,7 +1447,7 @@ function find_highlighted_object($pid, $indirec) {
 	//-- handle finding the media of remote objects
 	$ct = preg_match("/(.*):(.*)/", $pid, $match);
 	if ($ct>0) {
-		require_once 'includes/serviceclient_class.php';
+		require_once 'includes/class_serviceclient.php';
 		$client = ServiceClient::getInstance($match[1]);
 		if (!is_null($client)) {
 			$mt = preg_match_all("/\d OBJE @(.*)@/", $indirec, $matches, PREG_SET_ORDER);
@@ -1672,26 +1850,21 @@ function compareStrings($aName, $bName, $ignoreCase=true) {
  * @return int negative numbers sort $a first, positive sort $b first
  */
 function itemsort($a, $b) {
-	if (isset($a["name"]))
+	if (isset($a["name"])) {
 		$aname = sortable_name_from_name($a["name"]);
-	else
-		if (isset($a["names"]))
-			$aname = sortable_name_from_name($a["names"][0][0]);
-		else
-			if (is_array($a))
-				$aname = sortable_name_from_name(array_shift($a));
-	else
+	} elseif (is_array($a)) {
+		$aname = sortable_name_from_name(reset($a));
+	} else {
 		$aname=$a;
-	if (isset($b["name"]))
+	}
+
+	if (isset($b["name"])) {
 		$bname = sortable_name_from_name($b["name"]);
-	else
-		if (isset($b["names"]))
-			$bname = sortable_name_from_name($b["names"][0][0]);
-		else
-			if (is_array($b))
-				$bname = sortable_name_from_name(array_shift($b));
-	else
+	} elseif (is_array($b)) {
+		$bname = sortable_name_from_name(reset($b));
+	} else {
 		$bname=$b;
+	}
 
 	$aname = strip_prefix($aname);
 	$bname = strip_prefix($bname);
@@ -1769,12 +1942,14 @@ function mediasort($a, $b) {
  * @return int negative numbers sort $a first, positive sort $b first
  */
 function idsort($a, $b) {
-	if (isset($a["gedcom"])) {
+	if(is_object($a)) $aid = $a->getXref();
+	else if (isset($a["gedcom"])) {
 		$ct = preg_match("/0 @(.*)@/", $a["gedcom"], $match);
 		if ($ct>0)
 			$aid = $match[1];
 	}
-	if (isset($b["gedcom"])) {
+	if (is_object($b)) $bid = $b->getXref();
+	else if (isset($b["gedcom"])) {
 		$ct = preg_match("/0 @(.*)@/", $b["gedcom"], $match);
 		if ($ct>0)
 			$bid = $match[1];
@@ -1789,261 +1964,6 @@ function idsort($a, $b) {
 //-- used for index mode
 function lettersort($a, $b) {
 	return stringsort($a["letter"], $b["letter"]);
-}
-
-//**************************************** old sort functions
-// Helper function to sort facts.
-function compare_facts_type_old($arec, $brec) {
-	global $factarray;
-	static $factsort;
-
-	if (is_array($arec))
-		$arec = $arec[1];
-	if (is_array($brec))
-		$brec = $brec[1];
-
-	// Facts from different families stay grouped together
-	if (preg_match('/_PGVFS @(\w+)@/', $arec, $match1) && preg_match('/_PGVFS @(\w+)@/', $brec, $match2) && $match1[1]!=$match2[1])
-		return 0;
-		
-	// Extract fact type from record
-	if (!preg_match("/1\s+(\w+)/", $arec, $matcha) || !preg_match("/1\s+(\w+)/", $brec, $matchb))
-		return 0;
-	$afact=$matcha[1];
-	$bfact=$matchb[1];
-
-	if (($afact=="EVEN" || $afact=="FACT") && preg_match("/2\s+TYPE\s+(\w+)/", $arec, $match) && isset($factarray[$match[1]]))
-		$afact=$match[1];
-	if (($bfact=="EVEN" || $bfact=="FACT") && preg_match("/2\s+TYPE\s+(\w+)/", $brec, $match) && isset($factarray[$match[1]]))
-		$bfact=$match[1];
-
-	if (!is_array($factsort))
-		$factsort = array_flip(array(
-			"BIRT",
-			"_HNM",
-			"ALIA", "_AKA", "_AKAN",
-			"ADOP", "_ADPF", "_ADPF",
-			"_BRTM",
-			"CHR", "BAPM",
-			"FCOM",
-			"CONF",
-			"BARM", "BASM",
-			"SSN",
-			"EDUC",
-			"GRAD",
-			"_DEG",
-			"EMIG", "IMMI",
-			"NATU",
-			"_MILI", "_MILT",
-			"ENGA",
-			"MARB", "MARC", "MARL", "_MARI", "_MBON",
-			"MARR", "MARR_CIVIL", "MARR_RELIGIOUS", "MARR_PARTNERS", "MARR_UNKNOWN", "_COML",
-			"_STAT",
-			"_SEPR",
-			"DIVF",
-			"MARS",
-			"_BIRT_CHIL",
-			"DIV", "ANUL",
-			"_BIRT_", "_MARR_", "_DEAT_",
-			"CENS",
-			"OCCU",
-			"RESI",
-			"PROP",
-			"CHRA",
-			"RETI",
-			"FACT", "EVEN",
-			"_NMR", "_NMAR", "NMR",
-			"NCHI",
-			"WILL",
-			"_HOL",
-			"_????_",
-			"DEAT", "CAUS",
-			"_FNRL", "BURI", "CREM", "_INTE", "CEME",
-			"_YART",
-			"_NLIV",
-			"PROB",
-			"TITL",
-			"COMM",
-			"NATI",
-			"CITN",
-			"CAST",
-			"RELI",
-			"IDNO",
-			"TEMP",
-			"SLGC", "BAPL", "CONL", "ENDL", "SLGS",
-			"AFN", "REFN", "_PRMN", "REF", "RIN",
-			"ADDR", "PHON", "EMAIL", "_EMAIL", "EMAL", "FAX", "WWW", "URL", "_URL",
-			"CHAN", "_TODO"
-		));
-
-	// Events not in the above list get mapped onto one that is.
-	if (!isset($factsort[$afact]))
-		if (preg_match('/(_(BIRT|MARR|DEAT)_)/', $afact, $match))
-			$afact=$match[1];
-		else
-			$afact="_????_";
-	if (!isset($factsort[$bfact]))
-		if (preg_match('/(_(BIRT|MARR|DEAT)_)/', $bfact, $match))
-			$bfact=$match[1];
-		else
-			$bfact="_????_";
-
-	$ret = $factsort[$afact]-$factsort[$bfact];
-	//-- if the facts are the same, then go ahead and compare them by date
-	//-- this will improve the positioning of non-dated elements on the next pass
-	if ($ret==0)
-		$ret = compare_facts_date_old($arec, $brec);
-	return $ret;
-}
-
-// Helper function to sort facts.
-function compare_facts_date_old($arec, $brec) {
-	if (is_array($arec))
-		$arec = $arec[1];
-	if (is_array($brec))
-		$brec = $brec[1];
-
-	// If either fact is undated, the facts sort equally.
-	if (!preg_match("/2 _?DATE (.*)/", $arec, $amatch) || !preg_match("/2 _?DATE (.*)/", $brec, $bmatch)) {
-		if (preg_match('/2 _SORT (\d+)/', $arec, $match1) && preg_match('/2 _SORT (\d+)/', $brec, $match2)) {
-			return $match1[1]-$match2[1];
-		}
-		return 0;
-	}
-
-	$adate = new GedcomDate($amatch[1]);
-	$bdate = new GedcomDate($bmatch[1]);
-	// If either date can't be parsed, don't sort.
-	if (!$adate->isOK() || !$bdate->isOK()) {
-		if (preg_match('/2 _SORT (\d+)/', $arec, $match1) && preg_match('/2 _SORT (\d+)/', $brec, $match2)) {
-			return $match1[1]-$match2[1];
-		}
-		return 0;
-	}
-
-	// Remember that dates can be ranges and overlapping ranges sort equally.
-	$amin=$adate->MinJD();
-	$bmin=$bdate->MinJD();
-	$amax=$adate->MaxJD();
-	$bmax=$bdate->MaxJD();
-
-	// BEF/AFT XXX sort as the day before/after XXX
-	if ($adate->qual1=='BEF') {
-		$amin=$amin-1;
-		$amax=$amin;
-	} else
-		if ($adate->qual1=='AFT') {
-			$amax=$amax+1;
-			$amin=$amax;
-		}
-	if ($bdate->qual1=='BEF') {
-		$bmin=$bmin-1;
-		$bmax=$bmin;
-	} else
-		if ($bdate->qual1=='AFT') {
-			$bmax=$bmax+1;
-			$bmin=$bmax;
-		}
-
-	if ($amax<$bmin)
-		return -1;
-	else
-		if ($amin>$bmax)
-			return 1;
-		else {
-			//-- ranged date... take the type of fact sorting into account
-			$factWeight = 0;
-			if (preg_match('/2 _SORT (\d+)/', $arec, $match1) && preg_match('/2 _SORT (\d+)/', $brec, $match2)) {
-				$factWeight = $match1[1]-$match2[1];
-			}
-			//-- fact is prefered to come before, so compare using the minimum ranges
-			if ($factWeight < 0 && $amin!=$bmin) {
-				return ($amin-$bmin);
-			} else
-				if ($factWeight > 0 && $bmax!=$amax) {
-					//-- fact is prefered to come after, so compare using the max of the ranges
-					return ($bmax-$amax);
-				} else {
-					//-- facts are the same or the ranges don't give enough info, so use the average of the range
-					$aavg = ($amin+$amax)/2;
-					$bavg = ($bmin+$bmax)/2;
-					if ($aavg<$bavg)
-						return -1;
-					else
-						if ($aavg>$bavg)
-							return 1;
-						else
-							return $factWeight;
-				}
-		
-			return 0;
-		}
-}
-
-// Sort the facts, using three conflicting rules (family sequence,
-// date sequence and fact sequence).
-// We sort by fact first (preserving family order where possible) and then
-// resort by date (preserving fact order where possible).
-// This results in the dates always being in sequence, and the facts
-// *mostly* being in sequence.
-function sort_facts_old(&$arr) {
-	// Pass one - insertion sort on fact type
-	$lastDate = "";
-	for ($i=0; $i<count($arr); ++$i) {
-		if ($i>0) {
-			$tmp=$arr[$i];
-			$j=$i;
-			while ($j>0 && compare_facts_type_old($arr[$j-1], $tmp)>0) {
-				$arr[$j]=$arr[$j-1];
-				--$j;
-			}
-			$arr[$j]=$tmp;
-		}
-	}
-
-	//-- add extra codes for the next pass of sorting
-	//-- add a fake date for the date sorting based on the previous fact that came before
-	$lastDate = "";
-	for ($i=0; $i<count($arr); $i++) {
-		//-- add a fake date for the date sorting based on the previous fact that came before
-		if (is_array($arr[$i])) {
-			if (preg_match("/2 DATE (.+)/", $arr[$i][1], $match)==0 && !empty($lastDate))
-				$arr[$i][1].="\r\n2 _DATE ".$lastDate."\r\n";
-			else
-				$lastDate = @$match[1];
-			//-- also add a sort field so that we can compare based on how they were sorted by the previous pass when the date does not give enough information
-			$arr[$i][1] .= "\r\n2 _SORT ".$i."\r\n";
-		} else {
-			if (preg_match("/2 DATE (.+)/", $arr[$i], $match)==0 && !empty($lastDate))
-				$arr[$i].="\r\n2 _DATE ".$lastDate."\r\n";
-			else
-				$lastDate = @$match[1];
-			$arr[$i].="\r\n2 _SORT ".$i."\r\n";
-		}
-	}
-	
-	// Pass two - modified bubble/insertion sort on date
-	for ($i=0; $i<count($arr)-1; ++$i)
-		for ($j=count($arr)-1; $j>$i; --$j)
-			if (compare_facts_date_old($arr[$i],$arr[$j])>0) {
-				$tmp=$arr[$i];
-				for ($k=$i; $k<$j; ++$k)
-					$arr[$k]=$arr[$k+1];
-				$arr[$j]=$tmp;
-			}
-			
-	//-- delete the temporary fields
-	for ($i=0; $i<count($arr); $i++) {
-		if (is_array($arr[$i])) {
-			$arr[$i][1] = preg_replace("/2 _DATE (.+)/", "", $arr[$i][1]);
-			$arr[$i][1] = preg_replace("/2 _SORT (.+)/", "", $arr[$i][1]);
-			$arr[$i][1] = trim($arr[$i][1]);
-		} else {
-			$arr[$i] = preg_replace("/2 _DATE (.+)/", "", $arr[$i]);
-			$arr[$i] = preg_replace("/2 _SORT (.+)/", "", $arr[$i]);
-			$arr[$i] = trim($arr[$i]);
-		}
-	}
 }
 
 // Helper function to sort facts.
@@ -2228,14 +2148,21 @@ function compare_date($a, $b) {
 	if (!empty($sortby))
 		$tag = $sortby;
 	if (is_object($a)) {
-		$afact = $a->getFactByType($tag);
-		$bfact = $b->getFactByType($tag);
+		//-- use estimated dates for sorting
+		if ($tag=='BIRT') $afact = $a->getBirthEvent();
+		else if ($tag=='DEAT') $afact = $a->getDeathEvent();
+		else $afact = $a->getFactByType($tag);
+		if ($tag=='BIRT') $bfact = $b->getBirthEvent();
+		else if ($tag=='DEAT') $bfact = $b->getDeathEvent();
+		else $bfact = $b->getFactByType($tag);
 		if (!is_null($afact) && !is_null($bfact)) {
 			$cmp=GedcomDate::Compare($afact->getDate(), $bfact->getDate());
 			if ($cmp!=0)
 				return $cmp;
 		}
-		return itemsort($a, $b);
+		if (is_null($afact) && !is_null($bfact)) return -1;
+		if (!is_null($afact) && is_null($bfact)) return 1;
+		return GedcomRecord::Compare($a, $b);
 	}
 	else if (isset($a["undo"])) {
 		// Look at record in pgv_changes.php
@@ -2247,7 +2174,7 @@ function compare_date($a, $b) {
 	}
 	if (!empty($adate) && !empty($bdate)){
 		$adate=new GedcomDate($adate);
-		$bdate=new GedcomDate($adate);
+		$bdate=new GedcomDate($bdate);
 		$cmp=GedcomDate::Compare($adate, $bdate);
 		if ($cmp!=0)
 			return $cmp;
@@ -3062,8 +2989,7 @@ function get_theme_names() {
  * before it can be used on the filesystem
  */
 function filename_decode($filename) {
-	global $WIN32;
-	if ($WIN32)
+	if (DIRECTORY_SEPARATOR=='\\')
 		return utf8_decode($filename);
 	else
 		return $filename;
@@ -3076,8 +3002,7 @@ function filename_decode($filename) {
  * before it can be used in PGV
  */
 function filename_encode($filename) {
-	global $WIN32;
-	if ($WIN32)
+	if (DIRECTORY_SEPARATOR=='\\')
 		return utf8_encode($filename);
 	else
 		return $filename;
@@ -3207,21 +3132,6 @@ function get_report_list($force=false) {
 }
 
 /**
- * clean up user submitted input before submitting it to the SQL query
- *
- * This function will take user submitted input string and remove any special characters
- * before they are submitted to the SQL query.
- * Examples of invalid characters are _ & ? < > " '
- * @param string $pid	The string to cleanup
- * @return string	The cleaned up string
- */
-function clean_input($pid) {
-	$pid = preg_replace("/[%?_\"'\(\);]/", "", trim($pid));
-	$pid = strip_tags($pid);
-	return $pid;
-}
-
-/**
  * remove any custom PGV tags from the given gedcom record
  * custom tags include _PGVU and _THUM
  * @param string $gedrec	the raw gedcom record
@@ -3328,88 +3238,79 @@ function get_query_string() {
 //the pdf witout regard to if a known person exists in each generation.
 //ToDo: If a known individual is found in a generation, add prior empty positions
 //and add remaining empty spots automatically.
-function add_ancestors($pid, $children=false, $generations=-1, $show_empty=false) {
-	global $list, $indilist, $genlist;
+function add_ancestors(&$list, $pid, $children=false, $generations=-1, $show_empty=false) {
 	$total_num_skipped = 0;
 	$skipped_gen = 0;
 	$num_skipped = 0;
 	$genlist = array($pid);
-	$list[$pid]["generation"] = 1;
+	$list[$pid]->generation = 1;
 	while (count($genlist)>0) {
 		$id = array_shift($genlist);
-		$famids = find_family_ids($id);
+		if ($id=="empty") continue;
+		$person = Person::getInstance($id);
+		$famids = $person->getChildFamilies();
 		if (count($famids)>0) {
 			if ($show_empty) {
 				for ($i=0;$i<$num_skipped;$i++) {
-					$list["empty" . $total_num_skipped] = array();
-					$list["empty" . $total_num_skipped]["generation"] = $list[$id]["generation"]+1;
-					$list["empty" . $total_num_skipped]["gedcom"] = "";
+					$list["empty" . $total_num_skipped] = new Person();
+					$list["empty" . $total_num_skipped]->generation = $list[$id]->generation+1;
 					array_push($genlist, "empty" . $total_num_skipped);
 					$total_num_skipped++;
 				}
 			}
 			$num_skipped = 0;
-			foreach ($famids as $indexval => $famid) {
-				$parents = find_parents($famid);
-				if (!empty($parents["HUSB"])) {
-					find_person_record($parents["HUSB"]);
-					$list[$parents["HUSB"]] = $indilist[$parents["HUSB"]];
-					$list[$parents["HUSB"]]["generation"] = $list[$id]["generation"]+1;
+			foreach ($famids as $famid => $family) {
+				$husband = $family->getHusband();
+				$wife = $family->getWife();
+				if ($husband) {
+					$list[$husband->getXref()] = $husband;
+					$list[$husband->getXref()]->generation = $list[$id]->generation+1;
 				} else
 					if ($show_empty) {
-						$list["empty" . $total_num_skipped] = array("empty");
-						$list["empty" . $total_num_skipped]["generation"] = $list[$id]["generation"]+1;
-						$list["empty" . $total_num_skipped]["gedcom"] = "";
+						$list["empty" . $total_num_skipped] = new Person();
+						$list["empty" . $total_num_skipped]->generation = $list[$id]->generation+1;
 					}
-				if (!empty($parents["WIFE"])) {
-					find_person_record($parents["WIFE"]);
-					$list[$parents["WIFE"]] = $indilist[$parents["WIFE"]];
-					$list[$parents["WIFE"]]["generation"] = $list[$id]["generation"]+1;
+				if ($wife) {
+					$list[$wife->getXref()] = $wife;
+					$list[$wife->getXref()]->generation = $list[$id]->generation+1;
 				} else
 					if ($show_empty) {
-						$list["empty" . $total_num_skipped] = array("empty");
-						$list["empty" . $total_num_skipped]["generation"] = $list[$id]["generation"]+1;
-						$list["empty" . $total_num_skipped]["gedcom"] = "";
+						$list["empty" . $total_num_skipped] = new Person();
+						$list["empty" . $total_num_skipped]->generation = $list[$id]->generation+1;
 					}
-				if ($generations == -1 || $list[$id]["generation"]+1 < $generations) {
-					$skipped_gen = $list[$id]["generation"]+1;
-					if (!empty($parents["HUSB"]))
-						array_push($genlist, $parents["HUSB"]);
+				if ($generations == -1 || $list[$id]->generation+1 < $generations) {
+					$skipped_gen = $list[$id]->generation+1;
+					if ($husband)
+						array_push($genlist, $husband->getXref());
 					else
 						if ($show_empty)
 							array_push($genlist, "empty" . $total_num_skipped);
-					if (!empty($parents["WIFE"]))
-						array_push($genlist, $parents["WIFE"]);
+					if ($wife)
+						array_push($genlist, $wife->getXref());
 					else
 						if ($show_empty)
 							array_push($genlist, "empty" . $total_num_skipped);
 				}
 				$total_num_skipped++;
 				if ($children) {
-					$famrec = find_family_record($famid);
-					if ($famrec) {
-						$num = preg_match_all("/1\s*CHIL\s*@(.*)@/", $famrec, $smatch,PREG_SET_ORDER);
-						for ($i=0; $i<$num; $i++) {
-							find_person_record($smatch[$i][1]);
-							$list[$smatch[$i][1]] = $indilist[$smatch[$i][1]];
-							if (isset($list[$id]["generation"]))
-								$list[$smatch[$i][1]]["generation"] = $list[$id]["generation"];
+					$childs = $family->getChildren();
+					foreach($childs as $child) {
+						$list[$child->getXref()] = $child;
+						if (isset($list[$id]->generation))
+							$list[$child->getXref()]->generation = $list[$id]->generation;
 							else
-								$list[$smatch[$i][1]]["generation"] = 1;
+							$list[$child->getXref()]->generation = 1;
 						}
 					}
 				}
-			}
 		} else
 			if ($show_empty) {
-				if ($skipped_gen > $list[$id]["generation"]) {
+				if ($skipped_gen > $list[$id]->generation) {
 					$list["empty" . $total_num_skipped] = array();
-					$list["empty" . $total_num_skipped]["generation"] = $list[$id]["generation"]+1;
-					$list["empty" . $total_num_skipped]["gedcom"] = "";
+					$list["empty" . $total_num_skipped]->generation = $list[$id]->generation+1;
 					$total_num_skipped++;
 					$list["empty" . $total_num_skipped] = array();
-					$list["empty" . $total_num_skipped]["generation"] = $list[$id]["generation"]+1;
-					$list["empty" . $total_num_skipped]["gedcom"] = "";
+					$list["empty" . $total_num_skipped]->generation = $list[$id]->generation+1;
 					array_push($genlist, "empty" . ($total_num_skipped - 1));
 					array_push($genlist, "empty" . $total_num_skipped);
 					$total_num_skipped++;
@@ -3420,58 +3321,53 @@ function add_ancestors($pid, $children=false, $generations=-1, $show_empty=false
 	}
 }
 
-//--- copied from reportpdf.php
-function add_descendancy($pid, $parents=false, $generations=-1) {
-	global $list, $indilist;
+//--- copied from class_reportpdf.php
+function add_descendancy(&$list, $pid, $parents=false, $generations=-1) {
+	global $indilist;
 
+	$person = Person::getInstance($pid);
+	if ($person==null) return;
 	if (!isset($list[$pid])) {
-		$indirec = find_person_record($pid);
-		if (!empty($indirec))
-			$list[$pid] = $indilist[$pid];
-		else
-			return;
+		$list[$pid] = $person;
 	}
-	if (!isset($list[$pid]["generation"])) {
-		$list[$pid]["generation"] = 0;
+	if (!isset($list[$pid]->generation)) {
+		$list[$pid]->generation = 0;
 	}
-	$famids = find_sfamily_ids($pid);
+	$famids = $person->getSpouseFamilies();
 	if (count($famids)>0) {
-		foreach ($famids as $indexval => $famid) {
-			$famrec = find_family_record($famid);
-			if ($famrec) {
+		foreach ($famids as $famid => $family) {
+			if ($family) {
 				if ($parents) {
-					$parents = find_parents_in_record($famrec);
-					if (!empty($parents["HUSB"])) {
-						find_person_record($parents["HUSB"]);
-						$list[$parents["HUSB"]] = $indilist[$parents["HUSB"]];
-						if (isset($list[$pid]["generation"]))
-							$list[$parents["HUSB"]]["generation"] = $list[$pid]["generation"]-1;
+					$husband = $family->getHusband();
+					$wife = $family->getWife();
+					if ($husband) {
+						$list[$husband->getXref()] = $husband;
+						if (isset($list[$pid]->generation))
+							$list[$husband->getXref()]->generation = $list[$pid]->generation-1;
 						else
-							$list[$parents["HUSB"]]["generation"] = 1;
+							$list[$husband->getXref()]->generation = 1;
 					}
-					if (!empty($parents["WIFE"])) {
-						find_person_record($parents["WIFE"]);
-						$list[$parents["WIFE"]] = $indilist[$parents["WIFE"]];
-						if (isset($list[$pid]["generation"]))
-							$list[$parents["WIFE"]]["generation"] = $list[$pid]["generation"]-1;
+					if ($wife) {
+						$list[$wife->getXref()] = $wife;
+						if (isset($list[$pid]->generation))
+							$list[$wife->getXref()]->generation = $list[$pid]->generation-1;
 						else
-							$list[$parents["WIFE"]]["generation"] = 1;
-					}
-				}
-				$num = preg_match_all("/1\s*CHIL\s*@(.*)@/", $famrec, $smatch,PREG_SET_ORDER);
-				for ($i=0; $i<$num; $i++) {
-					$indirec = find_person_record($smatch[$i][1]);
-					if (!empty($indirec)) {
-						$list[$smatch[$i][1]] = $indilist[$smatch[$i][1]];
-						if (isset($list[$pid]["generation"]))
-							$list[$smatch[$i][1]]["generation"] = $list[$pid]["generation"]+1;
-						else
-							$list[$smatch[$i][1]]["generation"] = 2;
+							$list[$wife->getXref()]->generation = 1;
 					}
 				}
-				if ($generations == -1 || $list[$pid]["generation"]+1 < $generations) {
-					for ($i=0; $i<$num; $i++) {
-						add_descendancy($smatch[$i][1], $parents, $generations);	// recurse on the childs family
+				$children = $family->getChildren();
+				foreach($children as $child) {
+					if ($child) {
+						$list[$child->getXref()] = $child;
+						if (isset($list[$pid]->generation))
+							$list[$child->getXref()]->generation = $list[$pid]->generation+1;
+						else
+							$list[$child->getXref()]->generation = 2;
+					}
+				}
+				if ($generations == -1 || $list[$pid]->generation+1 < $generations) {
+					foreach($children as $child) {
+						add_descendancy($list, $child->getXref(), $parents, $generations);	// recurse on the childs family
 					}
 				}
 			}
@@ -3676,6 +3572,8 @@ function check_in($logline, $filename, $dirname, $bInsert = false) {
  *			loadLangFile("pgv_confighelp, pgv_faqlib");
  *		To load all files, call the function this way:
  *			loadLangFile("all"); 
+ *		To load the file XXX for module YYY, call
+ *		  loadLangFile("YYY:XXX");
  */
 function loadLangFile($fileListNames="") {
 	global $pgv_language, $confighelpfile, $helptextfile, $factsfile, $adminfile, $editorfile, $countryfile, $faqlistfile, $extrafile;
@@ -3695,38 +3593,6 @@ function loadLangFile($fileListNames="") {
 	// Work on each input file type 
 	foreach ($list as $fileListName) {
 		switch ($fileListName) {
-		case "ra_lang":
-			$fileName1 = "modules/research_assistant/languages/lang.".$lang_short_cut["english"].".php";
-			$fileName2 = "modules/research_assistant/languages/lang.".$lang_short_cut[$LANGUAGE].".php";
-			break;
-		case "ra_help":
-			$fileName1 = "modules/research_assistant/languages/help_text.".$lang_short_cut["english"].".php";
-			$fileName2 = "modules/research_assistant/languages/help_text.".$lang_short_cut[$LANGUAGE].".php";
-			break;
-		case "gm_lang":
-			$fileName1 = "modules/googlemap/languages/lang.".$lang_short_cut["english"].".php";
-			$fileName2 = "modules/googlemap/languages/lang.".$lang_short_cut[$LANGUAGE].".php";
-			break;
-		case "gm_help":
-			$fileName1 = "modules/googlemap/languages/help_text.".$lang_short_cut["english"].".php";
-			$fileName2 = "modules/googlemap/languages/help_text.".$lang_short_cut[$LANGUAGE].".php";
-			break;
-		case "sm_lang":
-			$fileName1 = "modules/sitemap/languages/lang.".$lang_short_cut["english"].".php";
-			$fileName2 = "modules/sitemap/languages/lang.".$lang_short_cut[$LANGUAGE].".php";
-			break;
-		case "sm_help":
-			$fileName1 = "modules/sitemap/languages/help_text.".$lang_short_cut["english"].".php";
-			$fileName2 = "modules/sitemap/languages/help_text.".$lang_short_cut[$LANGUAGE].".php";
-			break;
-		case "lb_lang":
-			$fileName1 = "modules/lightbox/languages/lang.".$lang_short_cut["english"].".php";
-			$fileName2 = "modules/lightbox/languages/lang.".$lang_short_cut[$LANGUAGE].".php";
-			break;
-		case "lb_help":
-			$fileName1 = "modules/lightbox/languages/help_text.".$lang_short_cut["english"].".php";
-			$fileName2 = "modules/lightbox/languages/help_text.".$lang_short_cut[$LANGUAGE].".php";
-			break;
 		case "pgv_lang":
 			$fileName1 = $pgv_language["english"];
 			$fileName2 = $pgv_language[$LANGUAGE];
@@ -3760,10 +3626,20 @@ function loadLangFile($fileListNames="") {
 			$fileName2 = $faqlistfile[$LANGUAGE];
 			break;
 		default:
-			return;
+			if (preg_match('/(.+):(.+)/', $fileListName, $match)) {
+				$fileName1 = 'modules/'.$match[1].'/languages/'.$match[2].'.'.$lang_short_cut['english'].'.php';
+				$fileName2 = 'modules/'.$match[1].'/languages/'.$match[2].'.'.$lang_short_cut[$LANGUAGE].'.php';
+				break;
+			} else {
+				continue 2;
 		}
-		if (file_exists($fileName1)) require $fileName1;
-		if ($LANGUAGE!="english" && file_exists($fileName2)) require $fileName2;
+	}
+		if (file_exists($fileName1)) {
+			require $fileName1;
+		}
+		if ($LANGUAGE!='english' && file_exists($fileName2)) {
+			require $fileName2;
+		}
 	}
 
 	// Now that the variables have been loaded in the desired language, load the optional 
@@ -4013,7 +3889,7 @@ function loadLanguage($desiredLanguage="english", $forceLoad=false) {
  *		have 52 different UTF8 characters all mapping to the same base character.  This will
  *		handle Vietnamese, which is by far the richest language in terms of diacritic marks.
  */
- 	require "includes/sort_tables_utf8.php";
+ 	require_once "includes/sort_tables_utf8.php";
 }
 
 /**

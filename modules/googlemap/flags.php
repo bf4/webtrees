@@ -24,13 +24,21 @@
  * @version $Id$
  */
 
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
+	exit;
+}
+
 require_once "config.php";
 require "modules/googlemap/defaultconfig.php";
 if (file_exists('modules/googlemap/config.php')) require('modules/googlemap/config.php');
 require "includes/functions_edit.php";
 require $INDEX_DIRECTORY."pgv_changes.php";
 
-loadLangFile("pgv_facts, gm_lang, gm_help");
+loadLangFile("pgv_facts, googlemap:lang, googlemap:help_text");
+
+if (isset($_REQUEST['countrySelected'])) $countrySelected = $_REQUEST['countrySelected'];
+if (isset($_REQUEST['action'])) $action = $_REQUEST['action'];
 
 $saveLanguage = $LANGUAGE;
 $LANGUAGE = $deflang;
@@ -97,7 +105,6 @@ if ($action == "ChangeFlag") {
 			window.opener.document.editplaces.icon.value = "places/<?php echo $countrySelected."/flags/".$flags[$_POST["FLAGS"]];?>.gif";
 			window.opener.document.getElementById('flagsDiv').innerHTML = "<img src=\"places/<?php echo $countrySelected."/flags/".$flags[$_POST["FLAGS"]];?>.gif\">&nbsp;&nbsp;<a href=\"javascript:;\" onclick=\"change_icon();return false;\"><?php echo $pgv_lang["pl_change_flag"]?></a>&nbsp;&nbsp;<a href=\"javascript:;\" onclick=\"remove_icon();return false;\"><?php echo $pgv_lang["pl_remove_flag"]?></a>";
 <?php } ?>
-			if (window.opener.showchanges) window.opener.showchanges();
 			window.close();
 		}
 	//-->
@@ -127,7 +134,6 @@ else {
 	}
 
 	function edit_close() {
-		if (window.opener.showchanges) window.opener.showchanges();
 		window.close();
 	}
 

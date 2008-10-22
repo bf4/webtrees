@@ -26,12 +26,14 @@
  * @version $Id$
  */
 
-if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
-	print "You cannot access an include file directly.";
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
-require_once 'includes/person_class.php';
+define('PGV_FUNCTIONS_PRINT_FACTS_PHP', '');
+
+require_once 'includes/class_person.php';
 
 /**
  * Turn URLs in text into HTML links.  Insert breaks into long URLs
@@ -45,7 +47,7 @@ function expand_urls($text) {
 	// (([^:/?#]+):)?(//([^/?#]*))?([^?#]*)(\?([^#]*))?(#(.*))?
 	// This matches far too much while a "precise" regex is several pages long.
 	// This is a compromise.
-	$URL_REGEX='((https?|ftp]):)(//([^\s/?#<>]*))?([^\s?#<>]*)(\?([^\s#<>]*))?(#(\S*))?';
+	$URL_REGEX='((https?|ftp]):)(//([^\s/?#<>]*))?([^\s?#<>]*)(\?([^\s#<>]*))?(#[^\s?#<>]+)?';
 
 	return preg_replace_callback(
 		'/'.addcslashes("(?!>)$URL_REGEX(?!</a>)", '/').'/i',
@@ -76,7 +78,7 @@ function print_fact(&$eventObj, $noedit=false) {
 	global $CONTACT_EMAIL, $view, $FACT_COUNT;
 	global $n_chil, $n_gchi, $n_ggch;
 	global $SEARCH_SPIDER;
-	
+
 	//-- keep the time of this access to help with concurrent edits
 	$_SESSION['last_access_time'] = time();
 
@@ -105,7 +107,7 @@ function print_fact(&$eventObj, $noedit=false) {
 	// -- avoid known non facts
 	if (in_array($fact, $nonfacts)) return;
 	//-- do not print empty facts
-	$lines = preg_split("/\n/", trim($factrec));
+	$lines = explode("\n", trim($factrec));
 	if ((count($lines)<2)&&($event=="")) return;
 	// See if RESN tag prevents display or edit/delete
 	$resn_tag = preg_match("/2 RESN (.*)/", $factrec, $match);
@@ -417,7 +419,7 @@ function print_fact(&$eventObj, $noedit=false) {
 			print_asso_rela_record($pid, $factrec, true, gedcom_record_type($pid, get_id_from_gedcom($GEDCOM)));
 			// -- find _PGVU field
 			$ct = preg_match("/2 _PGVU (.*)/", $factrec, $match);
-//			if ($ct>0) print $factarray["_PGVU"].": ".$match[1];			
+//			if ($ct>0) print $factarray["_PGVU"].": ".$match[1];
 			if ($ct>0) print " - ".$factarray["_PGVU"].": ".$match[1];
 			// -- Find RESN tag
 			if (isset($resn_value)) {
@@ -471,9 +473,17 @@ function print_fact(&$eventObj, $noedit=false) {
 				for($i=0; $i<$ct; $i++) {
 					$factref = $match[$i][1];
 					if (!in_array($factref, $special_facts)) {
+						if ($factref=="AGNC") {
+							// Allow special processing for different languages
+							$func="fact_AGNC_localisation_{$lang_short_cut[$LANGUAGE]}";
+							if (function_exists($func)) {
+								// Localise the AGNC fact
+								$func($factref, $fact);
+							}
+						}
 						if (isset($factarray[$factref])) $label = $factarray[$factref];
 						else $label = $factref;
-						if ($SHOW_FACT_ICONS && file_exists($PGV_IMAGE_DIR."/facts/".$factref.".gif")) 
+						if ($SHOW_FACT_ICONS && file_exists($PGV_IMAGE_DIR."/facts/".$factref.".gif"))
 							//print $eventObj->Icon().' '; // print incorrect fact icon !!!
 							print "<img src=\"{$PGV_IMAGE_DIR}/facts/".$factref.".gif\" alt=\"{$label}\" title=\"{$label}\" align=\"middle\" /> ";
 						else print "<span class=\"label\">".$label.": </span>";
@@ -527,7 +537,7 @@ function print_submitter_info($sid) {
 function print_repository_record($sid) {
 	global $TEXT_DIRECTION;
 	if (displayDetailsById($sid, "REPO")) {
-		$source = find_repo_record($sid);
+		$source = find_other_record($sid);
 		$ct = preg_match("/1 NAME (.*)/", $source, $match);
 		if ($ct > 0) {
 			$ct2 = preg_match("/0 @(.*)@/", $source, $rmatch);
@@ -616,7 +626,7 @@ function print_fact_sources($factrec, $level, $return=false) {
 			$data .= print_fact_notes($srec, $nlevel, false, true);
 			$data .= "</div>";
 			$data .= "</div>";
-			
+
 			$printDone = true;
 		}
 	}
@@ -658,7 +668,7 @@ function print_media_links($factrec, $level,$pid='') {
 			$thumbnail = thumbnail_file($mainMedia, true, false, $pid);
 			$isExternal = isFileExternal($row["m_file"]);
 			$mediaTitle = $row["m_titl"];
-			
+
 			// Determine the size of the mediafile
 			$imgsize = findImageSize($mainMedia);
 			$imgwidth = $imgsize[0]+40;
@@ -667,9 +677,9 @@ function print_media_links($factrec, $level,$pid='') {
 				if ($objectNum > 0) print "<br clear=\"all\" />";
 				print "<table><tr><td>";
 				if ($isExternal || media_exists($thumbnail)) {
-				
+
 					//LBox --------  change for Lightbox Album --------------------------------------------
-					if (file_exists("modules/lightbox/album.php")&& ( eregi("\.jpg",$mainMedia) || eregi("\.jpeg",$mainMedia) || eregi("\.gif",$mainMedia) || eregi("\.png",$mainMedia) ) ) { 
+					if (file_exists("modules/lightbox/album.php")&& ( eregi("\.jpg",$mainMedia) || eregi("\.jpeg",$mainMedia) || eregi("\.gif",$mainMedia) || eregi("\.png",$mainMedia) ) ) {
 						$name = trim($row["m_titl"]);
 							print "<a href=\"" . $mainMedia . "\" rel=\"clearbox[general_1]\" rev=\"" . $media_id . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name,ENT_COMPAT,'UTF-8')) . "\">" . "\n";
 					// ---------------------------------------------------------------------------------------------
@@ -678,7 +688,7 @@ function print_media_links($factrec, $level,$pid='') {
 					}else{
 						print "<a href=\"javascript:;\" onclick=\"return openImage('".rawurlencode($mainMedia)."',$imgwidth, $imgheight);\">";
 					}
-					
+
 					print "<img src=\"".$thumbnail."\" border=\"0\" align=\"" . ($TEXT_DIRECTION== "rtl"?"right": "left") . "\" class=\"thumbnail\"";
 					if ($isExternal) print " width=\"".$THUMBNAIL_WIDTH."\"";
 					print " alt=\"" . PrintReady($mediaTitle) . "\"";
@@ -888,10 +898,10 @@ function print_main_sources($factrec, $level, $pid, $linenum, $noedit=false) {
 	global $factarray, $view;
 	global $PGV_IMAGE_DIR, $PGV_IMAGES, $SHOW_SOURCES;
 	if ($SHOW_SOURCES<PGV_USER_ACCESS_LEVEL) return;
-	
+
 	//-- keep the time of this access to help with concurrent edits
 	$_SESSION['last_access_time'] = time();
-	
+
 	$nlevel = $level+1;
 	$styleadd="";
 	$ct = preg_match("/PGV_NEW/", $factrec, $match);
@@ -999,14 +1009,14 @@ function print_main_sources($factrec, $level, $pid, $linenum, $noedit=false) {
 	}
 }
 
-/** 
+/**
  *	Print SOUR structure
  *
- *  This function prints the input array of SOUR sub-records built by the 
+ *  This function prints the input array of SOUR sub-records built by the
  *  getSourceStructure() function.
  *
  *  The input array is defined as follows:
- *	$textSOUR["PAGE"] = +1  Source citation	
+ *	$textSOUR["PAGE"] = +1  Source citation
  *	$textSOUR["EVEN"] = +1  Event type
  *	$textSOUR["ROLE"] = +2  Role in event
  *	$textSOUR["DATA"] = +1  place holder (no text in this sub-record)
@@ -1055,7 +1065,7 @@ function printSourceStructure($textSOUR) {
  * Extract SOUR structure from the incoming Source sub-record
  *
  *  The output array is defined as follows:
- *	$textSOUR["PAGE"] = +1  Source citation	
+ *	$textSOUR["PAGE"] = +1  Source citation
  *	$textSOUR["EVEN"] = +1  Event type
  *	$textSOUR["ROLE"] = +2  Role in event
  *	$textSOUR["DATA"] = +1  place holder (no text in this sub-record)
@@ -1125,10 +1135,10 @@ function print_main_notes($factrec, $level, $pid, $linenum, $noedit=false) {
 	global $PGV_IMAGE_DIR;
 	global $PGV_IMAGES;
 	global $TEXT_DIRECTION, $USE_RTL_FUNCTIONS;
-	
+
 	//-- keep the time of this access to help with concurrent edits
 	$_SESSION['last_access_time'] = time();
-	
+
 	$styleadd="";
 	$ct = preg_match("/PGV_NEW/", $factrec, $match);
 	if ($ct>0) $styleadd="change_new";
@@ -1266,7 +1276,7 @@ function print_main_media($pid, $level=1, $related=false, $noedit=false) {
 	if (!isset($pgv_changes[$pid."_".$GEDCOM])) $gedrec = find_gedcom_record($pid);
 	else $gedrec = find_updated_record($pid);
 	$ids = array($pid);
-	
+
 	//-- find all of the related ids
 	if ($related) {
 		$ct = preg_match_all("/1 FAMS @(.*)@/", $gedrec, $match, PREG_SET_ORDER);
@@ -1274,7 +1284,7 @@ function print_main_media($pid, $level=1, $related=false, $noedit=false) {
 			$ids[] = trim($match[$i][1]);
 		}
 	}
-	
+
 	//LBox -- if  exists, get a list of the sorted current objects in the indi gedcom record  -  (1 _PGV_OBJS @xxx@ .... etc) ----------
 	$sort_current_objes = array();
 	if ($level>0) $sort_regexp = "/".$level." _PGV_OBJS @(.*)@/";
@@ -1289,13 +1299,13 @@ function print_main_media($pid, $level=1, $related=false, $noedit=false) {
 	// -----------------------------------------------------------------------------------------------
 
 	// create ORDER BY list from Gedcom sorted records list  ---------------------------
-	$orderbylist = 'ORDER BY '; // initialize  
+	$orderbylist = 'ORDER BY '; // initialize
 	foreach ($sort_match as $id) {
 		$orderbylist .= "m_media='$id[1]' DESC, ";
-	}  
+	}
 	$orderbylist = rtrim($orderbylist, ', ');
 	// -----------------------------------------------------------------------------------------------
-	
+
 	//-- get a list of the current objects in the record
 	$current_objes = array();
 	if ($level>0) $regexp = "/".$level." OBJE @(.*)@/";
@@ -1323,7 +1333,7 @@ function print_main_media($pid, $level=1, $related=false, $noedit=false) {
 	$sqlmm .= ") AND mm_gedfile = '".$GEDCOMS[$GEDCOM]["id"]."' AND mm_media=m_media AND mm_gedfile=m_gedfile ";
 	//-- for family and source page only show level 1 obje references
 	if ($level>0) $sqlmm .= "AND mm_gedrec LIKE '$level OBJE%'";
-	
+
 	// LBox --- media sort -------------------------------------
 	if ($sort_ct>0) {
 		$sqlmm .= $orderbylist;
@@ -1331,7 +1341,7 @@ function print_main_media($pid, $level=1, $related=false, $noedit=false) {
 		$sqlmm .= " ORDER BY mm_gid DESC ";
 	}
 	// ---------------------------------------------------------------
-	
+
 	$resmm = dbquery($sqlmm);
 	$foundObjs = array();
 	while($rowm = $resmm->fetchRow(DB_FETCHMODE_ASSOC)) {
@@ -1404,7 +1414,7 @@ function print_main_media($pid, $level=1, $related=false, $noedit=false) {
 		//-- check if we need to get the object from a remote location
 		$ct = preg_match("/(.*):(.*)/", $media_id, $match);
 		if ($ct>0) {
-			require_once 'includes/serviceclient_class.php';
+			require_once 'includes/class_serviceclient.php';
 			$client = ServiceClient::getInstance($match[1]);
 			if (!is_null($client)) {
 				$newrec = $client->getRemoteRecord($match[2]);
@@ -1466,7 +1476,7 @@ function print_main_media_row($rtype, $rowm, $pid) {
 
 	//-- keep the time of this access to help with concurrent edits
 	$_SESSION['last_access_time'] = time();
-		
+
 	$styleadd="";
 	if ($rtype=='new') $styleadd = "change_new";
 	if ($rtype=='old') $styleadd = "change_old";
@@ -1536,22 +1546,98 @@ function print_main_media_row($rtype, $rowm, $pid) {
 				$imgsize = findImageSize($mainMedia);
 				$imgwidth = $imgsize[0]+40;
 				$imgheight = $imgsize[1]+150;
-//LBox --------  change for Lightbox Album --------------------------------------------
-					if (file_exists("modules/lightbox/album.php") && ( eregi("\.jpg",$mainMedia) || eregi("\.jpeg",$mainMedia) || eregi("\.gif",$mainMedia) || eregi("\.png",$mainMedia) ) ) { 
+				
+			//LBox --------  Addition for Lightbox Album --------------------------------------------
+				// if Lightbox installed
+				if (file_exists("modules/lightbox/album.php") ) {
+					if (file_exists("modules/lightbox/lb_config.php") ) {
+						include('modules/lightbox/lb_config.php');
+					}else{
+						include('modules/lightbox/lb_defaultconfig.php');
+					}
+					// Check Filetype of media item ( Regular, URL, or Not supported by lightbox at the moment )
+					// Regular ----------------------------------
+					if (eregi("\.jpg" ,$rowm['m_file']) ||
+						eregi("\.jpeg",$rowm['m_file']) ||
+						eregi("\.gif" ,$rowm['m_file']) ||
+						eregi("\.png" ,$rowm['m_file'])
+						)
+					{
+						$file_type = "regular";
+					
+					// FLV local file----------------------------------
+					}else if(eregi("\.flv" ,$rowm['m_file']) 
+							)
+					{
+						$file_type = "flvfile";
+						
+					// URL ----------------------------------
+					}else if(eregi("http" ,$rowm['m_file']) ||
+							 eregi("\.pdf",$rowm['m_file'])
+							)
+					{
+						$file_type = "url";
+					// Other ------------------------------
+					}else{
+						$file_type = "other";
+					}
+					
 					$name = trim($rowm["m_titl"]);
-					print "<a href=\"" . $mainMedia . "\" rel=\"clearbox[general_3]\" rev=\"" . $rowm["m_media"] . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name,ENT_COMPAT,'UTF-8')) . "\">" . "\n";
-// ---------------------------------------------------------------------------------------------
+					// If regular filetype (Lightbox)
+					if ($file_type == "regular") {
+						print "<a href=\"" . $mainMedia . "\" rel='clearbox[general_3]' rev=\"" . $rowm["m_media"] . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name,ENT_COMPAT,'UTF-8')) . "\">" . "\n";
+					// Else If flv native (Lightbox)
+					}elseif ($file_type == "flvfile") {
+						print "<a href=\"module.php?mod=JWplayer&amp;pgvaction=flvVideo&amp;flvVideo=" . $mainMedia . "\" rel='clearbox(" . 445 . "," . 370 . ",click)' rev=\"" . $rowm["m_media"] . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name,ENT_COMPAT,'UTF-8')) . "\">" . "\n";
+					// Else If url filetype (Lightbox)
+					}elseif ($file_type == "url") {
+						print "<a href=\"" . $mainMedia . "\" rel='clearbox(" . $LB_URL_WIDTH . "," . $LB_URL_HEIGHT . ",click)' rev=\"" . $rowm["m_media"] . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name,ENT_COMPAT,'UTF-8')) . "\">" . "\n";
+					// Else Other filetype (Pop-up Window)
+					}
+			// ---------------------------------------------------------------------------------------------
+				// else if Media viewer enabled 
 				}elseif ($USE_MEDIA_VIEWER) {
 					print "<a href=\"".encode_url("mediaviewer.php?mid={$rowm['m_media']}")."\">";
+				// else if JWplayer installed
+				}elseif (file_exists("modules/JWplayer/flvVideo.php") && eregi("\.flv" ,$rowm['m_file'])) {
+					print "<a href=\"javascript:;\" onclick=\" var winflv = window.open('module.php?mod=JWplayer&amp;pgvaction=flvVideo&amp;flvVideo=" . $mainMedia . "', 'winflv', 'width=445, height=365, left=600, top=200'); if (window.focus) {winflv.focus();}\">";
+				// else just use normal image viewer
 				}else{
 					print "<a href=\"javascript:;\" onclick=\"return openImage('".rawurlencode($mainMedia)."',$imgwidth, $imgheight);\">";
 				}
 			}
-			print "<img src=\"".$thumbnail."\" border=\"0\" align=\"" . ($TEXT_DIRECTION== "rtl"?"right": "left") . "\" class=\"thumbnail\"";
-			if ($isExternal) print " width=\"".$THUMBNAIL_WIDTH."\"";
+				
+			// --------------  Addition for Lightbox Album and JWPlayer ------------------------
+				// Now finally print the thumbnail 
+				// If Plain URL Print the Common URL Thumbnail
+				if (eregi("http",$rowm['m_file']) && !eregi("\.jpg",$rowm['m_file']) && !eregi("\.jpeg",$rowm['m_file']) && !eregi("\.gif",$rowm['m_file']) && !eregi("\.png",$rowm['m_file'])) {
+					print "<img src=\"images/URL.png\" border=\"0\" align=\"" . ($TEXT_DIRECTION== "rtl"?"right": "left") . "\"  width=\"72\" height=\"80\" " ;
+				// If local flv file, print the common flv thumbnail
+				}else if (media_exists($thumbnail) && eregi("\media.gif",$thumbnail) && eregi("\.flv",$rowm['m_file'])) {
+					if (file_exists("modules/lightbox/album.php") || file_exists("modules/JWplayer/flvVideo.php") ) {
+						print "<img src=\"modules/JWplayer/flash.png\" height=\"60\" border=\"0\" align=\"" . ($TEXT_DIRECTION== "rtl"?"right": "left") . "\" class=\"thumbnail\" " ;
+					}else{
+						print "<img src=\"images/media.gif\" height=\"60\" border=\"0\" align=\"" . ($TEXT_DIRECTION== "rtl"?"right": "left") . "\" class=\"thumbnail\" " ;
+					}
+				// Else Print the Regular Thumbnail if associated with a thumbnail image,
+				}else{
+			// ---------------------------------------------------------------------------------------------
+					
+					print "<img src=\"".$thumbnail."\" border=\"0\" align=\"" . ($TEXT_DIRECTION== "rtl"?"right": "left") . "\" class=\"thumbnail\"";
+					
+			// --------------  Addition for Lightbox Album and JWPlayer ------------------------
+				}
+			// ---------------------------------------------------------------------------------------------
+				
+			if ($isExternal) {
+				print " width=\"".$THUMBNAIL_WIDTH."\"";
+			}
 			print " alt=\"" . PrintReady(htmlspecialchars($mediaTitle,ENT_COMPAT,'UTF-8')) . "\" title=\"" . PrintReady(htmlspecialchars($mediaTitle,ENT_COMPAT,'UTF-8')) . "\" />";
-			if ($mainFileExists) print "</a>";
+			if ($mainFileExists) {
+				print "</a>";
+			}
 		}
+
 		if(empty($SEARCH_SPIDER)) {
 			print "<a href=\"".encode_url("mediaviewer.php?mid={$rowm['m_media']}")."\">";
 		}
@@ -1614,8 +1700,8 @@ function print_main_media_row($rtype, $rowm, $pid) {
 						print "]</a>\n";
 				}
 			}
+			print "<br />\n";
 		}
-		//print "<br />\n";
 		//-- don't show _PRIM option to regular users
 		if (PGV_USER_GEDCOM_ADMIN) {
 			$prim = get_gedcom_value("_PRIM", 2, $rowm["mm_gedrec"]);

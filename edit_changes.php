@@ -24,10 +24,11 @@
  * @version $Id$
  */
 
-require "config.php";
-require "includes/functions_edit.php";
-require "includes/functions_import.php";
-require $INDEX_DIRECTORY."pgv_changes.php";
+require './config.php';
+
+require_once 'includes/functions_edit.php';
+require_once 'includes/functions_import.php';
+require $INDEX_DIRECTORY.'pgv_changes.php';
 
 if (!PGV_USER_CAN_ACCEPT) {
 	header("Location: login.php?url=edit_changes.php");

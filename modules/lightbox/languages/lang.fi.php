@@ -28,11 +28,11 @@
  * @translator Matti Valve
  */
 
-//-- security check, only allow access from module.php
-if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
-	print "Et pääse suoraan kielitiedostoon.";
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
+
 // Added in VERSION 4.1.6
 $pgv_lang["lb_generalhelp"]     = "Individual Page - Lightbox General Help";
 $pgv_lang["lb_viewedit"]		= "View/Edit";
@@ -45,7 +45,7 @@ $pgv_lang["lb_balloon_true"]	= "Balloon";
 $pgv_lang["lb_balloon_false"]	= "Normal";
 $pgv_lang["lb_tt_balloon"]		= "Individual Page - Album Tab Thumbnail - Notes Tooltip";
 $pgv_lang["lb_ttAppearance"]	= "Notes - Tooltip appearance";
-$pgv_lang["view_lightbox"]		= "View Album of ...";
+$pgv_lang["view_lightbox"]		= "Näytä albumi ..."; //@@
 $pgv_lang["lb_notes"]			= "Notes";
 $pgv_lang["lb_notes_info"]		= "";
 
@@ -101,6 +101,12 @@ $pgv_lang["showmenu"] 			= "Näytä menu:";
 
 $pgv_lang["TYPE__other"] 	 		= "Muu"; 
 $pgv_lang["TYPE__footnotes"]		= "Alaviite"; 
+
+$pgv_lang["ROW_TYPE__photo"] 		= $pgv_lang["TYPE__photo"];
+$pgv_lang["ROW_TYPE__document"] 	= $pgv_lang["TYPE__document"];
+$pgv_lang["ROW_TYPE__census"] 		= $factarray["CENS"];
+$pgv_lang["ROW_TYPE__other"] 		= $pgv_lang["TYPE__other"];
+$pgv_lang["ROW_TYPE__footnotes"]	= $pgv_lang["TYPE__footnotes"];
 
 $pgv_lang["census_text"]  	 		= "\"Nämä CENSUS kuvat on saatu \"Kansallisarkistosta\", joka hallitsee alkuperäisiä tiedostoja, ";
 $pgv_lang["census_text"] 			.= "ja on pantu esille tänne heidän suostumuksellaan edellyttäen, ettei niitä luvatta käytetä aupallisesti hyväksi.\".\"\n";

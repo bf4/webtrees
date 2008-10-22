@@ -27,10 +27,12 @@
  * @version $Id$
  */
 
-if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
-	print "You cannot access an include file directly.";
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
+
+define('PGV_FUNCTIONS_TR_PHP', '');
 
 ////////////////////////////////////////////////////////////////////////////////
 // Localise a date. "[qualifier] date [qualifier date] [qualifier]"
@@ -73,7 +75,7 @@ function date_localisation_tr(&$q1, &$d1, &$q2, &$d2, &$q3) {
 			default: $q1=str_replace('#EXT#', 'e', $pgv_lang[$q1]); break;
 			}
 		} else {
-			$q1=str_replace('#EXT#', 'e', $pgv_lang[$q1]); 
+			$q1=str_replace('#EXT#', 'e', $pgv_lang[$q1]);
 		}
 		break;
 	default:
@@ -94,7 +96,7 @@ function date_localisation_tr(&$q1, &$d1, &$q2, &$d2, &$q3) {
 			default: $q2=str_replace('#EXT#', 'e', $pgv_lang[$q2]); break;
 			}
 		} else {
-			$q2=str_replace('#EXT#', 'e', $pgv_lang[$q2]); 
+			$q2=str_replace('#EXT#', 'e', $pgv_lang[$q2]);
 		}
 		break;
 	default:

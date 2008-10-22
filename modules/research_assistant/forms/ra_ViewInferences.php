@@ -27,12 +27,12 @@
  * @author Mike Hessick
  * @author David Molton
  */
-//-- security check, only allow access from module.php
-if (strstr($_SERVER["SCRIPT_NAME"],"module.php")===false) {
-	print "Now, why would you want to do that.  You're not hacking are you?";
+
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
-// Require our base class
+
 require_once'ra_form.php';
 include_once("ra_RSFunction.php");
 /**
@@ -50,7 +50,7 @@ class ra_ViewInferences extends ra_form {
 		if ($input=="FAMC:HUSB") $input = $pgv_lang["father"];
 		if ($input=="FAMC:WIFE") $input = $pgv_lang["mother"];
 		if ($input=="FAMS:SPOUSE") $input = $pgv_lang["spouse"];
-		$parts = preg_split("/:/", $input);
+		$parts = explode(':', $input);
 		$out = "";
 		
 			if(!empty($otherFact) && !empty($input))

@@ -23,18 +23,19 @@
  * @subpackage Charts
  * @version $Id$
  */
- 
 
-if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
-	print "You cannot access an include file directly.";
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
-require_once ("includes/GrampsExport.php");
-require_once ("includes/person_class.php");
-require_once ("includes/functions.php");
-require_once ("includes/controllers/basecontrol.php");
-require_once ("includes/pclzip.lib.php");
+define('PGV_CLIPPINGS_CTRL', '');
+
+require_once 'includes/class_grampsexport.php';
+require_once 'includes/class_person.php';
+require_once 'includes/functions.php';
+require_once 'includes/controllers/basecontrol.php';
+require_once 'includes/pclzip.lib.php';
 
 function same_group($a, $b) {
 	if ($a['type'] == $b['type'])
@@ -73,12 +74,14 @@ class ClippingsControllerRoot extends BaseController {
 	var $media_list = array();
 	var $addCount = 0;
 	var $privCount = 0;
-	var $action="";
 	var $type="";
 	var $id="";
 	var $IncludeMedia;
 	var $Zip;
 	var $filetype;
+    var $level1;  // number of levels of ancestors
+    var $level2; 
+    var $level3;	// number of levels of descendents
 
 	/**
 	 * @param string $thing the id of the person
@@ -107,6 +110,9 @@ class ClippingsControllerRoot extends BaseController {
 		$this->Zip = safe_GET('Zip');
 		$this->IncludeMedia = safe_GET('IncludeMedia');
 		$this->filetype = safe_GET('filetype');
+        $this->level1 = safe_GET('level1');
+        $this->level2 = safe_GET('level2');
+        $this->level3 = safe_GET('level3');
 		if (empty($this->filetype)) $this->filetype = "gedcom";
 		$others = safe_GET('others');
 		$item = safe_GET('item');
@@ -180,10 +186,10 @@ class ClippingsControllerRoot extends BaseController {
 						}
 					} else
 					if ($others == 'ancestors') {
-						$this->add_ancestors_to_cart($this->id);
+                        $this->add_ancestors_to_cart($this->id, $this->level1);
 					} else
 					if ($others == 'ancestorsfamilies') {
-						$this->add_ancestors_to_cart_families($this->id);
+                        $this->add_ancestors_to_cart_families($this->id, $this->level2);
 					} else
 					if ($others == 'members') {
 						$famids = find_sfamily_ids($this->id);
@@ -204,7 +210,7 @@ class ClippingsControllerRoot extends BaseController {
 							$clipping['id'] = $famid;
 							$ret = $this->add_clipping($clipping);
 							if ($ret)
-							$this->add_family_descendancy($famid);
+							$this->add_family_descendancy($famid, $this->level3);
 						}
 					}
 				}
@@ -249,7 +255,7 @@ class ClippingsControllerRoot extends BaseController {
 					$filetext = preg_replace("/UTF-8/", "ANSI", $filetext);
 					$filetext = utf8_decode($filetext);
 				}
-					
+
 				for ($i = 0; $i < $ct; $i++) {
 					$clipping = $cart[$i];
 					if ($clipping['gedcom'] == $GEDCOM) {
@@ -571,7 +577,7 @@ class ClippingsControllerRoot extends BaseController {
 	}
 
 	// --------------------------------- Recursive function to traverse the tree
-	function add_family_descendancy($famid) {
+	function add_family_descendancy($famid, $level="") {
 		global $cart;
 
 		if (!$famid)
@@ -602,7 +608,10 @@ class ClippingsControllerRoot extends BaseController {
 							$clipping['type'] = "fam";
 							$clipping['id'] = $cfamid;
 							$ret = $this->add_clipping($clipping); // add the childs family
-							$this->add_family_descendancy($cfamid); // recurse on the childs family
+							if ($level=="" || $level>0) {
+								if ($level!="") $level--;
+								$this->add_family_descendancy($cfamid, $level); // recurse on the childs family
+							}
 						}
 					}
 				} else {
@@ -643,76 +652,83 @@ class ClippingsControllerRoot extends BaseController {
 	}
 
 	//-- recursively adds direct-line ancestors to cart
-	function add_ancestors_to_cart($pid) {
+    function add_ancestors_to_cart($pid, $level="") {
 		global $cart;
 		$famids = find_family_ids($pid);
 		if (count($famids) > 0) {
 			foreach ($famids as $indexval => $famid) {
-				$clipping = array ();
-				$clipping['type'] = "fam";
-				$clipping['id'] = $famid;
-				$ret = $this->add_clipping($clipping);
-				if ($ret) {
-					$parents = find_parents($famid);
-					if (!empty ($parents["HUSB"])) {
-						$clipping = array ();
-						$clipping['type'] = "indi";
-						$clipping['id'] = $parents["HUSB"];
-						$this->add_clipping($clipping);
-						$this->add_ancestors_to_cart($parents["HUSB"]);
-					}
-					if (!empty ($parents["WIFE"])) {
-						$clipping = array ();
-						$clipping['type'] = "indi";
-						$clipping['id'] = $parents["WIFE"];
-						$this->add_clipping($clipping);
-						$this->add_ancestors_to_cart($parents["WIFE"]);
+                if ($level=="" || $level > 0) {
+                    if ($level!="") $level = $level -1;
+					$clipping = array ();
+					$clipping['type'] = "fam";
+					$clipping['id'] = $famid;
+					$ret = $this->add_clipping($clipping);
+					if ($ret) {
+						$parents = find_parents($famid);
+						if (!empty ($parents["HUSB"])) {
+							$clipping = array ();
+							$clipping['type'] = "indi";
+							$clipping['id'] = $parents["HUSB"];
+							$this->add_clipping($clipping);
+                            $this->add_ancestors_to_cart($parents["HUSB"], $level);
+						}
+						if (!empty ($parents["WIFE"])) {
+							$clipping = array ();
+							$clipping['type'] = "indi";
+							$clipping['id'] = $parents["WIFE"];
+							$this->add_clipping($clipping);
+                            $this->add_ancestors_to_cart($parents["WIFE"], $level);
+						}
 					}
 				}
-			}
+
+            }
 		}
 	}
 
 	//-- recursively adds direct-line ancestors and their families to the cart
-	function add_ancestors_to_cart_families($pid) {
+    function add_ancestors_to_cart_families($pid, $level="") {
 		global $cart;
 		$famids = find_family_ids($pid);
 		if (count($famids) > 0) {
 			foreach ($famids as $indexval => $famid) {
-				$clipping = array ();
-				$clipping['type'] = "fam";
-				$clipping['id'] = $famid;
-				$ret = $this->add_clipping($clipping);
-				if ($ret) {
-					$parents = find_parents($famid);
-					if (!empty ($parents["HUSB"])) {
-						$clipping = array ();
-						$clipping['type'] = "indi";
-						$clipping['id'] = $parents["HUSB"];
-						$ret = $this->add_clipping($clipping);
-						$this->add_ancestors_to_cart_families($parents["HUSB"]);
-					}
-					if (!empty ($parents["WIFE"])) {
-						$clipping = array ();
-						$clipping['type'] = "indi";
-						$clipping['id'] = $parents["WIFE"];
-						$ret = $this->add_clipping($clipping);
-						$this->add_ancestors_to_cart_families($parents["WIFE"]);
-					}
-					$famrec = find_family_record($famid);
-					if ($famrec) {
-						$num = preg_match_all("/1\s*CHIL\s*@(.*)@/", $famrec, $smatch, PREG_SET_ORDER);
-						for ($i = 0; $i < $num; $i++) {
+               if ($level=="" || $level > 0) {
+                    if ($level!="")$level = $level -1;
+					$clipping = array ();
+					$clipping['type'] = "fam";
+					$clipping['id'] = $famid;
+					$ret = $this->add_clipping($clipping);
+					if ($ret) {
+						$parents = find_parents($famid);
+						if (!empty ($parents["HUSB"])) {
 							$clipping = array ();
 							$clipping['type'] = "indi";
-							$clipping['id'] = $smatch[$i][1];
-							$this->add_clipping($clipping);
+							$clipping['id'] = $parents["HUSB"];
+							$ret = $this->add_clipping($clipping);
+	                            $this->add_ancestors_to_cart_families($parents["HUSB"], $level);
+						}
+						if (!empty ($parents["WIFE"])) {
+							$clipping = array ();
+							$clipping['type'] = "indi";
+							$clipping['id'] = $parents["WIFE"];
+							$ret = $this->add_clipping($clipping);
+	                            $this->add_ancestors_to_cart_families($parents["WIFE"], $level);
+						}
+						$famrec = find_family_record($famid);
+						if ($famrec) {
+							$num = preg_match_all("/1\s*CHIL\s*@(.*)@/", $famrec, $smatch, PREG_SET_ORDER);
+							for ($i = 0; $i < $num; $i++) {
+								$clipping = array ();
+								$clipping['type'] = "indi";
+								$clipping['id'] = $smatch[$i][1];
+								$this->add_clipping($clipping);
+							}
 						}
 					}
 				}
 			}
 		}
-	}
+    }
 
 	//---------------------------- End function definition
 
@@ -727,6 +743,4 @@ if (file_exists('includes/controllers/clippings_ctrl_user.php')) {
 	}
 }
 
-$controller = new ClippingsController();
-$controller->init();
 ?>

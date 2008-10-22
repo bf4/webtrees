@@ -24,7 +24,8 @@
  * @version $Id$
  */
 
-require('config.php');
+require './config.php';
+
 if (!PGV_USER_GEDCOM_ADMIN) {
 	header("Location: login.php?url=admin.php");
 	exit;

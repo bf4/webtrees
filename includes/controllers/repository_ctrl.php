@@ -1,7 +1,7 @@
 <?php
 /**
  * Controller for the repository page view
- * 
+ *
  * phpGedView: Genealogy Viewer
  * Copyright (C) 2002 to 2008	PGV Development Team.  All rights reserved.
  *
@@ -24,16 +24,18 @@
  * @version $Id$
  */
 
-if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
-	print "You cannot access an include file directly.";
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
-require_once("config.php");
-require_once('includes/functions_print_facts.php');
-require_once('includes/controllers/basecontrol.php');
-require_once('includes/repository_class.php');
-require_once('includes/menu.php');
+define('PGV_REPOSITORY_CTRL_PHP', '');
+
+require_once 'includes/functions_print_facts.php';
+require_once 'includes/controllers/basecontrol.php';
+require_once 'includes/class_repository.php';
+require_once 'includes/class_menu.php';
+require_once 'includes/functions_import.php';
 
 $nonfacts = array();
 /**
@@ -41,49 +43,45 @@ $nonfacts = array();
  */
 class RepositoryControllerRoot extends BaseController {
 	var $rid;
-	var $show_changes = "yes";
-	var $action = "";
 	var $repository = null;
 	var $uname = "";
 	var $diffrepository = null;
 	var $accept_success = false;
 	var $canedit = false;
-	
+
 	/**
 	 * constructor
 	 */
 	function RepositoryRootController() {
 		parent::BaseController();
 	}
-	
+
 	/**
 	 * initialize the controller
 	 */
 	function init() {
 		global $pgv_lang, $CONTACT_EMAIL, $GEDCOM, $pgv_changes;
-		
+
 		//-- keep the time of this access to help with concurrent edits
 		$_SESSION['last_access_time'] = time();
-		
-		if (!empty($_REQUEST["show_changes"])) $this->show_changes = $_REQUEST["show_changes"];
-		if (!empty($_REQUEST["action"])) $this->action = $_REQUEST["action"];
-		if (!empty($_REQUEST["rid"])) $this->rid = strtoupper($_REQUEST["rid"]);
-		$this->rid = clean_input($this->rid);
-		
-		$repositoryrec = find_repo_record($this->rid);
+
+		$this->rid         =safe_GET_xref('rid');
+
+		$repositoryrec = find_other_record($this->rid);
 		if (!$repositoryrec) $repositoryrec = "0 @".$this->rid."@ REPO\r\n";
-		
+
 		$this->repository = new Repository($repositoryrec);
-		
+		$this->repository->ged_id=PGV_GED_ID; // This record is from a file
+
 		if (!$this->repository->canDisplayDetails()) {
 			print_header($pgv_lang["private"]." ".$pgv_lang["repo_info"]);
 			print_privacy_error($CONTACT_EMAIL);
 			print_footer();
 			exit;
 		}
-		
+
 		$this->uname = PGV_USER_NAME;
-		
+
 		//-- perform the desired action
 		switch($this->action) {
 			case "addfav":
@@ -96,25 +94,25 @@ class RepositoryControllerRoot extends BaseController {
 				$this->repository->undoChange();
 				break;
 		}
-		
+
 		//-- check for the user
 		//-- if the user can edit and there are changes then get the new changes
-		if ($this->show_changes=="yes" && PGV_USER_CAN_EDIT && isset($pgv_changes[$this->rid."_".$GEDCOM])) {
+		if ($this->show_changes && PGV_USER_CAN_EDIT && isset($pgv_changes[$this->rid."_".$GEDCOM])) {
 			$newrec = find_updated_record($this->rid);
 			$this->diffrepository = new Repository($newrec);
 			$this->diffrepository->setChanged(true);
 			$repositoryrec = $newrec;
 		}
-		
+
 		if ($this->repository->canDisplayDetails()) {
 			$this->canedit = PGV_USER_CAN_EDIT;
 		}
-		
-		if ($this->show_changes=="yes" && $this->canedit) {
+
+		if ($this->show_changes && $this->canedit) {
 			$this->repository->diffMerge($this->diffrepository);
 		}
 	}
-	
+
 	/**
 	 * Add a new favorite for the action user
 	 */
@@ -123,7 +121,7 @@ class RepositoryControllerRoot extends BaseController {
 		if (empty($this->uname)) return;
 		if (!empty($_REQUEST["gid"])) {
 			$gid = strtoupper($_REQUEST["gid"]);
-			$indirec = find_repo_record($gid);
+			$indirec = find_other_record($gid);
 			if ($indirec) {
 				$favorite = array();
 				$favorite["username"] = $this->uname;
@@ -143,13 +141,12 @@ class RepositoryControllerRoot extends BaseController {
 	 */
 	function acceptChanges() {
 		global $GEDCOM;
-		
+
 		if (!PGV_USER_CAN_ACCEPT) return;
-		require_once("includes/functions_import.php");
 		if (accept_changes($this->rid."_".$GEDCOM)) {
-			$this->show_changes="no";
+			$this->show_changes=false;
 			$this->accept_success=true;
-			$indirec = find_repo_record($this->rid);
+			$indirec = find_other_record($this->rid);
 			//-- check if we just deleted the record and redirect to index
 			if (empty($indirec)) {
 				header("Location: index.php?ctype=gedcom");
@@ -158,7 +155,7 @@ class RepositoryControllerRoot extends BaseController {
 			$this->repository = new Repository($indirec);
 		}
 	}
-	
+
 	/**
 	 * get the title for this page
 	 * @return string
@@ -174,7 +171,7 @@ class RepositoryControllerRoot extends BaseController {
 	function userCanEdit() {
 		return $this->canedit;
 	}
-	
+
 	/**
 	 * get edit menut
 	 * @return Menu
@@ -184,15 +181,15 @@ class RepositoryControllerRoot extends BaseController {
 		global $SHOW_GEDCOM_RECORD;
 		if ($TEXT_DIRECTION=="rtl") $ff="_rtl";
 		else $ff="";
-		
+
 		if (!$this->userCanEdit()) {
 			$tempvar = false;
 			return $tempvar;
 		}
-		
+
 		// edit repository menu
 		$menu = new Menu($pgv_lang['edit_repo']);
-		if ($SHOW_GEDCOM_RECORD || PGV_USER_IS_ADMIN) 
+		if ($SHOW_GEDCOM_RECORD || PGV_USER_IS_ADMIN)
 			$menu->addOnclick('return edit_raw(\''.$this->rid.'\');');
 		if (!empty($PGV_IMAGES["edit_repo"]["small"]))
 			$menu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['edit_repo']['small']}");
@@ -207,7 +204,7 @@ class RepositoryControllerRoot extends BaseController {
 			$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}");
 			$menu->addSubmenu($submenu);
 		}
-		
+
 		// edit repository / delete_repository
 		$submenu = new Menu($pgv_lang['delete_repo']);
 		$submenu->addOnclick("if (confirm('".$pgv_lang["confirm_delete_repo"]."')) return deleterepository('".$this->rid."'); else return false;");
@@ -224,7 +221,7 @@ class RepositoryControllerRoot extends BaseController {
 			$menu->addSubmenu($submenu);
 
 			// edit_repo / show/hide changes
-			if ($this->show_changes == 'no')
+			if (!$this->show_changes)
 			{
 				$submenu = new Menu($pgv_lang['show_changes'], encode_url("repo.php?rid={$this->rid}&show_changes=yes"));
 				if (!empty($PGV_IMAGES["edit_repo"]["small"]))
@@ -258,7 +255,7 @@ class RepositoryControllerRoot extends BaseController {
 		}
 		return $menu;
 	}
-	
+
 	/**
 	 * get the other menu
 	 * @return Menu
@@ -266,22 +263,22 @@ class RepositoryControllerRoot extends BaseController {
 	function &getOtherMenu() {
 		global $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $pgv_lang;
 		global $SHOW_GEDCOM_RECORD, $ENABLE_CLIPPINGS_CART;
-		
+
 		if ($TEXT_DIRECTION=="rtl") $ff="_rtl";
 		else $ff="";
-		
+
 		if (!$this->repository->canDisplayDetails() || (!$SHOW_GEDCOM_RECORD && $ENABLE_CLIPPINGS_CART < PGV_USER_ACCESS_LEVEL)) {
 			$tempvar = false;
 			return $tempvar;
 		}
-		
+
 			// other menu
 		$menu = new Menu($pgv_lang['other']);
 		$menu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}", "submenu{$ff}");
 		if ($SHOW_GEDCOM_RECORD)
 		{
 			$menu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['gedcom']['small']}");
-			if ($this->show_changes == 'yes'  && $this->userCanEdit())
+			if ($this->show_changes && $this->userCanEdit())
 			{
 				$menu->addLink("javascript:show_gedcom_record('new');");
 			}
@@ -300,7 +297,7 @@ class RepositoryControllerRoot extends BaseController {
 		{
 				// other / view_gedcom
 				$submenu = new Menu($pgv_lang['view_gedcom']);
-				if ($this->show_changes == 'yes' && $this->userCanEdit())
+				if ($this->show_changes && $this->userCanEdit())
 				{
 					$submenu->addLink("javascript:show_gedcom_record('new');");
 				}
@@ -344,6 +341,5 @@ else
 	{
 	}
 }
-$controller = new RepositoryController();
-$controller->init();
+
 ?>

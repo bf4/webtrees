@@ -29,12 +29,11 @@
  * @version $Id$
  */
 
-if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
-	print "Nie można uzyskać bezpośredniego dostępu do pliku.";
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
-//-- CONFIGURE FILE MESSAGES
 $pgv_lang["gedconf_head"]		= "Konfiguracja GEDCOM";
 $pgv_lang["other_theme"]		= "Inne, wprowadź";
 $pgv_lang["performing_update"]	= "Trwa aktualizacja.";
@@ -56,7 +55,7 @@ $pgv_lang["does_not_exist"]		= "nie istnieje";
 $pgv_lang["media_drive_letter"]	= "Ścieżka do multimediów nie zawiera litery dysku; nie można wyświelić multimediów.";
 $pgv_lang["db_setup_bad"]		= "Błędna konfiguracja bazy danych. Sprawdź parametry połączenia z bazą danych i skonfiguruj ponownie.";
 $pgv_lang["bad_host_user_pass"]	= "PhpGedView nie mógł nawiązać połączenia z twoim hostem bazy danych. Sprawdź poprawność ustawień hosta, loginu i hasła.";
-$pgv_lang["bad_database_name"]	= "PhpGedView nawiązał połączenie z twoim hostem bazy danych, ale nie mógł połączyć się z bazą danych o podanej nazwie. Sprawdź, czy baza danych istnieje, i czy podany użytkownik ma odpowienie uprawnienia do tej bazy danych.";
+$pgv_lang["bad_database_name"]	= "PhpGedView nawiązał połączenie z twoim hostem bazy danych, ale nie mógł połączyć się z bazą danych o podanej nazwie. Sprawdź, czy baza danych istnieje, i czy podany użytkownik ma odpowiednie uprawnienia do tej bazy danych.";
 $pgv_lang["db"]				= "Baza danych";
 $pgv_lang["dbase"]			= "dBase";
 $pgv_lang["current_gedcoms"]	= "Bieżące pliki GEDCOM";
@@ -76,7 +75,8 @@ $pgv_lang["DBTYPE"]				= "Typ bazy danych";
 $pgv_lang["DBTYPE_help"]		= "~#pgv_lang[DBTYPE]#~<br /><br />Typ bazy danych ze sterownikiem PEAR.<br /><br />PhpGedView obsługuje bazy danych MySQL, PostgreSQL i SQLite. MySQL i PostgreSQL wymagają zainstalowania odpowiednich bibliotek w PHP. SQLite jest domyślnie zainstalowany w PHP 5.<br /><br />Jeśli używasz SQLite, nie musisz konfigurować hosta, loginu ani hasła, ale musisz ustawić ścieżkę pliku do swojej bazy danych w polu \"Nazwa bazy danych\".<br /><br />Ustawia zmienną \$DBTYPE w pliku <i>config.php</i>.<br />";
 $pgv_lang["DBHOST"]				= "Host bazy danych";
 $pgv_lang["DBHOST_help"]		= "~#pgv_lang[DBHOST]#~<br /><br />Adres DNS lub IP komputera, na którym znajduje się twój serwer bazy danych. Ten parametr nie jest brany pod uwagę jeśli korzystasz z bazy danych SQLite.<br /><br />Ustawia zmienną \$DBHOST w pliku <i>config.php</i>.<br />";
-
+$pgv_lang["DBPORT"]				= "Port bazy danych";
+$pgv_lang["DBPORT_help"]		= "~#pgv_lang[DBPORT]#~<br /><br />Port TCP jaki powinien być używany do połączeń z bazą danych. Pozostaw to pole puste, aby użyć domyślnego portu dla konkretnego rodzaju bazy danych. To ustawienie jest ignorowane, jeżeli używana jest baza danych SQLite.<br />";
 $pgv_lang["DBUSER"]			= "Użytkownik bazy danych";
 $pgv_lang["DBUSER_help"]	= "~#pgv_lang[DBUSER]#~<br /><br />Nazwa użytkownika bazy danych, wymagana do zalogowania do twojej bazy danych. Ten parametr nie jest brany pod uwagę jeśli korzystasz z bazy danych SQLite.<br /><br />Ustawia zmienną \$DBUSER w pliku <i>config.php</i>.<br />";
 $pgv_lang["DBPASS"]			= "Hasło do bazy danych";
@@ -608,12 +608,19 @@ $pgv_lang["SEARCHLOG_CREATE"]		= "Archiwizuj pliki SearchLog";
 $pgv_lang["SEARCHLOG_CREATE_help"]	= "~#pgv_lang[SEARCHLOG_CREATE]#~<br /><br />Jak często system powinien archiwizować pliki Searchlog files.<br /><br />Ustawia zmienną \$SEARCHLOG_CREATE w pliku <i><u>xxx</u>.GED_conf.php</i>.<br />";
 $pgv_lang["CHANGELOG_CREATE"]		= "Archiwizuj pliki ChangeLog";
 $pgv_lang["CHANGELOG_CREATE_help"]	= "~#pgv_lang[CHANGELOG_CREATE]#~<br /><br />Jak często system powinien archiwizować pliki Changelog files.<br /><br />Ustawia zmienną \$CHANGELOG_CREATE w pliku <i><u>xxx</u>.GED_conf.php</i>.<br />";
-$pgv_lang["CHART_BOX_TAGS"]		= "Inne fakty widoczne na wykresach";
-$pgv_lang["CHART_BOX_TAGS_help"]		= "~#pgv_lang[CHART_BOX_TAGS]#~<br /><br />Powinna być to lista faktów rozdzielana przecinkami lub spacjami (dodatkowo poza urodzeniem i śmiercią), które mają być widoczne w ramkach wykresów, takich jak wykres rodowy. Ta lista wymaga użycia znaczników faktów, zdefiniowanych w standardzie GEDCOM 5.5.1. Na przykład, jeśli chcesz pokazać w ramce zawód, dodajesz do tego pola znacznik \"OCCU\".<br /><br />Ustawia zmienną \$CHART_BOX_TAGS w pliku <i><u>xxx</u>.GED_conf.php</i>.<br />";
-$pgv_lang["gedcom_conf"]		= "Podstawy GEDCOM";
+$pgv_lang["CHART_BOX_TAGS"]			= "Inne fakty widoczne na wykresach";
+$pgv_lang["CHART_BOX_TAGS_help"]	= "~#pgv_lang[CHART_BOX_TAGS]#~<br /><br />Powinna być to lista faktów rozdzielana przecinkami lub spacjami (dodatkowo poza urodzeniem i śmiercią), które mają być widoczne w ramkach wykresów, takich jak wykres rodowy. Ta lista wymaga użycia znaczników faktów, zdefiniowanych w standardzie GEDCOM 5.5.1. Na przykład, jeśli chcesz pokazać w ramce zawód, dodajesz do tego pola znacznik \"OCCU\".<br /><br />Ustawia zmienną \$CHART_BOX_TAGS w pliku <i><u>xxx</u>.GED_conf.php</i>.<br />";
+$pgv_lang["FULL_SOURCES"]			= "Użyj pełnych opisów źródeł";
+$pgv_lang["FULL_SOURCES_help"]		= "~#pgv_lang[FULL_SOURCES]#~<br /><br />Opisy źródeł mogą zawierać pola <b>Jakości danych</b> oraz <b>Daty wpisu w oryginalnym źródle</b>. Jeśli nie używasz tych pól możesz je wyłączyć, wówczas nie będą one widoczne podczas tworzenia nowego odwołania do źródła.<br />";
+$pgv_lang["PREFER_LEVEL2_SOURCES"]		= "Preferuj źródła faktów";
+$pgv_lang["PREFER_LEVEL2_SOURCES_help"]	= "~#pgv_lang[PREFER_LEVEL2_SOURCES]#~<br /><br />Podczas dodawania nowej osoby, możesz powiązać źródło z osobą i rodziną (INDI, FAM) lub z faktami (BIRT, MARR, DEAT). Ta opcja pozwala na wybranie, który typ powiązań źródłowych jest domyślny.<br />";
 
-$pgv_lang["new_gedcom_title"]		= "Genealogia z [#GEDCOMFILE#]";
-$pgv_lang["keep_media_help"]			= "~#pgv_lang[keep_media]#~<br /><br />Czy istniejące odnośniki do multimediów należy zachować w bazie danych przy wgrywaniu nowej wersji pliku GEDCOM. Wybranie <b>Nie</b> spowoduje usunięcie istniejących odnośników do multimediów z bazy danych, zaś opcja <b>Tak</b> pozwala je zachować.<br /><br />Ta opcja jest przydatna kiedy eksportujesz plik GEDCOM do własnej aplikacji, która nie potrafi obsługiwać wskaźników do zagnieżdżonych multimediów, a następnie chcesz z powrotem zaimportować zmieniony GEDCOM do PhpGedView. W tej sytuacji wskaźniki do multimediów w wyeksportowanym pliku GEDCOM zostaną usunięte i będzie trzeba ponownie powiązać wszystkie multimedia do odpowiednich wpisów o osobach, rodzinach i źródłach po ponownym zaimportowaniu do PhpGedView.<br /><br />Wybranie <b>Tak</b> powoduje zachowanie przez PhpGedView istniejących powiązań z multimediami, dzięki czemu nie trzeba ich znowu tworzyć po ponownym zaimportowaniu zmienionego pliku GEDCOM, ale twoja aplikacja musi zawsze generować te same identyfikatory osoby, rodziny i źródła.<br /><br /><i>Family Tree Maker</i> jest jedną z aplikacji, które <u>nie</u> obsługują poprawnie wskaźników do multimediów w plikach GEDCOM. <i>Legacy</i>, jak wiele innych, <u>potrafi</u> obsługiwać je poprawnie.<br /><br />";
+
+
+//-- CONFIGURE FILE MESSAGES
+$pgv_lang["gedcom_conf"]		= "Podstawy GEDCOM";
+$pgv_lang["new_gedcom_title"]	= "Genealogia z [#GEDCOMFILE#]";
+$pgv_lang["keep_media_help"]	= "~#pgv_lang[keep_media]#~<br /><br />Czy istniejące odnośniki do multimediów należy zachować w bazie danych przy wgrywaniu nowej wersji pliku GEDCOM. Wybranie <b>Nie</b> spowoduje usunięcie istniejących odnośników do multimediów z bazy danych, zaś opcja <b>Tak</b> pozwala je zachować.<br /><br />Ta opcja jest przydatna kiedy eksportujesz plik GEDCOM do własnej aplikacji, która nie potrafi obsługiwać wskaźników do zagnieżdżonych multimediów, a następnie chcesz z powrotem zaimportować zmieniony GEDCOM do PhpGedView. W tej sytuacji wskaźniki do multimediów w wyeksportowanym pliku GEDCOM zostaną usunięte i będzie trzeba ponownie powiązać wszystkie multimedia do odpowiednich wpisów o osobach, rodzinach i źródłach po ponownym zaimportowaniu do PhpGedView.<br /><br />Wybranie <b>Tak</b> powoduje zachowanie przez PhpGedView istniejących powiązań z multimediami, dzięki czemu nie trzeba ich znowu tworzyć po ponownym zaimportowaniu zmienionego pliku GEDCOM, ale twoja aplikacja musi zawsze generować te same identyfikatory osoby, rodziny i źródła.<br /><br /><i>Family Tree Maker</i> jest jedną z aplikacji, które <u>nie</u> obsługują poprawnie wskaźników do multimediów w plikach GEDCOM. <i>Legacy</i>, jak wiele innych, <u>potrafi</u> obsługiwać je poprawnie.<br /><br />";
 $pgv_lang["USE_MEDIA_VIEWER"]			= "Użyj przeglądarki multimediów";
 $pgv_lang["USE_MEDIA_VIEWER_help"]		= "~#pgv_lang[USE_MEDIA_VIEWER]#~<br /><br />Kiedy ten parametr ustawiony jest na <b>Tak</b>, po kliknięciu na obrazek na twojej stronie użytkownicy zostaną przekierowanie na stronę Widok mediów, wprowadzony w wersji v4.1. Strona Widok mediów wyświetla szczegóły obrazka i pozwala na ich edycję.<br /><br />Ustawienie tego parametru na <b>Nie</b> spowoduje zachowanie analogiczne do starszych wersji PhpGedView, przed wersją v4.1, gdzie kliknięcie na obrazek otwiera nowe okno z obrazkiem w pełnej rozdzielczości.<br /><br />";
 $pgv_lang["USE_MEDIA_FIREWALL"]			= "Użyj Firewalla multimediów";
@@ -692,4 +699,6 @@ $pgv_lang["THUMBNAIL_WIDTH"]			= "Szerokość generowanych miniaturek";
 $pgv_lang["THUMBNAIL_WIDTH_help"]		= "~#pgv_lang[THUMBNAIL_WIDTH]#~<br /><br />To jest szerokość (w pikselach), którą system zastosuje podczas automatycznego generowania miniaturek. Domyślna wartość to 100.<br />";
 $pgv_lang["SHOW_EST_LIST_DATES"]		="Pokaż przybliżone daty na listach i wykresach";
 $pgv_lang["SHOW_EST_LIST_DATES_help"]	= "~#pgv_lang[SHOW_EST_LIST_DATES]#~<br /><br />Ta opcja określa czy przybliżone daty urodzin i śmierci  mają być pokazane zamiast pustych pól na listach i wykresach.<br />";
+$pgv_lang["SHOW_LIST_PLACES"]			= "Liczba poziomów miejsc widoczna na listach";
+$pgv_lang["SHOW_LIST_PLACES_help"]		= "~#pgv_lang[SHOW_LIST_PLACES]#~<br /><br />Ta opcja określa, jak wiele informacji o miejscach będzie widoczne na wykresach w ramkach osoby.<br /><br />Ustawienie wartości na 9 zagwarantuje pokazanie wszystkich poziomów hierarchii miejsc. Wartość 0 spowoduje całkowite ukrycie informacji o miejscach. Wartość 1 pozwoli pokazać pierwszy poziom, 2 - pierwsze dwa poziomy, itd.<br />";
 ?>

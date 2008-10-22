@@ -46,11 +46,10 @@
 // NOTE: $replace_gedcom = When uploading a GEDCOM, user will be asked to replace an existing one. If yes, overwrite
 // NOTE: $bakfile = Name and path of the backupfile, this file is created if a file with the same name exists
 
-ini_set('register_globals', 'Off');
-@import_request_variables('gcp');
-require "config.php";
-require_once "includes/functions_import.php";
-require_once "includes/functions_export.php";
+require './config.php';
+
+require_once 'includes/functions_import.php';
+require_once 'includes/functions_export.php';
 
 loadLangFile("pgv_confighelp");
 
@@ -58,6 +57,10 @@ if (!PGV_USER_GEDCOM_ADMIN) {
 	header("Location: login.php?url=uploadgedcom.php");
 	exit;
 }
+
+// editconfig.php and uploadgedcom.php make extensive use of
+// import_request_variables and are heavily inter-dependent.
+@import_request_variables('cgp');
 
 @ini_set('zlib.output_compression','0');
 
@@ -114,7 +117,6 @@ else if ($check == "add") {
 			$verify = "validate_form";
 			$exists = true;
 			// NOTE: Go straight to import, no other settings needed
-			$marr_names = "no";
 			$xreftype = "NA";
 			$utf8convert = "no";
 			$ged = $GEDFILENAME;
@@ -235,7 +237,7 @@ if ($cleanup_needed == "cleanup_needed" && $continue == $pgv_lang["del_proceed"]
 				date_cleanup($_POST["datetype"]);
 			}
 			/**
-			 if($_POST["xreftype"]!="NA") {
+			if($_POST["xreftype"]!="NA") {
 				$filechanged=true;
 				xref_change($_POST["xreftype"]);
 				}
@@ -308,7 +310,7 @@ if ($action == "add_form") {
 	<input type="hidden" name="import_existing" value="<?php print $import_existing; ?>" />
 	<table class="facts_table">
 	<?php
-	
+
 	$i = 0;
 	if (!empty ($error)) {
 		print "<tr><td class=\"optionbox wrap\" colspan=\"2\">";
@@ -461,9 +463,9 @@ if ($verify == "verify_gedcom") {
 		<input type="hidden" name="GEDFILENAME" value="<?php if (isset($GEDFILENAME)) print $GEDFILENAME; ?>" />
 		<input type="hidden" name="bakfile" value="<?php if (isset($bakfile)) print $bakfile; ?>" />
 		<input type="hidden" name="path" value="<?php if (isset($path)) print $path; ?>" />
-		
+
 		<?php
-		
+
 		if ($imported) {
 			print "<span class=error>".$pgv_lang["dataset_exists"]."</span><br /><br />";
 			if (!$SYNC_GEDCOM_FILE)
@@ -492,7 +494,7 @@ if ($verify == "verify_gedcom") {
 			print "</select></td></tr>";
 			//-- check if there are media in the DB already
 			$mc = get_list_size('objectlist');
-			
+
 			$hasObje = false;
 			//-- read the gedcom and check if it has OBJE records
 			$fp = fopen($GEDCOMS[$GEDFILENAME]["path"], "r");
@@ -501,7 +503,7 @@ if ($verify == "verify_gedcom") {
 				if (strpos($fcontents, "@ OBJE")!==false) $hasObje = true;
 			}
 			fclose($fp);
-			
+
 //			if ($mc>0 && !$hasObje) {
 			if ($mc>0) {
 			?>
@@ -745,20 +747,6 @@ if ($import == true) {
 	print "<option value=\"NO\">".$pgv_lang["no"]."</option>\n</select>";
 	print "</td></tr>";
 
-	// NOTE: Import married names
-	print "<tr><td class=\"descriptionbox width20 wrap\">";
-	print_help_link("import_marr_names_help", "qm", "import_marr_names");
-	print $pgv_lang["import_marr_names"].":";
-	print "</td><td class=\"optionbox\">";
-	if ($startimport == "true")
-	print $pgv_lang[$marr_names];
-	else {
-		print "<select name=\"marr_names\">\n";
-		print "<option value=\"yes\">".$pgv_lang["yes"]."</option>\n";
-		print "<option value=\"no\" selected=\"selected\">".$pgv_lang["no"]."</option>\n</select>";
-	}
-	print "</td></tr>";
-	
 	// NOTE: change XREF to RIN, REFN, or Don't change
 	print "<tr><td class=\"descriptionbox wrap\">";
 	print_help_link("change_indi2id_help", "qm", "change_id");
@@ -824,39 +812,39 @@ if ($startimport == "true") {
 		<!--
 		function complete_progress(time, exectext, go_pedi, go_welc) {
 			progress = document.getElementById("progress_header");
-			if (progress) progress.innerHTML = '<span class="error"><b><?php print $pgv_lang["import_complete"]; ?></b></span><br />'+exectext+' '+time+' <?php print $pgv_lang["sec"]; ?>'; 
-			progress = document.getElementById("link1"); 
-			if (progress) progress.innerHTML = '<a href="pedigree.php?ged=<?php print encode_url(preg_replace("/'/", "\'", $ged)); ?>">'+go_pedi+'</a>'; 
-			progress = document.getElementById("link2"); 
-			if (progress) progress.innerHTML = '<a href="index.php?ctype=gedcom&ged=<?php print encode_url(preg_replace("/'/", "\'", $ged)); ?>">'+go_welc+'</a>'; 
-			progress = document.getElementById("link3"); 
+			if (progress) progress.innerHTML = '<span class="error"><b><?php print $pgv_lang["import_complete"]; ?></b></span><br />'+exectext+' '+time+' <?php print $pgv_lang["sec"]; ?>';
+			progress = document.getElementById("link1");
+			if (progress) progress.innerHTML = '<a href="pedigree.php?ged=<?php print encode_url(preg_replace("/'/", "\'", $ged)); ?>">'+go_pedi+'</a>';
+			progress = document.getElementById("link2");
+			if (progress) progress.innerHTML = '<a href="index.php?ctype=gedcom&ged=<?php print encode_url(preg_replace("/'/", "\'", $ged)); ?>">'+go_welc+'</a>';
+			progress = document.getElementById("link3");
 			if (progress) progress.innerHTML = '<a href="editgedcoms.php"><?php print $pgv_lang["manage_gedcoms"]; ?></a>';
 		}
-		function wait_progress() { 
-			progress = document.getElementById("progress_header"); 
-			if (progress) progress.innerHTML = '<?php print $pgv_lang["please_be_patient"]; ?>'; 
+		function wait_progress() {
+			progress = document.getElementById("progress_header");
+			if (progress) progress.innerHTML = '<?php print $pgv_lang["please_be_patient"]; ?>';
 		}
-		
-		var FILE_SIZE = <?php print $FILE_SIZE; ?>; 
+
+		var FILE_SIZE = <?php print $FILE_SIZE; ?>;
 		var TIME_LIMIT = <?php print $timelimit; ?>;
-		
-		function update_progress(bytes, time) { 
-			perc = Math.round(100*(bytes / FILE_SIZE)); 
-			if (perc>100) perc = 100; 
-			progress = document.getElementById("progress_div"); 
+
+		function update_progress(bytes, time) {
+			perc = Math.round(100*(bytes / FILE_SIZE));
+			if (perc>100) perc = 100;
+			progress = document.getElementById("progress_div");
 			if (progress) {
-				progress.style.width = perc+"%"; 
-				progress.innerHTML = perc+"%"; 
-			} 
-			perc = Math.round(100*(time / TIME_LIMIT)); 
-			if (perc>100) perc = 100; 
-			progress = document.getElementById("time_div"); 
+				progress.style.width = perc+"%";
+				progress.innerHTML = perc+"%";
+			}
+			perc = Math.round(100*(time / TIME_LIMIT));
+			if (perc>100) perc = 100;
+			progress = document.getElementById("time_div");
 			if (progress) {
-				progress.style.width = perc+"%"; progress.innerHTML = perc+"%"; 
-			} 
+				progress.style.width = perc+"%"; progress.innerHTML = perc+"%";
+			}
 		}
-		//--> 
-		</script> 
+		//-->
+		</script>
 		<?php
 		print "\n<table style=\"width: 800px;\"><tr><td>";
 		print "<div id=\"progress_header\" class=\"person_box\" style=\"width: 350px; margin: 10px; text-align: center;\">\n";
@@ -1097,8 +1085,7 @@ if ($stage == 1) {
 							value="<?php print $ged; ?>" /> <input type="hidden" name="stage"
 							value="1" /> <input type="hidden" name="timelimit"
 							value="<?php print $timelimit; ?>" /> <input type="hidden"
-							name="importtime" value="<?php print $importtime; ?>" /> <input
-							type="hidden" name="marr_names" value="<?php print $marr_names; ?>" />
+							name="importtime" value="<?php print $importtime; ?>" />
 						<input type="hidden" name="xreftype" value="<?php print $xreftype; ?>" />
 						<input type="hidden" name="utf8convert"
 							value="<?php print $utf8convert; ?>" /> <input type="hidden"
@@ -1122,7 +1109,7 @@ if ($stage == 1) {
 						});
 						//-->
 					</script>
-					<?php 
+					<?php
 					}
 					cleanup_database();
 					print_footer();
@@ -1166,145 +1153,6 @@ if ($stage == 1) {
 	}
 	flush();
 
-	if ($marr_names == "yes") {
-		include_once ("includes/functions_edit.php");
-		$GEDCOM = $FILE;
-		get_indi_list();
-		get_fam_list();
-		read_gedcom_file();
-	
-		print "\n<table class=\"facts_table\">";
-		print "<tr><td class=\"topbottombar $TEXT_DIRECTION\" colspan=\"2\">";
-		print $pgv_lang["calc_marr_names"];
-		print "</td></tr>";
-		print "</table>";
-		//print "<tr><td class=\"optionbox\">";
-		setup_progress_bar(count($indilist));
-		//print "</td></tr>";
-	
-		$i = 0;
-		$newtime = time();
-		$exectime = $newtime - $oldtime;
-		$exectime_start = $exectime;
-		$names_added = 0;
-		$manual_save = true;
-		foreach ($indilist as $gid => $indi) {
-			if (preg_match("/1 SEX F/", $indi["gedcom"]) > 0) {
-				$ct = preg_match_all("/1\s*FAMS\s*@(.*)@/", $indi["gedcom"], $match, PREG_SET_ORDER);
-				if ($ct > 0) {
-					for ($j = 0; $j < $ct; $j ++) {
-						if (isset ($famlist[$match[$j][1]])) {
-							$marrrec = get_sub_record(1, "1 MARR", $famlist[$match[$j][1]]["gedcom"]);
-							if ($marrrec) {
-								$parents = find_parents_in_record($famlist[$match[$j][1]]["gedcom"]);
-								if ($parents["HUSB"] != $gid)
-								$spid = $parents["HUSB"];
-								else
-								$spid = $parents["WIFE"];
-								if (isset ($indilist[$spid])) {
-									$surname = $indilist[$spid]["names"][0][2];
-									if (!empty($surname) && $surname!="@N.N.") {
-										if (!preg_match("/2 _MARNM .*\/$surname\//", $indi["gedcom"])) {
-											$letter = $indilist[$spid]["names"][0][1];
-											//-- uncomment the next line to put the maiden name in the given name area
-											//$newname = preg_replace("~/(.*)/~", " $1 /".$surname."/", $indi["names"][0][0]);
-											$newname = preg_replace("~/.*/~", "/$surname/", $indi["names"][0][0]);
-											$nopnname= str_replace('@P.N. ', '', $newname);
-											$pos1 = strpos($indi["gedcom"], "1 NAME");
-											if ($pos1 !== false) {
-												$pos1 = strpos($indi["gedcom"], "\n1", $pos1 +1);
-												if ($pos1 !== false)
-													$indi["gedcom"] = substr($indi["gedcom"], 0, $pos1)."\n2 _MARNM $nopnname\r\n".substr($indi["gedcom"], $pos1 +1);
-												else
-													$indi["gedcom"] = trim($indi["gedcom"])."\r\n2 _MARNM $nopnname\r\n";
-												$indi["gedcom"] = check_gedcom($indi["gedcom"], false);
-												$pos1 = strpos($fcontents, "0 @$gid@");
-												$pos2 = strpos($fcontents, "0 @", $pos1 +1);
-												if ($pos2 === false)
-												$pos2 = strlen($fcontents);
-												$fcontents = substr($fcontents, 0, $pos1).trim($indi["gedcom"])."\r\n".substr($fcontents, $pos2);
-												add_new_name($gid, $newname, $letter, $surname, $indi["gedcom"]);
-												$names_added ++;
-											}
-										}
-									}
-								}
-							}
-						}
-					}
-				}
-			}
-			$i ++;
-			if ($i % 10 == 0) {
-				$newtime = time();
-				$exectime = $newtime - $oldtime;
-				print "\n<script type=\"text/javascript\">update_progress($i, $exectime);</script>\n";
-				flush();
-	
-				//-- check if we are getting close to timing out
-				$newtime = time();
-				$exectime = $newtime - $oldtime;
-				if (($timelimit != 0) && ($timelimit - $exectime) < 2) {
-					$importtime = $importtime + $exectime;
-					$fcontents = substr($fcontents, $pos2);
-					//-- store the resume information in the session
-					$_SESSION["media_count"] = $media_count;
-					$_SESSION["TOTAL_BYTES"] = $TOTAL_BYTES;
-					$_SESSION["fcontents"] = $fcontents;
-					$_SESSION["listtype"] = $listtype;
-					$_SESSION["exectime_start"] = $exectime_start;
-					$_SESSION["importtime"] = $importtime;
-					$_SESSION["i"] = $i;
-	
-					//-- close the file connection
-					write_file();
-					$_SESSION["resumed"]++;
-					print "\n<table class=\"facts_table\">";
-					?>
-					<tr>
-						<td class="descriptionbox"><?php print $pgv_lang["import_time_exceeded"]; ?></td>
-					</tr>
-					<tr>
-						<td class="topbottombar"><input type="hidden" name="ged"
-							value="<?php print $ged; ?>" /> <input type="hidden" name="stage"
-							value="1" /> <input type="hidden" name="timelimit"
-							value="<?php print $timelimit; ?>" /> <input type="hidden"
-							name="importtime" value="<?php print $importtime; ?>" /> <input
-							type="hidden" name="marr_names" value="<?php print $marr_names; ?>" />
-						<input type="hidden" name="xreftype" value="<?php print $xreftype; ?>" />
-						<input type="hidden" name="utf8convert"
-							value="<?php print $utf8convert; ?>" /> <input type="hidden"
-							name="verify" value="<?php print $verify; ?>" /> <input type="hidden"
-							name="startimport" value="<?php print $startimport; ?>" /> <input
-							type="hidden" name="import" value="<?php print $import; ?>" /> <input
-							type="hidden" name="FILE" value="<?php print $FILE; ?>" /> <input
-							type="submit" name="continue"
-							value="<?php print $pgv_lang["del_proceed"]; ?>" /></td>
-					</tr>
-					</table>
-					<?php
-					print_footer();
-					exit;
-				}
-			}
-		}
-		write_file();
-		$show_table_marr = "\n<table class=\"list_table\"><tr>";
-		$show_table_marr .= "<tr><td class=\"topbottombar\" colspan=\"3\">".$pgv_lang["import_marr_names"]."</td></tr>";
-		$show_table_marr .= "<td class=\"descriptionbox\">&nbsp;".$pgv_lang["exec_time"]."&nbsp;</td>";
-		$show_table_marr .= "<td class=\"descriptionbox\">&nbsp;".$pgv_lang["found_record"]."&nbsp;</td>";
-		$show_table_marr .= "<td class=\"descriptionbox\">&nbsp;".$pgv_lang["type"]."&nbsp;</td></tr>\n";
-		$newtime = time();
-		$exectime = $newtime - $oldtime;
-		$show_exectime = $exectime - $exectime_start;
-		$show_table_marr .= "<tr><td class=\"optionbox indent_rtl rtl\">$show_exectime ".$pgv_lang["sec"]."</td>\n";
-		$show_table_marr .= "<td class=\"optionbox indent_rtl rtl\">$names_added<script type=\"text/javascript\">update_progress($i, $exectime);</script></td>";
-		$show_table_marr .= "<td class=\"optionbox\">&nbsp;INDI&nbsp;</td></tr>\n";
-		$show_table_marr .= "</table>\n";
-		$stage = 10;
-		$record_count = 0;
-		flush();
-	}
 	// TODO: Layout for Hebrew
 	$show_table1 = "\n<table class=\"list_table\"><tr>";
 	$show_table1 .= "<tr><td class=\"topbottombar\" colspan=\"4\">".$pgv_lang["ged_import"]."</td></tr>";
@@ -1328,12 +1176,10 @@ if ($stage == 1) {
 	print "</td></tr>";
 	print "<tr><td class=\"optionbox\">";
 	print "\n<table cellspacing=\"20px\"><tr><td class=\"optionbox\" style=\"vertical-align: top;\">";
-	if (isset ($skip_table))
-	print "<br />...";
-	else {
+	if (isset ($skip_table)) {
+	 print "<br />...";
+	} else {
 		print $show_table1;
-		if ($marr_names == "yes")
-		print "</td><td class=\"optionbox\">".$show_table_marr;
 	}
 	print "</td></tr></table>\n";
 	// NOTE: Finished Links
@@ -1342,7 +1188,7 @@ if ($stage == 1) {
 	$GEDCOMS[$ged]["pgv_ver" ] = PGV_VERSION;
 	store_gedcoms();
 	print "</td></tr>";
-	
+
 	$record_count = 0;
 	$_SESSION["resumed"] = 0;
 	unset ($_SESSION["TOTAL_BYTES"]);

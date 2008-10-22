@@ -27,6 +27,13 @@
  * @subpackage Blocks
  */
 
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
+	exit;
+}
+
+define('PGV_GEDCOM_STATS_PHP', '');
+
 require_once 'includes/functions_print_lists.php';
 
 $PGV_BLOCKS["print_gedcom_stats"]["name"]     =$pgv_lang["gedcom_stats_block"];
@@ -99,12 +106,12 @@ function print_gedcom_stats($block = true, $config="", $side, $index) {
 			$content .= $text;
 		}
 	}
-	$ct=preg_match("/1 DATE (.+)/", $head, $match);
-	if ($ct>0) {
-		$date = new GedcomDate($match[1]);
-		if (empty($software)) $text = str_replace(array("#DATE#", "#CREATED_DATE#"), $date->Display(false), $pgv_lang["gedcom_created_on"]);
-		else $text = $text = str_replace(array("#DATE#", "#CREATED_DATE#"), $date->Display(false), $pgv_lang["gedcom_created_on2"]);
-		$content .= $text;
+	if (preg_match("/1 DATE (.+)/", $head, $match)) {
+		if (empty($software)) {
+			$content.=str_replace(array("#DATE#", "#CREATED_DATE#"), $stats->gedcomDate(), $pgv_lang["gedcom_created_on"]);
+		} else {
+			$content.=str_replace(array("#DATE#", "#CREATED_DATE#"), $stats->gedcomDate(), $pgv_lang["gedcom_created_on2"]);
+		}
 	}
 
 	$content .= "<br />\n";

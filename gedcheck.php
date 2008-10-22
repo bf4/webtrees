@@ -26,7 +26,7 @@
  * @version $Id$
  */
 
-require("config.php");
+require './config.php';
 
 // Must be an admin user to use this module
 if (!PGV_USER_GEDCOM_ADMIN) {
@@ -82,7 +82,7 @@ $err_level    =safe_POST('err_level',    '[0-3]', $error); // Higher numbers are
 $openinnew    =safe_POST('openinnew',    '[01]',  '0');    // Open links in same/new tab/window
 $context_lines=safe_POST('context_lines','[0-5]', '2');    // Lines of context to display
 $showall      =safe_POST('showall',      '[01]',  '0');    // Show details of records with no problems
- 
+
 print "<form method='post' name='gedcheck' action='gedcheck.php'>\n";
 print "<table class='list_table, $TEXT_DIRECTION'>\n";
 print "<tr><td class='list_label'>{$pgv_lang["gedcom_file"]}</td>\n";
@@ -787,6 +787,9 @@ function check_indi($id)
 	$gedrec=$indi_list[$id]["gedcom"];
 	$errors="";
 
+	$indi=Person::getInstance($id);
+	$name=$indi->getFullName();
+
 	if ($err_level>=$error)
 		foreach ($indi_facts_unique as $fact)
 			if (get_sub_record(1, "1 $fact", $gedrec, 2)!="")
@@ -794,7 +797,7 @@ function check_indi($id)
 
 	unset ($famc, $fams); $foundf=false; $patok=false; $todo=array();
 
-	$facts=get_all_subrecords($gedrec, "CHAN OBJE NOTE SOUR", true, false, false);
+	$facts=get_all_subrecords($gedrec, "CHAN OBJE NOTE SOUR", true, false);
 	$min_fact_date=array();
 	$max_fact_date=array();
 	foreach ($facts as $subged) {
@@ -896,10 +899,8 @@ function check_fam($id)
 	$fam_list[$id]["checked"]=true;
 	$gedrec=$fam_list[$id]["gedcom"];
 	$errors="";
-	if (isset($fam_list[$id]["name"]))
-		$name=$fam_list[$id]["name"];
-	else
-		$name="???";
+	$fam=Family::getInstance($id);
+	$name=$fam->getFullName();
 
 	if ($err_level>=$error)
 		foreach ($fam_facts_unique as $fact)
@@ -907,8 +908,8 @@ function check_fam($id)
 				$errors.=multiple($fact);
 
 	unset ($chil, $husb, $wife); $todo=array();
-	$facts=get_all_subrecords($gedrec, "CHAN OBJE", true, false, true);
-	foreach ($facts as $subged) 
+	$facts=get_all_subrecords($gedrec, "CHAN OBJE", true, true);
+	foreach ($facts as $subged)
 		if (preg_match("/^1/", $subged)) { # Sometimes get_all_subrecords() gives just a CR
 			preg_match("/^1\s*(\S*)/", $subged, $fact);
 			preg_match("/^1\s*{$fact[1]}\s*@(.*)@{$EOL}/", $subged, $link);

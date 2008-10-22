@@ -24,15 +24,16 @@
  * @version $Id$
  */
 
-if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
-	print "You cannot access an include file directly.";
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
-require_once("config.php");
-require_once("includes/functions_charts.php");
+define('PGV_TIMELINE_CTRL_PHP', '');
+
+require_once 'includes/functions_charts.php';
 require_once 'includes/controllers/basecontrol.php';
-require_once 'includes/person_class.php';
+require_once 'includes/class_person.php';
 /**
  * Main controller class for the timeline page.
  */
@@ -73,7 +74,7 @@ class TimelineControllerRoot extends BaseController {
 				if (stristr($newpid, $GEDCOM_ID_PREFIX)===false) $newpid = $GEDCOM_ID_PREFIX.$newpid;
 			}
 		}
-		
+
 		if (safe_GET('clear', '1')=='1') {
 			unset($_SESSION['timeline_pids']);
 		} else {
@@ -93,10 +94,9 @@ class TimelineControllerRoot extends BaseController {
 		$newpids = array();
 		foreach($this->pids as $key=>$value) {
 			if ($value!=$remove) {
-				$value = clean_input($value);
 				$newpids[] = $value;
 				$person = Person::getInstance($value);
-				if (!is_null($person)) $this->people[] = $person; 
+				if (!is_null($person)) $this->people[] = $person;
 			}
 		}
 		$this->pids = $newpids;
@@ -131,7 +131,7 @@ class TimelineControllerRoot extends BaseController {
 						$this->baseyear=min($this->baseyear, $date->y);
 						$this->topyear =max($this->topyear,  $date->y);
 
-						if (!is_dead_id($indi->getXref()))
+						if (!$indi->isDead())
 							$this->topyear=max($this->topyear, date('Y'));
 						$event->temp = $p;
 						//-- do not add the same fact twice (prevents marriages from being added multiple times)
@@ -141,7 +141,7 @@ class TimelineControllerRoot extends BaseController {
 			}
 		}
 		$_SESSION['timeline_pids'] = $this->pids;
-		$scale=safe_GET_integer('scale', 0, 200, 0); 
+		$scale=safe_GET_integer('scale', 0, 200, 0);
 		if ($scale==0) {
 			$this->scale = round(($this->topyear-$this->baseyear)/20 * count($this->indifacts)/4);
 			if ($this->scale<6) $this->scale = 6;
@@ -174,7 +174,7 @@ class TimelineControllerRoot extends BaseController {
 			}
 		}
 	}
-	
+
 	function print_time_fact($event) {
 		global $basexoffset, $baseyoffset, $factcount, $TEXT_DIRECTION;
 		global $factarray, $pgv_lang, $lang_short_cut, $LANGUAGE, $PGV_IMAGE_DIR, $PGV_IMAGES, $SHOW_PEDIGREE_PLACES, $placements;
@@ -280,7 +280,7 @@ class TimelineControllerRoot extends BaseController {
 					$place = $event->getPlace();
 					if ($place!=null) {
 						print " - ";
-						$plevels = preg_split("/,/", $place);
+						$plevels = explode(',', $place);
 						for($plevel=0; $plevel<$SHOW_PEDIGREE_PLACES; $plevel++) {
 							if (!empty($plevels[$plevel])) {
 								if ($plevel>0) print ", ";
@@ -351,6 +351,5 @@ else
 	{
 	}
 }
-$controller = new TimelineController();
-$controller->init();
+
 ?>

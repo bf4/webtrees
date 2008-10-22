@@ -23,10 +23,12 @@
  * @version $Id$
  */
 
-if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
-	print "You cannot access an include file directly.";
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
+
+define('PGV_FUNCTIONS_MAIL_PHP', '');
 
 /**
  * this function is a wrapper to the php mail() function so that we can change settings globally

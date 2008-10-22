@@ -23,10 +23,12 @@
  * @version $Id$
  */
 
-if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
-	print "You cannot access an include file directly.";
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
+
+define('PGV_FUNCTIONS_NAME_PHP', '');
 
 $NPFX_accept = array("Adm", "Amb", "Brig", "Can", "Capt", "Chan", "Chapln", "Cmdr", "Col", "Cpl", "Cpt", "Dr", "Gen", "Gov", "Hon", "Lady", "Lt", "Mr", "Mrs", "Ms", "Msgr", "Pfc", "Pres", "Prof", "Pvt", "Rabbi", "Rep", "Rev", "Sen", "Sgt", "Sir", "Sr", "Sra", "Srta", "Ven");
 
@@ -59,12 +61,10 @@ function get_common_surnames_index($ged) {
  * @param int $min the number of times a surname must occur before it is added to the array
  */
 function get_common_surnames($min) {
-	global $TBLPREFIX, $GEDCOM, $indilist, $CONFIGURED, $GEDCOMS, $COMMON_NAMES_ADD, $COMMON_NAMES_REMOVE, $pgv_lang, $HNN, $ANN;
+	global $TBLPREFIX, $GEDCOM, $CONFIGURED, $GEDCOMS, $COMMON_NAMES_ADD, $COMMON_NAMES_REMOVE, $pgv_lang, $HNN, $ANN;
 
 	$surnames = array();
 	if (!$CONFIGURED || !adminUserExists() || (count($GEDCOMS)==0) || (!check_for_import($GEDCOM))) return $surnames;
-	//-- this line causes a bug where the common surnames list is not properly updated
-	// if ((!isset($indilist))||(!is_array($indilist))) return $surnames;
 	$surnames = get_top_surnames(100);
 	arsort($surnames);
 	$topsurns = array();
@@ -138,57 +138,6 @@ function sortable_name_from_name($name) {
 }
 
 /**
- * reverse a name
- * this function will reverse a name for languages that
- * prefer last name first such as hungarian and chinese
- * @param string $name	the name to reverse, must be gedcom encoded as if from the 1 NAME line
- * @return string		the reversed name
- */
-function reverse_name($name) {
-	$ct = preg_match("~(.*)/(.*)/(.*)~", $name, $match);
-	if ($ct>0) {
-		$surname = trim($match[2]);
-		if (empty($surname)) $surname = "@N.N.";
-		$givenname = trim($match[1]);
-		$othername = trim($match[3]);
-		if (empty($givenname)&&!empty($othername)) {
-			$givenname = $othername;
-			$othername = "";
-		}
-		if (empty($givenname)) $givenname = "@P.N.";
-		$name = $surname;
-		$name .= " ".$givenname;
-		if (!empty($othername)) $name .= " ".$othername;
-	}
-
-	return $name;
-}
-
-function get_add_person_name_in_record($name_record, $keep_slash=false) {
-	global $NAME_REVERSE;
-
-	// Check for ROMN name
-	$romn = preg_match("/(2 ROMN (.*)|2 _HEB (.*))/", $name_record, $romn_match);
-	if ($romn > 0){
-		if ($keep_slash) return trim($romn_match[count($romn_match)-1]);
-		$names = preg_split("/\//", $romn_match[count($romn_match)-1]);
-		if (count($names)>1) {
-			if ($NAME_REVERSE) {
-				$name = trim($names[1])." ".trim($names[0]);
-			}
-			else {
-				$name = trim($names[0])." ".trim($names[1]);
-			}
-		}
-		else $name = trim($names[0]);
-	}
-	else $name = "";
-
-	if ($NAME_REVERSE) $name = reverse_name($name);
-	return $name;
-}
-
-/**
  * strip name prefixes
  *
  * this function strips the prefixes of lastnames
@@ -202,38 +151,6 @@ function strip_prefix($lastname){
 	$name = trim($name);
 	if ($name=="") return $lastname;
 	return $name;
-}
-
-/**
- * Extract the surname from a name
- *
- * This function will extract the surname from an individual name in the form
- * Surname, Given Name
- * All surnames are stored in the global $surnames array
- * It will only get the surnames that start with the letter $alpha
- * For names like van den Burg, it will only return the "Burg"
- * It will work if the surname is all lowercase
- * @param string $indiname	the name to extract the surname from
- */
-function extract_surname($indiname, $count=true) {
-	global $surnames, $alpha, $surname, $show_all, $i, $testname;
-
-	if (!isset($testname)) $testname="";
-
-	$nsurname = "";
-	//-- get surname from a standard name
-	if (preg_match("~/([^/]*)/~", $indiname, $match)>0) {
-		$nsurname = trim($match[1]);
-	}
-	//-- get surname from a sortable name
-	else {
-		$names = preg_split("/,/", $indiname);
-		if (count($names)==1) $nsurname = "@N.N.";
-		else $nsurname = trim($names[0]);
-		$nsurname = preg_replace(array("/ [jJsS][rR]\.?/", "/ I+/"), array("",""), $nsurname);
-	}
-	if ($count) surname_count($nsurname);
-	return $nsurname;
 }
 
 /**
@@ -326,7 +243,7 @@ function get_first_letter($text, $import=false) {
 		$letter = substr($text, 0, $charLen);
 	}
         if ($letter=="/") $letter="@"; //where has @P.N. vanished from names with a null firstname?
-	
+
 	return $letter;
 }
 
@@ -572,102 +489,23 @@ function smart_utf8_decode($in_str) {
 }
 
 /**
- * get an array of names from an individual record
- * @param string $indirec	The raw individual gedcom record
- * @return array	The array of individual names
- */
-function get_indi_names($indirec, $import=false, $getMarriedName=true) {
-	global $NAME_REVERSE;
-	$names = array();
-	//-- get all names
-	$namerec = get_sub_record(1, "1 NAME", $indirec, 1);
-	if (empty($namerec)) $names[] = array("@P.N /@N.N./", "@", "@N.N.", "A");
-	else {
-		$j = 1;
-		while(!empty($namerec)) {
-			$name = get_gedcom_value("NAME", 1, $namerec, '', false);
-			$name = preg_replace('/\/\//','/@N.N./', $name);	// Missing SURN -> @N.N.
-			$name = preg_replace('/^\//', '@P.N. /', $name);	// Missing GIVN	-> @P.N.
-			$surname = extract_surname($name, false);
-			if (empty($surname)) $surname = "@N.N.";
-			//-- all ____  names get changed to @N.N.
-			if (preg_match("/^_+$/", $surname)>0) $surname="@N.N.";
-			//-- remove these characters so that they do not get selected as the first letter
-			$lname = preg_replace("/^[a-z0-9 '\.\-\_\(\[]+/", "", $surname);
-			if (empty($lname)) $lname = $surname;
-			$letter = get_first_letter($lname, $import);
-			$letter = UTF8_strtoupper($letter);
-			if (empty($letter)) $letter = "@";
-			if (preg_match("~/~", $name)==0) $name .= " /@N.N./";
-			$names[] = array($name, $letter, $surname, "A");
-			//-- check for _HEB or ROMN name sub tags
-			$addname = get_add_person_name_in_record($namerec, true);
-			if (!empty($addname)) {
-				$surname = extract_surname($addname, false);
-				if (empty($surname)) $surname = "@N.N.";
-				//-- remove these characters so that they do not get selected as the first letter
-				$lname = preg_replace("/^[a-z0-9 '\.\-\_\(\[]+/", "", $surname);
-				if (empty($lname)) $lname = $surname;
-				$letter = get_first_letter($lname, $import);
-				$letter = UTF8_strtoupper($letter);
-				if (empty($letter)) $letter = "@";
-				if (preg_match("~/~", $addname)==0) $addname .= " /@N.N./";
-				$names[] = array($addname, $letter, $surname, "A");
-			}
-			//-- check for _MARNM name subtags
-			if ($getMarriedName) {
-				$ct = preg_match_all("/\d _MARNM (.*)/", $namerec, $match, PREG_SET_ORDER);
-				for($i=0; $i<$ct; $i++) {
-					$marriedname = trim($match[$i][1]);
-					$surname = extract_surname($marriedname, false);
-					if (empty($surname)) $surname = "@N.N.";
-					$lname = preg_replace("/^[a-z0-9 '\.\-\_\(\[]+/", "", $surname);
-					if (empty($lname)) $lname = $surname;
-					$letter = get_first_letter($lname, $import);
-					$letter = UTF8_strtoupper($letter);
-					if (empty($letter)) $letter = "@";
-					if (preg_match("~/~", $marriedname)==0) $marriedname .= " /@N.N./";
-					$names[] = array($marriedname, $letter, $surname, "C");
-				}
-			}
-			//-- check for _AKA name subtags
-			$ct = preg_match_all("/\d _AKA (.*)/", $namerec, $match, PREG_SET_ORDER);
-			for($i=0; $i<$ct; $i++) {
-				$marriedname = trim($match[$i][1]);
-				$surname = extract_surname($marriedname, false);
-				if (empty($surname)) $surname = "@N.N.";
-				$lname = preg_replace("/^[a-z0-9 '\.\-\_\(\[]+/", "", $surname);
-				if (empty($lname)) $lname = $surname;
-				$letter = get_first_letter($lname, $import);
-				$letter = UTF8_strtoupper($letter);
-				if (empty($letter)) $letter = "@";
-				if (preg_match("~/~", $marriedname)==0) $marriedname .= " /@N.N./";
-				$names[] = array($marriedname, $letter, $surname, "A");
-			}
-			$j++;
-			$namerec = get_sub_record(1, "1 NAME", $indirec, $j);
-		}
-	}
-	return $names;
-}
-
-/**
  * determine the Daitch-Mokotoff Soundex code for a name
  * @param string $name	The name
  * @return array		The array of codes
  */
 function DMSoundex($name, $option = "") {
-	global $PGV_BASEDIRECTORY, $dmsoundexlist, $dmcoding, $maxchar, $INDEX_DIRECTORY, $cachecount, $cachename;
+	global $dmsoundexlist, $dmcoding, $maxchar, $INDEX_DIRECTORY, $cachecount, $cachename;
 
 	// If the code tables are not loaded, reload! Keep them global!
-	if (!isset($dmcoding)) {
-		$fname = $PGV_BASEDIRECTORY."includes/dmarray.full.utf-8.php";
+	if (!defined('PGV_DMARRAY_FULL_UTF_8_PHP')) {
+		$fname = "includes/dmarray.full.utf-8.php";
 		require($fname);
 	}
 
 	// Load the previously saved cachefile and return. Keep the cache global!
 
 	if ($option == "opencache") {
+		$fname = "includes/dmarray.full.utf-8.php";
 		$cachename = $INDEX_DIRECTORY."DM".date("mdHis", filemtime($fname)).".dat";
 		if (file_exists($cachename)) {
 			$fp = fopen($cachename, "r");

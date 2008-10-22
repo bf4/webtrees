@@ -24,9 +24,9 @@
  * @package PhpGedView
  * @subpackage Display
  * @version $Id$
- */ 
+ */
 
-require 'config.php';
+require './config.php';
 
 // Extract query parameters
 $url     =safe_POST('url', PGV_REGEX_URL);
@@ -68,7 +68,7 @@ if ($action=='login') {
 				$_SESSION['CLANGUAGE'] = $MyLanguage;
 			}
 		}
-		
+
 		// If we have no access rights to the current gedcom, switch to one where we do
 		if (!userIsAdmin($user_id)) {
 			if (!userCanAccess($user_id, PGV_GED_ID)) {
@@ -81,7 +81,7 @@ if ($action=='login') {
 				}
 			}
 		}
-		
+
 		//-- section added based on UI feedback
 		// $url is set to individual.php below if a URL is not passed in... it will then be resent as "individual.php" when the user attempts to login
 		if ($url=='individual.php') {
@@ -106,7 +106,7 @@ if ($action=='login') {
 		if (substr($url, 0, 9)=='login.php') {
 			$url='index.php';
 		}
-			
+
 		$urlnew = $SERVER_URL;
 		if (substr($urlnew,-1,1)!="/") $urlnew .= "/";
 		$url = preg_replace("/logout=1/", "", $url);
@@ -119,7 +119,7 @@ if ($action=='login') {
 		if (substr($url, -1)=="&") $url = substr($url, 0, -1);
 		$url .= "&ged=".$ged;
 		$url = str_replace(array("&&", ".php&", ".php?&"), array("&", ".php?", ".php?"), $url);
-		
+
 		header("Location: ".encode_url($url, false));
 		exit;
 	} else {
@@ -140,7 +140,7 @@ if ($action=='login') {
 				if (stristr($url,$SERVER_URL)!==false) $url = $SERVER_URL;
 			}
 			//else $url = $SERVER_URL;
-			/* - commented out based on UI feedback	
+			/* - commented out based on UI feedback
 			else $url = "index.php?ctype=user";
 			*/
 			else $url = "individual.php";

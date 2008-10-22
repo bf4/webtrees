@@ -26,7 +26,13 @@
  * @version $Id$
  * @author Brian Holland
  */
-loadLangFile("lb_lang");
+
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
+	exit;
+}
+
+loadLangFile("lightbox:lang");
 
 global $LANGUAGE, $mediatab, $mediacnt;
 global $edit, $controller, $tabno, $_REQUEST, $thumb_edit, $n, $LB_URL_WIDTH, $LB_URL_HEIGHT, $LB_TT_BALLOON ;
@@ -34,9 +40,9 @@ global $reorder, $PHP_SELF, $rownum, $sort_i, $GEDCOM;
 
 $reorder=safe_get('reorder', '1', '0');
 
-// Get Javascript variables from lb_config.php --------------------------- 
-include_once('modules/lightbox/lb_defaultconfig.php'); 
-if (file_exists('modules/lightbox/lb_config.php')) include_once('modules/lightbox/lb_config.php'); 
+// Get Javascript variables from lb_config.php ---------------------------
+include_once('modules/lightbox/lb_defaultconfig.php');
+if (file_exists('modules/lightbox/lb_config.php')) include_once('modules/lightbox/lb_config.php');
 //	include_once('modules/lightbox/functions/browser_detection_php_ar.php');
 
 function cut_html($string)
@@ -80,11 +86,11 @@ $sort_i=0; // Used in sorting on lightbox_print_media_row.php page
 			order += Sortable.sequence(section) + ',';
 		});
 		document.getElementById("ord2").value = order;
-	}; 
+	};
 	//-->
 	</script>
-	
-	
+
+
 	<form name="reorder_form" method="post" action="edit_interface.php">
 		<input type="hidden" name="action" value="al_reorder_media_update" />
 		<input type="hidden" name="pid" value="<?php print $pid; ?>" />
@@ -93,7 +99,7 @@ $sort_i=0; // Used in sorting on lightbox_print_media_row.php page
 		<center>
 		<button type="submit" title="<?php print $pgv_lang["reorder_media_save"];?>" onclick="saveOrder();" ><?php print $pgv_lang["save"];?></button>&nbsp;
 		<button type="submit" title="<?php print $pgv_lang["reorder_media_reset"];?>" onclick="document.reorder_form.action.value='al_reset_media_update'; document.reorder_form.submit();"><?php print $pgv_lang["reset"];?></button>&nbsp;
-		<button type="button" title="<?php print $pgv_lang["reorder_media_cancel"];?>" onClick="location.href='<?php echo $PHP_SELF . "?pid=" . $pid . "&tab=" . $tabno; ?>'"><?php print $pgv_lang["cancel"];?></button> 
+		<button type="button" title="<?php print $pgv_lang["reorder_media_cancel"];?>" onClick="location.href='<?php echo $PHP_SELF . "?pid=" . $pid . "&tab=" . $tabno; ?>'"><?php print $pgv_lang["cancel"];?></button>
 <?php
 /*
 		// Debug ---------------------------------------------------------------------------
@@ -116,7 +122,7 @@ echo "<table border='0' width='100%' cellpadding=\"0\" ><tr>", "\n\n";
 //------------------------------------------------------------------------------
 // Build Thumbnail Rows
 //------------------------------------------------------------------------------
-	echo "<td valign=\"top\" >";
+	echo "<td valign=\"top\">";
 		echo "<table width=\"100%\" cellpadding=\"0\" border=\"0\"><tr>";
 		echo "<td width=\"100%\" valign=\"top\" >";
 		for ($t=1; $t <=5; $t++) {
@@ -134,7 +140,7 @@ echo "<table border='0' width='100%' cellpadding=\"0\" ><tr>", "\n\n";
 			}
 			elseif ($t==5 ) {
 				lightbox_print_media($pid, 0, true, 5);
-			}   
+			}
 			else{
 			}
 		}
@@ -148,11 +154,11 @@ echo "<table border='0' width='100%' cellpadding=\"0\" ><tr>", "\n\n";
 //------------------------------------------------------------------------------
 // Build Relatives navigator from includes/controllers/individual_ctrl
 //------------------------------------------------------------------------------
-	echo '<td valign="top" align="center" width="220">', "\n" ;
+	echo '<td valign="top" align="center" width="220px">', "\n" ;
 	//echo "<table cellpadding=\"0\" ><tr><td>";
-		echo "<table cellpadding=\"0\" STYLE=\"margin-top:2px; margin-left:0px;\" ><tr><td class=\"optionbox\" align=\"center\">";
+		echo "<table cellpadding=\"0\" STYLE=\"margin-top:2px; margin-left:0px;\" ><tr><td width=\"220px\" class=\"optionbox\" align=\"center\">";
 		echo "<b>{$pgv_lang['view_lightbox']}</b><br /><br />" . "\n" ;
-			$controller->lightbox();	 
+			$controller->lightbox();
 		echo "<br />";
 		echo "</td></tr></table>";
 	//echo "</td></tr></table>";

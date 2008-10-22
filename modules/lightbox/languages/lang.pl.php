@@ -27,13 +27,14 @@
  * @version $Id$
  */
 
-//-- security check, only allow access from module.php
-if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
-	print "Nie można uzyskać bezpośredniego dostępu do pliku.";
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
 // Added in VERSION 4.1.6
+$pgv_lang["lb_toAdminConfigPage"]	= "Wróć do poprzedniej strony";
+$pgv_lang["lb_manage"]				= "Zarządzaj konfiguracją Lightbox-Album";
 $pgv_lang["lb_generalhelp"]     = "Strona informacji o osobie - Pomoc Ogólna - Lightbox";
 $pgv_lang["lb_viewedit"]		= "Zobacz/Edytuj";
 $pgv_lang["lb_viewnotes"]		= "Zobacz notatki";
@@ -100,10 +101,14 @@ $pgv_lang["lightbox"]		 = "Album";
 $pgv_lang["showmenu"] 		 = "Pokaż Menu:";
 
 $pgv_lang["TYPE__other"] 	 = "Inne";
-
 $pgv_lang["TYPE__footnotes"] = "Notes";
-
 $pgv_lang["census_text"]  	 = "" ;
+
+$pgv_lang["ROW_TYPE__photo"] 		= $pgv_lang["TYPE__photo"];
+$pgv_lang["ROW_TYPE__document"] 	= $pgv_lang["TYPE__document"];
+$pgv_lang["ROW_TYPE__census"] 		= $factarray["CENS"];
+$pgv_lang["ROW_TYPE__other"] 		= $pgv_lang["TYPE__other"];
+$pgv_lang["ROW_TYPE__footnotes"]	= $pgv_lang["TYPE__footnotes"];
 
 $pgv_lang["lb_edit_details"] 	= "Edytuj szczegóły";
 $pgv_lang["lb_view_details"] 	= "Pokaż szczegóły";

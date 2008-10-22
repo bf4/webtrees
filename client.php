@@ -23,13 +23,14 @@
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- * 
+ *
  * @package PhpGedView
  * @subpackage Edit
  * @version $Id$
  */
 
-require 'config.php';
+require './config.php';
+
 require_once 'includes/functions_edit.php';
 
 header("Content-Type: text/plain; charset=$CHARACTER_SET");
@@ -142,7 +143,7 @@ case 'get':
 							if (empty($chan)) {
 								$head = find_gedcom_record("HEAD");
 								$head_date = get_sub_record(1, "1 DATE", $head);
-								$lines = preg_split("/\n/", $head_date);
+								$lines = explode("\n", $head_date);
 								$head_date = "";
 								foreach($lines as $line) {
 									$num = $line{0};
@@ -190,7 +191,7 @@ case 'update':
 	if ($xref) {
 		$gedrec=safe_GET('gedrec', '.*'); // raw data may contain any characters
 		if ($gedrec) {
-			if (empty($_SESSION['readonly']) && PGV_USER_CAN_EDIT && displayDetails($gedrec)) {
+			if (empty($_SESSION['readonly']) && PGV_USER_CAN_EDIT && displayDetailsById($xref)) {
 				$gedrec = preg_replace(array("/\\\\+r/","/\\\\+n/"), array("\r","\n"), $gedrec);
 				$success = replace_gedrec($xref, $gedrec);
 				if ($success) {
@@ -255,7 +256,7 @@ case 'getnext':
 		if (!$gedrec) {
 			$gedrec = find_gedcom_record($xref1);
 		}
-		if (!displayDetails($gedrec)) {
+		if (!displayDetailsById($xref1)) {
 			//-- do not have full access to this record, so privatize it
 			$gedrec = privatize_gedcom($gedrec);
 		}
@@ -274,7 +275,7 @@ case 'getprev':
 		if (!$gedrec) {
 			$gedrec = find_gedcom_record($xref1);
 		}
-		if (!displayDetails($gedrec)) {
+		if (!displayDetailsById($xref1)) {
 			//-- do not have full access to this record, so privatize it
 			$gedrec = privatize_gedcom($gedrec);
 		}
@@ -307,7 +308,7 @@ case 'soundex':
 	$firstname=safe_GET('firstname');
 	$place=safe_GET('place');
 	$soundex=safe_GET('soundex', '\w+', 'Russell');
-	
+
 	if ($lastname || $firstname) {
 		$res = search_indis_soundex($soundex, $lastname, $firstname, $place);
 		print "SUCCESS\n";
@@ -384,7 +385,7 @@ case 'getxref':
 		}
 		$res = dbquery($sql);
 		print "SUCCESS\n";
-		while ($row = $res->fetchRow()) {		
+		while ($row = $res->fetchRow()) {
 			print "$row[0]\n";
 		}
 		$res->free();

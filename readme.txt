@@ -131,8 +131,8 @@ web applications.
  3.  Set Write permissions on config.php and the "index" directory.  For 
      optimal security, you should move the "index" directory to a location 
      where it is not accessible from the Internet.
- 4.  Point your browser to the directory where you uploaded your PhpGedView 
-     files (for example, http://www.yourserver.com/PhpGedView/).
+ 4.  Point your browser install.php in the directory where you uploaded your 
+     PhpGedView files (for example, http://www.yourserver.com/PhpGedView/install.php).
  5.  Enter your configuration settings.  If you moved the index directory, 
      be sure to specify the correct location to it on this page.  Save the 
      configuration parameters.

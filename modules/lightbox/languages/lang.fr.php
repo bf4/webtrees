@@ -27,9 +27,8 @@
  * @author Brian Holland
  */
 
-//-- security check, only allow access from module.php
-if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
-	header("HTTP/1.0 403 Forbidden" );
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
@@ -62,6 +61,12 @@ $pgv_lang["lightbox"]                   = "Album";
 $pgv_lang["showmenu"]                   = "Afficher Menu:";
 $pgv_lang["TYPE__other"]                = "Autres";
 $pgv_lang["TYPE__footnotes"]            = "Notes de pied-de-page";
+
+$pgv_lang["ROW_TYPE__photo"] 		= $pgv_lang["TYPE__photo"];
+$pgv_lang["ROW_TYPE__document"] 	= $pgv_lang["TYPE__document"];
+$pgv_lang["ROW_TYPE__census"] 		= $factarray["CENS"];
+$pgv_lang["ROW_TYPE__other"] 		= $pgv_lang["TYPE__other"];
+$pgv_lang["ROW_TYPE__footnotes"]	= $pgv_lang["TYPE__footnotes"];
 
 $pgv_lang["lb_edit_details"]            = "Editer détails";
 $pgv_lang["lb_view_details"]            = "Afficher détails";

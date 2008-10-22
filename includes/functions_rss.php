@@ -24,10 +24,12 @@
  * @subpackage RSS
  */
 
-if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
-	print "You cannot access an include file directly.";
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
+
+define('PGV_FUNCTIONS_RSS_PHP', '');
 
 require_once 'includes/functions_print_lists.php';
 require_once 'includes/class_stats.php';
@@ -400,23 +402,32 @@ function getRecentChanges() {
 				$disp = true;
 				switch($type) {
 					case 'INDI':
-						if (($filter=="living")&&(is_dead_id($gid)==1)) $disp = false;
-						else if ($HIDE_LIVE_PEOPLE) $disp = displayDetailsByID($gid);
+						if (($filter=="living")&&(is_dead($gedrec)==1)) $disp = false;
+						else if ($HIDE_LIVE_PEOPLE) $disp = displayDetailsById($gid);
 						break;
 					case 'FAM':
 						if ($filter=="living") {
 							$parents = find_parents_in_record($gedrec);
-							if (is_dead_id($parents["HUSB"])==1) $disp = false;
-							else if ($HIDE_LIVE_PEOPLE) $disp = displayDetailsByID($parents["HUSB"]);
-							if ($disp) {
-								if (is_dead_id($parents["WIFE"])==1) $disp = false;
-								else if ($HIDE_LIVE_PEOPLE) $disp = displayDetailsByID($parents["WIFE"]);
+							$husb=Person::getInstance($parents['HUSB']);
+							$wife=Person::getInstance($parents['HUSB']);
+							if ($husb->isDead()) {
+								$disp = false;
+							} elseif ($HIDE_LIVE_PEOPLE) {
+								$disp = $husb->canDisplayDetails();
 							}
+							if ($disp) {
+								if ($wife->isDead()) {
+									$disp = false;
+								} elseif ($HIDE_LIVE_PEOPLE) {
+									$disp = $wife->canDisplayDetails();
+								}
+							}
+						} else {
+							if ($HIDE_LIVE_PEOPLE) $disp = displayDetailsById($gid, "FAM");
 						}
-						else if ($HIDE_LIVE_PEOPLE) $disp = displayDetailsByID($gid, "FAM");
 						break;
 					default:
-						$disp = displayDetailsByID($gid, $type);
+						$disp = displayDetailsById($gid, $type);
 						break;
 				}
 				if ($disp) {
@@ -497,7 +508,7 @@ function getRandomMedia() {
 			$disp = ($medialist[$value]["EXISTS"]>0) && $medialist[$value]["LINKED"] && $medialist[$value]["CHANGE"]!="delete" ;
 			//if (isset($DEBUG)&&($DEBUG==true) && !$disp && !$error) {$error = true; print "<span class=\"error\">".$medialist[$value]["XREF"]." File does not exist, or is not linked to anyone, or is marked for deletion.</span><br />\n";}
 
-			$disp &= displayDetailsByID($value["XREF"], "OBJE");
+			$disp &= displayDetailsById($value["XREF"], "OBJE");
 			$disp &= !FactViewRestricted($value["XREF"], $value["GEDCOM"]);
 
 			//if (isset($DEBUG)&&($DEBUG==true) && !$disp && !$error) {$error = true; print "<span class=\"error\">".$medialist[$value]["XREF"]." Failed to pass privacy</span><br />\n";}

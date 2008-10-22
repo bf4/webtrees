@@ -25,10 +25,12 @@
  * @version $Id$
  */
 
-if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
-	print "You cannot access an include file directly.";
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
+
+define('PGV_FUNCTIONS_MEDIADB_PHP', '');
 
 //-- Setup array of media types
 $MEDIATYPE = array("a11","acb","adc","adf","afm","ai","aiff","aif","amg","anm","ans","apd","asf","au","avi","awm","bga","bmp","bob","bpt","bw","cal","cel","cdr","cgm","cmp","cmv","cmx","cpi","cur","cut","cvs","cwk","dcs","dib","dmf","dng","doc","dsm","dxf","dwg","emf","enc","eps","fac","fax","fit","fla","flc","fli","fpx","ftk","ged","gif","gmf","hdf","iax","ica","icb","ico","idw","iff","img","jbg","jbig","jfif","jpe","jpeg","jp2","jpg","jtf","jtp","lwf","mac","mid","midi","miff","mki","mmm",".mod","mov","mp2","mp3","mpg","mpt","msk","msp","mus","mvi","nap","ogg","pal","pbm","pcc","pcd","pcf","pct","pcx","pdd","pdf","pfr","pgm","pic","pict","pk","pm3","pm4","pm5","png","ppm","ppt","ps","psd","psp","pxr","qt","qxd","ras","rgb","rgba","rif","rip","rla","rle","rpf","rtf","scr","sdc","sdd","sdw","sgi","sid","sng","swf","tga","tiff","tif","txt","text","tub","ul","vda","vis","vob","vpg","vst","wav","wdb","win","wk1","wks","wmf","wmv","wpd","wxf","wp4","wp5","wp6","wpg","wpp","xbm","xls","xpm","xwd","yuv","zgm");
@@ -392,7 +394,7 @@ function real_path($path) {
 function set_media_path($filename, $moveto, $thumb = false) {
 	$movefile = "";
 	if ($moveto == "..") {
-		$directories = preg_split("/\//", $filename);
+		$directories = explode('/', $filename);
 		$ct = count($directories);
 		foreach ($directories as $key => $value) {
 			if ($key == 1 && $thumb == true)
@@ -403,7 +405,7 @@ function set_media_path($filename, $moveto, $thumb = false) {
 				$movefile .= "/";
 		}
 	} else {
-		$directories = preg_split("/\//", $filename);
+		$directories = explode('/', $filename);
 		$ct = count($directories);
 		foreach ($directories as $key => $value) {
 			if ($key == 1 && $thumb == true)
@@ -528,7 +530,7 @@ function get_medialist($currentdir = false, $directory = "", $linkonly = false, 
 	$myDir = str_replace($MEDIA_DIRECTORY, "", $directory);
 	$sql = "SELECT m_id, m_file, m_media, m_gedrec, m_titl FROM {$TBLPREFIX}media WHERE m_gedfile={$GEDCOMS[$GEDCOM]['id']}";
 	if ($random == true) {
-		$sql .= " ORDER BY ".DB_RANDOM."()";
+		$sql .= " ORDER BY ".PGV_DB_RANDOM;
 		$res = & dbquery($sql, true, 5);
 	} else {
 		$sql .= " AND (m_file LIKE '%" . $DBCONN->escapeSimple($myDir) . "%' OR m_file LIKE '%://%') ORDER BY m_id desc";
@@ -823,7 +825,7 @@ function get_medialist($currentdir = false, $directory = "", $linkonly = false, 
 				$ext = strtolower($exts[count($exts) - 1]);
 				if (!in_array($ext, $MEDIATYPE))
 					break;
-	
+
 				// This is a valid media file:
 				// now see whether we already know about it
 				$mediafile = $directory . $fileName;
@@ -842,7 +844,7 @@ function get_medialist($currentdir = false, $directory = "", $linkonly = false, 
 				}
 				if ($exist)
 					break;
-	
+
 				// This media item is not yet in the database
 				$media = array ();
 				$media["ID"] = "";
@@ -903,7 +905,7 @@ function filterMedia($media, $filter, $acceptExt) {
 	$links = $media["LINKS"];
 	if (count($links) != 0) {
 		foreach ($links as $id => $type) {
-			if (!displayDetailsByID($id, $type)) {
+			if (!displayDetailsById($id, $type)) {
 				return false;
 			}
 		}
@@ -962,7 +964,7 @@ function filterMedia($media, $filter, $acceptExt) {
  * @return	array $myindilist array with all individuals that matched the query
  */
 function search_media_pids($query, $allgeds = false, $ANDOR = "AND") {
-	global $TBLPREFIX, $GEDCOM, $indilist, $DBCONN, $REGEXP_DB, $GEDCOMS;
+	global $TBLPREFIX, $GEDCOM, $DBCONN, $REGEXP_DB, $GEDCOMS;
 	$myindilist = array ();
 	if ($REGEXP_DB)
 		$term = "REGEXP";
@@ -1420,7 +1422,7 @@ function show_media_form($pid, $action = "newentry", $filename = "", $linktoid =
 				$ThumbSupport .= ", PNG";
 			if (!$AUTO_GENERATE_THUMBS)
 				$ThumbSupport = "";
-	
+
 			if ($ThumbSupport != "") {
 				$ThumbSupport = substr($ThumbSupport, 2); // Trim off first ", "
 				print "<tr><td class=\"descriptionbox $TEXT_DIRECTION wrap width25\">";
@@ -1591,7 +1593,7 @@ function show_media_form($pid, $action = "newentry", $filename = "", $linktoid =
 		}
 		add_simple_tag("1 $gedprim");
 	}
-	
+
 	//-- don't show _THUM option to regular users
 	if (PGV_USER_GEDCOM_ADMIN) {
 		// 2 _THUM
@@ -1630,7 +1632,7 @@ function show_media_form($pid, $action = "newentry", $filename = "", $linktoid =
 					add_simple_tag(($sourceLevel+1) ." QUAY ". $sourceQUAY);
 					$sourceSOUR = "";
 				}
-				
+
 				if ($fact=="SOUR") {
 					$sourceLevel = $subLevel;
 					$sourceSOUR = $event;
@@ -1763,7 +1765,7 @@ function PrintMediaLinks($links, $size = "small") {
 				$linkItem['record']=$record;
 				$linkList[] = $linkItem;
 				break;
-				
+
 			}
 		}
 	}
@@ -1812,7 +1814,7 @@ function PrintMediaLinks($links, $size = "small") {
 		echo '</a>';
 		$prev_record=$record;
 	}
-		
+
 	if ($size == "small")
 		print "</sub>";
 	return true;
@@ -1975,7 +1977,7 @@ function get_server_filename($filename) {
 
 // pass in the standard media directory
 // returns protected media directory
-// strips off any "../" which may be configured in your MEDIA_DIRECTORY variable 
+// strips off any "../" which may be configured in your MEDIA_DIRECTORY variable
 function get_media_firewall_path($path) {
 	global $MEDIA_FIREWALL_ROOTDIR;
 	$path = str_replace("../", "", $path);
@@ -2005,7 +2007,7 @@ function mkdirs($dir, $mode = 0777, $recursive = true) {
 	return FALSE;
 }
 
-// pass in an image type and this will determine if your system supports editing of that image type 
+// pass in an image type and this will determine if your system supports editing of that image type
 function isImageTypeSupported($reqtype) {
 	if (!function_exists("imagetypes")) return false;
 	$reqtype = strtolower($reqtype);
@@ -2022,12 +2024,12 @@ function isImageTypeSupported($reqtype) {
 	}
 }
 
-// converts raw values from php.ini file into bytes 
+// converts raw values from php.ini file into bytes
 // from http://www.php.net/manual/en/function.ini-get.php
 function return_bytes($val) {
 	if (!$val) {
-		// no value was passed in, assume no limit and return -1 
-		$val = -1; 
+		// no value was passed in, assume no limit and return -1
+		$val = -1;
 	}
 	$val = trim($val);
 	$last = strtolower($val{strlen($val)-1});
@@ -2054,7 +2056,7 @@ function hasMemoryForImage($serverFilename, $debug_verboseLogging=false) {
 	$memoryAvailable = return_bytes(@ini_get('memory_limit'));
 	// if memory is unlimited, it will return -1 and we don't need to worry about it
 	if ($memoryAvailable == -1) return true;
-	
+
 	// find out how much memory we are already using
 	// if the memory_get_usage() function doesn't exist, assume we are using 900k to load the PGV framework
 	$memoryUsed = ( function_exists('memory_get_usage') ) ? memory_get_usage() : 900000;
@@ -2109,13 +2111,13 @@ function generate_thumbnail($filename, $thumbnail) {
 
 	$type = isImageTypeSupported($ext);
 	if ( !$type ) return false;
-	
+
 	if (!isFileExternal($filename)) {
 		// internal
 		if (!file_exists(filename_decode($filename))) {
 			if ($USE_MEDIA_FIREWALL) {
 				// see if the file exists in the protected index directory
-				$filename = get_media_firewall_path($filename); 
+				$filename = get_media_firewall_path($filename);
 				if (!file_exists(filename_decode($filename))) return false;
 				if ($MEDIA_FIREWALL_THUMBS) {
 					// put the thumbnail in the protected directory too
@@ -2169,7 +2171,7 @@ function generate_thumbnail($filename, $thumbnail) {
 
 	$imCreateFunc = 'imagecreatefrom'.$type;
 	$imSendFunc = 'image'.$type;
-		
+
 	// load the image into memory
 	$im = @$imCreateFunc(filename_decode($filename));
 	if (!$im) return false;
@@ -2177,7 +2179,7 @@ function generate_thumbnail($filename, $thumbnail) {
 	$new = imagecreatetruecolor($width, $height);
 	// resample the original image into the thumbnail
 	imagecopyresampled($new, $im, 0, 0, 0, 0, $width, $height, $imgsize[0], $imgsize[1]);
-	// save the thumbnail to a file 
+	// save the thumbnail to a file
 	$imSendFunc($new, filename_decode($thumbnail));
 	// free up memory
 	imagedestroy($im);

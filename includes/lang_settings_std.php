@@ -27,8 +27,8 @@
  * @subpackage Languages
  */
 
-if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
-	print "You cannot access an include file directly.";
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
@@ -642,7 +642,7 @@ $language_settings['chinese']=array(
 'countryfile'=>'languages/countries.zh.php',
 'faqlistfile'=>'languages/faqlist.zh.php',
 'extrafile'=>'languages/extra.zh.php',
-'DATE_FORMAT'=>'Y年 M D日',
+'DATE_FORMAT'=>'Y年 m月 d日',
 'TIME_FORMAT'=>'g:i:sa',
 'WEEK_START'=>'0',
 'TEXT_DIRECTION'=>'ltr',

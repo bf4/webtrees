@@ -24,8 +24,8 @@
  * @version $Id$
  */
 
-if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
-	print "You cannot access an include file directly.";
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
@@ -107,7 +107,7 @@ $menubar = new MenuBar();
 		}
 
 		$menus = $menubar->getModuleMenus();
-		foreach($menus as $m=>$menu) { 
+		foreach($menus as $m=>$menu) {
 			if($menu->link != "") {
 				print "\t<td width=\"7%\" valign=\"top\">\n";
 				$menu->addLabel("", "none");

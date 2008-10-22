@@ -24,9 +24,16 @@
  * @version $Id$
  */
 
-require_once('webservice/genealogyService.php');
-require_once("includes/functions_edit.php");
-require_once('includes/GEWebService.php');
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
+	exit;
+}
+
+define('PGV_PGV_SERVICELOGIC_CLASS_PHP', '');
+
+require_once 'webservice/genealogyService.php';
+require_once 'includes/functions_edit.php';
+require_once 'includes/class_gewebservice.php';
 
 $DEBUG = 1;
 
@@ -411,14 +418,13 @@ class PGVServiceLogic extends GenealogyService
 
 		if (!empty($PID))
 		{
-			$xrefs = preg_split("/;/", $PID);
+			$xrefs = explode(';', $PID);
 			$success = true;
 			$person = array();
 			foreach($xrefs as $indexval => $xref1)
 			{
 				$gedrec = "";
 				$xref1 = trim($xref1);
-				$xref1 = clean_input($xref1);
 				if (!empty($xref1))
 				{
 					if (isset($pgv_changes[$xref1."_".$GEDCOM]))
@@ -495,14 +501,13 @@ class PGVServiceLogic extends GenealogyService
 			else $returnType = 'gramps';
 		if (!empty($FID))
 		{
-			$xrefs = preg_split("/;/", $FID);
+			$xrefs = explode(';', $FID);
 			$success = true;
 			$family = array();
 			foreach($xrefs as $indexval => $xref1)
 			{
 				$gedrec = "";
 				$xref1 = trim($xref1);
-				$xref1 = clean_input($xref1);
 				if (!empty($xref1))
 				{
 					if (isset($pgv_changes[$xref1."_".$GEDCOM]))
@@ -566,14 +571,13 @@ class PGVServiceLogic extends GenealogyService
 
 		if (!empty($SCID))
 		{
-			$xrefs = preg_split("/;/", $SCID);
+			$xrefs = explode(';', $SCID);
 			$success = true;
 			$source = array();
 			foreach($xrefs as $indexval => $xref1)
 			{
 				$gedrec = "";
 				$xref1 = trim($xref1);
-				$xref1 = clean_input($xref1);
 				if (!empty($xref1))
 				{
 					if (isset($pgv_changes[$xref1."_".$GEDCOM]))
@@ -616,14 +620,13 @@ class PGVServiceLogic extends GenealogyService
 
 		if (!empty($PID))
 		{
-			$xrefs = preg_split("/;/", $PID);
+			$xrefs = explode(';', $PID);
 			$success = true;
 			$gedrecords="";
 			foreach($xrefs as $indexval => $xref1)
 			{
 				$gedrec = "";
 				$xref1 = trim($xref1);
-				$xref1 = clean_input($xref1);
 				if (!empty($xref1))
 				{
 					if (isset($pgv_changes[$xref1."_".$GEDCOM]))
@@ -738,12 +741,12 @@ class PGVServiceLogic extends GenealogyService
 			$array_querys = array();
 
 			// array used to split the string $query into parts
-			$temp_queries = preg_split("/&/", $query);
+			$temp_queries = explode('&', $query);
 
 			// each part is gone through to select the field and the values
 			foreach($temp_queries as $index=>$query)
 			{
-				$part = preg_split("/=/", $query);
+				$part = explode('=', $query);
 				// $part[0] = field $part[1] = value;
 				$array_querys[$part[0]] = $part[1];
 			}
@@ -1039,12 +1042,10 @@ class PGVServiceLogic extends GenealogyService
 	***/
 	function postGetAncestry($SID, $rootID, $generations, $returnGedcom)
 	{
-		global $list, $indilist, $genlist;
-
 		$list = array();
-		$list[$rootID] = $indilist[$rootID];
+		$list[$rootID] = Person::getInstance($rootID);
 
-		add_ancestors($rootID, false, $generations);
+		add_ancestors($list, $rootID, false, $generations);
 
 		if(empty($list)){
 			return new SOAP_Fault('Could not retrieve ancestory', 'Server', '',null);
@@ -1054,9 +1055,9 @@ class PGVServiceLogic extends GenealogyService
 			$count = 0;
 			foreach($list as $key => $value)
 			{
-				if(isset($value['gedcom']))
+				if($value!=null)
 				{
-					$person = $this->createPerson($key, $value['gedcom'], "item", $returnGedcom);
+					$person = $this->createPerson($key, $value->getGedcomRecord(), "item", $returnGedcom);
 					$result[] = $person;
 					$count++;
 				}
@@ -1080,11 +1081,9 @@ class PGVServiceLogic extends GenealogyService
 	*/
 	function postGetDescendants($SID, $rootID, $generations, $returnGedcom)
 	{
-		global $list, $indilist, $genlist;
-
 		$list = array();
 
-		add_descendancy($rootID, false, $generations);
+		add_descendancy($list, $rootID, false, $generations);
 
 		if(empty($list)){
 			return new SOAP_Fault('Could not retrieve descendancy', 'Server', '',null);
@@ -1095,9 +1094,9 @@ class PGVServiceLogic extends GenealogyService
 			$count = 0;
 			foreach($list as $key => $value)
 			{
-				if(isset($value['gedcom']))
+				if($value!=null)
 				{
-					$person = $this->createPerson($key, $value['gedcom'], "item", $returnGedcom);
+					$person = $this->createPerson($key, $value->getGedcomRecord(), "item", $returnGedcom);
 					$result[] = $person;
 					$count++;
 				}

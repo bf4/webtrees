@@ -24,19 +24,19 @@
  * @version $Id$
  */
 
-if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
-	print "You cannot access an include file directly.";
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
-require_once("config.php");
+define('PGV_DESCENDANCY_PHP', '');
+
 require_once 'includes/controllers/basecontrol.php';
-require_once("includes/functions_charts.php");
+require_once 'includes/functions_charts.php';
 
 loadLangFile("pgv_confighelp");
 
-require_once 'includes/menu.php';
-require_once 'includes/person_class.php';
+require_once 'includes/class_person.php';
 
 $indifacts = array();			 // -- array to store the fact records in for sorting and displaying
 $globalfacts = array();
@@ -58,8 +58,6 @@ $nonfamfacts[] = "";
  * Main controller class for the individual page.
  */
 class DescendancyControllerRoot extends BaseController {
-	var $show_changes = "yes";
-	var $action = "";
 	var $pid = "";
 	var $descPerson = null;
 
@@ -77,7 +75,6 @@ class DescendancyControllerRoot extends BaseController {
 	var $chart_style;
 	var $sexarray = array();
 	var $generations;
-	var $view;
 	var $personcount;
 	var $box_width;
 	var $Dbwidth;
@@ -358,6 +355,4 @@ else
 	}
 }
 
-$controller = new DescendancyController();
-$controller->init();
 ?>

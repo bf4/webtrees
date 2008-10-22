@@ -28,13 +28,17 @@
  * @translator: Julio Sánchez Fernández
  */
 
-//-- security check, only allow access from module.php
-if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
-	print "Usted no puede acceder a este archivo de idioma directamente.";
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
 // Added in VERSION 4.1.6
+
+// Lightbox general help file  ---------------------------------------------------------------------------------------------------------
+$pgv_lang["LIGHTBOX_CONFIG"]           = "Configuración de Lightbox";
+$pgv_lang["LIGHTBOX_CONFIG_help"]      = "~#pgv_lang[GOOGLEMAP_CONFIG]#~<br /><br />Configure todos los aspectos del módulo Lightbox aquí.";
+
 
 // Lightbox general help file  ---------------------------------------------------------------------------------------------------------
 $pgv_lang["lb_generalLegend"]		 = "Álbum Lightbox - Ayuda general";

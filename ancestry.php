@@ -26,17 +26,22 @@
  * @version $Id$
  */
 
+require './config.php';
+
 require_once("includes/controllers/ancestry_ctrl.php");
+$controller = new AncestryController();
+$controller->init();
 
 // -- print html header information
 print_header($controller->name . " " . $pgv_lang["ancestry_chart"]);
+require 'js/autocomplete.js.htm';
 
 // LBox =====================================================================================
 if ($MULTI_MEDIA && file_exists("modules/lightbox/album.php")) {
 	include('modules/lightbox/lb_defaultconfig.php');
 	if (file_exists('modules/lightbox/lb_config.php')) include('modules/lightbox/lb_config.php');
 	include('modules/lightbox/functions/lb_call_js.php');
-}	
+}
 // ==========================================================================================
 
 print "\n\t<table><tr><td valign=\"top\">\n\t\t";
@@ -141,15 +146,15 @@ if ($view != "preview") {
 		print ">".$i."</option>";
 	}?>
 	</select>
-	
+
 	</td>
-	
+
 	<!-- // NOTE: show full -->
-	
+
 	<td class="descriptionbox">
 	<?php
 	print_help_link("show_full_help", "qm");
-	print $pgv_lang["show_details"]; 
+	print $pgv_lang["show_details"];
 	?>
 	</td>
 	<td class="optionbox vmiddle">

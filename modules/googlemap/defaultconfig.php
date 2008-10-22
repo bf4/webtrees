@@ -3,7 +3,7 @@
  * Configuration file required by Googlemap module
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  John Finlay and Others
+ * Copyright (C) 2002 to 2008  PGV Development Team. All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,6 +24,11 @@
  * @version $Id: defaultconfig.php$
  * $Id: defaultconfig.php 2666 2008-04-23 21:38:56Z wooc$
  */
+
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
+	exit;
+}
 
 $GOOGLEMAP_ENABLED = "false";          // Enable or disable Googlemap
 

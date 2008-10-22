@@ -26,6 +26,13 @@
  * @subpackage Blocks
  */
 
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
+	exit;
+}
+
+define('PGV_GEDCOM_FAVORITES_PHP', '');
+
 $PGV_BLOCKS["print_gedcom_favorites"]["name"]     = $pgv_lang["gedcom_favorites_block"];
 $PGV_BLOCKS["print_gedcom_favorites"]["descr"]    = "gedcom_favorites_descr";
 $PGV_BLOCKS["print_gedcom_favorites"]["canconfig"]= false;
@@ -33,10 +40,10 @@ $PGV_BLOCKS["print_gedcom_favorites"]["config"]   = array("cache"=>7);
 
 //-- print gedcom favorites
 function print_gedcom_favorites($block = true, $config="", $side, $index) {
-	global $pgv_lang, $factarray, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $ctype, $sourcelist, $TEXT_DIRECTION;
+	global $pgv_lang, $factarray, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $ctype, $TEXT_DIRECTION;
 	global $show_full, $PEDIGREE_FULL_DETAILS, $BROWSERTYPE;
 
-	// Override GEDCOM configuration temporarily	
+	// Override GEDCOM configuration temporarily
 	if (isset($show_full)) $saveShowFull = $show_full;
 	$savePedigreeFullDetails = $PEDIGREE_FULL_DETAILS;
 	$show_full = 1;
@@ -51,7 +58,7 @@ function print_gedcom_favorites($block = true, $config="", $side, $index) {
 	if ($TEXT_DIRECTION=="rtl") $title .= getRLM();
 	$title .= "(".count($userfavs).")";
 	if ($TEXT_DIRECTION=="rtl") $title .= getRLM();
-	
+
 	$content = "";
 	if ($block) {
 		$style = 2;		// 1 means "regular box", 2 means "wide box"
@@ -78,7 +85,7 @@ function print_gedcom_favorites($block = true, $config="", $side, $index) {
 				$content .= "<br />".PrintReady($favorite["note"]);
 				$content .= "</div>\n";
 			} else {
-				if (displayDetailsbyId($favorite["gid"], $favorite["type"])) {
+				if (displayDetailsById($favorite["gid"], $favorite["type"])) {
 					if ($favorite["type"]=="INDI") {
 						$indirec = find_person_record($favorite["gid"]);
 						$content .= "<div id=\"box".$favorite["gid"].".0\" class=\"person_box";
@@ -110,7 +117,7 @@ function print_gedcom_favorites($block = true, $config="", $side, $index) {
 		}
 		$content .= "</table>\n";
 	}
-	if (PGV_USER_GEDCOM_ADMIN) { 
+	if (PGV_USER_GEDCOM_ADMIN) {
 	$content .= '
 		<script language="JavaScript" type="text/javascript">
 		<!--
@@ -150,7 +157,7 @@ function print_gedcom_favorites($block = true, $config="", $side, $index) {
 		$content .= "\n<br /><input type=\"submit\" value=\"".$pgv_lang["add"]."\" style=\"font-size: 8pt; \" />";
 		$content .= "\n</form></div>\n";
 	}
-	
+
 	global $THEME_DIR;
 	if ($block) {
 		include($THEME_DIR."templates/block_small_temp.php");

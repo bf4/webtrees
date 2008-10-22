@@ -24,11 +24,10 @@
  * @version $Id$
  */
 
-if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
-	echo "You cannot access an include file directly.";
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
-
 
 echo "</div> <!-- closing div id=\"content\" -->\n";//FIXME uncomment as soon as ready
 echo "<div id=\"footer\" class=\"$TEXT_DIRECTION\">";

@@ -24,8 +24,8 @@
  * @version $Id$
  */
 
-if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
-	print "You cannot access an include file directly.";
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
@@ -58,6 +58,9 @@ $PGV_IMAGES["reports"]["large"] = "reports.gif";
 $PGV_IMAGES["search"]["large"] = "search.gif";
 $PGV_IMAGES["sfamily"]["large"] = "sfamily.gif";
 $PGV_IMAGES["source"]["large"] = "source.gif";
+$PGV_IMAGES["sex"]["large"] = "male.gif";
+$PGV_IMAGES["sexf"]["large"] = "female.gif";
+$PGV_IMAGES["sexn"]["large"] = "fe_male.gif";
 
 //- PGV main icons for optional modules
 $PGV_IMAGES["menu_gallery"]["large"] = "menu_gallery.gif";
@@ -190,8 +193,8 @@ $PGV_DXHTMLTAB_COLORS = "#c7974d,#eae0d4";
 
 $ONLOADFUNCTION = "onloadfunction();";		//-- function that should be called in the <body onload="
 
-// Arrow symbol or icon for up-page links on Help pages 
-// This icon is referred to in Help text by: #GLOBALS[UpArrow]# 
+// Arrow symbol or icon for up-page links on Help pages
+// This icon is referred to in Help text by: #GLOBALS[UpArrow]#
 if (file_exists($PGV_IMAGE_DIR."/uarrow3.gif")) $UpArrow = "<img src=\"{$PGV_IMAGE_DIR}/uarrow3.gif\" class=\"icon\" border=\"0\" alt=\"^\" />";
 else $UpArrow = "<b>^^&nbsp;&nbsp;</b>";
 

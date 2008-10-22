@@ -26,12 +26,19 @@
  * @version $Id$
  */
 
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
+	exit;
+}
+
+define('PGV_RECENT_CHANGES_PHP', '');
+
 $PGV_BLOCKS["print_recent_changes"]["name"]     = $pgv_lang["recent_changes_block"];
 $PGV_BLOCKS["print_recent_changes"]["descr"]    = "recent_changes_descr";
 $PGV_BLOCKS["print_recent_changes"]["canconfig"]= true;
 $PGV_BLOCKS["print_recent_changes"]["config"]   = array(
 	"cache"=>1,
-	"days"=>30, 
+	"days"=>30,
 	"hide_empty"=>"no"
 	);
 

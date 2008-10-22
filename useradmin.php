@@ -19,14 +19,13 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * This Page Is Valid XHTML 1.0 Transitional! > 30 August 2005
- *
  * @package PhpGedView
  * @subpackage Admin
  * @version $Id$
  */
 
-require_once 'config.php';
+require './config.php';
+
 require_once 'includes/functions_edit.php';
 
 loadLangFile('pgv_confighelp');
@@ -70,7 +69,7 @@ $lastname                =safe_POST('lastname'   );
 $pass1                   =safe_POST('pass1',        PGV_REGEX_PASSWORD);
 $pass2                   =safe_POST('pass2',        PGV_REGEX_PASSWORD);
 $emailaddress            =safe_POST('emailaddress', PGV_REGEX_EMAIL);
-$user_theme              =safe_POST('user_theme',               $ALL_THEME_DIRS, $THEME_DIR);
+$user_theme              =safe_POST('user_theme',               $ALL_THEME_DIRS);
 $user_language           =safe_POST('user_language',            array_keys($pgv_language), $LANGUAGE);
 $new_contact_method      =safe_POST('new_contact_method',       $ALL_CONTACT_METHODS, $CONTACT_METHOD);
 $new_default_tab         =safe_POST('new_default_tab',          array_keys($ALL_DEFAULT_TABS), $GEDCOM_DEFAULT_TAB);
@@ -212,23 +211,17 @@ if ($action=='createuser' || $action=='edituser2') {
 					foreach (get_all_gedcoms() as $ged_id=>$ged_name) {
 						$myid=get_user_gedcom_setting($username, $ged_id, 'gedcomid');
 						if ($myid) {
-							include_once "includes/functions_edit.php";
-							$indirec=find_updated_record($myid, $ged_name);
-							if (!$indirec) {
-								$indirec=find_person_record($myid, $ged_name);
-							}
-							if ($indirec) {
-								$OLDGEDCOM=$GEDCOM;
-								$GEDCOM=$ged_name;
-								if (preg_match("/\d _?EMAIL/", $indirec)) {
-									$indirec= preg_replace("/(\d _?EMAIL)[^\r\n]*/", "$1 ".$emailaddress, $indirec);
-									replace_gedrec($myid, $indirec);
+							$OLDGEDCOM=$GEDCOM;
+							$GEDCOM=$ged_name;
+							$person=Person::getInstance($myid);
+							if ($person) {
+								if (preg_match('/\d _?EMAIL/', $person->getGedcomRecord())) {
+									replace_gedrec($myid, preg_replace("/(\d _?EMAIL)[^\r\n]*/", '$1 '.$emailaddress, $person->getGedcomRecord()));
 								} else {
-									$indirec.="\r\n1 EMAIL ".$emailaddress;
-									replace_gedrec($myid, $indirec);
+									replace_gedrec($myid, $person->getGedcomRecord()."\r\n1 EMAIL ".$emailaddress);
 								}
-								$GEDCOM=$OLDGEDCOM;
 							}
+							$GEDCOM=$OLDGEDCOM;
 						}
 					}
 				}
@@ -240,6 +233,7 @@ if ($action=='createuser' || $action=='edituser2') {
 	}
 } else {
 	print_header($pgv_lang['user_admin']);
+	require 'js/autocomplete.js.htm';
 }
 
 // Print the form to edit a user
@@ -545,7 +539,7 @@ if ($action == "listusers") {
 			break;
 		case "sortveradmin":
 			$users = get_all_users("asc","verified_by_admin");
-			break;	
+			break;
 		default:
 			$users = get_all_users("asc","username");
 			break;

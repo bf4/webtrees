@@ -1,7 +1,7 @@
 <?php
 /**
  * Controller for the source page view
- * 
+ *
  * phpGedView: Genealogy Viewer
  * Copyright (C) 2002 to 2008	PGV Development Team.  All rights reserved.
  *
@@ -24,16 +24,18 @@
  * @version $Id$
  */
 
-if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
-	print "You cannot access an include file directly.";
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
-require_once("config.php");
-require_once('includes/functions_print_facts.php');
-require_once('includes/controllers/basecontrol.php');
-require_once('includes/source_class.php');
-require_once('includes/menu.php');
+define('PGV_SOURCE_CTRL_PHP', '');
+
+require_once 'includes/functions_print_facts.php';
+require_once 'includes/controllers/basecontrol.php';
+require_once 'includes/class_source.php';
+require_once 'includes/class_menu.php';
+require_once 'includes/functions_import.php';
 
 $nonfacts = array();
 /**
@@ -41,50 +43,46 @@ $nonfacts = array();
  */
 class SourceControllerRoot extends BaseController {
 	var $sid;
-	var $show_changes = "yes";
-	var $action = "";
 	/* @var Source */
 	var $source = null;
 	var $uname = "";
 	var $diffsource = null;
 	var $accept_success = false;
 	var $canedit = false;
-	
+
 	/**
 	 * constructor
 	 */
 	function SourceRootController() {
 		parent::BaseController();
 	}
-	
+
 	/**
 	 * initialize the controller
 	 */
 	function init() {
 		global $pgv_lang, $CONTACT_EMAIL, $GEDCOM, $pgv_changes;
-		
+
 		//-- keep the time of this access to help with concurrent edits
 		$_SESSION['last_access_time'] = time();
-		
-		if (!empty($_REQUEST["show_changes"])) $this->show_changes = $_REQUEST["show_changes"];
-		if (!empty($_REQUEST["action"])) $this->action = $_REQUEST["action"];
-		if (!empty($_REQUEST["sid"])) $this->sid = strtoupper($_REQUEST["sid"]);
-		$this->sid = clean_input($this->sid);
-		
+
+		$this->sid = safe_GET_xref('sid');
+
 		$sourcerec = find_source_record($this->sid);
 		if (!$sourcerec) $sourcerec = "0 @".$this->sid."@ SOUR\r\n";
-		
+
 		$this->source = new Source($sourcerec);
-		
+		$this->source->ged_id=PGV_GED_ID; // This record is from a file
+
 		if (!$this->source->canDisplayDetails()) {
 			print_header($pgv_lang["private"]." ".$pgv_lang["source_info"]);
 			print_privacy_error($CONTACT_EMAIL);
 			print_footer();
 			exit;
 		}
-		
+
 		$this->uname = PGV_USER_NAME;
-		
+
 		//-- perform the desired action
 		switch($this->action) {
 			case "addfav":
@@ -97,25 +95,25 @@ class SourceControllerRoot extends BaseController {
 				$this->source->undoChange();
 				break;
 		}
-		
+
 		//-- check for the user
 		//-- if the user can edit and there are changes then get the new changes
-		if ($this->show_changes=="yes" && PGV_USER_CAN_EDIT && isset($pgv_changes[$this->sid."_".$GEDCOM])) {
+		if ($this->show_changes && PGV_USER_CAN_EDIT && isset($pgv_changes[$this->sid."_".$GEDCOM])) {
 			$newrec = find_updated_record($this->sid);
 			$this->diffsource = new Source($newrec);
 			$this->diffsource->setChanged(true);
 			$sourcerec = $newrec;
 		}
-		
+
 		if ($this->source->canDisplayDetails()) {
 			$this->canedit = PGV_USER_CAN_EDIT;
 		}
-		
-		if ($this->show_changes=="yes" && $this->canedit) {
+
+		if ($this->show_changes && $this->canedit) {
 			$this->source->diffMerge($this->diffsource);
 		}
 	}
-	
+
 	/**
 	 * Add a new favorite for the action user
 	 */
@@ -144,11 +142,10 @@ class SourceControllerRoot extends BaseController {
 	 */
 	function acceptChanges() {
 		global $GEDCOM;
-		
+
 		if (!PGV_USER_CAN_ACCEPT) return;
-		require_once("includes/functions_import.php");
 		if (accept_changes($this->sid."_".$GEDCOM)) {
-			$this->show_changes="no";
+			$this->show_changes=false;
 			$this->accept_success=true;
 			$indirec = find_source_record($this->sid);
 			//-- check if we just deleted the record and redirect to index
@@ -159,7 +156,7 @@ class SourceControllerRoot extends BaseController {
 			$this->source = new Source($indirec);
 		}
 	}
-	
+
 	/**
 	 * get the title for this page
 	 * @return string
@@ -175,7 +172,7 @@ class SourceControllerRoot extends BaseController {
 	function userCanEdit() {
 		return $this->canedit;
 	}
-	
+
 	/**
 	 * get edit menut
 	 * @return Menu
@@ -185,15 +182,15 @@ class SourceControllerRoot extends BaseController {
 		global $SHOW_GEDCOM_RECORD;
 		if ($TEXT_DIRECTION=="rtl") $ff="_rtl";
 		else $ff="";
-		
+
 		if (!$this->userCanEdit()) {
 			$tempvar = false;
 			return $tempvar;
 		}
-		
+
 		// edit source menu
 		$menu = new Menu($pgv_lang['edit_source']);
-		if ($SHOW_GEDCOM_RECORD || PGV_USER_IS_ADMIN) 
+		if ($SHOW_GEDCOM_RECORD || PGV_USER_IS_ADMIN)
 			$menu->addOnclick('return edit_raw(\''.$this->sid.'\');');
 		if (!empty($PGV_IMAGES["edit_sour"]["small"]))
 			$menu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['edit_sour']['small']}");
@@ -208,7 +205,7 @@ class SourceControllerRoot extends BaseController {
 			$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}");
 			$menu->addSubmenu($submenu);
 		}
-		
+
 		// edit source / delete_source
 		$submenu = new Menu($pgv_lang['delete_source']);
 		$submenu->addOnclick("if (confirm('".$pgv_lang["confirm_delete_source"]."')) return deletesource('".$this->sid."'); else return false;");
@@ -225,7 +222,7 @@ class SourceControllerRoot extends BaseController {
 			$menu->addSubmenu($submenu);
 
 			// edit_sour / show/hide changes
-			if ($this->show_changes == 'no')
+			if (!$this->show_changes)
 			{
 				$submenu = new Menu($pgv_lang['show_changes'], encode_url("source.php?sid={$this->sid}&show_changes=yes"));
 				if (!empty($PGV_IMAGES["edit_sour"]["small"]))
@@ -259,7 +256,7 @@ class SourceControllerRoot extends BaseController {
 		}
 		return $menu;
 	}
-	
+
 	/**
 	 * get the other menu
 	 * @return Menu
@@ -267,22 +264,22 @@ class SourceControllerRoot extends BaseController {
 	function &getOtherMenu() {
 		global $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $pgv_lang;
 		global $SHOW_GEDCOM_RECORD, $ENABLE_CLIPPINGS_CART;
-		
+
 		if ($TEXT_DIRECTION=="rtl") $ff="_rtl";
 		else $ff="";
-		
+
 		if (!$this->source->canDisplayDetails() || (!$SHOW_GEDCOM_RECORD && $ENABLE_CLIPPINGS_CART < PGV_USER_ACCESS_LEVEL)) {
 			$tempvar = false;
 			return $tempvar;
 		}
-		
+
 			// other menu
 		$menu = new Menu($pgv_lang['other']);
 		$menu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}", "submenu{$ff}");
 		if ($SHOW_GEDCOM_RECORD)
 		{
 			$menu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['gedcom']['small']}");
-			if ($this->show_changes == 'yes'  && $this->userCanEdit())
+			if ($this->show_changes && $this->userCanEdit())
 			{
 				$menu->addLink("javascript:show_gedcom_record('new');");
 			}
@@ -301,7 +298,7 @@ class SourceControllerRoot extends BaseController {
 		{
 				// other / view_gedcom
 				$submenu = new Menu($pgv_lang['view_gedcom']);
-				if ($this->show_changes == 'yes' && $this->userCanEdit())
+				if ($this->show_changes && $this->userCanEdit())
 				{
 					$submenu->addLink("javascript:show_gedcom_record('new');");
 				}
@@ -345,6 +342,5 @@ else
 	{
 	}
 }
-$controller = new SourceController();
-$controller->init();
+
 ?>

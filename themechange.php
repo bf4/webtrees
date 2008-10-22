@@ -25,7 +25,7 @@
  * @version $Id$
  */
 
-require 'config.php';
+require './config.php';
 
 // Extract request variables
 $mytheme =safe_GET('mytheme');

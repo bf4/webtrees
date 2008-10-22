@@ -25,23 +25,24 @@
  * @version $Id$
  */
 
-require_once("config.php");
-require_once("includes/functions_export.php");
+require './config.php';
 
-if (!PGV_USER_GEDCOM_ADMIN || empty ($ged)) {
+require_once 'includes/functions_export.php';
+
+// Validate user parameters
+$ged                   =safe_GET('ged',                     get_all_gedcoms());
+$action                =safe_GET('action',                 'download');
+$remove                =safe_GET('remove',                 'yes', 'no');
+$convert               =safe_GET('convert',                'yes', 'no');
+$zip                   =safe_GET('zip',                    'yes', 'no');
+$privatize_export      =safe_GET('privatize_export',       'yes', 'no');
+$privatize_export_level=safe_GET('privatize_export_level', array('visitor', 'user', 'gedadmin', 'admin'));
+$filetype              =safe_GET('filetype',               array('gedcom', 'gramps'));
+
+if (!PGV_USER_GEDCOM_ADMIN || !$ged) {
 	header("Location: editgedcoms.php");
 	exit;
 }
-if (!isset ($action))
-	$action = "";
-if (!isset ($remove))
-	$remove = "no";
-if (!isset ($convert))
-	$convert = "no";
-if (!isset ($zip))
-	$zip = "no";
-if (!isset ($privatize_export))
-	$privatize_export = "no";
 
 if ($action == "download" && $zip == "yes") {
 	require "includes/pclzip.lib.php";
@@ -112,7 +113,7 @@ print_header($pgv_lang["download_gedcom"]);
 	<div class="center">
 	<h2><?php print $pgv_lang["download_gedcom"]; ?></h2>
 	<br />
-	<form name="convertform" method="post">
+	<form name="convertform" method="get">
 		<input type="hidden" name="action" value="download" />
 		<input type="hidden" name="ged" value="<?php print $ged; ?>" />
 		<table class="list_table" border="0" align="center" valign="top">
@@ -120,10 +121,10 @@ print_header($pgv_lang["download_gedcom"]);
 		<?php print $pgv_lang["options"]; ?>
 		</td></tr>
 		<td class="descriptionbox wrap" align="left"><?php print $pgv_lang["choose_file_type"] ?></td>
-		<td class="optionbox" align="left"><input type="radio" name="filetype" checked="checked"  value="gedcom" />GEDCOM 
+		<td class="optionbox" align="left"><input type="radio" name="filetype" checked="checked"  value="gedcom" />GEDCOM
 		<?php print_help_link("def_gedcom_help", "qm"); ?>
 		<br/>
-		<input type="radio" name="filetype" value="gramps" />Gramps XML 
+		<input type="radio" name="filetype" value="gramps" />Gramps XML
 		<?php print_help_link("def_gramps_help", "qm"); ?>
 		</td></tr>
 		<tr><td class="list_label" style="padding: 5px; text-align:<?php if ($TEXT_DIRECTION == "ltr") print "left"; else print "right";?>; "><?php print $pgv_lang["utf8_to_ansi"]; ?></td>

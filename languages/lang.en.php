@@ -26,11 +26,15 @@
  * @version $Id$
  */
 
-if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
-	print "You cannot access a language file directly.";
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
+$pgv_lang["exact"]				= "Exact";
+$pgv_lang["advanced_search"] 	= "Advanced Search";
+$pgv_lang["more_fields"]		= "Add More Fields";
+$pgv_lang["install_step_8"] 		= "Get Started";
 $pgv_lang["parent_family"]			= "Parents Family";
 $pgv_lang["step_parent_family"]		= "Step-Parent Family";
 $pgv_lang["immediate_family"]		= "Immediate Family";
@@ -520,6 +524,7 @@ $pgv_lang["download_file"]			= "Download file #GLOBALS[whichFile]#";
 $pgv_lang["indi_downloaded_from"]	= "This Individual was downloaded from:";
 $pgv_lang["family_downloaded_from"] = "This Family was downloaded from:";
 $pgv_lang["source_downloaded_from"] = "This Source was downloaded from:";
+$pgv_lang["enter_person_generations"] = "Number of generations:";
 
 //-- PLACELIST FILE MESSAGES
 $pgv_lang["connections"]			= "Place connections found";
@@ -623,11 +628,11 @@ $pgv_lang["show_surnames"]			= "Show Surname lists";
 $pgv_lang["all"]					= "ALL";
 $pgv_lang["hidden"]					= "Hidden";
 $pgv_lang["confidential"]			= "Confidential";
-$pgv_lang["alpha_index"]				= "Alphabetical Index";
+$pgv_lang["alpha_index"]			= "Alphabetical Index";
 $pgv_lang["name_list"] 				= "Name List";
 $pgv_lang["firstname_alpha_index"] 	= "Firstname Alphabetical Index";
-$pgv_lang["roots"]		 				= "Roots";
-$pgv_lang["leaves"] 					= "Leaves";
+$pgv_lang["roots"]		 			= "Roots";
+$pgv_lang["leaves"] 				= "Leaves";
 $pgv_lang["widow"] 					= "Widow";
 $pgv_lang["widower"] 				= "Widower";
 $pgv_lang["show_parents"] 			= "Show parents";
@@ -638,7 +643,8 @@ $pgv_lang["husb_age"]				= "Husband's age";
 $pgv_lang["wife_age"]				= "Wife's age";
 $pgv_lang["days"]					= "days";
 $pgv_lang["months"]					= "months";
-$pgv_lang["years"]					= "years";
+$pgv_lang["years"]					= "years";	// >2 years
+$pgv_lang["years2"]					= "years";	// 2 years
 $pgv_lang["day1"]					= "day";
 $pgv_lang["month1"]					= "month";
 $pgv_lang["year1"]					= "year";

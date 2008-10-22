@@ -3,7 +3,7 @@
  * Polish texts
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team. All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,8 +28,8 @@
  * @version $Id$
  */
 
-if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
-	print "Nie można uzyskać bezpośredniego dostępu do pliku.";
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
@@ -41,7 +41,7 @@ $factarray["ADR2"] 	= "Adres 2";
 $factarray["ADOP"] 	= "Adopcja";
 $factarray["AFN"] 	= "Numer pliku genealogicznego (AFN)";
 $factarray["AGE"] 	= "W wieku";
-$factarray["AGNC"] 	= "Agencja";
+$factarray["AGNC"] 	= "Instytucja";
 $factarray["ALIA"] 	= "Znany(a) także jako";
 $factarray["ANCE"] 	= "Przodkowie";
 $factarray["ANCI"] 	= "Udział przodków";
@@ -90,7 +90,7 @@ $factarray["EVEN"] 	= "Wydarzenie";
 $factarray["FAM"] 	= "Rodzina";
 $factarray["FAMC"] 	= "W rodzinie jako dziecko";
 $factarray["FAMF"] 	= "Plik rodziny";
-$factarray["FAMS"] 	= "W rodzinie jako małżonek";
+$factarray["FAMS"] 	= "Małżeństwo";
 $factarray["FCOM"] 	= "Pierwsza Komunia";
 $factarray["FILE"] 	= "Plik zewnętrzny";
 $factarray["FORM"] 	= "Format";
@@ -175,6 +175,7 @@ $factarray["FAMC:MARR:PLAC"] = "Miejsce ślubu rodziców";
 $factarray["FAMC:HUSB:OCCU"] = "Zawód ojca";
 $factarray[":BIRT:PLAC"] = "Miejsce urodzenia";
 $factarray["FAMS:MARR:PLAC"] = "Miejsce ślubu";
+$factarray["FAMS:MARR:DATE"] = "Data ślubu";
 $factarray["FAMS:SPOUSE:DEAT:PLAC"] = "Miejsce śmierci małżonka";
 $factarray["FAMC:HUSB:GIVN"] = "Imię ojca";
 $factarray["FAMS:SPOUSE:BIRT:PLAC"] = "Miejsce urodzenia małżonka";
@@ -187,11 +188,17 @@ $factarray["FAMS:CHIL:BIRT:PLAC"] = "Miejsce urodzin dziecka";
 
 // These facts are all colon delimited
 $factarray["BIRT:PLAC"] = "Miejsce urodzenia";
+$factarray["BIRT:DATE"] = "Data urodzenia";
 $factarray["DEAT:PLAC"] = "Miejsce śmierci";
+$factarray["DEAT:DATE"] = "Data śmierci";
 $factarray["CHR:PLAC"]  = "Miejsce chrztu";
+$factarray["CHR:DATE"]  = "Data chrztu";
 $factarray["BAPM:PLAC"] = "Miejsce chrztu";
+$factarray["BAPM:DATE"] = "Data chrztu";
 $factarray["BURI:PLAC"] = "Miejsce pochówku";
+$factarray["BURI:DATE"] = "Data pochówku";
 $factarray["MARR:PLAC"] = "Miejsce ślubu";
+$factarray["MARR:DATE"] = "Data ślubu";
 
 // Fakty specyficzne dla eksportu GedCom z programu Family Tree Maker
 $factarray["_MDCL"] = "Służba medyczna";
@@ -217,9 +224,10 @@ $factarray["_MREL"]	= "Związek z matką";
 $factarray["_FREL"]	= "Związek z ojcem";
 $factarray["_MSTAT"]= "Status na początku małżeństwa";
 $factarray["_MEND"]	= "Status na końcu małżeństwa";
+$factarray["_NAMS"]	= "Imiennik";
 
 // Fakty związane z GedCom 5.5.1 
-$factarray["FAX"] 	= "Fax";
+$factarray["FAX"] 	= "Faks";
 $factarray["FACT"] 	= "Fakt";
 $factarray["WWW"] 	= "Strona WWW";
 $factarray["MAP"] 	= "Mapa";

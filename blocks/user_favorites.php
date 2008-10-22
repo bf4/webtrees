@@ -25,6 +25,14 @@
  * @package PhpGedView
  * @subpackage Blocks
  */
+
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
+	exit;
+}
+
+define('PGV_USER_FAVORITES_PHP', '');
+
 require_once("includes/functions_print_lists.php");
 $PGV_BLOCKS["print_user_favorites"]["name"]			= $pgv_lang["user_favorites_block"];
 $PGV_BLOCKS["print_user_favorites"]["descr"]		= "user_favorites_descr";
@@ -34,10 +42,10 @@ $PGV_BLOCKS["print_user_favorites"]["config"]		= array("cache"=>0);
 
 //-- print user favorites
 function print_user_favorites($block=true, $config="", $side, $index) {
-	global $pgv_lang, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $TEXT_DIRECTION, $INDEX_DIRECTORY, $MEDIA_DIRECTORY, $MULTI_MEDIA, $MEDIA_DIRECTORY_LEVELS, $ctype, $indilist, $sourcelist;
+	global $pgv_lang, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $TEXT_DIRECTION, $INDEX_DIRECTORY, $MEDIA_DIRECTORY, $MULTI_MEDIA, $MEDIA_DIRECTORY_LEVELS, $ctype;
 	global $show_full, $PEDIGREE_FULL_DETAILS, $BROWSERTYPE;
 
-	// Override GEDCOM configuration temporarily	
+	// Override GEDCOM configuration temporarily
 	if (isset($show_full)) $saveShowFull = $show_full;
 	$savePedigreeFullDetails = $PEDIGREE_FULL_DETAILS;
 	$show_full = 1;

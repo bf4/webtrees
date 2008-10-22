@@ -24,8 +24,8 @@
  * @version $Id$
  */
 
-if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
-	print "You cannot access an include file directly.";
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
@@ -76,9 +76,6 @@ $PGV_IMAGES["pedigree"]["small"] = "small/pedigree.gif";
 $PGV_IMAGES["place"]["small"] = "small/place.gif";
 $PGV_IMAGES["repository"]["small"] = "small/repository.gif";
 $PGV_IMAGES["search"]["small"] = "small/search.gif";
-$PGV_IMAGES["sex"]["small"] = "small/male.gif";
-$PGV_IMAGES["sexf"]["small"] = "small/female.gif";
-$PGV_IMAGES["sexn"]["small"] = "small/fe_male.gif";
 $PGV_IMAGES["sfamily"]["small"] = "sfamily.gif";
 $PGV_IMAGES["source"]["small"] = "small/source.gif";
 $PGV_IMAGES["timeline"]["small"] = "small/timeline.gif";
@@ -168,8 +165,8 @@ $Darrowwidth = 15;	// -- additional width to include for the up arrows
 $CHARTS_CLOSE_HTML = true;		//-- should the charts, pedigree, descendacy, etc close the HTML on the page
 $PGV_DXHTMLTAB_COLORS = "#FFFFFF,#bababa";
 
-// Arrow symbol or icon for up-page links on Help pages 
-// This icon is referred to in Help text by: #GLOBALS[UpArrow]# 
+// Arrow symbol or icon for up-page links on Help pages
+// This icon is referred to in Help text by: #GLOBALS[UpArrow]#
 if (file_exists($PGV_IMAGE_DIR."/uarrow3.gif")) $UpArrow = "<img src=\"{$PGV_IMAGE_DIR}/uarrow3.gif\" class=\"icon\" border=\"0\" alt=\"^\" />";
 else $UpArrow = "<b>^^&nbsp;&nbsp;</b>";
 

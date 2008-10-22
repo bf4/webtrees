@@ -42,7 +42,8 @@
  * @subpackage Lists
  */
 
-require 'config.php';
+require './config.php';
+
 require_once 'includes/functions_print_lists.php';
 
 // We show three different lists:
@@ -221,45 +222,49 @@ if ($showList) {
 			$person=Person::getInstance($pid);
 			if (!is_object($person)) continue;
 			foreach ($person->getAllNames() as $name) {
-				$surn=reset(explode(',', $name['sort']));
-				// Ignore diacritics - need to use the same logic as get_indi_alpha()
-				// TODO: This ought to be a language-dependent conversion, as in some
-				// languages, letters with diacritics are regarded as separate letters.
-				$initial=get_first_letter($surn);
-				if ($DICTIONARY_SORT[$LANGUAGE]) {
-					$position = strpos($UCDiacritWhole, $initial);
-					if ($position!==false) {
-						$position = $position >> 1;
-						$initial = substr($UCDiacritStrip, $position, 1);
-					} else {
-						$position = strpos($LCDiacritWhole, $initial);
+				if ($SHOW_MARRIED_NAMES || $name['type']!='_MARNM') {
+					list($surn)=explode(',', $name['sort']);
+					// Ignore diacritics - need to use the same logic as get_indi_alpha()
+					// TODO: This ought to be a language-dependent conversion, as in some
+					// languages, letters with diacritics are regarded as separate letters.
+					$initial=get_first_letter($surn);
+					if ($DICTIONARY_SORT[$LANGUAGE]) {
+						$position = strpos($UCDiacritWhole, $initial);
 						if ($position!==false) {
 							$position = $position >> 1;
-							$initial = substr($LCDiacritStrip, $position, 1);
+							$initial = substr($UCDiacritStrip, $position, 1);
+						} else {
+							$position = strpos($LCDiacritWhole, $initial);
+							if ($position!==false) {
+								$position = $position >> 1;
+								$initial = substr($LCDiacritStrip, $position, 1);
+							}
 						}
 					}
-				}
-				if ($show_all=='yes' || $surname && $surname==$surn || !$surname && $alpha==$initial) {
-					$spfxsurn=reset(explode(',', $name['list']));
-					switch ($surn) {
-					case '@N.N.':
-						$spfxsurn=$pgv_lang['NN'];
-						break;
-					case '':
-						$spfxsurn='('.$pgv_lang['none'].')';
-						break;
+					if ($show_all=='yes' || $surname && $surname==$surn || !$surname && $alpha==$initial) {
+						switch ($surn) {
+						case '@N.N.':
+							$spfxsurn=$pgv_lang['NN'];
+							break;
+						case '':
+							$spfxsurn='('.$pgv_lang['none'].')';
+							break;
+						default:
+							$spfxsurn=$name['spfx'] ? $name['spfx'].' '.$name['surn'] : $name['surn'];
+							break;
+						}
+						if (! array_key_exists($surn, $surnames)) {
+							$surnames[$surn]=array();
+						}
+						if (! array_key_exists($spfxsurn, $surnames[$surn])) {
+							$surnames[$surn][$spfxsurn]=array();
+						}
+						// $surn is the base surname, e.g. GOGH
+						// $spfxsurn is the full surname, e.g. van GOGH
+						// $pid allows us to count indis as well as surnames, for indis that
+						// appear twice in this list.
+						$surnames[$surn][$spfxsurn][$pid]=true;
 					}
-					if (! array_key_exists($surn, $surnames)) {
-						$surnames[$surn]=array();
-					}
-					if (! array_key_exists($spfxsurn, $surnames[$surn])) {
-						$surnames[$surn][$spfxsurn]=array();
-					}
-					// $surn is the base surname, e.g. GOGH
-					// $spfxsurn is the full surname, e.g. van GOGH
-					// $pid allows us to count indis as well as surnames, for indis that
-					// appear twice in this list.
-					$surnames[$surn][$spfxsurn][$pid]=true;
 				}
 			}
 		}
@@ -275,26 +280,23 @@ if ($showList) {
 		}
 	} else {
 		// Show the individual list
-		// Note that each person is listed as many times as they have names that
-		// match the search criteria.  e.g. Mary Black nee Brown is listed twice
-		// on the "B" list.
 
 		$individuals=array();
 		$givn_initials=array();
 		// Show the indi list
 		foreach (array_keys($indis) as $pid) {
-			if (empty($pid)) continue;
 			$person=Person::getInstance($pid);
-			if (!is_object($person)) continue;
+			if (!$person) continue;
 			foreach ($person->getAllNames() as $n=>$name) {
 				if ($SHOW_MARRIED_NAMES || $name['type']!='_MARNM') {
-					list($surn,$givn)=explode(',', $name['sort']);
-					$givn_alpha=get_first_letter($givn);
-					if ((!$surname || $surname==$surn) &&
+					$givn_alpha=get_first_letter($name['givn']);
+					if ((!$surname || strpos($name['sort'], $surname.',')===0) &&
 					    (!$alpha   || $alpha==get_first_letter($name['sort']))) {
 						$givn_initials[$givn_alpha]=$givn_alpha;
 						if (!$falpha || $falpha==$givn_alpha) {
-							$individuals[]=array('gid'=>$pid, 'primary'=>$n, 'name'=>$name['sort']);
+							$person->setPrimaryName($n);
+							$individuals[]=$person;
+							continue 2;
 						}
 					}
 				}
@@ -312,7 +314,7 @@ if ($showList) {
 				$falpha=default_initial($givn_initials, $alpha);
 				$legend.=', '.$falpha;
 				foreach ($individuals as $key=>$value) {
-					if (strpos($value['name'], ','.$falpha)===false) {
+					if (strpos($value->getSortName(), ','.$falpha)===false) {
 						unset($individuals[$key]);
 					}
 				}
@@ -361,7 +363,7 @@ if ($showList) {
 		}
 
 		if ($showList) {
-			usort($individuals, 'itemsort');
+			usort($individuals, array('GedcomRecord', 'Compare'));
 			if ($legend && $show_all=='no') {
 				$legend=PrintReady(str_replace("#surname#", check_NN($legend), $pgv_lang['indis_with_surname']));
 			}

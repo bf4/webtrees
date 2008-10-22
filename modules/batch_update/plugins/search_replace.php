@@ -24,6 +24,11 @@
  * $Id$
  */
 
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
+	exit;
+}
+
 class plugin extends base_plugin {
 	var $search =null; // Search string
 	var $replace=null; // Replace string
@@ -31,7 +36,12 @@ class plugin extends base_plugin {
 	var $regex  =null; // Search string, converted to a regex
 	var $case   =null; // "i" for case insensitive, "" for case sensitive
 	var $error  =null; // Message for bad user parameters
-	
+
+	// Default is to operate on INDI records
+	function getRecordTypesToUpdate() {
+		return array('INDI', 'FAM', 'SOUR', 'REPO', 'NOTE', 'OBJE');
+	}
+
 	function doesRecordNeedUpdate($xref, $gedrec) {
 		return !$this->error && preg_match('/(?:'.$this->regex.')/'.$this->case, $gedrec);
 	}
@@ -98,9 +108,5 @@ class plugin extends base_plugin {
 			'<input type="checkbox" name="case" value="i" '.($this->case=='i' ? 'checked="checked"' : '').'" onchange="this.form.submit();">'.
 			'<br/><i>'.$pgv_lang['bu_case_desc'].'</i></td></tr>'.
 			parent::getOptionsForm();
-	}
-
-	function xgetActionPreview($xref, $gedrec) {
-		return '<pre>'.self::createEditLinks(preg_replace('/('.$this->regex.')/'.$this->case, self::decorateInsertedText($this->replace), $gedrec)).'</pre>';
 	}
 }

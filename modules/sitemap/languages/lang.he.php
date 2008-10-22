@@ -24,7 +24,13 @@
  * @version $Id$
  */
 
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
+	exit;
+}
+
 // Admin menu
+$pgv_lang["sitemap"]       		= "מיפוי של האתר"; 
 $pgv_lang["generate_sitemap"]    	= "צור קבצי מיפוי של האתר";
 
 // Sitemap pages
@@ -34,7 +40,7 @@ $pgv_lang["sitemaps_generated"]     	= "קובצי מיפוי של האתר הב
 $pgv_lang["sitemaps_placement"]     	= "הצב את כל הקבצים בתקיה הראשית (root) של התקנת ה-PhpGedView שלך.";
 $pgv_lang["sm_indi_info"]		= "נתוני אנשים";
 $pgv_lang["sm_family_info"]		= "נתוני משפחה";
-$pgv_lang["sm_individual_list"]		= "רשימת אנשים";
+$pgv_lang["sm_individual_list"]	= "רשימת אנשים";
 $pgv_lang["sm_family_list"]		= "רשימת משפחה";
 $pgv_lang["sm_item"]                	= "פריט";
 $pgv_lang["sm_priority"]            	= "עדיפות";

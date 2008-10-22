@@ -7,6 +7,10 @@
    Comments:        Dutch Language file for Google map module
 ===================================================*/
 
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
+	exit;
+}
 
 $pgv_lang["googlemap"]              = "Landkaart";
 $pgv_lang["no_gmtab"]               = "Geen gegevens voor deze persoon";

@@ -22,10 +22,12 @@
  * @package PhpGedView
  * @version $Id$
  */
-if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
-	print "Du kan ikke tilgå en sprogfil direkte.";
+
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
+
 // -- Define a fact array to map GEDCOM tags with their danish values
 $factarray["ABBR"] = "Forkortelse";
 $factarray["ADDR"] = "Adresse";

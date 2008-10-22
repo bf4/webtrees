@@ -25,16 +25,16 @@
  * @version $Id$
  * @author Christopher Stolworthy
  */
-//-- security check, only allow access from module.php
-if (strstr($_SERVER["SCRIPT_NAME"],"ra_functions.php")) {
-	print "Now, why would you want to do that.  You're not hacking are you?";
+
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
-loadLangFile("ra_lang");	// Set up our default language file
+loadLangFile("research_assistant:lang");
 
 include_once("modules/research_assistant/forms/ra_privacy.php");
-require_once("includes/person_class.php");
+require_once("includes/class_person.php");
 
 	//the inferences function will look for correlations 
 	//and return an array with each probability
@@ -74,7 +74,7 @@ require_once("includes/person_class.php");
 		//Hit the database so that the person's data is loaded into the cache.
 		$person = Person::getInstance($pid);
 		//Put the person's information from the cache into our array in the postion of their person ID.
-		$myindilist[$pid] = $indilist[$pid];
+		$myindilist[$pid] = $person;
 		//Get the person's family so we can get the children and spouse
 		$personsFamily = $person->getSpouseFamilies();
 		//Get the person's families where they were a child
@@ -89,42 +89,13 @@ require_once("includes/person_class.php");
 		//This is done simply for easier processing
 		$personsFamily = array_merge($personsFamily,$childFamilies);
 		//Iterate over the array of Families that was returned		
-		foreach($personsFamily as $famid=>$family) {
-			//Get the husband in this family. 
-			//This is done so we can include the person's parents
-			$myHusb = $family->getHusband();
-			//Get the wife in this family
-			//This is done so we can include the person's parents
-			$myWife = $family->getWife();
-			//get the children in the family of the person, and it will also
-			//get his siblings since we merged the arrays earlier
-			$children = $family->getChildren();
-			
-			if(!empty($myHusb))
-			{
-			//Load the husbands details into $myindilist
-			$myindilist[$myHusb->getXref()] = $indilist[$myHusb->getXref()];
+		foreach ($personsFamily as $famid=>$family) {
+			$myindilist[$family->getHusbId()]=$family->getHusband();
+			$myindilist[$family->getWifeId()]=$family->getWife();
+						foreach ($family->getChildren() as $child) {
+				$myindilist[$child->getXref()]=$child;
 			}
-			
-			if(!empty($myWife))
-			{
-			//Load the wife's details into $myindilist
-			$myindilist[$myWife->getXref()] = $indilist[$myWife->getXref()];			
-			}
-			//Copy the family data into the $myfamlist for later use
 			$myfamlist[] = $family;
-			//foreach over the array of children and siblings
-			if(!empty($children))
-			{
-				foreach($children as $chKey=>$child)
-				{
-					//copy the persons details into $myindilist
-					//these people may already exist and their detials will just be
-					//added again.  If we didn't do this, things might get lost 
-					//in the mix
-					if (!is_null($child)) $myindilist[$child->getXref()] = $indilist[$child->getXref()];
-				}
-			}
 		}
 		
 		//various counts
@@ -135,8 +106,7 @@ require_once("includes/person_class.php");
 		$malesCount = 0;
 		$femalesCount = 0;
 
-		foreach (array_keys($myindilist) as $pid) {
-			$indi=Person::getInstance($pid);
+		foreach ($myindilist as $pid=>$indi) {
 			if ($indi) {
 				//assign surname, gender, birthplace and occupation for the individual
 				$gender = $indi->getSex();
@@ -215,7 +185,7 @@ require_once("includes/person_class.php");
 				//check the array of record types coming in to make sure there is something there
 				if ($recordTag!='') {
 					//try and split the tag we are searching for in case of a colon.
-					$rec_tags = preg_split("/:/", $recordTag);
+					$rec_tags = explode(':', $recordTag);
 					//iterate over the count of the number of tags
 					for($i=0; $i<count($rec_tags); $i++) {
 						//set tag to the value in $rec_tags in the position of current loop position
@@ -462,7 +432,7 @@ require_once("includes/person_class.php");
 		if ($input=="FAMC:HUSB") $input = "father";
 		if ($input=="FAMC:WIFE") $input = "mother";
 		if ($input=="FAMS:SPOUSE") $input = "spouse";
-		$parts = preg_split("/:/", $input);
+		$parts = explode(':', $input);
 		$out = "";
 		foreach($parts as $part) {
 			if (isset($factarray[$part])) $out .= $factarray[$part];

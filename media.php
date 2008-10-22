@@ -42,10 +42,12 @@
  *  $dirs = list of subdirectories within current directory.  Built with medialist.
  */
 
-require("config.php");
-require_once("includes/functions_print_lists.php");
-require_once("includes/functions_print_facts.php");
-require_once("includes/functions_edit.php");
+require './config.php';
+
+require_once 'includes/functions_print_lists.php';
+require_once 'includes/functions_print_facts.php';
+require_once 'includes/functions_edit.php';
+require_once 'includes/functions_import.php';
 
 if (isset($_REQUEST['DEBUG'])) $DEBUG = $_REQUEST['DEBUG'];
 else $DEBUG = false;
@@ -106,7 +108,7 @@ function move_file($src, $dest) {
 function move_files($path, $blnProtect) {
 	global $MEDIA_FIREWALL_THUMBS, $TIME_LIMIT, $starttime, $pgv_lang;
 	if ($dir=@opendir($path)) {
-        while (($element=readdir($dir))!== false) {
+		while (($element=readdir($dir))!== false) {
 			$timelimit = $TIME_LIMIT ? $TIME_LIMIT : 0;
 			$exectime = time() - $starttime;
 			if (($timelimit != 0) && ($timelimit - $exectime) < 3) {
@@ -115,7 +117,7 @@ function move_files($path, $blnProtect) {
 				return;
 			}
 			// do not move certain files...
-	     	if ($element!= "." && $element!= ".." && $element!=".svn" && $element!="watermark" && $element!=".htaccess" && $element!="index.php" && $element!="MediaInfo.txt" && $element!="ThumbsInfo.txt") {
+			if ($element!= "." && $element!= ".." && $element!=".svn" && $element!="watermark" && $element!=".htaccess" && $element!="index.php" && $element!="MediaInfo.txt" && $element!="ThumbsInfo.txt") {
 				$fullpath = $path."/".$element;
 				if (is_dir($fullpath)) {
 					// call this function recursively on this directory
@@ -129,10 +131,10 @@ function move_files($path, $blnProtect) {
 					}
 				}
 			}
-        }
-        closedir($dir);
-    }
-    return;
+		}
+		closedir($dir);
+	}
+	return;
 }
 
 /**
@@ -144,8 +146,8 @@ function set_perms($path, $filemode, $dirmode) {
 	if (preg_match("'^($MEDIA_FIREWALL_ROOTDIR)?$MEDIA_DIRECTORY'", $path."/")==0){
 		return false;
 	}
-    if ($dir=@opendir($path)) {
-        while (($element=readdir($dir))!== false) {
+	if ($dir=@opendir($path)) {
+		while (($element=readdir($dir))!== false) {
 			$timelimit = $TIME_LIMIT ? $TIME_LIMIT : 0;
 			$exectime = time() - $starttime;
 			if (($timelimit != 0) && ($timelimit - $exectime) < 3) {
@@ -153,7 +155,7 @@ function set_perms($path, $filemode, $dirmode) {
 				print "<div class=\"error\">".$pgv_lang["setperms_time_exceeded"]."</div>";
 				return;
 			}
-	     	// do not set perms on certain files...
+			// do not set perms on certain files...
 			if ($element!= "." && $element!= ".." && $element!=".svn") {
 				$fullpath = $path."/".$element;
 				if (is_dir($fullpath)) {
@@ -172,34 +174,34 @@ function set_perms($path, $filemode, $dirmode) {
 					}
 				}
 			}
-        }
-        closedir($dir);
-    }
-    return;
+		}
+		closedir($dir);
+	}
+	return;
 }
 
 
 // global var used by recursive functions
 $starttime = time();
 
-// Get rid of extra slashes in input variables
-if (isset($filename)) $filename = stripslashes($filename);
-if (isset($directory))$directory = stripslashes($directory);
-if (isset($movetodir))$movetodir = stripslashes($movetodir);
-if (isset($movefile))$movefile = stripslashes($movefile);
+// TODO Determine source and validation requirements for these variables
+$filename=safe_REQUEST($_REQUEST, 'filename');
+$directory=safe_REQUEST($_REQUEST, 'directory', PGV_REGEX_NOSCRIPT, $MEDIA_DIRECTORY);
+$movetodir=safe_REQUEST($_REQUEST, 'movetodir');
+$movefile=safe_REQUEST($_REQUEST, 'movefile');
+$action=safe_REQUEST($_REQUEST, 'action', PGV_REGEX_ALPHA, 'filter');
+$subclick=safe_REQUEST($_REQUEST, 'subclick', PGV_REGEX_ALPHA, 'none');
+$media=safe_REQUEST($_REQUEST, 'media');
+$filter=safe_REQUEST($_REQUEST, 'filter', PGV_REGEX_NOSCRIPT);
 
-if (empty($action)) $action="filter";
-if (empty($subclick)) $subclick = "none";
+$level=safe_REQUEST($_REQUEST, 'level', PGV_REGEX_INTEGER, 0);
+$start=safe_REQUEST($_REQUEST, 'start', PGV_REGEX_INTEGER, 0);
+$max=safe_REQUEST($_REQUEST, 'max', PGV_REGEX_INTEGER, 20);
 
-if (!isset($media)) $media="";
-if (!isset($filter) || strlen($filter)<2) $filter="";
-if (!isset($directory)) $directory = $MEDIA_DIRECTORY;
-if (!isset($level)) $level=0;
-if (!isset($start)) $start = 0;
-if (!isset($max)) $max = 20;
+$showthumb=safe_REQUEST($_REQUEST, 'showthumb');
 
-if (!isset($showthumb)) $showthumb = false;
-else $showthumb= isset($showthumb);
+if (isset($_REQUEST['xref'])) $xref = $_REQUEST['xref'];
+
 if (count($_POST) == 0) $showthumb = true;
 
 $thumbget = "";
@@ -243,9 +245,9 @@ print_header($pgv_lang["manage_media"]);
 	function openImage(filename, width, height) {
 		height=height+50;
 		screenW = screen.width;
-	 	screenH = screen.height;
-	 	if (width>screenW-100) width=screenW-100;
-	 	if (height>screenH-110) height=screenH-120;
+		screenH = screen.height;
+		if (width>screenW-100) width=screenW-100;
+		if (height>screenH-110) height=screenH-120;
 		if ((filename.search(/\.je?pg$/gi)!=-1)||(filename.search(/\.gif$/gi)!=-1)||(filename.search(/\.png$/gi)!=-1)||(filename.search(/\.bmp$/gi)!=-1)) window.open('imageview.php?filename='+filename,'_blank','top=50,left=50,height='+height+',width='+width+',scrollbars=1,resizable=1');
 		else window.open(unescape(filename),'_blank','top=50,left=50,height='+height+',width='+width+',scrollbars=1,resizable=1');
 		return false;
@@ -298,7 +300,7 @@ print_header($pgv_lang["manage_media"]);
 	<tr><td class="topbottombar" colspan="6"><?php print_help_link("manage_media_help","qm","manage_media");print $pgv_lang["manage_media"]; ?></td></tr>
 	<!-- // NOTE: Filter options -->
 	<tr><td class="descriptionbox wrap width25"><?php print_help_link("simple_filter_help","qm","filter"); print $pgv_lang["filter"];?></td>
-	<td class="optionbox wrap"><input type="text" name="filter" value="<?php if(isset($filter)) print $filter;?>" /><br /><input type="submit" name="search" value="<?php print $pgv_lang["filter"];?>" onclick="this.form.subclick.value=this.name" />&nbsp;&nbsp;&nbsp;<input type="submit" name="all" value="<?php print $pgv_lang["display_all"]; ?>" onclick="this.form.subclick.value=this.name" /></td>
+	<td class="optionbox wrap"><input type="text" name="filter" value="<?php if($filter) print $filter;?>" /><br /><input type="submit" name="search" value="<?php print $pgv_lang["filter"];?>" onclick="this.form.subclick.value=this.name" />&nbsp;&nbsp;&nbsp;<input type="submit" name="all" value="<?php print $pgv_lang["display_all"]; ?>" onclick="this.form.subclick.value=this.name" /></td>
 
 	<!-- // NOTE: Upload media files -->
 	<td class="descriptionbox wrap width25"><?php print_help_link("upload_media_help","qm","upload_media"); print $pgv_lang["upload_media"]; ?></td>
@@ -320,18 +322,18 @@ print_header($pgv_lang["manage_media"]);
 
 // NOTE: Here is checked if the media structure is OK, if not , we cannot continue
 if (check_media_structure()) {
-	/**
-	 * This action creates a new directory in the current directory
-	 *
-	 * Checks are made for relative filename exploits.
-	 * The index.php is created which points back to the medialist page
-	 * The same is done for the thumbnail directory to keep filesystem consistent
-	 *
-	 * Directory access checks are done during menu creation so the user
-	 * cannot create directories deeper than the configured level
-	 *
-	 * @name $action->newdir
-	 */
+/**
+ * This action creates a new directory in the current directory
+ *
+ * Checks are made for relative filename exploits.
+ * The index.php is created which points back to the medialist page
+ * The same is done for the thumbnail directory to keep filesystem consistent
+ *
+ * Directory access checks are done during menu creation so the user
+ * cannot create directories deeper than the configured level
+ *
+ * @name $action->newdir
+ */
 	if ($action == "newdir") {
 		print "<table class=\"list_table $TEXT_DIRECTION width100\">";
 		print "<tr><td class=\"messagebox wrap\">";
@@ -505,21 +507,21 @@ if (check_media_structure()) {
 	}
 
 
-	/**
-	 * This action moves a file one directory level at a time
-	 *
-	 * Note: this will generally not work with default install.
-	 * files and dirs need to be writable by the php/web user,
-	 *
-	 * Thumbnails are moved as well forcing a consistent directory structure
-	 * Directory access checks are done during menu creation so directories
-	 * deeper than the configured level will not be shown even if they exist.
-	 *
-	 * Media Firewall Note: not sure how this function gets called, 
-	 * not yet modified to work with the Media Firewall
-	 * 
-	 * @name $action->moveto
-	 */
+/**
+ * This action moves a file one directory level at a time
+ *
+ * Note: this will generally not work with default install.
+ * files and dirs need to be writable by the php/web user,
+ *
+ * Thumbnails are moved as well forcing a consistent directory structure
+ * Directory access checks are done during menu creation so directories
+ * deeper than the configured level will not be shown even if they exist.
+ *
+ * Media Firewall Note: not sure how this function gets called,
+ * not yet modified to work with the Media Firewall
+ *
+ * @name $action->moveto
+ */
 	if ($action=="moveto") {
 		print "<table class=\"list_table $TEXT_DIRECTION width100\">";
 		print "<tr><td class=\"messagebox wrap\">";
@@ -583,7 +585,7 @@ if (check_media_structure()) {
 				if (file_exists(filename_decode($moveThumbFrom))) {
 					if (is_dir(filename_decode($moveToThumbDir))) {
 						$thumbOK = @rename(filename_decode($moveThumbFrom), filename_decode($moveThumbTo));
-				 	} else {
+					} else {
 						if (mkdir(filename_decode($moveToThumbDir),0777)) {
 							$thumbOK = @rename(filename_decode($moveThumbFrom), filename_decode($moveThumbTo));
 						} else {
@@ -616,7 +618,6 @@ if (check_media_structure()) {
 						// This can't be undone through the normal "reject change",
 						// so we'll auto-accept all changes to this media object
 						// regardless of config settings
-						include_once('includes/functions_import.php');
 						accept_changes($_REQUEST['xref']."_".$GEDCOM);
 					}
 				}
@@ -627,11 +628,11 @@ if (check_media_structure()) {
 		print "</td></tr></table>";
 	}
 
-	/**
-	 * This action generates a thumbnail for the file
-	 *
-	 * @name $action->thumbnail
-	 */
+/**
+ * This action generates a thumbnail for the file
+ *
+ * @name $action->thumbnail
+ */
 	if ($action == "thumbnail") {
 		print "<table class=\"list_table $TEXT_DIRECTION width100\">";
 		print "<tr><td class=\"messagebox wrap\">";
@@ -644,7 +645,7 @@ if (check_media_structure()) {
 			foreach ($medialist as $key => $media) {
 				if (!($MEDIA_EXTERNAL && isFileExternal($filename))) {
 					// why doesn't this use thumbnail_file??
-					$thumbnail = str_replace("$MEDIA_DIRECTORY",$MEDIA_DIRECTORY."thumbs/",check_media_depth($media["FILE"], "NOTRUNC"));  
+					$thumbnail = str_replace("$MEDIA_DIRECTORY",$MEDIA_DIRECTORY."thumbs/",check_media_depth($media["FILE"], "NOTRUNC"));
 					if (!$media["THUMBEXISTS"]) {
 						if (generate_thumbnail($media["FILE"],$thumbnail)) {
 							print_text("thumb_genned");
@@ -700,8 +701,8 @@ if (check_media_structure()) {
 		}
 		print "</td></tr></table>";
 		$action="filter";
-	}  
-  
+	}
+
 	// Move single file to standard dir
 	if ($action == "movestandard") {
 		print "<table class=\"list_table $TEXT_DIRECTION width100\">";
@@ -720,7 +721,7 @@ if (check_media_structure()) {
 		}
 		print "</td></tr></table>";
 		$action="filter";
-	}  
+	}
 
 	// Move entire dir and all subdirs to protected dir
 	if ($action == "movedirprotected") {
@@ -760,7 +761,7 @@ if (check_media_structure()) {
 		print "</td></tr></table>";
 		$action="filter";
 	}
-  
+
 	// Upload media items
 	if ($action == "upload") {
 		print "<table class=\"list_table $TEXT_DIRECTION width100\">";
@@ -774,7 +775,7 @@ if (check_media_structure()) {
 				$folderName = dirname($folderName)."/";
 				$thumbFolderName = str_replace($MEDIA_DIRECTORY, $MEDIA_DIRECTORY."thumbs/", $folderName);
 
-				if (!empty($folderName)) { 
+				if (!empty($folderName)) {
 					$_SESSION["upload_folder"] = $folderName; // store standard media folder in session
 					if ($USE_MEDIA_FIREWALL) {
 						$folderName = get_media_firewall_path($folderName);
@@ -782,7 +783,7 @@ if (check_media_structure()) {
 					// make sure the dir exists
 					@mkdirs($folderName);
 				}
-				if (!empty($thumbFolderName)) { 
+				if (!empty($thumbFolderName)) {
 					if ($USE_MEDIA_FIREWALL && $MEDIA_FIREWALL_THUMBS) {
 						$thumbFolderName = get_media_firewall_path($thumbFolderName);
 					}
@@ -1068,7 +1069,7 @@ if (check_media_structure()) {
 						AddToChangeLog($server_filename." -- ".$pgv_lang["media_file_not_deleted"]);
 					}
 				}
-	
+
 				// Check if thumbnail exists. If so, delete it.
 				$thumbnail = str_replace("$MEDIA_DIRECTORY",$MEDIA_DIRECTORY."thumbs/",$filename);
 				$server_thumbnail = get_server_filename($thumbnail);
@@ -1110,7 +1111,6 @@ if (check_media_structure()) {
 
 				// Record changes to the Media object
 					//-- why do we accept changes just to delete the item?
-					include_once('includes/functions_import.php');
 					accept_changes($xref."_".$GEDCOM);
 					$objerec = find_gedcom_record($xref);
 
@@ -1150,11 +1150,11 @@ if (check_media_structure()) {
 		print "</td></tr></table>";
 	}
 
-	/**
-	 * Generate link flyout menu
-	 *
-	 * @param string $mediaid
-	 */
+/**
+ * Generate link flyout menu
+ *
+ * @param string $mediaid
+ */
 	function print_link_menu($mediaid) {
 		global $pgv_lang, $TEXT_DIRECTION;
 
@@ -1203,16 +1203,16 @@ if (check_media_structure()) {
 	if ($action == "filter") {
 		if (empty($directory)) $directory = $MEDIA_DIRECTORY;
 		$medialist = get_medialist(true, $directory);
-		// Get the list of media items
-		/**
-		 * This is the default action for the page
-		 *
-		 * Displays a list of dirs and files. Displaying only
-		 * thumbnails as the images may be large and we do not want large delays
-		 * while administering the file structure
-		 *
-		 * @name $action->filter
-		 */
+// Get the list of media items
+/**
+ * This is the default action for the page
+ *
+ * Displays a list of dirs and files. Displaying only
+ * thumbnails as the images may be large and we do not want large delays
+ * while administering the file structure
+ *
+ * @name $action->filter
+ */
 		// Show link to previous folder
 		if ($level>0) {
 			$levels = explode("/", $directory);

@@ -28,27 +28,30 @@
  * @translator: Julio Sánchez Fernández
  */
 
-//-- security check, only allow access from module.php
-if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
-	print "Usted no puede acceder a este archivo de idioma directamente.";
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
 // Added in VERSION 4.1.6
-$pgv_lang["lb_generalhelp"]     = "Página personal - Ayuda general de Lightbox";
-$pgv_lang["lb_viewedit"]		= "Ver/Modificar";
-$pgv_lang["lb_viewnotes"]		= "Ver notas";
-$pgv_lang["lb_viewdetails"]		= "Ver detalles";
-$pgv_lang["lb_viewsource"]		= "Ver fuente";
-$pgv_lang["lb_editmedia"]		= "Modificar objeto";
-$pgv_lang["lb_unlinkmedia"]		= "Desvincular objeto";
-$pgv_lang["lb_balloon_true"]	= "Globo";
-$pgv_lang["lb_balloon_false"]	= "Normal";
-$pgv_lang["lb_tt_balloon"]		= "Página personal - Miniatura de pestaña de álbum - Ayuda de los enlaces superiores";
-$pgv_lang["lb_ttAppearance"]	= "Notas - Apariencia de la ayuda";
-$pgv_lang["view_lightbox"]		= "Ver álbum de ...";
-$pgv_lang["lb_notes"]			= "Notas";
-// $pgv_lang["lb_notes_info"]		= "";
+// $pgv_lang["lb_toAdminConfigPage"]	= "Return to Admin Page";
+// $pgv_lang["lb_toAdminConfigPage"]	= "Return to Admin Page";
+// $pgv_lang["lb_toAdminConfigPage"]	= "Return to Admin Page";
+$pgv_lang["lb_manage"]				= "Gestionar la configuración de Lightbox";
+$pgv_lang["lb_generalhelp"]			= "Página personal - Ayuda general de Lightbox";
+$pgv_lang["lb_viewedit"]			= "Ver/Modificar";
+$pgv_lang["lb_viewnotes"]			= "Ver notas";
+$pgv_lang["lb_viewdetails"]			= "Ver detalles";
+$pgv_lang["lb_viewsource"]			= "Ver fuente";
+$pgv_lang["lb_editmedia"]			= "Modificar objeto";
+$pgv_lang["lb_unlinkmedia"]			= "Desvincular objeto";
+$pgv_lang["lb_balloon_true"]		= "Globo";
+$pgv_lang["lb_balloon_false"]		= "Normal";
+$pgv_lang["lb_tt_balloon"]			= "Página personal - Miniatura de pestaña de álbum - Ayuda de los enlaces superiores";
+$pgv_lang["lb_ttAppearance"]		= "Notas - Apariencia de la ayuda";
+$pgv_lang["view_lightbox"]			= "Ver álbum de ...";
+$pgv_lang["lb_notes"]				= "Notas";
+// $pgv_lang["lb_notes_info"]			= "";
  
 
 // Added in VERSION 4.1.4 
@@ -103,14 +106,20 @@ $pgv_lang["lb_help"] 		 = "Ayuda de Álbum";
 $pgv_lang["lightbox"]		 = "Álbum";
 $pgv_lang["showmenu"] 		 = "Mostrar menú:";
 
-$pgv_lang["TYPE__other"] 	 = "Otro";
+// $pgv_lang["TYPE__other"] 			= "Other";
+$pgv_lang["TYPE__footnotes"]		= "Notas al pie";
 
-$pgv_lang["TYPE__footnotes"] = "Notas al pie";
+$pgv_lang["ROW_TYPE__photo"] 		= $pgv_lang["TYPE__photo"];
+$pgv_lang["ROW_TYPE__document"] 	= $pgv_lang["TYPE__document"];
+$pgv_lang["ROW_TYPE__census"] 		= $factarray["CENS"];
+$pgv_lang["ROW_TYPE__other"] 		= $pgv_lang["TYPE__other"];
+$pgv_lang["ROW_TYPE__footnotes"]	= $pgv_lang["TYPE__footnotes"];
 
-$pgv_lang["census_text"]  	 = "\"Estas imágenes del censo se han obtenido de \"Archivos Nacionales\", custodio de los registros originales, ";
-$pgv_lang["census_text"] 	.= "and appear here with their approval on the condition that no commercial use is made of them without permission." . "\n" ;
-$pgv_lang["census_text"] 	.= "Requests for commercial publication of these or other UK census images appearing on this website should be directed to: ";
-$pgv_lang["census_text"] 	.= "Image Library, The National Archives, Kew, Surrey, TW9 4DU, United Kingdom.\"" . "\n" ;
+ $pgv_lang["census_text"]  	 = "\"UK census images have been obtained from \"The National Archives\", the custodian of the original records, ";
+ $pgv_lang["census_text"] 	.= "and appear here with their approval on the condition that no commercial use is made of them without permission." . "\n" ;
+ $pgv_lang["census_text"] 	.= "Requests for commercial publication of these or other UK census images appearing on this website should be directed to: ";
+ $pgv_lang["census_text"] 	.= "Image Library, The National Archives, Kew, Surrey, TW9 4DU, United Kingdom.\"" . "\n" ;
+// $pgv_lang["census_text"]  	 = "";
 
 $pgv_lang["lb_edit_details"] 	= "Editar detalles";
 $pgv_lang["lb_view_details"] 	= "Ver detalles";

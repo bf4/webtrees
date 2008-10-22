@@ -24,11 +24,12 @@
  * @version $Id$
  * @author Christopher Stolworthy
  */
- //-- security check, only allow access from module.php
-if (strstr($_SERVER["SCRIPT_NAME"],"WW1DraftB.php")) {
-	print "Now, why would you want to do that.  You're not hacking are you?";
+
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
+
 require_once "ra_form.php";
 require_once "includes/functions_edit.php";
 

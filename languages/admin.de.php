@@ -26,10 +26,69 @@
  * @version $Id$
  */
 
-if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
-	print "Direkter Sprach-Dateien Zugriff ist nicht erlaubt.";
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
+$pgv_lang["upload_a_gedcom"] 		= "GEDCOM-Datei hochladen";
+$pgv_lang["start_entering"] 		= "Neue Daten eingeben";
+$pgv_lang["add_gedcom_from_path"] 	= "Bereits auf dem Server vorhandene GEDCOM-Datei einfügen";
+$pgv_lang["manage_gedcoms"]			= "GEDCOM-Dateien verwalten";
+$pgv_lang["get_started_instructions"]	= "Bitte wählen Sie eine der folgenden Optionen um anzufangen mit PhpGedView zu arbeiten";
+
+$pgv_lang["admin_users_exists"]		= "Folgende Verwalter sind bereits eingetragen:";
+$pgv_lang["install_step_1"]			= "Verifizierung des Betriebssytems";
+$pgv_lang["install_step_2"]			= "Datenbank-Anschluß";
+$pgv_lang["install_step_3"]			= "Datenbank-Tabellen";
+$pgv_lang["install_step_4"]			= "Konfiguration der Site";
+$pgv_lang["install_step_5"]			= "Sprachen";
+$pgv_lang["install_step_6"]			= "Speichern der Site-Konfiguration";
+$pgv_lang["install_step_7"]			= "Erstellung des Haupt-Verwalters";
+$pgv_lang["install_wizard"]			= "Installations-Assistent";
+$pgv_lang["basic_site_config"]		= "Gewöhnliche Optionen";
+$pgv_lang["adv_site_config"]		= "Erweiterte Optionen";
+$pgv_lang["config_not_saved"]		= "*Ihre Konfigurations-Optionen werden erst in der 6. Etappe gespeichert";
+$pgv_lang["download_config"]		= "Konfigurations-Datei config.php herunterladen";
+$pgv_lang["site_unavailable"]		= "Die Site ist momentan nicht erreichbar";
+$pgv_lang["to_manage_users"]		= "Um Benutzer zu verwalten, wenden Sie sich bitte an die Seite <a href=\"useradmin.php\">Benutzer Verwaltung</a>.";
+$pgv_lang["db_tables_created"]		= "Die Datenbank-Tabellen wurden erstellt";
+$pgv_lang["config_saved"]			= "Konfiguration wurde gespeichert";
+$pgv_lang["checking_errors"]		= "Fehler-Suche...";
+$pgv_lang["checking_php_version"]	= "Verifizierung der Version des PHP-Systems:";
+$pgv_lang["failed"]					= "Fehler";
+$pgv_lang["pgv_requires_version"]	= "PhpGedView erfordert mindestens die Version ".PGV_REQUIRED_PHP_VERSION." des PHP-Systems";
+$pgv_lang["using_php_version"]		= "Ihr Server unterstützt nur PHP-Version ".PHP_VERSION;
+$pgv_lang["checking_db_support"]	= "Verifizierung der Datenbank-Unterstützung:";
+$pgv_lang["no_db_extensions"]		= "Ihr Server betreibt keine der von PhpGedView unterstützten Datenbank-Systemen.";
+$pgv_lang["db_ext_support"]			= "Ihr Server betreibt das #DBEXT# Datenbank-System";
+$pgv_lang["checking_config.php"]	= "Verifizierung der Konfigurations-Datei config.php:";
+$pgv_lang["config.php_missing"]		= "Die Konfigurations-Datei config.php ist nicht vorhanden.";
+$pgv_lang["config.php_missing_instr"]	= "Der Installation-Assistent ist nicht in der Lage, Ihre Option-Wahlen in die Konfigurations-Datei config.php zu speichern.  Sie können können die fehlende Datei config.php erstellen, indem Sie die Datei config.dist kopieren und dann entsprechend umbenannen. Eine andere Möglichkeit wäre nach der Konfiguration die Resultate herunter zu laden und danach die gerade heruntergeladene Konfigurations-Datei config.php hoch zu laden.";
+$pgv_lang["config.php_not_writable"]	= "Die Datei config.php ist nicht überschreibbar.";
+$pgv_lang["config.php_not_writable_instr"]	= "Der Installation-Assistent ist nicht in der Lage, Ihre Option-Wahlen in die Konfigurations-Datei config.php zu speichern.  Sie können die fehlenden Schreib-Rechte erstellen.  Eine andere Möglichkeit wäre, nach der Konfiguration die Resultate herunter zu laden und danach die gerade heruntergeladene Konfigurations-Datei config.php hoch zu laden.";
+$pgv_lang["passed"]					= "Keine Fehler";
+$pgv_lang["config.php_writable"]	= "Die Konfigurations-Datei config.php existiert und kann überschrieben werden.";
+$pgv_lang["checking_warnings"]		= "Warnungen-Suche...";
+$pgv_lang["checking_timelimit"]		= "Versuch, Laufzeit-Beschränkung zu ändern:";
+$pgv_lang["cannot_change_timelimit"]	= "Laufzeit-Beschränkung kann nicht geändert werden.";
+$pgv_lang["cannot_change_timelimit_instr"]	= "Es ist möglich, daß bei größeren Datenbanken mit vielen Personen nicht alle Funktionen einwandfrei laufen.";
+$pgv_lang["current_max_timelimit"]	= "Aktuelle, vom Server beschränkte Laufzeit:";
+$pgv_lang["check_memlimit"]			= "Versuch, Hauptspeicherbeschränkung zu ändern:";
+$pgv_lang["cannot_change_memlimit"]	= "Hauptspeicherbeschränkung kann nicht geändert werden.";
+$pgv_lang["cannot_change_memlimit_instr"]	= "Es ist möglich, daß bei größeren Datenbanken mit vielen Personen nicht alle Funktionen einwandfrei laufen.";
+$pgv_lang["current_max_memlimit"]	= "Aktuelle, vom Server beschränkte Hauptspeicherbeschränkung:";
+$pgv_lang["check_upload"]			= "Versuch, Beschränkungen zum Hochlanden zu ermitteln:";
+$pgv_lang["current_max_upload"]		= "Maximale Größe von hochzuladenen Dateien:";
+$pgv_lang["check_gd"]				= "Versuch, die GD image library zu ermitteln:";
+$pgv_lang["cannot_use_gd"]			= "Die GD image library ist von Ihrem Server nicht unterstützt.  PhpGedView kann Miniaturbilder nicht automatisch erstellen.";
+$pgv_lang["check_sax"]				= "Versuch, die SAX XML library zu ermitteln:";
+$pgv_lang["cannot_use_sax"]			= "Die SAX XML library ist von Ihrem Server nicht unterstützt.  PhpGedView kann keine Berichte erstellen, und einige andere Funktionen fehlen auch.";
+$pgv_lang["check_dom"]				= "Versuch, die DOM XML library zu ermitteln:";
+$pgv_lang["cannot_use_dom"]			= "Die DOM XML library ist von Ihrem Server nicht unterstützt.  PhpGedView kann keine Dateien im XML Format exportieren.";
+$pgv_lang["check_calendar"]			= "Versuch, die Fähigkeit Kalender und Daten zu bearbeiten zu ermitteln:";
+$pgv_lang["cannot_use_calendar"]	= "Ihr Server unterstützt nur das Bearbeiten von normalen Kalendern und Daten.  Besondere Daten, die zum Beispiel in Jüdischen oder Arabischen Kalendern vorkommen, können nicht bearbeitet werden.";
+$pgv_lang["warnings_passed"]		= "Die Warnungen-Suche ist beendet.";
+$pgv_lang["warning_instr"]			= "Falls Sie Meldungen erhalten haben, können Sie trotzdem das Programm mit beschränkten Funktionen benutzen.";
 
 $pgv_lang["associated_files"]		= "Verwandte Dateien:";
 $pgv_lang["remove_all_files"]		= "Alle nicht unbedingt erforderliche Dateien löschen";
@@ -105,7 +164,6 @@ $pgv_lang["ansi_to_utf8"]				= "Soll diese ANSI-codierte GEDCOM-Datei in den UTF
 $pgv_lang["apply_privacy"]				= "Datenschutz Einstellungen verwenden?";
 $pgv_lang["back_useradmin"]				= "Zurück zur Benutzerverwaltung";
 $pgv_lang["bytes_read"]					= "Gelesene Bytes:";
-$pgv_lang["calc_marr_names"]			= "Ehenamen Ermittlung in Gang";
 $pgv_lang["can_admin"]					= "darf verwalten";
 $pgv_lang["can_edit"]					= "Zugriffsrechte";
 $pgv_lang["change_id"]					= "Persönliche ID ändern in:";
@@ -170,7 +228,6 @@ $pgv_lang["ifx"]						= "Informix";
 $pgv_lang["img_admin_settings"]			= "Bild-Veränderungs-Konfiguration bearbeiten";
 $pgv_lang["autoContinue"]				= "«Fortsetzen» Button automatisch drücken";
 $pgv_lang["import_complete"]			= "Import beendet";
-$pgv_lang["import_marr_names"]			= "Ehenamen ermitteln";
 $pgv_lang["import_options"]				= "Import Optionen";
 $pgv_lang["import_progress"]			= "Import Fortschritt...";
 $pgv_lang["import_statistics"]			= "Import Statistiken";
@@ -294,6 +351,10 @@ $pgv_lang["welcome_new"]				= "Willkommen auf Ihrer neuen PhpGedView-Website.";
 $pgv_lang["yearly"]						= "Jährlich";
 $pgv_lang["admin_OK_subject"]			= "Zugangserlaubnis bei #SERVER_NAME#";
 $pgv_lang["admin_OK_message"]			= "Der Verwalter von PhpGedView bei #SERVER_NAME# hat Ihren Zugangsantrag erlaubt.  Sie können sich jetzt mit dem folgenden Link anmelden:\r\n\r\n#SERVER_NAME#\r\n";
+
+$pgv_lang["batch_update"]				= "Ihre Datenbank mittels Stapelverarbeitung aktualisieren oder ändern";
+
+// Text for the Gedcom Checker
 $pgv_lang["gedcheck"]					= "GEDCOM Verifizierungs-Modul";
 $pgv_lang["gedcheck_text"]				= "Dieses Modul verifiziert GEDCOM Dateien gegen den <a href='http://phpgedview.sourceforge.net/ged551-5.pdf'>GEDCOM 5.5.1 Standard</a>.  Es sucht auch nach oft vorkommenden Fehlern.<br /><br />Bitte beachten Sie, dass viele Programme den GEDCOM 5.5.1 Standard erweitert haben.  Deshalb sollten Sie sich zuerst nur mit «kritischen» Fehlern befassen.  Den Grund der meisten Fehlermeldungen können Sie durch gündliches Lesen des Standards ermitteln.  Wenn absolut notwending, können Sie auch Ihre Fragen im <a href='https://sourceforge.net/forum/forum.php?forum_id=185166'>Help-Forum</a> stellen.";
 $pgv_lang["info"]						= "Information";

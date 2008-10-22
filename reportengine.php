@@ -26,7 +26,8 @@
  * @version $Id$
  */
 
-require("config.php");
+require './config.php';
+
 require_once("includes/functions_charts.php");
 
 //-- try to increase the time limit because reports can take a long time
@@ -63,7 +64,6 @@ if (!isset($type)) $type = array();
 //-- setup the arrays
 $newvars = array();
 foreach($vars as $name=>$var) {
-	$var = clean_input($var);
 	$newvars[$name]["id"] = $var;
 	if (!empty($type[$name]) && (($type[$name]=="INDI")||($type[$name]=="FAM")||($type[$name]=="SOUR"))) {
 		$gedcom = find_gedcom_record($var);
@@ -131,7 +131,7 @@ else if ($action=="setup") {
 		print "<span class=\"error\">".$pgv_lang["file_not_found"]."</span> ".$report."\n";
 	}
 	else {
-		require_once("includes/reportheader.php");
+		require_once 'includes/reportheader.php';
 		$report_array = array();
 		//-- start the sax parser
 		$xml_parser = xml_parser_create();
@@ -144,7 +144,7 @@ else if ($action=="setup") {
 
 		//-- open the file
 		if (!($fp = fopen($report, "r"))) {
-		   die("could not open XML input");
+			die("could not open XML input");
 		}
 		//-- read the file and parse it 4kb at a time
 		while ($data = fread($fp, 4096)) {
@@ -170,7 +170,7 @@ function paste_id(value) {
 		print "<input type=\"hidden\" name=\"report\" value=\"$report\" />\n";
 		print "<input type=\"hidden\" name=\"download\" value=\"\" />\n";
 		//print "<input type=\"hidden\" name=\"output\" value=\"PDF\" />\n";
-				
+
 		print "<table class=\"facts_table width50 center $TEXT_DIRECTION\">";
 		print "<tr><td class=\"topbottombar\" colspan=\"2\">".$pgv_lang["enter_report_values"]."</td></tr>";
 		print "<tr><td class=\"descriptionbox width30 wrap\">".$pgv_lang["selected_report"]."</td><td class=\"optionbox\">".$report_array["title"]."</td></tr>\n";
@@ -197,14 +197,14 @@ function paste_id(value) {
 					if (!isset($input["default"])) $input["default"] = "";
 					if (isset($input["lookup"])) {
 						if ($input["lookup"]=="INDI") {
-							if (!empty($pid)) $input["default"] = clean_input($pid);
+							if (!empty($pid)) $input["default"] = $pid;
 							else $input["default"] = check_rootid($input["default"]);
 						}
 						if ($input["lookup"]=="FAM") {
-							if (!empty($famid)) $input["default"] = clean_input($famid);
+							if (!empty($famid)) $input["default"] = $famid;
 						}
 						if ($input["lookup"]=="SOUR") {
-							if (!empty($sid)) $input["default"] = clean_input($sid);
+							if (!empty($sid)) $input["default"] = $sid;
 						}
 					}
 					if ($input["type"]=="text") {
@@ -241,7 +241,7 @@ function paste_id(value) {
 							print "</option>\n";
 						}
 						print "</select>\n";
-					}		
+					}
 					if (isset($input["lookup"])) {
 						print "<input type=\"hidden\" name=\"type[".$input["name"]."]\" value=\"".$input["lookup"]."\" />";
 						if ($input["lookup"]=="FAM") print_findfamily_link("famid");
@@ -270,13 +270,13 @@ function paste_id(value) {
 		<table><tr>
 		<td><img src="images/media/pdf.gif" alt="PDF" title="PDF" /></td>
 		<td><img src="images/media/html.gif" alt="HTML" title="HTML" /></td>
-		<?php if (file_exists("includes/reportlatex.php")) { ?> 
+		<?php if (file_exists("includes/reportlatex.php")) { ?>
 		<td><img src="images/media/tex.gif" alt="LaTEX" title="LaTEX" /></td>
 		<?php } ?>
 		</tr><tr>
 		<td><center><input type="radio" name="output" value="PDF" checked="checked" /></center></td>
 		<td><center><input type="radio" name="output" value="HTML" <?php if ($output=="HTML") echo " checked=\"checked\"";?> /></center></td>
-		<?php if (file_exists("includes/reportlatex.php")) { ?> 
+		<?php if (file_exists("includes/reportlatex.php")) { ?>
 		<td><center><input type="radio" name="output" value="TEX" <?php if ($output=="TEX") echo " checked=\"checked\"";?> /></center></td>
 		<?php } ?>
 		</tr></table>
@@ -302,9 +302,18 @@ function paste_id(value) {
 //-- run the report
 else if ($action=="run") {
 	//-- load the report generator
-	if ($output=="HTML") require("includes/reporthtml.php");
-	else if ($output=="TEX") require("includes/reportlatex.php");
-	else require("includes/reportpdf.php");
+	switch ($output) {
+	case 'HTML':
+		require 'includes/class_reporthtml.php';
+		break;
+	case 'TEXT':
+		require 'includes/class_reportlatex.php';
+		break;
+	case 'PDF':
+	default:
+		require 'includes/class_reportpdf.php';
+		break;
+	}
 
 	//-- start the sax parser
 	$xml_parser = xml_parser_create();
@@ -317,7 +326,7 @@ else if ($action=="run") {
 
 	//-- open the file
 	if (!($fp = fopen($report, "r"))) {
-	   die("could not open XML input");
+		die("could not open XML input");
 	}
 	//-- read the file and parse it 4kb at a time
 	while ($data = fread($fp, 4096)) {

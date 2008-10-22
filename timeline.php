@@ -28,9 +28,14 @@
  * @version $Id$
  */
 
-require_once("includes/controllers/timeline_ctrl.php");
+require './config.php';
+
+require_once 'includes/controllers/timeline_ctrl.php';
+$controller = new TimelineController();
+$controller->init();
 
 print_header($pgv_lang["timeline_title"]);
+require 'js/autocomplete.js.htm';
 ?>
 <script language="JavaScript" type="text/javascript">
 <!--
@@ -137,7 +142,7 @@ function MM(e) {
 			yearform = document.getElementById('yearform'+personnum);
 			ageform = document.getElementById('ageform'+personnum);
 			yearform.innerHTML = year+"      "+month+" <?php print get_first_letter($pgv_lang["month"]);?>   "+day+" <?php print get_first_letter($pgv_lang["day"]);?>";
-			if (ba*yage>1 || ba*yage<-1 || ba*yage==0) 
+			if (ba*yage>1 || ba*yage<-1 || ba*yage==0)
 				 ageform.innerHTML = (ba*yage)+" <?php print get_first_letter($pgv_lang["years"]);?>   "+(ba*mage)+" <?php print get_first_letter($pgv_lang["month"]);?>   "+(ba*dage)+" <?php print get_first_letter($pgv_lang["day"]);?>";
 			else ageform.innerHTML = (ba*yage)+" <?php print get_first_letter($pgv_lang["year"]);?>   "+(ba*mage)+" <?php print get_first_letter($pgv_lang["month"]);?>   "+(ba*dage)+" <?php print get_first_letter($pgv_lang["day"]);?>";
 			var line = document.getElementById('ageline'+personnum);
@@ -253,7 +258,6 @@ $controller->checkPrivacy();
 	if ($count>5) $half = ceil($count/2);
 	if (!$controller->isPrintPreview()) $half++;
 	foreach($controller->people as $p=>$indi) {
-		$sex = $indi->getSex();
 		$pid = $indi->getXref();
 		$col = $p % 6;
 		if ($i==$half) print "</tr><tr>";
@@ -261,27 +265,13 @@ $controller->checkPrivacy();
 		?>
 		<td class="person<?php print $col; ?>" style="padding: 5px;">
 		<?php
-		if ((!is_null($indi))&&($indi->canDisplayDetails())) {
-			switch($sex) {
-			case "M":
-				$seximage = $PGV_IMAGE_DIR."/".$PGV_IMAGES["sex"]["small"];
-				?>
-				<img src="<?php print $seximage; ?>" title="<?php print $pgv_lang["male"]; ?>" alt="<?php print $pgv_lang["male"]; ?>" vspace="0" hspace="0" class="gender_image" border="0" />
-				<?php
-				break;
-			case "F":
-				$seximage = $PGV_IMAGE_DIR."/".$PGV_IMAGES["sexf"]["small"];
-				?>
-				<img src="<?php print $seximage; ?>" title="<?php print $pgv_lang["female"]; ?>" alt="<?php print $pgv_lang["female"]; ?>" vspace="0" hspace="0" class="gender_image" border="0" />
-				<?php
-				break;
-			default:
-				$seximage = $PGV_IMAGE_DIR."/".$PGV_IMAGES["sexn"]["small"];
-				?>
-				<img src="<?php print $seximage; ?>" title="<?php print $pgv_lang["sex"]." ".$pgv_lang["unknown"]; ?>" alt="<?php print $pgv_lang["sex"]." ".$pgv_lang["unknown"]; ?>" vspace="0" hspace="0" class="gender_image" border="0" />
-				<?php
-				break;
-			}
+		if ($indi && $indi->canDisplayDetails()) {
+			if ($indi->getSex()=="M")
+				echo $indi->getSexImage('large', '', $pgv_lang['male']);
+			else if ($indi->getSex()=="F")
+				echo $indi->getSexImage('large', '', $pgv_lang['female']);
+			else
+				echo $indi->getSexImage('large', '', $pgv_lang['unknown']);
 		?>
  			<a href="individual.php?pid=<?php print $pid; ?>">&nbsp;<?php print PrintReady($indi->getFullName()); ?><br />
  			<?php $addname = $indi->getAddName(); if (strlen($addname) > 0) print PrintReady($addname); ?>

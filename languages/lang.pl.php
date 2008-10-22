@@ -29,8 +29,8 @@
  * @version $Id$
  */
 
-if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
-	print "Nie można uzyskać bezpośredniego dostępu do pliku.";
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
@@ -244,6 +244,8 @@ $pgv_lang["download_file"]			= "Pobierz plik #GLOBALS[whichFile]#";
 $pgv_lang["indi_downloaded_from"]	= "Ta osoba została pobrana z:";
 $pgv_lang["family_downloaded_from"]	= "Ta rodzina została pobrana z:";
 $pgv_lang["source_downloaded_from"]	= "To źródło zostało pobrane z:";
+$pgv_lang["enter_person_generations"] = "Liczba pokoleń:";
+
 //-- PLACELIST FILE MESSAGES
 $pgv_lang["connections"]		= "powiązań z miejscem";
 $pgv_lang["top_level"]			= "Najwyższy poziom hierarchii";
@@ -363,6 +365,7 @@ $pgv_lang["at_death_day"]      		= "w dniu śmierci";
 $pgv_lang["year1"]					= "rok";
 $pgv_lang["month1"]					= "miesiąc";
 $pgv_lang["day1"]					= "dzień";
+$pgv_lang["years2"]					= "lata";
 $pgv_lang["years"]					= "lat";
 $pgv_lang["months"]					= "miesięcy";
 $pgv_lang["days"]					= "dni";
@@ -1206,7 +1209,7 @@ $pgv_lang["show_notes"] 			= "Czy pokazać notatki?";
 $pgv_lang["show_basic"] 			= "Czy&nbsp;pokazać&nbsp;puste&nbsp;wydarzenia?";
 $pgv_lang["show_sources"]			= "Czy pokazać źródła?";
 $pgv_lang["enter_famid"]			= "Wprowadź&nbsp;identyfikator&nbsp;rodziny";
-$pgv_lang["of"] 					= "od";
+$pgv_lang["of"] 					= "z";
 $pgv_lang["page"]					= "Strona";
 $pgv_lang["html_reports"]			= "Raporty HTML";
 $pgv_lang["pdf_reports"]			= "Raporty PDF";
@@ -1226,10 +1229,10 @@ $pgv_lang["sosa_14"]				= "pradziadek";
 $pgv_lang["sosa_15"]				= "prababcia";
 $pgv_lang["sosa_30"]				= "prapradziadek";
 $pgv_lang["sosa_31"]				= "praprababcia";
-$pgv_lang["sosa_maternal_male_n_generations"]	= "%3\$d x pra babcia";
-$pgv_lang["sosa_maternal_female_n_generations"]	= "%3\$d x pra dziadek";
-$pgv_lang["sosa_paternal_male_n_generations"]	= "%3\$d x pra babcia";
-$pgv_lang["sosa_paternal_female_n_generations"]	= "%3\$d x pra dziadek";
+$pgv_lang["sosa_maternal_male_n_generations"]	= "%3\$d x pra dziadek";
+$pgv_lang["sosa_maternal_female_n_generations"]	= "%3\$d x pra babcia";
+$pgv_lang["sosa_paternal_male_n_generations"]	= "%3\$d x pra dziadek";
+$pgv_lang["sosa_paternal_female_n_generations"]	= "%3\$d x pra babcia";
 $pgv_lang["fan_chart"]				= "Diagram kołowy";
 $pgv_lang["fontfile_error"]			= "Nie znaleziono pliku czcionki na serwerze PHP";
 $pgv_lang["fanchart_IE"]			= "Twoja przeglądarka nie może bezpośrednio wydrukować tego obrazu wykresu wachlarzowego. Kliknij prawym przyciskiem, a następnie wybierz opcję Zapisz i Drukuj.";
@@ -1653,7 +1656,17 @@ $pgv_lang["showUnknown"]			= "Pokaż osoby o nieznanej płci";
 $pgv_lang["ellipsis"]				= "\xE2\x80\xA6";
 $pgv_lang["tree"]					= "Drzewo";
 $pgv_lang["example"]				= "Przykład:";
-$pgv_lang["interactive_tree"]		= "Interaktywne Drzewo";
+$pgv_lang["interactive_tree"]		= "Interaktywne drzewo";
 $pgv_lang["hide_show_spouses"]		= "Pokaż lub ukryj wielu małżonków";
-$pgv_lang["load_full_tree"]			= "Zobacz to drzewo na stronie interaktywnego drzewa";
+$pgv_lang["load_full_tree"]			= "Zobacz to drzewo na stronie Interaktywnego drzewa";
+
+$pgv_lang["parent_family"]			= "Rodzice i rodzeństwo";
+$pgv_lang["step_parent_family"]		= "Przyrodni rodzice i rodzeństwo";
+$pgv_lang["immediate_family"]		= "Najbliższa rodzina";
+
+$pgv_lang["install_step_8"] 		= "Rozpocznij korzystanie";
+
+$pgv_lang["exact"]					= "Dokładna data";
+$pgv_lang["advanced_search"]		= "Wyszukiwanie zaawansowane";
+$pgv_lang["more_fields"]			= "Dodaj więcej pól";
 ?>

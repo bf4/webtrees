@@ -3,7 +3,7 @@
  * English Language file for PhpGedView.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team
+ * Copyright (C) 2002 to 2008 PGV Development Team. All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,8 +23,8 @@
  * @version $Id$
  */
 
-if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
-	print "You cannot access a language file directly.";
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
@@ -170,6 +170,7 @@ $factarray["FAMC:MARR:PLAC"] = "Parents' Marriage Place";
 $factarray["FAMC:HUSB:OCCU"] = "Father's Occupation";
 $factarray[":BIRT:PLAC"] = "Birthplace";
 $factarray["FAMS:MARR:PLAC"] = "Marriage Place";
+$factarray["FAMS:MARR:DATE"] = "Marriage Date";
 $factarray["FAMS:SPOUSE:DEAT:PLAC"] = "Spouse's Death Place";
 $factarray["FAMC:HUSB:GIVN"] = "Father's Given Name";
 $factarray["FAMS:SPOUSE:BIRT:PLAC"] = "Spouse's Birth Place";
@@ -182,11 +183,17 @@ $factarray["FAMS:CHIL:BIRT:PLAC"] = "Child's Birth Place";
 
 // These facts are all colon delimited
 $factarray["BIRT:PLAC"] = "Birth Place";
+$factarray["BIRT:DATE"] = "Birth Date";
 $factarray["DEAT:PLAC"] = "Death Place";
+$factarray["DEAT:DATE"] = "Death Date";
 $factarray["CHR:PLAC"] = "Christening Place";
+$factarray["CHR:DATE"] = "Christening Date";
 $factarray["BAPM:PLAC"] = "Baptism Place";
+$factarray["BAPM:DATE"] = "Baptism Date";
 $factarray["BURI:PLAC"] = "Burial Place";
+$factarray["BURI:DATE"] = "Burial Date";
 $factarray["MARR:PLAC"] = "Marriage Place";
+$factarray["MARR:DATE"] = "Marriage Date";
 
 // These facts are specific to GEDCOM exports from Family Tree Maker
 $factarray["_MDCL"]	= "Medical";
@@ -212,6 +219,7 @@ $factarray["_MREL"]	= "Relationship to Mother";
 $factarray["_FREL"]	= "Relationship to Father";
 $factarray["_MSTAT"]	= "Marriage Beginning Status";
 $factarray["_MEND"]	= "Marriage Ending Status";
+$factarray["_NAMS"]	= "Namesake";
 
 // GEDCOM 5.5.1 related facts
 $factarray["FAX"] = "FAX";

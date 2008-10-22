@@ -26,6 +26,13 @@
  * @subpackage Blocks
  */
 
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
+	exit;
+}
+
+define('PGV_GEDCOM_NEWS_PHP', '');
+
 $PGV_BLOCKS['print_gedcom_news']['name']		= $pgv_lang['gedcom_news_block'];
 $PGV_BLOCKS['print_gedcom_news']['descr']		= 'gedcom_news_descr';
 $PGV_BLOCKS['print_gedcom_news']['type']		= 'gedcom';
@@ -111,7 +118,7 @@ function print_gedcom_news($block = true, $config='', $side, $index)
 		}
 		$content .= "<span class=\"news_title\">".PrintReady($newsTitle)."</span><br />\n";
 		$content .= "<span class=\"news_date\">".format_timestamp($news['date'])."</span><br /><br />\n";
-			
+
 		// Look for $pgv_lang, $factarray, and $GLOBALS substitutions in the News text
 		$newsText = print_text($news['text'], 0, 2);
 		$ct = preg_match("/#(.+)#/", $newsText, $match);

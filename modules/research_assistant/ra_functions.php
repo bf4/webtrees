@@ -34,12 +34,13 @@
  * @author David Molton
  * @author Daniel Parker
  */
-//-- security check, only allow access from module.php
-if (strstr($_SERVER["SCRIPT_NAME"],"ra_functions.php")) {
-	print "Now, why would you want to do that.  You're not hacking are you?";
+
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
-loadLangFile("ra_lang");	// Set up our default language file
+
+loadLangFile("research_assistant:lang");
 
 include_once("modules/research_assistant/forms/ra_privacy.php");
 include_once("modules/research_assistant/forms/ra_RSFunction.php");
@@ -80,7 +81,7 @@ function trimLocation($loc) {
 	if (!$loc) return "";
 	$newLoc = ""; 
 	// reverse the array so that we get the top level first
-	$levels = array_reverse(preg_split("/,/", $loc));
+	$levels = array_reverse(explode(',', $loc));
 	foreach($levels as $pindex=>$ppart) {
 		// build the location string in reverse order, up to the requested number of levels
 		if ($pindex < $loclevels) $newLoc .= trim($ppart).",";
@@ -112,17 +113,25 @@ class ra_functions {
 
 		// If the Table is not in the array
 		if (!in_array($TBLPREFIX.'factlookup', $data)) {
-			//Then create Table
-			// TODO don't use auto-inc fields... instead use the get_next_id serializer
-	   	   if ($DBTYPE == "pgsql")
-				$sql = 'create table '.$TBLPREFIX.'factlookup (id SERIAL,Description VARCHAR(255) not null,StartDate INT not null, EndDate INT not null, Gedcom_fact VARCHAR(10),PL_LV1 VARCHAR(255), PL_LV2 VARCHAR(255), PL_LV3 VARCHAR(255), PL_LV4 VARCHAR(255), PL_LV5 VARCHAR(255), SOUR_ID VARCHAR(255),Comment VARCHAR(255),PRIMARY KEY(id))';			
-			else
-				$sql = 'create table '.$TBLPREFIX.'factlookup (id INT AUTO_INCREMENT,Description VARCHAR(255) not null,StartDate INT not null, EndDate INT not null, Gedcom_fact VARCHAR(10),PL_LV1 VARCHAR(255), PL_LV2 VARCHAR(255), PL_LV3 VARCHAR(255), PL_LV4 VARCHAR(255), PL_LV5 VARCHAR(255), SOUR_ID VARCHAR(255),Comment VARCHAR(255),PRIMARY KEY(id))';
-			$res = dbquery($sql);
+			dbquery(
+				"CREATE TABLE {$TBLPREFIX}factlookup (".
+				" id        ".PGV_DB_AUTO_ID_TYPE." NOT NULL,".
+				" description VARCHAR(255)      NOT NULL,".
+				" startdate   INT               NOT NULL,".
+				" enddate     INT               NOT NULL,".
+				" gedcom_fact VARCHAR(10)           NULL,".
+				" pl_lv1      VARCHAR(255)          NULL,".
+				" pl_lv2      VARCHAR(255)          NULL,".
+			 	" pl_lv3      VARCHAR(255)          NULL,".
+			 	" pl_lv4      VARCHAR(255)          NULL,".
+				" pl_lv5      VARCHAR(255)          NULL,".
+			 	" sour_id     VARCHAR(255)          NULL,".
+				" comment     VARCHAR(255)          NULL,".
+				" PRIMARY KEY (id)".
+				")"
+			);
 			$this->insertInitialFacts();
 		}
-		
-		
 	}
 	
 	/*
@@ -154,7 +163,7 @@ class ra_functions {
 		}
 		
 		if (!empty($place)) {
-			$parts = preg_split("/,/",$place);
+			$parts = explode(',',$place);
 			for($i = 0; $i < count($parts); $i++)
 			{
 				$parts[$i] = trim($parts[$i]);
@@ -275,41 +284,91 @@ class ra_functions {
 
 		// Create all of the tables needed for this module
 		if (!in_array($TBLPREFIX.'tasks', $data)) {
-			$sql = 'create table '.$TBLPREFIX.'tasks (t_id INTEGER not null,t_fr_id INTEGER not null,t_title VARCHAR(255) not null,t_description text not null, t_startdate INT not null, t_enddate INT null, t_results text null, t_form varchar(255) null, t_username varchar(45) null, constraint '.$TBLPREFIX.'tasks_PK primary key (t_id) );';
-			$res = dbquery($sql);
-		}
-		else {
+			dbquery(
+				"CREATE TABLE {$TBLPREFIX}tasks (".
+				" t_id          INTEGER      NOT NULL,".
+				" t_fr_id       INTEGER      NOT NULL,".
+				" t_title       VARCHAR(255) NOT NULL,".
+				" t_description TEXT         NOT NULL,".
+				" t_startdate   INTEGER      NOT NULL,".
+				" t_enddate     INTEGER          NULL,".
+				" t_results     TEXT             NULL,".
+			 	" t_form        VARCHAR(255)     NULL,".
+				" t_username    VARCHAR(45)      NULL,".
+				" PRIMARY KEY (t_id)".
+				")"
+			);
+		} else {
 			$has_form = false;
 			$info = $DBCONN->tableInfo($TBLPREFIX."tasks");
 			foreach($info as $indexval => $field) {
 				if ($field["name"]=="t_form") $has_form = true;
 			}
 			if (!$has_form) {
-				$sql = "alter table ".$TBLPREFIX."tasks add t_form varchar(255)";
-				$res = dbquery($sql);
+				dbquery("ALTER TABLE {$TBLPREFIX}tasks ADD t_form VARCHAR(255) NULL");
 			}
 		}
 		if (!in_array($TBLPREFIX.'comments', $data)) {
-			$sql = 'create table '.$TBLPREFIX.'comments (c_id INTEGER not null,c_t_id INTEGER not null,c_u_username VARCHAR(30) not null,c_body text not null,c_datetime INT not null, constraint '.$TBLPREFIX.'comments_PK primary key (c_id) );';
-			$res = dbquery($sql);
+			dbquery(
+				"CREATE TABLE {$TBLPREFIX}comments (".
+				" c_id         INTEGER     NOT NULL,".
+				" c_t_id       INTEGER     NOT NULL,".
+				" c_u_username VARCHAR(30) NOT NULL,".
+				" c_body       TEXT        NOT NULL,".
+				" c_datetime   INTEGER     NOT NULL,".
+				" PRIMARY KEY (c_id)".
+				")"
+			);
 		}
 		if (!in_array($TBLPREFIX.'tasksource', $data)) {
-			$sql = 'create table '.$TBLPREFIX.'tasksource (ts_t_id INTEGER not null,ts_s_id VARCHAR(255) not null, ts_page VARCHAR(255), ts_date VARCHAR(50), ts_text TEXT, ts_quay VARCHAR(50), ts_obje VARCHAR(20), ts_array TEXT, constraint '.$TBLPREFIX.'tasksource_PK primary key (ts_s_id, ts_t_id) );';
-			$res = dbquery($sql);
+			dbquery(
+				"CREATE TABLE {$TBLPREFIX}tasksource (".
+				" ts_t_id  INTEGER      NOT NULL,".
+				" ts_s_id  VARCHAR(255) NOT NULL,".
+				" ts_page  VARCHAR(255)     NULL,".
+				" ts_date  VARCHAR(50)      NULL,".
+			 	" ts_text  TEXT             NULL,".
+				" ts_quay  VARCHAR(50)      NULL,".
+			 	" ts_obje  VARCHAR(20)      NULL,".
+				" ts_array TEXT             NULL,".
+				" PRIMARY KEY (ts_s_id, ts_t_id)".
+				")"
+			);
 		}
 		if (!in_array($TBLPREFIX.'folders', $data)) {
-			$sql = 'create table '.$TBLPREFIX.'folders (fr_id INTEGER not null,fr_name VARCHAR(255),fr_description text null,fr_parentid INTEGER null, constraint '.$TBLPREFIX.'folders_PK primary key (fr_id) );';
-			$res = dbquery($sql);
+			dbquery(
+				"CREATE TABLE {$TBLPREFIX}folders (".
+				" fr_id          INTEGER      NOT NULL,".
+				" fr_name        VARCHAR(255)     NULL,".
+				" fr_description TEXT             NULL,".
+				" fr_parentid    INTEGER          NULL,".
+				" PRIMARY KEY (fr_id)".
+				")"
+			);
 		}
 		if (!in_array($TBLPREFIX.'individualtask', $data)) {
-			$sql = 'create table '.$TBLPREFIX.'individualtask (it_t_id integer not null,it_i_id VARCHAR(255) not null,it_i_file integer not null, constraint '.$TBLPREFIX.'individualtask_PK primary key (it_t_id, it_i_id,it_i_file) );';
-			$res = dbquery($sql);
+			dbquery(
+				"CREATE TABLE {$TBLPREFIX}individualtask (".
+				" it_t_id   INTEGER      NOT NULL,".
+				" it_i_id   VARCHAR(255) NOT NULL,".
+				" it_i_file INTEGER      NOT NULL,".
+				" PRIMARY KEY (it_t_id, it_i_id,it_i_file)".
+				")"
+			);
 		}
 		if (!in_array($TBLPREFIX.'taskfacts', $data)) {
-			$sql = "CREATE TABLE ".$TBLPREFIX."taskfacts (tf_id INTEGER NOT NULL, tf_t_id INTEGER, tf_factrec TEXT, tf_people VARCHAR(255),tf_multiple VARCHAR(3), tf_type VARCHAR(4), primary key (tf_id))";
-			$res = dbquery($sql);
-		}
-		else {
+			dbquery(
+				"CREATE TABLE {$TBLPREFIX}taskfacts (".
+				" tf_id       INTEGER      NOT NULL,".
+				" tf_t_id     INTEGER          NULL,".
+				" tf_factrec  TEXT             NULL,".
+				" tf_people   VARCHAR(255)     NULL,".
+				" tf_multiple VARCHAR(3)       NULL,".
+				" tf_type     VARCHAR(4)       NULL,".
+				" PRIMARY KEY (tf_id)".
+				")"
+			);
+		} else {
 			$has_multiple = false;
 			$has_type = false;
 			$info = $DBCONN->tableInfo($TBLPREFIX."taskfacts");
@@ -318,18 +377,24 @@ class ra_functions {
 				if ($field["name"]=="tf_type") $has_type = true;
 			}
 			if (!$has_multiple) {
-				$sql = "alter table ".$TBLPREFIX."taskfacts add tf_multiple varchar(3)";
-				$res = dbquery($sql);
+				dbquery("ALTER TABLE {$TBLPREFIX}taskfacts ADD tf_multiple VARCHAR(3) NULL");
 			}
 			if (!$has_type) {
-				$sql = "alter table ".$TBLPREFIX."taskfacts add tf_type varchar(4)";
-				$res = dbquery($sql);
+				dbquery("ALTER TABLE {$TBLPREFIX}taskfacts ADD tf_type     VARCHAR(4) NULL");
 			}
 		}
 		if(!in_array($TBLPREFIX.'user_comments', $data)){
-			//$sql = 'create table'.$TBLPREFIX.'user_comments (uc_id INTEGER not null,uc_username VARCHAR(45) not null,uc_datetime INTEGER not null,uc_comment VARCHAR(500) not null,uc_p_id VARCHAR(255) not null,uc_f_id INTEGER not null, constraint '.$TBLPREFIX.'user_comments_PK primary key (uc_id));';
-			$sql = 'create table '.$TBLPREFIX.'user_comments (uc_id INT not null,uc_username VARCHAR(45) not null,uc_datetime INT not null,uc_comment text,uc_p_id VARCHAR(255) not null,uc_f_id INT not null, constraint '.$TBLPREFIX.'user_comments_PK primary key (uc_id));';
-			$res = dbquery($sql);
+			dbquery(
+				"CREATE TABLE {$TBLPREFIX}user_comments (".
+				" uc_id       INTEGER      NOT NULL,".
+				" uc_username VARCHAR(45)  NOT NULL,".
+				" uc_datetime INTEGER      NOT NULL,".
+				" uc_comment  TEXT         NOT NULL,".
+				" uc_p_id     VARCHAR(255) NOT NULL,".
+				" uc_f_id     INTEGER      NOT NULL,".
+				" PRIMARY KEY (uc_id)".
+				")"
+			);
 		}
 		
 		/**
@@ -341,8 +406,18 @@ class ra_functions {
 		 * The break down is the first level element, second level element, relationship, percentage 
 		 */
 		if (!in_array($TBLPREFIX.'probabilities', $data)) {
-			$sql = "create table ".$TBLPREFIX."probabilities (pr_id int NOT NULL, pr_f_lvl varchar(200) NOT NULL, pr_s_lvl varchar(200), pr_rel varchar(200) NOT NULL, pr_matches INT NOT NULL, pr_count INT NOT NULL, pr_file INTEGER, primary key (pr_id) )";
-			$res = dbquery($sql);
+			dbquery(
+				"CREATE TABLE {$TBLPREFIX}probabilities (".
+				" pr_id      INTEGER      NOT NULL,".
+				" pr_f_lvl   VARCHAR(200) NOT NULL,".
+			 	" pr_s_lvl   VARCHAR(200) NOT NULL,".
+				" pr_rel     VARCHAR(200) NOT NULL,".
+				" pr_matches INTEGER      NOT NULL,".
+				" pr_count   INTEGER      NOT NULL,".
+				" pr_file    INTEGER          NULL,".
+				" PRIMARY KEY (pr_id)".
+				")"
+			);
 		}
 	}
 	
@@ -1089,7 +1164,7 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 		$perId = $person->getXref();
 	
 		$MissingReturn = array (); //Local var for the return string
-		if ($person->sex == "U") //check for missing sex info
+		if ($person->getSex() == "U") //check for missing sex info
 		{
 			$MissingReturn[] = array("SEX", $pgv_lang["All"]);
 		}
@@ -1183,7 +1258,7 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 	function add_sources($task_id, $sources = -1) {
 		global $TBLPREFIX, $DBCONN;
 		if (!is_array($sources)) {
-			$sources = preg_split("/;/", $sources);
+			$sources = explode(';', $sources);
 		}
 		foreach($sources as $s=>$source_id) {
 			if (!empty($source_id)) {
@@ -1289,7 +1364,7 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 				//-- set to the record from the inferences table that we want to compare the value to
 				$record = $indi;
 				if ($record) {
-					$rec_tags = preg_split("/:/", $value['record']);
+					$rec_tags = explode(':', $value['record']);
 					while ($record && $rec_tags) {
 						$tag = array_shift($rec_tags);
 						if (preg_match("/1 $tag @(.*)@/", $record->getGedcomRecord(), $match)) {
@@ -1408,8 +1483,6 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 	 */
 	function getSourceTasks($sId) {
 		global $pgv_lang, $TBLPREFIX, $GEDCOMS, $GEDCOM, $DBCONN;
-		global $indilist;
-		global $factarray;
         	
 		$sql = "SELECT * FROM ".$TBLPREFIX."tasks, ".$TBLPREFIX."tasksource, ".$TBLPREFIX."sources WHERE t_id=ts_t_id AND s_id=ts_s_id AND s_id='".$DBCONN->escapeSimple($sId)."' AND s_file=".$GEDCOMS[$GEDCOM]['id'];
 		$res = dbquery($sql);
@@ -1493,7 +1566,6 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 	function tab(&$person) {
 		// Start our engines.
 		global $pgv_lang, $TBLPREFIX, $DBCONN, $GEDCOMS, $GEDCOM;
-		global $indilist;
 		global $factarray;
 		
 		if (!is_object($person)) return "";

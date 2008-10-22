@@ -28,13 +28,13 @@
  * @author Brian Kramer
  * @author Julian Gautier
  */
- //-- security check, only allow access from module.php
-if (strstr($_SERVER["SCRIPT_NAME"],"ra_AddTask.php")) {
-	print "Now, why would you want to do that.  You're not hacking are you?";
+
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
- require_once("includes/functions_db.php");
+require_once("includes/functions_db.php");
 
     // Grab the global vars we need
  	global $pgv_lang, $TBLPREFIX, $SOURCE_ID_PREFIX;

@@ -27,9 +27,8 @@
  * @version $Id$
  */
 
-//-- security check, only allow access from module.php
-if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
-	print "Doğrudan lisan dosyasına erişemezsiniz.";
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
@@ -74,6 +73,12 @@ $pgv_lang["active"] 		 = "Aktif";
 $pgv_lang["TYPE__other"] 	 = "Diğer";
 $pgv_lang["no_media"] 		 = "Hiç biri";
 $pgv_lang["TYPE__footnotes"] = "Medya notları";
+
+$pgv_lang["ROW_TYPE__photo"] 		= $pgv_lang["TYPE__photo"];
+$pgv_lang["ROW_TYPE__document"] 	= $pgv_lang["TYPE__document"];
+$pgv_lang["ROW_TYPE__census"] 		= $factarray["CENS"];
+$pgv_lang["ROW_TYPE__other"] 		= $pgv_lang["TYPE__other"];
+$pgv_lang["ROW_TYPE__footnotes"]	= $pgv_lang["TYPE__footnotes"];
 
 $pgv_lang["census_text"]  	 = "\"Bu nüfüs sayımı görüntüleri \"Ulusal Arşivden\" orjinal kayıtlarından elde edildiler ";
 $pgv_lang["census_text"] 	.= "ve ticari kullanmamak şartıyla burada gösterildiler." . "\n" ;

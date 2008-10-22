@@ -1,6 +1,6 @@
 <?php
 /**
- * Search in help files 
+ * Search in help files
  *
  * phpGedView: Genealogy Viewer
  * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reerved.
@@ -25,7 +25,7 @@
  * @version $Id$
  */
 
-require "config.php";
+require './config.php';
 
 print_simple_header($pgv_lang["hs_title"]);
 
@@ -42,10 +42,12 @@ if (!PGV_USER_GEDCOM_ADMIN) {
 }
 
 // Initialize variables
-if (!isset($searchtext)) $searchtext = "";
-if (!isset($searchuser)) $searchuser = "no";
-if (!isset($searchconfig)) $searchconfig = "no";
-if (!isset($searchmodules)) $searchmodules = "no";
+$searchtext   =safe_POST('searchtext');
+$searchuser   =safe_POST('searchuser',    'yes', 'no');
+$searchconfig =safe_POST('searchconfig',  'yes', 'no');
+$searchmodules=safe_POST('searchmodules', 'yes', 'no');
+$searchhow	  =safe_POST('searchhow');
+$searchintext =safe_POST('searchintext');
 $found = 0;
 
 ?>
@@ -132,12 +134,12 @@ if ((!empty($searchtext)) && strlen($searchtext)>1)  {
 	if (PGV_USER_CAN_EDIT) $langFiles .= "pgv_editor, ";
 	if ($searchuser == "yes") $langFiles .= "pgv_help, ";
 	if ($searchconfig == "yes") $langFiles .= "pgv_confighelp, ";
-	if ($searchmodules == "yes") $langFiles .= "ra_lang, ra_help, gm_lang, gm_help, sm_lang, sm_help, ";
+	if ($searchmodules == "yes") $langFiles .= "research_assistant:lang, research_assistant:help_text, googlemap:lang, googlemap:help_text, sitemap:lang, sitemap:help_text, ";
 	$langFiles = substr($langFiles, 0, -2);		// Trim last ", "
-	
+
 	$helpvarnames = array();
 	unset($pgv_lang);
-	
+
 	loadLangFile($langFiles);
 
 	// Find all helpvars, so we know what vars to check after the lang.xx file has been reloaded
@@ -149,8 +151,8 @@ if ((!empty($searchtext)) && strlen($searchtext)>1)  {
 	// Split the search criteria if all or any is chosen. Otherwise, just fill the array with the sentence
 	$criteria = array();
 	if ($searchhow == "sentence") $criteria[] = $searchtext;
-	else $criteria = preg_split("/ /", $searchtext);
-	
+	else $criteria = explode(' ', $searchtext);
+
 	// Search in the previously stored vars for a hit and print it
 	foreach ($helpvarnames as $key => $value) {
 		$helptxt = print_text($value,0,1);

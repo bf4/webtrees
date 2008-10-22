@@ -24,9 +24,13 @@
  * @subpackage Admin
  * $Id$
  */
-require "config.php";
 
-loadLangFile("pgv_lang, pgv_confighelp, pgv_help, lb_lang, lb_help");
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
+	exit;
+}
+
+loadLangFile("pgv_lang, pgv_confighelp, pgv_help, lightbox:lang, lightbox:help_text");
 
 $help = safe_GET("help");
 

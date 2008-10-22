@@ -29,10 +29,70 @@
  * @version $Id$
  */
 
-if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
-	print "Nie można uzyskać bezpośredniego dostępu do pliku.";
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
+
+$pgv_lang["upload_a_gedcom"]		= "Wgraj plik GEDCOM";
+$pgv_lang["start_entering"]			= "Rozpocznij wprowadzanie danych";
+$pgv_lang["add_gedcom_from_path"]	= "Dodaj plik GEDCOM";
+$pgv_lang["manage_gedcoms"]			= "Zarządzaj plikami GEDCOM";
+$pgv_lang["get_started_instructions"] = "Wybierz jedną z poniższych opcji, aby zacząć korzystać z PhpGedView";
+
+$pgv_lang["admin_users_exists"]		= "Istniejący użytkownicy z prawami administracyjnymi:";
+$pgv_lang["install_step_1"]			= "Sprawdź środowisko";
+$pgv_lang["install_step_2"]			= "Połączenie z bazą danych";
+$pgv_lang["install_step_3"]			= "Utwórz tabele";
+$pgv_lang["install_step_4"]			= "Konfiguracja strony";
+$pgv_lang["install_step_5"]			= "Języki";
+$pgv_lang["install_step_6"]			= "Zapisz konfigurację";
+$pgv_lang["install_step_7"]			= "Utwórz administratora";
+$pgv_lang["install_wizard"]			= "Kreator instalacji";
+$pgv_lang["basic_site_config"]		= "Ustawienia podstawowe";
+$pgv_lang["adv_site_config"]		= "Ustawienia zaawansowane";
+$pgv_lang["config_not_saved"]		= "*Twoje ustawienia<br />nie będą zapisane<br />dopóki nie ukończysz kroku 6.";
+$pgv_lang["download_config"]		= "Pobierz config.php";
+$pgv_lang["site_unavailable"]		= "Strona jest obecnie niedostępna";
+$pgv_lang["to_manage_users"]		= "By zarządzać użytkownikami użyj strony <a href=\"useradmin.php\">Zarządzania użytkownikami</a>.";
+$pgv_lang["db_tables_created"]		= "Tabele bazy danych zostały utworzone";
+$pgv_lang["config_saved"]			= "Konfiguracja zapisana pomyślnie";
+$pgv_lang["checking_errors"]		= "Sprawdzanie serwera...";
+$pgv_lang["checking_php_version"]	= "Sprawdzanie wymaganej wersji PHP:";
+$pgv_lang["failed"]					= "Test nie zaliczony";
+$pgv_lang["pgv_requires_version"]	= "PhpGedView wymaga PHP w wersji ".PGV_REQUIRED_PHP_VERSION." lub wyższej.";
+$pgv_lang["using_php_version"]		= "Używasz PHP w wersji ".PHP_VERSION;
+$pgv_lang["checking_db_support"]	= "Sprawdzanie wspieranych baz danych:";
+$pgv_lang["no_db_extensions"]		= "Nie posiadasz żadnego z obsługiwanych rozszerzeń bazy danych.";
+$pgv_lang["db_ext_support"]			= "Posiadasz wsparcie #DBEXT#";
+$pgv_lang["checking_config.php"]	= "Sprawdzanie pliku config.php:";
+$pgv_lang["config.php_missing"]		= "Plik config.php nie został znaleziony.";
+$pgv_lang["config.php_missing_instr"]	= "Kreator instalacji nie będzie w stanie zapisać ustawień do pliku config.php. Możesz wykonać kopię pliku config.dist i zmienić jego nazwę na config.php. Alternatywnie, po zakończeniu tego kreatora będziesz miał możliwość pobrania ustawień i przesłania wynikowego pliku config.php.";
+$pgv_lang["config.php_not_writable"]	= "Plik config.php jest tylko do odczytu.";
+$pgv_lang["config.php_not_writable_instr"]	= "Kreator instalacji nie będzie w stanie zapisać ustawień do pliku config.php. Plik ma ustawiony atrybut tylko do odczytu, po zakończeniu tego kreatora będziesz miał możliwość pobrania ustawień i przesłania wynikowego pliku config.php.";
+$pgv_lang["passed"]					= "Test zaliczony";
+$pgv_lang["config.php_writable"]	= "Plik config.php jest obecny i jest zapisywalny.";
+$pgv_lang["checking_warnings"]		= "Sprawdzanie ograniczeń...";
+$pgv_lang["checking_timelimit"]		= "Sprawdzanie możliwości zmiany limitu czasu:";
+$pgv_lang["cannot_change_timelimit"]= "Nie można zmienić limitu czasu.";
+$pgv_lang["cannot_change_timelimit_instr"] = "Możesz nie być w stanie uruchomić wszystkich funkcji na dużych plikach GEDCOM z dużą ilością osób.";
+$pgv_lang["current_max_timelimit"]	= "Maksymalny limit czasu";
+$pgv_lang["check_memlimit"]			= "Sprawdzanie możliwości zmiany limitu pamięci:";
+$pgv_lang["cannot_change_memlimit"]	= "Nie można zmienić limitu pamięci.";
+$pgv_lang["cannot_change_memlimit_instr"] = "Możesz nie być w stanie uruchomić wszystkich funkcji na dużych plikach GEDCOM z dużą ilością osób.";
+$pgv_lang["current_max_memlimit"]	= "Obecny limit pamięci";
+$pgv_lang["check_upload"]			= "Sprawdzanie możliwości przesyłania plików:";
+$pgv_lang["current_max_upload"]		= "Maksymalny rozmiar przesyłanego pliku:";
+$pgv_lang["check_gd"]				= "Sprawdzanie biblioteki GD image:";
+$pgv_lang["cannot_use_gd"]			= "Brak biblioteki GD image. Nie będzie można automatycznie tworzyć miniatur obrazów.";
+$pgv_lang["check_sax"]				= "Sprawdzanie biblioteki SAX XML:";
+$pgv_lang["cannot_use_sax"]			= "Brak biblioteki SAX XML. Nie będzie w stanie uruchomić raportów lub innych pomocniczych funkcji.";
+$pgv_lang["check_dom"]				= "Sprawdzanie biblioteki DOM XML:";
+$pgv_lang["cannot_use_dom"]			= "Brak biblioteki DOM XML. Nie będzie można eksportować do XMLa.";
+$pgv_lang["check_calendar"]			= "Sprawdzanie biblioteki Advanced Calendar (Zaawansowanego Kalendarza):";
+$pgv_lang["cannot_use_calendar"]	= "Nie masz wsparcia zaawansowanego kalendarza. Nie będzie w stanie uruchomić niektórych zaawansowanych funkcji kalendarza.";
+$pgv_lang["warnings_passed"]		= "Test zakończony pomyślnie. Brak ograniczeń.";
+$pgv_lang["warning_instr"]			= "Jeżeli występują jakieś ograniczenia nadal możesz uruchomić PhpGedView na tym serwerze, ale niektóre funkcje mogą być wyłączone lub jakość ich działania może być niezadawalająca.";
 
 $pgv_lang["user"]					= "Użytkownik autoryzowany";
 $pgv_lang["thumbnail_deleted"]		= "Plik miniaturek został usunięty.";
@@ -80,7 +140,7 @@ $pgv_lang["security_not_exist"]		= "Ostrzeżenie bezpieczeństwa: Plik <b><i>ind
 $pgv_lang["label_added_servers"]	= "Zdalne serwery";
 $pgv_lang["label_banned_servers"]  	= "Zabroń dostępu dla stron po IP";
 $pgv_lang["label_delete"]           = "Usuń";
-$pgv_lang["progress_bars_info"]		= "Paski postępu poniżej dadzą ci możliwość śledzenia statusu importu. Jeśli przekroczony zostanie limit czasu, import zostanie wstrzymany do czasu, aż wciśniesz przycisk <b>Kontynuuj</b>.  Jeśl nie zobaczysz przycisku <b>Kontynuuj</b>, będzie trzeba rozpocząć import ponownie z mniejszym ograniczeniem na czas.";
+$pgv_lang["progress_bars_info"]		= "Paski postępu poniżej dadzą ci możliwość śledzenia statusu importu. Jeśli przekroczony zostanie limit czasu, import zostanie wstrzymany do czasu, aż wciśniesz przycisk <b>Kontynuuj</b>. Jeśli nie zobaczysz przycisku <b>Kontynuuj</b>, będzie trzeba rozpocząć import ponownie z mniejszym ograniczeniem na czas. Gdy plik GEDCOM zostanie wczytany pojawi się napis <b>Import zakończony</b>.";
 $pgv_lang["upload_replacement"]		= "Wczytaj nową wersję";
 $pgv_lang["about_user"]				= "Najpierw musisz stworzyć głównego administratora. Ten użytkownik będzie miał uprawnienia modyfikowania plików konfiguracyjnych, przeglądania poufnych danych i tworzenia nowych użytkowników.";
 $pgv_lang["access"]					= "Dostęp";
@@ -104,7 +164,6 @@ $pgv_lang["ansi_to_utf8"]			= "Czy przekonwertować plik GEDCOM z ANSI do UTF-8?
 $pgv_lang["apply_privacy"]			= "Czy zastosować ustawienia prywatności?";
 $pgv_lang["back_useradmin"]			= "Powrót do zarządzania użytkownikami";
 $pgv_lang["bytes_read"]				= "Wczytanych bajtów:";
-$pgv_lang["calc_marr_names"]		= "Generowanie nazwisk po ślubie";
 $pgv_lang["can_admin"]				= "Użytkownik może zarządzać";
 $pgv_lang["can_edit"]				= "Poziom dostępu";
 $pgv_lang["change_id"]				= "Zmień identyfikator osoby na:";
@@ -152,7 +211,7 @@ $pgv_lang["error_view_info"]       	= "Wybierz osobę, której szczegóły chces
 $pgv_lang["example_date"]			= "Przykład nieprawidłowej daty w twoim GEDCOM-ie:";
 $pgv_lang["example_place"]			= "Przykład nieprawidłowego miejsca w twoim GEDCOM-ie:";
 $pgv_lang["fbsql"]					= "FrontBase";
-$pgv_lang["found_record"]			= "Znaleziono wpis";
+$pgv_lang["found_record"]			= "Znalezionych wpisów";
 $pgv_lang["ged_download"]			= "Pobierz";
 $pgv_lang["ged_import"]				= "Importuj";
 $pgv_lang["ged_check"] 				= "Sprawdź";
@@ -166,7 +225,6 @@ $pgv_lang["ifx"]					= "Informix";
 $pgv_lang["img_admin_settings"]		= "Zmień konfigurację manipulacji obrazami";
 $pgv_lang["autoContinue"]			= "Kontynuuj automatycznie";
 $pgv_lang["import_complete"]		= "Import zakończony";
-$pgv_lang["import_marr_names"]		= "Importuj nazwiska po ślubie";
 $pgv_lang["import_options"]			= "Opcje importu";
 $pgv_lang["import_progress"]		= "Trwa importowanie...";
 $pgv_lang["import_statistics"]		= "Statystyki importu";
@@ -288,6 +346,7 @@ $pgv_lang["welcome_new"]			= "Witaj na swojej nowej stronie PhpGedView.";
 $pgv_lang["yearly"]					= "Co rok";
 $pgv_lang["admin_OK_subject"]		= "Zatwierdzenie konta na #SERVER_NAME#";
 $pgv_lang["admin_OK_message"]		= "Administrator strony #SERVER_NAME# zatwierdził twoje zgłoszenie. Możesz się teraz zalogować używając odnośnika:\r\n\r\n#SERVER_NAME#\r\n";
+$pgv_lang["batch_update"]			= "Uaktualnij/edytuj informacje w plikach GEDCOM";
 $pgv_lang["gedcheck"]     			= "Tester GEDCOM";
 $pgv_lang["gedcheck_text"]			= "Ten moduł sprawdza poprawność formatu pliku GEDCOM według <a href=\"http://phpgedview.sourceforge.net/ged551-5.pdf\">Specyfikacji 5.5.1 GEDCOM</a>. Wykrywa także wiele rodzajów częstych błędów w danych. Pamiętaj, że istnieje wiele wersji, rozszerzeń i odmian specyfikacji, więc nie musisz się przejmować żadnymi błędami poza tymi oznaczonymi jako krytyczne. Objaśnienia do wszystkich błędów możesz znaleźć w specyfikacji, więc zajrzyj do niej zanim poprosisz o pomoc.";
 $pgv_lang["level"]					= "Poziom";

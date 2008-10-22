@@ -27,13 +27,15 @@
  * @version $Id$
  */
 
-if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
-	print "You cannot access an include file directly.";
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
-require_once("config.php");
+define('PGV_USERMIGRATE_CTRL_PHP', '');
+
 require_once 'includes/controllers/basecontrol.php';
+require_once 'includes/functions_export.php';
 
 loadLangFile("pgv_confighelp");
 
@@ -50,7 +52,6 @@ else if (!PGV_USER_IS_ADMIN) {
 	exit;
 }
 
-require_once("includes/functions_export.php");
 
 class UserMigrateControllerRoot extends BaseController {
 	var $proceed;
@@ -289,7 +290,7 @@ class UserMigrateControllerRoot extends BaseController {
 				//-- make sure fields are set for v4.0 DB
 				if (!isset($user["firstname"])) {
 					if (isset($user["fullname"])) {
-						$parts = preg_split("/ /", trim($user["fullname"]));
+						$parts = explode(' ', trim($user["fullname"]));
 						$user["lastname"] = array_pop($parts);
 						$user["firstname"] = implode(" ", $parts);
 					}
@@ -468,6 +469,5 @@ else
 	{
 	}
 }
-$controller = new UserMigrateController();
-$controller->init();
+
 ?>

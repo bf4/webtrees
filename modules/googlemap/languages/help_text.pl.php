@@ -24,9 +24,9 @@
  * @author: Łukasz Wileński
  * @version $Id: help_text.pl.php  2008-04-19 16:36:59Z wooc$
  */
- 
-if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
-	print "You cannot access a language file directly.";
+
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 

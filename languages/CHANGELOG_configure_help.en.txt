@@ -32,7 +32,7 @@ Additional codes, to help Translators, follow the date as follows:
 	F - Major format change
 	p - Punctuation change  (doesn't affect translation)
 	M - Moved to another file
-	S - Spelling change		(doesn't affect translation)
+	S - Spelling change (doesn't affect translation)
 	w - Minor wording change
 	W - Major wording change or completely new text
 
@@ -45,8 +45,18 @@ VERSION 4.1.6
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 -------------------------------------------------------------------------------------------
--$PGV_LANG["NAME_FROM_GEDCOM"]                28 Aug 2008   Configuration option removed
--$PGV_LANG["NAME_FROM_GEDCOM_help"]           28 Aug 2008
+*$pgv_lang["FULL_SOURCES_help"]						18 Oct 2008				p
++$pgv_lang["FULL_SOURCES"]							17 Oct 2008				A
++$pgv_lang["FULL_SOURCES_help"]						17 Oct 2008				A
++$pgv_lang["PREFER_LEVEL2_SOURCES"]					17 Oct 2008				A
++$pgv_lang["PREFER_LEVEL2_SOURCES_help"]			17 Oct 2008				A
++$pgv_lang["DBPORT"]								02 Oct 2008				A
++$pgv_lang["DBPORT_help"]							02 Oct 2008				A
+*$pgv_lang["SHOW_LIST_PLACES_help"]					12 Sep 2008				W
++$pgv_lang["SHOW_LIST_PLACES"]						11 Sep 2008				A
++$pgv_lang["SHOW_LIST_PLACES_help"]					11 Sep 2008				A
+-$PGV_LANG["NAME_FROM_GEDCOM"]						28 Aug 2008				Configuration option removed
+-$PGV_LANG["NAME_FROM_GEDCOM_help"]					28 Aug 2008
 *$pgv_lang["SHOW_EST_LIST_DATES_help"]				06 Aug 2008				W added "and charts"
 *$pgv_lang["google_translate_help"]					06 Aug 2008				W Added Google Translate FAQ link
 +$pgv_lang["google_translate"]						03 Aug 2008				A Google Translate API

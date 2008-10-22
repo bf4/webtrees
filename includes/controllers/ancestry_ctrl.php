@@ -24,17 +24,17 @@
  * @version $Id$
  */
 
-if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
-	print "You cannot access an include file directly.";
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
 
-require_once("config.php");
-require_once("includes/functions_charts.php");
+define('PGV_ANCESTRY_CTRL_PHP', '');
+
+require_once 'includes/functions_charts.php';
 require_once 'includes/controllers/basecontrol.php';
 
 loadLangFile("pgv_confighelp");
-
 
 $indifacts = array();			 // -- array to store the fact records in for sorting and displaying
 $globalfacts = array();
@@ -55,8 +55,6 @@ $nonfamfacts[] = "";
  * Main controller class for the Ancestry page.
  */
 class AncestryControllerRoot extends BaseController {
-	var $show_changes = "yes";
-	var $action = "";
 	var $pid = "";
 
 	var $user = false;
@@ -64,7 +62,6 @@ class AncestryControllerRoot extends BaseController {
 	var $visibility = "visible";
 	var $position = "relative";
 	var $display = "block";
-	var $view;
 	var $show_cousins;
 	var $rootid;
 	var $name;
@@ -187,7 +184,7 @@ class AncestryControllerRoot extends BaseController {
 		print "</tr></table>";
 
 		if (is_null($person)) {
-			print "</li>"; 
+			print "</li>";
 			return;
 		}
 		// parents
@@ -238,6 +235,4 @@ else
 	}
 }
 
-$controller = new AncestryController();
-$controller->init();
 ?>
