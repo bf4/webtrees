@@ -1,0 +1,133 @@
+<div id="gedcom_stats" class="block">
+<table class="blockheader" cellspacing="0" cellpadding="0" style="direction:ltr;"><tr><td class="blockh1" >&nbsp;</td><td class="blockh2" ><div class="blockhc"> <a class="help" tabindex="0" href="javascript:// index_stats_help" onclick="helpPopup('index_stats_help'); return false;"><img src="images/small/help.gif" class="icon" width="15" height="15" alt="" /></a> 
+<b>GEDCOM Statistics</b></div></td><td class="blockh3">&nbsp;</td></tr>
+</table><div class="blockcontent"><b><a href="index.php?ctype=gedcom">Genealogy from ‎‎‎‎‎‎&lrm;[presidents.ged]&lrm;‎‎‎‎‎‎</a></b><br />
+This GEDCOM was created using <b>PhpGedView Online Genealogy 3.3.5 final</b> on <b>27 July 2005</b><br />
+<table><tr><td valign="top" class="width20"><table cellspacing="1" cellpadding="0">			<tr>
+				<td class="facts_label">
+					Individuals				</td>
+				<td class="facts_value"><div dir="rtl">
+					<a href="indilist.php?surname_sublist=no&amp;ged=presidents.ged">2147</a>
+				</div></td>
+			</tr>
+						<tr>
+				<td class="facts_label">
+					Total surnames				</td>
+				<td class="facts_value"><div dir="rtl">
+					<a href="indilist.php?surname_sublist=yes&amp;ged=presidents.ged">798</a>
+				</div></td>
+			</tr>
+						<tr>
+				<td class="facts_label">
+					Families				</td>
+				<td class="facts_value"><div dir="rtl">
+					<a href="famlist.php">1044</a>
+				</div></td>
+			</tr>
+						<tr>
+				<td class="facts_label">
+					Sources				</td>
+				<td class="facts_value"><div dir="rtl">
+					<a href="sourcelist.php">1</a>
+				</div></td>
+			</tr>
+							<tr>
+					<td class="facts_label">
+			  			Media objects					</td>
+					<td class="facts_value"><div dir="rtl">
+						<a href="medialist.php">46</a>
+					</div></td>
+				</tr>
+							<tr>
+				<td class="facts_label">
+					Other Records				</td>
+				<td class="facts_value"><div dir="rtl">
+					3				</div></td>
+			</tr>
+						<tr>
+				<td class="facts_label">
+					Total events				</td>
+				<td class="facts_value"><div dir="rtl">
+					2624				</div></td>
+			</tr>
+						<tr>
+				<td class="facts_label">
+					Total users				</td>
+				<td class="facts_value"><div dir="rtl">
+					3				</div></td>
+			</tr>
+			</table>
+</td><td><br /></td><td valign="top"><table cellspacing="1" cellpadding="1" border="0">			<tr>
+				<td class="facts_label">
+					Earliest Birth Year				</td>
+				<td class="facts_value"><div dir="rtl">
+					<a href="calendar.php?action=year&amp;year=1180">1180</a>
+				</div></td>
+				<td  class="facts_value">
+					<span class="ltr" dir="ltr"><a href="individual.php?pid=I73&amp;ged=presidents.ged" class="list_item"><b>William de Hertburn</b>&nbsp;&nbsp;(I73)&nbsp;&nbsp;<span dir="ltr"><br /><i>Birth  about 1180 </i></span></a></span>				</td>
+			</tr>
+						<tr>
+				<td class="facts_label">
+					Latest Birth Year				</td>
+				<td class="facts_value"><div dir="rtl">
+					<a href="calendar.php?action=year&amp;year=1988">1988</a>
+				</div></td>
+				<td  class="facts_value">
+									</td>
+			</tr>
+						<tr>
+				<td class="facts_label">
+					Earliest Death Year				</td>
+				<td class="facts_value"><div dir="rtl">
+					<a href="calendar.php?action=year&amp;year=1016">1016</a>
+				</div></td>
+				<td  class="facts_value">
+					<span class="ltr" dir="ltr"><a href="individual.php?pid=I82&amp;ged=presidents.ged" class="list_item"><b>Ethelred II. of England</b>&nbsp;&nbsp;(I82)&nbsp;&nbsp;<span dir="ltr"><br /><i>Death  1016 </i></span></a></span>				</td>
+			</tr>
+						<tr>
+				<td class="facts_label">
+					Latest Death Year				</td>
+				<td class="facts_value"><div dir="rtl">
+					<a href="calendar.php?action=year&amp;year=1994">1994</a>
+				</div></td>
+				<td  class="facts_value">
+					<span class="ltr" dir="ltr"><a href="individual.php?pid=I1195&amp;ged=presidents.ged" class="list_item"><b>Richard Milhous NIXON</b>&nbsp;&nbsp;(I1195)&nbsp;&nbsp;<span dir="ltr"><br /><i>Birth  13 January 1913   -- Yorba Linda, California</i></span><span dir="ltr"><br /><i>Death  23 April 1994   -- Yorba Linda, California</i></span></a></span>				</td>
+			</tr>
+						<tr>
+				<td class="facts_label">
+					Person who lived the longest				</td>
+				<td class="facts_value"><div dir="rtl">
+					109				</div></td>
+				<td  class="facts_value">
+					<span class="ltr" dir="ltr"><a href="individual.php?pid=I1457&amp;ged=presidents.ged" class="list_item"><b>Mary Jane Truman</b>&nbsp;&nbsp;(I1457)&nbsp;&nbsp;<span dir="ltr"><br /><i>Birth  12 August 1869 </i></span><span dir="ltr"><br /><i>Death  8 November 1978 </i></span></a></span>				</td>
+			</tr>
+							<tr>
+					<td class="facts_label">
+						Average age at death					</td>
+					<td class="facts_value"><div dir="rtl">
+						59					</div></td>
+									<td  class="facts_value">
+						&nbsp;
+					</td>
+								</tr>
+								<tr>
+					<td class="facts_label">
+						Family with the most children					</td>
+					<td class="facts_value"><div dir="rtl">
+						12					</div></td>
+					<td  class="facts_value">
+						<span class="ltr" dir="ltr"><a href="family.php?famid=F790&amp;ged=presidents.ged" class="list_item"><b>James Madison + Eleanor &lrm;(Nelly)&lrm; Rose Conway</b>&nbsp;&nbsp;(F790)&nbsp;&nbsp;</a></span>					</td>
+				</tr>
+								<tr>
+					<td class="facts_label">
+						Average number of children per family					</td>
+					<td class="facts_value"><div dir="rtl">
+						1.10					</div></td>
+									<td  class="facts_value">
+						&nbsp;
+					</td>
+								</tr>
+				</table></td></tr></table><br /> <a class="help" tabindex="0" href="javascript:// index_common_names_help" onclick="helpPopup('index_common_names_help'); return false;"><img src="images/small/help.gif" class="icon" width="15" height="15" alt="" /></a> 
+<b>Most Common Surnames</b><br />
+<a href="indilist.php?ged=presidents.ged&amp;surname=Smith">Smith</a></div>
+</div>

@@ -1,0 +1,219 @@
+[Fri Aug 03 14:49:16 2007] [crit] (22)Invalid argument: unable to replace stderr with error_log
+[Fri Aug 03 14:49:16 2007] [crit] (2)No such file or directory: unable to replace stderr with /dev/null
+[Fri Aug 03 14:49:16 2007] [crit] (22)Invalid argument: unable to replace stderr with error_log
+[Fri Aug 03 14:49:16 2007] [crit] (2)No such file or directory: unable to replace stderr with /dev/null
+[Fri Aug 03 14:49:16 2007] [notice] Apache/2.2.4 (Win32) PHP/5.2.3 DAV/2 configured -- resuming normal operations
+[Fri Aug 03 14:49:16 2007] [notice] Server built: Jan  9 2007 23:17:20
+[Fri Aug 03 14:49:16 2007] [notice] Parent: Created child process 4696
+PHP Warning:  PHP Startup: Unable to load dynamic library '.\\democd\\httpd\\php\\ext\\php_gd2.dll' - The specified module could not be found.\r\n in Unknown on line 0
+PHP Warning:  PHP Startup: Unable to load dynamic library '.\\democd\\httpd\\php\\ext\\php_pdo.dll' - The specified module could not be found.\r\n in Unknown on line 0
+PHP Warning:  PHP Startup: Unable to load dynamic library '.\\democd\\httpd\\php\\ext\\php_pdo_sqlite.dll' - The specified module could not be found.\r\n in Unknown on line 0
+PHP Warning:  PHP Startup: Unable to load dynamic library '.\\democd\\httpd\\php\\ext\\php_soap.dll' - The specified module could not be found.\r\n in Unknown on line 0
+PHP Warning:  PHP Startup: Unable to load dynamic library '.\\democd\\httpd\\php\\ext\\php_sockets.dll' - The specified module could not be found.\r\n in Unknown on line 0
+PHP Warning:  PHP Startup: Unable to load dynamic library '.\\democd\\httpd\\php\\ext\\php_sqlite.dll' - The specified module could not be found.\r\n in Unknown on line 0
+PHP Warning:  PHP Startup: Unable to load dynamic library '.\\democd\\httpd\\php\\ext\\php_xsl.dll' - The specified module could not be found.\r\n in Unknown on line 0
+PHP Warning:  PHP Startup: Unable to load dynamic library '.\\democd\\httpd\\php\\ext\\php_zip.dll' - The specified module could not be found.\r\n in Unknown on line 0
+PHP Warning:  PHP Startup: Unable to load dynamic library '.\\democd\\httpd\\php\\ext\\php_domxml.dll' - The specified module could not be found.\r\n in Unknown on line 0
+PHP Warning:  PHP Startup: Unable to load dynamic library '.\\democd\\httpd\\php\\ext\\php_zlib_filter.dll' - The specified module could not be found.\r\n in Unknown on line 0
+[Fri Aug 03 14:49:16 2007] [notice] Child 4696: Child process is running
+[Fri Aug 03 14:49:16 2007] [notice] Child 4696: Acquired the start mutex.
+[Fri Aug 03 14:49:16 2007] [notice] Child 4696: Starting 250 worker threads.
+[Fri Aug 03 14:49:16 2007] [notice] Child 4696: Starting thread to listen on port 6880.
+[Fri Aug 03 14:49:19 2007] [error] [client 127.0.0.1] client denied by server configuration: C:/PhpGedView/distribution/PGVDemo-4.1/democd/sites/index.html
+[Fri Aug 03 14:51:12 2007] [crit] (22)Invalid argument: unable to replace stderr with error_log
+[Fri Aug 03 14:51:12 2007] [crit] (2)No such file or directory: unable to replace stderr with /dev/null
+[Fri Aug 03 14:51:12 2007] [crit] (22)Invalid argument: unable to replace stderr with error_log
+[Fri Aug 03 14:51:12 2007] [crit] (2)No such file or directory: unable to replace stderr with /dev/null
+[Fri Aug 03 14:51:12 2007] [notice] Apache/2.2.4 (Win32) PHP/5.2.3 DAV/2 configured -- resuming normal operations
+[Fri Aug 03 14:51:12 2007] [notice] Server built: Jan  9 2007 23:17:20
+[Fri Aug 03 14:51:12 2007] [notice] Parent: Created child process 5988
+PHP Notice:  Constant XML_ELEMENT_NODE already defined in Unknown on line 0
+PHP Notice:  Constant XML_ATTRIBUTE_NODE already defined in Unknown on line 0
+PHP Notice:  Constant XML_TEXT_NODE already defined in Unknown on line 0
+PHP Notice:  Constant XML_CDATA_SECTION_NODE already defined in Unknown on line 0
+PHP Notice:  Constant XML_ENTITY_REF_NODE already defined in Unknown on line 0
+PHP Notice:  Constant XML_ENTITY_NODE already defined in Unknown on line 0
+PHP Notice:  Constant XML_PI_NODE already defined in Unknown on line 0
+PHP Notice:  Constant XML_COMMENT_NODE already defined in Unknown on line 0
+PHP Notice:  Constant XML_DOCUMENT_NODE already defined in Unknown on line 0
+PHP Notice:  Constant XML_DOCUMENT_TYPE_NODE already defined in Unknown on line 0
+PHP Notice:  Constant XML_DOCUMENT_FRAG_NODE already defined in Unknown on line 0
+PHP Notice:  Constant XML_NOTATION_NODE already defined in Unknown on line 0
+PHP Notice:  Constant XML_HTML_DOCUMENT_NODE already defined in Unknown on line 0
+PHP Notice:  Constant XML_DTD_NODE already defined in Unknown on line 0
+PHP Notice:  Constant XML_ELEMENT_DECL_NODE already defined in Unknown on line 0
+PHP Notice:  Constant XML_ATTRIBUTE_DECL_NODE already defined in Unknown on line 0
+PHP Notice:  Constant XML_ENTITY_DECL_NODE already defined in Unknown on line 0
+PHP Notice:  Constant XML_NAMESPACE_DECL_NODE already defined in Unknown on line 0
+PHP Notice:  Constant XML_LOCAL_NAMESPACE already defined in Unknown on line 0
+PHP Notice:  Constant XML_ATTRIBUTE_CDATA already defined in Unknown on line 0
+PHP Notice:  Constant XML_ATTRIBUTE_ID already defined in Unknown on line 0
+PHP Notice:  Constant XML_ATTRIBUTE_IDREF already defined in Unknown on line 0
+PHP Notice:  Constant XML_ATTRIBUTE_IDREFS already defined in Unknown on line 0
+PHP Notice:  Constant XML_ATTRIBUTE_ENTITY already defined in Unknown on line 0
+PHP Notice:  Constant XML_ATTRIBUTE_NMTOKEN already defined in Unknown on line 0
+PHP Notice:  Constant XML_ATTRIBUTE_NMTOKENS already defined in Unknown on line 0
+PHP Notice:  Constant XML_ATTRIBUTE_ENUMERATION already defined in Unknown on line 0
+PHP Notice:  Constant XML_ATTRIBUTE_NOTATION already defined in Unknown on line 0
+[Fri Aug 03 14:51:13 2007] [notice] Child 5988: Child process is running
+[Fri Aug 03 14:51:13 2007] [notice] Child 5988: Acquired the start mutex.
+[Fri Aug 03 14:51:13 2007] [notice] Child 5988: Starting 250 worker threads.
+[Fri Aug 03 14:51:13 2007] [notice] Child 5988: Starting thread to listen on port 6880.
+[Fri Aug 03 14:51:14 2007] [error] [client 127.0.0.1] client denied by server configuration: C:/PhpGedView/distribution/PGVDemo-4.1/democd/sites/index.html
+[Fri Aug 03 14:51:18 2007] [error] [client 127.0.0.1] client denied by server configuration: C:/PhpGedView/distribution/PGVDemo-4.1/democd/sites/index.html
+[Fri Aug 03 14:54:51 2007] [crit] (22)Invalid argument: unable to replace stderr with error_log
+[Fri Aug 03 14:54:51 2007] [crit] (2)No such file or directory: unable to replace stderr with /dev/null
+[Fri Aug 03 14:54:51 2007] [crit] (22)Invalid argument: unable to replace stderr with error_log
+[Fri Aug 03 14:54:51 2007] [crit] (2)No such file or directory: unable to replace stderr with /dev/null
+[Fri Aug 03 14:54:51 2007] [notice] Apache/2.2.4 (Win32) PHP/5.2.3 DAV/2 configured -- resuming normal operations
+[Fri Aug 03 14:54:51 2007] [notice] Server built: Jan  9 2007 23:17:20
+[Fri Aug 03 14:54:51 2007] [notice] Parent: Created child process 7184
+PHP Notice:  Constant XML_ELEMENT_NODE already defined in Unknown on line 0
+PHP Notice:  Constant XML_ATTRIBUTE_NODE already defined in Unknown on line 0
+PHP Notice:  Constant XML_TEXT_NODE already defined in Unknown on line 0
+PHP Notice:  Constant XML_CDATA_SECTION_NODE already defined in Unknown on line 0
+PHP Notice:  Constant XML_ENTITY_REF_NODE already defined in Unknown on line 0
+PHP Notice:  Constant XML_ENTITY_NODE already defined in Unknown on line 0
+PHP Notice:  Constant XML_PI_NODE already defined in Unknown on line 0
+PHP Notice:  Constant XML_COMMENT_NODE already defined in Unknown on line 0
+PHP Notice:  Constant XML_DOCUMENT_NODE already defined in Unknown on line 0
+PHP Notice:  Constant XML_DOCUMENT_TYPE_NODE already defined in Unknown on line 0
+PHP Notice:  Constant XML_DOCUMENT_FRAG_NODE already defined in Unknown on line 0
+PHP Notice:  Constant XML_NOTATION_NODE already defined in Unknown on line 0
+PHP Notice:  Constant XML_HTML_DOCUMENT_NODE already defined in Unknown on line 0
+PHP Notice:  Constant XML_DTD_NODE already defined in Unknown on line 0
+PHP Notice:  Constant XML_ELEMENT_DECL_NODE already defined in Unknown on line 0
+PHP Notice:  Constant XML_ATTRIBUTE_DECL_NODE already defined in Unknown on line 0
+PHP Notice:  Constant XML_ENTITY_DECL_NODE already defined in Unknown on line 0
+PHP Notice:  Constant XML_NAMESPACE_DECL_NODE already defined in Unknown on line 0
+PHP Notice:  Constant XML_LOCAL_NAMESPACE already defined in Unknown on line 0
+PHP Notice:  Constant XML_ATTRIBUTE_CDATA already defined in Unknown on line 0
+PHP Notice:  Constant XML_ATTRIBUTE_ID already defined in Unknown on line 0
+PHP Notice:  Constant XML_ATTRIBUTE_IDREF already defined in Unknown on line 0
+PHP Notice:  Constant XML_ATTRIBUTE_IDREFS already defined in Unknown on line 0
+PHP Notice:  Constant XML_ATTRIBUTE_ENTITY already defined in Unknown on line 0
+PHP Notice:  Constant XML_ATTRIBUTE_NMTOKEN already defined in Unknown on line 0
+PHP Notice:  Constant XML_ATTRIBUTE_NMTOKENS already defined in Unknown on line 0
+PHP Notice:  Constant XML_ATTRIBUTE_ENUMERATION already defined in Unknown on line 0
+PHP Notice:  Constant XML_ATTRIBUTE_NOTATION already defined in Unknown on line 0
+[Fri Aug 03 14:54:51 2007] [notice] Child 7184: Child process is running
+[Fri Aug 03 14:54:51 2007] [notice] Child 7184: Acquired the start mutex.
+[Fri Aug 03 14:54:51 2007] [notice] Child 7184: Starting 250 worker threads.
+[Fri Aug 03 14:54:51 2007] [notice] Child 7184: Starting thread to listen on port 6880.
+[Fri Aug 03 15:09:01 2007] [crit] (22)Invalid argument: unable to replace stderr with error_log
+[Fri Aug 03 15:09:01 2007] [crit] (2)No such file or directory: unable to replace stderr with /dev/null
+[Fri Aug 03 15:09:01 2007] [crit] (22)Invalid argument: unable to replace stderr with error_log
+[Fri Aug 03 15:09:01 2007] [crit] (2)No such file or directory: unable to replace stderr with /dev/null
+[Fri Aug 03 15:09:01 2007] [notice] Apache/2.2.4 (Win32) PHP/5.2.3 DAV/2 configured -- resuming normal operations
+[Fri Aug 03 15:09:01 2007] [notice] Server built: Jan  9 2007 23:17:20
+[Fri Aug 03 15:09:01 2007] [notice] Parent: Created child process 9132
+PHP Notice:  Constant XML_ELEMENT_NODE already defined in Unknown on line 0
+PHP Notice:  Constant XML_ATTRIBUTE_NODE already defined in Unknown on line 0
+PHP Notice:  Constant XML_TEXT_NODE already defined in Unknown on line 0
+PHP Notice:  Constant XML_CDATA_SECTION_NODE already defined in Unknown on line 0
+PHP Notice:  Constant XML_ENTITY_REF_NODE already defined in Unknown on line 0
+PHP Notice:  Constant XML_ENTITY_NODE already defined in Unknown on line 0
+PHP Notice:  Constant XML_PI_NODE already defined in Unknown on line 0
+PHP Notice:  Constant XML_COMMENT_NODE already defined in Unknown on line 0
+PHP Notice:  Constant XML_DOCUMENT_NODE already defined in Unknown on line 0
+PHP Notice:  Constant XML_DOCUMENT_TYPE_NODE already defined in Unknown on line 0
+PHP Notice:  Constant XML_DOCUMENT_FRAG_NODE already defined in Unknown on line 0
+PHP Notice:  Constant XML_NOTATION_NODE already defined in Unknown on line 0
+PHP Notice:  Constant XML_HTML_DOCUMENT_NODE already defined in Unknown on line 0
+PHP Notice:  Constant XML_DTD_NODE already defined in Unknown on line 0
+PHP Notice:  Constant XML_ELEMENT_DECL_NODE already defined in Unknown on line 0
+PHP Notice:  Constant XML_ATTRIBUTE_DECL_NODE already defined in Unknown on line 0
+PHP Notice:  Constant XML_ENTITY_DECL_NODE already defined in Unknown on line 0
+PHP Notice:  Constant XML_NAMESPACE_DECL_NODE already defined in Unknown on line 0
+PHP Notice:  Constant XML_LOCAL_NAMESPACE already defined in Unknown on line 0
+PHP Notice:  Constant XML_ATTRIBUTE_CDATA already defined in Unknown on line 0
+PHP Notice:  Constant XML_ATTRIBUTE_ID already defined in Unknown on line 0
+PHP Notice:  Constant XML_ATTRIBUTE_IDREF already defined in Unknown on line 0
+PHP Notice:  Constant XML_ATTRIBUTE_IDREFS already defined in Unknown on line 0
+PHP Notice:  Constant XML_ATTRIBUTE_ENTITY already defined in Unknown on line 0
+PHP Notice:  Constant XML_ATTRIBUTE_NMTOKEN already defined in Unknown on line 0
+PHP Notice:  Constant XML_ATTRIBUTE_NMTOKENS already defined in Unknown on line 0
+PHP Notice:  Constant XML_ATTRIBUTE_ENUMERATION already defined in Unknown on line 0
+PHP Notice:  Constant XML_ATTRIBUTE_NOTATION already defined in Unknown on line 0
+[Fri Aug 03 15:09:01 2007] [notice] Child 9132: Child process is running
+[Fri Aug 03 15:09:01 2007] [notice] Child 9132: Acquired the start mutex.
+[Fri Aug 03 15:09:01 2007] [notice] Child 9132: Starting 250 worker threads.
+[Fri Aug 03 15:09:01 2007] [notice] Child 9132: Starting thread to listen on port 6880.
+[Fri Aug 03 15:10:37 2007] [crit] (22)Invalid argument: unable to replace stderr with error_log
+[Fri Aug 03 15:10:37 2007] [crit] (2)No such file or directory: unable to replace stderr with /dev/null
+[Fri Aug 03 15:10:37 2007] [crit] (22)Invalid argument: unable to replace stderr with error_log
+[Fri Aug 03 15:10:37 2007] [crit] (2)No such file or directory: unable to replace stderr with /dev/null
+[Fri Aug 03 15:10:37 2007] [notice] Apache/2.2.4 (Win32) PHP/5.2.3 DAV/2 configured -- resuming normal operations
+[Fri Aug 03 15:10:37 2007] [notice] Server built: Jan  9 2007 23:17:20
+[Fri Aug 03 15:10:37 2007] [notice] Parent: Created child process 6256
+PHP Notice:  Constant XML_ELEMENT_NODE already defined in Unknown on line 0
+PHP Notice:  Constant XML_ATTRIBUTE_NODE already defined in Unknown on line 0
+PHP Notice:  Constant XML_TEXT_NODE already defined in Unknown on line 0
+PHP Notice:  Constant XML_CDATA_SECTION_NODE already defined in Unknown on line 0
+PHP Notice:  Constant XML_ENTITY_REF_NODE already defined in Unknown on line 0
+PHP Notice:  Constant XML_ENTITY_NODE already defined in Unknown on line 0
+PHP Notice:  Constant XML_PI_NODE already defined in Unknown on line 0
+PHP Notice:  Constant XML_COMMENT_NODE already defined in Unknown on line 0
+PHP Notice:  Constant XML_DOCUMENT_NODE already defined in Unknown on line 0
+PHP Notice:  Constant XML_DOCUMENT_TYPE_NODE already defined in Unknown on line 0
+PHP Notice:  Constant XML_DOCUMENT_FRAG_NODE already defined in Unknown on line 0
+PHP Notice:  Constant XML_NOTATION_NODE already defined in Unknown on line 0
+PHP Notice:  Constant XML_HTML_DOCUMENT_NODE already defined in Unknown on line 0
+PHP Notice:  Constant XML_DTD_NODE already defined in Unknown on line 0
+PHP Notice:  Constant XML_ELEMENT_DECL_NODE already defined in Unknown on line 0
+PHP Notice:  Constant XML_ATTRIBUTE_DECL_NODE already defined in Unknown on line 0
+PHP Notice:  Constant XML_ENTITY_DECL_NODE already defined in Unknown on line 0
+PHP Notice:  Constant XML_NAMESPACE_DECL_NODE already defined in Unknown on line 0
+PHP Notice:  Constant XML_LOCAL_NAMESPACE already defined in Unknown on line 0
+PHP Notice:  Constant XML_ATTRIBUTE_CDATA already defined in Unknown on line 0
+PHP Notice:  Constant XML_ATTRIBUTE_ID already defined in Unknown on line 0
+PHP Notice:  Constant XML_ATTRIBUTE_IDREF already defined in Unknown on line 0
+PHP Notice:  Constant XML_ATTRIBUTE_IDREFS already defined in Unknown on line 0
+PHP Notice:  Constant XML_ATTRIBUTE_ENTITY already defined in Unknown on line 0
+PHP Notice:  Constant XML_ATTRIBUTE_NMTOKEN already defined in Unknown on line 0
+PHP Notice:  Constant XML_ATTRIBUTE_NMTOKENS already defined in Unknown on line 0
+PHP Notice:  Constant XML_ATTRIBUTE_ENUMERATION already defined in Unknown on line 0
+PHP Notice:  Constant XML_ATTRIBUTE_NOTATION already defined in Unknown on line 0
+[Fri Aug 03 15:10:37 2007] [notice] Child 6256: Child process is running
+[Fri Aug 03 15:10:37 2007] [notice] Child 6256: Acquired the start mutex.
+[Fri Aug 03 15:10:37 2007] [notice] Child 6256: Starting 250 worker threads.
+[Fri Aug 03 15:10:37 2007] [notice] Child 6256: Starting thread to listen on port 6880.
+[Fri Aug 03 15:11:09 2007] [crit] (22)Invalid argument: unable to replace stderr with error_log
+[Fri Aug 03 15:11:09 2007] [crit] (2)No such file or directory: unable to replace stderr with /dev/null
+[Fri Aug 03 15:11:09 2007] [crit] (22)Invalid argument: unable to replace stderr with error_log
+[Fri Aug 03 15:11:09 2007] [crit] (2)No such file or directory: unable to replace stderr with /dev/null
+[Fri Aug 03 15:11:09 2007] [notice] Apache/2.2.4 (Win32) PHP/5.2.3 DAV/2 configured -- resuming normal operations
+[Fri Aug 03 15:11:09 2007] [notice] Server built: Jan  9 2007 23:17:20
+[Fri Aug 03 15:11:09 2007] [notice] Parent: Created child process 1336
+PHP Notice:  Constant XML_ELEMENT_NODE already defined in Unknown on line 0
+PHP Notice:  Constant XML_ATTRIBUTE_NODE already defined in Unknown on line 0
+PHP Notice:  Constant XML_TEXT_NODE already defined in Unknown on line 0
+PHP Notice:  Constant XML_CDATA_SECTION_NODE already defined in Unknown on line 0
+PHP Notice:  Constant XML_ENTITY_REF_NODE already defined in Unknown on line 0
+PHP Notice:  Constant XML_ENTITY_NODE already defined in Unknown on line 0
+PHP Notice:  Constant XML_PI_NODE already defined in Unknown on line 0
+PHP Notice:  Constant XML_COMMENT_NODE already defined in Unknown on line 0
+PHP Notice:  Constant XML_DOCUMENT_NODE already defined in Unknown on line 0
+PHP Notice:  Constant XML_DOCUMENT_TYPE_NODE already defined in Unknown on line 0
+PHP Notice:  Constant XML_DOCUMENT_FRAG_NODE already defined in Unknown on line 0
+PHP Notice:  Constant XML_NOTATION_NODE already defined in Unknown on line 0
+PHP Notice:  Constant XML_HTML_DOCUMENT_NODE already defined in Unknown on line 0
+PHP Notice:  Constant XML_DTD_NODE already defined in Unknown on line 0
+PHP Notice:  Constant XML_ELEMENT_DECL_NODE already defined in Unknown on line 0
+PHP Notice:  Constant XML_ATTRIBUTE_DECL_NODE already defined in Unknown on line 0
+PHP Notice:  Constant XML_ENTITY_DECL_NODE already defined in Unknown on line 0
+PHP Notice:  Constant XML_NAMESPACE_DECL_NODE already defined in Unknown on line 0
+PHP Notice:  Constant XML_LOCAL_NAMESPACE already defined in Unknown on line 0
+PHP Notice:  Constant XML_ATTRIBUTE_CDATA already defined in Unknown on line 0
+PHP Notice:  Constant XML_ATTRIBUTE_ID already defined in Unknown on line 0
+PHP Notice:  Constant XML_ATTRIBUTE_IDREF already defined in Unknown on line 0
+PHP Notice:  Constant XML_ATTRIBUTE_IDREFS already defined in Unknown on line 0
+PHP Notice:  Constant XML_ATTRIBUTE_ENTITY already defined in Unknown on line 0
+PHP Notice:  Constant XML_ATTRIBUTE_NMTOKEN already defined in Unknown on line 0
+PHP Notice:  Constant XML_ATTRIBUTE_NMTOKENS already defined in Unknown on line 0
+PHP Notice:  Constant XML_ATTRIBUTE_ENUMERATION already defined in Unknown on line 0
+PHP Notice:  Constant XML_ATTRIBUTE_NOTATION already defined in Unknown on line 0
+[Fri Aug 03 15:11:09 2007] [notice] Child 1336: Child process is running
+[Fri Aug 03 15:11:09 2007] [notice] Child 1336: Acquired the start mutex.
+[Fri Aug 03 15:11:09 2007] [notice] Child 1336: Starting 250 worker threads.
+[Fri Aug 03 15:11:09 2007] [notice] Child 1336: Starting thread to listen on port 6880.

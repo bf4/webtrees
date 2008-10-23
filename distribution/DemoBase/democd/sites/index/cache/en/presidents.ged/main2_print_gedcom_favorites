@@ -1,0 +1,64 @@
+<div id="gedcom_favorites" class="block">
+<table class="blockheader" cellspacing="0" cellpadding="0" style="direction:ltr;"><tr><td class="blockh1" >&nbsp;</td><td class="blockh2" ><div class="blockhc"> <a class="help" tabindex="0" href="javascript:// index_favorites_help" onclick="helpPopup('index_favorites_help'); return false;"><img src="images/small/help.gif" class="icon" width="15" height="15" alt="" /></a> 
+<b>This GEDCOM's Favorites&nbsp;&nbsp;(3)</b></div></td><td class="blockh3">&nbsp;</td></tr>
+</table><div class="blockcontent"><table width="100%" class="ltr"><tr><td><div id="boxI1.0" class="person_box">
+
+		<div id="II1.1.1links" style="position:absolute; left: 0px; top:0px; width: 168.75px; visibility:hidden; z-index:'100';">
+			<table class="person_box"><tr><td class="details1"><a href="pedigree.php?rootid=I1&amp;PEDIGREE_GENERATIONS=4&amp;talloffset=1&amp;ged=presidents.ged" title="Pedigree Chart: I1" onmouseover="clear_family_box_timeout('I1.1.1');" onmouseout="family_box_timeout('I1.1.1');"><b>Pedigree Tree</b></a>
+<br /><a href="descendancy.php?pid=I1&amp;show_full=1&amp;generations=&amp;box_width=&amp;ged=presidents.ged" title="Descendancy Chart: I1" onmouseover="clear_family_box_timeout('I1.1.1');" onmouseout="family_box_timeout('I1.1.1');"><b>Descendancy Chart</b></a><br />
+<a href="ancestry.php?rootid=I1&amp;chart_style=&amp;PEDIGREE_GENERATIONS=4&amp;box_width=&amp;ged=presidents.ged" title="Ancestry Chart: I1" onmouseover="clear_family_box_timeout('I1.1.1');" onmouseout="family_box_timeout('I1.1.1');"><b>Ancestry Chart</b></a><br />
+<a href="compact.php?rootid=I1&amp;ged=presidents.ged" title="Compact Chart: I1" onmouseover="clear_family_box_timeout('I1.1.1');" onmouseout="family_box_timeout('I1.1.1');"><b>Compact Chart</b></a><br />
+<a href="fanchart.php?rootid=I1&amp;PEDIGREE_GENERATIONS=4&amp;ged=presidents.ged" title="Circle Diagram: I1" onmouseover="clear_family_box_timeout('I1.1.1');" onmouseout="family_box_timeout('I1.1.1');"><b>Circle Diagram</b></a><br />
+<a href="hourglass.php?pid=I1&amp;chart_style=&amp;PEDIGREE_GENERATIONS=4&amp;box_width=&amp;ged=presidents.ged&amp;show_spouse=&amp;show_full=1" title="Hourglass Chart: I1" onmouseover="clear_family_box_timeout('I1.1.1');" onmouseout="family_box_timeout('I1.1.1');"><b>Hourglass Chart</b></a><br />
+<a href="family.php?famid=F1&amp;ged=presidents.ged" title="Family Book Chart: F1" onmouseover="clear_family_box_timeout('I1.1.1');" onmouseout="family_box_timeout('I1.1.1');"><b>Family with spouse</b></a><br /> 
+<a href="individual.php?pid=I2&amp;ged=presidents.ged" title="Individual Information: I2" onmouseover="clear_family_box_timeout('I1.1.1');" onmouseout="family_box_timeout('I1.1.1');">Martha Dandridge</a><br />
+</td></tr></table>
+		</div>
+			<div id="out-I1.1.1" style="padding: 2px;"><table width="100%" cellspacing="0" cellpadding="0" border="0"><tr><td valign="top"><div id="icons-I1.1.1" style="float:right; width: 25px; height: 50px; display: block;"><a href="javascript:;" onclick="expandbox('I1.1.1', 2); return false;"><img id="iconz-I1.1.1" src="images/zoomin.gif" width="25" height="25" border="0" alt="Zoom in/out on this box." title="Zoom in/out on this box." /></a><a href="javascript:;" title=""onclick="toggle_family_box('I1.1.1', 'relatives'); return false;" onmouseout="family_box_timeout('I1.1.1'); return false;"><img src="images/small/pedigree.gif" width="25" border="0" vspace="0" hspace="0" alt="Links to charts, families, and close relatives of this person. Click this icon to view this page, starting at this person." title="Links to charts, families, and close relatives of this person. Click this icon to view this page, starting at this person." /></a></div>
+<a href="mediaviewer.php?mid=M42" ><img id="box-I1.1.1-thumb" src="media/thumbs/GeorgeWashington.gif" vspace="0" hspace="0" class="pedigree_image_portrait" alt ="" title=""  /></a>
+<a href="individual.php?pid=I1&amp;ged=presidents.ged" title="Individual Information: I1" onmouseover="change_class('namedef-I1.1.1','name2Hover'); return false;" onmouseout="change_class('namedef-I1.1.1','name2'); return false;"><span id="namedef-I1.1.1" class="name2 BIRT DEAT BURI FCOM OCCU">George Washington</span><span class="name2"> <img id="box-I1.1.1-gender" src="images/small/male.gif" title="Male" alt="Male" class="gender_image" /></span>
+<span class="details2">&lrm;(I1)&lrm; </span></a><div id="fontdef-I1.1.1" class="details2">
+<div id="inout2-I1.1.1"  style="display: block;">
+<span class="details_label">Birth</span>  11 February 1732 <span class="age"></span>   -- Pope's Creek, Westmoreland Co., Virginia<br />
+<span class="details_label">Death</span>   -- Mount Vernon, Fairfax Co., Virginia<br />
+</div>
+</div>
+
+<div id="inout-I1.1.1" style="display: none;">
+<div id="LOADING-inout-I1.1.1">Loading...</div></div>
+			</td></tr></table></div></div>
+</td></tr>
+<tr><td><div id="boxI1049.0" class="person_box">
+
+		<div id="II1049.1.2links" style="position:absolute; left: 0px; top:0px; width: 168.75px; visibility:hidden; z-index:'100';">
+			<table class="person_box"><tr><td class="details1"><a href="pedigree.php?rootid=I1049&amp;PEDIGREE_GENERATIONS=4&amp;talloffset=1&amp;ged=presidents.ged" title="Pedigree Chart: I1049" onmouseover="clear_family_box_timeout('I1049.1.2');" onmouseout="family_box_timeout('I1049.1.2');"><b>Pedigree Tree</b></a>
+<br /><a href="descendancy.php?pid=I1049&amp;show_full=1&amp;generations=&amp;box_width=&amp;ged=presidents.ged" title="Descendancy Chart: I1049" onmouseover="clear_family_box_timeout('I1049.1.2');" onmouseout="family_box_timeout('I1049.1.2');"><b>Descendancy Chart</b></a><br />
+<a href="ancestry.php?rootid=I1049&amp;chart_style=&amp;PEDIGREE_GENERATIONS=4&amp;box_width=&amp;ged=presidents.ged" title="Ancestry Chart: I1049" onmouseover="clear_family_box_timeout('I1049.1.2');" onmouseout="family_box_timeout('I1049.1.2');"><b>Ancestry Chart</b></a><br />
+<a href="compact.php?rootid=I1049&amp;ged=presidents.ged" title="Compact Chart: I1049" onmouseover="clear_family_box_timeout('I1049.1.2');" onmouseout="family_box_timeout('I1049.1.2');"><b>Compact Chart</b></a><br />
+<a href="fanchart.php?rootid=I1049&amp;PEDIGREE_GENERATIONS=4&amp;ged=presidents.ged" title="Circle Diagram: I1049" onmouseover="clear_family_box_timeout('I1049.1.2');" onmouseout="family_box_timeout('I1049.1.2');"><b>Circle Diagram</b></a><br />
+<a href="hourglass.php?pid=I1049&amp;chart_style=&amp;PEDIGREE_GENERATIONS=4&amp;box_width=&amp;ged=presidents.ged&amp;show_spouse=&amp;show_full=1" title="Hourglass Chart: I1049" onmouseover="clear_family_box_timeout('I1049.1.2');" onmouseout="family_box_timeout('I1049.1.2');"><b>Hourglass Chart</b></a><br />
+<a href="family.php?famid=F542&amp;ged=presidents.ged" title="Family Book Chart: F542" onmouseover="clear_family_box_timeout('I1049.1.2');" onmouseout="family_box_timeout('I1049.1.2');"><b>Family with spouse</b></a><br /> 
+<a href="individual.php?pid=I1121&amp;ged=presidents.ged" title="Individual Information: I1121" onmouseover="clear_family_box_timeout('I1049.1.2');" onmouseout="family_box_timeout('I1049.1.2');">Mary Ann Todd</a><br />
+
+				&nbsp;&nbsp;<a href="individual.php?pid=I1122&amp;ged=presidents.ged" title="Individual Information: I1122" onmouseover="clear_family_box_timeout('I1049.1.2');" onmouseout="family_box_timeout('I1049.1.2');">Robert Todd Lincoln<br /></a>
+				&nbsp;&nbsp;<a href="individual.php?pid=I1123&amp;ged=presidents.ged" title="Individual Information: I1123" onmouseover="clear_family_box_timeout('I1049.1.2');" onmouseout="family_box_timeout('I1049.1.2');">Edward Baker Lincoln<br /></a>
+				&nbsp;&nbsp;<a href="individual.php?pid=I1124&amp;ged=presidents.ged" title="Individual Information: I1124" onmouseover="clear_family_box_timeout('I1049.1.2');" onmouseout="family_box_timeout('I1049.1.2');">William Wallace Lincoln<br /></a>
+				&nbsp;&nbsp;<a href="individual.php?pid=I1125&amp;ged=presidents.ged" title="Individual Information: I1125" onmouseover="clear_family_box_timeout('I1049.1.2');" onmouseout="family_box_timeout('I1049.1.2');">Thomas &lrm;(Tad)&lrm; Lincoln<br /></a></td></tr></table>
+		</div>
+			<div id="out-I1049.1.2" style="padding: 2px;"><table width="100%" cellspacing="0" cellpadding="0" border="0"><tr><td valign="top"><div id="icons-I1049.1.2" style="float:right; width: 25px; height: 50px; display: block;"><a href="javascript:;" onclick="expandbox('I1049.1.2', 2); return false;"><img id="iconz-I1049.1.2" src="images/zoomin.gif" width="25" height="25" border="0" alt="Zoom in/out on this box." title="Zoom in/out on this box." /></a><a href="javascript:;" title=""onclick="toggle_family_box('I1049.1.2', 'relatives'); return false;" onmouseout="family_box_timeout('I1049.1.2'); return false;"><img src="images/small/pedigree.gif" width="25" border="0" vspace="0" hspace="0" alt="Links to charts, families, and close relatives of this person. Click this icon to view this page, starting at this person." title="Links to charts, families, and close relatives of this person. Click this icon to view this page, starting at this person." /></a></div>
+<a href="mediaviewer.php?mid=M26" ><img id="box-I1049.1.2-thumb" src="media/thumbs/AbrahamLincoln.gif" vspace="0" hspace="0" class="pedigree_image_portrait" alt ="" title=""  /></a>
+<a href="individual.php?pid=I1049&amp;ged=presidents.ged" title="Individual Information: I1049" onmouseover="change_class('namedef-I1049.1.2','name2Hover'); return false;" onmouseout="change_class('namedef-I1049.1.2','name2'); return false;"><span id="namedef-I1049.1.2" class="name2 BIRT DEAT BURI OCCU">Abraham Lincoln</span><span class="name2"> <img id="box-I1049.1.2-gender" src="images/small/male.gif" title="Male" alt="Male" class="gender_image" /></span>
+<span class="details2">&lrm;(I1049)&lrm; </span></a><div id="fontdef-I1049.1.2" class="details2">
+<div id="inout2-I1049.1.2"  style="display: block;">
+<span class="details_label">Birth</span>  12 February 1809 <span class="age"><img src="images/small/male.gif" title="Father" alt="Father" class="gender_image" />31<img src="images/small/female.gif" title="Mother" alt="Mother" class="gender_image" />25</span>   -- Sinking Spring, Hodgenville, Hardin Co., KY<br />
+<span class="details_label">Death</span>  15 April 1865 <span class="age">(Age 56)</span>   -- Washington, DC<br />
+</div>
+</div>
+
+<div id="inout-I1049.1.2" style="display: none;">
+<div id="LOADING-inout-I1049.1.2">Loading...</div></div>
+			</td></tr></table></div></div>
+</td></tr>
+<tr><td></td></tr>
+</table>
+</div></div>
