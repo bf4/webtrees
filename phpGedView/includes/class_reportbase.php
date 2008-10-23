@@ -2122,7 +2122,7 @@ function PGVRRelativesEHandler() {
 	foreach($list as $key=>$value) {
 		if (isset($value->generation)) $generation = $value->generation;
 //KN		if (displayDetailsById($key)) {
-			$gedrec = $value->getGedcomRecord();
+			$tmp=GedcomRecord::getInstance($key);	$gedrec = $tmp->getGedcomRecord();
 			//-- start the sax parser
 			$repeat_parser = xml_parser_create();
 			$parser = $repeat_parser;
