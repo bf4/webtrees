@@ -10,6 +10,7 @@
 
 
 Version 4.1.6
+ - Added: Prevention of "css file not found" Apache Log errors if Lightbox module not installed. (windmillway)
  - Fix: [ 2180725 ] 4107 Notes Tab (fisharebest)
  - Added: [ 1810145 ] Simple Sources
  - Added: Enabled re-intialisation of Lightbox (if installed) on any tab on Indi page (windmillway)
