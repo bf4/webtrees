@@ -2365,7 +2365,7 @@ function delete_person($pid, $gedrec='') {
 					}
 				}
 				//-- if there is not at least two people in a family then the family is deleted
-				$pt = preg_match_all("/1 (HUSB|WIFE|CHIL) @(.*)@/", $newfamrec, $pmatch, PREG_SET_ORDER);
+				$pt = preg_match_all("/1 (?:HUSB|WIFE|CHIL) @(.*)@/", $newfamrec, $pmatch, PREG_SET_ORDER);
 				if ($pt<2) {
 					for ($j=0; $j<$pt; $j++) {
 						$xref = $pmatch[$j][1];
