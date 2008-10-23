@@ -560,17 +560,11 @@ class GregorianDate extends CalendarDate {
 // (Proleptic means we extend it backwards, prior to its introduction in 46BC)
 ////////////////////////////////////////////////////////////////////////////////
 class JulianDate extends CalendarDate {
+	var $new_old_style=false;
+
 	static function CALENDAR_ESCAPE() {
 		return '@#DJULIAN@';
 	}
-
-	var $NUM_MONTHS=12;
-	var $DAYS_OF_WEEK=array('monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday');
-	var $NUM_DAYS_OF_WEEK=7;
-	var $CAL_START_JD=0; // @#DJULIAN@ 01 JAN 4713B.C.
-	var $CAL_END_JD=99999999;
-	// 
-	var $new_old_style=false;
 
 	static function NextYear($y) {
 		if ($y==-1)
@@ -741,11 +735,11 @@ class HebrewDate extends JewishDate {
 	}
 
 	function FormatLongWeekday() {
-		return self::$HEBREW_DAYS[$this->minJD % $this->NUM_DAYS_OF_WEEK];
+		return self::$HEBREW_DAYS[$this->minJD % $this->NUM_DAYS_OF_WEEK()];
 	}
 
 	function FormatShortWeekday() {
-		return self::$HEBREW_DAYS[$this->minJD % $this->NUM_DAYS_OF_WEEK];
+		return self::$HEBREW_DAYS[$this->minJD % $this->NUM_DAYS_OF_WEEK()];
 	}
 
 	function FormatShortYear() {
