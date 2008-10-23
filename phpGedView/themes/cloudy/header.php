@@ -48,13 +48,16 @@ $menubar = new MenuBar();
 		<?php if ($use_alternate_styles && $BROWSERTYPE != "other") { ?>
 			<link rel="stylesheet" href="<?php print $THEME_DIR.$BROWSERTYPE; ?>.css" type="text/css" media="all" />
 		<?php	}
-		if ($TEXT_DIRECTION=='rtl') { ?>
-			<link rel="stylesheet" href="modules/lightbox/css/clearbox_music_RTL.css" type="text/css" />
-			<link rel="stylesheet" href="modules/lightbox/css/album_page_RTL_ff.css" type="text/css" media="screen" />
-		<?php } else { ?>
-			<link rel="stylesheet" href="modules/lightbox/css/clearbox_music.css" type="text/css" />
-			<link rel="stylesheet" href="modules/lightbox/css/album_page.css" type="text/css" media="screen" />
-		<?php } ?>
+		// Additional css files required (Only if Lightbox installed)
+		if (is_dir('modules/lightbox/css')) {
+			if ($TEXT_DIRECTION=='rtl') {
+				echo '<link rel="stylesheet" href="modules/lightbox/css/clearbox_music_RTL.css" type="text/css" />';
+				echo '<link rel="stylesheet" href="modules/lightbox/css/album_page_RTL_ff.css" type="text/css" media="screen" />';
+			} else {
+				echo '<link rel="stylesheet" href="modules/lightbox/css/clearbox_music.css" type="text/css" />';
+				echo '<link rel="stylesheet" href="modules/lightbox/css/album_page.css" type="text/css" media="screen" />';
+			}
+		} ?>
 
 	<link rel="stylesheet" href="<?php print $print_stylesheet; ?>" type="text/css" media="print" />
 	<?php if ($BROWSERTYPE == "msie") { ?>
