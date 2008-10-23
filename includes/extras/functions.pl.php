@@ -90,10 +90,7 @@ function date_localisation_pl(&$q1, &$d1, &$q2, &$d2, &$q3) {
 function age_localisation_pl(&$agestring, &$show_years) {
 	global $pgv_lang;
 
-	// Only suppress years if there are no months/days
-	if (preg_match('/\d[md]/i', $agestring)) {
-		$show_years=true;
-	}
+	$show_years=true;
 	$agestring=preg_replace(
 		array(
 			'/\bchi(ld)?\b/i',
