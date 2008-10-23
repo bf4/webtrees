@@ -231,7 +231,7 @@ class TimelineControllerRoot extends BaseController {
 				print ": 3px;\" />\n";
 				$col = $event->temp % 6;
 				print "</td><td valign=\"top\" class=\"person".$col."\">\n";
-				if (count($this->pids) > 6) print $event->getParentObject()->getFullName()." - ";
+				if (count($this->pids) > 6) {$tmp=$event->getParentObject(); print $tmp->getFullName()." - ";}
 				$indi=$event->getParentObject();
 				if ($fact=="_AKAN" || $fact=="_AKA" || $fact=="ALIA" || $fact == "_INTE") {
 					// Allow special processing for different languages
