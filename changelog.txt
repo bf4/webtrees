@@ -10,6 +10,7 @@
 
 
 Version 4.1.6
+ - Fixed: [ 2186659 ] SVN 4113: Setup wizard, index dir field in wrong group (canajun2eh)
  - Added: Prevention of "css file not found" Apache Log errors if Lightbox module not installed. (windmillway)
  - Fix: [ 2180725 ] 4107 Notes Tab (fisharebest)
  - Added: [ 1810145 ] Simple Sources
