@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="PGVBuild" basedir="." default="zip">
 	<property name="proj.name" value="PhpGedView" />
-	<property name="pgv.version" value="4.1.5" />
-	<property name="dist.dir" value="../../distribution" />
+	<property name="pgv.version" value="4.1.6" />
+	<property name="dist.dir" value="../distribution" />
 	<property name="all.dir" value="${dist.dir}/${proj.name}-all-${pgv.version}" />
 	<property name="basic.dir" value="${dist.dir}/${proj.name}-basic-${pgv.version}" />
 	<property name="lang.dir" value="${dist.dir}/PGV-Languages-${pgv.version}" />
@@ -10,10 +10,12 @@
 	<property name="themes.dir" value="${dist.dir}/PGV-Themes-${pgv.version}" />
 	<property name="modules-all.dir" value="${dist.dir}/PGV-Modules-All-${pgv.version}" />
 
+	<property name="module-batch-update.dir" value="${dist.dir}/PGV-Module-batch-update-${pgv.version}" />
 	<property name="module-cms-interface.dir" value="${dist.dir}/PGV-Module-cms-interface-${pgv.version}" />
 	<property name="module-fckeditor.dir" value="${dist.dir}/PGV-Module-fckeditor-${pgv.version}" />
 	<property name="module-gallery2.dir" value="${dist.dir}/PGV-Module-gallery2-${pgv.version}" />
 	<property name="module-googlemap.dir" value="${dist.dir}/PGV-Module-googlemap-${pgv.version}" />
+	<property name="module-jwplayer.dir" value="${dist.dir}/PGV-Module-jwplayer-${pgv.version}" />
 	<property name="module-lightbox.dir" value="${dist.dir}/PGV-Module-lightbox-${pgv.version}" />
 	<property name="module-phpsysinfo.dir" value="${dist.dir}/PGV-Module-phpsysinfo-${pgv.version}" />
 	<property name="module-punbb.dir" value="${dist.dir}/PGV-Module-punbb-${pgv.version}" />
@@ -80,6 +82,8 @@
 		<delete file="${modules-all.dir}.zip" failonerror="false" />
 		<delete dir ="${demo.dir}" failonerror="false" />
 		<delete file="${demo.dir}.zip" failonerror="false" />
+		<delete dir ="${module-batch-update.dir}" failonerror="false" />
+		<delete file="${module-batch-update.dir}.zip" failonerror="false" />
 		<delete dir ="${module-cms-interface.dir}" failonerror="false" />
 		<delete file="${module-cms-interface.dir}.zip" failonerror="false" />
 		<delete dir ="${module-fckeditor.dir}" failonerror="false" />
@@ -88,6 +92,8 @@
 		<delete file="${module-gallery2.dir}.zip" failonerror="false" />
 		<delete dir ="${module-googlemap.dir}" failonerror="false" />
 		<delete file="${module-googlemap.dir}.zip" failonerror="false" />
+		<delete dir ="${module-jwplayer.dir}" failonerror="false" />
+		<delete file="${module-jwplayer.dir}.zip" failonerror="false" />
 		<delete dir ="${module-lightbox.dir}" failonerror="false" />
 		<delete file="${module-lightbox.dir}.zip" failonerror="false" />
 		<delete dir ="${module-phpsysinfo.dir}" failonerror="false" />
@@ -188,6 +194,14 @@
 		</copy>
 	</target>
 
+	<target name="package-module-batch-update">
+		<copy todir="${module-batch-update.dir}">
+			<fileset dir="./modules/">
+				<include name="batch_update*/**" />
+			</fileset>
+		</copy>
+	</target>
+
 	<target name="package-module-cms-interface">
 		<copy todir="${module-cms-interface.dir}">
 			<fileset dir="./modules/">
@@ -216,6 +230,14 @@
 		<copy todir="${module-googlemap.dir}">
 			<fileset dir="./modules">
 				<include name="googlemap*/**" />
+			</fileset>
+		</copy>
+	</target>
+
+	<target name="package-module-jwplayer">
+		<copy todir="${module-jwplayer.dir}">
+			<fileset dir="./modules/">
+				<include name="JWplayer*/**" />
 			</fileset>
 		</copy>
 	</target>
@@ -307,7 +329,7 @@
 	</target>
 
 	<target name="package"
-		depends="package-all, package-basic, package-lang, package-themes, package-modules-all, package-places, package-demo, package-module-cms-interface, package-module-fckeditor, package-module-gallery2, package-module-googlemap, package-module-lightbox, package-module-phpsysinfo, package-module-punbb, package-module-research-assistant, package-module-sitemap, package-module-slideshow, package-module-wordsearch">
+		depends="package-all, package-basic, package-lang, package-themes, package-modules-all, package-places, package-demo, package-module-cms-interface, package-module-batch-update, package-module-fckeditor, package-module-gallery2, package-module-googlemap, package-module-jwplayer, package-module-lightbox, package-module-phpsysinfo, package-module-punbb, package-module-research-assistant, package-module-sitemap, package-module-slideshow, package-module-wordsearch">
 		<!--  default target which does everything -->
 	</target>
 	
@@ -319,10 +341,12 @@
 		<zip destfile="${themes.dir}.zip" basedir="${themes.dir}" update="true" />
 		<zip destfile="${modules-all.dir}.zip" basedir="${modules-all.dir}" update="true" />
 		<zip destfile="${demo.dir}.zip" basedir="${demo.dir}" update="true" />
+		<zip destfile="${module-batch-update.dir}.zip" basedir="${module-batch-update.dir}" update="true" />
 		<zip destfile="${module-cms-interface.dir}.zip" basedir="${module-cms-interface.dir}" update="true" />
 		<zip destfile="${module-fckeditor.dir}.zip" basedir="${module-fckeditor.dir}" update="true" />
 		<zip destfile="${module-gallery2.dir}.zip" basedir="${module-gallery2.dir}" update="true" />
 		<zip destfile="${module-googlemap.dir}.zip" basedir="${module-googlemap.dir}" update="true" />
+		<zip destfile="${module-jwplayer.dir}.zip" basedir="${module-jwplayer.dir}" update="true" />
 		<zip destfile="${module-lightbox.dir}.zip" basedir="${module-lightbox.dir}" update="true" />
 		<zip destfile="${module-phpsysinfo.dir}.zip" basedir="${module-phpsysinfo.dir}" update="true" />
 		<zip destfile="${module-punbb.dir}.zip" basedir="${module-punbb.dir}" update="true" />
