@@ -1173,7 +1173,7 @@ class Person extends GedcomRecord {
 								$factrec.='\n2 RESN privacy';
 							}
 							if (strstr($srec, "twin")) {
-								$rela_sex = Person::getInstance($spid)->getSex();
+								$tmp=Person::getInstance($spid); $rela_sex=$tmp->getSex();
 								$rela="twin";
 								if ($rela_sex=="F") $rela="twin_sister";
 								else if ($rela_sex=="M") $rela="twin_brother";
@@ -1420,14 +1420,14 @@ class Person extends GedcomRecord {
 							}
 						}
 						else if ($fact=='BIRT') {
-							$sex = Person::getInstance($rid)->getSex();
+							$tmp=Person::getInstance($rid); $sex=$tmp->getSex();
 							if ($sex == "M") $rela_b="twin_brother";
 							else if ($sex == "F") $rela_b="twin_sister";
 							else $rela_b="twin";
 							$factrec .= "\n2 ASSO @".$rid."@\n3 RELA ".$rela_b;
 						}
 						else if ($fact=='CHR') {
-							$sex = Person::getInstance($rid)->getSex();
+							$tmp=Person::getInstance($rid); $sex=$tmp->getSex();
 							if ($sex == "M") $rela_chr="godson";
 							else if ($sex == "F") $rela_chr="goddaughter";
 							else $rela_chr="godchild";

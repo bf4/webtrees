@@ -217,8 +217,8 @@ function cr_facts_localisation_pl(&$factrec, &$fact, &$explode_fact, &$pid) {
 	$ct = preg_match_all("/\d ASSO @(.*)@/", $factrec, $match, PREG_SET_ORDER);
 	if ($ct>0) $pid2 = $match[0][1];
 	if (isset($pid2)) {
-		$sex1 = Person::getInstance($pid)->getSex();
-		$sex2 = Person::getInstance($pid2)->getSex();
+		$tmp=Person::getInstance($pid);$sex1=$tmp->getSex();
+		$tmp=Person::getInstance($pid2);$sex2=$tmp->getSex();
 
 		if ($explode_fact[1] == "BIRT") {
 			switch ($explode_fact[2]) {
@@ -249,7 +249,7 @@ function cr_facts_localisation_pl(&$factrec, &$fact, &$explode_fact, &$pid) {
 			case "NEPH":
 				$node = get_relationship($pid, $pid2);
 				if (isset($node["path"][1])) {
-					$sex3 = Person::getInstance($node["path"][1])->getSex();
+					$tmp=Person::getInstance($node["path"][1]);$sex3=$tmp->getSex();
 					if ($sex2 == "M") {
 						if ($sex3 == "M")		$factarray[$fact] = "Narodziny bratanka";
 						else if ($sex3 == "F")	$factarray[$fact] = "Narodziny siostrzeńca";
@@ -303,7 +303,7 @@ function cr_facts_localisation_pl(&$factrec, &$fact, &$explode_fact, &$pid) {
 			case "NEPH":
 				$node = get_relationship($pid, $pid2);
 				if (isset($node["path"][1])) {
-					$sex3 = Person::getInstance($node["path"][1])->getSex();
+					$tmp=Person::getInstance($node["path"][1]);$sex3=$tmp->getSex();
 					if ($sex2 == "M") {
 						if ($sex3 == "M")		$factarray[$fact] = $factarray[$explode_fact[1]]." bratanka";
 						else if ($sex3 == "F")	$factarray[$fact] = $factarray[$explode_fact[1]]." siostrzeńca";

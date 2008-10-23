@@ -478,7 +478,7 @@ class GEClippings extends GrampsExport {
 		$passed = true;
 		$people = $this->dom->getElementsByTagName($elementName);
 		foreach ($people as $person) {
-			$id = $person->attributes->item(0)->nodeValue;
+			$tmp=$person->attributes->item(0);$id=$tmp->nodeValue;
 			if (!id_in_cart($id)) {
 				$passed = false;
 			}

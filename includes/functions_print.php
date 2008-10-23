@@ -1811,7 +1811,7 @@ function print_asso_rela_record($pid, $factrec, $linebr=false, $type='INDI') {
 					if ($key == "nephew") {
 						$node = get_relationship($pid, $pid2);
 						if (isset($node["path"][1])) {
-							$sex3 = Person::getInstance($node["path"][1])->getSex();
+							$tmp=Person::getInstance($node["path"][1]);$sex3=$tmp->getSex();
 							if ($sex3 == "M")  $rela = $pgv_lang["bosa_brothers_offspring_2"];
 							else if ($sex3 == "F")  $rela = $pgv_lang["bosa_sisters_offspring_2"];
 						}
@@ -1819,7 +1819,7 @@ function print_asso_rela_record($pid, $factrec, $linebr=false, $type='INDI') {
 					else if ($key == "niece") {
 						$node = get_relationship($pid, $pid2);
 						if (isset($node["path"][1])) {
-							$sex3 = Person::getInstance($node["path"][1])->getSex();
+							$tmp=Person::getInstance($node["path"][1]);$sex3=$tmp->getSex();
 							if ($sex3 == "M")  $rela = $pgv_lang["bosa_brothers_offspring_3"];
 							else if ($sex3 == "F")  $rela = $pgv_lang["bosa_sisters_offspring_3"];
 						}
@@ -1827,7 +1827,7 @@ function print_asso_rela_record($pid, $factrec, $linebr=false, $type='INDI') {
 					else if ($key == "uncle" || $key == "aunt") {
 						$node = get_relationship($pid, $pid2);
 						if (isset($node["path"][1])) {
-							$sex3 = Person::getInstance($node["path"][1])->getSex();
+							$tmp=Person::getInstance($node["path"][1]);$sex3=$tmp->getSex();
 							if ($sex3 == "M")  $rela = $pgv_lang["sosa_{$key}_2"];
 							else if ($sex3 == "F")  $rela = $pgv_lang["sosa_{$key}_3"];
 						}

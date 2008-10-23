@@ -304,7 +304,7 @@ class TimelineControllerRoot extends BaseController {
 						$ct = preg_match("/2 _PGVFS @(.*)@/", $factrec, $match);
 						if ($ct>0) {
 							print " <a href=\"".encode_url("family.php?pid={$match[1]}&ged={$GEDCOM}")."\">";
-							if (displayDetailsById($match[1])||showLivingNameById($match[1])) print $event->getParentObject()->getFullName();
+							if (displayDetailsById($match[1])||showLivingNameById($match[1])) {$tmp=$event->getParentObject(); print $tmp->getFullName();}
 							else print $pgv_lang["private"];
 							print "</a>";
 						}

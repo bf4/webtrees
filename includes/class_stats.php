@@ -870,7 +870,7 @@ class stats {
 				$result="<a href=\"".$person->getLinkUrl()."\">".$person->getFullName()."{$id}</a>";
 				break;
 			case 'place':
-				$result=format_fact_place(Person::getInstance($row['d_gid'])->getFactByType($row['d_fact']), true, true, true);
+				$tmp=Person::getInstance($row['d_gid']); $result=format_fact_place($tmp->getFactByType($row['d_fact']), true, true, true);
 				break;
 		}
 		return str_replace('<a href="', '<a href="'.$this->_server_url, $result);
