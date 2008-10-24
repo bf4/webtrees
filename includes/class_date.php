@@ -711,8 +711,8 @@ class JewishDate extends CalendarDate {
 // rather than the local language.
 ////////////////////////////////////////////////////////////////////////////////
 class HebrewDate extends JewishDate {
-	static $HEBREW_MONTHS=array("", "תשרי", "חשוון", "כסלו", "טבת", "שבט", "אדר", "אדר ב'", "ניסן", "אייר", "סיוון", "תמוז", "אב", "אלול");
-	static $HEBREW_DAYS=array("שני", "שלישי", "רביעי", "חמישי", "ששי", "שבת", "ראשון");
+	var $HEBREW_MONTHS=array("", "תשרי", "חשוון", "כסלו", "טבת", "שבט", "אדר", "אדר ב'", "ניסן", "אייר", "סיוון", "תמוז", "אב", "אלול");
+	var $HEBREW_DAYS=array("שני", "שלישי", "רביעי", "חמישי", "ששי", "שבת", "ראשון");
 
 	const ALAFIM="אלפים";
 	const GERSHAYIM="״";
@@ -925,8 +925,8 @@ class HijriDate extends CalendarDate {
 // rather than the local language.
 ////////////////////////////////////////////////////////////////////////////////
 class ArabicDate extends HijriDate {
-	static $ARABIC_MONTHS=array("", "محرّم", "صفر", "ربيع الأول", "ربيع الثانى", "جمادى الأول", "جمادى الثاني", "رجب", "شعبان", "رمضان", "شوّال", "ذو القعدة", "ذو الحجة");
-	static $ARABIC_DAYS=array("الأثنين", "الثلاثاء", "الأربعاء", "الخميس", "الجمعه", "السبت", "الأحد");
+	var $ARABIC_MONTHS=array("", "محرّم", "صفر", "ربيع الأول", "ربيع الثانى", "جمادى الأول", "جمادى الثاني", "رجب", "شعبان", "رمضان", "شوّال", "ذو القعدة", "ذو الحجة");
+	var $ARABIC_DAYS=array("الأثنين", "الثلاثاء", "الأربعاء", "الخميس", "الجمعه", "السبت", "الأحد");
 
 	function FormatLongMonth() {
 		return self::$ARABIC_MONTHS[$this->m];

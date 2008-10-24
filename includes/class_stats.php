@@ -45,11 +45,11 @@ class stats {
 	var $_gedcom_url;
 	var $_ged_id;
 	var $_server_url; // Absolute URL for generating external links.  e.g. in RSS feeds
-	static $_not_allowed = false;
-	static $_media_types = array('audio', 'book', 'card', 'certificate', 'document', 'electronic', 'magazine', 'manuscript', 'map', 'fiche', 'film', 'newspaper', 'painting', 'photo', 'tombstone', 'video', 'other');
+	var $_not_allowed = false;
+	var $_media_types = array('audio', 'book', 'card', 'certificate', 'document', 'electronic', 'magazine', 'manuscript', 'map', 'fiche', 'film', 'newspaper', 'painting', 'photo', 'tombstone', 'video', 'other');
 	// For Google charts simple encoding
-	static $_encoding = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-	static $_xencoding = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-.';
+	var $_encoding = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+	var $_xencoding = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-.';
 
 	function stats($gedcom, $server_url='') {
 		self::$_not_allowed = explode(',', STATS_NOT_ALLOWED);
