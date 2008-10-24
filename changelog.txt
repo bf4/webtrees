@@ -10,6 +10,8 @@
 
 
 Version 4.1.6
+ - Added: "Create missing thumbnails" option on Manage Media page (canajun2eh)
+ - Fixed: Improve usability of Manage Media page when working within a directory (canajun2eh)
  - Fixed: [ 2186659 ] SVN 4113: Setup wizard, index dir field in wrong group (canajun2eh)
  - Added: Prevention of "css file not found" Apache Log errors if Lightbox module not installed. (windmillway)
  - Fix: [ 2180725 ] 4107 Notes Tab (fisharebest)
