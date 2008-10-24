@@ -580,7 +580,7 @@ function autocomplete_PLAC() {
 	$data = array_filter($data, "place_ok");
 
 	//-- no match => perform a geoNames query
-	if (empty($data)) {
+	if (empty($data) && strtolower(ini_get('allow_url_fopen'))=='on') {
 		$url = "http://ws.geonames.org/searchJSON".
 					"?name_startsWith=".urlencode($FILTER).
 					"&lang=".$lang_short_cut[$LANGUAGE].
