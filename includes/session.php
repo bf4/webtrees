@@ -640,4 +640,10 @@ if ($TEXT_DIRECTION=='ltr') {
 	define ('PGV_RPARENS', ')&rlm;');
 }
 
+// Although *most* dependencies on import_request_variables() have been removed,
+// testing has not been completed.   Therefore it is being added back for the
+// 4.1.6 release.  Paranoid system administrators may want to remove it, although
+// the risk is that some infrequently used functions may not work.
+@import_request_variables('gcp');
+
 ?>
