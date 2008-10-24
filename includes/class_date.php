@@ -714,16 +714,16 @@ class HebrewDate extends JewishDate {
 	var $HEBREW_MONTHS=array("", "תשרי", "חשוון", "כסלו", "טבת", "שבט", "אדר", "אדר ב'", "ניסן", "אייר", "סיוון", "תמוז", "אב", "אלול");
 	var $HEBREW_DAYS=array("שני", "שלישי", "רביעי", "חמישי", "ששי", "שבת", "ראשון");
 
-	const ALAFIM="אלפים";
-	const GERSHAYIM="״";
-	const GERSH="׳";
+	var $ALAFIM="אלפים";
+	var $GERSHAYIM="״";
+	var $GERSH="׳";
 
 	function FormatDayZeros() {
-		return self::NumToHebrew($this->d);
+		return $this->NumToHebrew($this->d);
 	}
 
 	function FormatDay() {
-		return self::NumToHebrew($this->d);
+		return $this->NumToHebrew($this->d);
 	}
 
 	function FormatLongMonth() {
@@ -731,23 +731,23 @@ class HebrewDate extends JewishDate {
 		if ($mon=='adr' && $this->IsLeapYear())
 			return "אדר א'";
 		else
-			return self::$HEBREW_MONTHS[$this->m];
+			return $this->HEBREW_MONTHS[$this->m];
 	}
 
 	function FormatLongWeekday() {
-		return self::$HEBREW_DAYS[$this->minJD % $this->NUM_DAYS_OF_WEEK()];
+		return $this->HEBREW_DAYS[$this->minJD % $this->NUM_DAYS_OF_WEEK()];
 	}
 
 	function FormatShortWeekday() {
-		return self::$HEBREW_DAYS[$this->minJD % $this->NUM_DAYS_OF_WEEK()];
+		return $this->HEBREW_DAYS[$this->minJD % $this->NUM_DAYS_OF_WEEK()];
 	}
 
 	function FormatShortYear() {
-		return self::NumToHebrew($this->y%1000);
+		return $this->NumToHebrew($this->y%1000);
 	}
 
 	function FormatLongYear() {
-		return self::NumToHebrew($this->y);
+		return $this->NumToHebrew($this->y);
 	}
 	// Convert a decimal number to hebrew - like roman numerals, but with extra punctuation
 	// and special rules.
@@ -768,12 +768,12 @@ class HebrewDate extends JewishDate {
 		//append thousands to String
 		if($num % 1000 == 0) { // in year is 5000, 4000 etc
 			$sb .= $jOnes[$thousands];
-			$sb .= self::GERSH;
+			$sb .= $this->GERSH;
 			$sb .= " ";
-			$sb .= self::ALAFIM; //add # of thousands plus word thousand (overide alafim boolean)
+			$sb .= $this->ALAFIM; //add # of thousands plus word thousand (overide alafim boolean)
 		} else if($DISPLAY_JEWISH_THOUSANDS) { // if alafim boolean display thousands
 			$sb .= $jOnes[$thousands];
-			$sb .= self::GERSH; //append thousands quote
+			$sb .= $this->GERSH; //append thousands quote
 			$sb .= " ";
 		}
 		$num = $num % 1000; //remove 1000s
@@ -799,11 +799,11 @@ class HebrewDate extends JewishDate {
 			}
 		}
 		if ($singleDigitYear == true) {
-			$sb .= self::GERSH; //append single quote
+			$sb .= $this->GERSH; //append single quote
 		} else { // append double quote before last digit
         	$pos1 = strlen($sb)-2;
- 			$sb = substr($sb, 0, $pos1) . self::GERSHAYIM . substr($sb, $pos1);
-			$sb = str_replace(self::GERSHAYIM . self::GERSHAYIM, self::GERSHAYIM, $sb); //replace double gershayim with single instance
+ 			$sb = substr($sb, 0, $pos1) . $this->GERSHAYIM . substr($sb, $pos1);
+			$sb = str_replace($this->GERSHAYIM . $this->GERSHAYIM, $this->GERSHAYIM, $sb); //replace double gershayim with single instance
 		}
 		return $sb;
 	}
@@ -929,19 +929,19 @@ class ArabicDate extends HijriDate {
 	var $ARABIC_DAYS=array("الأثنين", "الثلاثاء", "الأربعاء", "الخميس", "الجمعه", "السبت", "الأحد");
 
 	function FormatLongMonth() {
-		return self::$ARABIC_MONTHS[$this->m];
+		return $this->ARABIC_MONTHS[$this->m];
 	}
 
 	function FormatShortMonth() {
-		return self::$ARABIC_MONTHS[$this->m];
+		return $this->ARABIC_MONTHS[$this->m];
 	}
 
 	function FormatLongWeekday() {
-		return self::$ARABIC_DAYS[$this->minJD % $this->NUM_DAYS_OF_WEEK()];
+		return $this->ARABIC_DAYS[$this->minJD % $this->NUM_DAYS_OF_WEEK()];
 	}
 
 	function FormatShortWeekday() {
-		return self::$ARABIC_DAYS[$this->minJD % $this->NUM_DAYS_OF_WEEK()];
+		return $this->ARABIC_DAYS[$this->minJD % $this->NUM_DAYS_OF_WEEK()];
 	}
 } // class ArabicDate
 

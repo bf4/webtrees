@@ -52,7 +52,7 @@ class stats {
 	var $_xencoding = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-.';
 
 	function stats($gedcom, $server_url='') {
-		self::$_not_allowed = explode(',', STATS_NOT_ALLOWED);
+		$this->_not_allowed = explode(',', STATS_NOT_ALLOWED);
 		$this->_setGedcom($gedcom);
 		$this->_server_url = $server_url;
 	}
@@ -71,7 +71,7 @@ class stats {
 		$methods = get_class_methods('stats');
 		$c = count($methods);
 		for ($i=0; $i < $c; $i++) {
-			if ($methods[$i][0] == '_' || in_array($methods[$i], self::$_not_allowed)) {
+			if ($methods[$i][0] == '_' || in_array($methods[$i], $this->_not_allowed)) {
 				continue;
 			}
 			$examples[$methods[$i]] = $this->$methods[$i]();
@@ -95,7 +95,7 @@ class stats {
 		$methods = get_class_methods($this);
 		$c = count($methods);
 		for ($i=0; $i < $c; $i++) {
-			if (in_array($methods[$i], self::$_not_allowed) || $methods[$i][0] == '_' || $methods[$i] == 'getAllTagsTable' || $methods[$i] == 'getAllTagsText') {
+			if (in_array($methods[$i], $this->_not_allowed) || $methods[$i][0] == '_' || $methods[$i] == 'getAllTagsTable' || $methods[$i] == 'getAllTagsText') {
 				continue;
 			} // Include this method name to prevent bad stuff happening
 			$examples[$methods[$i]] = $this->$methods[$i]();
@@ -132,7 +132,7 @@ class stats {
 		$methods=get_class_methods($this);
 		$c=count($methods);
 		for ($i=0; $i < $c; $i++) {
-			if (in_array($methods[$i], self::$_not_allowed) || $methods[$i][0] == '_' || $methods[$i] == 'getAllTagsTable' || $methods[$i] == 'getAllTagsText') {continue;} // Include this method name to prevent bad stuff happining
+			if (in_array($methods[$i], $this->_not_allowed) || $methods[$i][0] == '_' || $methods[$i] == 'getAllTagsTable' || $methods[$i] == 'getAllTagsText') {continue;} // Include this method name to prevent bad stuff happining
 			$examples[$methods[$i]] = $methods[$i];
 		}
 		$out = '';
@@ -177,7 +177,7 @@ class stats {
 			}
 
 			// Skip non-tags and non-allowed tags
-			if ($tags[$i][0] == '_' || in_array($tags[$i], self::$_not_allowed)) {continue;}
+			if ($tags[$i][0] == '_' || in_array($tags[$i], $this->_not_allowed)) {continue;}
 
 			// Generate the replacement value for the tag
 			if (method_exists($this, $tags[$i]))
@@ -286,13 +286,13 @@ class stats {
 
 	function gedcomCreatedSoftware()
 	{
-		$head=self::_gedcomHead();
+		$head=$this->_gedcomHead();
 		return $head[0];
 	}
 
 	function gedcomCreatedVersion()
 	{
-		$head=self::_gedcomHead();
+		$head=$this->_gedcomHead();
 		// fix broken version string in Family Tree Maker
 		if (strstr($head[1], 'Family Tree Maker ')) {
 			$p=strpos($head[1], '(') + 1;
@@ -320,12 +320,12 @@ class stats {
 	function gedcomUpdated()
 	{
 		global $TBLPREFIX;
-		$rows=self::_runSQL("SELECT d_year, d_month, d_day FROM {$TBLPREFIX}dates WHERE d_file={$this->_ged_id} AND d_fact='CHAN' ORDER BY d_julianday2 DESC, d_type", 1);
+		$rows=$this->_runSQL("SELECT d_year, d_month, d_day FROM {$TBLPREFIX}dates WHERE d_file={$this->_ged_id} AND d_fact='CHAN' ORDER BY d_julianday2 DESC, d_type", 1);
 		if (isset($rows[0])) {
 			$date=new GedcomDate("{$rows[0]['d_day']} {$rows[0]['d_month']} {$rows[0]['d_year']}");
 			return $date->Display(false);
 		}
-		return self::gedcomDate();
+		return $this->gedcomDate();
 	}
 
 	function gedcomHighlight()
@@ -408,7 +408,7 @@ class stats {
 	function totalIndividuals()
 	{
 		global $TBLPREFIX;
-		$rows=self::_runSQL("SELECT COUNT(i_file) AS tot FROM {$TBLPREFIX}individuals WHERE i_file=".$this->_ged_id);
+		$rows=$this->_runSQL("SELECT COUNT(i_file) AS tot FROM {$TBLPREFIX}individuals WHERE i_file=".$this->_ged_id);
 		return $rows[0]['tot'];
 	}
 
@@ -420,7 +420,7 @@ class stats {
 	function totalFamilies()
 	{
 		global $TBLPREFIX;
-		$rows=self::_runSQL("SELECT COUNT(f_file) AS tot FROM {$TBLPREFIX}families WHERE f_file=".$this->_ged_id);
+		$rows=$this->_runSQL("SELECT COUNT(f_file) AS tot FROM {$TBLPREFIX}families WHERE f_file=".$this->_ged_id);
 		return $rows[0]['tot'];
 	}
 
@@ -432,7 +432,7 @@ class stats {
 	function totalSources()
 	{
 		global $TBLPREFIX;
-		$rows=self::_runSQL("SELECT COUNT(s_file) AS tot FROM {$TBLPREFIX}sources WHERE s_file=".$this->_ged_id);
+		$rows=$this->_runSQL("SELECT COUNT(s_file) AS tot FROM {$TBLPREFIX}sources WHERE s_file=".$this->_ged_id);
 		return $rows[0]['tot'];
 	}
 
@@ -444,7 +444,7 @@ class stats {
 	function totalOtherRecords()
 	{
 		global $TBLPREFIX;
-		$rows=self::_runSQL("SELECT COUNT(o_file) AS tot FROM {$TBLPREFIX}other WHERE o_file=".$this->_ged_id);
+		$rows=$this->_runSQL("SELECT COUNT(o_file) AS tot FROM {$TBLPREFIX}other WHERE o_file=".$this->_ged_id);
 		return $rows[0]['tot'];
 	}
 
@@ -469,7 +469,7 @@ class stats {
 			$dis = ' DISTINCT ';
 			$opt = '';
 		}
-		$rows = self::_runSQL("SELECT COUNT({$dis}i_surname) AS tot FROM {$TBLPREFIX}individuals WHERE i_file={$this->_ged_id}{$opt}");
+		$rows = $this->_runSQL("SELECT COUNT({$dis}i_surname) AS tot FROM {$TBLPREFIX}individuals WHERE i_file={$this->_ged_id}{$opt}");
 		return $rows[0]['tot'];
 	}
 
@@ -507,7 +507,7 @@ class stats {
 		{
 			$opt = '';
 		}
-		$rows = self::_runSQL("SELECT COUNT(d_gid) AS tot FROM {$TBLPREFIX}dates WHERE d_file={$this->_ged_id} AND d_fact!='CHAN' AND d_gid!='HEAD'{$opt}");
+		$rows = $this->_runSQL("SELECT COUNT(d_gid) AS tot FROM {$TBLPREFIX}dates WHERE d_file={$this->_ged_id} AND d_fact!='CHAN' AND d_gid!='HEAD'{$opt}");
 		if (!isset($rows[0])) {return '';}
 		return $rows[0]['tot'];
 	}
@@ -542,7 +542,7 @@ class stats {
 	function totalSexMales()
 	{
 		global $TBLPREFIX;
-		$rows=self::_runSQL("SELECT COUNT(i_id) AS tot FROM {$TBLPREFIX}individuals WHERE i_file={$this->_ged_id} AND i_gedcom LIKE '%1 SEX M%'");
+		$rows=$this->_runSQL("SELECT COUNT(i_id) AS tot FROM {$TBLPREFIX}individuals WHERE i_file={$this->_ged_id} AND i_gedcom LIKE '%1 SEX M%'");
 		if (!isset($rows[0])) {return '';}
 		return $rows[0]['tot'];
 	}
@@ -555,7 +555,7 @@ class stats {
 	function totalSexFemales()
 	{
 		global $TBLPREFIX;
-		$rows=self::_runSQL("SELECT COUNT(i_id) AS tot FROM {$TBLPREFIX}individuals WHERE i_file={$this->_ged_id} AND i_gedcom LIKE '%1 SEX F%'");
+		$rows=$this->_runSQL("SELECT COUNT(i_id) AS tot FROM {$TBLPREFIX}individuals WHERE i_file={$this->_ged_id} AND i_gedcom LIKE '%1 SEX F%'");
 		if (!isset($rows[0])) {return '';}
 		return $rows[0]['tot'];
 	}
@@ -569,7 +569,7 @@ class stats {
 	function totalSexUnknown()
 	{
 		global $TBLPREFIX;
-		$rows=self::_runSQL("SELECT COUNT(i_id) AS tot FROM {$TBLPREFIX}individuals WHERE i_file={$this->_ged_id} AND (i_gedcom NOT LIKE '%1 SEX M%' AND i_gedcom NOT LIKE '%1 SEX F%')");
+		$rows=$this->_runSQL("SELECT COUNT(i_id) AS tot FROM {$TBLPREFIX}individuals WHERE i_file={$this->_ged_id} AND (i_gedcom NOT LIKE '%1 SEX M%' AND i_gedcom NOT LIKE '%1 SEX F%')");
 		if (!isset($rows[0])) {return '';}
 		return $rows[0]['tot'];
 	}
@@ -592,7 +592,7 @@ class stats {
 		$tot_f = $this->totalSexFemalesPercentage();
 		$tot_m = $this->totalSexMalesPercentage();
 		$tot_u = $this->totalSexUnknownPercentage();
-		$chd = self::_array_to_extended_encoding(array($tot_u, $tot_f, $tot_m));
+		$chd = $this->_array_to_extended_encoding(array($tot_u, $tot_f, $tot_m));
 		$chl = reverseText($pgv_lang['stat_unknown']).'|'.reverseText($pgv_lang['stat_females']).'|'.reverseText($pgv_lang['stat_males']);
 		return "<img src=\"".encode_url("http://chart.apis.google.com/chart?cht=p3&chd=e:{$chd}&chs={$size}&chco={$color_unknown},{$color_female},{$color_male}&chf=bg,s,ffffff00&chl={$chl}")."\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" alt=\"\" />";
 	}
@@ -600,7 +600,7 @@ class stats {
 	function totalLiving()
 	{
 		global $TBLPREFIX;
-		$rows=self::_runSQL("SELECT COUNT(i_id) AS tot FROM {$TBLPREFIX}individuals WHERE i_file={$this->_ged_id} AND i_isdead=0");
+		$rows=$this->_runSQL("SELECT COUNT(i_id) AS tot FROM {$TBLPREFIX}individuals WHERE i_file={$this->_ged_id} AND i_isdead=0");
 		if (!isset($rows[0])) {return '';}
 		return $rows[0]['tot'];
 	}
@@ -614,7 +614,7 @@ class stats {
 	function totalDeceased()
 	{
 		global $TBLPREFIX;
-		$rows=self::_runSQL("SELECT COUNT(i_id) AS tot FROM {$TBLPREFIX}individuals WHERE i_file={$this->_ged_id} AND i_isdead=1");
+		$rows=$this->_runSQL("SELECT COUNT(i_id) AS tot FROM {$TBLPREFIX}individuals WHERE i_file={$this->_ged_id} AND i_isdead=1");
 		if (!isset($rows[0])) {return '';}
 		return $rows[0]['tot'];
 	}
@@ -628,7 +628,7 @@ class stats {
 	function totalMortalityUnknown()
 	{
 		global $TBLPREFIX;
-		$rows=self::_runSQL("SELECT COUNT(i_id) AS tot FROM {$TBLPREFIX}individuals WHERE i_file={$this->_ged_id} AND i_isdead=-1");
+		$rows=$this->_runSQL("SELECT COUNT(i_id) AS tot FROM {$TBLPREFIX}individuals WHERE i_file={$this->_ged_id} AND i_isdead=-1");
 		if (!isset($rows[0])) {return '';}
 		return $rows[0]['tot'];
 	}
@@ -651,7 +651,7 @@ class stats {
 		$tot_l = $this->totalLivingPercentage();
 		$tot_d = $this->totalDeceasedPercentage();
 		$tot_u = $this->totalMortalityUnknownPercentage();
-		$chd = self::_array_to_extended_encoding(array($tot_u, $tot_l, $tot_d));
+		$chd = $this->_array_to_extended_encoding(array($tot_u, $tot_l, $tot_d));
 		$chl = reverseText($pgv_lang['total_unknown']).'|'.reverseText($pgv_lang['total_living']).'|'.reverseText($pgv_lang['total_dead']);
 		return "<img src=\"".encode_url("http://chart.apis.google.com/chart?cht=p3&chd=e:{$chd}&chs={$size}&chco={$color_unknown},{$color_living},{$color_dead}&chf=bg,s,ffffff00&chl={$chl}")."\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" alt=\"\" />";
 	}
@@ -666,7 +666,7 @@ class stats {
 	function totalAdmins()
 	{
 		global $TBLPREFIX;
-		$rows = self::_runSQL("SELECT COUNT(u_username) AS tot FROM {$TBLPREFIX}users WHERE u_canadmin='Y'");
+		$rows = $this->_runSQL("SELECT COUNT(u_username) AS tot FROM {$TBLPREFIX}users WHERE u_canadmin='Y'");
 		if (!isset($rows[0])) {return 0;}
 		return $rows[0]['tot'];
 	}
@@ -674,7 +674,7 @@ class stats {
 	function totalNonAdmins()
 	{
 		global $TBLPREFIX;
-		$rows = self::_runSQL("SELECT COUNT(u_username) AS tot FROM {$TBLPREFIX}users WHERE u_canadmin!='Y'");
+		$rows = $this->_runSQL("SELECT COUNT(u_username) AS tot FROM {$TBLPREFIX}users WHERE u_canadmin!='Y'");
 		if (!isset($rows[0])) {return 0;}
 		return $rows[0]['tot'];
 	}
@@ -683,7 +683,7 @@ class stats {
 	{
 		global $TBLPREFIX, $MULTI_MEDIA;
 		if (!$MULTI_MEDIA) {return 0;}
-		if (!in_array($type, self::$_media_types) && $type != 'all' && $type != 'unknown') {return 0;}
+		if (!in_array($type, $this->_media_types) && $type != 'all' && $type != 'unknown') {return 0;}
 		$like = '';
 		if ($type != 'all')
 		{
@@ -695,7 +695,7 @@ class stats {
 			{
 				// There has to be a better way then this :(
 				$nolike = array();
-				foreach (self::$_media_types as $t)
+				foreach ($this->_media_types as $t)
 				{
 					$nolike[] = "m_gedrec NOT LIKE '%3 TYPE {$t}%'";
 				}
@@ -703,7 +703,7 @@ class stats {
 				$like = " AND ({$nolike})";
 			}
 		}
-		$rows = self::_runSQL("SELECT COUNT(m_id) AS tot FROM {$TBLPREFIX}media WHERE m_gedfile='{$this->_ged_id}'{$like}");
+		$rows = $this->_runSQL("SELECT COUNT(m_id) AS tot FROM {$TBLPREFIX}media WHERE m_gedfile='{$this->_ged_id}'{$like}");
 		if (!isset($rows[0])) {return 0;}
 		return $rows[0]['tot'];
 	}
@@ -744,7 +744,7 @@ class stats {
 		// Build a table listing only the media types actually present in the GEDCOM
 		$mediaCounts = array();
 		$mediaTypes = "";
-		foreach (self::$_media_types as $type) {
+		foreach ($this->_media_types as $type) {
 			$count = $this->_totalMediaType($type);
 			if ($count != 0) {
 				$mediaCounts[] = round(100 * $count / $tot, 0);
@@ -758,7 +758,7 @@ class stats {
 			$mediaTypes .= reverseText($pgv_lang['unknown']);
 			$mediaTypes .= '|';
 		}
-		$chd = self::_array_to_extended_encoding($mediaCounts);
+		$chd = $this->_array_to_extended_encoding($mediaCounts);
 		$chl = urlencode(substr($mediaTypes,0,-1));
 		return "<img src=\"".encode_url("http://chart.apis.google.com/chart?cht=p3&chd=e:{$chd}&chs={$size}&chco={$color_from},{$color_to}&chf=bg,s,ffffff00&chl={$chl}")."\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" alt=\"\" />";
 	}
@@ -793,7 +793,7 @@ class stats {
 			// Testing new style
 			default:
 			{
-				$rows=self::_runSQL(''
+				$rows=$this->_runSQL(''
 					.' SELECT'
 						.' d2.d_year,'
 						.' d2.d_type,'
@@ -822,7 +822,7 @@ class stats {
 			// MySQL 4.0 can't handle nested queries, so we use the old style. Of course this hits the performance of PHP4 users a tiny bit, but it's the best we can do.
 			case 'mysql':
 			{
-				$rows=self::_runSQL(''
+				$rows=$this->_runSQL(''
 					.' SELECT'
 						.' d_year,'
 						.' d_type,'
@@ -921,7 +921,7 @@ class stats {
 			$sex_search = " i_gedcom LIKE '%1 SEX M%'";
 		}
 
-		$rows=self::_runSQL(''
+		$rows=$this->_runSQL(''
 			.' SELECT'
 				.' death.d_gid AS id,'
 				.' death.d_julianday2-birth.d_julianday1 AS age'
@@ -990,7 +990,7 @@ class stats {
 			$sex_search = '';
 		}
 		if ($params !== null && isset($params[0])) {$total = $params[0];}else{$total = 10;}
-		$rows=self::_runSQL(''
+		$rows=$this->_runSQL(''
 			.' SELECT '
 				.' MAX(death.d_julianday2-birth.d_julianday1) AS age,'
 				.' death.d_gid'
@@ -1063,7 +1063,7 @@ class stats {
 		{
 			$sex_search = '';
 		}
-		$rows=self::_runSQL(''
+		$rows=$this->_runSQL(''
 			.' SELECT'
 				.' AVG(death.d_julianday2-birth.d_julianday1) AS age'
 			.' FROM'
@@ -1139,7 +1139,7 @@ class stats {
 		$fact_query = "IN ('".str_replace('|', "','", $facts)."')";
 
 		if ($direction != 'ASC') {$direction = 'DESC';}
-		$rows=self::_runSQL(''
+		$rows=$this->_runSQL(''
 			.' SELECT'
 				.' d_gid AS id,'
 				.' d_year AS year,'
@@ -1246,7 +1246,7 @@ class stats {
 		global $TBLPREFIX, $pgv_lang;
 		if ($sex == 'F') {$sex_field = 'f_wife';}else{$sex_field = 'f_husb';}
 		if ($age_dir != 'ASC') {$age_dir = 'DESC';}
-		$rows=self::_runSQL(''
+		$rows=$this->_runSQL(''
 			.' SELECT'
 				.' fam.f_id,'
 				." fam.{$sex_field},"
@@ -1328,7 +1328,7 @@ class stats {
 	function _familyQuery($type='full')
 	{
 		global $TBLPREFIX, $pgv_lang;
-		$rows=self::_runSQL(''
+		$rows=$this->_runSQL(''
 			.' SELECT'
 				.' f_numchil AS tot,'
 				.' f_id AS id'
@@ -1368,7 +1368,7 @@ class stats {
 	{
 		global $TBLPREFIX, $TEXT_DIRECTION, $pgv_lang;
 		if ($params !== null && isset($params[0])) {$total = $params[0];}else{$total = 10;}
-		$rows=self::_runSQL(''
+		$rows=$this->_runSQL(''
 			.' SELECT DISTINCT'
 				.' f_numchil AS tot,'
 				.' f_id AS id'
@@ -1427,7 +1427,7 @@ class stats {
 		if (isset($params[2]) && $params[2] != '') {$color_to = strtolower($params[2]);}else{$color_to = '000000';}
 		if (isset($params[3]) && $params[3] != '') {$total = strtolower($params[3]);}else{$total = 10;}
 		$sizes = explode('x', $size);
-		$rows=self::_runSQL(''
+		$rows=$this->_runSQL(''
 			.' SELECT'
 				.' f_numchil AS tot,'
 				.' f_id AS id'
@@ -1450,7 +1450,7 @@ class stats {
 			} else {
 				$per = round(100 * $rows[$i]['tot'] / $tot, 0);
 			}
-			$chd .= self::_array_to_extended_encoding(array($per));
+			$chd .= $this->_array_to_extended_encoding(array($per));
 			$family=Family::getInstance($rows[$i]['id']);
 			$chl[] = reverseText($family->getFullName());
 		}
@@ -1461,7 +1461,7 @@ class stats {
 	function averageChildren()
 	{
 		global $TBLPREFIX;
-		$rows=self::_runSQL("SELECT AVG(f_numchil) AS tot FROM {$TBLPREFIX}families WHERE f_file={$this->_ged_id}");
+		$rows=$this->_runSQL("SELECT AVG(f_numchil) AS tot FROM {$TBLPREFIX}families WHERE f_file={$this->_ged_id}");
 		$row=$rows[0];
 		return sprintf('%.2f', $row['tot']);
 	}
@@ -1531,10 +1531,10 @@ class stats {
 		//}
 	}
 
-	function commonSurnames($params=array('','','alpha')) {return self::_commonSurnamesQuery('nolist', false, $params);}
-	function commonSurnamesTotals($params=array('','','rcount')) {return self::_commonSurnamesQuery('nolist', true, $params);}
-	function commonSurnamesList($params=array('','','alpha')) {return self::_commonSurnamesQuery('list', false, $params);}
-	function commonSurnamesListTotals($params=array('','','rcount')) {return self::_commonSurnamesQuery('list', true, $params);}
+	function commonSurnames($params=array('','','alpha')) {return $this->_commonSurnamesQuery('nolist', false, $params);}
+	function commonSurnamesTotals($params=array('','','rcount')) {return $this->_commonSurnamesQuery('nolist', true, $params);}
+	function commonSurnamesList($params=array('','','alpha')) {return $this->_commonSurnamesQuery('list', false, $params);}
+	function commonSurnamesListTotals($params=array('','','rcount')) {return $this->_commonSurnamesQuery('list', true, $params);}
 
 	function chartCommonSurnames($params=null)
 	{
@@ -1558,7 +1558,7 @@ class stats {
 			} else {
 				$per = round(100 * $surname['match'] / $tot, 0);
 			}
-			$chd .= self::_array_to_extended_encoding($per);
+			$chd .= $this->_array_to_extended_encoding($per);
 			$chl[] = reverseText($surname['name']);
 		}
 		$chl = join('|', $chl);
@@ -1706,29 +1706,29 @@ class stats {
 		}
 	}
 
-	function commonGiven($params=array(1,10,'alpha')){return self::_commonGivenQuery('B', 'nolist', false, $params);}
-	function commonGivenTotals($params=array(1,10,'rcount')){return self::_commonGivenQuery('B', 'nolist', true, $params);}
-	function commonGivenList($params=array(1,10,'alpha')){return self::_commonGivenQuery('B', 'list', false, $params);}
-	function commonGivenListTotals($params=array(1,10,'rcount')){return self::_commonGivenQuery('B', 'list', true, $params);}
-	function commonGivenTable($params=array(1,10,'rcount')){return self::_commonGivenQuery('B', 'table', false, $params);}
+	function commonGiven($params=array(1,10,'alpha')){return $this->_commonGivenQuery('B', 'nolist', false, $params);}
+	function commonGivenTotals($params=array(1,10,'rcount')){return $this->_commonGivenQuery('B', 'nolist', true, $params);}
+	function commonGivenList($params=array(1,10,'alpha')){return $this->_commonGivenQuery('B', 'list', false, $params);}
+	function commonGivenListTotals($params=array(1,10,'rcount')){return $this->_commonGivenQuery('B', 'list', true, $params);}
+	function commonGivenTable($params=array(1,10,'rcount')){return $this->_commonGivenQuery('B', 'table', false, $params);}
 
-	function commonGivenFemale($params=array(1,10,'alpha')){return self::_commonGivenQuery('F', 'nolist', false, $params);}
-	function commonGivenFemaleTotals($params=array(1,10,'rcount')){return self::_commonGivenQuery('F', 'nolist', true, $params);}
-	function commonGivenFemaleList($params=array(1,10,'alpha')){return self::_commonGivenQuery('F', 'list', false, $params);}
-	function commonGivenFemaleListTotals($params=array(1,10,'rcount')){return self::_commonGivenQuery('F', 'list', true, $params);}
-	function commonGivenFemaleTable($params=array(1,10,'rcount')){return self::_commonGivenQuery('F', 'table', false, $params);}
+	function commonGivenFemale($params=array(1,10,'alpha')){return $this->_commonGivenQuery('F', 'nolist', false, $params);}
+	function commonGivenFemaleTotals($params=array(1,10,'rcount')){return $this->_commonGivenQuery('F', 'nolist', true, $params);}
+	function commonGivenFemaleList($params=array(1,10,'alpha')){return $this->_commonGivenQuery('F', 'list', false, $params);}
+	function commonGivenFemaleListTotals($params=array(1,10,'rcount')){return $this->_commonGivenQuery('F', 'list', true, $params);}
+	function commonGivenFemaleTable($params=array(1,10,'rcount')){return $this->_commonGivenQuery('F', 'table', false, $params);}
 
-	function commonGivenMale($params=array(1,10,'alpha')){return self::_commonGivenQuery('M', 'nolist', false, $params);}
-	function commonGivenMaleTotals($params=array(1,10,'rcount')){return self::_commonGivenQuery('M', 'nolist', true, $params);}
-	function commonGivenMaleList($params=array(1,10,'alpha')){return self::_commonGivenQuery('M', 'list', false, $params);}
-	function commonGivenMaleListTotals($params=array(1,10,'rcount')){return self::_commonGivenQuery('M', 'list', true, $params);}
-	function commonGivenMaleTable($params=array(1,10,'rcount')){return self::_commonGivenQuery('M', 'table', false, $params);}
+	function commonGivenMale($params=array(1,10,'alpha')){return $this->_commonGivenQuery('M', 'nolist', false, $params);}
+	function commonGivenMaleTotals($params=array(1,10,'rcount')){return $this->_commonGivenQuery('M', 'nolist', true, $params);}
+	function commonGivenMaleList($params=array(1,10,'alpha')){return $this->_commonGivenQuery('M', 'list', false, $params);}
+	function commonGivenMaleListTotals($params=array(1,10,'rcount')){return $this->_commonGivenQuery('M', 'list', true, $params);}
+	function commonGivenMaleTable($params=array(1,10,'rcount')){return $this->_commonGivenQuery('M', 'table', false, $params);}
 
-	function commonGivenUnknown($params=array(1,10,'alpha')){return self::_commonGivenQuery('U', 'nolist', false, $params);}
-	function commonGivenUnknownTotals($params=array(1,10,'rcount')){return self::_commonGivenQuery('U', 'nolist', true, $params);}
-	function commonGivenUnknownList($params=array(1,10,'alpha')){return self::_commonGivenQuery('U', 'list', false, $params);}
-	function commonGivenUnknownListTotals($params=array(1,10,'rcount')){return self::_commonGivenQuery('U', 'list', true, $params);}
-	function commonGivenUnknownTable($params=array(1,10,'rcount')){return self::_commonGivenQuery('U', 'table', false, $params);}
+	function commonGivenUnknown($params=array(1,10,'alpha')){return $this->_commonGivenQuery('U', 'nolist', false, $params);}
+	function commonGivenUnknownTotals($params=array(1,10,'rcount')){return $this->_commonGivenQuery('U', 'nolist', true, $params);}
+	function commonGivenUnknownList($params=array(1,10,'alpha')){return $this->_commonGivenQuery('U', 'list', false, $params);}
+	function commonGivenUnknownListTotals($params=array(1,10,'rcount')){return $this->_commonGivenQuery('U', 'list', true, $params);}
+	function commonGivenUnknownTable($params=array(1,10,'rcount')){return $this->_commonGivenQuery('U', 'table', false, $params);}
 
 ///////////////////////////////////////////////////////////////////////////////
 // Users                                                                     //
@@ -1857,12 +1857,12 @@ class stats {
 		else{return $visible + $anon;}
 	}
 
-	function usersLoggedIn() {return self::_usersLoggedIn('nolist');}
-	function usersLoggedInList() {return self::_usersLoggedIn('list');}
+	function usersLoggedIn() {return $this->_usersLoggedIn('nolist');}
+	function usersLoggedInList() {return $this->_usersLoggedIn('list');}
 
-	function usersLoggedInTotal() {return self::_usersLoggedInTotal('all');}
-	function usersLoggedInTotalAnon() {return self::_usersLoggedInTotal('anon');}
-	function usersLoggedInTotalVisible() {return self::_usersLoggedInTotal('visible');}
+	function usersLoggedInTotal() {return $this->_usersLoggedInTotal('all');}
+	function usersLoggedInTotalAnon() {return $this->_usersLoggedInTotal('anon');}
+	function usersLoggedInTotalVisible() {return $this->_usersLoggedInTotal('visible');}
 
 	function userID() {return getUserId();}
 	function userName() {return getUserName();}
@@ -1926,14 +1926,14 @@ class stats {
 		}
 	}
 
-	function latestUserId(){return self::_getLatestUserData('userid');}
-	function latestUserName(){return self::_getLatestUserData('username');}
-	function latestUserFullName(){return self::_getLatestUserData('fullname');}
-	function latestUserFirstName(){return self::_getLatestUserData('firstname');}
-	function latestUserLastName(){return self::_getLatestUserData('lastname');}
-	function latestUserRegDate($params=null){return self::_getLatestUserData('regdate', $params);}
-	function latestUserRegTime($params=null){return self::_getLatestUserData('regtime', $params);}
-	function latestUserLoggedin($params=null){return self::_getLatestUserData('loggedin', $params);}
+	function latestUserId(){return $this->_getLatestUserData('userid');}
+	function latestUserName(){return $this->_getLatestUserData('username');}
+	function latestUserFullName(){return $this->_getLatestUserData('fullname');}
+	function latestUserFirstName(){return $this->_getLatestUserData('firstname');}
+	function latestUserLastName(){return $this->_getLatestUserData('lastname');}
+	function latestUserRegDate($params=null){return $this->_getLatestUserData('regdate', $params);}
+	function latestUserRegTime($params=null){return $this->_getLatestUserData('regtime', $params);}
+	function latestUserLoggedin($params=null){return $this->_getLatestUserData('loggedin', $params);}
 
 ///////////////////////////////////////////////////////////////////////////////
 // Contact                                                                   //
@@ -1995,7 +1995,7 @@ class stats {
 		{
 			$first = floor($value / 64);
 			$second = $value % 64;
-			$encoding .= self::$_xencoding[$first].self::$_xencoding[$second];
+			$encoding .= $this->_xencoding[$first].$this->_xencoding[$second];
 		}
 		return $encoding;
 	}
