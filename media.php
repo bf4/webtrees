@@ -200,6 +200,8 @@ $max=safe_REQUEST($_REQUEST, 'max', PGV_REGEX_INTEGER, 20);
 
 $showthumb=safe_REQUEST($_REQUEST, 'showthumb');
 
+$all=safe_REQUEST($_REQUEST, 'all', 'yes', 'no');
+
 if (isset($_REQUEST['xref'])) $xref = $_REQUEST['xref'];
 
 if (count($_POST) == 0) $showthumb = true;
@@ -284,7 +286,7 @@ print_header($pgv_lang["manage_media"]);
 	}
 
 	function showchanges() {
-		window.location = '<?php print $SCRIPT_NAME."?show_changes=yes&directory=".$directory."&level=".$level; ?>';
+		window.location = '<?php print $SCRIPT_NAME."?show_changes=yes&directory=".$directory."&level=".$level."&filter=".$filter."&subclick=".$subclick; ?>';
 	}
 
 //-->
@@ -312,10 +314,21 @@ print_header($pgv_lang["manage_media"]);
 
 	<!-- // NOTE: Add media -->
 	<td class="descriptionbox wrap width25"><?php print_help_link("add_media_help", "qm"); ?><?php print $pgv_lang["add_media_lbl"]; ?></td>
-	<td class="optionbox wrap">
-	<a href="javascript: <?php echo $pgv_lang["add_media_lbl"]; ?>" onclick="window.open('addmedia.php?action=showmediaform&linktoid=new', '_blank', 'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1'); return false;"> <?php echo $pgv_lang["add_media"]; ?></a>
-	</td>
-	</tr>
+	<td class="optionbox wrap"><a href="javascript: <?php echo $pgv_lang["add_media_lbl"]; ?>" onclick="window.open('addmedia.php?action=showmediaform&linktoid=new', '_blank', 'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1'); return false;"> <?php echo $pgv_lang["add_media"]; ?></a></td></tr>
+
+	<!-- // NOTE: empty -->
+	<tr><td class="descriptionbox wrap width25"></td>
+	<td class="optionbox wrap"></td>
+
+	<!-- // NOTE: Generate missing thumbnails -->
+	<?php
+		$tempURL = "media.php?";
+		if (!empty($filter)) $tempURL .= "filter={$filter}&";
+		if (!empty($subclick)) $tempURL .= "subclick={$subclick}&";
+		$tempURL .= "action=thumbnail&all=yes&level={$level}&directory={$directory}".$thumbget;
+		?>
+	<td class="descriptionbox wrap width25"><?php print_help_link("gen_missing_thumbs_help", "qm"); ?><?php print $pgv_lang["gen_missing_thumbs_lbl"]; ?></td>
+	<td class="optionbox wrap"><a href="<?php print encode_url($tempURL);?>"><?php print $pgv_lang["gen_missing_thumbs"];?></a></td></tr>
 	</table>
 </form>
 <?php
@@ -641,7 +654,8 @@ if (check_media_structure()) {
 
 		// Check if $all is true, if so generate thumbnails for all files that do
 		// not yet have any thumbnails created. Otherwise only the file specified.
-		if ($all == true) {
+		if ($all == 'yes') {
+			$medialist = get_medialist(true, $directory);
 			foreach ($medialist as $key => $media) {
 				if (!($MEDIA_EXTERNAL && isFileExternal($filename))) {
 					// why doesn't this use thumbnail_file??
@@ -662,7 +676,7 @@ if (check_media_structure()) {
 				}
 			}
 		}
-		else if ($all == false) {
+		else if ($all != 'yes') {
 			if (!($MEDIA_EXTERNAL && isFileExternal($filename))) {
 				$thumbnail = str_replace("$MEDIA_DIRECTORY",$MEDIA_DIRECTORY."thumbs/",check_media_depth($filename, "NOTRUNC"));
 				if (generate_thumbnail($filename,$thumbnail)) {
@@ -1390,7 +1404,7 @@ if (check_media_structure()) {
 							if (!$isExternal && $objectCount<2) {
 								$tempURL = "media.php?";
 								if (!empty($filter)) $tempURL.= "filter={$filter}&";
-								$tempURL .= "action=deletefile&showthumb={$showthumb}&filename={$media['FILE']}&directory={$directory}&level={$level}&xref={$media['XREF']}&gedfile=".$media["GEDFILE"];
+								$tempURL .= "action=deletefile&showthumb={$showthumb}&filter={$filter}&subclick={$subclick}&filename={$media['FILE']}&directory={$directory}&level={$level}&xref={$media['XREF']}&gedfile={$media['GEDFILE']}";
 								print "<a href=\"".encode_url($tempURL)."\" onclick=\"return confirm('".$pgv_lang["confirm_delete_file"]."');\">".$pgv_lang["delete_file"]."</a><br />";
 							}
 
@@ -1398,7 +1412,7 @@ if (check_media_structure()) {
 							if (!empty($media["XREF"])) {
 								$tempURL = "media.php?";
 								if (!empty($filter)) $tempURL .= "filter={$filter}&";
-								$tempURL .= "action=removeobject&showthumb={$showthumb}&filename={$media['FILE']}&directory={$directory}&level={$level}&xref={$media['XREF']}&gedfile=".$media["GEDFILE"];
+								$tempURL .= "action=removeobject&showthumb={$showthumb}&filter={$filter}&subclick={$subclick}&filename={$media['FILE']}&directory={$directory}&level={$level}&xref={$media['XREF']}&gedfile={$media['GEDFILE']}";
 								print "<a href=\"".encode_url($tempURL)."\" onclick=\"return confirm('".$pgv_lang["confirm_remove_object"]."');\">".$pgv_lang["remove_object"]."</a><br />";
 							}
 
@@ -1406,7 +1420,7 @@ if (check_media_structure()) {
 							if ($media["LINKED"]) {
 								$tempURL = "media.php?";
 								if (!empty($filter)) $tempURL .= "filter={$filter}&";
-								$tempURL .= "action=removelinks&showthumb={$showthumb}&filename={$media['FILE']}&directory={$directory}&level={$level}&xref={$media['XREF']}&gedfile=".$media["GEDFILE"];
+								$tempURL .= "action=removelinks&showthumb={$showthumb}&filter={$filter}&subclick={$subclick}&filename={$media['FILE']}&directory={$directory}&level={$level}&xref={$media['XREF']}&gedfile={$media['GEDFILE']}";
 								print "<a href=\"".encode_url($tempURL)."\" onclick=\"return confirm('".$pgv_lang["confirm_remove_links"]."');\">".$pgv_lang["remove_links"]."</a><br />";
 							}
 
@@ -1433,7 +1447,7 @@ if (check_media_structure()) {
 								if ($ext=="jpg" || $ext=="jpeg" || $ext=="gif" || $ext=="png") {
 									$tempURL = "media.php?";
 									if (!empty($filter)) $tempURL .= "filter={$filter}&";
-									$tempURL .= "action=thumbnail&all=0&level={$level}&directory={$directory}&filename=".$media["FILE"].$thumbget;
+									$tempURL .= "action=thumbnail&all=no&level={$level}&directory={$directory}&filename=".$media["FILE"].$thumbget;
 									print "<a href=\"".encode_url($tempURL)."\">".$pgv_lang["gen_thumb"]."</a>";
 								}
 							}
