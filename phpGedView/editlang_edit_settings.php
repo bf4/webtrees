@@ -271,7 +271,7 @@ if ($action != "save" && $action != "toggleActive") {
 					print " selected=\"selected\"";
 					$flag_i = $i;
 				}
-			print ">".$flagfiles["file"][$i]."</option>\n";
+			print ">".filename_encode($flagfiles["file"][$i])."</option>\n";
 			}
 			print "</select>\n";
 		} else {
