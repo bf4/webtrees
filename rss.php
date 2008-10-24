@@ -35,9 +35,9 @@ if (!empty($lang)) {
 	$NEWLANGUAGE = $lang;
 }
 
-require 'includes/class_feedcreator.php';
-require 'includes/functions_rss.php';
-require 'includes/index_cache.php';
+require_once 'includes/class_feedcreator.php';
+require_once 'includes/functions_rss.php';
+require_once 'includes/index_cache.php';
 
 $feedCacheName = "fullFeed";
 
