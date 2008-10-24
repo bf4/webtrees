@@ -28,9 +28,12 @@ require './config.php';
 
 loadLangFile("pgv_confighelp");
 
-$action 	 =safe_REQUEST($_REQUEST, 'action',			PGV_REGEX_UNSAFE);
-$ln			 =safe_REQUEST($_REQUEST, 'ln',				PGV_REGEX_UNSAFE);
-$new_shortcut=safe_REQUEST($_REQUEST, 'new_shortcut',	PGV_REGEX_UNSAFE);
+$action              =safe_REQUEST($_REQUEST, 'action',                PGV_REGEX_UNSAFE);
+$ln                  =safe_REQUEST($_REQUEST, 'ln',                    PGV_REGEX_UNSAFE);
+$new_shortcut        =safe_REQUEST($_REQUEST, 'new_shortcut',          PGV_REGEX_UNSAFE);
+$v_flagsfile         =safe_REQUEST($_REQUEST, 'v_flagsfile',           PGV_REGEX_UNSAFE);
+$v_original_lang_name=safe_REQUEST($_REQUEST, 'v_original_lang_name',  PGV_REGEX_UNSAFE);
+$v_lang_shortcut     =safe_REQUEST($_REQUEST, 'v_lang_shortcut',       PGV_REGEX_UNSAFE);
 
 if ($action == "" and $ln == "") {
 	header("Location: admin.php");
@@ -138,8 +141,7 @@ if ($action == "new_lang") {
 
 	$pgv_lang[$d_LangName]  = $lng_codes[$new_shortcut][0];
 }
-else if(!isset($v_flagsfile) && isset($flagsfile[$ln])) $v_flagsfile=$flagsfile[$ln];
-else if(!isset($v_flagsfile)) $v_flagsfile = "";
+else if(empty($v_flagsfile) && isset($flagsfile[$ln])) $v_flagsfile=$flagsfile[$ln];
 
 if ($action != "save" && $action != "toggleActive") {
 	print "<script language=\"JavaScript\" type=\"text/javascript\">\n";
@@ -261,7 +263,7 @@ if ($action != "save" && $action != "toggleActive") {
 		$sortedflags = array_flip($sortedflags);
 		reset($sortedflags);
 		if ($action != "new_lang") {
-			print "&nbsp;&nbsp;&nbsp;<select name=\"v_flagsfile\" onchange=\"document.Form1.action.value=''; submit();\">\n";
+			print "&nbsp;&nbsp;&nbsp;<select name=\"v_flagsfile\" id=\"v_flagsfile\" onchange=\"document.getElementById('flag').src=document.getElementById('v_flagsfile').value;\">\n";
 			foreach ($sortedflags as $key=>$value) {
 				$i = $sortedflags[$key];
 				print "<option value=\"".$flagfiles["path"][$i]."\"";
@@ -284,8 +286,8 @@ if ($action != "save" && $action != "toggleActive") {
 		}
 	}
 	if (isset($flag_i) && isset($flagfiles["path"][$flag_i])){
-		print "<div id=\"flag\" style=\"display: inline; padding-left: 7px;\">";
-		print " <img src=\"".$flagfiles["path"][$flag_i]."\" alt=\"\" class=\"brightflag border1\" /></div>\n";
+		print "<div style=\"display: inline; padding-left: 7px;\">";
+		print " <img id=\"flag\" src=\"".$flagfiles["path"][$flag_i]."\" alt=\"\" class=\"brightflag border1\" /></div>\n";
 	}
 	print "</td>";
 	print "</tr>";
@@ -499,7 +501,6 @@ if ($action == "toggleActive") {
 }
 
 if ($action == "save") {
-	if (!isset($_POST)) $_POST = $HTTP_POST_VARS;
 	if ($protectActive) $_POST["v_lang_use"] = true;
 	if (!isset($_POST["v_lang_use"])) $_POST["v_lang_use"] = false;
 	if ($_POST["new_old"] == "new") {
@@ -513,6 +514,7 @@ if ($action == "save") {
 		$adminfile[$ln]    = "languages/admin.".$v_lang_shortcut.".php";
 		$editorfile[$ln]    = "languages/editor.".$v_lang_shortcut.".php";
 		$countryfile[$ln]    = "languages/countries.".$v_lang_shortcut.".php";
+		$faqlistfile[$ln]    = "languages/faqlist.".$v_lang_shortcut.".php";
 		$extrafile[$ln]    = "languages/extra.".$v_lang_shortcut.".php";
 		$language_settings[$ln]  = $lang;
 		$languages[$ln]    = $ln;
