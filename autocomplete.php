@@ -580,13 +580,24 @@ function autocomplete_PLAC() {
 	$data = array_filter($data, "place_ok");
 
 	//-- no match => perform a geoNames query
-	if (empty($data) && strtolower(ini_get('allow_url_fopen'))=='on') {
+	if (empty($data)) {
 		$url = "http://ws.geonames.org/searchJSON".
 					"?name_startsWith=".urlencode($FILTER).
 					"&lang=".$lang_short_cut[$LANGUAGE].
 					"&fcode=CMTY&fcode=ADM4&fcode=PPL&fcode=PPLA&fcode=PPLC".
 					"&style=full";
-		$json = file_get_contents($url);
+		// try to use curl when file_get_contents not allowed
+		if (ini_get('allow_url_fopen'))
+			$json = file_get_contents($url);
+		elseif (function_exists('curl_init')) {
+			$ch = curl_init();
+			curl_setopt($ch, CURLOPT_URL, $url);
+			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+			$json = curl_exec($ch);
+			curl_close($ch);
+		}
+		else
+		  return $data;
 		// json_decode is PHP5 only !
 		if (!function_exists('json_decode')){
 			function json_decode($content, $assoc=false){
