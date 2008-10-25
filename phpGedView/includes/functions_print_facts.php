@@ -1493,7 +1493,8 @@ function print_main_media_row($rtype, $rowm, $pid) {
 		$menu["icon"] = "";
 		$menu["link"] = "#";
 		// $menu["onclick"] = "return edit_record('$pid', $linenum);";
-		$menu["onclick"] = "return window.open('addmedia.php?action=editmedia&pid={$rowm['m_media']}&filename={$rowm['m_file']}&linktoid={$rowm['mm_gid']}', '_blank', 'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1');";
+		// $menu["onclick"] = "return window.open('addmedia.php?action=editmedia&pid={$rowm['m_media']}&filename={$rowm['m_file']}&linktoid={$rowm['mm_gid']}', '_blank', 'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1');";
+		$menu["onclick"] = "return window.open('addmedia.php?action=editmedia&pid={$rowm['m_media']}&linktoid={$rowm['mm_gid']}', '_blank', 'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1');";
 		$menu["class"] = "";
 		$menu["hoverclass"] = "";
 		$menu["flyout"] = "down";
@@ -1503,7 +1504,8 @@ function print_main_media_row($rtype, $rowm, $pid) {
 		$submenu["label"] = $pgv_lang["edit"];
 		$submenu["labelpos"] = "right";
 		$submenu["icon"] = "";
-		$submenu["onclick"] = "return window.open('addmedia.php?action=editmedia&pid={$rowm['m_media']}&filename={$rowm['m_file']}&linktoid={$rowm['mm_gid']}', '_blank', 'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1');";
+		// $submenu["onclick"] = "return window.open('addmedia.php?action=editmedia&pid={$rowm['m_media']}&filename={$rowm['m_file']}&linktoid={$rowm['mm_gid']}', '_blank', 'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1');";
+		$submenu["onclick"] = "return window.open('addmedia.php?action=editmedia&pid={$rowm['m_media']}&linktoid={$rowm['mm_gid']}', '_blank', 'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1');";
 		$submenu["link"] = "#";
 		$submenu["class"] = "submenuitem";
 		$submenu["hoverclass"] = "submenuitem_hover";
@@ -1601,6 +1603,15 @@ function print_main_media_row($rtype, $rowm, $pid) {
 				// else if JWplayer installed
 				}elseif (file_exists("modules/JWplayer/flvVideo.php") && eregi("\.flv" ,$rowm['m_file'])) {
 					print "<a href=\"javascript:;\" onclick=\" var winflv = window.open('module.php?mod=JWplayer&amp;pgvaction=flvVideo&amp;flvVideo=" . $mainMedia . "', 'winflv', 'width=445, height=365, left=600, top=200'); if (window.focus) {winflv.focus();}\">";
+				//else if URL image
+				}else if(eregi("http" ,$rowm['m_file']) && (eregi("\.jpg",$rowm['m_file']) || eregi("\.gif",$rowm['m_file']) || eregi("\.png",$rowm['m_file']) ) ){
+					$imageinfo = Getimagesize($rowm['m_file']); 
+					$wth = $imageinfo[0];
+					$hgt = $imageinfo[1];
+					print "<a href=\"javascript:void(0)\" onclick=\"var winimg = window.open('".$rowm['m_file']."', 'winimg', 'width=".$wth.", height=".$hgt.", left=200, top=200'); if (window.focus) {winimg.focus();} \">";
+				//else if URL page
+				}else if(eregi("http" ,$rowm['m_file']) || eregi("\.pdf",$rowm['m_file']) ){
+					print "<a href=\"javascript:;\" onclick=\"var winurl = window.open('".$rowm['m_file']."', 'winurl', 'width=800, height=600, left=200, top=200'); if (window.focus) {winurl.focus();}\">";
 				// else just use normal image viewer
 				}else{
 					print "<a href=\"javascript:;\" onclick=\"return openImage('".rawurlencode($mainMedia)."',$imgwidth, $imgheight);\">";
