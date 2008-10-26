@@ -59,8 +59,6 @@ $preview="";
 		s1.write("container");
   </script>
 
-<?php
-
 </center>
 </body>
 
