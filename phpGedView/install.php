@@ -74,6 +74,8 @@ function install_checkdb() {
 	return true;
 }
 
+ob_start();  // in order for the download function to work, we have to buffer and discard the regular output
+
 header("Content-Type: text/html; charset=$CHARACTER_SET");
 
 ?>
@@ -151,6 +153,7 @@ if ($CONFIGURED && DB::isError($DBCONN)) {
 	</body>
 	</html>
 	<?php
+	ob_end_flush(); // send everything in the output buffer
 	exit();
 }
 
@@ -265,13 +268,14 @@ switch($step) {
 			$config_array['CONFIGURED'] = true;
 			$ret = update_site_config($config_array, $download);
 			if ($download && !is_array($ret)) {
+				ob_end_clean(); // discard html currently in output buffer
 				header("Pragma: public"); // required
 				header("Expires: 0");
 				header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
 				header("Cache-Control: private",false); // required for certain browsers 
 				header("Content-Type: text/text");
 				header("Content-Disposition: attachment; filename=config.php");
-				header("Content-length: ".sizeof($ret));
+				header("Content-length: ".mb_strlen($ret,'UTF-8'));
 				header("Content-Transfer-Encoding: binary");
 				print $ret;
 				exit();
@@ -302,14 +306,14 @@ switch($step) {
 				}
 				$error = update_lang_settings();
 				if (!empty($error)) $errors[] = array('msg'=>$pgv_lang[$error]);
-				
-				if ($ret===true && count($errors)==0) {
-					unset($_SESSION['install_modified']);
-					if ($_SESSION['install_step']<6) $_SESSION['install_step'] = 6;
-				}
-				else {
-					$errors = array_merge($errors, $ret);
-				}
+			}
+		
+			if ($ret===true && count($errors)==0) {
+				unset($_SESSION['install_modified']);
+				if ($_SESSION['install_step']<6) $_SESSION['install_step'] = 6;
+			}
+			else {
+				$errors = array_merge($errors, $ret);
 			}
 		}
 		break;
@@ -1044,4 +1048,5 @@ function printAdminUserForm() {
 	}
 	return true;
 }
- ?>
+ob_end_flush(); // send everything in the output buffer
+?>

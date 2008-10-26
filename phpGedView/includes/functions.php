@@ -545,7 +545,7 @@ function update_site_config($newconfig, $return = false) {
 	if ($res===false) {
 		if ($return) return $configtext;
 		 
-		$fp = fopen("config.php", "wb");
+		$fp = @fopen("config.php", "wb");
 		if (!$fp) {
 			$error['msg'] = $pgv_lang["pgv_config_write_error"];
 			$errors[] = $error;
