@@ -10,6 +10,7 @@
 
 
 Version 4.1.6
+ - Fixed: Error in User admin -> Cleanup users when users not approved by admin exist (canajun2eh)
  - Fixed: URL media not displaying/editing properly on Media Tab (windmillway)
  - Added: "Create missing thumbnails" option on Manage Media page (canajun2eh)
  - Fixed: Improve usability of Manage Media page when working within a directory (canajun2eh)
