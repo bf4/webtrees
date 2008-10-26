@@ -29,12 +29,14 @@
  ?>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<META HTTP-EQUIV="Expires" CONTENT="Tue, 01 Jan 1980 1:00:00 GMT">
-<META HTTP-EQUIV="Pragma" CONTENT="no-cache"> 
+	<META HTTP-EQUIV="Expires" CONTENT="Tue, 01 Jan 1980 1:00:00 GMT">
+	<META HTTP-EQUIV="Pragma" CONTENT="no-cache"> 
 	<title>JW Player for Flash</title>
+	<script type="text/javascript" src="modules/JWplayer/swfobject.js"></script>
 </head>
 <body bgcolor="#000000">
 <center>
+
 <?php
 global $pgv_lang, $pid, $GEDCOM ;
 global $flvVideo, $SERVER_URL;
@@ -43,16 +45,21 @@ $preview="";
 ?>
 
 	<div id="container"><a href="http://www.macromedia.com/go/getflashplayer">Get the Flash Player</a> to see this player.</div>
-	<script type="text/javascript" src="modules/JWplayer/swfobject.js"></script>
 	<script type="text/javascript">
-		var video 	= "<?php print $SERVER_URL.$flvVideo; ?>";
+		<?php if (eregi("www//" ,$flvVideo)) { ?>
+			var video 	= "<?php print $flvVideo; ?>";
+		<?php } else { ?>
+			var video 	= "<?php print $SERVER_URL.$flvVideo; ?>";
+		<?php } ?>
 		var preview = "<?php print $preview; ?>";
-		var s1 = new SWFObject("modules/JWplayer/player.swf","ply","425","344","9","#FFFFFF");
+		var s1 = new SWFObject("modules/JWplayer/player.swf","ply","425","344","9","#000000");
 		s1.addParam("allowfullscreen","true");
 		s1.addParam("allowscriptaccess","always");
 		s1.addParam("flashvars","file=" +video+ "&image=" +preview+ "&autostart=true");
 		s1.write("container");
-	</script>
+  </script>
+
+<?php
 
 </center>
 </body>

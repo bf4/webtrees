@@ -10,6 +10,7 @@
 
 
 Version 4.1.6
+ - Added: Support for "You Tube" Videos (Ref. Open discussion "YouTube-video of Individuals" for details (windmillway)
  - Fixed: [ 2159394 ] Download Config fails 
  - Fixed: Error in User admin -> Cleanup users when users not approved by admin exist (canajun2eh)
  - Fixed: URL media not displaying/editing properly on Media Tab (windmillway)
