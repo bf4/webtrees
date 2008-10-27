@@ -10,6 +10,7 @@
 
 
 Version 4.1.6
+ - Fixed: [1882147] Fan (circle) chart gets corrupted at 10th generation (fisharebest)
  - Fixed: Set proper permissions on image files in CGI mode (ljm)
  - Fixed: parse error in flvVideo.php (windmillway)
  - Added: Support for "You Tube" Videos (Ref. Open discussion "YouTube-video of Individuals" for details (windmillway)
