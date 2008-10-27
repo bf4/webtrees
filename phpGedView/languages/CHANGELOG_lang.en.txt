@@ -44,6 +44,9 @@ VERSION 4.1.6
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change	codes and comments
 ----------------------------------------------------------------------------------------
+-$pgv_lang["setperms_writable"]						26 Oct 2008				D
+-$pgv_lang["setperms_readonly"]						26 Oct 2008				D
++$pgv_lang["setperms_fix"]							26 Oct 2008				A
 *$pgv_lang["set_link"]								24 Oct 2008				C
 +$pgv_lang["years2"]								8 Oct 2008				A 2 years different than i.e. 5 years in some languages
 +$pgv_lang["exact"]									6 Oct 2008				A

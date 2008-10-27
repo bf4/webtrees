@@ -1994,7 +1994,7 @@ function get_media_standard_path($path) {
 
 // recursively make directories
 // taken from http://us3.php.net/manual/en/function.mkdir.php#60861
-function mkdirs($dir, $mode = 0777, $recursive = true) {
+function mkdirs($dir, $mode = PGV_PERM_EXE, $recursive = true) {
 	if( is_null($dir) || $dir === "" ){
 		return FALSE;
 	}
