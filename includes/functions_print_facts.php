@@ -1549,45 +1549,25 @@ function print_main_media_row($rtype, $rowm, $pid) {
 				$imgwidth = $imgsize[0]+40;
 				$imgheight = $imgsize[1]+150;
 				
-				//LBox --------  Addition for Lightbox Album --------------------------------------------
-				// Check Filetype of media item -------------------------------------------
-				// If Regular ----------------------------------
-				if (
-					eregi("\.jpg" ,$rowm['m_file']) ||
-					eregi("\.jpeg",$rowm['m_file']) ||
-					eregi("\.gif" ,$rowm['m_file']) ||
-					eregi("\.png" ,$rowm['m_file'])
-					)
-				{
+				 // Check Filetype of media item -------------------------------------------
+				 // If Regular ----------------------------------
+				if (eregi("\.(jpg|jpeg|gif|png)$", $rowm['m_file'])) {
 					$file_type = "regular";
-					
-				// Else if FLV as URL ----------------------------------
-				}else if(
-						eregi("http://www.youtube.com" ,$rowm['m_file']) 
-						) 
-				{
+				 // Else if FLV as URL ----------------------------------
+				}else if(eregi("http://www.youtube.com", $rowm['m_file'])) {
 					$file_type = "flv";
-					
-				// Else if FLV local file----------------------------------
-				}else if(
-						eregi("\.flv" ,$rowm['m_file']) 
-						)
-				{
+				 // Else if FLV local file----------------------------------
+				}else if(eregi("\.flv" ,$rowm['m_file'])) {
 					$file_type = "flvfile";
-					
-				// Else if URL page----------------------------------
-				}else if(
-						eregi("http" ,$rowm['m_file']) ||
-						eregi("\.pdf",$rowm['m_file'])
-						)
-				{
+				 // Else if URL page----------------------------------
+				}else if(eregi("http" ,$rowm['m_file']) || eregi("\.pdf",$rowm['m_file'])) {
 					$file_type = "url";
-				// Else Other ------------------------------
+				 // Else Other ------------------------------
 				}else{
 					$file_type = "other";
 				}
-			
-				// if Lightbox installed ------------------------------------------------------------------------------
+				
+				 // if Lightbox installed ------------------------------------------------------------------------------
 				if (file_exists("modules/lightbox/album.php") ) {
 					if (file_exists("modules/lightbox/lb_config.php") ) {
 						include('modules/lightbox/lb_config.php');
@@ -1612,9 +1592,9 @@ function print_main_media_row($rtype, $rowm, $pid) {
 					}else{
 						print "<a href=\"javascript:;\" onclick=\"return openImage('".rawurlencode($mainMedia)."',$imgwidth, $imgheight);\">";
 					}
-				
-				// if Lightbox NOT installed or not enabled -------------------------
-				// else if Media viewer enabled  
+					
+				 // if Lightbox NOT installed or not enabled -------------------------
+				 // else if Media viewer enabled  
 				}elseif ($USE_MEDIA_VIEWER) {
 					print "<a href=\"".encode_url("mediaviewer.php?mid={$rowm['m_media']}")."\">";
 				// else if JWplayer installed and filetype=flvfile (Locally stored in media files )
@@ -1631,7 +1611,7 @@ function print_main_media_row($rtype, $rowm, $pid) {
 					print "<a href=\"javascript:void(0)\" onclick=\"var winimg = window.open('".$rowm['m_file']."', 'winimg', 'width=".$wth.", height=".$hgt.", left=200, top=200'); if (window.focus) {winimg.focus();} \">";
 				//else if URL page
 				}else if(eregi("http" ,$rowm['m_file']) || eregi("\.pdf",$rowm['m_file']) ){
-					print "<a href=\"javascript:;\" onclick=\"var winurl = window.open('".$rowm['m_file']."', 'winurl', 'width=800, height=600, left=200, top=200'); if (window.focus) {winurl.focus();}\">";
+					print "<a href=\"javascript:;\" onclick=\"var winurl = window.open('".$rowm['m_file']."', 'winurl', 'width=900, height=600, left=200, top=200'); if (window.focus) {winurl.focus();}\">";
 				// else just use normal image viewer
 				}else{
 					print "<a href=\"javascript:;\" onclick=\"return openImage('".rawurlencode($mainMedia)."',$imgwidth, $imgheight);\">";
