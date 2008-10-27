@@ -33,14 +33,14 @@ class plugin extends base_plugin {
 	var $surname=null; // User option: add or replace husband's surname
 
 	function doesRecordNeedUpdate($xref, $gedrec) {
-		return preg_match('/^1 SEX F/m', $gedrec) && preg_match('/^1 NAME /m', $gedrec) && self::_surnames_to_add($xref, $gedrec);
+		return preg_match('/^1 SEX F/m', $gedrec) && preg_match('/^1 NAME /m', $gedrec) && $this->_surnames_to_add($xref, $gedrec);
 	}
 
 	function updateRecord($xref, $gedrec) {
 		preg_match('/^1 NAME (.*)/m', $gedrec, $match);
 		$wife_name=$match[1];
 		$married_names=array();
-		foreach (self::_surnames_to_add($xref, $gedrec) as $surname) {
+		foreach ($this->_surnames_to_add($xref, $gedrec) as $surname) {
 			switch ($this->surname) {
 			case 'add':
 				$married_names[]="\n2 _MARNM ".str_replace('/', '', $wife_name).' /'.$surname.'/';
@@ -54,7 +54,7 @@ class plugin extends base_plugin {
 	}
 
 	function _surnames_to_add($xref, $gedrec) {
-		$wife_surnames=self::_surnames($xref, $gedrec);
+		$wife_surnames=$this->_surnames($xref, $gedrec);
 		$husb_surnames=array();
 		$missing_surnames=array();
 		preg_match_all('/^1 FAMS @(.+)@/m', $gedrec, $fmatch);
@@ -62,7 +62,7 @@ class plugin extends base_plugin {
 			$famrec=batch_update::getLatestRecord($famid, 'FAM');
 			if (preg_match('/^1 '.PGV_EVENTS_MARR.'/m', $famrec) && preg_match('/^1 HUSB @(.+)@/m', $famrec, $hmatch)) {
 				$husbrec=batch_update::getLatestRecord($hmatch[1], 'INDI');
-				$husb_surnames=array_unique(array_merge($husb_surnames, self::_surnames($hmatch[1], $husbrec)));
+				$husb_surnames=array_unique(array_merge($husb_surnames, $this->_surnames($hmatch[1], $husbrec)));
 			}
 		}
 		foreach ($husb_surnames as $husb_surname) {

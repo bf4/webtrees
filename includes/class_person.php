@@ -512,7 +512,7 @@ class Person extends GedcomRecord {
 	 * @return string 	<img ... />
 	 */
 	function getSexImage($size='small', $style='', $title='') {
-		return self::sexImage($this->getSex(), $size, $style, $title);
+		return $this->sexImage($this->getSex(), $size, $style, $title);
 	}
 
 	function sexImage($sex, $size='small', $style='', $title='') {

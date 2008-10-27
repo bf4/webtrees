@@ -209,8 +209,8 @@ class stats_ui extends stats
 		return $content;
 	}
 
-	function gedcomFavorites(){return self::_getFavorites(true);}
-	function userFavorites(){return self::_getFavorites(false);}
+	function gedcomFavorites(){return $this->_getFavorites(true);}
+	function userFavorites(){return $this->_getFavorites(false);}
 
 	function totalGedcomFavorites(){return count(getUserFavorites($GLOBALS['GEDCOM']));}
 	function totalUserFavorites(){return count(getUserFavorites(PGV_USER_ID));}

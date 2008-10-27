@@ -57,7 +57,7 @@ class batch_update {
 		// HTML common to all pages
 		$html=
 			mod_print_header($pgv_lang['batch_update']).
-			self::getJavascript().
+			$this->getJavascript().
 			'<form id="batch_update_form" action="module.php" method="get">'.
 			'<input type="hidden" name="mod" value="batch_update">'.
 			'<input type="hidden" name="xref"   value="'.$this->xref.'">'.
@@ -95,8 +95,8 @@ class batch_update {
 
 					$html.=
 						'</table><br/><table class="list_table width100"><tr valign="middle"><td class="list_label center width20">'.
-						self::createSubmitButton($pgv_lang['prev'], $this->prev_xref).
-						self::createSubmitButton($pgv_lang['next'], $this->next_xref).
+						$this->createSubmitButton($pgv_lang['prev'], $this->prev_xref).
+						$this->createSubmitButton($pgv_lang['next'], $this->next_xref).
 						'</td><td class="optionbox width80"><h1><a href="'.$object->getLinkUrl().'">'.$object->getFullName().'</a>'.
 						'</h1></td>'.
 						'</tr><tr><td valign="top" class="list_label center width20">'.
@@ -116,7 +116,7 @@ class batch_update {
 
 	// Constructor - initialise variables and validate user-input
 	function batch_update() {
-		$this->plugins=self::getPluginList();              // List of available plugins
+		$this->plugins=$this->getPluginList();              // List of available plugins
 		$this->plugin =safe_GET('plugin', $this->plugins); // User parameters
 		$this->xref   =safe_GET('xref',   PGV_REGEX_XREF);
 		$this->action =safe_GET('action');
@@ -133,7 +133,7 @@ class batch_update {
 			case '':
 				break;
 			case 'update':
-				$record=self::getLatestRecord($this->xref, $this->all_xrefs[$this->xref]);
+				$record=$this->getLatestRecord($this->xref, $this->all_xrefs[$this->xref]);
 				if ($this->PLUGIN->doesRecordNeedUpdate($this->xref, $record)) {
 					$newrecord=$this->PLUGIN->updateRecord($this->xref, $record);
 					if ($newrecord!=$record) {
@@ -148,7 +148,7 @@ class batch_update {
 				break;
 			case 'update_all':
 				foreach ($this->all_xrefs as $xref=>$type) {
-					$record=self::getLatestRecord($xref, $type);
+					$record=$this->getLatestRecord($xref, $type);
 					if ($this->PLUGIN->doesRecordNeedUpdate($xref, $record)) {
 						$newrecord=$this->PLUGIN->updateRecord($xref, $record);
 						if ($newrecord!=$record) {
@@ -163,7 +163,7 @@ class batch_update {
 				$this->xref='';
 				return;
 			case 'delete':
-				$record=self::getLatestRecord($this->xref, $this->all_xrefs[$this->xref]);
+				$record=$this->getLatestRecord($this->xref, $this->all_xrefs[$this->xref]);
 				if ($this->PLUGIN->doesRecordNeedUpdate($this->xref, $record)) {
 					delete_gedrec($this->xref);
 				}
@@ -171,7 +171,7 @@ class batch_update {
 				break;
 			case 'delete_all':
 				foreach ($this->all_xrefs as $xref=>$type) {
-					$record=self::getLatestRecord($xref, $type);
+					$record=$this->getLatestRecord($xref, $type);
 					if ($this->PLUGIN->doesRecordNeedUpdate($xref, $record)) {
 						delete_gedrec($xref);
 					}
@@ -188,7 +188,7 @@ class batch_update {
 			// It may have been updated in another session, or may not have
 			// been specified at all.
 			if (array_key_exists($this->xref, $this->all_xrefs) &&
-				$this->PLUGIN->doesRecordNeedUpdate($this->xref, self::getLatestRecord($this->xref, $this->all_xrefs[$this->xref]))) {
+				$this->PLUGIN->doesRecordNeedUpdate($this->xref, $this->getLatestRecord($this->xref, $this->all_xrefs[$this->xref]))) {
 				$this->curr_xref=$this->xref;
 			}
 			// The requested record doesn't need updating - find one that does
@@ -200,7 +200,7 @@ class batch_update {
 			}
 			// If we've found a record to update, get details and look for the next/prev
 			if ($this->curr_xref) {
-				$this->record=self::getLatestRecord($this->curr_xref, $this->all_xrefs[$this->curr_xref]);
+				$this->record=$this->getLatestRecord($this->curr_xref, $this->all_xrefs[$this->curr_xref]);
 				$this->prev_xref=$this->findPrevXref($this->curr_xref);
 				$this->next_xref=$this->findNextXref($this->curr_xref);
 			}
@@ -211,7 +211,7 @@ class batch_update {
 	function findNextXref($xref) {
 		foreach (array_keys($this->all_xrefs) as $key) {
 			if ($key>$xref) {
-				$record=self::getLatestRecord($key, $this->all_xrefs[$key]);
+				$record=$this->getLatestRecord($key, $this->all_xrefs[$key]);
 				if ($this->PLUGIN->doesRecordNeedUpdate($key, $record)) {
 					return $key;
 				}
@@ -224,7 +224,7 @@ class batch_update {
 	function findPrevXref($xref) {
 		foreach (array_reverse(array_keys($this->all_xrefs)) as $key) {
 			if ($key<$xref) {
-				$record=self::getLatestRecord($key, $this->all_xrefs[$key]);
+				$record=$this->getLatestRecord($key, $this->all_xrefs[$key]);
 				if ($this->PLUGIN->doesRecordNeedUpdate($key, $record)) {
 					return $key;
 				}
@@ -362,7 +362,7 @@ class base_plugin {
 		$old_lines=preg_split('/[\r\n]+/', $gedrec);
 		$new_lines=preg_split('/[\r\n]+/', $this->updateRecord($xref, $gedrec));
 		// Find matching lines using longest-common-subsequence algorithm.
-		$lcs=self::LCS($old_lines, $new_lines, 0, count($old_lines)-1, 0, count($new_lines)-1);
+		$lcs=$this->LCS($old_lines, $new_lines, 0, count($old_lines)-1, 0, count($new_lines)-1);
 
 		$diff_lines=array();
 		$last_old=-1;
@@ -370,23 +370,23 @@ class base_plugin {
 		while ($lcs) {
 			list($old, $new)=array_shift($lcs);
 			while ($last_old<$old-1) {
-				$diff_lines[]=self::decorateDeletedText($old_lines[++$last_old]);
+				$diff_lines[]=$this->decorateDeletedText($old_lines[++$last_old]);
 			}
 			while ($last_new<$new-1) {
-				$diff_lines[]=self::decorateInsertedText($new_lines[++$last_new]);
+				$diff_lines[]=$this->decorateInsertedText($new_lines[++$last_new]);
 			}
 			$diff_lines[]=$new_lines[$new];
 			$last_old=$old;
 			$last_new=$new;
 		}
 		while ($last_old<count($old_lines)-1) {
-			$diff_lines[]=self::decorateDeletedText($old_lines[++$last_old]);
+			$diff_lines[]=$this->decorateDeletedText($old_lines[++$last_old]);
 		}
 		while ($last_new<count($new_lines)-1) {
-			$diff_lines[]=self::decorateInsertedText($new_lines[++$last_new]);
+			$diff_lines[]=$this->decorateInsertedText($new_lines[++$last_new]);
 		}
 
-		return '<pre>'.self::createEditLinks(implode("\n", $diff_lines)).'</pre>';
+		return '<pre>'.$this->createEditLinks(implode("\n", $diff_lines)).'</pre>';
 	}
 
 	// Longest Common Subsequence.
@@ -394,18 +394,18 @@ class base_plugin {
 		if ($x2-$x1>=0 && $y2-$y1>=0) {
 			if ($X[$x1]==$Y[$y1]) {
 				// Match at start of sequence
-				$tmp=self::LCS($X, $Y, $x1+1, $x2, $y1+1, $y2);
+				$tmp=$this->LCS($X, $Y, $x1+1, $x2, $y1+1, $y2);
 				array_unshift($tmp, array($x1, $y1));
 				return $tmp;
 			} elseif ($X[$x2]==$Y[$y2]) {
 				// Match at end of sequence
-				$tmp=self::LCS($X, $Y, $x1, $x2-1, $y1, $y2-1);
+				$tmp=$this->LCS($X, $Y, $x1, $x2-1, $y1, $y2-1);
 				array_push($tmp, array($x2, $y2));
 				return $tmp;
 			} else {
 				// No match.  Look for subsequences
-				$tmp1=self::LCS($X, $Y, $x1, $x2, $y1, $y2-1);
-				$tmp2=self::LCS($X, $Y, $x1, $x2-1, $y1, $y2);
+				$tmp1=$this->LCS($X, $Y, $x1, $x2, $y1, $y2-1);
+				$tmp2=$this->LCS($X, $Y, $x1, $x2-1, $y1, $y2);
 				return count($tmp1) > count($tmp2) ? $tmp1 : $tmp2;
 			}
 		} else {
