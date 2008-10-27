@@ -1262,8 +1262,8 @@ if (check_media_structure()) {
 				print "<input type=\"submit\" value=\"".$pgv_lang["move_protected"]."\" onclick=\"this.form.action.value='movedirprotected';\" />";
 				print "<br />";
 			}
-				print "<input type=\"submit\" value=\"".$pgv_lang["setperms_fix"]."\" onclick=\"this.form.action.value='setpermsfix';\" />";
 				print_help_link("setperms_help","qm","setperms");
+				print "<input type=\"submit\" value=\"".$pgv_lang["setperms_fix"]."\" onclick=\"this.form.action.value='setpermsfix';\" />";
 				
 				print "</form>";
 				
