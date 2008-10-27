@@ -98,13 +98,12 @@ loadLangFile("lightbox:lang");
 			<tr>
 				<td align="center">
 					<?php
+					
+					// If we can display details
 					if ($controller->canDisplayDetails()) {
-					//Checks to see if the File exist in the system.
-					if (isFileExternal($filename) || $controller->mediaobject->fileExists()) {
-						// the file is external, or it exists locally
-						// attempt to get the image size
-						if ($controller->mediaobject->getWidth()) {
-							// this is an image
+						//Check to see if the File exists in the system. (ie if the file is external, or it exists locally)
+						if (isFileExternal($filename) || $controller->mediaobject->fileExists()) {
+							// attempt to get the image size
 							$imgwidth = $controller->mediaobject->getWidth()+40;
 							$imgheight = $controller->mediaobject->getHeight()+150;
 							if (file_exists("modules/lightbox/album.php")) {
@@ -112,84 +111,109 @@ loadLangFile("lightbox:lang");
 							}else{
 								$dwidth = 300;
 							}
-							if ($imgwidth<$dwidth) $dwidth = $imgwidth;
-								
-							//LBox -- If Lightbox installed, open image with Lightbox
-							if ( file_exists("modules/lightbox/album.php") && ( eregi("\.jpg",$filename) || eregi("\.jpeg",$filename) || eregi("\.gif",$filename) || eregi("\.png",$filename) ) ) {
-								//			print "<a href=\"" . $media["FILE"] . "\" rel=\"clearbox[general]\" title=\"" . stripslashes(PrintReady($name1)) . "\">" . "\n";
-								print "<a
-									href=\"" . $filename . "\"
-									onmouseover=\"window.status='javascript:;'; return true;\"
-									onmouseout=\"window.status=''; return true;\"
-									rel=\"clearbox[general]\" rev=\"" . $controller->pid . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($controller->mediaobject->getFullName(),ENT_COMPAT,'UTF-8')) . "\">" . "\n";
-							//Else open image with the Image View Page
+							if ($imgwidth<$dwidth) {
+								$dwidth = $imgwidth;
+							}
+							
+							 // Check Filetype of media item -------------------------------------------
+							 // If Regular 
+							if (eregi("\.(jpg|jpeg|gif|png)$", $filename)) {
+								$file_type = "regular";
+							 // Else if FLV as URL
+							}else if(eregi("http://www.youtube.com" ,$filename)) {
+								$file_type = "flv";
+							 // Else if FLV local file
+							}else if(eregi("\.flv" ,$filename)) {
+								$file_type = "flvfile";
+							 // Else if URL page
+							}else if(eregi("http" ,$filename) || eregi("\.pdf",$filename)) {
+								$file_type = "url";
+							 // Else Other 
 							}else{
-								?>
-								<a href="javascript:;" onclick="return openImage('<?php print rawurlencode($filename); ?>', <?php print $imgwidth; ?>, <?php print $imgheight; ?>);">
-								<?php
-							} ?>
-							<img src="<?php if (!$USE_THUMBS_MAIN) print $filename; else print $controller->mediaobject->getThumbnail(); ?>" border="0" <?php if (!$USE_THUMBS_MAIN) print "width=\"" . $dwidth . "\"";?> alt="<?php print $controller->mediaobject->getFullName(); ?>" title="<?php print PrintReady(htmlspecialchars($controller->mediaobject->getFullName(),ENT_COMPAT,'UTF-8')); ?>" />
-							</a>
-							<?php
-						}else{
-							//  If flv native (Lightbox)
-							if ( file_exists("modules/lightbox/album.php") && ( eregi("\.flv", $filename) ) ) {
-								print "<a 
-									href=\"module.php?mod=JWplayer&amp;pgvaction=flvVideo&amp;flvVideo=" . $filename . "\" 
-									onmouseover=\"window.status='javascript:;'; return true;\"
-									onmouseout=\"window.status=''; return true;\"
-									rel='clearbox(" . 445 . "," . 370 . ",click)' rev=\"" . $controller->pid . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($controller->mediaobject->getFullName(),ENT_COMPAT,'UTF-8')) . "\">" . "\n";
-									if (media_exists($controller->mediaobject->getThumbnail()) && eregi("\media.gif",$controller->mediaobject->getThumbnail()) && eregi("\.flv",$filename)) {
-										print "<img src=\"modules/JWplayer/flash.png\" height=\"80\" border=\"0\" " ;
-									}else{
-										?>
-										<img src="<?php print $controller->mediaobject->getThumbnail(); ?>" border="0" width="120" alt="<?php print $controller->mediaobject->getFullName(); ?>" title="<?php print PrintReady(htmlspecialchars($controller->mediaobject->getFullName(),ENT_COMPAT,'UTF-8')); ?>" />
-										<?php
-									} 
-								print "</a>";
-								
-							// Else If url filetype (Lightbox)
-							}elseif ( file_exists("modules/lightbox/album.php") && ( eregi("\http", $filename) ) ) {
+								$file_type = "other";
+							}
+							$name = trim($controller->mediaobject->getFullName());
+							
+							 // if Lightbox installed ------------------------------------------------------------------------------
+							if (file_exists("modules/lightbox/album.php") ) {
+								 // Get Lightbox config variables
 								if (file_exists("modules/lightbox/lb_config.php") ) {
 									include('modules/lightbox/lb_config.php');
 								}else{
 									include('modules/lightbox/lb_defaultconfig.php');
 								}
-								print "<a 
-									href=\"" . $filename . "\" 
-									rel='clearbox(" . $LB_URL_WIDTH . "," . $LB_URL_HEIGHT . ",click)' rev=\"" . $controller->pid . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($controller->mediaobject->getFullName(),ENT_COMPAT,'UTF-8')) . "\">" . "\n";
-								print "<img src=\"images/URL.png\" height=\"80\" border=\"0\" " ;
-								print "</a>";
-							// else if JWplayer installed
-							}elseif (file_exists("modules/JWplayer/flvVideo.php") && eregi("\.flv" ,$filename) ) {
-								print "<a href=\"javascript:;\" onclick=\" var winflv = window.open('module.php?mod=JWplayer&amp;pgvaction=flvVideo&amp;flvVideo=" . $filename . "', 'winflv', 'width=445, height=370, left=600, top=200'); if (window.focus) {winflv.focus();}\">";
-								if (eregi("\media.gif",$controller->mediaobject->getThumbnail())) {
-									print "<img src=\"modules/JWplayer/flash.png\" height=\"80\" border=\"0\" " ;
-								}else{ ?>
-									<img src="<?php print $controller->mediaobject->getThumbnail(); ?>" border="0" width="100" alt="<?php print $controller->mediaobject->getFullName(); ?>" title="<?php print PrintReady(htmlspecialchars($controller->mediaobject->getFullName(),ENT_COMPAT,'UTF-8')); ?>" />
-									<?php
+								 // If regular filetype (Lightbox)
+								if ($file_type == "regular") {
+									print "<a href=\"" . $filename . "\" rel='clearbox[general_3]' rev=\"" . $controller->pid . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name,ENT_COMPAT,'UTF-8')) . "\">" . "\n";
+								 // Else If flv native (Lightbox)
+								}elseif ($file_type == "flvfile") {
+									print "<a href=\"module.php?mod=JWplayer&amp;pgvaction=flvVideo&amp;flvVideo=" . $filename . "\" rel='clearbox(" . 445 . "," . 370 . ",click)' rev=\"" . $controller->pid . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name,ENT_COMPAT,'UTF-8')) . "\">" . "\n";
+								 // Else If flv url filetype (Lightbox)
+								}elseif ($file_type == "flv") {
+									print "<a href=\"module.php?mod=JWplayer&amp;pgvaction=flvVideo&amp;flvVideo=" . str_replace('http://', '', $filename) . "\" rel='clearbox(" . 445 . "," . 370 . ",click)' rev=\"" . $filename . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name,ENT_COMPAT,'UTF-8')) . "\">" . "\n";
+								 // Else If url filetype (Lightbox)
+								}elseif ($file_type == "url") {
+									print "<a href=\"" . $filename . "\" rel='clearbox(" . $LB_URL_WIDTH . "," . $LB_URL_HEIGHT . ",click)' rev=\"" . $filename . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name,ENT_COMPAT,'UTF-8')) . "\">" . "\n";
+								 // Else Other filetype (Pop-up Window)
+								}else{
+									print "<a href=\"javascript:;\" onclick=\"return openImage('".rawurlencode($filename)."',$imgwidth, $imgheight);\">";
 								}
-								print "</a>";
-							// Else regular image
-							}else{
-								?>
-								<a href="<?php print $filename; ?>" target="_BLANK">
-								<img src="<?php print $controller->mediaobject->getThumbnail(); ?>" border="0" width="150" alt="<?php print $controller->mediaobject->getFullName(); ?>" title="<?php print PrintReady(htmlspecialchars($controller->mediaobject->getFullName(),ENT_COMPAT,'UTF-8')); ?>" />
-								</a>
-								<?php
+								
+							 // else  if Lightbox NOT installed or not enabled -------------------------------------------
+							 // else if Media viewer enabled  
+							} elseif ($USE_MEDIA_VIEWER) {
+								print "<a href=\"".encode_url("mediaviewer.php?mid={$filename}")."\">";
+							 // else if JWplayer installed and filetype=flvfile (Locally stored in media files )
+							} elseif ( file_exists("modules/JWplayer/flvVideo.php") && $file_type == "flvfile") {
+								print "<a href=\"javascript:;\" onclick=\" var winflv = window.open('module.php?mod=JWplayer&amp;pgvaction=flvVideo&amp;flvVideo=" . $filename . "', 'winflv', 'width=445, height=365, left=600, top=200'); if (window.focus) {winflv.focus();}\">";
+							 // else if JWplayer installed and filetype=flv (Remote flv file e.g. YouTube)
+							} elseif ( file_exists("modules/JWplayer/flvVideo.php") && $file_type == "flv" ) {
+								print "<a href=\"javascript:;\" onclick=\" var winflv = window.open('module.php?mod=JWplayer&amp;pgvaction=flvVideo&amp;flvVideo=" . str_replace('http://', '', $filename) . "', 'winflv', 'width=445, height=365, left=600, top=200'); if (window.focus) {winflv.focus();}\">";
+							 //else if URL image
+							} else if(eregi("http" ,$filename) && (eregi("\.jpg",$filename) || eregi("\.gif",$filename) || eregi("\.png",$filename) ) ){
+								$imageinfo = Getimagesize($rowm['m_file']); 
+								$wth = $imageinfo[0];
+								$hgt = $imageinfo[1];
+								print "<a href=\"javascript:void(0)\" onclick=\"var winimg = window.open('".$filename."', 'winimg', 'width=".$wth.", height=".$hgt.", left=200, top=200'); if (window.focus) {winimg.focus();} \">";
+							 //else if URL page
+							} else if(eregi("http" ,$filename) || eregi("\.pdf",$filename) ){
+								print "<a href=\"javascript:;\" onclick=\"var winurl = window.open('".$filename."', 'winurl', 'width=900, height=600, left=200, top=200'); if (window.focus) {winurl.focus();}\">";
+							 // else just use normal image viewer
+							} else {
+								print "<a href=\"javascript:;\" onclick=\"return openImage('".rawurlencode($filename)."',$imgwidth, $imgheight);\">";
 							}
 						}
-						if ($SHOW_MEDIA_DOWNLOAD) print "<br /><br /><a href=\"".$filename."\">".$pgv_lang["download_image"]."</a><br/>";
-					}
-					else{
-						// the file is not external and does not exist
-						?>
-						<img src="<?php print $controller->mediaobject->getThumbnail(); ?>" border="0" width="100" alt="<?php print $controller->mediaobject->getFullName(); ?>" title="<?php print PrintReady(htmlspecialchars($controller->mediaobject->getFullName(),ENT_COMPAT,'UTF-8')); ?>" />
-						<br /><span class="error"><?php print $pgv_lang["file_not_found"];?></span>
-						<?php
-					}
+							
+						 // Now finally print the thumbnail  --------------------------------------------------
+						 // If URL flv file (eg You Tube) and JWplayer installed
+						if ($file_type == "flv") {
+							print "<img src=\"modules/JWplayer/flashrem.png\" width=\"60\" border=\"0\" align=\"" . ($TEXT_DIRECTION== "rtl"?"right": "left") . "\" class=\"thumbnail\" " ;
+						 // If Plain URL Print the Common URL Thumbnail
+						} else if (eregi("http",$filename) && !eregi("\.jpg",$filename) && !eregi("\.jpeg",$filename) && !eregi("\.gif",$filename) && !eregi("\.png",$filename)) {
+							print "<img src=\"images/URL.png\" border=\"0\" align=\"" . ($TEXT_DIRECTION== "rtl"?"right": "left") . "\"  width=\"72\" height=\"80\" " ;
+						 // If local flv file, and JWplayer installed, print the common flv thumbnail
+						} else if (media_exists($controller->mediaobject->getThumbnail()) && eregi("\media.gif",$controller->mediaobject->getThumbnail()) && eregi("\.flv",$filename)) {
+							if (file_exists("modules/lightbox/album.php") || file_exists("modules/JWplayer/flvVideo.php") ) {
+								print "<img src=\"modules/JWplayer/flash.png\" height=\"60\" border=\"0\" align=\"" . ($TEXT_DIRECTION== "rtl"?"right": "left") . "\" class=\"thumbnail\" " ;
+							} else {
+								print "<img src=\"images/media.gif\" height=\"60\" border=\"0\" align=\"" . ($TEXT_DIRECTION== "rtl"?"right": "left") . "\" class=\"thumbnail\" " ;
+							}
+						 // Else Print the Regular Thumbnail if associated with a thumbnail image
+						} else {
+							print "<img src=\"".$controller->mediaobject->getThumbnail()."\" border=\"0\" align=\"" . ($TEXT_DIRECTION== "rtl"?"right": "left") . "\" class=\"thumbnail\"";
+						}
+							
+						 // Finish off anchor and tooltips
+						if (isFileExternal($filename)) {
+							print " width=\"".$THUMBNAIL_WIDTH."\"";
+						}
+						print " alt=\"" . PrintReady(htmlspecialchars($name,ENT_COMPAT,'UTF-8')) . "\" title=\"" . PrintReady(htmlspecialchars($name,ENT_COMPAT,'UTF-8')) . "\" />";
+						if (isFileExternal($filename) || $controller->mediaobject->fileExists()) {
+							print "</a>";
+						}
 					}
 					?>
+					
 				</td>
 				<td valign="top">
 					<table width="100%">

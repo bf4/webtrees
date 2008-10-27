@@ -309,6 +309,24 @@ if ($ct>0) {
 
 
 //LBox --------  change for Lightbox Album and JWplayer ---------------------------
+	// Check Filetype of media item ( Regular, URL, or Not supported by lightbox at the moment )
+		// Regular ----------------------------------
+		if (eregi("\.(jpg|jpeg|gif|png)$", $media['FILE'])) {
+			$file_type = "regular";
+		// FLV as http ----------------------------------
+		}else if (eregi("http://www.youtube.com", $media['FILE'])) {
+			$file_type = "flv";
+		// FLV local file----------------------------------
+		}else if (eregi("\.flv" ,$media['FILE'])) {
+			$file_type = "flvfile";
+		// URL ----------------------------------
+		}else if(eregi("http" ,$media["FILE"]) || eregi("\.pdf",$media['FILE'])) {
+			$file_type = "url";
+		// Other ------------------------------
+		}else{
+			$file_type = "other";
+		}
+
 		//Get media item Notes
 		$haystack = $media["GEDCOM"];
 		$needle   = "1 NOTE";
@@ -317,35 +335,62 @@ if ($ct>0) {
 		$worked   = ereg_replace("1 NOTE", "1 NOTE<br />", $after);
 		$final    = $before.$needle.$worked;
 		$notes    = PrintReady(htmlspecialchars(addslashes(print_fact_notes($final, 1, true, true)),ENT_COMPAT,'UTF-8'));
-		// If regular image and Lightbox installed
-		if (file_exists("modules/lightbox/album.php") && (eregi("\.(jpg|jpeg|gif|png)$",$media["FILE"]))) {
-			print "<a href=\"" . $media["FILE"] . "\" rel=\"clearbox[general]\" rev=\"" . $media["XREF"] . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name,ENT_COMPAT,'UTF-8')) . "::" . htmlspecialchars($notes,ENT_COMPAT,'UTF-8') . "\">" . "\n";
-		// Else if FLV video and Lightbox installed
-		} else if (file_exists("modules/lightbox/album.php") && (eregi("\.(flv)$",$media["FILE"])) && is_dir('modules/JWplayer')) {
-			// print "<a href=\"" . $media["FILE"] . "\" rel=\"clearbox[general]\" rev=\"" . $media["XREF"] . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name,ENT_COMPAT,'UTF-8')) . "::" . htmlspecialchars($notes,ENT_COMPAT,'UTF-8') . "\">" . "\n";
-			print "<a href=\"module.php?mod=JWplayer&amp;pgvaction=flvVideo&amp;flvVideo=" . $media["FILE"] . "\" rel='clearbox(" . 445 . "," . 370 . ",click)' rev=\"" . $media["XREF"] . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name,ENT_COMPAT,'UTF-8')) . "::" . htmlspecialchars($notes,ENT_COMPAT,'UTF-8') . "\">" . "\n";
-		// Else if Lightbox NOT installed
-		} else if ($USE_MEDIA_VIEWER) {
-			print "<a href=\"mediaviewer.php?mid=".$media["XREF"]."\">";
-		// Else if FLV file and JWplayer installed
-		} else if ( eregi("\.(flv)$",$media["FILE"]) && is_dir('modules/JWplayer') ) {
-			print "<a href=\"javascript:;\" onclick=\" var winflv = window.open('module.php?mod=JWplayer&amp;pgvaction=flvVideo&amp;flvVideo=" . $media["FILE"] . "', 'winflv', 'width=445, height=365, left=600, top=200'); if (window.focus) {winflv.focus();}\">";
-		// Else
-		} else {
-			print "<a href=\"#\" onclick=\"return openImage('".rawurlencode($media["FILE"])."',$imgwidth, $imgheight);\">";
-		}
+		
+		// If Lightbox installed ------------------------------------
+			// If regular image (Lightbox installed)
+			if (file_exists("modules/lightbox/album.php") && ($file_type == "regular")) {
+				print "<a href=\"" . $media["FILE"] . "\" rel=\"clearbox[general]\" rev=\"" . $media["XREF"] . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name,ENT_COMPAT,'UTF-8')) . "::" . htmlspecialchars($notes,ENT_COMPAT,'UTF-8') . "\">" . "\n";
+			// Else if FLV local file (Lightbox installed) + (JWplayer installed)
+			} else if (file_exists("modules/lightbox/album.php") && ($file_type == "flvfile") && is_dir('modules/JWplayer')) {
+				print "<a href=\"module.php?mod=JWplayer&amp;pgvaction=flvVideo&amp;flvVideo=" . $media["FILE"] . "\" rel='clearbox(" . 445 . "," . 370 . ",click)' rev=\"" . $media["XREF"] . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name,ENT_COMPAT,'UTF-8')) . "::" . htmlspecialchars($notes,ENT_COMPAT,'UTF-8') . "\">" . "\n";
+			// Else if FLV url filetype  - e.g. You Tube link -  (Lightbox installed) + (JWplayer installed)
+			} elseif (file_exists("modules/lightbox/album.php") && $file_type == "flv") {
+				print "<a href=\"module.php?mod=JWplayer&amp;pgvaction=flvVideo&amp;flvVideo=" . str_replace('http://', '', $media["FILE"]) . "\" rel='clearbox(" . 445 . "," . 370 . ",click)' rev=\"" . $media["XREF"] . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name,ENT_COMPAT,'UTF-8')) . "::" . htmlspecialchars($notes,ENT_COMPAT,'UTF-8') . "\">" . "\n";
+			// Else If url filetype  (Lightbox installed)
+			}elseif (file_exists("modules/lightbox/album.php") && $file_type == "url") {
+				print 	"<a href=\"" . $media["FILE"] . "\" rel='clearbox(" . $LB_URL_WIDTH . "," . $LB_URL_HEIGHT . ",click)' rev=\"" . $media["XREF"] . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name,ENT_COMPAT,'UTF-8')) . "::" . htmlspecialchars($notes,ENT_COMPAT,'UTF-8') . "\">" . "\n";
+
+		// Else if Lightbox NOT installed ------------------------
+			// If Use media viewer enabled in config
+			} else if ($USE_MEDIA_VIEWER) {
+				print "<a href=\"mediaviewer.php?mid=".$media["XREF"]."\">";
+			// Else if FLV local file  + (JWplayer installed)
+			} else if ( ($file_type == "flvfile") && is_dir('modules/JWplayer') ) {
+				print "<a href=\"javascript:;\" onclick=\" var winflv = window.open('module.php?mod=JWplayer&amp;pgvaction=flvVideo&amp;flvVideo=" . $media["FILE"] . "', 'winflv', 'width=445, height=365, left=600, top=200'); if (window.focus) {winflv.focus();}\">";
+			// Else if FLV url filetype  - e.g. You Tube link -  (JWplayer installed)
+			} elseif ($file_type == "flv") {
+				print "<a href=\"javascript:;\" onclick=\" var winflv = window.open('module.php?mod=JWplayer&amp;pgvaction=flvVideo&amp;flvVideo=" . str_replace('http://', '', $media["FILE"]) . "', 'winflv', 'width=445, height=365, left=600, top=200'); if (window.focus) {winflv.focus();}\">";
+			//else if URL image
+			} else if (eregi("http" ,$media["FILE"]) && (eregi("\.(jpg|jpeg|gif|png)$", $media['FILE'])) ){
+				$imageinfo = Getimagesize($media['FILE']); 
+				$wth = $imageinfo[0];
+				$hgt = $imageinfo[1];
+				print "<a href=\"javascript:void(0)\" onclick=\"var winimg = window.open('".$media["FILE"]."', 'winimg', 'width=".$wth.", height=".$hgt.", left=200, top=200'); if (window.focus) {winimg.focus();} \">";
+			//else if URL page
+			} else if ($file_type == "url") {
+				print "<a href=\"javascript:;\" onclick=\"var winurl = window.open('".$media["FILE"]."', 'winurl', 'width=900, height=600, left=200, top=200'); if (window.focus) {winurl.focus();}\">";
+			// else just use normal image viewer
+			} else {
+				print "<a href=\"#\" onclick=\"return openImage('".rawurlencode($media["FILE"])."',$imgwidth, $imgheight);\">";
+			}
 		
 		// Finally print thumbnails
-		// If local flv file, and no uploaded thumbnail, print the common flv thumbnail
-		if ( is_dir('modules/JWplayer') && media_exists($media["THUMB"]) && eregi("\media.gif",$media["THUMB"]) && eregi("\.flv",$media['FILE'])) {
-			print "<img src=\"modules/JWplayer/flash.png\" height=\"60\" border=\"0\" " ;
-		// Else Print the Regular Thumbnail if associated with a thumbnail image,
-		} else {
-			print "<img src=\"".$media["THUMB"]."\" align=\"left\" class=\"thumbnail\" border=\"none\"";
-			if ($isExternal) {
-					print " width=\"".$THUMBNAIL_WIDTH."\"";
+			// If URL flv file (eg You Tube)
+			if ($file_type == "flv" && is_dir('modules/JWplayer')) {
+				print "<img src=\"modules/JWplayer/flashrem.png\" height=\"60\" border=\"0\" " ;
+			// If Plain URL Print the Common Thumbnail
+			} else if ($file_type == "url") {
+				print "<img src=\"images/URL.png\" height=\"80\" border=\"0\" " ;
+			// If local flv file  + (JWplayer installed) and no uploaded thumbnail, print the common flv thumbnail
+			} else if ($file_type == "flvfile" && is_dir('modules/JWplayer') && media_exists($media["THUMB"]) && eregi("\media.gif",$media["THUMB"]) ) {
+				print "<img src=\"modules/JWplayer/flash.png\" height=\"60\" border=\"0\" " ;
+			// Else Print the Regular Thumbnail if associated with a thumbnail image,
+			} else {
+				print "<img src=\"".$media["THUMB"]."\" align=\"left\" class=\"thumbnail\" border=\"none\"";
+				if ($isExternal) {
+						print " width=\"".$THUMBNAIL_WIDTH."\"";
+				}
 			}
-		}
 //LBox ----------- end change for Lightbox Album and JWplayer ---------------------------
 
 		print " alt=\"" . PrintReady(htmlspecialchars($name,ENT_COMPAT,'UTF-8')) . "\" title=\"" . PrintReady(htmlspecialchars($name,ENT_COMPAT,'UTF-8')) . "\" /></a>";
