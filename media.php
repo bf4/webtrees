@@ -292,7 +292,7 @@ print_header($pgv_lang["manage_media"]);
 </script>
 <script src="phpgedview.js" language="JavaScript" type="text/javascript"></script>
 <form name="managemedia" method="post" onsubmit="return checknames(this);" action="media.php">
-	<input type="hidden" name="directory" value="<?php $action == "deletedir"?print $parentdir:print $directory; ?>" />
+	<input type="hidden" name="directory" value="<?php print $directory; ?>" />
 	<input type="hidden" name="thumbdir" value="<?php print $thumbdir; ?>" />
 	<input type="hidden" name="level" value="<?php print $level; ?>" />
 	<input type="hidden" name="all" value="true" />
@@ -513,7 +513,9 @@ if (check_media_structure()) {
 			}
 		}
 
-		$directory = $parentdir;
+		// Back up to this directory's parent
+		$i = strrpos(substr($directory,0,-1), '/');
+		$directory = trim(substr($directory,0,$i), '/').'/';
 		$action="filter";
 		print "</td></tr></table>";
 	}
@@ -534,6 +536,8 @@ if (check_media_structure()) {
  *
  * @name $action->moveto
  */
+ 
+/*
 	if ($action=="moveto") {
 		print "<table class=\"list_table $TEXT_DIRECTION width100\">";
 		print "<tr><td class=\"messagebox wrap\">";
@@ -639,6 +643,7 @@ if (check_media_structure()) {
 		$action = "filter";
 		print "</td></tr></table>";
 	}
+*/
 
 /**
  * This action generates a thumbnail for the file
