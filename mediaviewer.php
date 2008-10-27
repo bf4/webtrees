@@ -159,26 +159,23 @@ loadLangFile("lightbox:lang");
 									print "<a href=\"javascript:;\" onclick=\"return openImage('".rawurlencode($filename)."',$imgwidth, $imgheight);\">";
 								}
 								
-							 // else  if Lightbox NOT installed or not enabled -------------------------------------------
-							 // else if Media viewer enabled  
-							} elseif ($USE_MEDIA_VIEWER) {
-								print "<a href=\"".encode_url("mediaviewer.php?mid={$filename}")."\">";
+							 // if Lightbox NOT installed or not enabled -------------------------------------------
 							 // else if JWplayer installed and filetype=flvfile (Locally stored in media files )
 							} elseif ( file_exists("modules/JWplayer/flvVideo.php") && $file_type == "flvfile") {
 								print "<a href=\"javascript:;\" onclick=\" var winflv = window.open('module.php?mod=JWplayer&amp;pgvaction=flvVideo&amp;flvVideo=" . $filename . "', 'winflv', 'width=445, height=365, left=600, top=200'); if (window.focus) {winflv.focus();}\">";
 							 // else if JWplayer installed and filetype=flv (Remote flv file e.g. YouTube)
 							} elseif ( file_exists("modules/JWplayer/flvVideo.php") && $file_type == "flv" ) {
 								print "<a href=\"javascript:;\" onclick=\" var winflv = window.open('module.php?mod=JWplayer&amp;pgvaction=flvVideo&amp;flvVideo=" . str_replace('http://', '', $filename) . "', 'winflv', 'width=445, height=365, left=600, top=200'); if (window.focus) {winflv.focus();}\">";
-							 //else if URL image
+							//else if URL image
 							} else if(eregi("http" ,$filename) && (eregi("\.jpg",$filename) || eregi("\.gif",$filename) || eregi("\.png",$filename) ) ){
-								$imageinfo = Getimagesize($rowm['m_file']); 
+								$imageinfo = Getimagesize($filename); 
 								$wth = $imageinfo[0];
 								$hgt = $imageinfo[1];
 								print "<a href=\"javascript:void(0)\" onclick=\"var winimg = window.open('".$filename."', 'winimg', 'width=".$wth.", height=".$hgt.", left=200, top=200'); if (window.focus) {winimg.focus();} \">";
-							 //else if URL page
+							//else if URL page
 							} else if(eregi("http" ,$filename) || eregi("\.pdf",$filename) ){
 								print "<a href=\"javascript:;\" onclick=\"var winurl = window.open('".$filename."', 'winurl', 'width=900, height=600, left=200, top=200'); if (window.focus) {winurl.focus();}\">";
-							 // else just use normal image viewer
+							// else just use normal image viewer
 							} else {
 								print "<a href=\"javascript:;\" onclick=\"return openImage('".rawurlencode($filename)."',$imgwidth, $imgheight);\">";
 							}
