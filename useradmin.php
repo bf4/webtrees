@@ -1006,14 +1006,16 @@ if ($action == "cleanup") {
 	// Then check obsolete gedcom rights
 	$gedrights = array();
 	foreach(get_all_users() as $user_id=>$user_name) {
-		foreach(unserialize(get_user_setting($user_id, 'canedit')) as $gedid=>$data) {
-			if (!get_id_from_gedcom($gedid) && !in_array($gedid, $gedrights)) $gedrights[] = $gedid;
-		}
-		foreach(unserialize(get_user_setting($user_id, 'gedcomid')) as $gedid=>$data) {
-			if (!get_id_from_gedcom($gedid) && !in_array($gedid, $gedrights)) $gedrights[] = $gedid;
-		}
-		foreach(unserialize(get_user_setting($user_id, 'rootid')) as $gedid=>$data) {
-			if (!get_id_from_gedcom($gedid) && !in_array($gedid, $gedrights)) $gedrights[] = $gedid;
+		if (get_user_setting($user_id,'verified_by_admin')=="yes") {
+			foreach(unserialize(get_user_setting($user_id, 'canedit')) as $gedid=>$data) {
+				if (!get_id_from_gedcom($gedid) && !in_array($gedid, $gedrights)) $gedrights[] = $gedid;
+			}
+			foreach(unserialize(get_user_setting($user_id, 'gedcomid')) as $gedid=>$data) {
+				if (!get_id_from_gedcom($gedid) && !in_array($gedid, $gedrights)) $gedrights[] = $gedid;
+			}
+			foreach(unserialize(get_user_setting($user_id, 'rootid')) as $gedid=>$data) {
+				if (!get_id_from_gedcom($gedid) && !in_array($gedid, $gedrights)) $gedrights[] = $gedid;
+			}
 		}
 	}
 	ksort($gedrights);

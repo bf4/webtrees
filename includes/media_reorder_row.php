@@ -85,8 +85,11 @@ if (!defined('PGV_PHPGEDVIEW')) {
 		print "<td width=\"80\" valign=\"top\" align=\"center\" >". "\n";
 		
 		//Finally Print the thumbnail ---------------------------------
-			// If Plain URL Print the Common URL Thumbnail
-			if (eregi("http",$rowm['m_file']) && !eregi("\.jpg",$rowm['m_file']) && !eregi("\.jpeg",$rowm['m_file']) && !eregi("\.gif",$rowm['m_file']) && !eregi("\.png",$rowm['m_file'])) {
+			// If URL flv file (eg You Tube)
+			if (eregi("http://www.youtube.com" ,$rowm['m_file']) ) {
+				print "<img src=\"modules/JWplayer/flashrem.png\" width=\"38\" border=\"0\" " ;
+			// Else if Plain URL Print the Common URL Thumbnail
+			}else if (eregi("http",$rowm['m_file']) && !eregi("\.jpg",$rowm['m_file']) && !eregi("\.jpeg",$rowm['m_file']) && !eregi("\.gif",$rowm['m_file']) && !eregi("\.png",$rowm['m_file'])) {
 				print "<img src=\"images/URL.png\" height=\"48\" width=\"44\"border=\"0\" " ;
 			//Else If local flv file, print the common flash thumbnail
 			}else if (media_exists($thumbnail) && eregi("\media.gif",$thumbnail) && eregi("\.flv",$rowm['m_file'])) {

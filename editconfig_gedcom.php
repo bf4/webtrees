@@ -40,6 +40,8 @@ if (!PGV_USER_GEDCOM_ADMIN) {
 	exit;
 }
 
+	global $whichFile;		// This is needed for error messages
+
 /**
  * find the name of the first GEDCOM file in a zipfile
  * @param string $zipfile	the path and filename
@@ -467,15 +469,14 @@ if ($action=="update") {
 		$errors = true;
 	}
 	$configtext = preg_replace('/\$TIME_LIMIT\s*=\s*".*";/', "\$TIME_LIMIT = \"".$_POST["NEW_TIME_LIMIT"]."\";", $configtext);
-	global $whichFile;
 	$whichFile = $INDEX_DIRECTORY.$FILE."_conf.php";
-	if (!is_writable($INDEX_DIRECTORY.$FILE."_conf.php")) {
+	if (!is_writable($whichFile)) {
 		$errors = true;
 		$error_msg .= "<span class=\"error\"><b>".print_text("gedcom_config_write_error",0,1)."</b></span><br />";
 		$_SESSION[$gedcom_config]=$configtext;
 		$error_msg .= "<br /><br /><a href=\"".encode_url("config_download.php?file={$gedcom_config}")."\">".$pgv_lang["download_gedconf"]."</a> ".$pgv_lang["upload_to_index"]."$INDEX_DIRECTORY<br /><br />\n";
 	}
-	$fp = @fopen($INDEX_DIRECTORY.$FILE."_conf.php", "wb");
+	$fp = @fopen($whichFile, "wb");
 	if (!$fp) {
 		$errors = true;
 		$error_msg .= "<span class=\"error\">".print_text("gedcom_config_write_error",0,1)."</span><br />\n";
@@ -516,7 +517,8 @@ if ($action=="update") {
 			$httext .= "\nErrorDocument\t404\t".$mediafirewall_path;
 			$httext .= "\n########## END PGV MEDIA FIREWALL SECTION ##########";
 
-			$fp = @fopen($MEDIA_DIRECTORY.".htaccess", "wb");
+			$whichFile = $MEDIA_DIRECTORY.".htaccess";
+			$fp = @fopen($whichFile, "wb");
 			if (!$fp) {
 				$errors = true;
 				$error_msg .= "<span class=\"error\">".print_text("gedcom_config_write_error",0,1)."</span><br />\n";
@@ -536,7 +538,8 @@ if ($action=="update") {
 			// comment out any lines that set ErrorDocument 404
 			$httext = preg_replace('/^(ErrorDocument\s*404(.*))\n?/', "#$1\n", $httext);
 			$httext = preg_replace('/[^#](ErrorDocument\s*404(.*))\n?/', "\n#$1\n", $httext);
-			$fp = @fopen($MEDIA_DIRECTORY.".htaccess", "wb");
+			$whichFile = $MEDIA_DIRECTORY.".htaccess";
+			$fp = @fopen($whichFile, "wb");
 			if (!$fp) {
 				$errors = true;
 				$error_msg .= "<span class=\"error\">".print_text("gedcom_config_write_error",0,1)."</span><br />\n";

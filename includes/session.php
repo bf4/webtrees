@@ -640,6 +640,15 @@ if ($TEXT_DIRECTION=='ltr') {
 	define ('PGV_RPARENS', ')&rlm;');
 }
 
+// define constants to be used when setting permissions after creating files/directories
+if (substr(PHP_SAPI, 0, 3) == 'cgi') {  // cgi-mode, should only be writable by owner
+	define('PGV_PERM_EXE',  0755);  // to be used on directories, php files and htaccess files
+	define('PGV_PERM_FILE', 0644);  // to be used on images, text files, etc
+} else { // mod_php mode, should be writable by everyone
+	define('PGV_PERM_EXE',  0777);
+	define('PGV_PERM_FILE', 0666);
+}
+
 // Although *most* dependencies on import_request_variables() have been removed,
 // testing has not been completed.   Therefore it is being added back for the
 // 4.1.6 release.  Paranoid system administrators may want to remove it, although

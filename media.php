@@ -141,7 +141,7 @@ function move_files($path, $blnProtect) {
 * Recursively sets the permissions on files
 * Operates directly on the filesystem, does not use the db.
 */
-function set_perms($path, $filemode, $dirmode) {
+function set_perms($path) {
 	global $MEDIA_FIREWALL_ROOTDIR, $MEDIA_DIRECTORY, $TIME_LIMIT, $starttime, $pgv_lang;
 	if (preg_match("'^($MEDIA_FIREWALL_ROOTDIR)?$MEDIA_DIRECTORY'", $path."/")==0){
 		return false;
@@ -159,18 +159,18 @@ function set_perms($path, $filemode, $dirmode) {
 			if ($element!= "." && $element!= ".." && $element!=".svn") {
 				$fullpath = $path."/".$element;
 				if (is_dir($fullpath)) {
-					if (@chmod($fullpath, $dirmode)) {
-						print "<div>".$pgv_lang["setperms_success"]." [".$fullpath."]</div>";
+					if (@chmod($fullpath, PGV_PERM_EXE)) {
+						print "<div>".$pgv_lang["setperms_success"]." [".decoct(PGV_PERM_EXE)."] [".$fullpath."]</div>";
 					} else {
-						print "<div>".$pgv_lang["setperms_failure"]." [".$fullpath."]</div>";
+						print "<div>".$pgv_lang["setperms_failure"]." [".decoct(PGV_PERM_EXE)."] [".$fullpath."]</div>";
 					}
 					// call this function recursively on this directory
-					set_perms($fullpath, $filemode, $dirmode);
+					set_perms($fullpath);
 				} else {
-					if (@chmod($fullpath, $filemode)) {
-						print "<div>".$pgv_lang["setperms_success"]." [".$fullpath."]</div>";
+					if (@chmod($fullpath, PGV_PERM_FILE)) {
+						print "<div>".$pgv_lang["setperms_success"]." [".decoct(PGV_PERM_FILE)."] [".$fullpath."]</div>";
 					} else {
-						print "<div>".$pgv_lang["setperms_failure"]." [".$fullpath."]</div>";
+						print "<div>".$pgv_lang["setperms_failure"]." [".decoct(PGV_PERM_FILE)."] [".$fullpath."]</div>";
 					}
 				}
 			}
@@ -179,7 +179,6 @@ function set_perms($path, $filemode, $dirmode) {
 	}
 	return;
 }
-
 
 // global var used by recursive functions
 $starttime = time();
@@ -757,21 +756,12 @@ if (check_media_structure()) {
 		$action="filter";
 	}
 
-	if ($action == "setpermswrite") {
+	if ($action == "setpermsfix") {
 		print "<table class=\"list_table $TEXT_DIRECTION width100\">";
 		print "<tr><td class=\"messagebox wrap\">";
-		print "<strong>".$pgv_lang["setperms_writable"]."<br />";
-		set_perms(substr($directory,0,-1), 0666, 0777);
-		set_perms(substr(get_media_firewall_path($directory),0,-1), 0666, 0777);
-		print "</td></tr></table>";
-		$action="filter";
-	}
-	if ($action == "setpermsread") {
-		print "<table class=\"list_table $TEXT_DIRECTION width100\">";
-		print "<tr><td class=\"messagebox wrap\">";
-		print "<strong>".$pgv_lang["setperms_readonly"]."<br />";
-		set_perms(substr($directory,0,-1), 0664, 0775);
-		set_perms(substr(get_media_firewall_path($directory),0,-1), 0664, 0775);
+		print "<strong>".$pgv_lang["setperms_fix"]."<br />";
+		set_perms(substr($directory,0,-1));
+		set_perms(substr(get_media_firewall_path($directory),0,-1));
 		print "</td></tr></table>";
 		$action="filter";
 	}
@@ -1267,11 +1257,11 @@ if (check_media_structure()) {
 				print "<input type=\"submit\" value=\"".$pgv_lang["move_protected"]."\" onclick=\"this.form.action.value='movedirprotected';\" />";
 				print "<br />";
 			}
-				print "<input type=\"submit\" value=\"".$pgv_lang["setperms_writable"]."\" onclick=\"this.form.action.value='setpermswrite';\" />";
+				print "<input type=\"submit\" value=\"".$pgv_lang["setperms_fix"]."\" onclick=\"this.form.action.value='setpermsfix';\" />";
 				print_help_link("setperms_help","qm","setperms");
-				print "<input type=\"submit\" value=\"".$pgv_lang["setperms_readonly"]."\" onclick=\"this.form.action.value='setpermsread';\" />";
+				
 				print "</form>";
-
+				
 			print "</td>";
 		print "</tr>";
 
@@ -1305,8 +1295,6 @@ if (check_media_structure()) {
 							print "<input type=\"submit\" value=\"".$pgv_lang["move_standard"]."\" onclick=\"this.form.level.value=(this.form.level.value*1)+1;this.form.action.value='movedirstandard';\" />";
 							print "<input type=\"submit\" value=\"".$pgv_lang["move_protected"]."\" onclick=\"this.form.level.value=(this.form.level.value*1)+1;this.form.action.value='movedirprotected';\" />";
 						}
-						// print "<input type=\"submit\" value=\"".$pgv_lang["setperms_writable"]."\" onclick=\"this.form.level.value=(this.form.level.value*1)+1;this.form.action.value='setpermswrite';\" />";
-						// print "<input type=\"submit\" value=\"".$pgv_lang["setperms_readonly"]."\" onclick=\"this.form.level.value=(this.form.level.value*1)+1;this.form.action.value='setpermsread';\" />";
 
 						print "</form>";
 					print "</td>";

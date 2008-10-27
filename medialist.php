@@ -308,7 +308,7 @@ if ($ct>0) {
 			print "<table class=\"$TEXT_DIRECTION\">\n\t<tr>\n\t\t<td valign=\"top\" style=\"white-space: normal;\">";
 
 
-//LBox --------  change for Lightbox Album --------------------------------------------
+//LBox --------  change for Lightbox Album and JWplayer ---------------------------
 		//Get media item Notes
 		$haystack = $media["GEDCOM"];
 		$needle   = "1 NOTE";
@@ -317,17 +317,37 @@ if ($ct>0) {
 		$worked   = ereg_replace("1 NOTE", "1 NOTE<br />", $after);
 		$final    = $before.$needle.$worked;
 		$notes    = PrintReady(htmlspecialchars(addslashes(print_fact_notes($final, 1, true, true)),ENT_COMPAT,'UTF-8'));
+		// If regular image and Lightbox installed
 		if (file_exists("modules/lightbox/album.php") && (eregi("\.(jpg|jpeg|gif|png)$",$media["FILE"]))) {
 			print "<a href=\"" . $media["FILE"] . "\" rel=\"clearbox[general]\" rev=\"" . $media["XREF"] . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name,ENT_COMPAT,'UTF-8')) . "::" . htmlspecialchars($notes,ENT_COMPAT,'UTF-8') . "\">" . "\n";
-				} elseif ($USE_MEDIA_VIEWER) {
+		// Else if FLV video and Lightbox installed
+		} else if (file_exists("modules/lightbox/album.php") && (eregi("\.(flv)$",$media["FILE"])) && is_dir('modules/JWplayer')) {
+			// print "<a href=\"" . $media["FILE"] . "\" rel=\"clearbox[general]\" rev=\"" . $media["XREF"] . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name,ENT_COMPAT,'UTF-8')) . "::" . htmlspecialchars($notes,ENT_COMPAT,'UTF-8') . "\">" . "\n";
+			print "<a href=\"module.php?mod=JWplayer&amp;pgvaction=flvVideo&amp;flvVideo=" . $media["FILE"] . "\" rel='clearbox(" . 445 . "," . 370 . ",click)' rev=\"" . $media["XREF"] . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name,ENT_COMPAT,'UTF-8')) . "::" . htmlspecialchars($notes,ENT_COMPAT,'UTF-8') . "\">" . "\n";
+		// Else if Lightbox NOT installed
+		} else if ($USE_MEDIA_VIEWER) {
 			print "<a href=\"mediaviewer.php?mid=".$media["XREF"]."\">";
+		// Else if FLV file and JWplayer installed
+		} else if ( eregi("\.(flv)$",$media["FILE"]) && is_dir('modules/JWplayer') ) {
+			print "<a href=\"javascript:;\" onclick=\" var winflv = window.open('module.php?mod=JWplayer&amp;pgvaction=flvVideo&amp;flvVideo=" . $media["FILE"] . "', 'winflv', 'width=445, height=365, left=600, top=200'); if (window.focus) {winflv.focus();}\">";
+		// Else
 		} else {
 			print "<a href=\"#\" onclick=\"return openImage('".rawurlencode($media["FILE"])."',$imgwidth, $imgheight);\">";
 		}
-//LBox ----------- end change for Lightbox Album ----------------------------------
+		
+		// Finally print thumbnails
+		// If local flv file, and no uploaded thumbnail, print the common flv thumbnail
+		if ( is_dir('modules/JWplayer') && media_exists($media["THUMB"]) && eregi("\media.gif",$media["THUMB"]) && eregi("\.flv",$media['FILE'])) {
+			print "<img src=\"modules/JWplayer/flash.png\" height=\"60\" border=\"0\" " ;
+		// Else Print the Regular Thumbnail if associated with a thumbnail image,
+		} else {
+			print "<img src=\"".$media["THUMB"]."\" align=\"left\" class=\"thumbnail\" border=\"none\"";
+			if ($isExternal) {
+					print " width=\"".$THUMBNAIL_WIDTH."\"";
+			}
+		}
+//LBox ----------- end change for Lightbox Album and JWplayer ---------------------------
 
-		print "<img src=\"".$media["THUMB"]."\" align=\"left\" class=\"thumbnail\" border=\"none\"";
-		if ($isExternal) print " width=\"".$THUMBNAIL_WIDTH."\"";
 		print " alt=\"" . PrintReady(htmlspecialchars($name,ENT_COMPAT,'UTF-8')) . "\" title=\"" . PrintReady(htmlspecialchars($name,ENT_COMPAT,'UTF-8')) . "\" /></a>";
 		print "</td>\n\t\t<td class=\"list_value_wrap\" style=\"border: none;\" width=\"100%\">";
 
