@@ -10,9 +10,10 @@
 
 
 Version 4.1.6
+ - Fixed: Set proper permissions on image files in CGI mode (ljm)
  - Fixed: parse error in flvVideo.php (windmillway)
  - Added: Support for "You Tube" Videos (Ref. Open discussion "YouTube-video of Individuals" for details (windmillway)
- - Fixed: [ 2159394 ] Download Config fails 
+ - Fixed: [ 2159394 ] Download Config fails (ljm)
  - Fixed: Error in User admin -> Cleanup users when users not approved by admin exist (canajun2eh)
  - Fixed: URL media not displaying/editing properly on Media Tab (windmillway)
  - Added: "Create missing thumbnails" option on Manage Media page (canajun2eh)
