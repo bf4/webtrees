@@ -33,9 +33,6 @@ if (!defined('PGV_PHPGEDVIEW')) {
 }
 
 // Admin menu
-// $pgv_lang["sitemap"]       			= "Sitemap";
-// $pgv_lang["sitemap"]       			= "Sitemap";
-// $pgv_lang["sitemap"]       			= "Sitemap";
 $pgv_lang["generate_sitemap"]       = "Generar archivos de mapa del sitio";
 
 // Sitemap pages

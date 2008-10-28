@@ -1798,5 +1798,7 @@ $pgv_lang["godchild"]			= "Filleul / filleule";
 $pgv_lang["exact"]				= "Exact";
 $pgv_lang["advanced_search"] 	= "Recherche avancée";
 $pgv_lang["more_fields"]		= "Ajouter d'autres champs";
+$pgv_lang["years2"]					= "années";	// 2 années";
+$pgv_lang["setperms_fix"]			= "Modifier les permissions de lecture/écriture/exécution";
 
 ?>

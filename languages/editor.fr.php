@@ -232,4 +232,6 @@ $pgv_lang["file_no_temp_dir"]		= "Répertoire temporaire PHP manquant";
 $pgv_lang["file_cant_write"]		= "PHP n'a pas pu écrire sur le disque";
 $pgv_lang["file_bad_extension"]		= "PHP a bloqué le fichier à cause de son extension";
 $pgv_lang["file_unkown_err"]		= "Erreur de téléchargement de fichier inconnu (code #pgv_lang[global_num1]#). Rapportez cette information comme un bug.";
+$pgv_lang["gen_missing_thumbs"]		= "Créer les vignettes manquantes";
+$pgv_lang["gen_missing_thumbs_lbl"]	= "Vignettes manquantes";
 ?>
