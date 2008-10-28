@@ -105,7 +105,7 @@ function move_file($src, $dest) {
 * Recursively moves files from standard media directory to the protected media directory
 * and vice-versa.  Operates directly on the filesystem, does not use the db.
 */
-function move_files($path, $blnProtect) {
+function move_files($path, $protect) {
 	global $MEDIA_FIREWALL_THUMBS, $TIME_LIMIT, $starttime, $pgv_lang;
 	if ($dir=@opendir($path)) {
 		while (($element=readdir($dir))!== false) {
@@ -117,21 +117,39 @@ function move_files($path, $blnProtect) {
 				return;
 			}
 			// do not move certain files...
-			if ($element!= "." && $element!= ".." && $element!=".svn" && $element!="watermark" && $element!=".htaccess" && $element!="index.php" && $element!="MediaInfo.txt" && $element!="ThumbsInfo.txt") {
-				$fullpath = $path."/".$element;
-				if (is_dir($fullpath)) {
+			if ($element!= "." && $element!= ".." && $element!=".svn" && $element!="watermark" && $element!="thumbs" && $element!=".htaccess" && $element!="index.php" && $element!="MediaInfo.txt" && $element!="ThumbsInfo.txt") {
+				$filename = $path."/".$element;
+				if (is_dir($filename)) {
 					// call this function recursively on this directory
-					move_files($fullpath, $blnProtect);
+					move_files($filename, $protect);
 				} else {
-					// if moving to the standard directory, or if not a thumbnail, or if we want to protect thumbnails... move the file
-					if ( !$blnProtect || (strpos($fullpath, "/thumbs") === false) || $MEDIA_FIREWALL_THUMBS) {
-						$dest = ($blnProtect) ? get_media_firewall_path($fullpath) : get_media_standard_path($fullpath);
-						// note: the move_file function verifies that the source and destination dirs are valid
-						move_file($fullpath, $dest);
+					if ($protect) {
+						// Move single file and optionally its corresponding thumbnail to protected dir
+						if (file_exists($filename)) {
+							move_file($filename, get_media_firewall_path($filename));
+						}
+						if ($MEDIA_FIREWALL_THUMBS) {
+							$thumbnail = thumbnail_file($filename,false);
+							if (file_exists($thumbnail)) {
+								move_file($thumbnail, get_media_firewall_path($thumbnail));
+							}
+						}
+					} else {
+						// Move single file and its corresponding thumbnail to standard dir
+						$filename = get_media_standard_path($filename);
+						if (file_exists(get_media_firewall_path($filename))) {
+							move_file(get_media_firewall_path($filename), $filename);
+						}
+						$thumbnail = thumbnail_file($filename,false);
+						if (file_exists(get_media_firewall_path($thumbnail))) {
+							move_file(get_media_firewall_path($thumbnail), $thumbnail);
+						}
 					}
 				}
 			}
 		}
+		print "</td></tr></table>";
+		$action="filter";
 		closedir($dir);
 	}
 	return;
@@ -292,7 +310,7 @@ print_header($pgv_lang["manage_media"]);
 </script>
 <script src="phpgedview.js" language="JavaScript" type="text/javascript"></script>
 <form name="managemedia" method="post" onsubmit="return checknames(this);" action="media.php">
-	<input type="hidden" name="directory" value="<?php $action == "deletedir"?print $parentdir:print $directory; ?>" />
+	<input type="hidden" name="directory" value="<?php print $directory; ?>" />
 	<input type="hidden" name="thumbdir" value="<?php print $thumbdir; ?>" />
 	<input type="hidden" name="level" value="<?php print $level; ?>" />
 	<input type="hidden" name="all" value="true" />
@@ -513,7 +531,9 @@ if (check_media_structure()) {
 			}
 		}
 
-		$directory = $parentdir;
+		// Back up to this directory's parent
+		$i = strrpos(substr($directory,0,-1), '/');
+		$directory = trim(substr($directory,0,$i), '/').'/';
 		$action="filter";
 		print "</td></tr></table>";
 	}
@@ -534,6 +554,8 @@ if (check_media_structure()) {
  *
  * @name $action->moveto
  */
+ 
+/*
 	if ($action=="moveto") {
 		print "<table class=\"list_table $TEXT_DIRECTION width100\">";
 		print "<tr><td class=\"messagebox wrap\">";
@@ -639,6 +661,7 @@ if (check_media_structure()) {
 		$action = "filter";
 		print "</td></tr></table>";
 	}
+*/
 
 /**
  * This action generates a thumbnail for the file
@@ -694,7 +717,7 @@ if (check_media_structure()) {
 		print "</td></tr></table>";
 	}
 
-	// Move single file to protected dir
+	// Move single file and optionally its corresponding thumbnail to protected dir
 	if ($action == "moveprotected") {
 		print "<table class=\"list_table $TEXT_DIRECTION width100\">";
 		print "<tr><td class=\"messagebox wrap\">";
@@ -716,7 +739,7 @@ if (check_media_structure()) {
 		$action="filter";
 	}
 
-	// Move single file to standard dir
+	// Move single file and its corresponding thumbnail to standard dir
 	if ($action == "movestandard") {
 		print "<table class=\"list_table $TEXT_DIRECTION width100\">";
 		print "<tr><td class=\"messagebox wrap\">";
@@ -746,7 +769,7 @@ if (check_media_structure()) {
 		$action="filter";
 	}
 
-	// Move entire dir and all subdirs to stanard dir
+	// Move entire dir and all subdirs to standard dir
 	if ($action == "movedirstandard") {
 		print "<table class=\"list_table $TEXT_DIRECTION width100\">";
 		print "<tr><td class=\"messagebox wrap\">";
@@ -1251,14 +1274,15 @@ if (check_media_structure()) {
 				print "<input type=\"hidden\" name=\"level\" value=\"".($level)."\" />";
 				print "<input type=\"hidden\" name=\"dir\" value=\"".$directory."\" />";
 				print "<input type=\"hidden\" name=\"action\" value=\"\" />";
+				print "<input type=\"hidden\" name=\"showthumb\" value=\"{$showthumb}\" />";
 			if ($USE_MEDIA_FIREWALL) {
 				print "<input type=\"submit\" value=\"".$pgv_lang["move_standard"]."\" onclick=\"this.form.action.value='movedirstandard';\" />";
 				print_help_link("move_mediadirs_help","qm","move_mediadirs");
 				print "<input type=\"submit\" value=\"".$pgv_lang["move_protected"]."\" onclick=\"this.form.action.value='movedirprotected';\" />";
 				print "<br />";
 			}
-				print "<input type=\"submit\" value=\"".$pgv_lang["setperms_fix"]."\" onclick=\"this.form.action.value='setpermsfix';\" />";
 				print_help_link("setperms_help","qm","setperms");
+				print "<input type=\"submit\" value=\"".$pgv_lang["setperms_fix"]."\" onclick=\"this.form.action.value='setpermsfix';\" />";
 				
 				print "</form>";
 				
@@ -1290,6 +1314,7 @@ if (check_media_structure()) {
 						print "<input type=\"hidden\" name=\"level\" value=\"".($level)."\" />";
 						print "<input type=\"hidden\" name=\"dir\" value=\"".$dir."\" />";
 						print "<input type=\"hidden\" name=\"action\" value=\"\" />";
+						print "<input type=\"hidden\" name=\"showthumb\" value=\"{$showthumb}\" />";
 						print "<input type=\"image\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["remove"]["other"]."\" alt=\"".$pgv_lang['delete']."\" onclick=\"this.form.action.value='deletedir';return confirm('".$pgv_lang["confirm_folder_delete"]."');\" />";
 						if ($USE_MEDIA_FIREWALL) {
 							print "<input type=\"submit\" value=\"".$pgv_lang["move_standard"]."\" onclick=\"this.form.level.value=(this.form.level.value*1)+1;this.form.action.value='movedirstandard';\" />";

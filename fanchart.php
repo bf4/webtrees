@@ -495,7 +495,8 @@ if ($view != "preview") {
 	print $pgv_lang["generations"]."</td>";
 	print "<td class=\"optionbox\">";
 	print "<select name=\"PEDIGREE_GENERATIONS\">";
-	for ($i=2; $i<=$MAX_PEDIGREE_GENERATIONS; $i++) {
+	// Can only show 9 generations (256 ancestors) as graphics library has integer degree resolution
+	for ($i=2; $i<=min(9,$MAX_PEDIGREE_GENERATIONS); $i++) {
 	print "<option value=\"".$i."\"" ;
 	if ($i == $PEDIGREE_GENERATIONS) print "selected=\"selected\" ";
 		print ">".$i."</option>";

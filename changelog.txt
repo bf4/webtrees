@@ -10,6 +10,10 @@
 
 
 Version 4.1.6
+ - Fixed: Thumbnail positioning on mediaviewer page. (windmillway)
+ - Fixed: Incorrect "loopback" to mediaviewer page if "Use Media Viewer" item set to Yes in the config page. (windmillway)
+ - Added: Show thumbnails for URL images/videos/pages on multimedialist, mediaviewer, and media tab pages (windmillway)
+ - Fixed: [1882147] Fan (circle) chart gets corrupted at 10th generation (fisharebest)
  - Fixed: Set proper permissions on image files in CGI mode (ljm)
  - Fixed: parse error in flvVideo.php (windmillway)
  - Added: Support for "You Tube" Videos (Ref. Open discussion "YouTube-video of Individuals" for details (windmillway)
