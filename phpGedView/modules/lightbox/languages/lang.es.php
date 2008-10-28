@@ -34,9 +34,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 }
 
 // Added in VERSION 4.1.6
-// $pgv_lang["lb_toAdminConfigPage"]	= "Return to Admin Page";
-// $pgv_lang["lb_toAdminConfigPage"]	= "Return to Admin Page";
-// $pgv_lang["lb_toAdminConfigPage"]	= "Return to Admin Page";
+$pgv_lang["lb_toAdminConfigPage"]	= "Volver a la página de Administración";
 $pgv_lang["lb_manage"]				= "Gestionar la configuración de Lightbox";
 $pgv_lang["lb_generalhelp"]			= "Página personal - Ayuda general de Lightbox";
 $pgv_lang["lb_viewedit"]			= "Ver/Modificar";

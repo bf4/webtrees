@@ -61,7 +61,7 @@ $pgv_lang["lb_tt_balloon_help"]			= "~#pgv_lang[lb_tt_balloonLegend]#~<br />Esta
 
 // VERSION 4.1.3 
 $pgv_lang["mediatabLegend"]				= "Apariencia de la pestaña de objetos";
-$pgv_lang["mediatab_help"]				= "~#pgv_lang[mediatabLegend]#~<br />Esta opción le permite determinar si se muestra la pestaña de Objetos en la página #pgv_lang[indi_info]#.<br /><br />Si se fija esta opción a <b>#pgv_lang[hide]#</b>, sólo se muestra la perstaña <b>#pgv_lang[lightbox]#</b> y, además, aparecerá como <b>#pgv_lang[media]#</b>.<br />";
+$pgv_lang["mediatab_help"]				= "~#pgv_lang[mediatabLegend]#~<br />Esta opción le permite determinar si se muestra la pestaña de Objetos en la página #pgv_lang[indi_info]#.<br /><br />Si se fija esta opción a <b>#pgv_lang[hide]#</b>, sólo se muestra la pestaña <b>#pgv_lang[lightbox]#</b>.<br />";
 $pgv_lang["lb_al_head_linksLegend"]		= "Apariencia del vínculo al encabezamiento en la pestaña Álbum";
 $pgv_lang["lb_al_head_links_help"]		= "~#pgv_lang[lb_al_head_linksLegend]#~<br />Esta opción le permite determinar si el área de encabezamientos de la pestaña #pgv_lang[lightbox]#, que contiene vínculos para controlar diversos aspectos del módulo Lightbox, debe contener sólo iconos, sólo texto o ambos.<br /><br />La opción <b>#pgv_lang[lb_icon]#</b> probablemente no es muy útil, pues no verá ninguna indicación de la función de cada icono hasta que su puntero flote sobre el icono.<br />";
 $pgv_lang["lb_al_thumb_linksLegend"]	= "Apariencia del vínculo a las miniaturas en la pestaña Álbum";
