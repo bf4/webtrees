@@ -21,7 +21,7 @@
  *
  * @package PhpGedView
  * @subpackage Languages
- * @author Jaakko Sarell, Jani Miettinen and Matti Valve
+ * @author Jaakko Sarell, Jani Miettinen, Matti Valve, Marko Kohtala
  * @version $Id$
  */
 
@@ -29,9 +29,21 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
+$pgv_lang["exact"]			= "Tarkka"; //@@
+$pgv_lang["more_fields"]		= "Lisää uusia kenttiä"; //@@
+$pgv_lang["install_step_8"] 		= "Aloita"; //@@
+$pgv_lang["parent_family"]		= "Vanhempien perhe";
+$pgv_lang["step_parent_family"]	= "Puolivanhemman perhe";
+$pgv_lang["immediate_family"]	= "Oma perhe";
 
-$pgv_lang["interactive_tree"]		= "Interactiivinen puu";
-$pgv_lang["ellipsis"]				= "\xE2\x80\xA6";
+$pgv_lang["load_full_tree"]		= "Näytä tämä puu täyden sivun interaktiivisena puuna";
+$pgv_lang["hide_show_spouses"]	= "Näytä tai piilota useammat puolisot";
+
+$pgv_lang["interactive_tree"]		= "Interaktiivinen puu";
+$pgv_lang["example"]			= "Esimerkki:"; //@@
+$pgv_lang["tree"]			= "Puu";
+$pgv_lang["ellipsis"]			= "\xE2\x80\xA6";
+$pgv_lang["showUnknown"]		= "Näytä tuntematon sukupuoli"; //@@
 $pgv_lang["age_differences"]		= "Näytä ikäerot";
 $pgv_lang["date_of_entry"]		= "Alkuperäisen lähteen päiväys";
 $pgv_lang["multi_site_search"] 	= "Haku monesta palvelusta";
@@ -39,27 +51,153 @@ $pgv_lang["switch_lifespan"]		= "Näytä elinkaarikaavio";
 $pgv_lang["switch_timeline"]		= "Näytä aikajanakaavio";
 $pgv_lang["differences"]		= "Eroavuudet";
 $pgv_lang["charts_block"]		= "Kaavioalue";
-$pgv_lang["charts_block_descr"]	= "Kaavioalueen avulla voit sijoittaa kaavion tervetuloasivulle tai MyGedView-portaalisivulle. Voit konfiguroida alueen näyttämään esipovi-, jälkipolvi- tai tiimalasinäkymän. Voit myös valita kaavion lähtöhenkilön.";
-$pgv_lang["charts_click_box"]		= "Näpäytä mitä tahansa ruutua saadaksesi lisätietoa kyseisestä henkilöstä.";
+$pgv_lang["charts_block_descr"]	= "Kaavioalueen avulla voit sijoittaa kaavion tervetuloasivulle tai OmaGedView-portaalisivulle. Voit konfiguroida alueen näyttämään esipovi-, jälkipolvi- tai tiimalasinäkymän. Voit myös valita kaavion lähtöhenkilön.";
+$pgv_lang["charts_click_box"]		= "Klikkaa mitä tahansa ruutua saadaksesi lisätietoa kyseisestä henkilöstä.";
 $pgv_lang["chart_type"]		= "Kaaviotyyppi";
 $pgv_lang["changedate1"]		= "Muutospäivämäärien loppualue";
 $pgv_lang["changedate2"]		= "Muutospäivämäärien alkualue";
 $pgv_lang["search_place_word"]	= "Vain kokonaiset sanat";
+//@@ add ->
+$pgv_lang["invalid_search_input"] 	= "Anna vuosiluvun lisäksi etunimi, sukunimi tai paikka.";
+$pgv_lang["duplicate_username"] 	= "Tämä käyttäjätunnus on jo olemassa. Valitse toinen käyttäjätunnus.";
+$pgv_lang["cache_life"]		= "Välimuistitiedoston elinikä";
+$pgv_lang["genealogy"]		= "sukututkimus";
+$pgv_lang["activate"]			= "Aktivoi";
+$pgv_lang["deactivate"]		= "Deaktivoi";
+$pgv_lang["play"]			= "Käynnistä";
+$pgv_lang["stop"]			= "Pysäytä";
+$pgv_lang["random_media_start_slide"]	= "Aloitetaanko diaesitys sivun latatutuessa?";
+$pgv_lang["random_media_ajax_controls"]	= "Näytetäänkö AJAX-kontrollit?";
+$pgv_lang["description"]		= "Kuvaus";
+$pgv_lang["current_dir"]		= "Nykyinen kansio";
+$pgv_lang["SHOW_ID_NUMBERS"]	= "Näytä ID-tunnus nimen vieressä";
+$pgv_lang["SHOW_HIGHLIGHT_IMAGES"]	= "Näytä korostetut kuvat henkilöalueilla";
+$pgv_lang["view_img_details"]	= "Näytä kuvan tiedot";
+$pgv_lang["server_folder"]		= "Kansion nimi palvelimella";
+$pgv_lang["medialist_recursive"]	= "Luettele tiedostot alikansioissa";
+$pgv_lang["media_options"]		= "Media-asetukset";
+$pgv_lang["confirm_password"]	= "Salasana on toistettava.";
+$pgv_lang["enter_email"]		= "Sinun on täytettävä sähköpostiosoite.";
+$pgv_lang["name"]			= "Nimi";
+$pgv_lang["children"]			= "Lapset"; //@@
+$pgv_lang["child"]			= "Lapsi"; //@@
+$pgv_lang["family"] 			= "Perhe"; //@@
+$pgv_lang["source_menu"]		= "Vaihtoehtoja lähteille";
+$pgv_lang["repo_menu"]		= "Vaihtoehtoja tietovarastolle";
+$pgv_lang["search_DM"]		= "Daitch-Mokotoff";
+$pgv_lang["other_searches"]		= "Muita hakuja"; 
+$pgv_lang["welcome_page"]		= "Tervetulosivu";
+$pgv_lang["loading"]			= "Ladataan...";
+$pgv_lang["clear_chart"]		= "Tyhjennä kaavio";
+$pgv_lang["file_information"]		= "Tiedostoinformaatio";
+$pgv_lang["choose_file_type"]	= "Valitse tiedostomuoto";
+$pgv_lang["add_individual_by_id"]	= "Lisää henkilö ID-tunnuksen avulla";
+$pgv_lang["advanced_options"]	= "Lisäasetukset";
+$pgv_lang["zip_files"]			= "Zip-tiedosto(t)";
+$pgv_lang["include_media"]		= "Sisällytä media (automaattisesti zip-tiedosto)";
+$pgv_lang["roman_surn"]		= "Romanisoitu sukunimi";
+$pgv_lang["roman_givn"]		= "Romanisoidut etunimet";
+$pgv_lang["include"]			= "Sisällytä:";
+$pgv_lang["page_x_of_y"]		= "Sivu #GLOBALS[currentPage]# / #GLOBALS[lastPage]#";
+$pgv_lang["page_size"]		= "Sivun koko";
+
+$pgv_lang["record_not_found"]	= "Pyydettyä GEDCOM-tietuetta ei löytynyt. Se voi johtua joko linkistä virheellisen henkilöön tai vikaantuneesta GEDCOM-tiedostosta.";
+$pgv_lang["result_page"]		= "Tulossivu";
+$pgv_lang["edit_media"]		= "Muokkaa mediaa";
+$pgv_lang["wiki_main_page"]		= "Wiki pääsivu";
+$pgv_lang["wiki_users_guide"]	= "Wiki käyttäjän opas";
+$pgv_lang["wiki_admin_guide"]	= "Wiki ylläpitäjän opas";
+$pgv_lang["no_search_for"]		= "Valitse haettava vaihtoehto.";
+$pgv_lang["no_search_site"]		= "Valitse vähintään yksi etäsivusto.";
+$pgv_lang["search_sites"] 		= "Sivustot, joilta haku suoritetaan";
+$pgv_lang["site_list"]			= "Sivusto: ";
+$pgv_lang["site_had"]			= "sisälsi seuraavan";
+
+$pgv_lang["label_search_engine_detected"]  = "Havaittu hakurobotti";
+$pgv_lang["ex-spouse"] 		= "Entinen puoliso";
+$pgv_lang["ex-wife"] 			= "Entinen vaimo";
+$pgv_lang["ex-husband"] 		= "Entinen mies";
+$pgv_lang["noemail"] 			= "Osoitteet ilman sähköpostiosoitetta";
+$pgv_lang["onlyemail"] 		= "Vain osoitteet, joilla sähköpostiosoite";
+$pgv_lang["maxviews_exceeded"]	= "Sivun hakumäärä #GLOBALS[MAX_VIEWS]# / #GLOBALS[MAX_VIEW_TIME]# sekunttia ylittynyt.";
+$pgv_lang["broadcast_not_logged_6mo"] = "Lähetä viesti käyttäjille, jotka eivät ole kirjautuneet 6 kuukauteen.";
+$pgv_lang["broadcast_never_logged_in"]  = "Lähetä viesti käyttäjille, jotka eivät koskaan ole kirjautuneet.";
+$pgv_lang["stats_to_show"]		= "Valitse tässä lohkossa näytettävät tilastotiedot";
+$pgv_lang["stat_avg_age_at_death"]	= "Keskimääräinen ikä kuollessa";
+$pgv_lang["stat_longest_life"]		= "Vanhimman henkilön ikä";
+$pgv_lang["stat_most_children"]	= "Suurin lapsiluku perheessä";
+$pgv_lang["stat_average_children"]	= "Keskimääräinen lapsiluku perheessä";
+$pgv_lang["stat_events"]		= "Tapahtumia yhteensä";
+$pgv_lang["stat_media"]		= "Mediakohteet";
+$pgv_lang["stat_surnames"]		= "Sukunimiä yhteensä";
+$pgv_lang["stat_users"]		= "Käyttäjiä yhteensä";
+$pgv_lang["no_family_facts"]		= "Ei tietoja tästä perheestä";
+$pgv_lang["stat_males"]		= "Miespuolisten henkilöiden lukumäärä";
+$pgv_lang["stat_females"]		= "Naispuolisten henkilöiden lukumäärä";
+
+$pgv_lang["sunday_1st"]		= "su";
+$pgv_lang["monday_1st"]		= "ma";
+$pgv_lang["tuesday_1st"]		= "ti";
+$pgv_lang["wednesday_1st"]		= "ke";
+$pgv_lang["thursday_1st"]		= "to";
+$pgv_lang["friday_1st"]		= "pe";
+$pgv_lang["saturday_1st"]		= "la";
+
+$pgv_lang["jan_1st"]			= "tammi";
+$pgv_lang["feb_1st"]			= "helmi";
+$pgv_lang["mar_1st"]			= "maalis";
+$pgv_lang["apr_1st"]			= "huhti";
+$pgv_lang["may_1st"]			= "touko";
+$pgv_lang["jun_1st"]			= "kesä";
+$pgv_lang["jul_1st"]			= "heinä";
+$pgv_lang["aug_1st"]			= "elo";
+$pgv_lang["sep_1st"]			= "syys";
+$pgv_lang["oct_1st"]			= "loka";
+$pgv_lang["nov_1st"]			= "marras";
+$pgv_lang["dec_1st"]			= "joulu";
+
+$pgv_lang["edit_source"]		= "Muokkaa lähdettä";
+$pgv_lang["familybook_chart"]		= "Sukukirjakaavio";
+$pgv_lang["family_of"]			= "Perhe:  ";
+$pgv_lang["descent_steps"]		= "Jälkipolvien lukumäärä";
+$pgv_lang["cancel"]			= "Peruuta";
+
+$pgv_lang["cookie_help"]		= "Tämä sivusto käyttää evästeitä seuraamaan sisääkirjautumistilaasi.<br /><br />Et näytä sallineen evästeitä selaimessasi. Sinun on sallittava evästeiden käyttö ennen kuin voit kirjautua. Katso selaimesi aputoiminnoista  (helpistä)miten evästeet sallitaan.";
+//new stuff
+//Individual
+$pgv_lang["indi_is_remote"]		= "Tämän henkilön tiedot on yhdistetty toisesta palvelusta.";
+$pgv_lang["link_remote"]            	= "Yhdistä ulkoinen henkilö";
+$pgv_lang["title_search_link"]      	= "Lisää paikallinen yhteys";
+$pgv_lang["label_site_url2"]        	= "Verkko-osoite (URL)";
+//new stuff
+
+$pgv_lang["delete_family_confirm"]	= "Perheen poistaminen poistaa kaikki henkilöiden väliset yhteydet mutta jättää henkilöt paikalleen. Haluatko todella poistaa tämän perheen?";
+$pgv_lang["delete_family"]		= "Poista perhe";
+$pgv_lang["add_favorite"]		= "Lisää uusi suosikki";
+$pgv_lang["url"]			= "URL";
+$pgv_lang["add_fav_enter_note"]	= "Kirjoita lisätieto tästä suosikista";
+$pgv_lang["add_fav_or_enter_url"]	= "TAI<br /> lisää URL-osoite ja otsikko";
+$pgv_lang["add_fav_enter_id"]	= "Lisää henkilö, perhe tai lähde-ID";
+$pgv_lang["next_email_sent"]		= "Seuraava sähköpostimuistutus lähetetään ";
+$pgv_lang["last_email_sent"]		= "Viimeisin sähköpostimuistutus lähetettiin ";
+$pgv_lang["remove_child"]		= "Poista tämä henkilö perheestä";
+$pgv_lang["link_new_husb"]		= "Liitä mies puolisoksi käyttäen tiedostossa olevaa henkilöä.";
+$pgv_lang["link_new_wife"]		= "Liitä vaimo käyttäen tiedostossa olevaa henkilöä.";
 $pgv_lang["address_labels"]		= "Osoitetarrat";
 $pgv_lang["filter_address"]		= "Näytä osoitteet, jotka sisältävät:";
 $pgv_lang["address_list"]		= "Osoiteluettelo";
 $pgv_lang["autocomplete"]		= "Automaattinen täydentäminen";
-$pgv_lang["index_edit_advice"]	= "Korosta aluenimeä ja näpäytä sitten nuolikuvaketta siirtääksesi aluetta haluttuun suuntaan.";
+$pgv_lang["index_edit_advice"]	= "Korosta aluenimeä ja klikkaa sitten nuolikuvaketta siirtääksesi aluetta haluttuun suuntaan.";
 $pgv_lang["changelog"]		= "Version #VERSION# muutoksia";
 $pgv_lang["html_block_descr"]	= "Tämä on yksinkertainen HTML-alue jonka voit sijoittaa sivullesi lisätäksesi minkä tahansa viestin.";
-$pgv_lang["html_block_sample_part1"]	= "<p class=\"blockhc\"><b>Kirjoita otsikkosi tähän </b></p><br /><p>Näpäytä Konfiguroi-painiketta.";
-$pgv_lang["html_block_sample_part2"]	= "muuttaaksesi sen, mikä on tulostettu tähän.</p>";
-$pgv_lang["html_block_name"]		= "HTML-alue";
+$pgv_lang["html_block_sample_part1"] = "<p class=\"blockhc\"><b>Kirjoita otsikkosi tähän </b></p><br /><p>Klikkaa Konfiguroi-painiketta.";
+$pgv_lang["html_block_sample_part2"] = "muuttaaksesi sen, mikä on tulostettu tähän.</p>";
+$pgv_lang["html_block_name"]	= "HTML-alue";
 $pgv_lang["htmlplus_block_name"]	= "Edistynyt HTML";
 $pgv_lang["htmlplus_block_descr"]	= "Tämä on HTML-alue, jonka voit sijoittaa sivullesi lisätäksesi minkä tahansa haluamasi viestin. Voit lisätä viittauksia GEDCOM-tiedostosi tietoihin HTML-tekstiin.";
-$pgv_lang["htmlplus_block_templates"] 	= "Mallipohjat";
+$pgv_lang["htmlplus_block_templates"] = "Mallipohjat";
 $pgv_lang["htmlplus_block_content"] 	= "Sisällys";
-$pgv_lang["htmlplus_block_narrative"] 	= "Kertova tyyli (vain englanniksi)";
+$pgv_lang["htmlplus_block_narrative"] = "Kertova tyyli (vain englanniksi)";
 $pgv_lang["htmlplus_block_custom"]	= "Omat asetukset";
 $pgv_lang["htmlplus_block_keyword"]	= "Esimerkkejä avainsanoista (vain englanniksi)";
 $pgv_lang["htmlplus_block_taglist"]	= "Merkitsinluettelo";
@@ -81,76 +219,57 @@ $pgv_lang["after"]			= "jälkeen";
 $pgv_lang["config_block"]		= "Konfiguroi alue";
 $pgv_lang["enter_comments"]		= "Lisää tiedot suhteestasi tietoon kommenttikentässä.";
 $pgv_lang["comments"]		= "Kommentteja";
-$pgv_lang["ahnentafel_report"]	= "Sukutauluraportti";
-$pgv_lang["ahnentafel_header"]	= "Sukutauluraportti henkilölle ";
-$pgv_lang["ahnentafel_generation"]	= "Sukupolvi ";
-$pgv_lang["ahnentafel_pronoun_m"]	= "Hän ";
-$pgv_lang["ahnentafel_pronoun_f"]	= "Hän ";
-$pgv_lang["ahnentafel_born_m"]	= "syntyi";
-$pgv_lang["ahnentafel_born_f"]	= "syntyi";
-$pgv_lang["ahnentafel_christened_m"] 	= "kastettiin";
-$pgv_lang["ahnentafel_christened_f"] = "kastettiin";
-$pgv_lang["ahnentafel_married_m"]	= "avioitui";
-$pgv_lang["ahnentafel_married_f"]	= "avioitui";
-$pgv_lang["ahnentafel_died_m"]	= "kuoli";
-$pgv_lang["ahnentafel_died_f"]	= "kuoli";
-$pgv_lang["ahnentafel_buried_m"]	= "haudattiin";
-$pgv_lang["ahnentafel_buried_f"]	= "haudattiin";
-$pgv_lang["ahnentafel_place"]	= "&nbsp;";
-$pgv_lang["ahnentafel_no_details"]	= "mutta yksityiskohdat puuttuvat";
-$pgv_lang["changes_report"]		= "Muutosraportti";
-$pgv_lang["changes_pending_tot"]	= "Keskeneräiset muutokset yhteensä:";
-$pgv_lang["changes_accepted_tot"]	= "Hyväksytyt muutokset yhteensä:";
 $pgv_lang["child-family"]		= "Vanhemmat ja sisarukset";
 $pgv_lang["spouse-family"]		= "Puoliso ja lapset";
-$pgv_lang["direct-ancestors"]		= "Esipolvet suoraan ylenevässä polvessa";
+$pgv_lang["direct-ancestors"]		= "Esivanhemmat suoraan ylenevässä polvessa";
 $pgv_lang["ancestors"]		= "Esivahemmat ja heidän perheensä suoraan ylenevässä polvessa";
 $pgv_lang["descendants"]		= "Jälkipolvet";
 $pgv_lang["choose_relatives"]	= "Valitse sukulaiset";
 $pgv_lang["relatives_report"]		= "Raportti sukulaisista";
 $pgv_lang["total_living"]		= "Yhteensä elossa";
-$pgv_lang["total_dead"]		= "Yhteensä kuolleet";
+$pgv_lang["total_dead"]		= "Yhteensä kuolleita";
 $pgv_lang["total_not_born"]		= "Yhteensä vielä syntymättömät";
 $pgv_lang["remove_custom_tags"]	= "Poista räätälöidyt PGV-merkitsimet? (Esim. _PGVU, _THUM)";
-$pgv_lang["cookie_login_help"]	= "Tämä sivusto muistaa sinut aiemmasta sisäänkirjautumisesta. Pääset käsiksi yksityistietoihin ja muihin käyttäjäöminaisuuksiin, mutta jos haluat editoida tai ylläpitää sivustoa, sinun on kirjauduttava tietoturvan takia.";
+$pgv_lang["cookie_login_help"]	= "Tämä sivusto muistaa sinut aiemmasta sisäänkirjautumisesta. Pääset käsiksi yksityistietoihin ja muihin käyttäjäöminaisuuksiin, mutta jos haluat muuttaa tai ylläpitää sivustoa, sinun on kirjauduttava tietoturvan takia.";
 $pgv_lang["remember_me"]		= "Muista minut tällä tietokoneella?";
 $pgv_lang["fams_with_surname"]	= "Perheet, joilla on sukunimi #surname#";
-$pgv_lang["support_contact"]		= "Tekninen apu";
-$pgv_lang["genealogy_contact"]	= "Yhteys sukututkimukseen";
+$pgv_lang["support_contact"]		= "Teknisen avun yhteyshenkilö";
+$pgv_lang["genealogy_contact"]	= "Sukututkimuksen yhteyshenkilö";
 $pgv_lang["common_upload_errors"]	= "Tämä virhe tarkoittaa luultavasti, että yritit ladata suurempaa tiedotoa kuin mitä palvelin sallii. Oletusraja on 2 MB. Ota yhteyttä ylläpitäjään saadaksesi suuremman raja-arvon php.ini-tiedostossa tai yritä ladata tiedosto käyttämällä FTP-tiedostonsiirtoa. Käytä sivua <a href=\"uploadgedcom.php?action=add_form\">Lisää GEDCOM</a> ladataksesi palvelimelle GEDCOM-tiedoston käyttämällä FTP:tä.";
 $pgv_lang["total_memory_usage"]	= "Muistia käytössä:";
 $pgv_lang["mothers_family_with"]	= "Äidin perhe mukaanlukien ";
 $pgv_lang["fathers_family_with"]	= "Isän perhe mukaanlukien ";
-$pgv_lang["halfsibling"]		= "Sisar-/velipuoli";
+$pgv_lang["family_with"]		= "Oma perhe /";
+$pgv_lang["halfsibling"]		= "Puolisisarus";
 $pgv_lang["halfbrother"]		= "Velipuoli";
 $pgv_lang["halfsister"]			= "Sisarpuoli";
 $pgv_lang["family_timeline"]		= "Näytä perhe aikajanalla";
 $pgv_lang["children_timeline"]		= "Näytä lapset aikajanalla";
-$pgv_lang["other"]			= "Muuta";
+$pgv_lang["other"]			= "Muut";
 $pgv_lang["sort_by_marriage"]	= "Lajittele avioitumispäivän mukaan";
 $pgv_lang["reorder_families"]		= "Järjestä perheet";
 $pgv_lang["indis_with_surname"]	= "henkilöt, joilla on sukunimi  #surname#";
 $pgv_lang["first_letter_fname"]	= "Valitse kirjain näyttääksesi henkilöt, joiden etunimi alkaa kyseisellä kirjaimella.";
 $pgv_lang["total_names"]		= "Yhteensä nimiä";
-$pgv_lang["top10_pageviews_nohits"]= "Ei osumia.";
+$pgv_lang["top10_pageviews_nohits"] = "Ei osumia.";
 $pgv_lang["top10_pageviews_msg"]	= "Laskurit on aktivoitava GEDCOM-asetuksissa jotta tämä alue toimisi.";
-$pgv_lang["review_changes_descr"]	= "Alue \"hyväksymättömät muutokset\" näyttää editoivalle käyttäjälle luettelon niistä tietueista, jotka on muutettu on-line tilassa ja jotka vielä täytyy tarkistaa ja hyväksyä.<br /><br />Mikäli tämä alue on aktivoitu, ne käyttäjät joilla on hyväksymisoikeudet saavat kerran päivässä sähköpostiviestin, jossa pyydetään tarkistamaan muutokset.";
-$pgv_lang["review_changes_block"]	= "Ei hyväksytyt muutokset";
+$pgv_lang["review_changes_descr"]	= "Alue \"vireillä olevat muutokset\" näyttää muokkaamiseen oikeutetuille käyttäjälle luettelon niistä tietueista, joita on muutettu on-line tilassa ja jotka vielä täytyy tarkistaa ja hyväksyä. Nämä muutokset odottavat hyväksyntää tai hylkäystä.<br /><br />Jos tämä alue on käytössä, muutosten hyväksymiseen oikeutettuja käyttäjiä pyydetään kerran päivässä sähköpostiviestillä tarkistamaan muutokset.";
+$pgv_lang["review_changes_block"]	= "Vireillä olevat muutokset";
 $pgv_lang["review_changes_email"]	= "Lähetä muistutusviestit?";
-$pgv_lang["review_changes_email_freq"]= "Muistutusviestien frekvenssi (päiviä)";
-$pgv_lang["review_changes_subject"]= "PhpGedView - Tarkista muutokset";
-$pgv_lang["review_changes_body"]	= "PhpGedView sivustoon  on tehty on-line muutoksia. Nämä muutokset on tarkastettava ja hyväksyttävä ennen niiden näkymistä kaikille käyttäjille. Näpäytä alla olevaa linkkiä mennäksesi PhpGedView sivustolle ja kirjaudu järjestelmään tarkastaaksesi muutokset.";
-$pgv_lang["show_pending"]		= "Näytä keskeneräiset muutokset";
+$pgv_lang["review_changes_email_freq"] = "Muistutusviestien väli (päiviä)";
+$pgv_lang["review_changes_subject"] = "PhpGedView - Tarkista muutokset";
+$pgv_lang["review_changes_body"]	= "Sukutietokantaan on tehty on-line muutoksia. Nämä muutokset on tarkastettava ja hyväksyttävä ennen niiden näkymistä kaikille käyttäjille. Käytä alla olevaa linkkiä siirtyäksesi PhpGedView sivustolle ja kirjaudu järjestelmään tarkastaaksesi muutokset.";
+$pgv_lang["show_pending"]		= "Näytä vireillä olevat muutokset";
 $pgv_lang["show_spouses"]		= "Näytä puolisot";
 $pgv_lang["quick_update_title"] 	= "Pikapäivitys";
-$pgv_lang["quick_update_instructions"] 	= "Tällä sivulla voit nopeasti päivittää henkilön tiedot. Sinun tarvitsee vain lisätä uudet tai muuttaa tällä sivustolla jo olevat tiedot. Kun muutokset on lähetetty ylläpitäjä tarkistaa ne ennenkuin ne näkyvät verkkosivuilla.";
+$pgv_lang["quick_update_instructions"] = "Tällä sivulla voit nopeasti päivittää henkilön tiedot. Sinun tarvitsee vain lisätä uudet tai muuttaa tällä sivustolla jo olevat tiedot. Kun muutokset on lähetetty ylläpitäjä tarkistaa ne ennenkuin ne näkyvät verkkosivuilla.";
 $pgv_lang["update_name"] 		= "Päivitä nimi";
 $pgv_lang["update_fact"] 		= "Päivitä tieto";
 $pgv_lang["update_fact_restricted"] 	= "Tämän tiedon päivittämistä on rajoitettu";
 $pgv_lang["update_photo"] 		= "Päivitä valokuva";
 $pgv_lang["select_fact"] 		= "Valitse tieto";
 $pgv_lang["update_address"] 		= "Päivitä osoite";
-$pgv_lang["top10_pageviews_descr"]	= "Tällä alueella näytetään 10 useimmin katsottua tietuetta. Tämä vaatii osumalaskurin aktivoimisen GEDCOM asetuksissa.";
+$pgv_lang["top10_pageviews_descr"] = "Tällä alueella näytetään 10 useimmin katsottua tietuetta. Tämä vaatii osumalaskurin aktivoimisen GEDCOM asetuksissa.";
 $pgv_lang["top10_pageviews"]	= "Useimmin katsotut asiat";
 $pgv_lang["top10_pageviews_block"]	= "Suosikkikohteiden alue";
 $pgv_lang["stepdad"]			= "Isäpuoli";
@@ -160,9 +279,10 @@ $pgv_lang["stepbrother"]		= "Velipuoli";
 $pgv_lang["fams_charts"]		= "Perheen asetukset";
 $pgv_lang["indis_charts"]		= "Henkilökaaviot";
 $pgv_lang["none"]			= "Ei yhtään";
-$pgv_lang["locked"]			= "Älä muuta";
+$pgv_lang["locked"]			= "Älä muokkaa";
 $pgv_lang["privacy"]			= "yksityisyys";
 $pgv_lang["number_sign"]		= "#";
+
 //-- GENERAL HELP MESSAGES
 $pgv_lang["qm"]			= "?";
 $pgv_lang["qm_ah"]			= "?";
@@ -178,8 +298,9 @@ $pgv_lang["resolution"] 		= "Näytön tarkkuus";
 $pgv_lang["menu"]			= "Valikko";
 $pgv_lang["header"]			= "Otsikko";
 $pgv_lang["imageview"]		= "Kuvakatselin";
-$pgv_lang["login_head"] 		= "PhpGedView Käyttäjän sisäänkirjautuminen";
+
 //-- CONFIG FILE MESSAGES
+$pgv_lang["login_head"] 		= "PhpGedView Käyttäjän sisäänkirjautuminen";
 $pgv_lang["for_support"]		= "Teknisissä asioissa ota yhteys:";
 $pgv_lang["for_contact"]		= "Sukuasioissa ota yhteys:";
 $pgv_lang["for_all_contact"]		= "Teknisissä tai sukuasioissa ota yhteys:";
@@ -198,9 +319,10 @@ $pgv_lang["admin"]			= "Ylläpito";
 $pgv_lang["logged_in_as"]		= "Kirjautunut nimellä";
 $pgv_lang["my_pedigree"]		= "Esivanhempani";
 $pgv_lang["my_indi"]			= "Tietoni";
-$pgv_lang["yes"]			=  "Kyllä";
+$pgv_lang["yes"]			= "Kyllä";
 $pgv_lang["no"]			= "Ei";
 $pgv_lang["change_theme"]		= "Vaihda teema";
+
 //-- INDEX (PEDIGREE_TREE) FILE MESSAGES
 $pgv_lang["index_header"]		= "Esipolvet";
 $pgv_lang["gen_ped_chart"]		= "#PEDIGREE_GENERATIONS# sukupolven esipolvitaulu";
@@ -218,15 +340,12 @@ $pgv_lang["landscape"]		= "Vaakasuoraan";
 $pgv_lang["start_at_parents"]		= "Aloita vanhemmista";
 $pgv_lang["charts"]			= "Kaaviot";
 $pgv_lang["lists"]			= "Luettelot";
-$pgv_lang["welcome_page"]		= "Tervetulosivu";
-//$pgv_lang["max_generation"]	= "Esipolvien maksimimäärä taulussa on #PEDIGREE_GENERATIONS#.";
-//$pgv_lang["min_generation"]		= "Esipolvien minimimäärä taulussa on 3.";
 $pgv_lang["box_width"] 		= "Leveys";
+
 //-- FUNCTIONS FILE MESSAGES
 $pgv_lang["unable_to_find_family"]	= "Ei löydy perhettä, jonka ID on";
 $pgv_lang["unable_to_find_record"]	= "Ei löydy tietuetta, jonka ID on";
 $pgv_lang["title"]			= "Nimike:";
-$pgv_lang["media_options"]		= "Media-asetukset";
 $pgv_lang["living"]			= "Elossa";
 $pgv_lang["private"]			= "Yksityinen";
 $pgv_lang["birth"]			= "Syntynyt:";
@@ -247,12 +366,13 @@ $pgv_lang["print"]			= "Tulosta";
 $pgv_lang["total_queries"]		= "Tiedostokysymykset: ";
 $pgv_lang["total_privacy_checks"]	= "Tietosuojavarmistus:";
 $pgv_lang["back"]			= "Takaisin";
+
 //-- INDIVIDUAL FILE MESSAGES
 $pgv_lang["aka"]			= "Lisänimi";
 $pgv_lang["male"]			= "Mies";
 $pgv_lang["female"]			= "Nainen";
-$pgv_lang["temple"]			= "Mormoonitemppeli";
-$pgv_lang["temple_code"]		= "Mormoonitemppeli koodi:";
+$pgv_lang["temple"]			= "Mormonitemppeli";
+$pgv_lang["temple_code"]		= "Mormonitemppeli koodi:";
 $pgv_lang["status"]			= "Tila";
 $pgv_lang["source"]			= "Lähde";
 $pgv_lang["text"]			= "Teksti:";
@@ -269,8 +389,8 @@ $pgv_lang["NNrussian"] 		= "(неопределено)";
 $pgv_lang["PNrussian"] 		= "(неопределено)";
 $pgv_lang["NNchinese"] 		= "(未知)";
 $pgv_lang["PNchinese"] 		= "(未知)";
-$pgv_lang["NNvietnamese"] = "(vô danh)";
-$pgv_lang["PNvietnamese"] = "(không biết tuổi)";
+$pgv_lang["NNvietnamese"] 		= "(vô danh)";
+$pgv_lang["PNvietnamese"] 		= "(không biết tuổi)";
 $pgv_lang["NNthai"] 			= "(Tuntematon)";
 $pgv_lang["PNthai"] 			= "(Tuntematon)";
 $pgv_lang["NNother"] 			= "(Tuntematon)";
@@ -280,14 +400,12 @@ $pgv_lang["unrecognized_code_msg"]	= "Tämä on virhe jonka haluaisimme korjata.
 $pgv_lang["indi_info"]		= "Henkilökohtainen tieto";
 $pgv_lang["pedigree_chart"]	= "Esipolvitaulu";
 $pgv_lang["individual"]		= "Henkilö";
-$pgv_lang["family_with"]	= "Oma perhe /";
 $pgv_lang["as_spouse"]	= "Oma perhe";
 $pgv_lang["as_child"]		= "Perhe vanhempineen";
 $pgv_lang["view_gedcom"]	= "Näytä GEDCOM-tietue";
 $pgv_lang["add_to_cart"]	= "Lisää leikekoriin";
 $pgv_lang["privacy_error"]	= "Tämän henkilön tiedot on suojattu.<br />";
-$pgv_lang["more_information"]= "Lisätietoja varten ota yhteys";
-$pgv_lang["name"]		= "Nimi";
+$pgv_lang["more_information"]= "Lisätietoja varten on yhteyshenkilö";
 $pgv_lang["given_name"]	= "Etunimi:";
 $pgv_lang["surname"]		= "Sukunimi:";
 $pgv_lang["suffix"]		= "Etuliite:";
@@ -317,48 +435,50 @@ $pgv_lang["disproved"]	= "Ei hyväksytty";
 $pgv_lang["infant"]		= "Sylilapsi";
 $pgv_lang["stillborn"]		= "Kuolleena syntynyt";
 $pgv_lang["deceased"]	= "Kuollut";
-$pgv_lang["link_as_wife"]	= "Linkitä tämä henkilö aviovaimoksi olemassa olevaan perheeseen.";
+$pgv_lang["link_as_wife"]	= "Liitä tämä henkilö vaimoksi olemassa olevaan perheeseen.";
 $pgv_lang["no_tab1"]		= "Tällä henkilöllä ei ole tietoja.";
 $pgv_lang["no_tab2"]		= "Tällä henkilöllä ei ole lisätietoja.";
 $pgv_lang["no_tab3"]		= "Tällä henkilöllä ei ole lähteitä.";
 $pgv_lang["no_tab4"]		= "Tällä henkilöllä ei ole multimediakohteita.";
 $pgv_lang["no_tab5"]		= "Tällä henkilöllä ei ole lähisukulaisia.";
 $pgv_lang["no_tab6"]		= "Tälle henkilölle ei ole tutkimuslokia.";
-$pgv_lang["show_fact_notes"]	= "Näytä kaikki lisätiedot";
-$pgv_lang["show_fact_sources"]	= "Näytä kaikki lähteet";
+$pgv_lang["show_fact_notes"] = "Näytä kaikki lisätiedot";
+$pgv_lang["show_fact_sources"] = "Näytä kaikki lähteet";
+
 //-- FAMILY FILE MESSAGES
 $pgv_lang["family_info"]		= "Perhetieto";
 $pgv_lang["family_group_info"]	= "Perheen ryhmätieto";
 $pgv_lang["husband"]			= "Mies";
 $pgv_lang["wife"]			= "Vaimo";
 $pgv_lang["marriage"]			= "Avioliitto:";
-$pgv_lang["lds_sealing"]		= "Mormooni sinetöinti:";
+$pgv_lang["lds_sealing"]		= "Mormoni sinetöinti:";
 $pgv_lang["marriage_license"]	= "Vihkitodistus:";
 $pgv_lang["children"]			= "Lapset";
 $pgv_lang["no_children"]		= "Ei lapsia rekisterissä";
 $pgv_lang["childless_family"]		= "Tämä perhe jäi lapsettomaksi";
 $pgv_lang["parents_timeline"]		= "Näytä pariskunta aikajanalla";
+
 //-- CLIPPINGS FILE MESSAGES
 $pgv_lang["clip_cart"]			= "Leikekori";
-$pgv_lang["which_links"]		= "Mitä muita linkkejä tästä perheestä haluat lisätä?";
+$pgv_lang["which_links"]		= "Mitä muita yhteyksiä tästä perheestä haluat lisätä?";
 $pgv_lang["just_family"]		= "Lisää vain tämän perheen tietue.";
 $pgv_lang["parents_and_family"]	= "Lisää vanhemmat tämän perheen tietueeseen.";
 $pgv_lang["parents_and_child"]	= "Lisää tähän tietueeseen vanhempien ja lasten tietueet.";
 $pgv_lang["parents_desc"]		= "Lisää tähän tietueeseen vanhempien ja kaikkien jälkeläisten tietueet.";
 $pgv_lang["continue"]			= "Jatka lisäämistä";
-$pgv_lang["which_p_links"]		= "Mitä muita linkkejä tästä henkilöstä haluat lisätä?";
+$pgv_lang["which_p_links"]		= "Mitä muita yhteyksiä tästä henkilöstä haluat lisätä?";
 $pgv_lang["just_person"]		= "Lisää vain tämä henkilö.";
 $pgv_lang["person_parents_sibs"]	= "Lisää tämä henkilö vanhempineen ja sisaruksineen.";
 $pgv_lang["person_ancestors"]	= "Lisää tämä henkilö suorine esivanhempineen.";
 $pgv_lang["person_ancestor_fams"]	= "Lisää tämä henkilö suorine esivanhempineen sekä näiden perheet.";
 $pgv_lang["person_spouse"]		= "Lisää tämä henkilö puolisoineen ja lapsineen.";
 $pgv_lang["person_desc"]		= "Lisää tämä henkilö puolisoineen sekä kaikkien heidän jälkeläistensä tietueet.";
-$pgv_lang["which_s_links"]		= "Mitkä tähän lähteeseen linkitetyt tietueet tulisi lisätä?";
+$pgv_lang["which_s_links"]		= "Mitkä tähän lähteeseen liitetyt tietueet tulisi lisätä?";
 $pgv_lang["just_source"]		= "Lisää vain tämä lähde.";
-$pgv_lang["linked_source"]		= "Lisää tämä lähde ja siihen linkitetyt perheet/henkilöt.";
+$pgv_lang["linked_source"]		= "Lisää tämä lähde ja siihen liitetyt perheet/henkilöt.";
 $pgv_lang["person_private"]		= "Tämän henkilön tiedot ovat yksityisiä.  Henkilön tietoja ei oteta mukaan.";
 $pgv_lang["family_private"]		= "Tämän perheen tiedot ovat yksityisiä. Perheen tietoja ei oteta mukaan.";
-$pgv_lang["download"]		= "Näpäytä hiiren oikealla napilla (tai control + näpäys Mac-koneessa) alla olevaa linkkiä ja valitse &quot;Tallenna kohde nimellä&quot; ladataksesi tiedostot koneellesi.";
+$pgv_lang["download"]		= "Klikkaa hiiren oikealla napilla (tai control + klikkaus Mac-koneessa) alla olevaa linkkiä ja valitse &quot;Tallenna kohde nimellä&quot; ladataksesi tiedostot koneellesi.";
 $pgv_lang["cart_is_empty"]		= "Leikekorisi on tyhjä.";
 $pgv_lang["id"]				= "ID";
 $pgv_lang["name_description"]	= "Nimi / Kuvaus";
@@ -367,8 +487,9 @@ $pgv_lang["empty_cart"]		= "Tyhjennä leikekori";
 $pgv_lang["download_now"]		= "Lataa nyt omalle koneelle";
 $pgv_lang["download_file"]		= "Lataa tiedosto #GLOBALS[whichFile]#";
 $pgv_lang["indi_downloaded_from"]	= "Henkilö on ladattu omalle koneelle tiedostosta:";
-$pgv_lang["family_downloaded_from"]	= "Perhe on ladattu omalle koneelle tiedostosta:";
-$pgv_lang["source_downloaded_from"]	= "Lähde on ladattu omalle koneelle tiedostosta:";
+$pgv_lang["family_downloaded_from"] = "Perhe on ladattu omalle koneelle tiedostosta:";
+$pgv_lang["source_downloaded_from"] = "Lähde on ladattu omalle koneelle tiedostosta:";
+
 //-- PLACELIST FILE MESSAGES
 $pgv_lang["connections"]		= "Paikkalinkki löytynyt";
 $pgv_lang["top_level"]			= "Ylin taso";
@@ -383,6 +504,7 @@ $pgv_lang["show_place_hierarchy"]	= "Näytä paikat hierarkiana";
 $pgv_lang["show_place_list"]		= "Näytä kaikki paikat listassa";
 $pgv_lang["total_unic_places"]	= "Paikkoja yhteensä";
 $pgv_lang["external_objects"]		= "Ulkoiset kohteet";
+
 //-- MEDIALIST FILE MESSAGES
 $pgv_lang["multi_title"]			= "Multimedialuettelo";
 $pgv_lang["media_found"]		= "Mediakohteita löytynyt";
@@ -396,9 +518,17 @@ $pgv_lang["next_image"]		= "Seuraava";
 $pgv_lang["file_not_found"]		= "Tiedostoa ei löydy.";
 $pgv_lang["medialist_show"]     	= "Näytä";
 $pgv_lang["per_page"]          		= "mediakohdetta sivulla";
-$pgv_lang["current_dir"]		= "Nykyinen hakemisto";
-$pgv_lang["SHOW_ID_NUMBERS"]	= "Näytä ID-tunnus nimen vieressä";
-$pgv_lang["SHOW_HIGHLIGHT_IMAGES"]	= "Näytä korostetut kuvat henkilöalueilla";
+$pgv_lang["media_format"]		= "Mediaformaatti";
+$pgv_lang["image_size"]		= "Kuvan mitat";
+$pgv_lang["media_id"]			= "Media ID";
+$pgv_lang["invalid_id"]			= "Tätä ID-tunnusta ei ole tässä GEDCOM-tiedostossa.";
+$pgv_lang["record_updated"]		= "Tietue #pid# päivitetty.";
+$pgv_lang["record_not_updated"]	= "Tietuette #pid# ei voitu päivittää.";
+$pgv_lang["record_removed"]		= "Tietue #xref# poistettu GEDCOM-tiedostosta.";
+$pgv_lang["record_not_removed"]	= "Tietuetta #xref# ei voitu poistaa GEDCOM-tiedostotsta.";
+$pgv_lang["record_added"]		= "Tietueen #xref# lisäys GEDCOM-tiedostoon onnistui.";
+$pgv_lang["record_not_added"]	= "Tietuetta #xref# ei voitu lisätä GEDCOM-tiedostoon.";
+
 //-- SEARCH FILE MESSAGES
 $pgv_lang["search_gedcom"]		= "Hae GEDCOM-tiedostosta";
 $pgv_lang["enter_terms"]		= "Anna hakuehdot:";
@@ -433,28 +563,32 @@ $pgv_lang["search_asso_text"]	= "Näytä sukulaishenkilöt- ja perheet.";
 $pgv_lang["results_per_page"]	= "Tuloksia sivulla";
 $pgv_lang["search_record"]		= "Koko tietue";
 $pgv_lang["search_to"]		= "-";
+
 //-- SOURCELIST FILE MESSAGES
 $pgv_lang["titles_found"]		= "Otsikot";
 $pgv_lang["find_source"]		= "Hae lähde";
+
 //-- REPOLIST FILE MESSAGES
 $pgv_lang["repo_list"]			= "Tietovarastoluettelo";
 $pgv_lang["repos_found"]		= "Löydetty tietovarastoja";
 $pgv_lang["find_repository"]		= "Hae tietovarasto";
 $pgv_lang["total_repositories"]	= "Tietovarastoja yhteensä";
 $pgv_lang["repo_info"]		= "Tietovarastoinformaatiota";
-$pgv_lang["other_repo_records"]	= "Tietueet, jotka linkittyvät tähän tietovarastoon:";
+$pgv_lang["other_repo_records"]	= "Tietueet, jotka yhdistyvät tähän tietovarastoon:";
 $pgv_lang["confirm_delete_repo"]	= "Oletko varma, että haluat poistaa tämän tietovaraston GEDCOM-tiedostosta?";
+
 //-- SOURCE FILE MESSAGES
 $pgv_lang["source_info"]		= "Lähdetieto";
-$pgv_lang["other_records"]		= "Tähän lähteeseen linkittyvät tietueet:";
-$pgv_lang["people"]			= "Henkilöt";
-$pgv_lang["families"]			= "Perheet";
-$pgv_lang["total_sources"]		= "Kokonaismäärä - Lähteitä";
+$pgv_lang["other_records"]		= "Tähän lähteeseen viittaavat tietueet:";
+$pgv_lang["people"]			= "Henkilöitä";
+$pgv_lang["families"]			= "Perheitä";
+$pgv_lang["total_sources"]		= "Lähteiden kokonaismäärä";
+
 //-- BUILDINDEX FILE MESSAGES
-$pgv_lang["invalid_gedformat"]	= "Epäkelpo GEDCOM muoto";
-$pgv_lang["exec_time"]		= "Esitysaika:";
+$pgv_lang["invalid_gedformat"]	= "GEDCOM muoto ei kelpaa";
+$pgv_lang["exec_time"]		= "Suoritusaika:";
 $pgv_lang["unable_to_create_index"] = "Indeksitiedostoa ei voi luoda. Varmista kirjoitusoikeutesi PhpGedViewDirectoryyn. Oikeudet voidaan palauttaa kunhan indeksitiedostot on kirjoitettu. ";
-$pgv_lang["changes_present"]	= "Tässä GEDCOM-tiedostossa on vielä hyväksymättömiä muutoksia jotka menetetään tuotaessa uusi tiedosto.";
+$pgv_lang["changes_present"]	= "Tässä GEDCOM-tiedostossa on vielä vireillä olevia muutoksia, jotka menetetään tuotaessa uusi tiedosto.";
 $pgv_lang["sec"]			= "s.";
 //-- INDIVIDUAL AND FAMILYLIST FILE MESSAGES
 $pgv_lang["total_fams"]		= "Perheiden kokonaismäärä";
@@ -472,7 +606,7 @@ $pgv_lang["magnify"]			= "Suurenna";
 $pgv_lang["skip_surnames"]		= "Ohita sukunimiluettelo";
 $pgv_lang["show_surnames"]		= "Näytä sukunimiluettelo";
 $pgv_lang["all"]			= "Kaikki";
-$pgv_lang["hidden"]			= "Piiloitettu";
+$pgv_lang["hidden"]			= "Piilotettu";
 $pgv_lang["confidential"]		= "Luottamuksellinen";
 $pgv_lang["alpha_index"]		= "Aakkosellinen hakemisto";
 $pgv_lang["name_list"] 		= "Nimiluettelo";
@@ -481,15 +615,21 @@ $pgv_lang["roots"]		 	= "Juuret";
 $pgv_lang["leaves"] 			= "Lehdet";
 $pgv_lang["widow"] 			= "Leski";
 $pgv_lang["widower"] 			= "Leski";
+$pgv_lang["show_parents"] 		= "Näytä vanhemmat"; //@@
+
 //-- TIMELINE FILE MESSAGES
 $pgv_lang["age"]			= "Ikä";
+$pgv_lang["husb_age"]		= "Miehen ikä";
+$pgv_lang["wife_age"]			= "Vaimon ikä";
 $pgv_lang["days"]			= "päivää";
 $pgv_lang["months"]			= "kuukautta";
 $pgv_lang["years"]			= "vuotta";
+$pgv_lang["years2"]			= "vuotta";
 $pgv_lang["day1"]			= "päivä";
 $pgv_lang["month1"]			= "kuukausi";
 $pgv_lang["year1"]			= "vuosi";
-$pgv_lang["after_death"]        		="Kuoleman jälkeen";
+$pgv_lang["after_death"]        		= "Kuoleman jälkeen";
+$pgv_lang["at_death_day"]      	= "päivänä, jona kuolema";
 $pgv_lang["timeline_title"]		= "PhpGedView aikajana";
 $pgv_lang["timeline_chart"]		= "Aikajana";
 $pgv_lang["remove_person"]		= "Poista henkilö kaaviosta";
@@ -545,47 +685,47 @@ $pgv_lang["oct"]			= "lokakuu";
 $pgv_lang["nov"]			= "marraskuu";
 $pgv_lang["dec"]			= "joulukuu";
 
-$pgv_lang["vend"]         = "Vendémiaire";
-$pgv_lang["brum"]         = "Brumaire";
-$pgv_lang["frim"]         = "Frimaire";
-$pgv_lang["nivo"]         = "Nivôse";
-$pgv_lang["pluv"]         = "Pluviôse";
-$pgv_lang["vent"]         = "Ventôse";
-$pgv_lang["germ"]         = "Germinal";
-$pgv_lang["flor"]         = "Floréal";
-$pgv_lang["prai"]         = "Prairial";
-$pgv_lang["mess"]         = "Messidor";
-$pgv_lang["ther"]         = "Thermidor";
-$pgv_lang["fruc"]         = "Fructidor";
-$pgv_lang["comp"]         = "jours complémentaires";
+$pgv_lang["vend"]         		= "Vendémiaire";
+$pgv_lang["brum"]         		= "Brumaire";
+$pgv_lang["frim"]         			= "Frimaire";
+$pgv_lang["nivo"]         			= "Nivôse";
+$pgv_lang["pluv"]         			= "Pluviôse";
+$pgv_lang["vent"]         		= "Ventôse";
+$pgv_lang["germ"]         		= "Germinal";
+$pgv_lang["flor"]         			= "Floréal";
+$pgv_lang["prai"]         			= "Prairial";
+$pgv_lang["mess"]         		= "Messidor";
+$pgv_lang["ther"]         			= "Thermidor";
+$pgv_lang["fruc"]         			= "Fructidor";
+$pgv_lang["comp"]         		= "jours complémentaires";
 
-$pgv_lang["tsh"]          = "tishri-kuu";
-$pgv_lang["csh"]          = "chesvan-kuu";
-$pgv_lang["ksl"]          = "kislev-kuu";
-$pgv_lang["tvt"]          = "tevet-kuu";
-$pgv_lang["shv"]          = "shvat-kuu";
-$pgv_lang["adr"]          = "adar-kuu";
-$pgv_lang["adr_leap_year"]= "adar I-kuu";
-$pgv_lang["ads"]          = "adar II-kuu";
-$pgv_lang["nsn"]          = "nisan-kuu";
-$pgv_lang["iyr"]          = "ijar-kuu";
-$pgv_lang["svn"]          = "sivan-kuu";
-$pgv_lang["tmz"]          = "tamuz-kuu";
-$pgv_lang["aav"]          = "av-kuu";
-$pgv_lang["ell"]          = "elul-kuu";
+$pgv_lang["tsh"]          			= "tishri-kuu";
+$pgv_lang["csh"]          		= "chesvan-kuu";
+$pgv_lang["ksl"]          			= "kislev-kuu";
+$pgv_lang["tvt"]          			= "tevet-kuu";
+$pgv_lang["shv"]          			= "shvat-kuu";
+$pgv_lang["adr"]          			= "adar-kuu";
+$pgv_lang["adr_leap_year"]		= "adar I-kuu";
+$pgv_lang["ads"]          		= "adar II-kuu";
+$pgv_lang["nsn"]          		= "nisan-kuu";
+$pgv_lang["iyr"]          			= "ijar-kuu";
+$pgv_lang["svn"]          			= "sivan-kuu";
+$pgv_lang["tmz"]          		= "tamuz-kuu";
+$pgv_lang["aav"]          			= "av-kuu";
+$pgv_lang["ell"]          			= "elul-kuu";
 
-$pgv_lang["muhar"]        = "muharram";
-$pgv_lang["safar"]        = "safar";
-$pgv_lang["rabia"]        = "rabi` al-awwal";
-$pgv_lang["rabit"]        = "rabi` al-sani";
-$pgv_lang["jumaa"]        = "jumada-al-awwal";
-$pgv_lang["jumat"]        = "jumada-al-sani";
-$pgv_lang["rajab"]        = "rajab";
-$pgv_lang["shaab"]        = "sha`ban";
-$pgv_lang["ramad"]        = "ramadan";
-$pgv_lang["shaww"]        = "shawwal";
-$pgv_lang["dhuaq"]        = "dhul-qa`da";
-$pgv_lang["dhuah"]        = "dhul-hijja";
+$pgv_lang["muhar"]        		= "muharram";
+$pgv_lang["safar"]        		= "safar";
+$pgv_lang["rabia"]        		= "rabi` al-awwal";
+$pgv_lang["rabit"]        			= "rabi` al-sani";
+$pgv_lang["jumaa"]        		= "jumada-al-awwal";
+$pgv_lang["jumat"]        		= "jumada-al-sani";
+$pgv_lang["rajab"]        		= "rajab";
+$pgv_lang["shaab"]        		= "sha`ban";
+$pgv_lang["ramad"]        		= "ramadan";
+$pgv_lang["shaww"]        		= "shawwal";
+$pgv_lang["dhuaq"]        		= "dhul-qa`da";
+$pgv_lang["dhuah"]        		= "dhul-hijja";
 
 $pgv_lang["b.c."]         			= "eKr";
 $pgv_lang["abt"]			= "noin";
@@ -595,23 +735,27 @@ $pgv_lang["bef"]			= "ennen";
 $pgv_lang["bet"]			= "välillä";
 $pgv_lang["cal"]			= "laskettu";
 $pgv_lang["est"]			= "arviolta";
-$pgv_lang["from"]			= "lähtien";
+$pgv_lang["from"]			= "lähtien"; // "täältä"; 
+
 $pgv_lang["int"]			= "tulkittu";
-$pgv_lang["to"]			= "saakka";
+$pgv_lang["to"]			= "saakka"; // "tänne"; 
+
 $pgv_lang["cir"]			= "noin";
 $pgv_lang["apx"]			= "noin";
+
 //-- Admin File Messages
 $pgv_lang["rebuild_indexes"]		= "Luo uudelleen indeksitiedostot";
 $pgv_lang["user_admin"]		= "Käyttäjien hallinta";
+$pgv_lang["manage_media"]		= "Ylläpidä mediaa";
 $pgv_lang["password_mismatch"]	= "Salasana ei täsmää.";
 $pgv_lang["enter_username"]		= "Käyttäjätunnus on annettava.";
 $pgv_lang["enter_fullname"]		= "Täydellinen nimi on annettava.";
 $pgv_lang["enter_password"]		= "Salasana on pakollinen.";
-$pgv_lang["confirm_password"]	= "Salasana on toistettava.";
+
 $pgv_lang["save"]			= "Tallenna";
 $pgv_lang["saveandgo"]		= "Tallenna ja mene uuteen tietueeseen";
 $pgv_lang["delete"]			= "Poista";
-$pgv_lang["edit"]			= "Editoi";
+$pgv_lang["edit"]			= "Muokkaa";
 $pgv_lang["no_login"]			= "Sisäänkirjautuminen epäonnistui.";
 $pgv_lang["basic_realm"]		= "PhpGedView autentikointijärjestelmä";
 $pgv_lang["basic_auth_failure"]	= "Sinun on lisättävä käypä tunnus ja salasana päästäksesi tähän palveluun";
@@ -621,6 +765,7 @@ $pgv_lang["no_auth_needed"]		= "Ei tunnistusta";
 $pgv_lang["file_not_exists"]		= "Annettua tiedostonimeä ei ole.";
 $pgv_lang["research_assistant"]	= "Tutkimusavustaja";
 $pgv_lang["utf8_to_ansi"]		= "Muunnetaanko tämä UTF-8-koodattu GEDCOM ANSI (ISO-8859-1) muotoon?";
+
 //-- Relationship chart messages
 $pgv_lang["view_fam_nav_details"]	= "Näytä tiedot ...";
 $pgv_lang["relationship_chart"]	= "Sukulaisuus";
@@ -650,13 +795,13 @@ $pgv_lang["firstcousin"]		= "Serkku";
 $pgv_lang["femalecousin"]		= "Naispuolinen serkku";
 $pgv_lang["malecousin"]		= "Miespuolinen serkku";
 $pgv_lang["relationship_to_me"]	= "Sukulaisuus minuun";
-$pgv_lang["rela_husb"]		= "Sukulaisuus aviomieheen";
-$pgv_lang["rela_wife"]			= "Sukulaisuus aviovaimoon";
+$pgv_lang["rela_husb"]		= "Sukulaisuus mieheen";
+$pgv_lang["rela_wife"]			= "Sukulaisuus vaimoon";
 $pgv_lang["next_path"]		= "Hae toinen reitti";
 $pgv_lang["show_path"]		= "Näytä polku";
 $pgv_lang["line_up_generations"]	= "Aseta sama sukupolvi riviin";
 $pgv_lang["oldest_top"]             	= "Näytä vanhin huipulla";
-$pgv_lang["check_delete"]		= "Haluatko varmasti poistaa tämän GEDCOM tiedon?";
+$pgv_lang["check_delete"]		= "Haluatko varmasti poistaa tämän GEDCOM-tiedon?";
 $pgv_lang["access_denied"]		= "<b>Pääsy kielletty</b><br />Sinulla ei ole oikeutta tähän resurssiin.";
 $pgv_lang["relationship_male_1_is_the_2_of_3"] 	= "%1\$s - %3\$s - %2\$s.";
 $pgv_lang["relationship_female_1_is_the_2_of_3"] 	= "%1\$s - %3\$s - %2\$s.";
@@ -669,6 +814,8 @@ $pgv_lang["daughter_in_law"]		= "Miniä";
 $pgv_lang["aunt_in_law"]		= "Täti";
 $pgv_lang["uncle_in_law"]		= "Eno/Setä";
 $pgv_lang["cousin_in_law"]		= "Serkku";
+$pgv_lang["m_cousin_in_law"]	= "Serkkupoika";
+$pgv_lang["f_cousin_in_law"]		= "Serkkutyttö";
 $pgv_lang["step_son"]			= "poikapuoli";
 $pgv_lang["step_daughter"]	    	= "tytärpuoli";
 // the bosa_brothers_offspring name is used for fraternal nephews and nieces - the names below can be extended to any number
@@ -845,28 +992,30 @@ $pgv_lang["female_cousin_18"]          = "serkku 18. polvessa";
 $pgv_lang["female_cousin_19"]          = "serkku 19. polvessa";
 $pgv_lang["female_cousin_20"]          = "serkku 20. polvessa";
 $pgv_lang["female_cousin_n"]            = "serkku %d. polvessa";
+
 //-- GEDCOM edit utility
-$pgv_lang["changes_exist"]		= "Tämä GEDCOM on muutettu.";
+$pgv_lang["changes_exist"]		= "Tätä GEDCOM-tiedostoa on muutettu.";
 $pgv_lang["find_place"]		= "hae paikka";
 $pgv_lang["close_window"]		= "Sulje ikkuna";
 $pgv_lang["close_window_without_refresh"] = "Sulje ikkuna lataamatta sitä uudelleen";
 $pgv_lang["place_contains"]		= "Paikka sisältää:";
 $pgv_lang["add"]			= "Lisää";
 $pgv_lang["custom_event"]		= "Erikoistapahtuma";
-$pgv_lang["confirm_delete_person"]	= "Haluatko varmasti poistaa henkilön GEDCOM tiedostosta?";
+$pgv_lang["confirm_delete_person"]	= "Haluatko varmasti poistaa henkilön GEDCOM-tiedostosta?";
 $pgv_lang["delete_person"]		= "Poista tämä henkilö";
 $pgv_lang["find_media"]		= "Etsi media";
-$pgv_lang["set_link"]			= "Linkitä";
-$pgv_lang["confirm_delete_source"]	= "Haluatko varmasti poistaa lähteen GEDCOM tiedostosta?";
+$pgv_lang["set_link"]			= "Liitä";
+$pgv_lang["confirm_delete_source"]	= "Haluatko varmasti poistaa lähteen GEDCOM-tiedostosta?";
 $pgv_lang["delete_source"]		= "Poista lähde";
 $pgv_lang["find_family"]		= "Hae perhe";
 $pgv_lang["find_fam_list"]		= "Hae perheluettelo";
-$pgv_lang["edit_name"]		= "Muuta nimi";
+$pgv_lang["edit_name"]		= "Muokkaa nimeä";
 $pgv_lang["delete_name"]		= "Pyyhi nimi";
 $pgv_lang["select_date"]		= "Valitse päivämäärä";
 $pgv_lang["user_cannot_edit"]	= "Tämä käyttäjätunnus ei voi editoida tätä GEDCOM-tiedostoa.";
 $pgv_lang["ged_noshow"]		= "Ylläpito on poistanut tämän sivun käytöstä";
 $pgv_lang["bdm"]			= "Syntymät, kuolemat, avioliitot";
+
 //-- calendar.php messages
 $pgv_lang["on_this_day"]		= "Tänä päivänä tapahtui...";
 $pgv_lang["in_this_month"]		= "Tässä kuussa, historiassa...";
@@ -892,13 +1041,7 @@ $pgv_lang["all_people"]		= "Kaikki henkilöt";
 $pgv_lang["living_only"]		= "Elossa olevat";
 $pgv_lang["recent_events"]		= "Viimeiset vuodet (< 100 vuotta)";
 $pgv_lang["day_not_set"]		= "Päivää ei ole asetettu";
-//-- upload media messages
-$pgv_lang["record_updated"]		= "Tietue #pid# päivitetty.";
-$pgv_lang["record_not_updated"]	= "Tietuette #pid# ei voitu päivittää.";
-$pgv_lang["record_removed"]		= "Tietue #xref# poistettu GEDCOM-tiedostosta.";
-$pgv_lang["record_not_removed"]	= "Tietuetta #xref# ei voitu poistaa GEDCOM-tiedostotsta.";
-$pgv_lang["record_added"]		= "Tietueen #xref# lisäys GEDCOM-tiedostoon onnistui.";
-$pgv_lang["record_not_added"]	= "Tietuetta #xref# ei voitu lisätä GEDCOM-tiedostoon.";
+
 //-- user self registration module
 $pgv_lang["lost_password"]		= "Salasana on hukassa?";
 $pgv_lang["requestpassword"]	= "Pyydä uusi salasana";
@@ -940,12 +1083,11 @@ $pgv_lang["data_incorrect"]		= "Tiedot eivät ole oikeita!<br />Yritä uudelleen
 $pgv_lang["user_not_found"]		= "Täyttämiäsi tietoja ei voinut vahvistaa. Yritä uudelleen.";
 $pgv_lang["lost_pw_reset"]		= "Pyydä uusi salasana";
 $pgv_lang["pls_note11"]		= "Tarvitsemme tilisi käyttäjätunnuksen ja sähköpostiosoiteen jos haluat että muutamme salasanasi.<br /><br />Tulemme lähettämään erikois-URLin sähköpostissa. Se tulee sisältämään tilisi vahvistuskoodin. Vieraile lähetetyssä URLissa ja voit muuttaa verkkopaikan salasanan ja käyttäjätunnuksen. Turvallisuussyistä sinun tulee olla antamatta vahvistuskoodia kenellekkään, ei edes tämän verkkopaikan ylläpitäjälle (emme tule pyytämään sitä).<br /><br />Jos tarvitset tämän verkkopaikan ylläpitäjän apuaan, ota häneen yhteyttä.";
-$pgv_lang["enter_email"]		= "Sinun on täytettävä sähköpostiosoite.";
 $pgv_lang["mail04_line01"]		= "Hei #user_fullname#...";
 $pgv_lang["mail04_line02"]		= "Uusi salasana on pyydetty käyttäjätunnuksellesi!";
 $pgv_lang["mail04_line03"]		= "Suosittelu:";
-$pgv_lang["mail04_line04"]		= "Klikkaa aihe linkkiä, kirjoitaudu sissään uudella salasanalla ja vaihda salasana niin että tietosuoja säilyy.";
-$pgv_lang["mail04_line05"]		= "Kirjauduttuasi, valitse linkki '#pgv_lang[myuserdata]#'  '#pgv_lang[mygedview]#'-valikosta ja täytä salasanakentät vaihtaaksesi salasanasi.";
+$pgv_lang["mail04_line04"]		= "Klikkaa aihe-linkkiä, kirjoitaudu sisään uudella salasanalla ja vaihda salasana niin että tietosuoja säilyy.";
+$pgv_lang["mail04_line05"]		= "Kirjauduttuasi, valitse linkki '#pgv_lang[myuserdata]#' '#pgv_lang[mygedview]#'-valikosta ja täytä salasanakentät vaihtaaksesi salasanasi.";
 $pgv_lang["mail04_subject"]		= "Tietopyyntö koneelta #SERVER_NAME#";
 $pgv_lang["pwreqinfo"]		= "Hei...<br /><br />Sähköposti, jossa on uusi salasana, on lähetetty osoitteeseen (#user[email]#).<br /><br />Tutki sähköpostitiliäsi parin minuutin kuluttua. Sinun tulisi saada posti siihen mennessä.<br /><br />Suosittelu:<br />Saatuasi sähköpostisi sinun tulee kirjoitautua ja muuttaa salasanasi lisätäksesi tietosuoja kokonaisuutta.";
 $pgv_lang["editowndata"]		= "Käyttäjätilini";
@@ -954,9 +1096,9 @@ $pgv_lang["user_theme"]		= "Teemani";
 $pgv_lang["mgv"]			= "OmaGedView";
 $pgv_lang["mygedview"]		= "OmaGedView";
 $pgv_lang["passwordlength"]		= "Salasanassa pitää olla vähintään 6 merkkiä.";
-$pgv_lang["welcome_text_auth_mode_1"] = "<center><b>Tervetuloa tähän sukututkimuksen verkkopalveluun</b></center><br />Jokaisella käyttäjällä, jolla on käyttäjätili, on pääsy tänne.<br /><br />Mikäli sinulla on käyttäjätili, voit kirjautua tältä sivulta. Mikäli sinulla ei ole käyttäjätiliä, voit pyytää sellaisen näpäyttämällä alla olevaa  linkkiä.<br /><br />Todennettuaan pyyntösi ylläpitäjä aktivoi käyttäjätilisi. Saat sähköpostiviestin kun pyyntösi on hyväksytty. ";
-$pgv_lang["welcome_text_auth_mode_2"] = "<center><b>Tervetuloa tähän sukututkimuksen verkkopalveluun.</b></center><br />Pääsy näille sivuille on sallittu vain niille käyttäjille, joille on annettu <b>käyttöoikeus</b>.<br /><br />Mikäli sinulla jo on käyttäjätili, voit kirjautua järjestelmään tällä sivulla. Mikäli sinulla ei ole käyttäjätiliä, voit pyytää sellaista näpäyttämällä asianomaista linkkiä tällä sivulla.<br /><br />Varmistuttuaan antamistasi tiedoista ylläpitäjä joko hyväksyy tai hylkää pyyntösi. Tulet saamaan sähköpostiviestin kun pyyntösi on hyväksytty.";
-$pgv_lang["welcome_text_auth_mode_3"] = "<center><b>Tervetuloa tähän sukututkimuksen verkkopalveluun</b></center><br />Pääsy tänne on sallittu ainoastaan <u>sukulaisille</u>.<br /><br />Mikäli sinulla on käyttäjätili voit kirjautua sivustolle. Mikäli sinulla ei vielä ole käyttäjätiliä, voit pyytää sellaista näpäyttämällä asianomaista linkkiä tällä sivulla.<br /><br />Tarkistettuaan tietosi sivun ylläpitäjä joko hyväksyy tai hylkää pyyntösi. Saat sähköpostiviestin kun pyyntösi on hyväksytty.";
+$pgv_lang["welcome_text_auth_mode_1"] = "<center><b>Tervetuloa tähän sukututkimuksen verkkopalveluun</b></center><br />Jokaisella käyttäjällä, jolla on käyttäjätili, on pääsy tänne.<br /><br />Mikäli sinulla on käyttäjätili, voit kirjautua tältä sivulta. Mikäli sinulla ei ole käyttäjätiliä, voit pyytää sellaisen klikkaamalla alla olevaa linkkiä.<br /><br />Todennettuaan pyyntösi ylläpitäjä aktivoi käyttäjätilisi. Saat sähköpostiviestin kun pyyntösi on hyväksytty. ";
+$pgv_lang["welcome_text_auth_mode_2"] = "<center><b>Tervetuloa tähän sukututkimuksen verkkopalveluun.</b></center><br />Pääsy näille sivuille on sallittu vain niille käyttäjille, joille on annettu <b>käyttöoikeus</b>.<br /><br />Mikäli sinulla jo on käyttäjätili, voit kirjautua järjestelmään tällä sivulla. Mikäli sinulla ei ole käyttäjätiliä, voit pyytää sellaista klikkaamalla asianomaista linkkiä tällä sivulla.<br /><br />Varmistuttuaan antamistasi tiedoista ylläpitäjä joko hyväksyy tai hylkää pyyntösi. Tulet saamaan sähköpostiviestin kun pyyntösi on hyväksytty.";
+$pgv_lang["welcome_text_auth_mode_3"] = "<center><b>Tervetuloa tähän sukututkimuksen verkkopalveluun</b></center><br />Pääsy tänne on sallittu ainoastaan <u>sukulaisille</u>.<br /><br />Mikäli sinulla on käyttäjätili voit kirjautua sivustolle. Mikäli sinulla ei vielä ole käyttäjätiliä, voit pyytää sellaista klikkaamalla asianomaista linkkiä tällä sivulla.<br /><br />Tarkistettuaan tietosi sivun ylläpitäjä joko hyväksyy tai hylkää pyyntösi. Saat sähköpostiviestin kun pyyntösi on hyväksytty.";
 $pgv_lang["welcome_text_cust_head"]	= "<center><b>Tervetuloa tähän sukututkimuksen verkkopalveluun</b></center><br />Pääsy on sallittu käyttäjille, joilla on käyttäjätunnus ja salasana tähän verkkopalveluun.<br />";
 $pgv_lang["acceptable_use"]		= "<div class=\\\"largeError\\\">Huomautus:</div><div class=\\\"error\\\">Täyttämällä ja lähettämällä tämän lomakkeen sitoudut:<ul><li>suojaamaan sivustoillamme esiintyvien elävien henkilöiden yksityisyyden;</li><li>ja kertomaan alla olevassa tekstikentässä kenelle olet sukua tai toimittamaan meille tietoa henkilöstä, jonka tulisi olla sivustollamme.</li></ul></div>";
 //-- mygedview page
@@ -975,7 +1117,7 @@ $pgv_lang["no_events_all"]		= "Mitään tapahtumia ei ole seuraavien #pgv_lang[g
 $pgv_lang["no_events_all1"]		= "Mitään tapahtumia ei ole huomenna.";
 $pgv_lang["no_events_privacy"]	= "Tapahtumia esiintyy seuraavien #pgv_lang[global_num1]# päivän aikana, mutta yksityisyysasetukset estävät niiden näkymisen.";
 $pgv_lang["no_events_privacy1"]	= "Tapahtumia esiintyy huomenna, mutta yksityisyysasetukset estävät niiden näkymisen.";
-$pgv_lang["more_events_privacy"]	= "<br />Lisää apahtumia esiintyy seuraavien #pgv_lang[global_num1]# päivän aikana, mutta yksityisyysasetukset estävät niiden näkymisen.";
+$pgv_lang["more_events_privacy"]	= "<br />Lisää tapahtumia esiintyy seuraavien #pgv_lang[global_num1]# päivän aikana, mutta yksityisyysasetukset estävät niiden näkymisen.";
 $pgv_lang["more_events_privacy1"]	= "<br />Lisää tapahtumia esiintyy huomenna, mutta yksityisyysasetukset estävät niiden näkymisen.";
 $pgv_lang["none_today_living"]	= "Tänään ei ole elävien henkilöiden tapahtumia.";
 $pgv_lang["none_today_all"]		= "Tänään ei ole tapahtumia.";
@@ -1011,7 +1153,7 @@ $pgv_lang["no_favorites"]		= "Et ole valinnus suosikkeja. Lisää henkilö suosi
 $pgv_lang["my_favorites"]		= "Suosikkini";
 $pgv_lang["add_to_my_favorites"]	= "Lisää suosikkeihini";
 $pgv_lang["no_gedcom_favorites"]	= "Toistaiseksi ei ole valittuja suosikkeja. Ylläpitäjä voi lisätä suosikkeja jotka näytetään aloitettaessa.";
-$pgv_lang["gedcom_favorites"]	= "Tämän GEDCOM tiedoston suosikit";
+$pgv_lang["gedcom_favorites"]	= "Tämän GEDCOM-tiedoston suosikit";
 $pgv_lang["confirm_fav_remove"]	= "Haluatko varmasti poistaa tämän tietueen suosikeistasi?";
 $pgv_lang["invalid_email"]		= "Huom! Anna hyväksyttävä sähköpostiosoite.";
 $pgv_lang["enter_subject"]		= "Huom! Anna viestin aihe.";
@@ -1039,21 +1181,27 @@ $pgv_lang["stat_latest_birth"] 		= "Myöhäisin syntymävuosi";
 $pgv_lang["stat_earliest_death"] 	= "Aikaisin kuolinvuosi";
 $pgv_lang["stat_latest_death"] 	= "Myöhäisin kuolinvuosi";
 $pgv_lang["customize_page"]		= "Muokkaa oma portaalisi";
-$pgv_lang["customize_gedcom_page"]	= "Muokkaa GEDCOM portaalia";
+$pgv_lang["customize_gedcom_page"]	= "Muokkaa GEDCOM-portaalia";
 $pgv_lang["upcoming_events_block"]	= "Tulevien tapahtumien alue";
-$pgv_lang["upcoming_events_descr"]= "Tulevat tapahtumat-alue aktiivisessa GEDCOM:issa näyttää luettelon 30 seuraavan vuorokauden aikana sattuvista tapahtumista. Käyttäjän OmaGedView sivun alueella luetteloidaan vain elävät henkilöt.GEDCOM tervetuloa-sivulla näytetään kaikki henkilöt.";
+$pgv_lang["upcoming_events_descr"]= "Tulevat tapahtumat-alue aktiivisessa GEDCOMissa näyttää luettelon 30 seuraavan vuorokauden aikana sattuvista tapahtumista. Käyttäjän OmaGedView sivun alueella luetteloidaan vain elävät henkilöt. GEDCOM tervetuloa-sivulla näytetään kaikki henkilöt.";
 $pgv_lang["todays_events_block"]	= "Tänä päivänä alue";
-$pgv_lang["todays_events_descr"]	= "Tänä päivänä  omassa historiassasi... alueella on luettelo tämän päivän tapahtumista. Mikäli tapahtumia ei löydy, ei aluetta näytetä. Käyttäjän OmaGedView sivun alueella luetteloidaan vain elävät, GEDCOM tervetuloa-sivulla näytetään kaikki henkilöt.";
-$pgv_lang["yahrzeit_block"]="Tulevat jortsaitit";
-$pgv_lang["yahrzeit_descr"]		= "Esiintuleva Yahrzeitenalue näyttää lähitulevaisuudessa esiintyvät kuolinaikojen vuosipäivät. Voit muokata näytettävää ajanjaksoa ja ylläpitäjä voi muokata miten kauaksi tulevaisuuten alueella katsotaan.";
+$pgv_lang["todays_events_descr"]	= "Tänä päivänä omassa historiassasi... alueella on luettelo tämän päivän tapahtumista. Mikäli tapahtumia ei löydy, ei aluetta näytetä. Käyttäjän OmaGedView sivun alueella luetteloidaan vain elävät, GEDCOM tervetuloa -sivulla näytetään kaikki henkilöt.";
+$pgv_lang["todo_block"] 		= "&quot;To Do&quot; tehtävät";
+$pgv_lang["todo_descr"] 		= "The To Do block lists all outstanding _TODO facts in the database."; //@@
+$pgv_lang["todo_show_other"]     	= "Näytä muiden käyttäjien tehtävät";
+$pgv_lang["todo_show_unassigned"]	= "Näytä määrittämättömät tehtävät";
+$pgv_lang["todo_show_future"]    	= "Näytä tulevat tehtävät";
+$pgv_lang["todo_nothing"]        	= "Ei ole &quot;To Do&quot; tehtäviä."; //@@
+$pgv_lang["yahrzeit_block"]		= "Tulevat jortsaitit";
+$pgv_lang["yahrzeit_descr"]		= "Tulevat jortsaitit-alue näyttää lähitulevaisuudessa esiintyvät kuolinaikojen vuosipäivät. Voit muokata näytettävää ajanjaksoa ja ylläpitäjä voi muokata miten kauaksi tulevaisuuten alueella katsotaan.";
 $pgv_lang["logged_in_users_block"]	= "Sisäänkirjautuneet-alue";
 $pgv_lang["logged_in_users_descr"]	= "Sisäänkirjautuneet-alue näyttää luettelon tällä hetkellä sisäänkirjautuneista käyttäjistä.";
 $pgv_lang["user_messages_block"]	= "Käyttäjän viestialue";
 $pgv_lang["user_messages_descr"]	= "Käyttäjän viestialue näyttää luettelon aktiiviselle käyttäjälle lähetetyistä viesteistä.";
 $pgv_lang["user_favorites_block"]	= "Käyttäjän suosikit-alue";
-$pgv_lang["user_favorites_descr"]	= "Käyttäjän suosikit-lalue näyttää luettelon suosituimmista henkilöistä jotta niihin on helppo muodostaa linkki.";
+$pgv_lang["user_favorites_descr"]	= "Käyttäjän suosikit-alue näyttää luettelon suosituimmista henkilöistä jotta niihin on helppo muodostaa linkki.";
 $pgv_lang["welcome_block"]		= "Käyttäjän tervetuloalue";
-$pgv_lang["welcome_descr"]		= "Käyttäjän tervetuloalue näyttää sen hetkisen päivämäärän ja kellonajan, pikalinkit käyttäjätietojen muuttamiseksi sekä omaan sukupuuhun ja linkin  josta pääsee muokkaamaan MyGedView-sivua.";
+$pgv_lang["welcome_descr"]		= "Käyttäjän tervetuloalue näyttää sen hetkisen päivämäärän ja kellonajan, pikalinkit käyttäjätietojen muuttamiseksi sekä omaan sukupuuhun ja linkin, josta pääsee muokkaamaan OmaGedView-sivua.";
 $pgv_lang["random_media_block"]	= "Satunnaisen kuvan alue";
 $pgv_lang["random_media_descr"] 	= "Satunnaisen kuvan alue valitsee satunnaisen kuvan tai muun median aktiivisesta GEDCOM-tiedostosta ja näyttää sen.";
 $pgv_lang["random_media_persons_or_all"] = "Näytetäänkö ainoastaan henkilöt, tapahtumat vai kaikki?";
@@ -1061,41 +1209,47 @@ $pgv_lang["random_media_persons"]	= "Henkilöt";
 $pgv_lang["random_media_events"]	= "Tapahtumat";
 $pgv_lang["gedcom_block"]		= "GEDCOM tervetuloalue";
 $pgv_lang["gedcom_descr"]		= "GEDCOM Tervetuloalue toimii samoin kuin Käyttäjän Tervetuloalue toivottamalla kävijä tervetulleeksi sivustolle ja näyttämällä aktiivisen GEDCOM-tiedoston otsikon sekä päivämäärän ja kellonajan.";
-$pgv_lang["gedcom_favorites_block"]	= "GEDCOM suosikit-alue";
-$pgv_lang["gedcom_favorites_descr"] 	= "GEDCOM Suosikit-alue mahdollistaa ylläpitäjää valitsemaan suosikkihenkilönsä niin, että kävijä helposti löytää heidät. Tällä tavoin voidaan osoittaa sukuhistoriasi tärkeät henkilöt.";
+$pgv_lang["gedcom_favorites_block"]= "GEDCOM suosikit-alue";
+$pgv_lang["gedcom_favorites_descr"]= "GEDCOM Suosikit-alue mahdollistaa ylläpitäjää valitsemaan suosikkihenkilönsä niin, että kävijä helposti löytää heidät. Tällä tavoin voidaan osoittaa sukuhistoriasi tärkeät henkilöt.";
+$pgv_lang["gedcom_descr"]		= "GEDCOM tervetuloalue toimii samoin kuin käyttäjän tervetuloalue toivottamalla kävijä tervetulleeksi sivustolle ja näyttämällä aktiivisen GEDCOM-tiedoston otsikon sekä päivämäärän ja kellonajan.";
+$pgv_lang["gedcom_favorites_block"]= "GEDCOM suosikit-alue";
+$pgv_lang["gedcom_favorites_descr"]= "GEDCOM suosikit-alue mahdollistaa ylläpitäjää valitsemaan suosikkihenkilönsä niin, että kävijä helposti löytää heidät. Tällä tavoin voidaan osoittaa sukuhistoriasi tärkeät henkilöt.";
 $pgv_lang["gedcom_stats_block"]	= "GEDCOM tilastotietoalue";
 $pgv_lang["gedcom_stats_descr"] 	= "GEDCOM tilastotietoalue näyttää kävijälle joitakin GEDCOMia koskevia perustietoja kuten luontipäivämäärän ja montako henkilöä siinä on.";
 $pgv_lang["gedcom_stats_show_surnames"] = "Näytä tavalliset sukunimet?";
 $pgv_lang["portal_config_intructions"]	= "~#pgv_lang[customize_page]# <br /> #pgv_lang[customize_gedcom_page]#~<br /><br />Voit muokata sivua asettelemalla alueita haluamallasi tavalla.<br /><br /> Sivu on jaettu kahteen osastoon: <b>pääosastoon</b> ja <b>oikeanpuoleiseen</p> osastoon. <b>Pääosaston</p> alueet näkyvät suurempina ja sijoittuvat sivun otsakkeen alle. <b>Oikeanpuoleinen</b> osasto alkaa otsakkeen oikealla puolella ja jatkuu alaspäin sivun oikeaa laitaa.<br /><br /> Jokaisella osastolla on oma luettelonsa niistä alueista jotka kirjoitetaan sivulle siinä järjestyksessä kun ne on lueteltu. Voit lisätä, poistaa ja järjestää uudelleen alueita haluamallasi tavalla.<br /><br />Jos jokin alue on tyhjä, täyttävät muut alueet vapaan tila koko sivun leveydeltä.<br /><br />";
 $pgv_lang["login_block"]		= "Sisäänkirjautumisalue";
 $pgv_lang["login_descr"]		= "Sisäänkirjautumisalue kirjoittaa käyttäjätunnuksen ja salasanan sisäänkirjautumista varten.";
-$pgv_lang["theme_select_block"]     	= "Teemanvalinta-alue";
-$pgv_lang["theme_select_descr"] 	= "Teemanvalinta-alue näyttää teemavalikon vaikka \"muuta teema\" valinta on poistettu käytöstä.";
+$pgv_lang["theme_select_block"]     	= "Teemavalinta-alue";
+$pgv_lang["theme_select_descr"] 	= "Teemavalinta-alue näyttää teemavalikon vaikka \"muuta teema\" valinta on poistettu käytöstä.";
 $pgv_lang["block_top10_title"]      	= "Yleisimmät sukunimet";
 $pgv_lang["block_top10"]            	= "\"10 suosituinta sukunimeä\"-alue";
 $pgv_lang["block_top10_descr"]	= "Tämä alue näyttää taulukon tietokannan 10 suosituimmasta sukunimestä.";
+$pgv_lang["block_givn_top10_title"]	= "Top 10 Etunimet";
+$pgv_lang["block_givn_top10"]	= "Top 10 Etunimet";
+
 $pgv_lang["gedcom_news_block"]	= "GEDCOM uutisalue";
-$pgv_lang["gedcom_news_descr"]	= "GEDCOM uutisalue näyttää vierailijalle ylläpitäjän lähettämiä uusia päivityksiä tai artikkeleita. Uutiset on hyvä paikka ilmoittaa päivitetystä GEDCOM tiedostosta tai perhetapaamisista.";
+$pgv_lang["gedcom_news_descr"]	= "GEDCOM uutisalue näyttää vierailijalle ylläpitäjän lähettämiä uusia päivityksiä tai artikkeleita. Uutiset on hyvä paikka ilmoittaa päivitetystä GEDCOM-tiedostosta tai perhetapaamisista.";
 $pgv_lang["gedcom_news_limit"]	= "Rajoita näyttö seuraavasti:";
 $pgv_lang["gedcom_news_limit_nolimit"]	= "Ei rajoituksia";
 $pgv_lang["gedcom_news_limit_date"]	= "Kohteen ikä";
 $pgv_lang["gedcom_news_limit_count"]	= "Kohteiden lukumäärä";
 $pgv_lang["gedcom_news_flag"]	= "Rajoitus:";
 $pgv_lang["gedcom_news_archive"] 	= "Näytä arkisto";
-$pgv_lang["user_news_block"]	= "Käyttäjän päiväkirja-alue";
-$pgv_lang["user_news_descr"]	= "Käyttäjän päiväkirja-alueella käyttäjä voi ylläpitää päiväkirjaa tai tehdä sinne muistiinpanoja.";
+$pgv_lang["user_news_block"]	= "Käyttäjän päiväkirjaalue";
+$pgv_lang["user_news_descr"]	= "Käyttäjän päiväkirjaalueella käyttäjä voi ylläpitää päiväkirjaa tai tehdä sinne muistiinpanoja.";
 $pgv_lang["my_journal"]		= "Päiväkirjani";
-$pgv_lang["no_journal"]		= "Et ole luonnut päiväkirja merkinntöjä.";
-$pgv_lang["confirm_journal_delete"]	= "Haluatko varmasti poistaa tämän päiväkirja merkinnän?";
-$pgv_lang["add_journal"]		= "Lisää päiväkirja merkintä";
+$pgv_lang["no_journal"]		= "Et ole luonnut päiväkirjamerkintöjä.";
+$pgv_lang["confirm_journal_delete"]	= "Haluatko varmasti poistaa tämän päiväkirjamerkinnän?";
+$pgv_lang["add_journal"]		= "Lisää päiväkirjamerkintä";
 $pgv_lang["gedcom_news"]		= "Uutisia";
 $pgv_lang["confirm_news_delete"]	= "Haluatko varmasti poistaa tämän uutisen?";
 $pgv_lang["add_news"]		= "Lisää uutisartikkeli";
 $pgv_lang["no_news"]			= "Uutisartikkeleita ei ole lähetetty.";
-$pgv_lang["edit_news"]		= "Muuta päiväkirja/uutisartikkeli merkintä";
+$pgv_lang["edit_news"]		= "Muokkaa päiväkirja-/uutisartikkelimerkintää";
 $pgv_lang["enter_title"]		= "Täytä otsikko.";
-$pgv_lang["enter_text"]		= "Täytä teksti tähän uutis- tai päiväkirjaartikkeliin. ";
-$pgv_lang["news_saved"]		= "Päiväkirja/uutisartikkeli merkintä on säilytetty.";
+$pgv_lang["enter_text"]		= "Täytä teksti tähän uutis- tai päiväkirja-artikkeliin. ";
+$pgv_lang["news_saved"]		= "Päiväkirja-/uutisartikkelimerkintä on säilytetty.";
 $pgv_lang["article_text"]		= "Teksti:";
 $pgv_lang["main_section"]		= "Pääosaan alueet";
 $pgv_lang["right_section"]		= "Oikean osaan alueet";
@@ -1110,46 +1264,47 @@ $pgv_lang["phpgedview_message"]	= "PhpGedView viesti";
 $pgv_lang["reset_default_blocks"]	= "Palauta alkuperäiset alueet";
 $pgv_lang["common_surnames"]	= "Yleisimmät sukunimet";
 $pgv_lang["default_news_title"]	= "Tervetuloa sukututkimukseesi";
-$pgv_lang["default_news_text"]	= "Tätä sukututkimussivustoa käyttää  <a href=\"http://www.phpgedview.net/\" target=\"_blank\">PhpGedView</a>. Tämä sivu johdattelee tähän sukututkimukseen. Aloittaaksesi tietojen käsittelyn, valitse yksi kaaviomalli kaaviovalikosta, mene henkilöluetteloon tai hae nimi tai paikka.<br /><br />Mikäli sinulla on vaikeuksia käyttää sivustoa, näpäyttämällä Ohje-valikkoa saat tietoa kuinka käyttää parhaillaan katselemaasi sivua. <br /><br />Kiitos kun käyt tällä sivustolla.";
+$pgv_lang["default_news_text"]	= "Tätä sukututkimussivustoa käyttää  <a href=\"http://www.phpgedview.net/\" target=\"_blank\">PhpGedView</a>. Tämä sivu johdattelee tähän sukututkimukseen. Aloittaaksesi tietojen käsittelyn, valitse yksi kaaviomalli kaaviovalikosta, mene henkilöluetteloon tai hae nimi tai paikka.<br /><br />Mikäli sinulla on vaikeuksia käyttää sivustoa, klikkaamalla Ohje-valikkoa saat tietoa kuinka käyttää parhaillaan katselemaasi sivua. <br /><br />Kiitos kun käyt tällä sivustolla.";
 $pgv_lang["recent_changes"]		= "Viimeiset muutokset";
 $pgv_lang["recent_changes_block"]	= "Viimeisten muutosten alue";
 $pgv_lang["recent_changes_descr"]	= "Viimeisten muutosten alueella luetteloidaan GEDCOM-tiedostoon tehdyt muutokset viimeisen kuukauden aikana. Tämä alue pitää sinut ajan tasalla tehtyjen muutosten suhteen. Muutokset havaitan CHAN-merkitsimen avulla.";
 $pgv_lang["recent_changes_none"]	= "<b>Ei muutoksia viimeisen #pgv_lang[global_num1]# päivän aikana.</b><br />";
 $pgv_lang["recent_changes_some"]	= "<b>Muutoksia viimeisten #pgv_lang[global_num1]# päivän aikana</b><br />";
 $pgv_lang["show_empty_block"]	= "Tulisiko tämän alueen olla piilossa kun se on tyhjä?";
-$pgv_lang["hide_block_warn"]		= "Mikäli piiloitat tyhjän alueen, et voi muuttaa sen konfiguraatiota, ennenkuin se taas tulee näkyviin sisältäessään tietoa.";
+$pgv_lang["hide_block_warn"]		= "Mikäli piilotat tyhjän alueen, et voi muuttaa sen konfiguraatiota, ennenkuin se taas tulee näkyviin sisältäessään tietoa.";
 $pgv_lang["delete_selected_messages"]	= "Poista merkityt viestit";
 $pgv_lang["use_blocks_for_default"]	= "Käytä näitä alueita kaikkien käyttäjien oletusalueasetuksina?";
 $pgv_lang["block_not_configure"]	= "Tätä aluetta ei voi konfiguroida.";
 $pgv_lang["options"]			= "Asetukset:";
 $pgv_lang["config_update_ok"]	= "Konfigurointitiedoston päivitys onnistui.";
+
 //-- validate GEDCOM
 $pgv_lang["add_media_tool"] 		= "\"Lisää media\"-työkalu";
-$pgv_lang["media_linked"]		= "Tämä mediaobjekti on linkitetty seuraavaan:";
-$pgv_lang["media_not_linked"]	= "Tätä mediaobjektia ei ole linkitetty mihinkään GEDCOM-tietueeseen.";
+$pgv_lang["media_linked"]		= "Tämä mediaobjekti on liitetty seuraavaan:";
+$pgv_lang["media_not_linked"]	= "Tätä mediaobjektia ei ole liitetty mihinkään GEDCOM-tietueeseen.";
 $pgv_lang["media_dir_1"]		= "Mediatiedosto sijaitsee ulkoisella palvelimella";
-$pgv_lang["media_dir_2"]		= "Mediatiedosto sijaitsee vakiomediahakemistossa";
-$pgv_lang["media_dir_3"]		= "Mediatiedosto sijaitsee suojatussa mediahakemistossa";
+$pgv_lang["media_dir_2"]		= "Mediatiedosto sijaitsee vakiomediakansiossa";
+$pgv_lang["media_dir_3"]		= "Mediatiedosto sijaitsee suojatussa mediakansiossa";
 $pgv_lang["thumb_dir_1"]		= "Pienoiskuva sijaitsee ulkoisella palvelimella";
-$pgv_lang["thumb_dir_2"]		= "Pienoiskuva on vakiomediahakemistossa";
-$pgv_lang["thumb_dir_3"]		= "Pienoiskuva sijaitsee suojatussa mediahakemistossa";
-$pgv_lang["moveto_2"]		= "Siirrä suojattuun hakemistoon";
-$pgv_lang["moveto_3"]		= "Siirrä vakiohakemistoon";
+$pgv_lang["thumb_dir_2"]		= "Pienoiskuva on vakiomediakansiossa";
+$pgv_lang["thumb_dir_3"]		= "Pienoiskuva sijaitsee suojatussa mediakansiossa";
+$pgv_lang["moveto_2"]		= "Siirrä suojattuun kansioon";
+$pgv_lang["moveto_3"]		= "Siirrä vakiokansioon";
 $pgv_lang["move_standard"]		= "Siirrä vakioon";
 $pgv_lang["move_protected"]		= "Siirrä suojattuun";
-$pgv_lang["move_mediadirs"]		= "Siirrä mediahakemistoja";
+$pgv_lang["move_mediadirs"]		= "Siirrä mediakansioita";
 $pgv_lang["setperms"]		= "Aseta mediaoikeudet";
-$pgv_lang["setperms_writable"]	= "Tee kirjoitskelpoiseksi";
-$pgv_lang["setperms_readonly"]	= "Tee vain lukukelpoiseksi";
+//$pgv_lang["setperms_writable"]	= "Tee kirjoitskelpoiseksi";
+//$pgv_lang["setperms_readonly"]	= "Tee vain lukukelpoiseksi";
 $pgv_lang["setperms_success"]	= "Oikeudet asetettu";
 $pgv_lang["setperms_failure"]		= "Oikeuksia ei ole asetettu";
-$pgv_lang["setperms_time_exceeded"]	= "Suoritusaikaraja on savutettu. Yritä komentoa uudelleen pienemmällä hakemistolla.";
-$pgv_lang["move_time_exceeded"]		= "Suoritusaikaraja on saavutettu. Yritä komentoa uudelleen siirtämään loput tiedostot.";
-$pgv_lang["media_firewall_rootdir_no_exist"]	= "Hakemaasi mediapalomuurijuurihakemistoa ei ole. Se on ensin luotava.";
-$pgv_lang["media_firewall_protected_dir_no_exist"]		= "Suojattua mediahakemistoa ei voitu luoda mediapalomuurijuurihakemistoon. Luo tämä hakemisto ja tee se kirjoituskelpoiseksi.";
-$pgv_lang["media_firewall_protected_dir_not_writable"]	= "Suojattu mediahakemisto mediapalomuurijuurihakemistossa ei ole kirjoituskelpoinen.";
-$pgv_lang["media_firewall_invalid_dir"]	= "Virhe: Mediapalomuuri käynnistettiin muualta kuin mediahakemistosta.";
-$pgv_lang["relationship_great"]		= "iso";
+$pgv_lang["setperms_time_exceeded"]	= "Suoritusaikaraja on savutettu. Yritä komentoa uudelleen pienemmällä kansiolla.";
+$pgv_lang["move_time_exceeded"]	= "Suoritusaikaraja on saavutettu. Yritä komentoa uudelleen siirtämään loput tiedostot.";
+$pgv_lang["media_firewall_rootdir_no_exist"]		= "Hakemaasi mediapalomuurijuurikansiota ei ole. Se on ensin luotava.";
+$pgv_lang["media_firewall_protected_dir_no_exist"]	= "Suojattua mediakansiota ei voitu luoda mediapalomuurijuurikansioon. Luo tämä kansio ja tee se kirjoituskelpoiseksi.";
+$pgv_lang["media_firewall_protected_dir_not_writable"]	= "Suojattu mediakansio mediapalomuurijuurikansiossa ei ole kirjoituskelpoinen.";
+$pgv_lang["media_firewall_invalid_dir"]	= "Virhe: Mediapalomuuri käynnistettiin muualta kuin mediakansiosta.";
+$pgv_lang["relationship_great"]	= "iso";
 //-- hourglass chart
 $pgv_lang["hourglass_chart"]		= "Tiimalasikaavio";
 //-- report engine
@@ -1161,6 +1316,35 @@ $pgv_lang["download_report"]       	= "Talleta raportti";
 $pgv_lang["reports"]               		= "Raportit";
 $pgv_lang["pdf_reports"]            	= "PDF raportti";
 $pgv_lang["html_reports"]           	= "HTML raportti";
+
+//-- Ahnentafel report
+$pgv_lang["ahnentafel_report"]	= "Sukutauluraportti";
+$pgv_lang["ahnentafel_header"]	= "Sukutauluraportti henkilölle ";
+$pgv_lang["ahnentafel_generation"]	= "Sukupolvi ";
+$pgv_lang["ahnentafel_pronoun_m"]	= "Hän ";
+$pgv_lang["ahnentafel_pronoun_f"]	= "Hän ";
+$pgv_lang["ahnentafel_born_m"]	= "syntyi";
+$pgv_lang["ahnentafel_born_f"]	= "syntyi";
+$pgv_lang["ahnentafel_christened_m"]= "kastettiin";
+$pgv_lang["ahnentafel_christened_f"] = "kastettiin";
+$pgv_lang["ahnentafel_married_m"]	= "avioitui";
+$pgv_lang["ahnentafel_married_f"]	= "avioitui";
+$pgv_lang["ahnentafel_died_m"]	= "kuoli";
+$pgv_lang["ahnentafel_died_f"]	= "kuoli";
+$pgv_lang["ahnentafel_buried_m"]	= "haudattiin";
+$pgv_lang["ahnentafel_buried_f"]	= "haudattiin";
+$pgv_lang["ahnentafel_place"]	= "&nbsp;";
+$pgv_lang["ahnentafel_no_details"]	= "mutta yksityiskohdat puuttuvat";
+
+//-- Changes report
+$pgv_lang["changes_report"]		= "Muutosraportti";
+$pgv_lang["changes_pending_tot"]	= "Vireillä olevia muutoksia yhteensä: ";
+$pgv_lang["changes_accepted_tot"]	= "Hyväksyttyjä muutoksia yhteensä: ";
+
+//-- Descendancy report
+$pgv_lang["descend_report"]		= "Jälkipolviraportti";
+$pgv_lang["descendancy_header"]	= "Jälkipolviraportti henkilölle ";
+
 $pgv_lang["family_group_report"]    	= "Perheryhmäraportti";
 $pgv_lang["page"]                   		= "Sivu";
 $pgv_lang["of"]                     		= "/";
@@ -1191,26 +1375,29 @@ $pgv_lang["marrdate1"]		= "Avioliittoonvihkimisajanjakso alkaa";
 $pgv_lang["marrdate2"]		= "Avioliittoonvihkimisajanjakso päättyy";
 $pgv_lang["sort_by"]			= "Lajittele seuraavan mukaan:";
 $pgv_lang["cleanup"]			= "Siivoa";
+
 //-- CONFIGURE (extra) messgaes for programs patriarch, slklist and statistics
 //$pgv_lang["dynasty_list"]           	= "Perheiden yleiskuvaus";
 //$pgv_lang["patriarch_list"]         	= "Patriarkkalista";
 $pgv_lang["statistics"]             		= "Tilastot";
+
 //-- Merge Records
 $pgv_lang["merge_same"] 		= "Tietueet eivät ole samaa typpiä. Erityyppisiä tietueita ei voi yhdistää.";
 $pgv_lang["merge_step1"]		= "Yhdistä - vaihe 1/3 ";
 $pgv_lang["merge_step2"]		= "Yhdistä - vaihe 2/3";
 $pgv_lang["merge_step3"]		= "Yhdistä - vaihe 3/3";
-$pgv_lang["select_gedcom_records"]	= "Valitse kaksi GEDCOM-tietuetta yhdistettäväksi. Tietueiden tulee olla samaa tyyppiä.";
-$pgv_lang["merge_to"]		= "Yhdistä ID:een";
+$pgv_lang["select_gedcom_records"]= "Valitse kaksi GEDCOM-tietuetta yhdistettäväksi. Tietueiden tulee olla samaa tyyppiä.";
+$pgv_lang["merge_to"]		= "Yhdistä ID:een:";
 $pgv_lang["merge_from"] 		= "Yhdistä ID:stä:";
 $pgv_lang["merge_facts_same"]	= "Seuraavat tiedot olivat täsmälleen samanlaiset kummassakin tietueessa ja yhdistetään automaattisesti.";
 $pgv_lang["no_matches_found"]	= "Yhtäpitäviä tietoja ei löytynyt.";
 $pgv_lang["unmatching_facts"]	= "Seuraavat tiedot eivät ole yhtäpitäviä. Valitse tieto, jonka haluat säilyttää.";
 $pgv_lang["record"] 			= "Tietue";
-$pgv_lang["adding"] 			= "Lisää";
-$pgv_lang["updating_linked"]		= "Päivittää linkitettyä tietuetta";
+$pgv_lang["adding"] 			= "Lisätään";
+$pgv_lang["updating_linked"]		= "Päivitetään yhdistettyä tietuetta";
 $pgv_lang["merge_more"] 		= "Yhdistä lisää tietueita.";
 $pgv_lang["same_ids"]		= "Kirjoitit saman ID:n. Et voi yhdistää samoja tietueita.";
+
 //-- ANCESTRY FILE MESSAGES
 $pgv_lang["ancestry_chart"] 		= "Esipolvikaavio";
 $pgv_lang["gen_ancestry_chart"]     	= "#PEDIGREE_GENERATIONS# Sukupolvet esipolvikaaviossa";
@@ -1230,11 +1417,11 @@ $pgv_lang["sosa_7"] 			= "Isoäiti";
 $pgv_lang["sosa_8"] 			= "Isoisänisä";
 $pgv_lang["sosa_9"] 			= "Isoisänäiti";
 $pgv_lang["sosa_10"]			= "Isoäidinisä";
-$pgv_lang["sosa_11"]			= "Isoäidiniti";
+$pgv_lang["sosa_11"]			= "Isoäidinäiti";
 $pgv_lang["sosa_12"]			= "Isoisänisä";
 $pgv_lang["sosa_13"]			= "Isoisänäiti";
 $pgv_lang["sosa_14"]			= "Isoäidinisä";
-$pgv_lang["sosa_15"]			= "Isoäidiniti";
+$pgv_lang["sosa_15"]			= "Isoäidinäiti";
 // 4th generation
 $pgv_lang["sosa_16"]              	= "Isänisänisänisä";
 $pgv_lang["sosa_17"]              	= "Isänisänisänäiti";
@@ -1252,46 +1439,17 @@ $pgv_lang["sosa_28"]         	     	= "Äidinäidinisänisä";
 $pgv_lang["sosa_29"]         	     	= "Äidinäidinisänäiti";
 $pgv_lang["sosa_30"]          	    	= "Äidinäidinäidinisä";
 $pgv_lang["sosa_31"]          	    	= "Äidinäidinäidinäiti";
+// for the general case of ancestors of the nth generation use the text below
+// in this text %1\$d is replaced with the number of generations
+//              %2\$d is replaced with the number of generations - 1
+//              %3\$d is replaced with the number of generations - 2
 $pgv_lang["sosa_paternal_male_n_generations"]	= "%3\$d x isoisoisiä";
 $pgv_lang["sosa_paternal_female_n_generations"]	= "%3\$d x isoisoäiti";
 $pgv_lang["sosa_maternal_male_n_generations"]	= "%3\$d x isoisoisiä";
 $pgv_lang["sosa_maternal_female_n_generations"]	= "%3\$d x isoisoäiti";
-// 5th generation
-//$pgv_lang["sosa_32"]          	    	= "N/A";
-//$pgv_lang["sosa_33"]          	    	= "N/A";
-//$pgv_lang["sosa_34"]         		= "N/A";
-//$pgv_lang["sosa_35"]        		= "N/A";
-//$pgv_lang["sosa_36"]             	= "N/A";
-//$pgv_lang["sosa_37"]        	      	= "N/A";
-//$pgv_lang["sosa_38"]       	       	= "N/A";
-//$pgv_lang["sosa_39"]        	      	= "N/A";
-//$pgv_lang["sosa_40"]         	     	= "N/A";
-//$pgv_lang["sosa_41"]            	= "N/A";
-//$pgv_lang["sosa_42"]          	    	= "N/A";
-//$pgv_lang["sosa_43"]         	     	= "N/A";
-//$pgv_lang["sosa_44"]         	     	= "N/A";
-//$pgv_lang["sosa_45"]         	     	= "N/A";
-//$pgv_lang["sosa_46"]         	     	= "N/A";
-//$pgv_lang["sosa_47"]         	     	= "N/A";
-//$pgv_lang["sosa_48"]         	     	= "N/A";
-//$pgv_lang["sosa_49"]        	      	= "N/A";
-//$pgv_lang["sosa_50"]         		= "N/A";
-//$pgv_lang["sosa_51"]        		= "N/A";
-//$pgv_lang["sosa_52"]         	    	= "N/A";
-//$pgv_lang["sosa_53"]         	     	= "N/A";
-//$pgv_lang["sosa_54"]        	      	= "N/A";
-//$pgv_lang["sosa_55"]        	      	= "N/A";
-//$pgv_lang["sosa_56"]        	      	= "N/A";
-//$pgv_lang["sosa_57"]        	      	= "N/A";
-//$pgv_lang["sosa_58"]         	     	= "N/A";
-//$pgv_lang["sosa_59"]         	    	= "N/A";
-//$pgv_lang["sosa_60"]          	    	= "N/A";
-//$pgv_lang["sosa_61"]          	    	= "N/A";
-//$pgv_lang["sosa_62"]          	    	= "N/A";
-//$pgv_lang["sosa_63"]       	   	= "N/A";
 
-$pgv_lang["compact_chart"]		= "Kompakti kaavio";
 //-- FAN CHART
+$pgv_lang["compact_chart"]		= "Kompakti kaavio";
 $pgv_lang["fan_chart"]			= "Viuhkakaavio";
 $pgv_lang["gen_fan_chart"]    		= "#PEDIGREE_GENERATIONS# Sukupolviviuhkakaavio";
 $pgv_lang["fan_width"]		= "Viuhkakaavion leveys.";
@@ -1299,7 +1457,7 @@ $pgv_lang["gd_library"]       		= "PHP palvelimen virheellinen konfigurointi: va
 $pgv_lang["gd_freetype"]		= "PHP palvelimen virheellinen konfigurointi: vaaditaan Freetype kirjastoa jotta True Type kirjasimia voi käyttää.";
 $pgv_lang["gd_helplink"]		= "http://www.php.net/gd";
 $pgv_lang["fontfile_error"]   		= "Kirjasintiedostoa ei löytynyt PHP-palvelimelta.";
-$pgv_lang["fanchart_IE"]		= "Selaimesi ei kykene tulostamaan tätä viuhkakaaviota suoraan. Näpäytä kakkospainikkeella, tallenna ja tulosta sitten.";
+$pgv_lang["fanchart_IE"]		= "Selaimesi ei kykene tulostamaan tätä viuhkakaaviota suoraan. Klikkaa kakkospainikkeella, tallenna ja tulosta sitten.";
 //-- RSS Feed
 $pgv_lang["rss_descr"]		= "Uutiset ja linkit #GEDCOM_TITLE# sivustolta.";
 $pgv_lang["rss_logo_descr"]		= "Syötteen toteutti PhpGedView";
@@ -1308,6 +1466,7 @@ $pgv_lang["no_feed_title"]		= "Syöte ei ole käytettävissä";
 $pgv_lang["no_feed"]			= "Tällä PhpGedView-sivustolla ei ole käytettävissä RSS-syötettä.";
 $pgv_lang["feed_login"]		= "Mikäli sinulla on käyttäjätili tälle PhpGedView-sivustolle, voit <a href=\"#AUTH_URL#\">kirjautua</a> palvelimelle käyttäen HTTP-autentikointia nähdäksesi yksityisiä tietoja.";
 $pgv_lang["authenticated_feed"]	= "Autentikoitu syöte";
+
 //-- ASSOciates RELAtionship
 // After any change in the following list, please check $assokeys in edit_interface.php
 $pgv_lang["attendant"] 		= "Avustaja";
@@ -1321,6 +1480,9 @@ $pgv_lang["friend"] 			= "Ystävä";
 $pgv_lang["godfather"] 		= "Kummisetä";
 $pgv_lang["godmother"] 		= "Kummitäti";
 $pgv_lang["godparent"] 		= "Kummi";
+$pgv_lang["godson"]			= "Kummipoika";
+$pgv_lang["goddaughter"] 		= "Kummityttö";
+$pgv_lang["godchild"]			= "Kummilapsi";
 $pgv_lang["informant"] 		= "Tiedon antaja";
 $pgv_lang["lodger"] 			= "Asukki";
 $pgv_lang["nurse"] 			= "Hoitaja";
@@ -1333,6 +1495,7 @@ $pgv_lang["twin"] 			= "Kaksonen";
 $pgv_lang["twin_brother"] 		= "Kaksosveli";
 $pgv_lang["twin_sister"] 		= "Kaksossisar";
 $pgv_lang["witness"] 			= "Todistaja";
+
 //-- statistics utility
 $pgv_lang["statutci"]			= "Indeksiä ei voi luoda";
 $pgv_lang["statnnames"]         		= "nimien lukumäärä =";
@@ -1370,10 +1533,11 @@ $pgv_lang["statar_zgp"]		= "Väliarvot aikajaksoille (z-akseli):";
 $pgv_lang["statreset"]			= "palauta alkuperäiset arvot";
 $pgv_lang["statsubmit"]		= "näytä kuvaaja";
 $pgv_lang["statistiek_list"]		= "Tilastokuvaaja";
+
 //-- statisticsplot utility
 $pgv_lang["stpl"]			 = "...";
 $pgv_lang["stplGDno"]		= "Kuvaajakirjastoa ei ole käytettävissä PHP 4:ssä. Kysy ylläpitäjältä.";
-$pgv_lang["stpljpgraphno"]		= "JP grafiikkamodulit eivät ole käytettävissä hakemistossa phpgedview/jpgraph. Hae ne osoitteesta http://www.aditus.nu/jpgraph/jpdownload.php<br /><h3>Asenna ensin JPgraph hakemistoon phpgedview/jpgraph/</h3><br />\";\$pgv_lang[\"stplinfo\"] = \"kuvaajainfo:";
+$pgv_lang["stpljpgraphno"]		= "JP grafiikkamodulit eivät ole käytettävissä kansiossa phpgedview/jpgraph. Hae ne osoitteesta http://www.aditus.nu/jpgraph/jpdownload.php<br /><h3>Asenna ensin JPgraph kansioon phpgedview/jpgraph/</h3><br />\";\$pgv_lang[\"stplinfo\"] = \"kuvaajainfo:";
 $pgv_lang["stplinfo"]			= "Muuttujat kuvaajalle:";
 $pgv_lang["stpltype"]			= "tyyppi:";
 $pgv_lang["stplnoim"]			= "ei toteutettu:";
@@ -1386,6 +1550,7 @@ $pgv_lang["stplage"]			= "ikä";
 $pgv_lang["stplperc"]			= "prosenttiosuus";
 $pgv_lang["stplnumof"]		= "yhteensä ";   //"Counts ";
 $pgv_lang["stplmarrbirth"]		= "kuukausia vihkimisestä ensimmäisen lapsen syntymään";
+
 //-- alive in year
 $pgv_lang["alive_in_year"]		= "Elossa vuonna";
 $pgv_lang["is_alive_in"]		= "Elossa vuonna ";
@@ -1394,33 +1559,30 @@ $pgv_lang["dead"]			= "Kuollut";
 $pgv_lang["maybe"]			= "Ehkä";
 $pgv_lang["both_alive"]		= "Molemmat elossa";
 $pgv_lang["both_dead"]		= "Molemmat kuolleet";
-//-- find media
-$pgv_lang["media_format"]		= "Mediaformaatti";
-$pgv_lang["image_size"]		= "Kuvan mitat";
-$pgv_lang["manage_media"]		= "Ylläpidä mediaa";
-//-- link media
-$pgv_lang["media_id"]			= "Media ID";
-$pgv_lang["invalid_id"]			= "Tätä ID-tunnusta ei ole tässä GEDCOM-tiedostossa.";
+
 //-- Help system
 $pgv_lang["definitions"]		= "Määritelmiä";
+
 //-- Index_edit
-$pgv_lang["description"]		= "Kuvaus";
 $pgv_lang["block_desc"]		= "Alueiden kuvaukset";
-$pgv_lang["click_here"]		= "Näpäytä tästä jatkaaksesi";
-$pgv_lang["click_here_help"]		= "~#pgv_lang[click_here]#~<br /><br />Näpäytä tätä painiketta toteuttaaksesi aiemmin tallentamasi muutokset.";
+$pgv_lang["click_here"]		= "Klikkaa tästä jatkaaksesi";
+$pgv_lang["click_here_help"]		= "~#pgv_lang[click_here]#~<br /><br />Klikkaa tätä painiketta toteuttaaksesi aiemmin tallentamasi muutokset.";
 $pgv_lang["block_summaries"]	= "~#pgv_lang[block_desc]#~<br /><br />Tässä on lyhyt selostus jokaisesta alueesta, jonka voit sijoittaa #pgv_lang[welcome]#- tai #pgv_lang[mygedview]#-sivulle.<br /><center><table border='1'><tr><td class='list_value'><b>#pgv_lang[name]#</b></td><td class='list_value'><b>#pgv_lang[description]#</b></td></tr>#pgv_lang[block_summary_table]#</table></center><br /><br />";
 $pgv_lang["block_summary_table"]	= "&nbsp;";
+
 //-- Find page
 $pgv_lang["total_places"]		= "Paikkoja löytyi";
 $pgv_lang["media_contains"]		= "Media sisältää:";
 $pgv_lang["repo_contains"]		= "Tietovarasto sisältää:";
 $pgv_lang["source_contains"]		= "Lähde sisältää:";
 $pgv_lang["display_all"]		= "Näytä kaikki";
+
+//-- accesskey navigation
 $pgv_lang["accesskeys"]		= "Näppäinoikotiet";
 $pgv_lang["accesskey_skip_to_content"]		= "S";
-$pgv_lang["accesskey_search"]			= "S";
+$pgv_lang["accesskey_search"]			= "E";
 $pgv_lang["accesskey_skip_to_content_desc"] 	= "Oikaise sisältöön";
-$pgv_lang["accesskey_viewing_advice"]		= "O";
+$pgv_lang["accesskey_viewing_advice"]		= "0";
 $pgv_lang["accesskey_viewing_advice_desc"] 	= "Katsomisohje";
 $pgv_lang["accesskey_home_page"]			= "1";
 $pgv_lang["accesskey_help_content"]		= "2";
@@ -1442,6 +1604,8 @@ $pgv_lang["accesskey_family_parents_timeline"]	= "P";
 $pgv_lang["accesskey_family_children_timeline"]	= "D";
 $pgv_lang["accesskey_family_timeline"]		= "T";
 $pgv_lang["accesskey_family_gedcom"]		= "G";
+
+// FAQ Page
 $pgv_lang["add_faq_header"] 	= "FAQ-otsikko";
 $pgv_lang["add_faq_body"] 		= "FAQ tekstialue";
 $pgv_lang["add_faq_order"] 		= "FAQ sijainti";
@@ -1453,6 +1617,8 @@ $pgv_lang["faq_list"] 			= "FAQ-luettelo";
 $pgv_lang["confirm_faq_delete"] 	= "Haluatko varmasti poistaa FAQ-kysymyksen?";
 $pgv_lang["preview"] 			=  "Esikatselu";
 $pgv_lang["no_id"] 			= "FAQ ID-tunnusta ei ole määritelty!";
+
+// Help search
 $pgv_lang["hs_title"] 			= "Hae ohjetekstistä";
 $pgv_lang["hs_search"] 		= "Hae";
 $pgv_lang["hs_close"] 		= "Sulje ikkuna";
@@ -1470,6 +1636,8 @@ $pgv_lang["hs_intruehelp"]		= "Vain ohjetekstistä";
 $pgv_lang["hs_inallhelp"]		= "Kaikki tekstit";
 $pgv_lang["choose"] 			= "Valitse:";
 $pgv_lang["account_information"] 	= "Tietoja käyttäjätilistä";
+
+//-- Media item "TYPE" sub-field
 $pgv_lang["TYPE__audio"] 		= "Äänitiedosto";
 $pgv_lang["TYPE__book"] 		= "Kirja";
 $pgv_lang["TYPE__card"] 		= "Kortti";
@@ -1487,6 +1655,8 @@ $pgv_lang["TYPE__tombstone"] 	= "Hautakivi";
 $pgv_lang["TYPE__video"] 		= "Video";
 $pgv_lang["TYPE__painting"] 		= "Maalaus";
 $pgv_lang["TYPE__other"] 		= "Muu";
+
+//-- Other media suff
 $pgv_lang["view_slideshow"] 		= "Katsele diaesityksenä";
 $pgv_lang["download_image"]	= "Lataa tiedosto";
 $pgv_lang["no_media"]		= "Mediaa ei löydy";
@@ -1496,8 +1666,12 @@ $pgv_lang["file_size"]			= "Tiedoston koko";
 $pgv_lang["img_size"]			= "Kuvan koko";
 $pgv_lang["media_broken"]		= "Tämä mediatiedosto on rikkonainen eikä siihen voi laittaa vesileimaa";
 $pgv_lang["unknown_mime"]		= "Mediapalomuurivirhe: >Tuntematon MIMEtype< tiedostolle";
+
+//-- Modules
 $pgv_lang["module_error_unknown_action_v2"] = "Tuntematon toiminto: [action].";
 $pgv_lang["module_error_unknown_type"] = "Tuntematon modulimuoto.";
+
+//-- sortable tables buttons
 $pgv_lang["button_alive_in_year"] 	= "Näytä elossa olevien henkilöiden lukumäärä viitattuna vuonna.";
 $pgv_lang["button_BIRT_Y100"] 	= "Näytä syntyneiden henkilöiden lukumäärä viimeisen sadan vuoden aikana.";
 $pgv_lang["button_BIRT_YES"] 	= "Näytä syntyneiden henkilöiden lukumäärä yli sata vuotta sitten. ";
@@ -1518,123 +1692,4 @@ $pgv_lang["button_SEX_U"] 		= "Näytä vain tuntematonta sukupuolta olevat henki
 $pgv_lang["button_TREE_L"] 		= "Näytä &laquo;lehti&raquo;parit tai henkilöt. Nämä ovat elossa olevia henkilöitä, joilla ei ole lapsia tietokannassa. ";
 $pgv_lang["button_TREE_R"] 	= "Näytä &laquo;juuri&raquo;parit tai henkilöt. Heitä voi myös kutsua &laquo;patriarkoiksi&raquo;. He ovat henkilöitä, joilla ei ole vanhempia tietokannassa.  ";
 $pgv_lang["sort_column"] 		= "Lajittele tämän sarakkeen mukaisesti.";
-$pgv_lang["link_new_husb"]		= "Lisää aviomies käyttäen tiedostossa olevaa henkilöä.";
-$pgv_lang["link_new_wife"]		= "Lisää aviovaimo käyttäen tiedostossa olevaa henkilöä.";
-$pgv_lang["next_email_sent"]		= "Seuraava sähköpostimuistutus lähetetään ";
-$pgv_lang["last_email_sent"]		= "Viimeisin sähköpostimuistutus lähetettiin ";
-$pgv_lang["remove_child"]		= "Poista tämä henkilö perheestä";
-$pgv_lang["indi_is_remote"]		= "Tämän henkilön tiedot on linkitetty toisesta palvelusta.";
-$pgv_lang["link_remote"]            	= "Linkitä henkilö toisesta palvelusta";
-$pgv_lang["title_search_link"]      	= "Lisää paikallinen linkki";
-$pgv_lang["label_site_url2"]        	= "Verkko-osoite (URL)";
-$pgv_lang["label_search_engine_detected"]  = "Havaittu hakurobotti";
-$pgv_lang["cancel"]			= "Peruuta";
-$pgv_lang["cookie_help"]		= "Tämä sivusto käyttää evästeitä seuraamaan sisääkirjautumistilaasi.<br /><br />Et näytä sallineen evästeitä selaimessasi. Sinun on sallittava evästeiden käyttö ennen kuin voit kirjautua. Katso selaimesi aputoiminnoista  (helpistä)miten evästeet sallitaan. ";
-$pgv_lang["delete_family_confirm"]	= "Perheen poistaminen poistaa kaikki henkilöiden väliset linkit mutta jättää henkilöt paikalleen. Haluatko todella poistaa tämän perheen?";
-$pgv_lang["delete_family"]		= "Poista perhe";
-$pgv_lang["add_favorite"]		= "Lisää uusi suosikki";
-$pgv_lang["url"]			= "URL";
-$pgv_lang["add_fav_enter_note"]	= "Kirjoita lisätieto tästä suosikista";
-$pgv_lang["add_fav_or_enter_url"]	= "TAI<br /> lisää URL-osoite ja otsikko";
-$pgv_lang["add_fav_enter_id"]	= "Lisää henkilö, perhe tai lähde-ID";
-$pgv_lang["edit_source"]		= "Editoi lähdettä";
-$pgv_lang["source_menu"]		= "Vaihtoehtoja lähteille";
-$pgv_lang["repo_menu"]			= "Vaihtoehtoja tietovarastolle";
-$pgv_lang["familybook_chart"]		= "Sukukirjakaavio";
-$pgv_lang["family_of"]			= "Perhe:  ";
-$pgv_lang["descent_steps"]		= "Jälkipolvien lukumäärä";
-$pgv_lang["ex-spouse"] 		= "Entinen puoliso";
-$pgv_lang["ex-wife"] 			= "Entinen aviovaimo";
-$pgv_lang["ex-husband"] 		= "Entinen aviomies";
-$pgv_lang["noemail"] 			= "Osoitteet ilman sähköpostiosoitetta";
-$pgv_lang["onlyemail"] 		= "Vain osoitteet, joilla sähköpostiosoite";
-$pgv_lang["maxviews_exceeded"]	= "Sivun hakumäärä ylittynyt, yritä myöhemmin uudestaan.";
-$pgv_lang["broadcast_not_logged_6mo"] = "Lähetä viesti käyttäjille, jotka eivät ole kirjautuneet 6 kuukauteen.";
-$pgv_lang["broadcast_never_logged_in"]	 = "Lähetä viesti käyttäjille, jotka eivät koskaan ole kirjautuneet.";
-$pgv_lang["stats_to_show"]		= "Valitse tässä lohkossa näytettävät tilastotiedot";
-$pgv_lang["stat_avg_age_at_death"]	= "Keskimääräinen ikä kuollessa";
-$pgv_lang["stat_longest_life"]		= "Vanhimman henkilön ikä";
-$pgv_lang["stat_most_children"]	= "Suurin lapsiluku perheessä";
-$pgv_lang["stat_average_children"]	= "Keskimääräinen lapsiluku perheessä";
-$pgv_lang["stat_events"]		= "Tapahtumia yhteensä";
-$pgv_lang["stat_media"]		= "Mediakohteet";
-$pgv_lang["stat_surnames"]		= "Sukunimiä yhteensä";
-$pgv_lang["stat_users"]		= "Käyttäjiä yhteensä";
-$pgv_lang["no_family_facts"]		= "Ei tietoja tästä perheestä";
-$pgv_lang["stat_males"]		= "Miespuolisten henkilöiden lukumäärä";
-$pgv_lang["stat_females"]		= "Naispuolisten henkilöiden lukumäärä";
-$pgv_lang["sunday_1st"]		= "su";
-$pgv_lang["monday_1st"]		= "ma";
-$pgv_lang["tuesday_1st"]		= "ti";
-$pgv_lang["wednesday_1st"]		= "ke";
-$pgv_lang["thursday_1st"]		= "to";
-$pgv_lang["friday_1st"]		= "pe";
-$pgv_lang["saturday_1st"]		= "la";
-$pgv_lang["feb_1st"]			= "helmi";
-$pgv_lang["mar_1st"]			= "maalis";
-$pgv_lang["apr_1st"]			= "huhti";
-$pgv_lang["may_1st"]			= "touko";
-$pgv_lang["jun_1st"]			= "kesä";
-$pgv_lang["jul_1st"]			= "heinä";
-$pgv_lang["aug_1st"]			= "elo";
-$pgv_lang["sep_1st"]			= "syys";
-$pgv_lang["oct_1st"]			= "loka";
-$pgv_lang["nov_1st"]			= "marras";
-$pgv_lang["dec_1st"]			= "joulu";
-$pgv_lang["jan_1st"]			= "tammi";
-$pgv_lang["record_not_found"]	= "Pyydettyä GEDCOM-tietuetta ei löytynyt. Se voi johtua joko linkistä virheellisen henkilöön tai vikaantuneesta GEDCOM-tiedostosta.";
-$pgv_lang["result_page"]		= "Tulossivu";
-$pgv_lang["edit_media"]		= "Editoi mediakohdetta";
-$pgv_lang["wiki_main_page"]		= "Wiki pääsivu";
-$pgv_lang["wiki_users_guide"]	= "Wiki käyttäjän opas";
-$pgv_lang["wiki_admin_guide"]	= "Wiki ylläpitäjän opas";
-$pgv_lang["no_search_for"]		= "Valitse haettava vaihtoehto.";
-$pgv_lang["no_search_site"]		= "Valitse vähintään yksi etäsivusto.";
-$pgv_lang["other_searches"]		= "Muita hakuja";
-$pgv_lang["search_sites"] 		= "Sivustot, joilta haku suoritetaan";
-$pgv_lang["site_list"]			= "Sivusto: ";
-$pgv_lang["site_had"]			= "sisälsi seuraavan";
-$pgv_lang["page_size"]		= "Sivun koko";
-$pgv_lang["descend_report"]		= "Jälkipolviraportti";
-$pgv_lang["descendancy_header"]	= "Jälkipolviraportti henkilölle ";
-$pgv_lang["server_folder"]		= "Hakemiston nimi palvelimella";
-$pgv_lang["medialist_recursive"]	= "Luettele tiedostot alihakemistoissa";
-$pgv_lang["page_x_of_y"]		= "Sivu #GLOBALS[currentPage]# / #GLOBALS[lastPage]#";
-$pgv_lang["roman_surn"]		= "Romanisoitu sukunimi";
-$pgv_lang["roman_givn"]		= "Romanisoidut etunimet";
-$pgv_lang["include"]			= "Sisällytä:";
-$pgv_lang["clear_chart"]		= "Tyhjennä kaavio";
-$pgv_lang["file_information"]		= "Tiedostoinformaatio";
-$pgv_lang["choose_file_type"]	= "Valitse tiedostomuoto";
-$pgv_lang["add_individual_by_id"]	= "Lisää henkilö ID-tunnuksen avulla";
-$pgv_lang["advanced_options"]	= "Lisäasetukset";
-$pgv_lang["zip_files"]			= "Zip-tiedosto(t)";
-$pgv_lang["include_media"]		= "Sisällytä media (automaattisesti zip-tiedosto)";
-$pgv_lang["loading"]			="Ladataan...";
-$pgv_lang["random_media_start_slide"]	= "Aloitetaanko diaesitys sivun latatutuessa?";
-$pgv_lang["random_media_ajax_controls"]	= "Näytetäänkö AJAX-kontrollit?";
-$pgv_lang["view_img_details"]		= "Näytä kuvan tiedot";
-$pgv_lang["play"]			= "Käynnistä";
-$pgv_lang["stop"]			= "Pysäytä";
-$pgv_lang["activate"]			= "Aktivoi";
-$pgv_lang["deactivate"]		= "Deaktivoi";
-$pgv_lang["genealogy"]		= "sukututkimus";
-
-$pgv_lang["invalid_search_input"] 	= "Anna vuosiluvun lisäksi etunimi, sukunimi tai paikka. ";
-$pgv_lang["duplicate_username"] 	= "Tämä käyttäjätunnus on jo olemassa. Valitse toinen käyttäjätunnus.";
-$pgv_lang["cache_life"]		= "Välimuistitiedoston elinikä";
-$pgv_lang["tree"]					= "Puu";
-$pgv_lang["husb_age"]				= "Aviomiehen ikä";
-$pgv_lang["wife_age"]				= "Vaimo ikä";
-$pgv_lang["at_death_day"]      		= "päivänä, jona kuolema";
-$pgv_lang["wife_age"]				= "Vaimon ikä";
-$pgv_lang["todo_block"] = "\"To Do\" tehtävät";
-$pgv_lang["block_givn_top10_title"]		= "Top 10 Etunimet";
-$pgv_lang["block_givn_top10"]			= "Top 10 Etunimet";
-$pgv_lang["godson"]		= "Kummipoika";
-$pgv_lang["todo_show_future"]    = "Näytä tulevat tehtävät";
-$pgv_lang["todo_show_other"]     = "Näytä muiden käyttäjien tehtävät";
-$pgv_lang["todo_show_unassigned"]= "Näytä määrittämättömät tehtävät";
-$pgv_lang["goddaughter"] = "Kummityttö";
-$pgv_lang["godchild"]	= "Kummilapsi";
 ?>

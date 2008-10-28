@@ -34,38 +34,38 @@ if (!defined('PGV_PHPGEDVIEW')) {
 }
 
 // Added in VERSION 4.1.6
-$pgv_lang["lb_generalhelp"]     = "Individual Page - Lightbox General Help";
-$pgv_lang["lb_viewedit"]		= "View/Edit";
-$pgv_lang["lb_viewnotes"]		= "View Notes";
-$pgv_lang["lb_viewdetails"]		= "View Details";
-$pgv_lang["lb_viewsource"]		= "View Source";
-$pgv_lang["lb_editmedia"]		= "Edit Media";
-$pgv_lang["lb_unlinkmedia"]		= "Unlink Media";
-$pgv_lang["lb_balloon_true"]	= "Balloon";
-$pgv_lang["lb_balloon_false"]	= "Normal";
-$pgv_lang["lb_tt_balloon"]		= "Individual Page - Album Tab Thumbnail - Notes Tooltip";
-$pgv_lang["lb_ttAppearance"]	= "Notes - Tooltip appearance";
+$pgv_lang["lb_generalhelp"]     	= "Henkilösivu - Lightboxin yleinen apu";
+$pgv_lang["lb_viewedit"]		= "Näytä/Muokkaa";
+$pgv_lang["lb_viewnotes"]		= "Näytä lisätiedot";
+$pgv_lang["lb_viewdetails"]		= "Näytä yksityiskohdat";
+$pgv_lang["lb_viewsource"]		= "Näytä lähteet";
+$pgv_lang["lb_editmedia"]		= "Muokkaa mediaa"; 
+$pgv_lang["lb_unlinkmedia"]		= "Poista yhteys mediaan";
+$pgv_lang["lb_balloon_true"]		= "Pallo";  //Balloon
+$pgv_lang["lb_balloon_false"]		= "Normaali";
+$pgv_lang["lb_tt_balloon"]		= "Henkilösivu - Albumivälilehden  pienoiskuva - Lisätiedot työkaluvihje";
+$pgv_lang["lb_ttAppearance"]		= "Lisätiedot - Työkaluvihjeen ulkonäkö";   //tooltip appearance
 $pgv_lang["view_lightbox"]		= "Näytä albumi ..."; //@@
-$pgv_lang["lb_notes"]			= "Notes";
+$pgv_lang["lb_notes"]			= "Lisätiedot";
 $pgv_lang["lb_notes_info"]		= "";
 
 // Added in VERSION 4.1.4 
-$pgv_lang["lb_details"]	= "Tietoja";
-$pgv_lang["lb_detail_info"] = "Tarkastele tämän mediakohteen tietoja ...  sekä muita media-asetuksia – Median tarkastelusivu";
-$pgv_lang["lb_pause_ss"] = "Pysäytä diaesitys";
-$pgv_lang["lb_start_ss"] = "Aloita diaesitys";
-$pgv_lang["lb_music"] = "Musiikki päälle/pois";
-$pgv_lang["lb_zoom_off"] = "Estä zoomaus";
-$pgv_lang["lb_zoom_on"] = "Zoomaus käytössä ... käytä hiiren vierintärullaa tai i- tai o-näppäintä lähentämään ja loitontamaan";
-$pgv_lang["lb_close_win"] = "Sulje valolaatikkoikkuna";
+$pgv_lang["lb_details"]		= "Tiedot";
+$pgv_lang["lb_detail_info"] 		= "Tarkastele tämän mediakohteen tietoja ...  sekä muita media-asetuksia – Median tarkastelusivu";
+$pgv_lang["lb_pause_ss"] 		= "Pysäytä diaesitys";
+$pgv_lang["lb_start_ss"] 		= "Aloita diaesitys";
+$pgv_lang["lb_music"] 		= "Musiikki päälle/pois";
+$pgv_lang["lb_zoom_off"] 		= "Estä zoomaus";
+$pgv_lang["lb_zoom_on"] 		= "Zoomaus käytössä ... käytä hiiren vierintärullaa tai i- tai o-näppäintä lähentämään ja loitontamaan";
+$pgv_lang["lb_close_win"] 		= "Sulje valolaatikkoikkuna";
 
 // Added in VERSION 4.1.3 
 //Config Parameters -------------------------------------
-$pgv_lang["configure_lightbox"] = "Valolaatikkoalbumin configurointi";
-$pgv_lang["mediatab"]       			= "Henkilösivu - Mediavälilehti";
+$pgv_lang["configure_lightbox"] 	= "Valolaatikkoalbumin configurointi";
+$pgv_lang["mediatab"]       		= "Henkilösivu - Mediavälilehti";
 $pgv_lang["lb_appearance"]		= "Ulkonäkö";
-$pgv_lang["lb_linkAppearance"]		= "Linkin ulkonäkö";
-$pgv_lang["lb_MP3Only"]			= "(vain mp3)";
+$pgv_lang["lb_linkAppearance"]	= "Liitteen ulkonäkö";
+$pgv_lang["lb_MP3Only"]		= "(vain mp3)";
 $pgv_lang["lb_admin_error"]		= "Vain ylläpitäjille tarkoitettu sivu";
 $pgv_lang["lb_toAlbumPage"]		= "Palaa albumisivulle";
 
@@ -75,19 +75,19 @@ $pgv_lang["lb_both"]			= "Kumpikin";
 $pgv_lang["lb_none"]			= "Ei mikään";
 
 $pgv_lang["lb_al_head_links"]		= "Henkilösivu – Albumivälilehden otsikko";
-$pgv_lang["lb_al_thumb_links"]		= "Henkilösivu – Albumivälilehden pienoiskuvat";
-$pgv_lang["lb_ml_thumb_links"]		= "Multimediasivu - Pienoiskuvat";
-$pgv_lang["lb_music_file"]			= "Diaesityksen ääniraita";
-$pgv_lang["lb_musicFileAdvice"]		= "Ääniraitatiedoston sijainti (jätä tyhjäksi, jos tiedostoa ei ole)";
-$pgv_lang["lb_ss_speed"]			= "Diaesityksen nopeus";
-$pgv_lang["lb_ss_SpeedAdvice"]		= "Diaesityksen ajastus sekunteina";
+$pgv_lang["lb_al_thumb_links"]	= "Henkilösivu – Albumivälilehden pienoiskuvat";
+$pgv_lang["lb_ml_thumb_links"]	= "Multimediasivu - Pienoiskuvat";
+$pgv_lang["lb_music_file"]		= "Diaesityksen ääniraita";
+$pgv_lang["lb_musicFileAdvice"]	= "Ääniraitatiedoston sijainti (jätä tyhjäksi, jos tiedostoa ei ole)";
+$pgv_lang["lb_ss_speed"]		= "Diaesityksen nopeus";
+$pgv_lang["lb_ss_SpeedAdvice"]	= "Diaesityksen ajastus sekunteina";
 
-$pgv_lang["lb_transition"]			= "Kuvavaihdon nopeus";
-$pgv_lang["lb_normal"]			= "Normaali";
-$pgv_lang["lb_double"]			= "Kaksinkertainen";
+$pgv_lang["lb_transition"]		= "Kuvavaihdon nopeus";
+$pgv_lang["lb_normal"]		= "Normaali";
+$pgv_lang["lb_double"]		= "Kaksinkertainen";
 $pgv_lang["lb_warp"]			= "Jatka alusta";
-$pgv_lang["lb_url_dimensions"]		= "URL-ikkunan mitat";
-$pgv_lang["lb_url_dimensionsAdvice"]	= "URL-ikkunan leveys ja korkeus pikseleinä";
+$pgv_lang["lb_url_dimensions"]	= "URL-ikkunan mitat";
+$pgv_lang["lb_url_dimensionsAdvice"] = "URL-ikkunan leveys ja korkeus pikseleinä";
 $pgv_lang["lb_width"]			= "Leveys";
 $pgv_lang["lb_height"]			= "Korkeus";
 									
@@ -97,10 +97,10 @@ $pgv_lang["lb_height"]			= "Korkeus";
 
 $pgv_lang["lb_help"] 		 	= "Albumin ohje";
 $pgv_lang["lightbox"]			= "Albumi";
-$pgv_lang["showmenu"] 			= "Näytä menu:";
+$pgv_lang["showmenu"] 		= "Näytä menu:";
 
-$pgv_lang["TYPE__other"] 	 		= "Muu"; 
-$pgv_lang["TYPE__footnotes"]		= "Alaviite"; 
+$pgv_lang["TYPE__other"] 	 	= "Muu"; 
+$pgv_lang["TYPE__footnotes"]	= "Alaviite"; 
 
 $pgv_lang["ROW_TYPE__photo"] 		= $pgv_lang["TYPE__photo"];
 $pgv_lang["ROW_TYPE__document"] 	= $pgv_lang["TYPE__document"];
@@ -108,30 +108,30 @@ $pgv_lang["ROW_TYPE__census"] 		= $factarray["CENS"];
 $pgv_lang["ROW_TYPE__other"] 		= $pgv_lang["TYPE__other"];
 $pgv_lang["ROW_TYPE__footnotes"]	= $pgv_lang["TYPE__footnotes"];
 
-$pgv_lang["census_text"]  	 		= "\"Nämä CENSUS kuvat on saatu \"Kansallisarkistosta\", joka hallitsee alkuperäisiä tiedostoja, ";
-$pgv_lang["census_text"] 			.= "ja on pantu esille tänne heidän suostumuksellaan edellyttäen, ettei niitä luvatta käytetä aupallisesti hyväksi.\".\"\n";
-$pgv_lang["census_text"] 			.= "Lupa näiden tai muiden täll sivustolla olevien CENSUS kuvien kaupalliseen käyttöön on pyydettävä: ";
-$pgv_lang["census_text"] 			.= "Image Library, The National Archives, Kew, Surrey, TW9 4DU, United Kingdom.\"" . "\n" ;
+$pgv_lang["census_text"]  	 	= "\"Nämä CENSUS kuvat on saatu \"Kansallisarkistosta\", joka hallitsee alkuperäisiä tiedostoja, ";
+$pgv_lang["census_text"] 		.= "ja on pantu esille tänne heidän suostumuksellaan edellyttäen, ettei niitä luvatta käytetä aupallisesti hyväksi.\".\"\n";
+$pgv_lang["census_text"] 		.= "Lupa näiden tai muiden täll sivustolla olevien CENSUS kuvien kaupalliseen käyttöön on pyydettävä: ";
+$pgv_lang["census_text"] 		.= "Image Library, The National Archives, Kew, Surrey, TW9 4DU, United Kingdom.\"" . "\n" ;
 
-$pgv_lang["lb_edit_details"] 		= "Editoi tiedot";
+$pgv_lang["lb_edit_details"] 		= "Muokkaa tiedot";
 $pgv_lang["lb_view_details"] 		= "Näytä tiedot";
-$pgv_lang["lb_edit_media"] 		= "Editoi tämän mediakohteen tietoja";
-$pgv_lang["lb_delete_media"] 		= "Poista tämä mediakohde - Poistaa vain linkin tähän henkilöön - ei poista itse mediatiedostoa tai muita linkkejä";
+$pgv_lang["lb_edit_media"] 		= "Muokkaa tämän mediakohteen tietoja";
+$pgv_lang["lb_delete_media"] 	= "Poista tämä mediakohde - Poistaa vain linkin tähän henkilöön - ei poista itse mediatiedostoa tai muita linkkejä";
 $pgv_lang["lb_view_media"] 		= "Näytä tämän mediakohteen tietoja. \n ynnä muita mediavalintoja - Mediannäyttösivu";
 
-$pgv_lang["lb_add_media"] 		= " Lisää uusi media"; 
-$pgv_lang["lb_add_media_full"] 		= "Lisää uusi multimediakohde tälle henkilölle";
-$pgv_lang["lb_link_media"] 		= "Linkitä olemassaolevaan mediaan"; 
-$pgv_lang["lb_link_media_full"] 		= "Linkitä tämä henkilצö olemassa olevaan multimediakohteeseen";
+$pgv_lang["lb_add_media"] 		= "Lisää uusi media"; 
+$pgv_lang["lb_add_media_full"] 	= "Lisää uusi multimediakohde tälle henkilölle";
+$pgv_lang["lb_link_media"] 		= "Liitä olemassaolevaan mediaan"; 
+$pgv_lang["lb_link_media_full"] 	= "Liitä tämä henkilö olemassa olevaan multimediakohteeseen";
 
 $pgv_lang["lb_slide_show"] 		= "Diaesitys";
-$pgv_lang["turn_edit_ON"] 			= "Avaa editiomuoto"; 
+$pgv_lang["turn_edit_ON"] 		= "Avaa editiomuoto"; 
 $pgv_lang["turn_edit_OFF"] 		= "Sulje editiomuoto"; 
 
 $pgv_lang["lb_source_avail"] 		= "Lähdetietoa olemassa - näpäytä tästä.";
 
-$pgv_lang["lb_private"] 			= "Kuva linkitetty <br />yksityiseen henkilöön";
-$pgv_lang["lb_view_source_tip"] 		= "Näytä lähde: ";
-$pgv_lang["lb_view_details_tip"] 		= "Näytä median tiedot: ";
+$pgv_lang["lb_private"] 		= "Kuva liitetty <br />yksityiseen henkilöön";
+$pgv_lang["lb_view_source_tip"] 	= "Näytä lähde: ";
+$pgv_lang["lb_view_details_tip"] 	= "Näytä median tiedot: ";
 
 ?>
