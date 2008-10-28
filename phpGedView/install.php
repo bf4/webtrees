@@ -214,15 +214,12 @@ switch($step) {
 		}
 		break;
 	case 4:
-		if (isset($_POST["NEW_INDEX_DIRECTORY"])) {
+		if (isset($_POST['NEW_INDEX_DIRECTORY'])) {
+			$temp = trim(preg_replace('/\\\/','/',trim($_POST['NEW_INDEX_DIRECTORY'])),'/').'/';	// Ensure presence of trailing "/"
+			if ($temp=='/') $temp = './index/';
+			if ($_POST['NEW_INDEX_DIRECTORY']!=$temp) unset($_REQUEST['next']);		// Force the admin to check the form
+			$_SESSION['install_config']['INDEX_DIRECTORY'] = $temp;
 			$_SESSION['install_modified'] = true;
-			$_POST["NEW_INDEX_DIRECTORY"] = trim(preg_replace('/\\\/','/',trim($_POST["NEW_INDEX_DIRECTORY"])),'/').'/';	// Ensure presence of trailing "/"
-			if ($_POST["NEW_INDEX_DIRECTORY"]!='/') {
-				$_SESSION['install_config']['INDEX_DIRECTORY'] = $_POST["NEW_INDEX_DIRECTORY"];
-			} else {
-				$_SESSION['install_config']['INDEX_DIRECTORY'] = './index/';
-				unset($_REQUEST['next']);		// Force the admin to re-check the Index directory
-			}
 		}
 		if (isset($_POST['NEW_ALLOW_CHANGE_GEDCOM'])) {
 			$_SESSION['install_config']['ALLOW_CHANGE_GEDCOM'] = $_POST['NEW_ALLOW_CHANGE_GEDCOM']=="yes"?true:false;
@@ -235,7 +232,14 @@ switch($step) {
 		if (isset($_POST['NEW_ALLOW_USER_THEMES'])) $_SESSION['install_config']['ALLOW_USER_THEMES'] = $_POST['NEW_ALLOW_USER_THEMES']=="yes"?true:false;
 		if (isset($_POST['NEW_ALLOW_REMEMBER_ME'])) $_SESSION['install_config']['ALLOW_REMEMBER_ME'] = $_POST['NEW_ALLOW_REMEMBER_ME']=="yes"?true:false;
 		if (isset($_POST['NEW_LOGFILE_CREATE'])) $_SESSION['install_config']['LOGFILE_CREATE'] = $_POST['NEW_LOGFILE_CREATE'];
-		if (isset($_POST['NEW_SERVER_URL'])) $_SESSION['install_config']['SERVER_URL'] = trim(trim($_POST['NEW_SERVER_URL']),'/').'/';
+		if (isset($_POST['NEW_SERVER_URL'])) {
+			$temp = trim($_POST['NEW_SERVER_URL']);
+			if ($temp!='') $temp = trim($temp,'/').'/';		// Ensure presence of trailing "/"
+			if ($_POST['NEW_SERVER_URL']!=$temp) {
+				unset($_REQUEST['next']);		// Force the admin to check the form
+			}
+			$_SESSION['install_config']['SERVER_URL'] = $temp;
+		}
 		if (isset($_POST['NEW_LOGIN_URL'])) $_SESSION['install_config']['LOGIN_URL'] = $_POST['NEW_LOGIN_URL'];
 		if (isset($_POST['NEW_PGV_SESSION_SAVE_PATH'])) $_SESSION['install_config']['PGV_SESSION_SAVE_PATH'] = $_POST['NEW_PGV_SESSION_SAVE_PATH'];
 		if (isset($_POST['NEW_PGV_SESSION_TIME'])) $_SESSION['install_config']['PGV_SESSION_TIME'] = $_POST['NEW_PGV_SESSION_TIME'];
