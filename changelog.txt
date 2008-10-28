@@ -10,6 +10,7 @@
 
 
 Version 4.1.6
+ - Fixed: [ 2203023 ] Installation Wizard breaks $INDEX_DIRECTORY setting (canajun2eh)
  - Fixed: Thumbnail positioning on mediaviewer page. (windmillway)
  - Fixed: Incorrect "loopback" to mediaviewer page if "Use Media Viewer" item set to Yes in the config page. (windmillway)
  - Added: Show thumbnails for URL images/videos/pages on multimedialist, mediaviewer, and media tab pages (windmillway)
