@@ -20,7 +20,7 @@
  *
  * @package PhpGedView
  * @subpackage Modules, punBB
- * @version $Id: menu.php 507 2006-10-17 21:07:54Z canajun2eh $
+ * @version $Id$
  * @author Patrick Kellum
  */
 //-- security check, only allow access from module.php
