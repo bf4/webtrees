@@ -511,8 +511,8 @@ $pgv_lang["moveto_3"]				= "Przenieś do katalogu standardowego";
 $pgv_lang["move_standard"]			= "Przenieś do standardowego";
 $pgv_lang["move_protected"]			= "Przenieś do chronionego";
 $pgv_lang["move_mediadirs"]			= "Przenieś katalogi multimediów";
-$pgv_lang["setperms"]				= "Ustaw atrybuty dla multimediów";
-$pgv_lang["setperms_writable"]		= "Możliwość zapisu dla wszystkich";
+$pgv_lang["setperms"]				= "Ustaw atrybuty multimediów";
+$pgv_lang["setperms_fix"]			= "Popraw atrybuty multimediów";
 $pgv_lang["setperms_success"]		= "Atrybuty";
 $pgv_lang["setperms_failure"]		= "Atrybuty nie ustwione";
 $pgv_lang["setperms_time_exceeded"]	= "Czas wykonania został przekroczony. Spróbuj ponownie dla mniejszego katalogu.";
@@ -521,7 +521,6 @@ $pgv_lang["media_firewall_rootdir_no_exist"]			= "Katalog Firewalla multimediów
 $pgv_lang["media_firewall_protected_dir_no_exist"]		= "Katalog chroniony multimediów nie może być stworzony w katalogu głównym Firewalla multimediów. Stwórz ten katalog w innym miejscu i ustaw atrybuty na możliwość zapisu dla wszystkich.";
 $pgv_lang["media_firewall_protected_dir_not_writable"]	= "katalog chroniony multimediów w katalogu głównym Firewlla multimediów nie jest dostępny dla wszystkich jako zapisywalny.";
 $pgv_lang["media_firewall_invalid_dir"]					= "Błąd: Firewall multimediów został włączony z innego katalogu niż katalog multimediów.";
-$pgv_lang["setperms_readonly"]		= "Możliwość odczytu dla wszystkich";
 
 //-- Relationship chart messages
 $pgv_lang["view_fam_nav_details"]	= "Zobacz szczegóły ...";
@@ -554,7 +553,7 @@ $pgv_lang["rela_wife"]				= "Pokrewieństwo z żoną";
 $pgv_lang["next_path"]				= "Pokaż następną ścieżkę";
 $pgv_lang["show_path"]				= "Pokaż ścieżkę";
 $pgv_lang["line_up_generations"]	= "Pokaż te same pokolenia w jednej linii";
-$pgv_lang["oldest_top"]             = "Pokaż starszych u góry";
+$pgv_lang["oldest_top"]				= "Pokaż starszych u góry";
 
 // %1\$s replaced by first person, %2\$s by the relationship and %3\$s by the second person.
 $pgv_lang["relationship_male_1_is_the_2_of_3"] 		= "Osoba: %1\$s to %2\$s dla osoby: %3\$s.";
