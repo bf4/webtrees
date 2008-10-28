@@ -21,7 +21,7 @@
  *
  * @package PhpGedView
  * @subpackage admin
- * @version $Id: install.php 3045 2008-05-12 23:05:27Z yalnifj $
+ * @version $Id$
  */
 
 /*
