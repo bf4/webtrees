@@ -355,7 +355,7 @@ function check_gedcom($gedrec, $chan=true) {
 		if (!empty($line)) $newrec .= $line."\r\n";
 	}
 
-	$newrec = html_entity_decode($newrec,ENT_COMPAT,'UTF-8');
+	$newrec = html_entity_decode($newrec,ENT_COMPAT); // PHP 4 doesn't support the 'UTF-8' param in html_entity_decode
 	return $newrec;
 }
 

@@ -115,7 +115,7 @@ if ($action=='login') {
 		else setcookie("pgv_rem", "", time()-60*60*24*7);
 
 		$url .= "&";	// Simplify the preg_replace following
-		$url = preg_replace("/(&|\?)ged=.*&/", "$1", html_entity_decode(rawurldecode($url),ENT_COMPAT,'UTF-8'));	// Remove any existing &ged= parameter
+		$url = preg_replace("/(&|\?)ged=.*&/", "$1", html_entity_decode(rawurldecode($url),ENT_COMPAT));	// Remove any existing &ged= parameter,  Note: PHP 4 doesn't support the 'UTF-8' param in html_entity_decode
 		if (substr($url, -1)=="&") $url = substr($url, 0, -1);
 		$url .= "&ged=".$ged;
 		$url = str_replace(array("&&", ".php&", ".php?&"), array("&", ".php?", ".php?"), $url);

@@ -232,7 +232,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 			}
 			$menu = array();
 			// If Media Title character length > 16,  Get the first 13 characters of the Media Title and add the ellipsis. (using UTF-8 Charset)
-				$mtitle = html_entity_decode(stripLRMRLM($mediaTitle), ENT_COMPAT,'UTF-8');
+				$mtitle = html_entity_decode(stripLRMRLM($mediaTitle), ENT_COMPAT); // PHP 4 doesn't support the 'UTF-8' param in html_entity_decode
 				if (UTF8_strlen($mtitle)>16) $mtitle = UTF8_substr($mtitle, 0, 13).$pgv_lang["ellipsis"];
 				$mtitle = htmlentities($mtitle, ENT_COMPAT, 'UTF-8');
 
