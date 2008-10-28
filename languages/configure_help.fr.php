@@ -3,7 +3,7 @@
  * French Language file for PhpGedView.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team. All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -689,4 +689,34 @@ $pgv_lang["movedown_faq_item"]          = "Déplacer FAQ vers le bas";
 #pgv_lang["ged_filter_description"]     = "Search option text";
 #pgv_lang["ged_filter_description_help"]= "~#pgv_lang[ged_filter_description]#~<br />This option lets you search the text associated with configuration options.<br /><br />As you type letters, the search will find all configuration options that contain that letter sequence.  The search becomes more precise as you type more letters.<br />";
 
+$pgv_lang["SHOW_LIST_PLACES"]	= "Afficher les niveaux de lieux sur des listes";
+$pgv_lang["ged_filter_description"] = "L'option de recherche par texte";
+$pgv_lang["ged_filter_reset"] = "Effacer la recherche";
+$pgv_lang["SHOW_LIST_PLACES_help"]	= "~#pgv_lang[SHOW_LIST_PLACES]#~<br /><br />Cette option détermine la granularité de l'information qui est affichée dans les listes des champs de lieux .<br /><br />Si vous paramétrez la valeur à <b>9</b> tous les détails de l'information du lieu seront affichés. Si vous paramétrez la valeur à <b>0</b> (zéro) cela masquera complètement les lieux. Si vous paramétrez la valeur à <b>1</b> cela n'affichera que le niveau supérieur de l'information de lieu, qui est en règle générale le pays. Si vous paramétrez la valeur à <b>2</b> cela affichera les deux niveaux supérieurs d'information de lieu. Le deuxième niveau supérieur, en dessous du pays, est en règle générale, la région ou l'Etat (pour les USA par exemple). Etc.<br />";
+$pgv_lang["SECURITY_CHECK_GEDCOM_DOWNLOADABLE"] = "Vérifiez si les fichiers GEDCOM sont téléchargeables";
+$pgv_lang["MEDIA_FIREWALL_ROOTDIR_note"]	= "Lorsque ce champ est vide, le répertoire <b> # GLOBALS [INDEX_DIRECTORY] # </ b> sera utilisé.";
+$pgv_lang["SHOW_PRIVATE_RELATIONSHIPS"]	= "Afficher les relations privées";
+$pgv_lang["more_config_hjaelp"]			= "<br /> <b> Plus d'aide </ b> <br /> Plus d'aide est disponible en cliquant sur le <b>? </ b> qui se trouve à côté des éléments de la page. <br />";
+$pgv_lang["THUMBNAIL_WIDTH_help"]		= "~ # pgv_lang [THUMBNAIL_WIDTH] # ~ <br /> <br /> C'est la largeur (en pixels) que le programme utilisera lors de la génération automatique de vignettes. Le réglage par défaut est 100. <br />";
+$pgv_lang["CHANGELOG_CREATE_help"]	= "~ # pgv_lang [CHANGELOG_CREATE] # ~ <br /> <br /> À quelle fréquence le programme doit archiver les fichiers de modifications des logs (Changelog). <br />";
+$pgv_lang["PREFER_LEVEL2_SOURCES"]		= "Préférer les sources factuelles";
+$pgv_lang["DBPORT"]			= "Port base de la base de données";
+$pgv_lang["PEDIGREE_SHOW_GENDER"]	= "Afficher les icônes de sexe sur les diagrammes";
+$pgv_lang["SHOW_EST_LIST_DATES"]		= "Afficher les dates estimées pour la naissance et le décès";
+$pgv_lang["SHOW_RESEARCH_ASSISTANT_help"]		= "~ # pgv_lang [SHOW_RESEARCH_ASSISTANT] # ~ <br /> <br /> Quel type d'utilisateur peut afficher le module d'assistant de recherche s'il est installé? <br />";
+$pgv_lang["google_translate"]	= "Traduction Google ";
+$pgv_lang["commit"]				= "Accepter";
+$pgv_lang["commit_google"]		= "Accepter les traductions proposées par Google";
+$pgv_lang["commit_google_help"]	= "~ # pgv_lang [commit_google] # ~ <br /> <br /> En cliquant sur ce lien, vous sauvegardez toutes les traductions proposées par Google. L'indicateur de progression de l'écriture des traductions est affiché ci-dessous. <br /> <br />";
+$pgv_lang["language_to_edit_help"]		= "~ # pgv_lang [language_to_edit] # ~ <br /> <br /> Dans cette liste, vous sélectionnez la langue avec laquelle vous souhaitez modifier les messages. <br />";
+$pgv_lang["um_index_sql"] = "Cet outil importera le fichier <i> authenticate.php </ i> et d'autres fichiers<i>. dat </ i> depuis votre le répertoire index de votre base de données. <br />";
+$pgv_lang["um_sql_index_help"] = "~ Migrer les utilisateurs du mode SQL au mode index ~ <br /> <br /> # pgv_lang [um_sql_index] #";
+$pgv_lang["um_index_sql_help"] = "~ Migrer les utilisateurs du mode index au mode SQL ~ <br /> <br /> # pgv_lang [um_index_sql] #";
+$pgv_lang["restore_faq_edits"] = "Rétablir la fonctionnalité de modification de la FAQ";
+$pgv_lang["ged_filter_results"] = "Résultats trouvés";
+$pgv_lang["time_limit_help"]			= "~ # pgv_lang [time_limit] # ~ <br /> <br /> Le temps maximum qui est autorisé pour l'importation afin de procéder au traitement du fichier GEDCOM.";
+$pgv_lang["delete_faq_item_help"] = "~ # pgv_lang [delete_faq_item] # ~ <br /> Cette option vous permettra de supprimer un élément de la page FAQ <br />";
+$pgv_lang["edit_faq_item_help"] = "~ # pgv_lang [edit_faq_item] # ~ <br /> Cette option vous permettra de modifier un élément sur la page FAQ. <br />";
+$pgv_lang["add_faq_item_help"] = "~ # pgv_lang [add_faq_item] # ~ <br /> Cette option vous permettra d'ajouter un élément à la page FAQ. <br />";
+$pgv_lang["restore_faq_edits_help"] = "~ # pgv_lang [restore_faq_edits] # ~ <br /> Cette option restaure la page FAQ à ce qu'un utilisateur administrateur voit normalement, de sorte que les éléments de la page FAQ puissent être modifiés. <br />";
 ?>
