@@ -215,7 +215,7 @@ switch($step) {
 		break;
 	case 4:
 		if (isset($_POST['NEW_INDEX_DIRECTORY'])) {
-			$temp = trim(preg_replace('/\\\/','/',rtrim($_POST['NEW_INDEX_DIRECTORY'])),'/').'/';	// Ensure presence of trailing "/"
+			$temp = rtrim(preg_replace('/\\\/','/',trim($_POST['NEW_INDEX_DIRECTORY'])),'/').'/';	// Ensure presence of trailing "/"
 			if ($temp=='/') $temp = './index/';
 			if ($_POST['NEW_INDEX_DIRECTORY']!=$temp) unset($_REQUEST['next']);		// Force the admin to check the form
 			$_SESSION['install_config']['INDEX_DIRECTORY'] = $temp;
