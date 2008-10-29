@@ -108,7 +108,7 @@ $sourcefacts = $controller->source->getSourceFacts();
 foreach($sourcefacts as $indexval => $fact) {
 	if (!empty($fact)) {
 		if ($fact->getTag()=="NOTE") {
-			print_main_notes($fact->getGedcomRecord(), 1, $sid, $fact->getLineNumber());
+			print_main_notes($fact->getGedcomRecord(), 1, $controller->sid, $fact->getLineNumber());
 		}
 		else {
 			print_fact($fact);
