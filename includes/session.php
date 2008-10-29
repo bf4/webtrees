@@ -44,7 +44,7 @@ define('PGV_REQUIRED_SQLITE_VERSION',  '3.2.6'); // Not currently enforced
 define('PGV_REQUIRED_PRIVACY_VERSION', '3.1');
 
 // Regular expressions for validating user input, etc.
-define('PGV_REGEX_XREF',      '[A-Za-z0-9:-_]+');
+define('PGV_REGEX_XREF',      '[A-Za-z0-9:_-]+');
 define('PGV_REGEX_INTEGER',   '-?\d+');
 define('PGV_REGEX_ALPHA',     '[a-zA-Z]+');
 define('PGV_REGEX_ALPHANUM',  '[a-zA-Z0-9]+');

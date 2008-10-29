@@ -108,7 +108,7 @@ $repositoryfacts = $controller->repository->getRepositoryFacts();
 foreach($repositoryfacts as $indexval => $fact) {
 	if (!empty($fact)) {
 		if ($fact->getTag()=="NOTE") {
-			print_main_notes($fact->getGedcomRecord(), 1, $rid, $fact->getLineNumber());
+			print_main_notes($fact->getGedcomRecord(), 1, $controller->rid, $fact->getLineNumber());
 		}
 		else {
 			print_fact($fact);
