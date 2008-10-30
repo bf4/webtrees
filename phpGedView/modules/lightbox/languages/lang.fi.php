@@ -57,11 +57,11 @@ $pgv_lang["lb_start_ss"] 		= "Aloita diaesitys";
 $pgv_lang["lb_music"] 		= "Musiikki päälle/pois";
 $pgv_lang["lb_zoom_off"] 		= "Estä zoomaus";
 $pgv_lang["lb_zoom_on"] 		= "Zoomaus käytössä ... käytä hiiren vierintärullaa tai i- tai o-näppäintä lähentämään ja loitontamaan";
-$pgv_lang["lb_close_win"] 		= "Sulje valolaatikkoikkuna";
+$pgv_lang["lb_close_win"] 		= "Sulje Lightbox ikkuna";
 
 // Added in VERSION 4.1.3 
 //Config Parameters -------------------------------------
-$pgv_lang["configure_lightbox"] 	= "Valolaatikkoalbumin configurointi";
+$pgv_lang["configure_lightbox"] 	= "Lightbox asetukset";
 $pgv_lang["mediatab"]       		= "Henkilösivu - Mediavälilehti";
 $pgv_lang["lb_appearance"]		= "Ulkonäkö";
 $pgv_lang["lb_linkAppearance"]	= "Liitteen ulkonäkö";
@@ -125,8 +125,8 @@ $pgv_lang["lb_link_media"] 		= "Liitä olemassaolevaan mediaan";
 $pgv_lang["lb_link_media_full"] 	= "Liitä tämä henkilö olemassa olevaan multimediakohteeseen";
 
 $pgv_lang["lb_slide_show"] 		= "Diaesitys";
-$pgv_lang["turn_edit_ON"] 		= "Avaa editiomuoto"; 
-$pgv_lang["turn_edit_OFF"] 		= "Sulje editiomuoto"; 
+$pgv_lang["turn_edit_ON"] 		= "Muokkaustila päälle"; 
+$pgv_lang["turn_edit_OFF"] 		= "Muokkaustila pois"; 
 
 $pgv_lang["lb_source_avail"] 		= "Lähdetietoa olemassa - näpäytä tästä.";
 
