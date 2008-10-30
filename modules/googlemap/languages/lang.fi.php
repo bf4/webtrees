@@ -30,9 +30,9 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
-$pgv_lang["googlemap"]              	= "Kartta";
+$pgv_lang["googlemap"]              	= "Kartasto";
 $pgv_lang["no_gmtab"]               	= "Ei kartta tietoa tällä henkilöllä";
-$pgv_lang["gm_disabled"]            	= "GoogleKartta moduli estetty";
+$pgv_lang["gm_disabled"]            	= "Google-kartasto -moduli estetty";
 
 $pgv_lang["gm_redraw_map"]          	= "Näytä kartta uudelleen";
 $pgv_lang["gm_map"]                 	= "Kartta";
@@ -41,18 +41,18 @@ $pgv_lang["gm_satellite"]           	= "Satelliitti";
 $pgv_lang["gm_hybrid"]              	= "Hybridi";
 
 // Configuration texts
-$pgv_lang["gm_manage"]              	= "Hallitse GoogleKartta asetuksia";
-$pgv_lang["configure_googlemap"]    = "GoogleKartta asetukset";
+$pgv_lang["gm_manage"]              	= "Hallitse Google-kartasto -asetuksia";
+$pgv_lang["configure_googlemap"]    = "Google-kartasto -asetukset";
 $pgv_lang["gm_admin_error"]         	= "Sivu vain ylläpitäjille";
-$pgv_lang["gm_db_error"]            	= "paikkasijainti taulu ei löydy tietokannasta";
-$pgv_lang["gm_table_created"]       	= "paikkasijainti taulu luotu";
-$pgv_lang["googlemap_enable"]       	= "Ota käyttöön GoogleKartta";
-$pgv_lang["googlemapkey"]           	= "GoogleKartta API avain";
-$pgv_lang["gm_map_type"]            	= "Oletus kartta tyyppi";
+$pgv_lang["gm_db_error"]            	= "placelocation-taulua ei löydy tietokannasta";
+$pgv_lang["gm_table_created"]       	= "placelocation-taulu luotu";
+$pgv_lang["googlemap_enable"]       	= "Ota käyttöön Google-kartasto";
+$pgv_lang["googlemapkey"]           	= "Google-kartasto sovellusliittymäavain";
+$pgv_lang["gm_map_type"]            	= "Oletuskarttatyyppi";
 $pgv_lang["gm_map_size"]            	= "Kartan koko (pikseleinä)";
 $pgv_lang["gm_map_size_x"]          	= "Leveys";
 $pgv_lang["gm_map_size_y"]          	= "Korkeus";
-$pgv_lang["gm_map_zoom"]            	= "Kartan zoomaus kerroin";
+$pgv_lang["gm_map_zoom"]            	= "Kartan zoomauskerroin";
 $pgv_lang["gm_digits"]              	= "taso"; //"luku";
 $pgv_lang["gm_min"]                 	= "Min.";
 $pgv_lang["gm_max"]                 	= "Max.";
@@ -61,7 +61,7 @@ $pgv_lang["gm_nof_levels"]          	= "Tasojen määrä";
 $pgv_lang["gm_config_per_level"]    	= "Tasojen asetukset";
 $pgv_lang["gm_name_prefix"]         	= "Etuliite";
 $pgv_lang["gm_name_postfix"]        	= "Jälkiliite";
-$pgv_lang["gm_name_pre_post"]       = "Etuliite / jälkiliite järjestys";
+$pgv_lang["gm_name_pre_post"]       = "Etu- ja jälkiliitteiden järjestys";
 $pgv_lang["gm_level"]               	= "Taso";
 $pgv_lang["gm_pp_none"]             	= "Ei etu-/jälkiliitettä";
 $pgv_lang["gm_pp_n_pr_po_b"]       	= "Normaali, etuliite, jälkiliite, kumpikin";
@@ -128,20 +128,19 @@ $pgv_lang["list_inactive"]        		= "Klikkaa tässä nähdäksesi joutilaat pa
 
 //Placecheck specific text
 $pgv_lang["placecheck"]		= "Paikkojen tarkistus";
-$pgv_lang["placecheck_text"]		= "Tämä listaa kaikki paikat valitusta GEDCOM-tiedostosta. Oletuksena tämä ei sisällytä paikkoja, jotka täysin vastaavat GEDCOM tiedostoa ja GoogleKartta tauluja";
+$pgv_lang["placecheck_text"]		= "Tämä listaa kaikki paikat valitusta GEDCOM-tiedostosta. Oletuksena tämä ei sisällytä paikkoja, jotka täysin vastaavat GEDCOM tiedostoa ja Google-kartaston tauluja";
 $pgv_lang["placecheck_top"]		= "Ylimmän tason paikat";
 $pgv_lang["placecheck_one"]		= "Tason yksi paikat";
 $pgv_lang["placecheck_select1"]	= "Valitse ylin taso...";
 $pgv_lang["placecheck_select2"]	= "Valitse seuraava taso...";
-$pgv_lang["placecheck_key"]		= "Avain värit joita käytetään";
-$pgv_lang["placecheck_key1"]	= "tämä paikka ja sen koordinaatit ei löydy GoogleKartta taulusta";
-$pgv_lang["placecheck_key1"]	= "tämä paikka ja sen koordinaatteja ei löydy GoogleKartta taulusta";
-$pgv_lang["placecheck_key2"]	= "tämä paikka on GoogleKartta taulussa, mutta ei sisällä koordinaatteja";
-$pgv_lang["placecheck_key3"]	= "Tämä paikkataso on tyhjä GEDCOM tiedostossasi. Se olisi hyvä lisätä <br/>GoogleKartta paikkoihin \"tuntematon\" koordinaattien kanssa edelliseltä<br/>tasolta ennen kuin lisäät paikkoja seuraavalle tasolle.";
-$pgv_lang["placecheck_key4"]	= "tämä paikkataso on tyhjä sinun GEDCOM tiedostossasi, mutta näkyy tekstillä 'tuntematon'<br/> GoogleKartta paikkataulussa koordinaattien kera. Se ei vaadi toimenpiteitä<br/>ennen kuin kadoksissa oleva taso voidaan lisätä";
+$pgv_lang["placecheck_key"]		= "Avainvärit joita käytetään";
+$pgv_lang["placecheck_key1"]	= "tämä paikka ja sen koordinaatteja ei löydy Google-kartaston taulusta";
+$pgv_lang["placecheck_key2"]	= "tämä paikka on Google-kartaston taulussa, mutta ei sisällä koordinaatteja";
+$pgv_lang["placecheck_key3"]	= "tämä paikkataso on tyhjä GEDCOM tiedostossasi. Se olisi hyvä lisätä <br/>Google-kartaston paikkoihin tekstillä \"tuntematon\" koordinaattien kanssa edelliseltä<br/>tasolta ennen kuin lisäät paikkoja seuraavalle tasolle";
+$pgv_lang["placecheck_key4"]	= "tämä paikkataso on tyhjä sinun GEDCOM tiedostossasi, mutta näkyy tekstillä 'tuntematon'<br/> Google-kartaston paikkataulussa koordinaattien kera. Se ei vaadi toimenpiteitä<br/>ennen kuin kadoksissa oleva taso voidaan lisätä";
 $pgv_lang["placecheck_head"]	= "Paikkalista GEDCOM tiedostosta";
 $pgv_lang["placecheck_gedheader"]	= "GEDCOM-tiedoston paikkadata<br/>(2 PLAC tag)";
-$pgv_lang["placecheck_gm_header"]	= "GoogleKartta Paikkatauludata";
+$pgv_lang["placecheck_gm_header"]	= "Google-kartaston paikkatauludata";
 $pgv_lang["placecheck_unique"]	= "yhteensä yksilöllisiä paikkoja";
 $pgv_lang["placecheck_zoom"]        	= "Zoomaus=";
 $pgv_lang["placecheck_options"]     	= "Paikkatarkistuslistan valinnat";
