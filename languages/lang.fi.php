@@ -57,7 +57,6 @@ $pgv_lang["chart_type"]		= "Kaaviotyyppi";
 $pgv_lang["changedate1"]		= "Muutospäivämäärien loppualue";
 $pgv_lang["changedate2"]		= "Muutospäivämäärien alkualue";
 $pgv_lang["search_place_word"]	= "Vain kokonaiset sanat";
-//@@ add ->
 $pgv_lang["invalid_search_input"] 	= "Anna vuosiluvun lisäksi etunimi, sukunimi tai paikka.";
 $pgv_lang["duplicate_username"] 	= "Tämä käyttäjätunnus on jo olemassa. Valitse toinen käyttäjätunnus.";
 $pgv_lang["cache_life"]		= "Välimuistitiedoston elinikä";
