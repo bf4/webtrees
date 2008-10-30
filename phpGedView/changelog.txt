@@ -10,6 +10,7 @@
 
 
 Version 4.1.6
+ - Fixed: [ 2199778 ] [4146] Adding Parents in Quick Edit Copies Marriage (fisharebest)
  - Fixed: [ 2203023 ] Installation Wizard breaks $INDEX_DIRECTORY setting (canajun2eh)
  - Fixed: Thumbnail positioning on mediaviewer page. (windmillway)
  - Fixed: Incorrect "loopback" to mediaviewer page if "Use Media Viewer" item set to Yes in the config page. (windmillway)
