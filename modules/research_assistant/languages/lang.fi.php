@@ -22,7 +22,7 @@
  * @package PhpGedView
  * @subpackage Research_Assistant
  * @version $Id$
- * @translator Matti Valve
+ * @translator Matti Valve, Marko Kohtala
  */
 
 if (!defined('PGV_PHPGEDVIEW')) {
@@ -60,13 +60,13 @@ $pgv_lang["task_list_text"]		= "Tällä alueella näytetään luomasi tehtävät
 // -- MENU ITEM MESSAGES
 $pgv_lang["my_tasks"]						= "Tehtäväni";
 $pgv_lang["add_task"]						= "Lisää tehtävä";
-$pgv_lang["view_folders"]					= "Näytä hakemistot";
+$pgv_lang["view_folders"]					= "Näytä kansiot";
 $pgv_lang["view_probabilities"]				= "Näytä todennäköisyydet";
-$pgv_lang["up_folder"]						= "Ylempi hakemsitotaso";
+$pgv_lang["up_folder"]						= "Ylempi kansiotaso";
 $pgv_lang["gen_tasks"]						= "Luo automaattisesti tehtäviä";
 
 // -- RA GENERAL MESSAGES
-$pgv_lang["edit_task"]						= "Editoi tehtävää";
+$pgv_lang["edit_task"]						= "Muokkaa tehtävää";
 $pgv_lang["completed"]						= "Valmis";
 $pgv_lang["complete"]						= "Lopeta";
 $pgv_lang["incomplete"]						= "Kesken";
@@ -74,7 +74,7 @@ $pgv_lang["created"]						= "Luotu";
 $pgv_lang["details"]						= "Yksityiskohdat";
 $pgv_lang["result"]                     	= "Tulos";
 $pgv_lang["okay"]                           = "OK";
-$pgv_lang["editform"]						= "Editoi lomaketietoa";
+$pgv_lang["editform"]						= "Muokkaa lomaketietoa";
 $pgv_lang["FilterBy"]						= "Suodata";
 $pgv_lang["Recalculate"]					= "Laske uudelleen";
 $pgv_lang["LocalData"]						= "Paikallinen tieto";
@@ -99,7 +99,7 @@ $pgv_lang["EnterResults"]					= "Lisä tulokset";
 $pgv_lang["ra_submit"]						= "Lähetä"; 
 $pgv_lang["ra_generate_tasks"]				= "Luo tehtävät TODOsista"; 
 $pgv_lang["TaskDescription"]				= "Tehtäväkuvaus"; 
-$pgv_lang["SelectFolder"]                   = "Valitse hakemisto:"; 
+$pgv_lang["SelectFolder"]                   = "Valitse kansio:"; 
 $pgv_lang["ra_done"]						= "Valmis"; 
 $pgv_lang["ra_generate"]					= "Luo"; 
 
@@ -123,51 +123,51 @@ $pgv_lang["DataCorrelations"]				= "Tietojen Yhteydet";
 $pgv_lang["ViewProbExplanation"]			= "Tällä sivulla analysoidaan aktiivisen GEDCOM-tiedoston datajoukkoa ja näytetään eri muuttujien välisiä yhteyksiä. Esimerkiksi paikallisen tietueen ja isän tietueen sukunimien välillä voi olla 95 prosentin korrelaatio. Se voi merkitä, että 95 prosentilla tässä GEDCOM tietojoukossa olevilla henkilöillä on sama sukunimi kuin heidän isällään. Tässä tutkimusavustajan versiossa näitä laskelmia ei käytetä ohjelman muissa osissa ja ne ovat vain avustamassa omaa tutkimustasi. Tulevaisuudessa suunnittelemme tämän tiedon käyttämistä osoittamaan mihin suuntaan sinun kannattaisi keskittää tulevia tutkimuksia.";
 
 // -- RA_FOLDER MESSAGES
-$pgv_lang["Folder"]                         = "Hakemisto:";
-$pgv_lang["Edit_Gen_Task"]                 	= "Editoi luotu tehtävä"; 
+$pgv_lang["Folder"]                         = "Kansio:";
+$pgv_lang["Edit_Gen_Task"]                 	= "Muokkaa luotua tehtävää"; 
 $pgv_lang["Start_Date"]                 	= "Aloituspäivämäärä";
 $pgv_lang["Task_Name"]                		= "Tehtävän nimi";
-$pgv_lang["Folder_Name"]                	= "Hakemiston nimi";
-$pgv_lang["Folder_View"]                	= "Hakemistonäkymä";
+$pgv_lang["Folder_Name"]                	= "Kansion nimi";
+$pgv_lang["Folder_View"]                	= "Kansionäkymä";
 $pgv_lang["Task_View"]                  	= "Tehtävänäkymä";
-$pgv_lang["page_header"]					= "Tutkimusavustajahakemistot";
-$pgv_lang["no_folder_name"]             	= "Hakemistonimi on pakollinen";
-$pgv_lang["add_folder"]                 	= "Lisää hakemisto";
-$pgv_lang["edit_folder"]                	= "Editoi hakemistoa";
-$pgv_lang["folder_name"]                	= "Hakemiston nimi:";
-$pgv_lang["Parent_Folder:"]             	= "Päähakemisto:";
-$pgv_lang["No_Parent"]                  	= "Ei päähakemistoa";
-$pgv_lang["Folder_Description:"]        	= "Hakemiston kuvaus:";
-$pgv_lang["Folder_names_must_be_unique"]	= "Ei samoja hakemistonimiä.";
-$pgv_lang["folder_submitted"]          		= "Hakemistosi on lähetetty";
-$pgv_lang["folder_problem"]             	= "Hakemistosi lisääminen ei onnistunut, yritä uudelleen";
+$pgv_lang["page_header"]					= "Tutkimusavustajakansiot";
+$pgv_lang["no_folder_name"]             	= "Kansion nimi on pakollinen";
+$pgv_lang["add_folder"]                 	= "Lisää kansio";
+$pgv_lang["edit_folder"]                	= "Muokkaa kansiota";
+$pgv_lang["folder_name"]                	= "Kansion nimi:";
+$pgv_lang["Parent_Folder:"]             	= "Pääkansio:";
+$pgv_lang["No_Parent"]                  	= "Ei pääkansiota";
+$pgv_lang["Folder_Description:"]        	= "Kansion kuvaus:";
+$pgv_lang["Folder_names_must_be_unique"]	= "Ei samoja kansionimiä.";
+$pgv_lang["folder_submitted"]          		= "Kansiosi on lähetetty";
+$pgv_lang["folder_problem"]             	= "Kansiosi lisääminen ei onnistunut, yritä uudelleen";
 
 // -- Missing Information Help
-$pgv_lang["ra_missing_info_help"]			= "Tällä alueella näytetään mitkä tiedot puuttuvat tietueesta . Valitse valintaruutu ja ja hakemisto ja paina Lisää tehtävä luodaksesi tehtävän puuttuvalle kohteelle. Jo luodut tehtävät näyttävät 'näytä' valintaruudun asemesta <br />";
+$pgv_lang["ra_missing_info_help"]			= "Tällä alueella näytetään mitkä tiedot puuttuvat tietueesta . Valitse valintaruutu ja kansio ja paina Lisää tehtävä luodaksesi tehtävän puuttuvalle kohteelle. Jo luodut tehtävät näyttävät 'näytä' valintaruudun asemesta <br />";
 $pgv_lang["task_entry"]						= "Luo uusi tehtävä.";
 
 //-- ERROR MESSAGES
-$pgv_lang["no_folder"]						= "Yhtään hakemistoa ei vielä ole. Luo ensin uusi hakemisto.";
+$pgv_lang["no_folder"]						= "Yhtään kansiota ei vielä ole. Luo ensin uusi kansio.";
 
 //-- HELP MESSAGES
-$pgv_lang["ra_fold_name_help"]				= "<H2><B>Hakemistonäkymä:</B></H2><ul><li><B>Hakemiston nimi:</B> Tällä palstalla ovat kaikkien luomiesi hakemistojen nimet.</li><li><B>Kuvaus:</B> Tällä palstalla ovat hakemistojen kuvaukset.</li></ul>";
-$pgv_lang["ra_add_task_help"]				= "<H2><B>Lisää uusi tehtävä:</B></H2></H2><ul><li><B>Otsikko:</B>Tässä pitäisi olla lisäämäsi tehtävän otsikko.</li><li><B>Hakemisto:</B>Tähän kenttään voit merkitä, mihin hakemistoon uusi tehtävä tulee.</li><li><B>Kuvaus:</B> Lisää tehtävääsi kuvaava kuvaus.</li><li><B>Lähteet:</B> Lisää tehtävääsi liittyvät lähteet.</li><li><B>Henkilöt:</B> Lisää tehtävään liittyvät henkilöt.</li></ul>";
-$pgv_lang["ra_edit_folder_help"]			= "<H2><B>Editoi hakemistoa:</B></H2><ul><li><B>Hakemiston nimi:</B> Lisää tähän editoitavan hakemiston nimi.</B></li><li><B>Päähakemisto:</B> Voit määrittää editoitavan hakemiston päähakemistoksi.</B></li><li><B>Hakemiston kuvaus:</B> Lisää hakemistosi kuvaus.</B></li></ul>";
-$pgv_lang["ra_add_folder_help"]				= "<H2><B>Lisää hakemisto:</B></H2><ul><li><B>Hakemiston nimi:</B> Lisää tähän lisättävän hakemiston nimi.</B></li><li><B>Päähakemisto:</B> Voit määrittää editoitavan hakemiston päähakemistoksi.</B></li><li><B>Hakemiston kuvaus:</B> Lisää hakemistosi kuvaus.</B></li></ul>";
-$pgv_lang["ra_view_task_help"]				= "<H2><B>Tehtävänäkymä:</B></H2><ul><li><B>Tehtävän nimi:</B> Tällä palstalla ovat kaikkien luomiesi tehtävien nimet.</B></li><li><B>Kuvaus:</B> Tällä palstalla ovat tehtäviesi kuvaukset.</li><li><B>Aloituspäivämäärä:</B> Tässä ovat kaikkien tehtävien aloituspäivämäärät.</li><li><B>Valmis:</B>Tässä näkyy, onko tehtävä suoritettu valmiiksi.</li><li><B>Yksityiskohdat:</B>Tässä näkyvät tehtävien yksityiskohdat.</li><li><B>Poista:</B>Tässä poistetaan tehtävä.</li></ul>";
-$pgv_lang["ra_task_view_help"]				= "<H2><B>Näytä tehtävä:</B></H2><ul><li><B>Otsikko:</B>Tässä pitäisi olla lisäämäsi tehtävän otsikko.</li><li><B>Henkilöt:</B> Liitä henkilö, joka liittyy tehtävään</li><li><B>Kuvaus:</B> Lisää tehtävääsi kuvaava kuvaus.</li><li><B>Lähteet:</B> Lisää tehtävääsi liittyvät lähteet.</li><li>Näpäytä 'Editoi tehtävää'-painiketta muokataksesi tehtävän yksityiskohtia.</li></ul>";
-$pgv_lang["ra_comments_help"]				= "<H2><B>Kommentit:</B></H2><ul><li>Tähän tulevat tehtävään liittyvät kommentit. Näpäytä 'Lisää uusi kommentti'-painiketta lisätäksesi kommentin.</li></ul>";
-$pgv_lang["ra_GenerateTasks_help"]			= "<H2><B>Luo tehtäviä:</B></H2><p>Tämä lomake luo tehtäviä _TODO-merkitsimistä GEDCOM-tiedostossasi.</p><ul><li><B>Luo:</B> Tarkista jokainen luotava tehtävä, kun painat 'Luo tehtävä'-painiketta.</li><li><B>Tehtävän nimi:</B> Tämä nimi annetaan tehtävälle.  This defaults to the text in the actual _TODO tag, excluding any CONT tag&quot;s</li><li><B>Tehtävän kuvaus:</B> Tehtävälle annettava kuvaus. Se luodaan _TODO-merkitsimen tekstistä sekä kaikesta, joka on liittynyt CONT-merkitsimiin.  </li><li><B>Editoi:</B> näpäytä linkkiä editoidaksesi tehtävää.</li><li><B>Valitse hakemisto:</B> valitse se hakemisto, johon tehtävä sijoitetaan.</li><li><B>Luo:</B> luom rastitetut tehtävät.</li><li><B>Valmis:</B> vie sinut hakemistonäkymäsivulle.</li></ul>";
-$pgv_lang["ra_EditGenerateTasks_help"]		= "<H2><B>Editoi luotuja thtäviä:</B></H2><p>Tällä lomakkeella voit editoida tehtäviä, jotka on luotu _TODO-merkitsimistä GEDCOM-tiedostossasi.</p><ul><li><B>Tehtävän nimi:</B> Tämä nimi annetaan tehtävälle.  </li><li><B>Tehtävän kuvaus:</B> Tehtävän kuvaus annetaan. </li><li><B>Henkilö:</B> näpäytä linkkiä valitaksesi henkilön, joka liitetään tehtävään.</li><li><B>Lähde:</B> näpäytä linkkiä valitaksesi lähde, joka liitetään tehtävään..</li><li><B>Tallenna:</B> tallentaa kaikki muutokset ja vie sinut 'Luo tehtävä'-sivulle.</li><li><B>Peruuta:</B> peruuttaa kaikki muutokset ja vie sinut 'Luo tehtävä'-sivulle.</li></ul>";
-$pgv_lang["ra_configure_privacy_help"]		= "<H2><B>Konfiguroi yksityisyysasetuksia:</B></H2></H2><ul><li><B>Näytä kaikille:</B> Näyttää määritellyt tehtävät kaikille.</li><li><B>Näytä autentikoiduille käyttäjille:</B> Näyttää määritellyt tehtävät vain autentikoiduille käyttäjille.</li><li><B> Näytä ylläpitäjille:</B> Näyttää määritellyt tehtävät vain ylläpitäjille.</li><li><B> Piilota myös ylläpitäjiltä:</B> Kukaan ei näe määriteltyjä tehtäviä.</li></ul>";
-$pgv_lang["ra_edit_task_help"]				= "<H2><B>Editoi tehtävää:</B></H2></H2><ul><li><B>Otsikko:</B> Tässä tulee olla editoitavan tehtävän otsikko.</li><li><B>Hakemisto:</B> Tähän voit merkitä, mihin hakemistoon uusi tehtävä tulee.</li><li><B>Kuvaus:</B> Lisää editoitavan tehtävän kuvaus.</li><li><B>Lähteet:</B> Määrittele tai editoi tehtävään kuuluvat lähteet.</li><li><B>Henkilöt:</B> Määrittele tai editoi tehtävään kuuluvat henkilöt.</li></ul>";
+$pgv_lang["ra_fold_name_help"]				= "~Kansionäkymä~<ul><li><b>Kansion nimi:</b> Tällä palstalla ovat kaikkien luomiesi kansioiden nimet.</li><li><b>Kuvaus:</b> Tällä palstalla ovat kansioiden kuvaukset.</li></ul>";
+$pgv_lang["ra_add_task_help"]				= "~Lisää uusi tehtävä~<ul><li><b>Otsikko:</b>Tässä pitäisi olla lisäämäsi tehtävän otsikko.</li><li><b>Kansio:</b>Tähän kenttään voit merkitä, mihin kansioon uusi tehtävä tulee.</li><li><b>Kuvaus:</b> Lisää tehtävääsi kuvaava kuvaus.</li><li><b>Lähteet:</b> Lisää tehtävääsi liittyvät lähteet.</li><li><b>Henkilöt:</b> Lisää tehtävään liittyvät henkilöt.</li></ul>";
+$pgv_lang["ra_edit_folder_help"]			= "~Muokkaa kansiota:~<ul><li><b>Kansion nimi:</b> Lisää tähän muokattavan kansion nimi.</b></li><li><b>Pääkansio:</b> Voit määrittää muokattavan kansion pääkansioksi.</b></li><li><b>Kansion kuvaus:</b> Lisää kansiosi kuvaus.</b></li></ul>";
+$pgv_lang["ra_add_folder_help"]				= "~Lisää kansio:~<ul><li><b>Kansion nimi:</b> Lisää tähän lisättävän kansion nimi.</b></li><li><b>Pääkansio:</b> Voit määrittää muokattavan kansion pääkansioksi.</b></li><li><b>Kansion kuvaus:</b> Lisää kansiosi kuvaus.</b></li></ul>";
+$pgv_lang["ra_view_task_help"]				= "~Tehtävänäkymä:~<ul><li><b>Tehtävän nimi:</b> Tällä palstalla ovat kaikkien luomiesi tehtävien nimet.</b></li><li><b>Kuvaus:</b> Tällä palstalla ovat tehtäviesi kuvaukset.</li><li><b>Aloituspäivämäärä:</b> Tässä ovat kaikkien tehtävien aloituspäivämäärät.</li><li><b>Valmis:</b>Tässä näkyy, onko tehtävä suoritettu valmiiksi.</li><li><b>Yksityiskohdat:</b>Tässä näkyvät tehtävien yksityiskohdat.</li><li><b>Poista:</b>Tässä poistetaan tehtävä.</li></ul>";
+$pgv_lang["ra_task_view_help"]				= "~Näytä tehtävä:~<ul><li><b>Otsikko:</b>Tässä pitäisi olla lisäämäsi tehtävän otsikko.</li><li><b>Henkilöt:</b> Liitä henkilö, joka liittyy tehtävään</li><li><b>Kuvaus:</b> Lisää tehtävääsi kuvaava kuvaus.</li><li><b>Lähteet:</b> Lisää tehtävääsi liittyvät lähteet.</li><li>Näpäytä 'Muokkaa tehtävää'-painiketta muokataksesi tehtävän yksityiskohtia.</li></ul>";
+$pgv_lang["ra_comments_help"]				= "~Kommentit:~<ul><li>Tähän tulevat tehtävään liittyvät kommentit. Näpäytä 'Lisää uusi kommentti'-painiketta lisätäksesi kommentin.</li></ul>";
+$pgv_lang["ra_GenerateTasks_help"]			= "~Luo tehtäviä:~<p>Tämä lomake luo tehtäviä _TODO-merkitsimistä GEDCOM-tiedostossasi.</p><ul><li><b>Luo:</b> Tarkista jokainen luotava tehtävä, kun painat 'Luo tehtävä'-painiketta.</li><li><b>Tehtävän nimi:</b> Tämä nimi annetaan tehtävälle.  This defaults to the text in the actual _TODO tag, excluding any CONT tag&quot;s</li><li><b>Tehtävän kuvaus:</b> Tehtävälle annettava kuvaus. Se luodaan _TODO-merkitsimen tekstistä sekä kaikesta, joka on liittynyt CONT-merkitsimiin.  </li><li><b>Muokkaa:</b> näpäytä linkkiä muokataksesi tehtävää.</li><li><b>Valitse kansio:</b> valitse se kansio, johon tehtävä sijoitetaan.</li><li><b>Luo:</b> luom rastitetut tehtävät.</li><li><b>Valmis:</b> vie sinut kansionäkymäsivulle.</li></ul>";
+$pgv_lang["ra_EditGenerateTasks_help"]		= "~Muokkaa luotuja tehtäviä:~<p>Tällä lomakkeella voit muokata tehtäviä, jotka on luotu _TODO-merkitsimistä GEDCOM-tiedostossasi.</p><ul><li><b>Tehtävän nimi:</b> Tämä nimi annetaan tehtävälle.  </li><li><b>Tehtävän kuvaus:</b> Tehtävän kuvaus annetaan. </li><li><b>Henkilö:</b> näpäytä linkkiä valitaksesi henkilön, joka liitetään tehtävään.</li><li><b>Lähde:</b> näpäytä linkkiä valitaksesi lähde, joka liitetään tehtävään..</li><li><b>Tallenna:</b> tallentaa kaikki muutokset ja vie sinut 'Luo tehtävä'-sivulle.</li><li><b>Peruuta:</b> peruuttaa kaikki muutokset ja vie sinut 'Luo tehtävä'-sivulle.</li></ul>";
+$pgv_lang["ra_configure_privacy_help"]		= "~Konfiguroi yksityisyysasetuksia:~<ul><li><b>Näytä kaikille:</b> Näyttää määritellyt tehtävät kaikille.</li><li><b>Näytä autentikoiduille käyttäjille:</b> Näyttää määritellyt tehtävät vain autentikoiduille käyttäjille.</li><li><b> Näytä ylläpitäjille:</b> Näyttää määritellyt tehtävät vain ylläpitäjille.</li><li><b> Piilota myös ylläpitäjiltä:</b> Kukaan ei näe määriteltyjä tehtäviä.</li></ul>";
+$pgv_lang["ra_edit_task_help"]				= "~Muokkaa tehtävää:~<ul><li><b>Otsikko:</b> Tässä tulee olla muokattavan tehtävän otsikko.</li><li><b>Kansio:</b> Tähän voit merkitä, mihin kansioon uusi tehtävä tulee.</li><li><b>Kuvaus:</b> Lisää muokattavan tehtävän kuvaus.</li><li><b>Lähteet:</b> Määrittele tai muokkaa tehtävään kuuluvat lähteet.</li><li><b>Henkilöt:</b> Määrittele tai muokkaa tehtävään kuuluvat henkilöt.</li></ul>";
 
 //-- RA_VIEWTASK MESSAGES
 $pgv_lang["view_task"]						= "Näytä tehtävä";
 $pgv_lang["add_new_comment"]				= "Lisää uusi kommentti";
 $pgv_lang["no_indi_tasks"]					= "Tähän tehtävään ei ole liitetty yhtään henkilöä.";
 $pgv_lang["no_sour_tasks"]					= "No tasks associated with this ssource.";
-$pgv_lang["edit_comment"]					= "Editoi kommenttia";
+$pgv_lang["edit_comment"]					= "Muokkaa kommenttia";
 $pgv_lang["comment_success"]				= "Kommenttisi on lisätty.";
 $pgv_lang["comment_body"]					= 'Kommentti';
 
@@ -186,8 +186,8 @@ $pgv_lang["configure_privacy"]		    	= "Konfiguroi yksityisyysasetuksia";
 $pgv_lang["show_my_tasks"]         		    = "Näytä tehtäväni";
 $pgv_lang["show_add_task"]		        	= "Näytä Lisää tehtävä";
 $pgv_lang["show_auto_gen_task"]         	= "Näytä Luo tehtävä automaattisesti";
-$pgv_lang["show_view_folders"]		    	= "Näytä Näytä hakemisto";
-$pgv_lang["show_add_folder"]		    	= "Näytä Lisää hakemisto";
+$pgv_lang["show_view_folders"]		    	= "Näytä Näytä kansio";
+$pgv_lang["show_add_folder"]		    	= "Näytä Lisää kansio";
 $pgv_lang["show_add_unlinked_source"]   	= "Näytä Lisää linkittämätön lähde";
 $pgv_lang["show_view_probabilities"]		= "Näytä Näytä todennäköisyydet";
 
@@ -225,7 +225,7 @@ $pgv_lang["order_no"]					= "Tilausnumero:";
 //-- MY TASK BLOCK
 $pgv_lang["mytasks_block_descr"]				= "Omat tehtävät alue osoittaa nykyisen käyttäjän tehtävän ja voidaan konfiguroida näyttämään valmiit tehtävät tai tehtävät joita toistaiseksi ei ole luovutettu"; 
 $pgv_lang["mytasks_block"] 						= "Omat tehtävät alue";
-$pgv_lang["mytasks_edit"]               		= "Editoi";
+$pgv_lang["mytasks_edit"]               		= "Muokkaa";
 $pgv_lang["mytasks_unassigned"]					= "Ei osoitettu"; 
 $pgv_lang["mytasks_takeOn"]						= "Omaksu";  
 $pgv_lang["mytasks_help"]						= "~OMA TEHTÄVÄ ALUE~<br /><br />Oma tehtävä alue näyttää nykyisen käyttäjän tehtävän ja voidaan konfiguroida näyttämään valmiit<br />tehtävät tai tehtävät joita toistaiseksi ei ole osoitettu";
@@ -257,6 +257,6 @@ $pgv_lang["autosearch_search"]           		= "Hae";
 $pgv_lang["autosearch_keywords"] 				= "Avainsanat:"; 
 
 //Folder deletion error messages
-$pgv_lang["has_tasks"]                 			="Hakemisto sisältää tehtäviä eikä sitä voi poistaa";
-$pgv_lang["has_folders"]               			="Hakemisto sisältää alihakemistoja eikä sitä voi poistaa";
+$pgv_lang["has_tasks"]                 			="Kansio sisältää tehtäviä eikä sitä voi poistaa";
+$pgv_lang["has_folders"]               			="Kansio sisältää alikansioita eikä sitä voi poistaa";
 ?>

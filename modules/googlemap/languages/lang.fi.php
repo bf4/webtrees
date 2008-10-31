@@ -21,7 +21,7 @@
  *
  * @package PhpGedView
  * @subpackage GoogleMap
- * @translator Jani Miettinen
+ * @translator Jani Miettinen, Marko Kohtala
  * @version $Id$
  */
 

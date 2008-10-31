@@ -25,7 +25,7 @@
  * @subpackage Module
  * @version $Id$
  * @author Brian Holland
- * @translator Matti Valve
+ * @translator Matti Valve, Marko Kohtala
  */
 
 if (!defined('PGV_PHPGEDVIEW')) {
@@ -34,6 +34,8 @@ if (!defined('PGV_PHPGEDVIEW')) {
 }
 
 // Added in VERSION 4.1.6
+$pgv_lang["lb_toAdminConfigPage"]	= "Palaa ylläpitosivulle";
+$pgv_lang["lb_manage"]				= "Hallitse Lightbox asetuksia";
 $pgv_lang["lb_generalhelp"]     	= "Henkilösivu - Lightboxin yleinen apu";
 $pgv_lang["lb_viewedit"]		= "Näytä/Muokkaa";
 $pgv_lang["lb_viewnotes"]		= "Näytä lisätiedot";
@@ -41,11 +43,11 @@ $pgv_lang["lb_viewdetails"]		= "Näytä yksityiskohdat";
 $pgv_lang["lb_viewsource"]		= "Näytä lähteet";
 $pgv_lang["lb_editmedia"]		= "Muokkaa mediaa"; 
 $pgv_lang["lb_unlinkmedia"]		= "Poista yhteys mediaan";
-$pgv_lang["lb_balloon_true"]		= "Pallo";  //Balloon
+$pgv_lang["lb_balloon_true"]		= "Pallo";  
 $pgv_lang["lb_balloon_false"]		= "Normaali";
 $pgv_lang["lb_tt_balloon"]		= "Henkilösivu - Albumivälilehden  pienoiskuva - Lisätiedot työkaluvihje";
 $pgv_lang["lb_ttAppearance"]		= "Lisätiedot - Työkaluvihjeen ulkonäkö";   //tooltip appearance
-$pgv_lang["view_lightbox"]		= "Näytä albumi ..."; //@@
+$pgv_lang["view_lightbox"]		= "Näytä albumi ..."; 
 $pgv_lang["lb_notes"]			= "Lisätiedot";
 $pgv_lang["lb_notes_info"]		= "";
 
