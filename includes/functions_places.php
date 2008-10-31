@@ -71,6 +71,8 @@ function setup_place_subfields($element_id) {
 	<!--
 	var element_id = '<?php print $element_id; ?>';
 	function http_loadmap(ctry) {
+		// meaningless request?
+		if (ctry=='' || ctry=='???') return;
 		// already loaded ?
 		if (document.getElementsByName(ctry)[0]) return;
 		// load data into HTML tag <div id="mapdata"> ... </div>
@@ -80,16 +82,24 @@ function setup_place_subfields($element_id) {
 		// 1. user map
 		mapfile = 'places/'+ctry+'/'+ctry+'.extra.htm';
 		http_request.open('GET', mapfile, false); http_request.send(null);
-		if (http_request.status == 200) document.getElementById("mapdata").innerHTML += http_request.responseText;
+		if (http_request.status == 200) {
+			document.getElementById("mapdata").innerHTML += http_request.responseText;
+		} else {
 		// 2. localized map
-		mapfile = 'places/'+ctry+'/'+ctry+'.<?php print $lang_short_cut[$LANGUAGE]?>.htm';
-		http_request.open('GET', mapfile, false); http_request.send(null);
-		if (http_request.status == 200) document.getElementById("mapdata").innerHTML += http_request.responseText;
+			mapfile = 'places/'+ctry+'/'+ctry+'.<?php print $lang_short_cut[$LANGUAGE]?>.htm';
+			http_request.open('GET', mapfile, false); http_request.send(null);
+			if (http_request.status == 200) {
+				document.getElementById("mapdata").innerHTML += http_request.responseText;
+			} else {
 		// 3. default map
-		mapfile = 'places/'+ctry+'/'+ctry+'.htm';
-		http_request.open('GET', mapfile, false); http_request.send(null);
-		// load data into HTML tag <div id="mapdata"> ... </div>
-		if (http_request.status == 200) document.getElementById("mapdata").innerHTML += http_request.responseText;
+				mapfile = 'places/'+ctry+'/'+ctry+'.htm';
+				http_request.open('GET', mapfile, false); http_request.send(null);
+				// load data into HTML tag <div id="mapdata"> ... </div>
+				if (http_request.status == 200) {
+					document.getElementById("mapdata").innerHTML += http_request.responseText;
+				}
+			}
+		}
 	}
 	// called to refresh field PLAC after any subfield change
 	function updatewholeplace(place_tag) {
