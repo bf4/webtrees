@@ -139,7 +139,7 @@ $pgv_lang["default_user"]		= "Tee oletus pääkäyttäjä";
 $pgv_lang["do_not_change"]		= "Älä muuta";
 $pgv_lang["download_gedcom"]	= "Lataa koneesta GEDCOM-tiedosto";
 $pgv_lang["download_here"]		= "Klikkaa tähän ladataksesi tiedoston.";
-$pgv_lang["download_note"]		= "HUOMAA: Suurten GEDCOM-tiedostojen käsittely saattaa viedä pikän ajan ennen niiden latausta. Jos PHP ilmoittaa ajan loppuneen ennenkuin lataus on viety loppuun, saattaa olla, että lataus ei ole täydellinen.<br /><br />Voit tarkastaa ladatun GEDCOM-tiedoston etsimällä rivi <b>0&nbsp;TRLR</b> tiedoston lopusta varmistaaksesi latauksen onnistumisen.<br /><br />Yleensä latausaika saattaa olla yhtä pitkä kuin tuontiaika GEDCOM-tiedostollesi.";
+$pgv_lang["download_note"]		= "HUOMAA: Suurten GEDCOM-tiedostojen käsittely saattaa viedä pikän ajan ennen niiden latausta. Jos PHP ilmoittaa ajan loppuneen ennen kuin lataus on viety loppuun, saattaa olla, että lataus ei ole täydellinen.<br /><br />Voit tarkastaa ladatun GEDCOM-tiedoston etsimällä rivi <b>0&nbsp;TRLR</b> tiedoston lopusta varmistaaksesi latauksen onnistumisen.<br /><br />Yleensä latausaika saattaa olla yhtä pitkä kuin tuontiaika GEDCOM-tiedostollesi.";
 $pgv_lang["editaccount"]		= "Salli tämän käyttäjän muokata käyttäjätiliään.";
 $pgv_lang["empty_dataset"]		= "Haluatko poistaa vanhat tiedot ja korvata ne näillä uusilla?";
 $pgv_lang["enable_disable_lang"]	= "Valitse tuetut kielet";
@@ -298,7 +298,7 @@ $pgv_lang["batch_update"]		="Suorita eräpäivitykset/-muokkaukset GEDCOMille";
 
 // Text for the Gedcom Checker
 $pgv_lang["gedcheck"]     		= "Gedcom-tarkastaja";
-$pgv_lang["gedcheck_text"]		= "Tässä moduulissa tarkastetaan GEDCOM-tiedoston formaatti verrattuna <a href=\"http://phpgedview.sourceforge.net/ged551-5.pdf\">5.5.1 GEDCOM-määrittelyyn</a>. Siinä tarkastetaan myös tiedostossasi mehdollisesti esiintyviä yleisiä virheitä. Huomaa, että määrittelyllä on useita versioita ja laajennuksia, joten ota huomioon vain ne, jotka on merkitty \"Kriittinen\". Selitykset kaikkiin rivikohtaisiin virheisiin löytyvät määrittelystä, joten tarkista ensin sieltä ennenkuin pyydät apua.";
+$pgv_lang["gedcheck_text"]		= "Tässä moduulissa tarkastetaan GEDCOM-tiedoston formaatti verrattuna <a href=\"http://phpgedview.sourceforge.net/ged551-5.pdf\">5.5.1 GEDCOM-määrittelyyn</a>. Siinä tarkastetaan myös tiedostossasi mehdollisesti esiintyviä yleisiä virheitä. Huomaa, että määrittelyllä on useita versioita ja laajennuksia, joten ota huomioon vain ne, jotka on merkitty \"Kriittinen\". Selitykset kaikkiin rivikohtaisiin virheisiin löytyvät määrittelystä, joten tarkista ensin sieltä ennen kuin pyydät apua.";
 $pgv_lang["level"]        			= "Taso";
 $pgv_lang["critical"]     			= "Kriittinen";
 $pgv_lang["error"]        		= "Virhe";

@@ -11,7 +11,7 @@ $lang_post = array(
 
 // Posting
 'Post errors'		=>	'Virheitä viestissä',
-'Post errors info'	=>	'Seuraavat virheet täytyy korjata ennenkuin viestin voi lähettää foorumille:',
+'Post errors info'	=>	'Seuraavat virheet täytyy korjata ennen kuin viestin voi lähettää foorumille:',
 'Post preview'		=>	'Viestin esikatselu',
 'Guest name'		=>	'Nimi',	// For guests (instead of Username)
 'Post redirect'		=>	'Viesti annettu. Uudelleenohjaus &hellip;',
