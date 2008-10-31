@@ -21,6 +21,7 @@
  *
  * @package PhpGedView
  * @subpackage SiteMap
+ * @translator Matti Valve, Marko Kohtala 
  * @version $Id$
  */
 
@@ -36,7 +37,7 @@ $pgv_lang["generate_sitemap"] = "Luo sivukarttatiedostot";
 $pgv_lang["selected_item"] = " Valitse kohteet, jotka tallennetaan sivukarttaan:";
 $pgv_lang["gedcoms_selected"] = "GEDCOM-tiedostot, jotka tallennetaan sivukarttaan:";
 $pgv_lang["sitemaps_generated"] = " Seuraavat sivukarttatiedostot on luotu ja voidaan ladata työasemalle:";
-$pgv_lang["sitemaps_placement"] = "Sijoita kaikki tiedostot PhpGedView-asennuksesi juurihakemistoon.";
+$pgv_lang["sitemaps_placement"] = "Sijoita kaikki tiedostot PhpGedView-asennuksesi juurikansioon.";
 $pgv_lang["sm_indi_info"] = "Henkilötietoja";
 $pgv_lang["sm_family_info"] = "Perhetietoja";
 $pgv_lang["sm_individual_list"] = "Henkilöluettelo";
