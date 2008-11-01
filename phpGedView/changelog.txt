@@ -10,6 +10,7 @@
 
 
 Version 4.1.6
+ - Changed: Installation Wizard, Step 4, when using IE produces incorrect page format (canajun2eh)
  - Fixed: [ 2173838 ] New family not shown on relationship tab (opus27)
  - Changed: Use normal page headers when editing existing site config (canajun2eh)
  - Fixed: [ 2193733 ] Installation Wizard won't complete (canajun2eh)
