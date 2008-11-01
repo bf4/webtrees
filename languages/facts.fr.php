@@ -23,12 +23,10 @@
  * @subpackage Languages
  * @version $Id$
  */
-
 if (!defined('PGV_PHPGEDVIEW')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
-
 // -- Define a fact array to map GEDCOM tags with their English values
 $factarray["ABBR"]                      = "Abréviation";
 $factarray["ADDR"]                      = "Adresse";
@@ -36,7 +34,7 @@ $factarray["ADR1"]                      = "Adresse 1";
 $factarray["ADR2"]                      = "Adresse 2";
 $factarray["ADOP"]                      = "Adoption";
 $factarray["AFN"]                       = "N° AFN";
-$factarray["AGE"]                       = "Âge";
+$factarray["AGE"]                       = "Age";
 $factarray["AGNC"]                      = "Institution";
 $factarray["ALIA"]                      = "Alias";
 $factarray["ANCE"]                      = "Ancêtres";
@@ -158,10 +156,8 @@ $factarray["_TODO"]                     = "Note";
 $factarray["_UID"]                      = "Identificateur universel (UID)";
 $factarray["_PRIM"]                     = "Image principale";
 $factarray["_DBID"]                     = "Bases liées";
-
 // These facts are used in specific contexts
 $factarray["STAT:DATE"]                 = "Date de modification du statut";
-
 //These facts are compounds for the view probabilities page
 $factarray["FAMC:HUSB:SURN"]            = "Nom de famille du père";
 $factarray["FAMC:WIFE:SURN"]            = "Nom de famille de la mère";
@@ -171,6 +167,7 @@ $factarray["FAMC:MARR:PLAC"]            = "Lieu de mariage des parents";
 $factarray["FAMC:HUSB:OCCU"]            = "Métier du père";
 $factarray[":BIRT:PLAC"]                = "Lieu de naissance";
 $factarray["FAMS:MARR:PLAC"]            = "Lieu de mariage";
+$factarray["FAMS:MARR:DATE"]            = "Date de mariage";
 $factarray["FAMS:SPOUSE:DEAT:PLAC"]     = "Lieu de décès du conjoint";
 $factarray["FAMC:HUSB:GIVN"]            = "Prénom du père";
 $factarray["FAMS:SPOUSE:BIRT:PLAC"]     = "Lieu de naissance du conjoint";
@@ -180,15 +177,19 @@ $factarray["FAMC:WIFE:FAMC:WIFE:GIVN"]  = "Prénom de la grand-mère maternelle"
 $factarray["FAMC:WIFE:FAMC:HUSB:GIVN"]  = "Prénom du grand-père maternel";
 $factarray["FAMC:HUSB:FAMC:WIFE:GIVN"]  = "Prénom de la grand-mère paternelle";
 $factarray["FAMS:CHIL:BIRT:PLAC"]       = "Lieu de naissance de l'enfant";
-
 // These facts are all colon delimited
 $factarray["BIRT:PLAC"]                 = "Lieu de naissance";
+$factarray["BIRT:DATE"]                 = "Date de naissance";
 $factarray["DEAT:PLAC"]                 = "Lieu de décès";
+$factarray["DEAT:DATE"]                 = "Date de décès";
 $factarray["CHR:PLAC"]                  = "Lieu de baptême";
+$factarray["CHR:DATE"]                  = "Date de baptême";
 $factarray["BAPM:PLAC"]                 = "Lieu de baptême";
+$factarray["BAPM:DATE"]                 = "Date de baptême";
 $factarray["BURI:PLAC"]                 = "Lieu de sépulture";
+$factarray["BURI:DATE"]                 = "Date de sépulture";
 $factarray["MARR:PLAC"]                 = "Lieu de mariage";
-
+$factarray["MARR:DATE"]                 = "Date de mariage";
 // These facts are specific to GEDCOM exports from Family Tree Maker
 $factarray["_MDCL"]                     = "Médical";
 $factarray["_DEG"]                      = "Diplôme";
@@ -213,7 +214,6 @@ $factarray["_MREL"]                     = "Lien avec la mère";
 $factarray["_FREL"]                     = "Lien avec le père";
 $factarray["_MSTAT"]                    = "Début Mariage";
 $factarray["_MEND"]                     = "Fin Mariage";
-
 // GEDCOM 5.5.1 related facts
 $factarray["FAX"]                       = "Fax";
 $factarray["FACT"]                      = "Événement";
@@ -223,7 +223,6 @@ $factarray["LATI"]                      = "Latitude";
 $factarray["LONG"]                      = "Longitude";
 $factarray["FONE"]                      = "Phonétique";
 $factarray["ROMN"]                      = "Romain";
-
 // PAF related facts
 $factarray["_NAME"]                     = "Adresse Mailing";
 $factarray["URL"]                       = "URL";
@@ -232,14 +231,11 @@ $factarray["_HEB"]                      = "Hébreu";
 $factarray["_SCBK"]                     = "Album";
 $factarray["_TYPE"]                     = "Type MultiMédia";
 $factarray["_SSHOW"]                    = "Diaporama";
-
 // Rootsmagic
 $factarray["_SUBQ"]                     = "Version courte";
 $factarray["_BIBL"]                     = "Bibliographie";
-
 // Reunion
 $factarray["EMAL"]                      = "Adresse courriel";
-
 // Other common customized facts
 $factarray["_ADPF"]                     = "Adoption par le père";
 $factarray["_ADPM"]                     = "Adoption par la mère";
@@ -267,159 +263,131 @@ $factarray["_MARNM"]                    = "Nom après mariage";
 $factarray["_MARNM_SURN"]               = "Nom de famille après mariage";
 $factarray["_STAT"]                     = "Statut Mariage";
 $factarray["COMM"]                      = "Commentaire";
-
 // Aldfaer related facts
 $factarray["MARR_CIVIL"]                = "Mariage civil";
 $factarray["MARR_RELIGIOUS"]            = "Mariage religieux";
 $factarray["MARR_PARTNERS"]             = "Partenaires";
-$factarray["MARR_UNKNOWN"]              = "Type de mariage inconnu";
-
+$factarray["MARR_UNKNOWN"]              = "";
 $factarray["_HNM"]                      = "Nom hébreu";
-
 // Pseudo-facts for relatives
 $factarray["_DEAT_SPOU"]                = "Décès du conjoint";
 $factarray["_BURI_SPOU"]                = "Enterrement du conjoint";
 $factarray["_CREM_SPOU"]                = "Crémation du conjoint";
-
 $factarray["_BIRT_CHIL"]                = "Naissance d'un enfant";
+$factarray["_CHR_CHIL" ]                = "Baptême d'un enfant";
+$factarray["_BAPM_CHIL"]                = "Baptême d'un enfant";
+$factarray["__BRTM_CHIL"]               = "Brit Mila d'un enfant";
+$factarray["_ADOP_CHIL"]                = "Adoption d'un enfant";
 $factarray["_MARR_CHIL"]                = "Mariage d'un enfant";
+$factarray["_MARB_CHIL"]                = "Publication de mariage d'un enfant";
 $factarray["_DEAT_CHIL"]                = "Décès d'un enfant";
 $factarray["_BURI_CHIL"]                = "Enterrement d'un enfant";
 $factarray["_CREM_CHIL"]                = "Crémation d'un enfant";
-
 $factarray["_BIRT_GCHI"]                = "Naissance d'un petit-enfant";
+$factarray["_CHR_GCHI" ]                = "Baptême d'un petit-enfant";
+$factarray["_BAPM_GCHI"]                = "Baptême d'un petit-enfant";
+$factarray["__BRTM_GCHI"]               = "Brit Mila d'un petit-enfant";
+$factarray["_ADOP_GCHI"]                = "Adoption d'un petit-enfant";
 $factarray["_MARR_GCHI"]                = "Mariage d'un petit-enfant";
+$factarray["_MARB_GCHI"]                = "Publication de mariage d'un petit-enfant";
 $factarray["_DEAT_GCHI"]                = "Décès d'un petit-enfant";
 $factarray["_BURI_GCHI"]                = "Enterrement d'un petit-enfant";
 $factarray["_CREM_GCHI"]                = "Crémation d'un petit-enfant";
-
 $factarray["_BIRT_GGCH"]                = "Naissance d'un arrière-petit-enfant";
+$factarray["_CHR_GGCH" ]                = "Baptême d'un arrière-petit-enfant";
+$factarray["_BAPM_GGCH"]                = "Baptême d'un arrière-petit-enfant";
+$factarray["__BRTM_GGCH"]               = "Brit Mila d'un arrière-petit-enfant";
+$factarray["_ADOP_GGCH"]                = "Adoption d'un arrière-petit-enfant";
 $factarray["_MARR_GGCH"]                = "Mariage d'un arrière-petit-enfant";
+$factarray["_MARB_GGCH"]                = "Publication de mariage d'un arrière-petit-enfant";
 $factarray["_DEAT_GGCH"]                = "Décès d'un arrière-petit-enfant";
-$factarray["_BURI_GGCH"]                = "Enterrement d'un arrière petit enfant";
-$factarray["_CREM_GGCH"]                = "Crémation d'un arrière petit enfant";
-
+$factarray["_BURI_GGCH"]                = "Enterrement d'un arrière-petit-enfant";
+$factarray["_CREM_GGCH"]                = "Crémation d'un arrière-petit-enfant";
 $factarray["_MARR_FATH"]                = "Mariage du père";
+$factarray["_MARB_FATH"]                = "Publication de mariage du père";
 $factarray["_DEAT_FATH"]                = "Décès du père";
 $factarray["_BURI_FATH"]                = "Enterrement du père";
 $factarray["_CREM_FATH"]                = "Crémation du père";
-
+$factarray["_MARR_FAMC"]                = "Mariage des parents";
+$factarray["_MARB_FAMC"]                = "Publication de mariage des parents";
 $factarray["_MARR_MOTH"]                = "Mariage de la mère";
+$factarray["_MARB_MOTH"]                = "Publication de mariage de la mère";
 $factarray["_DEAT_MOTH"]                = "Décès de la mère";
 $factarray["_BURI_MOTH"]                = "Enterrement de la mère";
 $factarray["_CREM_MOTH"]                = "Crémation de la mère";
-
 $factarray["_BIRT_SIBL"]                = "Naissance frère/sœur";
+$factarray["_CHR_SIBL" ]                = "Baptême frère/sœur";
+$factarray["_BAPM_SIBL"]                = "Baptême frère/sœur";
+$factarray["__BRTM_SIBL"]               = "Brit Mila frère/sœur";
+$factarray["_ADOP_SIBL"]                = "Adoption frère/sœur";
 $factarray["_MARR_SIBL"]                = "Mariage frère/sœur";
+$factarray["_MARB_SIBL"]                = "Publication de mariage frère/sœur";
 $factarray["_DEAT_SIBL"]                = "Décès frère/sœur";
 $factarray["_BURI_SIBL"]                = "Enterrement frère/sœur";
 $factarray["_CREM_SIBL"]                = "Crémation frère/sœur";
-
 $factarray["_BIRT_HSIB"]                = "Naissance demi-frère/sœur";
+$factarray["_CHR_HSIB" ]                = "Baptême demi-frère/sœur";
+$factarray["_BAPM_HSIB"]                = "Baptême demi-frère/sœur";
+$factarray["__BRTM_HSIB"]               = "Brit Mila demi-frère/sœur";
+$factarray["_ADOP_HSIB"]                = "Adoption demi-frère/sœur";
 $factarray["_MARR_HSIB"]                = "Mariage demi-frère/sœur";
+$factarray["_MARB_HSIB"]                = "Publication de mariage demi-frère/sœur";
 $factarray["_DEAT_HSIB"]                = "Décès demi-frère/sœur";
 $factarray["_BURI_HSIB"]                = "Enterrement demi-frère/sœur";
 $factarray["_CREM_HSIB"]                = "Crémation demi-frère/sœur";
-
 $factarray["_BIRT_NEPH"]                = "Naissance neveu/nièce";
+$factarray["_CHR_NEPH" ]                = "Baptême neveu/nièce";
+$factarray["_BAPM_NEPH"]                = "Baptême neveu/nièce";
+$factarray["__BRTM_NEPH"]               = "Brit Mila neveu";
+$factarray["_ADOP_NEPH"]                = "Adoption neveu/nièce";
 $factarray["_MARR_NEPH"]                = "Mariage neveu/nièce";
+$factarray["_MARB_NEPH"]                = "Publication de mariage neveu/nièce";
 $factarray["_DEAT_NEPH"]                = "Décès neveu/nièce";
 $factarray["_BURI_NEPH"]                = "Enterrement neveu/nièce";
 $factarray["_CREM_NEPH"]                = "Crémation neveu/nièce";
-
 $factarray["_DEAT_GPAR"]                = "Décès d'un grand-parent";
 $factarray["_BURI_GPAR"]                = "Enterrement d'un grand-parent";
 $factarray["_CREM_GPAR"]                = "Crémation d'un grand-parent";
-
 $factarray["_DEAT_GGPA"]                = "Décès d'un arrière-grand-parent";
 $factarray["_BURI_GGPA"]                = "Enterrement d'un arrière grand-parent";
 $factarray["_CREM_GGPA"]                = "Crémation d'un arrière grand-parent";
-
 $factarray["_BIRT_FSIB"]                = "Naissance frère/sœur du père";
+$factarray["_CHR_FSIB" ]                = "Baptême frère/sœur du père";
+$factarray["_BAPM_FSIB"]                = "Baptême frère/sœur du père";
+$factarray["__BRTM_FSIB"]               = "Brit Mila frère/sœur du père";
+$factarray["_ADOP_FSIB"]                = "Adoption frère/sœur du père";
 $factarray["_MARR_FSIB"]                = "Mariage frère/sœur du père";
+$factarray["_MARB_FSIB"]                = "Publication de mariage frère/sœur du père";
 $factarray["_DEAT_FSIB"]                = "Décès frère/sœur du père";
 $factarray["_BURI_FSIB"]                = "Enterrement frère/sœur du père";
 $factarray["_CREM_FSIB"]                = "Crémation frère/sœur du père";
-
 $factarray["_BIRT_MSIB"]                = "Naissance frère/sœur de la mère";
+$factarray["_CHR_MSIB" ]                = "Baptême frère/sœur de la mère";
+$factarray["_BAPM_MSIB"]                = "Baptême frère/sœur de la mère";
+$factarray["__BRTM_MSIB"]               = "Brit Mila frère/sœur de la mère";
+$factarray["_ADOP_MSIB"]                = "Adoption frère/sœur de la mère";
 $factarray["_MARR_MSIB"]                = "Mariage frère/sœur de la mère";
+$factarray["_MARB_MSIB"]                = "Publication de mariage frère/sœur de la mère";
 $factarray["_DEAT_MSIB"]                = "Décès frère/sœur de la mère";
 $factarray["_BURI_MSIB"]                = "Enterrement frère/sœur de la mère";
 $factarray["_CREM_MSIB"]                = "Crémation frère/sœur de la mère";
-
 $factarray["_BIRT_COUS"]                = "Naissance cousin(e) germain(e)";
+$factarray["_CHR_COUS"]                 = "Baptême cousin(e) germain(e)";
+$factarray["_BAPM_COUS"]                = "Baptême cousin(e) germain(e)";
+$factarray["__BRTM_COUS"]               = "Brit Mila cousin(e) germain(e)";
+$factarray["_ADOP_COUS"]                = "Adoption cousin(e) germain(e)";
 $factarray["_MARR_COUS"]                = "Mariage cousin(e) germain(e)";
+$factarray["_MARB_COUS"]                = "Publication de mariage cousin(e) germain(e)";
 $factarray["_DEAT_COUS"]                = "Décès cousin(e) germain(e)";
 $factarray["_BURI_COUS"]                = "Enterrement cousin(e) germain(e)";
 $factarray["_CREM_COUS"]                = "Crémation cousin(e) germain(e)";
-
 $factarray["_FAMC_EMIG"]                = "Émigration des parents";
 $factarray["_FAMC_RESI"]                = "Domicile des parents";
-
 //-- PGV Only facts
 $factarray["_THUM"]                     = "Vignette";
 $factarray["_PGVU"]                     = "par";
 $factarray["SERV"]                      = "Serveur distant";
 $factarray["_GEDF"]                     = "Fichier GEDCOM";
-
-
-$factarray["FAMS:MARR:DATE"] = "Date de mariage";
-$factarray["BIRT:DATE"] = "Date de naissance";
-$factarray["DEAT:DATE"] = "Date du décès";
-$factarray["CHR:DATE"] = "Date de baptême";
-$factarray["BAPM:DATE"] = "Date de baptême";
-$factarray["BURI:DATE"] = "Date des obsèques";
-$factarray["MARR:DATE"] = "Date de mariage";
-$factarray["_NAMS"]	= "Homonyme";
-
-$factarray["_CHR_CHIL" ] = "Baptême d'un enfant";
-$factarray["_BAPM_CHIL"] = "Baptême d'un enfant";
-$factarray["__BRTM_CHIL"] = "Brit Mila d'un enfant";
-$factarray["_ADOP_CHIL"] = "Adoption d'un enfant";
-$factarray["_MARB_CHIL"] = "Bans de mariage d'un enfant";
-$factarray["_CHR_GCHI" ] = "Baptême d'un petit-enfant";
-$factarray["_BAPM_GCHI"] = "Baptême d'un petit-enfant";
-$factarray["__BRTM_GCHI"] = "Brit Mila d'un petit-enfant";
-$factarray["_ADOP_GCHI"] = "Adoption d'un petit-enfant";
-$factarray["_MARB_GCHI"] = "Ban de mariage d'un petit-enfant";
-$factarray["_CHR_GGCH" ] = "Baptême d'un arrière petit enfant";
-$factarray["_BAPM_GGCH"] = "Baptême d'un arrière petit enfant";
-$factarray["__BRTM_GGCH"] = "Brit Mila d'un arrière petit enfant";
-$factarray["_ADOP_GGCH"] = "Adoption d'un arrière petit enfant";
-$factarray["_MARB_GGCH"] = "Bans de mariage d'un arrière petit enfant";
-$factarray["_MARB_FATH"] = "Bans de mariage du père";
-$factarray["_MARR_FAMC"] = "Mariage des parents";
-$factarray["_MARB_FAMC"] = "Bans de mariage des parents";
-$factarray["_MARB_MOTH"] = "Bans de mariage de la mère";
-$factarray["_CHR_SIBL" ] = "Baptême d'un frère ou d'une soeur";
-$factarray["_BAPM_SIBL"] = "Baptême d'un frère ou d'une soeur";
-$factarray["__BRTM_SIBL"] = "Brit Mila d'un frère ou d'une soeur";
-$factarray["_ADOP_SIBL"] = "Adoption d'un frère ou d'une soeur";
-$factarray["_MARB_SIBL"] = "Bans de mariage d'un frère ou d'une soeur";
-$factarray["_CHR_HSIB" ] = "Baptême d'un demi-frère ou d'une demi-soeur";
-$factarray["_BAPM_HSIB"] = "Baptême d'un demi-frère ou d'une demi-soeur";
-$factarray["__BRTM_HSIB"] = "Brit Mila d'un demi-frère ou d'une demi-soeur";
-$factarray["_ADOP_HSIB"] = "Adoption d'un demi-frère ou d'une demi-soeur";
-$factarray["_MARB_HSIB"] = "Bans de mariage d'un demi-frère ou d'une demi-soeur";
-$factarray["_CHR_NEPH" ] = "Baptême d'un neveu ou nièce";
-$factarray["_BAPM_NEPH"] = "Baptême d'un neveu ou nièce";
-$factarray["__BRTM_NEPH"] = "Brit Mila d'un neveu";
-$factarray["_ADOP_NEPH"] = "Adoption d'un neveu ou nièce";
-$factarray["_MARB_NEPH"] = "Bans de mariage d'un neveu ou d'une nièce";
-$factarray["_CHR_FSIB" ] = "Baptême d'un ";
-$factarray["_CHR_FSIB" ] = "Baptême d'un frère ou d'une soeur du père";
-$factarray["_BAPM_FSIB"] = "Baptême d'un frère ou d'une soeur du père";
-$factarray["__BRTM_FSIB"] = "Brit Mila d'un frère ou d'une soeur du père";
-$factarray["_ADOP_FSIB"] = "Adoption d'un frère ou d'une soeur du père";
-$factarray["_MARB_FSIB"] = "Bans de mariage d'un frère ou d'une soeur du père";
-$factarray["_CHR_MSIB" ] = "Baptême d'un frère ou d'une soeur de la mère";
-$factarray["_BAPM_MSIB"] = "Baptême d'un frère ou d'une soeur de la mère";
-$factarray["__BRTM_MSIB"] = "Brit Mila d'un frère ou d'une soeur de la mère";
-$factarray["_ADOP_MSIB"] = "Adoption d'un frère ou d'une soeur de la mère";
-$factarray["_MARB_MSIB"] = "Bans de mariage d'un frère ou d'une soeur de la mère";
-$factarray["_CHR_COUS"]  = "Baptême d'un(e) cousin(e) germain(e)";
-$factarray["_BAPM_COUS"] = "Baptême d'un(e) cousin(e) germain(e)";
-$factarray["__BRTM_COUS"] = "Brit Mila d'un(e) cousin(e) germain(e)";
-$factarray["_ADOP_COUS"] = "Adoption d'un(e) cousin(e) germain(e)";
-$factarray["_MARB_COUS"] = "Bans de mariage d'un(e) cousin(e) germain(e)";
+ 
+ 
 ?>

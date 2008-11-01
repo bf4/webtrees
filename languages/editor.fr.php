@@ -23,12 +23,10 @@
  * @subpackage Languages
  * @version $Id$
  */
-
 if (!defined('PGV_PHPGEDVIEW')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
-
 $pgv_lang["add_marriage"]               = "Ajouter un nouveau mariage";
 $pgv_lang["edit_concurrency_change"]    = "Enregistrement modifié en dernier par <i>#CHANGEUSER#</i> le #CHANGEDATE#";
 $pgv_lang["edit_concurrency_msg2"]      = "L'enregistrement #PID# a été modifié par un autre utilisateur depuis votre dernière visite.";
@@ -54,10 +52,18 @@ $pgv_lang["to_person"]                  = "à une personne";
 $pgv_lang["to_family"]                  = "à une famille";
 $pgv_lang["to_source"]                  = "à une source";
 $pgv_lang["edit_fam"]                   = "Modifier la famille";
+$pgv_lang["edit_repo"]                  = "Modifier le dépôt d'archives";
 $pgv_lang["copy"]                       = "Copier";
 $pgv_lang["cut"]                        = "Couper";
 $pgv_lang["sort_by_birth"]              = "Trier par date de naissance";
 $pgv_lang["reorder_children"]           = "Modifier l'ordre des enfants";
+$pgv_lang["reorder_media"]              = "Réordonner les objets MultiMédia";
+$pgv_lang["reorder_media_title"]        = "Cliquez et glissez-déposez les vignettes pour réordonner les objets MultiMédia";
+$pgv_lang["reorder_media_window"]       = "Réordonnez les objets MultiMédia";
+$pgv_lang["reorder_media_window_title"] = "Cliquez sur une rangée, puis glissez-déposez les vignettes pour réordonner les objets MultiMédia";
+$pgv_lang["reorder_media_save"]         = "Enregistrer les modifications";
+$pgv_lang["reorder_media_reset"]        = "Revenir à l'ordonnancement initial";
+$pgv_lang["reorder_media_cancel"]       = "Annuler les modifications";
 $pgv_lang["add_from_clipboard"]         = "Ajouter depuis le presse-papiers : ";
 $pgv_lang["record_copied"]              = "Enregistrement copié dans le presse-papiers";
 $pgv_lang["add_unlinked_person"]        = "Ajouter une personne isolée";
@@ -148,11 +154,17 @@ $pgv_lang["file_missing"]               = "Fichier non reçu. Veuillez recommenc
 $pgv_lang["file_partial"]               = "Fichier reçu partiellement. Veuillez recommencer.";
 $pgv_lang["file_success"]               = "Fichier chargé avec succès";
 $pgv_lang["file_too_big"]               = "Le fichier chargé dépasse la taille autorisée";
+$pgv_lang["file_no_temp_dir"]           = "Répertoire temporaire PHP manquant";
+$pgv_lang["file_cant_write"]            = "PHP n'a pas pu écrire sur le disque";
+$pgv_lang["file_bad_extension"]         = "PHP a bloqué le fichier à cause de son extension";
+$pgv_lang["file_unkown_err"]            = "Erreur de téléchargement de fichier inconnu (code #pgv_lang[global_num1]#). Rapportez cette information comme un bug.";
 $pgv_lang["folder"]                     = "Répertoire";
 $pgv_lang["gedcom_editing_disabled"]    = "La modification de ce fichier GEDCOM a été interdite par l'administrateur.";
 $pgv_lang["gedcomid"]                   = "Code GEDCOM";
 $pgv_lang["gedrec_deleted"]             = "Enregistrement GEDCOM supprimé avec succès.";
 $pgv_lang["gen_thumb"]                  = "Créer les vignettes";
+$pgv_lang["gen_missing_thumbs"]         = "Créer les vignettes manquantes";
+$pgv_lang["gen_missing_thumbs_lbl"]     = "Vignettes manquantes";
 $pgv_lang["gender_search"]              = "Sexe : ";
 $pgv_lang["generate_thumbnail"]         = "Création automatique d'une vignette depuis ";
 $pgv_lang["hebrew_givn"]                = "Prénoms Hébreu";
@@ -166,7 +178,6 @@ $pgv_lang["label_diff_server"]          = "Un autre site";
 $pgv_lang["label_location"]             = "Adresse";
 $pgv_lang["label_password_id2"]         = "Mot de passe : ";
 $pgv_lang["label_rel_to_current"]       = "Lien de parenté";
-$pgv_lang["label_remote_id"]            = "ID individu [distant]";
 $pgv_lang["label_same_server"]          = "Le même site";
 $pgv_lang["label_site"]                 = "Site";
 $pgv_lang["label_site_url"]             = "URL:";
@@ -219,19 +230,4 @@ $pgv_lang["upload_media"]               = "Charger des objets MultiMédia";
 $pgv_lang["upload_media_help"]          = "~#pgv_lang[upload_media]#~<br /><br />Choisir un fichier sur votre poste. Il sera copié sur le serveur dans le dossier <b>#MEDIA_DIRECTORY#</b> ou un de ses sous-dossiers.<br /><br />Le nom du dossier sera ajouté à #MEDIA_DIRECTORY#. Par exemple, #MEDIA_DIRECTORY#famille. Si le dossier de vignettes n'existe pas, il sera créé automatiquement.";
 $pgv_lang["upload_successful"]          = "Téléchargement réussi";
 $pgv_lang["view_change_diff"]           = "Voir les différences";
-
-$pgv_lang["edit_repo"]				= "Modifier le dépôt";
-$pgv_lang["reorder_media"]					= "Réordonner les media";
-$pgv_lang["reorder_media_title"]			= "Cliquez et glissez-déposez les vignettes pour réordonner les media";
-$pgv_lang["reorder_media_window"]			= "Réordonnez les media ";
-$pgv_lang["reorder_media_window_title"]		= "Cliquez sur une rangée, puis glissez-déposez les vignettes pour réordonner les media";
-$pgv_lang["reorder_media_save"]				= "Sauvegarde les media réordonnés dans la base de données";
-$pgv_lang["reorder_media_reset"]			= "Revenir à l'ordonnancement initial";
-$pgv_lang["reorder_media_cancel"]			= "Quittez et retour";
-$pgv_lang["file_no_temp_dir"]		= "Répertoire temporaire PHP manquant";
-$pgv_lang["file_cant_write"]		= "PHP n'a pas pu écrire sur le disque";
-$pgv_lang["file_bad_extension"]		= "PHP a bloqué le fichier à cause de son extension";
-$pgv_lang["file_unkown_err"]		= "Erreur de téléchargement de fichier inconnu (code #pgv_lang[global_num1]#). Rapportez cette information comme un bug.";
-$pgv_lang["gen_missing_thumbs"]		= "Créer les vignettes manquantes";
-$pgv_lang["gen_missing_thumbs_lbl"]	= "Vignettes manquantes";
 ?>
