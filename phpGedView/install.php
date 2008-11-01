@@ -76,6 +76,50 @@ function install_checkdb() {
 
 ob_start();  // in order for the download function to work, we have to buffer and discard the regular output
 
+// Build the HTML that needs to precede the </head> tag
+$head = '';
+$head .= "<link rel=\"stylesheet\" href=\"{$stylesheet}\" type=\"text/css\"></link>\n";
+$head .= "<style type=\"text/css\">\n";
+$head .= ".imenu {\n";
+$head .= "	font-size: 12pt;\n";
+$head .= "}\n";
+$head .= ".pass {\n";
+$head .= "	color: green;\n";
+$head .= "}\n";
+$head .= "</style>\n";
+$head .= "<script language=\"JavaScript\" type=\"text/javascript\">\n";
+$head .= "<!--\n";
+$head .= "	var helpWin;\n";
+$head .= "	function helpPopup(which) {\n";
+$head .= "		if ((!helpWin)||(helpWin.closed)) helpWin = window.open('editconfig_help.php?help='+which,'_blank','left=50,top=50,width=500,height=320,resizable=1,scrollbars=1');\n";
+$head .= "		else helpWin.location = 'editconfig_help.php?help='+which;\n";
+$head .= "		return false;\n";
+$head .= "	}\n";
+$head .= "	function getHelp(which) {\n";
+$head .= "		if ((helpWin)&&(!helpWin.closed)) helpWin.location='editconfig_help.php?help='+which;\n";
+$head .= "	}\n";
+$head .= "	function closeHelp() {\n";
+$head .= "		if (helpWin) helpWin.close();\n";
+$head .= "	}\n";
+$head .= "	function changeDBtype(dbselect) {\n";
+$head .= "		if (dbselect.options[dbselect.selectedIndex].value=='sqlite') {\n";
+$head .= "			document.configform.NEW_DBNAME.value='./index/phpgedview.db\";\n";
+$head .= "		}\n";
+$head .= "		else {\n";
+$head .= "			document.configform.NEW_DBNAME.value='phpgedview\";\n";
+$head .= "		}\n";
+$head .= "	}\n";
+$head .= "	function checkForm(frm) {\n";
+$head .= "		if (window.validate) return validate(frm);\n";
+$head .= "		return true;\n";
+$head .= "	}\n";
+$head .= "	//-->\n";
+$head .= "</script>\n";
+
+$newSite = $CONFIGURED ? 'no':'yes';
+if (isset($_REQUEST['newSite'])) $newSite = safe_REQUEST($_REQUEST, 'newSite', 'yes', 'no');
+if ($newSite=='no') print_header($pgv_lang["install_wizard"], $head);
+else {
 header("Content-Type: text/html; charset=$CHARACTER_SET");
 
 ?>
@@ -85,44 +129,11 @@ header("Content-Type: text/html; charset=$CHARACTER_SET");
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon"></link>
 <title><?php print $pgv_lang["install_wizard"]; ?></title>
-<link rel="stylesheet" href="<?php print $stylesheet ?>" type="text/css"></link>
-<style type="text/css">
-.imenu {
-	font-size: 12pt;
-}
-.pass {
-	color: green;
-}
-</style>
-<script language="JavaScript" type="text/javascript">
-<!--
-	var helpWin;
-	function helpPopup(which) {
-		if ((!helpWin)||(helpWin.closed)) helpWin = window.open('editconfig_help.php?help='+which,'_blank','left=50,top=50,width=500,height=320,resizable=1,scrollbars=1');
-		else helpWin.location = 'editconfig_help.php?help='+which;
-		return false;
-	}
-	function getHelp(which) {
-		if ((helpWin)&&(!helpWin.closed)) helpWin.location='editconfig_help.php?help='+which;
-	}
-	function closeHelp() {
-		if (helpWin) helpWin.close();
-	}
-	function changeDBtype(dbselect) {
-		if (dbselect.options[dbselect.selectedIndex].value=='sqlite') {
-			document.configform.NEW_DBNAME.value='./index/phpgedview.db';
-		}
-		else {
-			document.configform.NEW_DBNAME.value='phpgedview';
-		}
-	}
-	function checkForm(frm) {
-		if (window.validate) return validate(frm);
-		return true;
-	}
-	//-->
-</script>
+
+<?php print $head;?>
+
 </head>
+<?php } ?>
 <body id="body" dir="<?php print $TEXT_DIRECTION; ?>">
 <br />
 <table class="list_table person_boxNN width70" style="background-color: none;" cellspacing="0" cellpadding="5">
@@ -145,7 +156,7 @@ if ($CONFIGURED && DB::isError($DBCONN)) {
 			<br /><br />
 			<h2><?php print $pgv_lang["site_unavailable"] ?></h2>
 			<br /><br /><br />
-			
+
 			<!-- <?php print $DBCONN->getMessage() . " " . $DBCONN->getUserInfo(); ?> -->
 		</td>
 	</tr>
@@ -165,13 +176,10 @@ else {
 	if (adminUserExists()) $step = 8;
 }
 if (isset($_REQUEST['prev'])) $step--;
-if (!isset($_SESSION['install_step'])) $_SESSION['install_step'] = 1;
-if (!$CONFIGURED && $step>$_SESSION['install_step']+1) $step = $_SESSION['install_step']+1;
 
 $errors = array();
 switch($step) {
 	case 1:
-		if ($_SESSION['install_step']<1) $_SESSION['install_step'] = 1;
 		break;
 	case 2:
 		if (isset($_POST["NEW_DBHOST"]))
@@ -190,8 +198,8 @@ switch($step) {
 			$_SESSION['install_config']['DBUSER'] = $_POST["NEW_DBUSER"];
 		if (isset($_POST["NEW_TBLPREFIX"]))
 			$_SESSION['install_config']['TBLPREFIX'] = $_POST["NEW_TBLPREFIX"];
-		
-		if (!empty($_SESSION['install_config']['INDEX_DIRECTORY']) 
+
+		if (!empty($_SESSION['install_config']['INDEX_DIRECTORY'])
 			&& !is_writable($_SESSION['install_config']['INDEX_DIRECTORY'])) {
 				$error['msg'] = print_text("sanity_err6",0,1);
 				$error['help'] = '';
@@ -206,11 +214,7 @@ switch($step) {
 		$error = install_checkdb();
 		if ($error!==true) {
 			$errors[] = $error;
-			$step = 2;
-			$_SESSION['install_step'] = 2;
-		}
-		else {
-			if ($_SESSION['install_step']<3) $_SESSION['install_step'] = 3;
+			$step = 2;		// For any DB error, re-do Step 2
 		}
 		break;
 	case 4:
@@ -247,7 +251,7 @@ switch($step) {
 		if (isset($_POST['NEW_PGV_MEMORY_LIMIT'])) $_SESSION['install_config']['PGV_MEMORY_LIMIT'] = $_POST['NEW_PGV_MEMORY_LIMIT'];
 		if (isset($_POST['NEW_MAX_VIEWS'])) $_SESSION['install_config']['MAX_VIEWS'] = $_POST['NEW_MAX_VIEWS'];
 		if (isset($_POST['NEW_MAX_VIEW_TIME'])) $_SESSION['install_config']['MAX_VIEW_TIME'] = $_POST['NEW_MAX_VIEW_TIME'];
-		
+
 		if (isset($_SESSION['install_config']['INDEX_DIRECTORY'])) {
 			$INDEX_DIRECTORY = $_SESSION['install_config']['INDEX_DIRECTORY'];
 		}
@@ -257,17 +261,16 @@ switch($step) {
 			$errors[] = $error;
 		}
 		if (count($errors)==0) {
-			if ($_SESSION['install_step']<4) $_SESSION['install_step'] = 4;
+			$step = 4;
 		}
 		break;
 	case 5:
-		if ($_SESSION['install_step']<5) $_SESSION['install_step'] = 5;
 		//-- don't break, fall through to step 6
 	case 6:
 		if (isset($_SESSION['install_config'])) {
 			$download = false;
 			if (isset($_REQUEST['download'])) $download = true;
-			
+
 			$config_array = $_SESSION['install_config'];
 			$config_array['CONFIGURED'] = true;
 			$ret = update_site_config($config_array, $download);
@@ -276,7 +279,7 @@ switch($step) {
 				header("Pragma: public"); // required
 				header("Expires: 0");
 				header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
-				header("Cache-Control: private",false); // required for certain browsers 
+				header("Cache-Control: private",false); // required for certain browsers
 				header("Content-Type: text/text");
 				header("Content-Disposition: attachment; filename=config.php");
 				header("Content-length: ".mb_strlen($ret,'UTF-8'));
@@ -284,7 +287,7 @@ switch($step) {
 				print $ret;
 				exit();
 			}
-			
+
 			if (isset($_POST['NEW_LANGS'])) {
 				//-- make sure we are using the user's preferred index directory
 				if (isset($_SESSION['install_config']['INDEX_DIRECTORY'])) {
@@ -293,17 +296,17 @@ switch($step) {
 				if (isset($_SESSION['install_config']['COMMIT_COMMAND'])) {
 					$COMMIT_COMMAND = $_SESSION['install_config']['COMMIT_COMMAND'];
 				}
-				
+
 				// Save the languages the user has chosen to have active on the website
 				$Filename = $INDEX_DIRECTORY . "lang_settings.php";
 				if (!file_exists($Filename)) copy("includes/lang_settings_std.php", $Filename);
-				
+
 				$NEW_LANGS = $_POST['NEW_LANGS'];
 				// Set the chosen languages to active
 				foreach ($NEW_LANGS as $key => $name) {
 					$pgv_lang_use[$name] = true;
 				}
-			
+
 				// Set the other languages to non-active
 				foreach ($pgv_lang_use as $name => $value) {
 					if (!isset($NEW_LANGS[$name])) $pgv_lang_use[$name] = false;
@@ -311,10 +314,9 @@ switch($step) {
 				$error = update_lang_settings();
 				if (!empty($error)) $errors[] = array('msg'=>$pgv_lang[$error]);
 			}
-		
+
 			if ($ret===true && count($errors)==0) {
 				unset($_SESSION['install_modified']);
-				if ($_SESSION['install_step']<6) $_SESSION['install_step'] = 6;
 			}
 			else {
 				$errors = array_merge($errors, $ret);
@@ -344,7 +346,7 @@ switch($step) {
 				set_user_setting($user_id, 'max_relation_path',    '2');
 				set_user_setting($user_id, 'auto_accept',          'N');
 				AddToLog(getUserName()." added user -> {$_POST['username']} <-");
-				
+
 				$_SESSION["pgv_user"]=$user_id;
 			} else {
 				$error['msg'] = $pgv_lang["user_create_error"];
@@ -357,7 +359,7 @@ switch($step) {
 			$errors[] = $error;
 		}
 		if (count($errors)==0) {
-			if ($_SESSION['install_step']<7) $_SESSION['install_step'] = 7;
+			$step = 7;
 		}
 		}
 		break;
@@ -381,15 +383,13 @@ $errormsg = "";
 
 ?>
 	<tr>
-		<td>
-		<h2><?php print $pgv_lang["install_wizard"]; ?></h2>
-		</td>
-		<td class="center">
+		<td colspan="2" class="center">
 			<?php if (file_exists($THEME_DIR."/header.jpg")) { ?>
 			<img src="<?php print $THEME_DIR;?>header.jpg" width="281" height="50" alt="PhpGedView" />
 			<?php } else { ?>
 			<h1>PhpGedView</h1>
 			<?php } ?>
+			<h2><?php print $pgv_lang["install_wizard"]; ?></h2>
 		</td>
 	</tr>
 	<tr>
@@ -401,22 +401,24 @@ $errormsg = "";
 			?>
 			<tr>
 				<td class="<?php print $class; ?> imenu">
-				<a href="install.php?step=<?php print $i; ?>"><?php print $i.". ".$pgv_lang["install_step_".$i]; ?></a>
+				<a href="install.php?step=<?php print $i; ?>&newSite=<?php print $newSite; ?>"><?php print $i.". ".$pgv_lang["install_step_".$i]; ?></a>
 				</td>
 			</tr>
 			<?php } ?>
-			<tr>
-			<td class="descriptionbox wrap width30"><br />
 			<?php if (!empty($_SESSION['install_modified'])) { ?>
-			<span class="warning"><?php print $pgv_lang["config_not_saved"] ?></span>
+			<tr>
+				<td class="descriptionbox wrap width30"><br />
+				<span class="warning"><?php print $pgv_lang["config_not_saved"] ?></span>
+				</td>
+			</tr>
 			<?php } ?>
-			</td>
 		</table>
 		</td>
 		<td class="optionbox width75" style="white-space: normal">
 		<h3 class="center"><?php print $title; ?></h3>
 		<form action="install.php" method="post" onsubmit="return checkForm(this);">
-		<input type="hidden" name="step" value="<?php print $step ?>" /> 
+		<input type="hidden" name="step" value="<?php print $step ?>" />
+		<input type="hidden" name="newSite" value="<?php print $newSite ?>" />
 		<?php
 			if (count($errors)>0) {
 				foreach($errors as $error)
@@ -430,13 +432,14 @@ $errormsg = "";
 					break;
 				case 3:
 					//-- temporarily set configured so that tables will be created
+					$saveConfigured = $CONFIGURED;
 					$CONFIGURED = true;
 					//-- setup user tables
 					checkTableExists();
 					//-- setup genealogy tables
 					setup_database();
 					cleanup_database();
-					$CONFIGURED = false;
+					$CONFIGURED = $saveConfigured;
 					print "<span class=\"pass\">".$pgv_lang["db_tables_created"]."</span><br /><br /><br />";
 					$success = true;
 					break;
@@ -464,30 +467,32 @@ $errormsg = "";
 					$success = checkEnvironment();
 					break;
 			}
-			
+
 			?>
 		<br/><br />
-		<div style="float: right;">
-			<?php if ($step<$total_steps && $success) {?>
+		<?php if ($step<$total_steps && $success) {?>
+			<div style="float: right;">
 			<input type="submit" id="next_button" name="next" value="<?php print $pgv_lang['next'] ?>" />
 			<script type="text/javascript">
 			<!--
 				document.getElementById("next_button").focus();
 			//-->
 			</script>
-			<?php } ?>
-		</div>
-		<div style="float: left;">
-			<?php if ($step>1) {?><input type="submit" name="prev" value="<?php print $pgv_lang['prev'] ?>" /><?php } ?>
-		</div>
+			</div>
+		<?php } ?>
+		<?php if ($step>1) {?>
+			<div style="float: left;">
+			<input type="submit" name="prev" value="<?php print $pgv_lang['prev'] ?>" />
+			</div>
+		<?php } ?>
 		</form>
 		</td>
 	</tr>
 </table>
 <br />
-</body>
-</html>
 <?php
+if ($newSite=='no') print_footer();
+else print "</body></html>";
 
 //-- Start of business functions
 
@@ -498,12 +503,12 @@ $errormsg = "";
  */
 function checkEnvironment() {
 	global $pgv_lang;
-	
+
 	$success = true;
 	print "<h4>".$pgv_lang["checking_errors"]."</h4>";
 	print "<table border=\"0\" cellpadding=\"2\" cellspacing=\"0\">";
 	$phpcheck = (version_compare(PHP_VERSION, PGV_REQUIRED_PHP_VERSION)<0);
-	if ($phpcheck) { 
+	if ($phpcheck) {
 		print "<tr><td valign=\"top\">";
 		print $pgv_lang["checking_php_version"]."<br />";
 		print "<span class=\"error\">".$pgv_lang["failed"]."</span><br />".$pgv_lang["pgv_requires_version"]."<br />";
@@ -521,14 +526,9 @@ function checkEnvironment() {
 		print "<tr><td valign=\"top\">";
 		print $pgv_lang["checking_db_support"]."<br />";
 		print "<span class=\"error\">".$pgv_lang["no_db_extensions"]."</span><br />";
-		if ($has_mssql) print str_replace("#DBEXT#", "mssql", $pgv_lang["db_ext_support"])."<br />";
-		if ($has_mysql) print str_replace("#DBEXT#", "mysql", $pgv_lang["db_ext_support"])."<br />";
-		if ($has_mysqli) print str_replace("#DBEXT#", "mysqli", $pgv_lang["db_ext_support"])."<br />";
-		if ($has_pgsql) print str_replace("#DBEXT#", "pgsql", $pgv_lang["db_ext_support"])."<br />";
-		if ($has_sqlite) print str_replace("#DBEXT#", "sqlite", $pgv_lang["db_ext_support"])."<br />";
 		print "</td></tr>";
 	}
-	
+
 	//config.php file
 	print "<tr><td valign=\"top\">";
 	print $pgv_lang["checking_config.php"]."<br />";
@@ -542,13 +542,14 @@ function checkEnvironment() {
 		print "<span class=\"pass\">".$pgv_lang["passed"]."</span><br />".$pgv_lang["config.php_writable"];
 	}
 	print "</td></tr>";
-	print "</table>\n";
+	print "</table>\r\n";
 
 	//-- warnings
 	$has_warnings = false;
 	print "<h4>".$pgv_lang["checking_warnings"]."</h4>";
 	print "<table border=\"0\" cellpadding=\"2\" cellspacing=\"0\">";
 	//set timelimit
+	//-- to do: This doesn't work if the time limit is already at 300 and can't be changed
 	$oldtimelimit = @ini_get("max_execution_time");
 	@set_time_limit(300);
 	$newtimelimit = @ini_get("max_execution_time");
@@ -561,6 +562,7 @@ function checkEnvironment() {
 		print "</td></tr>";
 	}
 	//set memory limit
+	//-- to do: This doesn't work if the memory limit is already at 38M and can't be changed
 	$oldmemorylimit = @ini_get('memory_limit');
 	@ini_set('memory_limit', "38M");
 	$memorylimit = @ini_get('memory_limit');
@@ -568,7 +570,7 @@ function checkEnvironment() {
 		$has_warnings = true;
 		print "<tr><td valign=\"top\">";
 		print $pgv_lang["check_memlimit"]."<br />";
-		
+
 		print "<span class=\"warning\">".$pgv_lang["cannot_change_memlimit"]."</span>".$pgv_lang["cannot_change_memlimit_instr"]."<br />";
 		print $pgv_lang["current_max_memlimit"]." ".$oldmemorylimit;
 		print "</td></tr>";
@@ -580,56 +582,50 @@ function checkEnvironment() {
 		$has_warnings = true;
 		print "<tr><td valign=\"top\">";
 		print $pgv_lang["check_upload"]."<br />";
-		
-//			print "<span class=\"pass\">Passed</span><br />";
-			print $pgv_lang["current_max_upload"]." ".ini_get("upload_max_filesize")."<br />";
-		//	print "<span class=\"warning\">You cannot upload files with this configuration of PHP.</span><br />You will still be able to use PhpGedView, but you will have to upload all GEDCOM and media files using FTP.<br />";
+
+		print $pgv_lang["current_max_upload"]." ".ini_get("upload_max_filesize")."<br />";
 		print "</td></tr>";
 	}
 
 	// gd library
-	if (!function_exists('imagecreatefromjpeg'))
-	{
+	if (!function_exists('imagecreatefromjpeg')) {
 		$has_warnings = true;
 		print "<tr><td valign=\"top\">";
 		print $pgv_lang["check_gd"]."<br />";
-		
-			print "<span class=\"warning\">".$pgv_lang["cannot_use_gd"]."</span><br />";
+
+		print "<span class=\"warning\">".$pgv_lang["cannot_use_gd"]."</span><br />";
 		print "</td></tr>";
 	}
 
 	//-- xml sax library
-	if (!function_exists('xml_parser_create'))
-	{
+	if (!function_exists('xml_parser_create')) {
 		$has_warnings = true;
 		print "<tr><td valign=\"top\">";
 		print $pgv_lang["check_sax"]."<br />";
-		
+
 		print "<span class=\"warning\">".$pgv_lang["cannot_use_sax"]."</span><br />";
 		print "</td></tr>";
 	}
 
-	if (!class_exists('DomDocument'))
-	{
+	if (!class_exists('DomDocument')) {
 		$has_warnings = true;
 		print "<tr><td valign=\"top\">";
 		print $pgv_lang["check_dom"]."<br />";
-		
+
 		print "<span class=\"warning\">".$pgv_lang["cannot_use_dom"]."</span><br />";
 		print "</td></tr>";
 	}
 
-	if (!function_exists('GregorianToJD'))
-	{
+	if (!function_exists('GregorianToJD')) {
 		$has_warnings = true;
 		print "<tr><td valign=\"top\">";
 		print $pgv_lang["check_calendar"]."<br />";
-		
+
 		print "<span class=\"warning\">".$pgv_lang["cannot_use_calendar"]."</span><br />";
 		print "</td></tr>";
 	}
-	
-	
+
+
 		print "<tr><td valign=\"top\">";
 		if (!$has_warnings) {
 			print "<span class=\"pass\">".$pgv_lang['passed']."</span><br />";
@@ -640,7 +636,7 @@ function checkEnvironment() {
 		}
 		print "</td></tr>";
 	print "</table>";
-	
+
 	return $success;
 }
 
@@ -653,31 +649,23 @@ function printDBForm() {
 	$has_mysqli = extension_loaded("mysqli");
 	$has_mssql = extension_loaded("mssql");
 	$has_sqlite = extension_loaded("sqlite");
-	if (isset($_SESSION['install_config']['DBHOST']))
-		$DBHOST = $_SESSION['install_config']['DBHOST'];
-	if (isset($_SESSION['install_config']['DBNAME']))
-		$DBNAME =$_SESSION['install_config']['DBNAME'];
-	if (isset($_SESSION['install_config']['DBPASS']))
-		$DBPASS =	$_SESSION['install_config']['DBPASS'];
-	if (isset($_SESSION['install_config']['DBPERSIST']))
-		$DBPERSIST = $_SESSION['install_config']['DBPERSIST'];
-	if (isset($_SESSION['install_config']['DBPORT']))
-		$DBPORT = $_SESSION['install_config']['DBPORT'];
-	if (isset($_SESSION['install_config']['DBTYPE']))
-		$DBTYPE = $_SESSION['install_config']['DBTYPE'];
-	if (isset($_SESSION['install_config']['DBUSER']))
-		$DBUSER = $_SESSION['install_config']['DBUSER'];
-	if (isset($_SESSION['install_config']['TBLPREFIX']))
-		$TBLPREFIX = $_SESSION['install_config']['TBLPREFIX'];
+	if (isset($_SESSION['install_config']['DBHOST'])) $DBHOST = $_SESSION['install_config']['DBHOST'];
+	if (isset($_SESSION['install_config']['DBNAME'])) $DBNAME =$_SESSION['install_config']['DBNAME'];
+	if (isset($_SESSION['install_config']['DBPASS'])) $DBPASS =	$_SESSION['install_config']['DBPASS'];
+	if (isset($_SESSION['install_config']['DBPERSIST'])) $DBPERSIST = $_SESSION['install_config']['DBPERSIST'];
+	if (isset($_SESSION['install_config']['DBPORT'])) $DBPORT = $_SESSION['install_config']['DBPORT'];
+	if (isset($_SESSION['install_config']['DBTYPE'])) $DBTYPE = $_SESSION['install_config']['DBTYPE'];
+	if (isset($_SESSION['install_config']['DBUSER'])) $DBUSER = $_SESSION['install_config']['DBUSER'];
+	if (isset($_SESSION['install_config']['TBLPREFIX'])) $TBLPREFIX = $_SESSION['install_config']['TBLPREFIX'];
 	?>
 	<table>
 	<tr>
 		<td class="descriptionbox wrap width30"><?php print_help_link("DBTYPE_help", "qm", "DBTYPE"); print $pgv_lang["DBTYPE"];?></td>
-		<td class="optionbox"><select name="NEW_DBTYPE" dir="ltr" tabindex="<?php $i++; print $i?>" onfocus="getHelp('DBTYPE_help');" onchange="changeDBtype(this);">
+		<td class="optionbox">
+			<select name="NEW_DBTYPE" dir="ltr" tabindex="<?php $i++; print $i?>" onfocus="getHelp('DBTYPE_help');" onchange="changeDBtype(this);">
 				<?php if ($has_mssql) {?><option value="mssql" <?php if ($DBTYPE=='mssql') print "selected=\"selected\""; ?>><?php print $pgv_lang["mssql"];?></option><?php } ?>
 				<?php if ($has_mysql) {?><option value="mysql" <?php if ($DBTYPE=='mysql') print "selected=\"selected\""; ?>><?php print $pgv_lang["mysql"];?></option><?php } ?>
 				<?php if ($has_mysqli) {?><option value="mysqli" <?php if ($DBTYPE=='mysqli') print "selected=\"selected\""; ?>><?php print $pgv_lang["mysqli"];?></option><?php } ?>
-				<!--<option value="oci8" <?php if ($DBTYPE=='oci8') print "selected=\"selected\""; ?>><?php print $pgv_lang["oci8"];?></option>-->
 				<?php if ($has_pgsql) {?><option value="pgsql" <?php if ($DBTYPE=='pgsql') print "selected=\"selected\""; ?>><?php print $pgv_lang["pgsql"];?></option><?php } ?>
 				<?php if ($has_sqlite) {?><option value="sqlite" <?php if ($DBTYPE=='sqlite') print "selected=\"selected\""; ?>><?php print $pgv_lang["sqlite"];?></option><?php } ?>
 			</select>
@@ -705,7 +693,8 @@ function printDBForm() {
 	</tr>
 	<tr>
 		<td class="descriptionbox wrap width30"><?php print_help_link("DBPERSIST_help", "qm", "DBPERSIST"); print $pgv_lang["DBPERSIST"];?></td>
-		<td class="optionbox"><select name="NEW_DBPERSIST" tabindex="<?php $i++; print $i?>" onfocus="getHelp('DBPERSIST_help');">
+		<td class="optionbox">
+			<select name="NEW_DBPERSIST" tabindex="<?php $i++; print $i?>" onfocus="getHelp('DBPERSIST_help');">
 				<option value="yes" <?php if ($DBPERSIST) print "selected=\"selected\""; ?>><?php print $pgv_lang["yes"];?></option>
 				<option value="no" <?php if (!$DBPERSIST) print "selected=\"selected\""; ?>><?php print $pgv_lang["no"];?></option>
 			</select>
@@ -715,7 +704,7 @@ function printDBForm() {
 		<td class="descriptionbox wrap width30"><?php print_help_link("TBLPREFIX_help", "qm", "TBLPREFIX"); print $pgv_lang["TBLPREFIX"];?></td>
 		<td class="optionbox"><input type="text" name="NEW_TBLPREFIX" value="<?php print $TBLPREFIX?>" size="40" tabindex="<?php $i++; print $i?>" onfocus="getHelp('TBLPREFIX_help');" /></td>
 	</tr>
-	
+
 	</table>
 	<?php
 	return true;
@@ -727,7 +716,7 @@ function printConfigForm(){
 	global $LOGIN_URL, $SCRIPT_NAME, $PGV_SESSION_SAVE_PATH, $PGV_SESSION_TIME, $COMMIT_COMMAND, $PGV_MEMORY_LIMIT, $MAX_VIEWS;
 	global $MAX_VIEW_TIME, $INDEX_DIRECTORY;
 	global $pgv_lang;
-	
+
 	$i=1;
 	if (isset($_SESSION['install_config']['INDEX_DIRECTORY'])) $INDEX_DIRECTORY = $_SESSION['install_config']['INDEX_DIRECTORY'];
 	if (isset($_SESSION['install_config']['ALLOW_CHANGE_GEDCOM'])) $ALLOW_CHANGE_GEDCOM = $_SESSION['install_config']['ALLOW_CHANGE_GEDCOM'];
@@ -749,7 +738,7 @@ function printConfigForm(){
 
 	$oldmemorylimit = @ini_get('memory_limit');
 	if ($oldmemorylimit > $PGV_MEMORY_LIMIT) $PGV_MEMORY_LIMIT = $oldmemorylimit;
-	
+
 	require_once("js/dhtmlXTabbar.js.htm");
 	?>
 	<div id="conf_tabbar" class="dhtmlxTabBar" <?php if($TEXT_DIRECTION=="rtl") echo ' align="right"'; else echo ' align="left"';?> skinColors="<?php print $PGV_DXHTMLTAB_COLORS; ?>" style="min-width: 450px; height: 380px">
@@ -771,7 +760,8 @@ function printConfigForm(){
 			</tr>
 			<tr>
 				<td class="descriptionbox wrap width30"><?php print_help_link("ALLOW_CHANGE_GEDCOM_help", "qm", "ALLOW_CHANGE_GEDCOM"); print $pgv_lang["ALLOW_CHANGE_GEDCOM"];?></td>
-				<td class="optionbox"><select name="NEW_ALLOW_CHANGE_GEDCOM" tabindex="<?php $i++; print $i?>" onfocus="getHelp('ALLOW_CHANGE_GEDCOM_help');">
+				<td class="optionbox">
+					<select name="NEW_ALLOW_CHANGE_GEDCOM" tabindex="<?php $i++; print $i?>" onfocus="getHelp('ALLOW_CHANGE_GEDCOM_help');">
 						<option value="yes" <?php if ($ALLOW_CHANGE_GEDCOM) print "selected=\"selected\""; ?>><?php print $pgv_lang["yes"];?></option>
 						<option value="no" <?php if (!$ALLOW_CHANGE_GEDCOM) print "selected=\"selected\""; ?>><?php print $pgv_lang["no"];?></option>
 					</select>
@@ -779,7 +769,8 @@ function printConfigForm(){
 			</tr>
 			<tr>
 				<td class="descriptionbox wrap width30"><?php print_help_link("USE_REGISTRATION_MODULE_help", "qm", "USE_REGISTRATION_MODULE"); print $pgv_lang["USE_REGISTRATION_MODULE"];?></td>
-				<td class="optionbox"><select name="NEW_USE_REGISTRATION_MODULE" tabindex="<?php $i++; print $i?>" onfocus="getHelp('USE_REGISTRATION_MODULE_help');">
+				<td class="optionbox">
+					<select name="NEW_USE_REGISTRATION_MODULE" tabindex="<?php $i++; print $i?>" onfocus="getHelp('USE_REGISTRATION_MODULE_help');">
 						<option value="yes" <?php if ($USE_REGISTRATION_MODULE) print "selected=\"selected\""; ?>><?php print $pgv_lang["yes"];?></option>
 						<option value="no" <?php if (!$USE_REGISTRATION_MODULE) print "selected=\"selected\""; ?>><?php print $pgv_lang["no"];?></option>
 					</select>
@@ -787,7 +778,8 @@ function printConfigForm(){
 			</tr>
 			<tr>
 		 		<td class="descriptionbox wrap width30"><?php print_help_link("REQUIRE_ADMIN_AUTH_REGISTRATION_help", "qm", "REQUIRE_ADMIN_AUTH_REGISTRATION"); print $pgv_lang["REQUIRE_ADMIN_AUTH_REGISTRATION"];?></td>
-		 		<td class="optionbox"><select name="NEW_REQUIRE_ADMIN_AUTH_REGISTRATION" tabindex="<?php $i++; print $i?>" onfocus="getHelp('REQUIRE_ADMIN_AUTH_REGISTRATION_help');">
+		 		<td class="optionbox">
+		 			<select name="NEW_REQUIRE_ADMIN_AUTH_REGISTRATION" tabindex="<?php $i++; print $i?>" onfocus="getHelp('REQUIRE_ADMIN_AUTH_REGISTRATION_help');">
 		 				<option value="yes" <?php if ($REQUIRE_ADMIN_AUTH_REGISTRATION) print "selected=\"selected\""; ?>><?php print $pgv_lang["yes"];?></option>
 		 				<option value="no" <?php if (!$REQUIRE_ADMIN_AUTH_REGISTRATION) print "selected=\"selected\""; ?>><?php print $pgv_lang["no"];?></option>
 					</select>
@@ -795,7 +787,8 @@ function printConfigForm(){
 		 	</tr>
 		 	<tr>
 				<td class="descriptionbox wrap width30"><?php print_help_link("ALLOW_REMEMBER_ME_help", "qm", "ALLOW_REMEMBER_ME"); print $pgv_lang["ALLOW_REMEMBER_ME"];?></td>
-				<td class="optionbox"><select name="NEW_ALLOW_REMEMBER_ME" tabindex="<?php $i++; print $i?>" onfocus="getHelp('ALLOW_REMEMBER_ME_help');">
+				<td class="optionbox">
+					<select name="NEW_ALLOW_REMEMBER_ME" tabindex="<?php $i++; print $i?>" onfocus="getHelp('ALLOW_REMEMBER_ME_help');">
 		 				<option value="yes" <?php if ($ALLOW_REMEMBER_ME) print "selected=\"selected\""; ?>><?php print $pgv_lang["yes"];?></option>
 		 				<option value="no" <?php if (!$ALLOW_REMEMBER_ME) print "selected=\"selected\""; ?>><?php print $pgv_lang["no"];?></option>
 					</select>
@@ -803,7 +796,8 @@ function printConfigForm(){
 			</tr>
 			<tr>
 				<td class="descriptionbox wrap width30"><?php print_help_link("ALLOW_USER_THEMES_help", "qm", "ALLOW_USER_THEMES"); print $pgv_lang["ALLOW_USER_THEMES"];?></td>
-				<td class="optionbox"><select name="NEW_ALLOW_USER_THEMES" tabindex="<?php $i++; print $i?>" onfocus="getHelp('ALLOW_USER_THEMES_help');">
+				<td class="optionbox">
+					<select name="NEW_ALLOW_USER_THEMES" tabindex="<?php $i++; print $i?>" onfocus="getHelp('ALLOW_USER_THEMES_help');">
 						<option value="yes" <?php if ($ALLOW_USER_THEMES) print "selected=\"selected\""; ?>><?php print $pgv_lang["yes"];?></option>
 						<option value="no" <?php if (!$ALLOW_USER_THEMES) print "selected=\"selected\""; ?>><?php print $pgv_lang["no"];?></option>
 					</select>
@@ -811,7 +805,7 @@ function printConfigForm(){
 			</tr>
 		</table>
 		</div>
-		
+
 		<!--  advanced settings -->
 		<div id="conf_advanced" name="<?php print $pgv_lang['adv_site_config'];?>" class="indent">
 			<table>
@@ -822,7 +816,8 @@ function printConfigForm(){
 			</tr>
 			<tr>
 				<td class="descriptionbox wrap width30"><?php print_help_link("PGV_STORE_MESSAGES_help", "qm", "PGV_STORE_MESSAGES"); print $pgv_lang["PGV_STORE_MESSAGES"];?></td>
-				<td class="optionbox"><select name="NEW_PGV_STORE_MESSAGES" tabindex="<?php $i++; print $i?>" onfocus="getHelp('PGV_STORE_MESSAGES_help');">
+				<td class="optionbox">
+					<select name="NEW_PGV_STORE_MESSAGES" tabindex="<?php $i++; print $i?>" onfocus="getHelp('PGV_STORE_MESSAGES_help');">
 						<option value="yes" <?php if ($PGV_STORE_MESSAGES) print "selected=\"selected\""; ?>><?php print $pgv_lang["yes"];?></option>
 						<option value="no" <?php if (!$PGV_STORE_MESSAGES) print "selected=\"selected\""; ?>><?php print $pgv_lang["no"];?></option>
 					</select>
@@ -830,7 +825,8 @@ function printConfigForm(){
 			</tr>
 			<tr>
 				<td class="descriptionbox wrap width30"><?php print_help_link("PGV_SIMPLE_MAIL_help", "qm", "PGV_SIMPLE_MAIL"); print $pgv_lang["PGV_SIMPLE_MAIL"];?></td>
-				<td class="optionbox"><select name="NEW_PGV_SIMPLE_MAIL" tabindex="<?php $i++; print $i?>" onfocus="getHelp('PGV_SIMPLE_MAIL_help');">
+				<td class="optionbox">
+					<select name="NEW_PGV_SIMPLE_MAIL" tabindex="<?php $i++; print $i?>" onfocus="getHelp('PGV_SIMPLE_MAIL_help');">
 						<option value="yes" <?php if ($PGV_SIMPLE_MAIL) print "selected=\"selected\""; ?>><?php print $pgv_lang["yes"];?></option>
 						<option value="no" <?php if (!$PGV_SIMPLE_MAIL) print "selected=\"selected\""; ?>><?php print $pgv_lang["no"];?></option>
 					</select>
@@ -838,7 +834,8 @@ function printConfigForm(){
 			</tr>
 			<tr>
 				<td class="descriptionbox wrap width30"><?php print_help_link("LOGFILE_CREATE_help", "qm", "LOGFILE_CREATE"); print $pgv_lang["LOGFILE_CREATE"];?></td>
-				<td class="optionbox"><select name="NEW_LOGFILE_CREATE" tabindex="<?php $i++; print $i?>" onfocus="getHelp('LOGFILE_CREATE_help');">
+				<td class="optionbox">
+					<select name="NEW_LOGFILE_CREATE" tabindex="<?php $i++; print $i?>" onfocus="getHelp('LOGFILE_CREATE_help');">
 						<option value="none" <?php if ($LOGFILE_CREATE=="none") print "selected=\"selected\""; ?>><?php print $pgv_lang["no_logs"];?></option>
 						<option value="daily" <?php if ($LOGFILE_CREATE=="daily") print "selected=\"selected\""; ?>><?php print $pgv_lang["daily"];?></option>
 						<option value="weekly" <?php if ($LOGFILE_CREATE=="weekly") print "selected=\"selected\""; ?>><?php print $pgv_lang["weekly"];?></option>
@@ -872,7 +869,8 @@ function printConfigForm(){
 			</tr>
 			<tr>
 				<td class="descriptionbox wrap width30"><?php print_help_link("COMMIT_COMMAND_help", "qm", "COMMIT_COMMAND"); print $pgv_lang['COMMIT_COMMAND'];?></td>
-		 		<td class="optionbox"><select name="NEW_COMMIT_COMMAND" tabindex="<?php $i++; print $i?>" onfocus="getHelp('COMMIT_COMMAND_help');">
+		 		<td class="optionbox">
+		 			<select name="NEW_COMMIT_COMMAND" tabindex="<?php $i++; print $i?>" onfocus="getHelp('COMMIT_COMMAND_help');">
 						<option value="" <?php if ($COMMIT_COMMAND=="") print "selected=\"selected\""; ?>><?php print $pgv_lang["none"];?></option>
 						<option value="cvs" <?php if ($COMMIT_COMMAND=="cvs") print "selected=\"selected\""; ?>>CVS</option>
 						<option value="svn" <?php if ($COMMIT_COMMAND=="svn") print "selected=\"selected\""; ?>>SVN</option>
@@ -892,7 +890,7 @@ function printConfigForm(){
 
 function printLanguageForm() {
 	global $pgv_lang, $pgv_language, $pgv_lang_use, $pgv_lang_self;
-	
+
 	//-- override old values with session values
 	if (isset($_SESSION['install_config']['NEW_LANGS'])) {
 		foreach($pgv_lang_use as $lang=>$languse) {
@@ -902,7 +900,7 @@ function printLanguageForm() {
 			else $pgv_lang_use[$lang] = false;
 		}
 	}
-	
+
 	print_help_link("LANG_SELECTION_help", "qm", "LANG_SELECTION"); print $pgv_lang["LANG_SELECTION"];?>
 	<table>
 	<tr>
@@ -1031,17 +1029,19 @@ function printAdminUserForm() {
 		?>
 		<?php print $pgv_lang["admin_users_exists"]	; ?>
 		<table>
-		<tr><td class="topbottombar"><?php print $pgv_lang["username"];?></td>
-		<td class="topbottombar"><?php print $pgv_lang["firstname"];?></td>
-		<td class="topbottombar"><?php print $pgv_lang["lastname"];?></td>
-		<td class="topbottombar"><?php print $pgv_lang["emailadress"];?></td>
+		<tr>
+			<td class="topbottombar"><?php print $pgv_lang["username"];?></td>
+			<td class="topbottombar"><?php print $pgv_lang["firstname"];?></td>
+			<td class="topbottombar"><?php print $pgv_lang["lastname"];?></td>
+			<td class="topbottombar"><?php print $pgv_lang["emailadress"];?></td>
 		</tr>
 		<?php foreach(get_all_users() as $user_id=>$user_name) {
 		if (userIsAdmin($user_id)) {?>
-		<tr><td class="optionbox"><?php print $user_name;?></td>
-		<td class="optionbox"><?php print get_user_setting($user_id, "firstname");?></td>
-		<td class="optionbox"><?php print get_user_setting($user_id, "lastname");?></td>
-		<td class="optionbox"><?php print get_user_setting($user_id, "email");?></td>
+		<tr>
+			<td class="optionbox"><?php print $user_name;?></td>
+			<td class="optionbox"><?php print get_user_setting($user_id, "firstname");?></td>
+			<td class="optionbox"><?php print get_user_setting($user_id, "lastname");?></td>
+			<td class="optionbox"><?php print get_user_setting($user_id, "email");?></td>
 		</tr>
 		<?php }
 		 } ?>
