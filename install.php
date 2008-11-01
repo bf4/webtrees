@@ -282,7 +282,7 @@ switch($step) {
 				header("Cache-Control: private",false); // required for certain browsers
 				header("Content-Type: text/text");
 				header("Content-Disposition: attachment; filename=config.php");
-				header("Content-length: ".mb_strlen($ret,'UTF-8'));
+				header("Content-length: ".strlen($ret);
 				header("Content-Transfer-Encoding: binary");
 				print $ret;
 				exit();
