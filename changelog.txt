@@ -10,6 +10,7 @@
 
 
 Version 4.1.6
+ - Fixed: [ 2173838 ] New family not shown on relationship tab (opus27)
  - Changed: Use normal page headers when editing existing site config (canajun2eh)
  - Fixed: [ 2193733 ] Installation Wizard won't complete (canajun2eh)
  - Fixed: [ 2209285 ] Incorrect action when editing completely empty Place (canajun2eh)
