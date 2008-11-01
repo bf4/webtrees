@@ -715,6 +715,7 @@ function printConfigForm(){
 	global $ALLOW_CHANGE_GEDCOM, $PGV_SIMPLE_MAIL, $ALLOW_USER_THEMES, $ALLOW_REMEMBER_ME, $LOGFILE_CREATE, $SERVER_URL;
 	global $LOGIN_URL, $SCRIPT_NAME, $PGV_SESSION_SAVE_PATH, $PGV_SESSION_TIME, $COMMIT_COMMAND, $PGV_MEMORY_LIMIT, $MAX_VIEWS;
 	global $MAX_VIEW_TIME, $INDEX_DIRECTORY;
+	global $BROWSERTYPE;		// MSIE and dhtmlXTabbar don't play friendly at the moment
 	global $pgv_lang;
 
 	$i=1;
@@ -741,9 +742,14 @@ function printConfigForm(){
 
 	require_once("js/dhtmlXTabbar.js.htm");
 	?>
+	<?php if ($BROWSERTYPE!='msie') { ?>
 	<div id="conf_tabbar" class="dhtmlxTabBar" <?php if($TEXT_DIRECTION=="rtl") echo ' align="right"'; else echo ' align="left"';?> skinColors="<?php print $PGV_DXHTMLTAB_COLORS; ?>" style="min-width: 450px; height: 380px">
+	<?php } ?>
 		<div id="conf_basic" name="<?php print $pgv_lang['basic_site_config'];?>" class="indent" >
 		<table>
+		<?php if ($BROWSERTYPE=='msie') { ?>
+			<tr><td colspan="2" class="center"><b><?php print $pgv_lang['basic_site_config'];?></b></td></tr>
+		<?php } ?>
 			<tr>
 				<td class="descriptionbox wrap width30"><?php print_help_link("INDEX_DIRECTORY_help", "qm", "INDEX_DIRECTORY"); print $pgv_lang["INDEX_DIRECTORY"];?></td>
 				<td class="optionbox"><input type="text" size="50" name="NEW_INDEX_DIRECTORY" value="<?php print $INDEX_DIRECTORY?>" dir="ltr" tabindex="<?php $i++; print $i?>" onfocus="getHelp('INDEX_DIRECTORY_help');" /></td>
@@ -809,6 +815,9 @@ function printConfigForm(){
 		<!--  advanced settings -->
 		<div id="conf_advanced" name="<?php print $pgv_lang['adv_site_config'];?>" class="indent">
 			<table>
+		<?php if ($BROWSERTYPE=='msie') { ?>
+			<tr><td colspan="2" class="center"><br /><b><?php print $pgv_lang['adv_site_config'];?></b></td></tr>
+		<?php } ?>
 			<tr>
 				<td class="descriptionbox wrap width30"><?php print_help_link("LOGIN_URL_help", "qm", "LOGIN_URL"); print $pgv_lang["LOGIN_URL"];?></td>
 				<td class="optionbox"><input type="text" name="NEW_LOGIN_URL" value="<?php print $LOGIN_URL?>" dir="ltr" tabindex="<?php $i++; print $i?>" onfocus="getHelp('LOGIN_URL_help');" size="50" />
@@ -883,7 +892,7 @@ function printConfigForm(){
 			</tr>
 			</table>
 		</div>
-	</div>
+	<?php if ($BROWSERTYPE!='msie') print '</div>'; ?>
 	<?php
 	return true;
 }
