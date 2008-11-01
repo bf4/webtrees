@@ -10,6 +10,8 @@
 
 
 Version 4.1.6
+ - Changed: Use normal page headers when editing existing site config (canajun2eh)
+ - Fixed: [ 2193733 ] Installation Wizard won't complete (canajun2eh)
  - Fixed: [ 2209285 ] Incorrect action when editing completely empty Place (canajun2eh)
  - Fixed: [ 2199778 ] [4146] Adding Parents in Quick Edit Copies Marriage (fisharebest)
  - Fixed: [ 2203023 ] Installation Wizard breaks $INDEX_DIRECTORY setting (canajun2eh)

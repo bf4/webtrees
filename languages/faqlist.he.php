@@ -29,5 +29,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
+$faqlist["FAQ_000_head"] = "\"FAQ\": שמעתי על כך, אבל מה זה?"; 
+$faqlist["FAQ_000_body"] = "<b>FAQ</b> הוא ראשי תיבות לשאלה נפוצה <b>F</b>requently <b>A</b>sked <b>Q</b>uestion.<br /><br />רשימת FAQ היא רשימה של שאלות (בצרוף התשובות) שנשאלות בתדירות גבוהה.  היא הוכנה ע\"י צוות ה-PhpGedView, ומתעדכנת לעיתים קרובות."; 
 
 ?>

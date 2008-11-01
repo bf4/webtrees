@@ -1163,6 +1163,7 @@ class GedcomDate {
 					else
 						$d2tmp='';
 				}
+				$q2tmp=$this->qual2;
 				$q3tmp='';
 				// Localise the date
 				$func($q1tmp, $d1tmp, $q2tmp, $d2tmp, $q3tmp);
@@ -1192,7 +1193,6 @@ class GedcomDate {
 		// Return at least one printable character, for better formatting in tables.
 		$tmp=trim("{$q1} {$d1}{$conv1} {$q2} {$d2}{$conv2} {$q3} {$this->text}");
 		if (strip_tags($tmp)=='')
-//			return '<a>&nbsp;</a>';
 			return '&nbsp;';
 		else
 			return "<span class=\"date\">{$tmp}</span>";
