@@ -428,19 +428,6 @@ function print_header($title, $head="",$use_alternate_styles=true) {
 	}
 	header("Content-Type: text/html; charset=$CHARACTER_SET");
 
-	// Determine browser type
-	$BROWSERTYPE = "other";
-	if (!empty($_SERVER["HTTP_USER_AGENT"])) {
-		if (stristr($_SERVER["HTTP_USER_AGENT"], "Opera"))
-			$BROWSERTYPE = "opera";
-		else if (stristr($_SERVER["HTTP_USER_AGENT"], "Netscape"))
-			$BROWSERTYPE = "netscape";
-		else if (stristr($_SERVER["HTTP_USER_AGENT"], "Gecko"))
-			$BROWSERTYPE = "mozilla";
-		else if (stristr($_SERVER["HTTP_USER_AGENT"], "MSIE"))
-			$BROWSERTYPE = "msie";
-	}
-
 	if (empty($META_TITLE)) $metaTitle = ' - '.PGV_PHPGEDVIEW;
 	else $metaTitle = " - ".$META_TITLE.' - '.PGV_PHPGEDVIEW;
 

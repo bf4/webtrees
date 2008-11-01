@@ -23,12 +23,10 @@
  * @subpackage Languages
  * @version $Id$
  */
-
 if (!defined('PGV_PHPGEDVIEW')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
-
 $countries["ABW"]                       ="Aruba";
 $countries["ACA"]                       ="Acadie";
 $countries["AFG"]                       ="Afghanistan";
@@ -72,6 +70,7 @@ $countries["BWI"]                       ="Antilles britanniques";
 $countries["CAF"]                       ="République centrafricaine";
 $countries["CAN"]                       ="Canada";
 $countries["CAP"]                       ="Colonie du Cap";
+$countries["CAT"]                       ="Catalogne";
 $countries["CCK"]                       ="Îles Cocos";
 $countries["CHE"]                       ="Suisse";
 $countries["CHI"]                       ="Îles Anglo-Normandes";
@@ -292,7 +291,6 @@ $countries["ZAR"]                       ="Zaïre";
 $countries["ZMB"]                       ="Zambie";
 $countries["ZWE"]                       ="Zimbabwe";
 $countries["???"]                       ="inconnu";
-
 $altCountryNames["COD"]                 ="Zaïre";
 $altCountryNames["DEU"]                 ="East Germany; West Germany; GDR; FRG";
 $altCountryNames["FLK"]                 ="Malouines";
@@ -306,5 +304,4 @@ $altCountryNames["SUN"]                 ="Union Soviétique";
 $altCountryNames["TLS"]                 ="Timor Occidental";
 $altCountryNames["VAT"]                 ="Saint Siège";
 $altCountryNames["WSM"]                 ="Samoa Occidental";
-
 ?>

@@ -308,7 +308,7 @@ function tabswitch(n) {
 			}
 			else if (document.getElementById(tabid[i]+'_content')) {
 				var oXmlHttp = createXMLHttp();
-				var link = "individual.php?action=ajax&pid=<?php print $controller->pid; ?>&tab="+i;
+				var link = "individual.php?action=ajax&pid=<?php echo $controller->pid; ?>&tab="+i+"&show_changes=<?php if ($controller->show_changes) echo 'yes'?>";
 				if (location.search.indexOf("SQL_LOG=true") > -1) link += "&SQL_LOG=true";
 				oXmlHttp.open("get", link, true);
 				temp = new tempObj(i, oXmlHttp);
