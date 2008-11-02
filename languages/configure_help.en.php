@@ -570,6 +570,7 @@ $pgv_lang["lang_name_lithuanian"]	= "Lithuanian";
 $pgv_lang["lang_name_norwegian"]	= "Norwegian";
 $pgv_lang["lang_name_polish"]		= "Polish";
 $pgv_lang["lang_name_portuguese"]	= "Portuguese";
+$pgv_lang["lang_name_romanian"]		= "Romanian";
 $pgv_lang["lang_name_russian"]		= "Russian";
 $pgv_lang["lang_name_slovak"]		= "Slovak";
 $pgv_lang["lang_name_spanish"]		= "Spanish";

@@ -436,6 +436,7 @@ $pgv_lang["lang_name_arabic"]		= "Arabisch";
 $pgv_lang["lang_name_lithuanian"]	= "Litauisch";
 $pgv_lang["lang_name_vietnamese"]	= "Vietnamesisch";
 $pgv_lang["lang_name_slovak"]		= "Slowakisch";
+$pgv_lang["lang_name_romanian"]		= "Rumänisch";
 $pgv_lang["lang_name_estonian"]		= "Estnisch";
 $pgv_lang["lang_name_catalan"]		= "Katalanisch (Valencianisch)";
 $pgv_lang["lang_new_language"]		= "Neue Sprache";
