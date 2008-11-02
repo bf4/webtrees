@@ -513,6 +513,34 @@ $language_settings['slovak']=array(
 'DICTIONARY_SORT'=>true
 );
 
+//-- settings for romanian
+$language_settings['romanian']=array(
+'pgv_langname'=>'romanian',
+'pgv_lang_use'=>false,
+'pgv_lang_self'=>'Română',
+'lang_short_cut'=>'ro',
+'langcode'=>'ro;ro-ro;',
+'pgv_language'=>'languages/lang.ro.php',
+'confighelpfile'=>'languages/configure_help.ro.php',
+'helptextfile'=>'languages/help_text.ro.php',
+'flagsfile'=>'images/flags/romania.gif',
+'factsfile'=>'languages/facts.ro.php',
+'adminfile'=>'languages/admin.ro.php',
+'editorfile'=>'languages/editor.ro.php',
+'countryfile'=>'languages/countries.ro.php',
+'faqlistfile'=>'languages/faqlist.ro.php',
+'extrafile'=>'languages/extra.ro.php',
+'DATE_FORMAT'=>'D M Y',
+'TIME_FORMAT'=>'g:i:sa',
+'WEEK_START'=>'0',
+'TEXT_DIRECTION'=>'ltr',
+'NAME_REVERSE'=>false,
+'ALPHABET_upper'=>'AĂÂBCDEFGHIÎJKLMNOPQRSŞTŢUVWXYZ',
+'ALPHABET_lower'=>'aăâbcdefghiîjklmnopqrsştţuvwxyz',
+'MULTI_LETTER_ALPHABET'=>'',
+'DICTIONARY_SORT'=>true
+);
+
 //-- settings for finnish
 $language_settings['finnish']=array(
 'pgv_langname'=>'finnish',
