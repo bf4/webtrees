@@ -1017,7 +1017,10 @@ class Person extends GedcomRecord {
 								if (!$sEvent->canShow()) {
 									$factrec .= "\n2 RESN privacy";
 								}
-								$factrec.="\n2 ASSO @".$parent->getXref()."@\n3 RELA *sosa_".($sosa*2);
+								if ($parent->getSex()=='M')
+									$factrec.="\n2 ASSO @".$parent->getXref()."@\n3 RELA *sosa_".($sosa*2);
+								else if ($parent->getSex()=='F')
+									$factrec.="\n2 ASSO @".$parent->getXref()."@\n3 RELA *sosa_".($sosa*2+1);
 								$factrec.="\n".get_sub_record(2, '2 ASSO @'.$this->xref.'@', $srec);
 								$event=new Event($factrec, 0);
 								$event->setParentObject($this);
