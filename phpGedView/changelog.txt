@@ -10,6 +10,7 @@
 
 
 Version 4.1.6
+ - Fixed: [ 2193279 ] Merge trouble with upper/lower case (fisharebest)
  - Added: Support for Romanian language (canajun2eh)
  - Changed: Installation Wizard, Step 4, when using IE produces incorrect page format (canajun2eh)
  - Fixed: [ 2173838 ] New family not shown on relationship tab (opus27)
