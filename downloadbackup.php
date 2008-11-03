@@ -28,21 +28,21 @@ require './config.php';
 
 $fname=safe_GET('fname');
 
-if (!PGV_USER_GEDCOM_ADMIN || empty($fname) || preg_match("/\.zip$/", $fname)==0) {
+if (!PGV_USER_GEDCOM_ADMIN || !preg_match('/\.zip$/', $fname)) {
 	print $pgv_lang['access_denied'];
 	exit;
 }
 
 if(ini_get('zlib.output_compression')) @ini_set('zlib.output_compression', 'Off');
 
-header("Pragma: public"); // required
-header("Expires: 0");
-header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
-header("Cache-Control: private",false); // required for certain browsers
-header("Content-Type: application/zip");
-header("Content-Disposition: attachment; filename=$fname");
-header("Content-length: ".filesize($INDEX_DIRECTORY.$fname));
-header("Content-Transfer-Encoding: binary");
+header('Pragma: public'); // required
+header('Expires: 0');
+header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+header('Cache-Control: private',false); // required for certain browsers
+header('Content-Type: application/zip');
+header('Content-Disposition: attachment; filename="'.$fname.'"');
+header('Content-length: '.filesize($INDEX_DIRECTORY.$fname));
+header('Content-Transfer-Encoding: binary');
 readfile($INDEX_DIRECTORY.basename($fname));
 exit();
 ?>

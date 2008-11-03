@@ -95,11 +95,11 @@ if ($action == "download") {
 	$fp=fopen('php://output', 'w');
 	switch ($filetype) {
 	case 'gedcom':
-		header("Content-Disposition: attachment; filename={$ged}");
+		header('Content-Disposition: attachment; filename="'.$ged.'"');
 		print_gedcom($privatize_export, $privatize_export_level, $convert, $remove, $fp);
 		break;
 	case 'gramps':
-		header("Content-Disposition: attachment; filename={$ged}.gramps");
+		header('Content-Disposition: attachment; filename="'.$ged.'.gramps"');
 		print_gramps($privatize_export, $privatize_export_level, $convert, $remove, $fp);
 		break;
 	}

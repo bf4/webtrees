@@ -462,8 +462,8 @@ class ClippingsControllerRoot extends BaseController {
 	function download_clipping(){
 		if ($this->IncludeMedia == "yes" || $this->Zip == "yes")
 		{
-			header("Content-Type: application/zip");
-			header("Content-Disposition: attachment; filename=clipping.zip");
+			header('Content-Type: application/zip');
+			header('Content-Disposition: attachment; filename="clipping.zip"');
 			$this->zip_cart();
 		}
 		else
@@ -471,14 +471,14 @@ class ClippingsControllerRoot extends BaseController {
 			switch ($this->filetype) {
 				case 'gedcom':
 					{
-						header("Content-Type: text/plain");
-						header("Content-Disposition: attachment; filename=clipping.ged");
+						header('Content-Type: text/plain');
+						header('Content-Disposition: attachment; filename="clipping.ged"');
 					}
 					break;
 				case 'gramps':
 					{
-						header("Content-Type: text/xml");
-						header("Content-Disposition: attachment; filename=clipping.gramps");
+						header('Content-Type: text/xml');
+						header('Content-Disposition: attachment; filename="clipping.gramps"');
 					}
 					break;
 			}
