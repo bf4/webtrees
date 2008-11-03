@@ -45,6 +45,7 @@ VERSION 4.1.6
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 -----------------------------------------------------------------------------------------
+*$pgv_lang["download_note"]		                03 Nov 2008				w
 *$pgv_lang["get_started_instructions"]				29 Oct 2008				w	(shouldn't affect translations)
 *$pgv_lang["cannot_change_timelimit_instr"]			13 Oct 2008				w	GEDCOM --> database;  more than 3000 --> many
 *$pgv_lang["cannot_change_memlimit_instr"]			13 Oct 2008				w	GEDCOM --> database;  more than 3000 --> many

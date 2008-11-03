@@ -42,8 +42,8 @@ if (empty($uname)) {
 if (!isset($action)) $action="";
 
 if ($action=="sendFiles") {
-    header("Content-Type: application/octet-stream");
-    header("Content-Disposition: attachment; filename=".$filename);
+    header('Content-Type: application/octet-stream');
+    header('Content-Disposition: attachment; filename="'.$filename.'"');
 
     print "<?xml version='1.0' encoding='UTF-8'?>\n";
     print "<?xml-stylesheet type=\"text/xsl\" href=\"".$SERVER_URL."modules/sitemap/gss.xsl\"?>\n";
@@ -125,8 +125,8 @@ if ($action=="sendFiles") {
 }
 
 if ($action=="sendIndex") {
-    header("Content-Type: application/octet-stream");
-    header("Content-Disposition: attachment; filename=SitemapIndex.xml");
+    header('Content-Type: application/octet-stream');
+    header('Content-Disposition: attachment; filename="SitemapIndex.xml"');
 
     print "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
     print "<?xml-stylesheet type=\"text/xsl\" href=\"".$SERVER_URL."modules/sitemap/gss.xsl\"?>\n";

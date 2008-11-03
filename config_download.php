@@ -35,8 +35,8 @@ if (adminUserExists() && !PGV_USER_IS_ADMIN && $CONFIGURED) {
 
 if (empty($file)) $file="config.php";
 
-header("Content-Type: text/plain");
-header("Content-Disposition: attachment; filename=$file");
+header('Content-Type: text/plain');
+header('Content-Disposition: attachment; filename="'.$file.'"');
 
 print $_SESSION[$file];
 print "\r\n";
