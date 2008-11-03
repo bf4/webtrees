@@ -155,8 +155,8 @@ if ($action=="ExportFile" && PGV_USER_IS_ADMIN) {
 	$tmp=place_id_to_hierarchy($parent);
 	$tmp[0]="places";
 	$outputFileName=preg_replace('/[:;\/\\\(\)\{\}\[\] $]/', '_', implode('-', $tmp)).'.csv';
-	header("Content-Type: application/octet-stream");
-	header("Content-Disposition: attachment; filename={$outputFileName}");
+	header('Content-Type: application/octet-stream');
+	header('Content-Disposition: attachment; filename="'.$outputFileName.'"');
 	echo "\"Level\";\"Country\";\"State\";\"County\";\"Place\";\"Longitude\";\"Latitude\";\"ZoomLevel\";\"Icon\"\r\n";
 	outputLevel($parent);
 	exit;

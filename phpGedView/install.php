@@ -281,7 +281,7 @@ switch($step) {
 				header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
 				header("Cache-Control: private",false); // required for certain browsers
 				header("Content-Type: text/text");
-				header("Content-Disposition: attachment; filename=config.php");
+				header('Content-Disposition: attachment; filename="config.php"');
 				header("Content-length: ".strlen($ret));
 				header("Content-Transfer-Encoding: binary");
 				print $ret;
