@@ -1036,31 +1036,13 @@ function get_source_list($ged_id) {
 
 // Get a list of repositories from the database
 // $ged_id - the gedcom to search
-// $filter - an array of search criteria
-// $conjunction - match filter terms with "AND" or "OR"
-function get_repo_list($ged_id=PGV_GED_ID, $filters=null, $conjunction="AND") {
-	global $TBLPREFIX, $DBCONN;
+function get_repo_list($ged_id) {
+	global $TBLPREFIX;
 
 	$ged_id=(int)$ged_id;
-
-	if ($filters) {
-		if (!is_array($filters)) {
-			$filters=array($filters);
-		}
-		foreach ($filters as $key=>$value) {
-			$filter[$key]=
-				"o_gedcom ".PGV_DB_LIKE." '".
-				str_replace(array('@', '_', '%'), array('@@', '@_', '@%'), $DBCONN->escapeSimple($value)).
-				"' ESCAPE '@'";
-		}
-		$where.=" AND (".implode(" {$conjunction} ", $filter).")";
-	} else {
-		$where='';
-	}
-
 	$res=dbquery(
 		"SELECT 'REPO' AS type, o_id AS xref, {$ged_id} AS ged_id, o_gedcom AS gedrec ".
-		"FROM {$TBLPREFIX}other WHERE o_type='REPO' AND o_file={$ged_id} ${where}"
+		"FROM {$TBLPREFIX}other WHERE o_type='REPO' AND o_file={$ged_id}"
 	);
 	$list=array();
 	while ($row=$res->fetchRow(DB_FETCHMODE_ASSOC)) {
@@ -1069,7 +1051,6 @@ function get_repo_list($ged_id=PGV_GED_ID, $filters=null, $conjunction="AND") {
 	$res->free();
 
 	usort($list, array('GedcomRecord', 'Compare'));
-
 	return $list;
 }
 
