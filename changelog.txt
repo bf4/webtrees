@@ -10,6 +10,7 @@
 
 
 Version 4.1.6
+ - Added: Improvement to Notes positioning and appearance when enlarged Lightbox Image Notes icon is clicked. (windmillway)
  - Fixed: [ 2217714 ] Changes to Thumbnail Behavior for Non-Images (windmillway)
  - Fixed: [ 2156359 ] Recent Changes Block Not Sorted by Time (fisharebest)
  - Fixed: [ 2193279 ] Merge trouble with upper/lower case (fisharebest)

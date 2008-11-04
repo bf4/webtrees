@@ -1573,6 +1573,15 @@ function print_main_media_row($rtype, $rowm, $pid) {
 				}else{
 					$file_type = "other";
 				}
+				
+				//Get media item Notes
+				$haystack = $rowm["m_gedrec"];
+				$needle   = "1 NOTE";
+				$before   = substr($haystack, 0, strpos($haystack, $needle));
+				$after    = substr(strstr($haystack, $needle), strlen($needle));
+				$worked   = ereg_replace("1 NOTE", "1 NOTE<br />", $after);
+				$final    = $before.$needle.$worked;
+				$notes    = PrintReady(htmlspecialchars(addslashes(print_fact_notes($final, 1, true, true)),ENT_COMPAT,'UTF-8'));
 					
 				// if Lightbox installed ------------------------------------------------------------------------------
 				if (file_exists("modules/lightbox/album.php") ) {
@@ -1585,19 +1594,19 @@ function print_main_media_row($rtype, $rowm, $pid) {
 					
 					// If URL FLV filetype (Lightbox)
 					if ($file_type == "url_flv") {
-						print "<a href=\"module.php?mod=JWplayer&amp;pgvaction=flvVideo&amp;flvVideo=" . str_replace('http://', '', $mainMedia) . "\" rel='clearbox(" . 445 . "," . 370 . ",click)' rev=\"" . $rowm["m_media"] . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name,ENT_COMPAT,'UTF-8')) . "\">" . "\n";
+						print "<a href=\"module.php?mod=JWplayer&amp;pgvaction=flvVideo&amp;flvVideo=" . str_replace('http://', '', $mainMedia) . "\" rel='clearbox(" . 445 . "," . 370 . ",click)' rev=\"" . $rowm["m_media"] . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name,ENT_COMPAT,'UTF-8')) . "::" . htmlspecialchars($notes,ENT_COMPAT,'UTF-8') . "\">" . "\n";
 					// Else if URL image (Lightbox)
 					} elseif ($file_type == "url_image") {
-						print "<a href=\"" . $mainMedia . "\" rel='clearbox[general_3]' rev=\"" . $rowm["m_media"] . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name,ENT_COMPAT,'UTF-8')) . "\">" . "\n";
+						print "<a href=\"" . $mainMedia . "\" rel='clearbox[general_3]' rev=\"" . $rowm["m_media"] . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name,ENT_COMPAT,'UTF-8')) . "::" . htmlspecialchars($notes,ENT_COMPAT,'UTF-8') . "\">" . "\n";
 					// Else if URL page (Lightbox)
 					} elseif ($file_type == "url_page") {
-						print "<a href=\"" . $mainMedia . "\" rel='clearbox(" . $LB_URL_WIDTH . "," . $LB_URL_HEIGHT . ",click)' rev=\"" . $rowm["m_media"] . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name,ENT_COMPAT,'UTF-8')) . "\">" . "\n";
+						print "<a href=\"" . $mainMedia . "\" rel='clearbox(" . $LB_URL_WIDTH . "," . $LB_URL_HEIGHT . ",click)' rev=\"" . $rowm["m_media"] . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name,ENT_COMPAT,'UTF-8')) . "::" . htmlspecialchars($notes,ENT_COMPAT,'UTF-8') . "\">" . "\n";
 					// Else if Local FLV  (Lightbox)
 					} else if ($file_type == "local_flv") {
-						print "<a href=\"module.php?mod=JWplayer&amp;pgvaction=flvVideo&amp;flvVideo=" . $mainMedia . "\" rel='clearbox(" . 445 . "," . 370 . ",click)' rev=\"" . $rowm["m_media"] . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name,ENT_COMPAT,'UTF-8')) . "\">" . "\n";
+						print "<a href=\"module.php?mod=JWplayer&amp;pgvaction=flvVideo&amp;flvVideo=" . $mainMedia . "\" rel='clearbox(" . 445 . "," . 370 . ",click)' rev=\"" . $rowm["m_media"] . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name,ENT_COMPAT,'UTF-8')) . "::" . htmlspecialchars($notes,ENT_COMPAT,'UTF-8') . "\">" . "\n";
 					// Else if Local Image (Lightbox)
 					} else if ($file_type == "local_image") {
-						print "<a href=\"" . $mainMedia . "\" rel='clearbox[general_3]' rev=\"" . $rowm["m_media"] . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name,ENT_COMPAT,'UTF-8')) . "\">" . "\n";
+						print "<a href=\"" . $mainMedia . "\" rel='clearbox[general_3]' rev=\"" . $rowm["m_media"] . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name,ENT_COMPAT,'UTF-8')) . "::" . htmlspecialchars($notes,ENT_COMPAT,'UTF-8') . "\">" . "\n";
 					// Else Other filetype (Pop-up Window)
 					} else {
 						print "<a href=\"javascript:;\" onclick=\"return openImage('".rawurlencode($mainMedia)."',$imgwidth, $imgheight);\">";
