@@ -1252,7 +1252,7 @@ function format_surname_table($surnames, $type) {
 	$html.='<td class="list_item">&nbsp;</td>';
 	$html.='<td style="display:none;">&nbsp;</td>'; // hidden column for sorting surnames
 	$html.='<td class="list_label name2">'.$pgv_lang['total_indis'].': '.count($unique_indi);
-	$html.='<br/>'.$pgv_lang['total_names'].': '.count($unique_surn).'</tr></table>';
+	$html.='<br/>'.$pgv_lang['total_names'].': '.count($unique_surn).'</td></tr></table>';
 	return $html;
 }
 
