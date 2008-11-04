@@ -287,7 +287,7 @@ function autocomplete_INDI_SOUR_PAGE() {
 				do {
 					$srec = get_sub_record("SOUR @{$OPTION}@", $level, $person->gedrec, $i++);
 					$page = get_gedcom_value("PAGE", $level+1, $srec);
-					if (stripos($page, $FILTER)!==false || empty($FILTER))
+					if (stristr($page, $FILTER)!==false || empty($FILTER))
 						$data[] = $page;
 				} while ($srec);
 			}
@@ -323,7 +323,7 @@ function autocomplete_FAM_SOUR_PAGE() {
 				do {
 					$srec = get_sub_record("SOUR @{$OPTION}@", $level, $family->gedrec, $i++);
 					$page = get_gedcom_value("PAGE", $level+1, $srec);
-					if (stripos($page, $FILTER)!==false || empty($FILTER))
+					if (stristr($page, $FILTER)!==false || empty($FILTER))
 						$data[] = $page;
 				} while ($srec);
 			}
@@ -575,7 +575,7 @@ function autocomplete_PLAC() {
 	//-- filter
 	function place_ok($v) {
 		global $FILTER;
-		return (stripos($v, $FILTER)!==false);
+		return (stristr($v, $FILTER)!==false);
 	}
 	$data = array_filter($data, "place_ok");
 
