@@ -488,7 +488,7 @@ function print_fam_table($datalist, $legend="", $option="") {
 	echo "<th style=\"display:none\">HUSB:GIVN</th>";
 	echo "<th class=\"list_label\">".$factarray["AGE"]."</th>";
 	if ($SHOW_ID_NUMBERS) echo "<th class=\"list_label rela\">INDI</th>";
-	echo "<th class=\"list_label\">".$pgv_lang["spouse"]."</th>";
+	echo "<th class=\"list_label\">".$factarray["NAME"]."</th>";
 	echo "<th style=\"display:none\">WIFE:GIVN</th>";
 	echo "<th class=\"list_label\">".$factarray["AGE"]."</th>";
 	echo "<th class=\"list_label\">".$factarray["MARR"]."</th>";
