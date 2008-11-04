@@ -382,7 +382,7 @@ function print_indi_table($datalist, $legend="", $option="") {
 	if ($SHOW_ID_NUMBERS) echo "<td></td>"; // INDI:ID
 	echo "<td class=\"list_label\">"; // NAME
 	echo '<a href="javascript:;" onclick="sortByOtherCol(this,1)"><img src="images/topdown.gif" alt="" border="0" /> '.$factarray["GIVN"].'</a><br />';
-	echo "<input id=\"cb_parents_$table_id\" type=\"checkbox\" onclick=\"toggleByClassName('DIV', 'parents_$table_id');\" /><label for=\"parents_$table_id\">".$pgv_lang["show_parents"]."</label><br />";
+	echo "<input id=\"cb_parents_$table_id\" type=\"checkbox\" onclick=\"toggleByClassName('DIV', 'parents_$table_id');\" /><label for=\"cb_parents_$table_id\">".$pgv_lang["show_parents"]."</label><br />";
 	echo $pgv_lang['total_indis'], ' : ', count($unique_indis);
 	if ($n!=count($unique_indis)) {
 		echo '<br/>', $pgv_lang['total_names'], ' : ', $n;
@@ -488,7 +488,7 @@ function print_fam_table($datalist, $legend="", $option="") {
 	echo "<th style=\"display:none\">HUSB:GIVN</th>";
 	echo "<th class=\"list_label\">".$factarray["AGE"]."</th>";
 	if ($SHOW_ID_NUMBERS) echo "<th class=\"list_label rela\">INDI</th>";
-	echo "<th class=\"list_label\">".$pgv_lang["spouse"]."</th>";
+	echo "<th class=\"list_label\">".$factarray["NAME"]."</th>";
 	echo "<th style=\"display:none\">WIFE:GIVN</th>";
 	echo "<th class=\"list_label\">".$factarray["AGE"]."</th>";
 	echo "<th class=\"list_label\">".$factarray["MARR"]."</th>";
@@ -747,7 +747,7 @@ function print_fam_table($datalist, $legend="", $option="") {
 	if ($SHOW_ID_NUMBERS) echo "<td></td>"; // HUSB:ID
 	echo "<td class=\"list_label\">"; // HUSB:NAME
 	echo '<a href="javascript:;" onclick="sortByOtherCol(this,1)"><img src="images/topdown.gif" alt="" border="0" /> '.$factarray["GIVN"].'</a><br />';
-	echo "<input id=\"cb_parents_$table_id\" type=\"checkbox\" onclick=\"toggleByClassName('DIV', 'parents_$table_id');\" /><label for=\"parents_$table_id\">".$pgv_lang["show_parents"]."</label><br />";
+	echo "<input id=\"cb_parents_$table_id\" type=\"checkbox\" onclick=\"toggleByClassName('DIV', 'parents_$table_id');\" /><label for=\"cb_parents_$table_id\">".$pgv_lang["show_parents"]."</label><br />";
 	echo $pgv_lang["total_fams"]." : ".$num;
 	if ($hidden) echo "<br /><span class=\"warning\">".$pgv_lang["hidden"]." : ".$hidden."</span>";
 	echo "</td>";
@@ -1252,7 +1252,7 @@ function format_surname_table($surnames, $type) {
 	$html.='<td class="list_item">&nbsp;</td>';
 	$html.='<td style="display:none;">&nbsp;</td>'; // hidden column for sorting surnames
 	$html.='<td class="list_label name2">'.$pgv_lang['total_indis'].': '.count($unique_indi);
-	$html.='<br/>'.$pgv_lang['total_names'].': '.count($unique_surn).'</tr></table>';
+	$html.='<br/>'.$pgv_lang['total_names'].': '.count($unique_surn).'</td></tr></table>';
 	return $html;
 }
 
@@ -1459,7 +1459,7 @@ function print_changes_table($datalist) {
 	if ($SHOW_ID_NUMBERS) echo "<td></td>";
 	echo "<td class=\"list_label\">";
 	echo '<a href="javascript:;" onclick="sortByOtherCol(this,1)"><img src="images/topdown.gif" alt="" border="0" /> '.$factarray["GIVN"].'</a><br />';
-	echo "<input id=\"cb_parents_$table_id\" type=\"checkbox\" onclick=\"toggleByClassName('DIV', 'parents_$table_id');\" /><label for=\"parents_$table_id\">".$pgv_lang["show_parents"]."</label><br />";
+	echo "<input id=\"cb_parents_$table_id\" type=\"checkbox\" onclick=\"toggleByClassName('DIV', 'parents_$table_id');\" /><label for=\"cb_parents_$table_id\">".$pgv_lang["show_parents"]."</label><br />";
 	echo $pgv_lang["total_names"].": ".$n;
 	if ($hidden) echo "<br /><span class=\"warning\">".$pgv_lang["hidden"]." : ".$hidden."</span>";
 	if ($n>=$NMAX) echo "<br /><span class=\"warning\">".$pgv_lang["recent_changes"]." &gt; ".$NMAX."</span>";
@@ -1604,7 +1604,7 @@ function print_events_table($startjd, $endjd, $events='BIRT MARR DEAT', $only_li
 		//-- table footer
 		print "<tr class=\"sortbottom\">";
 		print "<td class=\"list_label\">";
-		print "<input id=\"cb_parents_$table_id\" type=\"checkbox\" onclick=\"toggleByClassName('DIV', 'parents_$table_id');\" /><label for=\"parents_$table_id\">&nbsp;&nbsp;".$pgv_lang["show_parents"]."</label><br />";
+		print "<input id=\"cb_parents_$table_id\" type=\"checkbox\" onclick=\"toggleByClassName('DIV', 'parents_$table_id');\" /><label for=\"cb_parents_$table_id\">&nbsp;&nbsp;".$pgv_lang["show_parents"]."</label><br />";
 		print "</td><td class=\"list_label\" colspan=\"3\">";
 		print $pgv_lang["stat_events"].": ".$output;
 		if ($allow_download) {
