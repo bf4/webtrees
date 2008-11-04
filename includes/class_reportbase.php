@@ -218,17 +218,16 @@ class PGVRElement {
 		//print "[".substr($t, 0, 1)."=$ord]";
 		$found=false;
 		foreach($SpecialOrds as $indexval => $ord) {
-   			if (strpos($t, chr($ord))!==false) {
+			if (strpos($t, chr($ord))!==false) {
 				$found=true;
 			}
 		}
-   		if ($found) $embed_fonts = true;
-   		$t = trim($t, "\r\n\t");
+		if ($found) $embed_fonts = true;
+		$t = trim($t, "\r\n\t");
 		$t = str_replace(array('<br />', '&nbsp;'), array("\n", ' '), $t);
 		$t = strip_tags($t);
 		$t = unhtmlentities($t);
 		if ($embed_fonts) $t = bidi_text($t);
-		//else $t = smart_utf8_decode($t);
 		$this->text .= $t;
 	}
 
@@ -433,16 +432,15 @@ class PGVRFootnote extends PGVRElement {
 
 		$found=false;
 		foreach($SpecialOrds as $indexval => $ord) {
-   			if (strpos($t, chr($ord))!==false) $found=true;
+			if (strpos($t, chr($ord))!==false) $found=true;
 		}
-   		if ($found) $embed_fonts = true;
+		if ($found) $embed_fonts = true;
 
 		$t = trim($t, "\r\n\t");
 		$t = str_replace(array('<br />', '&nbsp;'), array("\n", ' '), $t);
 		$t = strip_tags($t);
 		$t = unhtmlentities($t);
 		if ($embed_fonts) $t = bidi_text($t);
-		//else $t = smart_utf8_decode($t);
 		$this->text .= $t;
 	}
 
@@ -2069,9 +2067,9 @@ function PGVRRelativesSHandler($attrs) {
 			reset($list);
 			$genCounter = 1;
 			while (count($newarray) < count($list)) {
-		        	foreach ($list as $key => $value) {
-			                $generation = $value->generation;
-			                if ($generation == $genCounter) {
+				foreach ($list as $key => $value) {
+					$generation = $value->generation;
+					if ($generation == $genCounter) {
 						$newarray[$key]->generation=$generation;
 					}
 				}

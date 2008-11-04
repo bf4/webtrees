@@ -176,11 +176,9 @@ if ($display=="hierarchy") {
 			$mapfile = "places/".$country."/".$country.".".$lang_short_cut[$LANGUAGE].".htm";
 			if (!file_exists($mapfile)) $mapfile = "places/".$country."/".$country.".htm";
 			if ($level>1) {
-				//$state = smart_utf8_decode($parent[1]);
 				$state = $parent[1];
 				$mapname .= "_".$state;
 				if ($level>2) {
-					//$county = smart_utf8_decode($parent[2]);
 					$county = $parent[2];
 					$mapname .= "_".$county;
 					$areaname = str_replace("'","\'",$parent[2]);

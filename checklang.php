@@ -129,10 +129,8 @@ function checkfile($filename) {
 	set_time_limit(0); //
 
 	// loading source data
-	//echo "<br />$filename";
 	if (!$fd = fopen($filename, 'r')) die("Cannot open $filename");
 	while ($data = @fgets($fd)) {
-		//if (substr($data, 0, 1) == "\$") $source[] = $data; //smart_utf8_decode($data);
 		if (isset($data[1]) and $data[1]!='*' and $data[1]!='?') $source[] = $data;
 	}
 	fclose($fd);
@@ -143,7 +141,7 @@ function checkfile($filename) {
 	$header = "";
 	while ($data = @fgets($fd)) {
 		if ($data[1]=='*' or $data[1]=='?') $header .= $data;
-		if (substr($data, 0, 1) == "\$") $target[] = $data; //smart_utf8_decode($data);
+		if (substr($data, 0, 1) == "\$") $target[] = $data;
 	}
 	@fclose($fd);
 	$target[] = ""; // DO NOT DELETE THIS
