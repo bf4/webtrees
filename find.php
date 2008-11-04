@@ -695,7 +695,7 @@ if ($action=="filter") {
 	// Output Repositories
 	if ($type == "repo") {
 		print "\n\t<table class=\"tabs_table $TEXT_DIRECTION width90\">\n\t\t<tr>";
-		$repo_list = get_repo_list();
+		$repo_list = get_repo_list(PGV_GED_ID);
 		if ($repo_list) {
 			print "\n\t\t<td class=\"list_value_wrap\"><ul>";
 			foreach ($repo_list as $repo) {
