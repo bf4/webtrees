@@ -10,7 +10,7 @@
 
 
 Version 4.1.6
- - Fixed: [ 2217714 ]  Changes to Thumbnail Behavior for Non-Images
+ - Fixed: [ 2217714 ] Changes to Thumbnail Behavior for Non-Images (windmillway)
  - Fixed: [ 2156359 ] Recent Changes Block Not Sorted by Time (fisharebest)
  - Fixed: [ 2193279 ] Merge trouble with upper/lower case (fisharebest)
  - Added: Support for Romanian language (canajun2eh)
