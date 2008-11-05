@@ -790,121 +790,123 @@ function print_fam_table($datalist, $legend="", $option="") {
  * @param array $datalist contain sources that were extracted from the database.
  * @param string $legend optional legend of the fieldset
  */
-function print_sour_table($datalist, $legend="") {
+function print_sour_table($datalist, $legend=null) {
 	global $pgv_lang, $factarray, $SHOW_ID_NUMBERS, $SHOW_LAST_CHANGE, $TEXT_DIRECTION;
 	global $PGV_IMAGE_DIR, $PGV_IMAGES;
 
-	if (count($datalist)<1) return;
-	$name_subtags = array("_HEB", "ROMN");
+	if (count($datalist)<1) {
+		return;
+	}
 	require_once 'js/sorttable.js.htm';
 	require_once 'includes/class_source.php';
 
-	if ($legend == "") $legend = $pgv_lang["sources"];
-	$legend = "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["source"]["small"]."\" alt=\"\" align=\"middle\" /> ".$legend;
-	echo "<fieldset><legend>".$legend."</legend>";
+	echo '<fieldset><legend><img src="', $PGV_IMAGE_DIR, '/', $PGV_IMAGES['source']['small'], '" align="middle" /> ';
+	if ($legend) {
+		echo $legend;
+	} else {
+		echo $pgv_lang['sources'];
+	}
+	echo '</legend>';
 	$table_id = "ID".floor(microtime()*1000000); // sorttable requires a unique ID
 	//-- table header
-	echo "<table id=\"".$table_id."\" class=\"sortable list_table center\">";
-	echo "<tr>";
-	echo "<td></td>";
-	if ($SHOW_ID_NUMBERS) echo "<th class=\"list_label rela\">SOUR</th>";
-	echo "<th class=\"list_label\">".$factarray["TITL"]."</th>";
-	$t2 = false; echo "<td class=\"list_label t2\">".$factarray["TITL"]."2</td>";
-	echo "<th class=\"list_label\">".$factarray["AUTH"]."</th>";
-	echo "<th class=\"list_label\">".$pgv_lang["individuals"]."</th>";
-	echo "<th class=\"list_label\">".$pgv_lang["families"]."</th>";
-	echo "<th class=\"list_label\">".$pgv_lang["media"]."</th>";
-	if ($SHOW_LAST_CHANGE) echo "<th class=\"list_label rela\">".$factarray["CHAN"]."</th>";
-	echo "</tr>\n";
+	echo '<table id="', $table_id, '" class="sortable list_table center"><tr><td></td>';
+	if ($SHOW_ID_NUMBERS) {
+		echo '<th class="list_label rela">SOUR</th>';
+	}
+	echo '<th class="list_label">', $factarray['TITL'], '</th>';
+	echo '<td class="list_label t2" style="display:none;">', $factarray['TITL'], ' 2</td>';
+	echo '<th class="list_label">', $factarray['AUTH'], '</th>';
+	echo '<th class="list_label">', $pgv_lang['individuals'], '</th>';
+	echo '<th class="list_label">', $pgv_lang['families'], '</th>';
+	echo '<th class="list_label">', $pgv_lang['media'], '</th>';
+	if ($SHOW_LAST_CHANGE) {
+		echo '<th class="list_label rela">', $factarray['CHAN'], '</th>';
+	}
+	echo '</tr>';
 	//-- table body
-	$hidden = 0;
-	$n = 0;
-	foreach ($datalist as $key => $value) {
+	$t2=false;
+	$n=0;
+	foreach ($datalist as $key=>$value) {
 		if (is_object($value)) { // Array of objects
 			$source=$value;
 		} elseif (!is_array($value)) { // Array of IDs
-			$source = Source::getInstance($key); // from placelist
-			if (is_null($source)) $source = Source::getInstance($value);
+			$source=Source::getInstance($key); // from placelist
+			if (is_null($source)) {
+				$source=Source::getInstance($value);
+			}
 			unset($value);
 		} else { // Array of search results
-			$gid = "";
-			if (isset($value["gid"])) $gid = $value["gid"];
-			if (isset($value["gedcom"])) $source = new Source($value["gedcom"]);
-			else $source = Source::getInstance($gid);
+			$gid='';
+			if (isset($value['gid'])) {
+				$gid=$value['gid'];
+			}
+			if (isset($value['gedcom'])) {
+				$source=new Source($value['gedcom']);
+			} else {
+				$source=Source::getInstance($gid);
+			}
 		}
-		if (is_null($source)) continue;
-		if (!$source->canDisplayDetails()) {
-			$hidden++;
+		if (!$source || !$source->canDisplayDetails()) {
 			continue;
 		}
+		$link_url=encode_url($source->getLinkUrl());
 		//-- Counter
-		echo "<tr>";
-		echo "<td class=\"list_value_wrap rela list_item\">".++$n."</td>";
+		echo '<tr><td class="list_value_wrap rela list_item">', ++$n, '</td>';
 		//-- Source ID
-		if ($SHOW_ID_NUMBERS)
+		if ($SHOW_ID_NUMBERS) {
 			echo '<td class="list_value_wrap rela">'.$source->getXrefLink().'</td>';
-		//-- Source name(s)
-		$name=$source->getFullName();
-		echo "<td class=\"list_value_wrap\" align=\"".get_align($name)."\">";
-		echo "<a href=\"".encode_url($source->getLinkUrl())."\" class=\"list_item name2\">".PrintReady($name)."</a>";
-		echo "</td>";
-		// alternate title in a new column
-		echo "<td class=\"list_value_wrap t2\">";
-		$addname = $source->getAddName();
-		if ($addname) {
-			echo "<a href=\"".encode_url($source->getLinkUrl())."\" class=\"list_item\">".PrintReady($addname)."</a><br />";
-			$t2 = true;
 		}
-		echo "&nbsp;</td>";
+		//-- Source name(s)
+		$tmp=$source->getFullName();
+		echo '<td class="list_value_wrap" align="', get_align($tmp), '"><a href="', $link_url, '" class="list_item name2">', PrintReady($tmp), '</a></td>';
+		// alternate title in a new column
+		$tmp=$source->getAddName();
+		if ($tmp) {
+			echo '<td class="list_value_wrap t2" style="display:none;"><a href="', $link_url, '" class="list_item">', PrintReady($tmp), '</a></td>';
+			$t2=true;
+		} else {
+			echo '<td class="list_value_wrap t2" style="display:none;">&nbsp;</td>';
+		}
 		//-- Author
-		echo "<td class=\"list_value_wrap\" align=\"".get_align($source->getAuth())."\">";
-		echo "<a href=\"".encode_url($source->getLinkUrl())."\" class=\"list_item\">".PrintReady($source->getAuth())."</a>";
-		echo "&nbsp;</td>";
-
+		$tmp=$source->getAuth();
+		if ($tmp) {
+			echo '<td class="list_value_wrap" align="', get_align($tmp), '"><a href="', $link_url, '" class="list_item">', PrintReady($tmp), '</a>&nbsp;</td>';
+		} else {
+			echo '<td class="list_value_wrap">&nbsp;</td>';
+		}
 		//-- Linked INDIs
-		echo "<td class=\"list_value_wrap\">";
-		echo "<a href=\"".encode_url($source->getLinkUrl())."\" class=\"list_item\">".$source->countLinkedIndividuals()."</a>";
-		echo "</td>";
+		$tmp=$source->countLinkedIndividuals();
+		echo '<td class="list_value_wrap"><a href="', $link_url, '" class="list_item" name="', $tmp, '">', $tmp, '</a></td>';
 		//-- Linked FAMs
-		echo "<td class=\"list_value_wrap\">";
-		echo "<a href=\"".encode_url($source->getLinkUrl())."\" class=\"list_item\">".$source->countLinkedfamilies()."</a>";
-		echo "</td>";
+		$tmp=$source->countLinkedfamilies();
+		echo '<td class="list_value_wrap"><a href="', $link_url, '" class="list_item" name="', $tmp, '">', $tmp, '</a></td>';
 		//-- Linked OBJEcts
-		echo "<td class=\"list_value_wrap\">";
-		echo "<a href=\"".encode_url($source->getLinkUrl())."\" class=\"list_item\">".$source->countLinkedMedia()."</a>";
-		echo "</td>";
-
+		$tmp=$source->countLinkedMedia();
+		echo '<td class="list_value_wrap"><a href="', $link_url, '" class="list_item" name="', $tmp, '">', $tmp, '</a></td>';
 		//-- Last change
-		if ($SHOW_LAST_CHANGE)
+		if ($SHOW_LAST_CHANGE) {
 			print '<td class="'.strrev($TEXT_DIRECTION).' list_value_wrap rela">'.$source->LastChangeTimestamp(empty($SEARCH_SPIDER)).'</td>';
+		}
 		echo "</tr>\n";
 	}
 	//-- table footer
-	echo "<tr class=\"sortbottom\">";
-	echo "<td></td>";
-	if ($SHOW_ID_NUMBERS) echo "<td></td>";
-	echo "<td class=\"list_label\">";
-	echo $pgv_lang["total_sources"]." : ".$n;
-	if ($hidden) echo "<br /><span class=\"warning\">".$pgv_lang["hidden"]." : ".$hidden."</span>";
-	echo "</td>";
-	echo "<td></td>";
-	echo "<td class=\"t2\"></td>";
-	echo "<td></td>";
-	echo "<td></td>";
-	echo "<td></td>";
-	echo "<td></td>";
-	if ($SHOW_LAST_CHANGE) echo "<td></td>";
-	echo "</tr>";
-	echo "</table>\n";
-	echo "</fieldset>\n";
-	//-- hide TITLE2 col if empty
-	if (!$t2) {
+	echo '<tr class="sortbottom"><td></td>';
+	if ($SHOW_ID_NUMBERS) {
+		echo '<td></td>';
+	}
+	echo '<td class="list_label">', $pgv_lang['total_sources'], ' : ', $n,  '</td><td></td><td class="t2" style="display:none;"></td><td></td><td></td><td></td><td></td>';
+	if ($SHOW_LAST_CHANGE) {
+		echo '<td></td>';
+	}
+	echo '</tr></table></fieldset>';
+	// show TITLE2 col if not empty
+	if ($t2) {
 		echo <<< T2
 		<script type="text/javascript">
 		// <![CDATA[
 			var table = document.getElementById("$table_id");
 			cells = table.getElementsByTagName('td');
-			for (i=0;i<cells.length;i++) if (cells[i].className && (cells[i].className.indexOf('t2') != -1)) cells[i].style.display='none';
+			for (i=0;i<cells.length;i++) if (cells[i].className && (cells[i].className.indexOf('t2') != -1)) cells[i].style.display='block';
 		// ]]>
 		</script>
 T2;
@@ -963,7 +965,8 @@ function print_repo_table($repos, $legend='') {
 		}
 		echo '</td>';
 		//-- Linked SOURces
-		echo '<td class="list_value_wrap"><a href="', encode_url($repo->getLinkUrl()), '" class="list_item">', $repo->countLinkedSources(), '</a></td>';
+		$tmp=$repo->countLinkedSources();
+		echo '<td class="list_value_wrap"><a href="', encode_url($repo->getLinkUrl()), '" class="list_item" name="', $tmp, '">', $tmp, '</a></td>';
 		//-- Last change
 		if ($SHOW_LAST_CHANGE) {
 			echo '<td class="', strrev($TEXT_DIRECTION), ' list_value_wrap rela">', $repo->LastChangeTimestamp(!$SEARCH_SPIDER), '</td>';
