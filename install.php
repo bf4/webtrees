@@ -103,10 +103,10 @@ $head .= "		if (helpWin) helpWin.close();\n";
 $head .= "	}\n";
 $head .= "	function changeDBtype(dbselect) {\n";
 $head .= "		if (dbselect.options[dbselect.selectedIndex].value=='sqlite') {\n";
-$head .= "			document.configform.NEW_DBNAME.value='./index/phpgedview.db\";\n";
+$head .= "			document.configform.NEW_DBNAME.value='./index/phpgedview.db';\n";
 $head .= "		}\n";
 $head .= "		else {\n";
-$head .= "			document.configform.NEW_DBNAME.value='phpgedview\";\n";
+$head .= "			document.configform.NEW_DBNAME.value='phpgedview';\n";
 $head .= "		}\n";
 $head .= "	}\n";
 $head .= "	function checkForm(frm) {\n";
@@ -416,7 +416,7 @@ $errormsg = "";
 		</td>
 		<td class="optionbox width75" style="white-space: normal">
 		<h3 class="center"><?php print $title; ?></h3>
-		<form action="install.php" method="post" onsubmit="return checkForm(this);">
+		<form name="configform" action="install.php" method="post" onsubmit="return checkForm(this);">
 		<input type="hidden" name="step" value="<?php print $step ?>" />
 		<input type="hidden" name="newSite" value="<?php print $newSite ?>" />
 		<?php
