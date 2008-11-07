@@ -66,4 +66,8 @@ $pgv_lang["bu_married_names_desc"]="You can make it easier to search for married
 $pgv_lang["bu_surname_option"]="Surname Option";
 $pgv_lang["bu_surname_replace"]="Wife's surname replaced by husband's surname";
 $pgv_lang["bu_surname_add"]="Wife's maiden surname becomes new given name";
+
+$pgv_lang["bu_name_format"]="Fix name slashes and spaces";
+$pgv_lang["bu_name_format_desc"]="Correct NAME records of the form 'John/DOE/' or 'John /DOE', as produced by older genealogy programs.";
+
 ?>
