@@ -331,10 +331,10 @@ while ($x<$i) {
 			if ($levels[$z]=="unknown") {
 				$placestr2=$mapstr_add.$id."&amp;level=".$level.$mapstr3.$mapstr7."<font color='#00FF00'><strong>".rtrim(ltrim($pgv_lang["pl_unknown"]))."</strong></font>".$mapstr8;$matched[$x]++;
 			} else {
-				$placestr2=$mapstr_add.$id."&amp;level=".$level.$mapstr3.$mapstr7."<font color='#FF0000'>".rtrim(ltrim($levels[$z]))."</font>".$mapstr8;$matched[$x]++;
+				$placestr2=$mapstr_add.$id."&amp;place_name=".urlencode($levels[$z])."&amp;level=".$level.$mapstr3.$mapstr7."<font color='#FF0000'>".rtrim(ltrim($levels[$z]))."</font>".$mapstr8;$matched[$x]++;
 			}
 		}
-		$plac[$z]="<td class='facts_value'>".$placestr2."</td>";
+		$plac[$z]="<td class='facts_value'>".$placestr2."</td>\n";
 		if ($row['pl_lati']!='') {
 			$lati[$z]="<td class='facts_value'>".$row['pl_lati']."</td>";
 		} else {
