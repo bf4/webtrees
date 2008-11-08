@@ -54,11 +54,12 @@ $person=Person::getInstance($pid);
 $name  =$person->getFullName();
 
 function print_descendency($pid, $count) {
-	global $show_spouse, $dgenerations, $bwidth, $bheight, $bhalfheight, $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES, $generations, $box_width, $view, $show_full, $pgv_lang;
+	global $show_spouse, $dgenerations, $bwidth, $bheight, $bhalfheight;
+	global $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES, $generations, $box_width, $view, $show_full, $pgv_lang;
 	if ($count>=$dgenerations) return 0;
 	print "<table cellspacing=\"0\" cellpadding=\"0\" border=\"0\">\n";
 	print "<tr>";
-	print "<td width=\"$bwidth\">\n";
+	print "<td width=\"".($bwidth-2)."\">\n";
 	$numkids = 0;
 	$famids = find_sfamily_ids($pid);
 	if (count($famids)>0) {
@@ -73,27 +74,29 @@ function print_descendency($pid, $count) {
 				if (($i>0)&&($i<$ct-1)) $rowspan=1;
 				$chil = trim($match[$i][1]);
 				print "<tr><td rowspan=\"$rowspan\" width=\"$bwidth\" style=\"padding-top: 2px;\">\n";
-				if ($count+1 < $dgenerations) {
+				if ($count < $dgenerations) {
 					$kids = print_descendency($chil, $count+1);
 					if ($i==0) $firstkids = $kids;
 					$numkids += $kids;
+					print "</td>\n";
 				}
 				else {
 					print_pedigree_person($chil);
 					$numkids++;
+					print "</td>\n";
 				}
-				print "</td>\n";
+				
 				$twidth = 7;
 				if ($ct==1) $twidth+=3;
 				print "<td rowspan=\"$rowspan\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["hline"]["other"]."\" width=\"$twidth\" height=\"3\" alt=\"\" /></td>\n";
 				if ($ct>1) {
 					if ($i==0) {
-						print "<td height=\"".$bhalfheight."\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"]."\" width=\"3\" alt=\"\" /></td></tr>\n";
-						print "<tr><td height=\"".$bhalfheight."\" style=\"background: url('".$PGV_IMAGE_DIR."/".$PGV_IMAGES["vline"]["other"]."');\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"]."\" width=\"3\" alt=\"\" /></td>\n";
+						print "<td height=\"".($bhalfheight+3)."\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"]."\" width=\"3\" alt=\"\" /></td></tr>\n";
+						print "<tr><td height=\"".($bhalfheight+3)."\" style=\"background: url('".$PGV_IMAGE_DIR."/".$PGV_IMAGES["vline"]["other"]."');\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"]."\" width=\"3\" alt=\"\" /></td>\n";
 					}
 					else if ($i==$ct-1) {
-						print "<td height=\"".$bhalfheight."\" style=\"background: url('".$PGV_IMAGE_DIR."/".$PGV_IMAGES["vline"]["other"]."');\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"]."\" width=\"3\" alt=\"\" /></td></tr>\n";
-						print "<tr><td height=\"".$bhalfheight."\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"]."\" width=\"3\" alt=\"\" /></td>\n";
+						print "<td height=\"".($bhalfheight+4)."\" style=\"background: url('".$PGV_IMAGE_DIR."/".$PGV_IMAGES["vline"]["other"]."');\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"]."\" width=\"3\" alt=\"\" /></td></tr>\n";
+						print "<tr><td height=\"".($bhalfheight+4)."\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"]."\" width=\"3\" alt=\"\" /></td>\n";
 					}
 					else {
 						print "<td style=\"background: url('".$PGV_IMAGE_DIR."/".$PGV_IMAGES["vline"]["other"]."');\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"]."\" width=\"3\" alt=\"\" /></td>\n";
@@ -112,7 +115,7 @@ function print_descendency($pid, $count) {
 		$numkids = 1;
 		$tbwidth = $bwidth+16;
 		for($j=$count; $j<$dgenerations; $j++) {
-			print "<div style=\"width: ".($tbwidth)."px;\"><br /></div>\n</td>\n<td width=\"$bwidth\">\n";
+			print "</td>\n<td width=\"$bwidth\">\n";
 		}
 	}
 	//-- add offset divs to make things line up better
@@ -291,24 +294,29 @@ function print_person_pedigree($pid, $count) {
 	global $generations, $SHOW_EMPTY_BOXES, $PGV_IMAGE_DIR, $PGV_IMAGES, $bheight, $bhalfheight;
 	if ($count>=$generations) return;
 	$famids = find_family_ids($pid);
+	$hheight = ($bhalfheight+3) * pow(2,($generations-$count-1));
 	foreach($famids as $indexval => $famid) {
 		print "<table cellspacing=\"0\" cellpadding=\"0\" border=\"0\" style=\"empty-cells: show;\">\n";
 		$parents = find_parents($famid);
 		$height="100%";
 		print "<tr>";
-		if ($count<$generations-1) print "<td height=\"".$bhalfheight."\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"]."\" width=\"3\" alt=\"\" /></td>\n";
-		if ($count<$generations-1) print "<td rowspan=\"2\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["hline"]["other"]."\" width=\"7\" height=\"3\" alt=\"\" /></td>\n";
+		if ($count<$generations-1) {
+			print "<td height=\"".$hheight."\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"]."\" width=\"3\" alt=\"\" /></td>\n";
+			print "<td rowspan=\"2\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["hline"]["other"]."\" width=\"7\" height=\"3\" alt=\"\" /></td>\n";
+		}
 		print "<td rowspan=\"2\">\n";
 		print_pedigree_person($parents["HUSB"]);
 		print "</td>\n";
 		print "<td rowspan=\"2\">\n";
 		print_person_pedigree($parents["HUSB"], $count+1);
 		print "</td>\n";
-		print "</tr>\n<tr>\n<td height=\"".$bhalfheight."\"";
+		print "</tr>\n<tr>\n<td height=\"".$hheight."\"";
 		if ($count<$generations-1) print " style=\"background: url('".$PGV_IMAGE_DIR."/".$PGV_IMAGES["vline"]["other"]."');\" ";
 		print "><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"]."\" width=\"3\" alt=\"\" /></td></tr>\n<tr>\n";
-		if ($count<$generations-1) print "<td height=\"".$bhalfheight."\" style=\"background: url('".$PGV_IMAGE_DIR."/".$PGV_IMAGES["vline"]["other"]."');\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"]."\" width=\"3\" alt=\"\" /></td>";
-		if ($count<$generations-1) print "<td rowspan=\"2\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["hline"]["other"]."\" width=\"7\" height=\"3\" alt=\"\" /></td>\n";
+		if ($count<$generations-1) {
+			print "<td height=\"".$hheight."\" style=\"background: url('".$PGV_IMAGE_DIR."/".$PGV_IMAGES["vline"]["other"]."');\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"]."\" width=\"3\" alt=\"\" /></td>";
+			print "<td rowspan=\"2\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["hline"]["other"]."\" width=\"7\" height=\"3\" alt=\"\" /></td>\n";
+		}
 		print "<td rowspan=\"2\">\n";
 		print_pedigree_person($parents["WIFE"]);
 		print "</td>\n";
@@ -316,7 +324,7 @@ function print_person_pedigree($pid, $count) {
 		print_person_pedigree($parents["WIFE"], $count+1);
 		print "</td>\n";
 		print "</tr>\n";
-		if ($count<$generations-1) print "<tr>\n<td height=\"".$bhalfheight."\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"]."\" width=\"3\" alt=\"\" /></td></tr>\n";
+		if ($count<$generations-1) print "<tr>\n<td height=\"".$hheight."\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"]."\" width=\"3\" alt=\"\" /></td></tr>\n";
 		print "</table>\n";
 	}
 }
