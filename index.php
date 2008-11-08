@@ -35,12 +35,6 @@ if (!isset($CONFIGURED)) {
 	exit;
 }
 
-if (isset ($_REQUEST['mod']))
-{
-	require_once 'module.php';
-	exit;
-}
-
 if (isset($_REQUEST['action'])) $action = $_REQUEST['action'];
 if (isset($_REQUEST['ctype'])) $ctype = $_REQUEST['ctype'];
 $message_id = safe_GET('message_id');

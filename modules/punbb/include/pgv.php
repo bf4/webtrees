@@ -7,6 +7,6 @@ function genurl($url, $header=false, $print=false)
 	$action = basename($parts['path'], '.php');
 	if(isset($parts['query'])){$query = "{$sep}{$parts['query']}";}else{$query = '';}
 	if(isset($parts['fragment'])){$frag = "#{$parts['fragment']}";}else{$frag = '';}
-	$modurl = 'index.php?mod='.PUN_MOD_NAME."{$sep}pgvaction={$action}{$query}{$frag}";
+	$modurl = 'module.php?mod='.PUN_MOD_NAME."{$sep}pgvaction={$action}{$query}{$frag}";
 	if($print){print $modurl;}else{return $modurl;}
 }

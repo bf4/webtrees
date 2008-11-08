@@ -109,7 +109,7 @@ if ( version_compare( $pun_config['o_cur_version'], $sourcecode_version, "<") ) 
 	// the source code has been updated and we need to run the update script in order to update the database
 	require_once PUN_ROOT.'include/pgv.php';
 
-	header('Location: ' . genurl('index.php?mod=punbb&pgvaction=extras/12_to_1217_update'));
+	header('Location: ' . genurl('module.php?mod=punbb&pgvaction=extras/12_to_1217_update'));
 }
 
 // Enable output buffering
