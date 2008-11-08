@@ -45,7 +45,7 @@ class mod_gallery2_updateuser
 		if($SERVER_URL[strlen($SERVER_URL) - 1] == '/'){$sep = '';}else{$sep = '/';}
 
 		$ret = GalleryEmbed::init(array(
-			'embedUri'			=> 'index.php?mod=gallery2',
+			'embedUri'			=> 'module.php?mod=gallery2',
 			'g2Uri'				=> G2EmbedDiscoveryUtilities::normalizeG2Uri($modinfo['Gallery2']['path']),
 			'loginRedirect'		=> "{$SERVER_URL}{$sep}login.php",
 			'apiVersion'		=> array(1, 1)

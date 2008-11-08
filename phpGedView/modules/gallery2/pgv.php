@@ -66,7 +66,7 @@ function mod_gallery2_load($uid)
 	$bits = parse_url($SERVER_URL);
 	if(isset($bits['query'])){$bits['query'] = "&{$bits['query']}";}else{$bits['query'] = '';}
 	if(isset($bits['fragment'])){$bits['fragment'] = "#{$bits['fragment']}";}else{$bits['fragment'] = '';}
-	$url = "{$bits['scheme']}://{$bits['host']}/index.php?mod=gallery2{$bits['query']}{$bits['fragment']}";
+	$url = "{$bits['scheme']}://{$bits['host']}/module.php?mod=gallery2{$bits['query']}{$bits['fragment']}";
 
 	$init = GalleryEmbed::init(array(
 		'embedUri'		=> G2EmbedDiscoveryUtilities::normalizeEmbedUri($url),

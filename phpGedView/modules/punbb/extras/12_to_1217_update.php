@@ -105,7 +105,7 @@ if (!isset($_POST['form_sent']))
 <div class="blockform">
 	<h2><span>PunBB Update</span></h2>
 	<div class="box">
-		<form method="post" action="index.php?mod=punbb&amp;pgvaction=extras/12_to_1217_update" onsubmit="this.start.disabled=true">
+		<form method="post" action="module.php?mod=punbb&amp;pgvaction=extras/12_to_1217_update" onsubmit="this.start.disabled=true">
 			<div><input type="hidden" name="form_sent" value="1" /></div>
 			<div class="inform">
 				<p style="font-size: 1.1em">This script will update your current PunBB <?php echo $cur_version ?> forum database to PunBB <?php echo $update_to ?>. The update procedure might take anything from a second to a few minutes depending on the speed of the server and the size of the forum database. Don't forget to make a backup of the database before continuing.</p>
