@@ -51,12 +51,12 @@ class gallery2_ModuleMenu
 		if($TEXT_DIRECTION == 'rtl'){$ff = '_rtl';}else{$ff = '';}
 
 		// Gallery
-		$menu = new Menu($pgv_lang['mod_gallery2'], 'index.php?mod=gallery2', 'down');
+		$menu = new Menu($pgv_lang['mod_gallery2'], 'module.php?mod=gallery2', 'down');
 		if(!empty($PGV_IMAGES['menu_gallery']['large'])){$menu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['menu_gallery']['large']}");}
 		$menu->addClass("menuitem{$ff}", "menuitem_hover{$ff}", "submenu{$ff}");
 
 		// Advanced Search
-		$submenu = new Menu($pgv_lang['mod_gallery2_advsearch'], 'index.php?mod=gallery2&amp;g2_view=search.SearchScan');
+		$submenu = new Menu($pgv_lang['mod_gallery2_advsearch'], 'module.php?mod=gallery2&amp;g2_view=search.SearchScan');
 		$submenu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['search']['small']}");
 		$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}");
 		$menu->addSubmenu($submenu);
@@ -84,11 +84,11 @@ class gallery2_ModuleMenu
 								{
 									if(empty($albumId))
 									{
-										$submenu = new Menu($pgv_lang['mod_gallery2_useralbum'], 'index.php?mod=gallery2&amp;g2_controller=useralbum.UserAlbum');
+										$submenu = new Menu($pgv_lang['mod_gallery2_useralbum'], 'module.php?mod=gallery2&amp;g2_controller=useralbum.UserAlbum');
 									}
 									else
 									{
-										$submenu = new Menu($pgv_lang['mod_gallery2_useralbum'], "index.php?mod=gallery2&amp;g2_controller=useralbum.UserAlbum&amp;g2_view=core.ShowItem&amp;g2_itemId={$albumId}");
+										$submenu = new Menu($pgv_lang['mod_gallery2_useralbum'], "module.php?mod=gallery2&amp;g2_controller=useralbum.UserAlbum&amp;g2_view=core.ShowItem&amp;g2_itemId={$albumId}");
 									}
 									$submenu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['indis']['small']}");
 									$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}");
@@ -105,7 +105,7 @@ class gallery2_ModuleMenu
 		// Site Admin
 		if(userIsAdmin(getUserName()))
 		{
-			$submenu = new Menu($pgv_lang['mod_gallery2_siteadmin'], 'index.php?mod=gallery2&amp;g2_view=core.SiteAdmin');
+			$submenu = new Menu($pgv_lang['mod_gallery2_siteadmin'], 'module.php?mod=gallery2&amp;g2_view=core.SiteAdmin');
 			$submenu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['admin']['small']}");
 			$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}");
 			$menu->addSubmenu($submenu);

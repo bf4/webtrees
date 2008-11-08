@@ -48,12 +48,12 @@ class punbb_ModuleMenu
 		if($TEXT_DIRECTION == 'rtl'){$ff = '_rtl';}else{$ff = '';}
 
 		// punBB
-		$menu = new Menu($pgv_lang['mod_punbb'], 'index.php?mod=punbb', 'down');
+		$menu = new Menu($pgv_lang['mod_punbb'], 'module.php?mod=punbb', 'down');
 		if(!empty($PGV_IMAGES['menu_punbb']['large'])){$menu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['menu_punbb']['large']}");}
 		$menu->addClass("menuitem{$ff}", "menuitem_hover{$ff}", "submenu{$ff}");
 
 		// Search
-		$submenu = new Menu($pgv_lang['mod_punbb_search'], 'index.php?mod=punbb&amp;pgvaction=search');
+		$submenu = new Menu($pgv_lang['mod_punbb_search'], 'module.php?mod=punbb&amp;pgvaction=search');
 		$submenu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['search']['small']}");
 		$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}");
 		$menu->addSubmenu($submenu);
@@ -63,7 +63,7 @@ class punbb_ModuleMenu
 		{
 			$submenu = new Menu();$submenu->isSeperator();$menu->addSubmenu($submenu);
 
-			$submenu = new Menu($pgv_lang['mod_punbb_admin'], 'index.php?mod=punbb&amp;pgvaction=admin_index');
+			$submenu = new Menu($pgv_lang['mod_punbb_admin'], 'module.php?mod=punbb&amp;pgvaction=admin_index');
 			$submenu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['admin']['small']}");
 			$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}");
 			$menu->addSubmenu($submenu);

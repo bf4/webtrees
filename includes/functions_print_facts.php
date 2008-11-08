@@ -973,8 +973,8 @@ function print_main_sources($factrec, $level, $pid, $linenum, $noedit=false) {
 			print "</td>";
 			print "\n\t\t\t<td class=\"optionbox $styleadd wrap\">";
 			//print "\n\t\t\t<td class=\"facts_value$styleadd\">";
-			if (showFactDetails("SOUR", $pid)) {
-				$source=Source::getInstance($sid);
+			$source=Source::getInstance($sid);
+			if ($source && showFactDetails("SOUR", $pid)) {
 				echo "<a href=\"".encode_url($source->getLinkUrl())."\">", PrintReady($source->getFullName()), "</a>";
 				// PUBL
 				$text = get_gedcom_value("PUBL", "1", $source->getGedcomRecord());
