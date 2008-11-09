@@ -37,6 +37,7 @@ require $INDEX_DIRECTORY."pgv_changes.php";
 loadLangFile("pgv_facts, googlemap:lang, googlemap:help_text");
 
 if (isset($_REQUEST['placeid'])) $placeid = $_REQUEST['placeid'];
+if (isset($_REQUEST['place_name'])) $place_name = $_REQUEST['place_name'];
 if (isset($_REQUEST['action']))  $action  = $_REQUEST['action'];
 
 print_simple_header($pgv_lang["edit_place_locations"]);
@@ -183,9 +184,9 @@ if ($action=="update") {
 		$selected_country = $selected_country[1];
 	else
 		$selected_country = "Countries";
-	$parent_id  = $row[4];
-	$level	   = $row[5];
-	$zoomfactor = $row[6];
+	$parent_id	= $row[4];
+	$level		= $row[5];
+	$zoomfactor	= $row[6];
 	$parent_lati = "0.0";
 	$parent_long = "0.0";
 	if(($row[1] != NULL) && ($row[2] != NULL)) {
@@ -245,7 +246,7 @@ if ($action=="add") {
 		} while (($row[2] != 0) && ($row[0] == NULL) && ($row[1] == NULL));
 	}
 	else {
-		$place_name  = "";
+		if (!isset($place_name)) $place_name  = "";
 		$place_lati  = null;
 		$place_long  = null;
 		$parent_lati = "0.0";
@@ -259,7 +260,8 @@ if ($action=="add") {
 	$show_marker = false;
 	$success = false;
 
-	echo "<b>".$pgv_lang["pl_unknown"];
+	if (!isset($place_name) || $place_name=="") echo "<b>".$pgv_lang["pl_unknown"];
+	else echo "<b>".$place_name;
 	if (count($where_am_i)>0)
 		echo ", ".str_replace("Unknown", $pgv_lang["pl_unknown"], PrintReady(implode(', ', array_reverse($where_am_i, true))))."</b><br />\n";
 	echo "</b><br />";
@@ -351,7 +353,7 @@ if ($action=="add") {
 		}
 
 		map.setCenter(point, zoom);
-		document.getElementById('resultDiv').innerHTML = "";
+		//document.getElementById('resultDiv').innerHTML = "";
 
 		var childicon = new GIcon();
 		childicon.image = "http://labs.google.com/ridefinder/images/mm_20_green.png";
@@ -494,7 +496,7 @@ if ($action=="add") {
 					}
 					// Trying to get the smaller yellow icon drawn in front.
 					map.addOverlay(new GMarker(point, smicon));
-					document.getElementById('resultDiv').innerHTML = "";
+					//document.getElementById('resultDiv').innerHTML = "";
 					document.editplaces.save1.disabled = "";
 					document.editplaces.save2.disabled = "";
 					var childicon = new GIcon();
@@ -539,19 +541,7 @@ if ($action=="add") {
 					if ($pl_long >= 0) 		$row[2] = abs($pl_long);
 					else if ($pl_long < 0) 	$row[2] = "-".abs($pl_long);
 
-					if (($row[3] == null) || ($row[3] == "")) {
-						echo "	 	 	 childplaces.push(new GMarker(new GLatLng(".$row[1].", ".$row[2]."), childicon));\n";
-					}
-					else {
-						echo "	 	 	 var flagicon = new GIcon();\n";
-						echo "	 	 	 flagicon.image = \"".$row[3]."\";\n";
-						echo "	 	 	 flagicon.shadow = \"modules/googlemap/flag_shadow.png\";\n";
-						echo "	 	 	 flagicon.iconSize = new GSize(25, 15);\n";
-						echo "	 	 	 flagicon.shadowSize = new GSize(35, 45);\n";
-						echo "	 	 	 flagicon.iconAnchor = new GPoint(1, 45);\n";
-						echo "			 flagicon.infoWindowAnchor = new GPoint(5, 1);\n";
-						echo "	 	 	 childplaces.push(new GMarker(new GLatLng(".$row[1].", ".$row[2]."), flagicon));\n";
-					}
+					echo "	 	 	 childplaces.push(new GMarker(new GLatLng(".$row[1].", ".$row[2]."), childicon));\n";
 					echo "			 GEvent.addListener(childplaces[".$i."], \"click\", function() {\n";
 					echo "             childplaces[".$i."].openInfoWindowHtml(\"<td width='100%'><div class='iwstyle' style='width: 250px;'><br />".addslashes($row[0])."<br /><br /></div>\")});\n";
 					echo "	 	 	 map.addOverlay(childplaces[".$i."]);\n";
@@ -733,11 +723,12 @@ if ($action=="add") {
 		<?php
 			$exp = explode(".", $place_lati);
 			if (isset($exp[1])) $precision1 = strlen($exp[1]);
-			else $precision1 = 0;
+			else $precision1 = -1;
 			$exp = explode(".", $place_long);
 			if (isset($exp[1])) $precision2 = strlen($exp[1]);
-			else $precision2 = 0;
+			else $precision2 = -1;
 			($precision1 > $precision2) ? ($precision = $precision1) : ($precision = $precision2);
+			if ($precision == -1 ) ($level > 5) ? ($precision = 5) : ($precision = $level);
 		?>
 		<td class="optionbox">
 			<input type="radio" id="new_prec_0" name="NEW_PRECISION" onchange="updateMap();" <?php if($precision==$GOOGLEMAP_PRECISION_0) echo "checked "?>value="<?php echo $GOOGLEMAP_PRECISION_0;?>" tabindex="<?php echo ++$i;?>" />
