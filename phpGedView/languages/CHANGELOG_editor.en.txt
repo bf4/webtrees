@@ -45,6 +45,8 @@ VERSION 4.1.6
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 -----------------------------------------------------------------------------------------
++$pgv_lang["copy_error"]							9 Nov 2008				A
+*$pgv_lang["max_media_depth"]						9 Nov 2008				W
 +$pgv_lang["gen_missing_thumbs_lbl"]				23 Oct 2008				A
 +$pgv_lang["gen_missing_thumbs"]					23 Oct 2008				A
 *$pgv_lang["add_marriage"]							22 Aug 2008				W	new marriage -> marriage details

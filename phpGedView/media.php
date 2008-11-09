@@ -48,6 +48,7 @@ require_once 'includes/functions_print_lists.php';
 require_once 'includes/functions_print_facts.php';
 require_once 'includes/functions_edit.php';
 require_once 'includes/functions_import.php';
+require_once 'includes/functions_mediadb.php';
 
 if (isset($_REQUEST['DEBUG'])) $DEBUG = $_REQUEST['DEBUG'];
 else $DEBUG = false;
@@ -267,7 +268,7 @@ print_header($pgv_lang["manage_media"]);
 		screenH = screen.height;
 		if (width>screenW-100) width=screenW-100;
 		if (height>screenH-110) height=screenH-120;
-		if ((filename.search(/\.je?pg$/gi)!=-1)||(filename.search(/\.gif$/gi)!=-1)||(filename.search(/\.png$/gi)!=-1)||(filename.search(/\.bmp$/gi)!=-1)) window.open('imageview.php?filename='+filename,'_blank','top=50,left=50,height='+height+',width='+width+',scrollbars=1,resizable=1');
+		if ((filename.search(/\.jpe?g$/gi)!=-1)||(filename.search(/\.gif$/gi)!=-1)||(filename.search(/\.png$/gi)!=-1)||(filename.search(/\.bmp$/gi)!=-1)) window.open('imageview.php?filename='+filename,'_blank','top=50,left=50,height='+height+',width='+width+',scrollbars=1,resizable=1');
 		else window.open(unescape(filename),'_blank','top=50,left=50,height='+height+',width='+width+',scrollbars=1,resizable=1');
 		return false;
 	}
@@ -294,9 +295,10 @@ print_header($pgv_lang["manage_media"]);
 	function checkpath(folder) {
 		value = folder.value;
 		if (value.substr(value.length-1,1) == "/") value = value.substr(0, value.length-1);
+		if (value.substr(0,1) == "/") value = value.substr(1, value.length-1);
 		result = value.split("/");
 		if (result.length > <?php print $MEDIA_DIRECTORY_LEVELS; ?>) {
-			alert('<?php print $pgv_lang["max_media_depth"]; ?>');
+			alert('<?php print_text("max_media_depth"); ?>');
 			folder.focus();
 			return false;
 		}
@@ -554,7 +556,7 @@ if (check_media_structure()) {
  *
  * @name $action->moveto
  */
- 
+
 /*
 	if ($action=="moveto") {
 		print "<table class=\"list_table $TEXT_DIRECTION width100\">";
@@ -791,127 +793,9 @@ if (check_media_structure()) {
 
 	// Upload media items
 	if ($action == "upload") {
-		print "<table class=\"list_table $TEXT_DIRECTION width100\">";
-		print "<tr><td class=\"messagebox wrap\">";
-		for($i=1; $i<6; $i++) {
-			if (!empty($_FILES['mediafile'.$i]["name"]) || !empty($_FILES['thumbnail'.$i]["name"])) {
-				$folderName = "";
-				if (!empty($_POST["folder".$i])) $folderName = $_POST["folder".$i];
-				// Validate and correct folder names
-				$folderName = check_media_depth($folderName."/y.z", "BACK");
-				$folderName = dirname($folderName)."/";
-				$thumbFolderName = str_replace($MEDIA_DIRECTORY, $MEDIA_DIRECTORY."thumbs/", $folderName);
-
-				if (!empty($folderName)) {
-					$_SESSION["upload_folder"] = $folderName; // store standard media folder in session
-					if ($USE_MEDIA_FIREWALL) {
-						$folderName = get_media_firewall_path($folderName);
-					}
-					// make sure the dir exists
-					@mkdirs($folderName);
-				}
-				if (!empty($thumbFolderName)) {
-					if ($USE_MEDIA_FIREWALL && $MEDIA_FIREWALL_THUMBS) {
-						$thumbFolderName = get_media_firewall_path($thumbFolderName);
-					}
-					// make sure the dir exists
-					@mkdirs($thumbFolderName);
-				}
-
-				$error = "";
-
-				// Determine file name on server
-				if (!empty($_POST["filename".$i])) {
-					$parts = pathinfo($_POST["filename".$i]);
-					$mediaFile = $parts["basename"];
-					if (empty($parts["extension"]) || !in_array(strtolower($parts["extension"]), $MEDIATYPE)) {
-						if (!empty($_FILES["mediafile".$i]["name"])) {
-							$parts = pathinfo($_FILES["mediafile".$i]["name"]);
-						} else {
-							$parts = pathinfo($_FILES["thumbnail".$i]["name"]);
-						}
-						$mediaFile .= ".".$parts["extension"];
-					}
-				} else {
-					if (!empty($_FILES["mediafile".$i]["name"])) {
-						$parts = pathinfo($_FILES["mediafile".$i]["name"]);
-					} else {
-						$parts = pathinfo($_FILES["thumbnail".$i]["name"]);
-					}
-					$mediaFile = $parts["basename"];
-				}
-
-				if (!empty($_FILES["mediafile".$i]["name"])) {
-					// Copy main media file into the destination directory
-					if (!move_uploaded_file($_FILES["mediafile".$i]["tmp_name"], filename_decode($folderName.$mediaFile))) {
-						// the file cannot be copied
-						$error .= $pgv_lang["upload_error"]."<br />".file_upload_error_text($_FILES["mediafile".$i]["error"])."<br />";
-					} else {
-						// Set file permission to read/write for everybody
-//						@chmod(filename_decode($folderName.$mediaFile), 0644);
-						AddToLog("Media file ".$folderName.$mediaFile." uploaded");
-					}
-				}
-				if ($error=="" && !empty($_FILES["thumbnail".$i]["name"])) {
-					// Copy user-supplied thumbnail file into the destination directory
-					if (!move_uploaded_file($_FILES["thumbnail".$i]["tmp_name"], filename_decode($thumbFolderName.$mediaFile))) {
-						// the file cannot be copied
-						$error .= $pgv_lang["upload_error"]."<br />".file_upload_error_text($_FILES["thumbnail".$i]["error"])."<br />";
-					} else {
-						// Set file permission to read/write for everybody
-//						@chmod(filename_decode($thumbFolderName.$mediaFile), 0644);
-						AddToLog("Media file ".$thumbFolderName.$mediaFile." uploaded");
-					}
-				}
-				if ($error=="" && empty($_FILES["mediafile".$i]["name"]) && !empty($_FILES["thumbnail".$i]["name"])) {
-					// Copy user-supplied thumbnail file into the main destination directory
-					if (!copy(filename_decode($thumbFolderName.$mediaFile), filename_decode($folderName.$mediaFile))) {
-						// the file cannot be copied
-						$error .= $pgv_lang["upload_error"]."<br />".file_upload_error_text($_FILES["thumbnail".$i]["error"])."<br />";
-					} else {
-						// Set file permission to read/write for everybody
-//						@chmod(filename_decode($folderName.$mediaFile), 0644);
-						AddToLog("Media file ".$folderName.$mediaFile." uploaded");
-					}
-				}
-				if ($error=="" && !empty($_FILES["mediafile".$i]["name"]) && empty($_FILES["thumbnail".$i]["name"])) {
-					if (!empty($_POST['genthumb'.$i]) && ($_POST['genthumb'.$i]=="yes")) {
-						// Generate thumbnail from main image
-						$ct = preg_match("/\.([^\.]+)$/", $mediaFile, $match);
-						if ($ct>0) {
-							$ext = strtolower(trim($match[1]));
-							if ($ext=="jpg" || $ext=="jpeg" || $ext=="gif" || $ext=="png") {
-								$okThumb = generate_thumbnail($folderName.$mediaFile, $thumbFolderName.$mediaFile, "OVERWRITE");
-								$thumbnail = $thumbFolderName.$mediaFile;
-								if (!$okThumb) {
-									$error .= print_text("thumbgen_error",0,1);
-								} else {
-									// Set file permission on thumbnail to read/write for everybody
-//									@chmod(filename_decode($thumbFolderName.$mediaFile), 0644);
-									print_text("thumb_genned");
-									print "<br />";
-									AddToLog("Media thumbnail ".$thumbFolderName.$mediaFile." generated");
-								}
-							}
-						}
-					}
-				}
-				// Let's see if there are any errors generated and print it
-				if (!empty($error)) print "<span class=\"error\">".$error."</span><br />\n";
-				// No errors found then tell the user all is successful
-				else {
-					print $pgv_lang["upload_successful"]."<br /><br />";
-					$imgsize = findImageSize($folderName.$mediaFile);
-					$imgwidth = $imgsize[0]+40;
-					$imgheight = $imgsize[1]+150;
-					print "<a href=\"#\" onclick=\"return openImage('".encode_url($folderName.$mediaFile)."',$imgwidth, $imgheight);\">".$mediaFile."</a>";
-					print"<br /><br />";
-				}
-			}
-		}
+		process_uploadMedia_form();
 		$medialist = get_medialist();
 		$action = "filter";
-		print "</td></tr></table>";
 	}
 
 	print "<div id=\"uploadmedia\" style=\"display:none\">";
@@ -921,98 +805,10 @@ if (check_media_structure()) {
 		print "<span class=\"error\"><b>";
 		print $pgv_lang["no_upload"];
 		print "</b></span><br />";
+	} else {
+		show_mediaUpload_form('media.php', $showthumb);		// We have the green light to upload media, print the form
 	}
-	// We have the green light to upload media, print the form
-	else {
-		print "<form name=\"uploadmedia\" enctype=\"multipart/form-data\" method=\"post\" action=\"media.php\">";
-		print "<input type=\"hidden\" name=\"action\" value=\"upload\" />";
-		print "<input type=\"hidden\" name=\"showthumb\" value=\"$showthumb\" />";
-		print "<table class=\"list_table $TEXT_DIRECTION width100\">";
-		if (!$filesize = ini_get('upload_max_filesize')) $filesize = "2M";
-		print "<tr><td class=\"topbottombar\" colspan=\"2\">".$pgv_lang["upload_media"]."<br />".$pgv_lang["max_upload_size"].$filesize."</td></tr>";
-		$tab = 1;
-		// Print the submit button for uploading the media
-		print "<tr><td class=\"topbottombar\" colspan=\"2\"><input type=\"submit\" value=\"".$pgv_lang["upload"]."\" tabindex=\"".$tab++."\" /></td></tr>";
-		// Print 5 forms for uploading images
-		for($i=1; $i<6; $i++) {
-			print "<tr>";
-				print "<td class=\"descriptionbox $TEXT_DIRECTION wrap width25\">";
-				print_help_link("upload_media_file_help","qm", "upload_media");
-				print $pgv_lang["media_file"];
-				print "</td>";
-				print "<td class=\"optionbox $TEXT_DIRECTION wrap\">";
-				print "<input name=\"mediafile".$i."\" type=\"file\" size=\"40\" tabindex=\"".$tab++."\" />";
-				if ($i==1) print "<br /><sub>".$pgv_lang["use_browse_advice"]."</sub>";
-				print "</td>";
-			print "</tr>";
 
-			// Check for thumbnail generation support
-			$ThumbSupport = "";
-			if (function_exists("imagecreatefromjpeg") and function_exists("imagejpeg")) $ThumbSupport .= ", JPG";
-			if (function_exists("imagecreatefromgif") and function_exists("imagegif")) $ThumbSupport .= ", GIF";
-			if (function_exists("imagecreatefrompng") and function_exists("imagepng")) $ThumbSupport .= ", PNG";
-			if (!$AUTO_GENERATE_THUMBS) $ThumbSupport = "";
-
-			if ($ThumbSupport != "") {
-				$ThumbSupport = substr($ThumbSupport, 2);	// Trim off first ", "
-				print "<tr><td class=\"descriptionbox $TEXT_DIRECTION wrap width25\">";
-				print_help_link("generate_thumb_help", "qm","generate_thumbnail");
-				print $pgv_lang["auto_thumbnail"];
-				print "</td><td class=\"optionbox $TEXT_DIRECTION wrap\">";
-				print "<input type=\"checkbox\" name=\"genthumb".$i."\" value=\"yes\" checked=\"checked\" tabindex=\"".$tab++."\" />";
-				print "&nbsp;&nbsp;&nbsp;".$pgv_lang["generate_thumbnail"].$ThumbSupport;
-				print "</td></tr>";
-			}
-			print "<tr>";
-				print "<td class=\"descriptionbox $TEXT_DIRECTION wrap width25\">";
-				print_help_link("upload_thumbnail_file_help","qm", "upload_media");
-				print $pgv_lang["thumbnail"];
-				print "</td>";
-				print "<td class=\"optionbox $TEXT_DIRECTION wrap\">";
-				print "<input name=\"thumbnail".$i."\" type=\"file\" tabindex=\"".$tab++."\" size=\"40\" />";
-				if ($i==1) print "<br /><sub>".$pgv_lang["use_browse_advice"]."</sub>";
-				print "</td>";
-			print "</tr>";
-			print "<tr>";
-				print "<td class=\"descriptionbox $TEXT_DIRECTION wrap width25\">";
-				print_help_link("upload_server_file_help","qm", "upload_media");
-				print $pgv_lang["server_file"];
-				print "</td>";
-				print "<td class=\"optionbox $TEXT_DIRECTION wrap\">";
-				print "<input name=\"filename".$i."\" type=\"text\" tabindex=\"".$tab++."\" size=\"40\" />";
-				if ($i==1) print "<br /><sub>".$pgv_lang["server_file_advice"]."</sub>";
-				print "</td>";
-			print "</tr>";
-			if ($MEDIA_DIRECTORY_LEVELS>0) {
-				print "<tr>";
-					print "<td class=\"descriptionbox $TEXT_DIRECTION wrap width25\">";
-					print_help_link("upload_server_folder_help","qm", "upload_media");
-					print $pgv_lang["server_folder"];
-					print "</td>";
-					print "<td class=\"optionbox $TEXT_DIRECTION wrap\">";
-					// Check is done here if the folder specified is not longer than the
-					// media depth. If it is, a JS popup informs the user. User cannot leave
-					// the input box until corrected. This does not work in Firefox.
-					print "<input name=\"folder".$i."\" type=\"text\" size=\"40\" tabindex=\"".$tab++."\" onblur=\"checkpath(this)\" />";
-					if ($i==1) print "<br /><sub>".print_text("server_folder_advice",0,1)."</sub>";
-					print "</td>";
-				print "</tr>";
-			} else {
-				print "<input name=\"folder".$i."\" type=\"hidden\" value=\"\" />";
-			}
-			if ($i!=5) {
-				print "<tr>";
-					print "<td colspan=\"2\">";
-					print "&nbsp;";
-					print "</td>";
-				print "</tr>";
-			}
-		}
-
-		// Print the submit button for uploading the media
-		print "<tr><td class=\"topbottombar\" colspan=\"2\"><input type=\"submit\" value=\"".$pgv_lang["upload"]."\" tabindex=\"".$tab++."\" /></td></tr>";
-		print "</table></form>";
-	}
 	print "</div><br />";
 
 	$allowDelete = true;
@@ -1283,9 +1079,9 @@ if (check_media_structure()) {
 			}
 				print_help_link("setperms_help","qm","setperms");
 				print "<input type=\"submit\" value=\"".$pgv_lang["setperms_fix"]."\" onclick=\"this.form.action.value='setpermsfix';\" />";
-				
+
 				print "</form>";
-				
+
 			print "</td>";
 		print "</tr>";
 
