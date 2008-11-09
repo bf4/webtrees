@@ -1340,6 +1340,241 @@ function get_media_folders() {
 }
 
 /**
+ * process the form for uploading media files
+ */
+function process_uploadMedia_form() {
+	global $pgv_lang, $TEXT_DIRECTION;
+	global $MEDIA_DIRECTORY, $USE_MEDIA_FIREWALL, $MEDIA_FIREWALL_THUMBS, $MEDIATYPE;
+	global $thumbnail, $whichFile1, $whichFile2;
+
+	print "<table class=\"list_table $TEXT_DIRECTION width100\">";
+	print "<tr><td class=\"messagebox wrap\">";
+	for($i=1; $i<6; $i++) {
+		if (!empty($_FILES['mediafile'.$i]["name"]) || !empty($_FILES['thumbnail'.$i]["name"])) {
+			$folderName = trim(trim(safe_POST('folder'.$i, PGV_REGEX_NOSCRIPT)), '/');
+			// Validate and correct folder names
+			$folderName = check_media_depth($folderName."/y.z", "BACK");
+			$folderName = dirname($folderName)."/";
+			$thumbFolderName = str_replace($MEDIA_DIRECTORY, $MEDIA_DIRECTORY."thumbs/", $folderName);
+
+			$_SESSION["upload_folder"] = $folderName; // store standard media folder in session
+			if ($USE_MEDIA_FIREWALL) {
+				$folderName = get_media_firewall_path($folderName);
+				if ($MEDIA_FIREWALL_THUMBS) $thumbFolderName = get_media_firewall_path($thumbFolderName);
+			}
+			// make sure the dirs exist
+			@mkdirs($folderName);
+			@mkdirs($thumbFolderName);
+
+			$error = "";
+
+			// Determine file name on server
+			$fileName = trim(trim(safe_POST('filename'.$i, PGV_REGEX_NOSCRIPT)), '/');
+			$parts = pathinfo($fileName);
+			if (!empty($parts["basename"])) {
+				// User supplied a name to be used on the server
+				$mediaFile = $parts["basename"];	// Use the supplied name
+				if (empty($parts["extension"]) || !in_array(strtolower($parts["extension"]), $MEDIATYPE)) {
+					// Strip invalid extension from supplied name
+					$lastDot = strrpos($mediaFile, '.');
+					if ($lastDot !== false) $mediaFile = substr($mediaFile, 0, $lastDot);
+					// Use extension of original uploaded file name
+					if (!empty($_FILES["mediafile".$i]["name"])) $parts = pathinfo($_FILES["mediafile".$i]["name"]);
+					else $parts = pathinfo($_FILES["thumbnail".$i]["name"]);
+					$mediaFile .= ".".$parts["extension"];
+				}
+			} else {
+				// User did not specify a name to be used on the server:  use the original uploaded file name
+				if (!empty($_FILES["mediafile".$i]["name"])) $parts = pathinfo($_FILES["mediafile".$i]["name"]);
+				else $parts = pathinfo($_FILES["thumbnail".$i]["name"]);
+				$mediaFile = $parts["basename"];
+			}
+
+			if (!empty($_FILES["mediafile".$i]["name"])) {
+				$newFile = $folderName.$mediaFile;
+				// Copy main media file into the destination directory
+				if (!move_uploaded_file($_FILES["mediafile".$i]["tmp_name"], filename_decode($newFile))) {
+					// the file cannot be copied
+					$error .= $pgv_lang["upload_error"]."<br />".file_upload_error_text($_FILES["mediafile".$i]["error"])."<br />";
+				} else {
+					@chmod(filename_decode($newFile), PGV_PERM_FILE);
+					AddToLog("Media file {$newFile} uploaded");
+				}
+			}
+			if ($error=="" && !empty($_FILES["thumbnail".$i]["name"])) {
+				// Copy user-supplied thumbnail file into the destination directory
+				$newThum = $thumbFolderName.$mediaFile;
+				if (!move_uploaded_file($_FILES["thumbnail".$i]["tmp_name"], filename_decode($newThum))) {
+					// the file cannot be copied
+					$error .= $pgv_lang["upload_error"]."<br />".file_upload_error_text($_FILES["thumbnail".$i]["error"])."<br />";
+				} else {
+					@chmod(filename_decode($newThum), PGV_PERM_FILE);
+					AddToLog("Media file {$newThum} uploaded");
+				}
+			}
+			if ($error=="" && empty($_FILES["mediafile".$i]["name"]) && !empty($_FILES["thumbnail".$i]["name"])) {
+				$newFile = $folderName.$mediaFile;
+				$whichFile1 = $thumbFolderName.$mediaFile;
+				$whichFile2 = $folderName.$mediaFile;
+				// Copy user-supplied thumbnail file into the main destination directory
+				if (!copy(filename_decode($whichFile1), filename_decode($whichFile2))) {
+					// the file cannot be copied
+					$error .= $pgv_lang["upload_error"]."<br />".file_upload_error_text($_FILES["thumbnail".$i]["error"])."<br />";
+				} else {
+					@chmod(filename_decode($whichFile2), PGV_PERM_FILE);
+					AddToLog("Media file {$whichFile2} copied from {$whichFile1}");
+				}
+			}
+			if ($error=="" && !empty($_FILES["mediafile".$i]["name"]) && empty($_FILES["thumbnail".$i]["name"])) {
+				if (safe_POST('genthumb'.$i, 'yes', 'no') == 'yes') {
+					// Generate thumbnail from main image
+					$parts = pathinfo($mediaFile);
+					if (!empty($parts["extension"])) {
+						$ext = strtolower($parts["extension"]);
+						if (isImageTypeSupported($ext)) {
+							$thumbnail = $thumbFolderName.$mediaFile;
+							$okThumb = generate_thumbnail($folderName.$mediaFile, $thumbnail, "OVERWRITE");
+							if (!$okThumb) {
+								$error .= print_text("thumbgen_error",0,1);
+							} else {
+								@chmod(filename_decode($thumbnail), PGV_PERM_FILE);
+								print_text("thumb_genned");
+								print "<br />";
+								AddToLog("Media thumbnail ".$thumbnail." generated");
+							}
+						}
+					}
+				}
+			}
+			// Let's see if there are any errors generated and print it
+			if (!empty($error)) echo '<span class="error">', $error, "</span><br />\n";
+			// No errors found then tell the user all is successful
+			else {
+				print $pgv_lang["upload_successful"]."<br /><br />";
+				$imgsize = findImageSize($folderName.$mediaFile);
+				$imgwidth = $imgsize[0]+40;
+				$imgheight = $imgsize[1]+150;
+				print "<a href=\"#\" onclick=\"return openImage('".encode_url($folderName.$mediaFile)."',$imgwidth, $imgheight);\">".$mediaFile."</a>";
+				print"<br /><br />";
+			}
+		}
+	}
+	print "</td></tr></table>";
+}
+
+/**
+ * print a form for uploading media files
+ * @param string $URL		the URL the input form is to execute when the "Submit" button is pressed
+ * @param bool   $showthumb	the setting of the "show thumbnail" option (required by media.php)
+ */
+function show_mediaUpload_form($URL='media.php', $showthumb=false) {
+	global $AUTO_GENERATE_THUMBS, $MEDIA_DIRECTORY_LEVELS;
+	global $pgv_lang, $TEXT_DIRECTION;
+
+	// Check for thumbnail generation support
+	$thumbSupport = "";
+	if ($AUTO_GENERATE_THUMBS) {
+/*		"wbmp" is NOT "Windows BMP" -- it's "Wireless BMP", a simple B&W bit mapped format
+		if (function_exists("imagecreatefromwbmp") && function_exists("imagewbmp")) $thumbSupport .= ", BMP";
+*/
+		if (function_exists("imagecreatefromgif") && function_exists("imagegif")) $thumbSupport .= ", GIF";
+		if (function_exists("imagecreatefromjpeg") && function_exists("imagejpeg")) $thumbSupport .= ", JPG";
+		if (function_exists("imagecreatefrompng") && function_exists("imagepng")) $thumbSupport .= ", PNG";
+	}
+	if ($thumbSupport != '') $thumbSupport = substr($thumbSupport, 2);	// Trim off first ", "
+
+	// Determine file size limit
+	$filesize = ini_get('upload_max_filesize');
+	if (empty($filesize)) $filesize = "2M";
+
+	// Print the form
+	echo '<form name="uploadmedia" enctype="multipart/form-data" method="post" action="', encode_url($URL), '">';
+	echo '<input type="hidden" name="action" value="upload" />';
+	echo '<input type="hidden" name="showthumb" value="', $showthumb, '" />';
+	echo '<table class="list_table ', $TEXT_DIRECTION, ' width100">';
+	echo '<tr><td class="topbottombar" colspan="2">';
+		echo $pgv_lang["upload_media"], '<br />', $pgv_lang["max_upload_size"], $filesize;
+	echo '</td></tr>';
+	$tab = 1;
+	// Print the Submit button for uploading the media
+	echo '<tr><td class="topbottombar" colspan="2">';
+		echo '<input type="submit" value="', $pgv_lang["upload"], '" tabindex="', $tab++, '" />';
+	echo '</td></tr>';
+
+	// Print 5 forms for uploading images
+	for($i=1; $i<6; $i++) {
+		echo '<tr><td class="descriptionbox ', $TEXT_DIRECTION, ' wrap width25">';
+			print_help_link("upload_media_file_help","qm", "upload_media");
+			echo $pgv_lang["media_file"];
+			echo '</td>';
+			echo '<td class="optionbox ', $TEXT_DIRECTION, ' wrap">';
+			echo '<input name="mediafile', $i, '" type="file" size="40" tabindex="', $tab++, '" />';
+			if ($i==1) echo '<br /><sub>', $pgv_lang["use_browse_advice"], '</sub>';
+		echo '</td></tr>';
+
+		if ($thumbSupport != "") {
+			echo '<tr><td class="descriptionbox ', $TEXT_DIRECTION, ' wrap width25">';
+				print_help_link("generate_thumb_help", "qm","generate_thumbnail");
+				echo $pgv_lang["auto_thumbnail"];
+				echo '</td><td class="optionbox ', $TEXT_DIRECTION, ' wrap">';
+				echo '<input type="checkbox" name="genthumb', $i, '" value="yes" checked="checked" tabindex="', $tab++, '" />';
+				echo '&nbsp;&nbsp;&nbsp;', $pgv_lang["generate_thumbnail"], $thumbSupport;
+			echo '</td></tr>';
+		}
+
+		echo '<tr><td class="descriptionbox ', $TEXT_DIRECTION, ' wrap width25">';
+			print_help_link("upload_thumbnail_file_help","qm", "upload_media");
+			echo $pgv_lang["thumbnail"];
+			echo '</td>';
+			echo '<td class="optionbox ', $TEXT_DIRECTION, ' wrap">';
+			echo '<input name="thumbnail', $i, '" type="file" tabindex="', $tab++, '" size="40" />';
+			if ($i==1) echo '<br /><sub>', $pgv_lang["use_browse_advice"], '</sub>';
+		echo '</td></tr>';
+
+		if (PGV_USER_GEDCOM_ADMIN) {
+			echo '<tr><td class="descriptionbox ', $TEXT_DIRECTION, ' wrap width25">';
+				print_help_link("upload_server_file_help","qm", "upload_media");
+				echo $pgv_lang["server_file"];
+				echo '</td>';
+				echo '<td class="optionbox ', $TEXT_DIRECTION, ' wrap">';
+				echo '<input name="filename', $i, '" type="text" tabindex="', $tab++, '" size="40" />';
+				if ($i==1) echo "<br /><sub>".$pgv_lang["server_file_advice"]."</sub>";
+			echo '</td></tr>';
+		} else {
+			echo '<input type="hidden" name="filename', $i, '" value="" />';
+		}
+
+		if (PGV_USER_GEDCOM_ADMIN && $MEDIA_DIRECTORY_LEVELS>0) {
+			echo '<tr><td class="descriptionbox ', $TEXT_DIRECTION, ' wrap width25">';
+				print_help_link("upload_server_folder_help","qm", "upload_media");
+				echo $pgv_lang["server_folder"];
+				echo '</td>';
+				echo '<td class="optionbox ', $TEXT_DIRECTION, ' wrap">';
+				// Check is done here if the folder specified is not longer than the
+				// media depth. If it is, a JS popup informs the user. User cannot leave
+				// the input box until corrected.
+				echo '<input name="folder', $i, '" type="text" size="40" tabindex="', $tab++, '" onblur="checkpath(this)" />';
+				if ($i==1) echo '<br /><sub>', print_text("server_folder_advice",0,1), '</sub>';
+			echo '</td></tr>';
+		} else {
+			echo '<input name="folder', $i, '" type="hidden" value="" />';
+		}
+
+		if ($i!=5) {
+			echo '<tr><td colspan="2">&nbsp;</td></tr>';
+		}
+	}
+
+	// Print the Submit button for uploading the media
+	echo '<tr><td class="topbottombar" colspan="2">';
+		echo '<input type="submit" value="', $pgv_lang["upload"], '" tabindex="', $tab++, '" />';
+	echo '</td></tr>';
+
+	echo '</table></form>';
+}
+
+
+/**
  * print a form for editing or adding media items
  * @param string $pid		the id of the media item to edit
  * @param string $action	the action to take after the form is posted
@@ -1414,23 +1649,25 @@ function show_media_form($pid, $action = "newentry", $filename = "", $linktoid =
 		// Check for thumbnail generation support
 		if (PGV_USER_GEDCOM_ADMIN) {
 			$ThumbSupport = "";
-			if (function_exists("imagecreatefromjpeg") and function_exists("imagejpeg"))
-				$ThumbSupport .= ", JPG";
-			if (function_exists("imagecreatefromgif") and function_exists("imagegif"))
-				$ThumbSupport .= ", GIF";
-			if (function_exists("imagecreatefrompng") and function_exists("imagepng"))
-				$ThumbSupport .= ", PNG";
-			if (!$AUTO_GENERATE_THUMBS)
-				$ThumbSupport = "";
+		// Check for thumbnail generation support
+			$thumbSupport = "";
+			if ($AUTO_GENERATE_THUMBS) {
+/*				"wbmp" is NOT "Windows BMP" -- it's "Wireless BMP", a simple B&W bit mapped format
+				if (function_exists("imagecreatefromwbmp") && function_exists("imagewbmp")) $thumbSupport .= ", WBMP";
+*/
+				if (function_exists("imagecreatefromgif") && function_exists("imagegif")) $thumbSupport .= ", GIF";
+				if (function_exists("imagecreatefromjpeg") && function_exists("imagejpeg")) $thumbSupport .= ", JPG";
+				if (function_exists("imagecreatefrompng") && function_exists("imagepng")) $thumbSupport .= ", PNG";
+			}
 
-			if ($ThumbSupport != "") {
-				$ThumbSupport = substr($ThumbSupport, 2); // Trim off first ", "
+			if ($thumbSupport != "") {
+				$thumbSupport = substr($thumbSupport, 2); // Trim off first ", "
 				print "<tr><td class=\"descriptionbox $TEXT_DIRECTION wrap width25\">";
 				print_help_link("generate_thumb_help", "qm", "generate_thumbnail");
 				print $pgv_lang["auto_thumbnail"];
 				print "</td><td class=\"optionbox wrap\">";
 				print "<input type=\"checkbox\" name=\"genthumb\" value=\"yes\" checked=\"checked\" />";
-				print "&nbsp;&nbsp;&nbsp;" . $pgv_lang["generate_thumbnail"] . $ThumbSupport;
+				print "&nbsp;&nbsp;&nbsp;" . $pgv_lang["generate_thumbnail"] . $thumbSupport;
 				print "</td></tr>";
 			}
 			print "<tr><td class=\"descriptionbox $TEXT_DIRECTION wrap width25\">";
@@ -1489,41 +1726,51 @@ function show_media_form($pid, $action = "newentry", $filename = "", $linktoid =
 
 	// Box for user to choose the folder to store the image
 	if (!$isExternal && $MEDIA_DIRECTORY_LEVELS > 0) {
-		print "<tr><td class=\"descriptionbox $TEXT_DIRECTION wrap width25\">";
+		echo '<tr><td class="descriptionbox ', $TEXT_DIRECTION, 'wrap width25">';
 		print_help_link("upload_server_folder_help", "qm");
-		if (empty ($folder)) {
-			if (!empty ($_SESSION['upload_folder']))
-				$folder = $_SESSION['upload_folder'];
-			else
-				$folder = $MEDIA_DIRECTORY;
+		if (empty($folder)) {
+			if (!empty($_SESSION['upload_folder'])) $folder = $_SESSION['upload_folder'];
+			else $folder = '';
 		}
-		print $pgv_lang["server_folder"] . "</td><td class=\"optionbox wrap\">";
+		// Strip $MEDIA_DIRECTORY from the folder name
+		if (substr($folder,0,strlen($MEDIA_DIRECTORY)) == $MEDIA_DIRECTORY) $folder = substr($folder, strlen($MEDIA_DIRECTORY));
+		echo $pgv_lang["server_folder"], '</td><td class="optionbox wrap">';
 		//-- don't let regular users change the location of media items
 		if ($action!='update' || PGV_USER_GEDCOM_ADMIN) {
 			$folders = get_media_folders();
-			print "<span dir=\"ltr\"><select name=\"folder_list\" onchange=\"document.newmedia.folder.value=this.options[this.selectedIndex].value;\">\n";
+			echo '<span dir="ltr"><select name="folder_list" onchange="document.newmedia.folder.value=this.options[this.selectedIndex].value;">', "\n";
+			echo '<option';
+			if ($folder == '/') echo ' selected="selected"';
+			echo ' value="/"> ', $pgv_lang["choose"], ' </option>';
+			if (PGV_USER_GEDCOM_ADMIN) echo '<option value="other" disabled>', $pgv_lang["add_media_other_folder"], "</option>\n";
 			foreach ($folders as $f) {
-				if (!strpos($f, ".svn")){    //Do not print subversion directories
-					print "<option value=\"$f\"";
-					if ($folder == $f)
-						print " selected=\"selected\"";
-					print ">$f</option>\n";
+				if (!strpos($f, ".svn")) {    //Do not print subversion directories
+					// Strip $MEDIA_DIRECTORY from the folder name
+					if (substr($f,0,strlen($MEDIA_DIRECTORY)) == $MEDIA_DIRECTORY) $f = substr($f, strlen($MEDIA_DIRECTORY));
+					if ($f == '') $f = '/';
+					echo '<option value="', $f, '"';
+					if ($folder == $f && $f != '/')
+						echo ' selected="selected"';
+					echo '>', $f, "</option>\n";
 				}
 			}
-			if (PGV_USER_GEDCOM_ADMIN) print "<option value=\"other\">" . $pgv_lang["add_media_other_folder"] . "</option>\n";
 			print "</select></span>\n";
 		}
-		else print $folder;
-		print "<input name=\"oldFolder\" type=\"hidden\" value=\"" . addslashes($folder) . "\" />";
-		if (PGV_USER_GEDCOM_ADMIN) print "<span dir=\"ltr\"><input type=\"text\" name=\"folder\" size=\"30\" value=\"" . $folder . "\" /></span>";
-		else print "<input name=\"folder\" type=\"hidden\" value=\"" . addslashes($folder) . "\" />";
-		if ($gedfile == "FILE") {
-			print "<br /><sub>" . $pgv_lang["server_folder_advice2"] . "</sub>";
-		}
-		print "</td></tr>";
+		else echo $folder;
+		echo '<input name="oldFolder" type="hidden" value="', addslashes($folder), '" />';
+		if (PGV_USER_GEDCOM_ADMIN) {
+			echo '<br /><span dir="ltr"><input type="text" name="folder" size="40" value="', $folder, ' "onblur="checkpath(this)" /></span>';
+			if ($MEDIA_DIRECTORY_LEVELS>0) {
+				echo '<br /><sub>', print_text("server_folder_advice",0,1), '</sub>';
+			}
+			if ($gedfile == "FILE") {
+				echo '<br /><sub>', $pgv_lang["server_folder_advice2"], '</sub>';
+			}
+		} else echo '<input name="folder" type="hidden" value="', addslashes($folder), '" />';
+		echo '</td></tr>';
 	} else {
-		print "<input name=\"oldFolder\" type=\"hidden\" value=\"\" />";
-		print "<input name=\"folder\" type=\"hidden\" value=\"\" />";
+		echo '<input name="oldFolder" type="hidden" value="" />';
+		echo '<input name="folder" type="hidden" value="" />';
 	}
 	// 2 FORM
 	if ($gedrec == "")
@@ -1905,34 +2152,44 @@ function cropImage($image, $dest_image, $left, $top, $right, $bottom){ //$image 
 	$cheight = ($ims[1]-$bottom)-$top;
 	$width = $THUMBNAIL_WIDTH;
 	$height = round($cheight * ($width/$cwidth));
-	if($ims['mime'] == "image/png") //if the type is png
-	{
-	$img = imagecreatetruecolor(($ims[0]-$right)-$left,($ims[1]-$bottom)-$top);
-	//$org_img = imagecreatefromjpeg($image);
-	$org_img = imagecreatefrompng($image);
-	$ims = @getimagesize($image);
-	imagecopyresampled($img,$org_img, 0, 0, $left, $top, $width, $height, ($ims[0]-$right)-$left,($ims[1]-$bottom)-$top);
-	//imagejpeg($img,$dest_image,90);
-	imagepng($img,$dest_image);
-	imagedestroy($img);
-	}
-	if($ims['mime'] == "image/jpeg") //if the type is jpeg
-	{
-	$img = imagecreatetruecolor($width, $height);
-	$org_img = imagecreatefromjpeg($image);
-	$ims = @getimagesize($image);
-	imagecopyresampled($img,$org_img, 0, 0, $left, $top, $width, $height, ($ims[0]-$right)-$left,($ims[1]-$bottom)-$top);
-	imagejpeg($img,$dest_image,90);
-	imagedestroy($img);
-	}
-	if($ims['mime'] == "image/gif") //if the type is gif
-	{
-	$img = imagecreatetruecolor(($ims[0]-$right)-$left,($ims[1]-$bottom)-$top);
-	$org_img =  imagecreatefromgif($image);
-	$ims = @getimagesize($image);
-	imagecopyresampled($img,$org_img, 0, 0, $left, $top, $width, $height, ($ims[0]-$right)-$left,($ims[1]-$bottom)-$top);
-	imagegif($img,$dest_image);
-	imagedestroy($img);
+	switch ($ims['mime']) {
+	case 'image/png':
+		if (!function_exists('imagecreatefrompng') || !function_exists('imagepng')) break;
+		$img = imagecreatetruecolor(($ims[0]-$right)-$left,($ims[1]-$bottom)-$top);
+		$org_img = imagecreatefrompng($image);
+		$ims = @getimagesize($image);
+		imagecopyresampled($img,$org_img, 0, 0, $left, $top, $width, $height, ($ims[0]-$right)-$left,($ims[1]-$bottom)-$top);
+		imagepng($img,$dest_image);
+		imagedestroy($img);
+		break;
+	case 'image/jpeg':
+		if (!function_exists('imagecreatefromjpeg') || !function_exists('imagejpeg')) break;
+		$img = imagecreatetruecolor($width, $height);
+		$org_img = imagecreatefromjpeg($image);
+		$ims = @getimagesize($image);
+		imagecopyresampled($img,$org_img, 0, 0, $left, $top, $width, $height, ($ims[0]-$right)-$left,($ims[1]-$bottom)-$top);
+		imagejpeg($img,$dest_image,90);
+		imagedestroy($img);
+		break;
+	case 'image/gif':
+		if (!function_exists('imagecreatefromgif') || !function_exists('imagegif')) break;
+		$img = imagecreatetruecolor(($ims[0]-$right)-$left,($ims[1]-$bottom)-$top);
+		$org_img = imagecreatefromgif($image);
+		$ims = @getimagesize($image);
+		imagecopyresampled($img,$org_img, 0, 0, $left, $top, $width, $height, ($ims[0]-$right)-$left,($ims[1]-$bottom)-$top);
+		imagegif($img,$dest_image);
+		imagedestroy($img);
+		break;
+/*		"wbmp" is NOT "Windows BMP" -- it's "Wireless BMP", a simple B&W bit mapped format
+		if (!function_exists('imagecreatefromwbmp') || !function_exists('imagewbmp')) break;
+		$img = imagecreatetruecolor(($ims[0]-$right)-$left,($ims[1]-$bottom)-$top);
+		$org_img = imagecreatefromwbmp($image);
+		$ims = @getimagesize($image);
+		imagecopyresampled($img,$org_img, 0, 0, $left, $top, $width, $height, ($ims[0]-$right)-$left,($ims[1]-$bottom)-$top);
+		imagewbmp($img,$dest_image);
+		imagedestroy($img);
+		break;
+*/
 	}
 }
 
@@ -2009,19 +2266,15 @@ function mkdirs($dir, $mode = PGV_PERM_EXE, $recursive = true) {
 
 // pass in an image type and this will determine if your system supports editing of that image type
 function isImageTypeSupported($reqtype) {
-	if (!function_exists("imagetypes")) return false;
+	$supportByGD = array('jpg'=>'jpeg', 'jpeg'=>'jpeg', 'gif'=>'gif', 'png'=>'png');
 	$reqtype = strtolower($reqtype);
-	if ( ( ($reqtype == 'jpg') || ($reqtype == 'jpeg') ) && (imagetypes() & IMG_JPG)) {
-		return ('jpeg');
-	} else if (($reqtype == 'gif') && (imagetypes() & IMG_GIF)) {
-		return ('gif');
-	} else if (($reqtype == 'png') && (imagetypes() & IMG_PNG)) {
-		return ('png');
-	} else if ( ( ($reqtype == 'wbmp') || ($reqtype == 'bmp') ) && (imagetypes() & IMG_WBMP)) {
-		return ('wbmp');
-	} else {
-		return false;
-	}
+
+	if (empty($supportByGD[$reqtype])) return false;
+	$type = $supportByGD[$reqtype];
+
+	if (function_exists('imagecreatefrom'.$type) && function_exists('image'.$type)) return $type;
+	// Here we could check for image types that are supported by other than the GD library
+	return false;
 }
 
 // converts raw values from php.ini file into bytes
@@ -2092,58 +2345,45 @@ function generate_thumbnail($filename, $thumbnail) {
 	global $MEDIA_DIRECTORY, $THUMBNAIL_WIDTH, $AUTO_GENERATE_THUMBS, $USE_MEDIA_FIREWALL, $MEDIA_FIREWALL_THUMBS;
 
 	if (!$AUTO_GENERATE_THUMBS) return false;
-	if (media_exists($thumbnail)) return false;
 	if (!is_writable($MEDIA_DIRECTORY."thumbs")) return false;
 
-/*	No references to "media/thumbs/urls" exist anywhere else
-	if (!is_dir(filename_decode($MEDIA_DIRECTORY."thumbs/urls"))) {
-		mkdir(filename_decode($MEDIA_DIRECTORY."thumbs/urls"), 0777);
-		AddToLog("Folder ".$MEDIA_DIRECTORY."thumbs/urls created.");
-	}
-	if (!is_writable(filename_decode($MEDIA_DIRECTORY."thumbs/urls"))) return false;
-*/
-
-	$ext = "";
-	$ct = preg_match("/\.([^\.]+)$/", $filename, $match);
-	if ($ct>0) {
-		$ext = strtolower(trim($match[1]));
-	}
-
+	// Can we generate thumbnails for this file type?
+	$parts = pathinfo($filename);
+	if (isset($parts["extension"])) $ext = strtolower($parts["extension"]);
+	else $ext = "";
 	$type = isImageTypeSupported($ext);
-	if ( !$type ) return false;
+	if (!$type) return false;
 
 	if (!isFileExternal($filename)) {
 		// internal
-		if (!file_exists(filename_decode($filename))) {
-			if ($USE_MEDIA_FIREWALL) {
-				// see if the file exists in the protected index directory
+		if ($USE_MEDIA_FIREWALL) {
+			// Look for the original file in either possible location
+			if (!file_exists(filename_decode($filename))) {
 				$filename = get_media_firewall_path($filename);
-				if (!file_exists(filename_decode($filename))) return false;
-				if ($MEDIA_FIREWALL_THUMBS) {
-					// put the thumbnail in the protected directory too
+			}
+			if ($MEDIA_FIREWALL_THUMBS) {
+				// Look for the thumbnail in either possible location (so we can overwrite it)
+				if (!file_exists(filename_decode($thumbnail))) {
 					$thumbnail = get_media_firewall_path($thumbnail);
 				}
-				// ensure the directory exists
-				if (!is_dir(dirname($thumbnail))) {
-					if (!mkdirs(dirname($thumbnail))) {
-						return false;
-					}
+			}
+			// Ensure the directory exists
+			if (!is_dir(dirname($thumbnail))) {
+				if (!mkdirs(dirname($thumbnail))) {
+					return false;
 				}
-			} else {
-				return false;
 			}
 		}
+		if (!file_exists(filename_decode($filename))) return false;		// Can't thumbnail a non-existent image
 		$imgsize = getimagesize(filename_decode($filename));
-		// Check if a size has been determined
-		if (!$imgsize) return false;
+		if (!$imgsize) return false;		// Can't thumbnail an image of unknown size
 
 		//-- check if file is small enough to be its own thumbnail
 		if (($imgsize[0]<150)&&($imgsize[1]<150)) {
 			@copy($filename, $thumbnail);
 			return true;
 		}
-	}
-	else {
+	} else {
 		// external
 		if ($fp = @fopen(filename_decode($filename), "rb")) {
 			if ($fp===false) return false;

@@ -116,6 +116,18 @@ if (!PGV_USER_CAN_EDIT || !$disp || !$ALLOW_EDIT_GEDCOM) {
 		language_filter = lang;
 		magnify = mag;
 	}
+
+	function checkpath(folder) {
+		value = folder.value;
+		if (value.substr(value.length-1,1) == "/") value = value.substr(0, value.length-1);
+		if (value.substr(0,1) == "/") value = value.substr(1, value.length-1);
+		result = value.split("/");
+		if (result.length > <?php print $MEDIA_DIRECTORY_LEVELS; ?>) {
+			alert('<?php print_text("max_media_depth"); ?>');
+			folder.focus();
+			return false;
+		}
+	}
 //-->
 </script>
 
@@ -137,105 +149,102 @@ if ($action=="newentry") {
 	$mediaFile = "";
 	$thumbFile = "";
 	if (!empty($_FILES['mediafile']["name"]) || !empty($_FILES['thumbnail']["name"])) {
-		// NOTE: Check for file upload
-		$folderName = "";
-		if (!empty($_POST["folder"])) $folderName = trim($_POST["folder"]);
 		// Validate and correct folder names
+		$folderName = trim(trim(safe_POST('folder', PGV_REGEX_NOSCRIPT)), '/');
 		$folderName = check_media_depth($folderName."/y.z", "BACK");
 		$folderName = dirname($folderName)."/";
 		$thumbFolderName = str_replace($MEDIA_DIRECTORY, $MEDIA_DIRECTORY."thumbs/", $folderName);
 
-		if (!empty($folderName)) {
-			$_SESSION["upload_folder"] = $folderName; // store standard media folder in session
-			// if using the media firewall, automatically upload new files to the protected media directory
-			$serverFolderName = ($USE_MEDIA_FIREWALL) ? get_media_firewall_path($folderName) : $folderName;
-			// make sure the dir exists
-			@mkdirs($serverFolderName);
+		$_SESSION["upload_folder"] = $folderName; // store standard media folder in session
+		if ($USE_MEDIA_FIREWALL) {
+			$folderName = get_media_firewall_path($folderName);
+			if ($MEDIA_FIREWALL_THUMBS) $thumbFolderName = get_media_firewall_path($thumbFolderName);
 		}
-		if (!empty($thumbFolderName)) {
-			// determine thumbdir and make sure it exists
-			$serverThumbFolderName = ($USE_MEDIA_FIREWALL && $MEDIA_FIREWALL_THUMBS) ? get_media_firewall_path($thumbFolderName) : $thumbFolderName;
-			@mkdirs($serverThumbFolderName);
-		}
+		// make sure the dirs exist
+		@mkdirs($folderName);
+		@mkdirs($thumbFolderName);
 
 		$error = "";
 
 		// Determine file name on server
-		if (PGV_USER_GEDCOM_ADMIN && !empty($text[0])) {
-			$parts = pathinfo(trim($text[0]));
-			$mediaFile = $parts["basename"];
+		if (PGV_USER_GEDCOM_ADMIN && !empty($text[0])) $fileName = trim(trim($text[0]), '/');
+		else $fileName = '';
+		$parts = pathinfo($fileName);
+		if (!empty($parts["basename"])) {
+			// User supplied a name to be used on the server
+			$mediaFile = $parts["basename"];	// Use the supplied name
 			if (empty($parts["extension"]) || !in_array(strtolower($parts["extension"]), $MEDIATYPE)) {
-				if (!empty($_FILES["mediafile"]["name"])) {
-					$parts = pathinfo($_FILES["mediafile"]["name"]);
-				} else {
-					$parts = pathinfo($_FILES["thumbnail"]["name"]);
-				}
-				$mediaFile .= ".".$parts["extension"];
+				// Strip invalid extension from supplied name
+				$lastDot = strrpos($mediaFile, '.');
+				if ($lastDot !== false) $mediaFile = substr($mediaFile, 0, $lastDot);
+				// Use extension of original uploaded file name
+				if (!empty($_FILES["mediafile"]["name"])) $parts = pathinfo($_FILES["mediafile"]["name"]);
+				else $parts = pathinfo($_FILES["thumbnail"]["name"]);
+				if (!empty($parts["extension"])) $mediaFile .= ".".$parts["extension"];
 			}
 		} else {
-			if (!empty($_FILES["mediafile"]["name"])) {
-				$parts = pathinfo($_FILES["mediafile"]["name"]);
-			} else {
-				$parts = pathinfo($_FILES["thumbnail"]["name"]);
-			}
+			// User did not specify a name to be used on the server:  use the original uploaded file name
+			if (!empty($_FILES["mediafile"]["name"])) $parts = pathinfo($_FILES["mediafile"]["name"]);
+			else $parts = pathinfo($_FILES["thumbnail"]["name"]);
 			$mediaFile = $parts["basename"];
 		}
-
 		if (!empty($_FILES["mediafile"]["name"])) {
-			$newFile = $serverFolderName.$mediaFile;
-			$fileExists = file_exists(filename_decode($newFile));
+			$newFile = $folderName.$mediaFile;
 			// Copy main media file into the destination directory
-			if ($fileExists) {
+			if (file_exists(filename_decode($newFile))) {
 				$error .= $pgv_lang["media_exists"]."&nbsp;&nbsp;".$newFile."<br />";
 			} else {
 				if (!move_uploaded_file($_FILES["mediafile"]["tmp_name"], filename_decode($newFile))) {
 					// the file cannot be copied
 					$error .= $pgv_lang["upload_error"]."<br />".file_upload_error_text($_FILES["mediafile"]["error"])."<br />";
 				} else {
-					AddToLog("Media file {$folderName}{$mediaFile} uploaded");
+					@chmod(filename_decode($newFile), PGV_PERM_FILE);
+					AddToLog("Media file {$newFile} uploaded");
 				}
 			}
 		}
 		if ($error=="" && !empty($_FILES["thumbnail"]["name"])) {
-			$newThum = $serverThumbFolderName.$mediaFile;
-			$thumExists = file_exists(filename_decode($newThum));
+			$newThum = $thumbFolderName.$mediaFile;
 			// Copy user-supplied thumbnail file into the destination directory
-			if ($thumExists) {
+			if (file_exists(filename_decode($newThum))) {
 				$error .= $pgv_lang["media_thumb_exists"]."&nbsp;&nbsp;".$newThum."<br />";
 			} else {
 				if (!move_uploaded_file($_FILES["thumbnail"]["tmp_name"], filename_decode($newThum))) {
 					// the file cannot be copied
 					$error .= $pgv_lang["upload_error"]."<br />".file_upload_error_text($_FILES["thumbnail"]["error"])."<br />";
 				} else {
-					AddToLog("Media file {$thumbFolderName}{$mediaFile} uploaded");
+					@chmod(filename_decode($newThum), PGV_PERM_FILE);
+					AddToLog("Media file {$newThum} uploaded");
 				}
 			}
 		}
 		if ($error=="" && empty($_FILES["mediafile"]["name"]) && !empty($_FILES["thumbnail"]["name"])) {
 			// Copy user-supplied thumbnail file into the main destination directory
-			if (!copy(filename_decode($serverThumbFolderName.$mediaFile), filename_decode($serverFolderName.$mediaFile))) {
+			$whichFile1 = $thumbFolderName.$mediaFile;
+			$whichFile2 = $folderName.$mediaFile;
+			if (!copy(filename_decode($whichFile1), filename_decode($whichFile2))) {
 				// the file cannot be copied
-				$error .= $pgv_lang["upload_error"]."<br />".file_upload_error_text($_FILES["thumbnail"]["error"])."<br />";
+				$error .= $pgv_lang["upload_error"]."<br />".print_text('copy_error', 0, 1)."<br />";
 			} else {
-				AddToLog("Media file {$folderName}{$mediaFile} uploaded");
+				@chmod(filename_decode($whichFile2), PGV_PERM_FILE);
+				AddToLog("Media file {$whichFile2} copied from {$whichFile1}");
 			}
 		}
 		if ($error=="" && !empty($_FILES["mediafile"]["name"]) && empty($_FILES["thumbnail"]["name"])) {
-			if (!empty($_POST['genthumb']) && ($_POST['genthumb']=="yes")) {
+			if (safe_POST('genthumb', 'yes', 'no') == 'yes') {
 				// Generate thumbnail from main image
-				$ct = preg_match("/\.([^\.]+)$/", $mediaFile, $match);
-				if ($ct>0) {
-					$ext = strtolower(trim($match[1]));
-					if ($ext=="jpg" || $ext=="jpeg" || $ext=="gif" || $ext=="png") {
-						// note: generate_thumbnail takes folderName and thumbFoldername as input, not serverFolderName and serverThumbFolderName
-						$okThumb = generate_thumbnail($folderName.$mediaFile, $thumbFolderName.$mediaFile, "OVERWRITE");
-						$thumbnail = $serverThumbFolderName.$mediaFile;
+				$parts = pathinfo($mediaFile);
+				if (!empty($parts["extension"])) {
+					$ext = strtolower($parts["extension"]);
+					if (isImageTypeSupported($ext)) {
+						$thumbnail = $thumbFolderName.$mediaFile;
+						$okThumb = generate_thumbnail($folderName.$mediaFile, $thumbnail, "OVERWRITE");
 						if (!$okThumb) {
 							$error .= print_text("thumbgen_error",0,1);
 						} else {
 							print_text("thumb_genned");
 							print "<br />";
-							AddToLog("Media thumbnail {$thumbFolderName}{$mediaFile} generated");
+							AddToLog("Media thumbnail {$thumbnail} generated");
 						}
 					}
 				}
@@ -243,7 +252,7 @@ if ($action=="newentry") {
 		}
 		// Let's see if there are any errors generated and print it
 		if (!empty($error)) {
-			print "<span class=\"largeError\">".$error."</span><br />\n";
+			echo '<span class="error">', $error, "</span><br />\n";
 			$mediaFile = "";
 			$finalResult = false;
 		} else $finalResult = true;
@@ -264,7 +273,7 @@ if ($action=="newentry") {
 				}
 			}
 			if ($mediaFile=="") {
-				print "<span class=\"largeError\">".$pgv_lang["illegal_chars"]."</span><br />\n";
+				echo '<span class="error">', $pgv_lang["illegal_chars"], "</span><br />\n";
 				$finalResult = false;
 			} else $finalResult = true;
 		} else {
@@ -299,7 +308,7 @@ if ($action=="newentry") {
 			$finalResult = true;
 			if ($filename!=$oldFilename || $folder!=$oldFolder) {
 				if (!$onegedcom) {
-					print "<span class=\"largeError\">".$pgv_lang["multiple_gedcoms"]."<br /><br /><b>";
+					echo '<span class="error">', $pgv_lang["multiple_gedcoms"], '<br /><br /><b>';
 					if ($filename!=$oldFilename) print $pgv_lang["media_file_not_renamed"];
 					else print $pgv_lang["media_file_not_moved"];
 					print "</b></span><br />";
@@ -347,9 +356,7 @@ if ($action=="newentry") {
 						if ($okMain) print_text("main_media_ok".$mediaAction);
 						else {
 							$finalResult = false;
-							print "<span class=\"largeError\">";
-							print_text("main_media_fail".$mediaAction);
-							print "</span>";
+							echo '<span class="error">', print_text("main_media_fail".$mediaAction), '</span>';
 						}
 					}
 					print "<br />";
@@ -360,9 +367,7 @@ if ($action=="newentry") {
 						if ($okThum) print_text("thumb_media_ok".$mediaAction);
 						else {
 							$finalResult = false;
-							print "<span class=\"largeError\">";
-							print_text("thumb_media_fail".$mediaAction);
-							print "</span>";
+							echo '<span class="error">', print_text("thumb_media_fail".$mediaAction), '</span>';
 						}
 					}
 					print "<br />";
@@ -459,7 +464,7 @@ if ($action == "update") {
 
 	if ($filename!=$oldFilename || $folder!=$oldFolder) {
 		if (!$onegedcom) {
-			print "<span class=\"largeError\">".$pgv_lang["multiple_gedcoms"]."<br /><br /><b>";
+			echo '<span class="error">', $pgv_lang["multiple_gedcoms"], '<br /><br /><b>';
 			if ($filename!=$oldFilename) print $pgv_lang["media_file_not_renamed"];
 			else print $pgv_lang["media_file_not_moved"];
 			print "</b></span><br />";
@@ -507,9 +512,7 @@ if ($action == "update") {
 				if ($okMain) print_text("main_media_ok".$mediaAction);
 				else {
 					$finalResult = false;
-					print "<span class=\"largeError\">";
-					print_text("main_media_fail".$mediaAction);
-					print "</span>";
+					echo '<span class="error">', print_text("main_media_fail".$mediaAction), '</span>';
 				}
 			}
 			print "<br />";
@@ -520,9 +523,7 @@ if ($action == "update") {
 				if ($okThum) print_text("thumb_media_ok".$mediaAction);
 				else {
 					$finalResult = false;
-					print "<span class=\"largeError\">";
-					print_text("thumb_media_fail".$mediaAction);
-					print "</span>";
+					echo '<span class="error">', print_text("thumb_media_fail".$mediaAction), '</span>';
 				}
 			}
 			print "<br />";

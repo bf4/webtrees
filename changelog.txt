@@ -10,7 +10,8 @@
 
 
 Version 4.1.6
- - Fixed: [ 2003907 ] Redundancy info, "On This Day" blockA (fisharebest)
+ - Changed: Improvements to Media upload and Media editing (canajun2eh)
+ - Fixed: [ 2003907 ] Redundancy info, "On This Day" block (fisharebest)
  - Added: Improvement to Notes positioning and appearance when enlarged Lightbox Image Notes icon is clicked. (windmillway)
  - Fixed: [ 2217714 ] Changes to Thumbnail Behavior for Non-Images (windmillway)
  - Fixed: [ 2156359 ] Recent Changes Block Not Sorted by Time (fisharebest)
@@ -64,7 +65,7 @@ Version 4.1.6
  - Fixed [ 2134663 ] ALL CAPS surnames (opus27)
  - Added Advanced Search (yalnifj)
  - Changed: JWplayer : Corrected wrong path to Reorder option, now incudes correct thumbnail (windmillway)
- - Added: JW flash video player support whether Lightbox module installed or not. 
+ - Added: JW flash video player support whether Lightbox module installed or not.
           Note: JWplayer module IS required for either case for flv playback. (windmillway)
  - Changed: JW flash video player support now in separate module. Prepares for upcoming flash video support with or w/o Lightbox. (windmillway)
  - Added [ 2014313 ] Clippings: limit number of generations (yalnifj)
@@ -79,7 +80,7 @@ Version 4.1.6
  - Fixed: [ 2104235 ] Add Favorites refuses a long URL (fisharebest)
  - Fixed: IE script error message "wz_tooltip.js must be included INSIDE the body section...." (windmillway)
  - Added: 2nd generation fly-out menus for Details and Album Family Navigator (windmillway)
- - Fixed: (1) Missing underline of starred names on Charts. (2) Erratic width of Navigator on Album Tab page. (windmillway)  
+ - Fixed: (1) Missing underline of starred names on Charts. (2) Erratic width of Navigator on Album Tab page. (windmillway)
  - Added list place size configuration setting (yalnifj)
  - Added: [ 1671551 ] 2-surnames support for PGV!!! (fisharebest)
  - Fixed: [ 2016270 ] Surname with commas (fisharebest)
@@ -104,7 +105,7 @@ Version 4.1.6
  - Changed: Removed Portuguese (Brazil) language; replaced with Portuguese, using pt-br language files (canajun2eh)
  - Changed: Don't pollute log file with logs of known good spiders (canajun2eh)
  - Changed: Don't show lists until filter criteria have been entered (canajun2eh)
- - Fixed: [ 2022036 ] Translation tool adds backslashes input text 
+ - Fixed: [ 2022036 ] Translation tool adds backslashes input text
  - Fixed: [ 2020014 ] Weird indexing for surnames with some diacritics (canajun2eh)
  - Fixed: Album page errors due to import_request_variables() call being removed (windmillway)
  - Added theme based template for portal blocks (yalnifj)
@@ -124,7 +125,7 @@ Version 4.1.6
  - Changed: Album Page: (Windmillway)
 		1)Changed Thumbnail dropdown link to be a truncated version the Title of the media (instead of View or View/Edit)
 		2)Changed source view to be viewable by all.
- - Changed: Album Page: (windmillway) 
+ - Changed: Album Page: (windmillway)
 		1) Lightbox General Help Text now in line with PGV norms. (lang variable is also split for easier editing)
 		2) Tidy up thumbnail area - Added drop-down menu to replace links above and below thumbnail.
 		3) Made "View Notes" link a "toggle Show"/"toggle Hide" item on thumbnails and enlarged Lightbox images.
@@ -144,13 +145,13 @@ Version 4.1.6
  - Fixed: [ 1999315 ] 3344 New Name & Lists (fisharebest)
  - Fixed: Indi Page Media Tab: Corrected truncation of title when Lightbox Image opened. (windmillway)
  - Fixed: Indi Page: Corrected Research assistant and Googlemap validation errors, tidied up a few lightbox files  (windmillway)
- - Fixed: Indi Page: Corrected all Validation errors. (windmillway) 
-		1) most within Lightbox files. 
+ - Fixed: Indi Page: Corrected all Validation errors. (windmillway)
+		1) most within Lightbox files.
 		2) some within Googlemap section in individual.php
  - Fixed: Lightbox Album: Media Re-sort (Horizontal sort): Fixed displacement problem in IE. (windmillway)
  - Added: Lightbox Configuration page: Now conform to PGV config file updates and avoid destroying lb_config file on option updates (windmillway)
  - Added: Album Tab Page: (windmillway)
-		1) Added Notes Link on Enlarged Lightbox Image. 
+		1) Added Notes Link on Enlarged Lightbox Image.
 		2) Moved Thumbnail Mouseover Details Tooltip to link above Thumbnail.
 		3) Added Tooltip "Balloon" option in Lightbox Configuration page.
  - Fixed: [ 1995523 ] Google Maps: Admin Issue with Single Quotes in Place Name (wooc)
@@ -176,7 +177,7 @@ Version 4.1.6
  - Fixed: Reorder Media: Hide Reorder Links when media count is less than 2. (windmillway)
  - Fixed: Re-Order Media: Remove error introduced in svn 3188. (windmillway)
  - Changed: Lightbox Album: (1) Changed: Thumbnail Note text Format. (2) Fixed: Hide Reorder Links when media count is less than 2. (windmillway)
- - Fixed: Lightbox Album: Album Navigator - Fixed spurious incorrect tab calls, Corrected alignment. (windmillway) 
+ - Fixed: Lightbox Album: Album Navigator - Fixed spurious incorrect tab calls, Corrected alignment. (windmillway)
  - Fixed: Re-order Media: corrected wrong path for include in individual.php. (windmillway)
  - Fixed: Re-order Media: corrected omission for when Googlemaps not installed (windmillway)
  - Fixed: Corrected Reorder Media links when Googlemaps not installed (windmillway)
@@ -198,7 +199,7 @@ Version 4.1.6
  - Fixed: [ 1764343 ] login after login (fisharebest)
  - Fixed: [ 1774725 ] problem in login in site with several Gedcoms (fisharebest)
  - Changed: Lightbox: - Preparation for the Media sort feature (Which I hope to have out soon) (windmillway)
- - Changed: Lightbox: - Fix suppression of FF browser tooltip, personal Facts tooltip info etc (windmillway)  
+ - Changed: Lightbox: - Fix suppression of FF browser tooltip, personal Facts tooltip info etc (windmillway)
  - Added: Google Maps - use google geocode engine (wooc)
  - Fixed: [ 1966611 ] 4.1.5 - Edit Geographic Place Location - escapes, flag (wooc)
  - Fixed: [ 1965647 ] Starred Given Names in Charts including compact chart. (windmillway)
@@ -216,7 +217,7 @@ Version 4.1.6
  - Added: New block to display _TODO items (fisharebest)
  - Fixed: [ 1947080 ] mediafirewall - fix auto-generated .htaccess file when PGV is in the root directory
  - Changed: Show highlight and thumbnail Media options only to Admin users (canajun2eh)
- - Fixed: [ 1956830 ] (unknown) when name exists 
+ - Fixed: [ 1956830 ] (unknown) when name exists
  - Fixed: [ 1954862 ] [4.1.5] Search engine visit errors (fisharebest)
  - Fixed: Place Hierarchy: Small change to align "bubble" background for themes Simplygreen, Simplyblue and Simplyred. (windmillway)
  - Fixed: Lightbox: Various CSS errors corrected (windmillway)
@@ -341,7 +342,7 @@ Version 4.1.4 2008-04-04
  - Added [ 1890383 ] Media Firewall use mod_rewrite when available (ljm)
  - Fixed [ 1892008 ] Media Firewall should not trigger rate limiter (ljm)
  - Partially Fixed [ 1891976 ] Media Firewall incompatible with clippings cart (ljm)
- 
+
 Version 4.1.3 2007-11-16
  - Fixed [ 1822946 ] Missing reference to port number in $SERVER_URL (yalnifj)
  - Fixed [ 1586584 ] Minimal theme - Icons on some Indi page tabs (canajun2eh)
@@ -428,8 +429,8 @@ Version 4.1.1 2007-09-08
  - Fixed VERY minor XSS vulnerability on login page (yalnifj)
  - Fixed [ 1782104 ] ERROR 8 in mediaviewer (yalnifj)
  - Fixed [ 1786455 ] Main menus draw behind Relationship table (canajun2eh)
- - Fixed Ajax controls in Random Media block ignore block configuration (canajun2eh) 
- - Added Filter by Format, Filter by Type in Random Media block (canajun2eh) 
+ - Fixed Ajax controls in Random Media block ignore block configuration (canajun2eh)
+ - Added Filter by Format, Filter by Type in Random Media block (canajun2eh)
  - Fixed [ 1765862 ] Divide by zero error in timeline (yalnifj)
  - Fixed [ 1779085 ] [SVN1480] HTML Report should use a popup Target (yalnifj)
  - Fixed [ 1776999 ] SVN 1451 - Circle Chart (yalnifj)
