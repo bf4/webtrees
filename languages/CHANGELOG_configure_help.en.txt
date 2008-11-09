@@ -45,7 +45,6 @@ VERSION 4.1.6
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 -------------------------------------------------------------------------------------------
-*$pgv_lang["generate_thumb_help"]					9 Nov 2008				W
 +$pgv_lang["lang_name_romanian"]					1 Nov 2008				A
 *$pgv_lang["FULL_SOURCES_help"]						18 Oct 2008				p
 +$pgv_lang["FULL_SOURCES"]							17 Oct 2008				A
