@@ -32,15 +32,25 @@ loadLangFile("pgv_confighelp");
 
 global $PGV_IMAGES, $faqs;
 
-if (PGV_USER_GEDCOM_ADMIN) $canconfig = true;
-else $canconfig = false;
-$action =safe_REQUEST($_REQUEST, 'action',  PGV_REGEX_UNSAFE);
-if (!isset($action)) $action = "show";
-if (!isset($adminedit) && $canconfig) $adminedit = true;
-else if (!isset($adminedit)) $adminedit = false;
-
 // -- print html header information
 print_header($pgv_lang["faq_list"]);
+
+// -- Get all of the _POST variables we're interested in
+$action			= safe_REQUEST($_REQUEST,	'action',		PGV_REGEX_UNSAFE,	'show');
+$adminedit		= safe_REQUEST($_REQUEST,	'adminedit',	PGV_REGEX_UNSAFE);
+$type			= safe_REQUEST($_REQUEST,	'type',			PGV_REGEX_UNSAFE);
+$oldGEDCOM		= safe_REQUEST($_REQUEST,	'oldGEDCOM',	PGV_REGEX_UNSAFE);
+$whichGEDCOM	= safe_REQUEST($_REQUEST,	'whichGEDCOM',	PGV_REGEX_UNSAFE);
+$oldOrder		= safe_REQUEST($_REQUEST,	'oldOrder',		PGV_REGEX_UNSAFE);
+$order			= safe_REQUEST($_REQUEST,	'order',		PGV_REGEX_UNSAFE);
+$header			= safe_REQUEST($_POST,		'header',		PGV_REGEX_UNSAFE);
+$body			= safe_REQUEST($_POST,		'body',			PGV_REGEX_UNSAFE);
+$pidh			= safe_REQUEST($_REQUEST,	'pidh',			PGV_REGEX_UNSAFE);
+$pidb			= safe_REQUEST($_REQUEST,	'pidb',			PGV_REGEX_UNSAFE);
+$id				= safe_REQUEST($_REQUEST,	'id',			PGV_REGEX_UNSAFE);
+
+if ($adminedit == '') $adminedit = PGV_USER_GEDCOM_ADMIN;
+
 
 // NOTE: Commit the faq data to the DB
 if ($action=="commit") {
@@ -233,16 +243,16 @@ if ($action == "show") {
 
 	$faqs = get_faq_data();
 	print "<table class=\"list_table width100\">";
-	if (count($faqs) == 0 && $canconfig) {
+	if (count($faqs) == 0 && PGV_USER_GEDCOM_ADMIN) {
 		print "<tr><td class=\"width20 list_label\">";
 		print_help_link("add_faq_item_help","qm","add_faq_item");
 		print "<a href=\"faq.php?action=add\">".$pgv_lang["add_faq_item"]."</a>";
 		print "</td></tr>";
 	}
-	else if (count($faqs) == 0 && !$canconfig) print "<tr><td class=\"error center\">".$pgv_lang["no_faq_items"]."</td></tr>";
+	else if (count($faqs) == 0 && !PGV_USER_GEDCOM_ADMIN) print "<tr><td class=\"error center\">".$pgv_lang["no_faq_items"]."</td></tr>";
 	else {
 		// NOTE: Add a preview link
-		if ($canconfig) {
+		if (PGV_USER_GEDCOM_ADMIN) {
 			print "<tr>";
 			if ($adminedit) {
 				print "<td class=\"descriptionbox center\" colspan=\"2\">";
@@ -271,7 +281,7 @@ if ($action == "show") {
 			if ($data["header"] && $data["body"]) {
 				print "<tr>";
 				// NOTE: Print the position of the current item
-				if ($canconfig && $adminedit) {
+				if (PGV_USER_GEDCOM_ADMIN && $adminedit) {
 					print "<td class=\"descriptionbox width20 $TEXT_DIRECTION\" colspan=\"4\">";
 					print $pgv_lang["position_item"].": ".$id.", ";
 					if ($data["header"]["gedcom"]=="*all*") print $pgv_lang["all"];
@@ -284,7 +294,7 @@ if ($action == "show") {
 				$body = str_replace(array('&lt;', '&gt;'), array('<', '>'), stripslashes(print_text($data["body"]["text"], 0, 2)));
 				print "<tr>";
 				// NOTE: Print the edit options of the current item
-				if ($canconfig && $adminedit) {
+				if (PGV_USER_GEDCOM_ADMIN && $adminedit) {
 					print "<td class=\"optionbox center\">";
 					print_help_link("moveup_faq_item_help","qm","moveup_faq_item");
 					print "<a href=\"".encode_url("faq.php?action=commit&type=moveup&id={$id}&pidh=".$data["header"]["pid"]."&pidb=".$data["body"]["pid"])."\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["uarrow"]["other"]."\" border=\"0\" alt=\"\" /></a>\n</td>";
