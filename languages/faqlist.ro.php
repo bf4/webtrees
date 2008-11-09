@@ -22,7 +22,7 @@
  *
  * @package PhpGedView
  * @subpackage Languages
- * @version $Id: faqlist.ru.php 4194 2008-10-30 10:45:46Z fisharebest $
+ * @version $Id$
  */
 
 if (!defined('PGV_PHPGEDVIEW')) {
