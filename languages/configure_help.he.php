@@ -564,6 +564,7 @@ $pgv_lang["lang_name_italian"]		= "איטלקית";
 $pgv_lang["lang_name_norwegian"]		= "נורבגית";
 $pgv_lang["lang_name_polish"]		= "פולנית";
 $pgv_lang["lang_name_portuguese"]		= "פורטוגזית";
+$pgv_lang["lang_name_romanian"]		= "רומנית"; 
 $pgv_lang["lang_name_russian"]		= "רוסית";
 $pgv_lang["lang_name_spanish"]		= "ספרדית";
 $pgv_lang["lang_name_spanish-ar"]		= "ספרדית (אמריקה הלטינית)";

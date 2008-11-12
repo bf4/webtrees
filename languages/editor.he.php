@@ -193,7 +193,7 @@ $pgv_lang["link_as_child"]		= "קשר אדם זה למשפחה קיימת בתו
 $pgv_lang["link_as_husband"]		= "קשר אדם זה למשפחה קיימת בתור בעל";
 $pgv_lang["link_success"]		= "קישור התווסף בהצלחה";
 $pgv_lang["link_to_existing_media"]	= "קשר לישות מדיה קיימת";
-$pgv_lang["max_media_depth"]	= "ניתן רק לרדת לעומק #MEDIA_DIRECTORY_LEVELS# תיקיות";
+$pgv_lang["max_media_depth"]	= "לא ניתן להכניס יותר מ-#GLOBALS[MEDIA_DIRECTORY_LEVELS]# רמות של שמות תת-ספריות"; 
 $pgv_lang["max_upload_size"]	= "גודל העלאה מכסימלי: ";
 $pgv_lang["media_deleted"]		= "תיקיית המדיה הוסרה בהצלחה.";
 $pgv_lang["media_exists"]		= "קובץ המדיה כבר קיים.";
@@ -231,6 +231,7 @@ $pgv_lang["undo_successful"]	= "הביטול הצליח";
 $pgv_lang["update_successful"]	= "העדכון הצליח";
 $pgv_lang["upload"]			= "העלה";
 $pgv_lang["upload_error"]		= "התגלתה שגיאה בהעלאת הקובץ שלך.";
+$pgv_lang["copy_error"]		= "לא ניתן להעתיק את קובץ #GLOBALS[whichFile2]# מ-#GLOBALS[whichFile1]#"; 
 $pgv_lang["upload_media"]		= "העלאת קבצי מדיה";
 $pgv_lang["upload_media_help"]	= "~#pgv_lang[upload_media]#~<br /><br />בחר קבצים מהמחשב המקומי שלך להעלאה לשרת שלך. כל הקבצים מועלים לתיקיית <b><span dir=\"ltr\">#MEDIA_DIRECTORY#</span></b> או לאחת מהתיקיות מתחתיה.<br /><br />שמות החוצצים שאתה מציין יתווספו ל-<span dir=\"ltr\">#MEDIA_DIRECTORY#</span>, למשל, #MEDIA_DIRECTORY#myfamily. אם תיקיית התמונות המזעריות אינה קיימת, היא תיווצר בצורה אוטומטית.";
 $pgv_lang["upload_successful"]	= "ההעלאה הצליחה.";
