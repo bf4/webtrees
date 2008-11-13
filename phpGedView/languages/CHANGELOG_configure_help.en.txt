@@ -45,6 +45,11 @@ VERSION 4.1.6
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 -------------------------------------------------------------------------------------------
+*$pgv_lang["SHOW_SPIDER_TAGLINE_help"]				13 Nov 2008				w	Add Registered TM sign to "Google"
+*$pgv_lang["google_translate"]						13 Nov 2008				w	Add Registered TM sign to "Google"
+*$pgv_lang["commit_google"]							13 Nov 2008				w	Add Registered TM sign to "Google"
+*$pgv_lang["commit_google_help"]					13 Nov 2008				W
+*$pgv_lang["google_translate_help"]					13 Nov 2008				W
 +$pgv_lang["lang_name_romanian"]					1 Nov 2008				A
 *$pgv_lang["FULL_SOURCES_help"]						18 Oct 2008				p
 +$pgv_lang["FULL_SOURCES"]							17 Oct 2008				A
