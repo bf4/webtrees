@@ -366,39 +366,10 @@ class SearchControllerRoot extends BaseController {
 
 		// Then see if an ID is typed in. If so, we might want to jump there.
 		if (isset ($this->query)) {
-
-			// see if it's an indi ID. If it's found and privacy allows it, JUMP!!!!
-			if (find_person_record($this->query)) {
-				if (showLivingNameById($this->query) || displayDetailsById($this->query)) {
-					header("Location: ".encode_url("individual.php?pid={$this->query}&ged={$GEDCOM}", false));
-					exit;
-				}
-			}
-			// see if it's a family ID. If it's found and privacy allows it, JUMP!!!!
-			if (find_family_record($this->query)) {
-				//-- check if we can display both parents
-				if (displayDetailsById($this->query, "FAM") == true) {
-					$parents = find_parents($this->query);
-					if (showLivingNameById($parents["HUSB"]) && showLivingNameById($parents["WIFE"])) {
-						header("Location: ".encode_url("family.php?famid={$this->query}&ged={$GEDCOM}", false));
-						exit;
-					}
-				}
-			}
-			// see if it's an source ID. If it's found and privacy allows it, JUMP!!!!
-			if ($SHOW_SOURCES >= PGV_USER_ACCESS_LEVEL) {
-				if (find_source_record($this->query)) {
-					header("Location: ".encode_url("source.php?sid={$this->query}&ged={$GEDCOM}", false));
-					exit;
-				}
-			}
-
-			// see if it's a repository ID. If it's found and privacy allows it, JUMP!!!!
-			if ($SHOW_SOURCES >= PGV_USER_ACCESS_LEVEL) {
-				if (find_other_record($this->query)) {
-					header("Location: ".encode_url("repo.php?rid={$this->query}&ged={$GEDCOM}", false));
-					exit;
-				}
+			$record=GedcomRecord::getInstance($this->query);
+			if ($record && $record->canDisplayDetails()) {
+				header("Location: ".encode_url($record->getLinkUrl(), false));
+				exit;
 			}
 		}
 	}

@@ -45,6 +45,7 @@ VERSION 4.1.6
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 -----------------------------------------------------------------------------------------
+*$pgv_lang["generate_thumb_help"]					9 Nov 2008				W
 +$pgv_lang["gen_missing_thumbs_help"]				23 Oct 2008				A
 -$PGV_LANG["import_marr_names_help"]				6 Sep 2008				D
 -$pgv_lang["alive_in_year_help"]					29 August 2008			D

@@ -254,7 +254,7 @@ loadLangFile("lightbox:lang");
 					<?php
 						// PrintMediaLinks($links, "");
 						require_once 'includes/functions_print_lists.php';
-						print_changes_table($links);
+						print_changes_table($links, $SHOW_LAST_CHANGE);
 					}	?>
 				</td>
 			</tr>

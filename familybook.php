@@ -74,18 +74,16 @@ function print_descendency($pid, $count) {
 				if (($i>0)&&($i<$ct-1)) $rowspan=1;
 				$chil = trim($match[$i][1]);
 				print "<tr><td rowspan=\"$rowspan\" width=\"$bwidth\" style=\"padding-top: 2px;\">\n";
-				if ($count < $dgenerations) {
+				if ($count < $dgenerations-1) {
 					$kids = print_descendency($chil, $count+1);
 					if ($i==0) $firstkids = $kids;
 					$numkids += $kids;
-					print "</td>\n";
 				}
 				else {
 					print_pedigree_person($chil);
 					$numkids++;
-					print "</td>\n";
 				}
-				
+				print "</td>\n";
 				$twidth = 7;
 				if ($ct==1) $twidth+=3;
 				print "<td rowspan=\"$rowspan\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["hline"]["other"]."\" width=\"$twidth\" height=\"3\" alt=\"\" /></td>\n";
