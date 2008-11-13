@@ -10,6 +10,7 @@
 
 
 Version 4.1.6
+ - Fixed: [ 2275792 ] Top search - innn - Privacy in Raw Updating (fisharebest)
  - Fixed: Media Viewer "relates to" table doesn't obey "show last change" option in GEDCOM config (canajun2eh)
  - Fixed: [ 2251169 ] Error Adding FAQ entry (canajun2eh)
  - Changed: Improvements to Media upload and Media editing (canajun2eh)
