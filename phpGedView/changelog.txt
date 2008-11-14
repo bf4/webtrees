@@ -10,6 +10,7 @@
 
 
 Version 4.1.6
+ - Fixed: [ 2281694 ] [4276] D1 in Tree View (kiwi_pgv)
  - Fixed: Errors in language file editor (canajun2eh)
  - Fixed: [ 2275792 ] Top search - innn - Privacy in Raw Updating (fisharebest)
  - Fixed: Media Viewer "relates to" table doesn't obey "show last change" option in GEDCOM config (canajun2eh)
