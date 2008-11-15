@@ -954,7 +954,8 @@ if ($action == "cleanup") {
 	</tr>
 	<?php
 	// Check for idle users
-	if (!isset($month)) $month = 1;
+//	if (!isset($month)) $month = 1;
+	$month = safe_GET_integer('month', 1, 12, 6);
 	print "<tr><td class=\"descriptionbox\">".$pgv_lang["usr_idle"]."</td>";
 	print "<td class=\"optionbox\"><select onchange=\"document.location=options[selectedIndex].value;\">";
 	for($i=1; $i<=12; $i++) {
