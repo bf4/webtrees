@@ -10,6 +10,7 @@
 
 
 Version 4.1.6
+ - Fixed: [ 2275930 ] See approved change only after page refresh (fisharebest)
  - Fixed: [ 2281694 ] [4276] D1 in Tree View (kiwi_pgv)
  - Fixed: Errors in language file editor (canajun2eh)
  - Fixed: [ 2275792 ] Top search - innn - Privacy in Raw Updating (fisharebest)
