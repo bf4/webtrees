@@ -425,6 +425,4 @@ $factarray["_PGVU"]	= "von"; // Zuletzt geändert von";
 $factarray["SERV"] = "Fremder Server";
 $factarray["_GEDF"] = "GEDCOM Datei";
 
-Cousin: Taufe";
-$factarray["_CHR_COUS"]  = "Cousin: Taufe";
 ?>
