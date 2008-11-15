@@ -1007,14 +1007,23 @@ if ($action == "cleanup") {
 	$gedrights = array();
 	foreach(get_all_users() as $user_id=>$user_name) {
 		if (get_user_setting($user_id,'verified_by_admin')=="yes") {
-			foreach(unserialize(get_user_setting($user_id, 'canedit')) as $gedid=>$data) {
-				if (!get_id_from_gedcom($gedid) && !in_array($gedid, $gedrights)) $gedrights[] = $gedid;
+			$tempArray = unserialize(get_user_setting($user_id, 'canedit'));
+			if (is_array($tempArray)) {
+				foreach($tempArray as $gedid=>$data) {
+					if (!get_id_from_gedcom($gedid) && !in_array($gedid, $gedrights)) $gedrights[] = $gedid;
+				}
 			}
-			foreach(unserialize(get_user_setting($user_id, 'gedcomid')) as $gedid=>$data) {
-				if (!get_id_from_gedcom($gedid) && !in_array($gedid, $gedrights)) $gedrights[] = $gedid;
+			$tempArray = unserialize(get_user_setting($user_id, 'gedcomid'));
+			if (is_array($tempArray)) {
+				foreach($tempArray as $gedid=>$data) {
+					if (!get_id_from_gedcom($gedid) && !in_array($gedid, $gedrights)) $gedrights[] = $gedid;
+				}
 			}
-			foreach(unserialize(get_user_setting($user_id, 'rootid')) as $gedid=>$data) {
-				if (!get_id_from_gedcom($gedid) && !in_array($gedid, $gedrights)) $gedrights[] = $gedid;
+			$tempArray = unserialize(get_user_setting($user_id, 'rootid'));
+			if (is_array($tempArray)) {
+				foreach($tempArray as $gedid=>$data) {
+					if (!get_id_from_gedcom($gedid) && !in_array($gedid, $gedrights)) $gedrights[] = $gedid;
+				}
 			}
 		}
 	}
@@ -1049,25 +1058,34 @@ if ($action == "cleanup2") {
 			AddToLog("deleted user ->{$user_name}<-");
 			print $pgv_lang["usr_deleted"]; print $user_name."<br />";
 		} else {
-			foreach(unserialize(get_user_setting($user_id,'canedit')) as $gedid=>$data) {
-				$var = "delg_".str_replace(array(".","-"," "), array("_","_","_"), $gedid);
-				if (safe_POST($var)=='yes' && get_user_gedcom_setting($user_id, $gedid, 'canedit')) {
-					set_user_gedcom_setting($user_id, $gedid, 'canedit', null);
-					print $gedid.":&nbsp;&nbsp;".$pgv_lang["usr_unset_rights"].$user_name."<br />";
+			$tempArray = unserialize(get_user_setting($user_id,'canedit'));
+			if (is_array($tempArray)) {
+				foreach ($tempArray as $gedid=>$data) {
+					$var = "delg_".str_replace(array(".","-"," "), "_", $gedid);
+					if (safe_POST($var)=='yes' && get_user_gedcom_setting($user_id, $gedid, 'canedit')) {
+						set_user_gedcom_setting($user_id, $gedid, 'canedit', null);
+						print $gedid.":&nbsp;&nbsp;".$pgv_lang["usr_unset_rights"].$user_name."<br />";
+					}
 				}
 			}
-			foreach(unserialize(get_user_setting($user_id,'rootid')) as $gedid=>$data) {
-				$var = "delg_".str_replace(array(".","-"," "), array("_","_","_"), $gedid);
-				if (safe_POST($var)=='yes' && get_user_gedcom_setting($user_id, $gedid, 'rootid')) {
-					set_user_gedcom_setting($user_id, $gedid, 'rootid', null);
-					print $gedid.":&nbsp;&nbsp;".$pgv_lang["usr_unset_rootid"].$user_name."<br />";
+			$tempArray = unserialize(get_user_setting($user_id,'rootid'));
+			if (is_array($tempArray)) {
+				foreach ($tempArray as $gedid=>$data) {
+					$var = "delg_".str_replace(array(".","-"," "), "_", $gedid);
+					if (safe_POST($var)=='yes' && get_user_gedcom_setting($user_id, $gedid, 'rootid')) {
+						set_user_gedcom_setting($user_id, $gedid, 'rootid', null);
+						print $gedid.":&nbsp;&nbsp;".$pgv_lang["usr_unset_rootid"].$user_name."<br />";
+					}
 				}
 			}
-			foreach(unserialize(get_user_setting($user_id,'gedcomid')) as $gedid=>$data) {
-				$var = "delg_".str_replace(array(".","-"," "), array("_","_","_"), $gedid);
-				if (safe_POST($var)=='yes' && get_user_gedcom_setting($user_id, $gedid, 'gedcomid')) {
-					set_user_gedcom_setting($user_id, $gedid, 'gedcomid', null);
-					print $gedid.":&nbsp;&nbsp;".$pgv_lang["usr_unset_gedcomid"].$user_name."<br />";
+			$tempArray = unserialize(get_user_setting($user_id,'gedcomid'));
+			if (is_array($tempArray)) {
+				foreach ($tempArray as $gedid=>$data) {
+					$var = "delg_".str_replace(array(".","-"," "), "_", $gedid);
+					if (safe_POST($var)=='yes' && get_user_gedcom_setting($user_id, $gedid, 'gedcomid')) {
+						set_user_gedcom_setting($user_id, $gedid, 'gedcomid', null);
+						print $gedid.":&nbsp;&nbsp;".$pgv_lang["usr_unset_gedcomid"].$user_name."<br />";
+					}
 				}
 			}
 		}
