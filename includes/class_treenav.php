@@ -347,8 +347,11 @@ class TreeNav {
 				<br />
 				<b><?php
 				if ($spouse->isDead()) {
-					if (isset ($factAbbrev["DEAT"])) print $factAbbrev["DEAT"];
-					else print print get_first_letter($factarray['DEAT']);
+					if (isset ($factAbbrev["DEAT"])) {
+						echo $factAbbrev["DEAT"];
+					} else {
+						echo get_first_letter($factarray['DEAT']);
+					}
 					?>:</b>
 					<?php
 					$ddate = $spouse->getDeathDate(false);

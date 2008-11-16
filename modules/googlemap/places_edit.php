@@ -223,7 +223,7 @@ if ($action=="update") {
 if ($action=="add") {
 	// --- find the parent place in the file
 	if ($placeid != 0) {
-		$place_name = "";
+		if (!isset($place_name)) $place_name  = "";
 		$place_lati = null;
 		$place_long = null;
 		$zoomfactor = 1;
@@ -239,6 +239,7 @@ if ($action=="add") {
 				$parent_lati = str_replace(array('N', 'S', ','), array('', '-', '.') , $row[0]);
 				$parent_long = str_replace(array('E', 'W', ','), array('', '-', '.') , $row[1]);
 				$zoomfactor = $row[3]+2;
+				if ($zoomfactor > $GOOGLEMAP_MAX_ZOOM) $zoomfactor = $GOOGLEMAP_MAX_ZOOM;
 				$level	   = $row[4]+1;
 			}
 			$parent_id = $row[2];
@@ -728,7 +729,8 @@ if ($action=="add") {
 			if (isset($exp[1])) $precision2 = strlen($exp[1]);
 			else $precision2 = -1;
 			($precision1 > $precision2) ? ($precision = $precision1) : ($precision = $precision2);
-			if ($precision == -1 ) ($level > 5) ? ($precision = 5) : ($precision = $level);
+			if ($precision == -1 ) ($level > 3) ? ($precision = 3) : ($precision = $level);
+			else if ($precision > 5) $precision = 5;
 		?>
 		<td class="optionbox">
 			<input type="radio" id="new_prec_0" name="NEW_PRECISION" onchange="updateMap();" <?php if($precision==$GOOGLEMAP_PRECISION_0) echo "checked "?>value="<?php echo $GOOGLEMAP_PRECISION_0;?>" tabindex="<?php echo ++$i;?>" />

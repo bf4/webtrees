@@ -38,14 +38,16 @@ if (!PGV_USER_IS_ADMIN) {
 	exit;
 }
 
-if (!isset($lang_filename)) $lang_filename = "";
-if (!isset($file_type)) $file_type = "";
-if (!isset($language2)) $language2 = "";
-if (!isset($ls01)) $ls01 = "";
-if (!isset($ls02)) $ls02 = "";
-if (!isset($lang_filename_orig)) $lang_filename_orig = "";
+$lang_filename		= safe_REQUEST($_REQUEST, 'lang_filename',		PGV_REGEX_NOSCRIPT, '');
+$file_type			= safe_REQUEST($_REQUEST, 'file_type',			PGV_REGEX_NOSCRIPT, '');
+$language2			= safe_REQUEST($_REQUEST, 'language2',			PGV_REGEX_NOSCRIPT, '');
+$ls01				= safe_REQUEST($_REQUEST, 'ls01',				PGV_REGEX_NOSCRIPT, '');
+$ls02				= safe_REQUEST($_REQUEST, 'ls02',				PGV_REGEX_NOSCRIPT, '');
+$lang_filename_orig	= safe_REQUEST($_REQUEST, 'lang_filename_orig',	PGV_REGEX_NOSCRIPT, '');
+$action				= safe_REQUEST($_REQUEST, 'action',				PGV_REGEX_NOSCRIPT, '');
+$anchor				= safe_REQUEST($_REQUEST, 'anchor',				PGV_REGEX_NOSCRIPT, '');
 
-print_simple_header($pgv_lang["editlang_help"]);
+print_simple_header($pgv_lang["editlang"]);
 
 print "<script language=\"JavaScript\" type=\"text/javascript\">self.focus();</script>\n";
 
@@ -96,8 +98,7 @@ case "lang":
 	break;
 }
 
-if ($action != "save")
-{
+if ($action != "save") {
 	print "<div align=\"center\"><center>\n";
 	print "<table class=\"facts_table\">\n";
 	print "  <tr>\n";
@@ -164,9 +165,7 @@ if ($action != "save")
 	print "</center></div>\n";
 }
 
-if ($action == "save")
-{
-	if (!isset($_POST)) $_POST = $HTTP_POST_VARS;
+if ($action == "save") {
 
 	// Post-parameters
 	// $new_message is the edited message
@@ -176,15 +175,12 @@ if ($action == "save")
 	// $file_type defines which language file
 
 	//$new_message = safe_POST('new_message'); 	//generates errors while editing texts contains brackets
-	$language2 = safe_POST('language2');
-	$ls01 = safe_POST('ls01');
-	$ls02 = safe_POST('ls02');
-	$file_type = safe_POST('file_type');
+	if (isset($_REQUEST['new_message'])) $new_message = $_REQUEST['new_message'];
+	else $new_message = '';
 
 	if (get_magic_quotes_gpc()) $new_message = stripslashes($new_message);	// Remove escaping backslashes added by POST
 
-	switch ($file_type)
-	{
+	switch ($file_type) {
 	case "facts":
 		// read facts.en.php file into array
 		$english_language_array = array();
@@ -275,9 +271,7 @@ if ($action == "save")
 	if (isset($new_language_array[$ls02])) $dummyArray = $new_language_array[$ls02];
 	else $dummyArray = array();
 
-	if ($ls02 < 1)
-	{
-
+	if ($ls02 < 1) {
 			$dummyArray = $english_language_array[$ls01];
 			$new_message_line = abs($ls02);
 	}
@@ -289,13 +283,11 @@ if ($action == "save")
 	$dummyArray[1] = $new_message;
 	$dummyArray[3] = substr($dummyArray[3], 0, $dummyArray[2]) . $new_message . "\";";
 
-	if ($ls02 > 0)
-	{
+	if ($ls02 > 0) {
 		$new_language_array[$ls02] = $dummyArray;
 	}
 
-	if ($ls02 == 0)
-	{
+	if ($ls02 == 0) {
 		# $new_language_array[$ls02] = $dummyArray;
 		$ls02 = $new_message_line;
 	}
@@ -320,15 +312,13 @@ if ($action == "save")
 	print "<table class=\"facts_table\">\n";
 	print "<tr>\n";
 	if ($Write_Ok) print "<td class=\"facts_label03\" style=\"color: blue; font-weight: bold; \">".print_text("original_message",0,1);
-	else
-	{
+	else {
 		print "<td class=\"warning\" >\n";
 		print str_replace("#lang_filename#", $lang_filename, $pgv_lang["lang_file_write_error"]) . "<br /><br />\n";
 	}
 	print "</td>\n";
 	print "</tr>\n";
-	if ($Write_Ok)
-	{
+	if ($Write_Ok) {
 		print "<tr>\n";
 		print "<td class=\"facts_value\" style=\"text-align:center; color: blue\" >";
 		print "<strong style=\"color: red\">|</strong>".str_replace($fromEscapedChars, $toPlainChars, find_in_file($ls01, $lang_filename_orig))."<strong style=\"color: red\">|</strong>\n";
@@ -337,8 +327,7 @@ if ($action == "save")
 	}
 	print "</table>\n";
 
-	if ($Write_Ok)
-	{
+	if ($Write_Ok) {
 		print "<br />\n";
 
 		print "<table class=\"facts_table\">\n";
@@ -365,8 +354,7 @@ if ($action == "save")
 	print "<input type=\"submit\" value=\"" . $pgv_lang["close_window"] . "\"" . " onclick=\"window.opener.showchanges('&dv=".rand()."#".$anchor."'); self.close();\" />\n";
 	print "</td>\n";
 	print "</tr>\n";
-	if ($Write_Ok)
-	{
+	if ($Write_Ok) {
 		print "<tr>\n";
 		print "<td class=\"facts_value\" style=\"text-align:center; \" >\n";
 		print "<br /><br /><input type=\"submit\" value=\"";
@@ -383,8 +371,7 @@ if ($action == "save")
 	print "</center></div>\n";
 
 	// if ls02 (the line of the translated sentence) variable has not been set, try to find the row in the translated file
-	if ($ls02 == "")
-	{
+	if ($ls02 == "") {
 		$ls02 = 0;
 		for ($y = 0; $y < sizeof($new_language_array); $y++) {
 			if (isset($new_language_array[$y][1])) {

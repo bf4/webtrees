@@ -213,7 +213,7 @@ function show_gedcom_record(shownew) {
 	if (shownew=="yes") fromfile='&fromfile=1';
 	var recwin = window.open("gedrecord.php?pid=<?php print $controller->pid; ?>"+fromfile, "_blank", "top=50,left=50,width=600,height=400,scrollbars=1,scrollable=1,resizable=1");
 }
-<?php if (PGV_USER_CAN_ACCEPT) { ?>
+<?php if (PGV_USER_CAN_EDIT) { ?>
 function open_link_remote(pid){
 	window.open("addremotelink.php?pid="+pid, "_blank", "top=50,left=50,width=600,height=500,scrollbars=1,scrollable=1,resizable=1");
 	return false;
