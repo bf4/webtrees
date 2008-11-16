@@ -9,6 +9,9 @@
 =====================================================================
 
 
+Version 4.2.0
+
+
 Version 4.1.6
  - Fixed: [ 2287009 ] 4.1.6 User Cleanup Errors (canajun2eh)
  - Fixed: [ 2275930 ] See approved change only after page refresh (fisharebest)
