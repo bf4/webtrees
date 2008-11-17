@@ -13,6 +13,7 @@ Version 4.2.0
  - Added: [ 2264855 ] Show more details of paste items (fisharebest)
 
 Version 4.1.6
+ - Removed: Not-working secondary reorder (horiz) link in Album Tab page Header area (windmillway)
  - Fixed: [ 2287009 ] 4.1.6 User Cleanup Errors (canajun2eh)
  - Fixed: [ 2275930 ] See approved change only after page refresh (fisharebest)
  - Fixed: [ 2281694 ] [4276] D1 in Tree View (kiwi_pgv)
