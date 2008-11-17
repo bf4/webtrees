@@ -10,7 +10,7 @@
 
 
 Version 4.2.0
-
+ - Added: [ 2264855 ] Show more details of paste items (fisharebest)
 
 Version 4.1.6
  - Fixed: [ 2287009 ] 4.1.6 User Cleanup Errors (canajun2eh)
