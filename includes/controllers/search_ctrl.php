@@ -301,7 +301,6 @@ class SearchControllerRoot extends BaseController {
 		// Get the search results based on the action
 		if (isset ($this->topsearch)) $this->TopSearch();
 		// If we want to show associated persons, build the list
-		if ($this->showasso == "on") get_asso_list();
 		if ($this->action == "general") $this->GeneralSearch();
 		else if ($this->action == "soundex") $this->SoundexSearch();
 		else if ($this->action == "replace") $this->SearchAndReplace();
@@ -474,7 +473,8 @@ class SearchControllerRoot extends BaseController {
 							$pid = $key;
 							$key = $key."[".get_gedcom_from_id($indi["gedfile"])."]";
 						}
-						if (!isset ($assolist[$key])) {
+						// Check that there are no associates
+						if (count_linked_indi($indi['id'], 'ASSO', $indi['gedfile'])==0 && count_linked_fam($indi['id'], 'ASSO', $indi['gedfile'])==0) {
 							if (showLivingNameById($pid) || displayDetailsById($pid)) {
 								header("Location: ".encode_url("individual.php?pid={$pid}&ged=".get_gedcom_from_id($indi["gedfile"]), false));
 								exit;
@@ -814,33 +814,12 @@ class SearchControllerRoot extends BaseController {
 		// We may add the assos at this point.
 
 		if ($this->showasso == "on") {
-			foreach ($this->printname as $key => $pname) {
-				$apid = $pname[1]."[".$pname[2]."]";
-				// Check if associates exist
-				if (isset ($assolist[$apid])) {
-					// if so, print all indi's where the indi is associated to
-					foreach ($assolist[$apid] as $indexval => $asso) {
-						if ($asso["type"] == "indi") {
-							// print all names
-							foreach ($asso["name"] as $nkey => $assoname) {
-								$key = splitkey($indexval, "id");
-								$this->printname[] = array (sortable_name_from_name($assoname[0]), $key, get_gedcom_from_id($asso["gedfile"]), $apid);
-							}
-						} else
-						if ($asso["type"] == "fam") {
-							$fam_printed[$indexval] = "1";
-							// print all names
-							foreach ($asso["name"] as $nkey => $assoname) {
-								$assosplit = preg_split("/(\s\+\s)/", trim($assoname));
-								// Both names have to have the same direction
-								if (hasRTLText($assosplit[0]) == hasRTLText($assosplit[1])) {
-									$apid2 = splitkey($indexval, "id");
-									$this->printfamname[] = array (check_NN($assoname), $apid2, get_gedcom_from_id($asso["gedfile"]), $apid);
-								}
-							}
-						}
-					}
-					unset ($assolist[$apid]);
+			foreach ($this->printname as $pname) {
+				foreach (fetch_linked_indi($pname[1], 'ASSO', get_id_from_gedcom($pname[2])) as $asso) {
+					$this->printname[] = array ($asso->getSortName(), $asso->getXref(), get_gedcom_from_id($asso->ged_id));
+				}
+				foreach (fetch_linked_fam($pname[1], 'ASSO', get_id_from_gedcom($pname[2])) as $asso) {
+					$this->printfamname[] = array ($asso->getSortName(), $asso->getXref(), get_gedcom_from_id($asso->ged_id));
 				}
 			}
 		}
@@ -1069,26 +1048,12 @@ class SearchControllerRoot extends BaseController {
 
 							// If associates must be shown, see if we can display them and add them to the print array
 							if (($this->showasso == "on") && (strpos($skiptagsged, "ASSO") === false)) {
-								$apid = $key."[".$value["gedfile"]."]";
-								// Check if associates exist
-								if (isset ($assolist[$apid])) {
-									// if so, print all indi's where the indi is associated to
-									foreach ($assolist[$apid] as $indexval => $asso) {
-										if ($asso["type"] == "indi") {
-											$printindiname[] = array ($key, get_gedcom_from_id($asso["gedfile"]));
-										} else
-										if ($asso["type"] == "fam") {
-											$fam_printed[$indexval] = "1";
-											// print all names
-											foreach ($asso["name"] as $nkey => $assoname) {
-												$assosplit = preg_split("/(\s\+\s)/", trim($assoname));
-												// Both names have to have the same direction
-												if (hasRTLText($assosplit[0]) == hasRTLText($assosplit[1])) {
-													$apid2 = splitkey($indexval, "id");
-													$printfamname[] = array (check_NN($assoname), $apid2, get_gedcom_from_id($asso["gedfile"]), $apid);
-												}
-											}
-										}
+								foreach ($printindiname as $pname) {
+									foreach (fetch_linked_indi($pname[0], 'ASSO', get_id_from_gedcom($pname[1])) as $asso) {
+										$printindiname[] = array ($asso->getXref(), get_gedcom_from_id($asso->ged_id));
+									}
+									foreach (fetch_linked_fam($pname[0], 'ASSO', get_id_from_gedcom($pname[1])) as $asso) {
+										$printfamname[] = array ($asso->getXref(), get_gedcom_from_id($asso->ged_id));
 									}
 								}
 							}
