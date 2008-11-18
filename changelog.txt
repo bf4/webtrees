@@ -10,6 +10,8 @@
 
 
 Version 4.2.0
+ - Fixed: [ 1835731 ] Favorites summary doesn't work -> fv_gid too short (fisharebest)
+ - Fixed: [ 1968304 ] favorites - fv_gid too short (fisharebest)
  - Removed: Not-working secondary reorder (horiz) link in Album Tab page Header area (windmillway)
  - Added: [ 2264855 ] Show more details of paste items (fisharebest)
 
