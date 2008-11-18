@@ -406,7 +406,7 @@ function count_linked_indi($xref, $link, $ged_id) {
 	$xref=$DBCONN->escapeSimple($xref);
 	$link=$DBCONN->escapeSimple($link);
 	$ged_id=(int)$ged_id;
-	$res=dbquery("SELECT COUNT(*) FROM pgv_link, pgv_individuals WHERE i_file=l_file AND i_id=l_from AND l_file={$ged_id} AND l_type='{$link}' AND l_to='{$xref}'");
+	$res=dbquery("SELECT COUNT(*) FROM {$TBLPREFIX}link, {$TBLPREFIX}individuals WHERE i_file=l_file AND i_id=l_from AND l_file={$ged_id} AND l_type='{$link}' AND l_to='{$xref}'");
 
 	$row=$res->fetchRow();
 	$res->free();
@@ -417,7 +417,7 @@ function count_linked_fam($xref, $link, $ged_id) {
 	$xref=$DBCONN->escapeSimple($xref);
 	$link=$DBCONN->escapeSimple($link);
 	$ged_id=(int)$ged_id;
-	$res=dbquery("SELECT COUNT(*) FROM pgv_link, pgv_families WHERE f_file=l_file AND f_id=l_from AND l_file={$ged_id} AND l_type='{$link}' AND l_to='{$xref}'");
+	$res=dbquery("SELECT COUNT(*) FROM {$TBLPREFIX}link, {$TBLPREFIX}families WHERE f_file=l_file AND f_id=l_from AND l_file={$ged_id} AND l_type='{$link}' AND l_to='{$xref}'");
 
 	$row=$res->fetchRow();
 	$res->free();
@@ -428,7 +428,7 @@ function count_linked_sour($xref, $link, $ged_id) {
 	$xref=$DBCONN->escapeSimple($xref);
 	$link=$DBCONN->escapeSimple($link);
 	$ged_id=(int)$ged_id;
-	$res=dbquery("SELECT COUNT(*) FROM pgv_link, pgv_sources WHERE s_file=l_file AND s_id=l_from AND l_file={$ged_id} AND l_type='{$link}' AND l_to='{$xref}'");
+	$res=dbquery("SELECT COUNT(*) FROM {$TBLPREFIX}link, {$TBLPREFIX}sources WHERE s_file=l_file AND s_id=l_from AND l_file={$ged_id} AND l_type='{$link}' AND l_to='{$xref}'");
 
 	$row=$res->fetchRow();
 	$res->free();
@@ -439,7 +439,7 @@ function count_linked_obje($xref, $link, $ged_id) {
 	$xref=$DBCONN->escapeSimple($xref);
 	$link=$DBCONN->escapeSimple($link);
 	$ged_id=(int)$ged_id;
-	$res=dbquery("SELECT COUNT(*) FROM pgv_link, pgv_media WHERE m_gedfile=l_file AND m_media=l_from AND l_file={$ged_id} AND l_type='{$link}' AND l_to='{$xref}'");
+	$res=dbquery("SELECT COUNT(*) FROM {$TBLPREFIX}link, {$TBLPREFIX}media WHERE m_gedfile=l_file AND m_media=l_from AND l_file={$ged_id} AND l_type='{$link}' AND l_to='{$xref}'");
 
 	$row=$res->fetchRow();
 	$res->free();
@@ -454,7 +454,7 @@ function fetch_linked_indi($xref, $link, $ged_id) {
 	$xref=$DBCONN->escapeSimple($xref);
 	$link=$DBCONN->escapeSimple($link);
 	$ged_id=(int)$ged_id;
-	$res=dbquery("SELECT 'INDI' AS type, i_id AS xref, {$ged_id} AS ged_id, i_gedcom AS gedrec, i_isdead FROM pgv_link, pgv_individuals WHERE i_file=l_file AND i_id=l_from AND l_file={$ged_id} AND l_type='{$link}' AND l_to='{$xref}'");
+	$res=dbquery("SELECT 'INDI' AS type, i_id AS xref, {$ged_id} AS ged_id, i_gedcom AS gedrec, i_isdead FROM {$TBLPREFIX}link, {$TBLPREFIX}individuals WHERE i_file=l_file AND i_id=l_from AND l_file={$ged_id} AND l_type='{$link}' AND l_to='{$xref}'");
 
 	$list=array();
 	while ($row=$res->fetchRow(DB_FETCHMODE_ASSOC)) {
@@ -468,7 +468,7 @@ function fetch_linked_fam($xref, $link, $ged_id) {
 	$xref=$DBCONN->escapeSimple($xref);
 	$link=$DBCONN->escapeSimple($link);
 	$ged_id=(int)$ged_id;
-	$res=dbquery("SELECT 'FAM' AS type, f_id AS xref, {$ged_id} AS ged_id, f_gedcom AS gedrec, f_husb, f_wife, f_chil, f_numchil FROM pgv_link, pgv_families f WHERE f_file=l_file AND f_id=l_from AND l_file={$ged_id} AND l_type='{$link}' AND l_to='{$xref}'");
+	$res=dbquery("SELECT 'FAM' AS type, f_id AS xref, {$ged_id} AS ged_id, f_gedcom AS gedrec, f_husb, f_wife, f_chil, f_numchil FROM {$TBLPREFIX}link, {$TBLPREFIX}families f WHERE f_file=l_file AND f_id=l_from AND l_file={$ged_id} AND l_type='{$link}' AND l_to='{$xref}'");
 
 	$list=array();
 	while ($row=$res->fetchRow(DB_FETCHMODE_ASSOC)) {
@@ -482,7 +482,7 @@ function fetch_linked_sour($xref, $link, $ged_id) {
 	$xref=$DBCONN->escapeSimple($xref);
 	$link=$DBCONN->escapeSimple($link);
 	$ged_id=(int)$ged_id;
-	$res=dbquery("SELECT 'SOUR' AS type, s_id AS xref, {$ged_id} AS ged_id, s_gedcom AS gedrec FROM pgv_link, pgv_sources s WHERE s_file=l_file AND s_id=l_from AND l_file={$ged_id} AND l_type='{$link}' AND l_to='{$xref}'");
+	$res=dbquery("SELECT 'SOUR' AS type, s_id AS xref, {$ged_id} AS ged_id, s_gedcom AS gedrec FROM {$TBLPREFIX}link, {$TBLPREFIX}sources s WHERE s_file=l_file AND s_id=l_from AND l_file={$ged_id} AND l_type='{$link}' AND l_to='{$xref}'");
 
 	$list=array();
 	while ($row=$res->fetchRow(DB_FETCHMODE_ASSOC)) {
@@ -496,7 +496,7 @@ function fetch_linked_obje($xref, $link, $ged_id) {
 	$xref=$DBCONN->escapeSimple($xref);
 	$link=$DBCONN->escapeSimple($link);
 	$ged_id=(int)$ged_id;
-	$res=dbquery("SELECT 'OBJE' AS type, m_media AS xref, {$ged_id} AS ged_id, m_gedrec AS gedrec, m_titl, m_file FROM pgv_link, pgv_media m WHERE m_gedfile=l_file AND m_media=l_from AND l_file={$ged_id} AND l_type='{$link}' AND l_to='{$xref}'");
+	$res=dbquery("SELECT 'OBJE' AS type, m_media AS xref, {$ged_id} AS ged_id, m_gedrec AS gedrec, m_titl, m_file FROM {$TBLPREFIX}link, {$TBLPREFIX}media m WHERE m_gedfile=l_file AND m_media=l_from AND l_file={$ged_id} AND l_type='{$link}' AND l_to='{$xref}'");
 
 	$list=array();
 	while ($row=$res->fetchRow(DB_FETCHMODE_ASSOC)) {
@@ -1091,89 +1091,6 @@ function get_indi_list() {
 
 	$INDILIST_RETRIEVED = true;
 	return $indilist;
-}
-
-
-//-- get the assolist from the datastore
-function get_asso_list($type = "all", $ipid='') {
-	global $assolist, $GEDCOM, $TBLPREFIX, $ASSOLIST_RETRIEVED;
-
-	if ($ASSOLIST_RETRIEVED)
-		return $assolist;
-	$assolist = array();
-
-	$oldged = $GEDCOM;
-	if (($type == "all") || ($type == "fam")) {
-		$sql = "SELECT f_id, f_file, f_gedcom, f_husb, f_wife FROM ".$TBLPREFIX."families WHERE f_gedcom ";
-		if (!empty($pid))
-			$sql .= "LIKE '% ASSO @$ipid@%'";
-		else
-			$sql .= "LIKE '% ASSO %'";
-		$res = dbquery($sql);
-
-		$ct = $res->numRows();
-		while ($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)){
-			$asso = array();
-			$asso["type"] = "fam";
-			$pid2 = $row["f_id"]."[".$row["f_file"]."]";
-			$asso["gedcom"] = $row["f_gedcom"];
-			$asso["gedfile"] = $row["f_file"];
-			$asso["id"] = $row["f_id"];
-			// Get the family names
-			$GEDCOM = get_gedcom_from_id($row["f_file"]);
-			$name=array();
-			$family=Family::getInstance($row['f_id']);
-			foreach ($family->getAllNames() as $fname) {
-				$name[]=$fname['sort'];
-			}
-			$asso["name"] = $name;
-			$ca = preg_match_all("/\d ASSO @(.*)@/", $row["f_gedcom"], $match, PREG_SET_ORDER);
-			for ($i=0; $i<$ca; $i++) {
-				$pid = $match[$i][1]."[".$row["f_file"]."]";
-				$assolist[$pid][$pid2] = $asso;
-			}
-			$row = db_cleanup($row);
-		}
-		$res->free();
-	}
-
-	if (($type == "all") || ($type == "indi")) {
-		$sql = "SELECT i_id, i_file, i_gedcom FROM ".$TBLPREFIX."individuals WHERE i_gedcom ";
-		if (!empty($pid))
-			$sql .= "LIKE '% ASSO @$ipid@%'";
-		else
-			$sql .= "LIKE '% ASSO %'";
-		$res = dbquery($sql);
-
-		$ct = $res->numRows();
-		while ($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)){
-			$asso = array();
-			$asso["type"] = "indi";
-			$pid2 = $row["i_id"]."[".$row["i_file"]."]";
-			$asso["gedcom"] = $row["i_gedcom"];
-			$asso["gedfile"] = $row["i_file"];
-			$asso["id"] = $row["i_id"];
-			$GEDCOM = get_gedcom_from_id($row["i_file"]);
-			$name=array();
-			$person=Person::getInstance($row['i_id']);
-			foreach ($person->getAllNames() as $pname) {
-				$name[]=$pname['sort'];
-			}
-			$asso["name"] = $name;
-			$ca = preg_match_all("/\d ASSO @(.*)@/", $row["i_gedcom"], $match, PREG_SET_ORDER);
-			for ($i=0; $i<$ca; $i++) {
-				$pid = $match[$i][1]."[".$row["i_file"]."]";
-				$assolist[$pid][$pid2] = $asso;
-			}
-			$row = db_cleanup($row);
-		}
-		$res->free();
-	}
-
-	$GEDCOM = $oldged;
-
-	$ASSOLIST_RETRIEVED = true;
-	return $assolist;
 }
 
 //-- get the famlist from the datastore
