@@ -43,16 +43,16 @@ function closeHelp() {
 }
 
 function openImage(filename, width, height) {
-		height=height+50;
-		screenW = screen.width;
-	 	screenH = screen.height;
-	 	if (width>screenW-100) width=screenW-100;
-	 	if (height>screenH-110) height=screenH-120;
-		if ((filename.search(/\.je?pg$/gi)!=-1)||(filename.search(/\.gif$/gi)!=-1)||(filename.search(/\.png$/gi)!=-1)||(filename.search(/\.bmp$/gi)!=-1)) 
-			window.open('imageview.php?filename='+filename,'_blank','top=50,left=50,height='+height+',width='+width+',scrollbars=1,resizable=1');
-		else window.open(unescape(filename),'_blank','top=50,left=50,height='+height+',width='+width+',scrollbars=1,resizable=1');
-		return false;
-	}
+	height=height+50;
+	screenW = screen.width;
+ 	screenH = screen.height;
+ 	if (width>screenW-100) width=screenW-100;
+ 	if (height>screenH-110) height=screenH-120;
+	if (filename.search(/\.(jpe?g|gif|png|bmp)$/gi)!=-1)
+		window.open('imageview.php?filename='+filename,'_blank','top=50,left=50,height='+height+',width='+width+',scrollbars=1,resizable=1');
+	else window.open(unescape(filename),'_blank','top=50,left=50,height='+height+',width='+width+',scrollbars=1,resizable=1');
+	return false;
+}
 
 // variables to hold mouse x-y pos.s
 	var msX = 0;

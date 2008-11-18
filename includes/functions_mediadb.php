@@ -1358,13 +1358,20 @@ function process_uploadMedia_form() {
 			$thumbFolderName = str_replace($MEDIA_DIRECTORY, $MEDIA_DIRECTORY."thumbs/", $folderName);
 
 			$_SESSION["upload_folder"] = $folderName; // store standard media folder in session
+
+			$destFolder = $folderName;		// This is where the actual image will be stored
+			$destThumbFolder = $thumbFolderName;		// ditto for the thumbnail
+ 
 			if ($USE_MEDIA_FIREWALL) {
-				$folderName = get_media_firewall_path($folderName);
-				if ($MEDIA_FIREWALL_THUMBS) $thumbFolderName = get_media_firewall_path($thumbFolderName);
+				$destFolder = get_media_firewall_path($folderName);
+				if ($MEDIA_FIREWALL_THUMBS) $destThumbFolder = get_media_firewall_path($thumbFolderName);
 			}
+
 			// make sure the dirs exist
 			@mkdirs($folderName);
+			@mkdirs($destFolder);
 			@mkdirs($thumbFolderName);
+			@mkdirs($destThumbFolder);
 
 			$error = "";
 
@@ -1381,7 +1388,7 @@ function process_uploadMedia_form() {
 					// Use extension of original uploaded file name
 					if (!empty($_FILES["mediafile".$i]["name"])) $parts = pathinfo($_FILES["mediafile".$i]["name"]);
 					else $parts = pathinfo($_FILES["thumbnail".$i]["name"]);
-					$mediaFile .= ".".$parts["extension"];
+					if (!empty($parts["extension"])) $mediaFile .= ".".$parts["extension"];
 				}
 			} else {
 				// User did not specify a name to be used on the server:  use the original uploaded file name
@@ -1391,38 +1398,33 @@ function process_uploadMedia_form() {
 			}
 
 			if (!empty($_FILES["mediafile".$i]["name"])) {
-				$newFile = $folderName.$mediaFile;
 				// Copy main media file into the destination directory
-				if (!move_uploaded_file($_FILES["mediafile".$i]["tmp_name"], filename_decode($newFile))) {
+				if (!move_uploaded_file($_FILES["mediafile".$i]["tmp_name"], filename_decode($destFolder.$mediaFile))) {
 					// the file cannot be copied
 					$error .= $pgv_lang["upload_error"]."<br />".file_upload_error_text($_FILES["mediafile".$i]["error"])."<br />";
 				} else {
-					@chmod(filename_decode($newFile), PGV_PERM_FILE);
-					AddToLog("Media file {$newFile} uploaded");
+					@chmod(filename_decode($destFolder.$mediaFile), PGV_PERM_FILE);
+					AddToLog("Media file {$folderName}{$mediaFile} uploaded");
 				}
 			}
 			if ($error=="" && !empty($_FILES["thumbnail".$i]["name"])) {
 				// Copy user-supplied thumbnail file into the destination directory
-				$newThum = $thumbFolderName.$mediaFile;
-				if (!move_uploaded_file($_FILES["thumbnail".$i]["tmp_name"], filename_decode($newThum))) {
+				if (!move_uploaded_file($_FILES["thumbnail".$i]["tmp_name"], filename_decode($destThumbFolder.$mediaFile))) {
 					// the file cannot be copied
 					$error .= $pgv_lang["upload_error"]."<br />".file_upload_error_text($_FILES["thumbnail".$i]["error"])."<br />";
 				} else {
-					@chmod(filename_decode($newThum), PGV_PERM_FILE);
-					AddToLog("Media file {$newThum} uploaded");
+					@chmod(filename_decode($destThumbFolder.$mediaFile), PGV_PERM_FILE);
+					AddToLog("Media file {$thumbFolderName}{$mediaFile} uploaded");
 				}
 			}
 			if ($error=="" && empty($_FILES["mediafile".$i]["name"]) && !empty($_FILES["thumbnail".$i]["name"])) {
-				$newFile = $folderName.$mediaFile;
-				$whichFile1 = $thumbFolderName.$mediaFile;
-				$whichFile2 = $folderName.$mediaFile;
 				// Copy user-supplied thumbnail file into the main destination directory
-				if (!copy(filename_decode($whichFile1), filename_decode($whichFile2))) {
+				if (!copy(filename_decode($destThumbFolder.$mediaFile), filename_decode($destFolder.$mediaFile))) {
 					// the file cannot be copied
 					$error .= $pgv_lang["upload_error"]."<br />".file_upload_error_text($_FILES["thumbnail".$i]["error"])."<br />";
 				} else {
-					@chmod(filename_decode($whichFile2), PGV_PERM_FILE);
-					AddToLog("Media file {$whichFile2} copied from {$whichFile1}");
+					@chmod(filename_decode($folderName.$mediaFile), PGV_PERM_FILE);
+					AddToLog("Media file {$folderName}{$mediaFile} copied from {$thumbFolderName}{$mediaFile}");
 				}
 			}
 			if ($error=="" && !empty($_FILES["mediafile".$i]["name"]) && empty($_FILES["thumbnail".$i]["name"])) {
@@ -1437,10 +1439,9 @@ function process_uploadMedia_form() {
 							if (!$okThumb) {
 								$error .= print_text("thumbgen_error",0,1);
 							} else {
-								@chmod(filename_decode($thumbnail), PGV_PERM_FILE);
 								print_text("thumb_genned");
 								print "<br />";
-								AddToLog("Media thumbnail ".$thumbnail." generated");
+								AddToLog("Media thumbnail {$thumbnail} generated");
 							}
 						}
 					}
