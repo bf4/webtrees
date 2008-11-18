@@ -547,13 +547,13 @@ function checkTableExists() {
 		dbquery("DROP TABLE {$TBLPREFIX}favorites", false);
 		dbquery(
 			"CREATE TABLE {$TBLPREFIX}favorites (".
-			" fv_id       INT         NOT NULL,".
-		 	" fv_username VARCHAR(30)     NULL,".
-			" fv_gid      VARCHAR(255)    NULL,".
-			" fv_type     VARCHAR(10)     NULL,".
-			" fv_file     VARCHAR(100)    NULL,".
-			" fv_url      VARCHAR(255)    NULL,".
-		 	" fv_title    VARCHAR(255)    NULL,".
+			" fv_id       INT               NOT NULL,".
+		 	" fv_username VARCHAR(30)       NULL,".
+			" fv_gid    ".PGV_DB_COL_XREF." NULL,".
+			" fv_type   ".PGV_DB_COL_TAG."  NULL,".
+			" fv_file     VARCHAR(100)      NULL,".
+			" fv_url      VARCHAR(255)      NULL,".
+		 	" fv_title    VARCHAR(255)      NULL,".
 			" fv_note     TEXT,".
 			" PRIMARY KEY (fv_id)".
 			")"

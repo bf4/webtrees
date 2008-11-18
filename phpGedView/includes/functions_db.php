@@ -118,8 +118,9 @@ default:
 }
 
 // Define some "standard" columns, so we create our tables consistently
-define('PGV_DB_COL_FILE', PGV_DB_INT2_TYPE.' '.PGV_DB_UNSIGNED);
-define('PGV_DB_COL_XREF', PGV_DB_VARCHAR_TYPE.'(63)');
+define('PGV_DB_COL_FILE', PGV_DB_INT2_TYPE.' '.PGV_DB_UNSIGNED); // Allow 32768/65536 Gedcoms
+define('PGV_DB_COL_XREF', PGV_DB_VARCHAR_TYPE.'(20)');           // Gedcom identifiers are max 20 chars
+define('PGV_DB_COL_TAG',  PGV_DB_VARCHAR_TYPE.'(15)');           // Gedcom tags/record types are max 15 chars
 
 //-- uncomment the following line to turn on sql query logging
 //$SQL_LOG = true;

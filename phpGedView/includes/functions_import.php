@@ -997,8 +997,8 @@ function create_individuals_table() {
 	dbquery("DROP TABLE {$TBLPREFIX}individuals", false);
 	dbquery(
 		"CREATE TABLE {$TBLPREFIX}individuals (".
-		" i_id       VARCHAR(255)       NOT NULL,".
-		" i_file     INT                NOT NULL,".
+		" i_id     ".PGV_DB_COL_XREF."      NOT NULL,".
+		" i_file   ".PGV_DB_COL_FILE."      NOT NULL,".
 		" i_rin      VARCHAR(255)           NULL,".
 		" i_name     VARCHAR(255)           NULL,".
 		" i_isdead   INT DEFAULT 1          NULL,".
@@ -1023,13 +1023,13 @@ function create_families_table() {
 	dbquery("DROP TABLE {$TBLPREFIX}families", false);
 	dbquery(
 		"CREATE TABLE {$TBLPREFIX}families (".
-		" f_id       VARCHAR(255)       NOT NULL,".
-		" f_file     INT                NOT NULL,".
-		" f_husb     VARCHAR(255)           NULL,".
-		" f_wife     VARCHAR(255)           NULL,".
+		" f_id     ".PGV_DB_COL_XREF."      NOT NULL,".
+		" f_file   ".PGV_DB_COL_FILE."      NOT NULL,".
+		" f_husb   ".PGV_DB_COL_XREF."      NULL,".
+		" f_wife   ".PGV_DB_COL_XREF."      NULL,".
 		" f_chil     TEXT                   NULL,".
 		" f_gedcom ".PGV_DB_LONGTEXT_TYPE." NULL,".
-		" f_numchil   INT                   NULL,".
+		" f_numchil  INT                    NULL,".
 		" PRIMARY KEY (f_id, f_file)".
 		")"
 	);
@@ -1047,8 +1047,8 @@ function create_sources_table() {
 	dbquery("DROP TABLE {$TBLPREFIX}sources", false);
 	dbquery(
 		"CREATE TABLE {$TBLPREFIX}sources (".
-		" s_id       VARCHAR(255)       NOT NULL,".
-		" s_file     INT                NOT NULL,".
+		" s_id     ".PGV_DB_COL_XREF."      NOT NULL,".
+		" s_file   ".PGV_DB_COL_FILE."      NULL,".
 		" s_name     VARCHAR(255)           NULL,".
 		" s_gedcom ".PGV_DB_LONGTEXT_TYPE." NULL,".
 		" PRIMARY KEY (s_id, s_file)".
@@ -1067,9 +1067,9 @@ function create_other_table() {
 	dbquery("DROP TABLE {$TBLPREFIX}other", false);
 	dbquery(
 		"CREATE TABLE {$TBLPREFIX}other (".
-		" o_id     VARCHAR(255)         NOT NULL,".
-		" o_file   INT                  NOT NULL,".
-	 	" o_type   VARCHAR(20)              NULL,".
+		" o_id     ".PGV_DB_COL_XREF."      NOT NULL,".
+		" o_file   ".PGV_DB_COL_FILE."      NOT NULL,".
+	 	" o_type   ".PGV_DB_COL_TAG."       NULL,".
 		" o_gedcom ".PGV_DB_LONGTEXT_TYPE." NULL,".
 		" PRIMARY KEY (o_id, o_file)".
 		")"
@@ -1086,9 +1086,9 @@ function create_placelinks_table() {
 	dbquery("DROP TABLE {$TBLPREFIX}placelinks", false);
 	dbquery(
 		"CREATE TABLE {$TBLPREFIX}placelinks (".
-		" pl_p_id INT          NOT NULL,".
-		" pl_gid  VARCHAR(255) NOT NULL,".
-		" pl_file INT          NOT NULL,".
+		" pl_p_id   INT               NOT NULL,".
+		" pl_gid  ".PGV_DB_COL_XREF." NOT NULL,".
+		" pl_file ".PGV_DB_COL_FILE." NOT NULL,".
 		" PRIMARY KEY (pl_p_id, pl_gid, pl_file)".
 		")"
 	);
@@ -1129,12 +1129,12 @@ function create_names_table() {
 	dbquery("DROP TABLE {$TBLPREFIX}names", false);
 	dbquery(
 		"CREATE TABLE {$TBLPREFIX}names (".
-		" n_gid     VARCHAR(255) NULL,".
-		" n_file    INT          NULL,".
-		" n_name    VARCHAR(255) NULL,".
-		" n_letter  VARCHAR(5)   NULL,".
-		" n_surname VARCHAR(100) NULL,".
-		" n_type    VARCHAR(10)  NULL".
+		" n_gid   ".PGV_DB_COL_XREF." NOT NULL,".
+		" n_file  ".PGV_DB_COL_FILE." NOT NULL,".
+		" n_name    VARCHAR(255)      NULL,".
+		" n_letter  VARCHAR(5)        NULL,".
+		" n_surname VARCHAR(100)      NULL,".
+		" n_type    VARCHAR(10)       NULL".
 		")"
 	);
 	dbquery("CREATE INDEX {$TBLPREFIX}name_gid    ON {$TBLPREFIX}names (n_gid    )");
@@ -1153,9 +1153,9 @@ function create_remotelinks_table() {
 	dbquery("DROP TABLE {$TBLPREFIX}remotelinks", false);
 	dbquery(
 		"CREATE TABLE {$TBLPREFIX}remotelinks (".
-		" r_gid    VARCHAR(255) NULL,".
-		" r_linkid VARCHAR(255) NULL,".
-		" r_file   INT          NULL".
+		" r_gid  ".PGV_DB_COL_XREF." NOT NULL,".
+		" r_linkid VARCHAR(255)      NULL,".
+		" r_file ".PGV_DB_COL_FILE." NOT NULL".
 		")"
 	);
 	dbquery("CREATE INDEX {$TBLPREFIX}r_gid     ON {$TBLPREFIX}remotelinks (r_gid   )");
@@ -1171,13 +1171,13 @@ function create_soundex_table() {
 	dbquery("DROP TABLE {$TBLPREFIX}soundex", false);
 	dbquery(
 		"CREATE TABLE {$TBLPREFIX}soundex (".
-		" sx_i_id        VARCHAR(255) NOT NULL,".
-		" sx_n_id        VARCHAR(255) NOT NULL,".
-		" sx_file        INT          NOT NULL,".
-		" sx_fn_std_code TEXT             NULL,".
-		" sx_fn_dm_code  TEXT             NULL,".
-		" sx_ln_std_code TEXT             NULL,".
-		" sx_ln_dm_code  TEXT             NULL".
+		" sx_i_id      ".PGV_DB_COL_XREF." NOT NULL,".
+		" sx_n_id        VARCHAR(255)      NOT NULL,".
+		" sx_file      ".PGV_DB_COL_FILE." NOT NULL,".
+		" sx_fn_std_code TEXT              NULL,".
+		" sx_fn_dm_code  TEXT              NULL,".
+		" sx_ln_std_code TEXT              NULL,".
+		" sx_ln_dm_code  TEXT              NULL".
 		")"
 	);
 	dbquery("CREATE INDEX {$TBLPREFIX}sx_i_id_ix ON {$TBLPREFIX}soundex (sx_i_id)");
@@ -1192,13 +1192,13 @@ function create_media_table() {
 	dbquery("DROP TABLE {$TBLPREFIX}media", false);
 	dbquery(
 		"CREATE TABLE {$TBLPREFIX}media (".
-		" m_id       INT                NOT NULL,".
-		" m_media    VARCHAR(15)            NULL,".
-		" m_ext      VARCHAR(6)             NULL,".
-		" m_titl     VARCHAR(255)           NULL,".
-		" m_file     VARCHAR(255)           NULL,".
-		" m_gedfile  INT                    NULL,".
-		" m_gedrec ".PGV_DB_LONGTEXT_TYPE." NULL,".
+		" m_id        INT                    NOT NULL,".
+		" m_media   ".PGV_DB_COL_XREF."      NULL,".
+		" m_ext       VARCHAR(6)             NULL,".
+		" m_titl      VARCHAR(255)           NULL,".
+		" m_file      VARCHAR(255)           NULL,".
+		" m_gedfile ".PGV_DB_COL_FILE."      NULL,".
+		" m_gedrec  ".PGV_DB_LONGTEXT_TYPE." NULL,".
 		" PRIMARY KEY (m_id)".
 		")"
 	);
@@ -1214,17 +1214,17 @@ function create_dates_table() {
 	dbquery("DROP TABLE {$TBLPREFIX}dates", false);
 	dbquery(
 		"CREATE TABLE {$TBLPREFIX}dates (".
-		" d_day        INT          NULL,".
-		" d_month      VARCHAR(5)   NULL,".
-		" d_mon        INT          NULL,".
-		" d_year       INT          NULL,".
-		" d_datestamp  INT          NULL,".
-		" d_julianday1 INT          NULL,".
-		" d_julianday2 INT          NULL,".
-		" d_fact       VARCHAR(10)  NULL,".
-		" d_gid        VARCHAR(255) NULL,".
-		" d_file       INT          NULL,".
-		" d_type       VARCHAR(13)  NULL".
+		" d_day        INT               NULL,".
+		" d_month      VARCHAR(5)        NULL,".
+		" d_mon        INT               NULL,".
+		" d_year       INT               NULL,".
+		" d_datestamp  INT               NULL,".
+		" d_julianday1 INT               NULL,".
+		" d_julianday2 INT               NULL,".
+		" d_fact     ".PGV_DB_COL_TAG."  NULL,".
+		" d_gid      ".PGV_DB_COL_XREF." NULL,".
+		" d_file     ".PGV_DB_COL_FILE." NULL,".
+		" d_type       VARCHAR(13)       NULL".
 		" )"
 	);
 	dbquery("CREATE INDEX {$TBLPREFIX}date_day        ON {$TBLPREFIX}dates (d_day        )") ;
@@ -1249,12 +1249,12 @@ function create_media_mapping_table() {
 	dbquery("DROP TABLE {$TBLPREFIX}media_mapping", false);
 	dbquery(
 		"CREATE TABLE {$TBLPREFIX}media_mapping (".
-		" mm_id       INT                    NOT NULL,".
-		" mm_media    VARCHAR(15)            NOT NULL DEFAULT '',".
-		" mm_gid      VARCHAR(15)            NOT NULL DEFAULT '',".
-		" mm_order    INT                    NOT NULL DEFAULT '0',".
-		" mm_gedfile  INT                    NULL,".
-		" mm_gedrec ".PGV_DB_LONGTEXT_TYPE." NULL,".
+		" mm_id        INT                    NOT NULL,".
+		" mm_media   ".PGV_DB_COL_XREF."      NOT NULL DEFAULT '',".
+		" mm_gid     ".PGV_DB_COL_XREF."      NOT NULL DEFAULT '',".
+		" mm_order     INT                    NOT NULL DEFAULT '0',".
+		" mm_gedfile ".PGV_DB_COL_FILE."      NULL,".
+		" mm_gedrec  ".PGV_DB_LONGTEXT_TYPE." NULL,".
 		" PRIMARY KEY (mm_id)".
 		")"
 	);
@@ -1271,9 +1271,9 @@ function create_nextid_table() {
 	dbquery("DROP TABLE {$TBLPREFIX}nextid ", false);
 	dbquery(
 		"CREATE TABLE {$TBLPREFIX}nextid (".
-		" ni_id      INT         NOT NULL,".
-		" ni_type    VARCHAR(30) NOT NULL,".
-		" ni_gedfile INT         NOT NULL,".
+		" ni_id        INT               NOT NULL,".
+		" ni_type    ".PGV_DB_COL_TAG."  NOT NULL,".
+		" ni_gedfile ".PGV_DB_COL_FILE." NOT NULL,".
 		" PRIMARY KEY (ni_type, ni_gedfile)".
 		")"
 	);
