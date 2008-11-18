@@ -42,6 +42,9 @@ require_once 'DB.php';
 //-- set the REGEXP status of databases
 $REGEXP_DB = (stristr($DBTYPE,'mysql') !== false || $DBTYPE=='pgsql');
 
+// New setting, added to config.php in 4.2.0
+if (!isset($DB_UTF8_COLLATION)) $DB_UTF8_COLLATION=false;
+
 /**
  * Field and function definition variances between sql databases
  */
