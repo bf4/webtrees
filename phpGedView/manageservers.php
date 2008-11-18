@@ -267,17 +267,16 @@ if ($action=='deleteServer') {
 	if (!empty($address)) {
 		$sid = stripslashes($address);
 
-		// Search the database for references to this Source ID
-		$query = "SOUR @".$sid."@";
-		if (!$REGEXP_DB) $query = "%".$query."%";
-		$myList = search_fams($query);		// Search family list first (it's shorter)
-		if (count($myList)==0) $myList = search_indis($query);		// No hit on families: try indis
-
-		if (count($myList)==0) {	// No references exist:  it's OK to delete this source
+		if (count_linked_indi($sid, 'SOUR', PGV_GED_ID) || count_linked_fam($sid, 'SOUR', PGV_GED_ID)) {
+			$errorDelete = $pgv_lang["error_remove_site_linked"];
+		} else {
+			// No references exist:  it's OK to delete this source
 			if (delete_gedrec($sid)) {
 				accept_changes($sid."_".$GEDCOM);
-			} else $errorDelete = $pgv_lang["error_remove_site"];
-		} else $errorDelete = $pgv_lang["error_remove_site_linked"];
+			} else {
+				$errorDelete = $pgv_lang["error_remove_site"];
+			}
+		}
 	}
 
 	$remoteServers = get_server_list();		// refresh the list

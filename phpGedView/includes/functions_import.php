@@ -140,9 +140,10 @@ function import_record($gedrec, $update) {
 	//-- replace any added ltr processing codes
 	$gedrec = str_replace(array(PGV_UTF8_LRM, PGV_UTF8_RLM), "", $gedrec);
 
-	// Update the dates and places tables.
+	// Update the cross-reference/index tables.
 	update_places($gid, $gedrec);
 	update_dates($gid, $gedrec);
+	update_links($gid, PGV_GED_ID, $gedrec);
 
 	$newrec = update_media($gid, $gedrec, $update);
 	if ($newrec != $gedrec) {
@@ -482,6 +483,34 @@ function update_dates($gid, $gedrec) {
 }
 
 /**
+ * extract all links from the given record and insert them
+ * into the links table
+ * @param string $gedrec
+ */
+function update_links($xref, $ged_id, $gedrec) {
+	global $DBCONN, $TBLPREFIX;
+
+	if (preg_match_all("/^\d (\w+) @([^@#\r\n][^@\r\n]*)@/m", $gedrec, $matches, PREG_SET_ORDER)) {
+		$links=array();
+		foreach ($matches as $match) {
+			// only include each link once
+			foreach ($links as $link) {
+				if ($link[0]==$match[1] && $link[1]==$match[2]) {
+					continue 2;
+				}
+			}
+			$links[]=array($match[1], $match[2]);
+		}
+		$xref=$DBCONN->escapeSimple($xref);
+		foreach ($links as $link) {
+			dbquery(
+				"INSERT INTO {$TBLPREFIX}link (l_from, l_to, l_type, l_file)".
+				" VALUES ('{$xref}', '{$link[1]}', '{$link[0]}', {$ged_id})");
+		}
+	}
+}
+
+/**
  * Insert media items into the database
  * This method is used in conjuction with the gedcom import/update routines
  * @param string $objrec	The OBJE subrecord
@@ -753,6 +782,7 @@ function setup_database() {
 	$has_places_gid = false;
 	$has_places_std_soundex = false;
 	$has_places_dm_soundex = false;
+	$has_link = false;
 	$has_names = false;
 	$has_names_surname = false;
 	$has_names_type = false;
@@ -823,6 +853,9 @@ function setup_database() {
 								break;
 						}
 					}
+					break;
+				case "link" :
+					$has_link = true;
 					break;
 				case "names" :
 					$has_names = true;
@@ -975,6 +1008,9 @@ function setup_database() {
 	}
 	if(!$has_soundex) {
 		create_soundex_table();
+	}
+	if (!$has_link) {
+		create_link_table();
 	}
 	/*-- commenting out as it seems to cause more problems than it helps
 	$sql = "LOCK TABLE {$TBLPREFIX}individuals WRITE, {$TBLPREFIX}families WRITE, {$TBLPREFIX}sources WRITE, {$TBLPREFIX}other WRITE, {$TBLPREFIX}places WRITE, {$TBLPREFIX}users WRITE";
@@ -1145,6 +1181,24 @@ function create_names_table() {
 	dbquery("CREATE INDEX {$TBLPREFIX}name_file   ON {$TBLPREFIX}names (n_file   )");
 }
 /**
+ * Create the link table
+ */
+function create_link_table() {
+	global $TBLPREFIX;
+
+	dbquery("DROP TABLE {$TBLPREFIX}link", false);
+	dbquery(
+		"CREATE TABLE {$TBLPREFIX}link (".
+		" l_file    ".PGV_DB_COL_FILE." NOT NULL,".
+		" l_from    ".PGV_DB_COL_XREF." NOT NULL,".
+		" l_type      VARCHAR(15)       NOT NULL,".
+		" l_to      ".PGV_DB_COL_XREF." NOT NULL,".
+		" PRIMARY KEY (l_from, l_file, l_type, l_to)".
+		") ".PGV_DB_UTF8_TABLE
+	);
+	dbquery("CREATE INDEX {$TBLPREFIX}ix1 ON {$TBLPREFIX}link (l_to, l_file, l_type, l_from)");
+}
+/**
  * Create the remotelinks table
  */
 function create_remotelinks_table() {
@@ -1296,6 +1350,7 @@ function empty_database($FILE, $keepmedia=false) {
 	dbquery("DELETE FROM {$TBLPREFIX}places      WHERE p_file ={$FILE}");
 	dbquery("DELETE FROM {$TBLPREFIX}placelinks  WHERE pl_file={$FILE}");
 	dbquery("DELETE FROM {$TBLPREFIX}names       WHERE n_file ={$FILE}");
+	dbquery("DELETE FROM {$TBLPREFIX}link        WHERE l_file ={$FILE}");
 	dbquery("DELETE FROM {$TBLPREFIX}dates       WHERE d_file ={$FILE}");
 
 	if (!$keepmedia) {
@@ -1600,6 +1655,9 @@ function update_record($gedrec, $delete = false) {
 	$res = dbquery($sql);
 
 	$sql = "DELETE FROM {$TBLPREFIX}remotelinks WHERE r_gid='" . $DBCONN->escapeSimple($gid) . "' AND r_file='" . $DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"]) . "'";
+	$res = dbquery($sql);
+
+	$sql = "DELETE FROM {$TBLPREFIX}link WHERE l_from LIKE '" . $DBCONN->escapeSimple($gid) . "' AND l_file='" . $DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"]) . "'";
 	$res = dbquery($sql);
 
 	if ($type == "INDI") {
