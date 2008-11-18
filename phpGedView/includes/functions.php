@@ -56,7 +56,7 @@ if (isset($DEBUG)) $ERROR_LEVEL = 2;
  */
 function check_db($ignore_previous=false) {
 	global $DBTYPE, $DBHOST, $DBPORT, $DBUSER, $DBPASS, $DBNAME, $DBCONN, $TOTAL_QUERIES, $PHP_SELF, $DBPERSIST, $CONFIGURED;
-	global $INDEX_DIRECTORY, $BUILDING_INDEX;
+	global $INDEX_DIRECTORY, $BUILDING_INDEX, $DB_UTF8_COLLATION;
 
 	if (!$ignore_previous) {
 		if ((is_object($DBCONN)) && (!DB::isError($DBCONN)))
@@ -74,6 +74,7 @@ function check_db($ignore_previous=false) {
 			if (isset($_POST['NEW_DBPORT'])) $DBPORT = $_POST['NEW_DBPORT'];
 			if (isset($_POST['NEW_DBNAME'])) $DBNAME = $_POST['NEW_DBNAME'];
 			if (isset($_POST['NEW_DBPERSIST'])) $DBPERSIST = $_POST['NEW_DBPERSIST'];
+			if (isset($_POST['NEW_DB_UTF8_COLLATION'])) $DBPERSIST = $_POST['NEW_DB_UTF8_COLLATION'];
 		}
 	}
 	//-- initialize query counter
@@ -107,13 +108,19 @@ function check_db($ignore_previous=false) {
 	// Perform any database-specific initialisation
 	switch ($DBTYPE) {
 	case 'mysql':
-		//dbquery("SET NAMES UTF8");
+		if ($DB_UTF8_COLLATION) {
+			dbquery("SET NAMES UTF8");
+		}
 		break;
 	case 'pgsql':
-		//dbquery("SET NAMES 'UTF8'");
+		if ($DB_UTF8_COLLATION) {
+			dbquery("SET NAMES 'UTF8'");
+		}
 		break;
 	case 'sqlite':
-		//dbquery('PRAGMA encoding = "UTF-8"');
+		if ($DB_UTF8_COLLATION) {
+			dbquery('PRAGMA encoding = "UTF-8"');
+		}
 		break;
 	}
 
@@ -570,7 +577,7 @@ function update_site_config($newconfig, $return = false) {
 function update_lang_settings() {
 	global $INDEX_DIRECTORY, $language_settings, $languages, $pgv_language, $lang_short_cut, $pgv_lang_self, $pgv_lang_use, $confighelpfile, $helptextfile, $factsfile;
 	global $flagsfile, $adminfile, $countryfile, $faqlistfile, $extrafile, $ALPHABET_lower, $ALPHABET_upper, $DATE_FORMAT_array, $editorfile, $lang_langcode;
-	global $DICTIONARY_SORT, $MULTI_LETTER_ALPHABET, $NAME_REVERSE_array, $TEXT_DIRECTION_array, $TIME_FORMAT_array, $WEEK_START_array;
+	global $DICTIONARY_SORT, $MULTI_LETTER_ALPHABET, $NAME_REVERSE_array, $TEXT_DIRECTION_array, $TIME_FORMAT_array, $WEEK_START_array, $COLLATION;
 	
 	$Filename = $INDEX_DIRECTORY . "lang_settings.php";
 	if (!file_exists($Filename)) copy("includes/lang_settings_std.php", $Filename);
@@ -615,7 +622,8 @@ function update_lang_settings() {
 				fwrite($fp, "'ALPHABET_upper'=>'{$ALPHABET_upper[$key]}',\r\n");
 				fwrite($fp, "'ALPHABET_lower'=>'{$ALPHABET_lower[$key]}',\r\n");
 				fwrite($fp, "'MULTI_LETTER_ALPHABET'=>'{$MULTI_LETTER_ALPHABET[$key]}',\r\n");
-				fwrite($fp, "'DICTIONARY_SORT'=>".($DICTIONARY_SORT[$key]?'true':'false')."\r\n");
+				fwrite($fp, "'DICTIONARY_SORT'=>".($DICTIONARY_SORT[$key]?'true':'false').",\r\n");
+				fwrite($fp, "'COLLATION'=>'{$COLLATION[$key]}'\r\n");
 				fwrite($fp, ");\r\n");
 			}
 			fwrite($fp, "\r\n");

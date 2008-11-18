@@ -61,7 +61,7 @@ if (!in_array($TBLPREFIX."placelocation", $tables)) {
 		" pl_zoom      INT              NULL,".
 		" pl_icon      VARCHAR(255)     NULL,".
 		" PRIMARY KEY (pl_id)".
-		")"
+		") ".PGV_DB_UTF8_TABLE
 	);
 	dbquery("CREATE INDEX {$TBLPREFIX}pl_level     ON {$TBLPREFIX}placelocation (pl_level    )");
 	dbquery("CREATE INDEX {$TBLPREFIX}p            ON {$TBLPREFIX}placelocation (pl_long     )");

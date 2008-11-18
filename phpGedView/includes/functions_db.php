@@ -62,6 +62,7 @@ case 'mssql':
 	define('PGV_DB_LONGTEXT_TYPE', 'TEXT');
 	define('PGV_DB_BEGIN_TRANS',   'BEGIN TRANSACTION');
 	define('PGV_DB_COMMIT_TRANS',  'COMMIT TRANSACTION');
+	define('PGV_DB_UTF8_TABLE',    '');
 	break;
 case 'sqlite':
 	define('PGV_DB_AUTO_ID_TYPE',  'INTEGER AUTOINCREMENT');
@@ -79,6 +80,7 @@ case 'sqlite':
 	define('PGV_DB_LONGTEXT_TYPE', 'TEXT');
 	define('PGV_DB_BEGIN_TRANS',   'BEGIN');
 	define('PGV_DB_COMMIT_TRANS',  'COMMIT');
+	define('PGV_DB_UTF8_TABLE',    '');
 	break;
 case 'pgsql':
 	define('PGV_DB_AUTO_ID_TYPE',  'SERIAL');
@@ -96,6 +98,7 @@ case 'pgsql':
 	define('PGV_DB_LONGTEXT_TYPE', 'TEXT');
 	define('PGV_DB_BEGIN_TRANS',   'BEGIN');
 	define('PGV_DB_COMMIT_TRANS',  'COMMIT');
+	define('PGV_DB_UTF8_TABLE',    '');
 	break;
 case 'mysql':
 default:
@@ -114,6 +117,13 @@ default:
 	define('PGV_DB_LONGTEXT_TYPE', 'LONGTEXT');
 	define('PGV_DB_BEGIN_TRANS',   'BEGIN');
 	define('PGV_DB_COMMIT_TRANS',  'COMMIT');
+	// Since install.php creates the tables before saving the configuration settings to config.php,
+	// we must check its temporary configuration settings as well.
+	if (isset($_SESSION['install_config']) && $_SESSION['install_config']['DB_UTF8_COLLATION'] || $DB_UTF8_COLLATION) {
+		define('PGV_DB_UTF8_TABLE',  'CHARACTER SET utf8 COLLATE utf8_unicode_ci');
+	} else {
+		define('PGV_DB_UTF8_TABLE',  '');
+	}
 	break;
 }
 

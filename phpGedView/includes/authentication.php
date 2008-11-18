@@ -473,7 +473,7 @@ function checkTableExists() {
 			" u_max_relation_path    INT             NULL,".
 			" u_auto_accept          VARCHAR(2)      NULL,".
 			" PRIMARY KEY (u_username)".
-			")"
+			") ".PGV_DB_UTF8_TABLE
 		);
 	} else {
 		if (!$has_email) {
@@ -539,7 +539,7 @@ function checkTableExists() {
 			" m_body    TEXT             NULL,".
 			" m_created VARCHAR(255)     NULL,".
 			" PRIMARY KEY (m_id)".
-			")"
+			") ".PGV_DB_UTF8_TABLE
 		);
 		dbquery("CREATE INDEX {$TBLPREFIX}messages_to ON {$TBLPREFIX}messages (m_to)");
 	}
@@ -556,7 +556,7 @@ function checkTableExists() {
 		 	" fv_title    VARCHAR(255)      NULL,".
 			" fv_note     TEXT,".
 			" PRIMARY KEY (fv_id)".
-			")"
+			") ".PGV_DB_UTF8_TABLE
 		);
 		dbquery("CREATE INDEX {$TBLPREFIX}favorites_username ON {$TBLPREFIX}favorites (fv_username)");
 	} else {
@@ -577,7 +577,7 @@ function checkTableExists() {
 			" b_name     VARCHAR(255)     NULL,".
 			" b_config   TEXT             NULL,".
 			" PRIMARY KEY (b_id)".
-			")"
+			") ".PGV_DB_UTF8_TABLE
 		);
 		dbquery("CREATE INDEX {$TBLPREFIX}blocks_username ON {$TBLPREFIX}blocks (b_username)");
 	} else {
@@ -595,7 +595,7 @@ function checkTableExists() {
 			" n_title    VARCHAR(255)     NULL,".
 			" n_text     TEXT             NULL,".
 			" PRIMARY KEY (n_id)".
-			")"
+			") ".PGV_DB_UTF8_TABLE
 		);
 		dbquery("CREATE INDEX {$TBLPREFIX}news_username ON {$TBLPREFIX}news (n_username)");
 	}
@@ -608,7 +608,7 @@ function checkTableExists() {
 		 	" mx_thread VARCHAR(255)     NULL,".
 			" mx_time   INT              NULL,".
 			" PRIMARY KEY (mx_id)".
-			")"
+			") ".PGV_DB_UTF8_TABLE
 		);
 		dbquery("CREATE INDEX {$TBLPREFIX}mutex_name ON {$TBLPREFIX}mutex (mx_name)");
 	}

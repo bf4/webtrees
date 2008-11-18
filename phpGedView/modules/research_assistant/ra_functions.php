@@ -128,7 +128,7 @@ class ra_functions {
 			 	" sour_id     VARCHAR(255)          NULL,".
 				" comment     VARCHAR(255)          NULL,".
 				" PRIMARY KEY (id)".
-				")"
+				") ".PGV_DB_UTF8_TABLE
 			);
 			$this->insertInitialFacts();
 		}
@@ -296,7 +296,7 @@ class ra_functions {
 			 	" t_form        VARCHAR(255)     NULL,".
 				" t_username    VARCHAR(45)      NULL,".
 				" PRIMARY KEY (t_id)".
-				")"
+				") ".PGV_DB_UTF8_TABLE
 			);
 		} else {
 			$has_form = false;
@@ -317,7 +317,7 @@ class ra_functions {
 				" c_body       TEXT        NOT NULL,".
 				" c_datetime   INTEGER     NOT NULL,".
 				" PRIMARY KEY (c_id)".
-				")"
+				") ".PGV_DB_UTF8_TABLE
 			);
 		}
 		if (!in_array($TBLPREFIX.'tasksource', $data)) {
@@ -332,7 +332,7 @@ class ra_functions {
 			 	" ts_obje  VARCHAR(20)      NULL,".
 				" ts_array TEXT             NULL,".
 				" PRIMARY KEY (ts_s_id, ts_t_id)".
-				")"
+				") ".PGV_DB_UTF8_TABLE
 			);
 		}
 		if (!in_array($TBLPREFIX.'folders', $data)) {
@@ -343,7 +343,7 @@ class ra_functions {
 				" fr_description TEXT             NULL,".
 				" fr_parentid    INTEGER          NULL,".
 				" PRIMARY KEY (fr_id)".
-				")"
+				") ".PGV_DB_UTF8_TABLE
 			);
 		}
 		if (!in_array($TBLPREFIX.'individualtask', $data)) {
@@ -353,7 +353,7 @@ class ra_functions {
 				" it_i_id   VARCHAR(255) NOT NULL,".
 				" it_i_file INTEGER      NOT NULL,".
 				" PRIMARY KEY (it_t_id, it_i_id,it_i_file)".
-				")"
+				") ".PGV_DB_UTF8_TABLE
 			);
 		}
 		if (!in_array($TBLPREFIX.'taskfacts', $data)) {
@@ -366,7 +366,7 @@ class ra_functions {
 				" tf_multiple VARCHAR(3)       NULL,".
 				" tf_type     VARCHAR(4)       NULL,".
 				" PRIMARY KEY (tf_id)".
-				")"
+				") ".PGV_DB_UTF8_TABLE
 			);
 		} else {
 			$has_multiple = false;
@@ -393,7 +393,7 @@ class ra_functions {
 				" uc_p_id     VARCHAR(255) NOT NULL,".
 				" uc_f_id     INTEGER      NOT NULL,".
 				" PRIMARY KEY (uc_id)".
-				")"
+				") ".PGV_DB_UTF8_TABLE
 			);
 		}
 		
@@ -416,7 +416,7 @@ class ra_functions {
 				" pr_count   INTEGER      NOT NULL,".
 				" pr_file    INTEGER          NULL,".
 				" PRIMARY KEY (pr_id)".
-				")"
+				") ".PGV_DB_UTF8_TABLE
 			);
 		}
 	}

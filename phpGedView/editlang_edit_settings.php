@@ -138,6 +138,7 @@ if ($action == "new_lang") {
 	$ALPHABET_lower[$ln]    = "abcdefghijklmnopqrstuvwxyz";
 	$MULTI_LETTER_ALPHABET[$ln] = "";
 	$DICTIONARY_SORT[$ln]   = true;
+	$COLLATION[$ln]   = 'utf8_unicode_ci';
 
 	$pgv_lang[$d_LangName]  = $lng_codes[$new_shortcut][0];
 }
@@ -450,6 +451,17 @@ if ($action != "save" && $action != "toggleActive") {
 	print "</td>";
 	print "</tr>";
 
+	print "<tr>";
+	if (!isset($v_collation)) $v_collation = $COLLATION[$ln];
+	print "<td class=\"facts_label\" >";
+	print_help_link("collation_help", "qm");
+	print $pgv_lang["collation"];
+	print "</td>";
+	write_td_with_textdir_check();
+	print "<input type=\"text\" name=\"v_collation\" size=\"30\" value=\"" . $v_collation . "\" />";
+	print "</td>";
+	print "</tr>";
+
 	if (!isset($v_lang_filename)) $v_lang_filename = "languages/lang.".$v_lang_shortcut.".php";
 	if (!isset($v_config_filename)) $v_config_filename = "languages/configure_help.".$v_lang_shortcut.".php";
 	if (!isset($v_factsfile)) $v_factsfile = "languages/facts.".$v_lang_shortcut.".php";
@@ -532,6 +544,7 @@ if ($action == "save") {
 	$ALPHABET_lower[$ln]  = $_POST["v_alphabet_lower"];
 	$MULTI_LETTER_ALPHABET[$ln]  = $_POST["v_multi_letter_alphabet"];
 	$DICTIONARY_SORT[$ln]  = $_POST["v_dictionary_sort"];
+	$COLLATION[$ln]  = $_POST["v_collation"];
 	$DATE_FORMAT_array[$ln]  = $_POST["v_date_format"];
 	$TIME_FORMAT_array[$ln]  = $_POST["v_time_format"];
 	$WEEK_START_array[$ln]  = $_POST["v_week_start"];
