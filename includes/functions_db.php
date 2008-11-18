@@ -406,8 +406,8 @@ function count_linked_indi($xref, $link, $ged_id) {
 	$xref=$DBCONN->escapeSimple($xref);
 	$link=$DBCONN->escapeSimple($link);
 	$ged_id=(int)$ged_id;
-	$like="\n_ {$link} ".str_replace(array('@', '%', '_'), array('@@', '@%', '@_'), '@'.$xref.'@');
-	$res=dbquery("SELECT COUNT(*) FROM {$TBLPREFIX}individuals WHERE i_file={$ged_id} AND i_gedcom LIKE '%{$like}%' ESCAPE '@'");
+	$res=dbquery("SELECT COUNT(*) FROM pgv_link, pgv_individuals WHERE i_file=l_file AND i_id=l_from AND l_file={$ged_id} AND l_type='{$link}' AND l_to='{$xref}'");
+
 	$row=$res->fetchRow();
 	$res->free();
 	return $row[0];
@@ -417,8 +417,8 @@ function count_linked_fam($xref, $link, $ged_id) {
 	$xref=$DBCONN->escapeSimple($xref);
 	$link=$DBCONN->escapeSimple($link);
 	$ged_id=(int)$ged_id;
-	$like="\n_ {$link} ".str_replace(array('@', '%', '_'), array('@@', '@%', '@_'), '@'.$xref.'@');
-	$res=dbquery("SELECT COUNT(*) FROM {$TBLPREFIX}families WHERE f_file={$ged_id} AND f_gedcom LIKE '%{$like}%' ESCAPE '@'");
+	$res=dbquery("SELECT COUNT(*) FROM pgv_link, pgv_families WHERE f_file=l_file AND f_id=l_from AND l_file={$ged_id} AND l_type='{$link}' AND l_to='{$xref}'");
+
 	$row=$res->fetchRow();
 	$res->free();
 	return $row[0];
@@ -428,8 +428,8 @@ function count_linked_sour($xref, $link, $ged_id) {
 	$xref=$DBCONN->escapeSimple($xref);
 	$link=$DBCONN->escapeSimple($link);
 	$ged_id=(int)$ged_id;
-	$like="\n_ {$link} ".str_replace(array('@', '%', '_'), array('@@', '@%', '@_'), '@'.$xref.'@');
-	$res=dbquery("SELECT COUNT(*) FROM {$TBLPREFIX}sources WHERE s_file={$ged_id} AND s_gedcom LIKE '%{$like}%' ESCAPE '@'");
+	$res=dbquery("SELECT COUNT(*) FROM pgv_link, pgv_sources WHERE s_file=l_file AND s_id=l_from AND l_file={$ged_id} AND l_type='{$link}' AND l_to='{$xref}'");
+
 	$row=$res->fetchRow();
 	$res->free();
 	return $row[0];
@@ -439,8 +439,8 @@ function count_linked_obje($xref, $link, $ged_id) {
 	$xref=$DBCONN->escapeSimple($xref);
 	$link=$DBCONN->escapeSimple($link);
 	$ged_id=(int)$ged_id;
-	$like="\n_ {$link} ".str_replace(array('@', '%', '_'), array('@@', '@%', '@_'), '@'.$xref.'@');
-	$res=dbquery("SELECT COUNT(*) FROM {$TBLPREFIX}media WHERE m_gedfile={$ged_id} AND m_gedrec LIKE '%{$like}%' ESCAPE '@'");
+	$res=dbquery("SELECT COUNT(*) FROM pgv_link, pgv_media WHERE m_gedfile=l_file AND m_media=l_from AND l_file={$ged_id} AND l_type='{$link}' AND l_to='{$xref}'");
+
 	$row=$res->fetchRow();
 	$res->free();
 	return $row[0];
@@ -454,8 +454,8 @@ function fetch_linked_indi($xref, $link, $ged_id) {
 	$xref=$DBCONN->escapeSimple($xref);
 	$link=$DBCONN->escapeSimple($link);
 	$ged_id=(int)$ged_id;
-	$like="\n_ {$link} ".str_replace(array('@', '%', '_'), array('@@', '@%', '@_'), '@'.$xref.'@');
-	$res=dbquery("SELECT 'INDI' AS type, i_id AS xref, {$ged_id} AS ged_id, i_gedcom AS gedrec, i_isdead FROM {$TBLPREFIX}individuals WHERE i_file={$ged_id} AND i_gedcom LIKE '%{$like}%' ESCAPE '@'");
+	$res=dbquery("SELECT 'INDI' AS type, i_id AS xref, {$ged_id} AS ged_id, i_gedcom AS gedrec, i_isdead FROM pgv_link, pgv_individuals WHERE i_file=l_file AND i_id=l_from AND l_file={$ged_id} AND l_type='{$link}' AND l_to='{$xref}'");
+
 	$list=array();
 	while ($row=$res->fetchRow(DB_FETCHMODE_ASSOC)) {
 		$list[]=Person::getInstance($row);
@@ -468,8 +468,8 @@ function fetch_linked_fam($xref, $link, $ged_id) {
 	$xref=$DBCONN->escapeSimple($xref);
 	$link=$DBCONN->escapeSimple($link);
 	$ged_id=(int)$ged_id;
-	$like="\n_ {$link} ".str_replace(array('@', '%', '_'), array('@@', '@%', '@_'), '@'.$xref.'@');
-	$res=dbquery("SELECT 'FAM' AS type, f_id AS xref, {$ged_id} AS ged_id, f_gedcom AS gedrec, f_husb, f_wife, f_chil, f_numchil FROM {$TBLPREFIX}families WHERE f_file={$ged_id} AND f_gedcom LIKE '%{$like}%' ESCAPE '@'");
+	$res=dbquery("SELECT 'FAM' AS type, f_id AS xref, {$ged_id} AS ged_id, f_gedcom AS gedrec, f_husb, f_wife, f_chil, f_numchil FROM pgv_link, pgv_families f WHERE f_file=l_file AND f_id=l_from AND l_file={$ged_id} AND l_type='{$link}' AND l_to='{$xref}'");
+
 	$list=array();
 	while ($row=$res->fetchRow(DB_FETCHMODE_ASSOC)) {
 		$list[]=Family::getInstance($row);
@@ -482,8 +482,8 @@ function fetch_linked_sour($xref, $link, $ged_id) {
 	$xref=$DBCONN->escapeSimple($xref);
 	$link=$DBCONN->escapeSimple($link);
 	$ged_id=(int)$ged_id;
-	$like="\n_ {$link} ".str_replace(array('@', '%', '_'), array('@@', '@%', '@_'), '@'.$xref.'@');
-	$res=dbquery("SELECT 'SOUR' AS type, s_id AS xref, {$ged_id} AS ged_id, s_gedcom AS gedrec FROM {$TBLPREFIX}sources WHERE s_file={$ged_id} AND s_gedcom LIKE '%{$like}%' ESCAPE '@'");
+	$res=dbquery("SELECT 'SOUR' AS type, s_id AS xref, {$ged_id} AS ged_id, s_gedcom AS gedrec FROM pgv_link, pgv_sources s WHERE s_file=l_file AND s_id=l_from AND l_file={$ged_id} AND l_type='{$link}' AND l_to='{$xref}'");
+
 	$list=array();
 	while ($row=$res->fetchRow(DB_FETCHMODE_ASSOC)) {
 		$list[]=Source::getInstance($row);
@@ -496,8 +496,8 @@ function fetch_linked_obje($xref, $link, $ged_id) {
 	$xref=$DBCONN->escapeSimple($xref);
 	$link=$DBCONN->escapeSimple($link);
 	$ged_id=(int)$ged_id;
-	$like="\n_ {$link} ".str_replace(array('@', '%', '_'), array('@@', '@%', '@_'), '@'.$xref.'@');
-	$res=dbquery("SELECT 'OBJE' AS type, m_media AS xref, {$ged_id} AS ged_id, m_gedrec AS gedrec, m_titl, m_file FROM {$TBLPREFIX}media WHERE m_gedfile={$ged_id} AND m_gedrec LIKE '%{$like}%' ESCAPE '@'");
+	$res=dbquery("SELECT 'OBJE' AS type, m_media AS xref, {$ged_id} AS ged_id, m_gedrec AS gedrec, m_titl, m_file FROM pgv_link, pgv_media m WHERE m_gedfile=l_file AND m_media=l_from AND l_file={$ged_id} AND l_type='{$link}' AND l_to='{$xref}'");
+
 	$list=array();
 	while ($row=$res->fetchRow(DB_FETCHMODE_ASSOC)) {
 		$list[]=Media::getInstance($row);
