@@ -297,15 +297,23 @@ if (file_exists($INDEX_DIRECTORY."gedcoms.php")) {
 	foreach ($GEDCOMS as $key => $gedcom) {
 		$i++;
 		$GEDCOMS[$key]["commonsurnames"] = stripslashes($gedcom["commonsurnames"]);
-		if (empty($GEDCOMS[$key]["id"])) $GEDCOMS[$key]["id"] = $i;
-		if (empty($GEDCOMS[$key]["pgv_ver"])) $GEDCOMS[$key]["pgv_ver"] = PGV_VERSION;
+		if (empty($GEDCOMS[$key]["id"])) {
+			$GEDCOMS[$key]["id"] = $i;
+		}
+		if (empty($GEDCOMS[$key]["pgv_ver"])) {
+			$GEDCOMS[$key]["pgv_ver"] = PGV_VERSION;
+		}
 
 		// Force the gedcom to be re-imported if the code has been significantly upgraded
-		if (substr($GEDCOMS[$key]["pgv_ver"], 0, 3) != substr(PGV_VERSION, 0, 3))
+		list($major1, $minor1)=explode('.', $GEDCOMS[$key]['pgv_ver']);
+		list($major2, $minor2)=explode('.', PGV_VERSION);
+		if ($major1!=$major2 || $minor1!=$minor2) {
 			$GEDCOMS[$key]["imported"] = false;
+		}
 	}
+} else {
+	$GEDCOMS=array();
 }
-else $GEDCOMS=array();
 
 //-- connect to the database
 $DBPASS = str_replace(array("\\\\", "\\\"", "\\\$"), array("\\", "\"", "\$"), $DBPASS); // remove escape codes before using PW
