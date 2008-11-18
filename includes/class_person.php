@@ -970,7 +970,7 @@ class Person extends GedcomRecord {
 		if($otherfacts){
 			$this->add_parents_facts($this);
 			$this->add_historical_facts();
-			$this->add_asso_facts($this);
+			$this->add_asso_facts();
 		}
 	}
 	/**
@@ -1377,83 +1377,74 @@ class Person extends GedcomRecord {
 	/**
 	 * add events where pid is an ASSOciate
 	 *
-	 * @param Person $person	Gedcom id
 	 * @return records added to indifacts array
 	 *
 	 */
-	function add_asso_facts(&$person) {
+	function add_asso_facts() {
 		global $factarray, $pgv_lang;
-		global $assolist, $GEDCOM, $GEDCOMS;
-		if (!function_exists("get_asso_list")) return;
-		get_asso_list('all', $person->getXref());
-		$apid = $person->getXref()."[".$GEDCOMS[$GEDCOM]["id"]."]";
-		// associates exist ?
-		if (isset($assolist[$apid])) {
-			// if so, print all indi's where the indi is associated to
-			foreach($assolist[$apid] as $indexval => $asso) {
-				$aperson = new Person($asso["gedcom"]);
-				$rid = $aperson->getXref();
-				$typ = $aperson->getType();
-				// search for matching fact
-				$facts = $aperson->getFacts();
-				/* @var $event Event */
-				foreach($facts as $event) {
-					$srec = $event->getGedComRecord();
-					$arec = get_sub_record(2, "2 ASSO @".$person->getXref()."@", $srec);
-					if ($arec) {
-						$fact = $event->getTag();
-						$label = $event->getLabel();
-						$sdate = get_sub_record(2, "2 DATE", $srec);
-						// relationship ?
-						$rrec = get_sub_record(3, "3 RELA", $arec);
-						$rela = trim(substr($rrec, 7));
-						if (empty($rela)) $rela = "ASSO";
-						// add an event record
-						$factrec = "1 EVEN\n2 TYPE ".$label."<br/>[ <span class=\"details_label\">";
-						if (isset($pgv_lang[strtolower($rela)])) $factrec .= $pgv_lang[strtolower($rela)]."</span> ]";
-						else if (isset($factarray[$rela])) $factrec .= $factarray[$rela]."</span> ]";
-						$factrec.="\n".$sdate."\n".get_sub_record(2, '2 PLAC', $srec);
-						if (!$event->canShow()) $factrec .= "\n2 RESN privacy";
-						if ($typ=='FAM') {
-							$famrec = find_family_record($rid);
-							if ($famrec) {
-								$parents = find_parents_in_record($famrec);
-								if ($parents["HUSB"]) $factrec .= "\n2 ASSO @".$parents["HUSB"]."@"; //\n3 RELA ".$factarray[$fact];
-								if ($parents["WIFE"]) $factrec .= "\n2 ASSO @".$parents["WIFE"]."@"; //\n3 RELA ".$factarray[$fact];
-							}
+
+		$associates=array_merge(
+			fetch_linked_indi($this->getXref(), 'ASSO', $this->ged_id),
+			fetch_linked_fam ($this->getXref(), 'ASSO', $this->ged_id)
+		);
+		foreach($associates as $associate) {
+			foreach($associate->getFacts() as $event) {
+				$srec = $event->getGedComRecord();
+				$arec = get_sub_record(2, "2 ASSO @".$this->getXref()."@", $srec);
+				if ($arec) {
+					$fact = $event->getTag();
+					$label = $event->getLabel();
+					$sdate = get_sub_record(2, "2 DATE", $srec);
+					// relationship ?
+					$rrec = get_sub_record(3, "3 RELA", $arec);
+					$rela = trim(substr($rrec, 7));
+					if (empty($rela)) $rela = "ASSO";
+					// add an event record
+					$factrec = "1 EVEN\n2 TYPE ".$label."<br/>[ <span class=\"details_label\">";
+					if (isset($pgv_lang[strtolower($rela)])) $factrec .= $pgv_lang[strtolower($rela)]."</span> ]";
+					else if (isset($factarray[$rela])) $factrec .= $factarray[$rela]."</span> ]";
+					$factrec.="\n".$sdate."\n".get_sub_record(2, '2 PLAC', $srec);
+					if (!$event->canShow()) $factrec .= "\n2 RESN privacy";
+					if ($associate->getType()=='FAM') {
+						$famrec = find_family_record($associate->getXref());
+						if ($famrec) {
+							$parents = find_parents_in_record($famrec);
+							if ($parents["HUSB"]) $factrec .= "\n2 ASSO @".$parents["HUSB"]."@"; //\n3 RELA ".$factarray[$fact];
+							if ($parents["WIFE"]) $factrec .= "\n2 ASSO @".$parents["WIFE"]."@"; //\n3 RELA ".$factarray[$fact];
 						}
-						else if ($fact=='BIRT') {
-							$sex = Person::getInstance($rid)->getSex();
-							if ($sex == "M") $rela_b="twin_brother";
-							else if ($sex == "F") $rela_b="twin_sister";
-							else $rela_b="twin";
-							$factrec .= "\n2 ASSO @".$rid."@\n3 RELA ".$rela_b;
-						}
-						else if ($fact=='CHR') {
-							$sex = Person::getInstance($rid)->getSex();
-							if ($sex == "M") $rela_chr="godson";
-							else if ($sex == "F") $rela_chr="goddaughter";
-							else $rela_chr="godchild";
-							$factrec .= "\n2 ASSO @".$rid."@\n3 RELA ".$rela_chr;
-						}
-						else $factrec .= "\n2 ASSO @".$rid."@\n3 RELA ".$fact;
-						//$factrec .= "\n3 NOTE ".$rela;
-						$factrec .= "\n2 ASSO @".$person->getXref()."@\n3 RELA *".$rela;
-						// check if this fact already exists in the list
-						$found = false;
-						if ($sdate) foreach($this->indifacts as $k=>$v) {
-							if (strpos($v->getGedComRecord(), trim($sdate))
-							&& strpos($v->getGedComRecord(), "2 ASSO @".$person->getXref()."@")) {
-								$found = true;
-								break;
-							}
-						}
-						if (!$found) $this->indifacts[] = new Event($factrec, 0);
 					}
+					else if ($fact=='BIRT') {
+						$sex = $associate->getSex();
+						if ($sex == "M") $rela_b="twin_brother";
+						else if ($sex == "F") $rela_b="twin_sister";
+						else $rela_b="twin";
+						$factrec .= "\n2 ASSO @".$associate->getXref()."@\n3 RELA ".$rela_b;
+					}
+					else if ($fact=='CHR') {
+						$sex = $associate->getSex();
+						if ($sex == "M") $rela_chr="godson";
+						else if ($sex == "F") $rela_chr="goddaughter";
+						else $rela_chr="godchild";
+						$factrec .= "\n2 ASSO @".$associate->getXref()."@\n3 RELA ".$rela_chr;
+					}
+					else $factrec .= "\n2 ASSO @".$associate->getXref()."@\n3 RELA ".$fact;
+					//$factrec .= "\n3 NOTE ".$rela;
+					$factrec .= "\n2 ASSO @".$this->getXref()."@\n3 RELA *".$rela;
+					// check if this fact already exists in the list
+					$found = false;
+					if ($sdate) foreach($this->indifacts as $k=>$v) {
+						if (strpos($v->getGedComRecord(), trim($sdate))
+						&& strpos($v->getGedComRecord(), "2 ASSO @".$this->getXref()."@")) {
+							$found = true;
+							break;
+						}
+					}
+					if (!$found) $this->indifacts[] = new Event($factrec, 0);
 				}
 			}
 		}
 	}
+
 	/**
 	 * Merge the facts from another Person object into this object
 	 * for generating a diff view
