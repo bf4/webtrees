@@ -258,55 +258,45 @@ print_header($pgv_lang["manage_media"]);
 ?>
 <script language="JavaScript" type="text/javascript">
 <!--
-	function pasteid(id) {
-		window.opener.paste_id(id);
-		window.close();
-	}
-	function openImage(filename, width, height) {
-		height=height+50;
-		screenW = screen.width;
-		screenH = screen.height;
-		if (width>screenW-100) width=screenW-100;
-		if (height>screenH-110) height=screenH-120;
-		if ((filename.search(/\.jpe?g$/gi)!=-1)||(filename.search(/\.gif$/gi)!=-1)||(filename.search(/\.png$/gi)!=-1)||(filename.search(/\.bmp$/gi)!=-1)) window.open('imageview.php?filename='+filename,'_blank','top=50,left=50,height='+height+',width='+width+',scrollbars=1,resizable=1');
-		else window.open(unescape(filename),'_blank','top=50,left=50,height='+height+',width='+width+',scrollbars=1,resizable=1');
-		return false;
-	}
+function pasteid(id) {
+	window.opener.paste_id(id);
+	window.close();
+}
 
-	function ilinkitem(mediaid, type) {
-		window.open('inverselink.php?mediaid='+mediaid+'&linkto='+type+'&'+sessionname+'='+sessionid, '_blank', 'top=50,left=50,width=400,height=300,resizable=1,scrollbars=1');
-		return false;
-	}
+function ilinkitem(mediaid, type) {
+	window.open('inverselink.php?mediaid='+mediaid+'&linkto='+type+'&'+sessionname+'='+sessionid, '_blank', 'top=50,left=50,width=400,height=300,resizable=1,scrollbars=1');
+	return false;
+}
 
-	function checknames(frm) {
-		if (document.managemedia.subclick) button = document.managemedia.subclick.value;
-		if (button == "all") {
-			frm.filter.value = "";
-			return true;
-		}
-		else if (frm.filter.value.length < 2) {
-			alert("<?php print $pgv_lang["search_more_chars"]; ?>");
-			frm.filter.focus();
-			return false;
-		}
+function checknames(frm) {
+	if (document.managemedia.subclick) button = document.managemedia.subclick.value;
+	if (button == "all") {
+		frm.filter.value = "";
 		return true;
 	}
-
-	function checkpath(folder) {
-		value = folder.value;
-		if (value.substr(value.length-1,1) == "/") value = value.substr(0, value.length-1);
-		if (value.substr(0,1) == "/") value = value.substr(1, value.length-1);
-		result = value.split("/");
-		if (result.length > <?php print $MEDIA_DIRECTORY_LEVELS; ?>) {
-			alert('<?php print_text("max_media_depth"); ?>');
-			folder.focus();
-			return false;
-		}
+	else if (frm.filter.value.length < 2) {
+		alert("<?php print $pgv_lang["search_more_chars"]; ?>");
+		frm.filter.focus();
+		return false;
 	}
+	return true;
+}
 
-	function showchanges() {
-		window.location = '<?php print $SCRIPT_NAME."?show_changes=yes&directory=".$directory."&level=".$level."&filter=".$filter."&subclick=".$subclick; ?>';
+function checkpath(folder) {
+	value = folder.value;
+	if (value.substr(value.length-1,1) == "/") value = value.substr(0, value.length-1);
+	if (value.substr(0,1) == "/") value = value.substr(1, value.length-1);
+	result = value.split("/");
+	if (result.length > <?php print $MEDIA_DIRECTORY_LEVELS; ?>) {
+		alert('<?php print_text("max_media_depth"); ?>');
+		folder.focus();
+		return false;
 	}
+}
+
+function showchanges() {
+	window.location = '<?php print $SCRIPT_NAME."?show_changes=yes&directory=".$directory."&level=".$level."&filter=".$filter."&subclick=".$subclick; ?>';
+}
 
 //-->
 </script>
@@ -539,131 +529,6 @@ if (check_media_structure()) {
 		$action="filter";
 		print "</td></tr></table>";
 	}
-
-
-/**
- * This action moves a file one directory level at a time
- *
- * Note: this will generally not work with default install.
- * files and dirs need to be writable by the php/web user,
- *
- * Thumbnails are moved as well forcing a consistent directory structure
- * Directory access checks are done during menu creation so directories
- * deeper than the configured level will not be shown even if they exist.
- *
- * Media Firewall Note: not sure how this function gets called,
- * not yet modified to work with the Media Firewall
- *
- * @name $action->moveto
- */
-
-/*
-	if ($action=="moveto") {
-		print "<table class=\"list_table $TEXT_DIRECTION width100\">";
-		print "<tr><td class=\"messagebox wrap\">";
-		// just in case someone fashions the right url
-
-		//-- check if the file is used in more than one gedcom
-		//-- do not allow it to be moved if it is
-		$myFile = str_replace($MEDIA_DIRECTORY, "", $directory.$movefile);
-		$sql = "SELECT * FROM ".$TBLPREFIX."media WHERE m_file LIKE '%".$DBCONN->escapeSimple($myFile)."'";
-		$res = dbquery($sql);
-		$onegedcom = true;
-		while($row=$res->fetchRow(DB_FETCHMODE_ASSOC)) {
-			if ($row['m_gedfile']!=PGV_GED_ID) $onegedcom = false;
-		}
-		$res->free();
-		if (!$onegedcom) {
-			print "<span class=\"error\">".$pgv_lang["multiple_gedcoms"]."<br /><br /><b>".$pgv_lang["media_file_not_moved"]."</b></span><br />";
-		}
-
-		while (PGV_USER_IS_ADMIN && $fileaccess && $onegedcom) {
-			$exists = false;
-
-			// file details
-			$fileName = $movefile;
-			$moveFromDir = $directory;
-			$moveToDir = $moveFromDir.$movetodir."/";
-			if ($movetodir=="..") {
-				$moveToDir = "";
-				$folders = explode("/", $moveFromDir);
-				for($i=0; $i<count($folders)-2; $i++) {
-					$moveToDir .= $folders[$i]."/";
-				}
-			}
-
-			// and the thumbnail
-			$moveFromThumbDir = str_replace("$MEDIA_DIRECTORY",$MEDIA_DIRECTORY."thumbs/",$moveFromDir);
-			$moveToThumbDir = str_replace("$MEDIA_DIRECTORY",$MEDIA_DIRECTORY."thumbs/",$moveToDir);
-
-			// Check if the files do not yet exist on the new location
-			$moveFileFrom = $moveFromDir.$fileName;
-			$moveFileTo = $moveToDir.$fileName;
-			$moveThumbFrom = $moveFromThumbDir.$fileName;
-			$moveThumbTo = $moveToThumbDir.$fileName;
-
-			$exists = false;
-			if (file_exists(filename_decode($moveFileTo))) {
-				print "<span class=\"error\">".$pgv_lang["media_exists"]."</span><br />";
-				AddToLog($moveFileTo." ".$pgv_lang["media_exists"]);
-				$exists = true;
-			}
-			if (file_exists(filename_decode($moveThumbTo))) {
-				print "<span class=\"error\">".$pgv_lang["media_thumb_exists"]."</span><br />";
-				AddToLog($moveThumbTo." ".$pgv_lang["media_thumb_exists"]);
-				$exists = true;
-			}
-
-			if (!$exists) {
-				// Moving the thumbnail file if it exists
-				// no error if admin chooses not to have a thumbnail file
-				$thumbOK = true;
-				if (file_exists(filename_decode($moveThumbFrom))) {
-					if (is_dir(filename_decode($moveToThumbDir))) {
-						$thumbOK = @rename(filename_decode($moveThumbFrom), filename_decode($moveThumbTo));
-					} else {
-						if (mkdir(filename_decode($moveToThumbDir),0777)) {
-							$thumbOK = @rename(filename_decode($moveThumbFrom), filename_decode($moveThumbTo));
-						} else {
-							// abort the whole operation to keep the directory structure valid
-							print $moveToThumbDir." ".$pgv_lang["no_thumb_dir"]."<br />";
-							AddToLog($moveToThumbDir." ".$pgv_lang["no_thumb_dir"]);
-							break;
-						}
-					}
-				}
-
-				// no major error from thumbnail so move the file
-				$fileOK = @rename(filename_decode($moveFileFrom), filename_decode($moveFileTo));
-
-				if ($thumbOK && $fileOK) {
-					print $pgv_lang["move_file_success"]."<br />";
-					AddToLog($moveFileTo." ".$pgv_lang["move_file_success"]);
-				} else break;
-
-				// also update the gedcom record
-				if (!empty($_REQUEST["xref"])) {
-					//-- we don't need to update the database, the database will be
-					//-- updated automatically when the changes are accepted
-					if (isset($pgv_changes[$_REQUEST['xref']."_".$GEDCOM])) $objerec = find_updated_record($_REQUEST['xref']);
-					else $objerec = find_media_record($_REQUEST['xref']);
-					if (!empty($objerec)) {
-						$objerec = preg_replace("/ FILE ([^\r\n]*)/", " FILE ".$moveFileTo, $objerec);
-						replace_gedrec($_REQUEST['xref'], $objerec);
-
-						// This can't be undone through the normal "reject change",
-						// so we'll auto-accept all changes to this media object
-						// regardless of config settings
-						accept_changes($_REQUEST['xref']."_".$GEDCOM);
-					}
-				}
-			}
-			break;		// Everything is OK
-		}
-		$action = "filter";
-		print "</td></tr></table>";
-	}
-*/
 
 /**
  * This action generates a thumbnail for the file
