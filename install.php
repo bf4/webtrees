@@ -54,13 +54,14 @@ if (!empty($PGV_DB_CONNECTED) && adminUserExists()) {
 loadLangFile("pgv_confighelp, pgv_help");
 
 function install_checkdb() {
-	global $DBCONN,$DBHOST,$DBNAME,$DBPASS,$DBPERSIST,$DBPORT,$DBTYPE,$DBUSER,$TBLPREFIX;
+	global $DBCONN,$DBHOST,$DBNAME,$DBPASS,$DBPERSIST,$DBPORT,$DBTYPE,$DBUSER,$DB_UTF8_COLLATION,$TBLPREFIX;
 	global $pgv_lang;
 	if (isset($_SESSION['install_config']['DBHOST'])) {
 		$DBHOST = $_SESSION['install_config']['DBHOST'];
 		$DBNAME =$_SESSION['install_config']['DBNAME'];
 		$DBPASS =	$_SESSION['install_config']['DBPASS'];
 		$DBPERSIST = $_SESSION['install_config']['DBPERSIST'];
+		$DB_UTF8_COLLATION = $_SESSION['install_config']['DB_UTF8_COLLATION'];
 		$DBPORT = $_SESSION['install_config']['DBPORT'];
 		$DBTYPE = $_SESSION['install_config']['DBTYPE'];
 		$DBUSER = $_SESSION['install_config']['DBUSER'];
@@ -189,7 +190,9 @@ switch($step) {
 		if (isset($_POST["NEW_DBPASS"]))
 			$_SESSION['install_config']['DBPASS'] = $_POST["NEW_DBPASS"];
 		if (isset($_POST["NEW_DBPERSIST"]))
-			$_SESSION['install_config']['DBPERSIST'] = $_POST["NEW_DBPERSIST"]=="yes"?true:false;
+			$_SESSION['install_config']['DBPERSIST'] = $_POST["NEW_DBPERSIST"]=="yes";
+		if (isset($_POST["NEW_DB_UTF8_COLLATION"]))
+			$_SESSION['install_config']['DB_UTF8_COLLATION'] = $_POST["NEW_DB_UTF8_COLLATION"]=="yes";
 		if (isset($_POST["NEW_DBPORT"]))
 			$_SESSION['install_config']['DBPORT'] = $_POST["NEW_DBPORT"];
 		if (isset($_POST["NEW_DBTYPE"]))
@@ -641,7 +644,7 @@ function checkEnvironment() {
 }
 
 function printDBForm() {
-	global $DBHOST, $DBNAME, $DBPASS, $DBPERSIST, $DBPORT, $DBTYPE, $DBUSER, $TBLPREFIX;
+	global $DBHOST, $DBNAME, $DBPASS, $DBPERSIST, $DBPORT, $DBTYPE, $DBUSER, $DB_UTF8_COLLATION, $TBLPREFIX;
 	global $pgv_lang;
 	$i=1;
 	$has_mysql = extension_loaded("mysql");
@@ -653,6 +656,7 @@ function printDBForm() {
 	if (isset($_SESSION['install_config']['DBNAME'])) $DBNAME =$_SESSION['install_config']['DBNAME'];
 	if (isset($_SESSION['install_config']['DBPASS'])) $DBPASS =	$_SESSION['install_config']['DBPASS'];
 	if (isset($_SESSION['install_config']['DBPERSIST'])) $DBPERSIST = $_SESSION['install_config']['DBPERSIST'];
+	if (isset($_SESSION['install_config']['DB_UTF8_COLLATION'])) $DB_UTF8_COLLATION = $_SESSION['install_config']['DB_UTF8_COLLATION'];
 	if (isset($_SESSION['install_config']['DBPORT'])) $DBPORT = $_SESSION['install_config']['DBPORT'];
 	if (isset($_SESSION['install_config']['DBTYPE'])) $DBTYPE = $_SESSION['install_config']['DBTYPE'];
 	if (isset($_SESSION['install_config']['DBUSER'])) $DBUSER = $_SESSION['install_config']['DBUSER'];
@@ -697,6 +701,15 @@ function printDBForm() {
 			<select name="NEW_DBPERSIST" tabindex="<?php $i++; print $i?>" onfocus="getHelp('DBPERSIST_help');">
 				<option value="yes" <?php if ($DBPERSIST) print "selected=\"selected\""; ?>><?php print $pgv_lang["yes"];?></option>
 				<option value="no" <?php if (!$DBPERSIST) print "selected=\"selected\""; ?>><?php print $pgv_lang["no"];?></option>
+			</select>
+		</td>
+	</tr>
+	<tr>
+		<td class="descriptionbox wrap width30"><?php print_help_link("DB_UTF8_COLLATION_help", "qm", "DB_UTF8_COLLATION"); print $pgv_lang["DB_UTF8_COLLATION"];?></td>
+		<td class="optionbox">
+			<select name="NEW_DB_UTF8_COLLATION" tabindex="<?php $i++; print $i?>" onfocus="getHelp('DB_UTF8_COLLATION_help');">
+				<option value="yes" <?php if ($DB_UTF8_COLLATION) print "selected=\"selected\""; ?>><?php print $pgv_lang["yes"];?></option>
+				<option value="no" <?php if (!$DB_UTF8_COLLATION) print "selected=\"selected\""; ?>><?php print $pgv_lang["no"];?></option>
 			</select>
 		</td>
 	</tr>

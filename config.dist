@@ -41,6 +41,7 @@ $DBUSER = "root";									//-- MySQL database User Name
 $DBPASS = "";									//-- MySQL database User Password
 $DBNAME = "phpgedview";							//-- The MySQL database name where you want PHPGedView to build its tables
 $DBPERSIST = false;								//-- Use persistent database connections
+$DB_UTF8_COLLATION = false;             //-- Use the database to sort/collation UTF8 text
 $TBLPREFIX = "pgv_";							//-- prefix to include on table names
 $INDEX_DIRECTORY = "./index/";					//-- Readable and Writeable Directory to store index files (include the trailing "/")
 $AUTHENTICATION_MODULE = "authentication.php";	//-- File that contains authentication functions

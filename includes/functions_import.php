@@ -1006,7 +1006,7 @@ function create_individuals_table() {
 		" i_letter   VARCHAR(5)             NULL,".
 		" i_surname  VARCHAR(100)           NULL,".
 		" PRIMARY KEY (i_id, i_file)".
-		")"
+		") ".PGV_DB_UTF8_TABLE
 	);
 	dbquery("CREATE INDEX {$TBLPREFIX}indi_id     ON {$TBLPREFIX}individuals (i_id     )");
 	dbquery("CREATE INDEX {$TBLPREFIX}indi_name   ON {$TBLPREFIX}individuals (i_name   )");
@@ -1031,7 +1031,7 @@ function create_families_table() {
 		" f_gedcom ".PGV_DB_LONGTEXT_TYPE." NULL,".
 		" f_numchil  INT                    NULL,".
 		" PRIMARY KEY (f_id, f_file)".
-		")"
+		") ".PGV_DB_UTF8_TABLE
 	);
 	dbquery("CREATE INDEX {$TBLPREFIX}fam_id   ON {$TBLPREFIX}families (f_id  )");
 	dbquery("CREATE INDEX {$TBLPREFIX}fam_file ON {$TBLPREFIX}families (f_file)");
@@ -1052,7 +1052,7 @@ function create_sources_table() {
 		" s_name     VARCHAR(255)           NULL,".
 		" s_gedcom ".PGV_DB_LONGTEXT_TYPE." NULL,".
 		" PRIMARY KEY (s_id, s_file)".
-		")"
+		") ".PGV_DB_UTF8_TABLE
 	);
 	dbquery("CREATE INDEX {$TBLPREFIX}sour_id   ON {$TBLPREFIX}sources (s_id  )");
 	dbquery("CREATE INDEX {$TBLPREFIX}sour_name ON {$TBLPREFIX}sources (s_name)");
@@ -1072,7 +1072,7 @@ function create_other_table() {
 	 	" o_type   ".PGV_DB_COL_TAG."       NULL,".
 		" o_gedcom ".PGV_DB_LONGTEXT_TYPE." NULL,".
 		" PRIMARY KEY (o_id, o_file)".
-		")"
+		") ".PGV_DB_UTF8_TABLE
 	);
 	dbquery("CREATE INDEX {$TBLPREFIX}other_id   ON {$TBLPREFIX}other (o_id  )");
 	dbquery("CREATE INDEX {$TBLPREFIX}other_file ON {$TBLPREFIX}other (o_file)");
@@ -1090,7 +1090,7 @@ function create_placelinks_table() {
 		" pl_gid  ".PGV_DB_COL_XREF." NOT NULL,".
 		" pl_file ".PGV_DB_COL_FILE." NOT NULL,".
 		" PRIMARY KEY (pl_p_id, pl_gid, pl_file)".
-		")"
+		") ".PGV_DB_UTF8_TABLE
 	);
 	dbquery("CREATE INDEX {$TBLPREFIX}plindex_place ON {$TBLPREFIX}placelinks (pl_p_id)");
 	dbquery("CREATE INDEX {$TBLPREFIX}plindex_gid   ON {$TBLPREFIX}placelinks (pl_gid )");
@@ -1113,7 +1113,7 @@ function create_places_table() {
 		" p_std_soundex TEXT             NULL,".
 		" p_dm_soundex  TEXT             NULL,".
 		" PRIMARY KEY (p_id)".
-		")"
+		") ".PGV_DB_UTF8_TABLE
 	);
 	dbquery("CREATE INDEX {$TBLPREFIX}place_place  ON {$TBLPREFIX}places (p_place    )");
 	dbquery("CREATE INDEX {$TBLPREFIX}place_level  ON {$TBLPREFIX}places (p_level    )");
@@ -1135,7 +1135,7 @@ function create_names_table() {
 		" n_letter  VARCHAR(5)        NULL,".
 		" n_surname VARCHAR(100)      NULL,".
 		" n_type    VARCHAR(10)       NULL".
-		")"
+		") ".PGV_DB_UTF8_TABLE
 	);
 	dbquery("CREATE INDEX {$TBLPREFIX}name_gid    ON {$TBLPREFIX}names (n_gid    )");
 	dbquery("CREATE INDEX {$TBLPREFIX}name_name   ON {$TBLPREFIX}names (n_name   )");
@@ -1156,7 +1156,7 @@ function create_remotelinks_table() {
 		" r_gid  ".PGV_DB_COL_XREF." NOT NULL,".
 		" r_linkid VARCHAR(255)      NULL,".
 		" r_file ".PGV_DB_COL_FILE." NOT NULL".
-		")"
+		") ".PGV_DB_UTF8_TABLE
 	);
 	dbquery("CREATE INDEX {$TBLPREFIX}r_gid     ON {$TBLPREFIX}remotelinks (r_gid   )");
 	dbquery("CREATE INDEX {$TBLPREFIX}r_link_id ON {$TBLPREFIX}remotelinks (r_linkid)");
@@ -1178,7 +1178,7 @@ function create_soundex_table() {
 		" sx_fn_dm_code  TEXT              NULL,".
 		" sx_ln_std_code TEXT              NULL,".
 		" sx_ln_dm_code  TEXT              NULL".
-		")"
+		") ".PGV_DB_UTF8_TABLE
 	);
 	dbquery("CREATE INDEX {$TBLPREFIX}sx_i_id_ix ON {$TBLPREFIX}soundex (sx_i_id)");
 	dbquery("CREATE INDEX {$TBLPREFIX}sx_file_ix ON {$TBLPREFIX}soundex (sx_file)");
@@ -1200,7 +1200,7 @@ function create_media_table() {
 		" m_gedfile ".PGV_DB_COL_FILE."      NULL,".
 		" m_gedrec  ".PGV_DB_LONGTEXT_TYPE." NULL,".
 		" PRIMARY KEY (m_id)".
-		")"
+		") ".PGV_DB_UTF8_TABLE
 	);
 	dbquery("CREATE INDEX {$TBLPREFIX}m_media      ON {$TBLPREFIX}media (m_media           )");
 	dbquery("CREATE INDEX {$TBLPREFIX}m_media_file ON {$TBLPREFIX}media (m_media, m_gedfile)");
@@ -1225,7 +1225,7 @@ function create_dates_table() {
 		" d_gid      ".PGV_DB_COL_XREF." NULL,".
 		" d_file     ".PGV_DB_COL_FILE." NULL,".
 		" d_type       VARCHAR(13)       NULL".
-		" )"
+		") ".PGV_DB_UTF8_TABLE
 	);
 	dbquery("CREATE INDEX {$TBLPREFIX}date_day        ON {$TBLPREFIX}dates (d_day        )") ;
 	dbquery("CREATE INDEX {$TBLPREFIX}date_month      ON {$TBLPREFIX}dates (d_month      )");
@@ -1256,7 +1256,7 @@ function create_media_mapping_table() {
 		" mm_gedfile ".PGV_DB_COL_FILE."      NULL,".
 		" mm_gedrec  ".PGV_DB_LONGTEXT_TYPE." NULL,".
 		" PRIMARY KEY (mm_id)".
-		")"
+		") ".PGV_DB_UTF8_TABLE
 	);
 	dbquery("CREATE INDEX {$TBLPREFIX}mm_media_id      ON {$TBLPREFIX}media_mapping (mm_media, mm_gedfile)");
 	dbquery("CREATE INDEX {$TBLPREFIX}mm_media_gid     ON {$TBLPREFIX}media_mapping (mm_gid, mm_gedfile  )");
@@ -1275,7 +1275,7 @@ function create_nextid_table() {
 		" ni_type    ".PGV_DB_COL_TAG."  NOT NULL,".
 		" ni_gedfile ".PGV_DB_COL_FILE." NOT NULL,".
 		" PRIMARY KEY (ni_type, ni_gedfile)".
-		")"
+		") ".PGV_DB_UTF8_TABLE
 	);
 }
 /**

@@ -62,7 +62,8 @@ $language_settings['catalan']=array(
 'ALPHABET_upper'=>'AÀBCÇDEÈÉFGHIÍÏJKLMNÑOÒÓPQRSTUÚÜVWXYZ',
 'ALPHABET_lower'=>'aàbcçdeèéfghiíïjklmnñopqrstuúüvwxyz',
 'MULTI_LETTER_ALPHABET'=>'l·l',
-'DICTIONARY_SORT'=>true
+'DICTIONARY_SORT'=>true,
+'COLLATION'=>'utf8_spanish_ci'
 );
 
 //-- settings for czech
@@ -90,7 +91,8 @@ $language_settings['czech']=array(
 'ALPHABET_upper'=>'AÁBCČDĎEĚÉFGHIÍJKLMNŇOÓPQRŘSŠTŤUÚŮVWXYÝZŽ',
 'ALPHABET_lower'=>'aábcčdďeěéfghiíjklmnňoópqrřsštťuúůvwxyýzž',
 'MULTI_LETTER_ALPHABET'=>'ch',
-'DICTIONARY_SORT'=>true
+'DICTIONARY_SORT'=>true,
+'COLLATION'=>'utf8_czech_ci'
 );
 
 //-- settings for danish
@@ -118,7 +120,8 @@ $language_settings['danish']=array(
 'ALPHABET_upper'=>'ABCDEFGHIJKLMNOPQRSTUVWXYZÆØÅ',
 'ALPHABET_lower'=>'abcdefghijklmnopqrstuvwxyzæøå',
 'MULTI_LETTER_ALPHABET'=>'',
-'DICTIONARY_SORT'=>false
+'DICTIONARY_SORT'=>false,
+'COLLATION'=>'utf8_danish_ci'
 );
 
 //-- settings for german
@@ -146,7 +149,8 @@ $language_settings['german']=array(
 'ALPHABET_upper'=>'AÄBCDEFGHIJKLMNOÖPQRSßTUÜVWXYZ',
 'ALPHABET_lower'=>'aäbcdefghijklmnoöpqrsßtuüvwxyz',
 'MULTI_LETTER_ALPHABET'=>'',
-'DICTIONARY_SORT'=>true
+'DICTIONARY_SORT'=>true,
+'COLLATION'=>'utf8_unicode_ci'
 );
 
 //-- settings for estonian
@@ -174,7 +178,8 @@ $language_settings['estonian']=array(
 'ALPHABET_upper'=>'ABCDEFGHIJKLMNOPQRSŠZŽTUVWÕÄÖÜXY',
 'ALPHABET_lower'=>'abcdefghijklmnopqrsšzžtuvwõäöüxy',
 'MULTI_LETTER_ALPHABET'=>'',
-'DICTIONARY_SORT'=>false
+'DICTIONARY_SORT'=>false,
+'COLLATION'=>'utf8_estonian_ci'
 );
 
 //-- settings for english
@@ -202,7 +207,8 @@ $language_settings['english']=array(
 'ALPHABET_upper'=>'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
 'ALPHABET_lower'=>'abcdefghijklmnopqrstuvwxyz',
 'MULTI_LETTER_ALPHABET'=>'',
-'DICTIONARY_SORT'=>true
+'DICTIONARY_SORT'=>true,
+'COLLATION'=>'utf8_unicode_ci'
 );
 
 //-- settings for spanish
@@ -230,7 +236,8 @@ $language_settings['spanish']=array(
 'ALPHABET_upper'=>'ABCDEFGHIJKLMNÑOPQRSTUVWXYZ',
 'ALPHABET_lower'=>'abcdefghijklmnñopqrstuvwxyz',
 'MULTI_LETTER_ALPHABET'=>'',
-'DICTIONARY_SORT'=>true
+'DICTIONARY_SORT'=>true,
+'COLLATION'=>'utf8_spanish_ci'
 );
 
 //-- settings for spanish-ar
@@ -258,7 +265,8 @@ $language_settings['spanish-ar']=array(
 'ALPHABET_upper'=>'ABCDEFGHIJKLMNÑOPQRSTUVWXYZ',
 'ALPHABET_lower'=>'abcdefghijklmnñopqrstuvwxyz',
 'MULTI_LETTER_ALPHABET'=>'',
-'DICTIONARY_SORT'=>true
+'DICTIONARY_SORT'=>true,
+'COLLATION'=>'utf8_spanish_ci'
 );
 
 //-- settings for french
@@ -286,7 +294,8 @@ $language_settings['french']=array(
 'ALPHABET_upper'=>'AÀÂÆBCÇDEÉÈËÊFGHIÏÎJKLMNOÔŒPQRSTUÙÛVWXYZ',
 'ALPHABET_lower'=>'aàâæbcçdeéèëêfghiïîjklmnoôœpqrstuùûvwxyz',
 'MULTI_LETTER_ALPHABET'=>'',
-'DICTIONARY_SORT'=>true
+'DICTIONARY_SORT'=>true,
+'COLLATION'=>'utf8_unicode_ci'
 );
 
 //-- settings for italian
@@ -314,7 +323,8 @@ $language_settings['italian']=array(
 'ALPHABET_upper'=>'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
 'ALPHABET_lower'=>'abcdefghijklmnopqrstuvwxyz',
 'MULTI_LETTER_ALPHABET'=>'',
-'DICTIONARY_SORT'=>true
+'DICTIONARY_SORT'=>true,
+'COLLATION'=>'utf8_unicode_ci'
 );
 
 //-- settings for hungarian
@@ -342,7 +352,8 @@ $language_settings['hungarian']=array(
 'ALPHABET_upper'=>'AÁBCDEÉFGHIÍJKLMNOÓÖŐPQRSTUÚÜŰVWXYZ',
 'ALPHABET_lower'=>'aábcdeéfghiíjklmnoóöőpqrstuúüűvwxyz',
 'MULTI_LETTER_ALPHABET'=>'cs;ccs;dz;ddz;dzs;ddzs;gy;ggy;ly;lly;ny;nny;sz;ssz;ty;tty;zs;zzs',
-'DICTIONARY_SORT'=>true
+'DICTIONARY_SORT'=>true,
+'COLLATION'=>'utf8_hungarian_ci'
 );
 
 //-- settings for lithuanian
@@ -370,7 +381,8 @@ $language_settings['lithuanian']=array(
 'ALPHABET_upper'=>'AĄBCČDEĘĖFGHIYĮJKLMNOPRSŠTUŲŪVZŽ',
 'ALPHABET_lower'=>'aąbcčdeęėfghiyįjklmnoprsštuųūvzž',
 'MULTI_LETTER_ALPHABET'=>'',
-'DICTIONARY_SORT'=>true
+'DICTIONARY_SORT'=>true,
+'COLLATION'=>'utf8_lithuanian_ci'
 );
 
 //-- settings for dutch
@@ -398,7 +410,8 @@ $language_settings['dutch']=array(
 'ALPHABET_upper'=>'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
 'ALPHABET_lower'=>'abcdefghijklmnopqrstuvwxyz',
 'MULTI_LETTER_ALPHABET'=>'',
-'DICTIONARY_SORT'=>false
+'DICTIONARY_SORT'=>false,
+'COLLATION'=>'utf8_unicode_ci'
 );
 
 //-- settings for norwegian
@@ -426,7 +439,8 @@ $language_settings['norwegian']=array(
 'ALPHABET_upper'=>'ABCDEFGHIJKLMNOPQRSTUVWXYZÅØÆ',
 'ALPHABET_lower'=>'abcdefghijklmnopqrstuvwxyzåøæ',
 'MULTI_LETTER_ALPHABET'=>'',
-'DICTIONARY_SORT'=>false
+'DICTIONARY_SORT'=>false,
+'COLLATION'=>'utf8_unicode_ci'
 );
 
 //-- settings for polish
@@ -454,7 +468,8 @@ $language_settings['polish']=array(
 'ALPHABET_upper'=>'AĄBCĆDEĘFGHIJKLŁMNŃOÓPQRSŚTUVWXYZŹŻ',
 'ALPHABET_lower'=>'aąbcćdeęfghijklłmnńoópqrsśtuvwxyzźż',
 'MULTI_LETTER_ALPHABET'=>'',
-'DICTIONARY_SORT'=>false
+'DICTIONARY_SORT'=>false,
+'COLLATION'=>'utf8_polish_ci'
 );
 
 //-- settings for portuguese
@@ -482,7 +497,8 @@ $language_settings['portuguese']=array(
 'ALPHABET_upper'=>'AÁÂÃBCÇDEÉÊFGHIÍJKLMNÑOÓÔÕPQRSTUÚÜVWXYZ',
 'ALPHABET_lower'=>'aáâãbcçdeéêfghiíjklmnñoóôõpqrstuúüvwxyz',
 'MULTI_LETTER_ALPHABET'=>'',
-'DICTIONARY_SORT'=>true
+'DICTIONARY_SORT'=>true,
+'COLLATION'=>'utf8_spanish_ci'
 );
 
 //-- settings for slovak
@@ -510,7 +526,8 @@ $language_settings['slovak']=array(
 'ALPHABET_upper'=>'AÁÄBCČDĎEÉFGHCHIÍJKLĽĹMNŇOÓÔPQRŔSŠTŤUÚVWXYÝZŽ',
 'ALPHABET_lower'=>'aáäbcčdďeéfghchiíjklľĺmnňoóôpqrŕsštťuúvwxyýzž',
 'MULTI_LETTER_ALPHABET'=>'dz,ch',
-'DICTIONARY_SORT'=>true
+'DICTIONARY_SORT'=>true,
+'COLLATION'=>'utf8_slovak_ci'
 );
 
 //-- settings for romanian
@@ -538,7 +555,8 @@ $language_settings['romanian']=array(
 'ALPHABET_upper'=>'AĂÂBCDEFGHIÎJKLMNOPQRSŞTŢUVWXYZ',
 'ALPHABET_lower'=>'aăâbcdefghiîjklmnopqrsştţuvwxyz',
 'MULTI_LETTER_ALPHABET'=>'',
-'DICTIONARY_SORT'=>true
+'DICTIONARY_SORT'=>true,
+'COLLATION'=>'utf8_romanian_ci'
 );
 
 //-- settings for finnish
@@ -566,7 +584,8 @@ $language_settings['finnish']=array(
 'ALPHABET_upper'=>'ABCDEFGHIJKLMNOPQRSTUVWXYZÅÄÖ',
 'ALPHABET_lower'=>'abcdefghijklmnopqrstuvwxyzåäö',
 'MULTI_LETTER_ALPHABET'=>'',
-'DICTIONARY_SORT'=>false
+'DICTIONARY_SORT'=>false,
+'COLLATION'=>'utf8_unicode_ci'
 );
 
 //-- settings for swedish
@@ -594,7 +613,8 @@ $language_settings['swedish']=array(
 'ALPHABET_upper'=>'ABCDEFGHIJKLMNOPQRSTUVWXYZÅÄÖ',
 'ALPHABET_lower'=>'abcdefghijklmnopqrstuvwxyzåäö',
 'MULTI_LETTER_ALPHABET'=>'',
-'DICTIONARY_SORT'=>false
+'DICTIONARY_SORT'=>false,
+'COLLATION'=>'utf8_swedish_ci'
 );
 
 //-- settings for turkish
@@ -622,7 +642,8 @@ $language_settings['turkish']=array(
 'ALPHABET_upper'=>'ABCÇDEFGĞHIİJKLMNOÖPRSŞTUÜVYZ',
 'ALPHABET_lower'=>'abcçdefgğhıijklmnoöprsştuüvyz',
 'MULTI_LETTER_ALPHABET'=>'',
-'DICTIONARY_SORT'=>true
+'DICTIONARY_SORT'=>true,
+'COLLATION'=>'utf8_turkish_ci'
 );
 
 //-- settings for vietnamese
@@ -650,7 +671,8 @@ $language_settings['vietnamese']=array(
 'ALPHABET_upper'=>'AÀẢÃÁẠĂẰẲẴẮẶÂẦẨẪẤẬBCDĐEÈẺẼÉẸÊỀỂỄẾỆFGHIÌỈĨÍỊJKLMNOÒỎÕÓỌÔỒỔỖỐỘƠỜỞỠỚỢPQRSTUÙỦŨÚỤƯỪỬỮỨỰVWXYỲỶỸÝỴZ',
 'ALPHABET_lower'=>'aàảãáạăằẳẵắặâầẩẫấậbcdđeèẻẽéẹêềểễếệfghiìỉĩíịjklmnoòỏõóọôồổỗốộơờởỡớợpqrstuùủũúụưừửữứựvwxyỳỷỹýỵz',
 'MULTI_LETTER_ALPHABET'=>'',
-'DICTIONARY_SORT'=>true
+'DICTIONARY_SORT'=>true,
+'COLLATION'=>'utf8_unicode_ci'
 );
 
 //-- settings for chinese
@@ -678,7 +700,8 @@ $language_settings['chinese']=array(
 'ALPHABET_upper'=>'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
 'ALPHABET_lower'=>'abcdefghijklmnopqrstuvwxyz',
 'MULTI_LETTER_ALPHABET'=>'',
-'DICTIONARY_SORT'=>false
+'DICTIONARY_SORT'=>false,
+'COLLATION'=>'utf8_unicode_ci'
 );
 
 //-- settings for hebrew
@@ -706,7 +729,8 @@ $language_settings['hebrew']=array(
 'ALPHABET_upper'=>'אבגדהוזחטיכךלמםנןסעפףצץקרשת',
 'ALPHABET_lower'=>'אבגדהוזחטיכךלמםנןסעפףצץקרשת',
 'MULTI_LETTER_ALPHABET'=>'',
-'DICTIONARY_SORT'=>false
+'DICTIONARY_SORT'=>false,
+'COLLATION'=>'utf8_unicode_ci'
 );
 
 //-- settings for russian
@@ -734,7 +758,8 @@ $language_settings['russian']=array(
 'ALPHABET_upper'=>'АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ',
 'ALPHABET_lower'=>'абвгдеёжзийклмнопрстуфхцчшщъыьэюя',
 'MULTI_LETTER_ALPHABET'=>'',
-'DICTIONARY_SORT'=>false
+'DICTIONARY_SORT'=>false,
+'COLLATION'=>'utf8_unicode_ci'
 );
 
 //-- settings for greek
@@ -762,7 +787,8 @@ $language_settings['greek']=array(
 'ALPHABET_upper'=>'ΆΑΒΓΔΈΕΖΉΗΘΊΪΪΙΚΛΜΝΞΌΟΠΡΣΣΤΎΫΫΥΦΧΨΏΩ',
 'ALPHABET_lower'=>'άαβγδέεζήηθίϊΐικλμνξόοπρσςτύϋΰυφχψώω',
 'MULTI_LETTER_ALPHABET'=>'',
-'DICTIONARY_SORT'=>false
+'DICTIONARY_SORT'=>false,
+'COLLATION'=>'utf8_unicode_ci'
 );
 
 //-- settings for arabic
@@ -790,7 +816,8 @@ $language_settings['arabic']=array(
 'ALPHABET_upper'=>'ابتثجحخدذرزسشصضطظعغفقكلمنهويآةىی',
 'ALPHABET_lower'=>'ابتثجحخدذرزسشصضطظعغفقكلمنهويآةىی',
 'MULTI_LETTER_ALPHABET'=>'',
-'DICTIONARY_SORT'=>false
+'DICTIONARY_SORT'=>false,
+'COLLATION'=>'utf8_unicode_ci'
 );
 
 ?>
