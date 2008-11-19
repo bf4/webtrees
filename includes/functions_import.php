@@ -142,7 +142,7 @@ function import_record($gedrec, $update) {
 
 	// Update the cross-reference/index tables.
 	update_places($gid, $gedrec);
-	update_dates($gid, $gedrec);
+	update_dates($gid, PGV_GED_ID, $gedrec);
 	update_links($gid, PGV_GED_ID, $gedrec);
 
 	$newrec = update_media($gid, $gedrec, $update);
@@ -452,60 +452,67 @@ function update_places($gid, $gedrec) {
 	}
 }
 
-/**
- * extract all date info from the given record and insert them
- * into the dates table
- * @param string $gedrec
- */
-function update_dates($gid, $gedrec) {
-	global $FILE, $TBLPREFIX, $DBCONN, $GEDCOMS, $factarray;
-	$pt = preg_match("/\d DATE (.*)/", $gedrec, $match);
-	if ($pt == 0)
-		return 0;
-	$facts = get_all_subrecords($gedrec, "", false, false);
-	foreach ($facts as $f => $factrec) {
-		if (preg_match("/1 (\w+)/", $factrec, $match)) {
-			$fact = trim($match[1]);
-			// 1 FACT/2 TYPE XXXX gets recorded as XXXX to enable searching
-			if (($fact=='FACT' || $fact=='EVEN') && preg_match("/\n2 TYPE (\w+)/", $factrec, $match) && array_key_exists($match[1], $factarray))
-				$fact=$match[1];
-			$pt = preg_match_all("/2 DATE (.*)/", $factrec, $match, PREG_SET_ORDER);
-			for ($i = 0; $i < $pt; $i++) {
-				$geddate=new GedcomDate($match[$i][1]);
-				$dates=array($geddate->date1);
-				if ($geddate->date2)
-					$dates[]=$geddate->date2;
-				foreach($dates as $date)
-					dbquery("INSERT INTO {$TBLPREFIX}dates(d_day,d_month,d_mon,d_year,d_julianday1,d_julianday2,d_fact,d_gid,d_file,d_type)VALUES({$date->d},'".$date->Format('O')."',{$date->m},{$date->y},{$date->minJD},{$date->maxJD},'".$DBCONN->escapeSimple($fact)."','".$DBCONN->escapeSimple($gid)."',{$GEDCOMS[$FILE]['id']},'".$date->CALENDAR_ESCAPE()."')");
+// extract all the dates from the given record and insert them into the database
+function update_dates($xref, $ged_id, $gedrec) {
+	global $DBTYPE, $DBCONN, $TBLPREFIX, $factarray;
+
+	if (strpos($gedrec, '2 DATE ') && preg_match_all("/\n1 (\w+).*(?:\n[2-9].*)*(?:\n2 DATE (.+))(?:\n[2-9].*)*/", $gedrec, $matches, PREG_SET_ORDER)) {
+		$data=array();
+		$xref=$DBCONN->escapeSimple($xref);
+		foreach ($matches as $match) {
+			$fact=$match[1];
+			if (($fact=='FACT' || $fact=='EVEN') && preg_match("/\n2 TYPE (\w+)/", $match[0], $tmatch) && array_key_exists($tmatch[1], $factarray)) {
+				$fact=$tmatch[1];
 			}
+			$date=new GedcomDate($match[2]);
+			$fact=$DBCONN->escapeSimple($fact);
+			$data[]="({$date->date1->d},'".$date->date1->Format('O')."',{$date->date1->m},{$date->date1->y},{$date->date1->minJD},{$date->date1->maxJD},'{$fact}','{$xref}',{$ged_id},'".$date->date1->CALENDAR_ESCAPE()."')";
+			if ($date->date2) {
+				$data[]="({$date->date2->d},'".$date->date2->Format('O')."',{$date->date2->m},{$date->date2->y},{$date->date2->minJD},{$date->date2->maxJD},'{$fact}','{$xref}',{$ged_id},'".$date->date2->CALENDAR_ESCAPE()."')";
+			}
+		}
+
+		switch ($DBTYPE) {
+		case 'mysql':
+			// MySQL can insert multiple rows in one statement
+			dbquery("INSERT INTO {$TBLPREFIX}dates (d_day,d_month,d_mon,d_year,d_julianday1,d_julianday2,d_fact,d_gid,d_file,d_type) VALUES ".implode(',', $data));
+			break;
+		default:
+			foreach ($data as $datum) {
+				dbquery("INSERT INTO {$TBLPREFIX}dates (d_day,d_month,d_mon,d_year,d_julianday1,d_julianday2,d_fact,d_gid,d_file,d_type) VALUES ".$datum);
+			}
+			break;
 		}
 	}
+	return;
 }
 
-/**
- * extract all links from the given record and insert them
- * into the links table
- * @param string $gedrec
- */
+// extract all the links from the given record and insert them into the database
 function update_links($xref, $ged_id, $gedrec) {
-	global $DBCONN, $TBLPREFIX;
+	global $DBTYPE, $DBCONN, $TBLPREFIX;
 
-	if (preg_match_all("/^\d (\w+) @([^@#\r\n][^@\r\n]*)@/m", $gedrec, $matches, PREG_SET_ORDER)) {
-		$links=array();
-		foreach ($matches as $match) {
-			// only include each link once
-			foreach ($links as $link) {
-				if ($link[0]==$match[1] && $link[1]==$match[2]) {
-					continue 2;
-				}
-			}
-			$links[]=array($match[1], $match[2]);
-		}
+	if (preg_match_all("/^\d+ ([A-Z0-9_]+) @([^@#\r\n][^@\r\n]*)@/m", $gedrec, $matches, PREG_SET_ORDER)) {
+		$data=array();
 		$xref=$DBCONN->escapeSimple($xref);
-		foreach ($links as $link) {
-			dbquery(
-				"INSERT INTO {$TBLPREFIX}link (l_from, l_to, l_type, l_file)".
-				" VALUES ('{$xref}', '{$link[1]}', '{$link[0]}', {$ged_id})");
+		foreach ($matches as $match) {
+			$match[2]=$DBCONN->escapeSimple($match[2]);
+			$sql="('{$xref}','{$match[2]}','{$match[1]}',{$ged_id})";
+			// Include each link once only.
+			if (!in_array($sql, $data)) {
+				$data[]=$sql;
+			}
+		}
+
+		switch ($DBTYPE) {
+		case 'mysql':
+			// MySQL can insert multiple rows in one statement
+			dbquery("INSERT INTO {$TBLPREFIX}link (l_from,l_to,l_type,l_file) VALUES ".implode(',', $data));
+			break;
+		default:
+			foreach ($data as $datum) {
+				dbquery("INSERT INTO {$TBLPREFIX}link (l_from,l_to,l_type,l_file) VALUES ".$datum);
+			}
+			break;
 		}
 	}
 }
