@@ -122,7 +122,7 @@ default:
 	define('PGV_DB_COMMIT_TRANS',  'COMMIT');
 	// Since install.php creates the tables before saving the configuration settings to config.php,
 	// we must check its temporary configuration settings as well.
-	if (isset($_SESSION['install_config']) && $_SESSION['install_config']['DB_UTF8_COLLATION'] || $DB_UTF8_COLLATION) {
+	if (isset($_SESSION['install_config']['DB_UTF8_COLLATION']) && $_SESSION['install_config']['DB_UTF8_COLLATION'] || $DB_UTF8_COLLATION) {
 		define('PGV_DB_UTF8_TABLE',  'CHARACTER SET utf8 COLLATE utf8_unicode_ci');
 	} else {
 		define('PGV_DB_UTF8_TABLE',  '');
