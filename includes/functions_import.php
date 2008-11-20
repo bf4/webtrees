@@ -138,12 +138,35 @@ function import_record($gedrec, $update) {
 			$MAX_IDS[$type] = $idnum;
 
 	//-- replace any added ltr processing codes
-	$gedrec = str_replace(array(PGV_UTF8_LRM, PGV_UTF8_RLM), "", $gedrec);
+	$gedrec=str_replace(array(PGV_UTF8_LRM, PGV_UTF8_RLM), "", $gedrec);
+	switch ($type) {
+	case 'INDI':
+		$record=new Person($gedrec);
+		break;
+	case 'FAM':
+		$record=new Family($gedrec);
+		break;
+	case 'SOUR':
+		$record=new Source($gedrec);
+		break;
+	case 'REPO':
+		$record=new Repository($gedrec);
+		break;
+	case 'OBJE':
+		$record=new Media($gedrec);
+		break;
+	default:
+		$record=new GedcomRecord($gedrec);
+		break;
+	}
+	$ged_id=(int)($GEDCOMS[$GEDCOM]["id"]);
+	$xref=$DBCONN->escapeSimple($gid);
 
 	// Update the cross-reference/index tables.
 	update_places($gid, $gedrec);
-	update_dates($gid, PGV_GED_ID, $gedrec);
-	update_links($gid, PGV_GED_ID, $gedrec);
+	update_dates ($gid, PGV_GED_ID, $gedrec);
+	update_links ($gid, PGV_GED_ID, $gedrec);
+	update_names ($gid, PGV_GED_ID, $record);
 
 	$newrec = update_media($gid, $gedrec, $update);
 	if ($newrec != $gedrec) {
@@ -376,6 +399,37 @@ function import_record($gedrec, $update) {
 		fwrite($fpnewged, trim($gedrec) . "\r\n");
 }
 
+function soundex_std($text) {
+	Character_Substitute($text);
+	$words=explode(' ', $text);
+	$soundex_array=array();
+	foreach ($words as $word) {
+		if ($word) {
+			$soundex_array[]=soundex($word);
+		}
+	}
+	if (count($words)>1) {
+		$soundex_array[]=soundex(strtr($text, ' ', ''));
+	}
+	return implode(':', array_unique($soundex_array));
+}
+
+function soundex_dm($text) {
+	Character_Substitute($text);
+	$words=explode(' ', $text);
+	$soundex_array=array();
+	$combined = "";
+	foreach ($words as $word) {
+		if ($word) {
+			$soundex_array=array_merge($soundex_array, DMSoundex($word));
+		}
+	}
+	if (count($words)>1) {
+		$soundex_array=array_merge($soundex_array, DMSoundex(strtr($text, ' ', '')));
+	}
+	return implode(":", array_unique($soundex_array));
+}
+
 /**
  * extract all places from the given record and insert them
  * into the places table
@@ -460,7 +514,7 @@ function update_dates($xref, $ged_id, $gedrec) {
 		$data=array();
 		$xref=$DBCONN->escapeSimple($xref);
 		foreach ($matches as $match) {
-			$fact=$match[1];
+				$fact=$match[1];
 			if (($fact=='FACT' || $fact=='EVEN') && preg_match("/\n2 TYPE (\w+)/", $match[0], $tmatch) && array_key_exists($tmatch[1], $factarray)) {
 				$fact=$tmatch[1];
 			}
@@ -469,8 +523,8 @@ function update_dates($xref, $ged_id, $gedrec) {
 			$data[]="({$date->date1->d},'".$date->date1->Format('O')."',{$date->date1->m},{$date->date1->y},{$date->date1->minJD},{$date->date1->maxJD},'{$fact}','{$xref}',{$ged_id},'".$date->date1->CALENDAR_ESCAPE()."')";
 			if ($date->date2) {
 				$data[]="({$date->date2->d},'".$date->date2->Format('O')."',{$date->date2->m},{$date->date2->y},{$date->date2->minJD},{$date->date2->maxJD},'{$fact}','{$xref}',{$ged_id},'".$date->date2->CALENDAR_ESCAPE()."')";
-			}
 		}
+	}
 
 		switch ($DBTYPE) {
 		case 'mysql':
@@ -480,7 +534,7 @@ function update_dates($xref, $ged_id, $gedrec) {
 		default:
 			foreach ($data as $datum) {
 				dbquery("INSERT INTO {$TBLPREFIX}dates (d_day,d_month,d_mon,d_year,d_julianday1,d_julianday2,d_fact,d_gid,d_file,d_type) VALUES ".$datum);
-			}
+}
 			break;
 		}
 	}
@@ -500,8 +554,8 @@ function update_links($xref, $ged_id, $gedrec) {
 			// Include each link once only.
 			if (!in_array($sql, $data)) {
 				$data[]=$sql;
+				}
 			}
-		}
 
 		switch ($DBTYPE) {
 		case 'mysql':
@@ -511,12 +565,63 @@ function update_links($xref, $ged_id, $gedrec) {
 		default:
 			foreach ($data as $datum) {
 				dbquery("INSERT INTO {$TBLPREFIX}link (l_from,l_to,l_type,l_file) VALUES ".$datum);
-			}
+		}
 			break;
 		}
 	}
 }
 
+// extract all the names from the given record and insert them into the database
+function update_names($xref, $ged_id, $record) {
+	global $DBTYPE, $DBCONN, $TBLPREFIX;
+
+	if ($record->getType()!='FAM' && $record->getXref()) {
+		$data=array();
+
+		foreach ($record->getAllNames() as $n=>$name) {
+			$tmp="({$ged_id},'".$DBCONN->escapeSimple($record->getXref())."',{$n},'{$name['type']}','".$DBCONN->escapeSimple($name['sort'])."',";
+			if ($record->getType()=='INDI') {
+				if ($name['givn']=='@P.N.') {
+					$soundex_givn_std="NULL";
+					$soundex_givn_dm="NULL";
+				} else {
+					$soundex_givn_std="'".soundex_std($name['givn'])."'";
+					$soundex_givn_dm="'".soundex_dm($name['givn'])."'";
+				}
+				if ($name['surn']=='@N.N.') {
+					$soundex_surn_std="NULL";
+					$soundex_surn_dm="NULL";
+				} else {
+					$soundex_surn_std="'".soundex_std($name['surname'])."'";
+					$soundex_surn_dm="'".soundex_dm($name['surname'])."'";
+				}
+				$data[]=$tmp."'".$DBCONN->escapeSimple($name['fullNN'])."','".$DBCONN->escapeSimple($name['listNN'])."','".$DBCONN->escapeSimple($name['surname'])."','".$DBCONN->escapeSimple($name['surn'])."','".$DBCONN->escapeSimple($name['givn'])."',{$soundex_givn_std},{$soundex_surn_std},{$soundex_givn_dm},{$soundex_surn_dm})";
+			} else {
+				$data[]=$tmp."'".$DBCONN->escapeSimple($name['full'])."','".$DBCONN->escapeSimple($name['list'])."')";
+			}
+		}
+
+		switch ($DBTYPE) {
+		case 'mysql':
+			// MySQL can insert multiple rows in one statement
+			if ($record->getType()=='INDI') {
+				dbquery("INSERT INTO {$TBLPREFIX}name (n_file,n_id,n_num,n_type,n_sort,n_full,n_list,n_surname,n_surn,n_givn,n_soundex_givn_std,n_soundex_surn_std,n_soundex_givn_dm,n_soundex_surn_dm) VALUES ".implode(',', $data));
+			} else {
+				dbquery("INSERT INTO {$TBLPREFIX}name (n_file,n_id,n_num,n_type,n_sort,n_full,n_list) VALUES ".implode(',', $data));
+			}
+			break;
+		default:
+			foreach ($data as $datum) {
+				if ($record->getType=='INDI') {
+					dbquery("INSERT INTO {$TBLPREFIX}name (n_file,n_id,n_num,n_type,n_sort,n_full,n_list,n_surname,n_surn,n_givn,n_soundex_givn_std,n_soundex_surn_std,n_soundex_givn_dm,n_soundex_surn_dm) VALUES ".$datum);
+				} else {
+					dbquery("INSERT INTO {$TBLPREFIX}name (n_file,n_id,n_num,n_type,n_sort,n_full,n_list) VALUES ".$datum);
+				}
+			}
+			break;
+		}
+	}
+}
 /**
  * Insert media items into the database
  * This method is used in conjuction with the gedcom import/update routines
@@ -790,6 +895,7 @@ function setup_database() {
 	$has_places_std_soundex = false;
 	$has_places_dm_soundex = false;
 	$has_link = false;
+	$has_name = false;
 	$has_names = false;
 	$has_names_surname = false;
 	$has_names_type = false;
@@ -864,6 +970,9 @@ function setup_database() {
 				case "link" :
 					$has_link = true;
 					break;
+				case "name" :
+					$has_name = true;
+					break;
 				case "names" :
 					$has_names = true;
 					$info = $DBCONN->tableInfo($TBLPREFIX . "names");
@@ -871,7 +980,7 @@ function setup_database() {
 						switch ($field["name"]) {
 							case "n_surname" :
 								$has_names_surname = true;
-								break;
+					break;
 							case "n_type" :
 								$has_names_type = true;
 								break;
@@ -938,7 +1047,7 @@ function setup_database() {
 			dbquery("ALTER TABLE {$TBLPREFIX}individuals ADD i_surname VARCHAR(100) NULL");
 			dbquery("CREATE INDEX indi_surn ON {$TBLPREFIX}individuals (i_surname)");
 		}
-	}
+		}
 	if (!$has_families || $sqlite && ($has_families_name || !$has_families_numchil)) {
 		create_families_table();
 	} else { // check columns in the table
@@ -971,10 +1080,10 @@ function setup_database() {
 		if (!$has_names_surname) {
 			dbquery("ALTER TABLE {$TBLPREFIX}names ADD n_surname VARCHAR(100) NULL");
 			dbquery("CREATE INDEX name_surn ON {$TBLPREFIX}names (n_surname)");
-		}
-		if (!$has_names_type) {
-			dbquery("ALTER TABLE {$TBLPREFIX}names ADD n_type VARCHAR(10) NULL");
-		}
+	}
+	if (!$has_names_type) {
+		dbquery("ALTER TABLE {$TBLPREFIX}names ADD n_type VARCHAR(10) NULL");
+	}
 	}
 	if (!$has_dates || $sqlite && (!$has_dates_mon || !$has_dates_datestamp || !$has_dates_juliandays)) {
 		create_dates_table();
@@ -1019,6 +1128,9 @@ function setup_database() {
 	if (!$has_link) {
 		create_link_table();
 	}
+	if (!$has_name) {
+		create_name_table();
+	}
 	/*-- commenting out as it seems to cause more problems than it helps
 	$sql = "LOCK TABLE {$TBLPREFIX}individuals WRITE, {$TBLPREFIX}families WRITE, {$TBLPREFIX}sources WRITE, {$TBLPREFIX}other WRITE, {$TBLPREFIX}places WRITE, {$TBLPREFIX}users WRITE";
 	$res = dbquery($sql); */
@@ -1051,10 +1163,10 @@ function create_individuals_table() {
 		" PRIMARY KEY (i_id, i_file)".
 		") ".PGV_DB_UTF8_TABLE
 	);
-	dbquery("CREATE INDEX {$TBLPREFIX}indi_id     ON {$TBLPREFIX}individuals (i_id     )");
+	dbquery("CREATE INDEX {$TBLPREFIX}indi_id   ON {$TBLPREFIX}individuals (i_id     )");
 	dbquery("CREATE INDEX {$TBLPREFIX}indi_name   ON {$TBLPREFIX}individuals (i_name   )");
 	dbquery("CREATE INDEX {$TBLPREFIX}indi_letter ON {$TBLPREFIX}individuals (i_letter )");
-	dbquery("CREATE INDEX {$TBLPREFIX}indi_file   ON {$TBLPREFIX}individuals (i_file   )");
+	dbquery("CREATE INDEX {$TBLPREFIX}indi_file ON {$TBLPREFIX}individuals (i_file   )");
 	dbquery("CREATE INDEX {$TBLPREFIX}indi_surn   ON {$TBLPREFIX}individuals (i_surname)");
 }
 /**
@@ -1188,6 +1300,35 @@ function create_names_table() {
 	dbquery("CREATE INDEX {$TBLPREFIX}name_file   ON {$TBLPREFIX}names (n_file   )");
 }
 /**
+ * Create the name table
+ */
+function create_name_table() {
+	global $TBLPREFIX;
+
+	dbquery("DROP TABLE {$TBLPREFIX}name", false);
+	dbquery(
+		"CREATE TABLE {$TBLPREFIX}name (".
+		" n_file           ".PGV_DB_COL_FILE." NOT NULL,".
+		" n_id             ".PGV_DB_COL_XREF." NOT NULL,".
+		" n_num              INT               NOT NULL,".
+		" n_type             VARCHAR(15)       NOT NULL,".
+		" n_sort             VARCHAR(255)      NOT NULL,". // e.g. "GOGH,VINCENT WILLEM"
+		" n_full             VARCHAR(255)      NOT NULL,". // e.g. "Vincent Willem van GOGH"
+		" n_list             VARCHAR(255)      NOT NULL,". // e.g. "van GOGH, Vincent Willem"
+		// These fields are only used for INDI records
+		" n_surname          VARCHAR(255)          NULL,". // e.g. "van GOGH"
+		" n_surn             VARCHAR(255)          NULL,". // e.g. "GOGH"
+		" n_givn             VARCHAR(255)          NULL,". // e.g. "Vincent Willem"
+		" n_soundex_givn_std VARCHAR(255)          NULL,".
+		" n_soundex_surn_std VARCHAR(255)          NULL,".
+		" n_soundex_givn_dm  VARCHAR(255)          NULL,".
+		" n_soundex_surn_dm  VARCHAR(255)          NULL,".
+		" PRIMARY KEY (n_id, n_file, n_num)".
+		") ".PGV_DB_UTF8_TABLE
+	);
+	dbquery("CREATE INDEX {$TBLPREFIX}name_file   ON {$TBLPREFIX}name (n_file   )");
+}
+/**
  * Create the link table
  */
 function create_link_table() {
@@ -1275,17 +1416,17 @@ function create_dates_table() {
 	dbquery("DROP TABLE {$TBLPREFIX}dates", false);
 	dbquery(
 		"CREATE TABLE {$TBLPREFIX}dates (".
-		" d_day        INT               NULL,".
-		" d_month      VARCHAR(5)        NULL,".
-		" d_mon        INT               NULL,".
-		" d_year       INT               NULL,".
+		" d_day        INT          NULL,".
+		" d_month      VARCHAR(5)   NULL,".
+		" d_mon        INT          NULL,".
+		" d_year       INT          NULL,".
 		" d_datestamp  INT               NULL,".
-		" d_julianday1 INT               NULL,".
-		" d_julianday2 INT               NULL,".
+		" d_julianday1 INT          NULL,".
+		" d_julianday2 INT          NULL,".
 		" d_fact     ".PGV_DB_COL_TAG."  NULL,".
 		" d_gid      ".PGV_DB_COL_XREF." NULL,".
 		" d_file     ".PGV_DB_COL_FILE." NULL,".
-		" d_type       VARCHAR(13)       NULL".
+		" d_type       VARCHAR(13)  NULL".
 		") ".PGV_DB_UTF8_TABLE
 	);
 	dbquery("CREATE INDEX {$TBLPREFIX}date_day        ON {$TBLPREFIX}dates (d_day        )") ;
@@ -1356,7 +1497,7 @@ function empty_database($FILE, $keepmedia=false) {
 	dbquery("DELETE FROM {$TBLPREFIX}other       WHERE o_file ={$FILE}");
 	dbquery("DELETE FROM {$TBLPREFIX}places      WHERE p_file ={$FILE}");
 	dbquery("DELETE FROM {$TBLPREFIX}placelinks  WHERE pl_file={$FILE}");
-	dbquery("DELETE FROM {$TBLPREFIX}names       WHERE n_file ={$FILE}");
+	dbquery("DELETE FROM {$TBLPREFIX}name        WHERE n_file ={$FILE}");
 	dbquery("DELETE FROM {$TBLPREFIX}link        WHERE l_file ={$FILE}");
 	dbquery("DELETE FROM {$TBLPREFIX}dates       WHERE d_file ={$FILE}");
 
@@ -1662,6 +1803,9 @@ function update_record($gedrec, $delete = false) {
 	$res = dbquery($sql);
 
 	$sql = "DELETE FROM {$TBLPREFIX}remotelinks WHERE r_gid='" . $DBCONN->escapeSimple($gid) . "' AND r_file='" . $DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"]) . "'";
+	$res = dbquery($sql);
+
+	$sql = "DELETE FROM {$TBLPREFIX}name WHERE n_id LIKE '" . $DBCONN->escapeSimple($gid) . "' AND n_file='" . $DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"]) . "'";
 	$res = dbquery($sql);
 
 	$sql = "DELETE FROM {$TBLPREFIX}link WHERE l_from LIKE '" . $DBCONN->escapeSimple($gid) . "' AND l_file='" . $DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"]) . "'";
