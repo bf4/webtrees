@@ -39,9 +39,6 @@ define('PGV_FUNCTIONS_DB_PHP', '');
 //-- load the PEAR:DB files
 require_once 'DB.php';
 
-//-- set the REGEXP status of databases
-$REGEXP_DB = (stristr($DBTYPE,'mysql') !== false || $DBTYPE=='pgsql');
-
 // New setting, added to config.php in 4.2.0
 if (!isset($DB_UTF8_COLLATION)) $DB_UTF8_COLLATION=false;
 
@@ -1162,21 +1159,14 @@ function search_indis($query, $allgeds=false, $ANDOR="AND") {
 	global $TBLPREFIX, $GEDCOM, $indilist, $DBCONN, $DBTYPE, $GEDCOMS;
 
 	$myindilist = array();
-	if (stristr($DBTYPE, "mysql")!==false)
-		$term = "REGEXP";
-	else
-		if (stristr($DBTYPE, "pgsql")!==false)
-			$term = "~*";
-		else
-			$term = "LIKE";
 	//-- if the query is a string
 	if (!is_array($query)) {
 		$sql = "SELECT i_id, i_file, i_gedcom, i_isdead FROM ".$TBLPREFIX."individuals WHERE (";
 		//-- make sure that MySQL matches the upper and lower case utf8 characters
 		if (has_utf8($query))
-			$sql .= "i_gedcom $term '".$DBCONN->escapeSimple(UTF8_strtoupper($query))."' OR i_gedcom $term '".$DBCONN->escapeSimple(UTF8_strtolower($query))."')";
+			$sql .= "i_gedcom ".PGV_DB_LIKE." '%".$DBCONN->escapeSimple(UTF8_strtoupper($query))."%' OR i_gedcom ".PGV_DB_LIKE." '%".$DBCONN->escapeSimple(UTF8_strtolower($query))."%')";
 		else
-			$sql .= "i_gedcom $term '".$DBCONN->escapeSimple($query)."')";
+			$sql .= "i_gedcom ".PGV_DB_LIKE." '%".$DBCONN->escapeSimple($query)."%')";
 	} else {
 		//-- create a more complicated query if it is an array
 		$sql = "SELECT i_id, i_file, i_gedcom, i_isdead FROM ".$TBLPREFIX."individuals WHERE (";
@@ -1185,9 +1175,9 @@ function search_indis($query, $allgeds=false, $ANDOR="AND") {
 			if ($i>0)
 				$sql .= " $ANDOR ";
 			if (has_utf8($q))
-				$sql .= "(i_gedcom $term '".$DBCONN->escapeSimple(UTF8_strtoupper($q))."' OR i_gedcom $term '".$DBCONN->escapeSimple(UTF8_strtolower($q))."')";
+				$sql .= "(i_gedcom ".PGV_DB_LIKE." '%".$DBCONN->escapeSimple(UTF8_strtoupper($q))."%' OR i_gedcom ".PGV_DB_LIKE." '%".$DBCONN->escapeSimple(UTF8_strtolower($q))."%')";
 			else
-				$sql .= "(i_gedcom $term '".$DBCONN->escapeSimple($q)."')";
+				$sql .= "(i_gedcom ".PGV_DB_LIKE." '%".$DBCONN->escapeSimple($q)."%')";
 			$i++;
 		}
 		$sql .= ")";
@@ -1236,24 +1226,14 @@ function search_indis($query, $allgeds=false, $ANDOR="AND") {
 
 //-- search through the gedcom records for individuals
 function search_indis_names($query, $allgeds=false) {
-	global $TBLPREFIX, $indilist, $DBCONN, $REGEXP_DB, $DBTYPE;
-
-	if (stristr($DBTYPE, "mysql")!==false)
-		$term = "REGEXP";
-	else
-		if (stristr($DBTYPE, "pgsql")!==false)
-			$term = "~*";
-		else
-			$term='LIKE';
+	global $TBLPREFIX, $indilist, $DBCONN, $DBTYPE;
 
 	//-- split up words and find them anywhere in the record... important for searching names
 	//-- like "givenname surname"
 	if (!is_array($query)) {
 		$query = preg_split("/[\s,]+/", $query);
-		if (!$REGEXP_DB) {
-			for ($i=0; $i<count($query); $i++){
-				$query[$i] = "%".$query[$i]."%";
-			}
+		for ($i=0; $i<count($query); $i++){
+			$query[$i] = "%".$query[$i]."%";
 		}
 	}
 
@@ -1262,7 +1242,7 @@ function search_indis_names($query, $allgeds=false) {
 		$sql = "SELECT i_id, i_file, i_gedcom, i_isdead FROM ".$TBLPREFIX."individuals";
 	else
 		if (!is_array($query))
-			$sql = "SELECT i_id, i_file, i_gedcom, i_isdead FROM ".$TBLPREFIX."individuals WHERE i_name $term '".$DBCONN->escapeSimple($query)."'";
+			$sql = "SELECT i_id, i_file, i_gedcom, i_isdead FROM ".$TBLPREFIX."individuals WHERE i_name ".PGV_DB_LIKE." '%".$DBCONN->escapeSimple($query)."%'";
 		else {
 			$sql = "SELECT i_id, i_file, i_gedcom, i_isdead FROM ".$TBLPREFIX."individuals WHERE (";
 			$i=0;
@@ -1270,7 +1250,7 @@ function search_indis_names($query, $allgeds=false) {
 				if (!empty($q)) {
 					if ($i>0)
 						$sql .= " AND ";
-					$sql .= "i_name $term '".$DBCONN->escapeSimple($q)."'";
+					$sql .= "i_name ".PGV_DB_LIKE." '%".$DBCONN->escapeSimple($q)."%'";
 					$i++;
 				}
 			}
@@ -1301,7 +1281,7 @@ function search_indis_names($query, $allgeds=false) {
 
 	//-- search the names table too
 	if (!is_array($query))
-		$sql = "SELECT i_id, i_file, i_gedcom, i_isdead FROM ".$TBLPREFIX."individuals, ".$TBLPREFIX."names WHERE i_id=n_gid AND i_file=n_file AND n_name $term '".$DBCONN->escapeSimple($query)."'";
+		$sql = "SELECT i_id, i_file, i_gedcom, i_isdead FROM ".$TBLPREFIX."individuals, ".$TBLPREFIX."names WHERE i_id=n_gid AND i_file=n_file AND n_name ".PGV_DB_LIKE." '%".$DBCONN->escapeSimple($query)."%'";
 	else {
 		$sql = "SELECT i_id, i_file, i_gedcom, i_isdead FROM ".$TBLPREFIX."individuals, ".$TBLPREFIX."names WHERE i_id=n_gid AND i_file=n_file AND (";
 		$i=0;
@@ -1309,7 +1289,7 @@ function search_indis_names($query, $allgeds=false) {
 			if (!empty($q)) {
 				if ($i>0)
 					$sql .= " AND ";
-				$sql .= "n_name $term '".$DBCONN->escapeSimple($q)."'";
+				$sql .= "n_name ".PGV_DB_LIKE." '%".$DBCONN->escapeSimple($q)."%'";
 				$i++;
 			}
 		}
@@ -1353,7 +1333,7 @@ function search_indis_names($query, $allgeds=false) {
  * @return Database ResultSet
  */
 function search_indis_soundex($soundex, $lastname, $firstname='', $place='', $sgeds='') {
-	global $GEDCOMS, $GEDCOM, $TBLPREFIX, $REGEXP_DB, $DBCONN;
+	global $GEDCOMS, $GEDCOM, $TBLPREFIX, $DBCONN;
 
 	$res = false;
 
@@ -1362,12 +1342,8 @@ function search_indis_soundex($soundex, $lastname, $firstname='', $place='', $sg
 	// Adjust the search criteria
 	if (isset ($firstname)) {
 		if (strlen($firstname) == 1)
-		$firstname = preg_replace(array ("/\?/", "/\|/", "/\*/"), array ("\\\?", "\\\|", "\\\\\*"), $firstname);
-		if ($REGEXP_DB)
-			$firstname = preg_replace(array ("/\s+/", "/\(/", "/\)/", "/\[/", "/\]/"), array (".*", '\(', '\)', '\[', '\]'), $firstname);
-		else {
-			$firstname = "%".preg_replace("/\s+/", "%", $firstname)."%";
-		}
+			$firstname = preg_replace(array ("/\?/", "/\|/", "/\*/"), array ("\\\?", "\\\|", "\\\\\*"), $firstname);
+		$firstname = "%".preg_replace("/\s+/", "%", $firstname)."%";
 	}
 	if (isset ($lastname)) {
 		// see if there are brackets around letter(groups)
@@ -1386,30 +1362,18 @@ function search_indis_soundex($soundex, $lastname, $firstname='', $place='', $sg
 			}
 		}
 		if (strlen($lastname) == 1)
-		$lastname = preg_replace(array ("/\?/", "/\|/", "/\*/"), array ("\\\?", "\\\|", "\\\\\*"), $lastname);
-		if ($REGEXP_DB)
-		$lastname = preg_replace(array ("/\s+/", "/\(/", "/\)/", "/\[/", "/\]/"), array (".*", '\(', '\)', '\[', '\]'), $lastname);
-		else {
-			$lastname = "%".preg_replace("/\s+/", "%", $lastname)."%";
-		}
+			$lastname = preg_replace(array ("/\?/", "/\|/", "/\*/"), array ("\\\?", "\\\|", "\\\\\*"), $lastname);
+		$lastname = "%".preg_replace("/\s+/", "%", $lastname)."%";
 	}
 	if (isset ($place)) {
 		if (strlen($place) == 1)
-		$place = preg_replace(array ("/\?/", "/\|/", "/\*/"), array ("\\\?", "\\\|", "\\\\\*"), $place);
-		if ($REGEXP_DB)
-		$place = preg_replace(array ("/\s+/", "/\(/", "/\)/", "/\[/", "/\]/"), array (".*", '\(', '\)', '\[', '\]'), $place);
-		else {
-			$place = "%".preg_replace("/\s+/", "%", $place)."%";
-		}
+			$place = preg_replace(array ("/\?/", "/\|/", "/\*/"), array ("\\\?", "\\\|", "\\\\\*"), $place);
+		$place = "%".preg_replace("/\s+/", "%", $place)."%";
 	}
 	if (isset ($year)) {
 		if (strlen($year) == 1)
-		$year = preg_replace(array ("/\?/", "/\|/", "/\*/"), array ("\\\?", "\\\|", "\\\\\*"), $year);
-		if ($REGEXP_DB)
-		$year = preg_replace(array ("/\s+/", "/\(/", "/\)/", "/\[/", "/\]/"), array (".*", '\(', '\)', '\[', '\]'), $year);
-		else {
-			$year = "%".preg_replace("/\s+/", "%", $year)."%";
-		}
+			$year = preg_replace(array ("/\?/", "/\|/", "/\*/"), array ("\\\?", "\\\|", "\\\\\*"), $year);
+		$year = "%".preg_replace("/\s+/", "%", $year)."%";
 	}
 	if (count($sgeds) > 0) {
 		if ($soundex == "DaitchM")
@@ -1472,7 +1436,7 @@ function search_indis_soundex($soundex, $lastname, $firstname='', $place='', $sg
 						if ($fnc>0)
 							$sql .= " OR ";
 						$fnc++;
-						$sql .= $field." LIKE '%".$DBCONN->escapeSimple($name1)."%'";
+						$sql .= $field." ".PGV_DB_LIKE." '%".$DBCONN->escapeSimple($name1)."%'";
 					}
 				}
 				$sql .= ") ";
@@ -1488,7 +1452,7 @@ function search_indis_soundex($soundex, $lastname, $firstname='', $place='', $sg
 					if ($lnc>0)
 						$sql .= " OR ";
 					$lnc++;
-					$sql .= $field." LIKE '%".$DBCONN->escapeSimple($name)."%'";
+					$sql .= $field." ".PGV_DB_LIKE." '%".$DBCONN->escapeSimple($name)."%'";
 				}
 				$sql .= ") ";
 			}
@@ -1504,7 +1468,7 @@ function search_indis_soundex($soundex, $lastname, $firstname='', $place='', $sg
 					if ($pc>0)
 						$sql .= " OR ";
 					$pc++;
-					$sql .= $field." LIKE '%".$DBCONN->escapeSimple($place)."%'";
+					$sql .= $field." ".PGV_DB_LIKE." '%".$DBCONN->escapeSimple($place)."%'";
 				}
 				$sql .= ") ";
 			}
@@ -1716,23 +1680,16 @@ function search_indis_year_range($startyear, $endyear) {
 function search_fams($query, $allgeds=false, $ANDOR="AND", $allnames=false) {
 	global $TBLPREFIX, $GEDCOM, $famlist, $DBCONN, $DBTYPE, $GEDCOMS;
 
-	if (stristr($DBTYPE, "mysql")!==false)
-		$term = "REGEXP";
-	else
-		if (stristr($DBTYPE, "pgsql")!==false)
-			$term = "~*";
-		else
-			$term='LIKE';
 	$myfamlist = array();
 	if (!is_array($query))
-		$sql = "SELECT f_id, f_husb, f_wife, f_file, f_gedcom, f_numchil FROM ".$TBLPREFIX."families WHERE (f_gedcom $term '".$DBCONN->escapeSimple($query)."')";
+		$sql = "SELECT f_id, f_husb, f_wife, f_file, f_gedcom, f_numchil FROM ".$TBLPREFIX."families WHERE (f_gedcom ".PGV_DB_LIKE." '%".$DBCONN->escapeSimple($query)."%')";
 	else {
 		$sql = "SELECT f_id, f_husb, f_wife, f_file, f_gedcom, f_numchil FROM ".$TBLPREFIX."families WHERE (";
 		$i=0;
 		foreach ($query as $indexval => $q) {
 			if ($i>0)
 				$sql .= " $ANDOR ";
-			$sql .= "(f_gedcom $term '".$DBCONN->escapeSimple($q)."')";
+			$sql .= "(f_gedcom ".PGV_DB_LIKE." '%".$DBCONN->escapeSimple($q)."%')";
 			$i++;
 		}
 		$sql .= ")";
@@ -1857,14 +1814,14 @@ function search_fams_members($query, $allgeds=false, $ANDOR="AND", $allnames=fal
 
 	$myfamlist = array();
 	if (!is_array($query))
-		$sql = "SELECT f_id, f_husb, f_wife, f_file FROM ".$TBLPREFIX."families WHERE (f_husb='$query' OR f_wife='$query' OR f_chil LIKE '%$query;%')";
+		$sql = "SELECT f_id, f_husb, f_wife, f_file FROM ".$TBLPREFIX."families WHERE (f_husb='$query' OR f_wife='$query' OR f_chil ".PGV_DB_LIKE." '%$query;%')";
 	else {
 		$sql = "SELECT f_id, f_husb, f_wife, f_file FROM ".$TBLPREFIX."families WHERE (";
 		$i=0;
 		foreach ($query as $indexval => $q) {
 			if ($i>0)
 				$sql .= " $ANDOR ";
-			$sql .= "(f_husb='$query' OR f_wife='$query' OR f_chil LIKE '%$query;%')";
+			$sql .= "(f_husb='$query' OR f_wife='$query' OR f_chil ".PGV_DB_LIKE." '%$query;%')";
 			$i++;
 		}
 		$sql .= ")";
@@ -1918,20 +1875,13 @@ function search_sources($query, $allgeds=false, $ANDOR="AND") {
 	global $TBLPREFIX, $GEDCOM, $DBCONN, $DBTYPE, $GEDCOMS;
 
 	$mysourcelist = array();
-	if (stristr($DBTYPE, "mysql")!==false)
-		$term = "REGEXP";
-	else
-		if (stristr($DBTYPE, "pgsql")!==false)
-			$term = "~*";
-		else
-			$term='LIKE';
 	if (!is_array($query)) {
 		$sql = "SELECT s_id, s_name, s_file, s_gedcom FROM ".$TBLPREFIX."sources WHERE ";
 		//-- make sure that MySQL matches the upper and lower case utf8 characters
 		if (has_utf8($query))
-			$sql .= "(s_gedcom $term '".$DBCONN->escapeSimple(UTF8_strtoupper($query))."' OR s_gedcom $term '".$DBCONN->escapeSimple(UTF8_strtolower($query))."')";
+			$sql .= "(s_gedcom ".PGV_DB_LIKE." '%".$DBCONN->escapeSimple(UTF8_strtoupper($query))."%' OR s_gedcom ".PGV_DB_LIKE." '%".$DBCONN->escapeSimple(UTF8_strtolower($query))."%')";
 		else
-			$sql .= "s_gedcom $term '".$DBCONN->escapeSimple($query)."'";
+			$sql .= "s_gedcom ".PGV_DB_LIKE." '%".$DBCONN->escapeSimple($query)."%'";
 	} else {
 		$sql = "SELECT s_id, s_name, s_file, s_gedcom FROM ".$TBLPREFIX."sources WHERE (";
 		$i=0;
@@ -1939,9 +1889,9 @@ function search_sources($query, $allgeds=false, $ANDOR="AND") {
 			if ($i>0)
 				$sql .= " $ANDOR ";
 			if (has_utf8($q))
-				$sql .= "(s_gedcom $term '".$DBCONN->escapeSimple(UTF8_strtoupper($q))."' OR s_gedcom $term '".$DBCONN->escapeSimple(UTF8_strtolower($q))."')";
+				$sql .= "(s_gedcom ".PGV_DB_LIKE." '%".$DBCONN->escapeSimple(UTF8_strtoupper($q))."%' OR s_gedcom ".PGV_DB_LIKE." '%".$DBCONN->escapeSimple(UTF8_strtolower($q))."%')";
 			else
-				$sql .= "(s_gedcom $term '".$DBCONN->escapeSimple($q)."')";
+				$sql .= "(s_gedcom ".PGV_DB_LIKE." '%".$DBCONN->escapeSimple($q)."%')";
 			$i++;
 		}
 		$sql .= ")";
@@ -1991,7 +1941,7 @@ function get_place_parent_id($parent, $level) {
 	$parent_id=0;
 	for ($i=0; $i<$level; $i++) {
 		$escparent=preg_replace("/\?/","\\\\\\?", $DBCONN->escapeSimple($parent[$i]));
-		$psql = "SELECT p_id FROM ".$TBLPREFIX."places WHERE p_level=".$i." AND p_parent_id=$parent_id AND p_place LIKE '".$escparent."' AND p_file=".PGV_GED_ID." ORDER BY p_place";
+		$psql = "SELECT p_id FROM ".$TBLPREFIX."places WHERE p_level=".$i." AND p_parent_id=$parent_id AND p_place ".PGV_DB_LIKE." '".$escparent."' AND p_file=".PGV_GED_ID." ORDER BY p_place";
 		$res = dbquery($psql);
 		$row =& $res->fetchRow();
 		$res->free();
@@ -2045,7 +1995,7 @@ function get_place_positions($parent, $level='') {
 		$p_id = get_place_parent_id($parent, $level);
 	else {
 		//-- we don't know the level so get the any matching place
-		$sql = "SELECT DISTINCT pl_gid FROM ".$TBLPREFIX."placelinks, ".$TBLPREFIX."places WHERE p_place LIKE '".$DBCONN->escapeSimple($parent)."' AND p_file=pl_file AND p_id=pl_p_id AND p_file=".PGV_GED_ID;
+		$sql = "SELECT DISTINCT pl_gid FROM ".$TBLPREFIX."placelinks, ".$TBLPREFIX."places WHERE p_place ".PGV_DB_LIKE." '".$DBCONN->escapeSimple($parent)."' AND p_file=pl_file AND p_id=pl_p_id AND p_file=".PGV_GED_ID;
 		$res = dbquery($sql);
 		while ($row =& $res->fetchRow()) {
 			$positions[] = $row[0];
@@ -2236,7 +2186,7 @@ function get_fam_alpha() {
 		foreach ($danishTo as $k=>$v)
 			$famalpha[$v] = $v;
 
-	$sql = "SELECT DISTINCT i_letter AS alpha FROM ".$TBLPREFIX."individuals WHERE i_file=".PGV_GED_ID." AND i_gedcom LIKE '%1 FAMS%' ORDER BY alpha";
+	$sql = "SELECT DISTINCT i_letter AS alpha FROM ".$TBLPREFIX."individuals WHERE i_file=".PGV_GED_ID." AND i_gedcom ".PGV_DB_LIKE." '%1 FAMS%' ORDER BY alpha";
 	$res = dbquery($sql);
 
 	while ($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)){
@@ -2265,7 +2215,7 @@ function get_fam_alpha() {
 	}
 	$res->free();
 
-	$sql = "SELECT DISTINCT n_letter AS alpha FROM ".$TBLPREFIX."names, ".$TBLPREFIX."individuals WHERE i_file=n_file AND i_id=n_gid AND n_file=".PGV_GED_ID." AND i_gedcom LIKE '%1 FAMS%' ORDER BY alpha";
+	$sql = "SELECT DISTINCT n_letter AS alpha FROM ".$TBLPREFIX."names, ".$TBLPREFIX."individuals WHERE i_file=n_file AND i_id=n_gid AND n_file=".PGV_GED_ID." AND i_gedcom ".PGV_DB_LIKE." '%1 FAMS%' ORDER BY alpha";
 	$res = dbquery($sql);
 
 	while ($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)){
@@ -2344,12 +2294,12 @@ function get_alpha_indis($letter) {
 				if ($letter == "Å")
 					$text = "AA";
 		if (isset($text))
-			$sql .= "(i_letter = '".$DBCONN->escapeSimple($letter)."' OR i_name LIKE '%/".$DBCONN->escapeSimple($text)."%') ";
+			$sql .= "(i_letter = '".$DBCONN->escapeSimple($letter)."' OR i_name ".PGV_DB_LIKE." '%/".$DBCONN->escapeSimple($text)."%') ";
 		else
 			if ($letter=="A")
-				$sql .= "i_letter LIKE '".$DBCONN->escapeSimple($letter)."' ";
+				$sql .= "i_letter ".PGV_DB_LIKE." '".$DBCONN->escapeSimple($letter)."' ";
 			else
-				$sql .= "i_letter LIKE '".$DBCONN->escapeSimple($letter)."%' ";
+				$sql .= "i_letter ".PGV_DB_LIKE." '".$DBCONN->escapeSimple($letter)."%' ";
 		$checkDictSort = false;
 	} else
 		if ($MULTI_LETTER_ALPHABET[$LANGUAGE]!="") {
@@ -2373,7 +2323,7 @@ function get_alpha_indis($letter) {
 						break;
 			}
 				if ($MULTI_LETTER_ALPHABET[$LANGUAGE]=="")
-					$sql .= "(i_letter LIKE '".$DBCONN->escapeSimple($letter)."%'".$text.") ";
+					$sql .= "(i_letter ".PGV_DB_LIKE." '".$DBCONN->escapeSimple($letter)."%'".$text.") ";
 				else
 					$sql .= "(i_letter = '".$DBCONN->escapeSimple($letter)."'".$text.") ";
 			} else {
@@ -2388,7 +2338,7 @@ function get_alpha_indis($letter) {
 							break;
 		}
 					if ($MULTI_LETTER_ALPHABET[$LANGUAGE]=="")
-						$sql .= "(i_letter LIKE '".$DBCONN->escapeSimple($letter)."%'".$text.") ";
+						$sql .= "(i_letter ".PGV_DB_LIKE." '".$DBCONN->escapeSimple($letter)."%'".$text.") ";
 					else
 						$sql .= "(i_letter = '".$DBCONN->escapeSimple($letter)."'".$text.") ";
 	}
@@ -2396,7 +2346,7 @@ function get_alpha_indis($letter) {
 		}
 		if ($text=="") {
 			if ($MULTI_LETTER_ALPHABET[$LANGUAGE]=="")
-				$sql .= "i_letter LIKE '".$DBCONN->escapeSimple($letter)."%'";
+				$sql .= "i_letter ".PGV_DB_LIKE." '".$DBCONN->escapeSimple($letter)."%'";
 			else
 				$sql .= "i_letter = '".$DBCONN->escapeSimple($letter)."'";
 		}
@@ -2404,7 +2354,7 @@ function get_alpha_indis($letter) {
 
 	//-- add some optimization if the surname is set to speed up the lists
 	if (!empty($surname))
-		$sql .= "AND i_surname LIKE '%".$DBCONN->escapeSimple($surname)."%' ";
+		$sql .= "AND i_surname ".PGV_DB_LIKE." '%".$DBCONN->escapeSimple($surname)."%' ";
 	$sql .= "AND i_file=".PGV_GED_ID." ORDER BY i_name";
 	$res = dbquery($sql);
 	if (!DB::isError($res)) {
@@ -2430,9 +2380,9 @@ function get_alpha_indis($letter) {
 			$sql .= "(n_letter = '".$DBCONN->escapeSimple($letter)."' OR n_letter = '".$DBCONN->escapeSimple($text)."') ";
 		else
 			if ($letter=="A")
-				$sql .= "n_letter LIKE '".$DBCONN->escapeSimple($letter)."' ";
+				$sql .= "n_letter ".PGV_DB_LIKE." '".$DBCONN->escapeSimple($letter)."' ";
 			else
-				$sql .= "n_letter LIKE '".$DBCONN->escapeSimple($letter)."%' ";
+				$sql .= "n_letter ".PGV_DB_LIKE." '".$DBCONN->escapeSimple($letter)."%' ";
 		$checkDictSort = false;
 	} else
 		if ($MULTI_LETTER_ALPHABET[$LANGUAGE]!="") {
@@ -2456,7 +2406,7 @@ function get_alpha_indis($letter) {
 						break;
 				}
 				if ($MULTI_LETTER_ALPHABET[$LANGUAGE]=="")
-					$sql .= "(n_letter LIKE '".$DBCONN->escapeSimple($letter)."%'".$text.")";
+					$sql .= "(n_letter ".PGV_DB_LIKE." '".$DBCONN->escapeSimple($letter)."%'".$text.")";
 				else
 					$sql .= "(n_letter = '".$DBCONN->escapeSimple($letter)."'".$text.")";
 			} else {
@@ -2471,7 +2421,7 @@ function get_alpha_indis($letter) {
 							break;
 					}
 					if ($MULTI_LETTER_ALPHABET[$LANGUAGE]=="")
-						$sql .= "(n_letter LIKE '".$DBCONN->escapeSimple($letter)."%'".$text.")";
+						$sql .= "(n_letter ".PGV_DB_LIKE." '".$DBCONN->escapeSimple($letter)."%'".$text.")";
 					else
 						$sql .= "(n_letter = '".$DBCONN->escapeSimple($letter)."'".$text.")";
 				}
@@ -2479,14 +2429,14 @@ function get_alpha_indis($letter) {
 		}
 		if ($text=="") {
 			if ($MULTI_LETTER_ALPHABET[$LANGUAGE]=="")
-				$sql .= "n_letter LIKE '".$DBCONN->escapeSimple($letter)."%'";
+				$sql .= "n_letter ".PGV_DB_LIKE." '".$DBCONN->escapeSimple($letter)."%'";
 			else
 				$sql .= "n_letter = '".$DBCONN->escapeSimple($letter)."'";
 		}
 	}
 	//-- add some optimization if the surname is set to speed up the lists
 	if (!empty($surname))
-		$sql .= "AND n_surname LIKE '%".$DBCONN->escapeSimple($surname)."%' ";
+		$sql .= "AND n_surname ".PGV_DB_LIKE." '%".$DBCONN->escapeSimple($surname)."%' ";
 	if (!$SHOW_MARRIED_NAMES)
 		$sql .= "AND n_type!='C' ";
 	$sql .= "AND i_file=".PGV_GED_ID." ORDER BY i_name";
@@ -2513,7 +2463,7 @@ function get_surname_indis($surname) {
 	global $TBLPREFIX, $SHOW_MARRIED_NAMES, $DBCONN;
 
 	$tindilist = array();
-	$sql = "SELECT i_id FROM ".$TBLPREFIX."individuals WHERE i_surname LIKE '".$DBCONN->escapeSimple($surname)."' ";
+	$sql = "SELECT i_id FROM ".$TBLPREFIX."individuals WHERE i_surname ".PGV_DB_LIKE." '".$DBCONN->escapeSimple($surname)."' ";
 	$sql .= "AND i_file=".PGV_GED_ID;
 	$res = dbquery($sql);
 
@@ -2522,7 +2472,7 @@ function get_surname_indis($surname) {
 	}
 	$res->free();
 
-	$sql = "SELECT i_id FROM ".$TBLPREFIX."individuals, ".$TBLPREFIX."names WHERE i_id=n_gid AND i_file=n_file AND n_surname LIKE '".$DBCONN->escapeSimple($surname)."' ";
+	$sql = "SELECT i_id FROM ".$TBLPREFIX."individuals, ".$TBLPREFIX."names WHERE i_id=n_gid AND i_file=n_file AND n_surname ".PGV_DB_LIKE." '".$DBCONN->escapeSimple($surname)."' ";
 	if (!$SHOW_MARRIED_NAMES)
 		$sql .= "AND n_type!='C' ";
 	$sql .= "AND i_file=".PGV_GED_ID;
@@ -2702,21 +2652,11 @@ function delete_gedcom($ged) {
 function get_list_size($list, $filter="") {
 	global $TBLPREFIX, $DBTYPE;
 
-	if ($filter) {
-		if (stristr($DBTYPE, "mysql")!==false)
-			$term = "REGEXP";
-		else
-			if (stristr($DBTYPE, "pgsql")!==false)
-				$term = "~*";
-			else
-				$term = "LIKE";
-	}
-
 	switch($list) {
 		case "indilist":
 			$sql = "SELECT count(i_file) FROM ".$TBLPREFIX."individuals WHERE i_file=".PGV_GED_ID;
 			if ($filter)
-				$sql .= " AND i_gedcom $term '%$filter%'";
+				$sql .= " AND i_gedcom ".PGV_DB_LIKE." '%$filter%'";
 			$res = dbquery($sql);
 			$row =& $res->fetchRow();
 			$res->free();
@@ -2725,7 +2665,7 @@ function get_list_size($list, $filter="") {
 		case "famlist":
 			$sql = "SELECT count(f_file) FROM ".$TBLPREFIX."families WHERE f_file=".PGV_GED_ID;
 			if ($filter)
-				$sql .= " AND f_gedcom $term '%$filter%'";
+				$sql .= " AND f_gedcom ".PGV_DB_LIKE." '%$filter%'";
 			$res = dbquery($sql);
 
 			$row =& $res->fetchRow();
@@ -2735,7 +2675,7 @@ function get_list_size($list, $filter="") {
 		case "sourcelist":
 			$sql = "SELECT count(s_file) FROM ".$TBLPREFIX."sources WHERE s_file=".PGV_GED_ID;
 			if ($filter)
-				$sql .= " AND s_gedcom $term '%$filter%'";
+				$sql .= " AND s_gedcom ".PGV_DB_LIKE." '%$filter%'";
 			$res = dbquery($sql);
 
 			$row =& $res->fetchRow();
@@ -2745,7 +2685,7 @@ function get_list_size($list, $filter="") {
 		case "objectlist": // media object
 			$sql = "SELECT count(m_id) FROM ".$TBLPREFIX."media WHERE m_gedfile=".PGV_GED_ID;
 			if ($filter)
-				$sql .= " AND m_gedrec $term '%$filter%'";
+				$sql .= " AND m_gedrec ".PGV_DB_LIKE." '%$filter%'";
 			$res = dbquery($sql, false);
 			//-- prevent failure if DB tables are lost
 			if (DB::isError($res)) return 0;
@@ -2756,7 +2696,7 @@ function get_list_size($list, $filter="") {
 		case "otherlist": // REPO
 			$sql = "SELECT count(o_file) FROM ".$TBLPREFIX."other WHERE o_file=".PGV_GED_ID;
 			if ($filter)
-				$sql .= " AND o_gedcom $term '%$filter%'";
+				$sql .= " AND o_gedcom ".PGV_DB_LIKE." '%$filter%'";
 			$res = dbquery($sql);
 
 			$row =& $res->fetchRow();
@@ -2847,7 +2787,7 @@ function get_server_list(){
 	$sitelist = array();
 
 	if (isset($GEDCOMS[$GEDCOM]) && check_for_import($GEDCOM)) {
-		$sql = "SELECT s_id ,s_name, s_gedcom FROM {$TBLPREFIX}sources WHERE s_file=".PGV_GED_ID." AND s_gedcom LIKE '%1 _DBID%' ORDER BY s_name";
+		$sql = "SELECT s_id ,s_name, s_gedcom FROM {$TBLPREFIX}sources WHERE s_file=".PGV_GED_ID." AND s_gedcom ".PGV_DB_LIKE." '%1 _DBID%' ORDER BY s_name";
 		$res = dbquery($sql, false);
 		if (DB::isError($res))
 			return $sitelist;

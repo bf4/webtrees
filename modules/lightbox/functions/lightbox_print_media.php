@@ -62,44 +62,44 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	if ($t==1) {
 		$tt      = $pgv_lang["ROW_TYPE__photo"];
 		$typ2b   = "(";
-		$typ2b  .= " (m_gedrec LIKE '%TYPE photo%')       OR ";
-		$typ2b  .= " (m_gedrec LIKE '%TYPE map%')         OR ";
-		$typ2b  .= " (m_gedrec LIKE '%TYPE painting%')    OR ";
-		$typ2b  .= " (m_gedrec LIKE '%TYPE tombstone%')      ";
+		$typ2b  .= " (m_gedrec ".PGV_DB_LIKE." '%TYPE photo%')       OR ";
+		$typ2b  .= " (m_gedrec ".PGV_DB_LIKE." '%TYPE map%')         OR ";
+		$typ2b  .= " (m_gedrec ".PGV_DB_LIKE." '%TYPE painting%')    OR ";
+		$typ2b  .= " (m_gedrec ".PGV_DB_LIKE." '%TYPE tombstone%')      ";
 		$typ2b  .= ")";
 	}
 	if ($t==2){
 		$tt      = $pgv_lang["ROW_TYPE__document"];
 		$typ2b   = "(";
-		$typ2b  .= " (m_gedrec LIKE '%TYPE card%')        OR ";
-		$typ2b  .= " (m_gedrec LIKE '%TYPE certificate%') OR ";
-		$typ2b  .= " (m_gedrec LIKE '%TYPE document%')    OR ";
-		$typ2b  .= " (m_gedrec LIKE '%TYPE magazine%')    OR ";
-		$typ2b  .= " (m_gedrec LIKE '%TYPE manuscript%')  OR ";
-		$typ2b  .= " (m_gedrec LIKE '%TYPE newspaper%')      ";
+		$typ2b  .= " (m_gedrec ".PGV_DB_LIKE." '%TYPE card%')        OR ";
+		$typ2b  .= " (m_gedrec ".PGV_DB_LIKE." '%TYPE certificate%') OR ";
+		$typ2b  .= " (m_gedrec ".PGV_DB_LIKE." '%TYPE document%')    OR ";
+		$typ2b  .= " (m_gedrec ".PGV_DB_LIKE." '%TYPE magazine%')    OR ";
+		$typ2b  .= " (m_gedrec ".PGV_DB_LIKE." '%TYPE manuscript%')  OR ";
+		$typ2b  .= " (m_gedrec ".PGV_DB_LIKE." '%TYPE newspaper%')      ";
 		$typ2b  .= ")";
 	}
 	if ($t==3){
 		$tt      = $pgv_lang["ROW_TYPE__census"];
 		$typ2b   = "(";
-		$typ2b  .= " (m_gedrec LIKE '%TYPE electronic%')  OR ";
-		$typ2b  .= " (m_gedrec LIKE '%TYPE fiche%')       OR ";
-		$typ2b  .= " (m_gedrec LIKE '%TYPE film%')           ";
+		$typ2b  .= " (m_gedrec ".PGV_DB_LIKE." '%TYPE electronic%')  OR ";
+		$typ2b  .= " (m_gedrec ".PGV_DB_LIKE." '%TYPE fiche%')       OR ";
+		$typ2b  .= " (m_gedrec ".PGV_DB_LIKE." '%TYPE film%')           ";
 		$typ2b  .= ")";
 	}
 	if ($t==4){
 		$tt      = $pgv_lang["ROW_TYPE__other"];
 		$typ2b   = "(";
-		$typ2b  .= " (m_gedrec NOT LIKE '%TYPE %')        OR ";
-		$typ2b  .= " (m_gedrec LIKE     '%TYPE book%')    OR ";
-		$typ2b  .= " (m_gedrec LIKE     '%TYPE audio%')   OR ";
-		$typ2b  .= " (m_gedrec LIKE     '%TYPE video%')   OR ";
-		$typ2b  .= " (m_gedrec LIKE     '%TYPE other%')      ";
+		$typ2b  .= " (m_gedrec NOT ".PGV_DB_LIKE." '%TYPE %')        OR ";
+		$typ2b  .= " (m_gedrec ".PGV_DB_LIKE."     '%TYPE book%')    OR ";
+		$typ2b  .= " (m_gedrec ".PGV_DB_LIKE."     '%TYPE audio%')   OR ";
+		$typ2b  .= " (m_gedrec ".PGV_DB_LIKE."     '%TYPE video%')   OR ";
+		$typ2b  .= " (m_gedrec ".PGV_DB_LIKE."     '%TYPE other%')      ";
 		$typ2b  .= ")";
 	}
 	if ($t==5){
 		$tt      = $pgv_lang["ROW_TYPE__footnotes"];
-		$typ2b   = "(m_gedrec LIKE     '%%')";
+		$typ2b   = "(m_gedrec ".PGV_DB_LIKE."     '%%')";
 	}
 
 	if (!showFact("OBJE", $pid)) return false;
@@ -163,7 +163,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	}
 	$sqlmm .= ") AND mm_gedfile = '".$GEDCOMS[$GEDCOM]["id"]."' AND mm_media=m_media AND mm_gedfile=m_gedfile ";
 	//-- for family and source page only show level 1 obje references
-	if ($level>0) $sqlmm .= "AND mm_gedrec LIKE '$level OBJE%'";
+	if ($level>0) $sqlmm .= "AND mm_gedrec ".PGV_DB_LIKE." '$level OBJE%'";
 
 	$sqlmm .= " AND $typ2b ";
 	// $sqlmm .= " ORDER BY m_titl ";

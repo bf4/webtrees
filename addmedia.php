@@ -281,7 +281,7 @@ if ($action=="newentry") {
 			//-- check if the file is used in more than one gedcom
 			//-- do not allow it to be moved or renamed if it is
 			$myFile = str_replace($MEDIA_DIRECTORY, "", $oldFolder.$oldFilename);
-			$sql = "SELECT 1 FROM {$TBLPREFIX}media WHERE m_file LIKE '%".$DBCONN->escapeSimple($myFile)."' AND m_gedfile<>".PGV_GED_ID;
+			$sql = "SELECT 1 FROM {$TBLPREFIX}media WHERE m_file ".PGV_DB_LIKE." '%".$DBCONN->escapeSimple($myFile)."' AND m_gedfile<>".PGV_GED_ID;
 			$res = dbquery($sql);
 			$onegedcom = true;
 			if ($row=$res->fetchRow(DB_FETCHMODE_ASSOC))
@@ -432,7 +432,7 @@ if ($action == "update") {
 	//-- check if the file is used in more than one gedcom
 	//-- do not allow it to be moved or renamed if it is
 	$myFile = str_replace($MEDIA_DIRECTORY, "", $oldFolder.$oldFilename);
-	$sql = "SELECT 1 FROM {$TBLPREFIX}media WHERE m_file LIKE '%".$DBCONN->escapeSimple($myFile)."' AND m_gedfile<>".PGV_GED_ID;
+	$sql = "SELECT 1 FROM {$TBLPREFIX}media WHERE m_file ".PGV_DB_LIKE." '%".$DBCONN->escapeSimple($myFile)."' AND m_gedfile<>".PGV_GED_ID;
 	$res = dbquery($sql);
 	$onegedcom = true;
 	if ($row=$res->fetchRow(DB_FETCHMODE_ASSOC))

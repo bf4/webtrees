@@ -323,7 +323,7 @@ class Media extends GedcomRecord {
 
 		if (is_null($obje)) return false;
 		if (empty($FILE)) $FILE = $GEDCOM;
-		$sql = "SELECT m_media FROM ".$TBLPREFIX."media WHERE m_file='".$DBCONN->escapeSimple($obje->file)."' AND m_titl LIKE '".$DBCONN->escapeSimple($obje->title)."' AND m_gedfile=".$GEDCOMS[$FILE]['id'];
+		$sql = "SELECT m_media FROM ".$TBLPREFIX."media WHERE m_file='".$DBCONN->escapeSimple($obje->file)."' AND m_titl ".PGV_DB_LIKE." '".$DBCONN->escapeSimple($obje->title)."' AND m_gedfile=".$GEDCOMS[$FILE]['id'];
 		$res = dbquery($sql);
 
 		if ($res->numRows()>0) {

@@ -165,7 +165,7 @@ class AdvancedSearchController extends SearchController {
 	}
 	
 	function advancedSearch($justSql=false, $table="individuals", $prefix="i") {
-		global $TBLPREFIX, $REGEXP_DB, $DBCONN, $DBTYPE;
+		global $TBLPREFIX, $DBCONN, $DBTYPE;
 		global $gedcom_record_cache;
 		
 		DMsoundex("", "opencache");
@@ -219,7 +219,7 @@ class AdvancedSearchController extends SearchController {
 									if ($fnc>0)
 										$sqlwhere .= " OR ";
 									$fnc++;
-									$sqlwhere .= $field." LIKE '%".$DBCONN->escapeSimple($name1)."%'";
+									$sqlwhere .= $field." ".PGV_DB_LIKE." '%".$DBCONN->escapeSimple($name1)."%'";
 								}
 							}
 							$sqlwhere .= ") ";
@@ -234,13 +234,13 @@ class AdvancedSearchController extends SearchController {
 							$namesTable = true;
 						}
 						if (!isset($parts[1])) {
-							$sqlwhere .= " AND (n_name LIKE '%".$DBCONN->escapeSimple($value)."%' OR i_name LIKE '%".$DBCONN->escapeSimple($value)."%')";
+							$sqlwhere .= " AND (n_name ".PGV_DB_LIKE." '%".$DBCONN->escapeSimple($value)."%' OR i_name ".PGV_DB_LIKE." '%".$DBCONN->escapeSimple($value)."%')";
 						}
 						else if ($parts[1]=="GIVN") {
-							$sqlwhere .= " AND (n_name LIKE '%".$DBCONN->escapeSimple($value)."%' OR i_name LIKE '%".$DBCONN->escapeSimple($value)."%')";
+							$sqlwhere .= " AND (n_name ".PGV_DB_LIKE." '%".$DBCONN->escapeSimple($value)."%' OR i_name ".PGV_DB_LIKE." '%".$DBCONN->escapeSimple($value)."%')";
 						}
 						else if ($parts[1]=="SURN") {
-							$sqlwhere .= " AND (n_surname LIKE '%".$DBCONN->escapeSimple($value)."%' OR i_surname LIKE '%".$DBCONN->escapeSimple($value)."%')";
+							$sqlwhere .= " AND (n_surname ".PGV_DB_LIKE." '%".$DBCONN->escapeSimple($value)."%' OR i_surname ".PGV_DB_LIKE." '%".$DBCONN->escapeSimple($value)."%')";
 						}
 					}
 				}
@@ -293,7 +293,7 @@ class AdvancedSearchController extends SearchController {
 								if ($fnc>0)
 									$sqlwhere .= " OR ";
 								$fnc++;
-								$sqlwhere .= $field." LIKE '%".$DBCONN->escapeSimple($name1)."%'";
+								$sqlwhere .= $field." ".PGV_DB_LIKE." '%".$DBCONN->escapeSimple($name1)."%'";
 							}
 						}
 						$sqlwhere .= ") ";
@@ -346,7 +346,7 @@ class AdvancedSearchController extends SearchController {
 						}
 						else $this->fields[$j] = preg_replace("/^".$parts[0].":/","", $this->fields[$j]);
 					}
-					$sqlwhere .= " AND (FAMC.f_chil LIKE CONCAT('%',i_id,';%'))";
+					$sqlwhere .= " AND (FAMC.f_chil ".PGV_DB_LIKE." CONCAT('%',i_id,';%'))";
 					$subsql = $this->advancedSearch(true,"families","f");
 					$sqlwhere .= " AND ROW(FAMC.f_id, FAMC.f_file) IN (".$subsql.")";
 					$this->fields = $oldfields;
@@ -391,24 +391,15 @@ class AdvancedSearchController extends SearchController {
 			//-- handle everything else
 			else {
 				if (!empty($value)) {
-					$term = "LIKE";
-					if (stristr($DBTYPE, "mysql")!==false)
-						$term = "REGEXP";
-					else
-						if (stristr($DBTYPE, "pgsql")!==false)
-							$term = "~*";
 					$sqlwhere .= " AND i_gedcom ".$term." '";
 						
 					$ct = count($parts);
 					for($j=0; $j<$ct; $j++) {
 						 $sqlwhere .= ($j+1)." ".$parts[$j];
 						 if ($j<$ct-1) {
-						 	if ($REGEXP_DB) $sqlwhere .= "[^\n]*\n";
-						 	else $sqlwhere .= "%";
-						 }
-						 else {
-						 	if ($REGEXP_DB) $sqlwhere .= "[^\n]*".$DBCONN->escapeSimple($value);
-						 	else $sqlwhere .= "%".$DBCONN->escapeSimple($value)."%";
+						 	$sqlwhere .= "%";
+						 } else {
+						 	$sqlwhere .= "%".$DBCONN->escapeSimple($value)."%";
 						 }
 					}
 					$sqlwhere .= "'";

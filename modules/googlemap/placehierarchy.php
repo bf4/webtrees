@@ -84,7 +84,7 @@ function get_placeid($place) {
 			$placelist = create_possible_place_names($par[$i], $i+1);
 			foreach ($placelist as $key => $placename) {
 				$escparent=preg_replace("/\?/","\\\\\\?", $DBCONN->escapeSimple($placename));
-				$psql = "SELECT pl_id FROM {$TBLPREFIX}placelocation WHERE pl_level={$i} AND pl_parent_id={$place_id} AND pl_place LIKE '{$escparent}' ORDER BY pl_place";
+				$psql = "SELECT pl_id FROM {$TBLPREFIX}placelocation WHERE pl_level={$i} AND pl_parent_id={$place_id} AND pl_place ".PGV_DB_LIKE." '{$escparent}' ORDER BY pl_place";
 				$res = dbquery($psql);
 				$row =& $res->fetchRow();
 				$res->free();

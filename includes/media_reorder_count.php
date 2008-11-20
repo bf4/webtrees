@@ -71,7 +71,7 @@ define('PGV_MEDIA_REORDER_COUNT_PHP', '');
 			//-- for family and source page only show level 1 obje references----------------------------------------
 			$level=0;
 			if ($level>0) {
-				$sqlmm .= "AND mm_gedrec LIKE '$level OBJE%'";
+				$sqlmm .= "AND mm_gedrec ".PGV_DB_LIKE." '$level OBJE%'";
 			}
 			// Order by -------------------------------------------------------
 			$sqlmm .= " ORDER BY mm_gid DESC ";

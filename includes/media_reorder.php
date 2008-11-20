@@ -130,7 +130,7 @@ include_once("functions_print_facts.php");
 	}
 	$sqlmm .= ") AND mm_gedfile = '".$GEDCOMS[$GEDCOM]["id"]."' AND mm_media=m_media AND mm_gedfile=m_gedfile ";
 	//-- for family and source page only show level 1 obje references
-	if ($level>0) $sqlmm .= "AND mm_gedrec LIKE '$level OBJE%'";
+	if ($level>0) $sqlmm .= "AND mm_gedrec ".PGV_DB_LIKE." '$level OBJE%'";
 
 	if ($sort_ct>0) {
 		$sqlmm .= $orderbylist;

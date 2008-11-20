@@ -10,6 +10,14 @@
 
 
 Version 4.2.0
+ - Fixed: [ 1786448 ] SVN1545 - searching for \\ causes Apache to crash (fisharebest)
+ - Fixed: [ 1687548 ] 41b4 Search does not recognise multiple ÄäÖöÅå (fisharebest)
+ - Fixed: [ 2152304 ] [4030] Advanced Search (fisharebest)
+ - Fixed: [ 2154987 ] [4017] ordinary search (fisharebest)
+ - Fixed: [ 1992158 ] Search failed with polish letters (fisharebest)
+ - Fixed: [ 1852202 ] 4.1.3 - Search on UTF-8 characters is case sensitive (fisharebest)
+ - Fixed: [ 2046137 ] no search results with german characters (fisharebest)
+ - Fixed: [ 1784998 ] Search causes errors (fisharebest)
  - Fixed: [ 1493546 ] 4.08b Bad create SQL table with national support of UTF-8 (fisharebest)
  - Fixed: [ 2275883 ] Wrong thumbnail path using Media Firewall (canajun2eh)
  - Fixed: [ 1835731 ] Favorites summary doesn't work -> fv_gid too short (fisharebest)

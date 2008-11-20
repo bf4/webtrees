@@ -175,7 +175,7 @@ class ra_functions {
 				for($i = 0; ($i < count($parts) && $i<5); $i++)
 				{
 					if (!empty($parts[$numOfParts])) {
-						$sql .= ' AND PL_LV'.($i+1).' LIKE \'%'.$DBCONN->escapeSimple($parts[$numOfParts]).'%\'';
+						$sql .= ' AND PL_LV'.($i+1)." ".PGV_DB_LIKE." '%".$DBCONN->escapeSimple($parts[$numOfParts]).'%\'';
 					}
 					$numOfParts--;
 				}
