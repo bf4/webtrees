@@ -267,7 +267,7 @@ if ($action=="ImportGedcom") {
 			if ($escparent == "") {
 				$escparent = "Unknown";
 			}
-			$psql = "SELECT pl_id,pl_long,pl_lati,pl_zoom FROM ".$TBLPREFIX."placelocation WHERE pl_level=".$i." AND pl_parent_id=$parent_id AND pl_place LIKE '".$DBCONN->escapeSimple($escparent)."'";
+			$psql = "SELECT pl_id,pl_long,pl_lati,pl_zoom FROM ".$TBLPREFIX."placelocation WHERE pl_level=".$i." AND pl_parent_id=$parent_id AND pl_place ".PGV_DB_LIKE." '".$DBCONN->escapeSimple($escparent)."'";
 			$res = dbquery($psql);
 			$row =& $res->fetchRow();
 			$res->free();
@@ -442,7 +442,7 @@ if ($action=="ImportFile2") {
 			if ($escparent == "") {
 				$escparent = "Unknown";
 			}
-			$psql = "SELECT pl_id,pl_long,pl_lati,pl_zoom,pl_icon FROM ".$TBLPREFIX."placelocation WHERE pl_level=".$i." AND pl_parent_id=$parent_id AND pl_place LIKE '".$escparent."' ORDER BY pl_place";
+			$psql = "SELECT pl_id,pl_long,pl_lati,pl_zoom,pl_icon FROM ".$TBLPREFIX."placelocation WHERE pl_level=".$i." AND pl_parent_id=$parent_id AND pl_place ".PGV_DB_LIKE." '".$escparent."' ORDER BY pl_place";
 			$res = dbquery($psql);
 			$row =& $res->fetchRow();
 			$res->free();

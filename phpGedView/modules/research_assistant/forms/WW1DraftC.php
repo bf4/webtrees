@@ -539,7 +539,7 @@ return false;}return true;}
 	function processSimpleCitation() {
 		global $TBLPREFIX, $DBCONN;
     	//-- delete any old census records
-		$sql = "DELETE FROM ".$TBLPREFIX."taskfacts WHERE tf_t_id='".$DBCONN->escapeSimple($_REQUEST['taskid'])."' AND tf_factrec LIKE '1 _MILI%'";
+		$sql = "DELETE FROM ".$TBLPREFIX."taskfacts WHERE tf_t_id='".$DBCONN->escapeSimple($_REQUEST['taskid'])."' AND tf_factrec ".PGV_DB_LIKE." '1 _MILI%'";
 		$res = dbquery($sql);
    
 		// Set our output to nothing, this supresses a warning that we would otherwise get.

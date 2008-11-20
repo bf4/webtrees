@@ -310,7 +310,7 @@ while ($x<$i) {
 		$placelist=create_possible_place_names($levels[$z], $z+1); // add the necessary prefix/postfix values to the place name
 		foreach ($placelist as $key=>$placename) {
 			$escparent=preg_replace("/\?/","\\\\\\?", $DBCONN->escapeSimple($placename));
-			$psql="SELECT pl_id, pl_place, pl_long, pl_lati, pl_zoom FROM {$TBLPREFIX}placelocation WHERE pl_level={$z} AND pl_parent_id={$id} AND pl_place LIKE '{$escparent}' ORDER BY pl_place";
+			$psql="SELECT pl_id, pl_place, pl_long, pl_lati, pl_zoom FROM {$TBLPREFIX}placelocation WHERE pl_level={$z} AND pl_parent_id={$id} AND pl_place ".PGV_DB_LIKE." '{$escparent}' ORDER BY pl_place";
 			$res=dbquery($psql);
 			$row=& $res->fetchRow(DB_FETCHMODE_ASSOC);
 			$res->free();

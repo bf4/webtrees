@@ -302,7 +302,7 @@ require_once("includes/class_person.php");
 				$tempFullArray[] = $factInfer;
 			}
 		}
-			$sql = "select * from ".$TBLPREFIX."probabilities where pr_file=".$GEDCOMS[$GEDCOM]['id']." AND pr_f_lvl LIKE '".$factType."%' ORDER BY (pr_matches / pr_count) DESC";
+			$sql = "select * from ".$TBLPREFIX."probabilities where pr_file=".$GEDCOMS[$GEDCOM]['id']." AND pr_f_lvl ".PGV_DB_LIKE." '".$factType."%' ORDER BY (pr_matches / pr_count) DESC";
 	 		$result = dbquery($sql);
 	 		//Create an array to hold global inferences
 			$globalInference = array();

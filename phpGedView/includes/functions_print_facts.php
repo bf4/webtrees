@@ -1332,7 +1332,7 @@ function print_main_media($pid, $level=1, $related=false, $noedit=false) {
 	}
 	$sqlmm .= ") AND mm_gedfile = '".$GEDCOMS[$GEDCOM]["id"]."' AND mm_media=m_media AND mm_gedfile=m_gedfile ";
 	//-- for family and source page only show level 1 obje references
-	if ($level>0) $sqlmm .= "AND mm_gedrec LIKE '$level OBJE%'";
+	if ($level>0) $sqlmm .= "AND mm_gedrec ".PGV_DB_LIKE." '$level OBJE%'";
 
 	// LBox --- media sort -------------------------------------
 	if ($sort_ct>0) {

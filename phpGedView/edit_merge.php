@@ -174,7 +174,7 @@ if ($action!="choose") {
 						if ($success) print "<br />".$pgv_lang["gedrec_deleted"]."<br />\n";
 
 						//-- replace all the records that link to gid2
-						$sql = "SELECT i_id, i_gedcom FROM ".$TBLPREFIX."individuals WHERE i_file=".PGV_GED_ID." AND i_gedcom LIKE '%@$gid2@%'";
+						$sql = "SELECT i_id, i_gedcom FROM ".$TBLPREFIX."individuals WHERE i_file=".PGV_GED_ID." AND i_gedcom ".PGV_DB_LIKE." '%@$gid2@%'";
 						$res = dbquery($sql);
 						while($row = $res->fetchRow()) {
 							$record = $row[1];
@@ -186,7 +186,7 @@ if ($action!="choose") {
 								replace_gedrec($gid, $newrec);
 							}
 						}
-						$sql = "SELECT f_id, f_gedcom FROM ".$TBLPREFIX."families WHERE f_file=".PGV_GED_ID." AND f_gedcom LIKE '%@$gid2@%'";
+						$sql = "SELECT f_id, f_gedcom FROM ".$TBLPREFIX."families WHERE f_file=".PGV_GED_ID." AND f_gedcom ".PGV_DB_LIKE." '%@$gid2@%'";
 						$res = dbquery($sql);
 						while($row = $res->fetchRow()) {
 							$record = $row[1];
@@ -204,7 +204,7 @@ if ($action!="choose") {
 							}
 							replace_gedrec($gid, $newrec);
 						}
-						$sql = "SELECT s_id, s_gedcom FROM ".$TBLPREFIX."sources WHERE s_file=".PGV_GED_ID." AND s_gedcom LIKE '%@$gid2@%'";
+						$sql = "SELECT s_id, s_gedcom FROM ".$TBLPREFIX."sources WHERE s_file=".PGV_GED_ID." AND s_gedcom ".PGV_DB_LIKE." '%@$gid2@%'";
 						$res = dbquery($sql);
 						while($row = $res->fetchRow()) {
 							$record = $row[1];
@@ -214,7 +214,7 @@ if ($action!="choose") {
 							$newrec = preg_replace("/@$gid2@/", "@$gid1@", $record);
 							replace_gedrec($gid, $newrec);
 						}
-						$sql = "SELECT o_id, o_gedcom FROM ".$TBLPREFIX."other WHERE o_file=".PGV_GED_ID." AND o_gedcom LIKE '%@$gid2@%'";
+						$sql = "SELECT o_id, o_gedcom FROM ".$TBLPREFIX."other WHERE o_file=".PGV_GED_ID." AND o_gedcom ".PGV_DB_LIKE." '%@$gid2@%'";
 						$res = dbquery($sql);
 						while($row = $res->fetchRow()) {
 							$record = $row[1];

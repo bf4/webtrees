@@ -704,7 +704,7 @@ if (check_media_structure()) {
 			$myFile = str_replace($MEDIA_DIRECTORY, "", $filename);
 			//-- figure out how many levels are in this file
 			$mlevels = preg_split("~[/\\\]~", $filename);
-			$sql = "SELECT * FROM ".$TBLPREFIX."media WHERE m_file LIKE '%".$DBCONN->escapeSimple($myFile)."'";
+			$sql = "SELECT * FROM ".$TBLPREFIX."media WHERE m_file ".PGV_DB_LIKE." '%".$DBCONN->escapeSimple($myFile)."'";
 			$res = dbquery($sql);
 
 			while($row=$res->fetchRow(DB_FETCHMODE_ASSOC)) {

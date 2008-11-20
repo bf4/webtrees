@@ -533,7 +533,7 @@ function get_medialist($currentdir = false, $directory = "", $linkonly = false, 
 		$sql .= " ORDER BY ".PGV_DB_RANDOM;
 		$res = & dbquery($sql, true, 5);
 	} else {
-		$sql .= " AND (m_file LIKE '%" . $DBCONN->escapeSimple($myDir) . "%' OR m_file LIKE '%://%') ORDER BY m_id desc";
+		$sql .= " AND (m_file ".PGV_DB_LIKE." '%" . $DBCONN->escapeSimple($myDir) . "%' OR m_file ".PGV_DB_LIKE." '%://%') ORDER BY m_id desc";
 		$res = & dbquery($sql);
 	}
 	$mediaObjects = array ();
@@ -964,12 +964,8 @@ function filterMedia($media, $filter, $acceptExt) {
  * @return	array $myindilist array with all individuals that matched the query
  */
 function search_media_pids($query, $allgeds = false, $ANDOR = "AND") {
-	global $TBLPREFIX, $GEDCOM, $DBCONN, $REGEXP_DB, $GEDCOMS;
+	global $TBLPREFIX, $GEDCOM, $DBCONN, $GEDCOMS;
 	$myindilist = array ();
-	if ($REGEXP_DB)
-		$term = "REGEXP";
-	else
-		$term = "LIKE";
 	if (!is_array($query))
 		$sql = "SELECT m_media as m_media FROM " . $TBLPREFIX . "media WHERE (m_gedrec $term '" . $DBCONN->escapeSimple(strtoupper($query)) . "' OR m_gedrec $term '" . $DBCONN->escapeSimple(UTF8_strtoupper($query)) . "' OR m_gedrec $term '" . $DBCONN->escapeSimple(UTF8_strtolower($query)) . "')";
 	else {
@@ -2070,7 +2066,7 @@ function PrintMediaLinks($links, $size = "small") {
 
 function get_media_id_from_file($filename){
 	global $TBLPREFIX, $BUILDING_INDEX, $DBCONN, $GEDCOMS, $DBCONN;
-	$dbq = "select m_media from ".$TBLPREFIX."media where m_file LIKE '%".$DBCONN->escapeSimple($filename)."'";
+	$dbq = "select m_media from ".$TBLPREFIX."media where m_file ".PGV_DB_LIKE." '%".$DBCONN->escapeSimple($filename)."'";
 	$dbr = dbquery($dbq);
 	$mid = $dbr->fetchRow();
 	return $mid[0];
