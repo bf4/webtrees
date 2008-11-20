@@ -1640,6 +1640,8 @@ class Person extends GedcomRecord {
 			// GIVN and SURN can be comma-separated lists.
 			$surns=preg_split('/ *, */', $surn);
 			$givn=str_replace(array(',', ', '), ' ', $givn);
+			// SPFX+SURN for lists
+			$surn=($spfx?$spfx.' ':'').$surn;
 		} else {
 			$name=$full;
 			// We do not have a structured name - extract the GIVN and SURN(s) ourselves
@@ -1675,6 +1677,8 @@ class Person extends GedcomRecord {
 						}
 					}
 				}
+				// SPFX+SURN for lists
+				$surn=($spfx ? $spfx.' ' : '').implode(' ', $surns);
 				// Extract the GIVN.  Before first "/" and after last.
 				$pos1=strpos($name, '/');
 				if ($pos1===false) {
@@ -1738,6 +1742,11 @@ class Person extends GedcomRecord {
 			$full=trim(str_replace(array('/', '  '), array('', ' '), $full));
 		}
 
+		// Need the "not known" place holders for the database
+		$fullNN=$full;
+		$listNN=$list;
+		$surname=$surn;
+	
 		// Hungarians want the "full" name to be the surname first (i.e. "list") variant
 		if ($NAME_REVERSE) {
 			$full=$list;
@@ -1754,8 +1763,7 @@ class Person extends GedcomRecord {
 		$list=preg_replace('/(\S*)\*/', '<span class="starredname">\\1</span>', $list);
 
 		// If the name is written in greek/cyrillic/hebrew/etc., use the "unknown" name
-		// from that character set.  Otherwise use the one in the language file.
-		
+		// from that character set.  Otherwise use the one in the language file.		
 		if ($givn=='@P.N.' || $surn=='@N.N.' || $surns[0]=='@N.N.') {
 			if ($givn=='@P.N.' && ($surn=='@N.N.' || $surns[0]=='@N.N.')) {
 				$PN=$pgv_lang['PN'];
@@ -1780,7 +1788,17 @@ class Person extends GedcomRecord {
 			if (substr($SURN, 0, 2)=='MC'  ) { $SURN='MAC'.substr($SURN, 2); }
 			if (substr($SURN, 0, 4)=='MAC ') { $SURN='MAC'.substr($SURN, 4); }
 
-			$this->_getAllNames[]=array('type'=>$type, 'full'=>$full, 'list'=>$list, 'sort'=>$SURN.','.$GIVN, 'givn'=>$givn, 'spfx'=>($n?'':$spfx), 'surn'=>$surn);
+			$this->_getAllNames[]=array(
+				'type'=>$type, 'full'=>$full, 'list'=>$list, 'sort'=>$SURN.','.$GIVN,
+				// These extra parts used to populate the pgv_name table and the indi list
+				// For these, we don't want to translate the @N.N. into local text
+				'fullNN'=>$fullNN,
+				'listNN'=>$listNN,
+				'surname'=>$surname,
+				'givn'=>$givn,
+				'spfx'=>($n?'':$spfx),
+				'surn'=>$surn
+			);
 		}
 	}
 
