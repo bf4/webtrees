@@ -10,6 +10,7 @@
 
 
 Version 4.2.0
+ - Fixed: [ 1493546 ] 4.08b Bad create SQL table with national support of UTF-8 (fisharebest)
  - Fixed: [ 2275883 ] Wrong thumbnail path using Media Firewall (canajun2eh)
  - Fixed: [ 1835731 ] Favorites summary doesn't work -> fv_gid too short (fisharebest)
  - Fixed: [ 1968304 ] favorites - fv_gid too short (fisharebest)
