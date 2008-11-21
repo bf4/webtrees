@@ -30,6 +30,11 @@ if (!defined('PGV_PHPGEDVIEW')) {
 }
 
 class plugin extends base_plugin {
+	// Default is to operate on INDI records
+	function getRecordTypesToUpdate() {
+		return array('INDI', 'FAM', 'SOUR', 'REPO', 'NOTE', 'OBJE');
+	}
+
 	static function doesRecordNeedUpdate($xref, $gedrec) {
 		return
 			preg_match('/(\n1.*@.+@.*(?:(?:\n[2-9].*)*))(?:\n1.*(?:\n[2-9].*)*)*\1/', $gedrec) ||
