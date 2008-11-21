@@ -37,6 +37,8 @@ class plugin extends base_plugin {
 	}
 
 	function updateRecord($xref, $gedrec) {
+		global $SURNAME_TRADITION;
+
 		preg_match('/^1 NAME (.*)/m', $gedrec, $match);
 		$wife_name=$match[1];
 		$married_names=array();
@@ -46,6 +48,9 @@ class plugin extends base_plugin {
 				$married_names[]="\n2 _MARNM ".str_replace('/', '', $wife_name).' /'.$surname.'/';
 				break;
 			case 'replace':
+				if ($SURNAME_TRADITION=='polish') {
+					$surname=preg_replace(array('/ski$/','/cki$/','/dzki$/'), array('ska', 'cka', 'dzka'), $surname);
+				}
 				$married_names[]="\n2 _MARNM ".preg_replace('!/.*/!', '/'.$surname.'/', $wife_name);
 				break;
 			}
