@@ -25,6 +25,10 @@ occur in the respective language files.
 ?$pgv_lang["whatever"]                              dd Monthname, year      Change codes and comments
 ----------------------------------------------------------------------------------------
 
++$pgv_lang["bu_duplicate_links"]                    21 November 2008        A
++$pgv_lang["bu_duplicate_links_desc"]               21 November 2008
+A
+
 +$pgv_lang["bu_name_format"]                        07 November 2008        A
 +$pgv_lang["bu_name_format_desc"]                   07 November 2008        A
 
