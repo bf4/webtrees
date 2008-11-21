@@ -70,4 +70,7 @@ $pgv_lang["bu_surname_add"]="Wife's maiden surname becomes new given name";
 $pgv_lang["bu_name_format"]="Fix name slashes and spaces";
 $pgv_lang["bu_name_format_desc"]="Correct NAME records of the form 'John/DOE/' or 'John /DOE', as produced by older genealogy programs.";
 
+$pgv_lang["bu_duplicate_links"]="Remove duplicate links";
+$pgv_lang["bu_duplicate_links_desc"]="A common gedcom error is to have multiple links to the same record, for example listing the same child more than once in a family record.";
+
 ?>
