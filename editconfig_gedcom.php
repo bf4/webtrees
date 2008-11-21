@@ -1907,7 +1907,7 @@ print "&nbsp;<a href=\"javascript: ".$pgv_lang["editopt_conf"]."\" onclick=\"exp
 		<td class="descriptionbox wrap width20"><?php print_help_link("SURNAME_TRADITION_help", "qm", "SURNAME_TRADITION"); print $pgv_lang["SURNAME_TRADITION"]; ?></td>
 		<td class="optionbox"><select name="NEW_SURNAME_TRADITION" tabindex="<?php $i++; print $i; ?>" onfocus="getHelp('SURNAME_TRADITION_help');">
 			<?php
-				foreach (array('paternal', 'spanish', 'portuguese', 'icelandic', 'none') as $value) {
+				foreach (array('paternal', 'spanish', 'portuguese', 'icelandic', 'polish', 'none') as $value) {
 					print '<option value="'.$value.'"';
 					if ($SURNAME_TRADITION==$value) print ' selected="selected"';
 					print '>'.$pgv_lang["tradition_".$value].'</option>';

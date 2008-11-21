@@ -592,14 +592,21 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 			}
 			break;
 		case 'paternal':
+		case 'polish':
 			// Father gives his surname to his wife and children
 			switch ($nextaction) {
 			case 'addspouseaction':
 				if ($famtag=='WIFE' && preg_match('/\/(.*)\//', $indi_name, $match))
+					if ($SURNAME_TRADITION=='polish') {
+						$match[1]=preg_replace(array('/ski$/','/cki$/','/dzki$/'), array('ska', 'cka', 'dzka'), $match[1]);
+					}
 					$new_marnm=$match[1];
 				break;
 			case 'addchildaction':
 				if (preg_match('/\/([a-z]{2,3}\s+)*(.*)\//i', $father_name, $match)) {
+					if ($SURNAME_TRADITION=='polish' && $sextag=='F') {
+						$match[2]=preg_replace(array('/ski$/','/cki$/','/dzki$/'), array('ska', 'cka', 'dzka'), $match[2]);
+					}
 					$name_fields['SPFX']=trim($match[1]);
 					$name_fields['SURN']=$match[2];
 					$name_fields['NAME']="/{$match[1]}{$match[2]}/";
@@ -607,6 +614,9 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 				break;
 			case 'addnewparentaction':
 				if ($famtag=='HUSB' && preg_match('/\/([a-z]{2,3}\s+)*(.*)\//i', $indi_name, $match)) {
+					if ($SURNAME_TRADITION=='polish' && $sextag=='M') {
+						$match[2]=preg_replace(array('/ska$/','/cka$/','/dzka$/'), array('ski', 'cki', 'dzki'), $match[2]);
+					}
 					$name_fields['SPFX']=trim($match[1]);
 					$name_fields['SURN']=$match[2];
 					$name_fields['NAME']="/{$match[1]}{$match[2]}/";
@@ -648,7 +658,7 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 		foreach ($match[1] as $tag)
 			$adv_name_fields[$tag]='';
 	// This is a custom tag, but PGV uses it extensively.
-	if ($SURNAME_TRADITION=='paternal' || preg_match('/2 _MARNM/', $namerec))
+	if ($SURNAME_TRADITION=='paternal' || $SURNAME_TRADITION=='polish' || preg_match('/2 _MARNM/', $namerec))
 		$adv_name_fields['_MARNM']='';
 
 	foreach ($adv_name_fields as $tag=>$dummy) {
