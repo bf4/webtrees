@@ -592,9 +592,19 @@ class stats {
 		$tot_f = $this->totalSexFemalesPercentage();
 		$tot_m = $this->totalSexMalesPercentage();
 		$tot_u = $this->totalSexUnknownPercentage();
-		$chd = self::_array_to_extended_encoding(array($tot_u, $tot_f, $tot_m));
-		$chl = reverseText($pgv_lang['stat_unknown']).'|'.reverseText($pgv_lang['stat_females']).'|'.reverseText($pgv_lang['stat_males']);
-		return "<img src=\"".encode_url("http://chart.apis.google.com/chart?cht=p3&chd=e:{$chd}&chs={$size}&chco={$color_unknown},{$color_female},{$color_male}&chf=bg,s,ffffff00&chl={$chl}")."\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" alt=\"\" />";
+		if ($tot_u > 0) {
+			$chd = self::_array_to_extended_encoding(array($tot_u, $tot_f, $tot_m));
+			$chl = reverseText($pgv_lang['stat_unknown']).' ['.round($tot_u,1).'%]|'.
+				   reverseText($pgv_lang['stat_females']).' ['.round($tot_f,1).'%]|'.
+				   reverseText($pgv_lang['stat_males']).' ['.round($tot_m,1).'%]';
+			return "<img src=\"".encode_url("http://chart.apis.google.com/chart?cht=p3&chd=e:{$chd}&chs={$size}&chco={$color_unknown},{$color_female},{$color_male}&chf=bg,s,ffffff00&chl={$chl}")."\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" alt=\"\" />";
+		}
+		else {
+			$chd = self::_array_to_extended_encoding(array($tot_f, $tot_m));
+			$chl = reverseText($pgv_lang['stat_females']).' ['.round($tot_f,1).'%]|'.
+				   reverseText($pgv_lang['stat_males']).' ['.round($tot_m,1).'%]';
+			return "<img src=\"".encode_url("http://chart.apis.google.com/chart?cht=p3&chd=e:{$chd}&chs={$size}&chco={$color_female},{$color_male}&chf=bg,s,ffffff00&chl={$chl}")."\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" alt=\"\" />";
+		}
 	}
 
 	function totalLiving()
@@ -651,9 +661,19 @@ class stats {
 		$tot_l = $this->totalLivingPercentage();
 		$tot_d = $this->totalDeceasedPercentage();
 		$tot_u = $this->totalMortalityUnknownPercentage();
-		$chd = self::_array_to_extended_encoding(array($tot_u, $tot_l, $tot_d));
-		$chl = reverseText($pgv_lang['total_unknown']).'|'.reverseText($pgv_lang['total_living']).'|'.reverseText($pgv_lang['total_dead']);
-		return "<img src=\"".encode_url("http://chart.apis.google.com/chart?cht=p3&chd=e:{$chd}&chs={$size}&chco={$color_unknown},{$color_living},{$color_dead}&chf=bg,s,ffffff00&chl={$chl}")."\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" alt=\"\" />";
+		if ($tot_u > 0) {
+			$chd = self::_array_to_extended_encoding(array($tot_u, $tot_l, $tot_d));
+			$chl = reverseText($pgv_lang['total_unknown']).' ['.round($tot_u,1).'%]|'.
+				   reverseText($pgv_lang['total_living']).' ['.round($tot_l,1).'%]|'.
+				   reverseText($pgv_lang['total_dead']).' ['.round($tot_d,1).'%]|';
+			return "<img src=\"".encode_url("http://chart.apis.google.com/chart?cht=p3&chd=e:{$chd}&chs={$size}&chco={$color_unknown},{$color_living},{$color_dead}&chf=bg,s,ffffff00&chl={$chl}")."\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" alt=\"\" />";
+		}
+		else {
+			$chd = self::_array_to_extended_encoding(array($tot_l, $tot_d));
+			$chl = reverseText($pgv_lang['total_living']).' ['.round($tot_l,1).'%]|'.
+				   reverseText($pgv_lang['total_dead']).' ['.round($tot_d,1).'%]|';
+			return "<img src=\"".encode_url("http://chart.apis.google.com/chart?cht=p3&chd=e:{$chd}&chs={$size}&chco={$color_living},{$color_dead}&chf=bg,s,ffffff00&chl={$chl}")."\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" alt=\"\" />";
+		}
 	}
 
 	static function totalUsers($params=null)
@@ -749,7 +769,7 @@ class stats {
 			if ($count != 0) {
 				$mediaCounts[] = round(100 * $count / $tot, 0);
 				$mediaTypes .= reverseText($pgv_lang['TYPE__'.$type]);
-				$mediaTypes .= '|';
+				$mediaTypes .= ' ['.$count.']|';
 			}
 		}
 		$count = $this->_totalMediaType('unknown');
@@ -759,7 +779,7 @@ class stats {
 			$mediaTypes .= '|';
 		}
 		$chd = self::_array_to_extended_encoding($mediaCounts);
-		$chl = urlencode(substr($mediaTypes,0,-1));
+		$chl = substr($mediaTypes,0,-1);
 		return "<img src=\"".encode_url("http://chart.apis.google.com/chart?cht=p3&chd=e:{$chd}&chs={$size}&chco={$color_from},{$color_to}&chf=bg,s,ffffff00&chl={$chl}")."\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" alt=\"\" />";
 	}
 
@@ -821,6 +841,7 @@ class stats {
 			}
 			// MySQL 4.0 can't handle nested queries, so we use the old style. Of course this hits the performance of PHP4 users a tiny bit, but it's the best we can do.
 			case 'mysql':
+			case 'sqlite':
 			{
 				$rows=self::_runSQL(''
 					.' SELECT'
@@ -1422,7 +1443,7 @@ class stats {
 	{
 		global $TBLPREFIX, $pgv_lang;
 		if ($params === null) {$params = array();}
-		if (isset($params[0]) && $params[0] != '') {$size = strtolower($params[0]);}else{$size = '700x150';}
+		if (isset($params[0]) && $params[0] != '') {$size = strtolower($params[0]);}else{$size = '950x150';}
 		if (isset($params[1]) && $params[1] != '') {$color_from = strtolower($params[1]);}else{$color_from = 'ffffff';}
 		if (isset($params[2]) && $params[2] != '') {$color_to = strtolower($params[2]);}else{$color_to = '000000';}
 		if (isset($params[3]) && $params[3] != '') {$total = strtolower($params[3]);}else{$total = 10;}
@@ -1452,7 +1473,7 @@ class stats {
 			}
 			$chd .= self::_array_to_extended_encoding(array($per));
 			$family=Family::getInstance($rows[$i]['id']);
-			$chl[] = reverseText($family->getFullName());
+			$chl[] = reverseText($family->getFullName()).' ['.$rows[$i]['tot'].']';
 		}
 		$chl = join('|', $chl);
 		return "<img src=\"".encode_url("http://chart.apis.google.com/chart?cht=p3&chd=e:{$chd}&chs={$size}&chco={$color_from},{$color_to}&chf=bg,s,ffffff00&chl={$chl}")."\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" alt=\"\" />";
@@ -1559,7 +1580,7 @@ class stats {
 				$per = round(100 * $surname['match'] / $tot, 0);
 			}
 			$chd .= self::_array_to_extended_encoding($per);
-			$chl[] = reverseText($surname['name']);
+			$chl[] = reverseText($surname['name']).' ['.$surname['match'].']';
 		}
 		$chl = join('|', $chl);
 		return "<img src=\"".encode_url("http://chart.apis.google.com/chart?cht=p3&chd=e:{$chd}&chs={$size}&chco={$color_from},{$color_to}&chf=bg,s,ffffff00&chl={$chl}")."\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" alt=\"\" />";
