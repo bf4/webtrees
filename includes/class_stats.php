@@ -1561,11 +1561,12 @@ class stats {
 	{
 		global $pgv_lang, $COMMON_NAMES_THRESHOLD;
 		if ($params === null) {$params = array();}
-		if (isset($params[0]) && $params[0] != '') {$size = strtolower($params[0]);}else{$size = '350x100';}
+		if (isset($params[0]) && $params[0] != '') {$size = strtolower($params[0]);}else{$size = '450x120';}
 		if (isset($params[1]) && $params[1] != '') {$color_from = strtolower($params[1]);}else{$color_from = 'ffffff';}
 		if (isset($params[2]) && $params[2] != '') {$color_to = strtolower($params[2]);}else{$color_to = '000000';}
 		if (isset($params[3]) && $params[3] != '') {$threshold = strtolower($params[3]);}else{$threshold = $COMMON_NAMES_THRESHOLD;}
 		$sizes = explode('x', $size);
+		$tot_indi = $this->totalIndividuals();
 		$surnames = get_common_surnames($threshold);
 		if (count($surnames) <= 0) {return '';}
 		$tot = 0;
@@ -1577,11 +1578,14 @@ class stats {
 			if ($tot==0) {
 				$per = 0;
 			} else {
-				$per = round(100 * $surname['match'] / $tot, 0);
+				$per = round(100 * $surname['match'] / $tot_indi, 0);
 			}
 			$chd .= self::_array_to_extended_encoding($per);
 			$chl[] = reverseText($surname['name']).' ['.$surname['match'].']';
 		}
+		$per = round(100 * ($tot_indi-$tot) / $tot_indi, 0);
+		$chd .= self::_array_to_extended_encoding($per);
+		$chl[] = reverseText($pgv_lang["other"]).' ['.($tot_indi-$tot).']';
 		$chl = join('|', $chl);
 		return "<img src=\"".encode_url("http://chart.apis.google.com/chart?cht=p3&chd=e:{$chd}&chs={$size}&chco={$color_from},{$color_to}&chf=bg,s,ffffff00&chl={$chl}")."\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" alt=\"\" />";
 	}

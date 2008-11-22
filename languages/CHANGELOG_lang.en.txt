@@ -40,6 +40,20 @@ The above list of codes may be amended as new situations arise.
 For massive changes, the variable names should be listed in the order in which they
 occur in the respective language files.
 
+VERSION 4.2.
+
+?$pgv_lang["whatever"]								dd Monthname, year		Change	codes and comments
+----------------------------------------------------------------------------------------
+*$pgv_lang["statnnames"]							22 Nov 2008				W
+*$pgv_lang["statnfam"]								22 Nov 2008				W
+*$pgv_lang["statnmale"]								22 Nov 2008				W
+*$pgv_lang["statnfemale"]							22 Nov 2008				W
+*$pgv_lang["stat_17_arb"]							22 Nov 2008				C
+*$pgv_lang["stat_18_ard"]							22 Nov 2008				C
+*$pgv_lang["stat_19_arm"]							22 Nov 2008				C
+*$pgv_lang["stat_20_arm1"]							22 Nov 2008				C
+*$pgv_lang["stat_21_nok"]							22 Nov 2008				C
+
 VERSION 4.1.6
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change	codes and comments
