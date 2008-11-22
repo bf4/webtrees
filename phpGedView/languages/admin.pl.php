@@ -378,6 +378,7 @@ $pgv_lang["tradition_spanish"]      = "hiszpańska";
 $pgv_lang["tradition_portuguese"]   = "portugalska";
 $pgv_lang["tradition_icelandic"]    = "islandzka";
 $pgv_lang["tradition_paternal"]     = "ojcowska";
+$pgv_lang["tradition_polish"]		= "polska";
 $pgv_lang["tradition_none"]			= "brak";
 
 $pgv_lang["clear_cache_succes"]		= "Pliki cache zostały usunięte.";

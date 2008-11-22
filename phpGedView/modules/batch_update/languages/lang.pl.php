@@ -67,4 +67,10 @@ $pgv_lang["bu_married_names_desc"]	="Możesz łatwiej znaleźć kobiety zamężn
 $pgv_lang["bu_surname_option"]	="Opcje nazwiska";
 $pgv_lang["bu_surname_replace"]	="Nazwisko żony zastąp nazwiskiem męża";
 $pgv_lang["bu_surname_add"]		="Nazwisko panieńskie żony staje się nowym imieniem";
+
+$pgv_lang["bu_name_format"]		="Popraw wpisy imion i nazwisk";
+$pgv_lang["bu_name_format_desc"]="Poprawia wpisy NAME z 'Jan/KOWALSKI/' lub 'Jan /KOWALSKI', które są generowane przez starsze programy genealogiczne, na 'Jan /KOWALSKI/'.";	 
+
+$pgv_lang["bu_duplicate_links"] ="Usuń powtarzające się odnośniki";
+$pgv_lang["bu_duplicate_links_desc"] ="Popularnym błędem GEDCOM jest posiadanie kilku odnośników do tego samge wpisu, na przykład to samo dziecko jest dodane więcej niż raz do rodziny.";
 ?>
