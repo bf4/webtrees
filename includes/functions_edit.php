@@ -596,11 +596,12 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 			// Father gives his surname to his wife and children
 			switch ($nextaction) {
 			case 'addspouseaction':
-				if ($famtag=='WIFE' && preg_match('/\/(.*)\//', $indi_name, $match))
+				if ($famtag=='WIFE' && preg_match('/\/(.*)\//', $indi_name, $match)) {
 					if ($SURNAME_TRADITION=='polish') {
 						$match[1]=preg_replace(array('/ski$/','/cki$/','/dzki$/'), array('ska', 'cka', 'dzka'), $match[1]);
 					}
 					$new_marnm=$match[1];
+				}
 				break;
 			case 'addchildaction':
 				if (preg_match('/\/([a-z]{2,3}\s+)*(.*)\//i', $father_name, $match)) {
