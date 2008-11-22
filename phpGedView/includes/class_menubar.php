@@ -240,7 +240,7 @@ class MenuBar
 		if (file_exists("timeline.php")) $menuList["timeline"] = $pgv_lang["timeline_chart"];
 		if (file_exists("lifespan.php")) $menuList["lifespan"] = $pgv_lang["lifespan_chart"];
 		if (file_exists("relationship.php")) $menuList["relationship"] = $pgv_lang["relationship_chart"];
-		if (file_exists("statistics.php") $menuList["statistics"] = $pgv_lang["statistics"];
+		if (file_exists("statistics.php")) $menuList["statistics"] = $pgv_lang["statistics"];
 		if (file_exists("treenav.php")) $menuList["treenav"] = $pgv_lang["interactive_tree"];
 		asort($menuList);
 
