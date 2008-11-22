@@ -346,13 +346,23 @@ function myplot($mytitle,$n,$xdata,$xtitle,$ydata,$ytitle,$legend) {
 	$imgurl .= "0|";
 	if ($percentage){
 		for($i=1; $i<11; $i++) {
-			$imgurl .= round($ymax*$i/10,0)."|";
+			if ($ymax < 11)
+				$imgurl .= round($ymax*$i/10,1)."|";
+			else
+				$imgurl .= round($ymax*$i/10,0)."|";
 		}
 		$imgurl .= "3:||%|";
 	}
 	else {
-		for($i=1; $i<11; $i++) {
-			$imgurl .= round($ymax*$i/10,0)."|";
+		if ($ymax < 11) {
+			for($i=1; $i<$ymax+1; $i++) {
+				$imgurl .= round($ymax*$i/($ymax),0)."|";
+			}
+		}
+		else {
+			for($i=1; $i<11; $i++) {
+				$imgurl .= round($ymax*$i/10,0)."|";
+			}
 		}
 		$imgurl .= "3:||".$ytitle."|";
 	}
