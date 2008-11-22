@@ -612,7 +612,7 @@ function update_names($xref, $ged_id, $record) {
 			break;
 		default:
 			foreach ($data as $datum) {
-				if ($record->getType=='INDI') {
+				if ($record->getType()=='INDI') {
 					dbquery("INSERT INTO {$TBLPREFIX}name (n_file,n_id,n_num,n_type,n_sort,n_full,n_list,n_surname,n_surn,n_givn,n_soundex_givn_std,n_soundex_surn_std,n_soundex_givn_dm,n_soundex_surn_dm) VALUES ".$datum);
 				} else {
 					dbquery("INSERT INTO {$TBLPREFIX}name (n_file,n_id,n_num,n_type,n_sort,n_full,n_list) VALUES ".$datum);
