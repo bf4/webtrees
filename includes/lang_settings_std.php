@@ -37,7 +37,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 // Array definition of language_settings
 $language_settings = array();
 
-//-- settings for catalan (valencian)
+//-- settings for catalan
 $language_settings['catalan']=array(
 'pgv_langname'=>'catalan',
 'pgv_lang_use'=>false,
@@ -62,6 +62,7 @@ $language_settings['catalan']=array(
 'ALPHABET_upper'=>'AÀBCÇDEÈÉFGHIÍÏJKLMNÑOÒÓPQRSTUÚÜVWXYZ',
 'ALPHABET_lower'=>'aàbcçdeèéfghiíïjklmnñopqrstuúüvwxyz',
 'MULTI_LETTER_ALPHABET'=>'l·l',
+'MULTI_LETTER_EQUIV'=>'',
 'DICTIONARY_SORT'=>true,
 'COLLATION'=>'utf8_spanish_ci'
 );
@@ -91,6 +92,7 @@ $language_settings['czech']=array(
 'ALPHABET_upper'=>'AÁBCČDĎEĚÉFGHIÍJKLMNŇOÓPQRŘSŠTŤUÚŮVWXYÝZŽ',
 'ALPHABET_lower'=>'aábcčdďeěéfghiíjklmnňoópqrřsštťuúůvwxyýzž',
 'MULTI_LETTER_ALPHABET'=>'ch',
+'MULTI_LETTER_EQUIV'=>'',
 'DICTIONARY_SORT'=>true,
 'COLLATION'=>'utf8_czech_ci'
 );
@@ -120,6 +122,7 @@ $language_settings['danish']=array(
 'ALPHABET_upper'=>'ABCDEFGHIJKLMNOPQRSTUVWXYZÆØÅ',
 'ALPHABET_lower'=>'abcdefghijklmnopqrstuvwxyzæøå',
 'MULTI_LETTER_ALPHABET'=>'',
+'MULTI_LETTER_EQUIV'=>'Aa=Å,aa=å,AE=Æ,ae=æ,OE=Ø,oe=ø',
 'DICTIONARY_SORT'=>false,
 'COLLATION'=>'utf8_danish_ci'
 );
@@ -149,6 +152,7 @@ $language_settings['german']=array(
 'ALPHABET_upper'=>'AÄBCDEFGHIJKLMNOÖPQRSßTUÜVWXYZ',
 'ALPHABET_lower'=>'aäbcdefghijklmnoöpqrsßtuüvwxyz',
 'MULTI_LETTER_ALPHABET'=>'',
+'MULTI_LETTER_EQUIV'=>'',
 'DICTIONARY_SORT'=>true,
 'COLLATION'=>'utf8_unicode_ci'
 );
@@ -178,6 +182,7 @@ $language_settings['estonian']=array(
 'ALPHABET_upper'=>'ABCDEFGHIJKLMNOPQRSŠZŽTUVWÕÄÖÜXY',
 'ALPHABET_lower'=>'abcdefghijklmnopqrsšzžtuvwõäöüxy',
 'MULTI_LETTER_ALPHABET'=>'',
+'MULTI_LETTER_EQUIV'=>'',
 'DICTIONARY_SORT'=>false,
 'COLLATION'=>'utf8_estonian_ci'
 );
@@ -207,6 +212,7 @@ $language_settings['english']=array(
 'ALPHABET_upper'=>'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
 'ALPHABET_lower'=>'abcdefghijklmnopqrstuvwxyz',
 'MULTI_LETTER_ALPHABET'=>'',
+'MULTI_LETTER_EQUIV'=>'',
 'DICTIONARY_SORT'=>true,
 'COLLATION'=>'utf8_unicode_ci'
 );
@@ -236,6 +242,7 @@ $language_settings['spanish']=array(
 'ALPHABET_upper'=>'ABCDEFGHIJKLMNÑOPQRSTUVWXYZ',
 'ALPHABET_lower'=>'abcdefghijklmnñopqrstuvwxyz',
 'MULTI_LETTER_ALPHABET'=>'',
+'MULTI_LETTER_EQUIV'=>'',
 'DICTIONARY_SORT'=>true,
 'COLLATION'=>'utf8_spanish_ci'
 );
@@ -265,6 +272,7 @@ $language_settings['spanish-ar']=array(
 'ALPHABET_upper'=>'ABCDEFGHIJKLMNÑOPQRSTUVWXYZ',
 'ALPHABET_lower'=>'abcdefghijklmnñopqrstuvwxyz',
 'MULTI_LETTER_ALPHABET'=>'',
+'MULTI_LETTER_EQUIV'=>'',
 'DICTIONARY_SORT'=>true,
 'COLLATION'=>'utf8_spanish_ci'
 );
@@ -294,6 +302,7 @@ $language_settings['french']=array(
 'ALPHABET_upper'=>'AÀÂÆBCÇDEÉÈËÊFGHIÏÎJKLMNOÔŒPQRSTUÙÛVWXYZ',
 'ALPHABET_lower'=>'aàâæbcçdeéèëêfghiïîjklmnoôœpqrstuùûvwxyz',
 'MULTI_LETTER_ALPHABET'=>'',
+'MULTI_LETTER_EQUIV'=>'',
 'DICTIONARY_SORT'=>true,
 'COLLATION'=>'utf8_unicode_ci'
 );
@@ -323,6 +332,7 @@ $language_settings['italian']=array(
 'ALPHABET_upper'=>'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
 'ALPHABET_lower'=>'abcdefghijklmnopqrstuvwxyz',
 'MULTI_LETTER_ALPHABET'=>'',
+'MULTI_LETTER_EQUIV'=>'',
 'DICTIONARY_SORT'=>true,
 'COLLATION'=>'utf8_unicode_ci'
 );
@@ -352,6 +362,7 @@ $language_settings['hungarian']=array(
 'ALPHABET_upper'=>'AÁBCDEÉFGHIÍJKLMNOÓÖŐPQRSTUÚÜŰVWXYZ',
 'ALPHABET_lower'=>'aábcdeéfghiíjklmnoóöőpqrstuúüűvwxyz',
 'MULTI_LETTER_ALPHABET'=>'cs;ccs;dz;ddz;dzs;ddzs;gy;ggy;ly;lly;ny;nny;sz;ssz;ty;tty;zs;zzs',
+'MULTI_LETTER_EQUIV'=>'',
 'DICTIONARY_SORT'=>true,
 'COLLATION'=>'utf8_hungarian_ci'
 );
@@ -381,6 +392,7 @@ $language_settings['lithuanian']=array(
 'ALPHABET_upper'=>'AĄBCČDEĘĖFGHIYĮJKLMNOPRSŠTUŲŪVZŽ',
 'ALPHABET_lower'=>'aąbcčdeęėfghiyįjklmnoprsštuųūvzž',
 'MULTI_LETTER_ALPHABET'=>'',
+'MULTI_LETTER_EQUIV'=>'',
 'DICTIONARY_SORT'=>true,
 'COLLATION'=>'utf8_lithuanian_ci'
 );
@@ -410,6 +422,7 @@ $language_settings['dutch']=array(
 'ALPHABET_upper'=>'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
 'ALPHABET_lower'=>'abcdefghijklmnopqrstuvwxyz',
 'MULTI_LETTER_ALPHABET'=>'',
+'MULTI_LETTER_EQUIV'=>'IJ=Ĳ,ij=ĳ',
 'DICTIONARY_SORT'=>false,
 'COLLATION'=>'utf8_unicode_ci'
 );
@@ -439,8 +452,9 @@ $language_settings['norwegian']=array(
 'ALPHABET_upper'=>'ABCDEFGHIJKLMNOPQRSTUVWXYZÅØÆ',
 'ALPHABET_lower'=>'abcdefghijklmnopqrstuvwxyzåøæ',
 'MULTI_LETTER_ALPHABET'=>'',
+'MULTI_LETTER_EQUIV'=>'Aa=Å,aa=å,AE=Æ,ae=æ,OE=Ø,oe=ø',
 'DICTIONARY_SORT'=>false,
-'COLLATION'=>'utf8_unicode_ci'
+'COLLATION'=>'utf8_danish_ci'
 );
 
 //-- settings for polish
@@ -468,6 +482,7 @@ $language_settings['polish']=array(
 'ALPHABET_upper'=>'AĄBCĆDEĘFGHIJKLŁMNŃOÓPQRSŚTUVWXYZŹŻ',
 'ALPHABET_lower'=>'aąbcćdeęfghijklłmnńoópqrsśtuvwxyzźż',
 'MULTI_LETTER_ALPHABET'=>'',
+'MULTI_LETTER_EQUIV'=>'',
 'DICTIONARY_SORT'=>false,
 'COLLATION'=>'utf8_polish_ci'
 );
@@ -497,6 +512,7 @@ $language_settings['portuguese']=array(
 'ALPHABET_upper'=>'AÁÂÃBCÇDEÉÊFGHIÍJKLMNÑOÓÔÕPQRSTUÚÜVWXYZ',
 'ALPHABET_lower'=>'aáâãbcçdeéêfghiíjklmnñoóôõpqrstuúüvwxyz',
 'MULTI_LETTER_ALPHABET'=>'',
+'MULTI_LETTER_EQUIV'=>'',
 'DICTIONARY_SORT'=>true,
 'COLLATION'=>'utf8_spanish_ci'
 );
@@ -526,6 +542,7 @@ $language_settings['slovak']=array(
 'ALPHABET_upper'=>'AÁÄBCČDĎEÉFGHCHIÍJKLĽĹMNŇOÓÔPQRŔSŠTŤUÚVWXYÝZŽ',
 'ALPHABET_lower'=>'aáäbcčdďeéfghchiíjklľĺmnňoóôpqrŕsštťuúvwxyýzž',
 'MULTI_LETTER_ALPHABET'=>'dz,ch',
+'MULTI_LETTER_EQUIV'=>'DŽ=Ǆ,Dž=ǅ,dž=ǆ,DZ=Ǳ,Dz=ǲ,dz=ǳ',
 'DICTIONARY_SORT'=>true,
 'COLLATION'=>'utf8_slovak_ci'
 );
@@ -555,6 +572,7 @@ $language_settings['romanian']=array(
 'ALPHABET_upper'=>'AĂÂBCDEFGHIÎJKLMNOPQRSŞTŢUVWXYZ',
 'ALPHABET_lower'=>'aăâbcdefghiîjklmnopqrsştţuvwxyz',
 'MULTI_LETTER_ALPHABET'=>'',
+'MULTI_LETTER_EQUIV'=>'',
 'DICTIONARY_SORT'=>true,
 'COLLATION'=>'utf8_romanian_ci'
 );
@@ -584,6 +602,7 @@ $language_settings['finnish']=array(
 'ALPHABET_upper'=>'ABCDEFGHIJKLMNOPQRSTUVWXYZÅÄÖ',
 'ALPHABET_lower'=>'abcdefghijklmnopqrstuvwxyzåäö',
 'MULTI_LETTER_ALPHABET'=>'',
+'MULTI_LETTER_EQUIV'=>'',
 'DICTIONARY_SORT'=>false,
 'COLLATION'=>'utf8_unicode_ci'
 );
@@ -613,6 +632,7 @@ $language_settings['swedish']=array(
 'ALPHABET_upper'=>'ABCDEFGHIJKLMNOPQRSTUVWXYZÅÄÖ',
 'ALPHABET_lower'=>'abcdefghijklmnopqrstuvwxyzåäö',
 'MULTI_LETTER_ALPHABET'=>'',
+'MULTI_LETTER_EQUIV'=>'',
 'DICTIONARY_SORT'=>false,
 'COLLATION'=>'utf8_swedish_ci'
 );
@@ -642,6 +662,7 @@ $language_settings['turkish']=array(
 'ALPHABET_upper'=>'ABCÇDEFGĞHIİJKLMNOÖPRSŞTUÜVYZ',
 'ALPHABET_lower'=>'abcçdefgğhıijklmnoöprsştuüvyz',
 'MULTI_LETTER_ALPHABET'=>'',
+'MULTI_LETTER_EQUIV'=>'',
 'DICTIONARY_SORT'=>true,
 'COLLATION'=>'utf8_turkish_ci'
 );
@@ -671,6 +692,7 @@ $language_settings['vietnamese']=array(
 'ALPHABET_upper'=>'AÀẢÃÁẠĂẰẲẴẮẶÂẦẨẪẤẬBCDĐEÈẺẼÉẸÊỀỂỄẾỆFGHIÌỈĨÍỊJKLMNOÒỎÕÓỌÔỒỔỖỐỘƠỜỞỠỚỢPQRSTUÙỦŨÚỤƯỪỬỮỨỰVWXYỲỶỸÝỴZ',
 'ALPHABET_lower'=>'aàảãáạăằẳẵắặâầẩẫấậbcdđeèẻẽéẹêềểễếệfghiìỉĩíịjklmnoòỏõóọôồổỗốộơờởỡớợpqrstuùủũúụưừửữứựvwxyỳỷỹýỵz',
 'MULTI_LETTER_ALPHABET'=>'',
+'MULTI_LETTER_EQUIV'=>'',
 'DICTIONARY_SORT'=>true,
 'COLLATION'=>'utf8_unicode_ci'
 );
@@ -700,6 +722,7 @@ $language_settings['chinese']=array(
 'ALPHABET_upper'=>'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
 'ALPHABET_lower'=>'abcdefghijklmnopqrstuvwxyz',
 'MULTI_LETTER_ALPHABET'=>'',
+'MULTI_LETTER_EQUIV'=>'',
 'DICTIONARY_SORT'=>false,
 'COLLATION'=>'utf8_unicode_ci'
 );
@@ -729,6 +752,7 @@ $language_settings['hebrew']=array(
 'ALPHABET_upper'=>'אבגדהוזחטיכךלמםנןסעפףצץקרשת',
 'ALPHABET_lower'=>'אבגדהוזחטיכךלמםנןסעפףצץקרשת',
 'MULTI_LETTER_ALPHABET'=>'',
+'MULTI_LETTER_EQUIV'=>'',
 'DICTIONARY_SORT'=>false,
 'COLLATION'=>'utf8_unicode_ci'
 );
@@ -758,6 +782,7 @@ $language_settings['russian']=array(
 'ALPHABET_upper'=>'АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ',
 'ALPHABET_lower'=>'абвгдеёжзийклмнопрстуфхцчшщъыьэюя',
 'MULTI_LETTER_ALPHABET'=>'',
+'MULTI_LETTER_EQUIV'=>'',
 'DICTIONARY_SORT'=>false,
 'COLLATION'=>'utf8_unicode_ci'
 );
@@ -787,6 +812,7 @@ $language_settings['greek']=array(
 'ALPHABET_upper'=>'ΆΑΒΓΔΈΕΖΉΗΘΊΪΪΙΚΛΜΝΞΌΟΠΡΣΣΤΎΫΫΥΦΧΨΏΩ',
 'ALPHABET_lower'=>'άαβγδέεζήηθίϊΐικλμνξόοπρσςτύϋΰυφχψώω',
 'MULTI_LETTER_ALPHABET'=>'',
+'MULTI_LETTER_EQUIV'=>'',
 'DICTIONARY_SORT'=>false,
 'COLLATION'=>'utf8_unicode_ci'
 );
@@ -816,6 +842,7 @@ $language_settings['arabic']=array(
 'ALPHABET_upper'=>'ابتثجحخدذرزسشصضطظعغفقكلمنهويآةىی',
 'ALPHABET_lower'=>'ابتثجحخدذرزسشصضطظعغفقكلمنهويآةىی',
 'MULTI_LETTER_ALPHABET'=>'',
+'MULTI_LETTER_EQUIV'=>'',
 'DICTIONARY_SORT'=>false,
 'COLLATION'=>'utf8_unicode_ci'
 );

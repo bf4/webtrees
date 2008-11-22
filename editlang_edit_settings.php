@@ -137,6 +137,7 @@ if ($action == "new_lang") {
 	$ALPHABET_upper[$ln]    = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 	$ALPHABET_lower[$ln]    = "abcdefghijklmnopqrstuvwxyz";
 	$MULTI_LETTER_ALPHABET[$ln] = "";
+	$MULTI_LETTER_EQUIV[$ln] = "";
 	$DICTIONARY_SORT[$ln]   = true;
 	$COLLATION[$ln]   = 'utf8_unicode_ci';
 
@@ -399,7 +400,7 @@ if ($action != "save" && $action != "toggleActive") {
 	print $pgv_lang["alphabet_upper"];
 	print "</td>";
 	write_td_with_textdir_check();
-	print "<input type=\"text\" name=\"v_alphabet_upper\" size=\"50\" value=\"" . $v_alphabet_upper . "\" />";
+	print "<input type=\"text\" name=\"v_alphabet_upper\" size=\"80\" value=\"" . $v_alphabet_upper . "\" />";
 	print "</td>";
 	print "</tr>";
 
@@ -410,7 +411,7 @@ if ($action != "save" && $action != "toggleActive") {
 	print $pgv_lang["alphabet_lower"];
 	print "</td>";
 	write_td_with_textdir_check();
-	print "<input type=\"text\" name=\"v_alphabet_lower\" size=\"50\" value=\"" . $v_alphabet_lower . "\" />";
+	print "<input type=\"text\" name=\"v_alphabet_lower\" size=\"80\" value=\"" . $v_alphabet_lower . "\" />";
 	print "</td>";
 	print "</tr>";
 
@@ -422,6 +423,17 @@ if ($action != "save" && $action != "toggleActive") {
 	print "</td>";
 	write_td_with_textdir_check();
 	print "<input type=\"text\" name=\"v_multi_letter_alphabet\" size=\"50\" value=\"" . $v_multi_letter_alphabet . "\" />";
+	print "</td>";
+	print "</tr>";
+
+	print "<tr>";
+	if (!isset($v_multi_letter_equiv)) $v_multi_letter_equiv = $MULTI_LETTER_EQUIV[$ln];
+	print "<td class=\"facts_label\" >";
+	print_help_link("multi_letter_equiv_help", "qm");
+	print $pgv_lang["multi_letter_equiv"];
+	print "</td>";
+	write_td_with_textdir_check();
+	print "<input type=\"text\" name=\"v_multi_letter_equiv\" size=\"50\" value=\"" . $v_multi_letter_equiv . "\" />";
 	print "</td>";
 	print "</tr>";
 
@@ -543,6 +555,7 @@ if ($action == "save") {
 	$ALPHABET_upper[$ln]  = $_POST["v_alphabet_upper"];
 	$ALPHABET_lower[$ln]  = $_POST["v_alphabet_lower"];
 	$MULTI_LETTER_ALPHABET[$ln]  = $_POST["v_multi_letter_alphabet"];
+	$MULTI_LETTER_EQUIV[$ln]  = $_POST["v_multi_letter_equiv"];
 	$DICTIONARY_SORT[$ln]  = $_POST["v_dictionary_sort"];
 	$COLLATION[$ln]  = $_POST["v_collation"];
 	$DATE_FORMAT_array[$ln]  = $_POST["v_date_format"];
