@@ -577,7 +577,7 @@ function update_site_config($newconfig, $return = false) {
 function update_lang_settings() {
 	global $INDEX_DIRECTORY, $language_settings, $languages, $pgv_language, $lang_short_cut, $pgv_lang_self, $pgv_lang_use, $confighelpfile, $helptextfile, $factsfile;
 	global $flagsfile, $adminfile, $countryfile, $faqlistfile, $extrafile, $ALPHABET_lower, $ALPHABET_upper, $DATE_FORMAT_array, $editorfile, $lang_langcode;
-	global $DICTIONARY_SORT, $MULTI_LETTER_ALPHABET, $NAME_REVERSE_array, $TEXT_DIRECTION_array, $TIME_FORMAT_array, $WEEK_START_array, $COLLATION;
+	global $DICTIONARY_SORT, $MULTI_LETTER_ALPHABET, $MULTI_LETTER_EQUIV, $NAME_REVERSE_array, $TEXT_DIRECTION_array, $TIME_FORMAT_array, $WEEK_START_array, $COLLATION;
 	
 	$Filename = $INDEX_DIRECTORY . "lang_settings.php";
 	if (!file_exists($Filename)) copy("includes/lang_settings_std.php", $Filename);
@@ -622,6 +622,7 @@ function update_lang_settings() {
 				fwrite($fp, "'ALPHABET_upper'=>'{$ALPHABET_upper[$key]}',\r\n");
 				fwrite($fp, "'ALPHABET_lower'=>'{$ALPHABET_lower[$key]}',\r\n");
 				fwrite($fp, "'MULTI_LETTER_ALPHABET'=>'{$MULTI_LETTER_ALPHABET[$key]}',\r\n");
+				fwrite($fp, "'MULTI_LETTER_EQUIV'=>'{$MULTI_LETTER_EQUIV[$key]}',\r\n");
 				fwrite($fp, "'DICTIONARY_SORT'=>".($DICTIONARY_SORT[$key]?'true':'false').",\r\n");
 				fwrite($fp, "'COLLATION'=>'{$COLLATION[$key]}'\r\n");
 				fwrite($fp, ");\r\n");
@@ -3676,6 +3677,10 @@ function loadLanguage($desiredLanguage="english", $forceLoad=false) {
 	global $unknownNN, $unknownPN;
 	global $JEWISH_ASHKENAZ_PRONUNCIATION, $CALENDAR_FORMAT;
 	global $DBCONN;
+	global $COLLATION, $DBCOLLATE;
+
+	// Need to change the collation sequence each time we change language
+	$DBCOLLATE="COLLATE {$COLLATION[$LANGUAGE]}";
 
 	if (!isset($pgv_language[$desiredLanguage])) $desiredLanguage = "english";
 
