@@ -45,10 +45,11 @@ VERSION 4.2.0
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 -----------------------------------------------------------------------------------------
-+$pgv_lang["DB_UTF8_COLLATION"]       18 November 2008      A
-+$pgv_lang["DB_UTF8_COLLATION_help"]  18 November 2008      A
-+$pgv_lang["collation"]               17 November 2008      A
-+$pgv_lang["collation_help"]          17 November 2008      A
+*$pgv_lang["SURNAME_TRADITION_help"]				22 Nov 2008				W
++$pgv_lang["DB_UTF8_COLLATION"]						18 Nov 2008				A
++$pgv_lang["DB_UTF8_COLLATION_help"]				18 Nov 2008				A
++$pgv_lang["collation"]								17 Nov 2008				A
++$pgv_lang["collation_help"]						17 Nov 2008				A
 
 VERSION 4.1.6
 
