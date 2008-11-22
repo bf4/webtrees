@@ -67,8 +67,9 @@ if (!$surname_sublist) {
 setcookie('surname_sublist', $surname_sublist);
 
 // Fetch a list of the initial letters of all surnames in the database
-$initials=array_keys(get_indi_alpha());
-if (! $initials) {
+$initials=get_indi_alpha();
+// If there are no individuals in the database, do something sensible
+if (!$initials) {
 	$initials[]='@';
 }
 
