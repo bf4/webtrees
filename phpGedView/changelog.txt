@@ -10,6 +10,7 @@
 
 
 Version 4.2.0
+ - Added: Statistics : use Google Chart API instead jpgraph library (wooc)
  - Added: [ 2319821 ] Polish names -ski & -ska (fisharebest)
  - Fixed: [ 1786448 ] SVN1545 - searching for \\ causes Apache to crash (fisharebest)
  - Fixed: [ 1687548 ] 41b4 Search does not recognise multiple ÄäÖöÅå (fisharebest)
