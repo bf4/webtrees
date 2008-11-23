@@ -64,7 +64,7 @@ $PGV_BLOCKS["print_gedcom_stats"]["config"]   =array(
 
 function print_gedcom_stats($block = true, $config="", $side, $index) {
 	global $PGV_BLOCKS, $pgv_lang, $GEDCOM, $ALLOW_CHANGE_GEDCOM, $ctype, $COMMON_NAMES_THRESHOLD, $PGV_IMAGE_DIR, $PGV_IMAGES, $MULTI_MEDIA;
-	global $top10_block_present, $TBLPREFIX;
+	global $top10_block_present;
 
 	if (empty($config)) $config = $PGV_BLOCKS["print_gedcom_stats"]["config"];
 	if (!isset($config['stat_indi'])) $config = $PGV_BLOCKS["print_gedcom_stats"]["config"];

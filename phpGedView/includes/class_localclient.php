@@ -67,8 +67,7 @@ class LocalClient extends ServiceClient {
 	 * @param boolean $firstLink	is this the first time this record is being linked
 	 */
 	function mergeGedcomRecord($xref, $localrec, $isStub=false, $firstLink=false) {
-		global $FILE, $GEDCOM, $indilist, $famlist, $sourcelist, $otherlist;
-		global $TBLPREFIX, $GEDCOMS;
+		global $FILE, $GEDCOM, $indilist, $famlist, $sourcelist, $otherlist, $GEDCOMS;
 
 		$localkey = $this->xref.":".$xref;
 		//-- check the memory cache
