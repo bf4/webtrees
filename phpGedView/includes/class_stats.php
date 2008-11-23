@@ -1604,7 +1604,7 @@ class stats {
 	 */
 	static function _commonGivenQuery($sex='B', $type='list', $show_tot=false, $params=null)
 	{
-		global $TEXT_DIRECTION, $DEBUG, $GEDCOMS, $GEDCOM, $DBCONN, $TBLPREFIX, $pgv_lang;
+		global $TEXT_DIRECTION, $DEBUG, $GEDCOMS, $GEDCOM, $TBLPREFIX, $pgv_lang;
 		static $sort_types = array('count'=>'asort', 'rcount'=>'arsort', 'alpha'=>'ksort', 'ralpha'=>'krsort');
 		static $sort_flags = array('count'=>SORT_NUMERIC, 'rcount'=>SORT_NUMERIC, 'alpha'=>SORT_STRING, 'ralpha'=>SORT_STRING);
 

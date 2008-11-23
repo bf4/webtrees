@@ -50,7 +50,7 @@ $PGV_BLOCKS["print_block_givn_top10"]["config"]		= array(
  * Print First Names Block
  */
 function print_block_givn_top10($block=true, $config="", $side, $index) {
-	global $TBLPREFIX, $DBCONN, $GEDCOMS;
+	global $TBLPREFIX, $GEDCOMS;
 	global $pgv_lang, $GEDCOM, $DEBUG, $TEXT_DIRECTION;
 	global $PGV_BLOCKS, $ctype, $PGV_IMAGES, $PGV_IMAGE_DIR;
 

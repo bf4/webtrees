@@ -702,7 +702,6 @@ class SearchControllerRoot extends BaseController {
 	function SoundexSearch() {
 		global $GEDCOM, $GEDCOMS;
 		global $TBLPREFIX;
-		global $DBCONN;
 
 		if (((!empty ($this->lastname)) || (!empty ($this->firstname)) || (!empty ($this->place))) && (count($this->sgeds) > 0)) {
 			$logstring = "Type: Soundex<br />";
