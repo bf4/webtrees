@@ -73,23 +73,6 @@ if (!$initials) {
 	$initials[]='@';
 }
 
-// Decide which initial letter to show by default - if the user hasn't
-// specified.  Use the one in the same character set as the page language
-function default_initial($initials, $sample_text=null) {
-	global $pgv_lang;
-	if (is_null($sample_text)) {
-		$language=whatLanguage($pgv_lang['mother']); // Pick any text
-	} else {
-		$language=whatLanguage($sample_text);
-	}
-	foreach ($initials as $initial) {
-		if (whatLanguage($initial)==$language && $initial!=',') {
-			return $initial;
-		}
-	}
-	return reset($initials);
-}
-
 // Fetch the list of fams, and make sure selections are consistent.
 // i.e. can't specify show_all and surname at the same time.
 if ($show_all=='yes') {
@@ -117,10 +100,6 @@ if ($show_all=='yes') {
 	$fams=get_surname_fams($surname);
 	$url='famlist.php?surname='.urlencode($surname);
 } else {
-	// Can only select initial letters that are actually used.
-//	if (! in_array($alpha, $initials)) {
-//		$alpha=default_initial($initials);
-//	}
 	$show_all='no';
 	$surname='';
 	if ($alpha=='@') {
@@ -323,18 +302,8 @@ if ($showList) {
 		// Break long lists by initial letter of given name
 		//if (count($fams)>$SUBLIST_TRIGGER_F) {
 		if (($surname || $show_all=='yes') && count($fams)>$SUBLIST_TRIGGER_F) { // Ingore setting on initial lists at request of MA
-			$showList = false;		// Don't show the list until we have some filter criteria
-			if (!empty($falpha) || $show_all_firstnames=='yes') $showList = true;
-			if (!$falpha && $show_all_firstnames=='no') {
-				// If we didn't specify initial or all, filter by the first initial
-				$falpha=default_initial($givn_initials, $alpha);
-				$legend.=', '.$falpha;
-				foreach ($families as $key=>$value) {
-					if (strpos($value->getSortName(), ','.$falpha)===false) {
-						unset($families[$key]);
-					}
-				}
-			}
+			// Don't show the list until we have some filter criteria
+			$showList=($falpha || $show_all_firstnames=='yes');
 			$list=array();
 			$delayedList = array();
 			foreach ($givn_initials as $givn_initial) {
