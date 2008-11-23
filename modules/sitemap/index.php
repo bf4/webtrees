@@ -54,7 +54,7 @@ if ($action=="sendFiles") {
 
     if (isset($welcome)) {
         print "   <url>\n";
-        print "      <loc>".$SERVER_URL."index.php?command=gedcom&amp;ged=".$DBCONN->escapeSimple($gedcom_name)."</loc>\n";
+        print "      <loc>".$SERVER_URL."index.php?command=gedcom&amp;ged=".urlencode($gedcom_name)."</loc>\n";
         print "      <changefreq>".$welcome_update."</changefreq>\n";
         print "      <priority>0.".$welcome_priority."</priority>\n";
         print "   </url>\n";
@@ -65,7 +65,7 @@ if ($action=="sendFiles") {
         $res = dbquery($sql);
         while ($row =& $res->fetchRow()) {
             print "   <url>\n";
-            print "      <loc>".$SERVER_URL."individual.php?pid=".$row[0]."&amp;ged=".$DBCONN->escapeSimple($gedcom_name)."</loc>\n";
+            print "      <loc>".$SERVER_URL."individual.php?pid=".$row[0]."&amp;ged=".urlencode($gedcom_name)."</loc>\n";
             $arec = get_sub_record(1, "1 CHAN", $row[1], 1);
             if (!empty($arec) && preg_match("/2 DATE (.*)/", $arec, $datematch))
               print "      <lastmod>".date("Y-m-d", strtotime($datematch[1]))."</lastmod>\n";
@@ -81,7 +81,7 @@ if ($action=="sendFiles") {
         $res = dbquery($sql);
         while ($row =& $res->fetchRow()) {
             print "   <url>\n";
-            print "      <loc>".$SERVER_URL."family.php?famid=".$row[0]."&amp;ged=".$DBCONN->escapeSimple($gedcom_name)."</loc>\n";
+            print "      <loc>".$SERVER_URL."family.php?famid=".$row[0]."&amp;ged=".urlencode($gedcom_name)."</loc>\n";
             $arec = get_sub_record(1, "1 CHAN", $row[1], 1);
             if (!empty($arec) && preg_match("/2 DATE (.*)/", $arec, $datematch))
               print "      <lastmod>".date("Y-m-d", strtotime($datematch[1]))."</lastmod>\n";
@@ -100,7 +100,7 @@ if ($action=="sendFiles") {
 	        foreach($famalpha as $letter=>$list) {
 		        if ($letter != "@") {
                     print "   <url>\n";
-			        print "      <loc>".$SERVER_URL."famlist.php?alpha=".urlencode($letter)."&amp;surname_sublist=no&amp;show_all=no&amp;ged=".$DBCONN->escapeSimple($gedcom_name)."</loc>\n";
+			        print "      <loc>".$SERVER_URL."famlist.php?alpha=".urlencode($letter)."&amp;surname_sublist=no&amp;show_all=no&amp;ged=".urlencode($gedcom_name)."</loc>\n";
                     print "      <changefreq>".$famlist_update."</changefreq>\n";
                     print "      <priority>0.".$famlist_priority."</priority>\n";
                     print "   </url>\n";
@@ -113,7 +113,7 @@ if ($action=="sendFiles") {
 	        foreach (get_indi_alpha() as $letter) {
 		        if ($letter != "@") {
                     print "   <url>\n";
-			        print "      <loc>".$SERVER_URL."indilist.php?alpha=".urlencode($letter)."&amp;surname_sublist=no&amp;show_all=no&amp;ged=".$DBCONN->escapeSimple($gedcom_name)."</loc>\n";
+			        print "      <loc>".$SERVER_URL."indilist.php?alpha=".urlencode($letter)."&amp;surname_sublist=no&amp;show_all=no&amp;ged=".urlencode($gedcom_name)."</loc>\n";
                     print "      <changefreq>".$indilist_update."</changefreq>\n";
                     print "      <priority>0.".$indilist_priority."</priority>\n";
                     print "   </url>\n";
