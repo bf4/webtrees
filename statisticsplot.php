@@ -211,10 +211,11 @@ function nuch($i) {
 	if (isset($famgeg[$i])) {
 		$c= $famgeg[$i]["mmarr"];
 		$y= $famgeg[$i]["ymarr"];
+		if ($c>0 && $y>0) {
 			fill_ydata($y,$c,1);
 			$n1++;
+		}
 	}
-	
 }
 
 

@@ -117,7 +117,8 @@ $families= array();
 		$first= true;
 		for($j=0; $j<$ctc; $j++)
 		{
-			$keyf= $families[$j]; $k= $key2ind[$keyf]; //get the family array and month/date of marriage
+			$keyf= $families[$j];
+			$k= $key2ind[$keyf]; //get the family array and month/date of marriage
 			$mm= $famgeg[$k]["mmarr"];
 			$my= $famgeg[$k]["ymarr"];
 			if ($first)
