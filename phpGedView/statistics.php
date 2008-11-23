@@ -226,7 +226,7 @@ $dates= array();
 		$childs= preg_match_all("/1\s*CHIL\s*@(.*)@/",$indirec,$match1,PREG_SET_ORDER);
 		$children= array();
 		for($k=0; $k<$childs; $k++)
-		{	
+		{
 			$children[$k]= $match1[$k][1];
 		}
 
@@ -328,7 +328,7 @@ global $match1,$match2;
 	 * Initiate the stats object.
 	 */
 	$stats = new stats($GEDCOM);
-	
+
 	print_header($pgv_lang["statistics"]);
 
 	if (!isset($_SESSION[$GEDCOM."nrpers"]))
@@ -349,7 +349,8 @@ global $match1,$match2;
 	}
 	$params[1] = "ffffff";
 	$params[2] = "84beff";
-	echo "\t<left><h3>".$pgv_lang["statistics"]."</h3>\t";
+	//echo "\t<left><h3>".$pgv_lang["statistics"]."</h3>\t";
+	echo '<h2 class="center">', $pgv_lang['statistics'], '</h2>';
 	echo "<table><tr><td class=\"facts_label\">".$pgv_lang["statnmale"]."</td><td class=\"facts_value\">".$nrman."</td>";
 	echo "<td class=\"facts_label\">".$pgv_lang["statnnames"]."</td><td class=\"facts_value\">".$nrpers."</td></tr>";
 	echo "<tr><td class=\"facts_label\">".$pgv_lang["statnfemale"]."</td><td class=\"facts_value\">".$nrvrouw."</td>";
@@ -382,38 +383,40 @@ if (isset($_SESSION[$GEDCOM."statTicks"])) {
 ?>
 	<h3><?php print_help_link("stat_help","qm"); ?> <?php echo $pgv_lang["statvars"]; ?></h3>
 	<form method="post" name="form" action="statisticsplot.php?action=newform">
-	<input type="hidden" name="action" value="update">
+	<input type="hidden" name="action" value="update" />
 
 	<table class="facts_table">
 	<tr>
 	<td class="descriptionbox width20 wrap"><?php print_help_link("stat_help_x","qm"); ?> <?php echo $pgv_lang["statlxa"]; ?> </td>
 	<td class="optionbox"> <select name="x-as">
-		<option value= "11" selected="selected"><?php echo $pgv_lang["stat_11_mb"]; ?>
-		<option value= "12"> <?php echo $pgv_lang["stat_12_md"]; ?>
-		<option value= "13"> <?php echo $pgv_lang["stat_13_mm"]; ?>
-		<option value= "14"> <?php echo $pgv_lang["stat_14_mb1"]; ?>
-		<option value= "15"> <?php echo $pgv_lang["stat_15_mm1"]; ?>
-		<option value= "16"> <?php echo $pgv_lang["stat_16_mmb"]; ?>
-		<option value= "17"> <?php echo $pgv_lang["stat_17_arb"]; ?>
-		<option value= "18"> <?php echo $pgv_lang["stat_18_ard"]; ?>
-		<option value= "19"> <?php echo $pgv_lang["stat_19_arm"]; ?>
-		<option value= "20"> <?php echo $pgv_lang["stat_20_arm1"]; ?>
-		<option value= "21"> <?php echo $pgv_lang["stat_21_nok"]; ?>
+		<option value= "11" selected="selected"><?php echo $pgv_lang["stat_11_mb"]; ?></option>
+		<option value= "12"> <?php echo $pgv_lang["stat_12_md"]; ?></option>
+		<option value= "13"> <?php echo $pgv_lang["stat_13_mm"]; ?></option>
+		<option value= "14"> <?php echo $pgv_lang["stat_14_mb1"]; ?></option>
+		<option value= "15"> <?php echo $pgv_lang["stat_15_mm1"]; ?></option>
+		<option value= "16"> <?php echo $pgv_lang["stat_16_mmb"]; ?></option>
+		<option value= "17"> <?php echo $pgv_lang["stat_17_arb"]; ?></option>
+		<option value= "18"> <?php echo $pgv_lang["stat_18_ard"]; ?></option>
+		<option value= "19"> <?php echo $pgv_lang["stat_19_arm"]; ?></option>
+		<option value= "20"> <?php echo $pgv_lang["stat_20_arm1"]; ?></option>
+		<option value= "21"> <?php echo $pgv_lang["stat_21_nok"]; ?></option>
 	</select>
+	</td>
+	</tr>
 	<tr>
 	<td class="descriptionbox width20 wrap"><?php print_help_link("stat_help_y","qm"); ?> <?php echo $pgv_lang["statlya"]; ?>  </td>
 	<td class="optionbox"> <select name="y-as">
-		<option value= "201" selected="selected"> <?php echo $pgv_lang["stat_201_num"]; ?>
-		<option value= "202"> <?php echo $pgv_lang["stat_202_perc"]; ?>
+		<option value= "201" selected="selected"> <?php echo $pgv_lang["stat_201_num"]; ?></option>
+		<option value= "202"> <?php echo $pgv_lang["stat_202_perc"]; ?></option>
 	</select>
 	</td>
 	</tr>
 	<tr>
 	<td class="descriptionbox width20 wrap"><?php print_help_link("stat_help_z","qm"); ?> <?php echo $pgv_lang["statlza"]; ?>  </td>
 	<td class="optionbox"> <select name="z-as">
-		<option value= "300"> <?php echo $pgv_lang["stat_300_none"]; ?>
-		<option value= "301"> <?php echo $pgv_lang["stat_301_mf"]; ?>
-		<option value= "302" selected="selected"> <?php echo $pgv_lang["stat_302_cgp"]; ?>
+		<option value= "300"> <?php echo $pgv_lang["stat_300_none"]; ?></option>
+		<option value= "301"> <?php echo $pgv_lang["stat_301_mf"]; ?></option>
+		<option value= "302" selected="selected"> <?php echo $pgv_lang["stat_302_cgp"]; ?></option>
 	</select>
 	</td>
 	</tr>
@@ -426,33 +429,33 @@ if (isset($_SESSION[$GEDCOM."statTicks"])) {
 	<tr>
 	<td class="descriptionbox width20 wrap"><?php print_help_link("stat_help_gwx","qm"); ?> <?php echo $pgv_lang["statar_xgl"]; ?> </td>
 	<td class="optionbox"> <input type="text" name="xas-grenzen-leeftijden" value="<?php echo $xasGrLeeftijden; ?>"
-			size="60">
+			size="60" />
 	</td>
 	</tr>
 	<tr>
 	<td class="descriptionbox width20 wrap"> <?php echo $pgv_lang["statar_xgm"]; ?> </td>
 	<td class="optionbox"> <input type="text" name="xas-grenzen-maanden" value="<?php echo $xasGrMaanden; ?>"
-			size="60">
+			size="60" />
 	</td>
 	</tr>
 	<tr>
 	<td class="descriptionbox width20 wrap"> <?php echo $pgv_lang["statar_xga"]; ?> </td>
 	<td class="optionbox"> <input type="text" name="xas-grenzen-aantallen" value="<?php echo $xasGrAantallen; ?>"
-			size="60">
+			size="60" />
 	</td>
 	</tr>
 	<tr>
 	<td class="descriptionbox width20 wrap"><?php print_help_link("stat_help_gwz","qm"); ?> <?php echo $pgv_lang["statar_zgp"]; ?> </td>
 	<td class="optionbox"> <input type="text" name="zas-grenzen-periode" value="<?php echo $zasGrPeriode; ?>"
-			size="60">
+			size="60" />
 	</td>
 	</tr>
 	</table>
 
-</td></tr></table></center>
+<!--/td></tr></table-->
 <br/>
-<input type="submit" value="<?php echo $pgv_lang["statsubmit"]; ?> " onclick="closeHelp();">
-<input type="reset"  value=" <?php echo $pgv_lang["statreset"]; ?> "><br/>
+<input type="submit" value="<?php echo $pgv_lang["statsubmit"]; ?> " onclick="closeHelp();" />
+<input type="reset"  value=" <?php echo $pgv_lang["statreset"]; ?> " /><br/>
 </form>
 <?php
 }
