@@ -3895,6 +3895,44 @@ function isFileExternal($file) {
 	return strpos($file, '://') !== false;
 }
 
+/*
+ * Encrypt the input string
+ *
+ */
+function encrypt($string, $key) {
+	$result = '';
+
+	for($i=0; $i<strlen($string); $i++) {
+		$char = substr($string, $i, 1);
+		$keychar = substr($key, ($i % strlen($key))-1, 1);
+		$newOrd = ord($char) + ord($keychar);
+		if ($newOrd > 255) $newOrd -= 256;		// Make sure we stay within the 8-bit code table
+		$result .= chr($newOrd);
+	}
+
+	return base64_encode($result);
+}
+
+/*
+ * Decrypt the input string
+ *
+ */
+function decrypt($string, $key) {
+	$result = '';
+
+	$string = base64_decode($string);
+
+	for($i=0; $i<strlen($string); $i++) {
+		$char = substr($string, $i, 1);
+		$keychar = substr($key, ($i % strlen($key))-1, 1);
+		$newOrd = ord($char) - ord($keychar);
+		if ($newOrd < 0) $newOrd += 256;		// Make sure we stay within the 8-bit code table
+		$result .= chr($newOrd);
+	}
+	
+	return $result;
+}
+
 // optional extra file
 if (file_exists( "includes/functions.extra.php"))
 	require  "includes/functions.extra.php";
