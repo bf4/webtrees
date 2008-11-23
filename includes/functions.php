@@ -3677,10 +3677,21 @@ function loadLanguage($desiredLanguage="english", $forceLoad=false) {
 	global $unknownNN, $unknownPN;
 	global $JEWISH_ASHKENAZ_PRONUNCIATION, $CALENDAR_FORMAT;
 	global $DBCONN;
-	global $COLLATION, $DBCOLLATE;
+	global $DBTYPE, $DB_UTF8_COLLATION, $COLLATION, $DBCOLLATE;
 
 	// Need to change the collation sequence each time we change language
-	$DBCOLLATE="COLLATE {$COLLATION[$LANGUAGE]}";
+	if ($DB_UTF8_COLLATION) {
+		switch ($DBTYPE) {
+		case 'mysql':
+			$DBCOLLATE="COLLATE {$COLLATION[$LANGUAGE]}";
+			break;
+		default:
+			$DBCOLLATE='';
+			break;
+		}
+	} else {
+		$DBCOLLATE='';
+	}
 
 	if (!isset($pgv_language[$desiredLanguage])) $desiredLanguage = "english";
 
