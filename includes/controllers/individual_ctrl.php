@@ -1728,8 +1728,8 @@ class IndividualControllerRoot extends BaseController {
 		global $SEARCH_SPIDER, $SESSION_HIDE_GOOGLEMAP, $pgv_lang, $CONTACT_EMAIL, $PGV_IMAGE_DIR, $PGV_IMAGES;
 		global $LANGUAGE;
 		global $GOOGLEMAP_API_KEY, $GOOGLEMAP_MAP_TYPE, $GOOGLEMAP_MIN_ZOOM, $GOOGLEMAP_MAX_ZOOM, $GEDCOM;
-	    global $GOOGLEMAP_XSIZE, $GOOGLEMAP_YSIZE, $pgv_lang, $factarray, $SHOW_LIVING_NAMES, $PRIV_PUBLIC;
-	    global $GOOGLEMAP_ENABLED, $TBLPREFIX, $TEXT_DIRECTION, $GM_DEFAULT_TOP_VALUE, $GOOGLEMAP_COORD;
+		global $GOOGLEMAP_XSIZE, $GOOGLEMAP_YSIZE, $pgv_lang, $factarray, $SHOW_LIVING_NAMES, $PRIV_PUBLIC;
+		global $GOOGLEMAP_ENABLED, $TEXT_DIRECTION, $GM_DEFAULT_TOP_VALUE, $GOOGLEMAP_COORD;
 		global $GM_MARKER_COLOR, $GM_MARKER_SIZE, $GM_PREFIX, $GM_POSTFIX, $GM_PRE_POST_MODE;
 		// LB Fix if no googlemaps ========================================================
 		if (file_exists("modules/googlemap/googlemap.php")) {
@@ -1737,15 +1737,15 @@ class IndividualControllerRoot extends BaseController {
 		}
 		// LB Fix in no googlemaps ========================================================
 		if ($GOOGLEMAP_ENABLED == "false") {
-	        print "<table class=\"facts_table\">\n";
-					print "<tr><td colspan=\"2\" class=\"facts_value\">".$pgv_lang["gm_disabled"]."</td></tr>\n";
-	        if (PGV_USER_IS_ADMIN) {
-	            print "<tr><td align=\"center\" colspan=\"2\">\n";
-	            print "<a href=\"".encode_url("module.php?mod=googlemap&pgvaction=editconfig")."\">".$pgv_lang["gm_manage"]."</a>";
-	            print "</td></tr>\n";
-	        }
-	        print "\n\t</table>\n<br />";
-	        ?>
+			print "<table class=\"facts_table\">\n";
+			print "<tr><td colspan=\"2\" class=\"facts_value\">".$pgv_lang["gm_disabled"]."</td></tr>\n";
+			if (PGV_USER_IS_ADMIN) {
+				print "<tr><td align=\"center\" colspan=\"2\">\n";
+				print "<a href=\"".encode_url("module.php?mod=googlemap&pgvaction=editconfig")."\">".$pgv_lang["gm_manage"]."</a>";
+				print "</td></tr>\n";
+			}
+			print "\n\t</table>\n<br />";
+				?>
 					<script language="JavaScript" type="text/javascript">
 					<!--
 						tabstyles[5]='tab_cell_inactive_empty';
@@ -1756,14 +1756,14 @@ class IndividualControllerRoot extends BaseController {
 						function SetMarkersAndBounds () {}
 					//-->
 					</script>
-	        <?php
-	        return;
-	    } else {
-                $famids = array();
-                $families = $this->indi->getSpouseFamilies();
-                foreach($families as $famid=>$family) {
-                    $famids[] = $family->getXref();
-                }
+				<?php
+			return;
+		} else {
+			$famids = array();
+			$families = $this->indi->getSpouseFamilies();
+			foreach($families as $famid=>$family) {
+				$famids[] = $family->getXref();
+			}
 				$this->indi->add_family_facts(false);
 				// LB Fix if no googlemaps ========================================================
 				if (file_exists("modules/googlemap/googlemap.php")) {
@@ -1786,7 +1786,7 @@ class IndividualControllerRoot extends BaseController {
 	 * print the lightbox tab, ( which =  getTab8()  )
 	 */
 	function print_lightbox_tab() {
-		global $MULTI_MEDIA, $TBLPREFIX, $SHOW_ID_NUMBERS, $MEDIA_EXTERNAL;
+		global $MULTI_MEDIA, $SHOW_ID_NUMBERS, $MEDIA_EXTERNAL;
 		global $pgv_lang, $pgv_changes, $factarray, $view;
 		global $GEDCOM, $MEDIATYPE, $pgv_changes, $DBTYPE;
 		global $WORD_WRAPPED_NOTES, $MEDIA_DIRECTORY, $PGV_IMAGE_DIR, $PGV_IMAGES, $TEXT_DIRECTION, $is_media;

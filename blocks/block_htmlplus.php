@@ -60,7 +60,6 @@ function print_htmlplus_block($block=true, $config='', $side, $index)
 	$PGV_IMAGE_DIR,
 	$PGV_IMAGES,
 	$pgv_lang,
-	$TBLPREFIX,
 	$TEXT_DIRECTION,
 	$DEFAULT_GEDCOM,
 	$MULTI_MEDIA,
