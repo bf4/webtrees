@@ -1619,7 +1619,7 @@ $pgv_lang["stplmf"]			 	= " / man-woman";
 $pgv_lang["stplipot"]			= " / per timeperiod";
 $pgv_lang["stplgzas"]			= "Z axis boundaries:";
 $pgv_lang["stplmonth"]			= "month";
-$pgv_lang["stplnumbers"]		= "numbers for a family";
+$pgv_lang["stplnumbers"]		= "numbers";
 $pgv_lang["stplage"]			= "age";
 $pgv_lang["stplperc"]			= "percentage";
 $pgv_lang["stplnumof"]			= "Counts ";
@@ -1631,8 +1631,8 @@ $pgv_lang["is_alive_in"]			= "Is alive in #YEAR#";
 $pgv_lang["alive"]					= "Alive ";
 $pgv_lang["dead"]					= "Dead ";
 $pgv_lang["maybe"]					= "Maybe ";
-$pgv_lang["both_alive"]					= "Both alive ";
-$pgv_lang["both_dead"]					= "Both dead ";
+$pgv_lang["both_alive"]				= "Both alive ";
+$pgv_lang["both_dead"]				= "Both dead ";
 
 //-- Help system
 $pgv_lang["definitions"]			= "Definitions";

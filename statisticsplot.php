@@ -641,7 +641,7 @@ set_params(20,"FAM", false, false, "stat_20_arm1","stplage",   $y_as, $xgl,   $z
 set_params(21,"FAM", false, false, "stat_21_nok", "stplnumbers",$y_as,$xga,   $zgp,"nuch");  //plot plot aantal kinderen in een maand
 
 echo "<div class =\"center\">";
-echo "<br /><a href=\"statistics.php\">".PrintReady($pgv_lang["back"])."</a><br /><br />";
+echo "<input type=\"submit\" value=\"".$pgv_lang["back"]."\" onclick=\"javascript:history.go(-1);\"><br /><br />";
 echo "</div>\n";
 print_footer();
 ?>
