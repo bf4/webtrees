@@ -1565,8 +1565,8 @@ class stats {
 		if (isset($params[1]) && $params[1] != '') {$color_from = strtolower($params[1]);}else{$color_from = 'ffffff';}
 		if (isset($params[2]) && $params[2] != '') {$color_to = strtolower($params[2]);}else{$color_to = '000000';}
 		if (isset($params[3]) && $params[3] != '') {$threshold = strtolower($params[3]);}else{$threshold = $COMMON_NAMES_THRESHOLD;}
+		if (isset($params[4]) && $params[4] != '') {$maxtoshow = strtolower($params[4]);}else{$maxtoshow = 7;}
 		$sizes = explode('x', $size);
-		$maxtoshow = 7;
 		$tot_indi = $this->totalIndividuals();
 		$surnames = get_common_surnames($threshold);
 		uasort($surnames, array('stats', '_name_total_rsort'));
