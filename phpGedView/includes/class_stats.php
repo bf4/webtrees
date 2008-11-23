@@ -586,8 +586,8 @@ class stats {
 		if ($params === null) {$params = array();}
 		if (isset($params[0]) && $params[0] != '') {$size = strtolower($params[0]);}else{$size = '450x125';}
 		if (isset($params[1]) && $params[1] != '') {$color_female = strtolower($params[1]);}else{$color_female = 'ffd1dc';}
-		if (isset($params[2]) && $params[2] != '') {$color_male = strtolower($params[2]);}else{$color_male = 'add8e6';}
-		if (isset($params[3]) && $params[3] != '') {$color_unknown = strtolower($params[3]);}else{$color_unknown = '000000';}
+		if (isset($params[2]) && $params[2] != '') {$color_male = strtolower($params[2]);}else{$color_male = '84beff';}
+		if (isset($params[3]) && $params[3] != '') {$color_unknown = strtolower($params[3]);}else{$color_unknown = '777777';}
 		$sizes = explode('x', $size);
 		$tot_f = $this->totalSexFemalesPercentage();
 		$tot_m = $this->totalSexMalesPercentage();
@@ -1566,8 +1566,11 @@ class stats {
 		if (isset($params[2]) && $params[2] != '') {$color_to = strtolower($params[2]);}else{$color_to = '000000';}
 		if (isset($params[3]) && $params[3] != '') {$threshold = strtolower($params[3]);}else{$threshold = $COMMON_NAMES_THRESHOLD;}
 		$sizes = explode('x', $size);
+		$maxtoshow = 7;
 		$tot_indi = $this->totalIndividuals();
 		$surnames = get_common_surnames($threshold);
+		uasort($surnames, array('stats', '_name_total_rsort'));
+		$surnames = array_slice($surnames, 0, $maxtoshow);
 		if (count($surnames) <= 0) {return '';}
 		$tot = 0;
 		foreach ($surnames as $indexval=>$surname) {$tot += $surname['match'];}
