@@ -574,9 +574,9 @@ function print_fact_sources($factrec, $level, $return=false) {
 	$ct = preg_match_all("/$level SOUR (.*)/", $factrec, $match, PREG_SET_ORDER);
 	for($j=0; $j<$ct; $j++) {
 		if (strpos($match[$j][1], "@")===false) {
-			$srec = get_sub_record($level, " SOUR ", $factrec, $j+1);
-			$srec = substr($srec, 5); // remove SOUR
-			$srec = str_replace("\n".($level+1)." CONT ", " ", $srec); // remove n+1 CONT
+			$srec = get_sub_record($level, "$level SOUR ", $factrec, $j+1);
+			$srec = substr($srec, 6); // remove "2 SOUR"
+			$srec = str_replace("\n".($level+1)." CONT ", "<br/>", $srec); // remove n+1 CONT
 			$srec = str_replace("\n".($level+1)." CONC ", "", $srec); // remove n+1 CONC
 			$data .= "<br /><span class=\"label\">".$pgv_lang["source"].":</span> <span class=\"field\">".PrintReady($srec)."</span><br />";
 			$printDone = true;
