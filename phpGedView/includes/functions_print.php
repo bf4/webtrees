@@ -2286,7 +2286,7 @@ function print_add_new_fact($id, $usedfacts, $type) {
 	print "<tr><td class=\"descriptionbox\">";
 	print_help_link("add_new_facts_help", "qm");
 	print $pgv_lang["add_fact"]."</td>";
-	print "<td class=\"optionbox\">";
+	print "<td class=\"optionbox wrap\">";
 	print "<form method=\"get\" name=\"newfactform\" action=\"\" onsubmit=\"return false;\">";
 	print "<select id=\"newfact\" name=\"newfact\">";
 	foreach($addfacts as $indexval => $fact) {
@@ -2310,7 +2310,7 @@ function print_add_new_fact($id, $usedfacts, $type) {
 		}
 	}
 	print "</select>";
-	print "<input type=\"button\" value=\"".$pgv_lang["add"]."\" onclick=\"add_record('$id', 'newfact');\" />";
+	print "<input type=\"button\" value=\"".$pgv_lang["add"]."\" onclick=\"add_record('$id', 'newfact');\" /> ";
 	foreach($quickfacts as $k=>$v) echo "&nbsp;<small><a href='javascript://$v' onclick=\"add_new_record('$id', '$v');return false;\">".$factarray["$v"]."</a></small>&nbsp;";
 
 	print "</form>";
