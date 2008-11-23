@@ -53,7 +53,7 @@ define('PGV_REGEX_PASSWORD',  '.{6,}');
 define('PGV_REGEX_NOSCRIPT',  '[^<>"&%{};]+');
 define('PGV_REGEX_URL',       '[\/0-9A-Za-z_!~*\'().;?:@&=+$,%#-]+'); // Simple list of valid chars
 define('PGV_REGEX_EMAIL',     '[^\s<>"&%{};@]+@[^\s<>"&%{};@]+');
-define('PGV_REGEX_UNSAFE',    '(.|[\n])*'); // Use with care and apply additional validation!
+define('PGV_REGEX_UNSAFE',    '[\x00-\xFF]*'); // Use with care and apply additional validation!
 
 // UTF8 representation of various characters
 define('PGV_UTF8_BOM',    "\xEF\xBB\xBF"); // U+FEFF
