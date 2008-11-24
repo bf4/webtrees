@@ -980,12 +980,18 @@ function toggleStatus(sel) {
 
 function statusDisable(sel) {
 	var cbox = document.getElementById(sel);
+	cbox.checked = false;
 	cbox.disabled = true;
 }
 
 function statusEnable(sel) {
 	var cbox = document.getElementById(sel);
 	cbox.disabled = false;
+}
+
+function statusChecked(sel) {
+	var cbox = document.getElementById(sel);
+	cbox.checked = true;
 }
 
 var monthLabels = new Array();

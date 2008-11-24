@@ -554,11 +554,13 @@ if ($action=="update") {
 	if (!isset($_POST)) $_POST = $HTTP_POST_VARS;
 	$x_as= $_POST["x-as"];
 	$y_as= $_POST["y-as"];
-	$z_as= $_POST["z-as"];
+	if (isset($_POST["z-as"])) $z_as= $_POST["z-as"];
+	else $z_as=300;
 	$xas_grenzen_leeftijden= $_POST["xas-grenzen-leeftijden"];
 	$xas_grenzen_maanden= $_POST["xas-grenzen-maanden"];
 	$xas_grenzen_aantallen= $_POST["xas-grenzen-aantallen"];
-	$zas_grenzen_periode= $_POST["zas-grenzen-periode"];
+	if (isset($_POST["zas-grenzen-periode"])) $zas_grenzen_periode= $_POST["zas-grenzen-periode"];
+	else $zas_grenzen_periode=0;
 
 	$_SESSION[$GEDCOM."statTicks"]["xasGrLeeftijden"] = $xas_grenzen_leeftijden;
 	$_SESSION[$GEDCOM."statTicks"]["xasGrMaanden"] = $xas_grenzen_maanden;
