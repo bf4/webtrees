@@ -45,8 +45,9 @@ VERSION 4.2.0
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 -----------------------------------------------------------------------------------------
-*$pgv_lang["DB_UTF8_COLLATION"]						23 Nov 2008				s	"UTF8" --> "UTF-8"
-*$pgv_lang["DB_UTF8_COLLATION_help"]				23 Nov 2008				sW
+*$pgv_lang["EDIT_AUTOCLOSE_help"]					24 Nov 2008				S
+*$pgv_lang["DB_UTF8_COLLATION"]						24 Nov 2008				S	"UTF8" --> "UTF-8"
+*$pgv_lang["DB_UTF8_COLLATION_help"]				24 Nov 2008				SW
 *$pgv_lang["SURNAME_TRADITION_help"]				22 Nov 2008				W
 *$pgv_lang["multi_letter_equiv_help"]				22 Nov 2008				CSf
 *$pgv_lang["SURNAME_TRADITION_help"]				22 Nov 2008				W

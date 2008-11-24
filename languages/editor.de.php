@@ -32,6 +32,12 @@ if (!defined('PGV_PHPGEDVIEW')) {
 }
 
 $pgv_lang["add_marriage"]			= "Ehedetails hinzufügen";
+$pgv_lang["edit_concurrency_change"] = "Dieser Datensatz wurde zuletzt von <i>#CHANGEUSER#</i> um #CHANGEDATE# geändert.";
+$pgv_lang["edit_concurrency_msg2"]	= "Ein anderer Benutzer hat den Datensatz mit ID-Nummer #PID# geändert, seit Sie ihn aufruften.";
+$pgv_lang["edit_concurrency_msg1"]	= "Ein Fehler trat während dem Aufbau des Editier-Formulars auf.  Ein anderer Benutzer hat womöglich den Datensatz geändert, seit Sie ihn aufruften.";
+$pgv_lang["edit_concurrency_reload"] = "Bitte benutzen Sie den «Vorige Seite» Button des Browsers, und rufen Sie dann die vorige Seite erneut auf.  So können Sie sicher sein, dass Sie den neuesten Datensatz bearbeiten.";
+$pgv_lang["admin_override"]			= "Verwalter Option";
+$pgv_lang["no_update_CHAN"]			= "CHAN (letzte Änderung) Datensatz nicht ändern";
 $pgv_lang["select_events"]			= "Ereignisse wählen";
 $pgv_lang["source_events"]			= "Ereignisse mit dieser Quelle verbinden";
 $pgv_lang["advanced_name_fields"]	= "Weitere Namen (Spitzname, Ehename, usw.)";
@@ -161,8 +167,8 @@ $pgv_lang["gedcom_editing_disabled"] = "Änderung dieser GEDCOM Datei wurde vom 
 $pgv_lang["gedcomid"]				= "GEDCOM ID Nummer dieser Person";
 $pgv_lang["gedrec_deleted"]			= "GEDCOM Datensatz erfolgreich gelöscht.";
 $pgv_lang["gen_thumb"]				= "Miniaturbild erzeugen";
-$pgv_lang["gen_missing_thumbs_lbl"]	= "Fehlende Miniaturbilder";
 $pgv_lang["gen_missing_thumbs"]		= "Fehlende Miniaturbilder erzeugen";
+$pgv_lang["gen_missing_thumbs_lbl"]	= "Fehlende Miniaturbilder";
 $pgv_lang["gender_search"]			= "Geschlecht:";
 $pgv_lang["generate_thumbnail"]		= "Miniaturbild automatisch erstellen aus ";
 $pgv_lang["hebrew_givn"]			= "Hebräische Vornamen";
@@ -186,7 +192,6 @@ $pgv_lang["link_as_child"]			= "Diese Person als Kind mit einer existierenden Fa
 $pgv_lang["link_as_husband"]		= "Diese Person als Ehemann mit einer existierenden Familie verbinden";
 $pgv_lang["link_success"]			= "Link erfolgreich hinzugefügt";
 $pgv_lang["link_to_existing_media"]	= "Mit einem bereits bestehenden Medien-Objekt verbinden";
-$pgv_lang["max_media_depth"]		= "You can enter no more than #GLOBALS[MEDIA_DIRECTORY_LEVELS]# subdirectory names";
 $pgv_lang["max_media_depth"]		= "Sie können höchstens #GLOBALS[MEDIA_DIRECTORY_LEVELS]# Unterverzeichnisnamen eingeben";
 $pgv_lang["max_upload_size"]		= "Maximale Größe zum Hochladen: ";
 $pgv_lang["media_deleted"]			= "Medien Verzeichnis erfolgreich entfernt.";
@@ -230,12 +235,5 @@ $pgv_lang["upload_media"]			= "Multimedia Dateien auf Server hochladen";
 $pgv_lang["upload_media_help"]		= "~#pgv_lang[upload_media]#~<br /><br />Wählen Sie die Dateien zum Hochladen auf Ihren Server. Alle Dateien werden in das <b>#MEDIA_DIRECTORY#</b> Verzeichnis aktualisiert  oder in eines seiner Unterverzeichnisse.<br /><br />Verzeichnisnamen die Sie eingeben, werden an #MEDIA_DIRECTORY# angehängt. Zum Beispiel, #MEDIA_DIRECTORY#Müller. Falls das Miniaturbild-Verzeichnis nicht existiert, wird es automatisch erstellt.";
 $pgv_lang["upload_successful"]		= "Hochladen erfolgreich.";
 $pgv_lang["view_change_diff"]		= "Änderungen ansehen";
-
-$pgv_lang["no_update_CHAN"]			= "CHAN (letzte Änderung) Datensatz nicht ändern";
-$pgv_lang["admin_override"]			= "Verwalter Option";
-$pgv_lang["edit_concurrency_change"] = "Dieser Datensatz wurde zuletzt von <i>#CHANGEUSER#</i> um #CHANGEDATE# geändert.";
-$pgv_lang["edit_concurrency_msg2"]	= "Ein anderer Benutzer hat den Datensatz mit ID-Nummer #PID# geändert, seit Sie ihn aufruften.";
-$pgv_lang["edit_concurrency_msg1"]	= "Ein Fehler trat während dem Aufbau des Editier-Formulars auf.  Ein anderer Benutzer hat womöglich den Datensatz geändert, seit Sie ihn aufruften.";
-$pgv_lang["edit_concurrency_reload"] = "Bitte benutzen Sie den «Vorige Seite» Button des Browsers, und rufen Sie dann die vorige Seite erneut auf.  So können Sie sicher sein, dass Sie den neuesten Datensatz bearbeiten.";
 
 ?>
