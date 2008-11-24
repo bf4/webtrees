@@ -147,6 +147,11 @@ require 'js/autocomplete.js.htm';
 <form method="post" name="searchform" onsubmit="return checknames(this);" action="search.php">
 <input type="hidden" name="action" value="<?php print $controller->action; ?>" />
 <input type="hidden" name="isPostBack" value="true" />
+<script type="text/javascript">
+	function paste_char(value,lang,mag) {
+		document.searchform.query.value+=value;
+	}
+</script>
 <table class="list_table $TEXT_DIRECTION" width="35%" border="0">
 	<tr>
 
@@ -162,7 +167,9 @@ require 'js/autocomplete.js.htm';
 			<?php print $pgv_lang["enter_terms"]; ?>
 		</td>
 		<td class="list_value" style="padding: 5px;">
-			<input tabindex="1" id="firstfocus" type="text" name="query" value="<?php if (isset($controller->myquery)) print $controller->myquery; ?>" />
+			<input tabindex="1" id="firstfocus" type="text" name="query" value="<?php if (isset($controller->myquery)) print $controller->myquery; ?>" size="40" />
+			<?php print_specialchar_link('firstfocus', false); ?>
+
 		</td>
 		<td class="list_value" style="vertical-align: middle; text-align: center; padding: 5px;"  rowspan="4">
 			<input tabindex="2" type="submit" value="<?php print $pgv_lang["search"] ?>" />
