@@ -978,6 +978,16 @@ function toggleStatus(sel) {
 	cbox.disabled=!(cbox.disabled);
 }
 
+function statusDisable(sel) {
+	var cbox = document.getElementById(sel);
+	cbox.disabled = true;
+}
+
+function statusEnable(sel) {
+	var cbox = document.getElementById(sel);
+	cbox.disabled = false;
+}
+
 var monthLabels = new Array();
   monthLabels[1] = "January";
   monthLabels[2] = "February";
