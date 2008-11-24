@@ -755,37 +755,49 @@ if ($action=="filter") {
 
 	// Output Special Characters
 	if ($type == "specialchar") {
-		print "\n\t<table class=\"tabs_table $TEXT_DIRECTION width90\">\n\t\t<tr>\n\t\t<td class=\"list_value\">";
-		//upper case special characters
-		foreach($ucspecialchars as $key=>$value) {
-			$value = str_replace("'","\'",$value);
-			print "\n\t\t\t<a href=\"javascript:;\" onclick=\"return paste_char('$value','$language_filter','$magnify');\"><span class=\"list_item\" dir=\"$TEXT_DIRECTION\">";
-			if ($magnify) print "<span class=\"largechars\">";
-			print $key;
-			if ($magnify) print "</span>";
-			print "</span></a><br />";
-		}
-		print "</td>\n\t\t<td class=\"list_value\">";
+		print "\n\t<table class=\"tabs_table $TEXT_DIRECTION width90\">\n\t\t<tr>\n\t\t<td class=\"list_value center wrap\" dir=\"$TEXT_DIRECTION\"><br/>";
 		// lower case special characters
+		if ($magnify) {
+			echo '<span class="largechars">';
+		}
 		foreach($lcspecialchars as $key=>$value) {
 			$value = str_replace("'","\'",$value);
-			print "\n\t\t\t<a href=\"javascript:;\" onclick=\"return paste_char('$value','$language_filter','$magnify');\"><span class=\"list_item\" dir=\"$TEXT_DIRECTION\">";
-			if ($magnify) print "<span class=\"largechars\">";
+			print "<a href=\"javascript:;\" onclick=\"return paste_char('$value','$language_filter','$magnify');\">";
 			print $key;
-			if ($magnify) print "</span>";
-			print "</span></a><br />\n";
+			print "</span></a> ";
 		}
-		print "</td>\n\t\t<td class=\"list_value\">";
+		if ($magnify) {
+			echo '<span class="largechars">';
+		}
+		echo '<br/><br/>';
+		//upper case special characters
+		if ($magnify) {
+			echo '<span class="largechars">';
+		}
+		foreach($ucspecialchars as $key=>$value) {
+			$value = str_replace("'","\'",$value);
+			print "<a href=\"javascript:;\" onclick=\"return paste_char('$value','$language_filter','$magnify');\">";
+			print $key;
+			print "</span></a> ";
+		}
+		if ($magnify) {
+			echo '<span class="largechars">';
+		}
+		echo '<br/><br/>';
 		// other special characters (not letters)
+		if ($magnify) {
+			echo '<span class="largechars">';
+		}
 		foreach($otherspecialchars as $key=>$value) {
 			$value = str_replace("'","\'",$value);
-			print "\n\t\t\t<a href=\"javascript:;\" onclick=\"return paste_char('$value','$language_filter','$magnify');\"><span class=\"list_item\" dir=\"$TEXT_DIRECTION\">";
-			if ($magnify) print "<span class=\"largechars\">";
+			print "<a href=\"javascript:;\" onclick=\"return paste_char('$value','$language_filter','$magnify');\">";
 			print $key;
-			if ($magnify) print "</span>";
-			print "</span></a><br />\n";
+			print "</span></a> ";
 		}
-		print "\n\t\t</td>\n\t\t</tr>\n\t</table>";
+		if ($magnify) {
+			echo '<span class="largechars">';
+		}
+		echo '<br/><br/></td></tr></table>';
 	}
 }
 print "</div>"; // Close div that centers table
