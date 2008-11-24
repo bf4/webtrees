@@ -937,8 +937,8 @@ class SearchControllerRoot extends BaseController {
 				$printfamname = array ();
 				$actualsourcelist = array ();
 
-				// remove the % added for the like comparision of non-regex databases
-				$this->query = str_replace('%', '.*', substr($this->query, 1, strlen($this->query) - 2));
+				// Convert a SQL pattern (used for searching the DB) into a regex pattern (used for searching gedcom)
+				$this->query = '/'.str_replace(array('%', '_', '\/'), array('.*', '.', '\/'), UTF8_strtoupper(trim($this->query, '%'))).'/';
 
 				$cti = count($this->myindilist);
 				if (($cti > 0) && (isset ($this->srindi))) {
@@ -978,7 +978,7 @@ class SearchControllerRoot extends BaseController {
 							//-- any record that is not a FAMC, FAMS is private
 							$found = false;
 							foreach ($person->getAllNames() as $name) {
-								if (strpos(UTF8_strtoupper($name['full']), UTF8_strtoupper($this->query)) !== false) {
+								if (preg_match($this->query, UTF8_strtoupper($name['full']))) {
 									$hit = true;
 									$found = true;
 								}
@@ -987,8 +987,9 @@ class SearchControllerRoot extends BaseController {
 							$found = false;
 							// First check if the hit is in the key!
 							if ($this->tagfilter == "off") {
-								if (strpos(UTF8_strtoupper($key), UTF8_strtoupper($this->query)) !== false)
-								$found = true;
+								if (preg_match($this->query, UTF8_strtoupper($key))) {
+									$found = true;
+								}
 							}
 							if ($found == false) {
 								$recs = get_all_subrecords($value["gedcom"], "", false, false);
@@ -997,7 +998,7 @@ class SearchControllerRoot extends BaseController {
 									$recs2 = preg_split("/\r?\n/", $subrec);
 									foreach ($recs2 as $keysr2 => $subrec2) {
 										// There must be a hit in a subrec. If found, check in which tag
-										if (strpos(UTF8_strtoupper($subrec2), UTF8_strtoupper($this->query)) !== false) {
+										if (preg_match($this->query, UTF8_strtoupper($subrec2))) {
 											$ct = preg_match("/\d\s(\S*)\s*.*/i", $subrec2, $result2);
 											if (($ct > 0) && (!empty ($result2[1]))) {
 												// if the tag can be displayed, do so
@@ -1084,7 +1085,7 @@ class SearchControllerRoot extends BaseController {
 						$found = false;
 						// If a name is hit, no need to check for tags
 						foreach ($value["name"] as $nkey => $famname) {
-							if (strpos(UTF8_strtoupper($famname), UTF8_strtoupper($this->query)) !== false) {
+							if (preg_match($this->query, UTF8_strtoupper($famname))) {
 								$found = true;
 								break;
 							}
@@ -1092,7 +1093,7 @@ class SearchControllerRoot extends BaseController {
 						$hit = false;
 						// First check if the hit is in the key!
 						if (($this->tagfilter == "off") && ($found == false)) {
-							if (strpos(UTF8_strtoupper($key), UTF8_strtoupper($this->query)) !== false) {
+							if (preg_match($this->query, UTF8_strtoupper($key))) {
 								$found = true;
 								$hit = true;
 							}
@@ -1105,7 +1106,7 @@ class SearchControllerRoot extends BaseController {
 								$recs2 = preg_split("/\r?\n/", $subrec);
 								foreach ($recs2 as $keysr2 => $subrec2) {
 									// There must be a hit in a subrec. If found, check in which tag
-									if (strpos(UTF8_strtoupper($subrec2), UTF8_strtoupper($this->query)) !== false) {
+									if (preg_match($this->query, UTF8_strtoupper($subrec2))) {
 										$ct = preg_match("/\d.(\S*).*/i", $subrec2, $result2);
 										if (($ct > 0) && (!empty ($result2[1]))) {
 											// if the tag can be displayed, do so
@@ -1138,7 +1139,7 @@ class SearchControllerRoot extends BaseController {
 								// Both names have to have the same direction
 								if (hasRTLText($famsplit[0]) == hasRTLText($famsplit[1])) {
 									// do not print if the hit only in the second name. We want it first.
-									if (strpos(UTF8_strtoupper($famsplit[0]), UTF8_strtoupper($this->query)) !== false && strpos(UTF8_strtoupper($famsplit[1]), UTF8_strtoupper($this->query)) !== false) {
+									if (preg_match($this->query, UTF8_strtoupper($famsplit[0])) && preg_match($this->query, UTF8_strtoupper($famsplit[1]))) {
 										$printfamname[] = array (check_NN($famname), $key, get_gedcom_from_id($value["gedfile"]), "");
 									}
 								}
@@ -1187,7 +1188,7 @@ class SearchControllerRoot extends BaseController {
 						$hit = false;
 						// First check if the hit is in the key!
 						if ($this->tagfilter == "off") {
-							if (strpos(UTF8_strtoupper($key), UTF8_strtoupper($this->query)) !== false) {
+							if (preg_match($this->query, UTF8_strtoupper($key))) {
 								$found = true;
 								$hit = true;
 							}
@@ -1199,7 +1200,7 @@ class SearchControllerRoot extends BaseController {
 								$recs2 = preg_split("/[\r\n]+/", $subrec);
 								foreach ($recs2 as $keysr2 => $subrec2) {
 									// There must be a hit in a subrec. If found, check in which tag
-									if (strpos(UTF8_strtoupper($subrec2), UTF8_strtoupper($this->query)) !== false) {
+									if (preg_match($this->query, UTF8_strtoupper($subrec2))) {
 										$ct = preg_match("/\d.(\S*).*/i", $subrec2, $result2);
 										if (($ct > 0) && (!empty ($result2[1]))) {
 											// if the tag can be displayed, do so
