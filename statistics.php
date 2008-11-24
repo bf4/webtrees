@@ -30,269 +30,317 @@
 require './config.php';
 require_once 'includes/class_stats.php';
 
-function get_person()
-{
-$myindilist= array();
-$keys= array();
-$values= array();
-$dates= array();
-$families= array();
-global $nrfam, $famgeg, $famgeg1, $nrpers, $persgeg, $persgeg1,$key2ind,$nrman,$nrvrouw;
-global $match1,$match2;
+function get_person() {
+	global $nrpers, $persgeg, $persgeg1, $key2ind, $nrman, $nrvrouw;
+	global $match1,$match2;
 
-	$myindilist= get_indi_list();
+	$myindilist = array();
+	$keys = array();
+	$values = array();
+	$dates = array();
+	$families = array();
+
+	$myindilist = get_indi_list();
 	$keys = array_keys($myindilist);
 	$values = array_values($myindilist);
+	$nrpers = count($myindilist);
+	$nrman = 0;
+	$nrvrouw = 0;
 
-	$nrpers= count($myindilist);
-	$nrman=0; $nrvrouw=0;
-	for($i=0; $i<$nrpers; $i++)
-	{
+	for($i=0; $i<$nrpers; $i++) {
 		$value = $values[$i];
 		$key = $keys[$i];
-		$deathdate="";
-		$birthdate="";
-		$sex= "";
+		$deathdate = "";
+		$birthdate = "";
+		$sex = "";
 		$indirec= find_person_record($key);
-		if (dateplace($indirec,"1 BIRT")!==false)
-			{$birthdate= $match1[1]; $birthplace=$match2[1];}
-		if (dateplace($indirec,"1 DEAT")!==false)
-			{$deathdate= $match1[1]; $deathplace=$match2[1];}
-		if (stringinfo($indirec,"1 SEX") !==false)
-			{	$sex= 0;
-				if ($match1[1] == "M") {$sex= 1; $nrman++;}
-				if ($match1[1] == "F") {$sex= 2; $nrvrouw++;}
+		if (dateplace($indirec,"1 BIRT")!== false) {
+			$birthdate = $match1[1];
+			$birthplace = $match2[1];
+		}
+		if (dateplace($indirec,"1 DEAT")!==false) {
+			$deathdate = $match1[1];
+			$deathplace = $match2[1];
+		}
+		if (stringinfo($indirec,"1 SEX")!==false) {	
+			$sex = 0;
+			if ($match1[1] == "M") {
+				$sex = 1;
+				$nrman++;
 			}
-
-//-- get the marriage date of (the first) marriage.
-
-		$ybirth= -1; $mbirth= -1;
-		$ydeath= -1; $mdeath= -1;
+			if ($match1[1] == "F") {
+				$sex= 2;
+				$nrvrouw++;
+			}
+		}
+		//-- get the marriage date of (the first) marriage.
+		$ybirth = -1;
+		$mbirth = -1;
+		$ydeath = -1;
+		$mdeath = -1;
 		if ($birthdate !== "") {
 			$dates = new GedcomDate($birthdate);
 			if ($dates->qual1 == "") {
-				$date  =$dates->MinDate();
-				$date  =$date->convert_to_cal('gregorian');
-				$ybirth=$date->y;
-				$mbirth=$date->m;
+				$date	= $dates->MinDate();
+				$date	= $date->convert_to_cal('gregorian');
+				$ybirth = $date->y;
+				$mbirth = $date->m;
 			}
 		}
-
 		if ($deathdate !== "")
 		{
 			$dates = new GedcomDate($deathdate);
 			if ($dates->qual1 == "") {
-				$date  =$dates->MinDate();
-				$date  =$date->convert_to_cal('gregorian');
-				$ydeath=$date->y;
-				$mdeath=$date->m;
+				$date	= $dates->MinDate();
+				$date	= $date->convert_to_cal('gregorian');
+				$ydeath = $date->y;
+				$mdeath = $date->m;
 			}
 		}
-
-		$families= find_sfamily_ids($key); //-- get the number of marriages of this person.
-		$persgeg[$i]["key"]= $key;
-		$key2ind[$key]= $i;
-		$persgeg[$i]["ybirth"]= $ybirth;
-		$persgeg[$i]["mbirth"]= $mbirth;
-		$persgeg[$i]["ydeath"]= $ydeath;
-		$persgeg[$i]["mdeath"]= $mdeath;
-		$persgeg1[$i]["arfams"]= $families;
-		$persgeg[$i]["sex"]= $sex;
+		$families = find_sfamily_ids($key); //-- get the number of marriages of this person.
+		$persgeg[$i]["key"] = $key;
+		$key2ind[$key] = $i;
+		$persgeg[$i]["ybirth"] = $ybirth;
+		$persgeg[$i]["mbirth"] = $mbirth;
+		$persgeg[$i]["ydeath"] = $ydeath;
+		$persgeg[$i]["mdeath"] = $mdeath;
+		$persgeg1[$i]["arfams"] = $families;
+		$persgeg[$i]["sex"] = $sex;
 	}
 }
 
-function complete_data()
-{
-// fill in the first marriages instead of the keys.
-global $nrfam, $famgeg, $famgeg1, $nrpers, $persgeg, $persgeg1,$key2ind,$nrman,$nrvrouw;
-$childs= array();
-$families= array();
+function get_family() {
+	global $nrfam, $famgeg, $famgeg1, $persgeg, $key2ind;
+	global $match1, $match2;
 
-//look in the persgeg array for marriages that occurred
-	for($i=0; $i<$nrpers; $i++)
-	{
-		$families= $persgeg1[$i]["arfams"];
-		$ctc= count($families);
-		$marrmonth= -1; $marryear= -1;
-		$first= true;
-		for($j=0; $j<$ctc; $j++)
-		{
-			$keyf= $families[$j];
-			$k= $key2ind[$keyf]; //get the family array and month/date of marriage
-			$mm= $famgeg[$k]["mmarr"];
-			$my= $famgeg[$k]["ymarr"];
-			if ($first)
-			{	$marryear= $my; $marrmonth= $mm; $marrkey= $keyf; $kb= $k; $first= false;}
-			if (($marryear < 0) or (($my < $marryear) and ($my > 0)))
-			{	$marryear= $my; $marrmonth= $mm; $marrkey= $keyf; $kb= $k; $first= false;}
-		}
-		$persgeg[$i]["ymarr1"]= $marryear;
-		$persgeg[$i]["mmarr1"]= $marrmonth;
-		$famgeg[$kb]["ymarr1"]= $marryear;
-		$famgeg[$kb]["mmarr1"]= $marrmonth;
-	}
-	for($i=0; $i<$nrfam; $i++)
-	{
-		$childs= $famgeg1[$i]["arfamc"];
-		$ctc= count($childs);
-		$birthmonth= -1; $birthyear= -1; $sex=3;
-		$first= true;
-		for($j=0; $j<$ctc; $j++)
-		{
-			$key= $childs[$j]; $k= $key2ind[$key];
-			$bm= $persgeg[$k]["mbirth"];
-			$by= $persgeg[$k]["ybirth"];
-			$sex= $persgeg[$k]["sex"];
-			if ($first)
-			{	$birthyear= $by; $birthmonth= $bm; $childkey= $key; $sex1= $sex; $first= false;}
-			if (($birthyear < 0) or (($by < $birthyear) and ($by > 0)))
-			{	$birthyear= $by; $birthmonth= $bm; $childkey= $key; $sex1= $sex; $first= false;}
-		}
-		$famgeg[$i]["sex1"]= $sex1;
-		$famgeg[$i]["ybirth1"]= $birthyear;
-		$famgeg[$i]["mbirth1"]= $birthmonth;
-		$persgeg[$k]["ybirth1"]= $birthyear;
-		$persgeg[$k]["mbirth1"]= $birthmonth;
-	}
-}
+	$myfamlist = array();
+	$keys = array();
+	$values = array();
+	$parents = array();
+	$dates = array();
 
-
-function get_family()
-{
-$myfamlist= array();
-$keys= array();
-$values= array();
-$parents=array();
-global $nrfam, $famgeg, $famgeg1, $nrpers, $persgeg, $persgeg1,$key2ind,$nrman,$nrvrouw;
-global $match1,$match2;
-
-$dates= array();
-	$myfamlist= get_fam_list();
-	$nrfam= count($myfamlist);
+	$myfamlist = get_fam_list();
+	$nrfam = count($myfamlist);
 	$keys = array_keys($myfamlist);
 	$values = array_values($myfamlist);
 
-	for($i=0; $i<$nrfam; $i++)
-	{
+	for($i=0; $i<$nrfam; $i++) {
 		$value = $values[$i];
 		$key = $keys[$i];
-		$marriagedate=""; $ymarr= -1; $mmarr= -1;
-		$divorcedate= ""; $ydiv= -1; $mdiv= -1;
-		$indirec= find_family_record($key);
-		if (dateplace($indirec,"1 MARR")!==false)
-			{$marriagedate= $match1[1]; $marriageplace=$match2[1]; $sex=1;}
-		else
-		if (dateplace($indirec,"1 MARS")!==false)
-			{$marriagedate= $match1[1]; $marriageplace=$match2[1]; $sex=0;}
-		if (dateplace($indirec,"1 DIV")!==false)
-			{$divorcedate= $match1[1]; $divorceplace=$match2[1];}
-		if ($marriagedate !== "")
-		{
+		$marriagedate = "";
+		$ymarr = -1;
+		$mmarr = -1;
+		$divorcedate = "";
+		$ydiv = -1;
+		$mdiv = -1;
+		$indirec = find_family_record($key);
+		if (dateplace($indirec,"1 MARR")!==false) {
+			$marriagedate = $match1[1];
+			$marriageplace = $match2[1];
+			$sex = 1;
+		}
+		else if (dateplace($indirec,"1 MARS")!==false) {
+			$marriagedate = $match1[1];
+			$marriageplace = $match2[1];
+			$sex = 0;
+		}
+		if (dateplace($indirec,"1 DIV")!==false) {
+			$divorcedate = $match1[1];
+			$divorceplace = $match2[1];
+		}
+		if ($marriagedate !== "") {
 			$dates = new GedcomDate($marriagedate);
 			if ($dates->qual1 == "") {
-				$date =$dates->MinDate();
-				$date =$date->convert_to_cal('gregorian');
-				$ymarr=$date->y;
-				$mmarr=$date->m;
+				$date = $dates->MinDate();
+				$date = $date->convert_to_cal('gregorian');
+				$ymarr = $date->y;
+				$mmarr = $date->m;
 			}
 		}
-		if ($divorcedate !== "")
-		{
+		if ($divorcedate !== "") {
 			$dates = new GedcomDate($divorcedate);
 			if ($dates->qual1 == "") {
-				$date=$dates->MinDate();
-				$date=$date->convert_to_cal('gregorian');
-				$ydiv=$date->y;
-				$mdiv=$date->m;
+				$date = $dates->MinDate();
+				$date = $date->convert_to_cal('gregorian');
+				$ydiv = $date->y;
+				$mdiv = $date->m;
 			}
-
 		}
-		$parents= find_parents($key);
-		$xfather= $parents["HUSB"]; $xmother= $parents["WIFE"];
-
-//--	check if divorcedate exists otherwise get deadthdate from husband or wife
-		if ($ydiv !== "")
-		{
-			$ydeathf= ""; $ydeathm= "";
-			if ($xfather !== "") {$indf= $key2ind[$xfather]; $ydeathf= $persgeg[$indf]["ydeath"];}
-			if ($xmother !== "") {$indm= $key2ind[$xmother]; $ydeathm= $persgeg[$indm]["ydeath"];}
-			if (($ydeathf !== "") and ($ydeathm !== ""))
-			{	if ($ydeathf > $ydeathm)
-				{	$ydiv= $ydeathf; $mdiv= $persgeg[$indf]["mdeath"];}
-				else
-				{	$ydiv= $ydeathm; $mdiv= $persgeg[$indm]["mdeath"];};
+		$parents = find_parents($key);
+		$xfather = $parents["HUSB"];
+		$xmother = $parents["WIFE"];
+		//--	check if divorcedate exists otherwise get deadthdate from husband or wife
+		if ($ydiv !== "") {
+			$ydeathf= "";
+			$ydeathm= "";
+			if ($xfather !== "") {
+				$indf = $key2ind[$xfather];
+				$ydeathf = $persgeg[$indf]["ydeath"];
 			}
-		};
-		$childs= preg_match_all("/1\s*CHIL\s*@(.*)@/",$indirec,$match1,PREG_SET_ORDER);
-		$children= array();
-		for($k=0; $k<$childs; $k++)
-		{
-			$children[$k]= $match1[$k][1];
+			if ($xmother !== "") {
+				$indm = $key2ind[$xmother];
+				$ydeathm = $persgeg[$indm]["ydeath"];
+			}
+			if (($ydeathf !== "") && ($ydeathm !== "")) {
+				if ($ydeathf > $ydeathm) {
+					$ydiv = $ydeathf;
+					$mdiv = $persgeg[$indf]["mdeath"];
+				}
+				else {
+					$ydiv = $ydeathm;
+					$mdiv = $persgeg[$indm]["mdeath"];
+				}
+			}
 		}
-
-
-		$famgeg[$i]["key"]= $key;
-		$key2ind[$key]= $i;
-		$famgeg[$i]["ymarr"]= $ymarr;
-		$famgeg[$i]["mmarr"]= $mmarr;
-		$famgeg[$i]["ydiv"]= $ydiv;
-		$famgeg[$i]["mdiv"]= $mdiv;
-		$famgeg[$i]["childs"]= $childs;
-		$famgeg1[$i]["arfamc"]= $children;
-		$famgeg[$i]["male"]= $xfather;
-		$famgeg[$i]["female"]= $xmother;
+		$childs = preg_match_all("/1\s*CHIL\s*@(.*)@/", $indirec, $match1, PREG_SET_ORDER);
+		$children = array();
+		for($k=0; $k<$childs; $k++) {
+			$children[$k] = $match1[$k][1];
+		}
+		$famgeg[$i]["key"]		= $key;
+		$key2ind[$key]			= $i;
+		$famgeg[$i]["ymarr"]	= $ymarr;
+		$famgeg[$i]["mmarr"]	= $mmarr;
+		$famgeg[$i]["ydiv"]		= $ydiv;
+		$famgeg[$i]["mdiv"]		= $mdiv;
+		$famgeg[$i]["childs"]	= $childs;
+		$famgeg1[$i]["arfamc"]	= $children;
+		$famgeg[$i]["male"]		= $xfather;
+		$famgeg[$i]["female"]	= $xmother;
 	}
 }
 
-function stringinfo($indirec,$lookfor)
-//look for a starting string in the gedcom record of a person
-//then take the stripped comment
-{
-//-- echo "start stringinfo<br/>";
-global $match1,$match2;
-	$birthrec = get_sub_record(1, $lookfor, $indirec);
-	$match1[1]="";
-	$match2[1]="";
-	if ($birthrec!==false)
-		{
-			$dct = preg_match("/".$lookfor." (.*)/", $birthrec, $match1);
-			if ($dct < 1) {$match1[1]="";}
-			$match1[1]= trim($match1[1]);
-			return true;
+function complete_data() {
+	// fill in the first marriages instead of the keys.
+	global $nrfam, $famgeg, $famgeg1, $nrpers, $persgeg, $persgeg1, $key2ind;
+
+	$childs = array();
+	$families = array();
+
+	//look in the persgeg array for marriages that occurred
+	for($i=0; $i<$nrpers; $i++){
+		$families = $persgeg1[$i]["arfams"];
+		$ctc = count($families);
+		$marrmonth = -1;
+		$marryear = -1;
+		$kb = 0;
+		$first = true;
+		for($j=0; $j<$ctc; $j++) {
+			$keyf = $families[$j];
+			$k = $key2ind[$keyf]; //get the family array and month/date of marriage
+			$mm = $famgeg[$k]["mmarr"];
+			$my = $famgeg[$k]["ymarr"];
+			if ($first) {
+				$marryear = $my;
+				$marrmonth = $mm;
+				$marrkey = $keyf;
+				if ($k!="") $kb = $k;
+				$first = false;
+			}
+			if (($marryear < 0) || (($my < $marryear) && ($my > 0))) {
+				$marryear = $my;
+				$marrmonth = $mm;
+				$marrkey = $keyf;
+				if ($k!="") $kb = $k;
+				$first= false;
+			}
 		}
-	else 	{	return false;}
+		$persgeg[$i]["ymarr1"] = $marryear;
+		$persgeg[$i]["mmarr1"] = $marrmonth;
+		$famgeg[$kb]["ymarr1"] = $marryear;
+		$famgeg[$kb]["mmarr1"] = $marrmonth;
+	}
+	for($i=0; $i<$nrfam; $i++) {
+		$childs = $famgeg1[$i]["arfamc"];
+		$ctc = count($childs);
+		$birthmonth = -1;
+		$birthyear = -1;
+		$sex = 3;
+		$first = true;
+		for($j=0; $j<$ctc; $j++) {
+			$key = $childs[$j];
+			$k = $key2ind[$key];
+			$bm = $persgeg[$k]["mbirth"];
+			$by = $persgeg[$k]["ybirth"];
+			$sex = $persgeg[$k]["sex"];
+			if ($first) {
+				$birthyear = $by;
+				$birthmonth = $bm;
+				$childkey = $key;
+				$sex1 = $sex;
+				$first = false;
+			}
+			if (($birthyear < 0) || (($by < $birthyear) && ($by > 0))) {
+				$birthyear = $by;
+				$birthmonth = $bm;
+				$childkey = $key;
+				$sex1 = $sex;
+				$first= false;
+			}
+		}
+		$famgeg[$i]["sex1"] = $sex1;
+		$famgeg[$i]["ybirth1"] = $birthyear;
+		$famgeg[$i]["mbirth1"] = $birthmonth;
+		$persgeg[$k]["ybirth1"] = $birthyear;
+		$persgeg[$k]["mbirth1"] = $birthmonth;
+	}
+}
+
+function stringinfo($indirec,$lookfor) {
+	//look for a starting string in the gedcom record of a person
+	//then take the stripped comment
+	global $match1, $match2;
+
+	$birthrec = get_sub_record(1, $lookfor, $indirec);
+	$match1[1] = "";
+	$match2[1] = "";
+
+	if ($birthrec!==false) {
+		$dct = preg_match("/".$lookfor." (.*)/", $birthrec, $match1);
+		if ($dct < 1) {
+			$match1[1]="";
+		}
+		$match1[1] = trim($match1[1]);
+		return true;
+	}
+	else {
+		return false;
+	}
 }
 
 
-function dateplace($indirec,$lookfor)
-//--look for a starting string in the gedcom record of a person or family
-//--then find the DATE and PLACE variables
-{
-global $match1,$match2;
+function dateplace($indirec, $lookfor) {
+	//--look for a starting string in the gedcom record of a person or family
+	//--then find the DATE and PLACE variables
+	global $match1,$match2;
 
 	$birthrec = get_sub_record(1, $lookfor, $indirec);
-//--	$birthrec= $indirec;
-//-- You need to get the subrecord in order not to mistaken by another key with same subkeys.
-	$match1[1]="";
-	$match2[1]="";
-	if ($birthrec!== "")
-		{
-			$dct = preg_match("/2 DATE (.*)/", $birthrec, $match1);
-			if ($dct > 0) {$match1[1]= trim($match1[1]);} else {$match1[1]="";}
-			return true;
+	//-- You need to get the subrecord in order not to mistaken by another key with same subkeys.
+	$match1[1] = "";
+	$match2[1] = "";
+
+	if ($birthrec!== "") {
+		$dct = preg_match("/2 DATE (.*)/", $birthrec, $match1);
+		if ($dct > 0) {
+			$match1[1] = trim($match1[1]);
+		} else {
+			$match1[1] = "";
 		}
-	else 	{	return false;}
+		return true;
+	}
+	else {
+		return false;
+	}
 }
 
 function put_plot_data() {
-	global $GEDCOM, $GEDCOMS, $INDEX_DIRECTORY;
-	global $nrfam, $famgeg, $nrpers, $persgeg,$key2ind,$nrman,$nrvrouw;
+	global $GEDCOM, $INDEX_DIRECTORY;
+	global $famgeg, $persgeg, $key2ind;
 	global $pgv_lang;
 
 	$indexfile = $INDEX_DIRECTORY.$GEDCOM."_statistiek.php";
 	$FP = fopen($indexfile, "wb");
-	if (!$FP)
-	{
+	if (!$FP) {
 		echo "<font class=\"error\">" . $pgv_lang["statutci"] . "</font>";
 		exit;
 	}
@@ -315,65 +363,66 @@ function put_plot_data() {
 //--	========= start of main program =========
 
 $famgeg = array();
-$persgeg= array();
+$persgeg = array();
 $famgeg1 = array();
-$persgeg1= array();
-$key2ind= array();
-$match1= array();
-$match2= array();
-global $nrfam, $famgeg, $nrpers, $persgeg,$key2ind,$nrman,$nrvrouw;
-global $match1,$match2;
+$persgeg1 = array();
+$key2ind = array();
+$match1 = array();
+$match2 = array();
 
-	/*
-	 * Initiate the stats object.
-	 */
-	$stats = new stats($GEDCOM);
+global $nrfam, $nrpers, $nrman, $nrvrouw;
 
-	print_header($pgv_lang["statistics"]);
+/*
+ * Initiate the stats object.
+ */
+$stats = new stats($GEDCOM);
 
-	if (!isset($_SESSION[$GEDCOM."nrpers"]))
-		{	$nrpers=0;}
-		else
-		{	$nrpers=$_SESSION[$GEDCOM . "nrpers"];
-			$nrfam=$_SESSION[$GEDCOM . "nrfam"];
-			$nrman=$_SESSION[$GEDCOM . "nrman"];
-			$nrvrouw=$_SESSION[$GEDCOM . "nrvrouw"];
-		}
+print_header($pgv_lang["statistics"]);
+
+if (!isset($_SESSION[$GEDCOM."nrpers"])) {
+	$nrpers=0;
+}
+else {
+	$nrpers=$_SESSION[$GEDCOM."nrpers"];
+	$nrfam=$_SESSION[$GEDCOM."nrfam"];
+	$nrman=$_SESSION[$GEDCOM."nrman"];
+	$nrvrouw=$_SESSION[$GEDCOM."nrvrouw"];
+}
 //-- if nrpers<1 means there is no intermediate file yet set in this session
-	if ($nrpers < 1)
-	{
-		get_person();
-		get_family();
-		complete_data();
-		put_plot_data();
-	}
-	$params[1] = "ffffff";
-	$params[2] = "84beff";
-	//echo "\t<left><h3>".$pgv_lang["statistics"]."</h3>\t";
-	echo '<h2 class="center">', $pgv_lang['statistics'], '</h2>';
-	echo "<table><tr><td class=\"facts_label\">".$pgv_lang["statnmale"]."</td><td class=\"facts_value\">".$nrman."</td>";
-	echo "<td class=\"facts_label\">".$pgv_lang["statnnames"]."</td><td class=\"facts_value\">".$nrpers."</td></tr>";
-	echo "<tr><td class=\"facts_label\">".$pgv_lang["statnfemale"]."</td><td class=\"facts_value\">".$nrvrouw."</td>";
-	echo "<td class=\"facts_label\">".$pgv_lang["statnfam"]."</td><td class=\"facts_value\">".$nrfam."</td></tr>";
-	echo "<tr><td class=\"facts_label\">".$pgv_lang["statnnames"]."</td><td class=\"facts_value\">".$stats->chartSex()."</td>";
-	echo "<td class=\"facts_label\">".$pgv_lang["statnnames"]."</td><td class=\"facts_value\">".$stats->chartMortality()."</td></tr>";
-	echo "<tr><td class=\"facts_label\">".$pgv_lang["stat_surnames"]."</td><td class=\"facts_value\">".$stats->chartCommonSurnames($params)."</td>";
-	echo "<td class=\"facts_label\">".$pgv_lang["stat_media"]."</td><td class=\"facts_value\">".$stats->chartMedia($params)."</td></tr>";
-	echo "<tr><td class=\"facts_label\">".$pgv_lang["stat_21_nok"]."</td><td class=\"facts_value\" colspan=\"3\">".$stats->chartLargestFamilies($params)."</td></tr>";
-	echo "</table>";
-	$_SESSION[$GEDCOM . "nrpers"]= $nrpers;
-	$_SESSION[$GEDCOM . "nrfam"]= $nrfam;
-	$_SESSION[$GEDCOM . "nrman"]= $nrman;
-	$_SESSION[$GEDCOM . "nrvrouw"]= $nrvrouw;
+if ($nrpers < 1) {
+	get_person();
+	get_family();
+	complete_data();
+	put_plot_data();
+}
 
-{
+$_SESSION[$GEDCOM."nrpers"] = $nrpers;
+$_SESSION[$GEDCOM."nrfam"] = $nrfam;
+$_SESSION[$GEDCOM."nrman"] = $nrman;
+$_SESSION[$GEDCOM."nrvrouw"] = $nrvrouw;
+	
+$params[1] = "ffffff";
+$params[2] = "84beff";
+echo '<h2 class="center">', $pgv_lang['statistics'], '</h2>';
+echo "<table><tr><td class=\"facts_label\">".$pgv_lang["statnmale"]."</td><td class=\"facts_value\">".$nrman."</td>";
+echo "<td class=\"facts_label\">".$pgv_lang["statnnames"]."</td><td class=\"facts_value\">".$nrpers."</td></tr>";
+echo "<tr><td class=\"facts_label\">".$pgv_lang["statnfemale"]."</td><td class=\"facts_value\">".$nrvrouw."</td>";
+echo "<td class=\"facts_label\">".$pgv_lang["statnfam"]."</td><td class=\"facts_value\">".$nrfam."</td></tr>";
+echo "<tr><td class=\"facts_label\">".$pgv_lang["statnnames"]."</td><td class=\"facts_value\">".$stats->chartSex()."</td>";
+echo "<td class=\"facts_label\">".$pgv_lang["statnnames"]."</td><td class=\"facts_value\">".$stats->chartMortality()."</td></tr>";
+echo "<tr><td class=\"facts_label\">".$pgv_lang["stat_surnames"]."</td><td class=\"facts_value\">".$stats->chartCommonSurnames($params)."</td>";
+echo "<td class=\"facts_label\">".$pgv_lang["stat_media"]."</td><td class=\"facts_value\">".$stats->chartMedia($params)."</td></tr>";
+echo "<tr><td class=\"facts_label\">".$pgv_lang["stat_21_nok"]."</td><td class=\"facts_value\" colspan=\"3\">".$stats->chartLargestFamilies($params)."</td></tr>";
+echo "</table>";
+
 if (!isset($plottype)) $plottype=0;
 if (isset($_SESSION[$GEDCOM."statTicks"])) {
 	$xasGrLeeftijden = $_SESSION[$GEDCOM."statTicks"]["xasGrLeeftijden"];
 	$xasGrMaanden = $_SESSION[$GEDCOM."statTicks"]["xasGrMaanden"];
 	$xasGrAantallen = $_SESSION[$GEDCOM."statTicks"]["xasGrAantallen"];
 	$zasGrPeriode = $_SESSION[$GEDCOM."statTicks"]["zasGrPeriode"];
-} else {
+}
+else {
 	$xasGrLeeftijden = "1,5,10,20,30,40,50,60,70,80,90,100";
 	$xasGrMaanden = "-24,-12,0,8,12,18,24,48";
 	$xasGrAantallen = "1,2,3,4,5,6,7,8,9,10";
@@ -421,48 +470,41 @@ if (isset($_SESSION[$GEDCOM."statTicks"])) {
 	</td>
 	</tr>
 	</table>
-<br/>
+	<br/>
 
-<h3><?php echo $pgv_lang["statmess1"]; ?></h3>
+	<h3><?php echo $pgv_lang["statmess1"]; ?></h3>
 
 	<table class="facts_table">
 	<tr>
 	<td class="descriptionbox width20 wrap"><?php print_help_link("stat_help_gwx","qm"); ?> <?php echo $pgv_lang["statar_xgl"]; ?> </td>
-	<td class="optionbox"> <input type="text" name="xas-grenzen-leeftijden" value="<?php echo $xasGrLeeftijden; ?>"
-			size="60" />
+	<td class="optionbox"> <input type="text" name="xas-grenzen-leeftijden" value="<?php echo $xasGrLeeftijden; ?>" size="60" />
 	</td>
 	</tr>
 	<tr>
 	<td class="descriptionbox width20 wrap"> <?php echo $pgv_lang["statar_xgm"]; ?> </td>
-	<td class="optionbox"> <input type="text" name="xas-grenzen-maanden" value="<?php echo $xasGrMaanden; ?>"
-			size="60" />
+	<td class="optionbox"> <input type="text" name="xas-grenzen-maanden" value="<?php echo $xasGrMaanden; ?>" size="60" />
 	</td>
 	</tr>
 	<tr>
 	<td class="descriptionbox width20 wrap"> <?php echo $pgv_lang["statar_xga"]; ?> </td>
-	<td class="optionbox"> <input type="text" name="xas-grenzen-aantallen" value="<?php echo $xasGrAantallen; ?>"
-			size="60" />
+	<td class="optionbox"> <input type="text" name="xas-grenzen-aantallen" value="<?php echo $xasGrAantallen; ?>" size="60" />
 	</td>
 	</tr>
 	<tr>
 	<td class="descriptionbox width20 wrap"><?php print_help_link("stat_help_gwz","qm"); ?> <?php echo $pgv_lang["statar_zgp"]; ?> </td>
-	<td class="optionbox"> <input type="text" name="zas-grenzen-periode" value="<?php echo $zasGrPeriode; ?>"
-			size="60" />
+	<td class="optionbox"> <input type="text" name="zas-grenzen-periode" value="<?php echo $zasGrPeriode; ?>" size="60" />
 	</td>
 	</tr>
 	</table>
 
-<!--/td></tr></table-->
 <br/>
 <input type="submit" value="<?php echo $pgv_lang["statsubmit"]; ?> " onclick="closeHelp();" />
 <input type="reset"  value=" <?php echo $pgv_lang["statreset"]; ?> " /><br/>
 </form>
 <?php
-}
 
 $_SESSION["plottype"]=$plottype;
 
 echo "<br/>";
 print_footer();
-
 ?>
