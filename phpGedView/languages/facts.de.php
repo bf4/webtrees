@@ -185,7 +185,6 @@ $factarray["FAMC:WIFE:FAMC:HUSB:GIVN"] = "Vornamen des mütterlichen Großvaters
 $factarray["FAMC:HUSB:FAMC:WIFE:GIVN"] = "Vornamen der väterlichen Großmutter";
 $factarray["FAMS:CHIL:BIRT:PLAC"] = "Geburtsort des Kindes";
 
-
 // These facts are all colon delimited
 $factarray["BIRT:PLAC"] = "Geburtsort";
 $factarray["BIRT:DATE"] = "Geburtsdatum";
@@ -417,7 +416,6 @@ $factarray["_CREM_COUS"] = "Cousin: Einäscherung";
 
 $factarray["_FAMC_EMIG"] = "Auswanderung der Eltern";
 $factarray["_FAMC_RESI"] = "Wohnort der Eltern";
-
 
 //-- PGV Only facts
 $factarray["_THUM"]	= "Dieses Bild auch als Miniaturbild verwenden?";
