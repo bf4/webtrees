@@ -95,17 +95,15 @@ if ($view != "preview") {
 	<input type="radio" name="chart_style" value="0"
 	<?php
 	if ($controller->chart_style == "0") print " checked=\"checked\"";
-	print " onclick=\"toggleStatus('cousins');";
-	//if ($controller->chart_style != "1") print " document.people.chart_style.value='1';";
+	echo " onclick=\"statusDisable('cousins');";
 	print "\" />".$pgv_lang["chart_list"];
 	print "<br /><input type=\"radio\" name=\"chart_style\" value=\"1\"";
 	if ($controller->chart_style == "1") print " checked=\"checked\"";
-	print " onclick=\"toggleStatus('cousins');";
-	//if ($controller->chart_style != "1") print " document.people.chart_style.value='0';";
+	echo " onclick=\"statusEnable('cousins');";
 	print "\" />".$pgv_lang["chart_booklet"];
 	?>
 
-		<!-- // NOTE: show cousins -->
+	<!-- // NOTE: show cousins -->
 	<br />
 	<?php
 	print_help_link("show_cousins_help", "qm");
@@ -119,10 +117,12 @@ if ($view != "preview") {
 
 	print "<br /><input type=\"radio\" name=\"chart_style\" value=\"2\"";
 	if ($controller->chart_style == "2") print " checked=\"checked\" ";
-	print " />".$pgv_lang["individual_list"];
+	echo " onclick=\"statusDisable('cousins');";
+	print "\" />".$pgv_lang["individual_list"];
 	print "<br /><input type=\"radio\" name=\"chart_style\" value=\"3\"";
+	echo " onclick=\"statusDisable('cousins');";
 	if ($controller->chart_style == "3") print " checked=\"checked\" ";
-	print " />".$pgv_lang["family_list"];
+	print "\" />".$pgv_lang["family_list"];
 	?>
 	</td>
 
