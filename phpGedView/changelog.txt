@@ -10,6 +10,7 @@
 
 
 Version 4.2.0
+ - Fixed: [ 2318856 ] [4306] Search not functioning as before (fisharebest)
  - Fixed: [ 2333648 ] Handling alternate source format (fisharebest)
  - Added: Statistics : use Google Chart API instead jpgraph library (wooc)
  - Added: [ 2319821 ] Polish names -ski & -ska (fisharebest)
