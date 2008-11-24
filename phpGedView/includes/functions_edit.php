@@ -1156,6 +1156,10 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 		$rows=4;
 		$cols=40;
 		break;
+	case 'PAGE':
+		$rows=1;
+		$cols=50;
+		break;
 	default:
 		$rows=1;
 		$cols=($islink ? 10 : 40);
