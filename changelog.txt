@@ -10,6 +10,7 @@
 
 
 Version 4.2.0
+ - Fixed: [ 2332475 ] [4324] Unable to add new folder in Manage Media (canajun2eh)
  - Fixed: [ 2336088 ] 4.1.6 Edit Name - Source trailing @ displayed (fisharebest)
  - Fixed: [ 2318856 ] [4306] Search not functioning as before (fisharebest)
  - Fixed: [ 2333648 ] Handling alternate source format (fisharebest)

@@ -207,6 +207,7 @@ $filename=safe_REQUEST($_REQUEST, 'filename');
 $directory=safe_REQUEST($_REQUEST, 'directory', PGV_REGEX_NOSCRIPT, $MEDIA_DIRECTORY);
 $movetodir=safe_REQUEST($_REQUEST, 'movetodir');
 $movefile=safe_REQUEST($_REQUEST, 'movefile');
+$newdir=safe_REQUEST($_REQUEST, 'newdir');
 $action=safe_REQUEST($_REQUEST, 'action', PGV_REGEX_ALPHA, 'filter');
 $subclick=safe_REQUEST($_REQUEST, 'subclick', PGV_REGEX_ALPHA, 'none');
 $media=safe_REQUEST($_REQUEST, 'media');
