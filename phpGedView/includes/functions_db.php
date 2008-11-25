@@ -396,6 +396,32 @@ function get_prev_xref($pid, $ged_id=PGV_GED_ID) {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
+// Count the number of records of each type in the database.  Return an array
+// of 'type'=>count for each type where records exist.
+////////////////////////////////////////////////////////////////////////////////
+function count_all_records($ged_id) {
+	global $TBLPREFIX, $DBCONN;
+	$ged_id=(int)$ged_id;
+	$res=dbquery(
+		"SELECT 'INDI' AS type, COUNT(*) AS num FROM {$TBLPREFIX}individuals WHERE i_file={$ged_id} HAVING num>0".
+		" UNION ALL ".
+		"SELECT 'FAM'  AS type, COUNT(*) AS num FROM {$TBLPREFIX}families    WHERE f_file={$ged_id} HAVING num>0".
+		" UNION ALL ".
+		"SELECT 'SOUR' AS type, COUNT(*) AS num FROM {$TBLPREFIX}sources     WHERE s_file={$ged_id} HAVING num>0".
+		" UNION ALL ".
+		"SELECT 'OBJE' AS type, COUNT(*) AS num FROM {$TBLPREFIX}media       WHERE m_gedfile={$ged_id} HAVING num>0".
+		" UNION ALL ".
+		"SELECT o_type AS type, COUNT(*) as num FROM {$TBLPREFIX}other       WHERE o_file={$ged_id} GROUP BY o_type"
+	);
+	$list=array();
+	while ($row=$res->fetchRow(DB_FETCHMODE_ASSOC)) {
+		$list[$row['type']]=$row['num'];
+	}
+	$res->free();
+	return $list;
+}
+
+////////////////////////////////////////////////////////////////////////////////
 // Count the number of records linked to a given record
 ////////////////////////////////////////////////////////////////////////////////
 function count_linked_indi($xref, $link, $ged_id) {

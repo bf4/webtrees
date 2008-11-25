@@ -434,8 +434,9 @@ print "</td></tr>";
 
 if ($verify == "verify_gedcom") {
 	// NOTE: Check if GEDCOM has been imported into DB
-	$imported = check_for_import($GEDFILENAME);
-	if (true) {
+	$all_record_counts=count_all_records(get_id_from_gedcom($GEDFILENAME));
+	$imported=!empty($all_record_counts);
+	if ($imported || $bakfile != "") {
 		// NOTE: If GEDCOM exists show warning
 		print "<tr><td class=\"topbottombar $TEXT_DIRECTION\" colspan=\"2\">";
 		print "<a href=\"javascript: ".$pgv_lang["verify_gedcom"]."\" onclick=\"expand_layer('verify_gedcom');return false\"><img id=\"verify_gedcom_img\" src=\"".$PGV_IMAGE_DIR."/";
@@ -480,21 +481,19 @@ if ($verify == "verify_gedcom") {
 				break;
 			}
 		}
-		if (true) {
-			print "<tr><td class=\"descriptionbox width20 wrap\">".$pgv_lang["empty_dataset"]."</td><td class=\"optionbox vmiddle\">\n";
-			print "<select name=\"override\">";
-			print "<option value=\"yes\" ";
-			if ($override == "yes")
+		print "<tr><td class=\"descriptionbox width20 wrap\">".$pgv_lang["empty_dataset"]."</td><td class=\"optionbox vmiddle\">\n";
+		print "<select name=\"override\">";
+		print "<option value=\"yes\" ";
+		if ($override == "yes")
 			print "selected=\"selected\"";
-			print ">".$pgv_lang["yes"]."</option>";
-			print "<option value=\"no\" ";
-			if ($override != "yes")
+		print ">".$pgv_lang["yes"]."</option>";
+		print "<option value=\"no\" ";
+		if ($override != "yes")
 			print "selected=\"selected\"";
-			print ">".$pgv_lang["no"]."</option>";
-			print "</select></td></tr>";
-			//-- check if there are media in the DB already
-			$mc = get_list_size('objectlist');
-			if ($mc>0) {
+		print ">".$pgv_lang["no"]."</option>";
+		print "</select></td></tr>";
+		//-- check if there are media in the DB already
+		if (array_key_exists('OBJE', $all_record_counts)) {
 			?>
 			<tr>
 			<td class="descriptionbox wrap width20">
@@ -507,9 +506,8 @@ if ($verify == "verify_gedcom") {
 			</td>
 			</tr>
 			<?php
-			}
-			print "<tr><td class=\"optionbox wrap\" colspan=\"2\">";
 		}
+		print "<tr><td class=\"optionbox wrap\" colspan=\"2\">";
 		print "</td></tr></table>";
 	} else	$verify = "validate_form";
 }
