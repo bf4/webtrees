@@ -1498,13 +1498,14 @@ function empty_database($FILE, $keepmedia=false) {
 	dbquery("DELETE FROM {$TBLPREFIX}places      WHERE p_file ={$FILE}");
 	dbquery("DELETE FROM {$TBLPREFIX}placelinks  WHERE pl_file={$FILE}");
 	dbquery("DELETE FROM {$TBLPREFIX}name        WHERE n_file ={$FILE}");
-	dbquery("DELETE FROM {$TBLPREFIX}link        WHERE l_file ={$FILE}");
 	dbquery("DELETE FROM {$TBLPREFIX}dates       WHERE d_file ={$FILE}");
 
 	if (!$keepmedia) {
+		dbquery("DELETE FROM {$TBLPREFIX}link          WHERE l_file    ={$FILE}");
 		dbquery("DELETE FROM {$TBLPREFIX}media         WHERE m_gedfile ={$FILE}");
 		dbquery("DELETE FROM {$TBLPREFIX}media_mapping WHERE mm_gedfile={$FILE}");
 	} else {
+		dbquery("DELETE FROM {$TBLPREFIX}link WHERE l_file={$FILE} AND l_type!='OBJE'");
 		//-- make sure that we keep the correct IDs for media
     $sql = "SELECT ni_id FROM {$TBLPREFIX}nextid WHERE ni_type='OBJE' AND ni_gedfile='{$FILE}'";
 		$res =& dbquery($sql);
