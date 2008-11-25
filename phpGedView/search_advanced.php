@@ -85,7 +85,7 @@ print_header($pgv_lang["advanced_search"]);
 		trow.appendChild(val);
 		var lastRow = tbl.lastChild.previousSibling;
 	
-		tbl.insertBefore(trow, lastRow);
+		tbl.insertBefore(trow, lastRow.nextSibling);
 		numfields++;
 	}
 	
