@@ -343,7 +343,7 @@ function myplot($mytitle,$n,$xdata,$xtitle,$ydata,$ytitle,$legend) {
 		$imgurl .= $xdata[$i]."|";
 	}
 
-	$imgurl .= "1:||".$xtitle."|2:|";
+	$imgurl .= "1:||||".$xtitle."|2:|";
 	$imgurl .= "0|";
 	if ($percentage){
 		for($i=1; $i<11; $i++) {
@@ -557,12 +557,14 @@ if ($action=="update") {
 	if (isset($_POST["z-as"])) $z_as= $_POST["z-as"];
 	else $z_as=300;
 	$xas_grenzen_leeftijden= $_POST["xas-grenzen-leeftijden"];
+	$xas_grenzen_leeftijden_m= $_POST["xas-grenzen-leeftijden_m"];
 	$xas_grenzen_maanden= $_POST["xas-grenzen-maanden"];
 	$xas_grenzen_aantallen= $_POST["xas-grenzen-aantallen"];
 	if (isset($_POST["zas-grenzen-periode"])) $zas_grenzen_periode= $_POST["zas-grenzen-periode"];
 	else $zas_grenzen_periode=0;
 
 	$_SESSION[$GEDCOM."statTicks"]["xasGrLeeftijden"] = $xas_grenzen_leeftijden;
+	$_SESSION[$GEDCOM."statTicks"]["xasGrLeeftijden_m"] = $xas_grenzen_leeftijden_m;
 	$_SESSION[$GEDCOM."statTicks"]["xasGrMaanden"] = $xas_grenzen_maanden;
 	$_SESSION[$GEDCOM."statTicks"]["xasGrAantallen"] = $xas_grenzen_aantallen;
 	$_SESSION[$GEDCOM."statTicks"]["zasGrPeriode"] = $zas_grenzen_periode;
@@ -574,6 +576,7 @@ if ($action=="update") {
 	$savedInput["y_as"] = $y_as;
 	$savedInput["z_as"] = $z_as;
 	$savedInput["xas_grenzen_leeftijden"] = $xas_grenzen_leeftijden;
+	$savedInput["xas_grenzen_leeftijden_m"] = $xas_grenzen_leeftijden_m;
 	$savedInput["xas_grenzen_maanden"] = $xas_grenzen_maanden;
 	$savedInput["xas_grenzen_aantallen"] = $xas_grenzen_aantallen;
 	$savedInput["zas_grenzen_periode"] = $zas_grenzen_periode;
@@ -586,6 +589,7 @@ if ($action=="update") {
 	$y_as = $savedInput["y_as"];
 	$z_as = $savedInput["z_as"];
 	$xas_grenzen_leeftijden = $savedInput["xas_grenzen_leeftijden"];
+	$xas_grenzen_leeftijden_m = $savedInput["xas_grenzen_leeftijden_m"];
 	$xas_grenzen_maanden = $savedInput["xas_grenzen_maanden"];
 	$xas_grenzen_aantallen = $savedInput["xas_grenzen_aantallen"];
 	$zas_grenzen_periode = $savedInput["zas_grenzen_periode"];
@@ -623,26 +627,27 @@ if ($action=="update") {
 //-- Set params for request out of the information for plot
 	$g_xas= "1,2,3,4,5,6,7,8,9,10,11,12"; //should not be needed. but just for month
 	$xgl= $xas_grenzen_leeftijden;
+	$xglm= $xas_grenzen_leeftijden_m;
 	$xgm= $xas_grenzen_maanden;
 	$xga= $xas_grenzen_aantallen;
 	$zgp= $zas_grenzen_periode;
 
 //-- end of setting variables
 
-//---------nr,bron ,xgiven,zgiven,	title,      xtitle,   ytitle, grenzen_xas, grenzen-zas,,
-set_params(11,"IND", true,  false, "stat_11_mb",  "stplmonth", $y_as, $g_xas, $zgp,"bimo");  //plot aantal geboorten per maand
-set_params(12,"IND", true,  false, "stat_12_md",  "stplmonth", $y_as, $g_xas, $zgp,"demo");  //plot aantal overlijdens per maand
-set_params(13,"FAM", true,  false, "stat_13_mm",  "stplmonth", $y_as, $g_xas, $zgp,"mamo");  //plot aantal huwelijken per maand
-set_params(14,"FAM", true,  false, "stat_14_mb1", "stplmonth", $y_as, $g_xas, $zgp,"bimo1"); //plot aantal 1e geboorten per huwelijk per maand
-set_params(15,"FAM", true,  false, "stat_15_mm1", "stplmonth", $y_as, $g_xas, $zgp,"mamo1"); //plot 1e huwelijken per maand
-set_params(16,"FAM", false, false, "stat_16_mmb", "stplmarrbirth",$y_as, $xgm,$zgp,"mamam"); //plot tijd tussen 1e geboort en huwelijksdatum
-set_params(17,"IND", false, false, "stat_17_arb", "stplage",   $y_as, $xgl,   $zgp,"agbi");  //plot leeftijd t.o.v. geboortedatum
-set_params(18,"IND", false, false, "stat_18_ard", "stplage",   $y_as, $xgl,   $zgp,"agde");  //plot leeftijd t.o.v. overlijdensdatum
-set_params(19,"FAM", false, false, "stat_19_arm", "stplage",   $y_as, $xgl,   $zgp,"agma");  //plot leeftijd op de huwelijksdatum
-set_params(20,"FAM", false, false, "stat_20_arm1","stplage",   $y_as, $xgl,   $zgp,"agma1"); //plot leeftijd op de 1e huwelijksdatum
-set_params(21,"FAM", false, false, "stat_21_nok", "stplnumbers",$y_as,$xga,   $zgp,"nuch");  //plot plot aantal kinderen in een maand
+//---------		nr,  type,	  xgiven,	zgiven,	title,				xtitle,		ytitle,        boundaries_x, boundaries-z, function
+set_params(11,"IND", true,	false, "stat_11_mb",  "stplmonth",	$y_as,	$g_xas,	$zgp, "bimo");  //plot Month of birth
+set_params(12,"IND", true,	false, "stat_12_md",  "stplmonth",	$y_as,	$g_xas,	$zgp, "demo");  //plot Month of death
+set_params(13,"FAM", true,	false, "stat_13_mm",  "stplmonth",	$y_as,	$g_xas,	$zgp, "mamo");  //plot Month of marriage
+set_params(14,"FAM", true,	false, "stat_14_mb1", "stplmonth",	$y_as,	$g_xas,	$zgp, "bimo1"); //plot Month of birth of first child in a relation
+set_params(15,"FAM", true,	false, "stat_15_mm1", "stplmonth",	$y_as,	$g_xas,	$zgp, "mamo1"); //plot Month of first marriage
+set_params(16,"FAM", false,	false, "stat_16_mmb", "stplmarrbirth",$y_as,$xgm,	$zgp, "mamam"); //plot Months between marriage and first child
+set_params(17,"IND", false,	false, "stat_17_arb", "stplage",	$y_as,	$xgl,	$zgp, "agbi");  //plot Age related to birth year
+set_params(18,"IND", false,	false, "stat_18_ard", "stplage",	$y_as,	$xgl,	$zgp, "agde");  //plot Age related to death year
+set_params(19,"FAM", false,	false, "stat_19_arm", "stplage",	$y_as,	$xglm,	$zgp, "agma");  //plot Age in year of marriage
+set_params(20,"FAM", false,	false, "stat_20_arm1","stplage",	$y_as,	$xglm,	$zgp, "agma1"); //plot Age in year of first marriage
+set_params(21,"FAM", false,	false, "stat_21_nok", "stplnumbers",$y_as,	$xga,	$zgp, "nuch");  //plot Number of children
 
-echo "<div class =\"center\">";
+echo "<div class =\"center noprint\">";
 echo "<input type=\"submit\" value=\"".$pgv_lang["back"]."\" onclick=\"javascript:history.go(-1);\" /><br /><br />";
 echo "</div>\n";
 print_footer();

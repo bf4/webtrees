@@ -227,22 +227,24 @@ function complete_data() {
 		$first = true;
 		for($j=0; $j<$ctc; $j++) {
 			$keyf = $families[$j];
-			$k = $key2ind[$keyf]; //get the family array and month/date of marriage
-			$mm = $famgeg[$k]["mmarr"];
-			$my = $famgeg[$k]["ymarr"];
-			if ($first) {
-				$marryear = $my;
-				$marrmonth = $mm;
-				$marrkey = $keyf;
-				if ($k!="") $kb = $k;
-				$first = false;
-			}
-			if (($marryear < 0) || (($my < $marryear) && ($my > 0))) {
-				$marryear = $my;
-				$marrmonth = $mm;
-				$marrkey = $keyf;
-				if ($k!="") $kb = $k;
-				$first= false;
+			if (isset($key2ind[$keyf])) {
+				$k = $key2ind[$keyf]; //get the family array and month/date of marriage
+				$mm = $famgeg[$k]["mmarr"];
+				$my = $famgeg[$k]["ymarr"];
+				if ($first) {
+					$marryear = $my;
+					$marrmonth = $mm;
+					$marrkey = $keyf;
+					if ($k!="") $kb = $k;
+					$first = false;
+				}
+				if (($marryear < 0) || (($my < $marryear) && ($my > 0))) {
+					$marryear = $my;
+					$marrmonth = $mm;
+					$marrkey = $keyf;
+					if ($k!="") $kb = $k;
+					$first= false;
+				}
 			}
 		}
 		$persgeg[$i]["ymarr1"] = $marryear;
@@ -378,7 +380,22 @@ global $nrfam, $nrpers, $nrman, $nrvrouw;
 $stats = new stats($GEDCOM);
 
 print_header($pgv_lang["statistics"]);
-
+?>
+<script language="JavaScript" type="text/javascript">
+<!--
+	function statusHide(sel) {
+		var box = document.getElementById(sel);
+		box.style.display = "none";
+		var box_m = document.getElementById(sel+"_m");
+		if (box_m) box_m.style.display = "none";
+	}
+	function statusShow(sel) {
+		var box = document.getElementById(sel);
+		box.style.display = "";
+	}
+//-->
+</script>
+<?php
 if (!isset($_SESSION[$GEDCOM."nrpers"])) {
 	$nrpers=0;
 }
@@ -441,43 +458,97 @@ else {
 	<tr>
 	<td class="descriptionbox width10 wrap"><?php print_help_link("stat_help_x","qm"); ?> <?php echo $pgv_lang["statlxa"]; ?> </td>
 	<td class="optionbox">
-	<input type="radio" name="x-as" value="11"
+	<input type="radio" id="stat_11" name="x-as" value="11"
 	<?php
 	if ($plottype == "11") echo " checked=\"checked\"";
-	echo " onclick=\"statusEnable('z_sex');";
-	echo "\" />".$pgv_lang["stat_11_mb"]."<br /><input type=\"radio\" name=\"x-as\" value=\"12\"";
+	echo " onclick=\"{statusEnable('z_sex'); statusHide('x_years'); statusHide('x_months'); statusHide('x_numbers');}";
+	echo "\" /><label for=\"stat_11\">".$pgv_lang["stat_11_mb"]."</label><br />";
+	echo "<input type=\"radio\" id=\"stat_12\" name=\"x-as\" value=\"12\"";
 	if ($plottype == "12") echo " checked=\"checked\"";
-	echo " onclick=\"statusEnable('z_sex');";
-	echo "\" />".$pgv_lang["stat_12_md"]."<br /><input type=\"radio\" name=\"x-as\" value=\"13\"";
+	echo " onclick=\"{statusEnable('z_sex'); statusHide('x_years'); statusHide('x_months'); statusHide('x_numbers');}";
+	echo "\" /><label for=\"stat_12\">".$pgv_lang["stat_12_md"]."</label><br />";
+	echo "<input type=\"radio\" id=\"stat_13\" name=\"x-as\" value=\"13\"";
 	if ($plottype == "13") echo " checked=\"checked\"";
-	echo " onclick=\"{statusChecked('z_none'); statusDisable('z_sex');}";
-	echo "\" />".$pgv_lang["stat_13_mm"]."<br /><input type=\"radio\" name=\"x-as\" value=\"14\"";
-	if ($plottype == "14") echo " checked=\"checked\"";
-	echo " onclick=\"statusEnable('z_sex');";
-	echo "\" />".$pgv_lang["stat_14_mb1"]."<br /><input type=\"radio\" name=\"x-as\" value=\"15\"";
+	echo " onclick=\"{statusChecked('z_none'); statusDisable('z_sex'); statusHide('x_years'); statusHide('x_months'); statusHide('x_numbers');}";
+	echo "\" /><label for=\"stat_13\">".$pgv_lang["stat_13_mm"]."</label><br />";
+	echo "<input type=\"radio\" id=\"stat_15\" name=\"x-as\" value=\"15\"";
 	if ($plottype == "15") echo " checked=\"checked\"";
-	echo " onclick=\"{statusChecked('z_none'); statusDisable('z_sex');}";
-	echo "\" />".$pgv_lang["stat_15_mm1"]."<br /><input type=\"radio\" name=\"x-as\" value=\"16\"";
+	echo " onclick=\"{statusChecked('z_none'); statusDisable('z_sex'); statusHide('x_years'); statusHide('x_months'); statusHide('x_numbers');}";
+	echo "\" /><label for=\"stat_15\">".$pgv_lang["stat_15_mm1"]."</label><br />";
+	echo "<input type=\"radio\" id=\"stat_14\" name=\"x-as\" value=\"14\"";
+	if ($plottype == "14") echo " checked=\"checked\"";
+	echo " onclick=\"{statusEnable('z_sex'); statusHide('x_years'); statusHide('x_months'); statusHide('x_numbers');}";
+	echo "\" /><label for=\"stat_14\">".$pgv_lang["stat_14_mb1"]."</label><br />";
+	echo "<input type=\"radio\" id=\"stat_16\" name=\"x-as\" value=\"16\"";
 	if ($plottype == "16") echo " checked=\"checked\"";
-	echo " onclick=\"statusEnable('z_sex');";
-	echo "\" />".$pgv_lang["stat_16_mmb"]."<br /><input type=\"radio\" name=\"x-as\" value=\"17\"";
+	echo " onclick=\"{statusEnable('z_sex'); statusHide('x_years'); statusShow('x_months'); statusHide('x_numbers');}";
+	echo "\" /><label for=\"stat_16\">".$pgv_lang["stat_16_mmb"]."</label><br />";
+	echo "<input type=\"radio\" id=\"stat_17\" name=\"x-as\" value=\"17\"";
 	if ($plottype == "17") echo " checked=\"checked\"";
-	echo " onclick=\"statusEnable('z_sex');";
-	echo "\" />".$pgv_lang["stat_17_arb"]."<br /><input type=\"radio\" name=\"x-as\" value=\"18\"";
+	echo " onclick=\"{statusEnable('z_sex'); statusShow('x_years'); statusHide('x_months'); statusHide('x_numbers');}";
+	echo "\" /><label for=\"stat_17\">".$pgv_lang["stat_17_arb"]."</label><br />";
+	echo "<input type=\"radio\" id=\"stat_18\" name=\"x-as\" value=\"18\"";
 	if ($plottype == "18") echo " checked=\"checked\"";
-	echo " onclick=\"statusEnable('z_sex');";
-	echo "\" />".$pgv_lang["stat_18_ard"]."<br /><input type=\"radio\" name=\"x-as\" value=\"19\"";
+	echo " onclick=\"{statusEnable('z_sex'); statusShow('x_years'); statusHide('x_months'); statusHide('x_numbers');}";
+	echo "\" /><label for=\"stat_18\">".$pgv_lang["stat_18_ard"]."</label><br />";
+	echo "<input type=\"radio\" id=\"stat_19\" name=\"x-as\" value=\"19\"";
 	if ($plottype == "19") echo " checked=\"checked\"";
-	echo " onclick=\"statusEnable('z_sex');";
-	echo "\" />".$pgv_lang["stat_19_arm"]."<br /><input type=\"radio\" name=\"x-as\" value=\"20\"";
+	echo " onclick=\"{statusEnable('z_sex'); statusHide('x_years'); statusShow('x_years_m'); statusHide('x_months'); statusHide('x_numbers');}";
+	echo "\" /><label for=\"stat_19\">".$pgv_lang["stat_19_arm"]."</label><br />";
+	echo "<input type=\"radio\" id=\"stat_20\" name=\"x-as\" value=\"20\"";
 	if ($plottype == "20") echo " checked=\"checked\"";
-	echo " onclick=\"statusEnable('z_sex');";
-	echo "\" />".$pgv_lang["stat_20_arm1"]."<br /><input type=\"radio\" name=\"x-as\" value=\"21\"";
+	echo " onclick=\"{statusEnable('z_sex'); statusHide('x_years'); statusShow('x_years_m'); statusHide('x_months'); statusHide('x_numbers');}";
+	echo "\" /><label for=\"stat_20\">".$pgv_lang["stat_20_arm1"]."</label><br />";
+	echo "<input type=\"radio\" id=\"stat_21\" name=\"x-as\" value=\"21\"";
 	if ($plottype == "21") echo " checked=\"checked\"";
-	echo " onclick=\"{statusChecked('z_none'); statusDisable('z_sex');}";
-	echo "\" />".$pgv_lang["stat_21_nok"];
+	echo " onclick=\"{statusChecked('z_none'); statusDisable('z_sex'); statusHide('x_years'); statusHide('x_months'); statusShow('x_numbers');}";
+	echo "\" /><label for=\"stat_21\">".$pgv_lang["stat_21_nok"]."</label><br />";
 	?>
-	</td>
+	<br />
+	<div id="x_years" style="display:none;">
+	<?php
+	print_help_link("stat_help_gwx","qm");
+	echo $pgv_lang["statar_xgl"];
+	?>
+	<br /><select id="xas-grenzen-leeftijden" name="xas-grenzen-leeftijden">
+		<option value="1,5,10,20,30,40,50,60,70,80,90,100" selected="selected">1, 5, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100</option>
+		<option value="5,40,60,75,80,85,90">5, 40, 60, 75, 80, 85, 90</option>
+		<option value="10,25,50,75,100">10, 25, 50, 75, 100</option>
+	</select><br />
+	</div>
+	<div id="x_years_m" style="display:none;">
+	<?php
+	print_help_link("stat_help_gwx","qm");
+	echo $pgv_lang["statar_xgl"];
+	?>
+	<br /><select id="xas-grenzen-leeftijden_m" name="xas-grenzen-leeftijden_m">
+		<option value="16,18,20,22,24,26,28,30,32,35,40,50" selected="selected">16, 18, 20, 22, 24, 26, 28, 30, 32, 35, 40, 50</option>
+		<option value="20,25,30,35,40,45,50">20, 25, 30, 35, 40, 45, 50</option>
+	</select><br />
+	</div>
+	<div id="x_months" style="display:none;">
+	<?php
+	print_help_link("stat_help_gwx","qm");
+	echo $pgv_lang["statar_xgm"];
+	?>
+	<br /><select id="xas-grenzen-maanden" name="xas-grenzen-maanden">
+		<option value="0,8,12,15,18,24,48" selected="selected">0, 8, 12, 15, 18, 24, 48</option>
+		<option value="0,6,9,12,15,18,21,24">0, 6, 9, 12, 15, 18, 21, 24 - kwartaly</option>
+		<option value="0,6,12,18,24">0, 6, 12, 18, 24 - polrocza</option>
+		<option value="-24,-12,0,8,12,18,24,48">-24, -12, 0, 8, 12, 18, 24, 48</option>
+	</select><br />
+	</div>
+	<div id="x_numbers" style="display:none;">
+	<?php 
+	print_help_link("stat_help_gwx","qm");
+	echo $pgv_lang["statar_xga"];
+	?>
+	<br /><select id="xas-grenzen-aantallen" name="xas-grenzen-aantallen">
+		<option value="1,2,3,4,5,6,7,8,9,10" selected="selected">1, 2, 3, 4, 5, 6, 7, 8, 9, 10</option>
+		<option value="2,4,6,8,10,12">2, 4, 6, 8, 10, 12</option>
+	</select>
+	<br />
+	</div>
 	
 	<td class="descriptionbox width10 wrap"><?php print_help_link("stat_help_z","qm"); ?> <?php echo $pgv_lang["statlza"]; ?>  </td>
 	<td class="optionbox">
@@ -485,67 +556,49 @@ else {
 	<?php
 	if ($plotshow == "300") echo " checked=\"checked\"";
 	echo " onclick=\"statusDisable('zas-grenzen-periode');";
-	echo "\" />".$pgv_lang["stat_300_none"]."<br /><input type=\"radio\" id=\"z_sex\" name=\"z-as\" value=\"301\"";
+	echo "\" /><label for=\"z_none\">".$pgv_lang["stat_300_none"]."</label><br />";
+	echo "<input type=\"radio\" id=\"z_sex\" name=\"z-as\" value=\"301\"";
 	if ($plotshow == "301") echo " checked=\"checked\"";
 	echo " onclick=\"statusDisable('zas-grenzen-periode');";
-	echo "\" />".$pgv_lang["stat_301_mf"]."<br /><input type=\"radio\" id=\"z_time\" name=\"z-as\" value=\"302\"";
+	echo "\" /><label for=\"z_sex\">".$pgv_lang["stat_301_mf"]."</label><br />";
+	echo "<input type=\"radio\" id=\"z_time\" name=\"z-as\" value=\"302\"";
 	if ($plotshow == "302") echo " checked=\"checked\"";
 	echo " onclick=\"statusEnable('zas-grenzen-periode');";
-	echo "\" />".$pgv_lang["stat_302_cgp"]."<br /><br />";
+	echo "\" /><label for=\"z_time\">".$pgv_lang["stat_302_cgp"]."</label><br /><br />";
 	print_help_link("stat_help_gwz","qm");
 	echo $pgv_lang["statar_zgp"]."<br />";
 	?>
 	<select id="zas-grenzen-periode" name="zas-grenzen-periode">
-		<option value= "1700,1750,1800,1850,1900,1950,2000" selected="selected">1700,1750,1800,1850,1900,1950,2000</option>
-		<option value= "1800,1840,1870,1920,1950,1970,2000">1800,1840,1870,1920,1950,1970,2000</option>
-		<option value= "1800,1850,1900,1950,2000">1800,1850,1900,1950,2000</option>
-		<option value= "1800,1900,1950,2000">1800,1900,1950,2000</option>
-		<option value= "1900,1920,1940,1960,1980,1990,2000">1900,1920,1940,1960,1980,1990,2000</option>
-		<option value= "1900,1925,1950,1975,2000">1900,1925,1950,1975,2000</option>
-		<option value= "1940,1950,1960,1970,1980,1990,2000">1940,1950,1960,1970,1980,1990,2000</option>
+		<option value="1700,1750,1800,1850,1900,1950,2000" selected="selected">1700,1750,1800,1850,1900,1950,2000</option>
+		<option value="1800,1840,1880,1920,1950,1970,2000">1800,1840,1880,1920,1950,1970,2000</option>
+		<option value="1800,1850,1900,1950,2000">1800,1850,1900,1950,2000</option>
+		<option value="1800,1900,1950,2000">1800,1900,1950,2000</option>
+		<option value="1900,1920,1940,1960,1980,1990,2000">1900,1920,1940,1960,1980,1990,2000</option>
+		<option value="1900,1925,1950,1975,2000">1900,1925,1950,1975,2000</option>
+		<option value="1940,1950,1960,1970,1980,1990,2000">1940,1950,1960,1970,1980,1990,2000</option>
 	</select>
 	<br /><br />
 	<?php
 	print_help_link("stat_help_y","qm"); 
 	echo $pgv_lang["statlya"]."<br />";
 	?>
-	<input type="radio" name="y-as" value="201"
+	<input type="radio" id="y_num" name="y-as" value="201"
 	<?php
 	if ($plotnp == "201") echo " checked=\"checked\"";
-	echo "\" />".$pgv_lang["stat_201_num"]."<br /><input type=\"radio\" name=\"y-as\" value=\"202\"";
+	echo "\" /><label for=\"y_num\">".$pgv_lang["stat_201_num"]."</label><br />";
+	echo "<input type=\"radio\" id=\"y_perc\" name=\"y-as\" value=\"202\"";
 	if ($plotnp == "202") echo " checked=\"checked\"";
-	echo "\" />".$pgv_lang["stat_202_perc"]."<br />";
+	echo "\" /><label for=\"y_perc\">".$pgv_lang["stat_202_perc"]."</label><br />";
 	?>
 	</td>
-	
 	</tr>
-	</table>
+	<td></td><td>
 	<br/>
-
-	<h3><?php echo $pgv_lang["statmess1"]; ?></h3>
-
-	<table class="facts_table">
-	<tr>
-	<td class="descriptionbox width10 wrap"><?php print_help_link("stat_help_gwx","qm"); ?> <?php echo $pgv_lang["statar_xgl"]; ?> </td>
-	<td class="optionbox"> <input type="text" name="xas-grenzen-leeftijden" value="<?php echo $xasGrLeeftijden; ?>" size="60" />
+	<input type="submit" value="<?php echo $pgv_lang["statsubmit"]; ?> " onclick="closeHelp();" />
+	<input type="reset"  value=" <?php echo $pgv_lang["statreset"]; ?> " /><br/>
 	</td>
-	</tr>
-	<tr>
-	<td class="descriptionbox width10 wrap"> <?php echo $pgv_lang["statar_xgm"]; ?> </td>
-	<td class="optionbox"> <input type="text" name="xas-grenzen-maanden" value="<?php echo $xasGrMaanden; ?>" size="60" />
-	</td>
-	</tr>
-	<tr>
-	<td class="descriptionbox width10 wrap"> <?php echo $pgv_lang["statar_xga"]; ?> </td>
-	<td class="optionbox"> <input type="text" name="xas-grenzen-aantallen" value="<?php echo $xasGrAantallen; ?>" size="60" />
-	</td>
-	</tr>
 	</table>
-
-<br/>
-<input type="submit" value="<?php echo $pgv_lang["statsubmit"]; ?> " onclick="closeHelp();" />
-<input type="reset"  value=" <?php echo $pgv_lang["statreset"]; ?> " /><br/>
-</form>
+	</form>
 <?php
 
 $_SESSION["plottype"]=$plottype;
