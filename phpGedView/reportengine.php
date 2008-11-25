@@ -284,7 +284,7 @@ function paste_id(value) {
 		<?php
 		print "<tr><td class=\"topbottombar\" colspan=\"2\">";
 		print " <input type=\"submit\" value=\"".$pgv_lang["download_report"]."\" onclick=\"document.setupreport.elements['download'].value='1';\"/>";
-		print " <input type=\"submit\" value=\"".$pgv_lang["cancel"]."\" onclick=\"document.setupreport.elements['action'].value='setup';\"/>";
+		print " <input type=\"submit\" value=\"".$pgv_lang["cancel"]."\" onclick=\"document.setupreport.elements['action'].value='setup';document.setupreport.target='';\"/>";
 		print "</td></tr>\n";
 		print "</table>\n";
 		print "</form>\n";
