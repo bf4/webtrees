@@ -11,6 +11,7 @@
 
 Version 4.1.6 (bugs fixed post release)
 
+ - Fixed: [ 2344682 ] Find Individual ID (fisharebest)
  - Fixed: [ 2332475 ] [4324] Unable to add new folder in Manage Media (canajun2eh)
  - Fixed: [ 2275883 ] Wrong thumbnail path using Media Firewall (canajun2eh)
 
