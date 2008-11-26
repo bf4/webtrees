@@ -242,7 +242,10 @@ if (!$CONFIGURED) {
 ignore_user_abort(false);
 
 if (empty($SERVER_URL)) {
-	$SERVER_URL = "http://".$_SERVER["SERVER_NAME"];
+	$SERVER_URL = "http";
+	// HTTPS or HTTP ??
+	if (isset($_SERVER['HTTPS']) && ($_SERVER['HTTPS']=='1' || strtolower($_SERVER['HTTPS'])=='on')) $SERVER_URL .= "s";
+	$SERVER_URL .= "://".$_SERVER["SERVER_NAME"];
 	if (!empty($_SERVER["SERVER_PORT"]) && $_SERVER["SERVER_PORT"]!=80) $SERVER_URL .= ":".$_SERVER["SERVER_PORT"];
 	$SERVER_URL .= dirname($SCRIPT_NAME)."/";
 	$SERVER_URL = stripslashes($SERVER_URL);

@@ -10,6 +10,7 @@
 
 
 Version 4.2.0
+ - Fixed: [ 2350196 ] HTTPS / SSL detection in session.php (canajun2eh)
  - Fixed: [ 2232565 ] Reports Cancel Button (fisharebest)
  - Fixed: [ 2332475 ] [4324] Unable to add new folder in Manage Media (canajun2eh)
  - Fixed: [ 2336088 ] 4.1.6 Edit Name - Source trailing @ displayed (fisharebest)
