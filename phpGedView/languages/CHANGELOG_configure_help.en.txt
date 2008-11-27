@@ -45,6 +45,8 @@ VERSION 4.2.0
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 -----------------------------------------------------------------------------------------
+*$pgv_lang["ENABLE_RSS_help"]						26 Nov 2008				w	Correct URL to Wiki article on RSS
+*$pgv_lang["RSS_FORMAT_help"]						26 Nov 2008				w	Correct URL to Wiki article on RSS
 *$pgv_lang["EDIT_AUTOCLOSE_help"]					24 Nov 2008				S
 *$pgv_lang["DB_UTF8_COLLATION"]						24 Nov 2008				S	"UTF8" --> "UTF-8"
 *$pgv_lang["DB_UTF8_COLLATION_help"]				24 Nov 2008				SW
