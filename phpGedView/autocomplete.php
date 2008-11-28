@@ -24,6 +24,7 @@
  * @version $Id$
  */
 require './config.php';
+header("Content-Type: text/html; charset=$CHARACTER_SET");
 
 //-- args
 $FILTER = @$_GET["q"];
@@ -571,7 +572,7 @@ function autocomplete_PLAC() {
 			}
 		}
 	} while ($repeat);
-	
+
 	//-- filter
 	function place_ok($v) {
 		global $FILTER;
@@ -625,7 +626,7 @@ function autocomplete_PLAC() {
 			list($data[$k]) = explode(",", $v);
 		$data = array_filter($data, "place_ok");
 	}
-	
+
 	return $data;
 }
 ?>
