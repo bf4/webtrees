@@ -393,4 +393,57 @@ function convert_ansi_utf8() {
 	$fcontents = preg_replace("/1 CHAR (ANSI|ANSEL)/", "1 CHAR UTF-8", $fcontents);
 }
 
+
+/**
+ * Check for lat/lon information exported from The Master Genealogist
+ *
+ * TMG exports lat/lon information in a proprietary format
+ * see patch 1527087 for more details
+ * @see tmglatlon_cleanup()
+ * @see tmglatlon_cleanup2()
+ */
+function need_tmglatlon_cleanup()
+{
+	global $fcontents;
+
+	//check to see if need tmglatlon cleanup
+	$ct = preg_match_all ("/^(2 PLAC(.*)), (\d\d)(\d\d)(\d\d)([NS])(\d\d\d)(\d\d)(\d\d)([EW])/m",$fcontents,$matches);
+	if($ct > 0)
+		return true;
+	return false;
+}
+
+/**
+ * Convert lat/lon information exported from The Master Genealogist
+ *
+ * converts TMG's proprietary lat/lon format :
+ *    2 PLAC St Columba's Church, 2340 W. Lehigh Avenue,Philadelphia,Philadelphia Co,Pennsylvania,USA,395945N0751013W
+ * to the GEDCOM 5.5.1 standard that PGV can read:
+ *    2 PLAC St Columba's Church, 2340 W. Lehigh Avenue,Philadelphia,Philadelphia Co,Pennsylvania,USA\n3 MAP\n4 LATI N39.9958\n4 LONG W75.1703
+ * see patch 1527087 for more details
+ * @see need_tmglatlon_cleanup()
+ * @see tmglatlon_cleanup2()
+ */
+function tmglatlon_cleanup()
+{
+	global $fcontents;
+
+	$fcontents = preg_replace_callback("/^(2 PLAC(.*)), (\d\d)(\d\d)(\d\d)([NS])(\d\d\d)(\d\d)(\d\d)([EW])/m", "tmglatlon_cleanup2", $fcontents);
+	return true;
+}
+
+/**
+ * Convert lat/lon information exported from The Master Genealogist
+ *
+ * callback function for tmglatlon_cleanup()
+ * @see tmglatlon_cleanup()
+ */
+function tmglatlon_cleanup2($m)
+{
+	$strLATI = $m[6].(round($m[3]+($m[4]/60)+($m[5]/3600),4));
+	$strLONG = $m[10].(round($m[7]+($m[8]/60)+($m[9]/3600),4));
+	$strReturn = $m[1]."\n3 MAP\n4 LATI $strLATI\n4 LONG $strLONG";
+	return $strReturn;
+}
+
 ?>
