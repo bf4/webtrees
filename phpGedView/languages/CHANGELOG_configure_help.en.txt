@@ -45,6 +45,9 @@ VERSION 4.2.0
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 -----------------------------------------------------------------------------------------
+*$pgv_lang["edit_lang_utility_desc"]				28 Nov 2008				w	four --> nine
+-$pgv_lang["media_import_help"]						28 Nov 2008				D
+*$pgv_lang["compare_lang_utility_desc"]				28 Nov 2008				W	change wording about CHANGELOG files
 *$pgv_lang["ENABLE_RSS_help"]						26 Nov 2008				w	Correct URL to Wiki article on RSS
 *$pgv_lang["RSS_FORMAT_help"]						26 Nov 2008				w	Correct URL to Wiki article on RSS
 *$pgv_lang["EDIT_AUTOCLOSE_help"]					24 Nov 2008				S
