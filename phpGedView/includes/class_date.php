@@ -978,9 +978,9 @@ class GedcomDate {
 
 	function GedcomDate($date) {
 		// Extract any explanatory text
-		if (preg_match('/^(?:.*)( ?\(.*)$/', $date, $match)) {
+		if (preg_match('/^(.*)( ?\(.*)$/', $date, $match)) {
 			$date=$match[1];
-			$this->text=$match[1];
+			$this->text=$match[2];
 		}
 		// Ignore punctuation and normalise whitespace
 		$date=preg_replace(
