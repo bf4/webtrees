@@ -998,7 +998,7 @@ class GedcomDate {
 			$this->qual2=$match[4];
 			$this->date2=$this->ParseDate("{$match[1]} {$match[5]}");
 		} else {
-			if (preg_match('/^(@#d[a-z ]+@) (from|bet|to|and|bef|aft|cal|est|int|abt|apx|est|cir) (.+)/', $date, $match)) {
+			if (preg_match('/^(@#d[a-z ]+@) (from|bet|to|and|bef|aft|cal|est|int|abt|apx|cir) (.+)/', $date, $match)) {
 				$this->qual1=$match[2];
 				$this->date1=$this->ParseDate($match[1].' '.$match[3]);
 			} else {
@@ -1008,7 +1008,7 @@ class GedcomDate {
 					$this->qual2=$match[3];
 					$this->date2=$this->ParseDate($match[4]);
 				} else {
-					if (preg_match('/^(from|bet|to|and|bef|aft|cal|est|int|abt|apx|est|cir|qtr) (.+)/', $date, $match)) {
+					if (preg_match('/^(from|bet|to|and|bef|aft|cal|est|int|abt|apx|cir) (.+)/', $date, $match)) {
 						$this->qual1=$match[1];
 						$this->date1=$this->ParseDate($match[2]);
 					} else {
