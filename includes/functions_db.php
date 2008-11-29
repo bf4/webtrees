@@ -47,6 +47,7 @@ if (!isset($DB_UTF8_COLLATION)) $DB_UTF8_COLLATION=false;
  */
 switch ($DBTYPE) {
 case 'mssql':
+	function sql_mod_function($x,$y) { return "MOD($x,$y)"; } // Modulus function
 	define('PGV_DB_AUTO_ID_TYPE',  'INTEGER IDENTITY');
 	define('PGV_DB_INT1_TYPE',     'INTEGER');
 	define('PGV_DB_INT2_TYPE',     'INTEGER');
@@ -65,6 +66,7 @@ case 'mssql':
 	define('PGV_DB_UTF8_TABLE',    '');
 	break;
 case 'sqlite':
+	function sql_mod_function($x,$y) { return "(($x)%($y))"; } // Modulus function
 	define('PGV_DB_AUTO_ID_TYPE',  'INTEGER AUTOINCREMENT');
 	define('PGV_DB_INT1_TYPE',     'INTEGER');
 	define('PGV_DB_INT2_TYPE',     'INTEGER');
@@ -83,6 +85,7 @@ case 'sqlite':
 	define('PGV_DB_UTF8_TABLE',    '');
 	break;
 case 'pgsql':
+	function sql_mod_function($x,$y) { return "MOD($x,$y)"; } // Modulus function
 	define('PGV_DB_AUTO_ID_TYPE',  'SERIAL');
 	define('PGV_DB_INT1_TYPE',     'SMALLINT');
 	define('PGV_DB_INT2_TYPE',     'SMALLINT');
@@ -102,6 +105,7 @@ case 'pgsql':
 	break;
 case 'mysql':
 default:
+	function sql_mod_function($x,$y) { return "MOD($x,$y)"; } // Modulus function
 	define('PGV_DB_AUTO_ID_TYPE',  'INTEGER UNSIGNED AUTO_INCREMENT');
 	define('PGV_DB_INT1_TYPE',     'TINYINT');
 	define('PGV_DB_INT2_TYPE',     'SMALLINT');
@@ -269,18 +273,6 @@ function check_for_import($ged) {
 	}
 
 	return $GEDCOMS[$ged]["imported"];
-}
-
-// Generate a modulus function for various flavours of sql
-function sql_mod_function($x,$y) {
-	global $DBTYPE;
-
-	switch ($DBTYPE) {
-	case 'sqlite':
-		return "(($x)%($y))";
-	default:
-		return "MOD($x,$y)";
-	}
 }
 
 //-- gets the first record in the gedcom
