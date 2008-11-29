@@ -1333,9 +1333,12 @@ class GedcomDate {
 // Localise a date.  This is a default function, and may be overridden in extras.xx.php
 function DefaultDateLocalisation(&$q1, &$d1, &$q2, &$d2, &$q3) {
 	global $pgv_lang;
-	if (isset($pgv_lang[$q1]))
+
+	if ($q1) {
 		$q1=$pgv_lang[$q1];
-	if (isset($pgv_lang[$q2]))
+	}
+	if ($q2) {
 		$q2=$pgv_lang[$q2];
+	}
 }
 ?>
