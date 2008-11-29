@@ -66,10 +66,7 @@ class CalendarDate {
 
 		// Construct from an array (of three gedcom-style strings: "1900", "feb", "4")
 		if (is_array($date)) {
-			if (is_numeric($date[2]))
-				$this->d=0+$date[2];
-			else
-				$this->d=0;
+			$this->d=(int)$date[2];
 			if (!is_null($this->MONTH_TO_NUM($date[1]))) {
 				$this->m=$this->MONTH_TO_NUM($date[1]);
 			} else {
@@ -179,7 +176,7 @@ class CalendarDate {
 	}
 	// Calendars that use suffixes, etc. (e.g. 'B.C.') or OS/NS notation should redefine this.
 	function ExtractYear($year) {
-		return empty($year)?0:$year;
+		return (int)$year;
 	}
 	// Leap years may have extra days, extra months, etc.
 	function IsLeapYear() {
@@ -613,7 +610,7 @@ class JulianDate extends CalendarDate {
 			if (preg_match('/^(\d+) b ?c$/', $year, $match))
 				return -$match[1];
 			else
-				return $year+0;
+				return (int)$year;
 	}
 
 	function FormatLongYear() {
@@ -1037,17 +1034,17 @@ class GedcomDate {
 	static function ParseDate($date) {
 		global $LANGUAGE;
 		// Calendar escape specified? - use it
-		if (preg_match_all('/^(@#[^@]+@) ?(.*)/', $date, $match)) {
-			$cal=$match[1][0];
-			$date=$match[2][0];
+		if (preg_match('/^(@#[^@]+@) ?(.*)/', $date, $match)) {
+			$cal=$match[1];
+			$date=$match[2];
 		} else {
 			$cal='';
 		}
 		// A date with a month: DM, M, MY or DMY
-		if (preg_match_all('/^(\d?\d?) ?(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec|tsh|csh|ksl|tvt|shv|adr|ads|nsn|iyr|svn|tmz|aav|ell|vend|brum|frim|nivo|pluv|vent|germ|flor|prai|mess|ther|fruc|comp|muhar|safar|rabi[at]|juma[at]|rajab|shaab|ramad|shaww|dhuaq|dhuah) ?(\d+( b ?c)?|\d\d\d\d \/ \d{1,4})?$/', $date, $match)) {
-			$d=$match[1][0];
-			$m=$match[2][0];
-			$y=$match[3][0];
+		if (preg_match('/^(\d?\d?) (jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec|tsh|csh|ksl|tvt|shv|adr|ads|nsn|iyr|svn|tmz|aav|ell|vend|brum|frim|nivo|pluv|vent|germ|flor|prai|mess|ther|fruc|comp|muhar|safar|rabi[at]|juma[at]|rajab|shaab|ramad|shaww|dhuaq|dhuah) (\d+(?: b ?c)?|\d\d\d\d \/ \d{1,4})?$/', $date, $match)) {
+			$d=$match[1];
+			$m=$match[2];
+			$y=$match[3];
 		} else
 			// A date with just a year
 			if (preg_match('/^(\d+(?: b ?c)?|\d\d\d\d \/ \d{1,4})$/', $date, $match)) {
@@ -1094,21 +1091,21 @@ class GedcomDate {
 		// Now construct an object of the correct type
 		switch ($cal) {
 		case '@#dgregorian@':
-			return new GregorianDate(array($y+0, $m, $d));
+			return new GregorianDate(array($y, $m, $d));
 		case '@#djulian@':
 	 		return new JulianDate(array($y, $m, $d));
 		case '@#dhebrew@':
 			if ($LANGUAGE=='hebrew')
-	 			return new HebrewDate(array($y+0, $m, $d));
+	 			return new HebrewDate(array($y, $m, $d));
 			else
-	 			return new JewishDate(array($y+0, $m, $d));
+	 			return new JewishDate(array($y, $m, $d));
 		case '@#dhijri@':
 			if ($LANGUAGE=='arabic')
-				return new ArabicDate(array($y+0, $m, $d));
+				return new ArabicDate(array($y, $m, $d));
 			else
-				return new HijriDate(array($y+0, $m, $d));
+				return new HijriDate(array($y, $m, $d));
 		case '@#dfrench r@':
-		 	return new FrenchRDate(array($y+0, $m, $d));
+		 	return new FrenchRDate(array($y, $m, $d));
 		case '@#droman@':
 			return new RomanDate(array($y, $m, $d));
 		}
