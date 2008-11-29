@@ -159,14 +159,15 @@ function import_record($gedrec, $update) {
 		$record=new GedcomRecord($gedrec);
 		break;
 	}
-	$ged_id=(int)($GEDCOMS[$GEDCOM]["id"]);
-	$xref=$DBCONN->escapeSimple($gid);
 
 	// Update the cross-reference/index tables.
-	update_places($gid, $gedrec);
-	update_dates ($gid, PGV_GED_ID, $gedrec);
-	update_links ($gid, PGV_GED_ID, $gedrec);
-	update_names ($gid, PGV_GED_ID, $record);
+	$ged_id=(int)($GEDCOMS[$GEDCOM]["id"]);
+	$xref  =$DBCONN->escapeSimple($gid);
+	update_places($xref, $ged_id, $gedrec);
+	update_dates ($xref, $ged_id, $gedrec);
+	update_links ($xref, $ged_id, $gedrec);
+	update_rlinks($xref, $ged_id, $gedrec);
+	update_names ($xref, $ged_id, $record);
 
 	$newrec = update_media($gid, $gedrec, $update);
 	if ($newrec != $gedrec) {
@@ -178,14 +179,6 @@ function import_record($gedrec, $update) {
 			$type = trim($match[2]);
 		} else
 			$gid = '';
-	}
-
-	//-- set all remote link ids
-	$ct = preg_match("/1 RFN (.*)/", $gedrec, $rmatch);
-	if ($ct) {
-		$rfn = trim($rmatch[1]);
-		$sql = "INSERT INTO {$TBLPREFIX}remotelinks VALUES ('" . $DBCONN->escapeSimple($gid) . "','" . $DBCONN->escapeSimple($rfn) . "','" . $DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"]) . "')";
-		$res = dbquery($sql);
 	}
 
 	switch ($type) {
@@ -435,8 +428,8 @@ function soundex_dm($text) {
  * into the places table
  * @param string $gedrec
  */
-function update_places($gid, $gedrec) {
-	global $FILE, $placecache, $TBLPREFIX, $DBCONN, $GEDCOMS;
+function update_places($gid, $ged_id, $gedrec) {
+	global $placecache, $TBLPREFIX, $DBCONN;
 
 	if (!isset($placecache)) $placecache = array();
 	$personplace = array();
@@ -466,7 +459,7 @@ function update_places($gid, $gedrec) {
 				$parent_id = $placecache[$key];
 				if (!isset($personplace[$key])) {
 					$personplace[$key]=1;
-					$sql = 'INSERT INTO ' . $TBLPREFIX . 'placelinks VALUES('.$parent_id.', \'' . $DBCONN->escapeSimple($gid) . '\', ' . $DBCONN->escapeSimple($GEDCOMS[$FILE]["id"]) . ')';
+					$sql = 'INSERT INTO ' . $TBLPREFIX . 'placelinks VALUES('.$parent_id.', \'' . $DBCONN->escapeSimple($gid) . '\', ' . $ged_id . ')';
 					$res2 = dbquery($sql);
 				}
 				$level++;
@@ -476,7 +469,7 @@ function update_places($gid, $gedrec) {
 			//-- only search the database while we are finding places in it
 			if ($search) {
 				//-- check if this place and level has already been added
-				$sql = 'SELECT p_id FROM '.$TBLPREFIX.'places WHERE p_level='.$level.' AND p_file='.$GEDCOMS[$FILE]['id'].' AND p_parent_id='.$parent_id." AND p_place ".PGV_DB_LIKE." '".$DBCONN->escapeSimple($place).'\'';
+				$sql = 'SELECT p_id FROM '.$TBLPREFIX.'places WHERE p_level='.$level.' AND p_file='.$ged_id.' AND p_parent_id='.$parent_id." AND p_place ".PGV_DB_LIKE." '".$DBCONN->escapeSimple($place).'\'';
 				$res = dbquery($sql);
 				if ($res->numRows()>0) {
 					$row = $res->fetchRow();
@@ -491,11 +484,11 @@ function update_places($gid, $gedrec) {
 				$std_soundex = soundex($place);
 				$dm_soundex = DMSoundex($place);
 				$p_id = get_next_id("places", "p_id");
-				$sql = 'INSERT INTO ' . $TBLPREFIX . 'places VALUES(' . $p_id . ',  \''.$DBCONN->escapeSimple($place) . '\', '.$level.', '.$parent_id.', '.$DBCONN->escapeSimple($GEDCOMS[$FILE]["id"]).', \''.$DBCONN->escapeSimple($std_soundex).'\', \''.$DBCONN->escapeSimple(implode(":",$dm_soundex)).'\')';
+				$sql = 'INSERT INTO ' . $TBLPREFIX . 'places VALUES(' . $p_id . ',  \''.$DBCONN->escapeSimple($place) . '\', '.$level.', '.$parent_id.', '.$ged_id.', \''.$DBCONN->escapeSimple($std_soundex).'\', \''.$DBCONN->escapeSimple(implode(":",$dm_soundex)).'\')';
 				$res2 = dbquery($sql);
 			}
 
-			$sql = 'INSERT INTO ' . $TBLPREFIX . 'placelinks VALUES('.$p_id.', \'' . $DBCONN->escapeSimple($gid) . '\', ' . $DBCONN->escapeSimple($GEDCOMS[$FILE]["id"]) . ')';
+			$sql = 'INSERT INTO ' . $TBLPREFIX . 'placelinks VALUES('.$p_id.', \'' . $DBCONN->escapeSimple($gid) . '\', ' . $ged_id . ')';
 			$res2 = dbquery($sql);
 			//-- increment the level and assign the parent id for the next place level
 			$parent_id = $p_id;
@@ -541,21 +534,49 @@ function update_dates($xref, $ged_id, $gedrec) {
 	return;
 }
 
+// extract all the remote links from the given record and insert them into the database
+function update_rlinks($xref, $ged_id, $gedrec) {
+	global $DBTYPE, $DBCONN, $TBLPREFIX;
+
+	if (preg_match_all("/^1 RFN (.+)/m", $gedrec, $matches, PREG_SET_ORDER)) {
+		$data=array();
+		foreach ($matches as $match) {
+			$match[1]=$DBCONN->escapeSimple($match[1]);
+			$sql="('{$xref}','{$match[1]}',{$ged_id})";
+			// Include each remote link once only.
+			if (!in_array($sql, $data)) {
+				$data[]=$sql;
+			}
+		}
+
+		switch ($DBTYPE) {
+		case 'mysql':
+			// MySQL can insert multiple rows in one statement
+			dbquery("INSERT INTO {$TBLPREFIX}remotelinks (r_gid, r_linkid, r_file) VALUES ".implode(',', $data));
+			break;
+		default:
+			foreach ($data as $datum) {
+				dbquery("INSERT INTO {$TBLPREFIX}remotelinks (r_gid, r_linkid, r_file) VALUES ".$datum);
+		}
+			break;
+		}
+	}
+}
+
 // extract all the links from the given record and insert them into the database
 function update_links($xref, $ged_id, $gedrec) {
 	global $DBTYPE, $DBCONN, $TBLPREFIX;
 
 	if (preg_match_all("/^\d+ ([A-Z0-9_]+) @([^@#\r\n][^@\r\n]*)@/m", $gedrec, $matches, PREG_SET_ORDER)) {
 		$data=array();
-		$xref=$DBCONN->escapeSimple($xref);
 		foreach ($matches as $match) {
 			$match[2]=$DBCONN->escapeSimple($match[2]);
 			$sql="('{$xref}','{$match[2]}','{$match[1]}',{$ged_id})";
 			// Include each link once only.
 			if (!in_array($sql, $data)) {
 				$data[]=$sql;
-				}
 			}
+		}
 
 		switch ($DBTYPE) {
 		case 'mysql':
@@ -579,7 +600,7 @@ function update_names($xref, $ged_id, $record) {
 		$data=array();
 
 		foreach ($record->getAllNames() as $n=>$name) {
-			$tmp="({$ged_id},'".$DBCONN->escapeSimple($record->getXref())."',{$n},'{$name['type']}','".$DBCONN->escapeSimple($name['sort'])."',";
+			$tmp="({$ged_id},'{$xref}',{$n},'{$name['type']}','".$DBCONN->escapeSimple($name['sort'])."',";
 			if ($record->getType()=='INDI') {
 				if ($name['givn']=='@P.N.') {
 					$soundex_givn_std="NULL";
