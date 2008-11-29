@@ -286,16 +286,22 @@ class CalendarDate {
 	function Format($format) {
 		// Legacy formats (DMY) become jFY
 		if (preg_match('/^[DMY,. ;\/-]+$/', $format)) {
-			$format=str_replace(array('D', 'M'), array('j', 'F'), $format);
+			$format=strtr($format, 'DM', 'jF');
 		}
 		// Don't show exact details for inexact dates
-		$old_format=$format;
-		if ($this->d==0) $format=str_replace(array('d', 'j', 'l', 'D', 'N', 'S', 'w', 'z'), '', $format);
-		if ($this->m==0) $format=str_replace(array('F', 'm', 'M', 'n', 't'),                '', $format);
-		if ($this->y==0) $format=str_replace(array('t', 'L', 'G', 'y', 'Y'),                '', $format);
+		if (!$this->d) {
+			$format=str_replace(array('d', 'j', 'l', 'D', 'N', 'S', 'w', 'z'), '', $format);
+		}
+		if (!$this->m) {
+			$format=str_replace(array('F', 'm', 'M', 'n', 't'), '', $format);
+		}
+		if (!$this->y) {
+			$format=str_replace(array('t', 'L', 'G', 'y', 'Y'), '', $format);
+		}
 		// If we've trimmed the format, also trim the punctuation
-		if ($format!=$old_format)
-			$format=preg_replace('/(^[,. ;\/-]+)|([,. ;\/-]+$)/', '', $format);
+		if (!$this->d || !$this->m || !$this->y) {
+			$format=trim($format, ',. ;/-');
+		}
 		// Build up the formated date, character at a time
 		$str='';
 		foreach (str_split($format) as $code)
@@ -323,7 +329,7 @@ class CalendarDate {
 			case 'E': $str.=$this->FormatGedcomYear(); break;
 			default:  $str.=$code; break;
 			}
-		return trim($str);
+		return $str;
 	}
 
 	// Functions to extract bits of the date in various formats.  Individual calendars
