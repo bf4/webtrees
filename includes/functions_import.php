@@ -139,6 +139,19 @@ function import_record($gedrec, $update) {
 
 	//-- replace any added ltr processing codes
 	$gedrec=str_replace(array(PGV_UTF8_LRM, PGV_UTF8_RLM), "", $gedrec);
+
+	$newrec = update_media($gid, $gedrec, $update);
+	if ($newrec != $gedrec) {
+		$gedrec = $newrec;
+		//-- make sure we have the correct media id
+		$ct = preg_match("/0 @(.*)@ ([a-zA-Z_]+)/", $gedrec, $match);
+		if ($ct > 0) {
+			$gid = $match[1];
+			$type = trim($match[2]);
+		} else
+			$gid = '';
+	}
+
 	switch ($type) {
 	case 'INDI':
 		$record=new Person($gedrec);
@@ -169,23 +182,10 @@ function import_record($gedrec, $update) {
 	update_rlinks($xref, $ged_id, $gedrec);
 	update_names ($xref, $ged_id, $record);
 
-	$newrec = update_media($gid, $gedrec, $update);
-	if ($newrec != $gedrec) {
-		$gedrec = $newrec;
-		//-- make sure we have the correct media id
-		$ct = preg_match("/0 @(.*)@ ([a-zA-Z_]+)/", $gedrec, $match);
-		if ($ct > 0) {
-			$gid = $match[1];
-			$type = trim($match[2]);
-		} else
-			$gid = '';
-	}
-
 	switch ($type) {
 	case 'INDI':
 		cleanup_tags_y($gedrec);
-		$person=new Person($gedrec);
-		$person->dispname=true; // Just in case the admin has blocked themself from seeing names!
+		$record->dispname=true; // Just in case the admin has blocked themself from seeing names!
 		$ct = preg_match_all("/1 FAMS @(.*)@/", $gedrec, $match, PREG_SET_ORDER);
 		$sfams = "";
 		for ($j = 0; $j < $ct; $j++) {
@@ -198,7 +198,7 @@ function import_record($gedrec, $update) {
 		}
 		$isdead = -1;
 		$indi = array ();
-		$names=$person->getAllNames();
+		$names=$record->getAllNames();
 		foreach ($names as $n=>$name) {
 			list($surn, $givn)=explode(',', $name['sort']);
 			$initial=get_first_letter($name['sort']);
@@ -208,17 +208,14 @@ function import_record($gedrec, $update) {
 				// etc.  It would be more efficient to store all the names in the names table
 				// and just search that one.  This would require users to reimport their gedcoms,
 				// so this change will have to wait until a major version change.
-				$sql = "INSERT INTO {$TBLPREFIX}names (n_gid, n_file, n_name, n_letter, n_surname, n_type) VALUES('".$DBCONN->escapeSimple($gid)."',".$DBCONN->escapeSimple($GEDCOMS[$FILE]["id"]).",'".$DBCONN->escapeSimple($name['full'])."','".$DBCONN->escapeSimple($initial)."','".$DBCONN->escapeSimple($surn)."','".($name['type']=='_MARNM'?'C':'A')."')";
+				$sql = "INSERT INTO {$TBLPREFIX}names (n_gid, n_file, n_name, n_letter, n_surname, n_type) VALUES('{$xref}',{$ged_id},'".$DBCONN->escapeSimple($name['full'])."','".$DBCONN->escapeSimple($initial)."','".$DBCONN->escapeSimple($surn)."','".($name['type']=='_MARNM'?'C':'A')."')";
 				$res = dbquery($sql);
 			}
 
 			// Calculate Soundex Values and insert them into the database.
 
 			// Start building the SQL Insert
-			$sql = "INSERT INTO {$TBLPREFIX}soundex VALUES(" .
-					"'".$DBCONN->escapeSimple($gid)."'," .
-					"'".$DBCONN->escapeSimple($n)."'," .
-					"'".$DBCONN->escapeSimple($GEDCOMS[$FILE]["id"])."',";
+			$sql = "INSERT INTO {$TBLPREFIX}soundex VALUES('{$xref}',{$n},{$ged_id},";
 
 			// Ensure there is a firstname or lastname.
 			// If there is no name in a field, it will contain the string "@N.N."
@@ -300,17 +297,8 @@ function import_record($gedrec, $update) {
 		$isdead = (int)is_dead($gedrec, '', true);
 		list($surn, $givn)=explode(',', $names[0]['sort']);
 		$initial=get_first_letter($names[0]['sort']);
-		$sql = "INSERT INTO {$TBLPREFIX}individuals (i_id, i_file, i_rin, i_name, i_isdead, i_gedcom, i_letter, i_surname) VALUES ('".$DBCONN->escapeSimple($gid)."','".$DBCONN->escapeSimple($indi["gedfile"])."','".$DBCONN->escapeSimple($indi["rin"])."','".$DBCONN->escapeSimple($names[0]['full'])."',".$DBCONN->escapeSimple($isdead).",'".$DBCONN->escapeSimple($indi["gedcom"])."','".$DBCONN->escapeSimple($initial)."','".$DBCONN->escapeSimple($surn)."')";
+		$sql = "INSERT INTO {$TBLPREFIX}individuals (i_id, i_file, i_rin, i_name, i_isdead, i_gedcom, i_letter, i_surname) VALUES ('{$xref}',{$ged_id},'".$DBCONN->escapeSimple($indi["rin"])."','".$DBCONN->escapeSimple($names[0]['full'])."',".$DBCONN->escapeSimple($isdead).",'".$DBCONN->escapeSimple($indi["gedcom"])."','".$DBCONN->escapeSimple($initial)."','".$DBCONN->escapeSimple($surn)."')";
 		$res = dbquery($sql);
-
-		//-- PEAR supports prepared statements in mysqli we will use this code instead of the code above
-		//if (!isset($prepared_statement)) $prepared_statement = $DBCONN->prepare("INSERT INTO {$TBLPREFIX}individuals VALUES (?,?,?,?,?,?,?,?)");
-		//$data = array($DBCONN->escapeSimple($gid), $DBCONN->escapeSimple($indi["file"]), $indi["rin"], $names[0][0], -1, $indi["gedcom"], $DBCONN->escapeSimple($names[0][1]), $names[0][2]);
-		//$res =& $DBCONN->execute($prepared_statement, $data);
-		//$TOTAL_QUERIES++;
-		if (DB::isError($res)) {
-			// die(__LINE__." ".__FILE__."  ".$res->getMessage());
-		}
 		break;
 	case 'FAM':
 		cleanup_tags_y($gedrec);
@@ -338,7 +326,7 @@ function import_record($gedrec, $update) {
 		$fam["CHIL"] = $chil;
 		$fam["gedcom"] = $gedrec;
 		$fam["gedfile"] = $GEDCOMS[$FILE]["id"];
-		$sql = "INSERT INTO {$TBLPREFIX}families (f_id, f_file, f_husb, f_wife, f_chil, f_gedcom, f_numchil) VALUES ('" . $DBCONN->escapeSimple($gid) . "','" . $DBCONN->escapeSimple($fam["gedfile"]) . "','" . $DBCONN->escapeSimple($fam["HUSB"]) . "','" . $DBCONN->escapeSimple($fam["WIFE"]) . "','" . $DBCONN->escapeSimple($fam["CHIL"]) . "','" . $DBCONN->escapeSimple($fam["gedcom"]) . "','" . $DBCONN->escapeSimple($ct) . "')";
+		$sql = "INSERT INTO {$TBLPREFIX}families (f_id, f_file, f_husb, f_wife, f_chil, f_gedcom, f_numchil) VALUES ('{$xref}',{$ged_id},'" . $DBCONN->escapeSimple($fam["HUSB"]) . "','" . $DBCONN->escapeSimple($fam["WIFE"]) . "','" . $DBCONN->escapeSimple($fam["CHIL"]) . "','" . $DBCONN->escapeSimple($fam["gedcom"]) . "','" . $DBCONN->escapeSimple($ct) . "')";
 		$res = dbquery($sql);
 		break;
 	case 'SOUR':
@@ -364,7 +352,7 @@ function import_record($gedrec, $update) {
 					$name .= $match[$i][1];
 			}
 		}
-		$sql = "INSERT INTO {$TBLPREFIX}sources VALUES ('" . $DBCONN->escapeSimple($gid) . "','" . $DBCONN->escapeSimple($GEDCOMS[$FILE]["id"]) . "','" . $DBCONN->escapeSimple($name) . "','" . $DBCONN->escapeSimple($gedrec) . "')";
+		$sql = "INSERT INTO {$TBLPREFIX}sources VALUES ('{$xref}',{$ged_id},'" . $DBCONN->escapeSimple($name) . "','" . $DBCONN->escapeSimple($gedrec) . "')";
 		$res = dbquery($sql);
 		break;
 	case 'OBJE':
@@ -381,7 +369,7 @@ function import_record($gedrec, $update) {
 				}
 			}
 			if ($gid=="") $gid = $type;
-			$sql = "INSERT INTO {$TBLPREFIX}other VALUES ('" . $DBCONN->escapeSimple($gid) . "','" . $DBCONN->escapeSimple($GEDCOMS[$FILE]["id"]) . "','" . $DBCONN->escapeSimple($type) . "','" . $DBCONN->escapeSimple($gedrec) . "')";
+			$sql = "INSERT INTO {$TBLPREFIX}other VALUES ('{$xref}',{$ged_id},'" . $DBCONN->escapeSimple($type) . "','" . $DBCONN->escapeSimple($gedrec) . "')";
 			$res = dbquery($sql);
 		}
 		break;
@@ -459,7 +447,7 @@ function update_places($gid, $ged_id, $gedrec) {
 				$parent_id = $placecache[$key];
 				if (!isset($personplace[$key])) {
 					$personplace[$key]=1;
-					$sql = 'INSERT INTO ' . $TBLPREFIX . 'placelinks VALUES('.$parent_id.', \'' . $DBCONN->escapeSimple($gid) . '\', ' . $ged_id . ')';
+					$sql = 'INSERT INTO ' . $TBLPREFIX . 'placelinks VALUES('.$parent_id.', \'' . $gid . '\', ' . $ged_id . ')';
 					$res2 = dbquery($sql);
 				}
 				$level++;
@@ -488,7 +476,7 @@ function update_places($gid, $ged_id, $gedrec) {
 				$res2 = dbquery($sql);
 			}
 
-			$sql = 'INSERT INTO ' . $TBLPREFIX . 'placelinks VALUES('.$p_id.', \'' . $DBCONN->escapeSimple($gid) . '\', ' . $ged_id . ')';
+			$sql = 'INSERT INTO ' . $TBLPREFIX . 'placelinks VALUES('.$p_id.', \'' . $gid . '\', ' . $ged_id . ')';
 			$res2 = dbquery($sql);
 			//-- increment the level and assign the parent id for the next place level
 			$parent_id = $p_id;
@@ -505,7 +493,6 @@ function update_dates($xref, $ged_id, $gedrec) {
 
 	if (strpos($gedrec, '2 DATE ') && preg_match_all("/\n1 (\w+).*(?:\n[2-9].*)*(?:\n2 DATE (.+))(?:\n[2-9].*)*/", $gedrec, $matches, PREG_SET_ORDER)) {
 		$data=array();
-		$xref=$DBCONN->escapeSimple($xref);
 		foreach ($matches as $match) {
 				$fact=$match[1];
 			if (($fact=='FACT' || $fact=='EVEN') && preg_match("/\n2 TYPE (\w+)/", $match[0], $tmatch) && array_key_exists($tmatch[1], $factarray)) {
