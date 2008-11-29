@@ -298,8 +298,7 @@ class CalendarDate {
 			$format=preg_replace('/(^[,. ;\/-]+)|([,. ;\/-]+$)/', '', $format);
 		// Build up the formated date, character at a time
 		$str='';
-		//foreach (str_split($format) as $code) // PHP5
-		preg_match_all('/(.)/', $format, $match); foreach ($match[1] as $code) // PHP4
+		foreach (str_split($format) as $code)
 			switch ($code) {
 			case 'd': $str.=$this->FormatDayZeros(); break;
 			case 'j': $str.=$this->FormatDay(); break;
