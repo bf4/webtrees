@@ -40,7 +40,9 @@ define('PGV_FUNCTIONS_DB_PHP', '');
 require_once 'DB.php';
 
 // New setting, added to config.php in 4.2.0
-if (!isset($DB_UTF8_COLLATION)) $DB_UTF8_COLLATION=false;
+if (!isset($DB_UTF8_COLLATION)) {
+	$DB_UTF8_COLLATION=false;
+}
 
 /**
  * Field and function definition variances between sql databases
@@ -2654,72 +2656,6 @@ function delete_gedcom($ged) {
 		}
 		write_changes();
 	}
-}
-
-/**
- * return the current size of the given list
- * list options are indilist famlist sourcelist and otherlist
- *
- * @param string $list	list options are indilist famlist sourcelist and otherlist
- * @param string $filter
- * @return int
- */
-function get_list_size($list, $filter="") {
-	global $TBLPREFIX, $DBTYPE;
-
-	switch($list) {
-		case "indilist":
-			$sql = "SELECT count(i_file) FROM ".$TBLPREFIX."individuals WHERE i_file=".PGV_GED_ID;
-			if ($filter)
-				$sql .= " AND i_gedcom ".PGV_DB_LIKE." '%$filter%'";
-			$res = dbquery($sql);
-			$row =& $res->fetchRow();
-			$res->free();
-			return $row[0];
-		break;
-		case "famlist":
-			$sql = "SELECT count(f_file) FROM ".$TBLPREFIX."families WHERE f_file=".PGV_GED_ID;
-			if ($filter)
-				$sql .= " AND f_gedcom ".PGV_DB_LIKE." '%$filter%'";
-			$res = dbquery($sql);
-
-			$row =& $res->fetchRow();
-			$res->free();
-			return $row[0];
-		break;
-		case "sourcelist":
-			$sql = "SELECT count(s_file) FROM ".$TBLPREFIX."sources WHERE s_file=".PGV_GED_ID;
-			if ($filter)
-				$sql .= " AND s_gedcom ".PGV_DB_LIKE." '%$filter%'";
-			$res = dbquery($sql);
-
-			$row =& $res->fetchRow();
-			$res->free();
-			return $row[0];
-		break;
-		case "objectlist": // media object
-			$sql = "SELECT count(m_id) FROM ".$TBLPREFIX."media WHERE m_gedfile=".PGV_GED_ID;
-			if ($filter)
-				$sql .= " AND m_gedrec ".PGV_DB_LIKE." '%$filter%'";
-			$res = dbquery($sql, false);
-			//-- prevent failure if DB tables are lost
-			if (DB::isError($res)) return 0;
-			$row =& $res->fetchRow();
-			$res->free();
-			return $row[0];
-		break;
-		case "otherlist": // REPO
-			$sql = "SELECT count(o_file) FROM ".$TBLPREFIX."other WHERE o_file=".PGV_GED_ID;
-			if ($filter)
-				$sql .= " AND o_gedcom ".PGV_DB_LIKE." '%$filter%'";
-			$res = dbquery($sql);
-
-			$row =& $res->fetchRow();
-			$res->free();
-			return $row[0];
-		break;
-	}
-	return 0;
 }
 
 /**
