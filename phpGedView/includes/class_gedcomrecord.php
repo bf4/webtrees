@@ -315,7 +315,7 @@ class GedcomRecord {
 	 */
 	function getAbsoluteLinkUrl() {
 		global $SERVER_URL;
-		return $SERVER_URL . $this->getLinkUrl();
+		return $SERVER_URL.$this->getLinkUrl();
 	}
 
 	/**
@@ -323,12 +323,18 @@ class GedcomRecord {
 	 */
 	function undoChange() {
 		global $GEDCOM, $pgv_changes;
-		require_once('includes/functions_edit.php');
-		if (!PGV_USER_CAN_ACCEPT) return false;
+		require_once 'includes/functions_edit.php';
+		if (!PGV_USER_CAN_ACCEPT) {
+			return false;
+		}
 		$cid = $this->xref."_".$GEDCOM;
-		if (!isset($pgv_changes[$cid])) return false;
+		if (!isset($pgv_changes[$cid])) {
+			return false;
+		}
 		$index = count($pgv_changes[$cid])-1;
-		if (undo_change($cid, $index)) return true;
+		if (undo_change($cid, $index)) {
+			return true;
+		}
 		return false;
 	}
 
@@ -339,12 +345,15 @@ class GedcomRecord {
 	function isMarkedDeleted() {
 		global $pgv_changes, $GEDCOM;
 
-		if (!PGV_USER_CAN_EDIT) return false;
+		if (!PGV_USER_CAN_EDIT) {
+			return false;
+		}
 		if (isset($pgv_changes[$this->xref."_".$GEDCOM])) {
 			$change = end($pgv_changes[$this->xref."_".$GEDCOM]);
-			if ($change['type']=='delete') return true;
+			if ($change['type']=='delete') {
+				return true;
+			}
 		}
-
 		return false;
 	}
 
@@ -388,7 +397,9 @@ class GedcomRecord {
 	 */
 	static function getPlaceShort($gedcom_place) {
 		global $GEDCOM, $SHOW_LIST_PLACES;
-		if ($SHOW_LIST_PLACES==9) return $gedcom_place;
+		if ($SHOW_LIST_PLACES==9) {
+			return $gedcom_place;
+		}
 		$gedcom_place = trim($gedcom_place, " ,");
 		$exp = explode(",", $gedcom_place);
 		$place = "";
@@ -459,29 +470,31 @@ class GedcomRecord {
 			// Generally, the first name is the primary one....
 			$this->_getPrimaryName=0;
 			// ....except when the language/name use different character sets
-			global $LANGUAGE;
-			switch ($LANGUAGE) {
-			case 'greek':
-			case 'russian':
-			case 'hebrew':
-			case 'arabic':
-			case 'vietnamese':
-			case 'chinese':
-				foreach ($this->getAllNames() as $n=>$name) {
-					if ($name['type']!='_MARNM' && whatLanguage($name['sort'])==$LANGUAGE) {
-						$this->_getPrimaryName=$n;
-						break;
+			if (count($this->getAllNames())>1) {
+				global $LANGUAGE;
+				switch ($LANGUAGE) {
+				case 'greek':
+				case 'russian':
+				case 'hebrew':
+				case 'arabic':
+				case 'vietnamese':
+				case 'chinese':
+					foreach ($this->getAllNames() as $n=>$name) {
+						if ($name['type']!='_MARNM' && whatLanguage($name['sort'])==$LANGUAGE) {
+							$this->_getPrimaryName=$n;
+							break;
+						}
 					}
-				}
-				break;
-			default:
-				foreach ($this->getAllNames() as $n=>$name) {
-					if (whatLanguage($name['sort'])=='other') {
-						$this->_getPrimaryName=$n;
-						break;
+					break;
+				default:
+					foreach ($this->getAllNames() as $n=>$name) {
+						if (whatLanguage($name['sort'])=='other') {
+							$this->_getPrimaryName=$n;
+							break;
+						}
 					}
+					break;
 				}
-				break;
 			}
 		}
 		return $this->_getPrimaryName;
@@ -662,9 +675,13 @@ class GedcomRecord {
 	 */
 	function &getFactByType($factType) {
 		$this->parseFacts();
-		if (empty($this->facts)) return null;
-		foreach($this->facts as $f=>$fact) {
-			if ($fact->getTag()==$factType || $fact->getType()==$factType) return $fact;
+		if (empty($this->facts)) {
+			return null;
+		}
+		foreach ($this->facts as $f=>$fact) {
+			if ($fact->getTag()==$factType || $fact->getType()==$factType) {
+				return $fact;
+			}
 		}
 		return null;
 	}
@@ -677,7 +694,9 @@ class GedcomRecord {
 	 */
 	function getAllFactsByType($factTypes) {
 		$this->parseFacts();
-		if (is_string($factTypes)) $factTypes = array($factTypes);
+		if (is_string($factTypes)) {
+			$factTypes = array($factTypes);
+		}
 		$facts = array();
 		foreach ($factTypes as $factType) {
 			foreach ($this->facts as $fact) {
@@ -715,10 +734,14 @@ class GedcomRecord {
 	 */
 	function parseFacts($nfacts=NULL) {
 		//-- only run this function once
-		if (!is_null($this->facts) && is_array($this->facts)) return;
+		if (!is_null($this->facts) && is_array($this->facts)) {
+			return;
+		}
 		$this->facts=array();
 		//-- don't run this function if privacy does not allow viewing of details
-		if (!$this->canDisplayDetails()) return;
+		if (!$this->canDisplayDetails()) {
+			return;
+		}
 		//-- must trim the record here because the record is trimmed in edit and it could mess up line numbers
 		$this->gedrec = trim($this->gedrec);
 		//-- find all the fact information
@@ -728,9 +751,14 @@ class GedcomRecord {
 		$line = "";   // -- temporary line buffer
 		$linenum=1;
 		for($i=1; $i<=$lct; $i++) {
-			if ($i<$lct) $line = $indilines[$i];
-			else $line=" ";
-			if (empty($line)) $line=" ";
+			if ($i<$lct) {
+				$line = $indilines[$i];
+			} else {
+				$line=" ";
+			}
+			if (empty($line)) {
+				$line=" ";
+			}
 			if ($i==$lct||$line{0}==1) {
 				if ($i>1){
 					$event = new Event($factrec, $linenum);
@@ -753,7 +781,9 @@ class GedcomRecord {
 	 * @param GedcomRecord $diff	the record to compare facts with
 	 */
 	function diffMerge(&$diff) {
-		if (is_null($diff)) return;
+		if (is_null($diff)) {
+			return;
+		}
 		$this->parseFacts();
 		$diff->parseFacts();
 
@@ -792,24 +822,23 @@ class GedcomRecord {
 
 	function getEventDate($event) {
 	  $srec = $this->getAllEvents($event);
-	  if (!$srec) return "";
+		if (!$srec) {
+			return '';
+		}
 	  $srec = $srec[0];
 	  return get_gedcom_value("DATE", 2, $srec);
 	  //return get_gedcom_value("PAGE", 3, $srec);
 	}
 	function getEventSource($event) {
 	  $srec = $this->getAllEvents($event);
-	  if (!$srec) return "";
+		if (!$srec) {
+			return '';
+		}
 	  $srec = $srec[0];
 	  return get_sub_record("SOUR", 2, $srec);
 	  //return get_gedcom_value("PAGE", 3, $srec);
 	}
 	function getEventSourcePage($event) {
-	  /*$srec = $this->getAllEvents($event);
-	  if (!$srec) return "";
-	  $srec = $srec[0];
-	  $srec = get_sub_record("SOUR", 2, $srec);
-	  return get_gedcom_value("PAGE", 3, $srec);*/
 	  return get_gedcom_value("PAGE", 3, getEventSource($event));
 	}
 
@@ -822,7 +851,9 @@ class GedcomRecord {
 
 		$chan = $this->getChangeEvent();
 
-		if (is_null($chan))	return '&nbsp;';
+		if (is_null($chan))	{
+			return '&nbsp;';
+		}
 
 		$d = $chan->getDate();
 		if (preg_match('/^(\d\d):(\d\d):(\d\d)/', get_gedcom_value('DATE:TIME', 2, $chan->getGedComRecord(), '', false).':00', $match)) {
@@ -833,8 +864,9 @@ class GedcomRecord {
 			$sort=$d->MinJD().'000000';
 			$text=strip_tags($d->Display(false, "{$DATE_FORMAT}", array()));
 		}
-		if ($add_url)
+		if ($add_url) {
 			$text='<a name="'.$sort.'" href="'.encode_url($this->getLinkUrl()).'">'.$text.'</a>';
+		}
 		return $text;
 	}
 
@@ -844,11 +876,14 @@ class GedcomRecord {
 	function LastchangeUser() {
 		$chan = $this->getChangeEvent();
 
-		if (is_null($chan))	return '&nbsp;';
+		if (is_null($chan))	{
+			return '&nbsp;';
+		}
 
 		$chan_user = $chan->getValue("_PGVU");
-		if (empty($chan_user)) return '&nbsp;';
-
+		if (empty($chan_user)) {
+			return '&nbsp;';
+		}
 		return $chan_user;
 	}
 }
