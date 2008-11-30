@@ -110,22 +110,22 @@ if ($MULTI_MEDIA) {
 				}
 				$links = $medialist[$value]["LINKS"];
 				$disp = ($medialist[$value]["EXISTS"]>0) && $medialist[$value]["LINKED"] && $medialist[$value]["CHANGE"]!="delete" ;
-				if (PGV_DEBUG) && !$disp && !$error) {$error = true; print "<span class=\"error\">".$medialist[$value]["XREF"]." File does not exist, or is not linked to anyone, or is marked for deletion.</span><br />";}
+				if (PGV_DEBUG && !$disp && !$error) {$error = true; print "<span class=\"error\">".$medialist[$value]["XREF"]." File does not exist, or is not linked to anyone, or is marked for deletion.</span><br />";}
 
 				$disp &= displayDetailsById($medialist[$value]["XREF"], "OBJE");
 				$disp &= !FactViewRestricted($medialist[$value]["XREF"], $medialist[$value]["GEDCOM"]);
 
-				if (PGV_DEBUG) && !$disp && !$error) {$error = true; print "<span class=\"error\">".$medialist[$value]["XREF"]." Failed to pass privacy</span><br />";}
+				if (PGV_DEBUG && !$disp && !$error) {$error = true; print "<span class=\"error\">".$medialist[$value]["XREF"]." Failed to pass privacy</span><br />";}
 
 				$isExternal = isFileExternal($medialist[$value]["FILE"]);
 
 				if ($block && !$isExternal) $disp &= ($medialist[$value]["THUMBEXISTS"]>0);
-				if (PGV_DEBUG) && !$disp && !$error) {$error = true; print "<span class=\"error\">".$medialist[$value]["XREF"]." thumbnail file could not be found</span><br />";}
+				if (PGV_DEBUG && !$disp && !$error) {$error = true; print "<span class=\"error\">".$medialist[$value]["XREF"]." thumbnail file could not be found</span><br />";}
 
 				// Filter according to format and type  (Default: unless configured otherwise, don't filter)
 				if (!empty($medialist[$value]["FORM"]) && isset($config["filter_".$medialist[$value]["FORM"]]) && $config["filter_".$medialist[$value]["FORM"]]!="yes") $disp = false;
 				if (!empty($medialist[$value]["TYPE"]) && isset($config["filter_".$medialist[$value]["TYPE"]]) && $config["filter_".$medialist[$value]["TYPE"]]!="yes") $disp = false;
-				if (PGV_DEBUG) && !$disp && !$error) {$error = true; print "<span class=\"error\">".$medialist[$value]["XREF"]." failed Format or Type filters</span><br />";}
+				if (PGV_DEBUG && !$disp && !$error) {$error = true; print "<span class=\"error\">".$medialist[$value]["XREF"]." failed Format or Type filters</span><br />";}
 
 				if ($disp && count($links) != 0){
 					/** link privacy allready checked in displayDetailsById
