@@ -50,7 +50,7 @@ $PGV_BLOCKS["print_block_givn_top10"]["config"]		= array(
  * Print First Names Block
  */
 function print_block_givn_top10($block=true, $config="", $side, $index) {
-	global $GEDCOMS, $pgv_lang, $GEDCOM, $DEBUG, $TEXT_DIRECTION, $PGV_BLOCKS, $ctype, $PGV_IMAGES, $PGV_IMAGE_DIR;
+	global $GEDCOMS, $pgv_lang, $GEDCOM, $TEXT_DIRECTION, $PGV_BLOCKS, $ctype, $PGV_IMAGES, $PGV_IMAGE_DIR;
 
 	if (empty($config)) $config = $PGV_BLOCKS["print_block_givn_top10"]["config"];
 	if (isset($config["infoStyle"])) $infoStyle = $config["infoStyle"];  // "style1" or "style2"

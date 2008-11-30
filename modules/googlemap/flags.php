@@ -110,7 +110,9 @@ if ($action == "ChangeFlag") {
 	//-->
 	</script>
 <?php
-	if ($EDIT_AUTOCLOSE and !$GLOBALS["DEBUG"]) echo "\n<script type=\"text/javascript\">\n<!--\nedit_close();\n//-->\n</script>";
+	if ($EDIT_AUTOCLOSE && !PGV_DEBUG) {
+		echo "\n<script type=\"text/javascript\">\n<!--\nedit_close();\n//-->\n</script>";
+	}
 	echo "<div class=\"center\"><a href=\"javascript:;\" onclick=\"edit_close();\">".$pgv_lang["close_window"]."</a></div><br />\n";
 	print_simple_footer();
 	exit;

@@ -691,7 +691,6 @@ class SearchControllerRoot extends BaseController {
 	 *  Does not work on separate double word surnames
 	 *  Does not work on duplicate code values of the searched text and does not give the correct code
 	 *     Cohen should give DM codes 556000, 456000, 460000 and 560000, in 4.1 we search only on 560000??
-	 *  Print the DM codes at least when the URL contains &DEBUG=1
 	 *
 	 *  The names' Soundex SQL table contains all the soundex values twice
 	 *  The places table contains only one value

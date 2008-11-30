@@ -149,7 +149,7 @@ if ($action=='addrecord') {
 	if (PGV_USER_IS_ADMIN) {
 		$res = dbquery($sql);
 	}
-	if ($EDIT_AUTOCLOSE and !$GLOBALS['DEBUG']) echo "\n<script type=\"text/javascript\">\n<!--\nedit_close();\n//-->\n</script>";
+	if ($EDIT_AUTOCLOSE && !PGV_DEBUG) echo "\n<script type=\"text/javascript\">\n<!--\nedit_close();\n//-->\n</script>";
 	echo "<div class=\"center\"><a href=\"javascript:;\" onclick=\"edit_close();return false;\">".$pgv_lang["close_window"]."</a></div><br />\n";
 	print_simple_footer();
 	exit;
@@ -165,7 +165,7 @@ if ($action=='updaterecord') {
 	if (PGV_USER_IS_ADMIN) {
 		$res = dbquery($sql);
 	}
-	if ($EDIT_AUTOCLOSE and !$GLOBALS["DEBUG"]) echo "\n<script type=\"text/javascript\">\n<!--\nedit_close();\n//-->\n</script>";
+	if ($EDIT_AUTOCLOSE && !PGV_DEBUG) echo "\n<script type=\"text/javascript\">\n<!--\nedit_close();\n//-->\n</script>";
 	echo "<div class=\"center\"><a href=\"javascript:;\" onclick=\"edit_close();return false;\">".$pgv_lang["close_window"]."</a></div><br />\n";
 	print_simple_footer();
 	exit;

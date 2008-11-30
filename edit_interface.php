@@ -311,7 +311,9 @@ else {
 //------------------------------------------------------------------------------
 switch ($action) {
 case 'delete':
-	if ($GLOBALS["DEBUG"]) phpinfo(32);
+	if (PGV_DEBUG) {
+		phpinfo(INFO_VARIABLES);
+	}
 	if (!empty($linenum)) {
 		if ($linenum===0) {
 			if (delete_gedrec($pid)) print $pgv_lang["gedrec_deleted"];
@@ -515,7 +517,9 @@ case 'linkspouse':
 	break;
 //------------------------------------------------------------------------------
 case 'linkfamaction':
-	if ($GLOBALS["DEBUG"]) phpinfo(32);
+	if (PGV_DEBUG) {
+		phpinfo(INFO_VARIABLES);
+	}
 	if (!isset($pgv_changes[$famid."_".$GEDCOM])) $famrec = find_gedcom_record($famid);
 	else $famrec = find_updated_record($famid);
 	$famrec = trim($famrec);
@@ -569,7 +573,9 @@ case 'linkfamaction':
 				if ($spid!=$pid) {
 					//-- change a of the old ids to the new id
 					$famrec = preg_replace("/1 $famtag @$spid@/", "1 $famtag @$pid@", $famrec);
-					if ($GLOBALS["DEBUG"]) print "<pre>$famrec</pre>";
+					if (PGV_DEBUG) {
+						print "<pre>$famrec</pre>";
+					}
 					replace_gedrec($famid, $famrec);
 					//-- remove the FAMS reference from the old husb/wife
 					if (!empty($spid)) {
@@ -577,7 +583,9 @@ case 'linkfamaction':
 						else $srec = find_updated_record($spid);
 						if ($srec) {
 							$srec = preg_replace("/1 $itag @$famid@\s*/", "", $srec);
-							if ($GLOBALS["DEBUG"]) print "<pre>$srec</pre>";
+							if (PGV_DEBUG) {
+								print "<pre>$srec</pre>";
+							}
 							replace_gedrec($spid, $srec);
 						}
 					}
@@ -585,7 +593,9 @@ case 'linkfamaction':
 			}
 			else {
 				$famrec .= "\n1 $famtag @$pid@\n";
-				if ($GLOBALS["DEBUG"]) print "<pre>$famrec</pre>";
+				if (PGV_DEBUG) {
+					print "<pre>$famrec</pre>";
+				}
 				replace_gedrec($famid, $famrec);
 			}
 		}
@@ -673,7 +683,9 @@ case 'addnewsource':
 //------------------------------------------------------------------------------
 //-- create a source record from the incoming variables
 case 'addsourceaction':
-	if ($GLOBALS["DEBUG"]) phpinfo(32);
+	if (PGV_DEBUG) {
+		phpinfo(INFO_VARIABLES);
+	}
 	$newgedrec = "0 @XREF@ SOUR\n";
 	if (isset($_REQUEST['EVEN'])) $EVEN = $_REQUEST['EVEN'];
 	if (!empty($EVEN) && count($EVEN)>0) {
@@ -709,7 +721,9 @@ case 'addsourceaction':
 		$newgedrec .= "1 REPO @$REPO@\n";
 		if (!empty($CALN)) $newgedrec .= "2 CALN $CALN\n";
 	}
-	if ($GLOBALS["DEBUG"]) print "<pre>$newgedrec</pre>";
+	if (PGV_DEBUG) {
+		print "<pre>$newgedrec</pre>";
+	}
 	$xref = append_gedrec($newgedrec);
 	$link = "source.php?sid=$xref&show_changes=yes";
 	if ($xref) {
@@ -771,7 +785,9 @@ case 'addnewrepository':
 //------------------------------------------------------------------------------
 //-- create a repository record from the incoming variables
 case 'addrepoaction':
-	if ($GLOBALS["DEBUG"]) phpinfo(32);
+	if (PGV_DEBUG) {
+		phpinfo(INFO_VARIABLES);
+	}
 	$newgedrec = "0 @XREF@ REPO\n";
 	if (isset($_REQUEST['NAME'])) $NAME = $_REQUEST['NAME'];
 	if (isset($_REQUEST['_HEB'])) $_HEB = $_REQUEST['_HEB'];
@@ -799,7 +815,9 @@ case 'addrepoaction':
 	if (!empty($EMAIL)) $newgedrec .= "1 EMAIL $EMAIL\n";
 	if (!empty($WWW)) $newgedrec .= "1 WWW $WWW\n";
 
-	if ($GLOBALS["DEBUG"]) print "<pre>$newgedrec</pre>";
+	if (PGV_DEBUG) {
+		print "<pre>$newgedrec</pre>";
+	}
 	$xref = append_gedrec($newgedrec);
 	$link = "repo.php?rid=$xref&show_changes=yes";
 	if ($xref) {
@@ -811,8 +829,10 @@ case 'addrepoaction':
 //-- get the new incoming raw gedcom record and store it in the file
 case 'updateraw':
 	if (isset($_REQUEST['newgedrec'])) $newgedrec = $_REQUEST['newgedrec'];
-	if ($GLOBALS["DEBUG"]) phpinfo(32);
-	if ($GLOBALS["DEBUG"]) print "<pre>$newgedrec</pre>";
+	if (PGV_DEBUG) {
+		phpinfo(INFO_VARIABLES);
+		print "<pre>$newgedrec</pre>";
+	}
 	$newgedrec = trim($newgedrec);
 	$success = (!empty($newgedrec)&&(replace_gedrec($pid, $newgedrec, $update_CHAN)));
 	if ($success) print "<br /><br />".$pgv_lang["update_successful"];
@@ -820,8 +840,10 @@ case 'updateraw':
 //------------------------------------------------------------------------------
 //-- reconstruct the gedcom from the incoming fields and store it in the file
 case 'update':
-	if ($GLOBALS["DEBUG"]) print "<pre>$gedrec</pre>";
-	if ($GLOBALS["DEBUG"]) phpinfo(32);
+	if (PGV_DEBUG) {
+		phpinfo(INFO_VARIABLES);
+		print "<pre>$gedrec</pre>";
+	}
 	// add or remove Y
 	if ($text[0]=="Y" or $text[0]=="y") $text[0]="";
 	if (in_array($tag[0], $emptyfacts) && array_unique($text)==array("") && !$islink[0]) $text[0]="Y";
@@ -904,13 +926,17 @@ case 'update':
 		$newged .= trim($gedlines[$i])."\n";
 		$i++;
 	}
-	if ($GLOBALS["DEBUG"]) print "<pre>$newged</pre>";
+	if (PGV_DEBUG) {
+		print "<pre>$newged</pre>";
+	}
 	$success = (replace_gedrec($pid, $newged, $update_CHAN));
 	if ($success) print "<br /><br />".$pgv_lang["update_successful"];
 	break;
 //------------------------------------------------------------------------------
 case 'addchildaction':
-	if ($GLOBALS["DEBUG"]) phpinfo(32);
+	if (PGV_DEBUG) {
+		phpinfo(INFO_VARIABLES);
+	}
 
 	splitSOUR();			// separate SOUR record from the rest
 
@@ -953,7 +979,9 @@ case 'addchildaction':
 		$gedrec = updateRest($gedrec);
 	}
 
-	if ($GLOBALS["DEBUG"]) print "<pre>$gedrec</pre>";
+	if (PGV_DEBUG) {
+		print "<pre>$gedrec</pre>";
+	}
 	$xref = append_gedrec($gedrec);
 	$link = "individual.php?pid=$xref&show_changes=yes";
 	if ($xref) {
@@ -984,7 +1012,9 @@ case 'addchildaction':
 															"1 CHIL @".$child->getXref()."@\n1 CHIL @$xref@",
 															$gedrec);
 			}
-			if ($GLOBALS["DEBUG"]) print "<pre>$gedrec</pre>";
+			if (PGV_DEBUG) {
+				print "<pre>$gedrec</pre>";
+			}
 			replace_gedrec($famid, $gedrec);
 		}
 		$success = true;
@@ -992,7 +1022,9 @@ case 'addchildaction':
 	break;
 //------------------------------------------------------------------------------
 case 'addspouseaction':
-	if ($GLOBALS["DEBUG"]) phpinfo(32);
+	if (PGV_DEBUG) {
+		phpinfo(INFO_VARIABLES);
+	}
 
 	splitSOUR();			// separate SOUR record from the rest
 
@@ -1011,7 +1043,9 @@ case 'addspouseaction':
 		$gedrec = updateRest($gedrec);
 	}
 
-	if ($GLOBALS["DEBUG"]) print "<pre>$gedrec</pre>";
+	if (PGV_DEBUG) {
+		print "<pre>$gedrec</pre>";
+	}
 	$xref = append_gedrec($gedrec);
 	$link = "individual.php?pid=$xref&show_changes=yes";
 	if ($xref) print "<br /><br />".$pgv_lang["update_successful"];
@@ -1044,7 +1078,9 @@ case 'addspouseaction':
 			$famrec = updateRest($famrec);
 		}
 
-		if ($GLOBALS["DEBUG"]) print "<pre>$famrec</pre>";
+		if (PGV_DEBUG) {
+			print "<pre>$famrec</pre>";
+		}
 		$famid = append_gedrec($famrec);
 	}
 	else if (!empty($famid)) {
@@ -1066,7 +1102,9 @@ case 'addspouseaction':
 				$famrec = updateRest($famrec);
 			}
 
-			if ($GLOBALS["DEBUG"]) print "<pre>$famrec</pre>";
+			if (PGV_DEBUG) {
+				print "<pre>$famrec</pre>";
+			}
 			replace_gedrec($famid, $famrec);
 		}
 	}
@@ -1077,7 +1115,9 @@ case 'addspouseaction':
 		**/
 		$gedrec = $spouserec;
 		$gedrec = trim($gedrec) . "\n1 FAMS @$famid@\n";
-		if ($GLOBALS["DEBUG"]) print "<pre>$gedrec</pre>";
+		if (PGV_DEBUG) {
+			print "<pre>$gedrec</pre>";
+		}
 		replace_gedrec($xref, $gedrec);
 	}
 	if (!empty($pid)) {
@@ -1086,14 +1126,18 @@ case 'addspouseaction':
 		else $indirec = find_updated_record($pid);
 		if ($indirec) {
 			$indirec = trim($indirec) . "\n1 FAMS @$famid@\n";
-			if ($GLOBALS["DEBUG"]) print "<pre>$indirec</pre>";
+			if (PGV_DEBUG) {
+				print "<pre>$indirec</pre>";
+			}
 			replace_gedrec($pid, $indirec);
 		}
 	}
 	break;
 //------------------------------------------------------------------------------
 case 'linkspouseaction':
-	if ($GLOBALS["DEBUG"]) phpinfo(32);
+	if (PGV_DEBUG) {
+		phpinfo(INFO_VARIABLES);
+	}
 
 	splitSOUR();			// separate SOUR record from the rest
 
@@ -1124,12 +1168,16 @@ case 'linkspouseaction':
 					$famrec = updateRest($famrec);
 				}
 
-				if ($GLOBALS["DEBUG"]) print "<pre>$famrec</pre>";
+				if (PGV_DEBUG) {
+					print "<pre>$famrec</pre>";
+				}
 				$famid = append_gedrec($famrec);
 			}
 			if ((!empty($famid))&&($famid!="new")) {
 				$gedrec .= "\n1 FAMS @$famid@\n";
-				if ($GLOBALS["DEBUG"]) print "<pre>$gedrec</pre>";
+				if (PGV_DEBUG) {
+					print "<pre>$gedrec</pre>";
+				}
 				replace_gedrec($spid, $gedrec);
 			}
 			if (!empty($pid)) {
@@ -1138,7 +1186,9 @@ case 'linkspouseaction':
 				else $indirec = find_updated_record($pid);
 				if (!empty($indirec)) {
 					$indirec = trim($indirec) . "\n1 FAMS @$famid@\n";
-					if ($GLOBALS["DEBUG"]) print "<pre>$indirec</pre>";
+					if (PGV_DEBUG) {
+						print "<pre>$indirec</pre>";
+					}
 					replace_gedrec($pid, $indirec);
 				}
 			}
@@ -1147,7 +1197,9 @@ case 'linkspouseaction':
 	break;
 //------------------------------------------------------------------------------
 case 'addnewparentaction':
-	if ($GLOBALS["DEBUG"]) phpinfo(32);
+	if (PGV_DEBUG) {
+		phpinfo(INFO_VARIABLES);
+	}
 
 	splitSOUR();			// separate SOUR record from the rest
 
@@ -1166,7 +1218,9 @@ case 'addnewparentaction':
 		$gedrec = updateRest($gedrec);
 	}
 
-	if ($GLOBALS["DEBUG"]) print "<pre>$gedrec</pre>";
+	if (PGV_DEBUG) {
+		print "<pre>$gedrec</pre>";
+	}
 	$xref = append_gedrec($gedrec);
 	$link = "individual.php?pid=$xref&show_changes=yes";
 	if ($xref) print "<br /><br />".$pgv_lang["update_successful"];
@@ -1196,7 +1250,9 @@ case 'addnewparentaction':
 			$famrec = updateRest($famrec);
 		}
 
-		if ($GLOBALS["DEBUG"]) print "<pre>$famrec</pre>";
+		if (PGV_DEBUG) {
+			print "<pre>$famrec</pre>";
+		}
 		$famid = append_gedrec($famrec);
 	}
 	else if (!empty($famid)) {
@@ -1218,7 +1274,9 @@ case 'addnewparentaction':
 				$famrec = updateRest($famrec);
 			}
 
-			if ($GLOBALS["DEBUG"]) print "<pre>$famrec</pre>";
+			if (PGV_DEBUG) {
+				print "<pre>$famrec</pre>";
+			}
 			replace_gedrec($famid, $famrec);
 		}
 	}
@@ -1230,7 +1288,9 @@ case 'addnewparentaction':
 			**/
 			$gedrec = $spouserec;
 			$gedrec = trim($gedrec) . "\n1 FAMS @$famid@\n";
-			if ($GLOBALS["DEBUG"]) print "<pre>$gedrec</pre>";
+			if (PGV_DEBUG) {
+				print "<pre>$gedrec</pre>";
+			}
 			replace_gedrec($xref, $gedrec);
 	}
 	if (!empty($pid)) {
@@ -1242,7 +1302,9 @@ case 'addnewparentaction':
 			$ct = preg_match("/1 FAMC @$famid@/", $indirec);
 			if ($ct==0) {
 				$indirec = trim($indirec) . "\n1 FAMC @$famid@\n";
-				if ($GLOBALS["DEBUG"]) print "<pre>$indirec</pre>";
+				if (PGV_DEBUG) {
+					print "<pre>$indirec</pre>";
+				}
 				replace_gedrec($pid, $indirec);
 			}
 		}
@@ -1250,8 +1312,10 @@ case 'addnewparentaction':
 	break;
 //------------------------------------------------------------------------------
 case 'deleteperson':
-	if ($GLOBALS["DEBUG"]) phpinfo(32);
-	if ($GLOBALS["DEBUG"]) print "<pre>$gedrec</pre>";
+	if (PGV_DEBUG) {
+		phpinfo(INFO_VARIABLES);
+		print "<pre>$gedrec</pre>";
+	}
 	if (!checkFactEdit($gedrec)) {
 		print "<br />".$pgv_lang["privacy_prevented_editing"];
 		if (!empty($pid)) print "<br />".$pgv_lang["privacy_not_granted"]." pid $pid.";
@@ -1263,8 +1327,10 @@ case 'deleteperson':
 	break;
 //------------------------------------------------------------------------------
 case 'deletefamily':
-	if ($GLOBALS["DEBUG"]) phpinfo(32);
-	if ($GLOBALS["DEBUG"]) print "<pre>$gedrec</pre>";
+	if (PGV_DEBUG) {
+		phpinfo(INFO_VARIABLES);
+		print "<pre>$gedrec</pre>";
+	}
 	if (!checkFactEdit($gedrec)) {
 		print "<br />".$pgv_lang["privacy_prevented_editing"];
 		if (!empty($pid)) print "<br />".$pgv_lang["privacy_not_granted"]." pid $pid.";
@@ -1277,8 +1343,10 @@ case 'deletefamily':
 	break;
 //------------------------------------------------------------------------------
 case 'deletesource':
-	if ($GLOBALS["DEBUG"]) phpinfo(32);
-	if ($GLOBALS["DEBUG"]) print "<pre>$gedrec</pre>";
+	if (PGV_DEBUG) {
+		phpinfo(INFO_VARIABLES);
+		print "<pre>$gedrec</pre>";
+	}
 	if (!empty($gedrec)) {
 		$success = true;
 		$query = "SOUR @$pid@";
@@ -1309,7 +1377,9 @@ case 'deletesource':
 					}
 				}
 			}
-			if ($GLOBALS["DEBUG"]) print "<pre>$newrec</pre>";
+			if (PGV_DEBUG) {
+				print "<pre>$newrec</pre>";
+			}
 			$success = $success && replace_gedrec($key, $newrec);
 		}
 		$myfamlist = search_fams($query);
@@ -1335,7 +1405,9 @@ case 'deletesource':
 					}
 				}
 			}
-			if ($GLOBALS["DEBUG"]) print "<pre>$newrec</pre>";
+			if (PGV_DEBUG) {
+				print "<pre>$newrec</pre>";
+			}
 			$success = $success && replace_gedrec($key, $newrec);
 		}
 		if ($success) {
@@ -1346,8 +1418,10 @@ case 'deletesource':
 	break;
 //------------------------------------------------------------------------------
 case 'deleterepo':
-	if ($GLOBALS["DEBUG"]) phpinfo(32);
-	if ($GLOBALS["DEBUG"]) print "<pre>$gedrec</pre>";
+	if (PGV_DEBUG) {
+		phpinfo(INFO_VARIABLES);
+		print "<pre>$gedrec</pre>";
+	}
 	if (!empty($gedrec)) {
 		$success = true;
 		$query = "REPO @$pid@";
@@ -1377,7 +1451,9 @@ case 'deleterepo':
 					}
 				}
 			}
-			if ($GLOBALS["DEBUG"]) print "<pre>$newrec</pre>";
+			if (PGV_DEBUG) {
+				print "<pre>$newrec</pre>";
+			}
 			$success = $success && replace_gedrec($key, $newrec);
 		}
 		if ($success) {
@@ -1439,8 +1515,10 @@ case 'copy':
 //------------------------------------------------------------------------------
 case 'paste':
 	$gedrec .= "\n".$_SESSION["clipboard"][$fact]["factrec"]."\n";
-	if ($GLOBALS["DEBUG"]) phpinfo(32);
-	if ($GLOBALS["DEBUG"]) print "<pre>$gedrec</pre>";
+	if (PGV_DEBUG) {
+		phpinfo(INFO_VARIABLES);
+		print "<pre>$gedrec</pre>";
+	}
 	$success = replace_gedrec($pid, $gedrec);
 	if ($success) print "<br /><br />".$pgv_lang["update_successful"];
 	break;
@@ -1468,7 +1546,9 @@ case 'reset_media_update': // Reset sort using popup
 
 //------------------------------------------------------------------------------
 case 'reorder_media_update': // Update sort using popup
-	if ($GLOBALS["DEBUG"]) phpinfo(32);
+	if (PGV_DEBUG) {
+		phpinfo(INFO_VARIABLES);
+	}
 	if (isset($_REQUEST['order1'])) $order1 = $_REQUEST['order1'];
 	$lines = explode("\n", $gedrec);
 	$newgedrec = "";
@@ -1478,7 +1558,9 @@ case 'reorder_media_update': // Update sort using popup
 	foreach($order1 as $m_media=>$num) {
 		$newgedrec .= "1 _PGV_OBJS @".$m_media."@\n";
 	}
-	if ($GLOBALS["DEBUG"]) print "<pre>$newgedrec</pre>";
+	if (PGV_DEBUG) {
+		print "<pre>$newgedrec</pre>";
+	}
 	$success = (replace_gedrec($pid, $newgedrec));
 	if ($success) print "<br />".$pgv_lang["update_successful"]."<br /><br />";
 		// $mediaordsuccess='yes';
@@ -1517,7 +1599,9 @@ case 'al_reset_media_update': // Reset sort using Album Page
 
 //------------------------------------------------------------------------------
 case 'al_reorder_media_update': // Update sort using Album Page
-	if ($GLOBALS["DEBUG"]) phpinfo(32);
+	if (PGV_DEBUG) {
+		phpinfo(INFO_VARIABLES);
+	}
 	if (isset($_REQUEST['order1'])) $order1 = $_REQUEST['order1'];
 
 	function SwapArray($Array){
@@ -1537,8 +1621,10 @@ case 'al_reorder_media_update': // Update sort using Album Page
 	foreach($order2 as $m_media=>$num) {
 		$newgedrec .= "1 _PGV_OBJS @".$m_media."@\n";
 	}
-	if ($GLOBALS["DEBUG"]) print "<pre>$newgedrec</pre>";
-		$success = (replace_gedrec($pid, $newgedrec));
+	if (PGV_DEBUG) {
+		print "<pre>$newgedrec</pre>";
+	}
+	$success = (replace_gedrec($pid, $newgedrec));
 	if ($success) {
 		if (!file_exists("modules/googlemap/defaultconfig.php")) {
 			$tabno = "7";
@@ -1896,7 +1982,9 @@ case 'changefamily_update':
 	break;
 //------------------------------------------------------------------------------
 case 'reorder_update':
-	if ($GLOBALS["DEBUG"]) phpinfo(32);
+	if (PGV_DEBUG) {
+		phpinfo(INFO_VARIABLES);
+	}
 	if (isset($_REQUEST['order'])) $order = $_REQUEST['order'];
 	asort($order);
 	reset($order);
@@ -1905,11 +1993,15 @@ case 'reorder_update':
 		// move each child subrecord to the bottom, in the order specified
 		$subrec = get_sub_record(1, "1 CHIL @".$child."@", $gedrec);
 		$subrec = trim($subrec,"\n");
-		if ($GLOBALS["DEBUG"]) echo "<pre>[".$subrec."]</pre>";
+		if (PGV_DEBUG) {
+			echo "<pre>[".$subrec."]</pre>";
+		}
 		$newgedrec = str_replace($subrec,"", $newgedrec);
 		$newgedrec .= "\n".$subrec."\n";
 	}
-	if ($GLOBALS["DEBUG"]) print "<pre>$newgedrec</pre>";
+	if (PGV_DEBUG) {
+		print "<pre>$newgedrec</pre>";
+	}
 	$success = (replace_gedrec($pid, $newgedrec));
 	if ($success) print "<br /><br />".$pgv_lang["update_successful"];
 	break;
@@ -1965,7 +2057,9 @@ case 'reorder_fams':
 	break;
 //------------------------------------------------------------------------------
 case 'reorder_fams_update':
-	if ($GLOBALS["DEBUG"]) phpinfo(32);
+	if (PGV_DEBUG) {
+		phpinfo(INFO_VARIABLES);
+	}
 	if (isset($_REQUEST['order'])) $order = $_REQUEST['order'];
 	asort($order);
 	reset($order);
@@ -1977,9 +2071,13 @@ case 'reorder_fams_update':
 	foreach($order as $famid=>$num) {
 		$newgedrec .= "1 FAMS @".$famid."@\n";
 	}
-	if ($GLOBALS["DEBUG"]) print "<pre>$newgedrec</pre>";
+	if (PGV_DEBUG) {
+		print "<pre>$newgedrec</pre>";
+	}
 	$success = (replace_gedrec($pid, $newgedrec));
-	if ($success) print "<br /><br />".$pgv_lang["update_successful"];
+	if ($success) {
+		print "<br /><br />".$pgv_lang["update_successful"];
+	}
 	break;
 //------------------------------------------------------------------------------
 //-- the following section provides a hook for modules
@@ -2002,7 +2100,7 @@ if (empty($goto) || empty($link))
 	$link='';
 //------------------------------------------------------------------------------
 // autoclose window when update successful
-if ($success && $EDIT_AUTOCLOSE && !$GLOBALS["DEBUG"] ) {
+if ($success && $EDIT_AUTOCLOSE && !PGV_DEBUG) {
 	if ($action=="copy") print "\n<script type=\"text/javascript\">\n<!--\nwindow.close();\n//-->\n</script>";
 	else print "\n<script type=\"text/javascript\">\n<!--\nedit_close('{$link}');\n//-->\n</script>";
 }

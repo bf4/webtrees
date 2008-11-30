@@ -50,9 +50,6 @@ require_once 'includes/functions_edit.php';
 require_once 'includes/functions_import.php';
 require_once 'includes/functions_mediadb.php';
 
-if (isset($_REQUEST['DEBUG'])) $DEBUG = $_REQUEST['DEBUG'];
-else $DEBUG = false;
-
 /**
  * This functions checks if an existing directory is physically writeable
  * The standard PHP function only checks for the R/O attribute and doesn't

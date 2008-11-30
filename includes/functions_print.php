@@ -623,7 +623,7 @@ function print_simple_header($title) {
 function print_footer() {
 	global $without_close, $pgv_lang, $view, $DBTYPE;
 	global $SHOW_STATS, $SCRIPT_NAME, $QUERY_STRING, $footerfile, $print_footerfile, $GEDCOMS, $ALLOW_CHANGE_GEDCOM, $printlink;
-	global $PGV_IMAGE_DIR, $theme_name, $PGV_IMAGES, $TEXT_DIRECTION, $footer_count, $DEBUG;
+	global $PGV_IMAGE_DIR, $theme_name, $PGV_IMAGES, $TEXT_DIRECTION, $footer_count;
 	
 	$view = safe_get('view');
 	
@@ -666,7 +666,7 @@ function print_simple_footer() {
 	print "<br /><br /><div align=\"center\" style=\"width: 99%;\">";
 	print contact_links();
 	print '<a href="'.PGV_PHPGEDVIEW_URL.'" target="_blank"><img src="'.$PGV_IMAGE_DIR.'/'.$PGV_IMAGES['gedview']['other'].'" border="0" alt="'.PGV_PHPGEDVIEW." ".PGV_VERSION_TEXT.'" title="'.PGV_PHPGEDVIEW." ".PGV_VERSION_TEXT.'" /></a><br />';
-	if ($SHOW_STATS || isset($DEBUG) && $DEBUG==true) {
+	if ($SHOW_STATS || PGV_DEBUG) {
 		print_execution_stats();
 	}
 	print "</div></body></html>";
@@ -1580,7 +1580,7 @@ function print_theme_dropdown($style=0) {
  * @param string $text to be printed
  */
 function PrintReady($text, $InHeaders=false, $trim=true) {
-	global $query, $action, $firstname, $lastname, $place, $year, $DEBUG;
+	global $query, $action, $firstname, $lastname, $place, $year;
 	global $TEXT_DIRECTION_array, $TEXT_DIRECTION, $USE_RTL_FUNCTIONS;
 	// Check whether Search page highlighting should be done or not
 	$HighlightOK = false;
