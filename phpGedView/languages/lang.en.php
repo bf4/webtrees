@@ -342,7 +342,6 @@ $pgv_lang["login_head"] 			= "PhpGedView User Login";
 $pgv_lang["for_support"]			= "For technical support and information contact";
 $pgv_lang["for_contact"]			= "For help with genealogy questions contact";
 $pgv_lang["for_all_contact"]		= "For technical support or genealogy questions, please contact";
-$pgv_lang["build_error"]			= "GEDCOM file has been updated.";
 $pgv_lang["choose_username"]		= "Desired user name";
 $pgv_lang["username"]				= "User name";
 $pgv_lang["invalid_username"]		= "User name contains invalid characters";
@@ -766,7 +765,6 @@ $pgv_lang["cir"]					= "circa";
 $pgv_lang["apx"]					= "approx.";
 
 //-- Admin File Messages
-$pgv_lang["rebuild_indexes"]		= "Rebuild indexes";
 $pgv_lang["password_mismatch"]		= "Passwords do not match.";
 $pgv_lang["enter_username"] 		= "You must enter a user name.";
 $pgv_lang["enter_password"] 		= "You must enter a password.";

@@ -169,8 +169,9 @@ echo "\n\t<br />";
 print_help_link("preview_help", "qm");
 echo "<a href=\"$SCRIPT_NAME?view=preview&amp;".get_query_string()."\">".$pgv_lang["print_preview"]."</a>";
 echo "<br />";
-if ($SHOW_STATS || (isset($DEBUG) && ($DEBUG==true))) print_execution_stats();
-if ($buildindex) echo " ".$pgv_lang["build_error"]."  <a href=\"editgedcoms.php\">".$pgv_lang["rebuild_indexes"]."</a>\n";
+if ($SHOW_STATS || PGV_DEBUG) {
+	print_execution_stats();
+}
 if (exists_pending_change()) {
 	echo "<br />".$pgv_lang["changes_exist"]." <a href=\"javascript:;\" onclick=\"window.open('edit_changes.php','_blank','width=600,height=500,resizable=1,scrollbars=1'); return false;\">".$pgv_lang["accept_changes"]."</a>\n";
 }

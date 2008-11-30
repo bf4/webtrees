@@ -44,6 +44,8 @@ VERSION 4.2.
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change	codes and comments
 ----------------------------------------------------------------------------------------
+-$pgv_lang["build_error"]							30 Nov 2008				D
+-$pgv_lang["rebuild_indexes"]					30 Nov 2008				D
 *$pgv_lang["stplnumbers"]							23 Nov 2008				W
 *$pgv_lang["statnnames"]							22 Nov 2008				W
 *$pgv_lang["statnfam"]								22 Nov 2008				W
