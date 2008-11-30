@@ -80,7 +80,7 @@ if ($MULTI_MEDIA) {
 	function print_random_media($block = true, $config="", $side, $index) {
 		global $pgv_lang, $GEDCOM, $foundlist, $MULTI_MEDIA, $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES;
 		global $MEDIA_EXTERNAL, $MEDIA_DIRECTORY, $SHOW_SOURCES;
-		global $MEDIATYPE, $THUMBNAIL_WIDTH, $USE_MEDIA_VIEWER, $DEBUG;
+		global $MEDIATYPE, $THUMBNAIL_WIDTH, $USE_MEDIA_VIEWER;
 		global $PGV_BLOCKS, $ctype, $action;
 		global $PGV_IMAGE_DIR, $PGV_IMAGES;
 
@@ -104,28 +104,28 @@ if ($MULTI_MEDIA) {
 			while($i<40) {
 				$error = false;
 				$value = array_rand($medialist);
-				if (isset($DEBUG)&&($DEBUG==true)) {
+				if (PGV_DEBUG) {
 					print "<br />";print_r($medialist[$value]);print "<br />";
 					print "Trying ".$medialist[$value]["XREF"]."<br />";
 				}
 				$links = $medialist[$value]["LINKS"];
 				$disp = ($medialist[$value]["EXISTS"]>0) && $medialist[$value]["LINKED"] && $medialist[$value]["CHANGE"]!="delete" ;
-				if (isset($DEBUG)&&($DEBUG==true) && !$disp && !$error) {$error = true; print "<span class=\"error\">".$medialist[$value]["XREF"]." File does not exist, or is not linked to anyone, or is marked for deletion.</span><br />";}
+				if (PGV_DEBUG) && !$disp && !$error) {$error = true; print "<span class=\"error\">".$medialist[$value]["XREF"]." File does not exist, or is not linked to anyone, or is marked for deletion.</span><br />";}
 
 				$disp &= displayDetailsById($medialist[$value]["XREF"], "OBJE");
 				$disp &= !FactViewRestricted($medialist[$value]["XREF"], $medialist[$value]["GEDCOM"]);
 
-				if (isset($DEBUG)&&($DEBUG==true) && !$disp && !$error) {$error = true; print "<span class=\"error\">".$medialist[$value]["XREF"]." Failed to pass privacy</span><br />";}
+				if (PGV_DEBUG) && !$disp && !$error) {$error = true; print "<span class=\"error\">".$medialist[$value]["XREF"]." Failed to pass privacy</span><br />";}
 
 				$isExternal = isFileExternal($medialist[$value]["FILE"]);
 
 				if ($block && !$isExternal) $disp &= ($medialist[$value]["THUMBEXISTS"]>0);
-				if (isset($DEBUG)&&($DEBUG==true) && !$disp && !$error) {$error = true; print "<span class=\"error\">".$medialist[$value]["XREF"]." thumbnail file could not be found</span><br />";}
+				if (PGV_DEBUG) && !$disp && !$error) {$error = true; print "<span class=\"error\">".$medialist[$value]["XREF"]." thumbnail file could not be found</span><br />";}
 
 				// Filter according to format and type  (Default: unless configured otherwise, don't filter)
 				if (!empty($medialist[$value]["FORM"]) && isset($config["filter_".$medialist[$value]["FORM"]]) && $config["filter_".$medialist[$value]["FORM"]]!="yes") $disp = false;
 				if (!empty($medialist[$value]["TYPE"]) && isset($config["filter_".$medialist[$value]["TYPE"]]) && $config["filter_".$medialist[$value]["TYPE"]]!="yes") $disp = false;
-				if (isset($DEBUG)&&($DEBUG==true) && !$disp && !$error) {$error = true; print "<span class=\"error\">".$medialist[$value]["XREF"]." failed Format or Type filters</span><br />";}
+				if (PGV_DEBUG) && !$disp && !$error) {$error = true; print "<span class=\"error\">".$medialist[$value]["XREF"]." failed Format or Type filters</span><br />";}
 
 				if ($disp && count($links) != 0){
 					/** link privacy allready checked in displayDetailsById
@@ -136,7 +136,7 @@ if ($MULTI_MEDIA) {
 						// $disp &= $type!="SOUR";
 						$disp &= displayDetailsById($key, $type);
 					}
-					if (isset($DEBUG)&&($DEBUG==true)&&!$disp && !$error) {$error = true; print "<span class=\"error\">".$medialist[$value]["XREF"]." failed link privacy</span><br />";}
+					if (PGV_DEBUG && !$disp && !$error) {$error = true; print "<span class=\"error\">".$medialist[$value]["XREF"]." failed link privacy</span><br />";}
 					*/
 					if ($disp && $filter!="all") {
 						// Apply filter criteria
@@ -150,7 +150,7 @@ if ($MULTI_MEDIA) {
 								$objectRefLevel = $match2[1];
 								if ($filter=="indi" && $objectRefLevel!="1") $disp = false;
 								if ($filter=="event" && $objectRefLevel=="1") $disp = false;
-								if (isset($DEBUG)&&($DEBUG==true)&&!$disp && !$error) {$error = true; print "<span class=\"error\">".$medialist[$value]["XREF"]." failed to pass config filter</span><br />";}
+								if (PGV_DEBUG && !$disp && !$error) {$error = true; print "<span class=\"error\">".$medialist[$value]["XREF"]." failed to pass config filter</span><br />";}
 							}
 							else $disp = false;
 						}
@@ -162,7 +162,7 @@ if ($MULTI_MEDIA) {
 				}
 				//-- otherwise remove the private media item from the list
 				else {
-					if (isset($DEBUG)&&($DEBUG==true)) print "<span class=\"error\">".$medialist[$value]["XREF"]." Will not be shown</span><br />";
+					if (PGV_DEBUG) print "<span class=\"error\">".$medialist[$value]["XREF"]." Will not be shown</span><br />";
 					unset($medialist[$value]);
 				}
 				//-- if there are no more media items, then try to get some more
