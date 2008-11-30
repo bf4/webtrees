@@ -35,9 +35,6 @@ require_once 'includes/class_gedcomrecord.php';
 require_once 'includes/class_serviceclient.php';
 
 class Repository extends GedcomRecord {
-	var $sourcelist     =null;
-	var $repositoryfacts=null;
-
 	// Get an instance of a Repository.  We either specify
 	// an XREF (in the current gedcom), or we can provide a row
 	// from the database (if we anticipate the record hasn't
