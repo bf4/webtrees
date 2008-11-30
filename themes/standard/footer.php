@@ -43,7 +43,10 @@ if (!isset($without_close)) echo "</div> <!-- closing div id=\"content\" -->\n";
 <?php print_help_link("preview_help", "qm"); ?>
 <a href="<?php echo $SCRIPT_NAME."?view=preview&amp;".get_query_string(); ?>"><?php echo $pgv_lang["print_preview"];?></a>
 <br />
-<?php if ($SHOW_STATS || (isset($DEBUG) && ($DEBUG==true))) print_execution_stats();
+<?php
+if ($SHOW_STATS || PGV_DEBUG) {
+	print_execution_stats();
+}
 if (exists_pending_change()) {?>
 	<br />
 	<?php echo $pgv_lang["changes_exist"]; ?>
