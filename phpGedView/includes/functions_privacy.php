@@ -75,7 +75,6 @@ function is_dead($indirec, $cyear="", $import=false) {
 	global $HIDE_LIVE_PEOPLE;
 	global $PRIVACY_BY_YEAR;
 	global $pgv_lang;
-	global $BUILDING_INDEX;
 	global $GEDCOM;
 
 	$ct = preg_match("/0 @(.*)@ INDI/", $indirec, $match);

@@ -33,9 +33,9 @@ if (!defined('PGV_PHPGEDVIEW')) {
 
 define('PGV_FUNCTIONS_PHP', '');
 
-require_once('includes/class_mutex.php');
-require_once('includes/class_media.php');
-require_once('includes/functions_UTF8.php');
+require_once 'includes/class_mutex.php';
+require_once 'includes/class_media.php';
+require_once 'includes/functions_UTF8.php';
 
 if (PGV_DEBUG) {
 	$ERROR_LEVEL = 2;
@@ -57,7 +57,7 @@ if (PGV_DEBUG) {
  */
 function check_db($ignore_previous=false) {
 	global $DBTYPE, $DBHOST, $DBPORT, $DBUSER, $DBPASS, $DBNAME, $DBCONN, $TOTAL_QUERIES, $PHP_SELF, $DBPERSIST, $CONFIGURED;
-	global $INDEX_DIRECTORY, $BUILDING_INDEX, $DB_UTF8_COLLATION;
+	global $INDEX_DIRECTORY, $DB_UTF8_COLLATION;
 
 	if (!$ignore_previous) {
 		if ((is_object($DBCONN)) && (!DB::isError($DBCONN)))
