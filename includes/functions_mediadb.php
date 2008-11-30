@@ -2065,7 +2065,7 @@ function PrintMediaLinks($links, $size = "small") {
 }
 
 function get_media_id_from_file($filename){
-	global $TBLPREFIX, $BUILDING_INDEX, $DBCONN, $GEDCOMS, $DBCONN;
+	global $TBLPREFIX, $DBCONN, $GEDCOMS, $DBCONN;
 	$dbq = "select m_media from ".$TBLPREFIX."media where m_file ".PGV_DB_LIKE." '%".$DBCONN->escapeSimple($filename)."'";
 	$dbr = dbquery($dbq);
 	$mid = $dbr->fetchRow();
@@ -2073,7 +2073,7 @@ function get_media_id_from_file($filename){
 }
 //returns an array of rows from the database containing the Person ID's for the people associated with this picture
 function get_media_relations($mid){
-	global $TBLPREFIX, $BUILDING_INDEX, $DBCONN, $GEDCOMS, $GEDCOM, $medialist;
+	global $TBLPREFIX, $DBCONN, $GEDCOMS, $GEDCOM, $medialist;
 
 	//-- check in the medialist cache first
 	$firstChar = substr($mid, 0, 1);
@@ -2101,7 +2101,7 @@ function get_media_relations($mid){
 }
 //Basically calls the get_media_relations method but it uses a file name rather than a media id.
 function get_media_relations_with_file_name($filename){
-global $TBLPREFIX, $BUILDING_INDEX, $DBCONN, $GEDCOMS, $GEDCOM;
+global $TBLPREFIX, $DBCONN, $GEDCOMS, $GEDCOM;
 	$dbq = "select m_media from ".$TBLPREFIX."media where m_file='".$filename."' and m_gedfile='".$GEDCOMS[$GEDCOM]['id']."'";
 	$dbr = dbquery($dbq);
 	if (isset($dbr)){
