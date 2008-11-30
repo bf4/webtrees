@@ -368,7 +368,7 @@ function displayDetailsById($pid, $type = "INDI") {
 	global $PRIV_PUBLIC, $PRIV_USER, $PRIV_NONE, $PRIV_HIDE, $USE_RELATIONSHIP_PRIVACY, $CHECK_MARRIAGE_RELATIONS, $MAX_RELATION_PATH_LENGTH;
 	global $global_facts, $person_privacy, $user_privacy, $HIDE_LIVE_PEOPLE, $GEDCOM, $SHOW_DEAD_PEOPLE, $MAX_ALIVE_AGE, $PRIVACY_BY_YEAR;
 	global $PRIVACY_CHECKS, $PRIVACY_BY_RESN, $SHOW_SOURCES, $SHOW_LIVING_NAMES;
-	global $indilist, $GEDCOMS, $SQL_LOG, $INDEX_DIRECTORY;
+	global $indilist, $GEDCOMS, $INDEX_DIRECTORY;
 
 	static $privacy_cache = array();
 
@@ -385,8 +385,8 @@ function displayDetailsById($pid, $type = "INDI") {
 	if (!isset($PRIVACY_CHECKS)) $PRIVACY_CHECKS = 1;
 	else $PRIVACY_CHECKS++;
 
-	if (!empty($SQL_LOG)) {
-		$fp = fopen($INDEX_DIRECTORY."/sql_log.txt", "a");
+	if (PGV_DEBUG_PRIV) {
+		$fp = fopen($INDEX_DIRECTORY."/priv_log.txt", "a");
 		$backtrace = debug_backtrace();
 		$temp = "";
 		if (isset($backtrace[2])) $temp .= basename($backtrace[2]["file"])." (".$backtrace[2]["line"].")";

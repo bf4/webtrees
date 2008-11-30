@@ -127,7 +127,6 @@ class research_assistant extends ra_functions {
 					return $out;
 				}
 
-                // DEBUG 
                 //die("Task id: " . $taskid);
 				$sql = "INSERT INTO ".$TBLPREFIX."tasks (t_id, t_fr_id, t_title, t_description, t_startdate, t_username) "."VALUES ('".$DBCONN->escapeSimple($taskid)."', '".$DBCONN->escapeSimple($_POST["folder"])."', '".$DBCONN->escapeSimple($_POST["title"])."', '".$DBCONN->escapeSimple($_POST["desc"])."', '".time()."','".$DBCONN->escapeSimple($_POST['Users'])."')";
 				$res = dbquery($sql);
@@ -525,7 +524,6 @@ class research_assistant extends ra_functions {
 			return $out;
 		}
 
-        // DEBUG 
 		$sql = "INSERT INTO ".$TBLPREFIX."tasks (t_id, t_fr_id, t_title, t_description, t_startdate) "."VALUES ('".$DBCONN->escapeSimple($taskid)."', '".$DBCONN->escapeSimple($folderId)."', '".$DBCONN->escapeSimple($task->getName())."', '".$DBCONN->escapeSimple($task->getDescription())."', '".time()."')";
 		$res = dbquery($sql);
 

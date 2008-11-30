@@ -365,7 +365,7 @@ function getTop10Surnames() {
  */
 function getRecentChanges() {
 	global $pgv_lang, $factarray, $month, $year, $day, $HIDE_LIVE_PEOPLE, $SHOW_ID_NUMBERS, $ctype, $TEXT_DIRECTION;
-	global $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $DEBUG, $ASC, $IGNORE_FACTS, $IGNORE_YEAR, $TOTAL_QUERIES, $LAST_QUERY, $PGV_BLOCKS, $SHOW_SOURCES;
+	global $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $ASC, $IGNORE_FACTS, $IGNORE_YEAR, $TOTAL_QUERIES, $LAST_QUERY, $PGV_BLOCKS, $SHOW_SOURCES;
 	global $objectlist, $SERVER_URL;
 
 	if ($ctype=="user") $filter = "living";
@@ -474,7 +474,7 @@ function getRecentChanges() {
 function getRandomMedia() {
 	global $pgv_lang, $GEDCOM, $foundlist, $MULTI_MEDIA, $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES;
 	global $MEDIA_EXTERNAL, $MEDIA_DIRECTORY, $SHOW_SOURCES;
-	global $MEDIATYPE, $THUMBNAIL_WIDTH, $USE_MEDIA_VIEWER, $DEBUG;
+	global $MEDIATYPE, $THUMBNAIL_WIDTH, $USE_MEDIA_VIEWER;
 	global $PGV_BLOCKS, $ctype, $action;
 	global $PGV_IMAGE_DIR, $PGV_IMAGES;
 	if (empty($config)) $config = $PGV_BLOCKS["print_random_media"]["config"];
@@ -500,28 +500,18 @@ function getRandomMedia() {
 		while($i<40) {
 			$error = false;
 			$value = array_rand($medialist);
-			//if (isset($DEBUG)&&($DEBUG==true)) {
-			//	print "<br />";print_r($medialist[$value]);print "<br />";
-			//	print "Trying ".$medialist[$value]["XREF"]."<br />\n";
-			//}
 			$links = $medialist[$value]["LINKS"];
 			$disp = ($medialist[$value]["EXISTS"]>0) && $medialist[$value]["LINKED"] && $medialist[$value]["CHANGE"]!="delete" ;
-			//if (isset($DEBUG)&&($DEBUG==true) && !$disp && !$error) {$error = true; print "<span class=\"error\">".$medialist[$value]["XREF"]." File does not exist, or is not linked to anyone, or is marked for deletion.</span><br />\n";}
-
 			$disp &= displayDetailsById($value["XREF"], "OBJE");
 			$disp &= !FactViewRestricted($value["XREF"], $value["GEDCOM"]);
-
-			//if (isset($DEBUG)&&($DEBUG==true) && !$disp && !$error) {$error = true; print "<span class=\"error\">".$medialist[$value]["XREF"]." Failed to pass privacy</span><br />\n";}
 
 			$isExternal = isFileExternal($medialist[$value]["FILE"]);
 
 			if (!$isExternal) $disp &= ($medialist[$value]["THUMBEXISTS"]>0);
-			//if (isset($DEBUG)&&($DEBUG==true) && !$disp && !$error) {$error = true; print "<span class=\"error\">".$medialist[$value]["XREF"]." thumbnail file could not be found</span><br />\n";}
 
 			// Filter according to format and type  (Default: unless configured otherwise, don't filter)
 			if (!empty($medialist[$value]["FORM"]) && isset($config["filter_".$medialist[$value]["FORM"]]) && $config["filter_".$medialist[$value]["FORM"]]!="yes") $disp = false;
 			if (!empty($medialist[$value]["TYPE"]) && isset($config["filter_".$medialist[$value]["TYPE"]]) && $config["filter_".$medialist[$value]["TYPE"]]!="yes") $disp = false;
-			//if (isset($DEBUG)&&($DEBUG==true) && !$disp && !$error) {$error = true; print "<span class=\"error\">".$medialist[$value]["XREF"]." failed Format or Type filters</span><br />\n";}
 
 			if ($disp && count($links) != 0){
 				foreach($links as $key=>$type) {
@@ -531,7 +521,6 @@ function getRandomMedia() {
 					// $disp &= $type!="SOUR";
 					$disp &= displayDetailsById($key, $type);
 				}
-				//if (isset($DEBUG)&&($DEBUG==true)&&!$disp && !$error) {$error = true; print "<span class=\"error\">".$medialist[$value]["XREF"]." failed link privacy</span><br />\n";}
 				if ($disp && $filter!="all") {
 					// Apply filter criteria
 					$ct = preg_match("/0\s(@.*@)\sOBJE/", $medialist[$value]["GEDCOM"], $match);
@@ -541,7 +530,6 @@ function getRandomMedia() {
 						$objectRefLevel = $match2[1];
 						if ($filter=="indi" && $objectRefLevel!="1") $disp = false;
 						if ($filter=="event" && $objectRefLevel=="1") $disp = false;
-						//if (isset($DEBUG)&&($DEBUG==true)&&!$disp && !$error) {$error = true; print "<span class=\"error\">".$medialist[$value]["XREF"]." failed to pass config filter</span><br />\n";}
 					}
 					else $disp = false;
 				}
@@ -552,7 +540,6 @@ function getRandomMedia() {
 			}
 			//-- otherwise remove the private media item from the list
 			else {
-				//if (isset($DEBUG)&&($DEBUG==true)) print "<span class=\"error\">".$medialist[$value]["XREF"]." Will not be shown</span><br />\n";
 				unset($medialist[$value]);
 			}
 			//-- if there are no more media items, then try to get some more

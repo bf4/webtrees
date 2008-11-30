@@ -34,16 +34,6 @@ define('PGV_FUNCTIONS_EDIT_PHP', '');
 
 require_once 'functions_import.php';
 
-/**
- * The DEBUG variable allows you to turn on debugging
- * which will write all communication output to the pgv log files
- * in the index directory and print other information to the screen.
- * Set this to true to enable debugging,
- * but be sure to set it back to false when you are done debugging.
- * @global boolean $DEBUG
- */
-$DEBUG = false;
-
 $NPFX_accept = array( "Adm", "Amb", "Brig", "Can", "Capt", "Chan", "Chapln", "Cmdr", "Col", "Cpl", "Cpt", "Dr", "Gen", "Gov", "Hon", "Lady", "Lt", "Mr", "Mrs", "Ms", "Msgr", "Pfc", "Pres", "Prof", "Pvt", "Rabbi", "Rep", "Rev", "Sen", "Sgt", "Sir", "Sr", "Sra", "Srta", "Ven");$SPFX_accept = array("al", "da", "de", "den", "dem", "der", "di", "du", "el", "la", "van", "von");
 $NSFX_accept = array( "I", "II", "III", "IV", "V", "VI", "Jr", "Junior", "MD", "PhD", "Senior", "Sr");
 $FILE_FORM_accept = array("avi", "bmp", "gif", "jpeg", "mp3", "ole", "pcx", "png", "tiff", "wav");
@@ -310,7 +300,7 @@ function delete_gedrec($gid, $linkpid='') {
 
 //-- this function will check a GEDCOM record for valid gedcom format
 function check_gedcom($gedrec, $chan=true) {
-	global $pgv_lang, $DEBUG;
+	global $pgv_lang;
 
 	$gedrec = trim(stripslashes(stripLRMRLM($gedrec)));
 
@@ -318,7 +308,7 @@ function check_gedcom($gedrec, $chan=true) {
 	if ($ct==0) {
 		print "ERROR 20: Invalid GEDCOM 5.5 format.\n";
 		AddToChangeLog("ERROR 20: Invalid GEDCOM 5.5 format.->" . PGV_USER_NAME ."<-");
-		if ($GLOBALS["DEBUG"]) {
+		if (PGV_DEBUG) {
 			print "<pre>$gedrec</pre>\n";
 			print debug_print_backtrace();
 		}
@@ -1197,7 +1187,9 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 			$func($fact, $main_fact);
 		}
 	}
-	if ($GLOBALS["DEBUG"]) print $element_name."<br />\n";
+	if (PGV_DEBUG) {
+		print $element_name."<br />\n";
+	}
 	if (!empty($label)) print $label;
 	else {
 		if (isset($pgv_lang[$fact])) print $pgv_lang[$fact];
@@ -1224,7 +1216,9 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 
 	// value
 	print "<td class=\"optionbox wrap\">\n";
-	if ($GLOBALS["DEBUG"]) print $tag."<br />\n";
+	if (PGV_DEBUG) {
+		print $tag."<br />\n";
+	}
 
 	// retrieve linked NOTE
 	if ($fact=="NOTE" and $islink) {
@@ -1745,14 +1739,14 @@ function addNewFact($fact) {
 /**
  * Add Debug Log
  *
- * This function checks the if the global $DEBUG
- * variable is true and adds debugging information
- * to the log file
+ * This function adds debugging information to the log file
+ * only if debugging output is enabled in session.php
  * @param string $logstr	the string to add to the log
  */
 function addDebugLog($logstr) {
-	global $DEBUG;
-	if ($DEBUG) AddToChangeLog($logstr);
+	if (PGV_DEBUG) {
+		AddToChangeLog($logstr);
+	}
 }
 
 /**
@@ -1938,7 +1932,9 @@ function handle_updates($newged, $levelOverride="no") {
 				$newnote = "0 @$text[$j]@ NOTE\r\n";
 				$newline = "1 CONC ".rtrim(stripLRMRLM($NOTE[$text[$j]]));
 				$newnote .= breakConts($newline);
-				if ($GLOBALS["DEBUG"]) print "<pre>$newnote</pre>";
+				if (PGV_DEBUG) {
+					print "<pre>$newnote</pre>";
+				}
 				replace_gedrec($text[$j], $newnote);
 			}
 		} //-- end of external note handling code
@@ -2353,8 +2349,10 @@ function insert_missing_subtags($level1tag)
 function delete_person($pid, $gedrec='') {
 	// NOTE: $pgv_changes isn't a global.  Making it global appears to cause problems.
 	global $pgv_lang, $GEDCOM;
-	if ($GLOBALS["DEBUG"]) phpinfo(32);
-	if ($GLOBALS["DEBUG"]) print "<pre>$gedrec</pre>";
+	if (PGV_DEBUG) {
+		phpinfo(INFO_VARIABLES);
+		print "<pre>$gedrec</pre>";
+	}
 
 	if (empty($gedrec)) $gedrec = find_person_record($pid);
 	if (!empty($gedrec)) {
@@ -2388,7 +2386,9 @@ function delete_person($pid, $gedrec='') {
 							if (!isset($pgv_changes[$xref."_".$GEDCOM])) $indirec = find_gedcom_record($xref);
 							else $indirec = find_updated_record($xref);
 							$indirec = preg_replace("/1.*@$famid@.*/", "", $indirec);
-							if ($GLOBALS["DEBUG"]) print "<pre>$indirec</pre>";
+							if (PGV_DEBUG) {
+								print "<pre>$indirec</pre>";
+							}
 							replace_gedrec($xref, $indirec);
 						}
 					}
@@ -2421,7 +2421,9 @@ function delete_family($pid, $gedrec='') {
 		for($i=0; $i<$ct; $i++) {
 			$type = $match[$i][1];
 			$id = $match[$i][2];
-			if ($GLOBALS["DEBUG"]) print $type." ".$id." ";
+			if (PGV_DEBUG) {
+				print $type." ".$id." ";
+			}
 			if (!isset($pgv_changes[$id."_".$GEDCOM])) $indirec = find_gedcom_record($id);
 			else $indirec = find_updated_record($id);
 			if (!empty($indirec)) {

@@ -1232,8 +1232,9 @@ if ($action=="update") {
 
 	if ($closewin) {
 		// autoclose window when update successful
-		if ($EDIT_AUTOCLOSE and !$GLOBALS["DEBUG"]) print "\n<script type=\"text/javascript\">\n<!--\nif (window.opener.showchanges) window.opener.showchanges(); window.close();\n//-->\n</script>";
-
+		if ($EDIT_AUTOCLOSE && !PGV_DEBUG) {
+			print "\n<script type=\"text/javascript\">\n<!--\nif (window.opener.showchanges) window.opener.showchanges(); window.close();\n//-->\n</script>";
+		}
 		print "<center><br /><br /><br />";
 		print "<a href=\"#\" onclick=\"if (window.opener.showchanges) window.opener.showchanges(); window.close();\">".$pgv_lang["close_window"]."</a><br /></center>\n";
 		print_simple_footer();

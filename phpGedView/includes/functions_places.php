@@ -314,7 +314,9 @@ function print_place_subfields($element_id) {
 		if (isset($pgv_lang[$key])) print $pgv_lang[$key];
 		else print $plac_label[$i];
 		print "</small><br />";
-		if ($GLOBALS["DEBUG"]) print $subtagname."<br />\n";
+		if (PGV_DEBUG) {
+			print $subtagname."<br />\n";
+		}
 		print "<input type=\"text\" id=\"".$subtagid."\" name=\"".$subtagname."\" value=\"\" size=\"".$cols."\"";
 		print " tabindex=\"".($i+1)."\" ";
 		print " onblur=\"updatewholeplace('".$element_id."'); splitplace('".$element_id."');\" ";

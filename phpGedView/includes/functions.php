@@ -37,14 +37,15 @@ require_once('includes/class_mutex.php');
 require_once('includes/class_media.php');
 require_once('includes/functions_UTF8.php');
 
-/**
- * The level of error reporting
- * $ERROR_LEVEL = 0 will not print any errors
- * $ERROR_LEVEL = 1 will only print the last function that was called
- * $ERROR_LEVEL = 2 will print a full stack trace with function arguments.
- */
-$ERROR_LEVEL = 2;
-if (isset($DEBUG)) $ERROR_LEVEL = 2;
+if (PGV_DEBUG) {
+	$ERROR_LEVEL = 2;
+} else {
+	// If you don't want errors displayed on production servers, change this to
+	// $ERROR_LEVEL = 0 will not print any errors
+	// $ERROR_LEVEL = 1 will only print the last function that was called
+	// $ERROR_LEVEL = 2 will print a full stack trace with function arguments.
+	$ERROR_LEVEL = 2;
+}
 
 // ************************************************* START OF INITIALIZATION FUNCTIONS ********************************* //
 /**

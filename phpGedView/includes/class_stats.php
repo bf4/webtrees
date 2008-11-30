@@ -1604,7 +1604,7 @@ class stats {
 	 */
 	static function _commonGivenQuery($sex='B', $type='list', $show_tot=false, $params=null)
 	{
-		global $TEXT_DIRECTION, $DEBUG, $GEDCOMS, $GEDCOM, $TBLPREFIX, $pgv_lang;
+		global $TEXT_DIRECTION, $GEDCOMS, $GEDCOM, $TBLPREFIX, $pgv_lang;
 		static $sort_types = array('count'=>'asort', 'rcount'=>'arsort', 'alpha'=>'ksort', 'ralpha'=>'krsort');
 		static $sort_flags = array('count'=>SORT_NUMERIC, 'rcount'=>SORT_NUMERIC, 'alpha'=>SORT_STRING, 'ralpha'=>SORT_STRING);
 
@@ -1614,13 +1614,11 @@ class stats {
 
 		//-- cache the result in the session so that subsequent calls do not have to
 		//-- perform the calculation all over again.
-		//if(isset($_SESSION['first_names_f'][$GEDCOM]) && (!isset($DEBUG) || ($DEBUG == false))) {
 		if(
 			isset($_SESSION['first_names_F'][$GEDCOM]) &&
 			isset($_SESSION['first_names_M'][$GEDCOM]) &&
 			isset($_SESSION['first_names_U'][$GEDCOM]) &&
-			(!isset($DEBUG) ||
-			($DEBUG == false))
+			!PGV_DEBUG
 		) {
 			$name_list_F = $_SESSION['first_names_F'][$GEDCOM];
 			$name_list_M = $_SESSION['first_names_M'][$GEDCOM];

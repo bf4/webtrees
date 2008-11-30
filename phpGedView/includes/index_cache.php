@@ -38,13 +38,13 @@ define('PGV_INDEX_CACHE_PHP', '');
  * @return boolean  returns false if the block could not be loaded from cache
  */
 function loadCachedBlock($block, $index) {
-	global $PGV_BLOCKS, $INDEX_DIRECTORY, $DEBUG, $lang_short_cut, $LANGUAGE, $GEDCOM;
+	global $PGV_BLOCKS, $INDEX_DIRECTORY, $lang_short_cut, $LANGUAGE, $GEDCOM;
 
 	//-- ignore caching when DEBUG is set
-	if (isset($DEBUG) && $DEBUG==true) return false;
-
 	//-- ignore caching for logged in users
-	if (PGV_USER_ID) return false;
+	if (PGV_DEBUG || PGV_USER_ID) {
+		return false;
+	}
 
 	//-- ignore cache when its life is not configured or when its life is zero
 	$cacheLife = 0;
@@ -78,13 +78,13 @@ function loadCachedBlock($block, $index) {
  * @return boolean  returns false if the block could not be saved to cache
  */
 function saveCachedBlock($block, $index, $content) {
-	global $PGV_BLOCKS, $INDEX_DIRECTORY, $DEBUG, $lang_short_cut, $LANGUAGE, $GEDCOM;
+	global $PGV_BLOCKS, $INDEX_DIRECTORY, $lang_short_cut, $LANGUAGE, $GEDCOM;
 
 	//-- ignore caching when DEBUG is set
-	if (isset($DEBUG) && $DEBUG==true) return false;
-
 	//-- ignore caching for logged in users
-	if (PGV_USER_ID) return false;
+	if (PGV_DEBUG || PGV_USER_ID) {
+		return false;
+	}
 
 	//-- ignore cache when its life is not configured or when its life is zero
 	$cacheLife = 0;
@@ -119,7 +119,7 @@ function saveCachedBlock($block, $index, $content) {
  * clears the cache files
  */
 function clearCache() {
-	global $PGV_BLOCKS, $INDEX_DIRECTORY, $DEBUG, $lang_short_cut, $LANGUAGE, $GEDCOM;
+	global $PGV_BLOCKS, $INDEX_DIRECTORY, $lang_short_cut, $LANGUAGE, $GEDCOM;
 
 	foreach($lang_short_cut as $key=>$value) {
 		$fname = $INDEX_DIRECTORY."/cache/".$value."/".$GEDCOM;

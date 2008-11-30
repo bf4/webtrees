@@ -46,14 +46,14 @@ function top_surname_sort($a, $b) {
 }
 
 function print_block_name_top10($block=true, $config="", $side, $index) {
-	global $pgv_lang, $GEDCOM, $DEBUG, $TEXT_DIRECTION;
+	global $pgv_lang, $GEDCOM, $TEXT_DIRECTION;
 	global $COMMON_NAMES_ADD, $COMMON_NAMES_REMOVE, $COMMON_NAMES_THRESHOLD, $PGV_BLOCKS, $ctype, $PGV_IMAGES, $PGV_IMAGE_DIR, $SURNAME_LIST_STYLE;
 
 	if (empty($config)) $config = $PGV_BLOCKS["print_block_name_top10"]["config"];
 
 	//-- cache the result in the session so that subsequent calls do not have to
 	//-- perform the calculation all over again.
-	if (isset($_SESSION["top10"][$GEDCOM])&&(!isset($DEBUG)||($DEBUG==false))) {
+	if (isset($_SESSION["top10"][$GEDCOM]) && !PGV_DEBUG) {
 		$surnames = $_SESSION["top10"][$GEDCOM];
 	} else {
 		$surnames = get_top_surnames($config["num"]);

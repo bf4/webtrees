@@ -1155,7 +1155,7 @@ function setup_database() {
  * Create the individuals table
  */
 function create_individuals_table() {
-	global $TBLPREFIX, $pgv_lang, $DBCONN, $DBTYPE, $DEBUG;
+	global $TBLPREFIX, $pgv_lang, $DBCONN, $DBTYPE;
 
 	dbquery("DROP TABLE {$TBLPREFIX}individuals", false);
 	dbquery(

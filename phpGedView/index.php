@@ -278,11 +278,15 @@ if ($action=="ajax") {
 
 	//-- not sure which block to call so call the first one we find
 	foreach($ublocks["main"] as $bindex=>$blockval) {
-		if (isset($DEBUG)&&($DEBUG==true)) print_execution_stats();
+		if (PGV_DEBUG) {
+			print_execution_stats();
+		}
 		if ($blockval[0]==$block && function_exists($blockval[0])) eval($blockval[0]."(false, \$blockval[1], \"main\", $bindex);");
 	}
 	foreach($ublocks["right"] as $bindex=>$blockval) {
-		if (isset($DEBUG)&&($DEBUG==true)) print_execution_stats();
+		if (PGV_DEBUG) {
+			print_execution_stats();
+		}
 		if ($blockval[0]==$block && function_exists($blockval[0])) eval($blockval[0]."(true, \$blockval[1], \"right\", $bindex);");
 	}
 	exit;
@@ -318,7 +322,6 @@ if ($MULTI_MEDIA && file_exists("modules/lightbox/album.php")) {
 	function paste_id(value) {
 		pastefield.value=value;
 	}
-	<?php if (isset($DEBUG)&&($DEBUG==true)) print "var DEBUG = true;\n"; else print "var DEBUG = false;\n"; ?>
 /**
  * blocks may use this JS function to update themselves using AJAX technology
  * @param string targetId	the id of the block to target the results too
@@ -337,7 +340,6 @@ if ($MULTI_MEDIA && file_exists("modules/lightbox/album.php")) {
 
 		var oXmlHttp = createXMLHttp();
 		link = "index.php?action=ajax&block="+block+"&side="+side+"&bindex="+bindex+"&ctype="+ctype;
-		if (DEBUG) link = link + "&DEBUG="+DEBUG;
 		oXmlHttp.open("get", link, true);
 		oXmlHttp.onreadystatechange=function()
 		{
@@ -369,7 +371,9 @@ if (count($ublocks["main"])!=0) {
 	}
 
 	foreach($ublocks["main"] as $bindex=>$block) {
-		if (isset($DEBUG)&&($DEBUG==true)) print_execution_stats();
+		if (PGV_DEBUG) {
+			print_execution_stats();
+		}
 		if (function_exists($block[0]) && !loadCachedBlock($block, "main".$bindex)) {
 			ob_start();
 			eval($block[0]."(false, \$block[1], \"main\", $bindex);");
@@ -393,7 +397,9 @@ if (count($ublocks["right"])!=0) {
 		print "\t<div id=\"index_full_blocks\">\n";
 	}
 	foreach($ublocks["right"] as $bindex=>$block) {
-		if (isset($DEBUG)&&($DEBUG==true)) print_execution_stats();
+		if (PGV_DEBUG) {
+			print_execution_stats();
+		}
 		if (function_exists($block[0]) && !loadCachedBlock($block, "right".$bindex)) {
 			ob_start();
 			eval($block[0]."(true, \$block[1], \"right\", $bindex);");

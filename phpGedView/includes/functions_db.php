@@ -136,9 +136,6 @@ define('PGV_DB_COL_FILE', PGV_DB_INT2_TYPE.' '.PGV_DB_UNSIGNED); // Allow 32768/
 define('PGV_DB_COL_XREF', PGV_DB_VARCHAR_TYPE.'(20)');           // Gedcom identifiers are max 20 chars
 define('PGV_DB_COL_TAG',  PGV_DB_VARCHAR_TYPE.'(15)');           // Gedcom tags/record types are max 15 chars
 
-//-- uncomment the following line to turn on sql query logging
-//$SQL_LOG = true;
-
 /**
  * query the database
  *
@@ -149,7 +146,7 @@ define('PGV_DB_COL_TAG',  PGV_DB_VARCHAR_TYPE.'(15)');           // Gedcom tags/
  * @return DB_result the connection result
  */
 function &dbquery($sql, $show_error=true, $count=0) {
-	global $DBCONN, $TOTAL_QUERIES, $INDEX_DIRECTORY, $SQL_LOG, $LAST_QUERY, $CONFIGURED;
+	global $DBCONN, $TOTAL_QUERIES, $INDEX_DIRECTORY, $LAST_QUERY, $CONFIGURED;
 
 	if (!$CONFIGURED)
 		return false;
@@ -178,7 +175,7 @@ function &dbquery($sql, $show_error=true, $count=0) {
 	}
 	*/
 
-	if (!empty($SQL_LOG))
+	if (PGV_DEBUG_SQL)
 		$start_time2 = microtime(true);
 	if ($count == 0)
 		$res =& $DBCONN->query($sql);
@@ -187,7 +184,7 @@ function &dbquery($sql, $show_error=true, $count=0) {
 
 	$LAST_QUERY = $sql;
 	$TOTAL_QUERIES++;
-	if (!empty($SQL_LOG)) {
+	if (PGV_DEBUG_SQL) {
 		global $start_time;
 		$end_time = microtime(true);
 		$exectime = $end_time - $start_time;

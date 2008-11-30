@@ -37,8 +37,13 @@ define('PGV_VERSION_TEXT',    trim(PGV_VERSION.' '.PGV_VERSION_RELEASE));
 define('PGV_PHPGEDVIEW_URL',  'http://www.phpgedview.net');
 define('PGV_PHPGEDVIEW_WIKI', 'http://wiki.phpgedview.net');
 
+// Enable debugging output?
+define('PGV_DEBUG',      false);
+define('PGV_DEBUG_SQL',  false);
+define('PGV_DEBUG_PRIV', false);
+
 // Environmental requirements
-define('PGV_REQUIRED_PHP_VERSION',     '5.0.0'); // 5.1.4 ???
+define('PGV_REQUIRED_PHP_VERSION',     '5.0.0'); // 5.2.3 ???
 define('PGV_REQUIRED_MYSQL_VERSION',   '4.1');   // Not currently enforced
 define('PGV_REQUIRED_SQLITE_VERSION',  '3.2.6'); // Not currently enforced
 define('PGV_REQUIRED_PRIVACY_VERSION', '3.1');
@@ -523,9 +528,6 @@ define('PGV_USER_AUTO_ACCEPT',  userAutoAccept    (PGV_USER_ID));
 define('PGV_USER_ACCESS_LEVEL', getUserAccessLevel(PGV_USER_ID, PGV_GED_ID));
 define('PGV_USER_GEDCOM_ID',    get_user_gedcom_setting(PGV_USER_ID, PGV_GED_ID, 'gedcomid'));
 define('PGV_USER_ROOT_ID',      get_user_gedcom_setting(PGV_USER_ID, PGV_GED_ID, 'rootid'));
-
-// Only site administrators should see debugging output.
-define('PGV_DEBUG', PGV_USER_IS_ADMIN && safe_GET_bool('debug'));
 
 // Load all the language variables and language-specific functions
 loadLanguage($LANGUAGE, true);
