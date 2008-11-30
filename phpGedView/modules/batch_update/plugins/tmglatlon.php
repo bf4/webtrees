@@ -21,7 +21,7 @@
  *
  * @package PhpGedView
  * @subpackage Module
- * $Id:$
+ * $Id$
  */
 
 if (!defined('PGV_PHPGEDVIEW')) {
