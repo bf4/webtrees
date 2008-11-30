@@ -35,11 +35,6 @@ require_once 'includes/class_gedcomrecord.php';
 require_once 'includes/class_serviceclient.php';
 
 class Source extends GedcomRecord {
-	var $indilist=null;
-	var $famlist =null;
-	var $repo    =null;
-	var $auth    =null;
-
 	// Get an instance of a Source.  We either specify
 	// an XREF (in the current gedcom), or we can provide a row
 	// from the database (if we anticipate the record hasn't
@@ -111,10 +106,7 @@ class Source extends GedcomRecord {
 	 * @return string
 	 */
 	function getRepo() {
-		if (is_null($this->repo)) {
-			$this->repo=get_gedcom_value("REPO", 1, $this->gedrec, '', false);
-		}
-		return $this->repo;
+		return get_gedcom_value('REPO', 1, $this->gedrec, '', false);
 	}
 
 	/**
@@ -122,10 +114,7 @@ class Source extends GedcomRecord {
 	 * @return string
 	 */
 	function getAuth() {
-		if (is_null($this->auth)) {
-			$this->auth=get_gedcom_value("AUTH", 1, $this->gedrec, '', false);
-		}
-		return $this->auth;
+		return get_gedcom_value('AUTH', 1, $this->gedrec, '', false);
 	}
 
 	/**
