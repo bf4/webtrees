@@ -242,10 +242,6 @@ if ($cleanup_needed == "cleanup_needed" && $continue == $pgv_lang["del_proceed"]
 				xref_change($_POST["xreftype"]);
 				}
 				**/
-	        if (need_tmglatlon_cleanup()) {
-				$filechanged = true;
-				tmglatlon_cleanup();
-	        }
 			if (isset ($_POST["utf8convert"]) == "YES") {
 				$filechanged = true;
 				convert_ansi_utf8();
