@@ -73,4 +73,6 @@ $pgv_lang["bu_name_format_desc"]="Correct NAME records of the form 'John/DOE/' o
 $pgv_lang["bu_duplicate_links"]="Remove duplicate links";
 $pgv_lang["bu_duplicate_links_desc"]="A common gedcom error is to have multiple links to the same record, for example listing the same child more than once in a family record.";
 
+$pgv_lang["bu_tmglatlon"]="Fix TMG latlon data";
+$pgv_lang["bu_tmglatlon_desc"]="Converts The Master Genealogist's proprietary lat/lon format to the GEDCOM 5.5.1 standard that PGV can read.  Note: changes are not highlighted in the final output shown below.";
 ?>
