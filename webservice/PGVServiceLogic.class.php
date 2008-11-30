@@ -35,11 +35,7 @@ require_once 'webservice/genealogyService.php';
 require_once 'includes/functions_edit.php';
 require_once 'includes/class_gewebservice.php';
 
-$DEBUG = 1;
-
-class PGVServiceLogic extends GenealogyService
-{
-
+class PGVServiceLogic extends GenealogyService {
 
 	/**
 	 * Check for the availability of compression libs
@@ -47,19 +43,16 @@ class PGVServiceLogic extends GenealogyService
 	 * @return string comma delimited list of supported libs
 	 * @todo Change return type to an array
 	 **/
-	function getCompressionLibs()
-	{
+	function getCompressionLibs() {
 		$libs = 'none,';
 
 		//zlib compression
-		if(function_exists('gzcompress'))
-		{
+		if (function_exists('gzcompress')) {
 
 			$libs .= 'zlib,';
 		}
 		//pgv zip
-		if(file_exists('includes/pclzip.lib.php'))
-		{
+		if (file_exists('includes/pclzip.lib.php')) {
 			$libs .= 'zip,';
 		}
 		//trim the string
@@ -74,22 +67,17 @@ class PGVServiceLogic extends GenealogyService
 	 * @param string $lib The string of the compression library to use
 	 * @return string returns string name of compression to use
 	 */
-	function setCompression($lib)
-	{
+	function setCompression($lib) {
 		//default compression if nothing is provided
-		if($lib == '' || $lib == null)
-		{
+		if ($lib == '' || $lib == null) {
 			return 'none';
 		}
 		//get the list
 		$compression_list = $this->getCompressionLibs();
 		//set the compression, use none if they dont' match
-		if(strstr($compression_list,$lib) !== false)
-		{
+		if (strstr($compression_list,$lib) !== false) {
 			return $lib;
-		}
-		else
-		{
+		} else {
 			return 'none';
 		}
 	}
@@ -99,14 +87,12 @@ class PGVServiceLogic extends GenealogyService
 	 * @param string gedcom id
 	 * @return string gedcom id that will be used
 	 **/
-	function default_gedcom($gedcom_id='')
-	{
+	function default_gedcom($gedcom_id='') {
 		global $GEDCOMS, $GEDCOM;
 
 		if (is_array($GEDCOMS)) {
-			foreach($GEDCOMS as $ged=>$gedarray)
-			{
-				if($gedcom_id === $ged) {
+			foreach ($GEDCOMS as $ged=>$gedarray) {
+				if ($gedcom_id === $ged) {
 
 					return $ged;
 			}
@@ -128,16 +114,14 @@ class PGVServiceLogic extends GenealogyService
 	 *		library that is being used. If login unsucessful: returns a SOAP_Fault
 	 * @todo implement banning
 	 */
-	function postAuthenticate($username, $password, $gedcom_id, $compression,$data_type="GEDCOM")
-	{
+	function postAuthenticate($username, $password, $gedcom_id, $compression,$data_type="GEDCOM") {
 		global $GEDCOM;
 
 		$GEDCOM = $this->default_gedcom($gedcom_id);
 		$compress_method = $this->setCompression($compression);
 		$sid = session_id();
 		//guest auth
-		if(empty($username) && !$REQUIRE_AUTHENTICATION)
-		{
+		if (empty($username) && !$REQUIRE_AUTHENTICATION) {
 			$_SESSION["GEDCOM"] = $GEDCOM;
 			$_SESSION["compression"] = $compress_method;
 			$_SESSION["data_type"] = $data_type;
@@ -157,8 +141,7 @@ class PGVServiceLogic extends GenealogyService
 
 		//Call PGV authentication
 		//-- NOTE: the authenticateUser function will reset the session
-		if(authenticateUser($username, $password))
-		{
+		if (authenticateUser($username, $password)) {
 			$_SESSION["GEDCOM"] = $GEDCOM;
 			$_SESSION["compression"] = $compress_method;
 			$_SESSION["data_type"] = $data_type;
@@ -188,8 +171,7 @@ class PGVServiceLogic extends GenealogyService
 	 *
 	 * @return array Information of the web service
 	 */
-	function postServiceInfo()
-	{
+	function postServiceInfo() {
 		global $GEDCOMS;
 		//addDebugLog("in getServiceInfo ".$GEDCOMS);
 		$return['compression'] = $this->getCompressionLibs();
@@ -200,8 +182,7 @@ class PGVServiceLogic extends GenealogyService
 		$i = 0;
 		if (is_array($GEDCOMS)) {
 			//loop through the gedcoms available
-			foreach($GEDCOMS as $ged=>$gedarray)
-			{
+			foreach ($GEDCOMS as $ged=>$gedarray) {
 				$gedcominfo = array();
 				$gedcominfo['title'] = $gedarray["title"];
 				$gedcominfo['ID'] = $gedarray["gedcom"];
@@ -221,8 +202,7 @@ class PGVServiceLogic extends GenealogyService
 	* @param string gedcom id of the gedcom to use
 	* @return string	returns the id of the currently active gedcom
 	*/
-	function postChangeGedcom($gedcom)
-	{
+	function postChangeGedcom($gedcom) {
 		global $GEDCOM;
 		$gedcom = $this->default_gedcom($gedcom);
 		$GEDCOM = $gedcom;
@@ -248,11 +228,10 @@ class PGVServiceLogic extends GenealogyService
 			return $GLOBALS[$var];
 		}
 		//-- authenticated users can access any var not in $CONFIG_VARS
-		else if ((!empty($pgv_user))&&(!empty($var))&&(isset($GLOBALS[$var]))&&(!in_array($var, $CONFIG_VARS))) {
+		elseif ((!empty($pgv_user))&&(!empty($var))&&(isset($GLOBALS[$var]))&&(!in_array($var, $CONFIG_VARS))) {
 			addDebugLog("getVar var=$var SUCCESS\n".$GLOBALS[$var]);
 			return $GLOBALS[$var];
-		}
-		else {
+		} else {
 			addDebugLog("getVar var=$var ERROR 13: Invalid variable specified.  Please provide a variable.");
 			return new SOAP_Fault("ERROR 13: Invalid variable specified.\n", 'Client', '', null);
 		}
@@ -275,13 +254,11 @@ class PGVServiceLogic extends GenealogyService
 					addDebugLog("append gedrec=$gedrec SUCCESS\n$xref");
 					return $xref;
 				}
-			}
-			else {
+			} else {
 				addDebugLog("append gedrec=$gedrec ERROR 11: No write privileges for this record.");
 				return new SOAP_Fault("ERROR 11: No write privileges for this record.", 'Client', '', null);
 			}
-		}
-		else {
+		} else {
 			addDebugLog("append ERROR 8: No gedcom record provided.  Unable to process request.");
 			return new SOAP_Fault("ERROR 8: No write privileges for this record.", 'Client', '', null);
 		}
@@ -295,8 +272,7 @@ class PGVServiceLogic extends GenealogyService
 	*
 	* @return mixed SOAP_Fault or array of result from the postAppendRecord method
 	*/
-	function postDeleteRecord($SID, $RID)
-	{
+	function postDeleteRecord($SID, $RID) {
 		if (!empty($RID)) {
 			if (((empty($_SESSION['readonly']))&& PGV_USER_CAN_EDIT)&&(displayDetailsById($RID))) {
 				$success = delete_gedrec($RID);
@@ -304,13 +280,11 @@ class PGVServiceLogic extends GenealogyService
 					addDebugLog("delete RID=$RID SUCCESS");
 					return "delete RID=$RID SUCCESS";
 				}
-			}
-			else {
+			} else {
 				addDebugLog("delete RID=$RID ERROR 11: No write privileges for this record.");
 				return new SOAP_Fault("ERROR 11: No write privileges for this record.", 'Client', '', null);
 			}
-		}
-		else {
+		} else {
 			addDebugLog("delete ERROR 3: No gedcom id specified.  Please specify a xref.");
 			return new SOAP_Fault("ERROR 3: No write privileges for this record.", 'Client', '', null);
 		}
@@ -325,40 +299,21 @@ class PGVServiceLogic extends GenealogyService
 	 *
 	 * @return mixed SOAP_Fault or array of result
 	 */
-	function postUpdateRecord($SID, $RID, $gedcom)
-	{
-		if (!empty($RID))
-		{
-			if (!empty($gedcom))
-			{
-				if (empty($_SESSION['readonly']) && PGV_USER_CAN_EDIT && displayDetailsById($RID))
-				{
+	function postUpdateRecord($SID, $RID, $gedcom) {
+		if (!empty($RID)) {
+			if (!empty($gedcom)) {
+				if (empty($_SESSION['readonly']) && PGV_USER_CAN_EDIT && displayDetailsById($RID)) {
 					$gedrec = preg_replace(array("/\\\\+r/","/\\\\+n/"), array("\r","\n"), $gedcom);
 					$success = replace_gedrec($RID, $gedrec);
 					return 'Gedcom updated.';
+				} else {
+					return new SOAP_Fault("No write privileges for this record.", 'Client', '', null);
 				}
-				else
-				{
-					return new SOAP_Fault("No write privileges for this record.",
-									'Client',
-									'',
-									null);
-				}
+			} else {
+				return new SOAP_Fault("No gedcom record provided.  Unable to process request.", 'Client', '', null);
 			}
-			else
-			{
-				return new SOAP_Fault("No gedcom record provided.  Unable to process request.",
-									'Client',
-									'',
-									null);
-			}
-		}
-		else
-		{
-			return new SOAP_Fault("No gedcom id specified.  Please specify an id",
-								'Client',
-								'',
-								null);
+		} else {
+			return new SOAP_Fault("No gedcom id specified.  Please specify an id", 'Client', '', null);
 		}
 	}
 
@@ -382,11 +337,12 @@ class PGVServiceLogic extends GenealogyService
 				$ge = new GEWebService();
 				$person['gedcom'] = $ge->create_person($gedrec, $PID);
 			}
+		} else {
+			$person['gedcom'] = "";
 		}
-		else $person['gedcom'] = "";
 		$fams = find_families_in_record($gedrec, "FAMS");
 		$familyS = array();
-		foreach($fams as $f=>$famid) {
+		foreach ($fams as $f=>$famid) {
 //			$famrec = find_family_record($famid);
 	//		$family = $this->createFamily($famid, $famrec, "item");
 			$familyS[] = $famid;
@@ -394,7 +350,7 @@ class PGVServiceLogic extends GenealogyService
 		$person['spouseFamilies'] = new SOAP_Value('spouseFamilies', '{urn:'.$this->__namespace.'}ArrayOfIds', $familyS);
 		$famc = find_families_in_record($gedrec, "FAMC");
 		$familyC = array();
-		foreach($famc as $f=>$famid) {
+		foreach ($famc as $f=>$famid) {
 			$famrec = find_family_record($famid);
 //			$family = $this->createFamily($famid, $famrec, "item");
 			$familyC[] = $famid;
@@ -410,31 +366,28 @@ class PGVServiceLogic extends GenealogyService
 	* @param string SID
 	* @param string PID person id
 	*/
-	function postGetPersonByID($SID, $PID)
-	{
+	function postGetPersonByID($SID, $PID) {
 		global $pgv_changes, $GEDCOM, $SERVER_URL, $MEDIA_DIRECTORY;
 
 		$returnType = 'gedcom';
 
-		if (!empty($PID))
-		{
+		if (!empty($PID)) {
 			$xrefs = explode(';', $PID);
 			$success = true;
 			$person = array();
-			foreach($xrefs as $indexval => $xref1)
-			{
+			foreach ($xrefs as $indexval => $xref1) {
 				$gedrec = "";
 				$xref1 = trim($xref1);
-				if (!empty($xref1))
-				{
-					if (isset($pgv_changes[$xref1."_".$GEDCOM]))
+				if (!empty($xref1)) {
+					if (isset($pgv_changes[$xref1."_".$GEDCOM])) {
 						$gedrec = find_updated_record($xref1);
+					}
 
-					if (empty($gedrec))
+					if (empty($gedrec)) {
 						$gedrec = find_person_record($xref1);
+					}
 
-					if (!empty($gedrec))
-					{
+					if (!empty($gedrec)) {
 						$gedrec = trim($gedrec);
 						preg_match("/0 @(.*)@ (.*)/", $gedrec, $match);
 						$type = trim($match[2]);
@@ -444,16 +397,12 @@ class PGVServiceLogic extends GenealogyService
 						if (!empty($_SERVER['HTTP_USER_AGENT'])) $msg .= $_SERVER['HTTP_USER_AGENT'];
 						AddToLog($msg);
 						return $result;
-					}
-					else
-					{
+					} else {
 						return new SOAP_Fault("Unable to find person with ID ".$PID,'Client','',null);
 					}
 				}
 			} //-- end for loop
-		}
-		else
-		{
+		} else {
 			return new SOAP_Fault("No gedcom id specified.  Please specify a PID",'Client','',null);
 		}
 	}
@@ -475,12 +424,9 @@ class PGVServiceLogic extends GenealogyService
 		}
 		$family['CHILDREN'] = new SOAP_Value('CHILDREN', '{urn:'.$this->__namespace.'}ArrayOfIds', $CHILDREN);
 		//$family['CHILDREN'] = $CHILDREN;
-		if ($_SESSION['data_type'] == 'GEDCOM')
-		{
+		if ($_SESSION['data_type'] == 'GEDCOM') {
 			$family['gedcom'] = $gedrec;
-		}
-		else
-		{
+		} else {
 			$ge= new GEWebService();
 			$family['gedcom'] = $ge->create_family($gedrec, $FID);
 			addToLog($family['gedcom']);
@@ -494,48 +440,44 @@ class PGVServiceLogic extends GenealogyService
 	 * @param string FID Family id
 	 * @param string SID
 	 ***/
-	function postGetFamilyByID($SID, $FID)
-	{
+	function postGetFamilyByID($SID, $FID) {
 		global $pgv_changes, $GEDCOM, $SERVER_URL, $MEDIA_DIRECTORY;
-		if ($data_type="GEDCOM") $returnType = 'gedcom';
-			else $returnType = 'gramps';
-		if (!empty($FID))
-		{
+		if ($data_type="GEDCOM") {
+			$returnType = 'gedcom';
+		} else {
+			$returnType = 'gramps';
+		}
+		if (!empty($FID)) {
 			$xrefs = explode(';', $FID);
 			$success = true;
 			$family = array();
-			foreach($xrefs as $indexval => $xref1)
-			{
+			foreach ($xrefs as $indexval => $xref1) {
 				$gedrec = "";
 				$xref1 = trim($xref1);
-				if (!empty($xref1))
-				{
-					if (isset($pgv_changes[$xref1."_".$GEDCOM]))
+				if (!empty($xref1)) {
+					if (isset($pgv_changes[$xref1."_".$GEDCOM])) {
 						$gedrec = find_updated_record($xref1);
+					}
 
-					if (empty($gedrec))
+					if (empty($gedrec)) {
 						$gedrec = find_family_record($xref1);
+					}
 
-					if (!empty($gedrec))
-					{
+					if (!empty($gedrec)) {
 						$gedrec = trim($gedrec);
 						preg_match("/0 @(.*)@ (.*)/", $gedrec, $match);
 						$type = trim($match[2]);
 						$result = $this->createFamily($FID, $gedrec, "result");
 						return $result;
-					}
-					else
-					{
+					} else {
 						return new SOAP_Fault("Unable to find family with ID ".$FID,'Client','',null);
 					}
 				}
 			} //-- end foreach loop
-		}
-		else
-		{
+		} else {
 			return new SOAP_Fault("No gedcom id specified.  Please specify a FID",'Client','',null);
 		}
-     }
+	}
 
 	/**
 	 * create a Source complex type
@@ -563,46 +505,39 @@ class PGVServiceLogic extends GenealogyService
 	 * @param string SID session id
 	 * @param string SCID Source id
 	 */
-	function postGetSourceByID($SID, $SCID)
-	{
+	function postGetSourceByID($SID, $SCID) {
 		global $pgv_changes, $GEDCOM, $SERVER_URL, $MEDIA_DIRECTORY;
 
 		$returnType = 'gedcom';
 
-		if (!empty($SCID))
-		{
+		if (!empty($SCID)) {
 			$xrefs = explode(';', $SCID);
 			$success = true;
 			$source = array();
-			foreach($xrefs as $indexval => $xref1)
-			{
+			foreach ($xrefs as $indexval => $xref1) {
 				$gedrec = "";
 				$xref1 = trim($xref1);
-				if (!empty($xref1))
-				{
-					if (isset($pgv_changes[$xref1."_".$GEDCOM]))
+				if (!empty($xref1)) {
+					if (isset($pgv_changes[$xref1."_".$GEDCOM])) {
 						$gedrec = find_updated_record($xref1);
+					}
 
-					if (empty($gedrec))
+					if (empty($gedrec)) {
 						$gedrec = find_source_record($xref1);
+					}
 
-					if (!empty($gedrec))
-					{
+					if (!empty($gedrec)) {
 						$gedrec = trim($gedrec);
 						preg_match("/0 @(.*)@ (.*)/", $gedrec, $match);
 						$type = trim($match[2]);
 						$result = $this->createSource($SCID, $gedrec);
 						return $result;
-					}
-					else
-					{
+					} else {
 						return new SOAP_Fault("Unable to find Source with ID ".$SCID,'Client','',null);
 					}
 				}
 			} //-- end for loop
-		}
-		else
-		{
+		} else {
 			return new SOAP_Fault("No gedcom id specified.  Please specify a SCID",'Client','',null);
 		}
 	}
@@ -614,29 +549,26 @@ class PGVServiceLogic extends GenealogyService
 	 * @param string $PID	the gedcom xref id for the record to find
 	 * @return string		the raw gedcom record is returned
 	 */
-	function postGetGedcomRecord($SID, $PID)
-	{
+	function postGetGedcomRecord($SID, $PID) {
 		global $pgv_changes, $GEDCOM, $SERVER_URL, $MEDIA_DIRECTORY;
 
-		if (!empty($PID))
-		{
+		if (!empty($PID)) {
 			$xrefs = explode(';', $PID);
 			$success = true;
 			$gedrecords="";
-			foreach($xrefs as $indexval => $xref1)
-			{
+			foreach ($xrefs as $indexval => $xref1) {
 				$gedrec = "";
 				$xref1 = trim($xref1);
-				if (!empty($xref1))
-				{
-					if (isset($pgv_changes[$xref1."_".$GEDCOM]))
+				if (!empty($xref1)) {
+					if (isset($pgv_changes[$xref1."_".$GEDCOM])) {
 						$gedrec = find_updated_record($xref1);
+					}
 
-					if (empty($gedrec))
+					if (empty($gedrec)) {
 						$gedrec = find_gedcom_record($xref1);
+					}
 
-					if (!empty($gedrec))
-					{
+					if (!empty($gedrec)) {
 						$gedrec = trim($gedrec);
 						preg_match("/0 @(.*)@ (.*)/", $gedrec, $match);
 						$type = trim($match[2]);
@@ -646,62 +578,48 @@ class PGVServiceLogic extends GenealogyService
 						$msg = "GEDCOM record $xref1 accessed through Web Service ";
 						if (!empty($_SERVER['HTTP_USER_AGENT'])) $msg .= $_SERVER['HTTP_USER_AGENT'];
 						AddToLog($msg);
-					}
-					else
-					{
+					} else {
 						return new SOAP_Fault("No Results found for PID:".$PID,'Client','',null);
 					}
 				}
 			} //-- end for loop
-			if ($success)
-			{
-			if ($_SESSION['data_type'] == 'GEDCOM')
-			{
+			if ($success) {
+				if ($_SESSION['data_type'] == 'GEDCOM') {
 
-				if (empty($_REQUEST['keepfile']))
-				{
-					$ct = preg_match_all("/ FILE (.*)/", $gedrecords, $match, PREG_SET_ORDER);
-					for($i=0; $i<$ct; $i++)
-					{
-						$mediaurl = $SERVER_URL.$MEDIA_DIRECTORY.extract_filename($match[$i][1]);
-						$gedrecords = str_replace($match[$i][1], $mediaurl, $gedrecords);
+					if (empty($_REQUEST['keepfile'])) {
+						$ct = preg_match_all("/ FILE (.*)/", $gedrecords, $match, PREG_SET_ORDER);
+						for($i=0; $i<$ct; $i++)
+						{
+							$mediaurl = $SERVER_URL.$MEDIA_DIRECTORY.extract_filename($match[$i][1]);
+							$gedrecords = str_replace($match[$i][1], $mediaurl, $gedrecords);
+						}
 					}
-				}
 
-				$return = trim($gedrecords);
-				return $return;
+					$return = trim($gedrecords);
+					return $return;
+				} else {
+					$ge= new GEWebService();
+					return $ge->create_record($PID);
+				}
 			}
-			else
-			{
-				$ge= new GEWebService();
-				return $ge->create_record($PID);
-			}
-			}
-		}
-		else
-		{
+		} else {
 			return new SOAP_Fault("No gedcom id specified.  Please specify a PID",'Client','',null);
 		}
 	}
 
-	function postSearch($SID, $query, $start, $maxResults)
-	{
+	function postSearch($SID, $query, $start, $maxResults) {
 
-	//	AddToLog('inside search');
 		// keyword anywhere;field=value&field2=value2
 		// Known keywords NAME, BIRTHDATE, DEATHDATE, BIRTHPLACE, DEATHPLACE, GENDER
 		// 10 JAN 2005 only will take the standard date format of a gedcom
 
-		if(strlen($query) > 1)
-		{
-	//		AddToLog('More then one char suplied in query');
+		if (strlen($query) > 1) {
 			AddToLog('Search query: ' . $query);
 			// this is use to figure out if it is just a keyword or a advanced search
-			if(!(strstr($query, 'NAME') || strstr($query, 'BIRTHDATE') ||
+			if (!(strstr($query, 'NAME') || strstr($query, 'BIRTHDATE') ||
 					strstr($query, 'DEATHDATE') || strstr($query, 'BIRTHPLACE') ||
 					strstr($query, 'DEATHPLACE') || strstr($query, 'GENDER')))
 			{
-	//			AddToLog('Keyword search');
 				//if its just a key word search
 				$results = array();
 				$results_array = array();
@@ -709,34 +627,28 @@ class PGVServiceLogic extends GenealogyService
 
 				// loop thru the returned result of the method call
 
-				foreach($search_results as $gid=>$indi)
-				{
+				foreach ($search_results as $gid=>$indi) {
 					// privatize the gedcoms returned
 					$gedrec = privatize_gedcom($indi["gedcom"]);
-					//AddToLog(substr($gedrec,0,50));
 					// set the fields that exist and return all the results that are not private
-					if(preg_match("~".$query."~i",$gedrec)>0)
-					{
+					if (preg_match("~".$query."~i",$gedrec)>0) {
 						$search_result_element = $this->createPerson($gid, $gedrec, "item", false);
 						//$search_result_element['gedcom'] = $gedrec;
 						$results_array[] = $search_result_element;
 					}
 				}
-	//			AddToLog('Found '.count($results_array).' after privatizing');
 				// set the number of possible results
 				$results['totalResults'] = count($results_array);
 				// cut the array depending on start index and max results
 				$results_array = array_slice($results_array,$start,$maxResults);
 				// seting the value of search results to the results array
 				$results['persons'] = new SOAP_Value('persons', '{urn:'.$this->__namespace.'}ArrayOfPerson', $results_array);
-	//			AddToLog("Returning results from ".$start." to ".count($results_array));
 				$results = new SOAP_Value('Results', '{urn:'.$this->__namespace.'}SearchResult', $results);
 				return $results;
 			}
 
 	// The code below is for when the user queried an advance search
 
-	//		AddToLog('about to break up query string');
 			// array used to supply functions for searching with the correct information.
 			$array_querys = array();
 
@@ -744,8 +656,7 @@ class PGVServiceLogic extends GenealogyService
 			$temp_queries = explode('&', $query);
 
 			// each part is gone through to select the field and the values
-			foreach($temp_queries as $index=>$query)
-			{
+			foreach ($temp_queries as $index=>$query) {
 				$part = explode('=', $query);
 				// $part[0] = field $part[1] = value;
 				$array_querys[$part[0]] = $part[1];
@@ -758,55 +669,39 @@ class PGVServiceLogic extends GenealogyService
 			$newarray;
 			*/
 			// a search on the name supply in $query if it exists
-			if(array_key_exists('NAME', $array_querys))
-			{
+			if (array_key_exists('NAME', $array_querys)) {
 				$results_from_name = search_indis_names($array_querys['NAME']);
 			}
 
 			// used to change if both dates exist in $query
 			$both_dates_exist = true;
 			// a search on the birthdate supply in $query  if it exists
-			if(array_key_exists('BIRTHDATE', $array_querys))
-			{
+			if (array_key_exists('BIRTHDATE', $array_querys)) {
 				$date = new GedcomDate($array_querys['BIRTHDATE']);
 				$date = $date->MinDate();
 				//$day="", $month="", $year="", $fact="", $allgeds=false, $ANDOR="AND")
 				$results_from_birth_date = search_indis_dates($date->d,$date->Format('O'),$date->y,'BIRT');
-	//			AddToLog("Found ".count($results_from_birth_date)." searching for birth.");
-			}
-			else
-			{
-	//			AddToLog("Birth date did not exist");
+			} else {
 				$both_dates_exist = false;
 			}
 
 			// a search on the deathdate supply in $query  if it exists
-			if(array_key_exists('DEATHDATE', $array_querys))
-			{
+			if (array_key_exists('DEATHDATE', $array_querys)) {
 				$date = new GedcomDate($array_querys['DEATHDATE']);
 				$date = $date->MinDate();
 				$results_from_death_date = search_indis_dates($date->d,$date->Format('O'),$date->y,'DEAT');
-			}
-			else
-			{
-	//			AddToLog("Death date did not exist");
+			} else {
 				$both_dates_exist = false;
 			}
 
 			// if both exist then merge them
 			// if not then is one set if so the set that to be the one that is merged with the $results_from_name array
-			if($both_dates_exist)
-			{
+			if ($both_dates_exist) {
 				$results_from_dates = array_intersect_assoc($results_from_birth_date, $results_from_death_date);
-			}
-			else if(isset($results_from_birth_date)|| isset($results_from_death_date))
-			{
-				if(isset($results_from_birth_date))
-				{
+			} elseif (isset($results_from_birth_date)|| isset($results_from_death_date)) {
+				if (isset($results_from_birth_date)) {
 					$results_from_dates = $results_from_birth_date;
-				}
-				else
-				{
+				} else {
 					$results_from_dates = $results_from_death_date;
 				}
 			}
@@ -814,50 +709,29 @@ class PGVServiceLogic extends GenealogyService
 			// this array is used for storing the information about the people
 			// returned from the two searches and the unsimilar people are left out.
 			// only merge them is both are set else then set the one that is to $newarray
-			if(isset($results_from_name) && isset($results_from_dates))
-			{
-	//			AddToLog("intersect assoc with Name and dates");
+			if (isset($results_from_name) && isset($results_from_dates)) {
 				$newarray = array_intersect_assoc($results_from_name, $results_from_dates);
-			}
-			else if(isset($results_from_name)|| isset($results_from_dates))
-			{
-				if(isset($results_from_name))
-				{
-	//				AddToLog("preresults only on name");
+			} elseif (isset($results_from_name)|| isset($results_from_dates)) {
+				if (isset($results_from_name)) {
 					$newarray = $results_from_name;
-				}
-				else
-				{
-	//				AddToLog("preresults only on dates");
+				} else {
 					$newarray = $results_from_dates;
 				}
 			}
 
-			if(!isset($newarray))
-			{
+			if (!isset($newarray)) {
 				$queries = array();
-	//			AddToLog('query did not contain name or dates');
-				if(!empty($array_querys['BIRTHPLACE']))
-				{
-	//				AddToLog('but contained birthplace');
+				if (!empty($array_querys['BIRTHPLACE'])) {
 					$queries[] = 'PLAC[^\n]*'.$array_querys['BIRTHPLACE'];
 					//$newarray = search_indis('PLAC[^\n]*'.$array_querys['BIRTHPLACE']);
-				}
-				else if (!empty($array_querys['DEATHPLACE']))
-				{
-	//				AddToLog('but contained deathplave');
+				} elseif (!empty($array_querys['DEATHPLACE'])) {
 					$queries[] = 'PLAC[^\n]*'.$array_querys['DEATHPLACE'];
 					//$newarray = search_indis('PLAC[^\n]*'.$array_querys['DEATHPLACE']);
-				}
-				else if (!empty($array_querys['GENDER']))
-				{
-	//				AddToLog('but cantained gender');
+				} elseif (!empty($array_querys['GENDER'])) {
 					if (count($queries)==0 && count($newarray)==0) return new SOAP_Fault("Please specify a more advanced search.", "SERVER");
 					$queries[] = 'SEX '.$array_querys['GENDER'];
 					//$newarray = search_indis('SEX '.$array_querys['GENDER']);
-				}
-				else
-				{
+				} else {
 					$newarray = array();
 				}
 				if (count($queries)>0) {
@@ -866,110 +740,79 @@ class PGVServiceLogic extends GenealogyService
 			}
 			$results = array();
 			$results_array = array();
-	//		AddToLog("found ".count($newarray)." before privatizing");
-			foreach($newarray as $gid=>$indi)
-			{
-				//AddToLog("Checking results again for ".$gid);
+			foreach ($newarray as $gid=>$indi) {
 
 				// need to check to see if all the values asked for in the query are still there after the privatizing
 				$all_crit_exist_in_gedcom = true;
 				$search_result_element = $this->createPerson($gid, $indi['gedcom'], "item", false);
-				if(!empty($array_querys['NAME']) && (stristr($search_result_element->value['gedcomName'], $array_querys['NAME']) === false))
-				{
+				if (!empty($array_querys['NAME']) && (stristr($search_result_element->value['gedcomName'], $array_querys['NAME']) === false)) {
 					$all_crit_exist_in_gedcom = false;
-	//				AddToLog('Name did not match '. $search_result_element['gedcomName']. ' != '. $array_querys['NAME']);
 				}
 
-				if(!empty($array_querys['BIRTHDATE']) && (stristr($search_result_element->value['birthDate'], $array_querys['BIRTHDATE']) === false))
-				{
+				if (!empty($array_querys['BIRTHDATE']) && (stristr($search_result_element->value['birthDate'], $array_querys['BIRTHDATE']) === false)) {
 					$all_crit_exist_in_gedcom = false;
-	//				AddToLog('Birth date did not match for '.$gid.' '. $search_result_element['birthDate']. ' != '. $array_querys['BIRTHDATE']);
 				}
 
-				if(!empty($array_querys['BIRTHPLACE']) && (stristr($search_result_element->value['birthPlace'], $array_querys['BIRTHPLACE']) === false))
-				{
+				if (!empty($array_querys['BIRTHPLACE']) && (stristr($search_result_element->value['birthPlace'], $array_querys['BIRTHPLACE']) === false)) {
 					$all_crit_exist_in_gedcom = false;
-	//				AddToLog('Birth place did not match '. $search_result_element['birthPlace']. ' != '. $array_querys['BIRTHPLACE']);
 				}
 
-				if(!empty($array_querys['DEATHDATE']) && (stristr($search_result_element->value['deathDate'], $array_querys['DEATHDATE']) === false))
-				{
+				if (!empty($array_querys['DEATHDATE']) && (stristr($search_result_element->value['deathDate'], $array_querys['DEATHDATE']) === false)) {
 					$all_crit_exist_in_gedcom = false;
-	//				AddToLog('Death date did not match '. $search_result_element['deathDate']. ' != '. $array_querys['DEATHDATE']);
 				}
 
-				if(!empty($array_querys['DEATHPLACE']) && (stristr($search_result_element->value['deathPlace'], $array_querys['DEATHPLACE']) === false))
-				{
+				if (!empty($array_querys['DEATHPLACE']) && (stristr($search_result_element->value['deathPlace'], $array_querys['DEATHPLACE']) === false)) {
 					$all_crit_exist_in_gedcom = false;
-	//				AddToLog('Death place did not match '. $search_result_element['deathPlace']. ' != '. $array_querys['DEATHPLACE']);
 				}
 
-				if(!empty($array_querys['GENDER']) && $search_result_element->value['gender'] != $array_querys['GENDER'] )
-				{
+				if (!empty($array_querys['GENDER']) && $search_result_element->value['gender'] != $array_querys['GENDER'] ) {
 					$all_crit_exist_in_gedcom = false;
-	//				AddToLog('Gender did not match '.$search_result_element['gender'].' != ' .$array_querys['GENDER']);
 				}
 
 
 				// if all the critian still exist after privatize thenset it to the array
-				if($all_crit_exist_in_gedcom)
-				{
+				if ($all_crit_exist_in_gedcom) {
 					$results_array[] = $search_result_element;
 				}
 
 				// sample how to get information for the result set
 				//$birtdate = get_gedcom_value("BIRT:DATE", 1, $gedrec, '', false);
 			}
-	//		AddToLog('Found '.count($results_array).' after privatizing');
 			// set the number of possible results
 			$results['totalResults'] = count($results_array);
 			// cut the array depending on start index and max results
 			$results_array = array_slice($results_array,$start,$start + $maxResults);
 			// seting the value of search results to the results array
 			$results['persons'] = new SOAP_Value('persons', '{urn:'.$this->__namespace.'}ArrayOfPerson', $results_array);
-	//		AddToLog("Returning results from ".$start." to ".count($results_array));
 			$results = new SOAP_Value('Results', '{urn:'.$this->__namespace.'}SearchResult', $results);
 			return $results;
-		}
-		else
-		{
-	//		AddToLog('Less then 2 chars suplied in query');
+		} else {
 			// if the query string was less then 2 chars send soap fault
 			return new SOAP_Fault('search','search query must cantain more then one character');
 		}
 	}
 
-	function postCheckUpdatesByID($SID,$RID,$lastUpdate)
-	{
-	//	AddToLog('Checking Up date by ID');
+	function postCheckUpdatesByID($SID,$RID,$lastUpdate) {
 		// Method call used to retrieve data by the Gedcom Id form PGV
 		$indirec = find_person_record($RID);
 
-		if(!empty($indirec))
-		{
-	//		AddToLog('Found record for '.$RID);
+		if (!empty($indirec)) {
 			// MEthod call used to reteave data by the Person Created above by there gedcom id.
 			// in this case the data reteaved is the data of the last submission for the person.
 			$change_date = get_gedcom_value("CHAN:DATE", 1, $indirec, '', false);
 
 			//If the date does not exist then return the sample data with the Status code of Update date unknown
-			if (empty($change_date))
-			{
+			if (empty($change_date)) {
 				return new SOAP_Fault('perform_update_check','Last update date Unknown');
 			}
 
 			$chan_date     = new GedcomDate($change_date);
 			$incoming_date = new GedcomDate($lastUpdate);
 
-			if ($change_time->MinJD() > $incoming_time->MinJD())
-			{
-	//			AddToLog('Changes were made since last update');
+			if ($change_time->MinJD() > $incoming_time->MinJD()) {
 				$result = $this->createPerson($RID, $indirec, "result");
 				return $result;
-			}
-			else
-			{
-	//			AddToLog('No changes were made since last update');
+			} else {
 				return new SOAP_Fault('perform_update_check','Update check performed but no update was made');
 			}
 		}
@@ -977,43 +820,41 @@ class PGVServiceLogic extends GenealogyService
 
 	}
 
-	function postCheckUpdates($SID,$lastUpdate)
-	{
+	function postCheckUpdates($SID,$lastUpdate) {
 		$date = new GedcomDate($lastUpdate);
 
-		if (!$date->isOK())
+		if (!$date->isOK()) {
 			return new SOAP_Fault('perform_update_check','Invalid date parameter.  Please use a valid date in the GEDCOM format DD MMM YYYY.');
+		}
 
-		if ($date->MinJD()<server_jd()-180)
+		if ($date->MinJD()<server_jd()-180) {
 			return new SOAP_Fault('checkUpdates', 'You cannot retrieve updates for more than 180 days.');
+		}
 
 		$changes = get_recent_changes($date->MinJD());
 		$results = array();
-		foreach($changes as $id=>$change) {
+		foreach ($changes as $id=>$change) {
 			$results[] = $change['d_gid'];
 		}
 		$results = new SOAP_Value('result', '{urn:'.$this->__namespace.'}ArrayOfIds', $results);
 		return $results;
 	}
 
-	function getKnownServers($SID,$limit)
-	{
-	//	AddToLog('inside get known servers');
+	function getKnownServers($SID,$limit) {
 		// get_server_list(); returns array or false;
 		$servers = get_server_list();
-		if(count($servers)>0)
-		{
+		if (count($servers)>0) {
 	//		addtolog('servers = true');
 			// the array to return
 			$results_array = array();
 
 			$count = 0;
 			//Loop through the data and add each server and address to the results_array
-			foreach($servers as $server)
-			{
+			foreach ($servers as $server) {
 	//			Addtolog('foreach fun!'.$server);
-				if($count >= $limit && $limit !== 0)
+				if ($count >= $limit && $limit !== 0) {
 					break;
+				}
 				// the array used inside the results array to hold both
 				//the name and the address of each server that is known
 				$server_results_array = array();
@@ -1022,13 +863,10 @@ class PGVServiceLogic extends GenealogyService
 				$results_array[] = new SOAP_Value('server', '{urn:'.$this->__namespace.'}Server', $server_results_array);
 				$count++;
 			}
-	//		AddToLog('found '.count($results_array)." servers");
 			// and return the array of results
 			$results = new SOAP_Value('servers', '{urn:'.$this->__namespace.'}ArrayOfServer', $results_array);
 			return $results;
-		}
-		else
-		{
+		} else {
 			return new SOAP_Fault("No known servers to report",'Server','',null);
 		}
 	}
@@ -1040,23 +878,18 @@ class PGVServiceLogic extends GenealogyService
 	 * @param string generations number of generations to go
 	 * @param boolean  returnGedcom return gedcom with results
 	***/
-	function postGetAncestry($SID, $rootID, $generations, $returnGedcom)
-	{
+	function postGetAncestry($SID, $rootID, $generations, $returnGedcom) {
 		$list = array();
 		$list[$rootID] = Person::getInstance($rootID);
 
 		add_ancestors($list, $rootID, false, $generations);
 
-		if(empty($list)){
+		if (empty($list)){
 			return new SOAP_Fault('Could not retrieve ancestory', 'Server', '',null);
-		}
-		else
-		{
+		} else {
 			$count = 0;
-			foreach($list as $key => $value)
-			{
-				if($value!=null)
-				{
+			foreach ($list as $key => $value) {
+				if ($value!=null) {
 					$person = $this->createPerson($key, $value->getGedcomRecord(), "item", $returnGedcom);
 					$result[] = $person;
 					$count++;
@@ -1064,9 +897,9 @@ class PGVServiceLogic extends GenealogyService
 			}
 		}
 
-		if($count === 0)
+		if ($count === 0) {
 			return new SOAP_Fault('No ancestry results for ' . $rootID, 'Server', '', null);
-		else {
+		} else {
 			$result = new SOAP_Value('results', '{urn:'.$this->__namespace.'}ArrayOfPerson', $result);
 			return $result;
 		}
@@ -1079,32 +912,26 @@ class PGVServiceLogic extends GenealogyService
 	* @param string generations generations to go
 	* @param boolean returnGedcom return gedcom with results
 	*/
-	function postGetDescendants($SID, $rootID, $generations, $returnGedcom)
-	{
+	function postGetDescendants($SID, $rootID, $generations, $returnGedcom) {
 		$list = array();
 
 		add_descendancy($list, $rootID, false, $generations);
 
-		if(empty($list)){
+		if (empty($list)){
 			return new SOAP_Fault('Could not retrieve descendancy', 'Server', '',null);
-		}
-
-		else
-		{
+		} else {
 			$count = 0;
-			foreach($list as $key => $value)
-			{
-				if($value!=null)
-				{
+			foreach ($list as $key => $value) {
+				if ($value!=null) {
 					$person = $this->createPerson($key, $value->getGedcomRecord(), "item", $returnGedcom);
 					$result[] = $person;
 					$count++;
 				}
 			}
 		}
-		if($count === 0)
+		if ($count === 0) {
 			return new SOAP_Fault('No descendancy results for ' . $rootID, 'Server', '', null);
-		else {
+		} else {
 			$result = new SOAP_Value('results', '{urn:'.$this->__namespace.'}ArrayOfPerson', $result);
 			return $result;
 		}
@@ -1116,8 +943,7 @@ class PGVServiceLogic extends GenealogyService
 	/**
 	* Method to override
 	*/
-	function postGetXref($SID, $position, $type)
-	{
+	function postGetXref($SID, $position, $type) {
 		global $fcontents;
 		if (empty($position)) $position='first';
 		if (empty($type)) $type='INDI';
@@ -1133,8 +959,7 @@ class PGVServiceLogic extends GenealogyService
 				$xref1 = trim($match[$i][1]);
 				$myindilist[$xref1] = $xref1;
 			}
-		}
-		else {
+		} else {
 			$ct = preg_match_all("/0 @(.*)@ (.*)/", $fcontents, $match, PREG_SET_ORDER);
 			for($i=0; $i<$ct; $i++) {
 				$xref1 = trim($match[$i][1]);
@@ -1147,13 +972,11 @@ class PGVServiceLogic extends GenealogyService
 			$xref = current($myindilist);
 			addDebugLog("getXref type=$type position=$position SUCCESS\n$xref");
 			return new SOAP_Value('results', '{urn:'.$this->__namespace.'}ArrayOfIds', array($xref));
-		}
-		else if ($position=='last') {
+		} elseif ($position=='last') {
 			$xref = end($myindilist);
 			addDebugLog("getXref type=$type position=$position SUCCESS\n$xref");
 			return new SOAP_Value('results', '{urn:'.$this->__namespace.'}ArrayOfIds', array($xref));
-		}
-		else if ($position=='next') {
+		} elseif ($position=='next') {
 			// TODO: $xref can never be set?  This code looks like it was just copied from client.php
 			if (!empty($xref)) {
 				$xref1 = get_next_xref($xref);
@@ -1161,14 +984,12 @@ class PGVServiceLogic extends GenealogyService
 					addDebugLog("getXref type=$type position=$position xref=$xref SUCCESS\n$xref1");
 					return new SOAP_Value('results', '{urn:'.$this->__namespace.'}ArrayOfIds', array($xref));
 				}
-			}
-			else {
+			} else {
 				addDebugLog("getXref type=$type position=$position ERROR 3: No gedcom id specified.  Please specify a xref.");
 				//print "ERROR 3: No gedcom id specified.  Please specify a xref.\n";
 				return new SOAP_Fault('ERROR 3: No gedcom id specified.  Please specify a xref.', 'Server', '', null);
 			}
-		}
-		else if ($position=='prev') {
+		} elseif ($position=='prev') {
 			// TODO: $xref can never be set?  This code looks like it was just copied from client.php
 			if (!empty($xref)) {
 				$xref1 = get_prev_xref($xref);
@@ -1176,23 +997,15 @@ class PGVServiceLogic extends GenealogyService
 					addDebugLog("getXref type=$type position=$position xref=$xref SUCCESS\n$xref1");
 					return new SOAP_Value('results', '{urn:'.$this->__namespace.'}ArrayOfIds', array($xref));
 				}
-			}
-			else {
+			} else {
 				addDebugLog("getXref type=$type position=$position ERROR 3: No gedcom id specified.  Please specify a xref.");
 				//print "ERROR 3: No gedcom id specified.  Please specify a xref.\n";
 				return new SOAP_Fault('ERROR 3: No gedcom id specified.  Please specify a xref.', 'Server', '', null);
 			}
-		}
-		else if ($position=='all') {
-			//$msg_out = "SUCCESS\n";
-			//foreach($myindilist as $key=>$value) {
-			//	$msg_out .= "$key\n";
-			//}
+		} elseif ($position=='all') {
 			addDebugLog("getXref type=$type position=$position ");
 			return new SOAP_Value('results', '{urn:'.$this->__namespace.'}ArrayOfIds', $myindilist);
-		}
-		else if ($position=='new') {
-			//AddToLog("getXref position=new type=$type readonly=".$_SESSION['readonly']." username=".getUserName());
+		} elseif ($position=='new') {
 			if (empty($_SESSION['readonly']) && PGV_USER_CAN_EDIT) {
 				if ((empty($type))||(!in_array($type, array("INDI","FAM","SOUR","REPO","NOTE","OBJE","OTHER")))) {
 					addDebugLog("getXref type=$type position=$position ERROR 18: Invalid \$type specification.  Valid types are INDI, FAM, SOUR, REPO, NOTE, OBJE, or OTHER");
@@ -1205,14 +1018,12 @@ class PGVServiceLogic extends GenealogyService
 					addDebugLog("getXref type=$type position=$position SUCCESS\n$xref");
 					return new SOAP_Value('results', '{urn:'.$this->__namespace.'}ArrayOfIds', array($xref));
 				}
-			}
-			else {
+			} else {
 				addDebugLog("getXref type=$type position=$position ERROR 11: No write privileges for this record.");
 				//print "ERROR 11: No write privileges for this record.\n";
 				return new SOAP_Fault('ERROR 11: No write privileges for this record', 'Server', '', null);
 			}
-		}
-		else {
+		} else {
 			addDebugLog("getXref type=$type position=$position ERROR 17: Unknown position reference.  Valid values are first, last, prev, next.");
 			//print "ERROR 17: Unknown position reference.  Valid values are first, last, prev, next.\n";
 			return new SOAP_Fault('ERROR 17: Unknown position reference.  Valid values are first, last, prev, next', 'Server', '', null);
