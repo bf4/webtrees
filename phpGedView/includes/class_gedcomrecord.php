@@ -541,7 +541,7 @@ class GedcomRecord {
 		}
 		$dir=begRTLText($name) ? 'rtl' : 'ltr';
 		if ($find) {
-			$href='javascript:;" onclick="pasteid(\''.$this->getXref().'\', \''.addslashes(strip_tags($this->getFullName())).'\'); return false;';
+			$href='javascript:;" onclick="pasteid(\''.$this->getXref().'\', \''.htmlspecialchars(strip_tags($this->getFullName()), ENT_QUOTES).'\'); return false;';
 		} else {
 			$href=encode_url($this->getLinkUrl());
 		}
