@@ -73,4 +73,7 @@ $pgv_lang["bu_name_format_desc"]="Poprawia wpisy NAME z 'Jan/KOWALSKI/' lub 'Jan
 
 $pgv_lang["bu_duplicate_links"] ="Usuń powtarzające się odnośniki";
 $pgv_lang["bu_duplicate_links_desc"] ="Popularnym błędem GEDCOM jest posiadanie kilku odnośników do tego samge wpisu, na przykład to samo dziecko jest dodane więcej niż raz do rodziny.";
+
+$pgv_lang["bu_tmglatlon"]		="Popraw współrzędne geograficzne z programu TMG";
+$pgv_lang["bu_tmglatlon_desc"]	="Zmienia sposób zapisu współrzędnych geograficznych wykorzystywany w programie The Master Genealogist's  na format standardu GEDCOM 5.5.1 czytelny dla PGV. Uwaga: zmiany nie są podświetlone.";
 ?>
