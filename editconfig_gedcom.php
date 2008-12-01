@@ -222,7 +222,6 @@ $error_msg = "";
 if (!file_exists($path.$GEDFILENAME) && $source != "add_new_form") $action="add";
 if ($action=="update") {
 	$errors = false;
-	if (!isset($_POST)) $_POST = $HTTP_POST_VARS;
 	$FILE=$GEDFILENAME;
 	$newgedcom=false;
 	$gedcom_config="config_gedcom.php";

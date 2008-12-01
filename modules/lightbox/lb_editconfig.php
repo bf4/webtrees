@@ -57,7 +57,6 @@ if (!PGV_USER_IS_ADMIN) {
 }
 
 if ($action=="update" && !isset($security_user)) {
-    if (!isset($_POST)) $_POST = $HTTP_POST_VARS;
     $configtext = implode('', file("modules/lightbox/lb_defaultconfig.php"));
 
     $configtext = preg_replace('/\$mediatab\s*=\s*".*";/', "\$mediatab = \"".$_POST["NEW_mediatab"]."\";", $configtext);

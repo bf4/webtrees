@@ -551,7 +551,6 @@ $persgeg= array();
 $key2ind= array();
 
 if ($action=="update") {
-	if (!isset($_POST)) $_POST = $HTTP_POST_VARS;
 	$x_as= $_POST["x-as"];
 	$y_as= $_POST["y-as"];
 	if (isset($_POST["z-as"])) $z_as= $_POST["z-as"];

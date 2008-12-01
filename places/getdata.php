@@ -25,13 +25,13 @@
  * @see functions_places.php
  */
 
-$localized=@$HTTP_GET_VARS["localized"];
-$field=@$HTTP_GET_VARS["field"];
+$localized=@$_GET["localized"];
+$field=@$_GET["field"];
 //print $field."|";
-$ctry=@$HTTP_GET_VARS["ctry"];
-$stae=@$HTTP_GET_VARS["stae"];
-$cnty=@$HTTP_GET_VARS["cnty"];
-$city=@$HTTP_GET_VARS["city"];
+$ctry=@$_GET["ctry"];
+$stae=@$_GET["stae"];
+$cnty=@$_GET["cnty"];
+$city=@$_GET["city"];
 if (empty($ctry)) return;
 
 $mapname="";

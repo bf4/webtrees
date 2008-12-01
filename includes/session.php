@@ -478,12 +478,13 @@ if (($ENABLE_MULTI_LANGUAGE)&&(empty($_SESSION["CLANGUAGE"]))&&(empty($SEARCH_SP
 }
 $deflang = $LANGUAGE;
 
-if(empty($SEARCH_SPIDER)) {
-   if (!empty($_SESSION['CLANGUAGE'])) $CLANGUAGE = $_SESSION['CLANGUAGE'];
-   else if (!empty($HTTP_SESSION_VARS['CLANGUAGE'])) $CLANGUAGE = $HTTP_SESSION_VARS['CLANGUAGE'];
-   if (!empty($CLANGUAGE)) {
-      $LANGUAGE = $CLANGUAGE;
-   }
+if (empty($SEARCH_SPIDER)) {
+	if (!empty($_SESSION['CLANGUAGE'])) {
+		$CLANGUAGE=$_SESSION['CLANGUAGE'];
+	}
+	if (!empty($CLANGUAGE)) {
+		$LANGUAGE=$CLANGUAGE;
+	}
 }
 
 if (($ENABLE_MULTI_LANGUAGE) && (empty($SEARCH_SPIDER))) {
