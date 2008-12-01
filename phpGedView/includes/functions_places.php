@@ -356,4 +356,41 @@ function print_place_subfields($element_id) {
 	}
 	print "</div>";
 }
+
+/**
+ * get the URL to link to a place
+ * @string a url that can be used to link to placelist
+ */
+function get_place_url($gedcom_place) {
+	global $GEDCOM;
+	$exp = explode(",", $gedcom_place);
+	$level = count($exp);
+	$url = "placelist.php?action=show&level=".$level;
+	for ($i=0; $i<$level; $i++) {
+		$url .= "&parent[".$i."]=".trim($exp[$level-$i-1]);
+	}
+	$url .= "&ged=".$GEDCOM;
+	return $url;
+}
+
+/**
+ * get the first part of a place record
+ * @param string $gedcom_place	The original place to shorten
+ * @return string 	a shortened version of the place
+ */
+function get_place_short($gedcom_place) {
+	global $GEDCOM, $SHOW_LIST_PLACES;
+	if ($SHOW_LIST_PLACES==9) {
+		return $gedcom_place;
+	}
+	$gedcom_place = trim($gedcom_place, " ,");
+	$exp = explode(",", $gedcom_place);
+	$place = "";
+	for($i=0; $i<$SHOW_LIST_PLACES && $i<count($exp); $i++) {
+		if ($i>0) $place .= ", ";
+		$place.=trim($exp[$i]);
+	}
+	return $place;
+}
+
 ?>
