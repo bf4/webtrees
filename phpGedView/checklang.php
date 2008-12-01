@@ -29,7 +29,7 @@ require './config.php';
 print_header("checklang");
 
 // args
-$lang=@$HTTP_GET_VARS["lang"];
+$lang=@$_GET["lang"];
 if (!isset($lang)) $lang="";
 
 // reading flags directory

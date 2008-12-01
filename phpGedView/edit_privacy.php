@@ -139,7 +139,6 @@ require 'js/autocomplete.js.htm';
 </table>
 <?php
 if ($action=="update") {
-	if (!isset($_POST)) $_POST = $HTTP_POST_VARS;
 	$boolarray = array();
 	$boolarray["yes"]="true";
 	$boolarray["no"]="false";

@@ -101,7 +101,6 @@ if (!PGV_USER_IS_ADMIN) {
 }
 
 if ($action=="update" && !isset($security_user)) {
-    if (!isset($_POST)) $_POST = $HTTP_POST_VARS;
     $configtext = implode('', file("modules/googlemap/defaultconfig.php"));
     $configtext = preg_replace('/\$GOOGLEMAP_ENABLED\s*=\s*".*";/', "\$GOOGLEMAP_ENABLED = \"".$_POST["NEW_GOOGLEMAP_ENABLE"]."\";", $configtext);
     $configtext = preg_replace('/\$GOOGLEMAP_API_KEY\s*=\s*".*";/', "\$GOOGLEMAP_API_KEY = \"".$_POST["NEW_GOOGLEMAP_API_KEY"]."\";", $configtext);

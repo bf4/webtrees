@@ -139,8 +139,6 @@ $where_am_i=place_id_to_hierarchy($placeid);
 $level=count($where_am_i);
 
 if ($action=='addrecord') {
-	if (!isset($_POST)) $_POST = $HTTP_POST_VARS;
-		// $_POST[] is already escaped by the framework, so no need to escapeSimple()
 	if (($_POST['LONG_CONTROL'] == '') || ($_POST['NEW_PLACE_LONG'] == '') || ($_POST['NEW_PLACE_LATI'] == '')) {
 		$sql = "INSERT INTO {$TBLPREFIX}placelocation (pl_id, pl_parent_id, pl_level, pl_place, pl_long, pl_lati, pl_zoom, pl_icon) VALUES (".(getHighestIndex()+1).", {$placeid}, {$level}, '".$DBCONN->escapeSimple($_POST['NEW_PLACE_NAME'])."', '' , '', {$_POST['NEW_ZOOM_FACTOR']}, '{$_POST['icon']}');";
 	} else {
@@ -156,7 +154,6 @@ if ($action=='addrecord') {
 }
 
 if ($action=='updaterecord') {
-	if (!isset($_POST)) $_POST = $HTTP_POST_VARS;
 	if (($_POST['LONG_CONTROL'] == '') || ($_POST['NEW_PLACE_LONG'] == '') || ($_POST['NEW_PLACE_LATI'] == '')) {
 		$sql = "UPDATE {$TBLPREFIX}placelocation SET pl_place='".$DBCONN->escapeSimple($_POST['NEW_PLACE_NAME'])."', pl_lati='', pl_long='', pl_zoom={$_POST['NEW_ZOOM_FACTOR']}, pl_icon='{$_POST['icon']}' WHERE pl_id={$placeid}";
 	} else {

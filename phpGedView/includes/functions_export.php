@@ -128,10 +128,6 @@ function print_gedcom($privatize_export, $privatize_export_level, $convert, $rem
 			$_SESSION["org_user"] = $_SESSION["pgv_user"];
 			$_SESSION["pgv_user"] = "export";
 		}
-		if (isset ($HTTP_SESSION_VARS)) {
-			$HTTP_SESSION_VARS["org_user"] = $HTTP_SESSION_VARS["pgv_user"];
-			$HTTP_SESSION_VARS["pgv_user"] = "export";
-		}
 	}
 
 	$head=gedcom_header($GEDCOM, $CRLF);
@@ -227,9 +223,6 @@ function print_gedcom($privatize_export, $privatize_export_level, $convert, $rem
 	if ($privatize_export == "yes") {
 		if (isset ($_SESSION)) {
 			$_SESSION["pgv_user"] = $_SESSION["org_user"];
-		}
-		if (isset ($HTTP_SESSION_VARS)) {
-			$HTTP_SESSION_VARS["pgv_user"] = $HTTP_SESSION_VARS["org_user"];
 		}
 		delete_user($export_user_id);
 		AddToLog("deleted dummy user -> export <-");

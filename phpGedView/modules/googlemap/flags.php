@@ -64,7 +64,6 @@ if(!function_exists('scandir')) {
 }
 
 if(!isset($countrySelected)) $countrySelected="Countries";
-if (!isset($_POST)) $_POST = $HTTP_POST_VARS;
 
 print_simple_header($pgv_lang["flags_edit"]);
 

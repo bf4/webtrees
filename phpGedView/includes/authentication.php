@@ -163,38 +163,32 @@ function getUserId() {
 	//-- this section checks if the session exists and uses it to get the username
 	if (isset($_SESSION) && !empty($_SESSION['pgv_user'])) {
 		return $_SESSION['pgv_user'];
-	} else {
-		if (isset($HTTP_SESSION_VARS) && !empty($HTTP_SESSION_VARS['pgv_user'])) {
-			return $HTTP_SESSION_VARS['pgv_user'];
-		} else {
-			if ($ALLOW_REMEMBER_ME) {
-				$tSERVER_URL = preg_replace(array("'https?://'", "'www.'", "'/$'"), array("","",""), $SERVER_URL);
-				if (empty($tSERVER_URL))
-					$tSERVER_URL = $SERVER_URL; 	// cannot assume we had a match.
-				if ((isset($_SERVER['HTTP_REFERER'])) && !empty($tSERVER_URL) && (stristr($_SERVER['HTTP_REFERER'],$tSERVER_URL)!==false))
-					$referrer_found=true;
-				if (!empty($_COOKIE["pgv_rem"])&& (empty($referrer_found)) && empty($logout)) {
-					if (!is_object($DBCONN)) {
-						return $_COOKIE["pgv_rem"];
-					} else {	
-						$session_time=get_user_setting($_COOKIE['pgv_rem'], 'sessiontime');
-						if (is_null($session_time))
-							$session_time=0;
-						if (time() - $session_time < 60*60*24*7) {
-							$_SESSION['pgv_user'] = $_COOKIE['pgv_rem'];
-							$_SESSION['cookie_login'] = true;
-							return $_COOKIE['pgv_rem'];
-						} else {
-							return "";
-						}
-					}
+	} elseif ($ALLOW_REMEMBER_ME) {
+		$tSERVER_URL = preg_replace(array("'https?://'", "'www.'", "'/$'"), array("","",""), $SERVER_URL);
+		if (empty($tSERVER_URL))
+			$tSERVER_URL = $SERVER_URL; 	// cannot assume we had a match.
+		if ((isset($_SERVER['HTTP_REFERER'])) && !empty($tSERVER_URL) && (stristr($_SERVER['HTTP_REFERER'],$tSERVER_URL)!==false))
+			$referrer_found=true;
+		if (!empty($_COOKIE["pgv_rem"])&& (empty($referrer_found)) && empty($logout)) {
+			if (!is_object($DBCONN)) {
+				return $_COOKIE["pgv_rem"];
+			} else {	
+				$session_time=get_user_setting($_COOKIE['pgv_rem'], 'sessiontime');
+				if (is_null($session_time))
+					$session_time=0;
+				if (time() - $session_time < 60*60*24*7) {
+					$_SESSION['pgv_user'] = $_COOKIE['pgv_rem'];
+					$_SESSION['cookie_login'] = true;
+					return $_COOKIE['pgv_rem'];
 				} else {
 					return "";
 				}
-			} else {
-				return "";
 			}
+		} else {
+			return "";
 		}
+	} else {
+		return "";
 	}
 }
 
