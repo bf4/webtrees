@@ -44,6 +44,9 @@ VERSION 4.2.
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change	codes and comments
 ----------------------------------------------------------------------------------------
+*$pgv_lang["stat_8_fam"]							01 Dec 2008				w
+*$pgv_lang["stat_9_indi"]							01 Dec 2008				w
+*$pgv_lang["stplipot"]								01 Dec 2008             w
 -$pgv_lang["stplGDno"]								01 Dec 2008				D
 -$pgv_lang["stpljpgraphno"]							01 Dec 2008				D
 -$pgv_lang["statmess1"]								01 Dec 2008				D
