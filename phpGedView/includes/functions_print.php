@@ -479,19 +479,20 @@ function print_header($title, $head="",$use_alternate_styles=true) {
 		// Restrict good search engine spiders to the index page and the individual.php pages.
 		// Quick and dirty hack that will still leave some url only links in Google.
 		// Also ignored by crawlers like wget, so other checks have to be done too.
-		if((strstr($SCRIPT_NAME, "/individual.php")) ||
-		   (strstr($SCRIPT_NAME, "/indilist.php")) ||
-		   (strstr($SCRIPT_NAME, "/family.php")) ||
-		   (strstr($SCRIPT_NAME, "/famlist.php")) ||
-		   (strstr($SCRIPT_NAME, "/help_text.php")) ||
-		   (strstr($SCRIPT_NAME, "/source.php")) ||
-		   (strstr($SCRIPT_NAME, "/search_engine.php")) ||
-		   (strstr($SCRIPT_NAME, "/index.php")) ) {
-			// empty case is to index,follow anyways.
-			if (empty($META_ROBOTS)) $META_ROBOTS = "index,follow";
-		}
-		else {
-			$META_ROBOTS ="noindex,nofollow";
+		if (!empty($SEARCH_SPIDER)) {
+			if ((strstr($SCRIPT_NAME, "/individual.php")) ||
+			    (strstr($SCRIPT_NAME, "/indilist.php")) ||
+			    (strstr($SCRIPT_NAME, "/family.php")) ||
+			    (strstr($SCRIPT_NAME, "/famlist.php")) ||
+			    (strstr($SCRIPT_NAME, "/help_text.php")) ||
+			    (strstr($SCRIPT_NAME, "/source.php")) ||
+			    (strstr($SCRIPT_NAME, "/search_engine.php")) ||
+			    (strstr($SCRIPT_NAME, "/index.php")) ) {
+				// empty case is to index,follow anyways.
+				if (empty($META_ROBOTS)) $META_ROBOTS = "index,follow";
+			} else {
+				$META_ROBOTS ="noindex,nofollow";
+			}
 		}
 		$javascript .='<script language="JavaScript" type="text/javascript">
 	<!--
