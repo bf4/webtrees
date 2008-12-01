@@ -393,4 +393,16 @@ function get_place_short($gedcom_place) {
 	return $place;
 }
 
+/**
+ * get the last part of a place record
+ * @param string $gedcom_place	The original place to country
+ * @return string 				a country version of the place
+ */
+function getPlaceCountry($gedcom_place) {
+	global $GEDCOM;
+	$gedcom_place = trim($gedcom_place, " ,");
+	$exp = explode(",", $gedcom_place);
+	$place = trim($exp[count($exp)-1]);
+	return $place;
+}
 ?>

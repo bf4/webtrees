@@ -44,8 +44,46 @@ VERSION 4.2.
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change	codes and comments
 ----------------------------------------------------------------------------------------
+-$pgv_lang["stplGDno"]								01 Dec 2008				D
+-$pgv_lang["stpljpgraphno"]							01 Dec 2008				D
+-$pgv_lang["statmess1"]								01 Dec 2008				D
+-$pgv_lang["stplgzas"]								01 Dec 2008				D
++$pgv_lang["stat_sindi"]							01 Dec 2008				A
++$pgv_lang["stat_sfam"]								01 Dec 2008				A
++$pgv_lang["others"]								01 Dec 2008				A
++$pgv_lang["stat_1_map"]							01 Dec 2008				A
++$pgv_lang["stat_2_map"]							01 Dec 2008				A
++$pgv_lang["stat_3_map"]							01 Dec 2008				A
++$pgv_lang["stat_8_fam"]							01 Dec 2008				A
++$pgv_lang["stat_9_indi"]							01 Dec 2008				A
++$pgv_lang["map_type"]								01 Dec 2008				A
++$pgv_lang["indi_distribution_chart"]				01 Dec 2008				A
++$pgv_lang["surname_distribution_chart"]			01 Dec 2008				A
++$pgv_lang["g_chart_high"]							01 Dec 2008				A
++$pgv_lang["g_chart_low"]							01 Dec 2008				A
++$pgv_lang["g_chart_nobody"]						01 Dec 2008				A
++$pgv_lang["area_chart"]							01 Dec 2008				A
++$pgv_lang["europe_chart"]							01 Dec 2008				A
++$pgv_lang["s_america_chart"]						01 Dec 2008				A
++$pgv_lang["asia_chart"]							01 Dec 2008				A
++$pgv_lang["middle_east_chart"]						01 Dec 2008				A
++$pgv_lang["africa_chart"]							01 Dec 2008				A
++$pgv_lang["world_chart"]							01 Dec 2008				A
++$pgv_lang["quarters"]								01 Dec 2008				A
++$pgv_lang["half_year"]								01 Dec 2008				A
++$pgv_lang["stplnuch"]								01 Dec 2008				A
+*$pgv_lang["stplmf"]								01 Dec 2008				W
+*$pgv_lang["stplipot"]								01 Dec 2008				W
+*$pgv_lang["statlxa"]								01 Dec 2008				W
+*$pgv_lang["statlya"]								01 Dec 2008				W
+*$pgv_lang["statlza"]								01 Dec 2008				W
+*$pgv_lang["statar_xgp"]							01 Dec 2008				W
+*$pgv_lang["statar_xgl"]							01 Dec 2008				W
+*$pgv_lang["statar_xgm"]							01 Dec 2008				W
+*$pgv_lang["statar_xga"]							01 Dec 2008				W
+*$pgv_lang["statar_zgp"]							01 Dec 2008				W
 -$pgv_lang["build_error"]							30 Nov 2008				D
--$pgv_lang["rebuild_indexes"]					30 Nov 2008				D
+-$pgv_lang["rebuild_indexes"]						30 Nov 2008				D
 *$pgv_lang["stplnumbers"]							23 Nov 2008				W
 *$pgv_lang["statnnames"]							22 Nov 2008				W
 *$pgv_lang["statnfam"]								22 Nov 2008				W
