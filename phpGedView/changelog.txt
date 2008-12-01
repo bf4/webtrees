@@ -10,6 +10,7 @@
 
 
 Version 4.2.0
+ - Fixed: [ 2331810 ] 4.1.6 class event error displaying indi (fisharebest)
  - Added: [ 1527087 ] cleanup lat/lon export from TMG - implement as batch update plugin
  - Fixed: [ 2344682 ] Find Individual ID (fisharebest)
  - Fixed: [ 2350196 ] HTTPS / SSL detection in session.php (canajun2eh)
