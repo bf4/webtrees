@@ -35,6 +35,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 define('PGV_FUNCTIONS_PRINT_LISTS_PHP', '');
 
 require_once 'includes/class_person.php';
+require_once 'includes/functions_places.php';
 
 /**
  * print a sortable table of individuals
@@ -253,11 +254,11 @@ function print_indi_table($datalist, $legend="", $option="") {
 		if ($birth_places=$person->getAllBirthPlaces()) {
 			foreach ($birth_places as $birth_place) {
 				if ($SEARCH_SPIDER) {
-					echo $person->getPlaceShort($birth_place), ' ';
+					echo get_place_short($birth_place), ' ';
 				} else {
 					echo '<div align="', get_align($birth_place), '">';
-					echo '<a href="', encode_url($person->getPlaceUrl($birth_place)), '" class="list_item" title="', $birth_place.'">';
-					echo PrintReady($person->getPlaceShort($birth_place)), '</a>';
+					echo '<a href="', encode_url(get_place_url($birth_place)), '" class="list_item" title="', $birth_place.'">';
+					echo PrintReady(get_place_short($birth_place)), '</a>';
 					echo '</div>';
 				}
 			}
@@ -331,11 +332,11 @@ function print_indi_table($datalist, $legend="", $option="") {
 		if ($death_places=$person->getAllDeathPlaces()) {
 			foreach ($death_places as $death_place) {
 				if ($SEARCH_SPIDER) {
-					echo $person->getPlaceShort($death_place), ' ';
+					echo get_place_short($death_place), ' ';
 				} else {
 					echo '<div align="', get_align($death_place), '">';
-					echo '<a href="', encode_url($person->getPlaceUrl($death_place)), '" class="list_item" title="', $death_place.'">';
-					echo PrintReady($person->getPlaceShort($death_place)), '</a>';
+					echo '<a href="', encode_url(get_place_url($death_place)), '" class="list_item" title="', $death_place.'">';
+					echo PrintReady(get_place_short($death_place)), '</a>';
 					echo '</div>';
 				}
 			}
@@ -677,11 +678,11 @@ function print_fam_table($datalist, $legend="", $option="") {
 		if ($marriage_places=$family->getAllMarriagePlaces()) {
 			foreach ($marriage_places as $marriage_place) {
 				if ($SEARCH_SPIDER) {
-					echo $family->getPlaceShort($marriage_place), ' ';
+					echo get_place_short($marriage_place), ' ';
 				} else {
 					echo '<div align="', get_align($marriage_place), '">';
-					echo '<a href="', encode_url($family->getPlaceUrl($marriage_place)), '" class="list_item" title="', $marriage_place.'">';
-					echo PrintReady($family->getPlaceShort($marriage_place)), '</a>';
+					echo '<a href="', encode_url(get_place_url($marriage_place)), '" class="list_item" title="', $marriage_place.'">';
+					echo PrintReady(get_place_short($marriage_place)), '</a>';
 					echo '</div>';
 				}
 			}
@@ -1728,7 +1729,7 @@ function print_events_list($startjd, $endjd, $events='BIRT MARR DEAT', $only_liv
 		$return .= "<div class=\"indent\">";
 		$return .= $factarray[$value['fact']].' - '.$value['date']->Display(true);
 		if ($value['anniv']!=0) $return .= " (" . str_replace("#year_var#", $value['anniv'], $pgv_lang["year_anniversary"]).")";
-		if (!empty($value['plac'])) $return .= " - <a href=\"".encode_url(GedcomRecord::getPlaceUrl($value['plac']))."\">".$value['plac']."</a>";
+		if (!empty($value['plac'])) $return .= " - <a href=\"".encode_url(get_place_url($value['plac']))."\">".$value['plac']."</a>";
 		$return .= "</div>";
 	}
 
