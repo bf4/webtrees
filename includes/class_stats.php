@@ -411,6 +411,34 @@ class stats {
 		$rows=self::_runSQL("SELECT COUNT(i_file) AS tot FROM {$TBLPREFIX}individuals WHERE i_file=".$this->_ged_id);
 		return $rows[0]['tot'];
 	}
+	
+	function totalIndisWithSources()
+	{
+		global $TBLPREFIX;
+		// 4.2
+		//$rows=self::_runSQL("SELECT COUNT(DISTINCT i_id) AS tot FROM {$TBLPREFIX}link, {$TBLPREFIX}individuals WHERE i_id=l_from AND i_file=l_file AND l_file=".$this->_ged_id." AND l_type='SOUR'");
+		// 4.1.6
+		$rows=self::_runSQL("SELECT COUNT(i_id) AS tot FROM {$TBLPREFIX}individuals WHERE i_file=".$this->_ged_id." AND i_gedcom LIKE '%SOUR @%'");
+		return $rows[0]['tot'];
+	}
+
+	function chartIndisWithSources($params=null)
+	{
+		global $pgv_lang;
+		if ($params === null) {$params = array();}
+		if (isset($params[0]) && $params[0] != '') {$size = strtolower($params[0]);}else{$size = '450x125';}
+		if (isset($params[1]) && $params[1] != '') {$color_from = strtolower($params[1]);}else{$color_from = 'ffffff';}
+		if (isset($params[2]) && $params[2] != '') {$color_to = strtolower($params[2]);}else{$color_to = '000000';}
+		$sizes = explode('x', $size);
+		$tot_indi = $this->totalIndividuals();
+		$tot_sindi = $this->totalIndisWithSources();
+		$tot_indi_per = round(100 *  ($tot_indi-$tot_sindi) / $tot_indi, 2);
+		$tot_sindi_per = round(100 * $tot_sindi / $tot_indi, 2);
+		$chd = self::_array_to_extended_encoding(array($tot_sindi, $tot_indi-$tot_sindi));
+			$chl = reverseText($pgv_lang['stat_sindi']).' ['.round($tot_sindi_per,1).'%]|'.
+				   reverseText($pgv_lang['others']).' ['.round($tot_indi_per,1).'%]';
+			return "<img src=\"".encode_url("http://chart.apis.google.com/chart?cht=p3&chd=e:{$chd}&chs={$size}&chco={$color_from},{$color_to}&chf=bg,s,ffffff00&chl={$chl}")."\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" alt=\"\" />";
+	}
 
 	function totalIndividualsPercentage()
 	{
@@ -422,6 +450,34 @@ class stats {
 		global $TBLPREFIX;
 		$rows=self::_runSQL("SELECT COUNT(f_file) AS tot FROM {$TBLPREFIX}families WHERE f_file=".$this->_ged_id);
 		return $rows[0]['tot'];
+	}
+	
+	function totalFamsWithSources()
+	{
+		global $TBLPREFIX;
+		// 4.2
+		//$rows=self::_runSQL("SELECT COUNT(DISTINCT f_id) AS tot FROM {$TBLPREFIX}link, {$TBLPREFIX}families WHERE f_id=l_from AND f_file=l_file AND l_file=".$this->_ged_id." AND l_type='SOUR'");
+		// 4.1.6
+		$rows=self::_runSQL("SELECT COUNT(f_id) AS tot FROM {$TBLPREFIX}families WHERE f_file=".$this->_ged_id." AND f_gedcom LIKE '%SOUR @%'");
+		return $rows[0]['tot'];
+	}
+
+	function chartFamsWithSources($params=null)
+	{
+		global $pgv_lang;
+		if ($params === null) {$params = array();}
+		if (isset($params[0]) && $params[0] != '') {$size = strtolower($params[0]);}else{$size = '450x125';}
+		if (isset($params[1]) && $params[1] != '') {$color_from = strtolower($params[1]);}else{$color_from = 'ffffff';}
+		if (isset($params[2]) && $params[2] != '') {$color_to = strtolower($params[2]);}else{$color_to = '000000';}
+		$sizes = explode('x', $size);
+		$tot_fam = $this->totalFamilies();
+		$tot_sfam = $this->totalFamsWithSources();
+		$tot_fam_per = round(100 *  ($tot_fam-$tot_sfam) / $tot_fam, 2);
+		$tot_sfam_per = round(100 * $tot_sfam / $tot_fam, 2);
+		$chd = self::_array_to_extended_encoding(array($tot_sfam, $tot_fam-$tot_sfam));
+			$chl = reverseText($pgv_lang['stat_sfam']).' ['.round($tot_sfam_per,1).'%]|'.
+				   reverseText($pgv_lang['others']).' ['.round($tot_fam_per,1).'%]';
+			return "<img src=\"".encode_url("http://chart.apis.google.com/chart?cht=p3&chd=e:{$chd}&chs={$size}&chco={$color_from},{$color_to}&chf=bg,s,ffffff00&chl={$chl}")."\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" alt=\"\" />";
 	}
 
 	function totalFamiliesPercentage()
@@ -1561,7 +1617,7 @@ class stats {
 	{
 		global $pgv_lang, $COMMON_NAMES_THRESHOLD;
 		if ($params === null) {$params = array();}
-		if (isset($params[0]) && $params[0] != '') {$size = strtolower($params[0]);}else{$size = '450x120';}
+		if (isset($params[0]) && $params[0] != '') {$size = strtolower($params[0]);}else{$size = '450x125';}
 		if (isset($params[1]) && $params[1] != '') {$color_from = strtolower($params[1]);}else{$color_from = 'ffffff';}
 		if (isset($params[2]) && $params[2] != '') {$color_to = strtolower($params[2]);}else{$color_to = '000000';}
 		if (isset($params[3]) && $params[3] != '') {$threshold = strtolower($params[3]);}else{$threshold = $COMMON_NAMES_THRESHOLD;}

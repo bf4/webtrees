@@ -10,6 +10,8 @@
 
 
 Version 4.2.0
+ - Changed: Statistics - user-friendly (wooc)
+ - Fixed: [ 2330631 ] Statistics Plot - Minor Issues (wooc)
  - Fixed: [ 2370242 ] [4369] Meta Robots setting not sticking (canajun2eh)
  - Fixed: [ 2331810 ] 4.1.6 class event error displaying indi (fisharebest)
  - Added: [ 1527087 ] cleanup lat/lon export from TMG - implement as batch update plugin
