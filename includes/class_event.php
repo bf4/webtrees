@@ -474,8 +474,7 @@ class Event {
 			));
 
 		// Facts from different families stay grouped together
-		$afam = $a->getFamilyId();
-		if (!empty($a) && $a==$b->getFamilyId())
+		if ($a->getFamilyId() && $a->getFamilyId()==$b->getFamilyId())
 			return 0;
 
 		$atag = $a->getTag();
