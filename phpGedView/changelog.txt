@@ -10,6 +10,7 @@
 
 
 Version 4.2.0
+ - Fixed: [ 2377438 ] Clipping Cart, GRAMPS format, download error (canajun2eh)
  - Changed: Statistics - user-friendly (wooc)
  - Fixed: [ 2330631 ] Statistics Plot - Minor Issues (wooc)
  - Fixed: [ 2370242 ] [4369] Meta Robots setting not sticking (canajun2eh)
