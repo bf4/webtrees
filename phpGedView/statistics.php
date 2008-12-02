@@ -29,10 +29,11 @@
 
 require './config.php';
 require_once 'includes/class_stats.php';
+require_once 'includes/functions_places.php';
 
 function get_person() {
-	global $nrpers, $persgeg, $persgeg1, $key2ind;
-	global $match1,$match2;
+	global $nrmale, $nrfemale, $nrpers, $persgeg, $persgeg1, $key2ind;
+	global $match1, $match2;
 
 	$myindilist = array();
 	$keys = array();
@@ -44,14 +45,14 @@ function get_person() {
 	$keys = array_keys($myindilist);
 	$values = array_values($myindilist);
 	$nrpers = count($myindilist);
-	$nrmale = 0;
-	$nrfemale = 0;
 
 	for($i=0; $i<$nrpers; $i++) {
 		$value = $values[$i];
 		$key = $keys[$i];
 		$deathdate = "";
+		$deathplace = "";
 		$birthdate = "";
+		$birthplace = "";
 		$sex = "";
 		$indirec= find_person_record($key);
 		if (dateplace($indirec,"1 BIRT")!== false) {
@@ -76,8 +77,10 @@ function get_person() {
 		//-- get the marriage date of (the first) marriage.
 		$ybirth = -1;
 		$mbirth = -1;
+		$pbirth = -1;
 		$ydeath = -1;
 		$mdeath = -1;
+		$pdeath = -1;
 		if ($birthdate !== "") {
 			$dates = new GedcomDate($birthdate);
 			if ($dates->qual1 == "") {
@@ -86,6 +89,9 @@ function get_person() {
 				$ybirth = $date->y;
 				$mbirth = $date->m;
 			}
+		}
+		if ($birthplace !== "") {
+			$pbirth = getPlaceCountry($birthplace);
 		}
 		if ($deathdate !== "")
 		{
@@ -97,13 +103,18 @@ function get_person() {
 				$mdeath = $date->m;
 			}
 		}
+		if ($deathplace !== "") {
+			$pdeath = getPlaceCountry($deathplace);
+		}
 		$families = find_sfamily_ids($key); //-- get the number of marriages of this person.
 		$persgeg[$i]["key"] = $key;
 		$key2ind[$key] = $i;
 		$persgeg[$i]["ybirth"] = $ybirth;
 		$persgeg[$i]["mbirth"] = $mbirth;
+		$persgeg[$i]["pbirth"] = $pbirth;
 		$persgeg[$i]["ydeath"] = $ydeath;
 		$persgeg[$i]["mdeath"] = $mdeath;
+		$persgeg[$i]["pdeath"] = $pdeath;
 		$persgeg1[$i]["arfams"] = $families;
 		$persgeg[$i]["sex"] = $sex;
 	}
@@ -302,7 +313,7 @@ function complete_data() {
 	}
 }
 
-function stringinfo($indirec,$lookfor) {
+function stringinfo($indirec, $lookfor) {
 	//look for a starting string in the gedcom record of a person
 	//then take the stripped comment
 	global $match1, $match2;
@@ -324,7 +335,7 @@ function stringinfo($indirec,$lookfor) {
 	}
 }
 
-function chstringinfo($childrec,$lookfor) {
+function chstringinfo($childrec, $lookfor) {
 	//look for a starting string in the gedcom record of a child
 	//then take the stripped comment
 	$rec = get_sub_record(1, $lookfor, $childrec);
@@ -360,6 +371,12 @@ function dateplace($indirec, $lookfor) {
 			$match1[1] = trim($match1[1]);
 		} else {
 			$match1[1] = "";
+		}
+		$dct = preg_match("/2 PLAC (.*)/", $birthrec, $match2);
+		if ($dct > 0) {
+			$match2[1] = trim($match2[1]);
+		} else {
+			$match2[1] = "";
 		}
 		return true;
 	}
@@ -404,6 +421,8 @@ $persgeg1 = array();
 $key2ind = array();
 $match1 = array();
 $match2 = array();
+$nrmale = 0;
+$nrfemale = 0;
 
 /*
  * Initiate the stats object.
@@ -411,6 +430,7 @@ $match2 = array();
 $stats = new stats($GEDCOM);
 
 print_header($pgv_lang["statistics"]);
+require 'js/autocomplete.js.htm';
 ?>
 <script language="JavaScript" type="text/javascript">
 <!--
@@ -436,6 +456,16 @@ print_header($pgv_lang["statistics"]);
 			if (box_axes) box_axes.style.display = "none";
 			var box_zyaxes = document.getElementById("zyaxes");
 			if (box_zyaxes) box_zyaxes.style.display = "none";
+		}
+	}
+	function statusShowSurname(x) {
+	    if (x.value == "surname_distribution_chart") {
+			var box = document.getElementById("surname_opt");
+			box.style.display = "";
+		}
+		else if (x.value !== "surname_distribution_chart") {
+			var box = document.getElementById("surname_opt");
+			box.style.display = "none";
 		}
 	}
 //-->
@@ -502,7 +532,7 @@ if (isset($_SESSION[$GEDCOM."statTicks1"])) {
 else {
 	$chart_shows = "world";
 	$chart_type = "indi_distribution_chart";
-	$surname = $factarray['SURN'];
+	$surname = $stats->getCommonSurname();
 }
 
 ?>
@@ -631,10 +661,10 @@ else {
 	print_help_link('chart_type_help', 'qm');
 	echo $pgv_lang["map_type"]
 	?>
-	<br /><select name="chart_type">
-		<option value="indi_distribution_chart" selected="selected" onclick="statusHide('surname_opt');">
+	<br /><select name="chart_type" onchange="statusShowSurname(this)";>
+		<option value="indi_distribution_chart" selected="selected">
 			<?php echo $pgv_lang["indi_distribution_chart"]; ?></option>
-		<option value="surname_distribution_chart" onclick="statusShow('surname_opt');">
+		<option value="surname_distribution_chart">
 			<?php echo $pgv_lang["surname_distribution_chart"]; ?></option>
 	</select>
 	<br />
@@ -642,7 +672,7 @@ else {
 	<div id="surname_opt" style="display:none;">
 	<?php
 	print_help_link('google_chart_surname_help', 'qm');
-	echo $factarray['SURN'], '<br /><input type="text" name="surname" size="20" value="'.$factarray['SURN'].'" />';
+	echo $factarray['SURN'], '<br /><input type="text" name="SURN" size="20" />';
 	?>
 	<br />
 	</div>
