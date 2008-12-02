@@ -2865,10 +2865,7 @@ function get_anniversary_events($jd, $facts='', $ged_id=PGV_GED_ID) {
 	$found_facts=array();
 	foreach (array(new GregorianDate($jd), new JulianDate($jd), new FrenchRDate($jd), new JewishDate($jd), new HijriDate($jd)) as $anniv) {
 		// Build a SQL where clause to match anniversaries in the appropriate calendar.
-		if ($anniv->CALENDAR_ESCAPE()=='@#DGREGORIAN@')
-			$where="WHERE (d_type IS NULL OR d_type='".$anniv->CALENDAR_ESCAPE()."')";
-		else
-			$where="WHERE d_type='".$anniv->CALENDAR_ESCAPE()."'";
+		$where="WHERE d_type='".$anniv->CALENDAR_ESCAPE()."'";
 		// SIMPLE CASES:
 		// a) Non-hebrew anniversaries
 		// b) Hebrew months TVT, SHV, IYR, SVN, TMZ, AAV, ELL
@@ -2982,36 +2979,42 @@ function get_anniversary_events($jd, $facts='', $ged_id=PGV_GED_ID) {
 		$where.=" AND d_file=".$ged_id;
 
 		// Now fetch these anniversaries
-		$ind_sql="SELECT DISTINCT d_gid, i_gedcom, 'INDI', d_type, d_day, d_month, d_year, d_fact, d_type FROM {$TBLPREFIX}dates, {$TBLPREFIX}individuals {$where} AND d_gid=i_id AND d_file=i_file ORDER BY d_day ASC, d_year DESC";
-		$fam_sql="SELECT DISTINCT d_gid, f_gedcom, 'FAM',  d_type, d_day, d_month, d_year, d_fact, d_type FROM {$TBLPREFIX}dates, {$TBLPREFIX}families    {$where} AND d_gid=f_id AND d_file=f_file ORDER BY d_day ASC, d_year DESC";
+		$ind_sql="SELECT DISTINCT 'INDI' AS type, i_id AS xref, {$ged_id} AS ged_id, i_gedcom AS gedrec, i_isdead, d_type, d_day, d_month, d_year, d_fact, d_type FROM {$TBLPREFIX}dates, {$TBLPREFIX}individuals {$where} AND d_gid=i_id AND d_file=i_file ORDER BY d_day ASC, d_year DESC";
+		$fam_sql="SELECT DISTINCT 'FAM' AS type, f_id AS xref, {$ged_id} AS ged_id, f_gedcom AS gedrec, f_husb, f_wife, f_chil, f_numchil, d_type, d_day, d_month, d_year, d_fact, d_type FROM {$TBLPREFIX}dates, {$TBLPREFIX}families {$where} AND d_gid=f_id AND d_file=f_file ORDER BY d_day ASC, d_year DESC";
 		foreach (array($ind_sql, $fam_sql) as $sql) {
 			$res=dbquery($sql);
-			while ($row=&$res->fetchRow()) {
+			while ($row=&$res->fetchRow(DB_FETCHMODE_ASSOC)) {
+				if ($row['type']=='INDI') {
+					$record=Person::getInstance($row);
+				} else {
+					$record=Family::getInstance($row);
+				}
 				// Generate a regex to match the retrieved date - so we can find it in the original gedcom record.
 				// TODO having to go back to the original gedcom is lame.  This is why it is so slow, and needs
 				// to be cached.  We should store the level1 fact here (or somewhere)
-				if ($row[8]=='@#DJULIAN@')
-					if ($row[6]<0)
-						$year_regex=$row[6]." ?[Bb]\.? ?[Cc]\.\ ?";
+				if ($row['d_type']=='@#DJULIAN@')
+					if ($row['d_year']<0)
+						$year_regex=$row['d_year']." ?[Bb]\.? ?[Cc]\.\ ?";
 					else
-						$year_regex="({$row[6]}|".($row[6]-1)."\/".($row[6]%100).")";
+						$year_regex="({$row['d_year']}|".($row['d_year']-1)."\/".($row['d_year']%100).")";
 				else
-					$year_regex="0*".$row[6];
-				$ged_date_regex="/2 DATE.*(".($row[4]>0 ? "0?{$row[4]}\s*" : "").$row[5]."\s*".($row[6]!=0 ? $year_regex : "").")/i";
-				foreach (get_all_subrecords($row[1], $skipfacts, false, false) as $factrec)
-					if (preg_match("/(^1 {$row[7]}|^1 (FACT|EVEN).*\n2 TYPE {$row[7]})/s", $factrec) && preg_match($ged_date_regex, $factrec) && preg_match('/2 DATE (.+)/', $factrec, $match)) {
+					$year_regex="0*".$row['d_year'];
+				$ged_date_regex="/2 DATE.*(".($row['d_day']>0 ? "0?{$row['d_day']}\s*" : "").$row['d_month']."\s*".($row['d_year']!=0 ? $year_regex : "").")/i";
+				foreach (get_all_subrecords($row['gedrec'], $skipfacts, false, false) as $factrec)
+					if (preg_match("/(^1 {$row['d_fact']}|^1 (FACT|EVEN).*\n2 TYPE {$row['d_fact']})/s", $factrec) && preg_match($ged_date_regex, $factrec) && preg_match('/2 DATE (.+)/', $factrec, $match)) {
 						$date=new GedcomDate($match[1]);
 						if (preg_match('/2 PLAC (.+)/', $factrec, $match))
 							$plac=$match[1];
 						else
 							$plac='';
 						$found_facts[]=array(
-							'id'=>$row[0],
-							'objtype'=>$row[2],
-							'fact'=>$row[7],
+							'record'=>$record,
+							'id'=>$row['xref'],
+							'objtype'=>$row['type'],
+							'fact'=>$row['d_fact'],
 							'factrec'=>$factrec,
 							'jd'=>$jd,
-							'anniv'=>($row[6]==0?0:$anniv->y-$row[6]),
+							'anniv'=>($row['d_year']==0?0:$anniv->y-$row['d_year']),
 							'date'=>$date,
 							'plac'=>$plac
 						);
