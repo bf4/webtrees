@@ -282,7 +282,7 @@ function complete_data() {
 		$ctc = count($childs);
 		$birthmonth = -1;
 		$birthyear = -1;
-		$sex = 3;
+		$sex1 = 3;
 		$first = true;
 		for($j=0; $j<$ctc; $j++) {
 			$key = $childs[$j];
