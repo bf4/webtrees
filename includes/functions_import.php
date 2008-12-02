@@ -154,9 +154,11 @@ function import_record($gedrec, $update) {
 
 	switch ($type) {
 	case 'INDI':
+		cleanup_tags_y($gedrec);
 		$record=new Person($gedrec);
 		break;
 	case 'FAM':
+		cleanup_tags_y($gedrec);
 		$record=new Family($gedrec);
 		break;
 	case 'SOUR':
@@ -173,6 +175,10 @@ function import_record($gedrec, $update) {
 		break;
 	}
 
+	// Just in case the admin has blocked themself from seeing names!
+	$record->disp=true;
+	$record->dispname=true;
+
 	// Update the cross-reference/index tables.
 	$ged_id=(int)($GEDCOMS[$GEDCOM]["id"]);
 	$xref  =$DBCONN->escapeSimple($gid);
@@ -184,20 +190,7 @@ function import_record($gedrec, $update) {
 
 	switch ($type) {
 	case 'INDI':
-		cleanup_tags_y($gedrec);
-		$record->dispname=true; // Just in case the admin has blocked themself from seeing names!
-		$ct = preg_match_all("/1 FAMS @(.*)@/", $gedrec, $match, PREG_SET_ORDER);
-		$sfams = "";
-		for ($j = 0; $j < $ct; $j++) {
-			$sfams .= $match[$j][1] . ";";
-		}
-		$ct = preg_match_all("/1 FAMC @(.*)@/", $gedrec, $match, PREG_SET_ORDER);
-		$cfams = "";
-		for ($j = 0; $j < $ct; $j++) {
-			$cfams .= $match[$j][1] . ";";
-		}
 		$isdead = -1;
-		$indi = array ();
 		$names=$record->getAllNames();
 		foreach ($names as $n=>$name) {
 			list($surn, $givn)=explode(',', $name['sort']);
@@ -281,27 +274,19 @@ function import_record($gedrec, $update) {
 			$res = dbquery($sql);
 
 		}
-		$indi["isdead"] = $isdead;
-		$indi["gedcom"] = $gedrec;
-		$indi["gedfile"] = $GEDCOMS[$FILE]["id"];
-		if ($USE_RIN) {
-			$ct = preg_match("/1 RIN (.*)/", $gedrec, $match);
-			if ($ct > 0)
-				$rin = trim($match[1]);
-			else
-				$rin = $gid;
-			$indi["rin"] = $rin;
-		} else
-			$indi["rin"] = $gid;
+		if ($USE_RIN && preg_match("/1 RIN (.+)/", $gedrec, $match)) {
+			$rin = trim($match[1]);
+		} else {
+			$rin = $gid;
+		}
 
 		$isdead = (int)is_dead($gedrec, '', true);
 		list($surn, $givn)=explode(',', $names[0]['sort']);
 		$initial=get_first_letter($names[0]['sort']);
-		$sql = "INSERT INTO {$TBLPREFIX}individuals (i_id, i_file, i_rin, i_name, i_isdead, i_gedcom, i_letter, i_surname) VALUES ('{$xref}',{$ged_id},'".$DBCONN->escapeSimple($indi["rin"])."','".$DBCONN->escapeSimple($names[0]['full'])."',".$DBCONN->escapeSimple($isdead).",'".$DBCONN->escapeSimple($indi["gedcom"])."','".$DBCONN->escapeSimple($initial)."','".$DBCONN->escapeSimple($surn)."')";
+		$sql = "INSERT INTO {$TBLPREFIX}individuals (i_id, i_file, i_rin, i_name, i_isdead, i_gedcom, i_letter, i_surname) VALUES ('{$xref}',{$ged_id},'".$DBCONN->escapeSimple($rin)."','".$DBCONN->escapeSimple($names[0]['full'])."',".$DBCONN->escapeSimple($isdead).",'".$DBCONN->escapeSimple($gedrec)."','".$DBCONN->escapeSimple($initial)."','".$DBCONN->escapeSimple($surn)."')";
 		$res = dbquery($sql);
 		break;
 	case 'FAM':
-		cleanup_tags_y($gedrec);
 		$parents = array ();
 		$ct = preg_match("/1 HUSB @(.*)@/", $gedrec, $match);
 		if ($ct > 0)
