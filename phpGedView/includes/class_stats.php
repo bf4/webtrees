@@ -850,7 +850,7 @@ class stats {
 		if ($count != 0) {
 			$mediaCounts[] = round(100 * $count / $tot, 0);
 			$mediaTypes .= reverseText($pgv_lang['unknown']);
-			$mediaTypes .= ' ['.($tot-$c).']';
+			$mediaTypes .= ' ['.($tot-$c).']|';
 			$chart_title .= reverseText($pgv_lang['unknown']).' ['.($tot-$c).']';
 		}
 		else {
