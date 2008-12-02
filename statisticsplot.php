@@ -587,10 +587,15 @@ function set_params($current, $indfam, $xg,  $zg, $titstr,  $xt, $yt, $gx, $gz, 
 
 // prints a map charts
 function print_map_charts($chart_shows, $chart_type, $x_as, $surname) {
-	global $pgv_lang;
+	global $GEDCOM, $persgeg, $pgv_lang;
 	global $iso3166, $country_to_iso3166;
 	define ('PGV_GOOGLE_CHART_ENCODING', 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-.');
 
+	if ($surname=="") {
+		require_once 'includes/class_stats.php';
+		$stats = new stats($GEDCOM);
+		$surname = $stats->getCommonSurname();
+	}
 	switch ($chart_type) {
 	case 'indi_distribution_chart':
 		$chart_title=$pgv_lang["indi_distribution_chart"];
@@ -616,7 +621,8 @@ function print_map_charts($chart_shows, $chart_type, $x_as, $surname) {
 	case 'indi_distribution_chart':
 		// Count how many people were born in each country
 		$surn_countries=array();
-		foreach (array_keys(get_indi_list()) as $id) {
+		$indis = array_keys(get_indi_list());
+		foreach ($indis as $id) {
 			$person=Person::getInstance($id);
 			if (preg_match_all('/^2 PLAC (?:.*, *)*(.*)/m', $person->gedrec, $matches)) {
 				// PGV uses 3 letter country codes and localised country names, but google uses 2 letter codes.
@@ -673,12 +679,10 @@ function print_map_charts($chart_shows, $chart_type, $x_as, $surname) {
 	case 'birth_distribution_chart':
 		// Count how many people were born in each country
 		$surn_countries=array();
-		foreach (array_keys(get_indi_list()) as $id) {
-			$person=Person::getInstance($id);
-			if ($birth_places=$person->getAllBirthPlaces()) {
-				foreach ($birth_places as $birth_place) {
-					$country=getPlaceCountry($birth_place);
-					$country=UTF8_strtolower(trim($country));
+		foreach ($persgeg as $id=>$indis) {
+			foreach ($indis as $pbirth=>$birth_place) {
+				if ($pbirth == 'pbirth' && $birth_place != -1) {
+					$country=UTF8_strtolower(trim($birth_place));
 					// PGV uses 3 letter country codes and localised country names, but google uses 2 letter codes.
 					if (array_key_exists($country, $country_to_iso3166)) {
 						if (array_key_exists($country_to_iso3166[$country], $surn_countries)) {
@@ -702,12 +706,10 @@ function print_map_charts($chart_shows, $chart_type, $x_as, $surname) {
 	case 'death_distribution_chart':
 		// Count how many people were born in each country
 		$surn_countries=array();
-		foreach (array_keys(get_indi_list()) as $id) {
-			$person=Person::getInstance($id);
-			if ($death_places=$person->getAllDeathPlaces()) {
-				foreach ($death_places as $death_place) {
-					$country=getPlaceCountry($death_place);
-					$country=UTF8_strtolower(trim($country));
+		foreach ($persgeg as $id=>$indis) {
+			foreach ($indis as $pdeath=>$death_place) {
+				if ($pdeath == 'pdeath' && $death_place != -1) {
+					$country=UTF8_strtolower(trim($death_place));
 					// PGV uses 3 letter country codes and localised country names, but google uses 2 letter codes.
 					if (array_key_exists($country, $country_to_iso3166)) {
 						if (array_key_exists($country_to_iso3166[$country], $surn_countries)) {
@@ -742,7 +744,7 @@ function print_sources_stats_chart($type){
 	global $pgv_lang, $GEDCOM;
 	require_once 'includes/class_stats.php';
 	$stats = new stats($GEDCOM);
-	$params[0] = "600x200";
+	$params[0] = "700x200";
 	$params[1] = "ffffff";
 	$params[2] = "84beff";
 	switch ($type) {
@@ -769,9 +771,6 @@ $xdata= array();
 $ydata= array();
 $xgrenzen= array();
 $zgrenzen= array();
-$famgeg = array();
-$persgeg= array();
-$key2ind= array();
 
 if ($action=="update") {
 	$x_as = $_POST["x-as"];
@@ -786,7 +785,7 @@ if ($action=="update") {
 	else $zas_grenzen_periode = 0;
 	$chart_shows = $_POST["chart_shows"];
 	$chart_type  = $_POST["chart_type"];
-	$surname	 = $_POST["surname"];
+	$surname	 = $_POST["SURN"];
 
 	$_SESSION[$GEDCOM."statTicks"]["xasGrLeeftijden"] = $xas_grenzen_leeftijden;
 	$_SESSION[$GEDCOM."statTicks"]["xasGrLeeftijden_m"] = $xas_grenzen_leeftijden_m;
@@ -795,7 +794,7 @@ if ($action=="update") {
 	$_SESSION[$GEDCOM."statTicks"]["zasGrPeriode"] = $zas_grenzen_periode;
 	$_SESSION[$GEDCOM."statTicks"]["chart_shows"] = $chart_shows;
 	$_SESSION[$GEDCOM."statTicks"]["chart_type"] = $chart_type;
-	$_SESSION[$GEDCOM."statTicks"]["surname"] = $surname;
+	$_SESSION[$GEDCOM."statTicks"]["SURN"] = $surname;
 
 	// Save the input variables
 	$savedInput = array();
@@ -809,7 +808,7 @@ if ($action=="update") {
 	$savedInput["zas_grenzen_periode"] = $zas_grenzen_periode;
 	$savedInput["chart_shows"] = $chart_shows;
 	$savedInput["chart_type"] = $chart_type;
-	$savedInput["surname"] = $surname;
+	$savedInput["SURN"] = $surname;
 	$_SESSION[$GEDCOM."statisticsplot"] = $savedInput;
 	unset($savedInput);
 }
@@ -826,13 +825,14 @@ else {
 	$zas_grenzen_periode = $savedInput["zas_grenzen_periode"];
 	$chart_shows = $savedInput["chart_shows"];
 	$chart_type = $savedInput["chart_type"];
-	$surname = $savedInput["surname"];
+	$surname = $savedInput["SURN"];
 	unset($savedInput);
 }
 
 print_header($pgv_lang["statistiek_list"]);
 echo "\n\t<center><h2>".$pgv_lang["statistiek_list"]."</h2>\n\t";
 echo "</center><br />";
+get_plot_data();
 
 if ($x_as >  10) {
 	$nrpers = $_SESSION[$GEDCOM."nrpers"];
@@ -840,7 +840,6 @@ if ($x_as >  10) {
 	$nrmale = $_SESSION[$GEDCOM."nrmale"];
 	$nrfemale = $_SESSION[$GEDCOM."nrfemale"];
 
-	get_plot_data();
 	error_reporting(E_ALL ^E_NOTICE);
 	//-- no errors because then I cannot plot
 
@@ -884,7 +883,8 @@ else if ($x_as > 0 && $x_as < 4) {
 	require_once 'includes/functions_places.php';
 	// PGV uses 3-letter ISO/chapman codes, but google uses 2-letter ISO codes.  There is not a 1:1
 	// mapping, so Wales/Scotland/England all become GB, etc.
-	$iso3166=array(
+	if (!isset($iso3166)) {
+		$iso3166=array(
 		'ABW'=>'AW', 'AFG'=>'AF', 'AGO'=>'AO', 'AIA'=>'AI', 'ALA'=>'AX', 'ALB'=>'AL', 'AND'=>'AD', 'ANT'=>'AN',
 		'ARE'=>'AE', 'ARG'=>'AR', 'ARM'=>'AM', 'ASM'=>'AS', 'ATA'=>'AQ', 'ATF'=>'TF', 'ATG'=>'AG', 'AUS'=>'AU',
 		'AUT'=>'AT', 'AZE'=>'AZ', 'BDI'=>'BI', 'BEL'=>'BE', 'BEN'=>'BJ', 'BFA'=>'BF', 'BGD'=>'BD', 'BGR'=>'BG',
@@ -916,21 +916,23 @@ else if ($x_as > 0 && $x_as < 4) {
 		'TUR'=>'TR', 'TUV'=>'TV', 'TWN'=>'TW', 'TZA'=>'TZ', 'UGA'=>'UG', 'UKR'=>'UA', 'UMI'=>'UM', 'URY'=>'UY',
 		'USA'=>'US', 'UZB'=>'UZ', 'VAT'=>'VA', 'VCT'=>'VC', 'VEN'=>'VE', 'VGB'=>'VG', 'VIR'=>'VI', 'VNM'=>'VN',
 		'VUT'=>'VU', 'WLF'=>'WF', 'WLS'=>'GB', 'WSM'=>'WS', 'YEM'=>'YE', 'ZAF'=>'ZA', 'ZMB'=>'ZM', 'ZWE'=>'ZW'
-	);
-
+		);
+	}
 	// The country names can be specified in any language or in the chapman code.
 	// Generate a combined list.
-	$country_to_iso3166=array();
-	foreach ($iso3166 as $three=>$two) {
-		$country_to_iso3166[UTF8_strtolower($three)]=$two;
-	}
-	require("languages/countries.en.php");
-	if (file_exists("languages/countries.".$lang_short_cut[$deflang].".php")) require("languages/countries.".$lang_short_cut[$deflang].".php");
+	if (!isset($country_to_iso3166)) {
+		$country_to_iso3166=array();
+		foreach ($iso3166 as $three=>$two) {
+			$country_to_iso3166[UTF8_strtolower($three)]=$two;
+		}
+		require("languages/countries.en.php");
+		if (file_exists("languages/countries.".$lang_short_cut[$deflang].".php")) require("languages/countries.".$lang_short_cut[$deflang].".php");
 
-	foreach (array_keys($pgv_language) as $LANGUAGE) {
-		foreach ($countries as $code => $country) {
-			if (array_key_exists($code, $iso3166)) {
-				$country_to_iso3166[UTF8_strtolower($country)]=$iso3166[$code];
+		foreach (array_keys($pgv_language) as $LANGUAGE) {
+			foreach ($countries as $code => $country) {
+				if (array_key_exists($code, $iso3166)) {
+					$country_to_iso3166[UTF8_strtolower($country)]=$iso3166[$code];
+				}
 			}
 		}
 	}

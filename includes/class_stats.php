@@ -426,7 +426,7 @@ class stats {
 	{
 		global $pgv_lang;
 		if ($params === null) {$params = array();}
-		if (isset($params[0]) && $params[0] != '') {$size = strtolower($params[0]);}else{$size = '450x125';}
+		if (isset($params[0]) && $params[0] != '') {$size = strtolower($params[0]);}else{$size = '450x120';}
 		if (isset($params[1]) && $params[1] != '') {$color_from = strtolower($params[1]);}else{$color_from = 'ffffff';}
 		if (isset($params[2]) && $params[2] != '') {$color_to = strtolower($params[2]);}else{$color_to = '000000';}
 		$sizes = explode('x', $size);
@@ -435,9 +435,11 @@ class stats {
 		$tot_indi_per = round(100 *  ($tot_indi-$tot_sindi) / $tot_indi, 2);
 		$tot_sindi_per = round(100 * $tot_sindi / $tot_indi, 2);
 		$chd = self::_array_to_extended_encoding(array($tot_sindi, $tot_indi-$tot_sindi));
-			$chl = reverseText($pgv_lang['stat_sindi']).' ['.round($tot_sindi_per,1).'%]|'.
-				   reverseText($pgv_lang['others']).' ['.round($tot_indi_per,1).'%]';
-			return "<img src=\"".encode_url("http://chart.apis.google.com/chart?cht=p3&chd=e:{$chd}&chs={$size}&chco={$color_from},{$color_to}&chf=bg,s,ffffff00&chl={$chl}")."\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" alt=\"\" />";
+		$chl = reverseText($pgv_lang['stat_sindi']).' ['.round($tot_sindi_per,1).'%]|'.
+				reverseText($pgv_lang['others']).' ['.round($tot_indi_per,1).'%]';
+		$chart_title = reverseText($pgv_lang['stat_sindi']).' ['.round($tot_sindi_per,1).'%], '.
+						reverseText($pgv_lang['others']).' ['.round($tot_indi_per,1).'%]';
+		return "<img src=\"".encode_url("http://chart.apis.google.com/chart?cht=p3&chd=e:{$chd}&chs={$size}&chco={$color_from},{$color_to}&chf=bg,s,ffffff00&chl={$chl}")."\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" alt=\"".$chart_title."\" title=\"".$chart_title."\" />";
 	}
 
 	function totalIndividualsPercentage()
@@ -466,7 +468,7 @@ class stats {
 	{
 		global $pgv_lang;
 		if ($params === null) {$params = array();}
-		if (isset($params[0]) && $params[0] != '') {$size = strtolower($params[0]);}else{$size = '450x125';}
+		if (isset($params[0]) && $params[0] != '') {$size = strtolower($params[0]);}else{$size = '450x120';}
 		if (isset($params[1]) && $params[1] != '') {$color_from = strtolower($params[1]);}else{$color_from = 'ffffff';}
 		if (isset($params[2]) && $params[2] != '') {$color_to = strtolower($params[2]);}else{$color_to = '000000';}
 		$sizes = explode('x', $size);
@@ -475,9 +477,11 @@ class stats {
 		$tot_fam_per = round(100 *  ($tot_fam-$tot_sfam) / $tot_fam, 2);
 		$tot_sfam_per = round(100 * $tot_sfam / $tot_fam, 2);
 		$chd = self::_array_to_extended_encoding(array($tot_sfam, $tot_fam-$tot_sfam));
-			$chl = reverseText($pgv_lang['stat_sfam']).' ['.round($tot_sfam_per,1).'%]|'.
-				   reverseText($pgv_lang['others']).' ['.round($tot_fam_per,1).'%]';
-			return "<img src=\"".encode_url("http://chart.apis.google.com/chart?cht=p3&chd=e:{$chd}&chs={$size}&chco={$color_from},{$color_to}&chf=bg,s,ffffff00&chl={$chl}")."\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" alt=\"\" />";
+		$chl = reverseText($pgv_lang['stat_sfam']).' ['.round($tot_sfam_per,1).'%]|'.
+				reverseText($pgv_lang['others']).' ['.round($tot_fam_per,1).'%]';
+		$chart_title = reverseText($pgv_lang['stat_sfam']).' ['.round($tot_sfam_per,1).'%], '.
+						reverseText($pgv_lang['others']).' ['.round($tot_fam_per,1).'%]';
+		return "<img src=\"".encode_url("http://chart.apis.google.com/chart?cht=p3&chd=e:{$chd}&chs={$size}&chco={$color_from},{$color_to}&chf=bg,s,ffffff00&chl={$chl}")."\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" alt=\"".$chart_title."\" title=\"".$chart_title."\" />";
 	}
 
 	function totalFamiliesPercentage()
@@ -640,7 +644,7 @@ class stats {
 	{
 		global $pgv_lang, $TEXT_DIRECTION;
 		if ($params === null) {$params = array();}
-		if (isset($params[0]) && $params[0] != '') {$size = strtolower($params[0]);}else{$size = '450x125';}
+		if (isset($params[0]) && $params[0] != '') {$size = strtolower($params[0]);}else{$size = '450x120';}
 		if (isset($params[1]) && $params[1] != '') {$color_female = strtolower($params[1]);}else{$color_female = 'ffd1dc';}
 		if (isset($params[2]) && $params[2] != '') {$color_male = strtolower($params[2]);}else{$color_male = '84beff';}
 		if (isset($params[3]) && $params[3] != '') {$color_unknown = strtolower($params[3]);}else{$color_unknown = '777777';}
@@ -653,13 +657,18 @@ class stats {
 			$chl = reverseText($pgv_lang['stat_unknown']).' ['.round($tot_u,1).'%]|'.
 				   reverseText($pgv_lang['stat_females']).' ['.round($tot_f,1).'%]|'.
 				   reverseText($pgv_lang['stat_males']).' ['.round($tot_m,1).'%]';
-			return "<img src=\"".encode_url("http://chart.apis.google.com/chart?cht=p3&chd=e:{$chd}&chs={$size}&chco={$color_unknown},{$color_female},{$color_male}&chf=bg,s,ffffff00&chl={$chl}")."\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" alt=\"\" />";
+			$chart_title = reverseText($pgv_lang['stat_males']).' ['.round($tot_m,1).'%], '.
+							reverseText($pgv_lang['stat_females']).' ['.round($tot_f,1).'%], '.
+							reverseText($pgv_lang['stat_unknown']).' ['.round($tot_u,1).'%]';
+			return "<img src=\"".encode_url("http://chart.apis.google.com/chart?cht=p3&chd=e:{$chd}&chs={$size}&chco={$color_unknown},{$color_female},{$color_male}&chf=bg,s,ffffff00&chl={$chl}")."\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" alt=\"".$chart_title."\" title=\"".$chart_title."\" />";
 		}
 		else {
 			$chd = self::_array_to_extended_encoding(array($tot_f, $tot_m));
 			$chl = reverseText($pgv_lang['stat_females']).' ['.round($tot_f,1).'%]|'.
 				   reverseText($pgv_lang['stat_males']).' ['.round($tot_m,1).'%]';
-			return "<img src=\"".encode_url("http://chart.apis.google.com/chart?cht=p3&chd=e:{$chd}&chs={$size}&chco={$color_female},{$color_male}&chf=bg,s,ffffff00&chl={$chl}")."\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" alt=\"\" />";
+			$chart_title = reverseText($pgv_lang['stat_males']).' ['.round($tot_m,1).'%], '.
+							reverseText($pgv_lang['stat_females']).' ['.round($tot_f,1).'%]';
+			return "<img src=\"".encode_url("http://chart.apis.google.com/chart?cht=p3&chd=e:{$chd}&chs={$size}&chco={$color_female},{$color_male}&chf=bg,s,ffffff00&chl={$chl}")."\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" alt=\"".$chart_title."\" title=\"".$chart_title."\" />";
 		}
 	}
 
@@ -709,7 +718,7 @@ class stats {
 	{
 		global $pgv_lang, $TEXT_DIRECTION;
 		if ($params === null) {$params = array();}
-		if (isset($params[0]) && $params[0] != '') {$size = strtolower($params[0]);}else{$size = '450x125';}
+		if (isset($params[0]) && $params[0] != '') {$size = strtolower($params[0]);}else{$size = '450x120';}
 		if (isset($params[1]) && $params[1] != '') {$color_living = strtolower($params[1]);}else{$color_living = 'ffffff';}
 		if (isset($params[2]) && $params[2] != '') {$color_dead = strtolower($params[2]);}else{$color_dead = 'cccccc';}
 		if (isset($params[3]) && $params[3] != '') {$color_unknown = strtolower($params[3]);}else{$color_unknown = '777777';}
@@ -721,14 +730,19 @@ class stats {
 			$chd = self::_array_to_extended_encoding(array($tot_u, $tot_l, $tot_d));
 			$chl = reverseText($pgv_lang['total_unknown']).' ['.round($tot_u,1).'%]|'.
 				   reverseText($pgv_lang['total_living']).' ['.round($tot_l,1).'%]|'.
-				   reverseText($pgv_lang['total_dead']).' ['.round($tot_d,1).'%]|';
-			return "<img src=\"".encode_url("http://chart.apis.google.com/chart?cht=p3&chd=e:{$chd}&chs={$size}&chco={$color_unknown},{$color_living},{$color_dead}&chf=bg,s,ffffff00&chl={$chl}")."\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" alt=\"\" />";
+				   reverseText($pgv_lang['total_dead']).' ['.round($tot_d,1).'%]';
+			$chart_title = reverseText($pgv_lang['total_living']).' ['.round($tot_l,1).'%], '.
+							reverseText($pgv_lang['total_dead']).' ['.round($tot_d,1).'%], '.
+							reverseText($pgv_lang['total_unknown']).' ['.round($tot_u,1).'%]';
+			return "<img src=\"".encode_url("http://chart.apis.google.com/chart?cht=p3&chd=e:{$chd}&chs={$size}&chco={$color_unknown},{$color_living},{$color_dead}&chf=bg,s,ffffff00&chl={$chl}")."\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" alt=\"".$chart_title."\" title=\"".$chart_title."\" />";
 		}
 		else {
 			$chd = self::_array_to_extended_encoding(array($tot_l, $tot_d));
 			$chl = reverseText($pgv_lang['total_living']).' ['.round($tot_l,1).'%]|'.
 				   reverseText($pgv_lang['total_dead']).' ['.round($tot_d,1).'%]|';
-			return "<img src=\"".encode_url("http://chart.apis.google.com/chart?cht=p3&chd=e:{$chd}&chs={$size}&chco={$color_living},{$color_dead}&chf=bg,s,ffffff00&chl={$chl}")."\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" alt=\"\" />";
+			$chart_title = reverseText($pgv_lang['total_living']).' ['.round($tot_l,1).'%], '.
+							reverseText($pgv_lang['total_dead']).' ['.round($tot_d,1).'%]';
+			return "<img src=\"".encode_url("http://chart.apis.google.com/chart?cht=p3&chd=e:{$chd}&chs={$size}&chco={$color_living},{$color_dead}&chf=bg,s,ffffff00&chl={$chl}")."\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" alt=\"".$chart_title."\" title=\"".$chart_title."\" />";
 		}
 	}
 
@@ -808,7 +822,7 @@ class stats {
 	{
 		global $pgv_lang, $TEXT_DIRECTION;
 		if ($params === null) {$params = array();}
-		if (isset($params[0]) && $params[0] != '') {$size = strtolower($params[0]);}else{$size = '450x125';}
+		if (isset($params[0]) && $params[0] != '') {$size = strtolower($params[0]);}else{$size = '450x120';}
 		if (isset($params[1]) && $params[1] != '') {$color_from = strtolower($params[1]);}else{$color_from = 'ffffff';}
 		if (isset($params[2]) && $params[2] != '') {$color_to = strtolower($params[2]);}else{$color_to = '000000';}
 		$sizes = explode('x', $size);
@@ -820,23 +834,31 @@ class stats {
 		// Build a table listing only the media types actually present in the GEDCOM
 		$mediaCounts = array();
 		$mediaTypes = "";
+		$chart_title = "";
+		$c = 0;
 		foreach (self::$_media_types as $type) {
 			$count = $this->_totalMediaType($type);
 			if ($count != 0) {
 				$mediaCounts[] = round(100 * $count / $tot, 0);
 				$mediaTypes .= reverseText($pgv_lang['TYPE__'.$type]);
 				$mediaTypes .= ' ['.$count.']|';
+				$c += $count;
+				$chart_title .= reverseText($pgv_lang['TYPE__'.$type]).' ['.$count.'], ';
 			}
 		}
 		$count = $this->_totalMediaType('unknown');
 		if ($count != 0) {
 			$mediaCounts[] = round(100 * $count / $tot, 0);
 			$mediaTypes .= reverseText($pgv_lang['unknown']);
-			$mediaTypes .= '|';
+			$mediaTypes .= ' ['.($tot-$c).']';
+			$chart_title .= reverseText($pgv_lang['unknown']).' ['.($tot-$c).']';
+		}
+		else {
+			$chart_title = substr($chart_title,0,-2);
 		}
 		$chd = self::_array_to_extended_encoding($mediaCounts);
 		$chl = substr($mediaTypes,0,-1);
-		return "<img src=\"".encode_url("http://chart.apis.google.com/chart?cht=p3&chd=e:{$chd}&chs={$size}&chco={$color_from},{$color_to}&chf=bg,s,ffffff00&chl={$chl}")."\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" alt=\"\" />";
+		return "<img src=\"".encode_url("http://chart.apis.google.com/chart?cht=p3&chd=e:{$chd}&chs={$size}&chco={$color_from},{$color_to}&chf=bg,s,ffffff00&chl={$chl}")."\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" alt=\"".$chart_title."\" title=\"".$chart_title."\" />";
 	}
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -1532,7 +1554,7 @@ class stats {
 			$chl[] = reverseText($family->getFullName()).' ['.$rows[$i]['tot'].']';
 		}
 		$chl = join('|', $chl);
-		return "<img src=\"".encode_url("http://chart.apis.google.com/chart?cht=p3&chd=e:{$chd}&chs={$size}&chco={$color_from},{$color_to}&chf=bg,s,ffffff00&chl={$chl}")."\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" alt=\"\" />";
+		return "<img src=\"".encode_url("http://chart.apis.google.com/chart?cht=p3&chd=e:{$chd}&chs={$size}&chco={$color_from},{$color_to}&chf=bg,s,ffffff00&chl={$chl}")."\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" alt=\"".$pgv_lang["stat_21_nok"]."\" title=\"".$pgv_lang["stat_21_nok"]."\" />";
 	}
 
 	function averageChildren()
@@ -1608,6 +1630,17 @@ class stats {
 		//}
 	}
 
+	function getCommonSurname($show_tot=false) {
+		if ($show_tot) {
+			return get_top_surnames(0);
+		}
+		else {
+			foreach (array_keys(get_top_surnames(0)) as $surname) {
+				return $surname;
+			}
+		}
+	}
+
 	static function commonSurnames($params=array('','','alpha')) {return self::_commonSurnamesQuery('nolist', false, $params);}
 	static function commonSurnamesTotals($params=array('','','rcount')) {return self::_commonSurnamesQuery('nolist', true, $params);}
 	static function commonSurnamesList($params=array('','','alpha')) {return self::_commonSurnamesQuery('list', false, $params);}
@@ -1617,7 +1650,7 @@ class stats {
 	{
 		global $pgv_lang, $COMMON_NAMES_THRESHOLD;
 		if ($params === null) {$params = array();}
-		if (isset($params[0]) && $params[0] != '') {$size = strtolower($params[0]);}else{$size = '450x125';}
+		if (isset($params[0]) && $params[0] != '') {$size = strtolower($params[0]);}else{$size = '450x120';}
 		if (isset($params[1]) && $params[1] != '') {$color_from = strtolower($params[1]);}else{$color_from = 'ffffff';}
 		if (isset($params[2]) && $params[2] != '') {$color_to = strtolower($params[2]);}else{$color_to = '000000';}
 		if (isset($params[3]) && $params[3] != '') {$threshold = strtolower($params[3]);}else{$threshold = $COMMON_NAMES_THRESHOLD;}
@@ -1627,26 +1660,52 @@ class stats {
 		$surnames = get_common_surnames($threshold);
 		uasort($surnames, array('stats', '_name_total_rsort'));
 		$surnames = array_slice($surnames, 0, $maxtoshow);
+		$all_surnames=array();
+		foreach (array_keys($surnames) as $n=>$surname) {
+			if ($n>=$maxtoshow) {
+				break;
+			}
+			foreach (array_keys(get_surname_indis($surname)) as $pid) {
+				$person=Person::getInstance($pid);
+				foreach ($person->getAllNames() as $name) {
+					$surn=UTF8_strtoupper($name['surn']);
+					if ($surn && $surn!='@N.N.' && $surname==$surn) {
+						$spfxsurn=$name['spfx'].($name['spfx'] ? ' ' : '').$name['surn'];
+						if (! array_key_exists($surn, $all_surnames)) {
+							$all_surnames[$surn]=array();
+						}
+						if (! array_key_exists($spfxsurn, $all_surnames[$surn])) {
+							$all_surnames[$surn][$spfxsurn]=array();
+						}
+						$all_surnames[$surn][$spfxsurn][$pid]=true;
+					}
+				}
+			}
+		}
 		if (count($surnames) <= 0) {return '';}
 		$tot = 0;
 		foreach ($surnames as $indexval=>$surname) {$tot += $surname['match'];}
+		$chart_title = "";
 		$chd = '';
 		$chl = array();
-		foreach ($surnames as $indexval=>$surname)
-		{
-			if ($tot==0) {
-				$per = 0;
-			} else {
-				$per = round(100 * $surname['match'] / $tot_indi, 0);
+		foreach ($all_surnames as $surn=>$surns) {
+			foreach ($surns as $spfxsurn=>$indis) {
+				if ($tot==0) {
+					$per = 0;
+				} else {
+					$per = round(100 * count($indis) / $tot_indi, 0);
+				}
+				$chd .= self::_array_to_extended_encoding($per);
+				$chl[] = reverseText($spfxsurn).' ['.count($indis).']';
+				$chart_title .= reverseText($spfxsurn).' ['.count($indis).'], ';
 			}
-			$chd .= self::_array_to_extended_encoding($per);
-			$chl[] = reverseText($surname['name']).' ['.$surname['match'].']';
 		}
 		$per = round(100 * ($tot_indi-$tot) / $tot_indi, 0);
 		$chd .= self::_array_to_extended_encoding($per);
 		$chl[] = reverseText($pgv_lang["other"]).' ['.($tot_indi-$tot).']';
+		$chart_title .= reverseText($pgv_lang["other"]).' ['.($tot_indi-$tot).']';
 		$chl = join('|', $chl);
-		return "<img src=\"".encode_url("http://chart.apis.google.com/chart?cht=p3&chd=e:{$chd}&chs={$size}&chco={$color_from},{$color_to}&chf=bg,s,ffffff00&chl={$chl}")."\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" alt=\"\" />";
+		return "<img src=\"".encode_url("http://chart.apis.google.com/chart?cht=p3&chd=e:{$chd}&chs={$size}&chco={$color_from},{$color_to}&chf=bg,s,ffffff00&chl={$chl}")."\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" alt=\"".$chart_title."\" title=\"".$chart_title."\" />";
 	}
 
 
