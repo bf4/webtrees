@@ -203,7 +203,7 @@ class AdvancedSearchController extends SearchController {
 				}
 				switch (end($parts)) {
 				case 'SDX_STD':
-					$sdx=explode(':', soundex_dm($value));
+					$sdx=explode(':', soundex_std($value));
 					foreach ($sdx as $k=>$v) {
 						if ($parts[1]=='GIVN') {
 							$sdx[$k]='n_soundex_givn_std '.PGV_DB_LIKE." '%{$v}%'";
