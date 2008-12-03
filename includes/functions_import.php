@@ -205,75 +205,6 @@ function import_record($gedrec, $update) {
 				$sql = "INSERT INTO {$TBLPREFIX}names (n_gid, n_file, n_name, n_letter, n_surname, n_type) VALUES('{$xref}',{$ged_id},'".$DBCONN->escapeSimple($name['full'])."','".$DBCONN->escapeSimple($initial)."','".$DBCONN->escapeSimple($surn)."','".($name['type']=='_MARNM'?'C':'A')."')";
 				$res = dbquery($sql);
 			}
-
-			// Calculate Soundex Values and insert them into the database.
-
-			// Start building the SQL Insert
-			$sql = "INSERT INTO {$TBLPREFIX}soundex VALUES('{$xref}',{$n},{$ged_id},";
-
-			// Ensure there is a firstname or lastname.
-			// If there is no name in a field, it will contain the string "@N.N."
-			if ($givn!='@P.N.') {
-				Character_Substitute($givn);
-				// Split the first name array
-				$fnames = explode(" ", $givn);
-
-				$std_array = array();
-				$firstName_std_soundex = "";
-				$firstName_dm_soundex = "";
-				$dm_array = array();
-
-				$combined = "";
-				foreach($fnames as $fn) {
-					if (!empty($fn)) {
-						$std_array[] = soundex($fn);
-						$dm_array = array_merge($dm_array, DMSoundex($fn));
-					}
-				}
-				$fn_nospaces = strtr($givn, " ", "");
-				$dm_array = array_merge($dm_array, DMSoundex($fn_nospaces));
-
-				$std_array[] = soundex($fn_nospaces);
-				$firstName_dm_soundex .= ":" . implode(":", array_unique($dm_array));
-
-				$std_array = array_unique($std_array);
-				$firstName_std_soundex = implode(":", $std_array);
-				$sql .= "'".$DBCONN->escapeSimple(trim($firstName_std_soundex, ":"))."'," .
-						"'".$DBCONN->escapeSimple(trim($firstName_dm_soundex,":"))."',";
-			} else {
-				$sql .= "NULL,NULL,";
-			}
-
-			if ($surn!='@N.N.') {
-				Character_Substitute($surn);
-				$lnames = explode(" ", $surn);
-				$lastName_std_soundex = "";
-				$lastName_dm_soundex = "";
-				$dm_array = array();
-				$std_array = array();
-
-				foreach($lnames as $ln) {
-					$std_array[] = soundex($ln);
-					$dm_array = array_merge($dm_array, DMSoundex($ln));
-				}
-
-				$ln_nospaces = strtr($surn, " ", "");
-
-				$std_array[] =  soundex($ln_nospaces);
-				$dm_array = array_merge($dm_array, DMSoundex($ln_nospaces));
-				$lastName_std_soundex .= ":" . implode(":", array_unique($std_array));
-				$lastName_dm_soundex .= ":" . implode(":", array_unique($dm_array));
-
-				$sql .= "'".$DBCONN->escapeSimple(trim($lastName_std_soundex,":"))."'," .
-							"'".$DBCONN->escapeSimple(trim($lastName_dm_soundex,":"))."'";
-			} else {
-				$sql .= "NULL,NULL";
-			}
-
-			$sql .= ");";
-
-			$res = dbquery($sql);
-
 		}
 		if ($USE_RIN && preg_match("/1 RIN (.+)/", $gedrec, $match)) {
 			$rin = trim($match[1]);
@@ -1085,8 +1016,9 @@ function setup_database() {
 	if (!$has_sources) {
 		create_sources_table();
 	}
-	if(!$has_soundex) {
-		create_soundex_table();
+	if($has_soundex) {
+		// The old pgv_soundex table is now merged with the new pgv_name table
+		dbquery("DROP TABLE {$TBLPREFIX}soundex", false);
 	}
 	if (!$has_link) {
 		create_link_table();
@@ -1328,27 +1260,6 @@ function create_remotelinks_table() {
 	dbquery("CREATE INDEX {$TBLPREFIX}r_file    ON {$TBLPREFIX}remotelinks (r_file  )");
 }
 /**
- * Create the soundex table
- */
-function create_soundex_table() {
-	global $TBLPREFIX;
-
-	dbquery("DROP TABLE {$TBLPREFIX}soundex", false);
-	dbquery(
-		"CREATE TABLE {$TBLPREFIX}soundex (".
-		" sx_i_id      ".PGV_DB_COL_XREF." NOT NULL,".
-		" sx_n_id        VARCHAR(255)      NOT NULL,".
-		" sx_file      ".PGV_DB_COL_FILE." NOT NULL,".
-		" sx_fn_std_code TEXT              NULL,".
-		" sx_fn_dm_code  TEXT              NULL,".
-		" sx_ln_std_code TEXT              NULL,".
-		" sx_ln_dm_code  TEXT              NULL".
-		") ".PGV_DB_UTF8_TABLE
-	);
-	dbquery("CREATE INDEX {$TBLPREFIX}sx_i_id_ix ON {$TBLPREFIX}soundex (sx_i_id)");
-	dbquery("CREATE INDEX {$TBLPREFIX}sx_file_ix ON {$TBLPREFIX}soundex (sx_file)");
-}
-/**
  * Create the media table
  */
 function create_media_table() {
@@ -1489,8 +1400,6 @@ function empty_database($FILE, $keepmedia=false) {
 			")"
 		);
 	}
-
-	dbquery("DELETE FROM {$TBLPREFIX}soundex WHERE sx_file={$FILE}");
 
 	//-- clear all of the cache files for this gedcom
 	clearCache();
@@ -1781,10 +1690,6 @@ function update_record($gedrec, $delete = false) {
 
 		$sql = "DELETE FROM {$TBLPREFIX}names WHERE n_gid ".PGV_DB_LIKE." '" . $DBCONN->escapeSimple($gid) . "' AND n_file='" . $DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"]) . "'";
 		$res = dbquery($sql);
-
-		$sql = "DELETE FROM {$TBLPREFIX}soundex WHERE sx_i_id ".PGV_DB_LIKE." '".$DBCONN->escapeSimple($gid)."' AND sx_file='".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"])."'";
-		$res = dbquery($sql);
-
 	} else
 		if ($type == "FAM") {
 			$sql = "DELETE FROM {$TBLPREFIX}families WHERE f_id ".PGV_DB_LIKE." '" . $DBCONN->escapeSimple($gid) . "' AND f_file='" . $DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"]) . "'";
