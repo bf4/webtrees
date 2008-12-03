@@ -77,7 +77,7 @@ function get_common_surnames($min) {
 				&& stristr($surname["name"], $ANN.",")===false
 				&& stristr($COMMON_NAMES_REMOVE, $surname["name"])===false ) {
 			if ($surname["match"]>=$min) {
-				$topsurns[UTF8_strtoupper($surname["name"])] = $surname;
+				$topsurns[$surname["name"]] = $surname;
 			}
 			$i++;
 		}
