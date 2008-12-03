@@ -1599,8 +1599,7 @@ class stats {
 		// Note that we count/display SPFX SURN, but sort/group under just SURN
 		$surnames=array();
 		foreach (array_keys($surname_list) as $surname) {
-			foreach (array_keys(get_surname_indis($surname)) as $pid) {
-				$person=Person::getInstance($pid);
+			foreach (get_surname_indis($surname) as $person) {
 				foreach ($person->getAllNames() as $name) {
 					$surn=reset(explode(',', $name['sort']));
 					if ($surname==$surn) {
@@ -1615,7 +1614,7 @@ class stats {
 						// $spfxsurn is the full surname, e.g. van GOGH
 						// $pid allows us to count indis as well as surnames, for indis that
 						// appear twice in this list.
-						$surnames[$surn][$spfxsurn][$pid]=true;
+						$surnames[$surn][$spfxsurn][$person->getXref()]=true;
 					}
 				}
 			}
