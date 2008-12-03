@@ -2388,27 +2388,17 @@ function get_alpha_indis($letter) {
 function get_surname_indis($surname) {
 	global $TBLPREFIX, $SHOW_MARRIED_NAMES, $DBCONN;
 
-	$tindilist = array();
-	$sql = "SELECT i_id FROM ".$TBLPREFIX."individuals WHERE i_surname ".PGV_DB_LIKE." '".$DBCONN->escapeSimple($surname)."' ";
-	$sql .= "AND i_file=".PGV_GED_ID;
-	$res = dbquery($sql);
-
-	while ($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)) {
-		$tindilist[$row["i_id"]] = $row["i_id"];
-	}
-	$res->free();
-
-	$sql = "SELECT i_id FROM ".$TBLPREFIX."individuals, ".$TBLPREFIX."names WHERE i_id=n_gid AND i_file=n_file AND n_surname ".PGV_DB_LIKE." '".$DBCONN->escapeSimple($surname)."' ";
+	$sql="SELECT DISTINCT 'INDI' AS type, i_id AS xref, i_file AS ged_id, i_gedcom AS gedrec, i_isdead FROM {$TBLPREFIX}individuals, {$TBLPREFIX}name WHERE i_id=n_id AND i_file=n_file AND i_file=".PGV_GED_ID." AND n_surn='".$DBCONN->escapeSimple($surname)."' ";
 	if (!$SHOW_MARRIED_NAMES)
-		$sql .= "AND n_type!='C' ";
-	$sql .= "AND i_file=".PGV_GED_ID;
-	$res = dbquery($sql);
+		$sql.=" AND n_type!='_MARNM'";
+	$res=dbquery($sql);
 
+	$list=array();
 	while ($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)) {
-		$tindilist[$row["i_id"]] = $row["i_id"];
+		$list[]=Person::getInstance($row);
 	}
 	$res->free();
-	return $tindilist;
+	return $list;
 }
 
 /**
@@ -2462,16 +2452,10 @@ function get_alpha_fams($letter) {
  * @see http://www.phpgedview.net/devdocs/arrays.php#indilist
  */
 function get_surname_fams($surname) {
-	global $TBLPREFIX, $famlist, $indilist, $SHOW_MARRIED_NAMES;
+	global $TBLPREFIX;
 
 	$tfamlist = array();
-
-	$temp = $SHOW_MARRIED_NAMES;
-	$SHOW_MARRIED_NAMES = false;
-	$myindilist = get_surname_indis($surname);
-	$SHOW_MARRIED_NAMES = $temp;
-	foreach ($myindilist as $pid) {
-		$person=Person::getInstance($pid);
+	foreach (get_surname_indis($surname) as $person) {
 		foreach ($person->getSpouseFamilyIds() as $famid) {
 			$tfamlist[$famid] = $famid;
 		}

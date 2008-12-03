@@ -197,10 +197,10 @@ if ($showList) {
 		// Show the surname list
 		// Note that we count/display SPFX SURN, but sort/group under just SURN
 		$surnames=array();
-		foreach (array_keys($indis) as $pid) {
-			if (empty($pid)) continue;
-			$person=Person::getInstance($pid);
-			if (!is_object($person)) continue;
+		foreach ($indis as $pid=>$person) {
+			if (!is_object($person)) {
+				$person=Person::getInstance($pid);
+			}
 			foreach ($person->getAllNames() as $name) {
 				if ($SHOW_MARRIED_NAMES || $name['type']!='_MARNM') {
 					list($surn)=explode(',', $name['sort']);
@@ -264,9 +264,10 @@ if ($showList) {
 		$individuals=array();
 		$givn_initials=array();
 		// Show the indi list
-		foreach (array_keys($indis) as $pid) {
-			$person=Person::getInstance($pid);
-			if (!$person) continue;
+		foreach ($indis as $pid=>$person) {
+			if (!is_object($person)) {
+				$person=Person::getInstance($pid);
+			}
 			foreach ($person->getAllNames() as $n=>$name) {
 				if ($SHOW_MARRIED_NAMES || $name['type']!='_MARNM') {
 					$givn_alpha=get_first_letter($name['givn']);

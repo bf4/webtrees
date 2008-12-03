@@ -109,8 +109,7 @@ function print_block_name_top10($block=true, $config="", $side, $index) {
 			if ($n>=$config["num"]) {
 				break;
 			}
-			foreach (array_keys(get_surname_indis($surname)) as $pid) {
-				$person=Person::getInstance($pid);
+			foreach (get_surname_indis($surname) as $person) {
 				foreach ($person->getAllNames() as $name) {
 					$surn=UTF8_strtoupper($name['surn']);
 					if ($surn && $surn!='@N.N.' && $surname==$surn) {
@@ -125,7 +124,7 @@ function print_block_name_top10($block=true, $config="", $side, $index) {
 						// $spfxsurn is the full surname, e.g. van GOGH
 						// $pid allows us to count indis as well as surnames, for indis that
 						// appear twice in this list.
-						$all_surnames[$surn][$spfxsurn][$pid]=true;
+						$all_surnames[$surn][$spfxsurn][$person->getXref()]=true;
 					}
 				}
 			}
