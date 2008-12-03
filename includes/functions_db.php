@@ -1350,150 +1350,59 @@ function search_indis_names($query, $allgeds=false) {
  * @return Database ResultSet
  */
 function search_indis_soundex($soundex, $lastname, $firstname='', $place='', $sgeds='') {
-	global $GEDCOMS, $GEDCOM, $TBLPREFIX, $DBCONN;
+	global $TBLPREFIX;
 
-	$res = false;
-
-	if (empty($sgeds))
-		$sgeds = array($GEDCOM);
-	// Adjust the search criteria
-	if (isset ($firstname)) {
-		if (strlen($firstname) == 1)
-			$firstname = preg_replace(array ("/\?/", "/\|/", "/\*/"), array ("\\\?", "\\\|", "\\\\\*"), $firstname);
-		$firstname = "%".preg_replace("/\s+/", "%", $firstname)."%";
+	$sql="SELECT i_id, i_gedcom, i_name, i_isdead, i_file FROM {$TBLPREFIX}individuals";
+	if ($place) {
+		$sql.=" JOIN {$TBLPREFIX}placelinks ON (pl_file=i_file AND pl_gid=i_id)";
+		$sql.="	JOIN {$TBLPREFIX}places ON (p_file=pl_file AND pl_p_id=p_id)";
 	}
-	if (isset ($lastname)) {
-		// see if there are brackets around letter(groups)
-		$bcount = substr_count($lastname, "[");
-		if (($bcount == substr_count($lastname, "]")) && $bcount > 0) {
-			$barr = array ();
-			$ln = $lastname;
-			$pos = 0;
-			$npos = 0;
-			for ($i = 0; $i < $bcount; $i ++) {
-				$pos1 = strpos($ln, "[") + 1;
-				$pos2 = strpos($ln, "]");
-				$barr[$i] = array (substr($ln, $pos1, $pos2 - $pos1), $pos1 + $npos -1, $pos2 - $pos1);
-				$npos = $npos + $pos2 -1;
-				$ln = substr($ln, $pos2 +1);
-			}
-		}
-		if (strlen($lastname) == 1)
-			$lastname = preg_replace(array ("/\?/", "/\|/", "/\*/"), array ("\\\?", "\\\|", "\\\\\*"), $lastname);
-		$lastname = "%".preg_replace("/\s+/", "%", $lastname)."%";
+	if ($firstname || $lastname) {
+		$sql.=" JOIN {$TBLPREFIX}name ON (i_file=n_file AND i_id=n_id)";
 	}
-	if (isset ($place)) {
-		if (strlen($place) == 1)
-			$place = preg_replace(array ("/\?/", "/\|/", "/\*/"), array ("\\\?", "\\\|", "\\\\\*"), $place);
-		$place = "%".preg_replace("/\s+/", "%", $place)."%";
+	if ($sgeds) {
+		foreach ($sgeds as $k=>$v) {
+			$sgeds[$k]=get_id_from_gedcom($v);
+		}
+	} else {
+		$sgeds=array(PGV_GED_ID);
 	}
-	if (isset ($year)) {
-		if (strlen($year) == 1)
-			$year = preg_replace(array ("/\?/", "/\|/", "/\*/"), array ("\\\?", "\\\|", "\\\\\*"), $year);
-		$year = "%".preg_replace("/\s+/", "%", $year)."%";
+	$sql.=' WHERE i_file IN ('.implode(',', $sgeds).')';
+	switch ($soundex) {
+	case 'Russell':
+		$givn_sdx=explode(':', soundex_std($firstname));
+		$surn_sdx=explode(':', soundex_std($lastname));
+		$plac_sdx=explode(':', soundex_std($place));
+		$field='std';
+		break;
+	default:
+	case 'DaitchM':
+		$givn_sdx=explode(':', soundex_dm($firstname));
+		$surn_sdx=explode(':', soundex_dm($lastname));
+		$plac_sdx=explode(':', soundex_dm($place));
+		$field='dm';
+		break;
 	}
-	if (count($sgeds) > 0) {
-		if ($soundex == "DaitchM")
-		DMsoundex("", "opencache");
-
-		// Do some preliminary stuff: determine the soundex codes for the search criteria
-		if ((!empty ($lastname)) && ($soundex == "DaitchM")) {
-			$arr2 = DMsoundex($lastname);
+	if ($firstname && $givn_sdx) {
+		foreach ($givn_sdx as $k=>$v) {
+			$givn_sdx[$k]="n_soundex_givn_{$field} ".PGV_DB_LIKE." '%{$v}%'";
 		}
-		if ((!empty ($lastname)) && ($soundex == "Russell")) {
-			$arr2 = array(soundex($lastname));
-		}
-
-		$farr = array ();
-		if (!empty ($firstname)) {
-			$firstnames = explode(' ', trim($firstname));
-			for ($j = 0; $j < count($firstnames); $j ++) {
-				if ($soundex == "Russell")
-					$farr[$j] = array(soundex($firstnames[$j]));
-				if ($soundex == "DaitchM")
-					$farr[$j] = DMsoundex($firstnames[$j]);
-			}
-		}
-		if ((!empty ($place)) && ($soundex == "DaitchM"))
-		$parr = DMsoundex($place);
-		if ((!empty ($place)) && ($soundex == "Russell"))
-		$parr = array(soundex(trim($place)));
-
-		if (empty($place) || !empty($firstname) || !empty($lastname)) {
-			$sql = "SELECT i_id, i_gedcom, i_name, i_isdead, sx_n_id, i_file FROM ".$TBLPREFIX."soundex, ".$TBLPREFIX."individuals";
-			if (!empty($place)) {
-				$sql .= ", ".$TBLPREFIX."placelinks, ".$TBLPREFIX."places";
-			}
-			$sql .= " WHERE sx_i_id = i_id AND sx_file = i_file AND ";
-			if (!empty($place)) {
-				$sql .= "pl_file = i_file AND i_file = p_file AND pl_gid = i_id AND pl_p_id = p_id AND ";
-			}
-
-			if ((is_array($sgeds)) && (count($sgeds) != 0)) {
-				$sql .= " (";
-				for ($i=0; $i<count($sgeds); $i++) {
-					$sql .= "i_file='".$DBCONN->escapeSimple($GEDCOMS[$sgeds[$i]]["id"])."'";
-					if ($i < count($sgeds)-1)
-						$sql .= " OR ";
-				}
-				$sql .= ") ";
-			}
-
-			$x = 0;
-
-			if (count($farr)>0) {
-				$sql .= "AND (";
-				$fnc = 0;
-				if ($soundex == "DaitchM")
-					$field = "sx_fn_dm_code";
-				else
-					$field = "sx_fn_std_code";
-				foreach ($farr as $name) {
-					foreach ($name as $name1) {
-						if ($fnc>0)
-							$sql .= " OR ";
-						$fnc++;
-						$sql .= $field." ".PGV_DB_LIKE." '%".$DBCONN->escapeSimple($name1)."%'";
-					}
-				}
-				$sql .= ") ";
-			}
-			if (!empty($arr2) && count($arr2)>0) {
-				$sql .= "AND (";
-				$lnc = 0;
-				if ($soundex == "DaitchM")
-					$field = "sx_ln_dm_code";
-				else
-					$field = "sx_ln_std_code";
-				foreach ($arr2 as $name) {
-					if ($lnc>0)
-						$sql .= " OR ";
-					$lnc++;
-					$sql .= $field." ".PGV_DB_LIKE." '%".$DBCONN->escapeSimple($name)."%'";
-				}
-				$sql .= ") ";
-			}
-
-			if (!empty($place)) {
-				if ($soundex == "DaitchM")
-					$field = "p_dm_soundex";
-				if ($soundex == "Russell")
-					$field = "p_std_soundex";
-				$sql .= "AND (";
-				$pc = 0;
-				foreach ($parr as $place) {
-					if ($pc>0)
-						$sql .= " OR ";
-					$pc++;
-					$sql .= $field." ".PGV_DB_LIKE." '%".$DBCONN->escapeSimple($place)."%'";
-				}
-				$sql .= ") ";
-			}
-			//--group by
-			$sql .= "GROUP BY i_id";
-			$res = dbquery($sql);
-		}
+		$sql.=' AND ('.implode(' OR ', $givn_sdx).')';
 	}
+	if ($lastname && $surn_sdx) {
+		foreach ($surn_sdx as $k=>$v) {
+			$surn_sdx[$k]="n_soundex_surn_{$field} ".PGV_DB_LIKE." '%{$v}%'";
+		}
+		$sql.=' AND ('.implode(' OR ', $surn_sdx).')';
+	}
+	if ($place && $plac_sdx) {
+		foreach ($plac_sdx as $k=>$v) {
+			$plac_sdx[$k]="p_{$field}_soundex ".PGV_DB_LIKE." '%{$v}%'";
+		}
+		$sql.=' AND ('.implode(' OR ', $plac_sdx).')';
+	}
+	$sql.=' GROUP BY i_id, i_gedcom, i_name, i_isdead, i_file';
+	$res = dbquery($sql);
 	return $res;
 }
 
