@@ -43,7 +43,7 @@ class AdvancedSearchController extends SearchController {
 	var $values = array();
 	var $plusminus = array();
 	var $errors = array();
-	
+
 	/**
 	 * constructor
 	 */
@@ -72,7 +72,7 @@ class AdvancedSearchController extends SearchController {
 			$this->fields[] = "FAMC:WIFE:NAME:SURN:SDX";
 		}
 	}
-	
+
 	function getOtherFields() {
 		$ofields = array("ADDR","ADDR:CITY","ADDR:STAE","ADDR:CTRY","ADDR:POST",
 			"AFN","EMAIL","FAX",
@@ -106,27 +106,29 @@ class AdvancedSearchController extends SearchController {
 		if ($this->action=="advanced") return $pgv_lang["advanced_search"];
 		else parent :: getPageTitle();
 	}
-	
+
 	function getValue($i) {
 		$val = "";
 		if (isset($this->values[$i])) $val = htmlentities($this->values[$i]);
 		return $val;
 	}
-	
+
 	function getField($i) {
 		$val = "";
 		if (isset($this->fields[$i])) $val = htmlentities($this->fields[$i]);
 		return $val;
 	}
-	
+
 	function getIndex($field) {
 		return array_search($field, $this->fields);
 	}
-	
+
 	function getLabel($tag) {
 		global $factarray, $pgv_lang;
-		$factarray["NAME:GIVN:SDX"] = $factarray["GIVN"];
-		$factarray["NAME:SURN:SDX"] = $factarray["SURN"];
+		foreach (array('SDX', 'SDX_DM', 'SDX_STD', 'EXACT') as $keyword) {
+			$factarray["NAME:GIVN:$keyword"] = $factarray["GIVN"];
+			$factarray["NAME:SURN:$keyword"] = $factarray["SURN"];
+		}
 		if (isset($factarray[$tag])) return $factarray[$tag];
 		if (isset($pgv_lang[$tag])) return $pgv_lang[$tag];
 		$label = "";
@@ -138,7 +140,7 @@ class AdvancedSearchController extends SearchController {
 		}
 		return $label;
 	}
-	
+
 	function reorderFields() {
 		$i = 0;
 		$newfields = array();
@@ -152,7 +154,7 @@ class AdvancedSearchController extends SearchController {
 			}
 			$newfields[$i] = $this->fields[$j];
 			if (isset($this->values[$j])) $newvalues[$i] = $this->values[$j];
-			if (isset($this->plusminus[$j])) $newplus[$i] = $this->plusminus[$j]; 
+			if (isset($this->plusminus[$j])) $newplus[$i] = $this->plusminus[$j];
 			$i++;
 		}
 		$this->fields = $newfields;
@@ -163,25 +165,24 @@ class AdvancedSearchController extends SearchController {
 			$this->values[] = $value;
 		}
 	}
-	
+
 	function advancedSearch($justSql=false, $table="individuals", $prefix="i") {
 		global $TBLPREFIX, $DBCONN, $DBTYPE;
 		global $gedcom_record_cache;
-		
+
 		DMsoundex("", "opencache");
 		$this->myindilist = array ();
 		$fct = count($this->fields);
 		if ($fct==0) return;
-		
-		$soundexTable = false;
+
 		$namesTable = false;
 		$datesTable = false;
 		$placesTable = false;
 		$famsTable = false;
 		$famcTable = false;
-		
+
 		$sql = '';
-		if ($justSql) $sqlfields = "SELECT DISTINCT ".$prefix."_id, ".$prefix."_file"; 
+		if ($justSql) $sqlfields = "SELECT DISTINCT ".$prefix."_id, ".$prefix."_file";
 		else $sqlfields = "SELECT i_id, i_gedcom, i_name, i_isdead, i_file";
 		$sqltables = " FROM ".$TBLPREFIX.$table;
 		$sqlwhere = " WHERE ".$prefix."_file=".PGV_GED_ID;
@@ -191,219 +192,217 @@ class AdvancedSearchController extends SearchController {
 			if (empty($field)) continue;
 			$value='';
 			if (isset($this->values[$i])) $value = $this->values[$i];
+			if (empty($value)) continue;
 			$parts = preg_split("/:/", $field);
 			//-- handle names seperately
 			if ($parts[0]=="NAME") {
-				//-- soundex search
-				if (end($parts)=="SDX") {
-					if (!empty($value)) {
-						if (!$soundexTable) {
-							$sqltables.=", ".$TBLPREFIX."soundex";
-							$sqlwhere .= " AND i_file=sx_file AND i_id=sx_i_id ";
-							$soundexTable = true;
-						}
-						$farr = array ();
-						if (!empty ($value)) {
-							$firstnames = preg_split("/\s/", trim($value));
-							for ($j = 0; $j < count($firstnames); $j ++) {
-								$farr[$j] = DMsoundex($firstnames[$j]);
-							}
-						}
-						if (count($farr)>0) {
-							if ($parts[1]=="GIVN") $field = "sx_fn_dm_code";
-							else $field = "sx_ln_dm_code";
-							$sqlwhere .= " AND (";
-							$fnc = 0;
-							foreach ($farr as $name) {
-								foreach ($name as $name1) {
-									if ($fnc>0)
-										$sqlwhere .= " OR ";
-									$fnc++;
-									$sqlwhere .= $field." ".PGV_DB_LIKE." '%".$DBCONN->escapeSimple($name1)."%'";
-								}
-							}
-							$sqlwhere .= ") ";
-						}
-					}
+				// The pgv_name table contains both names and soundex values
+				if (!$namesTable) {
+					$sqltables.=" JOIN ".$TBLPREFIX."name ON (i_file=n_file AND i_id=n_id) ";
+					$namesTable = true;
 				}
-				else {
-					//-- exact name search
-					if (!empty($value)) {
-						if (!$namesTable) {
-							$sqltables.=" LEFT JOIN ".$TBLPREFIX."names ON (i_file=n_file AND i_id=n_gid) ";
-							$namesTable = true;
-						}
-						if (!isset($parts[1])) {
-							$sqlwhere .= " AND (n_name ".PGV_DB_LIKE." '%".$DBCONN->escapeSimple($value)."%' OR i_name ".PGV_DB_LIKE." '%".$DBCONN->escapeSimple($value)."%')";
-						}
-						else if ($parts[1]=="GIVN") {
-							$sqlwhere .= " AND (n_name ".PGV_DB_LIKE." '%".$DBCONN->escapeSimple($value)."%' OR i_name ".PGV_DB_LIKE." '%".$DBCONN->escapeSimple($value)."%')";
-						}
-						else if ($parts[1]=="SURN") {
-							$sqlwhere .= " AND (n_surname ".PGV_DB_LIKE." '%".$DBCONN->escapeSimple($value)."%' OR i_surname ".PGV_DB_LIKE." '%".$DBCONN->escapeSimple($value)."%')";
+				switch (end($parts)) {
+				case 'SDX_STD':
+					$sdx=explode(':', soundex_dm($value));
+					foreach ($sdx as $k=>$v) {
+						if ($parts[1]=='GIVN') {
+							$sdx[$k]='n_soundex_givn_std '.PGV_DB_LIKE." '%{$v}%'";
+						} else {
+							$sdx[$k]='n_soundex_surn_std '.PGV_DB_LIKE." '%{$v}%'";
 						}
 					}
+					$sqlwhere.=' AND ('.implode(' OR ', $sdx).')';
+					break;
+				case 'SDX':
+					// SDX uses DM by default.
+				case 'SDX_DM':
+					$sdx=explode(':', soundex_dm($value));
+					foreach ($sdx as $k=>$v) {
+						if ($parts[1]=='GIVN') {
+							$sdx[$k]='n_soundex_givn_dm '.PGV_DB_LIKE." '%{$v}%'";
+						} else {
+							$sdx[$k]='n_soundex_surn_dm '.PGV_DB_LIKE." '%{$v}%'";
+						}
+					}
+					$sqlwhere.=' AND ('.implode(' OR ', $sdx).')';
+					break;
+				case 'EXACT':
+					// Exact match.
+					switch ($parts[1]) {
+					case 'GIVN':
+						$sqlwhere.=' AND n_givn '.PGV_DB_LIKE." '".$DBCONN->escapeSimple($value)."'";
+						break;
+					case 'SURN':
+						$sqlwhere.=' AND n_surname '.PGV_DB_LIKE." '".$DBCONN->escapeSimple($value)."'";
+						break;
+					default:
+						$sqlwhere.=' AND n_full '.PGV_DB_LIKE." '".$DBCONN->escapeSimple($value)."'";
+						break;
+					}
+					break;
+				default:
+					// Partial match.
+					switch ($parts[1]) {
+					case 'GIVN':
+						$sqlwhere.=' AND n_givn '.PGV_DB_LIKE." '%".$DBCONN->escapeSimple($value)."%'";
+						break;
+					case 'SURN':
+						$sqlwhere.=' AND n_surname '.PGV_DB_LIKE." '%".$DBCONN->escapeSimple($value)."%'";
+						break;
+					default:
+						$sqlwhere.=' AND n_full '.PGV_DB_LIKE." '%".$DBCONN->escapeSimple($value)."%'";
+						break;
+					}
+					break;
 				}
 			}
 			//-- handle dates
 			else if (isset($parts[1]) && $parts[1]=="DATE") {
-				if (!empty($value)) {
-					if (!$datesTable) {
-						$sqltables.=", ".$TBLPREFIX."dates";
-						$sqlwhere .= " AND ".$prefix."_file=d_file AND ".$prefix."_id=d_gid";
-						$datesTable = true;
-					}
-					$sqlwhere .= " AND (d_fact='".$parts[0]."'";
-					$date = new GedcomDate($value);
-					if ($date->isOK()) {
-						$jd1 = $date->date1->minJD;
-						if ($date->date2) $jd2 = $date->date2->maxJD;
-						else $jd2 = $date->date1->maxJD;
-						if (!empty($this->plusminus[$i])) {
-							$adjd = $this->plusminus[$i]*365;
-							//print $jd1.":".$jd2.":".$adjd;
-							$jd1 = $jd1 - $adjd;
-							$jd2 = $jd2 + $adjd;
-						}
-						$sqlwhere .= " AND d_julianday1>=".$jd1." AND d_julianday2<=".$jd2;
-					}
-					$sqlwhere .= ") ";
+				if (!$datesTable) {
+					$sqltables.=", ".$TBLPREFIX."dates";
+					$sqlwhere .= " AND ".$prefix."_file=d_file AND ".$prefix."_id=d_gid";
+					$datesTable = true;
 				}
+				$sqlwhere .= " AND (d_fact='".$parts[0]."'";
+				$date = new GedcomDate($value);
+				if ($date->isOK()) {
+					$jd1 = $date->date1->minJD;
+					if ($date->date2) $jd2 = $date->date2->maxJD;
+					else $jd2 = $date->date1->maxJD;
+					if (!empty($this->plusminus[$i])) {
+						$adjd = $this->plusminus[$i]*365;
+						//print $jd1.":".$jd2.":".$adjd;
+						$jd1 = $jd1 - $adjd;
+						$jd2 = $jd2 + $adjd;
+					}
+					$sqlwhere .= " AND d_julianday1>=".$jd1." AND d_julianday2<=".$jd2;
+				}
+				$sqlwhere .= ") ";
 			}
 			//-- handle places
 			else if (isset($parts[1]) && $parts[1]=="PLAC") {
-				if (!empty($value)) {
-					if (!$placesTable) {
-						$sqltables.=", ".$TBLPREFIX."places, ".$TBLPREFIX."placelinks";
-						$sqlwhere .= " AND ".$prefix."_file=p_file AND p_file=pl_file AND ".$prefix."_id=pl_gid AND pl_p_id=p_id";
-						$placesTable = true;
-					}
-					//-- soundex search
-					//if (end($parts)=="SDX") {
-						$places = preg_split("/[, ]+/", $value);
-						$parr = array();
-						for ($j = 0; $j < count($places); $j ++) {
-							$parr[$j] = DMsoundex($places[$j]);
-						}
-						$sqlwhere .= " AND (";
-						$fnc = 0;
-						$field = "p_dm_soundex";
-						foreach ($parr as $name) {
-							foreach ($name as $name1) {
-								if ($fnc>0)
-									$sqlwhere .= " OR ";
-								$fnc++;
-								$sqlwhere .= $field." ".PGV_DB_LIKE." '%".$DBCONN->escapeSimple($name1)."%'";
-							}
-						}
-						$sqlwhere .= ") ";
-					//}
+				if (!$placesTable) {
+					$sqltables.=", ".$TBLPREFIX."places, ".$TBLPREFIX."placelinks";
+					$sqlwhere .= " AND ".$prefix."_file=p_file AND p_file=pl_file AND ".$prefix."_id=pl_gid AND pl_p_id=p_id";
+					$placesTable = true;
 				}
+				//-- soundex search
+				//if (end($parts)=="SDX") {
+					$places = preg_split("/[, ]+/", $value);
+					$parr = array();
+					for ($j = 0; $j < count($places); $j ++) {
+						$parr[$j] = DMsoundex($places[$j]);
+					}
+					$sqlwhere .= " AND (";
+					$fnc = 0;
+					$field = "p_dm_soundex";
+					foreach ($parr as $name) {
+						foreach ($name as $name1) {
+							if ($fnc>0)
+								$sqlwhere .= " OR ";
+							$fnc++;
+							$sqlwhere .= $field." ".PGV_DB_LIKE." '%".$DBCONN->escapeSimple($name1)."%'";
+						}
+					}
+					$sqlwhere .= ") ";
+				//}
 			}
 			//-- handle parent/spouse names
 			else if ($parts[0]=='FAMS') {
-				if (!empty($value)) {
-					if (!$famsTable) {
-						$sqltables.=", ".$TBLPREFIX."families as FAMS";
-						$sqlwhere .= " AND i_file=FAMS.f_file";
-						$famsTable = true;
+				if (!$famsTable) {
+					$sqltables.=", ".$TBLPREFIX."families as FAMS";
+					$sqlwhere .= " AND i_file=FAMS.f_file";
+					$famsTable = true;
+				}
+				//-- alter the fields and recurse to generate a subquery for spouse/parent fields
+				$oldfields = $this->fields;
+				for($j=0; $j<$fct; $j++) {
+					//-- if it doesn't start with FAMS or FAMC then remove that field
+					if (preg_match("/^".$parts[0].":/", $this->fields[$j])==0) {
+						$this->fields[$j]='';
 					}
-					//-- alter the fields and recurse to generate a subquery for spouse/parent fields
-					$oldfields = $this->fields;
-					for($j=0; $j<$fct; $j++) {
-						//-- if it doesn't start with FAMS or FAMC then remove that field
-						if (preg_match("/^".$parts[0].":/", $this->fields[$j])==0) {
-							$this->fields[$j]='';
-						}
-						else $this->fields[$j] = preg_replace("/^".$parts[0].":/","", $this->fields[$j]);
-					}
-					$sqlwhere .= " AND (FAMS.f_husb=i_id OR FAMS.f_wife=i_id)";
-					$subsql = $this->advancedSearch(true,"families","f");
-					$sqlwhere .= " AND ROW(FAMS.f_id, FAMS.f_file) IN (".$subsql.")";
-					$this->fields = $oldfields;
-					//-- remove all of the fam fields so they don't show up again
-					for($j=0; $j<$fct; $j++) {
-						//-- if it does start with FAMS or FAMC then remove that field
-						if (preg_match("/^".$parts[0].":/", $this->fields[$j])>0) {
-							$this->fields[$j]='';
-						}
+					else $this->fields[$j] = preg_replace("/^".$parts[0].":/","", $this->fields[$j]);
+				}
+				$sqlwhere .= " AND (FAMS.f_husb=i_id OR FAMS.f_wife=i_id)";
+				$subsql = $this->advancedSearch(true,"families","f");
+				$sqlwhere .= " AND ROW(FAMS.f_id, FAMS.f_file) IN (".$subsql.")";
+				$this->fields = $oldfields;
+				//-- remove all of the fam fields so they don't show up again
+				for($j=0; $j<$fct; $j++) {
+					//-- if it does start with FAMS or FAMC then remove that field
+					if (preg_match("/^".$parts[0].":/", $this->fields[$j])>0) {
+						$this->fields[$j]='';
 					}
 				}
 			}
 			else if ($parts[0]=='FAMC') {
-				if (!empty($value)) {
-					if (!$famcTable) {
-						$sqltables.=", ".$TBLPREFIX."families as FAMC";
-						$sqlwhere .= " AND i_file=FAMC.f_file";
-						$famcTable = true;
+				if (!$famcTable) {
+					$sqltables.=", ".$TBLPREFIX."families as FAMC";
+					$sqlwhere .= " AND i_file=FAMC.f_file";
+					$famcTable = true;
+				}
+				//-- alter the fields and recurse to generate a subquery for spouse/parent fields
+				$oldfields = $this->fields;
+				for($j=0; $j<$fct; $j++) {
+					//-- if it doesn't start with FAMS or FAMC then remove that field
+					if (preg_match("/^".$parts[0].":/", $this->fields[$j])==0) {
+						$this->fields[$j]='';
 					}
-					//-- alter the fields and recurse to generate a subquery for spouse/parent fields
-					$oldfields = $this->fields;
-					for($j=0; $j<$fct; $j++) {
-						//-- if it doesn't start with FAMS or FAMC then remove that field
-						if (preg_match("/^".$parts[0].":/", $this->fields[$j])==0) {
-							$this->fields[$j]='';
-						}
-						else $this->fields[$j] = preg_replace("/^".$parts[0].":/","", $this->fields[$j]);
-					}
-					$sqlwhere .= " AND (FAMC.f_chil ".PGV_DB_LIKE." CONCAT('%',i_id,';%'))";
-					$subsql = $this->advancedSearch(true,"families","f");
-					$sqlwhere .= " AND ROW(FAMC.f_id, FAMC.f_file) IN (".$subsql.")";
-					$this->fields = $oldfields;
-					//-- remove all of the fam fields so they don't show up again
-					for($j=0; $j<$fct; $j++) {
-						//-- if it does start with FAMS or FAMC then remove that field
-						if (preg_match("/^".$parts[0].":/", $this->fields[$j])>0) {
-							$this->fields[$j]='';
-						}
+					else $this->fields[$j] = preg_replace("/^".$parts[0].":/","", $this->fields[$j]);
+				}
+				$sqlwhere .= " AND (FAMC.f_chil ".PGV_DB_LIKE." CONCAT('%',i_id,';%'))";
+				$subsql = $this->advancedSearch(true,"families","f");
+				$sqlwhere .= " AND ROW(FAMC.f_id, FAMC.f_file) IN (".$subsql.")";
+				$this->fields = $oldfields;
+				//-- remove all of the fam fields so they don't show up again
+				for($j=0; $j<$fct; $j++) {
+					//-- if it does start with FAMS or FAMC then remove that field
+					if (preg_match("/^".$parts[0].":/", $this->fields[$j])>0) {
+						$this->fields[$j]='';
 					}
 				}
 			}
 			else if ($parts[0]=='HUSB' || $parts[0]=='WIFE') {
-				if (!empty($value)) {
-					if (!$famsTable) {
-						$sqltables.=", ".$TBLPREFIX."individuals";
-						$sqlwhere .= " AND i_file=f_file";
-						$famsTable = true;
+				if (!$famsTable) {
+					$sqltables.=", ".$TBLPREFIX."individuals";
+					$sqlwhere .= " AND i_file=f_file";
+					$famsTable = true;
+				}
+				//-- alter the fields and recurse to generate a subquery for spouse/parent fields
+				$oldfields = $this->fields;
+				for($j=0; $j<$fct; $j++) {
+					//-- if it doesn't start with FAMS or FAMC then remove that field
+					if (preg_match("/^".$parts[0].":/", $this->fields[$j])==0) {
+						$this->fields[$j]='';
 					}
-					//-- alter the fields and recurse to generate a subquery for spouse/parent fields
-					$oldfields = $this->fields;
-					for($j=0; $j<$fct; $j++) {
-						//-- if it doesn't start with FAMS or FAMC then remove that field
-						if (preg_match("/^".$parts[0].":/", $this->fields[$j])==0) {
-							$this->fields[$j]='';
-						}
-						else $this->fields[$j] = preg_replace("/^".$parts[0].":/","", $this->fields[$j]);
-					}
-					$subsql = $this->advancedSearch(true,"individuals","i");
-					if ($parts[0]=='HUSB') $sqlwhere .= " AND ROW(f_husb, f_file) IN (".$subsql.")";
-					if ($parts[0]=='WIFE') $sqlwhere .= " AND ROW(f_wife, f_file) IN (".$subsql.")";
-					$this->fields = $oldfields;
-					//-- remove all of the fam fields so they don't show up again
-					for($j=0; $j<$fct; $j++) {
-						//-- if it does start with HUSB or WIFE then remove that field
-						if (preg_match("/^".$parts[0].":/", $this->fields[$j])>0) {
-							$this->fields[$j]='';
-						}
+					else $this->fields[$j] = preg_replace("/^".$parts[0].":/","", $this->fields[$j]);
+				}
+				$subsql = $this->advancedSearch(true,"individuals","i");
+				if ($parts[0]=='HUSB') $sqlwhere .= " AND ROW(f_husb, f_file) IN (".$subsql.")";
+				if ($parts[0]=='WIFE') $sqlwhere .= " AND ROW(f_wife, f_file) IN (".$subsql.")";
+				$this->fields = $oldfields;
+				//-- remove all of the fam fields so they don't show up again
+				for($j=0; $j<$fct; $j++) {
+					//-- if it does start with HUSB or WIFE then remove that field
+					if (preg_match("/^".$parts[0].":/", $this->fields[$j])>0) {
+						$this->fields[$j]='';
 					}
 				}
 			}
 			//-- handle everything else
 			else {
-				if (!empty($value)) {
-					$sqlwhere .= " AND i_gedcom ".$term." '";
-						
-					$ct = count($parts);
-					for($j=0; $j<$ct; $j++) {
-						 $sqlwhere .= ($j+1)." ".$parts[$j];
-						 if ($j<$ct-1) {
-						 	$sqlwhere .= "%";
-						 } else {
-						 	$sqlwhere .= "%".$DBCONN->escapeSimple($value)."%";
-						 }
-					}
-					$sqlwhere .= "'";
+				$sqlwhere .= " AND i_gedcom ".$term." '";
+
+				$ct = count($parts);
+				for($j=0; $j<$ct; $j++) {
+					 $sqlwhere .= ($j+1)." ".$parts[$j];
+					 if ($j<$ct-1) {
+					 	$sqlwhere .= "%";
+					 } else {
+					 	$sqlwhere .= "%".$DBCONN->escapeSimple($value)."%";
+					 }
 				}
+				$sqlwhere .= "'";
 			}
 		}
 		$sql = $sqlfields.$sqltables.$sqlwhere;
@@ -423,10 +422,10 @@ class AdvancedSearchController extends SearchController {
 		}
 		$this->fields = $keepfields;
 	}
-	
+
 	function PrintResults() {
 		global $pgv_lang, $GEDCOMS;
-		
+
 		include_once ("includes/functions_print_lists.php");
 		$ret = true;
 		if (count($this->myindilist)>0) {
