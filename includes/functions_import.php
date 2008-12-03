@@ -36,6 +36,7 @@ require_once 'includes/class_media.php';
 include_once 'includes/functions_lang.php';
 require_once 'includes/class_mutex.php';
 require_once 'includes/index_cache.php';
+require_once 'includes/functions_name.php';
 
 // Programs such as FTM use the "tag formal names" instead of the actual tags.  This list lets us convert.
 $TRANSLATE_TAGS=array(
@@ -363,37 +364,6 @@ function import_record($gedrec, $update) {
 	//-- if this is not an update then write it to the new gedcom file
 	if (!$update && !empty ($fpnewged) && !(empty ($gedrec)))
 		fwrite($fpnewged, trim($gedrec) . "\r\n");
-}
-
-function soundex_std($text) {
-	Character_Substitute($text);
-	$words=explode(' ', $text);
-	$soundex_array=array();
-	foreach ($words as $word) {
-		if ($word) {
-			$soundex_array[]=soundex($word);
-		}
-	}
-	if (count($words)>1) {
-		$soundex_array[]=soundex(strtr($text, ' ', ''));
-	}
-	return implode(':', array_unique($soundex_array));
-}
-
-function soundex_dm($text) {
-	Character_Substitute($text);
-	$words=explode(' ', $text);
-	$soundex_array=array();
-	$combined = "";
-	foreach ($words as $word) {
-		if ($word) {
-			$soundex_array=array_merge($soundex_array, DMSoundex($word));
-		}
-	}
-	if (count($words)>1) {
-		$soundex_array=array_merge($soundex_array, DMSoundex(strtr($text, ' ', '')));
-	}
-	return implode(":", array_unique($soundex_array));
 }
 
 /**
