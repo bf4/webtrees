@@ -2504,32 +2504,16 @@ function get_top_surnames($num) {
 	global $TBLPREFIX;
 
 	$surnames = array();
-	$sql = "SELECT COUNT(i_surname) AS count, i_surname FROM ".$TBLPREFIX."individuals WHERE i_file=".PGV_GED_ID." GROUP BY i_surname ORDER BY count DESC";
+	$sql = "SELECT COUNT(n_surname) AS count, n_surn FROM {$TBLPREFIX}name WHERE n_file=".PGV_GED_ID." AND n_type!='_MARNM' GROUP BY n_surn ORDER BY count DESC";
 	$res = dbquery($sql, true, $num+1);
 
 	if (!DB::isError($res)) {
 		while ($row =& $res->fetchRow()) {
-			if (preg_match("/^(@N\.N\.?|_+|\?+)$/", $row[1])==0) {			// Skip various forms of "unknown"
-				if (isset($surnames[UTF8_strtoupper($row[1])]['match']))
-					$surnames[UTF8_strtoupper($row[1])]['match'] += $row[0];
-				else {
-					$surnames[UTF8_strtoupper($row[1])]['name'] = $row[1];
-					$surnames[UTF8_strtoupper($row[1])]['match'] = $row[0];
-				}
-			}
-		}
-		$res->free();
-	}
-	$sql = "SELECT COUNT(n_surname) AS count, n_surname FROM ".$TBLPREFIX."names WHERE n_file=".PGV_GED_ID." AND n_type!='C' GROUP BY n_surname ORDER BY count DESC";
-	$res = dbquery($sql, true, $num+1);
-
-	if (!DB::isError($res)) {
-		while ($row =& $res->fetchRow()) {
-			if (isset($surnames[UTF8_strtoupper($row[1])]['match']))
-				$surnames[UTF8_strtoupper($row[1])]['match'] += $row[0];
-			else {
-				$surnames[UTF8_strtoupper($row[1])]['name'] = $row[1];
-				$surnames[UTF8_strtoupper($row[1])]['match'] = $row[0];
+			if (isset($surnames[$row[1]]['match'])) {
+				$surnames[$row[1]]['match'] += $row[0];
+			} else {
+				$surnames[$row[1]]['name'] = $row[1];
+				$surnames[$row[1]]['match'] = $row[0];
 			}
 		}
 		$res->free();
