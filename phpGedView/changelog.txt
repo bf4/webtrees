@@ -10,6 +10,7 @@
 
 
 Version 4.2.0
+ - Fixed: [ 2269709 ] [4270] Top 10 surnames not sorted (fisharebest)
  - Fixed: [ 1496031 ] Soundex Search bugs
  - Fixed: [ 1608538 ] Soundex Search Output
  - Fixed: [ 2377438 ] Clipping Cart, GRAMPS format, download error (canajun2eh)
