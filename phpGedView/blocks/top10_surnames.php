@@ -112,6 +112,7 @@ function print_block_name_top10($block=true, $config="", $side, $index) {
 			foreach (get_surname_indis($surname) as $person) {
 				foreach ($person->getAllNames() as $name) {
 					$surn=UTF8_strtoupper($name['surn']);
+					$surname=UTF8_strtoupper($surname);
 					if ($surn && $surn!='@N.N.' && $surname==$surn) {
 						$spfxsurn=$name['spfx'].($name['spfx'] ? ' ' : '').$name['surn'];
 						if (! array_key_exists($surn, $all_surnames)) {
