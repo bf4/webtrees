@@ -434,7 +434,7 @@ class stats {
 		$tot_sindi = $this->totalIndisWithSources();
 		$tot_indi_per = round(100 *  ($tot_indi-$tot_sindi) / $tot_indi, 2);
 		$tot_sindi_per = round(100 * $tot_sindi / $tot_indi, 2);
-		$chd = self::_array_to_extended_encoding(array($tot_sindi_per, $tot_indi_per-$tot_sindi_per));
+		$chd = self::_array_to_extended_encoding(array($tot_sindi_per, 100-$tot_sindi_per));
 		$chl = reverseText($pgv_lang['stat_sindi']).' ['.round($tot_sindi_per,1).'%]|'.
 				reverseText($pgv_lang['others']).' ['.round($tot_indi_per,1).'%]';
 		$chart_title = reverseText($pgv_lang['stat_sindi']).' ['.round($tot_sindi_per,1).'%], '.
@@ -476,7 +476,7 @@ class stats {
 		$tot_sfam = $this->totalFamsWithSources();
 		$tot_fam_per = round(100 *  ($tot_fam-$tot_sfam) / $tot_fam, 2);
 		$tot_sfam_per = round(100 * $tot_sfam / $tot_fam, 2);
-		$chd = self::_array_to_extended_encoding(array($tot_sfam_per, $tot_fam_per-$tot_sfam_per));
+		$chd = self::_array_to_extended_encoding(array($tot_sfam_per, 100-$tot_sfam_per));
 		$chl = reverseText($pgv_lang['stat_sfam']).' ['.round($tot_sfam_per,1).'%]|'.
 				reverseText($pgv_lang['others']).' ['.round($tot_fam_per,1).'%]';
 		$chart_title = reverseText($pgv_lang['stat_sfam']).' ['.round($tot_sfam_per,1).'%], '.
