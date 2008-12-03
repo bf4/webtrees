@@ -426,7 +426,7 @@ class stats {
 	{
 		global $pgv_lang;
 		if ($params === null) {$params = array();}
-		if (isset($params[0]) && $params[0] != '') {$size = strtolower($params[0]);}else{$size = '450x120';}
+		if (isset($params[0]) && $params[0] != '') {$size = strtolower($params[0]);}else{$size = '440x125';}
 		if (isset($params[1]) && $params[1] != '') {$color_from = strtolower($params[1]);}else{$color_from = 'ffffff';}
 		if (isset($params[2]) && $params[2] != '') {$color_to = strtolower($params[2]);}else{$color_to = '000000';}
 		$sizes = explode('x', $size);
@@ -434,7 +434,7 @@ class stats {
 		$tot_sindi = $this->totalIndisWithSources();
 		$tot_indi_per = round(100 *  ($tot_indi-$tot_sindi) / $tot_indi, 2);
 		$tot_sindi_per = round(100 * $tot_sindi / $tot_indi, 2);
-		$chd = self::_array_to_extended_encoding(array($tot_sindi, $tot_indi-$tot_sindi));
+		$chd = self::_array_to_extended_encoding(array($tot_sindi_per, $tot_indi_per-$tot_sindi_per));
 		$chl = reverseText($pgv_lang['stat_sindi']).' ['.round($tot_sindi_per,1).'%]|'.
 				reverseText($pgv_lang['others']).' ['.round($tot_indi_per,1).'%]';
 		$chart_title = reverseText($pgv_lang['stat_sindi']).' ['.round($tot_sindi_per,1).'%], '.
@@ -468,7 +468,7 @@ class stats {
 	{
 		global $pgv_lang;
 		if ($params === null) {$params = array();}
-		if (isset($params[0]) && $params[0] != '') {$size = strtolower($params[0]);}else{$size = '450x120';}
+		if (isset($params[0]) && $params[0] != '') {$size = strtolower($params[0]);}else{$size = '440x125';}
 		if (isset($params[1]) && $params[1] != '') {$color_from = strtolower($params[1]);}else{$color_from = 'ffffff';}
 		if (isset($params[2]) && $params[2] != '') {$color_to = strtolower($params[2]);}else{$color_to = '000000';}
 		$sizes = explode('x', $size);
@@ -476,7 +476,7 @@ class stats {
 		$tot_sfam = $this->totalFamsWithSources();
 		$tot_fam_per = round(100 *  ($tot_fam-$tot_sfam) / $tot_fam, 2);
 		$tot_sfam_per = round(100 * $tot_sfam / $tot_fam, 2);
-		$chd = self::_array_to_extended_encoding(array($tot_sfam, $tot_fam-$tot_sfam));
+		$chd = self::_array_to_extended_encoding(array($tot_sfam_per, $tot_fam_per-$tot_sfam_per));
 		$chl = reverseText($pgv_lang['stat_sfam']).' ['.round($tot_sfam_per,1).'%]|'.
 				reverseText($pgv_lang['others']).' ['.round($tot_fam_per,1).'%]';
 		$chart_title = reverseText($pgv_lang['stat_sfam']).' ['.round($tot_sfam_per,1).'%], '.
@@ -644,7 +644,7 @@ class stats {
 	{
 		global $pgv_lang, $TEXT_DIRECTION;
 		if ($params === null) {$params = array();}
-		if (isset($params[0]) && $params[0] != '') {$size = strtolower($params[0]);}else{$size = '450x120';}
+		if (isset($params[0]) && $params[0] != '') {$size = strtolower($params[0]);}else{$size = '440x125';}
 		if (isset($params[1]) && $params[1] != '') {$color_female = strtolower($params[1]);}else{$color_female = 'ffd1dc';}
 		if (isset($params[2]) && $params[2] != '') {$color_male = strtolower($params[2]);}else{$color_male = '84beff';}
 		if (isset($params[3]) && $params[3] != '') {$color_unknown = strtolower($params[3]);}else{$color_unknown = '777777';}
@@ -718,7 +718,7 @@ class stats {
 	{
 		global $pgv_lang, $TEXT_DIRECTION;
 		if ($params === null) {$params = array();}
-		if (isset($params[0]) && $params[0] != '') {$size = strtolower($params[0]);}else{$size = '450x120';}
+		if (isset($params[0]) && $params[0] != '') {$size = strtolower($params[0]);}else{$size = '440x125';}
 		if (isset($params[1]) && $params[1] != '') {$color_living = strtolower($params[1]);}else{$color_living = 'ffffff';}
 		if (isset($params[2]) && $params[2] != '') {$color_dead = strtolower($params[2]);}else{$color_dead = 'cccccc';}
 		if (isset($params[3]) && $params[3] != '') {$color_unknown = strtolower($params[3]);}else{$color_unknown = '777777';}
@@ -822,7 +822,7 @@ class stats {
 	{
 		global $pgv_lang, $TEXT_DIRECTION;
 		if ($params === null) {$params = array();}
-		if (isset($params[0]) && $params[0] != '') {$size = strtolower($params[0]);}else{$size = '450x120';}
+		if (isset($params[0]) && $params[0] != '') {$size = strtolower($params[0]);}else{$size = '440x125';}
 		if (isset($params[1]) && $params[1] != '') {$color_from = strtolower($params[1]);}else{$color_from = 'ffffff';}
 		if (isset($params[2]) && $params[2] != '') {$color_to = strtolower($params[2]);}else{$color_to = '000000';}
 		$sizes = explode('x', $size);
@@ -1649,7 +1649,7 @@ class stats {
 	{
 		global $pgv_lang, $COMMON_NAMES_THRESHOLD;
 		if ($params === null) {$params = array();}
-		if (isset($params[0]) && $params[0] != '') {$size = strtolower($params[0]);}else{$size = '450x120';}
+		if (isset($params[0]) && $params[0] != '') {$size = strtolower($params[0]);}else{$size = '440x125';}
 		if (isset($params[1]) && $params[1] != '') {$color_from = strtolower($params[1]);}else{$color_from = 'ffffff';}
 		if (isset($params[2]) && $params[2] != '') {$color_to = strtolower($params[2]);}else{$color_to = '000000';}
 		if (isset($params[3]) && $params[3] != '') {$threshold = strtolower($params[3]);}else{$threshold = $COMMON_NAMES_THRESHOLD;}
@@ -1667,6 +1667,7 @@ class stats {
 			foreach (get_surname_indis($surname) as $person) {
 				foreach ($person->getAllNames() as $name) {
 					$surn=UTF8_strtoupper($name['surn']);
+					$surname=UTF8_strtoupper($surname);
 					if ($surn && $surn!='@N.N.' && $surname==$surn) {
 						$spfxsurn=$name['spfx'].($name['spfx'] ? ' ' : '').$name['surn'];
 						if (! array_key_exists($surn, $all_surnames)) {
