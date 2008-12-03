@@ -1249,76 +1249,20 @@ function search_indis_names($query, $allgeds=false) {
 	//-- like "givenname surname"
 	if (!is_array($query)) {
 		$query = preg_split("/[\s,]+/", $query);
-		for ($i=0; $i<count($query); $i++){
-			$query[$i] = "%".$query[$i]."%";
-		}
+	}
+	foreach ($query as $k=>$v) {
+	 	$query[$k]="n_full ".PGV_DB_LIKE." '%".$DBCONN->escapeSimple($v)."%'";
 	}
 
+	$sql="SELECT DISTINCT i_id, i_file, i_gedcom, i_isdead FROM {$TBLPREFIX}individuals, {$TBLPREFIX}name WHERE i_id=n_id AND i_file=n_file AND ".implode (' AND ', $query);
+	if (!$allgeds) {
+		$sql.=' AND i_file='.PGV_GED_ID;
+	}
+
+	$res = dbquery($sql, false);
 	$myindilist = array();
-	if (empty($query))
-		$sql = "SELECT i_id, i_file, i_gedcom, i_isdead FROM ".$TBLPREFIX."individuals";
-	else
-		if (!is_array($query))
-			$sql = "SELECT i_id, i_file, i_gedcom, i_isdead FROM ".$TBLPREFIX."individuals WHERE i_name ".PGV_DB_LIKE." '%".$DBCONN->escapeSimple($query)."%'";
-		else {
-			$sql = "SELECT i_id, i_file, i_gedcom, i_isdead FROM ".$TBLPREFIX."individuals WHERE (";
-			$i=0;
-			foreach ($query as $indexval => $q) {
-				if (!empty($q)) {
-					if ($i>0)
-						$sql .= " AND ";
-					$sql .= "i_name ".PGV_DB_LIKE." '%".$DBCONN->escapeSimple($q)."%'";
-					$i++;
-				}
-			}
-			$sql .= ")";
-		}
-	if (!$allgeds)
-		$sql .= " AND i_file=".PGV_GED_ID;
-	$res = dbquery($sql, false);
 	if (!DB::isError($res)) {
 		while ($row = $res->fetchRow()){
-			$row = db_cleanup($row);
-			if ($allgeds)
-				$key = $row[0]."[".$row[2]."]";
-			else
-				$key = $row[0];
-			if (isset($indilist[$key]))
-				$myindilist[$key] = $indilist[$key];
-			else {
-				$myindilist[$key]["gedfile"] = $row[1];
-				$myindilist[$key]["gedcom"] = $row[2];
-				$myindilist[$key]["isdead"] = $row[3];
-				$myindilist[$key]["id"] = $row[0];
-				$indilist[$key] = $myindilist[$key];
-			}
-		}
-		$res->free();
-	}
-
-	//-- search the names table too
-	if (!is_array($query))
-		$sql = "SELECT i_id, i_file, i_gedcom, i_isdead FROM ".$TBLPREFIX."individuals, ".$TBLPREFIX."names WHERE i_id=n_gid AND i_file=n_file AND n_name ".PGV_DB_LIKE." '%".$DBCONN->escapeSimple($query)."%'";
-	else {
-		$sql = "SELECT i_id, i_file, i_gedcom, i_isdead FROM ".$TBLPREFIX."individuals, ".$TBLPREFIX."names WHERE i_id=n_gid AND i_file=n_file AND (";
-		$i=0;
-		foreach ($query as $indexval => $q) {
-			if (!empty($q)) {
-				if ($i>0)
-					$sql .= " AND ";
-				$sql .= "n_name ".PGV_DB_LIKE." '%".$DBCONN->escapeSimple($q)."%'";
-				$i++;
-			}
-		}
-		$sql .= ")";
-	}
-	if (!$allgeds)
-		$sql .= " AND i_file=".PGV_GED_ID;
-	$res = dbquery($sql, false);
-
-	if (!DB::isError($res)) {
-		while ($row = $res->fetchRow()){
-			$row = db_cleanup($row);
 			if ($allgeds)
 				$key = $row[0]."[".$row[1]."]";
 			else
