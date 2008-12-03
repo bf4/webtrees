@@ -1665,8 +1665,7 @@ class stats {
 			if ($n>=$maxtoshow) {
 				break;
 			}
-			foreach (array_keys(get_surname_indis($surname)) as $pid) {
-				$person=Person::getInstance($pid);
+			foreach (get_surname_indis($surname) as $person) {
 				foreach ($person->getAllNames() as $name) {
 					$surn=UTF8_strtoupper($name['surn']);
 					if ($surn && $surn!='@N.N.' && $surname==$surn) {
@@ -1677,7 +1676,7 @@ class stats {
 						if (! array_key_exists($spfxsurn, $all_surnames[$surn])) {
 							$all_surnames[$surn][$spfxsurn]=array();
 						}
-						$all_surnames[$surn][$spfxsurn][$pid]=true;
+						$all_surnames[$surn][$spfxsurn][$person->getXref()]=true;
 					}
 				}
 			}
