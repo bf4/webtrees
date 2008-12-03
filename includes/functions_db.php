@@ -2441,49 +2441,26 @@ function delete_gedcom($ged) {
 
 	if (!isset($GEDCOMS[$ged]))
 		return;
-	$dbged = $GEDCOMS[$ged]["id"];
 
-	$sql = "DELETE FROM ".$TBLPREFIX."blocks WHERE b_username='".$DBCONN->escapeSimple($ged)."'";
-	$res = dbquery($sql);
-
-	$sql = "DELETE FROM ".$TBLPREFIX."dates WHERE d_file=".$DBCONN->escapeSimple($dbged);
-	$res = dbquery($sql);
-
-	$sql = "DELETE FROM ".$TBLPREFIX."families WHERE f_file=".$DBCONN->escapeSimple($dbged);
-	$res = dbquery($sql);
-
-	$sql = "DELETE FROM ".$TBLPREFIX."favorites WHERE fv_file=".$DBCONN->escapeSimple($dbged);
-	$res = dbquery($sql);
-
-	$sql = "DELETE FROM ".$TBLPREFIX."individuals WHERE i_file=".$DBCONN->escapeSimple($dbged);
-	$res = dbquery($sql);
-
-	$sql = "DELETE FROM ".$TBLPREFIX."media WHERE m_gedfile=".$DBCONN->escapeSimple($dbged);
-	$res = dbquery($sql);
-
-	$sql = "DELETE FROM ".$TBLPREFIX."media_mapping WHERE mm_gedfile=".$DBCONN->escapeSimple($dbged);
-	$res = dbquery($sql);
-
-	$sql = "DELETE FROM ".$TBLPREFIX."names WHERE n_file=".$DBCONN->escapeSimple($dbged);
-	$res = dbquery($sql);
-
-	$sql = "DELETE FROM ".$TBLPREFIX."news WHERE n_username='".$DBCONN->escapeSimple($ged)."'";
-	$res = dbquery($sql);
-
-	$sql = "DELETE FROM ".$TBLPREFIX."nextid WHERE ni_gedfile=".$DBCONN->escapeSimple($dbged);
-	$res = dbquery($sql);
-
-	$sql = "DELETE FROM ".$TBLPREFIX."other WHERE o_file=".$DBCONN->escapeSimple($dbged);
-	$res = dbquery($sql);
-
-	$sql = "DELETE FROM ".$TBLPREFIX."placelinks WHERE pl_file=".$DBCONN->escapeSimple($dbged);
-	$res = dbquery($sql);
-
-	$sql = "DELETE FROM ".$TBLPREFIX."places WHERE p_file=".$DBCONN->escapeSimple($dbged);
-	$res = dbquery($sql);
-
-	$sql = "DELETE FROM ".$TBLPREFIX."sources WHERE s_file=".$DBCONN->escapeSimple($dbged);
-	$res = dbquery($sql);
+	$ged=$DBCONN->escapeSimple($ged);
+	$dbged=(int)$GEDCOMS[$ged]["id"];
+	
+	$res = dbquery("DELETE FROM {$TBLPREFIX}blocks        WHERE b_username='{$ged}'");
+	$res = dbquery("DELETE FROM {$TBLPREFIX}dates         WHERE d_file    =$dbged");
+	$res = dbquery("DELETE FROM {$TBLPREFIX}families      WHERE f_file    =$dbged");
+	$res = dbquery("DELETE FROM {$TBLPREFIX}favorites     WHERE fv_file   =$dbged");
+	$res = dbquery("DELETE FROM {$TBLPREFIX}individuals   WHERE i_file    =$dbged");
+	$res = dbquery("DELETE FROM {$TBLPREFIX}link          WHERE n_file    =$dbged");
+	$res = dbquery("DELETE FROM {$TBLPREFIX}media         WHERE m_gedfile =$dbged");
+	$res = dbquery("DELETE FROM {$TBLPREFIX}media_mapping WHERE mm_gedfile=$dbged");
+	$res = dbquery("DELETE FROM {$TBLPREFIX}name          WHERE n_file    =$dbged");
+	$res = dbquery("DELETE FROM {$TBLPREFIX}names         WHERE n_file    =$dbged");
+	$res = dbquery("DELETE FROM {$TBLPREFIX}news          WHERE n_username='{$ged}'");
+	$res = dbquery("DELETE FROM {$TBLPREFIX}nextid        WHERE ni_gedfile=$dbged");
+	$res = dbquery("DELETE FROM {$TBLPREFIX}other         WHERE o_file    =$dbged");
+	$res = dbquery("DELETE FROM {$TBLPREFIX}placelinks    WHERE pl_file   =$dbged");
+	$res = dbquery("DELETE FROM {$TBLPREFIX}places        WHERE p_file    =$dbged");
+	$res = dbquery("DELETE FROM {$TBLPREFIX}sources       WHERE s_file    =$dbged");
 
 	if (isset($pgv_changes)) {
 		//-- erase any of the changes
