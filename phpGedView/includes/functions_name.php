@@ -487,4 +487,37 @@ function DMSoundex($name, $option = "") {
 	return $result;
 }
 
+// Wrapper function for soundex function.  Return a colon separated list of values.
+function soundex_std($text) {
+	Character_Substitute($text);
+	$words=explode(' ', $text);
+	$soundex_array=array();
+	foreach ($words as $word) {
+		if ($word) {
+			$soundex_array[]=soundex($word);
+		}
+	}
+	if (count($words)>1) {
+		$soundex_array[]=soundex(strtr($text, ' ', ''));
+	}
+	return implode(':', array_unique($soundex_array));
+}
+
+// Wrapper function for soundex function.  Return a colon separated list of values.
+function soundex_dm($text) {
+	Character_Substitute($text);
+	$words=explode(' ', $text);
+	$soundex_array=array();
+	$combined = "";
+	foreach ($words as $word) {
+		if ($word) {
+			$soundex_array=array_merge($soundex_array, DMSoundex($word));
+		}
+	}
+	if (count($words)>1) {
+		$soundex_array=array_merge($soundex_array, DMSoundex(strtr($text, ' ', '')));
+	}
+	return implode(":", array_unique($soundex_array));
+}
+
 ?>
