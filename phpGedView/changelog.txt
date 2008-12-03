@@ -10,6 +10,8 @@
 
 
 Version 4.2.0
+ - Fixed: [ 1496031 ] Soundex Search bugs
+ - Fixed: [ 1608538 ] Soundex Search Output
  - Fixed: [ 2377438 ] Clipping Cart, GRAMPS format, download error (canajun2eh)
  - Changed: Statistics - user-friendly (wooc)
  - Fixed: [ 2330631 ] Statistics Plot - Minor Issues (wooc)
