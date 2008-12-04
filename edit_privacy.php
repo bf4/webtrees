@@ -33,38 +33,10 @@ loadLangFile('pgv_confighelp, pgv_help');
 
 if (empty($ged)) $ged = $GEDCOM;
 
-if (!userGedcomAdmin(PGV_USER_ID, $ged) || empty($ged)) {
+if (!userGedcomAdmin(PGV_USER_ID, $ged)) {
 	header('Location: editgedcoms.php');
 	exit;
 }
-
-if (isset($_REQUEST['action'])) $action = $_REQUEST['action'];
-
-if (isset($_REQUEST['v_new_person_privacy_access_ID']))    $v_new_person_privacy_access_ID=$_REQUEST['v_new_person_privacy_access_ID'];
-if (isset($_REQUEST['v_new_person_privacy_acess_option'])) $v_new_person_privacy_acess_option=$_REQUEST['v_new_person_privacy_acess_option'];
-if (isset($_REQUEST['v_person_privacy_del']))              $v_person_privacy_del=$_REQUEST['v_person_privacy_del'];
-
-
-if (isset($_REQUEST['v_new_user_privacy_username']))     $v_new_user_privacy_username=$_REQUEST['v_new_user_privacy_username'];
-if (isset($_REQUEST['v_new_user_privacy_access_ID']))    $v_new_user_privacy_access_ID=$_REQUEST['v_new_user_privacy_access_ID'];
-if (isset($_REQUEST['v_new_user_privacy_acess_option'])) $v_new_user_privacy_acess_option=$_REQUEST['v_new_user_privacy_acess_option'];
-if (isset($_REQUEST['v_user_privacy_del']))              $v_user_privacy_del=$_REQUEST['v_user_privacy_del'];
-
-
-if (isset($_REQUEST['v_new_global_facts_abbr']))         $v_new_global_facts_abbr=$_REQUEST['v_new_global_facts_abbr'];
-if (isset($_REQUEST['v_new_global_facts_choice']))       $v_new_global_facts_choice=$_REQUEST['v_new_global_facts_choice'];
-if (isset($_REQUEST['v_new_global_facts_acess_option'])) $v_new_global_facts_acess_option=$_REQUEST['v_new_global_facts_acess_option'];
-if (isset($_REQUEST['v_global_facts_del']))              $v_global_facts_del=$_REQUEST['v_global_facts_del'];
-
-
-if (isset($_REQUEST['v_new_person_facts_access_ID']))    $v_new_person_facts_access_ID=$_REQUEST['v_new_person_facts_access_ID'];
-if (isset($_REQUEST['v_new_person_facts_abbr']))         $v_new_person_facts_abbr=$_REQUEST['v_new_person_facts_abbr'];
-if (isset($_REQUEST['v_new_person_facts_choice']))       $v_new_person_facts_choice=$_REQUEST['v_new_person_facts_choice'];
-if (isset($_REQUEST['v_new_person_facts_acess_option'])) $v_new_person_facts_acess_option=$_REQUEST['v_new_person_facts_acess_option'];
-if (isset($_REQUEST['v_person_facts_del']))              $v_person_facts_del=$_REQUEST['v_person_facts_del'];
-
-if (!isset($PRIVACY_BY_YEAR)) $PRIVACY_BY_YEAR = false;
-if (!isset($MAX_ALIVE_AGE)) $MAX_ALIVE_AGE = 120;
 
 $PRIVACY_CONSTANTS=array(
 	PGV_PRIV_NONE  =>'PGV_PRIV_NONE',
@@ -72,6 +44,32 @@ $PRIVACY_CONSTANTS=array(
 	PGV_PRIV_PUBLIC=>'PGV_PRIV_PUBLIC',
 	PGV_PRIV_HIDE  =>'PGV_PRIV_HIDE'
 );
+
+$action=safe_POST('action', 'update');
+
+$v_new_person_privacy_access_ID    =safe_POST('v_new_person_privacy_access_ID',     PGV_REGEX_XREF);
+$v_new_person_privacy_access_option=safe_POST('v_new_person_privacy_access_option', $PRIVACY_CONSTANTS);
+$v_person_privacy_del              =safe_POST('v_person_privacy_del',               '1');
+
+$v_new_user_privacy_username       =safe_POST('v_new_user_privacy_username',        get_all_users());
+$v_new_user_privacy_access_ID      =safe_POST('v_new_user_privacy_access_ID',       PGV_REGEX_XREF);
+$v_new_user_privacy_access_option  =safe_POST('v_new_user_privacy_access_option',   $PRIVACY_CONSTANTS);
+$v_user_privacy_del                =safe_POST('v_user_privacy_del',                 '1');
+
+$v_new_global_facts_abbr           =safe_POST('v_new_global_facts_abbr',            array_keys($factarray));
+$v_new_global_facts_choice         =safe_POST('v_new_global_facts_choice',          array('show', 'details'));
+$v_new_global_facts_access_option  =safe_POST('v_new_global_facts_access_option',   $PRIVACY_CONSTANTS);
+$v_global_facts_del                =safe_POST('v_global_facts_del',                 '1');
+
+$v_new_person_facts_access_ID      =safe_POST('v_new_person_facts_access_ID',       PGV_REGEX_XREF);
+$v_new_person_facts_abbr           =safe_POST('v_new_person_facts_abbr',            array_keys($factarray));
+$v_new_person_facts_choice         =safe_POST('v_new_person_facts_choice',          array('show', 'details'));
+$v_new_person_facts_access_option  =safe_POST('v_new_person_facts_access_option',   $PRIVACY_CONSTANTS);
+$v_person_facts_del                =safe_POST('v_person_facts_del',                 '1');
+
+// These values may not be present in privacy files created by old versions of PGV
+if (!isset($PRIVACY_BY_YEAR)) $PRIVACY_BY_YEAR = false;
+if (!isset($MAX_ALIVE_AGE)) $MAX_ALIVE_AGE = 120;
 
 /**
  * print yes/no select option
@@ -120,7 +118,6 @@ function search_ID_details($checkVar, $outputVar) {
 }
 
 
-if (empty($action)) $action="";
 $PRIVACY_MODULE = get_privacy_file();
 
 print_header($pgv_lang["privacy_header"]);
@@ -172,86 +169,78 @@ if ($action=="update") {
 	$configtext_beg = substr($configtext, 0, strpos($configtext, "//-- start person privacy --//"));
 	$configtext_end = substr($configtext, strpos($configtext, "//-- end person privacy --//"));
 	$person_privacy_text = "//-- start person privacy --//\n\$person_privacy = array();\n";
-	if (!isset($v_person_privacy_del)) $v_person_privacy_del = array();
-	if (!is_array($v_person_privacy_del)) $v_person_privacy_del = array();
 	if (!isset($v_person_privacy)) $v_person_privacy = array();
 	if (!is_array($v_person_privacy)) $v_person_privacy = array();
 	foreach($person_privacy as $key=>$value) {
-		if (!isset($v_person_privacy_del[$key])) {
+		if (!isset($v_person_privacy_del[$key]) && $key!=$v_new_person_privacy_access_ID) {
 			if (isset($v_person_privacy[$key])) $person_privacy_text .= "\$person_privacy['$key'] = ".$v_person_privacy[$key].";\n";
 			else $person_privacy_text .= "\$person_privacy['$key'] = ".$PRIVACY_CONSTANTS[$value].";\n";
 		}
 	}
-	if ((!empty($v_new_person_privacy_access_ID))&&(!empty($v_new_person_privacy_acess_option))) {
+	if ($v_new_person_privacy_access_ID && $v_new_person_privacy_access_option) {
 		$gedobj = new GedcomRecord(find_gedcom_record($v_new_person_privacy_access_ID));
 		$v_new_person_privacy_access_ID = $gedobj->getXref();
-		if (!empty($v_new_person_privacy_access_ID)) $person_privacy_text .= "\$person_privacy['$v_new_person_privacy_access_ID'] = ".$v_new_person_privacy_acess_option.";\n";
+		if ($v_new_person_privacy_access_ID) $person_privacy_text .= "\$person_privacy['$v_new_person_privacy_access_ID'] = ".$v_new_person_privacy_access_option.";\n";
 	}
 	$configtext = $configtext_beg . $person_privacy_text . $configtext_end;
 
 	$configtext_beg = substr($configtext, 0, strpos($configtext, "//-- start user privacy --//"));
 	$configtext_end = substr($configtext, strpos($configtext, "//-- end user privacy --//"));
 	$person_privacy_text = "//-- start user privacy --//\n\$user_privacy = array();\n";
-	if (!isset($v_user_privacy_del)) $v_user_privacy_del = array();
-	if (!is_array($v_user_privacy_del)) $v_user_privacy_del = array();
 	if (!isset($v_user_privacy)) $v_user_privacy = array();
 	if (!is_array($v_user_privacy)) $v_user_privacy = array();
 	foreach($user_privacy as $key=>$value) {
 		foreach($value as $id=>$setting) {
-			if (!isset($v_user_privacy_del[$key][$id])) {
+			if (!isset($v_user_privacy_del[$key][$id]) && ($key!=$v_new_user_privacy_username || $id!=$v_new_user_privacy_access_ID)) {
 				if (isset($v_user_privacy[$key][$id])) $person_privacy_text .= "\$user_privacy['$key']['$id'] = ".$v_user_privacy[$key][$id].";\n";
 				else $person_privacy_text .= "\$user_privacy['$key']['$id'] = ".$PRIVACY_CONSTANTS[$setting].";\n";
 			}
 		}
 	}
-	if ((!empty($v_new_user_privacy_username))&&(!empty($v_new_user_privacy_access_ID))&&(!empty($v_new_user_privacy_acess_option))) {
+	if ($v_new_user_privacy_username && $v_new_user_privacy_access_ID && $v_new_user_privacy_access_option) {
 		$gedobj = new GedcomRecord(find_gedcom_record($v_new_user_privacy_access_ID));
 		$v_new_user_privacy_access_ID = $gedobj->getXref();
-		if (!empty($v_new_user_privacy_access_ID)) $person_privacy_text .= "\$user_privacy['$v_new_user_privacy_username']['$v_new_user_privacy_access_ID'] = ".$v_new_user_privacy_acess_option.";\n";
+		if ($v_new_user_privacy_access_ID) $person_privacy_text .= "\$user_privacy['$v_new_user_privacy_username']['$v_new_user_privacy_access_ID'] = ".$v_new_user_privacy_access_option.";\n";
 	}
 	$configtext = $configtext_beg . $person_privacy_text . $configtext_end;
 
 	$configtext_beg = substr($configtext, 0, strpos($configtext, "//-- start global facts privacy --//"));
 	$configtext_end = substr($configtext, strpos($configtext, "//-- end global facts privacy --//"));
 	$person_privacy_text = "//-- start global facts privacy --//\n\$global_facts = array();\n";
-	if (!isset($v_global_facts_del)) $v_global_facts_del = array();
-	if (!is_array($v_global_facts_del)) $v_global_facts_del = array();
 	if (!isset($v_global_facts)) $v_global_facts = array();
 	if (!is_array($v_global_facts)) $v_global_facts = array();
 	foreach($global_facts as $tag=>$value) {
 		foreach($value as $key=>$setting) {
-			if (!isset($v_global_facts_del[$tag][$key])) {
+			if (!isset($v_global_facts_del[$tag][$key]) && ($tag!=$v_new_global_facts_abbr || $key!=$v_new_global_facts_choice)) {
 				if (isset($v_global_facts[$tag][$key])) $person_privacy_text .= "\$global_facts['$tag']['$key'] = ".$v_global_facts[$tag][$key].";\n";
 				else $person_privacy_text .= "\$global_facts['$tag']['$key'] = ".$PRIVACY_CONSTANTS[$setting].";\n";
 			}
 		}
 	}
-	if ((!empty($v_new_global_facts_abbr))&&(!empty($v_new_global_facts_choice))&&(!empty($v_new_global_facts_acess_option))) {
-		$person_privacy_text .= "\$global_facts['$v_new_global_facts_abbr']['$v_new_global_facts_choice'] = ".$v_new_global_facts_acess_option.";\n";
+	if ($v_new_global_facts_abbr && $v_new_global_facts_choice && $v_new_global_facts_access_option) {
+		$person_privacy_text .= "\$global_facts['$v_new_global_facts_abbr']['$v_new_global_facts_choice'] = ".$v_new_global_facts_access_option.";\n";
 	}
 	$configtext = $configtext_beg . $person_privacy_text . $configtext_end;
 
 	$configtext_beg = substr($configtext, 0, strpos($configtext, "//-- start person facts privacy --//"));
 	$configtext_end = substr($configtext, strpos($configtext, "//-- end person facts privacy --//"));
 	$person_privacy_text = "//-- start person facts privacy --//\n\$person_facts = array();\n";
-	if (!isset($v_person_facts_del)) $v_person_facts_del = array();
-	if (!is_array($v_person_facts_del)) $v_person_facts_del = array();
 	if (!isset($v_person_facts)) $v_person_facts = array();
 	if (!is_array($v_person_facts)) $v_person_facts = array();
 	foreach($person_facts as $id=>$value) {
 		foreach($value as $tag=>$value1) {
 			foreach($value1 as $key=>$setting) {
-				if (!isset($v_person_facts_del[$id][$tag][$key])) {
+				if (!isset($v_person_facts_del[$id][$tag][$key]) && ($id!=$v_new_person_facts_access_ID || $tag!=$v_new_person_facts_abbr || $key!=$v_new_person_facts_choice)) {
 					if (isset($v_person_facts[$id][$tag][$key])) $person_privacy_text .= "\$person_facts['$id']['$tag']['$key'] = ".$v_person_facts[$id][$tag][$key].";\n";
 					else $person_privacy_text .= "\$person_facts['$id']['$tag']['$key'] = ".$PRIVACY_CONSTANTS[$setting].";\n";
 				}
 			}
 		}
 	}
-	if ((!empty($v_new_person_facts_access_ID))&&(!empty($v_new_person_facts_abbr))&&(!empty($v_new_global_facts_choice))&&(!empty($v_new_global_facts_acess_option))) {
+	if ($v_new_person_facts_access_ID && $v_new_person_facts_abbr && $v_new_global_facts_choice && $v_new_global_facts_access_option) {
 		$gedobj = new GedcomRecord(find_gedcom_record($v_new_person_facts_access_ID));
 		$v_new_person_facts_access_ID = $gedobj->getXref();
-		if (!empty($v_new_person_facts_access_ID)) $person_privacy_text .= "\$person_facts['$v_new_person_facts_access_ID']['$v_new_person_facts_abbr']['$v_new_person_facts_choice'] = ".$v_new_person_facts_acess_option.";\n";
+		if ($v_new_person_facts_access_ID) $person_privacy_text .= "\$person_facts['$v_new_person_facts_access_ID']['$v_new_person_facts_abbr']['$v_new_person_facts_choice'] = ".$v_new_person_facts_access_option.";\n";
 	}
 	$configtext = $configtext_beg . $person_privacy_text . $configtext_end;
 
@@ -465,7 +454,7 @@ if ($action=="update") {
 								?>
 							</td>
 							<td class="optionbox">
-								<select size="1" name="v_new_person_privacy_acess_option"><?php write_access_option(""); ?></select>
+								<select size="1" name="v_new_person_privacy_access_option"><?php write_access_option(""); ?></select>
 							</td>
 						</tr>
 		</table>
@@ -561,7 +550,7 @@ if ($action=="update") {
 								?>
 							</td>
 							<td class="optionbox">
-								<select size="1" name="v_new_user_privacy_acess_option"><?php write_access_option(""); ?></select>
+								<select size="1" name="v_new_user_privacy_access_option"><?php write_access_option(""); ?></select>
 							</td>
 						</tr>
 					</table>
@@ -652,7 +641,7 @@ if ($action=="update") {
 								</select>
 							</td>
 							<td class="optionbox">
-								<select size="1" name="v_new_global_facts_acess_option"><?php write_access_option(""); ?></select>
+								<select size="1" name="v_new_global_facts_access_option"><?php write_access_option(""); ?></select>
 							</td>
 						</tr>
 					</table>
@@ -757,7 +746,7 @@ if ($action=="update") {
 								</select>
 							</td>
 							<td class="optionbox">
-								<select size="1" name="v_new_person_facts_acess_option"><?php write_access_option(""); ?></select>
+								<select size="1" name="v_new_person_facts_access_option"><?php write_access_option(""); ?></select>
 							</td>
 						</tr>
 						<?php //--End----add person_facts for individuals-----------------------------------------------
