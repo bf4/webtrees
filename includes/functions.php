@@ -109,6 +109,7 @@ function check_db($ignore_previous=false) {
 	// Perform any database-specific initialisation
 	switch ($DBTYPE) {
 	case 'mysql':
+	case 'mysqli':
 		if ($DB_UTF8_COLLATION) {
 			dbquery("SET NAMES UTF8");
 		}
@@ -3671,6 +3672,7 @@ function loadLanguage($desiredLanguage="english", $forceLoad=false) {
 	if ($DB_UTF8_COLLATION) {
 		switch ($DBTYPE) {
 		case 'mysql':
+		case 'mysqli':
 			$DBCOLLATE="COLLATE {$COLLATION[$LANGUAGE]}";
 			break;
 		default:
