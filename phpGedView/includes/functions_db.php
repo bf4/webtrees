@@ -106,6 +106,7 @@ case 'pgsql':
 	define('PGV_DB_UTF8_TABLE',    '');
 	break;
 case 'mysql':
+case 'mysqli':
 default:
 	function sql_mod_function($x,$y) { return "MOD($x,$y)"; } // Modulus function
 	define('PGV_DB_AUTO_ID_TYPE',  'INTEGER UNSIGNED AUTO_INCREMENT');

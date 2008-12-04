@@ -394,6 +394,7 @@ function update_dates($xref, $ged_id, $gedrec) {
 
 		switch ($DBTYPE) {
 		case 'mysql':
+		case 'mysqli':
 			// MySQL can insert multiple rows in one statement
 			dbquery("INSERT INTO {$TBLPREFIX}dates (d_day,d_month,d_mon,d_year,d_julianday1,d_julianday2,d_fact,d_gid,d_file,d_type) VALUES ".implode(',', $data));
 			break;
@@ -424,6 +425,7 @@ function update_rlinks($xref, $ged_id, $gedrec) {
 
 		switch ($DBTYPE) {
 		case 'mysql':
+		case 'mysqli':
 			// MySQL can insert multiple rows in one statement
 			dbquery("INSERT INTO {$TBLPREFIX}remotelinks (r_gid, r_linkid, r_file) VALUES ".implode(',', $data));
 			break;
@@ -453,6 +455,7 @@ function update_links($xref, $ged_id, $gedrec) {
 
 		switch ($DBTYPE) {
 		case 'mysql':
+		case 'mysqli':
 			// MySQL can insert multiple rows in one statement
 			dbquery("INSERT INTO {$TBLPREFIX}link (l_from,l_to,l_type,l_file) VALUES ".implode(',', $data));
 			break;
@@ -497,6 +500,7 @@ function update_names($xref, $ged_id, $record) {
 
 		switch ($DBTYPE) {
 		case 'mysql':
+		case 'mysqli':
 			// MySQL can insert multiple rows in one statement
 			if ($record->getType()=='INDI') {
 				dbquery("INSERT INTO {$TBLPREFIX}name (n_file,n_id,n_num,n_type,n_sort,n_full,n_list,n_surname,n_surn,n_givn,n_soundex_givn_std,n_soundex_surn_std,n_soundex_givn_dm,n_soundex_surn_dm) VALUES ".implode(',', $data));
