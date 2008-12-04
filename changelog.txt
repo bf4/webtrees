@@ -10,7 +10,7 @@
 
 
 Version 4.1.6 (bugs fixed post release)
-
+ - Fixed: [ 2377995 ] 4.1.6 Timeline Chart error (fisharebest)
  - Fixed: [ 2331810 ] 4.1.6 class event error displaying indi (fisharebest)
  - Fixed: [ 2344682 ] Find Individual ID (fisharebest)
  - Fixed: [ 2332475 ] [4324] Unable to add new folder in Manage Media (canajun2eh)

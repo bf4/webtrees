@@ -135,7 +135,16 @@ class TimelineControllerRoot extends BaseController {
 							$this->topyear=max($this->topyear, date('Y'));
 						$event->temp = $p;
 						//-- do not add the same fact twice (prevents marriages from being added multiple times)
-						if (!in_array($event, $this->indifacts, true)) $this->indifacts[] = $event;
+						$in_array=false;
+						foreach ($this->indifacts as $tmp) {
+							if ($event==$tmp) {
+								$in_array=true;
+								break;
+							}
+						}
+						if (!$in_array) {
+							$this->indifacts[] = $event;
+						}
 					}
 				}
 			}
