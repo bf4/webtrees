@@ -1875,13 +1875,6 @@ function event_sort($a, $b) {
 		return $a['jd']-$b['jd'];
 }
 
-////////////////////////////////////////////////////////////////////////////////
-// Sort a list (e.g. of SOURCES) by alphabetical name
-////////////////////////////////////////////////////////////////////////////////
-function source_sort($a, $b) {
-	return compareStrings($a['name'], $b['name']);
-}
-
 /**
  * sort an array of media items
  *
@@ -1951,12 +1944,6 @@ function idsort($a, $b) {
 		return itemsort($a, $b);
 	else
 		return stringsort($aid, $bid);
-}
-
-//-- comparison function for usort
-//-- used for index mode
-function lettersort($a, $b) {
-	return stringsort($a["letter"], $b["letter"]);
 }
 
 // Helper function to sort facts.
