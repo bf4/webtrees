@@ -388,7 +388,328 @@ function get_prev_xref($pid, $ged_id=PGV_GED_ID) {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-// Get a list of individuals for indilist.php and famlist.php
+// Generate a list of alternate initial letters for the indilist and famlist
+////////////////////////////////////////////////////////////////////////////////
+function db_collation_alternatives($letter) {
+	global $UCDiacritWhole, $UCDiacritStrip, $DB_UTF8_COLLATION, $MULTI_LETTER_ALPHABET, $MULTI_LETTER_EQUIV, $LANGUAGE;
+
+	// Multi-letter collation.
+	// e.g. on czech pages, we don't include "CH" under "C"
+	$include=array($letter);
+	$exclude=array();
+	foreach (preg_split('/[ ,;]/', UTF8_strtoupper($MULTI_LETTER_ALPHABET[$LANGUAGE])) as $digraph) {
+		if ($letter && $digraph!=$letter && strpos($digraph, $letter)===0) {
+			$exclude[]=$digraph;
+		}
+	}
+
+	// Multi-letter equivalents
+	// e.g. on danish pages, we include "AA" under "Aring", not under "A"
+	foreach (preg_split('/[ ,;]/', $MULTI_LETTER_EQUIV[$LANGUAGE], -1, PREG_SPLIT_NO_EMPTY) as $digraph) {
+		list($from, $to)=explode('=', $digraph);
+		$from=UTF8_strtoupper($from);
+		if ($from==$letter && strpos($from, $letter)===0) {
+			$include[]=$to;
+		}
+		if ($letter && $from!=$letter && strpos($from, $letter)===0) {
+			$exclude[]=$from;
+		}
+		if ($to==$letter) {
+			$include[]=$from;
+		}
+	}
+
+	// Non UTF8 aware databases need to be told that "e-ecute" is the same as "e"....
+	if (!$DB_UTF8_COLLATION) {
+		foreach (str_split($UCDiacritStrip) as $n=>$char) {
+			if ($char==$letter) {
+				$include[]=UTF8_substr($UCDiacritWhole, $n, 1);
+			}
+		}
+	}
+
+	return array($include, $exclude);
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// Generate a list of digraphs for the indilist and famlist
+////////////////////////////////////////////////////////////////////////////////
+function db_collation_digraphs() {
+	global $MULTI_LETTER_ALPHABET, $MULTI_LETTER_EQUIV, $LANGUAGE;
+
+	// Multi-letter collation.
+	// e.g. on czech pages, we don't include "CH" under "C"
+	$digraphs=array();
+	foreach (preg_split('/[ ,;]/', UTF8_strtoupper($MULTI_LETTER_ALPHABET[$LANGUAGE]), -1, PREG_SPLIT_NO_EMPTY) as $digraph) {
+		$digraphs[$digraph]=$digraph;
+	}
+
+	// Multi-letter equivalents
+	// e.g. danish pages, we include "AE" under "AE-ligature"
+	foreach (preg_split('/[ ,;]/', $MULTI_LETTER_EQUIV[$LANGUAGE], -1, PREG_SPLIT_NO_EMPTY) as $digraph) {
+		list($from, $to)=explode('=', $digraph);
+		$digraphs[$to]=UTF8_strtoupper($from);
+	}
+
+	return $digraphs;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// Get a list of initial surname letters for indilist.php and famlist.php
+// $marnm - if set, include married names
+// $fams - if set, only consider individuals with FAMS records
+// $ged_id - only consider individuals from this gedcom
+////////////////////////////////////////////////////////////////////////////////
+function get_indilist_salpha($marnm, $fams, $ged_id) {
+	global $DBCONN, $TBLPREFIX, $DB_UTF8_COLLATION, $DBCOLLATE;
+
+	$ged_id=(int)$ged_id;
+
+	if ($fams) {
+		$tables="{$TBLPREFIX}name, {$TBLPREFIX}individuals, {$TBLPREFIX}link";
+		$join="n_file={$ged_id} AND i_file=n_file AND i_id=n_id AND l_file=n_file AND l_from=n_id AND l_type='FAMS'";
+	} else {
+		$tables="{$TBLPREFIX}name, {$TBLPREFIX}individuals";
+		$join="n_file={$ged_id} AND i_file=n_file AND i_id=n_id";
+	}
+	if ($marnm) {
+		$join.=" AND n_type!='_MARNM'";
+	}
+	if ($DB_UTF8_COLLATION) {
+		$column="SUBSTR(n_sort {$DBCOLLATE}, 1, 1)";
+	} else {
+		$column="SUBSTR(n_sort {$DBCOLLATE}, 1, 3)";
+	}
+	$exclude='';
+	$include='';
+	$digraphs=db_collation_digraphs();
+	foreach (array_unique($digraphs) as $digraph) { // Multi-character digraphs
+		$exclude.=" AND n_sort NOT ".PGV_DB_LIKE." '{$digraph}%' {$DBCOLLATE}";
+	}
+	foreach ($digraphs as $to=>$from) { // Single-character digraphs
+		$include.=" UNION SELECT UPPER('{$to}' {$DBCOLLATE}) AS alpha FROM {$tables} WHERE {$join} AND n_sort ".PGV_DB_LIKE." '{$from}%' {$DBCOLLATE} GROUP BY alpha {$DBCOLLATE}";
+	}
+	$sql="SELECT {$column} AS alpha FROM {$tables} WHERE {$join} {$exclude} GROUP BY alpha {$DBCOLLATE} {$include} ORDER BY alpha='@', alpha=',', alpha {$DBCOLLATE}";
+	$res=dbquery($sql);
+
+	$list=array();
+	while ($row=$res->fetchRow(DB_FETCHMODE_ASSOC)) {
+		if ($DB_UTF8_COLLATION) {
+			$list[]=$row['alpha'];
+		} else {
+			$letter=UTF8_strtoupper(UTF8_substr($row['alpha'],0,1));
+			$list[$letter]=$letter;
+		}
+	}
+	$res->free();
+
+	// If we can't sort in the DB, sort ourselves
+	if (!$DB_UTF8_COLLATION) {
+		uasort($list, 'stringsort');
+		// stringsort puts "," and "@" first, so force them to the end
+		if (in_array(',', $list)) {
+			unset($list[',']);
+			$list[',']=',';
+		}
+		if (in_array('@', $list)) {
+			unset($list['@']);
+			$list['@']='@';
+		}
+	}
+	return $list;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// Get a list of initial given name letters for indilist.php and famlist.php
+// $surn - if set, only consider people with this surname
+// $salpha - if set, only consider surnames starting with this letter
+// $marnm - if set, include married names
+// $fams - if set, only consider individuals with FAMS records
+// $ged_id - only consider individuals from this gedcom
+////////////////////////////////////////////////////////////////////////////////
+function get_indilist_galpha($surn, $salpha, $marnm, $fams, $ged_id) {
+	global $DBCONN, $TBLPREFIX, $DB_UTF8_COLLATION, $DBCOLLATE;
+
+	$ged_id=(int)$ged_id;
+	$surn  =$DBCONN->escapeSimple($surn);
+	$salpha=$DBCONN->escapeSimple($salpha);
+
+	if ($fams) {
+		$tables="{$TBLPREFIX}name, {$TBLPREFIX}individuals, {$TBLPREFIX}link";
+		$join="n_file=$ged_id AND i_file=n_file AND i_id=n_id AND l_file=n_file AND l_from=n_id AND l_type='FAMS'";
+	} else {
+		$tables="{$TBLPREFIX}name, {$TBLPREFIX}individuals";
+		$join="n_file=$ged_id AND i_file=n_file AND i_id=n_id";
+	}
+	if ($marnm) {
+		$join.=" AND n_type!='_MARNM'";
+	}
+	if ($surn) {
+		$join.=" AND n_sort ".PGV_DB_LIKE." '{$surn},%'";
+	} elseif ($salpha) {
+		$join.=" AND n_sort ".PGV_DB_LIKE." '{$salpha}%,%'";
+	}
+
+	if ($DB_UTF8_COLLATION) {
+		$column="UPPER(SUBSTR(n_givn {$DBCOLLATE}, 1, 1))";
+	} else {
+		$column="UPPER(SUBSTR(n_givn {$DBCOLLATE}, 1, 3))";
+	}
+	$exclude='';
+	$include='';
+	$digraphs=db_collation_digraphs();
+	foreach (array_unique($digraphs) as $digraph) { // Multi-character digraphs
+		$exclude.=" AND n_sort NOT ".PGV_DB_LIKE." '{$digraph}%' {$DBCOLLATE}";
+	}
+	foreach ($digraphs as $to=>$from) { // Single-character digraphs
+		$include.=" UNION SELECT UPPER('{$to}' {$DBCOLLATE}) AS alpha FROM {$tables} WHERE {$join} AND n_sort ".PGV_DB_LIKE." '{$from}%' {$DBCOLLATE} GROUP BY alpha {$DBCOLLATE}";
+	}
+	$sql="SELECT {$column} AS alpha FROM {$tables} WHERE {$join} {$exclude} GROUP BY alpha {$DBCOLLATE} {$include} ORDER BY alpha='@', alpha=',', alpha {$DBCOLLATE}";
+	$res=dbquery($sql);
+
+	$list=array();
+	while ($row=$res->fetchRow(DB_FETCHMODE_ASSOC)) {
+		if ($DB_UTF8_COLLATION) {
+			$list[]=$row['alpha'];
+		} else {
+			$letter=UTF8_strtoupper(UTF8_substr($row['alpha'],0,1));
+			$list[$letter]=$letter;
+		}
+	}
+	$res->free();
+
+	// If we can't sort in the DB, sort ourselves
+	if (!$DB_UTF8_COLLATION) {
+		uasort($list, 'stringsort');
+		// stringsort puts "," and "@" first, so force them to the end
+		if (in_array(',', $list)) {
+			unset($list[',']);
+			$list[',']=',';
+		}
+		if (in_array('@', $list)) {
+			unset($list['@']);
+			$list['@']='@';
+		}
+	}
+	return $list;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// Get a list of surnames for indilist.php
+// $surn - if set, only fetch people with this surname
+// $salpha - if set, only consider surnames starting with this letter
+// $marnm - if set, include married names
+// $fams - if set, only consider individuals with FAMS records
+// $ged_id - only consider individuals from this gedcom
+////////////////////////////////////////////////////////////////////////////////
+function get_indilist_surns($surn, $salpha, $marnm, $fams, $ged_id) {
+	global $DBCONN, $TBLPREFIX, $DB_UTF8_COLLATION, $DBCOLLATE;
+
+	$surn=$DBCONN->escapeSimple($surn);
+	$salpha=$DBCONN->escapeSimple($salpha);
+	$ged_id=(int)$ged_id;
+
+	$sql="SELECT DISTINCT n_surn, n_surname, n_id FROM {$TBLPREFIX}individuals JOIN {$TBLPREFIX}name ON (i_id=n_id AND i_file=n_file)";
+	if ($fams) {
+		$sql.=" JOIN {$TBLPREFIX}link ON (i_id=l_from AND i_file=l_file AND l_type='FAMS')";
+	}
+	$where=array("n_file={$ged_id}");
+	if (!$marnm) {
+		$where[]="n_type!='_MARNM'";
+	}
+
+	list($s_incl, $s_excl)=db_collation_alternatives($salpha);
+
+	if ($surn) {
+		// Match a surname
+		$includes[]="n_sort {$DBCOLLATE} ".PGV_DB_LIKE." '{$surn},%'";
+	} elseif ($salpha==',') {
+		// Match a surname-less name
+		$includes[]="n_sort {$DBCOLLATE} ".PGV_DB_LIKE." ',%'";
+	} elseif ($salpha) {
+		// Match a surname initial
+		foreach ($s_incl as $s) {
+			$includes[]="n_sort {$DBCOLLATE} ".PGV_DB_LIKE." '{$s}%'";
+		}
+		foreach ($s_excl as $s) {
+			$where[]="n_sort {$DBCOLLATE} NOT ".PGV_DB_LIKE." '{$s}%'";
+		}
+	} else {
+		// Match all individuals
+	}
+
+	if ($includes) {
+		$where[]='('.implode(' OR ', $includes).')';
+	}
+
+	$sql.=" WHERE ".implode(' AND ', $where)." ORDER BY n_sort";
+
+	$list=array();
+	$res=dbquery($sql);
+	while ($row=$res->fetchRow(DB_FETCHMODE_ASSOC)) {
+		$list[$row['n_surn']][$row['n_surname']][$row['n_id']]=true;
+	}
+	$res->free();
+	return $list;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// Get a list of surnames for indilist.php
+// $surn - if set, only fetch people with this surname
+// $salpha - if set, only consider surnames starting with this letter
+// $marnm - if set, include married names
+// $ged_id - only consider individuals from this gedcom
+////////////////////////////////////////////////////////////////////////////////
+function get_famlist_surns($surn, $salpha, $marnm, $ged_id) {
+	global $DBCONN, $TBLPREFIX, $DB_UTF8_COLLATION, $DBCOLLATE;
+
+	$surn=$DBCONN->escapeSimple($surn);
+	$salpha=$DBCONN->escapeSimple($salpha);
+	$ged_id=(int)$ged_id;
+
+	$sql="SELECT DISTINCT n_surn, n_surname, f_id FROM {$TBLPREFIX}name JOIN {$TBLPREFIX}individuals ON (i_id=n_id AND i_file=n_file) JOIN {$TBLPREFIX}families ON ((i_id=f_husb OR i_id=f_wife) AND i_file=f_file)";
+	$where=array("n_file={$ged_id}");
+	if (!$marnm) {
+		$where[]="n_type!='_MARNM'";
+	}
+
+	list($s_incl, $s_excl)=db_collation_alternatives($salpha);
+
+	if ($surn) {
+		// Match a surname
+		$includes[]="n_sort {$DBCOLLATE} ".PGV_DB_LIKE." '{$surn},%'";
+	} elseif ($salpha==',') {
+		// Match a surname-less name
+		$includes[]="n_sort {$DBCOLLATE} ".PGV_DB_LIKE." ',%'";
+	} elseif ($salpha) {
+		// Match a surname initial
+		foreach ($s_incl as $s) {
+			$includes[]="n_sort {$DBCOLLATE} ".PGV_DB_LIKE." '{$s}%'";
+		}
+		foreach ($s_excl as $s) {
+			$where[]="n_sort {$DBCOLLATE} NOT ".PGV_DB_LIKE." '{$s}%'";
+		}
+	} else {
+		// Match all individuals
+	}
+
+	if ($includes) {
+		$where[]='('.implode(' OR ', $includes).')';
+	}
+
+	$sql.=" WHERE ".implode(' AND ', $where)." ORDER BY n_sort";
+
+	$list=array();
+	$res=dbquery($sql);
+	while ($row=$res->fetchRow(DB_FETCHMODE_ASSOC)) {
+		$list[$row['n_surn']][$row['n_surname']][$row['f_id']]=true;
+	}
+	$res->free();
+	return $list;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// Get a list of individuals for indilist.php
 // $surn - if set, only fetch people with this surname
 // $salpha - if set, only fetch surnames starting with this letter
 // $galpha - if set, only fetch given names starting with this letter
@@ -402,15 +723,9 @@ function get_prev_xref($pid, $ged_id=PGV_GED_ID) {
 //
 // To search for unknown names, use $surn="@N.N.", $salpha="@" or $galpha="@"
 // To search for names with no surnames, use $salpha=","
-//
-// Return is a multi-dimensional array of
-// $list[$surn][$surname][$n]=$record
-// This sorts/groups records by their "root" surname (e.g. "CLITHEROW"), then
-// their "real" surname (e.g. "de Clitherow").
-// An individual can appear multiple times if they have multiple matching names
 ////////////////////////////////////////////////////////////////////////////////
 function get_indilist_indis($surn='', $salpha='', $galpha='', $marnm=false, $fams=false, $ged_id=null) {
-	global $DBCONN, $TBLPREFIX, $DB_UTF8_COLLATION, $DBCOLLATE, $LANGUAGE, $MULTI_LETTER_ALPHABET, $MULTI_LETTER_EQUIV;
+	global $DBCONN, $TBLPREFIX, $DB_UTF8_COLLATION, $DBCOLLATE;
 
 	$surn  =$DBCONN->escapeSimple($surn);
 	$salpha=$DBCONN->escapeSimple($salpha);
@@ -429,59 +744,10 @@ function get_indilist_indis($surn='', $salpha='', $galpha='', $marnm=false, $fam
 		$where[]="n_type!='_MARNM'";
 	}
 
-	// Deal with digraphs, so that;
-	// danish users get "aa" names on an "aring" list
-	// czech users don't get "ch" names on a "c" list and vice versa
-	// etc.
+	list($s_incl, $s_excl)=db_collation_alternatives($salpha);
+	list($g_incl, $g_excl)=db_collation_alternatives($galpha);
 
-	$g_excl=array();
-	$s_excl=array();
-	foreach (preg_split('/[ ,;]/', UTF8_strtoupper($MULTI_LETTER_ALPHABET[$LANGUAGE])) as $digraph) {
-		if ($salpha && $digraph!=$salpha && strpos($digraph, $salpha)===0) {
-			$s_excl[]=$digraph;
-		}
-		if ($galpha && $digraph!=$galpha && strpos($digraph, $galpha)===0) {
-			$g_excl[]=$digraph;
-		}
-	}
-	$g_incl=array($galpha);
-	$s_incl=array($salpha);
-	foreach (preg_split('/[ ,;]/', $MULTI_LETTER_EQUIV[$LANGUAGE], -1, PREG_SPLIT_NO_EMPTY) as $digraph) {
-		list($from, $to)=explode('=', $digraph);
-		$from=UTF8_strtoupper($from);
-		if ($from==$salpha && strpos($from, $salpha)===0) {
-			$s_incl[]=$to;
-		}
-		if ($from==$galpha && strpos($from, $galpha)===0) {
-			$g_incl[]=$to;
-		}
-		if ($salpha && $from!=$salpha && strpos($from, $salpha)===0) {
-			$s_excl[]=$from;
-		}
-		if ($galpha && $from!=$galpha && strpos($from, $galpha)===0) {
-			$g_excl[]=$from;
-		}
-		if ($to==$salpha) {
-			$s_incl[]=$from;
-		}
-		if ($to==$galpha) {
-			$g_incl[]=$from;
-		}
-	}
-
-	// Non UTF8 aware databases need to be told that "e-ecute" is the same as "e"....
-	if (!$DB_UTF8_COLLATION) {
-		global $UCDiacritWhole, $UCDiacritStrip;
-
-		foreach (str_split($UCDiacritStrip) as $n=>$char) {
-			if ($char==$galpha) {
-				$g_incl[]=UTF8_substr($UCDiacritWhole, $n, 1);
-			}
-			if ($char==$salpha) {
-				$s_incl[]=UTF8_substr($UCDiacritWhole, $n, 1);
-			}
-		}
-	}
+	$includes=array();
 	if ($surn) {
 		// Match a surname, with or without a given initial
 		if ($galpha) {
@@ -543,16 +809,42 @@ function get_indilist_indis($surn='', $salpha='', $galpha='', $marnm=false, $fam
 
 	$sql.=" WHERE ".implode(' AND ', $where)." ORDER BY n_sort";
 
-	var_dump($sql);
-
 	$list=array();
 	$res=dbquery($sql);
 	while ($row=$res->fetchRow(DB_FETCHMODE_ASSOC)) {
 		$person=Person::getInstance($row);
 		$person->setPrimaryName($row['n_num']);
-		$list[$row['n_surn']][$row['n_surname']][]=$person;
+		$list[]=$person;
 	}
 	$res->free();
+	if (!$DB_UTF8_COLLATION) {
+		usort($list, 'GedcomRecord::Compare');
+	}
+	return $list;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// Get a list of families for famlist.php
+// $surn - if set, only fetch people with this surname
+// $salpha - if set, only fetch surnames starting with this letter
+// $galpha - if set, only fetch given names starting with this letter
+// $marnm - if set, include married names
+// $ged_id - if set, only fetch individuals from this gedcom
+//
+// All parameters must be in upper case.  We search against a database column
+// that contains uppercase values. This will allow non utf8-aware database
+// to match diacritics.
+//
+// To search for unknown names, use $surn="@N.N.", $salpha="@" or $galpha="@"
+// To search for names with no surnames, use $salpha=","
+////////////////////////////////////////////////////////////////////////////////
+function get_famlist_fams($surn='', $salpha='', $galpha='', $marnm, $ged_id=null) {
+	$list=array();
+	foreach (get_indilist_indis($surn, $salpha, $galpha, $marnm, true, $ged_id) as $indi) {
+		foreach ($indi->getSpouseFamilies() as $family) {
+			$list[$family->getXref()]=$family;
+		}
+	}
 	return $list;
 }
 
@@ -1254,27 +1546,17 @@ function get_repo_list($ged_id) {
 
 //-- get the indilist from the datastore
 function get_indi_list() {
-	global $indilist, $TBLPREFIX, $INDILIST_RETRIEVED;
+	global $TBLPREFIX, $DBCOLLATE;
 
-	if ($INDILIST_RETRIEVED)
-		return $indilist;
-	$indilist = array();
-	$sql = "SELECT i_id, i_gedcom, i_name, i_isdead, i_letter, i_surname  FROM {$TBLPREFIX}individuals WHERE i_file=".PGV_GED_ID." ORDER BY i_surname";
-	$res = dbquery($sql);
-
-	$ct = $res->numRows();
-	while ($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)){
-		$indi = array();
-		$indi["gedcom"] = $row["i_gedcom"];
-		$row = db_cleanup($row);
-		$indi["isdead"] = $row["i_isdead"];
-		$indi["gedfile"] = PGV_GED_ID;
-		$indilist[$row["i_id"]] = $indi;
+	$sql="SELECT 'INDI' AS type, i_id AS xref, i_file AS ged_id, i_gedcom AS gedrec, i_isdead FROM {$TBLPREFIX}name, {$TBLPREFIX}individuals WHERE n_file=".PGV_GED_ID." AND i_file=n_file AND i_id=n_id AND n_num=0 GROUP BY type, xref, ged_id, gedrec, i_isdead ORDER BY n_sort {$DBCOLLATE}";
+	$res=dbquery($sql);
+	$indis=array();
+	while ($row=$res->fetchRow(DB_FETCHMODE_ASSOC)) {
+		$indis[]=Person::getInstance($row);
 	}
 	$res->free();
-
-	$INDILIST_RETRIEVED = true;
-	return $indilist;
+	usort($indis, array('GedcomRecord', 'Compare'));
+	return $indis;
 }
 
 //-- get the famlist from the datastore
@@ -1419,7 +1701,7 @@ function search_indis_names($query, $allgeds=false) {
 	//-- like "givenname surname"
 	if (!is_array($query)) {
 		$query = preg_split("/[\s,]+/", $query);
-	}
+		}
 	foreach ($query as $k=>$v) {
 	 	$query[$k]="n_full ".PGV_DB_LIKE." '%".$DBCONN->escapeSimple($v)."%'";
 	}
@@ -1427,7 +1709,7 @@ function search_indis_names($query, $allgeds=false) {
 	$sql="SELECT DISTINCT i_id, i_file, i_gedcom, i_isdead FROM {$TBLPREFIX}individuals, {$TBLPREFIX}name WHERE i_id=n_id AND i_file=n_file AND ".implode (' AND ', $query);
 	if (!$allgeds) {
 		$sql.=' AND i_file='.PGV_GED_ID;
-	}
+				}
 
 	$res = dbquery($sql, false);
 	$myindilist = array();
@@ -1473,7 +1755,7 @@ function search_indis_soundex($soundex, $lastname, $firstname='', $place='', $sg
 	}
 	if ($firstname || $lastname) {
 		$sql.=" JOIN {$TBLPREFIX}name ON (i_file=n_file AND i_id=n_id)";
-	}
+			}
 	if ($sgeds) {
 		foreach ($sgeds as $k=>$v) {
 			$sgeds[$k]=get_id_from_gedcom($v);
@@ -1500,23 +1782,23 @@ function search_indis_soundex($soundex, $lastname, $firstname='', $place='', $sg
 	if ($firstname && $givn_sdx) {
 		foreach ($givn_sdx as $k=>$v) {
 			$givn_sdx[$k]="n_soundex_givn_{$field} ".PGV_DB_LIKE." '%{$v}%'";
-		}
-		$sql.=' AND ('.implode(' OR ', $givn_sdx).')';
 	}
+		$sql.=' AND ('.implode(' OR ', $givn_sdx).')';
+		}
 	if ($lastname && $surn_sdx) {
 		foreach ($surn_sdx as $k=>$v) {
 			$surn_sdx[$k]="n_soundex_surn_{$field} ".PGV_DB_LIKE." '%{$v}%'";
 		}
 		$sql.=' AND ('.implode(' OR ', $surn_sdx).')';
-	}
+			}
 	if ($place && $plac_sdx) {
 		foreach ($plac_sdx as $k=>$v) {
 			$plac_sdx[$k]="p_{$field}_soundex ".PGV_DB_LIKE." '%{$v}%'";
 		}
 		$sql.=' AND ('.implode(' OR ', $plac_sdx).')';
-	}
+			}
 	$sql.=' GROUP BY i_id, i_gedcom, i_name, i_isdead, i_file';
-	$res = dbquery($sql);
+			$res = dbquery($sql);
 	return $res;
 }
 
@@ -2127,467 +2409,6 @@ function get_media_list() {
 	}
 }
 
-/**
- * get all first letters of individual's last names
- * @see indilist.php
- * @return array	an array of all letters
- */
-function get_indi_alpha() {
-	global $TBLPREFIX, $LANGUAGE, $SHOW_MARRIED_NAMES, $MULTI_LETTER_ALPHABET;
-	global $DICTIONARY_SORT, $UCDiacritWhole, $UCDiacritStrip, $LCDiacritWhole, $LCDiacritStrip;
-
-	$indialpha = array();
-
-	$danishex = array("OE", "AE", "AA");
-	$danishFrom = array("AA", "AE", "OE");
-	$danishTo = array("Å", "Æ", "Ø");
-	// Force danish letters in the top list [ 1579889 ]
-	if ($LANGUAGE=="danish" || $LANGUAGE=="norwegian")
-		foreach ($danishTo as $k=>$v)
-			$indialpha[$v] = $v;
-
-	$sql = "SELECT DISTINCT i_letter AS alpha FROM ".$TBLPREFIX."individuals WHERE i_file=".PGV_GED_ID." ORDER BY alpha";
-	$res = dbquery($sql);
-
-	while ($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)){
-		$letter = UTF8_strtoupper($row["alpha"]);
-		if ($LANGUAGE=="danish" || $LANGUAGE=="norwegian")
-			$letter = str_replace($danishFrom, $danishTo, $letter);
-		$inArray = strpos($MULTI_LETTER_ALPHABET[$LANGUAGE], " ".$letter." ");
-		if ($inArray===false) {
-			if ((ord(substr($letter, 0, 1)) & 0x80)==0x00)
-				$letter = substr($letter, 0, 1);
-		}
-		if ($DICTIONARY_SORT[$LANGUAGE]) {
-			$position = strpos($UCDiacritWhole, $letter);
-			if ($position!==false) {
-				$position = $position >> 1;
-				$letter = substr($UCDiacritStrip, $position, 1);
-			} else {
-				$position = strpos($LCDiacritWhole, $letter);
-				if ($position!==false) {
-					$position = $position >> 1;
-					$letter = substr($LCDiacritStrip, $position, 1);
-				}
-			}
-		}
-		$indialpha[$letter] = $letter;
-	}
-	$res->free();
-
-	$sql = "SELECT DISTINCT n_letter AS alpha FROM ".$TBLPREFIX."names WHERE n_file=".PGV_GED_ID;
-	if (!$SHOW_MARRIED_NAMES)
-		$sql .= " AND n_type!='C'";
-	$sql .= " ORDER BY alpha";
-	$res = dbquery($sql);
-
-	while ($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)){
-		$letter = UTF8_strtoupper($row["alpha"]);
-		if ($LANGUAGE=="danish" || $LANGUAGE=="norwegian")
-			$letter = str_replace($danishFrom, $danishTo, $letter);
-		$inArray = strpos($MULTI_LETTER_ALPHABET[$LANGUAGE], " ".$letter." ");
-		if ($inArray===false) {
-			if ((ord(substr($letter, 0, 1)) & 0x80)==0x00)
-				$letter = substr($letter, 0, 1);
-		}
-		if ($DICTIONARY_SORT[$LANGUAGE]) {
-			$position = strpos($UCDiacritWhole, $letter);
-			if ($position!==false) {
-				$position = $position >> 1;
-				$letter = substr($UCDiacritStrip, $position, 1);
-			} else {
-				$position = strpos($LCDiacritWhole, $letter);
-				if ($position!==false) {
-					$position = $position >> 1;
-					$letter = substr($LCDiacritStrip, $position, 1);
-				}
-			}
-		}
-		$indialpha[$letter] = $letter;
-	}
-	$res->free();
-
-	uasort($indialpha, "stringsort");
-	return $indialpha;
-}
-
-//-- get the first character in the list
-function get_fam_alpha() {
-	global $TBLPREFIX, $LANGUAGE, $famalpha, $MULTI_LETTER_ALPHABET;
-	global $DICTIONARY_SORT, $UCDiacritWhole, $UCDiacritStrip, $LCDiacritWhole, $LCDiacritStrip;
-
-	$famalpha = array();
-
-	$danishex = array("OE", "AE", "AA");
-	$danishFrom = array("AA", "AE", "OE");
-	$danishTo = array("Å", "Æ", "Ø");
-	// Force danish letters in the top list [ 1579889 ]
-	if ($LANGUAGE=="danish" || $LANGUAGE=="norwegian")
-		foreach ($danishTo as $k=>$v)
-			$famalpha[$v] = $v;
-
-	$sql = "SELECT DISTINCT i_letter AS alpha FROM ".$TBLPREFIX."individuals WHERE i_file=".PGV_GED_ID." AND i_gedcom ".PGV_DB_LIKE." '%1 FAMS%' ORDER BY alpha";
-	$res = dbquery($sql);
-
-	while ($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)){
-		$letter = UTF8_strtoupper($row["alpha"]);
-		if ($LANGUAGE=="danish" || $LANGUAGE=="norwegian")
-			$letter = str_replace($danishFrom, $danishTo, $letter);
-		$inArray = strpos($MULTI_LETTER_ALPHABET[$LANGUAGE], " ".$letter." ");
-		if ($inArray===false) {
-			if ((ord(substr($letter, 0, 1)) & 0x80)==0x00)
-				$letter = substr($letter, 0, 1);
-		}
-		if ($DICTIONARY_SORT[$LANGUAGE]) {
-			$position = strpos($UCDiacritWhole, $letter);
-			if ($position!==false) {
-				$position = $position >> 1;
-				$letter = substr($UCDiacritStrip, $position, 1);
-			} else {
-				$position = strpos($LCDiacritWhole, $letter);
-				if ($position!==false) {
-					$position = $position >> 1;
-					$letter = substr($LCDiacritStrip, $position, 1);
-				}
-			}
-		}
-		$famalpha[$letter] = $letter;
-	}
-	$res->free();
-
-	$sql = "SELECT DISTINCT n_letter AS alpha FROM ".$TBLPREFIX."names, ".$TBLPREFIX."individuals WHERE i_file=n_file AND i_id=n_gid AND n_file=".PGV_GED_ID." AND i_gedcom ".PGV_DB_LIKE." '%1 FAMS%' ORDER BY alpha";
-	$res = dbquery($sql);
-
-	while ($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)){
-		$letter = UTF8_strtoupper($row["alpha"]);
-		if ($LANGUAGE=="danish" || $LANGUAGE=="norwegian")
-			$letter = str_replace($danishFrom, $danishTo, $letter);
-		$inArray = strpos($MULTI_LETTER_ALPHABET[$LANGUAGE], " ".$letter." ");
-		if ($inArray===false) {
-			if ((ord(substr($letter, 0, 1)) & 0x80)==0x00)
-				$letter = substr($letter, 0, 1);
-		}
-		if ($DICTIONARY_SORT[$LANGUAGE]) {
-			$position = strpos($UCDiacritWhole, $letter);
-			if ($position!==false) {
-				$position = $position >> 1;
-				$letter = substr($UCDiacritStrip, $position, 1);
-			} else {
-				$position = strpos($LCDiacritWhole, $letter);
-				if ($position!==false) {
-					$position = $position >> 1;
-					$letter = substr($LCDiacritStrip, $position, 1);
-				}
-			}
-		}
-		$famalpha[$letter] = $letter;
-	}
-	$res->free();
-
-	$sql = "SELECT f_id FROM ".$TBLPREFIX."families WHERE f_file=".PGV_GED_ID." AND (f_husb='' OR f_wife='')";
-	$res = dbquery($sql);
-
-	if ($res->numRows()>0) {
-		$famalpha["@"] = "@";
-	}
-	$res->free();
-
-	uasort($famalpha, "stringsort");
-	return $famalpha;
-}
-
-/**
- * Get Individuals Starting with a letter
- *
- * This function finds all of the individuals who start with the given letter
- * @param string $letter	The letter to search on
- * @return array	$indilist array
- * @see http://www.phpgedview.net/devdocs/arrays.php#indilist
- */
-function get_alpha_indis($letter) {
-	global $TBLPREFIX, $LANGUAGE, $indilist, $surname, $SHOW_MARRIED_NAMES, $DBCONN, $MULTI_LETTER_ALPHABET;
-	global $DICTIONARY_SORT, $UCDiacritWhole, $UCDiacritStrip, $LCDiacritWhole, $LCDiacritStrip;
-
-	$tindilist = array();
-
-	if ($letter=='_')
-		$letter='\_';
-	if ($letter=='%')
-		$letter='\%';
-	if ($letter=='')
-		$letter='@';
-
-	$danishex = array("OE", "AE", "AA");
-	$danishFrom = array("AA", "AE", "OE");
-	$danishTo = array("Å", "Æ", "Ø");
-
-	$checkDictSort = true;
-
-	$sql = "SELECT i_id FROM {$TBLPREFIX}individuals WHERE ";
-	if ($LANGUAGE == "danish" || $LANGUAGE == "norwegian") {
-		if ($letter == "Ø")
-			$text = "OE";
-		else
-			if ($letter == "Æ")
-				$text = "AE";
-			else
-				if ($letter == "Å")
-					$text = "AA";
-		if (isset($text))
-			$sql .= "(i_letter = '".$DBCONN->escapeSimple($letter)."' OR i_name ".PGV_DB_LIKE." '%/".$DBCONN->escapeSimple($text)."%') ";
-		else
-			if ($letter=="A")
-				$sql .= "i_letter ".PGV_DB_LIKE." '".$DBCONN->escapeSimple($letter)."' ";
-			else
-				$sql .= "i_letter ".PGV_DB_LIKE." '".$DBCONN->escapeSimple($letter)."%' ";
-		$checkDictSort = false;
-	} else
-		if ($MULTI_LETTER_ALPHABET[$LANGUAGE]!="") {
-			$isMultiLetter = strpos($MULTI_LETTER_ALPHABET[$LANGUAGE], " ".$letter." ");
-			if ($isMultiLetter!==false) {
-				$sql .= "i_letter = '".$DBCONN->escapeSimple($letter)."' ";
-				$checkDictSort = false;
-		}
-	}
-	if ($checkDictSort) {
-		$text = "";
-	if ($DICTIONARY_SORT[$LANGUAGE]) {
-			$inArray = strpos($UCDiacritStrip, $letter);
-			if ($inArray!==false) {
-				while (true) {
-					$text .= " OR i_letter = '".$DBCONN->escapeSimple(substr($UCDiacritWhole, ($inArray+$inArray), 2))."'";
-					$inArray ++;
-					if ($inArray > strlen($UCDiacritStrip))
-						break;
-					if (substr($UCDiacritStrip, $inArray, 1)!=$letter)
-						break;
-			}
-				if ($MULTI_LETTER_ALPHABET[$LANGUAGE]=="")
-					$sql .= "(i_letter ".PGV_DB_LIKE." '".$DBCONN->escapeSimple($letter)."%'".$text.") ";
-				else
-					$sql .= "(i_letter = '".$DBCONN->escapeSimple($letter)."'".$text.") ";
-			} else {
-				$inArray = strpos($LCDiacritStrip, $letter);
-				if ($inArray!==false) {
-					while (true) {
-						$text .= " OR i_letter = '".$DBCONN->escapeSimple(substr($LCDiacritWhole, ($inArray+$inArray), 2))."'";
-						$inArray ++;
-						if ($inArray > strlen($LCDiacritStrip))
-							break;
-						if (substr($LCDiacritStrip, $inArray, 1)!=$letter)
-							break;
-		}
-					if ($MULTI_LETTER_ALPHABET[$LANGUAGE]=="")
-						$sql .= "(i_letter ".PGV_DB_LIKE." '".$DBCONN->escapeSimple($letter)."%'".$text.") ";
-					else
-						$sql .= "(i_letter = '".$DBCONN->escapeSimple($letter)."'".$text.") ";
-	}
-			}
-		}
-		if ($text=="") {
-			if ($MULTI_LETTER_ALPHABET[$LANGUAGE]=="")
-				$sql .= "i_letter ".PGV_DB_LIKE." '".$DBCONN->escapeSimple($letter)."%'";
-			else
-				$sql .= "i_letter = '".$DBCONN->escapeSimple($letter)."'";
-		}
-	}
-
-	//-- add some optimization if the surname is set to speed up the lists
-	if (!empty($surname))
-		$sql .= "AND i_surname ".PGV_DB_LIKE." '%".$DBCONN->escapeSimple($surname)."%' ";
-	$sql .= "AND i_file=".PGV_GED_ID." ORDER BY i_name";
-	$res = dbquery($sql);
-	if (!DB::isError($res)) {
-		while ($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)){
-			$tindilist[$row["i_id"]] = $row["i_id"];
-		}
-		$res->free();
-	}
-
-	$checkDictSort = true;
-
-	$sql = "SELECT i_id FROM ".$TBLPREFIX."individuals, ".$TBLPREFIX."names WHERE i_id=n_gid AND i_file=n_file AND ";
-	if ($LANGUAGE == "danish" || $LANGUAGE == "norwegian") {
-		if ($letter == "Ø")
-			$text = "OE";
-		else
-			if ($letter == "Æ")
-				$text = "AE";
-			else
-				if ($letter == "Å")
-					$text = "AA";
-		if (isset($text))
-			$sql .= "(n_letter = '".$DBCONN->escapeSimple($letter)."' OR n_letter = '".$DBCONN->escapeSimple($text)."') ";
-		else
-			if ($letter=="A")
-				$sql .= "n_letter ".PGV_DB_LIKE." '".$DBCONN->escapeSimple($letter)."' ";
-			else
-				$sql .= "n_letter ".PGV_DB_LIKE." '".$DBCONN->escapeSimple($letter)."%' ";
-		$checkDictSort = false;
-	} else
-		if ($MULTI_LETTER_ALPHABET[$LANGUAGE]!="") {
-			$isMultiLetter = strpos($MULTI_LETTER_ALPHABET[$LANGUAGE], " ".$letter." ");
-			if ($isMultiLetter!==false) {
-				$sql .= "n_letter = '".$DBCONN->escapeSimple($letter)."' ";
-				$checkDictSort = false;
-			}
-		}
-	if ($checkDictSort) {
-		$text = "";
-		if ($DICTIONARY_SORT[$LANGUAGE]) {
-			$inArray = strpos($UCDiacritStrip, $letter);
-			if ($inArray!==false) {
-				while (true) {
-					$text .= " OR n_letter = '".$DBCONN->escapeSimple(substr($UCDiacritWhole, ($inArray+$inArray), 2))."'";
-					$inArray ++;
-					if ($inArray > strlen($UCDiacritStrip))
-						break;
-					if (substr($UCDiacritStrip, $inArray, 1)!=$letter)
-						break;
-				}
-				if ($MULTI_LETTER_ALPHABET[$LANGUAGE]=="")
-					$sql .= "(n_letter ".PGV_DB_LIKE." '".$DBCONN->escapeSimple($letter)."%'".$text.")";
-				else
-					$sql .= "(n_letter = '".$DBCONN->escapeSimple($letter)."'".$text.")";
-			} else {
-				$inArray = strpos($LCDiacritStrip, $letter);
-				if ($inArray!==false) {
-					while (true) {
-						$text .= " OR n_letter = '".$DBCONN->escapeSimple(substr($LCDiacritWhole, ($inArray+$inArray), 2))."'";
-						$inArray ++;
-						if ($inArray > strlen($LCDiacritStrip))
-							break;
-						if (substr($LCDiacritStrip, $inArray, 1)!=$letter)
-							break;
-					}
-					if ($MULTI_LETTER_ALPHABET[$LANGUAGE]=="")
-						$sql .= "(n_letter ".PGV_DB_LIKE." '".$DBCONN->escapeSimple($letter)."%'".$text.")";
-					else
-						$sql .= "(n_letter = '".$DBCONN->escapeSimple($letter)."'".$text.")";
-				}
-			}
-		}
-		if ($text=="") {
-			if ($MULTI_LETTER_ALPHABET[$LANGUAGE]=="")
-				$sql .= "n_letter ".PGV_DB_LIKE." '".$DBCONN->escapeSimple($letter)."%'";
-			else
-				$sql .= "n_letter = '".$DBCONN->escapeSimple($letter)."'";
-		}
-	}
-	//-- add some optimization if the surname is set to speed up the lists
-	if (!empty($surname))
-		$sql .= "AND n_surname ".PGV_DB_LIKE." '%".$DBCONN->escapeSimple($surname)."%' ";
-	if (!$SHOW_MARRIED_NAMES)
-		$sql .= "AND n_type!='C' ";
-	$sql .= "AND i_file=".PGV_GED_ID." ORDER BY i_name";
-	$res=dbquery($sql);
-	if (!DB::isError($res)) {
-		while ($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)){
-			$tindilist[$row["i_id"]] = $row["i_id"];
-		}
-		$res->free();
-	}
-
-	return $tindilist;
-}
-
-/**
- * Get Individuals with a given surname
- *
- * This function finds all of the individuals who have the given surname
- * @param string $surname	The surname to search on
- * @return array	$indilist array
- * @see http://www.phpgedview.net/devdocs/arrays.php#indilist
- */
-function get_surname_indis($surname) {
-	global $TBLPREFIX, $SHOW_MARRIED_NAMES, $DBCONN;
-
-	$sql="SELECT DISTINCT 'INDI' AS type, i_id AS xref, i_file AS ged_id, i_gedcom AS gedrec, i_isdead FROM {$TBLPREFIX}individuals, {$TBLPREFIX}name WHERE i_id=n_id AND i_file=n_file AND i_file=".PGV_GED_ID." AND n_surn='".$DBCONN->escapeSimple($surname)."' ";
-	if (!$SHOW_MARRIED_NAMES)
-		$sql.=" AND n_type!='_MARNM'";
-	$res=dbquery($sql);
-
-	$list=array();
-	while ($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)) {
-		$list[]=Person::getInstance($row);
-	}
-	$res->free();
-	return $list;
-}
-
-/**
- * Get Families Starting with a letter
- *
- * This function finds all of the families who start with the given letter
- * @param string $letter	The letter to search on
- * @return array	$indilist array
- * @see get_alpha_indis()
- * @see http://www.phpgedview.net/devdocs/arrays.php#famlist
- */
-function get_alpha_fams($letter) {
-	global $TBLPREFIX, $SHOW_MARRIED_NAMES;
-
-	$danishex = array("OE", "AE", "AA");
-	$danishFrom = array("AA", "AE", "OE");
-	$danishTo = array("Å", "Æ", "Ø");
-
-	$tfamlist = array();
-	$temp = $SHOW_MARRIED_NAMES;
-	$SHOW_MARRIED_NAMES = false;
-	$myindilist = get_alpha_indis($letter);
-	$SHOW_MARRIED_NAMES = $temp;
-	foreach (array_keys($myindilist) as $pid) {
-		$person=Person::getInstance($pid);
-		foreach ($person->getSpouseFamilyIds() as $famid) {
-			$tfamlist[$famid] = $famid;
-		}
-	}
-
-	if ($letter=="@") {
-		$sql = "SELECT f_id FROM {$TBLPREFIX}families WHERE (f_husb='' OR f_wife='') AND f_file=".PGV_GED_ID;
-		$res = dbquery($sql);
-
-		if ($res->numRows()>0) {
-			while ($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)){
-				$tfamlist[$row["f_id"]] = $row["f_id"];
-			}
-		}
-		$res->free();
-	}
-	return $tfamlist;
-}
-
-/**
- * Get Families with a given surname
- *
- * This function finds all of the individuals who have the given surname
- * @param string $surname	The surname to search on
- * @return array	$indilist array
- * @see http://www.phpgedview.net/devdocs/arrays.php#indilist
- */
-function get_surname_fams($surname) {
-	global $TBLPREFIX;
-
-	$tfamlist = array();
-	foreach (get_surname_indis($surname) as $person) {
-		foreach ($person->getSpouseFamilyIds() as $famid) {
-			$tfamlist[$famid] = $famid;
-		}
-	}
-
-	if ($surname=="@N.N.") {
-		$sql = "SELECT f_id FROM {$TBLPREFIX}families WHERE (f_husb='' OR f_wife='') AND f_file=".PGV_GED_ID;
-		$res = dbquery($sql);
-		if ($res->numRows()>0) {
-			while ($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)){
-				$tfamlist[$row["f_id"]] = $row["f_id"];
-			}
-		}
-		$res->free();
-	}
-	return $tfamlist;
-}
-
 //-- function to find the gedcom id for the given rin
 function find_rin_id($rin) {
 	global $TBLPREFIX;
@@ -2624,7 +2445,6 @@ function delete_gedcom($ged) {
 	$res = dbquery("DELETE FROM {$TBLPREFIX}media         WHERE m_gedfile =$dbged");
 	$res = dbquery("DELETE FROM {$TBLPREFIX}media_mapping WHERE mm_gedfile=$dbged");
 	$res = dbquery("DELETE FROM {$TBLPREFIX}name          WHERE n_file    =$dbged");
-	$res = dbquery("DELETE FROM {$TBLPREFIX}names         WHERE n_file    =$dbged");
 	$res = dbquery("DELETE FROM {$TBLPREFIX}news          WHERE n_username='{$ged}'");
 	$res = dbquery("DELETE FROM {$TBLPREFIX}nextid        WHERE ni_gedfile=$dbged");
 	$res = dbquery("DELETE FROM {$TBLPREFIX}other         WHERE o_file    =$dbged");
@@ -2661,8 +2481,8 @@ function get_top_surnames($num) {
 			} else {
 				$surnames[$row[1]]['name'] = $row[1];
 				$surnames[$row[1]]['match'] = $row[0];
+				}
 			}
-		}
 		$res->free();
 	}
 	return $surnames;

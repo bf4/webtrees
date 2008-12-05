@@ -1599,25 +1599,7 @@ class stats {
 		// Note that we count/display SPFX SURN, but sort/group under just SURN
 		$surnames=array();
 		foreach (array_keys($surname_list) as $surname) {
-			foreach (get_surname_indis($surname) as $person) {
-				foreach ($person->getAllNames() as $name) {
-					$surn=reset(explode(',', $name['sort']));
-					if ($surname==$surn) {
-						$spfxsurn=reset(explode(',', $name['list']));
-						if (! array_key_exists($surn, $surnames)) {
-							$surnames[$surn]=array();
-						}
-						if (! array_key_exists($spfxsurn, $surnames[$surn])) {
-							$surnames[$surn][$spfxsurn]=array();
-						}
-						// $surn is the base surname, e.g. GOGH
-						// $spfxsurn is the full surname, e.g. van GOGH
-						// $pid allows us to count indis as well as surnames, for indis that
-						// appear twice in this list.
-						$surnames[$surn][$spfxsurn][$person->getXref()]=true;
-					}
-				}
-			}
+			$surnames=array_merge($surnames, get_indilist_surns($surname, '', false, false, PGV_GED_ID));
 		}
 
 		//switch ($SURNAME_LIST_STYLE) {
@@ -1664,22 +1646,7 @@ class stats {
 			if ($n>=$maxtoshow) {
 				break;
 			}
-			foreach (get_surname_indis($surname) as $person) {
-				foreach ($person->getAllNames() as $name) {
-					$surn=UTF8_strtoupper($name['surn']);
-					$surname=UTF8_strtoupper($surname);
-					if ($surn && $surn!='@N.N.' && $surname==$surn) {
-						$spfxsurn=$name['spfx'].($name['spfx'] ? ' ' : '').$name['surn'];
-						if (! array_key_exists($surn, $all_surnames)) {
-							$all_surnames[$surn]=array();
-						}
-						if (! array_key_exists($spfxsurn, $all_surnames[$surn])) {
-							$all_surnames[$surn][$spfxsurn]=array();
-						}
-						$all_surnames[$surn][$spfxsurn][$person->getXref()]=true;
-					}
-				}
-			}
+			$all_surnames=array_merge($all_surnames, get_indilist_surns($surname, '', false, false, PGV_GED_ID));
 		}
 		if (count($surnames) <= 0) {return '';}
 		$tot = 0;

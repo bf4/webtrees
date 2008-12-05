@@ -192,30 +192,13 @@ function import_record($gedrec, $update) {
 	switch ($type) {
 	case 'INDI':
 		$isdead = -1;
-		$names=$record->getAllNames();
-		foreach ($names as $n=>$name) {
-			list($surn, $givn)=explode(',', $name['sort']);
-			$initial=get_first_letter($name['sort']);
-			if ($n) {
-				// TODO: we store the first (main) name in the indi table, and the others in
-				// the names table.  This means we need to search *both* tables for the indi list
-				// etc.  It would be more efficient to store all the names in the names table
-				// and just search that one.  This would require users to reimport their gedcoms,
-				// so this change will have to wait until a major version change.
-				$sql = "INSERT INTO {$TBLPREFIX}names (n_gid, n_file, n_name, n_letter, n_surname, n_type) VALUES('{$xref}',{$ged_id},'".$DBCONN->escapeSimple($name['full'])."','".$DBCONN->escapeSimple($initial)."','".$DBCONN->escapeSimple($surn)."','".($name['type']=='_MARNM'?'C':'A')."')";
-				$res = dbquery($sql);
-			}
-		}
 		if ($USE_RIN && preg_match("/1 RIN (.+)/", $gedrec, $match)) {
 			$rin = trim($match[1]);
 		} else {
 			$rin = $gid;
 		}
-
 		$isdead = (int)is_dead($gedrec, '', true);
-		list($surn, $givn)=explode(',', $names[0]['sort']);
-		$initial=get_first_letter($names[0]['sort']);
-		$sql = "INSERT INTO {$TBLPREFIX}individuals (i_id, i_file, i_rin, i_name, i_isdead, i_gedcom, i_letter, i_surname) VALUES ('{$xref}',{$ged_id},'".$DBCONN->escapeSimple($rin)."','".$DBCONN->escapeSimple($names[0]['full'])."',".$DBCONN->escapeSimple($isdead).",'".$DBCONN->escapeSimple($gedrec)."','".$DBCONN->escapeSimple($initial)."','".$DBCONN->escapeSimple($surn)."')";
+		$sql = "INSERT INTO {$TBLPREFIX}individuals (i_id, i_file, i_rin, i_isdead, i_sex, i_gedcom) VALUES ('{$xref}',{$ged_id},'".$DBCONN->escapeSimple($rin)."','".$DBCONN->escapeSimple($isdead)."','".$record->getSex()."','".$DBCONN->escapeSimple($gedrec)."')";
 		$res = dbquery($sql);
 		break;
 	case 'FAM':
@@ -784,7 +767,9 @@ function setup_database() {
 	$has_individuals = false;
 	$has_individuals_rin = false;
 	$has_individuals_letter = false;
+	$has_individuals_name = false;
 	$has_individuals_surname = false;
+	$has_individuals_sex = false;
 	$has_families = false;
 	$has_families_name = false;
 	$has_families_numchil = false;
@@ -830,6 +815,12 @@ function setup_database() {
 							case "i_surname" :
 								$has_individuals_surname = true;
 								break;
+							case "i_name" :
+								$has_individuals_name = true;
+								break;
+							case "i_sex" :
+								$has_individuals_sex = true;
+								break;
 						}
 					}
 					break;
@@ -873,17 +864,6 @@ function setup_database() {
 					break;
 				case "names" :
 					$has_names = true;
-					$info = $DBCONN->tableInfo($TBLPREFIX . "names");
-					foreach ($info as $indexval => $field) {
-						switch ($field["name"]) {
-							case "n_surname" :
-								$has_names_surname = true;
-					break;
-							case "n_type" :
-								$has_names_type = true;
-								break;
-						}
-					}
 					break;
 				case "placelinks" :
 					$has_placelinks = true;
@@ -931,21 +911,25 @@ function setup_database() {
 	}
 
 	//---------- Upgrade the database
-	if (!$has_individuals || $sqlite && (!$has_individuals_rin || !$has_individuals_letter || !$has_individuals_surname)) {
+	if (!$has_individuals || $sqlite && (!$has_individuals_rin || $has_individuals_letter || $has_individuals_surname || $has_individuals_name || !$has_individuals_sex)) {
 		create_individuals_table();
 	} else { // check columns in the table
 		if (!$has_individuals_rin) {
 			dbquery("ALTER TABLE {$TBLPREFIX}individuals ADD i_rin VARCHAR(255) NULL");
 		}
-		if (!$has_individuals_letter) {
-			dbquery("ALTER TABLE {$TBLPREFIX}individuals ADD i_letter VARCHAR(5) NULL");
-			dbquery("CREATE INDEX indi_letter ON {$TBLPREFIX}individuals (i_letter)");
+		if ($has_individuals_letter) {
+			dbquery("ALTER TABLE {$TBLPREFIX}individuals DROP COLUMN i_letter");
 		}
-		if (!$has_individuals_surname) {
-			dbquery("ALTER TABLE {$TBLPREFIX}individuals ADD i_surname VARCHAR(100) NULL");
-			dbquery("CREATE INDEX indi_surn ON {$TBLPREFIX}individuals (i_surname)");
+		if ($has_individuals_surname) {
+			dbquery("ALTER TABLE {$TBLPREFIX}individuals DROP COLUMN i_surname");
 		}
+		if ($has_individuals_name) {
+			dbquery("ALTER TABLE {$TBLPREFIX}individuals DROP COLUMN i_name");
 		}
+		if (!$has_individuals_sex) {
+			dbquery("ALTER TABLE {$TBLPREFIX}individuals ADD i_sex CHAR(1) NOT NULL DEFAULT 'U'");
+		}
+	}
 	if (!$has_families || $sqlite && ($has_families_name || !$has_families_numchil)) {
 		create_families_table();
 	} else { // check columns in the table
@@ -972,16 +956,9 @@ function setup_database() {
 	if (!$has_placelinks) {
 		create_placelinks_table();
 	}
-	if (!$has_names || $sqlite && (!$has_names_surname || !$has_names_type)) {
-		create_names_table();
-	} else {
-		if (!$has_names_surname) {
-			dbquery("ALTER TABLE {$TBLPREFIX}names ADD n_surname VARCHAR(100) NULL");
-			dbquery("CREATE INDEX name_surn ON {$TBLPREFIX}names (n_surname)");
-	}
-	if (!$has_names_type) {
-		dbquery("ALTER TABLE {$TBLPREFIX}names ADD n_type VARCHAR(10) NULL");
-	}
+	if ($has_names) {
+		// The old pgv_names table is now merged with the new pgv_name table
+		dbquery("DROP TABLE {$TBLPREFIX}names", false);
 	}
 	if (!$has_dates || $sqlite && (!$has_dates_mon || !$has_dates_datestamp || !$has_dates_juliandays)) {
 		create_dates_table();
@@ -1020,7 +997,7 @@ function setup_database() {
 	if (!$has_sources) {
 		create_sources_table();
 	}
-	if($has_soundex) {
+	if ($has_soundex) {
 		// The old pgv_soundex table is now merged with the new pgv_name table
 		dbquery("DROP TABLE {$TBLPREFIX}soundex", false);
 	}
@@ -1054,19 +1031,14 @@ function create_individuals_table() {
 		" i_id     ".PGV_DB_COL_XREF."      NOT NULL,".
 		" i_file   ".PGV_DB_COL_FILE."      NOT NULL,".
 		" i_rin      VARCHAR(255)           NULL,".
-		" i_name     VARCHAR(255)           NULL,".
 		" i_isdead   INT DEFAULT 1          NULL,".
+		" i_sex      CHAR(1)                NOT NULL,".
 		" i_gedcom ".PGV_DB_LONGTEXT_TYPE." NULL,".
-		" i_letter   VARCHAR(5)             NULL,".
-		" i_surname  VARCHAR(100)           NULL,".
 		" PRIMARY KEY (i_id, i_file)".
 		") ".PGV_DB_UTF8_TABLE
 	);
 	dbquery("CREATE INDEX {$TBLPREFIX}indi_id   ON {$TBLPREFIX}individuals (i_id     )");
-	dbquery("CREATE INDEX {$TBLPREFIX}indi_name   ON {$TBLPREFIX}individuals (i_name   )");
-	dbquery("CREATE INDEX {$TBLPREFIX}indi_letter ON {$TBLPREFIX}individuals (i_letter )");
 	dbquery("CREATE INDEX {$TBLPREFIX}indi_file ON {$TBLPREFIX}individuals (i_file   )");
-	dbquery("CREATE INDEX {$TBLPREFIX}indi_surn   ON {$TBLPREFIX}individuals (i_surname)");
 }
 /**
  * Create the families table
@@ -1173,30 +1145,6 @@ function create_places_table() {
 	dbquery("CREATE INDEX {$TBLPREFIX}place_level  ON {$TBLPREFIX}places (p_level    )");
 	dbquery("CREATE INDEX {$TBLPREFIX}place_parent ON {$TBLPREFIX}places (p_parent_id)");
 	dbquery("CREATE INDEX {$TBLPREFIX}place_file   ON {$TBLPREFIX}places (p_file     )");
-}
-/**
- * Create the names table
- */
-function create_names_table() {
-	global $TBLPREFIX;
-
-	dbquery("DROP TABLE {$TBLPREFIX}names", false);
-	dbquery(
-		"CREATE TABLE {$TBLPREFIX}names (".
-		" n_gid   ".PGV_DB_COL_XREF." NOT NULL,".
-		" n_file  ".PGV_DB_COL_FILE." NOT NULL,".
-		" n_name    VARCHAR(255)      NULL,".
-		" n_letter  VARCHAR(5)        NULL,".
-		" n_surname VARCHAR(100)      NULL,".
-		" n_type    VARCHAR(10)       NULL".
-		") ".PGV_DB_UTF8_TABLE
-	);
-	dbquery("CREATE INDEX {$TBLPREFIX}name_gid    ON {$TBLPREFIX}names (n_gid    )");
-	dbquery("CREATE INDEX {$TBLPREFIX}name_name   ON {$TBLPREFIX}names (n_name   )");
-	dbquery("CREATE INDEX {$TBLPREFIX}name_letter ON {$TBLPREFIX}names (n_letter )");
-	dbquery("CREATE INDEX {$TBLPREFIX}name_type   ON {$TBLPREFIX}names (n_type   )");
-	dbquery("CREATE INDEX {$TBLPREFIX}name_surn   ON {$TBLPREFIX}names (n_surname)");
-	dbquery("CREATE INDEX {$TBLPREFIX}name_file   ON {$TBLPREFIX}names (n_file   )");
 }
 /**
  * Create the name table
@@ -1688,31 +1636,29 @@ function update_record($gedrec, $delete = false) {
 	$sql = "DELETE FROM {$TBLPREFIX}link WHERE l_from ".PGV_DB_LIKE." '" . $DBCONN->escapeSimple($gid) . "' AND l_file='" . $DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"]) . "'";
 	$res = dbquery($sql);
 
-	if ($type == "INDI") {
+	switch ($type) {
+	case 'INDI':
 		$sql = "DELETE FROM {$TBLPREFIX}individuals WHERE i_id ".PGV_DB_LIKE." '" . $DBCONN->escapeSimple($gid) . "' AND i_file='" . $DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"]) . "'";
 		$res = dbquery($sql);
-
-		$sql = "DELETE FROM {$TBLPREFIX}names WHERE n_gid ".PGV_DB_LIKE." '" . $DBCONN->escapeSimple($gid) . "' AND n_file='" . $DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"]) . "'";
+		break;
+	case 'FAM':
+		$sql = "DELETE FROM {$TBLPREFIX}families WHERE f_id ".PGV_DB_LIKE." '" . $DBCONN->escapeSimple($gid) . "' AND f_file='" . $DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"]) . "'";
 		$res = dbquery($sql);
-	} else
-		if ($type == "FAM") {
-			$sql = "DELETE FROM {$TBLPREFIX}families WHERE f_id ".PGV_DB_LIKE." '" . $DBCONN->escapeSimple($gid) . "' AND f_file='" . $DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"]) . "'";
-			$res = dbquery($sql);
+		break;
+	case 'SOUR':
+		$sql = "DELETE FROM {$TBLPREFIX}sources WHERE s_id ".PGV_DB_LIKE." '" . $DBCONN->escapeSimple($gid) . "' AND s_file='" . $DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"]) . "'";
+		$res = dbquery($sql);
+		break;
+	case 'OBJE':
+		$sql = "DELETE FROM {$TBLPREFIX}media WHERE m_media ".PGV_DB_LIKE." '" . $DBCONN->escapeSimple($gid) . "' AND m_gedfile='" . $DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"]) . "'";
+		$res = dbquery($sql);
+		break;
+	default:
+		$sql = "DELETE FROM {$TBLPREFIX}other WHERE o_id ".PGV_DB_LIKE." '" . $DBCONN->escapeSimple($gid) . "' AND o_file='" . $DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"]) . "'";
+		$res = dbquery($sql);
+		break;
+	}
 
-		} else
-			if ($type == "SOUR") {
-				$sql = "DELETE FROM {$TBLPREFIX}sources WHERE s_id ".PGV_DB_LIKE." '" . $DBCONN->escapeSimple($gid) . "' AND s_file='" . $DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"]) . "'";
-				$res = dbquery($sql);
-
-			} else
-				if ($type == "OBJE") {
-					$sql = "DELETE FROM {$TBLPREFIX}media WHERE m_media ".PGV_DB_LIKE." '" . $DBCONN->escapeSimple($gid) . "' AND m_gedfile='" . $DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"]) . "'";
-					$res = dbquery($sql);
-				} else {
-					$sql = "DELETE FROM {$TBLPREFIX}other WHERE o_id ".PGV_DB_LIKE." '" . $DBCONN->escapeSimple($gid) . "' AND o_file='" . $DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"]) . "'";
-					$res = dbquery($sql);
-
-				}
 	if (!$delete) {
 		import_record($gedrec, true);
 	}
