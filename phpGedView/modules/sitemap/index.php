@@ -92,33 +92,28 @@ if ($action=="sendFiles") {
         $res->free();
     }
 
-    if (isset($fam_lists)) {
-        $famalpha = get_fam_alpha();
-        uasort($famalpha, "stringsort");
+		if (isset($fam_lists)) {
+			foreach(get_indilist_salpha($SHOW_MARRIED_SURNAMES, true, PHP_GED_ID) as $letter) {
+				if ($letter!='@') {
+					print "   <url>\n";
+					print "      <loc>".$SERVER_URL."famlist.php?alpha=".urlencode($letter)."&amp;ged=".urlencode($gedcom_name)."</loc>\n";
+					print "      <changefreq>".$famlist_update."</changefreq>\n";
+					print "      <priority>0.".$famlist_priority."</priority>\n";
+					print "   </url>\n";
+				}
+			}
+		}
 
-        if (count($famalpha) > 0) {
-	        foreach($famalpha as $letter=>$list) {
-		        if ($letter != "@") {
-                    print "   <url>\n";
-			        print "      <loc>".$SERVER_URL."famlist.php?alpha=".urlencode($letter)."&amp;surname_sublist=no&amp;show_all=no&amp;ged=".urlencode($gedcom_name)."</loc>\n";
-                    print "      <changefreq>".$famlist_update."</changefreq>\n";
-                    print "      <priority>0.".$famlist_priority."</priority>\n";
-                    print "   </url>\n";
-		        }
-	        }
-        }
-    }
-
-    if (isset($indi_lists)) {
-	        foreach (get_indi_alpha() as $letter) {
-		        if ($letter != "@") {
-                    print "   <url>\n";
-			        print "      <loc>".$SERVER_URL."indilist.php?alpha=".urlencode($letter)."&amp;surname_sublist=no&amp;show_all=no&amp;ged=".urlencode($gedcom_name)."</loc>\n";
-                    print "      <changefreq>".$indilist_update."</changefreq>\n";
-                    print "      <priority>0.".$indilist_priority."</priority>\n";
-                    print "   </url>\n";
-		        }
-	        }
+		if (isset($indi_lists)) {
+			foreach (get_indilist_salpha($SHOW_MARRIED_SURNAMES, false, PHP_GED_ID) as $letter) {
+				if ($letter!='@') {
+					print "   <url>\n";
+					print "      <loc>".$SERVER_URL."indilist.php?alpha=".urlencode($letter)."&amp;ged=".urlencode($gedcom_name)."</loc>\n";
+					print "      <changefreq>".$indilist_update."</changefreq>\n";
+					print "      <priority>0.".$indilist_priority."</priority>\n";
+					print "   </url>\n";
+				}
+			}
     }
     print "</urlset>";
     exit;

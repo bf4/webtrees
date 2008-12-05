@@ -109,26 +109,7 @@ function print_block_name_top10($block=true, $config="", $side, $index) {
 			if ($n>=$config["num"]) {
 				break;
 			}
-			foreach (get_surname_indis($surname) as $person) {
-				foreach ($person->getAllNames() as $name) {
-					$surn=UTF8_strtoupper($name['surn']);
-					$surname=UTF8_strtoupper($surname);
-					if ($surn && $surn!='@N.N.' && $surname==$surn) {
-						$spfxsurn=$name['spfx'].($name['spfx'] ? ' ' : '').$name['surn'];
-						if (! array_key_exists($surn, $all_surnames)) {
-							$all_surnames[$surn]=array();
-						}
-						if (! array_key_exists($spfxsurn, $all_surnames[$surn])) {
-							$all_surnames[$surn][$spfxsurn]=array();
-						}
-						// $surn is the base surname, e.g. GOGH
-						// $spfxsurn is the full surname, e.g. van GOGH
-						// $pid allows us to count indis as well as surnames, for indis that
-						// appear twice in this list.
-						$all_surnames[$surn][$spfxsurn][$person->getXref()]=true;
-					}
-				}
-			}
+			$all_surnames=array_merge($all_surnames, get_indilist_surns($surname, '', false, false, PGV_GED_ID));
 		}
 		switch ($SURNAME_LIST_STYLE) {
 		case 'style3':

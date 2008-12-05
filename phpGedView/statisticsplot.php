@@ -650,7 +650,7 @@ function print_map_charts($chart_shows, $chart_type, $x_as, $surname) {
 	case 'surname_distribution_chart':
 		// Count how many people were born in each country
 		$surn_countries=array();
-		$indis = get_surname_indis($surname);
+		$indis = get_indilist_indis($surname, '', '', false, false, PGV_GED_ID);
 		foreach ($indis as $person) {
 			if (preg_match_all('/^2 PLAC (?:.*, *)*(.*)/m', $person->gedrec, $matches)) {
 				// PGV uses 3 letter country codes and localised country names, but google uses 2 letter codes.
