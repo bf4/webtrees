@@ -599,18 +599,6 @@ function autocomplete_PLAC() {
 		}
 		else
 		  return $data;
-		// json_decode is PHP5 only !
-		if (!function_exists('json_decode')){
-			function json_decode($content, $assoc=false){
-				require_once 'Services/JSON.php';
-				if ( $assoc ){
-					$json = new Services_JSON(SERVICES_JSON_LOOSE_TYPE);
-				} else {
-					$json = new Services_JSON;
-				}
-				return $json->decode($content);
-			}
-		}
 		$places = json_decode($json, true);
 		if ($places["geonames"])
 			foreach ($places["geonames"] as $k => $place)
