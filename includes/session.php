@@ -43,9 +43,9 @@ define('PGV_DEBUG_SQL',  false);
 define('PGV_DEBUG_PRIV', false);
 
 // Environmental requirements
-define('PGV_REQUIRED_PHP_VERSION',     '5.0.0'); // 5.2.3 ???
-define('PGV_REQUIRED_MYSQL_VERSION',   '4.1');   // Not currently enforced
-define('PGV_REQUIRED_SQLITE_VERSION',  '3.2.6'); // Not currently enforced
+define('PGV_REQUIRED_PHP_VERSION',     '5.2.0'); // 5.2.3 is recommended
+define('PGV_REQUIRED_MYSQL_VERSION',   '4.1');   // Not enforced
+define('PGV_REQUIRED_SQLITE_VERSION',  '3.2.6'); // Not enforced, PHP5.2.0/PDO is 3.3.7
 define('PGV_REQUIRED_PRIVACY_VERSION', '3.1');
 
 // Regular expressions for validating user input, etc.
@@ -72,6 +72,7 @@ define('PGV_EVENTS_BIRT', 'BIRT|CHR|BAPM|_BRTM|ADOP');
 define('PGV_EVENTS_DEAT', 'DEAT|BURI|CREM');
 define('PGV_EVENTS_MARR', 'MARR|MARB');
 define('PGV_EVENTS_DIV',  'DIV|ANUL|_SEPR');
+
 @ini_set('arg_separator.output', '&amp;');
 @ini_set('error_reporting', 0);
 @ini_set('display_errors', '1');
