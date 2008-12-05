@@ -124,14 +124,14 @@ $worms = array(
 	$quitReason = "";
 
 	// check for attempt to redirect
-	if (eregi("=.*://", rawurldecode($_SERVER["REQUEST_URI"]))) {
+	if (eregi("=.*://", rawurldecode($_SERVER["REQUEST_URI"])!==false)) {
 		$quitReason = "Embedded URL detected";
 	}
 
 	// check for worms and bad bots
 	if ($quitReason == "") {
 		foreach ($worms as $worm) {
-			if (eregi($worm, $ua)) {
+			if (eregi($worm, $ua)!==false) {
 				$quitReason = "Blocked crawler detected";
 				break;
 			}
@@ -198,18 +198,18 @@ $worms = array(
 
 	if($ua != "") {
 		foreach($real_browsers as $browser_check) {
-			if (eregi($browser_check, $ua)) {
+			if (eregi($browser_check, $ua)!==false) {
 				$real = true;
 				break;
 			}
 		}
 		// check for old Netscapes.
 		if (eregi("Mozilla/", $ua)) {
-			if (!eregi("compatible", $ua)) {
-				if (eregi("\[..\]", $ua)) {
+			if (eregi("compatible", $ua)===false) {
+				if (eregi("\[..\]", $ua)!==false) {
 					$real = true;
 				}
-				if (eregi("Macintosh", $ua)) {
+				if (eregi("Macintosh", $ua)!==false) {
 					$real = true;
 				}
 			}
