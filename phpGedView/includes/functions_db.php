@@ -388,6 +388,175 @@ function get_prev_xref($pid, $ged_id=PGV_GED_ID) {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
+// Get a list of individuals for indilist.php and famlist.php
+// $surn - if set, only fetch people with this surname
+// $salpha - if set, only fetch surnames starting with this letter
+// $galpha - if set, only fetch given names starting with this letter
+// $marnm - if set, include married names
+// $fams - if set, only fetch individuals with FAMS records
+// $ged_id - if set, only fetch individuals from this gedcom
+//
+// All parameters must be in upper case.  We search against a database column
+// that contains uppercase values. This will allow non utf8-aware database
+// to match diacritics.
+//
+// To search for unknown names, use $surn="@N.N.", $salpha="@" or $galpha="@"
+// To search for names with no surnames, use $salpha=","
+//
+// Return is a multi-dimensional array of
+// $list[$surn][$surname][$n]=$record
+// This sorts/groups records by their "root" surname (e.g. "CLITHEROW"), then
+// their "real" surname (e.g. "de Clitherow").
+// An individual can appear multiple times if they have multiple matching names
+////////////////////////////////////////////////////////////////////////////////
+function get_indilist_indis($surn='', $salpha='', $galpha='', $marnm=false, $fams=false, $ged_id=null) {
+	global $DBCONN, $TBLPREFIX, $DB_UTF8_COLLATION, $DBCOLLATE, $LANGUAGE, $MULTI_LETTER_ALPHABET, $MULTI_LETTER_EQUIV;
+
+	$surn  =$DBCONN->escapeSimple($surn);
+	$salpha=$DBCONN->escapeSimple($salpha);
+	$galpha=$DBCONN->escapeSimple($galpha);
+	$ged_id=(int)$ged_id;
+
+	$sql="SELECT DISTINCT 'INDI' AS type, i_id AS xref, i_file AS ged_id, i_gedcom AS gedrec, i_isdead, n_surn, n_surname, n_num FROM {$TBLPREFIX}individuals JOIN {$TBLPREFIX}name ON (i_id=n_id AND i_file=n_file)";
+	if ($fams) {
+		$sql.=" JOIN {$TBLPREFIX}link ON (i_id=l_from AND i_file=l_file)";
+	}
+	$where=array();
+	if ($ged_id) {
+		$where[]="n_file={$ged_id}";
+	}
+	if (!$marnm) {
+		$where[]="n_type!='_MARNM'";
+	}
+
+	// Deal with digraphs, so that;
+	// danish users get "aa" names on an "aring" list
+	// czech users don't get "ch" names on a "c" list and vice versa
+	// etc.
+
+	$g_excl=array();
+	$s_excl=array();
+	foreach (preg_split('/[ ,;]/', UTF8_strtoupper($MULTI_LETTER_ALPHABET[$LANGUAGE])) as $digraph) {
+		if ($salpha && $digraph!=$salpha && strpos($digraph, $salpha)===0) {
+			$s_excl[]=$digraph;
+		}
+		if ($galpha && $digraph!=$galpha && strpos($digraph, $galpha)===0) {
+			$g_excl[]=$digraph;
+		}
+	}
+	$g_incl=array($galpha);
+	$s_incl=array($salpha);
+	foreach (preg_split('/[ ,;]/', $MULTI_LETTER_EQUIV[$LANGUAGE], -1, PREG_SPLIT_NO_EMPTY) as $digraph) {
+		list($from, $to)=explode('=', $digraph);
+		$from=UTF8_strtoupper($from);
+		if ($from==$salpha && strpos($from, $salpha)===0) {
+			$s_incl[]=$to;
+		}
+		if ($from==$galpha && strpos($from, $galpha)===0) {
+			$g_incl[]=$to;
+		}
+		if ($salpha && $from!=$salpha && strpos($from, $salpha)===0) {
+			$s_excl[]=$from;
+		}
+		if ($galpha && $from!=$galpha && strpos($from, $galpha)===0) {
+			$g_excl[]=$from;
+		}
+		if ($to==$salpha) {
+			$s_incl[]=$from;
+		}
+		if ($to==$galpha) {
+			$g_incl[]=$from;
+		}
+	}
+
+	// Non UTF8 aware databases need to be told that "e-ecute" is the same as "e"....
+	if (!$DB_UTF8_COLLATION) {
+		global $UCDiacritWhole, $UCDiacritStrip;
+
+		foreach (str_split($UCDiacritStrip) as $n=>$char) {
+			if ($char==$galpha) {
+				$g_incl[]=UTF8_substr($UCDiacritWhole, $n, 1);
+			}
+			if ($char==$salpha) {
+				$s_incl[]=UTF8_substr($UCDiacritWhole, $n, 1);
+			}
+		}
+	}
+	if ($surn) {
+		// Match a surname, with or without a given initial
+		if ($galpha) {
+			foreach ($g_incl as $g) {
+				$includes[]="n_sort {$DBCOLLATE} ".PGV_DB_LIKE." '{$surn},{$g}%'";
+			}
+			foreach ($g_excl as $g) {
+				$where[]="n_sort {$DBCOLLATE} NOT ".PGV_DB_LIKE." '{$surn},{$g}%'";
+			}
+		} else {
+			$includes[]="n_sort {$DBCOLLATE} ".PGV_DB_LIKE." '{$surn},%'";
+		}
+	} elseif ($salpha==',') {
+		// Match a surname-less name, with or without a given initial
+		if ($galpha) {
+			foreach ($g_incl as $g) {
+				$includes[]="n_sort {$DBCOLLATE} ".PGV_DB_LIKE." ',{$g}%'";
+			}
+			foreach ($g_excl as $g) {
+				$where[]="n_sort {$DBCOLLATE} NOT ".PGV_DB_LIKE." ',{$g}%'";
+			}
+		} else {
+			$includes[]="n_sort {$DBCOLLATE} ".PGV_DB_LIKE." ',%'";
+		}
+	} elseif ($salpha) {
+		// Match a surname initial, with or without a given initial
+		if ($galpha) {
+			foreach ($g_excl as $g) {
+				foreach ($s_excl as $s) {
+					$includes[]="n_sort {$DBCOLLATE} ".PGV_DB_LIKE." '{$s}%,{$g}%'";
+				}
+			}
+			foreach ($g_excl as $g) {
+				foreach ($s_excl as $s) {
+					$where[]="n_sort {$DBCOLLATE} NOT ".PGV_DB_LIKE." '{$s}%,{$g}%'";
+				}
+			}
+		} else {
+			foreach ($s_incl as $s) {
+				$includes[]="n_sort {$DBCOLLATE} ".PGV_DB_LIKE." '{$s}%'";
+			}
+			foreach ($s_excl as $s) {
+				$where[]="n_sort {$DBCOLLATE} NOT ".PGV_DB_LIKE." '{$s}%'";
+			}
+		}
+	} elseif ($galpha) {
+		// Match all surnames with a given initial
+		$includes[]="n_sort {$DBCOLLATE} ".PGV_DB_LIKE." '%,{$galpha}%'";
+		foreach ($g_excl as $g) {
+			$where[]="n_sort {$DBCOLLATE} NOT ".PGV_DB_LIKE." '{$g}%'";
+		}
+	} else {
+		// Match all individuals
+	}
+
+	if ($includes) {
+		$where[]='('.implode(' OR ', $includes).')';
+	}
+
+	$sql.=" WHERE ".implode(' AND ', $where)." ORDER BY n_sort";
+
+	var_dump($sql);
+
+	$list=array();
+	$res=dbquery($sql);
+	while ($row=$res->fetchRow(DB_FETCHMODE_ASSOC)) {
+		$person=Person::getInstance($row);
+		$person->setPrimaryName($row['n_num']);
+		$list[$row['n_surn']][$row['n_surname']][]=$person;
+	}
+	$res->free();
+	return $list;
+}
+
+////////////////////////////////////////////////////////////////////////////////
 // Count the number of records of each type in the database.  Return an array
 // of 'type'=>count for each type where records exist.
 ////////////////////////////////////////////////////////////////////////////////
