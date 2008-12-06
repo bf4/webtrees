@@ -132,25 +132,36 @@ function UTF8_chr($value) {
 /*
  * Extract substring from input string
  */
-function UTF8_substr($text, $start=0, $end=0) {
-	$UTF8_text = UTF8_str_split($text);
-	$textLen = count($UTF8_text);
-	if ($textLen==0) return $text;
-
-	if ($start<0) $start = $textLen - $start;
-	if ($start>$textLen) {
-		if (is_array($text)) return array();
-		else return '';
+function UTF8_substr($text, $start=0, $len=null) {
+	$UTF8_text=UTF8_str_split($text);
+	$textLen=count($UTF8_text);
+	if ($textLen==0) {
+		return $text;
 	}
 
-	if ($end==0 || $end>$textLen) $end = $textLen;
-	if ($end<0) $end = $textLen - $end;
-	if (($start+$end)>$textLen) $end = $textLen - $start;
-
-	$result = array_slice($UTF8_text, $start, $end);
-
-	if (is_array($text)) return $result;
-	else return implode('', $result);
+	if ($start>$textLen || $start<0 && -$start>$textLen) {
+		return false;
+	}
+	if ($start<0) {
+		$start=$textLen+$start;
+	}
+	if (is_null($len)) {
+		$len=$textLen;
+	} elseif ($len<0) {
+		if ($start>$textLen+$len) {
+			$len=0;
+		}
+	} elseif ($len>0) {
+		if ($start+$len>$textLen) {
+			$len=$textLen-$start;
+		}
+	}
+ 	$result=array_slice($UTF8_text, $start, $len);
+	if (is_array($text)) {
+		return $result;
+	} else {
+		return implode('', $result);
+	}
 }
 
 
