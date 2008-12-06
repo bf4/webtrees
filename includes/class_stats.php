@@ -529,7 +529,7 @@ class stats {
 			$dis = ' DISTINCT ';
 			$opt = '';
 		}
-		$rows = self::_runSQL("SELECT COUNT({$dis}n_surn) AS tot FROM {$TBLPREFIX}names WHERE n_file={$this->_ged_id}{$opt}");
+		$rows = self::_runSQL("SELECT COUNT({$dis}n_surn) AS tot FROM {$TBLPREFIX}name WHERE n_file={$this->_ged_id}{$opt}");
 		return $rows[0]['tot'];
 	}
 
