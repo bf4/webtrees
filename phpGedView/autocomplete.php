@@ -87,10 +87,11 @@ function autocomplete_INDI() {
 		}
 	}
 
-	$sql = "SELECT i_id".
-				" FROM {$TBLPREFIX}individuals".
-				" WHERE (i_surname ".PGV_DB_LIKE." '".$FILTER."%'".
+	$sql = "SELECT DISTINCT i_id".
+				" FROM {$TBLPREFIX}individuals, {$TBLPREFIX}name".
+				" WHERE (n_surname ".PGV_DB_LIKE." '".$FILTER."%'".
 				" OR i_id ".PGV_DB_LIKE." '%".$FILTER."%')".
+				" AND i_id=n_id AND i_file=n_file".
 				" AND i_file=".PGV_GED_ID.
 				" LIMIT ".PGV_AUTOCOMPLETE_LIMIT;
 	$res = dbquery($sql);
