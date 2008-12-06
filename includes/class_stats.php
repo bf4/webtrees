@@ -1693,79 +1693,39 @@ class stats {
 		if(is_array($params) && isset($params[1]) && $params[1] != '' && $params[1] >= 0){$maxtoshow = strtolower($params[1]);}else{$maxtoshow = 10;}
 		if(is_array($params) && isset($params[2]) && $params[2] != '' && isset($sort_types[strtolower($params[2])])){$sorting = strtolower($params[2]);}else{$sorting = 'rcount';}
 
-		//-- cache the result in the session so that subsequent calls do not have to
-		//-- perform the calculation all over again.
-		if(
-			isset($_SESSION['first_names_F'][$GEDCOM]) &&
-			isset($_SESSION['first_names_M'][$GEDCOM]) &&
-			isset($_SESSION['first_names_U'][$GEDCOM]) &&
-			!PGV_DEBUG
-		) {
-			$name_list_F = $_SESSION['first_names_F'][$GEDCOM];
-			$name_list_M = $_SESSION['first_names_M'][$GEDCOM];
-			$name_list_U = $_SESSION["first_names_U"][$GEDCOM];
-		} else {
-			$name_list_F = array();
-			$name_list_M = array();
-			$name_list_U = array();
+		switch ($sex) {
+		case 'M':
+			$sex_sql="i_sex='M'";
+			break;
+		case 'F':
+			$sex_sql="i_sex='F'";
+			break;
+		case 'U':
+			$sex_sql="i_sex='U'";
+			break;
+		case 'B':
+			$sex_sql="i_sex!='U'";
+			break;
+		}
+		$ged_id=get_id_from_gedcom($GEDCOM);
 
-			foreach (get_indi_list() as $person) {
-				if ($person->canDisplayName()) {
-					$genderList='name_list_'.$person->getSex();
-					foreach ($person->getAllNames() as $name) {
-						if ($name['type']!='_MARNM') {
-							$firstnamestring = ' '.str_replace(array('*', '.', '-', '_', ',', '(', ')', '[', ']', '{', '}', '@'), ' ', $name['givn']).' '; 
-							// Remove names within quotes and apostrophes
-							$firstnamestring = preg_replace(array(": '.*' :", ': ".*" :'), ' ', $firstnamestring);
-							$firstnamestring = preg_replace(": (\xC2\xAB|\xC2\xBB|\xEF\xB4\xBF|\xEF\xB4\xBE|\xE2\x80\xBA|\xE2\x80\xB9|\xE2\x80\x9E|\xE2\x80\x9C|\xE2\x80\x9D|\xE2\x80\x9A|\xE2\x80\x98|\xE2\x80\x99).*(\xC2\xAB|\xC2\xBB|\xEF\xB4\xBF|\xEF\xB4\xBE|\xE2\x80\xBA|\xE2\x80\xB9|\xE2\x80\x9E|\xE2\x80\x9C|\xE2\x80\x9D|\xE2\x80\x9A|\xE2\x80\x98|\xE2\x80\x99) :", ' ', $firstnamestring);
-	
-							foreach (explode(' ', $firstnamestring) as $givnName) {
-								// Ignore single letters (but not single-character japanese/chinese names?)
-								if (strlen($givnName)>1) {
-									if (isset(${$genderList}[$givnName])) {
-										${$genderList}[$givnName] ++;
-									} else {
-										${$genderList}[$givnName] = 1;
-									}
-								}
-							}
-						}
-					}
+		$sql="SELECT n_givn, COUNT(*) AS num FROM {$TBLPREFIX}name JOIN {$TBLPREFIX}individuals ON (n_id=i_id AND n_file=i_file) WHERE n_file={$ged_id} AND n_type!='_MARNM' AND n_givn NOT IN ('@P.N.', '') AND LENGTH(n_givn)>1 AND {$sex_sql} GROUP BY n_id, n_givn";
+		$res=dbquery($sql);
+		$nameList=array();
+		while ($row=$res->fetchRow(DB_FETCHMODE_ASSOC)) {
+			// Split "John Thomas" into "John" and "Thomas" and count against both totals
+			foreach (explode(' ', $row['n_givn']) as $given) {
+				$given=str_replace(array('*', '"'), '', $given);
+				if (array_key_exists($given, $nameList)) {
+					$nameList[$given]+=$row['num'];
+				} else {
+					$nameList[$given]=$row['num'];
 				}
 			}
+		}
+		arsort($nameList, SORT_NUMERIC);
+		$nameList=array_slice($nameList, 0, $maxtoshow);
 
-			arsort($name_list_F, SORT_NUMERIC);
-			$_SESSION['first_names_F'][$GEDCOM] = $name_list_F;
-			arsort($name_list_M, SORT_NUMERIC);
-			$_SESSION['first_names_M'][$GEDCOM] = $name_list_M;
-			arsort($name_list_U, SORT_NUMERIC);
-			$_SESSION['first_names_U'][$GEDCOM] = $name_list_U;
-		}
-		if ($sex == 'F') {
-			$nameList = array_slice($name_list_F, 0, $maxtoshow);
-			eval($sort_types[$sorting]($nameList, $sort_flags[$sorting]).";");
-		} else if ($sex == 'M') {
-			$nameList = array_slice($name_list_M, 0, $maxtoshow);
-			eval($sort_types[$sorting]($nameList, $sort_flags[$sorting]).";");
-		} else if ($sex == 'U') {
-			$nameList = array_slice($name_list_U, 0, $maxtoshow);
-			eval($sort_types[$sorting]($nameList, $sort_flags[$sorting]).";");
-		} else {
-			$name_list_B = $name_list_F;
-			// Combine names and counts from the Male list into the Totals list
-			foreach ($name_list_M as $key => $count) {
-				if (isset($name_list_B[$key])) $name_list_B[$key] += $count;
-				else $name_list_B[$key] = $count;
-			}
-			// Combine names and counts from the Unknown list into the Totals list
-			foreach ($name_list_U as $key => $count) {
-				if (isset($name_list_B[$key])) $name_list_B[$key] += $count;
-				else $name_list_B[$key] = $count;
-			}
-			arsort($name_list_B, SORT_NUMERIC);
-			$nameList = array_slice($name_list_B, 0, $maxtoshow);
-			eval($sort_types[$sorting]($nameList, $sort_flags[$sorting]).";");
-		}
 		if (count($nameList)==0) return '';
 
 		$common = array();
