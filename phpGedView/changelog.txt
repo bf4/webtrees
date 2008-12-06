@@ -10,6 +10,8 @@
 
 
 Version 4.2.0
+ - Fixed: [ 2396047 ] Quick update: "Family with ..." shows Death fact (canajun2eh)
+ - Fixed: [ 2392462 ] Quick Update, "family with ..." error (canajun2eh)
  - Fixed: [ 2316629 ] [svn 4303] Cannot update privacy settings (fisharebest)
  - Fixed: [ 2269709 ] [4270] Top 10 surnames not sorted (fisharebest)
  - Fixed: [ 1496031 ] Soundex Search bugs
