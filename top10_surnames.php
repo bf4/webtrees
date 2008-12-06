@@ -109,7 +109,7 @@ function print_block_name_top10($block=true, $config="", $side, $index) {
 			if ($n>=$config["num"]) {
 				break;
 			}
-			$all_surnames=array_merge($all_surnames, get_indilist_surns($surname, '', false, false, PGV_GED_ID));
+			$all_surnames=array_merge($all_surnames, get_indilist_surns(UTF8_strtoupper($surname), '', false, false, PGV_GED_ID));
 		}
 		switch ($SURNAME_LIST_STYLE) {
 		case 'style3':
