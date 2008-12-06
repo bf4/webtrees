@@ -839,12 +839,25 @@ function get_indilist_indis($surn='', $salpha='', $galpha='', $marnm=false, $fam
 // To search for names with no surnames, use $salpha=","
 ////////////////////////////////////////////////////////////////////////////////
 function get_famlist_fams($surn='', $salpha='', $galpha='', $marnm, $ged_id=null) {
+	global $TBLPREFIX;
+
 	$list=array();
 	foreach (get_indilist_indis($surn, $salpha, $galpha, $marnm, true, $ged_id) as $indi) {
 		foreach ($indi->getSpouseFamilies() as $family) {
 			$list[$family->getXref()]=$family;
 		}
 	}
+	// If we're searching for "Unknown surname", we also need to include families
+	// with missing spouses
+	if ($surn=='@N.N.' || $salpha=='@') {
+		$res=dbquery("SELECT 'FAM' AS type, f_id AS xref, {$ged_id} AS ged_id, f_gedcom AS gedrec, f_husb, f_wife, f_chil, f_numchil FROM {$TBLPREFIX}families f WHERE f_file={$ged_id} AND (f_husb='' OR f_wife='')");
+
+		while ($row=$res->fetchRow(DB_FETCHMODE_ASSOC)) {
+			$list[]=Family::getInstance($row);
+		}
+		$res->free();
+	}
+	usort($list, array('GedcomRecord', 'Compare'));
 	return $list;
 }
 
