@@ -417,7 +417,7 @@ function get_plot_data() {
 	global $GEDCOM, $INDEX_DIRECTORY;
 	global $nrfam, $famgeg, $nrpers, $persgeg, $key2ind;
 
-	$indexfile = $INDEX_DIRECTORY.$GEDCOM."_statistiek.php";
+	$indexfile = $INDEX_DIRECTORY.$GEDCOM."_statistics.php";
 	if (file_exists($indexfile)) {
 		$fp = fopen($indexfile, "rb");
 		$fcontents = fread($fp, filesize($indexfile));
@@ -573,23 +573,21 @@ function set_params($current, $indfam, $xg,  $zg, $titstr,  $xt, $yt, $gx, $gz, 
 		else
 			$nrmax = $nrfam;
 		if (!function_exists($myfunc)) {
-			echo "not implemented function".$myfunc."<br/>";
+			echo $myfunc." ".$pgv_lang["stplnoim"];
 			exit;
 		}
 		for ($i=0; $i < $nrmax; $i++) {
 			$myfunc($i);
 		}
-		//$hstr = $title." \n" .$pgv_lang["stplnumof"]." ".$n1." ".$pgv_lang["of"]." ".$nrmax;
-		$hstr = $title;
+		$hstr = $title."|" .$pgv_lang["stplnumof"]." ".$n1." ".$pgv_lang["of"]." ".$nrmax;
 		myplot($hstr, $zmax, $xdata, $xtitle, $ydata, $ytitle, $legend);
 	}
 }
 
 // prints a map charts
 function print_map_charts($chart_shows, $chart_type, $x_as, $surname) {
-	global $GEDCOM, $persgeg, $pgv_lang;
+	global $GEDCOM, $persgeg, $famgeg, $pgv_lang;
 	global $iso3166, $country_to_iso3166;
-	define ('PGV_GOOGLE_CHART_ENCODING', 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-.');
 
 	if ($surname=="") {
 		require_once 'includes/class_stats.php';
@@ -613,17 +611,19 @@ function print_map_charts($chart_shows, $chart_type, $x_as, $surname) {
 		$chart_type='death_distribution_chart';
 		$chart_title=$pgv_lang["stat_3_map"];
 		break;
+	case '4':
+		$chart_type='marriage_distribution_chart';
+		$chart_title=$pgv_lang["stat_4_map"];
+		break;
 	}
 
 	$title = $chart_title;
 
 	switch ($chart_type) {
 	case 'indi_distribution_chart':
-		// Count how many people were born in each country
+		// Count how many people are events in each country
 		$surn_countries=array();
-		$indis = array_keys(get_indi_list());
-		foreach ($indis as $id) {
-			$person=Person::getInstance($id);
+		foreach (get_indi_list() as $person) {
 			if (preg_match_all('/^2 PLAC (?:.*, *)*(.*)/m', $person->gedrec, $matches)) {
 				// PGV uses 3 letter country codes and localised country names, but google uses 2 letter codes.
 				foreach ($matches[1] as $country) {
@@ -648,9 +648,9 @@ function print_map_charts($chart_shows, $chart_type, $x_as, $surname) {
 		}
 		break;
 	case 'surname_distribution_chart':
-		// Count how many people were born in each country
+		// Count how many people are events in each country
 		$surn_countries=array();
-		$indis = get_indilist_indis($surname, '', '', false, false, PGV_GED_ID);
+		$indis = get_indilist_indis(UTF8_strtoupper($surname), '', '', false, false, PGV_GED_ID);
 		foreach ($indis as $person) {
 			if (preg_match_all('/^2 PLAC (?:.*, *)*(.*)/m', $person->gedrec, $matches)) {
 				// PGV uses 3 letter country codes and localised country names, but google uses 2 letter codes.
@@ -703,12 +703,39 @@ function print_map_charts($chart_shows, $chart_type, $x_as, $surname) {
 		}
 		break;
 	case 'death_distribution_chart':
-		// Count how many people were born in each country
+		// Count how many people were death in each country
 		$surn_countries=array();
 		foreach ($persgeg as $id=>$indis) {
 			foreach ($indis as $pdeath=>$death_place) {
 				if ($pdeath == 'pdeath' && $death_place != -1) {
 					$country=UTF8_strtolower(trim($death_place));
+					// PGV uses 3 letter country codes and localised country names, but google uses 2 letter codes.
+					if (array_key_exists($country, $country_to_iso3166)) {
+						if (array_key_exists($country_to_iso3166[$country], $surn_countries)) {
+							$surn_countries[$country_to_iso3166[$country]]++;
+						} else {
+							$surn_countries[$country_to_iso3166[$country]]=1;
+						}
+					}
+				}
+			}
+		};
+		$chart_url ="http://chart.apis.google.com/chart?cht=t&amp;chtm=".$chart_shows;
+		$chart_url.="&amp;chco=ffffff,c3dfff,84beff"; // country colours
+		$chart_url.="&amp;chf=bg,s,EAF7FE"; // sea colour
+		$chart_url.="&amp;chs=440x220"; // max size for maps is 440x220
+		$chart_url.="&amp;chld=".implode('', array_keys($surn_countries))."&amp;chd=s:";
+		foreach ($surn_countries as $count) {
+			$chart_url.=substr(PGV_GOOGLE_CHART_ENCODING, floor($count/max($surn_countries)*61), 1);
+		}
+		break;
+	case 'marriage_distribution_chart':
+		// Count how many families got marriage in each country
+		$surn_countries=array();
+		foreach ($famgeg as $id=>$fams) {
+			foreach ($fams as $pmarr=>$marr_place) {
+				if ($pmarr == 'pmarr' && $marr_place != -1) {
+					$country=UTF8_strtolower(trim($marr_place));
 					// PGV uses 3 letter country codes and localised country names, but google uses 2 letter codes.
 					if (array_key_exists($country, $country_to_iso3166)) {
 						if (array_key_exists($country_to_iso3166[$country], $surn_countries)) {
@@ -878,8 +905,7 @@ if ($x_as >  10) {
 	set_params(20,"IND", false,	false, "stat_20_arm1","stplage",	$y_as,	$xglm,	$zgp, "agma1"); //plot Age in year of first marriage
 	set_params(21,"FAM", false,	false, "stat_21_nok", "stplnuch",	$y_as,	$xga,	$zgp, "nuch");  //plot Number of children
 }
-else if ($x_as > 0 && $x_as < 4) {
-	require_once 'includes/functions_places.php';
+else if ($x_as > 0 && $x_as < 5) {
 	// PGV uses 3-letter ISO/chapman codes, but google uses 2-letter ISO codes.  There is not a 1:1
 	// mapping, so Wales/Scotland/England all become GB, etc.
 	if (!isset($iso3166)) {

@@ -47,9 +47,8 @@ class stats {
 	var $_server_url; // Absolute URL for generating external links.  e.g. in RSS feeds
 	static $_not_allowed = false;
 	static $_media_types = array('audio', 'book', 'card', 'certificate', 'document', 'electronic', 'magazine', 'manuscript', 'map', 'fiche', 'film', 'newspaper', 'painting', 'photo', 'tombstone', 'video', 'other');
-	// For Google charts simple encoding
-	static $_encoding = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-	static $_xencoding = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-.';
+
+	static $_xencoding = PGV_GOOGLE_CHART_ENCODING;
 
 	function stats($gedcom, $server_url='') {
 		self::$_not_allowed = explode(',', STATS_NOT_ALLOWED);
@@ -1644,12 +1643,12 @@ class stats {
 		$surnames = get_common_surnames($threshold);
 		uasort($surnames, array('stats', '_name_total_rsort'));
 		$surnames = array_slice($surnames, 0, $maxtoshow);
-		$all_surnames=array();
+		$all_surnames = array();
 		foreach (array_keys($surnames) as $n=>$surname) {
 			if ($n>=$maxtoshow) {
 				break;
 			}
-			$all_surnames=array_merge($all_surnames, get_indilist_surns($surname, '', false, false, PGV_GED_ID));
+			$all_surnames = array_merge($all_surnames, get_indilist_surns(UTF8_strtoupper($surname), '', false, false, PGV_GED_ID));
 		}
 		if (count($surnames) <= 0) {return '';}
 		$tot = 0;

@@ -384,9 +384,21 @@ class Family extends GedcomRecord {
 	function getMarriageYear($est = true, $cal = ""){
 		// TODO - change the design to use julian days, not gregorian years.
 		$mdate = $this->getMarriageDate();
-		$mdate=$mdate->MinDate();
-		if ($cal) $mdate=$mdate->convert_to_cal($cal);
+		$mdate = $mdate->MinDate();
+		if ($cal) $mdate = $mdate->convert_to_cal($cal);
 		return $mdate->y;
+	}
+
+	/**
+	 * get the marriage month
+	 * @return string
+	 */
+	function getMarriageMonth($est = true, $cal = ""){
+		// TODO - change the design to use julian days, not gregorian years.
+		$mdate = $this->getMarriageDate();
+		$mdate=$mdate->MinDate();
+		if ($cal) $mdate = $mdate->convert_to_cal($cal);
+		return $mdate->m;
 	}
 
 	/**
