@@ -520,7 +520,7 @@ class stats {
 		{
 			$dis = '';
 			$surnames = array();
-			foreach ($params as $surname) {$surnames[] = "i_surname='{$surname}'";}
+			foreach ($params as $surname) {$surnames[] = "n_surn='{$surname}'";}
 			$surnames = join(' OR ', $surnames);
 			$opt = " AND ({$surnames}) ";
 		}
@@ -529,7 +529,7 @@ class stats {
 			$dis = ' DISTINCT ';
 			$opt = '';
 		}
-		$rows = self::_runSQL("SELECT COUNT({$dis}i_surname) AS tot FROM {$TBLPREFIX}individuals WHERE i_file={$this->_ged_id}{$opt}");
+		$rows = self::_runSQL("SELECT COUNT({$dis}n_surn) AS tot FROM {$TBLPREFIX}names WHERE n_file={$this->_ged_id}{$opt}");
 		return $rows[0]['tot'];
 	}
 
