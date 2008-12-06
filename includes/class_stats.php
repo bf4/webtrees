@@ -602,7 +602,7 @@ class stats {
 	function totalSexMales()
 	{
 		global $TBLPREFIX;
-		$rows=self::_runSQL("SELECT COUNT(i_id) AS tot FROM {$TBLPREFIX}individuals WHERE i_file={$this->_ged_id} AND i_gedcom ".PGV_DB_LIKE." '%1 SEX M%'");
+		$rows=self::_runSQL("SELECT COUNT(i_id) AS tot FROM {$TBLPREFIX}individuals WHERE i_file={$this->_ged_id} AND i_sex='M'");
 		if (!isset($rows[0])) {return '';}
 		return $rows[0]['tot'];
 	}
@@ -615,7 +615,7 @@ class stats {
 	function totalSexFemales()
 	{
 		global $TBLPREFIX;
-		$rows=self::_runSQL("SELECT COUNT(i_id) AS tot FROM {$TBLPREFIX}individuals WHERE i_file={$this->_ged_id} AND i_gedcom ".PGV_DB_LIKE." '%1 SEX F%'");
+		$rows=self::_runSQL("SELECT COUNT(i_id) AS tot FROM {$TBLPREFIX}individuals WHERE i_file={$this->_ged_id} AND i_sex='F'");
 		if (!isset($rows[0])) {return '';}
 		return $rows[0]['tot'];
 	}
@@ -629,7 +629,7 @@ class stats {
 	function totalSexUnknown()
 	{
 		global $TBLPREFIX;
-		$rows=self::_runSQL("SELECT COUNT(i_id) AS tot FROM {$TBLPREFIX}individuals WHERE i_file={$this->_ged_id} AND (i_gedcom NOT ".PGV_DB_LIKE." '%1 SEX M%' AND i_gedcom NOT ".PGV_DB_LIKE." '%1 SEX F%')");
+		$rows=self::_runSQL("SELECT COUNT(i_id) AS tot FROM {$TBLPREFIX}individuals WHERE i_file={$this->_ged_id} AND i_sex='U'");
 		if (!isset($rows[0])) {return '';}
 		return $rows[0]['tot'];
 	}
@@ -1013,11 +1013,11 @@ class stats {
 		$sex_search = ' 1=1';
 		if ($sex == 'F')
 		{
-			$sex_search = " i_gedcom ".PGV_DB_LIKE." '%1 SEX F%'";
+			$sex_search = " i_sex='F'";
 		}
 		elseif ($sex == 'M')
 		{
-			$sex_search = " i_gedcom ".PGV_DB_LIKE." '%1 SEX M%'";
+			$sex_search = " i_sex='M'";
 		}
 
 		$rows=self::_runSQL(''
@@ -1078,11 +1078,11 @@ class stats {
 		global $TBLPREFIX, $TEXT_DIRECTION, $pgv_lang;
 		if ($sex == 'F')
 		{
-			$sex_search = " AND i_gedcom ".PGV_DB_LIKE." '%1 SEX F%'";
+			$sex_search = " AND i_sex='F'";
 		}
 		elseif ($sex == 'M')
 		{
-			$sex_search = " AND i_gedcom ".PGV_DB_LIKE." '%1 SEX M%'";
+			$sex_search = " AND i_sex='M'";
 		}
 		else
 		{
@@ -1152,11 +1152,11 @@ class stats {
 		global $TBLPREFIX;
 		if ($sex == 'F')
 		{
-			$sex_search = " AND i_gedcom ".PGV_DB_LIKE." '%1 SEX F%'";
+			$sex_search = " AND i_sex='F'";
 		}
 		elseif ($sex == 'M')
 		{
-			$sex_search = " AND i_gedcom ".PGV_DB_LIKE." '%1 SEX M%'";
+			$sex_search = " AND i_sex='M'";
 		}
 		else
 		{
@@ -1368,7 +1368,7 @@ class stats {
 				." married.d_fact = 'MARR' AND"
 				.' birth.d_julianday1 != 0 AND'
 				.' married.d_julianday1 != 0 AND'
-				." i_gedcom ".PGV_DB_LIKE." '%1 SEX {$sex}%'"
+				." i_sex='{$sex}'"
 			.' ORDER BY'
 				." married.d_julianday2-birth.d_julianday1 {$age_dir}"
 		, 1);
