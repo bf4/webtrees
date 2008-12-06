@@ -638,7 +638,13 @@ class SearchControllerRoot extends BaseController {
 	function Place_Search()
 	{
 		global $TBLPREFIX, $GEDCOM, $GEDCOMS, $DBQUERY;
-		$sql = "SELECT i.i_id, i.i_file, i.i_name FROM ".$TBLPREFIX."places JOIN ".$TBLPREFIX."placelinks ON p_id = pl_p_id JOIN ".$TBLPREFIX."individuals as i ON pl_gid = i_id WHERE p_file = ".$GEDCOMS[$GEDCOM]['id']." AND i_file = p_file AND (";
+		$ged_id=get_id_from_gedcom($GEDCOM);
+		$sql=
+			"SELECT DISTINCT i_id, i_file, n_full FROM {$TBLPREFIX}places".
+			" JOIN {$TBLPREFIX}placelinks ON (p_id=pl_p_id)".
+			" JOIN {$TBLPREFIX}individuals ON (pl_gid=i_id AND pl_file=i_file)".
+			" JOIN {$TBLPREFIX}name ON (n_id=i_id AND n_file=i_file)".
+			" WHERE p_file={$ged_id} AND (";
 
 		$place_sdx = "";
 
