@@ -368,8 +368,12 @@ class Family extends GedcomRecord {
 	 */
 	function getMarriageDate() {
 		global $pgv_lang;
-		if (!$this->canDisplayDetails()) return $pgv_lang["private"];
-		if (is_null($this->marriage)) $this->_parseMarriageRecord();
+		if (!$this->canDisplayDetails()) {
+			return new GedcomDate('');
+		}
+		if (is_null($this->marriage)) {
+			$this->_parseMarriageRecord();
+		}
 		return $this->marriage->getDate();
 	}
 
