@@ -1709,8 +1709,7 @@ class stats {
 			$name_list_M = array();
 			$name_list_U = array();
 
-			foreach (array_keys(get_indi_list()) as $pid) {
-				$person=Person::getInstance($pid);
+			foreach (get_indi_list() as $person) {
 				if ($person->canDisplayName()) {
 					$genderList='name_list_'.$person->getSex();
 					foreach ($person->getAllNames() as $name) {
