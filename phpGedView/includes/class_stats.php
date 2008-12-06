@@ -1719,10 +1719,12 @@ class stats {
 			// Split "John Thomas" into "John" and "Thomas" and count against both totals
 			foreach (explode(' ', $row['n_givn']) as $given) {
 				$given=str_replace(array('*', '"'), '', $given);
-				if (array_key_exists($given, $nameList)) {
-					$nameList[$given]+=$row['num'];
-				} else {
-					$nameList[$given]=$row['num'];
+				if (strlen($given)>1) {
+					if (array_key_exists($given, $nameList)) {
+						$nameList[$given]+=$row['num'];
+					} else {
+						$nameList[$given]=$row['num'];
+					}
 				}
 			}
 		}
