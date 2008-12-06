@@ -1622,7 +1622,7 @@ foreach($indifacts as $f=>$fact) {
 	if (!$fact->temp) { ?>
 		<td class="optionbox center">
 			<input type="hidden" name="REMS[<?php echo $f; ?>]" id="REM<?php echo $f; ?>" value="0" />
-			<a href="javascript: <?php print $pgv_lang["delete"]; ?>" onclick="document.quickupdate.closewin.value='0'; document.quickupdate.REM<?php echo $f; ?>.value='1'; document.quickupdate.submit(); return false;">
+			<a href="javascript: <?php print $pgv_lang["delete"]; ?>" onclick="if (confirm('<?php print $pgv_lang["check_delete"]; ?>')) { document.quickupdate.closewin.value='0'; document.quickupdate.REM<?php echo $f; ?>.value='1'; document.quickupdate.submit(); } return false;">
 				<img src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES["remove"]["other"]; ?>" border="0" alt="<?php print $pgv_lang["delete"]; ?>" />
 			</a>
 		</td>
@@ -1964,8 +1964,8 @@ foreach($famfacts as $f=>$eventObj) {
 				?>
 				<td class="optionbox center">
 					<input type="hidden" name="F<?php echo $i; ?>REMS[<?php echo $f; ?>]" id="F<?php echo $i; ?>REM<?php echo $f; ?>" value="0" />
-					<?php if (!$fact[2]) { ?>
-					<a href="javascript: <?php print $pgv_lang["delete"]; ?>" onclick="document.quickupdate.closewin.value='0'; document.quickupdate.F<?php echo $i; ?>REM<?php echo $f; ?>.value='1'; document.quickupdate.submit(); return false;">
+					<?php if ($date!='' || $plac!='' || $temp!='') { ?>
+					<a href="javascript: <?php print $pgv_lang["delete"]; ?>" onclick="if (confirm('<?php print $pgv_lang["check_delete"]; ?>')) { document.quickupdate.closewin.value='0'; document.quickupdate.F<?php echo $i; ?>REM<?php echo $f; ?>.value='1'; document.quickupdate.submit(); } return false;">
 						<img src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES["remove"]["other"]; ?>" border="0" alt="<?php print $pgv_lang["delete"]; ?>" />
 					</a>
 					<?php } ?>
@@ -2624,8 +2624,8 @@ foreach($famfacts as $f=>$eventObj) {
 		?>
 		<td class="optionbox center">
 			<input type="hidden" name="F<?php echo $i; ?>REMS[<?php echo $f; ?>]" id="F<?php echo $i; ?>REM<?php echo $f; ?>" value="0" />
-			<?php if (!$fact[2]) { ?>
-			<a href="javascript: <?php print $pgv_lang["delete"]; ?>" onclick="if (confirm('<?php print $pgv_lang["confirm_remove"]; ?>')) { document.quickupdate.closewin.value='0'; document.quickupdate.F<?php echo $i; ?>REM<?php echo $f; ?>.value='1'; document.quickupdate.submit(); } return false;">
+			<?php if ($date!='' || $plac!='' || $temp!='') { ?>
+			<a href="javascript: <?php print $pgv_lang["delete"]; ?>" onclick="if (confirm('<?php print $pgv_lang["check_delete"]; ?>')) { document.quickupdate.closewin.value='0'; document.quickupdate.F<?php echo $i; ?>REM<?php echo $f; ?>.value='1'; document.quickupdate.submit(); } return false;">
 				<img src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES["remove"]["other"]; ?>" border="0" alt="<?php print $pgv_lang["delete"]; ?>" />
 			</a>
 			<?php } ?>
@@ -2707,7 +2707,7 @@ $chil = find_children_in_record($famrec, $pid);
 			print "</td>\n";
 			?>
 			<td class="optionbox center">
-				<a href="javascript: <?php print $pgv_lang["remove_child"]; ?>" onclick="document.quickupdate.closewin.value='0'; document.quickupdate.F<?php echo $i; ?>CDEL.value='<?php echo $child; ?>'; document.quickupdate.submit(); return false;">
+				<a href="javascript: <?php print $pgv_lang["remove_child"]; ?>" onclick="if (confirm('<?php print $pgv_lang["check_remove"]; ?>')) { document.quickupdate.closewin.value='0'; document.quickupdate.F<?php echo $i; ?>CDEL.value='<?php echo $child; ?>'; document.quickupdate.submit(); } return false;">
 					<img src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES["remove"]["other"]; ?>" border="0" alt="<?php print $pgv_lang["remove_child"]; ?>" />
 				</a>
 			</td>
