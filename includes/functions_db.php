@@ -1664,7 +1664,6 @@ function search_indis($query, $allgeds=false, $ANDOR="AND") {
 		$sql .= ")";
 	}
 	//-- do some sorting in the DB, it won't be as good as the PHP sorting
-	$sql .= " ORDER BY i_surname, i_name";
 	$res = dbquery($sql, false);
 
 	$gedold = $GEDCOM;
@@ -1748,7 +1747,7 @@ function search_indis_names($query, $allgeds=false) {
 function search_indis_soundex($soundex, $lastname, $firstname='', $place='', $sgeds='') {
 	global $TBLPREFIX;
 
-	$sql="SELECT DISTINCT i_id, i_gedcom, i_name, i_isdead, i_file FROM {$TBLPREFIX}individuals";
+	$sql="SELECT DISTINCT i_id, i_gedcom, i_isdead, i_file FROM {$TBLPREFIX}individuals";
 	if ($place) {
 		$sql.=" JOIN {$TBLPREFIX}placelinks ON (pl_file=i_file AND pl_gid=i_id)";
 		$sql.="	JOIN {$TBLPREFIX}places ON (p_file=pl_file AND pl_p_id=p_id)";
