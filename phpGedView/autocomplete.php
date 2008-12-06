@@ -89,7 +89,7 @@ function autocomplete_INDI() {
 
 	$sql = "SELECT DISTINCT i_id".
 				" FROM {$TBLPREFIX}individuals, {$TBLPREFIX}name".
-				" WHERE (n_surname ".PGV_DB_LIKE." '".$FILTER."%'".
+				" WHERE (n_full ".PGV_DB_LIKE." '".$FILTER."%'".
 				" OR i_id ".PGV_DB_LIKE." '%".$FILTER."%')".
 				" AND i_id=n_id AND i_file=n_file".
 				" AND i_file=".PGV_GED_ID.
@@ -464,26 +464,18 @@ function autocomplete_IFSRO() {
  * @return Array of string
  */
 function autocomplete_SURN() {
-	global $TBLPREFIX, $DBTYPE, $DBCONN;
-	global $FILTER;
+	global $TBLPREFIX, $DBCONN, $FILTER;
 
-	$sql = "SELECT i_id".
-				" FROM {$TBLPREFIX}individuals".
-				" WHERE i_surname ".PGV_DB_LIKE." '".$FILTER."%'".
-				" AND i_file=".PGV_GED_ID. // comment this line to search all Gedcoms
+	$sql = "SELECT DISTINCT n_surname".
+				" FROM {$TBLPREFIX}name".
+				" WHERE n_surname ".PGV_DB_LIKE." '%".$FILTER."%'".
+				" AND n_file=".PGV_GED_ID. // comment this line to search all Gedcoms
 				" LIMIT ".PGV_AUTOCOMPLETE_LIMIT;
-	$res = dbquery($sql);
-
-	$data = array();
-	while ($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)) {
-		$person = Person::getInstance($row["i_id"]);
-		if ($person->canDisplayName()) {
-			// get exact surn (i_surname db field is capitalized)
-			$names = $person->getAllNames();
-			$data[] = $names[$person->getPrimaryName()]['surn'];
-		}
+	$res=dbquery($sql);
+	$data=array();
+	while ($row=$res->fetchRow(DB_FETCHMODE_ASSOC)) {
+		$data[]=$row['n_surname'];
 	}
-	$res->free();
 	return $data;
 }
 
@@ -492,27 +484,25 @@ function autocomplete_SURN() {
  * @return Array of string
  */
 function autocomplete_GIVN() {
-	global $TBLPREFIX, $DBTYPE, $DBCONN;
-	global $FILTER;
+	global $TBLPREFIX, $DBCONN, $FILTER;
 
-	$sql = "SELECT i_name".
-				" FROM {$TBLPREFIX}individuals".
-				" WHERE i_name ".PGV_DB_LIKE." '".$FILTER."%'".
-				" AND i_file=".PGV_GED_ID. // comment this line to search all Gedcoms
+	$sql = "SELECT DISTINCT n_givn".
+				" FROM {$TBLPREFIX}name".
+				" WHERE n_givn ".PGV_DB_LIKE." '%".$FILTER."%'".
+				" AND n_file=".PGV_GED_ID. // comment this line to search all Gedcoms
 				" LIMIT ".PGV_AUTOCOMPLETE_LIMIT;
-	$res = dbquery($sql);
-
-	$data = array();
-	while ($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)) {
-		// assuming there is no privacy on GIVN
-		list($givn) = explode("/", $row["i_name"]);
+	$res=dbquery($sql);
+	$data=array();
+	while ($row=$res->fetchRow(DB_FETCHMODE_ASSOC)) {
+		$givn=$row['n_givn'];
+		list($givn) = explode("/", $givn);
 		list($givn) = explode(",", $givn);
 		list($givn) = explode("*", $givn);
 		list($givn) = explode(" ", $givn);
-		if ($givn)
-			$data[] = $givn;
+		if ($givn) {
+			$data[]=$row['n_givn'];
+		}
 	}
-	$res->free();
 	return $data;
 }
 
