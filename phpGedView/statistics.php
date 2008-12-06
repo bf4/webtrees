@@ -221,7 +221,7 @@ function get_family() {
 			}
 		}
 		$famgeg[$i]["key"]		= $key;
-		$key2ind[$key]			= $i;
+		$key2ind[$indirec->getXref()]			= $i;
 		$famgeg[$i]["ymarr"]	= $ymarr;
 		$famgeg[$i]["mmarr"]	= $mmarr;
 		$famgeg[$i]["ydiv"]		= $ydiv;
