@@ -36,8 +36,10 @@ require_once 'includes/functions_charts.php';
 require_once 'includes/controllers/basecontrol.php';
 require_once 'includes/class_person.php';
 
-function compare_people($a, $b) {
-	return GedcomDate::Compare($a->getEstimatedBirthDate(), $b->getEstimatedBirthDate());
+function compare_people(&$a, &$b) {
+	$tmp1=$a->getEstimatedBirthDate();
+	$tmp2=$b->getEstimatedBirthDate();
+	return GedcomDate::Compare($tmp1, $tmp2);
 }
 
 
