@@ -1639,7 +1639,7 @@ class Person extends GedcomRecord {
 			}
 			// GIVN and SURN can be comma-separated lists.
 			$surns=preg_split('/ *, */', $surn);
-			$givn=str_replace(array(',', ', '), ' ', $givn);
+			$givn=str_replace(array(', ', ','), ' ', $givn);
 			// SPFX+SURN for lists
 			$surn=($spfx?$spfx.' ':'').$surn;
 		} else {
