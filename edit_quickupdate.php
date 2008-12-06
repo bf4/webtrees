@@ -28,7 +28,7 @@
 
 require './config.php';
 
-require_once("includes/functions_edit.php");
+require_once("includes/functions/functions_edit.php");
 
 loadLangFile("pgv_editor");
 
@@ -1396,7 +1396,7 @@ if ($action=="choosepid") {
     $facts = $person->getIndiFacts();
 	$repeat_tags = array();
 
-    foreach($facts as $event) {    
+    foreach($facts as $event) {
     	$fact = $event->getTag();
 		if ($fact=="EVEN" || $fact=="FACT") $fact = $event->getType();
 		if (in_array($fact, $addfacts)) {
@@ -1415,7 +1415,7 @@ if ($action=="choosepid") {
         $e->temp = true;
         $indifacts[] = $e;
 	}
-        
+
 	sort_facts($indifacts);
 	$sfams = find_families_in_record($gedrec, "FAMS");
 	$cfams = find_families_in_record($gedrec, "FAMC");
@@ -1827,15 +1827,16 @@ for($i=1; $i<=count($sfams); $i++) {
 		if ($fact=="EVEN" || $fact=="FACT") $fact = $eventObj->getValue("TYPE");
 		if (in_array($fact, $famaddfacts)) {
 			$newreqd = array();
-			foreach($famreqdfacts as $r=>$rfact) {
+			foreach($famreqdfacts as $rfact) {
 				if ($rfact!=$fact) $newreqd[] = $rfact;
 			}
 			$famreqdfacts = $newreqd;
 			$famfacts[] = $eventObj;
 		}
 	}
-    
-	foreach($reqdfacts as $ind=>$fact) {
+
+//	foreach($reqdfacts as $ind=>$fact) {
+	foreach($famreqdfacts as $fact) {
     	$e = new Event("1 $fact\r\n");
         $e->temp = true;
         $famfacts[] = $e;
@@ -2354,7 +2355,7 @@ for($j=1; $j<=count($cfams); $j++) {
 	$famfacts = array();
 	foreach($subrecords as $ind=>$eventObj) {
 		$fact = $eventObj->getTag();
-		$event = $eventObj->getDetail();    
+		$event = $eventObj->getDetail();
 		if ($fact=="EVEN" || $fact=="FACT") $fact = $eventObj->getValue("TYPE");
 
 		if (in_array($fact, $famaddfacts)) {
