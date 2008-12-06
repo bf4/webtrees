@@ -414,11 +414,13 @@ class stats {
 	
 	function totalIndisWithSources()
 	{
-		global $TBLPREFIX;
-		// 4.2
-		//$rows=self::_runSQL("SELECT COUNT(DISTINCT i_id) AS tot FROM {$TBLPREFIX}link, {$TBLPREFIX}individuals WHERE i_id=l_from AND i_file=l_file AND l_file=".$this->_ged_id." AND l_type='SOUR'");
-		// 4.1.6
-		$rows=self::_runSQL("SELECT COUNT(i_id) AS tot FROM {$TBLPREFIX}individuals WHERE i_file=".$this->_ged_id." AND i_gedcom LIKE '%SOUR @%'");
+		global $TBLPREFIX, $DBTYPE;
+		if ($DBTYPE=='sqlite') {
+			// sqlite2 can't do subqueries or count distinct
+			$rows=self::_runSQL("SELECT COUNT(i_id) AS tot FROM {$TBLPREFIX}individuals WHERE i_file=".$this->_ged_id." AND i_gedcom LIKE '%SOUR @%'");
+		} else {
+			$rows=self::_runSQL("SELECT COUNT(DISTINCT i_id) AS tot FROM {$TBLPREFIX}link, {$TBLPREFIX}individuals WHERE i_id=l_from AND i_file=l_file AND l_file=".$this->_ged_id." AND l_type='SOUR'");
+		}
 		return $rows[0]['tot'];
 	}
 
@@ -456,12 +458,13 @@ class stats {
 	
 	function totalFamsWithSources()
 	{
-		global $TBLPREFIX;
-		// 4.2
-		//$rows=self::_runSQL("SELECT COUNT(DISTINCT f_id) AS tot FROM {$TBLPREFIX}link, {$TBLPREFIX}families WHERE f_id=l_from AND f_file=l_file AND l_file=".$this->_ged_id." AND l_type='SOUR'");
-		// 4.1.6
-		$rows=self::_runSQL("SELECT COUNT(f_id) AS tot FROM {$TBLPREFIX}families WHERE f_file=".$this->_ged_id." AND f_gedcom LIKE '%SOUR @%'");
-		return $rows[0]['tot'];
+		global $TBLPREFIX, $DBTYPE;
+		if ($DBTYPE=='sqlite') {
+			// sqlite2 can't do subqueries or count distinct
+			$rows=self::_runSQL("SELECT COUNT(f_id) AS tot FROM {$TBLPREFIX}families WHERE f_file=".$this->_ged_id." AND f_gedcom LIKE '%SOUR @%'");
+		} else {
+			$rows=self::_runSQL("SELECT COUNT(DISTINCT f_id) AS tot FROM {$TBLPREFIX}link, {$TBLPREFIX}families WHERE f_id=l_from AND f_file=l_file AND l_file=".$this->_ged_id." AND l_type='SOUR'");
+		}
 	}
 
 	function chartFamsWithSources($params=null)
