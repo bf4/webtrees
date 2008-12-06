@@ -137,10 +137,15 @@ function UTF8_substr($text, $start=0, $end=0) {
 	$textLen = count($UTF8_text);
 	if ($textLen==0) return $text;
 
-	if ($end==0 || $end>$textLen) $end = $textLen;
 	if ($start<0) $start = $textLen - $start;
+	if ($start>$textLen) {
+		if (is_array($text)) return array();
+		else return '';
+	}
+
+	if ($end==0 || $end>$textLen) $end = $textLen;
 	if ($end<0) $end = $textLen - $end;
-	if ($start>$textLen || $start>$end) return '';
+	if (($start+$end)>$textLen) $end = $textLen - $start;
 
 	$result = array_slice($UTF8_text, $start, $end);
 
