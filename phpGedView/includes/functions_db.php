@@ -1548,7 +1548,7 @@ function get_repo_list($ged_id) {
 function get_indi_list() {
 	global $TBLPREFIX, $DBCOLLATE;
 
-	$sql="SELECT 'INDI' AS type, i_id AS xref, i_file AS ged_id, i_gedcom AS gedrec, i_isdead FROM {$TBLPREFIX}name, {$TBLPREFIX}individuals WHERE n_file=".PGV_GED_ID." AND i_file=n_file AND i_id=n_id AND n_num=0 GROUP BY type, xref, ged_id, gedrec, i_isdead ORDER BY n_sort {$DBCOLLATE}";
+	$sql="SELECT DISTINCT 'INDI' AS type, i_id AS xref, i_file AS ged_id, i_gedcom AS gedrec, i_isdead FROM {$TBLPREFIX}name, {$TBLPREFIX}individuals WHERE n_file=".PGV_GED_ID." AND i_file=n_file AND i_id=n_id AND n_num=0 ORDER BY n_sort {$DBCOLLATE}";
 	$res=dbquery($sql);
 	$indis=array();
 	while ($row=$res->fetchRow(DB_FETCHMODE_ASSOC)) {
@@ -1748,7 +1748,7 @@ function search_indis_names($query, $allgeds=false) {
 function search_indis_soundex($soundex, $lastname, $firstname='', $place='', $sgeds='') {
 	global $TBLPREFIX;
 
-	$sql="SELECT i_id, i_gedcom, i_name, i_isdead, i_file FROM {$TBLPREFIX}individuals";
+	$sql="SELECT DISTINCT i_id, i_gedcom, i_name, i_isdead, i_file FROM {$TBLPREFIX}individuals";
 	if ($place) {
 		$sql.=" JOIN {$TBLPREFIX}placelinks ON (pl_file=i_file AND pl_gid=i_id)";
 		$sql.="	JOIN {$TBLPREFIX}places ON (p_file=pl_file AND pl_p_id=p_id)";
@@ -1797,8 +1797,7 @@ function search_indis_soundex($soundex, $lastname, $firstname='', $place='', $sg
 		}
 		$sql.=' AND ('.implode(' OR ', $plac_sdx).')';
 			}
-	$sql.=' GROUP BY i_id, i_gedcom, i_name, i_isdead, i_file';
-			$res = dbquery($sql);
+	$res = dbquery($sql);
 	return $res;
 }
 
