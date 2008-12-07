@@ -487,9 +487,13 @@ function get_indilist_salpha($marnm, $fams, $ged_id) {
 		$exclude.=" AND n_sort NOT ".PGV_DB_LIKE." '{$digraph}%' {$DBCOLLATE}";
 	}
 	foreach ($digraphs as $to=>$from) { // Single-character digraphs
-		$include.=" UNION SELECT UPPER('{$to}' {$DBCOLLATE}) AS alpha FROM {$tables} WHERE {$join} AND n_sort ".PGV_DB_LIKE." '{$from}%' {$DBCOLLATE} GROUP BY alpha {$DBCOLLATE}";
+		// Bug in MySQL4.1 - can't combine COLLATE with GROUP/ORDER BY
+		//$include.=" UNION SELECT UPPER('{$to}' {$DBCOLLATE}) AS alpha FROM {$tables} WHERE {$join} AND n_sort ".PGV_DB_LIKE." '{$from}%' {$DBCOLLATE} GROUP BY alpha {$DBCOLLATE}";
+		$include.=" UNION SELECT UPPER('{$to}' {$DBCOLLATE}) AS alpha FROM {$tables} WHERE {$join} AND n_sort ".PGV_DB_LIKE." '{$from}%' {$DBCOLLATE} GROUP BY {$column}";
 	}
-	$sql="SELECT {$column} AS alpha FROM {$tables} WHERE {$join} {$exclude} GROUP BY alpha {$DBCOLLATE} {$include} ORDER BY alpha='@', alpha=',', alpha {$DBCOLLATE}";
+	// Bug in MySQL4.1 - can't combine COLLATE with GROUP/ORDER BY
+	//$sql="SELECT {$column} AS alpha FROM {$tables} WHERE {$join} {$exclude} GROUP BY alpha {$DBCOLLATE} {$include} ORDER BY alpha='@', alpha=',', alpha {$DBCOLLATE}";
+	$sql="SELECT {$column} AS alpha FROM {$tables} WHERE {$join} {$exclude} GROUP BY {$column} {$include} ORDER BY {$column}='@', {$column}=',',{$column}";
 	$res=dbquery($sql);
 
 	$list=array();
@@ -562,9 +566,13 @@ function get_indilist_galpha($surn, $salpha, $marnm, $fams, $ged_id) {
 		$exclude.=" AND n_sort NOT ".PGV_DB_LIKE." '{$digraph}%' {$DBCOLLATE}";
 	}
 	foreach ($digraphs as $to=>$from) { // Single-character digraphs
+		// Bug in MySQL4.1 - can't combine COLLATE with GROUP/ORDER BY
+		//$include.=" UNION SELECT UPPER('{$to}' {$DBCOLLATE}) AS alpha FROM {$tables} WHERE {$join} AND n_sort ".PGV_DB_LIKE." '{$from}%' {$DBCOLLATE} GROUP BY alpha {$DBCOLLATE}";
 		$include.=" UNION SELECT UPPER('{$to}' {$DBCOLLATE}) AS alpha FROM {$tables} WHERE {$join} AND n_sort ".PGV_DB_LIKE." '{$from}%' {$DBCOLLATE} GROUP BY alpha {$DBCOLLATE}";
 	}
-	$sql="SELECT {$column} AS alpha FROM {$tables} WHERE {$join} {$exclude} GROUP BY alpha {$DBCOLLATE} {$include} ORDER BY alpha='@', alpha=',', alpha {$DBCOLLATE}";
+	// Bug in MySQL4.1 - can't combine COLLATE with GROUP/ORDER BY
+	//$sql="SELECT {$column} AS alpha FROM {$tables} WHERE {$join} {$exclude} GROUP BY alpha {$DBCOLLATE} {$include} ORDER BY alpha='@', alpha=',', alpha {$DBCOLLATE}";
+	$sql="SELECT {$column} AS alpha FROM {$tables} WHERE {$join} {$exclude} GROUP BY {$column} {$include} ORDER BY {$column}='@', {$column}=',', {$column}";
 	$res=dbquery($sql);
 
 	$list=array();
