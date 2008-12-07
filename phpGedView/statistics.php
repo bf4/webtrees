@@ -32,125 +32,103 @@ require_once 'includes/class_stats.php';
 require_once 'includes/functions_places.php';
 
 function get_person() {
-	global $nrmale, $nrfemale, $nrpers, $persgeg, $persgeg1, $key2ind;
+	global $persgeg, $persgeg1;
 
-	$myindilist = get_indi_list();
-	$i = 0;
-	foreach ($myindilist as $person) {
+	foreach (get_indi_list() as $person) {
+		$key = $person->getXref();
 		$birthyear = $person->getBirthYear(false);
 		$birthmonth = $person->getBirthMonth(false);
 		$birthplace = $person->getBirthPlace();
 		if ($birthyear != 0) {
-			$persgeg[$i]["ybirth"] = $birthyear;
+			$persgeg[$key]["ybirth"] = $birthyear;
 		}
 		else {
-			$persgeg[$i]["ybirth"] = -1;
+			$persgeg[$key]["ybirth"] = -1;
 		}
 		if ($birthmonth != 0) {
-			$persgeg[$i]["mbirth"] = $birthmonth;
+			$persgeg[$key]["mbirth"] = $birthmonth;
 		}
 		else {
-			$persgeg[$i]["mbirth"] = -1;
+			$persgeg[$key]["mbirth"] = -1;
 		}
 		if ($birthplace != "") {
-			$persgeg[$i]["pbirth"] = getPlaceCountry($birthplace);
+			$persgeg[$key]["pbirth"] = getPlaceCountry($birthplace);
 		}
 		else {
-			$persgeg[$i]["pbirth"] = -1;
+			$persgeg[$key]["pbirth"] = -1;
 		}
 
 		$deathyear = $person->getDeathYear(false);
 		$deathmonth = $person->getDeathMonth(false);
 		$deathplace = $person->getDeathPlace();
 		if ($deathyear != 0) {
-			$persgeg[$i]["ydeath"] = $deathyear;
+			$persgeg[$key]["ydeath"] = $deathyear;
 		}
 		else {
-			$persgeg[$i]["ydeath"] = -1;
+			$persgeg[$key]["ydeath"] = -1;
 		}
 		if ($deathmonth != 0) {
-			$persgeg[$i]["mdeath"] = $deathmonth;
+			$persgeg[$key]["mdeath"] = $deathmonth;
 		}
 		else {
-			$persgeg[$i]["mdeath"] = -1;
+			$persgeg[$key]["mdeath"] = -1;
 		}
 		if ($deathplace != "") {
-			$persgeg[$i]["pdeath"] = getPlaceCountry($deathplace);
+			$persgeg[$key]["pdeath"] = getPlaceCountry($deathplace);
 		}
 		else {
-			$persgeg[$i]["pdeath"] = -1;
+			$persgeg[$key]["pdeath"] = -1;
 		}
 
 		$sex = $person->getSex();
 		if ($sex == "M") {
-			$persgeg[$i]["sex"] = 1;
-			$nrmale++;
+			$persgeg[$key]["sex"] = 1;
 		}
 		else if ($sex == "F") {
-			$persgeg[$i]["sex"] = 2;
-			$nrfemale++;
+			$persgeg[$key]["sex"] = 2;
 		}
 		else {
-			$persgeg[$i]["sex"] = 0;
+			$persgeg[$key]["sex"] = 0;
 		}
-		$key = $person->getXref();
-		$families = find_sfamily_ids($key); //-- get the number of marriages of this person.
-		$persgeg1[$i]["arfams"] = $families;
-		$persgeg[$i]["key"] = $key;
-		$key2ind[$key] = $i;
-		$i++;
+		$persgeg[$key]["ybirth1"] = -1;
+		$persgeg[$key]["mbirth1"] = -1;
+		$persgeg1[$key] = find_sfamily_ids($key); //-- get the number of marriages of this person.
 	}
-	$nrpers = $i;
 }
 
 function get_family() {
-	global $nrfam, $famgeg, $famgeg1, $persgeg, $key2ind;
+	global $famgeg, $famgeg1, $persgeg, $key2ind;
 
-	$myfamlist = array();
-	$keys = array();
-	$parents = array();
-
-	$myfamlist = get_fam_list();
-	$nrfam = count($myfamlist);
-	$keys = array_keys($myfamlist);
-
-	for($i=0; $i<$nrfam; $i++) {
+	foreach (array_keys(get_fam_list()) as $key) {
 		$nrchmale = 0;
 		$nrchfemale = 0;
-		$key = $keys[$i];
 		$family = Family::getInstance($key);
 
 		$marriageyear = $family->getMarriageYear(false);
 		$marriagemonth = $family->getMarriageMonth(false);
 		$marriageplace = $family->getMarriagePlace();
 		if ($marriageyear != 0) {
-			$famgeg[$i]["ymarr"] = $marriageyear;
+			$famgeg[$key]["ymarr"] = $marriageyear;
 		}
 		else {
-			$famgeg[$i]["ymarr"] = -1;
+			$famgeg[$key]["ymarr"] = -1;
 		}
 		if ($marriagemonth != 0) {
-			$famgeg[$i]["mmarr"] = $marriagemonth;
+			$famgeg[$key]["mmarr"] = $marriagemonth;
 		}
 		else {
-			$famgeg[$i]["mmarr"] = -1;
+			$famgeg[$key]["mmarr"] = -1;
 		}
 		if ($marriageplace != "") {
-			$famgeg[$i]["pmarr"] = getPlaceCountry($marriageplace);
+			$famgeg[$key]["pmarr"] = getPlaceCountry($marriageplace);
 		}
 		else {
-			$famgeg[$i]["pmarr"] = -1;
+			$famgeg[$key]["pmarr"] = -1;
 		}
 
-		$parents = find_parents($key);
-		$xfather = $parents["HUSB"];
-		$xmother = $parents["WIFE"];
-		$famrec = find_family_record($key);
-		$childs = preg_match_all("/1\s*CHIL\s*@(.*)@/", $famrec, $match1, PREG_SET_ORDER);
-		$children = array();
-		for($k=0; $k<$childs; $k++) {
-			$children[$k] = $match1[$k][1];
-			$person = Person::getInstance($children[$k]);
+		$children = $family->getChildrenIds();
+		foreach($children as $ch_key) {
+			$person = Person::getInstance($ch_key);
 			$sex = $person->getSex();
 			if ($sex == "M") {
 				$nrchmale++;
@@ -159,93 +137,56 @@ function get_family() {
 				$nrchfemale++;
 			}
 		}
-		$famgeg[$i]["key"]		= $key;
-		$key2ind[$key]			= $i;
-		$famgeg[$i]["childs"]	= $childs;
-		$famgeg[$i]["childs_m"]	= $nrchmale;
-		$famgeg[$i]["childs_f"]	= $nrchfemale;
-		$famgeg1[$i]["arfamc"]	= $children;
-		$famgeg[$i]["male"]		= $xfather;
-		$famgeg[$i]["female"]	= $xmother;
+		$famgeg[$key]["childs"]		= $family->getNumberOfChildren();
+		$famgeg[$key]["childs_m"]	= $nrchmale;
+		$famgeg[$key]["childs_f"]	= $nrchfemale;
+		$famgeg[$key]["male"]		= $family->getHusbId();
+		$famgeg[$key]["female"]		= $family->getWifeId();
+		$famgeg[$key]["sex1"]		= 3;
+		$famgeg[$key]["ybirth1"]	= -1;
+		$famgeg[$key]["mbirth1"]	= -1;
+		$famgeg1[$key]				= $children;
 	}
 }
 
 function complete_data() {
 	// fill in the first marriages instead of the keys.
-	global $nrfam, $famgeg, $famgeg1, $nrpers, $persgeg, $persgeg1, $key2ind;
-
-	$childs = array();
-	$families = array();
+	global $famgeg, $famgeg1, $persgeg, $persgeg1;
 
 	//look in the persgeg array for marriages that occurred
-	for($i=0; $i<$nrpers; $i++){
-		$families = $persgeg1[$i]["arfams"];
-		$ctc = count($families);
-		$marrmonth = -1;
-		$marryear = -1;
-		$kb = 0;
-		$first = true;
-		for($j=0; $j<$ctc; $j++) {
-			$keyf = $families[$j];
-			if (isset($key2ind[$keyf])) {
-				$k = $key2ind[$keyf]; //get the family array and month/date of marriage
-				$mm = $famgeg[$k]["mmarr"];
-				$my = $famgeg[$k]["ymarr"];
-				if ($first) {
-					$marryear = $my;
-					$marrmonth = $mm;
-					$marrkey = $keyf;
-					if ($k!="") $kb = $k;
-					$first = false;
-				}
-				if (($marryear < 0) || (($my < $marryear) && ($my > 0))) {
-					$marryear = $my;
-					$marrmonth = $mm;
-					$marrkey = $keyf;
-					if ($k!="") $kb = $k;
-					$first= false;
-				}
+	foreach($persgeg1 as $keyi=>$values) {
+		foreach ($values as $keyf) {
+			$marryear = -1;
+			$mm = $famgeg[$keyf]["mmarr"];
+			$my = $famgeg[$keyf]["ymarr"];
+			if (($marryear < 0) || (($my < $marryear) && ($my > 0))) {
+				$marryear = $my;
+				$persgeg[$keyi]["ymarr1"] = $my;
+				$persgeg[$keyi]["mmarr1"] = $mm;
+				$famgeg[$keyf]["ymarr1"] = $my;
+				$famgeg[$keyf]["mmarr1"] = $mm;
 			}
 		}
-		$persgeg[$i]["ymarr1"] = $marryear;
-		$persgeg[$i]["mmarr1"] = $marrmonth;
-		$famgeg[$kb]["ymarr1"] = $marryear;
-		$famgeg[$kb]["mmarr1"] = $marrmonth;
 	}
-	for($i=0; $i<$nrfam; $i++) {
-		$childs = $famgeg1[$i]["arfamc"];
-		$ctc = count($childs);
-		$birthmonth = -1;
+	
+	//look in the famgeg array for children
+	foreach($famgeg1 as $keyf=>$values) {
 		$birthyear = -1;
-		$sex1 = 3;
-		$first = true;
-		for($j=0; $j<$ctc; $j++) {
-			$key = $childs[$j];
-			$k = $key2ind[$key];
-			$bm = $persgeg[$k]["mbirth"];
-			$by = $persgeg[$k]["ybirth"];
-			$sex = $persgeg[$k]["sex"];
-			if ($first) {
-				$birthyear = $by;
-				$birthmonth = $bm;
-				$childkey = $key;
-				$sex1 = $sex;
-				$first = false;
-			}
+		foreach ($values as $keyi) {
+			$bm = $persgeg[$keyi]["mbirth"];
+			$by = $persgeg[$keyi]["ybirth"];
+			$sex = $persgeg[$keyi]["sex"];
 			if (($birthyear < 0) || (($by < $birthyear) && ($by > 0))) {
 				$birthyear = $by;
-				$birthmonth = $bm;
-				$childkey = $key;
-				$sex1 = $sex;
-				$first= false;
+				$famgeg[$keyf]["sex1"] = $sex;
+				$famgeg[$keyf]["ybirth1"] = $by;
+				$famgeg[$keyf]["mbirth1"] = $bm;
+				$persgeg[$keyi]["ybirth1"] = $by;
+				$persgeg[$keyi]["mbirth1"] = $bm;
 			}
 		}
-		$famgeg[$i]["sex1"] = $sex1;
-		$famgeg[$i]["ybirth1"] = $birthyear;
-		$famgeg[$i]["mbirth1"] = $birthmonth;
-		$persgeg[$k]["ybirth1"] = $birthyear;
-		$persgeg[$k]["mbirth1"] = $birthmonth;
 	}
+	unset($persgeg1, $famgeg1);
 }
 
 function put_plot_data() {
@@ -260,15 +201,10 @@ function put_plot_data() {
 		exit;
 	}
 
-	/*
-	fwrite($FP, serialize($lists));
-	*/
-	fwrite($FP, 'a:3:{s:6:"famgeg";');
+	fwrite($FP, 'a:2:{s:6:"famgeg";');
 	fwrite($FP, serialize($famgeg));
 	fwrite($FP, 's:7:"persgeg";');
 	fwrite($FP, serialize($persgeg));
-	fwrite($FP, 's:7:"key2ind";');
-	fwrite($FP, serialize($key2ind));
 	fwrite($FP, '}');
 	fclose($FP);
 	$logline = AddToLog($GEDCOM."_statistics.php updated");
@@ -276,22 +212,6 @@ function put_plot_data() {
 }
 
 //--	========= start of main program =========
-
-$famgeg = array();
-$persgeg = array();
-$famgeg1 = array();
-$persgeg1 = array();
-$key2ind = array();
-$match1 = array();
-$match2 = array();
-$nrmale = 0;
-$nrfemale = 0;
-
-/*
- * Initiate the stats object.
- */
-$stats = new stats($GEDCOM);
-
 print_header($pgv_lang["statistics"]);
 require 'js/autocomplete.js.htm';
 ?>
@@ -334,6 +254,11 @@ require 'js/autocomplete.js.htm';
 //-->
 </script>
 <?php
+/*
+ * Initiate the stats object.
+ */
+$stats = new stats($GEDCOM);
+
 if (!isset($_SESSION[$GEDCOM."nrpers"])) {
 	$nrpers = 0;
 }
@@ -351,18 +276,19 @@ if ($nrpers < 1) {
 	put_plot_data();
 }
 
-$_SESSION[$GEDCOM."nrpers"] = $nrpers;
-$_SESSION[$GEDCOM."nrfam"] = $nrfam;
-$_SESSION[$GEDCOM."nrmale"] = $nrmale;
-$_SESSION[$GEDCOM."nrfemale"] = $nrfemale;
+$_SESSION[$GEDCOM."nrpers"] = $stats->totalIndividuals();
+$_SESSION[$GEDCOM."nrfam"] = $stats->totalFamilies();
+$_SESSION[$GEDCOM."nrmale"] = $stats->totalSexMales();
+$_SESSION[$GEDCOM."nrfemale"] = $stats->totalSexFemales();
+
 
 $params[1] = "ffffff";
 $params[2] = "84beff";
 echo '<h2 class="center">', $pgv_lang['statistics'], '</h2>';
-echo "<table><tr><td class=\"facts_label\">".$pgv_lang["statnmale"]."</td><td class=\"facts_value\">".$nrmale."</td>";
-echo "<td class=\"facts_label\">".$pgv_lang["statnnames"]."</td><td class=\"facts_value\">".$nrpers."</td></tr>";
-echo "<tr><td class=\"facts_label\">".$pgv_lang["statnfemale"]."</td><td class=\"facts_value\">".$nrfemale."</td>";
-echo "<td class=\"facts_label\">".$pgv_lang["statnfam"]."</td><td class=\"facts_value\">".$nrfam."</td></tr>";
+echo "<table><tr><td class=\"facts_label\">".$pgv_lang["statnmale"]."</td><td class=\"facts_value\">".$stats->totalSexMales()."</td>";
+echo "<td class=\"facts_label\">".$pgv_lang["statnnames"]."</td><td class=\"facts_value\">".$stats->totalIndividuals()."</td></tr>";
+echo "<tr><td class=\"facts_label\">".$pgv_lang["statnfemale"]."</td><td class=\"facts_value\">".$stats->totalSexFemales()."</td>";
+echo "<td class=\"facts_label\">".$pgv_lang["statnfam"]."</td><td class=\"facts_value\">".$stats->totalFamilies()."</td></tr>";
 echo "<tr><td class=\"facts_label\">".$pgv_lang["statnnames"]."</td><td class=\"facts_value\">".$stats->chartSex()."</td>";
 echo "<td class=\"facts_label\">".$pgv_lang["statnnames"]."</td><td class=\"facts_value\">".$stats->chartMortality()."</td></tr>";
 echo "<tr><td class=\"facts_label\">".$pgv_lang["stat_surnames"]."</td><td class=\"facts_value\">".$stats->chartCommonSurnames($params)."</td>";
@@ -615,8 +541,4 @@ $_SESSION["plotnp"]=$plotnp;
 
 echo "<br/>";
 print_footer();
-
-// debug
-//get_person();
-//get_family()
 ?>

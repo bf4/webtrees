@@ -29,6 +29,7 @@
 
 require './config.php';
 
+// Month of birth
 function bimo($i) {
 	global $z_as, $persgeg, $n1;
 
@@ -41,6 +42,7 @@ function bimo($i) {
 	}
 }
 
+//Month of birth of first child in a relation
 function bimo1($i) {
 	global $z_as, $famgeg, $n1;
 
@@ -55,18 +57,20 @@ function bimo1($i) {
 	}
 }
 
+//Month of death
 function demo($i) {
 	global $z_as, $persgeg, $n1;
 
 	$m = $persgeg[$i]["mdeath"];
 	if ($z_as == 301) $ys = $persgeg[$i]["sex"]-1;
-	else $ys = $persgeg[$i]["ybirth"];
+	else $ys = $persgeg[$i]["ydeath"];
 	if ($m > 0) {
 		fill_ydata($ys, $m-1, 1);
 		$n1++;
 	}
 }
 
+//Month of marriage
 function mamo($i) {
 	global $famgeg, $n1;
 
@@ -80,6 +84,7 @@ function mamo($i) {
 	}
 }
 
+//Month of first marriage
 function mamo1($i) {
 	global $famgeg, $n1;
 
@@ -93,6 +98,7 @@ function mamo1($i) {
 	}
 }
 
+//Months between marriage and first child
 function mamam($i) {
 	global $z_as, $famgeg, $n1;
 
@@ -113,6 +119,7 @@ function mamam($i) {
 	}
 }
 
+//Age related to birth year
 function agbi($i) {
 	global $z_as, $persgeg, $n1;
 
@@ -126,6 +133,7 @@ function agbi($i) {
 	}
 }
 
+//Age related to death year
 function agde($i) {
 	global $z_as, $persgeg, $n1;
 
@@ -139,93 +147,87 @@ function agde($i) {
 	}
 }
 
+//Age in year of marriage
 function agma($i) {
-	global $z_as, $famgeg, $persgeg, $key2ind, $n1;
+	global $z_as, $famgeg, $persgeg, $n1;
 
 	if (isset($famgeg[$i])) {
 		$ym = $famgeg[$i]["ymarr"];
 		if ($ym > 0) {
 			$xfather = $famgeg[$i]["male"];
 			$xmother = $famgeg[$i]["female"];
-			if ((isset($key2ind[$xfather]))&&(isset($key2ind[$xmother]))) {
-				$j = $key2ind[$xfather];
-				$j2 = $key2ind[$xmother];
-				$ybirth = -1;
-				$ybirth2 = -1;
-				$age = 0;
-				$age2 = 0;
-				if ($xfather !== "") {
-					$ybirth = $persgeg[$j]["ybirth"];
-				}
-				if ($xmother !== "") {
-					$ybirth2 = $persgeg[$j2]["ybirth"];
-				}
-				$z = $ym;
-				$z1 = $ym;
-				if ($z_as == 301) {
-					$z= 0;
-					$z1= 1;
-				}
-				if ($ybirth > -1) {
-					$age = $ym-$ybirth;
-					fill_ydata($z, $age, 1);
-					$n1++;
-				}
-				if ($ybirth2 > -1) {
-					$age2 = $ym-$ybirth2;
-					fill_ydata($z1, $age2, 1);
-					$n1++;
-				}
+			$ybirth = -1;
+			$ybirth2 = -1;
+			$age = 0;
+			$age2 = 0;
+			if ($xfather !== "") {
+				$ybirth = $persgeg[$xfather]["ybirth"];
+			}
+			if ($xmother !== "") {
+				$ybirth2 = $persgeg[$xmother]["ybirth"];
+			}
+			$z = $ym;
+			$z1 = $ym;
+			if ($z_as == 301) {
+				$z= 0;
+				$z1= 1;
+			}
+			if ($ybirth > -1) {
+				$age = $ym-$ybirth;
+				fill_ydata($z, $age, 1);
+				$n1++;
+			}
+			if ($ybirth2 > -1) {
+				$age2 = $ym-$ybirth2;
+				fill_ydata($z1, $age2, 1);
+				$n1++;
 			}
 		}
 	}
 }
-
+ 
+//Age in year of first marriage
 function agma1($i) {
-	global $z_as, $famgeg, $persgeg, $key2ind, $n1;
+	global $z_as, $famgeg, $persgeg, $n1;
 
 	if (isset($famgeg[$i])) {
-		$ym = $famgeg[$i]["ymarr"];
+		$ym = $famgeg[$i]["ymarr1"];
 		if ($ym > -1) {
 			$xfather = $famgeg[$i]["male"];
 			$xmother = $famgeg[$i]["female"];
-			if ((isset($key2ind[$xfather]))&&(isset($key2ind[$xmother]))) {
-				$j = $key2ind[$xfather];
-				$j2 = $key2ind[$xmother];
-				$ybirth = -1;
-				$ybirth2 = -1;
-				$age = 0;
-				$age2 = 0;
-				if ($xfather !== "") {
-					$ybirth = $persgeg[$j]["ybirth"];
-					$ymf = $persgeg[$j]["ymarr1"];
-				}
-				if ($xmother !== "") {
-					$ybirth2 = $persgeg[$j2]["ybirth"];
-					$ymm = $persgeg[$j2]["ymarr1"];
-				}
-				$z = $ym;
-				$z1 = $ym;
-				if ($z_as == 301) {
-					$z= 0;
-					$z1= 1;
-				}
-				if (($ybirth > -1) && ($ymf > -1) && ($ym == $ymf)) {
-					$age = $ym-$ybirth;
-					fill_ydata($z, $age, 1);
-					$n1++;
-				}
-				if (($ybirth2 > -1) && ($ymm > -1) && ($ym == $ymm)) {
-					$age2 = $ym-$ybirth2;
-					fill_ydata($z1, $age2, 1);
-					$n1++;
-				}
+			$ybirth = -1;
+			$ybirth2 = -1;
+			$age = 0;
+			$age2 = 0;
+			if ($xfather !== "") {
+				$ybirth = $persgeg[$xfather]["ybirth"];
+				$ymf = $persgeg[$xfather]["ymarr1"];
+			}
+			if ($xmother !== "") {
+				$ybirth2 = $persgeg[$xmother]["ybirth"];
+				$ymm = $persgeg[$xmother]["ymarr1"];
+			}
+			$z = $ym;
+			$z1 = $ym;
+			if ($z_as == 301) {
+				$z= 0;
+				$z1= 1;
+			}
+			if (($ybirth > -1) && ($ymf > -1) && ($ym == $ymf)) {
+				$age = $ym-$ybirth;
+				fill_ydata($z, $age, 1);
+				$n1++;
+			}
+			if (($ybirth2 > -1) && ($ymm > -1) && ($ym == $ymm)) {
+				$age2 = $ym-$ybirth2;
+				fill_ydata($z1, $age2, 1);
+				$n1++;
 			}
 		}
 	}
 }
 
-
+//Number of children
 function nuch($i) {
 	global $z_as, $famgeg, $n1;
 
@@ -253,7 +255,6 @@ function nuch($i) {
 		}
 	}
 }
-
 
 function fill_ydata($z, $x, $val) {
 	global $ydata, $xmax, $xgrenzen, $zmax, $zgrenzen, $xgiven, $zgiven;
@@ -415,7 +416,7 @@ function myplot($mytitle, $n, $xdata, $xtitle, $ydata, $ytitle, $legend) {
 
 function get_plot_data() {
 	global $GEDCOM, $INDEX_DIRECTORY;
-	global $nrfam, $famgeg, $nrpers, $persgeg, $key2ind;
+	global $nrfam, $famgeg, $nrpers, $persgeg;
 
 	$indexfile = $INDEX_DIRECTORY.$GEDCOM."_statistics.php";
 	if (file_exists($indexfile)) {
@@ -426,7 +427,6 @@ function get_plot_data() {
 		unset($fcontents);
 		$famgeg = $lists["famgeg"];
 		$persgeg = $lists["persgeg"];
-		$key2ind = $lists["key2ind"];
 		$nrfam = count($famgeg);
 		$nrpers = count($persgeg);
 	}
@@ -493,9 +493,14 @@ function calc_legend($grenzen_zas) {
 
 //--------------------nr,-----bron ,xgiven,zgiven,title, xtitle,ytitle,grenzen_xas, grenzen-zas,functie,
 function set_params($current, $indfam, $xg,  $zg, $titstr,  $xt, $yt, $gx, $gz, $myfunc) {
-	global $x_as, $y_as, $z_as, $nrfam, $nrpers, $n1;
+	global $x_as, $y_as, $z_as, $nrfam, $nrpers, $famgeg, $persgeg, $n1;
 	global $legend, $xdata, $ydata, $xmax, $zmax, $zgrenzen, $xgiven, $zgiven, $percentage, $male_female;
 	global $pgv_lang;
+
+	if (!function_exists($myfunc)) {
+		echo $myfunc." ".$pgv_lang["stplnoim"];
+		exit;
+	}
 
 	$monthdata= array();
 	$monthdata[] = $pgv_lang["jan_1st"];
@@ -534,9 +539,9 @@ function set_params($current, $indfam, $xg,  $zg, $titstr,  $xt, $yt, $gx, $gz, 
 		$percentage = false;
 		if ($y_as == 201) {
 			$percentage = false;
-			if ($current == 21)
+			if ($current == 13 || $current == 15 || $current == 16 || $current == 21)
 				$ytitle = $pgv_lang["statnfam"];
-			else if ($current == 16 || $current == 14)
+			else if ($current == 14)
 				$ytitle = $pgv_lang["stat_21_nok"];
 			else
 				$ytitle = $pgv_lang["statnnames"];
@@ -568,16 +573,17 @@ function set_params($current, $indfam, $xg,  $zg, $titstr,  $xt, $yt, $gx, $gz, 
 				$ydata[$i][$j] = 0;
 			}
 		}
-		if ($indfam == "IND")
+		if ($indfam == "IND" && $current != 19 && $current != 20) {
+			foreach (array_keys($persgeg) as $key) {
+				$myfunc($key);
+			}
 			$nrmax = $nrpers;
-		else
-			$nrmax = $nrfam;
-		if (!function_exists($myfunc)) {
-			echo $myfunc." ".$pgv_lang["stplnoim"];
-			exit;
 		}
-		for ($i=0; $i < $nrmax; $i++) {
-			$myfunc($i);
+		else {
+			foreach (array_keys($famgeg) as $key) {
+				$myfunc($key);
+			}
+			$nrmax = $nrfam;
 		}
 		$hstr = $title."|" .$pgv_lang["stplnumof"]." ".$n1." ".$pgv_lang["of"]." ".$nrmax;
 		myplot($hstr, $zmax, $xdata, $xtitle, $ydata, $ytitle, $legend);
@@ -783,7 +789,7 @@ function print_sources_stats_chart($type){
 	case '8':
 		echo '<div id="google_charts" class="center">';
 		echo '<b>'.$pgv_lang["stat_8_fam"].'</b><br /><br />';
-		print $stats->chartFamsWithSources($params);
+		echo $stats->chartFamsWithSources($params);
 		echo '</div><br />';
 		break;
 	}
