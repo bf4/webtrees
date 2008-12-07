@@ -252,7 +252,12 @@ function import_record($gedrec, $update) {
 					$name .= $match[$i][1];
 			}
 		}
-		$sql = "INSERT INTO {$TBLPREFIX}sources VALUES ('{$xref}',{$ged_id},'" . $DBCONN->escapeSimple($name) . "','" . $DBCONN->escapeSimple($gedrec) . "')";
+		if (strpos($gedrec, '1 _DBID')) {
+			$_dbid="'Y'";
+		} else {
+			$_dbid='NULL';
+		}
+		$sql = "INSERT INTO {$TBLPREFIX}sources (s_id, s_file, s_name, s_gedcom, s_dbid) VALUES ('{$xref}',{$ged_id},'" . $DBCONN->escapeSimple($name) . "','" . $DBCONN->escapeSimple($gedrec) . "',{$_dbid})";
 		$res = dbquery($sql);
 		break;
 	case 'OBJE':
@@ -795,6 +800,7 @@ function setup_database() {
 	$has_remotelinks = false;
 	$has_other = false;
 	$has_sources = false;
+	$has_sources_dbid = false;
 	$has_soundex = false;
 
 	$sqlite = ($DBTYPE == "sqlite");
@@ -904,6 +910,14 @@ function setup_database() {
 					break;
 				case "sources" :
 					$has_sources = true;
+					$info = $DBCONN->tableInfo($TBLPREFIX . "sources");
+					foreach ($info as $indexval => $field) {
+						switch ($field["name"]) {
+							case "s_dbid" :
+								$has_sources_dbid = true;
+								break;
+						}
+					}
 					break;
 				case "soundex":
 					$has_soundex = true;
@@ -996,8 +1010,13 @@ function setup_database() {
 	if (!$has_other) {
 		create_other_table();
 	}
-	if (!$has_sources) {
+	if (!$has_sources || $sqlite && (!$has_sources_dbid)) {
 		create_sources_table();
+	} else {
+		if (!$has_sources_dbid) {
+			dbquery("ALTER TABLE {$TBLPREFIX}sources ADD s_dbid CHAR(1) NULL");
+			dbquery("CREATE INDEX {$TBLPREFIX}sour_dbid ON {$TBLPREFIX}sources (s_dbid)");
+		}
 	}
 	if ($has_soundex) {
 		// The old pgv_soundex table is now merged with the new pgv_name table
@@ -1079,12 +1098,14 @@ function create_sources_table() {
 		" s_file   ".PGV_DB_COL_FILE."      NULL,".
 		" s_name     VARCHAR(255)           NULL,".
 		" s_gedcom ".PGV_DB_LONGTEXT_TYPE." NULL,".
+		" s_dbid   ".PGV_DB_CHAR_TYPE."(1)  NULL,".
 		" PRIMARY KEY (s_id, s_file)".
 		") ".PGV_DB_UTF8_TABLE
 	);
 	dbquery("CREATE INDEX {$TBLPREFIX}sour_id   ON {$TBLPREFIX}sources (s_id  )");
 	dbquery("CREATE INDEX {$TBLPREFIX}sour_name ON {$TBLPREFIX}sources (s_name)");
 	dbquery("CREATE INDEX {$TBLPREFIX}sour_file ON {$TBLPREFIX}sources (s_file)");
+	dbquery("CREATE INDEX {$TBLPREFIX}sour_dbid ON {$TBLPREFIX}sources (s_dbid)");
 }
 /**
  * Create the other table
