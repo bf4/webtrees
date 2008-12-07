@@ -10,7 +10,8 @@
 
 
 Version 4.2.0
- - Fixed: [ 2397080 ] [4417] error on close relatives tab
+ - Fixed: [ 2399903 ] [4450]Top 10 Given breaks html validation (wooc)
+ - Fixed: [ 2397080 ] [4417] error on close relatives tab (fisharebest)
  - Fixed: [ 2396047 ] Quick update: "Family with ..." shows Death fact (canajun2eh)
  - Fixed: [ 2392462 ] Quick Update, "family with ..." error (canajun2eh)
  - Fixed: [ 2316629 ] [svn 4303] Cannot update privacy settings (fisharebest)
