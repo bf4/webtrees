@@ -1470,7 +1470,7 @@ class stats {
 		global $TBLPREFIX, $TEXT_DIRECTION, $pgv_lang;
 		if ($params !== null && isset($params[0])) {$total = $params[0];}else{$total = 10;}
 		$rows=self::_runSQL(''
-			.' SELECT DISTINCT'
+			.' SELECT'
 				.' f_numchil AS tot,'
 				.' f_id AS id'
 			.' FROM'
