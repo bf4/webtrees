@@ -2549,7 +2549,7 @@ function get_server_list(){
 	$sitelist = array();
 
 	if (isset($GEDCOMS[$GEDCOM]) && check_for_import($GEDCOM)) {
-		$sql = "SELECT s_id ,s_name, s_gedcom FROM {$TBLPREFIX}sources WHERE s_file=".PGV_GED_ID." AND s_gedcom ".PGV_DB_LIKE." '%1 _DBID%' ORDER BY s_name";
+		$sql = "SELECT s_id ,s_name, s_gedcom FROM {$TBLPREFIX}sources WHERE s_file=".PGV_GED_ID." AND s_dbid='Y' ORDER BY s_name";
 		$res = dbquery($sql, false);
 		if (DB::isError($res))
 			return $sitelist;
