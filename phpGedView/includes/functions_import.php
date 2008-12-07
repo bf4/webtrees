@@ -440,11 +440,13 @@ function update_links($xref, $ged_id, $gedrec) {
 		case 'mysql':
 		case 'mysqli':
 			// MySQL can insert multiple rows in one statement
-			dbquery("INSERT INTO {$TBLPREFIX}link (l_from,l_to,l_type,l_file) VALUES ".implode(',', $data));
+			// Use REPLACE INTO in case we have "duplicates" that differ on case, e.g. "S1" and "s1"
+			dbquery("REPLACE INTO {$TBLPREFIX}link (l_from,l_to,l_type,l_file) VALUES ".implode(',', $data));
 			break;
 		default:
 			foreach ($data as $datum) {
-				dbquery("INSERT INTO {$TBLPREFIX}link (l_from,l_to,l_type,l_file) VALUES ".$datum);
+				// Ignore any errors, which may be caused by "duplicates" that differ on case, e.g. "S1" and "s1"
+				dbquery("INSERT INTO {$TBLPREFIX}link (l_from,l_to,l_type,l_file) VALUES ".$datum, false);
 		}
 			break;
 		}
