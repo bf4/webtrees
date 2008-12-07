@@ -489,13 +489,13 @@ function get_indilist_salpha($marnm, $fams, $ged_id) {
 	foreach ($digraphs as $to=>$from) { // Single-character digraphs
 		$include.=" UNION SELECT UPPER('{$to}' {$DBCOLLATE}) AS alpha FROM {$tables} WHERE {$join} AND n_sort ".PGV_DB_LIKE." '{$from}%' {$DBCOLLATE} GROUP BY alpha {$DBCOLLATE}";
 	}
-	$sql="SELECT {$column} AS alpha FROM {$tables} WHERE {$join} {$exclude} GROUP BY alpha {$DBCOLLATE} {$include} ORDER BY alpha {$DBCOLLATE}";
+	$sql="SELECT {$column} AS alpha FROM {$tables} WHERE {$join} {$exclude} GROUP BY alpha {$DBCOLLATE} {$include} ORDER BY alpha='@', alpha=',', alpha {$DBCOLLATE}";
 	$res=dbquery($sql);
 
 	$list=array();
 	while ($row=$res->fetchRow(DB_FETCHMODE_ASSOC)) {
 		if ($DB_UTF8_COLLATION) {
-			$list[$row['alpha']]=$row['alpha'];
+			$list[]=$row['alpha'];
 		} else {
 			$letter=UTF8_strtoupper(UTF8_substr($row['alpha'],0,1));
 			$list[$letter]=$letter;
@@ -506,15 +506,15 @@ function get_indilist_salpha($marnm, $fams, $ged_id) {
 	// If we can't sort in the DB, sort ourselves
 	if (!$DB_UTF8_COLLATION) {
 		uasort($list, 'stringsort');
-	}
-	// Sorting puts "," and "@" first, but we want them at the end
-	if (in_array(',', $list)) {
-		unset($list[',']);
-		$list[',']=',';
-	}
-	if (in_array('@', $list)) {
-		unset($list['@']);
-		$list['@']='@';
+		// stringsort puts "," and "@" first, so force them to the end
+		if (in_array(',', $list)) {
+			unset($list[',']);
+			$list[',']=',';
+		}
+		if (in_array('@', $list)) {
+			unset($list['@']);
+			$list['@']='@';
+		}
 	}
 	return $list;
 }
@@ -564,13 +564,13 @@ function get_indilist_galpha($surn, $salpha, $marnm, $fams, $ged_id) {
 	foreach ($digraphs as $to=>$from) { // Single-character digraphs
 		$include.=" UNION SELECT UPPER('{$to}' {$DBCOLLATE}) AS alpha FROM {$tables} WHERE {$join} AND n_sort ".PGV_DB_LIKE." '{$from}%' {$DBCOLLATE} GROUP BY alpha {$DBCOLLATE}";
 	}
-	$sql="SELECT {$column} AS alpha FROM {$tables} WHERE {$join} {$exclude} GROUP BY alpha {$DBCOLLATE} {$include} ORDER BY alpha {$DBCOLLATE}";
+	$sql="SELECT {$column} AS alpha FROM {$tables} WHERE {$join} {$exclude} GROUP BY alpha {$DBCOLLATE} {$include} ORDER BY alpha='@', alpha=',', alpha {$DBCOLLATE}";
 	$res=dbquery($sql);
 
 	$list=array();
 	while ($row=$res->fetchRow(DB_FETCHMODE_ASSOC)) {
 		if ($DB_UTF8_COLLATION) {
-			$list[$row['alpha']]=$row['alpha'];
+			$list[]=$row['alpha'];
 		} else {
 			$letter=UTF8_strtoupper(UTF8_substr($row['alpha'],0,1));
 			$list[$letter]=$letter;
@@ -581,15 +581,15 @@ function get_indilist_galpha($surn, $salpha, $marnm, $fams, $ged_id) {
 	// If we can't sort in the DB, sort ourselves
 	if (!$DB_UTF8_COLLATION) {
 		uasort($list, 'stringsort');
-	}
-	// sorting puts "," and "@" first, but we want them at the end
-	if (in_array(',', $list)) {
-		unset($list[',']);
-		$list[',']=',';
-	}
-	if (in_array('@', $list)) {
-		unset($list['@']);
-		$list['@']='@';
+		// stringsort puts "," and "@" first, so force them to the end
+		if (in_array(',', $list)) {
+			unset($list[',']);
+			$list[',']=',';
+		}
+		if (in_array('@', $list)) {
+			unset($list['@']);
+			$list['@']='@';
+		}
 	}
 	return $list;
 }
@@ -2540,7 +2540,7 @@ function get_server_list(){
 	$sitelist = array();
 
 	if (isset($GEDCOMS[$GEDCOM]) && check_for_import($GEDCOM)) {
-		$sql = "SELECT s_id ,s_name, s_gedcom FROM {$TBLPREFIX}sources WHERE s_file=".PGV_GED_ID." AND s_dbid IS NOT NULL ORDER BY s_name";
+		$sql = "SELECT s_id ,s_name, s_gedcom FROM {$TBLPREFIX}sources WHERE s_file=".PGV_GED_ID." AND s_gedcom ".PGV_DB_LIKE." '%1 _DBID%' ORDER BY s_name";
 		$res = dbquery($sql, false);
 		if (DB::isError($res))
 			return $sitelist;
