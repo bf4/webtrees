@@ -26,7 +26,7 @@
 
 require './config.php';
 
-require_once('includes/functions_print_facts.php');
+require_once('includes/functions/functions_print_facts.php');
 
 
 loadLangFile("lightbox:lang");
@@ -302,7 +302,7 @@ if ($ct>0) {
 			}
 			print "\n\t\t\t<td class=\"list_value_wrap\" width=\"50%\">";
 			print "<table class=\"$TEXT_DIRECTION\">\n\t<tr>\n\t\t<td valign=\"top\" style=\"white-space: normal;\">";
-				
+
 //LBox --------  change for Lightbox Album and JWplayer ---------------------------
 	// Check Filetype of media item ( URL, Local or Other )
 		// URL FLV  ----------------------------------
@@ -333,7 +333,7 @@ if ($ct>0) {
 		$worked   = ereg_replace("1 NOTE", "1 NOTE<br />", $after);
 		$final    = $before.$needle.$worked;
 		$notes    = PrintReady(htmlspecialchars(addslashes(print_fact_notes($final, 1, true, true)),ENT_COMPAT,'UTF-8'));
-		
+
 		// If Lightbox installed ------------------------------------
 			// if URL FLV  filetype  - e.g. You Tube link -  (Lightbox installed + JWplayer installed)
 			if (file_exists("modules/lightbox/album.php") && $file_type == "url_flv") {
@@ -360,7 +360,7 @@ if ($ct>0) {
 				print "<a href=\"javascript:;\" onclick=\" var winflv = window.open('module.php?mod=JWplayer&amp;pgvaction=flvVideo&amp;flvVideo=" . str_replace('http://', '', $media["FILE"]) . "', 'winflv', 'width=445, height=365, left=600, top=200'); if (window.focus) {winflv.focus();}\">";
 			//else if URL image
 			} else if ($file_type == "url_image"){
-				$imageinfo = Getimagesize($media['FILE']); 
+				$imageinfo = Getimagesize($media['FILE']);
 				$wth = $imageinfo[0];
 				$hgt = $imageinfo[1];
 				print "<a href=\"javascript:void(0)\" onclick=\"var winimg = window.open('".$media["FILE"]."', 'winimg', 'width=".$wth.", height=".$hgt.", left=200, top=200'); if (window.focus) {winimg.focus();} \">";
@@ -374,7 +374,7 @@ if ($ct>0) {
 			} else {
 				print "<a href=\"#\" onclick=\"return openImage('".rawurlencode($media["FILE"])."',$imgwidth, $imgheight);\">";
 			}
-		
+
 		// Finally print thumbnails
 			// If URL flv file (eg You Tube)
 			if ($file_type == "url_flv" && is_dir('modules/JWplayer')) {
@@ -562,7 +562,7 @@ if ($ct>0) {
 }
 print "\n</div>\n";
 /** not ready for 4.1
-require_once("includes/functions_print_lists.php");
+require_once("includes/functions/functions_print_lists.php");
 $legend = $pgv_lang["media"];
 if ($filter) $legend .= " : &laquo;".$filter."&raquo;";
 print_media_table($medialist, $legend);

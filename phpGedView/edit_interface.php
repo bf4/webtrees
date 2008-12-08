@@ -26,7 +26,7 @@
 
 require './config.php';
 
-require("includes/functions_edit.php");
+require("includes/functions/functions_edit.php");
 
 loadLangFile("pgv_country");
 uasort($countries, "stringsort");
@@ -1710,7 +1710,7 @@ case 'reorder_children':
 	break;
 //------------------------------------------------------------------------------
 case 'changefamily':
-	require_once 'includes/class_family.php';
+	require_once 'includes/classes/class_family.php';
 	$family = new Family($gedrec);
 	$father = $family->getHusband();
 	$mother = $family->getWife();
@@ -1841,7 +1841,7 @@ case 'changefamily':
 	break;
 //------------------------------------------------------------------------------
 case 'changefamily_update':
-	require_once 'includes/class_family.php';
+	require_once 'includes/classes/class_family.php';
 	$family = new Family($gedrec);
 	$father = $family->getHusband();
 	$mother = $family->getWife();

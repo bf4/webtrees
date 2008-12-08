@@ -31,9 +31,9 @@ if (!defined('PGV_PHPGEDVIEW')) {
 
 define('PGV_CLIPPINGS_CTRL', '');
 
-require_once 'includes/class_grampsexport.php';
-require_once 'includes/class_person.php';
-require_once 'includes/functions.php';
+require_once 'includes/classes/class_grampsexport.php';
+require_once 'includes/classes/class_person.php';
+require_once 'includes/functions/functions.php';
 require_once 'includes/controllers/basecontrol.php';
 require_once 'includes/pclzip.lib.php';
 
@@ -80,7 +80,7 @@ class ClippingsControllerRoot extends BaseController {
 	var $Zip;
 	var $filetype;
     var $level1;  // number of levels of ancestors
-    var $level2; 
+    var $level2;
     var $level3;	// number of levels of descendents
 
 	/**
@@ -375,7 +375,7 @@ class ClippingsControllerRoot extends BaseController {
 			if ($this->filetype == "gramps") {
 				// Sort the clippings cart because the export works better when the cart is sorted
 				usort($cart, "same_group");
-				require_once("includes/class_geclippings.php");
+				require_once("includes/classes/class_geclippings.php");
 				$gramps_Exp = new GEClippings();
 				$gramps_Exp->begin_xml();
 				$ct = count($cart);

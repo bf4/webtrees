@@ -3,7 +3,7 @@
  * phpGedView Research Assistant Tool - ra_EditTask
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  John Finlay and Others
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -35,13 +35,13 @@ if (!defined('PGV_PHPGEDVIEW')) {
 }
 
 // Require the database functions
-require_once("includes/functions_db.php");
-require_once("includes/class_person.php");
+require_once("includes/functions/functions_db.php");
+require_once("includes/classes/class_person.php");
 global $pgv_lang, $TBLPREFIX, $DBCONN, $SOURCE_ID_PREFIX;
- 
+
  	/**
 	 * GETS the DATES of the task with the given taskid
-	 * 
+	 *
 	 * @return mixed dates of the task
 	 */
 	function getDates(){
@@ -50,8 +50,8 @@ global $pgv_lang, $TBLPREFIX, $DBCONN, $SOURCE_ID_PREFIX;
 		$sql = "SELECT t_startdate, t_enddate, t_results FROM " . $TBLPREFIX . "tasks WHERE t_id='".$DBCONN->escapeSimple($_REQUEST['taskid'])."'";
 		$res = dbquery($sql);
 
-        $s_date = "";	
-        $e_date = ""; 
+        $s_date = "";
+        $e_date = "";
         $t_results = "";
         $out = "";
 
@@ -60,13 +60,13 @@ global $pgv_lang, $TBLPREFIX, $DBCONN, $SOURCE_ID_PREFIX;
 			$e_date = $dates["t_enddate"];
 			$t_results = $dates["t_results"];
 		}
-		
+
 		return array($s_date, $e_date, $t_results);
 	}
-	
+
 	/**
 	 * GETS a list of all available FOLDERS with the folder that the current task is in, on top
-	 * 
+	 *
 	 * @return mixed list of available folders
 	 */
 	function getFolders($folderid) {
@@ -74,24 +74,24 @@ global $pgv_lang, $TBLPREFIX, $DBCONN, $SOURCE_ID_PREFIX;
 
         $sql = "select fr_name, fr_id from " . $TBLPREFIX . "folders";
 		$res = dbquery($sql);
-        
+
         $out = "";
         while($foldername =& $res->fetchRow(DB_FETCHMODE_ASSOC)){
         	if($foldername["fr_id"] != $folderid)
 		    	$out .= '<option value="'.$foldername['fr_id'].'">'.PrintReady($foldername['fr_name']) . '</option>';
 		    else
 		    	$out .= '<option value="'.$foldername['fr_id'].'" selected="selected">'.PrintReady($foldername['fr_name']) . '</option>';
-		    	
-		
+
+
 		}
 		print($folderid);
      print("This is a test");
         return $out;
 	}
-	
+
 	/**
 	 * GETS all PEOPLE associated with the task given taskid
-	 * 
+	 *
 	 * @return mixed people associated with the task
 	 */
 	function getPeople(){
@@ -109,10 +109,10 @@ global $pgv_lang, $TBLPREFIX, $DBCONN, $SOURCE_ID_PREFIX;
 
 		return $people;
 	}
-	
+
 	/**
 	 * GETS all SOURCES associated with the task given taskid
-	 * 
+	 *
 	 * @return sources associated with the task
 	 */
 	function getSources(){
@@ -128,10 +128,10 @@ global $pgv_lang, $TBLPREFIX, $DBCONN, $SOURCE_ID_PREFIX;
 
 		return $sources;
 	}
-	
+
 	/**
 	 * GETS all COMMENTS associated with the task
-	 * 
+	 *
 	 * @return mixed comments associated with the task
 	 */
 	function getComments(){
@@ -153,7 +153,7 @@ global $pgv_lang, $TBLPREFIX, $DBCONN, $SOURCE_ID_PREFIX;
 					'</span><br /><br />' .
 					nl2br($comment["c_body"]).			// INSERT body
 					'<hr size="1" />';
-					
+
 			if (PGV_USER_IS_ADMIN || PGV_USER_NAME==$comment["c_u_username"]){
 				$out .= '<a href="javascript:;" onclick="editcomment(' .
 							''.$comment["c_id"].'' .	// INSERT commentid
@@ -165,14 +165,14 @@ global $pgv_lang, $TBLPREFIX, $DBCONN, $SOURCE_ID_PREFIX;
 		}
 		return $out;
 	}
-	
-	
+
+
 	if(isset($_REQUEST['delete']) && !empty($_REQUEST['delete'])){
 		// TODO: Verify user
 		$sql = "DELETE FROM " . $TBLPREFIX . "comments WHERE c_id='".$DBCONN->escapeSimple($_REQUEST['delete'])."'";
 		$res = dbquery($sql);
 	}
-	
+
 	$task = ra_functions::getTask($_REQUEST['taskid']);
 ?>
 
@@ -231,7 +231,7 @@ global $pgv_lang, $TBLPREFIX, $DBCONN, $SOURCE_ID_PREFIX;
     			<td class="descriptionbox">
     				<?php print $pgv_lang['assign_task']; ?>
     			</td>
-    			<td class="optionbox" colspan=3> 
+    			<td class="optionbox" colspan=3>
     			<select name="Users"> <option value=""></option>
     			<?php
     				foreach(get_all_users() as $username) {
@@ -241,9 +241,9 @@ global $pgv_lang, $TBLPREFIX, $DBCONN, $SOURCE_ID_PREFIX;
 							}
 							print ">".getUserFullName($username)."</option>";
     				}
-    			?>  		
+    			?>
     			</select>
-    				
+
     			</td>
     			<tr>
     		</tr>
@@ -260,7 +260,7 @@ global $pgv_lang, $TBLPREFIX, $DBCONN, $SOURCE_ID_PREFIX;
 	      			print '</textarea>';
 	      		?>
 	      	</td>
-	    </tr>    
+	    </tr>
 	    <tr>
 <!--SOURCES-->
 			<td class="descriptionbox">
@@ -352,7 +352,7 @@ global $pgv_lang, $TBLPREFIX, $DBCONN, $SOURCE_ID_PREFIX;
                <?php print $pgv_lang["result"]; ?>
             </td>
             <td class="optionbox" colspan="3">
-            	<textarea name="results" cols="55" rows="5"><?php print $data[2]; ?></textarea> 
+            	<textarea name="results" cols="55" rows="5"><?php print $data[2]; ?></textarea>
             </td>
         </tr>
     	<?php
@@ -364,7 +364,7 @@ global $pgv_lang, $TBLPREFIX, $DBCONN, $SOURCE_ID_PREFIX;
     		<input type="submit" value="<?php print $pgv_lang["complete"];?>" name="complete" />
     		</td>
    	</tr>
-				
+
     <tr>
     <td colspan="4">
     <br />
@@ -386,21 +386,21 @@ global $pgv_lang, $TBLPREFIX, $DBCONN, $SOURCE_ID_PREFIX;
 			<tr>
 				<td class="blockh1" >&nbsp;</td>
 				<td class="blockh2" >
-					<div class="blockhc"> 
+					<div class="blockhc">
 					</div>
 				</td>
 				<td class="blockh3">&nbsp;</td>
 			</tr>
 		</table>
         <?php print getComments(); ?>
-        
+
 	</div>
 <!--END COMMENT SECTION-->
 </td>
 </tr>
 <tr class="topbottombar">
     		<td colspan="4">
-<input type="button" value="<?php print $pgv_lang["add_new_comment"]; ?>" name="Add New Comment" onclick="window.open('editcomment.php?taskid='+<?php print $_REQUEST['taskid']; ?>, '', 
+<input type="button" value="<?php print $pgv_lang["add_new_comment"]; ?>" name="Add New Comment" onclick="window.open('editcomment.php?taskid='+<?php print $_REQUEST['taskid']; ?>, '',
         'top=50,left=50,width=600,height=400,resizable=1,scrollbars=1');">
         </td>
     	</tr>

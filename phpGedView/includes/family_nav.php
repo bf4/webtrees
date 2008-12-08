@@ -28,10 +28,10 @@
  * @author Brian Holland
  */
 
-if (!defined('PGV_PHPGEDVIEW')) { 
-	header('HTTP/1.0 403 Forbidden'); 
-	exit; 
-} 
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
+	exit;
+}
 
 define('PGV_FAMILY_NAV_PHP', '');
 
@@ -44,7 +44,7 @@ define('PGV_FAMILY_NAV_PHP', '');
 global $edit, $tabno, $mediacnt, $GEDCOM, $pid;
 $edit=$edit;
 global $show_full, $tabno;
-$show_full="1"; 
+$show_full="1";
 
 // Debug only -----------------------------------------
 // echo "DEFAULT TAB =" . $this->default_tab ;
@@ -89,11 +89,11 @@ if (file_exists('modules/googlemap/defaultconfig.php')) {
 	echo "<table class=\"facts_table\" width='230' cellpadding=\"0\">";
 		global $pgv_lang, $SHOW_ID_NUMBERS, $PGV_IMAGE_DIR, $PGV_IMAGES;
 		global $spouselinks, $parentlinks, $DeathYr, $BirthYr;
-		global $TEXT_DIRECTION; 
-		
+		global $TEXT_DIRECTION;
+
 		$personcount=0;
 		$families = $this->indi->getChildFamilies();
-		
+
 		//-- parent families -------------------------------------------------------------
 		foreach($families as $famid=>$family) {
 			$label = $this->indi->getChildFamilyLabel($family);
@@ -113,15 +113,15 @@ if (file_exists('modules/googlemap/defaultconfig.php')) {
 				$submenu["label"]  = print_pedigree_person_nav($people["husb"]->getXref(), 2, !$this->isPrintPreview(), 0, $personcount++);
 				$submenu["label"] .= PrintReady($parentlinks);
 				$menu["items"][] = $submenu;
-				
+
 				if (PrintReady($people["husb"]->getDeathYear()) == 0) { $DeathYr = ""; }else{ $DeathYr = PrintReady($people["husb"]->getDeathYear()); }
 				if (PrintReady($people["husb"]->getBirthYear()) == 0) { $BirthYr = ""; }else{ $BirthYr = PrintReady($people["husb"]->getBirthYear()); }
 				?>
 				<tr>
 					<td class="facts_label<?php print $styleadd; ?>" nowrap="nowrap">
 						<?php // print $people["husb"]->getLabel(); ?>
-						<?php 
-							 print_menu($menu); 
+						<?php
+							 print_menu($menu);
 						?>
 					</td>
 					<td align="center" class="<?php print $this->getPersonStyle($people["husb"]); ?>">
@@ -139,7 +139,7 @@ if (file_exists('modules/googlemap/defaultconfig.php')) {
 				</tr>
 				<?php
 			}
-			
+
 			if (isset($people["wife"])) {
 				$menu = array();
 				$menu["label"] = "&nbsp;" . $people["wife"]->getLabel() . "&nbsp;". "\n";
@@ -147,17 +147,17 @@ if (file_exists('modules/googlemap/defaultconfig.php')) {
 				$menu["items"] =  array();
 				$submenu = array();
 				$submenu["label"]  = print_pedigree_person_nav($people["wife"]->getXref(), 2, !$this->isPrintPreview(), 0, $personcount++);
-				$submenu["label"] .= PrintReady($parentlinks); 
+				$submenu["label"] .= PrintReady($parentlinks);
 				$menu["items"][] = $submenu;
-				
+
 				if (PrintReady($people["wife"]->getDeathYear()) == 0) { $DeathYr = ""; }else{ $DeathYr = PrintReady($people["wife"]->getDeathYear()); }
 				if (PrintReady($people["wife"]->getBirthYear()) == 0) { $BirthYr = ""; }else{ $BirthYr = PrintReady($people["wife"]->getBirthYear()); }
 				?>
 				<tr>
 					<td class="facts_label<?php print $styleadd; ?>">
 						<?php //print $people["wife"]->getLabel(); ?>
-						<?php 
-							print_menu($menu); 
+						<?php
+							print_menu($menu);
 						?>
 					</td>
 					<td align="center" class="<?php print $this->getPersonStyle($people["wife"]); ?>">
@@ -176,7 +176,7 @@ if (file_exists('modules/googlemap/defaultconfig.php')) {
 				</tr>
 				<?php
 			}
-			
+
 			if (isset($people["children"])) {
 				$elderdate = $family->getMarriageDate();
 				foreach($people["children"] as $key=>$child) {
@@ -197,11 +197,11 @@ if (file_exists('modules/googlemap/defaultconfig.php')) {
 					?>
 					<tr>
 						<td class="facts_label<?php print $styleadd; ?>">
-						<?php 
+						<?php
 						if ($pid == $child->getXref() ) {
-							print $child->getLabel(); 
+							print $child->getLabel();
 						}else{
-							print_menu($menu); 
+							print_menu($menu);
 						}
 						?>
 						</td>
@@ -220,7 +220,7 @@ if (file_exists('modules/googlemap/defaultconfig.php')) {
 								}
 							}else{
 								print $pgv_lang["private"];
-							} 
+							}
 							?>
 						</td>
 					</tr>
@@ -237,7 +237,7 @@ if (file_exists('modules/googlemap/defaultconfig.php')) {
 			if ($people){
 				echo "<tr><td><br /></td><td></td></tr>";
 			}
-				
+
 			$styleadd = "";
 			$elderdate = "";
 			if (isset($people["husb"]) && $people["husb"]->getLabel() == ".") {
@@ -251,9 +251,9 @@ if (file_exists('modules/googlemap/defaultconfig.php')) {
 				$menu["items"] =  array();
 				$submenu = array();
 				$submenu["label"]  = print_pedigree_person_nav($people["husb"]->getXref(), 2, !$this->isPrintPreview(), 0, $personcount++);
-				$submenu["label"] .= PrintReady($parentlinks); 
+				$submenu["label"] .= PrintReady($parentlinks);
 				$menu["items"][] = $submenu;
-			
+
 				if (PrintReady($people["husb"]->getDeathYear()) == 0) { $DeathYr = ""; }else{ $DeathYr = PrintReady($people["husb"]->getDeathYear()); }
 				if (PrintReady($people["husb"]->getBirthYear()) == 0) { $BirthYr = ""; }else{ $BirthYr = PrintReady($people["husb"]->getBirthYear()); }
 				?>
@@ -262,8 +262,8 @@ if (file_exists('modules/googlemap/defaultconfig.php')) {
 				</tr>
 				<tr>
 					<td class="facts_label<?php print $styleadd; ?>" nowrap="nowrap">
-						<?php 
-							 print_menu($menu); 
+						<?php
+							 print_menu($menu);
 						?>
 					</td>
 					<td align="center" class="<?php print $this->getPersonStyle($people["husb"]); ?>" >
@@ -282,7 +282,7 @@ if (file_exists('modules/googlemap/defaultconfig.php')) {
 				<?php
 				$elderdate = $people["husb"]->getBirthDate(false);
 			}
-			
+
 			$styleadd = "";
 			if (isset($people["wife"]) && $people["wife"]->getLabel() == ".") {
 				$menu = array();
@@ -297,14 +297,14 @@ if (file_exists('modules/googlemap/defaultconfig.php')) {
 				$submenu["label"]  = print_pedigree_person_nav($people["wife"]->getXref(), 2, !$this->isPrintPreview(), 0, $personcount++);
 				$submenu["label"] .= PrintReady($parentlinks);
 				$menu["items"][] = $submenu;
-				
+
 				if (PrintReady($people["wife"]->getDeathYear()) == 0) { $DeathYr = ""; }else{ $DeathYr = PrintReady($people["wife"]->getDeathYear()); }
 				if (PrintReady($people["wife"]->getBirthYear()) == 0) { $BirthYr = ""; }else{ $BirthYr = PrintReady($people["wife"]->getBirthYear()); }
 				?>
 				<tr>
 					<td class="facts_label<?php print $styleadd; ?>" nowrap="nowrap">
-						<?php 
-							 print_menu($menu); 
+						<?php
+							 print_menu($menu);
 						?>
 					</td>
 					<td align="center" class="<?php print $this->getPersonStyle($people["wife"]); ?>">
@@ -335,15 +335,15 @@ if (file_exists('modules/googlemap/defaultconfig.php')) {
 					$submenu["label"]  = print_pedigree_person_nav($child->getXref(), 2, !$this->isPrintPreview(), 0, $personcount++);
 					$submenu["label"] .= PrintReady($spouselinks);
 					$menu["items"][] = $submenu;
-					
+
 					if (PrintReady($child->getDeathYear()) == 0) { $DeathYr = ""; }else{ $DeathYr = PrintReady($child->getDeathYear()); }
 					if (PrintReady($child->getBirthYear()) == 0) { $BirthYr = ""; }else{ $BirthYr = PrintReady($child->getBirthYear()); }
 					?>
 					<tr>
 						<td class="facts_label<?php print $styleadd; ?>" nowrap="nowrap">
 							<?php //print $child->getLabel(); ?>
-							<?php 
-								print_menu($menu); 
+							<?php
+								print_menu($menu);
 							?>
 						</td>
 						<td align="center" class="<?php print $this->getPersonStyle($child); ?>">
@@ -374,7 +374,7 @@ if (file_exists('modules/googlemap/defaultconfig.php')) {
 				<td style="padding-bottom: 4px;" align="center" colspan="2"><b><?php echo $pgv_lang["immediate_family"] ?></b></td>
 			</tr>
 		<?php
-			
+
 			//$personcount = 0;
 			$people = $this->buildFamilyList($family, "spouse");
 			if ($this->indi->equals($people["husb"])){
@@ -392,15 +392,15 @@ if (file_exists('modules/googlemap/defaultconfig.php')) {
 				$submenu["label"]  = print_pedigree_person_nav($people["husb"]->getXref(), 2, !$this->isPrintPreview(), 0, $personcount++);
 				$submenu["label"] .= PrintReady($parentlinks);
 				$menu["items"][] = $submenu;
-				
+
 				if (PrintReady($people["husb"]->getDeathYear()) == 0) { $DeathYr = ""; }else{ $DeathYr = PrintReady($people["husb"]->getDeathYear()); }
 				if (PrintReady($people["husb"]->getBirthYear()) == 0) { $BirthYr = ""; }else{ $BirthYr = PrintReady($people["husb"]->getBirthYear()); }
 				?>
 				<tr>
 					<td class="facts_label<?php print $styleadd; ?>" nowrap="nowrap">
 						<?php // print $people["husb"]->getLabel(); ?>
-						<?php 
-							print_menu($menu); 
+						<?php
+							print_menu($menu);
 						?>
 					</td>
 					<td align="center" class="<?php print $this->getPersonStyle($people["husb"]); ?>">
@@ -424,7 +424,7 @@ if (file_exists('modules/googlemap/defaultconfig.php')) {
 				</tr>
 				<?php
 			}
-			
+
 			if ( isset($people["wife"]) && $spousetag == 'WIFE') {
 				$menu = array();
 				$menu["label"] = "&nbsp;" . $people["wife"]->getLabel() . "&nbsp;". "\n";
@@ -434,19 +434,19 @@ if (file_exists('modules/googlemap/defaultconfig.php')) {
 				$submenu["label"]  = print_pedigree_person_nav($people["wife"]->getXref(), 2, !$this->isPrintPreview(), 0, $personcount++);
 				$submenu["label"] .= PrintReady($parentlinks);
 				$menu["items"][] = $submenu;
-				
+
 				if (PrintReady($people["wife"]->getDeathYear()) == 0) { $DeathYr = ""; }else{ $DeathYr = PrintReady($people["wife"]->getDeathYear()); }
 				if (PrintReady($people["wife"]->getBirthYear()) == 0) { $BirthYr = ""; }else{ $BirthYr = PrintReady($people["wife"]->getBirthYear()); }
 				?>
 				<tr>
 					<td class="facts_label<?php print $styleadd; ?>" nowrap="nowrap">
 						<?php // print $people["wife"]->getLabel(); ?>
-						<?php 
-							print_menu($menu); 
+						<?php
+							print_menu($menu);
 						?>
 					</td>
 					<td align="center" class="<?php print $this->getPersonStyle($people["wife"]); ?>">
-						<?php 
+						<?php
 							if ( ($people["wife"]->canDisplayDetails()) ) {
 								if ($pid == $people["wife"]->getXref()) {
 									print "" . PrintReady($people["wife"]->getFullName()) . "";
@@ -466,7 +466,7 @@ if (file_exists('modules/googlemap/defaultconfig.php')) {
 				</tr>
 				<?php
 			}
-			
+
 			$styleadd = "";
 			if (isset($people["children"])) {
 				foreach($people["children"] as $key=>$child) {
@@ -478,15 +478,15 @@ if (file_exists('modules/googlemap/defaultconfig.php')) {
 					$submenu["label"]  = print_pedigree_person_nav($child->getXref(), 2, !$this->isPrintPreview(), 0, $personcount++);
 					$submenu["label"] .= PrintReady($spouselinks);
 					$menu["items"][] = $submenu;
-					
+
 					if (PrintReady($child->getDeathYear()) == 0) { $DeathYr = ""; }else{ $DeathYr = PrintReady($child->getDeathYear()); }
 					if (PrintReady($child->getBirthYear()) == 0) { $BirthYr = ""; }else{ $BirthYr = PrintReady($child->getBirthYear()); }
 					?>
 					<tr>
 						<td class="facts_label<?php print $styleadd; ?>" nowrap="nowrap">
 							<?php //print $child->getLabel(); ?>
-							<?php 
-								print_menu($menu); 
+							<?php
+								print_menu($menu);
 							?>
 						</td>
 						<td align="center" class="<?php print $this->getPersonStyle($child); ?>">
@@ -505,11 +505,11 @@ if (file_exists('modules/googlemap/defaultconfig.php')) {
 					<?php
 				}
 			}
-			
+
 		}
 		echo "</table>";
-	 
-	 
+
+
 // -----------------------------------------------------------------------------
 // }
 // -----------------------------------------------------------------------------
@@ -517,7 +517,7 @@ if (file_exists('modules/googlemap/defaultconfig.php')) {
 // -----------------------------------------------------------------------------
 
 // ==================================================================
-require_once 'includes/functions_charts.php';
+require_once 'includes/functions/functions_charts.php';
 /**
  * print the information for an individual chart box
  *
@@ -535,10 +535,10 @@ function print_pedigree_person_nav($pid, $style=1, $show_famlink=true, $count=0,
 	global $chart_style, $box_width, $generations, $show_spouse, $show_full;
 	global $CHART_BOX_TAGS, $SHOW_LDS_AT_GLANCE, $PEDIGREE_SHOW_GENDER;
 	global $SEARCH_SPIDER;
-	
+
 	global $spouselinks, $parentlinks, $step_parentlinks, $persons, $person_step, $person_parent, $tabno, $theme_name, $spousetag;
 	global $natdad, $natmom;
-	
+
 	if ($style != 2) $style=1;
 	if (empty($show_full)) $show_full = 0;
 	if (empty($PEDIGREE_FULL_DETAILS)) $PEDIGREE_FULL_DETAILS = 0;
@@ -552,7 +552,7 @@ function print_pedigree_person_nav($pid, $style=1, $show_famlink=true, $count=0,
 		$parentlinks 		= false;
 		$step_parentlinks	= false;
 	}
-	
+
 	$tmp=array('M'=>'','F'=>'F', 'U'=>'NN');
 	$isF=$tmp[$person->getSex()];
 	$spouselinks = "";
@@ -582,30 +582,30 @@ function print_pedigree_person_nav($pid, $style=1, $show_famlink=true, $count=0,
 				$persons       = "";
 				$person_parent = "";
 				$person_step   = "";
-				
 
-			
+
+
 				//-- parent families --------------------------------------
 				$fams = $person->getChildFamilies();
 				foreach($fams as $famid=>$family) {
-					
+
 					if (!is_null($family)) {
 						$husb = $family->getHusband($person);
 						$wife = $family->getWife($person);
 						// $spouse = $family->getSpouse($person);
 						$children = $family->getChildren();
 						$num = count($children);
-						
+
 						// Husband ------------------------------
 						if ($husb || $num>0) {
-							if ($TEXT_DIRECTION=="ltr") { 
+							if ($TEXT_DIRECTION=="ltr") {
 								$title = $pgv_lang["familybook_chart"].": ".$famid;
 							}else{
 								$title = $famid." :".$pgv_lang["familybook_chart"];
 							}
 							if ($husb) {
 								$person_parent="Yes";
-								if ($TEXT_DIRECTION=="ltr") { 
+								if ($TEXT_DIRECTION=="ltr") {
 									$title = $pgv_lang["indi_info"].": ".$husb->getXref();
 								}else{
 									$title = $husb->getXref()." :".$pgv_lang["indi_info"];
@@ -622,17 +622,17 @@ function print_pedigree_person_nav($pid, $style=1, $show_famlink=true, $count=0,
 								$natdad = "yes";
 							}
 						}
-						
+
 						// Wife ------------------------------
 						if ($wife || $num>0) {
-							if ($TEXT_DIRECTION=="ltr") { 
+							if ($TEXT_DIRECTION=="ltr") {
 								$title = $pgv_lang["familybook_chart"].": ".$famid;
 							}else{
 								$title = $famid." :".$pgv_lang["familybook_chart"];
 							}
 							if ($wife) {
 								$person_parent="Yes";
-								if ($TEXT_DIRECTION=="ltr") { 
+								if ($TEXT_DIRECTION=="ltr") {
 									$title = $pgv_lang["indi_info"].": ".$wife->getXref();
 								}else{
 									$title = $wife->getXref()." :".$pgv_lang["indi_info"];
@@ -661,12 +661,12 @@ function print_pedigree_person_nav($pid, $style=1, $show_famlink=true, $count=0,
 						// $spouse = $family->getSpouse($person);
 						$children = $family->getChildren();
 						$num = count($children);
-						
+
 						if ($natdad == "yes") {
 						}else{
 							// Husband -----------------------
 							if ( ($husb || $num>0) && $husb->getLabel() != "." ) {
-								if ($TEXT_DIRECTION=="ltr") { 
+								if ($TEXT_DIRECTION=="ltr") {
 									$title = $pgv_lang["familybook_chart"].": ".$famid;
 								}else{
 									$title = $famid." :".$pgv_lang["familybook_chart"];
@@ -690,7 +690,7 @@ function print_pedigree_person_nav($pid, $style=1, $show_famlink=true, $count=0,
 								}
 							}
 						}
-						
+
 						if ($natmom == "yes") {
 						}else{
 							// Wife ----------------------------
@@ -721,15 +721,15 @@ function print_pedigree_person_nav($pid, $style=1, $show_famlink=true, $count=0,
 						}
 					}
 				}
-				
-				// Spouse Families -------------------------------------- @var $family Family 
+
+				// Spouse Families -------------------------------------- @var $family Family
 				$fams = $person->getSpouseFamilies();
 				foreach($fams as $famid=>$family) {
 					if (!is_null($family)) {
 						$spouse = $family->getSpouse($person);
 						$children = $family->getChildren();
 						$num = count($children);
-						
+
 						// Spouse ------------------------------
 						if ($spouse || $num>0) {
 							if ($TEXT_DIRECTION=="ltr") {
@@ -738,13 +738,13 @@ function print_pedigree_person_nav($pid, $style=1, $show_famlink=true, $count=0,
 								$title = $famid." :".$pgv_lang["familybook_chart"];
 							}
 							if ($spouse) {
-								if ($TEXT_DIRECTION=="ltr") { 
+								if ($TEXT_DIRECTION=="ltr") {
 									$title = $pgv_lang["indi_info"].": ".$spouse->getXref();
 								}else{
 									$title = $spouse->getXref()." :".$pgv_lang["indi_info"];
 								}
 								$tmp=$spouse->getXref();
-								if ($spouse->canDisplayName()) { 
+								if ($spouse->canDisplayName()) {
 									$spouselinks .= "<a href=\"".encode_url("individual.php?pid={$tmp}&amp;tab={$tabno}&amp;gedcom={$GEDCOM}")."\">";
 									$spouselinks .= PrintReady($spouse->getFullName());
 								}else{
@@ -756,8 +756,8 @@ function print_pedigree_person_nav($pid, $style=1, $show_famlink=true, $count=0,
 								}
 							}
 						}
-						
-						// Children ------------------------------   @var $child Person 
+
+						// Children ------------------------------   @var $child Person
 						foreach($children as $c=>$child) {
 							$cpid = $child->getXref();
 							if ($child) {
@@ -769,7 +769,7 @@ function print_pedigree_person_nav($pid, $style=1, $show_famlink=true, $count=0,
 										$spouselinks .= "<a href=\"".encode_url("individual.php?pid=".$child->getXref()."&amp;tab={$tabno}&amp;gedcom={$GEDCOM}")."\">";
 										$spouselinks .= PrintReady($child->getFullName());
 										$spouselinks .= "</a>";
-									}else{ 
+									}else{
 										$spouselinks .= $pgv_lang["private"];
 									}
 									$spouselinks .= "<br />";
@@ -780,7 +780,7 @@ function print_pedigree_person_nav($pid, $style=1, $show_famlink=true, $count=0,
 										$spouselinks .= PrintReady($child->getFullName() );
 										$spouselinks .= "</a>";
 										$spouselinks .= "&nbsp;&nbsp;o";
-									}else{ 
+									}else{
 										$spouselinks .= "o&nbsp;&nbsp;";
 										$spouselinks .= $pgv_lang["private"];
 									}
@@ -791,26 +791,26 @@ function print_pedigree_person_nav($pid, $style=1, $show_famlink=true, $count=0,
 					}
 				}
 				?>
-				
+
 				<?php if ($theme_name=="Xenea" || $theme_name=="Standard" || $theme_name=="Wood" || $theme_name=="Ocean") { ?>
 				<style type="text/css" rel="stylesheet">
 					a:hover .name2 { color: #222222; }
 				</style>
 				<?php } ?>
-				
+
 				<?php
 				if ($persons != "Yes") {
 					$spouselinks  .= "(" . $pgv_lang['none'] . ")</td></tr></table>\n\t\t";
 				}else{
 					$spouselinks  .= "</td></tr></table>\n\t\t";
 				}
-				
+
 				if ($person_parent != "Yes") {
 					$parentlinks .= "(" . $pgv_lang['unknown'] . ")</td></tr></table>\n\t\t";
 				}else{
 					$parentlinks .= "</td></tr></table>\n\t\t";
 				}
-				
+
 				if ($person_step != "Yes") {
 					$step_parentlinks .= "(" . $pgv_lang['unknown'] . ")</td></tr></table>\n\t\t";
 				}else{

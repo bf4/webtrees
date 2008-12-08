@@ -41,7 +41,7 @@ print "After getGedcomRecord<br />";
 
 //$person = $soap->getPersonByID($result->SID, "I1");
 //print_r($person);
-//require_once('includes/class_grampsexport.php');
+//require_once('includes/classes/class_grampsexport.php');
 //$ge= new GrampsExport();
 //$ge->begin_xml();
 //$ge->create_family(find_family_record("F1"), "F1", 1);

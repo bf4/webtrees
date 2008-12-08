@@ -26,7 +26,7 @@
 
 require './config.php';
 
-require_once("includes/functions_charts.php");
+require_once("includes/functions/functions_charts.php");
 
 /**
  * split and center text by lines

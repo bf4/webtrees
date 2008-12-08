@@ -3,7 +3,7 @@
  * phpGedView Research Assistant Tool - ra_AddTask
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  John Finlay and Others
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -34,17 +34,17 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
-require_once("includes/functions_db.php");
+require_once("includes/functions/functions_db.php");
 
     // Grab the global vars we need
  	global $pgv_lang, $TBLPREFIX, $SOURCE_ID_PREFIX;
- 
+
 	/**
 	 * GETS all available FOLDERS and creates a combo box with the folders listed.
-	 * 
+	 *
 	 * @return all available folders
 	 */
-	
+
     function getFolders() {
         global $TBLPREFIX;
 
@@ -57,11 +57,11 @@ require_once("includes/functions_db.php");
 		    if (!empty($_REQUEST['folderid']) && $_REQUEST['folderid']==$foldername['fr_id']) $out .= '" selected="selected"';
 			$out .= '>'.$foldername['fr_name'] . '</option>';
         }
-        
+
 		return $out;
 	}
-	
-	function truncate($trunstring, $max = 30, $rep = '...') 
+
+	function truncate($trunstring, $max = 30, $rep = '...')
 	{
        if(strlen($trunstring) < 1)
        {
@@ -72,7 +72,7 @@ require_once("includes/functions_db.php");
            $string = $trunstring;
        }
        $count = $max - strlen($rep);
-      
+
        if(strlen($string) > $max)
        {
            return substr_replace($string, $rep, $count);
@@ -81,14 +81,14 @@ require_once("includes/functions_db.php");
        {
            return $string;
        }
-      
+
    }
-	
+
 ?>
 
 <!--JAVASCRIPT-->
 
-  
+
 
 <!--BEGIN ADD NEW TASK FORM-->
 
@@ -100,7 +100,7 @@ require_once("includes/functions_db.php");
         <tbody>
             <tr>
     <!--HEADING-->
-                <td colspan="4" align="right" class="topbottombar"> 
+                <td colspan="4" align="right" class="topbottombar">
                     <h2><?php print $pgv_lang["add_new_task"]; print_help_link("ra_add_task_help", "qm", '', false, false); ?></h2>
                 </td>
             </tr>
@@ -110,13 +110,13 @@ require_once("includes/functions_db.php");
                     <?php print $pgv_lang["title"]; ?>
                 </td>
                 <td class="optionbox"><input type="text" name="title" value="" size="35"/></td>
-    <!--FOLDER--> 
+    <!--FOLDER-->
                 <td class="descriptionbox">
                     <?php print $pgv_lang["folder"]; ?>
                 </td>
                 <td class="optionbox">
                     <select name="folder">
-                        <?php 
+                        <?php
                             // Gets a list of all available folders in the format { <option value="folderid">foldername }
                             print getFolders();
                         ?>
@@ -129,26 +129,26 @@ require_once("includes/functions_db.php");
     			<td class="descriptionbox">
     				<?php print $pgv_lang["assign_task"]; ?>
     			</td>
-    			<td class="optionbox" colspan=3> 
+    			<td class="optionbox" colspan=3>
     			<select name="Users"> <option value=""></option>
-    			<?php 
+    			<?php
     				foreach(get_all_users() as $username) {
     					print "<option value=\"$username\">".getUserFullName($username)."</option>";
     				}
-    			?>  		
+    			?>
     			</select>
-    				
+
     			</td>
     			<tr>
-    		</tr>	
+    		</tr>
     <!--DESCRIPTION-->
                 <td class="descriptionbox">
                     <?php print $pgv_lang["description"]; ?>
                 </td>
                 <td class="optionbox" colspan="3"><textarea name="desc" rows="3" cols="55"></textarea></td>
-            </tr>    
-            <tr>	
-    
+            </tr>
+            <tr>
+
     <!--SOURCES-->
                 <td class="descriptionbox" >
                     <?php  print $pgv_lang["source"]; ?>

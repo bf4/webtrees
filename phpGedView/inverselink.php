@@ -5,7 +5,7 @@
  * This is the page that does the work of linking items.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2003  John Finlay and Others
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,7 +28,7 @@
 
 require './config.php';
 
-require("includes/functions_edit.php");
+require("includes/functions/functions_edit.php");
 
 //-- page parameters and checking
 

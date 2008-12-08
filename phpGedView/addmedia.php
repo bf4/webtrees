@@ -30,8 +30,8 @@
 
 require './config.php';
 
-require_once 'includes/functions_print_lists.php';
-require_once 'includes/functions_edit.php';
+require_once 'includes/functions/functions_print_lists.php';
+require_once 'includes/functions/functions_edit.php';
 
 if (empty($ged)) $ged = $GEDCOM;
 $GEDCOM = $ged;
@@ -155,7 +155,7 @@ if ($action=="newentry") {
 
 		$destFolder = $folderName;		// This is where the actual image will be stored
 		$destThumbFolder = $thumbFolderName;		// ditto for the thumbnail
- 
+
 		if ($USE_MEDIA_FIREWALL) {
 			$destFolder = get_media_firewall_path($folderName);
 			if ($MEDIA_FIREWALL_THUMBS) $destThumbFolder = get_media_firewall_path($thumbFolderName);
@@ -404,7 +404,7 @@ if ($action=="newentry") {
 
 		$newged = handle_updates($newged);
 
-		require_once 'includes/class_media.php';
+		require_once 'includes/classes/class_media.php';
 		$media_obje = new Media($newged);
 		$mediaid = Media::in_obje_list($media_obje);
 		if (!$mediaid) $mediaid = append_gedrec($newged, $linktoid);

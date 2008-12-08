@@ -44,7 +44,7 @@
 
 require './config.php';
 
-require_once 'includes/functions_print_lists.php';
+require_once 'includes/functions/functions_print_lists.php';
 
 // We show three different lists:
 $alpha   =safe_GET('alpha'); // All surnames beginning with this letter where "@"=unknown and ","=none

@@ -3,7 +3,7 @@
  * Parses gedcom file and displays record for given id in raw text
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2005  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,7 +26,7 @@
 
 require './config.php';
 
-require_once("includes/class_gedcomrecord.php");
+require_once("includes/classes/class_gedcomrecord.php");
 header("Content-Type: text/html; charset=$CHARACTER_SET");
 
 $pid=safe_GET_xref('pid');

@@ -2,7 +2,7 @@
 /**
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008 John Finlay and Others.  All rights reserved.
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -30,9 +30,9 @@ if (!defined('PGV_PHPGEDVIEW')) {
 
 define('PGV_PEDIGREE_CTRL_PHP', '');
 
-require_once 'includes/functions_charts.php';
+require_once 'includes/functions/functions_charts.php';
 require_once 'includes/controllers/basecontrol.php';
-require_once 'includes/class_person.php';
+require_once 'includes/classes/class_person.php';
 
 /**
  * Main controller class for the Ancestry page.

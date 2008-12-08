@@ -185,7 +185,7 @@ function agma($i) {
 		}
 	}
 }
- 
+
 //Age in year of first marriage
 function agma1($i) {
 	global $z_as, $famgeg, $persgeg, $n1;
@@ -596,7 +596,7 @@ function print_map_charts($chart_shows, $chart_type, $x_as, $surname) {
 	global $iso3166, $country_to_iso3166;
 
 	if ($surname=="") {
-		require_once 'includes/class_stats.php';
+		require_once 'includes/classes/class_stats.php';
 		$stats = new stats($GEDCOM);
 		$surname = $stats->getCommonSurname();
 	}

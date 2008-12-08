@@ -26,11 +26,11 @@
  */
 // Include the search controller from now on refered to as $controller
 require_once ("includes/controllers/advancedsearch_ctrl.php");
-require_once ("includes/functions_print_lists.php");
+require_once ("includes/functions/functions_print_lists.php");
 
 $controller = new AdvancedSearchController();
 $controller->init();
-	
+
 // Print the top header
 print_header($pgv_lang["advanced_search"]);
 ?>
@@ -38,10 +38,10 @@ print_header($pgv_lang["advanced_search"]);
 <!--
 	function checknames(frm) {
 		action = "<?php print $controller->action ?>";
-		
+
 		return true;
 	}
-	
+
 	var numfields = <?php print count($controller->fields); ?>;
 	/**
 	 * add a row to the table of fields
@@ -75,7 +75,7 @@ print_header($pgv_lang["advanced_search"]);
 		var val = document.createElement('td');
 		val.id = 'vcell'+numfields;
 		val.className='list_value';
-		
+
 		var inp = document.createElement('input');
 		inp.name='values['+numfields+']';
 		inp.type='text';
@@ -84,17 +84,17 @@ print_header($pgv_lang["advanced_search"]);
 		val.appendChild(inp);
 		trow.appendChild(val);
 		var lastRow = tbl.lastChild.previousSibling;
-	
+
 		tbl.insertBefore(trow, lastRow.nextSibling);
 		numfields++;
 	}
-	
+
 	/**
 	 * add the date options selection
 	 */
 	function showDate(sel, row) {
 		var type = sel.options[sel.selectedIndex].value;
-		var pm = document.getElementById('plusminus'+row); 
+		var pm = document.getElementById('plusminus'+row);
 		if (!type.match("DATE$")) {
 			//-- if it is not a date do not show the date
 			if (pm) pm.parentNode.removeChild(pm);
@@ -142,7 +142,7 @@ print_header($pgv_lang["advanced_search"]);
 		</td>
 	</tr>
 	<!-- // search terms -->
-	<?php 
+	<?php
 	$fct = count($controller->fields);
 	for($i=0; $i<$fct; $i++) {
 		if (strpos($controller->getField($i), "FAMC:HUSB:NAME")===0) continue;
@@ -155,7 +155,7 @@ print_header($pgv_lang["advanced_search"]);
 		<td id="vcell<?php print $i; ?>" class="list_value">
 			<input type="hidden" name="fields[<?php print $i ?>]" value="<?php print $controller->getField($i); ?>" />
 			<input tabindex="<?php print $i+1; ?>" type="text" id="value<?php print $i; ?>" name="values[<?php print $i; ?>]" value="<?php print $controller->getValue($i); ?>" />
-			<?php if (preg_match("/:DATE$/", $controller->getField($i))>0) { 
+			<?php if (preg_match("/:DATE$/", $controller->getField($i))>0) {
 				?>
 				<select name="plusminus[<?php print $i ?>]">
 					<option value=""><?php print $pgv_lang["exact"]; ?></option>
@@ -166,8 +166,8 @@ print_header($pgv_lang["advanced_search"]);
 			<?php }?>
 		</td>
 		<?php
-		//-- relative fields 
-		if ($i==0 && $fct>4) { 
+		//-- relative fields
+		if ($i==0 && $fct>4) {
 			$j=$fct;
 			?>
 			<td rowspan="100" class="list_value">

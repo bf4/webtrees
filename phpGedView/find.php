@@ -26,7 +26,7 @@
 
 require './config.php';
 
-require_once 'includes/functions_print_lists.php';
+require_once 'includes/functions/functions_print_lists.php';
 
 $type          =safe_GET('type', PGV_REGEX_ALPHA, 'indi');
 $filter        =safe_GET('filter');

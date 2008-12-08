@@ -3,7 +3,7 @@
  * phpGedView Research Assistant Tool - World War 1 Draft Card C
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  John Finlay and Others
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -31,7 +31,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 }
 
 require_once "ra_form.php";
-require_once "includes/functions_edit.php";
+require_once "includes/functions/functions_edit.php";
 
 class WW1DraftC extends ra_form {
 
@@ -47,10 +47,10 @@ class WW1DraftC extends ra_form {
 	    			'<input type="hidden" name="taskid" value="'.$_REQUEST['taskid'].'" />';
 			if (!isset($_REQUEST['numOfRows'])) $_REQUEST['numOfRows'] = count($this->getPeople());
 			if ($_REQUEST['numOfRows']<1) $_REQUEST['numOfRows']=1;
-	  
+
 			$out .= '</form>';
 		}
-		 
+
 		// Split action and use it for hidden inputs
 		$action = parse_url($action);
 		$params = array();
@@ -74,7 +74,7 @@ return false;}return true;}
 		$out .= '</tr>';
 		return $out;
 	}
-	
+
 	function getFieldValue($j, $lines) {
 		$value = "";
 		if (empty($lines[$j])) return $value;
@@ -83,7 +83,7 @@ return false;}return true;}
 		if ($ct>0) $value = trim($match[1]);
 		return $value;
 	}
-	
+
 	/**
 	 * override method from ra_form.php
 	 */
@@ -95,7 +95,7 @@ return false;}return true;}
 			$people = $this->getPeople();
 			$row = count($people);
 		}
-		 
+
 		$citation = $this->getSourceCitationData();
 		$page = "";
 		$callno = "";
@@ -105,14 +105,14 @@ return false;}return true;}
 			$page = trim($match[1]);
 			$callno = trim($match[2]);
 		}
-		 
+
 		$city = "";
 		$county = "";
 		$state = "";
 		if (!empty($citation['ts_array']['city'])) $city = $citation['ts_array']['city'];
 		if (!empty($citation['ts_array']['county'])) $county = $citation['ts_array']['county'];
 		if (!empty($citation['ts_array']['state'])) $state = $citation['ts_array']['state'];
-   
+
 		$out = '<tr>
 			<td class="descriptionbox">'.print_help_link("edit_media_help", "qm",'',false,true).$factarray['OBJE'].'</td>
 			<td class="optionbox" colspan="5"><input type="text" name="OBJE" id="OBJE" size="5" value="'.$citation['ts_obje'].'"/>';
@@ -277,7 +277,7 @@ return false;}return true;}
   </td>';
 		}
 		$out .='</tr>';
- 
+
 		$out .= '<tr><th colspan="2" align="right"class="topbottombar"><h2>' . "Registrar's Report" . '</h2></th>';
 		$out .= '</tr>
 <tr>
@@ -307,7 +307,7 @@ return false;}return true;}
  <tr>';
 }
 
-		
+
 		$out .='</tr>
 <tr>
   <td class="descriptionbox">Color of Eyes:
@@ -357,7 +357,7 @@ return false;}return true;}
 				if (isset($persons[$i])) $pid = $persons[$i]->getXref();
 			}
 			$person = Person::GetInstance($pid);
-  	
+
 			$out .= '
 	            <td id="peoplecell" class="optionbox">
 	                   <div id="peoplelink'.$i.'">';
@@ -369,7 +369,7 @@ return false;}return true;}
 			$out .= print_findindi_link("personid".$i, "peoplelink".$i, true,false,'',$searchName);
 			$out .= "<br />Create New Person: <input type=\"checkbox\" value=\"newPerson\"/>";
 			$out .= '<br /></td>';
-	    
+
 		}
 		$out .='</tr></table>';
 		$out .= '</td></tr>';
@@ -381,28 +381,28 @@ return false;}return true;}
     {
     	$indiFact = "0 @new@ INDI\r\n";
     	$indiFact .= "1 NAME ".$_POST["NameOfPeople".$i]."\r\n";
-    	
+
     	if(!empty($_POST["Age".$i]))
     	{
     		$age = 1930 - $_POST["Age".$i];
     		$indiFact .= "1 BIRT\r\n";
     		$indiFact .= "2 DATE ABT ".$age;
     	}
-    	
+
     	if(!empty($_POST["PlaceOfBirth".$i]))
     	{
     		$indiFact .= "2 PLAC ".$_POST["PlaceOfBirth"];
     	}
-    	
+
     	if(!empty($_POST["Gender".$i]))
     	{
     		$indiFact .= "1 SEX ".$_POST["Gender".$i];
     	}
-    	
+
     	return $indiFact;
-    	
+
     }
-	
+
 	function footer() {
 		return '</table></form>';
 	}
@@ -414,12 +414,12 @@ return false;}return true;}
 		$out .= $this->footer();
 		return $out;
 	}
-	
+
 	function step2() {
 		global $GEDCOM, $GEDCOMS, $TBLPREFIX, $DBCONN, $factarray, $pgv_lang;
 		global $INDI_FACTS_ADD;
 
-		
+
 		$personid = "";
 		for($number = 0; $number < $_POST['numOfRows']; $number++)
 		{
@@ -440,7 +440,7 @@ return false;}return true;}
 			$out .= $this->footer();
 			return $out;
 	}
-	
+
 	function inferFacts($rows){
 		$people = array();
 
@@ -449,8 +449,8 @@ return false;}return true;}
 
 
 	}
-	
-	
+
+
 	function editFactsForm($printButton = true)
 	{
 		global $factarray, $pgv_lang;
@@ -463,9 +463,9 @@ return false;}return true;}
 
 		if(!empty($inferFacts))
 		{
-			
+
 			$out .= '<tr><td colspan="2" id="inferData"><table class="list_table"><tbody><tr><td colspan="4" class="topbottombar">'.$pgv_lang["ra_inferred_facts"].'</td></tr>
-<tr><td class="descriptionbox">'.$pgv_lang["ra_fact"].'</td><td class="descriptionbox">'.$pgv_lang["ra_person"].'</td><td class="descriptionbox">'.$pgv_lang["ra_reason"].'</td><td class="descriptionbox">'.$pgv_lang["add"].'</td></tr>'; 
+<tr><td class="descriptionbox">'.$pgv_lang["ra_fact"].'</td><td class="descriptionbox">'.$pgv_lang["ra_person"].'</td><td class="descriptionbox">'.$pgv_lang["ra_reason"].'</td><td class="descriptionbox">'.$pgv_lang["add"].'</td></tr>';
 			$completeFact = true;
 			$occufact = true;
 			foreach($inferFacts as $key=>$inferredFacts) {
@@ -475,13 +475,13 @@ return false;}return true;}
 					{
 						$ct = preg_match("/1 (\w+)/", $factValues['tf_factrec'], $match);
 						$factname = trim($match[1]);
-			
+
 						if($factValues["tf_people"] == $key  && $factname == $value["factType"])
 						{
 							$completeFact = false;
 						}
 					}
-						
+
 					if($completeFact)
 					{
 						$out .='<tr>';
@@ -491,19 +491,19 @@ return false;}return true;}
 						$out .="<td class=\"optionbox\">".'<input type="Checkbox" id="'.$value['PersonID'].$value['factType'].'" onclick="add_ra_fact_inferred(this,\''.preg_replace("/\r?\n/", "\\r\\n",$value["Fact"]).'\',\''.$value['PersonID'].'\',\''.$value['factType'].'\',\''.htmlentities($value["Person"]).'\',\''.$value["factPeople"].'\')"></td>'."\n";
 						$out .="</tr>";
 					}
-					
+
 				}
 			}
-			$out .= '<tr><td class="descriptionbox" align="center" colspan="4"><input type="submit" value='.$pgv_lang["complete"].'></td></tr>'; 
+			$out .= '<tr><td class="descriptionbox" align="center" colspan="4"><input type="submit" value='.$pgv_lang["complete"].'></td></tr>';
 			return $out;
 		}
-		else 
+		else
 		{
-		$out .= '<tr><td class="descriptionbox" align="center" colspan="4"><input type="submit" value='.$pgv_lang["complete"].'></td></tr>'; 
+		$out .= '<tr><td class="descriptionbox" align="center" colspan="4"><input type="submit" value='.$pgv_lang["complete"].'></td></tr>';
 		return $out;
 		}
 	}
-	
+
 	function step3() {
 		global $GEDCOM, $GEDCOMS, $TBLPREFIX, $DBCONN, $pgv_lang;
 
@@ -518,7 +518,7 @@ return false;}return true;}
 		// Return it to the buffer.
 		return $out;
 	}
-	
+
 	function getOccupation($gedcomRecord)
 	{
 		$occupation = get_gedcom_value("OCCU", 1, $gedcomRecord);
@@ -529,10 +529,10 @@ return false;}return true;}
 	 * This is a function that will attempt to infer facts from the census form.
 	 * If any facts can be inferred then it will attempt to validate them against the database.
 	 * If a fact differs from that in the database, or there is no fact present in the databse,
-	 * this function will suggest the facts to the user. 
+	 * this function will suggest the facts to the user.
 	 */
-	
-	
+
+
 	/**
 	 * Override method from ra_form
 	 */
@@ -541,7 +541,7 @@ return false;}return true;}
     	//-- delete any old census records
 		$sql = "DELETE FROM ".$TBLPREFIX."taskfacts WHERE tf_t_id='".$DBCONN->escapeSimple($_REQUEST['taskid'])."' AND tf_factrec ".PGV_DB_LIKE." '1 _MILI%'";
 		$res = dbquery($sql);
-   
+
 		// Set our output to nothing, this supresses a warning that we would otherwise get.
 		$out = "";
 		$factrec = "1 _MILI";
@@ -601,8 +601,8 @@ return false;}return true;}
 			if (!isset($_POST["FathersBirthPlace".$number])) $_POST["FathersBirthPlace".$number]="";
 			if (!isset($_POST["NearestRelative".$number])) $_POST["NearestRelative".$number]="";
 			if (!isset($_POST["NearestRelativeAddress".$number])) $_POST["NearestRelativeAddress".$number]="";
-		
-		
+
+
 			$rows[$number] = array(
 			'FName'=>$_POST["FName".$number],
 			'MName'=>$_POST["MName".$number],
@@ -642,7 +642,7 @@ return false;}return true;}
 			"NearestRelative"=>$_POST["NearestRelative".$number],
 			"Regstate"=>$_POST["Regstate".$number]
 			);
-		
+
 			$text .= "\r\n";
 			if (!empty($_POST["FName".$number])) $text .= "First Name: ".$_POST["FName".$number];
 			if (!empty($_POST["MName".$number])) $text .= "Middle Name: ".$_POST["MName".$number];
@@ -679,9 +679,9 @@ return false;}return true;}
 
 		$citation = array(
 			"PAGE"=>"Page: ".$_POST['page'].", Serial No.: ".$_POST['CallNumberURL'],
-			"QUAY"=>'', 
-    		"DATE"=>!empty($_POST['EnumerationDate'])?$_POST['EnumerationDate']:"1880", 
-			"TEXT"=>$text, 
+			"QUAY"=>'',
+    		"DATE"=>!empty($_POST['EnumerationDate'])?$_POST['EnumerationDate']:"1880",
+			"TEXT"=>$text,
 			"OBJE"=>$_POST['OBJE'],
 			"array"=>array(
 			'city'=>"",
@@ -691,6 +691,6 @@ return false;}return true;}
 
 		return $citation;
 	}
-	
+
 }
 ?>

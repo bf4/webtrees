@@ -3,7 +3,7 @@
  * Display a diff between two language files to help in translating.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  John Finlay and Others
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -172,7 +172,7 @@ if ($action=="generate") {
     if (isset($_POST["fam_recs"])) print "<tr><td class=\"optionbox\">".$pgv_lang["sm_family_info"]."</td></tr>\n";
     if (isset($_POST["fam_list"])) print "<tr><td class=\"optionbox\">".$pgv_lang["sm_family_list"]."</td></tr>\n";
 //  if (isset($_POST["GEDCOM_Privacy"])) print "<tr><td class=\"optionbox\">".$pgv_lang["gedcoms_privacy"]."</td></tr>\n";
- 
+
     print "   <tr><td class=\"topbottombar\">".$pgv_lang["gedcoms_selected"]."</td></tr>\n";
     foreach($GEDCOMS as $ged_index=>$ged_rec) {
         if (isset($_POST["GEDCOM_".$ged_rec["id"]])) print "<tr><td class=\"optionbox\">".$ged_rec["title"]."</td></tr>\n";
@@ -373,7 +373,7 @@ if ($action=="") {
             </td>
         </tr>
     </table>
-    <center><input id="savebutton" type="submit" value="<?php print $pgv_lang["sm_generate"];?>" /></center><br /><br />    
+    <center><input id="savebutton" type="submit" value="<?php print $pgv_lang["sm_generate"];?>" /></center><br /><br />
 </form>
 
 <?php

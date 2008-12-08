@@ -12,7 +12,7 @@
  * $Id$
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008 John Finlay and Others.  All rights reserved.
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -172,7 +172,7 @@ function getUserId() {
 		if (!empty($_COOKIE["pgv_rem"])&& (empty($referrer_found)) && empty($logout)) {
 			if (!is_object($DBCONN)) {
 				return $_COOKIE["pgv_rem"];
-			} else {	
+			} else {
 				$session_time=get_user_setting($_COOKIE['pgv_rem'], 'sessiontime');
 				if (is_null($session_time))
 					$session_time=0;
@@ -278,7 +278,7 @@ function userCanAccept($user_id=PGV_USER_ID, $ged_id=PGV_GED_ID) {
 
 	if (!$ALLOW_EDIT_GEDCOM)
 		return false;
-	
+
 	$tmp=get_user_gedcom_setting($user_id, $ged_id, 'canedit');
 	return $tmp=='admin' || $tmp=='accept';
 }
@@ -773,7 +773,7 @@ function addMessage($message) {
 	if ($message["from"]==$message["to"])
 		return false;
 
-	require_once('includes/functions_mail.php');
+	require_once('includes/functions/functions_mail.php');
 
 	if (!get_user_id($message["to"])) {
 			//-- the to user must be a valid user in the system before it will send any mails

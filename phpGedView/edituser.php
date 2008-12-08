@@ -26,8 +26,8 @@
 
 require './config.php';
 
-require 'includes/functions_print_lists.php';
-include 'includes/functions_edit.php';
+require 'includes/functions/functions_print_lists.php';
+include 'includes/functions/functions_edit.php';
 
 // cannot edit account using a cookie login - login with password first
 if (!PGV_USER_ID || $_SESSION['cookie_login']) {

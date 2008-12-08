@@ -44,11 +44,11 @@
 
 require './config.php';
 
-require_once 'includes/functions_print_lists.php';
-require_once 'includes/functions_print_facts.php';
-require_once 'includes/functions_edit.php';
-require_once 'includes/functions_import.php';
-require_once 'includes/functions_mediadb.php';
+require_once 'includes/functions/functions_print_lists.php';
+require_once 'includes/functions/functions_print_facts.php';
+require_once 'includes/functions/functions_edit.php';
+require_once 'includes/functions/functions_import.php';
+require_once 'includes/functions/functions_mediadb.php';
 
 /**
  * This functions checks if an existing directory is physically writeable

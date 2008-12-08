@@ -28,8 +28,8 @@ require './config.php';
 
 loadLangFile("pgv_confighelp");
 
-require  "includes/functions_editlang.php";
-if (file_exists( "rs_functions.php")) require  "rs_functions.php";
+require  "includes/functions/functions_editlang.php";
+// if (file_exists( "includes/functions/rs_functions.php")) require  "includes/functions/rs_functions.php";		what IS this??
 
 //-- make sure that they have admin status before they can use this page
 //-- otherwise have them login again

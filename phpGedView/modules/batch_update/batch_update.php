@@ -3,7 +3,7 @@
  * Batch Update module for phpGedView
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2008 Greg Roach.  All rights reserved.
+ * Copyright (C) 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,6 +21,7 @@
  *
  * @package PhpGedView
  * @subpackage Module
+ * @author Greg Roach
  * $Id$
  */
 
@@ -35,7 +36,7 @@ if (!PGV_USER_GEDCOM_ADMIN) {
 }
 
 loadLangFile('batch_update:lang');
-require 'includes/functions_edit.php';
+require 'includes/functions/functions_edit.php';
 
 class batch_update {
 	var $plugin   =null; // Form parameter: chosen plugin

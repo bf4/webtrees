@@ -74,7 +74,7 @@ if ($MULTI_MEDIA) {
 		"filter_video"		=>"no"
 	);
 
-	require_once 'includes/functions_print_facts.php';
+	require_once 'includes/functions/functions_print_facts.php';
 
 	//-- function to display a random picture from the gedcom
 	function print_random_media($block = true, $config="", $side, $index) {

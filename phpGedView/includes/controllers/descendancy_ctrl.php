@@ -32,11 +32,11 @@ if (!defined('PGV_PHPGEDVIEW')) {
 define('PGV_DESCENDANCY_PHP', '');
 
 require_once 'includes/controllers/basecontrol.php';
-require_once 'includes/functions_charts.php';
+require_once 'includes/functions/functions_charts.php';
 
 loadLangFile("pgv_confighelp");
 
-require_once 'includes/class_person.php';
+require_once 'includes/classes/class_person.php';
 
 $indifacts = array();			 // -- array to store the fact records in for sorting and displaying
 $globalfacts = array();

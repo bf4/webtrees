@@ -28,8 +28,8 @@
 
 require './config.php';
 
-require_once("includes/functions_charts.php");
-require_once("includes/class_person.php");
+require_once("includes/functions/functions_charts.php");
+require_once("includes/classes/class_person.php");
 
 function getRelationshipSentence($node, $pid1, $pid2)
 {

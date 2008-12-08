@@ -34,7 +34,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 
 define('PGV_GEDCOM_STATS_PHP', '');
 
-require_once 'includes/functions_print_lists.php';
+require_once 'includes/functions/functions_print_lists.php';
 
 $PGV_BLOCKS["print_gedcom_stats"]["name"]     =$pgv_lang["gedcom_stats_block"];
 $PGV_BLOCKS["print_gedcom_stats"]["descr"]    ="gedcom_stats_descr";

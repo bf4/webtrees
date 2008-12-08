@@ -31,12 +31,12 @@ if (!defined('PGV_PHPGEDVIEW')) {
 
 define('PGV_INDIVIDUAL_CTRL_PHP', '');
 
-require_once 'includes/functions_print_facts.php';
+require_once 'includes/functions/functions_print_facts.php';
 require_once 'includes/controllers/basecontrol.php';
-require_once 'includes/class_menu.php';
-require_once 'includes/class_person.php';
-require_once 'includes/class_family.php';
-require_once 'includes/functions_import.php';
+require_once 'includes/classes/class_menu.php';
+require_once 'includes/classes/class_person.php';
+require_once 'includes/classes/class_family.php';
+require_once 'includes/functions/functions_import.php';
 
 $indifacts = array();			 // -- array to store the fact records in for sorting and displaying
 $globalfacts = array();
@@ -98,7 +98,7 @@ class IndividualControllerRoot extends BaseController {
 		$this->sexarray["F"] = $pgv_lang["female"];
 		$this->sexarray["U"] = $pgv_lang["unknown"];
 
-		$this->pid = safe_GET_xref('pid');	
+		$this->pid = safe_GET_xref('pid');
 
 		$show_famlink = $this->view!='preview';
 
@@ -116,7 +116,7 @@ class IndividualControllerRoot extends BaseController {
 			if ($ct>0) {
 				$servid = trim($match[1]);
 				$remoteid = trim($match[2]);
-				include_once('includes/class_serviceclient.php');
+				include_once('includes/classes/class_serviceclient.php');
 				$service = ServiceClient::getInstance($servid);
 				if ($service != null) {
 					$newrec= $service->mergeGedcomRecord($remoteid, "0 @".$this->pid."@ INDI\r\n1 RFN ".$this->pid, false);
@@ -202,7 +202,7 @@ class IndividualControllerRoot extends BaseController {
 					$servid = $parts[0];
 					$aliaid = $parts[1];
 					if (!empty($servid)&&!empty($aliaid)) {
-						require_once("includes/class_serviceclient.php");
+						require_once("includes/classes/class_serviceclient.php");
 						$serviceClient = ServiceClient::getInstance($servid);
 						if (!is_null($serviceClient)) {
 							if (!empty($newrec)) $mergerec = $serviceClient->mergeGedcomRecord($aliaid, $newrec, true);
@@ -1213,7 +1213,7 @@ class IndividualControllerRoot extends BaseController {
 			<?php
 		}
 	}
-	
+
 	function getTab($tab) {
 
 // LB Fix for no googlemaps ==========================================================================

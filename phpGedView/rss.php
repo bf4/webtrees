@@ -4,7 +4,7 @@
  * in the index page.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2004  John Finlay and Others
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -35,8 +35,8 @@ if (!empty($lang)) {
 	$NEWLANGUAGE = $lang;
 }
 
-require_once 'includes/class_feedcreator.php';
-require_once 'includes/functions_rss.php';
+require_once 'includes/classes/class_feedcreator.php';
+require_once 'includes/functions/functions_rss.php';
 require_once 'includes/index_cache.php';
 
 $feedCacheName = "fullFeed";

@@ -28,7 +28,7 @@
 
 require './config.php';
 
-require_once("includes/functions_edit.php");
+require_once("includes/functions/functions_edit.php");
 
 loadLangFile("pgv_editor");
 

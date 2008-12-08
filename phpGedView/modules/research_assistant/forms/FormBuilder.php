@@ -3,7 +3,7 @@
  * phpGedView Research Assistant Tool - United States Census 1880 File
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  John Finlay and Others
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -31,7 +31,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 }
 
 require_once "modules/research_assistant/forms/ra_form.php";
-require_once "includes/functions_edit.php";
+require_once "includes/functions/functions_edit.php";
 
 class FormBuilder extends ra_form {
 
@@ -55,7 +55,7 @@ class FormBuilder extends ra_form {
 	    			$out .=	'</select></td></tr><tr><td colspan="2" class="topbottombar"><input type="submit" value="'.$pgv_lang["okay"].'"/></td></tr></table>';
 	    			$out .= '</form>';
 		}
-			
+
 		// Split action and use it for hidden inputs
 		$action = parse_url($action);
 		$params = array();
@@ -74,7 +74,7 @@ class FormBuilder extends ra_form {
 
 		return $out;
 	}
-	
+
 	function completeheader($action, $tableAlign, $heading, $showchoose = false) {
 		global $pgv_lang;
 		$out = "";
@@ -88,7 +88,7 @@ class FormBuilder extends ra_form {
 	    			if ($_REQUEST['numOfRows']<1) $_REQUEST['numOfRows']=1;
 	    			$out .= '</form>';
 		}
-			
+
 		// Split action and use it for hidden inputs
 		$action = parse_url($action);
 		$params = array();
@@ -107,7 +107,7 @@ class FormBuilder extends ra_form {
 
 		return $out;
 	}
-	
+
 	function getFieldValue($j, $lines) {
 		$value = "";
 		if (empty($lines[$j])) return $value;
@@ -116,10 +116,10 @@ class FormBuilder extends ra_form {
 		if ($ct>0) $value = trim($match[1]);
 		return $value;
 	}
-	
+
 	function getSelectBox($i) {
 		global $pgv_lang;
-		
+
 		$out = '<select name="inputType'.$i.'" id="'.$i.'" onchange="checkShowField(this)">';
 		$out .= '<option value="Text">'.$pgv_lang["txt"].'</option>';
 		$out .= '<option value="ChkBox">'.$pgv_lang["checkbox"].'</option>';
@@ -128,7 +128,7 @@ class FormBuilder extends ra_form {
 
 		return $out;
 	}
-	
+
 	/**
 	 * override method from ra_form.php
 	 */
@@ -137,7 +137,7 @@ class FormBuilder extends ra_form {
 
 		//        Next Table
 		$out = '<tr>';
-		if(isset($_POST["errorMsg"])) $out .='<td><h3>'.$_POST["errorMsg"].'</h3></td>';		
+		if(isset($_POST["errorMsg"])) $out .='<td><h3>'.$_POST["errorMsg"].'</h3></td>';
 		$out .= '<td colspan="6">';
 
         $out .= '<table align="left" dir="ltr">';
@@ -175,7 +175,7 @@ class FormBuilder extends ra_form {
 			$out .= '<tr>';
 			$out .= '<td class="optionbox">';
 			$out .= '<input type="text" size="22" name="FieldName'.$i.'"/>';
-			$out .= '</td>';			
+			$out .= '</td>';
 			$out .= '<td class="optionbox">';
 			$out .= $this->getSelectBox($i);
 			$out .= '<div style="display:none" id="div'.$i.'"><input type="text" size="22" name = "SelectOptions'.$i.'"/></div>';
@@ -195,7 +195,7 @@ class FormBuilder extends ra_form {
 	function footer() {
 		return '</table></form>';
 	}
-	
+
 	function WriteFile($fileContents,$fileName)
 	{
 		$filePointer = fopen($fileName,"wb");
@@ -204,13 +204,13 @@ class FormBuilder extends ra_form {
 	}
 
 	function display_form() {
-		global $pgv_lang;		
+		global $pgv_lang;
 		$out = $this->header("module.php?mod=research_assistant&form=FormBuilder&action=func&func=step2", "center", $pgv_lang["FormBuilder"], true);
 		$out .=	$this->simpleCitationForm();
 		$out .= $this->footer();
 		return $out;
 	}
-	
+
 	function generate_form()
 	{
 		//Get our form name
@@ -225,7 +225,7 @@ class FormBuilder extends ra_form {
 
 		$tempForm = file_get_contents("modules/research_assistant/forms/FormBuilder/ra_SimpleCitationDummy.php");
 		$tempForm = preg_replace("/%FORMNAME%/",$formName,$tempForm);
-		
+
 		if($multiplePeople == "Y")
 		{
 			$out .= 'if (!isset($_REQUEST[\'numOfRows\'])) $_REQUEST[\'numOfRows\'] = count($this->getPeople());';
@@ -239,8 +239,8 @@ class FormBuilder extends ra_form {
 			$out .= 'if ($_REQUEST[\'numOfRows\']<1) $_REQUEST[\'numOfRows\']=1;';
 			$out .= preg_replace("/%ADDCURLY%/","}",$tempForm);
 		}
-			
-		
+
+
 
 		for($i = 0; $i <$_REQUEST['numOfRows'];$i++)
 		{
@@ -252,7 +252,7 @@ class FormBuilder extends ra_form {
 				$out .= '<tr><td class="descriptionbox">'.$_REQUEST["FieldName".$i].'</td>\';'."\n";
 				$out .= 'for($i=0; $i<$_REQUEST[\'numOfRows\']; $i++) {'."\n";
 				$out .= '$value = "";'."\n";
-				
+
 				if(empty($_REQUEST["customFieldName".$i]))
 				{
 					$out .= 'if (isset($citation[\'ts_array\'][\'rows\'][$i][\''."TextField".$i.'\'])) $value = $citation[\'ts_array\'][\'rows\'][$i][\''."TextField".$i.'\'];'."\n";
@@ -265,7 +265,7 @@ class FormBuilder extends ra_form {
 					$out .= '$out .= \'<td class="optionbox">';
 					$out .= '<INPUT TYPE="TEXT" SIZE="22" name="'.$_REQUEST["customFieldName".$i].'\'.$i.\'" value="\'.htmlentities($value).\'" />';
 				}
-				
+
 				$out .= '</td>\';'."\n";
 				$out .= '}'."\n";
 				$out .= '$out .=\'</tr>'."\n";
@@ -284,7 +284,7 @@ class FormBuilder extends ra_form {
 				{
 				$out .= 'if (isset($citation[\'ts_array\'][\'rows\'][$i][\''.$_REQUEST["customFieldName".$i].'\'])) $value = $citation[\'ts_array\'][\'rows\'][$i][\''.$_REQUEST["customFieldName".$i].'\'];'."\n";
 				}
-				
+
 				$out .= '$out .= \'<td class="optionbox">'."\n";
 
 				if(!empty($_REQUEST["SelectOptions".$i]))
@@ -382,7 +382,7 @@ class FormBuilder extends ra_form {
 			{
 				$out .= 'if (!isset($_POST["TextField'.$i.'".$number])) $_POST["TextField'.$i.'".$number]="";';
 			}
-			
+
 			if($control == "ChkBox")
 			{
 				$out .= 'if (!isset($_POST["CheckBox'.$i.'".$number])) $_POST["CheckBox'.$i.'".$number]="";';
@@ -392,10 +392,10 @@ class FormBuilder extends ra_form {
 			{
 				$out .= 'if (!isset($_POST["Radio'.$i.'".$number])) $_POST["Radio'.$i.'".$number]="";';
 			}
-				
-			
+
+
 		}
-		
+
 		$out .= "\n".'$rows[$number] = array(';
 
 		for($i = 0; $i <$_REQUEST['numOfRows'];$i++)
@@ -439,45 +439,45 @@ class FormBuilder extends ra_form {
 		$out .= '}';
 
 		$out .= '$citation = array(
-			"PAGE"=>"Page: ".$_POST[\'page\'].", Call Number/URL: ".$_POST[\'CallNumberURL\'], 
-			"QUAY"=>\'\', 
-    		"DATE"=>!empty($_POST[\'EnumerationDate\'])?$_POST[\'EnumerationDate\']:"Unknown", 
-			"TEXT"=>$text, 
+			"PAGE"=>"Page: ".$_POST[\'page\'].", Call Number/URL: ".$_POST[\'CallNumberURL\'],
+			"QUAY"=>\'\',
+    		"DATE"=>!empty($_POST[\'EnumerationDate\'])?$_POST[\'EnumerationDate\']:"Unknown",
+			"TEXT"=>$text,
 			"OBJE"=>$_POST[\'OBJE\'],
 			"array"=>array(
 		\'city\'=>$_POST[\'city\'],
 			\'county\'=>$_POST[\'county\'],
 			\'state\'=>$_POST[\'state\'],
 			\'rows\'=>$rows));
-		
+
 		return $citation;
     }} ?>';
 		if(strstr($formName,'\\') || strstr($formName,'/'))
 		{
-			
+
 		}
 		else
 		{
 			$this->WriteFile($out,"modules/research_assistant/forms/".$formName.".php");
 		}
 	}
-	
+
 	function getEditFactsFormAndStep3()
 	{
 		$temp = 'function editFactsForm($printButton = true)
 	{
 		global $factarray;
-		
+
 		$facts = $this->getFactData();
 		$citation = $this->getSourceCitationData();
 		$out = parent::editFactsForm(false);
 		$rows = $citation[\'ts_array\'][\'rows\'];
-		
-		$out .= \'<tr><td class="descriptionbox" align="center" colspan="4"><input type="submit" value=\'.$pgv_lang["complete"].\'></td></tr>\'; 
+
+		$out .= \'<tr><td class="descriptionbox" align="center" colspan="4"><input type="submit" value=\'.$pgv_lang["complete"].\'></td></tr>\';
 		return $out;
 	}
-	
-	
+
+
 	function step3() {
 		global $GEDCOM, $GEDCOMS, $TBLPREFIX, $DBCONN, $pgv_lang;
 
@@ -487,12 +487,12 @@ class FormBuilder extends ra_form {
 		ra_functions::completeTask($_REQUEST[\'taskid\'], $_REQUEST[\'form\']);
 		// Tell the user their form submitted successfully.
 		$out .= ra_functions::print_menu();
-		$out .= ra_functions::printMessage($pgv_lang["success"],true);		
+		$out .= ra_functions::printMessage($pgv_lang["success"],true);
 
 		// Return it to the buffer.
 		return $out;
 	}
-	
+
 	function getOccupation($gedcomRecord)
 	{
 		$occupation = get_gedcom_value("OCCU", 1, $gedcomRecord);
@@ -502,30 +502,30 @@ class FormBuilder extends ra_form {
 		return $temp;
 
 	}
-	
+
 	function generateTextBox($i)
 	{
 		$out = '<input type="text" size="22" name="TextField'.$i.'"/>';
 	}
-	
+
 	function step2() {
-			
+
 		$out = $this->completeheader("module.php?mod=research_assistant&form=FormBuilder&action=func&func=step2", "center", "FormBuilder", true);
 		$this->generate_form();
 		$out .= $this->editFactsForm(false);
-		
+
 		$out .= $this->footer();
 
 		return $out;
 	}
-	
-	
-	
+
+
+
 	function editFactsForm($printButton = true)
 	{
 		global $pgv_lang;
 		$out = '<tr><td class="descriptionbox align="center"><h2>'.$pgv_lang["FormGeneration"].'</h2></td></tr>';
-		
+
 		return $out;
 	}
 	}

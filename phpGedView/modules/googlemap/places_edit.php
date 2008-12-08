@@ -31,7 +31,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 
 require_once "config.php";
 if (file_exists('modules/googlemap/config.php')) require('modules/googlemap/config.php');
-require "includes/functions_edit.php";
+require "includes/functions/functions_edit.php";
 require $INDEX_DIRECTORY."pgv_changes.php";
 
 loadLangFile("pgv_facts, googlemap:lang, googlemap:help_text");

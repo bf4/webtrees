@@ -26,8 +26,8 @@
 
 require './config.php';
 
-require_once 'includes/functions_edit.php';
-require_once 'includes/functions_import.php';
+require_once 'includes/functions/functions_edit.php';
+require_once 'includes/functions/functions_import.php';
 require $INDEX_DIRECTORY.'pgv_changes.php';
 
 if (!PGV_USER_CAN_ACCEPT) {
