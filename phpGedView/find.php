@@ -622,6 +622,7 @@ if ($action=="filter") {
 						if ($media["LINKED"]) {
 							print $pgv_lang["media_linked"]."<br />";
 							foreach ($media["LINKS"] as $indi => $type_record) {
+								if ($type_record!='INDI' && $type_record!='FAM' && $type_record!='SOUR' && $type_record!='OBJE') continue;
 								$record=GedcomRecord::getInstance($indi);
 								echo '<br /><a href="'.encode_url($record->getLinkUrl()).'">';
 								switch($type_record) {
