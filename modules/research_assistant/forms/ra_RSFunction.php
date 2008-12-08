@@ -34,18 +34,18 @@ if (!defined('PGV_PHPGEDVIEW')) {
 loadLangFile("research_assistant:lang");
 
 include_once("modules/research_assistant/forms/ra_privacy.php");
-require_once("includes/class_person.php");
+require_once("includes/classes/class_person.php");
 
-	//the inferences function will look for correlations 
+	//the inferences function will look for correlations
 	//and return an array with each probability
 	//so, it will have a meaningful index system such as ['FATHER:BIRT:PLAC']
-	//to return the probability that an individual will have the same 
-	//birth place as their father or ['BIRT:MARR:DEAT'] for the probability that 
+	//to return the probability that an individual will have the same
+	//birth place as their father or ['BIRT:MARR:DEAT'] for the probability that
 	//an individual will have the same birth, marriage and death place
 	//at each index of the array will be a description as well as a percentage liklihood of the given correlation
 	function personalinferences($pid) {
 		global $DBCONN, $TBLPREFIX, $GEDCOMS, $GEDCOM, $indilist, $famlist;
-		
+
 		$inferences[] = array('local'=>'SURN', 'record'=>'FAMC:HUSB', 'comp'=>'SURN', 'value'=>0, 'count'=>0);
 		$inferences[] = array('local'=>'SURN', 'record'=>'FAMC:WIFE', 'comp'=>'SURN', 'value'=>0, 'count'=>0);
 		$inferences[] = array('local'=>'BIRT:PLAC', 'record'=>'FAMC:HUSB', 'comp'=>'BIRT:PLAC', 'value'=>0, 'count'=>0);
@@ -65,7 +65,7 @@ require_once("includes/class_person.php");
 		$inferences[] = array('local'=>'GIVN', 'record'=>'FAMC:WIFE', 'comp'=>'GIVN', 'value'=>0, 'count'=>0);
 		$inferences[] = array('local'=>'GIVN', 'record'=>'FAMC:HUSB:FAMC:HUSB', 'comp'=>'GIVN', 'value'=>0, 'count'=>0);
 		$inferences[] = array('local'=>'GIVN', 'record'=>'FAMC:WIFE:FAMC:WIFE', 'comp'=>'GIVN', 'value'=>0, 'count'=>0);
-		
+
 		//Create an array to put our data in
 		$myindilist = array();
 		//Create a family array to put our family data in
@@ -88,7 +88,7 @@ require_once("includes/class_person.php");
 		//Merge the ChildFamilies and the personsFamily array's.
 		//This is done simply for easier processing
 		$personsFamily = array_merge($personsFamily,$childFamilies);
-		//Iterate over the array of Families that was returned		
+		//Iterate over the array of Families that was returned
 		foreach ($personsFamily as $famid=>$family) {
 			$myindilist[$family->getHusbId()]=$family->getHusband();
 			$myindilist[$family->getWifeId()]=$family->getWife();
@@ -97,9 +97,9 @@ require_once("includes/class_person.php");
 			}
 			$myfamlist[] = $family;
 		}
-		
+
 		//various counts
-		$total = count($indilist); 
+		$total = count($indilist);
 		$nnCount = 0;
 		$tempCount = 0;
 		$tempInd = 0;
@@ -124,9 +124,9 @@ require_once("includes/class_person.php");
 							break;
 						}
 					}
-					
-					$record = getRecord($value['record'],$pid);			
-				
+
+					$record = getRecord($value['record'],$pid);
+
 					if (!empty($record)) {
 						if (preg_match("/SURN/", $value['comp'])) {
 							$ct = preg_match("/0 @(.*)@/", $record, $match);
@@ -172,14 +172,14 @@ require_once("includes/class_person.php");
 
 		return $inferences;
 	}
-	
+
 	function getRecord($recordTag,$pid)
 	{
 		global $indilist,$famlist;
 		/*@var $per Person*/
 		$per = Person::getInstance($pid);
 				//-- load up the gedcom record we want to compare the data from
-				//-- record defaults to the indis record, after this section runs it will be 
+				//-- record defaults to the indis record, after this section runs it will be
 				//-- set to the record from the inferences table that we want to compare the value to
 				$record = $per->getGedcomRecord();
 				//check the array of record types coming in to make sure there is something there
@@ -196,7 +196,7 @@ require_once("includes/class_person.php");
 							$parents = find_parents_in_record($record);
 							//if the Husband in the record is the same person as we are looking for
 							// then set $id to the Wife's PID
-							if ($parents['HUSB']==$pid) $id = $parents['WIFE']; 
+							if ($parents['HUSB']==$pid) $id = $parents['WIFE'];
 							//Otherwise set $id to the husbands ID
 							else $id = $parents['HUSB'];
 							//if we didn't find an ID set the record to nothing
@@ -230,7 +230,7 @@ require_once("includes/class_person.php");
 				}
 				return $record;
 	}
-	
+
 	/*
 	 * This method will return a multi-dimensional array of the probabilities and fact types,
 	 * based on the fact type supplied.
@@ -243,24 +243,24 @@ require_once("includes/class_person.php");
 	 * @factType The type of fact you want probabilities for
 	 * @return An array that contains two more arrays, one for global inferences and one for local inferences
 	 * Both the global and local contain first the probability, and second the value of what you are looking for
-	 
+
 	 */
 	function singleInference($pid,$factType)
 	{
-		
+
 		global $TBLPREFIX,$GEDCOMS, $GEDCOM;
 		//Run the fact check
 		$tempArray = personalinferences($pid);
 		//create an array to hold our data to put it in the actual array
 		$tempFullArray = array();
 		//iterate over the facts that were returned
-		
+
 		foreach($tempArray as $tempKey=>$localValue)
 		{
-		
+
 			if(strstr($localValue['local'],$factType))
 			{
-			
+
 				if($localValue['count'] != 0 && $localValue['value'] != 0)
 				{
 					//calculate the probability
@@ -270,10 +270,10 @@ require_once("includes/class_person.php");
 				{
 					$localProb = 0;
 				}
-					
+
 				//add that related fact to our $tempMultiArray
 				$factInfer = new FactInference(0,0,$localProb,$localValue['count'],$localValue['local'],$localValue['record'],$localValue['comp'],$pid);
-				
+
 				//if ($localProb>0) {
 					//get the related gedcom for the fact type we are looking for
 					$relatedGedcom = getRecord($localValue['record'],$pid);
@@ -281,7 +281,7 @@ require_once("includes/class_person.php");
 				if($factType != "SURN")
 				{
 					$factRelation =	get_gedcom_value($localValue['comp'],1,$relatedGedcom);
-				
+
 					$factInfer->setFactValue($factRelation);
 				}
 				else
@@ -298,7 +298,7 @@ require_once("includes/class_person.php");
 					$factInfer->setFactValue($factRelation);
 				}
 				//}
-					
+
 				$tempFullArray[] = $factInfer;
 			}
 		}
@@ -306,14 +306,14 @@ require_once("includes/class_person.php");
 	 		$result = dbquery($sql);
 	 		//Create an array to hold global inferences
 			$globalInference = array();
-			//Check and see if global inferences have been run 		
+			//Check and see if global inferences have been run
 			if($result->numRows()!=0)
 			{
 				while($row = $result->fetchRow(DB_FETCHMODE_ASSOC))
 				{
 					foreach($tempFullArray as $tempInferKey=>$inferVal)
 					{
-					
+
 						if($inferVal->getFactTag() === $row['pr_f_lvl'] && $inferVal->getRelationTag() === $row['pr_s_lvl'] && $inferVal->getCompareTag() === $row['pr_rel'])
 						{
 							if($row['pr_count'] != 0)
@@ -329,13 +329,13 @@ require_once("includes/class_person.php");
 						}
 					}
 				}
-				
+
 			}
 			return $tempFullArray;
 	 }
-		
-	
-	
+
+
+
 	function run($pid)
 	{
 		//Get the inferences for the data
@@ -372,11 +372,11 @@ require_once("includes/class_person.php");
 		//Add our array to our nice data array
 		$niceData[] = $tempArray;
 		 }
-		
-		
+
+
 		 return $niceData;
 	}
-	
+
 	function computeProb($count, $matches)
 	{
 		if($matches != 0)
@@ -389,18 +389,18 @@ require_once("includes/class_person.php");
 		}
 		return $count;
 	}
-	
+
 	function getGlobalinferences()
 	{
 		global $TBLPREFIX,$DBCONN, $GEDCOMS, $GEDCOM;
  		global $LANGUAGE, $factarray, $pgv_lang;
- 		
+
 		$sql = "select * from ".$TBLPREFIX."probabilities where pr_file=".$GEDCOMS[$GEDCOM]['id']." ORDER BY (pr_matches / pr_count) DESC";
 	 		$result = dbquery($sql);
 	 		if($result->numRows()==0) {
 	 			return false;
 	 		}
-	 		
+
 	 			if($result->numRows()>0)
 	 		{
 	 			$inferenceArray = array();
@@ -414,19 +414,19 @@ require_once("includes/class_person.php");
 	 					{
 		 					$tempArray["GlobalProb"] = $row['pr_matches'] / $row['pr_count'];
 		 					$tempArray["GlobalCount"] = $row['pr_matches'];
-		 				
+
 	 					}
 	 					else
 	 					{
 	 					$tempArray["GlobalProb"] = 0;
 	 					$tempArray["GlobalCount"] = 0;
 	 					}
-	 					$inferenceArray[] = $tempArray;			
+	 					$inferenceArray[] = $tempArray;
 	 				}
 	 		}
 	 	return $inferenceArray;
 	}
-	
+
 	function getPartsTranslation($input) {
 		global $factarray, $pgv_lang;
 		if ($input=="FAMC:HUSB") $input = "father";
@@ -442,4 +442,4 @@ require_once("includes/class_person.php");
 		}
 		return $out;
 	}
-	
+

@@ -84,7 +84,7 @@ if ($action == "phpinfo") {
 
 if ($action=="confighelp") {
 
-	require "includes/functions_editlang.php";
+	require "includes/functions/functions_editlang.php";
 	$helpindex = "config_help_help";
 	print_header($pgv_lang["config_help"]);
 	print "<h2 class=\"center\">".UTF8_strtoupper($pgv_lang["config_help"])."</h2><br />";

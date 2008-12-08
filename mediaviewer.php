@@ -98,7 +98,7 @@ loadLangFile("lightbox:lang");
 			<tr>
 				<td align="center" width="150">
 					<?php
-					
+
 					// If we can display details
 					if ($controller->canDisplayDetails()) {
 						//Check to see if the File exists in the system. (ie if the file is external, or it exists locally)
@@ -115,9 +115,9 @@ loadLangFile("lightbox:lang");
 							if ($imgwidth<$dwidth) {
 								$dwidth = $imgwidth;
 							}
-							
+
 							// Check Filetype of media item -------------------------------------------
-							// If Regular 
+							// If Regular
 							if (eregi("\.(jpg|jpeg|gif|png)$", $filename)) {
 								$file_type = "regular";
 							// Else if FLV as URL
@@ -129,12 +129,12 @@ loadLangFile("lightbox:lang");
 							// Else if URL page
 							}else if(eregi("http" ,$filename) || eregi("\.pdf",$filename)) {
 								$file_type = "url";
-							// Else Other 
+							// Else Other
 							}else{
 								$file_type = "other";
 							}
 							$name = trim($controller->mediaobject->getFullName());
-							
+
 							// if Lightbox installed ------------------------------------------------------------------------------
 							if (file_exists("modules/lightbox/album.php") ) {
 								// Get Lightbox config variables
@@ -159,7 +159,7 @@ loadLangFile("lightbox:lang");
 								}else{
 									print "<a href=\"javascript:;\" onclick=\"return openImage('".rawurlencode($filename)."',$imgwidth, $imgheight);\">";
 								}
-								
+
 							 // if Lightbox NOT installed or not enabled -------------------------------------------
 							 // else if JWplayer installed and filetype=flvfile (Locally stored in media files )
 							} elseif ( file_exists("modules/JWplayer/flvVideo.php") && $file_type == "flvfile") {
@@ -169,7 +169,7 @@ loadLangFile("lightbox:lang");
 								print "<a href=\"javascript:;\" onclick=\" var winflv = window.open('module.php?mod=JWplayer&amp;pgvaction=flvVideo&amp;flvVideo=" . str_replace('http://', '', $filename) . "', 'winflv', 'width=445, height=365, left=600, top=200'); if (window.focus) {winflv.focus();}\">";
 							//else if URL image
 							} else if (eregi("http" ,$filename) && eregi("\.(jpg|jpeg|gif|png)$", $filename)){
-								$imageinfo = Getimagesize($filename); 
+								$imageinfo = Getimagesize($filename);
 								$wth = $imageinfo[0];
 								$hgt = $imageinfo[1];
 								print "<a href=\"javascript:void(0)\" onclick=\"var winimg = window.open('".$filename."', 'winimg', 'width=".$wth.", height=".$hgt.", left=200, top=200'); if (window.focus) {winimg.focus();} \">";
@@ -180,7 +180,7 @@ loadLangFile("lightbox:lang");
 							} else {
 								print "<a href=\"javascript:;\" onclick=\"return openImage('".rawurlencode($filename)."',$imgwidth, $imgheight);\">";
 							}
-							
+
 							// Now finally print the thumbnail  --------------------------------------------------
 							// If URL flv file (eg You Tube) and JWplayer installed, print the remote flv thumbnail
 							if ($file_type == "flv") {
@@ -199,7 +199,7 @@ loadLangFile("lightbox:lang");
 							} else {
 								print "<img src=\"".$controller->mediaobject->getThumbnail()."\" border=\"0\" align=\"center" . ($TEXT_DIRECTION== "rtl"?"right": "left") . "\" class=\"thumbnail\"";
 							}
-							
+
 							// Finish off anchor and tooltips
 							if (isFileExternal($filename)) {
 								print " width=\"".$THUMBNAIL_WIDTH."\"";
@@ -208,12 +208,12 @@ loadLangFile("lightbox:lang");
 							if (isFileExternal($filename) || $controller->mediaobject->fileExists()) {
 								print "</a>";
 							}
-							
+
 							// If download
-							if ($SHOW_MEDIA_DOWNLOAD) { 
-								print "<br /><br /><a href=\"".$filename."\">".$pgv_lang["download_image"]."</a><br/>"; 
+							if ($SHOW_MEDIA_DOWNLOAD) {
+								print "<br /><br /><a href=\"".$filename."\">".$pgv_lang["download_image"]."</a><br/>";
 							}
-							
+
 						 // else the file is not external and does not exist
 						} else {
 							?>
@@ -225,7 +225,7 @@ loadLangFile("lightbox:lang");
 						}
 					}
 					?>
-					
+
 				</td>
 				<td valign="top">
 					<table width="100%">
@@ -253,7 +253,7 @@ loadLangFile("lightbox:lang");
 					<br /><b><?php print $pgv_lang["relations_heading"]; ?></b><br /><br />
 					<?php
 						// PrintMediaLinks($links, "");
-						require_once 'includes/functions_print_lists.php';
+						require_once 'includes/functions/functions_print_lists.php';
 						print_changes_table($links, $SHOW_LAST_CHANGE);
 					}	?>
 				</td>

@@ -34,8 +34,8 @@ if (!defined('PGV_PHPGEDVIEW')) {
 define('PGV_REMOTELINK_CTRL_PHP', '');
 
 require_once('includes/controllers/basecontrol.php');
-require_once("includes/functions_edit.php");
-require_once("includes/class_serviceclient.php");
+require_once("includes/functions/functions_edit.php");
+require_once("includes/classes/class_serviceclient.php");
 
 class RemoteLinkController extends BaseController {
 	var $has_familysearch = false;
@@ -61,7 +61,7 @@ class RemoteLinkController extends BaseController {
 			header('Location: '.encode_url("login.php?type=simple&ged={$GEDCOM}&url=".urlencode("edit_interface.php?".decode_url($QUERY_STRING)), false));
 			exit;
 		}
-		
+
 		$this->pid   =safe_GET('pid', PGV_REGEX_XREF);
 
 		//check for pid

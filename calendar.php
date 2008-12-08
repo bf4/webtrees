@@ -30,7 +30,7 @@
 
 require './config.php';
 
-require_once("includes/functions_print_lists.php");
+require_once("includes/functions/functions_print_lists.php");
 
 if (isset($_REQUEST['cal'])) $cal = $_REQUEST['cal'];
 if (isset($_REQUEST['day'])) $day = $_REQUEST['day'];

@@ -28,7 +28,7 @@ require './config.php';
 
 if (file_exists('modules/googlemap/placehierarchy.php'))
 	require("modules/googlemap/placehierarchy.php");
-require_once("includes/functions_print_lists.php");
+require_once("includes/functions/functions_print_lists.php");
 
 function case_in_array($value, $array) {
 	foreach($array as $key=>$val) {

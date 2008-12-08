@@ -3,7 +3,7 @@
  * phpGedView Research Assistant Tool - United States Census 1930 File
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  John Finlay and Others
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -31,7 +31,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 }
 
 require_once "ra_form.php";
-require_once "includes/functions_edit.php";
+require_once "includes/functions/functions_edit.php";
 
 class Census1930 extends ra_form {
 
@@ -56,12 +56,12 @@ class Census1930 extends ra_form {
 	    	$out .=	'</select></td></tr><tr><td colspan="2" class="topbottombar"><input type="submit" value="'.$pgv_lang["okay"].'"/></td></tr></table>';
 	    	$out .= '</form>';
     	}
-    	
+
 		// Split action and use it for hidden inputs
         $action = parse_url($action);
         $params = array();
         parse_str(html_entity_decode($action["query"]), $params);
-        
+
         // Setup for our form to go through the module system
        $out .= '<script language="JavaScript" type="text/javascript">
 <!--
@@ -80,7 +80,7 @@ return false;}return true;}
         $out .= '</tr>';
         return $out;
     }
-    
+
     function getFieldValue($j, $lines) {
     	$value = "";
     	if (empty($lines[$j])) return $value;
@@ -89,7 +89,7 @@ return false;}return true;}
     	if ($ct>0) $value = trim($match[1]);
     	return $value;
     }
-	
+
 	/**
 	 * override method from ra_form.php
 	 */
@@ -101,7 +101,7 @@ return false;}return true;}
     		$people = $this->getPeople();
     		$row = count($people);
     	}
-    	
+
     	$citation = $this->getSourceCitationData();
     	$page = "";
     	$callno = "";
@@ -111,14 +111,14 @@ return false;}return true;}
     		$page = trim($match[1]);
     		$callno = trim($match[2]);
     	}
-    	
+
     	$city = "";
     	$county = "";
     	$state = "";
     	if (!empty($citation['ts_array']['city'])) $city = $citation['ts_array']['city'];
     	if (!empty($citation['ts_array']['county'])) $county = $citation['ts_array']['county'];
     	if (!empty($citation['ts_array']['state'])) $state = $citation['ts_array']['state'];
-    	
+
 //        Start of Table
 		$out = '<tr>
 			<td class="descriptionbox">'.print_help_link("edit_media_help", "qm",'',false,true).$factarray['OBJE'].'</td>
@@ -130,7 +130,7 @@ return false;}return true;}
 				/*@var $picture Media*/
 				$picture = Media::getInstance($citation['ts_obje']);
 				if(!is_null($picture))
-				{	
+				{
 					$out .= "<span id=\"censusImgSpan\">".$picture->getFullName().'</span><br/><img id="censusImage" src="'.$picture->getThumbnail().'" />';
 				}
 				else
@@ -155,7 +155,7 @@ return false;}return true;}
         $out .=	'<td class="descriptionbox">'.$pgv_lang["page"].'</td><td class="optionbox"><input name="page" type="text" size="5" value="'.htmlentities($page).'"></td></tr>';
 //        Next Table
         $out .= '<tr><td colspan="6">';
-        
+
         $out .= '<table  align="left" dir="ltr">
   <tr>
   <td class="descriptionbox" align="left">Dwelling number</td>';
@@ -178,7 +178,7 @@ return false;}return true;}
   		for($i=0; $i<$_REQUEST['numOfRows']; $i++) {
   			$value = "";
 	  		if (isset($citation['ts_array']['rows'][$i]['NameOfPeople'])) $value = $citation['ts_array']['rows'][$i]['NameOfPeople'];
-  			$out .= '<td class="optionbox" align="left"><INPUT TYPE="TEXT" SIZE="23" name = "NameOfPeople'.$i.'" value="'.htmlentities($value).'" /></td>'; 
+  			$out .= '<td class="optionbox" align="left"><INPUT TYPE="TEXT" SIZE="23" name = "NameOfPeople'.$i.'" value="'.htmlentities($value).'" /></td>';
   		}
  $out .='</tr>
  <tr>
@@ -232,7 +232,7 @@ return false;}return true;}
   			$value = "";
 	  		if (isset($citation['ts_array']['rows'][$i]['Gender'])) $value = $citation['ts_array']['rows'][$i]['Gender'];
   				$out .= '<td class="optionbox" align="left">
- 				Male:<INPUT TYPE="RADIO" value="M" name="Gender'.$i.'"'.($value=='M'?' checked="checked"':'').' /> 
+ 				Male:<INPUT TYPE="RADIO" value="M" name="Gender'.$i.'"'.($value=='M'?' checked="checked"':'').' />
 				Female:<INPUT TYPE="RADIO" value="F" name="Gender'.$i.'"'.($value=='F'?' checked="checked"':'').' /></td>';
 	}
 	$out .='</tr>
@@ -412,7 +412,7 @@ return false;}return true;}
 		}
  		$out .='</tr>
  <tr>
- <td class="descriptionbox" align="left">Number of farm schedule 
+ <td class="descriptionbox" align="left">Number of farm schedule
   </td>';
 	for($i=0; $i<$_REQUEST['numOfRows']; $i++) {
 		$value = "";
@@ -420,9 +420,9 @@ return false;}return true;}
   		$out .= '<td class="optionbox" align="left"><INPUT TYPE="TEXT" SIZE="6" name = "FarmSchedule'.$i.'" value="'.htmlentities($value).'" /></td>';
 		}
  		$out .='</tr>';
- 			
+
  		$out .='<tr><td class="descriptionbox" align="left">Person
-  </td>';		
+  </td>';
   $people = $this->getPeople();
   $persons = array_values($people);
  		for($i=0; $i<$_REQUEST['numOfRows']; $i++) {
@@ -432,7 +432,7 @@ return false;}return true;}
 	  			if (isset($persons[$i])) $pid = $persons[$i]->getXref();
 	  		}
   			$person = Person::GetInstance($pid);
-  			
+
 			$out .= '
 	            <td id="peoplecell" class="optionbox" align="left">
 	                   <div id="peoplelink'.$i.'">';
@@ -444,11 +444,11 @@ return false;}return true;}
 	                   $out .= print_findindi_link("personid".$i, "peoplelink".$i, true,false,'',$searchName);
 	                   $out .= "<br />Create New Person: <input type=\"checkbox\" name=\"newPerson".$i."\" value=\"newPerson\"/>";
 	                   $out .= '<br /></td>';
-	        
+
 		}
  	$out .= '</tr></table>';
  		$out .= '</td></tr>';
-        
+
         return $out;
     }
 
@@ -463,41 +463,41 @@ return false;}return true;}
         $out .= $this->footer();
         return $out;
     }
-    
+
     function createPerson($i)
     {
     	$indiFact = "0 @new@ INDI\r\n";
     	$indiFact .= "1 NAME ".$_POST["NameOfPeople".$i]."\r\n";
-    	
+
     	if(!empty($_POST["Age".$i]))
     	{
     		$age = 1930 - $_POST["Age".$i];
     		$indiFact .= "1 BIRT\r\n";
     		$indiFact .= "2 DATE ABT ".$age;
     	}
-    	
+
     	if(!empty($_POST["PlaceOfBirth".$i]))
     	{
     		$indiFact .= "2 PLAC ".$_POST["PlaceOfBirth"];
     	}
-    	
+
     	if(!empty($_POST["Gender".$i]))
     	{
     		$indiFact .= "1 SEX ".$_POST["Gender".$i];
     	}
-    	
+
     	return $indiFact;
-    	
+
     }
-    
+
     function step2() {
 		global $GEDCOM, $GEDCOMS, $TBLPREFIX, $DBCONN, $factarray, $pgv_lang;
 		global $INDI_FACTS_ADD;
-		
+
 		$people = array();
 		$pids = array();
 		$positions = array();
-			
+
 		$personid = "";
 		for($number = 0; $number < $_POST['numOfRows']; $number++)
 		{
@@ -506,17 +506,17 @@ return false;}return true;}
 				$tempPerson = $this->createPerson($number);
 				$_POST["personid".$number] = append_gedrec($tempPerson,true,'');
 			}
-			
+
 			if (!isset($_POST["personid".$number])) $_POST["personid".$number]="";
 			$personid .= $_POST["personid".$number].";";
 			$_POST["personid".$number] = trim($_POST["personid".$number], '; \r\n\t');
-			
-			
+
+
 		}
-		
+
 		$_REQUEST['personid'] = $personid;
 		$return = $this->processSourceCitation();
-		
+
 		if(empty($return))
 		{
 			$out = $this->header("module.php?mod=research_assistant&form=Census1930&action=func&func=step3&taskid=" . $_REQUEST['taskid'], "center", "1930 United States Federal Census");
@@ -526,25 +526,25 @@ return false;}return true;}
 		}
 		else
 		{
-			
+
 		}
 	}
-	
+
 		function editFactsForm($printButton = true)
 	{
 		global $factarray, $pgv_lang;
-		
+
 		$facts = $this->getFactData();
 		$citation = $this->getSourceCitationData();
 		$out = parent::editFactsForm(false);
 		$rows = $citation['ts_array']['rows'];
 		$inferFacts = $this->inferFacts($rows);
-		
+
 		if(!empty($inferFacts))
 		{
 
 		$out .= '<tr><td colspan="2" id="inferData"><table class="list_table"><tbody><tr><td colspan="4" class="topbottombar">'.$pgv_lang["ra_inferred_facts"].'</td></tr>
-<tr><td class="descriptionbox">'.$pgv_lang["ra_fact"].'</td><td class="descriptionbox">'.$pgv_lang["ra_person"].'</td><td class="descriptionbox">'.$pgv_lang["ra_reason"].'</td><td class="descriptionbox">'.$pgv_lang["add"].'</td></tr>'; 
+<tr><td class="descriptionbox">'.$pgv_lang["ra_fact"].'</td><td class="descriptionbox">'.$pgv_lang["ra_person"].'</td><td class="descriptionbox">'.$pgv_lang["ra_reason"].'</td><td class="descriptionbox">'.$pgv_lang["add"].'</td></tr>';
 		$completeFact = true;
 		$occufact = true;
 		foreach($inferFacts as $key=>$inferredFacts) {
@@ -554,14 +554,14 @@ return false;}return true;}
 					{
 						$ct = preg_match("/1 (\w+)/", $factValues['tf_factrec'], $match);
 						$factname = trim($match[1]);
-					
-						if($factValues["tf_people"] == $key  && $factname == $value["factType"])	
+
+						if($factValues["tf_people"] == $key  && $factname == $value["factType"])
 						{
 							$completeFact = false;
 						}
-					
+
 					}
-					
+
 					if($completeFact)
 					{
 						$out .='<tr>';
@@ -571,17 +571,17 @@ return false;}return true;}
 						$out .="<td>".'<input type="Checkbox" id="'.$value['PersonID'].$value['factType'].'" onclick="add_ra_fact_inferred(this,\''.preg_replace("/\r?\n/", "\\r\\n",$value["Fact"]).'\',\''.$value['PersonID'].'\',\''.$value['factType'].'\',\''.$value["Person"].'\',\''.$value["factPeople"].'\')"></td>';
 						$out .="</tr>";
 					}
-				
+
 				}
 		}
-				
-			
-		
-		$out .= '<tr><td class="descriptionbox" align="center" colspan="4"><input type="submit" value='.$pgv_lang["complete"].'></td></tr>'; 
+
+
+
+		$out .= '<tr><td class="descriptionbox" align="center" colspan="4"><input type="submit" value='.$pgv_lang["complete"].'></td></tr>';
 		return $out;
 	}
 	}
-	
+
 	function step3() {
 		global $GEDCOM, $GEDCOMS, $TBLPREFIX, $DBCONN, $pgv_lang;
 
@@ -607,11 +607,11 @@ return false;}return true;}
  * This is a function that will attempt to infer facts from the census form.
 	 * If any facts can be inferred then it will attempt to validate them against the database.
 	 * If a fact differs from that in the database, or there is no fact present in the databse,
-	 * this function will suggest the facts to the user. 
+	 * this function will suggest the facts to the user.
 	 */
 	function inferFacts($rows){
 		$people = array();
-		
+
 		for($number = 0; $number < $_POST['numOfRows']; $number++)
 		{
 			$inferredFacts = array();
@@ -621,10 +621,10 @@ return false;}return true;}
 				$bdate=$person->getEstimatedBirthDate();
 				$bdate=$bdate->gregorianYear();
 				$occupation = $this->getOccupation($person->getGedcomRecord());
-			
+
 			$censusAge = $rows[$number]["Age"];
 			$birthDate = 1930 - $censusAge;
-			
+
 			if($occupation != $rows[$number]["Occupation"])
 			{
 				$inferredFact["Person"] = $person->getFullName();
@@ -638,7 +638,7 @@ return false;}return true;}
 			}
 			if($rows[$number]["Single"] == "Widowed")
 			{
-				
+
 				$spouseFams = $person->getSpouseFamilies();
 				foreach($spouseFams as $sFamKey => $sFamValue)
 				{
@@ -651,7 +651,7 @@ return false;}return true;}
 							if($diff > 1 || $diff < 0)
 							{
 								$tempArray = array();
-								$inferredFact["Person"] = $spouse->getFullName();								
+								$inferredFact["Person"] = $spouse->getFullName();
 								$inferredFact["PersonID"] = $spouse->getXref();
 								$inferredFact["Reason"] = "A death Date can be inferred!";
 								$inferredFact["Fact"] = "1 DEAT \r\n2 DATE BEF 1930";
@@ -661,14 +661,14 @@ return false;}return true;}
 								$inferredFacts[] = $inferredFact;
 							}
 						}
-					
+
 				}
-			
+
 			}
-			
+
 			if($rows[$number]["Single"] == "Married")
 			{
-				
+
 				$spouseFams = $person->getSpouseFamilies();
 				foreach($spouseFams as $sFamKey => $sFamValue)
 				{
@@ -690,15 +690,15 @@ return false;}return true;}
 						}
 					}
 				}
-			
+
 			}
-			
+
 			if(!empty($bdate))
 			{
 				 $bDiff = $birthDate - $bdate;
 				 if($bDiff >1 || $bDiff < 0)
 				 {
-				 		
+
 				 	if($birthDate != 1930)
 				 {
 				 	if(!empty($rows[$number]["PlaceOfBirth"]))
@@ -708,10 +708,10 @@ return false;}return true;}
 				 		$inferredFact["Reason"] = "A birth date difference was detected";
 				 		$inferredFact["Fact"] = "1 BIRT \r\n2 DATE ABT".$birthDate."\r\n2 PLAC ".$rows[$number]["PlaceOfBirth"];
 				 		$inferredFact["date"] = "ABT ".$birthDate;
-				 		$inferredFact["factType"] = 'BIRT';	 	
-				 		$inferredFact["factPeople"] = "indi";	
+				 		$inferredFact["factType"] = 'BIRT';
+				 		$inferredFact["factPeople"] = "indi";
 						$inferredFacts[] = $inferredFact;
-				 		
+
 				 	}
 				 	else
 				 	{
@@ -719,21 +719,21 @@ return false;}return true;}
 						$inferredFact["PersonID"] = $person->getXref();
 				 		$inferredFact["Reason"] = "A birth date difference was detected";
 				 		$inferredFact["Fact"] = "1 BIRT \r\n2 DATE ABT".$birthDate;
-				 		$inferredFact["date"] = "ABT ".$birthDate;	
-				 		$inferredFact["factType"] = 'BIRT'; 	
+				 		$inferredFact["date"] = "ABT ".$birthDate;
+				 		$inferredFact["factType"] = 'BIRT';
 				 		$inferredFact["factPeople"] = "indi";
 						$inferredFacts[] = $inferredFact;
 				 	}
 				 }
 			}
 			}
-		
+
 			$people[$person->getXref()] = $inferredFacts;
-			}			
+			}
 		}
 		return $people;
-		
-		
+
+
 	}
 
 	/**
@@ -744,14 +744,14 @@ return false;}return true;}
     	//-- delete any old census records
     	$sql = "DELETE FROM ".$TBLPREFIX."taskfacts WHERE tf_t_id='".$DBCONN->escapeSimple($_REQUEST['taskid'])."' AND tf_factrec ".PGV_DB_LIKE." '1 CENS%'";
     	$res = dbquery($sql);
-    	
+
 		// Set our output to nothing, this supresses a warning that we would otherwise get.
 		$out = "";
 		$factrec = "1 CENS";
 		$factrec .= "\r\n2 DATE ";
 		$factrec .=!empty($_POST['EnumerationDate'])?$_POST['EnumerationDate']:"1930";
 		$factrec .= "\r\n2 PLAC ".$_POST['city'].", ".$_POST['county'].", ".$_POST['state'].", USA";
-		
+
 		$people = $this->getPeople();
 		$pids = array_keys($people);
 		//-- store the fact associations in the database
@@ -760,7 +760,7 @@ return false;}return true;}
 			"'".$DBCONN->escapeSimple($factrec)."'," .
 			"'".$DBCONN->escapeSimple(implode(";", $pids))."', 'Y', 'indi')";
 		$res = dbquery($sql);
-		
+
 		$rows = array();
 		$text = $_POST['city'].", ".$_POST['county'].", ".$_POST['state'].", 1930 US Census";
 		for($number = 0; $number < $_POST['numOfRows']; $number++)
@@ -778,7 +778,7 @@ return false;}return true;}
 			if (!isset($_POST["Age".$number])) $_POST["Age".$number]="";
 			if (!isset($_POST["Single".$number])) $_POST["Single".$number]="";
 			if (!isset($_POST["MarriageAge".$number])) $_POST["MarriageAge".$number]="";
-			if (!isset($_POST["School".$number])) $_POST["School".$number]="";			
+			if (!isset($_POST["School".$number])) $_POST["School".$number]="";
 			if (!isset($_POST["Read".$number])) $_POST["Read".$number]="";
 			if (!isset($_POST["PlaceOfBirth".$number])) $_POST["PlaceOfBirth".$number]="";
 			if (!isset($_POST["FathersPlaceOfBirth".$number])) $_POST["FathersPlaceOfBirth".$number]="";
@@ -795,7 +795,7 @@ return false;}return true;}
 			if (!isset($_POST["War".$number])) $_POST["War".$number]="";
 			if (!isset($_POST["FarmSchedule".$number])) $_POST["FarmSchedule".$number]="";
 			if (!isset($_POST["personid".$number])) $_POST["personid".$number]="";
-			
+
 			$rows[$number] = array(
 			"House"=>$_POST["House".$number],
 			"Families"=>$_POST["Families".$number],
@@ -828,7 +828,7 @@ return false;}return true;}
 			"FarmSchedule"=>$_POST["FarmSchedule".$number],
 			"personid"=>$_POST["personid".$number]
 			);
-			
+
 			$text .= "\r\n";
 			if (!empty($_POST["House".$number])) $text .= "Dwelling number: ".$_POST["House".$number];
 			if (!empty($_POST["Families".$number])) $text .= " Family number: ".$_POST["Families".$number];
@@ -860,23 +860,23 @@ return false;}return true;}
 			if (!empty($_POST["War".$number])) $text .= ", ".$_POST["War".$number];
 			if (!empty($_POST["FarmSchedule".$number])) $text .= ", Farm Schedule:".$_POST["FarmSchedule".$number];
 			if (!empty($_POST["personid".$number])) $text .= ", Persons ID: ".$_POST["personid".$number];
-		
+
 		}
 
 		$citation = array(
-			"PAGE"=>"Page: ".$_POST['page'].", Call Number/URL: ".$_POST['CallNumberURL'], 
-			"QUAY"=>'', 
-    		"DATE"=>!empty($_POST['EnumerationDate'])?$_POST['EnumerationDate']:"1930", 
-			"TEXT"=>$text, 
+			"PAGE"=>"Page: ".$_POST['page'].", Call Number/URL: ".$_POST['CallNumberURL'],
+			"QUAY"=>'',
+    		"DATE"=>!empty($_POST['EnumerationDate'])?$_POST['EnumerationDate']:"1930",
+			"TEXT"=>$text,
 			"OBJE"=>$_POST['OBJE'],
 			"array"=>array(
 			'city'=>$_POST['city'],
 			'county'=>$_POST['county'],
 			'state'=>$_POST['state'],
 			'rows'=>$rows));
-		
+
 		return $citation;
     }
-    
+
 }
 ?>

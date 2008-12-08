@@ -3,7 +3,7 @@
  * phpGedView Research Assistant Tool - United States Census 1820 File
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  John Finlay and Others
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -31,7 +31,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 }
 
 require_once "ra_form.php";
-require_once "includes/functions_edit.php";
+require_once "includes/functions/functions_edit.php";
 
 class Census1820 extends ra_form {
 
@@ -55,12 +55,12 @@ class Census1820 extends ra_form {
 	    	$out .=	'</select></td></tr><tr><td colspan="2" class="topbottombar"><input type="submit" value="'.$pgv_lang["okay"].'"/></td></tr></table>';
 	    	$out .= '</form>';
     	}
-    	
+
 		// Split action and use it for hidden inputs
         $action = parse_url($action);
         global $params;
         parse_str(html_entity_decode($action["query"]), $params);
-        
+
         // Setup for our form to go through the module system
         $out .=  '<form action="' . $action["path"] . '" method="post">';
 		$out .= '<input type="hidden" name="numOfRows" value="'.$_REQUEST['numOfRows'].'" />';
@@ -73,7 +73,7 @@ class Census1820 extends ra_form {
         $out .= '</tr>';
         return $out;
     }
-	
+
 	/**
 	 * override method from ra_form.php
 	 */
@@ -83,7 +83,7 @@ class Census1820 extends ra_form {
     		$data = array();
     	if (empty($_REQUEST['row']))
     		$row = 1;
-    	
+
     	$citation = $this->getSourceCitationData();
     	$page = "";
     	$callno = "";
@@ -93,14 +93,14 @@ class Census1820 extends ra_form {
     		$page = trim($match[1]);
     		$callno = trim($match[2]);
     	}
-    	
+
     	$city = "";
     	$county = "";
     	$state = "";
     	if (!empty($citation['ts_array']['city'])) $city = $citation['ts_array']['city'];
     	if (!empty($citation['ts_array']['county'])) $county = $citation['ts_array']['county'];
     	if (!empty($citation['ts_array']['state'])) $state = $citation['ts_array']['state'];
-    	
+
 //        Start of Table
 		$out = '<tr>
 			<td class="descriptionbox">'.print_help_link("edit_media_help", "qm",'',false,true).$factarray['OBJE'].'</td>
@@ -112,7 +112,7 @@ class Census1820 extends ra_form {
 				/*@var $picture Media*/
 				$picture = Media::getInstance($citation['ts_obje']);
 				if(!is_null($picture))
-				{	
+				{
 					$out .= "<span id=\"censusImgSpan\">".$picture->getFullName().'</span><br/><img id="censusImage" src="'.$picture->getThumbnail().'" />';
 				}
 				else
@@ -142,7 +142,7 @@ class Census1820 extends ra_form {
         $out .= '<td colspan="5" class="descriptionbox" align="center">Free White Females</td>';
         $out .= '<td colspan="4" class="descriptionbox" align="center">Slaves</td>';
         $out .= '<td colspan="4" class="descriptionbox" align="center">Free Colored Persons</td>';
-        
+
         $out .= '<td class="descriptionbox" align="center" rowspan="2">Foreigners not noturalized</td>';
         $out .= '<td class="descriptionbox" align="center" rowspan="2">Numbers of persons<br />engaged in Agriculture</td>';
         $out .= '<td class="descriptionbox" align="center" rowspan="2">Numbers of persons<br />engaged in Commerce</td>';
@@ -162,7 +162,7 @@ class Census1820 extends ra_form {
         for($i = 0; $i < $_REQUEST['numOfRows']; $i++){
         	$row = array();
         	if (isset($citation['ts_array']['rows'][$i])) $row = $citation['ts_array']['rows'][$i];
-        	
+
         	$value = "";
         	if (isset($row['headName'])) $value = $row['headName'];
 	        $out .= '<tr><td class="optionbox"><input name="headName'.$i.'" type="text" size="19" value="'.htmlentities($value).'"></td>';
@@ -182,7 +182,7 @@ class Census1820 extends ra_form {
 	       $value = "";
         	if (isset($row['fortyfiveAndOverM'])) $value = $row['fortyfiveAndOverM'];
 	        $out .= '<td class="optionbox"><input name="fortyfiveAndOverM'.$i.'" type="text" size="4" value="'.htmlentities($value).'"></td>';
-	//		  Free white females input boxes 
+	//		  Free white females input boxes
 			$value = "";
         	if (isset($row['underTenF'])) $value = $row['underTenF'];
 	        $out .= '<td class="optionbox"><input name="underTenF'.$i.'" type="text" size="4" value="'.htmlentities($value).'"></td>';
@@ -239,7 +239,7 @@ class Census1820 extends ra_form {
 			$value = "";
         	if (isset($row['AllOther'])) $value = $row['AllOther'];
 	        $out .= '<td class="optionbox"><input name="AllOther'.$i.'" type="text" size="17" value="'.htmlentities($value).'"></td>';
-			
+
         }
         $out .= '</table></td></tr>';
         return $out;
@@ -256,19 +256,19 @@ class Census1820 extends ra_form {
         $out .= $this->footer();
         return $out;
     }
-    
+
     function step2() {
 		global $GEDCOM, $GEDCOMS, $TBLPREFIX, $DBCONN, $factarray, $pgv_lang;
 		global $INDI_FACTS_ADD;
-		
+
 		$this->processSourceCitation();
-		
+
 		$out = $this->header("module.php?mod=research_assistant&form=Census1820&action=func&func=step3&taskid=" . $_REQUEST['taskid'], "center", "1820 United States Federal Census");
 		$out .= $this->editFactsForm();
 		$out .= $this->footer();
 		return $out;
 	}
-	
+
 	function step3() {
 		global $GEDCOM, $GEDCOMS, $TBLPREFIX, $DBCONN, $pgv_lang;
 
@@ -278,7 +278,7 @@ class Census1820 extends ra_form {
 		ra_functions::completeTask($_REQUEST['taskid'], $_REQUEST['form']);
 		// Tell the user their form submitted successfully.
 		$out .= ra_functions::print_menu();
-		$out .= ra_functions::printMessage($pgv_lang["success"],true);		
+		$out .= ra_functions::printMessage($pgv_lang["success"],true);
 
 		// Return it to the buffer.
 		return $out;
@@ -292,14 +292,14 @@ class Census1820 extends ra_form {
     	//-- delete any old census records
     	$sql = "DELETE FROM ".$TBLPREFIX."taskfacts WHERE tf_t_id='".$DBCONN->escapeSimple($_REQUEST['taskid'])."' AND tf_factrec ".PGV_DB_LIKE." '1 CENS%'";
     	$res = dbquery($sql);
-    	
+
 		// Set our output to nothing, this supresses a warning that we would otherwise get.
 		$out = "";
 		$factrec = "1 CENS";
 		$factrec .= "\r\n2 DATE ";
 		$factrec .=!empty($_POST['EnumerationDate'])?$_POST['EnumerationDate']:"1820";
 		$factrec .= "\r\n2 PLAC ".$_POST['city'].", ".$_POST['county'].", ".$_POST['state'].", USA";
-		
+
 		$people = $this->getPeople();
 		$pids = array_keys($people);
 		//-- store the fact associations in the database
@@ -308,7 +308,7 @@ class Census1820 extends ra_form {
 			"'".$DBCONN->escapeSimple($factrec)."'," .
 			"'".$DBCONN->escapeSimple(implode(";", $pids))."', 'Y', 'indi')";
 		$res = dbquery($sql);
-		
+
 		$rows = array();
 		$text = $_POST['city'].", ".$_POST['county'].", ".$_POST['state'].", 1820 US Census";
 		for($number = 0; $number < $_REQUEST['numOfRows']; $number++)
@@ -341,7 +341,7 @@ class Census1820 extends ra_form {
 			"Manufactures"=>$_POST["Manufactures".$number],
 			"AllOther"=>$_POST["AllOther".$number],
 			);
-			
+
 			$text .=$number==0?"" :"\r\n";
 			$text .= "\r\nHead of Family: ".$_POST["headName".$number];
 			$text .= "\r\nMales under 10: ".$_POST["underTenM".$number];
@@ -371,19 +371,19 @@ class Census1820 extends ra_form {
 		}
 
 		$citation = array(
-			"PAGE"=>"Page: ".$_POST['page'].", Call Number/URL: ".$_POST['CallNumberURL'], 
-			"QUAY"=>'', 
-    		"DATE"=>!empty($_POST['EnumerationDate'])?$_POST['EnumerationDate']:"1820", 
-			"TEXT"=>$text, 
+			"PAGE"=>"Page: ".$_POST['page'].", Call Number/URL: ".$_POST['CallNumberURL'],
+			"QUAY"=>'',
+    		"DATE"=>!empty($_POST['EnumerationDate'])?$_POST['EnumerationDate']:"1820",
+			"TEXT"=>$text,
 			"OBJE"=>'',
 			"array"=>array(
 			'city'=>$_POST['city'],
 			'county'=>$_POST['county'],
 			'state'=>$_POST['state'],
 			'rows'=>$rows));
-					
+
 		return $citation;
     }
-    
+
 }
 ?>

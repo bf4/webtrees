@@ -175,7 +175,7 @@ if ($controller->chart_style==1) {
 }
 //-- Individual list
 if ($controller->chart_style==2) {
-	require_once("includes/functions_print_lists.php");
+	require_once("includes/functions/functions_print_lists.php");
 	$datalist = array();
 	function indi_desc($pid, $n) {
 		if ($n<0) return;
@@ -200,7 +200,7 @@ if ($controller->chart_style==2) {
 }
 //-- Family list
 if ($controller->chart_style==3) {
-	require_once("includes/functions_print_lists.php");
+	require_once("includes/functions/functions_print_lists.php");
 	$datalist = array();
 	function fam_desc($pid, $n) {
 		if ($n<0) return;

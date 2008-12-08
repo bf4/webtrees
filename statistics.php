@@ -28,8 +28,8 @@
  */
 
 require './config.php';
-require_once 'includes/class_stats.php';
-require_once 'includes/functions_places.php';
+require_once 'includes/classes/class_stats.php';
+require_once 'includes/functions/functions_places.php';
 
 function get_person() {
 	global $persgeg, $persgeg1;
@@ -168,7 +168,7 @@ function complete_data() {
 			}
 		}
 	}
-	
+
 	//look in the famgeg array for children
 	foreach($famgeg1 as $keyf=>$values) {
 		$birthyear = -1;
@@ -438,7 +438,7 @@ else {
 	</select><br />
 	</div>
 	<div id="x_numbers" style="display:none;">
-	<?php 
+	<?php
 	print_help_link("stat_help_gwx","qm");
 	echo $pgv_lang["statar_xga"];
 	?>
@@ -482,7 +482,7 @@ else {
 		<option value="africa"><?php echo $pgv_lang["africa_chart"]; ?></option>
 	</select>
 	</div>
-	
+
 	<td class="descriptionbox width10 wrap" id="axes"><?php print_help_link("stat_help_z","qm"); ?> <?php echo $pgv_lang["statlza"]; ?>  </td>
 	<td class="optionbox" id="zyaxes">
 	<input type="radio" id="z_none" name="z-as" value="300"
@@ -512,7 +512,7 @@ else {
 	</select>
 	<br /><br />
 	<?php
-	print_help_link("stat_help_y","qm"); 
+	print_help_link("stat_help_y","qm");
 	echo $pgv_lang["statlya"]."<br />";
 	?>
 	<input type="radio" id="y_num" name="y-as" value="201"
@@ -533,7 +533,7 @@ else {
 	</table>
 	</form>
 
-<?php //print_help_link("stat_help","qm"); 
+<?php //print_help_link("stat_help","qm");
 
 $_SESSION["plottype"]=$plottype;
 $_SESSION["plotshow"]=$plotshow;

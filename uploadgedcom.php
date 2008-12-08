@@ -48,8 +48,8 @@
 
 require './config.php';
 
-require_once 'includes/functions_import.php';
-require_once 'includes/functions_export.php';
+require_once 'includes/functions/functions_import.php';
+require_once 'includes/functions/functions_export.php';
 
 loadLangFile("pgv_confighelp");
 
@@ -177,7 +177,7 @@ if ($check == "cancel_upload") {
 }
 
 if ($cleanup_needed == "cleanup_needed" && $continue == $pgv_lang["del_proceed"]) {
-	require_once ("includes/functions_tools.php");
+	require_once ("includes/functions/functions_tools.php");
 
 	$filechanged = false;
 	if (file_is_writeable($GEDCOMS[$GEDFILENAME]["path"]) && (file_exists($GEDCOMS[$GEDFILENAME]["path"]))) {
@@ -536,7 +536,7 @@ if ($verify == "validate_form") {
 	print "<span class=\"error\">$error</span>\n";
 
 	if ($import != true && $skip_cleanup != $pgv_lang["skip_cleanup"]) {
-		require_once ("includes/functions_tools.php");
+		require_once ("includes/functions/functions_tools.php");
 		if ($override == "yes") {
 			copy($bakfile, $GEDCOMS[$GEDFILENAME]["path"]);
 			if (file_exists($bakfile))

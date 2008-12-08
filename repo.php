@@ -27,7 +27,7 @@
 
 require './config.php';
 
-require_once("includes/functions_print_lists.php");
+require_once("includes/functions/functions_print_lists.php");
 require_once("includes/controllers/repository_ctrl.php");
 
 global $linkToID;

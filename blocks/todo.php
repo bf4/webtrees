@@ -71,7 +71,7 @@ function print_todo($block=true, $config='', $side, $index) {
 	$content = "";
 
 	require_once("js/sorttable.js.htm");
-	require_once("includes/class_gedcomrecord.php");
+	require_once("includes/classes/class_gedcomrecord.php");
 
 	$all_gedcoms=get_all_gedcoms();
 

@@ -27,7 +27,7 @@
 
 require './config.php';
 
-require_once 'includes/functions_export.php';
+require_once 'includes/functions/functions_export.php';
 
 // Validate user parameters
 $ged                   =safe_GET('ged',                     get_all_gedcoms());

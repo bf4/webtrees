@@ -3,7 +3,7 @@
  * phpGedView Research Assistant Tool - Generic_Form
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  John Finlay and Others
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -33,17 +33,17 @@ if (!defined('PGV_PHPGEDVIEW')) {
 
 // Require the base class and any functions we need.
 require_once "ra_form.php";
-require_once "includes/functions_edit.php";
+require_once "includes/functions/functions_edit.php";
 
 /**
- * Generic_Form 
- * 
+ * Generic_Form
+ *
  * @uses ra_form
  */
 class Generic_Form extends ra_form {
     /**
 	 * Contains all the information that we want to print out in the header.
-     * 
+     *
 	 * How-To: This function is used to pint out specific things at the top of a custom input form. You
 	 * must provide this or your form will not work. It must also contain a user specified action, alignment,
 	 * and heading to appear properly. Anything inside the form must be assigned to the $out variable, and
@@ -58,7 +58,7 @@ class Generic_Form extends ra_form {
         $action = parse_url($action);
         global $params;
         parse_str(html_entity_decode($action["query"]), $params);
-        
+
         // Setup for our form to go through the module system
         $out =  '<form action="' . $action["path"] . '" method="post">';
 
@@ -88,11 +88,11 @@ END_OUT;
 		$out .= '</tr>';
 		return $out;
 	}
-    
+
 	/**
 	 * Contains all the main content that were going to print out.
-	 * 
-     * This function is usually what the user will fill full of 
+	 *
+     * This function is usually what the user will fill full of
      * information before they submit the form.
      *
      * @return void
@@ -100,10 +100,10 @@ END_OUT;
 	function content() {
 		return $this->sourceCitationForm();
 	}
-    
+
 	/**
 	 * Contains all the information for the footer.
-	 * 
+	 *
 	 * Anything that you want to print out in the footer of your form.
      *
      * @return mixed
@@ -115,7 +115,7 @@ END_OUT;
 
 	/**
 	 * Function that actually controls the printing of yuor form, and sends it back to the output buffer to print properly.
-	 * 
+	 *
 	 * <p>This is probably the most important function that your form has to have. This will control what is printed out and where,
 	 * you will also tell the header function what its method and action are here, as well as give your form a name. As you can see in this file
 	 * we want it to post back to itself and call the save method, the table align is center, and the form title is "Generic Information".
@@ -135,10 +135,10 @@ END_OUT;
 	function step2() {
 		global $GEDCOM, $GEDCOMS, $TBLPREFIX, $DBCONN, $factarray, $pgv_lang;
 		global $INDI_FACTS_ADD;
-		
+
 		$this->processSourceCitation();
 		$task = ra_functions::getTask($_REQUEST['taskid']);
-		
+
 		$out = $this->header("module.php?mod=research_assistant&form=Generic_Form&action=func&func=step3&taskid=" . $_REQUEST['taskid'], "center", "Fact Information");
 		$out .= $this->editFactsForm();
 		$out .= $this->footer();

@@ -1,9 +1,9 @@
-<?php 
+<?php
 /**
  * Common functions for the Search Plug-in of the Auto search Assistant
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  Greg Roach.  All rights reserved
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,6 +21,7 @@
  *
  * @version $Id$
  * @package PhpGedView
+ * @author Greg Roach
  * @subpackage Research Assistant
  */
 
@@ -29,7 +30,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
-require_once 'includes/class_person.php';
+require_once 'includes/classes/class_person.php';
 
 class Base_AutoSearch {
 	// These values should be class static/constant properties.
@@ -46,7 +47,7 @@ class Base_AutoSearch {
 		$this->method=$method;
 		$this->fields=$fields;
 	}
-	
+
 	// Generate a form to show the search options
 	function options() {
 		global $pgv_lang;
@@ -55,7 +56,7 @@ class Base_AutoSearch {
 		if (empty($pid)) $pid = safe_POST_xref('pid');
 		$person=Person::getInstance($pid);
 
-		$html ='<form name="autosearch" action="module.php" target="_blank" method="post">'; 
+		$html ='<form name="autosearch" action="module.php" target="_blank" method="post">';
 		$html.='<input type="hidden" name="mod"        value="research_assistant" />';
 		$html.='<input type="hidden" name="action"     value="auto_search" />';
 		$html.='<input type="hidden" name="searchtype" value="'.$this->title.'" />';
@@ -271,7 +272,7 @@ class Base_AutoSearch {
 
 	function country($person) {
 		global $lang_short_cut, $LANGUAGE;
-	
+
 		// Fetch a list of countries
 		require 'languages/countries.'.$lang_short_cut[$LANGUAGE].'.php';
 		asort($countries);

@@ -3,7 +3,7 @@
  *  PGV SOAP implementation of the genealogy web service
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -32,8 +32,8 @@ if (!defined('PGV_PHPGEDVIEW')) {
 define('PGV_PGV_SERVICELOGIC_CLASS_PHP', '');
 
 require_once 'webservice/genealogyService.php';
-require_once 'includes/functions_edit.php';
-require_once 'includes/class_gewebservice.php';
+require_once 'includes/functions/functions_edit.php';
+require_once 'includes/classes/class_gewebservice.php';
 
 class PGVServiceLogic extends GenealogyService {
 

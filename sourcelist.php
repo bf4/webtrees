@@ -3,7 +3,7 @@
  * Parses gedcom file and displays a list of the sources in the file.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,7 +26,7 @@
 
 require './config.php';
 
-require_once 'includes/functions_print_lists.php';
+require_once 'includes/functions/functions_print_lists.php';
 
 print_header($pgv_lang['source_list']);
 echo '<div class="center"><h2>'.$pgv_lang['source_list'].'</h2>';

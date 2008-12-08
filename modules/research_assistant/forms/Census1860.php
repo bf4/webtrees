@@ -3,7 +3,7 @@
  * phpGedView Research Assistant Tool - United States Census 1860 File
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  John Finlay and Others
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -31,7 +31,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 }
 
 require_once "ra_form.php";
-require_once "includes/functions_edit.php";
+require_once "includes/functions/functions_edit.php";
 
 class Census1860 extends ra_form {
 
@@ -56,7 +56,7 @@ class Census1860 extends ra_form {
 	    			$out .=	'</select></td></tr><tr><td colspan="2" class="topbottombar"><INPUT tabindex="5"  type="submit" value="'.$pgv_lang["okay"].'"/></td></tr></table>';
 	    			$out .= '</form>';
 		}
-		 
+
 		// Split action and use it for hidden inputs
 		$action = parse_url($action);
 		$params = array();
@@ -101,7 +101,7 @@ return false;}return true;}
 			$people = $this->getPeople();
 			$row = count($people);
 		}
-		 
+
 		$citation = $this->getSourceCitationData();
 		$page = "";
 		$callno = "";
@@ -111,14 +111,14 @@ return false;}return true;}
 			$page = trim($match[1]);
 			$callno = trim($match[2]);
 		}
-		 
+
 		$city = "";
 		$county = "";
 		$state = "";
 		if (!empty($citation['ts_array']['city'])) $city = $citation['ts_array']['city'];
 		if (!empty($citation['ts_array']['county'])) $county = $citation['ts_array']['county'];
 		if (!empty($citation['ts_array']['state'])) $state = $citation['ts_array']['state'];
-  
+
 //        Start of Table
 		$out = '<tr>
 			<td class="descriptionbox">'.print_help_link("edit_media_help", "qm",'',false,true).$factarray['OBJE'].'</td>
@@ -130,7 +130,7 @@ return false;}return true;}
 				/*@var $picture Media*/
 				$picture = Media::getInstance($citation['ts_obje']);
 				if(!is_null($picture))
-				{	
+				{
 					$out .= "<span id=\"censusImgSpan\">".$picture->getFullName().'</span><br/><img id="censusImage" src="'.$picture->getThumbnail().'" />';
 				}
 				else
@@ -195,7 +195,7 @@ return false;}return true;}
 			$value = "";
 			if (isset($citation['ts_array']['rows'][$i]['Gender'])) $value = $citation['ts_array']['rows'][$i]['Gender'];
 			$out .= '<td class="optionbox" align="left">
- 				Male:<INPUT tabindex="'.($i*100+19).'"  TYPE="RADIO" value="M" name="Gender'.$i.'"'.($value=='M'?' checked="checked"':'').' /> 
+ 				Male:<INPUT tabindex="'.($i*100+19).'"  TYPE="RADIO" value="M" name="Gender'.$i.'"'.($value=='M'?' checked="checked"':'').' />
 				Female:<INPUT tabindex="'.($i*100+20).'"  TYPE="RADIO" value="F" name="Gender'.$i.'"'.($value=='F'?' checked="checked"':'').' /></td>';
 		}
 		$out .='</tr>
@@ -255,7 +255,7 @@ $out .= '</tr>
  		}
  		$out .='</tr>
  <tr>
-  <td class="descriptionbox" align="left">Attended School within the year 
+  <td class="descriptionbox" align="left">Attended School within the year
   </td>';
  		for($i=0; $i<$_REQUEST['numOfRows']; $i++) {
  			$value = "";
@@ -294,7 +294,7 @@ $out .= '</tr>
  				if (isset($persons[$i])) $pid = $persons[$i]->getXref();
  			}
  			$person = Person::GetInstance($pid);
-  
+
  			$out .= '
 	            <td id="peoplecell" class="optionbox">
 	                   <div id="peoplelink'.$i.'">';
@@ -306,7 +306,7 @@ $out .= '</tr>
  			$out .= print_findindi_link("personid".$i, "peoplelink".$i, true,false,'',$searchName);
  			$out .= "<br />Create New Person: <input type=\"checkbox\" value=\"newPerson\"/>";
  			$out .= '<br /></td>';
-	  
+
  		}
  		$out .='</tr></table>';
  		$out .= '</td></tr>';
@@ -330,26 +330,26 @@ $out .= '</tr>
 	{
 		$indiFact = "0 @new@ INDI\r\n";
 		$indiFact .= "1 NAME ".$_POST["NameOfPeople".$i]."\r\n";
-  
+
 		if(!empty($_POST["Age".$i]))
 		{
 			$age = 1860 - $_POST["Age".$i];
 			$indiFact .= "1 BIRT\r\n";
 			$indiFact .= "2 DATE ABT ".$age;
 		}
-		 
+
 		if(!empty($_POST["PlaceOfBirth".$i]))
 		{
 			$indiFact .= "2 PLAC ".$_POST["PlaceOfBirth"];
 		}
-		 
+
 		if(!empty($_POST["Gender".$i]))
 		{
 			$indiFact .= "1 SEX ".$_POST["Gender".$i];
 		}
-		 
+
 		return $indiFact;
-  
+
 	}
 
 	function step2() {
@@ -406,7 +406,7 @@ $out .= '</tr>
 		{
 
 			$out .= '<tr><td colspan="2" id="inferData"><table class="list_table"><tbody><tr><td colspan="4" class="topbottombar">'.$pgv_lang["ra_inferred_facts"].'</td></tr>
-<tr><td class="descriptionbox">'.$pgv_lang["ra_fact"].'</td><td class="descriptionbox">'.$pgv_lang["ra_person"].'</td><td class="descriptionbox">'.$pgv_lang["ra_reason"].'</td><td class="descriptionbox">'.$pgv_lang["add"].'</td></tr>'; 
+<tr><td class="descriptionbox">'.$pgv_lang["ra_fact"].'</td><td class="descriptionbox">'.$pgv_lang["ra_person"].'</td><td class="descriptionbox">'.$pgv_lang["ra_reason"].'</td><td class="descriptionbox">'.$pgv_lang["add"].'</td></tr>';
 			$completeFact = true;
 			$occufact = true;
 			foreach($inferFacts as $key=>$inferredFacts) {
@@ -421,7 +421,7 @@ $out .= '</tr>
 						{
 							$completeFact = false;
 						}
-							
+
 					}
 
 					if($completeFact)
@@ -470,7 +470,7 @@ $out .= '</tr>
 	 * This is a function that will attempt to infer facts from the census form.
 	 * If any facts can be inferred then it will attempt to validate them against the database.
 	 * If a fact differs from that in the database, or there is no fact present in the databse,
-	 * this function will suggest the facts to the user. 
+	 * this function will suggest the facts to the user.
 	 */
 	function inferFacts($rows){
 		$people = array();
@@ -540,8 +540,8 @@ $out .= '</tr>
 			}
 		}
 		return $people;
-		
-		
+
+
 	}
 
 	/**
@@ -552,7 +552,7 @@ $out .= '</tr>
 		//-- delete any old census records
 		$sql = "DELETE FROM ".$TBLPREFIX."taskfacts WHERE tf_t_id='".$DBCONN->escapeSimple($_REQUEST['taskid'])."' AND tf_factrec ".PGV_DB_LIKE." '1 CENS%'";
 		$res = dbquery($sql);
-  
+
 		// Set our output to nothing, this supresses a warning that we would otherwise get.
 		$out = "";
 		$factrec = "1 CENS";
@@ -604,7 +604,7 @@ $out .= '</tr>
 			"MarriedWithinYear"=>$_POST["MarriedWithinYear".$number],
 			"school"=>$_POST["school".$number],
 			"readwrite"=>$_POST["readwrite".$number],
-			"personalestate"=>$_POST["personalestate".$number],			
+			"personalestate"=>$_POST["personalestate".$number],
 			"personid"=>$_POST["personid".$number]
 			);
 
@@ -628,10 +628,10 @@ $out .= '</tr>
 			}
 
 			$citation = array(
-			"PAGE"=>"Page: ".$_POST['page'].", Call Number/URL: ".$_POST['CallNumberURL'], 
-			"QUAY"=>'', 
-    		"DATE"=>!empty($_POST['EnumerationDate'])?$_POST['EnumerationDate']:"1860", 
-			"TEXT"=>$text, 
+			"PAGE"=>"Page: ".$_POST['page'].", Call Number/URL: ".$_POST['CallNumberURL'],
+			"QUAY"=>'',
+    		"DATE"=>!empty($_POST['EnumerationDate'])?$_POST['EnumerationDate']:"1860",
+			"TEXT"=>$text,
 			"OBJE"=>$_POST['OBJE'],
 			"array"=>array(
 			'city'=>$_POST['city'],

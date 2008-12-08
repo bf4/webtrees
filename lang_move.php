@@ -147,7 +147,7 @@ else if ($action=="adminonly") {
 	$files = array("./admin.php", "./downloadgedcom.php", "./edit_privacy.php", "./editconfig_gedcom.php", "./install.php",
 	"./editgedcoms.php", "./editlang_edit_settings.php", "./editlang_edit.php", "./editlang.php", "./manageservers.php",
 	"./media.php", "./pgvinfo.php", "./printlog.php", "./uploadgedcom.php", "./useradmin.php", "./usermigrate.php",
-	"./includes/functions_editlang.php", "./includes/functions_export.php", "./includes/functions_tools.php",
+	"./includes/functions/functions_editlang.php", "./includes/functions/functions_export.php", "./includes/functions/functions_tools.php",
 	"./sanity_check.php");
 	$adminlang = array();
 	foreach($files as $i=>$file) {
@@ -191,7 +191,7 @@ else if ($action=="adminonly") {
 else if ($action=="editoronly") {
 	$files = array("./addmedia.php", "./addremotelink.php", "./addsearchlink.php", "./edit_changes.php",
 	"./edit_interface.php", "./edit_merge.php", "./edit_quickupdate.php", "./inverselink.php", "./uploadmedia.php",
-	"./blocks/review_changes.php", "./includes/functions_edit.php");
+	"./blocks/review_changes.php", "./includes/functions/functions_edit.php");
 	$adminlang = array();
 	foreach($files as $i=>$file) {
 		if (isset($lang[$file])) {

@@ -32,7 +32,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 
 define('PGV_MEDIA_REORDER_PHP', '');
 
-include_once("functions_print_facts.php");
+include_once("includes/functions/functions_print_facts.php");
 
 	print "<br /><b>".$pgv_lang["reorder_media"]."</b>";
 //	print_help_link("reorder_children_help", "qm");

@@ -31,7 +31,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 
 define('PGV_ANCESTRY_CTRL_PHP', '');
 
-require_once 'includes/functions_charts.php';
+require_once 'includes/functions/functions_charts.php';
 require_once 'includes/controllers/basecontrol.php';
 
 loadLangFile("pgv_confighelp");

@@ -31,11 +31,11 @@ if (!defined('PGV_PHPGEDVIEW')) {
 
 define('PGV_SOURCE_CTRL_PHP', '');
 
-require_once 'includes/functions_print_facts.php';
+require_once 'includes/functions/functions_print_facts.php';
 require_once 'includes/controllers/basecontrol.php';
-require_once 'includes/class_source.php';
-require_once 'includes/class_menu.php';
-require_once 'includes/functions_import.php';
+require_once 'includes/classes/class_source.php';
+require_once 'includes/classes/class_menu.php';
+require_once 'includes/functions/functions_import.php';
 
 $nonfacts = array();
 /**

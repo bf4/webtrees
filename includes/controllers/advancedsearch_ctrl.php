@@ -183,7 +183,7 @@ class AdvancedSearchController extends SearchController {
 
 		$sql = '';
 		if ($justSql) $sqlfields = "SELECT DISTINCT ".$prefix."_id, ".$prefix."_file";
-		else $sqlfields = "SELECT i_id, i_gedcom, i_isdead, i_file";
+		else $sqlfields = "SELECT i_id, i_gedcom, i_name, i_isdead, i_file";
 		$sqltables = " FROM ".$TBLPREFIX.$table;
 		$sqlwhere = " WHERE ".$prefix."_file=".PGV_GED_ID;
 		$keepfields = $this->fields;
@@ -426,7 +426,7 @@ class AdvancedSearchController extends SearchController {
 	function PrintResults() {
 		global $pgv_lang, $GEDCOMS;
 
-		include_once ("includes/functions_print_lists.php");
+		include_once ("includes/functions/functions_print_lists.php");
 		$ret = true;
 		if (count($this->myindilist)>0) {
 			print "<br />";

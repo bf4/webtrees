@@ -3,7 +3,7 @@
  * phpGedView Research Assistant Tool - United States Census 1840 File
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  John Finlay and Others
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -31,7 +31,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 }
 
 require_once "ra_form.php";
-require_once "includes/functions_edit.php";
+require_once "includes/functions/functions_edit.php";
 
 class Census1840 extends ra_form {
 
@@ -55,12 +55,12 @@ class Census1840 extends ra_form {
 	    	$out .=	'</select></td></tr><tr><td colspan="2" class="topbottombar"><input type="submit" value="'.$pgv_lang["okay"].'"/></td></tr></table>';
 	    	$out .= '</form>';
     	}
-    	
+
 		// Split action and use it for hidden inputs
         $action = parse_url($action);
         global $params;
         parse_str(html_entity_decode($action["query"]), $params);
-        
+
         // Setup for our form to go through the module system
         $out .=  '<form action="' . $action["path"] . '" method="post">';
 		$out .= '<input type="hidden" name="numOfRows" value="'.$_REQUEST['numOfRows'].'" />';
@@ -73,7 +73,7 @@ class Census1840 extends ra_form {
         $out .= '</tr>';
         return $out;
     }
-	
+
 	/**
 	 * override method from ra_form.php
 	 */
@@ -83,7 +83,7 @@ class Census1840 extends ra_form {
     		$data = array();
     	if (empty($_REQUEST['row']))
     		$row = 1;
-    	
+
     	$citation = $this->getSourceCitationData();
     	$page = "";
     	$callno = "";
@@ -93,14 +93,14 @@ class Census1840 extends ra_form {
     		$page = trim($match[1]);
     		$callno = trim($match[2]);
     	}
-    	
+
     	$city = "";
     	$county = "";
     	$state = "";
     	if (!empty($citation['ts_array']['city'])) $city = $citation['ts_array']['city'];
     	if (!empty($citation['ts_array']['county'])) $county = $citation['ts_array']['county'];
     	if (!empty($citation['ts_array']['state'])) $state = $citation['ts_array']['state'];
-    	
+
 //        Start of Table
 		$out = '<tr>
 			<td class="descriptionbox">'.print_help_link("edit_media_help", "qm",'',false,true).$factarray['OBJE'].'</td>
@@ -112,7 +112,7 @@ class Census1840 extends ra_form {
 				/*@var $picture Media*/
 				$picture = Media::getInstance($citation['ts_obje']);
 				if(!is_null($picture))
-				{	
+				{
 					$out .= "<span id=\"censusImgSpan\">".$picture->getFullName().'</span><br/><img id="censusImage" src="'.$picture->getThumbnail().'" />';
 				}
 				else
@@ -145,14 +145,14 @@ class Census1840 extends ra_form {
         $out .= '<td colspan="6" class="descriptionbox" align="center">Free Male Colored Persons</td>';
         $out .= '<td colspan="6" class="descriptionbox" align="center">Free Female Colored Persons</td>';
         $out .= '<td class="descriptionbox" align="center" rowspan="2">Total</td>';
-        
+
         $out .= '<td colspan="7" class="descriptionbox" align="center">Number of persons in each<br />family employed in</td>';
         $out .= '<td colspan="1" class="descriptionbox" align="center">Pensioners for Revolutionary<br />or military services, included<br />in the foregoing.</td>';
-        
+
         $out .= '<td colspan="6" class="descriptionbox" align="center">White Persons included in foregoing.</td>';
         $out .= '<td colspan="4" class="descriptionbox" align="center">Slaves and Colored Persons, included in foregoing.</td>';
         $out .= '<td colspan="7" class="descriptionbox" align="center">Schools & c.</td>';
-        
+
 //		  Next row of description cells
         $out .=	'<tr><td class="descriptionbox">under 5</td><td class="descriptionbox">5 to 10</td>';
         $out .= '<td class="descriptionbox">10 to 15</td><td class="descriptionbox">15 to 20</td><td class="descriptionbox">20 to 30</td>';
@@ -177,7 +177,7 @@ class Census1840 extends ra_form {
         $out .= '<td class="descriptionbox">Under 10</td><td class="descriptionbox">10 to 24</td><td class="descriptionbox">24 to 36</td>';
         $out .=	'<td class="descriptionbox">36 to 55</td><td class="descriptionbox">55 to 100</td>';
         $out .= '<td class="descriptionbox">100 & C.</td>';
-        
+
         $out .= '<td class="descriptionbox">Mining.</td>';
         $out .= '<td class="descriptionbox">Agriculture.</td>';
         $out .= '<td class="descriptionbox">Commerce.</td>';
@@ -185,9 +185,9 @@ class Census1840 extends ra_form {
         $out .= '<td class="descriptionbox">Navigation of<br />the ocean.</td>';
         $out .= '<td class="descriptionbox">Navigation of<br />canals, lakes,<br />rivers.</td>';
         $out .= '<td class="descriptionbox">Learned professional<br />engineers.</td>';
-        
+
          $out .= '<td class="descriptionbox">Names</td>';
-        
+
         $out .= '<td class="descriptionbox">Who are Deaf & Dumb,<br /> under 14 of age</td>';
         $out .= '<td class="descriptionbox">Who are Deaf & Dumb,<br /> of the age of 14 and under 25</td>';
         $out .= '<td class="descriptionbox">Who are Deaf and dumb<br />25 and up</td>';
@@ -198,7 +198,7 @@ class Census1840 extends ra_form {
         $out .= '<td class="descriptionbox">Blind</td>';
         $out .= '<td class="descriptionbox">Insane and idiots<br />at public charge</td>';
         $out .= '<td class="descriptionbox">Insane and idiots<br />at private charge</td>';
-        
+
         $out .= '<td class="descriptionbox">Universities or college</td>';
         $out .= '<td class="descriptionbox">Number of students</td>';
         $out .= '<td class="descriptionbox">Academies &<br />Grammar Schools</td>';
@@ -212,7 +212,7 @@ class Census1840 extends ra_form {
         for($i = 0; $i < $_REQUEST['numOfRows']; $i++){
         	$row = array();
         	if (isset($citation['ts_array']['rows'][$i])) $row = $citation['ts_array']['rows'][$i];
-        	
+
         	$value = "";
         	if (isset($row['headName'])) $value = $row['headName'];
 	        $out .= '<tr><td class="optionbox"><input name="headName'.$i.'" type="text" size="19" value="'.htmlentities($value).'"></td>';
@@ -257,7 +257,7 @@ class Census1840 extends ra_form {
         	if (isset($row['100upM'])) $value = $row['100upM'];
 	        $out .= '<td class="optionbox"><input name="100upM'.$i.'" type="text" size="4" value="'.htmlentities($value).'"></td>';
 
-	//		  Free white females input boxes 
+	//		  Free white females input boxes
 			$value = "";
         	if (isset($row['under5F'])) $value = $row['under5F'];
 	        $out .= '<td class="optionbox"><input name="under5F'.$i.'" type="text" size="4" value="'.htmlentities($value).'"></td>';
@@ -335,7 +335,7 @@ class Census1840 extends ra_form {
 	        $value = "";
         	if (isset($row['slaves100upF'])) $value = $row['slaves100upF'];
 	        $out .= '<td class="optionbox"><input name="slaves100upF'.$i.'" type="text" size="4" value="'.htmlentities($value).'"></td>';
-	        
+
 	// 			Free Colored Persons input boxes
 			$value = "";
         	if (isset($row['FreeSlavesUnder10M'])) $value = $row['FreeSlavesUnder10M'];
@@ -373,7 +373,7 @@ class Census1840 extends ra_form {
 	        $value = "";
         	if (isset($row['FreeSlaves100upF'])) $value = $row['FreeSlaves100upF'];
 	        $out .= '<td class="optionbox"><input name="FreeSlaves100upF'.$i.'" type="text" size="4" value="'.htmlentities($value).'"></td>';
-	       
+
 	       //Other inputs
 	        $value = "";
         	if (isset($row['Total'])) $value = $row['Total'];
@@ -399,12 +399,12 @@ class Census1840 extends ra_form {
 	        $value = "";
         	if (isset($row['LearnedProfessionalEngineers'])) $value = $row['LearnedProfessionalEngineers'];
 	        $out .= '<td class="optionbox"><input name="LearnedProfessionalEngineers'.$i.'" type="text" size="15" value="'.htmlentities($value).'"></td>';
-	        
+
 	        $value = "";
         	if (isset($row['Name'])) $value = $row['Name'];
 	        $out .= '<td class="optionbox"><input name="Name'.$i.'" type="text" size="20" value="'.htmlentities($value).'"></td>';
-	        
-	        
+
+
 	        $value = "";
         	if (isset($row['DeafDumbUnder14'])) $value = $row['DeafDumbUnder14'];
 	        $out .= '<td class="optionbox"><input name="DeafDumbUnder14'.$i.'" type="text" size="15" value="'.htmlentities($value).'"></td>';
@@ -423,7 +423,7 @@ class Census1840 extends ra_form {
 	        $value = "";
         	if (isset($row['privateidiots'])) $value = $row['privateidiots'];
 	        $out .= '<td class="optionbox"><input name="privateidiots'.$i.'" type="text" size="10" value="'.htmlentities($value).'"></td>';
-	        
+
 	        $value = "";
         	if (isset($row['DeafDumb14to25Slaves'])) $value = $row['DeafDumb14to25Slaves'];
 	        $out .= '<td class="optionbox"><input name="DeafDumb14to25Slaves'.$i.'" type="text" size="8" value="'.htmlentities($value).'"></td>';
@@ -436,7 +436,7 @@ class Census1840 extends ra_form {
 	        $value = "";
         	if (isset($row['BlindSlaves'])) $value = $row['BlindSlaves'];
 	        $out .= '<td class="optionbox"><input name="BlindSlaves" type="text" size="10" value="'.htmlentities($value).'"></td>';
-	        
+
 	        $value = "";
         	if (isset($row['UniversitiesOrCollege'])) $value = $row['UniversitiesOrCollege'];
 	        $out .= '<td class="optionbox"><input name="UniversitiesOrCollege" type="text" size="15" value="'.htmlentities($value).'"></td>';
@@ -474,19 +474,19 @@ class Census1840 extends ra_form {
         $out .= $this->footer();
         return $out;
     }
-    
+
     function step2() {
 		global $GEDCOM, $GEDCOMS, $TBLPREFIX, $DBCONN, $factarray, $pgv_lang;
 		global $INDI_FACTS_ADD;
-		
+
 		$this->processSourceCitation();
-		
+
 		$out = $this->header("module.php?mod=research_assistant&form=Census1840&action=func&func=step3&taskid=" . $_REQUEST['taskid'], "center", "1840 United States Federal Census");
 		$out .= $this->editFactsForm();
 		$out .= $this->footer();
 		return $out;
 	}
-	
+
 	function step3() {
 		global $GEDCOM, $GEDCOMS, $TBLPREFIX, $DBCONN, $pgv_lang;
 
@@ -496,7 +496,7 @@ class Census1840 extends ra_form {
 		ra_functions::completeTask($_REQUEST['taskid'], $_REQUEST['form']);
 		// Tell the user their form submitted successfully.
 		$out .= ra_functions::print_menu();
-		$out .= ra_functions::printMessage($pgv_lang["success"],true);		
+		$out .= ra_functions::printMessage($pgv_lang["success"],true);
 
 		// Return it to the buffer.
 		return $out;
@@ -510,14 +510,14 @@ class Census1840 extends ra_form {
     	//-- delete any old census records
     	$sql = "DELETE FROM ".$TBLPREFIX."taskfacts WHERE tf_t_id='".$DBCONN->escapeSimple($_REQUEST['taskid'])."' AND tf_factrec ".PGV_DB_LIKE." '1 CENS%'";
     	$res = dbquery($sql);
-    	
+
 		// Set our output to nothing, this supresses a warning that we would otherwise get.
 		$out = "";
 		$factrec = "1 CENS";
 		$factrec .= "\r\n2 DATE ";
 		$factrec .=!empty($_POST['EnumerationDate'])?$_POST['EnumerationDate']:"1840";
 		$factrec .= "\r\n2 PLAC ".$_POST['city'].", ".$_POST['county'].", ".$_POST['state'].", USA";
-		
+
 		$people = $this->getPeople();
 		$pids = array_keys($people);
 		//-- store the fact associations in the database
@@ -526,7 +526,7 @@ class Census1840 extends ra_form {
 			"'".$DBCONN->escapeSimple($factrec)."'," .
 			"'".$DBCONN->escapeSimple(implode(";", $pids))."', 'Y', 'indi')";
 		$res = dbquery($sql);
-		
+
 		$rows = array();
 		$text = $_POST['city'].", ".$_POST['county'].", ".$_POST['state'].", 1840 US Census";
 		for($number = 0; $number < $_REQUEST['numOfRows']; $number++)
@@ -690,19 +690,19 @@ class Census1840 extends ra_form {
 		}
 
 		$citation = array(
-			"PAGE"=>"Page: ".$_POST['page'].", Call Number/URL: ".$_POST['CallNumberURL'], 
-			"QUAY"=>'', 
-    		"DATE"=>!empty($_POST['EnumerationDate'])?$_POST['EnumerationDate']:"1840", 
-			"TEXT"=>$text, 
+			"PAGE"=>"Page: ".$_POST['page'].", Call Number/URL: ".$_POST['CallNumberURL'],
+			"QUAY"=>'',
+    		"DATE"=>!empty($_POST['EnumerationDate'])?$_POST['EnumerationDate']:"1840",
+			"TEXT"=>$text,
 			"OBJE"=>'',
 			"array"=>array(
 			'city'=>$_POST['city'],
 			'county'=>$_POST['county'],
 			'state'=>$_POST['state'],
 			'rows'=>$rows));
-					
+
 		return $citation;
     }
-    
+
 }
 ?>

@@ -3,7 +3,7 @@
  * phpGedView Research Assistant Tool - %FORMNAME%
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2005  John Finlay and Others
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -29,7 +29,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 }
 
 require_once "ra_form.php";
-require_once "includes/functions_edit.php";
+require_once "includes/functions/functions_edit.php";
 
 class %FORMNAME% extends ra_form {
 
@@ -43,4 +43,4 @@ class %FORMNAME% extends ra_form {
 	    			'<input type="hidden" name="action" value="printform" />' .
 	    			'<input type="hidden" name="formname" value="%FORMNAME%" />' .
 	    			'<input type="hidden" name="taskid" value="'.$_REQUEST['taskid'].'" />';
-	    	
+

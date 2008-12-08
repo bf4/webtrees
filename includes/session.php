@@ -266,8 +266,8 @@ if (empty($PGV_MEMORY_LIMIT)) $PGV_MEMORY_LIMIT = "32M";
 @ini_set('memory_limit', $PGV_MEMORY_LIMIT);
 
 //--load common functions
-require_once("includes/functions.php");
-require_once("includes/functions_name.php");
+require_once("includes/functions/functions.php");
+require_once("includes/functions/functions_name.php");
 //-- set the error handler
 $OLD_HANDLER = set_error_handler("pgv_error_handler");
 
@@ -295,7 +295,7 @@ if (isset($MANUAL_SESSION_START) && !empty($SID)) session_id($SID);
 @session_start();
 
 //-- load db specific functions
-require_once("includes/functions_db.php");
+require_once("includes/functions/functions_db.php");
 // -- load the authentication system, also logging
 require_once("includes/authentication.php");
 //-- load up the code to check for spiders
@@ -355,7 +355,7 @@ define('PGV_PRIV_HIDE',   -1); // Hide the item to all users including the admin
 $PRIV_PUBLIC = PGV_PRIV_PUBLIC;
 $PRIV_USER   = PGV_PRIV_USER;
 $PRIV_NONE   = PGV_PRIV_NONE;
-$PRIV_HIDE   = PGV_PRIV_HIDE; 
+$PRIV_HIDE   = PGV_PRIV_HIDE;
 
 /**
  * Load GEDCOM configuration
@@ -371,12 +371,12 @@ if (empty($PHPGEDVIEW_EMAIL)) {
  */
 if (strstr($SCRIPT_NAME, "client.php")===false && strstr($SCRIPT_NAME, "genservice.php")===false) {
 	//-- load media specific functions
-	require_once("includes/functions_print.php");
-	require_once("includes/functions_rtl.php");
+	require_once("includes/functions/functions_print.php");
+	require_once("includes/functions/functions_rtl.php");
 }
 
-if ($MULTI_MEDIA) require_once("includes/functions_mediadb.php");
-require_once("includes/functions_date.php");
+if ($MULTI_MEDIA) require_once("includes/functions/functions_mediadb.php");
+require_once("includes/functions/functions_date.php");
 
 if (empty($PEDIGREE_GENERATIONS)) $PEDIGREE_GENERATIONS = $DEFAULT_PEDIGREE_GENERATIONS;
 
@@ -505,7 +505,7 @@ require_once("includes/templecodes.php");  //-- load in the LDS temple code tran
 
 //-- load the privacy functions
 load_privacy_file(get_id_from_gedcom($GEDCOM));
-require_once("includes/functions_privacy.php");
+require_once("includes/functions/functions_privacy.php");
 
 //-----------------------------------
 //-- if user wishes to logout this is where we will do it

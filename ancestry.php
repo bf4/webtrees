@@ -212,7 +212,7 @@ END;
 }
 //-- Individual list
 if ($controller->chart_style==2) {
-	require_once("includes/functions_print_lists.php");
+	require_once("includes/functions/functions_print_lists.php");
 	$treeid = ancestry_array($controller->rootid, $PEDIGREE_GENERATIONS);
 	echo "<div class=\"center\">";
 	print_indi_table($treeid, $pgv_lang["ancestry_chart"]." : ".PrintReady($controller->name), "sosa");
@@ -220,7 +220,7 @@ if ($controller->chart_style==2) {
 }
 //-- Family list
 if ($controller->chart_style==3) {
-	require_once("includes/functions_print_lists.php");
+	require_once("includes/functions/functions_print_lists.php");
 	$treeid = ancestry_array($controller->rootid, $PEDIGREE_GENERATIONS-1);
 	$famlist = array();
 	foreach ($treeid as $p=>$pid) {

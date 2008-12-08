@@ -3,7 +3,7 @@
  * Installation and Configuration
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2008  PGV Development Team
+ * Copyright (C) 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -41,7 +41,7 @@
 if (file_exists('config.php')) require_once('config.php');
 else require_once('config.dist');
 
-require_once 'includes/functions_import.php';
+require_once 'includes/functions/functions_import.php';
 
 //-- if we are configured, then make sure that only admins access this page
 if (!empty($PGV_DB_CONNECTED) && adminUserExists()) {

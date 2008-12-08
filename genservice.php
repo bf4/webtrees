@@ -3,7 +3,7 @@
  *  Entry point for SOAP web service
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2005  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -46,7 +46,7 @@ if(!isset($_SERVER['QUERY_STRING']) || strstr($_SERVER['QUERY_STRING'],'wsdl')==
 		if ($ct>0) $_REQUEST['ged'] = trim($match[1]);
 
 		//AddToLog("Setting SID to ".$SID." ".$HTTP_RAW_POST_DATA);
-		require_once("includes/functions_edit.php");
+		require_once("includes/functions/functions_edit.php");
 	}
 }
 

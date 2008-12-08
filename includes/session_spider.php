@@ -142,9 +142,9 @@ $worms = array(
 	if ($quitReason != "") {
 		if ((!ini_get('register_globals'))||(strtolower(ini_get('register_globals'))=="off")) {
 			//-- load common functions
-			require_once("includes/functions.php");
+			require_once("includes/functions/functions.php");
 			//-- load db specific functions
-			require_once("includes/functions_db.php");
+			require_once("includes/functions/functions_db.php");
 			require_once("includes/authentication.php");      // -- load the authentication system
 			AddToLog("MSG>{$quitReason}; script terminated.");
 			AddToLog("UA>{$ua}<");

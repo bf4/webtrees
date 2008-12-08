@@ -28,7 +28,7 @@
 
 require './config.php';
 
-require_once("includes/functions_charts.php");
+require_once("includes/functions/functions_charts.php");
 
 //-- try to increase the time limit because reports can take a long time
 @set_time_limit($TIME_LIMIT*2);
@@ -304,14 +304,14 @@ else if ($action=="run") {
 	//-- load the report generator
 	switch ($output) {
 	case 'HTML':
-		require 'includes/class_reporthtml.php';
+		require 'includes/classes/class_reporthtml.php';
 		break;
 	case 'TEXT':
-		require 'includes/class_reportlatex.php';
+		require 'includes/classes/class_reportlatex.php';
 		break;
 	case 'PDF':
 	default:
-		require 'includes/class_reportpdf.php';
+		require 'includes/classes/class_reportpdf.php';
 		break;
 	}
 

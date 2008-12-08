@@ -32,9 +32,9 @@ if (!defined('PGV_PHPGEDVIEW')) {
 
 define('PGV_LIFESPAN_CTRL_PHP', '');
 
-require_once 'includes/functions_charts.php';
+require_once 'includes/functions/functions_charts.php';
 require_once 'includes/controllers/basecontrol.php';
-require_once 'includes/class_person.php';
+require_once 'includes/classes/class_person.php';
 
 function compare_people($a, $b) {
 	return GedcomDate::Compare($a->getEstimatedBirthDate(), $b->getEstimatedBirthDate());
@@ -396,7 +396,7 @@ class LifespanControllerRoot extends BaseController {
 					    $minlength = (UTF8_strlen($value->getFullName())-34) * $this->zoomfactor;
 //						$minlength = (strlen($value->getFullName())-7) * $this->zoomfactor;  // Assumes <span class="starredname> becomes <u>
 				else	$minlength = UTF8_strlen($value->getFullName()) * $this->zoomfactor;
-		
+
 				if ($startPos > 15) {
 					$startPos = (($birthYear - $this->timelineMinYear) * $this->zoomfactor) + 15 + $modFix;
 					$startPos = (($birthYear - $this->timelineMinYear) * $this->zoomfactor) + 15;
@@ -411,10 +411,10 @@ class LifespanControllerRoot extends BaseController {
 					$int = $birthYear+1;
 				}
 
-				$lifespan = "<span dir=\"ltr\">$birthYear-</span>"; 
+				$lifespan = "<span dir=\"ltr\">$birthYear-</span>";
 				$deathReal = $value->getDeathDate(false)->isOK();
 				$birthReal = $value->getBirthDate(false)->isOK();
-				if ($value->isDead() && $deathReal) $lifespan .= "<span dir=\"ltr\">$deathYear</span>"; 
+				if ($value->isDead() && $deathReal) $lifespan .= "<span dir=\"ltr\">$deathYear</span>";
 				$lifespannumeral = $deathYear - $birthYear;
 
 				//-- calculate a good Y top value
@@ -503,13 +503,13 @@ class LifespanControllerRoot extends BaseController {
 					"\n\t\t<td align=\"left\" width=\"100%\"><a href=\"".encode_url("individual.php?pid=".$value->getXref())."\">".$value->getSexImage().$indiName.":  $lifespan </a></td>" .
 					"\n\t\t<td width=\"15\">";
 					if ($value->isDead()) {
-						if ($deathReal || $value->isDead()) { 
+						if ($deathReal || $value->isDead()) {
 			 				print "<a class=\"showit\" href=\"#\"><b>";
 							if (isset ($factAbbrev["DEAT"])) print $factAbbrev["DEAT"];
 							else print get_first_letter($factarray["DEAT"]);
 							if (!$deathReal) print "*";
 							print "</b><span>".$value->getSexImage().$indiName."<br/>".$factarray["DEAT"]." ".strip_tags($ddate->Display(false))." ".PrintReady($value->getDeathPlace())."</span></a>";
-						} 
+						}
 					}
 					print "</td></tr></table>";
 					echo '</div>';
@@ -534,14 +534,14 @@ class LifespanControllerRoot extends BaseController {
 						print "</b><span>".$value->getSexImage().$indiName."<br/>".$factarray["BIRT"]." ".strip_tags($bdate->Display(false))." ".PrintReady($value->getBirthPlace())."</span></a></td>" .
 						"\n\t\t<td align=\"left\" width=\"100%\"><a href=\"".encode_url("individual.php?pid=".$value->getXref())."\">".$value->getSexImage().$indiName."</a></td>" .
 						"\n\t\t<td width=\"15\">";
-						if ($value->isDead()) { 
-							if ($deathReal || $value->isDead()) { 
+						if ($value->isDead()) {
+							if ($deathReal || $value->isDead()) {
 								print "<a class=\"showit\" href=\"#\"><b>";
 								if (isset ($factAbbrev["DEAT"])) print $factAbbrev["DEAT"];
 								else print get_first_letter($factarray["DEAT"]);
 								if (!$deathReal) print "*";
 								print "</b><span>".$value->getSexImage().$indiName."<br/>".$factarray["DEAT"]." ".strip_tags($ddate->Display(false))." ".PrintReady($value->getDeathPlace())."</span></a>";
-							} 
+							}
 						}
 						print "</td></tr></table>";
 						echo '</div>';
