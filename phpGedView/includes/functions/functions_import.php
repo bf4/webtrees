@@ -72,6 +72,433 @@ $TRANSLATE_TAGS=array(
 	// _DETS, _SEPR, CITN, _HEIG, _WEIG, _EXCM, _ELEC, _NAME, _MISN, _UNKN
 );
 
+// Tidy up a gedcom record, so that we can access it consistently.
+function reformat_record($rec) {
+	global $WORD_WRAPPED_NOTES;
+
+	// Strip out control characters and mac/msdos line endings
+	static $control1="\r\x01\x02\x03\x04\x05\x06\x07\x09\x0B\x0C\x0E\x0F\x10\x11\x12\x13\x14\x15\x16\x17\x18\x19\x1A\x1B\x1C\x1D\x1E\x1F\x7F";
+	static $control2="\n?????????????????????????????";
+	$rec=strtr($control1, $control2, $rec);
+
+	// Remove leading spaces and blank lines
+	$rec=preg_replace('/\n\s+/', "\n", trim($rec));
+
+	// Merge CONC lines
+	if (strpos($rec, 'CONC')) {
+		$rec=preg_replace('/\n\s*\d\s*CONC\s?/', $WORD_WRAPPED_NOTES ? ' ' : '', $rec);
+	}
+
+	// Process the record line-by-line
+	$lines=explode("\n", $rec);
+	foreach ($lines as $n=>$line) {
+		// Lines consist of: level + optional xref + tag + optional data
+		if (preg_match('/^(\d+)\s*(@[^@]*@)?\s*(\w+)\s?(.*)$/', $line, $match)) {
+			list($level, $xref, $tag, $data)=$match;
+			// Make sure tags are in upper case.
+			$tag=strtoupper($tag);
+			// Convert FTM-style "TAG_FORMAL_NAME" into "TAG".
+			switch ($tag) {
+			case 'ABBREVIATION':
+				$tag='ABBR';
+				break;
+			case 'ADDRESS':
+				$tag='ADDR';
+				break;
+			case 'ADDRESS1':
+				$tag='ADR1';
+				break;
+			case 'ADDRESS2':
+				$tag='ADR2';
+				break;
+			case 'ADDRESS3':
+				$tag='ADR3';
+				break;
+			case 'ADOPTION':
+				$tag='ADOP';
+				break;
+			case 'ADULT_CHRISTENING':
+				$tag='CHRA';
+				break;
+			case 'AGENCY':
+				$tag='AGNC';
+				break;
+			case 'ALIAS':
+				$tag='ALIA';
+				break;
+			case 'ANCESTORS':
+				$tag='ANCE';
+				break;
+			case 'ANCES_INTEREST':
+				$tag='ANCI';
+				break;
+			case 'ANNULMENT':
+				$tag='ANUL';
+				break;
+			case 'ASSOCIATES':
+				$tag='ASSO';
+				break;
+			case 'AUTHOR':
+				$tag='AUTH';
+				break;
+			case 'BAPTISM':
+				$tag='BAPM';
+				break;
+			case 'BAPTISM_LDS':
+				$tag='BAPL';
+				break;
+			case 'BAR_MITZVAH':
+				$tag='BARM';
+				break;
+			case 'BAS_MITZVAH':
+				$tag='BASM';
+				break;
+			case 'BIRTH':
+				$tag='BIRT';
+				break;
+			case 'BLESSING':
+				$tag='BLES';
+				break;
+			case 'BURIAL':
+				$tag='BURI';
+				break;
+			case 'CALL_NUMBER':
+				$tag='CALN';
+				break;
+			case 'CASTE':
+				$tag='CAST';
+				break;
+			case 'CAUSE':
+				$tag='CAUS';
+				break;
+			case 'CENSUS':
+				$tag='CENS';
+				break;
+			case 'CHANGE':
+				$tag='CHAN';
+				break;
+			case 'CHARACTER':
+				$tag='CHAR';
+				break;
+			case 'CHILD':
+				$tag='CHIL';
+				break;
+			case 'CHILDREN_COUNT':
+				$tag='NCHI';
+				break;
+			case 'CHRISTENING':
+				$tag='CHR';
+				break;
+			case 'CONCATENATION':
+				$tag='CONC';
+				break;
+			case 'CONFIRMATION':
+				$tag='CONF';
+				break;
+			case 'CONFIRMATION_LDS':
+				$tag='CONL';
+				break;
+			case 'CONTINUED':
+				$tag='CONT';
+				break;
+			case 'COPYRIGHT':
+				$tag='COPR';
+				break;
+			case 'CORPORATE':
+				$tag='CORP';
+				break;
+			case 'COUNTRY':
+				$tag='CTRY';
+				break;
+			case 'CREMATION':
+				$tag='CREM';
+				break;
+				break;
+			case 'DEATH':
+				$tag='DEAT';
+				break;
+			case '_DEGREE':
+				$tag='_DEG';
+				break;
+			case 'DESCENDANTS':
+				$tag='DESC';
+				break;
+			case 'DESCENDANT_INT':
+				$tag='DESI';
+				break;
+			case 'DESTINATION':
+				$tag='DEST';
+				break;
+			case 'DIVORCE':
+				$tag='DIV';
+				break;
+			case 'DIVORCE_FILED':
+				$tag='DIVF';
+				break;
+			case 'EDUCATION':
+				$tag='EDUC';
+				break;
+			case 'EMIGRATION':
+				$tag='EMIG';
+				break;
+			case 'ENDOWMENT':
+				$tag='ENDL';
+				break;
+			case 'ENGAGEMENT':
+				$tag='ENGA';
+				break;
+			case 'EVENT':
+				$tag='EVEN';
+				break;
+			case 'FACSIMILE':
+				$tag='FAX';
+				break;
+			case 'FAMILY':
+				$tag='FAM';
+				break;
+			case 'FAMILY_CHILD':
+				$tag='FAMC';
+				break;
+			case 'FAMILY_FILE':
+				$tag='FAMF';
+				break;
+			case 'FAMILY_SPOUSE':
+				$tag='FAMS';
+				break;
+			case 'FIRST_COMMUNION':
+				$tag='FCOM';
+				break;
+			case 'FORMAT':
+				$tag='FORM';
+			case 'FORM':
+				// Consistent commas
+				$data=preg_replace('/ *, */', ', ', $data);
+				break;
+			case 'GEDCOM':
+				$tag='GEDC';
+				break;
+			case 'GIVEN_NAME':
+				$tag='GIVN';
+				break;
+			case 'GRADUATION':
+				$tag='GRAD';
+				break;
+			case 'HEADER':
+				$tag='HEAD';
+			case 'HEAD':
+				// HEAD records don't have an XREF or DATA
+				$xref='';
+				$data='';
+				break;
+			case 'HUSBAND':
+				$tag='HUSB';
+				break;
+			case 'IDENT_NUMBER':
+				$tag='IDNO';
+				break;
+			case 'IMMIGRATION':
+				$tag='IMMI';
+				break;
+			case 'INDIVIDUAL':
+				$tag='INDI';
+				break;
+			case 'LANGUAGE':
+				$tag='LANG';
+				break;
+			case 'LATITUDE':
+				$tag='LATI';
+				break;
+			case 'LONGITUDE':
+				$tag='LONG';
+				break;
+			case 'MARRIAGE':
+				$tag='MARR';
+				break;
+			case 'MARRIAGE_BANN':
+				$tag='MARB';
+				break;
+			case 'MARRIAGE_COUNT':
+				$tag='NMR';
+				break;
+			case 'MARR_CONTRACT':
+				$tag='MARC';
+				break;
+			case 'MARR_LICENSE':
+				$tag='MARL';
+				break;
+			case 'MARR_SETTLEMENT':
+				$tag='MARS';
+				break;
+			case 'MEDIA':
+				$tag='MEDI';
+				break;
+			case '_MEDICAL':
+				$tag='_MDCL';
+				break;
+			case '_MILITARY_SERVICE':
+				$tag='_MILT';
+				break;
+			case 'NAME_PREFIX':
+				$tag='NPFX';
+				break;
+			case 'NAME_SUFFIX':
+				$tag='NSFX';
+				break;
+			case 'NATIONALITY':
+				$tag='NATI';
+				break;
+			case 'NATURALIZATION':
+				$tag='NATU';
+				break;
+			case 'NICKNAME':
+				$tag='NICK';
+				break;
+			case 'OBJECT':
+				$tag='OBJE';
+				break;
+			case 'OCCUPATION':
+				$tag='OCCU';
+				break;
+			case 'ORDINANCE':
+				$tag='ORDI';
+				break;
+			case 'ORDINATION':
+				$tag='ORDN';
+				break;
+			case 'PEDIGREE':
+				$tag='PEDI';
+				break;
+			case 'PHONE':
+				$tag='PHON';
+				break;
+			case 'PHONETIC':
+				$tag='FONE';
+				break;
+			case 'PHY_DESCRIPTION':
+				$tag='DSCR';
+				break;
+			case 'PLACE':
+				$tag='PLAC';
+			case 'PLAC':
+				// Consistent commas
+				$data=preg_replace('/ *, */', ', ', $data);
+				break;
+			case 'POSTAL_CODE':
+				$tag='POST';
+				break;
+			case 'PROBATE':
+				$tag='PROB';
+				break;
+			case 'PROPERTY':
+				$tag='PROP';
+				break;
+			case 'PUBLICATION':
+				$tag='PUBL';
+				break;
+			case 'QUALITY_OF_DATA':
+				$tag='QUAL';
+				break;
+			case 'REC_FILE_NUMBER':
+				$tag='RFN';
+				break;
+			case 'REC_ID_NUMBER':
+				$tag='RIN';
+				break;
+			case 'REFERENCE':
+				$tag='REFN';
+				break;
+			case 'RELATIONSHIP':
+				$tag='RELA';
+				break;
+			case 'RELIGION':
+				$tag='RELI';
+				break;
+			case 'REPOSITORY':
+				$tag='REPO';
+				break;
+			case 'RESIDENCE':
+				$tag='RESI';
+				break;
+			case 'RESTRICTION':
+				$tag='RESN';
+				break;
+			case 'RETIREMENT':
+				$tag='RETI';
+				break;
+			case 'ROMANIZED':
+				$tag='ROMN';
+				break;
+			case 'SEALING_CHILD':
+				$tag='SLGC';
+				break;
+			case 'SEALING_SPOUSE':
+				$tag='SLGS';
+				break;
+			case 'SOC_SEC_NUMBER':
+				$tag='SSN';
+				break;
+			case 'SOURCE':
+				$tag='SOUR';
+				break;
+			case 'STATE':
+				$tag='STAE';
+				break;
+			case 'STATUS':
+				$tag='STAT';
+				break;
+			case 'SUBMISSION':
+				$tag='SUBN';
+				break;
+			case 'SUBMITTER':
+				$tag='SUBM';
+				break;
+			case 'SURNAME':
+				$tag='SURN';
+				break;
+			case 'SURN_PREFIX':
+				$tag='SPFX';
+				break;
+			case 'TEMPLE':
+				$tag='TEMP';
+				break;
+			case 'TITLE':
+				$tag='TITL';
+				break;
+			case 'TRAILER':
+				$tag='TRLR';
+			case 'TRLR':
+				// TRLR records don't have an XREF or DATA
+				$xref='';
+				$data='';
+				break;
+			case 'VERSION':
+				$tag='VERS';
+				break;
+			case 'WEB':
+				$tag='WWW';
+				break;
+			}
+			// Collapse multiple/leading/trailing spaces
+			switch ($tag) {
+			case 'NOTE':
+			case 'TEXT':
+			case 'DATA':
+			case 'CONT':
+				// Spaces and tabs may be used for layout/indentation, so leave them alone.
+				break;
+			default:
+				// Collapse multiple/leading/trailing spaces
+				$data=preg_replace('/[ \t]{2,}/', ' ', trim($data));
+				break;
+			}
+			// Reassemble components back into a single line
+			$lines[$n]=$level.' '.($level=='0' && $xref ? $xref.' ' : '').$tag.($data ? ' '.$data : '');
+		}
+	}
+	// Reassemble lines back into a single record
+	return implode("\n", $lines);
+}
+
 /**
  * import record into database
  *
