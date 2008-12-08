@@ -1823,7 +1823,7 @@ class Person extends GedcomRecord {
 				'surname'=>$surname,
 				'givn'=>$givn,
 				'spfx'=>($n?'':$spfx),
-				'surn'=>$surn
+				'surn'=>$SURN
 			);
 		}
 	}
