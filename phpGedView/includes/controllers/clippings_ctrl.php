@@ -367,8 +367,8 @@ class ClippingsControllerRoot extends BaseController {
 				$filetext .= "0 TRLR\r\n";
 				//-- make sure the gedcom doesn't have any empty lines
 				$filetext = preg_replace("/(\r?\n)+/", "\r\n", $filetext);
-				//-- make sure DOS line endings are used
-				$filetext = preg_replace("/\r?\n/", "\r\n", $filetext);
+				//-- make sure the preferred line endings are used
+				$filetext = preg_replace("/[\r\n]+/", PGV_EOL, $filetext);
 				$this->download_data = $filetext;
 				$this->download_clipping();
 			} else

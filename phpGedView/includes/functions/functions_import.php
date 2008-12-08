@@ -723,7 +723,7 @@ function import_record($gedrec, $update) {
 
 	//-- if this is not an update then write it to the new gedcom file
 	if (!$update && !empty ($fpnewged) && !(empty ($gedrec)))
-		fwrite($fpnewged, trim($gedrec) . "\r\n");
+		fwrite($fpnewged, preg_replace('/[\r\n]+/', PGV_EOL, $gedrec) . PGV_EOL);
 }
 
 /**
@@ -1016,7 +1016,7 @@ function insert_media($objrec, $objlevel, $update, $gid, $count) {
 			$media_count++;
 			//-- if this is not an update then write it to the new gedcom file
 			if (!$update && !empty ($fpnewged))
-				fwrite($fpnewged, trim($objrec) . "\r\n");
+				fwrite($fpnewged, preg_replace('/[\r\n]+/', PGV_EOL, $objrec) . PGV_EOL);
 			//print "LINE ".__LINE__;
 		} else {
 			//-- already added so update the local id
