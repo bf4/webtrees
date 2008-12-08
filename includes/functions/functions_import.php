@@ -120,6 +120,10 @@ function reformat_record($rec) {
 			case 'ADULT_CHRISTENING':
 				$tag='CHRA';
 				break;
+			case 'AFN':
+				// AFN values are upper case
+				$data=strtoupper($data);
+				break;
 			case 'AGENCY':
 				$tag='AGNC';
 				break;
@@ -367,6 +371,9 @@ function reformat_record($rec) {
 				break;
 			case 'PEDIGREE':
 				$tag='PEDI';
+			case 'PEDI':
+				// PEDI values are lower case
+				$data=strtolower($data);
 				break;
 			case 'PHONE':
 				$tag='PHON';
@@ -421,6 +428,9 @@ function reformat_record($rec) {
 				break;
 			case 'RESTRICTION':
 				$tag='RESN';
+			case 'RESN':
+				// RESN values are lower case
+				$data=strtolower($data);
 				break;
 			case 'RETIREMENT':
 				$tag='RETI';
@@ -436,6 +446,10 @@ function reformat_record($rec) {
 				break;
 			case 'SOC_SEC_NUMBER':
 				$tag='SSN';
+				break;
+			case 'SEX':
+				// SEX values are upper case
+				$data=strtoupper($data);
 				break;
 			case 'SOURCE':
 				$tag='SOUR';
@@ -478,7 +492,7 @@ function reformat_record($rec) {
 				$tag='WWW';
 				break;
 			}
-			// Collapse multiple/leading/trailing spaces
+			// Collapse multiple/leading/trailing spaces/tabs
 			switch ($tag) {
 			case 'NOTE':
 			case 'TEXT':
