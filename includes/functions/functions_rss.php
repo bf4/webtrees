@@ -302,53 +302,44 @@ function getTop10Surnames() {
 	$dataArray[0] = str_replace("10", $numName, $pgv_lang["block_top10_title"]);
 	$dataArray[1] = time();
 
-	//-- cache the result in the session so that subsequent calls do not have to
-	//-- perform the calculation all over again.
-	if (isset($_SESSION["top10"][$GEDCOM])) {
-		$surnames = $_SESSION["top10"][$GEDCOM];
-	}
-	else {
-		$surnames = get_top_surnames($numName);
+	$surnames = get_top_surnames($numName);
 
-		// Insert from the "Add Names" list if not already in there
-		if ($COMMON_NAMES_ADD != "") {
-			$addnames = preg_split("/[,;] /", $COMMON_NAMES_ADD);
-			if (count($addnames)==0) $addnames[] = $COMMON_NAMES_ADD;
-			foreach($addnames as $indexval => $name) {
-				//$surname = UTF8_strtoupper($name);
-				$surname = $name;
-				if (!isset($surnames[$surname])) {
-					$surnames[$surname]["name"] = $name;
-					$surnames[$surname]["match"] = $COMMON_NAMES_THRESHOLD;
-				}
+	// Insert from the "Add Names" list if not already in there
+	if ($COMMON_NAMES_ADD != "") {
+		$addnames = preg_split("/[,;] /", $COMMON_NAMES_ADD);
+		if (count($addnames)==0) $addnames[] = $COMMON_NAMES_ADD;
+		foreach($addnames as $indexval => $name) {
+			//$surname = UTF8_strtoupper($name);
+			$surname = $name;
+			if (!isset($surnames[$surname])) {
+				$surnames[$surname]["name"] = $name;
+				$surnames[$surname]["match"] = $COMMON_NAMES_THRESHOLD;
 			}
 		}
-
-		// Remove names found in the "Remove Names" list
-		if ($COMMON_NAMES_REMOVE != "") {
-			$delnames = preg_split("/[,;] /", $COMMON_NAMES_REMOVE);
-			if (count($delnames)==0) $delnames[] = $COMMON_NAMES_REMOVE;
-			foreach($delnames as $indexval => $name) {
-				//$surname = UTF8_strtoupper($name);
-				$surname = $name;
-				unset($surnames[$surname]);
-			}
-		}
-
-		// Sort the list and save for future reference
-		uasort($surnames, "top_surname_sort");
-		$_SESSION["top10"][$GEDCOM] = $surnames;
 	}
+
+	// Remove names found in the "Remove Names" list
+	if ($COMMON_NAMES_REMOVE != "") {
+		$delnames = preg_split("/[,;] /", $COMMON_NAMES_REMOVE);
+		if (count($delnames)==0) $delnames[] = $COMMON_NAMES_REMOVE;
+		foreach($delnames as $indexval => $name) {
+			//$surname = UTF8_strtoupper($name);
+			$surname = $name;
+			unset($surnames[$surname]);
+		}
+	}
+
+	// Sort the list and save for future reference
+	uasort($surnames, "top_surname_sort");
+
 	if (count($surnames)>0) {
 		$i=0;
 		foreach($surnames as $indexval => $surname) {
-			if (stristr($surname["name"], "@N.N")===false) {
-				$data .= "<a href=\"".encode_url("{$SERVER_URL}indilist.php?surname={$surname['name']}")."\">".PrintReady($surname["name"])."</a> ";
-				if ($TEXT_DIRECTION=="rtl") $data .= getRLM() . "[" . getRLM() .$surname["match"].getRLM() . "]" . getRLM() . "<br />";
-				else $data .= "[".$surname["match"]."]<br />";
-				$i++;
-				if ($i>=$numName) break;
-			}
+			$data .= "<a href=\"".encode_url("{$SERVER_URL}indilist.php?surname={$surname['name']}")."\">".PrintReady($surname["name"])."</a> ";
+			if ($TEXT_DIRECTION=="rtl") $data .= getRLM() . "[" . getRLM() .$surname["match"].getRLM() . "]" . getRLM() . "<br />";
+			else $data .= "[".$surname["match"]."]<br />";
+			$i++;
+			if ($i>=$numName) break;
 		}
 	}
 	$dataArray[2] = $data;
