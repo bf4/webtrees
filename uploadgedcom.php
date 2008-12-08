@@ -103,13 +103,14 @@ else if ($check == "add") {
 		else $fp = fopen($INDEX_DIRECTORY.$GEDFILENAME, "wb");
 		if ($fp) {
 			$newgedcom = gedcom_header($GEDFILENAME).
-			"0 @I1@ INDI\r\n" .
-			"1 NAME Given Names /Surname/\r\n" .
-			"1 SEX M\r\n" .
-			"1 BIRT\r\n" .
-			"2 DATE 01 JAN 1850\r\n" .
-			"2 PLAC Click edit and change me\r\n" .
-			"0 TRLR";
+			"0 @I1@ INDI\n".
+			"1 NAME Given Names /Surname/\n".
+			"1 SEX M\n".
+			"1 BIRT\n".
+			"2 DATE 01 JAN 1850\n".
+			"2 PLAC Click edit and change me\n".
+			"0 TRLR\n";
+			$newgedcom = preg_replace('/[\r\n]+/', PGV_EOL, $newgedcom);
 			fwrite($fp, $newgedcom);
 			fclose($fp);
 			$logline = AddToLog($GEDFILENAME." updated");
@@ -133,13 +134,14 @@ else if ($check == "add") {
 		$fp = fopen($INDEX_DIRECTORY.$GEDFILENAME.".bak", "wb");
 		if ($fp) {
 			$newgedcom = gedcom_header($GEDFILENAME).
-			"0 @I1@ INDI\r\n" .
-			"1 NAME Given Names /Surname/\r\n" .
-			"1 SEX M\r\n" .
-			"1 BIRT\r\n" .
-			"2 DATE 01 JAN 1850\r\n" .
-			"2 PLAC Click edit and change me\r\n" .
-			"0 TRLR";
+			"0 @I1@ INDI\n".
+			"1 NAME Given Names /Surname/\n".
+			"1 SEX M\n".
+			"1 BIRT\n".
+			"2 DATE 01 JAN 1850\n".
+			"2 PLAC Click edit and change me\n".
+			"0 TRLR\n";
+			$newgedcom = preg_replace('/[\r\n]+/', PGV_EOL, $newgedcom);
 			fwrite($fp, $newgedcom);
 			fclose($fp);
 			if ($path != "")

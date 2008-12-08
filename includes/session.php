@@ -73,6 +73,9 @@ define('PGV_EVENTS_DEAT', 'DEAT|BURI|CREM');
 define('PGV_EVENTS_MARR', 'MARR|MARB');
 define('PGV_EVENTS_DIV',  'DIV|ANUL|_SEPR');
 
+// Use these line endings when writing files on the server
+define('PGV_EOL', "\r\n");
+
 // Used in Google charts
 define ('PGV_GOOGLE_CHART_ENCODING', 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-.');
 

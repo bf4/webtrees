@@ -36,44 +36,44 @@ require_once 'includes/classes/class_gedownloadgedcom.php';
 /*
  * Create a header for a (newly-created or already-imported) gedcom file.
  */
-function gedcom_header($gedfile, $CRLF="\r\n")
+function gedcom_header($gedfile)
 {
 	global $CHARACTER_SET, $GEDCOMS, $pgv_lang, $TBLPREFIX;
 
 	// Default values for a new header
-	$HEAD="0 HEAD{$CRLF}";
-	$SOUR="1 SOUR ".PGV_PHPGEDVIEW."{$CRLF}2 NAME ".PGV_PHPGEDVIEW."{$CRLF}2 VERS ".PGV_VERSION_TEXT."{$CRLF}";
-	$DEST="1 DEST DISKETTE{$CRLF}";
-	$DATE="1 DATE ".strtoupper(date("d M Y")).$CRLF."2 TIME ".date("H:i:s").$CRLF;
-	$GEDC="1 GEDC{$CRLF}2 VERS 5.5.1{$CRLF}2 FORM Lineage-Linked{$CRLF}";
-	$CHAR="1 CHAR {$CHARACTER_SET}{$CRLF}";
-	$FILE="1 FILE {$gedfile}{$CRLF}";
+	$HEAD="0 HEAD\n";
+	$SOUR="1 SOUR ".PGV_PHPGEDVIEW."\n2 NAME ".PGV_PHPGEDVIEW."\n2 VERS ".PGV_VERSION_TEXT."\n";
+	$DEST="1 DEST DISKETTE\n";
+	$DATE="1 DATE ".strtoupper(date("d M Y"))."\n2 TIME ".date("H:i:s")."\n";
+	$GEDC="1 GEDC\n2 VERS 5.5.1\n2 FORM Lineage-Linked\n";
+	$CHAR="1 CHAR {$CHARACTER_SET}\n";
+	$FILE="1 FILE {$gedfile}\n";
 	$LANG="";
-	$PLAC="1 PLAC{$CRLF}2 FORM {$pgv_lang['default_form']}{$CRLF}";
+	$PLAC="1 PLAC\n2 FORM {$pgv_lang['default_form']}\n";
 	$COPR="";
 	$SUBN="";
-	$SUBM="1 SUBM @SUBM@{$CRLF}0 @SUBM@ SUBM{$CRLF}1 NAME ".PGV_USER_NAME.$CRLF; // The SUBM record is mandatory
+	$SUBM="1 SUBM @SUBM@\n0 @SUBM@ SUBM\n1 NAME ".PGV_USER_NAME."\n"; // The SUBM record is mandatory
 
 	// Preserve some values from the original header
 	if (isset($GEDCOMS[$gedfile]['imported']) && $GEDCOMS[$gedfile]['imported']) {
 		$head=find_gedcom_record("HEAD");
 		if (preg_match("/(1 CHAR [^\r\n]+)/", $head, $match))
-			$CHAR=$match[1].$CRLF;
+			$CHAR=$match[1]."\n";
 		if (preg_match("/1 PLAC[\r\n]+2 FORM ([^\r\n]+)/", $head, $match))
-			$PLAC="1 PLAC{$CRLF}2 FORM {$match[1]}{$CRLF}";
+			$PLAC="1 PLAC\n2 FORM {$match[1]}\n";
 		if (preg_match("/(1 LANG [^\r\n]+)/", $head, $match))
-			$LANG=$match[1].$CRLF;
+			$LANG=$match[1]."\n";
 		if (preg_match("/(1 SUBN [^\r\n]+)/", $head, $match))
-			$SUBN=$match[1].$CRLF;
+			$SUBN=$match[1]."\n";
 		if (preg_match("/(1 COPR [^\r\n]+)/", $head, $match))
-			$COPR=$match[1].$CRLF;
+			$COPR=$match[1]."\n";
 		// Link to SUBM/SUBN records, if they exist
 		$sql="SELECT o_id FROM ${TBLPREFIX}other WHERE o_type='SUBN' AND o_file=".$GEDCOMS[$gedfile]["id"];
 		$res=dbquery($sql);
 		if (!DB::isError($res)) {
 			if ($res->numRows()>0) {
 				$row=$res->fetchRow();
-				$SUBN="1 SUBN @".$row[0]."@{$CRLF}";
+				$SUBN="1 SUBN @".$row[0]."@\n";
 			}
 			$res->free();
 		}
@@ -82,7 +82,7 @@ function gedcom_header($gedfile, $CRLF="\r\n")
 		if (!DB::isError($res)) {
 			if ($res->numRows()>0) {
 				$row=$res->fetchRow();
-				$SUBM="1 SUBM @".$row[0]."@{$CRLF}";
+				$SUBM="1 SUBM @".$row[0]."@\n";
 			}
 			$res->free();
 		}
@@ -91,7 +91,7 @@ function gedcom_header($gedfile, $CRLF="\r\n")
 	return $HEAD.$SOUR.$DEST.$DATE.$GEDC.$CHAR.$FILE.$COPR.$LANG.$PLAC.$SUBN.$SUBM;
 }
 
-function print_gedcom($privatize_export, $privatize_export_level, $convert, $remove, $gedout, $CRLF="\r\n") {
+function print_gedcom($privatize_export, $privatize_export_level, $convert, $remove, $gedout) {
 	global $GEDCOMS, $GEDCOM, $pgv_lang, $CHARACTER_SET;
 	global $TBLPREFIX;
 
@@ -130,12 +130,13 @@ function print_gedcom($privatize_export, $privatize_export_level, $convert, $rem
 		}
 	}
 
-	$head=gedcom_header($GEDCOM, $CRLF);
+	$head=gedcom_header($GEDCOM);
 	if ($convert == "yes") {
 		$head = preg_replace("/UTF-8/", "ANSI", $head);
 		$head = utf8_decode($head);
 	}
 	$head = remove_custom_tags($head, $remove);
+	$head = preg_replace('/[\r\n]+/', PGV_EOL, $head);
 	fwrite($gedout, $head);
 
 	$sql = "SELECT i_id, i_gedcom FROM {$TBLPREFIX}individuals WHERE i_file={$GEDCOMS[$GEDCOM]['id']}";
@@ -143,7 +144,7 @@ function print_gedcom($privatize_export, $privatize_export_level, $convert, $rem
 	while ($row = $res->fetchRow()) {
 		//-- ignore any remote cached records
 		if (preg_match("/S\d+:\w+/", $row[0])==0) {
-			$rec = preg_replace('/[\r\n]+/', $CRLF, $row[1]).$CRLF;
+			$rec = preg_replace('/[\r\n]+/', PGV_EOL, $row[1]).PGV_EOL;
 			$rec = remove_custom_tags($rec, $remove);
 			if ($privatize_export == "yes")
 				$rec = privatize_gedcom($rec);
@@ -159,7 +160,7 @@ function print_gedcom($privatize_export, $privatize_export_level, $convert, $rem
 	while ($row = $res->fetchRow()) {
 		//-- ignore any remote cached records
 		if (preg_match("/S\d+:\w+/", $row[0])==0) {
-			$rec = preg_replace('/[\r\n]+/', $CRLF, $row[1]).$CRLF;
+			$rec = preg_replace('/[\r\n]+/', PGV_EOL, $row[1]).PGV_EOL;
 			$rec = remove_custom_tags($rec, $remove);
 			if ($privatize_export == "yes")
 				$rec = privatize_gedcom($rec);
@@ -175,7 +176,7 @@ function print_gedcom($privatize_export, $privatize_export_level, $convert, $rem
 	while ($row = $res->fetchRow()) {
 		//-- ignore any remote cached records
 		if (preg_match("/S\d+:\w+/", $row[0])==0) {
-			$rec = preg_replace('/[\r\n]+/', $CRLF, $row[1]).$CRLF;
+			$rec = preg_replace('/[\r\n]+/', PGV_EOL, $row[1]).PGV_EOL;
 			$rec = remove_custom_tags($rec, $remove);
 			if ($privatize_export == "yes")
 				$rec = privatize_gedcom($rec);
@@ -191,7 +192,7 @@ function print_gedcom($privatize_export, $privatize_export_level, $convert, $rem
 	while ($row = $res->fetchRow()) {
 		//-- ignore any remote cached records
 		if (preg_match("/S\d+:\w+/", $row[0])==0) {
-			$rec = preg_replace('/[\r\n]+/', $CRLF, $row[1]).$CRLF;
+			$rec = preg_replace('/[\r\n]+/', PGV_EOL, $row[1]).PGV_EOL;
 			$rec = remove_custom_tags($rec, $remove);
 			if ($privatize_export == "yes")
 				$rec = privatize_gedcom($rec);
@@ -207,7 +208,7 @@ function print_gedcom($privatize_export, $privatize_export_level, $convert, $rem
 	while ($row = $res->fetchRow()) {
 		//-- ignore any remote cached records
 		if (preg_match("/S\d+:\w+/", $row[0])==0) {
-			$rec = preg_replace('/[\r\n]+/', $CRLF, $row[1]).$CRLF;
+			$rec = preg_replace('/[\r\n]+/', PGV_EOL, $row[1]).PGV_EOL;
 			$rec = remove_custom_tags($rec, $remove);
 			if ($privatize_export == "yes")
 				$rec = privatize_gedcom($rec);
@@ -218,7 +219,7 @@ function print_gedcom($privatize_export, $privatize_export_level, $convert, $rem
 	}
 	$res->free();
 
-	fwrite($gedout, "0 TRLR{$CRLF}");
+	fwrite($gedout, "0 TRLR".PGV_EOL);
 
 	if ($privatize_export == "yes") {
 		if (isset ($_SESSION)) {
@@ -229,10 +230,9 @@ function print_gedcom($privatize_export, $privatize_export_level, $convert, $rem
 	}
 }
 
-function print_gramps($privatize_export, $privatize_export_level, $convert, $remove, $gedout, $CRLF="\r\n") {
+function print_gramps($privatize_export, $privatize_export_level, $convert, $remove, $gedout) {
 	global $GEDCOMS, $GEDCOM, $pgv_lang;
 	global $TBLPREFIX;
-	global $CRLF;
 
 	$geDownloadGedcom = new GEDownloadGedcom();
 	$geDownloadGedcom->begin_xml();
@@ -240,7 +240,7 @@ function print_gramps($privatize_export, $privatize_export_level, $convert, $rem
 	$sql = "SELECT i_gedcom, i_id FROM " . $TBLPREFIX . "individuals WHERE i_file=" . $GEDCOMS[$GEDCOM]['id'] . " ORDER BY i_id";
 	$res = dbquery($sql);
 	while ($row = $res->fetchRow()) {
-		$rec = trim($row[0]).$CRLF;
+		$rec = $row[0];
 		$rec = remove_custom_tags($rec, $remove);
 		$geDownloadGedcom->create_person($rec, $row[1]);
 	}
@@ -249,7 +249,7 @@ function print_gramps($privatize_export, $privatize_export_level, $convert, $rem
 	$sql = "SELECT f_gedcom, f_id FROM " . $TBLPREFIX . "families WHERE f_file=" . $GEDCOMS[$GEDCOM]['id'] . " ORDER BY f_id";
 	$res = dbquery($sql);
 	while ($row = $res->fetchRow()) {
-		$rec = trim($row[0]).$CRLF;
+		$rec = $row[0];
 		$rec = remove_custom_tags($rec, $remove);
 		$geDownloadGedcom->create_family($rec, $row[1]);
 	}
@@ -258,7 +258,7 @@ function print_gramps($privatize_export, $privatize_export_level, $convert, $rem
 	$sql = "SELECT s_gedcom, s_id FROM " . $TBLPREFIX . "sources WHERE s_file=" . $GEDCOMS[$GEDCOM]['id'] . " ORDER BY s_id";
 	$res = dbquery($sql);
 	while ($row = $res->fetchRow()) {
-		$rec = trim($row[0]).$CRLF;
+		$rec = $row[0];
 		$rec = remove_custom_tags($rec, $remove);
 		$geDownloadGedcom->create_source($row[1], $rec);
 	}
@@ -268,7 +268,7 @@ function print_gramps($privatize_export, $privatize_export_level, $convert, $rem
 	$res = dbquery($sql);
 
 	while ($row = $res->fetchRow()) {
-		$rec = trim($row[0]).$CRLF;
+		$rec = $row[0];
 		$rec = remove_custom_tags($rec, $remove);
 		preg_match('/0 @(.*)@/',$rec, $varMatch);
 		$geDownloadGedcom->create_media($varMatch[1],$rec, $row[1]);
