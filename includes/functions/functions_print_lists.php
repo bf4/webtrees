@@ -288,9 +288,6 @@ function print_indi_table($datalist, $legend="", $option="") {
 					echo '<div>', $death_date->Display(!$SEARCH_SPIDER), '</div>';
 				} else if ($death_date->MinJD()!=0) {
 					echo '<div>', str_replace('<a', '<a name="'.$death_date->MinJD().'"', $death_date->Display(!$SEARCH_SPIDER)), '</div>';
-				} else if ($person->isDead()) {
-					$est_death_date=$person->getEstimatedDeathDate();
-					echo '<div>', $pgv_lang["yes"], '<a name="'.$est_death_date->JD().'"></a></div>';
 				}
 			}
 			if ($death_dates[0]->gregorianYear()>=1550 && $death_dates[0]->gregorianYear()<2030) {
@@ -301,6 +298,8 @@ function print_indi_table($datalist, $legend="", $option="") {
 			$death_jd=$death_date->JD();
 			if ($SHOW_EST_LIST_DATES) {
 				echo '<div>', str_replace('<a', '<a name="'.$death_jd.'"', $death_date->Display(!$SEARCH_SPIDER)), '</div>';
+			} else if ($person->isDead()) {
+				echo '<div>', $pgv_lang["yes"], '<a name="9d'.$death_jd.'"></a></div>';
 			} else {
 				echo '<span class="date"><a name="'.$death_jd.'">&nbsp;</span>'; // span needed for alive-in-year filter
 			}
@@ -382,7 +381,9 @@ function print_indi_table($datalist, $legend="", $option="") {
 	echo "<td></td>";
 	if ($SHOW_ID_NUMBERS) echo "<td></td>"; // INDI:ID
 	echo "<td class=\"list_label\">"; // NAME
-	echo '<a href="javascript:;" onclick="sortByOtherCol(this,1)"><img src="images/topdown.gif" alt="" border="0" /> '.$factarray["GIVN"].'</a><br />';
+	if (count($unique_indis)>1) {
+		echo '<a href="javascript:;" onclick="sortByOtherCol(this,1)"><img src="images/topdown.gif" alt="" border="0" /> '.$factarray["GIVN"].'</a><br />';
+	}
 	echo "<input id=\"cb_parents_$table_id\" type=\"checkbox\" onclick=\"toggleByClassName('DIV', 'parents_$table_id');\" /><label for=\"cb_parents_$table_id\">".$pgv_lang["show_parents"]."</label><br />";
 	echo $pgv_lang['total_indis'], ' : ', count($unique_indis);
 	if ($n!=count($unique_indis)) {
@@ -747,7 +748,9 @@ function print_fam_table($datalist, $legend="", $option="") {
 	if ($SHOW_ID_NUMBERS) echo "<td></td>"; // FAM:ID
 	if ($SHOW_ID_NUMBERS) echo "<td></td>"; // HUSB:ID
 	echo "<td class=\"list_label\">"; // HUSB:NAME
-	echo '<a href="javascript:;" onclick="sortByOtherCol(this,1)"><img src="images/topdown.gif" alt="" border="0" /> '.$factarray["GIVN"].'</a><br />';
+	if ($num>1) {
+		echo '<a href="javascript:;" onclick="sortByOtherCol(this,1)"><img src="images/topdown.gif" alt="" border="0" /> '.$factarray["GIVN"].'</a><br />';
+	}
 	echo "<input id=\"cb_parents_$table_id\" type=\"checkbox\" onclick=\"toggleByClassName('DIV', 'parents_$table_id');\" /><label for=\"cb_parents_$table_id\">".$pgv_lang["show_parents"]."</label><br />";
 	echo $pgv_lang["total_fams"]." : ".$num;
 	if ($hidden) echo "<br /><span class=\"warning\">".$pgv_lang["hidden"]." : ".$hidden."</span>";
@@ -1466,7 +1469,9 @@ function print_changes_table($datalist, $showChange=true) {
 	//echo "<td></td>";
 	if ($SHOW_ID_NUMBERS) echo "<td></td>";
 	echo "<td class=\"list_label\">";
-	echo '<a href="javascript:;" onclick="sortByOtherCol(this,1)"><img src="images/topdown.gif" alt="" border="0" /> '.$factarray["GIVN"].'</a><br />';
+	if ($n>1) {
+		echo '<a href="javascript:;" onclick="sortByOtherCol(this,1)"><img src="images/topdown.gif" alt="" border="0" /> '.$factarray["GIVN"].'</a><br />';
+	}
 	echo "<input id=\"cb_parents_$table_id\" type=\"checkbox\" onclick=\"toggleByClassName('DIV', 'parents_$table_id');\" /><label for=\"cb_parents_$table_id\">".$pgv_lang["show_parents"]."</label><br />";
 	echo $pgv_lang["total_names"].": ".$n;
 	if ($hidden) echo "<br /><span class=\"warning\">".$pgv_lang["hidden"]." : ".$hidden."</span>";
