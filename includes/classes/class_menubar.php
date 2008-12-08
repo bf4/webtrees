@@ -163,18 +163,20 @@ class MenuBar
 			$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 			$menu->addSubmenu($submenu);
 			//-- user_admin submenu
-			$submenu = new Menu($pgv_lang["user_admin"], "useradmin.php");
-			if (!empty($PGV_IMAGES["admin"]["small"]))
-				$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["admin"]["small"]);
-			$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
-			$menu->addSubmenu($submenu);
-			//-- manage_media submenu
-			 if (is_writable($MEDIA_DIRECTORY) && $MULTI_MEDIA) {
-				$submenu = new Menu($pgv_lang["manage_media"], "media.php");
-				if (!empty($PGV_IMAGES["menu_media"]["small"]))
-					$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["menu_media"]["small"]);
+			if (PGV_USER_IS_ADMIN) {
+				$submenu = new Menu($pgv_lang["user_admin"], "useradmin.php");
+				if (!empty($PGV_IMAGES["admin"]["small"]))
+					$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["admin"]["small"]);
 				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 				$menu->addSubmenu($submenu);
+				//-- manage_media submenu
+				if (is_writable($MEDIA_DIRECTORY) && $MULTI_MEDIA) {
+					$submenu = new Menu($pgv_lang["manage_media"], "media.php");
+					if (!empty($PGV_IMAGES["menu_media"]["small"]))
+						$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["menu_media"]["small"]);
+					$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
+					$menu->addSubmenu($submenu);
+				}
 			}
 		}
 		if (PGV_USER_CAN_EDIT) {
