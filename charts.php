@@ -35,7 +35,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 define('PGV_CHARTS_PHP', '');
 
 include_once 'includes/controllers/hourglass_ctrl.php';
-require_once 'includes/class_treenav.php';
+require_once 'includes/classes/class_treenav.php';
 
 $PGV_BLOCKS["print_charts_block"]["name"]		= $pgv_lang["charts_block"];
 $PGV_BLOCKS["print_charts_block"]["descr"]		= "charts_block_descr";

@@ -83,7 +83,7 @@ function print_recent_changes($block=true, $config="", $side, $index) {
 	} else {
 		$content .= print_text("recent_changes_some",0,1);
 		// sortable table
-		require_once("includes/functions_print_lists.php");
+		require_once("includes/functions/functions_print_lists.php");
 		ob_start();
 		print_changes_table($found_facts);
 		$content .= ob_get_clean();

@@ -33,7 +33,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 
 define('PGV_USER_FAVORITES_PHP', '');
 
-require_once("includes/functions_print_lists.php");
+require_once("includes/functions/functions_print_lists.php");
 $PGV_BLOCKS["print_user_favorites"]["name"]			= $pgv_lang["user_favorites_block"];
 $PGV_BLOCKS["print_user_favorites"]["descr"]		= "user_favorites_descr";
 $PGV_BLOCKS["print_user_favorites"]["type"]			= "user";

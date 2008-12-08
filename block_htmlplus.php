@@ -34,8 +34,8 @@ if (!defined('PGV_PHPGEDVIEW')) {
 
 define('PGV_BLOCK_HTMLPLUS_PHP', '');
 
-require_once 'includes/functions_print_lists.php';
-require_once 'includes/class_stats.php';
+require_once 'includes/functions/functions_print_lists.php';
+require_once 'includes/classes/class_stats.php';
 
 $PGV_BLOCKS['print_htmlplus_block']['name']			= $pgv_lang['htmlplus_block_name'];
 $PGV_BLOCKS['print_htmlplus_block']['descr']		= 'htmlplus_block_descr';
@@ -101,12 +101,12 @@ function print_htmlplus_block($block=true, $config='', $side, $index)
 	 */
 	if($config['compat'] == 1)
 	{
-		include_once 'includes/class_stats_compat.php';
+		include_once 'includes/classes/class_stats_compat.php';
 		$stats = new stats_compat($GEDCOM);
 	}
 	elseif($config['ui'] == 1)
 	{
-		include_once 'includes/class_stats_ui.php';
+		include_once 'includes/classes/class_stats_ui.php';
 		$stats = new stats_ui($GEDCOM);
 	}
 	else
