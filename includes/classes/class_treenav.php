@@ -86,7 +86,6 @@ class TreeNav {
 				$this->getDetails($this->rootPerson);
 			}
 			else if (!empty($_REQUEST['newroot'])) {
-				$_SESSION['navRoot'] = $this->rootPerson->getXref();
 				if (!empty($_REQUEST['drawport'])) $this->drawViewport('', "", "150px");
 				else {
 					$fam = null;

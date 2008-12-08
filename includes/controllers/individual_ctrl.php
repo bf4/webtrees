@@ -156,7 +156,6 @@ class IndividualControllerRoot extends BaseController {
 
 		$this->indi = new Person($indirec, false);
 		$this->indi->ged_id=PGV_GED_ID; // This record is from a file
-		$_SESSION['navRoot'] = $this->indi->getXref();
 
 		//-- if the person is from another gedcom then forward to the correct site
 		/*
