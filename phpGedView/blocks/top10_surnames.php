@@ -46,48 +46,44 @@ function top_surname_sort($a, $b) {
 }
 
 function print_block_name_top10($block=true, $config="", $side, $index) {
-	global $pgv_lang, $GEDCOM, $TEXT_DIRECTION;
-	global $COMMON_NAMES_ADD, $COMMON_NAMES_REMOVE, $COMMON_NAMES_THRESHOLD, $PGV_BLOCKS, $ctype, $PGV_IMAGES, $PGV_IMAGE_DIR, $SURNAME_LIST_STYLE;
+	global $pgv_lang, $GEDCOM, $COMMON_NAMES_ADD, $COMMON_NAMES_REMOVE, $COMMON_NAMES_THRESHOLD, $PGV_BLOCKS, $ctype, $PGV_IMAGES, $PGV_IMAGE_DIR, $SURNAME_LIST_STYLE;
 
-	if (empty($config)) $config = $PGV_BLOCKS["print_block_name_top10"]["config"];
-
-	//-- cache the result in the session so that subsequent calls do not have to
-	//-- perform the calculation all over again.
-	if (isset($_SESSION["top10"][$GEDCOM]) && !PGV_DEBUG) {
-		$surnames = $_SESSION["top10"][$GEDCOM];
-	} else {
-		$surnames = get_top_surnames($config["num"]);
-
-		// Insert from the "Add Names" list if not already in there
-		if ($COMMON_NAMES_ADD != "") {
-			$addnames = preg_split("/[,;] /", $COMMON_NAMES_ADD);
-			if (count($addnames)==0) $addnames[] = $COMMON_NAMES_ADD;
-			foreach($addnames as $indexval => $name) {
-				$surname = UTF8_strtoupper($name);
-				if (!isset($surnames[$surname])) {
-					$surnames[$surname]["name"] = $name;
-					$surnames[$surname]["match"] = $COMMON_NAMES_THRESHOLD;
-				}
-			}
-		}
-
-		// Remove names found in the "Remove Names" list
-		if ($COMMON_NAMES_REMOVE != "") {
-			$delnames = preg_split("/[,;] /", $COMMON_NAMES_REMOVE);
-			if (count($delnames)==0) $delnames[] = $COMMON_NAMES_REMOVE;
-			foreach($delnames as $indexval => $name) {
-				$surname = UTF8_strtoupper($name);
-				unset($surnames[$surname]);
-			}
-		}
-		unset($surnames["UNKNOWN"]);
-		unset($surnames["@N.N."]);
-		unset($surnames["?"]);
-
-		// Sort the list and save for future reference
-		uasort($surnames, "top_surname_sort");
-		$_SESSION["top10"][$GEDCOM] = $surnames;
+	if (empty($config)) {
+		$config=$PGV_BLOCKS["print_block_name_top10"]["config"];
 	}
+
+	$surnames=get_top_surnames($config["num"]);
+
+	// Insert from the "Add Names" list if not already in there
+	if ($COMMON_NAMES_ADD) {
+		$addnames=preg_split('/[,; ]+/', $COMMON_NAMES_ADD);
+		if (count($addnames)==0) {
+			$addnames[]=$COMMON_NAMES_ADD;
+		}
+		foreach($addnames as $name) {
+			$surname = UTF8_strtoupper($name);
+			if (!isset($surnames[$surname])) {
+				$surnames[$surname]["name"] = $name;
+				$surnames[$surname]["match"] = $COMMON_NAMES_THRESHOLD;
+			}
+		}
+	}
+
+	// Remove names found in the "Remove Names" list
+	if ($COMMON_NAMES_REMOVE) {
+		$delnames = preg_split("/[,; ]+/", $COMMON_NAMES_REMOVE);
+		if (count($delnames)==0) {
+			$delnames[]=$COMMON_NAMES_REMOVE;
+		}
+		foreach($delnames as $indexval => $name) {
+			$surname=UTF8_strtoupper($name);
+			unset($surnames[$surname]);
+		}
+	}
+
+	// Sort the list and save for future reference
+	uasort($surnames, "top_surname_sort");
+
 	if (count($surnames)>0) {
 		$id="top10surnames";
 		$title = print_help_link("index_common_names_help", "qm","",false,true);
@@ -109,7 +105,11 @@ function print_block_name_top10($block=true, $config="", $side, $index) {
 			if ($n>=$config["num"]) {
 				break;
 			}
-			$all_surnames=array_merge($all_surnames, get_indilist_surns(UTF8_strtoupper($surname), '', false, false, PGV_GED_ID));
+			if (in_array($surname, $addnames)) {
+				$all_surnames=array_merge($all_surnames, array($surname=>array($surname=>array_fill(0,$COMMON_NAMES_THRESHOLD, true))));
+			} else {
+				$all_surnames=array_merge($all_surnames, get_indilist_surns(UTF8_strtoupper($surname), '', false, false, PGV_GED_ID));
+			}
 		}
 		switch ($SURNAME_LIST_STYLE) {
 		case 'style3':
@@ -131,7 +131,7 @@ function print_block_name_top10($block=true, $config="", $side, $index) {
 }
 
 function print_block_name_top10_config($config) {
-	global $pgv_lang, $ctype, $PGV_BLOCKS, $TEXT_DIRECTION;
+	global $pgv_lang, $ctype, $PGV_BLOCKS;
 	if (empty($config)) $config = $PGV_BLOCKS["print_block_name_top10"]["config"];
 	if (!isset($config["cache"])) $config["cache"] = $PGV_BLOCKS["print_block_name_top10"]["config"]["cache"];
 ?>

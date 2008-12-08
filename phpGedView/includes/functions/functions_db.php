@@ -2494,7 +2494,7 @@ function get_top_surnames($num) {
 	global $TBLPREFIX;
 
 	$surnames = array();
-	$sql = "SELECT COUNT(n_surname) AS count, n_surn FROM {$TBLPREFIX}name WHERE n_file=".PGV_GED_ID." AND n_type!='_MARNM' GROUP BY n_surn ORDER BY count DESC";
+	$sql = "SELECT COUNT(n_surname) AS count, n_surn FROM {$TBLPREFIX}name WHERE n_file=".PGV_GED_ID." AND n_type!='_MARNM' AND n_surn NOT IN ('@N.N.', '', '?', 'UNKNOWN')GROUP BY n_surn ORDER BY count DESC";
 	$res = dbquery($sql, true, $num+1);
 
 	if (!DB::isError($res)) {
