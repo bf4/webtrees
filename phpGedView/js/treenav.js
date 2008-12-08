@@ -134,7 +134,7 @@ function NavTree(outerId, innerId, name, xref) {
 
 	this.loadChild = function(target, xref) {
 		oXmlHttp = createXMLHttp();
-		link = "charts/treenav.php?navAjax=1&jsname="+this.name+"&rootid="+xref+"&zoom="+this.zoom;
+		link = "treenav.php?navAjax=1&jsname="+this.name+"&rootid="+xref+"&zoom="+this.zoom;
 		link = link + "&allSpouses="+this.allSpouses;
 		oXmlHttp.open("get", link, true);
 		this.ajaxCounter++;
@@ -148,7 +148,7 @@ function NavTree(outerId, innerId, name, xref) {
 
 	this.loadParent = function(target, xref, ptype) {
 		oXmlHttp = createXMLHttp();
-		link = "charts/treenav.php?navAjax=1&jsname="+this.name+"&rootid="+xref+"&parent="+ptype+"&zoom="+this.zoom;
+		link = "treenav.php?navAjax=1&jsname="+this.name+"&rootid="+xref+"&parent="+ptype+"&zoom="+this.zoom;
 		link = link + "&allSpouses="+this.allSpouses;
 		oXmlHttp.open("get", link, true);
 		this.ajaxCounter++;
@@ -186,7 +186,7 @@ function NavTree(outerId, innerId, name, xref) {
 		this.opennedBox[xref] = true;
 		
 		oXmlHttp = createXMLHttp();
-		link = "charts/treenav.php?navAjax=1&jsname="+this.name+"&rootid="+xref+"&famid="+famid+"&details=1&zoom="+this.zoom;
+		link = "treenav.php?navAjax=1&jsname="+this.name+"&rootid="+xref+"&famid="+famid+"&details=1&zoom="+this.zoom;
 		link = link + "&allSpouses="+this.allSpouses;
 		oXmlHttp.open("get", link, true);
 		this.callback = this.expandCallback;
@@ -203,7 +203,7 @@ function NavTree(outerId, innerId, name, xref) {
 
 	this.newRoot = function(xref, element, gedcom) {
 		oXmlHttp = createXMLHttp();
-		link = "charts/treenav.php?navAjax=1&jsname="+this.name+"&rootid="+xref+"&newroot=1&zoom="+this.zoom;
+		link = "treenav.php?navAjax=1&jsname="+this.name+"&rootid="+xref+"&newroot=1&zoom="+this.zoom;
 		link = link + "&allSpouses="+this.allSpouses;	
 		if (gedcom) link += "&ged="+gedcom;
 		
@@ -233,7 +233,7 @@ function NavTree(outerId, innerId, name, xref) {
 	
 	this.loadBigTree = function(xref, gedcom) {
 		if (!xref || xref=='') xref = this.rootId;
-		link = "charts/treenav.php?jsname="+this.name+"&rootid="+xref+"&newroot=1";
+		link = "treenav.php?jsname="+this.name+"&rootid="+xref+"&newroot=1";
 		link = link + "&allSpouses="+this.allSpouses;
 		if (gedcom) link += "&ged="+gedcom;
 		window.location = link;
@@ -263,7 +263,7 @@ function NavTree(outerId, innerId, name, xref) {
 
 	this.drawViewport = function(element) {
 		oXmlHttp = createXMLHttp();
-		link = "charts/treenav.php?navAjax=1&jsname="+this.name+"&newroot=1&drawport=1&zoom=-2";
+		link = "treenav.php?navAjax=1&jsname="+this.name+"&newroot=1&drawport=1&zoom=-2";
 		link = link + "&allSpouses="+this.allSpouses;
 		oXmlHttp.open("get", link, true);
 		this.callback = this.sizeLines;
