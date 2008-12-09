@@ -406,7 +406,7 @@ else {
 	<br />
 	<div id="x_years" style="display:none;">
 	<?php
-	print_help_link("stat_help_gwx","qm");
+	print_help_link("stat_help_gax","qm");
 	echo $pgv_lang["statar_xgl"];
 	?>
 	<br /><select id="xas-grenzen-leeftijden" name="xas-grenzen-leeftijden">
@@ -417,7 +417,7 @@ else {
 	</div>
 	<div id="x_years_m" style="display:none;">
 	<?php
-	print_help_link("stat_help_gwx","qm");
+	print_help_link("stat_help_gbx","qm");
 	echo $pgv_lang["statar_xgl"];
 	?>
 	<br /><select id="xas-grenzen-leeftijden_m" name="xas-grenzen-leeftijden_m">
@@ -439,7 +439,7 @@ else {
 	</div>
 	<div id="x_numbers" style="display:none;">
 	<?php
-	print_help_link("stat_help_gwx","qm");
+	print_help_link("stat_help_gcx","qm");
 	echo $pgv_lang["statar_xga"];
 	?>
 	<br /><select id="xas-grenzen-aantallen" name="xas-grenzen-aantallen">
@@ -533,8 +533,7 @@ else {
 	</table>
 	</form>
 
-<?php //print_help_link("stat_help","qm");
-
+<?php
 $_SESSION["plottype"]=$plottype;
 $_SESSION["plotshow"]=$plotshow;
 $_SESSION["plotnp"]=$plotnp;
