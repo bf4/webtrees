@@ -138,41 +138,41 @@ function read_complete_file_into_array($dFileName, $string_needle) {
 		}
 
 		$dFound = ($fp = @fopen($Filename, "w"));
-		fwrite($fp, "<?php\r\n");
-		fwrite($fp, "/**\r\n");
-		fwrite($fp, " * $comment1\r\n");
-		fwrite($fp, " *\r\n");
-		fwrite($fp, " * PhpGedView: Genealogy Viewer\r\n");
-		fwrite($fp, " * Copyright (C) 2002 to ".date("Y")."  PGV Development Team.  All rights reserved.\r\n");
-		fwrite($fp, " *\r\n");
-		fwrite($fp, " * This program is free software; you can redistribute it and/or modify\r\n");
-		fwrite($fp, " * it under the terms of the GNU General Public License as published by\r\n");
-		fwrite($fp, " * the Free Software Foundation; either version 2 of the License, or\r\n");
-		fwrite($fp, " * (at your option) any later version.\r\n");
-		fwrite($fp, " *\r\n");
-		fwrite($fp, " * This program is distributed in the hope that it will be useful,\r\n");
-		fwrite($fp, " * but WITHOUT ANY WARRANTY; without even the implied warranty of\r\n");
-		fwrite($fp, " * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\r\n");
-		fwrite($fp, " * GNU General Public License for more details.\r\n");
-		fwrite($fp, " *\r\n");
-		fwrite($fp, " * You should have received a copy of the GNU General Public License\r\n");
-		fwrite($fp, " * along with this program; if not, write to the Free Software\r\n");
-		fwrite($fp, " * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA\r\n");
-		fwrite($fp, " *\r\n");
-		fwrite($fp, " * @package PhpGedView\r\n");
-		fwrite($fp, " * @author ".$dUserRealName."\r\n");
-		fwrite($fp, " * @created ".date("Y")."-".date("m")."-".date("d")."\r\n");
-		fwrite($fp, " * @version \$Id\$\r\n");
-		fwrite($fp, " */\r\n");
-		fwrite($fp, "\r\n");
-		fwrite($fp, "if (stristr(\$_SERVER[\"SCRIPT_NAME\"], basename(__FILE__))!==false) {\r\n");
-		fwrite($fp, "	print \"You cannot access a language file directly.\";\r\n");
-		fwrite($fp, "	exit;\r\n");
-		fwrite($fp, "}\r\n");
-		fwrite($fp, "\r\n");
-		fwrite($fp, "$comment2\r\n");
-		fwrite($fp, "\r\n");
-		fwrite($fp, "?>");
+		fwrite($fp, "<?php".PGV_EOL);
+		fwrite($fp, "/**".PGV_EOL);
+		fwrite($fp, " * $comment1".PGV_EOL);
+		fwrite($fp, " *".PGV_EOL);
+		fwrite($fp, " * PhpGedView: Genealogy Viewer".PGV_EOL);
+		fwrite($fp, " * Copyright (C) 2002 to ".date("Y")."  PGV Development Team.  All rights reserved".PGV_EOL);
+		fwrite($fp, " *".PGV_EOL);
+		fwrite($fp, " * This program is free software; you can redistribute it and/or modify".PGV_EOL);
+		fwrite($fp, " * it under the terms of the GNU General Public License as published by".PGV_EOL);
+		fwrite($fp, " * the Free Software Foundation; either version 2 of the License, or".PGV_EOL);
+		fwrite($fp, " * (at your option) any later version.".PGV_EOL);
+		fwrite($fp, " *".PGV_EOL);
+		fwrite($fp, " * This program is distributed in the hope that it will be useful,".PGV_EOL);
+		fwrite($fp, " * but WITHOUT ANY WARRANTY; without even the implied warranty of".PGV_EOL);
+		fwrite($fp, " * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the".PGV_EOL);
+		fwrite($fp, " * GNU General Public License for more details.".PGV_EOL);
+		fwrite($fp, " *".PGV_EOL);
+		fwrite($fp, " * You should have received a copy of the GNU General Public License".PGV_EOL);
+		fwrite($fp, " * along with this program; if not, write to the Free Software".PGV_EOL);
+		fwrite($fp, " * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA".PGV_EOL);
+		fwrite($fp, " *".PGV_EOL);
+		fwrite($fp, " * @package PhpGedView".PGV_EOL);
+		fwrite($fp, " * @author ".$dUserRealName."".PGV_EOL);
+		fwrite($fp, " * @created ".date("Y")."-".date("m")."-".date("d").PGV_EOL);
+		fwrite($fp, " * @version \$Id\$".PGV_EOL);
+		fwrite($fp, " */".PGV_EOL);
+		fwrite($fp, PGV_EOL);
+		fwrite($fp, "if (stristr(\$_SERVER[\"SCRIPT_NAME\"], basename(__FILE__))!==false) {".PGV_EOL);
+		fwrite($fp, "	print \"You cannot access a language file directly.\";".PGV_EOL);
+		fwrite($fp, "	exit;".PGV_EOL);
+		fwrite($fp, "}".PGV_EOL);
+		fwrite($fp, PGV_EOL);
+		fwrite($fp, "$comment2".PGV_EOL);
+		fwrite($fp, PGV_EOL);
+		fwrite($fp, "?>".PGV_EOL);
 		fclose($fp);
 
 		$dFound = ($fp = @fopen($Filename, "r"));
@@ -281,7 +281,7 @@ function write_array_into_file($dFileName01, $writeArray, $add_new_message_at_li
 		/* A new message which didn't exist before inside the language file */
 		if ($LineCounter == $add_new_message_at_line)
 		{
-			fwrite($fp, $new_message_string . "\r\n");
+			fwrite($fp, $new_message_string.PGV_EOL);
 			$LineCounter++;
 		}
 
@@ -314,7 +314,7 @@ function write_array_into_file($dFileName01, $writeArray, $add_new_message_at_li
 			fwrite($fp, $var[1]);
 			# print "var[1]= -" . $var[1]."-<br />";
 
-			fwrite($fp, "\";\r\n");
+			fwrite($fp, "\";".PGV_EOL);
 			# print "<br />";
 			# exit;
 		}
