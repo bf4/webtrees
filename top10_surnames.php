@@ -67,6 +67,8 @@ function print_block_name_top10($block=true, $config="", $side, $index) {
 				$surnames[$surname]["match"] = $COMMON_NAMES_THRESHOLD;
 			}
 		}
+	} else {
+		$addnames=array();
 	}
 
 	// Remove names found in the "Remove Names" list
