@@ -159,7 +159,7 @@ $factarray["WILL"] 	= "Testament";
 $factarray["_EMAIL"]= "Adres email";
 $factarray["EMAIL"] = "Adres email";
 $factarray["_TODO"] = "Do zrobienia";
-$factarray["_UID"] 	= "Uniwersalny identyfikator";
+$factarray["_UID"] 	= "Globalny uniwersalny identyfikator";
 $factarray["_PRIM"] = "Wyróżnione zdjęcie";
 $factarray["_DBID"] = "Indentyfikator dołączonej bazy danych";
 
