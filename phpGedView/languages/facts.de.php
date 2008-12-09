@@ -158,7 +158,7 @@ $factarray["WILL"]	= "Testament";
 $factarray["_EMAIL"]	= "Mail-Adresse";
 $factarray["EMAIL"]	= "Mail-Adresse";
 $factarray["_TODO"]	= "Unerledigt";
-$factarray["_UID"]	= "Universelle Identifikationsnummer (UID)";
+$factarray["_UID"]	= "Einmalig vorkommende ID-Nummer";
 $factarray["_PRIM"]	= "Bevorzugtes Bild";
 $factarray["_DBID"] = "ID der fremden Datenbank";
 
