@@ -1748,12 +1748,12 @@ class Person extends GedcomRecord {
 		}
 
 		// Convert "user-defined" unknowns into PGV unknowns
-		$full=preg_replace('/\/(_{2,}|\?{2,}|-{2,})\//', '/@N.N./', $full);
-		$full=preg_replace('/(_{2,}|\?{2,}|-{2,})/', '@P.N.', $full);
-		$surn=preg_replace('/(_{2,}|\?{2,}|-{2,})/', '@N.N.', $surn);
-		$givn=preg_replace('/(_{2,}|\?{2,}|-{2,})/', '@P.N.', $givn);
+		$full=preg_replace('/\/(_+|\?+|-+)\//',            '/@N.N./', $full);
+		$full=preg_replace('/(?<= |^)(_+|\?+|-+)(?= |$)/', '@P.N.',   $full);
+		$surn=preg_replace('/^(_+|\?+|-+)$/',              '@N.N.',   $surn);
+		$givn=preg_replace('/(?<= |^)(_+|\?+|-+)(?= |$)/', '@P.N.',   $givn);
 		foreach ($surns as $key=>$value) {
-			$surns[$key]=preg_replace('/(_{2,}|\?{2,}|-{2,})/', '@N.N.', $value);
+			$surns[$key]=preg_replace('/^(_+|\?+|-+)$/', '@N.N.', $value);
 		}
 
 		// Create the list (surname first) version of the name.  Note that zero
@@ -1790,8 +1790,8 @@ class Person extends GedcomRecord {
 
 		// If the name is written in greek/cyrillic/hebrew/etc., use the "unknown" name
 		// from that character set.  Otherwise use the one in the language file.
-		if ($givn=='@P.N.' || $surn=='@N.N.' || $surns[0]=='@N.N.') {
-			if ($givn=='@P.N.' && ($surn=='@N.N.' || $surns[0]=='@N.N.')) {
+		if (strpos($givn, '@P.N.')!==false || $surn=='@N.N.' || $surns[0]=='@N.N.') {
+			if (strpos($givn, '@P.N.')!==false && ($surn=='@N.N.' || $surns[0]=='@N.N.')) {
 				$PN=$pgv_lang['PN'];
 				$NN=$pgv_lang['NN'];
 			} else {
