@@ -774,7 +774,7 @@ function print_map_charts($chart_shows, $chart_type, $x_as, $surname) {
 
 function print_sources_stats_chart($type){
 	global $pgv_lang, $GEDCOM;
-	require_once 'includes/class_stats.php';
+	require_once 'includes/classes/class_stats.php';
 	$stats = new stats($GEDCOM);
 	$params[0] = "700x200";
 	$params[1] = "ffffff";
