@@ -154,7 +154,7 @@ $factarray["WILL"]	= "Will";
 $factarray["_EMAIL"]	= "Email Address";
 $factarray["EMAIL"]	= "Email Address";
 $factarray["_TODO"]	= "To Do Item";
-$factarray["_UID"]	= "Universal Identifier";
+$factarray["_UID"]	= "Globally unique Identifier";
 $factarray["_PRIM"]	= "Highlighted Image";
 $factarray["_DBID"] = "Linked database ID";
 
