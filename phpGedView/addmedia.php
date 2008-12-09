@@ -582,38 +582,6 @@ if ($action=="delete") {
 }
 // **** end action "delete"
 
-// **** begin action "showmedia"
-// IS THIS STILL USED?
-if ($action=="showmedia") {
-	$medialist = get_db_media_list();
-	if (count($medialist)>0) {
-		print "<table class=\"list_table\">\n";
-		print "<tr><td class=\"list_label\">".$pgv_lang["delete"]."</td><td class=\"list_label\">".$pgv_lang["title"]."</td><td class=\"list_label\">".$pgv_lang["gedcomid"]."</td>\n";
-		print "<td class=\"list_label\">".$factarray["FILE"]."</td><td class=\"list_label\">".$pgv_lang["highlighted"]."</td><td class=\"list_label\">order</td><td class=\"list_label\">gedcom</td></tr>\n";
-		foreach($medialist as $indexval => $media) {
-			print "<tr>";
-			print "<td class=\"list_value\"><a href=\"".encode_url("addmedia.php?action=delete&m_id=".$media["ID"])."\">delete</a></td>";
-			print "<td class=\"list_value\"><a href=\"".encode_url("addmedia.php?action=edit&m_id=".$media["ID"])."\">edit</a></td>";
-			print "<td class=\"list_value\">".$media["TITL"]."</td>";
-			print "<td class=\"list_value\">";
-			$person=Person::getInstance($media["INDI"]);
-			if ($person) {
-				echo $person->format_list('span');
-			} else {
-				echo $pgv_lang['unknown'];
-			}
-			print "</td>";
-			print "<td class=\"list_value\">".$media["FILE"]."</td>";
-			print "<td class=\"list_value\">".$media["_PRIM"]."</td>";
-			print "<td class=\"list_value\">".$media["ORDER"]."</td>";
-			print "<td class=\"list_value\">".$media["GEDFILE"]."</td>";
-			print "</tr>\n";
-		}
-		print "</table>\n";
-	}
-}
-// **** end action "showmedia"
-
 
 // **** begin action "showmediaform"
 if ($action=="showmediaform") {
