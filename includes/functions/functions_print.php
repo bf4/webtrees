@@ -1337,9 +1337,12 @@ function print_text($help, $level=0, $noprint=0){
 	global $GUESS_URL, $UpArrow, $DAYS_TO_SHOW_LIMIT, $MEDIA_DIRECTORY;
 	global $repeat, $thumbnail, $xref, $pid;
 
-	if (!isset($_SESSION["DEBUG_LANG"])) $DEBUG_LANG = "no";
-	else $DEBUG_LANG = $_SESSION["DEBUG_LANG"];
-	if ($DEBUG_LANG == "yes") print "[LANG_DEBUG] Variable called: ".$help."<br /><br />";
+	// $_SESSION['DEBUG_LANG'] is set in editlang.php
+	$DEBUG_LANG=isset($_SESSION['DEBUG_LANG']) && $_SESSION['DEBUG_LANG'];
+	
+	if ($DEBUG_LANG) {
+		print "[LANG_DEBUG] Variable called: ".$help."<br /><br />";
+	}
 	$sentence = false;
 	if ($level>0) {
 		// Map legacy global variables (e.g. $VERSION) onto their replacement constants (e.g. PGV_VERSION)
@@ -1363,7 +1366,7 @@ function print_text($help, $level=0, $noprint=0){
 			if (isset($pgv_lang[$help])) {
 				$sentence = $pgv_lang[$help];
 			} else {
-				if ($DEBUG_LANG == "yes") {
+				if ($DEBUG_LANG) {
 					print "[LANG_DEBUG] Variable not present: ".$help."<br /><br />";
 				}
 				$sentence = $pgv_lang["help_not_exist"];
@@ -1380,7 +1383,9 @@ function print_text($help, $level=0, $noprint=0){
 	for($i=0; $i<$ct; $i++) {
 		$value = "";
 		$newreplace = preg_replace(array("/\[/","/\]/"), array("['","']"), $match[$i][1]);
-		if ($DEBUG_LANG == "yes") print "[LANG_DEBUG] Embedded variable: ".$match[$i][1]."<br /><br />";
+		if ($DEBUG_LANG) {
+			print "[LANG_DEBUG] Embedded variable: ".$match[$i][1]."<br /><br />";
+		}
 		$value = print_text($newreplace, $level+1);
 		if ($value!==false) $sentence = str_replace($match[$i][0], $value, $sentence);
 		else if ($noprint==0 && $level==0) $sentence = str_replace($match[$i][0], $match[$i][1].": ".$pgv_lang["var_not_exist"], $sentence);
