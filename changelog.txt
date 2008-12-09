@@ -10,6 +10,7 @@
 
 
 Version 4.2.0
+ - Fixed: [ 2099148 ] Wrong EOL on translation (fisharebest)
  - Fixed: [ 1814907 ] Highlighted Starred Names in Search List (fisharebest)
  - Fixed: [ 1786458 ] Top nn Surnames Block - Wrong names and counters (fisharebest)
  - Fixed: [ 1762942 ] SVN1348 - famlist - people with partly unknown names (fisharebest)
