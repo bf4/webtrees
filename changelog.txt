@@ -10,6 +10,7 @@
 
 
 Version 4.2.0
+ - Fixed: [ 1786458 ] Top nn Surnames Block - Wrong names and counters (fisharebest)
  - Fixed: [ 1762942 ] SVN1348 - famlist - people with partly unknown names (fisharebest)
  - Fixed: [ 2399903 ] [4450]Top 10 Given breaks html validation (wooc)
  - Fixed: [ 2397080 ] [4417] error on close relatives tab (fisharebest)
