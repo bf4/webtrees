@@ -1722,7 +1722,7 @@ function show_media_form($pid, $action = "newentry", $filename = "", $linktoid =
 	}
 
 	// Box for user to choose the folder to store the image
-	if (!$isExternal && $MEDIA_DIRECTORY_LEVELS > 0) {
+	if (!$isExternal && $MEDIA_DIRECTORY_LEVELS > 0 && PGV_USER_GEDCOM_ADMIN) {
 		echo '<tr><td class="descriptionbox ', $TEXT_DIRECTION, 'wrap width25">';
 		print_help_link("upload_server_folder_help", "qm");
 		if (empty($folder)) {
