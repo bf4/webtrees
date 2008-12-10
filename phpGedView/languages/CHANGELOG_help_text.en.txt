@@ -45,6 +45,14 @@ VERSION 4.2.0
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 -----------------------------------------------------------------------------------------
+*$pgv_lang["stat_help_x"]							10 Dec 2008				W
+*$pgv_lang["stat_help_gwx"]							10 Dec 2008				wf
+*$pgv_lang["stat_help_gax"]							10 Dec 2008				wf
+*$pgv_lang["stat_help_gcx"]							10 Dec 2008				wf
+*$pgv_lang["stat_help_gwz"]							10 Dec 2008				wf
+*$pgv_lang["chart_type_help"]						10 Dec 2008				Wf
+*$pgv_lang["google_chart_surname_help"]				10 Dec 2008				Wf
+*$pgv_lang["chart_area_help"]						10 Dec 2008				w
 +$pgv_lang["stat_help_gax"]							9 Dec 2008				A
 +$pgv_lang["stat_help_gbx"]							9 Dec 2008				A
 +$pgv_lang["stat_help_gcx"]							9 Dec 2008				A
