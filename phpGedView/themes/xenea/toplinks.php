@@ -132,7 +132,7 @@ $menubar = new MenuBar();
 	</tr>
 </table>
 <br />
-<?php include("accesskeyHeaders.php"); ?>
+<?php require './includes/accesskeyHeaders.php'; ?>
 </div>
 <!-- close div for div id="header" -->
 <?php print "<div id=\"content\">\n"; ?>
