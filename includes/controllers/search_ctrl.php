@@ -783,7 +783,7 @@ class SearchControllerRoot extends BaseController {
 							}
 						}
 						if ($save === true) {
-							$this->printname[] = array (sortable_name_from_name($row["i_name"]), $row["i_id"], get_gedcom_from_id($row["i_file"]), "");
+							$this->printname[] = array ('i_name', $row["i_id"], get_gedcom_from_id($row["i_file"]), "");
 							//								break; // leave out if we want all names from one indi shown
 						}
 					}

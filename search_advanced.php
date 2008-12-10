@@ -24,11 +24,12 @@
  * @subpackage Display
  * @version $Id$
  */
-// Include the search controller from now on refered to as $controller
-require_once ("includes/controllers/advancedsearch_ctrl.php");
-require_once ("includes/functions/functions_print_lists.php");
 
-$controller = new AdvancedSearchController();
+require './config.php';
+require './includes/controllers/advancedsearch_ctrl.php';
+require './includes/functions/functions_print_lists.php';
+
+$controller=new AdvancedSearchController();
 $controller->init();
 
 // Print the top header
