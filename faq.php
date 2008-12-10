@@ -251,7 +251,7 @@ if ($action == "show") {
 			echo '<a href="faq.php?action=add">', $pgv_lang["add_faq_item"], '</a>';
 			echo '</td></tr>';
 		} else {
-			echo '<tr><td class="error center\>"', $pgv_lang["no_faq_items"], '</td></tr>';
+			echo '<tr><td class="error center">', $pgv_lang["no_faq_items"], '</td></tr>';
 		}
 	} else {
 		// NOTE: Add a preview link
