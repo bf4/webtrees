@@ -113,7 +113,7 @@ if(empty($SEARCH_SPIDER)) {
 </td>
 </tr>
 </table>
-<?php include("accesskeyHeaders.php"); ?>
+<?php require './includes/accesskeyHeaders.php'; ?>
 </div>
 <!-- close div for div id="header" -->
 <?php print "<div id=\"content\">\n"; ?>
