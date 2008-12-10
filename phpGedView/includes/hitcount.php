@@ -23,22 +23,10 @@
  * @package PhpGedView
  * @subpackage Charts
  */
-if (strstr($_SERVER["SCRIPT_NAME"],"hitcount")) {
-	print "Now, why would you want to do that.  You're not hacking are you?";
-	exit;
-}
 
-// Check if file_get_contents() is supported
-if (!function_exists("file_get_contents")) {
-	function file_get_contents($filename) {
-		$filestring = "";
-		$file = @fopen($filename, "r");
-		if ($file) {
-			while (!feof($file)) $filestring .= fread($file, 1024);
-			fclose($file);
-		}
-		return $filestring;
-	}
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
+	exit;
 }
 
 //only do counter stuff if counters are enabled
