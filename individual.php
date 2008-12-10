@@ -119,7 +119,7 @@ $linkToID = $controller->pid;	// -- Tell addmedia.php what to link to
 		<?php
 		if($SHOW_COUNTER && (empty($SEARCH_SPIDER))) {
 			//print indi counter only if displaying a non-private person
-			require("hitcount.php");
+			require './includes/hitcount.php';
 			print "\n<br />".$pgv_lang["hit_count"]."	".$hits."\n";
 		}
 		// if individual is a remote individual

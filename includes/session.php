@@ -658,7 +658,7 @@ else {
 	require_once($THEME_DIR."theme.php");
 }
 
-require_once("hitcount.php"); //--load the hit counter
+require './includes/hitcount.php'; //--load the hit counter
 
 if ($Languages_Default) {            // If Languages not yet configured
 	$pgv_lang_use["english"] = false;  //  disable English
