@@ -71,4 +71,9 @@ $pgv_lang["bu_surname_add"]	="שם הנעורים של האשה הופך לשם 
 $pgv_lang["bu_name_format"]	="תקן לוכסנים ורווחים בשמות"; 
 $pgv_lang["bu_name_format_desc"]	="תקן רשומות NAME שהם במבנה 'John/DOE/' או 'John /DOE', שנוצרות ע\"י תוכניות חקר משפחה ישנות."; 
 
+$pgv_lang["bu_duplicate_links"]	="הסר קישורים כפולים";
+$pgv_lang["bu_duplicate_links_desc"]="שגיאה כללית  של GEDCOM היא קיום קישורים מרובים לאותה רשומה, למשל רישום אותו ילד יותר מפעם אחד ברשומת משפחה."; 
+$pgv_lang["bu_tmglatlon"]		="תקן נתוני קו רוחב וקו אורך של TMG"; 
+$pgv_lang["bu_tmglatlon_desc"]	="מסב נתוני קו הרוחב וקו האורך של The Master Genealogist למבנה סטנדרטי של GEDCOM 5.5.1 ש-PGV יכול לקרוא.  הערה: השינויים אינם מודגשים בפלט הסופי המוצג למטה.";
+
 ?>

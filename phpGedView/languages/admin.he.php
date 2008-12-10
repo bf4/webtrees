@@ -420,6 +420,7 @@ $pgv_lang["tradition_spanish"]		= "ספרדי";
 $pgv_lang["tradition_portuguese"]	= "פורטוגזי"; 
 $pgv_lang["tradition_icelandic"]	= "איסלנדי"; 
 $pgv_lang["tradition_paternal"]	= "לפי אב";
+$pgv_lang["tradition_polish"]		= "פולני";
 $pgv_lang["tradition_none"]		= "אין";
 
 ?>
