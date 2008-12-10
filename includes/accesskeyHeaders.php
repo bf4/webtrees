@@ -29,7 +29,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
-global $SEARCH_SPIDER;
+global $SEARCH_SPIDER, $pgv_lang, $SCRIPT_NAME;
 if (empty($SEARCH_SPIDER)) {
 	?>
 	<div class="accesskeys">
