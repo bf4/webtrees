@@ -10,6 +10,12 @@
 
 
 Version 4.2.0
+ - Fixed: [ 2328568 ] Search finds too much (fisharebest)
+ - Fixed: [ 2058324 ] [3677] Search Routine with Multiple Gedcoms (fisharebest)
+ - Fixed: [ 2391217 ] 4.1.6 error when search would result in a private ID (fisharebest)
+ - Fixed: [ 1849095 ] Handling of invalid FAM number in search (fisharebest)
+ - Fixed: [ 1965654 ] 4.1.5 General Search Living Names being shown (fisharebest)
+ - Fixed: [ 2096827 ] [3792] Search still shows people from wrong gedcom (fisharebest)
  - Changed: Use CSS instead of images to display hit counters (canajun2eh)
  - Fixed: [ 2099148 ] Wrong EOL on translation (fisharebest)
  - Fixed: [ 1814907 ] Highlighted Starred Names in Search List (fisharebest)

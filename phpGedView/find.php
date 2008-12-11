@@ -372,58 +372,16 @@ if ($action=="filter") {
 	$filter = trim($filter);
 	// Output Individual
 	if ($type == "indi") {
-		$oldged = $GEDCOM;
-		print "\n\t<table class=\"tabs_table $TEXT_DIRECTION width90\">\n\t\t<tr>";
-		$myindilist = search_indis_names($filter);
-		$cti=count($myindilist);
-		if ($cti>0) {
-			$curged = $GEDCOM;
-			$printname = array();
-			$names = preg_split("/[\s,]+/", $filter);
-			print "<td class=\"list_value_wrap\"><ul>";
-			foreach ($myindilist as $key => $value) {
-				$person=Person::getInstance($key);
-				foreach ($person->getAllNames() as $namearray) {
-					$found = true;
-					foreach($names as $ni=>$name) {
-						if (preg_match("/".$name."/i", $namearray['list'])==0) {
-							$found=false;
-							break;
-						}
-					}
-					if ($found) {
-						$printname[] = array($namearray['list'], $key, get_gedcom_from_id($value["gedfile"]));
-						break;
-					}
-				}
+		print "<table class=\"tabs_table $TEXT_DIRECTION width90\">\n\t\t<tr>";
+		$myindilist=search_indis_names(array($filter), array(PGV_GED_ID), 'AND');
+		if ($myindilist) {
+			print "\n\t\t<td class=\"list_value_wrap $TEXT_DIRECTION\"><ul>";
+			usort($myindilist, array('GedcomRecord', 'Compare'));
+			foreach($myindilist as $indi) {
+				echo $indi->format_list('li', true);
 			}
-			uasort($printname, "itemsort");
-			foreach($printname as $pkey => $pvalue) {
-				$GEDCOM = $pvalue[2];
-				if ($GEDCOM != $curged) {
-					load_privacy_file(get_id_from_gedcom($GEDCOM));
-					$curged = $GEDCOM;
-				}
-				$person=Person::getInstance($pvalue[1]);
-				echo $person->format_list('li', true);
-				print "\n";
-			}
-			print "\n\t\t</ul></td>";
-			$GEDCOM = $oldged;
-			if ($GEDCOM != $curged) {
-				load_privacy_file(get_id_from_gedcom($GEDCOM));
-				$curged = $GEDCOM;
-			}
-			print "</tr>";
-			if ($cti > 0) {
-				print "<tr><td class=\"list_value\">".$pgv_lang["total_indis"]." ".$cti;
-//				if (count($indi_private)>0) print "  (".$pgv_lang["private"]." ".count($indi_private).")";
-//				if (count($indi_hide)>0) print "  --  ".$pgv_lang["hidden"]." ".count($indi_hide);
-//				if (count($indi_private)>0 || count($indi_hide)>0) print_help_link("privacy_error_help", "qm");
-				print "</td></tr>";
-			}
-		}
-		else {
+			echo '</ul></td></tr><tr><td class="list_label">', $pgv_lang['total_indis'], ' ', count($myindilist), '</tr></td>';
+		} else {
 			print "<td class=\"list_value_wrap\">";
 			print $pgv_lang["no_results"];
 			print "</td></tr>";
@@ -433,71 +391,22 @@ if ($action=="filter") {
 
 	// Output Family
 	if ($type == "fam") {
-		$oldged = $GEDCOM;
-		$myindilist = array();
-		$myfamlist = array();
-		$myfamlist2 = array();
-		$famquery = array();
-
 		print "\n\t<table class=\"tabs_table $TEXT_DIRECTION width90\">\n\t\t<tr>";
-		if (find_person_record($filter)) {
-			$printname = search_fams_members($filter);
-			$ctf = count($printname);
-		} else {
-			$myindilist = search_indis_names($filter);
-			foreach($myindilist as $key1 => $myindi) {
-				$famquery[] = array($key1, $GEDCOMS[$GEDCOM]['id']);
-			}
-			$cti=count($famquery);
-			$printname = array();
-			if ($cti>0) {
-				// Get the famrecs with hits on names from the family table
-				$myfamlist = search_fams_names($famquery, "OR", true);
-				// Get the famrecs with hits in the gedcom record from the family table
-				$myfamlist2 = search_fams($filter, false, "OR", true);
-				$myfamlist = pgv_array_merge($myfamlist, $myfamlist2);
-				foreach ($myfamlist as $key => $value) {
-					// lets see where the hit is
-					// makes sure that the spouse name with the hit is listed first
-					$found = false;
-					foreach($value["name"] as $nkey => $famname) {
-						$famsplit = preg_split("/(\s\+\s)/", trim($famname));
-						if (preg_match("/".preg_replace("/\s+/", "|", $filter)."/i", $famsplit[0]) != 0) {
-							$printname[]=array($famname, $key, get_gedcom_from_id($value["gedfile"]));
-							$found = true;
-							break;
-						}
-					}
-					if (!$found) $printname[] = array($value["name"][0], $key, get_gedcom_from_id($value["gedfile"]));
-				}
-				$ctf = count($printname);
-			}
-		}
-
-		if (count($printname)>0) {
+		// Get the famrecs with hits on names from the family table
+		// Get the famrecs with hits in the gedcom record from the family table
+		$myfamlist = pgv_array_merge(
+			search_fams_names(array($filter), array(PGV_GED_ID), 'AND'),
+			search_fams(array($filter), array(PGV_GED_ID), 'AND', true)
+		);
+		if ($myfamlist) {
 			$curged = $GEDCOM;
 			print "\n\t\t<td class=\"list_value_wrap $TEXT_DIRECTION\"><ul>";
-			uasort($printname, "itemsort");
-			foreach($printname as $pkey => $pvalue) {
-				$GEDCOM = $pvalue[2];
-				if ($GEDCOM != $curged) {
-					load_privacy_file(get_id_from_gedcom($GEDCOM));
-					$curged = $GEDCOM;
-				}
-				$family=Family::getInstance($pvalue[1]);
+			usort($myfamlist, array('GedcomRecord', 'Compare'));
+			foreach($myfamlist as $family) {
 				echo $family->format_list('li', true);
 			}
-			print "\n\t\t</ul></td>";
-			$GEDCOM = $oldged;
-			if ($GEDCOM != $curged) {
-				load_privacy_file(get_id_from_gedcom($GEDCOM));
-				$curged = $GEDCOM;
-			}
-			print "</tr>\n";
-
-			print "<tr><td class=\"list_label\">".$pgv_lang["total_fams"]." ".count($myfamlist)."</tr></td>";
-		}
-		else {
+			echo '</ul></td></tr><tr><td class="list_label">', $pgv_lang['total_fams'], ' ', count($myfamlist), '</tr></td>';
+		} else {
 			print "<td class=\"list_value_wrap\">";
 			print $pgv_lang["no_results"];
 			print "</td></tr>";
@@ -717,39 +626,27 @@ if ($action=="filter") {
 
 	}
 	// Output Sources
-	if ($type == "source") {
-		print "\n\t<table class=\"tabs_table $TEXT_DIRECTION width90\">\n\t\t<tr>\n\t\t<td class=\"list_value\"><tr>";
-		if (!$filter) {
-			$mysourcelist = get_source_list(PGV_GED_ID);
+	if ($type=="source") {
+		echo '<table class="tabs_table ', $TEXT_DIRECTION, ' width90"><tr><td class="list_value"><tr>';
+		if ($filter) {
+			$mysourcelist = search_sources(array($filter), array(PGV_GED_ID), 'AND', true);
 		} else {
-			$mysourcelist = search_sources($filter);
-			uasort($mysourcelist, "itemsort");
+			$mysourcelist = get_source_list(PGV_GED_ID);
 		}
-		$cts=count($mysourcelist);
-		if ($cts>0) {
-			print "\n\t\t<td class=\"list_value_wrap\"><ul>";
-			foreach ($mysourcelist as $key => $value) {
-				if (is_object($value)) {
-					$key=$value->getXref();
-					$name=$value->getFullName();
-				} else {
-					$name=$value["name"];
-				}
-				print "<li>";
-				print "<a href=\"javascript:;\" onclick=\"pasteid('$key', '".preg_replace("/(['\"])/", "\\$1", PrintReady($name))."'); return false;\"><span class=\"list_item\">".PrintReady($name)."</span></a>\n";
-				print "</li>\n";
+		if ($mysourcelist) {
+			usort($mysourcelist, array('GedcomRecord', 'Compare'));
+			echo '<td class="list_value_wrap"><ul>';
+			foreach ($mysourcelist as $source) {
+				echo '<li><a href="javascript:;" onclick="pasteid(\'', $source->getXref(), "', '", preg_replace("/(['\"])/", "\\$1", PrintReady($source->getFullName())), '\'); return false;"><span class="list_item">', PrintReady($source->getFullName()), '</span></a></li>';
 			}
-			print "</ul></td></tr>";
-			if ($cts > 0) print "<tr><td class=\"list_label\">".$pgv_lang["total_sources"]." ".$cts."</td></tr>";
+			echo '</ul></td></tr><tr><td class="list_label">', $pgv_lang['total_sources'], ' ', count($mysourcelist), '</td></tr>';
 		}
 		else {
-			print "<tr><td class=\"list_value_wrap\">";
-			print $pgv_lang["no_results"];
-			print "</td></tr>";
+			echo '<tr><td class="list_value_wrap">', $pgv_lang['no_results'], '</td></tr>';
 		}
-		print "</table>";
+		print '</table>';
 		if (PGV_USER_CAN_EDIT) {
-			print_help_link("edit_add_unlinked_source_help", "qm"); ?><a href="javascript: <?php print $pgv_lang["add_unlinked_source"]; ?>" onclick="addnewsource(''); return false;"><?php print $pgv_lang["add_unlinked_source"]; ?></a>
+			print_help_link('edit_add_unlinked_source_help', 'qm'); ?><a href="javascript: <?php print $pgv_lang['add_unlinked_source']; ?>" onclick="addnewsource(''); return false;"><?php print $pgv_lang['add_unlinked_source']; ?></a>
 		<?php
 		}
 	}

@@ -129,7 +129,7 @@ class ra_GenerateTasks extends ra_form
  		$_SESSION['desc_asc'] = true;
  		$_SESSION['name_asc'] = true;
  		$tasks = $this->tasks;
- 	    $todoindis = search_indis("_TODO");
+ 	    $todoindis = search_indis(array('1 _TODO '), array(PGV_GED_ID), 'AND', false);
        	$temp_id = 0;
        	$retval = '';
        	foreach($todoindis as $key => $value)

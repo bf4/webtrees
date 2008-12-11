@@ -289,14 +289,11 @@ case 'getprev':
 case 'search':
 	$query=safe_GET('query');
 	if ($query) {
-		$sindilist = search_indis($query);
-		uasort($sindilist, "itemsort");
+		$sindilist=search_indis(array($query), array(PGV_GED_ID), 'AND', true);
 		print "SUCCESS\n";
 		addDebugLog($action." query=$query SUCCESS");
-		foreach($sindilist as $xref=>$indi) {
-			if (displayDetailsById($xref)) {
-				print	"$xref\n";
-			}
+		foreach($sindilist as $indi) {
+			echo $indi->getXref(), "\n";
 		}
 	} else {
 		addDebugLog($action." ERROR 15: No query specified.  Please specify a query.");
@@ -310,14 +307,11 @@ case 'soundex':
 	$soundex=safe_GET('soundex', '\w+', 'Russell');
 
 	if ($lastname || $firstname) {
-		$res = search_indis_soundex($soundex, $lastname, $firstname, $place);
+		$sindilist=search_indis_soundex($soundex, $lastname, $firstname, $place, array(PGV_GED_ID));
 		print "SUCCESS\n";
 		addDebugLog($action." lastname=$lastname firstname=$firstname SUCCESS");
-		// -- only get the names who match soundex
-		while($row=$res->fetchRow(DB_FETCHMODE_ASSOC)) {
-			if (displayDetailsById($row['i_id'])) {
-				print $row['i_id']."\n";
-			}
+		foreach($sindilist as $indi) {
+			echo $indi->getXref(), "\n";
 		}
 	} else {
 		addDebugLog($action." ERROR 16: No names specified.  Please specify a firstname or a lastname.");

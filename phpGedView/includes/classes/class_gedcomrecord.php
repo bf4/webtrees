@@ -190,6 +190,13 @@ class GedcomRecord {
 		return $this->xref;
 	}
 	/**
+	 * get the gedcom file
+	 * @return string	returns the person ID
+	 */
+	function getGedId() {
+		return $this->ged_id;
+	}
+	/**
 	 * get the object type
 	 * @return string	returns the type of this object "INDI","FAM", etc.
 	 */
