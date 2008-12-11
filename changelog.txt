@@ -10,6 +10,7 @@
 
 
 Version 4.2.0
+ - Changed: Use CSS instead of images to display hit counters (canajun2eh)
  - Fixed: [ 2099148 ] Wrong EOL on translation (fisharebest)
  - Fixed: [ 1814907 ] Highlighted Starred Names in Search List (fisharebest)
  - Fixed: [ 1786458 ] Top nn Surnames Block - Wrong names and counters (fisharebest)

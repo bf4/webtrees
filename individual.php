@@ -34,7 +34,7 @@ $controller->init();
 
 loadLangFile("lightbox:lang, googlemap:lang");
 
-global $USE_THUMBS_MAIN, $mediacnt, $tabno;
+global $USE_THUMBS_MAIN, $mediacnt, $tabno, $hitCount;
 global $linkToID;
 global $SEARCH_SPIDER, $GOOGLEMAP_PH_CONTROLS;
 
@@ -120,7 +120,7 @@ $linkToID = $controller->pid;	// -- Tell addmedia.php what to link to
 		if($SHOW_COUNTER && (empty($SEARCH_SPIDER))) {
 			//print indi counter only if displaying a non-private person
 			require './includes/hitcount.php';
-			print "\n<br />".$pgv_lang["hit_count"]."	".$hits."\n";
+			print "\n<br />{$pgv_lang["hit_count"]} {$hitCount}\n";
 		}
 		// if individual is a remote individual
 		// if information for this information is based on a remote site

@@ -5,7 +5,7 @@
  * To learn more about CSS visit http: //www.w3.org/TR/REC-CSS2/
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008 John Finlay and Others, all rights reserved.
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -109,8 +109,8 @@ ul {
 	margin-right: auto;
 }
 
-.center { 
-	text-align: center; 
+.center {
+	text-align: center;
 }
 
 table.center{
@@ -493,6 +493,12 @@ a:hover .nameZoom {
 	color: #262626;
 }
 
+.hit-counter {
+	background: black;
+	color: white;
+	font-weight: bold;
+}
+
 /* This is the original.
  * It's not used, but it's left in in case you want to go back to it. */
 .flag {
@@ -523,7 +529,7 @@ a:hover .nameZoom {
 
 .border1 {
 	border: solid black 1px;
-}	
+}
 
 .header_select {
 	font-size: 9pt;
@@ -1305,7 +1311,7 @@ a.showit:hover span {
 	text-align: left;
 	opacity: .85;
 	z-index: 5;
-	white-space: normal; 
+	white-space: normal;
 }
 
 .lifespan_people span:first-letter {
@@ -1315,10 +1321,10 @@ a.showit:hover span {
 }
 
 .lifespan_outer {
-	position: relative; 
+	position: relative;
 	width: 1050px;
-	height: 600px; 
-	overflow: visible; 
+	height: 600px;
+	overflow: visible;
 	border: solid blue 1px;
 }
 
@@ -1332,27 +1338,27 @@ a.showit:hover span {
 }
 
 .lifespan_timeline {
-	position: absolute; 
-	width: 100%; 
-	left: -10px; 
-	top: -65px; 
-	z-index: 2; 
+	position: absolute;
+	width: 100%;
+	left: -10px;
+	top: -65px;
+	z-index: 2;
 	background-color: white
 }
 
 .lifespan_people {
-	position: absolute; 
-	width: 500px; 
-	left: -10px; 
-	top: -60px; 
+	position: absolute;
+	width: 500px;
+	left: -10px;
+	top: -60px;
 	z-index: 1;
 }
 .iwstyle {
 	width:360px;
 	/*background-color: #FFFFFF;*/
-} 
+}
 .iwstyle a {
-} 
+}
 .iwstyle a:hover {
 }
 /* Tag Cloud styles*/

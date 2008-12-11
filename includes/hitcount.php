@@ -3,7 +3,7 @@
  * Counts how many hits.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2005  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -52,7 +52,7 @@ if($SHOW_COUNTER)
 		//see if already viewed individual this session
 		if(isset($_SESSION[$PGV_INDI_COUNTER_NAME][$pid]))
 		{
-			$hits = $_SESSION[$PGV_INDI_COUNTER_NAME][$pid];
+			$hitCount = $_SESSION[$PGV_INDI_COUNTER_NAME][$pid];
 		}
 		else //haven't viewed individual this session
 		{
@@ -60,9 +60,9 @@ if($SHOW_COUNTER)
 			$ct = preg_match_all ("/@$pid@\s(\d+)/",$l_fcontents,$matches);
 			if($ct>0) //found individual increment counter
 			{
-				$hits = $matches[1][0];
-				$hits = ((int)$hits) + 1;
-				$l_fcontents = preg_replace("/(@$pid@) (\d+)/","$1 $hits",$l_fcontents);
+				$hitCount = $matches[1][0];
+				$hitCount = ((int)$hitCount) + 1;
+				$l_fcontents = preg_replace("/(@$pid@) (\d+)/","$1 $hitCount",$l_fcontents);
 				$fp=fopen($PGV_COUNTER_FILENAME,"r+");
 				fputs($fp,$l_fcontents);
 				fclose($fp);
@@ -73,9 +73,9 @@ if($SHOW_COUNTER)
 				fseek($fp,0,SEEK_END);
 				fputs($fp,"\r\n@".$pid."@ 1");
 				fclose($fp);
-				$hits=1;
+				$hitCount=1;
 			}
-			$_SESSION[$PGV_INDI_COUNTER_NAME][$pid] = $hits;
+			$_SESSION[$PGV_INDI_COUNTER_NAME][$pid] = $hitCount;
 		}
 	}
 	else //web site counter
@@ -83,7 +83,7 @@ if($SHOW_COUNTER)
 		// has user started a session on site yet
 		if(isset($_SESSION[$PGV_COUNTER_NAME]))
 		{
-			$hits = $_SESSION[$PGV_COUNTER_NAME];
+			$hitCount = $_SESSION[$PGV_COUNTER_NAME];
 		}
 		else //new user so increment counter and save
 		{
@@ -91,30 +91,30 @@ if($SHOW_COUNTER)
 			$ct = preg_match ("/^(\d+)/",$l_fcontents,$matches);
 			if($ct)
 			{
-			$hits = $matches[0];
-			$hits = ((int)$hits) + 1;
+			$hitCount = $matches[0];
+			$hitCount = ((int)$hitCount) + 1;
 			$ct = preg_match("/^(\d+)@/",$l_fcontents,$matches);
 			if($ct) //found missing return & newline
-				$l_fcontents = preg_replace("/^(\d+)/","$hits\r\n",$l_fcontents);
+				$l_fcontents = preg_replace("/^(\d+)/","$hitCount\r\n",$l_fcontents);
 			else  //returns & newline exist
-				$l_fcontents = preg_replace("/^(\d+)/","$hits",$l_fcontents);
+				$l_fcontents = preg_replace("/^(\d+)/","$hitCount",$l_fcontents);
 				$fp=fopen($PGV_COUNTER_FILENAME,"r+");
 				fputs($fp,$l_fcontents);
 				fclose($fp);
 		}
 		else
-			$hits=0;
-			$_SESSION[$PGV_COUNTER_NAME]=$hits;
+			$hitCount=0;
+			$_SESSION[$PGV_COUNTER_NAME]=$hitCount;
 		}
 	}
 
 	//replace the numbers with their images
 	if (array_key_exists('0', $PGV_IMAGES))
 		for($i=0;$i<10;$i++)
-			$hits = str_replace("$i","<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES[$i]["digit"]."\" alt=\"pgv_counter\" />","$hits");
+			$hitCount = str_replace("$i","<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES[$i]["digit"]."\" alt=\"pgv_counter\" />","$hitCount");
 	else
-		$hits="<span class=\"hit-counter\">{$hits}</span>";
+		$hitCount="<span class=\"hit-counter\">{$hitCount}</span>";
 
-	if ($TEXT_DIRECTION=="rtl") $hits = getLRM() . $hits . getLRM();
+	if ($TEXT_DIRECTION=="rtl") $hitCount = getLRM() . $hitCount . getLRM();
 }
 ?>
