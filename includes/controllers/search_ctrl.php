@@ -851,9 +851,8 @@ class SearchControllerRoot extends BaseController {
 										print "<tr><td class=\"list_value $TEXT_DIRECTION\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\" valign=\"center\" ><ul>";
 										print "<li class=\"$TEXT_DIRECTION\" dir=\"$TEXT_DIRECTION\">";
 										print "<a href=\"".encode_url("{$siteURL}/individual.php?pid={$person->PID}&ged={$serviceClient->gedfile}")."\" target=\"_blank\">";
-										$indiName = sortable_name_from_name($person->gedcomName);
 										$pageResultsNum += 1;
-										print "<b>".$indiName."</b>";
+										print "<b>".$person->getFullName()."</b>";
 										if (!empty ($person->PID)) {
 											print " (".$person->PID.")";
 										}
@@ -871,7 +870,7 @@ class SearchControllerRoot extends BaseController {
 
 										/*******************************  Remote Links Per Result *************************************************/
 										if (PGV_USER_CAN_EDIT) {
-											print "<td class=\"list_value $TEXT_DIRECTION\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\" >"."<ul style=\"list-style: NONE\"><li><a href=\"javascript:;\" "."onclick=\"return open_link('".$key."', '".$person->PID."', '".$indiName."');\">"."<b>".$pgv_lang["title_search_link"]."</b></a></ul></li></td></tr>\n";
+											print "<td class=\"list_value $TEXT_DIRECTION\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\" >"."<ul style=\"list-style: NONE\"><li><a href=\"javascript:;\" "."onclick=\"return open_link('".$key."', '".$person->PID."', '".$person->getFullName()."');\">"."<b>".$pgv_lang["title_search_link"]."</b></a></ul></li></td></tr>\n";
 										}
 									}
 								}

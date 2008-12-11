@@ -105,39 +105,6 @@ function get_common_surnames($min) {
 }
 
 /**
- * get the sortable name from the gedcom name
- * @param string $name 	the name from the 1 NAME gedcom line including the /
- * @return string 	The new name in the form Surname, Given Names
- */
-function sortable_name_from_name($name) {
-	global $NPFX_accept;
-	//-- remove any unwanted characters from the name
-	if (preg_match("/^\.(\.*)$|^\?(\?*)$|^_(_*)$|^,(,*)$/", $name)) $name = preg_replace(array("/,/","/\./","/_/","/\?/"), array("","","",""), $name);
-	$ct = preg_match("~(.*)/(.*)/(.*)~", $name, $match);
-	if ($ct>0) {
-		$surname = trim($match[2]);
-		if (empty($surname)) $surname = "@N.N.";
-		$givenname = trim($match[1]);
-		$othername = trim($match[3]);
-		if (empty($givenname)&&!empty($othername)) {
-			$givenname = $othername;
-			$othername = "";
-		}
-
-		// Remove any prefixes from given name
-		while (preg_match('/^(\w+)\.? +(.*)/', $givenname, $match) && in_array($match[1], $NPFX_accept))
-			$givenname=$match[2];
-
-		if (empty($givenname)) $givenname = "@P.N.";
-		$name = $surname;
-		if (!empty($othername)) $name .= " ".$othername;
-		$name .= ", ".$givenname;
-	}
-	if (!empty($name)) return $name;
-	else return "@N.N., @P.N.";
-}
-
-/**
  * strip name prefixes
  *
  * this function strips the prefixes of lastnames
