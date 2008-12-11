@@ -34,6 +34,8 @@ if (!defined('PGV_PHPGEDVIEW')) {
 
 define('PGV_TODO_PHP', '');
 
+require_once 'includes/functions/functions_print_lists.php';
+
 $PGV_BLOCKS['print_todo']['name']     =$pgv_lang['todo_block'];
 $PGV_BLOCKS['print_todo']['descr']    ='todo_descr';
 $PGV_BLOCKS['print_todo']['canconfig']=true;
