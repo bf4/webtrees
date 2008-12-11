@@ -64,7 +64,6 @@ if (empty($pid) && !empty($mid)) $pid = $mid;
 if (!empty($pid)) {
 	if (!isset($pgv_changes[$pid."_".$GEDCOM])) $gedrec = find_media_record($pid);
 	else $gedrec = find_updated_record($pid);
-	if (empty($gedrec)) $gedrec =  find_record_in_file($pid);
 	$disp = displayDetailsById($pid, "OBJE");
 }
 if ($action=="update" || $action=="newentry") {
@@ -553,7 +552,6 @@ if ($action == "update") {
 		//-- look for the old record media in the file
 		//-- if the old media record does not exist that means it was
 		//-- generated at import and we need to append it
-		//$oldrec = find_record_in_file($pid);
 		//if (!empty($oldrec)) {
 			if (replace_gedrec($pid, $newrec)) AddToChangeLog("Media ID ".$pid." successfully updated.");
 		//} else {

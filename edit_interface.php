@@ -207,7 +207,6 @@ if (!empty($pid)) {
 	if (($pid!="newsour") && ($pid!="newrepo")) {
 		if (!isset($pgv_changes[$pid."_".$GEDCOM])) $gedrec = find_gedcom_record($pid);
 		else $gedrec = find_updated_record($pid);
-		if (empty($gedrec)) $gedrec =  find_record_in_file($pid);
 		$ct = preg_match("/0 @$pid@ (.*)/", $gedrec, $match);
 		if ($ct>0) {
 			$type = trim($match[1]);
@@ -223,7 +222,6 @@ else if (!empty($famid)) {
 	if ($famid != "new") {
 		if (!isset($pgv_changes[$famid."_".$GEDCOM])) $gedrec = find_gedcom_record($famid);
 		else $gedrec = find_updated_record($famid);
-		if (empty($gedrec)) $gedrec =  find_record_in_file($famid);
 		$ct = preg_match("/0 @$famid@ (.*)/", $gedrec, $match);
 		if ($ct>0) {
 			$type = trim($match[1]);
