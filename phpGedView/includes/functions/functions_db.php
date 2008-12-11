@@ -493,7 +493,7 @@ function get_indilist_salpha($marnm, $fams, $ged_id) {
 	}
 	// Bug in MySQL4.1 - can't combine COLLATE with GROUP/ORDER BY
 	//$sql="SELECT {$column} AS alpha FROM {$tables} WHERE {$join} {$exclude} GROUP BY alpha {$DBCOLLATE} {$include} ORDER BY alpha='@', alpha=',', alpha {$DBCOLLATE}";
-	$sql="SELECT {$column} AS alpha FROM {$tables} WHERE {$join} {$exclude} GROUP BY {$column} {$include} ORDER BY {$column}='@', {$column}=',',{$column}";
+	$sql="SELECT {$column} AS alpha FROM {$tables} WHERE {$join} {$exclude} GROUP BY {$column} {$include} ORDER BY {$column}='@', {$column}=',', {$column}";
 	$res=dbquery($sql);
 
 	$list=array();
@@ -1102,16 +1102,12 @@ function fetch_gedcom_record($xref, $ged_id) {
 /**
  * find the gedcom record for a family
  *
- * This function first checks the <var>$famlist</var> cache to see if the family has already
- * been retrieved from the database.  If it hasn't been retrieved, then query the database and
- * add it to the cache.
- * also lookup the husb and wife so that they are in the cache
  * @link http://phpgedview.sourceforge.net/devdocs/arrays.php#family
  * @param string $famid the unique gedcom xref id of the family record to retrieve
  * @return string the raw gedcom record is returned
  */
 function find_family_record($pid, $gedfile='') {
-	global $TBLPREFIX, $GEDCOM, $DBCONN, $famlist;
+	global $TBLPREFIX, $GEDCOM, $DBCONN;
 
 	if (!$pid) {
 		return null;
@@ -1121,11 +1117,6 @@ function find_family_record($pid, $gedfile='') {
 		$ged_id=get_id_from_gedcom($gedfile);
 	} else {
 		$ged_id=get_id_from_gedcom($GEDCOM);
-	}
-
-	// Try the cache files first.
-	if (isset($famlist[$pid]['gedcom']) && $famlist[$pid]['gedfile']==$ged_id) {
-		return $famlist[$pid]['gedcom'];
 	}
 
 	// Look in the table.
@@ -1140,65 +1131,18 @@ function find_family_record($pid, $gedfile='') {
 	$row=$res->fetchRow();
 	$res->free();
 
-	if ($row) {
-		// Don't cache records from other gedcoms
-		if ($ged_id==PGV_GED_ID) {
-			$famlist[$pid]=array('gedcom'=>$row[0], 'husb'=>$row[1], 'wife'=>$row[2], 'numchil'=>$row[3], 'gedfile'=>$ged_id);
-		}
-		find_person_record($row[1]);
-		find_person_record($row[2]);
-		return $row[0];
-	} else {
-		return null;
-	}
-}
-
-/**
- * Load up a group of families into the cache by their ids from an array
- * This function is useful for optimizing pages that need to reference large
- * sets of families without loading them up individually
- * @param array $ids	an array of ids to load up
- */
-function load_families($ids) {
-	global $TBLPREFIX, $DBCONN, $famlist;
-
-	// don't load up records that are already loaded
-	foreach ($ids as $k=>$id) {
-		if (!$id || isset($famlist[$id]['gedcom']) && $famlist[$id]['gedfile']==PGV_GED_ID) {
-			unset ($ids[$k]);
-		} else {
-			$ids[$k]="'".$DBCONN->escapeSimple($id)."'";
-		}
-	}
-
-	if ($ids) {
-		$res=dbquery(
-			"SELECT f_gedcom, f_id, f_husb, f_wife, f_numchil FROM {$TBLPREFIX}families ".
-			"WHERE f_id IN (".join(',', $ids).") AND f_file=".PGV_GED_ID
-		);
-		$parents = array();
-		while ($row=$res->fetchRow()) {
-			$famlist[$row[1]]=array('gedcom'=>$row[0], 'gedfile'=>PGV_GED_ID, 'husb'=>$row[2], 'wife'=>$row[3], 'numchil'=>$row[4]);
-			$parents[]=$row[2];
-			$parents[]=$row[3];
-		}
-		$res->free();
-		load_people(array($row[2], $row[3]));
-	}
+	return $row[0];
 }
 
 /**
  * find the gedcom record for an individual
  *
- * This function first checks the <var>$indilist</var> cache to see if the individual has already
- * been retrieved from the database.  If it hasn't been retrieved, then query the database and
- * add it to the cache.
  * @link http://phpgedview.sourceforge.net/devdocs/arrays.php#indi
  * @param string $pid the unique gedcom xref id of the individual record to retrieve
  * @return string the raw gedcom record is returned
  */
 function find_person_record($pid, $gedfile='') {
-	global $TBLPREFIX, $GEDCOM, $DBCONN, $indilist;
+	global $TBLPREFIX, $GEDCOM, $DBCONN;
 
 	if (!$pid) {
 		return null;
@@ -1208,11 +1152,6 @@ function find_person_record($pid, $gedfile='') {
 		$ged_id=get_id_from_gedcom($gedfile);
 	} else {
 		$ged_id=get_id_from_gedcom($GEDCOM);
-	}
-
-	// Try the cache files first.
-	if ((isset($indilist[$pid]['gedcom']))&&($indilist[$pid]['gedfile']==$ged_id)) {
-		return $indilist[$pid]['gedcom'];
 	}
 
 	// Look in the table.
@@ -1224,67 +1163,19 @@ function find_person_record($pid, $gedfile='') {
 	if (DB::isError($res)) return "";
 	$row=$res->fetchRow();
 	$res->free();
-
-	if ($row) {
-		// Don't cache records from other gedcoms
-		if ($ged_id==PGV_GED_ID) {
-			$indilist[$pid]=array('gedcom'=>$row[0], 'isdead'=>$row[1], 'gedfile'=>$ged_id);
-		}
-		return $row[0];
-	} else {
-		return null;
-	}
-}
-
-/**
- * Load up a group of people into the cache by their ids from an array
- * This function is useful for optimizing pages that need to reference large
- * sets of people without loading them up individually
- * @param array $ids	an array of ids to load up
- */
-function load_people($ids) {
-	global $TBLPREFIX, $DBCONN, $indilist;
-
-	$myindilist = array();
-
-	// don't load up records that are already loaded
-	foreach ($ids as $k=>$id) {
-		if (!$id || isset($indilist[$id]['gedcom']) && $indilist[$id]['gedfile']==PGV_GED_ID) {
-			if ($id) {
-				$myindilist[$id]=$indilist[$id];
-			}
-			unset ($ids[$k]);
-		} else {
-			$ids[$k]="'".$DBCONN->escapeSimple($id)."'";
-		}
-	}
-
-	if ($ids) {
-		$res=dbquery(
-			"SELECT i_gedcom, i_id, i_isdead  FROM {$TBLPREFIX}individuals ".
-			"WHERE i_id IN (".join(',', $ids).") AND i_file=".PGV_GED_ID
-		);
-		while ($row=$res->fetchRow()) {
-			$indilist[$row[1]]=$myindilist[$row[1]]=array('gedcom'=>$row[0], 'isdead'=>$row[2], 'gedfile'=>PGV_GED_ID);
-		}
-		$res->free();
-	}
-	return $myindilist;
+	return $row[0];
 }
 
 /**
  * find the gedcom record
  *
- * This function first checks the caches to see if the record has already
- * been retrieved from the database.  If it hasn't been retrieved, then query the database and
- * add it to the cache.
  * @link http://phpgedview.sourceforge.net/devdocs/arrays.php#other
  * @param string $pid the unique gedcom xref id of the record to retrieve
  * @param string $gedfile	[optional] the gedcomfile to search in
  * @return string the raw gedcom record is returned
  */
 function find_gedcom_record($pid, $gedfile='') {
-	global $TBLPREFIX, $GEDCOM, $DBTYPE, $DBCONN, $indilist, $famlist, $sourcelist, $objectlist, $otherlist;
+	global $TBLPREFIX, $GEDCOM, $DBTYPE, $DBCONN;
 
 	if (!$pid) {
 		return null;
@@ -1295,18 +1186,6 @@ function find_gedcom_record($pid, $gedfile='') {
 	} else {
 		$ged_id=get_id_from_gedcom($GEDCOM);
 	}
-
-	// Try the cache files first.
-	if ((isset($indilist[$pid]["gedcom"]))&&($indilist[$pid]["gedfile"]==$ged_id))
-		return $indilist[$pid]["gedcom"];
-	if ((isset($famlist[$pid]["gedcom"]))&&($famlist[$pid]["gedfile"]==$ged_id))
-		return $famlist[$pid]["gedcom"];
-	if ((isset($objectlist[$pid]["gedcom"]))&&($objectlist[$pid]["gedfile"]==$ged_id))
-		return $objectlist[$pid]["gedcom"];
-	if ((isset($sourcelist[$pid]["gedcom"]))&&($sourcelist[$pid]["gedfile"]==$ged_id))
-		return $sourcelist[$pid]["gedcom"];
-	if ((isset($otherlist[$pid]["gedcom"]))&&($otherlist[$pid]["gedfile"]==$ged_id))
-		return $otherlist[$pid]["gedcom"];
 
 	// Look in the tables.
 	$pid=$DBCONN->escapeSimple($pid);
@@ -1370,15 +1249,12 @@ function gedcom_record_type($xref, $ged_id) {
 /**
  * find the gedcom record for a source
  *
- * This function first checks the <var>$sourcelist</var> cache to see if the source has already
- * been retrieved from the database.  If it hasn't been retrieved, then query the database and
- * add it to the cache.
  * @link http://phpgedview.sourceforge.net/devdocs/arrays.php#source
  * @param string $sid the unique gedcom xref id of the source record to retrieve
  * @return string the raw gedcom record is returned
  */
 function find_source_record($pid, $gedfile="") {
-	global $TBLPREFIX, $GEDCOM, $DBCONN, $sourcelist;
+	global $TBLPREFIX, $GEDCOM, $DBCONN;
 
 	if (!$pid) {
 		return null;
@@ -1390,11 +1266,6 @@ function find_source_record($pid, $gedfile="") {
 		$ged_id=get_id_from_gedcom($GEDCOM);
 	}
 
-	// Try the cache files first.
-	if ((isset($sourcelist[$pid]['gedcom']))&&($sourcelist[$pid]['gedfile']==$ged_id)) {
-		return $sourcelist[$pid]['gedcom'];
-	}
-
 	// Look in the table.
 	$pid=$DBCONN->escapeSimple($pid);
 	$res=dbquery(
@@ -1403,16 +1274,7 @@ function find_source_record($pid, $gedfile="") {
 	if (DB::isError($res)) return "";
 	$row=$res->fetchRow();
 	$res->free();
-
-	if ($row) {
-		// Don't cache records from other gedcoms
-		if ($ged_id==PGV_GED_ID) {
-			$sourcelist[$pid]=array('gedcom'=>$row[0], 'name'=>stripslashes($row[1]), 'gedfile'=>$ged_id);
-		}
-		return $row[0];
-	} else {
-		return null;
-	}
+	return $row[0];
 }
 
 
@@ -1453,7 +1315,7 @@ function find_other_record($pid, $gedfile="") {
  * @param string $rid	the record id
  */
 function find_media_record($pid, $gedfile='') {
-	global $TBLPREFIX, $GEDCOM, $DBCONN, $objectlist, $MULTI_MEDIA;
+	global $TBLPREFIX, $GEDCOM, $DBCONN, $MULTI_MEDIA;
 
 	if (!$pid || !$MULTI_MEDIA) {
 		return null;
@@ -1465,11 +1327,6 @@ function find_media_record($pid, $gedfile='') {
 		$ged_id=get_id_from_gedcom($GEDCOM);
 	}
 
-	// Try the cache files first.
-	if ((isset($objectlist[$pid]['gedcom']))&&($objectlist[$pid]['gedfile']==$ged_id)) {
-		return $objectlist[$pid]['gedcom'];
-	}
-
 	// Look in the table.
 	$escpid=$DBCONN->escapeSimple($pid);
 	$res=dbquery(
@@ -1479,18 +1336,7 @@ function find_media_record($pid, $gedfile='') {
 	$row=$res->fetchRow();
 	$res->free();
 
-	if ($row) {
-		// Don't cache records from other gedcoms
-		if ($ged_id==PGV_GED_ID) {
-			if (!$row[2]) {
-				$row[2]=$row[1];
-			}
-			$objectlist[$pid]=array('gedcom'=>$row[0], 'file'=>$row[1], 'title'=>$row[2], 'ext'=>$row[3], 'gedfile'=>$ged_id);
-		}
-		return $row[0];
-	} else {
-		return null;
-	}
+	return $row[0];
 }
 
 /**
@@ -1557,7 +1403,7 @@ function get_source_list($ged_id) {
 		$list[]=Source::getInstance($row);
 	}
 	$res->free();
-	uasort($list, array('GedcomRecord', 'Compare'));
+	usort($list, array('GedcomRecord', 'Compare'));
 	return $list;
 }
 
@@ -1598,55 +1444,17 @@ function get_indi_list() {
 
 //-- get the famlist from the datastore
 function get_fam_list() {
-	global $famlist, $TBLPREFIX, $FAMLIST_RETRIEVED;
+	global $TBLPREFIX, $DBCOLLATE;
 
-	if ($FAMLIST_RETRIEVED)
-		return $famlist;
-	$famlist = array();
-	$sql = "SELECT f_id, f_husb,f_wife, f_chil, f_gedcom, f_numchil FROM {$TBLPREFIX}families WHERE f_file=".PGV_GED_ID;
-	$res = dbquery($sql);
-
-	$ct = $res->numRows();
-	while ($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)){
-		$fam = array();
-		$fam["gedcom"] = $row["f_gedcom"];
-		$row = db_cleanup($row);
-		$family=Family::getInstance($row['f_id']);
-		$name=$family->getSortName();
-
-		$fam["name"] = $name;
-		$fam["HUSB"] = $row["f_husb"];
-		$fam["WIFE"] = $row["f_wife"];
-		$fam["CHIL"] = $row["f_chil"];
-		$fam["gedfile"] = PGV_GED_ID;
-		$fam["numchil"] = $row["f_numchil"];
-		$famlist[$row["f_id"]] = $fam;
+	$sql="SELECT DISTINCT 'FAM' AS type, f_id AS xref, f_file AS ged_id, f_gedcom AS gedrec, f_husb, f_wife, f_chil, f_numchil FROM {$TBLPREFIX}name, {$TBLPREFIX}families WHERE n_file=".PGV_GED_ID." AND f_file=n_file AND f_id=n_id AND n_num=0 ORDER BY n_sort {$DBCOLLATE}";
+	$res=dbquery($sql);
+	$fams=array();
+	while ($row=$res->fetchRow(DB_FETCHMODE_ASSOC)) {
+		$fams[]=Family::getInstance($row);
 	}
 	$res->free();
-	$FAMLIST_RETRIEVED = true;
-	return $famlist;
-}
-
-//-- get the otherlist from the datastore
-function get_other_list() {
-	global $otherlist, $TBLPREFIX;
-
-	$otherlist = array();
-
-	$sql = "SELECT o_id, o_type, o_gedcom FROM {$TBLPREFIX}other WHERE o_file=".PGV_GED_ID;
-	$res = dbquery($sql);
-
-	$ct = $res->numRows();
-	while ($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)){
-		$source = array();
-		$source["gedcom"] = $row["o_gedcom"];
-		$row = db_cleanup($row);
-		$source["type"] = $row["o_type"];
-		$source["gedfile"] = PGV_GED_ID;
-		$otherlist[$row["o_id"]]= $source;
-	}
-	$res->free();
-	return $otherlist;
+	usort($fams, array('GedcomRecord', 'Compare'));
+	return $fams;
 }
 
 // Search the gedcom records of indis
@@ -2308,52 +2116,6 @@ function find_place_list($place) {
 			}
 		}
 		$placelist = array_values($found);
-	}
-}
-
-//-- find all of the media
-function get_media_list() {
-	global $TBLPREFIX, $medialist, $ct, $MEDIA_DIRECTORY;
-
-	$ct = 0;
-	if (!isset($medialinks))
-		$medialinks = array();
-	$sqlmm = "SELECT mm_gid, mm_media FROM ".$TBLPREFIX."media_mapping WHERE mm_gedfile = ".PGV_GED_ID." ORDER BY mm_id ASC";
-	$resmm =@ dbquery($sqlmm);
-	while ($rowmm =& $resmm->fetchRow(DB_FETCHMODE_ASSOC)){
-		$sqlm = "SELECT m_id, m_titl, m_gedrec, m_file FROM {$TBLPREFIX}media WHERE m_media='{$rowmm['mm_media']}' AND m_gedfile=".PGV_GED_ID;
-		$resm =@ dbquery($sqlm);
-		while ($rowm =& $resm->fetchRow(DB_FETCHMODE_ASSOC)){
-			$filename = check_media_depth($rowm["m_file"], "NOTRUNC");
-			$thumbnail = str_replace($MEDIA_DIRECTORY, $MEDIA_DIRECTORY."thumbs/", $filename);
-			$title = $rowm["m_titl"];
-			$mediarec = $rowm["m_gedrec"];
-			$level = $mediarec{0};
-			$isprim="N";
-			$isthumb="N";
-			$pt = preg_match("/\d _PRIM (.*)/", $mediarec, $match);
-			if ($pt>0)
-				$isprim = trim($match[1]);
-			$pt = preg_match("/\d _THUM (.*)/", $mediarec, $match);
-			if ($pt>0)
-				$isthumb = trim($match[1]);
-			$medialinks[$ct][$rowmm["mm_gid"]] = gedcom_record_type($rowmm["mm_gid"], PGV_GED_ID);
-			$links = $medialinks[$ct];
-			if (!isset($foundlist[$filename])) {
-				$media = array();
-				$media["file"] = $filename;
-				$media["thumb"] = $thumbnail;
-				$media["title"] = $title;
-				$media["gedcom"] = $mediarec;
-				$media["level"] = $level;
-				$media["THUM"] = $isthumb;
-				$media["PRIM"] = $isprim;
-				$medialist[$ct]=$media;
-				$foundlist[$filename] = $ct;
-				$ct++;
-			}
-			$medialist[$foundlist[$filename]]["link"]=$links;
-		}
 	}
 }
 

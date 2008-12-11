@@ -99,10 +99,10 @@ function get_person() {
 function get_family() {
 	global $famgeg, $famgeg1, $persgeg, $key2ind;
 
-	foreach (array_keys(get_fam_list()) as $key) {
+	foreach (get_fam_list() as $family) {
+		$key=$family->getXref();
 		$nrchmale = 0;
 		$nrchfemale = 0;
-		$family = Family::getInstance($key);
 
 		$marriageyear = $family->getMarriageYear(false);
 		$marriagemonth = $family->getMarriageMonth(false);

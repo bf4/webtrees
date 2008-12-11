@@ -736,10 +736,6 @@ function get_medialist($currentdir = false, $directory = "", $linkonly = false, 
 			$peopleIds[] = stripslashes($row["mm_gid"]);
 		}
 		$res->free();
-
-		//-- load up all of the related people into the cache
-		load_people($peopleIds);
-		load_families($peopleIds);
 	}
 
 	// Search the list of GEDCOM changes pending approval.  There may be some new

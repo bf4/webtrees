@@ -233,11 +233,9 @@ class Family extends GedcomRecord {
 			$chil = trim($smatch[$i][1]);
 			$this->childrenIds[] = $chil;
 		}
-		//-- load the children with one query
-		load_people($this->childrenIds);
 		foreach($this->childrenIds as $t=>$chil) {
-			$child = Person::getInstance($chil);
-			if ( !is_null($child)) $this->children[] = $child;
+			$child=Person::getInstance($chil);
+			if (!is_null($child)) $this->children[] = $child;
 		}
 		$this->children_loaded = true;
 	}
