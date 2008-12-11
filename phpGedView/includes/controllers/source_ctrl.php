@@ -63,9 +63,6 @@ class SourceControllerRoot extends BaseController {
 	function init() {
 		global $pgv_lang, $CONTACT_EMAIL, $GEDCOM, $pgv_changes;
 
-		//-- keep the time of this access to help with concurrent edits
-		$_SESSION['last_access_time'] = time();
-
 		$this->sid = safe_GET_xref('sid');
 
 		$sourcerec = find_source_record($this->sid);

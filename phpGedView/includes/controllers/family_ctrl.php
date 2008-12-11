@@ -81,9 +81,6 @@ class FamilyRoot extends BaseController
 		$pbwidth = $bwidth + 12;
 		$pbheight = $bheight + 14;
 
-		//-- keep the time of this access to help with concurrent edits
-		$_SESSION['last_access_time'] = time();
-
 		$show_famlink = $this->view!='preview';
 
 		$this->famid       =safe_GET_xref('famid');

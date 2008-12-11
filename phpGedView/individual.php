@@ -27,9 +27,12 @@
  */
 
 require './config.php';
+require './includes/controllers/individual_ctrl.php';
 
-require_once 'includes/controllers/individual_ctrl.php';
-$controller = new IndividualController();
+// We have finished writing to $_SESSION, so release the lock
+session_write_close();
+
+$controller=new IndividualController();
 $controller->init();
 
 loadLangFile("lightbox:lang, googlemap:lang");

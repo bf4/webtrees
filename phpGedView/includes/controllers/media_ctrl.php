@@ -49,9 +49,6 @@ class MediaControllerRoot extends IndividualController{
 		$filename=safe_GET('filename');
 		$mid     =safe_GET_xref('mid');
 
-		//-- keep the time of this access to help with concurrent edits
-		$_SESSION['last_access_time'] = time();
-
 		if ($USE_MEDIA_FIREWALL && empty($filename) && empty($mid)) {
 			// this section used by mediafirewall.php to determine what media file was requested
 
