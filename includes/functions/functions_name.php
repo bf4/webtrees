@@ -121,36 +121,6 @@ function strip_prefix($lastname){
 }
 
 /**
- * add a surname to the surnames array for counting
- * @param string $nsurname
- * @return string
- */
-function surname_count($nsurname) {
-	global $surnames, $alpha, $surname, $show_all, $i, $testname;
-	// Match names with chosen first letter
-	$lname = strip_prefix($nsurname);
-	if (empty($lname)) $lname = $nsurname;
-	$sort_letter=get_first_letter($lname);
-		$tsurname = preg_replace(array("/ [jJsS][rR]\.?/", "/ I+/"), array("",""), $nsurname);
-		$tsurname = UTF8_strtoupper($tsurname);
-		if (empty($surname) || (UTF8_strtoupper($surname)==$tsurname)) {
-			if (!isset($surnames[$tsurname])) {
-				$surnames[$tsurname] = array();
-				$surnames[$tsurname]["name"] = $nsurname;
-				$surnames[$tsurname]["match"] = 1;
-				$surnames[$tsurname]["fam"] = 1;
-				$surnames[$tsurname]["alpha"] = get_first_letter($tsurname);
-			}
-			else {
-				$surnames[$tsurname]["match"]++;
-				if ($i==0 || $testname != $tsurname) $surnames[$tsurname]["fam"]++;
-			}
-			if ($i==0) $testname = $tsurname;
-		}
-		return $nsurname;
-}
-
-/**
  * get first letter
  *
  * get the first letter of a UTF-8 string
