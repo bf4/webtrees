@@ -2161,7 +2161,7 @@ function compare_date($a, $b) {
 			return $cmp;
 	}
 	// Same date?  Sort by name
-		return itemsort($a, $b);
+	GedcomRecord::Compare($a, $b);
 }
 function compare_date_descending($a, $b) {
 	$result = compare_date($a, $b);
