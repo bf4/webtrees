@@ -155,8 +155,10 @@ function print_yahrzeit($block=true, $config='', $side, $index) {
 		$content .= "<th class=\"list_label\">{$factarray['_YART']}</th>";
 		$content .= "</tr>";
 
+		$count=0;
 		foreach ($yahrzeits as $yahrzeit) {
 			if ($yahrzeit['jd']>=$startjd && $yahrzeit['jd']<$startjd+$config['days']) {
+				++$count;
 				$ind=person::GetInstance($yahrzeit['id']);
 				$content .= "<tr class=\"vevent\">"; // hCalendar:vevent
 				// Record name(s)
@@ -213,7 +215,7 @@ function print_yahrzeit($block=true, $config='', $side, $index) {
 		$content .= "<tr class=\"sortbottom\">";
 		$content .= "<td class=\"list_label\">";
 		$content .= '<a href="javascript:;" onclick="sortByOtherCol(this,1)"><img src="images/topdown.gif" alt="" border="0" /> '.$factarray["GIVN"].'</a><br />';
-		$content .= $pgv_lang["total_names"].": ".count($yahrzeits);
+		$content .= $pgv_lang["total_names"].": ".$count;
 		if ($hidden) {
 			$content .= "<br /><span class=\"warning\">{$pgv_lang['hidden']} : {$hidden}</span>";
 		}
