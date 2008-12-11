@@ -2070,8 +2070,8 @@ function PGVRRelativesSHandler($attrs) {
 	}
 
 	if ($sortby!="none") {
-		if ($sortby=="NAME") usort($list, array('GedcomRecord', 'Compare'));
-		else if ($sortby=="ID") usort($list, 'idsort');
+		if ($sortby=="NAME") uasort($list, array('GedcomRecord', 'Compare'));
+		else if ($sortby=="ID") uasort($list, array('GedcomRecord', 'CompareId'));
 		else if ($sortby=="generation") {
 			$newarray = array();
 			reset($list);
