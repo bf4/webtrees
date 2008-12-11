@@ -3,7 +3,7 @@
  * SimplyRed theme
  *
  * PhpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  John Finlay and others.  All rights reserved.
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -143,18 +143,6 @@ $PGV_IMAGES["lsltarrow"]["other"] = "lsltarrow.gif";
 $PGV_IMAGES["lsrtarrow"]["other"] = "lsrtarrow.gif";
 $PGV_IMAGES["lsdnarrow"]["other"] = "lsdnarrow.gif";
 $PGV_IMAGES["lsuparrow"]["other"] = "lsuparrow.gif";
-
-//- digits
-$PGV_IMAGES["0"]["digit"] = "0.jpg";
-$PGV_IMAGES["1"]["digit"] = "1.jpg";
-$PGV_IMAGES["2"]["digit"] = "2.jpg";
-$PGV_IMAGES["3"]["digit"] = "3.jpg";
-$PGV_IMAGES["4"]["digit"] = "4.jpg";
-$PGV_IMAGES["5"]["digit"] = "5.jpg";
-$PGV_IMAGES["6"]["digit"] = "6.jpg";
-$PGV_IMAGES["7"]["digit"] = "7.jpg";
-$PGV_IMAGES["8"]["digit"] = "8.jpg";
-$PGV_IMAGES["9"]["digit"] = "9.jpg";
 
 //-- This section defines variables for the pedigree chart
 $bwidth = 225;		// -- width of boxes on pedigree chart
