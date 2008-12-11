@@ -907,11 +907,14 @@ function print_sour_table($datalist, $legend=null) {
 	if ($t2) {
 		echo <<< T2
 		<script type="text/javascript">
-		// <![CDATA[
 			var table = document.getElementById("$table_id");
 			cells = table.getElementsByTagName('td');
-			for (i=0;i<cells.length;i++) if (cells[i].className && (cells[i].className.indexOf('t2') != -1)) cells[i].style.display='block';
-		// ]]>
+			for (i=0;i<cells.length;i++) {
+				if (cells[i].className && (cells[i].className.indexOf('t2') != -1)) {
+					cells[i].style.display='block';
+					cells[i].style.=' height:100%;';
+				}
+			}
 		</script>
 T2;
 	}
