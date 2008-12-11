@@ -100,7 +100,7 @@ function get_common_surnames($min) {
 
 	//-- check if we found some, else recurse
 	if (empty($topsurns) && $min>2) $topsurns = get_common_surnames($min/2);
-	uasort($topsurns, "itemsort");
+	uksort($topsurns, "stringsort");
 	return $topsurns;
 }
 

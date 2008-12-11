@@ -42,8 +42,8 @@ $ALL_ACTIONS=array('cleanup', 'cleanup2', 'createform', 'createuser', 'deleteuse
 $ALL_CONTACT_METHODS=array('messaging', 'messaging2', 'messaging3', 'mailto', 'none');
 $ALL_DEFAULT_TABS=array(0=>'personal_facts', 1=>'notes', 2=>'ssourcess', 3=>'media', 4=>'relatives', -1=>'all', -2=>'lasttab');
 $ALL_THEMES_DIRS=array();
-foreach (get_theme_names() as $theme) {
-	$ALL_THEME_DIRS[]=$theme['dir'];
+foreach (get_theme_names() as $themename=>$themedir) {
+	$ALL_THEME_DIRS[]=$themedir;
 }
 $ALL_EDIT_OPTIONS=array('none', 'access', 'edit', 'accept', 'admin');
 
@@ -439,12 +439,10 @@ if ($action=="edituser") {
 		<select name="user_theme" tabindex="<?php print ++$tab; ?>" dir="ltr">
 		<option value=""><?php print $pgv_lang["site_default"]; ?></option>
 		<?php
-		$themes = get_theme_names();
-		foreach($themes as $indexval => $themedir)
-		{
-		print "<option value=\"".$themedir["dir"]."\"";
-		if ($themedir["dir"] == get_user_setting($user_id, 'theme')) print " selected=\"selected\"";
-		print ">".$themedir["name"]."</option>\n";
+		foreach(get_theme_names() as $themename=>$themedir) {
+		print "<option value=\"".$themedir."\"";
+		if ($themedir == get_user_setting($user_id, 'theme')) print " selected=\"selected\"";
+		print ">".$themename."</option>\n";
 		}
 		?></select>
 		</td>
@@ -874,10 +872,9 @@ if ($action == "createform") {
 			<select name="new_user_theme" tabindex="<?php print ++$tab; ?>">
 			<option value="" selected="selected"><?php print $pgv_lang["site_default"]; ?></option>
 			<?php
-			$themes = get_theme_names();
-			foreach($themes as $indexval => $themedir) {
-				print "<option value=\"".$themedir["dir"]."\"";
-				print ">".$themedir["name"]."</option>\n";
+			foreach(get_theme_names() as $themename=>$themedir) {
+				print "<option value=\"".$themedir."\"";
+				print ">".$themename."</option>\n";
 			}
 			?>
 			</select>

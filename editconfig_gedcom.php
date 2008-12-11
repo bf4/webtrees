@@ -1989,11 +1989,10 @@ print "&nbsp;<a href=\"javascript: ".$pgv_lang["useropt_conf"]."\" onclick=\"exp
 		<td class="optionbox">
 			<select name="themeselect" dir="ltr" tabindex="<?php $i++; print $i; ?>"  onchange="document.configform.NTHEME_DIR.value=document.configform.themeselect.options[document.configform.themeselect.selectedIndex].value;">
 				<?php
-					$themes = get_theme_names();
-					foreach ($themes as $indexval => $themedir) {
-						print "<option value=\"".$themedir["dir"]."\"";
-						if ($themedir["dir"] == $NTHEME_DIR) print " selected=\"selected\"";
-						print ">".$themedir["name"]."</option>\n";
+					foreach (get_theme_names() as $themename=>$themedir) {
+						print "<option value=\"".$themedir."\"";
+						if ($themedir == $NTHEME_DIR) print " selected=\"selected\"";
+						print ">".$themename."</option>\n";
 					}
 				?>
 				<option value="themes/" <?php if ($themeselect=="themes//") print "selected=\"selected\""; ?>><?php print $pgv_lang["other_theme"]; ?></option>

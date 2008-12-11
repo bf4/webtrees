@@ -49,8 +49,8 @@ $ALL_ACTIONS=array('update');
 $ALL_CONTACT_METHODS=array('messaging', 'messaging2', 'messaging3', 'mailto', 'none');
 $ALL_DEFAULT_TABS=array(0=>'personal_facts', 1=>'notes', 2=>'ssourcess', 3=>'media', 4=>'relatives', -1=>'all', -2=>'lasttab');
 $ALL_THEMES_DIRS=array();
-foreach (get_theme_names() as $theme) {
-	$ALL_THEME_DIRS[]=$theme['dir'];
+foreach (get_theme_names() as $themename=>$themedir) {
+	$ALL_THEME_DIRS[]=$themedir;
 }
 
 // Extract form variables
@@ -279,12 +279,12 @@ if ($ALLOW_USER_THEMES) {
 	echo $pgv_lang['user_theme'], '</td><td class="optionbox" valign="top">';
 	echo '<select name="form_theme" tabindex="', ++$tab, '">';
 		echo '<option value="">', $pgv_lang['site_default'], '</option>';
-		foreach (get_theme_names() as $themedir) {
-			echo '<option value="', $themedir['dir'], '"';
-			if ($themedir['dir']==get_user_setting(PGV_USER_ID, 'theme')) {
+		foreach (get_theme_names() as $themename=>$themedir) {
+			echo '<option value="', $themedir, '"';
+			if ($themedir==get_user_setting(PGV_USER_ID, 'theme')) {
 				echo ' selected="selected"';
 			}
-			echo '>', $themedir['name'], '</option>';
+			echo '>', $themename, '</option>';
 		}
 		echo '</select></td></tr>';
 }

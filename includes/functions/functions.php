@@ -1832,40 +1832,6 @@ function compareStrings($aName, $bName, $ignoreCase=true) {
 	return 0;
 }
 
-/**
- * sort arrays or strings
- *
- * this function is called by the uasort PHP function to compare two items and tell which should be
- * sorted first.  It uses the language alphabets to create a string that will is used to compare the
- * strings.  For each letter in the strings, the letter's position in the alphabet string is found.
- * Whichever letter comes first in the alphabet string should be sorted first.
- * @param array $a first item
- * @param array $b second item
- * @return int negative numbers sort $a first, positive sort $b first
- */
-function itemsort($a, $b) {
-	if (isset($a["name"])) {
-		$aname = sortable_name_from_name($a["name"]);
-	} elseif (is_array($a)) {
-		$aname = sortable_name_from_name(reset($a));
-	} else {
-		$aname=$a;
-	}
-
-	if (isset($b["name"])) {
-		$bname = sortable_name_from_name($b["name"]);
-	} elseif (is_array($b)) {
-		$bname = sortable_name_from_name(reset($b));
-	} else {
-		$bname=$b;
-	}
-
-	$aname = strip_prefix($aname);
-	$bname = strip_prefix($bname);
-	$result = compareStrings($aname, $bname, true); // Case-insensitive compare
-	return $result;
-}
-
 ////////////////////////////////////////////////////////////////////////////////
 // Sort a list events for the today/upcoming blocks
 ////////////////////////////////////////////////////////////////////////////////
@@ -2921,20 +2887,17 @@ function get_theme_names() {
 	$d = dir("themes");
 	while (false !== ($entry = $d->read())) {
 		if ($entry{0}!="." && $entry!="CVS" && !stristr($entry, "svn") && is_dir("themes/$entry") && file_exists("themes/$entry/theme.php")) {
-			$theme = array();
 			$themefile = implode("", file("themes/$entry/theme.php"));
 			$tt = preg_match("/theme_name\s+=\s+\"(.*)\";/", $themefile, $match);
 			if ($tt>0)
 				$themename = trim($match[1]);
 			else
 				$themename = "themes/$entry";
-			$theme["name"] = $themename;
-			$theme["dir"] = "themes/$entry/";
-			$themes[] = $theme;
+			$themes[$themename] = "themes/$entry/";
 		}
 	}
 	$d->close();
-	uasort($themes, "itemsort");
+	uksort($themes, "stringsort");
 	return $themes;
 }
 
