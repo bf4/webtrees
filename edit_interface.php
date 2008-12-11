@@ -212,7 +212,8 @@ if (!empty($pid)) {
 			$type = trim($match[1]);
 			$disp = displayDetailsById($pid, $type);
 		}
-		checkChangeTime($pid, $gedrec);
+		// Don't allow edits if the record has changed since the edit-link was created
+		checkChangeTime($pid, $gedrec, safe_GET('accesstime', PGV_REGEX_INTEGER));
 	}
 	else {
 		$disp = true;
@@ -227,7 +228,8 @@ else if (!empty($famid)) {
 			$type = trim($match[1]);
 			$disp = displayDetailsById($famid, $type);
 		}
-		checkChangeTime($famid, $gedrec);
+		// Don't allow edits if the record has changed since the edit-link was created
+		checkChangeTime($famid, $gedrec, safe_GET('accesstime', PGV_REGEX_INTEGER));
 	}
 }
 else if (($action!="addchild")&&($action!="addchildaction")&&($action!="addnewsource")&&($action!="mod_edit_fact")) {

@@ -62,9 +62,6 @@ class RepositoryControllerRoot extends BaseController {
 	function init() {
 		global $pgv_lang, $CONTACT_EMAIL, $GEDCOM, $pgv_changes;
 
-		//-- keep the time of this access to help with concurrent edits
-		$_SESSION['last_access_time'] = time();
-
 		$this->rid         =safe_GET_xref('rid');
 
 		$repositoryrec = find_other_record($this->rid);

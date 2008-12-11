@@ -79,9 +79,6 @@ function print_fact(&$eventObj, $noedit=false) {
 	global $n_chil, $n_gchi, $n_ggch;
 	global $SEARCH_SPIDER;
 
-	//-- keep the time of this access to help with concurrent edits
-	$_SESSION['last_access_time'] = time();
-
 	$FACT_COUNT++;
 	$estimates = array("abt","aft","bef","est","cir");
 	$fact = $eventObj->getTag();
@@ -899,9 +896,6 @@ function print_main_sources($factrec, $level, $pid, $linenum, $noedit=false) {
 	global $PGV_IMAGE_DIR, $PGV_IMAGES, $SHOW_SOURCES;
 	if ($SHOW_SOURCES<PGV_USER_ACCESS_LEVEL) return;
 
-	//-- keep the time of this access to help with concurrent edits
-	$_SESSION['last_access_time'] = time();
-
 	$nlevel = $level+1;
 	$styleadd="";
 	$ct = preg_match("/PGV_NEW/", $factrec, $match);
@@ -1135,9 +1129,6 @@ function print_main_notes($factrec, $level, $pid, $linenum, $noedit=false) {
 	global $PGV_IMAGE_DIR;
 	global $PGV_IMAGES;
 	global $TEXT_DIRECTION, $USE_RTL_FUNCTIONS;
-
-	//-- keep the time of this access to help with concurrent edits
-	$_SESSION['last_access_time'] = time();
 
 	$styleadd="";
 	$ct = preg_match("/PGV_NEW/", $factrec, $match);
@@ -1473,9 +1464,6 @@ function print_main_media_row($rtype, $rowm, $pid) {
 		//print $rowm['m_media']." no privacy ";
 		return false;
 	}
-
-	//-- keep the time of this access to help with concurrent edits
-	$_SESSION['last_access_time'] = time();
 
 	$styleadd="";
 	if ($rtype=='new') $styleadd = "change_new";

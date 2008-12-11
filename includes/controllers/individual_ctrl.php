@@ -91,9 +91,6 @@ class IndividualControllerRoot extends BaseController {
 		global $USE_RIN, $MAX_ALIVE_AGE, $GEDCOM, $GEDCOM_DEFAULT_TAB, $pgv_changes, $pgv_lang, $CHARACTER_SET;
 		global $USE_QUICK_UPDATE, $pid;
 
-		//-- keep the time of this access to help with concurrent edits
-		$_SESSION['last_access_time'] = time();
-
 		$this->sexarray["M"] = $pgv_lang["male"];
 		$this->sexarray["F"] = $pgv_lang["female"];
 		$this->sexarray["U"] = $pgv_lang["unknown"];

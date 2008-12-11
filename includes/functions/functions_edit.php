@@ -96,7 +96,7 @@ function newConnection() {
  * @param string $pid	The gedcom id of the record to check pgv_changes
  * @param string $gedrec	The latest gedcom record to check the CHAN:DATE:TIME (auto accept)
  */
-function checkChangeTime($pid, $gedrec) {
+function checkChangeTime($pid, $gedrec, $last_time) {
 	global $GEDCOM, $pgv_changes, $pgv_lang;
 	//-- check if the record changes since last access
 	$changeTime = 0;
@@ -118,14 +118,13 @@ function checkChangeTime($pid, $gedrec) {
 			$changeTime = mktime($chan_time[0], $chan_time[1], $chan_time[2], $chan_date->m, $chan_date->d, $chan_date->y);
 		}
 	}
-	if (isset($_REQUEST['linenum']) && $changeTime!=0 && isset($_SESSION['last_access_time']) && $changeTime > $_SESSION['last_access_time']) {
+	if (isset($_REQUEST['linenum']) && $changeTime!=0 && $last_time && $changeTime > $last_time) {
 		print "<span class=\"error\">".preg_replace("/#PID#/", $pid, $pgv_lang["edit_concurrency_msg2"])."<br /><br />";
 		if (!empty($changeUser)) print preg_replace(array("/#CHANGEUSER#/", "/#CHANGEDATE#/"), array($changeUser,date("d M Y H:i:s", $changeTime)), $pgv_lang["edit_concurrency_change"])."<br /><br />";
 		print $pgv_lang["edit_concurrency_reload"]."</span>";
 		print_simple_footer();
 		exit;
 	}
-	return false;
 }
 
 /**

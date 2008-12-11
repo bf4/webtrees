@@ -97,8 +97,9 @@ if (!PGV_USER_CAN_EDIT) {
 if (!isset($pgv_changes[$pid."_".$GEDCOM])) $gedrec = find_gedcom_record($pid);
 else $gedrec = find_updated_record($pid);
 
-//-- make sure we are working with the latest record
-checkChangeTime($pid, $gedrec);
+// Don't allow edits if the record has changed since the edit-link was created
+checkChangeTime($pid, $gedrec, safe_GET('accesstime', PGV_REGEX_INTEGER));
+
 
 //-- only allow edit of individual records
 $disp = true;
