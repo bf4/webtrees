@@ -3157,8 +3157,6 @@ function add_ancestors(&$list, $pid, $children=false, $generations=-1, $show_emp
 
 //--- copied from class_reportpdf.php
 function add_descendancy(&$list, $pid, $parents=false, $generations=-1) {
-	global $indilist;
-
 	$person = Person::getInstance($pid);
 	if ($person==null) return;
 	if (!isset($list[$pid])) {

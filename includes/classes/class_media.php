@@ -42,8 +42,6 @@ class Media extends GedcomRecord {
 	var $filesizeraw   =-1;
 	var $width         =0;
 	var $height        =0;
-	var $indilist      =null;
-	var $famlist       =null;
 	var $serverfilename='';
 	var $fileexists    =false;
 	var $filepropset   =false;

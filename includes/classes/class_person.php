@@ -669,8 +669,6 @@ class Person extends GedcomRecord {
 
 	// Get a count of the children for this individual
 	function getNumberOfChildren() {
-		global $indilist, $GEDCOMS, $GEDCOM;
-
 		$nchi1=(int)get_gedcom_value('NCHI', 1, $this->gedrec);
 		$nchi2=count(fetch_child_ids($this->xref, $this->ged_id));
 		return max($nchi1, $nchi2);

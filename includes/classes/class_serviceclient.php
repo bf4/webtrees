@@ -380,7 +380,7 @@ class ServiceClient extends GedcomRecord {
 	 * This mergest the the two familys together
 	 */
 	 function MergeForUpdateFamily($Family1,$Family2,$Familylist,&$FamilyListReturn){
-		global $indilist, $famlist, $pgv_changes, $GEDCOM;
+		global $famlist, $pgv_changes, $GEDCOM;
 		include_once('includes/functions/functions_edit.php');
 
 		//print "<br />In MergeForUpdateFamily ".$Family1." ".$Family2;
@@ -453,7 +453,6 @@ class ServiceClient extends GedcomRecord {
 						if (preg_match("/1 RFN ".$this->xref.":/", $childrec)==0) {
 							$childrec .= "\r\n1 RFN ".$Child2->getXref();
 							//print "<br/> repalcing for child ".$Child1->getXref();
-//							$indilist[$Child1->getXref()]['gedcom']=$childrec;
 							replace_gedrec($Child1->getXref(), $childrec);
 							$this->setSameId($Child1->getXref(), $Child2->getXref());
 						}
@@ -492,7 +491,6 @@ class ServiceClient extends GedcomRecord {
 				if (preg_match("/1 RFN ".$this->xref.":/", $fatherrec)==0) {
 					$fatherrec .= "\r\n1 RFN ".$father2->getXref();
 					//print "<br/> repalcing for father ".$father1->getXref();
-//					$indilist[$father1->getXref()]['gedcom']=$fatherrec;
 					replace_gedrec($father1->getXref(), $fatherrec);
 					$this->setSameId($father1->getXref(), $father2->getXref());
 				}
@@ -513,7 +511,6 @@ class ServiceClient extends GedcomRecord {
 				if (preg_match("/1 RFN ".$this->xref.":/", $motherrec)==0) {
 					$motherrec .= "\r\n1 RFN ".$mother2->getXref();
 					//print "<br/> repalcing for mother ".$mother1->getXref();
-//					$indilist[$mother1->getXref()]['gedcom']=$motherrec;
 					replace_gedrec($mother1->getXref(), $motherrec);
 					$this->setSameId($mother1->getXref(), $mother2->getXref());
 				}
@@ -729,7 +726,7 @@ class ServiceClient extends GedcomRecord {
 	 * @param boolean $firstLink	is this the first time this record is being linked
 	 */
 	function mergeGedcomRecord($xref, $localrec, $isStub=false, $firstLink=false) {
-		global $FILE, $GEDCOM, $indilist, $famlist, $sourcelist, $otherlist;
+		global $FILE, $GEDCOM, $famlist, $sourcelist, $otherlist;
 		global $TBLPREFIX, $pgv_changes;
 		$FILE = $GEDCOM;
 		if (!$isStub) {
@@ -783,7 +780,6 @@ class ServiceClient extends GedcomRecord {
 				$pid = trim($match[1]);
 				if ($isStub) {
 					include_once("includes/functions/functions_edit.php");
-					//$indilist[$localrec->getXref()]['gedcom']=$localrec;
 					$localrec = $this->UpdateFamily($localrec,$gedrec);
 					replace_gedrec($pid,$localrec);
 				} else {
@@ -841,7 +837,6 @@ class ServiceClient extends GedcomRecord {
 						$localrec = $this->_merge($localrec, $gedrec);
 						if ($isStub) {
 							include_once("includes/functions/functions_edit.php");
-							//$indilist[$localrec->getXref()]['gedcom']=$localrec;
 							$localrec = $this->UpdateFamily($localrec,$gedrec);
 							replace_gedrec($pid,$localrec);
 						} else {
