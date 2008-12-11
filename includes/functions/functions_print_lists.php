@@ -912,7 +912,8 @@ function print_sour_table($datalist, $legend=null) {
 			for (i=0;i<cells.length;i++) {
 				if (cells[i].className && (cells[i].className.indexOf('t2') != -1)) {
 					cells[i].style.display='block';
-					cells[i].style.=' height:100%;';
+					// Help!  How do you set the height of a TD to that of its parent TR ???
+					//cells[i].style='height:100%;';
 				}
 			}
 		</script>
