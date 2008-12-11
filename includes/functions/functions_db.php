@@ -874,6 +874,18 @@ function get_famlist_fams($surn='', $salpha='', $galpha='', $marnm, $ged_id=null
 }
 
 ////////////////////////////////////////////////////////////////////////////////
+// Fetch a list of children for an individual, from all their partners.
+////////////////////////////////////////////////////////////////////////////////
+function fetch_child_ids($parent_id, $ged_id) {
+	global $TBLPREFIX, $DBCONN;
+	$parent_id=$DBCONN->escapeSimple($parent_id);
+	$ged_id=(int)$ged_id;
+
+	return $DBCONN->getCol("SELECT DISTINCT child.l_from AS xref FROM {$TBLPREFIX}link child, {$TBLPREFIX}link spouse WHERE child.l_type='FAMC' AND spouse.l_type='FAMS' AND child.l_file=spouse.l_file AND child.l_to=spouse.l_to AND spouse.l_from='{$parent_id}' AND child.l_file={$ged_id}");
+
+}
+
+////////////////////////////////////////////////////////////////////////////////
 // Count the number of records of each type in the database.  Return an array
 // of 'type'=>count for each type where records exist.
 ////////////////////////////////////////////////////////////////////////////////
