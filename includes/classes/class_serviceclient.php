@@ -380,7 +380,7 @@ class ServiceClient extends GedcomRecord {
 	 * This mergest the the two familys together
 	 */
 	 function MergeForUpdateFamily($Family1,$Family2,$Familylist,&$FamilyListReturn){
-		global $famlist, $pgv_changes, $GEDCOM;
+		global $pgv_changes, $GEDCOM;
 		include_once('includes/functions/functions_edit.php');
 
 		//print "<br />In MergeForUpdateFamily ".$Family1." ".$Family2;
@@ -472,7 +472,6 @@ class ServiceClient extends GedcomRecord {
 		}
 		if ($famupdated) {
 			//print "<br /> updating family record ".$family1->getXref();
-			$famlist[$family1->getXref()]['gedcom']=$famrec1;
 			replace_gedrec($family1->getXref(), $famrec1);
 		}
 
@@ -482,7 +481,6 @@ class ServiceClient extends GedcomRecord {
 				$father1=$father2;
 				$famrec1 .="\r\n1 HUSB @".$father1->getXref()."@";
 				//print "<br/> adding for fahter ".$father1->getXref();
-				$famlist[$family1->getXref()]['gedcom']=$famrec1;
 				replace_gedrec($family1->getXref(), $famrec1);
 			}
 		} elseif(!empty($father2)){
@@ -502,7 +500,6 @@ class ServiceClient extends GedcomRecord {
 				$mother1=$mother2;
 				$famrec1 .="\r\n1 WIFE @".$mother1->getXref()."@";
 				//print "<br/> adding for mother ".$mother1->getXref();
-				$famlist[$family1->getXref()]['gedcom']=$famrec1;
 				replace_gedrec($family1->getXref(), $famrec1);
 			}
 		} else if(!empty($mother2)){
@@ -726,7 +723,7 @@ class ServiceClient extends GedcomRecord {
 	 * @param boolean $firstLink	is this the first time this record is being linked
 	 */
 	function mergeGedcomRecord($xref, $localrec, $isStub=false, $firstLink=false) {
-		global $FILE, $GEDCOM, $famlist, $sourcelist, $otherlist;
+		global $FILE, $GEDCOM, $sourcelist, $otherlist;
 		global $TBLPREFIX, $pgv_changes;
 		$FILE = $GEDCOM;
 		if (!$isStub) {

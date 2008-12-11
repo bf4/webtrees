@@ -1773,13 +1773,6 @@ function PGVRListSHandler($attrs) {
 				$list = get_fam_list();
 			}
 			break;
-		/*
-		case "source":
-			$list = get_source_list();
-			break;
-		case "other":
-			$list = get_other_list();
-			break; */
 		case "pending":
 			$list = array();
 			foreach($pgv_changes as $cid=>$changes) {

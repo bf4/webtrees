@@ -67,14 +67,6 @@ class LocalClient extends ServiceClient {
 	 * @param boolean $firstLink	is this the first time this record is being linked
 	 */
 	function mergeGedcomRecord($xref, $localrec, $isStub=false, $firstLink=false) {
-		global $FILE, $GEDCOM, $indilist, $famlist, $sourcelist, $otherlist, $GEDCOMS;
-
-		$localkey = $this->xref.":".$xref;
-		//-- check the memory cache
-		if (!empty($indilist[$localkey]["gedcom"])) return $indilist[$localkey]["gedcom"];
-		if (!empty($famlist[$localkey]["gedcom"])) return $famlist[$localkey]["gedcom"];
-		if (!empty($otherlist[$localkey]["gedcom"])) return $otherlist[$localkey]["gedcom"];
-		if (!empty($sourcelist[$localkey]["gedcom"])) return $sourcelist[$localkey]["gedcom"];
 		//-- get the record from the database
 		$gedrec = find_gedcom_record($xref, $this->gedfile);
 		$gedrec = preg_replace("/@(.*)@/", "@".$this->xref.":$1@", $gedrec);
@@ -95,41 +87,6 @@ class LocalClient extends ServiceClient {
 				replace_gedrec($pid,$localrec);
 			}
 		}
-
-		if (!empty($localrec)) {
-			$gid=$localkey;
-			$ct = preg_match("/0 @(.*)@/", $localrec, $match);
-			if ($ct>0) $gid = trim($match[1]);
-			if ($gid!=$localkey) {
-				$localkey = $gid;
-			}
-			//print "found record for ".$localkey;
-			if (isset($indilist[$xref])) {
-				$indi = $indilist[$xref];
-				$indi["gedcom"] = $localrec;
-				$indi["gedfile"] = $GEDCOMS[$GEDCOM]["id"];
-				$indilist[$localkey] = $indi;
-			}
-			if (isset($famlist[$xref])) {
-				$indi = $famlist[$xref];
-				$indi["gedcom"] = $localrec;
-				$indi["gedfile"] = $GEDCOMS[$GEDCOM]["id"];
-				$famlist[$localkey] = $indi;
-			}
-			if (isset($otherlist[$xref])) {
-				$indi = $otherlist[$xref];
-				$indi["gedcom"] = $localrec;
-				$indi["gedfile"] = $GEDCOMS[$GEDCOM]["id"];
-				$otherlist[$localkey] = $indi;
-			}
-			if (isset($sourcelist[$xref])) {
-				$indi = $sourcelist[$xref];
-				$indi["gedcom"] = $localrec;
-				$indi["gedfile"] = $GEDCOMS[$GEDCOM]["id"];
-				$sourcelist[$localkey] = $indi;
-			}
-		}
-//		print "<pre>$localrec</pre>";
 		return $localrec;
 	}
 

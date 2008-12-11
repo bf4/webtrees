@@ -1325,7 +1325,6 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 
 		require_once("modules/research_assistant/ra_ViewInferencesArray.php");
 		$indilist = get_indi_list();
-		$famlist = get_fam_list();
 
 		//various counts
 		$total = count($indilist);
@@ -1335,8 +1334,7 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 		$malesCount = 0;
 		$femalesCount = 0;
 
-		foreach (array_keys($indilist) as $pid) {
-			$indi=Person::getInstance($pid);
+		foreach ($indilist as $indi) {
 			//assign surname, gender, birthplace and occupation for the individual
 			$gender = $indi->getSex();
 			$locals = array();

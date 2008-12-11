@@ -367,7 +367,7 @@ function displayDetailsById($pid, $type = "INDI") {
 	global $PRIV_PUBLIC, $PRIV_USER, $PRIV_NONE, $PRIV_HIDE, $USE_RELATIONSHIP_PRIVACY, $CHECK_MARRIAGE_RELATIONS, $MAX_RELATION_PATH_LENGTH;
 	global $global_facts, $person_privacy, $user_privacy, $HIDE_LIVE_PEOPLE, $GEDCOM, $SHOW_DEAD_PEOPLE, $MAX_ALIVE_AGE, $PRIVACY_BY_YEAR;
 	global $PRIVACY_CHECKS, $PRIVACY_BY_RESN, $SHOW_SOURCES, $SHOW_LIVING_NAMES;
-	global $indilist, $GEDCOMS, $INDEX_DIRECTORY;
+	global $GEDCOMS, $INDEX_DIRECTORY;
 
 	static $privacy_cache = array();
 
@@ -519,13 +519,11 @@ function displayDetailsById($pid, $type = "INDI") {
 	if (isset($person_privacy[$pid])) {
 		if ($person_privacy[$pid]>=PGV_USER_ACCESS_LEVEL) {
 			if ($cache_privacy) {
-				$indilist[$pid]['gedfile'] = $GEDCOMS[$GEDCOM]['id'];
 				$privacy_cache[$pkey] = true;
 			}
 			return true;
 		} else {
 			if ($cache_privacy) {
-				$indilist[$pid]['gedfile'] = $GEDCOMS[$GEDCOM]['id'];
 				$privacy_cache[$pkey] = false;
 			}
 			return false;
@@ -551,7 +549,6 @@ function displayDetailsById($pid, $type = "INDI") {
 			if (!checkPrivacyByYear($pid)) {
 				if ($cache_privacy) {
 					$privacy_cache[$pkey] = false;
-					$indilist[$pid]['gedfile'] = $GEDCOMS[$GEDCOM]['id'];
 				}
 				return false;
 			}
@@ -563,20 +560,17 @@ function displayDetailsById($pid, $type = "INDI") {
 			if ($SHOW_DEAD_PEOPLE>=PGV_USER_ACCESS_LEVEL) {
 				if ($cache_privacy) {
 					$privacy_cache[$pkey] = true;
-				$indilist[$pid]['gedfile'] = $GEDCOMS[$GEDCOM]['id'];
 				}
 				return true;
 			} else {
 				if ($cache_privacy) {
 					$privacy_cache[$pkey] = false;
-				$indilist[$pid]['gedfile'] = $GEDCOMS[$GEDCOM]['id'];
 				}
 				return false;
 			}
 		} else {
 			if (empty($username)) {
 				if ($cache_privacy) {
-					$indilist[$pid]['gedfile'] = $GEDCOMS[$GEDCOM]['id'];
 					$privacy_cache[$pkey] = false;
 				}
 				return false;
@@ -584,13 +578,11 @@ function displayDetailsById($pid, $type = "INDI") {
 			if ($SHOW_LIVING_NAMES>PGV_USER_ACCESS_LEVEL) {
 				if ($cache_privacy) {
 					$privacy_cache[$pkey] = true;
-					$indilist[$pid]['gedfile'] = $GEDCOMS[$GEDCOM]['id'];
 				}
 				return true;
 			} else {
 				if ($cache_privacy) {
 					$privacy_cache[$pkey] = false;
-				$indilist[$pid]['gedfile'] = $GEDCOMS[$GEDCOM]['id'];
 				}
 				return false;
 			}
