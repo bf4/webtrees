@@ -33,6 +33,8 @@ if (!defined('PGV_PHPGEDVIEW')) {
 
 define('PGV_UPCOMING_EVENTS_PHP', '');
 
+require_once './includes/functions/functions_print_lists.php';
+
 $PGV_BLOCKS["print_upcoming_events"]["name"]		= $pgv_lang["upcoming_events_block"];
 $PGV_BLOCKS["print_upcoming_events"]["descr"]		= "upcoming_events_descr";
 $PGV_BLOCKS["print_upcoming_events"]["infoStyle"]	= "style2";
