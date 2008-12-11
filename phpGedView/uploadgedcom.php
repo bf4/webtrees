@@ -778,9 +778,6 @@ if ($import == true) {
 }
 
 if ($startimport == "true") {
-	//-- set the building index flag to tell the rest of the program that we are importing and so shouldn't
-	//-- perform some of the same checks
-	$BUILDING_INDEX = true;
 	$GEDCOMS[$ged]["imported"] = false;
 	store_gedcoms();
 
@@ -921,13 +918,6 @@ if ($stage == 1) {
 	flush();
 
 	// ------------------------------------------------------ Begin importing data
-	// -- array of names
-	if (!isset ($indilist))
-	$indilist = array ();
-	if (!isset ($famlist))
-	$famlist = array ();
-	$sourcelist = array ();
-	$otherlist = array ();
 	$i = 0;
 
 	//-- as we are importing the file, a new file is being written to store any
