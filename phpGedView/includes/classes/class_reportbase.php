@@ -1886,7 +1886,7 @@ function PGVRListSHandler($attrs) {
 		$list = $mylist;
 	}
 	if ($sortby=="NAME") uasort($list, array('GedcomRecord', 'Compare'));
-	else if ($sortby=="ID") uasort($list, "idsort");
+	else if ($sortby=="ID") uasort($list, array('GedcomRecord', 'CompareId'));
 	else if ($sortby=="CHAN") uasort($list, "compare_date_descending");
 	else uasort($list, "compare_date");
 	//print count($list);

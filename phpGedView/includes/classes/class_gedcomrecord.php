@@ -497,8 +497,13 @@ class GedcomRecord {
 	}
 
 	// Static helper function to sort an array of objects by name
-	function Compare($x, $y) {
+	static function Compare($x, $y) {
 		return compareStrings($x->getSortName(), $y->getSortName());
+	}
+
+	// Static helper function to sort an array of objects by ID
+	static function CompareId($x, $y) {
+		return strcmp($x->getXref(), $y->getXref());
 	}
 
 	// Get the three variants of the name
