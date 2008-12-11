@@ -176,6 +176,7 @@ $worms = array(
 		'Axis/',
 		'MSFrontPage',
 		'RssReader',
+		'Liferea/',
 		'W3C_Validator'
 		);
 
@@ -186,6 +187,7 @@ $worms = array(
 		'Yahoo Slurp',
 		'msnbot',
 		'Ask Jeeves',
+		'Mediapartners-Google',
 		'Twiceler'
 	);
 
