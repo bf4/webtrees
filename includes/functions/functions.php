@@ -1922,31 +1922,6 @@ function mediasort($a, $b) {
 	return compareStrings($aKey, $bKey, true);		// Case-insensitive compare
 }
 
-/**
- * sort a list by the gedcom xref id
- * @param array $a	the first $indi array to sort on
- * @param array $b	the second $indi array to sort on
- * @return int negative numbers sort $a first, positive sort $b first
- */
-function idsort($a, $b) {
-	if(is_object($a)) $aid = $a->getXref();
-	else if (isset($a["gedcom"])) {
-		$ct = preg_match("/0 @(.*)@/", $a["gedcom"], $match);
-		if ($ct>0)
-			$aid = $match[1];
-	}
-	if (is_object($b)) $bid = $b->getXref();
-	else if (isset($b["gedcom"])) {
-		$ct = preg_match("/0 @(.*)@/", $b["gedcom"], $match);
-		if ($ct>0)
-			$bid = $match[1];
-	}
-	if (empty($aid) || empty($bid))
-		return itemsort($a, $b);
-	else
-		return stringsort($aid, $bid);
-}
-
 // Helper function to sort facts.
 function compare_facts_date($arec, $brec) {
 	if (is_array($arec))
