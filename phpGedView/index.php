@@ -369,20 +369,30 @@ if (count($ublocks["main"])!=0) {
 	} else {
 		print "\t<div id=\"index_full_blocks\">\n";
 	}
-
+	echo '<script src="js/jquery/jquery.min.js" type="text/javascript"></script>';
 	foreach($ublocks["main"] as $bindex=>$block) {
 		if (PGV_DEBUG) {
 			print_execution_stats();
 		}
 		if (function_exists($block[0]) && !loadCachedBlock($block, "main".$bindex)) {
-			ob_start();
-			eval($block[0]."(false, \$block[1], \"main\", $bindex);");
-			$content = ob_get_contents();
-			$temp = $SEARCH_SPIDER;
-			$SEARCH_SPIDER = false;
-			saveCachedBlock($block, "main".$bindex, $content);
-			$SEARCH_SPIDER = $temp;
-			ob_end_flush();
+			if ($SEARCH_SPIDER || PGV_DEBUG) {
+				// Search spiders get the blocks directly
+				ob_start();
+				eval($block[0]."(false, \$block[1], \"main\", $bindex);");
+				$content = ob_get_contents();
+				$temp = $SEARCH_SPIDER;
+				$SEARCH_SPIDER = false;
+				saveCachedBlock($block, "main".$bindex, $content);
+				$SEARCH_SPIDER = $temp;
+				ob_end_flush();
+			} else {
+				// Interactive users get the blocks via ajax
+				$url="ajax_block.php?name={$block[0]}&block=false&config=".urlencode(serialize($block[1]))."&side=main&index={$bindex}";
+				echo '<div id="block_main_', $bindex, '"><img src="images/loading.gif"></div>';
+				echo '<script type="text/javascript">';
+				echo "$('#block_main_{$bindex}').load('{$url}');";
+				echo '</script>';
+			}
 		}
 	}
 	print "</div>\n";
@@ -401,11 +411,21 @@ if (count($ublocks["right"])!=0) {
 			print_execution_stats();
 		}
 		if (function_exists($block[0]) && !loadCachedBlock($block, "right".$bindex)) {
-			ob_start();
-			eval($block[0]."(true, \$block[1], \"right\", $bindex);");
-			$content = ob_get_contents();
-			saveCachedBlock($block, "right".$bindex, $content);
-			ob_end_flush();
+			if ($SEARCH_SPIDER || PGV_DEBUG) {
+				// Search spiders get the blocks directly
+				ob_start();
+				eval($block[0]."(true, \$block[1], \"right\", $bindex);");
+				$content = ob_get_contents();
+				saveCachedBlock($block, "right".$bindex, $content);
+				ob_end_flush();
+			} else {
+				// Interactive users get the blocks via ajax
+				$url="ajax_block.php?name={$block[0]}&block=false&config=".urlencode(serialize($block[1]))."&side=right&index={$bindex}";
+				echo '<div id="block_right_', $bindex, '"><img src="images/loading.gif"></div>';
+				echo '<script type="text/javascript">';
+				echo "$('#block_right_{$bindex}').load('{$url}');";
+				echo '</script>';
+			}
 		}
 	}
 	print "\t</div>\n";
