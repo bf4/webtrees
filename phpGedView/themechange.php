@@ -32,13 +32,14 @@ $mytheme =safe_GET('mytheme');
 $frompage=safe_GET('frompage', PGV_REGEX_URL, 'index.php');
 
 // Only change to a valid theme
-foreach (get_theme_names() as $theme) {
-	if ($theme['dir']==$mytheme) {
+foreach (get_theme_names() as $themename=>$themedir) {
+	if ($themedir==$mytheme) {
 		$_SESSION['theme_dir']=$mytheme;
 		// Make the change permanent, if allowed
 		if (get_user_setting(PGV_USER_ID, 'editaccount')=='Y') {
 			set_user_setting(PGV_USER_ID, 'theme', $mytheme);
 		}
+		break;
 	}
 }
 
