@@ -3,7 +3,7 @@
  * Getting Started Block
  *
  * Prints out a helpful menu to help users get started
- * 
+ *
  * Admins
  *  - upload a gedcom
  *  - start entering data
@@ -15,7 +15,7 @@
  * Visitors
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  John Finlay and Others
+ * Copyright (C) 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -53,7 +53,7 @@ $PGV_BLOCKS["getting_started_block"]["config"]		= array("cache"=>5);
 
 //-- function to print the gedcom block
 function getting_started_block($block = true, $config="", $side, $index) {
-	global $hits, $pgv_lang, $GEDCOM, $GEDCOMS, $SHOW_COUNTER;
+	global $pgv_lang, $GEDCOM, $GEDCOMS, $SHOW_COUNTER;
 
 	$id = "getting_started";
 	$title = $pgv_lang["install_step_8"];
@@ -67,7 +67,7 @@ function getting_started_block($block = true, $config="", $side, $index) {
 	$content .= '<li style="padding: 5px;"><a class="imenu" href="useradmin.php">'.$pgv_lang["user_admin"].'</a></li>';
 	$content .= '<li style="padding: 5px;"><a class="imenu" href="admin.php">'.$pgv_lang["admin"].'</a></li>';
 	$content .= '</ul>';
-	
+
 	global $THEME_DIR;
 	if ($block) include($THEME_DIR."/templates/block_small_temp.php");
 	else include($THEME_DIR."/templates/block_main_temp.php");
