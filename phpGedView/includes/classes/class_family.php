@@ -247,13 +247,8 @@ class Family extends GedcomRecord {
 	 * @return int 	the number of children
 	 */
 	function getNumberOfChildren() {
-		global $famlist;
 
 		if ($this->numChildren!==false) return $this->numChildren;
-		if (isset($famlist[$this->xref]['numchil'])) {
-			$this->numChildren = $famlist[$this->xref]['numchil'];
-			return $this->numChildren;
-		}
 
 		$this->numChildren = get_gedcom_value("NCHI", 1, $this->gedrec);
 		if ($this->numChildren!="") return $this->numChildren.".";

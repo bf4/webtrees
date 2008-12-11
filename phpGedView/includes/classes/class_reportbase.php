@@ -1975,7 +1975,7 @@ function PGVRListTotalSHandler($attrs) {
 }
 
 function PGVRRelativesSHandler($attrs) {
-	global $pgvreport, $gedrec, $repeats, $repeatBytes, $list, $repeatsStack, $processRepeats, $parser, $vars, $sortby, $indilist;
+	global $pgvreport, $gedrec, $repeats, $repeatBytes, $list, $repeatsStack, $processRepeats, $parser, $vars, $sortby;
 
 	$processRepeats++;
 	if ($processRepeats>1) return;
