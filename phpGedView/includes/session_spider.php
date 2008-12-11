@@ -188,6 +188,7 @@ $worms = array(
 		'msnbot',
 		'Ask Jeeves',
 		'Mediapartners-Google',
+		'Feedfetcher-Google',
 		'Twiceler'
 	);
 
