@@ -1755,7 +1755,9 @@ function PGVRListSHandler($attrs) {
 							$filters[] = $searchstr;
 							break;
 						default:
-							if (!empty($val)) $filters2[] = array("tag"=>$tag, "expr"=>$expr, "val"=>$val);
+							if (!empty($val)) {
+								$filters2[] = array("tag"=>$tag, "expr"=>$expr, "val"=>$val);
+							}
 							break;
 					}
 				}
@@ -1765,8 +1767,11 @@ function PGVRListSHandler($attrs) {
 	}
 	switch($listname) {
 		case "family":
-			if (count($filters)>0) $list = search_fams($filters);
-			else $list = get_fam_list();
+			if (count($filters)>0) {
+				$list = search_fams($filters, array(PGV_GED_ID), 'AND', true);
+			} else {
+				$list = get_fam_list();
+			}
 			break;
 		/*
 		case "source":
@@ -1785,7 +1790,10 @@ function PGVRListSHandler($attrs) {
 			}
 			break;
 		default:
-			if (count($filters)>0) $list = search_indis($filters);
+			if (count($filters)>0) {
+				var_dump($filters);
+				$list = search_indis($filters, array(PGV_GED_ID), 'AND', true);
+			}
 			//-- handle date specific searches
 			foreach($filters2 as $f=>$filter) {
 				$tags = explode(':', $filter["tag"]);
@@ -1819,7 +1827,9 @@ function PGVRListSHandler($attrs) {
 	//-- apply other filters to the list that could not be added to the search string
 	if (count($filters2)>0) {
 		$mylist = array();
-		foreach($list as $key=>$value) {
+		foreach($list as $indi) {
+			$key=$indi->getXref();
+			$value=$indi->getGedcomRecord();
 			$keep = true;
 			foreach($filters2 as $indexval => $filter) {
 				if ($keep) {
@@ -1875,7 +1885,7 @@ function PGVRListSHandler($attrs) {
 		}
 		$list = $mylist;
 	}
-	if ($sortby=="NAME") uasort($list, "itemsort");
+	if ($sortby=="NAME") uasort($list, array('GedcomRecord', 'Compare'));
 	else if ($sortby=="ID") uasort($list, "idsort");
 	else if ($sortby=="CHAN") uasort($list, "compare_date_descending");
 	else uasort($list, "compare_date");

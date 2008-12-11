@@ -144,7 +144,7 @@ class LocalClient extends ServiceClient {
 	function &search($query, $start=0, $max=100) {
 		//$this->authenticate();
 		//$result = $this->soapClient->search($this->SID, $query, $start, $max);
-		$search_results = search_indis($query, array($this->gedfile));
+		$search_results = search_indis(array($query), array($this->gedfile), 'AND', true);
 
 		// loop thru the returned result of the method call
 		foreach($search_results as $gid=>$indi)

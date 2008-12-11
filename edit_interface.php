@@ -1354,10 +1354,13 @@ case 'deletesource':
 		$myindilist = array();
 		$myfamlist = array();
 
-		$myindilist = search_indis($query);
-		foreach($myindilist as $key=>$value) {
-			if (!isset($pgv_changes[$key."_".$GEDCOM])) $indirec = $value["gedcom"];
-			else $indirec = find_updated_record($key);
+		$myindilist = search_indis(array($query), array(PGV_GED_ID), 'AND', false);
+		foreach($myindilist as $indi) {
+			if (isset($pgv_changes[$indi->getXref().'_'.$GEDCOM])) {
+				$indirec=find_updated_record($indi->getXref());
+			} else {
+				$indirec=$indi->getGedcomRecord();
+			}
 			$lines = explode("\n", $indirec);
 			$newrec = "";
 			$skipline = false;
@@ -1380,12 +1383,17 @@ case 'deletesource':
 			if (PGV_DEBUG) {
 				print "<pre>$newrec</pre>";
 			}
-			$success = $success && replace_gedrec($key, $newrec);
+			$success = $success && replace_gedrec($indi->getXref(), $newrec);
 		}
-		$myfamlist = search_fams($query);
-		foreach($myfamlist as $key=>$value) {
-			if (!isset($pgv_changes[$key."_".$GEDCOM])) $indirec = $value["gedcom"];
-			else $indirec = find_updated_record($key);
+
+
+		$myfamlist = search_fams(array($query), array(PGV_GED_ID), 'AND', false);
+		foreach($myfamlist as $family) {
+			if (isset($pgv_changes[$family->getXref().'_'.$GEDCOM])) {
+				$indirec=find_updated_record($family->getXref());
+			} else {
+				$indirec=$family->getGedcomRecord();
+			}
 			$lines = explode("\n", $indirec);
 			$newrec = "";
 			$skipline = false;
@@ -1408,7 +1416,7 @@ case 'deletesource':
 			if (PGV_DEBUG) {
 				print "<pre>$newrec</pre>";
 			}
-			$success = $success && replace_gedrec($key, $newrec);
+			$success = $success && replace_gedrec($family->getXref(), $newrec);
 		}
 		if ($success) {
 			$success = $success && delete_gedrec($pid);
@@ -1424,14 +1432,12 @@ case 'deleterepo':
 	}
 	if (!empty($gedrec)) {
 		$success = true;
-		$query = "REPO @$pid@";
-		// -- array of names
-		$mysourlist = array();
-
-		$mysourlist = search_sources($query);
-		foreach($mysourlist as $key=>$value) {
-			if (!isset($pgv_changes[$key."_".$GEDCOM])) $sourrec = $value["gedcom"];
-			else $sourrec = find_updated_record($key);
+		foreach(search_sources(array("REPO @$pid@"), array(PGV_GED_ID), 'AND', false) as $source) {
+			if (isset($pgv_changes[$source->getXref().'_'.$GEDCOM])) {
+				$sourrec=find_updated_record($source->getXref());
+			} else {
+				$sourrec=$source->getGedcomRecord();
+			}
 			$lines = explode("\n", $sourrec);
 			$newrec = "";
 			$skipline = false;
@@ -1454,12 +1460,14 @@ case 'deleterepo':
 			if (PGV_DEBUG) {
 				print "<pre>$newrec</pre>";
 			}
-			$success = $success && replace_gedrec($key, $newrec);
+			$success=$success && replace_gedrec($source->getXref(), $newrec);
 		}
 		if ($success) {
-			$success = $success && delete_gedrec($pid);
+			$success=$success && delete_gedrec($pid);
 		}
-		if ($success) print "<br /><br />".$pgv_lang["gedrec_deleted"];
+		if ($success) {
+			echo '<br /><br />', $pgv_lang['gedrec_deleted'];
+		}
 	}
 	break;
 //------------------------------------------------------------------------------

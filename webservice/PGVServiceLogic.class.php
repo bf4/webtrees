@@ -623,7 +623,7 @@ class PGVServiceLogic extends GenealogyService {
 				//if its just a key word search
 				$results = array();
 				$results_array = array();
-				$search_results = search_indis($query);
+				$search_results = search_indis(array($query), array(PGV_GED_ID), 'AND', true);
 
 				// loop thru the returned result of the method call
 
@@ -723,19 +723,16 @@ class PGVServiceLogic extends GenealogyService {
 				$queries = array();
 				if (!empty($array_querys['BIRTHPLACE'])) {
 					$queries[] = 'PLAC[^\n]*'.$array_querys['BIRTHPLACE'];
-					//$newarray = search_indis('PLAC[^\n]*'.$array_querys['BIRTHPLACE']);
 				} elseif (!empty($array_querys['DEATHPLACE'])) {
 					$queries[] = 'PLAC[^\n]*'.$array_querys['DEATHPLACE'];
-					//$newarray = search_indis('PLAC[^\n]*'.$array_querys['DEATHPLACE']);
 				} elseif (!empty($array_querys['GENDER'])) {
 					if (count($queries)==0 && count($newarray)==0) return new SOAP_Fault("Please specify a more advanced search.", "SERVER");
 					$queries[] = 'SEX '.$array_querys['GENDER'];
-					//$newarray = search_indis('SEX '.$array_querys['GENDER']);
 				} else {
 					$newarray = array();
 				}
 				if (count($queries)>0) {
-					$newarray = search_indis($queries);
+					$newarray = search_indis($queries, array(PGV_GED_ID), 'AND', true);
 				}
 			}
 			$results = array();
