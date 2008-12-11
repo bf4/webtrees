@@ -1297,57 +1297,6 @@ function find_visible_families_in_record($indirec, $tag) {
 }
 
 /**
- * find record in file
- *
- * this function finds a gedcom record in the gedcom file by searching through the file 4Kb at a
- * time
- * @param string $gid the gedcom xref id of the record to find
- */
-function find_record_in_file($gid) {
-	global $GEDCOMS, $GEDCOM, $indilist;
-	$fpged = fopen($GEDCOMS[$GEDCOM]["path"], "r");
-	if (!$fpged)
-		return false;
-	$BLOCK_SIZE = 4096;	//-- 4k bytes per read
-	$fcontents = "";
-	$count = 0;
-	while (!feof($fpged)) {
-		$fcontents .= fread($fpged, $BLOCK_SIZE);
-		$count++;
-		$pos1 = strpos($fcontents, "0 @$gid@", 0);
-		if ($pos1===false)  {
-			$pos1 = strrpos($fcontents, "\n");
-			$fcontents = substr($fcontents, $pos1);
-		} else {
-			$pos2 = strpos($fcontents, "\n0", $pos1+1);
-			while ((!$pos2)&&(!feof($fpged))) {
-				$fcontents .= fread($fpged, $BLOCK_SIZE);
-				$pos2 = strpos($fcontents, "\n0", $pos1+1);
-			}
-			if ($pos2)
-				$indirec = substr($fcontents, $pos1, $pos2-$pos1);
-			else
-				$indirec = substr($fcontents, $pos1);
-			$ct = preg_match("/0 @.+@ (.+)/", $indirec, $match);
-			if ($ct>0) {
-				$type = trim($match[1]);
-				//-- add record to indilist for caching
-				if ($type=="INDI") {
-					$indilist[$gid]["gedcom"]=$indirec;
-					$indilist[$gid]["gedfile"]=$GEDCOM;
-					$indilist[$gid]["isdead"] = -1;
-				}
-			}
-			fclose($fpged);
-			return $indirec;
-			break;
-		}
-	}
-	fclose($fpged);
-	return false;
-}
-
-/**
  * find and return an updated gedcom record
  * @param string $gid	the id of the record to find
  * @param string $gedfile	the gedcom file to get the record from.. defaults to currently active gedcom

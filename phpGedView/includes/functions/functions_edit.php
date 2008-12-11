@@ -493,8 +493,6 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 			$famrec=find_updated_record($famid);
 		else
 			$famrec=find_family_record($famid);
-		if (empty($famrec))
-			$famrec = find_record_in_file($famid);
 		$parents=find_parents_in_record($famrec);
 		$father_name=get_gedcom_value('NAME', 0, find_person_record($parents['HUSB']));
 		$mother_name=get_gedcom_value('NAME', 0, find_person_record($parents['WIFE']));
@@ -503,8 +501,6 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 			$prec=find_updated_record($pid);
 		else
 			$prec=find_person_record($pid);
-		if (empty($prec))
-			$prec = find_record_in_file($pid);
 		$indi_name=get_gedcom_value('NAME', 0, $prec);
 		// Different cultures do surnames differently
 		switch ($SURNAME_TRADITION) {

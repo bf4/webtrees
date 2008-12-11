@@ -946,7 +946,6 @@ print "&nbsp;<a href=\"javascript: ".$pgv_lang["gedcom_conf"]."\" onclick=\"expa
 
 		<?php
 		if ((!empty($GEDCOMPATH))&&(file_exists($path.$GEDFILENAME))&&(!empty($PEDIGREE_ROOT_ID))) {
-			//-- the following section of code was modified from the find_record_in_file function of functions.php
 			$fpged = fopen($path.$GEDFILENAME, "r");
 			if ($fpged) {
 				$gid = $PEDIGREE_ROOT_ID;
