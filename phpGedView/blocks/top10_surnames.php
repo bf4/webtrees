@@ -41,8 +41,20 @@ $PGV_BLOCKS["print_block_name_top10"]["config"]		= array(
 	"num"=>10,
 	);
 
-function top_surname_sort($a, $b) {
+function top_surname_sort1($a, $b) {
 	return $b["match"] - $a["match"];
+}
+
+function top_surname_sort2($a, $b) {
+	$counta=0;
+	foreach ($a as $x) {
+		$counta+=count($x);
+	}
+	$countb=0;
+	foreach ($b as $x) {
+		$countb+=count($x);
+	}
+	return $countb - $counta;
 }
 
 function print_block_name_top10($block=true, $config="", $side, $index) {
@@ -84,7 +96,7 @@ function print_block_name_top10($block=true, $config="", $side, $index) {
 	}
 
 	// Sort the list and save for future reference
-	uasort($surnames, "top_surname_sort");
+	uasort($surnames, "top_surname_sort1");
 
 	if (count($surnames)>0) {
 		$id="top10surnames";
@@ -113,6 +125,7 @@ function print_block_name_top10($block=true, $config="", $side, $index) {
 				$all_surnames=array_merge($all_surnames, get_indilist_surns(UTF8_strtoupper($surname), '', false, false, PGV_GED_ID));
 			}
 		}
+		uasort($all_surnames, "top_surname_sort2");
 		switch ($SURNAME_LIST_STYLE) {
 		case 'style3':
 			$content=format_surname_tagcloud($all_surnames, 'indilist', true);
