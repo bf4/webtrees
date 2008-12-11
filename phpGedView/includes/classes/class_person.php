@@ -667,24 +667,13 @@ class Person extends GedcomRecord {
 		return $family->getSpouse($this);
 	}
 
-	/**
-	 * get the number of children for this person
-	 * @return int 	the number of children
-	 */
+	// Get a count of the children for this individual
 	function getNumberOfChildren() {
 		global $indilist, $GEDCOMS, $GEDCOM;
 
-		//-- first check for the value in the gedcom record
-		$nchi = get_gedcom_value("NCHI", 1, $this->gedrec);
-		if ($nchi!="") return ($nchi+0);
-
-		//-- check if the value was stored in the cache
-		if (isset($indilist[$this->xref])
-		&& $indilist[$this->xref]["gedfile"] == $GEDCOMS[$GEDCOM]['id']
-		&& isset($indilist[$this->xref]["numchil"])) return ($indilist[$this->xref]["numchil"]+0);
-		$nchi=0;
-		foreach ($this->getSpouseFamilies() as $famid=>$family) $nchi+=$family->getNumberOfChildren();
-		return $nchi;
+		$nchi1=(int)get_gedcom_value('NCHI', 1, $this->gedrec);
+		$nchi2=count(fetch_child_ids($this->xref, $this->ged_id));
+		return max($nchi1, $nchi2);
 	}
 	/**
 	 * get family with child ids
