@@ -45,6 +45,7 @@ VERSION 4.2.0
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 -----------------------------------------------------------------------------------------
++$pgv_lang["show_marnms_help"}        12 Dec 2008           A
 *$pgv_lang["stat_help_x"]							10 Dec 2008				W
 *$pgv_lang["stat_help_gwx"]							10 Dec 2008				wf
 *$pgv_lang["stat_help_gax"]							10 Dec 2008				wf

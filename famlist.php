@@ -69,6 +69,19 @@ if (!$surname_sublist) {
 }
 setcookie('surname_sublist', $surname_sublist);
 
+// We can either include or exclude married names.
+// We default to exclude.
+$show_marnm=safe_GET('show_marnm', array('no','yes'));
+if (!$show_marnm) {
+	$show_marnm=safe_COOKIE('show_marnm_famlist', array('no','yes'), 'yes');
+}
+if (!$show_marnm) {
+	$show_marnm='no';
+}
+setcookie('show_marnm_famlist', $show_marnm);
+// Override $SHOW_MARRIED_NAMES for this page
+$SHOW_MARRIED_NAMES=($show_marnm=='yes');
+
 // Fetch a list of the initial letters of all surnames in the database
 $initials=get_indilist_salpha($SHOW_MARRIED_NAMES, true, PGV_GED_ID);
 // If there are no individuals in the database, do something sensible
@@ -160,14 +173,26 @@ echo join(' | ', $list), '</p>';
 
 // Search spiders don't get an option to show/hide the surname sublists,
 // nor does it make sense on the all/unknown/surname views
-if (!$SEARCH_SPIDER && $alpha!='@' && $alpha!=',' && !$surname) {
+if (!$SEARCH_SPIDER) {
 	echo '<p class="center">';
-	if ($surname_sublist=='yes') {
-		print_help_link('skip_sublist_help', 'qm', 'skip_surnames');
-		echo '<a href="', $url, '&amp;surname_sublist=no">', $pgv_lang['skip_surnames'], '</a>';
-	} else {
-		print_help_link('skip_sublist_help', 'qm', 'show_surnames');
-		echo '<a href="', $url, '&amp;surname_sublist=yes">', $pgv_lang['show_surnames'], '</a>';
+	if ($alpha!='@' && $alpha!=',' && !$surname) {
+		if ($surname_sublist=='yes') {
+			print_help_link('skip_sublist_help', 'qm', 'skip_surnames');
+			echo '<a href="', $url, '&amp;surname_sublist=no">', $pgv_lang['skip_surnames'], '</a>';
+		} else {
+			print_help_link('skip_sublist_help', 'qm', 'show_surnames');
+			echo '<a href="', $url, '&amp;surname_sublist=yes">', $pgv_lang['show_surnames'], '</a>';
+		}
+		echo '&nbsp;&nbsp;&nbsp;';
+	}
+	if ($showList) {
+		print_help_link('show_marnm_help', 'qm', 'show_marnms');
+		if ($SHOW_MARRIED_NAMES) {
+			echo '<a href="', $url, '&amp;show_marnm=no">', $pgv_lang['skip_marnms'], '</a>';
+		} else {
+			echo '<a href="', $url, '&amp;show_marnm=yes">', $pgv_lang['show_marnms'], '</a>';
+		}
+		echo '&nbsp;&nbsp;&nbsp;';
 	}
 	print_help_link('name_list_help', 'qm');
 	echo '</p>';
