@@ -37,15 +37,12 @@ $controller->init();
 print_header($pgv_lang["clip_cart"]);
 require 'js/autocomplete.js.htm';
 require 'js/sorttable.js.htm';
+
+echo PGV_JS_START;
+echo 'function radAncestors(elementid) {var radFamilies=document.getElementById(elementid);radFamilies.checked=true;}';
+echo PGV_JS_END;
+
 ?>
-<script type="text/javascript">
-<!--
-function radAncestors(elementid) {
-     var radFamilies = document.getElementById(elementid);
-     radFamilies.checked = true;
- }
-//-->
-</script>
 <h2><?php print $pgv_lang["clippings_cart"] ?></h2>
 <?php
 
@@ -115,16 +112,11 @@ if($ct==0) {
 		loadLangFile("pgv_help");
 		print_text("help_clippings.php");
 
+		echo PGV_JS_START;
+		echo 'var pastefield;';
+		echo 'function paste_id(value) {pastefield.value=value;}';
+		echo PGV_JS_END;
 		?>
-		<script language="JavaScript" type="text/javascript">
-		<!--
-		var pastefield;
-		function paste_id(value)
-		{
-			pastefield.value=value;
-		}
-		//-->
-		</script>
 		<form method="get" name="addin" action="clippings.php">
 		<table>
 		<tr>

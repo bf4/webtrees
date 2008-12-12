@@ -53,15 +53,8 @@ print "</h2>";
 // -- print the form to change the number of displayed generations
 if ($view != "preview") {
 	$show_famlink = true;
+	echo PGV_JS_START, 'var pastefield; function paste_id(value) {pastefield.value=value;}', PGV_JS_END;
 	?>
-	<script language="JavaScript" type="text/javascript">
-	<!--
-	var pastefield;
-	function paste_id(value) {
-		pastefield.value=value;
-	}
-	//-->
-	</script>
 	</td><td width="50px">&nbsp;</td><td><form name="people" id="people" method="get" action="?">
 	<input type="hidden" name="show_full" value="<?php print $controller->show_full; ?>" />
 	<input type="hidden" name="show_cousins" value="<?php print $controller->show_cousins; ?>" />
@@ -187,12 +180,7 @@ if ($controller->chart_style==1) {
 	// first page : show indi facts
 	print_pedigree_person($controller->rootid, 2, false, 1);
 	// expand the layer
-	echo <<< END
-	<script language="JavaScript" type="text/javascript">
-		expandbox("$controller->rootid.1", 2);
-	</script>
-	<br />
-END;
+	echo PGV_JS_START, 'expandbox("', $controller->rootid, '.1", 2);', PGV_JS_END;
 	// process the tree
 	$treeid = ancestry_array($controller->rootid, $PEDIGREE_GENERATIONS-1);
 	foreach ($treeid as $i=>$pid) {

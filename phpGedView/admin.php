@@ -106,15 +106,7 @@ foreach(get_all_users() as $user_id=>$user_name) {
 	}
 }
 
-?>
-<script type="text/javascript">
-<!--
-function showchanges() {
-	window.location.reload();
-}
-//-->
-</script>
-<?php
+echo PGV_JS_START, 'function showchanges() {window.location.reload();}', PGV_JS_END;
 ?>
 	<table class="center <?php print $TEXT_DIRECTION ?> width90">
 		<tr>
@@ -241,27 +233,23 @@ if (file_exists("modules")) {
 	</table>
 
 <?php
-	if (isset($logfilename) and ($logfilename != "")) {
-		print "<hr><table align=\"center\" width=\"70%\"><tr><td class=\"listlog\">";
-		print "<strong>";
-		print $pgv_lang["logfile_content"];
-		print " [" . $INDEX_DIRECTORY . $logfilename . "]</strong><br /><br />";
-		$lines=file($INDEX_DIRECTORY . $logfilename);
-		$num = sizeof($lines);
-		for ($i = 0; $i < $num ; $i++) {
-			print $lines[$i] . "<br />";
-		}
-		print "</td></tr></table><hr>";
+if (isset($logfilename) && ($logfilename != "")) {
+	print "<hr><table align=\"center\" width=\"70%\"><tr><td class=\"listlog\">";
+	print "<strong>";
+	print $pgv_lang["logfile_content"];
+	print " [" . $INDEX_DIRECTORY . $logfilename . "]</strong><br /><br />";
+	$lines=file($INDEX_DIRECTORY . $logfilename);
+	$num = sizeof($lines);
+	for ($i = 0; $i < $num ; $i++) {
+		print $lines[$i] . "<br />";
 	}
-?>
-<script language="javascript" type="text/javascript">
-<!--
-function manageservers(){
-	window.open("manageservers.php", "", "top=50,left=50,width=700,height=500,scrollbars=1,resizable=1");
+	print "</td></tr></table><hr>";
 }
-//-->
-</script>
-<br /><br />
-<?php
+echo PGV_JS_START;
+echo 'function manageservers() {';
+echo ' window.open("manageservers.php", "", "top=50,left=50,width=700,height=500,scrollbars=1,resizable=1");';
+echo '}';
+echo PGV_JS_END;
+echo '<br /><br />';
 print_footer();
 ?>

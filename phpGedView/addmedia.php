@@ -90,9 +90,8 @@ if (!PGV_USER_CAN_EDIT || !$disp || !$ALLOW_EDIT_GEDCOM) {
 	exit;
 }
 
+echo PGV_JS_START;
 ?>
-<script language="JavaScript" type="text/javascript">
-<!--
 	var language_filter, magnify;
 	var pastefield;
 	language_filter = "";
@@ -101,17 +100,14 @@ if (!PGV_USER_CAN_EDIT || !$disp || !$ALLOW_EDIT_GEDCOM) {
 		window.opener.paste_id(id);
 		window.close();
 	}
-
 	function paste_id(value) {
 		pastefield.value = value;
 	}
-
 	function paste_char(value,lang,mag) {
 		pastefield.value += value;
 		language_filter = lang;
 		magnify = mag;
 	}
-
 	function checkpath(folder) {
 		value = folder.value;
 		if (value.substr(value.length-1,1) == "/") value = value.substr(0, value.length-1);
@@ -123,10 +119,9 @@ if (!PGV_USER_CAN_EDIT || !$disp || !$ALLOW_EDIT_GEDCOM) {
 			return false;
 		}
 	}
-//-->
-</script>
-
 <?php
+echo PGV_JS_END;
+
 // Naming conventions used in this script:
 // folderName - this is the link to the folder in the standard media directory; the one that is stored in the gedcom.
 // serverFolderName - this is where the file is physically located.  if the media firewall is enabled it is in the protected media directory.  if not it is the same as folderName.
@@ -414,10 +409,10 @@ if ($action=="newentry") {
 			if ($link) {
 				AddToChangeLog("Media ID ".$media_id." successfully added to $linktoid.");
 			} else {
-				print "<a href=\"javascript:// OBJE $mediaid\" onclick=\"openerpasteid('$mediaid'); return false;\">".$pgv_lang["paste_id_into_field"]." <b>$mediaid</b></a><br /><br />\n";
-				print "<script language=\"JavaScript\" type=\"text/javascript\">\n";
-				print "openerpasteid('".$mediaid."');\n";
-				print "</script>\n";
+				echo "<a href=\"javascript:// OBJE $mediaid\" onclick=\"openerpasteid('$mediaid'); return false;\">".$pgv_lang["paste_id_into_field"]." <b>$mediaid</b></a><br /><br />\n";
+				echo PGV_JS_START;
+				echo "openerpasteid('", $mediaid, "');";
+				echo PGV_JS_END;
 			}
 		}
 		print $pgv_lang["update_successful"];
