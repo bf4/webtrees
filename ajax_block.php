@@ -54,8 +54,8 @@ if (is_dir('modules')) {
 			$dh2->close();
 		}
 	}
+	$dh->close();
 }
-$dh->close();
 
 // Arguments:
 $name  =safe_GET('name', '[a-zA-Z0-9_]+');
