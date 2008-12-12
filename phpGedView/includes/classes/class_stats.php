@@ -248,6 +248,7 @@ class stats {
 
 	static function _gedcomHead()
 	{
+		$title = "";
 		static $cache=null;
 		if (is_array($cache)) {
 			return $cache;

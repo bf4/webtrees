@@ -332,7 +332,7 @@
 						</PGVRRepeatTag>
 					</PGVRTextBox>
 					<PGVRTextBox width="25" height="20" border="0">
-						<PGVRText style="label1"><br /></PGVRText>
+						<PGVRText style="label1"></PGVRText>
 					</PGVRTextBox>
 					<PGVRRepeatTag tag="FAMS">
 						<PGVRGedcom id="@FAMS">
@@ -345,10 +345,10 @@
 								</PGVRRepeatTag>
 								<PGVRTextBox width="500" height="20" border="0" newline="1">
 									<PGVRif condition="$numberOfChildren==1">
-										<PGVRText style="label1"><br /><PGVRvar var="pgv_lang[child]" /></PGVRText>
+										<PGVRText style="label1"><PGVRvar var="pgv_lang[child]" /></PGVRText>
 									</PGVRif>
 									<PGVRif condition="$numberOfChildren>1">
-										<PGVRText style="label1"><br /><PGVRvar var="pgv_lang[children]" /></PGVRText>
+										<PGVRText style="label1"><PGVRvar var="pgv_lang[children]" /></PGVRText>
 									</PGVRif>
 									
 									<PGVRText style="label1"> <PGVRvar var="pgv_lang[of]" /> </PGVRText>
@@ -381,7 +381,7 @@ i								</PGVRTextBox>
 										<PGVRif condition="$familyChildNumber==19"><PGVRSetVar name="familyChildRoman" value="xix" /></PGVRif>
 										<PGVRif condition="$familyChildNumber==20"><PGVRSetVar name="familyChildRoman" value="xx" /></PGVRif>
 										<PGVRTextBox width="25" height="20" border="0">
-											<PGVRText style="label1"><br /></PGVRText>
+											<PGVRText style="label1"></PGVRText>
 										</PGVRTextBox>
 										<PGVRSetVar name="showChildNumber" value="false" />
 										<PGVRRepeatTag tag="FAMS">
@@ -450,7 +450,7 @@ i								</PGVRTextBox>
 			<PGVRif condition="$sources==1">
 				<PGVRNewPage></PGVRNewPage>
 				<PGVRTextBox border="0" width="$width" height="20">
-					<PGVRText style="subheader"><br /><PGVRvar var="pgv_lang[sources]" /><br /><br /></PGVRText>
+					<PGVRText style="subheader"><PGVRvar var="pgv_lang[sources]" /></PGVRText>
 					<PGVRFootnoteTexts />
 				</PGVRTextBox>
 			</PGVRif>
