@@ -29,7 +29,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
-if (!isset($without_close)) echo "</div> <!-- closing div id=\"content\" -->\n";
+echo "</div> <!-- closing div id=\"content\" -->";
 ?>
 <div id="footer" class="<?php echo $TEXT_DIRECTION; ?>">
 <?php echo contact_links(); ?>

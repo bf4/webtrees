@@ -29,7 +29,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
-if (!isset($without_close)) echo "</div> <!-- closing div id=\"content\" -->\n";//FIXME uncomment as soon as ready
+echo "</div><!-- closing div id=\"content\" -->";
 echo "<div id=\"footer\" class=\"$TEXT_DIRECTION\">";
 echo "\n\t<br /><div align=\"center\" style=\"width:99%;\">";
 echo contact_links();
