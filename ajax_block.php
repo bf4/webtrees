@@ -33,6 +33,7 @@ session_write_close();
 // Unfortunately, we haven't used any naming convention, which means we need
 // to load every block in order to find the one that has the "print" function
 // that we need.
+$PGV_BLOCKS=array();
 $dh=dir('blocks');
 while ($file=$dh->read()) {
 	if (preg_match('/\.php$/', $file)) {
@@ -50,9 +51,11 @@ if (is_dir('modules')) {
 					require_once 'modules/'.$module.'/blocks/'.$file;
 				}
 			}
+			$dh2->close();
 		}
 	}
 }
+$dh->close();
 
 // Arguments:
 $name  =safe_GET('name', '[a-zA-Z0-9_]+');
@@ -60,10 +63,11 @@ $block =safe_GET_bool('block');
 $config=safe_GET('config', PGV_REGEX_UNSAFE);
 $side  =safe_GET('side', array('main', 'right'));
 $index =safe_GET('index', PGV_REGEX_INTEGER);
+$ctype =safe_GET('ctype', array('user', 'gedcom'));
 
 // Load and execute the block
 if (function_exists($name)) {
-	$name($block, @unserialize($config), $side, $index);
+	$name($block, unserialize($config), $side, $index);
 } else {
 	die('invalid block: '.$name);
 }
