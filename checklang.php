@@ -197,17 +197,14 @@ function checkfile($filename) {
 		}
 	}
 	fclose($fd);
-	?>
-		<script type="text/javascript">
-		var OK = <?php print $ok;?>;
-		var TOT = <?php print ($ok + $nok);?>;
-		var ELT = "<?php print "$flag." . substr(basename($filename), 0, 1);?>";
-		//alert(ELT);
-		perc = Math.round(100*(OK / TOT));
-		progress = document.getElementById(ELT);
-		progress.innerHTML = perc+"%";
-	</script>
-	<?php
+	echo PGV_JS_START;
+	echo 'var OK = ', $ok, ';';
+	echo 'var TOT= ', $ok + $nok, ';';
+	echo 'var ELT= "', $flag, '.', substr(basename($filename), 0, 1), '";';
+	echo 'perc = Math.round(100*(OK / TOT));';
+	echo 'progress = document.getElementById(ELT);';
+	echo 'progress.innerHTML = perc+"%";';
+	echo PGV_JS_END;
 	flush();
 }
 

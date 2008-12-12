@@ -63,24 +63,20 @@ $remoteServers = get_server_list();
 $gedcomList = get_all_gedcoms();
 
 $success = $controller->runAction();
-?>
 
-<script language="JavaScript" type="text/javascript">
-<!--
+echo PGV_JS_START;
+?>
 function sameServer() {
 	alert('<?php print $pgv_lang["error_same"];?>');
 }
-
 function remoteServer() {
 	alert('<?php print $pgv_lang["error_remote"];?>');
 }
-
 function swapComponents(btnPressed) {
 	var labelSite = document.getElementById('labelSite');
 	var existingContent = document.getElementById('existingContent');
 	var localContent = document.getElementById('localContent');
 	var remoteContent = document.getElementById('remoteContent');
-
 	if (btnPressed=="remote") {
 		labelSite.innerHTML = '<?php echo $pgv_lang["label_site"];?>';
 		existingContent.style.display='none';
@@ -98,12 +94,10 @@ function swapComponents(btnPressed) {
 		remoteContent.style.display='none';
 	}
 }
-
 function edit_close() {
 	if (window.opener.showchanges) window.opener.showchanges();
 	window.close();
 }
-
 function checkform(frm) {
 	if (frm.txtPID.value=='') {
 		alert('Please enter all fields.');
@@ -111,9 +105,10 @@ function checkform(frm) {
 	}
 	return true;
 }
-//-->
-</script>
-<?php if ($action!="addlink") {
+<?php
+echo PGV_JS_END;
+
+if ($action!="addlink") {
 	$success = false;
 ?>
 <form method="post" name="addRemoteRelationship" action="addremotelink.php" onsubmit="return checkform(this);">
@@ -237,7 +232,9 @@ function checkform(frm) {
 		<?php
 }
 // autoclose window when update successful
-if ($success && $EDIT_AUTOCLOSE) print "\n<script type=\"text/javascript\">\n<!--\nedit_close();\n//-->\n</script>";
+if ($success && $EDIT_AUTOCLOSE) {
+	echo PGV_JS_START, 'edit_close();', PGV_JS_END;
+}
 
 print "<div class=\"center\"><a href=\"javascript:// ".$pgv_lang["close_window"]."\" onclick=\"edit_close();\">".$pgv_lang["close_window"]."</a></div><br />\n";
 

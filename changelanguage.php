@@ -50,18 +50,16 @@ switch ($action) {
 		print_header($pgv_lang["edit_lang_utility"]);
 }
 
-print "<script language=\"JavaScript\" type=\"text/javascript\">\n";
-print "<!--\n";
-print "var helpWin;\n";
-print "function showchanges() {\n";
-print "\twindow.location = '$PHP_SELF';\n";
-print "}\n";
-print "function helpPopup03(which) {\n";
-print "location.href = 'editlang_edit_settings.php?' + which + '&new_shortcut=' + document.new_lang_form.new_shortcut.value;\n";
-print "return false;\n";
-print "}\n";
-print "//-->\n";
-print "</script>\n";
+print PGV_JS_START;
+print "var helpWin;";
+print "function showchanges() {";
+print "window.location = '$PHP_SELF';";
+print "}";
+print "function helpPopup03(which) {";
+print "location.href = 'editlang_edit_settings.php?' + which + '&new_shortcut=' + document.new_lang_form.new_shortcut.value;";
+print "return false;";
+print "}";
+print PGV_JS_END;
 
 // Create array with configured languages in gedcoms and users
 $configuredlanguages = array();

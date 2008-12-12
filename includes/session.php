@@ -76,9 +76,9 @@ define('PGV_EVENTS_DIV',  'DIV|ANUL|_SEPR');
 // Use these line endings when writing files on the server
 define('PGV_EOL', "\r\n");
 
-// Use these tags to wrap embedded javascript
-define('PGV_JS_START', "<script type=\"text/javascript\">\n//<![CDATA[\n");
-define('PGV_JS_END',   "\n//]]\n</script>");
+// Use these tags to wrap embedded javascript consistently
+define('PGV_JS_START', "\n<script type=\"text/javascript\">\n//<![CDATA[\n");
+define('PGV_JS_END',   "\n//]]\n</script>\n");
 
 // Used in Google charts
 define ('PGV_GOOGLE_CHART_ENCODING', 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-.');
