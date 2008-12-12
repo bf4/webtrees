@@ -375,7 +375,8 @@ if (count($ublocks["main"])!=0) {
 			print_execution_stats();
 		}
 		if (function_exists($block[0]) && !loadCachedBlock($block, "main".$bindex)) {
-			if ($SEARCH_SPIDER || PGV_DEBUG) {
+			$url="ajax_block.php?name={$block[0]}&block=false&ctype={$ctype}&config=".urlencode(serialize($block[1]))."&side=main&index={$bindex}";
+			if ($SEARCH_SPIDER || PGV_DEBUG || strlen($url)>2000) {
 				// Search spiders get the blocks directly
 				ob_start();
 				eval($block[0]."(false, \$block[1], \"main\", $bindex);");
@@ -387,7 +388,6 @@ if (count($ublocks["main"])!=0) {
 				ob_end_flush();
 			} else {
 				// Interactive users get the blocks via ajax
-				$url="ajax_block.php?name={$block[0]}&block=false&ctype={$ctype}&config=".urlencode(serialize($block[1]))."&side=main&index={$bindex}";
 				echo '<div id="block_main_', $bindex, '"><img src="images/loading.gif" alt="', htmlspecialchars($pgv_lang["loading"]),  '"/></div>';
 				echo PGV_JS_START, "$('#block_main_{$bindex}').load('{$url}');", PGV_JS_END;
 			}
@@ -409,7 +409,8 @@ if (count($ublocks["right"])!=0) {
 			print_execution_stats();
 		}
 		if (function_exists($block[0]) && !loadCachedBlock($block, "right".$bindex)) {
-			if ($SEARCH_SPIDER || PGV_DEBUG) {
+			$url="ajax_block.php?name={$block[0]}&block=true&ctype={$ctype}&config=".urlencode(serialize($block[1]))."&side=right&index={$bindex}";
+			if ($SEARCH_SPIDER || PGV_DEBUG || strlen($url)>2000) {
 				// Search spiders get the blocks directly
 				ob_start();
 				eval($block[0]."(true, \$block[1], \"right\", $bindex);");
@@ -418,7 +419,6 @@ if (count($ublocks["right"])!=0) {
 				ob_end_flush();
 			} else {
 				// Interactive users get the blocks via ajax
-				$url="ajax_block.php?name={$block[0]}&block=true&ctype={$ctype}&config=".urlencode(serialize($block[1]))."&side=right&index={$bindex}";
 				echo '<div id="block_right_', $bindex, '"><img src="images/loading.gif" alt="', htmlspecialchars($pgv_lang["loading"]),  '"/></div>';
 				echo PGV_JS_START, "$('#block_right_{$bindex}').load('{$url}');", PGV_JS_END;
 			}
