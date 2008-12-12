@@ -96,8 +96,7 @@ class TreeNav {
 			else if (!empty($_REQUEST['parent'])) {
 				$person = $this->rootPerson;
 				if ($_REQUEST['parent']=='f') {
-					$fams = $person->getChildFamilies();
-					$cfamily = end($fams);
+					$cfamily = $person->getPrimaryChildFamily();
 					if (!empty($cfamily)) {
 						$father = $cfamily->getHusband();
 						if (!empty($father)) {
@@ -111,8 +110,7 @@ class TreeNav {
 				else {
 					$spouse = $person->getCurrentSpouse();
 					if (!empty($spouse)) {
-						$fams = $spouse->getChildFamilies();
-						$cfamily = end($fams);
+						$cfamily = $spouse->getPrimaryChildFamily();
 						if (!empty($cfamily)) {
 							$mother = $cfamily->getHusband();
 							if (!empty($mother)) {
@@ -455,8 +453,7 @@ class TreeNav {
 		$father = null;
 
 		if ($state>=0) {
-			$fams = $person->getChildFamilies();
-			$cfamily = end($fams);
+			$cfamily = $person->getPrimaryChildFamily();
 			if (!empty($cfamily)) {
 				$father = $cfamily->getHusband();
 				if (empty($father)) $father = $cfamily->getWife();
@@ -467,8 +464,7 @@ class TreeNav {
 			foreach($fams as $family) {
 				if (!empty($family)) $spouse = $family->getSpouse($person);
 				if (!empty($spouse)) {
-					$fams = $spouse->getChildFamilies();
-					$mcfamily = end($fams);
+					$mcfamily = $spouse->getPrimaryChildFamily();
 					if (!empty($mcfamily)) {
 						$mother = $mcfamily->getHusband();
 						//-- a mother's father was found so break out
@@ -547,8 +543,7 @@ class TreeNav {
 									$spouse = $family->getSpouse($person);
 									$mother = null;
 									if ($spouse!=null) {
-										$fams = $spouse->getChildFamilies();
-										$mcfamily = end($fams);
+										$mcfamily = $spouse->getPrimaryChildFamily();
 										if (!empty($mcfamily)) {
 											$mother = $mcfamily->getHusband();
 										}
@@ -602,14 +597,12 @@ class TreeNav {
 			$family = end($fams);
 		}
 		if ($state>=0) {
-			$fams = $person->getChildFamilies();
-			$cfamily = end($fams);
+			$cfamily = $person->getPrimaryChildFamily();
 			if (!empty($cfamily)) {
 				$father = $cfamily->getHusband();
 			}
 			if (!empty($spouse)) {
-				$fams = $spouse->getChildFamilies();
-				$mcfamily = end($fams);
+				$mcfamily = $spouse->getPrimaryChildFamily();
 				if (!empty($mcfamily)) {
 					$mother = $mcfamily->getHusband();
 				}
