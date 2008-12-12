@@ -10,6 +10,9 @@
 
 
 Version 4.2.0
+ - Fixed: [ 2391188 ] Tree Tab Error (fisharebest)
+ - Added: Load welcome page blocks in parallel using ajax
+ - Added: Load indi page tabs in parallel using ajax
  - Fixed: [ 2328568 ] Search finds too much (fisharebest)
  - Fixed: [ 2058324 ] [3677] Search Routine with Multiple Gedcoms (fisharebest)
  - Fixed: [ 2391217 ] 4.1.6 error when search would result in a private ID (fisharebest)
