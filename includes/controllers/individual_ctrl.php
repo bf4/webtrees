@@ -1201,8 +1201,8 @@ class IndividualControllerRoot extends BaseController {
 				<td class="facts_value"><?php print_help_link($action."_help", "qm"); ?>
 					<a href="javascript:;" onclick="return addnewchild('<?php print $family->getXref(); ?>');"><?php print $pgv_lang[$action]; ?></a>
 					<span style='white-space:nowrap;'>
-						<a href="javascript:;" onclick="return addnewchild('<?php print $family->getXref(); ?>','M');"><?php print "[<img src=\"$PGV_IMAGE_DIR/" . $PGV_IMAGES["sex"]["small"] . "\" title=\"" . $pgv_lang[$child_m] . "\" alt=\"" . $pgv_lang["brother"] . "\" class=\"gender_image\" />]"?></a>
-						<a href="javascript:;" onclick="return addnewchild('<?php print $family->getXref(); ?>','F');"><?php print "[<img src=\"$PGV_IMAGE_DIR/" . $PGV_IMAGES["sexf"]["small"] . "\" title=\"" . $pgv_lang[$child_f] . "\" alt=\"" . $pgv_lang["sister"] . "\" class=\"gender_image\" />]"?></a>
+						<a href="javascript:;" onclick="return addnewchild('<?php print $family->getXref(); ?>','M');"><?php echo Person::sexImage('M', 'small', '', $pgv_lang['brother']); ?></a>
+						<a href="javascript:;" onclick="return addnewchild('<?php print $family->getXref(); ?>','F');"><?php echo Person::sexImage('F', 'small', '', $pgv_lang['sister']); ?></a>
 					</span>
 				</td>
 			</tr>
