@@ -418,7 +418,7 @@ if (count($ublocks["right"])!=0) {
 				ob_end_flush();
 			} else {
 				// Interactive users get the blocks via ajax
-				$url="ajax_block.php?name={$block[0]}&block=false&ctype={$ctype}&config=".urlencode(serialize($block[1]))."&side=right&index={$bindex}";
+				$url="ajax_block.php?name={$block[0]}&block=true&ctype={$ctype}&config=".urlencode(serialize($block[1]))."&side=right&index={$bindex}";
 				echo '<div id="block_right_', $bindex, '"><img src="images/loading.gif" alt="', htmlspecialchars($pgv_lang["loading"]),  '"/></div>';
 				echo PGV_JS_START, "$('#block_right_{$bindex}').load('{$url}');", PGV_JS_END;
 			}
