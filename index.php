@@ -389,9 +389,7 @@ if (count($ublocks["main"])!=0) {
 				// Interactive users get the blocks via ajax
 				$url="ajax_block.php?name={$block[0]}&block=false&ctype={$ctype}&config=".urlencode(serialize($block[1]))."&side=main&index={$bindex}";
 				echo '<div id="block_main_', $bindex, '"><img src="images/loading.gif" alt="', htmlspecialchars($pgv_lang["loading"]),  '"/></div>';
-				echo '<script type="text/javascript">';
-				echo "$('#block_main_{$bindex}').load('{$url}');";
-				echo '</script>';
+				echo PGV_JS_START, "$('#block_main_{$bindex}').load('{$url}');", PGV_JS_END;
 			}
 		}
 	}
@@ -422,9 +420,7 @@ if (count($ublocks["right"])!=0) {
 				// Interactive users get the blocks via ajax
 				$url="ajax_block.php?name={$block[0]}&block=false&ctype={$ctype}&config=".urlencode(serialize($block[1]))."&side=right&index={$bindex}";
 				echo '<div id="block_right_', $bindex, '"><img src="images/loading.gif" alt="', htmlspecialchars($pgv_lang["loading"]),  '"/></div>';
-				echo '<script type="text/javascript">';
-				echo "$('#block_right_{$bindex}').load('{$url}');";
-				echo '</script>';
+				echo PGV_JS_START, "$('#block_right_{$bindex}').load('{$url}');", PGV_JS_END;
 			}
 		}
 	}
