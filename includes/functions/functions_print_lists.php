@@ -439,7 +439,7 @@ function print_fam_table($datalist, $legend="", $option="") {
 	if (count($datalist)<1) return;
 	$tiny = (count($datalist)<=500);
 	$name_subtags = array("", "_AKA", "_HEB", "ROMN");
-	//if ($SHOW_MARRIED_NAMES) $name_subtags[] = "_MARNM";
+	//if ($SHOW_MARRIED_NAMES) $name_subtags[] = "_MARNM"; 
 	require_once 'js/sorttable.js.htm';
 	require_once 'includes/classes/class_family.php';
 	//-- init chart data
@@ -866,7 +866,7 @@ function print_sour_table($datalist, $legend=null) {
 		// alternate title in a new column
 		$tmp=$source->getAddName();
 		if ($tmp) {
-			echo '<td class="list_value_wrap t2" style="display:none;"><a href="', $link_url, '" class="list_item">', PrintReady($tmp), '</a></td>';
+			echo '<td class="list_value_wrap t2" style="display:none;" align="', get_align($tmp), '"><a href="', $link_url, '" class="list_item">', PrintReady($tmp), '</a></td>';
 			$t2=true;
 		} else {
 			echo '<td class="list_value_wrap t2" style="display:none;">&nbsp;</td>';
@@ -874,7 +874,7 @@ function print_sour_table($datalist, $legend=null) {
 		//-- Author
 		$tmp=$source->getAuth();
 		if ($tmp) {
-			echo '<td class="list_value_wrap" align="', get_align($tmp), '"><a href="', $link_url, '" class="list_item">', PrintReady($tmp), '</a>&nbsp;</td>';
+			echo '<td class="list_value_wrap" align="', get_align($tmp), '"><a href="', $link_url, '" class="list_item">', PrintReady($tmp), '</a></td>';
 		} else {
 			echo '<td class="list_value_wrap">&nbsp;</td>';
 		}
@@ -911,9 +911,7 @@ function print_sour_table($datalist, $legend=null) {
 			cells = table.getElementsByTagName('td');
 			for (i=0;i<cells.length;i++) {
 				if (cells[i].className && (cells[i].className.indexOf('t2') != -1)) {
-					cells[i].style.display='block';
-					// Help!  How do you set the height of a TD to that of its parent TR ???
-					//cells[i].style='height:100%;';
+					cells[i].style.display=""; 
 				}
 			}
 		</script>
