@@ -39,7 +39,7 @@ if (!function_exists("autocomplete_{$field}"))
 	die("Bad arg: field={$field}");
 
 //-- database query
-define('PGV_AUTOCOMPLETE_LIMIT', 200+100*strlen($FILTER));
+define('PGV_AUTOCOMPLETE_LIMIT', 200);
 eval("\$data = autocomplete_".$field."();");
 if (empty($data))
 	die();
@@ -87,9 +87,9 @@ function autocomplete_INDI() {
 		}
 	}
 
-	$sql = "SELECT DISTINCT i_id".
+	$sql = "SELECT DISTINCT i_id, n_list".
 				" FROM {$TBLPREFIX}individuals, {$TBLPREFIX}name".
-				" WHERE (n_full ".PGV_DB_LIKE." '".$FILTER."%'".
+				" WHERE (n_full ".PGV_DB_LIKE." '%".$FILTER."%'".
 				" OR i_id ".PGV_DB_LIKE." '%".$FILTER."%')".
 				" AND i_id=n_id AND i_file=n_file".
 				" AND i_file=".PGV_GED_ID.
@@ -156,7 +156,7 @@ function autocomplete_INDI() {
 			}
 		}
 		// display
-		$data[$row["i_id"]] = $person->getListName();
+		$data[$row["i_id"]] = check_NN($row['n_list']);
 		if ($OPTION && $event_date && $person->getBirthDate())
 			$data[$row["i_id"]] .= " <span class=\"age\">(".$pgv_lang["age"]." ".
 														GedcomDate::GetAgeYears($person->getBirthDate(), $event_date).
