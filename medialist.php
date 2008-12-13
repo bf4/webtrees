@@ -51,7 +51,9 @@ print "\n\t<div class=\"center\"><h2>".$pgv_lang["multi_title"]."</h2></div>\n\t
 // Get Javascript variables from lb_config.php ---------------------------
  if (file_exists("modules/lightbox/album.php")) {
 	include('modules/lightbox/lb_defaultconfig.php');
-	if (file_exists('modules/lightbox/lb_config.php')) include('modules/lightbox/lb_config.php');
+	if (file_exists('modules/lightbox/lb_config.php')) {
+		include('modules/lightbox/lb_config.php');
+	}
 	include('modules/lightbox/functions/lb_call_js.php');
 
 	if ($theme_name=="Minimal") {
@@ -568,7 +570,11 @@ if ($filter) $legend .= " : &laquo;".$filter."&raquo;";
 print_media_table($medialist, $legend);
 **/
 // -- load up the slideshow code
-if (file_exists("modules/slideshow/slideshow.php")) include_once("modules/slideshow/slideshow.php");
+if (!file_exists("modules/lightbox/album.php")) {
+	if (file_exists("modules/slideshow/slideshow.php")) {
+		include_once("modules/slideshow/slideshow.php");
+	}
+}
 print_footer();
 
 ?>

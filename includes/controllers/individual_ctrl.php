@@ -1822,7 +1822,7 @@ class IndividualControllerRoot extends BaseController {
 	 * include Census controller
 	 */
     function census_assistant() {
-        include('modules/census_assistant/census_ctrl.php');
+        include('modules/census_assistant/census_1_ctrl.php');
     }
 // -----------------------------------------------------------------------------
 // End  Census Assistant  Functions

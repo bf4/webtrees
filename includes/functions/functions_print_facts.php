@@ -1535,7 +1535,7 @@ function print_main_media_row($rtype, $rowm, $pid) {
 		}
 		if ($isExternal || media_exists($thumbnail)) {
 			$mainFileExists = false;
-			if ($isExternal || media_exists($mainMedia)) {
+			if ($isExternal || media_exists($mainMedia) || media_exists($rowm['m_file']) ) {
 				$mainFileExists = true;
 				$imgsize = findImageSize($mainMedia);
 				$imgwidth = $imgsize[0]+40;
@@ -1594,7 +1594,11 @@ function print_main_media_row($rtype, $rowm, $pid) {
 						print "<a href=\"module.php?mod=JWplayer&amp;pgvaction=flvVideo&amp;flvVideo=" . $mainMedia . "\" rel='clearbox(" . 445 . "," . 370 . ",click)' rev=\"" . $rowm["m_media"] . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name,ENT_COMPAT,'UTF-8')) . "::" . htmlspecialchars($notes,ENT_COMPAT,'UTF-8') . "\">" . "\n";
 					// Else if Local Image (Lightbox)
 					} else if ($file_type == "local_image") {
-						print "<a href=\"" . $mainMedia . "\" rel='clearbox[general_3]' rev=\"" . $rowm["m_media"] . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name,ENT_COMPAT,'UTF-8')) . "::" . htmlspecialchars($notes,ENT_COMPAT,'UTF-8') . "\">" . "\n";
+						if(media_exists($mainMedia)) {
+							print "<a href=\"" . $mainMedia . "\" rel='clearbox[general_3]' rev=\"" . $rowm["m_media"] . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name,ENT_COMPAT,'UTF-8')) . "::" . htmlspecialchars($notes,ENT_COMPAT,'UTF-8') . "\">" . "\n";
+						}else{
+							print "<a href=\"" . $rowm["m_file"] . "\" rel='clearbox[general_3]' rev=\"" . $rowm["m_media"] . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name,ENT_COMPAT,'UTF-8')) . "::" . htmlspecialchars($notes,ENT_COMPAT,'UTF-8') . "\">" . "\n";
+						}
 					// Else Other filetype (Pop-up Window)
 					} else {
 						print "<a href=\"javascript:;\" onclick=\"return openImage('".rawurlencode($mainMedia)."',$imgwidth, $imgheight);\">";
@@ -1623,6 +1627,8 @@ function print_main_media_row($rtype, $rowm, $pid) {
 				}else{
 					print "<a href=\"javascript:;\" onclick=\"return openImage('".rawurlencode($mainMedia)."',$imgwidth, $imgheight);\">";
 				}
+			}else{
+				$file_type = "none";
 			}
 
 			// Finally print thumbnail
@@ -1641,9 +1647,13 @@ function print_main_media_row($rtype, $rowm, $pid) {
 					}
 				// Else Print the Regular Thumbnail if associated with a thumbnail image,
 				}else{
-					print "<img src=\"".$thumbnail."\" border=\"0\" align=\"" . ($TEXT_DIRECTION== "rtl"?"right": "left") . "\" class=\"thumbnail\"";
+					if ($file_type=="none") {
+						print "<img src=\"images/media.gif\" height=\"60\" border=\"0\" align=\"" . ($TEXT_DIRECTION== "rtl"?"right": "left") . "\" class=\"thumbnail\"";
+					}else{
+						print "<img src=\"".$thumbnail."\" border=\"0\" align=\"" . ($TEXT_DIRECTION== "rtl"?"right": "left") . "\" class=\"thumbnail\"";
+					}
 				}
-
+				
 			if ($isExternal) {
 				print " width=\"".$THUMBNAIL_WIDTH."\"";
 			}
@@ -1652,7 +1662,7 @@ function print_main_media_row($rtype, $rowm, $pid) {
 				print "</a>";
 			}
 		}
-
+		
 		if(empty($SEARCH_SPIDER)) {
 			print "<a href=\"".encode_url("mediaviewer.php?mid={$rowm['m_media']}")."\">";
 		}
@@ -1670,7 +1680,7 @@ function print_main_media_row($rtype, $rowm, $pid) {
 		if(empty($SEARCH_SPIDER)) {
 			print "</a>";
 		}
-
+		
 		// NOTE: Print the format of the media
 		if (!empty($rowm["m_ext"])) {
 			print "\n\t\t\t<br /><span class=\"label\">".$factarray["FORM"].": </span> <span class=\"field\">".$rowm["m_ext"]."</span>";

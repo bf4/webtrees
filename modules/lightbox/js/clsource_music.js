@@ -1541,6 +1541,23 @@ var CB_Close_Win		= CB_Close_Win;
 		return;
 	}		
 
+	// New function used when counting number of lines in a Note ====================================
+	function countOccurrencesOf(source, pattern) {
+		count = 0;
+		if (source!=null) {
+			len = pattern.length;
+			found = -1;
+			start = 0;
+			while( (found = source.indexOf(pattern, start) ) != -1) {
+				start = found + len;
+				count++;
+			}
+			return count;
+		}
+		else return 0;
+	}
+	// ========================================================================================
+
     function CB_ShowImage() {
 		// ---Adjust Title width to image ----------------------------
 		CB_Txt.style.width = CB_ImgWidth + "px";
@@ -1581,8 +1598,22 @@ var CB_Close_Win		= CB_Close_Win;
 			CB_Txt.innerHTML = CB_Gallery[CB_ActImgId][1];
 			var notey1 = CB_Gallery[CB_ActImgId][5];
 			if (notey1 != "&lt;br /&gt;" && notey1 ) {
+				// alert(notey1);
+				var brs = countOccurrencesOf(notey1, "&lt;br /&gt;");
+				var spacer=0;
+				if (brs==1)  {spacer=0;}
+				if (brs==2)  {spacer=5;}
+				if (brs==3)  {spacer=10;}
+				if (brs==4)  {spacer=14;}
+				if (brs==5)  {spacer=19;}
+				if (brs==6)  {spacer=25;}
+				if (brs==7)  {spacer=35;}
+				if (brs==8)  {spacer=45;}
+				if (brs==9)  {spacer=55;}
+				if (brs==10) {spacer=65;}
+				// alert(brs + " - " + spacer);
 				CB_Txt3.innerHTML = "<a href=\"JavaScript:void(0);\" onclick=\"TipTog('<font color=#008800><b>" + CB_ImgNotes2 + ":</b></font><br />" + notey1 + "', CENTERWINDOW, true, DELAY, 0, TEXTALIGN, '" + CB_Alignm + "', WIDTH, "+CB_ImgWidth+"-30, BGCOLOR, '#fffbcc', BALLOON, true , BALLOONSTEMWIDTH, 0, ABOVE, true, BORDERCOLOR, '', TITLEBGCOLOR, '', CLOSEBTNTEXT, 'X', CLOSEBTN, false, CLOSEBTNCOLORS, ['#ff0000', '#ffffff', '#ffffff', '#ff0000'], OFFSETY, 150-" + ((DocSizeY-BrSizeY)/2) + ", OFFSETX, 0, STICKY, true, PADDING, 6, CLICKCLOSE, true );\" ></a>";
-				CB_Txt3a.innerHTML = "<a href=\"JavaScript:void(0);\" onclick=\"TipTog('<font color=#008800><b>" + CB_ImgNotes2 + ":</b></font><br />" + notey1 + "', CENTERWINDOW, true, DELAY, 0, TEXTALIGN, '" + CB_Alignm + "', WIDTH, "+CB_ImgWidth+"-30, BGCOLOR, '#fffbcc', BALLOON, true, BALLOONSTEMWIDTH, 0, ABOVE, true, BORDERCOLOR, '', TITLEBGCOLOR, '', CLOSEBTNTEXT, 'X', CLOSEBTN, false, CLOSEBTNCOLORS, ['#ff0000', '#ffffff', '#ffffff', '#ff0000'], OFFSETY, 150-" + ((DocSizeY-BrSizeY)/2) + ", OFFSETX, 0, STICKY, true, PADDING, 6, CLICKCLOSE, true );\" ><img id=\"CB_PicNotes\" title=\"" + CB_ImgNotes + "\" src=\"" + CB_PicDir + CB_PictureNotes + "\" alt=\"\" /></a>";
+				CB_Txt3a.innerHTML = "<a href=\"JavaScript:void(0);\" onclick=\"TipTog('<font color=#008800><b>" + CB_ImgNotes2 + ":</b></font><br />" + notey1 + "', CENTERWINDOW, true, DELAY, 0, TEXTALIGN, '" + CB_Alignm + "', WIDTH, "+CB_ImgWidth+"-30, BGCOLOR, '#fffbcc', BALLOON, true, BALLOONSTEMWIDTH, 0, ABOVE, true, BORDERCOLOR, '', TITLEBGCOLOR, '', CLOSEBTNTEXT, 'X', CLOSEBTN, false, CLOSEBTNCOLORS, ['#ff0000', '#ffffff', '#ffffff', '#ff0000'], OFFSETY, -10-" + ((DocSizeY-BrSizeY)/2) + "+" +(CB_ImgHeight/2)+ "-" +(spacer)+ ", OFFSETX, 0, STICKY, true, PADDING, 6, CLICKCLOSE, true );\" ><img id=\"CB_PicNotes\" title=\"" + CB_ImgNotes + "\" src=\"" + CB_PicDir + CB_PictureNotes + "\" alt=\"\" /></a>";
 			}
 		} else {
 			if (CB_ShowImgURL == "be") {

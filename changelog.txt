@@ -10,6 +10,7 @@
 
 
 Version 4.2.0
+ - Fixed: File not found errors on Album Tab page if GEDCOM loaded from PAF (windmillway)
  - Added: Option to include/exclude married names on indi/fam lists
  - Fixed: [ 2391188 ] Tree Tab Error (fisharebest)
  - Added: Load welcome page blocks in parallel using ajax
