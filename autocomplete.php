@@ -39,7 +39,7 @@ if (!function_exists("autocomplete_{$field}"))
 	die("Bad arg: field={$field}");
 
 //-- database query
-define('PGV_AUTOCOMPLETE_LIMIT', 200);
+define('PGV_AUTOCOMPLETE_LIMIT', 500);
 eval("\$data = autocomplete_".$field."();");
 if (empty($data))
 	die();
@@ -49,8 +49,9 @@ $data = array_unique($data);
 uasort($data, "stringsort");
 
 //-- output
-foreach ($data as $k=>$v)
+foreach ($data as $k=>$v) {
 	echo "$v|$k\n";
+}
 exit;
 
 /**
@@ -66,106 +67,91 @@ function autocomplete_INDI() {
 	// current INDI/FAM [, current event date]
 	if ($OPTION) {
 		list($pid, $event_date) = explode("|", $OPTION."|");
-		$record = GedcomRecord::getInstance($pid); // INDI or FAM
-		$event = new Event("1 EVEN\n2 DATE ".$event_date);
-		$event_date = $event->getDate();
-		$event_year = $event_date->date1->y;
+		$record=GedcomRecord::getInstance($pid); // INDI or FAM
+		$tmp=new GedcomDate($event_date);
+		$event_jd=$tmp->JD();
 		// INDI
-		$indi_birth_year = 0;
-		if ($record && $record->getType()=="INDI")
-			$indi_birth_year = $record->getBirthYear();
+		if ($record && $record->getType()=="INDI") {
+			$indi_birth_jd=$record->getEstimatedBirthDate()->minJD();
+		} else {
+			$indi_birth_jd=0;
+		}
 		// HUSB & WIFE
-		$husb_birth_year = 0;
-		$wife_birth_year = 0;
+		$husb_birth_jd = 0;
+		$wife_birth_jd = 0;
 		if ($record && $record->getType()=="FAM") {
-			$husb = $record->getHusband();
-			if ($husb)
-				$husb_birth_year = $husb->getBirthYear();
-			$wife = $record->getWife();
-			if ($wife)
-				$wife_birth_year = $wife->getBirthYear();
+			$husb=$record->getHusband();
+			if ($husb) {
+				$husb_birth_jd = $husb->getEstimatedBirthDate()->minJD();
+			}
+			$wife=$record->getWife();
+			if ($wife) {
+				$wife_birth_jdr = $wife->getEstimatedBirthDate()->minJD();
+			}
 		}
 	}
 
-	$sql = "SELECT DISTINCT i_id, n_list".
-				" FROM {$TBLPREFIX}individuals, {$TBLPREFIX}name".
-				" WHERE n_full ".PGV_DB_LIKE." '%".$FILTER."%'".
-				" AND i_id=n_id AND i_file=n_file".
-				" AND i_file=".PGV_GED_ID.
-				" LIMIT ".PGV_AUTOCOMPLETE_LIMIT;
-	$res = dbquery($sql);
+	$sql=
+		"SELECT DISTINCT 'INDI' AS type, i_id AS xref, i_file AS ged_id, i_gedcom AS gedrec, i_isdead, n_list".
+		" FROM {$TBLPREFIX}individuals, {$TBLPREFIX}name".
+		" WHERE n_full ".PGV_DB_LIKE." '%".$FILTER."%'".
+		" AND i_id=n_id AND i_file=n_file".
+		" AND i_file=".PGV_GED_ID.
+		" ORDER BY n_sort".
+		" LIMIT ".PGV_AUTOCOMPLETE_LIMIT;
+	$res=dbquery($sql);
 
-	$data = array();
-	while ($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)) {
-		$person = Person::getInstance($row["i_id"]);
-		// check privacy
-		if (!$person->canDisplayName())
-		  continue;
-		// filter ASSOciate
-		if ($OPTION) {
-			// no self-ASSOciate
-			if ($pid && $row["i_id"]==$pid)
-				continue;
-			// filter by birth date
-			$person_birth_year = $person->getBirthYear();
-			if (!$person_birth_year) {
-				$estim_date = $person->getEstimatedBirthDate();
-				$person_birth_year = $estim_date->date1->y;
+	$data=array();
+	while ($row=$res->fetchRow(DB_FETCHMODE_ASSOC)) {
+		$person=Person::getInstance($row);
+		if ($person->canDisplayName()) {
+			// filter ASSOciate
+			if ($OPTION && $event_jd) {
+				// no self-ASSOciate
+				if ($pid && $person->getXref()==$pid) {
+					continue;
+				}
+				// filter by birth date
+				$person_birth_jd=$person->getEstimatedBirthDate()->minJD();
+				if ($person_birth_jd) {
+					// born after event or not a contemporary
+					if ($event_jd && $person_birth_jd>$event_jd) {
+						continue;
+					} elseif ($indi_birth_jd && abs($indi_birth_jd-$person_birth_jd)>$MAX_ALIVE_AGE*365) {
+						continue;
+					} elseif ($husb_birth_jd && $wife_birth_jd && abs($husb_birth_jd-$person_birth_jd)>$MAX_ALIVE_AGE*365 && abs($wife_birth_jd-$person_birth_jd)>$MAX_ALIVE_AGE*365) {
+						continue;
+					} elseif ($husb_birth_jd && abs($husb_birth_jd-$person_birth_jd)>$MAX_ALIVE_AGE*365) {
+						continue;
+					} elseif ($wife_birth_jd && abs($wife_birth_jd-$person_birth_jd)>$MAX_ALIVE_AGE*365) {
+						continue;
+					}
+				}
+				// filter by death date
+				$person_death_jd=$person->getEstimatedDeathDate()->MaxJD();
+				if ($person_death_jd) {
+					// dead before event or not a contemporary
+					if ($event_jd && $person_death_jd<$event_jd) {
+						continue;
+					} elseif ($indi_birth_jd && $person_death_jd<$indi_birth_jd) {
+						continue;
+					} elseif ($husb_birth_jd && $wife_birth_jd && $person_death_jd<$husb_birth_jd && $person_death_jd<$wife_birth_jd) {
+						continue;
+					}	elseif ($husb_birth_jd && $person_death_jd<$husb_birth_jd) {
+						continue;
+					} elseif ($wife_birth_jd && $person_death_jd<$wife_birth_jd) {
+						continue;
+					}
+				}
 			}
-			if ($person_birth_year) {
-				// born after event
-				if ($event_year && $person_birth_year>$event_year)
-					continue;
-				// not a contemporary
-				if ($indi_birth_year
-				&& abs($indi_birth_year-$person_birth_year)>$MAX_ALIVE_AGE)
-					continue;
-				if ($husb_birth_year && $wife_birth_year
-				&& abs($husb_birth_year-$person_birth_year)>$MAX_ALIVE_AGE
-				&& abs($wife_birth_year-$person_birth_year)>$MAX_ALIVE_AGE)
-					continue;
-				elseif ($husb_birth_year
-				&& abs($husb_birth_year-$person_birth_year)>$MAX_ALIVE_AGE)
-					continue;
-				elseif ($wife_birth_year
-				&& abs($wife_birth_year-$person_birth_year)>$MAX_ALIVE_AGE)
-					continue;
-			}
-			// filter by death date
-			$person_death_year = $person->getDeathYear();
-			if (!$person_death_year) {
-				$estim_date = $person->getEstimatedDeathDate();
-				$person_death_year = $estim_date->date1->y;
-			}
-			if ($person_death_year) {
-				// dead before event
-				if ($event_year && $person_death_year<$event_year)
-					continue;
-				// not a contemporary
-				if ($indi_birth_year && $person_death_year<$indi_birth_year)
-					continue;
-				if ($husb_birth_year && $wife_birth_year
-				&& $person_death_year<$husb_birth_year
-				&& $person_death_year<$wife_birth_year)
-					continue;
-				elseif ($husb_birth_year && $person_death_year<$husb_birth_year)
-					continue;
-				elseif ($wife_birth_year && $person_death_year<$wife_birth_year)
-					continue;
+			// display
+			$data[$person->getXref()]=check_NN($row['n_list']);
+			if ($OPTION && $event_date && $person->getBirthDate()) {
+				$data[$person->getXref()].=" <span class=\"age\">(".$pgv_lang["age"]." ".$person->getBirthDate()->MinDate()->getAge(false, $event_jd).")</span>";
+			} else {
+				$data[$person->getXref()].=" <u>".ltrim($person->getBirthYear(), "0")."-".ltrim($person->getDeathYear(), "0")."</u>";
 			}
 		}
-		// display
-		$data[$row["i_id"]] = check_NN($row['n_list']);
-		if ($OPTION && $event_date && $person->getBirthDate())
-			$data[$row["i_id"]] .= " <span class=\"age\">(".$pgv_lang["age"]." ".
-														GedcomDate::GetAgeYears($person->getBirthDate(), $event_date).
-														")</span>";
-		else
-			$data[$row["i_id"]] .= " <u>".
-														ltrim($person->getBirthYear(), "0").
-														"-".
-														ltrim($person->getDeathYear(), "0").
-														"</u>";
 	}
 	$res->free();
 	return $data;
