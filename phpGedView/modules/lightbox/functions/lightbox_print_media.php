@@ -25,6 +25,7 @@
  * @subpackage Module
  * @version $Id$
  * @author Brian Holland
+ *
  */
 
 if (!defined('PGV_PHPGEDVIEW')) {
@@ -103,7 +104,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	}
 
 	if (!showFact("OBJE", $pid)) return false;
-	if (!isset($pgv_changes[$pid."&nbsp;".$GEDCOM])) $gedrec = find_gedcom_record($pid);
+	if (!isset($pgv_changes[$pid."_".$GEDCOM])) $gedrec = find_gedcom_record($pid);
 	else $gedrec = find_updated_record($pid);
 	$ids = array($pid);
 
@@ -141,13 +142,16 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	else $regexp = "/OBJE @(.*)@/";
 	$ct = preg_match_all($regexp, $gedrec, $match, PREG_SET_ORDER);
 	for($i=0; $i<$ct; $i++) {
-		if (!isset($current_objes[$match[$i][1]])) $current_objes[$match[$i][1]] = 1;
-		else $current_objes[$match[$i][1]]++;
+		if (!isset($current_objes[$match[$i][1]])) {
+			$current_objes[$match[$i][1]] = 1;
+		}else{ 
+			$current_objes[$match[$i][1]]++;
+		}
 		$obje_links[$match[$i][1]][] = $match[$i][0];
 	}
-
+	
 	$media_found = false;
-
+	
 	// Get the related media items
 		// Adding DISTINCT is the fix for: [ 1488550 ] Family/Individual Media Duplications
 		// but it may not work for all RDBMS.
@@ -175,9 +179,8 @@ if (!defined('PGV_PHPGEDVIEW')) {
 
 	$resmm = dbquery($sqlmm);
 	$foundObjs = array();
-
 	$numm = $resmm->numRows();
-
+	
 	// Begin to Layout the Album Media Rows
 	if ( ($t==1 && $numm>0 || $t==2 && $numm>0 || $t==3 && $numm>0 || $t==4 && $numm>0 || ($t==5 )) ) {
 		if ($t==5){ // do nothing
@@ -199,7 +202,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 			//echo '<td width="2"></td>';
 
 			echo '<td class="facts_value" >';
-			echo '<table class="facts_table" width=\"100%\" cellpadding=\"0\"><tr><td >' . "\n";
+			echo '<table class="facts_table" width="100%" cellpadding="0"><tr><td >' . "\n";
 				echo "<div id=\"thumbcontainer".$t."\">" . "\n";
 				echo "<ul class=\"section\" id=\"thumblist_".$t."\">" . "\n\n";
 				//echo "<ul id=\"thumblist\">" . "\n\n";
@@ -223,7 +226,9 @@ if (!defined('PGV_PHPGEDVIEW')) {
 		// Start pulling media items into thumbcontainer div ==============================
 		while ($rowm = $resmm->fetchRow(DB_FETCHMODE_ASSOC)) {
 			if (isset($foundObjs[$rowm['m_media']])) {
-				if (isset($current_objes[$rowm['m_media']])) $current_objes[$rowm['m_media']]--;
+				if (isset($current_objes[$rowm['m_media']])) {
+					$current_objes[$rowm['m_media']]--;
+				}
 				continue;
 			}
 			// NOTE: Determine the size of the mediafile
@@ -265,7 +270,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 				$row['mm_gedrec'] = $rowm["mm_gedrec"];
 				$rows['new'] = $row;
 				$rows['old'] = $rowm;
-				$current_objes[$rowm['m_media']]--;
+				// $current_objes[$rowm['m_media']]--;
 			}else{
 				if (!isset($current_objes[$rowm['m_media']]) && ($rowm['mm_gid']==$pid)) {
 					$rows['old'] = $rowm;
@@ -276,20 +281,89 @@ if (!defined('PGV_PHPGEDVIEW')) {
 					}
 				}
 			}
-
-
+			
 			foreach($rows as $rtype => $rowm) {
 				if ($t!=5){
-
 					$res = lightbox_print_media_row($rtype, $rowm, $pid);
-
 				}
 				$media_found = $media_found || $res;
 				$foundObjs[$rowm['m_media']]=true;
 			}
-			$mgedrec[] = $rowm["m_gedrec"];
+			// $mgedrec[] = $rowm["m_gedrec"];
 		}
-
+		
+		// =====================================================================================
+		if ($t==4){
+			//-- objects are removed from the $current_objes list as they are printed
+			//-- any objects left in the list are new objects recently added to the gedcom
+			//-- but not yet accepted into the database.  We will print them too.
+			
+			// NOTE this is not working just yet for new waiting to be accepted items - TODO
+			foreach($current_objes as $media_id=>$value) {
+				while($value>0) {
+					$objSubrec = array_pop($obje_links[$media_id]);
+					//-- check if we need to get the object from a remote location
+					$ct = preg_match("/(.*):(.*)/", $media_id, $match);
+					if ($ct>0) {
+						require_once 'includes/class_serviceclient.php';
+						$client = ServiceClient::getInstance($match[1]);
+						if (!is_null($client)) {
+							$newrec = $client->getRemoteRecord($match[2]);
+							$row['m_media'] = $media_id;
+							$row['m_file'] = get_gedcom_value("FILE", 1, $newrec);
+							$row['m_titl'] = get_gedcom_value("TITL", 1, $newrec);
+							if (empty($row['m_titl'])) {
+								$row['m_titl'] = get_gedcom_value("FILE:TITL", 1, $newrec);
+							}
+							$row['m_gedrec'] = $newrec;
+							$et = preg_match("/(\.\w+)$/", $row['m_file'], $ematch);
+							$ext = "";
+							if ($et>0) $ext = substr(trim($ematch[1]),1);
+							$row['m_ext'] = $ext;
+							$row['mm_gid'] = $pid;
+							$row['mm_gedrec'] = get_sub_record($objSubrec{0}, $objSubrec, $gedrec);
+							// $res =  lightbox_print_media_row('normal', $row, $pid);
+							// $media_found = $media_found || $res;
+						}
+					} else {
+						$row = array();
+						$newrec = find_updated_record($media_id);
+						if (empty($newrec)) $newrec = find_media_record($media_id);
+						$row['m_media'] = $media_id;
+						$row['m_file'] = get_gedcom_value("FILE", 1, $newrec);
+						$row['m_titl'] = get_gedcom_value("TITL", 1, $newrec);
+						if (empty($row['m_titl'])) { 
+							$row['m_titl'] = get_gedcom_value("FILE:TITL", 1, $newrec);
+						}
+						$row['m_gedrec'] = $newrec;
+						$et = preg_match("/(\.\w+)$/", $row['m_file'], $ematch);
+						$ext = "";
+						if ($et>0) $ext = substr(trim($ematch[1]),1);
+						$row['m_ext'] = $ext;
+						$row['mm_gid'] = $pid;
+						$row['mm_gedrec'] = get_sub_record($objSubrec{0}, $objSubrec, $gedrec);
+							// $res =  lightbox_print_media_row('new', $row, $pid);
+							// $media_found = $media_found || $res;
+							//	$current_objes[$rowm['m_media']]--;
+						if($newrec && !isset($rowm['m_file']) ) {
+							// -----
+						}else{
+							 echo "<li class=\"li_new\" >";
+							 echo "<table class=\"pic\" width=\"100%\" border=\"0\" >";
+							 echo "<tr><td align=\"center\" colspan=\"4\">";
+							 echo $row['m_media'];
+							 echo "</td></tr>";
+							 
+							$res =  lightbox_print_media_row('new', $row, $pid);
+							$media_found = $media_found || $res;
+						//	$current_objes[$rowm['m_media']]--;
+						}
+					}
+					$value--;
+				}
+			}
+		} 
+		
 		if ($t==5) {
 		}else{
 			echo "</ul>";
@@ -297,104 +371,23 @@ if (!defined('PGV_PHPGEDVIEW')) {
 			echo "<div class=\"clearlist\">";
 			echo "</div>";
 			// echo "</center>";
-
 			echo '</td></tr></table>' . "\n";
-
 			if ($t==3 && $numm > 0) {
 				echo "<font size='1'>";
 				echo $pgv_lang["census_text"];
 				echo "</font>";
 			}
-
 			// echo "</center>" . "\n";
 			echo '</td>'. "\n";
 			echo '</tr>';
 			echo '</table>' . "\n\n";
 		}
+		
 	}
-
-	//-- objects are removed from the $current_objes list as they are printed
-	//-- any objects left in the list are new objects recently added to the gedcom
-	//-- but not yet accepted into the database.  We will print them too.
-
-	foreach($current_objes as $media_id=>$value) {
-		while($value>0) {
-			$objSubrec = array_pop($obje_links[$media_id]);
-			//-- check if we need to get the object from a remote location
-			$ct = ( preg_match("/(.*):(.*)/", $media_id, $match) );
-			if ($ct>0) {
-				require_once 'includes/classes/class_serviceclient.php';
-				$client = ServiceClient::getInstance($match[1]);
-				if (!is_null($client)) {
-					$newrec = $client->getRemoteRecord($match[2]);
-					$row['m_media'] = $media_id;
-					$row['m_file'] = get_gedcom_value("FILE", 1, $newrec);
-					$row['m_titl'] = get_gedcom_value("TITL", 1, $newrec);
-
-					if (empty($row['m_titl'])) $row['m_titl'] = get_gedcom_value("FILE:TITL", 1, $newrec);
-					$row['m_gedrec'] = $newrec;
-					$et = preg_match("/(\.\w+)$/", $row['m_file'], $ematch);
-					$ext = "";
-					if ($et>0) $ext = substr(trim($ematch[1]),1);
-					$row['m_ext'] = $ext;
-					$row['mm_gid'] = $pid;
-					$row['mm_gedrec'] = get_sub_record($objSubrec{0}, $objSubrec, $gedrec);
-
-					// BH added "if" qualifiers for time $t ----------------------------------------
-					if ($t==1 && $ct>0 ) {
-						$typ2a  = ( (eregi("TYPE photo",$row['m_gedrec']) || eregi("TYPE painting",$row['m_gedrec']) || eregi("TYPE map",$row['m_gedrec']) || eregi("TYPE tombstone",$row['m_gedrec'])) && !eregi(".pdf",$row['m_file']) );
-					}
-					if ($t==2 && $ct>0 ) {
-						$typ2a  = ( (eregi("TYPE card",$row['m_gedrec']) || eregi("TYPE certificate",$row['m_gedrec']) || eregi("TYPE document",$row['m_gedrec']) || eregi("TYPE magazine",$row['m_gedrec']) || eregi("TYPE manuscript",$row['m_gedrec']) || eregi("TYPE newspaper",$row['m_gedrec'])) ) ;
-					}
-					if ($t==3 && $ct>0 ) {
-						$typ2a  = ( (eregi("TYPE electronic",$row['m_gedrec']) || eregi("TYPE film",$row['m_gedrec']) || eregi("TYPE fiche",$row['m_gedrec'])) );
-					}
-					if ($t==4 && $ct>0 ) {
-						$typ2a  = ( !eregi("TYPE",$row['m_gedrec']) || eregi("TYPE other",$row['m_gedrec']) || eregi("TYPE book",$row['m_gedrec']) || eregi("TYPE audio",$row['m_gedrec']) || eregi("TYPE video",$row['m_gedrec']) );
-					}
-
-					if ( $typ2a ) {
-						echo '<table border="0" class="facts_table"><tr>';
-						echo '<td width="80" align="center" class="descriptionbox">' ;
-						echo "<b><br /><br />" . $tt . "</b><br /><br />(" . $ct . ")";
-						echo '</td>' . "\n";
-						echo '<td class="facts_value">';
-						echo "<center>" . "\n\n";
-						echo '<table><tr><td>' . "\n";
-						echo "<center>" . "\n\n";  // needed for Firefox
-						echo "<div id=\"thumbcontainer".$t."\">" . "\n";
-
-						echo "<ul class=\"section\" id=\"thumblist_".$t."\">" . "\n\n";
-
-							$res = lightbox_print_media_row('normal', $row, $pid);
-							$media_found = $media_found || $res;
-
-						echo "</ul>";
-						echo "</div>";
-						echo "<div id=\"clearlist\">";
-						echo "</div";
-						echo "</center>";
-
-						echo '</td></tr></table>';
-						echo "</center>";
-
-						echo '</td>';
-						echo '</td>';
-						echo '</tr>';
-						echo '</table>' . "\n\n";
-					}
-				}
-			}
-			$value--;
-		}
-	}
-
-
-
-// ====================================================================================
-
-
+	
+	// if ($media_found) return true;
+	// else return false;
+	
 	if ($media_found) return $is_media="YES" ;
 	else return $is_media="NO" ;
 

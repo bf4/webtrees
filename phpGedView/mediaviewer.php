@@ -117,24 +117,24 @@ loadLangFile("lightbox:lang");
 							}
 
 							// Check Filetype of media item -------------------------------------------
-							// If Regular
+							// If Local Image 
 							if (eregi("\.(jpg|jpeg|gif|png)$", $filename)) {
-								$file_type = "regular";
-							// Else if FLV as URL
+								$file_type = "local_image";
+							// Else if FLV remote file(URL) 
 							}else if(eregi("http://www.youtube.com" ,$filename)) {
-								$file_type = "flv";
+								$file_type = "url_flv";
 							// Else if FLV local file
 							}else if(eregi("\.flv" ,$filename)) {
-								$file_type = "flvfile";
+								$file_type = "local_flv";
 							// Else if URL page
 							}else if(eregi("http" ,$filename) || eregi("\.pdf",$filename)) {
-								$file_type = "url";
-							// Else Other
+								$file_type = "url_page";
+							// Else Other 
 							}else{
 								$file_type = "other";
 							}
 							$name = trim($controller->mediaobject->getFullName());
-
+							
 							// if Lightbox installed ------------------------------------------------------------------------------
 							if (file_exists("modules/lightbox/album.php") ) {
 								// Get Lightbox config variables
@@ -143,33 +143,33 @@ loadLangFile("lightbox:lang");
 								}else{
 									include('modules/lightbox/lb_defaultconfig.php');
 								}
-								// If regular filetype (Lightbox)
-								if ($file_type == "regular") {
+								// If local image (Lightbox)
+								if ($file_type == "local_image") {
 									print "<a href=\"" . $filename . "\" rel='clearbox[general_3]' rev=\"" . $controller->pid . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name,ENT_COMPAT,'UTF-8')) . "\">" . "\n";
 								// Else If flv native (Lightbox)
-								}elseif ($file_type == "flvfile") {
+								}elseif ($file_type == "local_flv") {
 									print "<a href=\"module.php?mod=JWplayer&amp;pgvaction=flvVideo&amp;flvVideo=" . $filename . "\" rel='clearbox(" . 445 . "," . 370 . ",click)' rev=\"" . $controller->pid . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name,ENT_COMPAT,'UTF-8')) . "\">" . "\n";
-								// Else If flv url filetype (Lightbox)
-								}elseif ($file_type == "flv") {
+								// Else If url_flv filetype (Lightbox)
+								}elseif ($file_type == "url_flv") {
 									print "<a href=\"module.php?mod=JWplayer&amp;pgvaction=flvVideo&amp;flvVideo=" . str_replace('http://', '', $filename) . "\" rel='clearbox(" . 445 . "," . 370 . ",click)' rev=\"" . $filename . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name,ENT_COMPAT,'UTF-8')) . "\">" . "\n";
-								// Else If url filetype (Lightbox)
-								}elseif ($file_type == "url") {
+								// Else If url_page filetype (Lightbox)
+								}elseif ($file_type == "url_page") {
 									print "<a href=\"" . $filename . "\" rel='clearbox(" . $LB_URL_WIDTH . "," . $LB_URL_HEIGHT . ",click)' rev=\"" . $filename . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name,ENT_COMPAT,'UTF-8')) . "\">" . "\n";
 								// Else Other filetype (Pop-up Window)
 								}else{
 									print "<a href=\"javascript:;\" onclick=\"return openImage('".rawurlencode($filename)."',$imgwidth, $imgheight);\">";
 								}
-
+								
 							 // if Lightbox NOT installed or not enabled -------------------------------------------
-							 // else if JWplayer installed and filetype=flvfile (Locally stored in media files )
-							} elseif ( file_exists("modules/JWplayer/flvVideo.php") && $file_type == "flvfile") {
+							 // else if JWplayer installed and filetype=local_flv (Locally stored in media files )
+							} elseif ( file_exists("modules/JWplayer/flvVideo.php") && $file_type == "local_flv") {
 								print "<a href=\"javascript:;\" onclick=\" var winflv = window.open('module.php?mod=JWplayer&amp;pgvaction=flvVideo&amp;flvVideo=" . $filename . "', 'winflv', 'width=445, height=365, left=600, top=200'); if (window.focus) {winflv.focus();}\">";
-							// else if JWplayer installed and filetype=flv (Remote flv file e.g. YouTube)
-							} elseif ( file_exists("modules/JWplayer/flvVideo.php") && $file_type == "flv" ) {
+							// else if JWplayer installed and filetype=url_flv (Remote flv file e.g. YouTube)
+							} elseif ( file_exists("modules/JWplayer/flvVideo.php") && $file_type == "url_flv" ) {
 								print "<a href=\"javascript:;\" onclick=\" var winflv = window.open('module.php?mod=JWplayer&amp;pgvaction=flvVideo&amp;flvVideo=" . str_replace('http://', '', $filename) . "', 'winflv', 'width=445, height=365, left=600, top=200'); if (window.focus) {winflv.focus();}\">";
 							//else if URL image
 							} else if (eregi("http" ,$filename) && eregi("\.(jpg|jpeg|gif|png)$", $filename)){
-								$imageinfo = Getimagesize($filename);
+								$imageinfo = Getimagesize($filename); 
 								$wth = $imageinfo[0];
 								$hgt = $imageinfo[1];
 								print "<a href=\"javascript:void(0)\" onclick=\"var winimg = window.open('".$filename."', 'winimg', 'width=".$wth.", height=".$hgt.", left=200, top=200'); if (window.focus) {winimg.focus();} \">";
@@ -180,10 +180,10 @@ loadLangFile("lightbox:lang");
 							} else {
 								print "<a href=\"javascript:;\" onclick=\"return openImage('".rawurlencode($filename)."',$imgwidth, $imgheight);\">";
 							}
-
+							
 							// Now finally print the thumbnail  --------------------------------------------------
-							// If URL flv file (eg You Tube) and JWplayer installed, print the remote flv thumbnail
-							if ($file_type == "flv") {
+							// If url_flv file (eg You Tube) and JWplayer installed, print the remote flv thumbnail
+							if ($file_type == "url_flv") {
 								print "<img src=\"modules/JWplayer/flashrem.png\" width=\"60\" border=\"0\" align=\"center" . ($TEXT_DIRECTION== "rtl"?"right": "left") . "\" class=\"thumbnail\" " ;
 							// If URL page, print the Common URL Thumbnail
 							} else if (eregi("http",$filename) && !eregi("\.(jpg|jpeg|gif|png)$", $filename)) {
@@ -199,7 +199,7 @@ loadLangFile("lightbox:lang");
 							} else {
 								print "<img src=\"".$controller->mediaobject->getThumbnail()."\" border=\"0\" align=\"center" . ($TEXT_DIRECTION== "rtl"?"right": "left") . "\" class=\"thumbnail\"";
 							}
-
+							
 							// Finish off anchor and tooltips
 							if (isFileExternal($filename)) {
 								print " width=\"".$THUMBNAIL_WIDTH."\"";
