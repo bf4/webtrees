@@ -44,7 +44,9 @@ VERSION 4.2.
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change	codes and comments
 ----------------------------------------------------------------------------------------
-+$pgv_lang["skip_marnms"]							12 Dec 2008       A
+*$pgv_lang["search_fams"]							14 Dec 2008				W
+*$pgv_lang["search_indis"]							14 Dec 2008				W
++$pgv_lang["skip_marnms"]							12 Dec 2008				A
 +$pgv_lang["show_marnms"]							12 Dec 2008				A
 +$pgv_lang["stat_4_map"]							06 Dec 2008				A
 *$pgv_lang["stat_8_fam"]							01 Dec 2008				w
