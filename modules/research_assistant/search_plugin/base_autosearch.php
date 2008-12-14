@@ -271,10 +271,10 @@ class Base_AutoSearch {
 	}
 
 	function country($person) {
-		global $lang_short_cut, $LANGUAGE;
+		global $countries;
 
 		// Fetch a list of countries
-		require 'languages/countries.'.$lang_short_cut[$LANGUAGE].'.php';
+		loadLangFile('pgv_country');
 		asort($countries);
 
 		// Move birth/death countries to top of list
