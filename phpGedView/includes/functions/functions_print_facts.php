@@ -1361,6 +1361,7 @@ function print_main_media($pid, $level=1, $related=false, $noedit=false) {
 			}
 		}
 		$rows=array();
+		
 		//-- if there is a change to this media item then get the
 		//-- updated media item and show it
 		if (isset($pgv_changes[$rowm["m_media"]."_".$GEDCOM])) {
@@ -1379,7 +1380,7 @@ function print_main_media($pid, $level=1, $related=false, $noedit=false) {
 			$row['mm_gedrec'] = $rowm["mm_gedrec"];
 			$rows['new'] = $row;
 			$rows['old'] = $rowm;
-			$current_objes[$rowm['m_media']]--;
+			// $current_objes[$rowm['m_media']]--;
 		} else {
 			if (!isset($current_objes[$rowm['m_media']]) && ($rowm['mm_gid']==$pid)) {
 				$rows['old'] = $rowm;
@@ -1397,19 +1398,38 @@ function print_main_media($pid, $level=1, $related=false, $noedit=false) {
 		}
 		$media_found = true;
 	}
+	
 	//-- objects are removed from the $current_objes list as they are printed
 	//-- any objects left in the list are new objects recently added to the gedcom
 	//-- but not yet accepted into the database.  We will print them too.
 	foreach($current_objes as $media_id=>$value) {
 		while($value>0) {
 			$objSubrec = array_pop($obje_links[$media_id]);
-		//-- check if we need to get the object from a remote location
-		$ct = preg_match("/(.*):(.*)/", $media_id, $match);
-		if ($ct>0) {
-			require_once 'includes/classes/class_serviceclient.php';
-			$client = ServiceClient::getInstance($match[1]);
-			if (!is_null($client)) {
-				$newrec = $client->getRemoteRecord($match[2]);
+			//-- check if we need to get the object from a remote location
+			$ct = preg_match("/(.*):(.*)/", $media_id, $match);
+			if ($ct>0) {
+				require_once 'includes/classes/class_serviceclient.php';
+				$client = ServiceClient::getInstance($match[1]);
+				if (!is_null($client)) {
+					$newrec = $client->getRemoteRecord($match[2]);
+					$row['m_media'] = $media_id;
+					$row['m_file'] = get_gedcom_value("FILE", 1, $newrec);
+					$row['m_titl'] = get_gedcom_value("TITL", 1, $newrec);
+					if (empty($row['m_titl'])) $row['m_titl'] = get_gedcom_value("FILE:TITL", 1, $newrec);
+					$row['m_gedrec'] = $newrec;
+					$et = preg_match("/(\.\w+)$/", $row['m_file'], $ematch);
+					$ext = "";
+					if ($et>0) $ext = substr(trim($ematch[1]),1);
+					$row['m_ext'] = $ext;
+					$row['mm_gid'] = $pid;
+					$row['mm_gedrec'] = get_sub_record($objSubrec{0}, $objSubrec, $gedrec);
+						$res = print_main_media_row('normal', $row, $pid);
+					$media_found = $media_found || $res;
+				}
+			} else {
+				$row = array();
+				$newrec = find_updated_record($media_id);
+				if (empty($newrec)) $newrec = find_media_record($media_id);
 				$row['m_media'] = $media_id;
 				$row['m_file'] = get_gedcom_value("FILE", 1, $newrec);
 				$row['m_titl'] = get_gedcom_value("TITL", 1, $newrec);
@@ -1420,28 +1440,10 @@ function print_main_media($pid, $level=1, $related=false, $noedit=false) {
 				if ($et>0) $ext = substr(trim($ematch[1]),1);
 				$row['m_ext'] = $ext;
 				$row['mm_gid'] = $pid;
-					$row['mm_gedrec'] = get_sub_record($objSubrec{0}, $objSubrec, $gedrec);
-				$res = print_main_media_row('normal', $row, $pid);
+				$row['mm_gedrec'] = get_sub_record($objSubrec{0}, $objSubrec, $gedrec);
+					$res = print_main_media_row('new', $row, $pid);
 				$media_found = $media_found || $res;
 			}
-		} else {
-			$row = array();
-			$newrec = find_updated_record($media_id);
-			if (empty($newrec)) $newrec = find_media_record($media_id);
-			$row['m_media'] = $media_id;
-			$row['m_file'] = get_gedcom_value("FILE", 1, $newrec);
-			$row['m_titl'] = get_gedcom_value("TITL", 1, $newrec);
-			if (empty($row['m_titl'])) $row['m_titl'] = get_gedcom_value("FILE:TITL", 1, $newrec);
-			$row['m_gedrec'] = $newrec;
-			$et = preg_match("/(\.\w+)$/", $row['m_file'], $ematch);
-			$ext = "";
-			if ($et>0) $ext = substr(trim($ematch[1]),1);
-			$row['m_ext'] = $ext;
-			$row['mm_gid'] = $pid;
-				$row['mm_gedrec'] = get_sub_record($objSubrec{0}, $objSubrec, $gedrec);
-			$res = print_main_media_row('new', $row, $pid);
-			$media_found = $media_found || $res;
-		}
 			$value--;
 		}
 	}
@@ -1521,7 +1523,7 @@ function print_main_media_row($rtype, $rowm, $pid) {
 		print_menu($menu);
 		print "</div>";
 	}
-
+	
 	// NOTE Print the title of the media
 	print "</td><td class=\"optionbox wrap $styleadd\"><span class=\"field\">";
 	if (showFactDetails("OBJE", $pid)) {
@@ -1632,7 +1634,6 @@ function print_main_media_row($rtype, $rowm, $pid) {
 				}
 			}else{
 				$file_type = "none";
-				echo"none";
 			}
 			
 			// Finally print thumbnail
