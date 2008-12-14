@@ -160,8 +160,7 @@ if ($display=="hierarchy") {
 			$country = UTF8_strtoupper($country);
 			if (strlen($country)!=3) {
 				// search country code using current language countries table
-				require("languages/countries.en.php");
-				if (file_exists("languages/countries.".$lang_short_cut[$deflang].".php")) require("languages/countries.".$lang_short_cut[$deflang].".php");
+				loadLangFile('pgv_country');
 				foreach ($countries as $countrycode => $countryname) {
 					if (UTF8_strtoupper($countryname) == $country) {
 						$country = $countrycode;

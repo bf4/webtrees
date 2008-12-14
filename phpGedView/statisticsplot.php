@@ -956,8 +956,7 @@ else if ($x_as > 0 && $x_as < 5) {
 		foreach ($iso3166 as $three=>$two) {
 			$country_to_iso3166[UTF8_strtolower($three)]=$two;
 		}
-		require("languages/countries.en.php");
-		if (file_exists("languages/countries.".$lang_short_cut[$deflang].".php")) require("languages/countries.".$lang_short_cut[$deflang].".php");
+		loadLangFile('pgv_country');
 
 		foreach (array_keys($pgv_language) as $LANGUAGE) {
 			foreach ($countries as $code => $country) {
