@@ -60,7 +60,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 			// print "<table class=\"pic\" width=\"50px\" border=\"0\" >";
 			print "<tr>";
 				print "<td valign=\"top\" rowspan=\"2\" >";
-					print "<img src=\"modules/lightbox/images/transp80px.gif\" height=\"80px\" alt=\"\"></img>";
+					print "<img src=\"modules/lightbox/images/transp80px.gif\" height=\"82px\" alt=\"\"></img>";
 				print "</td>". "\n";
 				print "<td class=\"description_box\" valign=\"top\" colspan=\"3\" nowrap=\"nowrap\" >";
 					print "<center><br /><img src=\"themes/" . strtolower($theme_name) . "/images/media.gif\" height=\"30\" border=\"0\" />";
