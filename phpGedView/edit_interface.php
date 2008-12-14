@@ -517,6 +517,8 @@ case 'linkspouse':
 	break;
 //------------------------------------------------------------------------------
 case 'linkfamaction':
+	// Make sure we have the right ID (f123 vs. F123)
+	$famid=Family::getInstance($famid)->getXref();
 	if (PGV_DEBUG) {
 		phpinfo(INFO_VARIABLES);
 	}
@@ -529,8 +531,8 @@ case 'linkfamaction':
 
 		//-- update the individual record for the person
 		if (preg_match("/1 $itag @$famid@/", $gedrec)==0) {
+			$gedrec .= "\n";
 			if ($itag=="FAMC") {
-				$gedrec .= "\n";
 				$pedigree="";
 				if (isset($_REQUEST['pedigree'])) $pedigree = $_REQUEST['pedigree'];
 				switch ($pedigree) {
@@ -550,7 +552,8 @@ case 'linkfamaction':
 					$gedrec .= "1 FAMC @$famid@";
 					break;
 				}
-				$gedrec .= "\n";
+			} else {
+				$gedrec .= "1 FAMS @$famid@";
 			}
 			replace_gedrec($pid, $gedrec);
 		}
@@ -590,8 +593,7 @@ case 'linkfamaction':
 						}
 					}
 				}
-			}
-			else {
+			} else {
 				$famrec .= "\n1 $famtag @$pid@\n";
 				if (PGV_DEBUG) {
 					print "<pre>$famrec</pre>";

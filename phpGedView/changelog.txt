@@ -10,6 +10,7 @@
 
 
 Version 4.2.0
+ - Fixed: [ 2425458 ] Anomily if link family ID using lower case f (fisharebest)
  - Fixed: Corrected error occurring on Media Tab when "new" and "old" media changes are not yet accepted. (windmillway)
  - Changed: Album Tab Page, minor CSS alignment changes, Media Tab page, correct audio thumbnail (windmillway)
  - Fixed: File not found errors on Album Tab page if GEDCOM loaded from PAF (windmillway)
