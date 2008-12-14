@@ -136,8 +136,8 @@ float: right;
 }
 
 li.li_norm{
-/* border: 2px solid transparent; */
-border: 2px; 
+border: 2px solid transparent; 
+/* border: 2px;  */
 }
 
 li.li_new {

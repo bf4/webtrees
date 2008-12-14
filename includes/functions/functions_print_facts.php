@@ -1380,12 +1380,14 @@ function print_main_media($pid, $level=1, $related=false, $noedit=false) {
 			$rows['new'] = $row;
 			$rows['old'] = $rowm;
 			$current_objes[$rowm['m_media']]--;
-		}
-		else {
-			if (!isset($current_objes[$rowm['m_media']]) && ($rowm['mm_gid']==$pid)) $rows['old'] = $rowm;
-			else {
+		} else {
+			if (!isset($current_objes[$rowm['m_media']]) && ($rowm['mm_gid']==$pid)) {
+				$rows['old'] = $rowm;
+			} else {
 				$rows['normal'] = $rowm;
-				if (isset($current_objes[$rowm['m_media']])) $current_objes[$rowm['m_media']]--;
+				if (isset($current_objes[$rowm['m_media']])) {
+					$current_objes[$rowm['m_media']]--;
+				}
 			}
 		}
 		foreach($rows as $rtype => $rowm) {
@@ -1393,9 +1395,8 @@ function print_main_media($pid, $level=1, $related=false, $noedit=false) {
 			$media_found = $media_found || $res;
 			$foundObjs[$rowm['m_media']]=true;
 		}
-		//$media_found = true;
+		$media_found = true;
 	}
-
 	//-- objects are removed from the $current_objes list as they are printed
 	//-- any objects left in the list are new objects recently added to the gedcom
 	//-- but not yet accepted into the database.  We will print them too.
@@ -1423,8 +1424,7 @@ function print_main_media($pid, $level=1, $related=false, $noedit=false) {
 				$res = print_main_media_row('normal', $row, $pid);
 				$media_found = $media_found || $res;
 			}
-		}
-		else {
+		} else {
 			$row = array();
 			$newrec = find_updated_record($media_id);
 			if (empty($newrec)) $newrec = find_media_record($media_id);
@@ -1459,7 +1459,7 @@ function print_main_media_row($rtype, $rowm, $pid) {
 	global $PGV_IMAGE_DIR, $PGV_IMAGES, $view, $TEXT_DIRECTION;
 	global $SHOW_ID_NUMBERS, $GEDCOM, $factarray, $pgv_lang, $THUMBNAIL_WIDTH, $USE_MEDIA_VIEWER;
 	global $SEARCH_SPIDER;
-
+	
 	if (!displayDetailsById($rowm['m_media'], 'OBJE') || FactViewRestricted($rowm['m_media'], $rowm['m_gedrec'])) {
 		//print $rowm['m_media']." no privacy ";
 		return false;
@@ -1471,7 +1471,7 @@ function print_main_media_row($rtype, $rowm, $pid) {
 	// NOTEStart printing the media details
 	$thumbnail = thumbnail_file($rowm["m_file"], true, false, $pid);
 	$isExternal = isFileExternal($thumbnail);
-
+	
 	$linenum = 0;
 	print "\n\t\t<tr><td class=\"descriptionbox $styleadd center width20\"><img class=\"icon\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["media"]["small"]."\" alt=\"\" /><br />".$factarray["OBJE"];
 	if ($rowm['mm_gid']==$pid && PGV_USER_CAN_EDIT && (!FactEditRestricted($rowm['m_media'], $rowm['m_gedrec'])) && ($styleadd!="change_old") && ($view!="preview")) {
@@ -1521,6 +1521,7 @@ function print_main_media_row($rtype, $rowm, $pid) {
 		print_menu($menu);
 		print "</div>";
 	}
+
 	// NOTE Print the title of the media
 	print "</td><td class=\"optionbox wrap $styleadd\"><span class=\"field\">";
 	if (showFactDetails("OBJE", $pid)) {
@@ -1534,13 +1535,15 @@ function print_main_media_row($rtype, $rowm, $pid) {
 			$mediaTitle = basename($rowm["m_file"]);
 		}
 		if ($isExternal || media_exists($thumbnail)) {
+		
 			$mainFileExists = false;
+			//if ($isExternal || media_exists($mainMedia)) {
 			if ($isExternal || media_exists($mainMedia) || media_exists($rowm['m_file']) ) {
 				$mainFileExists = true;
 				$imgsize = findImageSize($mainMedia);
 				$imgwidth = $imgsize[0]+40;
 				$imgheight = $imgsize[1]+150;
-
+					
 				// Check Filetype of media item ( URL, Local or Other ) ------------------------------------------
 				// URL FLV  ----------------------------------
 				if (eregi("http://www.youtube.com", $rowm['m_file'])) {
@@ -1561,7 +1564,7 @@ function print_main_media_row($rtype, $rowm, $pid) {
 				}else{
 					$file_type = "other";
 				}
-
+				
 				//Get media item Notes
 				$haystack = $rowm["m_gedrec"];
 				$needle   = "1 NOTE";
@@ -1570,7 +1573,7 @@ function print_main_media_row($rtype, $rowm, $pid) {
 				$worked   = ereg_replace("1 NOTE", "1 NOTE<br />", $after);
 				$final    = $before.$needle.$worked;
 				$notes    = PrintReady(htmlspecialchars(addslashes(print_fact_notes($final, 1, true, true)),ENT_COMPAT,'UTF-8'));
-
+					
 				// if Lightbox installed ------------------------------------------------------------------------------
 				if (file_exists("modules/lightbox/album.php") ) {
 					if (file_exists("modules/lightbox/lb_config.php") ) {
@@ -1579,7 +1582,7 @@ function print_main_media_row($rtype, $rowm, $pid) {
 						include('modules/lightbox/lb_defaultconfig.php');
 					}
 					$name = trim($rowm["m_titl"]);
-
+					
 					// If URL FLV filetype (Lightbox)
 					if ($file_type == "url_flv") {
 						print "<a href=\"module.php?mod=JWplayer&amp;pgvaction=flvVideo&amp;flvVideo=" . str_replace('http://', '', $mainMedia) . "\" rel='clearbox(" . 445 . "," . 370 . ",click)' rev=\"" . $rowm["m_media"] . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name,ENT_COMPAT,'UTF-8')) . "::" . htmlspecialchars($notes,ENT_COMPAT,'UTF-8') . "\">" . "\n";
@@ -1603,7 +1606,7 @@ function print_main_media_row($rtype, $rowm, $pid) {
 					} else {
 						print "<a href=\"javascript:;\" onclick=\"return openImage('".rawurlencode($mainMedia)."',$imgwidth, $imgheight);\">";
 					}
-
+					
 				// if Lightbox NOT installed or not enabled -------------------------
 				 // else if Media viewer enabled
 				}elseif ($USE_MEDIA_VIEWER) {
@@ -1629,30 +1632,39 @@ function print_main_media_row($rtype, $rowm, $pid) {
 				}
 			}else{
 				$file_type = "none";
+				echo"none";
 			}
-
+			
 			// Finally print thumbnail
-				// If URL flv file (eg You Tube)
-				if ($file_type == "url_flv" && is_dir('modules/JWplayer')) {
-					print "<img src=\"modules/JWplayer/flashrem.png\" width=\"60\" border=\"0\" align=\"" . ($TEXT_DIRECTION== "rtl"?"right": "left") . "\" class=\"thumbnail\" " ;
-				// If URL page, Print the Common URL Thumbnail
-				} else if ($file_type == "url_page" && !eregi("\.pdf",$rowm['m_file']) && !eregi("\.avi",$rowm['m_file'])) {
-					print "<img src=\"images/URL.png\" border=\"0\" align=\"" . ($TEXT_DIRECTION== "rtl"?"right": "left") . "\"  width=\"72\" height=\"80\" " ;
-				// If local flv file  + (JWplayer installed) and no uploaded thumbnail, print the common flv thumbnail
-				}else if (media_exists($thumbnail) && eregi("\media.gif",$thumbnail) && eregi("\.flv",$rowm['m_file'])) {
-					if (file_exists("modules/lightbox/album.php") || file_exists("modules/JWplayer/flvVideo.php") ) {
-						print "<img src=\"modules/JWplayer/flash.png\" height=\"60\" border=\"0\" align=\"" . ($TEXT_DIRECTION== "rtl"?"right": "left") . "\" class=\"thumbnail\" " ;
-					}else{
-						print "<img src=\"images/media.gif\" height=\"60\" border=\"0\" align=\"" . ($TEXT_DIRECTION== "rtl"?"right": "left") . "\" class=\"thumbnail\" " ;
-					}
-				// Else Print the Regular Thumbnail if associated with a thumbnail image,
+			// If URL flv file (eg You Tube)
+			if ($file_type == "url_flv" && is_dir('modules/JWplayer')) {
+				print "<img src=\"modules/JWplayer/flashrem.png\" width=\"60\" border=\"0\" align=\"" . ($TEXT_DIRECTION== "rtl"?"right": "left") . "\" class=\"thumbnail\" " ;
+			// If URL page, Print the Common URL Thumbnail
+			} else if ($file_type == "url_page" && !eregi("\.pdf",$rowm['m_file']) && !eregi("\.avi",$rowm['m_file'])) {
+				print "<img src=\"images/URL.png\" border=\"0\" align=\"" . ($TEXT_DIRECTION== "rtl"?"right": "left") . "\"  width=\"72\" height=\"80\" " ;
+			// If local flv file  + (JWplayer installed) and no uploaded thumbnail, print the common flv thumbnail
+			}else if (media_exists($thumbnail) && eregi("\media.gif",$thumbnail) && eregi("\.flv",$rowm['m_file'])) {
+				if (file_exists("modules/lightbox/album.php") || file_exists("modules/JWplayer/flvVideo.php") ) {
+					print "<img src=\"modules/JWplayer/flash.png\" height=\"60\" border=\"0\" align=\"" . ($TEXT_DIRECTION== "rtl"?"right": "left") . "\" class=\"thumbnail\" " ;
 				}else{
-					if ($file_type=="none") {
-						print "<img src=\"images/media.gif\" height=\"60\" border=\"0\" align=\"" . ($TEXT_DIRECTION== "rtl"?"right": "left") . "\" class=\"thumbnail\"";
+					print "<img src=\"images/media.gif\" height=\"60\" border=\"0\" align=\"" . ($TEXT_DIRECTION== "rtl"?"right": "left") . "\" class=\"thumbnail\" " ;
+				}
+			// Else Print the Regular Thumbnail if associated with a thumbnail image,
+			}else{
+				// If audio file --------------------------------------------------
+				if (eregi("\.mp3", $rowm['m_file'])) {
+					if (media_exists("images/audio.png") && eregi("\media.gif",$thumbnail) ) {
+						print "<img src=\"images/audio.png\" height=\"60\" border=\"0\" align=\"center\" class=\"thumbnail\" " ;
+					}else if ($file_type=="none") {
+							print "<img src=\"images/media.gif\" height=\"60\" border=\"0\" align=\"" . ($TEXT_DIRECTION== "rtl"?"right": "left") . "\" class=\"thumbnail\"";
 					}else{
 						print "<img src=\"".$thumbnail."\" border=\"0\" align=\"" . ($TEXT_DIRECTION== "rtl"?"right": "left") . "\" class=\"thumbnail\"";
 					}
+				// Else if regular Image file -----------------------------------
+				}else{
+					print "<img src=\"".$thumbnail."\" border=\"0\" align=\"" . ($TEXT_DIRECTION== "rtl"?"right": "left") . "\" class=\"thumbnail\"";
 				}
+			}
 				
 			if ($isExternal) {
 				print " width=\"".$THUMBNAIL_WIDTH."\"";

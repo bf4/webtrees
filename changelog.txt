@@ -10,6 +10,7 @@
 
 
 Version 4.2.0
+ - Changed: Album Tab Page, minor CSS alignment changes, Media Tab page, correct audio thumbnail (windmillway)
  - Fixed: File not found errors on Album Tab page if GEDCOM loaded from PAF (windmillway)
  - Added: Option to include/exclude married names on indi/fam lists
  - Fixed: [ 2391188 ] Tree Tab Error (fisharebest)
