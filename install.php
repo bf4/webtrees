@@ -119,7 +119,7 @@ $head .= "</script>\n";
 
 $newSite = $CONFIGURED ? 'no':'yes';
 if (isset($_REQUEST['newSite'])) $newSite = safe_REQUEST($_REQUEST, 'newSite', 'yes', 'no');
-if ($newSite=='no') print_header($pgv_lang["install_wizard"], $head);
+if ($newSite=='no' && !DB::isError($DBCONN)) print_header($pgv_lang["install_wizard"], $head);
 else {
 header("Content-Type: text/html; charset=$CHARACTER_SET");
 
