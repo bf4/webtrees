@@ -10,6 +10,7 @@
 
 
 Version 4.2.0
+ - Fixed: [ 2432314 ] client.php 4498 inconsistency (fisharebest)
  - Fixed: [ 2432443 ] error in item called by client.php
  - Added: More options in Advanced Search name fields (canajun2eh)
  - Fixed: [ 2425458 ] Anomily if link family ID using lower case f (fisharebest)
