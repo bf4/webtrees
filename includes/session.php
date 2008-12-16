@@ -367,25 +367,24 @@ $PRIV_HIDE   = PGV_PRIV_HIDE;
 /**
  * Load GEDCOM configuration
  */
-require_once("config_gedcom.php");
-require_once(get_config_file());
+require_once 'config_gedcom.php';
+require_once get_config_file();
+
 if (empty($PHPGEDVIEW_EMAIL)) {
-	$PHPGEDVIEW_EMAIL = "phpgedview-noreply@".preg_replace("/^www\./i", "", $_SERVER["SERVER_NAME"]);
+	$PHPGEDVIEW_EMAIL="phpgedview-noreply@".preg_replace("/^www\./i", "", $_SERVER["SERVER_NAME"]);
 }
 
-/**
- * do not include print functions when using the gdbi protocol
- */
-if (strstr($SCRIPT_NAME, "client.php")===false && strstr($SCRIPT_NAME, "genservice.php")===false) {
-	//-- load media specific functions
-	require_once("includes/functions/functions_print.php");
-	require_once("includes/functions/functions_rtl.php");
+require_once 'includes/functions/functions_print.php';
+require_once 'includes/functions/functions_rtl.php';
+
+if ($MULTI_MEDIA) {
+	require_once 'includes/functions/functions_mediadb.php';
 }
+require_once 'includes/functions/functions_date.php';
 
-if ($MULTI_MEDIA) require_once("includes/functions/functions_mediadb.php");
-require_once("includes/functions/functions_date.php");
-
-if (empty($PEDIGREE_GENERATIONS)) $PEDIGREE_GENERATIONS = $DEFAULT_PEDIGREE_GENERATIONS;
+if (empty($PEDIGREE_GENERATIONS)) {
+	$PEDIGREE_GENERATIONS=$DEFAULT_PEDIGREE_GENERATIONS;
+}
 
 /* Re-build the various language-related arrays
  *  Note:
