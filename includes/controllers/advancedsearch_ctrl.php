@@ -244,13 +244,13 @@ class AdvancedSearchController extends SearchController {
 					// "Begins with" match.
 					switch ($parts[1]) {
 					case 'GIVN':
-						$sqlwhere.=' AND n_givn '.PGV_DB_LIKE." '%^".$DBCONN->escapeSimple($value)."%'";
+						$sqlwhere.=' AND n_givn '.PGV_DB_LIKE." '".$DBCONN->escapeSimple($value)."%'";
 						break;
 					case 'SURN':
-						$sqlwhere.=' AND n_surname '.PGV_DB_LIKE." '%^".$DBCONN->escapeSimple($value)."%'";
+						$sqlwhere.=' AND n_surname '.PGV_DB_LIKE." '".$DBCONN->escapeSimple($value)."%'";
 						break;
 					default:
-						$sqlwhere.=' AND n_full '.PGV_DB_LIKE." '%^".$DBCONN->escapeSimple($value)."%'";
+						$sqlwhere.=' AND n_full '.PGV_DB_LIKE." '".$DBCONN->escapeSimple($value)."%'";
 						break;
 					}
 					break;
