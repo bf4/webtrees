@@ -125,7 +125,7 @@ class AdvancedSearchController extends SearchController {
 
 	function getLabel($tag) {
 		global $factarray, $pgv_lang;
-		foreach (array('SDX', 'SDX_DM', 'SDX_STD', 'EXACT') as $keyword) {
+		foreach (array('SDX', 'SDX_DM', 'SDX_STD', 'EXACT', 'BEGINS', 'CONTAINS') as $keyword) {
 			$factarray["NAME:GIVN:$keyword"] = $factarray["GIVN"];
 			$factarray["NAME:SURN:$keyword"] = $factarray["SURN"];
 		}
@@ -240,6 +240,21 @@ class AdvancedSearchController extends SearchController {
 						break;
 					}
 					break;
+				case 'BEGINS':
+					// "Begins with" match.
+					switch ($parts[1]) {
+					case 'GIVN':
+						$sqlwhere.=' AND n_givn '.PGV_DB_LIKE." '%^".$DBCONN->escapeSimple($value)."%'";
+						break;
+					case 'SURN':
+						$sqlwhere.=' AND n_surname '.PGV_DB_LIKE." '%^".$DBCONN->escapeSimple($value)."%'";
+						break;
+					default:
+						$sqlwhere.=' AND n_full '.PGV_DB_LIKE." '%^".$DBCONN->escapeSimple($value)."%'";
+						break;
+					}
+					break;
+				case 'CONTAINS':
 				default:
 					// Partial match.
 					switch ($parts[1]) {

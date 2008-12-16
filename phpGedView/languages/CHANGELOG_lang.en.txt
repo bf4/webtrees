@@ -44,6 +44,12 @@ VERSION 4.2.
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change	codes and comments
 ----------------------------------------------------------------------------------------
+*$pgv_lang["search_general"]						15 Dec 2008				C
+*$pgv_lang["search_soundex"]						15 Dec 2008				C
+*$pgv_lang["search_replace"]						15 Dec 2008				C
++$pgv_lang["begins_with"]							15 Dec 2008				A
++$pgv_lang["contains"]								15 Dec 2008				A
++$pgv_lang["sounds_like"]							15 Dec 2008				A
 *$pgv_lang["search_fams"]							14 Dec 2008				W
 *$pgv_lang["search_indis"]							14 Dec 2008				W
 +$pgv_lang["skip_marnms"]							12 Dec 2008				A
