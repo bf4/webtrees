@@ -230,7 +230,8 @@ class AdvancedSearchController extends SearchController {
 					// Exact match.
 					switch ($parts[1]) {
 					case 'GIVN':
-						$sqlwhere.=' AND n_givn '.PGV_DB_LIKE." '".$DBCONN->escapeSimple($value)."'";
+						// Allow for exact match on multiple given names.
+						$sqlwhere.=' AND (n_givn '.PGV_DB_LIKE." '".$DBCONN->escapeSimple($value)."' OR n_givn ".PGV_DB_LIKE." '".$DBCONN->escapeSimple($value)." %' OR n_givn ".PGV_DB_LIKE." '% ".$DBCONN->escapeSimple($value)."' OR n_givn ".PGV_DB_LIKE." '% ".$DBCONN->escapeSimple($value)." %')";
 						break;
 					case 'SURN':
 						$sqlwhere.=' AND n_surname '.PGV_DB_LIKE." '".$DBCONN->escapeSimple($value)."'";
@@ -244,7 +245,8 @@ class AdvancedSearchController extends SearchController {
 					// "Begins with" match.
 					switch ($parts[1]) {
 					case 'GIVN':
-						$sqlwhere.=' AND n_givn '.PGV_DB_LIKE." '".$DBCONN->escapeSimple($value)."%'";
+						// Allow for match on start of multiple given names
+						$sqlwhere.=' AND (n_givn '.PGV_DB_LIKE." '".$DBCONN->escapeSimple($value)."%' OR n_givn ".PGV_DB_LIKE." '% ".$DBCONN->escapeSimple($value)."%')";
 						break;
 					case 'SURN':
 						$sqlwhere.=' AND n_surname '.PGV_DB_LIKE." '".$DBCONN->escapeSimple($value)."%'";
