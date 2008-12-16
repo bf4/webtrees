@@ -590,7 +590,7 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 				}
 				break;
 			case 'addchildaction':
-				if (preg_match('/\/([a-z]{2,3}\s+)*(.*)\//i', $father_name, $match)) {
+				if (preg_match('/\/((?:[a-z]{2,3}\s+)*)(.*)\//i', $father_name, $match)) {
 					if ($SURNAME_TRADITION=='polish' && $sextag=='F') {
 						$match[2]=preg_replace(array('/ski$/','/cki$/','/dzki$/'), array('ska', 'cka', 'dzka'), $match[2]);
 					}
@@ -600,7 +600,7 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 				}
 				break;
 			case 'addnewparentaction':
-				if ($famtag=='HUSB' && preg_match('/\/([a-z]{2,3}\s+)*(.*)\//i', $indi_name, $match)) {
+				if ($famtag=='HUSB' && preg_match('/\/((?:[a-z]{2,3}\s+)*)(.*)\//i', $indi_name, $match)) {
 					if ($SURNAME_TRADITION=='polish' && $sextag=='M') {
 						$match[2]=preg_replace(array('/ska$/','/cka$/','/dzka$/'), array('ski', 'cki', 'dzki'), $match[2]);
 					}
