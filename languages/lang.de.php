@@ -32,7 +32,10 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
-$pgv_lang["exact"]						= "Genaue";
+$pgv_lang["exact"]						= "Genau";
+$pgv_lang["begins_with"]				= "Beginnt mit";
+$pgv_lang["contains"]					= "Enthält";
+$pgv_lang["sounds_like"]				= "Lautet wie";
 $pgv_lang["advanced_search"]			= "Erweiterte Suche";
 $pgv_lang["more_fields"]				= "Mehr Felder hinzufügen";
 $pgv_lang["install_step_8"] 			= "Hier beginnen";

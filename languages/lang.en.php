@@ -32,6 +32,9 @@ if (!defined('PGV_PHPGEDVIEW')) {
 }
 
 $pgv_lang["exact"]				= "Exact";
+$pgv_lang["begins_with"]		= "Begins with";
+$pgv_lang["contains"]			= "Contains";
+$pgv_lang["sounds_like"]		= "Sounds like";
 $pgv_lang["advanced_search"] 	= "Advanced Search";
 $pgv_lang["more_fields"]		= "Add More Fields";
 $pgv_lang["install_step_8"] 		= "Get Started";
@@ -115,7 +118,7 @@ $pgv_lang["welcome_page"]			= "Welcome Page";
 $pgv_lang["editowndata"]			= "My Account";
 $pgv_lang["user_admin"] 			= "User administration";
 $pgv_lang["manage_media"]			= "Manage Media";
-$pgv_lang["search_general"]			= "General search";
+$pgv_lang["search_general"]			= "General Search";
 $pgv_lang["clipping_privacy"]		= "Some items could not be added due to privacy restrictions";
 $pgv_lang["chart_new"]				= "Family Tree Chart";
 $pgv_lang["loading"]				= "Loading...";
@@ -572,8 +575,8 @@ $pgv_lang["lastname_search"]		= "Last name";
 $pgv_lang["search_place"]			= "Place";
 $pgv_lang["search_year"]			= "Year";
 $pgv_lang["no_results"] 			= "No results found.";
-$pgv_lang["search_soundex"]			= "Soundex search";
-$pgv_lang["search_replace"]			= "Search and replace";
+$pgv_lang["search_soundex"]			= "Soundex Search";
+$pgv_lang["search_replace"]			= "Search and Replace";
 $pgv_lang["search_sources"]			= "Sources";
 $pgv_lang["search_more_chars"]      = "Please enter more than one character";
 $pgv_lang["search_soundextype"]		= "Soundex type:";
