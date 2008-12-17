@@ -238,6 +238,7 @@ $pgv_lang["fbsql"]						= "FrontBase";
 $pgv_lang["found_record"]				= "Datensatz gefunden";
 $pgv_lang["ged_download"]				= "Herunterladen";
 $pgv_lang["ged_import"]					= "Import";
+$pgv_lang["ged_export"] 				= "Export";
 $pgv_lang["ged_check"]					= "Verifizieren";
 $pgv_lang["gedcom_adm_head"]			= "GEDCOM-Verwaltung";
 $pgv_lang["gedcom_config_write_error"]	= "F E H L E R !!!<br />Die Datei <i>#GLOBALS[whichFile]#</i> konnte nicht geschrieben werden.  Bitte prüfen Sie, ob diese Datei die richtigen Schreib-Rechte hat.";

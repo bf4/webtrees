@@ -10,6 +10,7 @@
 
 
 Version 4.2.0
+ - Fixed: Advanced Search "Add More Fields" option doesn't work in IE (canajun2eh) 
  - Added: [ 2271529 ] Export gedcom to index directory (fisharebest)
  - Fixed: [ 2432314 ] client.php 4498 inconsistency (fisharebest)
  - Fixed: [ 2432443 ] error in item called by client.php

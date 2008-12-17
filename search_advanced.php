@@ -68,7 +68,7 @@ print_header($pgv_lang["advanced_search"]);
 		opt = document.createElement('option');
 		opt.value='<?php print $field; ?>';
 		opt.text='<?php print $controller->getLabel($field); ?>';
-		sel.appendChild(opt);
+		sel.options.add(opt);
 		<?php } ?>
 		label.appendChild(sel);
 		trow.appendChild(label);

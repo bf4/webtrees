@@ -165,7 +165,7 @@ $factarray["_DBID"] = "ID der fremden Datenbank";
 // These facts are used in specific contexts
 $factarray["STAT:DATE"] = "Datum der Statusänderung";
 
-//These facts are compounds for the view probabilities page
+//These facts are compounds for the view probabilities and the advanced search pages
 $factarray["FAMC:HUSB:SURN"] = "Nachname des Vaters";
 $factarray["FAMC:WIFE:SURN"] = "Nachname der Mutter";
 $factarray["FAMC:HUSB:BIRT:PLAC"] = "Geburtsort des Vaters";
@@ -184,6 +184,14 @@ $factarray["FAMC:WIFE:FAMC:WIFE:GIVN"] = "Vornamen der mütterlichen Großmutter
 $factarray["FAMC:WIFE:FAMC:HUSB:GIVN"] = "Vornamen des mütterlichen Großvaters";
 $factarray["FAMC:HUSB:FAMC:WIFE:GIVN"] = "Vornamen der väterlichen Großmutter";
 $factarray["FAMS:CHIL:BIRT:PLAC"] = "Geburtsort des Kindes";
+$factarray["FAMS:NOTE"] = "Ehepartner Anmerkung";
+$factarray["FAMS:CENS:DATE"] = "Volkszählung-Ehepartner Datum";
+$factarray["FAMS:CENS:PLAC"] = "Volkszählung-Ehepartner Ort";
+$factarray["FAMS:DIV:DATE"] = "Scheidung-Ehepartner Datum";
+$factarray["FAMS:DIV:PLAC"] = "Scheidung-Ehepartner Ort";
+$factarray["FAMS:SLGS:DATE"] = "HLT Ehepartner-Siegelung Datum";
+$factarray["FAMS:SLGS:PLAC"] = "HLT Ehepartner-Siegelung Ort";
+$factarray["FAMS:SLGS:TEMP"] = "HLT Ehepartner-Siegelung Tempel";
 
 // These facts are all colon delimited
 $factarray["BIRT:PLAC"] = "Geburtsort";

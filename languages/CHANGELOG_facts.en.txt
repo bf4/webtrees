@@ -44,6 +44,14 @@ VERSION 4.2.0
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 -----------------------------------------------------------------------------------------
++$factarray["FAMS:NOTE"]							17 Dec 2008				A
++$factarray["FAMS:CENS:DATE"]						17 Dec 2008				A
++$factarray["FAMS:CENS:PLAC"]						17 Dec 2008				A
++$factarray["FAMS:DIV:DATE"]						17 Dec 2008				A
++$factarray["FAMS:DIV:PLAC"]						17 Dec 2008				A
++$factarray["FAMS:SLGS:DATE"]						17 Dec 2008				A
++$factarray["FAMS:SLGS:PLAC"]						17 Dec 2008				A
++$factarray["FAMS:SLGS:TEMP"]						17 Dec 2008				A
 *$factarray["_UID"]									8 Dec 2008				W
 
 
