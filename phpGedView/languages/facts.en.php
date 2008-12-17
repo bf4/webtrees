@@ -161,7 +161,7 @@ $factarray["_DBID"] = "Linked database ID";
 // These facts are used in specific contexts
 $factarray["STAT:DATE"] = "Status Change Date";
 
-//These facts are compounds for the view probabilities page
+//These facts are compounds for the view probabilities and the advanced search pages
 $factarray["FAMC:HUSB:SURN"] = "Father's Surname";
 $factarray["FAMC:WIFE:SURN"] = "Mother's Surname";
 $factarray["FAMC:HUSB:BIRT:PLAC"] = "Father's Birthplace";
@@ -180,6 +180,14 @@ $factarray["FAMC:WIFE:FAMC:WIFE:GIVN"] = "Maternal Grandmother's Given Name";
 $factarray["FAMC:WIFE:FAMC:HUSB:GIVN"] = "Maternal Grandfather's Given Name"; 
 $factarray["FAMC:HUSB:FAMC:WIFE:GIVN"] = "Paternal Grandmother's Given Name";
 $factarray["FAMS:CHIL:BIRT:PLAC"] = "Child's Birth Place";
+$factarray["FAMS:NOTE"] = "Spouse Note";
+$factarray["FAMS:CENS:DATE"] = "Spouse Census Date";
+$factarray["FAMS:CENS:PLAC"] = "Spouse Census Place";
+$factarray["FAMS:DIV:DATE"] = "Spouse Divorce Date";
+$factarray["FAMS:DIV:PLAC"] = "Spouse Divorce Place";
+$factarray["FAMS:SLGS:DATE"] = "LDS Spouse Sealing Date";
+$factarray["FAMS:SLGS:PLAC"] = "LDS Spouse Sealing Place";
+$factarray["FAMS:SLGS:TEMP"] = "LDS Spouse Sealing Temple";
 
 // These facts are all colon delimited
 $factarray["BIRT:PLAC"] = "Birth Place";
