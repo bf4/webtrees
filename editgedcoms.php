@@ -163,7 +163,7 @@ $GedCount = 0;
 			// Row 1: Heading
 			print "<tr>";
 			print "<td colspan=\"1\" class=\"list_label\">".$pgv_lang["ged_title"]."</td>";
-			print "<td colspan=\"5\" class=\"list_value_wrap\">";
+			print "<td colspan=\"6\" class=\"list_value_wrap\">";
 			if ($DEFAULT_GEDCOM==$ged_name) print "<span class=\"label\">";
 			print PrintReady(get_gedcom_setting($ged_id, 'title'))."&nbsp;&nbsp;";
 			if ($TEXT_DIRECTION=="rtl") print getRLM() . "(".$ged_id.")" . getRLM();
@@ -210,17 +210,21 @@ $GedCount = 0;
 			print "&nbsp;&nbsp;";
 			print "</td>";
 
-			print "<td valign=\"top\">";		// Column 4  (Delete action)
+			echo '<td valign="top">';		// Column 4  (Export action)
+			echo '<a href="javascript:" onclick="window.open(\'', encode_url("export_gedcom.php?export={$ged_name}"), '\', \'_blank\',\'left=50,top=50,width=500,height=500,resizable=1,scrollbars=1\');">', $pgv_lang['ged_export'], '</a>';
+			echo '</td>';
+
+			print "<td valign=\"top\">";		// Column 5  (Delete action)
 			print "<a href=\"".encode_url("editgedcoms.php?action=delete&ged={$ged_name}")."\" onclick=\"return confirm('".$pgv_lang["confirm_gedcom_delete"]." ".preg_replace("/'/", "\'", $ged_name)."?');\">".$pgv_lang["delete"]."</a>";
 			print "&nbsp;&nbsp;";
 			print "</td>";
 
-			print "<td valign=\"top\">";		// Column 5  (Download action)
+			print "<td valign=\"top\">";		// Column 6  (Download action)
 			print "<a href=\"".encode_url("downloadgedcom.php?ged={$ged_name}")."\">".$pgv_lang["ged_download"]."</a>";
 			print "&nbsp;&nbsp;";
 			print "</td>";
 
-			print "<td valign=\"top\">";		// Column 6  (Check action)
+			print "<td valign=\"top\">";		// Column 7  (Check action)
 			print "<a href=\"".encode_url("gedcheck.php?ged={$ged_name}")."\">".$pgv_lang["ged_check"]."</a>";
 			print "&nbsp;&nbsp;";
 			print "</td>";
@@ -242,7 +246,7 @@ $GedCount = 0;
 			print "<a href=\"".encode_url("editconfig_gedcom.php?ged={$ged_name}")."\">".$pgv_lang["edit"]."</a>";
 			print "</td>";
 
-			print "<td colspan=\"3\" valign=\"top\">";		// Columns 4-6  (blank)
+			print "<td colspan=\"4\" valign=\"top\">";		// Columns 4-7  (blank)
 			print "&nbsp;";
 			print "</td>";
 			print "</tr>";
@@ -261,7 +265,7 @@ $GedCount = 0;
 			print "<a href=\"".encode_url("edit_privacy.php?ged={$ged_name}")."\">".$pgv_lang["edit"]."</a>";
 			print "</td>";
 
-			print "<td colspan=\"3\" valign=\"top\">";		// Columns 4-6  (blank)
+			print "<td colspan=\"4\" valign=\"top\">";		// Columns 4-7  (blank)
 			print "&nbsp;";
 			print "</td>";
 			print "</tr>";
@@ -283,7 +287,7 @@ $GedCount = 0;
 			}
 			print "</td>";
 
-			print "<td colspan=\"4\" valign=\"top\">";		// Columns 3-6  (file name selector)
+			print "<td colspan=\"5\" valign=\"top\">";		// Columns 3-7  (file name selector)
 			// Get the logfiles
 			if (!isset($logfilename)) $logfilename = "";
 			$file_nr = 0;
@@ -336,7 +340,7 @@ $GedCount = 0;
 			}
 			print "</td>";
 
-			print "<td colspan=\"4\" valign=\"top\">";		// Columns 3-6  (file name selector)
+			print "<td colspan=\"5\" valign=\"top\">";		// Columns 3-7  (file name selector)
 			// Get the logfiles
 			if (!isset($logfilename)) $logfilename = "";
 			$file_nr = 0;
