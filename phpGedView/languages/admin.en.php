@@ -239,6 +239,7 @@ $pgv_lang["fbsql"]								= "FrontBase";
 $pgv_lang["found_record"]						= "Found record";
 $pgv_lang["ged_download"]						= "Download";
 $pgv_lang["ged_import"] 						= "Import";
+$pgv_lang["ged_export"] 						= "Export";
 $pgv_lang["ged_check"] 							= "Check";
 $pgv_lang["gedcom_adm_head"]					= "GEDCOM Administration";
 $pgv_lang["gedcom_config_write_error"]			= "E R R O R !!!<br />Could not write to file <i>#GLOBALS[whichFile]#</i>.  Please check it for proper Write permissions.";
