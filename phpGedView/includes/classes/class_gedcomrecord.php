@@ -40,11 +40,11 @@ require_once 'includes/classes/class_event.php';
 require_once 'includes/classes/class_serviceclient.php';
 
 class GedcomRecord {
-	var $gedrec     =null;  // Raw gedcom text (privatised)
 	var $xref       =null;  // The record identifier
-	var $ged_id     =null;  // The gedcom file, only set if this record comes from the database
 	var $type       =null;  // INDI, FAM, etc.
-	var $changed    =false; // Is this a new record from pgv_changes[]
+	var $ged_id     =null;  // The gedcom file, only set if this record comes from the database
+	var $gedrec     =null;  // Raw gedcom text (privatised)
+	private $changed=false; // Is this a new record from pgv_changes[]
 	var $rfn        =null;
 	var $facts      =null;
 	var $changeEvent=null;
