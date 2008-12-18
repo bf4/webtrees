@@ -33,12 +33,10 @@ if (!defined('PGV_PHPGEDVIEW')) {
 require_once 'includes/classes/class_person.php';
 
 class Base_AutoSearch {
-	// These values should be class static/constant properties.
-	// When we move to PHP5, we can do this properly.
-	var $url=null;
-	var $method=null;
-	var $title=null;
-	var $fields=null;
+	private $title =null;
+	private $url   =null;
+	private $method=null;
+	private $fields=null;
 
 	// Constructor simply defines the fields to be used
 	function Base_AutoSearch($title, $url, $method, $fields) {
