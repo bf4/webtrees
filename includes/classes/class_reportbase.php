@@ -1784,7 +1784,7 @@ function PGVRListSHandler($attrs) {
 			break;
 		default:
 			if (count($filters)>0) {
-				var_dump($filters);
+//				var_dump($filters);
 				$list = search_indis($filters, array(PGV_GED_ID), 'AND', true);
 			}
 			//-- handle date specific searches
