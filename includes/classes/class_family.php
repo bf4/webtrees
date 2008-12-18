@@ -261,7 +261,9 @@ class Family extends GedcomRecord {
 	 */
 	function &getUpdatedFamily() {
 		global $GEDCOM, $pgv_changes;
-		if ($this->changed) return $this;
+		if ($this->getChanged()) {
+			return $this;
+		}
 		if (PGV_USER_CAN_EDIT && $this->canDisplayDetails()) {
 			if (isset($pgv_changes[$this->xref."_".$GEDCOM])) {
 				$newrec = find_updated_record($this->xref);
