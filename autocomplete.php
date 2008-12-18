@@ -92,7 +92,7 @@ function autocomplete_INDI() {
 	}
 
 	$sql=
-		"SELECT DISTINCT 'INDI' AS type, i_id AS xref, i_file AS ged_id, i_gedcom AS gedrec, i_isdead, n_list".
+		"SELECT DISTINCT 'INDI' AS type, i_id AS xref, i_file AS ged_id, i_gedcom AS gedrec, i_isdead, i_sex, n_list".
 		" FROM {$TBLPREFIX}individuals, {$TBLPREFIX}name".
 		" WHERE n_full ".PGV_DB_LIKE." '%".$FILTER."%'".
 		" AND i_id=n_id AND i_file=n_file".

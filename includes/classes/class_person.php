@@ -56,27 +56,27 @@ class Person extends GedcomRecord {
 	var $file = "";
 	var $age = null;
 	var $isdead = -1;
+	var $sex=null;
 	var $generation; // used in some lists to keep track of this Person's generation in that list
 
 	// Cached results from various functions.
-	// These should become private when we move to PHP5.  Do not use them from outside this class.
-	var $_getSex=null;
-	var $_getBirthDate=null;
-	var $_getBirthPlace=null;
-	var $_getAllBirthDates=null;
-	var $_getAllBirthPlaces=null;
-	var $_getEstimatedBirthDate=null;
-	var $_getDeathDate=null;
-	var $_getDeathPlace=null;
-	var $_getAllDeathDates=null;
-	var $_getAllDeathPlaces=null;
-	var $_getEstimatedDeathDate=null;
+	private $_getBirthDate=null;
+	private $_getBirthPlace=null;
+	private $_getAllBirthDates=null;
+	private $_getAllBirthPlaces=null;
+	private $_getEstimatedBirthDate=null;
+	private $_getDeathDate=null;
+	private $_getDeathPlace=null;
+	private $_getAllDeathDates=null;
+	private $_getAllDeathPlaces=null;
+	private $_getEstimatedDeathDate=null;
 
 	// Create a Person object from either raw GEDCOM data or a database row
 	function Person($data, $simple=true) {
 		if (is_array($data)) {
 			// Construct from a row from the database
 			$this->isdead=$data['i_isdead'];
+			$this->sex   =$data['i_sex'];
 		} else {
 			// Construct from raw GEDCOM data
 		}
@@ -522,7 +522,7 @@ class Person extends GedcomRecord {
 	 * @return string 	return M, F, or U
 	 */
 	function getSex() {
-		if (is_null($this->_getSex)) {
+		if (is_null($this->sex)) {
 			if (preg_match('/^1 SEX ([MF])/m', $this->gedrec, $match)) {
 				$this->sex=$match[1];
 			} else {

@@ -744,7 +744,7 @@ function get_indilist_indis($surn='', $salpha='', $galpha='', $marnm=false, $fam
 	$galpha=$DBCONN->escapeSimple($galpha);
 	$ged_id=(int)$ged_id;
 
-	$sql="SELECT DISTINCT 'INDI' AS type, i_id AS xref, i_file AS ged_id, i_gedcom AS gedrec, i_isdead, n_surn, n_surname, n_num FROM {$TBLPREFIX}individuals JOIN {$TBLPREFIX}name ON (i_id=n_id AND i_file=n_file)";
+	$sql="SELECT DISTINCT 'INDI' AS type, i_id AS xref, i_file AS ged_id, i_gedcom AS gedrec, i_isdead, i_sex, n_surn, n_surname, n_num FROM {$TBLPREFIX}individuals JOIN {$TBLPREFIX}name ON (i_id=n_id AND i_file=n_file)";
 	if ($fams) {
 		$sql.=" JOIN {$TBLPREFIX}link ON (i_id=l_from AND i_file=l_file)";
 	}
@@ -967,7 +967,7 @@ function fetch_linked_indi($xref, $link, $ged_id) {
 	$xref=$DBCONN->escapeSimple($xref);
 	$link=$DBCONN->escapeSimple($link);
 	$ged_id=(int)$ged_id;
-	$res=dbquery("SELECT 'INDI' AS type, i_id AS xref, {$ged_id} AS ged_id, i_gedcom AS gedrec, i_isdead FROM {$TBLPREFIX}link, {$TBLPREFIX}individuals WHERE i_file=l_file AND i_id=l_from AND l_file={$ged_id} AND l_type='{$link}' AND l_to='{$xref}'");
+	$res=dbquery("SELECT 'INDI' AS type, i_id AS xref, {$ged_id} AS ged_id, i_gedcom AS gedrec, i_isdead, i_sex FROM {$TBLPREFIX}link, {$TBLPREFIX}individuals WHERE i_file=l_file AND i_id=l_from AND l_file={$ged_id} AND l_type='{$link}' AND l_to='{$xref}'");
 
 	$list=array();
 	while ($row=$res->fetchRow(DB_FETCHMODE_ASSOC)) {
@@ -1030,7 +1030,7 @@ function fetch_person_record($xref, $ged_id) {
 	$xref=$DBCONN->escapeSimple($xref);
 	$ged_id=(int)$ged_id;
 	$res=dbquery(
-		"SELECT 'INDI' AS type, i_id AS xref, {$ged_id} AS ged_id, i_gedcom AS gedrec, i_isdead ".
+		"SELECT 'INDI' AS type, i_id AS xref, {$ged_id} AS ged_id, i_gedcom AS gedrec, i_isdead, i_sex ".
 		"FROM {$TBLPREFIX}individuals WHERE i_id='{$xref}' AND i_file={$ged_id}"
 	);
 	$row=$res->fetchRow(DB_FETCHMODE_ASSOC);
@@ -1431,7 +1431,7 @@ function get_repo_list($ged_id) {
 function get_indi_list() {
 	global $TBLPREFIX, $DBCOLLATE;
 
-	$sql="SELECT DISTINCT 'INDI' AS type, i_id AS xref, i_file AS ged_id, i_gedcom AS gedrec, i_isdead FROM {$TBLPREFIX}name, {$TBLPREFIX}individuals WHERE n_file=".PGV_GED_ID." AND i_file=n_file AND i_id=n_id AND n_num=0 ORDER BY n_sort {$DBCOLLATE}";
+	$sql="SELECT DISTINCT 'INDI' AS type, i_id AS xref, i_file AS ged_id, i_gedcom AS gedrec, i_isdead, i_sex FROM {$TBLPREFIX}name, {$TBLPREFIX}individuals WHERE n_file=".PGV_GED_ID." AND i_file=n_file AND i_id=n_id AND n_num=0 ORDER BY n_sort {$DBCOLLATE}";
 	$res=dbquery($sql);
 	$indis=array();
 	while ($row=$res->fetchRow(DB_FETCHMODE_ASSOC)) {
@@ -1485,7 +1485,7 @@ function search_indis($query, $geds, $match, $skip) {
 		}
 	}
 
-	$sql="SELECT 'INDI' AS type, i_id AS xref, i_file AS ged_id, i_gedcom AS gedrec, i_isdead FROM {$TBLPREFIX}individuals WHERE ".implode(" {$match} ", $querysql).' AND i_file IN ('.implode(',', $geds).')';
+	$sql="SELECT 'INDI' AS type, i_id AS xref, i_file AS ged_id, i_gedcom AS gedrec, i_isdead, i_sex FROM {$TBLPREFIX}individuals WHERE ".implode(" {$match} ", $querysql).' AND i_file IN ('.implode(',', $geds).')';
 
 	// Group results by gedcom, to minimise switching between privacy files
 	$sql.=' ORDER BY ged_id';
@@ -1552,7 +1552,7 @@ function search_indis_names($query, $geds, $match) {
 		}
 	}
 	
-	$sql="SELECT DISTINCT 'INDI' AS type, i_id AS xref, i_file AS ged_id, i_gedcom AS gedrec, i_isdead FROM {$TBLPREFIX}individuals JOIN {$TBLPREFIX}name ON i_id=n_id AND i_file=n_file WHERE ".implode(" {$match} ", $querysql).' AND i_file IN ('.implode(',', $geds).')';
+	$sql="SELECT DISTINCT 'INDI' AS type, i_id AS xref, i_file AS ged_id, i_gedcom AS gedrec, i_isdead, i_sex FROM {$TBLPREFIX}individuals JOIN {$TBLPREFIX}name ON i_id=n_id AND i_file=n_file WHERE ".implode(" {$match} ", $querysql).' AND i_file IN ('.implode(',', $geds).')';
 
 	// Group results by gedcom, to minimise switching between privacy files
 	$sql.=' ORDER BY ged_id';
@@ -1588,7 +1588,7 @@ function search_indis_names($query, $geds, $match) {
 function search_indis_soundex($soundex, $lastname, $firstname, $place, $geds) {
 	global $TBLPREFIX;
 
-	$sql="SELECT DISTINCT 'INDI' AS type, i_id AS xref, i_file AS ged_id, i_gedcom AS gedrec, i_isdead FROM {$TBLPREFIX}individuals";
+	$sql="SELECT DISTINCT 'INDI' AS type, i_id AS xref, i_file AS ged_id, i_gedcom AS gedrec, i_isdead, i_sex FROM {$TBLPREFIX}individuals";
 	if ($place) {
 		$sql.=" JOIN {$TBLPREFIX}placelinks ON (pl_file=i_file AND pl_gid=i_id)";
 		$sql.="	JOIN {$TBLPREFIX}places ON (p_file=pl_file AND pl_p_id=p_id)";
@@ -1687,7 +1687,7 @@ function get_recent_changes($jd=0, $allgeds=false) {
 function search_indis_dates($day, $month, $year, $facts) {
 	global $TBLPREFIX, $DBCONN;
 
-	$sql="SELECT 'INDI' AS type, i_id AS xref, i_file AS ged_id, i_gedcom AS gedrec, i_isdead FROM {$TBLPREFIX}individuals JOIN {$TBLPREFIX}dates ON i_id=d_gid AND i_file=d_file WHERE i_file=".PGV_GED_ID;
+	$sql="SELECT 'INDI' AS type, i_id AS xref, i_file AS ged_id, i_gedcom AS gedrec, i_isdead, i_sex FROM {$TBLPREFIX}individuals JOIN {$TBLPREFIX}dates ON i_id=d_gid AND i_file=d_file WHERE i_file=".PGV_GED_ID;
 	if ($day) {
 		$sql.=" AND d_day=".(int)$day;
 	}
@@ -1725,7 +1725,7 @@ function search_indis_daterange($start, $end, $facts) {
 	$start=(int)$start;
 	$end  =(int)$end;
 
-	$sql="SELECT 'INDI' AS type, i_id AS xref, i_file AS ged_id, i_gedcom AS gedrec, i_isdead FROM {$TBLPREFIX}individuals JOIN {$TBLPREFIX}dates ON i_id=d_gid AND i_file=d_file WHERE i_file=".PGV_GED_ID." AND d_julianday1 BETWEEN {$start} AND {$end}";
+	$sql="SELECT 'INDI' AS type, i_id AS xref, i_file AS ged_id, i_gedcom AS gedrec, i_isdead, i_sex FROM {$TBLPREFIX}individuals JOIN {$TBLPREFIX}dates ON i_id=d_gid AND i_file=d_file WHERE i_file=".PGV_GED_ID." AND d_julianday1 BETWEEN {$start} AND {$end}";
 	if ($facts) {
 		$facts=preg_split('/[, ;]+/', $facts);
 		foreach ($facts as $key=>$value) {
@@ -2477,7 +2477,7 @@ function get_anniversary_events($jd, $facts='', $ged_id=PGV_GED_ID) {
 		$where.=" AND d_file=".$ged_id;
 
 		// Now fetch these anniversaries
-		$ind_sql="SELECT DISTINCT 'INDI' AS type, i_id AS xref, i_file AS ged_id, i_gedcom AS gedrec, i_isdead, d_type, d_day, d_month, d_year, d_fact, d_type FROM {$TBLPREFIX}dates, {$TBLPREFIX}individuals {$where} AND d_gid=i_id AND d_file=i_file ORDER BY d_day ASC, d_year DESC";
+		$ind_sql="SELECT DISTINCT 'INDI' AS type, i_id AS xref, i_file AS ged_id, i_gedcom AS gedrec, i_isdead, i_sex, d_type, d_day, d_month, d_year, d_fact, d_type FROM {$TBLPREFIX}dates, {$TBLPREFIX}individuals {$where} AND d_gid=i_id AND d_file=i_file ORDER BY d_day ASC, d_year DESC";
 		$fam_sql="SELECT DISTINCT 'FAM' AS type, f_id AS xref, {$ged_id} AS ged_id, f_gedcom AS gedrec, f_husb, f_wife, f_chil, f_numchil, d_type, d_day, d_month, d_year, d_fact, d_type FROM {$TBLPREFIX}dates, {$TBLPREFIX}families {$where} AND d_gid=f_id AND d_file=f_file ORDER BY d_day ASC, d_year DESC";
 		foreach (array($ind_sql, $fam_sql) as $sql) {
 			$res=dbquery($sql);
