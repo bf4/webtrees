@@ -2151,7 +2151,7 @@ function delete_gedcom($ged) {
 	$res = dbquery("DELETE FROM {$TBLPREFIX}families      WHERE f_file    =$dbged");
 	$res = dbquery("DELETE FROM {$TBLPREFIX}favorites     WHERE fv_file   =$dbged");
 	$res = dbquery("DELETE FROM {$TBLPREFIX}individuals   WHERE i_file    =$dbged");
-	$res = dbquery("DELETE FROM {$TBLPREFIX}link          WHERE n_file    =$dbged");
+	$res = dbquery("DELETE FROM {$TBLPREFIX}link          WHERE l_file    =$dbged");
 	$res = dbquery("DELETE FROM {$TBLPREFIX}media         WHERE m_gedfile =$dbged");
 	$res = dbquery("DELETE FROM {$TBLPREFIX}media_mapping WHERE mm_gedfile=$dbged");
 	$res = dbquery("DELETE FROM {$TBLPREFIX}name          WHERE n_file    =$dbged");
