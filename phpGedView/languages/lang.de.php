@@ -1619,6 +1619,15 @@ $pgv_lang["statar_xgl"]					= "Bereichsgrenzen - Alter:";
 $pgv_lang["statar_xgm"]					= "Bereichsgrenzen - Monate:";
 $pgv_lang["statar_xga"]					= "Bereichsgrenzen - Anzahl:";
 $pgv_lang["statar_zgp"]					= "Bereichsgrenzen - Daten:";
+$pgv_lang["less"]						= "weniger als";
+$pgv_lang["over"]						= "über";
+$pgv_lang["interval"]					= "Spanne";
+$pgv_lang["aft_marr"]					= "Monate nach der Ehe";
+$pgv_lang["bef_marr"]					= "Monate vor und nach der Ehe";
+$pgv_lang["quarters"]					= "Jahresviertel nach der Ehe";
+$pgv_lang["half_year"]					= "Halb-Jahre nach der Ehe";
+$pgv_lang["one_child"]					= "Spanne: 1 Kind";
+$pgv_lang["two_children"]				= "Spanne: 2 Kinder";
 $pgv_lang["statreset"]					= "Zurücksetzen";
 $pgv_lang["statsubmit"]					= "Diagramm zeigen";
 
