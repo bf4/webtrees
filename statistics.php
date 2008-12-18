@@ -97,7 +97,7 @@ function get_person() {
 }
 
 function get_family() {
-	global $famgeg, $famgeg1, $persgeg, $key2ind;
+	global $famgeg, $famgeg1;
 
 	foreach (get_fam_list() as $family) {
 		$key=$family->getXref();
@@ -191,7 +191,7 @@ function complete_data() {
 
 function put_plot_data() {
 	global $GEDCOM, $INDEX_DIRECTORY;
-	global $famgeg, $persgeg, $key2ind;
+	global $famgeg, $persgeg;
 	global $pgv_lang;
 
 	$indexfile = $INDEX_DIRECTORY.$GEDCOM."_statistics.php";
@@ -203,8 +203,10 @@ function put_plot_data() {
 
 	fwrite($FP, 'a:2:{s:6:"famgeg";');
 	fwrite($FP, serialize($famgeg));
+	unset($famgeg);
 	fwrite($FP, 's:7:"persgeg";');
 	fwrite($FP, serialize($persgeg));
+	unset($persgeg);
 	fwrite($FP, '}');
 	fclose($FP);
 	$logline = AddToLog($GEDCOM."_statistics.php updated");
@@ -268,14 +270,16 @@ else {
 	$nrmale = $_SESSION[$GEDCOM."nrmale"];
 	$nrfemale = $_SESSION[$GEDCOM."nrfemale"];
 }
+$nrpers=0;
 //-- if nrpers<1 means there is no intermediate file yet set in this session
+/*
 if ($nrpers < 1) {
 	get_person();
 	get_family();
 	complete_data();
 	put_plot_data();
 }
-
+*/
 $_SESSION[$GEDCOM."nrpers"] = $stats->totalIndividuals();
 $_SESSION[$GEDCOM."nrfam"] = $stats->totalFamilies();
 $_SESSION[$GEDCOM."nrmale"] = $stats->totalSexMales();
@@ -410,9 +414,12 @@ else {
 	echo $pgv_lang["statar_xgl"];
 	?>
 	<br /><select id="xas-grenzen-leeftijden" name="xas-grenzen-leeftijden">
-		<option value="1,5,10,20,30,40,50,60,70,80,90,100" selected="selected">1, 5, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100</option>
-		<option value="5,40,60,75,80,85,90">5, 40, 60, 75, 80, 85, 90</option>
-		<option value="10,25,50,75,100">10, 25, 50, 75, 100</option>
+		<option value="1,5,10,20,30,40,50,60,70,80,90,100" selected="selected"><?php
+			echo $pgv_lang["interval"]." 10 ".$pgv_lang["years"];?></option>
+		<option value="5,20,40,60,75,80,85,90"><?php
+			echo $pgv_lang["interval"]." 20 ".$pgv_lang["years"];?></option>
+		<option value="10,25,50,75,100"><?php
+			echo $pgv_lang["interval"]." 25 ".$pgv_lang["years"];?></option>
 	</select><br />
 	</div>
 	<div id="x_years_m" style="display:none;">
@@ -421,8 +428,10 @@ else {
 	echo $pgv_lang["statar_xgl"];
 	?>
 	<br /><select id="xas-grenzen-leeftijden_m" name="xas-grenzen-leeftijden_m">
-		<option value="16,18,20,22,24,26,28,30,32,35,40,50" selected="selected">16, 18, 20, 22, 24, 26, 28, 30, 32, 35, 40, 50</option>
-		<option value="20,25,30,35,40,45,50">20, 25, 30, 35, 40, 45, 50</option>
+		<option value="16,18,20,22,24,26,28,30,32,35,40,50" selected="selected"><?php
+			echo $pgv_lang["interval"]." 2 ".$pgv_lang["years2"];?></option>
+		<option value="20,25,30,35,40,45,50"><?php
+			echo $pgv_lang["interval"]." 5 ".$pgv_lang["years"];?></option>
 	</select><br />
 	</div>
 	<div id="x_months" style="display:none;">
@@ -431,10 +440,10 @@ else {
 	echo $pgv_lang["statar_xgm"];
 	?>
 	<br /><select id="xas-grenzen-maanden" name="xas-grenzen-maanden">
-		<option value="0,8,12,15,18,24,48" selected="selected">0, 8, 12, 15, 18, 24, 48</option>
-		<option value="-24,-12,0,8,12,18,24,48">-24, -12, 0, 8, 12, 18, 24, 48</option>
-		<option value="0,6,9,12,15,18,21,24">0, 6, 9, 12, 15, 18, 21, 24 - <?php echo $pgv_lang["quarters"];?></option>
-		<option value="0,6,12,18,24">0, 6, 12, 18, 24 - <?php echo $pgv_lang["half_year"];?></option>
+		<option value="0,8,12,15,18,24,48" selected="selected"><?php echo $pgv_lang["aft_marr"];?></option>
+		<option value="-24,-12,0,8,12,18,24,48"><?php echo $pgv_lang["bef_marr"];?></option>
+		<option value="0,6,9,12,15,18,21,24"><?php echo $pgv_lang["quarters"];?></option>
+		<option value="0,6,12,18,24"><?php echo $pgv_lang["half_year"];?></option>
 	</select><br />
 	</div>
 	<div id="x_numbers" style="display:none;">
@@ -443,8 +452,8 @@ else {
 	echo $pgv_lang["statar_xga"];
 	?>
 	<br /><select id="xas-grenzen-aantallen" name="xas-grenzen-aantallen">
-		<option value="1,2,3,4,5,6,7,8,9,10" selected="selected">1, 2, 3, 4, 5, 6, 7, 8, 9, 10</option>
-		<option value="2,4,6,8,10,12">2, 4, 6, 8, 10, 12</option>
+		<option value="1,2,3,4,5,6,7,8,9,10" selected="selected"><?php echo $pgv_lang["one_child"];?></option>
+		<option value="2,4,6,8,10,12"><?php echo $pgv_lang["two_children"];?></option>
 	</select>
 	<br />
 	</div>
@@ -502,13 +511,18 @@ else {
 	echo $pgv_lang["statar_zgp"]."<br />";
 	?>
 	<select id="zas-grenzen-periode" name="zas-grenzen-periode">
-		<option value="1700,1750,1800,1850,1900,1950,2000" selected="selected">1700,1750,1800,1850,1900,1950,2000</option>
-		<option value="1800,1840,1880,1920,1950,1970,2000">1800,1840,1880,1920,1950,1970,2000</option>
-		<option value="1800,1850,1900,1950,2000">1800,1850,1900,1950,2000</option>
-		<option value="1800,1900,1950,2000">1800,1900,1950,2000</option>
-		<option value="1900,1920,1940,1960,1980,1990,2000">1900,1920,1940,1960,1980,1990,2000</option>
-		<option value="1900,1925,1950,1975,2000">1900,1925,1950,1975,2000</option>
-		<option value="1940,1950,1960,1970,1980,1990,2000">1940,1950,1960,1970,1980,1990,2000</option>
+		<option value="1700,1750,1800,1850,1900,1950,2000" selected="selected"><?php
+			echo $pgv_lang["from"]." 1700 ".$pgv_lang["interval"]." 50 ".$pgv_lang["years"];?></option>
+		<option value="1800,1840,1880,1920,1950,1970,2000"><?php
+			echo $pgv_lang["from"]." 1800 ".$pgv_lang["interval"]." 40 ".$pgv_lang["years"];?></option>
+		<option value="1800,1850,1900,1950,2000"><?php
+			echo $pgv_lang["from"]." 1800 ".$pgv_lang["interval"]." 50 ".$pgv_lang["years"];?></option>
+		<option value="1900,1920,1940,1960,1980,1990,2000"><?php
+			echo $pgv_lang["from"]." 1900 ".$pgv_lang["interval"]." 20 ".$pgv_lang["years"];?></option>
+		<option value="1900,1925,1950,1975,2000"><?php
+			echo $pgv_lang["from"]." 1900 ".$pgv_lang["interval"]." 25 ".$pgv_lang["years"];?></option>
+		<option value="1940,1950,1960,1970,1980,1990,2000"><?php
+			echo $pgv_lang["from"]." 1940 ".$pgv_lang["interval"]." 10 ".$pgv_lang["years"];?></option>
 	</select>
 	<br /><br />
 	<?php

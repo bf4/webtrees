@@ -44,6 +44,15 @@ VERSION 4.2.
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change	codes and comments
 ----------------------------------------------------------------------------------------
++$pgv_lang["interval"]								18 Dec 2008				A
++$pgv_lang["less"]									18 Dec 2008				A
++$pgv_lang["over"]									18 Dec 2008				A
++$pgv_lang["aft_marr"]								18 Dec 2008				A
++$pgv_lang["bef_marr"]								18 Dec 2008				A
++$pgv_lang["one_child"]								18 Dec 2008				A
++$pgv_lang["two_children"]							18 Dec 2008				A
+*$pgv_lang["quarters"]								18 Dec 2008				W
+*$pgv_lang["half_year"]								18 Dec 2008				W
 *$pgv_lang["search_general"]						15 Dec 2008				C
 *$pgv_lang["search_soundex"]						15 Dec 2008				C
 *$pgv_lang["search_replace"]						15 Dec 2008				C
