@@ -1718,7 +1718,7 @@ function show_media_form($pid, $action = "newentry", $filename = "", $linktoid =
 	}
 
 	// Box for user to choose the folder to store the image
-	if (!$isExternal && $MEDIA_DIRECTORY_LEVELS > 0 && PGV_USER_GEDCOM_ADMIN) {
+	if (!$isExternal && $MEDIA_DIRECTORY_LEVELS > 0) {
 		echo '<tr><td class="descriptionbox ', $TEXT_DIRECTION, 'wrap width25">';
 		print_help_link("upload_server_folder_help", "qm");
 		if (empty($folder)) {
@@ -1735,7 +1735,7 @@ function show_media_form($pid, $action = "newentry", $filename = "", $linktoid =
 			echo '<option';
 			if ($folder == '/') echo ' selected="selected"';
 			echo ' value="/"> ', $pgv_lang["choose"], ' </option>';
-			if (PGV_USER_GEDCOM_ADMIN) echo '<option value="other" disabled>', $pgv_lang["add_media_other_folder"], "</option>\n";
+			if (PGV_USER_IS_ADMIN) echo '<option value="other" disabled>', $pgv_lang["add_media_other_folder"], "</option>\n";
 			foreach ($folders as $f) {
 				if (!strpos($f, ".svn")) {    //Do not print subversion directories
 					// Strip $MEDIA_DIRECTORY from the folder name
@@ -1751,7 +1751,7 @@ function show_media_form($pid, $action = "newentry", $filename = "", $linktoid =
 		}
 		else echo $folder;
 		echo '<input name="oldFolder" type="hidden" value="', addslashes($folder), '" />';
-		if (PGV_USER_GEDCOM_ADMIN) {
+		if (PGV_USER_IS_ADMIN) {
 			echo '<br /><span dir="ltr"><input type="text" name="folder" size="40" value="', $folder, ' "onblur="checkpath(this)" /></span>';
 			if ($MEDIA_DIRECTORY_LEVELS>0) {
 				echo '<br /><sub>', print_text("server_folder_advice",0,1), '</sub>';
