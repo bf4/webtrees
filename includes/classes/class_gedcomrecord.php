@@ -52,10 +52,9 @@ class GedcomRecord {
 	var $dispname   =true;  // Can we display the name of this object
 
 	// Cached results from various functions.
-	// These should become private when we move to PHP5.  Do not use them from outside this class.
-	var $_getAllNames=null;
-	var $_getPrimaryName=null;
-	var $_getSecondaryName=null;
+	protected $_getAllNames=null;
+	protected $_getPrimaryName=null;
+	protected $_getSecondaryName=null;
 
 	// Create a GedcomRecord object from either raw GEDCOM data or a database row
 	function GedcomRecord($data, $simple=false) {
