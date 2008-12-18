@@ -28,232 +28,601 @@
  */
 
 require './config.php';
+require_once 'includes/classes/class_stats.php';
+/*
+ * Initiate the stats object.
+ */
+$stats = new stats($GEDCOM);
 
 // Month of birth
-function bimo($i) {
-	global $z_as, $persgeg, $n1;
+function bimo() {
+	global $z_as, $months, $zgrenzen, $stats, $n1;
 
-	$m = $persgeg[$i]["mbirth"];
-	if ($z_as == 301) $ys = $persgeg[$i]["sex"]-1;
-	else $ys = $persgeg[$i]["ybirth"];
- 	if ($m > 0) {
-		fill_ydata($ys, $m-1, 1);
-		$n1++;
+	if ($z_as == 300){
+		$num = $stats->statsBirth();
+		foreach ($num as $values) {
+			foreach ($values as $month_key=>$month_value) {
+				$data_value=0;
+				if ($month_key=='d_month') {
+					$data_key=-1;
+					foreach ($months as $key=>$month) {
+						if($month==$month_value) {
+							$data_key=$key;
+						}
+					}
+				}
+				else if ($data_key>=0) {
+					$data_value=$month_value;
+				}
+			}
+			if ($data_key>=0) {
+				fill_ydata(0, $data_key, $data_value);
+				$n1+=$data_value;
+			}
+		}
 	}
-}
-
-//Month of birth of first child in a relation
-function bimo1($i) {
-	global $z_as, $famgeg, $n1;
-
-	if (isset($famgeg[$i])) {
-		$m = $famgeg[$i]["mbirth1"];
-		if ($z_as == 301) $ys = $famgeg[$i]["sex1"]-1;
-		else $ys = $famgeg[$i]["ybirth1"];
-		if ($m > 0) {
-			fill_ydata($ys, $m-1, 1);
-			$n1++;
+	else if ($z_as == 301) {
+		$num = $stats->statsBirth(true);
+		foreach ($num as $values) {
+			foreach ($values as $month_key=>$month_value) {
+				if ($month_key=='d_month') {
+					$data_key = -1;
+					foreach ($months as $key=>$month) {
+						if($month==$month_value) {
+							$data_key=$key;
+						}
+					}
+				}
+				else if ($data_key>=0 && $month_key=='i_sex') {
+					if ($month_value=='M')
+						$sex_value = 0;
+					else if ($month_value=='F')
+						$sex_value = 1;
+				}
+				else if ($data_key>=0) {
+					$data_value=$month_value;
+				}
+			}
+			if ($data_key>=0) {
+				fill_ydata($sex_value, $data_key, $data_value);
+				$n1+=$data_value;
+			}
+		}
+	}
+	else {
+		$zstart = 0;
+		foreach ($zgrenzen as $boundary) {
+			$num = $stats->statsBirth(false, $zstart, $boundary);
+			foreach ($num as $values) {
+				foreach ($values as $month_key=>$month_value) {
+					$data_value=0;
+					if ($month_key=='d_month') {
+						$data_key=-1;
+						foreach ($months as $key=>$month) {
+							if($month==$month_value) {
+								$data_key=$key;
+							}
+						}
+					}
+					else if ($data_key>=0) {
+						$data_value=$month_value;
+					}
+				}
+				if ($data_key>=0) {
+					fill_ydata($boundary, $data_key, $data_value);
+					$n1+=$data_value;
+				}
+			}
+			$zstart=$boundary+1;
 		}
 	}
 }
 
-//Month of death
-function demo($i) {
-	global $z_as, $persgeg, $n1;
+//Month of birth of first child in a relation
+function bimo1() {
+	global $z_as, $famgeg, $n1;
+//TODO
 
-	$m = $persgeg[$i]["mdeath"];
-	if ($z_as == 301) $ys = $persgeg[$i]["sex"]-1;
-	else $ys = $persgeg[$i]["ydeath"];
-	if ($m > 0) {
-		fill_ydata($ys, $m-1, 1);
-		$n1++;
+echo "not work yet";
+}
+
+//Month of death
+function demo() {
+	global $z_as, $months, $zgrenzen, $stats, $n1;
+
+	if ($z_as == 300){
+		$num = $stats->statsDeath();
+		foreach ($num as $values) {
+			foreach ($values as $month_key=>$month_value) {
+				$data_value=0;
+				if ($month_key=='d_month') {
+					$data_key=-1;
+					foreach ($months as $key=>$month) {
+						if($month==$month_value) {
+							$data_key=$key;
+						}
+					}
+				}
+				else if ($data_key>=0) {
+					$data_value=$month_value;
+				}
+			}
+			if ($data_key>=0) {
+				//print $data_key." ".$data_value."<br />";
+				fill_ydata(0, $data_key, $data_value);
+				$n1+=$data_value;
+			}
+		}
+	}
+	else if ($z_as == 301) {
+		$num = $stats->statsDeath(true);
+		foreach ($num as $values) {
+			foreach ($values as $month_key=>$month_value) {
+				if ($month_key=='d_month') {
+					$data_key = -1;
+					foreach ($months as $key=>$month) {
+						if($month==$month_value) {
+							$data_key=$key;
+						}
+					}
+				}
+				else if ($data_key>=0 && $month_key=='i_sex') {
+					if ($month_value=='M')
+						$sex_value = 0;
+					else if ($month_value=='F')
+						$sex_value = 1;
+				}
+				else if ($data_key>=0) {
+					$data_value=$month_value;
+				}
+			}
+			if ($data_key>=0) {
+				fill_ydata($sex_value, $data_key, $data_value);
+				$n1+=$data_value;
+			}
+		}
+	}
+	else {
+		$zstart = 0;
+		foreach ($zgrenzen as $boundary) {
+			$num = $stats->statsDeath(false, $zstart, $boundary);
+			foreach ($num as $values) {
+				foreach ($values as $month_key=>$month_value) {
+					$data_value=0;
+					if ($month_key=='d_month') {
+						$data_key=-1;
+						foreach ($months as $key=>$month) {
+							if($month==$month_value) {
+								$data_key=$key;
+							}
+						}
+					}
+					else if ($data_key>=0) {
+						$data_value=$month_value;
+					}
+				}
+				if ($data_key>=0) {
+					fill_ydata($boundary, $data_key, $data_value);
+					$n1+=$data_value;
+				}
+			}
+			$zstart=$boundary+1;
+		}
 	}
 }
 
 //Month of marriage
-function mamo($i) {
-	global $famgeg, $n1;
+function mamo() {
+	global $z_as, $months, $zgrenzen, $stats, $n1;
 
-	if (isset($famgeg[$i])) {
-		$m = $famgeg[$i]["mmarr"];
-		$y = $famgeg[$i]["ymarr"];
-		if ($m > 0) {
-			fill_ydata($y, $m-1, 1);
-			$n1++;
+	if ($z_as == 300){
+		$num = $stats->statsMarr(false);
+		foreach ($num as $values) {
+			foreach ($values as $month_key=>$month_value) {
+				$data_value=0;
+				if ($month_key=='d_month') {
+					$data_key=-1;
+					foreach ($months as $key=>$month) {
+						if($month==$month_value) {
+							$data_key=$key;
+						}
+					}
+				}
+				else if ($data_key>=0) {
+					$data_value=$month_value;
+				}
+			}
+			if ($data_key>=0) {
+				fill_ydata(0, $data_key, $data_value);
+				$n1+=$data_value;
+			}
+		}
+	}
+	else {
+		$zstart = 0;
+		foreach ($zgrenzen as $boundary) {
+			$num = $stats->statsMarr(false, $zstart, $boundary);
+			foreach ($num as $values) {
+				foreach ($values as $month_key=>$month_value) {
+					$data_value=0;
+					if ($month_key=='d_month') {
+						$data_key=-1;
+						foreach ($months as $key=>$month) {
+							if($month==$month_value) {
+								$data_key=$key;
+							}
+						}
+					}
+					else if ($data_key>=0) {
+						$data_value=$month_value;
+					}
+				}
+				if ($data_key>=0) {
+					fill_ydata($boundary, $data_key, $data_value);
+					$n1+=$data_value;
+				}
+			}
+			$zstart=$boundary+1;
 		}
 	}
 }
 
 //Month of first marriage
-function mamo1($i) {
-	global $famgeg, $n1;
+//TODO first only
+function mamo1() {
+	global $z_as, $months, $zgrenzen, $stats, $n1;
 
-	if (isset($famgeg[$i]["mmarr1"])) {
-		$m = $famgeg[$i]["mmarr1"];
-		$y = $famgeg[$i]["ymarr1"];
-		if ($m > 0) {
-			fill_ydata($y, $m-1, 1);
-			$n1++;
+	
+echo "not work property yet";
+	if ($z_as == 300){
+		$num = $stats->statsMarr(true);
+		foreach ($num as $values) {
+			foreach ($values as $month_key=>$month_value) {
+				$data_value=0;
+				if ($month_key=='d_month') {
+					$data_key=-1;
+					foreach ($months as $key=>$month) {
+						if($month==$month_value) {
+							$data_key=$key;
+						}
+					}
+				}
+				else if ($data_key>=0) {
+					$data_value=$month_value;
+				}
+			}
+			if ($data_key>=0) {
+				fill_ydata(0, $data_key, $data_value);
+				$n1+=$data_value;
+			}
+		}
+	}
+	else {
+		$zstart = 0;
+		foreach ($zgrenzen as $boundary) {
+			$num = $stats->statsMarr(true, $zstart, $boundary);
+			foreach ($num as $values) {
+				foreach ($values as $month_key=>$month_value) {
+					$data_value=0;
+					if ($month_key=='d_month') {
+						$data_key=-1;
+						foreach ($months as $key=>$month) {
+							if($month==$month_value) {
+								$data_key=$key;
+							}
+						}
+					}
+					else if ($data_key>=0) {
+						$data_value=$month_value;
+					}
+				}
+				if ($data_key>=0) {
+					fill_ydata($boundary, $data_key, $data_value);
+					$n1+=$data_value;
+				}
+			}
+			$zstart=$boundary+1;
 		}
 	}
 }
 
 //Months between marriage and first child
-function mamam($i) {
-	global $z_as, $famgeg, $n1;
+function mamam() {
+	global $z_as, $n1;
+//TODO
 
-	if (isset($famgeg[$i])) {
-		$m = $famgeg[$i]["mmarr"];
-		$y = $famgeg[$i]["ymarr"];
-		if ($m > 0) {
-			$m2 = $famgeg[$i]["mbirth1"];
-			$y2 = $famgeg[$i]["ybirth1"];
-			if ($z_as == 301) $ys = $famgeg[$i]["sex1"]-1;
-			else $ys = $famgeg[$i]["ybirth1"];
-			if ($m2 > 0) {
-				$mm = ($y2-$y)*12+($m2-$m);
-				fill_ydata($ys, $mm, 1);
+echo "not work yet";
+}
+
+//Age related to birth year
+function agbi() {
+	global $z_as, $zgrenzen, $stats, $n1;
+
+	if ($z_as == 300){
+		$num = $stats->statsAge('BIRT');
+		foreach ($num as $values) {
+			foreach ($values as $age_value) {
+				fill_ydata(0, floor($age_value/365.25), 1);
 				$n1++;
 			}
 		}
 	}
-}
-
-//Age related to birth year
-function agbi($i) {
-	global $z_as, $persgeg, $n1;
-
-	$yb = $persgeg[$i]["ybirth"];
-	$yd = $persgeg[$i]["ydeath"];
-	if (($yb > 0)&&($yd > 0)) {
-		$age = $yd-$yb;
-		if ($z_as == 301) $yb = $persgeg[$i]["sex"]-1;
-		fill_ydata($yb, $age, 1);
-		$n1++;
+	else if ($z_as == 301) {
+		$num = $stats->statsAge('BIRT', 'M');
+		foreach ($num as $values) {
+			foreach ($values as $age_value) {
+				fill_ydata(0, floor($age_value/365.25), 1);
+				$n1++;
+			}
+		}
+		$num = $stats->statsAge('BIRT', 'F');
+		foreach ($num as $values) {
+			foreach ($values as $age_value) {
+				fill_ydata(1, floor($age_value/365.25), 1);
+				$n1++;
+			}
+		}
+	}
+	else {
+		$zstart = 0;
+		foreach ($zgrenzen as $boundary) {
+			$num = $stats->statsAge('BIRT', 'BOTH', $zstart, $boundary);
+			foreach ($num as $values) {
+				foreach ($values as $age_value) {
+					fill_ydata($boundary, floor($age_value/365.25), 1);
+					$n1++;
+				}
+			}
+			$zstart=$boundary+1;
+		}
 	}
 }
 
 //Age related to death year
-function agde($i) {
-	global $z_as, $persgeg, $n1;
+function agde() {
+	global $z_as, $zgrenzen, $stats, $n1;
 
-	$yb = $persgeg[$i]["ybirth"];
-	$yd = $persgeg[$i]["ydeath"];
-	if (($yb > 0)&&($yd > 0)) {
-		$age = $yd-$yb;
-		if ($z_as == 301) $yd = $persgeg[$i]["sex"]-1;
-		fill_ydata($yd, $age, 1);
-		$n1++;
+	if ($z_as == 300){
+		$num = $stats->statsAge('DEAT');
+		foreach ($num as $values) {
+			foreach ($values as $age_value) {
+				fill_ydata(0, floor($age_value/365.25), 1);
+				$n1++;
+			}
+		}
+	}
+	else if ($z_as == 301) {
+		$num = $stats->statsAge('DEAT', 'M');
+		foreach ($num as $values) {
+			foreach ($values as $age_value) {
+				fill_ydata(0, floor($age_value/365.25), 1);
+				$n1++;
+			}
+		}
+		$num = $stats->statsAge('DEAT', 'F');
+		foreach ($num as $values) {
+			foreach ($values as $age_value) {
+				fill_ydata(1, floor($age_value/365.25), 1);
+				$n1++;
+			}
+		}
+	}
+	else {
+		$zstart = 0;
+		foreach ($zgrenzen as $boundary) {
+			$num = $stats->statsAge('DEAT', 'BOTH', $zstart, $boundary);
+			foreach ($num as $values) {
+				foreach ($values as $age_value) {
+					fill_ydata($boundary, floor($age_value/365.25), 1);
+					$n1++;
+				}
+			}
+			$zstart=$boundary+1;
+		}
 	}
 }
 
 //Age in year of marriage
-function agma($i) {
-	global $z_as, $famgeg, $persgeg, $n1;
+function agma() {
+	global $z_as, $zgrenzen, $stats, $n1;
 
-	if (isset($famgeg[$i])) {
-		$ym = $famgeg[$i]["ymarr"];
-		if ($ym > 0) {
-			$xfather = $famgeg[$i]["male"];
-			$xmother = $famgeg[$i]["female"];
-			$ybirth = -1;
-			$ybirth2 = -1;
-			$age = 0;
-			$age2 = 0;
-			if ($xfather !== "") {
-				$ybirth = $persgeg[$xfather]["ybirth"];
+	if ($z_as == 300){
+		$num = $stats->statsMarrAge('M');
+		foreach ($num as $values) {
+			foreach ($values as $key=>$age_value) {
+				if ($key=='age') {
+					fill_ydata(0, floor($age_value/365.25), 1);
+					$n1++;
+				}
 			}
-			if ($xmother !== "") {
-				$ybirth2 = $persgeg[$xmother]["ybirth"];
+		}
+		$num = $stats->statsMarrAge('F');
+		foreach ($num as $values) {
+			foreach ($values as $key=>$age_value) {
+				if ($key=='age') {
+					fill_ydata(0, floor($age_value/365.25), 1);
+					$n1++;
+				}
 			}
-			$z = $ym;
-			$z1 = $ym;
-			if ($z_as == 301) {
-				$z= 0;
-				$z1= 1;
+		}
+	}
+	else if ($z_as == 301) {
+		$num = $stats->statsMarrAge('M');
+		foreach ($num as $values) {
+			foreach ($values as $key=>$age_value) {
+				if ($key=='age') {
+					fill_ydata(0, floor($age_value/365.25), 1);
+					$n1++;
+				}
 			}
-			if ($ybirth > -1) {
-				$age = $ym-$ybirth;
-				fill_ydata($z, $age, 1);
-				$n1++;
+		}
+		$num = $stats->statsMarrAge('F');
+		foreach ($num as $values) {
+			foreach ($values as $key=>$age_value) {
+				if ($key=='age') {
+					fill_ydata(1, floor($age_value/365.25), 1);
+					$n1++;
+				}
 			}
-			if ($ybirth2 > -1) {
-				$age2 = $ym-$ybirth2;
-				fill_ydata($z1, $age2, 1);
-				$n1++;
+		}
+	}
+	else {
+		$zstart = 0;
+		foreach ($zgrenzen as $boundary) {
+			$num = $stats->statsMarrAge('M', $zstart, $boundary);
+			foreach ($num as $values) {
+				foreach ($values as $key=>$age_value) {
+					if ($key=='age') {
+						fill_ydata($boundary, floor($age_value/365.25), 1);
+						$n1++;
+					}
+				}
 			}
+			$num = $stats->statsMarrAge('F', $zstart, $boundary);
+			foreach ($num as $values) {
+				foreach ($values as $key=>$age_value) {
+					if ($key=='age') {
+						fill_ydata($boundary, floor($age_value/365.25), 1);
+						$n1++;
+					}
+				}
+			}
+			$zstart=$boundary+1;
 		}
 	}
 }
 
 //Age in year of first marriage
-function agma1($i) {
-	global $z_as, $famgeg, $persgeg, $n1;
+function agma1() {
+	global $z_as, $zgrenzen, $stats, $n1;
 
-	if (isset($famgeg[$i])) {
-		$ym = $famgeg[$i]["ymarr1"];
-		if ($ym > -1) {
-			$xfather = $famgeg[$i]["male"];
-			$xmother = $famgeg[$i]["female"];
-			$ybirth = -1;
-			$ybirth2 = -1;
-			$age = 0;
-			$age2 = 0;
-			if ($xfather !== "") {
-				$ybirth = $persgeg[$xfather]["ybirth"];
-				$ymf = $persgeg[$xfather]["ymarr1"];
-			}
-			if ($xmother !== "") {
-				$ybirth2 = $persgeg[$xmother]["ybirth"];
-				$ymm = $persgeg[$xmother]["ymarr1"];
-			}
-			$z = $ym;
-			$z1 = $ym;
-			if ($z_as == 301) {
-				$z= 0;
-				$z1= 1;
-			}
-			if (($ybirth > -1) && ($ymf > -1) && ($ym == $ymf)) {
-				$age = $ym-$ybirth;
-				fill_ydata($z, $age, 1);
-				$n1++;
-			}
-			if (($ybirth2 > -1) && ($ymm > -1) && ($ym == $ymm)) {
-				$age2 = $ym-$ybirth2;
-				fill_ydata($z1, $age2, 1);
-				$n1++;
+	if ($z_as == 300) {
+		$num = $stats->statsMarrAge('M');
+		$first=true;
+		$indi='';
+		foreach ($num as $values) {
+			foreach ($values as $key=>$age_value) {
+				if ($key=='age' && $first) {
+					fill_ydata(0, floor($age_value/365.25), 1);
+					$n1++;
+				}
+				else if ($key=='indi') {
+					if ($indi!=$age_value) {
+						$indi=$age_value;
+						$first=true;
+					}
+					else $first=false;
+				}
 			}
 		}
+		$num = $stats->statsMarrAge('F');
+		$first=true;
+		$indi='';
+		foreach ($num as $values) {
+			foreach ($values as $key=>$age_value) {
+				if ($key=='age' && $first) {
+					fill_ydata(0, floor($age_value/365.25), 1);
+					$n1++;
+				}
+				else if ($key=='indi') {
+					if ($indi!=$age_value) {
+						$indi=$age_value;
+						$first=true;
+					}
+					else $first=false;
+				}
+			}
+		}
+	}
+	else if ($z_as == 301) {
+		$num = $stats->statsMarrAge('M');
+		$first=true;
+		$indi='';
+		foreach ($num as $values) {
+			foreach ($values as $key=>$age_value) {
+				if ($key=='age' && $first) {
+					fill_ydata(0, floor($age_value/365.25), 1);
+					$n1++;
+				}
+				else if ($key=='indi') {
+					if ($indi!=$age_value) {
+						$indi=$age_value;
+						$first=true;
+					}
+					else $first=false;
+				}
+			}
+		}
+		$num = $stats->statsMarrAge('F');
+		$first=true;
+		$indi='';
+		foreach ($num as $values) {
+			foreach ($values as $key=>$age_value) {
+				if ($key=='age' && $first) {
+					fill_ydata(1, floor($age_value/365.25), 1);
+					$n1++;
+				}
+				else if ($key=='indi') {
+					if ($indi!=$age_value) {
+						$indi=$age_value;
+						$first=true;
+					}
+					else $first=false;
+				}
+			}
+		}
+	}
+	else {
+		$zstart = 0;
+		$indi=array();
+		foreach ($zgrenzen as $boundary) {
+			$num = $stats->statsMarrAge('M', $zstart, $boundary);
+			$first=true;
+			foreach ($num as $values) {
+				foreach ($values as $key=>$age_value) {
+					if ($key=='age' && $first) {
+						fill_ydata($boundary, floor($age_value/365.25), 1);
+						$n1++;
+					}
+					else if ($key=='indi') {
+						if (!in_array($age_value, $indi)) {
+							$indi[]=$age_value;
+							$first=true;
+						}
+						else $first=false;
+					}
+				}
+			}
+			$num = $stats->statsMarrAge('F', $zstart, $boundary);
+			$first=true;
+			foreach ($num as $values) {
+				foreach ($values as $key=>$age_value) {
+					if ($key=='age' && $first) {
+						fill_ydata($boundary, floor($age_value/365.25), 1);
+						$n1++;
+					}
+					else if ($key=='indi') {
+						if (!in_array($age_value, $indi)) {
+							$indi[]=$age_value;
+							$first=true;
+						}
+						else $first=false;
+					}
+				}
+			}
+			$zstart=$boundary+1;
+		}
+		unset($indi);
 	}
 }
 
 //Number of children
-function nuch($i) {
-	global $z_as, $famgeg, $n1;
+function nuch() {
+	global $z_as, $n1;
 
-	if (isset($famgeg[$i])) {
-		$c = $famgeg[$i]["childs"];
-		$cm = $famgeg[$i]["childs_m"];
-		$cf = $famgeg[$i]["childs_f"];
-		$y = $famgeg[$i]["ymarr"];
-		if ($c >= 0) {
-			if ($z_as == 302) {
-				if ($y>0) {
-					fill_ydata($y, $c, 1);
-					$n1++;
-				}
-			}
-			else if ($z_as == 301) {
-				fill_ydata(0, $cm, 1);
-				fill_ydata(1, $cf, 1);
-				$n1++;
-			}
-			else {
-				fill_ydata($y, $c, 1);
-				$n1++;
-			}
-		}
-	}
+//TODO
+
+echo "not work yet";
 }
 
 function fill_ydata($z, $x, $val) {
@@ -366,10 +735,10 @@ function myplot($mytitle, $n, $xdata, $xtitle, $ydata, $ytitle, $legend) {
 	$titleLength = strpos($mytitle."\n", "\n");
 	$title = substr($mytitle, 0, $titleLength);
 
-	$imgurl = "http://chart.apis.google.com/chart?cht=bvg&chs=900x300&chf=bg,s,ffffff00|c,s,ffffff00&chtt=".$title."&".$datastring."&".$colorstring."&chbh=";
+	$imgurl = "http://chart.apis.google.com/chart?cht=bvg&chs=950x300&chf=bg,s,ffffff99|c,s,ffffff00&chtt=".$title."&".$datastring."&".$colorstring."&chbh=";
 	if (count($ydata) > 3) $imgurl .= "5,1";
-	else if (count($ydata) < 2) $imgurl .= "25,1";
-	else $imgurl .= "15,3";
+	else if (count($ydata) < 2) $imgurl .= "45,1";
+	else $imgurl .= "20,3";
 	$imgurl .= "&chxt=x,x,y,y&chxl=0:|";
 	for($i=0; $i<count($xdata); $i++) {
 		$imgurl .= $xdata[$i]."|";
@@ -410,38 +779,24 @@ function myplot($mytitle, $n, $xdata, $xtitle, $ydata, $ytitle, $legend) {
 		}
 	}
 	echo "<center>";
-	echo "<img src=\"".encode_url($imgurl)."\" width=\"900\" height=\"300\"  border=\"0\" alt=\"".$mytitle."\" title=\"".$mytitle."\"/>";
+	echo "<img src=\"".encode_url($imgurl)."\" width=\"950\" height=\"300\"  border=\"0\" alt=\"".$mytitle."\" title=\"".$mytitle."\"/>";
 	echo "</center><br /><br />";
 }
 
-function get_plot_data() {
-	global $GEDCOM, $INDEX_DIRECTORY;
-	global $nrfam, $famgeg, $nrpers, $persgeg;
-
-	$indexfile = $INDEX_DIRECTORY.$GEDCOM."_statistics.php";
-	if (file_exists($indexfile)) {
-		$fp = fopen($indexfile, "rb");
-		$fcontents = fread($fp, filesize($indexfile));
-		fclose($fp);
-		$lists = unserialize($fcontents);
-		unset($fcontents);
-		$famgeg = $lists["famgeg"];
-		$persgeg = $lists["persgeg"];
-		$nrfam = count($famgeg);
-		$nrpers = count($persgeg);
-	}
-}
-
 function calc_axis($xas_grenzen) {
-	global $xdata, $xmax, $xgrenzen;
+	global $x_as, $xdata, $xmax, $xgrenzen, $pgv_lang;
 
 	//calculate xdata and zdata elements out of given POST values
 	$hulpar = explode(",", $xas_grenzen);
 	$i=1;
-	if ($hulpar[0]==1)
+	if ($x_as==21 && $hulpar[0]==1)
 		$xdata[0] = 0;
+	else if ($x_as==16 && $hulpar[0]==0)
+		$xdata[0] = $pgv_lang["bef"];
+	else if ($x_as==16 && $hulpar[0]<0)
+		$xdata[0] = $pgv_lang["over"]." ".$hulpar[0];
 	else
-		$xdata[0] = "<".$hulpar[0];
+		$xdata[0] = $pgv_lang["less"]." ".$hulpar[0];
 	$xgrenzen[0] = $hulpar[0]-1;
 	while (isset($hulpar[$i])) {
 		$i1 = $i-1;
@@ -449,8 +804,12 @@ function calc_axis($xas_grenzen) {
 			$xdata[$i] = $hulpar[$i1];
 			$xgrenzen[$i] = $hulpar[$i1];
 		}
-		else {
+		else if ($hulpar[$i1]==$hulpar[0]){
 			$xdata[$i]= $hulpar[$i1]."-".$hulpar[$i];
+			$xgrenzen[$i] = $hulpar[$i];
+		}
+		else {
+			$xdata[$i]= ($hulpar[$i1]+1)."-".$hulpar[$i];
 			$xgrenzen[$i] = $hulpar[$i];
 		}
 		$i++;
@@ -461,39 +820,39 @@ function calc_axis($xas_grenzen) {
 		$xmax = $i+1;
 	else
 		$xmax = $i;
-	$xdata[$xmax] = ">".$hulpar[$i-1];
+	$xdata[$xmax] = $pgv_lang["over"]." ".$hulpar[$i-1];
 	$xgrenzen[$xmax] = 10000;
 	$xmax = $xmax+1;
 	if ($xmax > 20) $xmax = 20;
 }
 
 function calc_legend($grenzen_zas) {
-	global $legend, $zmax, $zgrenzen;
+	global $legend, $zmax, $zgrenzen, $pgv_lang;
 
 	// calculate the legend values
 	$hulpar = array();
 	//-- get numbers out of $grenzen_zas
 	$hulpar = explode(",", $grenzen_zas);
 	$i=1;
-	$legend[0] = "<".$hulpar[0];
+	$legend[0] = $pgv_lang["bef"]." ".$hulpar[0];
 	$zgrenzen[0] = $hulpar[0]-1;
 	while (isset($hulpar[$i])) {
 		$i1 = $i-1;
-		$legend[$i] = $hulpar[$i1]."-".$hulpar[$i];
-		$zgrenzen[$i] = $hulpar[$i];
+		$legend[$i] = $hulpar[$i1]."-".($hulpar[$i]-1);
+		$zgrenzen[$i] = $hulpar[$i]-1;
 		$i++;
 	}
 	$zmax = $i;
 	$zmax1 = $zmax-1;
-	$legend[$zmax] = ">".$hulpar[$zmax1];
+	$legend[$zmax] = $pgv_lang["from"]." ".$hulpar[$zmax1];
 	$zgrenzen[$zmax] = 10000;
 	$zmax = $zmax+1;
 	if ($zmax > 8) $zmax=8;
 }
 
 //--------------------nr,-----bron ,xgiven,zgiven,title, xtitle,ytitle,grenzen_xas, grenzen-zas,functie,
-function set_params($current, $indfam, $xg,  $zg, $titstr,  $xt, $yt, $gx, $gz, $myfunc) {
-	global $x_as, $y_as, $z_as, $nrfam, $nrpers, $famgeg, $persgeg, $n1;
+function set_params($current, $indfam, $xg, $zg, $titstr, $xt, $yt, $gx, $gz, $myfunc) {
+	global $x_as, $y_as, $z_as, $nrfam, $nrpers, $n1, $months;
 	global $legend, $xdata, $ydata, $xmax, $zmax, $zgrenzen, $xgiven, $zgiven, $percentage, $male_female;
 	global $pgv_lang;
 
@@ -518,8 +877,27 @@ function set_params($current, $indfam, $xg,  $zg, $titstr,  $xt, $yt, $gx, $gz, 
 	foreach ($monthdata as $key=>$month) {
 		$monthdata[$key] = $month;
 	}
+	$months= array();
+	$months[] = 'JAN';
+	$months[] = 'FEB';
+	$months[] = 'MAR';
+	$months[] = 'APR';
+	$months[] = 'MAY';
+	$months[] = 'JUN';
+	$months[] = 'JUL';
+	$months[] = 'AUG';
+	$months[] = 'SEP';
+	$months[] = 'OCT';
+	$months[] = 'NOV';
+	$months[] = 'DEC';
+	foreach ($months as $key=>$month) {
+		$months[$key] = $month;
+	}
 
 	if ($x_as == $current) {
+		if ($x_as==13 || $x_as==15 && $z_as == 301) {
+			$z_as = 300;
+		}
 		$xgiven = $xg;
 		$zgiven = $zg;
 		$title = $pgv_lang["$titstr"];
@@ -573,26 +951,20 @@ function set_params($current, $indfam, $xg,  $zg, $titstr,  $xt, $yt, $gx, $gz, 
 				$ydata[$i][$j] = 0;
 			}
 		}
-		if ($indfam == "IND" && $current != 19 && $current != 20) {
-			foreach (array_keys($persgeg) as $key) {
-				$myfunc($key);
-			}
-			$nrmax = $nrpers;
+		$myfunc();
+		if ($indfam == "IND") {
+			$hstr = $title."|" .$pgv_lang["stplnumof"]." ".$n1." ".$pgv_lang["of"]." ".$nrpers;
 		}
 		else {
-			foreach (array_keys($famgeg) as $key) {
-				$myfunc($key);
-			}
-			$nrmax = $nrfam;
+			$hstr = $title."|" .$pgv_lang["stplnumof"]." ".$n1." ".$pgv_lang["of"]." ".$nrfam;
 		}
-		$hstr = $title."|" .$pgv_lang["stplnumof"]." ".$n1." ".$pgv_lang["of"]." ".$nrmax;
 		myplot($hstr, $zmax, $xdata, $xtitle, $ydata, $ytitle, $legend);
 	}
 }
 
 // prints a map charts
 function print_map_charts($chart_shows, $chart_type, $x_as, $surname) {
-	global $GEDCOM, $persgeg, $famgeg, $pgv_lang;
+	global $GEDCOM, $pgv_lang;
 	global $iso3166, $country_to_iso3166;
 
 	if ($surname=="") {
@@ -684,17 +1056,17 @@ function print_map_charts($chart_shows, $chart_type, $x_as, $surname) {
 	case 'birth_distribution_chart':
 		// Count how many people were born in each country
 		$surn_countries=array();
-		foreach ($persgeg as $id=>$indis) {
-			foreach ($indis as $pbirth=>$birth_place) {
-				if ($pbirth == 'pbirth' && $birth_place != -1) {
-					$country=UTF8_strtolower(trim($birth_place));
-					// PGV uses 3 letter country codes and localised country names, but google uses 2 letter codes.
-					if (array_key_exists($country, $country_to_iso3166)) {
-						if (array_key_exists($country_to_iso3166[$country], $surn_countries)) {
-							$surn_countries[$country_to_iso3166[$country]]++;
-						} else {
-							$surn_countries[$country_to_iso3166[$country]]=1;
-						}
+		foreach (get_indi_list() as $person) {
+			$birthplace = $person->getBirthPlace();
+			if ($birthplace != "") {
+				$birthplace = getPlaceCountry($birthplace);
+				$country=UTF8_strtolower(trim($birthplace));
+				// PGV uses 3 letter country codes and localised country names, but google uses 2 letter codes.
+				if (array_key_exists($country, $country_to_iso3166)) {
+					if (array_key_exists($country_to_iso3166[$country], $surn_countries)) {
+						$surn_countries[$country_to_iso3166[$country]]++;
+					} else {
+						$surn_countries[$country_to_iso3166[$country]]=1;
 					}
 				}
 			}
@@ -711,17 +1083,17 @@ function print_map_charts($chart_shows, $chart_type, $x_as, $surname) {
 	case 'death_distribution_chart':
 		// Count how many people were death in each country
 		$surn_countries=array();
-		foreach ($persgeg as $id=>$indis) {
-			foreach ($indis as $pdeath=>$death_place) {
-				if ($pdeath == 'pdeath' && $death_place != -1) {
-					$country=UTF8_strtolower(trim($death_place));
-					// PGV uses 3 letter country codes and localised country names, but google uses 2 letter codes.
-					if (array_key_exists($country, $country_to_iso3166)) {
-						if (array_key_exists($country_to_iso3166[$country], $surn_countries)) {
-							$surn_countries[$country_to_iso3166[$country]]++;
-						} else {
-							$surn_countries[$country_to_iso3166[$country]]=1;
-						}
+		foreach (get_indi_list() as $person) {
+			$deathplace = $person->getDeathPlace();
+			if ($deathplace != "") {
+				$deathplace = getPlaceCountry($deathplace);
+				$country=UTF8_strtolower(trim($deathplace));
+				// PGV uses 3 letter country codes and localised country names, but google uses 2 letter codes.
+				if (array_key_exists($country, $country_to_iso3166)) {
+					if (array_key_exists($country_to_iso3166[$country], $surn_countries)) {
+						$surn_countries[$country_to_iso3166[$country]]++;
+					} else {
+						$surn_countries[$country_to_iso3166[$country]]=1;
 					}
 				}
 			}
@@ -738,17 +1110,17 @@ function print_map_charts($chart_shows, $chart_type, $x_as, $surname) {
 	case 'marriage_distribution_chart':
 		// Count how many families got marriage in each country
 		$surn_countries=array();
-		foreach ($famgeg as $id=>$fams) {
-			foreach ($fams as $pmarr=>$marr_place) {
-				if ($pmarr == 'pmarr' && $marr_place != -1) {
-					$country=UTF8_strtolower(trim($marr_place));
-					// PGV uses 3 letter country codes and localised country names, but google uses 2 letter codes.
-					if (array_key_exists($country, $country_to_iso3166)) {
-						if (array_key_exists($country_to_iso3166[$country], $surn_countries)) {
-							$surn_countries[$country_to_iso3166[$country]]++;
-						} else {
-							$surn_countries[$country_to_iso3166[$country]]=1;
-						}
+		foreach (get_fam_list() as $family) {
+			$marriageplace = $family->getMarriagePlace();
+			if ($marriageplace != "") {
+				$marriageplace = getPlaceCountry($marriageplace);
+				$country=UTF8_strtolower(trim($marriageplace));
+				// PGV uses 3 letter country codes and localised country names, but google uses 2 letter codes.
+				if (array_key_exists($country, $country_to_iso3166)) {
+					if (array_key_exists($country_to_iso3166[$country], $surn_countries)) {
+						$surn_countries[$country_to_iso3166[$country]]++;
+					} else {
+						$surn_countries[$country_to_iso3166[$country]]=1;
 					}
 				}
 			}
@@ -798,32 +1170,26 @@ function print_sources_stats_chart($type){
 //--	========= start of main program =========
 $action	= safe_REQUEST($_REQUEST, 'action', PGV_REGEX_XREF);
 
-$legend= array();
-$xdata= array();
-$ydata= array();
-$xgrenzen= array();
-$zgrenzen= array();
-
 if ($action=="update") {
 	$x_as = $_POST["x-as"];
 	$y_as = $_POST["y-as"];
 	if (isset($_POST["z-as"])) $z_as = $_POST["z-as"];
 	else $z_as = 300;
-	$xas_grenzen_leeftijden = $_POST["xas-grenzen-leeftijden"];
-	$xas_grenzen_leeftijden_m = $_POST["xas-grenzen-leeftijden_m"];
-	$xas_grenzen_maanden = $_POST["xas-grenzen-maanden"];
-	$xas_grenzen_aantallen = $_POST["xas-grenzen-aantallen"];
-	if (isset($_POST["zas-grenzen-periode"])) $zas_grenzen_periode = $_POST["zas-grenzen-periode"];
-	else $zas_grenzen_periode = 0;
+	$xgl = $_POST["xas-grenzen-leeftijden"];
+	$xglm = $_POST["xas-grenzen-leeftijden_m"];
+	$xgm = $_POST["xas-grenzen-maanden"];
+	$xga = $_POST["xas-grenzen-aantallen"];
+	if (isset($_POST["zas-grenzen-periode"])) $zgp = $_POST["zas-grenzen-periode"];
+	else $zgp = 0;
 	$chart_shows = $_POST["chart_shows"];
 	$chart_type  = $_POST["chart_type"];
 	$surname	 = $_POST["SURN"];
 
-	$_SESSION[$GEDCOM."statTicks"]["xasGrLeeftijden"] = $xas_grenzen_leeftijden;
-	$_SESSION[$GEDCOM."statTicks"]["xasGrLeeftijden_m"] = $xas_grenzen_leeftijden_m;
-	$_SESSION[$GEDCOM."statTicks"]["xasGrMaanden"] = $xas_grenzen_maanden;
-	$_SESSION[$GEDCOM."statTicks"]["xasGrAantallen"] = $xas_grenzen_aantallen;
-	$_SESSION[$GEDCOM."statTicks"]["zasGrPeriode"] = $zas_grenzen_periode;
+	$_SESSION[$GEDCOM."statTicks"]["xasGrLeeftijden"] = $xgl;
+	$_SESSION[$GEDCOM."statTicks"]["xasGrLeeftijden_m"] = $xglm;
+	$_SESSION[$GEDCOM."statTicks"]["xasGrMaanden"] = $xgm;
+	$_SESSION[$GEDCOM."statTicks"]["xasGrAantallen"] = $xga;
+	$_SESSION[$GEDCOM."statTicks"]["zasGrPeriode"] = $zgp;
 	$_SESSION[$GEDCOM."statTicks"]["chart_shows"] = $chart_shows;
 	$_SESSION[$GEDCOM."statTicks"]["chart_type"] = $chart_type;
 	$_SESSION[$GEDCOM."statTicks"]["SURN"] = $surname;
@@ -833,11 +1199,11 @@ if ($action=="update") {
 	$savedInput["x_as"] = $x_as;
 	$savedInput["y_as"] = $y_as;
 	$savedInput["z_as"] = $z_as;
-	$savedInput["xas_grenzen_leeftijden"] = $xas_grenzen_leeftijden;
-	$savedInput["xas_grenzen_leeftijden_m"] = $xas_grenzen_leeftijden_m;
-	$savedInput["xas_grenzen_maanden"] = $xas_grenzen_maanden;
-	$savedInput["xas_grenzen_aantallen"] = $xas_grenzen_aantallen;
-	$savedInput["zas_grenzen_periode"] = $zas_grenzen_periode;
+	$savedInput["xgl"] = $xgl;
+	$savedInput["xglm"] = $xglm;
+	$savedInput["xgm"] = $xgm;
+	$savedInput["xga"] = $xga;
+	$savedInput["zgp"] = $zgp;
 	$savedInput["chart_shows"] = $chart_shows;
 	$savedInput["chart_type"] = $chart_type;
 	$savedInput["SURN"] = $surname;
@@ -850,11 +1216,11 @@ else {
 	$x_as = $savedInput["x_as"];
 	$y_as = $savedInput["y_as"];
 	$z_as = $savedInput["z_as"];
-	$xas_grenzen_leeftijden = $savedInput["xas_grenzen_leeftijden"];
-	$xas_grenzen_leeftijden_m = $savedInput["xas_grenzen_leeftijden_m"];
-	$xas_grenzen_maanden = $savedInput["xas_grenzen_maanden"];
-	$xas_grenzen_aantallen = $savedInput["xas_grenzen_aantallen"];
-	$zas_grenzen_periode = $savedInput["zas_grenzen_periode"];
+	$xgl = $savedInput["xgl"];
+	$xglm = $savedInput["xglm"];
+	$xgm = $savedInput["xgm"];
+	$xga = $savedInput["xga"];
+	$zgp = $savedInput["zgp"];
 	$chart_shows = $savedInput["chart_shows"];
 	$chart_type = $savedInput["chart_type"];
 	$surname = $savedInput["SURN"];
@@ -864,22 +1230,17 @@ else {
 print_header($pgv_lang["statistiek_list"]);
 echo "\n\t<center><h2>".$pgv_lang["statistiek_list"]."</h2>\n\t";
 echo "</center><br />";
-get_plot_data();
 
-if ($x_as >  10) {
+//if ($x_as >  10) {
 	$nrpers = $_SESSION[$GEDCOM."nrpers"];
 	$nrfam = $_SESSION[$GEDCOM."nrfam"];
 	$nrmale = $_SESSION[$GEDCOM."nrmale"];
 	$nrfemale = $_SESSION[$GEDCOM."nrfemale"];
 
-	error_reporting(E_ALL ^E_NOTICE);
+	//error_reporting(E_ALL ^E_NOTICE);
 	//-- no errors because then I cannot plot
 
 	//-- out of range values
-	if ($x_as >  21) {
-		echo $pgv_lang["stpl"].$x_as.$pgv_lang["stplnoim"]."<br/>";
-		exit;
-	}
 	if (($y_as < 201) || ($y_as > 202)) {
 		echo $pgv_lang["stpl"].$y_as.$pgv_lang["stplnoim"]."<br/>";
 		exit;
@@ -891,87 +1252,110 @@ if ($x_as >  10) {
 
 	//-- Set params for request out of the information for plot
 	$g_xas = "1,2,3,4,5,6,7,8,9,10,11,12"; //should not be needed. but just for month
-	$xgl = $xas_grenzen_leeftijden;
-	$xglm = $xas_grenzen_leeftijden_m;
-	$xgm = $xas_grenzen_maanden;
-	$xga = $xas_grenzen_aantallen;
-	$zgp = $zas_grenzen_periode;
-	//-- end of setting variables
 
-	//---------		nr,  type,	  xgiven,	zgiven,	title,				xtitle,		ytitle,        boundaries_x, boundaries-z, function
-	set_params(11,"IND", true,	false, "stat_11_mb",  "stplmonth",	$y_as,	$g_xas,	$zgp, "bimo");  //plot Month of birth
-	set_params(12,"IND", true,	false, "stat_12_md",  "stplmonth",	$y_as,	$g_xas,	$zgp, "demo");  //plot Month of death
-	set_params(13,"FAM", true,	false, "stat_13_mm",  "stplmonth",	$y_as,	$g_xas,	$zgp, "mamo");  //plot Month of marriage
-	set_params(14,"FAM", true,	false, "stat_14_mb1", "stplmonth",	$y_as,	$g_xas,	$zgp, "bimo1"); //plot Month of birth of first child in a relation
-	set_params(15,"FAM", true,	false, "stat_15_mm1", "stplmonth",	$y_as,	$g_xas,	$zgp, "mamo1"); //plot Month of first marriage
-	set_params(16,"FAM", false,	false, "stat_16_mmb", "stplmarrbirth",$y_as,$xgm,	$zgp, "mamam"); //plot Months between marriage and first child
-	set_params(17,"IND", false,	false, "stat_17_arb", "stplage",	$y_as,	$xgl,	$zgp, "agbi");  //plot Age related to birth year
-	set_params(18,"IND", false,	false, "stat_18_ard", "stplage",	$y_as,	$xgl,	$zgp, "agde");  //plot Age related to death year
-	set_params(19,"IND", false,	false, "stat_19_arm", "stplage",	$y_as,	$xglm,	$zgp, "agma");  //plot Age in year of marriage
-	set_params(20,"IND", false,	false, "stat_20_arm1","stplage",	$y_as,	$xglm,	$zgp, "agma1"); //plot Age in year of first marriage
-	set_params(21,"FAM", false,	false, "stat_21_nok", "stplnuch",	$y_as,	$xga,	$zgp, "nuch");  //plot Number of children
-}
-else if ($x_as > 0 && $x_as < 5) {
-	// PGV uses 3-letter ISO/chapman codes, but google uses 2-letter ISO codes.  There is not a 1:1
-	// mapping, so Wales/Scotland/England all become GB, etc.
-	if (!isset($iso3166)) {
-		$iso3166=array(
-		'ABW'=>'AW', 'AFG'=>'AF', 'AGO'=>'AO', 'AIA'=>'AI', 'ALA'=>'AX', 'ALB'=>'AL', 'AND'=>'AD', 'ANT'=>'AN',
-		'ARE'=>'AE', 'ARG'=>'AR', 'ARM'=>'AM', 'ASM'=>'AS', 'ATA'=>'AQ', 'ATF'=>'TF', 'ATG'=>'AG', 'AUS'=>'AU',
-		'AUT'=>'AT', 'AZE'=>'AZ', 'BDI'=>'BI', 'BEL'=>'BE', 'BEN'=>'BJ', 'BFA'=>'BF', 'BGD'=>'BD', 'BGR'=>'BG',
-		'BHR'=>'BH', 'BHS'=>'BS', 'BIH'=>'BA', 'BLR'=>'BY', 'BLZ'=>'BZ', 'BMU'=>'BM', 'BOL'=>'BO', 'BRA'=>'BR',
-		'BRB'=>'BB', 'BRN'=>'BN', 'BTN'=>'BT', 'BVT'=>'BV', 'BWA'=>'BW', 'CAF'=>'CF', 'CAN'=>'CA', 'CCK'=>'CC',
-		'CHE'=>'CH', 'CHL'=>'CL', 'CHN'=>'CN', 'CHI'=>'JE', 'CIV'=>'CI', 'CMR'=>'CM', 'COD'=>'CD', 'COG'=>'CG',
-		'COK'=>'CK', 'COL'=>'CO', 'COM'=>'KM', 'CPV'=>'CV', 'CRI'=>'CR', 'CUB'=>'CU', 'CXR'=>'CX', 'CYM'=>'KY',
-		'CYP'=>'CY', 'CZE'=>'CZ', 'DEU'=>'DE', 'DJI'=>'DJ', 'DMA'=>'DM', 'DNK'=>'DK', 'DOM'=>'DO', 'DZA'=>'DZ',
-		'ECU'=>'EC', 'EGY'=>'EG', 'ENG'=>'GB', 'ERI'=>'ER', 'ESH'=>'EH', 'ESP'=>'ES', 'EST'=>'EE', 'ETH'=>'ET',
-		'FIN'=>'FI', 'FJI'=>'FJ', 'FLK'=>'FK', 'FRA'=>'FR', 'FRO'=>'FO', 'FSM'=>'FM', 'GAB'=>'GA', 'GBR'=>'GB',
-		'GEO'=>'GE', 'GHA'=>'GH', 'GIB'=>'GI', 'GIN'=>'GN', 'GLP'=>'GP', 'GMB'=>'GM', 'GNB'=>'GW', 'GNQ'=>'GQ',
-		'GRC'=>'GR', 'GRD'=>'GD', 'GRL'=>'GL', 'GTM'=>'GT', 'GUF'=>'GF', 'GUM'=>'GU', 'GUY'=>'GY', 'HKG'=>'HK',
-		'HMD'=>'HM', 'HND'=>'HN', 'HRV'=>'HR', 'HTI'=>'HT', 'HUN'=>'HU', 'IDN'=>'ID', 'IND'=>'IN', 'IOT'=>'IO',
-		'IRL'=>'IE', 'IRN'=>'IR', 'IRQ'=>'IQ', 'ISL'=>'IS', 'ISR'=>'IL', 'ITA'=>'IT', 'JAM'=>'JM', 'JOR'=>'JO',
-		'JPN'=>'JA', 'KAZ'=>'KZ', 'KEN'=>'KE', 'KGZ'=>'KG', 'KHM'=>'KH', 'KIR'=>'KI', 'KNA'=>'KN', 'KOR'=>'KO',
-		'KWT'=>'KW', 'LAO'=>'LA', 'LBN'=>'LB', 'LBR'=>'LR', 'LBY'=>'LY', 'LCA'=>'LC', 'LIE'=>'LI', 'LKA'=>'LK',
-		'LSO'=>'LS', 'LTU'=>'LT', 'LUX'=>'LU', 'LVA'=>'LV', 'MAC'=>'MO', 'MAR'=>'MA', 'MCO'=>'MC', 'MDA'=>'MD',
-		'MDG'=>'MG', 'MDV'=>'MV', 'MEX'=>'ME', 'MHL'=>'MH', 'MKD'=>'MK', 'MLI'=>'ML', 'MLT'=>'MT', 'MMR'=>'MM',
-		'MNG'=>'MN', 'MNP'=>'MP', 'MNT'=>'ME', 'MOZ'=>'MZ', 'MRT'=>'MR', 'MSR'=>'MS', 'MTQ'=>'MQ', 'MUS'=>'MU',
-		'MWI'=>'MW', 'MYS'=>'MY', 'MYT'=>'YT', 'NAM'=>'NA', 'NCL'=>'NC', 'NER'=>'NE', 'NFK'=>'NF', 'NGA'=>'NG',
-		'NIC'=>'NI', 'NIR'=>'GB', 'NIU'=>'NU', 'NLD'=>'NL', 'NOR'=>'NO', 'NPL'=>'NP', 'NRU'=>'NR', 'NZL'=>'NZ',
-		'OMN'=>'OM', 'PAK'=>'PK', 'PAN'=>'PA', 'PCN'=>'PN', 'PER'=>'PE', 'PHL'=>'PH', 'PLW'=>'PW', 'PNG'=>'PG',
-		'POL'=>'PL', 'PRI'=>'PR', 'PRK'=>'KP', 'PRT'=>'PO', 'PRY'=>'PY', 'PSE'=>'PS', 'PYF'=>'PF', 'QAT'=>'QA',
-		'REU'=>'RE', 'ROM'=>'RO', 'RUS'=>'RU', 'RWA'=>'RW', 'SAU'=>'SA', 'SCT'=>'GB', 'SDN'=>'SD', 'SEN'=>'SN',
-		'SER'=>'RS', 'SGP'=>'SG', 'SGS'=>'GS', 'SHN'=>'SH', 'SIC'=>'IT', 'SJM'=>'SJ', 'SLB'=>'SB', 'SLE'=>'SL',
-		'SLV'=>'SV', 'SMR'=>'SM', 'SOM'=>'SO', 'SPM'=>'PM', 'STP'=>'ST', 'SUN'=>'RU', 'SUR'=>'SR', 'SVK'=>'SK',
-		'SVN'=>'SI', 'SWE'=>'SE', 'SWZ'=>'SZ', 'SYC'=>'SC', 'SYR'=>'SY', 'TCA'=>'TC', 'TCD'=>'TD', 'TGO'=>'TG',
-		'THA'=>'TH', 'TJK'=>'TJ', 'TKL'=>'TK', 'TKM'=>'TM', 'TLS'=>'TL', 'TON'=>'TO', 'TTO'=>'TT', 'TUN'=>'TN',
-		'TUR'=>'TR', 'TUV'=>'TV', 'TWN'=>'TW', 'TZA'=>'TZ', 'UGA'=>'UG', 'UKR'=>'UA', 'UMI'=>'UM', 'URY'=>'UY',
-		'USA'=>'US', 'UZB'=>'UZ', 'VAT'=>'VA', 'VCT'=>'VC', 'VEN'=>'VE', 'VGB'=>'VG', 'VIR'=>'VI', 'VNM'=>'VN',
-		'VUT'=>'VU', 'WLF'=>'WF', 'WLS'=>'GB', 'WSM'=>'WS', 'YEM'=>'YE', 'ZAF'=>'ZA', 'ZMB'=>'ZM', 'ZWE'=>'ZW'
-		);
-	}
-	// The country names can be specified in any language or in the chapman code.
-	// Generate a combined list.
-	if (!isset($country_to_iso3166)) {
-		$country_to_iso3166=array();
-		foreach ($iso3166 as $three=>$two) {
-			$country_to_iso3166[UTF8_strtolower($three)]=$two;
+	switch ($x_as) {
+	case '11':
+		//---------		nr,  type,	  xgiven,	zgiven,	title,				xtitle,		ytitle,	boundaries_x, boundaries-z, function
+		set_params(11,"IND", true,	false, "stat_11_mb",  "stplmonth",	$y_as,	$g_xas,	$zgp, "bimo");  //plot Month of birth
+		break;
+	case '12':
+		set_params(12,"IND", true,	false, "stat_12_md",  "stplmonth",	$y_as,	$g_xas,	$zgp, "demo");  //plot Month of death
+		break;
+	case '13':
+		set_params(13,"FAM", true,	false, "stat_13_mm",  "stplmonth",	$y_as,	$g_xas,	$zgp, "mamo");  //plot Month of marriage
+		break;
+	case '14':
+		set_params(14,"FAM", true,	false, "stat_14_mb1", "stplmonth",	$y_as,	$g_xas,	$zgp, "bimo1"); //plot Month of birth of first child in a relation
+		break;
+	case '15':
+		set_params(15,"FAM", true,	false, "stat_15_mm1", "stplmonth",	$y_as,	$g_xas,	$zgp, "mamo1"); //plot Month of first marriage
+		break;
+	case '16':
+		set_params(16,"FAM", false,	false, "stat_16_mmb", "stplmarrbirth",$y_as,$xgm,	$zgp, "mamam"); //plot Months between marriage and first child
+		break;
+	case '17':
+		set_params(17,"IND", false,	false, "stat_17_arb", "stplage",	$y_as,	$xgl,	$zgp, "agbi");  //plot Age related to birth year
+		break;
+	case '18':
+		set_params(18,"IND", false,	false, "stat_18_ard", "stplage",	$y_as,	$xgl,	$zgp, "agde");  //plot Age related to death year
+		break;
+	case '19':
+		set_params(19,"IND", false,	false, "stat_19_arm", "stplage",	$y_as,	$xglm,	$zgp, "agma");  //plot Age in year of marriage
+		break;
+	case '20':
+		set_params(20,"IND", false,	false, "stat_20_arm1","stplage",	$y_as,	$xglm,	$zgp, "agma1"); //plot Age in year of first marriage
+		break;
+	case '21':
+		set_params(21,"FAM", false,	false, "stat_21_nok", "stplnuch",	$y_as,	$xga,	$zgp, "nuch");  //plot Number of children
+		break;
+	case '1':
+	case '2':
+	case '3':
+	case '4':
+		// PGV uses 3-letter ISO/chapman codes, but google uses 2-letter ISO codes.  There is not a 1:1
+		// mapping, so Wales/Scotland/England all become GB, etc.
+		if (!isset($iso3166)) {
+			$iso3166=array(
+			'ABW'=>'AW', 'AFG'=>'AF', 'AGO'=>'AO', 'AIA'=>'AI', 'ALA'=>'AX', 'ALB'=>'AL', 'AND'=>'AD', 'ANT'=>'AN',
+			'ARE'=>'AE', 'ARG'=>'AR', 'ARM'=>'AM', 'ASM'=>'AS', 'ATA'=>'AQ', 'ATF'=>'TF', 'ATG'=>'AG', 'AUS'=>'AU',
+			'AUT'=>'AT', 'AZE'=>'AZ', 'BDI'=>'BI', 'BEL'=>'BE', 'BEN'=>'BJ', 'BFA'=>'BF', 'BGD'=>'BD', 'BGR'=>'BG',
+			'BHR'=>'BH', 'BHS'=>'BS', 'BIH'=>'BA', 'BLR'=>'BY', 'BLZ'=>'BZ', 'BMU'=>'BM', 'BOL'=>'BO', 'BRA'=>'BR',
+			'BRB'=>'BB', 'BRN'=>'BN', 'BTN'=>'BT', 'BVT'=>'BV', 'BWA'=>'BW', 'CAF'=>'CF', 'CAN'=>'CA', 'CCK'=>'CC',
+			'CHE'=>'CH', 'CHL'=>'CL', 'CHN'=>'CN', 'CHI'=>'JE', 'CIV'=>'CI', 'CMR'=>'CM', 'COD'=>'CD', 'COG'=>'CG',
+			'COK'=>'CK', 'COL'=>'CO', 'COM'=>'KM', 'CPV'=>'CV', 'CRI'=>'CR', 'CUB'=>'CU', 'CXR'=>'CX', 'CYM'=>'KY',
+			'CYP'=>'CY', 'CZE'=>'CZ', 'DEU'=>'DE', 'DJI'=>'DJ', 'DMA'=>'DM', 'DNK'=>'DK', 'DOM'=>'DO', 'DZA'=>'DZ',
+			'ECU'=>'EC', 'EGY'=>'EG', 'ENG'=>'GB', 'ERI'=>'ER', 'ESH'=>'EH', 'ESP'=>'ES', 'EST'=>'EE', 'ETH'=>'ET',
+			'FIN'=>'FI', 'FJI'=>'FJ', 'FLK'=>'FK', 'FRA'=>'FR', 'FRO'=>'FO', 'FSM'=>'FM', 'GAB'=>'GA', 'GBR'=>'GB',
+			'GEO'=>'GE', 'GHA'=>'GH', 'GIB'=>'GI', 'GIN'=>'GN', 'GLP'=>'GP', 'GMB'=>'GM', 'GNB'=>'GW', 'GNQ'=>'GQ',
+			'GRC'=>'GR', 'GRD'=>'GD', 'GRL'=>'GL', 'GTM'=>'GT', 'GUF'=>'GF', 'GUM'=>'GU', 'GUY'=>'GY', 'HKG'=>'HK',
+			'HMD'=>'HM', 'HND'=>'HN', 'HRV'=>'HR', 'HTI'=>'HT', 'HUN'=>'HU', 'IDN'=>'ID', 'IND'=>'IN', 'IOT'=>'IO',
+			'IRL'=>'IE', 'IRN'=>'IR', 'IRQ'=>'IQ', 'ISL'=>'IS', 'ISR'=>'IL', 'ITA'=>'IT', 'JAM'=>'JM', 'JOR'=>'JO',
+			'JPN'=>'JA', 'KAZ'=>'KZ', 'KEN'=>'KE', 'KGZ'=>'KG', 'KHM'=>'KH', 'KIR'=>'KI', 'KNA'=>'KN', 'KOR'=>'KO',
+			'KWT'=>'KW', 'LAO'=>'LA', 'LBN'=>'LB', 'LBR'=>'LR', 'LBY'=>'LY', 'LCA'=>'LC', 'LIE'=>'LI', 'LKA'=>'LK',
+			'LSO'=>'LS', 'LTU'=>'LT', 'LUX'=>'LU', 'LVA'=>'LV', 'MAC'=>'MO', 'MAR'=>'MA', 'MCO'=>'MC', 'MDA'=>'MD',
+			'MDG'=>'MG', 'MDV'=>'MV', 'MEX'=>'ME', 'MHL'=>'MH', 'MKD'=>'MK', 'MLI'=>'ML', 'MLT'=>'MT', 'MMR'=>'MM',
+			'MNG'=>'MN', 'MNP'=>'MP', 'MNT'=>'ME', 'MOZ'=>'MZ', 'MRT'=>'MR', 'MSR'=>'MS', 'MTQ'=>'MQ', 'MUS'=>'MU',
+			'MWI'=>'MW', 'MYS'=>'MY', 'MYT'=>'YT', 'NAM'=>'NA', 'NCL'=>'NC', 'NER'=>'NE', 'NFK'=>'NF', 'NGA'=>'NG',
+			'NIC'=>'NI', 'NIR'=>'GB', 'NIU'=>'NU', 'NLD'=>'NL', 'NOR'=>'NO', 'NPL'=>'NP', 'NRU'=>'NR', 'NZL'=>'NZ',
+			'OMN'=>'OM', 'PAK'=>'PK', 'PAN'=>'PA', 'PCN'=>'PN', 'PER'=>'PE', 'PHL'=>'PH', 'PLW'=>'PW', 'PNG'=>'PG',
+			'POL'=>'PL', 'PRI'=>'PR', 'PRK'=>'KP', 'PRT'=>'PO', 'PRY'=>'PY', 'PSE'=>'PS', 'PYF'=>'PF', 'QAT'=>'QA',
+			'REU'=>'RE', 'ROM'=>'RO', 'RUS'=>'RU', 'RWA'=>'RW', 'SAU'=>'SA', 'SCT'=>'GB', 'SDN'=>'SD', 'SEN'=>'SN',
+			'SER'=>'RS', 'SGP'=>'SG', 'SGS'=>'GS', 'SHN'=>'SH', 'SIC'=>'IT', 'SJM'=>'SJ', 'SLB'=>'SB', 'SLE'=>'SL',
+			'SLV'=>'SV', 'SMR'=>'SM', 'SOM'=>'SO', 'SPM'=>'PM', 'STP'=>'ST', 'SUN'=>'RU', 'SUR'=>'SR', 'SVK'=>'SK',
+			'SVN'=>'SI', 'SWE'=>'SE', 'SWZ'=>'SZ', 'SYC'=>'SC', 'SYR'=>'SY', 'TCA'=>'TC', 'TCD'=>'TD', 'TGO'=>'TG',
+			'THA'=>'TH', 'TJK'=>'TJ', 'TKL'=>'TK', 'TKM'=>'TM', 'TLS'=>'TL', 'TON'=>'TO', 'TTO'=>'TT', 'TUN'=>'TN',
+			'TUR'=>'TR', 'TUV'=>'TV', 'TWN'=>'TW', 'TZA'=>'TZ', 'UGA'=>'UG', 'UKR'=>'UA', 'UMI'=>'UM', 'URY'=>'UY',
+			'USA'=>'US', 'UZB'=>'UZ', 'VAT'=>'VA', 'VCT'=>'VC', 'VEN'=>'VE', 'VGB'=>'VG', 'VIR'=>'VI', 'VNM'=>'VN',
+			'VUT'=>'VU', 'WLF'=>'WF', 'WLS'=>'GB', 'WSM'=>'WS', 'YEM'=>'YE', 'ZAF'=>'ZA', 'ZMB'=>'ZM', 'ZWE'=>'ZW'
+			);
 		}
-		loadLangFile('pgv_country');
-
-		foreach (array_keys($pgv_language) as $LANGUAGE) {
-			foreach ($countries as $code => $country) {
+		// The country names can be specified in any language or in the chapman code.
+		// Generate a combined list.
+		if (!isset($country_to_iso3166)) {
+			$country_to_iso3166=array();
+			foreach ($iso3166 as $three=>$two) {
+				$country_to_iso3166[UTF8_strtolower($three)]=$two;
+			}
+			loadLangFile('pgv_country');
+			foreach (array_keys($pgv_language) as $LANGUAGE) {
+				foreach ($countries as $code => $country) {
 				if (array_key_exists($code, $iso3166)) {
-					$country_to_iso3166[UTF8_strtolower($country)]=$iso3166[$code];
+						$country_to_iso3166[UTF8_strtolower($country)]=$iso3166[$code];
+					}
 				}
 			}
 		}
+		print_map_charts($chart_shows, $chart_type, $x_as, $surname);
+		break;
+	case '8':
+	case '9':
+		print_sources_stats_chart($x_as);
+		break;
+	default:
+		echo $pgv_lang["stpl"].$x_as.$pgv_lang["stplnoim"]."<br/>";
+		exit;
 	}
-	print_map_charts($chart_shows, $chart_type, $x_as, $surname);
-}
-else if ($x_as == 9 || $x_as == 8) {
-	print_sources_stats_chart($x_as);
-}
-
+//}
 echo "<br /><div class =\"center noprint\">";
 echo "<input type=\"submit\" value=\"".$pgv_lang["back"]."\" onclick=\"javascript:history.go(-1);\" /><br /><br />";
 echo "</div>\n";

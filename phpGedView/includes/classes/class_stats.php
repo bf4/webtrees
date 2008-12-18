@@ -520,7 +520,7 @@ class stats {
 
 	function totalSurnames($params = null)
 	{
-		global $TBLPREFIX;
+		global $DBTYPE, $TBLPREFIX;
 		if ($params !== null)
 		{
 			$dis = '';
@@ -534,7 +534,15 @@ class stats {
 			$dis = ' DISTINCT ';
 			$opt = '';
 		}
-		$rows = self::_runSQL("SELECT COUNT({$dis}n_surn) AS tot FROM {$TBLPREFIX}name WHERE n_file={$this->_ged_id}{$opt}");
+		if ($DBTYPE=="sqlite") {
+			$sql = "SELECT n_surn FROM {$TBLPREFIX}name WHERE n_file={$this->_ged_id} GROUP BY n_surn";
+			$tempsql = dbquery($sql);
+			$res =& $tempsql;
+			$rows[0]['tot'] = $res->numRows();
+			$res->free();
+		}
+		else
+			$rows = self::_runSQL("SELECT COUNT({$dis}n_surn) AS tot FROM {$TBLPREFIX}name WHERE n_file={$this->_ged_id}{$opt}");
 		return $rows[0]['tot'];
 	}
 
@@ -980,6 +988,58 @@ class stats {
 		return str_replace('<a href="', '<a href="'.$this->_server_url, $result);
 	}
 
+	function statsBirth($sex=false, $year1=-1, $year2=-1)
+	{
+		global $TBLPREFIX;
+		if ($sex) {
+			$sql = "SELECT d_month, i_sex, COUNT(*) FROM {$TBLPREFIX}dates "
+					."JOIN {$TBLPREFIX}individuals ON d_file = i_file AND d_gid = i_id "
+					."WHERE "
+						."d_file={$this->_ged_id} AND "
+						."d_fact='BIRT'";
+		}
+		else {
+			$sql = "SELECT d_month, COUNT(*) FROM {$TBLPREFIX}dates "
+					."WHERE "
+					."d_file={$this->_ged_id} AND "
+					."d_fact='BIRT'";
+		}
+		if ($year1>=0 && $year2>=0) {
+			$sql .= " AND d_year BETWEEN '{$year1}' AND '{$year2}'";
+		}
+		$sql .= " GROUP BY d_month";
+		if ($sex) $sql .= ", i_sex";
+		$rows=self::_runSQL($sql);
+		if (!isset($rows)) {return 0;}
+		return $rows;
+	}
+
+	function statsDeath($sex=false, $year1=-1, $year2=-1)
+	{
+		global $TBLPREFIX;
+		if ($sex) {
+			$sql = "SELECT d_month, i_sex, COUNT(*) FROM {$TBLPREFIX}dates "
+					."JOIN {$TBLPREFIX}individuals ON d_file = i_file AND d_gid = i_id "
+					."WHERE "
+						."d_file={$this->_ged_id} AND "
+						."d_fact='DEAT'";
+		}
+		else {
+			$sql = "SELECT d_month, COUNT(*) FROM {$TBLPREFIX}dates "
+					."WHERE "
+					."d_file={$this->_ged_id} AND "
+					."d_fact='DEAT'";
+		}
+		if ($year1>=0 && $year2>=0) {
+			$sql .= " AND d_year BETWEEN '{$year1}' AND '{$year2}'";
+		}
+		$sql .= " GROUP BY d_month";
+		if ($sex) $sql .= ", i_sex";
+		$rows=self::_runSQL($sql);
+		if (!isset($rows)) {return 0;}
+		return $rows;
+	}
+
 	//
 	// Birth
 	//
@@ -1191,6 +1251,51 @@ class stats {
 		return PrintReady(floor($row['age']/365.25));
 	}
 
+	function statsAge($related='BIRT', $sex='BOTH', $year1=-1, $year2=-1)
+	{
+		global $TBLPREFIX;
+		$sex_search = '';
+		$years = '';
+		if ($sex == 'F')
+		{
+			$sex_search = " AND i_sex='F'";
+		}
+		elseif ($sex == 'M')
+		{
+			$sex_search = " AND i_sex='M'";
+		}
+		if ($year1>=0 && $year2>=0) {
+			if ($related=='BIRT') {
+				$years = " AND birth.d_year BETWEEN '{$year1}' AND '{$year2}'";
+			}
+			else if ($related=='DEAT') {
+				$years = " AND death.d_year BETWEEN '{$year1}' AND '{$year2}'";
+			}
+		}
+		$rows=self::_runSQL(''
+			.' SELECT'
+				.' death.d_julianday2-birth.d_julianday1 AS age'
+			.' FROM'
+				." {$TBLPREFIX}dates AS death,"
+				." {$TBLPREFIX}dates AS birth,"
+				." {$TBLPREFIX}individuals AS indi"
+			.' WHERE'
+				.' indi.i_id=birth.d_gid AND'
+				.' birth.d_gid=death.d_gid AND'
+				." death.d_file={$this->_ged_id} AND"
+				.' birth.d_file=death.d_file AND'
+				.' birth.d_file=indi.i_file AND'
+				." birth.d_fact='BIRT' AND"
+				." death.d_fact='DEAT' AND"
+				.' birth.d_julianday1!=0 AND'
+				.' death.d_julianday1!=0'
+				.$years
+				.$sex_search
+			.' ORDER BY age DESC');
+		if (!isset($rows)) {return 0;}
+		return $rows;
+	}
+
 	// Both Sexes
 
 	function longestLife() {return $this->_longlifeQuery('full', 'BOTH');}
@@ -1399,6 +1504,80 @@ class stats {
 				break;
 		}
 		return str_replace('<a href="', '<a href="'.$this->_server_url, $result);
+	}
+
+	function statsMarr($first=false, $year1=-1, $year2=-1)
+	{
+		global $TBLPREFIX;
+		if ($first) {
+			$sql = '';
+		}
+		else {
+			$sql = "SELECT d_month, COUNT(*) FROM {$TBLPREFIX}dates "
+				."WHERE "
+				."d_file={$this->_ged_id} AND "
+				."d_fact='MARR'";
+				if ($year1>=0 && $year2>=0) {
+					$sql .= " AND d_year BETWEEN '{$year1}' AND '{$year2}'";
+				}
+			$sql .= " GROUP BY d_month";
+		}
+		$rows=self::_runSQL($sql);
+		if (!isset($rows)) {return 0;}
+		return $rows;
+	}
+
+	
+	function statsMarrAge($sex='BOTH', $year1=-1, $year2=-1)
+	{
+		global $TBLPREFIX;
+		$years = '';
+		if ($year1>=0 && $year2>=0) {
+			$years = " AND married.d_year BETWEEN '{$year1}' AND '{$year2}'";
+		}
+		if ($sex == 'F') {
+			$sex_field = 'fam.f_wife,';
+			$sex_field2 = " indi.i_id = fam.f_wife AND";
+			$sex_search = " AND i_sex='F'";
+		}
+		else if ($sex == 'M') {
+			$sex_field = 'fam.f_husb,';
+			$sex_field2 = " indi.i_id = fam.f_husb AND";
+			$sex_search = " AND i_sex='M'";
+		}
+		else {
+			$sex_field = 'fam.f_wife, fam.f_husb,';
+			$sex_field2 = " indi.i_id = fam.f_husb OR indi.i_id = fam.f_wife AND";
+			$sex_search = " AND i_sex='F' OR i_sex='M'";
+		}
+		$rows=self::_runSQL(''
+			.' SELECT'
+				.' fam.f_id,'
+				.$sex_field
+				.' married.d_julianday2-birth.d_julianday1 AS age,'
+				.' indi.i_id AS indi'
+			.' FROM'
+				." {$TBLPREFIX}families AS fam"
+			.' LEFT JOIN'
+				." {$TBLPREFIX}dates AS birth ON birth.d_file = {$this->_ged_id}"
+			.' LEFT JOIN'
+				." {$TBLPREFIX}dates AS married ON married.d_file = {$this->_ged_id}"
+			.' LEFT JOIN'
+				." {$TBLPREFIX}individuals AS indi ON indi.i_file = {$this->_ged_id}"
+			.' WHERE'
+				.' birth.d_gid = indi.i_id AND'
+				.' married.d_gid = fam.f_id AND'
+				.$sex_field2
+				." fam.f_file = {$this->_ged_id} AND"
+				." birth.d_fact = 'BIRT' AND"
+				." married.d_fact = 'MARR' AND"
+				.' birth.d_julianday1 != 0 AND'
+				.' married.d_julianday2 != 0'
+				.$sex_search
+				.$years
+			.' ORDER BY indi, age ASC');
+		if (!isset($rows)) {return 0;}
+		return $rows;
 	}
 
 	//
