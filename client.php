@@ -44,7 +44,7 @@ if (count(get_all_gedcoms())==0) {
 	exit;
 }
 
-$gedcom=safe_GET('GEDCOM');
+$gedcom=safe_REQUEST($_REQUEST,'GEDCOM');
 if ($gedcom) {
 	if (!in_array($gedcom, get_all_gedcoms())) {
 		addDebugLog("ERROR 21: Invalid GEDCOM specified.  Remember that the GEDCOM is case sensitive.");
@@ -61,7 +61,7 @@ if (!check_for_import($GEDCOM)) {
 	exit;
 }
 
-$action=safe_GET('action');
+$action=safe_REQUEST($_REQUEST,'action');
 
 // The following actions can be performed without being connected.
 switch ($action) {
@@ -74,9 +74,9 @@ case 'version':
 	print "SUCCESS\n".PGV_VERSION_TEXT."\n";
 	exit;
 case 'connect':
-	$username=safe_GET('username');
+	$username=safe_REQUEST($_REQUEST,'username');
 	if ($username) {
-		$password=safe_GET('password');
+		$password=safe_REQUEST($_REQUEST,'password');
 		$user_id=authenticateUser($username, $password);
 		if ($user_id) {
 			$stat=newConnection();
@@ -121,8 +121,8 @@ default:
 // The following actions can only be performed when connected
 switch ($action) {
 case 'get':
-	$xref=safe_GET('xref', PGV_REGEX_XREF.'([ ,;]+'.PGV_REGEX_XREF.')*');
-	$view=safe_GET('view', PGV_REGEX_ALPHANUM);
+	$xref=safe_REQUEST($_REQUEST,'xref', PGV_REGEX_XREF.'([ ,;]+'.PGV_REGEX_XREF.')*');
+	$view=safe_REQUEST($_REQUEST,'view', PGV_REGEX_ALPHANUM);
 	if ($xref) {
 		$xrefs = preg_split("/[;, ]/", $xref, 0, PREG_SPLIT_NO_EMPTY);
 		$gedrecords="";
@@ -158,7 +158,7 @@ case 'get':
 				}
 			}
 		}
-		if (!safe_GET('keepfile')) {
+		if (!safe_REQUEST($_REQUEST,'keepfile')) {
 			$ct = preg_match_all("/ FILE (.*)/", $gedrecords, $match, PREG_SET_ORDER);
 			for($i=0; $i<$ct; $i++) {
 				$mediaurl = $SERVER_URL.$MEDIA_DIRECTORY.extract_filename($match[$i][1]);
@@ -173,7 +173,7 @@ case 'get':
 	}
 	exit;
 case 'getvar':
-	$var=safe_GET('var', '[A-Za-z0-9_]+');
+	$var=safe_REQUEST($_REQUEST,'var', '[A-Za-z0-9_]+');
 	$public_vars = array("READ_ONLY","CHARACTER_SET","GEDCOM","PEDIGREE_ROOT_ID");
 	if ($var && in_array($var, $public_vars) && isset($$var)) {
 		addDebugLog($action." var=$var SUCCESS\n".$$var);
@@ -187,9 +187,9 @@ case 'getvar':
 	}
 	exit;
 case 'update':
-	$xref=safe_GET('xref', PGV_REGEX_XREF);
+	$xref=safe_REQUEST($_REQUEST,'xref', PGV_REGEX_XREF);
 	if ($xref) {
-		$gedrec=safe_GET('gedrec', '.*'); // raw data may contain any characters
+		$gedrec=safe_REQUEST($_REQUEST,'gedrec', '.*'); // raw data may contain any characters
 		if ($gedrec) {
 			if (empty($_SESSION['readonly']) && PGV_USER_CAN_EDIT && displayDetailsById($xref)) {
 				$gedrec = preg_replace(array("/\\\\+r/","/\\\\+n/"), array("\r","\n"), $gedrec);
@@ -212,7 +212,7 @@ case 'update':
 	}
 	exit;
 case 'append':
-	$gedrec=safe_GET('gedrec', '.*'); // raw data may contain any characters
+	$gedrec=safe_REQUEST($_REQUEST,'gedrec', '.*'); // raw data may contain any characters
 	if ($gedrec) {
 		if (empty($_SESSION['readonly']) && PGV_USER_CAN_EDIT) {
 			$gedrec = preg_replace(array("/\\\\+r/","/\\\\+n/"), array("\r","\n"), $gedrec);
@@ -231,7 +231,7 @@ case 'append':
 	}
 	exit;
 case 'delete':
-	$xref=safe_GET('xref', PGV_REGEX_XREF);
+	$xref=safe_REQUEST($_REQUEST,'xref', PGV_REGEX_XREF);
 	if ($xref) {
 		if (empty($_SESSION['readonly']) && PGV_USER_CAN_EDIT && displayDetailsById($xref)) {
 			$success = delete_gedrec($xref);
@@ -249,7 +249,7 @@ case 'delete':
 	}
 	exit;
 case 'getnext':
-	$xref=safe_GET('xref', PGV_REGEX_XREF);
+	$xref=safe_REQUEST($_REQUEST,'xref', PGV_REGEX_XREF);
 	if ($xref) {
 		$xref1 = get_next_xref($xref, $GED_ID);
 		$gedrec = find_updated_record($xref1);
@@ -268,7 +268,7 @@ case 'getnext':
 	}
 	exit;
 case 'getprev':
-	$xref=safe_GET('xref', PGV_REGEX_XREF);
+	$xref=safe_REQUEST($_REQUEST,'xref', PGV_REGEX_XREF);
 	if ($xref) {
 		$xref1 = get_prev_xref($xref, $GED_ID);
 		$gedrec = find_updated_record($xref1);
@@ -287,7 +287,7 @@ case 'getprev':
 	}
 	exit;
 case 'search':
-	$query=safe_GET('query');
+	$query=safe_REQUEST($_REQUEST,'query');
 	if ($query) {
 		$sindilist=search_indis(array($query), array(PGV_GED_ID), 'AND', true);
 		print "SUCCESS\n";
@@ -301,10 +301,10 @@ case 'search':
 	}
 	exit;
 case 'soundex':
-	$lastname=safe_GET('lastname');
-	$firstname=safe_GET('firstname');
-	$place=safe_GET('place');
-	$soundex=safe_GET('soundex', '\w+', 'Russell');
+	$lastname=safe_REQUEST($_REQUEST,'lastname');
+	$firstname=safe_REQUEST($_REQUEST,'firstname');
+	$place=safe_REQUEST($_REQUEST,'place');
+	$soundex=safe_REQUEST($_REQUEST,'soundex', '\w+', 'Russell');
 
 	if ($lastname || $firstname) {
 		$sindilist=search_indis_soundex($soundex, $lastname, $firstname, $place, array(PGV_GED_ID));
@@ -319,9 +319,9 @@ case 'soundex':
 	}
 	exit;
 case 'getxref':
-	$position=safe_GET('position', array('first','last','next','prev','new'));
-	$type=safe_GET('type', array('INDI','FAM','SOUR','REPO','NOTE','OBJE','OTHER'));
-	$xref=safe_GET('xref', PGV_REGEX_XREF);
+	$position=safe_REQUEST($_REQUEST,'position', array('first','last','next','prev','new'));
+	$type=safe_REQUEST($_REQUEST,'type', array('INDI','FAM','SOUR','REPO','NOTE','OBJE','OTHER'));
+	$xref=safe_REQUEST($_REQUEST,'xref', PGV_REGEX_XREF);
 
 	if ($position=='next' && !$xref) {
 		$position='first';
@@ -397,7 +397,7 @@ case 'uploadmedia':
 	}
 	exit;
 case 'getchanges':
-	$lastdate = new GedcomDate(safe_GET('date', '\d\d \w\w\w \d\d\d\d'));
+	$lastdate = new GedcomDate(safe_REQUEST($_REQUEST,'date', '\d\d \w\w\w \d\d\d\d'));
 	if ($lastdate->isOK()) {
 		if ($lastdate->MinJD()<server_jd()-180) {
 			addDebugLog($action." ERROR 24: You cannot retrieve updates for more than 180 days.");
