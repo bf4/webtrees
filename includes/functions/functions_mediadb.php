@@ -1461,8 +1461,10 @@ function process_uploadMedia_form() {
  * @param bool   $showthumb	the setting of the "show thumbnail" option (required by media.php)
  */
 function show_mediaUpload_form($URL='media.php', $showthumb=false) {
-	global $AUTO_GENERATE_THUMBS, $MEDIA_DIRECTORY_LEVELS;
+	global $AUTO_GENERATE_THUMBS, $MEDIA_DIRECTORY_LEVELS, $MEDIA_DIRECTORY;
 	global $pgv_lang, $TEXT_DIRECTION;
+
+	$mediaFolders = get_media_folders();
 
 	// Check for thumbnail generation support
 	$thumbSupport = "";
@@ -1543,11 +1545,25 @@ function show_mediaUpload_form($URL='media.php', $showthumb=false) {
 				echo $pgv_lang["server_folder"];
 				echo '</td>';
 				echo '<td class="optionbox ', $TEXT_DIRECTION, ' wrap">';
-				// Check is done here if the folder specified is not longer than the
-				// media depth. If it is, a JS popup informs the user. User cannot leave
-				// the input box until corrected.
-				echo '<input name="folder', $i, '" type="text" size="40" tabindex="', $tab++, '" onblur="checkpath(this)" />';
-				if ($i==1) echo '<br /><sub>', print_text("server_folder_advice",0,1), '</sub>';
+
+				echo '<span dir="ltr"><select name="folder_list', $i, '" onchange="document.uploadmedia.folder', $i, '.value=this.options[this.selectedIndex].value;">', "\n";
+				echo '<option';
+				echo ' value="/"> ', $pgv_lang["choose"], ' </option>';
+				if (PGV_USER_IS_ADMIN) echo '<option value="other" disabled>', $pgv_lang["add_media_other_folder"], "</option>\n";
+				foreach ($mediaFolders as $f) {
+					if (!strpos($f, ".svn")) {    //Do not print subversion directories
+						// Strip $MEDIA_DIRECTORY from the folder name
+						if (substr($f,0,strlen($MEDIA_DIRECTORY)) == $MEDIA_DIRECTORY) $f = substr($f, strlen($MEDIA_DIRECTORY));
+						if ($f == '') $f = '/';
+						echo '<option value="', $f, '"';
+						echo '>', $f, "</option>\n";
+					}
+				}
+				print "</select></span>\n";
+				if (PGV_USER_IS_ADMIN) {
+					echo '<br /><span dir="ltr"><input name="folder', $i, '" type="text" size="40" value="" tabindex="', $tab++, '" onblur="checkpath(this)" /></span>';
+					if ($i==1) echo '<br /><sub>', print_text("server_folder_advice",0,1), '</sub>';
+				} else echo '<input name="folder', $i, '" type="hidden" value="" />';
 			echo '</td></tr>';
 		} else {
 			echo '<input name="folder', $i, '" type="hidden" value="" />';
@@ -1730,13 +1746,13 @@ function show_media_form($pid, $action = "newentry", $filename = "", $linktoid =
 		echo $pgv_lang["server_folder"], '</td><td class="optionbox wrap">';
 		//-- don't let regular users change the location of media items
 		if ($action!='update' || PGV_USER_GEDCOM_ADMIN) {
-			$folders = get_media_folders();
+			$mediaFolders = get_media_folders();
 			echo '<span dir="ltr"><select name="folder_list" onchange="document.newmedia.folder.value=this.options[this.selectedIndex].value;">', "\n";
 			echo '<option';
 			if ($folder == '/') echo ' selected="selected"';
 			echo ' value="/"> ', $pgv_lang["choose"], ' </option>';
 			if (PGV_USER_IS_ADMIN) echo '<option value="other" disabled>', $pgv_lang["add_media_other_folder"], "</option>\n";
-			foreach ($folders as $f) {
+			foreach ($mediaFolders as $f) {
 				if (!strpos($f, ".svn")) {    //Do not print subversion directories
 					// Strip $MEDIA_DIRECTORY from the folder name
 					if (substr($f,0,strlen($MEDIA_DIRECTORY)) == $MEDIA_DIRECTORY) $f = substr($f, strlen($MEDIA_DIRECTORY));
