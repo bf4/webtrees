@@ -1508,10 +1508,10 @@ function search_indis($query, $geds, $match, $skip) {
 			$GED_ID=$row['ged_id'];
 		}
 		$indi=Person::getInstance($row);
-		// SQL may have matched on private data, so check again against privatized data.
+		// SQL may have matched on private data or gedcom tags, so check again against privatized data.
 		$gedrec=UTF8_strtoupper($indi->getGedcomRecord());
 		foreach ($queryregex as $q) {
-			if (!preg_match('/'.$q.'/i', $gedrec)) {
+			if (!preg_match('/\n\d\ \w+\ .*'.$q.'/i', $gedrec)) {
 				continue 2;
 			}
 		}
@@ -1809,10 +1809,10 @@ function search_fams($query, $geds, $match, $skip) {
 			$GED_ID=$row['ged_id'];
 		}
 		$family=Family::getInstance($row);
-		// SQL may have matched on private data, so check again against privatized data.
+		// SQL may have matched on private data or gedcom tags, so check again against privatized data.
 		$gedrec=UTF8_strtoupper($family->getGedcomRecord());
 		foreach ($queryregex as $q) {
-			if (!preg_match('/'.$q.'/i', $gedrec)) {
+			if (!preg_match('/\n\d\ \w+\ .*'.$q.'/i', $gedrec)) {
 				continue 2;
 			}
 		}
@@ -1986,10 +1986,10 @@ function search_sources($query, $geds, $match, $skip) {
 			$GED_ID=$row['ged_id'];
 		}
 		$source=Source::getInstance($row);
-		// SQL may have matched on private data, so check again against privatized data.
+		// SQL may have matched on private data or gedcom tags, so check again against privatized data.
 		$gedrec=UTF8_strtoupper($source->getGedcomRecord());
 		foreach ($queryregex as $q) {
-			if (!preg_match('/'.$q.'/i', $gedrec)) {
+			if (!preg_match('/\n\d\ \w+\ .*'.$q.'/i', $gedrec)) {
 				continue 2;
 			}
 		}
