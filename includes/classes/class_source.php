@@ -93,23 +93,6 @@ class Source extends GedcomRecord {
 	}
 
 	/**
-	 * get source facts array
-	 * @return array
-	 */
-	function getSourceFacts() {
-		$this->parseFacts();
-		return $this->facts;
-	}
-
-	/**
-	 * get the repository of this source record
-	 * @return string
-	 */
-	function getRepo() {
-		return get_gedcom_value('REPO', 1, $this->gedrec, '', false);
-	}
-
-	/**
 	 * get the author of this source record
 	 * @return string
 	 */

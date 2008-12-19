@@ -104,7 +104,7 @@ loadLangFile("lightbox:lang");
 		<td colspan="2">
 			<table class="facts_table">
 <?php
-$repositoryfacts = $controller->repository->getRepositoryFacts();
+$repositoryfacts = $controller->repository->getFacts();
 foreach($repositoryfacts as $indexval => $fact) {
 	if (!empty($fact)) {
 		if ($fact->getTag()=="NOTE") {
