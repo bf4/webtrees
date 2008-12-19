@@ -1044,7 +1044,12 @@ class Person extends GedcomRecord {
 						}
 					}
 					if ($sosa==1) $this->add_stepsiblings_facts($parent, $famid); // stepsiblings with father
-					$this->add_parents_facts($parent, $sosa*2); // recursive call for father ancestors
+					if ($parent->getSex()=='M') {
+						$this->add_parents_facts($parent, $sosa*2); // recursive call for father ancestors
+					}
+					else if ($parent->getSex()=='F') {
+						$this->add_parents_facts($parent, $sosa*2+1); // recursive call for mother ancestors	
+					}
 				}
 			}
 			if ($sosa>3) return;
@@ -1098,7 +1103,7 @@ class Person extends GedcomRecord {
 				}
 			}
 			//-- find siblings
-			$this->add_children_facts($family,$sosa, $person->getXref());
+			$this->add_children_facts($family, $sosa, $person->getXref());
 		}
 	}
 	/**
