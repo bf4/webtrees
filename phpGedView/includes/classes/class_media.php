@@ -307,8 +307,8 @@ class Media extends GedcomRecord {
 	 * get the URL to link to this object
 	 * @string a url that can be used to link to this object
 	 */
-	function getLinkUrl() {
-		return parent::getLinkUrl('mediaviewer.php?mid=');
+	public function getLinkUrl() {
+		return parent::_getLinkUrl('mediaviewer.php?mid=');
 	}
 
 	/**

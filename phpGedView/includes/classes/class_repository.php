@@ -96,8 +96,8 @@ class Repository extends GedcomRecord {
 	 * get the URL to link to this repository
 	 * @string a url that can be used to link to this repository
 	 */
-	function getLinkUrl() {
-		return parent::getLinkUrl('repo.php?rid=');
+	public function getLinkUrl() {
+		return parent::_getLinkUrl('repo.php?rid=');
 	}
 
 	// Get an array of structures containing all the names in the record

@@ -467,8 +467,8 @@ class Family extends GedcomRecord {
 	 * get the URL to link to this family
 	 * @string a url that can be used to link to this family
 	 */
-	function getLinkUrl() {
-		return parent::getLinkUrl('family.php?famid=');
+	public function getLinkUrl() {
+		return parent::_getLinkUrl('family.php?famid=');
 	}
 
 	// Get an array of structures containing all the names in the record
