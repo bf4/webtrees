@@ -270,16 +270,7 @@ else {
 	$nrmale = $_SESSION[$GEDCOM."nrmale"];
 	$nrfemale = $_SESSION[$GEDCOM."nrfemale"];
 }
-$nrpers=0;
-//-- if nrpers<1 means there is no intermediate file yet set in this session
-/*
-if ($nrpers < 1) {
-	get_person();
-	get_family();
-	complete_data();
-	put_plot_data();
-}
-*/
+
 $_SESSION[$GEDCOM."nrpers"] = $stats->totalIndividuals();
 $_SESSION[$GEDCOM."nrfam"] = $stats->totalFamilies();
 $_SESSION[$GEDCOM."nrmale"] = $stats->totalSexMales();
@@ -378,10 +369,10 @@ else {
 	if ($plottype == "20") echo " checked=\"checked\"";
 	echo " onclick=\"{statusEnable('z_sex'); statusHide('x_years'); statusShow('x_years_m'); statusHide('x_months'); statusHide('x_numbers'); statusHide('map_opt');}";
 	echo "\" /><label for=\"stat_20\">".$pgv_lang["stat_20_arm1"]."</label><br />";
-//	echo "<input type=\"radio\" id=\"stat_21\" name=\"x-as\" value=\"21\"";
-//	if ($plottype == "21") echo " checked=\"checked\"";
-//	echo " onclick=\"{statusEnable('z_sex'); statusHide('x_years'); statusHide('x_months'); statusShow('x_numbers'); statusHide('map_opt');}";
-//	echo "\" /><label for=\"stat_21\">".$pgv_lang["stat_21_nok"]."</label><br />";
+	echo "<input type=\"radio\" id=\"stat_21\" name=\"x-as\" value=\"21\"";
+	if ($plottype == "21") echo " checked=\"checked\"";
+	echo " onclick=\"{statusEnable('z_sex'); statusHide('x_years'); statusHide('x_months'); statusShow('x_numbers'); statusHide('map_opt');}";
+	echo "\" /><label for=\"stat_21\">".$pgv_lang["stat_21_nok"]."</label><br />";
 	echo "<input type=\"radio\" id=\"stat_1\" name=\"x-as\" value=\"1\"";
 	if ($plottype == "1") echo " checked=\"checked\"";
 	echo " onclick=\"{statusHide('x_years'); statusHide('x_months'); statusHide('x_numbers'); statusShow('map_opt'); statusShow('chart_type'); statusHide('axes');}";

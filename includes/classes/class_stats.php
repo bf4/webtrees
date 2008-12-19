@@ -1749,6 +1749,49 @@ class stats {
 		return sprintf('%.2f', $row['tot']);
 	}
 
+	function statsChildren($sex='BOTH', $year1=-1, $year2=-1)
+	{
+		global $TBLPREFIX;
+		
+		if ($sex=='M') {
+			$sql = "SELECT num, COUNT(*) FROM "
+						."(SELECT count(i_sex) AS num FROM {$TBLPREFIX}link "
+							."LEFT OUTER JOIN {$TBLPREFIX}individuals "
+							."ON l_from=i_id AND l_file=i_file AND i_sex='M' AND l_type='FAMC' "
+							."JOIN {$TBLPREFIX}families ON f_file=l_file AND f_id=l_to WHERE f_file={$this->_ged_id} GROUP BY l_to"
+						.") boys"
+						." GROUP BY num ORDER BY num ASC";
+		}
+		else if ($sex=='F') {
+			$sql = "SELECT num, COUNT(*) FROM "
+						."(SELECT count(i_sex) AS num FROM {$TBLPREFIX}link "
+							."LEFT OUTER JOIN {$TBLPREFIX}individuals "
+							."ON l_from=i_id AND l_file=i_file AND i_sex='F' AND l_type='FAMC' "
+							."JOIN {$TBLPREFIX}families ON f_file=l_file AND f_id=l_to WHERE f_file={$this->_ged_id} GROUP BY l_to"
+						.") girls"
+						." GROUP BY num ORDER BY num ASC";
+		}
+		else {
+			$sql = "SELECT f_numchil, COUNT(*) FROM {$TBLPREFIX}families ";
+			if ($year1>=0 && $year2>=0) {
+				$sql .= "AS fam LEFT JOIN {$TBLPREFIX}dates AS married ON married.d_file = {$this->_ged_id}"
+					.' WHERE'
+					.' married.d_gid = fam.f_id AND'
+					." fam.f_file = {$this->_ged_id} AND"
+					." married.d_fact = 'MARR' AND"
+					." married.d_year BETWEEN '{$year1}' AND '{$year2}'";
+			}
+			else {
+				$sql .='WHERE '
+					."f_file={$this->_ged_id}";
+			}
+			$sql .= ' GROUP BY f_numchil';
+		}
+		$rows=self::_runSQL($sql);
+		if (!isset($rows)) {return 0;}
+		return $rows;
+	}
+
 ///////////////////////////////////////////////////////////////////////////////
 // Surnames                                                                  //
 ///////////////////////////////////////////////////////////////////////////////
