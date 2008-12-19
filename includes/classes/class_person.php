@@ -1600,8 +1600,8 @@ class Person extends GedcomRecord {
 	 * get the URL to link to this person
 	 * @string a url that can be used to link to this person
 	 */
-	function getLinkUrl() {
-		return parent::getLinkUrl('individual.php?pid=');
+	public function getLinkUrl() {
+		return parent::_getLinkUrl('individual.php?pid=');
 	}
 
 	// If this object has no name, what do we call it?

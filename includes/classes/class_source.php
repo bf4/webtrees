@@ -104,8 +104,8 @@ class Source extends GedcomRecord {
 	 * get the URL to link to this source
 	 * @string a url that can be used to link to this source
 	 */
-	function getLinkUrl() {
-		return parent::getLinkUrl('source.php?sid=');
+	public function getLinkUrl() {
+		return parent::_getLinkUrl('source.php?sid=');
 	}
 
 	// Get an array of structures containing all the names in the record

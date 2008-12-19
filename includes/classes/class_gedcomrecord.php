@@ -256,7 +256,11 @@ class GedcomRecord {
 	 * get the URL to link to this record
 	 * @string a url that can be used to link to this person
 	 */
-	function getLinkUrl($link='gedcomrecord.php?pid=') {
+	public function getLinkUrl() {
+		return $this->_getLinkUrl('gedcomrecord.php?pid=');
+	}
+
+	protected function _getLinkUrl($link='gedcomrecord.php?pid=') {
 		$url = $link.$this->getXref().'&ged='.get_gedcom_from_id($this->ged_id);
 		if ($this->isRemote()) {
 			list($servid, $aliaid)=explode(':', $this->rfn);
