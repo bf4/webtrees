@@ -10,6 +10,7 @@
 
 
 Version 4.2.0
+ - Fixed: Incorrect Default Audio thumbnail showing when on Mediaviewer or Medialist pages with mp3 media (windmillway)
  - Fixed: [ 2388981 ] gdbi fails with 4.1.6 (fisharebest)
  - Changed: Album Tab: Fixed and Reinstated inline Media sort. (windmillway)
  - Fixed: Advanced Search "Add More Fields" option doesn't work in IE (canajun2eh) 

@@ -157,7 +157,12 @@ loadLangFile("lightbox:lang");
 									print "<a href=\"" . $filename . "\" rel='clearbox(" . $LB_URL_WIDTH . "," . $LB_URL_HEIGHT . ",click)' rev=\"" . $filename . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name,ENT_COMPAT,'UTF-8')) . "\">" . "\n";
 								// Else Other filetype (Pop-up Window)
 								}else{
-									print "<a href=\"javascript:;\" onclick=\"return openImage('".rawurlencode($filename)."',$imgwidth, $imgheight);\">";
+									// If audio file --------------------------------------------------
+									if (eregi("\.mp3", $filename)) {
+										print "<a href=\"javascript:;\" onclick=\"return openImage('".rawurlencode($filename)."', 250, 80);\">";
+									}else{
+										print "<a href=\"javascript:;\" onclick=\"return openImage('".rawurlencode($filename)."',$imgwidth, $imgheight);\">";
+									}
 								}
 								
 							 // if Lightbox NOT installed or not enabled -------------------------------------------
@@ -178,7 +183,11 @@ loadLangFile("lightbox:lang");
 								print "<a href=\"javascript:;\" onclick=\"var winurl = window.open('".$filename."', 'winurl', 'width=900, height=600, left=200, top=200'); if (window.focus) {winurl.focus();}\">";
 							// else just use normal image viewer
 							} else {
-								print "<a href=\"javascript:;\" onclick=\"return openImage('".rawurlencode($filename)."',$imgwidth, $imgheight);\">";
+								if (eregi("\.mp3", $filename)) {
+									print "<a href=\"javascript:;\" onclick=\"return openImage('".rawurlencode($filename)."', 250, 80);\">";
+								}else{
+									print "<a href=\"javascript:;\" onclick=\"return openImage('".rawurlencode($filename)."', $imgwidth, $imgheight);\">";
+								}
 							}
 							
 							// Now finally print the thumbnail  --------------------------------------------------
@@ -195,9 +204,19 @@ loadLangFile("lightbox:lang");
 								} else {
 									print "<img src=\"images/media.gif\" height=\"60\" border=\"0\" align=\"center" . ($TEXT_DIRECTION== "rtl"?"right": "left") . "\" class=\"thumbnail\" " ;
 								}
-							// Else Print the Regular Thumbnail if associated with a thumbnail image
-							} else {
-								print "<img src=\"".$controller->mediaobject->getThumbnail()."\" border=\"0\" align=\"center" . ($TEXT_DIRECTION== "rtl"?"right": "left") . "\" class=\"thumbnail\"";
+							// Else print the Regular Thumbnail if associated with a thumbnail image
+							}else{
+								// If audio file -----------------------------------------------------------------
+								if (eregi("\.mp3", $filename)) {
+									if (media_exists("images/audio.png") && eregi("\media.gif",$controller->mediaobject->getThumbnail()) ) {
+										print "<img src=\"images/audio.png\" height=\"60\" border=\"0\" align=\"center\" class=\"thumbnail\" " ;
+									}else{
+										print "<img src=\"".$controller->mediaobject->getThumbnail()."\" border=\"0\" align=\"center" . ($TEXT_DIRECTION== "rtl"?"right": "left") . "\" class=\"thumbnail\"";
+									}
+								// Else if regular image file --------------------------------------------------
+								}else{
+									print "<img src=\"".$controller->mediaobject->getThumbnail()."\" border=\"0\" align=\"center" . ($TEXT_DIRECTION== "rtl"?"right": "left") . "\" class=\"thumbnail\"";
+								}
 							}
 							
 							// Finish off anchor and tooltips
