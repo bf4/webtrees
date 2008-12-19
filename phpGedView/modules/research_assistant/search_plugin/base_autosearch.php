@@ -103,9 +103,8 @@ class Base_AutoSearch {
 	function givenname($person, $inputname='givenname') {
 		$all_givn=array();
 		foreach ($person->getAllNames() as $name) {
-			list($surn, $givn)=explode(',', $name['sort']);
-			if ($givn!='@P.N.') {
-				$all_givn[]=htmlspecialchars(strip_tags($givn));
+			if ($name['givn']!='@P.N.') {
+				$all_givn[]=htmlspecialchars(strip_tags($name['givn']));
 			}
 		}
 		$all_givn=array_unique($all_givn);
