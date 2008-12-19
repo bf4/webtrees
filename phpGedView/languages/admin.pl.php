@@ -214,6 +214,7 @@ $pgv_lang["fbsql"]					= "FrontBase";
 $pgv_lang["found_record"]			= "Znalezionych wpisów";
 $pgv_lang["ged_download"]			= "Pobierz";
 $pgv_lang["ged_import"]				= "Importuj";
+$pgv_lang["ged_export"] 			= "Eksportuj";
 $pgv_lang["ged_check"] 				= "Sprawdź";
 $pgv_lang["gedcom_adm_head"]		= "Zarządzanie plikami GEDCOM";
 $pgv_lang["gedcom_config_write_error"]	= "Błąd! Nie można zapisać do pliku <i>#GLOBALS[whichFile]#</i>. Sprawdź, czy plik ma wymagane uprawnienia do zapisu.";

@@ -185,6 +185,14 @@ $factarray["FAMC:WIFE:FAMC:WIFE:GIVN"] = "Imię babci ze strony matki";
 $factarray["FAMC:WIFE:FAMC:HUSB:GIVN"] = "Imię dziadka ze strony matki";
 $factarray["FAMC:HUSB:FAMC:WIFE:GIVN"] = "Imię babci ze strony ojca";
 $factarray["FAMS:CHIL:BIRT:PLAC"] = "Miejsce urodzin dziecka";
+$factarray["FAMS:NOTE"] = "Notatka dot. małżonka";
+$factarray["FAMS:CENS:DATE"] = "Data spisu ludności małżonka";
+$factarray["FAMS:CENS:PLAC"] = "Miejsce spisu ludności małżonka";
+$factarray["FAMS:DIV:DATE"] = "Dara rozwodu małżonka";
+$factarray["FAMS:DIV:PLAC"] = "Miejsce rozwodu małżonka";
+$factarray["FAMS:SLGS:DATE"] = "Data Mormońskiego Naznaczenia Małżonka";
+$factarray["FAMS:SLGS:PLAC"] = "Miejsce Mormońskiego Naznaczenia Małżonka";
+$factarray["FAMS:SLGS:TEMP"] = "Świątynia Mormońskiego Naznaczenia Małżonka";
 
 // These facts are all colon delimited
 $factarray["BIRT:PLAC"] = "Miejsce urodzenia";
