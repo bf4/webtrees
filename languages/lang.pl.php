@@ -35,6 +35,9 @@ if (!defined('PGV_PHPGEDVIEW')) {
 }
 
 $pgv_lang["exact"]				= "Dokładna data";
+$pgv_lang["begins_with"]		= "Zaczyna się od";
+$pgv_lang["contains"]			= "Zawiera";
+$pgv_lang["sounds_like"]		= "Brzmi jak";
 $pgv_lang["advanced_search"]	= "Wyszukiwanie zaawansowane";
 $pgv_lang["more_fields"]		= "Dodaj więcej pól";
 $pgv_lang["install_step_8"] 	= "Rozpocznij korzystanie";
@@ -627,6 +630,8 @@ $pgv_lang["find_specialchar"]		= "Znajdź znaki specjalne";
 $pgv_lang["magnify"]				= "Powiększ";
 $pgv_lang["skip_surnames"]			= "Pomiń listę nazwisk";
 $pgv_lang["show_surnames"]			= "Pokaż listę nazwisk";
+$pgv_lang["skip_marnms"]			= "Pomiń nazwiska po ślubie";
+$pgv_lang["show_marnms"]			= "Pokaż nazwiska po ślubie";
 $pgv_lang["all"]					= "Wszystkie";
 $pgv_lang["hidden"]					= "Ukryte";
 $pgv_lang["confidential"]			= "Poufne";
