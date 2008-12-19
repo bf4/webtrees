@@ -104,7 +104,7 @@ loadLangFile("lightbox:lang");
 		<td colspan="2">
 			<table class="facts_table">
 <?php
-$sourcefacts = $controller->source->getSourceFacts();
+$sourcefacts = $controller->source->getFacts();
 foreach($sourcefacts as $indexval => $fact) {
 	if (!empty($fact)) {
 		if ($fact->getTag()=="NOTE") {

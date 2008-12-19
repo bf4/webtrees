@@ -93,15 +93,6 @@ class Repository extends GedcomRecord {
 	}
 
 	/**
-	 * get repository facts array
-	 * @return array
-	 */
-	function getRepositoryFacts() {
-		$this->parseFacts();
-		return $this->facts;
-	}
-
-	/**
 	 * get the URL to link to this repository
 	 * @string a url that can be used to link to this repository
 	 */
