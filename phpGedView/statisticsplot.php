@@ -41,51 +41,28 @@ function bimo() {
 	if ($z_as == 300){
 		$num = $stats->statsBirth();
 		foreach ($num as $values) {
-			foreach ($values as $month_key=>$month_value) {
-				$data_value=0;
-				if ($month_key=='d_month') {
-					$data_key=-1;
-					foreach ($months as $key=>$month) {
-						if($month==$month_value) {
-							$data_key=$key;
-						}
-					}
+			foreach ($months as $key=>$month) {
+				if($month==$values['d_month']) {
+					fill_ydata(0, $key, $values['count(*)']);
+					$n1+=$values['count(*)'];
 				}
-				else if ($data_key>=0) {
-					$data_value=$month_value;
-				}
-			}
-			if ($data_key>=0) {
-				fill_ydata(0, $data_key, $data_value);
-				$n1+=$data_value;
 			}
 		}
 	}
 	else if ($z_as == 301) {
 		$num = $stats->statsBirth(true);
 		foreach ($num as $values) {
-			foreach ($values as $month_key=>$month_value) {
-				if ($month_key=='d_month') {
-					$data_key = -1;
-					foreach ($months as $key=>$month) {
-						if($month==$month_value) {
-							$data_key=$key;
-						}
+			foreach ($months as $key=>$month) {
+				if($month==$values['d_month']) {
+					if ($values['i_sex']=='M') {
+						fill_ydata(0, $key, $values['count(*)']);
+						$n1+=$values['count(*)'];
+					}
+					else if ($values['i_sex']=='F') {
+						fill_ydata(1, $key, $values['count(*)']);
+						$n1+=$values['count(*)'];
 					}
 				}
-				else if ($data_key>=0 && $month_key=='i_sex') {
-					if ($month_value=='M')
-						$sex_value = 0;
-					else if ($month_value=='F')
-						$sex_value = 1;
-				}
-				else if ($data_key>=0) {
-					$data_value=$month_value;
-				}
-			}
-			if ($data_key>=0) {
-				fill_ydata($sex_value, $data_key, $data_value);
-				$n1+=$data_value;
 			}
 		}
 	}
@@ -94,23 +71,11 @@ function bimo() {
 		foreach ($zgrenzen as $boundary) {
 			$num = $stats->statsBirth(false, $zstart, $boundary);
 			foreach ($num as $values) {
-				foreach ($values as $month_key=>$month_value) {
-					$data_value=0;
-					if ($month_key=='d_month') {
-						$data_key=-1;
-						foreach ($months as $key=>$month) {
-							if($month==$month_value) {
-								$data_key=$key;
-							}
-						}
+				foreach ($months as $key=>$month) {
+					if($month==$values['d_month']) {
+						fill_ydata($boundary, $key, $values['count(*)']);
+						$n1+=$values['count(*)'];
 					}
-					else if ($data_key>=0) {
-						$data_value=$month_value;
-					}
-				}
-				if ($data_key>=0) {
-					fill_ydata($boundary, $data_key, $data_value);
-					$n1+=$data_value;
 				}
 			}
 			$zstart=$boundary+1;
@@ -133,52 +98,28 @@ function demo() {
 	if ($z_as == 300){
 		$num = $stats->statsDeath();
 		foreach ($num as $values) {
-			foreach ($values as $month_key=>$month_value) {
-				$data_value=0;
-				if ($month_key=='d_month') {
-					$data_key=-1;
-					foreach ($months as $key=>$month) {
-						if($month==$month_value) {
-							$data_key=$key;
-						}
-					}
+			foreach ($months as $key=>$month) {
+				if($month==$values['d_month']) {
+					fill_ydata(0, $key, $values['count(*)']);
+					$n1+=$values['count(*)'];
 				}
-				else if ($data_key>=0) {
-					$data_value=$month_value;
-				}
-			}
-			if ($data_key>=0) {
-				//print $data_key." ".$data_value."<br />";
-				fill_ydata(0, $data_key, $data_value);
-				$n1+=$data_value;
 			}
 		}
 	}
 	else if ($z_as == 301) {
 		$num = $stats->statsDeath(true);
 		foreach ($num as $values) {
-			foreach ($values as $month_key=>$month_value) {
-				if ($month_key=='d_month') {
-					$data_key = -1;
-					foreach ($months as $key=>$month) {
-						if($month==$month_value) {
-							$data_key=$key;
-						}
+			foreach ($months as $key=>$month) {
+				if($month==$values['d_month']) {
+					if ($values['i_sex']=='M') {
+						fill_ydata(0, $key, $values['count(*)']);
+						$n1+=$values['count(*)'];
+					}
+					else if ($values['i_sex']=='F') {
+						fill_ydata(1, $key, $values['count(*)']);
+						$n1+=$values['count(*)'];
 					}
 				}
-				else if ($data_key>=0 && $month_key=='i_sex') {
-					if ($month_value=='M')
-						$sex_value = 0;
-					else if ($month_value=='F')
-						$sex_value = 1;
-				}
-				else if ($data_key>=0) {
-					$data_value=$month_value;
-				}
-			}
-			if ($data_key>=0) {
-				fill_ydata($sex_value, $data_key, $data_value);
-				$n1+=$data_value;
 			}
 		}
 	}
@@ -187,23 +128,11 @@ function demo() {
 		foreach ($zgrenzen as $boundary) {
 			$num = $stats->statsDeath(false, $zstart, $boundary);
 			foreach ($num as $values) {
-				foreach ($values as $month_key=>$month_value) {
-					$data_value=0;
-					if ($month_key=='d_month') {
-						$data_key=-1;
-						foreach ($months as $key=>$month) {
-							if($month==$month_value) {
-								$data_key=$key;
-							}
-						}
+				foreach ($months as $key=>$month) {
+					if($month==$values['d_month']) {
+						fill_ydata($boundary, $key, $values['count(*)']);
+						$n1+=$values['count(*)'];
 					}
-					else if ($data_key>=0) {
-						$data_value=$month_value;
-					}
-				}
-				if ($data_key>=0) {
-					fill_ydata($boundary, $data_key, $data_value);
-					$n1+=$data_value;
 				}
 			}
 			$zstart=$boundary+1;
@@ -218,23 +147,11 @@ function mamo() {
 	if ($z_as == 300){
 		$num = $stats->statsMarr(false);
 		foreach ($num as $values) {
-			foreach ($values as $month_key=>$month_value) {
-				$data_value=0;
-				if ($month_key=='d_month') {
-					$data_key=-1;
-					foreach ($months as $key=>$month) {
-						if($month==$month_value) {
-							$data_key=$key;
-						}
-					}
+			foreach ($months as $key=>$month) {
+				if($month==$values['d_month']) {
+					fill_ydata(0, $key, $values['count(*)']);
+					$n1+=$values['count(*)'];
 				}
-				else if ($data_key>=0) {
-					$data_value=$month_value;
-				}
-			}
-			if ($data_key>=0) {
-				fill_ydata(0, $data_key, $data_value);
-				$n1+=$data_value;
 			}
 		}
 	}
@@ -243,23 +160,11 @@ function mamo() {
 		foreach ($zgrenzen as $boundary) {
 			$num = $stats->statsMarr(false, $zstart, $boundary);
 			foreach ($num as $values) {
-				foreach ($values as $month_key=>$month_value) {
-					$data_value=0;
-					if ($month_key=='d_month') {
-						$data_key=-1;
-						foreach ($months as $key=>$month) {
-							if($month==$month_value) {
-								$data_key=$key;
-							}
-						}
+				foreach ($months as $key=>$month) {
+					if($month==$values['d_month']) {
+						fill_ydata($boundary, $key, $values['count(*)']);
+						$n1+=$values['count(*)'];
 					}
-					else if ($data_key>=0) {
-						$data_value=$month_value;
-					}
-				}
-				if ($data_key>=0) {
-					fill_ydata($boundary, $data_key, $data_value);
-					$n1+=$data_value;
 				}
 			}
 			$zstart=$boundary+1;
@@ -272,53 +177,28 @@ function mamo() {
 function mamo1() {
 	global $z_as, $months, $zgrenzen, $stats, $n1;
 
-	
-echo "not work property yet";
+	echo "not work property yet";
 	if ($z_as == 300){
-		$num = $stats->statsMarr(true);
+		$num = $stats->statsMarr(false);
 		foreach ($num as $values) {
-			foreach ($values as $month_key=>$month_value) {
-				$data_value=0;
-				if ($month_key=='d_month') {
-					$data_key=-1;
-					foreach ($months as $key=>$month) {
-						if($month==$month_value) {
-							$data_key=$key;
-						}
-					}
+			foreach ($months as $key=>$month) {
+				if($month==$values['d_month']) {
+					fill_ydata(0, $key, $values['count(*)']);
+					$n1+=$values['count(*)'];
 				}
-				else if ($data_key>=0) {
-					$data_value=$month_value;
-				}
-			}
-			if ($data_key>=0) {
-				fill_ydata(0, $data_key, $data_value);
-				$n1+=$data_value;
 			}
 		}
 	}
 	else {
 		$zstart = 0;
 		foreach ($zgrenzen as $boundary) {
-			$num = $stats->statsMarr(true, $zstart, $boundary);
+			$num = $stats->statsMarr(false, $zstart, $boundary);
 			foreach ($num as $values) {
-				foreach ($values as $month_key=>$month_value) {
-					$data_value=0;
-					if ($month_key=='d_month') {
-						$data_key=-1;
-						foreach ($months as $key=>$month) {
-							if($month==$month_value) {
-								$data_key=$key;
-							}
-						}
+				foreach ($months as $key=>$month) {
+					if($month==$values['d_month']) {
+						fill_ydata($boundary, $key, $values['count(*)']);
+						$n1+=$values['count(*)'];
 					}
-					else if ($data_key>=0) {
-						$data_value=$month_value;
-					}
-				}
-				if ($data_key>=0) {
-					fill_ydata($boundary, $data_key, $data_value);
-					$n1+=$data_value;
 				}
 			}
 			$zstart=$boundary+1;
@@ -429,41 +309,25 @@ function agma() {
 	if ($z_as == 300){
 		$num = $stats->statsMarrAge('M');
 		foreach ($num as $values) {
-			foreach ($values as $key=>$age_value) {
-				if ($key=='age') {
-					fill_ydata(0, floor($age_value/365.25), 1);
-					$n1++;
-				}
-			}
+			fill_ydata(0, floor($values['age']/365.25), 1);
+			$n1++;
 		}
 		$num = $stats->statsMarrAge('F');
 		foreach ($num as $values) {
-			foreach ($values as $key=>$age_value) {
-				if ($key=='age') {
-					fill_ydata(0, floor($age_value/365.25), 1);
-					$n1++;
-				}
-			}
+			fill_ydata(0, floor($values['age']/365.25), 1);
+			$n1++;
 		}
 	}
 	else if ($z_as == 301) {
 		$num = $stats->statsMarrAge('M');
 		foreach ($num as $values) {
-			foreach ($values as $key=>$age_value) {
-				if ($key=='age') {
-					fill_ydata(0, floor($age_value/365.25), 1);
-					$n1++;
-				}
-			}
+			fill_ydata(0, floor($values['age']/365.25), 1);
+			$n1++;
 		}
 		$num = $stats->statsMarrAge('F');
 		foreach ($num as $values) {
-			foreach ($values as $key=>$age_value) {
-				if ($key=='age') {
-					fill_ydata(1, floor($age_value/365.25), 1);
-					$n1++;
-				}
-			}
+			fill_ydata(1, floor($values['age']/365.25), 1);
+			$n1++;
 		}
 	}
 	else {
@@ -471,21 +335,13 @@ function agma() {
 		foreach ($zgrenzen as $boundary) {
 			$num = $stats->statsMarrAge('M', $zstart, $boundary);
 			foreach ($num as $values) {
-				foreach ($values as $key=>$age_value) {
-					if ($key=='age') {
-						fill_ydata($boundary, floor($age_value/365.25), 1);
-						$n1++;
-					}
-				}
+				fill_ydata($boundary, floor($values['age']/365.25), 1);
+				$n1++;
 			}
 			$num = $stats->statsMarrAge('F', $zstart, $boundary);
 			foreach ($num as $values) {
-				foreach ($values as $key=>$age_value) {
-					if ($key=='age') {
-						fill_ydata($boundary, floor($age_value/365.25), 1);
-						$n1++;
-					}
-				}
+				fill_ydata($boundary, floor($values['age']/365.25), 1);
+				$n1++;
 			}
 			$zstart=$boundary+1;
 		}
@@ -501,36 +357,32 @@ function agma1() {
 		$first=true;
 		$indi='';
 		foreach ($num as $values) {
-			foreach ($values as $key=>$age_value) {
-				if ($key=='age' && $first) {
-					fill_ydata(0, floor($age_value/365.25), 1);
-					$n1++;
+			if ($first) {
+				fill_ydata(0, floor($values['age']/365.25), 1);
+				$n1++;
+			}
+			else {
+				if (!in_array($age_value['indi'], $indi)) {
+					$indi[]=$age_value['indi'];
+					$first=true;
 				}
-				else if ($key=='indi') {
-					if ($indi!=$age_value) {
-						$indi=$age_value;
-						$first=true;
-					}
-					else $first=false;
-				}
+				else $first=false;
 			}
 		}
 		$num = $stats->statsMarrAge('F');
 		$first=true;
 		$indi='';
 		foreach ($num as $values) {
-			foreach ($values as $key=>$age_value) {
-				if ($key=='age' && $first) {
-					fill_ydata(0, floor($age_value/365.25), 1);
-					$n1++;
+			if ($first) {
+				fill_ydata(0, floor($values['age']/365.25), 1);
+				$n1++;
+			}
+			else {
+				if (!in_array($age_value['indi'], $indi)) {
+					$indi[]=$age_value['indi'];
+					$first=true;
 				}
-				else if ($key=='indi') {
-					if ($indi!=$age_value) {
-						$indi=$age_value;
-						$first=true;
-					}
-					else $first=false;
-				}
+				else $first=false;
 			}
 		}
 	}
@@ -539,36 +391,32 @@ function agma1() {
 		$first=true;
 		$indi='';
 		foreach ($num as $values) {
-			foreach ($values as $key=>$age_value) {
-				if ($key=='age' && $first) {
-					fill_ydata(0, floor($age_value/365.25), 1);
-					$n1++;
+			if ($first) {
+				fill_ydata(0, floor($values['age']/365.25), 1);
+				$n1++;
+			}
+			else {
+				if (!in_array($age_value['indi'], $indi)) {
+					$indi[]=$age_value['indi'];
+					$first=true;
 				}
-				else if ($key=='indi') {
-					if ($indi!=$age_value) {
-						$indi=$age_value;
-						$first=true;
-					}
-					else $first=false;
-				}
+				else $first=false;
 			}
 		}
 		$num = $stats->statsMarrAge('F');
 		$first=true;
 		$indi='';
 		foreach ($num as $values) {
-			foreach ($values as $key=>$age_value) {
-				if ($key=='age' && $first) {
-					fill_ydata(1, floor($age_value/365.25), 1);
-					$n1++;
+			if ($first) {
+				fill_ydata(1, floor($values['age']/365.25), 1);
+				$n1++;
+			}
+			else {
+				if (!in_array($age_value['indi'], $indi)) {
+					$indi[]=$age_value['indi'];
+					$first=true;
 				}
-				else if ($key=='indi') {
-					if ($indi!=$age_value) {
-						$indi=$age_value;
-						$first=true;
-					}
-					else $first=false;
-				}
+				else $first=false;
 			}
 		}
 	}
@@ -579,35 +427,31 @@ function agma1() {
 			$num = $stats->statsMarrAge('M', $zstart, $boundary);
 			$first=true;
 			foreach ($num as $values) {
-				foreach ($values as $key=>$age_value) {
-					if ($key=='age' && $first) {
-						fill_ydata($boundary, floor($age_value/365.25), 1);
-						$n1++;
+				if ($first) {
+					fill_ydata($boundary, floor($values['age']/365.25), 1);
+					$n1++;
+				}
+				else {
+					if (!in_array($age_value['indi'], $indi)) {
+						$indi[]=$age_value['indi'];
+						$first=true;
 					}
-					else if ($key=='indi') {
-						if (!in_array($age_value, $indi)) {
-							$indi[]=$age_value;
-							$first=true;
-						}
-						else $first=false;
-					}
+					else $first=false;
 				}
 			}
 			$num = $stats->statsMarrAge('F', $zstart, $boundary);
 			$first=true;
 			foreach ($num as $values) {
-				foreach ($values as $key=>$age_value) {
-					if ($key=='age' && $first) {
-						fill_ydata($boundary, floor($age_value/365.25), 1);
-						$n1++;
+				if ($first) {
+					fill_ydata($boundary, floor($values['age']/365.25), 1);
+					$n1++;
+				}
+				else {
+					if (!in_array($age_value['indi'], $indi)) {
+						$indi[]=$age_value['indi'];
+						$first=true;
 					}
-					else if ($key=='indi') {
-						if (!in_array($age_value, $indi)) {
-							$indi[]=$age_value;
-							$first=true;
-						}
-						else $first=false;
-					}
+					else $first=false;
 				}
 			}
 			$zstart=$boundary+1;
@@ -618,11 +462,39 @@ function agma1() {
 
 //Number of children
 function nuch() {
-	global $z_as, $n1;
+	global $z_as, $zgrenzen, $stats, $n1;
 
-//TODO
-
-echo "not work yet";
+	if ($z_as == 300) {
+		$num = $stats->statsChildren();
+		foreach ($num as $values) {
+			fill_ydata(0, $values['f_numchil'], $values['count(*)']);
+			$n1+=$values['f_numchil']*$values['count(*)'];
+		}
+	}
+	else if ($z_as == 301) {
+		$num = $stats->statsChildren('M');
+		foreach ($num as $values) {
+			fill_ydata(0, $values['num'], $values['count(*)']);
+			$n1+=$values['num']*$values['count(*)'];
+		}
+		$num = $stats->statsChildren('F');
+		foreach ($num as $values) {
+			fill_ydata(1, $values['num'], $values['count(*)']);
+			$n1+=$values['num']*$values['count(*)'];
+		}
+	}
+	else {
+		$zstart = 0;
+		foreach ($zgrenzen as $boundary) {
+			$num = $stats->statsChildren('BOTH', $zstart, $boundary);
+			foreach ($num as $values) {
+				fill_ydata($boundary, $values['f_numchil'], $values['count(*)']);
+				$n1+=$values['f_numchil']*$values['count(*)'];
+			}
+			$zstart=$boundary+1;
+		}
+		
+	}
 }
 
 function fill_ydata($z, $x, $val) {
@@ -952,7 +824,7 @@ function set_params($current, $indfam, $xg, $zg, $titstr, $xt, $yt, $gx, $gz, $m
 			}
 		}
 		$myfunc();
-		if ($indfam == "IND") {
+		if ($indfam == "IND" || $x_as==21) {
 			$hstr = $title."|" .$pgv_lang["stplnumof"]." ".$n1." ".$pgv_lang["of"]." ".$nrpers;
 		}
 		else {
