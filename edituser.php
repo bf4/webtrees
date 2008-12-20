@@ -307,7 +307,7 @@ echo '</select></td></tr>';
 echo '<tr><td class="descriptionbox wrap">';
 echo print_help_link('useradmin_visibleonline_help', 'qm', '', false, true);
 echo $pgv_lang['visibleonline'], '</td><td class="optionbox">';
-echo '<input type="checkbox" name="form_visible_online" tabindex="', ++$tab, '" value="yes"';
+echo '<input type="checkbox" name="form_visible_online" tabindex="', ++$tab, '" value="Y"';
 if (get_user_setting(PGV_USER_ID, 'visibleonline')=='Y') {
 	echo ' checked="checked"';
 }
