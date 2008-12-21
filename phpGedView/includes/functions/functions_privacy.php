@@ -823,8 +823,17 @@ function privatize_gedcom($gedrec) {
 			else {
 				$newrec = "0 @".$gid."@ $type\r\n";
 				if ($type=="INDI") {
-					$chil = get_sub_record(1, "1 NAME", $gedrec);
-					if (!empty($chil)) $newrec .= trim($chil)."\r\n";
+					// Find all Name records of all Name types for this individual
+					// A person can have, for instance, more than one 1 NAME record.  None of them should be privatized.
+					foreach (array('NAME', 'FONE', 'ROMN', '_HNM', '_HEB') as $nameFact) {
+						$factNum = 1;
+						while (true) {
+							$chil = trim(get_sub_record(1, "1 {$nameFact}", $gedrec, $factNum));
+							if (empty($chil)) break;
+							$newrec .= $chil."\r\n";
+							$factNum ++;
+						}
+					}
 					$chil = get_sub_record(1, "1 FAMC", $gedrec);
 					$i=1;
 					while (!empty($chil)) {
