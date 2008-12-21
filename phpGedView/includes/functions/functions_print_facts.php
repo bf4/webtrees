@@ -73,7 +73,7 @@ function print_fact(&$eventObj, $noedit=false) {
 	global $pgv_lang, $GEDCOM;
 	global $lang_short_cut, $LANGUAGE;
 	global $WORD_WRAPPED_NOTES;
-	global $TEXT_DIRECTION, $USE_RTL_FUNCTIONS;
+	global $TEXT_DIRECTION;
 	global $HIDE_GEDCOM_ERRORS, $SHOW_ID_NUMBERS, $SHOW_FACT_ICONS;
 	global $CONTACT_EMAIL, $view, $FACT_COUNT;
 	global $n_chil, $n_gchi, $n_ggch;
@@ -288,7 +288,7 @@ function print_fact(&$eventObj, $noedit=false) {
 		$ct = preg_match("/2 DATE (.+)/", $factrec, $match);
 		if (!empty($event) && $ct==0) {
 			if ($TEXT_DIRECTION=="rtl" && !hasRTLText($event) && hasLTRText($event) && $event!="N" && $event!="Y") $align=" align=\"left\"";
-			if ($TEXT_DIRECTION=="ltr" && $USE_RTL_FUNCTIONS && !hasLTRText($event) && hasRTLText($event)) $align=" align=\"right\"";
+			if ($TEXT_DIRECTION=="ltr" && !hasLTRText($event) && hasRTLText($event)) $align=" align=\"right\"";
 		}
 */
 		print "<td class=\"optionbox $styleadd wrap\" $align>";
@@ -1128,7 +1128,7 @@ function print_main_notes($factrec, $level, $pid, $linenum, $noedit=false) {
 	global $factarray, $view;
 	global $PGV_IMAGE_DIR;
 	global $PGV_IMAGES;
-	global $TEXT_DIRECTION, $USE_RTL_FUNCTIONS;
+	global $TEXT_DIRECTION;
 
 	$styleadd="";
 	$ct = preg_match("/PGV_NEW/", $factrec, $match);
@@ -1231,7 +1231,7 @@ function print_main_notes($factrec, $level, $pid, $linenum, $noedit=false) {
 		$align = "";
 		if (!empty($text)) {
 			if ($TEXT_DIRECTION=="rtl" && !hasRTLText($text) && hasLTRText($text)) $align=" align=\"left\"";
-			if ($TEXT_DIRECTION=="ltr" && $USE_RTL_FUNCTIONS && !hasLTRText($text) && hasRTLText($text)) $align=" align=\"right\"";
+			if ($TEXT_DIRECTION=="ltr" && !hasLTRText($text) && hasRTLText($text)) $align=" align=\"right\"";
 		}
 		print " </td>\n<td class=\"optionbox $styleadd wrap\" $align>";
 		if (showFactDetails("NOTE", $pid)) {
@@ -1361,7 +1361,7 @@ function print_main_media($pid, $level=1, $related=false, $noedit=false) {
 			}
 		}
 		$rows=array();
-		
+
 		//-- if there is a change to this media item then get the
 		//-- updated media item and show it
 		if (isset($pgv_changes[$rowm["m_media"]."_".$GEDCOM])) {
@@ -1398,7 +1398,7 @@ function print_main_media($pid, $level=1, $related=false, $noedit=false) {
 		}
 		$media_found = true;
 	}
-	
+
 	//-- objects are removed from the $current_objes list as they are printed
 	//-- any objects left in the list are new objects recently added to the gedcom
 	//-- but not yet accepted into the database.  We will print them too.
@@ -1461,7 +1461,7 @@ function print_main_media_row($rtype, $rowm, $pid) {
 	global $PGV_IMAGE_DIR, $PGV_IMAGES, $view, $TEXT_DIRECTION;
 	global $SHOW_ID_NUMBERS, $GEDCOM, $factarray, $pgv_lang, $THUMBNAIL_WIDTH, $USE_MEDIA_VIEWER;
 	global $SEARCH_SPIDER;
-	
+
 	if (!displayDetailsById($rowm['m_media'], 'OBJE') || FactViewRestricted($rowm['m_media'], $rowm['m_gedrec'])) {
 		//print $rowm['m_media']." no privacy ";
 		return false;
@@ -1473,7 +1473,7 @@ function print_main_media_row($rtype, $rowm, $pid) {
 	// NOTEStart printing the media details
 	$thumbnail = thumbnail_file($rowm["m_file"], true, false, $pid);
 	$isExternal = isFileExternal($thumbnail);
-	
+
 	$linenum = 0;
 	print "\n\t\t<tr><td class=\"descriptionbox $styleadd center width20\"><img class=\"icon\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["media"]["small"]."\" alt=\"\" /><br />".$factarray["OBJE"];
 	if ($rowm['mm_gid']==$pid && PGV_USER_CAN_EDIT && (!FactEditRestricted($rowm['m_media'], $rowm['m_gedrec'])) && ($styleadd!="change_old") && ($view!="preview")) {
@@ -1523,7 +1523,7 @@ function print_main_media_row($rtype, $rowm, $pid) {
 		print_menu($menu);
 		print "</div>";
 	}
-	
+
 	// NOTE Print the title of the media
 	print "</td><td class=\"optionbox wrap $styleadd\"><span class=\"field\">";
 	if (showFactDetails("OBJE", $pid)) {
@@ -1537,7 +1537,7 @@ function print_main_media_row($rtype, $rowm, $pid) {
 			$mediaTitle = basename($rowm["m_file"]);
 		}
 		if ($isExternal || media_exists($thumbnail)) {
-		
+
 			$mainFileExists = false;
 			//if ($isExternal || media_exists($mainMedia)) {
 			if ($isExternal || media_exists($mainMedia) || media_exists($rowm['m_file']) ) {
@@ -1545,7 +1545,7 @@ function print_main_media_row($rtype, $rowm, $pid) {
 				$imgsize = findImageSize($mainMedia);
 				$imgwidth = $imgsize[0]+40;
 				$imgheight = $imgsize[1]+150;
-					
+
 				// Check Filetype of media item ( URL, Local or Other ) ------------------------------------------
 				// URL FLV  ----------------------------------
 				if (eregi("http://www.youtube.com", $rowm['m_file'])) {
@@ -1566,7 +1566,7 @@ function print_main_media_row($rtype, $rowm, $pid) {
 				}else{
 					$file_type = "other";
 				}
-				
+
 				//Get media item Notes
 				$haystack = $rowm["m_gedrec"];
 				$needle   = "1 NOTE";
@@ -1575,7 +1575,7 @@ function print_main_media_row($rtype, $rowm, $pid) {
 				$worked   = ereg_replace("1 NOTE", "1 NOTE<br />", $after);
 				$final    = $before.$needle.$worked;
 				$notes    = PrintReady(htmlspecialchars(addslashes(print_fact_notes($final, 1, true, true)),ENT_COMPAT,'UTF-8'));
-					
+
 				// if Lightbox installed ------------------------------------------------------------------------------
 				if (file_exists("modules/lightbox/album.php") ) {
 					if (file_exists("modules/lightbox/lb_config.php") ) {
@@ -1584,7 +1584,7 @@ function print_main_media_row($rtype, $rowm, $pid) {
 						include('modules/lightbox/lb_defaultconfig.php');
 					}
 					$name = trim($rowm["m_titl"]);
-					
+
 					// If URL FLV filetype (Lightbox)
 					if ($file_type == "url_flv") {
 						print "<a href=\"module.php?mod=JWplayer&amp;pgvaction=flvVideo&amp;flvVideo=" . str_replace('http://', '', $mainMedia) . "\" rel='clearbox(" . 445 . "," . 370 . ",click)' rev=\"" . $rowm["m_media"] . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name,ENT_COMPAT,'UTF-8')) . "::" . htmlspecialchars($notes,ENT_COMPAT,'UTF-8') . "\">" . "\n";
@@ -1608,7 +1608,7 @@ function print_main_media_row($rtype, $rowm, $pid) {
 					} else {
 						print "<a href=\"javascript:;\" onclick=\"return openImage('".rawurlencode($mainMedia)."',$imgwidth, $imgheight);\">";
 					}
-					
+
 				// if Lightbox NOT installed or not enabled -------------------------
 				 // else if Media viewer enabled
 				}elseif ($USE_MEDIA_VIEWER) {
@@ -1635,7 +1635,7 @@ function print_main_media_row($rtype, $rowm, $pid) {
 			}else{
 				$file_type = "none";
 			}
-			
+
 			// Finally print thumbnail
 			// If URL flv file (eg You Tube)
 			if ($file_type == "url_flv" && is_dir('modules/JWplayer')) {
@@ -1666,7 +1666,7 @@ function print_main_media_row($rtype, $rowm, $pid) {
 					print "<img src=\"".$thumbnail."\" border=\"0\" align=\"" . ($TEXT_DIRECTION== "rtl"?"right": "left") . "\" class=\"thumbnail\"";
 				}
 			}
-				
+
 			if ($isExternal) {
 				print " width=\"".$THUMBNAIL_WIDTH."\"";
 			}
@@ -1675,7 +1675,7 @@ function print_main_media_row($rtype, $rowm, $pid) {
 				print "</a>";
 			}
 		}
-		
+
 		if(empty($SEARCH_SPIDER)) {
 			print "<a href=\"".encode_url("mediaviewer.php?mid={$rowm['m_media']}")."\">";
 		}
@@ -1693,7 +1693,7 @@ function print_main_media_row($rtype, $rowm, $pid) {
 		if(empty($SEARCH_SPIDER)) {
 			print "</a>";
 		}
-		
+
 		// NOTE: Print the format of the media
 		if (!empty($rowm["m_ext"])) {
 			print "\n\t\t\t<br /><span class=\"label\">".$factarray["FORM"].": </span> <span class=\"field\">".$rowm["m_ext"]."</span>";

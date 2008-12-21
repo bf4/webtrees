@@ -524,7 +524,7 @@ function import_record($gedrec, $update) {
 	global $DBCONN, $gid, $type, $TOTAL_QUERIES, $prepared_statement;
 	global $TBLPREFIX, $GEDCOM_FILE, $FILE, $pgv_lang, $USE_RIN, $gdfp, $placecache;
 	global $ALPHABET_upper, $ALPHABET_lower, $place_id, $WORD_WRAPPED_NOTES, $GEDCOMS;
-	global $MAX_IDS, $fpnewged, $GEDCOM, $USE_RTL_FUNCTIONS, $GENERATE_UIDS;
+	global $MAX_IDS, $fpnewged, $GEDCOM, $GENERATE_UIDS;
 	global $TRANSLATE_TAGS;
 
 	$FILE = $GEDCOM;
@@ -537,6 +537,7 @@ function import_record($gedrec, $update) {
 	//$gedrec=preg_replace('/ {2,}/', ' ', $gedrec); // Repeated spaces
 	$gedrec=preg_replace('/(^ +| +$)/m', '', $gedrec); // Leading/trailing space
 	$gedrec=preg_replace('/\n{2,}/', "\n", $gedrec); // Blank lines
+	$gedrec = stripLRMRLM($gedrec);		// LRM and RLM codes are NOT text:  they're instructions to the browser
 	if (!$update) {
 		$gedrec=str_replace('@@', '@', $gedrec); // Escaped @ signs (only if importing from file)
 	}

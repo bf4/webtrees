@@ -439,7 +439,7 @@ function print_fam_table($datalist, $legend="", $option="") {
 	if (count($datalist)<1) return;
 	$tiny = (count($datalist)<=500);
 	$name_subtags = array("", "_AKA", "_HEB", "ROMN");
-	//if ($SHOW_MARRIED_NAMES) $name_subtags[] = "_MARNM"; 
+	//if ($SHOW_MARRIED_NAMES) $name_subtags[] = "_MARNM";
 	require_once 'js/sorttable.js.htm';
 	require_once 'includes/classes/class_family.php';
 	//-- init chart data
@@ -911,7 +911,7 @@ function print_sour_table($datalist, $legend=null) {
 			cells = table.getElementsByTagName('td');
 			for (i=0;i<cells.length;i++) {
 				if (cells[i].className && (cells[i].className.indexOf('t2') != -1)) {
-					cells[i].style.display=""; 
+					cells[i].style.display="";
 				}
 			}
 		</script>
@@ -1846,11 +1846,11 @@ function print_chart_by_decade($data, $title) {
  * @return string left|right
  */
 function get_align($txt) {
-		global $TEXT_DIRECTION, $USE_RTL_FUNCTIONS;
+		global $TEXT_DIRECTION;
 
 		if (!empty($txt)) {
 			if ($TEXT_DIRECTION=="rtl" && !hasRTLText($txt) && hasLTRText($txt)) return "left";
-			if ($TEXT_DIRECTION=="ltr" && hasRTLText($txt) && !hasLTRText($txt) && $USE_RTL_FUNCTIONS) return "right";
+			if ($TEXT_DIRECTION=="ltr" && hasRTLText($txt) && !hasLTRText($txt)) return "right";
 		}
 		if ($TEXT_DIRECTION=="rtl") return "right";
 		return "left";
