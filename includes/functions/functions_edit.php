@@ -79,6 +79,7 @@ $level2_tags=array( // The order of the $keys is significant
 	"_PGVU"=>array("_TODO")
 );
 $STANDARD_NAME_FACTS = array('NAME', 'NPFX', 'GIVN', 'SPFX', 'SURN', 'NSFX');
+$REVERSED_NAME_FACTS = array('NAME', 'NPFX', 'SPFX', 'SURN', 'NSFX', 'GIVN');
 
 //-- this function creates a new unique connection
 //-- and adds it to the connections file
@@ -455,8 +456,8 @@ function undo_change($cid, $index) {
  */
 function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag="CHIL", $sextag="") {
 	global $pgv_lang, $factarray, $pid, $PGV_IMAGE_DIR, $PGV_IMAGES, $WORD_WRAPPED_NOTES;
-	global $NPFX_accept, $SPFX_accept, $NSFX_accept, $FILE_FORM_accept, $USE_RTL_FUNCTIONS, $GEDCOM;
-	global $bdm, $TEXT_DIRECTION, $STANDARD_NAME_FACTS, $ADVANCED_NAME_FACTS, $ADVANCED_PLAC_FACTS, $SURNAME_TRADITION;
+	global $NPFX_accept, $SPFX_accept, $NSFX_accept, $FILE_FORM_accept, $GEDCOM, $NAME_REVERSE;
+	global $bdm, $TEXT_DIRECTION, $STANDARD_NAME_FACTS, $REVERSED_NAME_FACTS, $ADVANCED_NAME_FACTS, $ADVANCED_PLAC_FACTS, $SURNAME_TRADITION;
 	global $QUICK_REQUIRED_FACTS, $QUICK_REQUIRED_FAMFACTS;
 
 	$bdm = ""; // used to copy '1 SOUR' to '2 SOUR' for BIRT DEAT MARR
@@ -481,8 +482,15 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 
 	// Populate the standard NAME field and subfields
 	$name_fields=array();
-	foreach ($STANDARD_NAME_FACTS as $tag)
-		$name_fields[$tag]=get_gedcom_value($tag, 0, $namerec);
+	if (!$NAME_REVERSE) {
+		foreach ($STANDARD_NAME_FACTS as $tag) {
+			$name_fields[$tag]=get_gedcom_value($tag, 0, $namerec);
+		}
+	} else {
+		foreach ($REVERSED_NAME_FACTS as $tag) {
+			$name_fields[$tag]=get_gedcom_value($tag, 0, $namerec);
+		}
+	}
 
 	$new_marnm='';
 	// Inherit surname from parents, spouse or child
@@ -553,14 +561,14 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 			break;
 		case 'icelandic':
 			// Sons get their father's given name plus "sson"
-			// Daughters get their mother's given name plus "sdottir"
+			// Daughters get their father's given name plus "sdottir"
 			switch ($nextaction) {
 			case 'addchildaction':
 				if ($sextag=='M' && preg_match('/(\S+)\s+\/.*\//', $father_name, $match)) {
 					$name_fields['SURN']=preg_replace('/s$/', '', $match[1]).'sson';
 					$name_fields['NAME']='/'.$name_fields['SURN'].'/';
 				}
-				if ($sextag=='F' && preg_match('/(\S+)\s+\/.*\//', $mother_name, $match)) {
+				if ($sextag=='F' && preg_match('/(\S+)\s+\/.*\//', $father_name, $match)) {
 					$name_fields['SURN']=preg_replace('/s$/', '', $match[1]).'sdottir';
 					$name_fields['NAME']='/'.$name_fields['SURN'].'/';
 				}
@@ -624,12 +632,13 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 	$npfx_accept=implode('|', $NPFX_accept);
 	if (preg_match ("/((($npfx_accept)\.?\s+)*)([^\r\n\/\"]*)(\"(.*)\")?\s*\/(([a-z]{2,3}\s+)*)(.*)\/\s*([^\r\n]*)/i", $name_fields['NAME'], $name_bits)) {
 		if (empty($name_fields['NPFX'])) $name_fields['NPFX']=$name_bits[1];
-		if (empty($name_fields['GIVN'])) $name_fields['GIVN']=$name_bits[4];
+		if (!$NAME_REVERSE && empty($name_fields['GIVN'])) $name_fields['GIVN']=$name_bits[4];
 		if (empty($name_fields['SPFX']) && empty($name_fields['SURN'])) {
 			$name_fields['SPFX']=trim($name_bits[7]);
 			$name_fields['SURN']=$name_bits[9];
 		}
 		if (empty($name_fields['NSFX'])) $name_fields['NSFX']=$name_bits[10];
+		if ($NAME_REVERSE && empty($name_fields['GIVN'])) $name_fields['GIVN']=$name_bits[4];
 		// Don't automatically create an empty NICK - it is an "advanced" field.
 		if (empty($name_fields['NICK']) && !empty($name_bits[6]) && !preg_match('/^2 NICK/m',$namerec))
 			$name_fields['NICK']=$name_bits[6];

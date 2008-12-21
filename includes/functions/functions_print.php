@@ -1340,7 +1340,7 @@ function print_text($help, $level=0, $noprint=0){
 
 	// $_SESSION['DEBUG_LANG'] is set in editlang.php
 	$DEBUG_LANG=isset($_SESSION['DEBUG_LANG']) && $_SESSION['DEBUG_LANG'];
-	
+
 	if ($DEBUG_LANG) {
 		print "[LANG_DEBUG] Variable called: ".$help."<br /><br />";
 	}
@@ -1588,7 +1588,7 @@ function print_theme_dropdown($style=0) {
  */
 function PrintReady($text, $InHeaders=false, $trim=true) {
 	global $query, $action, $firstname, $lastname, $place, $year;
-	global $TEXT_DIRECTION_array, $TEXT_DIRECTION, $USE_RTL_FUNCTIONS;
+	global $TEXT_DIRECTION_array, $TEXT_DIRECTION;
 	// Check whether Search page highlighting should be done or not
 	$HighlightOK = false;
 	if (strstr($_SERVER["SCRIPT_NAME"], "search.php")) {  // If we're on the Search page
@@ -1718,7 +1718,7 @@ function PrintReady($text, $InHeaders=false, $trim=true) {
 	// To correct the problem, we need to enclose the parentheses, braces, or brackets with
 	// zero-width characters (&lrm; or &rlm;) having a directionality that matches the
 	// directionality of the text that is enclosed by the parentheses, etc.
-	if ($USE_RTL_FUNCTIONS || $TEXT_DIRECTION=="rtl") {
+	if ($TEXT_DIRECTION=="rtl") {
 		$charPos = 0;
 		$lastChar = strlen($text);
 		$newText = "";

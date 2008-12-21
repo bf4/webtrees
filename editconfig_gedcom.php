@@ -3,7 +3,7 @@
  * UI for online updating of the GEDCOM config file.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008 PGV Development Team, all rights reserved.
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -394,7 +394,6 @@ if ($action=="update") {
 	$configtext = preg_replace('/\$UNDERLINE_NAME_QUOTES\s*=\s*.*;/', "\$UNDERLINE_NAME_QUOTES = ".$boolarray[$_POST["NEW_UNDERLINE_NAME_QUOTES"]].";", $configtext);
 	$configtext = preg_replace('/\$USE_QUICK_UPDATE\s*=\s*.*;/', "\$USE_QUICK_UPDATE = ".$boolarray[$_POST["NEW_USE_QUICK_UPDATE"]].";", $configtext);
 	$configtext = preg_replace('/\$USE_RIN\s*=\s*.*;/', "\$USE_RIN = ".$boolarray[$_POST["NEW_USE_RIN"]].";", $configtext);
-	$configtext = preg_replace('/\$USE_RTL_FUNCTIONS\s*=\s*.*;/', "\$USE_RTL_FUNCTIONS = ".$boolarray[$_POST["NEW_USE_RTL_FUNCTIONS"]].";", $configtext);
 	$configtext = preg_replace('/\$USE_THUMBS_MAIN\s*=\s*.*;/', "\$USE_THUMBS_MAIN = ".$boolarray[$_POST["NEW_USE_THUMBS_MAIN"]].";", $configtext);
 	$configtext = preg_replace('/\$USE_MEDIA_VIEWER\s*=\s*.*;/', "\$USE_MEDIA_VIEWER = ".$boolarray[$_POST["NEW_USE_MEDIA_VIEWER"]].";", $configtext);
 	$configtext = preg_replace('/\$USE_MEDIA_FIREWALL\s*=\s*.*;/', "\$USE_MEDIA_FIREWALL = ".$boolarray[$_POST["NEW_USE_MEDIA_FIREWALL"]].";", $configtext);
@@ -626,8 +625,7 @@ if (!empty($error)) print "<span class=\"error\">".$error."</span>";
 	}
 	function show_jewish() {
 		var cal=document.getElementById('NEW_CALENDAR_FORMAT');
-		var rtl=document.getElementById('NEW_USE_RTL_FUNCTIONS');
-		if (rtl.options[rtl.selectedIndex].value=='yes' || cal.options[cal.selectedIndex].value.match(/jewish|hebrew/)) {
+		if (cal.options[cal.selectedIndex].value.match(/jewish|hebrew/)) {
 			document.getElementById('hebrew-cal' ).style.display='block';
 		} else {
 			document.getElementById('hebrew-cal' ).style.display='none';
@@ -1013,17 +1011,8 @@ print "&nbsp;<a href=\"javascript: ".$pgv_lang["gedcom_conf"]."\" onclick=\"expa
 		?>
 		</select></td>
 	</tr>
-	<tr>
-		<td class="descriptionbox wrap width20">
-		<?php print_help_link("USE_RTL_FUNCTIONS_help", "qm", "USE_RTL_FUNCTIONS"); print $pgv_lang["USE_RTL_FUNCTIONS"]; ?></td>
-		<td class="optionbox"><select id="NEW_USE_RTL_FUNCTIONS" name="NEW_USE_RTL_FUNCTIONS" tabindex="<?php $i++; print $i; ?>" onfocus="getHelp('USE_RTL_FUNCTIONS_help');" onchange="show_jewish();">
-				<option value="yes" <?php if ($USE_RTL_FUNCTIONS) print "selected=\"selected\""; ?>><?php print $pgv_lang["yes"]; ?></option>
-				<option value="no" <?php if (!$USE_RTL_FUNCTIONS) print "selected=\"selected\""; ?>><?php print $pgv_lang["no"]; ?></option>
-			</select>
-		</td>
-	</tr>
 	</table>
-	<div id="hebrew-cal" style="display: <?php print $USE_RTL_FUNCTIONS ? 'block' : 'none'; ?>">
+	<div id="hebrew-cal" style="display: none">
 	<table class="facts_table">
 	<tr>
 		<td class="descriptionbox wrap width20">

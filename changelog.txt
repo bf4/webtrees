@@ -10,6 +10,9 @@
 
 
 Version 4.2.0
+ - Fixed: Quick Update, Edit Name, and Add Person forms don't obey "Surname First" option (canajun2eh)
+ - Fixed: Help for Hebrew and Romanized Names in Quick Update form need improvement (canajun2eh)
+ - Changed: Remove "Use RTL Functions" option in GEDCOM configuration (canajun2eh) 
  - Fixed: [ 2454091 ] Error 8 in Indi list (canajun2eh)
  - Fixed: [ 2445781 ] 4559 Events of close relatives (wooc)
  - Fixed: Incorrect Default Audio thumbnail showing when on Mediaviewer or Medialist pages with mp3 media (windmillway)
