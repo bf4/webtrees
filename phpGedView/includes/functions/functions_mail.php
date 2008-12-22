@@ -36,10 +36,10 @@ define('PGV_FUNCTIONS_MAIL_PHP', '');
  * for deatiled info on MIME (RFC 1521) email see: http://www.freesoft.org/CIE/RFC/1521/index.htm
  */
 function pgvMail($to, $from, $subject, $message) {
-	global $pgv_lang, $CHARACTER_SET, $LANGUAGE, $PGV_STORE_MESSAGES, $TEXT_DIRECTION;
+	global $PGV_SMTP_ACTIVE, $PGV_SMTP_HOST, $PGV_SMTP_HELO, $PGV_SMTP_PORT, $PGV_SMTP_AUTH, $PGV_SMTP_AUTH_USER, $PGV_SMTP_AUTH_PASS, $pgv_lang, $CHARACTER_SET, $LANGUAGE, $PGV_STORE_MESSAGES, $TEXT_DIRECTION;
 	$mailFormat = "plain";
 	//$mailFormat = "html";
-	//$mailFormat = "multipart"
+	//$mailFormat = "multipart";
 
 	$mailFormatText = "text/plain";
 
@@ -112,7 +112,47 @@ function pgvMail($to, $from, $subject, $message) {
 		$htmlMessage .= "\r\n\r\n\r\n\r\n--$boundry--";
 		$message = $htmlMessage;
 	}
-	mail($to, hex4email($subject,$CHARACTER_SET), $message, $extraHeaders);
+	// if SMTP mail is set active AND we have SMTP settings available, use the PHPMailer classes
+	if ( $PGV_SMTP_ACTIVE  && ( $PGV_SMTP_HOST && $PGV_SMTP_PORT ) ) {
+	    require_once( 'includes/classes/class_phpmailer.php' );
+	    $mail_object = new PHPMailer();
+	    $mail_object->IsSMTP();
+	    $mail_object->SetLanguage('en','languages/');
+	    if ( $PGV_SMTP_AUTH && ( $PGV_SMTP_AUTH_USER && $PGV_SMTP_AUTH_PASS ) ) {
+		    $mail_object->SMTPAuth = $PGV_SMTP_AUTH;
+		    $mail_object->Username = $PGV_SMTP_AUTH_USER;
+		    $mail_object->Password = $PGV_SMTP_AUTH_PASS;
+	    }
+	    $mail_object->Host = $PGV_SMTP_HOST;
+	    $mail_object->Port = $PGV_SMTP_PORT;
+	    $mail_object->Hostname = $PGV_SMTP_HELO;
+	    $mail_object->From = $from;
+	    $mail_object->FromName = 
+	    $mail_object->AddAddress($to);
+	    $mail_object->Subject = hex4email( $subject, $CHARACTER_SET );
+	    $mail_object->ContentType = $mailFormatText;
+	    if ( $mailFormat != "multipart" ) {
+		$mail_object->ContentType = $mailFormatText . '; format="flowed"';
+		$mail_object->CharSet = $CHARACTER_SET;
+		$mail_object->Encoding = '8bit';
+	    }
+	    if ( $mailFormat == "html" || $mailFormat == "multipart" ) {
+		$mail_object->AddCustomHeader( 'Mime-Version: 1.0' );
+	    }
+	    $mail_object->Body = $message;
+	    // attempt to send mail
+	    if ( ! $mail_object->Send() ) {
+		print 'Message was not sent.<br />';
+		print 'Mailer error: ' . $mail_object->ErrorInfo . '<br /.';
+		return;
+	    } else {
+		print 'SMTP OK.<br />';
+		return;
+	    }
+	} else {
+	    // use original PGV mail sending function	
+	    mail($to, hex4email($subject,$CHARACTER_SET), $message, $extraHeaders);
+	}
 }
 
 function getPgvMailLogo() {

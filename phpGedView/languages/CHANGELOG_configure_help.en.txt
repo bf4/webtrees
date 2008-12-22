@@ -45,8 +45,15 @@ VERSION 4.2.0
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 -----------------------------------------------------------------------------------------
--$pgv_lang["USE_RTL_FUNCTIONS"]
--$pgv_lang["USE_RTL_FUNCTIONS_help"]
++$pgv_lang["PGV_SMTP_ACTIVE_help"]					22 Dec 2008				A
++$pgv_lang["PGV_SMTP_HOST_help"]					22 Dec 2008				A
++$pgv_lang["PGV_SMTP_HELO_help"]					22 Dec 2008				A
++$pgv_lang["PGV_SMTP_PORT_help"]					22 Dec 2008				A
++$pgv_lang["PGV_SMTP_AUTH_help"]					22 Dec 2008				A
++$pgv_lang["PGV_SMTP_AUTH_USER_help"]				22 Dec 2008				A
++$pgv_lang["PGV_SMTP_AUTH_PASS_help"]				22 Dec 2008				A
+-$pgv_lang["USE_RTL_FUNCTIONS"]						21 Dec 2008				D
+-$pgv_lang["USE_RTL_FUNCTIONS_help"]				21 Dec 2008				D
 *$pgv_lang["person_privacy_help"]					30 Nov 2008				w	"ID 101" --> "ID I101"
 *$pgv_lang["user_privacy_help"]						30 Nov 2008				w	"ID 100" --> "ID I100"
 *$pgv_lang["edit_lang_utility_desc"]				28 Nov 2008				w	four --> nine

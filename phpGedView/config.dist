@@ -37,11 +37,11 @@ if (preg_match("/\Wconfig.php/", $_SERVER["SCRIPT_NAME"])>0) {
 $DBTYPE = "mysql";								//-- type of database to connect when using the PEAR:DB module
 $DBHOST = "localhost";							//-- Host where MySQL database is kept
 $DBPORT = "";									//-- Database port, leave blank for default
-$DBUSER = "root";									//-- MySQL database User Name
+$DBUSER = "root";								//-- MySQL database User Name
 $DBPASS = "";									//-- MySQL database User Password
 $DBNAME = "phpgedview";							//-- The MySQL database name where you want PHPGedView to build its tables
 $DBPERSIST = false;								//-- Use persistent database connections
-$DB_UTF8_COLLATION = false;             //-- Use the database to sort/collation UTF8 text
+$DB_UTF8_COLLATION = false;						//-- Use the database to sort/collation UTF8 text
 $TBLPREFIX = "pgv_";							//-- prefix to include on table names
 $INDEX_DIRECTORY = "./index/";					//-- Readable and Writeable Directory to store index files (include the trailing "/")
 $AUTHENTICATION_MODULE = "authentication.php";	//-- File that contains authentication functions
@@ -64,7 +64,15 @@ $PGV_MEMORY_LIMIT = "32M";						//-- the maximum amount of memory that PGV shoul
 $ALLOW_REMEMBER_ME = false;						//-- whether the users have the option of being remembered on the current computer
 $CONFIG_VERSION = "4.0";						//-- the version this config file goes to
 
-$COMMIT_COMMAND = "";						//-- Choices are empty string, cvs or svn
+$COMMIT_COMMAND = "";							//-- Choices are empty string, cvs or svn
+
+$PGV_SMTP_ACTIVE = false;						//-- Enable to use of SMTP to send external emails
+$PGV_SMTP_HOST = "";							//-- The domain name of the SMTP smarthost
+$PGV_SMTP_HELO = "";							//-- The local SMTP domain name
+$PGV_SMTP_PORT = "";							//-- The port number talk to the SMTP smarthost
+$PGV_SMTP_AUTH = false;							//-- Enable the use of SMTP authorization
+$PGV_SMTP_AUTH_USER = "";						//-- User name for SMTP authorization
+$PGV_SMTP_AUTH_PASS = "";						//-- Password for SMTP authorization
 
 $CONFIGURED = false;
 require_once("includes/session.php");
