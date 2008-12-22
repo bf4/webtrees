@@ -29,7 +29,7 @@
  * 		PHP version, necessary modules
  * 		Config.php
  * 2. Database Connection
- * 3. Configuration Basic/Advanced
+ * 3. Configuration Basic/Advanced/SMTP
  * 4. Create Tables
  * 5. Languages
  * 6. Save configuration
@@ -235,7 +235,6 @@ switch($step) {
 		if (isset($_POST['NEW_PGV_STORE_MESSAGES'])) $_SESSION['install_config']['PGV_STORE_MESSAGES'] = $_POST['NEW_PGV_STORE_MESSAGES']=="yes"?true:false;
 		if (isset($_POST['NEW_USE_REGISTRATION_MODULE'])) $_SESSION['install_config']['USE_REGISTRATION_MODULE'] = $_POST['NEW_USE_REGISTRATION_MODULE']=="yes"?true:false;
 		if (isset($_POST['NEW_REQUIRE_ADMIN_AUTH_REGISTRATION'])) $_SESSION['install_config']['REQUIRE_ADMIN_AUTH_REGISTRATION'] = $_POST['NEW_REQUIRE_ADMIN_AUTH_REGISTRATION']=="yes"?true:false;
-
 		if (isset($_POST['NEW_PGV_SIMPLE_MAIL'])) $_SESSION['install_config']['PGV_SIMPLE_MAIL'] =$_POST['NEW_PGV_SIMPLE_MAIL']=="yes"?true:false;
 		if (isset($_POST["NEW_PGV_SMTP_ACTIVE"])) $_SESSION['install_config']['PGV_SMTP_ACTIVE'] =$_POST["NEW_PGV_SMTP_ACTIVE"]=="yes"?true:false;
 		if (isset($_POST["NEW_PGV_SMTP_HOST"])) $_SESSION['install_config']['PGV_SMTP_HOST'] = $_POST['NEW_PGV_SMTP_HOST'];
@@ -244,7 +243,6 @@ switch($step) {
 		if (isset($_POST["NEW_PGV_SMTP_AUTH"])) $_SESSION['install_config']['PGV_SMTP_AUTH'] =$_POST["NEW_PGV_SMTP_AUTH"]=="yes"?true:false;
 		if (isset($_POST["NEW_PGV_SMTP_AUTH_USER"])) $_SESSION['install_config']['PGV_SMTP_AUTH_USER'] =$_POST["NEW_PGV_SMTP_AUTH_USER"];
 		if (isset($_POST["NEW_PGV_SMTP_AUTH_PASS"])) $_SESSION['install_config']['PGV_SMTP_AUTH_PASS'] =$_POST["NEW_PGV_SMTP_AUTH_PASS"];
-	
 		if (isset($_POST['NEW_ALLOW_USER_THEMES'])) $_SESSION['install_config']['ALLOW_USER_THEMES'] = $_POST['NEW_ALLOW_USER_THEMES']=="yes"?true:false;
 		if (isset($_POST['NEW_ALLOW_REMEMBER_ME'])) $_SESSION['install_config']['ALLOW_REMEMBER_ME'] = $_POST['NEW_ALLOW_REMEMBER_ME']=="yes"?true:false;
 		if (isset($_POST['NEW_LOGFILE_CREATE'])) $_SESSION['install_config']['LOGFILE_CREATE'] = $_POST['NEW_LOGFILE_CREATE'];
@@ -748,14 +746,11 @@ function printConfigForm(){
 	if (isset($_SESSION['install_config']['USE_REGISTRATION_MODULE'])) $USE_REGISTRATION_MODULE = $_SESSION['install_config']['USE_REGISTRATION_MODULE'];
 	if (isset($_SESSION['install_config']['REQUIRE_ADMIN_AUTH_REGISTRATION'])) $REQUIRE_ADMIN_AUTH_REGISTRATION = $_SESSION['install_config']['REQUIRE_ADMIN_AUTH_REGISTRATION'];
 	if (isset($_SESSION['install_config']['PGV_SIMPLE_MAIL'])) $PGV_SIMPLE_MAIL = $_SESSION['install_config']['PGV_SIMPLE_MAIL'];
-	
-	if (isset($_SESSION['install_config']['PGV_SIMPLE_MAIL'])) $PGV_SIMPLE_MAIL = $_SESSION['install_config']['PGV_SIMPLE_MAIL'];
 	if (isset($_SESSION['install_config']['ALLOW_USER_THEMES'])) $ALLOW_USER_THEMES = $_SESSION['install_config']['ALLOW_USER_THEMES'];
 	if (isset($_SESSION['install_config']['ALLOW_REMEMBER_ME'])) $ALLOW_REMEMBER_ME = $_SESSION['install_config']['ALLOW_REMEMBER_ME'];
 	if (isset($_SESSION['install_config']['LOGFILE_CREATE'])) $LOGFILE_CREATE = $_SESSION['install_config']['LOGFILE_CREATE'];
 	if (isset($_SESSION['install_config']['SERVER_URL'])) $SERVER_URL = $_SESSION['install_config']['SERVER_URL'];
 	if (isset($_SESSION['install_config']['LOGIN_URL'])) $LOGIN_URL = $_SESSION['install_config']['LOGIN_URL'];
-
 	if (isset($_SESSION['install_config']['PGV_SMTP_ACTIVE'])) $PGV_SMTP_ACTIVE = $_SESSION['install_config']['PGV_SMTP_ACTIVE'];
 	if (isset($_SESSION['install_config']['PGV_SMTP_HOST'])) $PGV_SMTP_HOST = $_SESSION['install_config']['PGV_SMTP_HOST'];
 	if (isset($_SESSION['install_config']['PGV_SMTP_HELO'])) $PGV_SMTP_HELO = $_SESSION['install_config']['PGV_SMTP_HELO'];
@@ -763,7 +758,7 @@ function printConfigForm(){
 	if (isset($_SESSION['install_config']['PGV_SMTP_AUTH'])) $PGV_SMTP_AUTH = $_SESSION['install_config']['PGV_SMTP_AUTH'];
 	if (isset($_SESSION['install_config']['PGV_SMTP_AUTH_USER'])) $PGV_SMTP_AUTH_USER = $_SESSION['install_config']['PGV_SMTP_AUTH_USER'];
 	if (isset($_SESSION['install_config']['PGV_SMTP_AUTH_PASS'])) $PGV_SMTP_AUTH_PASS = $_SESSION['install_config']['PGV_SMTP_AUTH_PASS'];
-
+	if (isset($_SESSION['install_config']['PGV_SESSION_SAVE_PATH'])) $PGV_SESSION_SAVE_PATH = $_SESSION['install_config']['PGV_SESSION_SAVE_PATH'];
 	if (isset($_SESSION['install_config']['PGV_SESSION_TIME'])) $PGV_SESSION_TIME = $_SESSION['install_config']['PGV_SESSION_TIME'];
 	if (isset($_SESSION['install_config']['COMMIT_COMMAND'])) $COMMIT_COMMAND = $_SESSION['install_config']['COMMIT_COMMAND'];
 	if (isset($_SESSION['install_config']['PGV_MEMORY_LIMIT'])) $PGV_MEMORY_LIMIT = $_SESSION['install_config']['PGV_MEMORY_LIMIT'];
