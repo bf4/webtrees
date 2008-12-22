@@ -408,23 +408,23 @@ class AdvancedSearchController extends SearchController {
 			}
 			//-- handle everything else
 			else {
-				$sqlwhere .= " AND i_gedcom ".$term." '";
+				$sqlwhere .= " AND i_gedcom ".PGV_DB_LIKE." '";
 
 				$ct = count($parts);
 				for($j=0; $j<$ct; $j++) {
-					 $sqlwhere .= ($j+1)." ".$parts[$j];
-					 if ($j<$ct-1) {
-					 	$sqlwhere .= "%";
-					 } else {
+					 $sqlwhere .= "%".($j+1)." ".$parts[$j]." %";
+//					 if ($j<$ct-1) {
+//					 	$sqlwhere .= "%";
+//					 } else {
 					 	$sqlwhere .= "%".$DBCONN->escapeSimple($value)."%";
-					 }
+//					 }
 				}
 				$sqlwhere .= "'";
 			}
 		}
 		$sql = $sqlfields.$sqltables.$sqlwhere;
-		if ($justSql) return $sql;
 //		print $sql;
+		if ($justSql) return $sql;
 		$res = dbquery($sql);
 		if (!DB::isError($res)) {
 			while ($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)){
