@@ -10,6 +10,7 @@
 
 
 Version 4.2.0
+ - Fixed: [ 2457278 ] Advanced search doesn't work right (canajun2eh)
  - Fixed: Quick Update, Edit Name, and Add Person forms don't obey "Surname First" option (canajun2eh)
  - Fixed: Help for Hebrew and Romanized Names in Quick Update form need improvement (canajun2eh)
  - Changed: Remove "Use RTL Functions" option in GEDCOM configuration (canajun2eh) 
