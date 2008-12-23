@@ -282,7 +282,7 @@ class Base_AutoSearch {
 		if ($bcountry && array_search($bcountry, $countries)) {
 			$html.='<option value="'.htmlspecialchars(array_search($bcountry, $countries)).'">'.htmlspecialchars($bcountry).'</option>';
 		}
-		if ($dcountry && array_search($dcountry, $countries) && $bcountry!=$dcountryh) {
+		if ($dcountry && array_search($dcountry, $countries) && $bcountry!=$dcountry) {
 			$html.='<option value="'.htmlspecialchars(array_search($dcountry, $countries)).'">'.htmlspecialchars($dcountry).'</option>';
 		}
 		foreach ($countries as $code=>$country) {
