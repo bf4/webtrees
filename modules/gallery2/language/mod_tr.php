@@ -3,7 +3,7 @@
  * phpGedView Gallery 2 Module.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2005  John Finlay and Others
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,6 +25,7 @@
  * @author Patrick Kellum
  * @author Adem GENÇ uzayuydu@gmail.com http://www.muttafi.com 
  */
+
 $pgv_lang['mod_gallery2'] = 'Galeri';
 $pgv_lang['mod_gallery2_siteadmin'] = 'Site Yönetimi';
 $pgv_lang['mod_gallery2_useralbum'] = 'Albümünüz';

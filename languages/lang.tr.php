@@ -3,7 +3,7 @@
  * Turkish Language file for PhpGedView.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,7 +24,6 @@
  * @author Adem GENÇ uzayuydu@gmail.com http://www.muttafi.com
  * @version $Id$
  */
-
 if (!defined('PGV_PHPGEDVIEW')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
@@ -96,7 +95,7 @@ $pgv_lang["cookie_login_help"]		= "Bu site bir önceki girişinizden sizi hatır
 $pgv_lang["remember_me"]		= "Beni bu bilgisayarda hatırla";
 $pgv_lang["fams_with_surname"]		= "#Soyad# Soyad ile aileler";
 $pgv_lang["support_contact"]		= "Teknik yardımı için iletişim";
-$pgv_lang["genealogy_contact"]		= "Soykütüğü için iletişimi";
+$pgv_lang["genealogy_contact"]		= "Nesep tetkiki için iletişim";
 $pgv_lang["common_upload_errors"]	= "Bu hata büyük ihtimalle sizin yüklemeye çalıştığınız dosya en fazla dosya yükleme kotası aştığı anlama gelir. PHP de varsayılan dosya yükleme kotası 2MD tir. Bu değeri artırmak için sunucu firmanızla görüşerek php.ini dosya içindeki yükleme kotasını artırmasını isteyebilir, Ayrıca dosyayı FTP ile yükleyebilirsiniz. <a href=\"uploadgedcom.php?action=add_form\"><b>GEDCOM ekle</b></a>";
 $pgv_lang["total_memory_usage"]		= "Topam Kullanılan Hafıza";
 $pgv_lang["mothers_family_with"]	= "Anne için Aile ";
@@ -112,7 +111,7 @@ $pgv_lang["reorder_families"]		= "Aileleri Yeniden Sırala";
 $pgv_lang["indis_with_surname"]		= "#Soyad# Soyad ile bireyseller";
 $pgv_lang["first_letter_fname"]		= "Mektubunun üzerinde bu ad ile başlayan bireyleri göstermek için mektubu se.";
 $pgv_lang["total_names"]			= "Toplam isim sayısı";
-$pgv_lang["top10_pageviews_nohits"]	= "Orada halen gösterecek birşey yok.";
+$pgv_lang["top10_pageviews_nohits"]	= "Şuan burada gösterilecek hiç bir şey yok.";
 $pgv_lang["top10_pageviews_msg"]	= "Bu blok için sayaçları çalıştırmak için konfigürasyonda sayaçlar etkinlileştirilmedir.";
 $pgv_lang["review_changes_block"]	= "Ilımlıdaki Değişiklikler";
 $pgv_lang["review_changes_subject"]	= "PhpGedView de - Değişenleri Tekrar Görüntüle";
@@ -165,7 +164,7 @@ $pgv_lang["review_changes_email"]	= "Hatırlatıcı emailler gönder?";
 
 //-- CONFIG FILE MESSAGES
 $pgv_lang["for_support"]		= "Teknik yardım ve bilgi için danışabileceğiniz kişi:";
-$pgv_lang["for_contact"]		= "Soyağacı içeriği hakkında bilgi danışabileceğiniz kişi:";
+$pgv_lang["for_contact"]		= "Nesep tetkiki için temas edilecek kişi:";
 $pgv_lang["for_all_contact"]		= "Teknik yardım veya seçere ile ilgili sorular için danışabileceğiniz ilişki adresi:";
 $pgv_lang["build_error"]		= "GEDCOM dosyası güncelleştirildi.";
 $pgv_lang["choose_username"]		= "Kullanıcı adı";
@@ -503,6 +502,7 @@ $pgv_lang["lifespan_chart"] = "Ömür Çizelgesi";
 $pgv_lang["cal_none"]                 = "Takvim dönüştürme hayır";
 $pgv_lang["cal_french"]               = "Fransız";
 $pgv_lang["cal_arabic"]               = "Arap";
+$pgv_lang["christmas"]  = "Noel";
 $pgv_lang["zoom_in"]			= "Görüntüyü büyüt";
 
 //-- MONTH NAMES
@@ -552,7 +552,7 @@ $pgv_lang["basic_auth"]				= "Temel Kanıtlama";
 $pgv_lang["digest_auth"]				= "Kanıtlamayı Kabullen";
 $pgv_lang["no_auth_needed"]			= "Kanıtlama yok";
 $pgv_lang["duplicate_username"]		= "Çifte kullanıcı adı. Siteye bu kullanıcı adı ile başka bir üye kayıtlıdır. Lütfen geri dönüp başka bir kullanıcı adı seçiniz.";
-$pgv_lang["cache_life"]				= "Yaşam dosya cache";
+$pgv_lang["cache_life"]				= "Dosya önbellek süresi";
 $pgv_lang["genealogy"]					= "soyağacı";
 $pgv_lang["activate"]					= "Aktif";
 $pgv_lang["deactivate"]					= "Aktif değil";
@@ -579,6 +579,9 @@ $pgv_lang["daughter-in-law"]		= "Gelini";
 $pgv_lang["grandchild"]				= "Torun";
 $pgv_lang["grandson"]				= "Erkek torun";
 $pgv_lang["granddaughter"]			= "Kız torun";
+$pgv_lang["greatgrandchild"]		= "Büyük torun";
+$pgv_lang["greatgrandson"]			= "Büyük erkek torun";
+$pgv_lang["greatgranddaughter"]		= "Büyük kız torun";
 $pgv_lang["brother"]			= "Erkek kardeş";
 $pgv_lang["sister"]			= "Kız kardeş";
 $pgv_lang["brother-in-law"]		= "Kanun içinde erken kardeş";
@@ -608,8 +611,8 @@ $pgv_lang["son_in_law"]		        = "damat";
 $pgv_lang["daughter_in_law"]		= "gelin";
 $pgv_lang["step_son"]		        = "üvey oğul";
 $pgv_lang["step_daughter"]	    	= "üvey kız";
-$pgv_lang["bosa_brothers_offspring_2"] 				= "erkek yeğen";
-$pgv_lang["bosa_brothers_offspring_3"] 				= "kız yeğen";
+$pgv_lang["bosa_brothers_offspring_2"] 				= "Erkek yeğen";
+$pgv_lang["bosa_brothers_offspring_3"] 				= "Kız yeğen";
 $pgv_lang["bosa_brothers_offspring_4"] 				= "büyük erkek yeğen";
 $pgv_lang["bosa_brothers_offspring_5"] 				= "büyük kız yeğen";
 $pgv_lang["bosa_brothers_offspring_6"] 				= "büyük erkek yeğen";
@@ -869,7 +872,7 @@ $pgv_lang["messaging2_help"]		= "Bu mesajın bir kopyası belirlediğiniz E-post
 $pgv_lang["mygedview_desc"]		= "Sizin <b>Benim GedView Anasayfam</b> alanında kısa yoldan devamlı görmek istediğiniz kişileri Sık Kullanılanlara ekleyerek gelecek yıl dönümlerini kaçırmayacaksınız  yada incelemek istediğinizde arama yapmadan kısa yoldan görüntüleyebilirsiniz, Günlüğünüze istediğiniz hadiseleri kaydedebilir bu vesile ile unutmak istemediğiniz notları yazabilirsiniz Günlüğünüzü sizden başka yönetici dahil hiç kimse göremez, Bu anasayfada diğer kayıtlı üyelerin gelecek yıldönümleri yada diğer üyelerden PhpGedView üzerinden size gönderilen mesajları okuyabilir yada diğer kayıtlı üyelere PhpGedView üzerinden mesajlaşma imkanı bulacaksınız. Ayrıca sağda ...<b>Benim GedView Anasayfamı özelleştir</b>... linki tıklatıp <b>Benim GedView Anasayfamda</b> görmek istediğiniz modülleri yükleyin Benim GedView Anasayfanızı zenginleştirebilirsiniz ve dahası.";
 $pgv_lang["no_messages"]		= "Okunmamış mesajınız yoktur.";
 $pgv_lang["clicking_ok"]		= "OK kelimesini tıklarsanız açılacak pencerede #user[fullname]# ile ilişkiye geçebilirsiniz.";
-$pgv_lang["favorites"]				= "Favorileriniz";
+$pgv_lang["favorites"]				= "Favorilerim";
 $pgv_lang["my_favorites"]		= "Benim Sık Kullanılanlar";
 $pgv_lang["no_favorites"]		= "Halen <b>#pgv_lang[my_favorites]#</b>a hiç kimseyi eklemediniz. <b>#pgv_lang[my_favorites]#</b>a bir şahsı eklemek için aşağıdaki <b>#pgv_lang[add_favorite]#</b> başındaki \"<b>+</b>\" artı ikona basın açılacak açılacak alanda <b>#pgv_lang[add_fav_enter_id]#</b> in altına ID bilgisi girilir bilmiyorsanız gireceğinize göre sağındaki ikonu seçip arama yapınız veya daha altındaki alana web sitelerinizi ekleyebilirsiniz ve bu <b>#pgv_lang[add_favorite]#</b> alanınıza ekleyecekleriniz hakkında bir açıklama gire bileceğiniz <b>#pgv_lang[add_fav_enter_note]#</b> alana detaylı bilgi girebilirsiniz ve Ekle butona basarak eklemenizi bitirebilirsiniz.";
 $pgv_lang["add_to_my_favorites"]	= "\"Sık kullanılanlarıma\" ekle";
@@ -937,7 +940,7 @@ $pgv_lang["login_user"]				= "1 kayıtlı kullanıcı";
 $pgv_lang["login_users"]			= "#pgv_lang[global_num1]# kayıtlı kullanıcılar";
 $pgv_lang["no_login_users"]			= "Kayıtlı veya gizli kullanıcılar yok";
 $pgv_lang["reply"]			= "Cevapla";
-$pgv_lang["random_picture"]		= "Rasgele fotoğraf";
+$pgv_lang["random_picture"]		= "Rastgele fotoğraf";
 $pgv_lang["sending_to"]			= "Bu mesaj #TO_USER# kullanıcı adlı üyeye yollanacaktır.";
 $pgv_lang["preferred_lang"]		= "Bu üye mesajlarını #USERLANG# dilinde okumayı tercih ediyor.";
 $pgv_lang["gedcom_created_using"]	= "Bu GEDCOM veritabanı <b>#SOFTWARE#</b> yazılımının <b>#VERSION#</b> sürümü ile yaratılmıştır. ";
@@ -1017,7 +1020,7 @@ $pgv_lang["hit_count"]			= "Sayaç:";
 $pgv_lang["phpgedview_message"]		= "PhpGedView mesajı";
 $pgv_lang["common_surnames"]		= "Ençok kullanılan soy isimler listesi";
 $pgv_lang["default_news_title"]		= "Nesep tetkikine hoş geldiniz";
-$pgv_lang["default_news_text"]		= "Bu sitede bulunan seçere bilgileri <a href=\"http://www.phpgedview.net/\" target=\"_blank\">PhpGedView</a> yazılımı ile gösterilmektedir. Bu sayfada bu soyağacını tanıtan bilgiler bulunmaktadır. Bu bilgilere ulaşmak için 'Çizgeler' menüsünden bir çizgeyi seçin, ya da 'Listeler' menüsünden şahıs listesine gidin, veyahut sizi ilgilendiren bir soy ismini ya da yeri arayın.<br /><br />Bu siteyi gezerken bir sorunla karşılaşacak olursanız yardım simgesine tıklayıp bulunduğunuz sayfa hakkında gerekli yardımı bulabilirsiniz.<br /><br />Bu siteyi ziyaret ettiğiniz için teşekkür ederiz.";
+$pgv_lang["default_news_text"]		= "Bu sitede bulunan seçere bilgileri <a href=\"http://www.phpgedview.net/\" target=\"_blank\">PhpGedView #VERSION#</a> yazılımı ile gösterilmektedir. Bu sayfada bu soyağacını tanıtan bilgiler bulunmaktadır. Bu bilgilere ulaşmak için 'Çizgeler' menüsünden bir çizgeyi seçin, ya da 'Listeler' menüsünden şahıs listesine gidin, veyahut sizi ilgilendiren bir soy ismini ya da yeri arayın.<br /><br />Bu siteyi gezerken bir sorunla karşılaşacak olursanız yardım simgesine tıklayıp bulunduğunuz sayfa hakkında gerekli yardımı bulabilirsiniz.<br /><br />Bu siteyi ziyaret ettiğiniz için teşekkür ederiz.";
 $pgv_lang["reset_default_blocks"]	= "Kutuları varsayılan duruma sıfırla";
 $pgv_lang["recent_changes"]		= "En Son Değişiklikler";
 $pgv_lang["recent_changes_block"]	= "\"En son değişiklikler\" kutusu";
@@ -1025,7 +1028,7 @@ $pgv_lang["recent_changes_descr"]	= "Bu blok son x günden bu yana GEDCOM içind
 $pgv_lang["recent_changes_none"]	= "<b>Son #pgv_lang[global_num1]# gün için hiç değişmeyenler.</b><br />";
 $pgv_lang["recent_changes_some"]	= "<b>Son #pgv_lang[global_num1]# gün içinde yapılan değişiklikler</b><br />";
 $pgv_lang["show_empty_block"]		= "Blok boş olduğunda gösterilsin mi?";
-$pgv_lang["hide_block_warn"]		= "Blok boş iken gösterme ayarlarsanız blok görülmeden blok konfigürasyon ayarlarını değiştiremezsiniz.";
+$pgv_lang["hide_block_warn"]		= "Eğer blok boş olduğu zaman gizle diye ayarlarsanız blok dolup gösterilene kadar tekrar ayarlayamayacaksınız.";
 $pgv_lang["delete_selected_messages"]	= "Seçilmiş mesajları sil";
 $pgv_lang["use_blocks_for_default"]	= "Bu kutular tüm ziyaretçiler icin varsayılan olarak kullanılsın mı?";
 $pgv_lang["block_not_configure"]	=	"Bu blok ayarlanamaz.";
@@ -1035,8 +1038,8 @@ $pgv_lang["review_changes_descr"]	= "Ilımlıdaki Değişiklikler Bloğu çevrim
 $pgv_lang["options"]			= "Seçenekler:";
 $pgv_lang["config_update_ok"]		= "Yapılandırma dosyanız başarı ile güncelleştirilmiştir.";
 $pgv_lang["date_of_entry"]				= "Orijinal kaynağın giriş tarihi";
-$pgv_lang["server_folder"]				= "Serverdaki dizin ismi";
-$pgv_lang["medialist_recursive"]	= "Alt dizinlerdeki dosyaları listele";
+$pgv_lang["server_folder"]				= "Sunucudaki klasör adı";
+$pgv_lang["medialist_recursive"]	= "Alt klasördeki dosyaları listele";
 $pgv_lang["media_options"]			= "Media Seçenekleri";
 $pgv_lang["page_size"]					= "Sayfa biçimi";
 $pgv_lang["record_not_found"]			= "Talep edilen GEDCOM kayıdı bulunamadı. Bu geçersin kişiye bağlantı olabilir veya bozulmuş GEDCOM dosya dosyalanmış olabilir.";
@@ -1054,6 +1057,7 @@ $pgv_lang["switch_timeline"]		= "Zaman Yolu Çizelgesi Göster";
 $pgv_lang["differences"]			= "Farklar";
 $pgv_lang["charts_block"]			= "Blok Çizgeleri";
 $pgv_lang["charts_block_descr"]		= "Bu blok Çizgeler bloğudur, Hoş geldiniz sayfasında veya <b>#GLOBALS[HOME_SITE_TEXT]#</b>da yerleştirmenize izin verir. Bu bloğa <b>#pgv_lang[index_header]#</b>, <b>#pgv_lang[hourglass_chart]#</b> ve <b>#pgv_lang[descend_chart]#</b> kısa Çizgeleri yerleştirebilirsiniz bu şekilde ziyaretçilerinize kısa bir örneklemede yapabilirsiniz.";
+$pgv_lang["charts_click_box"]		= "O kişi hakkında daha detaylı bilgi almak için kutudaki isimleri tıklayın.";
 $pgv_lang["search_sites"] 			= "Siteleri ara";
 $pgv_lang["site_list"]				= "Site: ";
 $pgv_lang["site_had"]				= "Aşağıdakiyi kapsa";
@@ -1315,7 +1319,7 @@ $pgv_lang["statistiek_list"]	= "İstatistik Alanı";
 //-- statisticsplot utility
 $pgv_lang["stpl"]			= "...";
 $pgv_lang["stplGDno"]			= "Grafik sergileme kütüphanesi mevcut değildir, Sistem yöneticinize PHP 4 sorun";
-$pgv_lang["stpljpgraphno"]		= "JPgraph modülleri rehber <i>PhpGedView/jpgraph/</i> da mevcut değiller. <br />Lütfen http://www.aditus.nu/jpgraph/jpdownload.php den onları önce alın<br /> <br /><h3>Rehber <i>PhpGedView/jpgraph/</i></h3> da Jpgraph kurun<br />";
+$pgv_lang["stpljpgraphno"]		= "JPgraph modülleri rehber <i>PhpGedView/jpgraph/</i> da mevcut değiller. <br />Lütfen http://www.aditus.nu/jpgraph/jpdownload.php den onları önce alın<br> <br /><h3>Rehber <i>PhpGedView/jpgraph/</i></h3> da Jpgraph kurun<br>";
 $pgv_lang["stplinfo"]			= "Çizge için değişken";
 $pgv_lang["stpltype"]			= "Tipi:";
 $pgv_lang["stplnoim"]			= "Uygulanacak yok:";
@@ -1452,7 +1456,7 @@ $pgv_lang["cal_none"]                 = "Takvim dönüştürme hayır";
 $pgv_lang["cal_gregorian"]            = "Miladi";
 $pgv_lang["cal_julian"]               = "Jüliyen";
 $pgv_lang["cal_french"]               = "Fransız";
-$pgv_lang["cal_jewish"]               = "Yadudi";
+$pgv_lang["cal_jewish"]               = "Yahudi";
 $pgv_lang["cal_hebrew"]               = "İbrani";
 $pgv_lang["cal_jewish_and_gregorian"] = "Yahudice ve Miladi";
 $pgv_lang["cal_hebrew_and_gregorian"] = "İbrani ve Miladi";
@@ -1509,4 +1513,71 @@ $pgv_lang["sosa_30"]				= "Büyük-büyük-büyükbaba";
 $pgv_lang["sosa_31"]				= "Büyük-büyük-büyükanne";
 
 $pgv_lang["age_differences"]		= "Yaş Farklarını Göster";
+$pgv_lang["immediate_family"]		= "En Yakın Aile";
+$pgv_lang["showUnknown"]			= "Bilinmeyen Cinsiyeti Göster";
+$pgv_lang["example"]				= "Örnek:";
+$pgv_lang["parent_family"]			= "Ebeveyn Aile";
+$pgv_lang["view_fam_nav_details"]	= "Detayları Görüntüleme ...";
+$pgv_lang["show_parents"] 			= "Ebeveynleri göster";
+$pgv_lang["years2"]					= "years";	// 2 Yıl";
+$pgv_lang["advanced_search"] 	= "Gelişmiş Arama";
+$pgv_lang["more_fields"]		= "Daha Fazla Alan Ekle";
+$pgv_lang["step_parent_family"]		= "Üvey-Ebeveyn Aile";
+$pgv_lang["repo_menu"]			= "Depo için Seçenekler";
+$pgv_lang["stat_unknown"]			= "Bilinmeyen toplam";
+$pgv_lang["total_unknown"]			= "Bilinmeyen toplam";
+$pgv_lang["enter_person_generations"] = "Nesillerin sayısı";
+$pgv_lang["apply_filter"]			= "Filtreyi uygula";
+$pgv_lang["exact"]				= "Çıkart";
+$pgv_lang["TYPE__other"] = "Diğer";
+$pgv_lang["TYPE__painting"] = "Boyanmış";
+$pgv_lang["TYPE__fiche"] = "Mikrofilm";
+$pgv_lang["interactive_tree"]		= "Etkileşimli Ağaç";
+$pgv_lang["tree"]					= "Ağaç";
+$pgv_lang["install_step_8"] 		= "Başlangıç Al";
+$pgv_lang["hide_show_spouses"]		= "Çok eşlileri göster veya gizle";
+$pgv_lang["load_full_tree"]			= "Tam sayfa birbirini etkileyen ağaç içinde bu ağacı görüntüle";
+$pgv_lang["count"]					= "Sayı";
+$pgv_lang["htmlplus_block_ui"]		= "Uzatılmış Arabirim";
+$pgv_lang["block_givn_top10_title"]		= "Eniyi Belirlenmiş 10 İsimler";
+$pgv_lang["block_givn_top10"]			= "Eniyi Belirlenmiş 10 İsimler";
+$pgv_lang["todo_show_other"]     = "Diğer kullanıcıların görevlerini göster";
+$pgv_lang["todo_show_unassigned"]= "Atanmamış görevleri göster";
+$pgv_lang["todo_show_future"]    = "Gelecek görevleri göster";
+$pgv_lang["ellipsis"]				= "\xE2\x80\xA6";
+$pgv_lang["first_letter_name"]		= "İsmini bunun üzerine letter başlayan aileleri göstermek için letter seç.";
+$pgv_lang["first_letter_iname"]		= "Soyadını bunun üzerine letter başlayan aileleri göstermek için letter seç.";
+$pgv_lang["NNthai"] 			= "(bilinmiyor)";
+$pgv_lang["PNthai"] 			= "(bilinmiyor)";
+$pgv_lang["NNother"] 			= "(bilinmiyor)";
+$pgv_lang["PNother"] 			= "(bilinmiyor)";
+$pgv_lang["parent_age"] 			= "Ebeveynin yaşı";
+$pgv_lang["father_age"]				= "Babanın yaşı";
+$pgv_lang["mother_age"]				= "Annenin yaşı";
+$pgv_lang["husb_age"]				= "Kocanın yaşı";
+$pgv_lang["wife_age"]				= "Hanımın yaşı";
+$pgv_lang["at_death_day"]      		= "Ölümün tarihinde";
+$pgv_lang["easter"]     = "Pakalya";
+$pgv_lang["ascension"]  = "Yükselme";
+$pgv_lang["pentecost"]  = "Hamsin bayramı";
+$pgv_lang["assumption"] = "Kabulün";
+$pgv_lang["all_saints"] = "Tüm ermişler";
+$pgv_lang["muhar"]        = "Muharrem ayı";
+$pgv_lang["setperms_fix"]			= "Doğru okuma/yazma/izinleri işlet";
+$pgv_lang["media_firewall_invalid_dir"]	= "Not: Media Firewall bir dizinden medya dizininden başka yerden başlatıldı.";
+$pgv_lang["mail03_line03a"]			= "Siz herhangi bir hareketi almak zorunda değilsiniz. kullanıcı şimdi giriş yapabilir.";
+$pgv_lang["style3"]					= "Etiket kümesi";
+$pgv_lang["todo_block"] = "&quot;To Do&quot; görevler";
+$pgv_lang["todo_descr"] = "Bloğu yapmak veritabanında tüm seçkin _TODO niteliklerini listeler.";
+$pgv_lang["yahrzeit_block"]			= "Gelecek Yahrzeiten";
+$pgv_lang["yahrzeit_descr"]			= "Gelecek Yahrzeiten bloğu yakın gelecekte meydana gelecek olan ölüm yıldönümlerini gösterir. Siz gösterilen dönemi ayarlayabilirsiniz, bu blok ne kadar uzak gelecekten gösterecek.";
+$pgv_lang["block_givn_top10_descr"]		= "Bu blok, sık sık veritabanında meydana gelen ilk 10 çocuğun bir tablosunu gösterir. Bu blokta gösterilen ilk adların asıl sayısı, ayarlanabilirdir.";
+$pgv_lang["gedcom_news_descr"]		= "GEDCOM haber bloğu, bir admin kullanıcısı tarafından ilan edilen ziyaretçi haber tahliyeleri veya makaleleri gösterir.<br /><br /><br />Haber bloğu, önemli bir veritabanı güncelleştirmesi, bir aile birleşmesi, veya bir çocuğun doğumunu ilan etmesi için iyi bir yerdir.";
+$pgv_lang["feed_login"]				= "Eğer senin, bu PhpGedView site yerinde bir hesabınız varsa özel bilgiyi görmeniz için kullanılan temel HTTP belgelemesinin olduğu sunucuya <a href=\"#AUTH_URL#\">giriş</a> yapabilirsin.";
+$pgv_lang["godson"]		= "Vaftiz oğlu";
+$pgv_lang["goddaughter"] = "Vaftiz kızı";
+$pgv_lang["godchild"]	= "Vaftiz çocuğu";
+$pgv_lang["click_here_help"]		= "~#pgv_lang[click_here]#~<br /><br />Değişikliklerinizi kurtarması için bu düğmeyi tıklayın.<br /><br />#pgv_lang[welcome]# veya #pgv_lang[mygedview]# sayfasına dönmüş olacaksınız, ama değişikliklerinizi gösterilmeyebilir. Sayfanın uygun şekilde değişikliklerinizi görmeniz için tarayıcınızın görevini tekrar doldurduğunu kullanmaya ihtiyaç duyabilirsin.";
+$pgv_lang["block_summaries"]		= "~#pgv_lang[block_desc]#~<br /><br />Sizin #pgv_lang[welcome]# veya #pgv_lang[mygedview]# sayfasında yerleştirebileceğiniz blokların her birinin kısa bir tanımlaması buradadır.<br /><table border='1' align='center'><tr><td class='list_value'><b>#pgv_lang[name]#</b></td><td class='list_value'><b>#pgv_lang[description]#</b></td></tr>#pgv_lang[block_summary_table]#</table><br /><br />";
+$pgv_lang["todo_nothing"]        = "Şuanda &quot;To Do&quot; görevleri yok.";
 ?>

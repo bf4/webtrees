@@ -3,7 +3,7 @@
  * Turkish Language file for PhpGedView.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,7 +24,6 @@
  * @author Adem GENÇ uzayuydu@gmail.com http://www.muttafi.com
  * @version $Id$
  */
-
 if (!defined('PGV_PHPGEDVIEW')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
@@ -36,9 +35,9 @@ $pgv_lang["SHOW_SOURCES"]		= "Kaynakları göster";
 $pgv_lang["gedcom_conf"]		= "Genel GEDCOM ayarları";
 $pgv_lang["media_conf"]			= "Multimedya";
 $pgv_lang["media_general_conf"]	= "Genel";
-$pgv_lang["media_firewall_conf"]	= "Media Firewall";
+$pgv_lang["media_firewall_conf"]	= "Medya Güvenlik Duvarı (Firewall)";
 $pgv_lang["accpriv_conf"]		= "Erişim ve mahremiyet";
-$pgv_lang["displ_conf"]			= "Görüntü ve düzenler";
+$pgv_lang["displ_conf"]			= "Gösterim ve Plan Düzenlemeleri";
 $pgv_lang["displ_names_conf"]		= "İsimler";
 $pgv_lang["displ_comsurn_conf"]		= "Yaygın soy isimleri";
 $pgv_lang["displ_layout_conf"]		= "Yerleşim";
@@ -92,7 +91,7 @@ $pgv_lang["MAX_PEDIGREE_GENERATIONS_help"]	= "~#pgv_lang[MAX_PEDIGREE_GENERATION
 $pgv_lang["MAX_DESCENDANCY_GENERATIONS"]	= "Şahsı izleyen nesiller Çizelgesinde maksimum nesil sayısı";
 $pgv_lang["MAX_DESCENDANCY_GENERATIONS_help"]	= "~#pgv_lang[MAX_DESCENDANCY_GENERATIONS]#~<br /><br />Şahsı izleyen nesiller Çizelgesinde göstermek için nesillerin en fazla sayıyı girin.<br />";
 $pgv_lang["USE_RIN"]			= "GEDCOM - Kişisel numaralarının yerine RIN# kullan";
-$pgv_lang["GENERATE_GUID"]		= "Otomatikman global olarak tek ID leri oluştur";
+$pgv_lang["GENERATE_GUID"]		= "Otomatikman global olarak tek ID oluştur";
 $pgv_lang["PEDIGREE_ROOT_ID"]		= "Soyağacı ya da şahsı izleyen nesiller Çizelgesinde kullanılacak ilk şahıs";
 $pgv_lang["PEDIGREE_ROOT_ID_help"]	= "~#pgv_lang[PEDIGREE_ROOT_ID]#~<br /><br />Soyağacı ve şahsı izleyen nesiller Çizgelerinde göstermek için vaysayılan kişinin ID bilgisini girin.<br />";
 $pgv_lang["GEDCOM_ID_PREFIX"]		= "GEDCOM - Kişisel ID öneki";
@@ -130,7 +129,7 @@ $pgv_lang["POSTAL_CODE"]  = "Posta Kodu Durumu";
 $pgv_lang["SUBLIST_TRIGGER_I"]		= "Soyadların en yüksek sayısı";
 $pgv_lang["SUBLIST_TRIGGER_F"]		= "Aile adların en yüksek sayısı";
 $pgv_lang["SURNAME_LIST_STYLE"]		= "Soyadı listeme biçimi";
-$pgv_lang["NAME_FROM_GEDCOM"]		= "İsimleri GEDCOM içinden göster";
+$pgv_lang["NAME_FROM_GEDCOM"]		= "GEDCOM içinden isimleri göster";
 $pgv_lang["SHOW_LAST_CHANGE"]		= "Listelerde geçen değişklik tarihini GEDCOM kayıtlarını göster";
 $pgv_lang["SHOW_PEDIGREE_PLACES"]	= "Şahsi kutularda gösterilecek yer isimlerinin derinliği";
 $pgv_lang["MULTI_MEDIA"]		= "Multimedya kullanıma ve gösterime izin ver";
@@ -138,8 +137,8 @@ $pgv_lang["MEDIA_EXTERNAL"]		= "Bağlantıları muhafaza et";
 $pgv_lang["MEDIA_DIRECTORY"]		= "Multimedya dizini";
 $pgv_lang["MEDIA_DIRECTORY_LEVELS"]	= "Multimedya dizin derinliği";
 $pgv_lang["USE_THUMBS_MAIN"]		= "Şahıs sayfasında tırnak resim yerine ana resim kullan";
-$pgv_lang["SHOW_MEDIA_FILENAME"]		= "Media izleyiciye dosya adını göster";
-$pgv_lang["SHOW_MEDIA_DOWNLOAD"]		= "Media izleyiciye dosya linkini göster";
+$pgv_lang["SHOW_MEDIA_FILENAME"]		= "Medya izleyiciye dosya adını göster";
+$pgv_lang["SHOW_MEDIA_DOWNLOAD"]		= "Medya izleyiciye dosya linkini göster";
 $pgv_lang["ENABLE_CLIPPINGS_CART"]	= "Parça toplama mahfazasını kullan";
 $pgv_lang["HIDE_GEDCOM_ERRORS"]		= "GEDCOM hatalarını sakla";
 $pgv_lang["WORD_WRAPPED_NOTES"]		= "Notların kesildiği yerde boşluk ekle";
@@ -150,15 +149,15 @@ $pgv_lang["COMMON_NAMES_ADD"]		= "\"Yaygın soy isim\" listesine katılacak soy 
 $pgv_lang["COMMON_NAMES_REMOVE"]	= "\"Yaygın soy isim\" listesinden silinecek soy isimleri (virgül ile ayrılacak)";
 $pgv_lang["HOME_SITE_URL"]		= "Sitenin ana URL adresi";
 $pgv_lang["HOME_SITE_TEXT"]		= "Sitenin ana genel mesajı";
-$pgv_lang["CONTACT_EMAIL"]		= "Nesep tetkiki için temas edilecek üye";
-$pgv_lang["CONTACT_METHOD"]		= "İlişki türü";
+$pgv_lang["CONTACT_EMAIL"]		= "Nesep tetkiki için temas edilecek kişi";
+$pgv_lang["CONTACT_METHOD"]		= "İletişim türü";
 $pgv_lang["PHPGEDVIEW_EMAIL"]		= "PhpGedViewde cevap adresi";
 $pgv_lang["WEBMASTER_EMAIL"]		= "Teknik yardım için temas edilecek üye";
 $pgv_lang["SUPPORT_METHOD"]		= "Destek türü";
 $pgv_lang["SHOW_FACT_ICONS"] 		= "Gerçek İkonları Göster";
 $pgv_lang["FAVICON"]			= "\"Sık Kullanılanlar\" (favorites) simgesi";
 $pgv_lang["THEME_DIR"]			= "Tema dizini";
-$pgv_lang["TIME_LIMIT"]			= "PHP zaman sınırlaması";
+$pgv_lang["TIME_LIMIT"]			= "PHP zaman aşım sınırlaması";
 $pgv_lang["LOGIN_URL"]			= "Giriş URL adresi";
 $pgv_lang["SHOW_STATS"]			= "İşletim istatistiklerini göster";
 $pgv_lang["SHOW_COUNTER"]		= "Sayaçları göster";
@@ -388,8 +387,8 @@ $pgv_lang["GEDCOM_DEFAULT_TAB"]		= "Şahısların bilgileri sayfasında gösteri
 $pgv_lang["SHOW_MARRIED_NAMES"]		= "Şahıs listesinde evlilik isimlerini göster";
 $pgv_lang["SHOW_QUICK_RESN"]		= "#pgv_lang[quick_update_title]# formunda gizli alanları göster";
 $pgv_lang["USE_QUICK_UPDATE"]		= "#pgv_lang[quick_update_title]# formu kullan";
-$pgv_lang["SEARCHLOG_CREATE"]		= "Arama-Günlük dosyalarını arşivle";
-$pgv_lang["CHANGELOG_CREATE"]		= "Değişen Kütük Arşiv Dosyaları";
+$pgv_lang["SEARCHLOG_CREATE"]		= "Günlük-Aramaların kütüğü";
+$pgv_lang["CHANGELOG_CREATE"]		= "Değişen-Dosyaların kütüğü";
 $pgv_lang["CHART_BOX_TAGS"]		= "Çizgelerde gösterilecek diğer hadiseler";
 
 $pgv_lang["FAM_ID_PREFIX"]		= "Aile ID öneki";
@@ -400,7 +399,7 @@ $pgv_lang["QUICK_ADD_FACTS"]			= "Hızlı güncelleştirmede göstermek için ge
 $pgv_lang["AUTO_GENERATE_THUMBS"]			= "Otomatikman tırnak önizleme üret";
 $pgv_lang["more_config_hjaelp"]			= "<br /><b>Daha çok Yardım</b><br />Daha çok yardım almak için sayfadaki <b>?</b> ikonu tıklayın.<br />";
 $pgv_lang["THUMBNAIL_WIDTH"]			= "Üretilen tırnak önizleme genişliği";
-$pgv_lang["MEDIA_ID_PREFIX"]		= "Media ID öneki";
+$pgv_lang["MEDIA_ID_PREFIX"]		= "Medya ID öneki";
 $pgv_lang["INDI_FACTS_ADD"] 			= "Kişisel Gerçekleri Ekle";
 $pgv_lang["INDI_FACTS_UNIQUE"] 			= "Tek Kişisel Gerçekler";
 $pgv_lang["INDI_FACTS_QUICK"] 			= "Hızlı Kişisel Gerçekler";
@@ -420,13 +419,20 @@ $pgv_lang["WATERMARK_THUMB"]			= "Tırnak önizlemelere filigran ekle?";
 $pgv_lang["SAVE_WATERMARK_THUMB"]		= "Servere tırnak önizlemelere filigran kaydet?";
 $pgv_lang["SAVE_WATERMARK_IMAGE"]		= "Serverdeki tüm resimlere filigran kaydet?";
 $pgv_lang["DBPERSIST"]					= "Databaseye inatçı bağlantıyı kullan";
-$pgv_lang["USE_MEDIA_VIEWER"]			= "Media İzleyici Kullan";
-$pgv_lang["USE_MEDIA_FIREWALL"]			= "Media Firewall Kullan";
-$pgv_lang["MEDIA_FIREWALL_ROOTDIR"]			= "Media Firewall Kök Klasörü";
+$pgv_lang["USE_MEDIA_VIEWER"]			= "Medya İzleyici Kullan";
+$pgv_lang["USE_MEDIA_FIREWALL"]			= "Medya Firewall Kullan";
+$pgv_lang["MEDIA_FIREWALL_ROOTDIR"]			= "Medya Firewall Kök Klasörü";
 $pgv_lang["MEDIA_FIREWALL_ROOTDIR_note"]	= "Bu alan boş iken <b>#GLOBALS[INDEX_DIRECTORY]#</b> klasörü kullanılacak.";
 $pgv_lang["MEDIA_FIREWALL_THUMBS"]			= "Korunmuş resimlerin tırnak önizlemelerini koru";
 $pgv_lang["SHOW_SPIDER_TAGLINE"]		= "Etiket içinde Örümcek Göster";
 $pgv_lang["SHOW_PRIVATE_RELATIONSHIPS"]	= "Özel ilişkileri göster";
 $pgv_lang["SYNC_GEDCOM_FILE"]			= "Düzenlemeleri GEDCOM dosya içinde senkronize et";
 $pgv_lang["new_gedcom_title"]		= "[#GEDCOMFILE#] dosyasından alınan seçere ile ilgili veri";
+$pgv_lang["SHOW_LIST_PLACES"]	= "Listelerde göstermek için yer düzeyleri";
+$pgv_lang["DBPORT"]			= "Veritabanı Portu";
+$pgv_lang["PEDIGREE_SHOW_GENDER"]	= "Çizelgede cinsiyet ikonu göster";
+$pgv_lang["USE_MEDIA_FIREWALL_help"]	= "~#pgv_lang[USE_MEDIA_FIREWALL]#~<br /><br />Media Firewall kullanmak hakkında açıklama için Wiki web sitesini görün. <a href=\"#PGV_PHPGEDVIEW_WIKI#/en/index.php?title=Media_Firewall\" target=\"_blank\">#PGV_PHPGEDVIEW_WIKI#</a><br />";
+
+$pgv_lang["FULL_SOURCES"]		= "Tam kaynak alıntıları kullan";
+$pgv_lang["PREFER_LEVEL2_SOURCES"]		= "Gerçek kaynakları tercih et";
 ?>
