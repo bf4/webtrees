@@ -239,6 +239,7 @@ switch($step) {
 		if (isset($_POST["NEW_PGV_SMTP_ACTIVE"])) $_SESSION['install_config']['PGV_SMTP_ACTIVE'] =$_POST["NEW_PGV_SMTP_ACTIVE"]=="yes"?true:false;
 		if (isset($_POST["NEW_PGV_SMTP_HOST"])) $_SESSION['install_config']['PGV_SMTP_HOST'] = $_POST['NEW_PGV_SMTP_HOST'];
 		if (isset($_POST["NEW_PGV_SMTP_HELO"])) $_SESSION['install_config']['PGV_SMTP_HELO'] =$_POST["NEW_PGV_SMTP_HELO"];
+		if (empty($_SESSION['install_config']['PGV_SMTP_PORT'])) $_SESSION['install_config']['PGV_SMTP_PORT'] = '25';
 		if (isset($_POST["NEW_PGV_SMTP_PORT"])) $_SESSION['install_config']['PGV_SMTP_PORT'] =$_POST["NEW_PGV_SMTP_PORT"];
 		if (isset($_POST["NEW_PGV_SMTP_AUTH"])) $_SESSION['install_config']['PGV_SMTP_AUTH'] =$_POST["NEW_PGV_SMTP_AUTH"]=="yes"?true:false;
 		if (isset($_POST["NEW_PGV_SMTP_AUTH_USER"])) $_SESSION['install_config']['PGV_SMTP_AUTH_USER'] =$_POST["NEW_PGV_SMTP_AUTH_USER"];
@@ -928,37 +929,37 @@ function printConfigForm(){
 			<tr><td colspan="2" class="center"><br /><b>SMTP</b></td></tr>
 		<?php } ?>
 	<tr>
-			<td class="descriptionbox wrap"><?php print_help_link("PGV_SMTP_ACTIVE_help", "qm", "PGV_SMTP_ACTIVE"); print $pgv_lang["PGV_SMTP_ACTIVE"];?></td>
+			<td class="descriptionbox wrap width30"><?php print_help_link("PGV_SMTP_ACTIVE_help", "qm", "PGV_SMTP_ACTIVE"); print $pgv_lang["PGV_SMTP_ACTIVE"];?></td>
 		<td class="optionbox"><select name="NEW_PGV_SMTP_ACTIVE" tabindex="<?php $i++; print $i?>" onfocus="getHelp('PGV_SMTP_ACTIVE_help');">
 				<option value="yes" <?php if ($PGV_SMTP_ACTIVE) print "selected=\"selected\""; ?>><?php print $pgv_lang["yes"];?></option>
 				<option value="no" <?php if (!$PGV_SMTP_ACTIVE) print "selected=\"selected\""; ?>><?php print $pgv_lang["no"];?></option>
 			</select>
 	</tr>
 	<tr>
-		<td class="descriptionbox wrap"><?php print_help_link("PGV_SMTP_HOST_help", "qm", "PGV_SMTP_HOST"); print $pgv_lang["PGV_SMTP_HOST"];?></td>
+		<td class="descriptionbox wrap width30"><?php print_help_link("PGV_SMTP_HOST_help", "qm", "PGV_SMTP_HOST"); print $pgv_lang["PGV_SMTP_HOST"];?></td>
 		<td class="optionbox"><input type="text" dir="ltr" size="50" name="NEW_PGV_SMTP_HOST" value="<?php print $PGV_SMTP_HOST?>" tabindex="<?php $i++; print $i?>" onfocus="getHelp('PGV_SMTP_HOST_help');" /></td>
 	</tr>
 	<tr>
-		<td class="descriptionbox wrap"><?php print_help_link("PGV_SMTP_HELO_help", "qm", "PGV_SMTP_HELO"); print $pgv_lang["PGV_SMTP_HELO"];?></td>
+		<td class="descriptionbox wrap width30"><?php print_help_link("PGV_SMTP_HELO_help", "qm", "PGV_SMTP_HELO"); print $pgv_lang["PGV_SMTP_HELO"];?></td>
 		<td class="optionbox"><input type="text" dir="ltr" size="50" name="NEW_PGV_SMTP_HELO" value="<?php print $PGV_SMTP_HELO?>" tabindex="<?php $i++; print $i?>" onfocus="getHelp('PGV_SMTP_HELO_help');" /></td>
 	</tr>
 	<tr>
-		<td class="descriptionbox wrap"><?php print_help_link("PGV_SMTP_PORT_help", "qm", "PGV_SMTP_PORT"); print $pgv_lang["PGV_SMTP_PORT"];?></td>
+		<td class="descriptionbox wrap width30"><?php print_help_link("PGV_SMTP_PORT_help", "qm", "PGV_SMTP_PORT"); print $pgv_lang["PGV_SMTP_PORT"];?></td>
 		<td class="optionbox"><input type="text" dir="ltr" size="5" name="NEW_PGV_SMTP_PORT" value="<?php print $PGV_SMTP_PORT?>" tabindex="<?php $i++; print $i?>" onfocus="getHelp('PGV_SMTP_PORT_help');" /></td>
 	</tr>
 	<tr>
-		<td class="descriptionbox wrap"><?php print_help_link("PGV_SMTP_AUTH_help", "qm", "PGV_SMTP_AUTH"); print $pgv_lang["PGV_SMTP_AUTH"];?></td>
+		<td class="descriptionbox wrap width30"><?php print_help_link("PGV_SMTP_AUTH_help", "qm", "PGV_SMTP_AUTH"); print $pgv_lang["PGV_SMTP_AUTH"];?></td>
 		<td class="optionbox"><select name="NEW_PGV_SMTP_AUTH" tabindex="<?php $i++; print $i?>" onfocus="getHelp('PGV_SMTP_AUTH_help');">
 				<option value="yes" <?php if ($PGV_SMTP_AUTH) print "selected=\"selected\""; ?>><?php print $pgv_lang["yes"];?></option>
 				<option value="no" <?php if (!$PGV_SMTP_AUTH) print "selected=\"selected\""; ?>><?php print $pgv_lang["no"];?></option>
 			</select>
 	</tr>
 	<tr>
-		<td class="descriptionbox wrap"><?php print_help_link("PGV_SMTP_AUTH_USER_help", "qm", "PGV_SMTP_AUTH_USER"); print $pgv_lang["PGV_SMTP_AUTH_USER"];?></td>
+		<td class="descriptionbox wrap width30"><?php print_help_link("PGV_SMTP_AUTH_USER_help", "qm", "PGV_SMTP_AUTH_USER"); print $pgv_lang["PGV_SMTP_AUTH_USER"];?></td>
 		<td class="optionbox"><input type="text" dir="ltr" size="50" name="NEW_PGV_SMTP_AUTH_USER" value="<?php print $PGV_SMTP_AUTH_USER?>" tabindex="<?php $i++; print $i?>" onfocus="getHelp('PGV_SMTP_AUTH_USER_help');" /></td>
 	</tr>
 	<tr>
-		<td class="descriptionbox wrap"><?php print_help_link("PGV_SMTP_AUTH_PASS_help", "qm", "PGV_SMTP_AUTH_PASS"); print $pgv_lang["PGV_SMTP_AUTH_PASS"];?></td>
+		<td class="descriptionbox wrap width30"><?php print_help_link("PGV_SMTP_AUTH_PASS_help", "qm", "PGV_SMTP_AUTH_PASS"); print $pgv_lang["PGV_SMTP_AUTH_PASS"];?></td>
 		<td class="optionbox"><input type="password" name="NEW_PGV_SMTP_AUTH_PASS" value="<?php print $PGV_SMTP_AUTH_PASS?>" tabindex="<?php $i++; print $i?>" onfocus="getHelp('PGV_SMTP_AUTH_PASS_help');" /></td>
 	</tr>
 	</table>

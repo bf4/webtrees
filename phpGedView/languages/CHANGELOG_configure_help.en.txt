@@ -45,6 +45,13 @@ VERSION 4.2.0
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 -----------------------------------------------------------------------------------------
+*$pgv_lang["PGV_SMTP_ACTIVE_help"]					22 Dec 2008				W
+*$pgv_lang["PGV_SMTP_HOST_help"]					22 Dec 2008				W
+*$pgv_lang["PGV_SMTP_HELO_help"]					22 Dec 2008				W
+*$pgv_lang["PGV_SMTP_PORT_help"]					22 Dec 2008				W
+*$pgv_lang["PGV_SMTP_AUTH_help"]					22 Dec 2008				W
+*$pgv_lang["PGV_SMTP_AUTH_USER_help"]				22 Dec 2008				W
+*$pgv_lang["PGV_SMTP_AUTH_PASS_help"]				22 Dec 2008				W
 +$pgv_lang["PGV_SMTP_ACTIVE_help"]					22 Dec 2008				A
 +$pgv_lang["PGV_SMTP_HOST_help"]					22 Dec 2008				A
 +$pgv_lang["PGV_SMTP_HELO_help"]					22 Dec 2008				A

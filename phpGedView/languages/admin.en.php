@@ -307,12 +307,12 @@ $pgv_lang["PGV_SESSION_SAVE_PATH"]				= "Session save path";
 $pgv_lang["PGV_SESSION_TIME"]					= "Session timeout";
 $pgv_lang["PGV_SIMPLE_MAIL"] 					= "Use simple mail headers in external mails";
 $pgv_lang["PGV_SMTP_ACTIVE"] 					= "Use SMTP to send external mails";
-$pgv_lang["PGV_SMTP_HOST"] 						= "Upstream SMTP smarthost";
-$pgv_lang["PGV_SMTP_HELO"] 						= "Local SMTP domain name";
-$pgv_lang["PGV_SMTP_PORT"] 						= "TCPIP port to talk to upstream SMTP smarthost via";
-$pgv_lang["PGV_SMTP_AUTH"] 						= "Use SMTP authorization";
-$pgv_lang["PGV_SMTP_AUTH_USER"] 				= "User name for SMTP authorization";
-$pgv_lang["PGV_SMTP_AUTH_PASS"] 				= "Password for SMTP authorization";
+$pgv_lang["PGV_SMTP_HOST"] 						= "Outgoing server (SMTP) name";
+$pgv_lang["PGV_SMTP_HELO"] 						= "Sending domain name";
+$pgv_lang["PGV_SMTP_PORT"] 						= "SMTP Port";
+$pgv_lang["PGV_SMTP_AUTH"] 						= "Use name and password";
+$pgv_lang["PGV_SMTP_AUTH_USER"] 				= "User name";
+$pgv_lang["PGV_SMTP_AUTH_PASS"] 				= "Password";
 $pgv_lang["PGV_STORE_MESSAGES"]					= "Allow messages to be stored online";
 $pgv_lang["phpinfo"]							= "PHP information";
 $pgv_lang["place_cleanup_detected"] 			= "Invalid place encodings were detected.  These errors should be fixed.";
@@ -419,21 +419,4 @@ $pgv_lang["tradition_paternal"]		= "Paternal";
 $pgv_lang["tradition_polish"]		= "Polish";
 $pgv_lang["tradition_none"]			= "None";				
 
-
-//SMTP mail configure
-$pgv_lang["PGV_SMTP_ACTIVE_help"] = "~#pgv_lang[PGV_SMTP_ACTIVE]#~<br /><br />Enable the use of SMTP to send external emails.<br />";
-$pgv_lang["PGV_SMTP_HOST_help"] = "~#pgv_lang[PGV_SMTP_HOST]#~<br /><br />The domain name of the SMTP smarthost used to send external emails through.<br />";
-$pgv_lang["PGV_SMTP_HELO_help"] = "~#pgv_lang[PGV_SMTP_HELO]#~<br /><br />The domain name of this site used to identify this server to the SMTP smarthost used to send external emails through. Generally, this would be your site's domain name.<br />";
-$pgv_lang["PGV_SMTP_PORT_help"] = "~#pgv_lang[PGV_SMTP_PORT]#~<br /><br />The port number talk to the SMTP smarthost used to send external emails through. Generally, this is port 25.<br />";
-$pgv_lang["PGV_SMTP_AUTH_help"] = "~#pgv_lang[PGV_SMTP_AUTH]#~<br /><br />Enable the use of SMTP authorization to send external emails.<br />";
-$pgv_lang["PGV_SMTP_AUTH_USER_help"] = "~#pgv_lang[PGV_SMTP_AUTH_USER]#~<br /><br />The user name required for authentication with the SMTP smarthost. Some SMTP smarthosts require authorization to send external emails via their services.<br />";
-$pgv_lang["PGV_SMTP_AUTH_PASS_help"] = "~#pgv_lang[PGV_SMTP_AUTH_PASS]#~<br /><br />The password required for authentication with the SMTP smarthost. Some SMTP smarthosts require authorization to send external emails via their services.<br />";
-//SMTP mail admin
-$pgv_lang["PGV_SMTP_ACTIVE"] 		= "Use SMTP to send external mails";
-$pgv_lang["PGV_SMTP_HOST"] 			= "Upstream SMTP smarthost";
-$pgv_lang["PGV_SMTP_HELO"] 			= "Local SMTP domain name";
-$pgv_lang["PGV_SMTP_PORT"] 			= "TCPIP port to talk to upstream SMTP smarthost via";
-$pgv_lang["PGV_SMTP_AUTH"] 			= "Use SMTP authorization";
-$pgv_lang["PGV_SMTP_AUTH_USER"] 	= "User name for SMTP authorization";
-$pgv_lang["PGV_SMTP_AUTH_PASS"] 	= "Password for SMTP authorization";
 ?>
