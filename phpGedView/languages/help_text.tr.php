@@ -3,7 +3,7 @@
  * Turkish Language file for PhpGedView.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,7 +24,6 @@
  * @author Adem GENÇ uzayuydu@gmail.com http://www.muttafi.com
  * @version $Id$
  */
-
 if (!defined('PGV_PHPGEDVIEW')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;

@@ -3,7 +3,7 @@
  * Turkish Language file for PhpGedView.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,7 +24,6 @@
  * @author Adem GENÇ uzayuydu@gmail.com http://www.muttafi.com
  * @version $Id$
  */
-
 if (!defined('PGV_PHPGEDVIEW')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
@@ -217,4 +216,22 @@ $pgv_lang["edit_concurrency_change"] = "Bu kaydı değiştiren <i>#CHANGEUSER#</
 $pgv_lang["edit_concurrency_msg2"]	= "Son erişimizden beri kimlik bilgisi #PID# ile başka kullanıcıyla değiştirildi.";
 $pgv_lang["edit_concurrency_msg1"]	= "Düzenleme formu oluştururken bir hata meydana geldi. Başka kullanıcı bu kaydı değiştirmiş olabilir siz onu önceden incelediniz.";
 $pgv_lang["add_marriage"]			= "Yeni evliliği ekle";
+$pgv_lang["reorder_media"]					= "Mediaları yeniden sırala";
+$pgv_lang["reorder_media_window"]			= "Mediaları yeniden sırala <br />(yeni pencere)";
+$pgv_lang["edit_repo"]				= "Depoyu Düzelt";
+$pgv_lang["edit_concurrency_reload"]	= "Lütfen sizin tarayıcının Geri sayfa düğmesini tıklatarak sizin en yeni oluşturulmuş kayıtla çalışıyor olduğundan emin olmak için önceki sayfayı tekrar yükleyin.";
+$pgv_lang["reorder_media_cancel"]			= "Çık ve geri gel";
+$pgv_lang["reorder_media_reset"]			= "Orijinal düzenine geri dön";
+$pgv_lang["reorder_media_save"]				= "Veritabanına sıralanmış medyayı kaydet";
+$pgv_lang["reorder_media_title"]			= "Media parçaları yeniden sıralamak için tırnak önizlemeleri sürükle-ve-bırak";
+$pgv_lang["reorder_media_window_title"]		= "Bir sıra tıkla, sonra media yeniden sıralamak için sürükle-ve-bırak ";
+$pgv_lang["file_no_temp_dir"]		= "PHP geçici rehbere ihtiyaç duyuyor";
+$pgv_lang["file_cant_write"]		= "PHP diske yazmakta başarız";
+$pgv_lang["file_bad_extension"]		= "PHP uzantılar tarafından dosya engellendi";
+$pgv_lang["file_unkown_err"]		= "Bilinmeyen dosya yükleme hata kodu #pgv_lang[global_num1]#. Lütfen bu hatayı rapor edin.";
+$pgv_lang["gen_missing_thumbs"]		= "Tırnak önizleme ihtiyaç duyuyor oluşturun";
+$pgv_lang["gen_missing_thumbs_lbl"]	= "Tırnak önizlemeleri ihtiyaç duyuyor";
+$pgv_lang["paste_id_into_field"]	= "Yeni oluşturulan kaydı referans göstermesi için sizin düzenlediğiniz alanların ID numarasını yapıştır ";
+$pgv_lang["resn_disabled"]				= "Not: Etki almak bu özelliği 'GEDCOM (RESN) Gizlilik Kısıtlamayı Kullan' kurarak etkinleştirmelisiniz.";
+$pgv_lang["copy_error"]				= "Dosya #GLOBALS[whichFile1]# dan #GLOBALS[whichFile2]# ye kopyalanamaz.";
 ?>

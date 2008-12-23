@@ -3,7 +3,7 @@
  * Turkish Language file for PhpGedView.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,7 +24,6 @@
  * @author Adem GENÇ uzayuydu@gmail.com http://www.muttafi.com
  * @version $Id$
  */
-
 if (!defined('PGV_PHPGEDVIEW')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
@@ -296,4 +295,85 @@ $factarray["ROMN"] = "Latince";
 
 if (file_exists( "languages/facts.tr.extra.php")) require  "languages/facts.tr.extra.php";
 
+$factarray["FAMS:MARR:DATE"] = "Evlilik Tarihi";
+$factarray["BIRT:DATE"] = "Doğum Tarihi";
+$factarray["DEAT:DATE"] = "Ölüm Tarihi";
+$factarray["CHR:DATE"] = "Vaftiz edildiği Tarih";
+$factarray["BAPM:DATE"] = "Vaftiz Tarihi";
+$factarray["BURI:DATE"] = "Gömme Tarihi";
+$factarray["MARR:DATE"] = "Evlilik Tarihi";
+$factarray["_NAMS"]	= "Adaş";
+$factarray["_SCBK"] = "Kupür";
+$factarray["_BURI_SPOU"] = "Hayat arkadaşının gömmesi";
+$factarray["_CREM_SPOU"] = "Hayat arkadaşının ölü yakması";
+$factarray["_CHR_CHIL" ] = "Bir çocuğu vaftiz etmek";
+$factarray["_BAPM_CHIL"] = "Bir çocuğun vaftizi";
+$factarray["_ADOP_CHIL"] = "Bir çocuğu evlat edinme";
+$factarray["_MARB_CHIL"] = "Bir çocuğu evlat edinme";
+$factarray["_BURI_CHIL"] = "Çocuğun defini";
+$factarray["_CREM_CHIL"] = "Çocuğun ölü yakılması";
+$factarray["_CHR_GCHI" ] = "Torunun vaftizi edilişi";
+$factarray["_BAPM_GCHI"] = "Torunun vaftizi";
+$factarray["_ADOP_GCHI"] = "Bir torunu evlat edinme";
+$factarray["_BURI_GCHI"] = "Torunun defini";
+$factarray["_CREM_GCHI"] = "Torunun ölü yakılması";
+$factarray["_BIRT_GGCH"] = "Büyük-torunun doğumu";
+$factarray["_CHR_GGCH" ] = "Büyük-torunun vaftiz edilişi";
+$factarray["_BAPM_GGCH"] = "Büyük-torunun vaftizi";
+$factarray["_ADOP_GGCH"] = "Büyük-torunu evlat edinme";
+$factarray["_MARR_GGCH"] = "Büyük-torunun evliliği";
+$factarray["_DEAT_GGCH"] = "Büyük-torunun ölümü";
+$factarray["_BURI_GGCH"] = "Büyük-torunun defni";
+$factarray["_CREM_GGCH"] = "Büyük-torunun ölü yakılması";
+$factarray["_BURI_FATH"] = "Babanın defni";
+$factarray["_CREM_FATH"] = "Babanın ölü yakılması";
+$factarray["_MARR_FAMC"] = "Ebeveynlerin evliliği";
+$factarray["_BURI_MOTH"] = "Annenin defni";
+$factarray["_CHR_SIBL" ] = "Kardeşin vaftiz edilişi";
+$factarray["_BAPM_SIBL"] = "Kardeşin vaftizi";
+$factarray["_ADOP_SIBL"] = "Kardeşi evlat edinme";
+$factarray["_BURI_SIBL"] = "Kardeşin defni";
+$factarray["_CREM_SIBL"] = "Kardeşin ölü yakılması";
+$factarray["_CHR_HSIB" ] = "Üvey-kardeşin vaftiz edilişi";
+$factarray["_BAPM_HSIB"] = "Üvey-kardeşin vaftizi";
+$factarray["_ADOP_HSIB"] = "Üvey-kardeşi evlat edinme";
+$factarray["_BURI_HSIB"] = "Üvey-kardeşin defni";
+$factarray["_CREM_HSIB"] = "Üvey-kardeşin ölü yakılması";
+$factarray["_CHR_NEPH" ] = "Erkek veya kız yeğenin vaftiz edilişi";
+$factarray["_BAPM_NEPH"] = "Erkek veya kız yeğenin vaftizi";
+$factarray["_CREM_COUS"] = "İlk kuzenin ölü yakılması";
+$factarray["_BURI_COUS"] = "İlk kuzenin defni";
+$factarray["_ADOP_COUS"] = "İlk kuzenin evlat edilmesi";
+$factarray["_BAPM_COUS"] = "İlk kuzenin vaftizi";
+$factarray["_CHR_COUS"]  = "İlk kuzenin vaftiz edilişi";
+$factarray["_CREM_MSIB"] = "Annenin kardeşi ölü yakılması";
+$factarray["_BURI_MSIB"] = "Annenin kardeşi defni";
+$factarray["_ADOP_MSIB"] = "Annenin kardeşi evlat edinme";
+$factarray["_DEAT_GGPA"] = "Büyük-büyük-ebeveynin ölümü";
+$factarray["_MARB_GCHI"] = "Torunun afaroz evliliği";
+$factarray["_MARB_GGCH"] = "Büyük torunun afaroz evliliği";
+$factarray["_MARB_FATH"] = "Babanın afaroz evliliği";
+$factarray["_MARB_FAMC"] = "Ebeveynlerin afaroz evliliği";
+$factarray["_MARB_MOTH"] = "Annenin aforoz evliliği";
+$factarray["_CREM_MOTH"] = "Annenin ölü yakılması";
+$factarray["_MARB_SIBL"] = "Kardeşin aforoz evliliği";
+$factarray["_MARB_HSIB"] = "Üvey kardeşin aforoz evliliği";
+$factarray["_ADOP_NEPH"] = "Erkek yada kız yeğen evlat edinme";
+$factarray["_MARB_NEPH"] = "Erkek yada kız yeğen aforoz evlat edinme";
+$factarray["_BURI_NEPH"] = "Erken veya Kız yeğenin defni";
+$factarray["_CREM_NEPH"] = "Erken veya Kız yeğenin ölü yakılması";
+$factarray["_BURI_GPAR"] = "Büyük ebeveynin defni";
+$factarray["_CREM_GPAR"] = "Büyük ebeveynin ölü yakılması";
+$factarray["_BURI_GGPA"] = "Büyük büyük ebeveynin defni";
+$factarray["_CREM_GGPA"] = "Büyük büyük ebeveynin ölü yakılması";
+$factarray["_CHR_FSIB" ] = "Babanın kardeşinin vaftiz edilişi";
+$factarray["_BAPM_FSIB"] = "Babanın kardeşinin vaftizi";
+$factarray["_ADOP_FSIB"] = "Babanın kardeşi evlat edilmesi";
+$factarray["_MARB_FSIB"] = "Babanın kardeşi aforoz evliliği";
+$factarray["_BURI_FSIB"] = "Babanın kardeşi defni";
+$factarray["_CREM_FSIB"] = "Babanın kardeşi ölü yakılması";
+$factarray["_CHR_MSIB" ] = "Annenin kardeşi vaftiz edilişi";
+$factarray["_BAPM_MSIB"] = "Annenin kardeşi vaftizi";
+$factarray["_MARB_MSIB"] = "Annenin kardeşi aforoz evliliği";
+$factarray["_MARB_COUS"] = "İlk kuzeninin aforoz evliliği";
 ?>

@@ -3,7 +3,7 @@
  * Turkish FAQ file for PhpGedView.
  *
  * PhpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  PGV Development Team
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,8 +20,8 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  * @package PhpGedView
- * @author Adem GENÇ
  * @created 2007-11-19
+ * @author Adem GENÇ uzayuydu@gmail.com http://www.muttafi.com
  * @version $Id$
  */
 
@@ -35,5 +35,6 @@ $faqlist["FAQ_010_head"] = "#GLOBALS[GEDCOM_TITLE]# NİN SSS HOŞ GELDİNİZ";
 $faqlist["FAQ_022_head"] = "BEN NİÇİN KAYIT OLMALIYIM?";
 $faqlist["FAQ_040_head"] = "PEKİ YA MAHREMİYET?";
 $faqlist["FAQ_050_head"] = "TEŞEKKÜR EDERİM";
+$faqlist["FAQ_017_head"] = "BU AĞACIN ASIL ÖZELLİĞİ NEDİR?";
 
 ?>
