@@ -3,7 +3,7 @@
  * Turkish Language file for PhpGedView.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team. All rights reserved.
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,7 +21,7 @@
  *
  * @package PhpGedView
  * @subpackage GoogleMap
- * @author Adem GENÇ uzayuydu@gmail.com http://www.muttafi.com 
+ * @author Adem GENÇ uzayuydu@gmail.com http://www.muttafi.com
  * @version $Id$
  */
 
@@ -38,6 +38,7 @@ $pgv_lang["gm_redraw_map"]          = "Haritayı varsayılana getir";
 $pgv_lang["gm_map"]                 = "Harita";
 $pgv_lang["gm_satellite"]           = "Uydu";
 $pgv_lang["gm_hybrid"]              = "Karma";
+$pgv_lang["gm_hybrid"]              = "Karışık";
 
 // Configuration texts
 $pgv_lang["gm_manage"]              = "Googlemap konfigürasyonu yönetimi";
@@ -71,6 +72,16 @@ $pgv_lang["gm_pp_pr_po_n_b"]        = "Önek, sonek, normal, her ikisi";
 $pgv_lang["gm_pp_po_pr_n_b"]        = "Sonek, önek, normal, her ikisi";
 $pgv_lang["googlemap_coord"]        = "Harita koordinatları göster";
 
+//wooc place hierarchy
+$pgv_lang["gm_place_hierarchy"]  	= "Yer Aşaması için Googlemap Kullan";
+$pgv_lang["gm_ph_map_size"]			= "Yer Aşaması harıtanın boyutu (piksel içinde)";
+$pgv_lang["gm_ph_marker_type"]		= "Yer Aşamanın içinde yer işaretlerin tipi";
+$pgv_lang["gm_standard_marker"]		= "Standard";
+$pgv_lang["gm_no_coord"]			= "Bu yer hiç bir koordinatlara sahip değil";
+$pgv_lang["gm_ph_placenames"]		= "Kısa yer isimleri göster";
+$pgv_lang["gm_ph_count"]			= "İndis ve aileler sayısını göster";
+$pgv_lang["gm_ph_wheel"]			= "Zum için fare tekerini kullan";
+$pgv_lang["gm_ph_controls"]			= "Harıta kontrolleri gizle";
 
 // Texts used on the Places location page
 $pgv_lang["edit_place_locations"]   = "Coğrafi yer konumları düzenle";
@@ -103,6 +114,9 @@ $pgv_lang["pl_neighborhood"]        = "Civari";
 $pgv_lang["pl_house"]               = "Ev";
 $pgv_lang["pl_max"]                 = "Max";
 $pgv_lang["pl_delete"]              = "Coğrafi konumu sil";
+$pgv_lang["pl_search_level"]		= "Bu duzeyde ara";
+$pgv_lang["pl_search_all"]			= "Tümünü ara";
+$pgv_lang["pl_unknown"]				= "Bilinmiyor";
 
 $pgv_lang["pl_flag"]                = "Bayrak";
 $pgv_lang["flags_edit"]             = "Bayrak seç";
