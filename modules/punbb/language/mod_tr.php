@@ -22,7 +22,7 @@
  * @subpackage punBB
  * @version $Id$
  * @author Patrick Kellum
- * @author Adem GENÇ uzayuydu@gmail.com http://www.muttafi.com 
+ * @author Adem GENÇ uzayuydu@gmail.com http://www.muttafi.com
  */
 $pgv_lang['mod_punbb'] = 'Mesaj Forumu';
 $pgv_lang['mod_punbb_search'] = 'Forumda Ara';

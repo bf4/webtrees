@@ -1,6 +1,6 @@
 <?php
 /**
- * Turkish Language file for PhpGedView.
+ * English Language file for PhpGedView.
  *
  * phpGedView: Genealogy Viewer
  * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
@@ -21,7 +21,7 @@
  *
  * @package PhpGedView
  * @subpackage BatchUpdate
- * @author Adem GENÇ uzayuydu@gmail.com http://www.muttafi.com 
+ * @author Adem GENÇ uzayuydu@gmail.com http://www.muttafi.com
  * @version $Id$
  */
 
@@ -62,11 +62,11 @@ $pgv_lang["bu_birth_y_desc"]="Tüm bireyler &laquo;yaşam olayının başlaması
 $pgv_lang["bu_death_y"]="Girilmemiş ölüm kayıtları ekle";
 $pgv_lang["bu_death_y_desc"]="Tüm bireyler &laquo;yaşam olayının ölümüne&raquo; sahip olduğuna güvence vererek PGV performansını geliştirebilirsiniz.";
 
-$pgv_lang["bu_married_names"]="Girilmemiş evli isimler ekle";
-$pgv_lang["bu_married_names_desc"]="Siz onların evli ismini kaydederek evli kadınları aramak için onu daha kolay yapabilirsiniz.<br />Yinede tüm kadınlar kocasının soyadını almaz bundan dolayı sizin GEDCOM da yanlış veriden sakının.";
+$pgv_lang["bu_married_names"]="Girilmemiş evli kadına soyadı ekle";
+$pgv_lang["bu_married_names_desc"]="Evli kadınların soy adlarını kaydederek evli kadınları daha kolay arayabileceksiniz.<br />Yinede tüm kadınlar kocalarının soyadlarını almaz veya kullanmazlar bundan dolay GEDCOM da yanlış veri kaydetmekten sakının.";
 $pgv_lang["bu_surname_option"]="Soyad Seçeneği";
 $pgv_lang["bu_surname_replace"]="Hanımının soyadı kocasının soyadı ile yer değiştir";
-$pgv_lang["bu_surname_add"]="Hanımının kızlık soyadı yeni belirlenen ismidir";
+$pgv_lang["bu_surname_add"]="Hanımının kızlık soyadı yeni soyadı olarak belirle";
 
 $pgv_lang["bu_name_format"]="İsim kesikleri ve boşlukları ayarla";
 $pgv_lang["bu_name_format_desc"]="Doğru İSİM kayıtları 'Adem/GENÇ' veya 'Adem /GENÇ' olarak formdan eski soyağaco programı tarafından üretilir.";

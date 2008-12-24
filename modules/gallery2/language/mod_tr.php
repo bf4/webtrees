@@ -23,9 +23,8 @@
  * @subpackage Gallery2
  * @version $Id$
  * @author Patrick Kellum
- * @author Adem GENÇ uzayuydu@gmail.com http://www.muttafi.com 
+ * @author Adem GENÇ uzayuydu@gmail.com http://www.muttafi.com
  */
-
 $pgv_lang['mod_gallery2'] = 'Galeri';
 $pgv_lang['mod_gallery2_siteadmin'] = 'Site Yönetimi';
 $pgv_lang['mod_gallery2_useralbum'] = 'Albümünüz';

@@ -24,6 +24,7 @@
  * @author Adem GENÇ uzayuydu@gmail.com http://www.muttafi.com
  * @version $Id$
  */
+
 if (!defined('PGV_PHPGEDVIEW')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
@@ -1104,7 +1105,7 @@ $pgv_lang["family_of"]				= "Aile:&nbsp;";
 $pgv_lang["descent_steps"]			= "Nesil Adımları";
 $pgv_lang["cancel"]					= "Vazgeç";
 $pgv_lang["delete_family_confirm"]	= "Bu aileyi silerseniz buna bağlı çocukları, eşleri ve fertler hiç kimse ile bağlantıları kalmayıp ortada kalacaktır. Yinede siz bu aileyi silmek istediğinizden eminmisiniz?";
-$pgv_lang["cookie_help"]			= "Bu site giriş konumunuzun izni elde tutmak için coikeler kullanır, (Giriş yapmış olarak siteyi dolaşabilmeniz için).<br /><br /><br />Coikeler tarayıcınızda etkinleştirmek için belirmezler. Siteye girmeden önce coikeleri etkinleştimeniz gerekiyor. Coikeleri etkineştirmek için bilgi yarayıcınızın yardım dokümanyonundan bakabilirsiniz.";
+$pgv_lang["cookie_help"]			= "Bu siteye giriş yapılmış olarak konumunuzu korumak için coikeler/çerezleri kullanır (Giriş yapmış olarak siteyi dolaşabilmeniz için).<br /><br /><br />Coikeler/çerezler tarayıcınızda etkinleştirilmiş olarak belirlemelisiniz. Siteye girmeden önce coikeler/çerezleri etkinleştirmeniz gerekiyor. Coikeleri/çerezleri etkinleştirmek için tarayıcınızın Araçlar>Seçenekler alanında veya tarayıcınızın yardım dokümanından bakabilirsiniz.";
 $pgv_lang["delete_family"]			= "Aileyi sil";
 $pgv_lang["add_favorite"]			= "Sık Kullanılanlara yeni ekle";
 $pgv_lang["url"]					= "URL";
