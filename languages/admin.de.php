@@ -33,7 +33,6 @@ if (!defined('PGV_PHPGEDVIEW')) {
 $pgv_lang["upload_a_gedcom"] 		= "GEDCOM-Datei hochladen";
 $pgv_lang["start_entering"] 		= "Neue Daten eingeben";
 $pgv_lang["add_gedcom_from_path"] 	= "Bereits auf dem Server vorhandene GEDCOM-Datei einfügen";
-$pgv_lang["manage_gedcoms"]			= "GEDCOM-Dateien verwalten";
 $pgv_lang["get_started_instructions"]	= "Bitte wählen Sie eine der folgenden Optionen um anzufangen mit PhpGedView zu arbeiten";
 
 $pgv_lang["admin_users_exists"]		= "Folgende Verwalter sind bereits eingetragen:";
