@@ -34,7 +34,6 @@ if (!defined('PGV_PHPGEDVIEW')) {
 $pgv_lang["upload_a_gedcom"] 		= "Upload a GEDCOM file";
 $pgv_lang["start_entering"] 		= "Start entering data";
 $pgv_lang["add_gedcom_from_path"] 	= "Add a GEDCOM from a file location";
-$pgv_lang["manage_gedcoms"]			= "Manage GEDCOMs";
 $pgv_lang["get_started_instructions"]	= "Choose one of these options to get started using PhpGedView";
 
 $pgv_lang["admin_users_exists"]		= "The following administrative users already exist:";
