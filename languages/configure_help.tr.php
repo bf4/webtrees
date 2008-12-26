@@ -55,7 +55,7 @@ $pgv_lang["does_not_exist"]		= "mevcut değil";
 $pgv_lang["media_drive_letter"]		= "Medya yolunun içinde sürücü harfi bulunmamalıdır. Aksi halde medya belki gösterilemez.";
 $pgv_lang["db_setup_bad"]		= "Güncel veritabanı konfigürasyonunuz hatalıdır. Lütfen veritabanı parametreleriniz kontrol edip tekrar deneyin.";
 $pgv_lang["db"]				= "Veritabanı";
-$pgv_lang["dbase"]			= "vtabanı";
+
 $pgv_lang["current_gedcoms"]		= "Geçerli GEDCOM veritabanları";
 $pgv_lang["ged_gedcom"]			= "GEDCOM dosyası";
 $pgv_lang["ged_title"]			= "GEDCOM veritabanın başlığı";
@@ -130,7 +130,7 @@ $pgv_lang["POSTAL_CODE"]  = "Posta Kodu Durumu";
 $pgv_lang["SUBLIST_TRIGGER_I"]		= "Soyadların en yüksek sayısı";
 $pgv_lang["SUBLIST_TRIGGER_F"]		= "Aile adların en yüksek sayısı";
 $pgv_lang["SURNAME_LIST_STYLE"]		= "Soyadı listeme biçimi";
-$pgv_lang["NAME_FROM_GEDCOM"]		= "GEDCOM içinden isimleri göster";
+
 $pgv_lang["SHOW_LAST_CHANGE"]		= "Listelerde geçen değişklik tarihini GEDCOM kayıtlarını göster";
 $pgv_lang["SHOW_PEDIGREE_PLACES"]	= "Şahsi kutularda gösterilecek yer isimlerinin derinliği";
 $pgv_lang["MULTI_MEDIA"]		= "Multimedya kullanıma ve gösterime izin ver";
@@ -288,7 +288,7 @@ $pgv_lang["lang_name_italian"]		= "İtalyanca";
 $pgv_lang["lang_name_norwegian"]	= "Norveççe";
 $pgv_lang["lang_name_polish"]		= "Lehçe";
 $pgv_lang["lang_name_portuguese"]	= "Portekizce";
-$pgv_lang["lang_name_portuguese-br"]	= "Brezilya Portekizcesi";
+
 $pgv_lang["lang_name_russian"]		= "Rusça";
 $pgv_lang["lang_name_spanish"]		= "İspanyolca";
 $pgv_lang["lang_name_spanish-ar"]	= "Latin Amerika İspanyolcası";
@@ -323,7 +323,7 @@ $pgv_lang["file_does_not_exist"]	= "HATA! Bu dosya yoktur...";
 $pgv_lang["optional_file_not_exist"]	= "Bu isteğe bağlı dosya mevcut değil.";
 $pgv_lang["alphabet_upper"]		= "Alfabe büyük harf";
 $pgv_lang["alphabet_lower"]		= "Alfabe küçük harf";
-$pgv_lang["multi_letter_alphabet"]		= "Çoklu-mektup alfabesi";
+$pgv_lang["multi_letter_alphabet"]		= "Çoklu-harf alfabesi";
 $pgv_lang["dictionary_sort"]		= "Düzenlerken sözlük kurallarını kullan";
 $pgv_lang["lang_config_write_error"]	= "Hata!!! [language_settings.php] adlı dosyaya yazamadım. Lütfen dosya ve dizin izinlerini denetleyin ve ondan sonra bu adımı tekrar deneyin.";
 $pgv_lang["translation_forum"]		= "SourceForge sitesindeki PhpGedView tercüme forumuna bağlantı";

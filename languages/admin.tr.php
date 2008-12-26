@@ -33,7 +33,6 @@ if (!defined('PGV_PHPGEDVIEW')) {
 $pgv_lang["upload_a_gedcom"] 		= "GEDCOM Dosya Yükle";
 $pgv_lang["start_entering"] 		= "Başlama girş tarihi";
 $pgv_lang["add_gedcom_from_path"] 	= "Yerelden GEDCOM Dosya ekle";
-$pgv_lang["manage_gedcoms"]			= "GEDCOM Yönetimi";
 $pgv_lang["get_started_instructions"]	= "PhpGedView kullanmaya başlamak için bu seçeneklerden birini seçin";
 
 $pgv_lang["admin_users_exists"]		= "Aşağıda zaten yönetici kullanıcı mevcut:";
@@ -406,28 +405,14 @@ $pgv_lang["tradition_icelandic"]	= "İzlanda";
 $pgv_lang["tradition_paternal"]		= "Babaya ait";
 $pgv_lang["tradition_none"]			= "Hiçbiri";
 
-
-
-
-
-
-
- //Old pharse
 $pgv_lang["check_upload"]		= "Dosyaları yükleme yeterlilik için kontrol et:";
 $pgv_lang["check_gd"]		= "GD resim kütüphane için kontrol et:";
 $pgv_lang["check_dom"]		= "DOM XML kütüphane için kontrol et:";
 $pgv_lang["check_calendar"]		= "Gelişmiş Takvim kütüphanesi için kontrol et:";
 $pgv_lang["batch_update"]="GEDCOM kümeyi güncelleme/düzenleme yönetimi";
-$pgv_lang["label_add_search_server"]	= "IP Ekle";
-$pgv_lang["label_add_server"]      		= "Ekle";
-$pgv_lang["label_ban_server"]			= "Gönder";
-$pgv_lang["label_remove_ip"]					= "IP Adresini Yasakla (Örnek: 198.128.*.*):";
-$pgv_lang["label_remove_search"]				= "Arama motor örümcekleri olarak IP adresini işaretle: ";
-$pgv_lang["calc_marr_names"]			= "Evli İsimler Hesaplandı";
-$pgv_lang["import_marr_names"]					= "Evli İsimleri İçeri aktar";
-$pgv_lang["spanish"]           = "İspanya";
-$pgv_lang["portuguese"]        = "Portekiz";
-$pgv_lang["icelandic"]         = "İslanda";
-$pgv_lang["paternal"]          = "Babaya mahsus";
 
+$pgv_lang["sanity_warn4"]			= "XML işleyici kütüphanesi mevcut değil. PhpGedView yinede iş görecek ancak özelliklerin bir kismi, rapor üretimi ve sunucu hizmetleri gibi XML işleyici kütüphanesi olmadan çalışmayacaktır. Lütfen daha çok bilgi için <a href='http://www.php.net/manual/en/ref.xml.php'>http://www.php.net/manual/en/ref.xml.php</a> siteye bakın.";
+$pgv_lang["sanity_warn6"]			= "Takvim kütüphanesi mevcut değil. PhpGedView yinede iş görecek görecek ancak özelliklerin bir kismi, İbrani veya Fransız gibi diğer takvimlere dönüşüm gibi özellikler çalışmayacaktır. PhpGedView scripti çalıştırmak için bir engel değildir. Lütfen daha geniç bilgi için <a href='http://www.php.net/manual/en/ref.calendar.php'>http://www.php.net/manual/en/ref.calendar.php</a> siteye bakın.";
+$pgv_lang["download_note"]						= "<b>Not:</b> Büyük veritabanları indirme vermeden önce uzun bir zaman işlem yapabilir. Eğer PHP zaman aşımı uygularsa indirme bitmeden önce indirilen veritabanı dosyası tam olmayabilir.<br /><br /> Dosya doğru olarak indirildiğinden emin olmak için GEDCOM biçiminde indiriyorsanız son satırında <b>0&nbsp;TRLR</b> olduğunu kontrol edin, yada XML biçiminde indiriyorsanız son satırında <b>&lt;/database&gt;</b> olduğunu kontrol edin. <br /><br />Bu dosyalar metindir siz herhangi bir uygun metin editörü kullanarak açabilir içeriğini görebilirsiniz. İndirdiğiniz dosyaları kontrol için açtığınızda kesinlikle <b><u>kaydetmeyin</u></b> dosyanız bozulabilir.<br /><br /> Genelde GEDCOM dosya indirildiğinde uzun zaman alıyorsa içeri aktarırken de uzun zaman alabilir.";
+$pgv_lang["gedcheck_text"] = "Bu modül <a href=\"http://phpgedview.sourceforge.net/ged551-5.pdf\">5.5.1 GEDCOM tanımlamasına karşı</a> bir GEDCOM dosyanın biçimini kontrol eder. Ayrıca verinizin içindeki hataların sayısınız kontrol eder. Not tanımlamada birçok verisyonlar, uzantılar ve değişkenler olduğuna dikkat edin bü yüzden \"Kritik\" olarak o bayraktan başka herhangi bir konular ile ilgilenmemelisiniz. Yardım istemeden önce tüm hataların satırında yine aynı satırda hatalar hakkında tanımlamalar bulunabilir bu yüzden lütfen kontrol etmenizi rica ediyoruz.";
 ?>
