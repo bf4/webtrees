@@ -287,4 +287,11 @@ $countries["ZMB"]="Zambia";
 $countries["ZWE"]="Zimbabve";
 $countries["???"]="Bilinmeyen";
 
+$countries["EIR"]="Irlanda";
+$countries["AZR"]="Asor adalar";
+$countries["CAT"]="Katalonya";
+$countries["FLD"]="Flandra";
+$countries["SUN"]="SSCB";
+$countries["TRN"]="Transilvanya";
+$countries["ZAR"]="Zaire";
 ?>

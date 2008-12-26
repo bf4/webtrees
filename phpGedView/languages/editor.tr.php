@@ -155,7 +155,7 @@ $pgv_lang["label_diff_server"]      = "Farklı Site ";
 $pgv_lang["label_location"]         = "Site Konumu ";
 $pgv_lang["label_password_id2"]		= "Şifre: ";
 $pgv_lang["label_rel_to_current"]   = "Geçerli Kişiye İlişkilendir";
-$pgv_lang["label_remote_id"]        = "Uzak Kişi ID";
+
 $pgv_lang["label_same_server"]      = "Aynı site";
 $pgv_lang["label_site"]             = "Site";
 $pgv_lang["label_site_url"]         = "Site URL:";

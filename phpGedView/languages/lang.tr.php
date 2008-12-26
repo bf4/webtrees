@@ -206,8 +206,8 @@ $pgv_lang["start_at_parents"]		= "Anne ve baba ile başla";
 $pgv_lang["charts"]			= "Çizgeler";
 $pgv_lang["lists"]			= "Listeler";
 $pgv_lang["welcome_page"]		= "Karşılama sayfası";
-$pgv_lang["max_generation"] 		= "#PEDIGREE_GENERATIONS# Soy ağacı nesillerin en fazla sayısıdır.";
-$pgv_lang["min_generation"] 		= "3 Soy ağacı nesillerin en az seçin sayısıdır.";
+
+
 $pgv_lang["box_width"]			= "Kutu eni";
 
 //-- FUNCTIONS FILE MESSAGES
@@ -329,7 +329,7 @@ $pgv_lang["no_tab5"]				= "Bu şahıs ile ilgili hiç bir yakın akraba bulunmam
 $pgv_lang["no_tab6"]				= "Bu kişisele bağlı hiç araştırma kütüğü yoktur.";
 $pgv_lang["show_fact_sources"]		= "Tüm kaynakları göster";
 $pgv_lang["show_fact_notes"]		= "Tüm notları göster";
-$pgv_lang["spouse"]			= "Eşi";
+$pgv_lang["spouse"]			= "Hanımı";
 $pgv_lang["spouses"] 				= "Eşler";
 
 //-- FAMILY FILE MESSAGES
@@ -577,8 +577,8 @@ $pgv_lang["follow_spouse"]		= "Evlilik ile gelişen akrabalılığı araştır";
 $pgv_lang["timeout_error"]		= "Bu scriptte hiçbir yakınlık bağlantısı bulamadan sona erdi!!!";
 $pgv_lang["son"]			= "Erkek çocuk";
 $pgv_lang["daughter"]			= "Kız çocuk";
-$pgv_lang["son-in-law"]				= "Damadı";
-$pgv_lang["daughter-in-law"]		= "Gelini";
+
+
 $pgv_lang["grandchild"]				= "Torun";
 $pgv_lang["grandson"]				= "Erkek torun";
 $pgv_lang["granddaughter"]			= "Kız torun";
@@ -587,8 +587,8 @@ $pgv_lang["greatgrandson"]			= "Büyük erkek torun";
 $pgv_lang["greatgranddaughter"]		= "Büyük kız torun";
 $pgv_lang["brother"]			= "Erkek kardeş";
 $pgv_lang["sister"]			= "Kız kardeş";
-$pgv_lang["brother-in-law"]		= "Kanun içinde erken kardeş";
-$pgv_lang["sister-in-law"]			= "Kardeş eşi (yenge)";
+
+
 $pgv_lang["aunt"]					= "Yenge";
 $pgv_lang["uncle"]				= "Amca";
 $pgv_lang["nephew"]				= "Erkek yeğen";
@@ -596,7 +596,7 @@ $pgv_lang["niece"]				= "Kız yeğen";
 $pgv_lang["firstcousin"]			= "İlk kuzen";
 $pgv_lang["femalecousin"]			= "Kadın kuzen";
 $pgv_lang["malecousin"]				= "Erkek kuzen";
-$pgv_lang["cousin-in-law"]			= "Kuzen eşi";
+
 $pgv_lang["relationship_to_me"]		= "Benimle olan yakınlığı";
 $pgv_lang["rela_husb"]				= "Kocaya ilişki";
 $pgv_lang["rela_wife"]				= "Hanıma ilişki";
@@ -606,14 +606,14 @@ $pgv_lang["line_up_generations"]	= "Ayni kuşaktan olan şahısları bir seviyed
 $pgv_lang["oldest_top"]			= "En yaşlıları üstte göster";
 $pgv_lang["relationship_male_1_is_the_2_of_3"] = "%3\$s 'in %2\$s 'i   %1\$s";
 $pgv_lang["relationship_female_1_is_the_2_of_3"] = "%3\$s 'in %2\$s 'i   %1\$s";
-$pgv_lang["mother_in_law"]		    = "kaynana";
-$pgv_lang["father_in_law"]		    = "kayınpeder";
-$pgv_lang["brother_in_law"]		    = "enişte";
-$pgv_lang["sister_in_law"]		    = "yenge";
-$pgv_lang["son_in_law"]		        = "damat";
-$pgv_lang["daughter_in_law"]		= "gelin";
-$pgv_lang["step_son"]		        = "üvey oğul";
-$pgv_lang["step_daughter"]	    	= "üvey kız";
+$pgv_lang["mother_in_law"]		    = "Kaynana";
+$pgv_lang["father_in_law"]		    = "Kayınpeder";
+$pgv_lang["brother_in_law"]		    = "Enişte";
+$pgv_lang["sister_in_law"]		    = "Yenge";
+$pgv_lang["son_in_law"]		        = "Damat";
+$pgv_lang["daughter_in_law"]		= "Gelini";
+$pgv_lang["step_son"]		        = "Üvey erkek";
+$pgv_lang["step_daughter"]	    	= "Üvey kız";
 $pgv_lang["bosa_brothers_offspring_2"] 				= "Erkek yeğen";
 $pgv_lang["bosa_brothers_offspring_3"] 				= "Kız yeğen";
 $pgv_lang["bosa_brothers_offspring_4"] 				= "büyük erkek yeğen";
@@ -648,8 +648,8 @@ $pgv_lang["n_x_grandson_from_son"]	  = "%3\$d x büyük erkek torun";
 $pgv_lang["n_x_granddaughter_from_son"] = "%3\$d x büyük kız torun";
 $pgv_lang["n_x_grandson_from_daughter"]	  = "%3\$d x büyük erkek torun";
 $pgv_lang["n_x_granddaughter_from_daughter"] = "%3\$d x büyük kız torun";
-$pgv_lang["sosa_uncle_2"] 				= "amca";
-$pgv_lang["sosa_uncle_3"] 				= "amca";
+$pgv_lang["sosa_uncle_2"] 				= "Amca";
+$pgv_lang["sosa_uncle_3"] 				= "Amca";
 $pgv_lang["sosa_uncle_4"] 				= "büyük amca";
 $pgv_lang["sosa_uncle_5"] 				= "büyük amca";
 $pgv_lang["sosa_uncle_6"] 				= "büyük amca";
@@ -1150,8 +1150,8 @@ $pgv_lang["move_standard"]			= "Standart da taşı";
 $pgv_lang["move_protected"]		= "Korunmuşa taşı";
 $pgv_lang["move_mediadirs"]			= "Media klasörleri taşı";
 $pgv_lang["setperms"]				= "Medya İzinleri Kur";
-$pgv_lang["setperms_writable"]		= "Yazılabilir-Dünya Yap";
-$pgv_lang["setperms_readonly"]		= "Sadece Okunur-Dünya Yap";
+
+
 $pgv_lang["setperms_success"]		= "İzinleri Kur";
 $pgv_lang["setperms_failure"]		= "İzinleri Kurma";
 $pgv_lang["setperms_time_exceeded"]	= "İletişim limiti aşıldı. Küçük klasörle tekrar komutu dene.";
@@ -1206,8 +1206,8 @@ $pgv_lang["sort_by"]			= "Sıralama biçimi:";
 $pgv_lang["cleanup"]			= "Temizle";
 
 //-- CONFIGURE (extra) messages for programs patriarch, slklist and statistics
-$pgv_lang["dynasty_list"]		= "Aile tablosu";
-$pgv_lang["patriarch_list"]		= "Ata listesi";
+
+
 $pgv_lang["statistics"]			= "İstatistikler";
 
 //-- Merge Records
@@ -1583,4 +1583,11 @@ $pgv_lang["godchild"]	= "Vaftiz çocuğu";
 $pgv_lang["click_here_help"]		= "~#pgv_lang[click_here]#~<br /><br />Değişikliklerinizi kurtarması için bu düğmeyi tıklayın.<br /><br />#pgv_lang[welcome]# veya #pgv_lang[mygedview]# sayfasına dönmüş olacaksınız, ama değişikliklerinizi gösterilmeyebilir. Sayfanın uygun şekilde değişikliklerinizi görmeniz için tarayıcınızın görevini tekrar doldurduğunu kullanmaya ihtiyaç duyabilirsin.";
 $pgv_lang["block_summaries"]		= "~#pgv_lang[block_desc]#~<br /><br />Sizin #pgv_lang[welcome]# veya #pgv_lang[mygedview]# sayfasında yerleştirebileceğiniz blokların her birinin kısa bir tanımlaması buradadır.<br /><table border='1' align='center'><tr><td class='list_value'><b>#pgv_lang[name]#</b></td><td class='list_value'><b>#pgv_lang[description]#</b></td></tr>#pgv_lang[block_summary_table]#</table><br /><br />";
 $pgv_lang["todo_nothing"]        = "Şuanda &quot;To Do&quot; görevleri yok.";
+$pgv_lang["aunt_in_law"]			= "Yenge";
+$pgv_lang["f_cousin_in_law"]		= "Kuzen Hanımı";
+$pgv_lang["pls_note06a"] 			= "Şimdi <b>#user_email#</b> email adresinize doğrulama mesajı göndereceğiz. Siz email adresinize mesajın içeriğindeki adımları izleyerek hesabınızı doğrulamalısınız. Eğer siz yedi gün içinde hesabınızı doğrulamazsanız sonrasındaki uygulamanız otomatik olarak reddedilecektir. Yeniden uygulamak zorunda kalacaksınız.<br /><br /> Mesajdaki doğrulama talimatları izledikten sonra giriş yapabilirsiniz. Bu siteye giriş yapabilmeniz için kullanıcı adı ve şifreye ihtiyaç duyacaksınız.<br /><br />";
+$pgv_lang["welcome_text_auth_mode_2"]	= "<center><b>Bu Soyağacı Web Sitesine Hoş Geldiniz</b></center><br /> Bu soyağacı web sitesine erişim sadece <u>kayıtlı</u> kullanıcılara izin veriliyor.<br /><br /> Eğer siz bir kullanıcı hesaba sahip iseniz giriş yapabilirsiniz.<br /><br /> Eğer sizin bir kullanıcı hesabınız yoksa aşağıdaki uygun linki tıklatarak kayıt olabilirsiniz.<br /><br /> Kayıt sonrası hesabınızı doğruladıktan sonra son olarak yönetici hesabınızı onaylayacak veya reddedecektir. <br /><br />Yönetici hesabınıza uygulamadan sonra email ile size mesaj gönderilecektir.";
+$pgv_lang["message_instructions"]	= "<b>Lütfen Not:</b> Yaşayan bireylerin özel bilgileri sadece aile akrabaları ve yakın arkadaşlarına verilebilir. Herhangi bir özeri veriyi almadan önce ilişkinizi doğrulamak için sorulacaksınız. Bazen ölü kişilerin bilgisi aynı zamanda özel olabilir. Eğer durum bu ise, çünkü kişi hakkında kararlaştırmak için onları yaşayan olup olmadığı bilinen yeterli bilgi yoktur veya değildir ve muhtemelen bu kişi hakkında bizde bilgi yok. <br /><br />Bir soruyu sormadan önce lütfen kendisi sizin tarihler, yerler ve yakın akrabaları kontrol ederek doğru kişi hakkında soruyor olduğunu doğrular. Eğer siz soyada ait veride değişiklikler iletiyorsanız lütfen bunun nedeninin sebebi olan kaynağını da belirterek iletiniz.<br /><br />";
+$pgv_lang["portal_config_intructions"]	= "~#pgv_lang[customize_page]# <br /> #pgv_lang[customize_gedcom_page]#~<br /><br />Bunları istediğiniz gibi sayfaya blokları yerleştirerek sayfayı ihtiyacınıza göre özelleştirebilirsiniz.<br /><br /> Sayfa <b>Ana</b> ve <b>Sağ</b> bölümler içine bölünür. <b>Ana</b> bölüm blokları geniş belirirler ve sayfa başlığın altında belirir. <b>Sağ</b> bölüm sağda belirir ve sayfa başlığın altının sağında listelenir.<br /><br />Her bir bölüm listelendiği düzende sayfada yazılan blokların kendi listesine sahip olur.<br /><br />Blok listelerinin biri boş olduğunda kalan bloklar sayfanın tümünün genişliğini kapsayacaktır.<br /><br />";
+
 ?>
