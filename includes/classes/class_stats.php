@@ -1013,6 +1013,28 @@ class stats {
 		if (!isset($rows)) {return 0;}
 		return $rows;
 	}
+	
+	function statsPlaces($fact='BIRT')
+	{
+		global $TBLPREFIX;
+		$rows=self::_runSQL(''
+					.' SELECT'
+						.' d_fact,'
+						.' d_gid'
+					.' FROM'
+						." {$TBLPREFIX}dates"
+					.' WHERE'
+						." d_file={$this->_ged_id}"
+						." AND d_fact='$fact'"
+					);
+		if (!isset($rows[0])) {return '';}
+		else {
+			foreach ($rows as $row) {
+				$result[]=getPlaceCountry(format_fact_place(Person::getInstance($row['d_gid'])->getFactByType($row['d_fact']), false, false, false));
+			}
+			return $result;
+		}
+	}
 
 	function statsDeath($sex=false, $year1=-1, $year2=-1)
 	{
@@ -1528,7 +1550,7 @@ class stats {
 	}
 
 	
-	function statsMarrAge($sex='BOTH', $year1=-1, $year2=-1)
+	function statsMarrAge($sex='M', $year1=-1, $year2=-1)
 	{
 		global $TBLPREFIX;
 		$years = '';
@@ -1544,11 +1566,6 @@ class stats {
 			$sex_field = 'fam.f_husb,';
 			$sex_field2 = " indi.i_id = fam.f_husb AND";
 			$sex_search = " AND i_sex='M'";
-		}
-		else {
-			$sex_field = 'fam.f_wife, fam.f_husb,';
-			$sex_field2 = " indi.i_id = fam.f_husb OR indi.i_id = fam.f_wife AND";
-			$sex_search = " AND i_sex='F' OR i_sex='M'";
 		}
 		$rows=self::_runSQL(''
 			.' SELECT'
@@ -1705,7 +1722,7 @@ class stats {
 	{
 		global $TBLPREFIX, $pgv_lang;
 		if ($params === null) {$params = array();}
-		if (isset($params[0]) && $params[0] != '') {$size = strtolower($params[0]);}else{$size = '950x150';}
+		if (isset($params[0]) && $params[0] != '') {$size = strtolower($params[0]);}else{$size = '1000x150';}
 		if (isset($params[1]) && $params[1] != '') {$color_from = strtolower($params[1]);}else{$color_from = 'ffffff';}
 		if (isset($params[2]) && $params[2] != '') {$color_to = strtolower($params[2]);}else{$color_to = '000000';}
 		if (isset($params[3]) && $params[3] != '') {$total = strtolower($params[3]);}else{$total = 10;}
