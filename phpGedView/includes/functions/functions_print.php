@@ -1718,36 +1718,34 @@ function PrintReady($text, $InHeaders=false, $trim=true) {
 	// To correct the problem, we need to enclose the parentheses, braces, or brackets with
 	// zero-width characters (&lrm; or &rlm;) having a directionality that matches the
 	// directionality of the text that is enclosed by the parentheses, etc.
-	if ($TEXT_DIRECTION=="rtl") {
-		$charPos = 0;
-		$lastChar = strlen($text);
-		$newText = "";
-		while (true) {
-			if ($charPos > $lastChar) break;
-			$thisChar = substr($text, $charPos, 1);
-			$charPos ++;
-			if ($thisChar=="(" || $thisChar=="{" || $thisChar=="[") {
-				$tempText = "";
-				while (true) {
-					$tempChar = "";
-					if ($charPos > $lastChar) break;
-					$tempChar = substr($text, $charPos, 1);
-					$charPos ++;
-					if ($tempChar==")" || $tempChar=="}" || $tempChar=="]") break;
-					$tempText .= $tempChar;
-				}
-				$thisLang = whatLanguage($tempText);
-				if (!isset($TEXT_DIRECTION_array[$thisLang]) || $TEXT_DIRECTION_array[$thisLang]=="ltr") {
-					$newText .= getLRM() . $thisChar . $tempText. $tempChar . getLRM();
-				} else {
-					$newText .= getRLM() . $thisChar . $tempText. $tempChar . getRLM();
-				}
-			} else {
-				$newText .= $thisChar;
+	$charPos = 0;
+	$lastChar = strlen($text);
+	$newText = "";
+	while (true) {
+		if ($charPos > $lastChar) break;
+		$thisChar = substr($text, $charPos, 1);
+		$charPos ++;
+		if ($thisChar=="(" || $thisChar=="{" || $thisChar=="[") {
+			$tempText = "";
+			while (true) {
+				$tempChar = "";
+				if ($charPos > $lastChar) break;
+				$tempChar = substr($text, $charPos, 1);
+				$charPos ++;
+				if ($tempChar==")" || $tempChar=="}" || $tempChar=="]") break;
+				$tempText .= $tempChar;
 			}
+			$thisLang = whatLanguage($tempText);
+			if (isset($TEXT_DIRECTION_array[$thisLang]) && $TEXT_DIRECTION_array[$thisLang]=="ltr") {
+				$newText .= getRLM() . $thisChar . $tempText . $tempChar . getRLM();
+			} else {
+				$newText .= getLRM() . $thisChar . $tempText . $tempChar . getLRM();
+			}
+		} else {
+			$newText .= $thisChar;
 		}
-		$text = $newText;
 	}
+	$text = $newText;
 
     // Parentheses, braces, and brackets have been processed:
     // Finish processing of "Highlight Start and "Highlight end"
