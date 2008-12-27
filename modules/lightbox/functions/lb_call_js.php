@@ -80,6 +80,7 @@ loadLangFile("lightbox:lang");
 			<?php
 // -------------------------------------------------------------------------------
 ?>
+<body>
 <?php if ($TEXT_DIRECTION == "rtl") { ?>
 		<script src="modules/lightbox/js/Sound.js" 					type="text/javascript"></script>
 		<script src="modules/lightbox/js/clearbox.js" 				type="text/javascript"></script>
@@ -109,3 +110,4 @@ loadLangFile("lightbox:lang");
 // -------------------------------------------------------------------------------
 
 ?>
+</body>
