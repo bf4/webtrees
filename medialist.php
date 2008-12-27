@@ -306,7 +306,8 @@ if ($ct>0) {
 //LBox --------  change for Lightbox Album and JWplayer ---------------------------
 	// Check Filetype of media item ( URL, Local or Other )
 		// URL FLV  ----------------------------------
-		if (eregi("http://www.youtube.com", $media['FILE'])) {
+		//if (eregi("http://www.youtube.com", $media['FILE'])) {
+		if ((eregi("http://", $media['FILE']) && eregi("\.flv", $media['FILE'])) || eregi("http://www.youtube.com", $media['FILE'])) {
 			$file_type = "url_flv";
 		// URL Image ------------------------------
 		}else if (eregi("http" ,$media["FILE"]) && eregi("\.(jpg|jpeg|gif|png|bmp)$", $media['FILE'])) {
@@ -387,7 +388,15 @@ if ($ct>0) {
 				print "<img src=\"modules/JWplayer/flash.png\" height=\"60\" border=\"0\" " ;
 			// Else Print the Regular Thumbnail if associated with a thumbnail image,
 			} else {
-				print "<img src=\"".$media["THUMB"]."\" align=\"left\" class=\"thumbnail\" border=\"none\"";
+				if (eregi("\.mp3", $media['FILE'])) {
+					if (media_exists("images/audio.png") && eregi("\media.gif",$media["THUMB"]) ) {
+						print "<img src=\"images/audio.png\" height=\"60\" border=\"0\" align=\"center\" class=\"thumbnail\" " ;
+					}else{
+						print "<img src=\"".$media["THUMB"]."\" border=\"0\" align=\"center" . ($TEXT_DIRECTION== "rtl"?"right": "left") . "\" class=\"thumbnail\"";
+					}
+				}else{
+					print "<img src=\"".$media["THUMB"]."\" border=\"0\" align=\"center" . ($TEXT_DIRECTION== "rtl"?"right": "left") . "\" class=\"thumbnail\"";
+				}
 				if ($isExternal) {
 						print " width=\"".$THUMBNAIL_WIDTH."\"";
 				}

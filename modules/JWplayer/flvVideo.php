@@ -46,8 +46,8 @@ $preview="";
 
 	<div id="container"><a href="http://www.macromedia.com/go/getflashplayer">Get the Flash Player</a> to see this player.</div>
 	<script type="text/javascript">
-		<?php if (eregi("www//" ,$flvVideo)) { ?>
-			var video 	= "<?php print $flvVideo; ?>";
+		<?php if (eregi("www", $flvVideo)) { ?>
+			var video 	= "<?php print "http://" . $flvVideo; ?>";
 		<?php } else { ?>
 			var video 	= "<?php print $SERVER_URL.$flvVideo; ?>";
 		<?php } ?>
