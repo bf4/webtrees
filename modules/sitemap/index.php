@@ -39,9 +39,28 @@ if (empty($uname)) {
 	exit;
 }
 
-$action	= safe_REQUEST($_REQUEST, 'action', PGV_REGEX_XREF);
+$action				= safe_REQUEST($_REQUEST, 'action', PGV_REGEX_XREF);
+$welcome			= safe_REQUEST($_REQUEST, 'welcome', PGV_REGEX_XREF);
+$gedcom_name		= safe_REQUEST($_REQUEST, 'gedcom_name');
+$filename			= safe_REQUEST($_REQUEST, 'filename');
+$index				= safe_REQUEST($_REQUEST, 'index');
+$welcome_priority	= safe_REQUEST($_REQUEST, 'welcome_priority', PGV_REGEX_XREF);
+$welcome_update		= safe_REQUEST($_REQUEST, 'welcome_update', PGV_REGEX_XREF);
+$indi_rec			= safe_REQUEST($_REQUEST, 'indi_rec', PGV_REGEX_XREF);
+$indirec_priority	= safe_REQUEST($_REQUEST, 'indirec_priority', PGV_REGEX_XREF);
+$indirec_update		= safe_REQUEST($_REQUEST, 'indirec_update', PGV_REGEX_XREF);
+$indi_lists			= safe_REQUEST($_REQUEST, 'indi_lists', PGV_REGEX_XREF);
+$indilist_priority	= safe_REQUEST($_REQUEST, 'indilist_priority', PGV_REGEX_XREF);
+$indilist_update	= safe_REQUEST($_REQUEST, 'indilist_update', PGV_REGEX_XREF);
+$fam_rec			= safe_REQUEST($_REQUEST, 'fam_rec', PGV_REGEX_XREF);
+$famrec_priority	= safe_REQUEST($_REQUEST, 'famrec_priority', PGV_REGEX_XREF);
+$famrec_update		= safe_REQUEST($_REQUEST, 'famrec_update', PGV_REGEX_XREF);
+$fam_lists			= safe_REQUEST($_REQUEST, 'fam_lists', PGV_REGEX_XREF);
+$famlist_priority	= safe_REQUEST($_REQUEST, 'famlist_priority', PGV_REGEX_XREF);
+$famlist_update		= safe_REQUEST($_REQUEST, 'famlist_update', PGV_REGEX_XREF);
 
 if ($action=="sendFiles") {
+	global $filename, $gedcom_name;
 	header('Content-Type: application/octet-stream');
 	header('Content-Disposition: attachment; filename="'.$filename.'"');
 
@@ -92,28 +111,28 @@ if ($action=="sendFiles") {
 		$res->free();
 	}
 
-		if (isset($fam_lists)) {
-			foreach(get_indilist_salpha($SHOW_MARRIED_SURNAMES, true, PHP_GED_ID) as $letter) {
-				if ($letter!='@') {
-					echo "   <url>\n";
-					echo "	  <loc>".$SERVER_URL."famlist.php?alpha=".urlencode($letter)."&amp;ged=".urlencode($gedcom_name)."</loc>\n";
-					echo "	  <changefreq>".$famlist_update."</changefreq>\n";
-					echo "	  <priority>0.".$famlist_priority."</priority>\n";
-					echo "   </url>\n";
-				}
+	if (isset($fam_lists)) {
+		foreach(get_indilist_salpha($SHOW_MARRIED_NAMES, true, PGV_GED_ID) as $letter) {
+			if ($letter!='@') {
+				echo "   <url>\n";
+				echo "	  <loc>".$SERVER_URL."famlist.php?alpha=".urlencode($letter)."&amp;ged=".urlencode($gedcom_name)."</loc>\n";
+				echo "	  <changefreq>".$famlist_update."</changefreq>\n";
+				echo "	  <priority>0.".$famlist_priority."</priority>\n";
+				echo "   </url>\n";
 			}
 		}
+	}
 
-		if (isset($indi_lists)) {
-			foreach (get_indilist_salpha($SHOW_MARRIED_SURNAMES, false, PHP_GED_ID) as $letter) {
-				if ($letter!='@') {
-					echo "   <url>\n";
-					echo "	  <loc>".$SERVER_URL."indilist.php?alpha=".urlencode($letter)."&amp;ged=".urlencode($gedcom_name)."</loc>\n";
-					echo "	  <changefreq>".$indilist_update."</changefreq>\n";
-					echo "	  <priority>0.".$indilist_priority."</priority>\n";
-					echo "   </url>\n";
-				}
+	if (isset($indi_lists)) {
+		foreach (get_indilist_salpha($SHOW_MARRIED_NAMES, false, PGV_GED_ID) as $letter) {
+			if ($letter!='@') {
+				echo "   <url>\n";
+				echo "	  <loc>".$SERVER_URL."indilist.php?alpha=".urlencode($letter)."&amp;ged=".urlencode($gedcom_name)."</loc>\n";
+				echo "	  <changefreq>".$indilist_update."</changefreq>\n";
+				echo "	  <priority>0.".$indilist_priority."</priority>\n";
+				echo "   </url>\n";
 			}
+		}
 	}
 	echo "</urlset>";
 	exit;
