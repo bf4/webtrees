@@ -189,7 +189,7 @@ case 'getvar':
 case 'update':
 	$xref=safe_REQUEST($_REQUEST,'xref', PGV_REGEX_XREF);
 	if ($xref) {
-		$gedrec=safe_REQUEST($_REQUEST,'gedrec', '.*'); // raw data may contain any characters
+		$gedrec=safe_REQUEST($_REQUEST,'gedrec', PGV_REGEX_UNSAFE); // raw data may contain any characters
 		if ($gedrec) {
 			if (empty($_SESSION['readonly']) && PGV_USER_CAN_EDIT && displayDetailsById($xref)) {
 				$gedrec = preg_replace(array("/\\\\+r/","/\\\\+n/"), array("\r","\n"), $gedrec);

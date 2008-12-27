@@ -10,6 +10,7 @@
 
 
 Version 4.2.0
+ - Fixed: [ 2459204 ] unable to update with GDBI (fisharebest)
  - Added: [ 2154522 ] SMTP w/ phpMailer [followup to 1869063] (wooc)
  - Added: [ 1869063 ] SMTP mail via PHPMailer added to functions_mail.php (wooc)
  - Fixed: [ 2457278 ] Advanced search doesn't work right (canajun2eh)
