@@ -32,6 +32,9 @@ if (!defined('PGV_PHPGEDVIEW')) {
 }
 
 $pgv_lang["exact"]				= "בדיוק";
+$pgv_lang["begins_with"]			= "מתחיל ב-";
+$pgv_lang["contains"]				= "כולל"; 
+$pgv_lang["sounds_like"]			= "נשמע כמו";
 $pgv_lang["advanced_search"] 		= "חיפוש מתקדם"; 
 $pgv_lang["more_fields"]			= "הוסף עוד שדות"; 
 $pgv_lang["install_step_8"] 			= "התחל"; 
@@ -95,10 +98,10 @@ $pgv_lang["enter_terms"]			= "הכנס תנאי חיפוש";
 $pgv_lang["search_asso_label"]		= "שותפים";
 $pgv_lang["search_asso_text"]		= "הראה אנשים/משפחות קשורים";
 $pgv_lang["search_DM"]			= "דאיטש-מוקוטוף";
-$pgv_lang["search_fams"]			= "שמות משפחה של משפחות"; 
+$pgv_lang["search_fams"]			= "משפחות"; 
 $pgv_lang["search_gedcom"]			= "חפש מאגרי נתונים";
 $pgv_lang["search_geds"]			= "מאגרי נתונים בהם יש לחפש";
-$pgv_lang["search_indis"]			= "שמות משפחה של אנשים"; 
+$pgv_lang["search_indis"]			= "אנשים"; 
 $pgv_lang["search_inrecs"]			= "חפש";
 $pgv_lang["search_prtall"]			= "כל השמות";
 $pgv_lang["search_prthit"]			= "שמות שנמצאו";
@@ -653,8 +656,6 @@ $pgv_lang["years2"]			= "שנים";	// 2 שנים
 $pgv_lang["day1"]			= "יום";
 $pgv_lang["month1"]			= "חודש";
 $pgv_lang["year1"]			= "שנה";
-$pgv_lang["quarters"]			= "רבעונים";
-$pgv_lang["half_year"]			= "חצי שנה"; 
 $pgv_lang["after_death"]        		= "לאחר הפטירה"; 
 $pgv_lang["at_death_day"]      	= "ביום הפטירה";
 $pgv_lang["timeline_title"]		= "תרשים קו הזמן של PhpGedView";
@@ -1177,7 +1178,8 @@ $pgv_lang["pls_note07"]		= "~#pgv_lang[user_verify]#~<br /><br />כדי לאשר
 $pgv_lang["pls_note08"]		= "הנתונים על המשתמש <span dir=\"ltr\"><b>#user_name#</b></span> נבדקו.";
 
 $pgv_lang["mail03_line01"]		= "שלום המנהלן ...";
-$pgv_lang["mail03_line02"]		= "המשתמש <span dir=\"ltr\">#newuser[username]# (#newuser[fullname]#)</span> אישר את נתוני הרישום שלו.";
+$pgv_lang["mail03_line02"]		= "המשתמש <span dir=\"ltr\">#newuser[username]# - #newuser[fullname]#</span> אישר את נתוני הרישום שלו.";
+
 $pgv_lang["mail03_line03"]		= "השתמש בקישור מתחת כדי להתחבר לאתר שלך, לעריכת נתוני המשתמש של המבקש, ובכך לאפשר למבקש להתחבר לאתר שלך.";
 $pgv_lang["mail03_line03a"]		= "לא נדרשת פעולה מצידך; המשתמש יכול עכשיו להתחבר.";
 $pgv_lang["mail03_subject"]		= "משתמש חדש ב-#SERVER_NAME#";
@@ -1619,9 +1621,18 @@ $pgv_lang["stat_302_cgp"]		= "תקופות - סמן הערכים של תקופו
 //$pgv_lang["statmess1"]		 = "<b>הכניסות הבאות מתייחסות לפרמטרי ציר ה-X וציר ה-Y של התרשים שמעל</b>";
 $pgv_lang["statar_xgp"]		 = "גבולות לתקופות:";
 $pgv_lang["statar_xgl"]		 = "גבולות לגילים:";
-$pgv_lang["statar_xgm"]		 = "גבולות לחודשים:";  
+$pgv_lang["statar_xgm"]		 = "גבולות לחודשים:";
 $pgv_lang["statar_xga"]		 = "גבולות למספרים:";
 $pgv_lang["statar_zgp"]		 = "גבולות לתקופות:";
+$pgv_lang["less"]			= "פחות מ-";
+$pgv_lang["over"]			= "מעל";
+$pgv_lang["interval"]			= "מרווח";
+$pgv_lang["aft_marr"]			= "חודשים אחרי הנישואין";
+$pgv_lang["bef_marr"]			= "חודשים לפני ואחרי הנישואין";
+$pgv_lang["quarters"]			= "רבעונים אחרי הנישואין";
+$pgv_lang["half_year"]			= "חצי שנה אחרי הנישואין";
+$pgv_lang["one_child"]		= "מרווח ילד אחד";
+$pgv_lang["two_children"]		= "מרווח שני ילדים";
 $pgv_lang["statreset"]			= "ברירת מחדל";
 $pgv_lang["statsubmit"]		= "הצג תרשים";
 
