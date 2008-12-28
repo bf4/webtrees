@@ -265,7 +265,8 @@ if ($action=="update") {
 	//-- check for name update
 	if (isset($_REQUEST['GIVN'])) $GIVN = $_REQUEST['GIVN'];
 	if (isset($_REQUEST['SURN'])) $SURN = $_REQUEST['SURN'];
-	if (isset($GIVN) || isset($SURN)) {
+	if (isset($_REQUEST['MSURN'])) $MSURN = $_REQUEST['MSURN'];
+	if (isset($GIVN) || isset($SURN) || isset($MSURN)) {
 		$namerec = trim(get_sub_record(1, "1 NAME", $gedrec));
 		if (!empty($namerec)) {
 			if (isset($GIVN)) {
@@ -290,6 +291,11 @@ if ($action=="update") {
 				if (preg_match("/2 SURN/", $namerec)>0) $namerec = preg_replace("/2 SURN.*/", "2 SURN $SURN\r\n", $namerec);
 				else $namerec.="\r\n2 SURN $SURN";
 			}
+			//-- update the married surname
+			if (!isset($SURN) || isset($MSURN) && $MSURN!=$SURN) {
+				if (preg_match("/2 _MARNM/", $namerec)>0) $namerec = preg_replace("/2 _MARNM.*/", "2 _MARNM $MSURN\r\n", $namerec);
+				else $namerec.="\r\n2 _MARNM $MSURN";
+			}
 			$pos1 = strpos($gedrec, "1 NAME");
 			if ($pos1!==false) {
 				$pos2 = strpos($gedrec, "\n1", $pos1+5);
@@ -301,7 +307,7 @@ if ($action=="update") {
 				}
 			}
 		}
-		else $gedrec .= "\r\n1 NAME $GIVN /$SURN/\r\n2 GIVN $GIVN\r\n2 SURN $SURN";
+		else $gedrec .= "\r\n1 NAME $GIVN /$SURN/\r\n2 GIVN $GIVN\r\n2 SURN $SURN\r\n2 _MARNM $MSURN";
 		$updated = true;
 //		print "<pre>NAME\n".$gedrec."</pre>\n";
 	}
@@ -536,6 +542,7 @@ if ($action=="update") {
 
 		if (isset($_REQUEST['SGIVN'.$i])) $sgivn = $_REQUEST['SGIVN'.$i];
 		if (isset($_REQUEST['SSURN'.$i])) $ssurn = $_REQUEST['SSURN'.$i];
+		if (isset($_REQUEST['MSSURN'.$i])) $mssurn = $_REQUEST['MSSURN'.$i];
 		//--add new spouse name, birth
 		if (!empty($sgivn) || !empty($ssurn)) {
 			//-- first add the new spouse
@@ -543,6 +550,7 @@ if ($action=="update") {
 			$spouserec .= "1 NAME ".$sgivn." /".$ssurn."/\r\n";
 			if (!empty($sgivn)) $spouserec .= "2 GIVN ".$sgivn."\r\n";
 			if (!empty($ssurn)) $spouserec .= "2 SURN ".$ssurn."\r\n";
+			if (!empty($mssurn)) $spouserec .= "2 _MARNM ".$mssurn."\r\n";
 
 			if (isset($_REQUEST['HSGIVN'.$i])) $hsgivn = $_REQUEST['HSGIVN'.$i];
 			if (isset($_REQUEST['HSSURN'.$i])) $hssurn = $_REQUEST['HSSURN'.$i];
@@ -731,6 +739,7 @@ if ($action=="update") {
 	//--add new spouse name, birth, marriage
 	if (isset($_REQUEST['SGIVN'])) $SGIVN = $_REQUEST['SGIVN'];
 	if (isset($_REQUEST['SSURN'])) $SSURN = $_REQUEST['SSURN'];
+	if (isset($_REQUEST['MSSURN'])) $MSSURN = $_REQUEST['MSSURN'];
 	if (isset($_REQUEST['SSEX'])) $SSEX = $_REQUEST['SSEX'];
 	if (!empty($SGIVN) || !empty($SSURN)) {
 		//-- first add the new spouse
@@ -738,6 +747,7 @@ if ($action=="update") {
 		$spouserec .= "1 NAME $SGIVN /$SSURN/\r\n";
 		if (!empty($SGIVN)) $spouserec .= "2 GIVN $SGIVN\r\n";
 		if (!empty($SSURN)) $spouserec .= "2 SURN $SSURN\r\n";
+		if (!empty($MSSURN)) $spouserec .= "2 _MARNM $MSSURN\r\n";
 		if (!empty($SSEX)) $spouserec .= "1 SEX $SSEX\r\n";
 		if (isset($_REQUEST['BDATE'])) $BDATE = $_REQUEST['BDATE'];
 		if (isset($_REQUEST['BPLAC'])) $BPLAC = $_REQUEST['BPLAC'];
@@ -775,10 +785,11 @@ if ($action=="update") {
 		$gedrec .= "\r\n1 FAMS @$newfamid@\r\n";
 		$updated = true;
 	}
+	if (isset($_REQUEST['MARRY'])) $MARRY = $_REQUEST['MARRY'];
 	if (isset($_REQUEST['MDATE'])) $MDATE = $_REQUEST['MDATE'];
 	if (isset($_REQUEST['MPLAC'])) $MPLAC = $_REQUEST['MPLAC'];
 	if (isset($_REQUEST['MRESN'])) $MRESN = $_REQUEST['MRESN'];
-	if (!empty($MDATE)||!empty($MPLAC)) {
+	if (!empty($MDATE)||!empty($MPLAC)||!empty($MARRY)) {
 		if (empty($newfamid)) {
 			$famrec = "0 @REF@ FAM\r\n";
 			if (preg_match("/1 SEX M/", $gedrec)>0) $famrec .= "1 HUSB @$pid@\r\n";
@@ -787,7 +798,12 @@ if ($action=="update") {
 			$gedrec .= "\r\n1 FAMS @$newfamid@";
 			$updated = true;
 		}
-		$factrec = "1 MARR\r\n";
+		if (!empty($MDATE)||!empty($MPLAC)) {
+			$factrec = "1 MARR\r\n";
+		}
+		else if (!empty($MARRY)) {
+			$factrec = "1 MARR Y\r\n";
+		}
 		$MDATE = check_input_date($MDATE);
 		if (!empty($MDATE)) $factrec .= "2 DATE $MDATE\r\n";
 		if (!empty($MPLAC)) $factrec .= "2 PLAC $MPLAC\r\n";
@@ -1287,6 +1303,7 @@ if ($action=="choosepid") {
 		//}
 	$GIVN = "";
 	$SURN = "";
+	$MSURN = "";
 	$subrec = get_sub_record(1, "1 NAME", $gedrec);
 	if (!empty($subrec)) {
 		$ct = preg_match("/2 GIVN (.*)/", $subrec, $match);
@@ -1304,6 +1321,15 @@ if ($action=="choosepid") {
 			if ($ct>0) {
 				$st = preg_match("~/(.*)/~", $match[1], $smatch);
 				if ($st>0) $SURN = $smatch[1];
+			}
+		}
+		$ct = preg_match("/2 _MARNM (.*)/", $subrec, $match);
+		if ($ct>0) $MSURN = trim($match[1]);
+		else {
+			$ct = preg_match("/1 NAME (.*)/", $subrec, $match);
+			if ($ct>0) {
+				$st = preg_match("~/(.*)/~", $match[1], $smatch);
+				if ($st>0) $MSURN = $smatch[1];
 			}
 		}
 		$HGIVN = "";
@@ -1537,6 +1563,13 @@ function checkform(frm) {
 <tr>
 	<td class="descriptionbox"><?php print_help_link("edit_surname_help", "qm"); print $factarray["SURN"];?></td>
 	<td class="optionbox" colspan="3"><input size="50" type="text" tabindex="<?php print $tabkey; ?>" name="SURN" value="<?php print PrintReady(htmlspecialchars($SURN,ENT_COMPAT,'UTF-8')); ?>" /></td>
+</tr>
+<?php $tabkey++; ?>
+<?php } ?>
+<?php if (!$NAME_REVERSE) { ?>
+<tr>
+	<td class="descriptionbox"><?php print_help_link("edit_surname_help", "qm"); print $factarray["_MARNM"];?></td>
+	<td class="optionbox" colspan="3"><input size="50" type="text" tabindex="<?php print $tabkey; ?>" name="MSURN" value="<?php print PrintReady(htmlspecialchars($MSURN,ENT_COMPAT,'UTF-8')); ?>" /></td>
 </tr>
 <?php $tabkey++; ?>
 <?php } ?>
@@ -1905,6 +1938,13 @@ for($i=1; $i<=count($sfams); $i++) {
 </tr>
 <?php $tabkey++; ?>
 <?php } ?>
+<?php if (!$NAME_REVERSE) { ?>
+<tr>
+	<td class="descriptionbox"><?php print_help_link("edit_surname_help", "qm"); print $factarray["_MARNM"];?></td>
+	<td class="optionbox" colspan="3"><input size="50" type="text" tabindex="<?php print $tabkey; ?>" name="MSSURN<?php echo $i; ?>" /></td>
+</tr>
+<?php $tabkey++; ?>
+<?php } ?>
 <?php if ($NAME_REVERSE) { ?>
 <tr>
 	<td class="descriptionbox"><?php print_help_link("edit__HEB_SURN_help", "qm"); print $pgv_lang["hebrew_surn"];?></td>
@@ -2264,6 +2304,13 @@ if (empty($child_surname)) $child_surname = "";
 </tr>
 <?php $tabkey++; ?>
 <?php } ?>
+<?php if (!$NAME_REVERSE) { ?>
+<tr>
+	<td class="descriptionbox"><?php print_help_link("edit_surname_help", "qm"); print $factarray["_MARNM"];?></td>
+	<td class="optionbox" colspan="3"><input size="50" type="text" tabindex="<?php print $tabkey; ?>" name="MSSURN" /></td>
+</tr>
+<?php $tabkey++; ?>
+<?php } ?>
 <?php if ($NAME_REVERSE) { ?>
 <tr>
 	<td class="descriptionbox"><?php print_help_link("edit__HEB_SURN_help", "qm"); print $pgv_lang["hebrew_surn"];?></td>
@@ -2351,6 +2398,13 @@ if (empty($child_surname)) $child_surname = "";
 	<td class="topbottombar" colspan="4"><?php print_help_link("quick_update_marriage_help", "qm"); print $factarray["MARR"]; ?></td>
 </tr>
 <tr><td class="descriptionbox">
+	<?php print_help_link("quick_update_marriage_help", "qm"); print $factarray["MARR"];?>
+	</td>
+	<td class="optionbox" colspan="3"><input type="checkbox" dir="ltr" tabindex="<?php print $tabkey; ?>" size="15" name="MARRY" id="MARRY">
+		<label for="MARRY"><?php print $pgv_lang["yes"]; ?></label></td>
+	</tr>
+	<?php $tabkey++; ?>
+	<tr><td class="descriptionbox">
 		<?php print_help_link("def_gedcom_date_help", "qm"); print $factarray["DATE"];?>
 	</td>
 	<td class="optionbox" colspan="3"><input type="text" dir="ltr" tabindex="<?php print $tabkey; ?>" size="15" name="MDATE" id="MDATE" onblur="valid_date(this);" /><?php print_calendar_popup("MDATE");?></td>
