@@ -59,7 +59,7 @@ function getting_started_block($block = true, $config="", $side, $index) {
 	$title = $pgv_lang["install_step_8"];
 	$content = $pgv_lang['get_started_instructions'];
 	$content .= '<ul>';
-	$content .= '<li style="padding: 5px;"><a class="imenu" href="uploadgedcom.php">'.$pgv_lang['upload_a_gedcom'].'</a></li>';
+	$content .= '<li style="padding: 5px;"><a class="imenu" href="editconfig_gedcom.php?source=upload_form">'.$pgv_lang['upload_a_gedcom'].'</a></li>';
 	// -- not read yet, need to design a new page for it
 	// $content .= '<li style="padding: 5px;"><a class="imenu" href="#">'.$pgv_lang['start_entering'].'</a></li>';
 	$content .= '<li style="padding: 5px;"><a class="imenu" href="editconfig_gedcom.php?source=add_form">'.$pgv_lang['add_gedcom_from_path'].'</a></li>';
