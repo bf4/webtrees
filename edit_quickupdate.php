@@ -2305,13 +2305,13 @@ if (empty($child_surname)) $child_surname = "";
 	<?php $tabkey++; ?>
 </tr>
 <tr>
-	<td class="descriptionbox"><?php print_help_link("def_gedcom_date_help", "qm"); echo $factarray["CHR:DATE"];?>
+	<td class="descriptionbox"><?php print_help_link("def_gedcom_date_help", "qm"); echo $factarray["DEAT:DATE"];?>
 	</td>
-	<td class="optionbox" colspan="3"><input type="text" dir="ltr" tabindex="<?php echo $tabkey; ?>" size="15" name="C<?php echo $i; ?>CHDATE" id="C<?php echo $i; ?>CHDATE" onblur="valid_date(this);" />&nbsp;<?php print_calendar_popup("C{$i}CHDATE");?></td>
+	<td class="optionbox" colspan="3"><input type="text" dir="ltr" tabindex="<?php echo $tabkey; ?>" size="15" name="C<?php echo $i; ?>DDATE" id="C<?php echo $i; ?>DDATE" onblur="valid_date(this);" />&nbsp;<?php print_calendar_popup("C{$i}DDATE");?></td>
 	<?php $tabkey++; ?>
 	</tr>
 	<tr>
-	<td class="descriptionbox"><?php print_help_link("edit_PLAC_help", "qm"); echo $factarray["CHR:PLAC"];?></td>
+	<td class="descriptionbox"><?php print_help_link("edit_PLAC_help", "qm"); echo $factarray["DEAT:PLAC"];?></td>
 	<td class="optionbox" colspan="3"><input size="30" type="text" tabindex="<?php echo $tabkey; ?>" name="C<?php echo $i; ?>DPLAC" id="c<?php echo $i; ?>dplace" /><img src="<?php echo $PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"];?>" alt="" />
 	<?php print_findplace_link("c".$i."dplace"); ?>
 	</td>
