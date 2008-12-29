@@ -10,6 +10,7 @@
 
 
 Version 4.2.0
+ - Fixed: [ 2475261 ] client.php?action=getxref&position=all fails (fisharebest)
  - Fixed: [ 2474873 ] User Journal entry gets added as GEDCOM News article (canajun2eh)
  - Changed: Removed "Skip Cleanup" button on Upload GEDCOM page (canajun2eh)
  - Fixed: [ 2474045 ] Several problems when uploading GEDCOM (canajun2eh)

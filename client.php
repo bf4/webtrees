@@ -319,7 +319,7 @@ case 'soundex':
 	}
 	exit;
 case 'getxref':
-	$position=safe_REQUEST($_REQUEST,'position', array('first','last','next','prev','new'));
+	$position=safe_REQUEST($_REQUEST,'position', array('first','last','next','prev','new','all'));
 	$type=safe_REQUEST($_REQUEST,'type', array('INDI','FAM','SOUR','REPO','NOTE','OBJE','OTHER'));
 	$xref=safe_REQUEST($_REQUEST,'xref', PGV_REGEX_XREF);
 
@@ -355,6 +355,36 @@ case 'getxref':
 		$xref=get_prev_xref($xref, $GED_ID);
 		addDebugLog($action." type=$type position=$position SUCCESS\n$xref");
 		print "SUCCESS\n$xref\n";
+		break;
+	case 'all':
+		switch($type) {
+			case "INDI":
+				$sql="SELECT i_id FROM {$TBLPREFIX}individuals WHERE i_file={$GED_ID} ORDER BY i_id";
+				break;
+			case "FAM":
+				$sql="SELECT f_id FROM {$TBLPREFIX}families WHERE f_file={$GED_ID} ORDER BY f_id";
+				break;
+			case "SOUR":
+				$sql="SELECT s_id FROM {$TBLPREFIX}sources WHERE s_file={$GED_ID} ORDER BY s_id";
+				break;
+			case "OBJE":
+				$sql="SELECT m_media FROM {$TBLPREFIX}media WHERE m_gedfile={$GED_ID} ORDER BY m_media";
+				break;
+			case "OTHER":
+				$sql="SELECT o_id FROM {$TBLPREFIX}other WHERE o_file={$GED_ID} AND o_type NOT IN ('REPO', 'NOTE') ORDER BY o_id";
+				break;
+			default:
+				$sql="SELECT o_id FROM {$TBLPREFIX}other WHERE o_file={$GED_ID} AND o_type='{$type}' ORDER BY o_id";
+				break;
+		}
+		$res = dbquery($sql);
+		print "SUCCESS\n";
+		while ($row = $res->fetchRow()) {
+			print "$row[0]\n";
+		}
+		$res->free();
+		addDebugLog($action." type=$type position=$position ".$msg_out);
+		print $msg_out;
 		break;
 	case 'new':
 		if (empty($_SESSION['readonly']) && PGV_USER_CAN_EDIT) {
