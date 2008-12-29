@@ -383,8 +383,7 @@ case 'getxref':
 			print "$row[0]\n";
 		}
 		$res->free();
-		addDebugLog($action." type=$type position=$position ".$msg_out);
-		print $msg_out;
+		addDebugLog($action." type=$type position=$position ");
 		break;
 	case 'new':
 		if (empty($_SESSION['readonly']) && PGV_USER_CAN_EDIT) {
