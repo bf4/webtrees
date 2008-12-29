@@ -327,7 +327,6 @@ $pgv_lang["select_an_option"]			= "Wählen Sie bitte eine der unten aufgeführte
 $pgv_lang["SERVER_URL"]					= "PhpGedView URL";
 $pgv_lang["show_phpinfo"]				= "PHPInfo-Seite zeigen";
 $pgv_lang["siteadmin"]					= "Seiten Verwalter";
-$pgv_lang["skip_cleanup"]				= "Korrigieren überspringen";
 $pgv_lang["sqlite"]						= "SQLite";
 $pgv_lang["sybase"]						= "Sybase";
 $pgv_lang["sync_gedcom"]				= "Benutzer Einstellungen mit den GEDCOM Daten synchronisieren";

@@ -83,7 +83,6 @@ if (!isset ($exists)) $exists = false;
 if (!isset ($config_gedcom)) $config_gedcom = "";
 if (!isset ($continue)) $continue = false;
 if (!isset ($import_existing)) $import_existing = false;
-if (!isset ($skip_cleanup)) $skip_cleanup = false;
 if (!isset($utf8convert)) $utf8convert = "no";
 if (isset($_REQUEST['keepmedia']) && $_REQUEST['keepmedia']=='yes') $keepmedia=true;
 else $keepmedia = false;
@@ -162,17 +161,11 @@ if ($check == "cancel_upload") {
 		@ unlink($INDEX_DIRECTORY.$GEDFILENAME);
 	}
 	// NOTE: Cleanup everything no longer needed
-	if (isset ($bakfile) && file_exists($bakfile))
-	unlink($bakfile);
-	if ($verify)
+	if (isset($bakfile) && file_exists($bakfile)) unlink($bakfile);
 	$verify = "";
-	if ($GEDFILENAME)
-	unset ($GEDFILENAME);
-	if ($startimport)
+	unset($GEDFILENAME);
 	$startimport = "";
-	if ($import)
 	$import = false;
-	if ($cleanup_needed)
 	$cleanup_needed = false;
 	$noupload = true;
 	header("Location: editgedcoms.php");
@@ -370,11 +363,8 @@ if (!empty ($error)) {
 <td class="optionbox" dir="ltr">
 <?php
 
-if (isset ($GEDFILENAME))
-print PrintReady($path.$GEDFILENAME);
-else
-if (isset ($UPFILE))
-print PrintReady($UPFILE["name"]);
+if (isset($GEDFILENAME)) print PrintReady($path.$GEDFILENAME);
+else if (isset($UPFILE)) print PrintReady($UPFILE["name"]);
 else {
 	print "<input name=\"UPFILE\" type=\"file\" size=\"60\" />";
 	if (!$filesize = ini_get('upload_max_filesize'))
@@ -437,8 +427,12 @@ print "</td></tr>";
 if ($verify == "verify_gedcom") {
 	// NOTE: Check if GEDCOM has been imported into DB
 	$all_record_counts=count_all_records(get_id_from_gedcom($GEDFILENAME));
-	$imported=!empty($all_record_counts);
-	if ($imported || $bakfile != "") {
+	$totalRecords = 0;
+	foreach ($all_record_counts as $recordCount) {
+		$totalRecords += $recordCount;
+	}
+	$imported = !empty($totalRecords);
+	if ($imported || (!empty($bakfile) && file_exists($bakfile))) {
 		// NOTE: If GEDCOM exists show warning
 		print "<tr><td class=\"topbottombar $TEXT_DIRECTION\" colspan=\"2\">";
 		print "<a href=\"javascript: ".$pgv_lang["verify_gedcom"]."\" onclick=\"expand_layer('verify_gedcom');return false\"><img id=\"verify_gedcom_img\" src=\"".$PGV_IMAGE_DIR."/";
@@ -537,7 +531,7 @@ if ($verify == "validate_form") {
 	if (!empty ($error))
 	print "<span class=\"error\">$error</span>\n";
 
-	if ($import != true && $skip_cleanup != $pgv_lang["skip_cleanup"]) {
+	if ($import != true) {
 		require_once ("includes/functions/functions_tools.php");
 		if ($override == "yes") {
 			copy($bakfile, $GEDCOMS[$GEDFILENAME]["path"]);
@@ -563,24 +557,16 @@ if ($verify == "validate_form") {
 		//-- read the gedcom and test it in 8KB chunks
 		while (!feof($fp)) {
 			$fcontents = fread($fp, 1024 * 8);
-			if (!$l_BOMcleanup && need_BOM_cleanup())
-			$l_BOMcleanup = true;
-			if (!$l_headcleanup && need_head_cleanup())
-			$l_headcleanup = true;
-			if (!$l_macfilecleanup && need_macfile_cleanup())
-			$l_macfilecleanup = true;
-			if (!$l_lineendingscleanup && need_line_endings_cleanup())
-			$l_lineendingscleanup = true;
-			if (!$l_placecleanup && ($placesample = need_place_cleanup()) !== false)
-			$l_placecleanup = true;
-			if (!$l_datecleanup && ($datesample = need_date_cleanup()) !== false)
-			$l_datecleanup = true;
-			if (!$l_isansi && is_ansi())
-			$l_isansi = true;
+			if (!$l_BOMcleanup && need_BOM_cleanup()) $l_BOMcleanup = true;
+			if (!$l_headcleanup && need_head_cleanup()) $l_headcleanup = true;
+			if (!$l_macfilecleanup && need_macfile_cleanup()) $l_macfilecleanup = true;
+			if (!$l_lineendingscleanup && need_line_endings_cleanup()) $l_lineendingscleanup = true;
+			if (!$l_placecleanup && ($placesample = need_place_cleanup()) !== false) $l_placecleanup = true;
+			if (!$l_datecleanup && ($datesample = need_date_cleanup()) !== false) $l_datecleanup = true;
+			if (!$l_isansi && is_ansi()) $l_isansi = true;
 		}
 		fclose($fp);
 
-		if (!isset ($cleanup_needed))
 		$cleanup_needed = false;
 		if (!$l_datecleanup && !$l_isansi && !$l_BOMcleanup && !$l_headcleanup && !$l_macfilecleanup && !$l_placecleanup && !$l_lineendingscleanup) {
 			print $pgv_lang["valid_gedcom"];
@@ -673,12 +659,10 @@ if ($verify == "validate_form") {
 				print "</table>\n";
 			}
 		}
-	} else
-	if (!$cleanup_needed) {
+	} else if (!$cleanup_needed) {
 		print $pgv_lang["valid_gedcom"];
 		$import = true;
-	} else
-	$import = true;
+	} else $import = true;
 	?>
 	<input type = "hidden" name="GEDFILENAME" value="<?php if (isset($GEDFILENAME)) print $GEDFILENAME; ?>" />
 	<input type = "hidden" name="verify" value="validate_form" />
@@ -1184,10 +1168,6 @@ if ($stage == 1) {
 
 	if ($startimport != "true")
 	print "<input type=\"submit\" name=\"continue\" value=\"".$pgv_lang["del_proceed"]."\" />&nbsp;";
-	if ($cleanup_needed && $skip_cleanup != $pgv_lang["skip_cleanup"]) {
-		print_help_link("skip_cleanup_help", "qm", "skip_cleanup");
-		print "<input type=\"submit\" name=\"skip_cleanup\" value=\"".$pgv_lang["skip_cleanup"]."\" />&nbsp;\n";
-	}
 	if ($verify && $startimport != "true")
 	print "<input type=\"button\" name=\"cancel\" value=\"".$pgv_lang["cancel"]."\" onclick=\"document.configform.override.value='no'; document.configform.no_upload.value='cancel_upload'; document.configform.submit(); \" />";
 	?></td>
