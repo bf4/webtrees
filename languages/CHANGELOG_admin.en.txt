@@ -44,6 +44,7 @@ VERSION 4.2.0
 
 ?$pgv_lang["whatever"]                dd Monthname, year		Change codes and comments
 -----------------------------------------------------------------------------------------
+-$pgv_lang["skip_cleanup"]							28 Dec 2008				D
 -$pgv_lang["manage_gedcoms"]						25 Dec 2008				D	Removed first occurrence of this var.
 *$pgv_lang["PGV_SMTP_HOST"]							21 Dec 2008				W
 *$pgv_lang["PGV_SMTP_HELO"]							21 Dec 2008				W

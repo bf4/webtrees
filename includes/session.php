@@ -338,13 +338,14 @@ if (file_exists($INDEX_DIRECTORY."gedcoms.php")) {
 $DBPASS = str_replace(array("\\\\", "\\\"", "\\\$"), array("\\", "\"", "\$"), $DBPASS); // remove escape codes before using PW
 $PGV_DB_CONNECTED = check_db();
 
+$logout=safe_GET_bool('logout');
 //-- try to set the active GEDCOM
 if (!isset($DEFAULT_GEDCOM)) $DEFAULT_GEDCOM = "";
 if (isset($_SESSION["GEDCOM"])) $GEDCOM = $_SESSION["GEDCOM"];
 if (isset($_REQUEST["GEDCOM"])) $GEDCOM = trim($_REQUEST["GEDCOM"]);
 if (isset($_REQUEST["ged"])) $GEDCOM = trim($_REQUEST["ged"]);
 if (!empty($GEDCOM) && is_int($GEDCOM)) $GEDCOM = get_gedcom_from_id($GEDCOM);
-if (empty($GEDCOM) || empty($GEDCOMS[$GEDCOM])) $GEDCOM=$DEFAULT_GEDCOM;
+if ($logout || empty($GEDCOM) || empty($GEDCOMS[$GEDCOM])) $GEDCOM=$DEFAULT_GEDCOM;
 if ((empty($GEDCOM))&&(count($GEDCOMS)>0)) {
          foreach($GEDCOMS as $ged_file=>$ged_array) {
 	         $GEDCOM = $ged_file;
@@ -452,55 +453,53 @@ foreach ($language_settings as $key => $value) {
 	$pgv_lang["lang_name_$key"] =$value["pgv_lang_self"];
 }
 
-/**
- * The following business rules are used to choose currently active language
- * 1. Use the language in visitor's browser settings if it is supported in the PGV site.
- *    If it is not supported, use the GEDCOM configuration setting.
- * 2. If the user has chosen a language from the list or the flags, use their choice.
- * 3. When the user logs in, switch to the language in their user profile unless the
- *    user made a language choice prior to logging in.
- * 4. When a user logs out their current language choice is ignored and the site will
- *    revert back to the language they first saw when arriving at the site according to
- *    rule 1.
- */
-$logout=safe_GET_bool('logout');
 if ($logout) unset($_SESSION["CLANGUAGE"]);  // user is about to log out
 
-if (($ENABLE_MULTI_LANGUAGE)&&(empty($_SESSION["CLANGUAGE"]))&&(empty($SEARCH_SPIDER))) {
-	if (isset($HTTP_ACCEPT_LANGUAGE)) $accept_langs = $HTTP_ACCEPT_LANGUAGE;
-	else if (!empty($_SERVER['HTTP_ACCEPT_LANGUAGE'])) $accept_langs = $_SERVER['HTTP_ACCEPT_LANGUAGE'];
-	if (isset($accept_langs)) {
-		// Seach list of supported languages for this Browser's preferred page languages
-		$langs_array = preg_split("/(,\s*)|(;\s*)/", $accept_langs);
-		$foundLanguage = false;
-		foreach ($langs_array as $browserLang) {
-			$browserLang = strtolower($browserLang).";";
-			foreach ($pgv_lang_use as $language => $active) {
-				if (!$active) continue;
-				if (strpos($lang_langcode[$language], $browserLang) === false) continue;
-				$LANGUAGE = $language;
-				$foundLanguage = true;
-				break;
-			}
-			if ($foundLanguage) break;
+// -- Determine which of PGV's supported languages is topmost in the browser's language list
+if ((!$CONFIGURED || empty($LANGUAGE) || $ENABLE_MULTI_LANGUAGE) && empty($_SESSION["CLANGUAGE"]) && empty($SEARCH_SPIDER)) {
+	$acceptLangs = 'en';
+	if (isset($HTTP_ACCEPT_LANGUAGE)) $acceptLangs = $HTTP_ACCEPT_LANGUAGE;
+	else if (!empty($_SERVER['HTTP_ACCEPT_LANGUAGE'])) $acceptLangs = $_SERVER['HTTP_ACCEPT_LANGUAGE'];
+	// Seach list of supported languages for this Browser's preferred page languages
+	$acceptLangsList = preg_split("/(,\s*)|(;\s*)/", $acceptLangs);
+	$preferredLang = '';
+	foreach ($acceptLangsList as $browserLang) {
+		$browserLang = strtolower(trim($browserLang)).";";
+		foreach ($pgv_lang_use as $language => $active) {
+			if ($CONFIGURED && !$active) continue;		// don't consider any language marked as "inactive"
+			if (strpos($lang_langcode[$language], $browserLang) === false) continue;
+			$preferredLang = $language;		// we have a match
+			break;
 		}
+		if (!empty($preferredLang)) break;		// no need to look further: a match was found
 	}
 }
+if (empty($preferredLang)) $preferredLang = 'english';		// If nothing matches, default to English
+
+// -- If the GEDCOM config doesn't specify a default, use the browser's topmost preference
+if (!$CONFIGURED || empty($LANGUAGE)) $LANGUAGE = $preferredLang;
+
+// -- If the user's profile specifies a preference, use that
+$thisUser = getUserId();
+if ($thisUser && !$logout) $LANGUAGE = get_user_setting($thisUser, 'language');
+
 $deflang = $LANGUAGE;
 
+// -- If the user previously selected a language from the menu, use that
 if (empty($SEARCH_SPIDER)) {
 	if (!empty($_SESSION['CLANGUAGE'])) {
-		$CLANGUAGE=$_SESSION['CLANGUAGE'];
-	}
-	if (!empty($CLANGUAGE)) {
-		$LANGUAGE=$CLANGUAGE;
+		$LANGUAGE = $_SESSION['CLANGUAGE'];
+	} else {
+		$_SESSION['CLANGUAGE'] = $LANGUAGE;
 	}
 }
 
-if (($ENABLE_MULTI_LANGUAGE) && (empty($SEARCH_SPIDER))) {
-	if ((isset($_REQUEST['changelanguage']))&&($_REQUEST['changelanguage']=="yes")) {
-		if (!empty($_REQUEST['NEWLANGUAGE']) && isset($pgv_language[$_REQUEST['NEWLANGUAGE']])) {
-			$LANGUAGE=$_REQUEST['NEWLANGUAGE'];
+// -- Finally, we'll see whether the user has now selected a preferred language from the menu
+if ($ENABLE_MULTI_LANGUAGE && empty($SEARCH_SPIDER)) {
+	if (isset($_REQUEST['changelanguage']) && strtolower($_REQUEST['changelanguage'])=='yes') {
+		if (!empty($_REQUEST['NEWLANGUAGE']) && isset($pgv_language[strtolower($_REQUEST['NEWLANGUAGE'])])) {
+			$LANGUAGE=strtolower($_REQUEST['NEWLANGUAGE']);
+			$_SESSION['CLANGUAGE'] = $LANGUAGE;
 			unset($_SESSION["upcoming_events"]);
 			unset($_SESSION["todays_events"]);
 		}

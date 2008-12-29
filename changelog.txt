@@ -10,6 +10,11 @@
 
 
 Version 4.2.0
+ - Changed: Removed "Skip Cleanup" button on Upload GEDCOM page (canajun2eh)
+ - Fixed: [ 2474045 ] Several problems when uploading GEDCOM (canajun2eh)
+ - Fixed: [ 2474040 ] "Upload GEDCOM" option in Setup wizard doesn't work (canajun2eh)
+ - Fixed: [ 2473198 ] Logout doesn't go back to default GEDCOM (canajun2eh)
+ - Fixed: [ 2461403 ] Configured default language not being used (canajun2eh)
  - Fixed: [ 2459204 ] unable to update with GDBI (fisharebest)
  - Added: [ 2154522 ] SMTP w/ phpMailer [followup to 1869063] (wooc)
  - Added: [ 1869063 ] SMTP mail via PHPMailer added to functions_mail.php (wooc)

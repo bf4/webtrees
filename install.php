@@ -51,7 +51,7 @@ if (!empty($PGV_DB_CONNECTED) && adminUserExists()) {
 	}
 }
 
-loadLangFile("pgv_confighelp, pgv_help");
+loadLangFile('pgv_admin, pgv_confighelp, pgv_help');
 
 function install_checkdb() {
 	global $DBCONN,$DBHOST,$DBNAME,$DBPASS,$DBPERSIST,$DBPORT,$DBTYPE,$DBUSER,$DB_UTF8_COLLATION,$TBLPREFIX;
