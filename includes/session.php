@@ -347,13 +347,13 @@ if (empty($PHPGEDVIEW_EMAIL)) {
 	$PHPGEDVIEW_EMAIL="phpgedview-noreply@".preg_replace("/^www\./i", "", $_SERVER["SERVER_NAME"]);
 }
 
-require_once 'includes/functions/functions_print.php';
-require_once 'includes/functions/functions_rtl.php';
+require_once 'includes/functions_print.php';
+require_once 'includes/functions_rtl.php';
 
 if ($MULTI_MEDIA) {
-	require_once 'includes/functions/functions_mediadb.php';
+	require_once 'includes/functions_mediadb.php';
 }
-require_once 'includes/functions/functions_date.php';
+require_once 'includes/functions_date.php';
 
 if (empty($PEDIGREE_GENERATIONS)) {
 	$PEDIGREE_GENERATIONS=$DEFAULT_PEDIGREE_GENERATIONS;
