@@ -178,8 +178,7 @@ class DescendancyControllerRoot extends BaseController {
 	 * @param int $depth the descendancy depth to show
 	 */
 	function print_child_family(&$person, $depth, $label="1.", $gpid="") {
-		global $pgv_lang;
-		global $PGV_IMAGE_DIR, $PGV_IMAGES, $personcount;
+		global $personcount;
 
 		if (is_null($person)) return;
 		$families = $person->getSpouseFamilies();
@@ -187,12 +186,10 @@ class DescendancyControllerRoot extends BaseController {
 		foreach($families as $famid => $family) {
 			print_sosa_family($family->getXref(), "", -1, $label, $person->getXref(), $gpid, $personcount);
 			$personcount++;
-			//$children = get_children_ids($famids);
 			$children = $family->getChildren();
 			$i=1;
-
-			foreach ($children as $childid => $child) {
-			$this->print_child_family($child, $depth-1, $label.($i++).".", $person->getXref());
+			foreach ($children as $child) {
+				$this->print_child_family($child, $depth-1, $label.($i++).".", $person->getXref());
 			}
 		}
 	}
@@ -331,7 +328,7 @@ function print_family_descendancy(&$person, &$family, $depth) {
 		else print $factarray["NCHI"].": ".count($children);
 		print "</td></tr></table>";
 		print "</li>\r\n";
-		if ($depth>0) foreach ($children as $childid => $child) {
+		if ($depth>0) foreach ($children as $child) {
 			$personcount++;
 			$this->print_child_descendancy($child, $depth-1);
 		}

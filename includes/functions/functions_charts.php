@@ -266,7 +266,8 @@ function print_family_children($famid, $childid = "", $sosa = 0, $label="", $per
 	global $pgv_lang, $factarray, $pbwidth, $pbheight, $view, $show_famlink, $show_cousins;
 	global $PGV_IMAGE_DIR, $PGV_IMAGES, $show_changes, $pgv_changes, $GEDCOM, $SHOW_ID_NUMBERS, $TEXT_DIRECTION;
 
-	$children = get_children_ids($famid);
+	$family=Family::getInstance($famid);
+	$children=$family->getChildrenIds();
 	print "<table border=\"0\" cellpadding=\"0\" cellspacing=\"2\"><tr>";
 	if ($sosa>0) print "<td></td>";
 	print "<td><span class=\"subheaders\">".$pgv_lang["children"]."</span></td>";
@@ -621,22 +622,6 @@ function ancestry_array($rootid, $maxgen=0) {
 }
 
 /**
- * find all children from a family
- *
- * @param string $famid family ID
- * @return array array of child ID
- */
-function get_children_ids($famid) {
-	$children = array();
-	$famrec = find_family_record($famid);
-	$ct = preg_match_all("/1\s*CHIL\s*@(.*)@/", $famrec, $match, PREG_SET_ORDER);
-	for($i = 0; $i < $ct; $i++) {
-		$children[] = $match[$i][1];
-	}
-	return $children;
-}
-
-/**
  * print an arrow to a new url
  *
  * @param string $id Id used for arrow img name (must be unique on the page)
@@ -853,7 +838,9 @@ function print_cousins($famid, $personcount="1") {
 	global $show_full, $bheight, $bwidth;
 	global $PGV_IMAGE_DIR, $PGV_IMAGES, $pgv_lang, $TEXT_DIRECTION;
 
-	$fchildren = get_children_ids($famid);
+	$family=Family::getInstance($famid);
+	$fchildren=$family->getChildrenIds();
+
 	$kids = count($fchildren);
 	$save_show_full = $show_full;
 	if ($save_show_full) {
