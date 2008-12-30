@@ -31,7 +31,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 
 define('PGV_FUNCTIONS_CHARTS_PHP', '');
 
-require_once("includes/classes/class_person.php");
+require_once 'includes/classes/class_person.php';
 
 /**
  * print a table cell with sosa number
@@ -617,38 +617,6 @@ function ancestry_array($rootid, $maxgen=0) {
 			}
 		}
 	}
-//	print_r($treeid);
-	return $treeid;
-}
-
-/**
- * creates an array with all of the individual ids to be displayed on the pedigree chart
- *
- * the id in position 0 is the root person.  The other positions are filled according to the following algorithm
- * if an individual is at position $i then individual $i's father will occupy position ($i*2)+1 and $i's mother
- * will occupy ($i*2)+2
- *
- * @deprecated	This function has been deprecated by the ancestry_array function, it is still
- *				provided for backwards compatibility but it should no longer be used in new code
- * @param string $rootid
- * @return array $treeid
- */
-function pedigree_array($rootid) {
-	global $PEDIGREE_GENERATIONS, $SHOW_EMPTY_BOXES;
-
-	$treeid = ancestry_array($rootid);
-	$treesize = count($treeid)-1;
-	//-- ancestry_array puts everyone at $i+1
-	for($i=0; $i<$treesize; $i++) $treeid[$i] = $treeid[$i+1];
-
-	// -- detect the highest generation that actually has a person in it and use it for the pedigree generations
-	if (!$SHOW_EMPTY_BOXES) {
-		for($i = ($treesize-1); empty($treeid[$i]); $i--);
-		$PEDIGREE_GENERATIONS = ceil(log($i + 2) / log(2));
-		if ($PEDIGREE_GENERATIONS < 2) $PEDIGREE_GENERATIONS = 2;
-		// print "$i:$PEDIGREE_GENERATIONS";
-	}
-
 	return $treeid;
 }
 
