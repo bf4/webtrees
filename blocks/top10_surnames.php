@@ -41,11 +41,7 @@ $PGV_BLOCKS["print_block_name_top10"]["config"]		= array(
 	"num"=>10,
 	);
 
-function top_surname_sort1($a, $b) {
-	return $b["match"] - $a["match"];
-}
-
-function top_surname_sort2($a, $b) {
+function top_surname_sort($a, $b) {
 	$counta=0;
 	foreach ($a as $x) {
 		$counta+=count($x);
@@ -64,77 +60,70 @@ function print_block_name_top10($block=true, $config="", $side, $index) {
 		$config=$PGV_BLOCKS["print_block_name_top10"]["config"];
 	}
 
-	$surnames=get_top_surnames($config["num"]);
+	// This next function is a bit out of date, and doesn't cope well with surname variants
+	$top_surnames=get_top_surnames($config["num"]);
+
+	$all_surnames=array();
+	foreach ($top_surnames as $top_surname) {
+		$all_surnames=array_merge($all_surnames, get_indilist_surns($top_surname['name'], '', false, false, PGV_GED_ID));
+	}
 
 	// Insert from the "Add Names" list if not already in there
 	if ($COMMON_NAMES_ADD) {
-		$addnames=preg_split('/[,; ]+/', $COMMON_NAMES_ADD);
-		if (count($addnames)==0) {
-			$addnames[]=$COMMON_NAMES_ADD;
-		}
-		foreach($addnames as $name) {
-			$surname = UTF8_strtoupper($name);
-			if (!isset($surnames[$surname])) {
-				$surnames[$surname]["name"] = $name;
-				$surnames[$surname]["match"] = $COMMON_NAMES_THRESHOLD;
+		foreach (preg_split('/[,; ]+/', $COMMON_NAMES_ADD) as $addname) {
+			$ADDNAME=UTF8_strtoupper($addname);
+			if (isset($all_surnames[$ADDNAME])) {
+				$SURNAME=$ADDNAME;
+				foreach (array_keys($all_surnames[$ADDNAME]) as $surname) {
+					if ($SURNAME!=$surname && $SURNAME==UTF8_strtoupper($surname)) {
+						$all_surnames[$ADDNAME][$SURNAME]=$all_surnames[$ADDNAME][$surname];
+						unset ($all_surnames[$ADDNAME][$surname]);
+					}
+				}
+				if (isset($all_surnames[$ADDNAME][$SURNAME])) {
+					$n=count($all_surnames[$ADDNAME][$SURNAME]);
+					$all_surnames[$ADDNAME][$SURNAME]=array_fill(0, max($n, $COMMON_NAMES_THRESHOLD), true);
+				} else {
+					$all_surnames[$ADDNAME][$SURNAME]=array_fill(0, $COMMON_NAMES_THRESHOLD, true);
+				}
+			} else {
+				$all_surnames[$ADDNAME][$ADDNAME]=array_fill(0, $COMMON_NAMES_THRESHOLD, true);
 			}
 		}
-	} else {
-		$addnames=array();
 	}
 
 	// Remove names found in the "Remove Names" list
 	if ($COMMON_NAMES_REMOVE) {
-		$delnames = preg_split("/[,; ]+/", $COMMON_NAMES_REMOVE);
-		if (count($delnames)==0) {
-			$delnames[]=$COMMON_NAMES_REMOVE;
-		}
-		foreach($delnames as $indexval => $name) {
-			$surname=UTF8_strtoupper($name);
-			unset($surnames[$surname]);
+		foreach (preg_split("/[,; ]+/", $COMMON_NAMES_REMOVE) as $delname) {
+			unset($all_surnames[UTF8_strtoupper($delname)]);
 		}
 	}
 
-	// Sort the list and save for future reference
-	uasort($surnames, "top_surname_sort1");
+	uasort($all_surnames, "top_surname_sort");
 
-	if (count($surnames)>0) {
-		$id="top10surnames";
-		$title = print_help_link("index_common_names_help", "qm","",false,true);
-		if ($PGV_BLOCKS["print_block_name_top10"]["canconfig"]) {
-			if ($ctype=="gedcom" && PGV_USER_GEDCOM_ADMIN || $ctype=="user" && PGV_USER_ID) {
-				if ($ctype=="gedcom") {
-					$name = preg_replace("/'/", "\'", $GEDCOM);
-				} else {
-					$name = PGV_USER_NAME;
-				}
-				$title .= "<a href=\"javascript: configure block\" onclick=\"window.open('".encode_url("index_edit.php?name={$name}&ctype={$ctype}&action=configure&side={$side}&index={$index}")."', '_blank', 'top=50,left=50,width=600,height=350,scrollbars=1,resizable=1'); return false;\">";
-				$title .= "<img class=\"adminicon\" src=\"$PGV_IMAGE_DIR/".$PGV_IMAGES["admin"]["small"]."\" width=\"15\" height=\"15\" border=\"0\" alt=\"".$pgv_lang["config_block"]."\" /></a>";
-			}
-		}
-		$title .= str_replace("10", $config["num"], $pgv_lang["block_top10_title"]);
-
-		$all_surnames=array();
-		foreach (array_keys($surnames) as $n=>$surname) {
-			if ($n>=$config["num"]) {
-				break;
-			}
-			if (in_array($surname, $addnames)) {
-				$all_surnames=array_merge($all_surnames, array($surname=>array($surname=>array_fill(0,$COMMON_NAMES_THRESHOLD, true))));
+	$id="top10surnames";
+	$title = print_help_link("index_common_names_help", "qm","",false,true);
+	if ($PGV_BLOCKS["print_block_name_top10"]["canconfig"]) {
+		if ($ctype=="gedcom" && PGV_USER_GEDCOM_ADMIN || $ctype=="user" && PGV_USER_ID) {
+			if ($ctype=="gedcom") {
+				$name = preg_replace("/'/", "\'", $GEDCOM);
 			} else {
-				$all_surnames=array_merge($all_surnames, get_indilist_surns(UTF8_strtoupper($surname), '', false, false, PGV_GED_ID));
+				$name = PGV_USER_NAME;
 			}
+			$title .= "<a href=\"javascript: configure block\" onclick=\"window.open('".encode_url("index_edit.php?name={$name}&ctype={$ctype}&action=configure&side={$side}&index={$index}")."', '_blank', 'top=50,left=50,width=600,height=350,scrollbars=1,resizable=1'); return false;\">";
+			$title .= "<img class=\"adminicon\" src=\"$PGV_IMAGE_DIR/".$PGV_IMAGES["admin"]["small"]."\" width=\"15\" height=\"15\" border=\"0\" alt=\"".$pgv_lang["config_block"]."\" /></a>";
 		}
-		uasort($all_surnames, "top_surname_sort2");
-		switch ($SURNAME_LIST_STYLE) {
-		case 'style3':
-			$content=format_surname_tagcloud($all_surnames, 'indilist', true);
-			break;
-		case 'style2':
-		default:
-			$content=format_surname_table($all_surnames, 'indilist');
-			break;
-		}
+	}
+	$title .= str_replace("10", $config["num"], $pgv_lang["block_top10_title"]);
+
+	switch ($SURNAME_LIST_STYLE) {
+	case 'style3':
+		$content=format_surname_tagcloud($all_surnames, 'indilist', true);
+		break;
+	case 'style2':
+	default:
+		$content=format_surname_table($all_surnames, 'indilist');
+		break;
 	}
 
 	global $THEME_DIR;
