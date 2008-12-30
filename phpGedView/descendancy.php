@@ -25,9 +25,10 @@
  */
 
 require './config.php';
+require './includes/controllers/descendancy_ctrl.php';
+require './includes/functions/functions_print_lists.php';
 
-require_once("includes/controllers/descendancy_ctrl.php");
-$controller = new DescendancyController();
+$controller=new DescendancyController();
 $controller->init();
 
 // -- print html header information
@@ -175,32 +176,28 @@ if ($controller->chart_style==1) {
 }
 //-- Individual list
 if ($controller->chart_style==2) {
-	require_once("includes/functions/functions_print_lists.php");
-	$datalist = array();
-	function indi_desc($pid, $n) {
-		if ($n<0) return;
+	$datalist=array();
+	function indi_desc($person, $n) {
 		global $datalist;
-		$person = Person::getInstance($pid);
-		if (is_null($person)) return;
-		//-- add indi
-		$datalist[] = $person->xref;
-		foreach ($person->getSpouseFamilyIds() as $f=>$fams) {
-			$family = Family::getInstance($fams);
-			if (is_null($family)) continue;
-			//-- add spouse
-			$datalist[] = $family->getSpouseId($pid);
-			//-- recursive call for each child
-			foreach ($family->getChildren() as $c=>$child) indi_desc($child->xref, $n-1);
+		if ($n<0) {
+			return;
+		}
+		$datalist[$person->getXref()]=$person;
+		foreach ($person->getSpouseFamilies() as $family) {
+			$spouse=$family->getSpouse($person);
+			$datalist[$spouse->getXref()]=$spouse;
+			foreach ($family->getChildren() as $child) {
+				indi_desc($child, $n-1);
+			}
 		}
 	}
-	indi_desc($controller->pid, $controller->generations);
+	indi_desc($controller->descPerson, $controller->generations);
 	echo "<div class=\"center\">";
-	print_indi_table(array_unique($datalist), $pgv_lang["descend_chart"]." : ".PrintReady($controller->name));
+	print_indi_table($datalist, $pgv_lang["descend_chart"]." : ".PrintReady($controller->name));
 	echo "</div>";
 }
 //-- Family list
 if ($controller->chart_style==3) {
-	require_once("includes/functions/functions_print_lists.php");
 	$datalist = array();
 	function fam_desc($pid, $n) {
 		if ($n<0) return;
