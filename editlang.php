@@ -718,7 +718,7 @@ default:
 	<tr>
 		<td class="facts_value width50">
 			<?php print_help_link("translation_forum_desc", "qm"); ?>
-			<a href="http://sourceforge.net/forum/forum.php?forum_id=294245" target="_blank" ><?php echo $pgv_lang["translation_forum"]; ?></a>
+			<a href="<?php echo PGV_TRANSLATORS_URL; ?>" target="_blank" ><?php echo $pgv_lang["translation_forum"]; ?></a>
 				</td>
 			<td class="facts_value width50">
 				<?php
