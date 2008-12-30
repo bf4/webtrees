@@ -57,12 +57,6 @@ class PedigreeControllerRoot extends BaseController {
 	var $minyoffset;
 
 	/**
-	 * constructor
-	 */
-	function PedigreeControllerRoot() {
-		parent::BaseController();
-	}
-	/**
 	 * Initialization function
 	 */
 	function init() {
@@ -118,8 +112,11 @@ class PedigreeControllerRoot extends BaseController {
 		$this->pbwidth = $bwidth+6;
 		$this->pbheight = $bheight+5;
 
-		$this->treeid = pedigree_array($this->rootid);
+		$this->treeid = ancestry_array($this->rootid);
 		$this->treesize = pow(2, (int)($this->PEDIGREE_GENERATIONS))-1;
+
+		//-- ancestry_array puts everyone at $i+1
+		for($i=0; $i<$this->treesize; $i++) $this->treeid[$i] = $this->treeid[$i+1];
 
 		if (($this->PEDIGREE_GENERATIONS < 5)&&($this->show_full==false)) {
 			$baseyoffset+=($this->PEDIGREE_GENERATIONS*$this->pbheight/2)+50;
