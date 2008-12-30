@@ -1686,7 +1686,6 @@ class Person extends GedcomRecord {
 					if ($key%2==1) {
 						if ($value) {
 							// Strip SPFX
-//						if (preg_match('/^((?:(?:A|AAN|AB|AF|AL|AP|AS|AUF|AV|BAT|BEN|BIJ|BIN|BINT|DA|DE|DEL|DELLA|DEM|DEN|DER|DI|DU|EL|FITZ|HET|IBN|LA|LAS|LE|LES|LOS|ONDER|OP|OVER|\'S|ST|\'T|TE|TEN|TER|TILL|TOT|UIT|UIJT|VAN|VANDEN|VON|VOOR|VOR)[ -]+)+(?:[DL]\')?)(.+)$/i', $value, $match)) {
 							if (preg_match('/^((?:(?:A|AAN|AB|AF|AL|AP|AS|AUF|AV|BAT|BIJ|BIN|BINT|DA|DE|DEL|DELLA|DEM|DEN|DER|DI|DU|EL|FITZ|HET|IBN|LA|LAS|LE|LES|LOS|ONDER|OP|OVER|\'S|ST|\'T|TE|TEN|TER|TILL|TOT|UIT|UIJT|VAN|VANDEN|VON|VOOR|VOR)[ -]+)+(?:[DL]\')?)(.+)$/i', $value, $match)) {
 								$spfx=trim($match[1]);
 								$value=$match[2];
