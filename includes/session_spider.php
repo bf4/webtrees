@@ -117,8 +117,8 @@ $worms = array(
 	'libwww-perl',
 	'LWP::Simple',
 	'lwp-trivial',
-	'MJ bot',
-	'ru rv',
+	'MJ.*bot',
+	'ru.*rv',
 	'DotBot',
 	'HTTrack'
 	);
