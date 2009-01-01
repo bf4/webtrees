@@ -25,8 +25,7 @@
  */
 
 require './config.php';
-
-require_once 'includes/functions/functions_print_lists.php';
+require './includes/functions/functions_print_lists.php';
 
 $type          =safe_GET('type', PGV_REGEX_ALPHA, 'indi');
 $filter        =safe_GET('filter');
@@ -370,10 +369,11 @@ print "<br />";
 
 if ($action=="filter") {
 	$filter = trim($filter);
+	$filter_array=explode(' ', preg_replace('/ {2,}/', ' ', $filter));
 	// Output Individual
 	if ($type == "indi") {
 		print "<table class=\"tabs_table $TEXT_DIRECTION width90\">\n\t\t<tr>";
-		$myindilist=search_indis_names(array($filter), array(PGV_GED_ID), 'AND');
+		$myindilist=search_indis_names($filter_array, array(PGV_GED_ID), 'AND');
 		if ($myindilist) {
 			print "\n\t\t<td class=\"list_value_wrap $TEXT_DIRECTION\"><ul>";
 			usort($myindilist, array('GedcomRecord', 'Compare'));
@@ -395,8 +395,8 @@ if ($action=="filter") {
 		// Get the famrecs with hits on names from the family table
 		// Get the famrecs with hits in the gedcom record from the family table
 		$myfamlist = pgv_array_merge(
-			search_fams_names(array($filter), array(PGV_GED_ID), 'AND'),
-			search_fams(array($filter), array(PGV_GED_ID), 'AND', true)
+			search_fams_names($filter_array, array(PGV_GED_ID), 'AND'),
+			search_fams($filter_array, array(PGV_GED_ID), 'AND', true)
 		);
 		if ($myfamlist) {
 			$curged = $GEDCOM;
@@ -486,8 +486,8 @@ if ($action=="filter") {
 					// simple filter to reduce the number of items to view
 					$isvalid = filterMedia($media, $filter, 'http');
 					if ($isvalid && $chooseType!="all") {
-						if ($chooseType=="file" && !empty($media["XREF"])) $isvalid = false;	// skip linked media files
-						if ($chooseType=="media" && empty($media["XREF"])) $isvalid = false;	// skip unlinked media files
+						if ($chooseType=="file" && !empty($media["XREF"])) $isvalid = false; // skip linked media files
+						if ($chooseType=="media" && empty($media["XREF"])) $isvalid = false; // skip unlinked media files
 					}
 
 					if ($isvalid) {
@@ -578,8 +578,8 @@ if ($action=="filter") {
 			if ($ctplace>0) {
 				print "\n\t\t<td class=\"list_value_wrap $TEXT_DIRECTION\"><ul>";
 				foreach($placelist as $indexval => $revplace) {
-					$levels = explode(',', $revplace);		// -- split the place into comma seperated values
-					$levels = array_reverse($levels);				// -- reverse the array so that we get the top level first
+					$levels = explode(',', $revplace); // -- split the place into comma seperated values
+					$levels = array_reverse($levels); // -- reverse the array so that we get the top level first
 					$placetext="";
 					$j=0;
 					foreach($levels as $indexval => $level) {
@@ -629,7 +629,7 @@ if ($action=="filter") {
 	if ($type=="source") {
 		echo '<table class="tabs_table ', $TEXT_DIRECTION, ' width90"><tr><td class="list_value"><tr>';
 		if ($filter) {
-			$mysourcelist = search_sources(array($filter), array(PGV_GED_ID), 'AND', true);
+			$mysourcelist = search_sources($filter_array, array(PGV_GED_ID), 'AND', true);
 		} else {
 			$mysourcelist = get_source_list(PGV_GED_ID);
 		}
