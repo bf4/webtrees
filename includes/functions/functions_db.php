@@ -1,33 +1,33 @@
 <?php
 /**
- * PEAR:DB specific functions file
- *
- * This file implements the datastore functions necessary for PhpGedView to use an SQL database as its
- * datastore. This file also implements array caches for the database tables.  Whenever data is
- * retrieved from the database it is stored in a cache.  When a database access is requested the
- * cache arrays are checked first before querying the database.
- *
- * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- *
- * @version $Id$
- * @package PhpGedView
- * @subpackage DB
- */
+* PEAR:DB specific functions file
+*
+* This file implements the datastore functions necessary for PhpGedView to use an SQL database as its
+* datastore. This file also implements array caches for the database tables.  Whenever data is
+* retrieved from the database it is stored in a cache.  When a database access is requested the
+* cache arrays are checked first before querying the database.
+*
+* phpGedView: Genealogy Viewer
+* Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
+*
+* This program is free software; you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation; either version 2 of the License, or
+* (at your option) any later version.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+* GNU General Public License for more details.
+*
+* You should have received a copy of the GNU General Public License
+* along with this program; if not, write to the Free Software
+* Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+*
+* @version $Id$
+* @package PhpGedView
+* @subpackage DB
+*/
 
 if (!defined('PGV_PHPGEDVIEW')) {
 	header('HTTP/1.0 403 Forbidden');
@@ -45,8 +45,8 @@ if (!isset($DB_UTF8_COLLATION)) {
 }
 
 /**
- * Field and function definition variances between sql databases
- */
+* Field and function definition variances between sql databases
+*/
 switch ($DBTYPE) {
 case 'mssql':
 	function sql_mod_function($x,$y) { return "MOD($x,$y)"; } // Modulus function
@@ -140,14 +140,14 @@ define('PGV_DB_COL_XREF', PGV_DB_VARCHAR_TYPE.'(20)');           // Gedcom ident
 define('PGV_DB_COL_TAG',  PGV_DB_VARCHAR_TYPE.'(15)');           // Gedcom tags/record types are max 15 chars
 
 /**
- * query the database
- *
- * this function will perform the given SQL query on the database
- * @param string $sql		the sql query to execture
- * @param boolean $show_error	whether or not to show any error messages
- * @param int $count	the number of records to return, 0 returns all
- * @return DB_result the connection result
- */
+* query the database
+*
+* this function will perform the given SQL query on the database
+* @param string $sql the sql query to execture
+* @param boolean $show_error whether or not to show any error messages
+* @param int $count the number of records to return, 0 returns all
+* @return DB_result the connection result
+*/
 function &dbquery($sql, $show_error=true, $count=0) {
 	global $DBCONN, $TOTAL_QUERIES, $INDEX_DIRECTORY, $LAST_QUERY, $CONFIGURED;
 
@@ -164,8 +164,8 @@ function &dbquery($sql, $show_error=true, $count=0) {
 	}
 
 	/**
-	 * Debugging code for multi-database support
-	 */
+	* Debugging code for multi-database support
+	*/
 /* -- commenting out for final release
 	if (preg_match('/[^\\\]"/', $sql)>0) {
 		pgv_error_handler(2, "<span class=\"error\">Incompatible SQL syntax. Double quote query: $sql</span><br />","","");
@@ -218,14 +218,14 @@ function &dbquery($sql, $show_error=true, $count=0) {
 }
 
 /**
- * Clean up an item retrieved from the database
- *
- * clean the slashes and convert special
- * html characters to their entities for
- * display and entry into form elements
- * @param mixed $item	the item to cleanup
- * @return mixed the cleaned up item
- */
+* Clean up an item retrieved from the database
+*
+* clean the slashes and convert special
+* html characters to their entities for
+* display and entry into form elements
+* @param mixed $item the item to cleanup
+* @return mixed the cleaned up item
+*/
 function db_cleanup($item) {
 	if (is_array($item)) {
 		foreach ($item as $key=>$value) {
@@ -241,12 +241,12 @@ function db_cleanup($item) {
 }
 
 /**
- * check if a gedcom has been imported into the database
- *
- * this function checks the database to see if the given gedcom has been imported yet.
- * @param string $ged the filename of the gedcom to check for import
- * @return bool return true if the gedcom has been imported otherwise returns false
- */
+* check if a gedcom has been imported into the database
+*
+* this function checks the database to see if the given gedcom has been imported yet.
+* @param string $ged the filename of the gedcom to check for import
+* @return bool return true if the gedcom has been imported otherwise returns false
+*/
 function check_for_import($ged) {
 	global $TBLPREFIX, $DBCONN, $GEDCOMS;
 
@@ -1100,12 +1100,12 @@ function fetch_gedcom_record($xref, $ged_id) {
 }
 
 /**
- * find the gedcom record for a family
- *
- * @link http://phpgedview.sourceforge.net/devdocs/arrays.php#family
- * @param string $famid the unique gedcom xref id of the family record to retrieve
- * @return string the raw gedcom record is returned
- */
+* find the gedcom record for a family
+*
+* @link http://phpgedview.sourceforge.net/devdocs/arrays.php#family
+* @param string $famid the unique gedcom xref id of the family record to retrieve
+* @return string the raw gedcom record is returned
+*/
 function find_family_record($pid, $gedfile='') {
 	global $TBLPREFIX, $GEDCOM, $DBCONN;
 
@@ -1135,12 +1135,12 @@ function find_family_record($pid, $gedfile='') {
 }
 
 /**
- * find the gedcom record for an individual
- *
- * @link http://phpgedview.sourceforge.net/devdocs/arrays.php#indi
- * @param string $pid the unique gedcom xref id of the individual record to retrieve
- * @return string the raw gedcom record is returned
- */
+* find the gedcom record for an individual
+*
+* @link http://phpgedview.sourceforge.net/devdocs/arrays.php#indi
+* @param string $pid the unique gedcom xref id of the individual record to retrieve
+* @return string the raw gedcom record is returned
+*/
 function find_person_record($pid, $gedfile='') {
 	global $TBLPREFIX, $GEDCOM, $DBCONN;
 
@@ -1167,13 +1167,13 @@ function find_person_record($pid, $gedfile='') {
 }
 
 /**
- * find the gedcom record
- *
- * @link http://phpgedview.sourceforge.net/devdocs/arrays.php#other
- * @param string $pid the unique gedcom xref id of the record to retrieve
- * @param string $gedfile	[optional] the gedcomfile to search in
- * @return string the raw gedcom record is returned
- */
+* find the gedcom record
+*
+* @link http://phpgedview.sourceforge.net/devdocs/arrays.php#other
+* @param string $pid the unique gedcom xref id of the record to retrieve
+* @param string $gedfile [optional] the gedcomfile to search in
+* @return string the raw gedcom record is returned
+*/
 function find_gedcom_record($pid, $gedfile='') {
 	global $TBLPREFIX, $GEDCOM, $DBTYPE, $DBCONN;
 
@@ -1247,12 +1247,12 @@ function gedcom_record_type($xref, $ged_id) {
 }
 
 /**
- * find the gedcom record for a source
- *
- * @link http://phpgedview.sourceforge.net/devdocs/arrays.php#source
- * @param string $sid the unique gedcom xref id of the source record to retrieve
- * @return string the raw gedcom record is returned
- */
+* find the gedcom record for a source
+*
+* @link http://phpgedview.sourceforge.net/devdocs/arrays.php#source
+* @param string $sid the unique gedcom xref id of the source record to retrieve
+* @return string the raw gedcom record is returned
+*/
 function find_source_record($pid, $gedfile="") {
 	global $TBLPREFIX, $GEDCOM, $DBCONN;
 
@@ -1279,10 +1279,10 @@ function find_source_record($pid, $gedfile="") {
 
 
 /**
- * Find a repository record by its ID
- * @param string $rid	the record id
- * @param string $gedfile	the gedcom file id
- */
+* Find a repository record by its ID
+* @param string $rid the record id
+* @param string $gedfile the gedcom file id
+*/
 function find_other_record($pid, $gedfile="") {
 	global $TBLPREFIX, $GEDCOM, $DBCONN;
 
@@ -1311,9 +1311,9 @@ function find_other_record($pid, $gedfile="") {
 }
 
 /**
- * Find a media record by its ID
- * @param string $rid	the record id
- */
+* Find a media record by its ID
+* @param string $rid the record id
+*/
 function find_media_record($pid, $gedfile='') {
 	global $TBLPREFIX, $GEDCOM, $DBCONN, $MULTI_MEDIA;
 
@@ -1340,9 +1340,9 @@ function find_media_record($pid, $gedfile='') {
 }
 
 /**
- * find and return the id of the first person in the gedcom
- * @return string the gedcom xref id of the first person in the gedcom
- */
+* find and return the id of the first person in the gedcom
+* @return string the gedcom xref id of the first person in the gedcom
+*/
 function find_first_person() {
 	global $TBLPREFIX;
 
@@ -1357,16 +1357,16 @@ function find_first_person() {
 }
 
 /**
- * update the is_dead status in the database
- *
- * this function will update the is_dead field in the individuals table with the correct value
- * calculated by the is_dead() function.  To improve import performance, the is_dead status is first
- * set to -1 during import.  The first time the is_dead status is retrieved this function is called to update
- * the database.  This makes the first request for a person slower, but will speed up all future requests.
- * @param string $pid	id of individual to update
- * @param string $ged_id	gedcom to update
- * @param bool $isdead	true=dead
- */
+* update the is_dead status in the database
+*
+* this function will update the is_dead field in the individuals table with the correct value
+* calculated by the is_dead() function.  To improve import performance, the is_dead status is first
+* set to -1 during import.  The first time the is_dead status is retrieved this function is called to update
+* the database.  This makes the first request for a person slower, but will speed up all future requests.
+* @param string $pid id of individual to update
+* @param string $ged_id gedcom to update
+* @param bool $isdead true=dead
+*/
 function update_isdead($gid, $ged_id, $isdead) {
 	global $TBLPREFIX, $DBCONN;
 	$gid   =$DBCONN->escapeSimple($gid);
@@ -1386,12 +1386,12 @@ function reset_isdead($ged_id=PGV_GED_ID) {
 }
 
 /**
- * get a list of all the sources
- *
- * returns an array of all of the sources in the database.
- * @link http://phpgedview.sourceforge.net/devdocs/arrays.php#sources
- * @return array the array of sources
- */
+* get a list of all the sources
+*
+* returns an array of all of the sources in the database.
+* @link http://phpgedview.sourceforge.net/devdocs/arrays.php#sources
+* @return array the array of sources
+*/
 function get_source_list($ged_id) {
 	global $TBLPREFIX, $DBCONN;
 
@@ -1552,7 +1552,7 @@ function search_indis_names($query, $geds, $match) {
 		}
 	}
 	
-	$sql="SELECT DISTINCT 'INDI' AS type, i_id AS xref, i_file AS ged_id, i_gedcom AS gedrec, i_isdead, i_sex FROM {$TBLPREFIX}individuals JOIN {$TBLPREFIX}name ON i_id=n_id AND i_file=n_file WHERE ".implode(" {$match} ", $querysql).' AND i_file IN ('.implode(',', $geds).')';
+	$sql="SELECT DISTINCT 'INDI' AS type, i_id AS xref, i_file AS ged_id, i_gedcom AS gedrec, i_isdead, i_sex, n_num FROM {$TBLPREFIX}individuals JOIN {$TBLPREFIX}name ON i_id=n_id AND i_file=n_file WHERE ".implode(" {$match} ", $querysql).' AND i_file IN ('.implode(',', $geds).')';
 
 	// Group results by gedcom, to minimise switching between privacy files
 	$sql.=' ORDER BY ged_id';
@@ -1569,6 +1569,7 @@ function search_indis_names($query, $geds, $match) {
 		}
 		$indi=Person::getInstance($row);
 		if ($indi->canDisplayName()) {
+			$indi->setPrimaryName($row['n_num']);
 			$list[]=$indi;
 		}
 	}
@@ -1591,7 +1592,7 @@ function search_indis_soundex($soundex, $lastname, $firstname, $place, $geds) {
 	$sql="SELECT DISTINCT 'INDI' AS type, i_id AS xref, i_file AS ged_id, i_gedcom AS gedrec, i_isdead, i_sex FROM {$TBLPREFIX}individuals";
 	if ($place) {
 		$sql.=" JOIN {$TBLPREFIX}placelinks ON (pl_file=i_file AND pl_gid=i_id)";
-		$sql.="	JOIN {$TBLPREFIX}places ON (p_file=pl_file AND pl_p_id=p_id)";
+		$sql.=" JOIN {$TBLPREFIX}places ON (p_file=pl_file AND pl_p_id=p_id)";
 	}
 	if ($firstname || $lastname) {
 		$sql.=" JOIN {$TBLPREFIX}name ON (i_file=n_file AND i_id=n_id)";
@@ -1659,10 +1660,10 @@ function search_indis_soundex($soundex, $lastname, $firstname, $place, $geds) {
 }
 
 /**
- * get recent changes since the given julian day inclusive
- * @author	yalnifj
- * @param	int $jd, leave empty to include all
- */
+* get recent changes since the given julian day inclusive
+* @author yalnifj
+* @param int $jd, leave empty to include all
+*/
 function get_recent_changes($jd=0, $allgeds=false) {
 	global $TBLPREFIX;
 
@@ -1756,7 +1757,7 @@ function search_indis_year_range($startyear, $endyear) {
 	$endjd  =GregorianDate::YMDtoJD($endyear+1, 1, 1)-1;
 
 	return search_indis_daterange($startjd, $endjd, '');
- }
+}
 
 // Search the gedcom records of families
 // $query - array of search terms
@@ -2008,11 +2009,11 @@ function search_sources($query, $geds, $match, $skip) {
 }
 
 /**
- * get place parent ID
- * @param array $parent
- * @param int $level
- * @return int
- */
+* get place parent ID
+* @param array $parent
+* @param int $level
+* @return int
+*/
 function get_place_parent_id($parent, $level) {
 	global $DBCONN, $TBLPREFIX;
 
@@ -2031,11 +2032,11 @@ function get_place_parent_id($parent, $level) {
 }
 
 /**
- * find all of the places in the hierarchy
- * The $parent array holds the parent hierarchy of the places
- * we want to get.  The level holds the level in the hierarchy that
- * we are at.
- */
+* find all of the places in the hierarchy
+* The $parent array holds the parent hierarchy of the places
+* we want to get.  The level holds the level in the hierarchy that
+* we are at.
+*/
 function get_place_list($parent, $level) {
 	global $TBLPREFIX;
 
@@ -2059,11 +2060,11 @@ function get_place_list($parent, $level) {
 }
 
 /**
- * get all of the place connections
- * @param array $parent
- * @param int $level
- * @return array
- */
+* get all of the place connections
+* @param array $parent
+* @param int $level
+* @return array
+*/
 function get_place_positions($parent, $level='') {
 	global $TBLPREFIX, $DBCONN;
 
@@ -2133,10 +2134,10 @@ function find_rin_id($rin) {
 }
 
 /**
- * Delete a gedcom from the database and the system
- * Does not delete the file from the file system
- * @param string $ged 	the filename of the gedcom to delete
- */
+* Delete a gedcom from the database and the system
+* Does not delete the file from the file system
+* @param string $ged  the filename of the gedcom to delete
+*/
 function delete_gedcom($ged) {
 	global $TBLPREFIX, $pgv_changes, $DBCONN, $GEDCOMS;
 
@@ -2173,10 +2174,10 @@ function delete_gedcom($ged) {
 }
 
 /**
- * get the top surnames
- * @param int $num	how many surnames to return
- * @return array
- */
+* get the top surnames
+* @param int $num how many surnames to return
+* @return array
+*/
 function get_top_surnames($num) {
 	global $TBLPREFIX;
 
@@ -2199,11 +2200,11 @@ function get_top_surnames($num) {
 }
 
 /**
- * get next unique id for the given table
- * @param string $table 	the name of the table
- * @param string $field		the field to get the next number for
- * @return int the new id
- */
+* get next unique id for the given table
+* @param string $table  the name of the table
+* @param string $field the field to get the next number for
+* @return int the new id
+*/
 function get_next_id($table, $field) {
 	global $TBLPREFIX, $TABLE_IDS;
 
@@ -2228,10 +2229,10 @@ function get_next_id($table, $field) {
 }
 
 /**
- * get a list of remote servers
- */
+* get a list of remote servers
+*/
 function get_server_list(){
- 	global $GEDCOM, $GEDCOMS, $TBLPREFIX, $sitelist, $sourcelist;
+	global $GEDCOM, $GEDCOMS, $TBLPREFIX, $sitelist, $sourcelist;
 
 	$sitelist = array();
 
@@ -2259,10 +2260,10 @@ function get_server_list(){
 }
 
 /**
- * Retrieve the array of faqs from the DB table blocks
- * @param int $id		The FAQ ID to retrieven
- * @return array $faqs	The array containing the FAQ items
- */
+* Retrieve the array of faqs from the DB table blocks
+* @param int $id The FAQ ID to retrieven
+* @return array $faqs The array containing the FAQ items
+*/
 function get_faq_data($id='') {
 	global $TBLPREFIX, $GEDCOM;
 
@@ -2323,12 +2324,12 @@ function delete_fact($linenum, $pid, $gedrec) {
 }
 
 /**
- * get_remote_id Recieves a RFN key and returns a Stub ID if the RFN exists
- *
- * @param mixed $rfn RFN number to see if it exists
- * @access public
- * @return gid Stub ID that contains the RFN number. Returns false if it didn't find anything
- */
+* get_remote_id Recieves a RFN key and returns a Stub ID if the RFN exists
+*
+* @param mixed $rfn RFN number to see if it exists
+* @access public
+* @return gid Stub ID that contains the RFN number. Returns false if it didn't find anything
+*/
 function get_remote_id($rfn) {
 	global $TBLPREFIX, $DBCONN;
 
@@ -2603,20 +2604,20 @@ function get_calendar_events($jd1, $jd2, $facts='', $ged_id=PGV_GED_ID) {
 
 
 /**
- * Get the list of current and upcoming events, sorted by anniversary date
- *
- * This function is used by the Todays and Upcoming blocks on the Index and Portal
- * pages.  It is also used by the RSS feed.
- *
- * Special note on unknown day-of-month:
- * When the anniversary date is imprecise, the sort will pretend that the day-of-month
- * is either tomorrow or the first day of next month.  These imprecise anniversaries
- * will sort to the head of the chosen day.
- *
- * Special note on Privacy:
- * This routine does not check the Privacy of the events in the list.  That check has
- * to be done by the routine that makes use of the event list.
- */
+* Get the list of current and upcoming events, sorted by anniversary date
+*
+* This function is used by the Todays and Upcoming blocks on the Index and Portal
+* pages.  It is also used by the RSS feed.
+*
+* Special note on unknown day-of-month:
+* When the anniversary date is imprecise, the sort will pretend that the day-of-month
+* is either tomorrow or the first day of next month.  These imprecise anniversaries
+* will sort to the head of the chosen day.
+*
+* Special note on Privacy:
+* This routine does not check the Privacy of the events in the list.  That check has
+* to be done by the routine that makes use of the event list.
+*/
 function get_events_list($jd1, $jd2, $events='') {
 	$found_facts=array();
 	for ($jd=$jd1; $jd<=$jd2; ++$jd) {
@@ -2856,7 +2857,8 @@ function get_user_setting($user_id, $parameter) {
 
 	global $PGV_USERS_cache;
 	if (isset($PGV_USERS_cache[$user_id])) {
-		return $PGV_USERS_cache[$user_id]['u_'.$parameter];	}
+		return $PGV_USERS_cache[$user_id]['u_'.$parameter];
+	}
 
 	if (!is_object($DBCONN) || DB::isError($DBCONN))
 		return false;
