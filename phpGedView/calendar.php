@@ -5,7 +5,7 @@
  * Displays events on a daily, monthly, or yearly calendar.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
+ * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -431,10 +431,10 @@ case 'today':
 	print "<td class=\"descriptionbox\">{$pgv_lang['total_indis']} ";
 	print count($indis);
 	print "<br />";
-	print "&nbsp;<img src=\"{$PGV_IMAGE_DIR}/{$PGV_IMAGES['sex']['small']}\" title=\"{$pgv_lang['male']}\" alt=\"{$pgv_lang['male']}\" class=\"sex_image\" />&nbsp;".$males."&nbsp;";
-	print "&nbsp;<img src=\"{$PGV_IMAGE_DIR}/{$PGV_IMAGES['sexf']['small']}\" title=\"{$pgv_lang['female']}\" alt=\"{$pgv_lang['female']}\" class=\"sex_image\" />&nbsp;".$females;
+	echo Person::sexImage('M', 'small', 'align="middle"', $pgv_lang['all']), "&nbsp;{$males}&nbsp;&nbsp;&nbsp;&nbsp;";
+	echo Person::sexImage('F', 'small', 'align="middle"', $pgv_lang['all']), "&nbsp;{$females}&nbsp;&nbsp;&nbsp;&nbsp;";
 	if (count($indis)!=$males+$females)
-		print "&nbsp;<img src=\"{$PGV_IMAGE_DIR}/{$PGV_IMAGES['sexn']['small']}\" title=\"{$pgv_lang['unknown']}\" alt=\"{$pgv_lang['unknown']}\" class=\"sex_image\" />&nbsp;".(count($indis)-$males-$females);
+		echo Person::sexImage('U', 'small', 'align="middle"', $pgv_lang['all']), '&nbsp;', count($indis)-$males-$females;
 	print "</td>";
 	print "<td class=\"descriptionbox\">{$pgv_lang['total_fams']} ".count($fams)."</td>";
 	print "</tr></table>";
@@ -594,15 +594,15 @@ function calendar_list_text($list, $tag1, $tag2, $show_sex_symbols) {
 		if ($show_sex_symbols && $tmp->getType()=='INDI')
 			switch ($tmp->getSex()) {
 			case 'M':
-				print "<img src=\"{$PGV_IMAGE_DIR}/{$PGV_IMAGES['sex']['small']}\" title=\"{$pgv_lang['male']}\" alt=\"{$pgv_lang['male']}\" class=\"sex_image\" />";
+				echo Person::sexImage('M', 'small', 'align="middle"', $pgv_lang['all']);
 				++$males;
 				break;
 			case 'F':
-				print "<img src=\"{$PGV_IMAGE_DIR}/{$PGV_IMAGES['sexf']['small']}\" title=\"{$pgv_lang['female']}\" alt=\"{$pgv_lang['female']}\" class=\"sex_image\" />";
+				echo Person::sexImage('F', 'small', 'align="middle"', $pgv_lang['all']);
 				++$females;
 				break;
 			default:
-				print "<img src=\"{$PGV_IMAGE_DIR}/{$PGV_IMAGES['sexn']['small']}\" title=\"{$pgv_lang['unknown']}\" alt=\"{$pgv_lang['unknown']}\" class=\"sex_image\" />";
+				echo Person::sexImage('U', 'small', 'align="middle"', $pgv_lang['all']);
 				break;
 			}
 			print "<div class=\"indent\">".$facts."</div>{$tag2}";
