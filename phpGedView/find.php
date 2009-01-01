@@ -27,32 +27,39 @@
 require './config.php';
 require './includes/functions/functions_print_lists.php';
 
-$type          =safe_GET('type', PGV_REGEX_ALPHA, 'indi');
-$filter        =safe_GET('filter');
-$action        =safe_GET('action');
-$callback      =safe_GET('callback', PGV_REGEX_NOSCRIPT, 'paste_id');
-$create        =safe_GET('create');
-$media         =safe_GET('media');
-$external_links=safe_GET('external_links');
-$directory     =safe_GET('directory', PGV_REGEX_NOSCRIPT, $MEDIA_DIRECTORY);
-$multiple      =safe_GET_bool('multiple');
-$showthumb     =safe_GET_bool('showthumb');
-$all           =safe_GET_bool('all');
-$choose=safe_GET('choose', PGV_REGEX_NOSCRIPT, '0all');
+$type           =safe_GET('type', PGV_REGEX_ALPHA, 'indi');
+$filter         =safe_GET('filter');
+$action         =safe_GET('action');
+$callback       =safe_GET('callback', PGV_REGEX_NOSCRIPT, 'paste_id');
+$create         =safe_GET('create');
+$media          =safe_GET('media');
+$external_links =safe_GET('external_links');
+$directory      =safe_GET('directory', PGV_REGEX_NOSCRIPT, $MEDIA_DIRECTORY);
+$multiple       =safe_GET_bool('multiple');
+$showthumb      =safe_GET_bool('showthumb');
+$all            =safe_GET_bool('all');
+$choose         =safe_GET('choose', PGV_REGEX_NOSCRIPT, '0all');
+$level          =safe_GET('level', PGV_REGEX_INTEGER, 0);
+$language_filter=safe_GET('language_filter');
+$magnify        =safe_GET_bool('magnify');
 
-$thumbget = "";
-if ($showthumb) {$thumbget = "&showthumb=true";}
+if ($showthumb) {
+	$thumbget='&showthumb=true';
+} else {
+	$thumbget='';
+}
 
 $embed = substr($choose,0,1)=="1";
 $chooseType = substr($choose,1);
-if ($chooseType!="media" && $chooseType!="file") $chooseType = "all";
+if ($chooseType!="media" && $chooseType!="file") {
+	$chooseType = "all";
+}
 
 //-- force the thumbnail directory to have the same layout as the media directory
 //-- Dots and slashes should be escaped for the preg_replace
 $srch = "/".addcslashes($MEDIA_DIRECTORY,'/.')."/";
 $repl = addcslashes($MEDIA_DIRECTORY."thumbs/",'/.');
 $thumbdir = stripcslashes(preg_replace($srch, $repl, $directory));
-$level=safe_GET('level', PGV_REGEX_INTEGER, 0);
 
 //-- prevent script from accessing an area outside of the media directory
 //-- and keep level consistency
@@ -66,16 +73,14 @@ if (($level < 0) || ($level > $MEDIA_DIRECTORY_LEVELS)){
 // End variables for find media
 
 // Variables for Find Special Character
-$language_filter=safe_GET('language_filter');
-
 if (empty($language_filter)) {
-	if (!empty($_SESSION["language_filter"])) $language_filter = $_SESSION["language_filter"];
-	else $language_filter=$lang_short_cut[$LANGUAGE];
+	if (!empty($_SESSION["language_filter"])) {
+		$language_filter=$_SESSION["language_filter"];
+	} else {
+		$language_filter=$lang_short_cut[$LANGUAGE];
+	}
 }
-$magnify=safe_GET_bool('magnify');
-
 require 'includes/specialchars.php';
-
 // End variables for Find Special Character
 
 switch ($type) {
@@ -107,35 +112,27 @@ switch ($type) {
 		break;
 }
 
+echo PGV_JS_START;
 ?>
-<script language="JavaScript" type="text/javascript">
-<!--
 	function pasteid(id, name,thumb) {
-
-	if(thumb)
-	{
-	window.opener.<?php print $callback; ?>(id,name,thumb);
-		<?php if (!$multiple) print "window.close();"; ?>
+		if(thumb) {
+			window.opener.<?php print $callback; ?>(id,name,thumb);
+			<?php if (!$multiple) print "window.close();"; ?>
+		} else {
+			window.opener.<?php print $callback; ?>(id);
+			if (window.opener.pastename) window.opener.pastename(name);
+			<?php if (!$multiple) print "window.close();"; ?>
+		}
 	}
-	else
-	{
-		window.opener.<?php print $callback; ?>(id);
-		if (window.opener.pastename) window.opener.pastename(name);
-		<?php if (!$multiple) print "window.close();"; ?>
-	}
-	}
-
 	var language_filter;
 	function paste_char(selected_char,language_filter,magnify) {
 		window.opener.paste_char(selected_char,language_filter,magnify);
 		return false;
 	}
-
 	function setMagnify() {
-		document.filterspecialchar.magnify.value = '<?PHP print !$magnify; ?>';
+		document.filterspecialchar.magnify.value = '<?php print !$magnify; ?>';
 		document.filterspecialchar.submit();
 	}
-
 	function checknames(frm) {
 		if (document.forms[0].subclick) button = document.forms[0].subclick.value;
 		else button = "";
@@ -149,9 +146,9 @@ switch ($type) {
 		}
 		return true;
 	}
-//-->
-</script>
 <?php
+echo PGV_JS_END;
+
 $options = array();
 $options["option"][]= "findindi";
 $options["option"][]= "findfam";
@@ -168,7 +165,6 @@ $options["form"][]= "formrepo";
 $options["form"][]= "formsource";
 $options["form"][]= "formspecialchar";
 
-global $TEXT_DIRECTION, $MULTI_MEDIA;
 print "<div align=\"center\">";
 print "<table class=\"list_table $TEXT_DIRECTION width90\" border=\"0\">";
 print "<tr><td style=\"padding: 10px;\" valign=\"top\" class=\"facts_label03 width90\">"; // start column for find text header
@@ -197,174 +193,174 @@ switch ($type) {
 		break;
 }
 
-	print "</td>"; // close column for find text header
+print "</td>"; // close column for find text header
 
-	// start column for find options
-	print "</tr><tr><td class=\"list_value\" style=\"padding: 5px;\">";
+// start column for find options
+print "</tr><tr><td class=\"list_value\" style=\"padding: 5px;\">";
 
-	// Show indi and hide the rest
-	if ($type == "indi") {
-		print "<div align=\"center\">";
-		print "<form name=\"filterindi\" method=\"get\" onsubmit=\"return checknames(this);\" action=\"find.php\">";
-		print "<input type=\"hidden\" name=\"callback\" value=\"$callback\" />";
-		print "<input type=\"hidden\" name=\"action\" value=\"filter\" />";
-		print "<input type=\"hidden\" name=\"type\" value=\"indi\" />";
-		print "<input type=\"hidden\" name=\"multiple\" value=\"$multiple\" />";
-		print "<table class=\"list_table $TEXT_DIRECTION width100\" border=\"0\">";
-		print "<tr><td class=\"list_label width10\" style=\"padding: 5px;\">";
-		print $pgv_lang["name_contains"]." <input type=\"text\" name=\"filter\" value=\"";
-		if ($filter) print $filter;
-		print "\" />";
-		print "</td></tr>";
-		print "<tr><td class=\"list_label width10\" style=\"padding: 5px;\">";
-		print "<input type=\"submit\" value=\"".$pgv_lang["filter"]."\" /><br />";
-		print "</td></tr></table>";
-		print "</form></div>";
+// Show indi and hide the rest
+if ($type == "indi") {
+	print "<div align=\"center\">";
+	print "<form name=\"filterindi\" method=\"get\" onsubmit=\"return checknames(this);\" action=\"find.php\">";
+	print "<input type=\"hidden\" name=\"callback\" value=\"$callback\" />";
+	print "<input type=\"hidden\" name=\"action\" value=\"filter\" />";
+	print "<input type=\"hidden\" name=\"type\" value=\"indi\" />";
+	print "<input type=\"hidden\" name=\"multiple\" value=\"$multiple\" />";
+	print "<table class=\"list_table $TEXT_DIRECTION width100\" border=\"0\">";
+	print "<tr><td class=\"list_label width10\" style=\"padding: 5px;\">";
+	print $pgv_lang["name_contains"]." <input type=\"text\" name=\"filter\" value=\"";
+	if ($filter) print $filter;
+	print "\" />";
+	print "</td></tr>";
+	print "<tr><td class=\"list_label width10\" style=\"padding: 5px;\">";
+	print "<input type=\"submit\" value=\"".$pgv_lang["filter"]."\" /><br />";
+	print "</td></tr></table>";
+	print "</form></div>";
+}
+
+// Show fam and hide the rest
+if ($type == "fam") {
+	print "<div align=\"center\">";
+	print "<form name=\"filterfam\" method=\"get\" onsubmit=\"return checknames(this);\" action=\"find.php\">";
+	print "<input type=\"hidden\" name=\"action\" value=\"filter\" />";
+	print "<input type=\"hidden\" name=\"type\" value=\"fam\" />";
+	print "<input type=\"hidden\" name=\"callback\" value=\"$callback\" />";
+	print "<input type=\"hidden\" name=\"multiple\" value=\"$multiple\" />";
+	print "<table class=\"list_table $TEXT_DIRECTION width100\" border=\"0\">";
+	print "<tr><td class=\"list_label width10\" style=\"padding: 5px;\">";
+	print $pgv_lang["name_contains"]." <input type=\"text\" name=\"filter\" value=\"";
+	if ($filter) print $filter;
+	print "\" />";
+	print "</td></tr>";
+	print "<tr><td class=\"list_label width10\" style=\"padding: 5px;\">";
+	print "<input type=\"submit\" value=\"".$pgv_lang["filter"]."\" /><br />";
+	print "</td></tr></table>";
+	print "</form></div>";
+}
+
+// Show media and hide the rest
+if ($type == "media" && $MULTI_MEDIA) {
+	print "<div align=\"center\">";
+	print "<form name=\"filtermedia\" method=\"get\" onsubmit=\"return checknames(this);\" action=\"find.php\">";
+	print "<input type=\"hidden\" name=\"choose\" value=\"".$choose."\" />";
+	print "<input type=\"hidden\" name=\"directory\" value=\"".$directory."\" />";
+	print "<input type=\"hidden\" name=\"thumbdir\" value=\"".$thumbdir."\" />";
+	print "<input type=\"hidden\" name=\"level\" value=\"".$level."\" />";
+	print "<input type=\"hidden\" name=\"action\" value=\"filter\" />";
+	print "<input type=\"hidden\" name=\"type\" value=\"media\" />";
+	print "<input type=\"hidden\" name=\"callback\" value=\"$callback\" />";
+	print "<input type=\"hidden\" name=\"subclick\">"; // This is for passing the name of which submit button was clicked
+	print "<table class=\"list_table $TEXT_DIRECTION width100\" border=\"0\">";
+	print "<tr><td class=\"list_label width10\" style=\"padding: 5px;\">";
+	print $pgv_lang["media_contains"]." <input type=\"text\" name=\"filter\" value=\"";
+	if ($filter) print $filter;
+	print "\" />";
+	print_help_link("simple_filter_help","qm");
+	print "</td></tr>";
+	print "<tr><td class=\"list_label width10\" wstyle=\"padding: 5px;\">";
+	print "<input type=\"checkbox\" name=\"showthumb\" value=\"true\"";
+	if( $showthumb) print "checked=\"checked\"";
+	print "onclick=\"javascript: this.form.submit();\" />".$pgv_lang["show_thumbnail"];
+	print_help_link("show_thumb_help","qm");
+	print "</td></tr>";
+	print "<tr><td class=\"list_label width10\" style=\"padding: 5px;\">";
+	print "<input type=\"submit\" name=\"search\" value=\"".$pgv_lang["filter"]."\" onclick=\"this.form.subclick.value=this.name\" />&nbsp;";
+	print "<input type=\"submit\" name=\"all\" value=\"".$pgv_lang["display_all"]."\" onclick=\"this.form.subclick.value=this.name\" />";
+	print "</td></tr></table>";
+	print "</form></div>";
+}
+
+// Show place and hide the rest
+if ($type == "place") {
+	print "<div align=\"center\">";
+	print "<form name=\"filterplace\" method=\"get\"  onsubmit=\"return checknames(this);\" action=\"find.php\">";
+	print "<input type=\"hidden\" name=\"action\" value=\"filter\" />";
+	print "<input type=\"hidden\" name=\"type\" value=\"place\" />";
+	print "<input type=\"hidden\" name=\"callback\" value=\"$callback\" />";
+	print "<input type=\"hidden\" name=\"subclick\">"; // This is for passing the name of which submit button was clicked
+	print "<table class=\"list_table $TEXT_DIRECTION width100\" border=\"0\">";
+	print "<tr><td class=\"list_label width10\" style=\"padding: 5px;\">";
+	print $pgv_lang["place_contains"]." <input type=\"text\" name=\"filter\" value=\"";
+	if ($filter) print $filter;
+	print "\" />";
+	print "</td></tr>";
+	print "<tr><td class=\"list_label width10\" style=\"padding: 5px;\">";
+	print "<input type=\"submit\" name=\"search\" value=\"".$pgv_lang["filter"]."\" onclick=\"this.form.subclick.value=this.name\" />&nbsp;";
+	print "<input type=\"submit\" name=\"all\" value=\"".$pgv_lang["display_all"]."\" onclick=\"this.form.subclick.value=this.name\" />";
+	print "</td></tr></table>";
+	print "</form></div>";
+}
+
+// Show repo and hide the rest
+if ($type == "repo" && $SHOW_SOURCES>=PGV_USER_ACCESS_LEVEL) {
+	print "<div align=\"center\">";
+	print "<form name=\"filterrepo\" method=\"get\" onsubmit=\"return checknames(this);\" action=\"find.php\">";
+	print "<input type=\"hidden\" name=\"action\" value=\"filter\" />";
+	print "<input type=\"hidden\" name=\"type\" value=\"repo\" />";
+	print "<input type=\"hidden\" name=\"callback\" value=\"$callback\" />";
+	print "<input type=\"hidden\" name=\"subclick\">"; // This is for passing the name of which submit button was clicked
+	print "<table class=\"list_table $TEXT_DIRECTION width100\" border=\"0\">";
+	print "<tr><td class=\"list_label width10\" style=\"padding: 5px;\">";
+	print $pgv_lang["repo_contains"]." <input type=\"text\" name=\"filter\" value=\"";
+	if ($filter) print $filter;
+	print "\" />";
+	print "</td></tr>";
+	print "<tr><td class=\"list_label width10\" style=\"padding: 5px;\">";
+	print "<input type=\"submit\" name=\"search\" value=\"".$pgv_lang["filter"]."\" onclick=\"this.form.subclick.value=this.name\" />&nbsp;";
+	print "<input type=\"submit\" name=\"all\" value=\"".$pgv_lang["display_all"]."\" onclick=\"this.form.subclick.value=this.name\" />";
+	print "</td></tr></table>";
+	print "</form></div>";
+}
+
+// Show source and hide the rest
+if ($type == "source" && $SHOW_SOURCES>=PGV_USER_ACCESS_LEVEL) {
+	print "<div align=\"center\">";
+	print "<form name=\"filtersource\" method=\"get\" onsubmit=\"return checknames(this);\" action=\"find.php\">";
+	print "<input type=\"hidden\" name=\"action\" value=\"filter\" />";
+	print "<input type=\"hidden\" name=\"type\" value=\"source\" />";
+	print "<input type=\"hidden\" name=\"callback\" value=\"$callback\" />";
+	print "<input type=\"hidden\" name=\"subclick\">"; // This is for passing the name of which submit button was clicked
+	print "<table class=\"list_table $TEXT_DIRECTION width100\" border=\"0\">";
+	print "<tr><td class=\"list_label width10\" style=\"padding: 5px;\">";
+	print $pgv_lang["source_contains"]." <input type=\"text\" name=\"filter\" value=\"";
+	if ($filter) print $filter;
+	print "\" />";
+	print "</td></tr>";
+	print "<tr><td class=\"list_label width10\" style=\"padding: 5px;\">";
+	print "<input type=\"submit\" name=\"search\" value=\"".$pgv_lang["filter"]."\" onclick=\"this.form.subclick.value=this.name\" />&nbsp;";
+	print "<input type=\"submit\" name=\"all\" value=\"".$pgv_lang["display_all"]."\" onclick=\"this.form.subclick.value=this.name\" />";
+	print "</td></tr></table>";
+	print "</form></div>";
+}
+
+// Show specialchar and hide the rest
+if ($type == "specialchar") {
+	print "<div align=\"center\">";
+	print "<form name=\"filterspecialchar\" method=\"get\" action=\"find.php\">";
+	print "<input type=\"hidden\" name=\"action\" value=\"filter\" />";
+	print "<input type=\"hidden\" name=\"type\" value=\"specialchar\" />";
+	print "<input type=\"hidden\" name=\"callback\" value=\"$callback\" />";
+	print "<input type=\"hidden\" name=\"magnify\" value=\"".$magnify."\" />";
+	print "<table class=\"list_table $TEXT_DIRECTION width100\" border=\"0\">";
+	print "<tr><td class=\"list_label\" style=\"padding: 5px;\">";
+	print "<select id=\"language_filter\" name=\"language_filter\" onchange=\"submit();\">";
+	print "<option value=\"\">".$pgv_lang["change_lang"]."</option>";
+	$language_options = "";
+	foreach($specialchar_languages as $key=>$value) {
+		$language_options.= "<option value=\"$key\">$value</option>";
 	}
-
-	// Show fam and hide the rest
-	if ($type == "fam") {
-		print "<div align=\"center\">";
-		print "<form name=\"filterfam\" method=\"get\" onsubmit=\"return checknames(this);\" action=\"find.php\">";
-		print "<input type=\"hidden\" name=\"action\" value=\"filter\" />";
-		print "<input type=\"hidden\" name=\"type\" value=\"fam\" />";
-		print "<input type=\"hidden\" name=\"callback\" value=\"$callback\" />";
-		print "<input type=\"hidden\" name=\"multiple\" value=\"$multiple\" />";
-		print "<table class=\"list_table $TEXT_DIRECTION width100\" border=\"0\">";
-		print "<tr><td class=\"list_label width10\" style=\"padding: 5px;\">";
-		print $pgv_lang["name_contains"]." <input type=\"text\" name=\"filter\" value=\"";
-		if ($filter) print $filter;
-		print "\" />";
-		print "</td></tr>";
-		print "<tr><td class=\"list_label width10\" style=\"padding: 5px;\">";
-		print "<input type=\"submit\" value=\"".$pgv_lang["filter"]."\" /><br />";
-		print "</td></tr></table>";
-		print "</form></div>";
-	}
-
-	// Show media and hide the rest
-	if ($type == "media" && $MULTI_MEDIA) {
-		print "<div align=\"center\">";
-		print "<form name=\"filtermedia\" method=\"get\" onsubmit=\"return checknames(this);\" action=\"find.php\">";
-		print "<input type=\"hidden\" name=\"choose\" value=\"".$choose."\" />";
-		print "<input type=\"hidden\" name=\"directory\" value=\"".$directory."\" />";
-		print "<input type=\"hidden\" name=\"thumbdir\" value=\"".$thumbdir."\" />";
-		print "<input type=\"hidden\" name=\"level\" value=\"".$level."\" />";
-		print "<input type=\"hidden\" name=\"action\" value=\"filter\" />";
-		print "<input type=\"hidden\" name=\"type\" value=\"media\" />";
-		print "<input type=\"hidden\" name=\"callback\" value=\"$callback\" />";
-		print "<input type=\"hidden\" name=\"subclick\">"; // This is for passing the name of which submit button was clicked
-		print "<table class=\"list_table $TEXT_DIRECTION width100\" border=\"0\">";
-		print "<tr><td class=\"list_label width10\" style=\"padding: 5px;\">";
-		print $pgv_lang["media_contains"]." <input type=\"text\" name=\"filter\" value=\"";
-		if ($filter) print $filter;
-		print "\" />";
-		print_help_link("simple_filter_help","qm");
-		print "</td></tr>";
-		print "<tr><td class=\"list_label width10\" wstyle=\"padding: 5px;\">";
-		print "<input type=\"checkbox\" name=\"showthumb\" value=\"true\"";
-		if( $showthumb) print "checked=\"checked\"";
-		print "onclick=\"javascript: this.form.submit();\" />".$pgv_lang["show_thumbnail"];
-		print_help_link("show_thumb_help","qm");
-		print "</td></tr>";
-		print "<tr><td class=\"list_label width10\" style=\"padding: 5px;\">";
-		print "<input type=\"submit\" name=\"search\" value=\"".$pgv_lang["filter"]."\" onclick=\"this.form.subclick.value=this.name\" />&nbsp;";
-		print "<input type=\"submit\" name=\"all\" value=\"".$pgv_lang["display_all"]."\" onclick=\"this.form.subclick.value=this.name\" />";
-		print "</td></tr></table>";
-		print "</form></div>";
-	}
-
-	// Show place and hide the rest
-	if ($type == "place") {
-		print "<div align=\"center\">";
-		print "<form name=\"filterplace\" method=\"get\"  onsubmit=\"return checknames(this);\" action=\"find.php\">";
-		print "<input type=\"hidden\" name=\"action\" value=\"filter\" />";
-		print "<input type=\"hidden\" name=\"type\" value=\"place\" />";
-		print "<input type=\"hidden\" name=\"callback\" value=\"$callback\" />";
-		print "<input type=\"hidden\" name=\"subclick\">"; // This is for passing the name of which submit button was clicked
-		print "<table class=\"list_table $TEXT_DIRECTION width100\" border=\"0\">";
-		print "<tr><td class=\"list_label width10\" style=\"padding: 5px;\">";
-		print $pgv_lang["place_contains"]." <input type=\"text\" name=\"filter\" value=\"";
-		if ($filter) print $filter;
-		print "\" />";
-		print "</td></tr>";
-		print "<tr><td class=\"list_label width10\" style=\"padding: 5px;\">";
-		print "<input type=\"submit\" name=\"search\" value=\"".$pgv_lang["filter"]."\" onclick=\"this.form.subclick.value=this.name\" />&nbsp;";
-		print "<input type=\"submit\" name=\"all\" value=\"".$pgv_lang["display_all"]."\" onclick=\"this.form.subclick.value=this.name\" />";
-		print "</td></tr></table>";
-		print "</form></div>";
-	}
-
-	// Show repo and hide the rest
-	if ($type == "repo" && $SHOW_SOURCES>=PGV_USER_ACCESS_LEVEL) {
-		print "<div align=\"center\">";
-		print "<form name=\"filterrepo\" method=\"get\" onsubmit=\"return checknames(this);\" action=\"find.php\">";
-		print "<input type=\"hidden\" name=\"action\" value=\"filter\" />";
-		print "<input type=\"hidden\" name=\"type\" value=\"repo\" />";
-		print "<input type=\"hidden\" name=\"callback\" value=\"$callback\" />";
-		print "<input type=\"hidden\" name=\"subclick\">"; // This is for passing the name of which submit button was clicked
-		print "<table class=\"list_table $TEXT_DIRECTION width100\" border=\"0\">";
-		print "<tr><td class=\"list_label width10\" style=\"padding: 5px;\">";
-		print $pgv_lang["repo_contains"]." <input type=\"text\" name=\"filter\" value=\"";
-		if ($filter) print $filter;
-		print "\" />";
-		print "</td></tr>";
-		print "<tr><td class=\"list_label width10\" style=\"padding: 5px;\">";
-		print "<input type=\"submit\" name=\"search\" value=\"".$pgv_lang["filter"]."\" onclick=\"this.form.subclick.value=this.name\" />&nbsp;";
-		print "<input type=\"submit\" name=\"all\" value=\"".$pgv_lang["display_all"]."\" onclick=\"this.form.subclick.value=this.name\" />";
-		print "</td></tr></table>";
-		print "</form></div>";
-	}
-
-	// Show source and hide the rest
-	if ($type == "source" && $SHOW_SOURCES>=PGV_USER_ACCESS_LEVEL) {
-		print "<div align=\"center\">";
-		print "<form name=\"filtersource\" method=\"get\" onsubmit=\"return checknames(this);\" action=\"find.php\">";
-		print "<input type=\"hidden\" name=\"action\" value=\"filter\" />";
-		print "<input type=\"hidden\" name=\"type\" value=\"source\" />";
-		print "<input type=\"hidden\" name=\"callback\" value=\"$callback\" />";
-		print "<input type=\"hidden\" name=\"subclick\">"; // This is for passing the name of which submit button was clicked
-		print "<table class=\"list_table $TEXT_DIRECTION width100\" border=\"0\">";
-		print "<tr><td class=\"list_label width10\" style=\"padding: 5px;\">";
-		print $pgv_lang["source_contains"]." <input type=\"text\" name=\"filter\" value=\"";
-		if ($filter) print $filter;
-		print "\" />";
-		print "</td></tr>";
-		print "<tr><td class=\"list_label width10\" style=\"padding: 5px;\">";
-		print "<input type=\"submit\" name=\"search\" value=\"".$pgv_lang["filter"]."\" onclick=\"this.form.subclick.value=this.name\" />&nbsp;";
-		print "<input type=\"submit\" name=\"all\" value=\"".$pgv_lang["display_all"]."\" onclick=\"this.form.subclick.value=this.name\" />";
-		print "</td></tr></table>";
-		print "</form></div>";
-	}
-
-	// Show specialchar and hide the rest
-	if ($type == "specialchar") {
-		print "<div align=\"center\">";
-		print "<form name=\"filterspecialchar\" method=\"get\" action=\"find.php\">";
-		print "<input type=\"hidden\" name=\"action\" value=\"filter\" />";
-		print "<input type=\"hidden\" name=\"type\" value=\"specialchar\" />";
-		print "<input type=\"hidden\" name=\"callback\" value=\"$callback\" />";
-		print "<input type=\"hidden\" name=\"magnify\" value=\"".$magnify."\" />";
-		print "<table class=\"list_table $TEXT_DIRECTION width100\" border=\"0\">";
-		print "<tr><td class=\"list_label\" style=\"padding: 5px;\">";
-		print "<select id=\"language_filter\" name=\"language_filter\" onchange=\"submit();\">";
-		print "\n\t<option value=\"\">".$pgv_lang["change_lang"]."</option>";
-		$language_options = "";
-		foreach($specialchar_languages as $key=>$value) {
-			$language_options.= "\n\t<option value=\"$key\">$value</option>";
-		}
-		$language_options = str_replace("\"$language_filter\"","\"$language_filter\" selected",$language_options);
-		print $language_options;
-		print "</select><br /><a href=\"javascript:;\" onclick=\"setMagnify()\">".$pgv_lang["magnify"]."</a>";
-		print "</td></tr></table>";
-		print "</form></div>";
-	}
-	// end column for find options
+	$language_options = str_replace("\"$language_filter\"","\"$language_filter\" selected",$language_options);
+	print $language_options;
+	print "</select><br /><a href=\"javascript:;\" onclick=\"setMagnify()\">".$pgv_lang["magnify"]."</a>";
+	print "</td></tr></table>";
+	print "</form></div>";
+}
+// end column for find options
 print "</td></tr>";
 print "</table>"; // Close table with find options
 
 print "<br />";
-print "<a href=\"javascript:;\" onclick=\"if (window.opener.showchanges) window.opener.showchanges(); window.close();\">".$pgv_lang["close_window"]."</a><br />\n";
+print "<a href=\"javascript:;\" onclick=\"if (window.opener.showchanges) window.opener.showchanges(); window.close();\">".$pgv_lang["close_window"]."</a><br />";
 print "<br />";
 
 if ($action=="filter") {
@@ -372,10 +368,10 @@ if ($action=="filter") {
 	$filter_array=explode(' ', preg_replace('/ {2,}/', ' ', $filter));
 	// Output Individual
 	if ($type == "indi") {
-		print "<table class=\"tabs_table $TEXT_DIRECTION width90\">\n\t\t<tr>";
+		print "<table class=\"tabs_table $TEXT_DIRECTION width90\"><tr>";
 		$myindilist=search_indis_names($filter_array, array(PGV_GED_ID), 'AND');
 		if ($myindilist) {
-			print "\n\t\t<td class=\"list_value_wrap $TEXT_DIRECTION\"><ul>";
+			print "<td class=\"list_value_wrap $TEXT_DIRECTION\"><ul>";
 			usort($myindilist, array('GedcomRecord', 'Compare'));
 			foreach($myindilist as $indi) {
 				echo $indi->format_list('li', true);
@@ -391,7 +387,7 @@ if ($action=="filter") {
 
 	// Output Family
 	if ($type == "fam") {
-		print "\n\t<table class=\"tabs_table $TEXT_DIRECTION width90\">\n\t\t<tr>";
+		print "<table class=\"tabs_table $TEXT_DIRECTION width90\"><tr>";
 		// Get the famrecs with hits on names from the family table
 		// Get the famrecs with hits in the gedcom record from the family table
 		$myfamlist = pgv_array_merge(
@@ -400,7 +396,7 @@ if ($action=="filter") {
 		);
 		if ($myfamlist) {
 			$curged = $GEDCOM;
-			print "\n\t\t<td class=\"list_value_wrap $TEXT_DIRECTION\"><ul>";
+			print "<td class=\"list_value_wrap $TEXT_DIRECTION\"><ul>";
 			usort($myfamlist, array('GedcomRecord', 'Compare'));
 			foreach($myfamlist as $family) {
 				echo $family->format_list('li', true);
@@ -420,7 +416,7 @@ if ($action=="filter") {
 
 		$medialist = get_medialist(true, $directory);
 
-		print "\n\t<table class=\"tabs_table $TEXT_DIRECTION width90\">\n\t\t";
+		print "<table class=\"tabs_table $TEXT_DIRECTION width90\">";
 		// Show link to previous folder
 		if ($level>0) {
 			$levels = explode("/", $directory);
@@ -429,7 +425,7 @@ if ($action=="filter") {
 			$levels = explode("/", $thumbdir);
 			$pthumb = "";
 			for($i=0; $i<count($levels)-2; $i++) $pthumb.=$levels[$i]."/";
-			$uplink = "<a href=\"".encode_url("find.php?directory={$pdir}&thumbdir={$pthumb}&level=".($level-1)."{$thumbget}&type=media&choose={$choose}")."\">&nbsp;&nbsp;&nbsp;&lt;-- <span dir=\"ltr\">".$pdir."</span>&nbsp;&nbsp;&nbsp;</a><br />\n";
+			$uplink = "<a href=\"".encode_url("find.php?directory={$pdir}&thumbdir={$pthumb}&level=".($level-1)."{$thumbget}&type=media&choose={$choose}")."\">&nbsp;&nbsp;&nbsp;&lt;-- <span dir=\"ltr\">".$pdir."</span>&nbsp;&nbsp;&nbsp;</a><br />";
 		}
 
 		// Start of media directory table
@@ -505,13 +501,13 @@ if ($action=="filter") {
 
 						//-- thumbnail field
 						if ($showthumb) {
-							print "\n\t\t\t<td class=\"list_value $TEXT_DIRECTION width10\">";
-							if (isset($media["THUMB"])) print "<a href=\"javascript:;\" onclick=\"return openImage('".rawurlencode($media["FILE"])."',$imgwidth, $imgheight);\"><img src=\"".filename_decode($media["THUMB"])."\" border=\"0\" width=\"50\" alt=\"\" /></a>\n";
+							print "<td class=\"list_value $TEXT_DIRECTION width10\">";
+							if (isset($media["THUMB"])) print "<a href=\"javascript:;\" onclick=\"return openImage('".rawurlencode($media["FILE"])."',$imgwidth, $imgheight);\"><img src=\"".filename_decode($media["THUMB"])."\" border=\"0\" width=\"50\" alt=\"\" /></a>";
 							else print "&nbsp;";
 						}
 
 						//-- name and size field
-						print "\n\t\t\t<td class=\"list_value $TEXT_DIRECTION\">";
+						print "<td class=\"list_value $TEXT_DIRECTION\">";
 						if ($media["TITL"] != "") {
 							print "<b>".PrintReady($media["TITL"])."</b>&nbsp;&nbsp;";
 							if ($TEXT_DIRECTION=="rtl") print getRLM();
@@ -553,7 +549,7 @@ if ($action=="filter") {
 						} else {
 							print $pgv_lang["media_not_linked"];
 						}
-						print "\n\t\t\t</td>";
+						print "</td>";
 					}
 				}
 			}
@@ -568,7 +564,7 @@ if ($action=="filter") {
 
 	// Output Places
 	if ($type == "place") {
-		print "\n\t<table class=\"tabs_table $TEXT_DIRECTION width90\">\n\t\t<tr>";
+		print "<table class=\"tabs_table $TEXT_DIRECTION width90\"><tr>";
 		$placelist = array();
 		if ($all || $filter)
 		{
@@ -576,7 +572,7 @@ if ($action=="filter") {
 			uasort($placelist, "stringsort");
 			$ctplace = count($placelist);
 			if ($ctplace>0) {
-				print "\n\t\t<td class=\"list_value_wrap $TEXT_DIRECTION\"><ul>";
+				print "<td class=\"list_value_wrap $TEXT_DIRECTION\"><ul>";
 				foreach($placelist as $indexval => $revplace) {
 					$levels = explode(',', $revplace); // -- split the place into comma seperated values
 					$levels = array_reverse($levels); // -- reverse the array so that we get the top level first
@@ -587,9 +583,9 @@ if ($action=="filter") {
 						$placetext .= trim($level);
 						$j++;
 					}
-					print "<li><a href=\"javascript:;\" onclick=\"pasteid('".preg_replace(array("/'/",'/"/'), array("\'",'&quot;'), $placetext)."');\">".PrintReady($revplace)."</a></li>\n";
+					print "<li><a href=\"javascript:;\" onclick=\"pasteid('".preg_replace(array("/'/",'/"/'), array("\'",'&quot;'), $placetext)."');\">".PrintReady($revplace)."</a></li>";
 				}
-				print "\n\t\t</ul></td></tr>";
+				print "</ul></td></tr>";
 				print "<tr><td class=\"list_label\">".$pgv_lang["total_places"]." ".$ctplace;
 				print "</td></tr>";
 			}
@@ -604,10 +600,10 @@ if ($action=="filter") {
 
 	// Output Repositories
 	if ($type == "repo") {
-		print "\n\t<table class=\"tabs_table $TEXT_DIRECTION width90\">\n\t\t<tr>";
+		print "<table class=\"tabs_table $TEXT_DIRECTION width90\"><tr>";
 		$repo_list = get_repo_list(PGV_GED_ID);
 		if ($repo_list) {
-			print "\n\t\t<td class=\"list_value_wrap\"><ul>";
+			print "<td class=\"list_value_wrap\"><ul>";
 			foreach ($repo_list as $repo) {
 				echo "<li><a href=\"javascript:;\" onclick=\"pasteid('".$repo->getXref()."');\"><span class=\"list_item\">".$repo->getListName()."&nbsp;&nbsp;&nbsp;";
 				echo PGV_LPARENS.$repo->getXref().PGV_RPARENS;
@@ -653,7 +649,7 @@ if ($action=="filter") {
 
 	// Output Special Characters
 	if ($type == "specialchar") {
-		print "\n\t<table class=\"tabs_table $TEXT_DIRECTION width90\">\n\t\t<tr>\n\t\t<td class=\"list_value center wrap\" dir=\"$TEXT_DIRECTION\"><br/>";
+		print "<table class=\"tabs_table $TEXT_DIRECTION width90\"><tr><td class=\"list_value center wrap\" dir=\"$TEXT_DIRECTION\"><br/>";
 		// lower case special characters
 		if ($magnify) {
 			echo '<span class="largechars">';
@@ -699,13 +695,10 @@ if ($action=="filter") {
 	}
 }
 print "</div>"; // Close div that centers table
-?>
-<script language="JavaScript" type="text/javascript">
-<!--
-	document.filter<?php print $type; ?>.filter.focus();
-//-->
-</script>
-<?php
+
+// Set focus to the input field
+echo PGV_JS_START, 'document.filter', $type, '.filter.focus();', PGV_JS_END;
+
 print_simple_footer();
 
 ?>
