@@ -73,7 +73,7 @@ if (!$controller->isPrintPreview()) {
 	$othermenu=$controller->getOtherMenu();
 	if ($editmenu || $othermenu) {
 		echo '<table class="sublinks_table" cellspacing="4" cellpadding="0">';
-		echo '<tr><td class="list_label ', $TEXT_DIRECTION, '" colspan="2">', $pgv_lang['source_menu'], '</td></tr>';
+		echo '<tr><td class="list_label ', $TEXT_DIRECTION, '" colspan="2">', $pgv_lang['repo_menu'], '</td></tr>';
 		echo '<tr>';
 		if ($editmenu) {
 			echo '<td class="sublinks_cell ', $TEXT_DIRECTION, '">', $editmenu->printMenu(), '</td>';
