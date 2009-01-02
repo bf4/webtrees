@@ -2,7 +2,7 @@
 /**
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
+ * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -190,6 +190,24 @@ function fact_AKA_localisation_pl(&$fact, &$pid) {
 	else {
 		if ($sex == "M")	  $factarray[$fact] = "Znany także jako"; // mężczyzna
 		else if ($sex == "F") $factarray[$fact] = "Znana także jako"; // kobieta
+	}
+}
+///////////////////////////////////////////////////////////////////////////////////////////
+// Localise the _NMR facts. Lokalizacja faktów _NMR.
+///////////////////////////////////////////////////////////////////////////////////////////
+function fact_NMR_localisation_pl($fact, &$fid) {
+	global $factarray;
+
+	$family = Family::getInstance($fid);
+	$husb = $family->getHusband();
+	$wife = $family->getWife();
+	if ($fact == "_NMR") {
+		if (empty($wife) && !empty($husb))		$factarray[$fact] = "Nieżonaty"; // mężczyzna
+		else if (empty($husb) && !empty($wife))	$factarray[$fact] = "Niezamężna"; // kobieta
+	}
+	else if ($fact == "_NMAR") {
+		if (empty($wife) && !empty($husb))		$factarray[$fact] = "Nigdy nieżonaty"; // mężczyzna
+		else if (empty($husb) && !empty($wife))	$factarray[$fact] = "Nigdy niezamężna"; // kobieta
 	}
 }
 ///////////////////////////////////////////////////////////////////////////////////////////

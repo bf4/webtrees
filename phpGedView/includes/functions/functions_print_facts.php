@@ -5,7 +5,7 @@
  * Various printing functions used to print fact records
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
+ * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -123,6 +123,14 @@ function print_fact(&$eventObj, $noedit=false) {
 				$func="fact_AKA_localisation_{$lang_short_cut[$LANGUAGE]}";
 				if (function_exists($func)) {
 					// Localise the AKA or _INTE facts
+					$func($fact, $pid);
+				}
+			}
+			if ($fact=="_NMR") {
+				// Allow special processing for different languages
+				$func="fact_NMR_localisation_{$lang_short_cut[$LANGUAGE]}";
+				if (function_exists($func)) {
+					// Localise the _NMR facts
 					$func($fact, $pid);
 				}
 			}
@@ -1774,15 +1782,15 @@ function print_main_media_row($rtype, $rowm, $pid) {
 // -----------------------------------------------------------------------------
 
 function lightbox_print_media($pid, $level=1, $related=false, $kind, $noedit=false ) {
-         include("modules/lightbox/functions/lightbox_print_media.php");
+		include("modules/lightbox/functions/lightbox_print_media.php");
 }
 
 function lightbox_print_media_row($rtype, $rowm, $pid) {
-         include("modules/lightbox/functions/lightbox_print_media_row.php");
+		include("modules/lightbox/functions/lightbox_print_media_row.php");
 }
 
 function media_reorder_row($rtype, $rowm, $pid) {
-         include("media_reorder_row.php");
+		include("media_reorder_row.php");
 }
 
 // -----------------------------------------------------------------------------

@@ -3,7 +3,7 @@
  * Polish texts
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team. All rights reserved.
+ * Copyright (C) 2002 to 2009  PGV Development Team. All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -316,6 +316,7 @@ $pgv_lang["update_address"] 		= "Zaktualizuj adres";
 $pgv_lang["top10_pageviews_descr"]	= "Ta sekcja wyświetla 10 osób, które były najczęściej odwiedzane. Sekcja wymaga włączenia licznika odwiedzin w ustawieniach konfiguracyjnych GEDCOM.";
 $pgv_lang["top10_pageviews"]		= "Najczęściej odwiedzane";
 $pgv_lang["top10_pageviews_block"]	= "Najczęściej odwiedzane";
+$pgv_lang["stepparent"]				= "Ojczym/Macocha";
 $pgv_lang["stepdad"]				= "Ojczym";
 $pgv_lang["stepmom"]				= "Macocha";
 $pgv_lang["stepsister"]				= "Siostra przyrodnia";

@@ -3,7 +3,7 @@
  * Controller for the Individual Page
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
+ * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -745,9 +745,9 @@ class IndividualControllerRoot extends BaseController {
 			$labels["brother"] = $pgv_lang["brother"];
 		}
 		if ($type=="step"){
-			$labels["parent"] = ".";		//print $pgv_lang["stepparent"];
-			$labels["mother"] = ".";		//print $pgv_lang["stepmom"];
-			$labels["father"] = ".";		//print $pgv_lang["stepdad"];
+			$labels["parent"] = $pgv_lang["stepparent"];
+			$labels["mother"] = $pgv_lang["stepmom"];
+			$labels["father"] = $pgv_lang["stepdad"];
 			$labels["sibling"] = $pgv_lang["halfsibling"];
 			$labels["sister"] = $pgv_lang["halfsister"];
 			$labels["brother"] = $pgv_lang["halfbrother"];
@@ -996,6 +996,7 @@ class IndividualControllerRoot extends BaseController {
 	function printParentsRows(&$family, &$people, $type) {
 		global $personcount, $pgv_changes, $pgv_lang, $factarray;
 		global $PGV_IMAGE_DIR, $PGV_IMAGES;
+		global $lang_short_cut, $LANGUAGE;
 		$elderdate = "";
 		//-- new father/husband
 		$styleadd = "";
@@ -1096,8 +1097,9 @@ class IndividualControllerRoot extends BaseController {
 			$styleadd = "";
 			$date = $family->getMarriageDate();
 			$place = $family->getMarriagePlace();
-			if (!$date && $this->show_changes && isset($pgv_changes[$family->getXref()."_".$GEDCOM])) {
-				$famrec = find_updated_record($family->getXref());
+			$famid = $family->getXref();
+			if (!$date && $this->show_changes && isset($pgv_changes[$famid."_".$GEDCOM])) {
+				$famrec = find_updated_record($famid);
 				$marrrec = get_sub_record(1, "1 MARR", $famrec);
 				if ($marrrec!=$family->getMarriageRecord()) {
 					$date = new GedcomDate(get_gedcom_value("MARR:DATE", 1, $marrrec, '', false));
@@ -1121,12 +1123,26 @@ class IndividualControllerRoot extends BaseController {
 						}
 						if (!empty($place)) echo $place;
 					}
-					else if (get_sub_record(1, "1 _NMR", find_family_record($family->getXref())))
+					else if (get_sub_record(1, "1 _NMR", find_family_record($famid))) {
+						// Allow special processing for different languages
+						$func="fact_NMR_localisation_{$lang_short_cut[$LANGUAGE]}";
+						if (function_exists($func)) {
+							// Localise the _NMR facts
+							$func("_NMR", $famid);
+						}
 						echo $factarray["_NMR"];
-					else if (get_sub_record(1, "1 _NMAR", find_family_record($family->getXref())))
+					}
+					else if (get_sub_record(1, "1 _NMAR", find_family_record($famid))) {
+						// Allow special processing for different languages
+						$func="fact_NMR_localisation_{$lang_short_cut[$LANGUAGE]}";
+						if (function_exists($func)) {
+							// Localise the _NMR facts
+							$func("_NMAR", $famid);
+						}
 						echo $factarray["_NMAR"];
+					}
 					else if ($family->getMarriageRecord()=="" && PGV_USER_CAN_EDIT) {
-						print "<a href=\"#\" onclick=\"return add_new_record('".$family->getXref()."', 'MARR');\">".$pgv_lang['add_marriage']."</a>";
+						print "<a href=\"#\" onclick=\"return add_new_record('".$famid."', 'MARR');\">".$pgv_lang['add_marriage']."</a>";
 					}
 					else {
 						$factdetail = explode(' ', trim($family->getMarriageRecord()));
@@ -1201,8 +1217,8 @@ class IndividualControllerRoot extends BaseController {
 				<td class="facts_value"><?php print_help_link($action."_help", "qm"); ?>
 					<a href="javascript:;" onclick="return addnewchild('<?php print $family->getXref(); ?>');"><?php print $pgv_lang[$action]; ?></a>
 					<span style='white-space:nowrap;'>
-						<a href="javascript:;" onclick="return addnewchild('<?php print $family->getXref(); ?>','M');"><?php echo Person::sexImage('M', 'small', '', $pgv_lang['brother']); ?></a>
-						<a href="javascript:;" onclick="return addnewchild('<?php print $family->getXref(); ?>','F');"><?php echo Person::sexImage('F', 'small', '', $pgv_lang['sister']); ?></a>
+						<a href="javascript:;" onclick="return addnewchild('<?php print $family->getXref(); ?>','M');"><?php echo Person::sexImage('M', 'small', '', $pgv_lang[$child_m]); ?></a>
+						<a href="javascript:;" onclick="return addnewchild('<?php print $family->getXref(); ?>','F');"><?php echo Person::sexImage('F', 'small', '', $pgv_lang[$child_f]); ?></a>
 					</span>
 				</td>
 			</tr>
@@ -1323,16 +1339,16 @@ class IndividualControllerRoot extends BaseController {
 		?>
 		</table>
 		</td>
-				<?php // ==================== Start Details Tab Navigator ========================================
-				?>
-				<td valign="top">
+			<?php // ==================== Start Details Tab Navigator ========================================
+			?>
+			<td valign="top">
 				<table class="optionbox" width="220px" cellpadding=\"0\"><tr><td align="center">
 				<b><?php print $pgv_lang["view_fam_nav_details"]; ?></b><br /><br />
 				<?php include_once('includes/family_nav.php'); ?>
 				<br />
 				</td></tr></table>
-				</td>
-				<?php // ==================== End Details Tab Navigator ========================================= */?>
+			</td>
+			<?php // ==================== End Details Tab Navigator ========================================= */?>
 		</tr></table>
 		<br />
 		<script language="JavaScript" type="text/javascript">
