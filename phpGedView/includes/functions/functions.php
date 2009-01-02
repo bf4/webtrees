@@ -1,30 +1,30 @@
 <?php
 /**
- * Core Functions that can be used by any page in PGV
- *
- * The functions in this file are common to all PGV pages and include date conversion
- * routines and sorting functions.
- *
- * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- *
- * @package PhpGedView
- * @version $Id$
- */
+* Core Functions that can be used by any page in PGV
+*
+* The functions in this file are common to all PGV pages and include date conversion
+* routines and sorting functions.
+*
+* phpGedView: Genealogy Viewer
+* Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
+*
+* This program is free software; you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation; either version 2 of the License, or
+* (at your option) any later version.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+* GNU General Public License for more details.
+*
+* You should have received a copy of the GNU General Public License
+* along with this program; if not, write to the Free Software
+* Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+*
+* @package PhpGedView
+* @version $Id$
+*/
 
 if (!defined('PGV_PHPGEDVIEW')) {
 	header('HTTP/1.0 403 Forbidden');
@@ -49,12 +49,12 @@ if (PGV_DEBUG) {
 
 // ************************************************* START OF INITIALIZATION FUNCTIONS ********************************* //
 /**
- * initialize and check the database
- *
- * this function will create a database connection and return false if any errors occurred
- * @param boolean $ignore_previous	whether or not to ignore a previous connection , this parameter is used mainly for the install.php page when setting everything up
- * @return boolean true if database successfully connected, false if there was an error
- */
+* initialize and check the database
+*
+* this function will create a database connection and return false if any errors occurred
+* @param boolean $ignore_previous whether or not to ignore a previous connection , this parameter is used mainly for the install.php page when setting everything up
+* @return boolean true if database successfully connected, false if there was an error
+*/
 function check_db($ignore_previous=false) {
 	global $DBTYPE, $DBHOST, $DBPORT, $DBUSER, $DBPASS, $DBNAME, $DBCONN, $TOTAL_QUERIES, $PHP_SELF, $DBPERSIST, $CONFIGURED;
 	global $INDEX_DIRECTORY, $DB_UTF8_COLLATION;
@@ -207,20 +207,16 @@ function safe_REQUEST($arr, $var, $regex=PGV_REGEX_NOSCRIPT, $default=null) {
 }
 
 function encode_url($url, $entities=true) {
-	$url = decode_url($url, $entities);		// Make sure we don't do any double conversions
-	$url = str_replace(array(' ', '+', '#', '"', "'"), array('%20', '%2b', '%23', '%22', '%27'), $url);		// GEDCOM names can legitimately contain these chars
+	$url = decode_url($url, $entities); // Make sure we don't do any double conversions
+	$url = str_replace(array(' ', '+', '#', '"', "'"), array('%20', '%2b', '%23', '%22', '%27'), $url); // GEDCOM names can legitimately contain these chars
 	if ($entities) $url = htmlspecialchars($url,ENT_COMPAT,'UTF-8');
-//	if ($entities) {
-//		$url = str_replace("&", "&amp;", ($url));
-//		$url = str_replace("&amp;amp;", "&amp;", ($url));
-//	}
 	return $url;
 }
 
 
 function decode_url($url, $entities=true) {
 	if ($entities) $url = html_entity_decode($url,ENT_COMPAT,'UTF-8');
-	$url = rawurldecode($url);		// GEDCOM names can legitimately contain " " and "+"
+	$url = rawurldecode($url); // GEDCOM names can legitimately contain " " and "+"
 	return $url;
 }
 
@@ -280,26 +276,33 @@ function file_upload_error_text($error_code) {
 	global $pgv_lang;
 
 	switch ($error_code) {
-	case UPLOAD_ERR_OK:         return $pgv_lang['file_success'];
+	case UPLOAD_ERR_OK:
+		return $pgv_lang['file_success'];
 	case UPLOAD_ERR_INI_SIZE:
-	case UPLOAD_ERR_FORM_SIZE:  return $pgv_lang['file_too_big'];
-	case UPLOAD_ERR_PARTIAL:    return $pgv_lang['file_partial'];
-	case UPLOAD_ERR_NO_FILE:    return $pgv_lang['file_missing'];
-	case UPLOAD_ERR_NO_TMP_DIR: return $pgv_lang['file_no_temp_dir'];
-	case UPLOAD_ERR_CANT_WRITE: return $pgv_lang['file_cant_write'];
-	case UPLOAD_ERR_EXTENSION:  return $pgv_lang['file_bad_extension'];
+	case UPLOAD_ERR_FORM_SIZE:
+		return $pgv_lang['file_too_big'];
+	case UPLOAD_ERR_PARTIAL:
+		return $pgv_lang['file_partial'];
+	case UPLOAD_ERR_NO_FILE:
+		return $pgv_lang['file_missing'];
+	case UPLOAD_ERR_NO_TMP_DIR:
+		return $pgv_lang['file_no_temp_dir'];
+	case UPLOAD_ERR_CANT_WRITE:
+		return $pgv_lang['file_cant_write'];
+	case UPLOAD_ERR_EXTENSION:
+		return $pgv_lang['file_bad_extension'];
 	default:
-								$pgv_lang['global_num1'] = $error_code;		// Make this available to print_text()
-								return print_text('file_unknown_err', 0, 1);
+		$pgv_lang['global_num1'] = $error_code; // Make this available to print_text()
+		return print_text('file_unknown_err', 0, 1);
 	}
 }
 
 /**
- * get gedcom configuration file
- *
- * this function returns the path to the currently active GEDCOM configuration file
- * @return string path to gedcom.ged_conf.php configuration file
- */
+* get gedcom configuration file
+*
+* this function returns the path to the currently active GEDCOM configuration file
+* @return string path to gedcom.ged_conf.php configuration file
+*/
 function get_config_file($ged="") {
 	global $GEDCOMS, $GEDCOM;
 
@@ -324,37 +327,37 @@ function get_config_file($ged="") {
 }
 
 /**
- * print write_access option
- *
- * @param string $checkVar
- */
+* print write_access option
+*
+* @param string $checkVar
+*/
 function write_access_option($checkVar) {
-  global $pgv_lang;
+	global $pgv_lang;
 
-  echo "<option value=\"PGV_PRIV_PUBLIC\"";
-  echo ($checkVar==PGV_PRIV_PUBLIC) ? " selected=\"selected\"" : '';
-  echo ">".$pgv_lang["PRIV_PUBLIC"]."</option>\n";
+	echo "<option value=\"PGV_PRIV_PUBLIC\"";
+	echo ($checkVar==PGV_PRIV_PUBLIC) ? " selected=\"selected\"" : '';
+	echo ">".$pgv_lang["PRIV_PUBLIC"]."</option>\n";
 
-  echo "<option value=\"PGV_PRIV_USER\"";
-  echo ($checkVar==PGV_PRIV_USER) ? " selected=\"selected\"" : '';
-  echo ">".$pgv_lang["PRIV_USER"]."</option>\n";
+	echo "<option value=\"PGV_PRIV_USER\"";
+	echo ($checkVar==PGV_PRIV_USER) ? " selected=\"selected\"" : '';
+	echo ">".$pgv_lang["PRIV_USER"]."</option>\n";
 
-  echo "<option value=\"PGV_PRIV_NONE\"";
-  echo ($checkVar==PGV_PRIV_NONE) ? " selected=\"selected\"" : '';
-  echo ">".$pgv_lang["PRIV_NONE"]."</option>\n";
+	echo "<option value=\"PGV_PRIV_NONE\"";
+	echo ($checkVar==PGV_PRIV_NONE) ? " selected=\"selected\"" : '';
+	echo ">".$pgv_lang["PRIV_NONE"]."</option>\n";
 
-  echo "<option value=\"PGV_PRIV_HIDE\"";
-  echo ($checkVar==PGV_PRIV_HIDE) ? " selected=\"selected\"" : '';
-  echo ">".$pgv_lang["PRIV_HIDE"]."</option>\n";
+	echo "<option value=\"PGV_PRIV_HIDE\"";
+	echo ($checkVar==PGV_PRIV_HIDE) ? " selected=\"selected\"" : '';
+	echo ">".$pgv_lang["PRIV_HIDE"]."</option>\n";
 }
 
 /**
- * Get the version of the privacy file
- *
- * This function opens the given privacy file and returns the privacy version from the file
- * @param string $privfile the path to the privacy file
- * @return string the privacy file version number
- */
+* Get the version of the privacy file
+*
+* This function opens the given privacy file and returns the privacy version from the file
+* @param string $privfile the path to the privacy file
+* @return string the privacy file version number
+*/
 function get_privacy_file_version($privfile) {
 	$privversion = "0";
 
@@ -371,11 +374,11 @@ function get_privacy_file_version($privfile) {
 }
 
 /**
- * Get the path to the privacy file
- *
- * Get the path to the privacy file for the currently active GEDCOM
- * @return string path to the privacy file
- */
+* Get the path to the privacy file
+*
+* Get the path to the privacy file for the currently active GEDCOM
+* @return string path to the privacy file
+*/
 function get_privacy_file() {
 	global $GEDCOMS, $GEDCOM;
 
@@ -429,13 +432,13 @@ function load_privacy_file($ged_id=PGV_GED_ID) {
 }
 
 /**
- * Store GEDCOMS array
- *
- * this function will store the <var>$GEDCOMS</var> array in the <var>$INDEX_DIRECTORY</var>/gedcoms.php
- * file.  The gedcoms.php file is included in session.php to create the <var>$GEDCOMS</var>
- * array with every page request.
- * @see session.php
- */
+* Store GEDCOMS array
+*
+* this function will store the <var>$GEDCOMS</var> array in the <var>$INDEX_DIRECTORY</var>/gedcoms.php
+* file.  The gedcoms.php file is included in session.php to create the <var>$GEDCOMS</var>
+* array with every page request.
+* @see session.php
+*/
 function store_gedcoms() {
 	global $GEDCOMS, $pgv_lang, $INDEX_DIRECTORY, $DEFAULT_GEDCOM, $COMMON_NAMES_THRESHOLD, $GEDCOM, $CONFIGURED;
 	global $IN_STORE_GEDCOMS;
@@ -526,16 +529,16 @@ function store_gedcoms() {
 }
 
 /**
- * Update the site configuration settings
- * New settings are passed in as an array of key value pairs
- * The key in the array should be the name of the setting to change
- * the value should be the new value
- * $newconfig['CONFIGURED'] = true;
- *
- * @param array	$newconfig
- * @param boolean $return	return the text or try to write the file
- * @return mixed	returns true on success, or returns an array of error messages on failure
- */
+* Update the site configuration settings
+* New settings are passed in as an array of key value pairs
+* The key in the array should be the name of the setting to change
+* the value should be the new value
+* $newconfig['CONFIGURED'] = true;
+*
+* @param array $newconfig
+* @param boolean $return return the text or try to write the file
+* @return mixed returns true on success, or returns an array of error messages on failure
+*/
 function update_site_config($newconfig, $return = false) {
 	global $pgv_lang, $COMMIT_COMMAND;
 
@@ -563,7 +566,7 @@ function update_site_config($newconfig, $return = false) {
 			fwrite($fp, $configtext);
 			fclose($fp);
 			$logline = AddToLog("config.php updated by >".getUserName()."<");
- 			if (!empty($COMMIT_COMMAND)) check_in($logline, "config.php", "");
+			if (!empty($COMMIT_COMMAND)) check_in($logline, "config.php", "");
 		}
 	}
 	else {
@@ -633,7 +636,7 @@ function update_lang_settings() {
 			fwrite($fp, "?>");
 			fclose($fp);
 		$logline = AddToLog("lang_settings.php updated");
- 		check_in($logline, $Filename, $INDEX_DIRECTORY);
+		check_in($logline, $Filename, $INDEX_DIRECTORY);
 		} else $error = "lang_config_write_error";
 	} else $error = "lang_set_file_read_error";
 	return $error;
@@ -645,7 +648,7 @@ function update_lang_settings() {
 function file_is_writeable($file) {
 	$err_write = false;
 	$handle = @fopen($file,"r+");
-	if	($handle)	{
+	if ($handle) {
 		$i = fclose($handle);
 		$err_write = true;
 	}
@@ -653,12 +656,12 @@ function file_is_writeable($file) {
 }
 
 /**
- * PGV Error Handling function
- *
- * This function will be called by PHP whenever an error occurs.  The error handling
- * is set in the session.php
- * @see http://us2.php.net/manual/en/function.set-error-handler.php
- */
+* PGV Error Handling function
+*
+* This function will be called by PHP whenever an error occurs.  The error handling
+* is set in the session.php
+* @see http://us2.php.net/manual/en/function.set-error-handler.php
+*/
 function pgv_error_handler($errno, $errstr, $errfile, $errline) {
 	global $ERROR_LEVEL;
 
@@ -706,12 +709,12 @@ function pgv_error_handler($errno, $errstr, $errfile, $errline) {
 // ************************************************* START OF GEDCOM FUNCTIONS ********************************* //
 
 /**
- * Get first tag in GEDCOM sub-record
- *
- * This routine uses function get_sub_record to retrieve the specified sub-record
- * and then returns the first tag.
- *
- */
+* Get first tag in GEDCOM sub-record
+*
+* This routine uses function get_sub_record to retrieve the specified sub-record
+* and then returns the first tag.
+*
+*/
 function get_first_tag($level, $tag, $gedrec, $num=1) {
 	$temp = get_sub_record($level, $level." ".$tag, $gedrec, $num)."\n";
 	$temp = str_replace("\r\n", "\n", $temp);
@@ -722,27 +725,27 @@ function get_first_tag($level, $tag, $gedrec, $num=1) {
 }
 
 /**
- * get a gedcom subrecord
- *
- * searches a gedcom record and returns a subrecord of it.  A subrecord is defined starting at a
- * line with level N and all subsequent lines greater than N until the next N level is reached.
- * For example, the following is a BIRT subrecord:
- * <code>1 BIRT
- * 2 DATE 1 JAN 1900
- * 2 PLAC Phoenix, Maricopa, Arizona</code>
- * The following example is the DATE subrecord of the above BIRT subrecord:
- * <code>2 DATE 1 JAN 1900</code>
- * @author John Finlay (yalnifj)
- * @author Roland Dalmulder (roland-d)
- * @param int $level the N level of the subrecord to get
- * @param string $tag a gedcom tag or string to search for in the record (ie 1 BIRT or 2 DATE)
- * @param string $gedrec the parent gedcom record to search in
- * @param int $num this allows you to specify which matching <var>$tag</var> to get.  Oftentimes a
- * gedcom record will have more that 1 of the same type of subrecord.  An individual may have
- * multiple events for example.  Passing $num=1 would get the first 1.  Passing $num=2 would get the
- * second one, etc.
- * @return string the subrecord that was found or an empty string "" if not found.
- */
+* get a gedcom subrecord
+*
+* searches a gedcom record and returns a subrecord of it.  A subrecord is defined starting at a
+* line with level N and all subsequent lines greater than N until the next N level is reached.
+* For example, the following is a BIRT subrecord:
+* <code>1 BIRT
+* 2 DATE 1 JAN 1900
+* 2 PLAC Phoenix, Maricopa, Arizona</code>
+* The following example is the DATE subrecord of the above BIRT subrecord:
+* <code>2 DATE 1 JAN 1900</code>
+* @author John Finlay (yalnifj)
+* @author Roland Dalmulder (roland-d)
+* @param int $level the N level of the subrecord to get
+* @param string $tag a gedcom tag or string to search for in the record (ie 1 BIRT or 2 DATE)
+* @param string $gedrec the parent gedcom record to search in
+* @param int $num this allows you to specify which matching <var>$tag</var> to get.  Oftentimes a
+* gedcom record will have more that 1 of the same type of subrecord.  An individual may have
+* multiple events for example.  Passing $num=1 would get the first 1.  Passing $num=2 would get the
+* second one, etc.
+* @return string the subrecord that was found or an empty string "" if not found.
+*/
 function get_sub_record($level, $tag, $gedrec, $num=1) {
 	if (empty($gedrec))
 		return "";
@@ -774,14 +777,14 @@ function get_sub_record($level, $tag, $gedrec, $num=1) {
 }
 
 /**
- * find all of the level 1 subrecords of the given record
- * @param string $gedrec the gedcom record to get the subrecords from
- * @param string $ignore a list of tags to ignore
- * @param boolean $families whether to include any records from the family
- * @param boolean $sort whether or not to sort the record by date
- * @param boolean $ApplyPriv whether to apply privacy right now or later
- * @return array an array of the raw subrecords to return
- */
+* find all of the level 1 subrecords of the given record
+* @param string $gedrec the gedcom record to get the subrecords from
+* @param string $ignore a list of tags to ignore
+* @param boolean $families whether to include any records from the family
+* @param boolean $sort whether or not to sort the record by date
+* @param boolean $ApplyPriv whether to apply privacy right now or later
+* @return array an array of the raw subrecords to return
+*/
 function get_all_subrecords($gedrec, $ignore="", $families=true, $ApplyPriv=true) {
 	$repeats = array();
 
@@ -814,11 +817,11 @@ function get_all_subrecords($gedrec, $ignore="", $families=true, $ApplyPriv=true
 						if ($tt>0) {
 							$type = trim($tmatch[1]);
 							if (!$ApplyPriv || (showFact($type, $id)&&showFactDetails($type,$id)))
-								$repeats[] = trim($subrec)."\r\n";
+								$repeats[] = trim($subrec)."\n";
 						} else
-							$repeats[] = trim($subrec)."\r\n";
+							$repeats[] = trim($subrec)."\n";
 					} else
-						$repeats[] = trim($subrec)."\r\n";
+						$repeats[] = trim($subrec)."\n";
 				}
 			}
 		}
@@ -846,18 +849,18 @@ function get_all_subrecords($gedrec, $ignore="", $families=true, $ApplyPriv=true
 						else
 							$prev_tags[$fact] = 1;
 						$subrec = get_sub_record(1, "1 $fact", $famrec, $prev_tags[$fact]);
-						$subrec .= "\r\n2 _PGVS @$spid@\r\n";
-						$subrec .= "2 _PGVFS @$famid@\r\n";
+						$subrec .= "\n2 _PGVS @$spid@\n";
+						$subrec .= "2 _PGVFS @$famid@\n";
 						if ($fact=="EVEN") {
 							$ct = preg_match("/2 TYPE (.*)/", $subrec, $tmatch);
 							if ($ct>0) {
 								$type = trim($tmatch[1]);
 								if (!$ApplyPriv or (showFact($type, $id)&&showFactDetails($type,$id)))
-									$repeats[] = trim($subrec)."\r\n";
+									$repeats[] = trim($subrec)."\n";
 							} else
-								$repeats[] = trim($subrec)."\r\n";
+								$repeats[] = trim($subrec)."\n";
 						} else
-							$repeats[] = trim($subrec)."\r\n";
+							$repeats[] = trim($subrec)."\n";
 					}
 				}
 			}
@@ -868,16 +871,16 @@ function get_all_subrecords($gedrec, $ignore="", $families=true, $ApplyPriv=true
 }
 
 /**
- * get gedcom tag value
- *
- * returns the value of a gedcom tag from the given gedcom record
- * @param string $tag	The tag to find, use : to delineate subtags
- * @param int $level	The gedcom line level of the first tag to find, setting level to 0 will cause it to use 1+ the level of the incoming record
- * @param string $gedrec	The gedcom record to get the value from
- * @param int $truncate	Should the value be truncated to a certain number of characters
- * @param boolean $convert	Should data like dates be converted using the configuration settings
- * @return string
- */
+* get gedcom tag value
+*
+* returns the value of a gedcom tag from the given gedcom record
+* @param string $tag The tag to find, use : to delineate subtags
+* @param int $level The gedcom line level of the first tag to find, setting level to 0 will cause it to use 1+ the level of the incoming record
+* @param string $gedrec The gedcom record to get the value from
+* @param int $truncate Should the value be truncated to a certain number of characters
+* @param boolean $convert Should data like dates be converted using the configuration settings
+* @return string
+*/
 function get_gedcom_value($tag, $level, $gedrec, $truncate='', $convert=true) {
 	global $SHOW_PEDIGREE_PLACES, $pgv_lang;
 
@@ -1037,16 +1040,16 @@ function get_gedcom_value($tag, $level, $gedrec, $truncate='', $convert=true) {
 }
 
 /**
- * create CONT lines
- *
- * Break input GEDCOM subrecord into pieces not more than 255 chars long,
- * with CONC and CONT lines as needed.  Routine also pays attention to the
- * word wrapped Notes option.  Routine also avoids splitting UTF-8 encoded
- * characters between lines.
- *
- * @param	string	$newline	Input GEDCOM subrecord to be worked on
- * @return	string	$newged		Output string with all necessary CONC and CONT lines
- */
+* create CONT lines
+*
+* Break input GEDCOM subrecord into pieces not more than 255 chars long,
+* with CONC and CONT lines as needed.  Routine also pays attention to the
+* word wrapped Notes option.  Routine also avoids splitting UTF-8 encoded
+* characters between lines.
+*
+* @param string $newline Input GEDCOM subrecord to be worked on
+* @return string $newged Output string with all necessary CONC and CONT lines
+*/
 function breakConts($newline) {
 	global $WORD_WRAPPED_NOTES;
 
@@ -1068,7 +1071,7 @@ function breakConts($newline) {
 					// added automatically when everything is put back together
 					$lastBlank = strrpos(substr($newlines[$k], 0, 255), " ");
 					$thisPiece = rtrim(substr($newlines[$k], 0, $lastBlank+1));
-					$newged .= $thisPiece."\r\n";
+					$newged .= $thisPiece."\n";
 					$newlines[$k] = substr($newlines[$k], (strlen($thisPiece)+1));
 					$newlines[$k] = "{$level} CONC ".$newlines[$k];
 				}
@@ -1090,34 +1093,34 @@ function breakConts($newline) {
 						// Make sure we didn't back up to a blank
 						$thisPiece = rtrim($thisPiece);
 					}
-					$newged .= $thisPiece."\r\n";
+					$newged .= $thisPiece."\n";
 					$newlines[$k] = substr($newlines[$k], strlen($thisPiece));
 					$newlines[$k] = "{$level} CONC ".$newlines[$k];
 				}
 			}
-			$newged .= trim($newlines[$k])."\r\n";
+			$newged .= trim($newlines[$k])."\n";
 		} else {
-			$newged .= trim($newlines[$k])."\r\n";
+			$newged .= trim($newlines[$k])."\n";
 		}
 	}
 	return $newged;
 }
 
 /**
- * get CONT lines
- *
- * get the N+1 CONT or CONC lines of a gedcom subrecord
- * @param int $nlevel the level of the CONT lines to get
- * @param string $nrec the gedcom subrecord to search in
- * @return string a string with all CONT or CONC lines merged
- */
+* get CONT lines
+*
+* get the N+1 CONT or CONC lines of a gedcom subrecord
+* @param int $nlevel the level of the CONT lines to get
+* @param string $nrec the gedcom subrecord to search in
+* @return string a string with all CONT or CONC lines merged
+*/
 function get_cont($nlevel, $nrec, $tobr=true) {
 	global $WORD_WRAPPED_NOTES;
 	$text = "";
 	if ($tobr)
 		$newline = "<br />";
 	else
-		$newline = "\r\n";
+		$newline = "\n";
 
 	$subrecords = explode("\n", $nrec);
 	foreach ($subrecords as $thisSubrecord) {
@@ -1137,13 +1140,13 @@ function get_cont($nlevel, $nrec, $tobr=true) {
 }
 
 /**
- * find the parents in a family
- *
- * find and return a two element array containing the parents of the given family record
- * @author John Finlay (yalnifj)
- * @param string $famid the gedcom xref id for the family
- * @return array returns a two element array with indexes HUSB and WIFE for the parent ids
- */
+* find the parents in a family
+*
+* find and return a two element array containing the parents of the given family record
+* @author John Finlay (yalnifj)
+* @param string $famid the gedcom xref id for the family
+* @return array returns a two element array with indexes HUSB and WIFE for the parent ids
+*/
 function find_parents($famid) {
 	global $pgv_lang;
 
@@ -1160,13 +1163,13 @@ function find_parents($famid) {
 }
 
 /**
- * find the parents in a family record
- *
- * find and return a two element array containing the parents of the given family record
- * @author John Finlay (yalnifj)
- * @param string $famrec the gedcom record of the family to search in
- * @return array returns a two element array with indexes HUSB and WIFE for the parent ids
- */
+* find the parents in a family record
+*
+* find and return a two element array containing the parents of the given family record
+* @author John Finlay (yalnifj)
+* @param string $famrec the gedcom record of the family to search in
+* @return array returns a two element array with indexes HUSB and WIFE for the parent ids
+*/
 function find_parents_in_record($famrec) {
 	global $pgv_lang;
 
@@ -1187,15 +1190,15 @@ function find_parents_in_record($famrec) {
 }
 
 /**
- * find the children in a family
- *
- * find and return an array containing the children of the given family record
- * @author John Finlay (yalnifj)
- * @param string $famid the gedcom xref id for the family
- * @param string $me	an xref id of a child to ignore, useful when you want to get a person's
- * siblings but do want to include them as well
- * @return array
- */
+* find the children in a family
+*
+* find and return an array containing the children of the given family record
+* @author John Finlay (yalnifj)
+* @param string $famid the gedcom xref id for the family
+* @param string $me an xref id of a child to ignore, useful when you want to get a person's
+* siblings but do want to include them as well
+* @return array
+*/
 function find_children($famid, $me='') {
 	global $pgv_lang;
 
@@ -1212,15 +1215,15 @@ function find_children($famid, $me='') {
 }
 
 /**
- * find the children in a family record
- *
- * find and return an array containing the children of the given family record
- * @author John Finlay (yalnifj)
- * @param string $famrec the gedcom record of the family to search in
- * @param string $me	an xref id of a child to ignore, useful when you want to get a person's
- * siblings but do want to include them as well
- * @return array
- */
+* find the children in a family record
+*
+* find and return an array containing the children of the given family record
+* @author John Finlay (yalnifj)
+* @param string $famrec the gedcom record of the family to search in
+* @param string $me an xref id of a child to ignore, useful when you want to get a person's
+* siblings but do want to include them as well
+* @return array
+*/
 function find_children_in_record($famrec, $me='') {
 	global $pgv_lang;
 
@@ -1238,52 +1241,52 @@ function find_children_in_record($famrec, $me='') {
 }
 
 /**
- * find all child family ids
- *
- * searches an individual gedcom record and returns an array of the FAMC ids where this person is a
- * child in the family, but only those families that are allowed to be seen by current user
- * @param string $pid the gedcom xref id for the person to look in
- * @return array array of family ids
- */
+* find all child family ids
+*
+* searches an individual gedcom record and returns an array of the FAMC ids where this person is a
+* child in the family, but only those families that are allowed to be seen by current user
+* @param string $pid the gedcom xref id for the person to look in
+* @return array array of family ids
+*/
 function find_family_ids($pid) {
 	$indirec=find_person_record($pid);
 	return find_visible_families_in_record($indirec, "FAMC");
 }
 
 /**
- * find all spouse family ids
- *
- * searches an individual gedcom record and returns an array of the FAMS ids where this person is a
- * spouse in the family, but only those families that are allowed to be seen by current user
- * @param string $pid the gedcom xref id for the person to look in
- * @return array array of family ids
- */
+* find all spouse family ids
+*
+* searches an individual gedcom record and returns an array of the FAMS ids where this person is a
+* spouse in the family, but only those families that are allowed to be seen by current user
+* @param string $pid the gedcom xref id for the person to look in
+* @return array array of family ids
+*/
 function find_sfamily_ids($pid) {
 	$indirec=find_person_record($pid);
 	return find_visible_families_in_record($indirec, "FAMS");
 }
 
 /**
- * find all family ids in the given record
- *
- * searches an individual gedcom record and returns an array of the FAMS|C ids
- * @param string $indirec the gedcom record for the person to look in
- * @param string $tag 	The family tag to look for
- * @return array array of family ids
- */
+* find all family ids in the given record
+*
+* searches an individual gedcom record and returns an array of the FAMS|C ids
+* @param string $indirec the gedcom record for the person to look in
+* @param string $tag  The family tag to look for
+* @return array array of family ids
+*/
 function find_families_in_record($indirec, $tag) {
 	preg_match_all("/1\s*{$tag}\s*@(.+)@/", $indirec, $match);
 	return $match[1];
 }
 
 /**
- * find all family ids in the given record that should be visible to the current user
- *
- * searches an individual gedcom record and returns an array of the FAMS|C ids that are visible
- * @param string $indirec the gedcom record for the person to look in
- * @param string $tag 	The family tag to look for, FAMS or FAMC
- * @return array array of family ids
- */
+* find all family ids in the given record that should be visible to the current user
+*
+* searches an individual gedcom record and returns an array of the FAMS|C ids that are visible
+* @param string $indirec the gedcom record for the person to look in
+* @param string $tag  The family tag to look for, FAMS or FAMC
+* @return array array of family ids
+*/
 function find_visible_families_in_record($indirec, $tag) {
 	$allfams = find_families_in_record($indirec, $tag);
 	$visiblefams = array();
@@ -1297,10 +1300,10 @@ function find_visible_families_in_record($indirec, $tag) {
 }
 
 /**
- * find and return an updated gedcom record
- * @param string $gid	the id of the record to find
- * @param string $gedfile	the gedcom file to get the record from.. defaults to currently active gedcom
- */
+* find and return an updated gedcom record
+* @param string $gid the id of the record to find
+* @param string $gedfile the gedcom file to get the record from.. defaults to currently active gedcom
+*/
 function find_updated_record($gid, $gedfile="") {
 	global $GEDCOM, $pgv_changes;
 
@@ -1333,17 +1336,17 @@ function exists_pending_change($user_id=PGV_USER_ID, $ged_id=PGV_GED_ID) {
 
 // ************************************************* START OF MULTIMEDIA FUNCTIONS ********************************* //
 /**
- * find the highlighted media object for a gedcom entity
- *
- * Rules for finding the highlighted media object:
- * 1. The first _THUM Y object will be used regardless of the object's level in the gedcom record
- * 2. The first _PRIM Y object will be used if no _THUM Y exists regardless of level in gedcom record
- * 3. The first level 1 object will be used if there is no _THUM Y or _PRIM Y and if its doesn't have _THUM N or _PRIM N (level 1 objects appear on the media tab on the individual page)
- * 4. Adding _PRIM N to any object will cause it not to be shown as a highlighted media.
- * @param string $pid the individual, source, or family id
- * @param string $indirec the gedcom record to look in
- * @return array an object array with indexes "thumb" and "file" for thumbnail and filename
- */
+* find the highlighted media object for a gedcom entity
+*
+* Rules for finding the highlighted media object:
+* 1. The first _THUM Y object will be used regardless of the object's level in the gedcom record
+* 2. The first _PRIM Y object will be used if no _THUM Y exists regardless of level in gedcom record
+* 3. The first level 1 object will be used if there is no _THUM Y or _PRIM Y and if its doesn't have _THUM N or _PRIM N (level 1 objects appear on the media tab on the individual page)
+* 4. Adding _PRIM N to any object will cause it not to be shown as a highlighted media.
+* @param string $pid the individual, source, or family id
+* @param string $indirec the gedcom record to look in
+* @return array an object array with indexes "thumb" and "file" for thumbnail and filename
+*/
 function find_highlighted_object($pid, $indirec) {
 	global $MEDIA_DIRECTORY, $MEDIA_DIRECTORY_LEVELS, $PGV_IMAGE_DIR, $PGV_IMAGES, $MEDIA_EXTERNAL;
 	global $GEDCOMS, $GEDCOM, $TBLPREFIX, $DBCONN;
@@ -1427,12 +1430,12 @@ function find_highlighted_object($pid, $indirec) {
 }
 
 /**
- * get the full file path
- *
- * get the file path from a multimedia gedcom record
- * @param string $mediarec a OBJE subrecord
- * @return the fullpath from the FILE record
- */
+* get the full file path
+*
+* get the file path from a multimedia gedcom record
+* @param string $mediarec a OBJE subrecord
+* @return the fullpath from the FILE record
+*/
 function extract_fullpath($mediarec) {
 	preg_match("/(\d) _*FILE (.*)/", $mediarec, $amatch);
 	if (empty($amatch[2]))
@@ -1445,13 +1448,13 @@ function extract_fullpath($mediarec) {
 }
 
 /**
- * get the relative filename for a media item
- *
- * gets the relative file path from the full media path for a media item.  checks the
- * <var>$MEDIA_DIRECTORY_LEVELS</var> to make sure the directory structure is maintained.
- * @param string $fullpath the full path from the media record
- * @return string a relative path that can be appended to the <var>$MEDIA_DIRECTORY</var> to reference the item
- */
+* get the relative filename for a media item
+*
+* gets the relative file path from the full media path for a media item.  checks the
+* <var>$MEDIA_DIRECTORY_LEVELS</var> to make sure the directory structure is maintained.
+* @param string $fullpath the full path from the media record
+* @return string a relative path that can be appended to the <var>$MEDIA_DIRECTORY</var> to reference the item
+*/
 function extract_filename($fullpath) {
 	global $MEDIA_DIRECTORY_LEVELS, $MEDIA_DIRECTORY;
 
@@ -1484,8 +1487,8 @@ function extract_filename($fullpath) {
 
 // ************************************************* START OF SORTING FUNCTIONS ********************************* //
 /**
- * Function to sort GEDCOM fact tags based on their tanslations
- */
+* Function to sort GEDCOM fact tags based on their tanslations
+*/
 function factsort($a, $b) {
 	global $factarray;
 
@@ -1496,16 +1499,16 @@ function factsort($a, $b) {
 	return stringsort($a, $b);
 }
 /**
- * String sorting function
- * @param string $a
- * @param string $b
- * @return int negative numbers sort $a first, positive sort $b first
- */
+* String sorting function
+* @param string $a
+* @param string $b
+* @return int negative numbers sort $a first, positive sort $b first
+*/
 function stringsort($aName, $bName) {
-	return compareStrings($aName, $bName, true);		// Case-insensitive sort
+	return compareStrings($aName, $bName, true); // Case-insensitive sort
 }
 function stringsort2($aName, $bName) {
-	return compareStrings($aName, $bName, false);		// Case-sensitive sort
+	return compareStrings($aName, $bName, false); // Case-sensitive sort
 }
 function compareStrings($aName, $bName, $ignoreCase=true) {
 	global $LANGUAGE, $CHARACTER_SET;
@@ -1519,12 +1522,12 @@ function compareStrings($aName, $bName, $ignoreCase=true) {
 
 	if ($LANGUAGE == "danish" || $LANGUAGE == "norwegian") {
 		$danishFrom = array("AA", "Aa", "AE", "Ae", "OE", "Oe", "aa", "ae", "oe");
-		$danishTo 	= array("Å", "Å", "Æ", "Æ", "Ø", "Ø", "å", "æ", "ø");
+		$danishTo  = array("Å", "Å", "Æ", "Æ", "Ø", "Ø", "å", "æ", "ø");
 	}
 
 	if ($LANGUAGE == "german") {
 		$germanFrom = array("AA", "Aa", "Æ", "AE", "Ae", "Ø", "OE", "Oe", "SS", "Ss", "UE", "Ue", "aa", "æ", "ae", "ø", "oe", "ss", "ue");
-		$germanTo 	= array("Å", "Å", "Ä", "Ä", "Ä", "Ö", "Ö", "Ö", "ß", "ß", "Ü", "Ü", "å", "ä", "ä", "ö", "ö", "ß", "ü");
+		$germanTo  = array("Å", "Å", "Ä", "Ä", "Ä", "Ö", "Ö", "Ö", "ß", "ß", "Ü", "Ü", "å", "ä", "ä", "ö", "ö", "ß", "ü");
 	}
 
 	//-- split strings into strings and numbers
@@ -1620,18 +1623,18 @@ function compareStrings($aName, $bName, $ignoreCase=true) {
 					$aCharLen = 1;
 					$aLetter = substr($aName, $aIndex, 1);
 					$aOrd = ord($aLetter);
-					if (($aOrd & 0xE0) == 0xC0) $aCharLen = 2;		// 2-byte sequence
-					if (($aOrd & 0xF0) == 0xE0) $aCharLen = 3;		// 3-byte sequence
-					if (($aOrd & 0xF8) == 0xF0) $aCharLen = 4;		// 4-byte sequence
+					if (($aOrd & 0xE0) == 0xC0) $aCharLen = 2; // 2-byte sequence
+					if (($aOrd & 0xF0) == 0xE0) $aCharLen = 3; // 3-byte sequence
+					if (($aOrd & 0xF8) == 0xF0) $aCharLen = 4; // 4-byte sequence
 				}
 
 				if (!$bMultiLetter) {
 					$bCharLen = 1;
 					$bLetter = substr($bName, $bIndex, 1);
 					$bOrd = ord($bLetter);
-					if (($bOrd & 0xE0) == 0xC0) $bCharLen = 2;		// 2-byte sequence
-					if (($bOrd & 0xF0) == 0xE0) $bCharLen = 3;		// 3-byte sequence
-					if (($bOrd & 0xF8) == 0xF0) $bCharLen = 4;		// 4-byte sequence
+					if (($bOrd & 0xE0) == 0xC0) $bCharLen = 2; // 2-byte sequence
+					if (($bOrd & 0xF0) == 0xE0) $bCharLen = 3; // 3-byte sequence
+					if (($bOrd & 0xF8) == 0xF0) $bCharLen = 4; // 4-byte sequence
 				}
 
 				$aLetter = substr($aName, $aIndex, $aCharLen);
@@ -1685,7 +1688,7 @@ function compareStrings($aName, $bName, $ignoreCase=true) {
 					//-- get the position of the letter in the alphabet string
 					if ($aMultiLetter) {
 						$sortAfter = substr($aLetter,0,1);
-						if ($aLetter=="CH") $sortAfter = "H";		// This one doesn't follow the rule
+						if ($aLetter=="CH") $sortAfter = "H"; // This one doesn't follow the rule
 						if ($aLetter=="Ch") $sortAfter = "H";
 						if ($aLetter=="ch") $sortAfter = "h";
 						$aPos = strpos($alphabet_upper, $sortAfter);
@@ -1696,7 +1699,7 @@ function compareStrings($aName, $bName, $ignoreCase=true) {
 					}
 					if ($bMultiLetter) {
 						$sortAfter = substr($bLetter,0,1);
-						if ($bLetter=="CH") $sortAfter = "H";		// This one doesn't follow the rule
+						if ($bLetter=="CH") $sortAfter = "H"; // This one doesn't follow the rule
 						if ($bLetter=="Ch") $sortAfter = "H";
 						if ($bLetter=="ch") $sortAfter = "h";
 						$bPos = strpos($alphabet_upper, $sortAfter);
@@ -1713,8 +1716,8 @@ function compareStrings($aName, $bName, $ignoreCase=true) {
 					}
 
 					if ($aPos!=$bPos) {
-						if ($aLetter=="@") return 1;		// Force "@" to the end
-						if ($bLetter=="@") return -1;		// Force "@" to the end
+						if ($aLetter=="@") return 1; // Force "@" to the end
+						if ($bLetter=="@") return -1; // Force "@" to the end
 						if (($bPos!==false)&&($aPos===false)) return -1;
 						if (($bPos===false)&&($aPos!==false)) return 1;
 						if (($bPos===false)&&($aPos===false)) {
@@ -1726,8 +1729,8 @@ function compareStrings($aName, $bName, $ignoreCase=true) {
 						return ($aPos-$bPos);
 					}
 				}
-				$aIndex += $aCharLen;			// advance to the 1st byte of the next sequence
-				$bIndex += $bCharLen;			// advance to the 1st byte of the next sequence
+				$aIndex += $aCharLen; // advance to the 1st byte of the next sequence
+				$bIndex += $bCharLen; // advance to the 1st byte of the next sequence
 				if ($aIndex >= $alen) break;
 				if ($bIndex >= $blen) break;
 			}
@@ -1758,9 +1761,9 @@ function event_sort($a, $b) {
 }
 
 /**
- * sort an array of media items
- *
- */
+* sort an array of media items
+*
+*/
 
 function mediasort($a, $b) {
 	$aKey = "";
@@ -1800,7 +1803,7 @@ function mediasort($a, $b) {
 					else
 						if (!empty($b["file"]))
 							$bKey = basename($b["file"]);
-	return compareStrings($aKey, $bKey, true);		// Case-insensitive compare
+	return compareStrings($aKey, $bKey, true); // Case-insensitive compare
 }
 
 // Helper function to sort facts.
@@ -1888,14 +1891,14 @@ function compare_facts_date($arec, $brec) {
 }
 
 /**
- * A multi-key sort
- * 1. First divide the facts into two arrays one set with dates and one set without dates
- * 2. Sort each of the two new arrays, the date using the compare date function, the non-dated
- * using the compare type function
- * 3. Then merge the arrays back into the original array using the compare type function
- *
- * @param unknown_type $arr
- */
+* A multi-key sort
+* 1. First divide the facts into two arrays one set with dates and one set without dates
+* 2. Sort each of the two new arrays, the date using the compare date function, the non-dated
+* using the compare type function
+* 3. Then merge the arrays back into the original array using the compare type function
+*
+* @param unknown_type $arr
+*/
 function sort_facts(&$arr) {
 	$dated = array();
 	$nondated = array();
@@ -1909,41 +1912,6 @@ function sort_facts(&$arr) {
 	usort($dated, array("Event","CompareDate"));
 	usort($nondated, array("Event","CompareType"));
 
-	/* This commented out code is an algorithm for inserting non-dated events into the dated events
-	 * using a weighted comparison.  Non-dated events are sorted by inserting them next to the the dated
-	 * fact they should be closest to.
-	$arr = $dated;
-	//-- find the best place to put each nondated event
-	$index = 0;
-	foreach($nondated as $event) {
-		$score = null;
-//		print "<br />".$event->getTag()." ";
-		for($i=$index; $i<count($arr); $i++) {
-			$tmp = Event::CompareType($event, $arr[$i]);
-//			print $i.":".$arr[$i]->getTag().":".$tmp." ";
-			if ($score==null || abs($tmp)<abs($score)) {
-				$score = $tmp;
-				$index = $i;
-			}
-		}
-
-		if ($score!=null) {
-			if ($score>0) $index++;
-			$ct = count($arr);
-			for($i=$ct-1; $i>=$index; $i--) {
-				$arr[$i+1] = $arr[$i];
-			}
-		}
-		else {
-			$index=count($arr);
-		}
-//		print "[$score $index]";
-		$arr[$index] = $event;
-		//-- because they are already sorted, they should always be after the event we just added
-		$index++;
-	}
-
-	*/
 	//-- merge the arrays back together comparing by Facts
 	$dc = count($dated);
 	$nc = count($nondated);
@@ -1974,10 +1942,10 @@ function sort_facts(&$arr) {
 }
 
 /**
- * fact date sort
- *
- * compare individuals by a fact date
- */
+* fact date sort
+*
+* compare individuals by a fact date
+*/
 function compare_date($a, $b) {
 	global $sortby;
 
@@ -2024,10 +1992,10 @@ function compare_date_descending($a, $b) {
 	return (0 - $result);
 }
 /**
- * Compare dates for facts in GedcomRec objects (or derived classes)
- *
- * fact to interrogate in global $sortby eg "MARR"
- */
+* Compare dates for facts in GedcomRec objects (or derived classes)
+*
+* fact to interrogate in global $sortby eg "MARR"
+*/
 function compare_date_gedcomrec($a, $b) {
 	global $sortby;
 
@@ -2047,19 +2015,19 @@ function gedcomsort($a, $b) {
 
 // ************************************************* START OF MISCELLANIOUS FUNCTIONS ********************************* //
 /**
- * Get relationship between two individuals in the gedcom
- *
- * function to calculate the relationship between two people it uses hueristics based on the
- * individuals birthdate to try and calculate the shortest path between the two individuals
- * it uses a node cache to help speed up calculations when using relationship privacy
- * this cache is indexed using the string "$pid1-$pid2"
- * @param string $pid1 the ID of the first person to compute the relationship from
- * @param string $pid2 the ID of the second person to compute the relatiohip to
- * @param bool $followspouse whether to add spouses to the path
- * @param int $maxlenght the maximim length of path
- * @param bool $ignore_cache enable or disable the relationship cache
- * @param int $path_to_find which path in the relationship to find, 0 is the shortest path, 1 is the next shortest path, etc
- */
+* Get relationship between two individuals in the gedcom
+*
+* function to calculate the relationship between two people it uses hueristics based on the
+* individuals birthdate to try and calculate the shortest path between the two individuals
+* it uses a node cache to help speed up calculations when using relationship privacy
+* this cache is indexed using the string "$pid1-$pid2"
+* @param string $pid1 the ID of the first person to compute the relationship from
+* @param string $pid2 the ID of the second person to compute the relatiohip to
+* @param bool $followspouse whether to add spouses to the path
+* @param int $maxlenght the maximim length of path
+* @param bool $ignore_cache enable or disable the relationship cache
+* @param int $path_to_find which path in the relationship to find, 0 is the shortest path, 1 is the next shortest path, etc
+*/
 function get_relationship($pid1, $pid2, $followspouse=true, $maxlength=0, $ignore_cache=false, $path_to_find=0) {
 	global $TIME_LIMIT, $start_time, $pgv_lang, $NODE_CACHE, $NODE_CACHE_LENGTH, $USE_RELATIONSHIP_PRIVACY, $pgv_changes, $GEDCOM;
 
@@ -2730,13 +2698,13 @@ function get_relationship2($pid1, $pid2, $followspouse=true, $maxlength=0, $igno
 }
 
 /**
- * write changes
- *
- * this function writes the $pgv_changes back to the <var>$INDEX_DIRECTORY</var>/pgv_changes.php
- * file so that it can be read in and checked to see if records have been updated.  It also stores
- * old records so that they can be undone.
- * @return bool true if successful false if there was an error
- */
+* write changes
+*
+* this function writes the $pgv_changes back to the <var>$INDEX_DIRECTORY</var>/pgv_changes.php
+* file so that it can be read in and checked to see if records have been updated.  It also stores
+* old records so that they can be undone.
+* @return bool true if successful false if there was an error
+*/
 function write_changes() {
 	global $pgv_changes, $INDEX_DIRECTORY, $CONTACT_EMAIL, $LAST_CHANGE_EMAIL;
 
@@ -2790,13 +2758,13 @@ function write_changes() {
 }
 
 /**
- * get theme names
- *
- * function to get the names of all of the themes as an array
- * it searches the themes directory and reads the name from the theme_name variable
- * in the theme.php file.
- * @return array and array of theme names and their corresponding directory
- */
+* get theme names
+*
+* function to get the names of all of the themes as an array
+* it searches the themes directory and reads the name from the theme_name variable
+* in the theme.php file.
+* @return array and array of theme names and their corresponding directory
+*/
 function get_theme_names() {
 	$themes = array();
 	$d = dir("themes");
@@ -2817,11 +2785,11 @@ function get_theme_names() {
 }
 
 /**
- * decode a filename
- *
- * windows doesn't use UTF-8 for its file system so we have to decode the filename
- * before it can be used on the filesystem
- */
+* decode a filename
+*
+* windows doesn't use UTF-8 for its file system so we have to decode the filename
+* before it can be used on the filesystem
+*/
 function filename_decode($filename) {
 	if (DIRECTORY_SEPARATOR=='\\')
 		return utf8_decode($filename);
@@ -2830,11 +2798,11 @@ function filename_decode($filename) {
 }
 
 /**
- * encode a filename
- *
- * windows doesn't use UTF-8 for its file system so we have to encode the filename
- * before it can be used in PGV
- */
+* encode a filename
+*
+* windows doesn't use UTF-8 for its file system so we have to encode the filename
+* before it can be used in PGV
+*/
 function filename_encode($filename) {
 	if (DIRECTORY_SEPARATOR=='\\')
 		return utf8_encode($filename);
@@ -2882,13 +2850,13 @@ function getAlphabet() {
 }
 
 /**
- * get a list of the reports in the reports directory
- *
- * When $force is false, the function will first try to read the reports list from the$INDEX_DIRECTORY."/reports.dat"
- * data file.  Otherwise the function will parse the report xml files and get the titles.
- * @param boolean $force	force the code to look in the directory and parse the files again
- * @return array 	The array of the found reports with indexes [title] [file]
- */
+* get a list of the reports in the reports directory
+*
+* When $force is false, the function will first try to read the reports list from the$INDEX_DIRECTORY."/reports.dat"
+* data file.  Otherwise the function will parse the report xml files and get the titles.
+* @param boolean $force force the code to look in the directory and parse the files again
+* @return array  The array of the found reports with indexes [title] [file]
+*/
 function get_report_list($force=false) {
 	global $INDEX_DIRECTORY, $report_array, $vars, $xml_parser, $elementHandler, $LANGUAGE;
 
@@ -2960,17 +2928,17 @@ function get_report_list($force=false) {
 	@fwrite($fp, serialize($files));
 	@fclose($fp);
 	$logline = AddToLog("reports.dat updated");
- 	check_in($logline, "reports.dat", $INDEX_DIRECTORY);
+	check_in($logline, "reports.dat", $INDEX_DIRECTORY);
 
 	return $files;
 }
 
 /**
- * remove any custom PGV tags from the given gedcom record
- * custom tags include _PGVU and _THUM
- * @param string $gedrec	the raw gedcom record
- * @return string		the updated gedcom record
- */
+* remove any custom PGV tags from the given gedcom record
+* custom tags include _PGVU and _THUM
+* @param string $gedrec the raw gedcom record
+* @return string the updated gedcom record
+*/
 function remove_custom_tags($gedrec, $remove="no") {
 	if ($remove=="yes") {
 		//-- remove _PGVU
@@ -3002,12 +2970,12 @@ function getfilesize($bytes) {
 }
 
 /**
- * split multi-ged keys and return either key or gedcom
- *
- * @param string $key		the multi-ged key to be split
- * @param string $type		either "id" or "ged", depending on what must be returned
- * @return string			either the key or the gedcom name
- */
+* split multi-ged keys and return either key or gedcom
+*
+* @param string $key the multi-ged key to be split
+* @param string $type either "id" or "ged", depending on what must be returned
+* @return string either the key or the gedcom name
+*/
 function splitkey($key, $type) {
 	$p1 = strpos($key,"[");
 	$id = substr($key,0,$p1);
@@ -3021,12 +2989,12 @@ function splitkey($key, $type) {
 }
 
 /**
- * array merge function for PGV
- * the PHP array_merge function will reindex all numerical indexes
- * This function should only be used for associative arrays
- * @param array $array1
- * @param array $array2
- */
+* array merge function for PGV
+* the PHP array_merge function will reindex all numerical indexes
+* This function should only be used for associative arrays
+* @param array $array1
+* @param array $array2
+*/
 function pgv_array_merge($array1, $array2) {
 	foreach ($array2 as $key=>$value) {
 		$array1[$key] = $value;
@@ -3035,9 +3003,9 @@ function pgv_array_merge($array1, $array2) {
 }
 
 /**
- * function to build an URL querystring from GET or POST variables
- * @return string
- */
+* function to build an URL querystring from GET or POST variables
+* @return string
+*/
 function get_query_string() {
 	$qstring = "";
 	if (!empty($_GET)) {
@@ -3064,7 +3032,7 @@ function get_query_string() {
 			}
 		}
 	}
-	$qstring = rtrim($qstring, "&");	// Remove trailing "&"
+	$qstring = rtrim($qstring, "&"); // Remove trailing "&"
 	return encode_url($qstring);
 }
 
@@ -3199,7 +3167,7 @@ function add_descendancy(&$list, $pid, $parents=false, $generations=-1) {
 				}
 				if ($generations == -1 || $list[$pid]->generation+1 < $generations) {
 					foreach($children as $child) {
-						add_descendancy($list, $child->getXref(), $parents, $generations);	// recurse on the childs family
+						add_descendancy($list, $child->getXref(), $parents, $generations); // recurse on the childs family
 					}
 				}
 			}
@@ -3208,8 +3176,8 @@ function add_descendancy(&$list, $pid, $parents=false, $generations=-1) {
 }
 
 /**
- * check if the page view rate for a session has been exeeded.
- */
+* check if the page view rate for a session has been exeeded.
+*/
 function CheckPageViews() {
 	global $SEARCH_SPIDER, $MAX_VIEWS, $MAX_VIEW_TIME;
 
@@ -3237,11 +3205,11 @@ function CheckPageViews() {
 }
 
 /**
- * get the next available xref
- * calculates the next available XREF id for the given type of record
- * @param string $type	the type of record, defaults to 'INDI'
- * @return string
- */
+* get the next available xref
+* calculates the next available XREF id for the given type of record
+* @param string $type the type of record, defaults to 'INDI'
+* @return string
+*/
 function get_new_xref($type='INDI', $use_cache=false) {
 	global $fcontents, $SOURCE_ID_PREFIX, $REPO_ID_PREFIX, $pgv_changes, $GEDCOM, $TBLPREFIX, $GEDCOMS;
 	global $MEDIA_ID_PREFIX, $FAM_ID_PREFIX, $GEDCOM_ID_PREFIX, $FILE, $DBCONN, $MAX_IDS;
@@ -3304,7 +3272,7 @@ function get_new_xref($type='INDI', $use_cache=false) {
 		$prefix = $SOURCE_ID_PREFIX;
 		break;
 	case "REPO":
-	 	$prefix = $REPO_ID_PREFIX;
+		$prefix = $REPO_ID_PREFIX;
 		break;
 	default:
 		$prefix = $type{0};
@@ -3337,9 +3305,9 @@ function get_new_xref($type='INDI', $use_cache=false) {
 }
 
 /**
- * check if the given string has UTF-8 characters
- *
- */
+* check if the given string has UTF-8 characters
+*
+*/
 function has_utf8($string) {
 	$len = strlen($string);
 	for ($i=0; $i<$len; $i++) {
@@ -3352,13 +3320,13 @@ function has_utf8($string) {
 }
 
 /**
- * check file in
- * @param  string  $logline  Log message
- * @param  string  $filename Filename
- * @param  string  $dirname  Directory
- * @param  boolean $bInsert  Insert Log message
- * @return boolean whether the file was checked in
- */
+* check file in
+* @param  string  $logline  Log message
+* @param  string  $filename Filename
+* @param  string  $dirname  Directory
+* @param  boolean $bInsert  Insert Log message
+* @return boolean whether the file was checked in
+*/
 function check_in($logline, $filename, $dirname, $bInsert = false) {
 	global $COMMIT_COMMAND;
 	$bRetSts = false;
@@ -3387,26 +3355,26 @@ function check_in($logline, $filename, $dirname, $bInsert = false) {
 }
 
 /**
- *		Load language files
- *		Load the contents of a specified language file
- *
- *		The input parameter lists the types of language files that should be loaded.
- *
- *		This routine will always load the English version of the specified language
- *		files first, followed by the same set of files in the currently active language.
- *		After that, the "extra.xx.php" files will always be loaded, but not trying for
- *		English first.
- *
- *		To load the "help_text.xx.php" file set, you'd call this function thus:
- *			loadLangFile("pgv_help");
- *		To load the "configure_help.xx.php" and the "faqlist.xx.php" file set, the function
- *		would be called thus:
- *			loadLangFile("pgv_confighelp, pgv_faqlib");
- *		To load all files, call the function this way:
- *			loadLangFile("all");
- *		To load the file XXX for module YYY, call
- *		  loadLangFile("YYY:XXX");
- */
+* Load language files
+* Load the contents of a specified language file
+*
+* The input parameter lists the types of language files that should be loaded.
+*
+* This routine will always load the English version of the specified language
+* files first, followed by the same set of files in the currently active language.
+* After that, the "extra.xx.php" files will always be loaded, but not trying for
+* English first.
+*
+* To load the "help_text.xx.php" file set, you'd call this function thus:
+* loadLangFile("pgv_help");
+* To load the "configure_help.xx.php" and the "faqlist.xx.php" file set, the function
+* would be called thus:
+* loadLangFile("pgv_confighelp, pgv_faqlib");
+* To load all files, call the function this way:
+* loadLangFile("all");
+* To load the file XXX for module YYY, call
+* loadLangFile("YYY:XXX");
+*/
 function loadLangFile($fileListNames="") {
 	global $pgv_language, $confighelpfile, $helptextfile, $factsfile, $adminfile, $editorfile, $countryfile, $faqlistfile, $extrafile;
 	global $LANGUAGE, $lang_short_cut;
@@ -3492,17 +3460,17 @@ function loadLangFile($fileListNames="") {
 
 
 /**
- *		Load language variables
- *		Set language-dependent global variables
- *
- *		This function loads the variables for the language, as specified by the first
- *		input parameter. It also loads any existing language-specific functions such
- *		special date handling for Finnish and Turkish.
- *
- *		If the forceLoad parameter is true, English will be loaded first, followed by
- *		the desired language file.
- *
- */
+* Load language variables
+* Set language-dependent global variables
+*
+* This function loads the variables for the language, as specified by the first
+* input parameter. It also loads any existing language-specific functions such
+* special date handling for Finnish and Turkish.
+*
+* If the forceLoad parameter is true, English will be loaded first, followed by
+* the desired language file.
+*
+*/
 function loadLanguage($desiredLanguage="english", $forceLoad=false) {
 	global $LANGUAGE, $lang_short_cut;
 	global $pgv_lang, $countries, $altCountryNames, $factarray, $factAbbrev, $faqlist;
@@ -3546,14 +3514,14 @@ function loadLanguage($desiredLanguage="english", $forceLoad=false) {
 
 	if ($forceLoad) {
 		$LANGUAGE = "english";
-		require($pgv_language[$LANGUAGE]);			// Load English
+		require($pgv_language[$LANGUAGE]); // Load English
 		require($factsfile[$LANGUAGE]);
 
 		$TEXT_DIRECTION = $TEXT_DIRECTION_array[$LANGUAGE];
-		$DATE_FORMAT	= $DATE_FORMAT_array[$LANGUAGE];
-		$TIME_FORMAT	= $TIME_FORMAT_array[$LANGUAGE];
-		$WEEK_START		= $WEEK_START_array[$LANGUAGE];
-		$NAME_REVERSE	= $NAME_REVERSE_array[$LANGUAGE];
+		$DATE_FORMAT = $DATE_FORMAT_array[$LANGUAGE];
+		$TIME_FORMAT = $TIME_FORMAT_array[$LANGUAGE];
+		$WEEK_START = $WEEK_START_array[$LANGUAGE];
+		$NAME_REVERSE = $NAME_REVERSE_array[$LANGUAGE];
 
 		// Load functions that are specific to the active language
 		$file = "./includes/extras/functions.".$lang_short_cut[$LANGUAGE].".php";
@@ -3580,7 +3548,7 @@ function loadLanguage($desiredLanguage="english", $forceLoad=false) {
 		$LANGUAGE = $desiredLanguage;
 		$file = $pgv_language[$LANGUAGE];
 		if (file_exists($file)) {
-			include($file);		// Load the requested language
+			include($file); // Load the requested language
 		}
 		$file = $factsfile[$LANGUAGE];
 		if (file_exists($file)) {
@@ -3588,10 +3556,10 @@ function loadLanguage($desiredLanguage="english", $forceLoad=false) {
 		}
 
 		$TEXT_DIRECTION = $TEXT_DIRECTION_array[$LANGUAGE];
-		$DATE_FORMAT	= $DATE_FORMAT_array[$LANGUAGE];
-		$TIME_FORMAT	= $TIME_FORMAT_array[$LANGUAGE];
-		$WEEK_START		= $WEEK_START_array[$LANGUAGE];
-		$NAME_REVERSE	= $NAME_REVERSE_array[$LANGUAGE];
+		$DATE_FORMAT = $DATE_FORMAT_array[$LANGUAGE];
+		$TIME_FORMAT = $TIME_FORMAT_array[$LANGUAGE];
+		$WEEK_START = $WEEK_START_array[$LANGUAGE];
+		$NAME_REVERSE = $NAME_REVERSE_array[$LANGUAGE];
 
 		// Load functions that are specific to the active language
 		$file = "./includes/extras/functions.".$lang_short_cut[$LANGUAGE].".php";
@@ -3651,11 +3619,11 @@ function loadLanguage($desiredLanguage="english", $forceLoad=false) {
 	}
 
 /**
- *		Build the tables of multi-character sequences that must be considered as a
- *		single character when sorting lists of names and titles.
- *			Reference http://en.wikipedia.org/wiki/Hungarian_alphabet
- *			Reference http://en.wikipedia.org/wiki/Alphabets_derived_from_the_Latin
- */
+* Build the tables of multi-character sequences that must be considered as a
+* single character when sorting lists of names and titles.
+* Reference http://en.wikipedia.org/wiki/Hungarian_alphabet
+* Reference http://en.wikipedia.org/wiki/Alphabets_derived_from_the_Latin
+*/
 	$digraph = array();
 	$trigraph = array();
 	$quadgraph = array();
@@ -3671,7 +3639,7 @@ function loadLanguage($desiredLanguage="english", $forceLoad=false) {
 		foreach ($wholeList as $letter) {
 			$first = substr($letter, 0, 1);
 			if ($letter=="CH")
-				$first = "H";	// This one doesn't follow the rule
+				$first = "H"; // This one doesn't follow the rule
 			if (!isset($sortValue[$first]))
 				$sortValue[$first] = 0;
 			$sortValue[$first] ++;
@@ -3701,7 +3669,7 @@ function loadLanguage($desiredLanguage="english", $forceLoad=false) {
 	foreach ($wholeList as $letter) {
 		$first = substr($letter, 0, 1);
 		if ($letter=="CH")
-			$first = "H";	// This one doesn't follow the rule
+			$first = "H"; // This one doesn't follow the rule
 		if (!isset($sortValue[$first]))
 			$sortValue[$first] = 0;
 		$sortValue[$first] ++;
@@ -3716,41 +3684,41 @@ function loadLanguage($desiredLanguage="english", $forceLoad=false) {
 
 
 /**
- *		Build the tables required for the Dictionary sort
- *
- *		A Dictionary sort is one where all letters with diacritics are considered to be
- *		identical to the base letter (without the mark).  Diacritics become important
- *		only when the two strings (without marks) are identical.
- *
- *		There are two sets of tables, one for the Upper Case version of a UTF8 character
- *		and the other for the lower-case version.  The two tables are not necessarily
- *		identical.  For example, the Turkish dotless i doesn't exist in the Upper case
- *		table.
- *
- *		Within each set, there are three lists which MUST have a one-to-one relationship.
- *		The "DiacritStrip" list gives the base letter of the corresponding "DiacritWhole"
- *		character.
- *		The "DiacritOrder" list assigns a sort value to the diacritic mark of the
- *		"DiacritWhole" character.  All letters that don't appear in these lists, including
- *		the base letter from which the one bearing diacritic marks is formed, are assigned
- *		a sort value of " ".  By using a single letter from the ASCII code chart, we can
- *		have 52 different UTF8 characters all mapping to the same base character.  This will
- *		handle Vietnamese, which is by far the richest language in terms of diacritic marks.
- */
- 	require_once "includes/sort_tables_utf8.php";
+* Build the tables required for the Dictionary sort
+*
+* A Dictionary sort is one where all letters with diacritics are considered to be
+* identical to the base letter (without the mark).  Diacritics become important
+* only when the two strings (without marks) are identical.
+*
+* There are two sets of tables, one for the Upper Case version of a UTF8 character
+* and the other for the lower-case version.  The two tables are not necessarily
+* identical.  For example, the Turkish dotless i doesn't exist in the Upper case
+* table.
+*
+* Within each set, there are three lists which MUST have a one-to-one relationship.
+* The "DiacritStrip" list gives the base letter of the corresponding "DiacritWhole"
+* character.
+* The "DiacritOrder" list assigns a sort value to the diacritic mark of the
+* "DiacritWhole" character.  All letters that don't appear in these lists, including
+* the base letter from which the one bearing diacritic marks is formed, are assigned
+* a sort value of " ".  By using a single letter from the ASCII code chart, we can
+* have 52 different UTF8 characters all mapping to the same base character.  This will
+* handle Vietnamese, which is by far the richest language in terms of diacritic marks.
+*/
+	require_once 'includes/sort_tables_utf8.php';
 }
 
 /**
- * determines whether the passed in filename is a link to an external source (i.e. contains '://')
- */
+* determines whether the passed in filename is a link to an external source (i.e. contains '://')
+*/
 function isFileExternal($file) {
 	return strpos($file, '://') !== false;
 }
 
 /*
- * Encrypt the input string
- *
- */
+* Encrypt the input string
+*
+*/
 function encrypt($string, $key) {
 	$result = '';
 
@@ -3758,7 +3726,7 @@ function encrypt($string, $key) {
 		$char = substr($string, $i, 1);
 		$keychar = substr($key, ($i % strlen($key))-1, 1);
 		$newOrd = ord($char) + ord($keychar);
-		if ($newOrd > 255) $newOrd -= 256;		// Make sure we stay within the 8-bit code table
+		if ($newOrd > 255) $newOrd -= 256; // Make sure we stay within the 8-bit code table
 		$result .= chr($newOrd);
 	}
 
@@ -3766,9 +3734,9 @@ function encrypt($string, $key) {
 }
 
 /*
- * Decrypt the input string
- *
- */
+* Decrypt the input string
+*
+*/
 function decrypt($string, $key) {
 	$result = '';
 
@@ -3778,7 +3746,7 @@ function decrypt($string, $key) {
 		$char = substr($string, $i, 1);
 		$keychar = substr($key, ($i % strlen($key))-1, 1);
 		$newOrd = ord($char) - ord($keychar);
-		if ($newOrd < 0) $newOrd += 256;		// Make sure we stay within the 8-bit code table
+		if ($newOrd < 0) $newOrd += 256; // Make sure we stay within the 8-bit code table
 		$result .= chr($newOrd);
 	}
 
