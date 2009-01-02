@@ -447,7 +447,7 @@ class SearchControllerRoot extends BaseController {
 			}
 			if (!$this->myindilist && !$this->myfamlist && count($this->mysourcelist)==1) {
 				$sour=$this->mysourcelist[0];
-				if ($fam->canDisplayName()) {
+				if ($sour->canDisplayName()) {
 					header("Location: ".encode_url($sour->getLinkUrl(), false));
 					exit;
 				}
