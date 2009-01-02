@@ -3,7 +3,7 @@
  * German Language file for PhpGedView.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reerved.
+ * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reerved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -315,6 +315,7 @@ $pgv_lang["update_address"]				= "Adresse bearbeiten";
 $pgv_lang["top10_pageviews_descr"]		= "Dieser Block zeigt die 10 Datensätze an, die am häufigsten aufgerufen wurden. Sie müssen dazu in der GEDCOM Konfiguration die Zähler zunächst aktivieren.";
 $pgv_lang["top10_pageviews"]			= "Meist aufgerufene Einträge";
 $pgv_lang["top10_pageviews_block"]		= "Meist aufgerufene Einträge";
+$pgv_lang["stepparent"]					= "Stiefelternteil";
 $pgv_lang["stepdad"]					= "Stiefvater";
 $pgv_lang["stepmom"]					= "Stiefmutter";
 $pgv_lang["stepsister"]					= "Stiefschwester";
