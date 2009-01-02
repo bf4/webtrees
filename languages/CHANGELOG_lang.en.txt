@@ -44,6 +44,7 @@ VERSION 4.2.
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change	codes and comments
 ----------------------------------------------------------------------------------------
++$pgv_lang["stepparent"]							02 Jan 2009				A
 +$pgv_lang["interval"]								18 Dec 2008				A
 +$pgv_lang["less"]									18 Dec 2008				A
 +$pgv_lang["over"]									18 Dec 2008				A
