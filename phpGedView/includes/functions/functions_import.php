@@ -1,29 +1,29 @@
 <?php
 /**
- *
- * Import specific functions
- *
- * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- *
- * @version $Id$
- * @package PhpGedView
- * @subpackage DB
- */
+*
+* Import specific functions
+*
+* phpGedView: Genealogy Viewer
+* Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
+*
+* This program is free software; you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation; either version 2 of the License, or
+* (at your option) any later version.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+* GNU General Public License for more details.
+*
+* You should have received a copy of the GNU General Public License
+* along with this program; if not, write to the Free Software
+* Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+*
+* @version $Id$
+* @package PhpGedView
+* @subpackage DB
+*/
 
 if (!defined('PGV_PHPGEDVIEW')) {
 	header('HTTP/1.0 403 Forbidden');
@@ -32,10 +32,10 @@ if (!defined('PGV_PHPGEDVIEW')) {
 
 define('PGV_FUNCTIONS_IMPORT_PHP', '');
 
-require_once 'includes/classes/class_media.php';
-include_once 'includes/functions/functions_lang.php';
-require_once 'includes/classes/class_mutex.php';
 require_once 'includes/index_cache.php';
+require_once 'includes/classes/class_media.php';
+require_once 'includes/classes/class_mutex.php';
+require_once 'includes/functions/functions_lang.php';
 require_once 'includes/functions/functions_name.php';
 
 // Programs such as FTM use the "tag formal names" instead of the actual tags.  This list lets us convert.
@@ -79,22 +79,14 @@ function reformat_record($rec) {
 	// Strip out control characters and mac/msdos line endings
 	static $control1="\r\x01\x02\x03\x04\x05\x06\x07\x09\x0B\x0C\x0E\x0F\x10\x11\x12\x13\x14\x15\x16\x17\x18\x19\x1A\x1B\x1C\x1D\x1E\x1F\x7F";
 	static $control2="\n?????????????????????????????";
-	$rec=strtr($control1, $control2, $rec);
-
-	// Remove leading spaces and blank lines
-	$rec=preg_replace('/\n\s+/', "\n", trim($rec));
-
-	// Merge CONC lines
-	if (strpos($rec, 'CONC')) {
-		$rec=preg_replace('/\n\s*\d\s*CONC\s?/', $WORD_WRAPPED_NOTES ? ' ' : '', $rec);
-	}
+	$rec=strtr($rec, $control1, $control2);
 
 	// Process the record line-by-line
-	$lines=explode("\n", $rec);
-	foreach ($lines as $n=>$line) {
+	$lines=array();
+	foreach (explode("\n", $rec) as $line) {
 		// Lines consist of: level + optional xref + tag + optional data
-		if (preg_match('/^(\d+)\s*(@[^@]*@)?\s*(\w+)\s?(.*)$/', $line, $match)) {
-			list($level, $xref, $tag, $data)=$match;
+		if ($line && preg_match('/^\s*(\d+)\s*(@[^@]*@)?\s*(\w+)\s?(.*)$/', $line, $match)) {
+			list(, $level, $xref, $tag, $data)=$match;
 			// Make sure tags are in upper case.
 			$tag=strtoupper($tag);
 			// Convert FTM-style "TAG_FORMAL_NAME" into "TAG".
@@ -217,6 +209,8 @@ function reformat_record($rec) {
 			case 'CREMATION':
 				$tag='CREM';
 				break;
+			case 'DATE':
+				// TODO: standardise date formats.
 				break;
 			case 'DEATH':
 				$tag='DEAT';
@@ -429,7 +423,7 @@ function reformat_record($rec) {
 			case 'RESTRICTION':
 				$tag='RESN';
 			case 'RESN':
-				// RESN values are lower case
+				// RESN values are lower case (confidential, privacy, locked)
 				$data=strtolower($data);
 				break;
 			case 'RETIREMENT':
@@ -448,8 +442,21 @@ function reformat_record($rec) {
 				$tag='SSN';
 				break;
 			case 'SEX':
-				// SEX values are upper case
-				$data=strtoupper($data);
+				switch ($data) {
+				case 'M':
+				case 'F':
+				case 'U':
+					break;
+				case 'm':
+					$data='M';
+					break;
+				case 'f':
+					$data='F';
+					break;
+				default:
+					$data='U';
+					break;
+				}
 				break;
 			case 'SOURCE':
 				$tag='SOUR';
@@ -474,6 +481,9 @@ function reformat_record($rec) {
 				break;
 			case 'TEMPLE':
 				$tag='TEMP';
+			case 'TEMP':
+				// Temple codes are upper case
+				$data=strtoupper($data);
 				break;
 			case 'TITLE':
 				$tag='TITL';
@@ -501,25 +511,36 @@ function reformat_record($rec) {
 				// Spaces and tabs may be used for layout/indentation, so leave them alone.
 				break;
 			default:
+				// Tabs aren't valid in gedcom data
+				if (strpos($data, "\t")!==false) {
+					$data=str_replace("\t", ' ', $data);
+				}
 				// Collapse multiple/leading/trailing spaces
-				$data=preg_replace('/[ \t]{2,}/', ' ', trim($data));
+				$data=preg_replace('/  +/', ' ', trim($data));
 				break;
 			}
 			// Reassemble components back into a single line
-			$lines[$n]=$level.' '.($level=='0' && $xref ? $xref.' ' : '').$tag.($data ? ' '.$data : '');
+			$lines[]=$level.' '.($level=='0' && $xref ? $xref.' ' : '').$tag.($data==='' ? '' : ' '.$data);
 		}
 	}
 	// Reassemble lines back into a single record
-	return implode("\n", $lines);
+	$rec= implode("\n", $lines);
+
+	// If CONC lines are present, merge them.
+	if (strpos($rec, 'CONC')) {
+		$rec=preg_replace('/\n\d+ CONC ?/', $WORD_WRAPPED_NOTES ? ' ' : '', $rec);
+	}
+
+	return $rec;
 }
 
 /**
- * import record into database
- *
- * this function will parse the given gedcom record and add it to the database
- * @param string $gedrec the raw gedcom record to parse
- * @param boolean $update whether or not this is an updated record that has been accepted
- */
+* import record into database
+*
+* this function will parse the given gedcom record and add it to the database
+* @param string $gedrec the raw gedcom record to parse
+* @param boolean $update whether or not this is an updated record that has been accepted
+*/
 function import_record($gedrec, $update) {
 	global $DBCONN, $gid, $type, $TOTAL_QUERIES, $prepared_statement;
 	global $TBLPREFIX, $GEDCOM_FILE, $FILE, $pgv_lang, $USE_RIN, $gdfp, $placecache;
