@@ -144,7 +144,7 @@ function print_gedcom($privatize_export, $privatize_export_level, $convert, $rem
 	while ($row=$res->fetchRow()) {
 		//-- ignore any remote cached records
 		if (preg_match("/S\d+:\w+/", $row[0])==0) {
-			$rec=breakConts($rec);
+			//$rec=breakConts($rec);
 			$rec=preg_replace('/[\r\n]+/', PGV_EOL, $row[1]).PGV_EOL;
 			$rec=remove_custom_tags($rec, $remove);
 			if ($privatize_export=="yes")
@@ -161,7 +161,7 @@ function print_gedcom($privatize_export, $privatize_export_level, $convert, $rem
 	while ($row=$res->fetchRow()) {
 		//-- ignore any remote cached records
 		if (preg_match("/S\d+:\w+/", $row[0])==0) {
-			$rec=breakConts($rec);
+			//$rec=breakConts($rec);
 			$rec=preg_replace('/[\r\n]+/', PGV_EOL, $row[1]).PGV_EOL;
 			$rec=remove_custom_tags($rec, $remove);
 			if ($privatize_export=="yes")
@@ -178,7 +178,7 @@ function print_gedcom($privatize_export, $privatize_export_level, $convert, $rem
 	while ($row=$res->fetchRow()) {
 		//-- ignore any remote cached records
 		if (preg_match("/S\d+:\w+/", $row[0])==0) {
-			$rec=breakConts($rec);
+			//$rec=breakConts($rec);
 			$rec=preg_replace('/[\r\n]+/', PGV_EOL, $row[1]).PGV_EOL;
 			$rec=remove_custom_tags($rec, $remove);
 			if ($privatize_export=="yes")
@@ -195,7 +195,7 @@ function print_gedcom($privatize_export, $privatize_export_level, $convert, $rem
 	while ($row=$res->fetchRow()) {
 		//-- ignore any remote cached records
 		if (preg_match("/S\d+:\w+/", $row[0])==0) {
-			$rec=breakConts($rec);
+			//$rec=breakConts($rec);
 			$rec=preg_replace('/[\r\n]+/', PGV_EOL, $row[1]).PGV_EOL;
 			$rec=remove_custom_tags($rec, $remove);
 			if ($privatize_export=="yes")
@@ -212,7 +212,7 @@ function print_gedcom($privatize_export, $privatize_export_level, $convert, $rem
 	while ($row=$res->fetchRow()) {
 		//-- ignore any remote cached records
 		if (preg_match("/S\d+:\w+/", $row[0])==0) {
-			$rec=breakConts($rec);
+			//$rec=breakConts($rec);
 			$rec=preg_replace('/[\r\n]+/', PGV_EOL, $row[1]).PGV_EOL;
 			$rec=remove_custom_tags($rec, $remove);
 			if ($privatize_export=="yes")
