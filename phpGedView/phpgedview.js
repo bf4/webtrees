@@ -2,7 +2,7 @@
  * Common javascript functions
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
+ * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -267,7 +267,7 @@ var show = false;
 		//if (window.resize_content_div) resize_content_div(lasttab+1);
 		return false;
 	}
-	
+
 	//-- function used for mouse overs of arrows
 	//- arrow is the id of the arrow to swap
 	//- index is the index into the arrows array
@@ -431,14 +431,14 @@ function valid_date(datefield) {
 
 	//-- don't try to validate empty dates for Safari/opera
 	if (datefield.value=="") return;
-	
+
 	// year only no validation for Safari/opera
 	var qsearch = /^(\d\d\d\d)$/i;
  	var found = qsearch.exec(datefield.value);
  	if (found) {
 	 	return;
  	}
- 	
+
 	// quarter format [ 1509083 ]
 	// e.g. Q1 1900
 	var qsearch = /^Q(\d) (\d\d\d\d)$/i;
@@ -484,7 +484,7 @@ function valid_date(datefield) {
 
 	// Use Javascript's Date() function to interpret a range of dates
 
-  date = new Date('opera bug');  // Detect Opera bug
+	date = new Date('1');  // Detect Opera bug
 	if (date && date.toString()!="NaN" && date.getDate().toString()!="NaN")
 		return;
 
@@ -673,7 +673,7 @@ function evalAjaxJavascript(text, parentElement) {
 	while(pos1>-1) {
 		//-- append the text up to the <script tag to the content of the parent element
 		parentElement.innerHTML += text.substring(0, pos1);
-		
+
 		//-- find the close of the <script> tag
 		pos2 = text.indexOf(">",pos1+5);
 		if (pos2==-1) {
@@ -828,7 +828,7 @@ function show_submenu(elementid, parentid, dir) {
 						boxright = element.offsetLeft+element.offsetWidth+10;
 					}
 				}
-		
+
 		//-- make sure the submenu is the size of the largest child
 		var maxwidth = 0;
 		var count = element.childNodes.length;
@@ -839,7 +839,7 @@ function show_submenu(elementid, parentid, dir) {
 		if (element.offsetWidth <  maxwidth) {
 			element.style.width = maxwidth+"px";
 		}
-		
+
 		if (dir=="down") {
 			var pelement = document.getElementById(parentid);
 			if (pelement) {
@@ -874,10 +874,10 @@ function show_submenu(elementid, parentid, dir) {
 		}
 
 		if (element.offsetLeft < 0) element.style.left = "0px";
-		
+
 		//-- put scrollbars on really long menus
 		if (element.offsetHeight > 500) {
-        	element.style.height = '400px';
+			element.style.height = '400px';
 			element.style.overflow = 'auto';
 		}
 
