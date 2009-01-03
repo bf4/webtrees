@@ -1,37 +1,37 @@
 <?php
 /**
- * Add media to gedcom file
- *
- * This file allows the user to maintain a seperate table
- * of media files and associate them with individuals in the gedcom
- * and then add these records later.
- * Requires SQL mode.
- *
- * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- * @package PhpGedView
- * @subpackage MediaDB
- * @version $Id$
- */
+* Add media to gedcom file
+*
+* This file allows the user to maintain a seperate table
+* of media files and associate them with individuals in the gedcom
+* and then add these records later.
+* Requires SQL mode.
+*
+* phpGedView: Genealogy Viewer
+* Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
+*
+* This program is free software; you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation; either version 2 of the License, or
+* (at your option) any later version.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+* GNU General Public License for more details.
+*
+* You should have received a copy of the GNU General Public License
+* along with this program; if not, write to the Free Software
+* Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+* @package PhpGedView
+* @subpackage MediaDB
+* @version $Id$
+*/
 
 require './config.php';
 
-require_once 'includes/functions/functions_print_lists.php';
-require_once 'includes/functions/functions_edit.php';
+require './includes/functions/functions_print_lists.php';
+require './includes/functions/functions_edit.php';
 
 if (empty($ged)) $ged = $GEDCOM;
 $GEDCOM = $ged;
@@ -75,8 +75,6 @@ if ($action=="update" || $action=="newentry") {
 }
 
 if (!PGV_USER_CAN_EDIT || !$disp || !$ALLOW_EDIT_GEDCOM) {
-	//print "pid: $pid<br />";
-	//print "gedrec: $gedrec<br />";
 	print $pgv_lang["access_denied"];
 	//-- display messages as to why the editing access was denied
 	if (!PGV_USER_CAN_EDIT) print "<br />".$pgv_lang["user_cannot_edit"];
@@ -147,8 +145,8 @@ if ($action=="newentry") {
 
 		$_SESSION["upload_folder"] = $folderName; // store standard media folder in session
 
-		$destFolder = $folderName;		// This is where the actual image will be stored
-		$destThumbFolder = $thumbFolderName;		// ditto for the thumbnail
+		$destFolder = $folderName;  // This is where the actual image will be stored
+		$destThumbFolder = $thumbFolderName;  // ditto for the thumbnail
 
 		if ($USE_MEDIA_FIREWALL) {
 			$destFolder = get_media_firewall_path($folderName);
@@ -169,7 +167,7 @@ if ($action=="newentry") {
 		$parts = pathinfo($fileName);
 		if (!empty($parts["basename"])) {
 			// User supplied a name to be used on the server
-			$mediaFile = $parts["basename"];	// Use the supplied name
+			$mediaFile = $parts["basename"]; // Use the supplied name
 			if (empty($parts["extension"]) || !in_array(strtolower($parts["extension"]), $MEDIATYPE)) {
 				// Strip invalid extension from supplied name
 				$lastDot = strrpos($mediaFile, '.');
@@ -391,10 +389,10 @@ if ($action=="newentry") {
 		// NOTE: Build the gedcom record
 		// NOTE: Level 0
 		$media_id = get_new_xref("OBJE");
-		$newged = "0 @".$media_id."@ OBJE\r\n";
+		$newged = "0 @".$media_id."@ OBJE\n";
 		//-- set the FILE text to the correct file location in the standard media directory
 		if (PGV_USER_GEDCOM_ADMIN) $text[0] = $folderName.$mediaFile;
-		else $newged .= "1 FILE ".$folderName.$mediaFile."\r\n";
+		else $newged .= "1 FILE ".$folderName.$mediaFile."\n";
 
 		$newged = handle_updates($newged);
 
@@ -541,18 +539,13 @@ if ($action == "update") {
 		$islink = array_merge(array(0), $islink);
 		$text = array_merge(array($folder.$filename), $text);
 
-		$newrec = "0 @$pid@ OBJE\r\n";
+		$newrec = "0 @$pid@ OBJE\n";
 		$newrec = handle_updates($newrec);
 		//print("[".$newrec."]");
 		//-- look for the old record media in the file
 		//-- if the old media record does not exist that means it was
 		//-- generated at import and we need to append it
-		//if (!empty($oldrec)) {
-			if (replace_gedrec($pid, $newrec)) AddToChangeLog("Media ID ".$pid." successfully updated.");
-		//} else {
-		//	$pid = append_gedrec($newrec);
-		//	if ($pid) AddToChangeLog("Media ID ".$pid." successfully added.");
-		//}
+		if (replace_gedrec($pid, $newrec)) AddToChangeLog("Media ID ".$pid." successfully updated.");
 
 		if ($pid && $linktoid!="") {
 			$link = linkMedia($pid, $linktoid, $level);
