@@ -558,7 +558,7 @@ function import_record($gedrec, $update) {
 	//$gedrec=preg_replace('/ {2,}/', ' ', $gedrec); // Repeated spaces
 	$gedrec=preg_replace('/(^ +| +$)/m', '', $gedrec); // Leading/trailing space
 	$gedrec=preg_replace('/\n{2,}/', "\n", $gedrec); // Blank lines
-	$gedrec = stripLRMRLM($gedrec);		// LRM and RLM codes are NOT text:  they're instructions to the browser
+	$gedrec = stripLRMRLM($gedrec); // LRM and RLM codes are NOT text:  they're instructions to the browser
 	if (!$update) {
 		$gedrec=str_replace('@@', '@', $gedrec); // Escaped @ signs (only if importing from file)
 	}
@@ -569,7 +569,7 @@ function import_record($gedrec, $update) {
 	}
 
 	//-- import different types of records
-	$ct = preg_match("/0 @(.*)@ ([a-zA-Z_]+)/", $gedrec, $match);
+	$ct = preg_match('/^0 @(.*)@ ([a-zA-Z_]+)/', $gedrec, $match);
 	if ($ct > 0) {
 		$gid = $match[1];
 		$type = trim($match[2]);
@@ -724,8 +724,8 @@ function import_record($gedrec, $update) {
 		$res = dbquery($sql);
 		break;
 	case 'OBJE':
-					//-- don't duplicate OBJE records
-					//-- OBJE records are imported by update_media function
+		//-- don't duplicate OBJE records
+		//-- OBJE records are imported by update_media function
 		break;
 	default:
 		if (preg_match("/_/", $type) == 0) {
@@ -733,7 +733,7 @@ function import_record($gedrec, $update) {
 				$ct = preg_match("/1 DATE (.*)/", $gedrec, $match);
 				if ($ct == 0) {
 					$gedrec = trim($gedrec);
-					$gedrec .= "\r\n1 DATE " . date("d") . " " . date("M") . " " . date("Y");
+					$gedrec .= "\n1 DATE ".date('d M Y');
 				}
 			}
 			if ($gid=="") $gid = $type;
@@ -746,13 +746,13 @@ function import_record($gedrec, $update) {
 	//-- if this is not an update then write it to the new gedcom file
 	if (!$update && !empty ($fpnewged) && !(empty ($gedrec)))
 		fwrite($fpnewged, preg_replace('/[\r\n]+/', PGV_EOL, $gedrec) . PGV_EOL);
-}
+	}
 
 /**
- * extract all places from the given record and insert them
- * into the places table
- * @param string $gedrec
- */
+* extract all places from the given record and insert them
+* into the places table
+* @param string $gedrec
+*/
 function update_places($gid, $ged_id, $gedrec) {
 	global $placecache, $TBLPREFIX, $DBCONN;
 
@@ -883,7 +883,7 @@ function update_rlinks($xref, $ged_id, $gedrec) {
 		default:
 			foreach ($data as $datum) {
 				dbquery("INSERT INTO {$TBLPREFIX}remotelinks (r_gid, r_linkid, r_file) VALUES ".$datum);
-		}
+			}
 			break;
 		}
 	}
@@ -974,14 +974,14 @@ function update_names($xref, $ged_id, $record) {
 	}
 }
 /**
- * Insert media items into the database
- * This method is used in conjuction with the gedcom import/update routines
- * @param string $objrec	The OBJE subrecord
- * @param int $objlevel		The original level of this OBJE
- * @param boolean $update	Whether or not this is an update or an import
- * @param string $gid		The XREF ID of the record this OBJE is related to
- * @param int $count		The count of OBJE records in the parent record
- */
+* Insert media items into the database
+* This method is used in conjuction with the gedcom import/update routines
+* @param string $objrec The OBJE subrecord
+* @param int $objlevel The original level of this OBJE
+* @param boolean $update Whether or not this is an update or an import
+* @param string $gid The XREF ID of the record this OBJE is related to
+* @param int $count The count of OBJE records in the parent record
+*/
 function insert_media($objrec, $objlevel, $update, $gid, $count) {
 	global $TBLPREFIX, $media_count, $GEDCOMS, $FILE, $DBCONN, $found_ids, $fpnewged;
 
@@ -993,11 +993,11 @@ function insert_media($objrec, $objlevel, $update, $gid, $count) {
 		$old_m_media = $match[1];
 		$objref = $objrec;
 		/**
-		 * Hiding some code in order to fix a very annoying bug
-		 * [ 1579889 ] Upgrading breaks Media links
-		 *
-		 * Don't understand the logic of renumbering media objects ??
-		 *
+		* Hiding some code in order to fix a very annoying bug
+		* [ 1579889 ] Upgrading breaks Media links
+		*
+		* Don't understand the logic of renumbering media objects ??
+		*
 		//-- if this is an import not an update get the updated ID
 		if (!$update) {
 			if (isset ($found_ids[$old_m_media])) {
@@ -1060,10 +1060,10 @@ function insert_media($objrec, $objlevel, $update, $gid, $count) {
 	}
 }
 /**
- * import media items from record
- * @todo Decide whether or not to update the original gedcom file
- * @return string	an updated record
- */
+* import media items from record
+* @todo Decide whether or not to update the original gedcom file
+* @return string an updated record
+*/
 function update_media($gid, $gedrec, $update = false) {
 	global $GEDCOMS, $FILE, $TBLPREFIX, $DBCONN, $media_count, $found_ids;
 	global $zero_level_media, $fpnewged, $MAX_IDS, $keepmedia;
@@ -1085,18 +1085,17 @@ function update_media($gid, $gedrec, $update = false) {
 		}
 	}
 
-//		print substr($gedrec, 0, 15)."<br />\n";
 	//-- handle level 0 media OBJE seperately
 	$ct = preg_match("/0 @(.*)@ OBJE/", $gedrec, $match);
 	if ($ct > 0) {
 		$old_m_media = $match[1];
 		$m_id = get_next_id("media", "m_id");
 		/**
-		 * Hiding some code in order to fix a very annoying bug
-		 * [ 1579889 ] Upgrading breaks Media links
-		 *
-		 * Don't understand the logic of renumbering media objects ??
-		 *
+		* Hiding some code in order to fix a very annoying bug
+		* [ 1579889 ] Upgrading breaks Media links
+		*
+		* Don't understand the logic of renumbering media objects ??
+		*
 		if ($update) {
 			$new_m_media = $old_m_media;
 		} else {
@@ -1145,91 +1144,90 @@ function update_media($gid, $gedrec, $update = false) {
 	//-- if there aren't any media records then don't look for them just return
 	$pt = preg_match("/\d OBJE/", $gedrec, $match);
 	if ($pt > 0) {
-	//-- go through all of the lines and replace any local
-	//--- OBJE to referenced OBJEs
-	$newrec = "";
-	$lines = preg_split("/[\r\n]+/", trim($gedrec));
-	$ct_lines = count($lines);
-	$inobj = false;
-	$processed = false;
-	$objlevel = 0;
-	$objrec = "";
-	$count = 1;
-	foreach ($lines as $key => $line) {
-		if (!empty ($line)) {
-			// NOTE: Match lines that resemble n OBJE @0000@
-			// NOTE: Renumber the old ID to a new ID and save the old ID
-			// NOTE: in case there are more references to it
-			$level = $line{0};
-			//-- putting this code back since $objlevel, $objrec, etc vars will be
-			//-- reset in sections after this
-			if ($objlevel>0 && ($level<=$objlevel)) {
-				$objref = insert_media($objrec, $objlevel, $update, $gid, $count);
-				$count++;
-				// NOTE: Add the new media object to the record
-				//$newrec .= $objlevel . " OBJE @" . $m_media . "@\r\n";
-				$newrec .= $objref;
+		//-- go through all of the lines and replace any local
+		//--- OBJE to referenced OBJEs
+		$newrec = "";
+		$lines = preg_split("/[\r\n]+/", trim($gedrec));
+		$ct_lines = count($lines);
+		$inobj = false;
+		$processed = false;
+		$objlevel = 0;
+		$objrec = "";
+		$count = 1;
+			foreach ($lines as $key => $line) {
+			if (!empty ($line)) {
+				// NOTE: Match lines that resemble n OBJE @0000@
+				// NOTE: Renumber the old ID to a new ID and save the old ID
+				// NOTE: in case there are more references to it
+				$level = $line{0};
+				//-- putting this code back since $objlevel, $objrec, etc vars will be
+				//-- reset in sections after this
+				if ($objlevel>0 && ($level<=$objlevel)) {
+					$objref = insert_media($objrec, $objlevel, $update, $gid, $count);
+					$count++;
+					// NOTE: Add the new media object to the record
+					$newrec .= $objref;
 
-				// NOTE: Set the details for the next media record
-				$objlevel = 0;
-				$inobj = false;
-			}
-			if (preg_match("/[1-9]\sOBJE\s@(.*)@/", $line, $match) != 0) {
-					// NOTE: Set object level
+					// NOTE: Set the details for the next media record
+					$objlevel = 0;
+					$inobj = false;
+				}
+				if (preg_match("/[1-9]\sOBJE\s@(.*)@/", $line, $match) != 0) {
+						// NOTE: Set object level
+						$objlevel = $level;
+						$inobj = true;
+						$objrec = $line . "\n";
+				}
+				else if (preg_match("/[1-9]\sOBJE/", $line, $match)) {
+					// NOTE: Set the details for the next media record
 					$objlevel = $level;
 					$inobj = true;
-					$objrec = $line . "\r\n";
-			}
-			else if (preg_match("/[1-9]\sOBJE/", $line, $match)) {
-				// NOTE: Set the details for the next media record
-				$objlevel = $level;
-				$inobj = true;
-				$objrec = $line . "\r\n";
-			} else {
-				$ct = preg_match("/(\d+)\s(\w+)(.*)/", $line, $match);
-				if ($ct > 0) {
-					if ($inobj)
-						$objrec .= $line . "\r\n";
-					else $newrec .= $line . "\r\n";
+					$objrec = $line . "\n";
+				} else {
+					$ct = preg_match("/(\d+)\s(\w+)(.*)/", $line, $match);
+					if ($ct > 0) {
+						if ($inobj)
+							$objrec .= $line . "\n";
+						else $newrec .= $line . "\n";
+					}
+					else $newrec .= $line . "\n";
 				}
-				else $newrec .= $line . "\r\n";
 			}
 		}
-	}
-	//-- make sure the last line gets handled
-	if ($inobj) {
-		$objref = insert_media($objrec, $objlevel, $update, $gid, $count);
-		$count++;
-		$newrec .= $objref;
+		//-- make sure the last line gets handled
+		if ($inobj) {
+			$objref = insert_media($objrec, $objlevel, $update, $gid, $count);
+			$count++;
+			$newrec .= $objref;
 
-		// NOTE: Set the details for the next media record
-		$objlevel = 0;
-		$inobj = false;
-	}
+			// NOTE: Set the details for the next media record
+			$objlevel = 0;
+			$inobj = false;
+		}
 	}
 	else $newrec = $gedrec;
 
 	if ($keepmedia) {
-		$newrec = trim($newrec)."\r\n";
+		$newrec = trim($newrec)."\n";
 		foreach($old_linked_media as $i=>$row) {
-			$newrec .= trim($row[1])."\r\n";
+			$newrec .= trim($row[1])."\n";
 		}
 	}
 
 	return trim($newrec);
 }
 /**
- * Create database schema
- *
- * function that checks if the database exists and creates tables
- * automatically handles version updates
- * - postgres does not support fields of type int(11) and
- * with a similar construct
- * - postgres does not like strings to be inserted into
- * the db surrounded by double quotes - it tries to treat
- * it as if it was the name of another column; the proper
- * way is to surround it by single quotes.
- */
+* Create database schema
+*
+* function that checks if the database exists and creates tables
+* automatically handles version updates
+* - postgres does not support fields of type int(11) and
+* with a similar construct
+* - postgres does not like strings to be inserted into
+* the db surrounded by double quotes - it tries to treat
+* it as if it was the name of another column; the proper
+* way is to surround it by single quotes.
+*/
 function setup_database() {
 	global $TBLPREFIX, $pgv_lang, $DBCONN, $DBTYPE;
 
@@ -1504,8 +1502,8 @@ function setup_database() {
 	$res = dbquery($sql);
 }
 /**
- * Create the individuals table
- */
+* Create the individuals table
+*/
 function create_individuals_table() {
 	global $TBLPREFIX, $pgv_lang, $DBCONN, $DBTYPE;
 
@@ -1525,8 +1523,8 @@ function create_individuals_table() {
 	dbquery("CREATE INDEX {$TBLPREFIX}indi_file ON {$TBLPREFIX}individuals (i_file   )");
 }
 /**
- * Create the families table
- */
+* Create the families table
+*/
 function create_families_table() {
 	global $TBLPREFIX;
 
@@ -1549,8 +1547,8 @@ function create_families_table() {
 	dbquery("CREATE INDEX {$TBLPREFIX}fam_wife ON {$TBLPREFIX}families (f_wife)");
 }
 /**
- * Create the sources table
- */
+* Create the sources table
+*/
 function create_sources_table() {
 	global $TBLPREFIX;
 
@@ -1571,8 +1569,8 @@ function create_sources_table() {
 	dbquery("CREATE INDEX {$TBLPREFIX}sour_dbid ON {$TBLPREFIX}sources (s_dbid)");
 }
 /**
- * Create the other table
- */
+* Create the other table
+*/
 function create_other_table() {
 	global $TBLPREFIX;
 
@@ -1581,7 +1579,7 @@ function create_other_table() {
 		"CREATE TABLE {$TBLPREFIX}other (".
 		" o_id     ".PGV_DB_COL_XREF."      NOT NULL,".
 		" o_file   ".PGV_DB_COL_FILE."      NOT NULL,".
-	 	" o_type   ".PGV_DB_COL_TAG."       NULL,".
+		" o_type   ".PGV_DB_COL_TAG."       NULL,".
 		" o_gedcom ".PGV_DB_LONGTEXT_TYPE." NULL,".
 		" PRIMARY KEY (o_id, o_file)".
 		") ".PGV_DB_UTF8_TABLE
@@ -1590,8 +1588,8 @@ function create_other_table() {
 	dbquery("CREATE INDEX {$TBLPREFIX}other_file ON {$TBLPREFIX}other (o_file)");
 }
 /**
- * Create the placelinks table
- */
+* Create the placelinks table
+*/
 function create_placelinks_table() {
 	global $TBLPREFIX;
 
@@ -1609,8 +1607,8 @@ function create_placelinks_table() {
 	dbquery("CREATE INDEX {$TBLPREFIX}plindex_file  ON {$TBLPREFIX}placelinks (pl_file)");
 }
 /**
- * Create the places table
- */
+* Create the places table
+*/
 function create_places_table() {
 	global $TBLPREFIX;
 
@@ -1633,8 +1631,8 @@ function create_places_table() {
 	dbquery("CREATE INDEX {$TBLPREFIX}place_file   ON {$TBLPREFIX}places (p_file     )");
 }
 /**
- * Create the name table
- */
+* Create the name table
+*/
 function create_name_table() {
 	global $TBLPREFIX;
 
@@ -1662,8 +1660,8 @@ function create_name_table() {
 	dbquery("CREATE INDEX {$TBLPREFIX}name_file   ON {$TBLPREFIX}name (n_file   )");
 }
 /**
- * Create the link table
- */
+* Create the link table
+*/
 function create_link_table() {
 	global $TBLPREFIX;
 
@@ -1680,8 +1678,8 @@ function create_link_table() {
 	dbquery("CREATE INDEX {$TBLPREFIX}ix1 ON {$TBLPREFIX}link (l_to, l_file, l_type, l_from)");
 }
 /**
- * Create the remotelinks table
- */
+* Create the remotelinks table
+*/
 function create_remotelinks_table() {
 	global $TBLPREFIX;
 
@@ -1698,8 +1696,8 @@ function create_remotelinks_table() {
 	dbquery("CREATE INDEX {$TBLPREFIX}r_file    ON {$TBLPREFIX}remotelinks (r_file  )");
 }
 /**
- * Create the media table
- */
+* Create the media table
+*/
 function create_media_table() {
 	global $TBLPREFIX;
 
@@ -1720,8 +1718,8 @@ function create_media_table() {
 	dbquery("CREATE INDEX {$TBLPREFIX}m_media_file ON {$TBLPREFIX}media (m_media, m_gedfile)");
 }
 /**
- * Create the dates table
- */
+* Create the dates table
+*/
 function create_dates_table() {
 	global $TBLPREFIX;
 
@@ -1755,8 +1753,8 @@ function create_dates_table() {
 }
 
 /**
- * Create the media_mapping table
- */
+* Create the media_mapping table
+*/
 function create_media_mapping_table() {
 	global $TBLPREFIX;
 
@@ -1777,8 +1775,8 @@ function create_media_mapping_table() {
 	dbquery("CREATE INDEX {$TBLPREFIX}mm_media_gedfile ON {$TBLPREFIX}media_mapping (mm_gedfile          )");
 }
 /**
- * Create the nextid table
- */
+* Create the nextid table
+*/
 function create_nextid_table() {
 	global $TBLPREFIX;
 
@@ -1793,12 +1791,12 @@ function create_nextid_table() {
 	);
 }
 /**
- * delete a gedcom from the database
- *
- * deletes all of the imported data about a gedcom from the database
- * @param string $FILE	the gedcom to remove from the database
- * @param boolean $keepmedia	Whether or not to keep media and media links in the tables
- */
+* delete a gedcom from the database
+*
+* deletes all of the imported data about a gedcom from the database
+* @param string $FILE the gedcom to remove from the database
+* @param boolean $keepmedia Whether or not to keep media and media links in the tables
+*/
 function empty_database($FILE, $keepmedia=false) {
 	global $TBLPREFIX;
 
@@ -1819,7 +1817,7 @@ function empty_database($FILE, $keepmedia=false) {
 	} else {
 		dbquery("DELETE FROM {$TBLPREFIX}link WHERE l_file={$FILE} AND l_type!='OBJE'");
 		//-- make sure that we keep the correct IDs for media
-    $sql = "SELECT ni_id FROM {$TBLPREFIX}nextid WHERE ni_type='OBJE' AND ni_gedfile='{$FILE}'";
+		$sql = "SELECT ni_id FROM {$TBLPREFIX}nextid WHERE ni_type='OBJE' AND ni_gedfile='{$FILE}'";
 		$res =& dbquery($sql);
 		if ($res->numRows() > 0) {
 			$row =& $res->fetchRow();
@@ -1844,12 +1842,12 @@ function empty_database($FILE, $keepmedia=false) {
 }
 
 /**
- * perform any database cleanup
- *
- * during the import process it might be necessary to cleanup some database values.  In index mode
- * the file handles need to be closed.  For database mode we probably don't need to do anything in
- * this funciton.
- */
+* perform any database cleanup
+*
+* during the import process it might be necessary to cleanup some database values.  In index mode
+* the file handles need to be closed.  For database mode we probably don't need to do anything in
+* this funciton.
+*/
 function cleanup_database() {
 	global $DBTYPE, $DBCONN, $TBLPREFIX, $MAX_IDS, $GEDCOMS, $FILE;
 	/*-- commenting out as it seems to cause more problems than it helps
@@ -1875,10 +1873,10 @@ function cleanup_database() {
 }
 
 /**
- * read the contents of a gedcom file
- *
- * opens a gedcom file and reads the contents into the <var>$fcontents</var> global string
- */
+* read the contents of a gedcom file
+*
+* opens a gedcom file and reads the contents into the <var>$fcontents</var> global string
+*/
 function read_gedcom_file() {
 	global $fcontents;
 	global $GEDCOM, $GEDCOMS;
@@ -1940,17 +1938,17 @@ function write_file() {
 	//-- always release the mutex
 	$mutex->Release();
 	$logline = AddToLog($GEDCOMS[$GEDCOM]["path"]." updated");
- 	check_in($logline, basename($GEDCOMS[$GEDCOM]["path"]), dirname($GEDCOMS[$GEDCOM]["path"]));
+	check_in($logline, basename($GEDCOMS[$GEDCOM]["path"]), dirname($GEDCOMS[$GEDCOM]["path"]));
 
 	return true;;
 }
 /**
- * Accpet changed gedcom record into database
- *
- * This function gets an updated record from the gedcom file and replaces it in the database
- * @author John Finlay
- * @param string $cid The change id of the record to accept
- */
+* Accpet changed gedcom record into database
+*
+* This function gets an updated record from the gedcom file and replaces it in the database
+* @author John Finlay
+* @param string $cid The change id of the record to accept
+*/
 function accept_changes($cid) {
 	global $pgv_changes, $GEDCOM, $TBLPREFIX, $FILE, $DBCONN, $GEDCOMS;
 	global $INDEX_DIRECTORY, $SYNC_GEDCOM_FILE, $fcontents, $manual_save;
@@ -1995,7 +1993,7 @@ function accept_changes($cid) {
 			}
 			else if ($change["type"]=="append") {
 				$pos1 = strpos($fcontents, "\n0 TRLR");
-				$fcontents = substr($fcontents, 0, $pos1+1).trim($gedrec)."\r\n0 TRLR";
+				$fcontents = substr($fcontents, 0, $pos1+1).trim($gedrec)."\n0 TRLR";
 			}
 			else if ($change["type"]=="replace") {
 				$pos1 = strpos($fcontents, "\n0 @".$gid."@");
@@ -2005,13 +2003,13 @@ function accept_changes($cid) {
 						$fcontents = substr($fcontents, 0, $pos1+1)."0 TRLR";
 						AddToLog("Corruption found in GEDCOM $GEDCOM Attempted to correct");
 					}
-					else $fcontents = substr($fcontents, 0, $pos1+1).trim($gedrec)."\r\n".substr($fcontents, $pos2+1);
+					else $fcontents = substr($fcontents, 0, $pos1+1).trim($gedrec)."\n".substr($fcontents, $pos2+1);
 				}
 				else {
 					//-- attempted to replace a record that doesn't exist
 					AddToLog("Corruption found in GEDCOM $GEDCOM Attempted to correct.  Replaced gedcom record $gid was not found in the gedcom file.");
 					$pos1 = strpos($fcontents, "\n0 TRLR");
-					$fcontents = substr($fcontents, 0, $pos1+1).trim($gedrec)."\r\n0 TRLR";
+					$fcontents = substr($fcontents, 0, $pos1+1).trim($gedrec)."\n0 TRLR";
 					AddToLog("Gedcom record $gid was appended back to the GEDCOM file.");
 				}
 			}
@@ -2065,9 +2063,9 @@ function accept_changes($cid) {
 }
 
 /**
- * update a record in the database
- * @param string $gedrec
- */
+* update a record in the database
+* @param string $gedrec
+*/
 function update_record($gedrec, $delete = false) {
 	global $TBLPREFIX, $GEDCOM, $DBCONN, $GEDCOMS, $FILE;
 
@@ -2155,24 +2153,24 @@ function cleanup_tags_y(& $irec) {
 		"MARC","MARL","MARS","BIRT","CHR","DEAT","BURI","CREM","ADOP","DSCR",
 		"BAPM","BARM","BASM","BLES","CHRA","CONF","FCOM","ORDN","NATU","EMIG",
 		"IMMI","CENS","PROB","WILL","GRAD","RETI");
-	$irec .= "\r\n1";
+	$irec .= "\n1";
 	$ft = preg_match_all("/1\s(\w+)\s/", $irec, $match);
 	for ($i = 0; $i < $ft; $i++) {
 		$sfact = $match[1][$i];
 		$sfact = trim($sfact);
 		if (in_array($sfact, $cleanup_facts)) {
-			$srchstr = "/1\s" . $sfact . "\sY\r\n2/";
-			$replstr = "1 " . $sfact . "\r\n2";
-			$srchstr2 = "/1\s" . $sfact . "(.{0,1})\r\n2/";
-			$srchstr = "/1\s" . $sfact . "\sY\r\n2/";
-			$srchstr3 = "/1\s" . $sfact . "\sY\r\n1/";
+			$srchstr = "/1 {$sfact} Y\n2/";
+			$replstr = "1 {$sfact}\n2";
+			$srchstr2 = "/1 {$sfact}(.{0,1})\n2/";
+			$srchstr = "/1 {$sfact} Y\n2/";
+			$srchstr3 = "/1 {$sfact} Y\n1/";
 			$irec = preg_replace($srchstr, $replstr, $irec);
 			if (preg_match($srchstr2, $irec)) {
 				$irec = preg_replace($srchstr3, "1", $irec);
 			}
 		}
 	}
-	$irec = substr($irec, 0, -3);
+	$irec = substr($irec, 0, -2);
 }
 
 // Create a pseudo-random UUID
@@ -2206,14 +2204,14 @@ function uuid() {
 }
 
 /**
- * parse out specific subrecords (NOTE, _PRIM, _THUM) from a given OBJE record
- *
- * @author Joseph King
- * @param string $objrec the OBJE record to retrieve the subrecords from
- * @param int $objlevel the level of the OBJE record
- * @param string $m_media that media id of the OBJE record
- * @return string containing NOTE, _PRIM, and _THUM subrecords parsed from the passed object record
- */
+* parse out specific subrecords (NOTE, _PRIM, _THUM) from a given OBJE record
+*
+* @author Joseph King
+* @param string $objrec the OBJE record to retrieve the subrecords from
+* @param int $objlevel the level of the OBJE record
+* @param string $m_media that media id of the OBJE record
+* @return string containing NOTE, _PRIM, and _THUM subrecords parsed from the passed object record
+*/
 function subrecord_createobjectref($objrec, $objlevel, $m_media){
 
 	//- level of subrecords is object record level + 1
@@ -2226,7 +2224,7 @@ function subrecord_createobjectref($objrec, $objlevel, $m_media){
 	do
 	{
 		$nt = get_sub_record($level, $level . " NOTE", $objrec, $n);
-		if($nt != "") $note = $note . trim($nt)."\r\n";
+		if($nt != "") $note = $note . trim($nt)."\n";
 		$n++;
 	}while($nt != "");
 	//- get and concatenate PRIM subrecords
@@ -2236,7 +2234,7 @@ function subrecord_createobjectref($objrec, $objlevel, $m_media){
 	do
 	{
 		$pm = get_sub_record($level, $level . " _PRIM", $objrec, $n);
-		if($pm != "") $prim = $prim . trim($pm)."\r\n";
+		if($pm != "") $prim = $prim . trim($pm)."\n";
 		$n++;
 	}while($pm != "");
 	//- get and concatenate THUM subrecords
@@ -2248,12 +2246,12 @@ function subrecord_createobjectref($objrec, $objlevel, $m_media){
 		$tm = get_sub_record($level, $level . " _THUM", $objrec, $n);
 		if($tm != ""){
 			//- call image cropping function ($tm contains thum data)
-			$thum = $thum . trim($tm)."\r\n";
+			$thum = $thum . trim($tm)."\n";
 		}
 		$n++;
 	}while($tm != "");
 	//- add object reference
-	$objmed = addslashes($objlevel . ' OBJE @' . $m_media . "@\r\n" . $note . $prim . $thum);
+	$objmed = addslashes($objlevel . ' OBJE @' . $m_media . "@\n" . $note . $prim . $thum);
 
 	//- return the object media reference
 	return $objmed;
