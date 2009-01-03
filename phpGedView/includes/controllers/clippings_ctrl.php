@@ -1,28 +1,28 @@
 <?php
 /**
- * Controller for the Clippings Page
- *
- * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- *
- * @package PhpGedView
- * @subpackage Charts
- * @version $Id$
- */
+* Controller for the Clippings Page
+*
+* phpGedView: Genealogy Viewer
+* Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
+*
+* This program is free software; you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation; either version 2 of the License, or
+* (at your option) any later version.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+* GNU General Public License for more details.
+*
+* You should have received a copy of the GNU General Public License
+* along with this program; if not, write to the Free Software
+* Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+*
+* @package PhpGedView
+* @subpackage Charts
+* @version $Id$
+*/
 
 if (!defined('PGV_PHPGEDVIEW')) {
 	header('HTTP/1.0 403 Forbidden');
@@ -66,8 +66,8 @@ function id_in_cart($id) {
 }
 
 /**
- * Main controller class for the Clippings page.
- */
+* Main controller class for the Clippings page.
+*/
 class ClippingsControllerRoot extends BaseController {
 
 	var $download_data;
@@ -79,9 +79,9 @@ class ClippingsControllerRoot extends BaseController {
 	var $IncludeMedia;
 	var $Zip;
 	var $filetype;
-    var $level1;  // number of levels of ancestors
-    var $level2;
-    var $level3;	// number of levels of descendents
+	var $level1;  // number of levels of ancestors
+	var $level2;
+	var $level3; // number of levels of descendents
 
 	/**
 	 * @param string $thing the id of the person
@@ -110,9 +110,9 @@ class ClippingsControllerRoot extends BaseController {
 		$this->Zip = safe_GET('Zip');
 		$this->IncludeMedia = safe_GET('IncludeMedia');
 		$this->filetype = safe_GET('filetype');
-        $this->level1 = safe_GET('level1');
-        $this->level2 = safe_GET('level2');
-        $this->level3 = safe_GET('level3');
+		$this->level1 = safe_GET('level1');
+		$this->level2 = safe_GET('level2');
+		$this->level3 = safe_GET('level3');
 		if (empty($this->filetype)) $this->filetype = "gedcom";
 		$others = safe_GET('others');
 		$item = safe_GET('item');
@@ -186,10 +186,10 @@ class ClippingsControllerRoot extends BaseController {
 						}
 					} else
 					if ($others == 'ancestors') {
-                        $this->add_ancestors_to_cart($this->id, $this->level1);
+						$this->add_ancestors_to_cart($this->id, $this->level1);
 					} else
 					if ($others == 'ancestorsfamilies') {
-                        $this->add_ancestors_to_cart_families($this->id, $this->level2);
+						$this->add_ancestors_to_cart_families($this->id, $this->level2);
 					} else
 					if ($others == 'members') {
 						$famids = find_sfamily_ids($this->id);
@@ -242,15 +242,14 @@ class ClippingsControllerRoot extends BaseController {
 				$media = array ();
 				$mediacount = 0;
 				$ct = count($cart);
-				$filetext = "0 HEAD\r\n1 SOUR ".PGV_PHPGEDVIEW."\r\n2 NAME ".PGV_PHPGEDVIEW."\r\n2 VERS ".PGV_VERSION_TEXT."\r\n1 DEST DISKETTE\r\n1 DATE " . date("j M Y") . "\r\n2 TIME " . date("H:i:s") . "\r\n";
-				$filetext .= "1 GEDC\r\n2 VERS 5.5\r\n2 FORM LINEAGE-LINKED\r\n1 CHAR $CHARACTER_SET\r\n";
+				$filetext = "0 HEAD\n1 SOUR ".PGV_PHPGEDVIEW."\n2 NAME ".PGV_PHPGEDVIEW."\n2 VERS ".PGV_VERSION_TEXT."\n1 DEST DISKETTE\n1 DATE " . date("j M Y") . "\n2 TIME " . date("H:i:s") . "\n";
+				$filetext .= "1 GEDC\n2 VERS 5.5\n2 FORM LINEAGE-LINKED\n1 CHAR $CHARACTER_SET\n";
 				$head = find_gedcom_record("HEAD");
 				$placeform = trim(get_sub_record(1, "1 PLAC", $head));
 				if (!empty ($placeform))
-				$filetext .= $placeform . "\r\n";
-				//	else $filetext .= "1 PLAC\r\n2 FORM ".$pgv_lang["default_form"]."\r\n";
+				$filetext .= $placeform . "\n";
 				else
-				$filetext .= "1 PLAC\r\n2 FORM " . "City, County, State/Province, Country" . "\r\n";
+				$filetext .= "1 PLAC\n2 FORM " . "City, County, State/Province, Country" . "\n";
 				if ($convert == "yes") {
 					$filetext = preg_replace("/UTF-8/", "ANSI", $filetext);
 					$filetext = utf8_decode($filetext);
@@ -286,12 +285,12 @@ class ClippingsControllerRoot extends BaseController {
 								}
 								$record = preg_replace("|(\d FILE )" . addslashes($match[$k][1]) . "|", "$1" . $filename, $record);
 							}
-							$filetext .= trim($record) . "\r\n";
-							$filetext .= "1 SOUR @SPGV1@\r\n";
-							$filetext .= "2 PAGE " . $dSERVER_URL . "/individual.php?pid=" . $clipping['id'] . "\r\n";
-							$filetext .= "2 DATA\r\n";
-							$filetext .= "3 TEXT " . $pgv_lang["indi_downloaded_from"] . "\r\n";
-							$filetext .= "4 CONT " . $dSERVER_URL . "/individual.php?pid=" . $clipping['id'] . "\r\n";
+							$filetext .= trim($record) . "\n";
+							$filetext .= "1 SOUR @SPGV1@\n";
+							$filetext .= "2 PAGE " . $dSERVER_URL . "/individual.php?pid=" . $clipping['id'] . "\n";
+							$filetext .= "2 DATA\n";
+							$filetext .= "3 TEXT " . $pgv_lang["indi_downloaded_from"] . "\n";
+							$filetext .= "4 CONT " . $dSERVER_URL . "/individual.php?pid=" . $clipping['id'] . "\n";
 						} else
 						if ($clipping['type'] == 'fam') {
 							$ft = preg_match_all("/1 CHIL @(.*)@/", $record, $match, PREG_SET_ORDER);
@@ -328,17 +327,17 @@ class ClippingsControllerRoot extends BaseController {
 								$record = preg_replace("|(\d FILE )" . addslashes($match[$k][1]) . "|", "$1" . $filename, $record);
 							}
 
-							$filetext .= trim($record) . "\r\n";
-							$filetext .= "1 SOUR @SPGV1@\r\n";
-							$filetext .= "2 PAGE " . $dSERVER_URL . $path . "family.php?famid=" . $clipping['id'] . "\r\n";
-							$filetext .= "2 DATA\r\n";
-							$filetext .= "3 TEXT " . $pgv_lang["family_downloaded_from"] . "\r\n";
-							$filetext .= "4 CONT " . $dSERVER_URL . "/family.php?famid=" . $clipping['id'] . "\r\n";
+							$filetext .= trim($record) . "\n";
+							$filetext .= "1 SOUR @SPGV1@\n";
+							$filetext .= "2 PAGE " . $dSERVER_URL . $path . "family.php?famid=" . $clipping['id'] . "\n";
+							$filetext .= "2 DATA\n";
+							$filetext .= "3 TEXT " . $pgv_lang["family_downloaded_from"] . "\n";
+							$filetext .= "4 CONT " . $dSERVER_URL . "/family.php?famid=" . $clipping['id'] . "\n";
 						} else
 						if ($clipping['type'] == "source") {
-							$filetext .= trim($record) . "\r\n";
-							$filetext .= "1 NOTE " . $pgv_lang["source_downloaded_from"] . "\r\n";
-							$filetext .= "2 CONT " . $dSERVER_URL . "/source.php?sid=" . $clipping['id'] . "\r\n";
+							$filetext .= trim($record) . "\n";
+							$filetext .= "1 NOTE " . $pgv_lang["source_downloaded_from"] . "\n";
+							$filetext .= "2 CONT " . $dSERVER_URL . "/source.php?sid=" . $clipping['id'] . "\n";
 						} else {
 							$ft = preg_match_all("/\d FILE (.*)/", $record, $match, PREG_SET_ORDER);
 							for ($k = 0; $k < $ft; $k++) {
@@ -349,7 +348,7 @@ class ClippingsControllerRoot extends BaseController {
 								}
 								$record = preg_replace("|(\d FILE )" . addslashes($match[$k][1]) . "|", "$1" . $filename, $record);
 							}
-							$filetext .= trim($record) . "\r\n";
+							$filetext .= trim($record) . "\n";
 						}
 					}
 				}
@@ -357,16 +356,14 @@ class ClippingsControllerRoot extends BaseController {
 				{
 					$this->media_list = $media;
 				}
-				$filetext .= "0 @SPGV1@ SOUR\r\n";
+				$filetext .= "0 @SPGV1@ SOUR\n";
 				if ($user_id=get_user_id($CONTACT_EMAIL)) {
-					$filetext .= "1 AUTH " . getUserFullName($user_id) . "\r\n";
+					$filetext .= "1 AUTH " . getUserFullName($user_id) . "\n";
 				}
-				$filetext .= "1 TITL " . $HOME_SITE_TEXT . "\r\n";
-				$filetext .= "1 ABBR " . $HOME_SITE_TEXT . "\r\n";
-				$filetext .= "1 PUBL " . $HOME_SITE_URL . "\r\n";
-				$filetext .= "0 TRLR\r\n";
-				//-- make sure the gedcom doesn't have any empty lines
-				$filetext = preg_replace("/(\r?\n)+/", "\r\n", $filetext);
+				$filetext .= "1 TITL " . $HOME_SITE_TEXT . "\n";
+				$filetext .= "1 ABBR " . $HOME_SITE_TEXT . "\n";
+				$filetext .= "1 PUBL " . $HOME_SITE_URL . "\n";
+				$filetext .= "0 TRLR\n";
 				//-- make sure the preferred line endings are used
 				$filetext = preg_replace("/[\r\n]+/", PGV_EOL, $filetext);
 				$this->download_data = $filetext;
@@ -392,14 +389,6 @@ class ClippingsControllerRoot extends BaseController {
 						$famrec = find_family_record($clipping["id"]);
 						$gramps_Exp->create_family($famrec, $clipping["id"]);
 					}
-					//									if ($clipping["type"] == "obje") {
-					//										$famrec = find_family_record($clipping["id"]);
-					//										$gramps_Exp->create_family($famrec, $clipping["id"]);
-					//									}
-					//									if ($clipping["type"] == "sour") {
-					//										$famrec = find_family_record($clipping["id"]);
-					//										$gramps_Exp->create_family($famrec, $clipping["id"]);
-					//									}
 				}
 				$this->download_data = $gramps_Exp->dom->saveXML();
 				if($convert)
@@ -581,8 +570,7 @@ class ClippingsControllerRoot extends BaseController {
 		global $cart;
 
 		if (!$famid)
-		return;
-		//print "add_family_descendancy(" . $famid . ")<br />";					# --------------
+			return;
 		$famrec = find_family_record($famid);
 		if ($famrec) {
 			$parents = find_parents_in_record($famrec);
@@ -652,13 +640,13 @@ class ClippingsControllerRoot extends BaseController {
 	}
 
 	//-- recursively adds direct-line ancestors to cart
-    function add_ancestors_to_cart($pid, $level="") {
+	function add_ancestors_to_cart($pid, $level="") {
 		global $cart;
 		$famids = find_family_ids($pid);
 		if (count($famids) > 0) {
 			foreach ($famids as $indexval => $famid) {
-                if ($level=="" || $level > 0) {
-                    if ($level!="") $level = $level -1;
+				if ($level=="" || $level > 0) {
+					if ($level!="") $level = $level -1;
 					$clipping = array ();
 					$clipping['type'] = "fam";
 					$clipping['id'] = $famid;
@@ -670,30 +658,29 @@ class ClippingsControllerRoot extends BaseController {
 							$clipping['type'] = "indi";
 							$clipping['id'] = $parents["HUSB"];
 							$this->add_clipping($clipping);
-                            $this->add_ancestors_to_cart($parents["HUSB"], $level);
+							$this->add_ancestors_to_cart($parents["HUSB"], $level);
 						}
 						if (!empty ($parents["WIFE"])) {
 							$clipping = array ();
 							$clipping['type'] = "indi";
 							$clipping['id'] = $parents["WIFE"];
 							$this->add_clipping($clipping);
-                            $this->add_ancestors_to_cart($parents["WIFE"], $level);
+							$this->add_ancestors_to_cart($parents["WIFE"], $level);
 						}
 					}
 				}
-
-            }
+			}
 		}
 	}
 
 	//-- recursively adds direct-line ancestors and their families to the cart
-    function add_ancestors_to_cart_families($pid, $level="") {
+	function add_ancestors_to_cart_families($pid, $level="") {
 		global $cart;
 		$famids = find_family_ids($pid);
 		if (count($famids) > 0) {
 			foreach ($famids as $indexval => $famid) {
-               if ($level=="" || $level > 0) {
-                    if ($level!="")$level = $level -1;
+				if ($level=="" || $level > 0) {
+					if ($level!="")$level = $level -1;
 					$clipping = array ();
 					$clipping['type'] = "fam";
 					$clipping['id'] = $famid;
@@ -705,14 +692,14 @@ class ClippingsControllerRoot extends BaseController {
 							$clipping['type'] = "indi";
 							$clipping['id'] = $parents["HUSB"];
 							$ret = $this->add_clipping($clipping);
-	                            $this->add_ancestors_to_cart_families($parents["HUSB"], $level);
+							$this->add_ancestors_to_cart_families($parents["HUSB"], $level);
 						}
 						if (!empty ($parents["WIFE"])) {
 							$clipping = array ();
 							$clipping['type'] = "indi";
 							$clipping['id'] = $parents["WIFE"];
 							$ret = $this->add_clipping($clipping);
-	                            $this->add_ancestors_to_cart_families($parents["WIFE"], $level);
+							$this->add_ancestors_to_cart_families($parents["WIFE"], $level);
 						}
 						$famrec = find_family_record($famid);
 						if ($famrec) {
@@ -728,13 +715,10 @@ class ClippingsControllerRoot extends BaseController {
 				}
 			}
 		}
-    }
-
-	//---------------------------- End function definition
-
+	}
 }
-
 // -- end of class
+
 //-- load a user extended class if one exists
 if (file_exists('includes/controllers/clippings_ctrl_user.php')) {
 	include_once 'includes/controllers/clippings_ctrl_user.php';
