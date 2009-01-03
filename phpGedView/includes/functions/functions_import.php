@@ -37,6 +37,7 @@ require_once 'includes/classes/class_media.php';
 require_once 'includes/classes/class_mutex.php';
 require_once 'includes/functions/functions_lang.php';
 require_once 'includes/functions/functions_name.php';
+require_once 'includes/functions/functions_export.php';
 
 // Programs such as FTM use the "tag formal names" instead of the actual tags.  This list lets us convert.
 $TRANSLATE_TAGS=array(
@@ -600,8 +601,8 @@ function import_record($gedrec, $update) {
 	}
 
 	//-- check for a _UID, if the record doesn't have one, add one
-	if ($GENERATE_UIDS && $type != "HEAD" && $type != "TRLR" && preg_match("/1 _UID /", $gedrec) == 0) {
-		$gedrec = trim($gedrec) . "\r\n1 _UID " . uuid();
+	if ($GENERATE_UIDS && $type!='HEAD' && $type!='TRLR' && !strpos($gedrec, "\n1 _UID ")) {
+		$gedrec.="\n1 _UID ".uuid();
 	}
 
 	//-- keep track of the max id for each type as they are imported
@@ -760,9 +761,10 @@ function import_record($gedrec, $update) {
 	} // switch
 
 	//-- if this is not an update then write it to the new gedcom file
-	if (!$update && !empty ($fpnewged) && !(empty ($gedrec)))
-		fwrite($fpnewged, preg_replace('/[\r\n]+/', PGV_EOL, $gedrec) . PGV_EOL);
+	if (!$update && !empty ($fpnewged) && !(empty ($gedrec))) {
+		fwrite($fpnewged, reformat_record_export($gedrec));
 	}
+}
 
 /**
 * extract all places from the given record and insert them
@@ -909,7 +911,7 @@ function update_rlinks($xref, $ged_id, $gedrec) {
 function update_links($xref, $ged_id, $gedrec) {
 	global $DBTYPE, $DBCONN, $TBLPREFIX;
 
-	if (preg_match_all("/^\d+ ([A-Z0-9_]+) @([^@#\r\n][^@\r\n]*)@/m", $gedrec, $matches, PREG_SET_ORDER)) {
+	if (preg_match_all("/^\d+ ([A-Z0-9_]+) @([^@#\n][^@\n]*)@/m", $gedrec, $matches, PREG_SET_ORDER)) {
 		$data=array();
 		foreach ($matches as $match) {
 			$match[2]=$DBCONN->escapeSimple($match[2]);
@@ -1053,9 +1055,9 @@ function insert_media($objrec, $objlevel, $update, $gid, $count) {
 			$res = dbquery($sql);
 			$media_count++;
 			//-- if this is not an update then write it to the new gedcom file
-			if (!$update && !empty ($fpnewged))
-				fwrite($fpnewged, preg_replace('/[\r\n]+/', PGV_EOL, $objrec) . PGV_EOL);
-			//print "LINE ".__LINE__;
+			if (!$update && !empty ($fpnewged)) {
+				fwrite($fpnewged, reformat_record_export($objrec));
+			}
 		} else {
 			//-- already added so update the local id
 			$objref = preg_replace("/@$m_media@/", "@$new_media@", $objref);
@@ -1160,66 +1162,66 @@ function update_media($gid, $gedrec, $update = false) {
 	//-- if there aren't any media records then don't look for them just return
 	$pt = preg_match("/\d OBJE/", $gedrec, $match);
 	if ($pt > 0) {
-		//-- go through all of the lines and replace any local
-		//--- OBJE to referenced OBJEs
-		$newrec = "";
-		$lines = preg_split("/[\r\n]+/", trim($gedrec));
-		$ct_lines = count($lines);
-		$inobj = false;
-		$processed = false;
-		$objlevel = 0;
-		$objrec = "";
-		$count = 1;
-			foreach ($lines as $key => $line) {
-			if (!empty ($line)) {
-				// NOTE: Match lines that resemble n OBJE @0000@
-				// NOTE: Renumber the old ID to a new ID and save the old ID
-				// NOTE: in case there are more references to it
-				$level = $line{0};
-				//-- putting this code back since $objlevel, $objrec, etc vars will be
-				//-- reset in sections after this
-				if ($objlevel>0 && ($level<=$objlevel)) {
-					$objref = insert_media($objrec, $objlevel, $update, $gid, $count);
-					$count++;
-					// NOTE: Add the new media object to the record
-					$newrec .= $objref;
+	//-- go through all of the lines and replace any local
+	//--- OBJE to referenced OBJEs
+	$newrec = "";
+	$lines = explode("\n", $gedrec);
+	$ct_lines = count($lines);
+	$inobj = false;
+	$processed = false;
+	$objlevel = 0;
+	$objrec = "";
+	$count = 1;
+	foreach ($lines as $key => $line) {
+		if (!empty ($line)) {
+			// NOTE: Match lines that resemble n OBJE @0000@
+			// NOTE: Renumber the old ID to a new ID and save the old ID
+			// NOTE: in case there are more references to it
+			$level = $line{0};
+			//-- putting this code back since $objlevel, $objrec, etc vars will be
+			//-- reset in sections after this
+			if ($objlevel>0 && ($level<=$objlevel)) {
+				$objref = insert_media($objrec, $objlevel, $update, $gid, $count);
+				$count++;
+				// NOTE: Add the new media object to the record
+				$newrec .= $objref;
 
-					// NOTE: Set the details for the next media record
-					$objlevel = 0;
-					$inobj = false;
-				}
-				if (preg_match("/[1-9]\sOBJE\s@(.*)@/", $line, $match) != 0) {
-						// NOTE: Set object level
-						$objlevel = $level;
-						$inobj = true;
-						$objrec = $line . "\n";
-				}
-				else if (preg_match("/[1-9]\sOBJE/", $line, $match)) {
-					// NOTE: Set the details for the next media record
+				// NOTE: Set the details for the next media record
+				$objlevel = 0;
+				$inobj = false;
+			}
+			if (preg_match("/[1-9]\sOBJE\s@(.*)@/", $line, $match) != 0) {
+					// NOTE: Set object level
 					$objlevel = $level;
 					$inobj = true;
+						$objrec = $line . "\n";
+			}
+			else if (preg_match("/[1-9]\sOBJE/", $line, $match)) {
+				// NOTE: Set the details for the next media record
+				$objlevel = $level;
+				$inobj = true;
 					$objrec = $line . "\n";
-				} else {
-					$ct = preg_match("/(\d+)\s(\w+)(.*)/", $line, $match);
-					if ($ct > 0) {
-						if ($inobj)
+			} else {
+				$ct = preg_match("/(\d+)\s(\w+)(.*)/", $line, $match);
+				if ($ct > 0) {
+					if ($inobj)
 							$objrec .= $line . "\n";
 						else $newrec .= $line . "\n";
-					}
-					else $newrec .= $line . "\n";
 				}
+					else $newrec .= $line . "\n";
 			}
 		}
-		//-- make sure the last line gets handled
-		if ($inobj) {
-			$objref = insert_media($objrec, $objlevel, $update, $gid, $count);
-			$count++;
-			$newrec .= $objref;
+	}
+	//-- make sure the last line gets handled
+	if ($inobj) {
+		$objref = insert_media($objrec, $objlevel, $update, $gid, $count);
+		$count++;
+		$newrec .= $objref;
 
-			// NOTE: Set the details for the next media record
-			$objlevel = 0;
-			$inobj = false;
-		}
+		// NOTE: Set the details for the next media record
+		$objlevel = 0;
+		$inobj = false;
+	}
 	}
 	else $newrec = $gedrec;
 
@@ -1936,10 +1938,7 @@ function write_file() {
 	}
 	$fl = @flock($fp, LOCK_EX);
 	if (!$fl) {
-//		print "ERROR 7: Unable to obtain file lock.\n";
 		AddToChangeLog("ERROR 7: Unable to obtain file lock. ->" . PGV_USER_NAME ."<-");
-//		fclose($fp);
-//		return false;
 	}
 	$fw = fwrite($fp, $fcontents);
 	if ($fw===false) {
