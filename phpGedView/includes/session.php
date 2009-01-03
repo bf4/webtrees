@@ -78,6 +78,9 @@ define('PGV_EVENTS_DIV',  'DIV|ANUL|_SEPR');
 // Use these line endings when writing files on the server
 define('PGV_EOL', "\r\n");
 
+// Gedcom specification/definition
+define ('PGV_GEDCOM_LINE_LENGTH', 255); // Characters, not bytes
+
 // Use these tags to wrap embedded javascript consistently
 define('PGV_JS_START', "\n<script type=\"text/javascript\">\n//<![CDATA[\n");
 define('PGV_JS_END',   "\n//]]\n</script>\n");
@@ -155,7 +158,7 @@ set_magic_quotes_runtime(0);
 
 // magic_quotes_gpc can't be disabled at run-time, so clean them up as necessary.
 if (function_exists('get_magic_quotes_gpc') && get_magic_quotes_gpc() ||
-    ini_get('magic_quotes_sybase') && strtolower(ini_get('magic_quotes_sybase'))!='off') {
+	ini_get('magic_quotes_sybase') && strtolower(ini_get('magic_quotes_sybase'))!='off') {
 	$in = array(&$_GET, &$_POST, &$_COOKIE);
 	while (list($k,$v) = each($in)) {
 		foreach ($v as $key => $val) {
@@ -209,10 +212,10 @@ if ($configOverride) {
 require_once( "includes/lang_settings_std.php");
 $Languages_Default = true;
 if (!strstr($_SERVER["REQUEST_URI"], "INDEX_DIRECTORY=") && file_exists($INDEX_DIRECTORY . "lang_settings.php")) {
-	$DefaultSettings = $language_settings;		// Save default settings, so we can merge properly
+	$DefaultSettings = $language_settings; // Save default settings, so we can merge properly
 	require_once($INDEX_DIRECTORY . "lang_settings.php");
-	$ConfiguredSettings = $language_settings;	// Save configured settings, same reason
-	$language_settings = array_merge($DefaultSettings, $ConfiguredSettings);	// Copy new langs into config
+	$ConfiguredSettings = $language_settings; // Save configured settings, same reason
+	$language_settings = array_merge($DefaultSettings, $ConfiguredSettings); // Copy new langs into config
 	// Now copy new language settings into existing configuration
 	foreach ($DefaultSettings as $lang => $settings) {
 		foreach ($settings as $key => $value) {
@@ -220,7 +223,7 @@ if (!strstr($_SERVER["REQUEST_URI"], "INDEX_DIRECTORY=") && file_exists($INDEX_D
 		}
 	}
 	unset($DefaultSettings);
-	unset($ConfiguredSettings);		// We don't need these any more
+	unset($ConfiguredSettings); // We don't need these any more
 	$Languages_Default = false;
 }
 
@@ -229,7 +232,7 @@ $pgv_lang_use = array();
 foreach ($language_settings as $key => $value) {
 	$pgv_lang_use[$key] = $value["pgv_lang_use"];
 }
-//		Don't let incoming request change to an unsupported or inactive language
+// Don't let incoming request change to an unsupported or inactive language
 if (isset($_REQUEST["NEWLANGUAGE"])) {
 	if (empty($pgv_lang_use[$_REQUEST["NEWLANGUAGE"]])) break;
 	if (!$pgv_lang_use[$_REQUEST["NEWLANGUAGE"]]) break;
@@ -248,13 +251,13 @@ $QUERY_STRING = preg_replace("/show_context_help=(no|yes)/", "", $QUERY_STRING);
 
 //-- if not configured then redirect to the configuration script
 if (!$CONFIGURED) {
-   if ((strstr($SCRIPT_NAME, "admin.php")===false)
-   &&(strstr($SCRIPT_NAME, "login.php")===false)
-   &&(strstr($SCRIPT_NAME, "install.php")===false)
-   &&(strstr($SCRIPT_NAME, "editconfig_help.php")===false)) {
-      header("Location: install.php");
-      exit;
-   }
+	if ((strstr($SCRIPT_NAME, "admin.php")===false)
+	&&(strstr($SCRIPT_NAME, "login.php")===false)
+	&&(strstr($SCRIPT_NAME, "install.php")===false)
+	&&(strstr($SCRIPT_NAME, "editconfig_help.php")===false)) {
+		header("Location: install.php");
+		exit;
+	}
 }
 //-- allow user to cancel
 ignore_user_abort(false);
@@ -290,9 +293,9 @@ $date = date("D M j H:i:s T Y", $time);
 //-- and then automatically be logged in at another site on the same server
 $pgv_path = "/";
 if (!empty($SCRIPT_NAME)) {
-     $dirname = dirname($SCRIPT_NAME);
-     if (strstr($SERVER_URL, $dirname)!==false) $pgv_path = str_replace("\\", "/", $dirname);
-     unset($dirname);
+	$dirname = dirname($SCRIPT_NAME);
+	if (strstr($SERVER_URL, $dirname)!==false) $pgv_path = str_replace("\\", "/", $dirname);
+	unset($dirname);
 }
 session_set_cookie_params($date, $pgv_path);
 unset($date);
@@ -349,11 +352,11 @@ if (isset($_REQUEST["ged"])) $GEDCOM = trim($_REQUEST["ged"]);
 if (!empty($GEDCOM) && is_int($GEDCOM)) $GEDCOM = get_gedcom_from_id($GEDCOM);
 if ($logout || empty($GEDCOM) || empty($GEDCOMS[$GEDCOM])) $GEDCOM=$DEFAULT_GEDCOM;
 if ((empty($GEDCOM))&&(count($GEDCOMS)>0)) {
-         foreach($GEDCOMS as $ged_file=>$ged_array) {
-	         $GEDCOM = $ged_file;
-	         if (check_for_import($ged_file)) break;
-         }
-      }
+	foreach($GEDCOMS as $ged_file=>$ged_array) {
+		$GEDCOM = $ged_file;
+		if (check_for_import($ged_file)) break;
+	}
+}
 $_SESSION["GEDCOM"] = $GEDCOM;
 
 // Privacy constants
@@ -468,15 +471,15 @@ if ((!$CONFIGURED || empty($LANGUAGE) || $ENABLE_MULTI_LANGUAGE) && empty($_SESS
 	foreach ($acceptLangsList as $browserLang) {
 		$browserLang = strtolower(trim($browserLang)).";";
 		foreach ($pgv_lang_use as $language => $active) {
-			if ($CONFIGURED && !$active) continue;		// don't consider any language marked as "inactive"
+			if ($CONFIGURED && !$active) continue; // don't consider any language marked as "inactive"
 			if (strpos($lang_langcode[$language], $browserLang) === false) continue;
-			$preferredLang = $language;		// we have a match
+			$preferredLang = $language; // we have a match
 			break;
 		}
-		if (!empty($preferredLang)) break;		// no need to look further: a match was found
+		if (!empty($preferredLang)) break; // no need to look further: a match was found
 	}
 }
-if (empty($preferredLang)) $preferredLang = 'english';		// If nothing matches, default to English
+if (empty($preferredLang)) $preferredLang = 'english'; // If nothing matches, default to English
 
 // -- If the GEDCOM config doesn't specify a default, use the browser's topmost preference
 if (!$CONFIGURED || empty($LANGUAGE)) $LANGUAGE = $preferredLang;
@@ -608,16 +611,16 @@ if ((strstr($SCRIPT_NAME, "install.php")===false)
 		}
 	}
 
-   // -- setup session information for tree clippings cart features
-   if ((!isset($_SESSION['cart'])) || (!empty($_SESSION['last_spider_name']))) { // reset cart everytime for spiders
-     $_SESSION['cart'] = array();
-   }
-   $cart = $_SESSION['cart'];
+	// -- setup session information for tree clippings cart features
+	if ((!isset($_SESSION['cart'])) || (!empty($_SESSION['last_spider_name']))) { // reset cart everytime for spiders
+		$_SESSION['cart'] = array();
+	}
+	$cart = $_SESSION['cart'];
 
-   $_SESSION['CLANGUAGE'] = $LANGUAGE;
-   if (!isset($_SESSION["timediff"])) {
-	   $_SESSION["timediff"] = 0;
-   }
+	$_SESSION['CLANGUAGE'] = $LANGUAGE;
+	if (!isset($_SESSION["timediff"])) {
+		$_SESSION["timediff"] = 0;
+	}
 
 	//-- load any editing changes
 	if (PGV_USER_CAN_EDIT && file_exists($INDEX_DIRECTORY."pgv_changes.php")) {
