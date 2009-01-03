@@ -1216,7 +1216,7 @@ function update_media($gid, $gedrec, $update = false) {
 		}
 	}
 
-	return $newrec;
+	return trim($newrec);
 }
 /**
  * Create database schema
