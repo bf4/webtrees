@@ -4,7 +4,7 @@
  * Searches based on user query.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
+ * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -346,10 +346,10 @@ if ($controller->action == "soundex") {
 		</td>
 		<td class="list_value" >
 			<input type="radio" name="soundex" value="Russell"
-				<?php if (($controller->soundex == "Russell") || ($controller->soundex == "")) print " checked=\"checked\" "; ?> />
+				<?php if ($controller->soundex == "Russell") print " checked=\"checked\" "; ?> />
 			<?php print $pgv_lang["search_russell"]; ?><br />
 			<input type="radio" name="soundex" value="DaitchM"
-				<?php if ($controller->soundex == "DaitchM") print " checked=\"checked\" "; ?> />
+				<?php if ($controller->soundex == "DaitchM" || $controller->soundex == "") print " checked=\"checked\" "; ?> />
 			<?php print $pgv_lang["search_DM"]; ?>
 		</td>
 	</tr>
