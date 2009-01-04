@@ -78,8 +78,8 @@ define('PGV_EVENTS_DIV',  'DIV|ANUL|_SEPR');
 // Use these line endings when writing files on the server
 define('PGV_EOL', "\r\n");
 
-// Gedcom specification/definition
-define ('PGV_GEDCOM_LINE_LENGTH', 255); // Characters, not bytes
+// Gedcom specification/definitions
+define ('PGV_GEDCOM_LINE_LENGTH', 255-strlen(PGV_EOL)); // Characters, not bytes
 
 // Use these tags to wrap embedded javascript consistently
 define('PGV_JS_START', "\n<script type=\"text/javascript\">\n//<![CDATA[\n");
