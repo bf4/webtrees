@@ -444,13 +444,13 @@ if (!defined('PGV_PHPGEDVIEW')) {
 					print "<img src=\"modules/JWplayer/flashrem.png\" width=\"60\" border=\"0\" align=\"center" . ($TEXT_DIRECTION== "rtl"?"right": "left") . "\" class=\"thumbnail\" " ;
 				// If URL page, Print the Common URL Thumbnail
 				} else if ($file_type == "url_page" && !eregi("\.pdf",$rowm['m_file']) && !eregi("\.avi",$rowm['m_file'])) {
-					print "<img src=\"images/URL.png\" border=\"0\" align=\"" . ($TEXT_DIRECTION== "rtl"?"right": "left") . "\"  width=\"72\" height=\"80\" " ;
+					print "<img src=\"images/URL.png\" border=\"0\" align=\"center\"  width=\"72\" height=\"80\" " ;
 				// If local flv file  + (JWplayer installed) and no uploaded thumbnail, print the common flv thumbnail
 				}else if (media_exists($thumbnail) && eregi("\media.gif",$thumbnail) && eregi("\.flv",$rowm['m_file'])) {
 					if (file_exists("modules/lightbox/album.php") || file_exists("modules/JWplayer/flvVideo.php") ) {
-						print "<img src=\"modules/JWplayer/flash.png\" height=\"60\" border=\"0\" align=\"" . ($TEXT_DIRECTION== "rtl"?"right": "left") . "\" class=\"thumbnail\" " ;
+						print "<img src=\"modules/JWplayer/flash.png\" height=\"60\" border=\"0\" align=\"center\" class=\"thumbnail\" " ;
 					}else{
-						print "<img src=\"images/media.gif\" height=\"60\" border=\"0\" align=\"" . ($TEXT_DIRECTION== "rtl"?"right": "left") . "\" class=\"thumbnail\" " ;
+						print "<img src=\"images/media.gif\" height=\"60\" border=\"0\" align=\"center\" class=\"thumbnail\" " ;
 					}
 				// Else Print the Regular Thumbnail if associated with a thumbnail image,
 				}else{
@@ -459,7 +459,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 						if (media_exists("images/audio.png") && eregi("\media.gif",$thumbnail) ) {
 							print "<img src=\"images/audio.png\" height=\"60\" border=\"0\" align=\"center\" class=\"thumbnail\" " ;
 						}else{
-							print "<img src=\"".$thumbnail."\" border=\"0\" align=\"center" . ($TEXT_DIRECTION== "rtl"?"right": "left") . "\" class=\"thumbnail\"";
+							print "<img src=\"".$thumbnail."\" border=\"0\" align=\"center\" class=\"thumbnail\"";
 						}
 					// Else if regular Image file -----------------------------------
 					}else{

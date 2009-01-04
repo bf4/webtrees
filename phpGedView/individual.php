@@ -242,11 +242,13 @@ if (file_exists("modules/lightbox/album.php")) {
 ?>
 <!-- ================== End Additions for Lightbox Module ================== -->
 
-var tabid = new Array('0', 'facts','notes','sources','media','relatives','tree','researchlog');
-<?php if (file_exists("modules/googlemap/defaultconfig.php")) {?>
-var tabid = new Array('0', 'facts','notes','sources','media','relatives','tree','researchlog','googlemap');
-<?php }?>
-var loadedTabs = new Array(false,false,false,false,false,false,false,false,false);
+	<?php if (file_exists("modules/googlemap/defaultconfig.php")) {?>
+	var tabid = new Array('0', 'facts','notes','sources','media','relatives','tree','researchlog','googlemap','spare');
+	var loadedTabs = new Array(false,false,false,false,false,false,false,false,false,false);
+	<?php }else{?>
+	var tabid = new Array('0', 'facts','notes','sources','media','relatives','tree','researchlog','spare');
+	var loadedTabs = new Array(false,false,false,false,false,false,false,false,false);
+	<?php }?>
 
 <!-- ====================== Added for Lightbox Module ===================== -->
  <?php } ?>
@@ -297,7 +299,20 @@ function tempObj(tab, oXmlHttp) {
 	};
 }
 
+
+function setfamnav() {
+	<?php if (isset($_COOKIE['famnav']) && $_COOKIE['famnav']=="YES" ) { ?>
+		document.cookie = "famnav=NO";
+	<?php }else{ ?>
+		document.cookie = "famnav=YES";
+	<?php } ?>
+	forceReloadFromServer = true;
+	window.location.reload(forceReloadFromServer);
+}
+
 function tabswitch(n) {
+// alert(n);
+document.cookie = "lastclick="+n;
 	if (!tabid[n]) n = 1;
 	for (var i=1; i<tabid.length; i++) {
 		var disp='none'; // reset inactive tabs
@@ -390,15 +405,18 @@ if (file_exists("modules/lightbox/album.php")) {
 ?>
 <!-- ================== End Additions for Lightbox Module ================== -->
 
-<dd id="door4"><a href="javascript:;" onclick="tabswitch(4); return false;" ><?php print $pgv_lang["media"]?></a></dd>
-<dd id="door5"><a href="javascript:;" onclick="tabswitch(5); return false;" ><?php print $pgv_lang["relatives"]?></a></dd>
-<dd id="door6"><a href="javascript:;" onclick="tabswitch(6); return false;" ><?php print $pgv_lang["tree"]?></a></dd>
-<dd id="door7"><a href="javascript:;" onclick="tabswitch(7); return false;" ><?php print $pgv_lang["research_assistant"]?></a></dd>
-<?php if (file_exists("modules/googlemap/defaultconfig.php")) {?>
-<dd id="door8"><a href="javascript:;" onclick="tabswitch(8); if (loadedTabs[8]) {ResizeMap(); ResizeMap();} return false;" ><?php print $pgv_lang["googlemap"]?></a></dd>
-<?php }?>
-<dd id="door0"><a href="javascript:;" onclick="tabswitch(0); if (loadedTabs[8]) {ResizeMap(); ResizeMap();} return false;" ><?php print $pgv_lang["all"]?></a></dd>
-
+	<dd id="door4"><a href="javascript:;" onclick="tabswitch(4); return false;" ><?php print $pgv_lang["media"]?></a></dd>
+	<dd id="door5"><a href="javascript:;" onclick="tabswitch(5); return false;" ><?php print $pgv_lang["relatives"]?></a></dd>
+	<dd id="door6"><a href="javascript:;" onclick="tabswitch(6); return false;" ><?php print $pgv_lang["tree"]?></a></dd>
+	<dd id="door7"><a href="javascript:;" onclick="tabswitch(7); return false;" ><?php print $pgv_lang["research_assistant"]?></a></dd>
+	<?php if (file_exists("modules/googlemap/defaultconfig.php")) {?>
+<!--	<dd id="door9"><a href="javascript:;" onclick="tabswitch(9); return false;" ><?php print "Spare" ?></a></dd> -->
+	<dd id="door8"><a href="javascript:;" onclick="tabswitch(8); if (loadedTabs[8]) {ResizeMap(); ResizeMap();} return false;" ><?php print $pgv_lang["googlemap"]?></a></dd>
+	<?php }else{?>
+<!--	<dd id="door8"><a href="javascript:;" onclick="tabswitch(8); return false;" ><?php print "Spare" ?></a></dd> -->
+	<?php }?>
+	<dd id="door0"><a href="javascript:;" onclick="tabswitch(0); if (loadedTabs[8]) {ResizeMap(); ResizeMap();} return false;" ><?php print $pgv_lang["all"]?></a></dd>
+	<dd id="door9"><a href="javascript:;" onclick=" setfamnav(); return false;"><?php print $pgv_lang["navigator"]?></a></dd>
 <!-- ====================== Added for Lightbox Module ===================== -->
 <?php } ?>
 <!-- ================== End Additions for Lightbox Module ================== -->
@@ -412,8 +430,7 @@ if (file_exists("modules/lightbox/album.php")) {
 	</td>
 	</tr>
 </table>
-
-<!-- ======================== Start 1st tab individual page ============ Personal Facts and Details -->
+<!-- ======================== Start Tab 0 individual page ============ Personal Facts and Details -->
 <?php
 if(empty($SEARCH_SPIDER))
 	print "<div id=\"facts\" class=\"tab_page\" style=\"display:none;\" >\n";
@@ -425,7 +442,8 @@ else loading_message();
 ?>
 </div>
 </div>
-<!-- ======================== Start 2nd tab individual page ==== Notes ======= -->
+
+<!-- ======================== Start Tab 1 individual page ==== Notes ======= -->
 <?php
 if(empty($SEARCH_SPIDER))
 	print "<div id=\"notes\" class=\"tab_page\" style=\"display:none;\" >\n";
@@ -440,7 +458,8 @@ else {
 ?>
 </div>
 </div>
-<!-- =========================== Start 3rd tab individual page === Sources -->
+
+<!-- =========================== Start Tab 2 individual page === Sources -->
 <?php
 if(empty($SEARCH_SPIDER))
 	print "<div id=\"sources\" class=\"tab_page\" style=\"display:none;\" >\n";
@@ -457,7 +476,8 @@ if ($SHOW_SOURCES>=PGV_USER_ACCESS_LEVEL) {
 }
 ?>
 </div>
-<!-- ==================== Start 4th tab individual page ==== Media -->
+
+<!-- ==================== Start Tab 3 individual page ==== Media -->
 <?php
 if(empty($SEARCH_SPIDER))
 	print "<div id=\"media\" class=\"tab_page\" style=\"display:none;\" >\n";
@@ -482,7 +502,8 @@ if ($MULTI_MEDIA) {
 }
 ?>
 </div>
-<!-- ============================= Start 5th tab individual page ==== Close relatives -->
+
+<!-- ============================= Start Tab 4 individual page ==== Close relatives -->
 <?php
 if(empty($SEARCH_SPIDER))
 	print "<div id=\"relatives\" class=\"tab_page\" style=\"display:none;\" >\n";
@@ -497,9 +518,9 @@ else
 </div>
 </div>
 
-<!-- ============================= Start 6th tab individual page ==== Tree -->
+<!-- ============================= Start Tab 5 individual page ==== Tree -->
 <?php
-if(empty($SEARCH_SPIDER)) {
+if(empty($SEARCH_SPIDER)) { 
 	print "<div id=\"tree\" class=\"tab_page\" style=\"display:none; border: solid blue 1px;\" >\n";
 ?>
 <div id="tree_content">
@@ -518,7 +539,9 @@ if(empty($SEARCH_SPIDER)) {
 </div>
 </div>
 <?php } ?>
-<!-- ============================ Start 7th tab individual page === Research Assistant -->
+
+
+<!-- ============================ Start Tab 6 individual page === Research Assistant -->
 <?php
 // Only show this section if we are not talking to a search engine.
 if(empty($SEARCH_SPIDER)) {
@@ -540,154 +563,126 @@ if(empty($SEARCH_SPIDER)) {
 }
 ?>
 
-<!-- =========================== Start 8th tab individual page ==== GoogleMaps -->
+<!-- =========================== Start Tab 7 individual page ==== GoogleMaps -->
 <?php
+
 // Only show this section if we are not talking to a search engine.
 if(empty($SEARCH_SPIDER)) {
-	if (file_exists("modules/googlemap/defaultconfig.php")) {
-		print "<div id=\"googlemap\" class=\"tab_page\" style=\"display:none;\" >\n";
-		print "<span class=\"subheaders\">".$pgv_lang["googlemap"]."</span>\n";
-		include_once('modules/googlemap/googlemap.php');
-		if ($GOOGLEMAP_ENABLED == "false") {
-			print "<table class=\"facts_table\">\n";
-			print "<tr><td id=\"no_tab8\" colspan=\"2\" class=\"facts_value\">".$pgv_lang["gm_disabled"]."</td></tr>\n";
-			if (PGV_USER_IS_ADMIN) {
-				print "<tr><td align=\"center\" colspan=\"2\">\n";
-				print "<a href=\"module.php?mod=googlemap&amp;pgvaction=editconfig\">".$pgv_lang["gm_manage"]."</a>";
-				print "</td></tr>\n";
-			}
-			print "\n\t</table>\n<br />";
-			?>
-			<script language="JavaScript" type="text/javascript">
-			<!--
-				function ResizeMap () {}
-				function SetMarkersAndBounds () {}
-			//-->
-			</script>
-			<?php
-		}else{
-			if(empty($SEARCH_SPIDER)) {
-				$tNew = preg_replace("/&HIDE_GOOGLEMAP=true/", "", $_SERVER["REQUEST_URI"]);
-				$tNew = preg_replace("/&HIDE_GOOGLEMAP=false/", "", $tNew);
-				$tNew = preg_replace("/&/", "&amp;", $tNew);
-				if($SESSION_HIDE_GOOGLEMAP == "true") {
-					print "&nbsp;&nbsp;&nbsp;<span class=\"font9\"><a href=\"".$tNew."&amp;HIDE_GOOGLEMAP=false\">";
-					print "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["plus"]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"".$pgv_lang["activate"]."\" title=\"".$pgv_lang["activate"]."\" />";
-					print " ".$pgv_lang["activate"]."</a></span>\n";
-					} else {
-						print "&nbsp;&nbsp;&nbsp;<span class=\"font9\"><a href=\"" .$tNew."&amp;HIDE_GOOGLEMAP=true\">";
-						print "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["minus"]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"".$pgv_lang["deactivate"]."\" title=\"".$pgv_lang["deactivate"]."\" />";
-						print " ".$pgv_lang["deactivate"]."</a></span>\n";
-					}
-			}
-			if (!$controller->indi->canDisplayName()) {
-				print "\n\t<table class=\"facts_table\">";
-				print "<tr><td class=\"facts_value\">";
-				print_privacy_error($CONTACT_EMAIL);
-				print "</td></tr>";
-				print "\n\t</table>\n<br />";
-				print "<script type=\"text/javascript\">\n";
-				print "function ResizeMap ()\n{\n}\n</script>\n";
-			}else{
-				if(empty($SEARCH_SPIDER)) {
-					if($SESSION_HIDE_GOOGLEMAP == "false") {
-						include_once('modules/googlemap/googlemap.php');
-						print "<table class=\"facts_table\">\n";
-						print "<tr><td valign=\"top\">\n";
-						print "<div id=\"googlemap_left\">\n";
-						print "<img src=\"images/hline.gif\" width=\"".$GOOGLEMAP_XSIZE."\" height=\"0\" alt=\"\" /><br/>";
-						print "<div id=\"map_pane\" style=\"border: 1px solid gray; color:black; width: 100%; height: ".$GOOGLEMAP_YSIZE."px\"></div>\n";
-						if (PGV_USER_IS_ADMIN) {
-							print "<table width=\"100%\"><tr>\n";
-							print "<td width=\"33%\" align=\"left\">\n";
-							print "<a href=\"module.php?mod=googlemap&amp;pgvaction=editconfig\">".$pgv_lang["gm_manage"]."</a>";
-							print "</td>\n";
-							print "<td width=\"33%\" align=\"center\">\n";
-							print "<a href=\"module.php?mod=googlemap&amp;pgvaction=places\">".$pgv_lang["edit_place_locations"]."</a>";
-							print "</td>\n";
-							print "<td width=\"33%\" align=\"right\">\n";
-							print "<a href=\"module.php?mod=googlemap&amp;pgvaction=placecheck\">".$pgv_lang["placecheck"]."</a>";
-							print "</td>\n";
-							print "</tr></table>\n";
-						}
-						print "</div>\n";
-						print "</td>\n";
-						print "<td valign=\"top\" width=\"33%\">\n";
-						print "<div id=\"googlemap_content\">\n";
-						setup_map();
-						if ($controller->default_tab==7) {
-							$controller->getTab(7);
-						}
-						print "</div>\n";
-						print "</td></tr></table>\n";
-					}
-				}
-			}
+
+	print "<div id=\"googlemap\" class=\"tab_page\" style=\"display:none;\" >\n";
+//	print "<span class=\"subheaders\">".$pgv_lang["googlemap"]."</span>\n";
+	
+		// Header Info ------------------------------------------------------------------------------------
+		if (file_exists("modules/googlemap/defaultconfig.php") ) {
+			//Content Info ------------------------------------------------------------
+			print "<div id=\"gg_map_content\"> \n";
+				echo "<table border=\"0\" width=\"100%\" ><tr><td >";
+					include_once('modules/googlemap/gg_map_content.php');
+				echo "</td>";
+				echo "</tr></table>";
+			print "</div>\n";
+		} else {
+			print "<div id=\"googlemap\" class=\"tab_page\" style=\"display:block; \" >\n";
+			echo "MAPS NOT INSTALLED";
+			print "</div>\n";
 		}
-		// start
-		print "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"]."\" id=\"marker6\" width=\"1\" height=\"1\" alt=\"\" />";
-		// end
-		print "</div>\n";
-	}
+		
+	print "</div>\n";
+
 }
 
 ?>
-<!-- ========================== End 8th tab individual page ==== GoogleMaps ===== -->
 
 
-<!-- ========================== Start 9th tab individual page ==== Album ======== -->
+<!-- ========================== Start Tab 8 individual page ==== Album ======== -->
 <?php
 if(empty($SEARCH_SPIDER) && file_exists("modules/lightbox/album.php")) {
+
 	print "<div id=\"lightbox2\" class=\"tab_page\" style=\"display:none;\" >\n";
+		
+		// Header Info ---------------------------------------------------------------------
+		if ($MULTI_MEDIA && file_exists("modules/lightbox/album.php")) {
+			print "<span class=\"subheaders\">" . $pgv_lang["lightbox"] . "</span>\n";
+			print "&nbsp;&nbsp;";
+			// ---------- Help link --------------------
+			print_help_link("lb_general_help", "qm", "lb_help", true);
+			// --------- Header include -------------
+			$mediacnt = $controller->get_media_count();
+			if ($mediacnt!=0) {
+				include_once('modules/lightbox/functions/lb_head.php');
+			}else{
+				include_once('modules/lightbox/functions/lb_head.php');
+				print "<table class=\"facts_table\"><tr><td id=\"no_tab9\" colspan=\"2\" class=\"facts_value\">".$pgv_lang["no_tab4"]."</td></tr></table>\n";
+			}
+		}else{
+			print "<div id=\"lightbox2\" class=\"tab_page\" style=\"display:block; \" >\n";
+		}
+		
+		// Content info ---------------------------------------------------
+		print "<div id=\"lightbox2_content\"> \n";
+			if ($mediacnt!=0) {
+				if ($MULTI_MEDIA && file_exists("modules/lightbox/album.php")) {
+					// LB Fix if googlemaps ========================================================
+					if (file_exists("modules/googlemap/googlemap.php")) {
+						if (($controller->default_tab==8)||(!empty($SEARCH_SPIDER))) {
+							$controller->getTab(8) ;
+						}else{
+							loading_message();
+						}
+					}else{
+						if (($controller->default_tab==7)||(!empty($SEARCH_SPIDER))) {
+							$controller->getTab(7) ;
+						}else{
+							loading_message();
+						}
+					}
+					// LB Fix if googlemaps ========================================================
+				}
+			}
+		print "</div>\n";
+		
+	print "</div>\n";
+}
+?>
 
-	if ($MULTI_MEDIA && file_exists("modules/lightbox/album.php")) {
 
-		print "<span class=\"subheaders\">" . $pgv_lang["lightbox"] . "</span>\n";
+<!-- ============================= Start Tab 9 individual page ==== Spare -->
+<?php
+if(empty($SEARCH_SPIDER)) {
+	//print "<div id=\"spare\" class=\"tab_page\" style=\"display:none; border: solid yellow 1px;\" >\n";
+	print "<div id=\"spare\" class=\"tab_page\" style=\"display:none; border: solid transparent 0px;\" >\n";
+		//print "<span class=\"subheaders\">" . $pgv_lang["lightbox"] . "</span>\n";
+		print "<span class=\"subheaders\">Spare</span>\n";
 		print "&nbsp;&nbsp;";
-
+		
 		// ---------- Help link --------------------
 		print_help_link("lb_general_help", "qm", "lb_help", true);
+		
+		print "<div id='spare_content'>";
 
-
-		// Header info ---------------------------------------------------
-		$mediacnt = $controller->get_media_count();
-		if ($mediacnt!=0) {
-			include_once('modules/lightbox/functions/lb_head.php');
-		}else{
-			include_once('modules/lightbox/functions/lb_head.php');
-			print "<table class=\"facts_table\"><tr><td id=\"no_tab9\" colspan=\"2\" class=\"facts_value\">".$pgv_lang["no_tab4"]."</td></tr></table>\n";
-		}
-	}else{
-		print "<div id=\"lightbox2\" class=\"tab_page\" style=\"display:block; \" >\n";
-	}
-	// Content info ---------------------------------------------------
-	print "<div id=\"lightbox2_content\"> \n";
-	if ($mediacnt!=0) {
-		if ($MULTI_MEDIA && file_exists("modules/lightbox/album.php")) {
-
-			// LB Fix if no googlemaps ========================================================
+			// Fix if no googlemaps ========================================================
 			if (file_exists("modules/googlemap/googlemap.php")) {
+				if (($controller->default_tab==9)||(!empty($SEARCH_SPIDER))) {
+					$controller->getTab(9) ;
+				}else{
+					loading_message();
+				}
+			}else{
 				if (($controller->default_tab==8)||(!empty($SEARCH_SPIDER))) {
 					$controller->getTab(8) ;
 				}else{
 					loading_message();
 				}
-			}else{
-				if (($controller->default_tab==7)||(!empty($SEARCH_SPIDER))) {
-					$controller->getTab(7) ;
-				}else{
-					loading_message();
-				}
 			}
-			// LB Fix if no googlemaps ========================================================
-		}
-	}
+			// Fix if no googlemaps ========================================================
 
+		print "</div>\n";
 	print "</div>\n";
-	print "</div>\n";
-}
-?>
-<!-- ============================= End 9th tab individual page ==== Album -->
+
+} ?>
+
+
+<!-- ============================   End Tabs - individual page   ============ -->
 
 <script language="JavaScript" type="text/javascript">
 <!--
@@ -702,7 +697,9 @@ if ($controller->isPrintPreview()) print "tabswitch(0);\n";
 else print "tabswitch(". ($controller->default_tab+1) .");\n";
 if ($controller->default_tab==5) print "treetab.sizeLines();\n";
 ?>
-if (typeof toggleByClassName == "undefined") alert('phpgedview.js\na javascript function is missing\n\nPlease clear your Web browser cache');
+if (typeof toggleByClassName == "undefined") {
+	alert('phpgedview.js\na javascript function is missing\n\nPlease clear your Web browser cache');
+}
 
 //-->
 
