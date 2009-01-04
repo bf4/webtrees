@@ -10,6 +10,7 @@
 
 
 Version 4.2.0
+ - Changed: Re-write of Daitch-Mokotoff "sounds like" algorithm (canajun2eh)
  - Fixed: Googlemap Redraw Map/Map/Satellite/Hybrid/Terrain boxes for other Browsers (in addition to FireFox) (windmillway)
  - Added: Indi Navigator to ALL tabs except Research Assistant and Tree (Navigator can be toggled on/off with Navigator Tab) (windmillway)
  - Fixed: [ 2477484 ] [4593] Research Assistant - Mc to MAC (fisharebest)

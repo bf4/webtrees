@@ -3,7 +3,7 @@
  * Name Specific Functions
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
+ * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -253,174 +253,107 @@ function is_utf8($string) {
  * @param string $name	The name
  * @return array		The array of codes
  */
-function DMSoundex($name, $option = "") {
-	global $dmsoundexlist, $dmcoding, $maxchar, $INDEX_DIRECTORY, $cachecount, $cachename;
+function DMSoundex($name) {
+	global $dmsounds, $maxchar;
 
 	// If the code tables are not loaded, reload! Keep them global!
-	if (!defined('PGV_DMARRAY_FULL_UTF_8_PHP')) {
-		$fname = "includes/dmarray.full.utf-8.php";
-		require($fname);
+	if (!defined('PGV_DMSOUNDS_UTF8_PHP')) {
+		require 'includes/dmsounds_UTF8.php';
 	}
 
-	// Load the previously saved cachefile and return. Keep the cache global!
+	// We'll deliberately not bother with caching the results.
 
-	if ($option == "opencache") {
-		$fname = "includes/dmarray.full.utf-8.php";
-		$cachename = $INDEX_DIRECTORY."DM".date("mdHis", filemtime($fname)).".dat";
-		if (file_exists($cachename)) {
-			$fp = fopen($cachename, "r");
-			$fcontents = fread($fp, filesize($cachename));
-			fclose($fp);
-			$dmsoundexlist = unserialize($fcontents);
-			unset($fcontents);
-			$cachecount = count($dmsoundexlist);
-			return;
-		}
-		else {
-			$dmsoundexlist = array();
-			// clean up old cache
-			$handle = opendir($INDEX_DIRECTORY);
-			while (($file = readdir ($handle)) != false) {
-				if ((substr($file, 0, 2) == "DM") && (substr($file, -4) == ".dat")) unlink($INDEX_DIRECTORY.$file);
-			}
-			closedir($handle);
-			return;
-		}
-	}
-
-	// Write the cache to disk after use. If nothing is added, just return.
-	if ($option == "closecache") {
-		if (count($dmsoundexlist) == $cachecount) return;
-		$fp = @fopen($cachename, "w");
-		if ($fp) {
-			@fwrite($fp, serialize($dmsoundexlist));
-			@fclose($fp);
-			return;
-		}
-	}
-
-	// Check if in cache
+	// Initialize
 	$name = UTF8_strtoupper($name);
-	$name = substr(trim($name), 0, 30);
-	if (isset($dmsoundexlist[$name])) return $dmsoundexlist[$name];
+	$nameLanguage = whatLanguage($name);
+	if ($nameLanguage == 'hebrew' || $nameLanguage == 'arabic') $noVowels = true;
+	else $noVowels = false;
+	$lastPos = strlen($name) - 1;
+	$currPos = 0;
+	$state = 1;						// 1: start of input string, 2: before vowel, 3: other
+	$result = array();				// accumulate complete 6-digit D-M codes here
+	$partialResult = array();		// accumulate incomplete D-M codes here
+	$partialResult[] = array('I');	// initialize 1st partial result  ('I' stops "duplicate sound" check)
 
-	// Define the result array and set the first (empty) result
-	$result = array();
-	$result[0][0] = "";
-	$rescount = 1;
-	$nlen = strlen($name);
-	$npos = 0;
-
-
-	// Loop here through the characters of the name
-	while($npos < $nlen) {
-		// Check, per length of characterstring, if it exists in the array.
-		// Start from max to length of 1 character
-		$code = array();
-		for ($i=$maxchar; $i>=0; $i--) {
-			// Only check if not read past the last character in the name
-			if (($npos + $i) <= $nlen) {
-				// See if the substring exists in the coding array
-				$element = substr($name,$npos,$i);
-				// If found, add the sets of results to the code array for the letterstring
-				if (isset($dmcoding[$element])) {
-					$dmcount = count($dmcoding[$element]);
-					// Loop here through the codesets
-					// first letter? Then store the first digit.
-					if ($npos == 0) {
-						// Loop through the sets of 3
-						for ($k=0; $k<$dmcount/3; $k++) {
-							$c = $dmcoding[$element][$k*3];
-							// store all results, cleanup later
-							$code[] = $c;
-						}
-						break;
-					}
-					// before a vowel? Then store the second digit
-					// Check if the code for the next letter exists
-					if ((isset($dmcoding[substr($name, $npos + $i + 1)]))) {
-						// See if it's a vowel
-						if ($dmcoding[substr($name, $npos + $i + 1)] == 0) {
-							// Loop through the sets of 3
-							for ($k=0; $k<$dmcount/3; $k++) {
-								$c = $dmcoding[$element][$k*3+1];
-								// store all results, cleanup later
-								$code[] = $c;
-							}
-							break;
-						}
-					}
-					// Do this in all other situations
-					for ($k=0; $k<$dmcount/3; $k++) {
-						$c = $dmcoding[$element][$k*3+2];
-						// store all results, cleanup later
-						$code[] = $c;
-					}
-					break;
-				}
-			}
+	// Loop through the input string.  
+	// Stop when the string is exhausted or when no more partial results remain
+	while (count($partialResult) !=0  && $currPos <= $lastPos) {
+		// Find the DM coding table entry for the chunk at the current position
+		$thisEntry = substr($name, $currPos, $maxchar);		// Get maximum length chunk
+		while ($thisEntry != '') {
+			if (isset($dmsounds[$thisEntry])) break;
+			$thisEntry = substr($thisEntry, 0, -1);			// Not in table: try a shorter chunk
 		}
-		// Store the results and multiply if more found
-		if (isset($dmcoding[$element])) {
-			// Add code to existing results
-
-			// Extend the results array if more than one code is found
-			for ($j=1; $j<count($code); $j++) {
-				$rcnt = count($result);
-				// Duplicate the array
-				for ($k=0; $k<$rcnt; $k++) {
-					$result[] = $result[$k];
-				}
-			}
-
-			// Add the code to the existing strings
-			// Repeat for every code...
-			for ($j=0; $j<count($code); $j++) {
-				// and add it to the appropriate block of array elements
-				for ($k=0; $k<$rescount; $k++) {
-					$result[$j * $rescount + $k][] = $code[$j];
-				}
-			}
-			$rescount=count($result);
-			$npos = $npos + strlen($element);
+		if ($thisEntry == '') {
+			$currPos ++;			// Not in table: advance pointer to next byte
+			continue;				// and try again
 		}
-		else {
-			// The code was not found. Ignore it and continue.
-			$npos = $npos + 1;
+
+		$soundTableEntry = $dmsounds[$thisEntry];
+		$workingResult = $partialResult;
+		$partialResult = array();
+		$currPos += strlen($thisEntry);
+
+		if ($state != 1) {			// Not at beginning of input string
+			if ($currPos <= $lastPos) {
+				// Determine whether the next chunk is a vowel
+				$nextEntry = substr($name, $currPos, $maxchar);		// Get maximum length chunk
+				while ($nextEntry != '') {
+					if (isset($dmsounds[$nextEntry])) break;
+					$nextEntry = substr($nextEntry, 0, -1);			// Not in table: try a shorter chunk
+				}
+			} else $nextEntry = '';
+			if ($nextEntry != '' && $dmsounds[$nextEntry][0] != '0') $state = 2;	// Next chunk is a vowel
+			else $state = 3;
+		}
+
+		while ($state < count($soundTableEntry)) {
+			if ($soundTableEntry[$state] == '') {		// empty means 'ignore this sound in this state'
+				foreach($workingResult as $workingEntry) {
+					$tempEntry = $workingEntry;
+					$tempEntry[count($tempEntry)-1] .= 'I';		// Prevent false 'doubles'
+					$partialResult[] = $tempEntry;
+				}
+			} else {
+				foreach($workingResult as $workingEntry) {
+					if ($soundTableEntry[$state] !== $workingEntry[count($workingEntry)-1]) {
+						// Incoming sound isn't a duplicate of the previous sound
+						$workingEntry[] = $soundTableEntry[$state];
+					} else {
+						// Incoming sound is a duplicate of the previous sound
+						// For Hebrew and Arabic, we need to create a pair of D-M sound codes, 
+						// one of the pair with only a single occurrence of the duplicate sound, 
+						// the other with both occurrences
+						if ($noVowels) {
+							$partialResult[] = $workingEntry;
+							$workingEntry[] = $soundTableEntry[$state];
+						}
+					}
+					if (count($workingEntry) < 7) $partialResult[] = $workingEntry;
+					else {
+						// This is the 6th code in the sequence
+						// We're looking for 7 entries because the first is 'I' and doesn't count
+						$tempResult = str_replace('I', '', implode('', $workingEntry)) . '000000';
+						$result[] = substr($tempResult, 0, 6);
+					}
+				}
+			}
+			$state = $state + 3;	// Advance to next triplet while keeping the same basic state
 		}
 	}
 
-	// Kill the doubles and zero's in each result
-	// Do this for every result
-	$ctr = count($result);
-	for ($i=0; $i<$ctr; $i++) {
-		$j=1;
-		$res = $result[$i][0];
-		// and check every code in the result.
-		// codes are stored separately in array elements, to keep
-		// distinction between 6 and 66.
-
-		$cti = count($result[$i]);
-		while($j<$cti) {
-
-//  Zeroes to remain in the Soundex result
-			if ((($result[$i][$j-1] != $result[$i][$j]) && ($result[$i][$j] != -1)) || $result[$i][$j] == 0) {
-
-				$res .= $result[$i][$j];
-			}
-			$j++;
-		}
-		// Fill up to 6 digits and store back in the array
-		$result[$i] = substr($res."000000", 0, 6);
+	// Zero-fill and copy all remaining partial results
+	foreach ($partialResult as $workingEntry) {
+		$tempResult = str_replace('I', '', implode('', $workingEntry)) . '000000';
+		$result[] = substr($tempResult, 0, 6);
 	}
 
-	// Kill the double results in the array
-	$result=array_flip(array_flip($result));
+	$result = array_flip(array_flip($result));		// Kill the double results in the array
 
-	// Store in cache and return
-	$dmsoundexlist[$name] = $result;
+	// We're done.  All that's left is to sort the result
+	sort($result);
 	return $result;
-}
+}	
 
 // Wrapper function for soundex function.  Return a colon separated list of values.
 function soundex_std($text) {
