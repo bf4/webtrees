@@ -813,7 +813,18 @@ $pgv_lang["media_firewall_protected_dir_not_writable"]	= "The protected media di
 $pgv_lang["media_firewall_invalid_dir"]	= "Error: The Media Firewall was launched from a directory other than the media directory.";
 
 //-- Relationship chart messages
-$pgv_lang["view_fam_nav_details"]	= "View Details of ...";
+$pgv_lang["view_fam_nav_details"]	= "View Details for ...";
+$pgv_lang["view_fam_nav_notes"]		= "View Notes for ...";
+$pgv_lang["view_fam_nav_sources"]	= "View Sources for ...";
+$pgv_lang["view_fam_nav_media"]		= "View Media for ...";
+$pgv_lang["view_fam_nav_album"]		= "View Album for ...";
+$pgv_lang["view_fam_nav_relatives"]	= "View Relatives for ...";
+$pgv_lang["view_fam_nav_tree"]		= "View Tree for ...";
+$pgv_lang["view_fam_nav_research"]	= "View Research for ...";
+$pgv_lang["view_fam_nav_map"]		= "View Map for ...";
+$pgv_lang["view_fam_nav_spare"]		= "View Spare-info for ...";
+$pgv_lang["navigator"]				= "Navigator";
+
 $pgv_lang["relationship_great"]		= "Great";
 $pgv_lang["relationship_chart"] 	= "Relationship Chart";
 $pgv_lang["person1"]				= "Person 1";

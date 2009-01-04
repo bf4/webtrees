@@ -46,42 +46,18 @@ $edit=$edit;
 global $show_full, $tabno;
 $show_full="1";
 
-// Debug only -----------------------------------------
-// echo "DEFAULT TAB =" . $this->default_tab ;
-
-// Set the tab page we are on =======================================================
-// If googlemaps is installed --------------
-if (file_exists('modules/googlemap/defaultconfig.php')) {
-	if ($this->default_tab == "9") {
-		$tabno="8";
-	// If we are on the Album page and googlemaps IS installed -------------------
-	}elseif ($this->default_tab == "8") {
-		$tabno="8";
-	// If we are on the Details page -----------------------------------------------------
-	}elseif ($this->default_tab == "1") {
-		$tabno="0";
-	// If all fails, go to the Details page ------------------------------------------------
-	}else{
-		$tabno="0";
-	}
-// If googlemaps is NOT installed --------------
+// Gets current clicked tab to set $tabno -----------
+if (isset($_COOKIE['lastclick'])) {
+	$tabno=$_COOKIE['lastclick']-1;
 }else{
-	if ($this->default_tab == "8") {
-		$tabno="7";
-	// If we are on the Album page and googlemaps is NOT installed --------------
-	}elseif ($this->default_tab == "7") {
-		$tabno="7";
-	// If we are on the Details page -----------------------------------------------------
-	}elseif ($this->default_tab == "1") {
-		$tabno="0";
-	// If all fails, go to the Details page ------------------------------------------------
-	}else{
-		$tabno="0";
-	}
+	$tabno=0;
 }
 
-// =====================================================================
 
+// Debug only -----------------------------------------
+// echo "Lastclick =" . $_COOKIE['lastclick'];
+//echo "<br />";
+//print "TAB =" . $tabno;
 
 // =====================================================================
 

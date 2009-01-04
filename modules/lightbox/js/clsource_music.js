@@ -1600,18 +1600,18 @@ var CB_Close_Win		= CB_Close_Win;
 			if (notey1 != "&lt;br /&gt;" && notey1 ) {
 				// alert(notey1);
 				var brs = countOccurrencesOf(notey1, "&lt;br /&gt;");
-				var spacer=0;
-				if (brs==1)  {spacer=0;}
-				if (brs==2)  {spacer=5;}
-				if (brs==3)  {spacer=10;}
-				if (brs==4)  {spacer=14;}
-				if (brs==5)  {spacer=19;}
-				if (brs==6)  {spacer=25;}
-				if (brs==7)  {spacer=35;}
-				if (brs==8)  {spacer=45;}
-				if (brs==9)  {spacer=55;}
-				if (brs==10) {spacer=65;}
-				// alert(brs + " - " + spacer);
+				var spacer=7;
+				if (brs==1)  {spacer=spacer+0;}
+				if (brs==2)  {spacer=spacer+5;}
+				if (brs==3)  {spacer=spacer+10;}
+				if (brs==4)  {spacer=spacer+17;}
+				if (brs==5)  {spacer=spacer+20;}
+				if (brs==6)  {spacer=spacer+27;}
+				if (brs==7)  {spacer=spacer+35;}
+				if (brs==8)  {spacer=spacer+45;}
+				if (brs==9)  {spacer=spacer+55;}
+				if (brs==10) {spacer=spacer+65;}
+				//alert(brs + " - " + spacer);
 				CB_Txt3.innerHTML = "<a href=\"JavaScript:void(0);\" onclick=\"TipTog('<font color=#008800><b>" + CB_ImgNotes2 + ":</b></font><br />" + notey1 + "', CENTERWINDOW, true, DELAY, 0, TEXTALIGN, '" + CB_Alignm + "', WIDTH, "+CB_ImgWidth+"-30, BGCOLOR, '#fffbcc', BALLOON, true , BALLOONSTEMWIDTH, 0, ABOVE, true, BORDERCOLOR, '', TITLEBGCOLOR, '', CLOSEBTNTEXT, 'X', CLOSEBTN, false, CLOSEBTNCOLORS, ['#ff0000', '#ffffff', '#ffffff', '#ff0000'], OFFSETY, 150-" + ((DocSizeY-BrSizeY)/2) + ", OFFSETX, 0, STICKY, true, PADDING, 6, CLICKCLOSE, true );\" ></a>";
 				CB_Txt3a.innerHTML = "<a href=\"JavaScript:void(0);\" onclick=\"TipTog('<font color=#008800><b>" + CB_ImgNotes2 + ":</b></font><br />" + notey1 + "', CENTERWINDOW, true, DELAY, 0, TEXTALIGN, '" + CB_Alignm + "', WIDTH, "+CB_ImgWidth+"-30, BGCOLOR, '#fffbcc', BALLOON, true, BALLOONSTEMWIDTH, 0, ABOVE, true, BORDERCOLOR, '', TITLEBGCOLOR, '', CLOSEBTNTEXT, 'X', CLOSEBTN, false, CLOSEBTNCOLORS, ['#ff0000', '#ffffff', '#ffffff', '#ff0000'], OFFSETY, -10-" + ((DocSizeY-BrSizeY)/2) + "+" +(CB_ImgHeight/2)+ "-" +(spacer)+ ", OFFSETX, 0, STICKY, true, PADDING, 6, CLICKCLOSE, true );\" ><img id=\"CB_PicNotes\" title=\"" + CB_ImgNotes + "\" src=\"" + CB_PicDir + CB_PictureNotes + "\" alt=\"\" /></a>";
 			}
@@ -1620,8 +1620,22 @@ var CB_Close_Win		= CB_Close_Win;
 				CB_Txt.innerHTML = CB_Gallery[CB_ActImgId][0].split("/")[CB_Gallery[CB_ActImgId][0].split("/").length - 1];
 				var notey2 = CB_Gallery[CB_ActImgId][5];
 				if (notey2 != "&lt;br /&gt;" && notey2 ) {
-					CB_Txt3.innerHTML = "<a href=\"JavaScript:void(0);\" onclick=\"TipTog('<font color=#008800><b>" + CB_ImgNotes2 + ":</b></font><br />" + notey2 + "', CENTERWINDOW, true, DELAY, 0, TEXTALIGN, '" + CB_Alignm + "', WIDTH, -450, BGCOLOR, '#fffbcc', BALLOON," + CB_Balloon + ", BALLOONSTEMWIDTH, 0, ABOVE, true, BORDERCOLOR, '', TITLEBGCOLOR, '', CLOSEBTNTEXT, 'X', CLOSEBTN, false, CLOSEBTNCOLORS, ['#ff0000', '#ffffff', '#ffffff', '#ff0000'], OFFSETY, 150-" + ((DocSizeY-BrSizeY)/2) + ", OFFSETX, 0, STICKY, true, PADDING, 6, CLICKCLOSE, true ) \"></a>";
-					CB_Txt3a.innerHTML = "<a href=\"JavaScript:void(0);\" onclick=\"TipTog('<font color=#008800><b>" + CB_ImgNotes2 + ":</b></font><br />" + notey2 + "', CENTERWINDOW, true, DELAY, 0, TEXTALIGN, '" + CB_Alignm + "', WIDTH, -450, BGCOLOR, '#fffbcc', BALLOON," + CB_Balloon + ", BALLOONSTEMWIDTH, 0, ABOVE, true, BORDERCOLOR, '', TITLEBGCOLOR, '', CLOSEBTNTEXT, 'X', CLOSEBTN, false, CLOSEBTNCOLORS, ['#ff0000', '#ffffff', '#ffffff', '#ff0000'], OFFSETY, 150-" + ((DocSizeY-BrSizeY)/2) + ", OFFSETX, 0, STICKY, true, PADDING, 6, CLICKCLOSE, true ) \"><img id=\"CB_PicNotes\" title=\"" + CB_ImgNotes + "\" src=\"" + CB_PicDir + CB_PictureNotes + "\" alt=\"\" /></a>";
+					// alert(notey2);
+					var brs = countOccurrencesOf(notey2, "&lt;br /&gt;");
+					var spacer=7;
+					if (brs==1)  {spacer=spacer+0;}
+					if (brs==2)  {spacer=spacer+5;}
+					if (brs==3)  {spacer=spacer+10;}
+					if (brs==4)  {spacer=spacer+17;}
+					if (brs==5)  {spacer=spacer+20;}
+					if (brs==6)  {spacer=spacer+27;}
+					if (brs==7)  {spacer=spacer+35;}
+					if (brs==8)  {spacer=spacer+45;}
+					if (brs==9)  {spacer=spacer+55;}
+					if (brs==10) {spacer=spacer+65;}
+					// alert(brs + " - " + spacer);
+					CB_Txt3.innerHTML = "<a href=\"JavaScript:void(0);\" onclick=\"TipTog('<font color=#008800><b>" + CB_ImgNotes2 + ":</b></font><br />" + notey2 + "', CENTERWINDOW, true, DELAY, 0, TEXTALIGN, '" + CB_Alignm + "', WIDTH, "+CB_ImgWidth+"-30, BGCOLOR, '#fffbcc', BALLOON, true , BALLOONSTEMWIDTH, 0, ABOVE, true, BORDERCOLOR, '', TITLEBGCOLOR, '', CLOSEBTNTEXT, 'X', CLOSEBTN, false, CLOSEBTNCOLORS, ['#ff0000', '#ffffff', '#ffffff', '#ff0000'], OFFSETY, 150-" + ((DocSizeY-BrSizeY)/2) + ", OFFSETX, 0, STICKY, true, PADDING, 6, CLICKCLOSE, true );\" ></a>";
+					CB_Txt3a.innerHTML = "<a href=\"JavaScript:void(0);\" onclick=\"TipTog('<font color=#008800><b>" + CB_ImgNotes2 + ":</b></font><br />" + notey2 + "', CENTERWINDOW, true, DELAY, 0, TEXTALIGN, '" + CB_Alignm + "', WIDTH, "+CB_ImgWidth+"-30, BGCOLOR, '#fffbcc', BALLOON, true, BALLOONSTEMWIDTH, 0, ABOVE, true, BORDERCOLOR, '', TITLEBGCOLOR, '', CLOSEBTNTEXT, 'X', CLOSEBTN, false, CLOSEBTNCOLORS, ['#ff0000', '#ffffff', '#ffffff', '#ff0000'], OFFSETY, -10-" + ((DocSizeY-BrSizeY)/2) + "+" +(CB_ImgHeight/2)+ "-" +(spacer)+ ", OFFSETX, 0, STICKY, true, PADDING, 6, CLICKCLOSE, true );\" ><img id=\"CB_PicNotes\" title=\"" + CB_ImgNotes + "\" src=\"" + CB_PicDir + CB_PictureNotes + "\" alt=\"\" /></a>";
 				}
 			}
         }

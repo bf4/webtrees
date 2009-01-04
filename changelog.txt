@@ -10,6 +10,8 @@
 
 
 Version 4.2.0
+ - Fixed: Googlemap Redraw Map/Map/Satellite/Hybrid/Terrain boxes for other Browsers (in addition to FireFox) (windmillway)
+ - Added: Indi Navigator to ALL tabs except Research Assistant and Tree (Navigator can be toggled on/off with Navigator Tab) (windmillway)
  - Fixed: [ 2477484 ] [4593] Research Assistant - Mc to MAC (fisharebest)
  - Fixed: [ 2475261 ] client.php?action=getxref&position=all fails (fisharebest)
  - Fixed: [ 2474873 ] User Journal entry gets added as GEDCOM News article (canajun2eh)

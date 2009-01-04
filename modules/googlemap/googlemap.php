@@ -383,6 +383,13 @@ function create_indiv_buttons() {
 	{
 		background: #ddd;
 	}
+	#map_nav
+	{
+		position: relative;
+		top: -484px;
+		left: 101%;
+	}
+	
 	</style>
 	<script type='text/javascript'>
 	<!--
