@@ -44,6 +44,17 @@ VERSION 4.2.
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change	codes and comments
 ----------------------------------------------------------------------------------------
+*$pgv_lang["view_fam_nav_details"]					04 Jan 2009				w
++$pgv_lang["view_fam_nav_notes"]					04 Jan 2009				A
++$pgv_lang["view_fam_nav_sources"]					04 Jan 2009				A
++$pgv_lang["view_fam_nav_media"]					04 Jan 2009				A
++$pgv_lang["view_fam_nav_album"]					04 Jan 2009				A
++$pgv_lang["view_fam_nav_relatives"]				04 Jan 2009				A
++$pgv_lang["view_fam_nav_tree"]						04 Jan 2009				A
++$pgv_lang["view_fam_nav_research"]					04 Jan 2009				A
++$pgv_lang["view_fam_nav_map"]						04 Jan 2009				A
++$pgv_lang["view_fam_nav_spare"]					04 Jan 2009				A
++$pgv_lang["navigator"]								04 Jan 2009				A
 +$pgv_lang["stepparent"]							02 Jan 2009				A
 +$pgv_lang["interval"]								18 Dec 2008				A
 +$pgv_lang["less"]									18 Dec 2008				A
