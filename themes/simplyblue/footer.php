@@ -3,7 +3,7 @@
  * Footer for SimplyBlue theme
  *
  * PhpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  John Finlay and others.  All rights reserved.
+ * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -37,9 +37,9 @@ echo '<br /><a href="'.PGV_PHPGEDVIEW_URL.'" target="_blank"><img src="'.$PGV_IM
 if (PGV_USER_IS_ADMIN) echo " - ".PGV_VERSION_TEXT;
 echo '" /></a><br />';
 
-print "svn - ";
-include ("svn.txt");
-print "<br />";
+//print "svn - ";
+//include ("svn.txt");
+//print "<br />";
 
 echo "\n\t<br />";
 print_help_link("preview_help", "qm");
