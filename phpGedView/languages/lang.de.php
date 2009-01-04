@@ -816,7 +816,18 @@ $pgv_lang["media_firewall_protected_dir_not_writable"]	= "Das geschützte Medien
 $pgv_lang["media_firewall_invalid_dir"]	= "Fehler: Die Medien-Feuerwand wurde außerhalb des Medien-Verzeichnisses aufgerufen.";
 
 //-- Relationship chart messages
-$pgv_lang["view_fam_nav_details"]		= "Zeige Details von ...";
+$pgv_lang["view_fam_nav_details"]		= "Zeige Details über ...";
+$pgv_lang["view_fam_nav_notes"]			= "Zeige Bemerke über ...";
+$pgv_lang["view_fam_nav_sources"]		= "Zeige Quellen für ...";
+$pgv_lang["view_fam_nav_media"]			= "Zeige Medien-Objekte von ...";
+$pgv_lang["view_fam_nav_album"]			= "Zeige Album von ...";
+$pgv_lang["view_fam_nav_relatives"]		= "Zeige Verwandte von ...";
+$pgv_lang["view_fam_nav_tree"]			= "Zeige Baum von ...";
+$pgv_lang["view_fam_nav_research"]		= "Zeige Forschungen über ...";
+$pgv_lang["view_fam_nav_map"]			= "Zeige Landkarte über ...";
+$pgv_lang["view_fam_nav_spare"]			= "Zeige andere Informationen über ...";
+$pgv_lang["navigator"]					= "Navigator";
+
 $pgv_lang["relationship_great"]			= "Ur";
 $pgv_lang["relationship_chart"]			= "Verwandtschaftsberechnung";
 $pgv_lang["person1"]					= "Person 1";
