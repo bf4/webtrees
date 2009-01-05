@@ -1,30 +1,30 @@
 <?php
 /**
- * Privacy Functions
- *
- * See http://www.phpgedview.net/privacy.php for more information on privacy in PhpGedView
- *
- * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- *
- * @version $Id$
- * @package PhpGedView
- * @subpackage Privacy
- */
+* Privacy Functions
+*
+* See http://www.phpgedview.net/privacy.php for more information on privacy in PhpGedView
+*
+* phpGedView: Genealogy Viewer
+* Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
+*
+* This program is free software; you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation; either version 2 of the License, or
+* (at your option) any later version.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+* GNU General Public License for more details.
+*
+* You should have received a copy of the GNU General Public License
+* along with this program; if not, write to the Free Software
+* Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+*
+* @version $Id$
+* @package PhpGedView
+* @subpackage Privacy
+*/
 
 if (!defined('PGV_PHPGEDVIEW')) {
 	header('HTTP/1.0 403 Forbidden');
@@ -35,40 +35,40 @@ define('PGV_FUNCTIONS_PRIVACY_PHP', '');
 
 if ($USE_RELATIONSHIP_PRIVACY) {
 	/**
-	 * store relationship paths in a cache
-	 *
-	 * the <var>$NODE_CACHE</var> is an array of nodes that have been previously checked
-	 * by the relationship calculator.  This cache greatly speed up the relationship privacy
-	 * checking on charts as many relationships on charts are in the same relationship path.
-	 *
-	 * See the documentation for the get_relationship() function in the functions.php file.
-	 */
+	* store relationship paths in a cache
+	*
+	* the <var>$NODE_CACHE</var> is an array of nodes that have been previously checked
+	* by the relationship calculator.  This cache greatly speed up the relationship privacy
+	* checking on charts as many relationships on charts are in the same relationship path.
+	*
+	* See the documentation for the get_relationship() function in the functions.php file.
+	*/
 	$NODE_CACHE = array();
 }
 
 //-- allow users to overide functions in privacy file
 if (!function_exists("is_dead")) {
 /**
- * check if a person is dead
- *
- * this function will read a person's gedcom record and try to determine whether the person is
- * dead or not.  It checks several parameters to determine death status in the following order:
- * 1. a DEAT record returns dead
- * 2. a BIRT record less than <var>$MAX_ALIVE_AGE</var> returns alive
- * 3. Any date in the record that would make them older than <var>$MAX_ALIVE_AGE</var>
- * 4. A date in the parents record that makes the parents older than <var>$MAX_ALIVE_AGE</var>+40
- * 5. A marriage record with a date greater than <var>$MAX_ALIVE_AGE</var>-10
- * 6. A date in the spouse record greater than <var>$MAX_ALIVE_AGE</var>
- * 7. A date in the children's record that is greater than <var>$MAX_ALIVE_AGE</var>-10
- * 8. A date in the grand children's record that is greater than <var>$MAX_ALIVE_AGE</var>-30
- *
- * This function should only be called once per individual.  In index mode this is called during
- * the Gedcom import.  In MySQL mode this is called the first time the individual is accessed
- * and then the database table is updated.
- * @author John Finlay (yalnifj)
- * @param string $indirec the raw gedcom record
- * @return bool true if dead false if alive
- */
+* check if a person is dead
+*
+* this function will read a person's gedcom record and try to determine whether the person is
+* dead or not.  It checks several parameters to determine death status in the following order:
+* 1. a DEAT record returns dead
+* 2. a BIRT record less than <var>$MAX_ALIVE_AGE</var> returns alive
+* 3. Any date in the record that would make them older than <var>$MAX_ALIVE_AGE</var>
+* 4. A date in the parents record that makes the parents older than <var>$MAX_ALIVE_AGE</var>+40
+* 5. A marriage record with a date greater than <var>$MAX_ALIVE_AGE</var>-10
+* 6. A date in the spouse record greater than <var>$MAX_ALIVE_AGE</var>
+* 7. A date in the children's record that is greater than <var>$MAX_ALIVE_AGE</var>-10
+* 8. A date in the grand children's record that is greater than <var>$MAX_ALIVE_AGE</var>-30
+*
+* This function should only be called once per individual.  In index mode this is called during
+* the Gedcom import.  In MySQL mode this is called the first time the individual is accessed
+* and then the database table is updated.
+* @author John Finlay (yalnifj)
+* @param string $indirec the raw gedcom record
+* @return bool true if dead false if alive
+*/
 function is_dead($indirec, $cyear="", $import=false) {
 	global $CHECK_CHILD_DATES;
 	global $MAX_ALIVE_AGE;
@@ -262,19 +262,19 @@ function is_dead($indirec, $cyear="", $import=false) {
 //-- allow users to overide functions in privacy file
 if (!function_exists("displayDetails")) {
 /**
- * check if the details of the GEDCOM record should be shown
- *
- *
- * This function checks if the details of the given GEDCOM record represented by <var>$indirec</var>
- * should be shown.  This function has been depricated and now all it does is looks up the GEDCOM
- * XRef ID and type from the gedcom record and pass them as parameters to the
- * <var>displayDetailsById</var> function.
- *
- * @deprecated	This function has been deprecated by the displayDetailsById function, it is still
- *				provided for backwards compatibility but it should no longer be used in new code
- * @param	string $indirec the raw gedcom record to check privacy settings for
- * @return	boolean return true to show the persons details, return false to keep them private
- */
+* check if the details of the GEDCOM record should be shown
+*
+*
+* This function checks if the details of the given GEDCOM record represented by <var>$indirec</var>
+* should be shown.  This function has been depricated and now all it does is looks up the GEDCOM
+* XRef ID and type from the gedcom record and pass them as parameters to the
+* <var>displayDetailsById</var> function.
+*
+* @deprecated This function has been deprecated by the displayDetailsById function, it is still
+* provided for backwards compatibility but it should no longer be used in new code
+* @param string $indirec the raw gedcom record to check privacy settings for
+* @return boolean return true to show the persons details, return false to keep them private
+*/
 function displayDetails($indirec) {
 	global $HIDE_LIVE_PEOPLE;
 
@@ -298,10 +298,10 @@ function displayDetails($indirec) {
 if (!function_exists("displayDetailsById")) {
 
 /**
- * checks if the person has died recently before showing their data
- * @param string $pid	the id of the person to check
- * @return boolean
- */
+* checks if the person has died recently before showing their data
+* @param string $pid the id of the person to check
+* @return boolean
+*/
 function checkPrivacyByYear($pid) {
 	global $MAX_ALIVE_AGE;
 
@@ -347,22 +347,22 @@ function checkPrivacyByYear($pid) {
 
 
 /**
- * check if details for a GEDCOM XRef ID should be shown
- *
- * This function uses the settings in the global variables above to determine if the current user
- * has sufficient privileges to access the GEDCOM resource.
- *
- * @author	yalnifj
- * @param	string $pid the GEDCOM XRef ID for the entity to check privacy settings for
- * @param	string $type the GEDCOM type represented by the $pid.  This setting is used so that
- *			different gedcom types can be handled slightly different. (ie. a source cannot be dead)
- *			The possible values of $type are:
- *			- "INDI" record is an individual
- *			- "FAM" record is a family
- *			- "SOUR" record is a source
- *          - "REPO" record is a repository
- * @return	boolean return true to show the persons details, return false to keep them private
- */
+* check if details for a GEDCOM XRef ID should be shown
+*
+* This function uses the settings in the global variables above to determine if the current user
+* has sufficient privileges to access the GEDCOM resource.
+*
+* @author yalnifj
+* @param string $pid the GEDCOM XRef ID for the entity to check privacy settings for
+* @param string $type the GEDCOM type represented by the $pid.  This setting is used so that
+* different gedcom types can be handled slightly different. (ie. a source cannot be dead)
+* The possible values of $type are:
+* - "INDI" record is an individual
+* - "FAM" record is a family
+* - "SOUR" record is a source
+*          - "REPO" record is a repository
+* @return boolean return true to show the persons details, return false to keep them private
+*/
 function displayDetailsById($pid, $type = "INDI") {
 	global $PRIV_PUBLIC, $PRIV_USER, $PRIV_NONE, $PRIV_HIDE, $USE_RELATIONSHIP_PRIVACY, $CHECK_MARRIAGE_RELATIONS, $MAX_RELATION_PATH_LENGTH;
 	global $global_facts, $person_privacy, $user_privacy, $HIDE_LIVE_PEOPLE, $GEDCOM, $SHOW_DEAD_PEOPLE, $MAX_ALIVE_AGE, $PRIVACY_BY_YEAR;
@@ -641,19 +641,19 @@ function displayDetailsById($pid, $type = "INDI") {
 //-- allow users to overide functions in privacy file
 if (!function_exists("showLivingName")) {
 /**
- * check if the name of the GEDCOM record should be shown
- *
- *
- * This function checks if the name of the given GEDCOM record represented by <var>$indirec</var>
- * should be shown.  This function has been depricated and now all it does is looks up the GEDCOM
- * XRef ID and type from the gedcom record and pass them as parameters to the
- * <code>showLivingNameById</code> function.
- *
- * @deprecated	This function has been deprecated by the showLivingNameById function, it is still
- *				provided for backwards compatibility but it should no longer be used in new code
- * @param	string $indirec the raw gedcom record to check privacy settings for
- * @return	boolean return true to show the persons details, return false to keep them private
- */
+* check if the name of the GEDCOM record should be shown
+*
+*
+* This function checks if the name of the given GEDCOM record represented by <var>$indirec</var>
+* should be shown.  This function has been depricated and now all it does is looks up the GEDCOM
+* XRef ID and type from the gedcom record and pass them as parameters to the
+* <code>showLivingNameById</code> function.
+*
+* @deprecated This function has been deprecated by the showLivingNameById function, it is still
+* provided for backwards compatibility but it should no longer be used in new code
+* @param string $indirec the raw gedcom record to check privacy settings for
+* @return boolean return true to show the persons details, return false to keep them private
+*/
 function showLivingName($indirec) {
 	global $SHOW_LIVING_NAMES, $PRIV_PUBLIC, $PRIV_USER, $PRIV_NONE;
 
@@ -669,19 +669,19 @@ function showLivingName($indirec) {
 //-- allow users to overide functions in privacy file
 if (!function_exists("showLivingNameById")) {
 /**
- * check if the name for a GEDCOM XRef ID should be shown
- *
- * This function uses the settings in the global variables above to determine if the current user
- * has sufficient privileges to access the GEDCOM resource.  It first checks the
- * <var>$SHOW_LIVING_NAMES</var> variable to see if names are shown to the public.  If they are
- * then this function will always return true.  If the name is hidden then all relationships
- * connected with the individual are also hidden such that arriving at this record results in a dead
- * end.
- *
- * @author	yalnifj
- * @param	string $pid the GEDCOM XRef ID for the entity to check privacy settings for
- * @return	boolean return true to show the person's name, return false to keep it private
- */
+* check if the name for a GEDCOM XRef ID should be shown
+*
+* This function uses the settings in the global variables above to determine if the current user
+* has sufficient privileges to access the GEDCOM resource.  It first checks the
+* <var>$SHOW_LIVING_NAMES</var> variable to see if names are shown to the public.  If they are
+* then this function will always return true.  If the name is hidden then all relationships
+* connected with the individual are also hidden such that arriving at this record results in a dead
+* end.
+*
+* @author yalnifj
+* @param string $pid the GEDCOM XRef ID for the entity to check privacy settings for
+* @return boolean return true to show the person's name, return false to keep it private
+*/
 function showLivingNameById($pid) {
 	global $SHOW_LIVING_NAMES, $person_privacy, $user_privacy;
 
@@ -711,17 +711,17 @@ function showLivingNameById($pid) {
 //-- allow users to overide functions in privacy file
 if (!function_exists("showFact")) {
 /**
- * check if the given GEDCOM fact for the given individual, family, or source XRef ID should be shown
- *
- * This function uses the settings in the global variables above to determine if the current user
- * has sufficient privileges to access the GEDCOM resource.  It first checks the $global_facts array
- * for admin override settings for the fact.
- *
- * @author	yalnifj
- * @param	string $fact the GEDCOM fact tag to check the privacy settings
- * @param	string $pid the GEDCOM XRef ID for the entity to check privacy settings
- * @return	boolean return true to show the fact, return false to keep it private
- */
+* check if the given GEDCOM fact for the given individual, family, or source XRef ID should be shown
+*
+* This function uses the settings in the global variables above to determine if the current user
+* has sufficient privileges to access the GEDCOM resource.  It first checks the $global_facts array
+* for admin override settings for the fact.
+*
+* @author yalnifj
+* @param string $fact the GEDCOM fact tag to check the privacy settings
+* @param string $pid the GEDCOM XRef ID for the entity to check privacy settings
+* @return boolean return true to show the fact, return false to keep it private
+*/
 function showFact($fact, $pid, $type='INDI') {
 	global $global_facts, $person_facts, $SHOW_SOURCES;
 
@@ -753,17 +753,17 @@ function showFact($fact, $pid, $type='INDI') {
 //-- allow users to overide functions in privacy file
 if (!function_exists("showFactDetails")) {
 /**
- * check if the details of given GEDCOM fact for the given individual, family, or source XRef ID should be shown
- *
- * This function uses the settings in the global variables above to determine if the current user
- * has sufficient privileges to access the GEDCOM resource.  It first checks the $global_facts array
- * for admin override settings for the fact.
- *
- * @author	yalnifj
- * @param	string $fact the GEDCOM fact tag to check the privacy settings
- * @param	string $pid the GEDCOM XRef ID for the entity to check privacy settings
- * @return	boolean return true to show the fact details, return false to keep it private
- */
+* check if the details of given GEDCOM fact for the given individual, family, or source XRef ID should be shown
+*
+* This function uses the settings in the global variables above to determine if the current user
+* has sufficient privileges to access the GEDCOM resource.  It first checks the $global_facts array
+* for admin override settings for the fact.
+*
+* @author yalnifj
+* @param string $fact the GEDCOM fact tag to check the privacy settings
+* @param string $pid the GEDCOM XRef ID for the entity to check privacy settings
+* @return boolean return true to show the fact details, return false to keep it private
+*/
 function showFactDetails($fact, $pid) {
 	global $global_facts, $person_facts;
 
@@ -781,13 +781,13 @@ function showFactDetails($fact, $pid) {
 }
 
 /**
- * remove all private information from a gedcom record
- *
- * this function will analyze and gedcom record and privatize it by removing all private
- * information that should be hidden from the user trying to access it.
- * @param string $gedrec the raw gedcom record to privatize
- * @return string the privatized gedcom record
- */
+* remove all private information from a gedcom record
+*
+* this function will analyze and gedcom record and privatize it by removing all private
+* information that should be hidden from the user trying to access it.
+* @param string $gedrec the raw gedcom record to privatize
+* @return string the privatized gedcom record
+*/
 function privatize_gedcom($gedrec) {
 	global $pgv_lang, $factarray, $GEDCOM, $SHOW_PRIVATE_RELATIONSHIPS, $pgv_private_records;
 	global $global_facts, $person_facts;
@@ -798,30 +798,29 @@ function privatize_gedcom($gedrec) {
 		$type = trim($gmatch[2]);
 		$disp = displayDetailsById($gid, $type);
 		$pgv_private_records[$gid] = "";
-//		print "[$gid $type $disp]";
 		//-- check if the whole record is private
 		if (!$disp) {
 			//-- check if name should be private
 			if (($type=="INDI")&&(!showLivingNameById($gid))) {
-				$newrec = "0 @".$gid."@ INDI\r\n";
-				$newrec .= "1 NAME " . $pgv_lang["private"] . "\r\n";
+				$newrec = "0 @".$gid."@ INDI\n";
+				$newrec .= "1 NAME " . $pgv_lang["private"] . "\n";
 				if ($SHOW_PRIVATE_RELATIONSHIPS) {
 					$fams = find_families_in_record($gedrec, "FAMS");
 					foreach($fams as $f=>$famid) {
-						$newrec .= "1 FAMS @$famid@\r\n";
+						$newrec .= "1 FAMS @$famid@\n";
 					}
 					$fams = find_families_in_record($gedrec, "FAMC");
 					foreach($fams as $f=>$famid) {
-						$newrec .= "1 FAMC @$famid@\r\n";
+						$newrec .= "1 FAMC @$famid@\n";
 					}
 				}
 			}
 			else if ($type=="SOUR") {
-				$newrec = "0 @".$gid."@ SOUR\r\n";
-				$newrec .= "1 TITL ".$pgv_lang["private"]."\r\n";
+				$newrec = "0 @".$gid."@ SOUR\n";
+				$newrec .= "1 TITL ".$pgv_lang["private"]."\n";
 			}
 			else {
-				$newrec = "0 @".$gid."@ $type\r\n";
+				$newrec = "0 @".$gid."@ $type\n";
 				if ($type=="INDI") {
 					// Find all Name records of all Name types for this individual
 					// A person can have, for instance, more than one 1 NAME record.  None of them should be privatized.
@@ -830,47 +829,47 @@ function privatize_gedcom($gedrec) {
 						while (true) {
 							$chil = trim(get_sub_record(1, "1 {$nameFact}", $gedrec, $factNum));
 							if (empty($chil)) break;
-							$newrec .= $chil."\r\n";
+							$newrec .= $chil."\n";
 							$factNum ++;
 						}
 					}
 					$chil = get_sub_record(1, "1 FAMC", $gedrec);
 					$i=1;
 					while (!empty($chil)) {
-						$newrec .= trim($chil)."\r\n";
+						$newrec .= trim($chil)."\n";
 						$i++;
 						$chil = get_sub_record(1, "1 FAMC", $gedrec, $i);
 					}
 					$chil = get_sub_record(1, "1 FAMS", $gedrec);
 					$i=1;
 					while (!empty($chil)) {
-						$newrec .= trim($chil)."\r\n";
+						$newrec .= trim($chil)."\n";
 						$i++;
 						$chil = get_sub_record(1, "1 FAMS", $gedrec, $i);
 					}
 				}
 				else if ($type=="SOUR") {
 					$chil = get_sub_record(1, "1 ABBR", $gedrec);
-					if (!empty($chil)) $newrec .= trim($chil)."\r\n";
+					if (!empty($chil)) $newrec .= trim($chil)."\n";
 					$chil = get_sub_record(1, "1 TITL", $gedrec);
-					if (!empty($chil)) $newrec .= trim($chil)."\r\n";
+					if (!empty($chil)) $newrec .= trim($chil)."\n";
 				}
 				else if ($type=="FAM") {
 					$chil = get_sub_record(1, "1 HUSB", $gedrec);
-					if (!empty($chil)) $newrec .= trim($chil)."\r\n";
+					if (!empty($chil)) $newrec .= trim($chil)."\n";
 					$chil = get_sub_record(1, "1 WIFE", $gedrec);
-					if (!empty($chil)) $newrec .= trim($chil)."\r\n";
+					if (!empty($chil)) $newrec .= trim($chil)."\n";
 					$chil = get_sub_record(1, "1 CHIL", $gedrec);
 					$i=1;
 					while (!empty($chil)) {
-						$newrec .= trim($chil)."\r\n";
+						$newrec .= trim($chil)."\n";
 						$i++;
 						$chil = get_sub_record(1, "1 CHIL", $gedrec, $i);
 					}
 				}
 			}
-			if ($type=="INDI") $newrec .= trim(get_sub_record(1, "1 SEX", $gedrec))."\r\n"; // do not privatize gender
-			$newrec .= "1 NOTE ".trim($pgv_lang["person_private"])."\r\n";
+			if ($type=="INDI") $newrec .= trim(get_sub_record(1, "1 SEX", $gedrec))."\n"; // do not privatize gender
+			$newrec .= "1 NOTE ".trim($pgv_lang["person_private"])."\n";
 			//print $newrec;
 			$pgv_private_records[$gid] = $gedrec;
 			return $newrec;
@@ -890,7 +889,7 @@ function privatize_gedcom($gedrec) {
 			//-- if no fact privacy then return the record
 			if (!$resn && !$ppriv && !$gpriv) return $gedrec;
 
-			$newrec = "0 @".$gid."@ $type\r\n";
+			$newrec = "0 @".$gid."@ $type\n";
 			//-- check all of the sub facts for access
 			$subs = get_all_subrecords($gedrec, "", false, false);
 			foreach($subs as $indexval => $sub) {
@@ -922,11 +921,11 @@ function get_last_private_data($gid) {
 }
 
 /**
- * get current user's access level
- *
- * checks the current user and returns their privacy access level
- * @return int		their access level
- */
+* get current user's access level
+*
+* checks the current user and returns their privacy access level
+* @return int their access level
+*/
 function getUserAccessLevel($user_id=PGV_USER_ID, $ged_id=PGV_GED_ID) {
 	global $PRIV_PUBLIC, $PRIV_NONE, $PRIV_USER;
 
@@ -946,13 +945,13 @@ function getUserAccessLevel($user_id=PGV_USER_ID, $ged_id=PGV_GED_ID) {
 }
 
 /**
- * Check fact record for editing restrictions
- *
- * Checks if the user is allowed to change fact information,
- * based on the existence of the RESN tag in the fact record.
- *
- * @return int		Allowed or not allowed
- */
+* Check fact record for editing restrictions
+*
+* Checks if the user is allowed to change fact information,
+* based on the existence of the RESN tag in the fact record.
+*
+* @return int Allowed or not allowed
+*/
 function FactEditRestricted($pid, $factrec) {
 	if (PGV_USER_GEDCOM_ADMIN) {
 		return false;
@@ -979,13 +978,13 @@ function FactEditRestricted($pid, $factrec) {
 }
 
 /**
- * Check fact record for viewing restrictions
- *
- * Checks if the user is allowed to view fact information,
- * based on the existence of the RESN tag in the fact record.
- *
- * @return int		Allowed or not allowed
- */
+* Check fact record for viewing restrictions
+*
+* Checks if the user is allowed to view fact information,
+* based on the existence of the RESN tag in the fact record.
+*
+* @return int Allowed or not allowed
+*/
 function FactViewRestricted($pid, $factrec) {
 	if (PGV_USER_GEDCOM_ADMIN) {
 		return false;
