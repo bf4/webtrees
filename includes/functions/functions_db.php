@@ -1485,7 +1485,7 @@ function search_indis($query, $geds, $match, $skip) {
 		}
 	}
 
-	$sql="SELECT 'INDI' AS type, i_id AS xref, i_file AS ged_id, i_gedcom AS gedrec, i_isdead, i_sex FROM {$TBLPREFIX}individuals WHERE ".implode(" {$match} ", $querysql).' AND i_file IN ('.implode(',', $geds).')';
+	$sql="SELECT 'INDI' AS type, i_id AS xref, i_file AS ged_id, i_gedcom AS gedrec, i_isdead, i_sex FROM {$TBLPREFIX}individuals WHERE (".implode(" {$match} ", $querysql).') AND i_file IN ('.implode(',', $geds).')';
 
 	// Group results by gedcom, to minimise switching between privacy files
 	$sql.=' ORDER BY ged_id';
@@ -1552,7 +1552,7 @@ function search_indis_names($query, $geds, $match) {
 		}
 	}
 	
-	$sql="SELECT DISTINCT 'INDI' AS type, i_id AS xref, i_file AS ged_id, i_gedcom AS gedrec, i_isdead, i_sex, n_num FROM {$TBLPREFIX}individuals JOIN {$TBLPREFIX}name ON i_id=n_id AND i_file=n_file WHERE ".implode(" {$match} ", $querysql).' AND i_file IN ('.implode(',', $geds).')';
+	$sql="SELECT DISTINCT 'INDI' AS type, i_id AS xref, i_file AS ged_id, i_gedcom AS gedrec, i_isdead, i_sex, n_num FROM {$TBLPREFIX}individuals JOIN {$TBLPREFIX}name ON i_id=n_id AND i_file=n_file WHERE (".implode(" {$match} ", $querysql).') AND i_file IN ('.implode(',', $geds).')';
 
 	// Group results by gedcom, to minimise switching between privacy files
 	$sql.=' ORDER BY ged_id';
@@ -1787,7 +1787,7 @@ function search_fams($query, $geds, $match, $skip) {
 		}
 	}
 
-	$sql="SELECT 'FAM' AS type, f_id AS xref, f_file AS ged_id, f_gedcom AS gedrec, f_husb, f_wife, f_chil, f_numchil FROM {$TBLPREFIX}families WHERE ".implode(" {$match} ", $querysql).' AND f_file IN ('.implode(',', $geds).')';
+	$sql="SELECT 'FAM' AS type, f_id AS xref, f_file AS ged_id, f_gedcom AS gedrec, f_husb, f_wife, f_chil, f_numchil FROM {$TBLPREFIX}families WHERE (".implode(" {$match} ", $querysql).') AND f_file IN ('.implode(',', $geds).')';
 
 	// Group results by gedcom, to minimise switching between privacy files
 	$sql.=' ORDER BY ged_id';
@@ -1849,13 +1849,13 @@ function search_fams_names($query, $geds, $match) {
 	foreach ($query as $q) {
 		$q=$DBCONN->escapeSimple($q);
 		if ($DB_UTF8_COLLATION || !has_utf8($q)) {
-			$querysql[]="husb.n_full ".PGV_DB_LIKE." '%{$q}%' OR wife.n_full ".PGV_DB_LIKE." '%{$q}%'";
+			$querysql[]="(husb.n_full ".PGV_DB_LIKE." '%{$q}%' OR wife.n_full ".PGV_DB_LIKE." '%{$q}%')";
 		} else {
 			$querysql[]="(husb.n_full ".PGV_DB_LIKE." '%{$q}%' OR wife.n_full ".PGV_DB_LIKE." '%{$q}%' OR husb.n_full like ".PGV_DB_LIKE." '%".UTF8_strtoupper($q)."%' OR husb.n_full ".PGV_DB_LIKE." '%".UTF8_strtolower($q)."% OR wife.n_full like ".PGV_DB_LIKE." '%".UTF8_strtoupper($q)."%' OR wife.n_full ".PGV_DB_LIKE." '%".UTF8_strtolower($q)."%')";
 		}
 	}
 	
-	$sql="SELECT DISTINCT 'FAM' AS type, f_id AS xref, f_file AS ged_id, f_gedcom AS gedrec, f_husb, f_wife, f_chil, f_numchil FROM {$TBLPREFIX}families LEFT OUTER JOIN {$TBLPREFIX}name husb ON f_husb=husb.n_id AND f_file=husb.n_file LEFT OUTER JOIN {$TBLPREFIX}name wife ON f_wife=wife.n_id AND f_file=wife.n_file WHERE ".implode(" {$match} ", $querysql).' AND f_file IN ('.implode(',', $geds).')';
+	$sql="SELECT DISTINCT 'FAM' AS type, f_id AS xref, f_file AS ged_id, f_gedcom AS gedrec, f_husb, f_wife, f_chil, f_numchil FROM {$TBLPREFIX}families LEFT OUTER JOIN {$TBLPREFIX}name husb ON f_husb=husb.n_id AND f_file=husb.n_file LEFT OUTER JOIN {$TBLPREFIX}name wife ON f_wife=wife.n_id AND f_file=wife.n_file WHERE (".implode(" {$match} ", $querysql).') AND f_file IN ('.implode(',', $geds).')';
 
 	// Group results by gedcom, to minimise switching between privacy files
 	$sql.=' ORDER BY ged_id';
@@ -1907,7 +1907,7 @@ function search_fams_members($query, $geds, $match) {
 		}
 	}
 	
-	$sql="SELECT DISTINCT 'FAM' AS type, f_id AS xref, f_file AS ged_id, f_gedcom AS gedrec, f_husb, f_wife, f_chil, f_numchil FROM {$TBLPREFIX}families JOIN {$TBLPREFIX}link ON f_file=l_file AND f_id=l_to AND l_type IN ('FAMS', 'FAMC') JOIN {$TBLPREFIX}name ON n_file=l_file AND n_from=n_id WHERE ".implode(" {$match} ", $querysql).' AND f_file IN ('.implode(',', $geds).')';
+	$sql="SELECT DISTINCT 'FAM' AS type, f_id AS xref, f_file AS ged_id, f_gedcom AS gedrec, f_husb, f_wife, f_chil, f_numchil FROM {$TBLPREFIX}families JOIN {$TBLPREFIX}link ON f_file=l_file AND f_id=l_to AND l_type IN ('FAMS', 'FAMC') JOIN {$TBLPREFIX}name ON n_file=l_file AND n_from=n_id WHERE (".implode(" {$match} ", $querysql).') AND f_file IN ('.implode(',', $geds).')';
 
 	// Group results by gedcom, to minimise switching between privacy files
 	$sql.=' ORDER BY ged_id';
@@ -1964,7 +1964,7 @@ function search_sources($query, $geds, $match, $skip) {
 		}
 	}
 
-	$sql="SELECT 'SOUR' AS type, s_id AS xref, s_file AS ged_id, s_gedcom AS gedrec FROM {$TBLPREFIX}sources WHERE ".implode(" {$match} ", $querysql).' AND s_file IN ('.implode(',', $geds).')';
+	$sql="SELECT 'SOUR' AS type, s_id AS xref, s_file AS ged_id, s_gedcom AS gedrec FROM {$TBLPREFIX}sources WHERE (".implode(" {$match} ", $querysql).') AND s_file IN ('.implode(',', $geds).')';
 
 	// Group results by gedcom, to minimise switching between privacy files
 	$sql.=' ORDER BY ged_id';
