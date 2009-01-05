@@ -53,7 +53,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	<?php } ?>
 	<dd id="door0"><a href="javascript:;" onclick="tabswitch(0); if (loadedTabs[8]) {ResizeMap(); ResizeMap();} return false;" ><?php print $pgv_lang["all"]?></a></dd> 
 <!--	<dd id="door10"><a href="javascript:;" onclick="tabswitch(10); return false;" ><?php print "Spare" ?></a></dd>  -->
-	<dd id="door10"><a href="javascript:;" onclick=" setfamnav(); return false;"><?php print $pgv_lang["navigator"]?></a></dd>
+
 
 
 

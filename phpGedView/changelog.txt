@@ -10,6 +10,7 @@
 
 
 Version 4.2.0
+ - Fixed: [ 2485553 ] Googlemap page error. Also removed Navigator "Tab", replaced with link on right (more to be done on config) (windmillway)
  - Changed: Re-write of Daitch-Mokotoff "sounds like" algorithm (canajun2eh)
  - Fixed: Googlemap Redraw Map/Map/Satellite/Hybrid/Terrain boxes for other Browsers (in addition to FireFox) (windmillway)
  - Added: Indi Navigator to ALL tabs except Research Assistant and Tree (Navigator can be toggled on/off with Navigator Tab) (windmillway)
