@@ -1,28 +1,28 @@
 <?php
 /**
- * Controller for the repository page view
- *
- * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008	PGV Development Team.  All rights reserved.
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- *
- * @package PhpGedView
- * @subpackage Charts
- * @version $Id$
- */
+* Controller for the repository page view
+*
+* phpGedView: Genealogy Viewer
+* Copyright (C) 2002 to 2008 PGV Development Team.  All rights reserved.
+*
+* This program is free software; you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation; either version 2 of the License, or
+* (at your option) any later version.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+* GNU General Public License for more details.
+*
+* You should have received a copy of the GNU General Public License
+* along with this program; if not, write to the Free Software
+* Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+*
+* @package PhpGedView
+* @subpackage Charts
+* @version $Id$
+*/
 
 if (!defined('PGV_PHPGEDVIEW')) {
 	header('HTTP/1.0 403 Forbidden');
@@ -39,8 +39,8 @@ require_once 'includes/functions/functions_import.php';
 
 $nonfacts = array();
 /**
- * Main controller class for the repository page.
- */
+* Main controller class for the repository page.
+*/
 class RepositoryControllerRoot extends BaseController {
 	var $rid;
 	var $repository = null;
@@ -50,22 +50,22 @@ class RepositoryControllerRoot extends BaseController {
 	var $canedit = false;
 
 	/**
-	 * constructor
-	 */
+	* constructor
+	*/
 	function RepositoryRootController() {
 		parent::BaseController();
 	}
 
 	/**
-	 * initialize the controller
-	 */
+	* initialize the controller
+	*/
 	function init() {
 		global $pgv_lang, $CONTACT_EMAIL, $GEDCOM, $pgv_changes;
 
 		$this->rid         =safe_GET_xref('rid');
 
 		$repositoryrec = find_other_record($this->rid);
-		if (!$repositoryrec) $repositoryrec = "0 @".$this->rid."@ REPO\r\n";
+		if (!$repositoryrec) $repositoryrec = "0 @".$this->rid."@ REPO\n";
 
 		$this->repository = new Repository($repositoryrec);
 		$this->repository->ged_id=PGV_GED_ID; // This record is from a file
@@ -111,8 +111,8 @@ class RepositoryControllerRoot extends BaseController {
 	}
 
 	/**
-	 * Add a new favorite for the action user
-	 */
+	* Add a new favorite for the action user
+	*/
 	function addFavorite() {
 		global $GEDCOM;
 		if (empty($this->uname)) return;
@@ -133,9 +133,9 @@ class RepositoryControllerRoot extends BaseController {
 		}
 	}
 	/**
-	 * Accept any edit changes into the database
-	 * Also update the indirec we will use to generate the page
-	 */
+	* Accept any edit changes into the database
+	* Also update the indirec we will use to generate the page
+	*/
 	function acceptChanges() {
 		global $GEDCOM;
 
@@ -154,25 +154,25 @@ class RepositoryControllerRoot extends BaseController {
 	}
 
 	/**
-	 * get the title for this page
-	 * @return string
-	 */
+	* get the title for this page
+	* @return string
+	*/
 	function getPageTitle() {
 		global $pgv_lang;
 		return $this->repository->getFullName()." - ".$this->rid." - ".$pgv_lang["repo_info"];
 	}
 	/**
-	 * check if use can edit this person
-	 * @return boolean
-	 */
+	* check if use can edit this person
+	* @return boolean
+	*/
 	function userCanEdit() {
 		return $this->canedit;
 	}
 
 	/**
-	 * get edit menut
-	 * @return Menu
-	 */
+	* get edit menut
+	* @return Menu
+	*/
 	function &getEditMenu() {
 		global $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $pgv_lang, $pgv_changes;
 		global $SHOW_GEDCOM_RECORD;
@@ -254,9 +254,9 @@ class RepositoryControllerRoot extends BaseController {
 	}
 
 	/**
-	 * get the other menu
-	 * @return Menu
-	 */
+	* get the other menu
+	* @return Menu
+	*/
 	function &getOtherMenu() {
 		global $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $pgv_lang;
 		global $SHOW_GEDCOM_RECORD, $ENABLE_CLIPPINGS_CART;
