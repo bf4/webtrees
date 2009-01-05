@@ -1,33 +1,33 @@
 <?php
 /**
- * Defines a protocol for interfacing remote requests over a http connection
- *
- * When $action is 'get' then the gedcom record with the given $xref is retrieved.
- * When $action is 'update' the gedcom record matching $xref is replaced with the data in $gedrec.
- * When $action is 'append' the gedcom record in $gedrec is appended to the end of the gedcom file.
- * When $action is 'delete' the gedcom record with $xref is removed from the file.
- *
- * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- *
- * @package PhpGedView
- * @subpackage Edit
- * @version $Id$
- */
+* Defines a protocol for interfacing remote requests over a http connection
+*
+* When $action is 'get' then the gedcom record with the given $xref is retrieved.
+* When $action is 'update' the gedcom record matching $xref is replaced with the data in $gedrec.
+* When $action is 'append' the gedcom record in $gedrec is appended to the end of the gedcom file.
+* When $action is 'delete' the gedcom record with $xref is removed from the file.
+*
+* phpGedView: Genealogy Viewer
+* Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
+*
+* This program is free software; you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation; either version 2 of the License, or
+* (at your option) any later version.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+* GNU General Public License for more details.
+*
+* You should have received a copy of the GNU General Public License
+* along with this program; if not, write to the Free Software
+* Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+*
+* @package PhpGedView
+* @subpackage Edit
+* @version $Id$
+*/
 
 require './config.php';
 
@@ -149,9 +149,9 @@ case 'get':
 									$num = $line{0};
 									$head_date.=($num+1).substr($line, 1)."\n";
 								}
-								$chan = "1 CHAN\r\n".$head_date;
+								$chan = "1 CHAN\n".$head_date;
 							}
-							$gedrec = '0 @'.$xref1.'@ '.$type."\r\n".$chan;
+							$gedrec = '0 @'.$xref1.'@ '.$type."\n".$chan;
 						}
 						if (!empty($gedrec)) $gedrecords = $gedrecords . "\n".trim($gedrec);
 					}
