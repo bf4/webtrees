@@ -31,7 +31,7 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 
 // Identify ourself
 define('PGV_PHPGEDVIEW',      'PhpGedView');
-define('PGV_VERSION',         '4.2e.0');
+define('PGV_VERSION',         '4.2.0');
 define('PGV_VERSION_RELEASE', 'svn'); // 'svn', 'beta', 'rc1', '', etc.
 define('PGV_VERSION_TEXT',    trim(PGV_VERSION.' '.PGV_VERSION_RELEASE));
 define('PGV_PHPGEDVIEW_URL',  'http://www.phpgedview.net');
