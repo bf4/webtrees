@@ -1768,6 +1768,7 @@ $pgv_lang["TYPE__audio"]				= "Ton";
 $pgv_lang["TYPE__book"]					= "Buch";
 $pgv_lang["TYPE__card"]					= "Karte";
 $pgv_lang["TYPE__certificate"]			= "Urkunde";
+$pgv_lang["TYPE__coat"]					= "Wappen";
 $pgv_lang["TYPE__document"]				= "Dokument";
 $pgv_lang["TYPE__electronic"]			= "Elektronisch";
 $pgv_lang["TYPE__fiche"]				= "Mikrofiche";
