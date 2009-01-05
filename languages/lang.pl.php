@@ -480,8 +480,8 @@ $pgv_lang["deceased"]			= "Zmarły(a)";
 $pgv_lang["link_as_wife"]		= "Powiąż jako żonę z istniejącą rodziną";
 $pgv_lang["no_tab1"]			= "Brak faktów dla tej osoby.";
 $pgv_lang["no_tab2"]			= "Brak notatek dla tej osoby.";
-$pgv_lang["no_tab3"]			= "Brak cytatów dla tej osoby.";
-$pgv_lang["no_tab4"]			= "Brak multimediów dla tej osoby.";
+$pgv_lang["no_tab3"]			= "Brak źródeł powiązanych z tą osobą.";
+$pgv_lang["no_tab4"]			= "Brak multimediów powiązanych z tą osobą.";
 $pgv_lang["no_tab5"]			= "Brak bliskich krewnych tej osoby.";
 $pgv_lang["no_tab6"]			= "Brak danych Asystenta badań powiązanych z tą osobą.";
 $pgv_lang["show_fact_sources"]	= "Pokaż wszystkie źródła";
@@ -816,6 +816,17 @@ $pgv_lang["media_firewall_invalid_dir"]					= "Błąd: Firewall multimediów zos
 
 //-- Relationship chart messages
 $pgv_lang["view_fam_nav_details"]	= "Zobacz szczegóły ...";
+$pgv_lang["view_fam_nav_notes"]		= "Zobacz notatki ...";
+$pgv_lang["view_fam_nav_sources"]	= "Zobacz źródła ...";
+$pgv_lang["view_fam_nav_media"]		= "Zobacz multimedia ...";
+$pgv_lang["view_fam_nav_album"]		= "Zobacz album ...";
+$pgv_lang["view_fam_nav_relatives"]	= "Zobacz bliskich ...";
+$pgv_lang["view_fam_nav_tree"]		= "Zobacz drzewo ...";
+$pgv_lang["view_fam_nav_research"]	= "Zobacz Asystenta badań ...";
+$pgv_lang["view_fam_nav_map"]		= "Zobacz mapę ...";
+$pgv_lang["view_fam_nav_spare"]		= "Zobacz informacje ...";
+$pgv_lang["navigator"]				= "Nawigator";
+
 $pgv_lang["relationship_great"]		= "pra";
 $pgv_lang["relationship_chart"]		= "Diagram pokrewieństwa";
 $pgv_lang["person1"]				= "Pierwsza osoba";
@@ -1753,6 +1764,7 @@ $pgv_lang["TYPE__audio"] 		= "Dźwięk";
 $pgv_lang["TYPE__book"] 		= "Książka";
 $pgv_lang["TYPE__card"] 		= "Karta";
 $pgv_lang["TYPE__certificate"] 	= "Akt";
+$pgv_lang["TYPE__coat"]			= "Herb";
 $pgv_lang["TYPE__document"] 	= "Dokument";
 $pgv_lang["TYPE__electronic"] 	= "Elektroniczny";
 $pgv_lang["TYPE__fiche"] 		= "Mikrofisza";
@@ -1768,7 +1780,7 @@ $pgv_lang["TYPE__painting"] 	= "Obraz";
 $pgv_lang["TYPE__video"] 		= "Film";
 
 //-- Other media suff
-$pgv_lang["view_slideshow"] 	= "Zobacz jako pokaz slajdów";
+$pgv_lang["view_slideshow"] 	= "Uruchom pokaz slajdów";
 $pgv_lang["download_image"]		= "Pobierz plik";
 $pgv_lang["no_media"]			= "Nie znaleziono obiektów multimedialnych";
 $pgv_lang["media_privacy"]		= "Ograniczenie prywatności uniemożliwia Ci oglądanie tego.";
