@@ -1,28 +1,28 @@
 <?php
 /**
- * Base class for all gedcom records
- *
- * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- *
- * @package PhpGedView
- * @subpackage DataModel
- * @version $Id$
- */
+* Base class for all gedcom records
+*
+* phpGedView: Genealogy Viewer
+* Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
+*
+* This program is free software; you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation; either version 2 of the License, or
+* (at your option) any later version.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+* GNU General Public License for more details.
+*
+* You should have received a copy of the GNU General Public License
+* along with this program; if not, write to the Free Software
+* Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+*
+* @package PhpGedView
+* @subpackage DataModel
+* @version $Id$
+*/
 
 if (!defined('PGV_PHPGEDVIEW')) {
 	header('HTTP/1.0 403 Forbidden');
@@ -74,7 +74,7 @@ class GedcomRecord {
 		}
 
 		//-- lookup the record from another gedcom
-		$remoterfn = get_gedcom_value("RFN", 1, $this->gedrec);
+		$remoterfn = get_gedcom_value('RFN', 1, $this->gedrec);
 		if (!empty($remoterfn)) {
 			$parts = explode(':', $remoterfn);
 			if (count($parts)==2) {
@@ -147,7 +147,7 @@ class GedcomRecord {
 		// Create the object
 		if (is_array($data)) {
 			$type=$data['type'];
-		} elseif (preg_match("/^0 +@.+@ +(\w+)/", $data, $match)) {
+		} elseif (preg_match('/^0 +@.+@ +(\w+)/', $data, $match)) {
 			$type=$match[1];
 		} else {
 			$type='';
@@ -183,21 +183,21 @@ class GedcomRecord {
 
 	/**
 	 * get the xref
-	 * @return string	returns the person ID
+	 * @return string returns the person ID
 	 */
 	function getXref() {
 		return $this->xref;
 	}
 	/**
 	 * get the gedcom file
-	 * @return string	returns the person ID
+	 * @return string returns the person ID
 	 */
 	function getGedId() {
 		return $this->ged_id;
 	}
 	/**
 	 * get the object type
-	 * @return string	returns the type of this object "INDI","FAM", etc.
+	 * @return string returns the type of this object "INDI","FAM", etc.
 	 */
 	function getType() {
 		return $this->type;
@@ -231,10 +231,10 @@ class GedcomRecord {
 
 	/**
 	 * is this person from another server
-	 * @return boolean 	return true if this person was linked from another server
+	 * @return boolean  return true if this person was linked from another server
 	 */
 	function isRemote() {
-		if (is_null($this->rfn)) $this->rfn = get_gedcom_value("RFN", 1, $this->gedrec);
+		if (is_null($this->rfn)) $this->rfn = get_gedcom_value('RFN', 1, $this->gedrec);
 		if (empty($this->rfn) || $this->xref!=$this->rfn) return false;
 
 		$parts = explode(':', $this->rfn);
@@ -260,7 +260,7 @@ class GedcomRecord {
 		return $this->_getLinkUrl('gedcomrecord.php?pid=');
 	}
 
-	protected function _getLinkUrl($link='gedcomrecord.php?pid=') {
+	protected function _getLinkUrl($link) {
 		$url = $link.$this->getXref().'&ged='.get_gedcom_from_id($this->ged_id);
 		if ($this->isRemote()) {
 			list($servid, $aliaid)=explode(':', $this->rfn);
@@ -309,14 +309,16 @@ class GedcomRecord {
 	}
 
 	// Get an HTML link to this object, for use in sortable lists.
-	function getXrefLink($target="") {
+	function getXrefLink($target='') {
 		global $SEARCH_SPIDER;
 		if (empty($SEARCH_SPIDER)) {
-			if ($target) $target = "target=\"".$target."\"";
+			if ($target) {
+				$target='target="'.$target.'"';
+			}
 			return "<a href=\"".encode_url($this->getLinkUrl())."#content\" name=\"".preg_replace('/\D/','',$this->getXref())."\" $target>".$this->getXref()."</a>";
-		}
-		else
+		} else {
 			return $this->getXref();
+		}
 	}
 
 	/**
@@ -337,7 +339,7 @@ class GedcomRecord {
 		if (!PGV_USER_CAN_ACCEPT) {
 			return false;
 		}
-		$cid = $this->xref."_".$GEDCOM;
+		$cid = $this->xref.'_'.$GEDCOM;
 		if (!isset($pgv_changes[$cid])) {
 			return false;
 		}
@@ -358,8 +360,8 @@ class GedcomRecord {
 		if (!PGV_USER_CAN_EDIT) {
 			return false;
 		}
-		if (isset($pgv_changes[$this->xref."_".$GEDCOM])) {
-			$change = end($pgv_changes[$this->xref."_".$GEDCOM]);
+		if (isset($pgv_changes[$this->xref.'_'.$GEDCOM])) {
+			$change = end($pgv_changes[$this->xref.'_'.$GEDCOM]);
 			if ($change['type']=='delete') {
 				return true;
 			}
@@ -407,22 +409,20 @@ class GedcomRecord {
 		global $pgv_lang, $WORD_WRAPPED_NOTES;
 
 		if (is_null($this->_getAllNames)) {
-			$sublevel=$level+1;
-			$subsublevel=$sublevel+1;
+			$this->_getAllNames=array();
 			if ($this->canDisplayName()) {
-				$this->_getAllNames=array();
-				$gedrec=preg_replace('/[\r\n]+\d CONC /', $WORD_WRAPPED_NOTES ? ' ' : '', $this->gedrec);
-				if (preg_match_all('/^'.$level.' ('.$fact.') *([^\r\n]*)(([\r\n]+['.$sublevel.'-9][^\r\n]+)*)/m', $gedrec, $matches, PREG_SET_ORDER)) {
+				$sublevel=$level+1;
+				$subsublevel=$sublevel+1;
+				if (preg_match_all("/\n{$level} ({$fact}) *(.*)((?:\n[{$sublevel}-9].+)*)/", $this->gedrec, $matches, PREG_SET_ORDER)) {
 					foreach ($matches as $match) {
 						$this->_addName($match[1], $match[2] ? $match[2] : $this->getFallBackName(), $match[0]);
-						if ($match[3] && preg_match_all('/^'.$sublevel.' (ROMN|FONE|_\w+) *([^\r\n]*)(([\r\n]+['.$subsublevel.'-9][^\r\n]+)*)/m', $match[3], $submatches, PREG_SET_ORDER)) {
+						if ($match[3] && preg_match_all("/\n{$sublevel} (ROMN|FONE|_\w+) *(.*)(?:(?:\n[{$subsublevel}-9].+)*)/", $match[3], $submatches, PREG_SET_ORDER)) {
 							foreach ($submatches as $submatch) {
 								$this->_addName($submatch[1], $submatch[2] ? $submatch[2] : $this->getFallBackName(), $submatch[0]);
 							}
 						}
 					}
-				}
-				if (empty($this->_getAllNames)) {
+				} else {
 					$this->_addName($this->getType(), $this->getFallBackName(), null);
 				}
 			} else {
@@ -636,7 +636,7 @@ class GedcomRecord {
 	function getAllEventPlaces($event) {
 		$places=array();
 		foreach ($this->getAllFactsByType($event) as $event) {
-			if (preg_match_all("/^(?:2 PLAC|3 (?:ROMN|FONE|_HEB)) +(.+)/m", $event->getGedComRecord(), $ged_places)) {
+			if (preg_match_all('/\n(?:2 PLAC|3 (?:ROMN|FONE|_HEB)) +(.+)/', $event->getGedComRecord(), $ged_places)) {
 				foreach ($ged_places[1] as $ged_place) {
 					$places[]=$ged_place;
 				}
@@ -702,7 +702,7 @@ class GedcomRecord {
 	 */
 	function getChangeEvent() {
 		if (is_null($this->changeEvent)) {
-			$this->changeEvent = $this->getFactByType("CHAN");
+			$this->changeEvent = $this->getFactByType('CHAN');
 		}
 		return $this->changeEvent;
 	}
@@ -723,19 +723,19 @@ class GedcomRecord {
 		//-- must trim the record here because the record is trimmed in edit and it could mess up line numbers
 		$this->gedrec = trim($this->gedrec);
 		//-- find all the fact information
-		$indilines = preg_split("/[\r\n]+/", $this->gedrec);   // -- find the number of lines in the individuals record
+		$indilines = explode("\n", $this->gedrec);   // -- find the number of lines in the individuals record
 		$lct = count($indilines);
-		$factrec = "";	 // -- complete fact record
-		$line = "";   // -- temporary line buffer
+		$factrec = ''; // -- complete fact record
+		$line = '';   // -- temporary line buffer
 		$linenum=1;
 		for($i=1; $i<=$lct; $i++) {
 			if ($i<$lct) {
 				$line = $indilines[$i];
 			} else {
-				$line=" ";
+				$line=' ';
 			}
 			if (empty($line)) {
-				$line=" ";
+				$line=' ';
 			}
 			if ($i==$lct||$line{0}==1) {
 				if ($i>1){
@@ -756,7 +756,7 @@ class GedcomRecord {
 	/**
 	 * Merge the facts from another GedcomRecord object into this object
 	 * for generating a diff view
-	 * @param GedcomRecord $diff	the record to compare facts with
+	 * @param GedcomRecord $diff the record to compare facts with
 	 */
 	function diffMerge(&$diff) {
 		if (is_null($diff)) {
@@ -777,7 +777,7 @@ class GedcomRecord {
 				}
 			}
 			if (!$found) {
-				$this->facts[$key]->gedComRecord.="\r\nPGV_OLD\r\n";
+				$this->facts[$key]->gedComRecord.="\nPGV_OLD\n";
 			}
 		}
 		//-- look for new facts
@@ -799,25 +799,23 @@ class GedcomRecord {
 	}
 
 	function getEventDate($event) {
-	  $srec = $this->getAllEvents($event);
+		$srec = $this->getAllEvents($event);
 		if (!$srec) {
 			return '';
 		}
-	  $srec = $srec[0];
-	  return get_gedcom_value("DATE", 2, $srec);
-	  //return get_gedcom_value("PAGE", 3, $srec);
+		$srec = $srec[0];
+		return get_gedcom_value('DATE', 2, $srec);
 	}
 	function getEventSource($event) {
-	  $srec = $this->getAllEvents($event);
+		$srec = $this->getAllEvents($event);
 		if (!$srec) {
 			return '';
 		}
-	  $srec = $srec[0];
-	  return get_sub_record("SOUR", 2, $srec);
-	  //return get_gedcom_value("PAGE", 3, $srec);
+		$srec = $srec[0];
+		return get_sub_record('SOUR', 2, $srec);
 	}
 	function getEventSourcePage($event) {
-	  return get_gedcom_value("PAGE", 3, getEventSource($event));
+		return get_gedcom_value('PAGE', 3, getEventSource($event));
 	}
 
 	//////////////////////////////////////////////////////////////////////////////
@@ -829,7 +827,7 @@ class GedcomRecord {
 
 		$chan = $this->getChangeEvent();
 
-		if (is_null($chan))	{
+		if (is_null($chan)) {
 			return '&nbsp;';
 		}
 
@@ -854,11 +852,11 @@ class GedcomRecord {
 	function LastchangeUser() {
 		$chan = $this->getChangeEvent();
 
-		if (is_null($chan))	{
+		if (is_null($chan)) {
 			return '&nbsp;';
 		}
 
-		$chan_user = $chan->getValue("_PGVU");
+		$chan_user = $chan->getValue('_PGVU');
 		if (empty($chan_user)) {
 			return '&nbsp;';
 		}
