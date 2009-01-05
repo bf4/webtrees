@@ -1,30 +1,30 @@
 <?php
 /**
- * Individual Page
- *
- * Display all of the information about an individual
- *
- * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- *
- * @package PhpGedView
- * @subpackage Charts
- * @version $Id$
- */
+* Individual Page
+*
+* Display all of the information about an individual
+*
+* phpGedView: Genealogy Viewer
+* Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
+*
+* This program is free software; you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation; either version 2 of the License, or
+* (at your option) any later version.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+* GNU General Public License for more details.
+*
+* You should have received a copy of the GNU General Public License
+* along with this program; if not, write to the Free Software
+* Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+*
+* @package PhpGedView
+* @subpackage Charts
+* @version $Id$
+*/
 
 require './config.php';
 require './includes/controllers/individual_ctrl.php';
@@ -35,11 +35,9 @@ session_write_close();
 $controller=new IndividualController();
 $controller->init();
 
-loadLangFile("lightbox:lang, googlemap:lang");
+loadLangFile('lightbox:lang, googlemap:lang');
 
-global $USE_THUMBS_MAIN, $mediacnt, $tabno, $hitCount;
-global $linkToID;
-global $SEARCH_SPIDER, $GOOGLEMAP_PH_CONTROLS;
+global $USE_THUMBS_MAIN, $mediacnt, $tabno, $hitCount, $GOOGLEMAP_PH_CONTROLS;
 
 print_header($controller->getPageTitle());
 
@@ -48,9 +46,9 @@ if (!$controller->indi->canDisplayName()) {
 	print_footer();
 	exit;
 }
-$linkToID = $controller->pid;	// -- Tell addmedia.php what to link to
-?>
+$linkToID=$controller->pid; // -- Tell addmedia.php what to link to
 
+?>
 <table border="0" cellspacing="0" cellpadding="0" class="facts_table">
 	<tr>
 	<?php if ($controller->canShowHighlightedObject()) { ?>
@@ -65,7 +63,7 @@ $linkToID = $controller->pid;	// -- Tell addmedia.php what to link to
 		if ($TEXT_DIRECTION=="rtl") print "&nbsp;";
 			print PrintReady($controller->indi->getFullName());
 			print "&nbsp;&nbsp;";
- 			print PrintReady("(".$controller->pid.")");
+			print PrintReady("(".$controller->pid.")");
 			if (PGV_USER_IS_ADMIN) {
 				$pgvuser=get_user_from_gedcom_xref($GEDCOM, $controller->pid);
 				if ($pgvuser) {
@@ -79,14 +77,14 @@ $linkToID = $controller->pid;	// -- Tell addmedia.php what to link to
 		<?php if ($controller->indi->canDisplayDetails()) { ?>
 		<table><tr>
 		<?php
-			$col=0; $maxcols=7;	// 4 with data and 3 spacers
+			$col=0; $maxcols=7; // 4 with data and 3 spacers
 			$globalfacts=$controller->getGlobalFacts();
 			$nameSex = array('NAME','SEX');
 			foreach ($globalfacts as $key=>$value) {
 				$fact = $value->getTag();
 				if (in_array($fact, $nameSex)) {
 						if ($col>0) {
-							print "<td width=\"10\"><br /></td>\n";
+							print "<td width=\"10\"><br /></td>";
 							++$col;
 						}
 					if ($fact=="SEX") $controller->print_sex_record($value);
@@ -123,7 +121,7 @@ $linkToID = $controller->pid;	// -- Tell addmedia.php what to link to
 		if($SHOW_COUNTER && (empty($SEARCH_SPIDER))) {
 			//print indi counter only if displaying a non-private person
 			require './includes/hitcount.php';
-			print "\n<br />{$pgv_lang["hit_count"]} {$hitCount}\n";
+			print "<br />{$pgv_lang["hit_count"]} {$hitCount}";
 		}
 		// if individual is a remote individual
 		// if information for this information is based on a remote site
@@ -152,7 +150,7 @@ $linkToID = $controller->pid;	// -- Tell addmedia.php what to link to
 				if (PGV_USER_GEDCOM_ID) {
 			?>
 			<a class="accesskeys" href="<?php print "relationship.php?show_full=$showFull&amp;pid1=".PGV_USER_GEDCOM_ID."&amp;pid2=".$controller->pid;?>" title="<?php print $pgv_lang["relationship_to_me"] ?>" tabindex="-1" accesskey="<?php print $pgv_lang["accesskey_individual_relation_to_me"]; ?>"><?php print $pgv_lang["relationship_to_me"] ?></a>
-			<?php 	}
+			<?php }
 			if ($controller->canShowGedcomRecord()) {
 			?>
 			<a class="accesskeys" href="javascript:show_gedcom_record();" title="<?php print $pgv_lang["view_gedcom"] ?>" tabindex="-1" accesskey="<?php print $pgv_lang["accesskey_individual_gedcom"]; ?>"><?php print $pgv_lang["view_gedcom"] ?></a>
@@ -229,16 +227,18 @@ function showchanges() {
 <!-- ====================== Added for Lightbox Module ===================== -->
 <?php
 if (file_exists("modules/lightbox/album.php")) {
-	include('modules/lightbox/lb_defaultconfig.php');
-	if (file_exists('modules/lightbox/lb_config.php')) include('modules/lightbox/lb_config.php');
+	require './modules/lightbox/lb_defaultconfig.php';
+	if (file_exists('./modules/lightbox/lb_config.php')) {
+		require './modules/lightbox/lb_config.php';
+	}
 	if ($theme_name=="Minimal") {
 		// Force icon options to "text" when we're dealing with the Minimal theme
 		if ($LB_AL_HEAD_LINKS!="none") { $LB_AL_HEAD_LINKS = "text"; }
 		if ($LB_AL_THUMB_LINKS!="none") { $LB_AL_THUMB_LINKS = "text"; }
 		if ($LB_ML_THUMB_LINKS!="none") { $LB_ML_THUMB_LINKS = "text"; }
 	}
-	include_once ("modules/lightbox/functions/lb_indi_tabs_" . $mediatab . ".php");
-}else{
+	require_once './modules/lightbox/functions/lb_indi_tabs_'.$mediatab.'.php';
+} else {
 ?>
 <!-- ================== End Additions for Lightbox Module ================== -->
 
@@ -251,7 +251,7 @@ if (file_exists("modules/lightbox/album.php")) {
 	<?php }?>
 
 <!-- ====================== Added for Lightbox Module ===================== -->
- <?php } ?>
+<?php } ?>
 <!-- ================== End Additions for Lightbox Module ================== -->
 
 loadedTabs[<?php print ($controller->default_tab+1); ?>] = true;
@@ -379,7 +379,7 @@ function resize_content_div(i) {
 		}
 	}
 }
- //]]>
+//]]>
 </script>
 <script src="phpgedview.js" language="JavaScript" type="text/javascript"></script>
 <?php
@@ -399,9 +399,9 @@ if ((!$controller->isPrintPreview())&&(empty($SEARCH_SPIDER))) {
 
 <!-- ====================== Added for Lightbox Module ===================== -->
 <?php
-if (file_exists("modules/lightbox/album.php")) {
-	include_once ("modules/lightbox/functions/lb_indi_doors_" . $mediatab . ".php");
-}else{
+if (file_exists('./modules/lightbox/album.php')) {
+	require_once './modules/lightbox/functions/lb_indi_doors_'.$mediatab.'.php';
+} else {
 ?>
 <!-- ================== End Additions for Lightbox Module ================== -->
 
@@ -433,9 +433,9 @@ if (file_exists("modules/lightbox/album.php")) {
 <!-- ======================== Start Tab 0 individual page ============ Personal Facts and Details -->
 <?php
 if(empty($SEARCH_SPIDER))
-	print "<div id=\"facts\" class=\"tab_page\" style=\"display:none;\" >\n";
+	print "<div id=\"facts\" class=\"tab_page\" style=\"display:none;\" >";
 else
-	print "<div id=\"facts\" class=\"tab_page\" style=\"display:block;\" >\n";
+	print "<div id=\"facts\" class=\"tab_page\" style=\"display:block;\" >";
 print "<span class=\"subheaders\">".$pgv_lang["personal_facts"]."</span><div id=\"facts_content\">";
 if (($controller->default_tab==0)||(!empty($SEARCH_SPIDER))) $controller->getTab(0);
 else loading_message();
@@ -446,9 +446,9 @@ else loading_message();
 <!-- ======================== Start Tab 1 individual page ==== Notes ======= -->
 <?php
 if(empty($SEARCH_SPIDER))
-	print "<div id=\"notes\" class=\"tab_page\" style=\"display:none;\" >\n";
+	print "<div id=\"notes\" class=\"tab_page\" style=\"display:none;\" >";
 else
-	print "<div id=\"notes\" class=\"tab_page\" style=\"display:block;\" >\n";
+	print "<div id=\"notes\" class=\"tab_page\" style=\"display:block;\" >";
 print "<span class=\"subheaders\">".$pgv_lang["notes"]."</span><div id=\"notes_content\">";
 if (($controller->default_tab==1)||(!empty($SEARCH_SPIDER))) $controller->getTab(1);
 else {
@@ -462,9 +462,9 @@ else {
 <!-- =========================== Start Tab 2 individual page === Sources -->
 <?php
 if(empty($SEARCH_SPIDER))
-	print "<div id=\"sources\" class=\"tab_page\" style=\"display:none;\" >\n";
+	print "<div id=\"sources\" class=\"tab_page\" style=\"display:none;\" >";
 else
-	print "<div id=\"sources\" class=\"tab_page\" style=\"display:block;\" >\n";
+	print "<div id=\"sources\" class=\"tab_page\" style=\"display:block;\" >";
 if ($SHOW_SOURCES>=PGV_USER_ACCESS_LEVEL) {
 	print "<span class=\"subheaders\">".$pgv_lang["ssourcess"]."</span><div id=\"sources_content\">";
 	if (($controller->default_tab==2)||(!empty($SEARCH_SPIDER))) $controller->getTab(2);
@@ -472,7 +472,7 @@ if ($SHOW_SOURCES>=PGV_USER_ACCESS_LEVEL) {
 		if ($controller->get_source_count()>0) loading_message();
 		else print "<span id=\"no_tab3\">".$pgv_lang["no_tab3"]."</span>";
 	}
-	print "</div>\n";
+	print "</div>";
 }
 ?>
 </div>
@@ -480,16 +480,16 @@ if ($SHOW_SOURCES>=PGV_USER_ACCESS_LEVEL) {
 <!-- ==================== Start Tab 3 individual page ==== Media -->
 <?php
 if(empty($SEARCH_SPIDER))
-	print "<div id=\"media\" class=\"tab_page\" style=\"display:none;\" >\n";
+	print "<div id=\"media\" class=\"tab_page\" style=\"display:none;\" >";
 else
-	print "<div id=\"media\" class=\"tab_page\" style=\"display:block;\" >\n";
+	print "<div id=\"media\" class=\"tab_page\" style=\"display:block;\" >";
 if ($MULTI_MEDIA) {
 	print "<span class=\"subheaders\">".$pgv_lang["media"]."</span>";
 	// For Reorder media ------------------------------------
 	if (PGV_USER_CAN_EDIT) {
-		print "<center>";
-		include_once('includes/media_tab_head.php');
-		print "</center>";
+		echo "<center>";
+		require_once './includes/media_tab_head.php';
+		echo "</center>";
 	}
 	// -----------------------------------------------------------
 	print "<div id=\"media_content\">";
@@ -498,7 +498,7 @@ if ($MULTI_MEDIA) {
 		if ($controller->get_media_count()>0) loading_message();
 		else print "<span id=\"no_tab4\">".$pgv_lang["no_tab4"]."</span>";
 	}
-	print "</div>\n";
+	print "</div>";
 }
 ?>
 </div>
@@ -506,9 +506,9 @@ if ($MULTI_MEDIA) {
 <!-- ============================= Start Tab 4 individual page ==== Close relatives -->
 <?php
 if(empty($SEARCH_SPIDER))
-	print "<div id=\"relatives\" class=\"tab_page\" style=\"display:none;\" >\n";
+	print "<div id=\"relatives\" class=\"tab_page\" style=\"display:none;\" >";
 else
-	print "<div id=\"relatives\" class=\"tab_page\" style=\"display:block;\" >\n";
+	print "<div id=\"relatives\" class=\"tab_page\" style=\"display:block;\" >";
 ?>
 <div id="relatives_content">
 <?php
@@ -521,11 +521,11 @@ else
 <!-- ============================= Start Tab 5 individual page ==== Tree -->
 <?php
 if(empty($SEARCH_SPIDER)) { 
-	print "<div id=\"tree\" class=\"tab_page\" style=\"display:none; border: solid blue 1px;\" >\n";
+	print "<div id=\"tree\" class=\"tab_page\" style=\"display:none; border: solid blue 1px;\" >";
 ?>
 <div id="tree_content">
 <?php
-	require_once('includes/classes/class_treenav.php');
+	require_once './includes/classes/class_treenav.php';
 	if ($controller->default_tab==5) {
 		$inav = new TreeNav($controller->pid,'treetab');
 	}
@@ -545,21 +545,21 @@ if(empty($SEARCH_SPIDER)) {
 <?php
 // Only show this section if we are not talking to a search engine.
 if(empty($SEARCH_SPIDER)) {
-	print "<div id=\"researchlog\" class=\"tab_page\" style=\"display:none;\" >\n";
-	print "<span class=\"subheaders\">".$pgv_lang["research_assistant"]."</span>\n";
-	print "<div id=\"researchlog_content\">\n";
+	print "<div id=\"researchlog\" class=\"tab_page\" style=\"display:none;\" >";
+	print "<span class=\"subheaders\">".$pgv_lang["research_assistant"]."</span>";
+	print "<div id=\"researchlog_content\">";
 
 	if (file_exists("modules/research_assistant/research_assistant.php") && ($SHOW_RESEARCH_ASSISTANT>=PGV_USER_ACCESS_LEVEL)) {
-		if (version_compare(PGV_VERSION, '4.1')<0) print "<script src=\"compat.js\" language\"JavaScript\" type=\"text/javascript\"></script>\n";
+		if (version_compare(PGV_VERSION, '4.1')<0) print "<script src=\"compat.js\" language\"JavaScript\" type=\"text/javascript\"></script>";
 		print "<script type=\"text/javascript\" src=\"modules/research_assistant/research_assistant.js\"></script>";
 		if ($controller->default_tab==6) $controller->getTab(6);
 		else loading_message();
 	}
 	else {
-		print "<table class=\"facts_table\"><tr><td id=\"no_tab7\" colspan=\"2\" class=\"facts_value\">".$pgv_lang["no_tab6"]."</td></tr></table>\n";
+		print "<table class=\"facts_table\"><tr><td id=\"no_tab7\" colspan=\"2\" class=\"facts_value\">".$pgv_lang["no_tab6"]."</td></tr></table>";
 	}
-	print "</div>\n";
-	print "</div>\n";
+	print "</div>";
+	print "</div>";
 }
 ?>
 
@@ -569,25 +569,25 @@ if(empty($SEARCH_SPIDER)) {
 // Only show this section if we are not talking to a search engine.
 if(empty($SEARCH_SPIDER)) {
 
-	print "<div id=\"googlemap\" class=\"tab_page\" style=\"display:none;\" >\n";
-//	print "<span class=\"subheaders\">".$pgv_lang["googlemap"]."</span>\n";
+	print "<div id=\"googlemap\" class=\"tab_page\" style=\"display:none;\" >";
+//	print "<span class=\"subheaders\">".$pgv_lang["googlemap"]."</span>";
 	
 		// Header Info ------------------------------------------------------------------------------------
 		if (file_exists("modules/googlemap/defaultconfig.php") ) {
 			//Content Info ------------------------------------------------------------
-			print "<div id=\"gg_map_content\"> \n";
+			print "<div id=\"gg_map_content\">";
 				echo "<table border=\"0\" width=\"100%\" ><tr><td >";
-					include_once('modules/googlemap/gg_map_content.php');
+					require_once './modules/googlemap/gg_map_content.php';
 				echo "</td>";
 				echo "</tr></table>";
-			print "</div>\n";
+			print "</div>";
 		} else {
-			print "<div id=\"googlemap\" class=\"tab_page\" style=\"display:block; \" >\n";
+			print "<div id=\"googlemap_content\" class=\"tab_page\" style=\"display:block; \" >";
 			echo "MAPS NOT INSTALLED";
-			print "</div>\n";
+			print "</div>";
 		}
 		
-	print "</div>\n";
+	print "</div>";
 
 }
 
@@ -598,28 +598,28 @@ if(empty($SEARCH_SPIDER)) {
 <?php
 if(empty($SEARCH_SPIDER) && file_exists("modules/lightbox/album.php")) {
 
-	print "<div id=\"lightbox2\" class=\"tab_page\" style=\"display:none;\" >\n";
+	print "<div id=\"lightbox2\" class=\"tab_page\" style=\"display:none;\" >";
 		
 		// Header Info ---------------------------------------------------------------------
 		if ($MULTI_MEDIA && file_exists("modules/lightbox/album.php")) {
-			print "<span class=\"subheaders\">" . $pgv_lang["lightbox"] . "</span>\n";
+			print "<span class=\"subheaders\">" . $pgv_lang["lightbox"] . "</span>";
 			print "&nbsp;&nbsp;";
 			// ---------- Help link --------------------
 			print_help_link("lb_general_help", "qm", "lb_help", true);
 			// --------- Header include -------------
 			$mediacnt = $controller->get_media_count();
 			if ($mediacnt!=0) {
-				include_once('modules/lightbox/functions/lb_head.php');
-			}else{
-				include_once('modules/lightbox/functions/lb_head.php');
-				print "<table class=\"facts_table\"><tr><td id=\"no_tab9\" colspan=\"2\" class=\"facts_value\">".$pgv_lang["no_tab4"]."</td></tr></table>\n";
+				require_once 'modules/lightbox/functions/lb_head.php';
+			} else {
+				require_once 'modules/lightbox/functions/lb_head.php';
+				print "<table class=\"facts_table\"><tr><td id=\"no_tab9\" colspan=\"2\" class=\"facts_value\">".$pgv_lang["no_tab4"]."</td></tr></table>";
 			}
 		}else{
-			print "<div id=\"lightbox2\" class=\"tab_page\" style=\"display:block; \" >\n";
+			print "<div id=\"lightbox2\" class=\"tab_page\" style=\"display:block; \" >";
 		}
 		
 		// Content info ---------------------------------------------------
-		print "<div id=\"lightbox2_content\"> \n";
+		print "<div id=\"lightbox2_content\">";
 			if ($mediacnt!=0) {
 				if ($MULTI_MEDIA && file_exists("modules/lightbox/album.php")) {
 					// LB Fix if googlemaps ========================================================
@@ -639,9 +639,9 @@ if(empty($SEARCH_SPIDER) && file_exists("modules/lightbox/album.php")) {
 					// LB Fix if googlemaps ========================================================
 				}
 			}
-		print "</div>\n";
+		print "</div>";
 		
-	print "</div>\n";
+	print "</div>";
 }
 ?>
 
@@ -649,10 +649,8 @@ if(empty($SEARCH_SPIDER) && file_exists("modules/lightbox/album.php")) {
 <!-- ============================= Start Tab 9 individual page ==== Spare -->
 <?php
 if(empty($SEARCH_SPIDER)) {
-	//print "<div id=\"spare\" class=\"tab_page\" style=\"display:none; border: solid yellow 1px;\" >\n";
-	print "<div id=\"spare\" class=\"tab_page\" style=\"display:none; border: solid transparent 0px;\" >\n";
-		//print "<span class=\"subheaders\">" . $pgv_lang["lightbox"] . "</span>\n";
-		print "<span class=\"subheaders\">Spare</span>\n";
+	print "<div id=\"spare\" class=\"tab_page\" style=\"display:none; border: solid transparent 0px;\" >";
+		print "<span class=\"subheaders\">Spare</span>";
 		print "&nbsp;&nbsp;";
 		
 		// ---------- Help link --------------------
@@ -676,42 +674,37 @@ if(empty($SEARCH_SPIDER)) {
 			}
 			// Fix if no googlemaps ========================================================
 
-		print "</div>\n";
-	print "</div>\n";
+		print "</div>";
+	print "</div>";
 
-} ?>
-
-
-<!-- ============================   End Tabs - individual page   ============ -->
-
-<script language="JavaScript" type="text/javascript">
-<!--
-	var catch_and_ignore;
-	function paste_id(value) {
-		catch_and_ignore = value;
-	}
-<?php
-//-- make sure googlemap is reloaded
-if ($controller->default_tab==7) print "loadedTabs[".($controller->default_tab+1)."] = false;\n";
-if ($controller->isPrintPreview()) print "tabswitch(0);\n";
-else print "tabswitch(". ($controller->default_tab+1) .");\n";
-if ($controller->default_tab==5) print "treetab.sizeLines();\n";
-?>
-if (typeof toggleByClassName == "undefined") {
-	alert('phpgedview.js\na javascript function is missing\n\nPlease clear your Web browser cache');
 }
 
-//-->
+echo '<!-- ============================   End Tabs - individual page   ============ -->';
+echo PGV_JS_START;
+echo 'var catch_and_ignore; function paste_id(value) {catch_and_ignore = value;}';
+//-- make sure googlemap is reloaded
+if ($controller->default_tab==7) {
+	print "loadedTabs[".($controller->default_tab+1)."] = false;";
+}
+if ($controller->isPrintPreview()) {
+	print "tabswitch(0);";
+} else {
+	print "tabswitch(". ($controller->default_tab+1) .");";
+}
+if ($controller->default_tab==5) {
+	print "treetab.sizeLines();";
+}
+echo 'if (typeof toggleByClassName == "undefined") {';
+echo 'alert("phpgedview.js: A javascript function is missing.  Please clear your Web browser cache");';
+echo '}';
+echo PGV_JS_END;
 
-
-
-</script>
-<?php
-if(empty($SEARCH_SPIDER))
-	print_footer();
-else {
+if ($SEARCH_SPIDER) {
 	if($SHOW_SPIDER_TAGLINE)
 		print $pgv_lang["label_search_engine_detected"].": ".$SEARCH_SPIDER;
-	print "\n</div>\n\t</body>\n</html>";
+	print "</div></body></html>";
+} else {
+	print_footer();
 }
+
 ?>
