@@ -1,29 +1,29 @@
 <?php
 /**
- * Various functions used by the Edit interface
- *
- * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- *
- * @package PhpGedView
- * @subpackage Edit
- * @see functions_places.php
- * @version $Id$
- */
+* Various functions used by the Edit interface
+*
+* phpGedView: Genealogy Viewer
+* Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
+*
+* This program is free software; you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation; either version 2 of the License, or
+* (at your option) any later version.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+* GNU General Public License for more details.
+*
+* You should have received a copy of the GNU General Public License
+* along with this program; if not, write to the Free Software
+* Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+*
+* @package PhpGedView
+* @subpackage Edit
+* @see functions_places.php
+* @version $Id$
+*/
 
 if (!defined('PGV_PHPGEDVIEW')) {
 	header('HTTP/1.0 403 Forbidden');
@@ -47,7 +47,7 @@ $templefacts = array("SLGC","SLGS","BAPL","ENDL","CONL");
 $nonplacfacts = array("ENDL","NCHI","SLGC","SLGS");
 $nondatefacts = array("ABBR","ADDR","AFN","AUTH","EMAIL","FAX","NAME","NCHI","NOTE","OBJE",
 "PHON","PUBL","REFN","REPO","SEX","SOUR","SSN","TEXT","TITL","WWW","_EMAIL");
-$typefacts = array();	//-- special facts that go on 2 TYPE lines
+$typefacts = array(); //-- special facts that go on 2 TYPE lines
 
 // Next two vars used by insert_missing_subtags()
 $date_and_time=array("BIRT","DEAT"); // Tags with date and time
@@ -89,14 +89,14 @@ function newConnection() {
 }
 
 /**
- * Check if the given gedcom record has changed since the last session access
- * This is used to check if the gedcom record changed between the time the user
- * loaded the individual page and the time they clicked on a link to edit
- * the data.
- *
- * @param string $pid	The gedcom id of the record to check pgv_changes
- * @param string $gedrec	The latest gedcom record to check the CHAN:DATE:TIME (auto accept)
- */
+* Check if the given gedcom record has changed since the last session access
+* This is used to check if the gedcom record changed between the time the user
+* loaded the individual page and the time they clicked on a link to edit
+* the data.
+*
+* @param string $pid The gedcom id of the record to check pgv_changes
+* @param string $gedrec The latest gedcom record to check the CHAN:DATE:TIME (auto accept)
+*/
 function checkChangeTime($pid, $gedrec, $last_time) {
 	global $GEDCOM, $pgv_changes, $pgv_lang;
 	//-- check if the record changes since last access
@@ -129,13 +129,13 @@ function checkChangeTime($pid, $gedrec, $last_time) {
 }
 
 /**
- * This function will replace a gedcom record with
- * the id $gid with the $gedrec
- * @param string $gid	The XREF id of the record to replace
- * @param string $gedrec	The new gedcom record to replace with
- * @param boolean $chan		Whether or not to update/add the CHAN record
- * @param string $linkpid	Tells whether or not this record change is linked with the record change of another record identified by $linkpid
- */
+* This function will replace a gedcom record with
+* the id $gid with the $gedrec
+* @param string $gid The XREF id of the record to replace
+* @param string $gedrec The new gedcom record to replace with
+* @param boolean $chan Whether or not to update/add the CHAN record
+* @param string $linkpid Tells whether or not this record change is linked with the record change of another record identified by $linkpid
+*/
 function replace_gedrec($gid, $gedrec, $chan=true, $linkpid='') {
 	global $fcontents, $GEDCOM, $pgv_changes, $manual_save, $pgv_private_records;
 
@@ -145,7 +145,7 @@ function replace_gedrec($gid, $gedrec, $chan=true, $linkpid='') {
 		$privatedata = trim(get_last_private_data($gid));
 		$subs = get_all_subrecords("\n".$privatedata, '', false, false);
 		foreach($subs as $s=>$sub) {
-			if (strstr($gedrec, $sub)===false) $gedrec = trim($gedrec)."\r\n".$sub;
+			if (strstr($gedrec, $sub)===false) $gedrec = trim($gedrec)."\n".$sub;
 		}
 		unset($pgv_private_records[$gid]);
 	}
@@ -195,8 +195,7 @@ function replace_gedrec($gid, $gedrec, $chan=true, $linkpid='') {
 
 		if (PGV_USER_AUTO_ACCEPT) {
 			accept_changes($gid."_".$GEDCOM);
-		}
-		else {
+		} else {
 			write_changes();
 		}
 		$backtrace = debug_backtrace();
@@ -240,8 +239,7 @@ function append_gedrec($gedrec, $chan=true, $linkpid='') {
 
 		if (PGV_USER_AUTO_ACCEPT) {
 			accept_changes($xref."_".$GEDCOM);
-		}
-		else {
+		} else {
 			write_changes();
 		}
 		$backtrace = debug_backtrace();
@@ -322,15 +320,15 @@ function check_gedcom($gedrec, $chan=true) {
 			$pos2 = strpos($gedrec, "\n1", $pos1+4);
 			if ($pos2===false) $pos2 = strlen($gedrec);
 			$newgedrec = substr($gedrec, 0, $pos1);
-			$newgedrec .= "1 CHAN\r\n2 DATE ".strtoupper(date("d M Y"))."\r\n";
-			$newgedrec .= "3 TIME ".date("H:i:s")."\r\n";
-			$newgedrec .= "2 _PGVU ".PGV_USER_NAME."\r\n";
+			$newgedrec .= "1 CHAN\n2 DATE ".strtoupper(date("d M Y"))."\n";
+			$newgedrec .= "3 TIME ".date("H:i:s")."\n";
+			$newgedrec .= "2 _PGVU ".PGV_USER_NAME."\n";
 			$newgedrec .= substr($gedrec, $pos2);
 			$gedrec = $newgedrec;
 		}
 		else {
-			$newgedrec = "\r\n1 CHAN\r\n2 DATE ".strtoupper(date("d M Y"))."\r\n";
-			$newgedrec .= "3 TIME ".date("H:i:s")."\r\n";
+			$newgedrec = "\n1 CHAN\n2 DATE ".strtoupper(date("d M Y"))."\n";
+			$newgedrec .= "3 TIME ".date("H:i:s")."\n";
 			$newgedrec .= "2 _PGVU ".PGV_USER_NAME;
 			$gedrec .= $newgedrec;
 		}
@@ -343,7 +341,7 @@ function check_gedcom($gedrec, $chan=true) {
 	foreach($lines as $ind=>$line) {
 		//-- remove any whitespace
 		$line = trim($line);
-		if (!empty($line)) $newrec .= $line."\r\n";
+		if (!empty($line)) $newrec .= $line."\n";
 	}
 
 	$newrec = html_entity_decode($newrec,ENT_COMPAT,'UTF-8');
@@ -351,14 +349,14 @@ function check_gedcom($gedrec, $chan=true) {
 }
 
 /**
- * remove a subrecord from a parent record by gedcom tag
- *
- * @param string $oldrecord	the parent record to remove the subrecord from
- * @param string $tag	the GEDCOM subtag to start deleting at
- * @param string $gid	[optional] gid can be used to limit to @gid@
- * @param int $num		[optional] num specifies which multiple of the tag to remove, set to -1 to remove all
- * @return string		returns the oldrecord minus the subrecord(s)
- */
+* remove a subrecord from a parent record by gedcom tag
+*
+* @param string $oldrecord the parent record to remove the subrecord from
+* @param string $tag the GEDCOM subtag to start deleting at
+* @param string $gid [optional] gid can be used to limit to @gid@
+* @param int $num [optional] num specifies which multiple of the tag to remove, set to -1 to remove all
+* @return string returns the oldrecord minus the subrecord(s)
+*/
 function remove_subrecord($oldrecord, $tag, $gid='', $num=0) {
 	$newrec = "";
 	$gedlines = explode("\n", $oldrecord);
@@ -383,12 +381,12 @@ function remove_subrecord($oldrecord, $tag, $gid='', $num=0) {
 }
 
 /**
- * delete a subrecord from a parent record using the linenumber
- *
- * @param string $oldrecord		parent record to delete from
- * @param int $linenum		linenumber where the subrecord to delete starts
- * @return string				the new record
- */
+* delete a subrecord from a parent record using the linenumber
+*
+* @param string $oldrecord parent record to delete from
+* @param int $linenum linenumber where the subrecord to delete starts
+* @return string the new record
+*/
 function remove_subline($oldrecord, $linenum) {
 	$newrec = "";
 	$gedlines = explode("\n", $oldrecord);
@@ -416,12 +414,12 @@ function remove_subline($oldrecord, $linenum) {
 }
 
 /**
- * Undo a change
- * this function will undo a change in the gedcom file
- * @param string $cid	the change id of the form gid_gedcom
- * @param int $index	the index of the change to undo
- * @return boolean	true if undo successful
- */
+* Undo a change
+* this function will undo a change in the gedcom file
+* @param string $cid the change id of the form gid_gedcom
+* @param int $index the index of the change to undo
+* @return boolean true if undo successful
+*/
 function undo_change($cid, $index) {
 	global $fcontents, $pgv_changes, $GEDCOM, $manual_save;
 
@@ -447,13 +445,13 @@ function undo_change($cid, $index) {
 }
 
 /**
- * prints a form to add an individual or edit an individual's name
- *
- * @param string $nextaction	the next action the edit_interface.php file should take after the form is submitted
- * @param string $famid			the family that the new person should be added to
- * @param string $namerec		the name subrecord when editing a name
- * @param string $famtag		how the new person is added to the family
- */
+* prints a form to add an individual or edit an individual's name
+*
+* @param string $nextaction the next action the edit_interface.php file should take after the form is submitted
+* @param string $famid the family that the new person should be added to
+* @param string $namerec the name subrecord when editing a name
+* @param string $famtag how the new person is added to the family
+*/
 function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag="CHIL", $sextag="") {
 	global $pgv_lang, $factarray, $pid, $PGV_IMAGE_DIR, $PGV_IMAGES, $WORD_WRAPPED_NOTES;
 	global $NPFX_accept, $SPFX_accept, $NSFX_accept, $FILE_FORM_accept, $GEDCOM, $NAME_REVERSE;
@@ -464,7 +462,6 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 	init_calendar_popup();
 	print "<form method=\"post\" name=\"addchildform\" onsubmit=\"return checkform();\">\n";
 	print "<input type=\"hidden\" name=\"action\" value=\"$nextaction\" />\n";
-//	print "<form method=\"post\" name=\"addchildform\" action=\"{$nextaction}\" onsubmit=\"return checkform();\">\n";
 	print "<input type=\"hidden\" name=\"linenum\" value=\"$linenum\" />\n";
 	print "<input type=\"hidden\" name=\"famid\" value=\"$famid\" />\n";
 	print "<input type=\"hidden\" name=\"pid\" value=\"$pid\" />\n";
@@ -518,7 +515,7 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 			switch ($nextaction) {
 			case 'addchildaction':
 				if (preg_match('/\/(\S+)\s+\S+\//', $mother_name, $matchm) &&
-				    preg_match('/\/(\S+)\s+\S+\//', $father_name, $matchf)) {
+						preg_match('/\/(\S+)\s+\S+\//', $father_name, $matchf)) {
 					$name_fields['SURN']=$matchf[1].' '.$matchm[1];
 					$name_fields['NAME']='/'.$name_fields['SURN'].'/';
 				}
@@ -542,7 +539,7 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 			switch ($nextaction) {
 			case 'addchildaction':
 				if (preg_match('/\/\S+\s+(\S+)\//', $mother_name, $matchm) &&
-				    preg_match('/\/\S+\s+(\S+)\//', $father_name, $matchf)) {
+						preg_match('/\/\S+\s+(\S+)\//', $father_name, $matchf)) {
 					$name_fields['SURN']=$matchf[1].' '.$matchm[1];
 					$name_fields['NAME']='/'.$name_fields['SURN'].'/';
 				}
@@ -682,7 +679,7 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 
 	// Handle any other NAME subfields that aren't included above (SOUR, NOTE, _CUSTOM, etc)
 	if ($namerec!="" && $namerec!="NEW") {
-		$gedlines = split("\n", $namerec);	// -- find the number of lines in the record
+		$gedlines = split("\n", $namerec); // -- find the number of lines in the record
 		$fields = explode(' ', $gedlines[0]);
 		$glevel = $fields[0];
 		$level = $glevel;
@@ -700,7 +697,7 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 				$iscont = false;
 				while(($i+1<count($gedlines))&&(preg_match("/".($level+1)." (CON[CT])\s?(.*)/", $gedlines[$i+1], $cmatch)>0)) {
 					$iscont=true;
-					if ($cmatch[1]=="CONT") $text.="\r\n";
+					if ($cmatch[1]=="CONT") $text.="\n";
 					if ($WORD_WRAPPED_NOTES) $text .= " ";
 					$text .= $cmatch[2];
 					$i++;
@@ -860,8 +857,8 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 	}
 
 	/**
-	 * convert a hidden field to a text box
-	 */
+	* convert a hidden field to a text box
+	*/
 	var oldName = "";
 	var manualChange = false;
 	function convertHidden(eid) {
@@ -922,11 +919,11 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 	}
 
 	/**
-	 * if the user manually changed the NAME field, then update the textual
-	 * HTML representation of it
-	 * If the value changed set manualChange to true so that changing
-	 * the other fields doesn't change the NAME line
-	 */
+	* if the user manually changed the NAME field, then update the textual
+	* HTML representation of it
+	* If the value changed set manualChange to true so that changing
+	* the other fields doesn't change the NAME line
+	*/
 	function updateTextName(eid) {
 		var element = document.getElementById(eid);
 		if (element) {
@@ -964,12 +961,12 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 }
 
 /**
- * generates javascript code for calendar popup in user's language
- *
- * @param string id		form text element id where to return date value
- * @param boolean $asString	Whether or not to return this text as a string or print it
- * @see init_calendar_popup()
- */
+* generates javascript code for calendar popup in user's language
+*
+* @param string id form text element id where to return date value
+* @param boolean $asString Whether or not to return this text as a string or print it
+* @see init_calendar_popup()
+*/
 function print_calendar_popup($id, $asString=false) {
 	global $pgv_lang, $PGV_IMAGE_DIR, $PGV_IMAGES;
 
@@ -986,8 +983,8 @@ function print_calendar_popup($id, $asString=false) {
 	else print $out;
 }
 /**
- * @todo add comments
- */
+* @todo add comments
+*/
 function print_addnewrepository_link($element_id) {
 	global $pgv_lang, $PGV_IMAGE_DIR, $PGV_IMAGES;
 
@@ -1000,8 +997,8 @@ function print_addnewrepository_link($element_id) {
 }
 
 /**
- * @todo add comments
- */
+* @todo add comments
+*/
 function print_addnewsource_link($element_id) {
 	global $pgv_lang, $PGV_IMAGE_DIR, $PGV_IMAGES;
 
@@ -1014,24 +1011,24 @@ function print_addnewsource_link($element_id) {
 }
 
 /**
- * add a new tag input field
- *
- * called for each fact to be edited on a form.
- * Fact level=0 means a new empty form : data are POSTed by name
- * else data are POSTed using arrays :
- * glevels[] : tag level
- *  islink[] : tag is a link
- *     tag[] : tag name
- *    text[] : tag value
- *
- * @param string $tag			fact record to edit (eg 2 DATE xxxxx)
- * @param string $upperlevel	optional upper level tag (eg BIRT)
- * @param string $label			An optional label to print instead of the default from the $factarray
- * @param string $readOnly		optional, when "READONLY", fact data can't be changed
- * @param string $noClose		optional, when "NOCLOSE", final "</td></tr>" won't be printed
- *								(so that additional text can be printed in the box)
- * @param boolean $rowDisplay	True to have the row displayed by default, false to hide it by default
- */
+* add a new tag input field
+*
+* called for each fact to be edited on a form.
+* Fact level=0 means a new empty form : data are POSTed by name
+* else data are POSTed using arrays :
+* glevels[] : tag level
+*  islink[] : tag is a link
+*     tag[] : tag name
+*    text[] : tag value
+*
+* @param string $tag fact record to edit (eg 2 DATE xxxxx)
+* @param string $upperlevel optional upper level tag (eg BIRT)
+* @param string $label An optional label to print instead of the default from the $factarray
+* @param string $readOnly optional, when "READONLY", fact data can't be changed
+* @param string $noClose optional, when "NOCLOSE", final "</td></tr>" won't be printed
+* (so that additional text can be printed in the box)
+* @param boolean $rowDisplay True to have the row displayed by default, false to hide it by default
+*/
 function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose="", $rowDisplay=true) {
 	global $factarray, $pgv_lang, $PGV_IMAGE_DIR, $PGV_IMAGES, $MEDIA_DIRECTORY, $TEMPLE_CODES;
 	global $assorela, $tags, $emptyfacts, $main_fact, $TEXT_DIRECTION, $pgv_changes, $GEDCOM;
@@ -1053,8 +1050,8 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 			txt=txt.replace(/(^\s*)|(\s*$)/g,''); // trim
 			txt=txt.replace(/ /g,':'); // N12 34 ==> N12.34
 			txt=txt.replace(/\+/g,''); // +17.1234 ==> 17.1234
-			txt=txt.replace(/-/g,neg);	// -0.5698 ==> W0.5698
-			txt=txt.replace(/,/g,'.');	// 0,5698 ==> 0.5698
+			txt=txt.replace(/-/g,neg); // -0.5698 ==> W0.5698
+			txt=txt.replace(/,/g,'.'); // 0,5698 ==> 0.5698
 			// 0�34'11 ==> 0:34:11
 			txt=txt.replace(/\uB0/g,':'); // �
 			txt=txt.replace(/\u27/g,':'); // '
@@ -1168,7 +1165,7 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 	print " >\n";
 	if (in_array($fact, $subnamefacts) || $fact=="LATI" || $fact=="LONG")
 			print "<td class=\"optionbox $TEXT_DIRECTION wrap width25\">";
-	else	print "<td class=\"descriptionbox $TEXT_DIRECTION wrap width25\">";
+	else print "<td class=\"descriptionbox $TEXT_DIRECTION wrap width25\">";
 
 	// help link
 	if (!in_array($fact, $emptyfacts)) {
@@ -1263,8 +1260,8 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 	else if ($fact=="ADOP") {
 		print "<select tabindex=\"".$tabkey."\" name=\"".$element_name."\" >";
 		foreach (array("BOTH"=>$factarray["HUSB"]."+".$factarray["WIFE"],
-		               "HUSB"=>$factarray["HUSB"],
-		               "WIFE"=>$factarray["WIFE"]) as $k=>$v) {
+										"HUSB"=>$factarray["HUSB"],
+										"WIFE"=>$factarray["WIFE"]) as $k=>$v) {
 			print "<option value='$k'";
 			if ($value==$k)
 				print " selected=\"selected\"";
@@ -1275,10 +1272,10 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 	else if ($fact=="PEDI") {
 		print "<select tabindex=\"".$tabkey."\" name=\"".$element_name."\" >";
 		foreach (array(""       =>$pgv_lang["unknown"],
-		               "birth"  =>$factarray["BIRT"],
-		               "adopted"=>$pgv_lang["adopted"],
-		               "foster" =>$pgv_lang["foster"],
-									 "sealing"=>$pgv_lang["sealing"]) as $k=>$v) {
+										"birth"  =>$factarray["BIRT"],
+										"adopted"=>$pgv_lang["adopted"],
+										"foster" =>$pgv_lang["foster"],
+										"sealing"=>$pgv_lang["sealing"]) as $k=>$v) {
 			print "<option value='$k'";
 			if (UTF8_strtolower($value)==$k)
 				print " selected=\"selected\"";
@@ -1560,10 +1557,10 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 }
 
 /**
- * prints collapsable fields to add ASSO/RELA, SOUR, OBJE ...
- *
- * @param string $tag		Gedcom tag name
- */
+* prints collapsable fields to add ASSO/RELA, SOUR, OBJE ...
+*
+* @param string $tag Gedcom tag name
+*/
 function print_add_layer($tag, $level=2, $printSaveButton=true) {
 	global $factarray, $pgv_lang, $PGV_IMAGE_DIR, $PGV_IMAGES;
 	global $MEDIA_DIRECTORY, $TEXT_DIRECTION, $PRIVACY_BY_RESN;
@@ -1742,12 +1739,12 @@ function addNewFact($fact) {
 }
 
 /**
- * Add Debug Log
- *
- * This function adds debugging information to the log file
- * only if debugging output is enabled in session.php
- * @param string $logstr	the string to add to the log
- */
+* Add Debug Log
+*
+* This function adds debugging information to the log file
+* only if debugging output is enabled in session.php
+* @param string $logstr the string to add to the log
+*/
 function addDebugLog($logstr) {
 	if (PGV_DEBUG) {
 		AddToChangeLog($logstr);
@@ -1755,28 +1752,28 @@ function addDebugLog($logstr) {
 }
 
 /**
- * This function splits the $glevels, $tag, $islink, and $text arrays so that the
- * entries associated with a SOUR record are separate from everything else.
- *
- * Input arrays:
- * - $glevels[] - an array of the gedcom level for each line that was edited
- * - $tag[] - an array of the tags for each gedcom line that was edited
- * - $islink[] - an array of 1 or 0 values to indicate when the text is a link element
- * - $text[] - an array of the text data for each line
- *
- * Output arrays:
- * ** For the SOUR record:
- * - $glevelsSOUR[] - an array of the gedcom level for each line that was edited
- * - $tagSOUR[] - an array of the tags for each gedcom line that was edited
- * - $islinkSOUR[] - an array of 1 or 0 values to indicate when the text is a link element
- * - $textSOUR[] - an array of the text data for each line
- * ** For the remaining records:
- * - $glevelsRest[] - an array of the gedcom level for each line that was edited
- * - $tagRest[] - an array of the tags for each gedcom line that was edited
- * - $islinkRest[] - an array of 1 or 0 values to indicate when the text is a link element
- * - $textRest[] - an array of the text data for each line
- *
- */
+* This function splits the $glevels, $tag, $islink, and $text arrays so that the
+* entries associated with a SOUR record are separate from everything else.
+*
+* Input arrays:
+* - $glevels[] - an array of the gedcom level for each line that was edited
+* - $tag[] - an array of the tags for each gedcom line that was edited
+* - $islink[] - an array of 1 or 0 values to indicate when the text is a link element
+* - $text[] - an array of the text data for each line
+*
+* Output arrays:
+* ** For the SOUR record:
+* - $glevelsSOUR[] - an array of the gedcom level for each line that was edited
+* - $tagSOUR[] - an array of the tags for each gedcom line that was edited
+* - $islinkSOUR[] - an array of 1 or 0 values to indicate when the text is a link element
+* - $textSOUR[] - an array of the text data for each line
+* ** For the remaining records:
+* - $glevelsRest[] - an array of the gedcom level for each line that was edited
+* - $tagRest[] - an array of the tags for each gedcom line that was edited
+* - $islinkRest[] - an array of 1 or 0 values to indicate when the text is a link element
+* - $textRest[] - an array of the text data for each line
+*
+*/
 function splitSOUR() {
 	global $glevels, $tag, $islink, $text;
 	global $glevelsSOUR, $tagSOUR, $islinkSOUR, $textSOUR;
@@ -1826,18 +1823,18 @@ function splitSOUR() {
 }
 
 /**
- * Add new GEDCOM lines from the $xxxSOUR interface update arrays, which
- * were produced by the splitSOUR() function.
- *
- * See the handle_updates() function for details.
- *
- */
+* Add new GEDCOM lines from the $xxxSOUR interface update arrays, which
+* were produced by the splitSOUR() function.
+*
+* See the handle_updates() function for details.
+*
+*/
 function updateSOUR($inputRec, $levelOverride="no") {
 	global $glevels, $tag, $islink, $text;
 	global $glevelsSOUR, $tagSOUR, $islinkSOUR, $textSOUR;
 	global $glevelsRest, $tagRest, $islinkRest, $textRest;
 
-	if (count($tagSOUR)==0) return $inputRec;		// No update required
+	if (count($tagSOUR)==0) return $inputRec; // No update required
 
 	// Save original interface update arrays before replacing them with the xxxSOUR ones
 	$glevelsSave = $glevels;
@@ -1850,7 +1847,7 @@ function updateSOUR($inputRec, $levelOverride="no") {
 	$islink = $islinkSOUR;
 	$text = $textSOUR;
 
-	$myRecord = handle_updates($inputRec, $levelOverride);		// Now do the update
+	$myRecord = handle_updates($inputRec, $levelOverride); // Now do the update
 
 	// Restore the original interface update arrays (just in case ...)
 	$glevels = $glevelsSave;
@@ -1862,18 +1859,18 @@ function updateSOUR($inputRec, $levelOverride="no") {
 }
 
 /**
- * Add new GEDCOM lines from the $xxxRest interface update arrays, which
- * were produced by the splitSOUR() function.
- *
- * See the handle_updates() function for details.
- *
- */
+* Add new GEDCOM lines from the $xxxRest interface update arrays, which
+* were produced by the splitSOUR() function.
+*
+* See the handle_updates() function for details.
+*
+*/
 function updateRest($inputRec, $levelOverride="no") {
 	global $glevels, $tag, $islink, $text;
 	global $glevelsSOUR, $tagSOUR, $islinkSOUR, $textSOUR;
 	global $glevelsRest, $tagRest, $islinkRest, $textRest;
 
-	if (count($tagRest)==0) return $inputRec;		// No update required
+	if (count($tagRest)==0) return $inputRec; // No update required
 
 	// Save original interface update arrays before replacing them with the xxxRest ones
 	$glevelsSave = $glevels;
@@ -1886,7 +1883,7 @@ function updateRest($inputRec, $levelOverride="no") {
 	$islink = $islinkRest;
 	$text = $textRest;
 
-	$myRecord = handle_updates($inputRec, $levelOverride);		// Now do the update
+	$myRecord = handle_updates($inputRec, $levelOverride); // Now do the update
 
 	// Restore the original interface update arrays (just in case ...)
 	$glevels = $glevelsSave;
@@ -1898,28 +1895,28 @@ function updateRest($inputRec, $levelOverride="no") {
 }
 
 /**
- * Add new gedcom lines from interface update arrays
- * The edit_interface and add_simple_tag function produce the following
- * arrays incoming from the $_POST form
- * - $glevels[] - an array of the gedcom level for each line that was edited
- * - $tag[] - an array of the tags for each gedcom line that was edited
- * - $islink[] - an array of 1 or 0 values to tell whether the text is a link element and should be surrounded by @@
- * - $text[] - an array of the text data for each line
- * With these arrays you can recreate the gedcom lines like this
- * <code>$glevel[0]." ".$tag[0]." ".$text[0]</code>
- * There will be an index in each of these arrays for each line of the gedcom
- * fact that is being edited.
- * If the $text[] array is empty for the given line, then it means that the
- * user removed that line during editing or that the line is supposed to be
- * empty (1 DEAT, 1 BIRT) for example.  To know if the line should be removed
- * there is a section of code that looks ahead to the next lines to see if there
- * are sub lines.  For example we don't want to remove the 1 DEAT line if it has
- * a 2 PLAC or 2 DATE line following it.  If there are no sub lines, then the line
- * can be safely removed.
- * @param string $newged	the new gedcom record to add the lines to
- * @param int $levelOverride	Override GEDCOM level specified in $glevels[0]
- * @return string	The updated gedcom record
- */
+* Add new gedcom lines from interface update arrays
+* The edit_interface and add_simple_tag function produce the following
+* arrays incoming from the $_POST form
+* - $glevels[] - an array of the gedcom level for each line that was edited
+* - $tag[] - an array of the tags for each gedcom line that was edited
+* - $islink[] - an array of 1 or 0 values to tell whether the text is a link element and should be surrounded by @@
+* - $text[] - an array of the text data for each line
+* With these arrays you can recreate the gedcom lines like this
+* <code>$glevel[0]." ".$tag[0]." ".$text[0]</code>
+* There will be an index in each of these arrays for each line of the gedcom
+* fact that is being edited.
+* If the $text[] array is empty for the given line, then it means that the
+* user removed that line during editing or that the line is supposed to be
+* empty (1 DEAT, 1 BIRT) for example.  To know if the line should be removed
+* there is a section of code that looks ahead to the next lines to see if there
+* are sub lines.  For example we don't want to remove the 1 DEAT line if it has
+* a 2 PLAC or 2 DATE line following it.  If there are no sub lines, then the line
+* can be safely removed.
+* @param string $newged the new gedcom record to add the lines to
+* @param int $levelOverride Override GEDCOM level specified in $glevels[0]
+* @return string The updated gedcom record
+*/
 function handle_updates($newged, $levelOverride="no") {
 	global $glevels, $islink, $tag, $uploaded_files, $text, $NOTE, $WORD_WRAPPED_NOTES;
 
@@ -1934,7 +1931,7 @@ function handle_updates($newged, $levelOverride="no") {
 				$text[$j] = "";
 			} else {
 				$noterec = find_gedcom_record($text[$j]);
-				$newnote = "0 @$text[$j]@ NOTE\r\n";
+				$newnote = "0 @$text[$j]@ NOTE\n";
 				$newline = "1 CONC ".rtrim(stripLRMRLM($NOTE[$text[$j]]));
 				$newnote .= breakConts($newline);
 				if (PGV_DEBUG) {
@@ -1959,7 +1956,6 @@ function handle_updates($newged, $levelOverride="no") {
 			}
 		}
 
-//		if (!empty($text[$j])) {
 		if (trim($text[$j])!='') {
 			$pass = true;
 		}
@@ -2011,12 +2007,12 @@ function handle_updates($newged, $levelOverride="no") {
 
 
 /**
- * check the given date that was input by a user and convert it
- * to proper gedcom date if possible
- * @author John Finlay
- * @param string $datestr	the date input by the user
- * @return string	the converted date string
- */
+* check the given date that was input by a user and convert it
+* to proper gedcom date if possible
+* @author John Finlay
+* @param string $datestr the date input by the user
+* @return string the converted date string
+*/
 function check_input_date($datestr) {
 	global $lang_short_cut, $LANGUAGE;
 	// Convert from natural language to gedcom format
@@ -2051,22 +2047,22 @@ function print_quick_resn($name) {
 
 
 /**
- * Link Media ID to Indi, Family, or Source ID
- *
- * Code was removed from inverselink.php to become a callable function
- *
- * @param 	string 	$mediaid	Media ID to be linked
- * @param	string	$linktoid	Indi, Family, or Source ID that the Media ID should link to
- * @param	int		$level		Level where the Media Object reference should be created
- * @return 	bool				success or failure
- */
+* Link Media ID to Indi, Family, or Source ID
+*
+* Code was removed from inverselink.php to become a callable function
+*
+* @param  string  $mediaid Media ID to be linked
+* @param string $linktoid Indi, Family, or Source ID that the Media ID should link to
+* @param int $level Level where the Media Object reference should be created
+* @return  bool success or failure
+*/
 function linkMedia($mediaid, $linktoid, $level=1) {
 	global $GEDCOM, $pgv_lang, $pgv_changes;
 
 	if (empty($level)) $level = 1;
 	//-- Make sure we only add new links to the media object
 	if (exists_db_link($mediaid, $linktoid, $GEDCOM)) return false;
-	if ($level!=1) return false;		// Level 2 items get linked elsewhere
+	if ($level!=1) return false; // Level 2 items get linked elsewhere
 	// find Indi, Family, or Source record to link to
 	if (isset($pgv_changes[$linktoid."_".$GEDCOM])) {
 		$gedrec = find_updated_record($linktoid);
@@ -2080,9 +2076,9 @@ function linkMedia($mediaid, $linktoid, $level=1) {
 
 	if ($gedrec) {
 		// Changed to match format of all other data adds.
-		//$mediarec = "1 OBJE @".$mediaid."@\r\n";
-		//$newrec = trim($gedrec."\r\n".$mediarec);
-		$newrec = $gedrec."\r\n1 OBJE @".$mediaid."@";
+		//$mediarec = "1 OBJE @".$mediaid."@\n";
+		//$newrec = trim($gedrec."\n".$mediarec);
+		$newrec = $gedrec."\n1 OBJE @".$mediaid."@";
 
 		replace_gedrec($linktoid, $newrec);
 
@@ -2094,9 +2090,9 @@ function linkMedia($mediaid, $linktoid, $level=1) {
 }
 
 /**
- * builds the form for adding new facts
- * @param string $fact	the new fact we are adding
- */
+* builds the form for adding new facts
+* @param string $fact the new fact we are adding
+*/
 function create_add_form($fact) {
 	global $tags, $pgv_lang, $FULL_SOURCES;
 
@@ -2128,19 +2124,19 @@ function create_add_form($fact) {
 }
 
 /**
- * creates the form for editing the fact within the given gedcom record at the
- * given line number
- * @param string $gedrec	the level 0 gedcom record
- * @param int $linenum		the line number of the fact to edit within $gedrec
- * @param string $level0type	the type of the level 0 gedcom record
- */
+* creates the form for editing the fact within the given gedcom record at the
+* given line number
+* @param string $gedrec the level 0 gedcom record
+* @param int $linenum the line number of the fact to edit within $gedrec
+* @param string $level0type the type of the level 0 gedcom record
+*/
 function create_edit_form($gedrec, $linenum, $level0type) {
 	global $WORD_WRAPPED_NOTES, $pgv_lang, $factarray;
 	global $pid, $tags, $ADVANCED_PLAC_FACTS, $date_and_time, $templefacts;
 	global $lang_short_cut, $LANGUAGE, $FULL_SOURCES;
 
 	$tags=array();
-	$gedlines = split("\n", $gedrec);	// -- find the number of lines in the record
+	$gedlines = split("\n", $gedrec); // -- find the number of lines in the record
 	if (!isset($gedlines[$linenum])) {
 		print "<span class=\"error\">".$pgv_lang["edit_concurrency_msg1"]."<br /><br />";
 		print $pgv_lang["edit_concurrency_reload"]."</span>";
@@ -2268,9 +2264,9 @@ function create_edit_form($gedrec, $linenum, $level0type) {
 }
 
 /**
- * Populates the global $tags array with any missing sub-tags.
- * @param string $level1tag	the type of the level 1 gedcom record
- */
+* Populates the global $tags array with any missing sub-tags.
+* @param string $level1tag the type of the level 1 gedcom record
+*/
 function insert_missing_subtags($level1tag)
 {
 	global $tags, $date_and_time, $templefacts, $level2_tags, $ADVANCED_PLAC_FACTS, $factarray;
@@ -2346,11 +2342,11 @@ function insert_missing_subtags($level1tag)
 }
 
 /**
- * Delete a person and update all records that link to that person
- * @param string $pid	the id of the person to delete
- * @param string $gedrec	the gedcom record of the person to delete
- * @return boolean	true or false based on the successful completion of the deletion
- */
+* Delete a person and update all records that link to that person
+* @param string $pid the id of the person to delete
+* @param string $gedrec the gedcom record of the person to delete
+* @return boolean true or false based on the successful completion of the deletion
+*/
 function delete_person($pid, $gedrec='') {
 	// NOTE: $pgv_changes isn't a global.  Making it global appears to cause problems.
 	global $pgv_lang, $GEDCOM;
@@ -2411,11 +2407,11 @@ function delete_person($pid, $gedrec='') {
 }
 
 /**
- * Delete a person and update all records that link to that person
- * @param string $pid	the id of the person to delete
- * @param string $gedrec	the gedcom record of the person to delete
- * @return boolean	true or false based on the successful completion of the deletion
- */
+* Delete a person and update all records that link to that person
+* @param string $pid the id of the person to delete
+* @param string $gedrec the gedcom record of the person to delete
+* @return boolean true or false based on the successful completion of the deletion
+*/
 function delete_family($pid, $gedrec='') {
 	// NOTE: $pgv_changes isn't a global.  Making it global appears to cause problems.
 	global $GEDCOM, $pgv_lang;
