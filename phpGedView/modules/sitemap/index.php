@@ -60,7 +60,6 @@ $famlist_priority	= safe_REQUEST($_REQUEST, 'famlist_priority', PGV_REGEX_XREF);
 $famlist_update		= safe_REQUEST($_REQUEST, 'famlist_update', PGV_REGEX_XREF);
 
 if ($action=="sendFiles") {
-	global $filename, $gedcom_name;
 	header('Content-Type: application/octet-stream');
 	header('Content-Disposition: attachment; filename="'.$filename.'"');
 
