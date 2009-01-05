@@ -1,31 +1,31 @@
 <?php
 /**
- *  Manage Servers Page
- *
- *  Allow a user the ability to manage servers i.e. allowing, banning, deleting
- *
- * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- *
- * @package PhpGedView
- * @subpackage Admin
- * @version $Id$
- * @author rbennett
- */
+*  Manage Servers Page
+*
+*  Allow a user the ability to manage servers i.e. allowing, banning, deleting
+*
+* phpGedView: Genealogy Viewer
+* Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
+*
+* This program is free software; you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation; either version 2 of the License, or
+* (at your option) any later version.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+* GNU General Public License for more details.
+*
+* You should have received a copy of the GNU General Public License
+* along with this program; if not, write to the Free Software
+* Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+*
+* @package PhpGedView
+* @subpackage Admin
+* @version $Id$
+* @author rbennett
+*/
 
 require './config.php';
 
@@ -46,11 +46,11 @@ if (!PGV_USER_GEDCOM_ADMIN) {
 }
 
 $banned = array();
-if (file_exists($INDEX_DIRECTORY."banned.php"))	require($INDEX_DIRECTORY."banned.php");
-$banned = array_unique($banned);						// Make sure we have no duplicates
+if (file_exists($INDEX_DIRECTORY."banned.php")) require($INDEX_DIRECTORY."banned.php");
+$banned = array_unique($banned); // Make sure we have no duplicates
 $search_engines = array();
-if (file_exists($INDEX_DIRECTORY."search_engines.php"))	require($INDEX_DIRECTORY."search_engines.php");
-$search_engines = array_unique($search_engines);		// Make sure we have no duplicates
+if (file_exists($INDEX_DIRECTORY."search_engines.php")) require($INDEX_DIRECTORY."search_engines.php");
+$search_engines = array_unique($search_engines); // Make sure we have no duplicates
 $remoteServers = get_server_list();
 
 $action = safe_GET('action');
@@ -59,19 +59,19 @@ $address = safe_GET('address');
 if (empty($address)) $address = safe_POST('address');
 
 $deleteBanned = safe_POST('deleteBanned');
-if (!empty($deleteBanned)) {		// A "remove banned IP" button was pushed
+if (!empty($deleteBanned)) { // A "remove banned IP" button was pushed
 	$action = 'deleteBanned';
 	$address = $deleteBanned;
 }
 
 $deleteSearch = safe_POST('deleteSearch');
-if (!empty($deleteSearch)) {		// A "remove search engine IP" button was pushed
+if (!empty($deleteSearch)) { // A "remove search engine IP" button was pushed
 	$action = 'deleteSearch';
 	$address = $deleteSearch;
 }
 
 $deleteServer = safe_POST('deleteServer');
-if (!empty($deleteServer)) {		// A "remove remote server" button was pushed
+if (!empty($deleteServer)) { // A "remove remote server" button was pushed
 	$action = 'deleteServer';
 	$address = $deleteServer;
 }
@@ -79,8 +79,8 @@ if (!empty($deleteServer)) {		// A "remove remote server" button was pushed
 if (empty($action)) $action = 'showForm';
 
 /*
- * Validate input string to be an IP address
- */
+* Validate input string to be an IP address
+*/
 function validIP($address) {
 	if (!preg_match('/^\d{1,3}\.(\d{1,3}|\*)\.(\d{1,3}|\*)\.(\d{1,3}|\*)$/', $address)) return false;
 	$pieces = explode('.', $address);
@@ -92,12 +92,12 @@ function validIP($address) {
 
 
 /**
- * Adds an IP address to the banned.php file
- */
+* Adds an IP address to the banned.php file
+*/
 if ($action=='addBanned') {
 	if (validIP($address)) {
 		$banned[] = $address;
-		$banned = array_unique($banned);		// Make sure we have no duplicates
+		$banned = array_unique($banned); // Make sure we have no duplicates
 
 		$bannedtext = "<?php\n//--List of banned IP addresses\n";
 		$bannedtext .= "\$banned = array();\n";
@@ -115,7 +115,7 @@ if ($action=='addBanned') {
 			fwrite($fp, $bannedtext);
 			fclose($fp);
 			$logline = AddToLog("banned.php updated");
- 			check_in($logline, "banned.php", $INDEX_DIRECTORY);
+			check_in($logline, "banned.php", $INDEX_DIRECTORY);
 		}
 	} else $errorBanned = $pgv_lang["error_ban_server"];
 
@@ -123,8 +123,8 @@ if ($action=='addBanned') {
 }
 
 /**
- * Removes an IP address from the banned.php file
- */
+* Removes an IP address from the banned.php file
+*/
 if ($action=='deleteBanned') {
 	$banned = array_flip($banned);
 	unset($banned[$address]);
@@ -146,19 +146,19 @@ if ($action=='deleteBanned') {
 		fwrite($fp, $bannedtext);
 		fclose($fp);
 		$logline = AddToLog("banned.php updated");
- 		check_in($logline, "banned.php", $INDEX_DIRECTORY);
+		check_in($logline, "banned.php", $INDEX_DIRECTORY);
 	}
 
 	$action = 'showForm';
 }
 
 /**
- * Adds an IP address to the search_engines.php file
- */
+* Adds an IP address to the search_engines.php file
+*/
 if ($action=='addSearch') {
 	if (validIP($address)) {
 		$search_engines[] = $address;
-		$search_engines = array_unique($search_engines);		// Make sure we have no duplicates
+		$search_engines = array_unique($search_engines); // Make sure we have no duplicates
 		$searchtext = "<?php\n//--List of search engine IP addresses\n";
 		$searchtext .= "\$search_engines = array();\n";
 		foreach ($search_engines as $value) {
@@ -183,8 +183,8 @@ if ($action=='addSearch') {
 }
 
 /**
- * Removes an IP address from the search_engines.php file
- */
+* Removes an IP address from the search_engines.php file
+*/
 if ($action=='deleteSearch') {
 	$search_engines = array_flip($search_engines);
 	unset($search_engines[$address]);
@@ -206,17 +206,17 @@ if ($action=='deleteSearch') {
 		fwrite($fp, $searchtext);
 		fclose($fp);
 		$logline = AddToLog("search_engines.php updated");
- 		check_in($logline, "search_engines.php", $INDEX_DIRECTORY);
+		check_in($logline, "search_engines.php", $INDEX_DIRECTORY);
 	}
 
 	$action = 'showForm';
 }
 
 /**
- * Adds a server to the outbound remote linking list
- */
+* Adds a server to the outbound remote linking list
+*/
 if ($action=='addServer') {
-	$serverTitle = trim(stripslashes(safe_POST('serverTitle', '[^<>"%{};]+')));		// same as PGV_REGEX_NOSCRIPT, but allow ampersand in title
+	$serverTitle = trim(stripslashes(safe_POST('serverTitle', '[^<>"%{};]+'))); // same as PGV_REGEX_NOSCRIPT, but allow ampersand in title
 	$serverURL = trim(stripslashes(safe_POST('serverURL', PGV_REGEX_URL)));
 	$gedcom_id = trim(stripslashes(safe_POST('gedcom_id')));
 	$username = trim(stripslashes(safe_POST('username')));
@@ -236,14 +236,14 @@ if ($action=='addServer') {
 			}
 		}
 		if (empty($errorServer)) {
-			$gedcom_string = "0 @new@ SOUR\r\n";
-			$gedcom_string.= "1 TITL ".$serverTitle."\r\n";
-			$gedcom_string.= "1 URL ".$serverURL."\r\n";
-			$gedcom_string.= "1 _DBID ".$gedcom_id."\r\n";
-			$gedcom_string.= "2 _USER ".$username."\r\n";
-			$gedcom_string.= "2 _PASS ".$password."\r\n";
+			$gedcom_string = "0 @new@ SOUR\n";
+			$gedcom_string.= "1 TITL ".$serverTitle."\n";
+			$gedcom_string.= "1 URL ".$serverURL."\n";
+			$gedcom_string.= "1 _DBID ".$gedcom_id."\n";
+			$gedcom_string.= "2 _USER ".$username."\n";
+			$gedcom_string.= "2 _PASS ".$password."\n";
 			//-- only allow admin users to see password
-			$gedcom_string.= "3 RESN confidential\r\n";
+			$gedcom_string.= "3 RESN confidential\n";
 
 			$service = new ServiceClient($gedcom_string);
 			$sid = $service->authenticate();
@@ -252,7 +252,7 @@ if ($action=='addServer') {
 			} else {
 				$serverID = append_gedrec($gedcom_string);
 				accept_changes($serverID."_".$GEDCOM);
-				$remoteServers = get_server_list();		// refresh the list
+				$remoteServers = get_server_list(); // refresh the list
 			}
 		}
 	} else $errorServer = $pgv_lang["error_url_blank"];
@@ -261,8 +261,8 @@ if ($action=='addServer') {
 }
 
 /**
- * Removes a server from the remote linking outbound list
- */
+* Removes a server from the remote linking outbound list
+*/
 if ($action=='deleteServer') {
 	if (!empty($address)) {
 		$sid = stripslashes($address);
@@ -279,7 +279,7 @@ if ($action=='deleteServer') {
 		}
 	}
 
-	$remoteServers = get_server_list();		// refresh the list
+	$remoteServers = get_server_list(); // refresh the list
 	$action = 'showForm';
 }
 
@@ -304,12 +304,12 @@ function showSite(siteID) {
 
 <!-- Search Engine IP address table -->
 <table class="width66" align="center">
- <tr>
+<tr>
 	<td colspan="2" class="title" align="center">
 	<?php echo $pgv_lang["title_manage_servers"];?>
 	</td>
- </tr>
- <tr>
+</tr>
+<tr>
 	<td>
 	<form name="searchengineform" action="manageservers.php" method="post">
 	<table class="width100" align="center">
@@ -359,12 +359,12 @@ function showSite(siteID) {
 	</table>
 	</form>
 	</td>
- </tr>
+</tr>
 </table>
 
 <!-- Banned IP address table -->
 <table class="width66" align="center">
- <tr>
+<tr>
 	<td>
 	<form name="banIPform" action="manageservers.php" method="post">
 	<table class="width100" align="center">
@@ -414,12 +414,12 @@ function showSite(siteID) {
 	</table>
 	</form>
 	</td>
- </tr>
+</tr>
 </table>
 
 <!-- remote server list -->
 <table class="width66" align="center">
- <tr>
+<tr>
 	<td>
 	<form name="serverlistform" action="manageservers.php" method="post">
 	<table class="width100">
@@ -510,7 +510,7 @@ function showSite(siteID) {
 	</table>
 	</form>
 	</td>
- </tr>
+</tr>
 </table>
 
 <!-- Add remote server form -->
@@ -524,7 +524,7 @@ if (empty($errorServer)) {
 ?>
 <form name="addserversform" action="manageservers.php" method="post"">
 <table class="width66" align="center">
- <tr>
+<tr>
 	<td valign="top">
 	<table class="width100">
 		<tr>
@@ -591,7 +591,7 @@ if (empty($errorServer)) {
 		</tr>
 	</table>
 	</td>
- </tr>
+</tr>
 </table>
 </form>
 <?php
