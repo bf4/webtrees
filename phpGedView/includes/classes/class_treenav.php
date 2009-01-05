@@ -3,7 +3,7 @@
  * Class file for the tree navigator
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2008  PGV Development Team.  All rights reserved.
+ * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -489,13 +489,14 @@ class TreeNav {
 					</td>
 					<?php
 					if ($hasChildren && $person->getNumberOfChildren()>1) { ?><td valign="top"><img style="position: absolute;" id="cline_<?php print $person->getXref();?>" name="vertline" src="<?php print $SERVER_URL.$PGV_IMAGE_DIR."/".$PGV_IMAGES['vline']['other']; ?>" width="3" /></td><?php }
+					else if ($hasChildren) { ?><td valign="top"><img style="position: absolute;" id="cline_<?php print $person->getXref();?>" name="vertline" src="<?php print $SERVER_URL.$PGV_IMAGE_DIR."/".$PGV_IMAGES['hline']['other']; ?>" width="3" /></td><?php }
 					}
 					if ($state>0) {
 						?><td><img src="<?php print $SERVER_URL.$PGV_IMAGE_DIR."/".$PGV_IMAGES['hline']['other']; ?>" width="8" height="3" /></td><?php
 					}
 					/* print the person */ ?>
 					<td>
-						<div class="person_box" dir="<?php print $TEXT_DIRECTION; ?>" id="box_<?php print $person->getXref();?>" style="text-align: <?php echo $TEXT_DIRECTION=="rtl" ? "right":"left"; ?>; cursor: pointer; font-size: <?php print 10 + $this->zoomLevel;?>px; width: <?php print ($this->bwidth+($this->zoomLevel*18));?>px; direction: <?php print $TEXT_DIRECTION; ?>" onclick="<?php print $this->name; ?>.expandBox(this, '<?php print $person->getXref(); ?>', 'all');">
+						<div class="person_box" dir="<?php print $TEXT_DIRECTION; ?>" id="box_<?php print $person->getXref();?>" style="text-align: <?php echo $TEXT_DIRECTION=="rtl" ? "right":"left"; ?>; cursor: pointer; font-size: <?php print 10 + $this->zoomLevel;?>px; width: <?php print ($this->bwidth+($this->zoomLevel*18));?>px; margin-left: 3px; direction: <?php print $TEXT_DIRECTION; ?>" onclick="<?php print $this->name; ?>.expandBox(this, '<?php print $person->getXref(); ?>', 'all');">
 						<?php
 							$name = $person->getFullName();
 //							if ($SHOW_ID_NUMBERS) $name.=" (".$person->getXref().")";
