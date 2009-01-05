@@ -5,7 +5,7 @@
  * Display media Items using Lightbox
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2007 to 2008  PGV Development Team.  All rights reserved.
+ * Copyright (C) 2007 to 2009  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -92,6 +92,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 		$tt      = $pgv_lang["ROW_TYPE__other"];
 		$typ2b   = "(";
 		$typ2b  .= " (m_gedrec NOT ".PGV_DB_LIKE." '%TYPE %')        OR ";
+		$typ2b  .= " (m_gedrec ".PGV_DB_LIKE."	   '%TYPE coat%')	 OR ";
 		$typ2b  .= " (m_gedrec ".PGV_DB_LIKE."     '%TYPE book%')    OR ";
 		$typ2b  .= " (m_gedrec ".PGV_DB_LIKE."     '%TYPE audio%')   OR ";
 		$typ2b  .= " (m_gedrec ".PGV_DB_LIKE."     '%TYPE video%')   OR ";
