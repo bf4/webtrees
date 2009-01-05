@@ -83,7 +83,7 @@ define ('PGV_GEDCOM_LINE_LENGTH', 255-strlen(PGV_EOL)); // Characters, not bytes
 
 // Use these tags to wrap embedded javascript consistently
 define('PGV_JS_START', "\n<script type=\"text/javascript\">\n//<![CDATA[\n");
-define('PGV_JS_END',   "\n//]]\n</script>\n");
+define('PGV_JS_END',   "\n//]]>\n</script>\n");
 
 // Used in Google charts
 define ('PGV_GOOGLE_CHART_ENCODING', 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-.');
