@@ -1,30 +1,30 @@
 <?php
 /**
- *  Add Remote Link Page
- *
- *  Allow a user the ability to add links to people from other servers and other gedcoms.
- *
- * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- *
- * @package PhpGedView
- * @subpackage Charts
- * @version $Id$
- */
+*  Add Remote Link Page
+*
+*  Allow a user the ability to add links to people from other servers and other gedcoms.
+*
+* phpGedView: Genealogy Viewer
+* Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
+*
+* This program is free software; you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation; either version 2 of the License, or
+* (at your option) any later version.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+* GNU General Public License for more details.
+*
+* You should have received a copy of the GNU General Public License
+* along with this program; if not, write to the Free Software
+* Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+*
+* @package PhpGedView
+* @subpackage Charts
+* @version $Id$
+*/
 
 if (!defined('PGV_PHPGEDVIEW')) {
 	header('HTTP/1.0 403 Forbidden');
@@ -33,9 +33,9 @@ if (!defined('PGV_PHPGEDVIEW')) {
 
 define('PGV_REMOTELINK_CTRL_PHP', '');
 
-require_once('includes/controllers/basecontrol.php');
-require_once("includes/functions/functions_edit.php");
-require_once("includes/classes/class_serviceclient.php");
+require_once 'includes/controllers/basecontrol.php';
+require_once 'includes/functions/functions_edit.php';
+require_once 'includes/classes/class_serviceclient.php';
 
 class RemoteLinkController extends BaseController {
 	var $has_familysearch = false;
@@ -45,15 +45,15 @@ class RemoteLinkController extends BaseController {
 	var $server_list = array();
 
 	/**
-	 * Initialize the controller for the add remote link
-	 *
-	 */
+	* Initialize the controller for the add remote link
+	*
+	*/
 	function init() {
 		global $GEDCOM;
 
 		if (file_exists("modules/FamilySearch/familySearchWrapper.php")) {
 			$this->has_familysearch = true;
-			require_once("modules/FamilySearch/familySearchWrapper.php");
+			require_once 'modules/FamilySearch/familySearchWrapper.php';
 		}
 
 		//-- require that the user have entered their password
@@ -78,9 +78,9 @@ class RemoteLinkController extends BaseController {
 	}
 
 	/**
-	 * Perform the desired action
-	 *
-	 */
+	* Perform the desired action
+	*
+	*/
 	function runAction() {
 		global $pgv_lang, $GEDCOM;
 		$this->success = false;
@@ -117,7 +117,7 @@ class RemoteLinkController extends BaseController {
 						$serverID = $this->addFamilySearchServer($server_title, $server_URL, $gedcom_id, $username, $password);
 					}
 					break;
-				default:		// Must be a local database
+				default: // Must be a local database
 					$server_title = trim(stripslashes(safe_POST('txtCB_Title', '[^<>"%{};]+', '')));
 					$gedcom_id = trim(stripslashes(safe_POST('txtCB_GID', PGV_REGEX_NOSCRIPT, '')));
 					$serverID = $this->addLocalServer($server_title, $gedcom_id);
@@ -133,126 +133,126 @@ class RemoteLinkController extends BaseController {
 
 				switch ($relation_type) {
 				case "father":
-					$indistub = "0 @new@ INDI\r\n";
-					$indistub .= "1 SOUR @".$serverID."@\r\n";
-					$indistub .= "2 PAGE ".$link_pid."\r\n";
-					$indistub .= "1 RFN ".$serverID.":".$link_pid."\r\n";
+					$indistub = "0 @new@ INDI\n";
+					$indistub .= "1 SOUR @".$serverID."@\n";
+					$indistub .= "2 PAGE ".$link_pid."\n";
+					$indistub .= "1 RFN ".$serverID.":".$link_pid."\n";
 					$stub_id = append_gedrec($indistub, false);
 					$indistub = find_updated_record($stub_id);
 
-					$gedcom_fam = "0 @new@ FAM\r\n";
-					$gedcom_fam.= "1 HUSB @".$stub_id."@\r\n";
-					$gedcom_fam.= "1 CHIL @".$pid."@\r\n";
+					$gedcom_fam = "0 @new@ FAM\n";
+					$gedcom_fam.= "1 HUSB @".$stub_id."@\n";
+					$gedcom_fam.= "1 CHIL @".$pid."@\n";
 					$fam_id = append_gedrec($gedcom_fam);
 
-					$indirec.= "\r\n";
-					$indirec.= "1 FAMC @".$fam_id."@\r\n";
+					$indirec.= "\n";
+					$indirec.= "1 FAMC @".$fam_id."@\n";
 					$answer2 = replace_gedrec($pid, $indirec);
 
 					$serviceClient = ServiceClient::getInstance($serverID);
 					$indistub = $serviceClient->mergeGedcomRecord($link_pid, $indistub, true, true);
-					$indistub.= "\r\n1 FAMS @".$fam_id."@\r\n";
+					$indistub.= "\n1 FAMS @".$fam_id."@\n";
 					$answer2 = replace_gedrec($stub_id, $indistub, false);
 					break;
 				case "mother":
-					$indistub = "0 @NEW@ INDI\r\n";
-					$indistub .= "1 SOUR @".$serverID."@\r\n";
-					$indistub .= "2 PAGE ".$link_pid."\r\n";
-					$indistub .= "1 RFN ".$serverID.":".$link_pid."\r\n";
+					$indistub = "0 @NEW@ INDI\n";
+					$indistub .= "1 SOUR @".$serverID."@\n";
+					$indistub .= "2 PAGE ".$link_pid."\n";
+					$indistub .= "1 RFN ".$serverID.":".$link_pid."\n";
 					$stub_id = append_gedrec($indistub, false);
 					$indistub = find_updated_record($stub_id);
 
-					$gedcom_fam = "0 @NEW@ FAM\r\n";
-					$gedcom_fam.= "1 WIFE @".$stub_id."@\r\n";
-					$gedcom_fam.= "1 CHIL @".$pid."@\r\n";
+					$gedcom_fam = "0 @NEW@ FAM\n";
+					$gedcom_fam.= "1 WIFE @".$stub_id."@\n";
+					$gedcom_fam.= "1 CHIL @".$pid."@\n";
 					$fam_id = append_gedrec($gedcom_fam);
 
-					$indirec.= "\r\n";
-					$indirec.= "1 FAMC @".$fam_id."@\r\n";
+					$indirec.= "\n";
+					$indirec.= "1 FAMC @".$fam_id."@\n";
 					$answer2 = replace_gedrec($pid, $indirec);
 
 					$serviceClient = ServiceClient::getInstance($serverID);
 					$indistub = $serviceClient->mergeGedcomRecord($link_pid, $indistub, true, true);
-					$indistub.= "\r\n1 FAMS @".$fam_id."@\r\n";
+					$indistub.= "\n1 FAMS @".$fam_id."@\n";
 					$answer2 = replace_gedrec($stub_id, $indistub, false);
 					break;
 				case "husband":
-					$indistub = "0 @NEW@ INDI\r\n";
-					$indistub .= "1 SOUR @".$serverID."@\r\n";
-					$indistub .= "2 PAGE ".$link_pid."\r\n";
-					$indistub .= "1 RFN ".$serverID.":".$link_pid."\r\n";
+					$indistub = "0 @NEW@ INDI\n";
+					$indistub .= "1 SOUR @".$serverID."@\n";
+					$indistub .= "2 PAGE ".$link_pid."\n";
+					$indistub .= "1 RFN ".$serverID.":".$link_pid."\n";
 					$stub_id = append_gedrec($indistub, false);
 					$indistub = find_updated_record($stub_id);
 
-					$gedcom_fam = "0 @NEW@ FAM\r\n";
-					$gedcom_fam.= "1 WIFE @".$pid."@\r\n";
-					$gedcom_fam.= "1 HUSB @".$stub_id."@\r\n";
+					$gedcom_fam = "0 @NEW@ FAM\n";
+					$gedcom_fam.= "1 WIFE @".$pid."@\n";
+					$gedcom_fam.= "1 HUSB @".$stub_id."@\n";
 					$fam_id = append_gedrec($gedcom_fam);
 
-					$indirec.= "\r\n";
-					$indirec.= "1 FAMS @".$fam_id."@\r\n";
+					$indirec.= "\n";
+					$indirec.= "1 FAMS @".$fam_id."@\n";
 					$answer2 = replace_gedrec($pid, $indirec);
 
 					$serviceClient = ServiceClient::getInstance($serverID);
 					$indistub = $serviceClient->mergeGedcomRecord($link_pid, $indistub, true, true);
-					$indistub.= "\r\n1 FAMS @".$fam_id."@\r\n";
+					$indistub.= "\n1 FAMS @".$fam_id."@\n";
 					$answer2 = replace_gedrec($stub_id, $indistub, false);
 					break;
 				case "wife":
-					$indistub = "0 @NEW@ INDI\r\n";
-					$indistub .= "1 SOUR @".$serverID."@\r\n";
-					$indistub .= "2 PAGE ".$link_pid."\r\n";
-					$indistub .= "1 RFN ".$serverID.":".$link_pid."\r\n";
+					$indistub = "0 @NEW@ INDI\n";
+					$indistub .= "1 SOUR @".$serverID."@\n";
+					$indistub .= "2 PAGE ".$link_pid."\n";
+					$indistub .= "1 RFN ".$serverID.":".$link_pid."\n";
 					$stub_id = append_gedrec($indistub, false);
 					$indistub = find_updated_record($stub_id);
 
-					$gedcom_fam = "0 @NEW@ FAM\r\n";
-					$gedcom_fam.= "1 WIFE @".$stub_id."@\r\n";
-					$gedcom_fam.= "1 HUSB @".$pid."@\r\n";
+					$gedcom_fam = "0 @NEW@ FAM\n";
+					$gedcom_fam.= "1 WIFE @".$stub_id."@\n";
+					$gedcom_fam.= "1 HUSB @".$pid."@\n";
 					$fam_id = append_gedrec($gedcom_fam);
 
-					$indirec.= "\r\n";
-					$indirec.= "1 FAMS @".$fam_id."@\r\n";
+					$indirec.= "\n";
+					$indirec.= "1 FAMS @".$fam_id."@\n";
 					$answer2 = replace_gedrec($pid, $indirec);
 
 					$serviceClient = ServiceClient::getInstance($serverID);
 					$indistub = $serviceClient->mergeGedcomRecord($link_pid, $indistub, true, true);
-					$indistub.= "\r\n1 FAMS @".$fam_id."@\r\n";
+					$indistub.= "\n1 FAMS @".$fam_id."@\n";
 					$answer2 = replace_gedrec($stub_id, $indistub, false);
 					break;
 				case "son":
 				case "daughter":
-					$indistub = "0 @NEW@ INDI\r\n";
-					$indistub .= "1 SOUR @".$serverID."@\r\n";
-					$indistub .= "2 PAGE ".$link_pid."\r\n";
-					$indistub .= "1 RFN ".$serverID.":".$link_pid."\r\n";
+					$indistub = "0 @NEW@ INDI\n";
+					$indistub .= "1 SOUR @".$serverID."@\n";
+					$indistub .= "2 PAGE ".$link_pid."\n";
+					$indistub .= "1 RFN ".$serverID.":".$link_pid."\n";
 					$stub_id = append_gedrec($indistub, false);
 					$indistub = find_updated_record($stub_id);
 
 					$sex = get_gedcom_value("SEX", 1, $indirec, '', false);
 					if ($sex=="M") {
-						$gedcom_fam = "0 @NEW@ FAM\r\n";
-						$gedcom_fam.= "1 HUSB @".$pid."@\r\n";
-						$gedcom_fam.= "1 CHIL @".$stub_id."@\r\n";
+						$gedcom_fam = "0 @NEW@ FAM\n";
+						$gedcom_fam.= "1 HUSB @".$pid."@\n";
+						$gedcom_fam.= "1 CHIL @".$stub_id."@\n";
 					} else {
-						$gedcom_fam = "0 @NEW@ FAM\r\n";
-						$gedcom_fam.= "1 WIFE @".$pid."@\r\n";
-						$gedcom_fam.= "1 CHIL @".$stub_id."@\r\n";
+						$gedcom_fam = "0 @NEW@ FAM\n";
+						$gedcom_fam.= "1 WIFE @".$pid."@\n";
+						$gedcom_fam.= "1 CHIL @".$stub_id."@\n";
 					}
 					$fam_id = append_gedrec($gedcom_fam);
-					$indirec.= "\r\n";
-					$indirec.= "1 FAMS @".$fam_id."@\r\n";
+					$indirec.= "\n";
+					$indirec.= "1 FAMS @".$fam_id."@\n";
 					$answer2 = replace_gedrec($pid, $indirec);
 
 					$serviceClient = ServiceClient::getInstance($serverID);
 					$indistub = $serviceClient->mergeGedcomRecord($link_pid, $indistub, true, true);
-					$indistub.= "\r\n1 FAMC @".$fam_id."@\r\n";
+					$indistub.= "\n1 FAMC @".$fam_id."@\n";
 					$answer2 = replace_gedrec($stub_id, $indistub,false);
 					break;
-				default:		// assume "self"
-					$indirec.="\r\n";
-					$indirec.="1 RFN ".$serverID.":".$link_pid."\r\n";
-					$indirec.="1 SOUR @".$serverID."@\r\n";
+				default: // assume "self"
+					$indirec.="\n";
+					$indirec.="1 RFN ".$serverID.":".$link_pid."\n";
+					$indirec.="1 SOUR @".$serverID."@\n";
 
 					$serviceClient = ServiceClient::getInstance($serverID);
 					if (!is_null($serviceClient)) {
@@ -277,33 +277,33 @@ class RemoteLinkController extends BaseController {
 	}
 
 	/**
-	 * Add a remote server
-	 *
-	 * @param string $title
-	 * @param string $url
-	 * @param string $gedcom_id
-	 * @param string $username
-	 * @param string $password
-	 * @return mixed	the serverID of the server to link to
-	 */
+	* Add a remote server
+	*
+	* @param string $title
+	* @param string $url
+	* @param string $gedcom_id
+	* @param string $username
+	* @param string $password
+	* @return mixed the serverID of the server to link to
+	*/
 	function addRemoteServer($title, $url, $gedcom_id, $username, $password) {
 		if (preg_match("/\?wsdl$/", $url)==0) $url.="?wsdl";
 		$serverID = $this->checkExistingServer($url, $gedcom_id);
 		if ($serverID===false) {
-			$gedcom_string = "0 @new@ SOUR\r\n";
-			$gedcom_string.= "1 URL ".$url."\r\n";
-			$gedcom_string.= "1 _DBID ".$gedcom_id."\r\n";
-			$gedcom_string.= "2 _USER ".$username."\r\n";
-			$gedcom_string.= "2 _PASS ".$password."\r\n";
+			$gedcom_string = "0 @new@ SOUR\n";
+			$gedcom_string.= "1 URL ".$url."\n";
+			$gedcom_string.= "1 _DBID ".$gedcom_id."\n";
+			$gedcom_string.= "2 _USER ".$username."\n";
+			$gedcom_string.= "2 _PASS ".$password."\n";
 			//-- only allow admin users to see password
-			$gedcom_string.= "3 RESN confidential\r\n";
+			$gedcom_string.= "3 RESN confidential\n";
 			$service = new ServiceClient($gedcom_string);
 			$sid = $service->authenticate();
 			if (PEAR::isError($sid)) $sid = '';
 			if (empty($sid)) print "<span class=\"error\">failed to authenticate to remote site</span>";
 			else {
 				if (empty($title)) $title = $service->getServiceTitle();
-				$gedcom_string.= "1 TITL ".$title."\r\n";
+				$gedcom_string.= "1 TITL ".$title."\n";
 				$serverID = append_gedrec($gedcom_string);
 			}
 		}
@@ -311,26 +311,26 @@ class RemoteLinkController extends BaseController {
 	}
 
 	/**
-	 * Add a familySearch server
-	 *
-	 * @param string $title
-	 * @param string $url
-	 * @param string $gedcom_id
-	 * @param string $username
-	 * @param string $password
-	 * @return mixed	the serverID of the server to link to
-	 */
+	* Add a familySearch server
+	*
+	* @param string $title
+	* @param string $url
+	* @param string $gedcom_id
+	* @param string $username
+	* @param string $password
+	* @return mixed the serverID of the server to link to
+	*/
 	function addFamilySearchServer($title, $url, $gedcom_id, $username, $password) {
 		$serverID = $this->checkExistingServer($url, $gedcom_id);
 		if ($serverID===false) {
-			$gedcom_string = "0 @new@ SOUR\r\n";
-			$gedcom_string.= "1 URL ".$url."\r\n";
-			$gedcom_string.= "2 TYPE FamilySearch\r\n";
-			$gedcom_string.= "1 _DBID ".$gedcom_id."\r\n";
-			$gedcom_string.= "2 _USER ".$username."\r\n";
-			$gedcom_string.= "2 _PASS ".$password."\r\n";
+			$gedcom_string = "0 @new@ SOUR\n";
+			$gedcom_string.= "1 URL ".$url."\n";
+			$gedcom_string.= "2 TYPE FamilySearch\n";
+			$gedcom_string.= "1 _DBID ".$gedcom_id."\n";
+			$gedcom_string.= "2 _USER ".$username."\n";
+			$gedcom_string.= "2 _PASS ".$password."\n";
 			//-- only allow admin users to see password
-			$gedcom_string.= "3 RESN confidential\r\n";
+			$gedcom_string.= "3 RESN confidential\n";
 			$service = new FamilySearchWrapper($gedcom_string);
 			$sid = $service->authenticate();
 			if (PEAR::isError($sid)) $sid = '';
@@ -338,7 +338,7 @@ class RemoteLinkController extends BaseController {
 			else {
 				if (empty($title)) $title = $service->getServiceTitle();
 				$title = $service->getServiceTitle();
-				$gedcom_string.= "1 TITL ".$title."\r\n";
+				$gedcom_string.= "1 TITL ".$title."\n";
 				$serverID = append_gedrec($gedcom_string);
 			}
 		}
@@ -346,33 +346,33 @@ class RemoteLinkController extends BaseController {
 	}
 
 	/**
-	 * Add a server record for a local remote link
-	 *
-	 * @param string $gedcom_id
-	 * @return mixed	the serverID of the server to link to
-	 */
+	* Add a server record for a local remote link
+	*
+	* @param string $gedcom_id
+	* @return mixed the serverID of the server to link to
+	*/
 	function addLocalServer($title, $gedcom_id) {
 		global $SERVER_URL, $GEDCOMS;
 		$serverID = $this->checkExistingServer($SERVER_URL, $gedcom_id);
 		if ($serverID===false) {
-			$gedcom_string = "0 @new@ SOUR\r\n";
+			$gedcom_string = "0 @new@ SOUR\n";
 			if (empty($title)) $title = $GEDCOMS[$gedcom_id]["title"];
-			$gedcom_string.= "1 TITL ".$title."\r\n";
-			$gedcom_string.= "1 URL ".$SERVER_URL."\r\n";
-			$gedcom_string.= "1 _DBID ".$gedcom_id."\r\n";
-			$gedcom_string.= "2 _BLOCK false\r\n";
+			$gedcom_string.= "1 TITL ".$title."\n";
+			$gedcom_string.= "1 URL ".$SERVER_URL."\n";
+			$gedcom_string.= "1 _DBID ".$gedcom_id."\n";
+			$gedcom_string.= "2 _BLOCK false\n";
 			$serverID = append_gedrec($gedcom_string);
 		}
 		return $serverID;
 	}
 
 	/**
-	 * check if the server already exists
-	 *
-	 * @param string $url
-	 * @param string $gedcom_id
-	 * @return mixed	the id of the server to link to or false if it does not exist
-	 */
+	* check if the server already exists
+	*
+	* @param string $url
+	* @param string $gedcom_id
+	* @return mixed the id of the server to link to or false if it does not exist
+	*/
 	function checkExistingServer($url, $gedcom_id='') {
 		global $pgv_changes;
 		//-- get rid of the protocol
@@ -408,10 +408,10 @@ class RemoteLinkController extends BaseController {
 	}
 
 	/**
-	 * whether or not the user has access to this area
-	 *
-	 * @return boolean
-	 */
+	* whether or not the user has access to this area
+	*
+	* @return boolean
+	*/
 	function canAccess() {
 		global $ALLOW_EDIT_GEDCOM;
 		if (!$ALLOW_EDIT_GEDCOM) return false;
