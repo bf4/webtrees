@@ -1,28 +1,28 @@
 <?php
 /**
- * Controller for the Individual Page
- *
- * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- *
- * @package PhpGedView
- * @subpackage Charts
- * @version $Id$
- */
+* Controller for the Individual Page
+*
+* phpGedView: Genealogy Viewer
+* Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
+*
+* This program is free software; you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation; either version 2 of the License, or
+* (at your option) any later version.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+* GNU General Public License for more details.
+*
+* You should have received a copy of the GNU General Public License
+* along with this program; if not, write to the Free Software
+* Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+*
+* @package PhpGedView
+* @subpackage Charts
+* @version $Id$
+*/
 
 if (!defined('PGV_PHPGEDVIEW')) {
 	header('HTTP/1.0 403 Forbidden');
@@ -38,9 +38,9 @@ require_once 'includes/classes/class_person.php';
 require_once 'includes/classes/class_family.php';
 require_once 'includes/functions/functions_import.php';
 
-$indifacts = array();			 // -- array to store the fact records in for sorting and displaying
+$indifacts = array();  // -- array to store the fact records in for sorting and displaying
 $globalfacts = array();
-$otheritems = array();			  //-- notes, sources, media objects
+$otheritems = array();  //-- notes, sources, media objects
 $FACT_COUNT=0;
 // -- array of GEDCOM elements that will be found but should not be displayed
 $nonfacts[] = "FAMS";
@@ -54,12 +54,12 @@ $nonfacts[] = "RFN";
 $nonfacts[] = "_PGV_OBJS";
 $nonfacts[] = "";
 
-//$nonfamfacts[] = "NCHI";  	// Turning back on NCHI display for the indi page.
+//$nonfamfacts[] = "NCHI";  // Turning back on NCHI display for the indi page.
 $nonfamfacts[] = "UID";
 $nonfamfacts[] = "";
 /**
- * Main controller class for the individual page.
- */
+* Main controller class for the individual page.
+*/
 class IndividualControllerRoot extends BaseController {
 	var $pid = "";
 	var $default_tab = 0;
@@ -78,15 +78,15 @@ class IndividualControllerRoot extends BaseController {
 	var $tabarray = array("facts","notes","sources","media","relatives","tree","research","map","lightbox","spare","nav");
 
 	/**
-	 * constructor
-	 */
+	* constructor
+	*/
 	function IndividualControllerRoot() {
 		parent::BaseController();
 	}
 
 	/**
-	 * Initialization function
-	 */
+	* Initialization function
+	*/
 	function init() {
 		global $USE_RIN, $MAX_ALIVE_AGE, $GEDCOM, $GEDCOM_DEFAULT_TAB, $pgv_changes, $pgv_lang, $CHARACTER_SET;
 		global $USE_QUICK_UPDATE, $pid;
@@ -106,8 +106,8 @@ class IndividualControllerRoot extends BaseController {
 		$indirec = find_person_record($this->pid);
 
 		if ($USE_RIN && $indirec==false) {
-		   $this->pid = find_rin_id($this->pid);
-		   $indirec = find_person_record($this->pid);
+			$this->pid = find_rin_id($this->pid);
+			$indirec = find_person_record($this->pid);
 		}
 		if (empty($indirec)) {
 			$ct = preg_match("/(\w+):(.+)/", $this->pid, $match);
@@ -117,12 +117,11 @@ class IndividualControllerRoot extends BaseController {
 				include_once('includes/classes/class_serviceclient.php');
 				$service = ServiceClient::getInstance($servid);
 				if ($service != null) {
-					$newrec= $service->mergeGedcomRecord($remoteid, "0 @".$this->pid."@ INDI\r\n1 RFN ".$this->pid, false);
+					$newrec= $service->mergeGedcomRecord($remoteid, "0 @".$this->pid."@ INDI\n1 RFN ".$this->pid, false);
 					$indirec = $newrec;
 				}
-			}
-			else {
-				$indirec = "0 @".$this->pid."@ INDI\r\n";
+			} else {
+				$indirec = "0 @".$this->pid."@ INDI\n";
 			}
 		}
 		//-- check for the user
@@ -183,14 +182,13 @@ class IndividualControllerRoot extends BaseController {
 		//-- if the user can edit and there are changes then get the new changes
 		if ($this->show_changes && PGV_USER_CAN_EDIT) {
 			if (isset($pgv_changes[$this->pid."_".$GEDCOM])) {
-				 //-- get the changed record from the file
+				//-- get the changed record from the file
 				$newrec = find_updated_record($this->pid);
 				//print("jkdsakjhdkjsadkjsakjdhsakd".$newrec);
 				$remoterfn = get_gedcom_value("RFN", 1, $newrec);
-			 }
-			 else {
+			} else {
 				$remoterfn = get_gedcom_value("RFN", 1, $indirec);
-			 }
+			}
 			// print "remoterfn=".$remoterfn;
 			//-- get an updated record from the web service
 			if (!empty($remoterfn)) {
@@ -256,8 +254,8 @@ class IndividualControllerRoot extends BaseController {
 	}
 	//-- end of init function
 	/**
-	 * Add a new favorite for the action user
-	 */
+	* Add a new favorite for the action user
+	*/
 	function addFavorite() {
 		global $GEDCOM;
 		if (PGV_USER_ID && !empty($_REQUEST["gid"])) {
@@ -277,9 +275,9 @@ class IndividualControllerRoot extends BaseController {
 		}
 	}
 	/**
-	 * Accept any edit changes into the database
-	 * Also update the indirec we will use to generate the page
-	 */
+	* Accept any edit changes into the database
+	* Also update the indirec we will use to generate the page
+	*/
 	function acceptChanges() {
 		global $GEDCOM;
 		if (!PGV_USER_CAN_ACCEPT) return;
@@ -298,9 +296,9 @@ class IndividualControllerRoot extends BaseController {
 	}
 
 	/**
-	 * return the title of this page
-	 * @return string	the title of the page to go in the <title> tags
-	 */
+	* return the title of this page
+	* @return string the title of the page to go in the <title> tags
+	*/
 	function getPageTitle() {
 		global $pgv_lang, $GEDCOM;
 		$name = $this->indi->getFullName();
@@ -308,8 +306,8 @@ class IndividualControllerRoot extends BaseController {
 	}
 
 	/**
-	 * gets a string used for setting the value of a cookie using javascript
-	 */
+	* gets a string used for setting the value of a cookie using javascript
+	*/
 	function getCookieTabString() {
 		$str = "";
 		if (isset($_COOKIE['lasttabs'])) {
@@ -324,9 +322,9 @@ class IndividualControllerRoot extends BaseController {
 		return $str;
 	}
 	/**
-	 * check if we can show the highlighted media object
-	 * @return boolean
-	 */
+	* check if we can show the highlighted media object
+	* @return boolean
+	*/
 	function canShowHighlightedObject() {
 		global $MULTI_MEDIA, $SHOW_HIGHLIGHT_IMAGES;
 
@@ -337,25 +335,25 @@ class IndividualControllerRoot extends BaseController {
 		return false;
 	}
 	/**
-	 * check if we can show the gedcom record
-	 * @return boolean
-	 */
+	* check if we can show the gedcom record
+	* @return boolean
+	*/
 	function canShowGedcomRecord() {
 		global $SHOW_GEDCOM_RECORD;
 		if ($SHOW_GEDCOM_RECORD && $this->indi->canDisplayDetails())
 			return true;
 	}
 	/**
-	 * check if use can edit this person
-	 * @return boolean
-	 */
+	* check if use can edit this person
+	* @return boolean
+	*/
 	function userCanEdit() {
 		return $this->canedit;
 	}
 	/**
-	 * get the highlighted object HTML
-	 * @return string	HTML string for the <img> tag
-	 */
+	* get the highlighted object HTML
+	* @return string HTML string for the <img> tag
+	*/
 	function getHighlightedObject() {
 		global $USE_THUMBS_MAIN, $THUMBNAIL_WIDTH, $USE_MEDIA_VIEWER, $GEDCOM;
 		if ($this->canShowHighlightedObject()) {
@@ -404,12 +402,12 @@ class IndividualControllerRoot extends BaseController {
 	}
 
 	/**
-	 * print information for a name record
-	 *
-	 * Called from the individual information page
-	 * @see individual.php
-	 * @param Event $event	the event object
-	 */
+	* print information for a name record
+	*
+	* Called from the individual information page
+	* @see individual.php
+	* @param Event $event the event object
+	*/
 	function print_name_record(&$event) {
 		global $pgv_lang, $factarray, $NAME_REVERSE;
 		global $lang_short_cut, $LANGUAGE;
@@ -447,8 +445,8 @@ class IndividualControllerRoot extends BaseController {
 				else print $fact;
 				print ":</span><span class=\"field\"> ";
 				if (isset($nmatch[$i][2])) {
-			  		$name = trim($nmatch[$i][2]);
-			  		$name = preg_replace("'/,'", ",", $name);
+					$name = trim($nmatch[$i][2]);
+					$name = preg_replace("'/,'", ",", $name);
 					$name = preg_replace("'/'", " ", $name);
 					print PrintReady($name);
 				}
@@ -456,7 +454,7 @@ class IndividualControllerRoot extends BaseController {
 			}
 		}
 		if ($this->total_names>1 && !$this->isPrintPreview() && $this->userCanEdit()) {
-	   		print "&nbsp;&nbsp;&nbsp;<a href=\"javascript:;\" class=\"font9\" onclick=\"edit_name('".$this->pid."', ".$linenum."); return false;\">".$pgv_lang["edit_name"]."</a> | ";
+			print "&nbsp;&nbsp;&nbsp;<a href=\"javascript:;\" class=\"font9\" onclick=\"edit_name('".$this->pid."', ".$linenum."); return false;\">".$pgv_lang["edit_name"]."</a> | ";
 			print "<a class=\"font9\" href=\"javascript:;\" onclick=\"delete_record('".$this->pid."', ".$linenum."); return false;\">".$pgv_lang["delete_name"]."</a>\n";
 			if ($this->name_count==2) print_help_link("delete_name_help", "qm");
 			print "<br />\n";
@@ -479,7 +477,7 @@ class IndividualControllerRoot extends BaseController {
 	 *
 	 * Called from the individual information page
 	 * @see individual.php
-	 * @param Event $event	the Event object
+	 * @param Event $event the Event object
 	 */
 	function print_sex_record(&$event) {
 		global $pgv_lang, $sex;
@@ -499,8 +497,8 @@ class IndividualControllerRoot extends BaseController {
 			if ((!$this->isPrintPreview()) && ($this->userCanEdit()) && (preg_match("/PGV_OLD/", $event->getGedComRecord())==0)) {
 			    if ($event->getLineNumber()=="new") print "<br /><a class=\"font9\" href=\"javascript:;\" onclick=\"add_new_record('".$this->pid."', 'SEX'); return false;\">".$pgv_lang["edit"]."</a>";
 			    else {
-			    	print "<br /><a class=\"font9\" href=\"javascript:;\" onclick=\"edit_record('".$this->pid."', ".$event->getLineNumber()."); return false;\">".$pgv_lang["edit"]."</a> | ";
-			    	print "<a class=\"font9\" href=\"javascript:;\" onclick=\"delete_record('".$this->pid."', ".$event->getLineNumber()."); return false;\">".$pgv_lang["delete"]."</a>\n";
+						print "<br /><a class=\"font9\" href=\"javascript:;\" onclick=\"edit_record('".$this->pid."', ".$event->getLineNumber()."); return false;\">".$pgv_lang["edit"]."</a> | ";
+						print "<a class=\"font9\" href=\"javascript:;\" onclick=\"delete_record('".$this->pid."', ".$event->getLineNumber()."); return false;\">".$pgv_lang["delete"]."</a>\n";
 			    }
 			}
 		}
@@ -524,12 +522,6 @@ class IndividualControllerRoot extends BaseController {
 		else $ff="";
 		//-- main edit menu
 		$menu = new Menu($pgv_lang["edit"]);
-		//-- getting the link for the first menu has gotten more complicated
-		//-- so we are now setting it at the end of the method after the menu items have
-		//-- all been added
-//		if ($USE_QUICK_UPDATE) $link = "return quickEdit('".$this->pid."');";
-//		else $link = "return edit_raw('".$this->pid."');";
-//		$menu->addOnclick($link);
 		if (!empty($PGV_IMAGES["edit_indi"]["small"]))
 			$menu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["edit_indi"]["small"]);
 		$menu->addClass("submenuitem$ff", "submenuitem_hover$ff", "submenu$ff");
@@ -669,7 +661,7 @@ class IndividualControllerRoot extends BaseController {
 	/**
 	 * get global facts
 	 * global facts are NAME and SEX
-	 * @return array	return the array of global facts
+	 * @return array return the array of global facts
 	 */
 	function getGlobalFacts() {
 		global $NAME_LINENUM, $SEX_LINENUM;
@@ -709,7 +701,7 @@ class IndividualControllerRoot extends BaseController {
 	 * get the person box stylesheet class
 	 * for the given person
 	 * @param Person $person
-	 * @return string	returns 'person_box', 'person_boxF', or 'person_boxNN'
+	 * @return string returns 'person_box', 'person_boxF', or 'person_boxNN'
 	 */
 	function getPersonStyle(&$person) {
 		$sex = $person->getSex();
@@ -729,8 +721,8 @@ class IndividualControllerRoot extends BaseController {
 	/**
 	 * build an array of Person that will be used to build a list
 	 * of family members on the close relatives tab
-	 * @param Family $family	the family we are building for
-	 * @return array			an array of Person that will be used to iterate through on the indivudal.php page
+	 * @param Family $family the family we are building for
+	 * @return array an array of Person that will be used to iterate through on the indivudal.php page
 	 */
 	function buildFamilyList(&$family, $type) {
 		global $factarray, $pgv_lang;
@@ -1147,8 +1139,10 @@ class IndividualControllerRoot extends BaseController {
 					}
 					else {
 						$factdetail = explode(' ', trim($family->getMarriageRecord()));
-						if ($family->getMarriageType())	$marr_type = "MARR_".strtoupper($family->getMarriageType());
-						else $marr_type = "MARR";
+						if ($family->getMarriageType())
+							$marr_type = "MARR_".strtoupper($family->getMarriageType());
+						else
+							$marr_type = "MARR";
 						if (isset($factarray[$marr_type])) {
 							if (isset($factdetail))
 								if (count($factdetail) == 3)
@@ -1238,7 +1232,6 @@ class IndividualControllerRoot extends BaseController {
 		}
 		$tabType = $tab_array[$tab];
 
-//		$tabType = $this->tabarray[$tab];
 // ================================================================================================
 
 		switch($tabType) {
@@ -1628,7 +1621,7 @@ class IndividualControllerRoot extends BaseController {
 			if (!$media_found) print "<tr><td id=\"no_tab4\" colspan=\"2\" class=\"facts_value\">".$pgv_lang["no_tab4"]."</td></tr>\n";
 			//-- New Media link
 			if (!$this->isPrintPreview() && PGV_USER_CAN_EDIT && $this->indi->canDisplayDetails()) {
-		   	?>
+		  ?>
 				<tr>
 					<td class="facts_label"><?php print_help_link("add_media_help", "qm"); ?><?php print $pgv_lang["add_media_lbl"]; ?></td>
 					<td class="facts_value">
@@ -1666,11 +1659,11 @@ class IndividualControllerRoot extends BaseController {
 		global $pgv_changes, $GEDCOM, $ABBREVIATE_CHART_LABELS;
 		global $show_full, $personcount;
 
-		if (isset($show_full)) $saved_show_full = $show_full;		// We always want to see full details here
+		if (isset($show_full)) $saved_show_full = $show_full; // We always want to see full details here
 		$show_full = 1;
 
 		$saved_ABBREVIATE_CHART_LABELS = $ABBREVIATE_CHART_LABELS;
-		$ABBREVIATE_CHART_LABELS = false;		// Override GEDCOM configuration
+		$ABBREVIATE_CHART_LABELS = false; // Override GEDCOM configuration
 
 		// Show or Hide Navigator -----------
 		if (isset($_COOKIE['famnav'])) {
@@ -1835,7 +1828,7 @@ class IndividualControllerRoot extends BaseController {
 				<td class="facts_value">
 				<?php print_help_link("link_remote_help", "qm"); ?>
 				<a href="javascript:;" onclick="return open_link_remote('<?php print $this->pid; ?>');"><?php print $pgv_lang["link_remote"]; ?></a>
-		    	</td>
+		   </td>
 		    </tr>
 		    <?php } ?>
 		</table>
@@ -1843,7 +1836,7 @@ class IndividualControllerRoot extends BaseController {
 		<br />
 		<?php
 		
-		$ABBREVIATE_CHART_LABELS = $saved_ABBREVIATE_CHART_LABELS;		// Restore GEDCOM configuration
+		$ABBREVIATE_CHART_LABELS = $saved_ABBREVIATE_CHART_LABELS; // Restore GEDCOM configuration
 		unset($show_full);
 		if (isset($saved_show_full)) $show_full = $saved_show_full;
 	}
@@ -2029,9 +2022,9 @@ class IndividualControllerRoot extends BaseController {
 	/** =================================================
 	 * include family navigator
 	 */
-    function fam_nav() {
-        include_once('includes/family_nav.php');
-    }
+	function fam_nav() {
+		include_once('includes/family_nav.php');
+	}
 	
 	
 	
@@ -2101,11 +2094,11 @@ class IndividualControllerRoot extends BaseController {
 // Functions for Census Assistant
 // -----------------------------------------------------------------------------
 	/**
-	 * include Census controller
-	 */
-    function census_assistant() {
-        include('modules/census_assistant/census_1_ctrl.php');
-    }
+	* include Census controller
+	*/
+	function census_assistant() {
+		require 'modules/census_assistant/census_1_ctrl.php';
+	}
 // -----------------------------------------------------------------------------
 // End  Census Assistant  Functions
 // -----------------------------------------------------------------------------
