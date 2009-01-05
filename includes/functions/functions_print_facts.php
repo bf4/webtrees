@@ -1,30 +1,30 @@
 <?php
 /**
- * Function for printing facts
- *
- * Various printing functions used to print fact records
- *
- * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- *
- * @package PhpGedView
- * @subpackage Display
- * @version $Id$
- */
+* Function for printing facts
+*
+* Various printing functions used to print fact records
+*
+* phpGedView: Genealogy Viewer
+* Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
+*
+* This program is free software; you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation; either version 2 of the License, or
+* (at your option) any later version.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+* GNU General Public License for more details.
+*
+* You should have received a copy of the GNU General Public License
+* along with this program; if not, write to the Free Software
+* Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+*
+* @package PhpGedView
+* @subpackage Display
+* @version $Id$
+*/
 
 if (!defined('PGV_PHPGEDVIEW')) {
 	header('HTTP/1.0 403 Forbidden');
@@ -36,12 +36,12 @@ define('PGV_FUNCTIONS_PRINT_FACTS_PHP', '');
 require_once 'includes/classes/class_person.php';
 
 /**
- * Turn URLs in text into HTML links.  Insert breaks into long URLs
- * so that the browser can word-wrap.
- *
- * @param string $text	Text that may or may not contain URLs
- * @return string	The text with URLs replaced by HTML links
- */
+* Turn URLs in text into HTML links.  Insert breaks into long URLs
+* so that the browser can word-wrap.
+*
+* @param string $text	Text that may or may not contain URLs
+* @return string	The text with URLs replaced by HTML links
+*/
 function expand_urls($text) {
 	// Some versions of RFC3987 have an appendix B which gives the following regex
 	// (([^:/?#]+):)?(//([^/?#]*))?([^?#]*)(\?([^#]*))?(#(.*))?
@@ -60,12 +60,12 @@ function expand_urls($text) {
 }
 
 /**
- * print a fact record
- *
- * prints a fact record designed for the personal facts and details page
- * @param Event $eventObj	The Event object to print
- * @param boolean $noedit	Hide or show edit links
- */
+* print a fact record
+*
+* prints a fact record designed for the personal facts and details page
+* @param Event $eventObj	The Event object to print
+* @param boolean $noedit	Hide or show edit links
+*/
 function print_fact(&$eventObj, $noedit=false) {
 	global $factarray;
 	global $nonfacts;
@@ -334,7 +334,7 @@ function print_fact(&$eventObj, $noedit=false) {
 			if ($ct>0) {
 				$spouse=Person::getInstance($match[1]);
 				if ($spouse) {
- 					print " <a href=\"".encode_url("individual.php?pid={$match[1]}&ged={$GEDCOM}")."\">";
+					print " <a href=\"".encode_url("individual.php?pid={$match[1]}&ged={$GEDCOM}")."\">";
 					if ($spouse->canDisplayName()) {
 						print PrintReady($spouse->getFullName());
 					} else {
@@ -349,8 +349,8 @@ function print_fact(&$eventObj, $noedit=false) {
 					else print " " . getRLM();
 					print "[".$pgv_lang["view_family"];
 					if ($SHOW_ID_NUMBERS) print " " . getLRM() . "($pid)" . getLRM();
- 					if ($TEXT_DIRECTION == "ltr") print getLRM() . "]</a>\n";
- 					else print getRLM() . "]</a>\n";
+					if ($TEXT_DIRECTION == "ltr") print getLRM() . "]</a>\n";
+					else print getRLM() . "]</a>\n";
 				}
 			}
 			//-- print other characterizing fact information
@@ -518,11 +518,11 @@ function print_fact(&$eventObj, $noedit=false) {
 //------------------- end print fact function
 
 /**
- * print a submitter record
- *
- * find and print submitter information
- * @param string $sid  the Gedcom Xref ID of the submitter to print
- */
+* print a submitter record
+*
+* find and print submitter information
+* @param string $sid  the Gedcom Xref ID of the submitter to print
+*/
 function print_submitter_info($sid) {
 	$srec = find_gedcom_record($sid);
 	preg_match("/1 NAME (.*)/", $srec, $match);
@@ -534,11 +534,11 @@ function print_submitter_info($sid) {
 }
 
 /**
- * print a repository record
- *
- * find and print repository information attached to a source
- * @param string $sid  the Gedcom Xref ID of the repository to print
- */
+* print a repository record
+*
+* find and print repository information attached to a source
+* @param string $sid  the Gedcom Xref ID of the repository to print
+*/
 function print_repository_record($sid) {
 	global $TEXT_DIRECTION;
 	if (displayDetailsById($sid, "REPO")) {
@@ -559,14 +559,14 @@ function print_repository_record($sid) {
 }
 
 /**
- * print a source linked to a fact (2 SOUR)
- *
- * this function is called by the print_fact function and other functions to
- * print any source information attached to the fact
- * @param string $factrec	The fact record to look for sources in
- * @param int $level		The level to look for sources at
- * @param boolean $return	whether to return the data or print the data
- */
+* print a source linked to a fact (2 SOUR)
+*
+* this function is called by the print_fact function and other functions to
+* print any source information attached to the fact
+* @param string $factrec	The fact record to look for sources in
+* @param int $level		The level to look for sources at
+* @param boolean $return	whether to return the data or print the data
+*/
 function print_fact_sources($factrec, $level, $return=false) {
 	global $pgv_lang;
 	global $factarray;
@@ -771,12 +771,12 @@ function print_media_links($factrec, $level,$pid='') {
 	}
 }
 /**
- * print an address structure
- *
- * takes a gedcom ADDR structure and prints out a human readable version of it.
- * @param string $factrec	The ADDR subrecord
- * @param int $level		The gedcom line level of the main ADDR record
- */
+* print an address structure
+*
+* takes a gedcom ADDR structure and prints out a human readable version of it.
+* @param string $factrec	The ADDR subrecord
+* @param int $level		The gedcom line level of the main ADDR record
+*/
 function print_address_structure($factrec, $level) {
 	global $factarray;
 	global $POSTAL_CODE;
@@ -1012,21 +1012,21 @@ function print_main_sources($factrec, $level, $pid, $linenum, $noedit=false) {
 }
 
 /**
- *	Print SOUR structure
- *
- *  This function prints the input array of SOUR sub-records built by the
- *  getSourceStructure() function.
- *
- *  The input array is defined as follows:
- *	$textSOUR["PAGE"] = +1  Source citation
- *	$textSOUR["EVEN"] = +1  Event type
- *	$textSOUR["ROLE"] = +2  Role in event
- *	$textSOUR["DATA"] = +1  place holder (no text in this sub-record)
- *	$textSOUR["DATE"] = +2  Entry recording date
- *	$textSOUR["TEXT"] = +2  (array) Text from source
- *	$textSOUR["QUAY"] = +1  Certainty assessment
- *	$textSOUR["TEXT2"] = +1 (array) Text from source
- */
+*	Print SOUR structure
+*
+*  This function prints the input array of SOUR sub-records built by the
+*  getSourceStructure() function.
+*
+*  The input array is defined as follows:
+*	$textSOUR["PAGE"] = +1  Source citation
+*	$textSOUR["EVEN"] = +1  Event type
+*	$textSOUR["ROLE"] = +2  Role in event
+*	$textSOUR["DATA"] = +1  place holder (no text in this sub-record)
+*	$textSOUR["DATE"] = +2  Entry recording date
+*	$textSOUR["TEXT"] = +2  (array) Text from source
+*	$textSOUR["QUAY"] = +1  Certainty assessment
+*	$textSOUR["TEXT2"] = +1 (array) Text from source
+*/
 function printSourceStructure($textSOUR) {
 	global $pgv_lang, $factarray;
 
@@ -1064,18 +1064,18 @@ function printSourceStructure($textSOUR) {
 }
 
 /**
- * Extract SOUR structure from the incoming Source sub-record
- *
- *  The output array is defined as follows:
- *	$textSOUR["PAGE"] = +1  Source citation
- *	$textSOUR["EVEN"] = +1  Event type
- *	$textSOUR["ROLE"] = +2  Role in event
- *	$textSOUR["DATA"] = +1  place holder (no text in this sub-record)
- *	$textSOUR["DATE"] = +2  Entry recording date
- *	$textSOUR["TEXT"] = +2  (array) Text from source
- *	$textSOUR["QUAY"] = +1  Certainty assessment
- *	$textSOUR["TEXT2"] = +1 (array) Text from source
- */
+* Extract SOUR structure from the incoming Source sub-record
+*
+*  The output array is defined as follows:
+*	$textSOUR["PAGE"] = +1  Source citation
+*	$textSOUR["EVEN"] = +1  Event type
+*	$textSOUR["ROLE"] = +2  Role in event
+*	$textSOUR["DATA"] = +1  place holder (no text in this sub-record)
+*	$textSOUR["DATE"] = +2  Entry recording date
+*	$textSOUR["TEXT"] = +2  (array) Text from source
+*	$textSOUR["QUAY"] = +1  Certainty assessment
+*	$textSOUR["TEXT2"] = +1 (array) Text from source
+*/
 function getSourceStructure($srec) {
 	global $WORD_WRAPPED_NOTES;
 
@@ -1122,15 +1122,15 @@ function getSourceStructure($srec) {
 }
 
 /**
- * print main note row
- *
- * this function will print a table row for a fact table for a level 1 note in the main record
- * @param string $factrec	the raw gedcom sub record for this note
- * @param int $level		The start level for this note, usually 1
- * @param string $pid		The gedcom XREF id for the level 0 record that this note is a part of
- * @param int $linenum		The line number in the level 0 record where this record was found.  This is used for online editing.
- * @param boolean $noedit	Whether or not to allow this fact to be edited
- */
+* print main note row
+*
+* this function will print a table row for a fact table for a level 1 note in the main record
+* @param string $factrec	the raw gedcom sub record for this note
+* @param int $level		The start level for this note, usually 1
+* @param string $pid		The gedcom XREF id for the level 0 record that this note is a part of
+* @param int $linenum		The line number in the level 0 record where this record was found.  This is used for online editing.
+* @param boolean $noedit	Whether or not to allow this fact to be edited
+*/
 function print_main_notes($factrec, $level, $pid, $linenum, $noedit=false) {
 	global $pgv_lang, $pgv_changes, $GEDCOM;
 	global $factarray, $view;
@@ -1153,7 +1153,7 @@ function print_main_notes($factrec, $level, $pid, $linenum, $noedit=false) {
 			$nid = $nmatch[1];
 			if (isset($pgv_changes[$nid."_".$GEDCOM]) && empty($styleadd)) {
 				$styleadd = "change_old";
-				$newfactrec = $factrec.="\r\nPGV_NEW";
+				$newfactrec = $factrec.="\nPGV_NEW";
 				print_main_notes($factrec, $level, $pid, $linenum, $noedit);
 			}
 		}
@@ -1261,11 +1261,11 @@ function print_main_notes($factrec, $level, $pid, $linenum, $noedit=false) {
 }
 
 /**
- * Print the links to multi-media objects
- * @param string $pid	The the xref id of the object to find media records related to
- * @param int $level	The level of media object to find
- * @param boolean $related	Whether or not to grab media from related records
- */
+* Print the links to multi-media objects
+* @param string $pid	The the xref id of the object to find media records related to
+* @param int $level	The level of media object to find
+* @param boolean $related	Whether or not to grab media from related records
+*/
 function print_main_media($pid, $level=1, $related=false, $noedit=false) {
 	global $TBLPREFIX;
 	global $pgv_changes;
@@ -1460,11 +1460,11 @@ function print_main_media($pid, $level=1, $related=false, $noedit=false) {
 }
 
 /**
- * print a media row in a table
- * @param string $rtype whether this is a 'new', 'old', or 'normal' media row... this is used to determine if the rows should be printed with an outline color
- * @param array $rowm	An array with the details about this media item
- * @param string $pid	The record id this media item was attached to
- */
+* print a media row in a table
+* @param string $rtype whether this is a 'new', 'old', or 'normal' media row... this is used to determine if the rows should be printed with an outline color
+* @param array $rowm	An array with the details about this media item
+* @param string $pid	The record id this media item was attached to
+*/
 function print_main_media_row($rtype, $rowm, $pid) {
 	global $PGV_IMAGE_DIR, $PGV_IMAGES, $view, $TEXT_DIRECTION;
 	global $SHOW_ID_NUMBERS, $GEDCOM, $factarray, $pgv_lang, $THUMBNAIL_WIDTH, $USE_MEDIA_VIEWER;
@@ -1618,7 +1618,7 @@ function print_main_media_row($rtype, $rowm, $pid) {
 					}
 
 				// if Lightbox NOT installed or not enabled -------------------------
-				 // else if Media viewer enabled
+				// else if Media viewer enabled
 				}elseif ($USE_MEDIA_VIEWER) {
 					print "<a href=\"".encode_url("mediaviewer.php?mid={$rowm['m_media']}")."\">";
 				// else if JWplayer installed and filetype=flvfile (Locally stored in media files )
