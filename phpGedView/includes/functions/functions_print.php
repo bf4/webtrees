@@ -1,30 +1,30 @@
 <?php
 /**
- * Function for printing
- *
- * Various printing functions used by all scripts and included by the functions.php file.
- *
- * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- *
- * @package PhpGedView
- * @subpackage Display
- * @version $Id$
- */
+* Function for printing
+*
+* Various printing functions used by all scripts and included by the functions.php file.
+*
+* phpGedView: Genealogy Viewer
+* Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
+*
+* This program is free software; you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation; either version 2 of the License, or
+* (at your option) any later version.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+* GNU General Public License for more details.
+*
+* You should have received a copy of the GNU General Public License
+* along with this program; if not, write to the Free Software
+* Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+*
+* @package PhpGedView
+* @subpackage Display
+* @version $Id$
+*/
 
 if (!defined('PGV_PHPGEDVIEW')) {
 	header('HTTP/1.0 403 Forbidden');
@@ -37,14 +37,14 @@ require_once 'includes/functions/functions_charts.php';
 require_once 'includes/classes/class_menubar.php';
 
 /**
- * print the information for an individual chart box
- *
- * find and print a given individuals information for a pedigree chart
- * @param string $pid	the Gedcom Xref ID of the   to print
- * @param int $style	the style to print the box in, 1 for smaller boxes, 2 for larger boxes
- * @param boolean $show_famlink	set to true to show the icons for the popup links and the zoomboxes
- * @param int $count	on some charts it is important to keep a count of how many boxes were printed
- */
+* print the information for an individual chart box
+*
+* find and print a given individuals information for a pedigree chart
+* @param string $pid the Gedcom Xref ID of the   to print
+* @param int $style the style to print the box in, 1 for smaller boxes, 2 for larger boxes
+* @param boolean $show_famlink set to true to show the icons for the popup links and the zoomboxes
+* @param int $count on some charts it is important to keep a count of how many boxes were printed
+*/
 function print_pedigree_person($pid, $style=1, $show_famlink=true, $count=0, $personcount="1") {
 	global $HIDE_LIVE_PEOPLE, $SHOW_LIVING_NAMES, $PRIV_PUBLIC, $factarray, $ZOOM_BOXES, $LINK_ICONS, $view, $SCRIPT_NAME, $GEDCOM;
 	global $pgv_lang, $MULTI_MEDIA, $SHOW_HIGHLIGHT_IMAGES, $bwidth, $bheight, $PEDIGREE_FULL_DETAILS, $SHOW_ID_NUMBERS, $SHOW_PEDIGREE_PLACES;
@@ -386,18 +386,18 @@ function print_pedigree_person($pid, $style=1, $show_famlink=true, $count=0, $pe
 }
 
 /**
- * print out standard HTML header
- *
- * This function will print out the HTML, HEAD, and BODY tags and will load in the CSS javascript and
- * other auxiliary files needed to run PGV.  It will also include the theme specific header file.
- * This function should be called by every page, except popups, before anything is output.
- *
- * Popup pages, because of their different format, should invoke function print_simple_header() instead.
- *
- * @param string $title	the title to put in the <TITLE></TITLE> header tags
- * @param string $head
- * @param boolean $use_alternate_styles
- */
+* print out standard HTML header
+*
+* This function will print out the HTML, HEAD, and BODY tags and will load in the CSS javascript and
+* other auxiliary files needed to run PGV.  It will also include the theme specific header file.
+* This function should be called by every page, except popups, before anything is output.
+*
+* Popup pages, because of their different format, should invoke function print_simple_header() instead.
+*
+* @param string $title the title to put in the <TITLE></TITLE> header tags
+* @param string $head
+* @param boolean $use_alternate_styles
+*/
 function print_header($title, $head="",$use_alternate_styles=true) {
 	global $pgv_lang, $bwidth;
 	global $HOME_SITE_URL, $HOME_SITE_TEXT, $SERVER_URL;
@@ -412,16 +412,18 @@ function print_header($title, $head="",$use_alternate_styles=true) {
 	// If not on allowed list, dump the spider onto the redirect page.
 	// This kills recognized spiders in their tracks.
 	// To stop unrecognized spiders, see META_ROBOTS below.
-	if(!empty($SEARCH_SPIDER)) {
-		if(!((strstr($SCRIPT_NAME, "/individual.php")) ||
-		     (strstr($SCRIPT_NAME, "/indilist.php")) ||
-		     (strstr($SCRIPT_NAME, "/login.php")) ||
-		     (strstr($SCRIPT_NAME, "/family.php")) ||
-		     (strstr($SCRIPT_NAME, "/famlist.php")) ||
-		     (strstr($SCRIPT_NAME, "/help_text.php")) ||
-		     (strstr($SCRIPT_NAME, "/source.php")) ||
-		     (strstr($SCRIPT_NAME, "/search_engine.php")) ||
-		     (strstr($SCRIPT_NAME, "/index.php"))) ) {
+	if (!empty($SEARCH_SPIDER)) {
+		if (
+			!((strstr($SCRIPT_NAME, "/individual.php")) ||
+			(strstr($SCRIPT_NAME, "/indilist.php")) ||
+			(strstr($SCRIPT_NAME, "/login.php")) ||
+			(strstr($SCRIPT_NAME, "/family.php")) ||
+			(strstr($SCRIPT_NAME, "/famlist.php")) ||
+			(strstr($SCRIPT_NAME, "/help_text.php")) ||
+			(strstr($SCRIPT_NAME, "/source.php")) ||
+			(strstr($SCRIPT_NAME, "/search_engine.php")) ||
+			(strstr($SCRIPT_NAME, "/index.php")))
+		) {
 			header("Location: search_engine.php");
 			exit;
 		}
@@ -480,16 +482,20 @@ function print_header($title, $head="",$use_alternate_styles=true) {
 		// Quick and dirty hack that will still leave some url only links in Google.
 		// Also ignored by crawlers like wget, so other checks have to be done too.
 		if (!empty($SEARCH_SPIDER)) {
-			if ((strstr($SCRIPT_NAME, "/individual.php")) ||
-			    (strstr($SCRIPT_NAME, "/indilist.php")) ||
-			    (strstr($SCRIPT_NAME, "/family.php")) ||
-			    (strstr($SCRIPT_NAME, "/famlist.php")) ||
-			    (strstr($SCRIPT_NAME, "/help_text.php")) ||
-			    (strstr($SCRIPT_NAME, "/source.php")) ||
-			    (strstr($SCRIPT_NAME, "/search_engine.php")) ||
-			    (strstr($SCRIPT_NAME, "/index.php")) ) {
+			if (
+				(strstr($SCRIPT_NAME, "/individual.php")) ||
+				(strstr($SCRIPT_NAME, "/indilist.php")) ||
+				(strstr($SCRIPT_NAME, "/family.php")) ||
+				(strstr($SCRIPT_NAME, "/famlist.php")) ||
+				(strstr($SCRIPT_NAME, "/help_text.php")) ||
+				(strstr($SCRIPT_NAME, "/source.php")) ||
+				(strstr($SCRIPT_NAME, "/search_engine.php")) ||
+				(strstr($SCRIPT_NAME, "/index.php"))
+			) {
 				// empty case is to index,follow anyways.
-				if (empty($META_ROBOTS)) $META_ROBOTS = "index,follow";
+				if (empty($META_ROBOTS)) {
+					$META_ROBOTS = "index,follow";
+				}
 			} else {
 				$META_ROBOTS ="noindex,nofollow";
 			}
@@ -605,16 +611,16 @@ function print_header($title, $head="",$use_alternate_styles=true) {
 }
 
 /**
- * print simple HTML header
- *
- * This function will print out the HTML, HEAD, and BODY tags and will load in the CSS javascript and
- * other auxiliary files needed to run PGV.  It does not include any theme specific header files.
- * This function should be called by every page before anything is output on popup pages.
- *
- * @param string $title	the title to put in the <TITLE></TITLE> header tags
- * @param string $head
- * @param boolean $use_alternate_styles
- */
+* print simple HTML header
+*
+* This function will print out the HTML, HEAD, and BODY tags and will load in the CSS javascript and
+* other auxiliary files needed to run PGV.  It does not include any theme specific header files.
+* This function should be called by every page before anything is output on popup pages.
+*
+* @param string $title the title to put in the <TITLE></TITLE> header tags
+* @param string $head
+* @param boolean $use_alternate_styles
+*/
 function print_simple_header($title) {
 	global $view;
 	$view = 'simple';
@@ -684,10 +690,10 @@ function google_analytics() {
 }
 
 /**
- * Prints Exection Statistics
- *
- * prints out the execution time and the databse queries
- */
+* Prints Exection Statistics
+*
+* prints out the execution time and the databse queries
+*/
 function print_execution_stats() {
 	global $start_time, $pgv_lang, $TOTAL_QUERIES, $PRIVACY_CHECKS;
 	$end_time = microtime(true);
@@ -731,10 +737,10 @@ function print_lang_form($option=0) {
 	}
 }
 /**
- * print user links
- *
- * this function will print login/logout links and other links based on user privileges
- */
+* print user links
+*
+* this function will print login/logout links and other links based on user privileges
+*/
 function print_user_links() {
 	global $pgv_lang, $SCRIPT_NAME, $QUERY_STRING, $GEDCOM;
 	global $LOGIN_URL, $SEARCH_SPIDER;
@@ -925,7 +931,6 @@ function print_favorite_selector($option=0) {
 			$GEDCOM = $favorite["file"];
 			$submenu = array();
 			if ($favorite["type"]=="URL" && !empty($favorite["url"])) {
-//				$submenu["link"] = encode_url($favorite["url"]."&ged=$GEDCOM");
 				$submenu["link"] = encode_url($favorite["url"]);
 				$submenu["label"] = PrintReady($favorite["title"]);
 				$submenu["labelpos"] = "right";
@@ -978,7 +983,6 @@ function print_favorite_selector($option=0) {
 				$pid = $favorite["gid"];
 				$submenu = array();
 				if ($favorite["type"]=="URL" && !empty($favorite["url"])) {
-//					$submenu["link"] = encode_url($favorite["url"]."&ged=$GEDCOM");
 					$submenu["link"] = encode_url($favorite["url"]);
 					$submenu["label"] = PrintReady($favorite["title"]);
 					$submenu["labelpos"] = "right";
@@ -1029,7 +1033,6 @@ function print_favorite_selector($option=0) {
 				$GEDCOM = $favorite["file"];
 				$pid = $favorite["gid"];
 				if ($favorite["type"]=="URL" && !empty($favorite["url"])) {
-//					print "<option value=\"".encode_url($favorite["url"]."&ged=".$GEDCOM)."\">".PrintReady($favorite["title"]);
 					print "<option value=\"".encode_url($favorite["url"])."\">".PrintReady($favorite["title"]);
 					print "</option>";
 				} else {
@@ -1082,7 +1085,6 @@ function print_favorite_selector($option=0) {
 				$GEDCOM = $favorite["file"];
 				$pid = $favorite["gid"];
 				if ($favorite["type"]=="URL" && !empty($favorite["url"])) {
-//					print "<option value=\"".encode_url($favorite["url"]."&ged=".$GEDCOM)."\">".PrintReady($favorite["title"]);
 					print "<option value=\"".encode_url($favorite["url"])."\">".PrintReady($favorite["title"]);
 					print "</option>";
 				} else {
@@ -1111,14 +1113,14 @@ function print_favorite_selector($option=0) {
 }
 
 /**
- * print a note record
- * @param string $text
- * @param int $nlevel	the level of the note record
- * @param string $nrec	the note record to print
- * @param bool $textOnly	Don't print the "Note: " introduction
- * @param boolean $return	Print the data or return the data
- * @return boolean
- */
+* print a note record
+* @param string $text
+* @param int $nlevel the level of the note record
+* @param string $nrec the note record to print
+* @param bool $textOnly Don't print the "Note: " introduction
+* @param boolean $return Print the data or return the data
+* @return boolean
+*/
 function print_note_record($text, $nlevel, $nrec, $textOnly=false, $return=false) {
 	global $pgv_lang;
 	global $PGV_IMAGE_DIR, $PGV_IMAGES, $EXPAND_SOURCES, $EXPAND_NOTES;
@@ -1165,12 +1167,12 @@ function print_note_record($text, $nlevel, $nrec, $textOnly=false, $return=false
 }
 
 /**
- * Print all of the notes in this fact record
- * @param string $factrec	the factrecord to print the notes from
- * @param int $level		The level of the factrecord
- * @param bool $textOnly	Don't print the "Note: " introduction
- * @param boolean $return	whether to return text or print the data
- */
+* Print all of the notes in this fact record
+* @param string $factrec the factrecord to print the notes from
+* @param int $level The level of the factrecord
+* @param bool $textOnly Don't print the "Note: " introduction
+* @param boolean $return whether to return text or print the data
+*/
 function print_fact_notes($factrec, $level, $textOnly=false, $return=false) {
 	global $pgv_lang;
 	global $factarray;
@@ -1222,12 +1224,12 @@ function print_fact_notes($factrec, $level, $textOnly=false, $return=false) {
 	else return $data;
 }
 /**
- * print a gedcom title linked to the gedcom portal
- *
- * This function will print the HTML to link the current gedcom title back to the
- * gedcom portal welcome page
- * @author John Finlay
- */
+* print a gedcom title linked to the gedcom portal
+*
+* This function will print the HTML to link the current gedcom title back to the
+* gedcom portal welcome page
+* @author John Finlay
+*/
 function print_gedcom_title_link($InHeader=FALSE) {
 	global $GEDCOMS, $GEDCOM, $GEDCOM_TITLE;
 	if ((count($GEDCOMS)==0)||(empty($GEDCOM))) return;
@@ -1267,12 +1269,12 @@ function print_privacy_error($username) {
 }
 
 /* Function to print popup help boxes
- * @param string $help		The variable that needs to be processed.
- * @param int $helpText		The text to be printed if the theme does not use images for help links
- * @param int $show_desc		The text to be shown as JavaScript description
- * @param boolean $use_print_text	If the text needs to be printed with the print_text() function
- * @param boolean $return	return the text instead of printing it
- */
+* @param string $help The variable that needs to be processed.
+* @param int $helpText The text to be printed if the theme does not use images for help links
+* @param int $show_desc The text to be shown as JavaScript description
+* @param boolean $use_print_text If the text needs to be printed with the print_text() function
+* @param boolean $return return the text instead of printing it
+*/
 function print_help_link($help, $helpText, $show_desc="", $use_print_text=false, $return=false) {
 	global $pgv_lang, $view, $PGV_USE_HELPIMG, $PGV_IMAGES, $PGV_IMAGE_DIR, $SEARCH_SPIDER;
 
@@ -1307,31 +1309,31 @@ function print_help_link($help, $helpText, $show_desc="", $use_print_text=false,
 }
 
 /**
- * print a language variable
- *
- * It accepts any kind of language variable. This can be a single variable but also
- * a variable with included variables that needs to be converted.
- * print_text, which used to be called print_help_text, now takes 3 parameters
- *		of which only the 1st is mandatory
- * The first parameter is the variable that needs to be processed.  At nesting level zero,
- *		this is the name of a $pgv_lang array entry.  "whatever" refers to
- *		$pgv_lang["whatever"].  At nesting levels greater than zero, this is the name of
- *		any global variable, but *without* the $ in front.  For example, VERSION or
- *		pgv_lang["whatever"] or factarray["rowname"].
- * The second parameter is $level for the nested vars in a sentence.  This indicates
- *		that the function has been called recursively.
- * The third parameter $noprint is for returning the text instead of printing it
- *		This parameter, when set to 2 means, in addition to NOT printing the result,
- *		the input string $help is text that needs to be interpreted instead of being
- *		the name of a $pgv_lang array entry.  This lets you use this function to work
- *		on something other than $pgv_lang array entries, but coded according to the
- *		same rules.
- * When we want it to return text we need to code:
- * print_text($mytext, 0, 2);
- * @param string $help		The variable that needs to be processed.
- * @param int $level		The position of the embedded variable
- * @param int $noprint		The switch if the text needs to be printed or returned
- */
+* print a language variable
+*
+* It accepts any kind of language variable. This can be a single variable but also
+* a variable with included variables that needs to be converted.
+* print_text, which used to be called print_help_text, now takes 3 parameters
+* of which only the 1st is mandatory
+* The first parameter is the variable that needs to be processed.  At nesting level zero,
+* this is the name of a $pgv_lang array entry.  "whatever" refers to
+* $pgv_lang["whatever"].  At nesting levels greater than zero, this is the name of
+* any global variable, but *without* the $ in front.  For example, VERSION or
+* pgv_lang["whatever"] or factarray["rowname"].
+* The second parameter is $level for the nested vars in a sentence.  This indicates
+* that the function has been called recursively.
+* The third parameter $noprint is for returning the text instead of printing it
+* This parameter, when set to 2 means, in addition to NOT printing the result,
+* the input string $help is text that needs to be interpreted instead of being
+* the name of a $pgv_lang array entry.  This lets you use this function to work
+* on something other than $pgv_lang array entries, but coded according to the
+* same rules.
+* When we want it to return text we need to code:
+* print_text($mytext, 0, 2);
+* @param string $help The variable that needs to be processed.
+* @param int $level The position of the embedded variable
+* @param int $noprint The switch if the text needs to be printed or returned
+*/
 function print_text($help, $level=0, $noprint=0){
 	global $pgv_lang, $factarray, $faqlist, $COMMON_NAMES_THRESHOLD;
 	global $INDEX_DIRECTORY, $GEDCOMS, $GEDCOM, $GEDCOM_TITLE, $LANGUAGE;
@@ -1455,25 +1457,25 @@ function print_help_index($help){
 	if ($ch>0) print "</ul></td></tr></table>";
 }
 /**
- * prints a JavaScript popup menu
- *
- * This function will print the DHTML required
- * to create a JavaScript Popup menu.  The $menu
- * parameter is an array that looks like this
- * $menu["label"] = "Charts";
- * $menu["labelpos"] = "down"; // tells where the text should be positioned relative to the picture options are up down left right
- * $menu["icon"] = "images/pedigree.gif";
- * $menu["hovericon"] = "images/pedigree2.gif";
- * $menu["link"] = "pedigree.php";
- * $menu["accesskey"] = "Z"; // optional accesskey
- * $menu["class"] = "menuitem";
- * $menu["hoverclass"] = "menuitem_hover";
- * $menu["flyout"] = "down"; // options are up down left right
- * $menu["items"] = array(); // an array of like menu items
- * $menu["onclick"] = "return javascript";  // java script to run on click
- * @author John Finlay
- * @param array $menu the menuitems array to print
- */
+* prints a JavaScript popup menu
+*
+* This function will print the DHTML required
+* to create a JavaScript Popup menu.  The $menu
+* parameter is an array that looks like this
+* $menu["label"] = "Charts";
+* $menu["labelpos"] = "down"; // tells where the text should be positioned relative to the picture options are up down left right
+* $menu["icon"] = "images/pedigree.gif";
+* $menu["hovericon"] = "images/pedigree2.gif";
+* $menu["link"] = "pedigree.php";
+* $menu["accesskey"] = "Z"; // optional accesskey
+* $menu["class"] = "menuitem";
+* $menu["hoverclass"] = "menuitem_hover";
+* $menu["flyout"] = "down"; // options are up down left right
+* $menu["items"] = array(); // an array of like menu items
+* $menu["onclick"] = "return javascript";  // java script to run on click
+* @author John Finlay
+* @param array $menu the menuitems array to print
+*/
 function print_menu($menu, $parentmenu="") {
 	$conv = array(
 		'label'=>'label',
@@ -1532,10 +1534,10 @@ function print_menu($menu, $parentmenu="") {
 //-------------------------------------------------------------------------------------------------------------
 function write_align_with_textdir_check($t_dir, $return=false)
 {
-  global $TEXT_DIRECTION;
-  $out = "";
-  if ($t_dir == "left")
-  {
+	global $TEXT_DIRECTION;
+	$out = "";
+	if ($t_dir == "left")
+	{
 		if ($TEXT_DIRECTION == "ltr")
 		{
 			$out .= " style=\"text-align:left; \" ";
@@ -1544,9 +1546,9 @@ function write_align_with_textdir_check($t_dir, $return=false)
 		{
 			$out .= " style=\"text-align:right; \" ";
 		}
-  }
-  else
-  {
+	}
+	else
+	{
 		if ($TEXT_DIRECTION == "ltr")
 		{
 			$out .= " style=\"text-align:right; \" ";
@@ -1555,9 +1557,9 @@ function write_align_with_textdir_check($t_dir, $return=false)
 		{
 			$out .= " style=\"text-align:left; \" ";
 		}
-  }
-  if ($return) return $out;
-  print $out;
+	}
+	if ($return) return $out;
+	print $out;
 }
 //-- print theme change dropdown box
 function print_theme_dropdown($style=0) {
@@ -1581,11 +1583,11 @@ function print_theme_dropdown($style=0) {
 }
 
 /**
- * Prepare text with parenthesis for printing
- * Convert & to &amp; for xhtml compliance
- *
- * @param string $text to be printed
- */
+* Prepare text with parenthesis for printing
+* Convert & to &amp; for xhtml compliance
+*
+* @param string $text to be printed
+*/
 function PrintReady($text, $InHeaders=false, $trim=true) {
 	global $query, $action, $firstname, $lastname, $place, $year;
 	global $TEXT_DIRECTION_array, $TEXT_DIRECTION;
@@ -1603,17 +1605,17 @@ function PrintReady($text, $InHeaders=false, $trim=true) {
 	//$text = preg_replace(array("/&/","/</","/>/"), array("&amp;","&lt;","&gt;"), $text);
 	//-- make sure we didn't double convert existing HTML entities like so:  &foo; to &amp;foo;
 	$text = preg_replace("/&amp;(\w+);/", "&$1;", $text);
-    if ($trim) $text = trim($text);
-    //-- if we are on the search page body, then highlight any search hits
-    //  In this routine, we will assume that the input string doesn't contain any
-    //  \x01 or \x02 characters.  We'll represent the <span class="search_hit"> by \x01
-    //  and </span> by \x02.  We will translate these \x01 and \x02 into their true
-    //  meaning at the end.
-    //
-    //  This special handling is required in case the user has submitted a multiple
-    //  argument search, in which the second or later arguments can be found in the
-    //  <span> or </span> strings.
-    if ($HighlightOK) {
+		if ($trim) $text = trim($text);
+		//-- if we are on the search page body, then highlight any search hits
+		//  In this routine, we will assume that the input string doesn't contain any
+		//  \x01 or \x02 characters.  We'll represent the <span class="search_hit"> by \x01
+		//  and </span> by \x02.  We will translate these \x01 and \x02 into their true
+		//  meaning at the end.
+		//
+		//  This special handling is required in case the user has submitted a multiple
+		//  argument search, in which the second or later arguments can be found in the
+		//  <span> or </span> strings.
+		if ($HighlightOK) {
 			if (isset($query)) {
 				$queries = explode(" ", $query);
 				$newtext = $text;
@@ -1708,7 +1710,7 @@ function PrintReady($text, $InHeaders=false, $trim=true) {
 			// All the "Highlight start" and "Highlight end" flags are set:
 			//  Delay the final clean-up and insertion of proper <span> and </span>
 			//  until parentheses, braces, and brackets have been processed
-    }
+		}
 
 	// Look for strings enclosed in parentheses, braces, or brackets.
 	//
@@ -1747,29 +1749,29 @@ function PrintReady($text, $InHeaders=false, $trim=true) {
 	}
 	$text = $newText;
 
-    // Parentheses, braces, and brackets have been processed:
-    // Finish processing of "Highlight Start and "Highlight end"
+	// Parentheses, braces, and brackets have been processed:
+	// Finish processing of "Highlight Start and "Highlight end"
 	$text = str_replace(array("\x02\x01", "\x02 \x01", "\x01", "\x02"), array("", " ", "<span class=\"search_hit\">", "</span>"), $text);
-    return $text;
+	return $text;
 }
 /**
- * print ASSO RELA information
- *
- * Ex1:
- * <code>1 ASSO @I1@
- * 2 RELA Twin</code>
- *
- * Ex2:
- * <code>1 CHR
- * 2 ASSO @I1@
- * 3 RELA Godfather
- * 2 ASSO @I2@
- * 3 RELA Godmother</code>
- *
- * @param string $pid		person or family ID
- * @param string $factrec	the raw gedcom record to print
- * @param string $linebr	optional linebreak
- */
+* print ASSO RELA information
+*
+* Ex1:
+* <code>1 ASSO @I1@
+* 2 RELA Twin</code>
+*
+* Ex2:
+* <code>1 CHR
+* 2 ASSO @I1@
+* 3 RELA Godfather
+* 2 ASSO @I2@
+* 3 RELA Godmother</code>
+*
+* @param string $pid person or family ID
+* @param string $factrec the raw gedcom record to print
+* @param string $linebr optional linebreak
+*/
 function print_asso_rela_record($pid, $factrec, $linebr=false, $type='INDI') {
 	global $GEDCOM, $SHOW_ID_NUMBERS, $TEXT_DIRECTION, $pgv_lang, $factarray, $PGV_IMAGE_DIR, $PGV_IMAGES, $view;
 	global $PEDIGREE_FULL_DETAILS, $LANGUAGE, $lang_short_cut;
@@ -1780,9 +1782,8 @@ function print_asso_rela_record($pid, $factrec, $linebr=false, $type='INDI') {
 		$pid2 = $match[$i][1];
 		if (empty($pid) && isset($match[1][1])) $pid = $match[1][1];
 		// get RELAtionship field
-		$autoRela = false;		// Indicates that the RELA information was automatically generated
+		$autoRela = false; // Indicates that the RELA information was automatically generated
 		$assorec = get_sub_record($level, "$level ASSO ", $factrec, $i+1);
-//		if (substr($_SERVER["SCRIPT_NAME"],1) == "pedigree.php") {
 			$rct = preg_match("/\d RELA (.*)/", $assorec, $rmatch);
 			if ($rct>0) {
 				// RELAtionship name in user language
@@ -1830,7 +1831,6 @@ function print_asso_rela_record($pid, $factrec, $linebr=false, $type='INDI') {
 				}
 				$p = strpos($rela, "(=");
 				if ($p>0) $rela = trim(substr($rela, 0, $p));
-//				if ($pid2==$pid) print "<span class=\"details_label\">";
 				// Allow special processing for different languages
 				$func="rela_localisation_{$lang_short_cut[$LANGUAGE]}";
 				if (function_exists($func))
@@ -1838,10 +1838,8 @@ function print_asso_rela_record($pid, $factrec, $linebr=false, $type='INDI') {
 					$func($rela);
 				else
 					print " {$rela}: ";
-//				if ($pid2==$pid) print "</span>";
 			}
 			else $rela = $factarray["RELA"]; // default
-//		}
 
 		// ASSOciate ID link
 		$gedrec = find_gedcom_record($pid2);
@@ -1921,10 +1919,10 @@ function print_asso_rela_record($pid, $factrec, $linebr=false, $type='INDI') {
 	}
 }
 /**
- * Format age of parents in HTML
- *
- * @param string $pid	child ID
- */
+* Format age of parents in HTML
+*
+* @param string $pid child ID
+*/
 function format_parents_age($pid) {
 	global $pgv_lang, $factarray, $SHOW_PARENTS_AGE;
 
@@ -1979,12 +1977,12 @@ function format_parents_age($pid) {
 	return $html;
 }
 /**
- * print fact DATE TIME
- *
- * @param Event $eventObj	Event to print the date for
- * @param boolean $anchor	option to print a link to calendar
- * @param boolean $time		option to print TIME value
- */
+* print fact DATE TIME
+*
+* @param Event $eventObj Event to print the date for
+* @param boolean $anchor option to print a link to calendar
+* @param boolean $time option to print TIME value
+*/
 function format_fact_date(&$eventObj, $anchor=false, $time=false) {
 	global $factarray, $pgv_lang, $pid, $SEARCH_SPIDER;
 
@@ -2029,11 +2027,16 @@ function format_fact_date(&$eventObj, $anchor=false, $time=false) {
 					$age=GedcomDate::GetAgeGedcom($birth_date, $date);
 					// Only show calculated age if it differs from recorded age
 					if (!empty($age)) {
-						if (!empty($fact_age) && $fact_age!=$age ||
-						    empty($fact_age) && empty($husb_age) && empty($wife_age) ||
-						    !empty($husb_age) && $person->getSex()=='M' && $husb_age!=$age ||
-						    !empty($wife_age) && $person->getSex()=='F' && $wife_age!=$age)
-							if ($age!="0d") $ageText = '('.$pgv_lang['age'].' '.get_age_at_event($age, false).')';
+						if (
+							!empty($fact_age) && $fact_age!=$age ||
+							empty($fact_age) && empty($husb_age) && empty($wife_age) ||
+							!empty($husb_age) && $person->getSex()=='M' && $husb_age!=$age ||
+							!empty($wife_age) && $person->getSex()=='F' && $wife_age!=$age
+						) {
+							if ($age!="0d") {
+								$ageText = '('.$pgv_lang['age'].' '.get_age_at_event($age, false).')';
+							}
+						}
 					}
 				}
 				if ($fact!='DEAT' && GedcomDate::Compare($date, $death_date)>=0) {
@@ -2056,11 +2059,14 @@ function format_fact_date(&$eventObj, $anchor=false, $time=false) {
 				$age=GedcomDate::GetAgeGedcom($birth_date, $date);
 				// Only show calculated age if it differs from recorded age
 				if (!empty($age) && $age>0) {
-					if (!empty($fact_age) && $fact_age!=$age ||
-					    empty($fact_age) && empty($husb_age) && empty($wife_age) ||
-					    !empty($husb_age) && $indi->getSex()=='M' && $husb_age!= $age ||
-					    !empty($wife_age) && $indi->getSex()=='F' && $wife_age!=$age)
+					if (
+						!empty($fact_age) && $fact_age!=$age ||
+						empty($fact_age) && empty($husb_age) && empty($wife_age) ||
+						!empty($husb_age) && $indi->getSex()=='M' && $husb_age!= $age ||
+						!empty($wife_age) && $indi->getSex()=='F' && $wife_age!=$age
+					) {
 						$ageText = '('.$pgv_lang['age'].' '.get_age_at_event($age, false).')';
+					}
 				}
 			}
 			if (!empty($ageText)) $html .= '<span class="age"> '.PrintReady($ageText).'</span>';
@@ -2069,8 +2075,8 @@ function format_fact_date(&$eventObj, $anchor=false, $time=false) {
 		// 1 DEAT Y with no DATE => print YES
 		// 1 DEAT N is not allowed
 		// It is not proper GEDCOM form to use a N(o) value with an event tag to infer that it did not happen.
-		$factrec = str_replace("\r\nPGV_OLD\r\n", '', $factrec);
-		$factrec = str_replace("\r\nPGV_NEW\r\n", '', $factrec);
+		$factrec = str_replace("\nPGV_OLD\n", '', $factrec);
+		$factrec = str_replace("\nPGV_NEW\n", '', $factrec);
 		$factdetail = explode(' ', trim($factrec));
 		if (isset($factdetail)) if (count($factdetail) == 3) if (strtoupper($factdetail[2]) == 'Y') {
 			$html.=$pgv_lang['yes'];
@@ -2085,13 +2091,13 @@ function format_fact_date(&$eventObj, $anchor=false, $time=false) {
 	return $html;
 }
 /**
- * print fact PLACe TEMPle STATus
- *
- * @param Event $eventObj	gedcom fact record
- * @param boolean $anchor	option to print a link to placelist
- * @param boolean $sub		option to print place subrecords
- * @param boolean $lds		option to print LDS TEMPle and STATus
- */
+* print fact PLACe TEMPle STATus
+*
+* @param Event $eventObj gedcom fact record
+* @param boolean $anchor option to print a link to placelist
+* @param boolean $sub option to print place subrecords
+* @param boolean $lds option to print LDS TEMPle and STATus
+*/
 function format_fact_place(&$eventObj, $anchor=false, $sub=false, $lds=false) {
 	global $SHOW_PEDIGREE_PLACES, $TEMPLE_CODES, $pgv_lang, $factarray, $SEARCH_SPIDER;
 	if ($eventObj==null) return '';
@@ -2198,10 +2204,10 @@ function format_fact_place(&$eventObj, $anchor=false, $sub=false, $lds=false) {
 	return $html;
 }
 /**
- * print first major fact for an Individual
- *
- * @param string $key	indi pid
- */
+* print first major fact for an Individual
+*
+* @param string $key indi pid
+*/
 function format_first_major_fact($key, $majorfacts = array("BIRT", "CHR", "BAPM", "DEAT", "BURI", "BAPL", "ADOP")) {
 	global $pgv_lang, $factarray, $LANGUAGE, $TEXT_DIRECTION;
 
@@ -2221,9 +2227,9 @@ function format_first_major_fact($key, $majorfacts = array("BIRT", "CHR", "BAPM"
 }
 
 /**
- * Check for facts that may exist only once for a certain record type.
- * If the fact already exists in the second array, delete it from the first one.
- */
+* Check for facts that may exist only once for a certain record type.
+* If the fact already exists in the second array, delete it from the first one.
+*/
 function CheckFactUnique($uniquefacts, $recfacts, $type) {
 	foreach($recfacts as $indexval => $factarray) {
 		$fact=false;
@@ -2249,11 +2255,11 @@ function CheckFactUnique($uniquefacts, $recfacts, $type) {
 }
 
 /**
- * Print a new fact box on details pages
- * @param string $id	the id of the person,family,source etc the fact will be added to
- * @param array $usedfacts	an array of facts already used in this record
- * @param string $type	the type of record INDI, FAM, SOUR etc
- */
+* Print a new fact box on details pages
+* @param string $id the id of the person,family,source etc the fact will be added to
+* @param array $usedfacts an array of facts already used in this record
+* @param string $type the type of record INDI, FAM, SOUR etc
+*/
 function print_add_new_fact($id, $usedfacts, $type) {
 	global $factarray, $pgv_lang;
 	global $INDI_FACTS_ADD,    $FAM_FACTS_ADD,    $SOUR_FACTS_ADD,    $REPO_FACTS_ADD;
@@ -2323,10 +2329,10 @@ function print_add_new_fact($id, $usedfacts, $type) {
 }
 
 /**
- * javascript declaration for calendar popup
- *
- * @param none
- */
+* javascript declaration for calendar popup
+*
+* @param none
+*/
 function init_calendar_popup() {
 	global $pgv_lang, $WEEK_START;
 
@@ -2353,13 +2359,13 @@ function init_calendar_popup() {
 }
 
 /**
- * prints a link to open the Find Special Character window
- * @param string $element_id	the ID of the element the value will be pasted to
- * @param string $indiname		the id of the element the name should be pasted to
- * @param boolean $asString		Whether or not the HTML should be returned as a string or printed
- * @param boolean $multiple		Whether or not the user will be selecting multiple people
- * @param string $ged			The GEDCOM to search in
- */
+* prints a link to open the Find Special Character window
+* @param string $element_id the ID of the element the value will be pasted to
+* @param string $indiname the id of the element the name should be pasted to
+* @param boolean $asString Whether or not the HTML should be returned as a string or printed
+* @param boolean $multiple Whether or not the user will be selecting multiple people
+* @param string $ged The GEDCOM to search in
+*/
 function print_findindi_link($element_id, $indiname, $asString=false, $multiple=false, $ged='', $filter='') {
 	global $pgv_lang, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM;
 
@@ -2474,10 +2480,10 @@ function print_findmedia_link($element_id, $choose="", $ged='', $asString=false)
 }
 
 /**
- * get a quick-glance view of current LDS ordinances
- * @param string $indirec
- * @return string
- */
+* get a quick-glance view of current LDS ordinances
+* @param string $indirec
+* @return string
+*/
 function get_lds_glance($indirec) {
 	$text = "";
 
@@ -2508,8 +2514,8 @@ function get_lds_glance($indirec) {
 }
 
 /**
- * This function produces a hexadecimal dump of the input string for debugging purposes
- */
+* This function produces a hexadecimal dump of the input string for debugging purposes
+*/
 
 function DumpString($input) {
 	if (empty($input)) return false;
