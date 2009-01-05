@@ -1,32 +1,32 @@
 <?php
 /**
- * PopUp Window to provide editing features.
- *
- * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- *
- * @package PhpGedView
- * @subpackage Edit
- * @version $Id$
- */
+* PopUp Window to provide editing features.
+*
+* phpGedView: Genealogy Viewer
+* Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
+*
+* This program is free software; you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation; either version 2 of the License, or
+* (at your option) any later version.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+* GNU General Public License for more details.
+*
+* You should have received a copy of the GNU General Public License
+* along with this program; if not, write to the Free Software
+* Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+*
+* @package PhpGedView
+* @subpackage Edit
+* @version $Id$
+*/
 
 require './config.php';
 
-require("includes/functions/functions_edit.php");
+require 'includes/functions/functions_edit.php';
 
 loadLangFile("pgv_country");
 uasort($countries, "stringsort");
@@ -168,11 +168,11 @@ $disp = false;
 $success = false;
 
 /**
- * Check if the given gedcom record has any RESN editing restrictions
- * This is used to prevent raw editing and deletion of records that are locked
- * @param string $gedrec
- * @return boolean
- */
+* Check if the given gedcom record has any RESN editing restrictions
+* This is used to prevent raw editing and deletion of records that are locked
+* @param string $gedrec
+* @return boolean
+*/
 function checkFactEdit($gedrec) {
 	if (PGV_USER_GEDCOM_ADMIN) {
 		return true;
@@ -233,7 +233,7 @@ else if (!empty($famid)) {
 	}
 }
 else if (($action!="addchild")&&($action!="addchildaction")&&($action!="addnewsource")&&($action!="mod_edit_fact")) {
-	print "<span class=\"error\">The \$pid variable was empty.	Unable to perform $action.</span>";
+	print "<span class=\"error\">The \$pid variable was empty. Unable to perform $action.</span>";
 	print_simple_footer();
 	$disp = true;
 }
@@ -273,7 +273,7 @@ if ($type=="INDI") {
 elseif ($type=="FAM") {
 	if (!empty($pid)) {
 		$record=Family::getInstance($pid);
-	}	else {
+	} else {
 		$record=Family::getInstance($famid);
 	}
 	print "<b>".PrintReady($record->getFullName())."</b><br />";
@@ -695,7 +695,7 @@ case 'addsourceaction':
 		$newgedrec .= "2 EVEN ".implode(",", $EVEN)."\n";
 		if (!empty($EVEN_DATE)) $newgedrec .= "3 DATE ".check_input_date($EVEN_DATE)."\n";
 		if (!empty($EVEN_PLAC)) $newgedrec .= "3 PLAC ".$EVEN_PLAC."\n";
-		if (!empty($AGNC))	$newgedrec .= "2 AGNC ".$AGNC."\n";
+		if (!empty($AGNC))      $newgedrec .= "2 AGNC ".$AGNC."\n";
 	}
 	if (isset($_REQUEST['ABBR'])) $ABBR = $_REQUEST['ABBR'];
 	if (isset($_REQUEST['TITL'])) $TITL = $_REQUEST['TITL'];
@@ -904,25 +904,25 @@ case 'update':
 	if (isset($_REQUEST['_AKA'])) $_AKA = $_REQUEST['_AKA'];
 	if (isset($_REQUEST['_MARNM'])) $_MARNM = $_REQUEST['_MARNM'];
 
-	if (!empty($NAME)) $newged .= "1 NAME $NAME\r\n";
-	if (!empty($TYPE)) $newged .= "2 TYPE $TYPE\r\n";
-	if (!empty($NPFX)) $newged .= "2 NPFX $NPFX\r\n";
-	if (!empty($GIVN)) $newged .= "2 GIVN $GIVN\r\n";
-	if (!empty($NICK)) $newged .= "2 NICK $NICK\r\n";
-	if (!empty($SPFX)) $newged .= "2 SPFX $SPFX\r\n";
-	if (!empty($SURN)) $newged .= "2 SURN $SURN\r\n";
-	if (!empty($NSFX)) $newged .= "2 NSFX $NSFX\r\n";
+	if (!empty($NAME)) $newged .= "1 NAME $NAME\n";
+	if (!empty($TYPE)) $newged .= "2 TYPE $TYPE\n";
+	if (!empty($NPFX)) $newged .= "2 NPFX $NPFX\n";
+	if (!empty($GIVN)) $newged .= "2 GIVN $GIVN\n";
+	if (!empty($NICK)) $newged .= "2 NICK $NICK\n";
+	if (!empty($SPFX)) $newged .= "2 SPFX $SPFX\n";
+	if (!empty($SURN)) $newged .= "2 SURN $SURN\n";
+	if (!empty($NSFX)) $newged .= "2 NSFX $NSFX\n";
 
 	//-- Refer to Bug [ 1329644 ] Add Married Name - Wrong Sequence
 	//-- _HEB/ROMN/FONE have to be before _AKA, even if _AKA exists in input and the others are now added
-	if (!empty($ROMN)) $newged .= "2 ROMN $ROMN\r\n";
-	if (!empty($FONE)) $newged .= "2 FONE $FONE\r\n";
-	if (!empty($_HEB)) $newged .= "2 _HEB $_HEB\r\n";
+	if (!empty($ROMN)) $newged .= "2 ROMN $ROMN\n";
+	if (!empty($FONE)) $newged .= "2 FONE $FONE\n";
+	if (!empty($_HEB)) $newged .= "2 _HEB $_HEB\n";
 
 	$newged = handle_updates($newged);
 
-	if (!empty($_AKA)) $newged .= "2 _AKA $_AKA\r\n";
-	if (!empty($_MARNM)) $newged .= "2 _MARNM $_MARNM\r\n";
+	if (!empty($_AKA)) $newged .= "2 _AKA $_AKA\n";
+	if (!empty($_MARNM)) $newged .= "2 _MARNM $_MARNM\n";
 
 	while($i<count($gedlines)) {
 		$newged .= trim($gedlines[$i])."\n";
@@ -940,7 +940,7 @@ case 'addchildaction':
 		phpinfo(INFO_VARIABLES);
 	}
 
-	splitSOUR();			// separate SOUR record from the rest
+	splitSOUR(); // separate SOUR record from the rest
 
 	$gedrec ="0 @REF@ INDI\n";
 	$gedrec.=addNewName();
@@ -1028,7 +1028,7 @@ case 'addspouseaction':
 		phpinfo(INFO_VARIABLES);
 	}
 
-	splitSOUR();			// separate SOUR record from the rest
+	splitSOUR(); // separate SOUR record from the rest
 
 	$gedrec ="0 @REF@ INDI\n";
 	$gedrec.=addNewName();
@@ -1141,7 +1141,7 @@ case 'linkspouseaction':
 		phpinfo(INFO_VARIABLES);
 	}
 
-	splitSOUR();			// separate SOUR record from the rest
+	splitSOUR(); // separate SOUR record from the rest
 
 	if (isset($_REQUEST['spid'])) $spid = $_REQUEST['spid'];
 	if (!empty($spid)) {
@@ -1203,7 +1203,7 @@ case 'addnewparentaction':
 		phpinfo(INFO_VARIABLES);
 	}
 
-	splitSOUR();			// separate SOUR record from the rest
+	splitSOUR(); // separate SOUR record from the rest
 
 	$gedrec ="0 @REF@ INDI\n";
 	$gedrec.=addNewName();
@@ -1686,7 +1686,7 @@ case 'reorder_children':
 				asort($children);
 			}
 			$i=0;
-			$show_full = 1;		// Force details to show for each child
+			$show_full = 1; // Force details to show for each child
 			foreach($children as $id=>$child) {
 				print "<li style=\"cursor:move;margin-bottom:2px;\"";
 				if (!in_array($id, $ids)) print " class=\"facts_valueblue\"";
