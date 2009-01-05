@@ -113,9 +113,9 @@
 							if (isset($_COOKIE['famnav'])) {
 								$Fam_Navigator=$_COOKIE['famnav'];
 							}else{
-								$Fam_Navigator="NO";
+								$Fam_Navigator="YES";
 							}
-							if ($_COOKIE['famnav'] == "YES") {
+							if ($Fam_Navigator == "YES") {
 								print "<td width=\"220px\" align=\"center\" valign=\"top\">";
 									//
 								print "</td>";

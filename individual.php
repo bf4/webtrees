@@ -204,7 +204,7 @@ $linkToID=$controller->pid; // -- Tell addmedia.php what to link to
 	<td width="10"><br /></td>
 	</tr>
 	<tr>
-	<td valign="bottom" colspan="5">
+	<td valign="bottom" colspan="2">
 	<?php if ($controller->indi->isMarkedDeleted()) print "<span class=\"error\">".$pgv_lang["record_marked_deleted"]."</span>"; ?>
 <script language="JavaScript" type="text/javascript">
 // <![CDATA[
@@ -416,7 +416,6 @@ if (file_exists('./modules/lightbox/album.php')) {
 <!--	<dd id="door8"><a href="javascript:;" onclick="tabswitch(8); return false;" ><?php print "Spare" ?></a></dd> -->
 	<?php }?>
 	<dd id="door0"><a href="javascript:;" onclick="tabswitch(0); if (loadedTabs[8]) {ResizeMap(); ResizeMap();} return false;" ><?php print $pgv_lang["all"]?></a></dd>
-	<dd id="door9"><a href="javascript:;" onclick=" setfamnav(); return false;"><?php print $pgv_lang["navigator"]?></a></dd>
 <!-- ====================== Added for Lightbox Module ===================== -->
 <?php } ?>
 <!-- ================== End Additions for Lightbox Module ================== -->
@@ -428,6 +427,10 @@ if (file_exists('./modules/lightbox/album.php')) {
 }
 ?>
 	</td>
+	<td align="center" valign="bottom">
+		<a href="javascript:;" onclick=" setfamnav(); return false;" title="Navigator On/Off" alt="">&nbsp;&nbsp;<?php print $pgv_lang["navigator"]?></a>
+	</td>
+	<td></td>
 	</tr>
 </table>
 <!-- ======================== Start Tab 0 individual page ============ Personal Facts and Details -->

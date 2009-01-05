@@ -1298,7 +1298,7 @@ class IndividualControllerRoot extends BaseController {
 		if (isset($_COOKIE['famnav'])) {
 			$Fam_Navigator=$_COOKIE['famnav'];
 		}else{
-			$Fam_Navigator="NO";
+			$Fam_Navigator="YES";
 		}
 		if ($Fam_Navigator=="YES") {
 			print "<table cellpadding=\"0\" ><tr><td valign=\"top\" width=\"100%\" >";
@@ -1402,7 +1402,7 @@ class IndividualControllerRoot extends BaseController {
 		if (isset($_COOKIE['famnav'])) {
 			$Fam_Navigator=$_COOKIE['famnav'];
 		}else{
-			$Fam_Navigator="NO";
+			$Fam_Navigator="YES";
 		}
 		if ($Fam_Navigator=="YES") {
 			print "<table cellpadding=\"0\" ><tr><td valign=\"top\" width=\"100%\" >";
@@ -1504,7 +1504,7 @@ class IndividualControllerRoot extends BaseController {
 		if (isset($_COOKIE['famnav'])) {
 			$Fam_Navigator=$_COOKIE['famnav'];
 		}else{
-			$Fam_Navigator="NO";
+			$Fam_Navigator="YES";
 		}
 		if ($Fam_Navigator=="YES") {
 			print "<table cellpadding=\"0\" ><tr><td valign=\"top\" width=\"100%\" >";
@@ -1608,7 +1608,7 @@ class IndividualControllerRoot extends BaseController {
 		if (isset($_COOKIE['famnav'])) {
 			$Fam_Navigator=$_COOKIE['famnav'];
 		}else{
-			$Fam_Navigator="NO";
+			$Fam_Navigator="YES";
 		}
 		if ($Fam_Navigator=="YES") {
 			print "<table cellpadding=\"0\" ><tr><td valign=\"top\" width=\"100%\" >";
@@ -1676,7 +1676,7 @@ class IndividualControllerRoot extends BaseController {
 		if (isset($_COOKIE['famnav'])) {
 			$Fam_Navigator=$_COOKIE['famnav'];
 		}else{
-			$Fam_Navigator="NO";
+			$Fam_Navigator="YES";
 		}
 		if ($Fam_Navigator=="YES") {
 			print "<table border=\"0\" cellpadding=\"0\" width=\"100%\"><tr><td valign=\"top\" width=\"100%\" >";
@@ -1885,7 +1885,7 @@ class IndividualControllerRoot extends BaseController {
 		if (isset($_COOKIE['famnav'])) {
 			$Fam_Navigator=$_COOKIE['famnav'];
 		}else{
-			$Fam_Navigator="NO";
+			$Fam_Navigator="YES";
 		}
 	
 		// LB Fix if no googlemaps ========================================================
@@ -1955,7 +1955,7 @@ class IndividualControllerRoot extends BaseController {
 		if (isset($_COOKIE['famnav'])) {
 			$Fam_Navigator=$_COOKIE['famnav'];
 		}else{
-			$Fam_Navigator="NO";
+			$Fam_Navigator="YES";
 		}
 		// ==================== Start Tree Tab Navigator ========================================  
 		if ($Fam_Navigator=="YES") {
@@ -1989,7 +1989,7 @@ class IndividualControllerRoot extends BaseController {
 		if (isset($_COOKIE['famnav'])) {
 			$Fam_Navigator=$_COOKIE['famnav'];
 		}else{
-			$Fam_Navigator="NO";
+			$Fam_Navigator="YES";
 		}
 		if ($Fam_Navigator=="YES") {
 			print "<table cellpadding=\"0\" ><tr><td valign=\"top\" width=\"100%\" >";
@@ -2050,7 +2050,7 @@ class IndividualControllerRoot extends BaseController {
 		if (isset($_COOKIE['famnav'])) {
 			$Fam_Navigator=$_COOKIE['famnav'];
 		}else{
-			$Fam_Navigator="NO";
+			$Fam_Navigator="YES";
 		}
 		if ($Fam_Navigator=="YES") {
 			print "<table cellpadding=\"0\" ><tr><td valign=\"top\" width=\"100%\" >";
