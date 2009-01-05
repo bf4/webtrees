@@ -1,34 +1,34 @@
 <?php
 /**
- * PopUp Window to provide users with a simple quick update form.
- *
- * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- *
- * This Page Is Valid XHTML 1.0 Transitional! > 19 August 2005
- *
- * @package PhpGedView
- * @subpackage Edit
- * @version $Id$
- */
+* PopUp Window to provide users with a simple quick update form.
+*
+* phpGedView: Genealogy Viewer
+* Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
+*
+* This program is free software; you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation; either version 2 of the License, or
+* (at your option) any later version.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+* GNU General Public License for more details.
+*
+* You should have received a copy of the GNU General Public License
+* along with this program; if not, write to the Free Software
+* Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+*
+* This Page Is Valid XHTML 1.0 Transitional! > 19 August 2005
+*
+* @package PhpGedView
+* @subpackage Edit
+* @version $Id$
+*/
 
 require './config.php';
 
-require_once("includes/functions/functions_edit.php");
+require_once 'includes/functions/functions_edit.php';
 
 loadLangFile("pgv_editor");
 
@@ -168,7 +168,6 @@ if ($action=="update") {
 		for($j=0; $j<count($TAGS); $j++) {
 			if (!empty($TAGS[$j])) {
 				$fact = $TAGS[$j];
-//				echo $fact;
 				if (!isset($repeat_tags[$fact])) $repeat_tags[$fact] = 1;
 				else $repeat_tags[$fact]++;
 
@@ -181,22 +180,21 @@ if ($action=="update") {
 					$RESNS[$j]="";
 				}
 				if ((empty($DATES[$j]))&&(empty($PLACS[$j]))&&(empty($TEMPS[$j]))&&(empty($RESNS[$j]))) {
-					if (!empty($FMARRY)) $factrec = "1 MARR Y\r\n";
-					else if (!empty($FDIVY)) $factrec = "1 DIV Y\r\n";
+					if (!empty($FMARRY)) $factrec = "1 MARR Y\n";
+					else if (!empty($FDIVY)) $factrec = "1 DIV Y\n";
 					else $factrec="";
 				}
 				else {
-					if (!in_array($fact, $typefacts)) $factrec = "1 $fact\r\n";
-					else $factrec = "1 EVEN\r\n2 TYPE $fact\r\n";
-					if (!empty($DATES[$j])) $factrec .= "2 DATE $DATES[$j]\r\n";
-					if (!empty($PLACS[$j])) $factrec .= "2 PLAC $PLACS[$j]\r\n";
-					if (!empty($TEMPS[$j])) $factrec .= "2 TEMP $TEMPS[$j]\r\n";
-					if (!empty($RESNS[$j])) $factrec .= "2 RESN $RESNS[$j]\r\n";
+					if (!in_array($fact, $typefacts)) $factrec = "1 $fact\n";
+					else $factrec = "1 EVEN\n2 TYPE $fact\n";
+					if (!empty($DATES[$j])) $factrec .= "2 DATE $DATES[$j]\n";
+					if (!empty($PLACS[$j])) $factrec .= "2 PLAC $PLACS[$j]\n";
+					if (!empty($TEMPS[$j])) $factrec .= "2 TEMP $TEMPS[$j]\n";
+					if (!empty($RESNS[$j])) $factrec .= "2 RESN $RESNS[$j]\n";
 				}
 				if (!in_array($fact, $typefacts)) $lookup = "1 $fact";
-				else $lookup = "1 EVEN\r\n2 TYPE $fact\r\n";
+				else $lookup = "1 EVEN\n2 TYPE $fact\n";
 				$pos1 = strpos($famrec, $lookup);
-//				echo $pos1."=pos1";
 				$k=1;
 				//-- make sure we are working with the correct fact
 				while($k<$repeat_tags[$fact]) {
@@ -204,7 +202,6 @@ if ($action=="update") {
 					$k++;
 					if ($pos1===false) break;
 				}
-//				echo $pos1."=pos1";
 				$noupdfact = false;
 				if ($pos1!==false) {
 					$pos2 = strpos($famrec, "\n1 ", $pos1+5);
@@ -218,43 +215,39 @@ if ($action=="update") {
 						//-- delete the fact
 						if ($REMS[$j]==1) {
 							$famupdate = true;
-							$famrec = substr($famrec, 0, $pos1) . "\r\n". substr($famrec, $pos2);
-//							echo "sfamupdate_del [".$factrec."]{".$oldfac."}";
+							$famrec = substr($famrec, 0, $pos1) . "\n". substr($famrec, $pos2);
 						}
 						else if (!empty($oldfac) && !empty($factrec)) {
 							$factrec = $oldfac;
 							if (!empty($DATES[$j])) {
 								if (strstr($factrec, "\n2 DATE")) $factrec = preg_replace("/2 DATE.*/", "2 DATE $DATES[$j]", $factrec);
-								else $factrec = $factrec."\r\n2 DATE $DATES[$j]";
+								else $factrec = $factrec."\n2 DATE $DATES[$j]";
 							}
 							if (!empty($PLACS[$j])) {
 								if (strstr($factrec, "\n2 PLAC")) $factrec = preg_replace("/2 PLAC.*/", "2 PLAC $PLACS[$j]", $factrec);
-								else $factrec = $factrec."\r\n2 PLAC $PLACS[$j]";
+								else $factrec = $factrec."\n2 PLAC $PLACS[$j]";
 							}
 							if (!empty($TEMPS[$j])) {
 								if (strstr($factrec, "\n2 TEMP")) $factrec = preg_replace("/2 TEMP.*/", "2 TEMP $TEMPS[$j]", $factrec);
-								else $factrec = $factrec."\r\n2 TEMP $TEMPS[$j]";
+								else $factrec = $factrec."\n2 TEMP $TEMPS[$j]";
 							}
 							if (!empty($RESNS[$j])) {
 								if (strstr($factrec, "\n2 RESN")) $factrec = preg_replace("/2 RESN.*/", "2 RESN $RESNS[$j]", $factrec);
-								else $factrec = $factrec."\r\n2 RESN $RESNS[$j]";
+								else $factrec = $factrec."\n2 RESN $RESNS[$j]";
 							}
 
-							$factrec = preg_replace("/[\r\n]+/", "\r\n", $factrec);
-							$oldfac = preg_replace("/[\r\n]+/", "\r\n", $oldfac);
-//			echo "<table><tr><th>new</th><th>old</th></tr><tr><td><pre>$factrec</pre></td><td><pre>$oldfac</pre></td></tr></table>";
+							$factrec = preg_replace("/[\r\n]+/", "\n", $factrec);
+							$oldfac = preg_replace("/[\r\n]+/", "\n", $oldfac);
 							if (trim($factrec) != trim($oldfac)) {
 								$famupdate = true;
-								$famrec = substr($famrec, 0, $pos1) . trim($factrec)."\r\n" . substr($famrec, $pos2);
-//								echo "sfamupdate3 [".$factrec."]{".$oldfac."}";
+								$famrec = substr($famrec, 0, $pos1) . trim($factrec)."\n" . substr($famrec, $pos2);
 							}
 						}
 					}
 				}
 				else if (!empty($factrec)) {
-					$famrec .= "\r\n".$factrec;
+					$famrec .= "\n".$factrec;
 					$famupdate = true;
-//						echo "sfamupdate2";
 				}
 			}
 		}
@@ -285,8 +278,8 @@ if ($action=="update") {
 				else {
 					$namerec = preg_replace("/1 NAME.+/", "1 NAME $GIVN", $namerec);
 				}
-				if (preg_match("/2 GIVN/", $namerec)>0) $namerec = preg_replace("/2 GIVN.*/", "2 GIVN $GIVN\r\n", $namerec);
-				else $namerec.="\r\n2 GIVN $GIVN";
+				if (preg_match("/2 GIVN/", $namerec)>0) $namerec = preg_replace("/2 GIVN.*/", "2 GIVN $GIVN\n", $namerec);
+				else $namerec.="\n2 GIVN $GIVN";
 			}
 			if (isset($SURN)) {
 				//-- check if name line has a GIVN and a SURN
@@ -294,15 +287,15 @@ if ($action=="update") {
 					$namerec = preg_replace("/1 NAME(.+)\/.*\//", "1 NAME$1/$SURN/", $namerec);
 				}
 				else {
-					$namerec = preg_replace("/1 NAME ([\w.\ -_]+)/", "1 NAME $1 /$SURN/\r\n", $namerec);
+					$namerec = preg_replace("/1 NAME ([\w.\ -_]+)/", "1 NAME $1 /$SURN/\n", $namerec);
 				}
-				if (preg_match("/2 SURN/", $namerec)>0) $namerec = preg_replace("/2 SURN.*/", "2 SURN $SURN\r\n", $namerec);
-				else $namerec.="\r\n2 SURN $SURN";
+				if (preg_match("/2 SURN/", $namerec)>0) $namerec = preg_replace("/2 SURN.*/", "2 SURN $SURN\n", $namerec);
+				else $namerec.="\n2 SURN $SURN";
 			}
 			//-- update the married surname
 			if (!isset($SURN) || isset($MRSURN) && $MRSURN!=$SURN) {
-				if (preg_match("/2 _MARNM/", $namerec)>0) $namerec = preg_replace("/2 _MARNM.*/", "2 _MARNM $MRSURN\r\n", $namerec);
-				else $namerec.="\r\n2 _MARNM $MRSURN";
+				if (preg_match("/2 _MARNM/", $namerec)>0) $namerec = preg_replace("/2 _MARNM.*/", "2 _MARNM $MRSURN\n", $namerec);
+				else $namerec.="\n2 _MARNM $MRSURN";
 			}
 			$pos1 = strpos($gedrec, "1 NAME");
 			if ($pos1!==false) {
@@ -311,13 +304,12 @@ if ($action=="update") {
 					$gedrec = substr($gedrec, 0, $pos1).$namerec;
 				}
 				else {
-					$gedrec = substr($gedrec, 0, $pos1).$namerec."\r\n".substr($gedrec, $pos2+1);
+					$gedrec = substr($gedrec, 0, $pos1).$namerec."\n".substr($gedrec, $pos2+1);
 				}
 			}
 		}
-		else $gedrec .= "\r\n1 NAME $GIVN /$SURN/\r\n2 GIVN $GIVN\r\n2 SURN $SURN\r\n2 _MARNM $MRSURN";
+		else $gedrec .= "\n1 NAME $GIVN /$SURN/\n2 GIVN $GIVN\n2 SURN $SURN\n2 _MARNM $MRSURN";
 		$updated = true;
-//		echo "<pre>NAME\n".$gedrec."</pre>\n";
 	}
 
 	//-- update the person's gender
@@ -330,7 +322,7 @@ if ($action=="update") {
 			}
 		}
 		else {
-			$gedrec .= "\r\n1 SEX $GENDER";
+			$gedrec .= "\n1 SEX $GENDER";
 			$updated = true;
 		}
 	}
@@ -351,9 +343,9 @@ if ($action=="update") {
 			if ($pos1!==false) {
 				$pos1 = strpos($gedrec, "\n1", $pos1+5);
 				if ($pos1===false) $pos1 = strlen($gedrec)-1;
-				$gedrec = substr($gedrec, 0, $pos1)."\r\n2 _HEB $HGIVN /$HSURN/\r\n".substr($gedrec, $pos1+1);
+				$gedrec = substr($gedrec, 0, $pos1)."\n2 _HEB $HGIVN /$HSURN/\n".substr($gedrec, $pos1+1);
 			}
-			else $gedrec .= "\r\n1 NAME $HGIVN /$HSURN/\r\n2 _HEB $HGIVN /$HSURN/\r\n";
+			else $gedrec .= "\n1 NAME $HGIVN /$HSURN/\n2 _HEB $HGIVN /$HSURN/\n";
 		}
 		$updated = true;
 	}
@@ -373,9 +365,9 @@ if ($action=="update") {
 			if ($pos1!==false) {
 				$pos1 = strpos($gedrec, "\n1", $pos1+5);
 				if ($pos1===false) $pos1 = strlen($gedrec)-1;
-				$gedrec = substr($gedrec, 0, $pos1)."\r\n2 ROMN $RGIVN /$RSURN/\r\n".substr($gedrec, $pos1+1);
+				$gedrec = substr($gedrec, 0, $pos1)."\n2 ROMN $RGIVN /$RSURN/\n".substr($gedrec, $pos1+1);
 			}
-			else $gedrec .= "\r\n1 NAME $RGIVN /$RSURN/\r\n2 ROMN $RGIVN /$RSURN/\r\n";
+			else $gedrec .= "\n1 NAME $RGIVN /$RSURN/\n2 ROMN $RGIVN /$RSURN/\n";
 		}
 		$updated = true;
 	}
@@ -384,7 +376,6 @@ if ($action=="update") {
 	if (isset($_REQUEST['TAGS'])) $TAGS = $_REQUEST['TAGS'];
 	if (count($TAGS)>0) {
 		$updated |= check_updated_facts("", $gedrec, $TAGS, "");
-//		echo "FACTS <pre>$gedrec</pre>";
 	}
 
 	//-- check for new fact
@@ -394,18 +385,18 @@ if ($action=="update") {
 	if (isset($_REQUEST['TEMP'])) $TEMP = $_REQUEST['TEMP'];
 	if (isset($_REQUEST['RESN'])) $RESN = $_REQUEST['RESN'];
 	if (!empty($newfact)) {
-		if (!in_array($newfact, $typefacts)) $factrec = "1 $newfact\r\n";
-		else $factrec = "1 EVEN\r\n2 TYPE $newfact\r\n";
+		if (!in_array($newfact, $typefacts)) $factrec = "1 $newfact\n";
+		else $factrec = "1 EVEN\n2 TYPE $newfact\n";
 		if (!empty($DATE)) {
 			$DATE = check_input_date($DATE);
-			$factrec .= "2 DATE $DATE\r\n";
+			$factrec .= "2 DATE $DATE\n";
 		}
-		if (!empty($PLAC)) $factrec .= "2 PLAC $PLAC\r\n";
-		if (!empty($TEMP)) $factrec .= "2 TEMP $TEMP\r\n";
-		if (!empty($RESN)) $factrec .= "2 RESN $RESN\r\n";
+		if (!empty($PLAC)) $factrec .= "2 PLAC $PLAC\n";
+		if (!empty($TEMP)) $factrec .= "2 TEMP $TEMP\n";
+		if (!empty($RESN)) $factrec .= "2 RESN $RESN\n";
 		//-- make sure that there is at least a Y
-		if (preg_match("/\n2 \w*/", $factrec)==0) $factrec = "1 $newfact Y\r\n";
-		$gedrec .= "\r\n".$factrec;
+		if (preg_match("/\n2 \w*/", $factrec)==0) $factrec = "1 $newfact Y\n";
+		$gedrec .= "\n".$factrec;
 		$updated = true;
 	}
 
@@ -420,23 +411,22 @@ if ($action=="update") {
 			generate_thumbnail($filename, $thumbnail);
 
 			if (isset($_REQUEST['TITL'])) $TITL = $_REQUEST['TITL'];
-			$objrec = "0 @new@ OBJE\r\n";
-			$objrec .= "1 FILE ".$filename."\r\n";
-			if (!empty($TITL)) $objrec .= "2 TITL $TITL\r\n";
+			$objrec = "0 @new@ OBJE\n";
+			$objrec .= "1 FILE ".$filename."\n";
+			if (!empty($TITL)) $objrec .= "2 TITL $TITL\n";
 			$objid = append_gedrec($objrec);
 
-//			$factrec = "1 OBJE @".$objid."@\r\n1 _PRIM Y\r\n"; //@@ MA  _PRIM should either not exist or we should write it as 2 _PRIM here or as 1 _PRIM for the 0 OBJE
-			$factrec = "1 OBJE @".$objid."@\r\n";
-			if (empty($replace)) $gedrec .= "\r\n".$factrec;
+			$factrec = "1 OBJE @".$objid."@\n";
+			if (empty($replace)) $gedrec .= "\n".$factrec;
 			else {
 				$fact = "OBJE";
 				$pos1 = strpos($gedrec, "1 $fact");
 				if ($pos1!==false) {
 					$pos2 = strpos($gedrec, "\n1 ", $pos1+1);
 					if ($pos2===false) $pos2 = strlen($gedrec)-1;
-					$gedrec = substr($gedrec, 0, $pos1) . "\r\n".$factrec . substr($gedrec, $pos2);
+					$gedrec = substr($gedrec, 0, $pos1) . "\n".$factrec . substr($gedrec, $pos2);
 				}
-				else $gedrec .= "\r\n".$factrec;
+				else $gedrec .= "\n".$factrec;
 			}
 			$updated = true;
 		}
@@ -453,76 +443,76 @@ if ($action=="update") {
 	$factrec = "";
 	if (!empty($ADDR)) {
 		if (!empty($ADR1)||!empty($CITY)||!empty($POST)) {
-			$factrec = "1 ADDR $ADDR\r\n";
-			if (!empty($_NAME)) $factrec.="2 _NAME ".$_NAME."\r\n";
-			if (!empty($ADR1)) $factrec.="2 ADR1 ".$ADR1."\r\n";
-			if (!empty($ADR2)) $factrec.="2 ADR2 ".$ADR2."\r\n";
-			if (!empty($CITY)) $factrec.="2 CITY ".$CITY."\r\n";
-			if (!empty($STAE)) $factrec.="2 STAE ".$STAE."\r\n";
-			if (!empty($POST)) $factrec.="2 POST ".$POST."\r\n";
-			if (!empty($CTRY)) $factrec.="2 CTRY ".$CTRY."\r\n";
+			$factrec = "1 ADDR $ADDR\n";
+			if (!empty($_NAME)) $factrec.="2 _NAME ".$_NAME."\n";
+			if (!empty($ADR1)) $factrec.="2 ADR1 ".$ADR1."\n";
+			if (!empty($ADR2)) $factrec.="2 ADR2 ".$ADR2."\n";
+			if (!empty($CITY)) $factrec.="2 CITY ".$CITY."\n";
+			if (!empty($STAE)) $factrec.="2 STAE ".$STAE."\n";
+			if (!empty($POST)) $factrec.="2 POST ".$POST."\n";
+			if (!empty($CTRY)) $factrec.="2 CTRY ".$CTRY."\n";
 		}
 		else {
 			$factrec = "1 ADDR ";
 			$lines = preg_split("/\r*\n/", $ADDR);
-			$factrec .= $lines[0]."\r\n";
-			for($i=1; $i<count($lines); $i++) $factrec .= "2 CONT ".$lines[$i]."\r\n";
+			$factrec .= $lines[0]."\n";
+			for($i=1; $i<count($lines); $i++) $factrec .= "2 CONT ".$lines[$i]."\n";
 		}
 	}
 	$pos1 = strpos($gedrec, "1 ADDR");
 	if ($pos1!==false) {
 		$pos2 = strpos($gedrec, "\n1 ", $pos1+1);
 		if ($pos2===false) $pos2 = strlen($gedrec)-1;
-		$gedrec = substr($gedrec, 0, $pos1) . "\r\n".$factrec . substr($gedrec, $pos2);
+		$gedrec = substr($gedrec, 0, $pos1) . "\n".$factrec . substr($gedrec, $pos2);
 		$updated = true;
 	}
 	else if (!empty($factrec)) {
-		$gedrec .= "\r\n".$factrec;
+		$gedrec .= "\n".$factrec;
 		$updated = true;
 	}
 
 	if (isset($_REQUEST['PHON'])) $PHON = $_REQUEST['PHON'];
 	$factrec = "";
-	if (!empty($PHON)) $factrec = "1 PHON $PHON\r\n";
+	if (!empty($PHON)) $factrec = "1 PHON $PHON\n";
 	$pos1 = strpos($gedrec, "1 PHON");
 	if ($pos1!==false) {
 		$pos2 = strpos($gedrec, "\n1 ", $pos1+1);
 		if ($pos2===false) $pos2 = strlen($gedrec)-1;
-		$gedrec = substr($gedrec, 0, $pos1) . "\r\n".$factrec . substr($gedrec, $pos2);
+		$gedrec = substr($gedrec, 0, $pos1) . "\n".$factrec . substr($gedrec, $pos2);
 		$updated = true;
 	}
 	else if (!empty($factrec)) {
-		$gedrec .= "\r\n".$factrec;
+		$gedrec .= "\n".$factrec;
 		$updated = true;
 	}
 
 	if (isset($_REQUEST['FAX'])) $FAX = $_REQUEST['FAX'];
 	$factrec = "";
-	if (!empty($FAX)) $factrec = "1 FAX $FAX\r\n";
+	if (!empty($FAX)) $factrec = "1 FAX $FAX\n";
 	$pos1 = strpos($gedrec, "1 FAX");
 	if ($pos1!==false) {
 		$pos2 = strpos($gedrec, "\n1 ", $pos1+1);
 		if ($pos2===false) $pos2 = strlen($gedrec)-1;
-		$gedrec = substr($gedrec, 0, $pos1) . "\r\n".$factrec . substr($gedrec, $pos2);
+		$gedrec = substr($gedrec, 0, $pos1) . "\n".$factrec . substr($gedrec, $pos2);
 		$updated = true;
 	}
 	else if (!empty($factrec)) {
-		$gedrec .= "\r\n".$factrec;
+		$gedrec .= "\n".$factrec;
 		$updated = true;
 	}
 
 	if (isset($_REQUEST['EMAIL'])) $EMAIL = $_REQUEST['EMAIL'];
 	$factrec = "";
-	if (!empty($EMAIL)) $factrec = "1 EMAIL $EMAIL\r\n";
+	if (!empty($EMAIL)) $factrec = "1 EMAIL $EMAIL\n";
 	$pos1 = strpos($gedrec, "1 EMAIL");
 	if ($pos1!==false) {
 		$pos2 = strpos($gedrec, "\n1 ", $pos1+1);
 		if ($pos2===false) $pos2 = strlen($gedrec)-1;
-		$gedrec = substr($gedrec, 0, $pos1) . "\r\n".$factrec . substr($gedrec, $pos2);
+		$gedrec = substr($gedrec, 0, $pos1) . "\n".$factrec . substr($gedrec, $pos2);
 		$updated = true;
 	}
 	else if (!empty($factrec)) {
-		$gedrec .= "\r\n".$factrec;
+		$gedrec .= "\n".$factrec;
 		$updated = true;
 	}
 
@@ -554,58 +544,57 @@ if ($action=="update") {
 		//--add new spouse name, birth
 		if (!empty($sgivn) || !empty($ssurn)) {
 			//-- first add the new spouse
-			$spouserec = "0 @REF@ INDI\r\n";
-			$spouserec .= "1 NAME ".$sgivn." /".$ssurn."/\r\n";
-			if (!empty($sgivn)) $spouserec .= "2 GIVN ".$sgivn."\r\n";
-			if (!empty($ssurn)) $spouserec .= "2 SURN ".$ssurn."\r\n";
-			if (!empty($mssurn)) $spouserec .= "2 _MARNM ".$mssurn."\r\n";
+			$spouserec = "0 @REF@ INDI\n";
+			$spouserec .= "1 NAME ".$sgivn." /".$ssurn."/\n";
+			if (!empty($sgivn)) $spouserec .= "2 GIVN ".$sgivn."\n";
+			if (!empty($ssurn)) $spouserec .= "2 SURN ".$ssurn."\n";
+			if (!empty($mssurn)) $spouserec .= "2 _MARNM ".$mssurn."\n";
 
 			if (isset($_REQUEST['HSGIVN'.$i])) $hsgivn = $_REQUEST['HSGIVN'.$i];
 			if (isset($_REQUEST['HSSURN'.$i])) $hssurn = $_REQUEST['HSSURN'.$i];
 			if (!empty($hsgivn) || !empty($hssurn)) {
-				$spouserec .= "2 _HEB ".$hsgivn." /".$hssurn."/\r\n";
+				$spouserec .= "2 _HEB ".$hsgivn." /".$hssurn."/\n";
 			}
 			if (isset($_REQUEST['RSGIVN'.$i])) $rsgivn = $_REQUEST['RSGIVN'.$i];
 			if (isset($_REQUEST['RSSURN'.$i])) $rssurn = $_REQUEST['RSSURN'.$i];
 			if (!empty($rsgivn) || !empty($rssurn)) {
-				$spouserec .= "2 ROMN ".$rsgivn." /".$rssurn."/\r\n";
+				$spouserec .= "2 ROMN ".$rsgivn." /".$rssurn."/\n";
 			}
 			if (isset($_REQUEST['SSEX'.$i])) $ssex = $_REQUEST['SSEX'.$i];
-			if (!empty($ssex)) $spouserec .= "1 SEX ".$ssex."\r\n";
+			if (!empty($ssex)) $spouserec .= "1 SEX ".$ssex."\n";
 
 			if (isset($_REQUEST['BDATE'.$i])) $bdate = $_REQUEST['BDATE'.$i];
 			if (isset($_REQUEST['BPLAC'.$i])) $bplac = $_REQUEST['BPLAC'.$i];
 			if (!empty($bdate)||!empty($bplac)) {
-				$spouserec .= "1 BIRT\r\n";
+				$spouserec .= "1 BIRT\n";
 				if (!empty($bdate)) {
 					$bdate = check_input_date($bdate);
-					$spouserec .= "2 DATE $bdate\r\n";
+					$spouserec .= "2 DATE $bdate\n";
 				}
-				if (!empty($bplac)) $spouserec .= "2 PLAC ".$bplac."\r\n";
+				if (!empty($bplac)) $spouserec .= "2 PLAC ".$bplac."\n";
 				if (isset($_REQUEST['BRESN'.$i])) $bresn = $_REQUEST['BRESN'.$i];
-				if (!empty($bresn)) $spouserec .= "2 RESN ".$bresn."\r\n";
+				if (!empty($bresn)) $spouserec .= "2 RESN ".$bresn."\n";
 			}
 			if (isset($_REQUEST['DDATE'.$i])) $bdate = $_REQUEST['DDATE'.$i];
 			if (isset($_REQUEST['DPLAC'.$i])) $bplac = $_REQUEST['DPLAC'.$i];
 			if (!empty($bdate)||!empty($bplac)) {
-				$spouserec .= "1 DEAT\r\n";
+				$spouserec .= "1 DEAT\n";
 				if (!empty($bdate)) {
 					$bdate = check_input_date($bdate);
-					$spouserec .= "2 DATE $bdate\r\n";
+					$spouserec .= "2 DATE $bdate\n";
 				}
-				if (!empty($bplac)) $spouserec .= "2 PLAC ".$bplac."\r\n";
+				if (!empty($bplac)) $spouserec .= "2 PLAC ".$bplac."\n";
 				if (isset($_REQUEST['DRESN'.$i])) $bresn = $_REQUEST['DRESN'.$i];
-				if (!empty($bresn)) $spouserec .= "2 RESN ".$bresn."\r\n";
+				if (!empty($bresn)) $spouserec .= "2 RESN ".$bresn."\n";
 			}
-			$spouserec .= "\r\n1 FAMS @$famid@\r\n";
+			$spouserec .= "\n1 FAMS @$famid@\n";
 			$SPID[$i] = append_gedrec($spouserec);
 		}
 
 		if (!empty($SPID[$i]) && $spid!=$SPID[$i]) {
 			if (strstr($famrec, "1 $tag")!==false) $famrec = preg_replace("/1 $tag @.*@/", "1 $tag @$SPID[$i]@", $famrec);
-			else $famrec .= "\r\n1 $tag @$SPID[$i]@";
+			else $famrec .= "\n1 $tag @$SPID[$i]@";
 			$famupdate = true;
-//			echo "sfamupdate1";
 		}
 
 		//-- check for updated facts
@@ -621,43 +610,41 @@ if ($action=="update") {
 		if (!empty($_REQUEST[$var])) $newfact = $_REQUEST[$var];
 		else $newfact = "";
 		if (!empty($newfact)) {
-			if (!in_array($newfact, $typefacts)) $factrec = "1 $newfact\r\n";
-			else $factrec = "1 EVEN\r\n2 TYPE $newfact\r\n";
+			if (!in_array($newfact, $typefacts)) $factrec = "1 $newfact\n";
+			else $factrec = "1 EVEN\n2 TYPE $newfact\n";
 			$var = "F".$i."DATE";
 			if (!empty($_REQUEST[$var])) $FDATE = $_REQUEST[$var];
 			else $FDATE = "";
 			if (!empty($FDATE)) {
 				$FDATE = check_input_date($FDATE);
-				$factrec .= "2 DATE $FDATE\r\n";
+				$factrec .= "2 DATE $FDATE\n";
 			}
 			$var = "F".$i."PLAC";
 			if (!empty($_REQUEST[$var])) $FPLAC = $_REQUEST[$var];
 			else $FPLAC = "";
-			if (!empty($FPLAC)) $factrec .= "2 PLAC $FPLAC\r\n";
+			if (!empty($FPLAC)) $factrec .= "2 PLAC $FPLAC\n";
 			$var = "F".$i."TEMP";
 			if (!empty($_REQUEST[$var])) $FTEMP = $_REQUEST[$var];
 			else $FTEMP = "";
-			if (!empty($FTEMP)) $factrec .= "2 TEMP $FTEMP\r\n";
+			if (!empty($FTEMP)) $factrec .= "2 TEMP $FTEMP\n";
 			$var = "F".$i."RESN";
 			if (!empty($_REQUEST[$var])) $FRESN = $_REQUEST[$var];
 			else $FRESN = "";
-			if (!empty($FRESN)) $factrec .= "2 RESN $FRESN\r\n";
+			if (!empty($FRESN)) $factrec .= "2 RESN $FRESN\n";
 			//-- make sure that there is at least a Y
-			if (preg_match("/\n2 \w*/", $factrec)==0) $factrec = "1 $newfact Y\r\n";
-			$famrec .= "\r\n".$factrec;
+			if (preg_match("/\n2 \w*/", $factrec)==0) $factrec = "1 $newfact Y\n";
+			$famrec .= "\n".$factrec;
 			$famupdate = true;
-//			echo "sfamupdate4";
 		}
 
 		if (isset($_REQUEST['CHIL'])) $CHIL = $_REQUEST['CHIL'];
 		if (!empty($CHIL[$i])) {
 			$famupdate = true;
-//			echo "sfamupdate5";
-			$famrec .= "\r\n1 CHIL @".$CHIL[$i]."@";
+			$famrec .= "\n1 CHIL @".$CHIL[$i]."@";
 			if (!isset($pgv_changes[$CHIL[$i]."_".$GEDCOM])) $childrec = find_person_record($CHIL[$i]);
 			else $childrec = find_updated_record($CHIL[$i]);
 			if (preg_match("/1 FAMC @$famid@/", $childrec)==0) {
-				$childrec = "\r\n1 FAMC @$famid@";
+				$childrec = "\n1 FAMC @$famid@";
 				replace_gedrec($CHIL[$i], $childrec, $update_CHAN);
 			}
 		}
@@ -668,7 +655,6 @@ if ($action=="update") {
 		if (!empty($fcdel)) {
 			$famrec = preg_replace("/1 CHIL @$fcdel@/", "", $famrec);
 			$famupdate = true;
-//			echo "sfamupdate6";
 		}
 
 		//--add new child, name, birth
@@ -682,24 +668,24 @@ if ($action=="update") {
 		else $csurn = "";
 		if (!empty($cgivn) || !empty($csurn)) {
 			//-- first add the new child
-			$childrec = "0 @REF@ INDI\r\n";
-			$childrec .= "1 NAME $cgivn /$csurn/\r\n";
-			if (!empty($cgivn)) $childrec .= "2 GIVN $cgivn\r\n";
-			if (!empty($csurn)) $childrec .= "2 SURN $csurn\r\n";
+			$childrec = "0 @REF@ INDI\n";
+			$childrec .= "1 NAME $cgivn /$csurn/\n";
+			if (!empty($cgivn)) $childrec .= "2 GIVN $cgivn\n";
+			if (!empty($csurn)) $childrec .= "2 SURN $csurn\n";
 			if (isset($_REQUEST["HC{$i}GIVN"])) $hsgivn = $_REQUEST["HC{$i}GIVN"];
 			if (isset($_REQUEST["HC{$i}SURN"])) $hssurn = $_REQUEST["HC{$i}SURN"];
 			if (!empty($hsgivn) || !empty($hssurn)) {
-				$childrec .= "2 _HEB ".$hsgivn." /".$hssurn."/\r\n";
+				$childrec .= "2 _HEB ".$hsgivn." /".$hssurn."/\n";
 			}
 			if (isset($_REQUEST["RC{$i}GIVN"])) $rsgivn = $_REQUEST["RC{$i}GIVN"];
 			if (isset($_REQUEST["RC{$i}SURN"])) $rssurn = $_REQUEST["RC{$i}SURN"];
 			if (!empty($rsgivn) || !empty($rssurn)) {
-				$childrec .= "2 ROMN ".$rsgivn." /".$rssurn."/\r\n";
+				$childrec .= "2 ROMN ".$rsgivn." /".$rssurn."/\n";
 			}
 			$var = "C".$i."SEX";
 			$csex = "";
 			if (!empty($_REQUEST[$var])) $csex = $_REQUEST[$var];
-			if (!empty($csex)) $childrec .= "1 SEX $csex\r\n";
+			if (!empty($csex)) $childrec .= "1 SEX $csex\n";
 			//--child birth
 			$var = "C".$i."DATE";
 			$cdate = "";
@@ -708,14 +694,14 @@ if ($action=="update") {
 			$cplac = "";
 			if (!empty($_REQUEST[$var])) $cplac = $_REQUEST[$var];
 			if (!empty($cdate)||!empty($cplac)) {
-				$childrec .= "1 BIRT\r\n";
+				$childrec .= "1 BIRT\n";
 				$cdate = check_input_date($cdate);
-				if (!empty($cdate)) $childrec .= "2 DATE $cdate\r\n";
-				if (!empty($cplac)) $childrec .= "2 PLAC $cplac\r\n";
+				if (!empty($cdate)) $childrec .= "2 DATE $cdate\n";
+				if (!empty($cplac)) $childrec .= "2 PLAC $cplac\n";
 				$var = "C".$i."RESN";
 				$cresn = "";
 				if (!empty($_REQUEST[$var])) $cresn = $_REQUEST[$var];
-				if (!empty($cresn)) $childrec .= "2 RESN $cresn\r\n";
+				if (!empty($cresn)) $childrec .= "2 RESN $cresn\n";
 			}
 			//--child death
 			$var = "C".$i."DDATE";
@@ -725,20 +711,19 @@ if ($action=="update") {
 			$cplac = "";
 			if (!empty($_REQUEST[$var])) $cplac = $_REQUEST[$var];
 			if (!empty($cdate)||!empty($cplac)) {
-				$childrec .= "1 DEAT\r\n";
+				$childrec .= "1 DEAT\n";
 				$cdate = check_input_date($cdate);
-				if (!empty($cdate)) $childrec .= "2 DATE $cdate\r\n";
-				if (!empty($cplac)) $childrec .= "2 PLAC $cplac\r\n";
+				if (!empty($cdate)) $childrec .= "2 DATE $cdate\n";
+				if (!empty($cplac)) $childrec .= "2 PLAC $cplac\n";
 				$var = "C".$i."DRESN";
 				$cresn = "";
 				if (!empty($_REQUEST[$var])) $cresn = $_REQUEST[$var];
-				if (!empty($cresn)) $childrec .= "2 RESN $cresn\r\n";
+				if (!empty($cresn)) $childrec .= "2 RESN $cresn\n";
 			}
-			$childrec .= "1 FAMC @$famid@\r\n";
+			$childrec .= "1 FAMC @$famid@\n";
 			$cxref = append_gedrec($childrec);
-			$famrec .= "\r\n1 CHIL @$cxref@";
+			$famrec .= "\n1 CHIL @$cxref@";
 			$famupdate = true;
-//			echo "sfamupdate7";
 		}
 
 		if ($famupdate && ($famrec!=$oldfamrec)) replace_gedrec($famid, $famrec, $update_CHAN);
@@ -751,46 +736,46 @@ if ($action=="update") {
 	if (isset($_REQUEST['SSEX'])) $SSEX = $_REQUEST['SSEX'];
 	if (!empty($SGIVN) || !empty($SSURN)) {
 		//-- first add the new spouse
-		$spouserec = "0 @REF@ INDI\r\n";
-		$spouserec .= "1 NAME $SGIVN /$SSURN/\r\n";
-		if (!empty($SGIVN)) $spouserec .= "2 GIVN $SGIVN\r\n";
-		if (!empty($SSURN)) $spouserec .= "2 SURN $SSURN\r\n";
-		if (!empty($MSSURN)) $spouserec .= "2 _MARNM $MSSURN\r\n";
-		if (!empty($SSEX)) $spouserec .= "1 SEX $SSEX\r\n";
+		$spouserec = "0 @REF@ INDI\n";
+		$spouserec .= "1 NAME $SGIVN /$SSURN/\n";
+		if (!empty($SGIVN)) $spouserec .= "2 GIVN $SGIVN\n";
+		if (!empty($SSURN)) $spouserec .= "2 SURN $SSURN\n";
+		if (!empty($MSSURN)) $spouserec .= "2 _MARNM $MSSURN\n";
+		if (!empty($SSEX)) $spouserec .= "1 SEX $SSEX\n";
 		if (isset($_REQUEST['BDATE'])) $BDATE = $_REQUEST['BDATE'];
 		if (isset($_REQUEST['BPLAC'])) $BPLAC = $_REQUEST['BPLAC'];
 		if (isset($_REQUEST['BRESN'])) $BRESN = $_REQUEST['BRESN'];
 		if (!empty($BDATE)||!empty($BPLAC)) {
-			$spouserec .= "1 BIRT\r\n";
-			if (!empty($BDATE)) $spouserec .= "2 DATE $BDATE\r\n";
-			if (!empty($BPLAC)) $spouserec .= "2 PLAC $BPLAC\r\n";
-			if (!empty($BRESN)) $spouserec .= "2 RESN $BRESN\r\n";
+			$spouserec .= "1 BIRT\n";
+			if (!empty($BDATE)) $spouserec .= "2 DATE $BDATE\n";
+			if (!empty($BPLAC)) $spouserec .= "2 PLAC $BPLAC\n";
+			if (!empty($BRESN)) $spouserec .= "2 RESN $BRESN\n";
 		}
 		if (isset($_REQUEST['DDATE'])) $DDATE = $_REQUEST['DDATE'];
 		if (isset($_REQUEST['DPLAC'])) $DPLAC = $_REQUEST['DPLAC'];
 		if (isset($_REQUEST['DRESN'])) $DRESN = $_REQUEST['DRESN'];
 		if (!empty($DDATE)||!empty($DPLAC)) {
-			$spouserec .= "1 DEAT\r\n";
-			if (!empty($DDATE)) $spouserec .= "2 DATE $DDATE\r\n";
-			if (!empty($DPLAC)) $spouserec .= "2 PLAC $DPLAC\r\n";
-			if (!empty($DRESN)) $spouserec .= "2 RESN $DRESN\r\n";
+			$spouserec .= "1 DEAT\n";
+			if (!empty($DDATE)) $spouserec .= "2 DATE $DDATE\n";
+			if (!empty($DPLAC)) $spouserec .= "2 PLAC $DPLAC\n";
+			if (!empty($DRESN)) $spouserec .= "2 RESN $DRESN\n";
 		}
 		$xref = append_gedrec($spouserec);
 
 		//-- next add the new family record
-		$famrec = "0 @REF@ FAM\r\n";
-		if ($SSEX=="M") $famrec .= "1 HUSB @$xref@\r\n1 WIFE @$pid@\r\n";
-		else $famrec .= "1 HUSB @$pid@\r\n1 WIFE @$xref@\r\n";
+		$famrec = "0 @REF@ FAM\n";
+		if ($SSEX=="M") $famrec .= "1 HUSB @$xref@\n1 WIFE @$pid@\n";
+		else $famrec .= "1 HUSB @$pid@\n1 WIFE @$xref@\n";
 		$newfamid = append_gedrec($famrec);
 
 		//-- add the new family id to the new spouse record
 		$spouserec = find_updated_record($xref);
 		if (empty($spouserec)) $spouserec = find_person_record($xref);
-		$spouserec .= "\r\n1 FAMS @$newfamid@\r\n";
+		$spouserec .= "\n1 FAMS @$newfamid@\n";
 		replace_gedrec($xref, $spouserec, $update_CHAN);
 
 		//-- last add the new family id to the persons record
-		$gedrec .= "\r\n1 FAMS @$newfamid@\r\n";
+		$gedrec .= "\n1 FAMS @$newfamid@\n";
 		$updated = true;
 	}
 	if (isset($_REQUEST['MARRY'])) $MARRY = $_REQUEST['MARRY'];
@@ -799,24 +784,24 @@ if ($action=="update") {
 	if (isset($_REQUEST['MRESN'])) $MRESN = $_REQUEST['MRESN'];
 	if (!empty($MDATE)||!empty($MPLAC)||!empty($MARRY)) {
 		if (empty($newfamid)) {
-			$famrec = "0 @REF@ FAM\r\n";
-			if (preg_match("/1 SEX M/", $gedrec)>0) $famrec .= "1 HUSB @$pid@\r\n";
+			$famrec = "0 @REF@ FAM\n";
+			if (preg_match("/1 SEX M/", $gedrec)>0) $famrec .= "1 HUSB @$pid@\n";
 			else $famrec .= "1 WIFE @$pid@";
 			$newfamid = append_gedrec($famrec);
-			$gedrec .= "\r\n1 FAMS @$newfamid@";
+			$gedrec .= "\n1 FAMS @$newfamid@";
 			$updated = true;
 		}
 		if (!empty($MDATE)||!empty($MPLAC)) {
-			$factrec = "1 MARR\r\n";
+			$factrec = "1 MARR\n";
 		}
 		else if (!empty($MARRY)) {
-			$factrec = "1 MARR Y\r\n";
+			$factrec = "1 MARR Y\n";
 		}
 		$MDATE = check_input_date($MDATE);
-		if (!empty($MDATE)) $factrec .= "2 DATE $MDATE\r\n";
-		if (!empty($MPLAC)) $factrec .= "2 PLAC $MPLAC\r\n";
-		if (!empty($MRESN)) $factrec .= "2 RESN $MRESN\r\n";
-		$famrec .= "\r\n".$factrec;
+		if (!empty($MDATE)) $factrec .= "2 DATE $MDATE\n";
+		if (!empty($MPLAC)) $factrec .= "2 PLAC $MPLAC\n";
+		if (!empty($MRESN)) $factrec .= "2 RESN $MRESN\n";
+		$famrec .= "\n".$factrec;
 	}
 
 	//--add new child, name, birth
@@ -827,62 +812,62 @@ if ($action=="update") {
 	if (isset($_REQUEST['HCSURN'])) $HCSURN = $_REQUEST['HCSURN'];
 	if (!empty($CGIVN) || !empty($CSURN)) {
 		//-- first add the new child
-		$childrec = "0 @REF@ INDI\r\n";
-		$childrec .= "1 NAME $CGIVN /$CSURN/\r\n";
-		if (!empty($CGIVN)) $childrec .= "2 GIVN $CGIVN\r\n";
-		if (!empty($CSURN)) $childrec .= "2 SURN $CSURN\r\n";
+		$childrec = "0 @REF@ INDI\n";
+		$childrec .= "1 NAME $CGIVN /$CSURN/\n";
+		if (!empty($CGIVN)) $childrec .= "2 GIVN $CGIVN\n";
+		if (!empty($CSURN)) $childrec .= "2 SURN $CSURN\n";
 		if (!empty($HCGIVN) || !empty($HCSURN)) {
-			$childrec .= "2 _HEB $HCGIVN /$HCSURN/\r\n";
+			$childrec .= "2 _HEB $HCGIVN /$HCSURN/\n";
 		}
-		if (!empty($CSEX)) $childrec .= "1 SEX $CSEX\r\n";
+		if (!empty($CSEX)) $childrec .= "1 SEX $CSEX\n";
 		if (isset($_REQUEST['CDATE'])) $CDATE = $_REQUEST['CDATE'];
 		if (isset($_REQUEST['CPLAC'])) $CPLAC = $_REQUEST['CPLAC'];
 		if (isset($_REQUEST['CRESN'])) $CRESN = $_REQUEST['CRESN'];
 		if (!empty($CDATE)||!empty($CPLAC)) {
-			$childrec .= "1 BIRT\r\n";
+			$childrec .= "1 BIRT\n";
 			$CDATE = check_input_date($CDATE);
-			if (!empty($CDATE)) $childrec .= "2 DATE $CDATE\r\n";
-			if (!empty($CPLAC)) $childrec .= "2 PLAC $CPLAC\r\n";
-			if (!empty($CRESN)) $childrec .= "2 RESN $CRESN\r\n";
+			if (!empty($CDATE)) $childrec .= "2 DATE $CDATE\n";
+			if (!empty($CPLAC)) $childrec .= "2 PLAC $CPLAC\n";
+			if (!empty($CRESN)) $childrec .= "2 RESN $CRESN\n";
 		}
 		if (isset($_REQUEST['CDDATE'])) $CDDATE = $_REQUEST['CDDATE'];
 		if (isset($_REQUEST['CDPLAC'])) $CDPLAC = $_REQUEST['CDPLAC'];
 		if (isset($_REQUEST['CDRESN'])) $CDRESN = $_REQUEST['CDRESN'];
 		if (!empty($CDDATE)||!empty($CDPLAC)) {
-			$childrec .= "1 DEAT\r\n";
+			$childrec .= "1 DEAT\n";
 			$CDDATE = check_input_date($CDDATE);
-			if (!empty($CDDATE)) $childrec .= "2 DATE $CDDATE\r\n";
-			if (!empty($CDPLAC)) $childrec .= "2 PLAC $CDPLAC\r\n";
-			if (!empty($CDRESN)) $childrec .= "2 RESN $CDRESN\r\n";
+			if (!empty($CDDATE)) $childrec .= "2 DATE $CDDATE\n";
+			if (!empty($CDPLAC)) $childrec .= "2 PLAC $CDPLAC\n";
+			if (!empty($CDRESN)) $childrec .= "2 RESN $CDRESN\n";
 		}
 		$cxref = append_gedrec($childrec);
 
 		//-- if a new family was already made by adding a spouse or a marriage
 		//-- then use that id, otherwise create a new family
 		if (empty($newfamid)) {
-			$famrec = "0 @REF@ FAM\r\n";
-			if (preg_match("/1 SEX M/", $gedrec)>0) $famrec .= "1 HUSB @$pid@\r\n";
-			else $famrec .= "1 WIFE @$pid@\r\n";
-			$famrec .= "1 CHIL @$cxref@\r\n";
+			$famrec = "0 @REF@ FAM\n";
+			if (preg_match("/1 SEX M/", $gedrec)>0) $famrec .= "1 HUSB @$pid@\n";
+			else $famrec .= "1 WIFE @$pid@\n";
+			$famrec .= "1 CHIL @$cxref@\n";
 			$newfamid = append_gedrec($famrec);
 
 			//-- add the new family to the new child
 			$childrec = find_updated_record($cxref);
 			if (empty($childrec)) $childrec = find_person_record($cxref);
-			$childrec .= "\r\n1 FAMC @$newfamid@\r\n";
+			$childrec .= "\n1 FAMC @$newfamid@\n";
 			replace_gedrec($cxref, $childrec, $update_CHAN);
 
 			//-- add the new family to the original person
-			$gedrec .= "\r\n1 FAMS @$newfamid@";
+			$gedrec .= "\n1 FAMS @$newfamid@";
 			$updated = true;
 		}
 		else {
-			$famrec .= "\r\n1 CHIL @$cxref@\r\n";
+			$famrec .= "\n1 CHIL @$cxref@\n";
 
 			//-- add the family to the new child
 			$childrec = find_updated_record($cxref);
 			if (empty($childrec)) $childrec = find_person_record($cxref);
-			$childrec .= "\r\n1 FAMC @$newfamid@\r\n";
+			$childrec .= "\n1 FAMC @$newfamid@\n";
 			replace_gedrec($cxref, $childrec, $update_CHAN);
 		}
 		echo $pgv_lang["update_successful"]."<br />\n";;
@@ -898,7 +883,6 @@ if ($action=="update") {
 	$i++;
 	for($j=1; $j<=count($cfams); $j++) {
 		$famid = $cfams[$j-1];
-//		echo $famid;
 		$famupdate = false;
 		if (!empty($famid)) {
 			if (!isset($pgv_changes[$famid."_".$GEDCOM])) $famrec = find_family_record($famid);
@@ -906,7 +890,7 @@ if ($action=="update") {
 			$oldfamrec = $famrec;
 		}
 		else {
-			$famrec = "0 @REF@ FAM\r\n1 CHIL @$pid@";
+			$famrec = "0 @REF@ FAM\n1 CHIL @$pid@";
 			$oldfamrec = "";
 		}
 
@@ -922,62 +906,62 @@ if ($action=="update") {
 			if (isset($_REQUEST["FMRSURN$i"])) $smsurn = $_REQUEST["FMRSURN$i"];
 			if (!empty($sgivn) || !empty($ssurn)) {
 				//-- first add the new spouse
-				$spouserec = "0 @REF@ INDI\r\n";
-				$spouserec .= "1 NAME ".$sgivn." /".$ssurn."/\r\n";
-				if (!empty($sgivn)) $spouserec .= "2 GIVN ".$sgivn."\r\n";
-				if (!empty($ssurn)) $spouserec .= "2 SURN ".$ssurn."\r\n";
-				if (!empty($smsurn)) $spouserec .= "2 _MARNM ".$smsurn."\r\n";
+				$spouserec = "0 @REF@ INDI\n";
+				$spouserec .= "1 NAME ".$sgivn." /".$ssurn."/\n";
+				if (!empty($sgivn)) $spouserec .= "2 GIVN ".$sgivn."\n";
+				if (!empty($ssurn)) $spouserec .= "2 SURN ".$ssurn."\n";
+				if (!empty($smsurn)) $spouserec .= "2 _MARNM ".$smsurn."\n";
 				$hsgivn = "";
 				$hssurn = "";
 				if (isset($_REQUEST["HFGIVN$i"])) $hsgivn = $_REQUEST["HFGIVN$i"];
 				if (isset($_REQUEST["HFSURN$i"])) $hssurn = $_REQUEST["HFSURN$i"];
 				if (!empty($hsgivn) || !empty($hssurn)) {
-					$spouserec .= "2 _HEB ".$hsgivn." /".$hssurn."/\r\n";
+					$spouserec .= "2 _HEB ".$hsgivn." /".$hssurn."/\n";
 				}
 				$rsgivn = "";
 				$rssurn = "";
 				if (isset($_REQUEST["RFGIVN$i"])) $rsgivn = $_REQUEST["RFGIVN$i"];
 				if (isset($_REQUEST["RFSURN$i"])) $rssurn = $_REQUEST["RFSURN$i"];
 				if (!empty($rsgivn) || !empty($rssurn)) {
-					$spouserec .= "2 ROMN ".$rsgivn." /".$rssurn."/\r\n";
+					$spouserec .= "2 ROMN ".$rsgivn." /".$rssurn."/\n";
 				}
 				$ssex = "";
 				if (isset($_REQUEST["FSEX$i"])) $ssex = $_REQUEST["FSEX$i"];
-				if (!empty($ssex)) $spouserec .= "1 SEX ".$ssex."\r\n";
+				if (!empty($ssex)) $spouserec .= "1 SEX ".$ssex."\n";
 				$bdate = "";
 				$bplac = "";
 				if (isset($_REQUEST["FBDATE$i"])) $bdate = $_REQUEST["FBDATE$i"];
 				if (isset($_REQUEST["FBPLAC$i"])) $bplac = $_REQUEST["FBPLAC$i"];
 				if (!empty($bdate)||!empty($bplac)) {
-					$spouserec .= "1 BIRT\r\n";
+					$spouserec .= "1 BIRT\n";
 					$bdate = check_input_date($bdate);
-					if (!empty($bdate)) $spouserec .= "2 DATE $bdate\r\n";
-					if (!empty($bplac)) $spouserec .= "2 PLAC ".$bplac."\r\n";
+					if (!empty($bdate)) $spouserec .= "2 DATE $bdate\n";
+					if (!empty($bplac)) $spouserec .= "2 PLAC ".$bplac."\n";
 					$bresn = "";
 					if (isset($_REQUEST["FBRESN$i"])) $bresn = $_REQUEST["FBRESN$i"];
-					if (!empty($bresn)) $spouserec .= "2 RESN ".$bresn."\r\n";
+					if (!empty($bresn)) $spouserec .= "2 RESN ".$bresn."\n";
 				}
 				$bdate = "";
 				$bplac = "";
 				if (isset($_REQUEST["FDDATE$i"])) $bdate = $_REQUEST["FDDATE$i"];
 				if (isset($_REQUEST["FDPLAC$i"])) $bplac = $_REQUEST["FDPLAC$i"];
 				if (!empty($bdate)||!empty($bplac)) {
-					$spouserec .= "1 DEAT\r\n";
+					$spouserec .= "1 DEAT\n";
 					$bdate = check_input_date($bdate);
-					if (!empty($bdate)) $spouserec .= "2 DATE $bdate\r\n";
-					if (!empty($bplac)) $spouserec .= "2 PLAC ".$bplac."\r\n";
+					if (!empty($bdate)) $spouserec .= "2 DATE $bdate\n";
+					if (!empty($bplac)) $spouserec .= "2 PLAC ".$bplac."\n";
 					$bresn = "";
 					if (isset($_REQUEST["FDRESN$i"])) $bresn = $_REQUEST["FDRESN$i"];
-					if (!empty($bresn)) $spouserec .= "2 RESN ".$bresn."\r\n";
+					if (!empty($bresn)) $spouserec .= "2 RESN ".$bresn."\n";
 				}
 				if (empty($famid)) {
 					//echo "HERE 1";
 					$famid = append_gedrec($famrec);
 					//echo "<pre>$famrec</pre>";
-					$gedrec .= "\r\n1 FAMC @$famid@\r\n";
+					$gedrec .= "\n1 FAMC @$famid@\n";
 					$updated = true;
 				}
-				$spouserec .= "\r\n1 FAMS @$famid@\r\n";
+				$spouserec .= "\n1 FAMS @$famid@\n";
 				$FATHER[$i] = append_gedrec($spouserec);
 			}
 		}
@@ -985,13 +969,13 @@ if ($action=="update") {
 			if (empty($famid)) {
 				//echo "HERE 2";
 				$famid = append_gedrec($famrec);
-				$gedrec .= "\r\n1 FAMC @$famid@\r\n";
+				$gedrec .= "\n1 FAMC @$famid@\n";
 				$updated = true;
 			}
 			if (empty($oldfamrec)) {
 				$spouserec = find_updated_record($FATHER[$i]);
 				if (empty($spouserec)) $spouserec = find_person_record($FATHER[$i]);
-				$spouserec .= "\r\n1 FAMS @$famid@";
+				$spouserec .= "\n1 FAMS @$famid@";
 				replace_gedrec($FATHER[$i], $spouserec, $update_CHAN);
 			}
 		}
@@ -999,9 +983,8 @@ if ($action=="update") {
 		$parents = find_parents_in_record($famrec);
 		if (!empty($FATHER[$i]) && $parents['HUSB']!=$FATHER[$i]) {
 			if (strstr($famrec, "1 HUSB")!==false) $famrec = preg_replace("/1 HUSB @.*@/", "1 HUSB @$FATHER[$i]@", $famrec);
-			else $famrec .= "\r\n1 HUSB @$FATHER[$i]@";
+			else $famrec .= "\n1 HUSB @$FATHER[$i]@";
 			$famupdate = true;
-//			echo "famupdate1";
 		}
 
 		if (isset($_REQUEST['MOTHER'])) $MOTHER = $_REQUEST['MOTHER'];
@@ -1016,83 +999,81 @@ if ($action=="update") {
 			//--add new spouse name, birth
 			if (!empty($sgivn) || !empty($ssurn)) {
 				//-- first add the new spouse
-				$spouserec = "0 @REF@ INDI\r\n";
-				$spouserec .= "1 NAME ".$sgivn." /".$ssurn."/\r\n";
-				if (!empty($sgivn)) $spouserec .= "2 GIVN ".$sgivn."\r\n";
-				if (!empty($ssurn)) $spouserec .= "2 SURN ".$ssurn."\r\n";
-				if (!empty($smsurn)) $spouserec .= "2 _MARNM ".$smsurn."\r\n";
+				$spouserec = "0 @REF@ INDI\n";
+				$spouserec .= "1 NAME ".$sgivn." /".$ssurn."/\n";
+				if (!empty($sgivn)) $spouserec .= "2 GIVN ".$sgivn."\n";
+				if (!empty($ssurn)) $spouserec .= "2 SURN ".$ssurn."\n";
+				if (!empty($smsurn)) $spouserec .= "2 _MARNM ".$smsurn."\n";
 				$hsgivn = "";
 				$hssurn = "";
 				if (isset($_REQUEST["HMGIVN$i"])) $hsgivn = $_REQUEST["HMGIVN$i"];
 				if (isset($_REQUEST["HMSURN$i"])) $hssurn = $_REQUEST["HMSURN$i"];
 				if (!empty($hsgivn) || !empty($hssurn)) {
-					$spouserec .= "2 _HEB ".$hsgivn." /".$hssurn."/\r\n";
+					$spouserec .= "2 _HEB ".$hsgivn." /".$hssurn."/\n";
 				}
 				$rsgivn = "";
 				$rssurn = "";
 				if (isset($_REQUEST["RMGIVN$i"])) $rsgivn = $_REQUEST["RMGIVN$i"];
 				if (isset($_REQUEST["RMSURN$i"])) $rssurn = $_REQUEST["RMSURN$i"];
 				if (!empty($rsgivn) || !empty($rssurn)) {
-					$spouserec .= "2 ROMN ".$rsgivn." /".$rssurn."/\r\n";
+					$spouserec .= "2 ROMN ".$rsgivn." /".$rssurn."/\n";
 				}
 				$ssex = "";
 				if (isset($_REQUEST["MSEX$i"])) $ssex = $_REQUEST["MSEX$i"];
-				if (!empty($ssex)) $spouserec .= "1 SEX ".$ssex."\r\n";
+				if (!empty($ssex)) $spouserec .= "1 SEX ".$ssex."\n";
 				$bdate = "";
 				$bplac = "";
 				if (isset($_REQUEST["MBDATE$i"])) $bdate = $_REQUEST["MBDATE$i"];
 				if (isset($_REQUEST["MBPLAC$i"])) $bplac = $_REQUEST["MBPLAC$i"];
 				if (!empty($bdate)||!empty($bplac)) {
-					$spouserec .= "1 BIRT\r\n";
+					$spouserec .= "1 BIRT\n";
 					$bdate = check_input_date($bdate);
-					if (!empty($bdate)) $spouserec .= "2 DATE $bdate\r\n";
-					if (!empty($bplac)) $spouserec .= "2 PLAC ".$bplac."\r\n";
+					if (!empty($bdate)) $spouserec .= "2 DATE $bdate\n";
+					if (!empty($bplac)) $spouserec .= "2 PLAC ".$bplac."\n";
 					$bresn = "";
 					if (isset($_REQUEST["MBRESN$i"])) $bplac = $_REQUEST["MBRESN$i"];
-					if (!empty($bresn)) $spouserec .= "2 RESN ".$bresn."\r\n";
+					if (!empty($bresn)) $spouserec .= "2 RESN ".$bresn."\n";
 				}
 				$bdate = "";
 				$bplac = "";
 				if (isset($_REQUEST["MDDATE$i"])) $bdate = $_REQUEST["MDDATE$i"];
 				if (isset($_REQUEST["MDPLAC$i"])) $bplac = $_REQUEST["MDPLAC$i"];
 				if (!empty($bdate)||!empty($bplac)) {
-					$spouserec .= "1 DEAT\r\n";
+					$spouserec .= "1 DEAT\n";
 					$bdate = check_input_date($bdate);
-					if (!empty($bdate)) $spouserec .= "2 DATE $bdate\r\n";
-					if (!empty($bplac)) $spouserec .= "2 PLAC ".$bplac."\r\n";
+					if (!empty($bdate)) $spouserec .= "2 DATE $bdate\n";
+					if (!empty($bplac)) $spouserec .= "2 PLAC ".$bplac."\n";
 					$bresn = "";
 					if (isset($_REQUEST["MDRESN$i"])) $bplac = $_REQUEST["MDRESN$i"];
-					if (!empty($bresn)) $spouserec .= "2 RESN ".$bresn."\r\n";
+					if (!empty($bresn)) $spouserec .= "2 RESN ".$bresn."\n";
 				}
 				if (empty($famid)) {
 					//echo "HERE 3";
 					$famid = append_gedrec($famrec);
-					$gedrec .= "\r\n1 FAMC @$famid@\r\n";
+					$gedrec .= "\n1 FAMC @$famid@\n";
 					$updated = true;
 				}
-				$spouserec .= "\r\n1 FAMS @$famid@\r\n";
+				$spouserec .= "\n1 FAMS @$famid@\n";
 				$MOTHER[$i] = append_gedrec($spouserec);
 			}
 		}
 		else {
 			if (empty($famid)) {
-// 				echo "HERE 4";
 				$famid = append_gedrec($famrec);
-				$gedrec .= "\r\n1 FAMC @$famid@\r\n";
+				$gedrec .= "\n1 FAMC @$famid@\n";
 				$updated = true;
 			}
 			if (empty($oldfamrec)) {
 				$spouserec = find_updated_record($MOTHER[$i]);
 				if (empty($spouserec)) $spouserec = find_person_record($MOTHER[$i]);
-				$spouserec .= "\r\n1 FAMS @$famid@";
+				$spouserec .= "\n1 FAMS @$famid@";
 				replace_gedrec($MOTHER[$i], $spouserec, $update_CHAN);
 			}
 		}
 		if (!empty($MOTHER[$i]) && $parents['WIFE']!=$MOTHER[$i]) {
 			if (strstr($famrec, "1 WIFE")!==false) $famrec = preg_replace("/1 WIFE @.*@/", "1 WIFE @$MOTHER[$i]@", $famrec);
-			else $famrec .= "\r\n1 WIFE @$MOTHER[$i]@";
+			else $famrec .= "\n1 WIFE @$MOTHER[$i]@";
 			$famupdate = true;
-//			echo "famupdate2";
 		}
 
 		//-- check for updated facts
@@ -1111,33 +1092,32 @@ if ($action=="update") {
 			if (empty($famid)) {
 				//echo "HERE 6";
 				$famid = append_gedrec($famrec);
-				$gedrec .= "\r\n1 FAMC @$famid@\r\n";
+				$gedrec .= "\n1 FAMC @$famid@\n";
 				$updated = true;
 			}
-			if (!in_array($newfact, $typefacts)) $factrec = "1 $newfact\r\n";
-			else $factrec = "1 EVEN\r\n2 TYPE $newfact\r\n";
+			if (!in_array($newfact, $typefacts)) $factrec = "1 $newfact\n";
+			else $factrec = "1 EVEN\n2 TYPE $newfact\n";
 			$var = "F".$i."DATE";
 			if (isset($_REQUEST[$var])) $FDATE = $_REQUEST[$var];
 			else $FDATE = "";
 			$FDATE = check_input_date($FDATE);
-			if (!empty($FDATE)) $factrec .= "2 DATE $FDATE\r\n";
+			if (!empty($FDATE)) $factrec .= "2 DATE $FDATE\n";
 			$var = "F".$i."PLAC";
 			if (isset($_REQUEST[$var])) $FPLAC = $_REQUEST[$var];
 			else $FPLAC = "";
-			if (!empty($FPLAC)) $factrec .= "2 PLAC $FPLAC\r\n";
+			if (!empty($FPLAC)) $factrec .= "2 PLAC $FPLAC\n";
 			$var = "F".$i."TEMP";
 			if (isset($_REQUEST[$var])) $FTEMP = $_REQUEST[$var];
 			else $FTEMP = "";
-			if (!empty($FTEMP)) $factrec .= "2 TEMP $FTEMP\r\n";
+			if (!empty($FTEMP)) $factrec .= "2 TEMP $FTEMP\n";
 			$var = "F".$i."RESN";
 			if (isset($_REQUEST[$var])) $FRESN = $_REQUEST[$var];
 			else $FRESN;
-			if (!empty($FRESN)) $factrec .= "2 RESN $FRESN\r\n";
+			if (!empty($FRESN)) $factrec .= "2 RESN $FRESN\n";
 			//-- make sure that there is at least a Y
-			if (preg_match("/\n2 \w*/", $factrec)==0) $factrec = "1 $newfact Y\r\n";
-			$famrec .= "\r\n".$factrec;
+			if (preg_match("/\n2 \w*/", $factrec)==0) $factrec = "1 $newfact Y\n";
+			$famrec .= "\n".$factrec;
 			$famupdate = true;
-//			echo "famupdate5";
 		}
 
 		if (isset($_REQUEST['CHIL'])) $CHIL = $_REQUEST['CHIL'];
@@ -1145,18 +1125,17 @@ if ($action=="update") {
 			if (empty($famid)) {
 				//echo "HERE 7";
 				$famid = append_gedrec($famrec);
-				$gedrec .= "\r\n1 FAMC @$famid@\r\n";
+				$gedrec .= "\n1 FAMC @$famid@\n";
 				$updated = true;
 			}
-			$famrec .= "\r\n1 CHIL @".$CHIL[$i]."@";
+			$famrec .= "\n1 CHIL @".$CHIL[$i]."@";
 			if (!isset($pgv_changes[$CHIL[$i]."_".$GEDCOM])) $childrec = find_person_record($CHIL[$i]);
 			else $childrec = find_updated_record($CHIL[$i]);
 			if (preg_match("/1 FAMC @$famid@/", $childrec)==0) {
-				$childrec = "\r\n1 FAMC @$famid@";
+				$childrec = "\n1 FAMC @$famid@";
 				replace_gedrec($CHIL[$i], $childrec, $update_CHAN);
 			}
 			$famupdate = true;
-//			echo "famupdate6";
 		}
 
 		$var = "F".$i."CDEL";
@@ -1165,7 +1144,6 @@ if ($action=="update") {
 		if (!empty($fcdel)) {
 			$famrec = preg_replace("/1 CHIL @$fcdel@/", "", $famrec);
 			$famupdate = true;
-//			echo "famupdate7";
 		}
 
 		//--add new child, name, birth
@@ -1177,31 +1155,31 @@ if ($action=="update") {
 			if (empty($famid)) {
 				//echo "HERE 8";
 				$famid = append_gedrec($famrec);
-				$gedrec .= "\r\n1 FAMC @$famid@\r\n";
+				$gedrec .= "\n1 FAMC @$famid@\n";
 				$updated = true;
 			}
 			//-- first add the new child
-			$childrec = "0 @REF@ INDI\r\n";
-			$childrec .= "1 NAME ".$cgivn." /".$csurn."/\r\n";
-			if (!empty($cgivn)) $childrec .= "2 GIVN ".$cgivn."\r\n";
-			if (!empty($csurn)) $childrec .= "2 SURN ".$csurn."\r\n";
+			$childrec = "0 @REF@ INDI\n";
+			$childrec .= "1 NAME ".$cgivn." /".$csurn."/\n";
+			if (!empty($cgivn)) $childrec .= "2 GIVN ".$cgivn."\n";
+			if (!empty($csurn)) $childrec .= "2 SURN ".$csurn."\n";
 			$hcgivn = "";
 			$hcsurn = "";
 			if (isset($_REQUEST["HC".$i."GIVN"])) $hcgivn = $_REQUEST["HC".$i."GIVN"];
 			if (isset($_REQUEST["HC".$i."SURN"])) $hcsurn = $_REQUEST["HC".$i."SURN"];
 			if (!empty($hcgivn) || !empty($hcsurn)) {
-				$childrec .= "2 _HEB ".$hcgivn." /".$hcsurn."/\r\n";
+				$childrec .= "2 _HEB ".$hcgivn." /".$hcsurn."/\n";
 			}
 			$rsgivn = "";
 			$rssurn = "";
 			if (isset($_REQUEST["RC".$i."GIVN"])) $rsgivn = $_REQUEST["RC".$i."GIVN"];
 			if (isset($_REQUEST["RC".$i."SURN"])) $rssurn = $_REQUEST["RC".$i."SURN"];
 			if (!empty($rsgivn) || !empty($rssurn)) {
-				$childrec .= "2 ROMN ".$rsgivn." /".$rssurn."/\r\n";
+				$childrec .= "2 ROMN ".$rsgivn." /".$rssurn."/\n";
 			}
 			if (isset($_REQUEST["C".$i."SEX"])) $csex = $_REQUEST["C".$i."SEX"];
 			else $csex = "";
-			if (!empty($csex)) $childrec .= "1 SEX $csex\r\n";
+			if (!empty($csex)) $childrec .= "1 SEX $csex\n";
 			//-- child birth
 			if (isset($_REQUEST["C".$i."DATE"])) $cdate = $_REQUEST["C".$i."DATE"];
 			else $cdate = "";
@@ -1209,14 +1187,14 @@ if ($action=="update") {
 			if (isset($_REQUEST[$var])) $cplac = $_REQUEST[$var];
 			else $cplac = "";
 			if (!empty($cdate)||!empty($cplac)) {
-				$childrec .= "1 BIRT\r\n";
+				$childrec .= "1 BIRT\n";
 				$cdate = check_input_date($cdate);
-				if (!empty($cdate)) $childrec .= "2 DATE $cdate\r\n";
-				if (!empty($cplac)) $childrec .= "2 PLAC $cplac\r\n";
+				if (!empty($cdate)) $childrec .= "2 DATE $cdate\n";
+				if (!empty($cplac)) $childrec .= "2 PLAC $cplac\n";
 				$var = "C".$i."RESN";
 				if (isset($_REQUEST[$var])) $cresn = $_REQUEST[$var];
 				else $cresn = "";
-				if (!empty($cresn)) $childrec .= "2 RESN $cresn\r\n";
+				if (!empty($cresn)) $childrec .= "2 RESN $cresn\n";
 			}
 			//-- child death
 			$var = "C".$i."DDATE";
@@ -1226,24 +1204,22 @@ if ($action=="update") {
 			if (isset($_REQUEST[$var])) $cplac = $_REQUEST[$var];
 			else $cplac = "";
 			if (!empty($cdate)||!empty($cplac)) {
-				$childrec .= "1 DEAT\r\n";
+				$childrec .= "1 DEAT\n";
 				$cdate = check_input_date($cdate);
-				if (!empty($cdate)) $childrec .= "2 DATE $cdate\r\n";
-				if (!empty($cplac)) $childrec .= "2 PLAC $cplac\r\n";
+				if (!empty($cdate)) $childrec .= "2 DATE $cdate\n";
+				if (!empty($cplac)) $childrec .= "2 PLAC $cplac\n";
 				$var = "C".$i."DRESN";
 				if (isset($_REQUEST[$var])) $cresn = $_REQUEST[$var];
 				else $cresn = "";
-				if (!empty($cresn)) $childrec .= "2 RESN $cresn\r\n";
+				if (!empty($cresn)) $childrec .= "2 RESN $cresn\n";
 			}
-			$childrec .= "1 FAMC @$famid@\r\n";
+			$childrec .= "1 FAMC @$famid@\n";
 			$cxref = append_gedrec($childrec);
-			$famrec .= "\r\n1 CHIL @$cxref@";
+			$famrec .= "\n1 CHIL @$cxref@";
 			$famupdate = true;
-//			echo "famupdate8";
 		}
 		if ($famupdate &&($oldfamrec!=$famrec)) {
 			$famrec = preg_replace("/0 @(.*)@/", "0 @".$famid."@", $famrec);
-//			echo $famrec;
 			replace_gedrec($famid, $famrec, $update_CHAN);
 		}
 		$i++;
@@ -1307,14 +1283,9 @@ if ($action=="choosepid") {
 	<input type="submit" value="<?php echo $pgv_lang["continue"]; ?>" />
 	</form>
 		<?php
-	}
-	else {
-		$SEX = get_gedcom_value("SEX", 1, $gedrec, '', false);
-		$child_surname = "";
-		//if ($SEX=="M") {
-		//	$ct = preg_match("~1 NAME.*/(.*)/~", $gedrec, $match);
-		//	if ($ct>0) $child_surname = $match[1];
-		//}
+} else {
+	$SEX = get_gedcom_value("SEX", 1, $gedrec, '', false);
+	$child_surname = "";
 	$GIVN = "";
 	$SURN = "";
 	$MRSURN = "";
@@ -1378,16 +1349,16 @@ if ($action=="choosepid") {
 		if (!empty($ADDR_CONT)) $ADDR .= $ADDR_CONT;
 		else {
 			$_NAME = get_gedcom_value("_NAME", 2, $subrec);
-			if (!empty($_NAME)) $ADDR .= "\r\n". $_NAME;
+			if (!empty($_NAME)) $ADDR .= "\n". $_NAME;
 			$ADR1 = get_gedcom_value("ADR1", 2, $subrec);
-			if (!empty($ADR1)) $ADDR .= "\r\n". $ADR1;
+			if (!empty($ADR1)) $ADDR .= "\n". $ADR1;
 			$ADR2 = get_gedcom_value("ADR2", 2, $subrec);
-			if (!empty($ADR2)) $ADDR .= "\r\n". $ADR2;
-			$cityspace = "\r\n";
+			if (!empty($ADR2)) $ADDR .= "\n". $ADR2;
+			$cityspace = "\n";
 			if (!$POSTAL_CODE) {
 				$POST = get_gedcom_value("POST", 2, $subrec);
-				if (!empty($POST)) $ADDR .= "\r\n". $POST;
-				else $ADDR .= "\r\n";
+				if (!empty($POST)) $ADDR .= "\n". $POST;
+				else $ADDR .= "\n";
 				$cityspace = " ";
 			}
 			$CITY = get_gedcom_value("CITY", 2, $subrec);
@@ -1400,11 +1371,11 @@ if ($action=="choosepid") {
 				if (!empty($POST)) $ADDR .= "  ". $POST;
 			}
 			$CTRY = get_gedcom_value("CTRY", 2, $subrec);
-			if (!empty($CTRY)) $ADDR .= "\r\n". $CTRY;
+			if (!empty($CTRY)) $ADDR .= "\n". $CTRY;
 		}
 		/**
-		 * @todo add support for ADDR subtags ADR1, CITY, STAE etc
-		 */
+		* @todo add support for ADDR subtags ADR1, CITY, STAE etc
+		*/
 	}
 	$PHON = "";
 	$subrec = get_sub_record(1, "1 PHON", $gedrec);
@@ -1430,11 +1401,11 @@ if ($action=="choosepid") {
 
 	$indifacts = array();
 	$person = Person::getInstance($pid);
-    $facts = $person->getIndiFacts();
+	$facts = $person->getIndiFacts();
 	$repeat_tags = array();
 
-    foreach($facts as $event) {
-    	$fact = $event->getTag();
+	foreach($facts as $event) {
+		$fact = $event->getTag();
 		if ($fact=="EVEN" || $fact=="FACT") $fact = $event->getType();
 		if (in_array($fact, $addfacts)) {
 			if (!isset($repeat_tags[$fact])) $repeat_tags[$fact]=1;
@@ -1444,13 +1415,13 @@ if ($action=="choosepid") {
 				if ($rfact!=$fact) $newreqd[] = $rfact;
 			}
 			$reqdfacts = $newreqd;
-            $indifacts[] = $event;
+			$indifacts[] = $event;
 		}
 	}
 	foreach($reqdfacts as $ind=>$fact) {
-		$e = new Event("1 $fact\r\n");
-        $e->temp = true;
-        $indifacts[] = $e;
+		$e = new Event("1 $fact\n");
+		$e->temp = true;
+		$indifacts[] = $e;
 	}
 
 	sort_facts($indifacts);
@@ -1651,10 +1622,10 @@ function checkform(frm) {
 foreach($indifacts as $f=>$fact) {
 	$fact_tag = $fact->getTag();
 	$fact_num = $fact->getLineNumber();
-    $date = $fact->getValue("DATE");
-    $plac = $fact->getPlace();
-    $temp = $fact->getValue("TEMP");
-    $desc = $fact->getDetail();
+	$date = $fact->getValue("DATE");
+	$plac = $fact->getPlace();
+	$temp = $fact->getValue("TEMP");
+	$desc = $fact->getDetail();
 	?>
 <tr>
 	<td class="descriptionbox">
@@ -1670,7 +1641,7 @@ foreach($indifacts as $f=>$fact) {
 		<input type="hidden" name="PLACS[]" value="<?php echo htmlspecialchars($plac,ENT_COMPAT,'UTF-8'); ?>" />
 		<input type="hidden" name="TEMPS[]" value="<?php echo htmlspecialchars($temp,ENT_COMPAT,'UTF-8'); ?>" />
 	</td>
-	<?php }	else {
+	<?php } else {
 		if (!in_array($fact_tag, $nondatefacts)) { ?>
 			<td class="optionbox">
 				<input type="hidden" name="DESCS[]" value="<?php echo htmlspecialchars($desc,ENT_COMPAT,'UTF-8'); ?>" />
@@ -1899,11 +1870,11 @@ for($i=1; $i<=count($sfams); $i++) {
 		echo $name."</a>\n";
 	}
 	else echo $pgv_lang["unknown"];
-    $subrecords = $family->getFacts(array("HUSB","WIFE","CHIL"));
+	$subrecords = $family->getFacts(array("HUSB","WIFE","CHIL"));
 	$famfacts = array();
 	foreach($subrecords as $ind=>$eventObj) {
-        $fact = $eventObj->getTag();
-        $event = $eventObj->getDetail();
+		$fact = $eventObj->getTag();
+		$event = $eventObj->getDetail();
 		if ($fact=="EVEN" || $fact=="FACT") $fact = $eventObj->getValue("TYPE");
 		if (in_array($fact, $famaddfacts)) {
 			$newreqd = array();
@@ -1915,11 +1886,10 @@ for($i=1; $i<=count($sfams); $i++) {
 		}
 	}
 
-//	foreach($reqdfacts as $ind=>$fact) {
 	foreach($famreqdfacts as $fact) {
-    	$e = new Event("1 $fact\r\n");
-        $e->temp = true;
-        $famfacts[] = $e;
+		$e = new Event("1 $fact\n");
+		$e->temp = true;
+		$famfacts[] = $e;
 	}
 	sort_facts($famfacts);
 ?>
@@ -2599,7 +2569,7 @@ for($j=1; $j<=count($cfams); $j++) {
 		}
 	}
 	foreach($famreqdfacts as $ind=>$fact) {
-		$newEvent = new Event("1 $fact\r\n");
+		$newEvent = new Event("1 $fact\n");
 		$famfacts[] = $newEvent;
 	}
 	sort_facts($famfacts);
@@ -2892,7 +2862,7 @@ foreach($famfacts as $f=>$eventObj) {
 			else echo $fact_tag;
 		?>
 			<input type="hidden" name="F<?php echo $i; ?>TAGS[]" value="<?php echo $fact_tag; ?>" />
-			<?php	
+			<?php
 			if ($fact_tag=='MARR') {
 				$factdetail = explode(' ', trim($eventObj->getGedComRecord("MARR")));
 				if (isset($factdetail[2]))
