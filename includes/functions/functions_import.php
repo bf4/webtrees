@@ -192,8 +192,8 @@ function reformat_record_import($rec) {
 			// Temporarily add leading/trailing spaces, to allow efficient matching below
 			$date=" {$date} ";
 			// Ensure space digits and letters
-			$date=preg_replace('/([a-z])(\d)/', '$1 $2', $date);
-			$date=preg_replace('/(\d)([a-z])/', '$1 $2', $date);
+			$date=preg_replace('/([A-Z])(\d)/', '$1 $2', $date);
+			$date=preg_replace('/(\d)([A-Z])/', '$1 $2', $date);
 			// Ensure space before/after calendar escapes
 			$date=preg_replace('/@#[^@]+@/', ' $0 ', $date);
 			// "BET." => "BET"
