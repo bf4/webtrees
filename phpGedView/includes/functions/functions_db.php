@@ -2300,7 +2300,7 @@ function delete_fact($linenum, $pid, $gedrec) {
 			$newged = "";
 			// NOTE: Add all lines that are before the fact to be deleted
 			for ($i=0; $i<$linenum; $i++) {
-				$newged .= trim($gedlines[$i])."\r\n";
+				$newged .= trim($gedlines[$i])."\n";
 			}
 			if (isset($gedlines[$linenum])) {
 				$fields = explode(' ', $gedlines[$linenum]);
@@ -2312,7 +2312,7 @@ function delete_fact($linenum, $pid, $gedrec) {
 					while ((isset($gedlines[$i]))&&($gedlines[$i]{0}>$glevel)) $i++;
 					// Add the remaining lines
 					while ($i<$ctlines) {
-						$newged .= trim($gedlines[$i])."\r\n";
+						$newged .= trim($gedlines[$i])."\n";
 						$i++;
 					}
 				}
