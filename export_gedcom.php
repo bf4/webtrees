@@ -25,7 +25,7 @@
  */
 
 require './config.php';
-require './includes/functions/functions_export.php';
+require_once './includes/functions/functions_export.php';
 
 // Which gedcoms do we have permission to export?
 $gedcoms=array();
