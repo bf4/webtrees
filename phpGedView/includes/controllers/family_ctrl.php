@@ -1,30 +1,30 @@
 <?php
 /**
- * Parses gedcom file and gives access to information about a family.
- *
- * You must supply a $famid value with the identifier for the family.
- *
- * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008	PGV Development Team.  All rights reserved.
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- *
- * @package PhpGedView
- * @subpackage Controllers
- * @version $Id$
- */
+* Parses gedcom file and gives access to information about a family.
+*
+* You must supply a $famid value with the identifier for the family.
+*
+* phpGedView: Genealogy Viewer
+* Copyright (C) 2002 to 2008 PGV Development Team.  All rights reserved.
+*
+* This program is free software; you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation; either version 2 of the License, or
+* (at your option) any later version.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+* GNU General Public License for more details.
+*
+* You should have received a copy of the GNU General Public License
+* along with this program; if not, write to the Free Software
+* Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+*
+* @package PhpGedView
+* @subpackage Controllers
+* @version $Id$
+*/
 
 if (!defined('PGV_PHPGEDVIEW')) {
 	header('HTTP/1.0 403 Forbidden');
@@ -57,8 +57,8 @@ class FamilyRoot extends BaseController
 	var $difffam = null;
 
 	/**
-	 * constructor
-	 */
+	* constructor
+	*/
 	function FamilyRoot() {
 		parent::BaseController();
 	}
@@ -95,7 +95,7 @@ class FamilyRoot extends BaseController
 				include_once('includes/classes/class_serviceclient.php');
 				$service = ServiceClient::getInstance($servid);
 				if (!is_null($service)) {
-					$newrec= $service->mergeGedcomRecord($remoteid, "0 @".$this->famid."@ FAM\r\n1 RFN ".$this->famid, false);
+					$newrec= $service->mergeGedcomRecord($remoteid, "0 @".$this->famid."@ FAM\n1 RFN ".$this->famid, false);
 					$this->famrec = $newrec;
 				}
 			}
@@ -103,7 +103,7 @@ class FamilyRoot extends BaseController
 
 		//-- if no record was found create a default empty one
 		if (empty($this->family)) {
-			$this->famrec = "0 @".$this->famid."@ FAM\r\n";
+			$this->famrec = "0 @".$this->famid."@ FAM\n";
 			$this->family = new Family($this->famrec);
 		}
 		$this->famrec = $this->family->getGedcomRecord();
@@ -242,9 +242,9 @@ class FamilyRoot extends BaseController
 	}
 
 	/**
-	 * get the family page charts menu
-	 * @return Menu
-	 */
+	* get the family page charts menu
+	* @return Menu
+	*/
 	function &getChartsMenu() {
 		global $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $pgv_lang;
 		if ($TEXT_DIRECTION=="rtl") $ff="_rtl";
@@ -300,10 +300,10 @@ class FamilyRoot extends BaseController
 	}
 
 	/**
-	 * get the family page reports menu
-	 * @deprecated	This function has been deprecated by the getReportsMenu function in menu.php
-	 * @return Menu
-	 */
+	* get the family page reports menu
+	* @deprecated This function has been deprecated by the getReportsMenu function in menu.php
+	* @return Menu
+	*/
 	function &getReportsMenu() {
 	/**
 		global $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $pgv_lang;
@@ -327,8 +327,8 @@ class FamilyRoot extends BaseController
 	}
 
 	/**
-	 * get the family page edit menu
-	 */
+	* get the family page edit menu
+	*/
 	function &getEditMenu() {
 		global $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $pgv_lang, $pgv_changes;
 		global $SHOW_GEDCOM_RECORD;
@@ -431,9 +431,9 @@ class FamilyRoot extends BaseController
 	}
 
 	/**
-	 * get the other menu
-	 * @return Menu
-	 */
+	* get the other menu
+	* @return Menu
+	*/
 	function &getOtherMenu() {
 		global $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $pgv_lang;
 		global $SHOW_GEDCOM_RECORD, $ENABLE_CLIPPINGS_CART;
@@ -444,42 +444,31 @@ class FamilyRoot extends BaseController
 			// other menu
 		$menu = new Menu($pgv_lang['other']);
 		$menu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}", "submenu{$ff}");
-		if ($SHOW_GEDCOM_RECORD)
-		{
+		if ($SHOW_GEDCOM_RECORD) {
 			$menu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['gedcom']['small']}");
-			if ($this->show_changes && PGV_USER_CAN_EDIT)
-			{
+			if ($this->show_changes && PGV_USER_CAN_EDIT) {
 				$menu->addLink("javascript:show_gedcom_record('new');");
-			}
-			else
-			{
+			} else {
 				$menu->addLink("javascript:show_gedcom_record();");
 			}
-		}
-		else
-		{
+		} else {
 			if (!empty($PGV_IMAGES["clippings"]["small"]))
 				$menu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['clippings']['small']}");
 			$menu->addLink(encode_url('clippings.php?action=add&id='.$this->getFamilyID().'&type=fam'));
 		}
-		if ($SHOW_GEDCOM_RECORD)
-		{
+		if ($SHOW_GEDCOM_RECORD) {
 				// other / view_gedcom
 				$submenu = new Menu($pgv_lang['view_gedcom']);
-				if ($this->show_changes && PGV_USER_CAN_EDIT)
-				{
+				if ($this->show_changes && PGV_USER_CAN_EDIT) {
 					$submenu->addLink("javascript:show_gedcom_record('new');");
-				}
-				else
-				{
+				} else {
 					$submenu->addLink("javascript:show_gedcom_record();");
 				}
 				$submenu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['gedcom']['small']}");
 				$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}");
 				$menu->addSubmenu($submenu);
 		}
-		if ($ENABLE_CLIPPINGS_CART >= PGV_USER_ACCESS_LEVEL)
-		{
+		if ($ENABLE_CLIPPINGS_CART >= PGV_USER_ACCESS_LEVEL) {
 				// other / add_to_cart
 				$submenu = new Menu($pgv_lang['add_to_cart'], encode_url('clippings.php?action=add&id='.$this->getFamilyID().'&type=fam'));
 				if (!empty($PGV_IMAGES["clippings"]["small"]))
@@ -487,26 +476,21 @@ class FamilyRoot extends BaseController
 				$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}");
 				$menu->addSubmenu($submenu);
 		}
-		if ($this->display && PGV_USER_ID)
-		{
-				// other / add_to_my_favorites
-				$submenu = new Menu($pgv_lang['add_to_my_favorites'], encode_url('family.php?action=addfav&famid='.$this->getFamilyID().'&gid='.$this->getFamilyID()));
-				$submenu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['gedcom']['small']}");
-				$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}");
-				$menu->addSubmenu($submenu);
+		if ($this->display && PGV_USER_ID) {
+			// other / add_to_my_favorites
+			$submenu = new Menu($pgv_lang['add_to_my_favorites'], encode_url('family.php?action=addfav&famid='.$this->getFamilyID().'&gid='.$this->getFamilyID()));
+			$submenu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['gedcom']['small']}");
+			$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}");
+			$menu->addSubmenu($submenu);
 		}
 		return $menu;
 	}
 }
 
-if (file_exists('includes/controllers/family_ctrl_user.php'))
-{
-	include_once 'includes/controllers/family_ctrl_user.php';
-}
-else
-{
-	class FamilyController extends FamilyRoot
-	{
+if (file_exists('includes/controllers/family_ctrl_user.php')) {
+	require_once 'includes/controllers/family_ctrl_user.php';
+} else {
+	class FamilyController extends FamilyRoot {
 	}
 }
 
