@@ -39,40 +39,6 @@ require_once 'includes/functions/functions_lang.php';
 require_once 'includes/functions/functions_name.php';
 require_once 'includes/functions/functions_export.php';
 
-// Programs such as FTM use the "tag formal names" instead of the actual tags.  This list lets us convert.
-$TRANSLATE_TAGS=array(
-	// These are standard tags, as defined in the 5.5.1 gedcom spec.
-	'ABBREVIATION'=>'ABBR', 'ADDRESS'=>'ADDR', 'ADDRESS1'=>'ADR1', 'ADDRESS2'=>'ADR2', 'ADDRESS3'=>'ADR3',
-	'ADOPTION'=>'ADOP', 'ADULT_CHRISTENING'=>'CHRA', 'AGENCY'=>'AGNC', 'ALIAS'=>'ALIA', 'ANCESTORS'=>'ANCE',
-	'ANCES_INTEREST'=>'ANCI', 'ANNULMENT'=>'ANUL', 'ASSOCIATES'=>'ASSO', 'AUTHOR'=>'AUTH', 'BAPTISM'=>'BAPM',
-	'BAPTISM_LDS'=>'BAPL', 'BAR_MITZVAH'=>'BARM', 'BAS_MITZVAH'=>'BASM', 'BIRTH'=>'BIRT', 'BLESSING'=>'BLES',
-	'BURIAL'=>'BURI', 'CALL_NUMBER'=>'CALN', 'CASTE'=>'CAST', 'CAUSE'=>'CAUS', 'CENSUS'=>'CENS',
-	'CHANGE'=>'CHAN', 'CHARACTER'=>'CHAR', 'CHILD'=>'CHIL', 'CHILDREN_COUNT'=>'NCHI', 'CHRISTENING'=>'CHR',
-	'CONCATENATION'=>'CONC', 'CONFIRMATION'=>'CONF', 'CONFIRMATION_LDS'=>'CONL', 'CONTINUED'=>'CONT',
-	'COPYRIGHT'=>'COPR', 'CORPORATE'=>'CORP', 'COUNTRY'=>'CTRY', 'CREMATION'=>'CREM', 'DEATH'=>'DEAT',
-	'_DEGREE'=>'_DEG', 'DESCENDANTS'=>'DESC', 'DESCENDANT_INT'=>'DESI', 'DESTINATION'=>'DEST',
-	'DIVORCE'=>'DIV', 'DIVORCE_FILED'=>'DIVF', 'EDUCATION'=>'EDUC', 'EMIGRATION'=>'EMIG', 'ENDOWMENT'=>'ENDL',
-	'ENGAGEMENT'=>'ENGA', 'EVENT'=>'EVEN', 'FACSIMILE'=>'FAX', 'FAMILY'=>'FAM', 'FAMILY_CHILD'=>'FAMC',
-	'FAMILY_FILE'=>'FAMF', 'FAMILY_SPOUSE'=>'FAMS', 'FIRST_COMMUNION'=>'FCOM', 'FORMAT'=>'FORM',
-	'GEDCOM'=>'GEDC', 'GIVEN_NAME'=>'GIVN', 'GRADUATION'=>'GRAD', 'HEADER'=>'HEAD', 'HUSBAND'=>'HUSB',
-	'IDENT_NUMBER'=>'IDNO', 'IMMIGRATION'=>'IMMI', 'INDIVIDUAL'=>'INDI', 'LANGUAGE'=>'LANG',
-	'LATITUDE'=>'LATI', 'LONGITUDE'=>'LONG', 'MARRIAGE'=>'MARR', 'MARRIAGE_BANN'=>'MARB',
-	'MARRIAGE_COUNT'=>'NMR', 'MARR_CONTRACT'=>'MARC', 'MARR_LICENSE'=>'MARL', 'MARR_SETTLEMENT'=>'MARS',
-	'MEDIA'=>'MEDI', '_MEDICAL'=>'_MDCL', '_MILITARY_SERVICE'=>'_MILT', 'NAME_PREFIX'=>'NPFX',
-	'NAME_SUFFIX'=>'NSFX', 'NATIONALITY'=>'NATI', 'NATURALIZATION'=>'NATU', 'NICKNAME'=>'NICK',
-	'OBJECT'=>'OBJE', 'OCCUPATION'=>'OCCU', 'ORDINANCE'=>'ORDI', 'ORDINATION'=>'ORDN', 'PEDIGREE'=>'PEDI',
-	'PHONE'=>'PHON', 'PHONETIC'=>'FONE', 'PHY_DESCRIPTION'=>'DSCR', 'PLACE'=>'PLAC', 'POSTAL_CODE'=>'POST',
-	'PROBATE'=>'PROB', 'PROPERTY'=>'PROP', 'PUBLICATION'=>'PUBL', 'QUALITY_OF_DATA'=>'QUAL',
-	'REC_FILE_NUMBER'=>'RFN', 'REC_ID_NUMBER'=>'RIN', 'REFERENCE'=>'REFN', 'RELATIONSHIP'=>'RELA',
-	'RELIGION'=>'RELI', 'REPOSITORY'=>'REPO', 'RESIDENCE'=>'RESI', 'RESTRICTION'=>'RESN', 'RETIREMENT'=>'RETI',
-	'ROMANIZED'=>'ROMN', 'SEALING_CHILD'=>'SLGC', 'SEALING_SPOUSE'=>'SLGS', 'SOC_SEC_NUMBER'=>'SSN',
-	'SOURCE'=>'SOUR', 'STATE'=>'STAE', 'STATUS'=>'STAT', 'SUBMISSION'=>'SUBN', 'SUBMITTER'=>'SUBM',
-	'SURNAME'=>'SURN', 'SURN_PREFIX'=>'SPFX', 'TEMPLE'=>'TEMP', 'TITLE'=>'TITL', 'TRAILER'=>'TRLR',
-	'VERSION'=>'VERS', 'WEB'=>'WWW'
-	// TODO: FTM uses the follow tags.  What are their full forms?
-	// _DETS, _SEPR, CITN, _HEIG, _WEIG, _EXCM, _ELEC, _NAME, _MISN, _UNKN
-);
-
 // Tidy up a gedcom record on import, so that we can access it consistently/efficiently.
 function reformat_record_import($rec) {
 	global $WORD_WRAPPED_NOTES;
@@ -213,7 +179,45 @@ function reformat_record_import($rec) {
 			$tag='CREM';
 			break;
 		case 'DATE':
-			// TODO: standardise date formats.
+			// Preserve text from INT dates
+			if (strpos($data, '(')!==false) {
+				list($date, $text)=explode('(', $data, 2);
+				$text=' ('.$text;
+			} else {
+				$date=$data;
+				$text='';
+			}
+			// Capitals
+			$date=strtoupper($date);
+			// Temporarily add leading/trailing spaces, to allow efficient matching below
+			$date=" {$date} ";
+			// Ensure space digits and letters
+			$date=preg_replace('/([a-z])(\d)/', '$1 $2', $date);
+			$date=preg_replace('/(\d)([a-z])/', '$1 $2', $date);
+			// Ensure space before/after calendar escapes
+			$date=preg_replace('/@#[^@]+@/', ' $0 ', $date);
+			// "BET." => "BET"
+			$date=preg_replace('/(\w\w)\./', '$1', $date);
+			// "CIR" => "ABT"
+			$date=str_replace(' CIR ', ' ABT ', $date);
+			$date=str_replace(' APX ', ' ABT ', $date);
+			// B.C. => BC (temporarily, to allow easier handling of ".")
+			$date=str_replace(' B.C. ', ' BC ', $date);
+			// "BET X - Y " => "BET X AND Y"
+			$date=preg_replace('/^(.* BET .+) - (.+)/', '$1 AND $2', $date);
+			$date=preg_replace('/^(.* FROM .+) - (.+)/', '$1 TO $2', $date);
+			// "@#ESC@ FROM X TO Y" => "FROM @#ESC@ X TO @#ESC@ Y"
+			$date=preg_replace('/^ +(@#[^@]+@) +FROM +(.+) +TO +(.+)/', ' FROM $1 $2 TO $1 $3', $date);
+			$date=preg_replace('/^ +(@#[^@]+@) +BET +(.+) +AND +(.+)/', ' BET $1 $2 AND $1 $3', $date);
+			// "@#ESC@ AFT X" => "AFT @#ESC@ X"
+			$date=preg_replace('/^ +(@#[^@]+@) +(FROM|BET|TO|AND|BEF|AFT|CAL|EST|INT|ABT) +(.+)/', ' $2 $1 $3', $date);
+			// Ignore any remaining punctuation, e.g. "14-MAY, 1900" => "14 MAY 1900"
+			// (don't change "/" - it is used in NS/OS dates)
+			$date=preg_replace('/[.,:;-]/', ' ', $date);
+			// BC => B.C.
+			$date=str_replace(' BC ', ' B.C. ', $date);
+			// Append the "INT" text
+			$data=$date.$text;
 			break;
 		case 'DEATH':
 			$tag='DEAT';
@@ -510,6 +514,9 @@ function reformat_record_import($rec) {
 			break;
 		}
 		// Suppress "Y", for facts/events with a DATE or PLAC
+		if ($data=='y') {
+			$data='Y';
+		}
 		if ($level=='1' && $data=='Y') {
 			for ($i=$n+1; $i<$num_matches-1 && $matches[$i][1]!='1'; ++$i) {
 				if ($matches[$i][3]=='DATE' || $matches[$i][3]=='PLAC') {
@@ -544,7 +551,8 @@ function reformat_record_import($rec) {
 			break;
 		case 'CONC':
 			// Merge CONC lines, to simplify access later on.
-			$newrec.=($WORD_WRAPPED_NOTES ? ' ' : '').$data;
+			// For $n==1, we must be appending to a level 0 record, so add a space
+			$newrec.=($WORD_WRAPPED_NOTES || $n==1 ? ' ' : '').$data;
 			break;
 		}
 	}
@@ -559,31 +567,18 @@ function reformat_record_import($rec) {
 * @param boolean $update whether or not this is an updated record that has been accepted
 */
 function import_record($gedrec, $update) {
-	global $DBCONN, $gid, $type, $TOTAL_QUERIES, $prepared_statement;
-	global $TBLPREFIX, $GEDCOM_FILE, $FILE, $pgv_lang, $USE_RIN, $gdfp, $placecache;
-	global $ALPHABET_upper, $ALPHABET_lower, $place_id, $WORD_WRAPPED_NOTES, $GEDCOMS;
-	global $MAX_IDS, $fpnewged, $GEDCOM, $GENERATE_UIDS;
-	global $TRANSLATE_TAGS;
+	global $DBCONN, $gid, $type, $TBLPREFIX, $GEDCOM_FILE, $FILE, $pgv_lang, $USE_RIN;
+	global $place_id, $WORD_WRAPPED_NOTES, $GEDCOMS, $MAX_IDS, $fpnewged, $GEDCOM, $GENERATE_UIDS;
 
 	$FILE = $GEDCOM;
 
-	// Clean input record
-	$gedrec=preg_replace('/[\x00-\x09\x0B-\x0C\x0E-\x1F\x7F]+/', ' ', $gedrec); // Illegal control characters
-	$gedrec=preg_replace('/[\r\n]+/', "\n", $gedrec); // Standardise line endings
-	// EEK! We only need to remove repeated spaces in certain circumstances.
-	// This global replace breaks various other things, so take it out
-	//$gedrec=preg_replace('/ {2,}/', ' ', $gedrec); // Repeated spaces
-	$gedrec=preg_replace('/(^ +| +$)/m', '', $gedrec); // Leading/trailing space
-	$gedrec=preg_replace('/\n{2,}/', "\n", $gedrec); // Blank lines
-	$gedrec = stripLRMRLM($gedrec); // LRM and RLM codes are NOT text:  they're instructions to the browser
+ // Escaped @ signs (only if importing from file)
 	if (!$update) {
-		$gedrec=str_replace('@@', '@', $gedrec); // Escaped @ signs (only if importing from file)
+		$gedrec=str_replace('@@', '@', $gedrec);
 	}
 
-	// Replace TAG_FORMAL_NAME (as sometimes created by FTM) with TAG
-	foreach ($TRANSLATE_TAGS as $tag_full=>$tag_abbr) {
-		$gedrec=preg_replace("/^(\d+ (@[^@]+@ )?){$tag_full}\b/m", '$1'.$tag_abbr, $gedrec);
-	}
+	// Standardise gedcom format
+	$gedrec=reformat_record_import($gedrec);
 
 	//-- import different types of records
 	$ct = preg_match('/^0 @(.*)@ ([a-zA-Z_]+)/', $gedrec, $match);
@@ -618,9 +613,6 @@ function import_record($gedrec, $update) {
 		if ($MAX_IDS[$type] < $idnum)
 			$MAX_IDS[$type] = $idnum;
 
-	//-- replace any added ltr processing codes
-	$gedrec=str_replace(array(PGV_UTF8_LRM, PGV_UTF8_RLM), "", $gedrec);
-
 	$newrec = update_media($gid, $gedrec, $update);
 	if ($newrec != $gedrec) {
 		$gedrec = $newrec;
@@ -635,11 +627,9 @@ function import_record($gedrec, $update) {
 
 	switch ($type) {
 	case 'INDI':
-		cleanup_tags_y($gedrec);
 		$record=new Person($gedrec);
 		break;
 	case 'FAM':
-		cleanup_tags_y($gedrec);
 		$record=new Family($gedrec);
 		break;
 	case 'SOUR':
@@ -1985,6 +1975,7 @@ function accept_changes($cid) {
 
 		//-- write the changes back to the gedcom file
 		if ($SYNC_GEDCOM_FILE) {
+			// TODO: We merge CONC lines on import, so need to add them back on export
 			if (!isset($manual_save) || $manual_save==false) {
 				//-- only allow one thread to accept changes at a time
 				$mutex = new Mutex("accept_changes");
@@ -2161,31 +2152,6 @@ function update_record($gedrec, $delete = false) {
 	if (!$delete) {
 		import_record($gedrec, true);
 	}
-}
-
-function cleanup_tags_y(& $irec) {
-	$cleanup_facts = array ("ANUL","CENS","DIV","DIVF","ENGA","MARR","MARB",
-		"MARC","MARL","MARS","BIRT","CHR","DEAT","BURI","CREM","ADOP","DSCR",
-		"BAPM","BARM","BASM","BLES","CHRA","CONF","FCOM","ORDN","NATU","EMIG",
-		"IMMI","CENS","PROB","WILL","GRAD","RETI");
-	$irec .= "\n1";
-	$ft = preg_match_all("/1\s(\w+)\s/", $irec, $match);
-	for ($i = 0; $i < $ft; $i++) {
-		$sfact = $match[1][$i];
-		$sfact = trim($sfact);
-		if (in_array($sfact, $cleanup_facts)) {
-			$srchstr = "/1 {$sfact} Y\n2/";
-			$replstr = "1 {$sfact}\n2";
-			$srchstr2 = "/1 {$sfact}(.{0,1})\n2/";
-			$srchstr = "/1 {$sfact} Y\n2/";
-			$srchstr3 = "/1 {$sfact} Y\n1/";
-			$irec = preg_replace($srchstr, $replstr, $irec);
-			if (preg_match($srchstr2, $irec)) {
-				$irec = preg_replace($srchstr3, "1", $irec);
-			}
-		}
-	}
-	$irec = substr($irec, 0, -2);
 }
 
 // Create a pseudo-random UUID

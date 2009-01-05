@@ -37,22 +37,63 @@ require_once 'includes/classes/class_gedownloadgedcom.php';
 function reformat_record_export($rec) {
 	global $WORD_WRAPPED_NOTES;
 
-	$lines=preg_split('/[\r\n]+/', $rec);
-	foreach ($lines as $line) {
-		// TODO
-		// Split long lines
+	$newrec='';
+	foreach (preg_split('/[\r\n]+/', $rec) as $line) {
 		// Escape @ characters
+		// TODO:
+		// Need to replace '@' with '@@', unless it is either
+		// a) an xref, such as @I123@
+		// b) an escape, such as @#D FRENCH R@
+		if (false) {
+			$line=str_replace('@', '@@', $line);
+		}
+		// Split long lines
+		// The total length of a GEDCOM line, including level number, cross-reference number,
+		// tag, value, delimiters, and terminator, must not exceed 255 (wide) characters.
+		// Use quick strlen() check before using slower UTF8_strlen() check
+		if (strlen($line)>PGV_GEDCOM_LINE_LENGTH && UTF8_strlen($line)>PGV_GEDCOM_LINE_LENGTH) {
+			list($level, $tag)=explode(' ', $line, 3);
+			if ($tag!='CONT' && $tag!='CONC') {
+				$level++;
+			}
+			do {
+				// Split after $pos chars
+				$pos=PGV_GEDCOM_LINE_LENGTH;
+				if ($WORD_WRAPPED_NOTES) {
+					// Split on a space, and remove it (for compatibility with some desktop apps)
+					while ($pos && UTF8_substr($line, $pos-1, 1)!=' ') {
+						--$pos;
+					}
+					if ($pos==strpos($line, ' ', 3)+1) {
+						// No spaces in the data! Can't split it :-(
+						break;
+					} else {
+						$newrec.=UTF8_substr($line, 0, $pos-1).PGV_EOL;
+						$line=$level.' CONC '.UTF8_substr($line, $pos);
+					}
+				} else {
+					// Split on a non-space (standard gedcom behaviour)
+					while ($pos && UTF8_substr($line, $pos-1, 1)==' ') {
+						--$pos;
+					}
+					if ($pos==strpos($line, ' ', 3)) {
+						// No non-spaces in the data! Can't split it :-(
+						break;
+					}
+					$newrec.=UTF8_substr($line, 0, $pos).PGV_EOL;
+					$line=$level.' CONC '.UTF8_substr($line, $pos);
+				}
+			} while (UTF8_strlen($line)>PGV_GEDCOM_LINE_LENGTH);
+		}
+		$newrec.=$line.PGV_EOL;
 	}
-
-	// We use "\n" internally, and PGV_EOL externally
-	return $rec=implode(PGV_EOL, $lines).PGV_EOL;
+	return $newrec;
 }
 
 /*
 * Create a header for a (newly-created or already-imported) gedcom file.
 */
-function gedcom_header($gedfile)
-{
+function gedcom_header($gedfile) {
 	global $CHARACTER_SET, $GEDCOMS, $pgv_lang, $TBLPREFIX;
 
 	// Default values for a new header
