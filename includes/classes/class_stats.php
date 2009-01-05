@@ -6,7 +6,7 @@
  * about the GEDCOM.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
+ * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -46,7 +46,7 @@ class stats {
 	var $_ged_id;
 	var $_server_url; // Absolute URL for generating external links.  e.g. in RSS feeds
 	static $_not_allowed = false;
-	static $_media_types = array('audio', 'book', 'card', 'certificate', 'document', 'electronic', 'magazine', 'manuscript', 'map', 'fiche', 'film', 'newspaper', 'painting', 'photo', 'tombstone', 'video', 'other');
+	static $_media_types = array('audio', 'book', 'card', 'certificate', 'coat', 'document', 'electronic', 'magazine', 'manuscript', 'map', 'fiche', 'film', 'newspaper', 'painting', 'photo', 'tombstone', 'video', 'other');
 
 	static $_xencoding = PGV_GOOGLE_CHART_ENCODING;
 

@@ -5,7 +5,7 @@
  * This block will randomly choose media items and show them in a block
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
+ * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -51,6 +51,7 @@ if ($MULTI_MEDIA) {
 		"filter_mp3"  =>"no",
 		"filter_ole"  =>"yes",
 		"filter_pcx"  =>"yes",
+		"filter_pdf"  =>"no",
 		"filter_png"  =>"yes",
 		"filter_tiff" =>"yes",
 		"filter_wav"  =>"no",
@@ -59,6 +60,7 @@ if ($MULTI_MEDIA) {
 		"filter_book"		=>"yes",
 		"filter_card"		=>"yes",
 		"filter_certificate"=>"yes",
+		"filter_coat"		=>"yes",
 		"filter_document"	=>"yes",
 		"filter_electronic"	=>"yes",
 		"filter_fiche"		=>"yes",
@@ -340,6 +342,7 @@ function openPic(filename, width, height) {
 			$config["filter_mp3"]	= "no";
 			$config["filter_ole"]	= "yes";
 			$config["filter_pcx"]	= "yes";
+			$config["filter_pdf"]	= "no";
 			$config["filter_png"]	= "yes";
 			$config["filter_tiff"]	= "yes";
 			$config["filter_wav"]	= "no";
@@ -348,6 +351,7 @@ function openPic(filename, width, height) {
 			$config["filter_book"]			= "yes";
 			$config["filter_card"]			= "yes";
 			$config["filter_certificate"]	= "yes";
+			$config["filter_coat"]			= "yes";
 			$config["filter_document"]		= "yes";
 			$config["filter_electronic"]	= "yes";
 			$config["filter_fiche"]			= "yes";
@@ -387,10 +391,10 @@ function openPic(filename, width, height) {
 				name="filter_avi"
 				<?php if ($config['filter_avi']=="yes") print " checked=\"checked\""; ?> />&nbsp;&nbsp;avi&nbsp;&nbsp;</td>
 			<td class="width33"><input type="checkbox" value="yes"
-				name="filter_avi"
+				name="filter_bmp"
 				<?php if ($config['filter_bmp']=="yes") print " checked=\"checked\""; ?> />&nbsp;&nbsp;bmp&nbsp;&nbsp;</td>
 			<td class="width33"><input type="checkbox" value="yes"
-				name="filter_avi"
+				name="filter_gif"
 				<?php if ($config['filter_gif']=="yes") print " checked=\"checked\""; ?> />&nbsp;&nbsp;gif&nbsp;&nbsp;</td>
 				</tr>
 		<tr>
@@ -409,13 +413,16 @@ function openPic(filename, width, height) {
 				name="filter_pcx"
 				<?php if ($config['filter_pcx']=="yes") print " checked=\"checked\""; ?> />&nbsp;&nbsp;pcx&nbsp;&nbsp;</td>
 			<td class="width33"><input type="checkbox" value="yes"
+				name="filter_pdf"
+				<?php if ($config['filter_pdf']=="yes") print " checked=\"checked\""; ?> />&nbsp;&nbsp;pdf&nbsp;&nbsp;</td>
+			<td class="width33"><input type="checkbox" value="yes"
 				name="filter_png"
 				<?php if ($config['filter_png']=="yes") print " checked=\"checked\""; ?> />&nbsp;&nbsp;png&nbsp;&nbsp;</td>
+		</tr>
+		<tr>
 			<td class="width33"><input type="checkbox" value="yes"
 				name="filter_tiff"
 				<?php if ($config['filter_tiff']=="yes") print " checked=\"checked\""; ?> />&nbsp;&nbsp;tiff&nbsp;&nbsp;</td>
-		</tr>
-		<tr>
 			<td class="width33"><input type="checkbox" value="yes"
 				name="filter_wav"
 				<?php if ($config['filter_wav']=="yes") print " checked=\"checked\""; ?> />&nbsp;&nbsp;wav&nbsp;&nbsp;</td>
