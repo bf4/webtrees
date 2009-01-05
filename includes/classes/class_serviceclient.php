@@ -1,28 +1,28 @@
 <?php
 /**
- * Class used to access records and data on a remote server
- *
- * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- *
- * @package PhpGedView
- * @subpackage DataModel
- * @version $Id$
- */
+* Class used to access records and data on a remote server
+*
+* phpGedView: Genealogy Viewer
+* Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
+*
+* This program is free software; you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation; either version 2 of the License, or
+* (at your option) any later version.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+* GNU General Public License for more details.
+*
+* You should have received a copy of the GNU General Public License
+* along with this program; if not, write to the Free Software
+* Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+*
+* @package PhpGedView
+* @subpackage DataModel
+* @version $Id$
+*/
 
 if (!defined('PGV_PHPGEDVIEW')) {
 	header('HTTP/1.0 403 Forbidden');
@@ -48,9 +48,9 @@ class ServiceClient extends GedcomRecord {
 	var $client_type = "SOAP"; // whether to use SOAP or PEAR:SOAP by default
 
 	/**
-	 * contstructor to create a new ServiceClient object
-	 * @param string $gedrec	the SERV gedcom record
-	 */
+	* contstructor to create a new ServiceClient object
+	* @param string $gedrec the SERV gedcom record
+	*/
 	function ServiceClient($gedrec) {
 		//parse url
 		//crate soap client class
@@ -70,8 +70,8 @@ class ServiceClient extends GedcomRecord {
 	}
 
 	/**
-	 * check if the service returned an error
-	 */
+	* check if the service returned an error
+	*/
 	static function isError(&$result) {
 		if (PEAR::isError($result) || isset($result->faultcode) || isset($result->message) || get_class($result)=='SOAP_Fault') {
 			return true;
@@ -80,9 +80,9 @@ class ServiceClient extends GedcomRecord {
 	}
 
 	/**
-	 * get the title of this source record
-	 * @return string
-	 */
+	* get the title of this source record
+	* @return string
+	*/
 	function getTitle() {
 		global $pgv_lang;
 
@@ -95,22 +95,22 @@ class ServiceClient extends GedcomRecord {
 	}
 
 	/**
-	 * get the gedcom file
-	 */
+	* get the gedcom file
+	*/
 	function getGedfile() {
 		return $this->gedfile;
 	}
 
 	/**
-	 * authenticate the client
-	 */
+	* authenticate the client
+	*/
 	function authenticate() {
 		if (!empty($this->SID)) return $this->SID;
 		if (is_null($this->soapClient)) {
 			if (!class_exists('SoapClient') || $this->client_type=='PEAR:SOAP') {
 				include_once('SOAP/Client.php');
 				//AddToLog('Using PEAR:SOAP library');
-				//	get the wsdl and cache it
+				// get the wsdl and cache it
 				$wsdl = new SOAP_WSDL($this->url);
 				//change the encoding style
 				$this->__change_encoding($wsdl);
@@ -138,9 +138,9 @@ class ServiceClient extends GedcomRecord {
 	}
 
 	/**
-	 * Get a record from the remote site
-	 * @param string $remoteid	the id of the record to get
-	 */
+	* Get a record from the remote site
+	* @param string $remoteid the id of the record to get
+	*/
 	function getRemoteRecord($remoteid) {
 		if (!is_object($this->soapClient)) $this->authenticate();
 		if (!is_object($this->soapClient)||$this->isError($this->soapClient)) return false;
@@ -154,9 +154,9 @@ class ServiceClient extends GedcomRecord {
 	}
 
 	/**
-	 * get the title for this service
-	 * @return string
-	 */
+	* get the title for this service
+	* @return string
+	*/
 	function getServiceTitle() {
 		if (!empty($this->title)) return $this->title;
 
@@ -171,8 +171,8 @@ class ServiceClient extends GedcomRecord {
 	}
 
 	/**
-	 * Merge people together.
-	 */
+	* Merge people together.
+	*/
 	function _merge($record1, $record2) {
 		// Returns second record if first is empty, no merge needed
 		if (empty($record1)) return $record2;
@@ -224,7 +224,7 @@ class ServiceClient extends GedcomRecord {
 		if ($ct>0) $localrec = preg_replace("/0 @(.*)@ (\w*)/", "0 @$1@ ".trim($match[2]), $localrec);
 		//-- add all of the new records
 		foreach($newrecs as $ind=>$subrec) {
-			$localrec .= trim($subrec)."\r\n";
+			$localrec .= trim($subrec)."\n";
 		}
 		$localrec = trim($localrec);
 //print "[<pre>$localrec</pre>]";
@@ -234,14 +234,14 @@ class ServiceClient extends GedcomRecord {
 			$pos2 = strpos($localrec, "\n1", $pos1+4);
 			if ($pos2===false) $pos2 = strlen($localrec);
 			$newgedrec = substr($localrec, 0, $pos1);
-			$newgedrec .= "1 CHAN\r\n2 DATE ".date("d M Y")."\r\n";
-			$newgedrec .= "3 TIME ".date("H:i:s")."\r\n";
-			$newgedrec .= "2 _PGVU @".$this->xref."@\r\n";
+			$newgedrec .= "1 CHAN\n2 DATE ".date("d M Y")."\n";
+			$newgedrec .= "3 TIME ".date("H:i:s")."\n";
+			$newgedrec .= "2 _PGVU @".$this->xref."@\n";
 			$newgedrec .= trim(substr($localrec, $pos2+1));
 			$localrec = $newgedrec;
 		} else {
-			$newgedrec = "\r\n1 CHAN\r\n2 DATE ".date("d M Y")."\r\n";
-			$newgedrec .= "3 TIME ".date("H:i:s")."\r\n";
+			$newgedrec = "\n1 CHAN\n2 DATE ".date("d M Y")."\n";
+			$newgedrec .= "3 TIME ".date("H:i:s")."\n";
 			$newgedrec .= "2 _PGVU @".$this->xref."@";
 			$localrec .= $newgedrec;
 		}
@@ -251,9 +251,9 @@ class ServiceClient extends GedcomRecord {
 	}
 
 	/**
-	 * Updates Family Records such as children, spouse, and parents
-	 */
-	 function UpdateFamily($record1,$record2){
+	* Updates Family Records such as children, spouse, and parents
+	*/
+	function UpdateFamily($record1,$record2){
 		// This makes sure there is a record in both the server and client else it returns the record that
 		// exist if any
 		if (empty($record1)) {
@@ -284,7 +284,6 @@ class ServiceClient extends GedcomRecord {
 
 		//-- remove all remote family links added in _merge() so that we can add them back in if we need to
 		$record1 = preg_replace("/\d FAM[SC] @".$this->xref.":[\w\d]+@\r?\n/", "", $record1);
-//		print "[<pre>$record1</pre>]";
 
 		//debug_print_backtrace();
 		// holds the arrays of the current individual Familys
@@ -355,31 +354,27 @@ class ServiceClient extends GedcomRecord {
 			}
 		}
 		// This Adds any new familys to the person.
-		if(count($FamilyListChild)>0){
-			for($i=0;$i<count($FamilyListChild);$i++){
-//				if (!empty($FamilyChildrenList[$i])){
-					$record1.="\r\n1 FAMC @";
-					if (strpos($FamilyListChild[$i], $this->xref)!==0) $record1 .= $this->xref.":";
-					$record1 .= $FamilyListChild[$i]."@";
-//				}
+		if (count($FamilyListChild)>0){
+			for ($i=0;$i<count($FamilyListChild);$i++){
+				$record1.="\n1 FAMC @";
+				if (strpos($FamilyListChild[$i], $this->xref)!==0) $record1 .= $this->xref.":";
+				$record1 .= $FamilyListChild[$i]."@";
 			}
 		}
 		if(count($FamilyListSpouse)>0){
 			for($i=0;$i<count($FamilyListSpouse);$i++){
-//				if (!empty($FamilyChildrenList[$i])){
-					$record1.="\r\n1 FAMS @";
-					if (strpos($FamilyListSpouse[$i], $this->xref)!==0) $record1 .= $this->xref.":";
-					$record1 .= $FamilyListSpouse[$i]."@";
-//				}
+				$record1.="\n1 FAMS @";
+				if (strpos($FamilyListSpouse[$i], $this->xref)!==0) $record1 .= $this->xref.":";
+				$record1 .= $FamilyListSpouse[$i]."@";
 			}
 		}
 		return $record1;
 	}
 
 	/**
-	 * This mergest the the two familys together
-	 */
-	 function MergeForUpdateFamily($Family1,$Family2,$Familylist,&$FamilyListReturn){
+	* This mergest the the two familys together
+	*/
+	function MergeForUpdateFamily($Family1,$Family2,$Familylist,&$FamilyListReturn){
 		global $pgv_changes, $GEDCOM;
 		include_once('includes/functions/functions_edit.php');
 
@@ -451,14 +446,14 @@ class ServiceClient extends GedcomRecord {
 					if($found){
 						$childrec = $Child1->getGedcomRecord();
 						if (preg_match("/1 RFN ".$this->xref.":/", $childrec)==0) {
-							$childrec .= "\r\n1 RFN ".$Child2->getXref();
+							$childrec .= "\n1 RFN ".$Child2->getXref();
 							//print "<br/> repalcing for child ".$Child1->getXref();
 							replace_gedrec($Child1->getXref(), $childrec);
 							$this->setSameId($Child1->getXref(), $Child2->getXref());
 						}
 					} else {
 						$famupdated = true;
-						$famrec1 .="\r\n1 CHIL @".$Child2->getXref()."@";
+						$famrec1 .="\n1 CHIL @".$Child2->getXref()."@";
 						//print "<br/> adding for child ".$Child2->getXref();
 					}
 				}
@@ -467,7 +462,7 @@ class ServiceClient extends GedcomRecord {
 
 		//-- update the family record
 		if (preg_match("/1 RFN ".$this->xref.":/", $famrec1)==0) {
-			$famrec1 .= "\r\n1 RFN ".$family2->getXref();
+			$famrec1 .= "\n1 RFN ".$family2->getXref();
 			$famupdated = true;
 		}
 		if ($famupdated) {
@@ -479,7 +474,7 @@ class ServiceClient extends GedcomRecord {
 		if(empty($father1)){
 			if(!empty($father2)){
 				$father1=$father2;
-				$famrec1 .="\r\n1 HUSB @".$father1->getXref()."@";
+				$famrec1 .="\n1 HUSB @".$father1->getXref()."@";
 				//print "<br/> adding for fahter ".$father1->getXref();
 				replace_gedrec($family1->getXref(), $famrec1);
 			}
@@ -487,7 +482,7 @@ class ServiceClient extends GedcomRecord {
 			if($this->ComparePeople($father1,$father2)){
 				$fatherrec = $father1->getGedcomRecord();
 				if (preg_match("/1 RFN ".$this->xref.":/", $fatherrec)==0) {
-					$fatherrec .= "\r\n1 RFN ".$father2->getXref();
+					$fatherrec .= "\n1 RFN ".$father2->getXref();
 					//print "<br/> repalcing for father ".$father1->getXref();
 					replace_gedrec($father1->getXref(), $fatherrec);
 					$this->setSameId($father1->getXref(), $father2->getXref());
@@ -498,7 +493,7 @@ class ServiceClient extends GedcomRecord {
 		if(empty($mother1)){
 			if(!empty($mother2)){
 				$mother1=$mother2;
-				$famrec1 .="\r\n1 WIFE @".$mother1->getXref()."@";
+				$famrec1 .="\n1 WIFE @".$mother1->getXref()."@";
 				//print "<br/> adding for mother ".$mother1->getXref();
 				replace_gedrec($family1->getXref(), $famrec1);
 			}
@@ -506,7 +501,7 @@ class ServiceClient extends GedcomRecord {
 			if($this->ComparePeople($mother1,$mother2)){
 				$motherrec = $mother1->getGedcomRecord();
 				if (preg_match("/1 RFN ".$this->xref.":/", $motherrec)==0) {
-					$motherrec .= "\r\n1 RFN ".$mother2->getXref();
+					$motherrec .= "\n1 RFN ".$mother2->getXref();
 					//print "<br/> repalcing for mother ".$mother1->getXref();
 					replace_gedrec($mother1->getXref(), $motherrec);
 					$this->setSameId($mother1->getXref(), $mother2->getXref());
@@ -514,14 +509,14 @@ class ServiceClient extends GedcomRecord {
 			}
 		}
 		$this->setSameId($Family1, $Family2);
-	 }
+	}
 
 	/**
-	 * Compairs familys and then returns true if the have 50% or more chance of being the same family.
-	 * Other wise it returns false.
-	 */
-	 function CompairForUpdateFamily($family1,$family2) {
-		 // Values used to calculate the Percent of likley hood that the family is the same.
+	* Compairs familys and then returns true if the have 50% or more chance of being the same family.
+	* Other wise it returns false.
+	*/
+	function CompairForUpdateFamily($family1,$family2) {
+		// Values used to calculate the Percent of likley hood that the family is the same.
 		$ChanceSameFamily=0.0;
 		$CountFamily1=0.0;
 		$CountFamily2=0.0;
@@ -617,10 +612,10 @@ class ServiceClient extends GedcomRecord {
 	}
 
 	/**
-	 * set two ids in the same person
-	 * @param string $local	The local id
-	 * @param string $remote	the remote id that matches the $local id
-	 */
+	* set two ids in the same person
+	* @param string $local The local id
+	* @param string $remote the remote id that matches the $local id
+	*/
 	static function setSameId($local, $remote) {
 		global $TBLPREFIX, $DBCONN, $GEDCOMS, $GEDCOM;
 
@@ -637,11 +632,11 @@ class ServiceClient extends GedcomRecord {
 	}
 
 	/**
-	 * Compares to see if two people are the same, and it returns true if they are, but
-	 * false if they are not. It only compares the name, sex birthdate, and deathdate
-	 * of the person
-	 */
-	 static function ComparePeople(&$Person1,&$Person2){
+	* Compares to see if two people are the same, and it returns true if they are, but
+	* false if they are not. It only compares the name, sex birthdate, and deathdate
+	* of the person
+	*/
+	static function ComparePeople(&$Person1,&$Person2){
 		$PersonName1=$Person1->getFullName();
 		$PersonSex1=$Person1->getSex();
 		$PersonBirth1=$Person1->getEstimatedBirthDate();
@@ -696,14 +691,14 @@ class ServiceClient extends GedcomRecord {
 		} else {
 			return true;
 		}
-	 }
+	}
 
 	/**
-	 * check if any there are any stub records with RFN tags that match the
-	 * ids in the gedcom record
-	 * @param string $gedrec
-	 * @return string
-	 */
+	* check if any there are any stub records with RFN tags that match the
+	* ids in the gedcom record
+	* @param string $gedrec
+	* @return string
+	*/
 	function checkIds($gedrec) {
 		$ct = preg_match_all("/@(".$this->xref.":.*)@/", $gedrec, $match, PREG_SET_ORDER);
 		for($i=0; $i<$ct; $i++) {
@@ -716,12 +711,12 @@ class ServiceClient extends GedcomRecord {
 		}
 
 	/**
-	 * merge a local gedcom record with the information from the remote site
-	 * @param string $xref		the remote ID to merge with
-	 * @param string $localrec	the local gedcom record to merge the remote record with
-	 * @param boolean $isStub	whether or not this is a stub record
-	 * @param boolean $firstLink	is this the first time this record is being linked
-	 */
+	* merge a local gedcom record with the information from the remote site
+	* @param string $xref the remote ID to merge with
+	* @param string $localrec the local gedcom record to merge the remote record with
+	* @param boolean $isStub whether or not this is a stub record
+	* @param boolean $firstLink is this the first time this record is being linked
+	*/
 	function mergeGedcomRecord($xref, $localrec, $isStub=false, $firstLink=false) {
 		global $FILE, $GEDCOM, $sourcelist, $otherlist;
 		global $TBLPREFIX, $pgv_changes;
@@ -789,8 +784,8 @@ class ServiceClient extends GedcomRecord {
 			$chan_time = parse_time($chan_time_str);
 			$change_time = mktime($chan_time[0], $chan_time[1], $chan_time[2], $chan_date->date1->m, $chan_date->date1->d, $chan_date->date1->y);
 			/**
-			 * @todo make the timeout a config option
-			 */
+			* @todo make the timeout a config option
+			*/
 			// Time Clock (determines how often a record is checked)
 			if ($change_time < time()-(60*60*24*14)) // if the last update (to the remote individual) was made more than 14 days ago
 			{
@@ -809,14 +804,14 @@ class ServiceClient extends GedcomRecord {
 						$pos2 = strpos($localrec, "\n1", $pos1+4);
 						if ($pos2===false) $pos2 = strlen($localrec);
 						$newgedrec = substr($localrec, 0, $pos1);
-						$newgedrec .= "1 CHAN\r\n2 DATE ".date("d M Y")."\r\n";
-						$newgedrec .= "3 TIME ".date("H:i:s")."\r\n";
-						$newgedrec .= "2 _PGVU @".$this->xref."@\r\n";
+						$newgedrec .= "1 CHAN\n2 DATE ".date("d M Y")."\n";
+						$newgedrec .= "3 TIME ".date("H:i:s")."\n";
+						$newgedrec .= "2 _PGVU @".$this->xref."@\n";
 						$newgedrec .= substr($localrec, $pos2);
 						$localrec = $newgedrec;
 					} else {
-						$newgedrec = "\r\n1 CHAN\r\n2 DATE ".date("d M Y")."\r\n";
-						$newgedrec .= "3 TIME ".date("H:i:s")."\r\n";
+						$newgedrec = "\n1 CHAN\n2 DATE ".date("d M Y")."\n";
+						$newgedrec .= "3 TIME ".date("H:i:s")."\n";
 						$newgedrec .= "2 _PGVU @".$this->xref."@";
 						$localrec .= $newgedrec;
 					}
@@ -848,13 +843,13 @@ class ServiceClient extends GedcomRecord {
 	}
 
 		/**
-	 * get a singleton instance of the results
-	 * returned by the soapClient search method
-	 *
-	 * @param string $query - the query to search on
-	 * @param integer $start - the start index of the results to return
-	 * @param integer $max - the maximum number of results to return
-	 */
+	* get a singleton instance of the results
+	* returned by the soapClient search method
+	*
+	* @param string $query - the query to search on
+	* @param integer $start - the start index of the results to return
+	* @param integer $max - the maximum number of results to return
+	*/
 	function &search($query, $start=0, $max=100) {
 		$this->authenticate();
 		$result = $this->soapClient->search($this->SID, $query, $start, $max);
@@ -862,12 +857,12 @@ class ServiceClient extends GedcomRecord {
 	}
 
 	/***
-	 * Change encoding style to literal
-	 * used when calling a java service
-	 *
-	 * @param object $wsdl SOAP_WSDL object
-	 * @returns object modified wsdl object
-	 */
+	* Change encoding style to literal
+	* used when calling a java service
+	*
+	* @param object $wsdl SOAP_WSDL object
+	* @returns object modified wsdl object
+	*/
 	function __change_encoding(&$wsdl) {
 		$namespace = array_keys($wsdl->bindings);
 		if (isset($namespace[0]) && isset($wsdl->bindings[$namespace[0]]['operations'])) {
@@ -881,9 +876,9 @@ class ServiceClient extends GedcomRecord {
 	}
 
 	/**
-	 * get a singleton instance of this client
-	 * @return ServiceClient
-	 */
+	* get a singleton instance of this client
+	* @return ServiceClient
+	*/
 	static function &getInstance($id) {
 		global $PGV_SERVERS, $SERVER_URL, $GEDCOM;
 
