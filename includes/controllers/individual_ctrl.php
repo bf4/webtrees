@@ -1671,7 +1671,7 @@ class IndividualControllerRoot extends BaseController {
 		}else{
 			$Fam_Navigator="YES";
 		}
-		if ($Fam_Navigator=="YES") {
+		if ($Fam_Navigator=="HIDE") {
 			print "<table border=\"0\" cellpadding=\"0\" width=\"100%\"><tr><td valign=\"top\" width=\"100%\" >";
 		}
 		//if (isset($_COOKIE['elderdate'])) $SHOW_AGE_DIFF = ($_COOKIE['elderdate']);
@@ -1744,7 +1744,7 @@ class IndividualControllerRoot extends BaseController {
 		}
 		
 		// ==================== Start Relatives Tab Navigator ========================================  
-		if ($Fam_Navigator=="YES") {
+		if ($Fam_Navigator=="HIDE") {
 			?>
 			</td>
 			<td valign="top">
@@ -1924,7 +1924,7 @@ class IndividualControllerRoot extends BaseController {
 				// LB Fix if no googlemaps ========================================================
 		}
 		// ==================== Start Map Tab Navigator ========================================
-		if ($Fam_Navigator=="YES") {
+		if ($Fam_Navigator=="HIDE") {
 			?>
 			<table id="map_nav" class="optionbox" width="220px" cellpadding=\"0\"><tr><td align="center"> 
 				<b><?php print $pgv_lang["view_fam_nav_map"]; ?></b><br /><br />
@@ -2032,6 +2032,7 @@ class IndividualControllerRoot extends BaseController {
 	 * print the spare tab, ( which =  getTab9()  )
 	 */
 	function print_spare_tab() {
+	/*
 		global $MULTI_MEDIA, $SHOW_ID_NUMBERS, $MEDIA_EXTERNAL;
 		global $pgv_lang, $pgv_changes, $factarray, $view;
 		global $GEDCOM, $MEDIATYPE, $DBTYPE;
@@ -2087,6 +2088,7 @@ class IndividualControllerRoot extends BaseController {
 			<?php
 		}
 		// ==================== End Spare Tab Navigator ========================================= 
+	*/
 	}
 
 
