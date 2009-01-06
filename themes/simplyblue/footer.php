@@ -37,10 +37,6 @@ echo '<br /><a href="'.PGV_PHPGEDVIEW_URL.'" target="_blank"><img src="'.$PGV_IM
 if (PGV_USER_IS_ADMIN) echo " - ".PGV_VERSION_TEXT;
 echo '" /></a><br />';
 
-//print "svn - ";
-//include ("svn.txt");
-//print "<br />";
-
 echo "\n\t<br />";
 print_help_link("preview_help", "qm");
 echo "<a href=\"$SCRIPT_NAME?view=preview&amp;".get_query_string()."\">".$pgv_lang["print_preview"]."</a>";
