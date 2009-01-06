@@ -1532,7 +1532,31 @@ class stats {
 	{
 		global $TBLPREFIX;
 		if ($first) {
-			$sql = '';
+			$years = '';
+			if ($year1>=0 && $year2>=0) {
+				$years = " married.d_year BETWEEN '{$year1}' AND '{$year2}' AND";
+			}
+			$sql=''
+			.' SELECT'
+				.' fam.f_id,'
+				.' fam.f_husb, fam.f_wife,'
+				.' married.d_julianday2 AS age,'
+				.' married.d_month AS month,'
+				.' indi.i_id AS indi'
+			.' FROM'
+				." {$TBLPREFIX}families AS fam"
+			.' LEFT JOIN'
+				." {$TBLPREFIX}dates AS married ON married.d_file = {$this->_ged_id}"
+			.' LEFT JOIN'
+				." {$TBLPREFIX}individuals AS indi ON indi.i_file = {$this->_ged_id}"
+			.' WHERE'
+				.' married.d_gid = fam.f_id AND'
+				." fam.f_file = {$this->_ged_id} AND"
+				." married.d_fact = 'MARR' AND"
+				.' married.d_julianday2 != 0 AND'
+				.$years
+				.' (indi.i_id = fam.f_husb OR indi.i_id = fam.f_wife)'
+			.' ORDER BY indi, age ASC';
 		}
 		else {
 			$sql = "SELECT d_month, COUNT(*) FROM {$TBLPREFIX}dates "

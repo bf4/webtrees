@@ -6,7 +6,7 @@
  * age -> periodes of 10 years (different for 0-1,1-5,5-10,10-20 etc)
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
+ * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -167,10 +167,10 @@ else {
 	if ($plottype == "13") echo " checked=\"checked\"";
 	echo " onclick=\"{statusChecked('z_none'); statusDisable('z_sex'); statusHide('x_years'); statusHide('x_months'); statusHide('x_numbers'); statusHide('map_opt');}";
 	echo "\" /><label for=\"stat_13\">".$pgv_lang["stat_13_mm"]."</label><br />";
-//	echo "<input type=\"radio\" id=\"stat_15\" name=\"x-as\" value=\"15\"";
-//	if ($plottype == "15") echo " checked=\"checked\"";
-//	echo " onclick=\"{statusChecked('z_none'); statusDisable('z_sex'); statusHide('x_years'); statusHide('x_months'); statusHide('x_numbers'); statusHide('map_opt');}";
-//	echo "\" /><label for=\"stat_15\">".$pgv_lang["stat_15_mm1"]."</label><br />";
+	echo "<input type=\"radio\" id=\"stat_15\" name=\"x-as\" value=\"15\"";
+	if ($plottype == "15") echo " checked=\"checked\"";
+	echo " onclick=\"{statusChecked('z_none'); statusDisable('z_sex'); statusHide('x_years'); statusHide('x_months'); statusHide('x_numbers'); statusHide('map_opt');}";
+	echo "\" /><label for=\"stat_15\">".$pgv_lang["stat_15_mm1"]."</label><br />";
 //	echo "<input type=\"radio\" id=\"stat_14\" name=\"x-as\" value=\"14\"";
 //	if ($plottype == "14") echo " checked=\"checked\"";
 //	echo " onclick=\"{statusEnable('z_sex'); statusHide('x_years'); statusHide('x_months'); statusHide('x_numbers'); statusHide('map_opt');}";
