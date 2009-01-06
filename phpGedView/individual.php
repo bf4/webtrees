@@ -425,14 +425,15 @@ if (file_exists('./modules/lightbox/album.php')) {
 <br />
 <?php
 }
+	echo "</td>";
+	echo "<td align=\"center\" valign=\"bottom\">";
+	// echo "<a href=\"javascript:;\" onclick=\" setfamnav(); return false;\" title=\"Navigator On/Off\" alt=\"\">&nbsp;&nbsp;";
+	// echo $pgv_lang["navigator"];
+	// echo "</a>";
+	echo "</td>";
+	echo "<td></td>";
+echo "</tr></table>";
 ?>
-	</td>
-	<td align="center" valign="bottom">
-		<a href="javascript:;" onclick=" setfamnav(); return false;" title="Navigator On/Off" alt="">&nbsp;&nbsp;<?php print $pgv_lang["navigator"]?></a>
-	</td>
-	<td></td>
-	</tr>
-</table>
 <!-- ======================== Start Tab 0 individual page ============ Personal Facts and Details -->
 <?php
 if(empty($SEARCH_SPIDER))
@@ -653,6 +654,8 @@ if(empty($SEARCH_SPIDER) && file_exists("modules/lightbox/album.php")) {
 <?php
 if(empty($SEARCH_SPIDER)) {
 	print "<div id=\"spare\" class=\"tab_page\" style=\"display:none; border: solid transparent 0px;\" >";
+
+/*
 		print "<span class=\"subheaders\">Spare</span>";
 		print "&nbsp;&nbsp;";
 		
@@ -660,7 +663,6 @@ if(empty($SEARCH_SPIDER)) {
 		print_help_link("lb_general_help", "qm", "lb_help", true);
 		
 		print "<div id='spare_content'>";
-
 			// Fix if no googlemaps ========================================================
 			if (file_exists("modules/googlemap/googlemap.php")) {
 				if (($controller->default_tab==9)||(!empty($SEARCH_SPIDER))) {
@@ -676,10 +678,10 @@ if(empty($SEARCH_SPIDER)) {
 				}
 			}
 			// Fix if no googlemaps ========================================================
-
 		print "</div>";
-	print "</div>";
+*/
 
+	print "</div>";
 }
 
 echo '<!-- ============================   End Tabs - individual page   ============ -->';

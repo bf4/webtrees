@@ -115,7 +115,7 @@
 							}else{
 								$Fam_Navigator="YES";
 							}
-							if ($Fam_Navigator == "YES") {
+							if ($Fam_Navigator == "HIDE") {
 								print "<td width=\"220px\" align=\"center\" valign=\"top\">";
 									//
 								print "</td>";
