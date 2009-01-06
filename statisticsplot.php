@@ -6,7 +6,7 @@
  * age -> periodes of 10 years (different for 0-1,1-5,5-10,10-20 etc)
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
+ * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -144,7 +144,7 @@ function demo() {
 function mamo() {
 	global $z_as, $months, $zgrenzen, $stats, $n1;
 
-	if ($z_as == 300){
+	if ($z_as == 300) {
 		$num = $stats->statsMarr(false);
 		foreach ($num as $values) {
 			foreach ($months as $key=>$month) {
@@ -173,37 +173,48 @@ function mamo() {
 }
 
 //Month of first marriage
-//TODO first only
 function mamo1() {
 	global $z_as, $months, $zgrenzen, $stats, $n1;
 
-	echo "not work property yet";
-	if ($z_as == 300){
-		$num = $stats->statsMarr(false);
+	if ($z_as == 300) {
+		$num = $stats->statsMarr(true);
+		$indi=array();
+		$fam=array();
 		foreach ($num as $values) {
-			foreach ($months as $key=>$month) {
-				if($month==$values['d_month']) {
-					fill_ydata(0, $key, $values['count(*)']);
-					$n1+=$values['count(*)'];
+			if (!in_array($values['indi'], $indi) && !in_array($values['fam.f_id'], $fam)) {
+				foreach ($months as $key=>$month) {
+					if($month==$values['month']) {
+						fill_ydata(0, $key, 1);
+						$n1++;
+					}
 				}
+				$indi[]=$values['indi'];
+				$fam[]=$values['fam.f_id'];
 			}
 		}
 	}
 	else {
 		$zstart = 0;
+		$indi=array();
+		$fam=array();
 		foreach ($zgrenzen as $boundary) {
-			$num = $stats->statsMarr(false, $zstart, $boundary);
+			$num = $stats->statsMarr(true, $zstart, $boundary);
 			foreach ($num as $values) {
-				foreach ($months as $key=>$month) {
-					if($month==$values['d_month']) {
-						fill_ydata($boundary, $key, $values['count(*)']);
-						$n1+=$values['count(*)'];
+				if (!in_array($values['indi'], $indi) && !in_array($values['fam.f_id'], $fam)) {
+					foreach ($months as $key=>$month) {
+						if($month==$values['month']) {
+							fill_ydata($boundary, $key, 1);
+							$n1++;
+						}
 					}
+					$indi[]=$values['indi'];
+					$fam[]=$values['fam.f_id'];
 				}
 			}
 			$zstart=$boundary+1;
 		}
 	}
+	unset($indi, $fam);
 }
 
 //Months between marriage and first child
@@ -354,69 +365,41 @@ function agma1() {
 
 	if ($z_as == 300) {
 		$num = $stats->statsMarrAge('M');
-		$first=true;
-		$indi='';
+		$indi=array();
 		foreach ($num as $values) {
-			if ($first) {
+			if (!in_array($values['indi'], $indi)) {
 				fill_ydata(0, floor($values['age']/365.25), 1);
 				$n1++;
-			}
-			else {
-				if (!in_array($age_value['indi'], $indi)) {
-					$indi[]=$age_value['indi'];
-					$first=true;
-				}
-				else $first=false;
+				$indi[]=$values['indi'];
 			}
 		}
 		$num = $stats->statsMarrAge('F');
-		$first=true;
-		$indi='';
+		$indi=array();
 		foreach ($num as $values) {
-			if ($first) {
+			if (!in_array($values['indi'], $indi)) {
 				fill_ydata(0, floor($values['age']/365.25), 1);
 				$n1++;
-			}
-			else {
-				if (!in_array($age_value['indi'], $indi)) {
-					$indi[]=$age_value['indi'];
-					$first=true;
-				}
-				else $first=false;
+				$indi[]=$values['indi'];
 			}
 		}
 	}
 	else if ($z_as == 301) {
 		$num = $stats->statsMarrAge('M');
-		$first=true;
-		$indi='';
+		$indi=array();
 		foreach ($num as $values) {
-			if ($first) {
+			if (!in_array($values['indi'], $indi)) {
 				fill_ydata(0, floor($values['age']/365.25), 1);
 				$n1++;
-			}
-			else {
-				if (!in_array($age_value['indi'], $indi)) {
-					$indi[]=$age_value['indi'];
-					$first=true;
-				}
-				else $first=false;
+				$indi[]=$values['indi'];
 			}
 		}
 		$num = $stats->statsMarrAge('F');
-		$first=true;
-		$indi='';
+		$indi=array();
 		foreach ($num as $values) {
-			if ($first) {
+			if (!in_array($values['indi'], $indi)) {
 				fill_ydata(1, floor($values['age']/365.25), 1);
 				$n1++;
-			}
-			else {
-				if (!in_array($age_value['indi'], $indi)) {
-					$indi[]=$age_value['indi'];
-					$first=true;
-				}
-				else $first=false;
+				$indi[]=$values['indi'];
 			}
 		}
 	}
@@ -425,39 +408,25 @@ function agma1() {
 		$indi=array();
 		foreach ($zgrenzen as $boundary) {
 			$num = $stats->statsMarrAge('M', $zstart, $boundary);
-			$first=true;
 			foreach ($num as $values) {
-				if ($first) {
+				if (!in_array($values['indi'], $indi)) {
 					fill_ydata($boundary, floor($values['age']/365.25), 1);
 					$n1++;
-				}
-				else {
-					if (!in_array($age_value['indi'], $indi)) {
-						$indi[]=$age_value['indi'];
-						$first=true;
-					}
-					else $first=false;
+					$indi[]=$values['indi'];
 				}
 			}
 			$num = $stats->statsMarrAge('F', $zstart, $boundary);
-			$first=true;
 			foreach ($num as $values) {
-				if ($first) {
+				if (!in_array($values['indi'], $indi)) {
 					fill_ydata($boundary, floor($values['age']/365.25), 1);
 					$n1++;
-				}
-				else {
-					if (!in_array($age_value['indi'], $indi)) {
-						$indi[]=$age_value['indi'];
-						$first=true;
-					}
-					else $first=false;
+					$indi[]=$values['indi'];
 				}
 			}
 			$zstart=$boundary+1;
 		}
-		unset($indi);
 	}
+	unset($indi);
 }
 
 //Number of children
@@ -767,7 +736,7 @@ function set_params($current, $indfam, $xg, $zg, $titstr, $xt, $yt, $gx, $gz, $m
 	}
 
 	if ($x_as == $current) {
-		if ($x_as==13 || $x_as==15 && $z_as == 301) {
+		if (($x_as==13 || $x_as==15) && $z_as == 301) {
 			$z_as = 300;
 		}
 		$xgiven = $xg;
