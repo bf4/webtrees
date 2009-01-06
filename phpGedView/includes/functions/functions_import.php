@@ -52,7 +52,7 @@ function reformat_record_import($rec) {
 	$rec=strtr($rec, $control1, $control2);
 
 	// Extract lines from the record; lines consist of: level + optional xref + tag + optional data
-	$num_matches=preg_match_all('/^\s*(\d+)\s*(@[^@]*@)?\s*(\w+)\s?(.*)$/m', $rec, $matches, PREG_SET_ORDER);
+	$num_matches=preg_match_all('/^[ \t]*(\d+)[ \t]*(@[^@]*@)?[ \t]*(\w+)[ \t]?(.*)$/m', $rec, $matches, PREG_SET_ORDER);
 
 	// Process the record line-by-line
 	$newrec='';
