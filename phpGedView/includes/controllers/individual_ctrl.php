@@ -473,12 +473,12 @@ class IndividualControllerRoot extends BaseController {
 	}
 
 	/**
-	 * print information for a sex record
-	 *
-	 * Called from the individual information page
-	 * @see individual.php
-	 * @param Event $event the Event object
-	 */
+	* print information for a sex record
+	*
+	* Called from the individual information page
+	* @see individual.php
+	* @param Event $event the Event object
+	*/
 	function print_sex_record(&$event) {
 		global $pgv_lang, $sex;
 
@@ -495,26 +495,26 @@ class IndividualControllerRoot extends BaseController {
 		}
 		if ($this->SEX_COUNT>1) {
 			if ((!$this->isPrintPreview()) && ($this->userCanEdit()) && (preg_match("/PGV_OLD/", $event->getGedComRecord())==0)) {
-			    if ($event->getLineNumber()=="new") print "<br /><a class=\"font9\" href=\"javascript:;\" onclick=\"add_new_record('".$this->pid."', 'SEX'); return false;\">".$pgv_lang["edit"]."</a>";
-			    else {
+			   if ($event->getLineNumber()=="new") print "<br /><a class=\"font9\" href=\"javascript:;\" onclick=\"add_new_record('".$this->pid."', 'SEX'); return false;\">".$pgv_lang["edit"]."</a>";
+			   else {
 						print "<br /><a class=\"font9\" href=\"javascript:;\" onclick=\"edit_record('".$this->pid."', ".$event->getLineNumber()."); return false;\">".$pgv_lang["edit"]."</a> | ";
 						print "<a class=\"font9\" href=\"javascript:;\" onclick=\"delete_record('".$this->pid."', ".$event->getLineNumber()."); return false;\">".$pgv_lang["delete"]."</a>\n";
-			    }
+			   }
 			}
 		}
 		print "<br /></span>";
-	   // -- find sources
-	   print "&nbsp;&nbsp;&nbsp;";
-	   print_fact_sources($event->getGedComRecord(), 2);
-	   //-- find the notes
-	   print "&nbsp;&nbsp;&nbsp;";
-	   print_fact_notes($event->getGedComRecord(), 2);
-	   print "</td>";
+	  // -- find sources
+	  print "&nbsp;&nbsp;&nbsp;";
+	  print_fact_sources($event->getGedComRecord(), 2);
+	  //-- find the notes
+	  print "&nbsp;&nbsp;&nbsp;";
+	  print_fact_notes($event->getGedComRecord(), 2);
+	  print "</td>";
 	}
 	/**
-	 * get the edit menu
-	 * @return Menu
-	 */
+	* get the edit menu
+	* @return Menu
+	*/
 	function &getEditMenu() {
 		global $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM;
 		global $NAME_LINENUM, $SEX_LINENUM, $pgv_lang, $pgv_changes, $USE_QUICK_UPDATE;
@@ -572,21 +572,21 @@ class IndividualControllerRoot extends BaseController {
 			$menu->addSeperator();
 			if (!$this->show_changes) {
 				$label = $pgv_lang["show_changes"];
-				$link = "individual.php?pid=".$this->pid."&show_changes=yes";
+				$link = $this->indi->getLinkUrl()."&show_changes=yes";
 			}
 			else {
 				$label = $pgv_lang["hide_changes"];
-				$link = "individual.php?pid=".$this->pid."&show_changes=no";
+				$link = $this->indi->getLinkUrl()."&show_changes=no";
 			}
 			$submenu = new Menu($label, encode_url($link));
 			$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 			$menu->addSubmenu($submenu);
 
 			if (PGV_USER_CAN_ACCEPT) {
-				$submenu = new Menu($pgv_lang["undo_all"], encode_url("individual.php?pid={$this->pid}&action=undo"));
+				$submenu = new Menu($pgv_lang["undo_all"], encode_url($this->indi->getLinkUrl()."&action=undo"));
 				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 				$menu->addSubmenu($submenu);
-				$submenu = new Menu($pgv_lang["accept_all"], encode_url("individual.php?pid={$this->pid}&action=accept"));
+				$submenu = new Menu($pgv_lang["accept_all"], encode_url($this->indi->getLinkUrl()."&action=accept"));
 				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 				$menu->addSubmenu($submenu);
 			}
@@ -599,9 +599,9 @@ class IndividualControllerRoot extends BaseController {
 		return $menu;
 	}
 	/**
-	 * check if we can show the other menu
-	 * @return boolean
-	 */
+	* check if we can show the other menu
+	* @return boolean
+	*/
 	function canShowOtherMenu() {
 		global $SHOW_GEDCOM_RECORD, $ENABLE_CLIPPINGS_CART;
 		if ($this->indi->canDisplayDetails() && ($SHOW_GEDCOM_RECORD || $ENABLE_CLIPPINGS_CART>=PGV_USER_ACCESS_LEVEL))
@@ -609,9 +609,9 @@ class IndividualControllerRoot extends BaseController {
 		return false;
 	}
 	/**
-	 * get the "other" menu
-	 * @return Menu
-	 */
+	* get the "other" menu
+	* @return Menu
+	*/
 	function &getOtherMenu() {
 		global $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $THEME_DIR;
 		global $SHOW_GEDCOM_RECORD, $ENABLE_CLIPPINGS_CART, $pgv_lang;
@@ -650,7 +650,7 @@ class IndividualControllerRoot extends BaseController {
 			$menu->addSubmenu($submenu);
 		}
 		if ($this->indi->canDisplayDetails() && PGV_USER_NAME) {
-			$submenu = new Menu($pgv_lang["add_to_my_favorites"], encode_url("individual.php?action=addfav&pid={$this->pid}&gid={$this->pid}"));
+			$submenu = new Menu($pgv_lang["add_to_my_favorites"], encode_url($this->indi->getLinkUrl()."&action=addfav&gid={$this->pid}"));
 			if (!empty($PGV_IMAGES["gedcom"]["small"]))
 				$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["gedcom"]["small"]);
 			$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
@@ -659,10 +659,10 @@ class IndividualControllerRoot extends BaseController {
 		return $menu;
 	}
 	/**
-	 * get global facts
-	 * global facts are NAME and SEX
-	 * @return array return the array of global facts
-	 */
+	* get global facts
+	* global facts are NAME and SEX
+	* @return array return the array of global facts
+	*/
 	function getGlobalFacts() {
 		global $NAME_LINENUM, $SEX_LINENUM;
 
@@ -681,28 +681,28 @@ class IndividualControllerRoot extends BaseController {
 		return $globalfacts;
 	}
 	/**
-	 * get the individual facts shown on tab 1
-	 * @return array
-	 */
+	* get the individual facts shown on tab 1
+	* @return array
+	*/
 	function getIndiFacts() {
 		$indifacts = $this->indi->getIndiFacts();
 		sort_facts($indifacts);
 		return $indifacts;
 	}
 	/**
-	 * get the other facts shown on tab 2
-	 * @return array
-	 */
+	* get the other facts shown on tab 2
+	* @return array
+	*/
 	function getOtherFacts() {
 		$otherfacts = $this->indi->getOtherFacts();
 		return $otherfacts;
 	}
 	/**
-	 * get the person box stylesheet class
-	 * for the given person
-	 * @param Person $person
-	 * @return string returns 'person_box', 'person_boxF', or 'person_boxNN'
-	 */
+	* get the person box stylesheet class
+	* for the given person
+	* @param Person $person
+	* @return string returns 'person_box', 'person_boxF', or 'person_boxNN'
+	*/
 	function getPersonStyle(&$person) {
 		$sex = $person->getSex();
 		switch($sex) {
@@ -719,11 +719,11 @@ class IndividualControllerRoot extends BaseController {
 		return "person_box".$isf;
 	}
 	/**
-	 * build an array of Person that will be used to build a list
-	 * of family members on the close relatives tab
-	 * @param Family $family the family we are building for
-	 * @return array an array of Person that will be used to iterate through on the indivudal.php page
-	 */
+	* build an array of Person that will be used to build a list
+	* of family members on the close relatives tab
+	* @param Family $family the family we are building for
+	* @return array an array of Person that will be used to iterate through on the indivudal.php page
+	*/
 	function buildFamilyList(&$family, $type) {
 		global $factarray, $pgv_lang;
 		$people = array();
@@ -957,11 +957,11 @@ class IndividualControllerRoot extends BaseController {
 	}
 
 	/**
-	 * print family header
-	 * @param String family id
-	 * @param String family label
-	 * @return html table
-	 */
+	* print family header
+	* @param String family id
+	* @param String family label
+	* @return html table
+	*/
 	function printFamilyHeader($famid, $label) {
 		global $pgv_lang;
 		global $PGV_IMAGE_DIR, $PGV_IMAGES, $SHOW_ID_NUMBERS, $SEARCH_SPIDER;
@@ -971,7 +971,7 @@ class IndividualControllerRoot extends BaseController {
 				<td><img src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES["cfamily"]["small"]; ?>" border="0" class="icon" alt="" /></td>
 				<td><span class="subheaders"><?php print PrintReady($label); ?></span>
 				<?php if ((!$this->isPrintPreview())&&(empty($SEARCH_SPIDER))) { ?>
-					 - <a href="family.php?famid=<?php print $famid; ?>">[<?php print $pgv_lang["view_family"]; ?><?php if ($SHOW_ID_NUMBERS) print " " . getLRM() . "($famid)" . getLRM(); ?>]</a>
+					- <a href="family.php?famid=<?php print $famid; ?>">[<?php print $pgv_lang["view_family"]; ?><?php if ($SHOW_ID_NUMBERS) print " " . getLRM() . "($famid)" . getLRM(); ?>]</a>
 				<?php }?>
 				</td>
 			</tr>
@@ -980,12 +980,12 @@ class IndividualControllerRoot extends BaseController {
 	}
 
 	/**
-	 * print parents informations
-	 * @param Family family
-	 * @param Array people
-	 * @param String family type
-	 * @return html table rows
-	 */
+	* print parents informations
+	* @param Family family
+	* @param Array people
+	* @param String family type
+	* @return html table rows
+	*/
 	function printParentsRows(&$family, &$people, $type) {
 		global $personcount, $pgv_changes, $pgv_lang, $factarray;
 		global $PGV_IMAGE_DIR, $PGV_IMAGES;
@@ -1161,12 +1161,12 @@ class IndividualControllerRoot extends BaseController {
 	}
 
 	/**
-	 * print children informations
-	 * @param Family family
-	 * @param Array people
-	 * @param String family type
-	 * @return html table rows
-	 */
+	* print children informations
+	* @param Family family
+	* @param Array people
+	* @param String family type
+	* @return html table rows
+	*/
 	function printChildrenRows(&$family, &$people, $type) {
 		global $personcount, $pgv_lang, $factarray;
 		global $PGV_IMAGE_DIR, $PGV_IMAGES;
@@ -1581,9 +1581,9 @@ class IndividualControllerRoot extends BaseController {
 	}
 
 	/**
-	 * get the number of media items for this person
-	 * @return int
-	 */
+	* get the number of media items for this person
+	* @return int
+	*/
 	function get_media_count() {
 		$ct = preg_match("/\d OBJE/", $this->indi->getGedcomRecord());
 		foreach ($this->indi->getSpouseFamilies() as $k=>$sfam)
@@ -1592,8 +1592,8 @@ class IndividualControllerRoot extends BaseController {
 	}
 
 	/**
-	 * print the media tab
-	 */
+	* print the media tab
+	*/
 	function print_media_tab() {
 		global $CONTACT_EMAIL, $pgv_lang, $MULTI_MEDIA;
 		
@@ -1621,7 +1621,7 @@ class IndividualControllerRoot extends BaseController {
 			if (!$media_found) print "<tr><td id=\"no_tab4\" colspan=\"2\" class=\"facts_value\">".$pgv_lang["no_tab4"]."</td></tr>\n";
 			//-- New Media link
 			if (!$this->isPrintPreview() && PGV_USER_CAN_EDIT && $this->indi->canDisplayDetails()) {
-		  ?>
+		 ?>
 				<tr>
 					<td class="facts_label"><?php print_help_link("add_media_help", "qm"); ?><?php print $pgv_lang["add_media_lbl"]; ?></td>
 					<td class="facts_value">
@@ -1630,7 +1630,7 @@ class IndividualControllerRoot extends BaseController {
 					</td>
 				</tr>
 			<?php
-		   }
+		  }
 		}
 		?>
 		</table>
@@ -1857,19 +1857,19 @@ class IndividualControllerRoot extends BaseController {
 		if (file_exists("modules/research_assistant/research_assistant.php") && ($SHOW_RESEARCH_ASSISTANT>=PGV_USER_ACCESS_LEVEL)) {
 			if (!$this->indi->canDisplayDetails()) { ?>
 				<table class="facts_table">
-			    <tr><td class="facts_value">
-			    <?php print_privacy_error($CONTACT_EMAIL); ?>
-			    </td></tr>
-			    </table>
-			    <br />
+			   <tr><td class="facts_value">
+			   <?php print_privacy_error($CONTACT_EMAIL); ?>
+			   </td></tr>
+			   </table>
+			   <br />
 			<?php
 			}
 			else {
-			   include_once('modules/research_assistant/research_assistant.php');
-			   $mod = new ra_functions();
-			   $mod->init();
-			   $out = $mod->tab($this->indi);
-			   print $out;
+			  include_once('modules/research_assistant/research_assistant.php');
+			  $mod = new ra_functions();
+			  $mod->init();
+			  $out = $mod->tab($this->indi);
+			  print $out;
 			}
 		}
 		else print "<table class=\"facts_table\"><tr><td id=\"no_tab6\" colspan=\"2\" class=\"facts_value\">".$pgv_lang["no_tab6"]."</td></tr></table>\n";
@@ -1976,8 +1976,8 @@ class IndividualControllerRoot extends BaseController {
 
 
 	/** =================================================
-	 * print the lightbox tab, ( which =  getTab8()  )
-	 */
+	* print the lightbox tab, ( which =  getTab8()  )
+	*/
 	function print_lightbox_tab() {
 		global $MULTI_MEDIA, $SHOW_ID_NUMBERS, $MEDIA_EXTERNAL;
 		global $pgv_lang, $pgv_changes, $factarray, $view;
@@ -2029,8 +2029,8 @@ class IndividualControllerRoot extends BaseController {
 	
 	
 	/** =================================================
-	 * include family navigator
-	 */
+	* include family navigator
+	*/
 	function fam_nav() {
 		include_once('includes/family_nav.php');
 	}
@@ -2038,8 +2038,8 @@ class IndividualControllerRoot extends BaseController {
 	
 	
 	/** =================================================
-	 * print the spare tab, ( which =  getTab9()  )
-	 */
+	* print the spare tab, ( which =  getTab9()  )
+	*/
 	function print_spare_tab() {
 	/*
 		global $MULTI_MEDIA, $SHOW_ID_NUMBERS, $MEDIA_EXTERNAL;
