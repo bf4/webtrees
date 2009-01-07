@@ -45,6 +45,7 @@ VERSION 4.2.0
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 -----------------------------------------------------------------------------------------
++$pgv_lang["lang_name_slovenian"]					7 Jan 2008				A
 *$pgv_lang["PGV_SMTP_ACTIVE_help"]					22 Dec 2008				W
 *$pgv_lang["PGV_SMTP_HOST_help"]					22 Dec 2008				W
 *$pgv_lang["PGV_SMTP_HELO_help"]					22 Dec 2008				W
