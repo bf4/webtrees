@@ -42,18 +42,18 @@ class FormBuilder extends ra_form {
 			//Row Form
 			$out = '<form action="module.php" method="post">';
 			$out .= '<input type="hidden" name="mod" value="research_assistant" />' .
-	    			'<input type="hidden" name="action" value="printform" />' .
-	    			'<input type="hidden" name="formname" value="FormBuilder" />';
-	    			if (!isset($_REQUEST['numOfRows'])) $_REQUEST['numOfRows'] = 1;
-	    			if ($_REQUEST['numOfRows']<1) $_REQUEST['numOfRows']=1;
-	    			$out .= '<table align="center"><tr><td class="descriptionbox">'.$pgv_lang["Fields"].'</td><td class="optionbox"><select name="numOfRows">';
-	    			for($i = 1; $i <= 20; $i++){
-	    				$out .= '<option value="'.$i.'"';
-	    				if ($_REQUEST['numOfRows']==$i) $out .= " selected=\"selected\"";
-	    				$out .= '>'.$i;
-	    			}
-	    			$out .=	'</select></td></tr><tr><td colspan="2" class="topbottombar"><input type="submit" value="'.$pgv_lang["okay"].'"/></td></tr></table>';
-	    			$out .= '</form>';
+	    '<input type="hidden" name="action" value="printform" />' .
+	    '<input type="hidden" name="formname" value="FormBuilder" />';
+	    if (!isset($_REQUEST['numOfRows'])) $_REQUEST['numOfRows'] = 1;
+	    if ($_REQUEST['numOfRows']<1) $_REQUEST['numOfRows']=1;
+	    $out .= '<table align="center"><tr><td class="descriptionbox">'.$pgv_lang["Fields"].'</td><td class="optionbox"><select name="numOfRows">';
+	    for($i = 1; $i <= 20; $i++){
+	    $out .= '<option value="'.$i.'"';
+	    if ($_REQUEST['numOfRows']==$i) $out .= " selected=\"selected\"";
+	    $out .= '>'.$i;
+	    }
+	    $out .= '</select></td></tr><tr><td colspan="2" class="topbottombar"><input type="submit" value="'.$pgv_lang["okay"].'"/></td></tr></table>';
+	    $out .= '</form>';
 		}
 
 		// Split action and use it for hidden inputs
@@ -82,11 +82,11 @@ class FormBuilder extends ra_form {
 			//Row Form
 			$out = '<form action="module.php" method="post">';
 			$out .= '<input type="hidden" name="mod" value="research_assistant" />' .
-	    			'<input type="hidden" name="action" value="printform" />' .
-	    			'<input type="hidden" name="formname" value="FormBuilder" />';
-	    			if (!isset($_REQUEST['numOfRows'])) $_REQUEST['numOfRows'] = 1;
-	    			if ($_REQUEST['numOfRows']<1) $_REQUEST['numOfRows']=1;
-	    			$out .= '</form>';
+	    '<input type="hidden" name="action" value="printform" />' .
+	    '<input type="hidden" name="formname" value="FormBuilder" />';
+	    if (!isset($_REQUEST['numOfRows'])) $_REQUEST['numOfRows'] = 1;
+	    if ($_REQUEST['numOfRows']<1) $_REQUEST['numOfRows']=1;
+	    $out .= '</form>';
 		}
 
 		// Split action and use it for hidden inputs
@@ -206,7 +206,7 @@ class FormBuilder extends ra_form {
 	function display_form() {
 		global $pgv_lang;
 		$out = $this->header("module.php?mod=research_assistant&form=FormBuilder&action=func&func=step2", "center", $pgv_lang["FormBuilder"], true);
-		$out .=	$this->simpleCitationForm();
+		$out .= $this->simpleCitationForm();
 		$out .= $this->footer();
 		return $out;
 	}
@@ -325,7 +325,7 @@ class FormBuilder extends ra_form {
 					{
 						$out .= 'if (isset($citation[\'ts_array\'][\'rows\'][$i][\''.$_REQUEST["customFieldName".$i].'\'])) $value = $citation[\'ts_array\'][\'rows\'][$i][\''.$_REQUEST["customFieldName".$i].'\'];'."\n";
 					}
-				$out .=	'$out .= \'<td class="optionbox">'."\n";
+				$out .= '$out .= \'<td class="optionbox">'."\n";
 				if(!empty($_REQUEST["SelectOptions".$i]))
 				{
 					$options = explode(",",$_REQUEST["SelectOptions".$i]);
@@ -441,7 +441,7 @@ class FormBuilder extends ra_form {
 		$out .= '$citation = array(
 			"PAGE"=>"Page: ".$_POST[\'page\'].", Call Number/URL: ".$_POST[\'CallNumberURL\'],
 			"QUAY"=>\'\',
-    		"DATE"=>!empty($_POST[\'EnumerationDate\'])?$_POST[\'EnumerationDate\']:"Unknown",
+     "DATE"=>!empty($_POST[\'EnumerationDate\'])?$_POST[\'EnumerationDate\']:"Unknown",
 			"TEXT"=>$text,
 			"OBJE"=>$_POST[\'OBJE\'],
 			"array"=>array(

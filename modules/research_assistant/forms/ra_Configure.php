@@ -73,8 +73,8 @@ if (isset($_REQUEST['subaction']) && $_REQUEST['subaction']=="submitconfig") {
 	
 	include $INDEX_DIRECTORY.$GEDCOM."_ra_priv.php";
 	$logline = AddToLog("Privacy file $PRIVACY_MODULE updated");
- 	$gedcomprivname = $GEDCOM."_ra_priv.php";
- 	if (!empty($COMMIT_COMMAND)) check_in($logline, $gedcomprivname, $INDEX_DIRECTORY);	
+	$gedcomprivname = $GEDCOM."_ra_priv.php";
+	if (!empty($COMMIT_COMMAND)) check_in($logline, $gedcomprivname, $INDEX_DIRECTORY);
 
 }
 ?>
@@ -95,7 +95,7 @@ if (isset($_REQUEST['subaction']) && $_REQUEST['subaction']=="submitconfig") {
                 </td>
             </tr>
    <!--MY TASKS-->
-    		<tr>
+		<tr>
                 <td class="descriptionbox">
                     <?php print $pgv_lang["show_my_tasks"]; ?>
                 </td>
@@ -104,46 +104,46 @@ if (isset($_REQUEST['subaction']) && $_REQUEST['subaction']=="submitconfig") {
                         <?php write_access_option($SHOW_MY_TASKS); ?>
                       </select>   
                 </td>
-            </tr>	       
+            </tr>       
             
     <!--ADD TASK-->
-    		<tr>
+		<tr>
                 <td class="descriptionbox">
                     <?php print $pgv_lang["show_add_task"]; ?>
                 </td>
                 <td class="optionbox">
                       <select size="1" name="v_SHOW_ADD_TASK">
-                      	<?php write_access_option($SHOW_ADD_TASK); ?>
+											<?php write_access_option($SHOW_ADD_TASK); ?>
                       </select>
                 </td>
             </tr>
             
     <!--AUTO GENERATE TASK-->
-    		<tr>
+			<tr>
                 <td class="descriptionbox">
                     <?php print $pgv_lang["show_auto_gen_task"]; ?>
                 </td>
                 <td class="optionbox">
                       <select size="1" name="v_SHOW_AUTO_GEN_TASK">
-                      	<?php write_access_option($SHOW_AUTO_GEN_TASK); ?>
+		<?php write_access_option($SHOW_AUTO_GEN_TASK); ?>
                       </select>
                 </td>
             </tr>
             
     <!--VIEW FOLDERS-->
-    		<tr>
+			<tr>
                 <td class="descriptionbox">
                     <?php print $pgv_lang["show_view_folders"]; ?>
                 </td>
                 <td class="optionbox">
                  <select size="1" name="v_SHOW_VIEW_FOLDERS">
-                   	<?php write_access_option($SHOW_VIEW_FOLDERS); ?>
+		<?php write_access_option($SHOW_VIEW_FOLDERS); ?>
                    </select>
                 </td>
             </tr>
             
     <!--ADD FOLDER-->
-    		<tr>
+			<tr>
                 <td class="descriptionbox">
                     <?php print $pgv_lang["show_add_folder"]; ?>
                 </td>
@@ -151,11 +151,11 @@ if (isset($_REQUEST['subaction']) && $_REQUEST['subaction']=="submitconfig") {
                    <select size="1" name="v_SHOW_ADD_FOLDER">
                        <?php write_access_option($SHOW_ADD_FOLDER); ?>
                       </select> 
-               	</td>
+		</td>
             </tr>
             
    <!--ADD UNLINKED SOURCE-->
-    		<tr>
+			<tr>
                 <td class="descriptionbox">
                     <?php print $pgv_lang["show_add_unlinked_source"]; ?>
                 </td>
@@ -164,10 +164,10 @@ if (isset($_REQUEST['subaction']) && $_REQUEST['subaction']=="submitconfig") {
                         <?php write_access_option($SHOW_ADD_UNLINKED_SOURCE); ?>
                       </select>  
                 </td>
-            </tr>	
+            </tr>
                             
    <!--VIEW PROBABILITIES-->
-    		<tr>
+			<tr>
                 <td class="descriptionbox">
                     <?php print $pgv_lang["show_view_probabilities"]; ?>
                 </td>
@@ -176,10 +176,10 @@ if (isset($_REQUEST['subaction']) && $_REQUEST['subaction']=="submitconfig") {
                         <?php write_access_option($SHOW_VIEW_PROBABILITIES); ?>
                       </select> 
                 </td>
-            </tr>	
+            </tr>
                    
     <!--SUBMIT BUTTON-->
-   			 <tr>
+				 <tr>
                 <td colspan="4" align="right" class="topbottombar">
                     <input type="submit" value="<?php print $pgv_lang["submit"]; ?>" onclick="" />
                     <input type="reset" value="<?php print $pgv_lang["reset"]?>" /><br />

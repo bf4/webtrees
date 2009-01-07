@@ -44,65 +44,65 @@ class ra_GenerateTasks extends ra_form
      * @param mixed $folder_id The id of the folder to edit
      * @return mixed
      */
- 	function content() 
- 	{
-       	$out = $this->print_header();
-       	if(empty($_SESSION['genTasks']))
-       	{
-       		$out .= $this->getItems();
-       	}
-       	else if($_SESSION['genTasks'] != false)
-       		$out .= $this->getItemsAfterPostBack();
-      	$out .= $this->print_footer();
+	function content() 
+	{
+	$out = $this->print_header();
+	if(empty($_SESSION['genTasks']))
+	{
+		$out .= $this->getItems();
+	}
+	else if($_SESSION['genTasks'] != false)
+		$out .= $this->getItemsAfterPostBack();
+	$out .= $this->print_footer();
 		return $out;
- 	}
- 	
- 	function getItemsAfterPostBack()
- 	{
- 		//return array();
- 		$tasks = unserialize($_SESSION['genTasks']);
- 		$retval = '';
- 		$checkedtasks = array();
- 		$keeptasks = array();
- 		$folder = '';
- 		$printed = 0;
- 		if(!empty($_REQUEST['folder']))
- 			$folder = $_REQUEST['folder'];
+	}
+	
+	function getItemsAfterPostBack()
+	{
+		//return array();
+		$tasks = unserialize($_SESSION['genTasks']);
+		$retval = '';
+		$checkedtasks = array();
+		$keeptasks = array();
+		$folder = '';
+		$printed = 0;
+		if(!empty($_REQUEST['folder']))
+			$folder = $_REQUEST['folder'];
 		if(!empty($_REQUEST['checkedtasks']))
-   			$checkedtasks = $_REQUEST['checkedtasks'];
-   			
-   		if(!empty($_REQUEST['orderby']))
-       	{
-       		if($_REQUEST['orderby'] == 'desc')
-       		{
-       			if($_SESSION['desc_asc'])
-       			{
-       				usort($tasks, array('GeneratedTask','orderby_' . $_REQUEST['orderby']));
-       				$_SESSION['desc_asc'] = false;
-       			}
-       			else
-       			{
-       				usort($tasks, array('GeneratedTask','orderby_' . $_REQUEST['orderby'] . '_descending'));
-       				$_SESSION['desc_asc'] = true;
-       			}
-       			$_SESSION['name_asc'] = true;
-       		}
-       		else if($_REQUEST['orderby'] == 'name')
-       		{
-       			if($_SESSION['name_asc'])
-       			{
-       				usort($tasks, array('GeneratedTask','orderby_' . $_REQUEST['orderby']));
-       				$_SESSION['name_asc'] = false;
-       			}
-       			else
-       			{
-       				usort($tasks, array('GeneratedTask','orderby_' . $_REQUEST['orderby'] . '_descending'));
-       				$_SESSION['name_asc'] = true;
-       			}
-       			$_SESSION['desc_asc'] = true;
-       		}
-       	}
-       	
+			$checkedtasks = $_REQUEST['checkedtasks'];
+			
+		if(!empty($_REQUEST['orderby']))
+	{
+		if($_REQUEST['orderby'] == 'desc')
+		{
+			if($_SESSION['desc_asc'])
+			{
+				usort($tasks, array('GeneratedTask','orderby_' . $_REQUEST['orderby']));
+				$_SESSION['desc_asc'] = false;
+			}
+			else
+			{
+				usort($tasks, array('GeneratedTask','orderby_' . $_REQUEST['orderby'] . '_descending'));
+				$_SESSION['desc_asc'] = true;
+			}
+			$_SESSION['name_asc'] = true;
+		}
+		else if($_REQUEST['orderby'] == 'name')
+		{
+			if($_SESSION['name_asc'])
+			{
+				usort($tasks, array('GeneratedTask','orderby_' . $_REQUEST['orderby']));
+				$_SESSION['name_asc'] = false;
+			}
+			else
+			{
+				usort($tasks, array('GeneratedTask','orderby_' . $_REQUEST['orderby'] . '_descending'));
+				$_SESSION['name_asc'] = true;
+			}
+			$_SESSION['desc_asc'] = true;
+		}
+	}
+	
 		foreach($tasks as $key => $value)
 		{
 			$print = true;
@@ -121,122 +121,119 @@ class ra_GenerateTasks extends ra_form
 			$_SESSION['genTasks'] = serialize($keeptasks);
 		else
 			$_SESSION['genTasks'] = false;
- 		return $retval;
- 	}
- 	
- 	function getItems()
- 	{
- 		$_SESSION['desc_asc'] = true;
- 		$_SESSION['name_asc'] = true;
- 		$tasks = $this->tasks;
- 	    $todoindis = search_indis(array('1 _TODO '), array(PGV_GED_ID), 'AND', false);
-       	$temp_id = 0;
-       	$retval = '';
-       	foreach($todoindis as $key => $value)
-       	{
-       		$todo = $this->get_Todo($todoindis[$key]['gedcom']);
-       		$lines = preg_split("/[\r\n]+/", $todo);
-       		$task = new GeneratedTask($lines[0], $todo, $temp_id, $key);
-       		$tasks[$task->getID()] = $task;
-       		$temp_id++;
-       	}
-       	
-       	if(!empty($_REQUEST['orderby']))
-       	{
-       		usort($tasks, array('GeneratedTask', 'orderby_' . $_REQUEST['orderby']));
-       	}
-       	
-       	foreach($tasks as $key => $value)
-       	{
-       		$retval .= $this->print_item($value);
-       	}
-       	$_SESSION['genTasks'] = serialize($tasks);
-       	return $retval;
- 	}
- 	
- 	function get_Todo($gedcom)
- 	{
- 		for($i = 0;$i < 10;$i++)
- 		{
- 			$todo = get_gedcom_value("_TODO", $i, $gedcom);
- 			if($todo != '')
- 				return $todo;
- 		}
- 		return $todo;
- 	}
- 	
- 	function print_header()
- 	{
-	 	global $pgv_lang;
- 		$retval = '<form action="module.php?mod=research_assistant&action=genTasks" method="post">
-    			   <input type="hidden" name="mod" value="research_assistant" />
-    			   <input type="hidden" name="action" value="generatetask" />';
- 		$retval .= '<table class="list_table" align="center" border="0" width="40%">';
-  		$retval .= '<tr>';
-  		$retval .= '<th colspan="5" align="right" class="topbottombar">';
-    	$retval .= '<h2>';
-    	$retval .= $pgv_lang["ra_generate_tasks"] .   
-    			print_help_link("ra_GenerateTasks_help", "qm", '', false, true);
-    	$retval .= '</h2>';
-    	$retval .= '</th>';
-    	$retval .= '</tr>';
-    	$retval .= '<tr>';
-    	$retval .= '<th class="descriptionbox">';
-    	$retval .= $pgv_lang["ra_generate"];
-    	$retval .= '</th>';
-    	$retval .= '<th class="descriptionbox">';
-    	$retval .= '<a href="module.php?mod=research_assistant&amp;action=genTasks&amp;orderby=name">'.$pgv_lang["Task_Name"].'</a>';
-    	$retval .= '</th>';
-    	$retval .= '<th class="descriptionbox">';
-    	$retval .= '<a href="module.php?mod=research_assistant&amp;action=genTasks&amp;orderby=desc">'.$pgv_lang["TaskDescription"].'</a>';
-    	$retval .= '</th>';
-//    	$retval .= '<th class="descriptionbox">';
-//    	$retval .= 'Details';
-//    	$retval .= '</th>';
-    	$retval .= '<th class="descriptionbox">';
-    	$retval .= $pgv_lang["edit_task"];
-    	$retval .= '</th>';
-    	
-    	return $retval;
- 	}
- 	
- 	function print_footer()
- 	{
-	 	global $pgv_lang;
- 		$onclick = "window.location='module.php?mod=research_assistant';";
- 		return  '<tr>'  .
- 				'<td align=right class="descriptionbox" colspan="4">&nbsp;&nbsp;' .
- 				$pgv_lang["SelectFolder"].'&nbsp;&nbsp;<select name=folder>' .
- 				$this->getFolders() .
- 				'</select>' .
- 				'</td></tr>' .
+		return $retval;
+	}
+	
+	function getItems()
+	{
+		$_SESSION['desc_asc'] = true;
+		$_SESSION['name_asc'] = true;
+		$tasks = $this->tasks;
+	    $todoindis = search_indis(array('1 _TODO '), array(PGV_GED_ID), 'AND', false);
+	$temp_id = 0;
+	$retval = '';
+	foreach($todoindis as $key => $value)
+	{
+		$todo = $this->get_Todo($todoindis[$key]['gedcom']);
+		$lines = preg_split("/[\r\n]+/", $todo);
+		$task = new GeneratedTask($lines[0], $todo, $temp_id, $key);
+		$tasks[$task->getID()] = $task;
+		$temp_id++;
+	}
+	
+	if(!empty($_REQUEST['orderby']))
+	{
+		usort($tasks, array('GeneratedTask', 'orderby_' . $_REQUEST['orderby']));
+	}
+	
+	foreach($tasks as $key => $value)
+	{
+		$retval .= $this->print_item($value);
+	}
+	$_SESSION['genTasks'] = serialize($tasks);
+	return $retval;
+	}
+	
+	function get_Todo($gedcom)
+	{
+		for($i = 0;$i < 10;$i++)
+		{
+			$todo = get_gedcom_value("_TODO", $i, $gedcom);
+			if($todo != '')
+				return $todo;
+		}
+		return $todo;
+	}
+	
+	function print_header()
+	{
+		global $pgv_lang;
+		$retval = '<form action="module.php?mod=research_assistant&action=genTasks" method="post">
+			   <input type="hidden" name="mod" value="research_assistant" />
+			   <input type="hidden" name="action" value="generatetask" />';
+		$retval .= '<table class="list_table" align="center" border="0" width="40%">';
+		$retval .= '<tr>';
+		$retval .= '<th colspan="5" align="right" class="topbottombar">';
+	$retval .= '<h2>';
+	$retval .= $pgv_lang["ra_generate_tasks"] .   
+			print_help_link("ra_GenerateTasks_help", "qm", '', false, true);
+	$retval .= '</h2>';
+	$retval .= '</th>';
+	$retval .= '</tr>';
+	$retval .= '<tr>';
+	$retval .= '<th class="descriptionbox">';
+	$retval .= $pgv_lang["ra_generate"];
+	$retval .= '</th>';
+	$retval .= '<th class="descriptionbox">';
+	$retval .= '<a href="module.php?mod=research_assistant&amp;action=genTasks&amp;orderby=name">'.$pgv_lang["Task_Name"].'</a>';
+	$retval .= '</th>';
+	$retval .= '<th class="descriptionbox">';
+	$retval .= '<a href="module.php?mod=research_assistant&amp;action=genTasks&amp;orderby=desc">'.$pgv_lang["TaskDescription"].'</a>';
+	$retval .= '</th>';
+	$retval .= '<th class="descriptionbox">';
+	$retval .= $pgv_lang["edit_task"];
+	$retval .= '</th>';
+	
+	return $retval;
+	}
+	
+	function print_footer()
+	{
+		global $pgv_lang;
+		$onclick = "window.location='module.php?mod=research_assistant';";
+		return  '<tr>'  .
+				'<td align=right class="descriptionbox" colspan="4">&nbsp;&nbsp;' .
+				$pgv_lang["SelectFolder"].'&nbsp;&nbsp;<select name=folder>' .
+				$this->getFolders() .
+				'</select>' .
+				'</td></tr>' .
 				'<tr>' .
- 				'<td class="topbottombar" colspan="4">' .
- 				'&nbsp;&nbsp;<input type=submit value='.$pgv_lang["ra_generate"].'>' .
- 				'&nbsp;&nbsp;<input type=button value='.$pgv_lang["ra_done"].' onclick="' . $onclick . '">' .
- 				'</td></tr></table></form>';
- 	}
- 	
- 	function print_item($task)
- 	{
-	 	global $pgv_lang;
- 		$retval = '<tr><TD class="optionbox" align="left">';
- 		$retval .= '<input type="checkbox" id="' . $task->getID() . '" name="checkedtasks[]" value=' . $task->getID();
- 		$retval .= '</td>';
- 		$retval .= '<TD class="optionbox">';
- 		$retval .= $task->getName();
- 		$retval .= '</td>';
- 		$retval .= '<TD class="optionbox">';
- 		$retval .= $task->getDescriptionForHTML();
- 		$retval .= '</td>';
- 		$retval .= '<TD align="right" class="optionbox">';
- 		$retval .= '<a name="edit" href="module.php?mod=research_assistant&amp;action=editgenTasks&amp;genTaskId=' . $task->getID() . '">'.$pgv_lang["edit"].'</a>';
- 		$retval .= '</td></tr>';
- 		
- 		return $retval;
- 	}
- 	
- 	/**
+				'<td class="topbottombar" colspan="4">' .
+				'&nbsp;&nbsp;<input type=submit value='.$pgv_lang["ra_generate"].'>' .
+				'&nbsp;&nbsp;<input type=button value='.$pgv_lang["ra_done"].' onclick="' . $onclick . '">' .
+				'</td></tr></table></form>';
+	}
+	
+	function print_item($task)
+	{
+		global $pgv_lang;
+		$retval = '<tr><TD class="optionbox" align="left">';
+		$retval .= '<input type="checkbox" id="' . $task->getID() . '" name="checkedtasks[]" value=' . $task->getID();
+		$retval .= '</td>';
+		$retval .= '<TD class="optionbox">';
+		$retval .= $task->getName();
+		$retval .= '</td>';
+		$retval .= '<TD class="optionbox">';
+		$retval .= $task->getDescriptionForHTML();
+		$retval .= '</td>';
+		$retval .= '<TD align="right" class="optionbox">';
+		$retval .= '<a name="edit" href="module.php?mod=research_assistant&amp;action=editgenTasks&amp;genTaskId=' . $task->getID() . '">'.$pgv_lang["edit"].'</a>';
+		$retval .= '</td></tr>';
+		
+		return $retval;
+	}
+	
+	/**
 	 * GETS all available FOLDERS and creates a combo box with the folders listed.
 	 * 
 	 * @return all available folders
@@ -252,10 +249,10 @@ class ra_GenerateTasks extends ra_form
 		    $out .= '<option value="'.$foldername['fr_id'].'"';
 		    if(!empty($_REQUEST['folder']))
 		    {
-		   		if ($_REQUEST['folder']==$foldername['fr_id']) 
-		   		{
-		   			$out .= '" selected="selected"';
-		   		}
+				if ($_REQUEST['folder']==$foldername['fr_id']) 
+				{
+					$out .= '" selected="selected"';
+				}
 		    }
 		    $out .= '>';
 		    if(strlen($foldername['fr_name']) < 30)
@@ -287,9 +284,9 @@ class ra_GenerateTasks extends ra_form
      * 
      * @return object
      */
- 	function display_form()
- 	{
- 		return $this->content();
- 	}
+	function display_form()
+	{
+		return $this->content();
+	}
  }
 ?>

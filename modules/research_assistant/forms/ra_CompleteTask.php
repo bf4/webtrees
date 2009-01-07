@@ -49,10 +49,10 @@ require_once 'ra_form.php';
      * 
      * @return mixed
      */
- 	function contents()
+		function contents()
     {
-    	global $pgv_lang;
-    	
+			global $pgv_lang;
+		
         $temp = ra_functions::print_form_list();
         $filenames = explode("\n",$temp);
         $out = '<form name="frmSelect" method="post"><input type="hidden" name="mod" value="research_assistant" />'
@@ -62,7 +62,7 @@ require_once 'ra_form.php';
             . '<tr><th class="descriptionbox" colspan="2"><h2>'.$pgv_lang['complete_title'].'</h2></th></tr>'
             . '<tr><td class="optionbox">'.$pgv_lang['choose_form_label'].'</td><td>';
         
-        $out .=	'<select name="commonFrm" onchange="document.forms[\'frmSelect\'].submit();">';
+        $out .= '<select name="commonFrm" onchange="document.forms[\'frmSelect\'].submit();">';
 
         // Show all of the form options
         $out .= "<option>".$pgv_lang['select_form']."</option>";
@@ -82,13 +82,13 @@ require_once 'ra_form.php';
             }
         }
 
-        $out .=	'</select></table></form>';
+        $out .= '</select></table></form>';
 
         if(!empty($_POST['commonFrm']) && $_POST['commonFrm']!=$pgv_lang['select_form'])
             $out .= ra_functions::print_form($_POST['commonFrm']);
 
         return $out;
- 	}
+		}
 
     /**
      * display_form 
@@ -96,9 +96,9 @@ require_once 'ra_form.php';
      * @access public
      * @return void
      */
- 	function display_form()
- 	{
- 		return $this->contents();
- 	}
+		function display_form()
+		{
+			return $this->contents();
+		}
  }
 ?>

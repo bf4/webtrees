@@ -36,25 +36,25 @@ require_once "includes/functions/functions_edit.php";
 class Census1810 extends ra_form {
 
     function header($action, $tableAlign, $heading, $showchoose = false) {
-    	global $pgv_lang;
-    	$out = "";
-    	if ($showchoose) {
-	    	//Row Form
-	    	$out = '<form action="module.php" method="post">';
-	    	$out .= '<input type="hidden" name="mod" value="research_assistant" />' .
-	    			'<input type="hidden" name="action" value="printform" />' .
-	    			'<input type="hidden" name="formname" value="Census1810" />' .
-	    			'<input type="hidden" name="taskid" value="'.$_REQUEST['taskid'].'" />';
-	    	if (!isset($_REQUEST['numOfRows'])) $_REQUEST['numOfRows'] = 1;
-	    	$out .= '<table align="center"><tr><td class="descriptionbox">'.$pgv_lang["rows"].'</td><td class="optionbox"><select name="numOfRows">';
-	    	for($i = 1; $i <= 20; $i++){
-	    		$out .= '<option value="'.$i;
-	    		if ($_REQUEST['numOfRows']==$i) $out .= " selected=\"selected\"";
-	    		$out .= '">'.$i;
-	    	}
-	    	$out .=	'</select></td></tr><tr><td colspan="2" class="topbottombar"><input type="submit" value="'.$pgv_lang["okay"].'"/></td></tr></table>';
-	    	$out .= '</form>';
-    	}
+     global $pgv_lang;
+     $out = "";
+     if ($showchoose) {
+	     //Row Form
+	     $out = '<form action="module.php" method="post">';
+	     $out .= '<input type="hidden" name="mod" value="research_assistant" />' .
+	     '<input type="hidden" name="action" value="printform" />' .
+	     '<input type="hidden" name="formname" value="Census1810" />' .
+	     '<input type="hidden" name="taskid" value="'.$_REQUEST['taskid'].'" />';
+	     if (!isset($_REQUEST['numOfRows'])) $_REQUEST['numOfRows'] = 1;
+	     $out .= '<table align="center"><tr><td class="descriptionbox">'.$pgv_lang["rows"].'</td><td class="optionbox"><select name="numOfRows">';
+	     for($i = 1; $i <= 20; $i++){
+	     $out .= '<option value="'.$i;
+	     if ($_REQUEST['numOfRows']==$i) $out .= " selected=\"selected\"";
+	     $out .= '">'.$i;
+	     }
+	     $out .= '</select></td></tr><tr><td colspan="2" class="topbottombar"><input type="submit" value="'.$pgv_lang["okay"].'"/></td></tr></table>';
+	     $out .= '</form>';
+     }
 
 		// Split action and use it for hidden inputs
         $action = parse_url($action);
@@ -78,28 +78,28 @@ class Census1810 extends ra_form {
 	 * override method from ra_form.php
 	 */
     function simpleCitationForm($citation) {
-    	global $pgv_lang, $factarray;
-    	if (empty($_POST['data']))
-    		$data = array();
-    	if (empty($_REQUEST['row']))
-    		$row = 1;
+     global $pgv_lang, $factarray;
+     if (empty($_POST['data']))
+     $data = array();
+     if (empty($_REQUEST['row']))
+     $row = 1;
 
-    	$citation = $this->getSourceCitationData();
-    	$page = "";
-    	$callno = "";
-    	$date = $citation['ts_date'];
-    	$ct = preg_match("/Page: (.*), .*: (.*)/", $citation['ts_page'], $match);
-    	if ($ct > 0) {
-    		$page = trim($match[1]);
-    		$callno = trim($match[2]);
-    	}
+     $citation = $this->getSourceCitationData();
+     $page = "";
+     $callno = "";
+     $date = $citation['ts_date'];
+     $ct = preg_match("/Page: (.*), .*: (.*)/", $citation['ts_page'], $match);
+     if ($ct > 0) {
+     $page = trim($match[1]);
+     $callno = trim($match[2]);
+     }
 
-    	$city = "";
-    	$county = "";
-    	$state = "";
-    	if (!empty($citation['ts_array']['city'])) $city = $citation['ts_array']['city'];
-    	if (!empty($citation['ts_array']['county'])) $county = $citation['ts_array']['county'];
-    	if (!empty($citation['ts_array']['state'])) $state = $citation['ts_array']['state'];
+     $city = "";
+     $county = "";
+     $state = "";
+     if (!empty($citation['ts_array']['city'])) $city = $citation['ts_array']['city'];
+     if (!empty($citation['ts_array']['county'])) $county = $citation['ts_array']['county'];
+     if (!empty($citation['ts_array']['state'])) $state = $citation['ts_array']['state'];
 
 //        Start of Table
 		$out = '<tr>
@@ -134,7 +134,7 @@ class Census1810 extends ra_form {
         $out .= '<td class="descriptionbox">'.$pgv_lang["enumDate"].'</td><td class="optionbox"><input name="EnumerationDate" type="text" size="27" value="'.htmlentities($date).'"></td></tr>';
         $out .= '<tr><td class="descriptionbox">'.$pgv_lang["county"].'</td><td class="optionbox"><input name="county" type="text" size="27" value="'.htmlentities($county).'"></td>';
         $out .= '<td class="descriptionbox">'.$pgv_lang["city"].'</td><td class="optionbox"><input name="city" type="text" size="27" value="'.htmlentities($city).'"></td>';
-        $out .=	'<td class="descriptionbox">'.$pgv_lang["page"].'</td><td class="optionbox"><input name="page" type="text" size="5" value="'.htmlentities($page).'"></td></tr>';
+        $out .= '<td class="descriptionbox">'.$pgv_lang["page"].'</td><td class="optionbox"><input name="page" type="text" size="5" value="'.htmlentities($page).'"></td></tr>';
 //        Next Table
         $out .= '<tr><td colspan="6"><table align="center" id="inputTable" dir="ltr">';
         $out .= '<td class="descriptionbox" align="center" rowspan="2">Names of heads of families</td>';
@@ -142,58 +142,58 @@ class Census1810 extends ra_form {
         $out .= '<td colspan="5" class="descriptionbox" align="center">Free White Females</td>';
         $out .= '<td class="descriptionbox" align="center" rowspan="2">All other<br/> free persons</td>';
         $out .= '<td class="descriptionbox" align="center" rowspan="2">Slaves</td>';
-//		  Next row of description cells
-        $out .=	'<tr><td class="descriptionbox">Under 10</td><td class="descriptionbox">10 thru 15</td>';
+// Next row of description cells
+        $out .= '<tr><td class="descriptionbox">Under 10</td><td class="descriptionbox">10 thru 15</td>';
         $out .= '<td class="descriptionbox">16 thru 25</td><td class="descriptionbox">26 thru 44</td><td class="descriptionbox">45 and over</td>';
-        $out .=	'<td class="descriptionbox">Under 10</td><td class="descriptionbox">10 thru 15</td>';
+        $out .= '<td class="descriptionbox">Under 10</td><td class="descriptionbox">10 thru 15</td>';
         $out .= '<td class="descriptionbox">16 thru 25</td><td class="descriptionbox">26 thru 44</td><td class="descriptionbox">45 and over</td></tr>';
-//		  Country, City, Page, Head of Family input boxes
+// Country, City, Page, Head of Family input boxes
 		if(!isset($_REQUEST['numOfRows'])) $_REQUEST['numOfRows'] = 1;
         for($i = 0; $i < $_REQUEST['numOfRows']; $i++){
-        	$row = array();
-        	if (isset($citation['ts_array']['rows'][$i])) $row = $citation['ts_array']['rows'][$i];
+         $row = array();
+         if (isset($citation['ts_array']['rows'][$i])) $row = $citation['ts_array']['rows'][$i];
 
-        	$value = "";
-        	if (isset($row['headName'])) $value = $row['headName'];
+         $value = "";
+         if (isset($row['headName'])) $value = $row['headName'];
 	        $out .= '<tr><td class="optionbox"><input name="headName'.$i.'" type="text" size="19" value="'.htmlentities($value).'"></td>';
 	//        Free white males input boxes
 			$value = "";
-        	if (isset($row['underTenM'])) $value = $row['underTenM'];
+         if (isset($row['underTenM'])) $value = $row['underTenM'];
 	        $out .= '<td class="optionbox"><input name="underTenM'.$i.'" type="text" size="4" value="'.htmlentities($value).'"></td>';
 	        $value = "";
-        	if (isset($row['tenThruFifteenM'])) $value = $row['tenThruFifteenM'];
+         if (isset($row['tenThruFifteenM'])) $value = $row['tenThruFifteenM'];
 	        $out .= '<td class="optionbox"><input name="tenThruFifteenM'.$i.'" type="text" size="4" value="'.htmlentities($value).'"></td>';
-	       	$value = "";
-        	if (isset($row['sixteenThruTwentyfiveM'])) $value = $row['sixteenThruTwentyfiveM'];
+	        $value = "";
+         if (isset($row['sixteenThruTwentyfiveM'])) $value = $row['sixteenThruTwentyfiveM'];
 	        $out .= '<td class="optionbox"><input name="sixteenThruTwentyfiveM'.$i.'" type="text" size="4" value="'.htmlentities($value).'"></td>';
 	        $value = "";
-        	if (isset($row['twentysixThruFortyfourM'])) $value = $row['twentysixThruFortyfourM'];
+         if (isset($row['twentysixThruFortyfourM'])) $value = $row['twentysixThruFortyfourM'];
 	        $out .= '<td class="optionbox"><input name="twentysixThruFortyfourM'.$i.'" type="text" size="4" value="'.htmlentities($value).'"></td>';
-	      	$value = "";
-        	if (isset($row['fortyfiveAndOverM'])) $value = $row['fortyfiveAndOverM'];
+	       $value = "";
+         if (isset($row['fortyfiveAndOverM'])) $value = $row['fortyfiveAndOverM'];
 	        $out .= '<td class="optionbox"><input name="fortyfiveAndOverM'.$i.'" type="text" size="4" value="'.htmlentities($value).'"></td>';
-	//		  Free white females input boxes
+	// Free white females input boxes
 			$value = "";
-        	if (isset($row['underTenF'])) $value = $row['underTenF'];
+         if (isset($row['underTenF'])) $value = $row['underTenF'];
 	        $out .= '<td class="optionbox"><input name="underTenF'.$i.'" type="text" size="4" value="'.htmlentities($value).'"></td>';
-	       	$value = "";
-        	if (isset($row['tenThruFifteenF'])) $value = $row['tenThruFifteenF'];
+	       $value = "";
+         if (isset($row['tenThruFifteenF'])) $value = $row['tenThruFifteenF'];
 	        $out .= '<td class="optionbox"><input name="tenThruFifteenF'.$i.'" type="text" size="4" value="'.htmlentities($value).'"></td>';
 	        $value = "";
-        	if (isset($row['sixteenThruTwentyfiveF'])) $value = $row['sixteenThruTwentyfiveF'];
+        if (isset($row['sixteenThruTwentyfiveF'])) $value = $row['sixteenThruTwentyfiveF'];
 	        $out .= '<td class="optionbox"><input name="sixteenThruTwentyfiveF'.$i.'" type="text" size="4" value="'.htmlentities($value).'"></td>';
 	        $value = "";
-        	if (isset($row['twentysixThruFortyfourF'])) $value = $row['twentysixThruFortyfourF'];
+        if (isset($row['twentysixThruFortyfourF'])) $value = $row['twentysixThruFortyfourF'];
 	        $out .= '<td class="optionbox"><input name="twentysixThruFortyfourF'.$i.'" type="text" size="4" value="'.htmlentities($value).'"></td>';
-	      	 $value = "";
-        	if (isset($row['fortyfiveAndOverF'])) $value = $row['fortyfiveAndOverF'];
+	      $value = "";
+        if (isset($row['fortyfiveAndOverF'])) $value = $row['fortyfiveAndOverF'];
 	        $out .= '<td class="optionbox"><input name="fortyfiveAndOverF'.$i.'" type="text" size="4" value="'.htmlentities($value).'"></td>';
-	//  	  Other Persons and Slaves input boxes
+	//  Other Persons and Slaves input boxes
 			$value = "";
-        	if (isset($row['otherPersons'])) $value = $row['otherPersons'];
+        if (isset($row['otherPersons'])) $value = $row['otherPersons'];
 	        $out .= '<td class="optionbox"><input name="otherPersons'.$i.'" type="text" size="5" value="'.htmlentities($value).'"></td>';
-	       	$value = "";
-        	if (isset($row['slaves'])) $value = $row['slaves'];
+	       $value = "";
+        if (isset($row['slaves'])) $value = $row['slaves'];
 	        $out .= '<td class="optionbox"><input name="slaves'.$i.'" type="text" size="4" value="'.htmlentities($value).'"></td></tr>';
         }
         $out .= '</table></td></tr>';
@@ -243,10 +243,10 @@ class Census1810 extends ra_form {
 	 * Override method from ra_form
 	 */
     function processSimpleCitation() {
-    	global $TBLPREFIX, $DBCONN;
-    	//-- delete any old census records
-    	$sql = "DELETE FROM ".$TBLPREFIX."taskfacts WHERE tf_t_id='".$DBCONN->escapeSimple($_REQUEST['taskid'])."' AND tf_factrec ".PGV_DB_LIKE." '1 CENS%'";
-    	$res = dbquery($sql);
+    global $TBLPREFIX, $DBCONN;
+    //-- delete any old census records
+    $sql = "DELETE FROM ".$TBLPREFIX."taskfacts WHERE tf_t_id='".$DBCONN->escapeSimple($_REQUEST['taskid'])."' AND tf_factrec ".PGV_DB_LIKE." '1 CENS%'";
+    $res = dbquery($sql);
 
 		// Set our output to nothing, this supresses a warning that we would otherwise get.
 		$out = "";
@@ -302,7 +302,7 @@ class Census1810 extends ra_form {
 		$citation = array(
 			"PAGE"=>"Page: ".$_POST['page'].", Call Number/URL: ".$_POST['CallNumberURL'],
 			"QUAY"=>'',
-    		"DATE"=>!empty($_POST['EnumerationDate'])?$_POST['EnumerationDate']:"1810",
+    "DATE"=>!empty($_POST['EnumerationDate'])?$_POST['EnumerationDate']:"1810",
 			"TEXT"=>$text,
 			"OBJE"=>'',
 			"array"=>array(

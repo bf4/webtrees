@@ -48,9 +48,9 @@ class ra_editfolder extends ra_form {
      * @param mixed $folder_id The id of the folder to edit
      * @return mixed
      */
- 	function content($folder_id) {
+	function content($folder_id) {
         // Obtain the global vars needed
- 		global $pgv_lang, $TBLPREFIX;
+		global $pgv_lang, $TBLPREFIX;
 
 		$fr_name="";
 		$fr_description="";
@@ -79,9 +79,9 @@ class ra_editfolder extends ra_form {
 		$out .= '{alert(\''.$pgv_lang['no_folder_name'].'\'); return false;';
 		$out .= "\n";
 		$out .= '}';
-		$out.= "\n";	
+		$out.= "\n";
 		$out .= 'else{ return true; }';
-		$out.= "\n";	
+		$out.= "\n";
 		$out.='}//--></script>';
 		$out .= '<form method="post" action="module.php" name="updateFolder" onsubmit="return OnSubmit();">';
 		$out .= '<input type="hidden" name="mod" value="research_assistant" />' .
@@ -92,7 +92,7 @@ class ra_editfolder extends ra_form {
 		if (!empty($folder_id)) $out .= $pgv_lang['edit_folder'] . print_help_link("ra_edit_folder_help", "qm", '', false, true);
 		else $out .= $pgv_lang['add_folder'] . print_help_link("ra_add_folder_help", "qm", '', false, true);
 		$out .= '</h2></th></tr>';
-		$out .=	'<tr><td class="optionbox">'.
+		$out .= '<tr><td class="optionbox">'.
 			$pgv_lang['folder_name'].'</td><td class="descriptionbox"><input type="text" name="folderName" value="'.PrintReady($fr_name).'"/></td></tr>'.
 				'<tr><td class="optionbox">'.$pgv_lang['Parent_Folder:'].'</td><td class="descriptionbox"><select name="parentFolder">' .
 				'<option value="null">'.$pgv_lang['No_Parent'].'</option>';
@@ -103,7 +103,7 @@ class ra_editfolder extends ra_form {
 				while($folder=& $res->fetchRow(DB_FETCHMODE_ASSOC))
 				{
 					if($fr_parentFolder==$folder['fr_id'])
-					{	
+					{
 						$out.='<option value="'.$folder['fr_id'].'" selected="selected">'.PrintReady($folder['fr_name']) . '</option>';
 					}
 					else
@@ -129,7 +129,7 @@ class ra_editfolder extends ra_form {
 					}
 						else {
 						$errormsg = $pgv_lang["has_folders"];
-					}				
+					}
 				}
 				else{
 					$errormsg = $pgv_lang["has_tasks"];
@@ -139,16 +139,15 @@ class ra_editfolder extends ra_form {
 				$out.='<span class="error">'.$errormsg.'</span>';
 				$out.='</td></tr></table></form>';
 		return $out;
- 	}
+	}
 
     /**
      * Show the form to the user
      * 
      * @return object
      */
- 	function display_form()
- 	{
- 		return $this;
- 	}
- }
+	function display_form() {
+		return $this;
+	}
+}
 ?>

@@ -280,7 +280,7 @@ require_once("includes/classes/class_person.php");
 					//get the value of the tag in the related gedcom
 				if($factType != "SURN")
 				{
-					$factRelation =	get_gedcom_value($localValue['comp'],1,$relatedGedcom);
+					$factRelation =get_gedcom_value($localValue['comp'],1,$relatedGedcom);
 
 					$factInfer->setFactValue($factRelation);
 				}
@@ -303,8 +303,8 @@ require_once("includes/classes/class_person.php");
 			}
 		}
 			$sql = "select * from ".$TBLPREFIX."probabilities where pr_file=".$GEDCOMS[$GEDCOM]['id']." AND pr_f_lvl ".PGV_DB_LIKE." '".$factType."%' ORDER BY (pr_matches / pr_count) DESC";
-	 		$result = dbquery($sql);
-	 		//Create an array to hold global inferences
+			$result = dbquery($sql);
+			//Create an array to hold global inferences
 			$globalInference = array();
 			//Check and see if global inferences have been run
 			if($result->numRows()!=0)
@@ -347,8 +347,8 @@ require_once("includes/classes/class_person.php");
 		$niceData = array();
 		//iterate over the results of the inferences
 	 foreach($tempResult as $pr_id=>$value) {
-	 	//Init a temporary array to hold data until inserted
-	 	$tempArray = array();
+		//Init a temporary array to hold data until inserted
+		$tempArray = array();
 		//Get the probability
 		$prob = computeProb($value['count'],$value['value']);
 		//add our information to the array
@@ -393,38 +393,38 @@ require_once("includes/classes/class_person.php");
 	function getGlobalinferences()
 	{
 		global $TBLPREFIX,$DBCONN, $GEDCOMS, $GEDCOM;
- 		global $LANGUAGE, $factarray, $pgv_lang;
+		global $LANGUAGE, $factarray, $pgv_lang;
 
 		$sql = "select * from ".$TBLPREFIX."probabilities where pr_file=".$GEDCOMS[$GEDCOM]['id']." ORDER BY (pr_matches / pr_count) DESC";
-	 		$result = dbquery($sql);
-	 		if($result->numRows()==0) {
-	 			return false;
-	 		}
+			$result = dbquery($sql);
+			if($result->numRows()==0) {
+				return false;
+			}
 
-	 			if($result->numRows()>0)
-	 		{
-	 			$inferenceArray = array();
-	 			while($row = $result->fetchRow(DB_FETCHMODE_ASSOC))
-	 				{
-	 					$tempArray = array();
-	 					$tempArray[] = $row['pr_f_lvl'];
-	 					$tempArray[] = $row['pr_s_lvl'];
-	 					$tempArray[] = $row['pr_rel'];
-	 					if($row['pr_matches'] != 0 && $row['pr_count'] != 0)
-	 					{
-		 					$tempArray["GlobalProb"] = $row['pr_matches'] / $row['pr_count'];
-		 					$tempArray["GlobalCount"] = $row['pr_matches'];
+				if($result->numRows()>0)
+			{
+				$inferenceArray = array();
+				while($row = $result->fetchRow(DB_FETCHMODE_ASSOC))
+					{
+						$tempArray = array();
+						$tempArray[] = $row['pr_f_lvl'];
+						$tempArray[] = $row['pr_s_lvl'];
+						$tempArray[] = $row['pr_rel'];
+						if($row['pr_matches'] != 0 && $row['pr_count'] != 0)
+						{
+							$tempArray["GlobalProb"] = $row['pr_matches'] / $row['pr_count'];
+							$tempArray["GlobalCount"] = $row['pr_matches'];
 
-	 					}
-	 					else
-	 					{
-	 					$tempArray["GlobalProb"] = 0;
-	 					$tempArray["GlobalCount"] = 0;
-	 					}
-	 					$inferenceArray[] = $tempArray;
-	 				}
-	 		}
-	 	return $inferenceArray;
+						}
+						else
+						{
+						$tempArray["GlobalProb"] = 0;
+						$tempArray["GlobalCount"] = 0;
+						}
+						$inferenceArray[] = $tempArray;
+					}
+			}
+		return $inferenceArray;
 	}
 
 	function getPartsTranslation($input) {

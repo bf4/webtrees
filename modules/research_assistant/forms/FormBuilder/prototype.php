@@ -1,5 +1,5 @@
- 
-  
+
+
 	
 	
 
@@ -42,7 +42,7 @@
 		$citation = array(
 			"PAGE"=>"Page: ".$_POST['page'].", Call Number/URL: ".$_POST['CallNumberURL'], 
 			"QUAY"=>'', 
-    		"DATE"=>!empty($_POST['EnumerationDate'])?$_POST['EnumerationDate']:"1880", 
+			"DATE"=>!empty($_POST['EnumerationDate'])?$_POST['EnumerationDate']:"1880", 
 			"TEXT"=>$text, 
 			"OBJE"=>$_POST['OBJE'],
 			"array"=>array(
@@ -52,6 +52,6 @@
 			'rows'=>$rows));
 		
 		return $citation;
-    }
-    
+	}
+
 }

@@ -49,7 +49,7 @@ class ra_form {
 
 		if (!is_null($this->people)) return $this->people;
 
-		$sql = 	"SELECT it_i_id FROM " . $TBLPREFIX . "individualtask WHERE it_t_id='" . $DBCONN->escapeSimple($_REQUEST["taskid"]) . "'";
+		$sql = "SELECT it_i_id FROM " . $TBLPREFIX . "individualtask WHERE it_t_id='" . $DBCONN->escapeSimple($_REQUEST["taskid"]) . "'";
 		$res = dbquery($sql);
 
 		$people = array();
@@ -70,7 +70,7 @@ class ra_form {
 	function getSources(){
         global $TBLPREFIX, $DBCONN, $GEDCOMS, $GEDCOM;
 
-		$sql = 	"SELECT s_name, s_id FROM " . $TBLPREFIX . "sources, " . $TBLPREFIX . "tasksource WHERE s_id = ts_s_id AND s_file=".$GEDCOMS[$GEDCOM]['id']." AND ts_t_id='" . $DBCONN->escapeSimple($_REQUEST["taskid"]) . "'";
+		$sql = "SELECT s_name, s_id FROM " . $TBLPREFIX . "sources, " . $TBLPREFIX . "tasksource WHERE s_id = ts_s_id AND s_file=".$GEDCOMS[$GEDCOM]['id']." AND ts_t_id='" . $DBCONN->escapeSimple($_REQUEST["taskid"]) . "'";
 		$res = dbquery($sql);
 		$sources = array();
 		while($source =& $res->fetchRow(DB_FETCHMODE_ASSOC)){
@@ -83,7 +83,7 @@ class ra_form {
 	function getSourceCitationData() {
 		global $TBLPREFIX, $DBCONN;
 
-		$sql = 	"SELECT * FROM " . $TBLPREFIX . "tasksource WHERE ts_t_id='" . $DBCONN->escapeSimple($_REQUEST["taskid"]) . "'";
+		$sql = "SELECT * FROM " . $TBLPREFIX . "tasksource WHERE ts_t_id='" . $DBCONN->escapeSimple($_REQUEST["taskid"]) . "'";
 		$res = dbquery($sql);
 
 		if ($res->numRows()>0) {
@@ -99,7 +99,7 @@ class ra_form {
 	function getFactData() {
 		global $TBLPREFIX, $DBCONN;
 
-		$sql = 	"SELECT * FROM " . $TBLPREFIX . "taskfacts WHERE tf_t_id='" . $DBCONN->escapeSimple($_REQUEST["taskid"]) . "'";
+		$sql = "SELECT * FROM " . $TBLPREFIX . "taskfacts WHERE tf_t_id='" . $DBCONN->escapeSimple($_REQUEST["taskid"]) . "'";
 		$res = dbquery($sql);
 
 		$tasks = array();
@@ -180,8 +180,8 @@ class ra_form {
     }
 
     function simpleCitationForm($citation) {
-    	global $pgv_lang, $factarray;
-    	$out = '<tr>
+			global $pgv_lang, $factarray;
+			$out = '<tr>
 			<td class="descriptionbox">'.print_help_link("edit_PAGE_help", "qm",'',false,true).$factarray['PAGE'].'</td>
 			<td class="optionbox"><input type="text" name="PAGE" value="'.$citation["ts_page"].'" /></td>
 		</tr>
@@ -210,7 +210,7 @@ class ra_form {
      * displays the form for editing the source citation information
      */
     function sourceCitationForm($colspan=3, $showpeople=true) {
-    	global $pgv_lang, $factarray;
+		global $pgv_lang, $factarray;
 
 		$citation = $this->getSourceCitationData();
 		$task = ra_functions::getTask($_REQUEST['taskid']);
@@ -281,35 +281,34 @@ class ra_form {
 	}
 	//-->
 	</script>
-                   <div id="sourcelink">';
-                   			$sources = $this->getSources();
-                   			$sval = '';
-                   			foreach($sources as $sid=>$source) {
-                   				$sval .= ';'.$sid;
-                   				$out .= '<a id="link_'.$sid.'" href="source.php?sid='.$sid.'">'.$source.'</a> <a id="rem_'.$sid.'" href="#" onclick="clearname(\'sourceid\', \'link_'.$sid.'\', \''.$sid.'\'); return false;" ><img src="images/remove.gif" border="0" alt="" /><br /></a>';
-                   			}
-                   $out .= '</div>
-                   <input type="hidden" id="sourceid" name="sourceid" size="3" value="'.$sval.'" />';
-
-                   $out .= print_findsource_link("sourceid", "sourcelink", true);
-                   $out .= '<br />
-                </td>
-            </tr>';
+    <div id="sourcelink">';
+		$sources = $this->getSources();
+    $sval = '';
+    foreach($sources as $sid=>$source) {
+    $sval .= ';'.$sid;
+    $out .= '<a id="link_'.$sid.'" href="source.php?sid='.$sid.'">'.$source.'</a> <a id="rem_'.$sid.'" href="#" onclick="clearname(\'sourceid\', \'link_'.$sid.'\', \''.$sid.'\'); return false;" ><img src="images/remove.gif" border="0" alt="" /><br /></a>';
+    }
+    $out .= '</div>
+    <input type="hidden" id="sourceid" name="sourceid" size="3" value="'.$sval.'" />';
+    $out .= print_findsource_link("sourceid", "sourcelink", true);
+    $out .= '<br />
+    </td>
+    </tr>';
 
 		$out .= $this->simpleCitationForm($citation);
 		if ($showpeople) {
 			$out .= '<tr>
 				<td class="descriptionbox">'.$pgv_lang["people"].'</td>
 	            <td id="peoplecell" class="optionbox" colspan="'.$colspan.'">
-	                   <div id="peoplelink">';
-	                   			$people = $this->getPeople();
-	                   			$pval = '';
-	                   			foreach($people as $pid=>$person) {
+	               <div id="peoplelink">';
+	               $people = $this->getPeople();
+	               $pval = '';
+	               foreach($people as $pid=>$person) {
 							if (!is_null($person)) {
-	                   				$pval .= ';'.$person->getXref();
-	                   				$out .= '<a id="link_'.$pid.'" href="individual.php?pid='.$pid.'">'.$person->getFullName().'</a> <a id="rem_'.$pid.'" href="#" onclick="clearname(\'personid\', \'link_'.$pid.'\', \''.$pid.'\'); return false;" ><img src="images/remove.gif" border="0" alt="" /><br /></a>';
+	               $pval .= ';'.$person->getXref();
+	               $out .= '<a id="link_'.$pid.'" href="individual.php?pid='.$pid.'">'.$person->getFullName().'</a> <a id="rem_'.$pid.'" href="#" onclick="clearname(\'personid\', \'link_'.$pid.'\', \''.$pid.'\'); return false;" ><img src="images/remove.gif" border="0" alt="" /><br /></a>';
 							}
-	                   			}
+	               }
 	                   $out .= '</div>
 	                   <input type="hidden" id="personid" name="personid" size="3" value="'.$pval.'" />';
 	                   $out .= print_findindi_link("personid", "peoplelink", true,false,'','');
@@ -325,8 +324,8 @@ class ra_form {
      * process the data from the source citation form
      */
     function processSourceCitation() {
-    	global $GEDCOMS, $GEDCOM, $TBLPREFIX, $DBCONN;
-    	if (empty($_REQUEST['sourceid'])) {
+		global $GEDCOMS, $GEDCOM, $TBLPREFIX, $DBCONN;
+		if (empty($_REQUEST['sourceid'])) {
 			return "You must select a source.";
 		}
 
@@ -391,18 +390,18 @@ class ra_form {
     }
 
     function processSimpleCitation() {
-    	$citation = array("PAGE"=>$_REQUEST['PAGE'], "QUAY"=>$_REQUEST['QUAY'],
-    		"DATE"=>$_REQUEST['DATE'], "TEXT"=>$_REQUEST['TEXT'], "OBJE"=>$_REQUEST['OBJE'], "array"=>array());
-    	return $citation;
+		$citation = array("PAGE"=>$_REQUEST['PAGE'], "QUAY"=>$_REQUEST['QUAY'],
+			"DATE"=>$_REQUEST['DATE'], "TEXT"=>$_REQUEST['TEXT'], "OBJE"=>$_REQUEST['OBJE'], "array"=>array());
+		return $citation;
     }
 
     /**
      * display the form for adding and editing facts
      */
     function editFactsForm($printButton = true) {
-    	global $pgv_lang, $INDI_FACTS_ADD, $factarray, $FAM_FACTS_ADD,$FAM_FACTS_UNIQUE;
-    	$task = ra_functions::getTask($_REQUEST['taskid']);
-    	$out = <<<END_OUT
+		global $pgv_lang, $INDI_FACTS_ADD, $factarray, $FAM_FACTS_ADD,$FAM_FACTS_UNIQUE;
+		$task = ra_functions::getTask($_REQUEST['taskid']);
+		$out = <<<END_OUT
 		<tr>
 			<td class="descriptionbox">{$pgv_lang['title']}</td>
 			<td class="optionbox">{$task['t_title']}</td>
@@ -511,10 +510,8 @@ END_OUT;
 			function edit_ra_fact(i) {
 				editi = i;
 				factfield = document.getElementById('fact'+i);
-//				alert(factfield);
 				if (factfield) {
 					factvalue = factfield.value;
-//					alert(factvalue+escape(factvalue));
 					window.open('edit_interface.php?action=mod_edit_fact&mod=research_assistant&ctype=edit&factrec='+escape(factvalue)+"&"+sessionname+"="+sessionid, '', 'top=50,left=50,width=710,height=500,resizable=1,scrollbars=1');
 				}
 				return false;
@@ -688,8 +685,8 @@ END_OUT;
 
 				out = '<table class="facts_table"><tr><td colspan="3" class="topbottombar">${pgv_lang["ra_facts"]}</td></tr>';
 				out += '<tr><td class="descriptionbox">${pgv_lang["ra_fact"]}</td><td class="descriptionbox">${pgv_lang["people"]}</td><td class="descriptionbox">${pgv_lang["ra_remove"]}</td></tr>';
-	 			for(i=0; i<facts.length; i++) {
-	 				//alert(facts[i]);
+				for(i=0; i<facts.length; i++) {
+					//alert(facts[i]);
 					out += '<tr><td id="factname'+i+'" class="optionbox">'+factnames[i];
 					out += '<br />';
 					pos1 = facts[i].indexOf('2 DATE ');
@@ -702,7 +699,6 @@ END_OUT;
 					out += '<input type="hidden" name="fact'+i+'" id="fact'+i+'" value="'+facts[i]+'" />';
 					value ='N';
 					if (peopleList[i] && peopleList[i].split("<option ").length > 2) value='Y';
-//					alert(i+" "+peopleList[i]+peopleList[i].split("<option ").length+" "+value);
 					out += '<input type="hidden" name="multiple'+i+'" id="multiple'+i+'" value="'+value+'" />';
 					out += '<input type="hidden" name="type'+i+'" id="type'+i+'" value="'+facttypes[i]+'" />';
 					out += '</td>';
@@ -771,8 +767,8 @@ END_OUT;
      * process the added/edited facts
      */
     function processFactsForm() {
-    	global $pgv_lang, $TBLPREFIX, $factarray, $GEDCOMS, $GEDCOM, $DBCONN;
-    	//-- generate the text for the citation
+		global $pgv_lang, $TBLPREFIX, $factarray, $GEDCOMS, $GEDCOM, $DBCONN;
+		//-- generate the text for the citation
 		$citation = $this->getSourceCitationData();
 		$citationTxt = "";
 		if (!empty($citation['ts_s_id'])) {
@@ -814,7 +810,6 @@ END_OUT;
 			if (isset($_REQUEST['people'.$i])) {
 				$people = $_REQUEST['people'.$i];
 				foreach($people as $ind=>$pid) {
-//					print $pid." ";
 					$person = Person::getInstance($pid);
 					if (!is_null($person)) {
 						$newrec = ra_functions::deleteRAFacts($_REQUEST['taskid'], $person);

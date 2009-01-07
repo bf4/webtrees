@@ -39,12 +39,12 @@ class WW1DraftB extends ra_form {
 		global $pgv_lang;
 		$out = "";
 		if ($showchoose) {
-	    	//Row Form
+	    //Row Form
 			$out = '<form action="module.php" method="post">';
 			$out .= '<input type="hidden" name="mod" value="research_assistant" />' .
-	    			'<input type="hidden" name="action" value="printform" />' .
-	    			'<input type="hidden" name="formname" value="WW1DraftB" />' .
-	    			'<input type="hidden" name="taskid" value="'.$_REQUEST['taskid'].'" />';
+	    '<input type="hidden" name="action" value="printform" />' .
+	    '<input type="hidden" name="formname" value="WW1DraftB" />' .
+	    '<input type="hidden" name="taskid" value="'.$_REQUEST['taskid'].'" />';
 			if (!isset($_REQUEST['numOfRows'])) $_REQUEST['numOfRows'] = count($this->getPeople());
 			if ($_REQUEST['numOfRows']<1) $_REQUEST['numOfRows']=1;
 
@@ -363,27 +363,27 @@ return false;}return true;}
 
  function createPerson($i)
     {
-    	$indiFact = "0 @new@ INDI\r\n";
-    	$indiFact .= "1 NAME ".$_POST["NameOfPeople".$i]."\r\n";
+    $indiFact = "0 @new@ INDI\r\n";
+    $indiFact .= "1 NAME ".$_POST["NameOfPeople".$i]."\r\n";
 
-    	if(!empty($_POST["Age".$i]))
-    	{
-    		$age = 1930 - $_POST["Age".$i];
-    		$indiFact .= "1 BIRT\r\n";
-    		$indiFact .= "2 DATE ABT ".$age;
-    	}
+    if(!empty($_POST["Age".$i]))
+    {
+    $age = 1930 - $_POST["Age".$i];
+    $indiFact .= "1 BIRT\r\n";
+    $indiFact .= "2 DATE ABT ".$age;
+    }
 
-    	if(!empty($_POST["PlaceOfBirth".$i]))
-    	{
-    		$indiFact .= "2 PLAC ".$_POST["PlaceOfBirth"];
-    	}
+    if(!empty($_POST["PlaceOfBirth".$i]))
+    {
+    $indiFact .= "2 PLAC ".$_POST["PlaceOfBirth"];
+    }
 
-    	if(!empty($_POST["Gender".$i]))
-    	{
-    		$indiFact .= "1 SEX ".$_POST["Gender".$i];
-    	}
+    if(!empty($_POST["Gender".$i]))
+    {
+    $indiFact .= "1 SEX ".$_POST["Gender".$i];
+    }
 
-    	return $indiFact;
+    return $indiFact;
 
     }
 
@@ -522,7 +522,7 @@ return false;}return true;}
 	 */
 	function processSimpleCitation() {
 		global $TBLPREFIX, $DBCONN;
-    	//-- delete any old census records
+    //-- delete any old census records
 		$sql = "DELETE FROM ".$TBLPREFIX."taskfacts WHERE tf_t_id='".$DBCONN->escapeSimple($_REQUEST['taskid'])."' AND tf_factrec ".PGV_DB_LIKE." '1 _MILI%'";
 		$res = dbquery($sql);
 
@@ -658,7 +658,7 @@ return false;}return true;}
 		$citation = array(
 			"PAGE"=>"Page: ".$_POST['page'].", Serial No.: ".$_POST['CallNumberURL'],
 			"QUAY"=>'',
-    		"DATE"=>!empty($_POST['EnumerationDate'])?$_POST['EnumerationDate']:"1880",
+			"DATE"=>!empty($_POST['EnumerationDate'])?$_POST['EnumerationDate']:"1880",
 			"TEXT"=>$text,
 			"OBJE"=>$_POST['OBJE'],
 			"array"=>array(
