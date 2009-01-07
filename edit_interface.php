@@ -1328,9 +1328,10 @@ case 'addopfchildaction':
 
 	splitSOUR(); // separate SOUR record from the rest
 
-	$gedrec ="0 @REF@ INDI\n";
-	$gedrec.=addNewName();
-	$gedrec.=addNewSex ();
+	$newindixref=get_new_xref('INDI');
+	$newfamxref=get_new_xref('FAM');
+
+	$gedrec ="0 @{$newindixref}@ INDI\n1 FAMC @{$newfamxref}@\n".addNewName().addNewSex ();
 	if (preg_match_all('/([A-Z0-9_]+)/', $QUICK_REQUIRED_FACTS, $matches)) {
 		foreach ($matches[1] as $match) {
 			$gedrec.=addNewFact($match);
@@ -1338,44 +1339,35 @@ case 'addopfchildaction':
 	}
 
 	if (safe_POST_bool('SOUR_INDI')) {
-		$gedrec = handle_updates($gedrec);
+		$gedrec=handle_updates($gedrec);
 	} else {
-		$gedrec = updateRest($gedrec);
+		$gedrec=updateRest($gedrec);
 	}
-
-	if (PGV_DEBUG) {
-		print "<pre>$gedrec</pre>";
-	}
-	$xref = append_gedrec($gedrec);
-	if ($xref) print "<br /><br />".$pgv_lang["update_successful"];
-	else exit;
-
-	$success = true;
-	$person=Person::getInstance($pid);
 	
-	$famrec = "0 @new@ FAM\n1 CHIL @{$xref}@";
+	$famrec="0 @$newfamxref@ FAM\n1 CHIL @{$newindixref}@";
+	$person=Person::getInstance($pid);
 	if ($person->getSex()=='F') {
 		$famrec.="\n1 WIFE @{$pid}@";
 	} else {
 		$famrec.="\n1 HUSB @{$pid}@";
 	}
 
-	if (PGV_DEBUG) {
-		print "<pre>$famrec</pre>";
+	if (!isset($pgv_changes[$pid."_".$GEDCOM])) {
+		$indirec=find_gedcom_record($pid);
+	} else {
+		$indirec=find_updated_record($pid);
 	}
-	$famid = append_gedrec($famrec);
-
-	$gedrec.="\n1 CHIL @{$famid}@";
-	replace_gedrec($xref, $gedrec);
-
-	if (!isset($pgv_changes[$pid."_".$GEDCOM])) $indirec = find_gedcom_record($pid);
-	else $indirec = find_updated_record($pid);
 	if ($indirec) {
-		$indirec.="\n1 FAMS @{$famid}@";
+		$indirec.="\n1 FAMS @{$newfamxref}@";
 		if (PGV_DEBUG) {
+			print "<pre>$gedrec</pre>";
+			print "<pre>$famrec</pre>";
 			print "<pre>$indirec</pre>";
 		}
-		replace_gedrec($pid, $indirec);
+		if (replace_gedrec($pid, $indirec) && append_gedrec($gedrec) && append_gedrec($famrec)) {
+			print "<br /><br />".$pgv_lang["update_successful"];
+			$success = true;
+		}
 	}
 	break;
 //------------------------------------------------------------------------------
