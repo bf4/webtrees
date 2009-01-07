@@ -184,7 +184,6 @@ if ($this->DEBUG) print "In getRemoteRecord($remoteid)<br />";
 	{
 if ($this->DEBUG) {
 	print "\n\n<br />In _merge()<br />\n\n";
-	//debug_print_backtrace();
 }
 		// Returns second record if first is empty, no merge needed
 		if (empty($record1)) return $record2;
@@ -306,7 +305,6 @@ if ($this->DEBUG) print "In UpdateFamily()<br />";
 		$record1 = preg_replace("/\d FAM[SC] @".$this->xref.":[\w\d]+@\r?\n/", "", $record1);
 //		print "[<pre>$record1</pre>]";
 
-		//debug_print_backtrace();
 		// holds the arrays of the current individual Familys
 		$List1FamilyChildID = find_families_in_record($record1, "FAMC");
 		$List2FamilyChildID = find_families_in_record($record2, "FAMC");
@@ -664,7 +662,6 @@ if ($this->DEBUG) print "In CompairForUpdateFamily()<br />";
 		global $TBLPREFIX, $DBCONN, $GEDCOMS, $GEDCOM;
 
 		if ($local == $remote) {
-			debug_print_backtrace();
 			return;
 		}
 		//-- check if the link already exists
@@ -829,7 +826,6 @@ if ($this->DEBUG) print_r($result);
 					replace_gedrec($pid,$localrec);
 				}
 				else {
-if ($this->DEBUG) debug_print_backtrace();
 if ($this->DEBUG) print "\r\n".__LINE__." adding record to the database ".$localrec;
 					update_record($localrec);
 				}

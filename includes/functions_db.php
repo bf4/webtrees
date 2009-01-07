@@ -791,7 +791,6 @@ function find_gedcom_record($pid, $gedfile='') {
 		"SELECT o_gedcom FROM {$TBLPREFIX}other       WHERE o_id='{$pid}' AND o_file={$ged_id}"
 	);
 	if (DB::isError($res)) {
-		debug_print_backtrace();
 		return "";
 	}
 	$row=$res->fetchRow();

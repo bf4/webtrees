@@ -320,7 +320,6 @@ function check_gedcom($gedrec, $chan=true) {
 		AddToChangeLog("ERROR 20: Invalid GEDCOM 5.5 format.->" . PGV_USER_NAME ."<-");
 		if ($GLOBALS["DEBUG"]) {
 			print "<pre>$gedrec</pre>\n";
-			print debug_print_backtrace();
 		}
 		return false;
 	}

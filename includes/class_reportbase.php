@@ -197,7 +197,6 @@ class PGVRElement {
 
 	function render(&$renderer) {
 //		print "Nothing rendered.  Something bad happened";
-//		debug_print_backtrace();
 		//-- to be implemented in inherited classes
 	}
 
@@ -1210,7 +1209,6 @@ function PGVRRepeatTagEHandler() {
 		if (!xml_parse($repeat_parser, $reportxml, true)) {
 			printf($reportxml."\nPGVRRepeatTagEHandler XML error: %s at line %d", xml_error_string(xml_get_error_code($repeat_parser)), xml_get_current_line_number($repeat_parser));
 			print_r($repeatsStack);
-			debug_print_backtrace();
 			exit;
 		}
 		xml_parser_free($repeat_parser);
@@ -1371,7 +1369,6 @@ function PGVRFactsEHandler() {
 
 		if (!xml_parse($repeat_parser, $reportxml, true)) {
 			die(sprintf($reportxml."\nPGVRFactsEHandler XML error: %s at line %d", xml_error_string(xml_get_error_code($repeat_parser)), xml_get_current_line_number($repeat_parser)));
-			debug_print_backtrace();
 		}
 		xml_parser_free($repeat_parser);
 	}
@@ -1937,7 +1934,6 @@ function PGVRListEHandler() {
 			if (!xml_parse($repeat_parser, $reportxml, true)) {
 				printf($reportxml."\nPGVRRepeatTagEHandler XML error: %s at line %d", xml_error_string(xml_get_error_code($repeat_parser)), xml_get_current_line_number($repeat_parser));
 				print_r($repeatsStack);
-				debug_print_backtrace();
 				exit;
 			}
 			xml_parser_free($repeat_parser);
@@ -2134,7 +2130,6 @@ function PGVRRelativesEHandler() {
 			if (!xml_parse($repeat_parser, $reportxml, true)) {
 				printf($reportxml."\nPGVRRelativesEHandler XML error: %s at line %d", xml_error_string(xml_get_error_code($repeat_parser)), xml_get_current_line_number($repeat_parser));
 				print_r($repeatsStack);
-				debug_print_backtrace();
 				exit;
 			}
 			xml_parser_free($repeat_parser);

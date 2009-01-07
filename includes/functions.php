@@ -1600,8 +1600,6 @@ function compareStrings($aName, $bName, $ignoreCase=true) {
 	global $digraph, $trigraph, $quadgraph;
 	global $DICTIONARY_SORT, $UCDiacritWhole, $UCDiacritStrip, $UCDiacritOrder, $LCDiacritWhole, $LCDiacritStrip, $LCDiacritOrder;
 
-	if (is_array($aName))
-		debug_print_backtrace();
 	getAlphabet();
 
 	if ($LANGUAGE == "danish" || $LANGUAGE == "norwegian") {
