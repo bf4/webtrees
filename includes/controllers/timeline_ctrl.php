@@ -1,28 +1,28 @@
 <?php
 /**
- * Controller for the timeline chart
- *
- * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008	PGV Development Team.  All rights reserved.
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- *
- * @package PhpGedView
- * @subpackage Charts
- * @version $Id$
- */
+* Controller for the timeline chart
+*
+* phpGedView: Genealogy Viewer
+* Copyright (C) 2002 to 2009 PGV Development Team.  All rights reserved.
+*
+* This program is free software; you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation; either version 2 of the License, or
+* (at your option) any later version.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+* GNU General Public License for more details.
+*
+* You should have received a copy of the GNU General Public License
+* along with this program; if not, write to the Free Software
+* Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+*
+* @package PhpGedView
+* @subpackage Charts
+* @version $Id$
+*/
 
 if (!defined('PGV_PHPGEDVIEW')) {
 	header('HTTP/1.0 403 Forbidden');
@@ -35,13 +35,13 @@ require_once 'includes/functions/functions_charts.php';
 require_once 'includes/controllers/basecontrol.php';
 require_once 'includes/classes/class_person.php';
 /**
- * Main controller class for the timeline page.
- */
+* Main controller class for the timeline page.
+*/
 class TimelineControllerRoot extends BaseController {
 	var $bheight = 30;
 	var $placements = array();
 	var $familyfacts = array();
-	var $indifacts = array();						// array to store the fact records in for sorting and displaying
+	var $indifacts = array(); // array to store the fact records in for sorting and displaying
 	var $birthyears=array();
 	var $birthmonths=array();
 	var $birthdays=array();
@@ -54,14 +54,14 @@ class TimelineControllerRoot extends BaseController {
 	// GEDCOM elements that will be found but should not be displayed
 	var $nonfacts = array("FAMS","FAMC","MAY","BLOB","OBJE","SEX","NAME","SOUR","NOTE","BAPL","ENDL","SLGC","SLGS","_TODO","CHAN","HUSB","WIFE","CHIL");
 	/**
-	 * constructor
-	 */
+	* constructor
+	*/
 	function TimelineRootController() {
 		parent::BaseController();
 	}
 	/**
-	 * Initialization function
-	 */
+	* Initialization function
+	*/
 	function init() {
 		global $GEDCOM_ID_PREFIX;
 
@@ -152,8 +152,8 @@ class TimelineControllerRoot extends BaseController {
 		$this->topyear += 5;
 	}
 	/**
-	 * check the privacy of the incoming people to make sure they can be shown
-	 */
+	* check the privacy of the incoming people to make sure they can be shown
+	*/
 	function checkPrivacy() {
 		global $CONTACT_EMAIL;
 		$printed = false;
@@ -161,7 +161,7 @@ class TimelineControllerRoot extends BaseController {
 			if (!is_null($this->people[$i])) {
 				if (!$this->people[$i]->canDisplayDetails()) {
 					if ($this->people[$i]->canDisplayName()) {
-						print "&nbsp;<a href=\"".encode_url("individual.php?pid=".$this->people[$i]->getXref())."\">".PrintReady($this->people[$i]->getFullName())."</a>";
+						print "&nbsp;<a href=\"".encode_url($this->people[$i]->getLinkUrl())."\">".PrintReady($this->people[$i]->getFullName())."</a>";
 						print_privacy_error($CONTACT_EMAIL);
 						print "<br />";
 						$printed = true;
