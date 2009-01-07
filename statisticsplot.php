@@ -181,7 +181,7 @@ function mamo1() {
 		$indi=array();
 		$fam=array();
 		foreach ($num as $values) {
-			if (!in_array($values['indi'], $indi) && !in_array($values['fam.f_id'], $fam)) {
+			if (!in_array($values['indi'], $indi) && !in_array($values['fams'], $fam)) {
 				foreach ($months as $key=>$month) {
 					if($month==$values['month']) {
 						fill_ydata(0, $key, 1);
@@ -189,7 +189,7 @@ function mamo1() {
 					}
 				}
 				$indi[]=$values['indi'];
-				$fam[]=$values['fam.f_id'];
+				$fam[]=$values['fams'];
 			}
 		}
 	}
@@ -200,7 +200,7 @@ function mamo1() {
 		foreach ($zgrenzen as $boundary) {
 			$num = $stats->statsMarr(true, $zstart, $boundary);
 			foreach ($num as $values) {
-				if (!in_array($values['indi'], $indi) && !in_array($values['fam.f_id'], $fam)) {
+				if (!in_array($values['indi'], $indi) && !in_array($values['fams'], $fam)) {
 					foreach ($months as $key=>$month) {
 						if($month==$values['month']) {
 							fill_ydata($boundary, $key, 1);
@@ -208,7 +208,7 @@ function mamo1() {
 						}
 					}
 					$indi[]=$values['indi'];
-					$fam[]=$values['fam.f_id'];
+					$fam[]=$values['fams'];
 				}
 			}
 			$zstart=$boundary+1;
