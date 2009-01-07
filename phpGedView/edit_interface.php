@@ -1365,6 +1365,9 @@ case 'addopfchildaction':
 	}
 	$famid = append_gedrec($famrec);
 
+	$gedrec.="\n1 CHIL @{$famid}@";
+	replace_gedrec($xref, $gedrec);
+
 	if (!isset($pgv_changes[$pid."_".$GEDCOM])) $indirec = find_gedcom_record($pid);
 	else $indirec = find_updated_record($pid);
 	if ($indirec) {
