@@ -1,32 +1,32 @@
 <?php
 /**
- * Family Navigator for phpGedView
- *
- * Display immediate family members table for fast navigation
- * ( Currently used with Facts and Details tab, and Album Tab pages )
- *
- * phpGedView: Genealogy Viewer
- * Copyright (C) 2007 to 2008  PGV Development Team.  All rights reserved.
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- *
- * @package PhpGedView
- * @subpackage Includes
- * @version $Id$
- * @author Brian Holland
- */
+* Family Navigator for phpGedView
+*
+* Display immediate family members table for fast navigation
+* ( Currently used with Facts and Details tab, and Album Tab pages )
+*
+* phpGedView: Genealogy Viewer
+* Copyright (C) 2007 to 2008  PGV Development Team.  All rights reserved.
+*
+* This program is free software; you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation; either version 2 of the License, or
+* (at your option) any later version.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+* GNU General Public License for more details.
+*
+* You should have received a copy of the GNU General Public License
+* along with this program; if not, write to the Free Software
+* Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+*
+* @package PhpGedView
+* @subpackage Includes
+* @version $Id$
+* @author Brian Holland
+*/
 
 if (!defined('PGV_PHPGEDVIEW')) {
 	header('HTTP/1.0 403 Forbidden');
@@ -97,19 +97,15 @@ if (isset($_COOKIE['lastclick'])) {
 					<td class="facts_label<?php print $styleadd; ?>" nowrap="nowrap">
 						<?php // print $people["husb"]->getLabel(); ?>
 						<?php
-							 print_menu($menu);
+							print_menu($menu);
 						?>
 					</td>
 					<td align="center" class="<?php print $this->getPersonStyle($people["husb"]); ?>">
 						<?php
-						if ( ($people["husb"]->canDisplayDetails()) ) {
-							print "<a href=\"".encode_url("individual.php?pid=".$people["husb"]->getXref()."&tab={$tabno}&gedcom={$GEDCOM}")."\">";
-							print "" . PrintReady($people["husb"]->getFullName()) . "";
-							print "<font size=\"1\"><br />" . $BirthYr . " - " . $DeathYr . "</font>";
-							print "</a>" . "\n" ;
-						}else{
-							print $pgv_lang["private"];
-						}
+						print "<a href=\"".encode_url($people["husb"]->getLinkUrl()."&tab={$tabno}")."\">";
+						print PrintReady($people["husb"]->getFullName());
+						print "<font size=\"1\"><br />" . $BirthYr . " - " . $DeathYr . "</font>";
+						print "</a>";
 						?>
 					</td>
 				</tr>
@@ -138,15 +134,10 @@ if (isset($_COOKIE['lastclick'])) {
 					</td>
 					<td align="center" class="<?php print $this->getPersonStyle($people["wife"]); ?>">
 						<?php
-						if ( ($people["wife"]->canDisplayDetails()) ) {
-							print "<a href=\"".encode_url("individual.php?pid=".$people["wife"]->getXref()."&tab={$tabno}&gedcom={$GEDCOM}")."\">";
-							print "" . PrintReady($people["wife"]->getFullName()) . "";
-							print "<font size=\"1\"><br />" . $BirthYr . " - " . $DeathYr . "</font>";
-							print "</a>" . "\n" ;
-
-						}else{
-							print $pgv_lang["private"];
-						}
+						print "<a href=\"".encode_url($people["wife"]->getLinkUrl()."&tab={$tabno}")."\">";
+						print PrintReady($people["wife"]->getFullName());
+						print "<font size=\"1\"><br />" . $BirthYr . " - " . $DeathYr . "</font>";
+						print "</a>";
 						?>
 					</td>
 				</tr>
@@ -183,19 +174,14 @@ if (isset($_COOKIE['lastclick'])) {
 						</td>
 						<td align="center" class="<?php print $this->getPersonStyle($child); ?>">
 							<?php
-							if ( ($child->canDisplayDetails()) ) {
-								if ($pid == $child->getXref()) {
-									print "" . PrintReady($child->getFullName()) . "";
-									print "<font size=\"1\"><br />" . $BirthYr . " - " . $DeathYr . "</font>";
-									print "\n" ;
-								}else{
-									print "<a href=\"".encode_url("individual.php?pid=".$child->getXref()."&tab={$tabno}&gedcom={$GEDCOM}")."\">";
-									print "" . PrintReady($child->getFullName()) . "";
-									print "<font size=\"1\"><br />" . $BirthYr . " - " . $DeathYr . "</font>";
-									print "</a>" . "\n" ;
-								}
+							if ($pid == $child->getXref()) {
+								print PrintReady($child->getFullName());
+								print "<font size=\"1\"><br />" . $BirthYr . " - " . $DeathYr . "</font>";
 							}else{
-								print $pgv_lang["private"];
+								print "<a href=\"".encode_url($child->getLinkUrl()."&tab={$tabno}")."\">";
+								print PrintReady($child->getFullName());
+								print "<font size=\"1\"><br />" . $BirthYr . " - " . $DeathYr . "</font>";
+								print "</a>";
 							}
 							?>
 						</td>
@@ -239,19 +225,15 @@ if (isset($_COOKIE['lastclick'])) {
 				<tr>
 					<td class="facts_label<?php print $styleadd; ?>" nowrap="nowrap">
 						<?php
-							 print_menu($menu);
+							print_menu($menu);
 						?>
 					</td>
 					<td align="center" class="<?php print $this->getPersonStyle($people["husb"]); ?>" >
 						<?php
-						if ( ($people["husb"]->canDisplayDetails()) ) {
-							print "<a href=\"".encode_url("individual.php?pid=".$people["husb"]->getXref()."&tab={$tabno}&gedcom={$GEDCOM}")."\">";
-							print "" . PrintReady($people["husb"]->getFullName()) . "";
-							print "<font size=\"1\"><br />" . $BirthYr . " - " . $DeathYr . "</font>";
-							print "</a>" . "\n" ;
-						}else{
-							print $pgv_lang["private"];
-						}
+						print "<a href=\"".encode_url($people["husb"]->getLinkUrl()."&tab={$tabno}")."\">";
+						print PrintReady($people["husb"]->getFullName());
+						print "<font size=\"1\"><br />" . $BirthYr . " - " . $DeathYr . "</font>";
+						print "</a>";
 						?>
 					</td>
 				</tr>
@@ -280,19 +262,15 @@ if (isset($_COOKIE['lastclick'])) {
 				<tr>
 					<td class="facts_label<?php print $styleadd; ?>" nowrap="nowrap">
 						<?php
-							 print_menu($menu);
+							print_menu($menu);
 						?>
 					</td>
 					<td align="center" class="<?php print $this->getPersonStyle($people["wife"]); ?>">
 						<?php
-						if ( ($people["wife"]->canDisplayDetails()) ) {
-							print "<a href=\"".encode_url("individual.php?pid=".$people["wife"]->getXref()."&tab={$tabno}&gedcom={$GEDCOM}")."\">";
-							print "" . PrintReady($people["wife"]->getFullName()) . "";
-							print "<font size=\"1\"><br />" . $BirthYr . " - " . $DeathYr . "</font>";
-							print "</a>" . "\n" ;
-						}else{
-							print $pgv_lang["private"];
-						}
+						print "<a href=\"".encode_url($people["wife"]->getLinkUrl()."&tab={$tabno}")."\">";
+						print PrintReady($people["wife"]->getFullName());
+						print "<font size=\"1\"><br />" . $BirthYr . " - " . $DeathYr . "</font>";
+						print "</a>";
 						?>
 					</td>
 				</tr>
@@ -324,14 +302,10 @@ if (isset($_COOKIE['lastclick'])) {
 						</td>
 						<td align="center" class="<?php print $this->getPersonStyle($child); ?>">
 							<?php
-							if ( ($child->canDisplayDetails()) ) {
-							print "<a href=\"".encode_url("individual.php?pid=".$child->getXref()."&tab={$tabno}&gedcom={$GEDCOM}")."\">";
-							print "" . PrintReady($child->getFullName()) . "";
+							print "<a href=\"".encode_url($child->getLinkUrl()."&tab={$tabno}")."\">";
+							print PrintReady($child->getFullName());
 							print "<font size=\"1\"><br />" . $BirthYr . " - " . $DeathYr . "</font>";
-							print "</a>" . "\n" ;
-							}else{
-								print $pgv_lang["private"];
-							}
+							print "</a>";
 							?>
 						</td>
 					</tr>
@@ -381,20 +355,15 @@ if (isset($_COOKIE['lastclick'])) {
 					</td>
 					<td align="center" class="<?php print $this->getPersonStyle($people["husb"]); ?>">
 						<?php
-							if ( ($people["husb"]->canDisplayDetails()) ) {
-								if ($pid == $people["husb"]->getXref()) {
-									print "" . PrintReady($people["husb"]->getFullName()) . "";
-									print "<font size=\"1\"><br />" . $BirthYr . " - " . $DeathYr . "</font>";
-									print "\n" ;
-								}else{
-									print "<a href=\"".encode_url("individual.php?pid=".$people["husb"]->getXref()."&tab={$tabno}&gedcom={$GEDCOM}")."\">";
-									print "" . PrintReady($people["husb"]->getFullName()) . "";
-									print "<font size=\"1\"><br />" . $BirthYr . " - " . $DeathYr . "</font>";
-									print "</a>" . "\n" ;
-								}
-							}else{
-								print $pgv_lang["private"];
-							}
+						if ($pid == $people["husb"]->getXref()) {
+							print PrintReady($people["husb"]->getFullName());
+							print "<font size=\"1\"><br />" . $BirthYr . " - " . $DeathYr . "</font>";
+						}else{
+							print "<a href=\"".encode_url($people["husb"]->getLinkUrl()."&tab={$tabno}")."\">";
+							print PrintReady($people["husb"]->getFullName());
+							print "<font size=\"1\"><br />" . $BirthYr . " - " . $DeathYr . "</font>";
+							print "</a>";
+						}
 						?>
 					</td>
 				</tr>
@@ -423,21 +392,16 @@ if (isset($_COOKIE['lastclick'])) {
 					</td>
 					<td align="center" class="<?php print $this->getPersonStyle($people["wife"]); ?>">
 						<?php
-							if ( ($people["wife"]->canDisplayDetails()) ) {
-								if ($pid == $people["wife"]->getXref()) {
-									print "" . PrintReady($people["wife"]->getFullName()) . "";
-									print "<font size=\"1\"><br />" . $BirthYr . " - " . $DeathYr . "</font>";
-									print "\n" ;
-								}else{
-									print "<a href=\"".encode_url("individual.php?pid=".$people["wife"]->getXref()."&tab={$tabno}&gedcom={$GEDCOM}")."\">";
-									print "" . PrintReady($people["wife"]->getFullName()) . "";
-									print "<font size=\"1\"><br />" . $BirthYr . " - " . $DeathYr . "</font>";
-									print "</a>" . "\n" ;
-								}
-							}else{
-								print $pgv_lang["private"];
-							}
-						 ?>
+						if ($pid == $people["wife"]->getXref()) {
+							print PrintReady($people["wife"]->getFullName());
+							print "<font size=\"1\"><br />" . $BirthYr . " - " . $DeathYr . "</font>";
+						}else{
+							print "<a href=\"".encode_url($people["wife"]->getLinkUrl()."&tab={$tabno}")."\">";
+							print PrintReady($people["wife"]->getFullName());
+							print "<font size=\"1\"><br />" . $BirthYr . " - " . $DeathYr . "</font>";
+							print "</a>";
+						}
+						?>
 					</td>
 				</tr>
 				<?php
@@ -467,14 +431,10 @@ if (isset($_COOKIE['lastclick'])) {
 						</td>
 						<td align="center" class="<?php print $this->getPersonStyle($child); ?>">
 							<?php
-							if ( ($child->canDisplayDetails()) ) {
-								print "<a href=\"".encode_url("individual.php?pid=".$child->getXref()."&tab={$tabno}&gedcom={$GEDCOM}")."\">";
-								print "" . PrintReady($child->getFullName()) . "";
-								print "<font size=\"1\"><br />" . $BirthYr . " - " . $DeathYr . "</font>";
-								print "</a>" . "\n" ;
-							}else{
-								print $pgv_lang["private"];
-							}
+							print "<a href=\"".encode_url($child->getLinkUrl()."&tab={$tabno}")."\">";
+							print PrintReady($child->getFullName());
+							print "<font size=\"1\"><br />" . $BirthYr . " - " . $DeathYr . "</font>";
+							print "</a>";
 							?>
 						</td>
 					</tr>
@@ -495,14 +455,14 @@ if (isset($_COOKIE['lastclick'])) {
 // ==================================================================
 require_once 'includes/functions/functions_charts.php';
 /**
- * print the information for an individual chart box
- *
- * find and print a given individuals information for a pedigree chart
- * @param string $pid	the Gedcom Xref ID of the   to print
- * @param int $style	the style to print the box in, 1 for smaller boxes, 2 for larger boxes
- * @param boolean $show_famlink	set to true to show the icons for the popup links and the zoomboxes
- * @param int $count	on some charts it is important to keep a count of how many boxes were printed
- */
+* print the information for an individual chart box
+*
+* find and print a given individuals information for a pedigree chart
+* @param string $pid the Gedcom Xref ID of the   to print
+* @param int $style the style to print the box in, 1 for smaller boxes, 2 for larger boxes
+* @param boolean $show_famlink set to true to show the icons for the popup links and the zoomboxes
+* @param int $count on some charts it is important to keep a count of how many boxes were printed
+*/
 function print_pedigree_person_nav($pid, $style=1, $show_famlink=true, $count=0, $personcount="1") {
 	global $HIDE_LIVE_PEOPLE, $SHOW_LIVING_NAMES, $PRIV_PUBLIC, $factarray, $ZOOM_BOXES, $LINK_ICONS, $view, $SCRIPT_NAME, $GEDCOM;
 	global $pgv_lang, $MULTI_MEDIA, $SHOW_HIGHLIGHT_IMAGES, $bwidth, $bheight, $PEDIGREE_FULL_DETAILS, $SHOW_ID_NUMBERS, $SHOW_PEDIGREE_PLACES;
@@ -524,9 +484,9 @@ function print_pedigree_person_nav($pid, $style=1, $show_famlink=true, $count=0,
 
 	$person=Person::getInstance($pid);
 	if ($pid==false || empty($person)) {
-		$spouselinks 		= false;
-		$parentlinks 		= false;
-		$step_parentlinks	= false;
+		$spouselinks  = false;
+		$parentlinks  = false;
+		$step_parentlinks = false;
 	}
 
 	$tmp=array('M'=>'','F'=>'F', 'U'=>'NN');
@@ -586,15 +546,10 @@ function print_pedigree_person_nav($pid, $style=1, $show_famlink=true, $count=0,
 								}else{
 									$title = $husb->getXref()." :".$pgv_lang["indi_info"];
 								}
-								$tmp=$husb->getXref();
-								if ($husb->canDisplayName()) {
-									$parentlinks .= "<a href=\"".encode_url("individual.php?pid={$tmp}&amp;tab={$tabno}&amp;gedcom={$GEDCOM}")."\">";
-									$parentlinks .= PrintReady($husb->getFullName());
-									$parentlinks .= "</a>";
-								}else{
-									$parentlinks .= $pgv_lang["private"];
-								}
-								$parentlinks .= "<br />\n";
+								$parentlinks .= "<a href=\"".encode_url($husb->getLinkUrl()."&amp;tab={$tabno}")."\">";
+								$parentlinks .= PrintReady($husb->getFullName());
+								$parentlinks .= "</a>";
+								$parentlinks .= "<br />";
 								$natdad = "yes";
 							}
 						}
@@ -613,15 +568,10 @@ function print_pedigree_person_nav($pid, $style=1, $show_famlink=true, $count=0,
 								}else{
 									$title = $wife->getXref()." :".$pgv_lang["indi_info"];
 								}
-								$tmp=$wife->getXref();
-								if ($wife->canDisplayName()) {
-									$parentlinks .= "<a href=\"".encode_url("individual.php?pid={$tmp}&amp;tab={$tabno}&amp;gedcom={$GEDCOM}")."\">";
-									$parentlinks .= PrintReady($wife->getFullName());
-									$parentlinks .= "</a>";
-								}else{
-									$parentlinks .= $pgv_lang["private"];
-								}
-								$parentlinks .= "<br />\n";
+								$parentlinks .= "<a href=\"".encode_url($wife->getLinkUrl()."&amp;tab={$tabno}")."\">";
+								$parentlinks .= PrintReady($wife->getFullName());
+								$parentlinks .= "</a>";
+								$parentlinks .= "<br />";
 								$natmom = "yes";
 							}
 						}
@@ -654,15 +604,10 @@ function print_pedigree_person_nav($pid, $style=1, $show_famlink=true, $count=0,
 									}else{
 										$title = $husb->getXref()." :".$pgv_lang["indi_info"];
 									}
-									$tmp=$husb->getXref();
-									if ($husb->canDisplayName()) {
-										$parentlinks .= "<a href=\"".encode_url("individual.php?pid={$tmp}&amp;tab={$tabno}&amp;gedcom={$GEDCOM}")."\">";
-										$parentlinks .= PrintReady($husb->getFullName());
-										$parentlinks .= "</a>";
-									}else{
-										$parentlinks .= $pgv_lang["private"];
-									}
-									$parentlinks .= "<br />\n";
+									$parentlinks .= "<a href=\"".encode_url($husb->getLinkUrl()."&amp;tab={$tabno}")."\">";
+									$parentlinks .= PrintReady($husb->getFullName());
+									$parentlinks .= "</a>";
+									$parentlinks .= "<br />";
 								}
 							}
 						}
@@ -683,15 +628,10 @@ function print_pedigree_person_nav($pid, $style=1, $show_famlink=true, $count=0,
 									}else{
 										$title = $wife->getXref()." :".$pgv_lang["indi_info"];
 									}
-									$tmp=$wife->getXref();
-									if ($wife->canDisplayName()) {
-										$parentlinks .= "<a href=\"".encode_url("individual.php?pid={$tmp}&amp;tab={$tabno}&amp;gedcom={$GEDCOM}")."\">";
-										$parentlinks .= PrintReady($wife->getFullName());
-										$parentlinks .= "</a>";
-									}else{
-										$parentlinks .= $pgv_lang["private"];
-									}
-									$parentlinks .= "<br />\n";
+									$parentlinks .= "<a href=\"".encode_url($wife->getLinkUrl()."&amp;tab={$tabno}")."\">";
+									$parentlinks .= PrintReady($wife->getFullName());
+									$parentlinks .= "</a>";
+									$parentlinks .= "<br />";
 								}
 							}
 						}
@@ -719,14 +659,9 @@ function print_pedigree_person_nav($pid, $style=1, $show_famlink=true, $count=0,
 								}else{
 									$title = $spouse->getXref()." :".$pgv_lang["indi_info"];
 								}
-								$tmp=$spouse->getXref();
-								if ($spouse->canDisplayName()) {
-									$spouselinks .= "<a href=\"".encode_url("individual.php?pid={$tmp}&amp;tab={$tabno}&amp;gedcom={$GEDCOM}")."\">";
-									$spouselinks .= PrintReady($spouse->getFullName());
-								}else{
-									$spouselinks .= $pgv_lang["private"];
-								}
-								$spouselinks .= "</a><br />\n";
+								$spouselinks .= "<a href=\"".encode_url($spouse->getLinkUrl()."&amp;tab={$tabno}")."\">";
+								$spouselinks .= PrintReady($spouse->getFullName());
+								$spouselinks .= "</a><br />";
 								if ($spouse->getFullName() != "") {
 									$persons = "Yes";
 								}
@@ -735,31 +670,21 @@ function print_pedigree_person_nav($pid, $style=1, $show_famlink=true, $count=0,
 
 						// Children ------------------------------   @var $child Person
 						foreach($children as $c=>$child) {
-							$cpid = $child->getXref();
 							if ($child) {
 								$persons="Yes";
 								if ($TEXT_DIRECTION=="ltr") {
-									$title = $pgv_lang["indi_info"].": ".$cpid;
-									$spouselinks .= "\n\t\t\t\to&nbsp;&nbsp;";
-									if ($child->canDisplayName()) {
-										$spouselinks .= "<a href=\"".encode_url("individual.php?pid=".$child->getXref()."&amp;tab={$tabno}&amp;gedcom={$GEDCOM}")."\">";
-										$spouselinks .= PrintReady($child->getFullName());
-										$spouselinks .= "</a>";
-									}else{
-										$spouselinks .= $pgv_lang["private"];
-									}
+									$title = $pgv_lang["indi_info"].": ".$child->getXref();
+									$spouselinks .= "o&nbsp;&nbsp;";
+									$spouselinks .= "<a href=\"".encode_url($child->getLinkUrl()."&amp;tab={$tabno}")."\">";
+									$spouselinks .= PrintReady($child->getFullName());
+									$spouselinks .= "</a>";
 									$spouselinks .= "<br />";
 								}else{
-									$title = $cpid." :".$pgv_lang["indi_info"];
-									if ($child->canDisplayName()) {
-										$spouselinks .= "<a href=\"".encode_url("individual.php?pid=".$child->getXref()."&amp;tab={$tabno}&amp;gedcom={$GEDCOM}")."\">";
-										$spouselinks .= PrintReady($child->getFullName() );
-										$spouselinks .= "</a>";
-										$spouselinks .= "&nbsp;&nbsp;o";
-									}else{
-										$spouselinks .= "o&nbsp;&nbsp;";
-										$spouselinks .= $pgv_lang["private"];
-									}
+									$title = $child->getXref()." :".$pgv_lang["indi_info"];
+									$spouselinks .= "<a href=\"".encode_url($child->getLinkUrl()."&amp;tab={$tabno}")."\">";
+									$spouselinks .= PrintReady($child->getFullName() );
+									$spouselinks .= "</a>";
+									$spouselinks .= "&nbsp;&nbsp;o";
 									$spouselinks .= "<br />";
 								}
 							}
