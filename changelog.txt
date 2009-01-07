@@ -10,6 +10,7 @@
 
 
 Version 4.1.6 (bugs fixed post release)
+ - Fixed: [ 2481185 ] v4.1.6 not compatible with php 4? (fisharebest)
  - Fixed: Various lightbox/multimedia issues (windmillway)
  - Fixed: [ 2459204 ] unable to update with GDBI (fisharebest)
  - Fixed: [ 2432314 ] client.php 4498 inconsistency (fisharebest)
