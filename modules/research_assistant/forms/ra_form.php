@@ -1,29 +1,29 @@
 <?php
 /**
- * phpGedView Research Assistant Tool - ra_form.
- *
- * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- *
- * @package PhpGedView
- * @subpackage Research_Assistant
- * @version $Id$
- * @author Jason Porter
- */
+* phpGedView Research Assistant Tool - ra_form.
+*
+* phpGedView: Genealogy Viewer
+* Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
+*
+* This program is free software; you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation; either version 2 of the License, or
+* (at your option) any later version.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+* GNU General Public License for more details.
+*
+* You should have received a copy of the GNU General Public License
+* along with this program; if not, write to the Free Software
+* Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+*
+* @package PhpGedView
+* @subpackage Research_Assistant
+* @version $Id$
+* @author Jason Porter
+*/
 
 if (!defined('PGV_PHPGEDVIEW')) {
 	header('HTTP/1.0 403 Forbidden');
@@ -34,18 +34,18 @@ global $LANGUAGE, $factarray;
 require_once "includes/classes/class_person.php";
 
 /**
- * Base class for Research Assistant forms
- *
- */
+* Base class for Research Assistant forms
+*
+*/
 class ra_form {
 	var $people;
 	/**
-	 * GETS all PEOPLE associated with the task given taskid
-	 *
-	 * @return array people associated with the task
-	 */
+	* GETS all PEOPLE associated with the task given taskid
+	*
+	* @return array people associated with the task
+	*/
 	function getPeople(){
-        global $TBLPREFIX, $DBCONN;
+		global $TBLPREFIX, $DBCONN;
 
 		if (!is_null($this->people)) return $this->people;
 
@@ -63,10 +63,10 @@ class ra_form {
 
 
 	/**
-	 * GETS all SOURCES associated with the task given taskid
-	 *
-	 * @return sources associated with the task
-	 */
+	* GETS all SOURCES associated with the task given taskid
+	*
+	* @return sources associated with the task
+	*/
 	function getSources(){
         global $TBLPREFIX, $DBCONN, $GEDCOMS, $GEDCOM;
 
@@ -306,7 +306,7 @@ class ra_form {
 	               foreach($people as $pid=>$person) {
 							if (!is_null($person)) {
 	               $pval .= ';'.$person->getXref();
-	               $out .= '<a id="link_'.$pid.'" href="individual.php?pid='.$pid.'">'.$person->getFullName().'</a> <a id="rem_'.$pid.'" href="#" onclick="clearname(\'personid\', \'link_'.$pid.'\', \''.$pid.'\'); return false;" ><img src="images/remove.gif" border="0" alt="" /><br /></a>';
+	               $out .= '<a id="link_'.$pid.'" href="', $person->getLinkUrl().'">'.$person->getFullName().'</a> <a id="rem_'.$pid.'" href="#" onclick="clearname(\'personid\', \'link_'.$pid.'\', \''.$pid.'\'); return false;" ><img src="images/remove.gif" border="0" alt="" /><br /></a>';
 							}
 	               }
 	                   $out .= '</div>
