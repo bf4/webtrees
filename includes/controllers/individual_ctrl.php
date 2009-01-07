@@ -1803,7 +1803,7 @@ class IndividualControllerRoot extends BaseController {
 				<a href="javascript:;" onclick="return add_fams('<?php print $this->pid; ?>','HUSB');"><?php print $pgv_lang["link_as_husband"]; ?></a>
 				</td>
 			</tr>
-		   <?php }
+			<?php }
 			if ($this->indi->getSex()!="M") { ?>
 			<tr>
 				<td class="facts_value">
@@ -1823,14 +1823,23 @@ class IndividualControllerRoot extends BaseController {
 				<a href="javascript:;" onclick="return add_fams('<?php print $this->pid; ?>','WIFE');"><?php print $pgv_lang["link_as_wife"]; ?></a>
 				</td>
 			</tr>
-			<?php } if (PGV_USER_GEDCOM_ADMIN) { ?>
+			<?php } ?>
+<?php if (PGV_USER_CAN_ACCEPT) { // NOTE this function is restricted to ACCEPTORS because another bug prevents pending changes being shown on the close relatives tab of the indi page.  Once that bug is fixed, this function can be opened up to all! ?>
+			<tr>
+				<td class="facts_value">
+				<?php print_help_link("open_opf_child_help", "qm"); ?>
+				<a href="javascript:;" onclick="return addopfchild('<?php print $this->pid; ?>','U');"><?php print $pgv_lang["add_opf_child"]; ?></a>
+				</td>
+			</tr>
+<?php } ?>
+			<?php if (PGV_USER_GEDCOM_ADMIN) { ?>
 			<tr>
 				<td class="facts_value">
 				<?php print_help_link("link_remote_help", "qm"); ?>
 				<a href="javascript:;" onclick="return open_link_remote('<?php print $this->pid; ?>');"><?php print $pgv_lang["link_remote"]; ?></a>
-		   </td>
-		    </tr>
-		    <?php } ?>
+				</td>
+			</tr>
+			<?php } ?>
 		</table>
 		<?php } ?>
 		<br />

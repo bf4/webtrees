@@ -113,6 +113,7 @@ $pgv_lang["add_child_to_family"]	= "Add a child to this family";
 $pgv_lang["add_fact"]				= "Add new fact";
 $pgv_lang["add_father"] 			= "Add a new father";
 $pgv_lang["add_husb"]				= "Add husband";
+$pgv_lang["add_opf_child"]				= "Add a child to create a one-parent family";
 $pgv_lang["add_husb_to_family"] 	= "Add a husband to this family";
 $pgv_lang["add_media"]				= "Add a new Media item";
 $pgv_lang["add_media_lbl"]			= "Add Media";

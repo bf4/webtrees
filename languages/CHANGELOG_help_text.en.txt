@@ -45,6 +45,7 @@ VERSION 4.2.0
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 -----------------------------------------------------------------------------------------
++$pgv_lang["add_opf_child_help"]          7 Jan 2009        A
 -$pgv_lang["skip_cleanup_help"]						28 Dec 2008				D
 +$pgv_lang["edit_ROMN_GIVN_help"]					21 Dec 2008				A
 +$pgv_lang["edit_ROMN_SURN_help"]					21 Dec 2008				A

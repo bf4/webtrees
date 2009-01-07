@@ -330,6 +330,11 @@ function addnewspouse(famid, famtag) {
 	return false;
 }
 
+function addopfchild(pid, gender) {
+	window.open('edit_interface.php?action=addopfchild&pid='+pid+'&gender='+gender+"&"+sessionname+"="+sessionid+"&accesstime="+accesstime, '_blank', 'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1');
+	return false;
+}
+
 function addspouse(pid, famtag) {
 	window.open('edit_interface.php?action=addspouse&pid='+pid+'&famtag='+famtag+'&famid=new&'+sessionname+"="+sessionid+"&accesstime="+accesstime, '_blank', 'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1');
 	return false;
