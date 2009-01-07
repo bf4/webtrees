@@ -1,29 +1,29 @@
 <?php
 
 /**
- * Controller for the timeline chart
- *
- * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008	PGV Development Team.  All rights reserved.
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- *
- * @package PhpGedView
- * @subpackage Charts
- * @version $Id$
- */
+* Controller for the timeline chart
+*
+* phpGedView: Genealogy Viewer
+* Copyright (C) 2002 to 2008 PGV Development Team.  All rights reserved.
+*
+* This program is free software; you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation; either version 2 of the License, or
+* (at your option) any later version.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+* GNU General Public License for more details.
+*
+* You should have received a copy of the GNU General Public License
+* along with this program; if not, write to the Free Software
+* Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+*
+* @package PhpGedView
+* @subpackage Charts
+* @version $Id$
+*/
 
 if (!defined('PGV_PHPGEDVIEW')) {
 	header('HTTP/1.0 403 Forbidden');
@@ -46,8 +46,8 @@ $nonfacts = array("FAMS","FAMC","MAY","BLOB","OBJE","SEX","NAME","SOUR","NOTE","
 $nonfamfacts = array("CHAN","HUSB","WIFE","CHIL");
 
 /**
- * Main controller class for the timeline page.
- */
+* Main controller class for the timeline page.
+*/
 class LifespanControllerRoot extends BaseController {
 	var $pids = array ();
 	var $people = array();
@@ -57,7 +57,7 @@ class LifespanControllerRoot extends BaseController {
 
 	// The following colours are deliberately omitted from the $colors list:
 	// Blue, Red, Black, White, Green
-	var $colors = array ('Aliceblue', ' Antiquewhite', 'Aqua', ' Aquamarine', '	Azure', ' Beige', ' Bisque', ' Blanchedalmond', ' Blueviolet', ' Brown', ' Burlywood', ' Cadetblue', ' Chartreuse', ' Chocolate', ' Coral', ' Cornflowerblue', ' Cornsilk', ' Crimson', ' Cyan', ' Darkcyan', ' Darkgoldenrod', ' Darkgray', ' Darkgreen', ' Darkkhaki', ' Darkmagenta', ' Darkolivegreen', ' Darkorange', ' Darkorchid', ' Darkred', ' Darksalmon', ' Darkseagreen', ' Darkslateblue', ' Darkturquoise', ' Darkviolet', ' Deeppink', ' Deepskyblue', ' Dimgray', ' Dodgerblue', ' Firebrick', ' Floralwhite', ' Forestgreen', ' Fuchsia', ' Gainsboro', ' Ghostwhite', ' Gold', ' Goldenrod', ' Gray', ' Greenyellow', ' Honeydew', ' Hotpink', ' Indianred', ' Ivory', ' Khaki', ' Lavender', ' Lavenderblush', ' Lawngreen', ' Lemonchiffon', ' Lightblue', ' Lightcoral', ' Lightcyan', ' Lightgoldenrodyellow', ' Lightgreen', ' Lightgrey', ' Lightpink', ' Lightsalmon', ' Lightseagreen', ' Lightskyblue', ' Lightslategray', ' Lightsteelblue', ' Lightyellow', ' Lime', ' Limegreen', ' Linen', ' Magenta', ' Maroon', ' Mediumaqamarine�', '� Mediumblue�', '� Mediumorchid�', '� Mediumpurple�', '� Mediumseagreen', ' Mediumslateblue', ' Mediumspringgreen', ' Mediumturquoise', ' Mediumvioletred', 'Mintcream', ' Mistyrose', ' Moccasin', ' Navajowhite', ' Oldlace', ' Olive', ' Olivedrab', ' Orange', ' Orangered', ' Orchid', ' Palegoldenrod', ' Palegreen', ' Paleturquoise', ' Palevioletred', ' Papayawhip', ' Peachpuff', ' Peru', ' Pink', ' Plum', ' Powderblue', ' Purple', ' Rosybrown', ' Royalblue', ' Saddlebrown', ' Salmon', ' Sandybrown', ' Seagreen', ' Seashell', ' Sienna', ' Silver', ' Skyblue', ' Slateblue', ' Slategray', ' Snow', ' Springgreen', ' Steelblue', ' Tan', ' Teal', ' Thistle', ' Tomato', ' Turquoise', ' Violet', ' Wheat', ' Whitesmoke', ' Yellow', ' YellowGreen');
+	var $colors = array ('Aliceblue', 'Antiquewhite', 'Aqua', 'Aquamarine', 'Azure', 'Beige', 'Bisque', 'Blanchedalmond', 'Blueviolet', 'Brown', 'Burlywood', 'Cadetblue', 'Chartreuse', 'Chocolate', 'Coral', 'Cornflowerblue', 'Cornsilk', 'Crimson', 'Cyan', 'Darkcyan', 'Darkgoldenrod', 'Darkgray', 'Darkgreen', 'Darkkhaki', 'Darkmagenta', 'Darkolivegreen', 'Darkorange', 'Darkorchid', 'Darkred', 'Darksalmon', 'Darkseagreen', 'Darkslateblue', 'Darkturquoise', 'Darkviolet', 'Deeppink', 'Deepskyblue', 'Dimgray', 'Dodgerblue', 'Firebrick', 'Floralwhite', 'Forestgreen', 'Fuchsia', 'Gainsboro', 'Ghostwhite', 'Gold', 'Goldenrod', 'Gray', 'Greenyellow', 'Honeydew', 'Hotpink', 'Indianred', 'Ivory', 'Khaki', 'Lavender', 'Lavenderblush', 'Lawngreen', 'Lemonchiffon', 'Lightblue', 'Lightcoral', 'Lightcyan', 'Lightgoldenrodyellow', 'Lightgreen', 'Lightgrey', 'Lightpink', 'Lightsalmon', 'Lightseagreen', 'Lightskyblue', 'Lightslategray', 'Lightsteelblue', 'Lightyellow', 'Lime', 'Limegreen', 'Linen', 'Magenta', 'Maroon', 'Mediumaqamarine', ' Mediumblue', 'Mediumorchid', 'Mediumpurple', 'Mediumseagreen', 'Mediumslateblue', 'Mediumspringgreen', 'Mediumturquoise', 'Mediumvioletred', 'Mintcream', 'Mistyrose', 'Moccasin', 'Navajowhite', 'Oldlace', 'Olive', 'Olivedrab', 'Orange', 'Orangered', 'Orchid', 'Palegoldenrod', 'Palegreen', 'Paleturquoise', 'Palevioletred', 'Papayawhip', 'Peachpuff', 'Peru', 'Pink', 'Plum', 'Powderblue', 'Purple', 'Rosybrown', 'Royalblue', 'Saddlebrown', 'Salmon', 'Sandybrown', 'Seagreen', 'Seashell', 'Sienna', 'Silver', 'Skyblue', 'Slateblue', 'Slategray', 'Snow', 'Springgreen', 'Steelblue', 'Tan', 'Teal', 'Thistle', 'Tomato', 'Turquoise', 'Violet', 'Wheat', 'Whitesmoke', 'Yellow', 'YellowGreen');
 	var $malecolorR = array('000', ' 010', ' 020', ' 030', ' 040', ' 050', ' 060', ' 070', ' 080', ' 090', ' 100', ' 110', ' 120', ' 130', ' 140', ' 150', ' 160', ' 170', ' 180', ' 190', ' 200', ' 210', ' 220', ' 230', ' 240', ' 250');
 	var $malecolorG = array('000', ' 010', ' 020', ' 030', ' 040', ' 050', ' 060', ' 070', ' 080', ' 090', ' 100', ' 110', ' 120', ' 130', ' 140', ' 150', ' 160', ' 170', ' 180', ' 190', ' 200', ' 210', ' 220', ' 230', ' 240', ' 250');
 	var $malecolorB = 255;
@@ -80,15 +80,15 @@ class LifespanControllerRoot extends BaseController {
 	var $startDate;
 	var $currentsex;
 	/**
-	 * constructor
-	 */
+	* constructor
+	*/
 	function TimelineRootController() {
 		parent :: BaseController();
 	}
 
 	/**
-	 * Initialization function
-	 */
+	* Initialization function
+	*/
 	function init() {
 		global $GEDCOM_ID_PREFIX;
 		$this->colorindex = 0;
@@ -209,8 +209,6 @@ class LifespanControllerRoot extends BaseController {
 
 			//--Sort the arrar in order of being year
 			uasort($this->people, "compare_people");
-				//		print "after sort";
-				//		print_execution_stats();
 			//If there is people in the array posted back this if occurs
 			if (isset ($this->people[0])) {
 				//Find the maximum Death year and mimimum Birth year for each individual returned in the array.
@@ -239,10 +237,10 @@ class LifespanControllerRoot extends BaseController {
 	}
 
 	/**
-	 * Add a person and his or her immediate family members to
-	 * the pids array
-	 * @param string $newpid
-	 */
+	* Add a person and his or her immediate family members to
+	* the pids array
+	* @param string $newpid
+	*/
 	function addFamily($newpid, $gen=0) {
 		if (!empty ($newpid)) {
 			$person = Person::getInstance($newpid);
@@ -393,9 +391,9 @@ class LifespanControllerRoot extends BaseController {
 
 				$startPos = (($birthYear - $this->timelineMinYear) * $this->zoomfactor) + 14 + $modFix;
 				if (stristr($value->getFullName(), "starredname"))
-					    $minlength = (UTF8_strlen($value->getFullName())-34) * $this->zoomfactor;
-//						$minlength = (strlen($value->getFullName())-7) * $this->zoomfactor;  // Assumes <span class="starredname> becomes <u>
-				else	$minlength = UTF8_strlen($value->getFullName()) * $this->zoomfactor;
+					$minlength = (UTF8_strlen($value->getFullName())-34) * $this->zoomfactor;
+				else
+					$minlength = UTF8_strlen($value->getFullName()) * $this->zoomfactor;
 
 				if ($startPos > 15) {
 					$startPos = (($birthYear - $this->timelineMinYear) * $this->zoomfactor) + 15 + $modFix;
@@ -500,11 +498,11 @@ class LifespanControllerRoot extends BaseController {
 					else print get_first_letter($factarray["BIRT"]);
 					if (!$birthReal) print "*";
 					print "</b><span>".$value->getSexImage().$indiName."<br/>".$factarray["BIRT"]." ".strip_tags($bdate->Display(false))." ".PrintReady($value->getBirthPlace())."</span></a></td>" .
-					"\n\t\t<td align=\"left\" width=\"100%\"><a href=\"".encode_url("individual.php?pid=".$value->getXref())."\">".$value->getSexImage().$indiName.":  $lifespan </a></td>" .
+						"\n\t\t<td align=\"left\" width=\"100%\"><a href=\"".encode_url($value->getLinkUrl())."\">".$value->getSexImage().$indiName.":  $lifespan </a></td>" .
 					"\n\t\t<td width=\"15\">";
 					if ($value->isDead()) {
 						if ($deathReal || $value->isDead()) {
-			 				print "<a class=\"showit\" href=\"#\"><b>";
+							print "<a class=\"showit\" href=\"#\"><b>";
 							if (isset ($factAbbrev["DEAT"])) print $factAbbrev["DEAT"];
 							else print get_first_letter($factarray["DEAT"]);
 							if (!$deathReal) print "*";
@@ -532,7 +530,7 @@ class LifespanControllerRoot extends BaseController {
 						else print get_first_letter($factarray["BIRT"]);
 						if (!$birthReal) print "*";
 						print "</b><span>".$value->getSexImage().$indiName."<br/>".$factarray["BIRT"]." ".strip_tags($bdate->Display(false))." ".PrintReady($value->getBirthPlace())."</span></a></td>" .
-						"\n\t\t<td align=\"left\" width=\"100%\"><a href=\"".encode_url("individual.php?pid=".$value->getXref())."\">".$value->getSexImage().$indiName."</a></td>" .
+						"<td align=\"left\" width=\"100%\"><a href=\"".encode_url($value->getLinkUrl())."\">".$value->getSexImage().$indiName."</a></td>" .
 						"\n\t\t<td width=\"15\">";
 						if ($value->isDead()) {
 							if ($deathReal || $value->isDead()) {
@@ -549,7 +547,7 @@ class LifespanControllerRoot extends BaseController {
 						echo "\n<div style=\"text-align: left; position: absolute;top:".$Y."px; left:".$startPos."px;width:".$width."px; height:".$height."px; background-color:".$this->color."; border: solid blue 1px; z-index:$Z;\">" ;
 
 						$indiName = PrintReady(str_replace(array('<span class="starredname">', '</span>'), array('<u>', '</u>'), $value->getFullName()));
-						print"<a class=\"showit\" href=\"".encode_url("individual.php?pid=".$value->getXref())."\"><b>";
+						print "<a class=\"showit\" href=\"".encode_url($value->getLinkUrl())."\"><b>";
 						if (isset ($factAbbrev["BIRT"])) print $factAbbrev["BIRT"];
 						else print get_first_letter($factarray["BIRT"]);
 						if (!$birthReal) print "*";
@@ -574,8 +572,8 @@ class LifespanControllerRoot extends BaseController {
 	}
 
 	/**
-	 * check the privacy of the incoming people to make sure they can be shown
-	 */
+	* check the privacy of the incoming people to make sure they can be shown
+	*/
 	function checkPrivacy() {
 		global $CONTACT_EMAIL;
 		$printed = false;
@@ -583,7 +581,7 @@ class LifespanControllerRoot extends BaseController {
 			if (!$this->people[$i]->canDisplayDetails()) {
 				if ($this->people[$i]->canDisplayName()) {
 					$indiName = PrintReady(str_replace(array('<span class="starredname">', '</span>'), array('<u>', '</u>'), $this->people[$i]->getFullName()));
-					print "&nbsp;<a href=\"".encode_url("individual.php?pid=".$this->people[$i]->getXref())."\">".$indiName."</a>";
+					print "&nbsp;<a href=\"".encode_url($this->people[$i]->getLinkUrl())."\">".$indiName."</a>";
 					print_privacy_error($CONTACT_EMAIL);
 					print "<br />";
 					$printed = true;
