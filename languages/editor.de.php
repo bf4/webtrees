@@ -3,7 +3,7 @@
  * German texts
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team
+ * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -113,6 +113,7 @@ $pgv_lang["add_child_to_family"]	= "Kind zu dieser Familie hinzufügen";
 $pgv_lang["add_fact"]				= "neues Ereignis hinzufügen";
 $pgv_lang["add_father"]				= "Vater hinzufügen";
 $pgv_lang["add_husb"]				= "Ehemann hinzufügen";
+$pgv_lang["add_opf_child"]			= "Kind hinzufügen, um gleichzeitig eine Familie mit nur einem Elternteil zu erstellen";
 $pgv_lang["add_husb_to_family"]		= "Ehemann zu dieser Familie hinzufügen";
 $pgv_lang["add_media"]				= "Neue Multimedia Datei hinzufügen";
 $pgv_lang["add_media_lbl"]			= "Multimedia Datei hinzufügen";
