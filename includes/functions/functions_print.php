@@ -98,7 +98,7 @@ function print_pedigree_person($pid, $style=1, $show_famlink=true, $count=0, $pe
 			if ($LINK_ICONS!="disabled") {
 				//-- draw a box for the family popup
 				// NOTE: Start div I.$pid.$personcount.$count.links
-				$personlinks .= "\n\t\t\t<table class=\"person_box$isF\"><tr><td class=\"details1\">";
+				$personlinks .= "<table class=\"person_box$isF\"><tr><td class=\"details1\">";
 				// NOTE: Zoom
 				if ($TEXT_DIRECTION=="ltr") $title = $pgv_lang["pedigree_chart"].": ".$pid;
 				else $title = $pid." :".$pgv_lang["pedigree_chart"];
@@ -154,26 +154,24 @@ function print_pedigree_person($pid, $style=1, $show_famlink=true, $count=0, $pe
 							if (!empty($spouse)) {
 								if ($TEXT_DIRECTION=="ltr") $title = $pgv_lang["indi_info"].": ".$spouse->getXref();
 								else $title = $spouse->getXref()." :".$pgv_lang["indi_info"];
-								$tmp=$spouse->getXref();
-								$personlinks .= "<a href=\"".encode_url("individual.php?pid={$tmp}&ged={$GEDCOM}")."\" title=\"$title\" $mouseAction1>";
+								$personlinks .= "<a href=\"".encode_url($spouse->getLinkUrl())."\" title=\"$title\" $mouseAction1>";
 								if ($spouse->canDisplayName()) $personlinks .= PrintReady($spouse->getFullName());
 								else $personlinks .= $pgv_lang["private"];
-								$personlinks .= "</a><br />\n";
+								$personlinks .= "</a><br />";
 							}
 						}
 						/* @var $child Person */
 						foreach($children as $c=>$child) {
-							$cpid = $child->getXref();
-							if ($TEXT_DIRECTION=="ltr") $title = $pgv_lang["indi_info"].": ".$cpid;
-							else $title = $cpid." :".$pgv_lang["indi_info"];
-							$personlinks .= "\n\t\t\t\t&nbsp;&nbsp;<a href=\"individual.php?pid=$cpid&amp;ged=$GEDCOM\" title=\"$title\" $mouseAction1>";
+							if ($TEXT_DIRECTION=="ltr") $title = $pgv_lang["indi_info"].": ".$child->getXref();
+							else $title = $child->getXref()." :".$pgv_lang["indi_info"];
+							$personlinks .= "&nbsp;&nbsp;<a href=\"".encode_url($child->getLinkUrl())."\" title=\"$title\" $mouseAction1>";
 							if ($child->canDisplayName()) $personlinks .= PrintReady($child->getFullName());
 							else $personlinks .= $pgv_lang["private"];
 							$personlinks .= "<br /></a>";
 						}
 					}
 				}
-				$personlinks .= "</td></tr></table>\n\t\t";
+				$personlinks .= "</td></tr></table>";
 			}
 			// NOTE: Start div out-$pid.$personcount.$count
 			if ($style==1) $outBoxAdd .= " class=\"person_box$isF\" style=\"width: ".$bwidth."px; height: ".$bheight."px; padding: 2px; overflow: hidden; z-index:'-1';\"";
@@ -1109,7 +1107,7 @@ function print_favorite_selector($option=0) {
 		print "</select></form>";
 		break;
 	}
-	print "</div>\n";
+	print "</div>";
 }
 
 /**
@@ -2309,11 +2307,11 @@ function print_add_new_fact($id, $usedfacts, $type) {
 			if ($fact["type"]==$type || $fact["type"]=='all') {
 				echo '<option value="clipboard_', $key, '">', $pgv_lang['add_from_clipboard'], ' ', $factarray[$fact['fact']];
 				// TODO use the event class to store/parse the clipboard events
-				if (preg_match('/^2 DATE ([^\r\n]+)/m', $fact['factrec'], $match)) {
+				if (preg_match('/^2 DATE (.+)/m', $fact['factrec'], $match)) {
 					$tmp=new GedcomDate($match[1]);
 					echo '; ', $tmp->minDate()->Format('Y');
 				}
-				if (preg_match('/^2 PLAC ([^,\r\n]+)/m', $fact['factrec'], $match)) {
+				if (preg_match('/^2 PLAC ([^,\n]+)/m', $fact['factrec'], $match)) {
 					echo '; ', $match[1];
 				}
 				echo '</option>';
