@@ -847,4 +847,34 @@ $language_settings['arabic']=array(
 'COLLATION'=>'utf8_unicode_ci'
 );
 
+//-- settings for slovenian
+$language_settings['slovenian']=array(
+'pgv_langname'=>'slovenian',
+'pgv_lang_use'=>false,
+'pgv_lang_self'=>'Slovenščina',
+'lang_short_cut'=>'sl',
+'langcode'=>'sl;',
+'pgv_language'=>'languages/lang.sl.php',
+'confighelpfile'=>'languages/configure_help.sl.php',
+'helptextfile'=>'languages/help_text.sl.php',
+'flagsfile'=>'images/flags/slovenia.gif',
+'factsfile'=>'languages/facts.sl.php',
+'adminfile'=>'languages/admin.sl.php',
+'editorfile'=>'languages/editor.sl.php',
+'countryfile'=>'languages/countries.sl.php',
+'faqlistfile'=>'languages/faqlist.sl.php',
+'extrafile'=>'languages/extra.sl.php',
+'DATE_FORMAT'=>'D. M Y',
+'TIME_FORMAT'=>'G:i:s',
+'WEEK_START'=>'1',
+'TEXT_DIRECTION'=>'ltr',
+'NAME_REVERSE'=>false,
+'ALPHABET_upper'=>'ABCČĆDEFGHIJKLMNOPQRSŠTUVWXYZŽ',
+'ALPHABET_lower'=>'abcčćdefghijklmnopqrsštuvwxyzž',
+'MULTI_LETTER_ALPHABET'=>'',
+'MULTI_LETTER_EQUIV'=>'',
+'DICTIONARY_SORT'=>true,
+'COLLATION'=>'utf8_slovenian_ci'
+);
+
 ?>

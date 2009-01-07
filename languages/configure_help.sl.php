@@ -1,6 +1,6 @@
 <?php
 /**
- * English Language file for PhpGedView.
+ * Slovenian Language file for PhpGedView.
  *
  * phpGedView: Genealogy Viewer
  * Copyright (C) 2002 to 2008  PGV Development Team
@@ -20,6 +20,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  * @package PhpGedView
+ * @translator Leon Kos
  * @version $Id$
  */
 
@@ -62,8 +63,6 @@ $pgv_lang["SAVE_WATERMARK_IMAGE"]		= "Store watermarked full size images on serv
 $pgv_lang["SAVE_WATERMARK_IMAGE_help"]	= "~#pgv_lang[SAVE_WATERMARK_IMAGE]#~<br /><br />If the Media Firewall is enabled, should copies of watermarked full size images be stored on the server in addition to the same images without watermarks?<br /><br />When set to <b>#pgv_lang[yes]#</b>, full-sized watermarked images will be produced more quickly at the expense of higher server disk space requirements.<br />";
 $pgv_lang["DBPERSIST"]					= "Use persistent database connections";
 $pgv_lang["DBPERSIST_help"]				= "Controls whether PhpGedView should use persistent database connections when dealing with the database.<br /><br />When set to <b>Yes</b>, PhpGedView can re-use database connections thereby speeding up the establishing of database accesses.  However, this could cause errors if your host configuration has the maximum connections value set too low.  If you are unsure of your host's support of persistent connections, you should set this value to <b>No</b>.<br />";
-$pgv_lang["DB_UTF8_COLLATION"]			= "Use the database to provide UTF-8 collation";
-$pgv_lang["DB_UTF8_COLLATION_help"]		= "Controls whether PhpGedView should use the database's built-in sorting and collation facilities.  It is generally quicker to use the database to sort and filter data rather than PHP, although not all databases/versions provide this feature.  The collation sequence used for each language is set in that language's settings page.<br /><br /><span class=\"warning\">IMPORTANT: You should only set this value to YES if you do so BEFORE the database tables are created for the first time. Selecting it on an existing database could cause your data to become corrupted.</span><br /><br />MySQL offers good support for UTF-8, although not all collation sequences are available in earlier versions.  Other databases offer little or no support for UTF-8. If you are unsure of your database's support of UTF-8, you should set this value to <b>No</b>.<br /><br />This <a href='http://en.wikipedia.org/wiki/UTF-8' target='_blank' title='Wikipedia article'><b>Wikipedia article</b></a> contains comprehensive information and links about UTF-8.<br />";
 $pgv_lang["INDI_FACTS_ADD"] 			= "Individual Add Facts";
 $pgv_lang["INDI_FACTS_ADD_help"]		= "~#pgv_lang[INDI_FACTS_ADD]#~<br /><br />This is the list of GEDCOM facts that your users can add to individuals.  You can modify this list by removing or adding fact names, even custom ones, as necessary.  Fact names that appear in this list must not also appear in the <i>#pgv_lang[INDI_FACTS_UNIQUE]#</i> list.<br />";
 $pgv_lang["INDI_FACTS_UNIQUE"] 			= "Unique Individual Facts";
@@ -101,7 +100,7 @@ $pgv_lang["QUICK_REQUIRED_FACTS"]			= "Facts to always show on Quick Update";
 $pgv_lang["QUICK_REQUIRED_FACTS_help"]		= "~#pgv_lang[QUICK_REQUIRED_FACTS]#~<br /><br />This is a comma separated list of GEDCOM fact tags that will always be shown on the Quick Update form whether or not they already exist in the individual's record.  For example, if BIRT is in the list, fields for birth date and birth place will always be shown on the form.<br />";
 $pgv_lang["QUICK_ADD_FACTS"]			= "Facts to show on Quick Update";
 $pgv_lang["QUICK_ADD_FACTS_help"]		= "~#pgv_lang[QUICK_ADD_FACTS]#~<br /><br />This is a comma separated list of GEDCOM fact tags that will be shown on the Quick Update form.  Only the facts in this list will be shown on the form or made available for selection in the area where you add new facts on the form.<br />";
-$pgv_lang["SURNAME_TRADITION_help"] = "~#pgv_lang[SURNAME_TRADITION]#~<br /><br />When you add new members to a family, PhpGedView can supply default values for surnames according to regional custom.<br /><br /><ul><li>In the <b>Paternal</b> tradition, all family members share the father's surname.</li><li>In the <b>Spanish</b> and <b>Portuguese</b> tradition, children receive a surname from each parent.</li><li>In the <b>Icelandic</b> tradition, children receive their male parent's given name as a surname, with a suffix that denotes gender.</li><li>In the <b>Polish</b> tradition, all family members share the father's surname. For some surnames, the suffix indicates gender.  The suffixes <i>ski</i>, <i>cki</i>, and <i>dzki</i> indicate male, while the corresponding suffixes <i>ska</i>, <i>cka</i>, and <i>dzka</i> indicate female.</li></ul><br />";
+$pgv_lang["SURNAME_TRADITION_help"] = "~#pgv_lang[SURNAME_TRADITION]#~<br /><br />When you add new members to a family, PhpGedView can supply default values for surnames according to regional custom.<br /><br /><ul><li>In the <b>Paternal</b> tradition, all family members share the father's surname.</li><li>In the <b>Spanish</b> and <b>Portuguese</b> tradition, children receive a surname from each parent.</li><li>In the <b>Icelandic</b> tradition, children receive their male parent's given name as a surname, with a suffix that denotes gender.</li></ul><br />";
 $pgv_lang["ADVANCED_NAME_FACTS_help"] = "~#pgv_lang[ADVANCED_NAME_FACTS]#~<br /><br />This is a comma separated list of GEDCOM fact tags that will be shown on the add/edit name form.  If you use non-Latin alphabets such as Hebrew, Greek, Cyrillic or Arabic, you may want to add tags such as _HEB, ROMN, FONE, etc. to allow you to store names in several different alphabets.<br />";
 $pgv_lang["ADVANCED_PLAC_FACTS_help"] = "~#pgv_lang[ADVANCED_PLAC_FACTS]#~<br /><br />This is a comma separated list of GEDCOM fact tags that will be shown when you add or edit place names.  If you use non-Latin alphabets such as Hebrew, Greek, Cyrillic or Arabic, you may want to add tags such as _HEB, ROMN, FONE, etc. to allow you to store place names in several different alphabets.<br />";
 $pgv_lang["AUTO_GENERATE_THUMBS"]			= "Automatically generated thumbnails";
@@ -153,9 +152,9 @@ $pgv_lang["displ_conf"]			= "Display and Layout";
 $pgv_lang["displ_names_conf"]	= "Names";
 $pgv_lang["displ_comsurn_conf"] = "Common Surnames";
 $pgv_lang["displ_layout_conf"]	= "Layout";
-$pgv_lang["displ_hide_conf"]	= "Hide and Show";
-$pgv_lang["editopt_conf"]		= "Edit Options";
-$pgv_lang["useropt_conf"]		= "User Options";
+$pgv_lang["displ_hide_conf"]	= "Skrij in prikaži";
+$pgv_lang["editopt_conf"]		= "Uredi možnosti";
+$pgv_lang["useropt_conf"]		= "Uporabnikove možnosti";
 $pgv_lang["contact_conf"]		= "Contact Information";
 $pgv_lang["meta_conf"]			= "Web Site and META Tag Settings";
 $pgv_lang["gedconf_head"]		= "GEDCOM Configuration";
@@ -169,13 +168,13 @@ $pgv_lang["bad_host_user_pass"]		= "PhpGedView was unable to make a connection t
 $pgv_lang["bad_database_name"]		= "PhpGedView made a connection to your database host, but was unable to use the database with the name you entered.  Check that the database exists and that the username you entered has the appropriate permissions on that database.";
 $pgv_lang["db"]				= "Database";
 $pgv_lang["current_gedcoms"]		= "Current GEDCOMs";
-$pgv_lang["ged_gedcom"]			= "GEDCOM file";
-$pgv_lang["ged_title"]			= "GEDCOM title";
-$pgv_lang["ged_config"]			= "Configuration file";
-$pgv_lang["ged_search"]			= "SearchLog files";
-$pgv_lang["ged_change"]			= "ChangeLog files";
-$pgv_lang["ged_privacy"]		= "Privacy file";
-$pgv_lang["disabled"]			= "Disabled";
+$pgv_lang["ged_gedcom"]			= "Datoteka GEDCOM";
+$pgv_lang["ged_title"]			= "GEDCOM Naslov";
+$pgv_lang["ged_config"]			= "Nastavitvena datoteka";
+$pgv_lang["ged_search"]			= "Datoteka iskalnega dnevnika";
+$pgv_lang["ged_change"]			= "Datoteke dnevnikov sprememb";
+$pgv_lang["ged_privacy"]		= "Datoteka zasebnosti";
+$pgv_lang["disabled"]			= "Izključeno";
 $pgv_lang["mouseover"]			= "On Mouse Over";
 $pgv_lang["mousedown"]			= "On Mouse Down";
 $pgv_lang["click"]			= "On Mouse Click";
@@ -214,6 +213,8 @@ $pgv_lang["DISPLAY_JEWISH_GERESHAYIM"]		= "Display Hebrew Gershayim";
 $pgv_lang["DISPLAY_JEWISH_GERESHAYIM_help"]	= "~#pgv_lang[DISPLAY_JEWISH_GERESHAYIM]#~<br /><br />Show single and double quotes when displaying Hebrew dates.<br /><br />Setting this to <b>Yes</b> will display February 8 1969 as <span lang='he-IL' dir='rtl'>&#1499;'&#160;&#1513;&#1489;&#1496;&#160;&#1514;&#1513;&#1499;&quot;&#1496;</span>&lrm; while setting it to <b>No</b> will display it as <span lang='he-IL' dir='rtl'>&#1499;&#160;&#1513;&#1489;&#1496;&#160;&#1514;&#1513;&#1499;&#1496;</span>&lrm;.  This has no impact on the Jewish year setting since quotes are not used in Jewish dates displayed with Latin characters.<br /><br />Note: This setting is similar to the PHP 5.0 Calendar constants CAL_JEWISH_ADD_ALAFIM_GERESH and CAL_JEWISH_ADD_GERESHAYIM.  This single setting affects both.<br />";
 $pgv_lang["JEWISH_ASHKENAZ_PRONUNCIATION"]	= "Jewish Ashkenaz pronunciation";
 $pgv_lang["JEWISH_ASHKENAZ_PRONUNCIATION_help"]	= "~#pgv_lang[JEWISH_ASHKENAZ_PRONUNCIATION]#~<br /><br />Use Jewish Ashkenazi pronunciations.<br /><br />When set to <b>Yes</b> the months Cheshvan and Teves will be spelled with Ashkenazi pronunciation.  Setting it to <b>No</b> will change the months to Hesvan and Tevet.  This only affects the Jewish setting.  The Hebrew setting will always use the Hebrew alphabet.<br />";
+$pgv_lang["USE_RTL_FUNCTIONS"]	= "Use RTL processing";
+$pgv_lang["USE_RTL_FUNCTIONS_help"]	= "~#pgv_lang[USE_RTL_FUNCTIONS]#~<br /><br />Use processing to properly display GEDCOM data in RTL languages.  If set to <b>Yes</b> the database will be processed at runtime to ensure proper display of RTL data; this setting can slow down performance.<br />";
 $pgv_lang["DEFAULT_PEDIGREE_GENERATIONS"]	= "Pedigree generations";
 $pgv_lang["DEFAULT_PEDIGREE_GENERATIONS_help"]	= "~#pgv_lang[DEFAULT_PEDIGREE_GENERATIONS]#~<br /><br />Set the default number of generations to display on Descendancy and Pedigree charts.<br />";
 $pgv_lang["MAX_PEDIGREE_GENERATIONS"]		= "Maximum Pedigree generations";
@@ -286,7 +287,7 @@ $pgv_lang["SHOW_GEDCOM_RECORD_help"]	= "~#pgv_lang[SHOW_GEDCOM_RECORD]#~<br /><b
 $pgv_lang["ALLOW_EDIT_GEDCOM"]		= "Enable online editing";
 $pgv_lang["ALLOW_EDIT_GEDCOM_help"]	= "~#pgv_lang[ALLOW_EDIT_GEDCOM]#~<br /><br />This option enables online editing features for this database so that users with Edit privileges may update data online.<br />";
 $pgv_lang["EDIT_AUTOCLOSE"]		= "Autoclose edit window";
-$pgv_lang["EDIT_AUTOCLOSE_help"]	= "~#pgv_lang[EDIT_AUTOCLOSE]#~<br /><br />This option controls whether or not to automatically close the Edit window after a successful update.<br />";
+$pgv_lang["EDIT_AUTOCLOSE_help"]	= "~#pgv_lang[EDIT_AUTOCLOSE]#~<br /><br />This option controls wether or not to automatically close the Edit window after a successful update.<br />";
 $pgv_lang["INDEX_DIRECTORY_help"]	= "~#pgv_lang[INDEX_DIRECTORY]#~<br /><br />The path to a readable and writable directory where PhpGedView should store index files (include the trailing \"/\").  PhpGedView does not require this directory's name to be \"index\".  You can choose any name you like.<br /><br />For security, this directory should be placed somewhere in the server's file space that is not accessible from the Internet. An example of such a structure follows:<br /><b>PhpGedView:</b> dir1/dir2/dir3/PhpGedView<br /><b>Index:</b> dir1/dir4/dir5/dir6/index<br /><br />For the example shown, you would enter <b>../../dir4/dir5/dir6/index/</b> in this field.<br />";
 $pgv_lang["POSTAL_CODE"]  = "Postal Code position";
 $pgv_lang["POSTAL_CODE_help"] = "~#pgv_lang[POSTAL_CODE]#~<br /><br />Different countries use different ways to write the address. This option will enable you to place the postal code either before or after the city name.<br />";
@@ -368,13 +369,6 @@ $pgv_lang["SHOW_COUNTER_help"]		= "~#pgv_lang[SHOW_COUNTER]#~<br /><br />Show hi
 $pgv_lang["USE_REGISTRATION_MODULE_help"]	= "~#pgv_lang[USE_REGISTRATION_MODULE]#~<br /><br />Gives visitors the option of registering themselves for an account on the site.<br /><br />The visitor will receive an email message with a code to verify his application for an account.  After verification, the Administrator will have to approve the registration before it becomes active.<br />";
 $pgv_lang["ALLOW_USER_THEMES_help"]	= "~#pgv_lang[ALLOW_USER_THEMES]#~<br /><br />Gives users the option of selecting their own theme.<br />";
 $pgv_lang["PGV_SIMPLE_MAIL_help"] = "~#pgv_lang[PGV_SIMPLE_MAIL]#~<br /><br />In normal mail headers for external mails, the email address as well as the name are used. Some mail systems will not accept this. When set to <b>Yes</b>, only the email address will be used.<br />";
-$pgv_lang["PGV_SMTP_ACTIVE_help"] = "~#pgv_lang[PGV_SMTP_ACTIVE]#~<br /><br />Use SMTP to send e-mails from PhpGedView.<br /><br />This option requires access to an SMTP mail server.  When set to <b>#pgv_lang[no]#</b> PhpGedView will use the e-mail system built into PHP on this server.<br />";
-$pgv_lang["PGV_SMTP_HOST_help"] = "~#pgv_lang[PGV_SMTP_HOST]#~<br /><br />This is the name of the SMTP mail server.  Example: <b>smtp.foo.bar.com</b>.<br />";
-$pgv_lang["PGV_SMTP_HELO_help"] = "~#pgv_lang[PGV_SMTP_HELO]#~<br /><br />This is the domain part of a valid e-mail address on the SMTP server.<br /><br />For example, if you have an e-mail account such as <b>yourname@abc.xyz.com</b>, you would enter <b>abc.xyz.com</b> here.<br />";
-$pgv_lang["PGV_SMTP_PORT_help"] = "~#pgv_lang[PGV_SMTP_PORT]#~<br /><br />The port number to be used for connections to the SMTP server.  Generally, this is port <b>25</b>.<br />";
-$pgv_lang["PGV_SMTP_AUTH_help"] = "~#pgv_lang[PGV_SMTP_AUTH]#~<br /><br />Use name and password authentication to connect to the SMTP server.<br /><br />Some SMTP servers require all connections to be authenticated before they will accept outbound e-mails.<br />";
-$pgv_lang["PGV_SMTP_AUTH_USER_help"] = "~#pgv_lang[PGV_SMTP_AUTH_USER]#~<br /><br />The user name required for authentication with the SMTP server.<br />";
-$pgv_lang["PGV_SMTP_AUTH_PASS_help"] = "~#pgv_lang[PGV_SMTP_AUTH_PASS]#~<br /><br />The password required for authentication with the SMTP server.<br />";
 $pgv_lang["gedcom_title"]			= "#pgv_lang[ged_title]#";
 $pgv_lang["gedcom_title_help"]		= "~#pgv_lang[gedcom_title]#~<br /><br />Enter a descriptive title to be displayed when users are choosing among GEDCOM datasets at your site.<br />";
 $pgv_lang["LOGFILE_CREATE"]		= "Archive log files";
@@ -416,9 +410,9 @@ $pgv_lang["META_TITLE"]		= "Add to TITLE header tag";
 $pgv_lang["META_TITLE_help"]	=	"~#pgv_lang[META_TITLE]#~<br /><br />Anything on this line will be added to the TITLE tag in the HTML page header after the regular page title and before the PhpGedView credit.<br />";
 
 $pgv_lang["ENABLE_RSS"]				= "Enable RSS";
-$pgv_lang["ENABLE_RSS_help"]		= "~#pgv_lang[ENABLE_RSS]#~<br /><br />This option lets you disable the RSS feature.<br /><br />RSS lets users monitor your site for changes to the Index page without actually visiting your site periodically.  If too many users make use of this feature or if the refresh frequency set by these users is too high, RSS can use up too much bandwidth or server capacity.<br /><br />This <a href='http://en.wikipedia.org/wiki/RSS' target='_blank' title='Wikipedia article'><b>Wikipedia article</b></a> contains comprehensive information and links about RSS and the various RSS formats.<br />";
+$pgv_lang["ENABLE_RSS_help"]		= "~#pgv_lang[ENABLE_RSS]#~<br /><br />This option lets you disable the RSS feature.<br /><br />RSS lets users monitor your site for changes to the Index page without actually visiting your site periodically.  If too many users make use of this feature or if the refresh frequency set by these users is too high, RSS can use up too much bandwidth or server capacity.<br /><br />This <a href='http://en.wikipedia.org/wiki/RSS_(file_format)' target='_blank' title='Wikipedia article'><b>Wikipedia article</b></a> contains comprehensive information and links about RSS and the various RSS formats.<br />";
 $pgv_lang["RSS_FORMAT"]				= "RSS Format";
-$pgv_lang["RSS_FORMAT_help"]		= "~#pgv_lang[RSS_FORMAT]#~<br /><br />The format to be used as the default feed format for the site. The numeric suffixes <u>do not</u> indicate version: they identify formats.  For example, RSS 2.0 is not newer than RSS 1.0, but a different format. Feed readers should be able to read any format.<br /><br />This <a href='http://en.wikipedia.org/wiki/RSS' target='_blank'title='Wikipedia article'><b>Wikipedia article</b></a> contains comprehensive information and links about RSS and the various RSS formats.<br />";
+$pgv_lang["RSS_FORMAT_help"]		= "~#pgv_lang[RSS_FORMAT]#~<br /><br />The format to be used as the default feed format for the site. The numeric suffixes <u>do not</u> indicate version: they identify formats.  For example, RSS 2.0 is not newer than RSS 1.0, but a different format. Feed readers should be able to read any format.<br /><br />This <a href='http://en.wikipedia.org/wiki/RSS_(file_format)' target='_blank'title='Wikipedia article'><b>Wikipedia article</b></a> contains comprehensive information and links about RSS and the various RSS formats.<br />";
 $pgv_lang["SECURITY_CHECK_GEDCOM_DOWNLOADABLE"] = "Check if GEDCOM files are downloadable";
 $pgv_lang["SECURITY_CHECK_GEDCOM_DOWNLOADABLE_help"] = "~#pgv_lang[SECURITY_CHECK_GEDCOM_DOWNLOADABLE]#~<br /><br />For security reasons, GEDCOM files should not be in a location where they can be directly downloaded, thus bypassing privacy checks. Clicking this link will check if your GEDCOM files can be downloaded over the network.<br /><br />On some systems this check has been known to take a really long time or not even complete.  If that is the case for you, then you should try to point your browser directly at your GEDCOM to see if it can be downloaded.<br />";
 $pgv_lang["gedcom_download_secure"]	= "#GEDCOM# cannot be downloaded.";
@@ -427,16 +421,16 @@ $pgv_lang["welcome_new2"]			= "<br /><br />Since you are seeing this page, you h
 $pgv_lang["welcome_new_help"]		= "~#pgv_lang[welcome_new]#~#pgv_lang[welcome_new2]#This Help page will guide you through the configuration process.  As you enter different fields, this window will provide you with help information about the field you are in.  You may close this window; to open it again click on one of the \"?\" question marks next to the field label.<br />";
 $pgv_lang["return_editconfig"]		= "You may return to this configuration at any time by pointing your browser to <i>editconfig.php</i> or by clicking the link for <b>Configuration</b> on the <b>PhpGedView Administration</b> page.<br />";
 $pgv_lang["return_editconfig_gedcom"]	= "You may return to this configuration at any time by clicking the link <b>Edit</b> in the <b>#pgv_lang[current_gedcoms]#</b> table on the <b>#pgv_lang[gedcom_adm_head]#</b> page or by pointing your browser to <i>editconfig_gedcom.php</i>.<br />";
-$pgv_lang["save_config"] 		= "Save configuration";
+$pgv_lang["save_config"] 		= "Shrani nastavitve";
 $pgv_lang["download_gedconf"]		= "Download GEDCOM configuration.";
 $pgv_lang["not_writable"]		= "We have detected that your configuration file is not writable by PHP.  You can use the <b>#pgv_lang[download_file]#</b> button to save your settings to a file that you can upload manually.";
 $pgv_lang["upload_to_index"]		= "Upload the file to your index directory: ";
 $pgv_lang["import_sql"]			= "SQL files have been found in your index directory. Since they may have originated from the User Migration tool, you have the option to import the information into your database. Do you wish to attempt importing these files into your database now? All existing user-related information (users, news, favorites, block layouts, and messages) in your database will be lost.<br /><br />If you choose to proceed, PhpGedView will attempt to import the data. If this is not successful, you will be asked to make the first administrator account anyway.<br />";
 
 //-- edit privacy messages
-$pgv_lang["edit_privacy"]			= "Edit Privacy";
+$pgv_lang["edit_privacy"]			= "Uredi zasebnost";
 $pgv_lang["edit_privacy_title"]			= "Edit GEDCOM privacy settings";
-$pgv_lang["save_changed_settings"]		= "Save changes";
+$pgv_lang["save_changed_settings"]		= "Shrani spremembe";
 $pgv_lang["add_new_pp_setting"]			= "Add new setting for Privacy by ID";
 $pgv_lang["add_new_up_setting"]			= "Add new setting for User Privacy";
 $pgv_lang["add_new_gf_setting"]			= "Add new setting for Global Fact Privacy";
@@ -449,21 +443,21 @@ $pgv_lang["edit_exist_person_facts_settings"]	= "Edit existing settings for Fact
 $pgv_lang["general_privacy"]			= "General Privacy settings";
 $pgv_lang["general_privacy_help"]		= "~#pgv_lang[general_privacy]#~<br /><br />You can have different Privacy settings for each GEDCOM on your PhpGedView web site.  Check under the page title whether you are editing the correct GEDCOM.<br /><br />You can override these general settings by using the other Privacy forms on the #pgv_lang[edit_privacy_title]# page.<br />#pgv_lang[more_config_hjaelp]#";
 $pgv_lang["person_privacy"]				= "Privacy settings by ID";
-$pgv_lang["person_privacy_help"]		= "~#pgv_lang[person_privacy]#~<br /><br />These settings allow administrators to override default privacy settings for a particular person, family, source, or media object.<br /><br />Suppose for example you have a child who died in infancy. Normally because the child is dead, its details would be shown to public users. However, you and everyone else in your family are still private. You don't want to remove the death record for the child but you want to hide the details and make them private. If this child had the ID of I100 you should enter the following privacy settings:<br />ID: I100<br />Show to: Show only to authenticated users<br /><br />This works the other way as well. If you wanted to make public the details of someone (ID I101) who you know to be dead but don't have a death date for, you could add the following:<br />ID: I101<br />Show to: Show to public<br />";
+$pgv_lang["person_privacy_help"]		= "~#pgv_lang[person_privacy]#~<br /><br />These settings allow administrators to override default privacy settings for a particular person, family, source, or media object.<br /><br />Suppose for example you have a child who died in infancy. Normally because the child is dead, its details would be shown to public users. However, you and everyone else in your family are still private. You don't want to remove the death record for the child but you want to hide the details and make them private. If this child had the ID of I100 you should enter the following privacy settings:<br />ID: I100<br />Show to: Show only to authenticated users<br /><br />This works the other way as well. If you wanted to make public the details of someone (ID 101) who you know to be dead but don't have a death date for, you could add the following:<br />ID: I101<br />Show to: Show to public<br />";
 $pgv_lang["user_privacy"]				= "User Privacy settings";
-$pgv_lang["user_privacy_help"]			= "~#pgv_lang[user_privacy]#~<br /><br />These settings give administrators the ability to override default privacy settings for individuals in the GEDCOM based on Username.  Suppose you don't want the Username <b>John</b> to be able to see any details of ID I100 in the GEDCOM, you could configure it like this:<br />Username: John<br />ID: I100<br />Show?: \"Hide\"<br /><br />and details for the specified individual would be hidden for the Username \"John\" only.<br /><br />To show the details of I101 (which usually would be hidden because I101 is still alive) to Username \"John\" set:<br /><br />Username: John<br />ID: I101<br />Show?: \"Show\"<br />";
+$pgv_lang["user_privacy_help"]			= "~#pgv_lang[user_privacy]#~<br /><br />These settings give administrators the ability to override default privacy settings for individuals in the GEDCOM based on Username.  Suppose you don't want the Username <b>John</b> to be able to see any details of ID 100 in the GEDCOM, you could configure it like this:<br />Username: John<br />ID: I100<br />Show?: \"Hide\"<br /><br />and details for the specified individual would be hidden for the Username \"John\" only.<br /><br />To show the details of I101 (which usually would be hidden because I101 is still alive) to Username \"John\" set:<br /><br />Username: John<br />ID: I101<br />Show?: \"Show\"<br />";
 $pgv_lang["global_facts"]				= "Global Fact Privacy settings";
 $pgv_lang["global_facts_help"]			= "~#pgv_lang[global_facts]#~<br /><br />These settings define facts on a global level that should be hidden for all individuals in the GEDCOM.  This only applies to level 1 fact records such as BIRT or DEAT that will appear with their own headings on the personal facts and details tab of the individual page.<br /><ul><li>The <b>#pgv_lang[name_of_fact]#</b> element determines which fact should be hidden.</li><li>The <b>#pgv_lang[choice]#</b> element specifies the fact itself or related details.</li><li>The <b>#pgv_lang[accessible_by]#</b> element determines at what access level the fact is shown.</li></ul><br />This feature is meant to hide certain facts, identified by GEDCOM tags, for all individuals alive or dead. By default the SSN tag is hidden to public users. This is to prevent people from stealing social security numbers and committing identity theft of dead persons.  This is probably mostly relevant for the USA.<br /><br />If you wanted to hide all marriages from public users in your GEDCOM you could set:<br /><br /><b>#pgv_lang[name_of_fact]#</b> (MARR) - Marriage<br /><b>#pgv_lang[choice]#</b> \"#pgv_lang[fact_show]#\"<br /><b>#pgv_lang[accessible_by]#</b> \"#pgv_lang[PRIV_USER]#\"<br /><br /><b>#pgv_lang[name_of_fact]#</b> (MARR) - Marriage<br /><b>#pgv_lang[choice]#</b> \"#pgv_lang[fact_details]#\"<br /><b>#pgv_lang[accessible_by]#</b> \"#pgv_lang[PRIV_USER]#\"<br /><br />These settings would hide marriages and related details to everyone who wasn't an admin.<br /><br />Unlike all other settings, in <b>#pgv_lang[edit_exist_global_facts_settings]#</b> you can hide facts even from admin users. Unwanted facts are completely suppressed.<br />";
 $pgv_lang["person_facts"]				= "Facts Privacy settings by ID";
 $pgv_lang["person_facts_help"]			= "~#pgv_lang[person_facts]#~<br /><br />These settings define facts that are hidden for a specific person, family, or source and the level at which they are hidden.  This only applies to level 1 fact records such as BIRT or DEAT that will appear with their own headings on the relevant details page  of the person, family, or source.<br /><br />The first element is the ID of the person, family, or source. The second element is the fact.  The <b>#pgv_lang[choice]#</b> element specifies the fact itself or related details.  The <b>#pgv_lang[accessible_by]#</b> element determines at what access level the fact is shown.  Not all facts shown in the list are applicable to all types of IDs.  For example, Birth and Death facts are not relevant to Source records.<br /><br />The \$person_facts array works the same as the \$global_facts array except that you also specify the GEDCOM ID of the person you want to hide facts for. You could, for example, hide the marriage record for a specific person.<br />";
 $pgv_lang["accessible_by"]			= "Show to?";
-$pgv_lang["hide"]				= "Hide";
-$pgv_lang["show_question"]			= "Show?";
-$pgv_lang["user_name"]				= "Username";
-$pgv_lang["name_of_fact"]			= "Name of fact";
-$pgv_lang["choice"]				= "Choice";
-$pgv_lang["fact_show"]				= "Show fact";
-$pgv_lang["fact_details"]			= "Show fact details";
+$pgv_lang["hide"]				= "Skrij";
+$pgv_lang["show_question"]			= "Pokaži?";
+$pgv_lang["user_name"]				= "Uporabniško ime";
+$pgv_lang["name_of_fact"]			= "Ime dejstva";
+$pgv_lang["choice"]				= "Izbor";
+$pgv_lang["fact_show"]				= "Pokaži dejstvo";
+$pgv_lang["fact_details"]			= "Pokaži podrobnosti dejstva";
 $pgv_lang["privacy_header"]			= "Edit privacy settings";
 $pgv_lang["unable_to_find_privacy_indi"]	= "Unable to find individual with id";
 $pgv_lang["save_and_import"]			= "After you save this GEDCOM configuration you will need to import the GEDCOM by clicking the <b>Import GEDCOM</b> button or by going to <b>Admin->Manage GEDCOMs->Import</b>";
@@ -505,7 +499,7 @@ $pgv_lang["bom_not_found"]		= "No BOM has been found.";
 $pgv_lang["bom_found"]			= "BOM has been found in ";
 $pgv_lang["edit_lang_utility"]		= "Language File Edit Utility";
 $pgv_lang["edit_lang_utility_help"]	= "~#pgv_lang[edit_lang_utility]#~<br /><br />#pgv_lang[edit_lang_utility_desc]#<br />";
-$pgv_lang["edit_lang_utility_desc"]	= "You can use this utility to edit the contents of a language file by using the contents of the English one.<br /><br />You will see the contents of the original English language file and the contents of the same file type (there are nine of these) in your chosen language.  You click on the message text shown below the English version.  This opens a new window where you can modify the text.  You can save the changes or abandon them.";
+$pgv_lang["edit_lang_utility_desc"]	= "You can use this utility to edit the contents of a language file by using the contents of the English one.<br /><br />You will see the contents of the original English language file and the contents of the same file type (there are four of these) in your chosen language.  You click on the message text shown below the English version.  This opens a new window where you can modify the text.  You can save the changes or abandon them.";
 $pgv_lang["edit_lang_utility_warning"]	= "CAUTION!<br /><br />If you use the <b>#pgv_lang[close_window_without_refresh]#</b> button, you might not see your changes on the screen until you do a manual page reload.  It's possible that your language file may be destroyed if you add a message which has not yet appeared inside the language file or if you just edit a message you have edited directly before.<br /><br />If you don't really know what you're doing, please do not use the <b>#pgv_lang[close_window_without_refresh]#</b> button.";
 $pgv_lang["language_to_edit"]		= "Language to edit";
 $pgv_lang["language_to_edit_help"]		= "~#pgv_lang[language_to_edit]#~<br /><br />In this list box you select the language whose messages you want to edit.<br />";
@@ -534,7 +528,7 @@ $pgv_lang["export_lang_utility_desc"]	= "You can create documentation for admini
 $pgv_lang["export_ok"]			= "Help messages were exported";
 $pgv_lang["compare_lang_utility"]	= "Language File Comparison Utility";
 $pgv_lang["compare_lang_utility_help"]	= "~#pgv_lang[compare_lang_utility]#~<br /><br />#pgv_lang[compare_lang_utility_desc]#<br />";
-$pgv_lang["compare_lang_utility_desc"]	= "This utility will compare two sets of language files to produce a list of the additions and subtractions between them.<br /><br />You should also check the various CHANGELOG files for changes to the English versions.  The English files should be used as the reference from which all others are produced.";
+$pgv_lang["compare_lang_utility_desc"]	= "This utility will compare two sets of language files to produce a list of the additions and subtractions between them.<br /><br />Read also the file <a href=\"languages/LANG_CHANGELOG.txt\" target=\"_blank\">LANG_CHANGELOG.txt</a> for changes to the English version.  The English files should be used as the reference from which all others are produced.";
 $pgv_lang["new_language"]		= "Source language";
 $pgv_lang["new_language_help"]			= "~#pgv_lang[new_language]#~<br /><br />From this list box you can select the language whose messages you want to compare with those of another language.<br /><br />All changes and additions to language files are first made to the <b>English</b> language files, so you would normally select English as one of the languages to compare.<br />";
 $pgv_lang["old_language"]		= "Secondary language";
@@ -549,20 +543,20 @@ $pgv_lang["config_lang_utility"]	= "Configuration of supported languages";
 $pgv_lang["config_lang_utility_help"]	= "~#pgv_lang[config_lang_utility]#~<br /><br />This page is used to control what language choices are available to your users.  For example, you can set things up so that only German and French are available.  This might be useful if, for example, you are not able to communicate with your users in Hungarian.<br /><br />You also use this page to alter certain aspects of PhpGedView that depend on the selected language.  For example, here is where you tell PhpGedView how to format date and time fields.<br /><br />The languages that are active and greyed out cannot be disabled because they are in use. Look at the bottom table to see where the language is used. When a language is no longer used by the GEDCOM or user you will be able to disable it.<br /><br />All of your changes will be recorded in a new file called <b>lang_settings.php</b> created in the <b>#INDEX_DIRECTORY#</b> directory.  All of your further changes will be made to this new file and PhpGedView will use only <u>this</u> file.  You can revert to the original default language settings by deleting this file.<br /><br />If you must report problems with your language settings, please tell the PhpGedView support team whether this new file is present or not.<br />";
 $pgv_lang["active"]			= "Active";
 $pgv_lang["active_help"]		= "~#pgv_lang[active]#~<br /><br />Allow users to select this language if the option <b>#pgv_lang[ENABLE_MULTI_LANGUAGE]#</b> is enabled.<br />";
-$pgv_lang["edit_settings"]		= "Edit settings";
-$pgv_lang["lang_edit"]			= "Edit";
-$pgv_lang["lang_language"]		= "Language";
-$pgv_lang["export_filename"]		= "Output file name:";
+$pgv_lang["edit_settings"]		= "Uredi nastavitve";
+$pgv_lang["lang_edit"]			= "Uredi";
+$pgv_lang["lang_language"]		= "Jezik";
+$pgv_lang["export_filename"]		= "Ime izhodne datoteke:";
 $pgv_lang["lang_back"]			= "Return to the main menu to edit and configure language files";
-$pgv_lang["lang_back_admin"]		= "Return to the Admin menu";
-$pgv_lang["lang_back_manage_gedcoms"]	= "Return to the GEDCOM management menu";
+$pgv_lang["lang_back_admin"]		= "Vrtni se na meni upravitelja";
+$pgv_lang["lang_back_manage_gedcoms"]	= "Vrni se na meni upravljanja z GEDCOM-i";
 $pgv_lang["lang_name_arabic"]		= "Arabic";
 $pgv_lang["lang_name_catalan"]		= "Catalan (Valencian)";
 $pgv_lang["lang_name_czech"]		= "Czech";
 $pgv_lang["lang_name_chinese"]		= "Chinese";
 $pgv_lang["lang_name_danish"]		= "Danish";
 $pgv_lang["lang_name_dutch"]		= "Dutch";
-$pgv_lang["lang_name_english"]		= "English";
+$pgv_lang["lang_name_english"]		= "Angleščina";
 $pgv_lang["lang_name_estonian"]		= "Estonian";
 $pgv_lang["lang_name_finnish"]		= "Finnish";
 $pgv_lang["lang_name_french"]		= "French";
@@ -578,13 +572,13 @@ $pgv_lang["lang_name_portuguese"]	= "Portuguese";
 $pgv_lang["lang_name_romanian"]		= "Romanian";
 $pgv_lang["lang_name_russian"]		= "Russian";
 $pgv_lang["lang_name_slovak"]		= "Slovak";
-$pgv_lang["lang_name_slovenian"] = "Slovenian";
+$pgv_lang["lang_name_slovenian"]	= "Slovenščina";
 $pgv_lang["lang_name_spanish"]		= "Spanish";
 $pgv_lang["lang_name_spanish-ar"]	= "Spanish (Latin America)";
 $pgv_lang["lang_name_swedish"]		= "Swedish";
 $pgv_lang["lang_name_turkish"]		= "Turkish";
 $pgv_lang["lang_name_vietnamese"]	= "Vietnamese";
-$pgv_lang["lang_new_language"]		= "New Language";
+$pgv_lang["lang_new_language"]		= "Nov jezik";
 $pgv_lang["original_lang_name"]		= "Original name of language in #D_LANGNAME#";
 $pgv_lang["original_lang_name_help"]	= "~Original name of language~<br /><br />How is this language named in this language?<br /><br />English calls itself <b>English</b>;  German calls itself <b>Deutsch</b>;  Dutch calls itself <b>Nederlands</b>;  Czech calls itself <b>Ceština</b>, etc.<br />";
 $pgv_lang["lang_shortcut"]		= "Abbreviation for language files";
@@ -616,12 +610,8 @@ $pgv_lang["alphabet_lower"]		= "Alphabet lower case";
 $pgv_lang["alphabet_lower_help"]	= "~#pgv_lang[alphabet_lower]#~<br /><br />Lower case alphabet letters in this language.  This alphabet is used while sorting lists of names.<br />";
 $pgv_lang["multi_letter_alphabet"]		= "Multi-letter alphabet";
 $pgv_lang["multi_letter_alphabet_help"]	= "~#pgv_lang[multi_letter_alphabet]#~<br /><br />Multi-letter combinations that are to be treated as a single distinct letter when sorting lists of names and titles in this language.<br /><br />Some languages, Hungarian and Slovak for example, consider certain combinations of letters to be distinct letters in their own right.  The order in which you specify these letter combinations determines the order in which they are inserted into the normal alphabet during sorting.  This is important when several multi-letter combinations have the same first letter.  Except for <b>ch</b>, these letter combinations are inserted into the normal alphabet according to their first letter.  <b>ch</b> is always inserted after <b>h</b>.<br />";
-$pgv_lang["multi_letter_equiv"]		= "Multi-letter equivalents";
-$pgv_lang["multi_letter_equiv_help"]	= "~#pgv_lang[multi_letter_equiv]#~<br /><br />In some languages, multiple letters are often treated as equivalent to a single letter when generating lists of names.<br /><br />For example, in Dutch, names beginning with IJ are listed together with names beginning with Y. In Norwegian, names beginning with AA are listed with &Aring;. In some languages, there are letters that can be written as one character or two. For example in Slovakian, the two characters D and \xC5\xBE can be written as the single character \xC7\x85. By specifying equivalents here, you can allow names beginning with these letters to be grouped together on the individual list pages.<br /><br />You should specify a comma-separated list of equivalents. To support databases that don't recognize UTF-8 encoding, you should specify both upper and lower case equivalents. This example demonstrates the format to use.<br /><br />Aa=&Aring;,aa=&aring;";
 $pgv_lang["dictionary_sort"]		= "Use dictionary rules while sorting";
 $pgv_lang["dictionary_sort_help"]	= "~#pgv_lang[dictionary_sort]#~<br /><br />This option controls how characters with diacritic marks are handled when sorting lists of names and titles.<br /><br />When set to <b>#pgv_lang[yes]#</b>, all characters with diacritic marks are treated as if they did not have any marks.  Diacritic marks are considered only when the two words being considered are otherwise identical.  When set to <b>#pgv_lang[no]#</b>, all letters are distinct, regardless of the presence or absence of diacritic marks.<br />";
-$pgv_lang["collation"]		= "Database collation sequence";
-$pgv_lang["collation_help"]	= "~#pgv_lang[collation]#~<br /><br />If you are using the database's built-in collation rules, this option specifies the collation sequence to use for this language.  You should ensure that your database supports all the collation sequences you intend to use.<br /><br />The use of database collation is controlled in the site configuration settings.<br />";
 $pgv_lang["lang_config_write_error"]	= "Error writing language settings into the file <b>lang_settings.php</b>.  Please check permissions and try again.";
 $pgv_lang["translation_forum"]		= "PhpGedView Translations forum on SourceForge";
 $pgv_lang["translation_forum_help"]	= "~#pgv_lang[translation_forum]#~<br /><br />#pgv_lang[translation_forum_desc]#<br />";
@@ -667,21 +657,21 @@ $pgv_lang["um_imp_news"] = "Importing news";
 $pgv_lang["um_nousers"] = "File <i>authenticate.php</i> not found in your index directory. Migration is cancelled.";
 $pgv_lang["um_imp_succ"] = "Import successful";
 $pgv_lang["um_imp_fail"] = "Import failed";
-$pgv_lang["um_backup"] = "Backup";
-$pgv_lang["um_zip_succ"] = "ZIP file successfully created.";
+$pgv_lang["um_backup"] = "Rezervna kopija";
+$pgv_lang["um_zip_succ"] = "Datoteka ZIP je bila uspešno izdelana.";
 $pgv_lang["um_zip_dl"] = "Download ZIPped backup file ";
-$pgv_lang["um_bu_explain"] = "This tool can make a backup of several kinds of data in PhpGedView.<br /><br />The data you choose to back up will be gathered into a ZIP file, which you can download by clicking the link at the bottom of the page, after the backup has been successfully made.<br /><br />The ZIP file will remain in your Index directory until you remove it manually.<br />";
+$pgv_lang["um_bu_explain"] = "To orodje lahko naredi rezervno kopijo različnih podatkov PhpGedView-a.<br /><br />Potatki, ki jih izberete se združijo v datoteko ZIP, ki jo lahko poberete s klikom na povezavo na dnu strani po tem, ko je se datoteka ZIP uspešno naredi.<br /><br />Datoteka ZIP bo ostala v imeniku Index dokler jo ne boste ročno izbrisali..<br />";
 $pgv_lang["um_bu_help"] = "~#pgv_lang[um_backup]#~<br /><br />#pgv_lang[um_bu_explain]#";
-$pgv_lang["um_bu_config"] = "PhpGedView Configuration File";
-$pgv_lang["um_bu_gedcoms"] = "GEDCOM Files";
-$pgv_lang["um_bu_gedsets"] = "GEDCOM Settings, Configuration and Privacy files";
-$pgv_lang["um_bu_logs"] = "GEDCOM Counters, SearchLogs and PhpGedView Logfiles";
-$pgv_lang["um_bu_usinfo"] = "User definitions, Block settings, Favorites, Messages, News";
-$pgv_lang["um_bu_media"]	= "Media files";
-$pgv_lang["um_mk_bu"] = "Make Backup";
-$pgv_lang["um_nofiles"] = "No files found for backup.";
-$pgv_lang["um_files_exist"] = "One or more files already exist. Do you want to overwrite them?";
-$pgv_lang["um_results"]		= "Results";
+$pgv_lang["um_bu_config"] = "PhpGedView datoteka zastavitev";
+$pgv_lang["um_bu_gedcoms"] = "GEDCOM datoteke";
+$pgv_lang["um_bu_gedsets"] = "GEDCOM nastavitve, Datoteki nastavitev in zasebnosti";
+$pgv_lang["um_bu_logs"] = "GEDCOM števci, Dnevniki iskanja in PhpGedView";
+$pgv_lang["um_bu_usinfo"] = "Podatki o uporabnikih, nastavitve sklopov, priljubljene nastavitve, sporočila, novice";
+$pgv_lang["um_bu_media"]	= "Datoteke fotografij";
+$pgv_lang["um_mk_bu"] = "Izdelaj rezervno kopijo";
+$pgv_lang["um_nofiles"] = "Ni datotek za izdelavo rezervne kopije.";
+$pgv_lang["um_files_exist"] = "Ena ali več datotek že obstaja. Ali jih želite prepisati?";
+$pgv_lang["um_results"]		= "Rezultati";
 $pgv_lang["preview_faq_item"] = "Preview all FAQ items";
 $pgv_lang["preview_faq_item_help"] = "~#pgv_lang[preview_faq_item]#~<br />This option lets an admin user view the FAQ page without all the editing options and links.<br /><br />Except for a single <b>Edit</b> link above the first FAQ item, the appearance of the FAQ page will be identical to what an ordinary user would see. This special <b>Edit</b> link will restore full Edit functionality to the FAQ page.<br />";
 $pgv_lang["restore_faq_edits"] = "Restore FAQ edit functionality";
@@ -704,6 +694,9 @@ $pgv_lang["add_faq_order_help"] = "~#pgv_lang[add_faq_order]#~<br />This field c
 $pgv_lang["add_faq_visibility_help"] = "~#pgv_lang[add_faq_visibility]#~<br />You can determine whether this FAQ will be visible regardless of GEDCOM, or whether it will be visible only to the current GEDCOM.<br /><ul><li><b>#pgv_lang[all]#</b>&nbsp;&nbsp;&nbsp;The FAQ will appear in all FAQ lists, regardless of GEDCOM.</li><li><b>#GLOBALS[GEDCOM]#</b>&nbsp;&nbsp;&nbsp;The FAQ will appear only in the currently active GEDCOM's FAQ list.</li></ul><br />";
 $pgv_lang["index_gedcom_news_adm_help"]		= "The GEDCOM News text allows the use of <b>HTML tags</b> and <b>HTML entities</b>.  HTML should not be used in News titles.<br /><br />Be sure to always use both start and end tags.  It may help to have an understanding of HTML appropriate for a web site administrator. This program uses <b>Cascading Style Sheets (CSS)</b> as well. A different CSS is implemented for each theme.  You can use classes from these style sheets to control the appearance of your messages.<br /><br />If you need more help with this, the PhpGedView web site has some examples of how to use these tags in your GEDCOM News block.<br /><br />As with the FAQ list, GEDCOM News titles and News text allow embedded references to \$pgv_lang, \$factarray, and \$GLOBALS variables to provide complete flexibility in the creation of News items that are sensitive to the currently active language.<br /><br />The following description, taken from the Help text for the FAQ list, is equally applicable to GEDCOM News items.<br /><br />#pgv_lang[add_faq_HTML]#<br /><br />#pgv_lang[add_faq_pgvLangRefs]#<br />";
 $pgv_lang["time_limit_help"]			= "~#pgv_lang[time_limit]#~<br /><br />The maximum time the import is allowed to run for processing the GEDCOM file.";
+
+// Media items
+$pgv_lang["media_import_help"] = "~#pgv_lang[media_import]#~<br />This import will convert the multimedia links in your GEDCOM file to multimedia records. For example, the following media entry will be changed from:<blockquote><code>1 OBJE<br />2 FORM jpg<br />2 FILE media/grandma.jpg<br />2 TITL Picture of grandma</code></blockquote>to:<blockquote><code>0 @M1@ OBJE<br />1 FORM jpg<br />1 FILE media/grandma.jpg<br />1 TITL Picture of grandma</code></blockquote>The new multimedia record will be stored separately in the database. Links to external multimedia files will be changed to references to the new multimedia record, which will in turn contain a reference to the external file. For example, the following GEDCOM record will be changed from:<blockquote><code>0 @I1@ INDI<br />1 NAME Your/Name/<br />1 OBJE<br />2 FORM jpg<br />2 FILE media/grandma.jpg<br />2 TITL Picture of grandma</code></blockquote>to:<blockquote><code>0 @I1@ INDI<br />1 NAME Your/Name/<br />1 OBJE @M1@<br /></code></blockquote>The advantage of using multimedia records is that you can easily administer your media. When you change the title of a multimedia record, it is changed for all GEDCOM records that link to this multimedia record. Several people,families, or sources can be linked to the same multimedia record.";
 
 // editconfig_gedcom.php Option Filter
 $pgv_lang["ged_filter_results"] = "Results found";
