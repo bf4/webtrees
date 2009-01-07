@@ -1,33 +1,33 @@
 <?php
 /**
- * phpGedView Research Assistant Tool - ra_EditTask
- *
- * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- *
- * @package PhpGedView
- * @subpackage Research_Assistant
- * @version $Id$:
- * @author Jason Porter
- * @author Wade Lasson
- * @author Brandon Gagnon
- * @author Brian Kramer
- * @author Julian Gautier
- */
+* phpGedView Research Assistant Tool - ra_EditTask
+*
+* phpGedView: Genealogy Viewer
+* Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
+*
+* This program is free software; you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation; either version 2 of the License, or
+* (at your option) any later version.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+* GNU General Public License for more details.
+*
+* You should have received a copy of the GNU General Public License
+* along with this program; if not, write to the Free Software
+* Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+*
+* @package PhpGedView
+* @subpackage Research_Assistant
+* @version $Id$:
+* @author Jason Porter
+* @author Wade Lasson
+* @author Brandon Gagnon
+* @author Brian Kramer
+* @author Julian Gautier
+*/
 
 if (!defined('PGV_PHPGEDVIEW')) {
 	header('HTTP/1.0 403 Forbidden');
@@ -40,20 +40,20 @@ require_once("includes/classes/class_person.php");
 global $pgv_lang, $TBLPREFIX, $DBCONN, $SOURCE_ID_PREFIX;
 
 	/**
-	 * GETS the DATES of the task with the given taskid
-	 *
-	 * @return mixed dates of the task
-	 */
+	* GETS the DATES of the task with the given taskid
+	*
+	* @return mixed dates of the task
+	*/
 	function getDates(){
-        global $TBLPREFIX, $DBCONN;
+		global $TBLPREFIX, $DBCONN;
 
 		$sql = "SELECT t_startdate, t_enddate, t_results FROM " . $TBLPREFIX . "tasks WHERE t_id='".$DBCONN->escapeSimple($_REQUEST['taskid'])."'";
 		$res = dbquery($sql);
 
-        $s_date = "";
-        $e_date = "";
-        $t_results = "";
-        $out = "";
+		$s_date = "";
+		$e_date = "";
+		$t_results = "";
+		$out = "";
 
 		while($dates =& $res->fetchRow(DB_FETCHMODE_ASSOC)) {
 			$s_date = $dates["t_startdate"];
@@ -65,37 +65,37 @@ global $pgv_lang, $TBLPREFIX, $DBCONN, $SOURCE_ID_PREFIX;
 	}
 
 	/**
-	 * GETS a list of all available FOLDERS with the folder that the current task is in, on top
-	 *
-	 * @return mixed list of available folders
-	 */
+	* GETS a list of all available FOLDERS with the folder that the current task is in, on top
+	*
+	* @return mixed list of available folders
+	*/
 	function getFolders($folderid) {
-        global $TBLPREFIX;
+		global $TBLPREFIX;
 
-        $sql = "select fr_name, fr_id from " . $TBLPREFIX . "folders";
+		$sql = "select fr_name, fr_id from " . $TBLPREFIX . "folders";
 		$res = dbquery($sql);
 
-        $out = "";
-        while($foldername =& $res->fetchRow(DB_FETCHMODE_ASSOC)){
-	if($foldername["fr_id"] != $folderid)
+		$out = "";
+		while($foldername =& $res->fetchRow(DB_FETCHMODE_ASSOC)){
+		if($foldername["fr_id"] != $folderid)
 			$out .= '<option value="'.$foldername['fr_id'].'">'.PrintReady($foldername['fr_name']) . '</option>';
-		    else
+		else
 			$out .= '<option value="'.$foldername['fr_id'].'" selected="selected">'.PrintReady($foldername['fr_name']) . '</option>';
 
 
 		}
 		print($folderid);
-     print("This is a test");
-        return $out;
+		print("This is a test");
+		return $out;
 	}
 
 	/**
-	 * GETS all PEOPLE associated with the task given taskid
-	 *
-	 * @return mixed people associated with the task
-	 */
+	* GETS all PEOPLE associated with the task given taskid
+	*
+	* @return mixed people associated with the task
+	*/
 	function getPeople(){
-        global $TBLPREFIX, $DBCONN;
+		global $TBLPREFIX, $DBCONN;
 
 		$sql = "SELECT it_i_id FROM " . $TBLPREFIX . "individualtask WHERE it_t_id='" . $DBCONN->escapeSimple($_REQUEST["taskid"]) . "'";
 		$res = dbquery($sql);
@@ -111,12 +111,12 @@ global $pgv_lang, $TBLPREFIX, $DBCONN, $SOURCE_ID_PREFIX;
 	}
 
 	/**
-	 * GETS all SOURCES associated with the task given taskid
-	 *
-	 * @return sources associated with the task
-	 */
+	* GETS all SOURCES associated with the task given taskid
+	*
+	* @return sources associated with the task
+	*/
 	function getSources(){
-        global $TBLPREFIX, $DBCONN, $GEDCOMS, $GEDCOM;
+		global $TBLPREFIX, $DBCONN, $GEDCOMS, $GEDCOM;
 
 		$sql = "SELECT s_name, s_id FROM " . $TBLPREFIX . "sources, ".$TBLPREFIX."tasksource WHERE s_file=".$GEDCOMS[$GEDCOM]['id']." AND ts_s_id=s_id AND ts_t_id='" . $DBCONN->escapeSimple($_REQUEST["taskid"]) . "'";
 		$res = dbquery($sql);
@@ -130,10 +130,10 @@ global $pgv_lang, $TBLPREFIX, $DBCONN, $SOURCE_ID_PREFIX;
 	}
 
 	/**
-	 * GETS all COMMENTS associated with the task
-	 *
-	 * @return mixed comments associated with the task
-	 */
+	* GETS all COMMENTS associated with the task
+	*
+	* @return mixed comments associated with the task
+	*/
 	function getComments(){
 		global $pgv_lang, $TBLPREFIX, $DBCONN;
 		$sql = "SELECT c_u_username, c_body, c_datetime, c_id " .
@@ -178,21 +178,21 @@ global $pgv_lang, $TBLPREFIX, $DBCONN, $SOURCE_ID_PREFIX;
 
 <!--JAVASCRIPT-->
 <script language="JavaScript" type="text/javascript"><!--
- function editcomment(commentid) {
- window.open('editcomment.php?taskid=<?php print $_REQUEST['taskid']; ?>&commentid='+commentid, '', 'top=50,left=50,width=600,height=400,resizable=1,scrollbars=1');
- }
- function confirm_prompt(text, commentid) {
-  if (confirm(text)) {
-  window.location = 'module.php?mod=research_assistant&action=edittask&delete='+commentid+'&taskid=<?php print $_REQUEST['taskid']; ?>';
-  }
- }
-    //-->
+function editcomment(commentid) {
+window.open('editcomment.php?taskid=<?php print $_REQUEST['taskid']; ?>&commentid='+commentid, '', 'top=50,left=50,width=600,height=400,resizable=1,scrollbars=1');
+}
+function confirm_prompt(text, commentid) {
+	if (confirm(text)) {
+	window.location = 'module.php?mod=research_assistant&action=edittask&delete='+commentid+'&taskid=<?php print $_REQUEST['taskid']; ?>';
+	}
+}
+//-->
 </script>
 <!--BEGIN EDIT TASK FORM-->
 <form action="module.php" method="post">
-    <input type="hidden" name="mod" value="research_assistant" />
-    <input type="hidden" name="action" value="updatetask" />
-    <input type="hidden" name="taskid" value="<?php print $_REQUEST['taskid'] ?>" />
+	<input type="hidden" name="mod" value="research_assistant" />
+	<input type="hidden" name="action" value="updatetask" />
+	<input type="hidden" name="taskid" value="<?php print $_REQUEST['taskid'] ?>" />
 	<table class="list_table" align="center" border="0" width="40%">
 	<tr>
 <!--HEADING-->
@@ -201,8 +201,8 @@ global $pgv_lang, $TBLPREFIX, $DBCONN, $SOURCE_ID_PREFIX;
 			<?php print $pgv_lang["edit_task"]; print_help_link("ra_edit_task_help", "qm", '', false, false); ?>
 		</h2>
 	</th>
-   </tr>
-   <tr>
+	</tr>
+	<tr>
 <!--TITLE-->
 			<td class="descriptionbox">
 			<?php print $pgv_lang["title"]; ?>
@@ -247,7 +247,7 @@ global $pgv_lang, $TBLPREFIX, $DBCONN, $SOURCE_ID_PREFIX;
 			</td>
 			<tr>
 		</tr>
-	    <tr>
+		<tr>
 <!--DESCRIPTION-->
 			<td class="descriptionbox">
 			<?php print $pgv_lang["description"]; ?>
@@ -260,14 +260,14 @@ global $pgv_lang, $TBLPREFIX, $DBCONN, $SOURCE_ID_PREFIX;
 				print '</textarea>';
 			?>
 		</td>
-	    </tr>
-	    <tr>
+	</tr>
+	<tr>
 <!--SOURCES-->
 			<td class="descriptionbox">
-                    <?php print $pgv_lang["source"]; ?>
-                </td>
-                <td class="optionbox" colspan="3">
-                <script language="JavaScript" type="text/javascript">
+		<?php print $pgv_lang["source"]; ?>
+		</td>
+		<td class="optionbox" colspan="3">
+		<script language="JavaScript" type="text/javascript">
 	<!--
 	var pastefield;
 	var nameElement;
@@ -302,7 +302,7 @@ global $pgv_lang, $TBLPREFIX, $DBCONN, $SOURCE_ID_PREFIX;
 	}
 	//-->
 	</script>
-                   <div id="sourcelink">
+		<div id="sourcelink">
 		<?php
 			$sources = getSources();
 			$sval = '';
@@ -311,19 +311,19 @@ global $pgv_lang, $TBLPREFIX, $DBCONN, $SOURCE_ID_PREFIX;
 				print '<a id="link_'.$sid.'" href="source.php?sid='.$sid.'">'.$source.'</a> <a id="rem_'.$sid.'" href="#" onclick="clearname(\'sourceid\', \'link_'.$sid.'\', \''.$sid.'\'); return false;" ><img src="images/remove.gif" border="0" alt="" /><br /></a>';
 			}
 		?>
-                   </div>
-                   <input type="hidden" id="sourceid" name="sourceid" size="3" value="<?php print $sval; ?>" />
-                     <?php print_findsource_link("sourceid", "sourcelink"); ?>
-                    <br />
-                </td>
-            </tr>
-            <tr>
+		</div>
+		<input type="hidden" id="sourceid" name="sourceid" size="3" value="<?php print $sval; ?>" />
+		<?php print_findsource_link("sourceid", "sourcelink"); ?>
+		<br />
+		</td>
+		</tr>
+		<tr>
 <!--PEOPLE-->
 			<td class="descriptionbox">
-               <?php print $pgv_lang["people"]; ?>
-            </td>
-            <td id="peoplecell" class="optionbox" colspan="3">
-                   <div id="peoplelink">
+		<?php print $pgv_lang["people"]; ?>
+		</td>
+		<td id="peoplecell" class="optionbox" colspan="3">
+		<div id="peoplelink">
 		<?php
 			$people = getPeople();
 			$pval = '';
@@ -336,27 +336,27 @@ global $pgv_lang, $TBLPREFIX, $DBCONN, $SOURCE_ID_PREFIX;
 				}
 			}
 		?>
-                   </div>
-                   <input type="hidden" id="personid" name="personid" size="3" value="<?php print $pval; ?>" />
-                     <?php print_findindi_link("personid", "peoplelink",false,true,'',''); ?>
-                    <br />
-            </td>
-        </tr>
-    <?php
-    $data = getDates();
-    if (!empty($data[1])) {
+		</div>
+		<input type="hidden" id="personid" name="personid" size="3" value="<?php print $pval; ?>" />
+		<?php print_findindi_link("personid", "peoplelink",false,true,'',''); ?>
+		<br />
+		</td>
+		</tr>
+		<?php
+		$data = getDates();
+		if (!empty($data[1])) {
 	?>
 	<tr>
 			<td class="descriptionbox">
-               <?php print $pgv_lang["result"]; ?>
-            </td>
-            <td class="optionbox" colspan="3">
+		<?php print $pgv_lang["result"]; ?>
+		</td>
+		<td class="optionbox" colspan="3">
 	<textarea name="results" cols="55" rows="5"><?php print $data[2]; ?></textarea>
-            </td>
-        </tr>
+		</td>
+		</tr>
 	<?php
-    }
-    ?>
+		}
+		?>
 	<tr class="topbottombar">
 		<td colspan="4">
 		<input type="submit" value="<?php print $pgv_lang["save"]; ?>" />
@@ -364,12 +364,12 @@ global $pgv_lang, $TBLPREFIX, $DBCONN, $SOURCE_ID_PREFIX;
 		</td>
 	</tr>
 
-    <tr>
-    <td colspan="4">
-    <br />
-    </td>
-    </tr>
-    <tr>
+		<tr>
+		<td colspan="4">
+		<br />
+		</td>
+		</tr>
+		<tr>
 <!--HEADING-->
 		<td colspan="4" class="topbottombar">
 			<h3>
@@ -377,8 +377,8 @@ global $pgv_lang, $TBLPREFIX, $DBCONN, $SOURCE_ID_PREFIX;
 			</h3>
 		</td>
 	</tr>
-    <tr>
-    <td colspan="4">
+		<tr>
+		<td colspan="4">
 <!--COMMENT SECTION-->
 	<div id="gedcom_news" class="block">
 		<table class="blockheader" cellspacing="0" cellpadding="0">
@@ -391,7 +391,7 @@ global $pgv_lang, $TBLPREFIX, $DBCONN, $SOURCE_ID_PREFIX;
 				<td class="blockh3">&nbsp;</td>
 			</tr>
 		</table>
-        <?php print getComments(); ?>
+		<?php print getComments(); ?>
 
 	</div>
 <!--END COMMENT SECTION-->
@@ -400,10 +400,10 @@ global $pgv_lang, $TBLPREFIX, $DBCONN, $SOURCE_ID_PREFIX;
 <tr class="topbottombar">
 		<td colspan="4">
 <input type="button" value="<?php print $pgv_lang["add_new_comment"]; ?>" name="Add New Comment" onclick="window.open('editcomment.php?taskid='+<?php print $_REQUEST['taskid']; ?>, '',
-        'top=50,left=50,width=600,height=400,resizable=1,scrollbars=1');">
-        </td>
+		'top=50,left=50,width=600,height=400,resizable=1,scrollbars=1');">
+		</td>
 	</tr>
-	     </table>
-    </form>
+	</table>
+</form>
 
 <!--END EDIT TASK FORM-->
