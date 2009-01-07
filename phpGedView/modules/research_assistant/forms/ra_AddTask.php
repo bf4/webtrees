@@ -36,8 +36,8 @@ if (!defined('PGV_PHPGEDVIEW')) {
 
 require_once("includes/functions/functions_db.php");
 
-    // Grab the global vars we need
- 	global $pgv_lang, $TBLPREFIX, $SOURCE_ID_PREFIX;
+// Grab the global vars we need
+global $pgv_lang, $TBLPREFIX, $SOURCE_ID_PREFIX;
 
 	/**
 	 * GETS all available FOLDERS and creates a combo box with the folders listed.
@@ -125,22 +125,22 @@ require_once("includes/functions/functions_db.php");
             </tr>
             <tr>
     <!-- ASSIGN TASK -->
-    		<tr>
-    			<td class="descriptionbox">
-    				<?php print $pgv_lang["assign_task"]; ?>
-    			</td>
-    			<td class="optionbox" colspan=3>
-    			<select name="Users"> <option value=""></option>
-    			<?php
-    				foreach(get_all_users() as $username) {
-    					print "<option value=\"$username\">".getUserFullName($username)."</option>";
-    				}
-    			?>
-    			</select>
+		<tr>
+			<td class="descriptionbox">
+				<?php print $pgv_lang["assign_task"]; ?>
+			</td>
+			<td class="optionbox" colspan=3>
+			<select name="Users"> <option value=""></option>
+			<?php
+				foreach(get_all_users() as $username) {
+					print "<option value=\"$username\">".getUserFullName($username)."</option>";
+				}
+			?>
+			</select>
 
-    			</td>
-    			<tr>
-    		</tr>
+			</td>
+		<tr>
+		</tr>
     <!--DESCRIPTION-->
                 <td class="descriptionbox">
                     <?php print $pgv_lang["description"]; ?>
@@ -171,7 +171,6 @@ require_once("includes/functions/functions_db.php");
 	function clearname(hiddenName, name, id) {
 		pastefield = document.getElementById(hiddenName);
 		if (pastefield) {
-//			pastefield.value = pastefield.value.replace(new RegExp("\:"+id), '');
 			pos1 = pastefield.value.indexOf(";"+id);
 			if (pos1>-1) {
 				pos2 = pastefield.value.indexOf(";", pos1+1);
@@ -210,8 +209,8 @@ require_once("includes/functions/functions_db.php");
                    <div id="peoplelink">
 										<?php
 										if ($person) {
-                   		echo'<a id="link_', $pid, '" href="'.$person->getLinkUrl(), '">', $person->getFullName(), '</a> <a id="rem_', $pid, '" href="#" onclick="clearname(\'', $pid, '\', \'link_', $pid, '\', \'', $pid, '\'); return false;" ><img src="images/remove.gif" border="0" alt="" /><br /></a>';
-                   	}
+											echo'<a id="link_', $pid, '" href="'.$person->getLinkUrl(), '">', $person->getFullName(), '</a> <a id="rem_', $pid, '" href="#" onclick="clearname(\'', $pid, '\', \'link_', $pid, '\', \'', $pid, '\'); return false;" ><img src="images/remove.gif" border="0" alt="" /><br /></a>';
+										}
 										?>
                    </div>
                      <?php print_findindi_link("personid", "peoplelink", false, true,'',''); ?>

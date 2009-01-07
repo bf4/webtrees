@@ -57,8 +57,8 @@ $nondatefacts = array("ABBR","ADDR","AFN","AUTH","EMAIL","FAX","NAME","NCHI","NO
 if (!function_exists("find_updated_record")) {
 	/**
 	 * find and return an updated gedcom record
-	 * @param string $gid	the id of the record to find
-	 * @param string $gedfile	the gedcom file to get the record from.. defaults to currently active gedcom
+	 * @param string $gid the id of the record to find
+	 * @param string $gedfile the gedcom file to get the record from.. defaults to currently active gedcom
 	 */
 	function find_updated_record($gid, $gedfile="") {
 		global $GEDCOMS, $GEDCOM, $pgv_changes;
@@ -122,10 +122,10 @@ class ra_functions {
 				" gedcom_fact VARCHAR(10)           NULL,".
 				" pl_lv1      VARCHAR(255)          NULL,".
 				" pl_lv2      VARCHAR(255)          NULL,".
-			 	" pl_lv3      VARCHAR(255)          NULL,".
-			 	" pl_lv4      VARCHAR(255)          NULL,".
+				" pl_lv3      VARCHAR(255)          NULL,".
+				" pl_lv4      VARCHAR(255)          NULL,".
 				" pl_lv5      VARCHAR(255)          NULL,".
-			 	" sour_id     VARCHAR(255)          NULL,".
+				" sour_id     VARCHAR(255)          NULL,".
 				" comment     VARCHAR(255)          NULL,".
 				" PRIMARY KEY (id)".
 				") ".PGV_DB_UTF8_TABLE
@@ -293,7 +293,7 @@ class ra_functions {
 				" t_startdate   INTEGER      NOT NULL,".
 				" t_enddate     INTEGER          NULL,".
 				" t_results     TEXT             NULL,".
-			 	" t_form        VARCHAR(255)     NULL,".
+				" t_form        VARCHAR(255)     NULL,".
 				" t_username    VARCHAR(45)      NULL,".
 				" PRIMARY KEY (t_id)".
 				") ".PGV_DB_UTF8_TABLE
@@ -327,9 +327,9 @@ class ra_functions {
 				" ts_s_id  VARCHAR(255) NOT NULL,".
 				" ts_page  VARCHAR(255)     NULL,".
 				" ts_date  VARCHAR(50)      NULL,".
-			 	" ts_text  TEXT             NULL,".
+				" ts_text  TEXT             NULL,".
 				" ts_quay  VARCHAR(50)      NULL,".
-			 	" ts_obje  VARCHAR(20)      NULL,".
+				" ts_obje  VARCHAR(20)      NULL,".
 				" ts_array TEXT             NULL,".
 				" PRIMARY KEY (ts_s_id, ts_t_id)".
 				") ".PGV_DB_UTF8_TABLE
@@ -410,7 +410,7 @@ class ra_functions {
 				"CREATE TABLE {$TBLPREFIX}probabilities (".
 				" pr_id      INTEGER      NOT NULL,".
 				" pr_f_lvl   VARCHAR(200) NOT NULL,".
-			 	" pr_s_lvl   VARCHAR(200) NOT NULL,".
+				" pr_s_lvl   VARCHAR(200) NOT NULL,".
 				" pr_rel     VARCHAR(200) NOT NULL,".
 				" pr_matches INTEGER      NOT NULL,".
 				" pr_count   INTEGER      NOT NULL,".
@@ -479,24 +479,12 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 		//button 'Add Task''
 		if (PGV_USER_ACCESS_LEVEL<=$SHOW_ADD_TASK)
 			$out .= '<td align="center" class="optionbox" width="'.$width.'"><a href="module.php?mod=research_assistant&amp;action=addtask&amp;folderid='.$folderid.'"><img src="modules/research_assistant/images/add_task.gif" alt="'.$pgv_lang["add_task"].'" border="0"></img><br />'.$pgv_lang["add_task"].'</a></td>';
-		//button 'Auto Generate Tasks'
-//		if (PGV_USER_ACCESS_LEVEL<=$SHOW_AUTO_GEN_TASK)
-//			$out .= '<td align="center" class="optionbox" width="'.$width.'"><a href="module.php?mod=research_assistant&amp;action=genTasks"><img src="modules/research_assistant/images/add_task.gif" alt="'.$pgv_lang["gen_tasks"].'" border="0"></img><br />'.$pgv_lang["gen_tasks"].'</a></td>';
 		//button 'View Folders'
 		if (PGV_USER_ACCESS_LEVEL<=$SHOW_VIEW_FOLDERS)
 			$out .= '<td align="center" class="optionbox" width="'.$width.'"><a href="module.php?mod=research_assistant&amp;action=view_folders"><img src="modules/research_assistant/images/folder_blue_icon.gif" alt="'.$pgv_lang["view_folders"].'" border="0"></img><br />'.$pgv_lang["view_folders"].'</a></td>';
 		//button 'Add Folder'
 		if (PGV_USER_ACCESS_LEVEL<=$SHOW_ADD_FOLDER )
 			$out .= '<td align="center" class="optionbox" width="'.$width.'"><a href="module.php?mod=research_assistant&amp;action=addfolder"><img src="modules/research_assistant/images/folder_blue_icon.gif" alt="'.$pgv_lang["add_folder"].'" border="0"></img><br />'.$pgv_lang["add_folder"].'</a></td>';
-		//button 'Add Unlinked Source'
-//		if (PGV_USER_ACCESS_LEVEL<=$SHOW_ADD_UNLINKED_SOURCE && PGV_USER_CAN_EDIT && empty ($folderid))
-//			$out .= '<td align="center" class="optionbox" width="'.$width.'"><a href="javascript: '.$pgv_lang["add_unlinked_source"].'" onclick="addnewsource(\'\'); return false;"><img src="modules/research_assistant/images/add_task.gif" alt="'.$pgv_lang["add_unlinked_source"].'"border=0"></img><br />'.$pgv_lang["add_unlinked_source"].'</a></td>';
-		//button 'View Probabilities'
-//		if (PGV_USER_ACCESS_LEVEL<=$SHOW_VIEW_PROBABILITIES && empty ($folderid))
-//			$out .= '<td align="center" class="optionbox" width="'.$width.'"><a href="module.php?mod=research_assistant&amp;action=viewProbabilities"><img src="modules/research_assistant/images/view_inferences.gif" alt="'.$pgv_lang["view_probabilities"].'" border="0"></img><br />'.$pgv_lang["view_probabilities"].'</a></td>';
-		//button 'Configure Privacy' for ADMIN ONLY
-//		if(PGV_USER_IS_ADMIN && empty ($folderid))
-//			$out .= '<td align="center" class="optionbox" width="'.$width.'"><a href="module.php?mod=research_assistant&amp;action=configurePrivacy"><img src="modules/research_assistant/images/folder_blue_icon.gif" alt="'.$pgv_lang["configure_privacy"].'" border="0"></img><br />'.$pgv_lang["configure_privacy"].'</a></td>';
 		// Below here is "in folder" relevant information. These are only shown when the user is inside a folder.
 		if (!empty ($folderid)) {
 			// Lets check to see if we can go up a folder.
@@ -584,8 +572,8 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 	/**
 	* This is the short Description for the Function
 	*
-	* @param	string $name Name of the form to display
-	* @return	string	 HTML of the form
+	* @param string $name Name of the form to display
+	* @return string HTML of the form
 	*/
 	function print_form($name = '') {
 		$out = "";
@@ -689,9 +677,9 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 	 */
 	 function print_user_tasks($userName)
 	 {
-	 	global $res, $pgv_lang, $folderId;
+		global $res, $pgv_lang, $folderId;
 		global $TBLPREFIX;
-		$sql = 	"Select * From " .$TBLPREFIX. "tasks where t_username ='".$userName."'";
+		$sql = "Select * From " .$TBLPREFIX. "tasks where t_username ='".$userName."'";
 		$res = dbquery($sql);
 		while ($task = $res->fetchRow(DB_FETCHMODE_ASSOC)) {
 			$task = db_cleanup($task);
@@ -709,9 +697,9 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 	 */
 	 function get_user_tasks($userName)
 	 {
-	 	global $res, $pgv_lang, $folderId;
+		global $res, $pgv_lang, $folderId;
 		global $TBLPREFIX;
-		$sql = 	"Select * From " .$TBLPREFIX. "tasks where t_username ='".$userName."' AND t_enddate IS NULL";
+		$sql = "Select * From " .$TBLPREFIX. "tasks where t_username ='".$userName."' AND t_enddate IS NULL";
 		$res = dbquery($sql);
 		$tasks = array();
 		while ($task = $res->fetchRow(DB_FETCHMODE_ASSOC)) {
@@ -757,24 +745,24 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 		global $TBLPREFIX, $pgv_lang;
 		if($filter == "All")
 		{
-			$sql = 	"Select * From ".$TBLPREFIX."tasks where t_username ='".$userName."'";
+			$sql = "Select * From ".$TBLPREFIX."tasks where t_username ='".$userName."'";
 			$res = dbquery($sql);
 			$out = "";
 		}
 		if($filter == "Incomplete")
 		{
-			$sql = 	"Select * From ".$TBLPREFIX."tasks where t_username ='".$userName."' AND t_enddate IS NULL";
+			$sql = "Select * From ".$TBLPREFIX."tasks where t_username ='".$userName."' AND t_enddate IS NULL";
 			$res = dbquery($sql);
 			$out = "";
 		}
 		if($filter == "Completed")
 		{
-			$sql = 	"Select * From ".$TBLPREFIX."tasks where t_username ='".$userName."' AND t_enddate IS NOT NULL";
+			$sql = "Select * From ".$TBLPREFIX."tasks where t_username ='".$userName."' AND t_enddate IS NOT NULL";
 			$res = dbquery($sql);
 			$out = "";
 		}
 
-	 	$out .= "<table id=\"Tasks\" class=\"list_table\" align=\"center\" width=\"700\" border=\"0\">";
+		$out .= "<table id=\"Tasks\" class=\"list_table\" align=\"center\" width=\"700\" border=\"0\">";
 		$out .= "<tr><th colspan=\"7\" class=\"topbottombar\"><h2>".$pgv_lang["Task_View"].print_help_link("ra_view_task_help", "qm", '', false, true)."</h2>";
 		$out .= "<form name=\"mytasks\" method=\"GET\" action=\"module.php\">\n";
 		$out .= "<input type=\"hidden\" name=\"mod\" value=\"research_assistant\" />\n";
@@ -865,7 +853,7 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 			return true;
 		  }
 		  else{
-		 	return false;
+			return false;
 		  }
 	  }
 	}
@@ -891,7 +879,7 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 			return true;
 		  }
 		  else{
-		 	return false;
+			return false;
 		  }
 	  }
 	}
@@ -997,7 +985,7 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 		}
 
 		while ($folders = & $res->fetchRow(DB_FETCHMODE_ASSOC)) {
- 			$out .= '<tr><td class="optionbox"><a href="module.php?mod=research_assistant&amp;action=viewtasks&amp;folderid='.$folders["fr_id"].'"><img src="modules/research_assistant/images/folder_blue_icon.gif" border="0" alt="Folder"></img>'.PrintReady($folders["fr_name"]).'</a></td><td class="optionbox wrap"><br />'.nl2br(PrintReady(stripslashes($folders["fr_description"]))).'</td><td class="optionbox"  align="center"><a href="module.php?mod=research_assistant&amp;action=editfolder&amp;folderid='.$folders["fr_id"].'">'.$pgv_lang["edit"].'</a></td></tr>';
+			$out .= '<tr><td class="optionbox"><a href="module.php?mod=research_assistant&amp;action=viewtasks&amp;folderid='.$folders["fr_id"].'"><img src="modules/research_assistant/images/folder_blue_icon.gif" border="0" alt="Folder"></img>'.PrintReady($folders["fr_name"]).'</a></td><td class="optionbox wrap"><br />'.nl2br(PrintReady(stripslashes($folders["fr_description"]))).'</td><td class="optionbox"  align="center"><a href="module.php?mod=research_assistant&amp;action=editfolder&amp;folderid='.$folders["fr_id"].'">'.$pgv_lang["edit"].'</a></td></tr>';
 		}
 		$out .= '</table>';
 		return $out;
@@ -1292,25 +1280,21 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 		}
 
 	}
-     //make sure that they are not trying to add no tasks, then loop through and all selected tasks and add them into the task
-     // and individual task tables
-     function auto_add_task(&$person,$folderID)
-     {
-       	global $TBLPREFIX, $GEDCOMS, $GEDCOM;
-     	if(!empty($_REQUEST['missingName'])){
-     		$missingName = $_REQUEST['missingName'];
-
-	     	for($i=0; $i<count($missingName); $i++) {
-	     		$nextTaskID =get_next_id("tasks","t_id");
-	     		$nextItaskId=get_next_id("individualtask","it_t_id");
-	     		$personName = $person->getFullName();
-	     		if($this->add_task($nextTaskID,$folderID,$missingName[$i],$personName." (auto generated)",$person->getXref()))
-	     		$this->add_indi_task($nextItaskId,$person->getXref(),$GEDCOMS[$GEDCOM]["id"]);
-
-     		//print $missingName[$i];
-     		}
-     	}
-     }
+	//make sure that they are not trying to add no tasks, then loop through and all selected tasks and add them into the task
+	// and individual task tables
+	function auto_add_task(&$person,$folderID) {
+		global $TBLPREFIX, $GEDCOMS, $GEDCOM;
+		if(!empty($_REQUEST['missingName'])){
+			$missingName = $_REQUEST['missingName'];
+			for($i=0; $i<count($missingName); $i++) {
+				$nextTaskID =get_next_id("tasks","t_id");
+				$nextItaskId=get_next_id("individualtask","it_t_id");
+				$personName = $person->getFullName();
+				if($this->add_task($nextTaskID,$folderID,$missingName[$i],$personName." (auto generated)",$person->getXref()))
+				$this->add_indi_task($nextItaskId,$person->getXref(),$GEDCOMS[$GEDCOM]["id"]);
+			}
+		}
+	}
 
 
 	//the inferences function will look for correlations
@@ -1519,7 +1503,7 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 			//load up the options into the html
 			foreach($this->sites as $key=>$value)
 			{
-			    $opts .=	"<option value=\"".$key."\" class=\"".$optCount."\">".$value."</option>\n";
+			    $opts .= "<option value=\"".$key."\" class=\"".$optCount."\">".$value."</option>\n";
 			    $optCount+=1;
 			}
 		return $opts;
@@ -1920,16 +1904,16 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 					<td width=\"5%\"><br /></td>\n<td valign=\"top\">
 						";
 		//Beginning of the auto search feature which gets dynamically populated with an individuals information to be sent to ancestry or familySearch
-		$out .= "		\n<table border=\"0\">
+		$out .= "\n<table border=\"0\">
 								<tr>
 									<td align=\"center\" class=\"topbottombar\" colspan=\"2\" height=\"50%\"><b>".print_help_link("auto_search", "qm", '', false, true)."<b>".$pgv_lang['auto_search_text']."</b>
 
 									</td>
 								</tr>
-		 						<tr>
+								<tr>
 									<td class=\"topbottombar\">
 										<form name=\"selector\" action=\"\" method=\"post\" onsubmit=\"return false;\">
-					 					<select name=\"cbosite\" onchange=\"search_selector('".$person->getXref()."');\">
+										<select name=\"cbosite\" onchange=\"search_selector('".$person->getXref()."');\">
 										" .$this->autoSearchFormOptions().
 										"</select>
 										</form>
@@ -1972,18 +1956,18 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 			$comment = db_cleanup($comment);
 			$date=new GedcomDate(date("d M Y", (int)$comment["uc_datetime"]));
 			$out .= '<div class="blockcontent"><div class="person_box" id="comment1"><span class="news_title">' .
-					$comment["uc_username"].'' . 	// INSERT username
+					$comment["uc_username"].'' . // INSERT username
 					'</span><br /><span class="news_date">' .
-					$date->Display(false).' - '. date("g:i:s A",(int)$comment["uc_datetime"]).		// INSERT datetime
+					$date->Display(false).' - '. date("g:i:s A",(int)$comment["uc_datetime"]). // INSERT datetime
 					'</span><br /><br />' .
 					nl2br($comment["uc_comment"]).
 					'<hr size="1" />';
 
 			if(PGV_USER_IS_ADMIN || PGV_USER_NAME==$comment["uc_username"]){
 				$out .= '<a href="javascript:;" onclick="editcomment('.
-							$comment["uc_id"].', \''.$person->getXref().'\'' .	// INSERT commentid
+							$comment["uc_id"].', \''.$person->getXref().'\'' . // INSERT commentid
 							')">'.$pgv_lang["edit"].'</a> | <a href="" onclick="confirm_prompt(\''.$pgv_lang["comment_delete_check"].'\', ' .
-							$comment["uc_id"].	// INSERT commentid
+							$comment["uc_id"]. // INSERT commentid
 							', \''.$person->getXref().'\'); return false;">'.$pgv_lang["delete"].'</a>';
 			}
 			$out .= '<br /></div></div><br />';
@@ -2151,7 +2135,6 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 			print "<input type=\"hidden\" name=\"ctype\" value=\"update\" />\n";
 			print "<input type=\"hidden\" name=\"mod\" value=\"research_assistant\" />\n";
 			print "<br /><input type=\"submit\" value=\"".$pgv_lang["save"]."\" /><br />\n";
-//		print "<pre>".$gedrec."</pre>";
 			print "<table class=\"facts_table\">";
 			$level0type = "INDI";
 			create_edit_form($gedrec, 0, $level0type);
@@ -2173,9 +2156,9 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 
 	/**
 	 * delete all facts associated with the given task id
-	 * @param string $taskid	the taskid to delete facts for
-	 * @param GedcomRecord $record	the record to look in
-	 * @return string 			the updated record without the associated facts
+	 * @param string $taskid the taskid to delete facts for
+	 * @param GedcomRecord $record the record to look in
+	 * @return string  the updated record without the associated facts
 	 */
 	function deleteRAFacts($taskid, &$record) {
 		$indirec = $record->getGedcomRecord();

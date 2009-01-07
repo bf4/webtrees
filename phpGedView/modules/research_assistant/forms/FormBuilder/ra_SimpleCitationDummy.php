@@ -24,43 +24,43 @@ return false;}return true;}
     }%ADDCURLY%
     
     function getFieldValue($j, $lines) {
-    	$value = "";
-    	if (empty($lines[$j])) return $value;
-    	$line = $lines[$j];
-    	$ct = preg_match("/: (.*)/", $line, $match);
-    	if ($ct>0) $value = trim($match[1]);
-    	return $value;
+    $value = "";
+    if (empty($lines[$j])) return $value;
+    $line = $lines[$j];
+    $ct = preg_match("/: (.*)/", $line, $match);
+    if ($ct>0) $value = trim($match[1]);
+    return $value;
     }
 	
 	/**
 	 * override method from ra_form.php
 	 */
     function simpleCitationForm($citation) {
-    	global $pgv_lang, $factarray;
-    	if (empty($_POST['data']))
-    		$data = array();
-    	if (empty($_REQUEST['row'])) {
-    		$people = $this->getPeople();
-    		$row = count($people);
-    	}
-    	
-    	$citation = $this->getSourceCitationData();
-    	$page = "";
-    	$callno = "";
-    	$date = $citation['ts_date'];
-    	$ct = preg_match("/Page: (.*), .*: (.*)/", $citation['ts_page'], $match);
-    	if ($ct > 0) {
-    		$page = trim($match[1]);
-    		$callno = trim($match[2]);
-    	}
-    	
-    	$city = "";
-    	$county = "";
-    	$state = "";
-    	if (!empty($citation['ts_array']['city'])) $city = $citation['ts_array']['city'];
-    	if (!empty($citation['ts_array']['county'])) $county = $citation['ts_array']['county'];
-    	if (!empty($citation['ts_array']['state'])) $state = $citation['ts_array']['state'];
-    	
+    global $pgv_lang, $factarray;
+    if (empty($_POST['data']))
+    $data = array();
+    if (empty($_REQUEST['row'])) {
+    $people = $this->getPeople();
+    $row = count($people);
+    }
+    
+    $citation = $this->getSourceCitationData();
+    $page = "";
+    $callno = "";
+    $date = $citation['ts_date'];
+    $ct = preg_match("/Page: (.*), .*: (.*)/", $citation['ts_page'], $match);
+    if ($ct > 0) {
+    $page = trim($match[1]);
+    $callno = trim($match[2]);
+    }
+    
+    $city = "";
+    $county = "";
+    $state = "";
+    if (!empty($citation['ts_array']['city'])) $city = $citation['ts_array']['city'];
+    if (!empty($citation['ts_array']['county'])) $county = $citation['ts_array']['county'];
+    if (!empty($citation['ts_array']['state'])) $state = $citation['ts_array']['state'];
+    
 //        Start of Table
 		$out = '<tr>
 			<td class="descriptionbox">'.print_help_link("edit_media_help", "qm",'',false,true).$factarray['OBJE'].'</td>
@@ -72,7 +72,7 @@ return false;}return true;}
 				/*@var $picture Media*/
 				$picture = Media::getInstance($citation['ts_obje']);
 				if(!is_null($picture))
-				{	
+				{ 
 					$out .= "<span id=\"censusImgSpan\">".$picture->getFullName().'</span><br/><img id="censusImage" src="'.$picture->getThumbnail().'" />';
 				}
 				else
@@ -94,7 +94,7 @@ return false;}return true;}
         $out .= '<td class="descriptionbox">'.$pgv_lang["enumDate"].'</td><td class="optionbox"><input name="EnumerationDate" type="text" size="27" value="'.htmlentities($date).'"></td></tr>';
         $out .= '<tr><td class="descriptionbox">'.$pgv_lang["county"].'</td><td class="optionbox"><input name="county" type="text" size="27" value="'.htmlentities($county).'"></td>';
         $out .= '<td class="descriptionbox">'.$pgv_lang["city"].'</td><td class="optionbox"><input name="city" type="text" size="27" value="'.htmlentities($city).'"></td>';
-        $out .=	'<td class="descriptionbox">'.$pgv_lang["page"].'</td><td class="optionbox"><input name="page" type="text" size="5" value="'.htmlentities($page).'"></td></tr>';
+        $out .= '<td class="descriptionbox">'.$pgv_lang["page"].'</td><td class="optionbox"><input name="page" type="text" size="5" value="'.htmlentities($page).'"></td></tr>';
 //        Next Table
         $out .= '<tr><td colspan="6">';
         

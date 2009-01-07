@@ -43,11 +43,11 @@ class ra_guide extends ra_form {
      * 
      * @return object
      */
- 	function display_form()
- 	{
- 		global $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES;
- 		// Obtain the global vars needed
- 		global $pgv_lang, $factarray, $PGV_DXHTMLTAB_COLORS;
+	function display_form()
+	{
+		global $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES;
+		// Obtain the global vars needed
+		global $pgv_lang, $factarray, $PGV_DXHTMLTAB_COLORS;
 		$out = '';
 		ob_start();
 		require_once("js/dhtmlXTabbar.js.htm");
@@ -78,7 +78,7 @@ class ra_guide extends ra_form {
 						<a href="module.php?mod=research_assistant&amp;action=viewProbabilities">
 						<img src="modules/research_assistant/images/view_inferences.gif" alt="<?php print $pgv_lang["view_probabilities"]; ?>" border="0"></img>
 					<?php print $pgv_lang["view_probabilities"]; ?></a>
-				</fieldset>				
+				</fieldset>
 			</div>
 			<div id="guide_sources" name="<?php print $pgv_lang["determine_sources"];?>" class="indent" >
 				<fieldset>
@@ -134,8 +134,8 @@ class ra_guide extends ra_form {
 					<form name="selector" action="" method="post" onsubmit="return false;">
 					<?php print $pgv_lang["pid_search_for"]; ?><br />
 					<input type="text" name="aspid" id="aspid" size="5" onchange="search_selector(this.value);"/><?php print_findindi_link("aspid",""); ?>
- 					<select name="cbosite" onchange="search_selector(document.getElementById('aspid').value);">
- 					<option value=""><?php print $pgv_lang["choose_search_site"];?></option>
+					<select name="cbosite" onchange="search_selector(document.getElementById('aspid').value);">
+					<option value=""><?php print $pgv_lang["choose_search_site"];?></option>
 					<?php print ra_functions::autoSearchFormOptions(); ?>
 					</select> 
 					</form>
@@ -174,6 +174,6 @@ class ra_guide extends ra_form {
 		$out .= ob_get_contents();
 		ob_end_clean();
 		return $out;
- 	}
+	}
  }
 ?>

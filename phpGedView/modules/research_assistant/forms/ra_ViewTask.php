@@ -37,7 +37,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 require_once("includes/classes/class_person.php");
 global $pgv_lang;
 
- 	/**
+	/**
 	 * GETS the TITLE of the task with the given taskid
 	 *
 	 * @return mixed title of the task
@@ -112,7 +112,7 @@ function getTitle(){
 	function getPeople(){
         global $TBLPREFIX, $DBCONN;
 
-		$sql = 	"SELECT it_i_id FROM ".$TBLPREFIX."individualtask WHERE it_t_id='" . $DBCONN->escapeSimple($_REQUEST["taskid"])."'";
+		$sql = "SELECT it_i_id FROM ".$TBLPREFIX."individualtask WHERE it_t_id='" . $DBCONN->escapeSimple($_REQUEST["taskid"])."'";
 		$res = dbquery($sql);
 
 		$out = "";
@@ -174,7 +174,7 @@ function getTitle(){
 	function getSources(){
         global $TBLPREFIX, $DBCONN, $GEDCOMS, $GEDCOM;
 
-		$sql = 	"SELECT s_name, s_id FROM " . $TBLPREFIX . "sources, ".$TBLPREFIX."tasksource WHERE s_file=".$GEDCOMS[$GEDCOM]['id']." AND ts_s_id=s_id AND ts_t_id='" . $DBCONN->escapeSimple($_REQUEST["taskid"]) . "'";
+		$sql = "SELECT s_name, s_id FROM " . $TBLPREFIX . "sources, ".$TBLPREFIX."tasksource WHERE s_file=".$GEDCOMS[$GEDCOM]['id']." AND ts_s_id=s_id AND ts_t_id='" . $DBCONN->escapeSimple($_REQUEST["taskid"]) . "'";
 		$res = dbquery($sql);
 
 		$sources = array();
@@ -192,7 +192,7 @@ function getTitle(){
 	 */
 	function getComments(){
 		global $pgv_lang, $TBLPREFIX;
-		$sql = 	"SELECT c_u_username, c_body, c_datetime, c_id " .
+		$sql =  "SELECT c_u_username, c_body, c_datetime, c_id " .
 				"FROM " . $TBLPREFIX . "comments " .
 				"WHERE c_t_id='" . $_REQUEST["taskid"] . "' " .
 				"ORDER BY c_datetime DESC";
@@ -203,18 +203,18 @@ function getTitle(){
 			$comment = db_cleanup($comment);
 			$date=new GedcomDate(date("d M Y", (int)$comment["c_datetime"]));
 			$out .= '<div class="blockcontent"><div class="person_box" id="comment1"><span class="news_title">' .
-					$comment["c_u_username"] . 	// INSERT username
+					$comment["c_u_username"] .  // INSERT username
 					'</span><br /><span class="news_date">' .
-					$date->Display(false).' - '. date("g:i:s A",(int)$comment["c_datetime"]).		// INSERT datetime
+					$date->Display(false).' - '. date("g:i:s A",(int)$comment["c_datetime"]). // INSERT datetime
 					'</span><br /><br />' .
-					nl2br($comment["c_body"]) .			// INSERT body
+					nl2br($comment["c_body"]) . // INSERT body
 					'<hr size="1" />';
 
 			if(PGV_USER_IS_ADMIN || PGV_USER_NAME==$comment["c_u_username"]){
 				$out .= '<a href="javascript:;" onclick="editcomment(' .
-							$comment["c_id"] .	// INSERT commentid
+							$comment["c_id"] . // INSERT commentid
 							')">'.$pgv_lang["edit"].'</a> | <a href="" onclick="confirm_prompt(\''.$pgv_lang["comment_delete_check"].'\', ' .
-							$comment["c_id"] .	// INSERT commentid
+							$comment["c_id"] . // INSERT commentid
 							'); return false;">'.$pgv_lang["delete"].'</a>';
 			}
 			$out .= '<br /></div></div><br/>';
@@ -235,13 +235,13 @@ function getTitle(){
 	function showchanges() {
 		window.location = 'module.php?mod=research_assistant&action=edittask&taskid=<?php print $_REQUEST['taskid']; ?>';
 	}
-  	function editcomment(commentid) {
-  		window.open('editcomment.php?taskid=<?php print $_REQUEST['taskid']; ?>&commentid='+commentid, '', 'top=50,left=50,width=800,height=500,resizable=1,scrollbars=1');
-  	}
-  	function confirm_prompt(text, commentid) {
-    	if (confirm(text)) {
-      		window.location = 'module.php?mod=research_assistant&action=viewtask&delete='+commentid+'&taskid=<?php print $_REQUEST['taskid']; ?>';
-    	}
+   function editcomment(commentid) {
+   window.open('editcomment.php?taskid=<?php print $_REQUEST['taskid']; ?>&commentid='+commentid, '', 'top=50,left=50,width=800,height=500,resizable=1,scrollbars=1');
+   }
+   function confirm_prompt(text, commentid) {
+     if (confirm(text)) {
+       window.location = 'module.php?mod=research_assistant&action=viewtask&delete='+commentid+'&taskid=<?php print $_REQUEST['taskid']; ?>';
+     }
     }
     //-->
 </script>
@@ -251,79 +251,79 @@ function getTitle(){
     <input type="hidden" name="action" value="updatetask" />
     <input type="hidden" name="taskid" value="<?php print $_REQUEST['taskid'] ?>" />
 	<table class="list_table" align="center" border="0" width="40%">
-  		<tr>
+   <tr>
 <!--HEADING-->
-    		<th colspan="4" align="right" class="topbottombar">
-    			<h2>
-    				 <?php  print $pgv_lang["view_task"]; print_help_link("ra_task_view_help", "qm", '', false, false);?>
-    			</h2>
-    		</th>
-    	</tr>
-    	<tr>
+     <th colspan="4" align="right" class="topbottombar">
+     <h2>
+     <?php  print $pgv_lang["view_task"]; print_help_link("ra_task_view_help", "qm", '', false, false);?>
+     </h2>
+     </th>
+     </tr>
+     <tr>
 <!----- todo: print RTL title, description, people and source right justified ----->
 <!--TITLE-->
 			<th class="descriptionbox">
-      			<?php print $pgv_lang["title"]; ?>
-      		</th>
-      		<th class="optionbox" colspan="3" align="left">
+       <?php print $pgv_lang["title"]; ?>
+       </th>
+       <th class="optionbox" colspan="3" align="left">
 
-      			<?php
-      				// get title, given taskid
-      				print PrintReady(getTitle());
-      			?>
-      		</th>
-    	</tr>
-    	<tr>
+       <?php
+       // get title, given taskid
+       print PrintReady(getTitle());
+       ?>
+       </th>
+     </tr>
+     <tr>
 <!--DESCRIPTION-->
 			<th class="descriptionbox">
-      			<?php print $pgv_lang["description"]; ?>
-      		</th>
-	      	<td class="optionbox" colspan="3" align="left">
-	      		<?php
-	      			print PrintReady(nl2br(getDescription()));
-	      		?>
-	      	</td>
+       <?php print $pgv_lang["description"]; ?>
+      </th>
+	      <td class="optionbox" colspan="3" align="left">
+	      <?php
+	      print PrintReady(nl2br(getDescription()));
+	      ?>
+	      </td>
 	    </tr>
-    	<tr>
+    <tr>
 <!--PEOPLE-->
 			<th class="descriptionbox">
                     <?php print $pgv_lang["people"]; ?>
             </th>
             <td class="optionbox" colspan="3" align="left">
-      			<?php
-      				// Get people, given taskid
-      				print getPeople();
-      			?>
-      			</td>
+      <?php
+      // Get people, given taskid
+      print getPeople();
+      ?>
+      </td>
             </tr>
 	    <tr>
 <!--SOURCES-->
 			<th class="descriptionbox">
-      			<?php print $pgv_lang["source"]; ?>
-      		</th>
+      <?php print $pgv_lang["source"]; ?>
+      </th>
 			<td class="optionbox" colspan="3" align="left">
-      		<?php
-       			$sources = getSources();
-       			$sval = '';
-       			foreach($sources as $sid=>$source) {
-       				$sval .= ';'.$sid;
-       				print '<a id="link_'.$sid.'" href="source.php?sid='.$sid.'">'.$source.'</a>';
-       			}
-       		?>
-      	</td>
+      <?php
+       $sources = getSources();
+       $sval = '';
+       foreach($sources as $sid=>$source) {
+       $sval .= ';'.$sid;
+       print '<a id="link_'.$sid.'" href="source.php?sid='.$sid.'">'.$source.'</a>';
+       }
+       ?>
+      </td>
         </tr>
         <?php $results = getResults();
         if (!empty($results)) { ?>
         <tr>
 <!--results-->
 			<th class="descriptionbox">
-      			<?php print $pgv_lang["result"]; ?>
-      		</th>
-	      	<td class="optionbox" colspan="3" >
-	      		<?php
-	      			print $results;
-	      		?>
-	      	</td>
+      <?php print $pgv_lang["result"]; ?>
+      </th>
+	      <td class="optionbox" colspan="3" >
+	      <?php
+	      print $results;
+	      ?>
+	      </td>
 	    </tr>
 	    <?php } ?>
 	<tr>
@@ -339,12 +339,12 @@ function getTitle(){
     </tr>
     <tr>
 <!--HEADING-->
-    		<th colspan="4" align="right" class="topbottombar">
-    			<h3>
-    				<?php print $pgv_lang["comments"]; print_help_link("ra_comments_help", "qm", '', false, false);?>
-    			</h3>
-    		</th>
-    	</tr>
+    <th colspan="4" align="right" class="topbottombar">
+    <h3>
+    <?php print $pgv_lang["comments"]; print_help_link("ra_comments_help", "qm", '', false, false);?>
+    </h3>
+    </th>
+    </tr>
     <tr>
     <td colspan="4">
 <!--COMMENT SECTION-->
@@ -366,11 +366,11 @@ function getTitle(){
 </td>
 </tr>
 <tr class="topbottombar">
-    		<td colspan="4">
+    <td colspan="4">
 <input type="button" value="<?php print $pgv_lang["add_new_comment"]; ?>" name="Add New Comment" onclick="window.open('editcomment.php?taskid='+<?php print $_REQUEST['taskid']; ?>, '',
         'top=50,left=50,width=800,height=500,resizable=1,scrollbars=1');">
         </td>
-    	</tr>
+    </tr>
 	     </table>
     </form>
 

@@ -32,104 +32,104 @@ if (!defined('PGV_PHPGEDVIEW')) {
 
 class GeneratedTask
  {
- 	var $name = '';
- 	var $desc = '';
- 	var $id = -1;
- 	var $personId = '';
- 	var $sourceId = '';
- 	
- 	function GeneratedTask($name, $desc, $id, $personId='', $sourceId='')
- 	{
- 		$this->name = $name;
- 		$this->desc = $desc;
- 		$this->id = $id;
- 		$this->personId = $personId;
- 		$this->sourceId = $sourceId;
- 	}
- 	
- 	function getName()
- 	{
- 		return $this->name;
- 	}
- 	
- 	function setName($name="")
- 	{
- 		$this->name = $name;
- 	}
- 	
- 	function getDescription()
- 	{
- 		return $this->desc;
- 	}
- 	
- 	function setDescription($desc="")
- 	{
- 		$this->desc = $desc;
- 	}
- 	
- 	function getDescriptionForHTML()
- 	{
- 		return nl2br($this->desc);
- 	}
- 	
- 	function getID()
- 	{
- 		return $this->id;
- 	}
- 	
- 	function setID($id)
- 	{
- 		$this->id = $id;
- 	}
- 	
- 	function getPersonId()
- 	{
- 		return $this->personId;
- 	}
- 	
- 	function setPersonId($personId="")
- 	{
- 		$this->personId = $personId;
- 	}
- 	
- 	function getSourceId()
- 	{
- 		return $this->sourceId;
- 	}
- 	
- 	function setSourceId($sourceId="")
- 	{
- 		$this->sourceId = $sourceId;
- 	}
- 	
- 	function orderby_desc($a, $b)
-   	{
-   		$val1 = strtolower($a->getDescription());
-   		$val2 = strtolower($b->getDescription());
-   		if($val1 == $val2)
-   			return 0;
-   		else
-   			return ($val1 > $val2) ? 1 : -1;
-   	}
-   	
-   	function orderby_desc_descending($a, $b)
-   	{
-   		$val1 = strtolower($a->getDescription());
-   		$val2 = strtolower($b->getDescription());
-   		if($val1 == $val2)
-   			return 0;
-   		else
-   			return ($val1 > $val2) ? -1 : 1;
-   	}
-   
-   	function orderby_name($a, $b)
-   	{
-			return GedcomRecord::Compare($a, $b);
-   	}
-   	
-   	function orderby_name_descending($a, $b)
-   	{
-			return GedcomRecord::Compare($b, $a);
-   	}
+	var $name = '';
+	var $desc = '';
+	var $id = -1;
+	var $personId = '';
+	var $sourceId = '';
+	
+	function GeneratedTask($name, $desc, $id, $personId='', $sourceId='')
+	{
+		$this->name = $name;
+		$this->desc = $desc;
+		$this->id = $id;
+		$this->personId = $personId;
+		$this->sourceId = $sourceId;
+	}
+	
+	function getName()
+	{
+		return $this->name;
+	}
+	
+	function setName($name="")
+	{
+		$this->name = $name;
+	}
+	
+	function getDescription()
+	{
+		return $this->desc;
+	}
+	
+	function setDescription($desc="")
+	{
+		$this->desc = $desc;
+	}
+	
+	function getDescriptionForHTML()
+	{
+		return nl2br($this->desc);
+	}
+	
+	function getID()
+	{
+		return $this->id;
+	}
+	
+	function setID($id)
+	{
+		$this->id = $id;
+	}
+	
+	function getPersonId()
+	{
+		return $this->personId;
+	}
+	
+	function setPersonId($personId="")
+	{
+		$this->personId = $personId;
+	}
+	
+	function getSourceId()
+	{
+		return $this->sourceId;
+	}
+	
+	function setSourceId($sourceId="")
+	{
+		$this->sourceId = $sourceId;
+	}
+	
+	function orderby_desc($a, $b)
+	{
+		$val1 = strtolower($a->getDescription());
+		$val2 = strtolower($b->getDescription());
+		if($val1 == $val2)
+			return 0;
+		else
+			return ($val1 > $val2) ? 1 : -1;
+	}
+	
+	function orderby_desc_descending($a, $b)
+	{
+		$val1 = strtolower($a->getDescription());
+		$val2 = strtolower($b->getDescription());
+		if($val1 == $val2)
+			return 0;
+		else
+			return ($val1 > $val2) ? -1 : 1;
+	}
+  
+	function orderby_name($a, $b)
+	{
+		return GedcomRecord::Compare($a, $b);
+	}
+	
+	function orderby_name_descending($a, $b)
+	{
+		return GedcomRecord::Compare($b, $a);
+	}
  }
 ?>

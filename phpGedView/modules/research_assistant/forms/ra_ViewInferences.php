@@ -87,109 +87,108 @@ class ra_ViewInferences extends ra_form {
      * The relationship that the fact is concerned with
      * The percentage of matches for this fact
      */
- 	function contents() {
- 		global $TBLPREFIX,$DBCONN, $GEDCOMS, $GEDCOM;
- 		global $LANGUAGE, $factarray, $pgv_lang;
-				 		
- 		$out = "<table class=\"width80\" align=\"center\"><tr><td><p>".$pgv_lang["ViewProbExplanation"]."</p></td></tr></table>";
- 		if(isset($_REQUEST['pid']))
- 		{
-	 		$out .= "<table align='center'><tr><td class='topbottombar' colspan='7'><b>".$pgv_lang["DataCorrelations"]."</b></td></tr>";
-	 		$out .= "<tr><td class=\"descriptionbox\">".$pgv_lang["LocalData"]."</td><td class=\"descriptionbox\">".$pgv_lang["RelatedRecord"]."</td><td class=\"descriptionbox\">".$pgv_lang["RelatedData"]."</td><td  class=\"descriptionbox\">".$pgv_lang["LocalPercent"]."</td><td  class=\"descriptionbox\">".$pgv_lang["GlobalPercent"]."</td><td  class=\"descriptionbox\">".$pgv_lang["Average"]."</td><td  class=\"descriptionbox\">".$pgv_lang["RelatedData"]."</td></tr>";
- 		}
- 		else
- 		{
- 			$out .= "<table align='center'><tr><td class='topbottombar' colspan='7'><b>".$pgv_lang["DataCorrelations"]."</b></td></tr>";
- 		$out .= "<tr><td class=\"descriptionbox\">".$pgv_lang["LocalData"]."</td><td class=\"descriptionbox\">".$pgv_lang["RelatedRecord"]."</td><td class=\"descriptionbox\">".$pgv_lang["RelatedData"]."</td><td  class=\"descriptionbox\">".$pgv_lang["LocalPercent"]."</td></tr>";
- 		
- 		}
- 		if(empty($_REQUEST["pid"]))
- 		{
-	 		$sql = "select * from ".$TBLPREFIX."probabilities where pr_file=".$GEDCOMS[$GEDCOM]['id']." ORDER BY (pr_matches / pr_count) DESC";
-	 		$result = dbquery($sql);
-	 		if($result->numRows()==0 || !empty($_REQUEST['recount'])) {
-	 			$inferences = ra_functions::inferences();
-	 			$result = dbquery($sql);
-	 		}
-	 		
-	 		//This takes the info from that database and displays it to the user
-	 		//The formatting is accomplished by using a HTML table
-	 		if($result->numRows()>0)
-	 		{
-	 			while($row = $result->fetchRow(DB_FETCHMODE_ASSOC))
-	 				{
-	 					$out .= "<tr><td class='optionbox'>";
-	 					$out .= $this->getPartsTranslation($row['pr_f_lvl']);
-						$out .= "</td>"; 
-	 					$out .= "<td class='optionbox'>".$this->getPartsTranslation($row['pr_s_lvl'],$row['pr_rel'])."</td>"; 
-	 					$out .= "<td class='optionbox'>".$this->getPartsTranslation($row['pr_rel'])."</td>";
-	 					if ($row['pr_count']==0) $row['pr_per'] = 0;
-	 					else $row['pr_per'] = 100*($row['pr_matches']/$row['pr_count']); 
-	 					$out .= "<td class='optionbox'>". sprintf("%.2f%%",$row['pr_per'])."</td></tr>"; 
-	 				}
-	 		}
-	 		$out .= "<tr><td class='topbottombar' colspan='4'><form method=\"get\" action=\"\"><input type=\"button\" value=\"".$pgv_lang["Recalculate"]."\" onclick=\"window.location='module.php?mod=research_assistant&action=viewProbabilities&recount=1';\" /></form></td></tr>";
-	 		//Returns the table to display
- 		}
- 		else
- 		{
- 			
- 			$avgExists = false;
- 			$pInfer = run($_REQUEST["pid"]);
-// 			print_r($pInfer);
+	function contents() {
+		global $TBLPREFIX,$DBCONN, $GEDCOMS, $GEDCOM;
+		global $LANGUAGE, $factarray, $pgv_lang;
 
- 			$avLocal = 0;
- 			$avGlobal = 0;
- 			foreach($pInfer as $myKey=>$myVal)
- 			{
- 				$out .= "\n<tr>";
- 				
- 				foreach($myVal as $actKey=>$niceData)
- 				{
- 					if($actKey !== "LocalCount" && $actKey !== "GlobalCount")
- 					{
- 						$out .= "<td class=\"optionbox\">";
- 						if($actKey === "Prob" || $actKey === "GlobalProb")
- 						{
- 							if($actKey === "Prob")
- 							{
- 								$localAvg = $niceData;
- 							}
- 							
- 							if($actKey === "GlobalProb")
- 							{
- 								$globalAvg = $niceData * 100;
- 							}
- 							
- 							if($myVal['LocalCount'] == 0 && $actKey === "Prob")
- 							{
- 								$out .= $pgv_lang["NoData"];
- 							}
- 							else
- 							{
- 								if($actKey === "Prob")
- 								{
-	 							$out .= sprintf("%.2f%%",$niceData);
- 								}
- 							}
- 							
- 							if($myVal['GlobalCount'] == 0 && $actKey === "GlobalProb")
- 							{
- 								$out .= $pgv_lang["NoData"];
- 							}
- 							else
- 							{
- 								if($actKey === "GlobalProb")
- 								{
- 									$niceData = $niceData *100;
-	 							$out .= sprintf("%.2f%%",$niceData);
- 								}
- 							}
- 						}
- 						else
- 						{
- 							$out .= getPartsTranslation($niceData);
- 						}
+		$out = "<table class=\"width80\" align=\"center\"><tr><td><p>".$pgv_lang["ViewProbExplanation"]."</p></td></tr></table>";
+		if(isset($_REQUEST['pid']))
+		{
+			$out .= "<table align='center'><tr><td class='topbottombar' colspan='7'><b>".$pgv_lang["DataCorrelations"]."</b></td></tr>";
+			$out .= "<tr><td class=\"descriptionbox\">".$pgv_lang["LocalData"]."</td><td class=\"descriptionbox\">".$pgv_lang["RelatedRecord"]."</td><td class=\"descriptionbox\">".$pgv_lang["RelatedData"]."</td><td  class=\"descriptionbox\">".$pgv_lang["LocalPercent"]."</td><td  class=\"descriptionbox\">".$pgv_lang["GlobalPercent"]."</td><td  class=\"descriptionbox\">".$pgv_lang["Average"]."</td><td  class=\"descriptionbox\">".$pgv_lang["RelatedData"]."</td></tr>";
+		}
+		else
+		{
+			$out .= "<table align='center'><tr><td class='topbottombar' colspan='7'><b>".$pgv_lang["DataCorrelations"]."</b></td></tr>";
+		$out .= "<tr><td class=\"descriptionbox\">".$pgv_lang["LocalData"]."</td><td class=\"descriptionbox\">".$pgv_lang["RelatedRecord"]."</td><td class=\"descriptionbox\">".$pgv_lang["RelatedData"]."</td><td  class=\"descriptionbox\">".$pgv_lang["LocalPercent"]."</td></tr>";
+		
+		}
+		if(empty($_REQUEST["pid"]))
+		{
+			$sql = "select * from ".$TBLPREFIX."probabilities where pr_file=".$GEDCOMS[$GEDCOM]['id']." ORDER BY (pr_matches / pr_count) DESC";
+			$result = dbquery($sql);
+			if($result->numRows()==0 || !empty($_REQUEST['recount'])) {
+				$inferences = ra_functions::inferences();
+				$result = dbquery($sql);
+			}
+			
+			//This takes the info from that database and displays it to the user
+			//The formatting is accomplished by using a HTML table
+			if($result->numRows()>0)
+			{
+				while($row = $result->fetchRow(DB_FETCHMODE_ASSOC))
+					{
+						$out .= "<tr><td class='optionbox'>";
+						$out .= $this->getPartsTranslation($row['pr_f_lvl']);
+						$out .= "</td>"; 
+						$out .= "<td class='optionbox'>".$this->getPartsTranslation($row['pr_s_lvl'],$row['pr_rel'])."</td>"; 
+						$out .= "<td class='optionbox'>".$this->getPartsTranslation($row['pr_rel'])."</td>";
+						if ($row['pr_count']==0) $row['pr_per'] = 0;
+						else $row['pr_per'] = 100*($row['pr_matches']/$row['pr_count']); 
+						$out .= "<td class='optionbox'>". sprintf("%.2f%%",$row['pr_per'])."</td></tr>"; 
+					}
+			}
+			$out .= "<tr><td class='topbottombar' colspan='4'><form method=\"get\" action=\"\"><input type=\"button\" value=\"".$pgv_lang["Recalculate"]."\" onclick=\"window.location='module.php?mod=research_assistant&action=viewProbabilities&recount=1';\" /></form></td></tr>";
+			//Returns the table to display
+		}
+		else
+		{
+			
+			$avgExists = false;
+			$pInfer = run($_REQUEST["pid"]);
+
+			$avLocal = 0;
+			$avGlobal = 0;
+			foreach($pInfer as $myKey=>$myVal)
+			{
+				$out .= "\n<tr>";
+				
+				foreach($myVal as $actKey=>$niceData)
+				{
+					if($actKey !== "LocalCount" && $actKey !== "GlobalCount")
+					{
+						$out .= "<td class=\"optionbox\">";
+						if($actKey === "Prob" || $actKey === "GlobalProb")
+						{
+							if($actKey === "Prob")
+							{
+								$localAvg = $niceData;
+							}
+							
+							if($actKey === "GlobalProb")
+							{
+								$globalAvg = $niceData * 100;
+							}
+							
+							if($myVal['LocalCount'] == 0 && $actKey === "Prob")
+							{
+								$out .= $pgv_lang["NoData"];
+							}
+							else
+							{
+								if($actKey === "Prob")
+								{
+								$out .= sprintf("%.2f%%",$niceData);
+								}
+							}
+							
+							if($myVal['GlobalCount'] == 0 && $actKey === "GlobalProb")
+							{
+								$out .= $pgv_lang["NoData"];
+							}
+							else
+							{
+								if($actKey === "GlobalProb")
+								{
+									$niceData = $niceData *100;
+								$out .= sprintf("%.2f%%",$niceData);
+								}
+							}
+						}
+						else
+						{
+							$out .= getPartsTranslation($niceData);
+						}
 						$out .= "</td>";
 						
 						if($actKey === 2)
@@ -201,82 +200,82 @@ class ra_ViewInferences extends ra_form {
 							$relatedTag = $niceData;
 						
 						}
- 					}
- 					
- 				}
- 				if($localAvg == 0 && $globalAvg == 0)
- 				{
- 					$out .= "<td class=\"optionbox\">".$pgv_lang["NotEnoughData"]."</td>";
- 					$avgExists = false;
- 				}
- 				if($localAvg == 0 && $globalAvg != 0)
- 				{
- 					$out .= "<td class=\"optionbox\">".sprintf("%.2f%%",$globalAvg)."</td>";
- 					$avgExists = true;
- 				}
- 				if($globalAvg == 0 && $localAvg != 0)
- 				{
- 					$out .= "<td class=\"optionbox\">".sprintf("%.2f%%",$localAvg)."</td>";
- 					$avgExists = true;
- 				}
- 				if($globalAvg != 0 && $localAvg != 0)
- 				{			
- 					$avg = ($localAvg+$globalAvg) /2;
- 					$out .= "<td class=\"optionbox\">".sprintf("%.2f%%",$avg)."</td>";
- 					$avgExists = true;
- 				}
+					}
+					
+				}
+				if($localAvg == 0 && $globalAvg == 0)
+				{
+					$out .= "<td class=\"optionbox\">".$pgv_lang["NotEnoughData"]."</td>";
+					$avgExists = false;
+				}
+				if($localAvg == 0 && $globalAvg != 0)
+				{
+					$out .= "<td class=\"optionbox\">".sprintf("%.2f%%",$globalAvg)."</td>";
+					$avgExists = true;
+				}
+				if($globalAvg == 0 && $localAvg != 0)
+				{
+					$out .= "<td class=\"optionbox\">".sprintf("%.2f%%",$localAvg)."</td>";
+					$avgExists = true;
+				}
+				if($globalAvg != 0 && $localAvg != 0)
+				{
+					$avg = ($localAvg+$globalAvg) /2;
+					$out .= "<td class=\"optionbox\">".sprintf("%.2f%%",$avg)."</td>";
+					$avgExists = true;
+				}
 				
- 				//Now we check to see if enough data existed to create a average for the user
- 				//if so we will display relevant data
- 				if($avgExists)
- 				{
- 					$tempVar = $this->getFactValue($_REQUEST['pid'],$relatedTag,$factTag);
- 					
- 					$compoundFact = $relatedTag.":".$factTag;
- 					if($compoundFact[0] == ":")
- 					{
- 						$compoundFact = trim($compoundFact, ":");
- 					}
- 					if(!empty($tempVar))
- 					{
- 					$out .=  "<td class=\"optionbox\"><b>".$factarray[$compoundFact].":</b> ".$tempVar."</td>";
- 					}
- 					else
- 					{
- 						$out .= "<td class=\"optionbox\"></td>";
- 					}
- 				}
- 				else
- 				{
- 					$out .= "<td class=\"optionbox\">".$pgv_lang["NotEnoughData"]."</td>";
- 				}
- 				
- 				$out .= "</tr>";
- 			}
- 		
- 		}
- 		return $out;
- 	}
- 	
- 	function getFactValue($pid, $recordTag, $factTag)
- 	{
+				//Now we check to see if enough data existed to create a average for the user
+				//if so we will display relevant data
+				if($avgExists)
+				{
+					$tempVar = $this->getFactValue($_REQUEST['pid'],$relatedTag,$factTag);
+					
+					$compoundFact = $relatedTag.":".$factTag;
+					if($compoundFact[0] == ":")
+					{
+						$compoundFact = trim($compoundFact, ":");
+					}
+					if(!empty($tempVar))
+					{
+					$out .=  "<td class=\"optionbox\"><b>".$factarray[$compoundFact].":</b> ".$tempVar."</td>";
+					}
+					else
+					{
+						$out .= "<td class=\"optionbox\"></td>";
+					}
+				}
+				else
+				{
+					$out .= "<td class=\"optionbox\">".$pgv_lang["NotEnoughData"]."</td>";
+				}
+				
+				$out .= "</tr>";
+			}
+		
+		}
+		return $out;
+	}
+	
+	function getFactValue($pid, $recordTag, $factTag)
+	{
 		$tempRecord = getRecord($recordTag,$pid);
 		//get the value of the tag from the related gedcom
- 		if ($factTag=='SURN') {
- 			$person = new Person($tempRecord);
+		if ($factTag=='SURN') {
+			$person = new Person($tempRecord);
 			list($factRelation)=explode(',', $person->getListName());
- 		}
+		}
 		else if ($factTag=='GIVN'){
 			$person = new Person($tempRecord);
 			list($dummy, $factRelation)=explode(',', $person->getListName());
 		}
 		else {
-			$factRelation =	get_gedcom_value($factTag,1,$tempRecord);
+			$factRelation=get_gedcom_value($factTag,1,$tempRecord);
 		}
 		
 		return $factRelation;
- 	}
- 	
+	}
+	
 	function display_form(){ 
 		$output = ra_form::heading();
 
@@ -312,14 +311,5 @@ class ra_ViewInferences extends ra_form {
                 </tr>';
         return $out;
     }
-	
-	
-	
-    /**
-     * Show the form to the user
-     * 
-     * @return object
-     */
- 	
  }
 ?>

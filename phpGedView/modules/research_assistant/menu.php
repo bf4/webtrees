@@ -2,7 +2,7 @@
 /**
  * Menu for research assistant
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007	John Finlay and Others
+ * Copyright (C) 2002 to 2007 John Finlay and Others
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -31,8 +31,8 @@ if (!defined('PGV_PHPGEDVIEW')) {
 class research_assistant_ModuleMenu {
 	/**
 	 * get the research assistant menu
-	 * @todo	create a way to abstract menus for plugins
-	 * @return Menu 	the menu item
+	 * @todo create a way to abstract menus for plugins
+	 * @return Menu  the menu item
 	 */
 	function &getMenu() {
 		global $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $pgv_lang;

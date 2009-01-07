@@ -38,13 +38,6 @@ if (!defined('PGV_PHPGEDVIEW')) {
 require_once ("modules/research_assistant/ra_functions.php");
 require_once 'modules/research_assistant/forms/ra_GeneratedTask.php';
 
-//-- commmented out because the other section should take care of redirecting
-// If the user is not logged in, take them to the login page.
-//if (empty ($_SESSION['pgv_user'])) {
-//	header("Location: login.php?url={$PHP_SELF}");
-//	exit;
-//}
-
 // If the user doesnt have access then take them to the index.
 if ($SHOW_RESEARCH_ASSISTANT < PGV_USER_ACCESS_LEVEL && preg_match("/index.php/", $SCRIPT_NAME)==0) {
 	header("Location: index.php");
@@ -69,7 +62,7 @@ class research_assistant extends ra_functions {
 	* for the module needs to happen in this function, it's kind of like a
 	* static method.
 	*
-	* @return	mixed	 Output to the user in HTML form
+	* @return mixed Output to the user in HTML form
 	*/
 	function main() {
 		// Specify our lang variable and the table prefix.
@@ -158,11 +151,9 @@ class research_assistant extends ra_functions {
 				{
 					if($_POST['complete'] == 1)
 					{
-							//SAVE & Complete
-							$out = mod_print_header($pgv_lang["page_header"]);
-							//$out. = $this->print_menu();
-	               			 //$task = $this->getTask($_REQUEST['taskid']);
-	              				$out .= $this->print_form('ra_CompleteTask');
+						//SAVE & Complete
+						$out = mod_print_header($pgv_lang["page_header"]);
+	          $out .= $this->print_form('ra_CompleteTask');
 					}
 					else
 					{
@@ -233,14 +224,8 @@ class research_assistant extends ra_functions {
 			if ($_REQUEST['action'] == "deletetask" && !empty ($_REQUEST['taskid'])) {
 				$this->deleteTask($_REQUEST['taskid']);
 				$out .= $this->print_menu("", $_REQUEST['taskid']);
-				//if($_REQUEST['userName'] == "")
-				//{
-					
-				//$out .= $this->print_folder_view();
-					$out .= $this->print_folder_view($_REQUEST['folder']);
-					$out .= $this->print_list($_REQUEST['folder']);
-//					$out .= $this->print_list();
-				//}
+				$out .= $this->print_folder_view($_REQUEST['folder']);
+				$out .= $this->print_list($_REQUEST['folder']);
 			}
 
 		// View a task
@@ -255,7 +240,7 @@ class research_assistant extends ra_functions {
 			if ($_REQUEST['action'] == "mytasks") 
 			{
 					$out .= $this->print_menu("", "");
-					$out .= $this->print_user_list(GetUserName());	
+					$out .= $this->print_user_list(GetUserName());
 			}
 
 		// Print a form
@@ -368,37 +353,37 @@ class research_assistant extends ra_functions {
 				$tasks = array();
 				if(!empty($_REQUEST['checkedtasks']) && !empty($_SESSION['genTasks']))
 				{
-   					$checkedtasks = $_REQUEST['checkedtasks'];
-   					$tasks = unserialize($_SESSION['genTasks']);
+					$checkedtasks = $_REQUEST['checkedtasks'];
+					$tasks = unserialize($_SESSION['genTasks']);
 				}
-   				foreach($checkedtasks as $key => $value)
-   				{
-   					$val1 = $tasks[$key];
-   					$this->addGenTask($val1, $_REQUEST['folder']);
-   				}
-   				$out .= $this->loadGenTasks();
-			}
-		else
-			if($_REQUEST['action']  == "savegentask")
-			{
-				$tasks = unserialize($_SESSION['genTasks']);
-				foreach($tasks as $key => $value)
- 					if($value->getID() == $_REQUEST['genTaskId'])
- 					{
- 			     		$value->setName($_REQUEST['title']);
- 			     		$value->setDescription($_REQUEST['description']);
- 			     		$value->setPersonId($_REQUEST['personid']);
- 			     		$value->setSourceId($_REQUEST['sourceid']);
- 					}
- 				$_SESSION['genTasks'] = serialize($tasks);
+				foreach($checkedtasks as $key => $value)
+				{
+					$val1 = $tasks[$key];
+					$this->addGenTask($val1, $_REQUEST['folder']);
+				}
 				$out .= $this->loadGenTasks();
 			}
-		else
-			if($_REQUEST['action'] == "editgenTasks")
-			{
-				$out .= $this->print_menu();
-				$out .= $this->print_form('ra_EditGeneratedTask');
-			}
+			else
+				if($_REQUEST['action']  == "savegentask")
+				{
+					$tasks = unserialize($_SESSION['genTasks']);
+					foreach($tasks as $key => $value)
+						if($value->getID() == $_REQUEST['genTaskId'])
+						{
+							$value->setName($_REQUEST['title']);
+							$value->setDescription($_REQUEST['description']);
+							$value->setPersonId($_REQUEST['personid']);
+							$value->setSourceId($_REQUEST['sourceid']);
+						}
+					$_SESSION['genTasks'] = serialize($tasks);
+					$out .= $this->loadGenTasks();
+				}
+				else
+					if($_REQUEST['action'] == "editgenTasks")
+					{
+						$out .= $this->print_menu();
+						$out .= $this->print_form('ra_EditGeneratedTask');
+					}
 
 		// Perform a function call on a form
 		else
@@ -483,7 +468,7 @@ class research_assistant extends ra_functions {
 
 	/**
 	 * Adds people to the idividualtask table
-	 * @param GeneratedTask $task	used when creating a new task from a generated task object
+	 * @param GeneratedTask $task used when creating a new task from a generated task object
 	 * @return void
 	 */
 	function add_people($task='')

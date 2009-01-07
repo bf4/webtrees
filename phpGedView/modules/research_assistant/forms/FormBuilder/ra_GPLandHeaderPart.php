@@ -34,13 +34,13 @@ require_once "includes/functions/functions_edit.php";
 class %FORMNAME% extends ra_form {
 
     function header($action, $tableAlign, $heading, $showchoose = false) {
-    	global $pgv_lang;
-    	$out = "";
-    	if ($showchoose) {
-	    	//Row Form
-	    	$out = '<form action="module.php" method="post">';
-	    	$out .= '<input type="hidden" name="mod" value="research_assistant" />' .
-	    			'<input type="hidden" name="action" value="printform" />' .
-	    			'<input type="hidden" name="formname" value="%FORMNAME%" />' .
-	    			'<input type="hidden" name="taskid" value="'.$_REQUEST['taskid'].'" />';
+    global $pgv_lang;
+    $out = "";
+    if ($showchoose) {
+	    //Row Form
+	    $out = '<form action="module.php" method="post">';
+	    $out .= '<input type="hidden" name="mod" value="research_assistant" />' .
+	    '<input type="hidden" name="action" value="printform" />' .
+	    '<input type="hidden" name="formname" value="%FORMNAME%" />' .
+	    '<input type="hidden" name="taskid" value="'.$_REQUEST['taskid'].'" />';
 

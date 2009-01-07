@@ -39,7 +39,7 @@ require_once("includes/functions/functions_db.php");
 require_once("includes/classes/class_person.php");
 global $pgv_lang, $TBLPREFIX, $DBCONN, $SOURCE_ID_PREFIX;
 
- 	/**
+	/**
 	 * GETS the DATES of the task with the given taskid
 	 *
 	 * @return mixed dates of the task
@@ -77,10 +77,10 @@ global $pgv_lang, $TBLPREFIX, $DBCONN, $SOURCE_ID_PREFIX;
 
         $out = "";
         while($foldername =& $res->fetchRow(DB_FETCHMODE_ASSOC)){
-        	if($foldername["fr_id"] != $folderid)
-		    	$out .= '<option value="'.$foldername['fr_id'].'">'.PrintReady($foldername['fr_name']) . '</option>';
+	if($foldername["fr_id"] != $folderid)
+			$out .= '<option value="'.$foldername['fr_id'].'">'.PrintReady($foldername['fr_name']) . '</option>';
 		    else
-		    	$out .= '<option value="'.$foldername['fr_id'].'" selected="selected">'.PrintReady($foldername['fr_name']) . '</option>';
+			$out .= '<option value="'.$foldername['fr_id'].'" selected="selected">'.PrintReady($foldername['fr_name']) . '</option>';
 
 
 		}
@@ -97,7 +97,7 @@ global $pgv_lang, $TBLPREFIX, $DBCONN, $SOURCE_ID_PREFIX;
 	function getPeople(){
         global $TBLPREFIX, $DBCONN;
 
-		$sql = 	"SELECT it_i_id FROM " . $TBLPREFIX . "individualtask WHERE it_t_id='" . $DBCONN->escapeSimple($_REQUEST["taskid"]) . "'";
+		$sql = "SELECT it_i_id FROM " . $TBLPREFIX . "individualtask WHERE it_t_id='" . $DBCONN->escapeSimple($_REQUEST["taskid"]) . "'";
 		$res = dbquery($sql);
 
 		$people = array();
@@ -118,7 +118,7 @@ global $pgv_lang, $TBLPREFIX, $DBCONN, $SOURCE_ID_PREFIX;
 	function getSources(){
         global $TBLPREFIX, $DBCONN, $GEDCOMS, $GEDCOM;
 
-		$sql = 	"SELECT s_name, s_id FROM " . $TBLPREFIX . "sources, ".$TBLPREFIX."tasksource WHERE s_file=".$GEDCOMS[$GEDCOM]['id']." AND ts_s_id=s_id AND ts_t_id='" . $DBCONN->escapeSimple($_REQUEST["taskid"]) . "'";
+		$sql = "SELECT s_name, s_id FROM " . $TBLPREFIX . "sources, ".$TBLPREFIX."tasksource WHERE s_file=".$GEDCOMS[$GEDCOM]['id']." AND ts_s_id=s_id AND ts_t_id='" . $DBCONN->escapeSimple($_REQUEST["taskid"]) . "'";
 		$res = dbquery($sql);
 
 		$sources = array();
@@ -136,7 +136,7 @@ global $pgv_lang, $TBLPREFIX, $DBCONN, $SOURCE_ID_PREFIX;
 	 */
 	function getComments(){
 		global $pgv_lang, $TBLPREFIX, $DBCONN;
-		$sql = 	"SELECT c_u_username, c_body, c_datetime, c_id " .
+		$sql = "SELECT c_u_username, c_body, c_datetime, c_id " .
 				"FROM " . $TBLPREFIX . "comments " .
 				"WHERE c_t_id='" . $DBCONN->escapeSimple($_REQUEST["taskid"]). "' " .
 				"ORDER BY c_datetime DESC";
@@ -147,18 +147,18 @@ global $pgv_lang, $TBLPREFIX, $DBCONN, $SOURCE_ID_PREFIX;
 			$comment = db_cleanup($comment);
 			$date=new GedcomDate(date("d M Y", (int)$comment["c_datetime"]));
 			$out .= '<div class="blockcontent"><div class="person_box" id="comment1"><span class="news_title">' .
-					$comment["c_u_username"]. 	// INSERT username
+					$comment["c_u_username"]. // INSERT username
 					'</span><br /><span class="news_date">' .
-					$date->Display(false).' - '. date("g:i:s A",(int)$comment["c_datetime"]).		// INSERT datetime
+					$date->Display(false).' - '. date("g:i:s A",(int)$comment["c_datetime"]). // INSERT datetime
 					'</span><br /><br />' .
-					nl2br($comment["c_body"]).			// INSERT body
+					nl2br($comment["c_body"]). // INSERT body
 					'<hr size="1" />';
 
 			if (PGV_USER_IS_ADMIN || PGV_USER_NAME==$comment["c_u_username"]){
 				$out .= '<a href="javascript:;" onclick="editcomment(' .
-							''.$comment["c_id"].'' .	// INSERT commentid
+							''.$comment["c_id"].'' . // INSERT commentid
 							')">'.$pgv_lang["edit"].'</a> | <a href="" onclick="confirm_prompt(\''.$pgv_lang["comment_delete_check"].'\', ' .
-							$comment["c_id"].'' .	// INSERT commentid
+							$comment["c_id"].'' . // INSERT commentid
 							'); return false;">'.$pgv_lang["delete"].'</a>';
 			}
 			$out .= '<br /></div></div><br/>';
@@ -178,14 +178,14 @@ global $pgv_lang, $TBLPREFIX, $DBCONN, $SOURCE_ID_PREFIX;
 
 <!--JAVASCRIPT-->
 <script language="JavaScript" type="text/javascript"><!--
-  	function editcomment(commentid) {
-  		window.open('editcomment.php?taskid=<?php print $_REQUEST['taskid']; ?>&commentid='+commentid, '', 'top=50,left=50,width=600,height=400,resizable=1,scrollbars=1');
-  	}
-  	function confirm_prompt(text, commentid) {
-    	if (confirm(text)) {
-      		window.location = 'module.php?mod=research_assistant&action=edittask&delete='+commentid+'&taskid=<?php print $_REQUEST['taskid']; ?>';
-    	}
-    }
+ function editcomment(commentid) {
+ window.open('editcomment.php?taskid=<?php print $_REQUEST['taskid']; ?>&commentid='+commentid, '', 'top=50,left=50,width=600,height=400,resizable=1,scrollbars=1');
+ }
+ function confirm_prompt(text, commentid) {
+  if (confirm(text)) {
+  window.location = 'module.php?mod=research_assistant&action=edittask&delete='+commentid+'&taskid=<?php print $_REQUEST['taskid']; ?>';
+  }
+ }
     //-->
 </script>
 <!--BEGIN EDIT TASK FORM-->
@@ -194,72 +194,72 @@ global $pgv_lang, $TBLPREFIX, $DBCONN, $SOURCE_ID_PREFIX;
     <input type="hidden" name="action" value="updatetask" />
     <input type="hidden" name="taskid" value="<?php print $_REQUEST['taskid'] ?>" />
 	<table class="list_table" align="center" border="0" width="40%">
-  		<tr>
+	<tr>
 <!--HEADING-->
-    		<th colspan="4" align="right" class="topbottombar">
-    			<h2>
-    				<?php print $pgv_lang["edit_task"]; print_help_link("ra_edit_task_help", "qm", '', false, false); ?>
-    			</h2>
-    		</th>
-    	</tr>
-    	<tr>
+	<th colspan="4" align="right" class="topbottombar">
+		<h2>
+			<?php print $pgv_lang["edit_task"]; print_help_link("ra_edit_task_help", "qm", '', false, false); ?>
+		</h2>
+	</th>
+   </tr>
+   <tr>
 <!--TITLE-->
 			<td class="descriptionbox">
-      			<?php print $pgv_lang["title"]; ?>
-      		</td>
-      		<td class="optionbox">
-      			<?php
-      				// get title, given taskid
-      				print '<input type="text" name="title" value="'.PrintReady(htmlspecialchars(stripslashes($task['t_title']))).'" size="50"/>';
-      			?>
-      		</td>
+			<?php print $pgv_lang["title"]; ?>
+		</td>
+		<td class="optionbox">
+			<?php
+				// get title, given taskid
+				print '<input type="text" name="title" value="'.PrintReady(htmlspecialchars(stripslashes($task['t_title']))).'" size="50"/>';
+			?>
+		</td>
 <!--FOLDER-->
 			<td class="descriptionbox">
-      			<?php print $pgv_lang["folder"]; ?>
-      		</td>
+			<?php print $pgv_lang["folder"]; ?>
+		</td>
 			<td class="optionbox">
- 				<select name="folder">
+				<select name="folder">
 					<?php
 						// Get a list of all available folders
 						print PrintReady(getFolders($task["t_fr_id"]));
 					?>
-      			</select>
-      		</td>
-    	</tr>
-    	<!-- ASSIGN TASK -->
-    		<tr>
-    			<td class="descriptionbox">
-    				<?php print $pgv_lang['assign_task']; ?>
-    			</td>
-    			<td class="optionbox" colspan=3>
-    			<select name="Users"> <option value=""></option>
-    			<?php
-    				foreach(get_all_users() as $username) {
-    					print "<option value=\"$username\"";
+			</select>
+		</td>
+	</tr>
+	<!-- ASSIGN TASK -->
+		<tr>
+			<td class="descriptionbox">
+				<?php print $pgv_lang['assign_task']; ?>
+			</td>
+			<td class="optionbox" colspan=3>
+			<select name="Users"> <option value=""></option>
+			<?php
+				foreach(get_all_users() as $username) {
+					print "<option value=\"$username\"";
 							if ($username==$task['t_username']) {
 								print " selected=\"selected\"";
 							}
 							print ">".getUserFullName($username)."</option>";
-    				}
-    			?>
-    			</select>
+				}
+			?>
+			</select>
 
-    			</td>
-    			<tr>
-    		</tr>
+			</td>
+			<tr>
+		</tr>
 	    <tr>
 <!--DESCRIPTION-->
 			<td class="descriptionbox">
-      			<?php print $pgv_lang["description"]; ?>
-      		</td>
-	      	<td class="optionbox" colspan="3" >
-	      		<?php
-	      			// get description, given taskid
-	      			print '<textarea name="desc" rows="3" cols="55">';
-	      			print PrintReady(htmlspecialchars(stripslashes($task['t_description'])));
-	      			print '</textarea>';
-	      		?>
-	      	</td>
+			<?php print $pgv_lang["description"]; ?>
+		</td>
+		<td class="optionbox" colspan="3" >
+			<?php
+				// get description, given taskid
+				print '<textarea name="desc" rows="3" cols="55">';
+				print PrintReady(htmlspecialchars(stripslashes($task['t_description'])));
+				print '</textarea>';
+			?>
+		</td>
 	    </tr>
 	    <tr>
 <!--SOURCES-->
@@ -284,7 +284,6 @@ global $pgv_lang, $TBLPREFIX, $DBCONN, $SOURCE_ID_PREFIX;
 	function clearname(hiddenName, name, id) {
 		pastefield = document.getElementById(hiddenName);
 		if (pastefield) {
-//			pastefield.value = pastefield.value.replace(new RegExp("\:"+id), '');
 			pos1 = pastefield.value.indexOf(";"+id);
 			if (pos1>-1) {
 				pos2 = pastefield.value.indexOf(";", pos1+1);
@@ -304,14 +303,14 @@ global $pgv_lang, $TBLPREFIX, $DBCONN, $SOURCE_ID_PREFIX;
 	//-->
 	</script>
                    <div id="sourcelink">
-                   		<?php
-                   			$sources = getSources();
-                   			$sval = '';
-                   			foreach($sources as $sid=>$source) {
-                   				$sval .= ';'.$sid;
-                   				print '<a id="link_'.$sid.'" href="source.php?sid='.$sid.'">'.$source.'</a> <a id="rem_'.$sid.'" href="#" onclick="clearname(\'sourceid\', \'link_'.$sid.'\', \''.$sid.'\'); return false;" ><img src="images/remove.gif" border="0" alt="" /><br /></a>';
-                   			}
-                   		?>
+		<?php
+			$sources = getSources();
+			$sval = '';
+			foreach($sources as $sid=>$source) {
+				$sval .= ';'.$sid;
+				print '<a id="link_'.$sid.'" href="source.php?sid='.$sid.'">'.$source.'</a> <a id="rem_'.$sid.'" href="#" onclick="clearname(\'sourceid\', \'link_'.$sid.'\', \''.$sid.'\'); return false;" ><img src="images/remove.gif" border="0" alt="" /><br /></a>';
+			}
+		?>
                    </div>
                    <input type="hidden" id="sourceid" name="sourceid" size="3" value="<?php print $sval; ?>" />
                      <?php print_findsource_link("sourceid", "sourcelink"); ?>
@@ -325,18 +324,18 @@ global $pgv_lang, $TBLPREFIX, $DBCONN, $SOURCE_ID_PREFIX;
             </td>
             <td id="peoplecell" class="optionbox" colspan="3">
                    <div id="peoplelink">
-                   		<?php
-                   			$people = getPeople();
-                   			$pval = '';
-                   			foreach($people as $pid=>$person) {
-                   				if(is_object($person)){
-	                   				$pval .= ';'.$person->getXref();
+		<?php
+			$people = getPeople();
+			$pval = '';
+			foreach($people as $pid=>$person) {
+				if(is_object($person)){
+					$pval .= ';'.$person->getXref();
 														$bdate=$person->getEstimatedBirthDate();
 														$byear=$bdate->gregorianYear();
-	                   				print '<a id="link_'.$pid.'" href="individual.php?pid='.$pid.'">'.$person->getFullName()." - ".$byear.'</a> <a id="rem_'.$pid.'" href="#" onclick="clearname(\'personid\', \'link_'.$pid.'\', \''.$pid.'\'); return false;" ><img src="images/remove.gif" border="0" alt="" /><br /></a>';
-                   				}
-                   			}
-                   		?>
+					print '<a id="link_'.$pid.'" href="individual.php?pid='.$pid.'">'.$person->getFullName()." - ".$byear.'</a> <a id="rem_'.$pid.'" href="#" onclick="clearname(\'personid\', \'link_'.$pid.'\', \''.$pid.'\'); return false;" ><img src="images/remove.gif" border="0" alt="" /><br /></a>';
+				}
+			}
+		?>
                    </div>
                    <input type="hidden" id="personid" name="personid" size="3" value="<?php print $pval; ?>" />
                      <?php print_findindi_link("personid", "peoplelink",false,true,'',''); ?>
@@ -346,24 +345,24 @@ global $pgv_lang, $TBLPREFIX, $DBCONN, $SOURCE_ID_PREFIX;
     <?php
     $data = getDates();
     if (!empty($data[1])) {
-    	?>
-    	<tr>
+	?>
+	<tr>
 			<td class="descriptionbox">
                <?php print $pgv_lang["result"]; ?>
             </td>
             <td class="optionbox" colspan="3">
-            	<textarea name="results" cols="55" rows="5"><?php print $data[2]; ?></textarea>
+	<textarea name="results" cols="55" rows="5"><?php print $data[2]; ?></textarea>
             </td>
         </tr>
-    	<?php
+	<?php
     }
     ?>
 	<tr class="topbottombar">
-    		<td colspan="4">
-    		<input type="submit" value="<?php print $pgv_lang["save"]; ?>" />
-    		<input type="submit" value="<?php print $pgv_lang["complete"];?>" name="complete" />
-    		</td>
-   	</tr>
+		<td colspan="4">
+		<input type="submit" value="<?php print $pgv_lang["save"]; ?>" />
+		<input type="submit" value="<?php print $pgv_lang["complete"];?>" name="complete" />
+		</td>
+	</tr>
 
     <tr>
     <td colspan="4">
@@ -372,12 +371,12 @@ global $pgv_lang, $TBLPREFIX, $DBCONN, $SOURCE_ID_PREFIX;
     </tr>
     <tr>
 <!--HEADING-->
-    		<td colspan="4" class="topbottombar">
-    			<h3>
-    				<?php print $pgv_lang["comments"]; ?>
-    			</h3>
-    		</td>
-    	</tr>
+		<td colspan="4" class="topbottombar">
+			<h3>
+				<?php print $pgv_lang["comments"]; ?>
+			</h3>
+		</td>
+	</tr>
     <tr>
     <td colspan="4">
 <!--COMMENT SECTION-->
@@ -399,11 +398,11 @@ global $pgv_lang, $TBLPREFIX, $DBCONN, $SOURCE_ID_PREFIX;
 </td>
 </tr>
 <tr class="topbottombar">
-    		<td colspan="4">
+		<td colspan="4">
 <input type="button" value="<?php print $pgv_lang["add_new_comment"]; ?>" name="Add New Comment" onclick="window.open('editcomment.php?taskid='+<?php print $_REQUEST['taskid']; ?>, '',
         'top=50,left=50,width=600,height=400,resizable=1,scrollbars=1');">
         </td>
-    	</tr>
+	</tr>
 	     </table>
     </form>
 

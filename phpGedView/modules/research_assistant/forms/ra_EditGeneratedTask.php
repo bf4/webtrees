@@ -42,39 +42,39 @@ class ra_EditGeneratedTask extends ra_form
      * @param mixed $folder_id The id of the folder to edit
      * @return mixed
      */
- 	function content() 
- 	{
- 		$tasks = unserialize($_SESSION['genTasks']);
- 		
- 		foreach($tasks as $key => $value)
- 			if($value->getID() == $_REQUEST['genTaskId'])
- 			     $this->task = $value;
- 		
+	function content() 
+	{
+		$tasks = unserialize($_SESSION['genTasks']);
+		
+		foreach($tasks as $key => $value)
+			if($value->getID() == $_REQUEST['genTaskId'])
+			     $this->task = $value;
+		
 		return $this->print_javascipt() . $this->print_header() . $this->print_Content() . $this->print_footer();
- 	}
- 	
- 	function print_header()
- 	{
-	 	global $pgv_lang;
- 		$out = '<form name="editGenTask" action="module.php" method="post">' .
- 		'<input type="hidden" name="mod" value="research_assistant" />' .
+	}
+	
+	function print_header()
+	{
+		global $pgv_lang;
+		$out = '<form name="editGenTask" action="module.php" method="post">' .
+		'<input type="hidden" name="mod" value="research_assistant" />' .
         '<input type="hidden" name="action" value="savegentask" />' .
         '<input type="hidden" name="genTaskId" value="' . $_REQUEST['genTaskId'] . '" />' .
 				'<table class="list_table" align="center" border="0" width="40%">' .
-		  		'<tr>' .
-		    		'<th colspan="4" align="right" class="topbottombar">' .
-		    			'<h2>'.$pgv_lang["Edit_Gen_Task"] .
-		    			print_help_link("ra_EditGenerateTasks_help", "qm", '', false, true) .
-		    			'</h2>' .
-		    		'</th>' .
-		    	'</tr>';
+				'<tr>' .
+				'<th colspan="4" align="right" class="topbottombar">' .
+					'<h2>'.$pgv_lang["Edit_Gen_Task"] .
+					print_help_link("ra_EditGenerateTasks_help", "qm", '', false, true) .
+					'</h2>' .
+				'</th>' .
+			'</tr>';
 		return $out;
- 	}
- 	
- 	function print_javascipt()
- 	{
- 		global $pgv_lang;
- 		$out = '<script language="JavaScript" type="text/javascript">
+	}
+	
+	function print_javascipt()
+	{
+		global $pgv_lang;
+		$out = '<script language="JavaScript" type="text/javascript">
 				<!--
 				var pastefield;
 				var nameElement;
@@ -144,23 +144,23 @@ class ra_EditGeneratedTask extends ra_form
 		return $out;
 	}
 	
- 	function print_footer() 
- 	{
-	 	global $pgv_lang;
- 		$onclick = "window.location='module.php?mod=research_assistant&action=genTasks';";
- 		return '<th colspan=2 class="topbottombar">' .
-		            	'<input type=submit value='.$pgv_lang["save"].'><input type=button value='.$pgv_lang["cancel"].' onclick="' . $onclick . '">' .
+	function print_footer() 
+	{
+		global $pgv_lang;
+		$onclick = "window.location='module.php?mod=research_assistant&action=genTasks';";
+		return '<th colspan=2 class="topbottombar">' .
+			'<input type=submit value='.$pgv_lang["save"].'><input type=button value='.$pgv_lang["cancel"].' onclick="' . $onclick . '">' .
 		        '</th></table></form>';
- 	}
+	}
 
     /**
      * Show the form to the user
      * 
      * @return object
      */
- 	function display_form()
- 	{
- 		return $this->content();
- 	}
+	function display_form()
+	{
+		return $this->content();
+	}
  }
 ?>
