@@ -10,6 +10,7 @@
 
 
 Version 4.2.0
+ - Fixed: Incorrect block heading format on Index and Portal pages when page language is RTL (canajun2eh)
  - Changed: Indi Navigator: Set 5 Tabs only: Facts/Notes/Sources/Media/Album pending config options. Removed on/off Toggle link (windmillway)
  - Fixed: [ 2485553 ] Googlemap page error. Also removed Navigator "Tab", replaced with link on right (more to be done on config) (windmillway)
  - Changed: Re-write of Daitch-Mokotoff "sounds like" algorithm (canajun2eh)
