@@ -1799,7 +1799,7 @@ class IndividualControllerRoot extends BaseController {
 			</tr>
 			<tr>
 				<td class="facts_value">
-				<?php print_help_link("link_new_husband_help", "qm"); ?>
+				<?php print_help_link("link_new_husb_help", "qm"); ?>
 				<a href="javascript:;" onclick="return add_fams('<?php print $this->pid; ?>','HUSB');"><?php print $pgv_lang["link_as_husband"]; ?></a>
 				</td>
 			</tr>
@@ -1813,7 +1813,7 @@ class IndividualControllerRoot extends BaseController {
 			</tr>
 			<tr>
 				<td class="facts_value">
-				<?php print_help_link("link_new_husband_help", "qm"); ?>
+				<?php print_help_link("link_husband_help", "qm"); ?>
 				<a href="javascript:;" onclick="return linkspouse('<?php print $this->pid; ?>','HUSB');"><?php print $pgv_lang["link_new_husb"]; ?></a>
 				</td>
 			</tr>
@@ -1827,7 +1827,7 @@ class IndividualControllerRoot extends BaseController {
 <?php if (PGV_USER_CAN_ACCEPT) { // NOTE this function is restricted to ACCEPTORS because another bug prevents pending changes being shown on the close relatives tab of the indi page.  Once that bug is fixed, this function can be opened up to all! ?>
 			<tr>
 				<td class="facts_value">
-				<?php print_help_link("open_opf_child_help", "qm"); ?>
+				<?php print_help_link("add_opf_child_help", "qm"); ?>
 				<a href="javascript:;" onclick="return addopfchild('<?php print $this->pid; ?>','U');"><?php print $pgv_lang["add_opf_child"]; ?></a>
 				</td>
 			</tr>
