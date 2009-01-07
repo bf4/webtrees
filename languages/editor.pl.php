@@ -105,6 +105,7 @@ $pgv_lang["add_child_to_family"]= "Dodaj dziecko do tej rodziny";
 $pgv_lang["add_fact"]			= "Dodaj nowy fakt";
 $pgv_lang["add_father"]			= "Dodaj nowego ojca";
 $pgv_lang["add_husb"]			= "Dodaj męża";
+$pgv_lang["add_opf_child"]		= "Dodaj dziecko do tej osoby";
 $pgv_lang["add_husb_to_family"]	= "Dodaj męża do tej rodziny";
 $pgv_lang["add_media"]			= "Dodaj nowy obiekt multimedialny";
 $pgv_lang["add_media_lbl"]		= "Dodaj multimedia";

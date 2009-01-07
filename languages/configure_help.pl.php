@@ -550,6 +550,7 @@ $pgv_lang["lang_name_arabic"]		= "arabski";
 $pgv_lang["lang_name_lithuanian"]	= "litewski";
 $pgv_lang["lang_name_vietnamese"]	= "wietnamski";
 $pgv_lang["lang_name_slovak"]		= "słowacki";
+$pgv_lang["lang_name_slovenian"]	= "słoweński";
 $pgv_lang["lang_name_estonian"]		= "estoński";
 $pgv_lang["lang_language"]			= "Język";
 $pgv_lang["export_filename"]		= "Nazwa pliku wynikowego";
