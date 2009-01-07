@@ -305,6 +305,10 @@ else if (strstr($action,"addnewparent")) {
 	if ($famtag=="WIFE") print "<b>".$pgv_lang["add_mother"]."</b>\n";
 	else print "<b>".$pgv_lang["add_father"]."</b>\n";
 }
+else if (strstr($action,"addopfchild")) {
+	print_help_link("edit_add_child_help", "qm");
+	print "<b>".$pgv_lang["add_opf_child"]."</b>";
+}
 else {
 	if (isset($factarray[$type])) print "<b>".$factarray[$type]."</b>";
 }
@@ -466,6 +470,10 @@ case 'addspouse':
 //------------------------------------------------------------------------------
 case 'addnewparent':
 	print_indi_form("addnewparentaction", $famid, "", "", $famtag);
+	break;
+//------------------------------------------------------------------------------
+case 'addopfchild':
+	print_indi_form('addopfchildaction', $famid, '', '','CHIL');
 	break;
 //------------------------------------------------------------------------------
 case 'addfamlink':
@@ -1310,6 +1318,61 @@ case 'addnewparentaction':
 				replace_gedrec($pid, $indirec);
 			}
 		}
+	}
+	break;
+//------------------------------------------------------------------------------
+case 'addopfchildaction':
+	if (PGV_DEBUG) {
+		phpinfo(INFO_VARIABLES);
+	}
+
+	splitSOUR(); // separate SOUR record from the rest
+
+	$gedrec ="0 @REF@ INDI\n";
+	$gedrec.=addNewName();
+	$gedrec.=addNewSex ();
+	if (preg_match_all('/([A-Z0-9_]+)/', $QUICK_REQUIRED_FACTS, $matches)) {
+		foreach ($matches[1] as $match) {
+			$gedrec.=addNewFact($match);
+		}
+	}
+
+	if (safe_POST_bool('SOUR_INDI')) {
+		$gedrec = handle_updates($gedrec);
+	} else {
+		$gedrec = updateRest($gedrec);
+	}
+
+	if (PGV_DEBUG) {
+		print "<pre>$gedrec</pre>";
+	}
+	$xref = append_gedrec($gedrec);
+	if ($xref) print "<br /><br />".$pgv_lang["update_successful"];
+	else exit;
+
+	$success = true;
+	$person=Person::getInstance($pid);
+	
+	$famrec = "0 @new@ FAM\n1 CHIL @{$xref}@";
+	if ($person->getSex()=='F') {
+		$famrec.="\n1 WIFE @{$pid}@";
+	} else {
+		$famrec.="\n1 HUSB @{$pid}@";
+	}
+
+	if (PGV_DEBUG) {
+		print "<pre>$famrec</pre>";
+	}
+	$famid = append_gedrec($famrec);
+
+	if (!isset($pgv_changes[$pid."_".$GEDCOM])) $indirec = find_gedcom_record($pid);
+	else $indirec = find_updated_record($pid);
+	if ($indirec) {
+		$indirec.="\n1 FAMS @{$famid}@";
+		if (PGV_DEBUG) {
+			print "<pre>$indirec</pre>";
+		}
+		replace_gedrec($pid, $indirec);
 	}
 	break;
 //------------------------------------------------------------------------------

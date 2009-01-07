@@ -44,6 +44,7 @@ VERSION 4.2.0
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 -----------------------------------------------------------------------------------------
++$pgv_lang["add_opf_child"]                  9 Jan 2009         A
 *$pgv_lang["edit_concurrency_reload"]				11 December 2008		W
 
 
