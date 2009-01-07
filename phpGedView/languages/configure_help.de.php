@@ -581,6 +581,7 @@ $pgv_lang["lang_name_portuguese"]		= "Portugiesisch";
 $pgv_lang["lang_name_romanian"]			= "Rumänisch";
 $pgv_lang["lang_name_russian"]			= "Russisch";
 $pgv_lang["lang_name_slovak"]			= "Slowakisch";
+$pgv_lang["lang_name_slovenian"]		= "Slowenisch";
 $pgv_lang["lang_name_spanish"]			= "Spanisch";
 $pgv_lang["lang_name_spanish-ar"]		= "Spanisch (Latein-Amerika)";
 $pgv_lang["lang_name_swedish"]			= "Schwedisch";
