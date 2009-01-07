@@ -467,6 +467,7 @@ class stats {
 		} else {
 			$rows=self::_runSQL("SELECT COUNT(DISTINCT f_id) AS tot FROM {$TBLPREFIX}link, {$TBLPREFIX}families WHERE f_id=l_from AND f_file=l_file AND l_file=".$this->_ged_id." AND l_type='SOUR'");
 		}
+		return $rows[0]['tot'];
 	}
 
 	function chartFamsWithSources($params=null)
@@ -1538,7 +1539,7 @@ class stats {
 			}
 			$sql=''
 			.' SELECT'
-				.' fam.f_id,'
+				.' fam.f_id AS fams,'
 				.' fam.f_husb, fam.f_wife,'
 				.' married.d_julianday2 AS age,'
 				.' married.d_month AS month,'
@@ -1556,7 +1557,7 @@ class stats {
 				.' married.d_julianday2 != 0 AND'
 				.$years
 				.' (indi.i_id = fam.f_husb OR indi.i_id = fam.f_wife)'
-			.' ORDER BY indi, age ASC';
+			.' ORDER BY fams, indi, age ASC';
 		}
 		else {
 			$sql = "SELECT d_month, COUNT(*) FROM {$TBLPREFIX}dates "
