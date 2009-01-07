@@ -1641,7 +1641,7 @@ class Person extends GedcomRecord {
 		global $UNDERLINE_NAME_QUOTES, $NAME_REVERSE, $unknownNN, $unknownPN, $pgv_lang;
 
 		// Look for GIVN/SURN at level n+1
-		$sublevel=1+(int)$gedrec[0];;
+		$sublevel=1+(int)$gedrec[0];
 
 		// Fix bad slashes.  e.g. "John/Smith" => "John/Smith/"
 		if (substr_count($full, '/')%2==1) {
