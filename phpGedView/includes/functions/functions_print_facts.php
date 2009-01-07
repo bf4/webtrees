@@ -334,7 +334,7 @@ function print_fact(&$eventObj, $noedit=false) {
 			if ($ct>0) {
 				$spouse=Person::getInstance($match[1]);
 				if ($spouse) {
-					print " <a href=\"".encode_url("individual.php?pid={$match[1]}&ged={$GEDCOM}")."\">";
+					print " <a href=\"".encode_url($spouse->getLinkUrl())."\">";
 					if ($spouse->canDisplayName()) {
 						print PrintReady($spouse->getFullName());
 					} else {
@@ -740,7 +740,7 @@ function print_media_links($factrec, $level,$pid='') {
 				if ($ct>0) {
 					$spouse=Person::getInstance($match[1]);
 					if ($spouse) {
-						print "<a href=\"".encode_url("individual.php?pid={$match[1]}&ged={$GEDCOM}")."\">";
+						print "<a href=\"".encode_url($spouse->getLinkUrl())."\">";
 						if ($spouse->canDisplayName()) {
 							print PrintReady($spouse->getFullName());
 						} else {
