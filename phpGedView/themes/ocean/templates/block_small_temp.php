@@ -8,7 +8,7 @@
  * $content - the content of the block
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2008  PGV Development Team.  All rights reserved.
+ * Copyright (C) 2008 to 2009  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -36,7 +36,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 
 ?>
 <div id="<?php print $id; ?>" class="block" >
-	<table class="blockheader" cellpadding="0" cellspacing="0" style="direction:ltr;padding:0;margin:0;">
+	<table class="blockheader" cellpadding="0" cellspacing="0" style="padding:0;margin:0;">
 		<tr>
 			<td class="blockh1" ></td>
 			<td class="blockh2" >
