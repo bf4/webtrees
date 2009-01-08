@@ -120,7 +120,9 @@ $worms = array(
 	'MJ.*bot',
 	'ru.*rv',
 	'DotBot',
-	'HTTrack'
+	'HTTrack',
+	'AISearchBot',
+	'panscient.com'
 	);
 	$quitReason = "";
 
