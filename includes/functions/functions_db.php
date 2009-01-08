@@ -716,6 +716,8 @@ function get_famlist_surns($surn, $salpha, $marnm, $ged_id) {
 		}
 	} else {
 		// Match all individuals
+		$where[]="n_sort {$DBCOLLATE} NOT ".PGV_DB_LIKE." '@N.N.,%'";
+		$where[]="n_sort {$DBCOLLATE} NOT ".PGV_DB_LIKE." ',%'";
 	}
 
 	if ($includes) {
