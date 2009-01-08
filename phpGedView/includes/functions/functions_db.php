@@ -151,15 +151,17 @@ define('PGV_DB_COL_TAG',  PGV_DB_VARCHAR_TYPE.'(15)');           // Gedcom tags/
 function &dbquery($sql, $show_error=true, $count=0) {
 	global $DBCONN, $TOTAL_QUERIES, $INDEX_DIRECTORY, $LAST_QUERY, $CONFIGURED;
 
-	if (!$CONFIGURED)
+	if (!$CONFIGURED) {
 		return false;
+	}
 	if (!isset($DBCONN)) {
 		return false;
 	}
 	//-- make sure a database connection has been established
 	if (DB::isError($DBCONN)) {
-		if ($DBCONN->getCode()!=-24)
+		if ($DBCONN->getCode()!=-24) {
 			print $DBCONN->getCode()." ".$DBCONN->getMessage();
+		}
 		return $DBCONN;
 	}
 
@@ -178,12 +180,14 @@ function &dbquery($sql, $show_error=true, $count=0) {
 	}
 	*/
 
-	if (PGV_DEBUG_SQL)
+	if (PGV_DEBUG_SQL) {
 		$start_time2 = microtime(true);
-	if ($count == 0)
+	}
+	if ($count == 0) {
 		$res =& $DBCONN->query($sql);
-	else
+	} else {
 		$res =& $DBCONN->limitQuery($sql, 0, $count);
+	}
 
 	$LAST_QUERY = $sql;
 	$TOTAL_QUERIES++;
@@ -193,20 +197,25 @@ function &dbquery($sql, $show_error=true, $count=0) {
 		$exectime = $end_time - $start_time;
 		$exectime2 = $end_time - $start_time2;
 
-		if ($count>0)
+		if ($count>0) {
 			$sql = $DBCONN->modifyLimitQuery($sql, 0, $count);
+		}
 
 		$fp = fopen($INDEX_DIRECTORY."/sql_log.txt", "a");
 		$backtrace = debug_backtrace();
 		$temp = "";
-		if (!DB::isError($res) && is_object($res))
+		if (!DB::isError($res) && is_object($res)) {
 			$temp .= "\t".$res->numRows()."\t";
-		if (isset($backtrace[3]))
+		}
+		if (isset($backtrace[3])) {
 			$temp .= basename($backtrace[3]["file"])." (".$backtrace[3]["line"].")";
-		if (isset($backtrace[2]))
+		}
+		if (isset($backtrace[2])) {
 			$temp .= basename($backtrace[2]["file"])." (".$backtrace[2]["line"].")";
-		if (isset($backtrace[1]))
+		}
+		if (isset($backtrace[1])) {
 			$temp .= basename($backtrace[1]["file"])." (".$backtrace[1]["line"].")";
+		}
 		$temp .= basename($backtrace[0]["file"])." (".$backtrace[0]["line"].")";
 		fwrite($fp, date("Y-m-d H:i:s")."\t".sprintf(" %.4f %.4f sec", $exectime, $exectime2).$_SERVER["SCRIPT_NAME"]."\t".$temp."\t".$TOTAL_QUERIES."-".$sql."\r\n");
 		fclose($fp);
@@ -229,10 +238,11 @@ function &dbquery($sql, $show_error=true, $count=0) {
 function db_cleanup($item) {
 	if (is_array($item)) {
 		foreach ($item as $key=>$value) {
-			if ($key!="gedcom")
+			if ($key!="gedcom") {
 				$item[$key]=stripslashes($value);
-			else
+			} else {
 				$key=$value;
+			}
 		}
 		return $item;
 	} else {
@@ -250,12 +260,15 @@ function db_cleanup($item) {
 function check_for_import($ged) {
 	global $TBLPREFIX, $DBCONN, $GEDCOMS;
 
-	if (DB::isError($DBCONN))
+	if (DB::isError($DBCONN)) {
 		return false;
-	if (count($GEDCOMS)==0)
+	}
+	if (count($GEDCOMS)==0) {
 		return false;
-	if (!isset($GEDCOMS[$ged]))
+	}
+	if (!isset($GEDCOMS[$ged])) {
 		return false;
+	}
 
 	if (!isset($GEDCOMS[$ged]["imported"])) {
 		$GEDCOMS[$ged]["imported"] = false;
@@ -678,7 +691,7 @@ function get_famlist_surns($surn, $salpha, $marnm, $ged_id) {
 	$salpha=$DBCONN->escapeSimple($salpha);
 	$ged_id=(int)$ged_id;
 
-	$sql="SELECT DISTINCT n_surn, n_surname, f_id FROM {$TBLPREFIX}name JOIN {$TBLPREFIX}individuals ON (i_id=n_id AND i_file=n_file) JOIN {$TBLPREFIX}families ON ((i_id=f_husb OR i_id=f_wife) AND i_file=f_file)";
+	$sql="SELECT DISTINCT n_surn, n_surname, l_to FROM {$TBLPREFIX}individuals JOIN {$TBLPREFIX}name ON (i_id=n_id AND i_file=n_file) JOIN {$TBLPREFIX}link ON (i_id=l_from AND i_file=l_file AND l_type='FAMS')";
 	$where=array("n_file={$ged_id}");
 	if (!$marnm) {
 		$where[]="n_type!='_MARNM'";
@@ -714,7 +727,7 @@ function get_famlist_surns($surn, $salpha, $marnm, $ged_id) {
 	$list=array();
 	$res=dbquery($sql);
 	while ($row=$res->fetchRow(DB_FETCHMODE_ASSOC)) {
-		$list[$row['n_surn']][$row['n_surname']][$row['f_id']]=true;
+		$list[$row['n_surn']][$row['n_surname']][$row['l_to']]=true;
 	}
 	$res->free();
 	return $list;
@@ -1160,7 +1173,9 @@ function find_person_record($pid, $gedfile='') {
 		"SELECT i_gedcom, i_isdead  FROM {$TBLPREFIX}individuals ".
 		"WHERE i_id='{$escpid}' AND i_file={$ged_id}"
 	);
-	if (DB::isError($res)) return "";
+	if (DB::isError($res)) {
+		return "";
+	}
 	$row=$res->fetchRow();
 	$res->free();
 	return $row[0];
@@ -1271,7 +1286,9 @@ function find_source_record($pid, $gedfile="") {
 	$res=dbquery(
 		"SELECT s_gedcom, s_name FROM {$TBLPREFIX}sources WHERE s_id='{$pid}' AND s_file={$ged_id}"
 	);
-	if (DB::isError($res)) return "";
+	if (DB::isError($res)) {
+		return "";
+	}
 	$row=$res->fetchRow();
 	$res->free();
 	return $row[0];
@@ -1350,10 +1367,11 @@ function find_first_person() {
 	$res = dbquery($sql,false,1);
 	$row = $res->fetchRow();
 	$res->free();
-	if (!DB::isError($row))
+	if (!DB::isError($row)) {
 		return $row[0];
-	else
+	} else {
 		return "I1";
+	}
 }
 
 /**
@@ -1667,15 +1685,16 @@ function search_indis_soundex($soundex, $lastname, $firstname, $place, $geds) {
 function get_recent_changes($jd=0, $allgeds=false) {
 	global $TBLPREFIX;
 
-	$sql = "SELECT d_gid FROM {$TBLPREFIX}dates WHERE d_fact='CHAN' AND d_julianday1>={$jd}";
-	if (!$allgeds)
-		$sql .= " AND d_file=".PGV_GED_ID." ";
-	$sql .= " ORDER BY d_julianday1 DESC";
+	$sql="SELECT d_gid FROM {$TBLPREFIX}dates WHERE d_fact='CHAN' AND d_julianday1>={$jd}";
+	if (!$allgeds) {
+		$sql.=" AND d_file=".PGV_GED_ID." ";
+	}
+	$sql.=" ORDER BY d_julianday1 DESC";
 
-	$changes = array();
-	$res = dbquery($sql);
+	$changes=array();
+	$res=dbquery($sql);
 	if (!DB::isError($res)) {
-		while ($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)){
+		while ($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)) {
 			if (preg_match("/\w+:\w+/", $row['d_gid'])==0) {
 				$changes[] = $row;
 			}
@@ -2024,8 +2043,9 @@ function get_place_parent_id($parent, $level) {
 		$res = dbquery($psql);
 		$row =& $res->fetchRow();
 		$res->free();
-		if (empty($row[0]))
+		if (empty($row[0])) {
 			break;
+		}
 		$parent_id = $row[0];
 	}
 	return $parent_id;
@@ -2043,9 +2063,9 @@ function get_place_list($parent, $level) {
 	$placelist=array();
 
 	// --- find all of the place in the file
-	if ($level==0)
+	if ($level==0) {
 		$sql = "SELECT p_place FROM ".$TBLPREFIX."places WHERE p_level=0 AND p_file=".PGV_GED_ID." ORDER BY p_place";
-	else {
+	} else {
 		$parent_id = get_place_parent_id($parent, $level);
 		$sql = "SELECT p_place FROM ".$TBLPREFIX."places WHERE p_level=$level AND p_parent_id=$parent_id AND p_file=".PGV_GED_ID." ORDER BY p_place";
 	}
@@ -2070,9 +2090,9 @@ function get_place_positions($parent, $level='') {
 
 	$positions=array();
 
-	if ($level!='')
+	if ($level!='') {
 		$p_id = get_place_parent_id($parent, $level);
-	else {
+	} else {
 		//-- we don't know the level so get the any matching place
 		$sql = "SELECT DISTINCT pl_gid FROM ".$TBLPREFIX."placelinks, ".$TBLPREFIX."places WHERE p_place ".PGV_DB_LIKE." '".$DBCONN->escapeSimple($parent)."' AND p_file=pl_file AND p_id=pl_p_id AND p_file=".PGV_GED_ID;
 		$res = dbquery($sql);
@@ -2100,9 +2120,9 @@ function find_place_list($place) {
 	$res = dbquery($sql);
 
 	while ($row =& $res->fetchRow()) {
-		if ($row[2]==0)
+		if ($row[2]==0) {
 			$placelist[$row[0]] = $row[1];
-		else {
+		} else {
 			$placelist[$row[0]] = $placelist[$row[2]].", ".$row[1];
 		}
 	}
@@ -2127,7 +2147,7 @@ function find_rin_id($rin) {
 	$sql = "SELECT i_id FROM ".$TBLPREFIX."individuals WHERE i_rin='$rin' AND i_file=".PGV_GED_ID;
 	$res = dbquery($sql);
 
-	while ($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)){
+	while ($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)) {
 		return $row["i_id"];
 	}
 	return $rin;
@@ -2141,8 +2161,9 @@ function find_rin_id($rin) {
 function delete_gedcom($ged) {
 	global $TBLPREFIX, $pgv_changes, $DBCONN, $GEDCOMS;
 
-	if (!isset($GEDCOMS[$ged]))
+	if (!isset($GEDCOMS[$ged])) {
 		return;
+	}
 
 	$ged=$DBCONN->escapeSimple($ged);
 	$dbged=(int)$GEDCOMS[$ged]["id"];
@@ -2166,8 +2187,9 @@ function delete_gedcom($ged) {
 	if (isset($pgv_changes)) {
 		//-- erase any of the changes
 		foreach ($pgv_changes as $cid=>$changes) {
-			if ($changes[0]["gedcom"]==$ged)
+			if ($changes[0]["gedcom"]==$ged) {
 				unset($pgv_changes[$cid]);
+			}
 		}
 		write_changes();
 	}
@@ -2208,8 +2230,9 @@ function get_top_surnames($num) {
 function get_next_id($table, $field) {
 	global $TBLPREFIX, $TABLE_IDS;
 
-	if (!isset($TABLE_IDS))
+	if (!isset($TABLE_IDS)) {
 		$TABLE_IDS = array();
+	}
 	if (isset($TABLE_IDS[$table][$field])) {
 		$TABLE_IDS[$table][$field]++;
 		return $TABLE_IDS[$table][$field];
@@ -2239,11 +2262,12 @@ function get_server_list(){
 	if (isset($GEDCOMS[$GEDCOM]) && check_for_import($GEDCOM)) {
 		$sql = "SELECT s_id ,s_name, s_gedcom FROM {$TBLPREFIX}sources WHERE s_file=".PGV_GED_ID." AND s_dbid='Y' ORDER BY s_name";
 		$res = dbquery($sql, false);
-		if (DB::isError($res))
+		if (DB::isError($res)) {
 			return $sitelist;
+		}
 
 		$ct = $res->numRows();
-		while ($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)){
+		while ($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)) {
 			$source = array();
 			$source["name"] = $row["s_name"];
 			$source["gedcom"] = $row["s_gedcom"];
@@ -2270,11 +2294,12 @@ function get_faq_data($id='') {
 	$faqs = array();
 	// Read the faq data from the DB
 	$sql = "SELECT b_id, b_location, b_order, b_config, b_username FROM ".$TBLPREFIX."blocks WHERE (b_username='$GEDCOM' OR b_username='*all*') AND b_name='faq'";
-	if ($id != '')
-		$sql .= " AND b_order='".$id."'";
+	if ($id!='') {
+		$sql.=" AND b_order='".$id."'";
+	}
 	$res = dbquery($sql);
 
-	while ($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)){
+	while ($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)) {
 		$faqs[$row["b_order"]][$row["b_location"]]["text"] = unserialize($row["b_config"]);
 		$faqs[$row["b_order"]][$row["b_location"]]["pid"] = $row["b_id"];
 		$faqs[$row["b_order"]][$row["b_location"]]["gedcom"] = $row["b_username"];
@@ -2288,15 +2313,17 @@ function delete_fact($linenum, $pid, $gedrec) {
 
 	if (!empty($linenum)) {
 		if ($linenum==0) {
-			if (delete_gedrec($pid))
+			if (delete_gedrec($pid)) {
 				print $pgv_lang["gedrec_deleted"];
+			}
 		} else {
 			$gedlines = preg_split("/[\r\n]+/", $gedrec);
 			// NOTE: The array_pop is used to kick off the last empty element on the array
 			// NOTE: To prevent empty lines in the GEDCOM
 			// DEBUG: Records without line breaks are imported as 1 big string
-			if ($linefix > 0)
+			if ($linefix > 0) {
 				array_pop($gedlines);
+			}
 			$newged = "";
 			// NOTE: Add all lines that are before the fact to be deleted
 			for ($i=0; $i<$linenum; $i++) {
@@ -2309,7 +2336,9 @@ function delete_fact($linenum, $pid, $gedrec) {
 				$i++;
 				if ($i<$ctlines) {
 					// Remove the fact
-					while ((isset($gedlines[$i]))&&($gedlines[$i]{0}>$glevel)) $i++;
+					while ((isset($gedlines[$i]))&&($gedlines[$i]{0}>$glevel)) {
+						$i++;
+					}
 					// Add the remaining lines
 					while ($i<$ctlines) {
 						$newged .= trim($gedlines[$i])."\n";
@@ -2317,8 +2346,9 @@ function delete_fact($linenum, $pid, $gedrec) {
 					}
 				}
 			}
-			if ($newged != "")
+			if ($newged != "") {
 				return $newged;
+			}
 		}
 	}
 }
@@ -2374,93 +2404,98 @@ function get_anniversary_events($jd, $facts='', $ged_id=PGV_GED_ID) {
 			if ($anniv->d==1) {
 				$where.=" AND d_day<=1";
 			} else
-				if ($anniv->d==$anniv->DaysInMonth())
+				if ($anniv->d==$anniv->DaysInMonth()) {
 					$where.=" AND d_day>={$anniv->d}";
-				else
+				} else {
 					$where.=" AND d_day={$anniv->d}";
+				}
 			$where.=" AND d_mon={$anniv->m}";
 		} else {
 			// SPECIAL CASES:
 			switch ($anniv->m) {
 			case 2:
 				// 29 CSH does not include 30 CSH (but would include an invalid 31 CSH if there were no 30 CSH)
-				if ($anniv->d==1)
+				if ($anniv->d==1) {
 					$where.=" AND d_day<=1 AND d_mon=2";
-				else
-					if ($anniv->d==30)
-						$where.=" AND d_day>=30 AND d_mon=2";
-					else
-						if ($anniv->d==29 && $anniv->DaysInMonth()==29)
-							$where.=" AND (d_day=29 OR d_day>30) AND d_mon=2";
-						else
-							$where.=" AND d_day={$anniv->d} AND d_mon=2";
+				} elseif ($anniv->d==30) {
+					$where.=" AND d_day>=30 AND d_mon=2";
+				} elseif ($anniv->d==29 && $anniv->DaysInMonth()==29) {
+					$where.=" AND (d_day=29 OR d_day>30) AND d_mon=2";
+				} else {
+					$where.=" AND d_day={$anniv->d} AND d_mon=2";
+				}
 				break;
 			case 3:
 				// 1 KSL includes 30 CSH (if this year didn't have 30 CSH)
 				// 29 KSL does not include 30 KSL (but would include an invalid 31 KSL if there were no 30 KSL)
 				if ($anniv->d==1) {
 					$tmp=new JewishDate(array($anniv->y, 'csh', 1));
-					if ($tmp->DaysInMonth()==29)
+					if ($tmp->DaysInMonth()==29) {
 						$where.=" AND (d_day<=1 AND d_mon=3 OR d_day=30 AND d_mon=2)";
-					else
+					} else {
 						$where.=" AND d_day<=1 AND d_mon=3";
+					}
 				} else
-					if ($anniv->d==30)
+					if ($anniv->d==30) {
 						$where.=" AND d_day>=30 AND d_mon=3";
-					else
-						if ($anniv->d==29 && $anniv->DaysInMonth()==29)
-							$where.=" AND (d_day=29 OR d_day>30) AND d_mon=3";
-						else
-							$where.=" AND d_day={$anniv->d} AND d_mon=3";
+					} elseif ($anniv->d==29 && $anniv->DaysInMonth()==29) {
+						$where.=" AND (d_day=29 OR d_day>30) AND d_mon=3";
+					} else {
+						$where.=" AND d_day={$anniv->d} AND d_mon=3";
+					}
 				break;
 			case 4:
 				// 1 TVT includes 30 KSL (if this year didn't have 30 KSL)
 				if ($anniv->d==1) {
 					$tmp=new JewishDate($anniv->y, 'ksl', 1);
-					if ($tmp->DaysInMonth()==29)
+					if ($tmp->DaysInMonth()==29) {
 						$where.=" AND (d_day<=1 AND d_mon=4 OR d_day=30 AND d_mon=3)";
-					else
+					} else {
 						$where.=" AND d_day<=1 AND d_mon=4";
+					}
 				} else
-					if ($anniv->d==$anniv->DaysInMonth())
+					if ($anniv->d==$anniv->DaysInMonth()) {
 						$where.=" AND d_day>={$anniv->d} AND d_mon=4";
-					else
+					} else {
 						$where.=" AND d_day={$anniv->d} AND d_mon=4";
+					}
 				break;
 			case 6: // ADR (non-leap) includes ADS (leap)
-				if ($anniv->d==1)
+				if ($anniv->d==1) {
 					$where.=" AND d_day<=1";
-				else
-					if ($anniv->d==$anniv->DaysInMonth())
-						$where.=" AND d_day>={$anniv->d}";
-					else
-						$where.=" AND d_day={$anniv->d}";
-				if ($anniv->IsLeapYear())
+				} elseif ($anniv->d==$anniv->DaysInMonth()) {
+					$where.=" AND d_day>={$anniv->d}";
+				} else {
+					$where.=" AND d_day={$anniv->d}";
+				}
+				if ($anniv->IsLeapYear()) {
 					$where.=" AND (d_mon=6 AND ".sql_mod_function("7*d_year+1","19")."<7)";
-				else
+				} else {
 					$where.=" AND (d_mon=6 OR d_mon=7)";
+				}
 				break;
 			case 7: // ADS includes ADR (non-leap)
-				if ($anniv->d==1)
+				if ($anniv->d==1) {
 					$where.=" AND d_day<=1";
-				else
-					if ($anniv->d==$anniv->DaysInMonth())
-						$where.=" AND d_day>={$anniv->d}";
-					else
-						$where.=" AND d_day={$anniv->d}";
+				} elseif ($anniv->d==$anniv->DaysInMonth()) {
+					$where.=" AND d_day>={$anniv->d}";
+				} else {
+					$where.=" AND d_day={$anniv->d}";
+				}
 				$where.=" AND (d_mon=6 AND ".sql_mod_function("7*d_year+1","19").">=7 OR d_mon=7)";
 				break;
 			case 8: // 1 NSN includes 30 ADR, if this year is non-leap
 				if ($anniv->d==1) {
-					if ($anniv->IsLeapYear())
+					if ($anniv->IsLeapYear()) {
 						$where.=" AND d_day<=1 AND d_mon=8";
-					else
+					} else {
 						$where.=" AND (d_day<=1 AND d_mon=8 OR d_day=30 AND d_mon=6)";
-				} else
-					if ($anniv->d==$anniv->DaysInMonth())
-						$where.=" AND d_day>={$anniv->d} AND d_mon=8";
-					else
-						$where.=" AND d_day={$anniv->d} AND d_mon=8";
+					}
+				} elseif ($anniv->d==$anniv->DaysInMonth()) {
+					$where.=" AND d_day>={$anniv->d} AND d_mon=8";
+				} else {
+					$where.=" AND d_day={$anniv->d} AND d_mon=8";
+				}
 				break;
 			}
 		}
@@ -2491,21 +2526,23 @@ function get_anniversary_events($jd, $facts='', $ged_id=PGV_GED_ID) {
 				// Generate a regex to match the retrieved date - so we can find it in the original gedcom record.
 				// TODO having to go back to the original gedcom is lame.  This is why it is so slow, and needs
 				// to be cached.  We should store the level1 fact here (or somewhere)
-				if ($row['d_type']=='@#DJULIAN@')
-					if ($row['d_year']<0)
+				if ($row['d_type']=='@#DJULIAN@') {
+					if ($row['d_year']<0) {
 						$year_regex=$row['d_year']." ?[Bb]\.? ?[Cc]\.\ ?";
-					else
+					} else {
 						$year_regex="({$row['d_year']}|".($row['d_year']-1)."\/".($row['d_year']%100).")";
-				else
+					}
+				} else
 					$year_regex="0*".$row['d_year'];
 				$ged_date_regex="/2 DATE.*(".($row['d_day']>0 ? "0?{$row['d_day']}\s*" : "").$row['d_month']."\s*".($row['d_year']!=0 ? $year_regex : "").")/i";
-				foreach (get_all_subrecords($row['gedrec'], $skipfacts, false, false) as $factrec)
+				foreach (get_all_subrecords($row['gedrec'], $skipfacts, false, false) as $factrec) {
 					if (preg_match("/(^1 {$row['d_fact']}|^1 (FACT|EVEN).*\n2 TYPE {$row['d_fact']})/s", $factrec) && preg_match($ged_date_regex, $factrec) && preg_match('/2 DATE (.+)/', $factrec, $match)) {
 						$date=new GedcomDate($match[1]);
-						if (preg_match('/2 PLAC (.+)/', $factrec, $match))
+						if (preg_match('/2 PLAC (.+)/', $factrec, $match)) {
 							$plac=$match[1];
-						else
+						} else {
 							$plac='';
+						}
 						$found_facts[]=array(
 							'record'=>$record,
 							'id'=>$row['xref'],
@@ -2518,6 +2555,7 @@ function get_anniversary_events($jd, $facts='', $ged_id=PGV_GED_ID) {
 							'plac'=>$plac
 						);
 					}
+				}
 			}
 			$res->free();
 		}
@@ -2570,21 +2608,24 @@ function get_calendar_events($jd1, $jd2, $facts='', $ged_id=PGV_GED_ID) {
 			// Generate a regex to match the retrieved date - so we can find it in the original gedcom record.
 			// TODO having to go back to the original gedcom is lame.  This is why it is so slow, and needs
 			// to be cached.  We should store the level1 fact here (or somewhere)
-			if ($row[8]=='@#DJULIAN@')
-				if ($row[6]<0)
+			if ($row[8]=='@#DJULIAN@') {
+				if ($row[6]<0) {
 					$year_regex=$row[6]." ?[Bb]\.? ?[Cc]\.\ ?";
-				else
+				} else {
 					$year_regex="({$row[6]}|".($row[6]-1)."\/".($row[6]%100).")";
-			else
+				}
+			} else {
 				$year_regex="0*".$row[6];
+			}
 			$ged_date_regex="/2 DATE.*(".($row[4]>0 ? "0?{$row[4]}\s*" : "").$row[5]."\s*".($row[6]!=0 ? $year_regex : "").")/i";
-			foreach (get_all_subrecords($row[1], $skipfacts, false, false) as $factrec)
+			foreach (get_all_subrecords($row[1], $skipfacts, false, false) as $factrec) {
 				if (preg_match("/(^1 {$row[7]}|^1 (FACT|EVEN).*\n2 TYPE {$row[7]})/s", $factrec) && preg_match($ged_date_regex, $factrec) && preg_match('/2 DATE (.+)/', $factrec, $match)) {
 					$date=new GedcomDate($match[1]);
-					if (preg_match('/2 PLAC (.+)/', $factrec, $match))
+					if (preg_match('/2 PLAC (.+)/', $factrec, $match)) {
 						$plac=$match[1];
-					else
+					} else {
 						$plac='';
+					}
 					$found_facts[]=array(
 						'id'=>$row[0],
 						'objtype'=>$row[2],
@@ -2596,6 +2637,7 @@ function get_calendar_events($jd1, $jd2, $facts='', $ged_id=PGV_GED_ID) {
 						'plac'=>$plac
 					);
 				}
+			}
 		}
 		$res->free();
 	}
@@ -2649,11 +2691,13 @@ function get_all_gedcoms() {
 function get_gedcom_from_id($ged_id) {
 	global $GEDCOMS;
 
-	if (isset($GEDCOMS[$ged_id]))
+	if (isset($GEDCOMS[$ged_id])) {
 		return $ged_id;
+	}
 	foreach ($GEDCOMS as $ged=>$gedarray) {
-		if ($gedarray['id']==$ged_id)
+		if ($gedarray['id']==$ged_id) {
 			return $ged;
+		}
 	}
 
 	return $ged_id;
@@ -2790,8 +2834,9 @@ function get_idle_users($time) {
 function get_user_id($username) {
 	global $DBCONN, $TBLPREFIX;
 
-	if (!is_object($DBCONN) || DB::isError($DBCONN))
+	if (!is_object($DBCONN) || DB::isError($DBCONN)) {
 		return false;
+	}
 
 	$username=$DBCONN->escapeSimple($username);
 
@@ -2860,14 +2905,16 @@ function get_user_setting($user_id, $parameter) {
 		return $PGV_USERS_cache[$user_id]['u_'.$parameter];
 	}
 
-	if (!is_object($DBCONN) || DB::isError($DBCONN))
+	if (!is_object($DBCONN) || DB::isError($DBCONN)) {
 		return false;
+	}
 
 	$user_id=$DBCONN->escapeSimple($user_id);
 	$sql="SELECT * FROM {$TBLPREFIX}users WHERE u_username='{$user_id}'";
 	$res=dbquery($sql, false);
-	if ($res==false || DB::isError($res))
+	if ($res==false || DB::isError($res)) {
 		return null;
+	}
 	$row=$res->fetchRow(DB_FETCHMODE_ASSOC);
 	$res->free();
 	if ($row) {
