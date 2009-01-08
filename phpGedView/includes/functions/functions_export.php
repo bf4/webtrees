@@ -3,7 +3,7 @@
 * Functions for exporting data
 *
 * phpGedView: Genealogy Viewer
-* Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
+* Copyright (C) 2002 to 2009 PGV Development Team.  All rights reserved.
 *
 * This program is free software; you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -113,16 +113,21 @@ function gedcom_header($gedfile) {
 	// Preserve some values from the original header
 	if (isset($GEDCOMS[$gedfile]['imported']) && $GEDCOMS[$gedfile]['imported']) {
 		$head=find_gedcom_record("HEAD");
-		if (preg_match("/(1 CHAR [^\r\n]+)/", $head, $match))
+		if (preg_match("/(1 CHAR [^\r\n]+)/", $head, $match)) {
 			$CHAR=$match[1]."\n";
-		if (preg_match("/1 PLAC[\r\n]+2 FORM ([^\r\n]+)/", $head, $match))
+		}
+		if (preg_match("/1 PLAC[\r\n]+2 FORM ([^\r\n]+)/", $head, $match)) {
 			$PLAC="1 PLAC\n2 FORM {$match[1]}\n";
-		if (preg_match("/(1 LANG [^\r\n]+)/", $head, $match))
+		}
+		if (preg_match("/(1 LANG [^\r\n]+)/", $head, $match)) {
 			$LANG=$match[1]."\n";
-		if (preg_match("/(1 SUBN [^\r\n]+)/", $head, $match))
+		}
+		if (preg_match("/(1 SUBN [^\r\n]+)/", $head, $match)) {
 			$SUBN=$match[1]."\n";
-		if (preg_match("/(1 COPR [^\r\n]+)/", $head, $match))
+		}
+		if (preg_match("/(1 COPR [^\r\n]+)/", $head, $match)) {
 			$COPR=$match[1]."\n";
+		}
 		// Link to SUBM/SUBN records, if they exist
 		$sql="SELECT o_id FROM ${TBLPREFIX}other WHERE o_type='SUBN' AND o_file=".$GEDCOMS[$gedfile]["id"];
 		$res=dbquery($sql);
@@ -202,10 +207,12 @@ function print_gedcom($privatize_export, $privatize_export_level, $convert, $rem
 		if (preg_match("/S\d+:\w+/", $row[0])==0) {
 			$rec=$row[1];
 			$rec=remove_custom_tags($rec, $remove);
-			if ($privatize_export=="yes")
+			if ($privatize_export=="yes") {
 				$rec=privatize_gedcom($rec);
-			if ($convert=="yes")
+			}
+			if ($convert=="yes") {
 				$rec=utf8_decode($rec);
+			}
 			$rec=reformat_record_export($rec);
 			fwrite($gedout, $rec);
 		}
@@ -219,10 +226,12 @@ function print_gedcom($privatize_export, $privatize_export_level, $convert, $rem
 		if (preg_match("/S\d+:\w+/", $row[0])==0) {
 			$rec=$row[1];
 			$rec=remove_custom_tags($rec, $remove);
-			if ($privatize_export=="yes")
+			if ($privatize_export=="yes") {
 				$rec=privatize_gedcom($rec);
-			if ($convert=="yes")
+			}
+			if ($convert=="yes") {
 				$rec=utf8_decode($rec);
+			}
 			$rec=reformat_record_export($rec);
 			fwrite($gedout, $rec);
 		}
@@ -236,10 +245,12 @@ function print_gedcom($privatize_export, $privatize_export_level, $convert, $rem
 		if (preg_match("/S\d+:\w+/", $row[0])==0) {
 			$rec=$row[1];
 			$rec=remove_custom_tags($rec, $remove);
-			if ($privatize_export=="yes")
+			if ($privatize_export=="yes") {
 				$rec=privatize_gedcom($rec);
-			if ($convert=="yes")
+			}
+			if ($convert=="yes") {
 				$rec=utf8_decode($rec);
+			}
 			$rec=reformat_record_export($rec);
 			fwrite($gedout, $rec);
 		}
@@ -253,10 +264,12 @@ function print_gedcom($privatize_export, $privatize_export_level, $convert, $rem
 		if (preg_match("/S\d+:\w+/", $row[0])==0) {
 			$rec=$row[1];
 			$rec=remove_custom_tags($rec, $remove);
-			if ($privatize_export=="yes")
+			if ($privatize_export=="yes") {
 				$rec=privatize_gedcom($rec);
-			if ($convert=="yes")
+			}
+			if ($convert=="yes") {
 				$rec=utf8_decode($rec);
+			}
 			$rec=reformat_record_export($rec);
 			fwrite($gedout, $rec);
 		}
@@ -270,10 +283,12 @@ function print_gedcom($privatize_export, $privatize_export_level, $convert, $rem
 		if (preg_match("/S\d+:\w+/", $row[0])==0) {
 			$rec=$row[1];
 			$rec=remove_custom_tags($rec, $remove);
-			if ($privatize_export=="yes")
+			if ($privatize_export=="yes") {
 				$rec=privatize_gedcom($rec);
-			if ($convert=="yes")
+			}
+			if ($convert=="yes") {
 				$rec=utf8_decode($rec);
+			}
 			$rec=reformat_record_export($rec);
 			fwrite($gedout, $rec);
 		}
@@ -342,7 +357,9 @@ function um_export($proceed) {
 	global $INDEX_DIRECTORY, $TBLPREFIX, $pgv_lang;
 
 	// Get user array and create authenticate.php
-	if (($proceed=="export") || ($proceed=="exportovr")) print $pgv_lang["um_creating"]." \"authenticate.php\"<br /><br />";
+	if (($proceed=="export") || ($proceed=="exportovr")) {
+		print $pgv_lang["um_creating"]." \"authenticate.php\"<br /><br />";
+	}
 	$authtext="<?php\n\n\$users=array();\n\n";
 	foreach (get_all_users() as $user_id=>$username) {
 		$authtext .="\$user=array();\n";
@@ -378,13 +395,17 @@ function um_export($proceed) {
 			fclose($fp);
 			$logline=AddToLog("authenticate.php updated");
 			check_in($logline, "authenticate.php", $INDEX_DIRECTORY);
-			if (($proceed=="export") || ($proceed=="exportovr")) print $pgv_lang["um_file_create_succ1"]." authenticate.php<br /><br />";
+			if (($proceed=="export") || ($proceed=="exportovr")) {
+				print $pgv_lang["um_file_create_succ1"]." authenticate.php<br /><br />";
+			}
 		} else
 			print $pgv_lang["um_file_create_fail2"]." ".$INDEX_DIRECTORY."authenticate.php. ".$pgv_lang["um_file_create_fail3"]."<br /><br />";
 	}
 
 	// Get messages and create messages.dat
-	if (($proceed=="export") || ($proceed=="exportovr")) print $pgv_lang["um_creating"]." \"messages.dat\"<br /><br />";
+	if (($proceed=="export") || ($proceed=="exportovr")) {
+		print $pgv_lang["um_creating"]." \"messages.dat\"<br /><br />";
+	}
 	$messages=array();
 	$mesid=1;
 	$sql="SELECT * FROM ".$TBLPREFIX."messages ORDER BY m_id DESC";
@@ -412,16 +433,22 @@ function um_export($proceed) {
 				fclose($fp);
 				$logline=AddToLog("messages.dat updated");
 				check_in($logline, "messages.dat", $INDEX_DIRECTORY);
-				if (($proceed=="export") || ($proceed=="exportovr")) print $pgv_lang["um_file_create_succ1"]." messages.dat<br /><br />";
+				if (($proceed=="export") || ($proceed=="exportovr")) {
+					print $pgv_lang["um_file_create_succ1"]." messages.dat<br /><br />";
+				}
 			} else
 				print $pgv_lang["um_file_create_fail2"]." ".$INDEX_DIRECTORY."messages.dat. ".$pgv_lang["um_file_create_fail3"]."<br /><br />";
 		}
 	} else {
-		if (($proceed=="export") || ($proceed=="exportovr")) print $pgv_lang["um_nomsg"]." ".$pgv_lang["um_file_not_created"]."<br /><br />";
+		if (($proceed=="export") || ($proceed=="exportovr")) {
+			print $pgv_lang["um_nomsg"]." ".$pgv_lang["um_file_not_created"]."<br /><br />";
+		}
 	}
 
 	// Get favorites and create favorites.dat
-	if (($proceed=="export") || ($proceed=="exportovr")) print $pgv_lang["um_creating"]." \"favorites.dat\"<br /><br />";
+	if (($proceed=="export") || ($proceed=="exportovr")) {
+		print $pgv_lang["um_creating"]." \"favorites.dat\"<br /><br />";
+	}
 	$favorites=array();
 	$sql="SELECT * FROM ".$TBLPREFIX."favorites";
 	$res=dbquery($sql);
@@ -451,16 +478,22 @@ function um_export($proceed) {
 				fclose($fp);
 				$logline=AddToLog("favorites.dat updated");
 				check_in($logline, "favorites.dat", $INDEX_DIRECTORY);
-				if (($proceed=="export") || ($proceed=="exportovr")) print $pgv_lang["um_file_create_succ1"]." favorites.dat<br /><br />";
+				if (($proceed=="export") || ($proceed=="exportovr")) {
+					print $pgv_lang["um_file_create_succ1"]." favorites.dat<br /><br />";
+				}
 			} else
 				print $pgv_lang["um_file_create_fail2"]." ".$INDEX_DIRECTORY."favorites.dat. ".$pgv_lang["um_file_create_fail3"]."<br /><br />";
 		}
 	} else {
-		if (($proceed=="export") || ($proceed=="exportovr")) print $pgv_lang["um_nofav"]." ".$pgv_lang["um_file_not_created"]."<br /><br />";
+		if (($proceed=="export") || ($proceed=="exportovr")) {
+			print $pgv_lang["um_nofav"]." ".$pgv_lang["um_file_not_created"]."<br /><br />";
+		}
 	}
 
 	// Get news and create news.dat
-	if (($proceed=="export") || ($proceed=="exportovr")) print $pgv_lang["um_creating"]." \"news.dat\"<br /><br />";
+	if (($proceed=="export") || ($proceed=="exportovr")) {
+		print $pgv_lang["um_creating"]." \"news.dat\"<br /><br />";
+	}
 	$allnews=array();
 	$sql="SELECT * FROM ".$TBLPREFIX."news ORDER BY n_date DESC";
 	$res=dbquery($sql);
@@ -485,16 +518,22 @@ function um_export($proceed) {
 				fclose($fp);
 				$logline=AddToLog("news.dat updated");
 				check_in($logline, "news.dat", $INDEX_DIRECTORY);
-				if (($proceed=="export") || ($proceed=="exportovr")) print $pgv_lang["um_file_create_succ1"]." news.dat<br /><br />";
+				if (($proceed=="export") || ($proceed=="exportovr")) {
+					print $pgv_lang["um_file_create_succ1"]." news.dat<br /><br />";
+				}
 			} else
 				print $pgv_lang["um_file_create_fail2"]." ".$INDEX_DIRECTORY."news.dat. ".$pgv_lang["um_file_create_fail3"]."<br /><br />";
 		}
 	} else {
-		if (($proceed=="export") || ($proceed=="exportovr")) print $pgv_lang["um_nonews"]." ".$pgv_lang["um_file_not_created"]."<br /><br />";
+		if (($proceed=="export") || ($proceed=="exportovr")) {
+			print $pgv_lang["um_nonews"]." ".$pgv_lang["um_file_not_created"]."<br /><br />";
+		}
 	}
 
 	// Get blocks and create blocks.dat
-	if (($proceed=="export") || ($proceed=="exportovr")) print $pgv_lang["um_creating"]." \"blocks.dat\"<br /><br />";
+	if (($proceed=="export") || ($proceed=="exportovr")) {
+		print $pgv_lang["um_creating"]." \"blocks.dat\"<br /><br />";
+	}
 	$allblocks=array();
 	$blocks["main"]=array();
 	$blocks["right"]=array();
@@ -520,12 +559,16 @@ function um_export($proceed) {
 				fclose($fp);
 				$logline=AddToLog("blocks.dat updated");
 				check_in($logline, "blocks.dat", $INDEX_DIRECTORY);
-				if (($proceed=="export") || ($proceed=="exportovr")) print $pgv_lang["um_file_create_succ1"]." blocks.dat<br /><br />";
+				if (($proceed=="export") || ($proceed=="exportovr")) {
+					print $pgv_lang["um_file_create_succ1"]." blocks.dat<br /><br />";
+				}
 			} else
 				print $pgv_lang["um_file_create_fail2"]." ".$INDEX_DIRECTORY."blocks.dat. ".$pgv_lang["um_file_create_fail3"]."<br /><br />";
 		}
 	} else {
-		if ($proceed=="export" || $proceed=="exportovr") print $pgv_lang["um_noblocks"]." ".$pgv_lang["um_file_not_created"]."<br /><br />";
+		if ($proceed=="export" || $proceed=="exportovr") {
+			print $pgv_lang["um_noblocks"]." ".$pgv_lang["um_file_not_created"]."<br /><br />";
+		}
 	}
 }
 ?>
