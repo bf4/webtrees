@@ -601,17 +601,19 @@ function import_record($gedrec, $update) {
 	}
 
 	//-- keep track of the max id for each type as they are imported
-	if (!isset ($MAX_IDS))
+	if (!isset ($MAX_IDS)) {
 		$MAX_IDS = array ();
+	}
 	$idnum = 0;
 	$ct = preg_match("/(\d+)/", $gid, $match);
-	if ($ct > 0)
+	if ($ct > 0) {
 		$idnum = $match[1];
-	if (!isset ($MAX_IDS[$type]))
+	}
+	if (!isset ($MAX_IDS[$type])) {
 		$MAX_IDS[$type] = $idnum;
-	else
-		if ($MAX_IDS[$type] < $idnum)
-			$MAX_IDS[$type] = $idnum;
+	} elseif ($MAX_IDS[$type] < $idnum) {
+		$MAX_IDS[$type] = $idnum;
+	}
 
 	$newrec = update_media($gid, $gedrec, $update);
 	if ($newrec != $gedrec) {
@@ -674,22 +676,26 @@ function import_record($gedrec, $update) {
 	case 'FAM':
 		$parents = array ();
 		$ct = preg_match("/1 HUSB @(.*)@/", $gedrec, $match);
-		if ($ct > 0)
+		if ($ct > 0) {
 			$parents["HUSB"] = $match[1];
-		else
+		} else {
 			$parents["HUSB"] = false;
+		}
 		$ct = preg_match("/1 WIFE @(.*)@/", $gedrec, $match);
-		if ($ct > 0)
+		if ($ct > 0) {
 			$parents["WIFE"] = $match[1];
-		else
+		} else {
 			$parents["WIFE"] = false;
+		}
 		$ct = preg_match_all("/\d CHIL @(.*)@/", $gedrec, $match, PREG_SET_ORDER);
 		$chil = "";
 		for ($j = 0; $j < $ct; $j++) {
 			$chil .= $match[$j][1] . ";";
 		}
 		$nchi = get_gedcom_value("NCHI", 1, $gedrec);
-		if (!empty($nchi)) $ct = $nchi;
+		if (!empty($nchi)) {
+			$ct = $nchi;
+		}
 		$fam = array ();
 		$fam["HUSB"] = $parents["HUSB"];
 		$fam["WIFE"] = $parents["WIFE"];
@@ -701,25 +707,30 @@ function import_record($gedrec, $update) {
 		break;
 	case 'SOUR':
 		$et = preg_match("/1 ABBR (.*)/", $gedrec, $smatch);
-		if ($et > 0)
+		if ($et > 0) {
 			$name = $smatch[1];
+		}
 		$tt = preg_match("/1 TITL (.*)/", $gedrec, $smatch);
-		if ($tt > 0)
+		if ($tt > 0) {
 			$name = $smatch[1];
-		if (empty ($name))
+		}
+		if (empty ($name)) {
 			$name = $gid;
+		}
 		$subindi = explode("1 TITL ", $gedrec);
 		if (count($subindi) > 1) {
 			$pos = strpos($subindi[1], "\n1", 0);
-			if ($pos)
+			if ($pos) {
 				$subindi[1] = substr($subindi[1], 0, $pos);
+			}
 			$ct = preg_match_all("/2 CON[C|T] (.*)/", $subindi[1], $match, PREG_SET_ORDER);
 			for ($i = 0; $i < $ct; $i++) {
 				$name = trim($name);
-				if ($WORD_WRAPPED_NOTES)
+				if ($WORD_WRAPPED_NOTES) {
 					$name .= " " . $match[$i][1];
-				else
+				} else {
 					$name .= $match[$i][1];
+				}
 			}
 		}
 		if (strpos($gedrec, '1 _DBID')) {
@@ -743,7 +754,9 @@ function import_record($gedrec, $update) {
 					$gedrec .= "\n1 DATE ".date('d M Y');
 				}
 			}
-			if ($gid=="") $gid = $type;
+			if ($gid=="") {
+				$gid = $type;
+			}
 			$sql = "INSERT INTO {$TBLPREFIX}other VALUES ('{$xref}',{$ged_id},'" . $DBCONN->escapeSimple($type) . "','" . $DBCONN->escapeSimple($gedrec) . "')";
 			$res = dbquery($sql);
 		}
@@ -764,7 +777,9 @@ function import_record($gedrec, $update) {
 function update_places($gid, $ged_id, $gedrec) {
 	global $placecache, $TBLPREFIX, $DBCONN;
 
-	if (!isset($placecache)) $placecache = array();
+	if (!isset($placecache)) {
+		$placecache = array();
+	}
 	$personplace = array();
 	// import all place locations, but not control info such as
 	// 0 HEAD/1 PLAC or 0 _EVDEF/1 PLAC
@@ -773,7 +788,9 @@ function update_places($gid, $ged_id, $gedrec) {
 		$place = trim($match[$i][1]);
 		$lowplace = UTF8_strtolower($place);
 		//-- if we have already visited this place for this person then we don't need to again
-		if (isset($personplace[$lowplace])) continue;
+		if (isset($personplace[$lowplace])) {
+			continue;
+		}
 		$personplace[$lowplace] = 1;
 		$places = explode(',', $place);
 		//-- reverse the array to start at the highest level
@@ -1022,7 +1039,9 @@ function insert_media($objrec, $objlevel, $update, $gid, $count) {
 		$new_m_media = $old_m_media;
 		$m_media = $new_m_media;
 		//print "LINK: old $old_m_media new $new_m_media $objref<br />";
-		if ($m_media != $old_m_media) $objref = preg_replace("/@$old_m_media@/", "@$m_media@", $objref);
+		if ($m_media != $old_m_media) {
+			$objref = preg_replace("/@$old_m_media@/", "@$m_media@", $objref);
+		}
 	}
 	//-- handle embedded OBJE records
 	else {
@@ -1076,15 +1095,19 @@ function update_media($gid, $gedrec, $update = false) {
 	global $GEDCOMS, $FILE, $TBLPREFIX, $DBCONN, $media_count, $found_ids;
 	global $zero_level_media, $fpnewged, $MAX_IDS, $keepmedia;
 
-	if (!isset ($media_count))
+	if (!isset ($media_count)) {
 		$media_count = 0;
-	if (!isset ($found_ids))
+	}
+	if (!isset ($found_ids)) {
 		$found_ids = array ();
-	if (!isset ($zero_level_media))
+	}
+	if (!isset ($zero_level_media)) {
 		$zero_level_media = false;
+	}
 	if (!$update && !isset ($MAX_IDS["OBJE"])) {
-		if (!$keepmedia) $MAX_IDS["OBJE"] = 1;
-		else {
+		if (!$keepmedia) {
+			$MAX_IDS["OBJE"] = 1;
+		} else {
 			$sql = "SELECT ni_id FROM {$TBLPREFIX}nextid WHERE ni_type='OBJE' AND ni_gedfile='".$GEDCOMS[$FILE]['id']."'";
 			$res = dbquery($sql);
 			$row =& $res->fetchRow();
@@ -1142,7 +1165,7 @@ function update_media($gid, $gedrec, $update = false) {
 		$sql = "SELECT mm_media, mm_gedrec FROM {$TBLPREFIX}media_mapping WHERE mm_gid='".$DBCONN->escapeSimple($gid)."' AND mm_gedfile='".$GEDCOMS[$FILE]['id']."'";
 		$res = dbquery($sql);
 		$old_linked_media = array();
-		while($row =& $res->fetchRow()) {
+		while ($row =& $res->fetchRow()) {
 			$old_linked_media[] = $row;
 		}
 		$res->free();
@@ -1185,8 +1208,7 @@ function update_media($gid, $gedrec, $update = false) {
 					$objlevel = $level;
 					$inobj = true;
 						$objrec = $line . "\n";
-			}
-			else if (preg_match("/[1-9]\sOBJE/", $line, $match)) {
+			} elseif (preg_match("/[1-9]\sOBJE/", $line, $match)) {
 				// NOTE: Set the details for the next media record
 				$objlevel = $level;
 				$inobj = true;
@@ -1194,11 +1216,14 @@ function update_media($gid, $gedrec, $update = false) {
 			} else {
 				$ct = preg_match("/(\d+)\s(\w+)(.*)/", $line, $match);
 				if ($ct > 0) {
-					if ($inobj)
-							$objrec .= $line . "\n";
-						else $newrec .= $line . "\n";
+					if ($inobj) {
+						$objrec .= $line . "\n";
+					} else {
+						$newrec .= $line . "\n";
+					}
+				} else {
+					$newrec .= $line . "\n";
 				}
-					else $newrec .= $line . "\n";
 			}
 		}
 	}
@@ -1217,7 +1242,7 @@ function update_media($gid, $gedrec, $update = false) {
 
 	if ($keepmedia) {
 		$newrec = trim($newrec)."\n";
-		foreach($old_linked_media as $i=>$row) {
+		foreach ($old_linked_media as $i=>$row) {
 			$newrec .= trim($row[1])."\n";
 		}
 	}
@@ -1500,13 +1525,15 @@ function setup_database() {
 	/*-- commenting out as it seems to cause more problems than it helps
 	$sql = "LOCK TABLE {$TBLPREFIX}individuals WRITE, {$TBLPREFIX}families WRITE, {$TBLPREFIX}sources WRITE, {$TBLPREFIX}other WRITE, {$TBLPREFIX}places WRITE, {$TBLPREFIX}users WRITE";
 	$res = dbquery($sql); */
-	if (preg_match("/mysql|pgsql/", $DBTYPE) > 0)
+	if (preg_match("/mysql|pgsql/", $DBTYPE) > 0) {
 		$DBCONN->autoCommit(false);
+	}
 	//-- start a transaction
-	if ($DBTYPE == 'mssql')
+	if ($DBTYPE == 'mssql') {
 		$sql = "BEGIN TRANSACTION";
-	else
+	} else {
 		$sql = "BEGIN";
+	}
 	$res = dbquery($sql);
 }
 /**
@@ -1678,12 +1705,12 @@ function create_link_table() {
 		"CREATE TABLE {$TBLPREFIX}link (".
 		" l_file    ".PGV_DB_COL_FILE." NOT NULL,".
 		" l_from    ".PGV_DB_COL_XREF." NOT NULL,".
-		" l_type      VARCHAR(15)       NOT NULL,".
+		" l_type    ".PGV_DB_COL_TAG."  NOT NULL,".
 		" l_to      ".PGV_DB_COL_XREF." NOT NULL,".
 		" PRIMARY KEY (l_from, l_file, l_type, l_to)".
 		") ".PGV_DB_UTF8_TABLE
 	);
-	dbquery("CREATE INDEX {$TBLPREFIX}ix1 ON {$TBLPREFIX}link (l_to, l_file, l_type, l_from)");
+	dbquery("CREATE UNIQUE INDEX {$TBLPREFIX}ux1 ON {$TBLPREFIX}link (l_to, l_file, l_type, l_from)");
 }
 /**
 * Create the remotelinks table
@@ -1870,10 +1897,11 @@ function cleanup_database() {
 			$res = dbquery($sql);
 		}
 	}
-	if ($DBTYPE == 'mssql')
+	if ($DBTYPE == 'mssql') {
 		$sql = "COMMIT TRANSACTION";
-	else
+	} else {
 		$sql = "COMMIT";
+	}
 	$res = dbquery($sql);
 
 	//if (preg_match("/mysql|pgsql/", $DBTYPE)>0) $DBCONN->autoCommit(false);
@@ -1907,8 +1935,12 @@ function read_gedcom_file() {
 function write_file() {
 	global $fcontents, $GEDCOMS, $GEDCOM, $INDEX_DIRECTORY;
 
-	if (empty($fcontents)) return;
-	if (preg_match("/0 TRLR/", $fcontents)==0) $fcontents.="0 TRLR\n";
+	if (empty($fcontents)) {
+		return;
+	}
+	if (preg_match("/0 TRLR/", $fcontents)==0) {
+		$fcontents.="0 TRLR\n";
+	}
 	//-- write the gedcom file
 	if (!is_writable($GEDCOMS[$GEDCOM]["path"])) {
 		print "ERROR 5: GEDCOM file is not writable.  Unable to complete request.\n";
@@ -1982,7 +2014,9 @@ function accept_changes($cid) {
 				$mutex->Wait();
 			}
 
-			if (empty($fcontents)) read_gedcom_file();
+			if (empty($fcontents)) {
+				read_gedcom_file();
+			}
 			if ($change["type"]=="delete") {
 				$pos1 = strpos($fcontents, "\n0 @".$gid."@");
 				if ($pos1!==false) {
@@ -1990,18 +2024,16 @@ function accept_changes($cid) {
 					if ($pos2===false) {
 						$fcontents = substr($fcontents, 0, $pos1+1)."0 TRLR";
 						AddToLog("Corruption found in GEDCOM $GEDCOM Attempted to correct");
+					} else {
+						$fcontents = substr($fcontents, 0, $pos1+1).substr($fcontents, $pos2+1);
 					}
-					else $fcontents = substr($fcontents, 0, $pos1+1).substr($fcontents, $pos2+1);
-				}
-				else {
+				} else {
 					AddToLog("Corruption found in GEDCOM $GEDCOM Attempted to correct.  Deleted gedcom record $gid was not found in the gedcom file.");
 				}
-			}
-			else if ($change["type"]=="append") {
+			} elseif ($change["type"]=="append") {
 				$pos1 = strpos($fcontents, "\n0 TRLR");
 				$fcontents = substr($fcontents, 0, $pos1+1).trim($gedrec)."\n0 TRLR";
-			}
-			else if ($change["type"]=="replace") {
+			} elseif ($change["type"]=="replace") {
 				$pos1 = strpos($fcontents, "\n0 @".$gid."@");
 				if ($pos1!==false) {
 					$pos2 = strpos($fcontents, "\n0", $pos1+5);
@@ -2010,8 +2042,7 @@ function accept_changes($cid) {
 						AddToLog("Corruption found in GEDCOM $GEDCOM Attempted to correct");
 					}
 					else $fcontents = substr($fcontents, 0, $pos1+1).trim($gedrec)."\n".substr($fcontents, $pos2+1);
-				}
-				else {
+				} else {
 					//-- attempted to replace a record that doesn't exist
 					AddToLog("Corruption found in GEDCOM $GEDCOM Attempted to correct.  Replaced gedcom record $gid was not found in the gedcom file.");
 					$pos1 = strpos($fcontents, "\n0 TRLR");
@@ -2054,15 +2085,20 @@ function accept_changes($cid) {
 		}
 
 		unset ($pgv_changes[$cid]);
-		if (!isset($manual_save) || $manual_save==false) write_changes();
-		if (isset ($_SESSION["recent_changes"]["user"][$GEDCOM]))
+		if (!isset($manual_save) || $manual_save==false) {
+			write_changes();
+		}
+		if (isset ($_SESSION["recent_changes"]["user"][$GEDCOM])) {
 			unset ($_SESSION["recent_changes"]["user"][$GEDCOM]);
-		if (isset ($_SESSION["recent_changes"]["gedcom"][$GEDCOM]))
+		}
+		if (isset ($_SESSION["recent_changes"]["gedcom"][$GEDCOM])) {
 			unset ($_SESSION["recent_changes"]["gedcom"][$GEDCOM]);
+		}
 		$logline = AddToLog("Accepted change $cid " . $change["type"] . " into database");
 		check_in($logline, $GEDCOM, dirname($GEDCOMS[$GEDCOM]['path']));
-		if (isset ($change["linkpid"]))
+		if (isset ($change["linkpid"])) {
 			accept_changes($change["linkpid"] . "_" . $GEDCOM);
+		}
 		return true;
 	}
 	return false;
@@ -2075,8 +2111,9 @@ function accept_changes($cid) {
 function update_record($gedrec, $delete = false) {
 	global $TBLPREFIX, $GEDCOM, $DBCONN, $GEDCOMS, $FILE;
 
-	if (empty ($FILE))
+	if (empty ($FILE)) {
 		$FILE = $GEDCOM;
+	}
 
 	$tt = preg_match("/0 @(.+)@ (.+)/", $gedrec, $match);
 	if ($tt > 0) {
@@ -2193,7 +2230,7 @@ function uuid() {
 * @param string $m_media that media id of the OBJE record
 * @return string containing NOTE, _PRIM, and _THUM subrecords parsed from the passed object record
 */
-function subrecord_createobjectref($objrec, $objlevel, $m_media){
+function subrecord_createobjectref($objrec, $objlevel, $m_media) {
 
 	//- level of subrecords is object record level + 1
 	$level = $objlevel + 1;
@@ -2202,35 +2239,36 @@ function subrecord_createobjectref($objrec, $objlevel, $m_media){
 	$n = 1;
 	$nt = "";
 	$note = "";
-	do
-	{
+	do {
 		$nt = get_sub_record($level, $level . " NOTE", $objrec, $n);
-		if($nt != "") $note = $note . trim($nt)."\n";
+		if ($nt != "") {
+			$note = $note . trim($nt)."\n";
+		}
 		$n++;
-	}while($nt != "");
+	} while ($nt != "");
 	//- get and concatenate PRIM subrecords
 	$n = 1;
 	$pm = "";
 	$prim = "";
-	do
-	{
+	do {
 		$pm = get_sub_record($level, $level . " _PRIM", $objrec, $n);
-		if($pm != "") $prim = $prim . trim($pm)."\n";
+		if ($pm != "") {
+			$prim = $prim . trim($pm)."\n";
+		}
 		$n++;
-	}while($pm != "");
+	} while ($pm != "");
 	//- get and concatenate THUM subrecords
 	$n = 1;
 	$tm = "";
 	$thum = "";
-	do
-	{
+	do {
 		$tm = get_sub_record($level, $level . " _THUM", $objrec, $n);
-		if($tm != ""){
+		if ($tm != "") {
 			//- call image cropping function ($tm contains thum data)
 			$thum = $thum . trim($tm)."\n";
 		}
 		$n++;
-	}while($tm != "");
+	} while ($tm != "");
 	//- add object reference
 	$objmed = addslashes($objlevel . ' OBJE @' . $m_media . "@\n" . $note . $prim . $thum);
 
