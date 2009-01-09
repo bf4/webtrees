@@ -147,7 +147,7 @@ class GedcomRecord {
 		// Create the object
 		if (is_array($data)) {
 			$type=$data['type'];
-		} elseif (preg_match('/^0 +@.+@ +(\w+)/', $data, $match)) {
+		} elseif (preg_match('/^0 @'.PGV_REGEX_XREF.'@ ('.PGV_REGEX_TAG.')/', $data, $match)) {
 			$type=$match[1];
 		} else {
 			$type='';

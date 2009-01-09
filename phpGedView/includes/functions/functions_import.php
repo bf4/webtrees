@@ -873,7 +873,7 @@ function update_rlinks($xref, $ged_id, $gedrec) {
 function update_links($xref, $ged_id, $gedrec) {
 	global $DBTYPE, $DBCONN, $TBLPREFIX;
 
-	if (preg_match_all('/^\d+ ([A-Z0-9_]+) @('.PGV_REGEX_XREF.')@/m', $gedrec, $matches, PREG_SET_ORDER)) {
+	if (preg_match_all('/^\d+ ('.PGV_REGEX_TAG.') @('.PGV_REGEX_XREF.')@/m', $gedrec, $matches, PREG_SET_ORDER)) {
 		$data=array();
 		foreach ($matches as $match) {
 			$match[2]=$DBCONN->escapeSimple($match[2]);
