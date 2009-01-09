@@ -647,7 +647,7 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 
 	// Get the advanced name fields
 	$adv_name_fields=array();
-	if (preg_match_all('/([A-Z0-9_]+)/', $ADVANCED_NAME_FACTS, $match))
+	if (preg_match_all('/('.PGV_REGEX_TAG.')/', $ADVANCED_NAME_FACTS, $match))
 		foreach ($match[1] as $tag)
 			$adv_name_fields[$tag]='';
 	// This is a custom tag, but PGV uses it extensively.
@@ -722,7 +722,7 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 		else if ($famtag=="WIFE" or $sextag=="F") add_simple_tag("0 SEX F");
 		else add_simple_tag("0 SEX");
 		$bdm = "BD";
-		if (preg_match_all('/([A-Z0-9_]+)/', $QUICK_REQUIRED_FACTS, $matches)) {
+		if (preg_match_all('/('.PGV_REGEX_TAG.')/', $QUICK_REQUIRED_FACTS, $matches)) {
 			foreach ($matches[1] as $match) {
 				if (!in_array($match, explode('|', PGV_EVENTS_DEAT))) {
 					addSimpleTags($match);
@@ -732,13 +732,13 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 		//-- if adding a spouse add the option to add a marriage fact to the new family
 		if ($nextaction=='addspouseaction' || ($nextaction=='addnewparentaction' && $famid!='new')) {
 			$bdm .= "M";
-			if (preg_match_all('/([A-Z0-9_]+)/', $QUICK_REQUIRED_FAMFACTS, $matches)) {
+			if (preg_match_all('/('.PGV_REGEX_TAG.')/', $QUICK_REQUIRED_FAMFACTS, $matches)) {
 				foreach ($matches[1] as $match) {
 					addSimpleTags($match);
 				}
 			}
 		}
-		if (preg_match_all('/([A-Z0-9_]+)/', $QUICK_REQUIRED_FACTS, $matches)) {
+		if (preg_match_all('/('.PGV_REGEX_TAG.')/', $QUICK_REQUIRED_FACTS, $matches)) {
 			foreach ($matches[1] as $match) {
 				if (in_array($match, explode('|', PGV_EVENTS_DEAT))) {
 					addSimpleTags($match);
@@ -1476,7 +1476,7 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 				if (strpos($bdm, 'B')!==false) {
 					echo '&nbsp;<input type="checkbox" name="SOUR_INDI" ', $level1_checked, ' value="Y" />';
 					echo $pgv_lang['individual'];
-					if (preg_match_all('/([A-Z0-9_]+)/', $QUICK_REQUIRED_FACTS, $matches)) {
+					if (preg_match_all('/('.PGV_REGEX_TAG.')/', $QUICK_REQUIRED_FACTS, $matches)) {
 						foreach ($matches[1] as $match) {
 							if (!in_array($match, explode('|', PGV_EVENTS_DEAT))) {
 								echo '&nbsp;<input type="checkbox" name="SOUR_', $match, '"', $level2_checked, ' value="Y" />';
@@ -1486,7 +1486,7 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 					}
 				}
 				if (strpos($bdm, 'D')!==false) {
-					if (preg_match_all('/([A-Z0-9_]+)/', $QUICK_REQUIRED_FACTS, $matches)) {
+					if (preg_match_all('/('.PGV_REGEX_TAG.')/', $QUICK_REQUIRED_FACTS, $matches)) {
 						foreach ($matches[1] as $match) {
 							if (in_array($match, explode('|', PGV_EVENTS_DEAT))) {
 								echo '&nbsp;<input type="checkbox" name="SOUR_', $match, '"', $level2_checked, ' value="Y" />';
@@ -1498,7 +1498,7 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 				if (strpos($bdm, 'M')!==false) {
 					echo '&nbsp;<input type="checkbox" name="SOUR_FAM" ', $level1_checked, ' value="Y" />';
 					echo $pgv_lang["family"];
-					if (preg_match_all('/([A-Z0-9_]+)/', $QUICK_REQUIRED_FAMFACTS, $matches)) {
+					if (preg_match_all('/('.PGV_REGEX_TAG.')/', $QUICK_REQUIRED_FAMFACTS, $matches)) {
 						foreach ($matches[1] as $match) {
 							echo '&nbsp;<input type="checkbox" name="SOUR_', $match, '"', $level2_checked, ' value="Y" />';
 							echo $factarray[$match];
@@ -1660,7 +1660,7 @@ function addSimpleTags($fact) {
 	add_simple_tag("0 {$fact}");
 	add_simple_tag("0 DATE", $fact);
 	add_simple_tag("0 PLAC", $fact);
-	if (preg_match_all('/([A-Z0-9_]+)/', $ADVANCED_PLAC_FACTS, $match))
+	if (preg_match_all('/('.PGV_REGEX_TAG.')/', $ADVANCED_PLAC_FACTS, $match))
 		foreach ($match[1] as $tag)
 			add_simple_tag("0 {$tag}", $fact);
 	add_simple_tag("0 MAP", $fact);
@@ -1676,7 +1676,7 @@ function addNewName() {
 
 	$tags=array('TYPE', 'NPFX', 'GIVN', 'SPFX', 'SURN', 'NSFX', '_MARNM');
 
-	if (preg_match_all('/([A-Z0-9_]+)/', $ADVANCED_NAME_FACTS, $match)) {
+	if (preg_match_all('/('.PGV_REGEX_TAG.')/', $ADVANCED_NAME_FACTS, $match)) {
 		$tags=array_merge($tags, $match[1]);
 	}
 	foreach ($tags as $tag) {
@@ -1712,7 +1712,7 @@ function addNewFact($fact) {
 		if ($PLAC) {
 			$gedrec.="2 PLAC {$PLAC}\n";
 
-			if (preg_match_all('/([A-Z0-9_]+)/', $ADVANCED_PLAC_FACTS, $match)) {
+			if (preg_match_all('/('.PGV_REGEX_TAG.')/', $ADVANCED_PLAC_FACTS, $match)) {
 				foreach ($match[1] as $tag) {
 					$TAG=safe_POST("{$fact}_{$tag}", PGV_REGEX_UNSAFE);
 					if ($TAG) {
@@ -2174,7 +2174,7 @@ function create_edit_form($gedrec, $linenum, $level0type) {
 		$expected_subtags['SOUR'][]='QUAY';
 		$expected_subtags['DATA'][]='DATE';
 	}
-	if (preg_match_all('/([A-Z0-9_]+)/', $ADVANCED_PLAC_FACTS, $match))
+	if (preg_match_all('/('.PGV_REGEX_TAG.')/', $ADVANCED_PLAC_FACTS, $match))
 		$expected_subtags['PLAC']=array_merge($match[1], $expected_subtags['PLAC']);
 
 	// Loop on existing tags :
@@ -2291,7 +2291,7 @@ function insert_missing_subtags($level1tag)
 			}
 			switch ($key) { // Add level 3/4 tags as appropriate
 				case "PLAC":
-					if (preg_match_all('/([A-Z0-9_]+)/', $ADVANCED_PLAC_FACTS, $match))
+					if (preg_match_all('/('.PGV_REGEX_TAG.')/', $ADVANCED_PLAC_FACTS, $match))
 						foreach ($match[1] as $tag)
 							add_simple_tag("3 $tag");
 					add_simple_tag("3 MAP");
@@ -2330,7 +2330,7 @@ function insert_missing_subtags($level1tag)
 			if (!in_array($tag, $tags)) {
 				add_simple_tag("2 {$tag}");
 				if ($tag=='PLAC') {
-					if (preg_match_all('/([A-Z0-9_]+)/', $ADVANCED_PLAC_FACTS, $match))
+					if (preg_match_all('/('.PGV_REGEX_TAG.')/', $ADVANCED_PLAC_FACTS, $match))
 						foreach ($match[1] as $atag)
 							add_simple_tag("3 $atag");
 					add_simple_tag("3 MAP");

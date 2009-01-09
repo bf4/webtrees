@@ -75,7 +75,7 @@ class Event {
 	function getValue($code) {
 		if (is_null($this->values)) {
 			$this->values=array();
-			preg_match_all('/\n2\s(\w+)\s*(.*)/', $this->gedComRecord, $matches, PREG_SET_ORDER);
+			preg_match_all('/\n2 ('.PGV_REGEX_TAG.') (.*)/', $this->gedComRecord, $matches, PREG_SET_ORDER);
 			foreach ($matches as $match) {
 				$this->values[$match[1]]=trim(preg_replace("/@/", "", $match[2]), "\r\n");
 			}
@@ -95,7 +95,7 @@ class Event {
 	 */
 	function Event($subrecord, $lineNumber=-1) {
 		global $factarray;
-		if (preg_match('/^1 (\w+) *(.*)/', $subrecord, $match)) {
+		if (preg_match('/^1 ('.PGV_REGEX_TAG.') *(.*)/', $subrecord, $match)) {
 			$this->tag=$match[1];
 			$this->detail=$match[2];
 			$this->lineNumber=$lineNumber;
