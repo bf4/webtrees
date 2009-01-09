@@ -39,8 +39,8 @@ require_once 'includes/classes/class_person.php';
 * Turn URLs in text into HTML links.  Insert breaks into long URLs
 * so that the browser can word-wrap.
 *
-* @param string $text	Text that may or may not contain URLs
-* @return string	The text with URLs replaced by HTML links
+* @param string $text Text that may or may not contain URLs
+* @return string The text with URLs replaced by HTML links
 */
 function expand_urls($text) {
 	// Some versions of RFC3987 have an appendix B which gives the following regex
@@ -63,8 +63,8 @@ function expand_urls($text) {
 * print a fact record
 *
 * prints a fact record designed for the personal facts and details page
-* @param Event $eventObj	The Event object to print
-* @param boolean $noedit	Hide or show edit links
+* @param Event $eventObj The Event object to print
+* @param boolean $noedit Hide or show edit links
 */
 function print_fact(&$eventObj, $noedit=false) {
 	global $factarray;
@@ -82,13 +82,16 @@ function print_fact(&$eventObj, $noedit=false) {
 	$FACT_COUNT++;
 	$estimates = array("abt","aft","bef","est","cir");
 	$fact = $eventObj->getTag();
-	$event = $eventObj->getDetail();
+	$event = htmlspecialchars($eventObj->getDetail(), ENT_COMPAT, 'UTF-8');
 	$factrec = $eventObj->getGedcomRecord();
 	$linenum = $eventObj->getLineNumber();
 	$parent = $eventObj->getParentObject();
 	$pid = "";
-	if (!is_null($eventObj->getFamilyId())) $pid = $eventObj->getFamilyId();
-	else if (!is_null($parent)) $pid = $parent->getXref();
+	if (!is_null($eventObj->getFamilyId())) {
+		$pid = $eventObj->getFamilyId();
+	} elseif (!is_null($parent)) {
+		$pid = $parent->getXref();
+	}
 
 	if ($fact=="NOTE") return print_main_notes($factrec, 1, $pid, $linenum, $noedit);
 	if ($fact=="SOUR") return print_main_sources($factrec, 1, $pid, $linenum, $noedit);
@@ -105,7 +108,9 @@ function print_fact(&$eventObj, $noedit=false) {
 	if (in_array($fact, $nonfacts)) return;
 	//-- do not print empty facts
 	$lines = explode("\n", trim($factrec));
-	if ((count($lines)<2)&&($event=="")) return;
+	if (count($lines)<2 && $event=="") {
+		return;
+	}
 	// See if RESN tag prevents display or edit/delete
 	$resn_tag = preg_match("/2 RESN (.*)/", $factrec, $match);
 	if ($resn_tag == "1") $resn_value = strtolower(trim($match[1]));
@@ -292,13 +297,6 @@ function print_fact(&$eventObj, $noedit=false) {
 			print "</td>";
 		}
 		$align = "";
-/*	Did not look good
-		$ct = preg_match("/2 DATE (.+)/", $factrec, $match);
-		if (!empty($event) && $ct==0) {
-			if ($TEXT_DIRECTION=="rtl" && !hasRTLText($event) && hasLTRText($event) && $event!="N" && $event!="Y") $align=" align=\"left\"";
-			if ($TEXT_DIRECTION=="ltr" && !hasLTRText($event) && hasRTLText($event)) $align=" align=\"right\"";
-		}
-*/
 		print "<td class=\"optionbox $styleadd wrap\" $align>";
 		//print "<td class=\"facts_value facts_value$styleadd\">";
 		if ((showFactDetails($factref, $pid)) && (FactViewRestricted($pid, $factrec))) {
@@ -306,13 +304,6 @@ function print_fact(&$eventObj, $noedit=false) {
 				print "<img src=\"images/RESN_".$resn_value.".gif\" alt=\"".$pgv_lang[$resn_value]."\" title=\"".$pgv_lang[$resn_value]."\" />\n";
 				// print_help_link("RESN_help", "qm");
 			}
-			/**
-			print $factarray["RESN"].": ";
-			if (isset($pgv_lang[$resn_value])) print $pgv_lang[$resn_value];
-			else if (isset($factarray[$resn_value])) print $factarray[$resn_value];
-			else print $resn_value;
-			print "<br />\n";
-			**/
 		}
 		if ((showFactDetails($factref, $pid)) && (!FactViewRestricted($pid, $factrec))) {
 			// -- first print TYPE for some facts
@@ -354,14 +345,14 @@ function print_fact(&$eventObj, $noedit=false) {
 				}
 			}
 			//-- print other characterizing fact information
-			if ($event!="" and $fact!="ASSO") {
+			if ($event && $fact!="ASSO") {
 				print " ";
 				$ct = preg_match("/@(.*)@/", $event, $match);
 				if ($ct>0) {
 					$gedrec=GedcomRecord::getInstance($match[1]);
 					if ($gedrec->getType()=='INDI') {
 						echo '<a href="', encode_url($gedrec->getLinkUrl()), '">', $gedrec->getFullName(), '</a><br />';
-					}	elseif ($fact=='REPO') {
+					} elseif ($fact=='REPO') {
 						print_repository_record($match[1]);
 					} else {
 						print_submitter_info($match[1]);
@@ -386,7 +377,7 @@ function print_fact(&$eventObj, $noedit=false) {
 				} elseif (strstr("_EMAIL", $fact)) {
 					print "<a href=\"mailto:".$event."\">".$event."</a>";
 				} elseif (strstr("AFN", $fact)) {
-					print '<a href="http://www.familysearch.org/Eng/Search/customsearchresults.asp?LDS=0&file_number='.urlencode($event).'" target="new">'.htmlspecialchars($event,ENT_COMPAT,'UTF-8').'</a>';
+					print '<a href="http://www.familysearch.org/Eng/Search/customsearchresults.asp?LDS=0&file_number='.urlencode($event).'" target="new">'.$event.'</a>';
 				} elseif (strstr('FAX PHON FILE ', $fact.' ')) {
 					print getLRM(). $event.' ' . getLRM();
 				} elseif ($event!='Y') {
@@ -404,7 +395,7 @@ function print_fact(&$eventObj, $noedit=false) {
 			if ($ct>0) print PrintReady($match[1]);
 				// -- print PLACe, TEMPle and STATus
 				echo format_fact_place($eventObj, true, true, true);
-				if (preg_match("/ (PLAC)|(STAT)|(TEMP)|(SOUR) /", $factrec)>0 || (!empty($event)&&$fact!="ADDR")) print "<br />\n";
+				if (preg_match("/ (PLAC)|(STAT)|(TEMP)|(SOUR) /", $factrec)>0 || ($event && $fact!="ADDR")) print "<br />\n";
 				// -- print BURIal -> CEMEtery
 				$ct = preg_match("/2 CEME (.*)/", $factrec, $match);
 				if ($ct>0) {
@@ -424,7 +415,6 @@ function print_fact(&$eventObj, $noedit=false) {
 			print_asso_rela_record($pid, $factrec, true, gedcom_record_type($pid, get_id_from_gedcom($GEDCOM)));
 			// -- find _PGVU field
 			$ct = preg_match("/2 _PGVU (.*)/", $factrec, $match);
-//			if ($ct>0) print $factarray["_PGVU"].": ".$match[1];
 			if ($ct>0) print " - ".$factarray["_PGVU"].": ".$match[1];
 			// -- Find RESN tag
 			if (isset($resn_value)) {
@@ -462,7 +452,7 @@ function print_fact(&$eventObj, $noedit=false) {
 					if ($key>0)
 						print ", ";
 					if (empty($factarray[$value]))
-						print $value;
+						print htmlspecialchars($value, ENT_COMPAT, 'UTF-8');
 					else
 						print $factarray[$value];
 				}
@@ -492,10 +482,13 @@ function print_fact(&$eventObj, $noedit=false) {
 							//print $eventObj->Icon().' '; // print incorrect fact icon !!!
 							print "<img src=\"{$PGV_IMAGE_DIR}/facts/".$factref.".gif\" alt=\"{$label}\" title=\"{$label}\" align=\"middle\" /> ";
 						else print "<span class=\"label\">".$label.": </span>";
-						$value = trim($match[$i][2]);
-						if (isset($pgv_lang[strtolower($value)])) print $pgv_lang[strtolower($value)];
-						else print PrintReady($value);
-						print "<br />\n";
+						$value = htmlspecialchars($match[$i][2], ENT_COMPAT, 'UTF-8');
+						if (isset($pgv_lang[strtolower($value)])) {
+							print $pgv_lang[strtolower($value)];
+						} else {
+							print PrintReady($value);
+						}
+						print "<br />";
 					}
 				}
 			}
@@ -563,9 +556,9 @@ function print_repository_record($sid) {
 *
 * this function is called by the print_fact function and other functions to
 * print any source information attached to the fact
-* @param string $factrec	The fact record to look for sources in
-* @param int $level		The level to look for sources at
-* @param boolean $return	whether to return the data or print the data
+* @param string $factrec The fact record to look for sources in
+* @param int $level  The level to look for sources at
+* @param boolean $return whether to return the data or print the data
 */
 function print_fact_sources($factrec, $level, $return=false) {
 	global $pgv_lang;
@@ -686,7 +679,7 @@ function print_media_links($factrec, $level,$pid='') {
 					//LBox --------  change for Lightbox Album --------------------------------------------
 					if (file_exists("modules/lightbox/album.php")&& ( eregi("\.jpg",$mainMedia) || eregi("\.jpeg",$mainMedia) || eregi("\.gif",$mainMedia) || eregi("\.png",$mainMedia) ) ) {
 						$name = trim($row["m_titl"]);
-							print "<a href=\"" . $mainMedia . "\" rel=\"clearbox[general_1]\" rev=\"" . $media_id . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name,ENT_COMPAT,'UTF-8')) . "\">" . "\n";
+							print "<a href=\"" . $mainMedia . "\" rel=\"clearbox[general_1]\" rev=\"" . $media_id . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name, ENT_COMPAT, 'UTF-8')) . "\">" . "\n";
 					// ---------------------------------------------------------------------------------------------
 					}elseif ($USE_MEDIA_VIEWER) {
 						print "<a href=\"".encode_url("mediaviewer.php?mid={$media_id}")."\">";
@@ -774,8 +767,8 @@ function print_media_links($factrec, $level,$pid='') {
 * print an address structure
 *
 * takes a gedcom ADDR structure and prints out a human readable version of it.
-* @param string $factrec	The ADDR subrecord
-* @param int $level		The gedcom line level of the main ADDR record
+* @param string $factrec The ADDR subrecord
+* @param int $level  The gedcom line level of the main ADDR record
 */
 function print_address_structure($factrec, $level) {
 	global $factarray;
@@ -1012,20 +1005,20 @@ function print_main_sources($factrec, $level, $pid, $linenum, $noedit=false) {
 }
 
 /**
-*	Print SOUR structure
+* Print SOUR structure
 *
 *  This function prints the input array of SOUR sub-records built by the
 *  getSourceStructure() function.
 *
 *  The input array is defined as follows:
-*	$textSOUR["PAGE"] = +1  Source citation
-*	$textSOUR["EVEN"] = +1  Event type
-*	$textSOUR["ROLE"] = +2  Role in event
-*	$textSOUR["DATA"] = +1  place holder (no text in this sub-record)
-*	$textSOUR["DATE"] = +2  Entry recording date
-*	$textSOUR["TEXT"] = +2  (array) Text from source
-*	$textSOUR["QUAY"] = +1  Certainty assessment
-*	$textSOUR["TEXT2"] = +1 (array) Text from source
+* $textSOUR["PAGE"] = +1  Source citation
+* $textSOUR["EVEN"] = +1  Event type
+* $textSOUR["ROLE"] = +2  Role in event
+* $textSOUR["DATA"] = +1  place holder (no text in this sub-record)
+* $textSOUR["DATE"] = +2  Entry recording date
+* $textSOUR["TEXT"] = +2  (array) Text from source
+* $textSOUR["QUAY"] = +1  Certainty assessment
+* $textSOUR["TEXT2"] = +1 (array) Text from source
 */
 function printSourceStructure($textSOUR) {
 	global $pgv_lang, $factarray;
@@ -1067,14 +1060,14 @@ function printSourceStructure($textSOUR) {
 * Extract SOUR structure from the incoming Source sub-record
 *
 *  The output array is defined as follows:
-*	$textSOUR["PAGE"] = +1  Source citation
-*	$textSOUR["EVEN"] = +1  Event type
-*	$textSOUR["ROLE"] = +2  Role in event
-*	$textSOUR["DATA"] = +1  place holder (no text in this sub-record)
-*	$textSOUR["DATE"] = +2  Entry recording date
-*	$textSOUR["TEXT"] = +2  (array) Text from source
-*	$textSOUR["QUAY"] = +1  Certainty assessment
-*	$textSOUR["TEXT2"] = +1 (array) Text from source
+* $textSOUR["PAGE"] = +1  Source citation
+* $textSOUR["EVEN"] = +1  Event type
+* $textSOUR["ROLE"] = +2  Role in event
+* $textSOUR["DATA"] = +1  place holder (no text in this sub-record)
+* $textSOUR["DATE"] = +2  Entry recording date
+* $textSOUR["TEXT"] = +2  (array) Text from source
+* $textSOUR["QUAY"] = +1  Certainty assessment
+* $textSOUR["TEXT2"] = +1 (array) Text from source
 */
 function getSourceStructure($srec) {
 	global $WORD_WRAPPED_NOTES;
@@ -1125,11 +1118,11 @@ function getSourceStructure($srec) {
 * print main note row
 *
 * this function will print a table row for a fact table for a level 1 note in the main record
-* @param string $factrec	the raw gedcom sub record for this note
-* @param int $level		The start level for this note, usually 1
-* @param string $pid		The gedcom XREF id for the level 0 record that this note is a part of
-* @param int $linenum		The line number in the level 0 record where this record was found.  This is used for online editing.
-* @param boolean $noedit	Whether or not to allow this fact to be edited
+* @param string $factrec the raw gedcom sub record for this note
+* @param int $level  The start level for this note, usually 1
+* @param string $pid  The gedcom XREF id for the level 0 record that this note is a part of
+* @param int $linenum  The line number in the level 0 record where this record was found.  This is used for online editing.
+* @param boolean $noedit Whether or not to allow this fact to be edited
 */
 function print_main_notes($factrec, $level, $pid, $linenum, $noedit=false) {
 	global $pgv_lang, $pgv_changes, $GEDCOM;
@@ -1262,9 +1255,9 @@ function print_main_notes($factrec, $level, $pid, $linenum, $noedit=false) {
 
 /**
 * Print the links to multi-media objects
-* @param string $pid	The the xref id of the object to find media records related to
-* @param int $level	The level of media object to find
-* @param boolean $related	Whether or not to grab media from related records
+* @param string $pid The the xref id of the object to find media records related to
+* @param int $level The level of media object to find
+* @param boolean $related Whether or not to grab media from related records
 */
 function print_main_media($pid, $level=1, $related=false, $noedit=false) {
 	global $TBLPREFIX;
@@ -1462,8 +1455,8 @@ function print_main_media($pid, $level=1, $related=false, $noedit=false) {
 /**
 * print a media row in a table
 * @param string $rtype whether this is a 'new', 'old', or 'normal' media row... this is used to determine if the rows should be printed with an outline color
-* @param array $rowm	An array with the details about this media item
-* @param string $pid	The record id this media item was attached to
+* @param array $rowm An array with the details about this media item
+* @param string $pid The record id this media item was attached to
 */
 function print_main_media_row($rtype, $rowm, $pid) {
 	global $PGV_IMAGE_DIR, $PGV_IMAGES, $view, $TEXT_DIRECTION;
