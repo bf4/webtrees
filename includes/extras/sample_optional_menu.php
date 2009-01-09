@@ -3,7 +3,7 @@
  * Menu Extension
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
+ * Copyright (C) 2007 to 2009  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -36,8 +36,8 @@
  * This menu is NEVER visible when a Search robot is accessing the site.  This is controlled by
  * "includes/classes/class_menubar.php".
  *
- * Use the code in "includes/classes/class_menubar.php" as a guide to how valid menus and sub-menus should be
- * constructed.
+ * Use the code in "includes/classes/class_menubar.php" as a guide to how valid menus and sub-menus 
+ * should be constructed.
  */
  /*
  * Explanation of the '$menu = new Menu("whatever 1", "whatever 2")' and
