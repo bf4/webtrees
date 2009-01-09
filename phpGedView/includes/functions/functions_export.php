@@ -200,98 +200,83 @@ function print_gedcom($privatize_export, $privatize_export_level, $convert, $rem
 	$head=preg_replace('/[\r\n]+/', PGV_EOL, $head);
 	fwrite($gedout, $head);
 
-	$sql="SELECT i_id, i_gedcom FROM {$TBLPREFIX}individuals WHERE i_file={$GEDCOMS[$GEDCOM]['id']} ORDER BY i_id";
+	$sql="SELECT i_id, i_gedcom FROM {$TBLPREFIX}individuals WHERE i_file={$GEDCOMS[$GEDCOM]['id']} AND i_id NOT LIKE '%:%' ORDER BY i_id";
 	$res=dbquery($sql);
 	while ($row=$res->fetchRow()) {
-		//-- ignore any remote cached records
-		if (preg_match("/S\d+:\w+/", $row[0])==0) {
-			$rec=$row[1];
-			$rec=remove_custom_tags($rec, $remove);
-			if ($privatize_export=="yes") {
-				$rec=privatize_gedcom($rec);
-			}
-			if ($convert=="yes") {
-				$rec=utf8_decode($rec);
-			}
-			$rec=reformat_record_export($rec);
-			fwrite($gedout, $rec);
+		$rec=$row[1];
+		$rec=remove_custom_tags($rec, $remove);
+		if ($privatize_export=="yes") {
+			$rec=privatize_gedcom($rec);
 		}
+		if ($convert=="yes") {
+			$rec=utf8_decode($rec);
+		}
+		$rec=reformat_record_export($rec);
+		fwrite($gedout, $rec);
 	}
 	$res->free();
 
-	$sql="SELECT f_id, f_gedcom FROM {$TBLPREFIX}families WHERE f_file={$GEDCOMS[$GEDCOM]['id']} ORDER BY f_id";
+	$sql="SELECT f_id, f_gedcom FROM {$TBLPREFIX}families WHERE f_file={$GEDCOMS[$GEDCOM]['id']} AND f_id NOT LIKE '%:%' ORDER BY f_id";
 	$res=dbquery($sql);
 	while ($row=$res->fetchRow()) {
-		//-- ignore any remote cached records
-		if (preg_match("/S\d+:\w+/", $row[0])==0) {
-			$rec=$row[1];
-			$rec=remove_custom_tags($rec, $remove);
-			if ($privatize_export=="yes") {
-				$rec=privatize_gedcom($rec);
-			}
-			if ($convert=="yes") {
-				$rec=utf8_decode($rec);
-			}
-			$rec=reformat_record_export($rec);
-			fwrite($gedout, $rec);
+		$rec=$row[1];
+		$rec=remove_custom_tags($rec, $remove);
+		if ($privatize_export=="yes") {
+			$rec=privatize_gedcom($rec);
 		}
+		if ($convert=="yes") {
+			$rec=utf8_decode($rec);
+		}
+		$rec=reformat_record_export($rec);
+		fwrite($gedout, $rec);
 	}
 	$res->free();
 
-	$sql="SELECT s_id, s_gedcom FROM {$TBLPREFIX}sources WHERE s_file={$GEDCOMS[$GEDCOM]['id']} ORDER BY s_id";
+	$sql="SELECT s_id, s_gedcom FROM {$TBLPREFIX}sources WHERE s_file={$GEDCOMS[$GEDCOM]['id']} AND s_id NOT LIKE '%:%' ORDER BY s_id";
 	$res=dbquery($sql);
 	while ($row=$res->fetchRow()) {
-		//-- ignore any remote cached records
-		if (preg_match("/S\d+:\w+/", $row[0])==0) {
-			$rec=$row[1];
-			$rec=remove_custom_tags($rec, $remove);
-			if ($privatize_export=="yes") {
-				$rec=privatize_gedcom($rec);
-			}
-			if ($convert=="yes") {
-				$rec=utf8_decode($rec);
-			}
-			$rec=reformat_record_export($rec);
-			fwrite($gedout, $rec);
+		$rec=$row[1];
+		$rec=remove_custom_tags($rec, $remove);
+		if ($privatize_export=="yes") {
+			$rec=privatize_gedcom($rec);
 		}
+		if ($convert=="yes") {
+			$rec=utf8_decode($rec);
+		}
+		$rec=reformat_record_export($rec);
+		fwrite($gedout, $rec);
 	}
 	$res->free();
 
-	$sql="SELECT o_id, o_gedcom FROM {$TBLPREFIX}other WHERE o_file={$GEDCOMS[$GEDCOM]['id']} AND o_type!='HEAD' AND o_type!='TRLR' ORDER BY o_id";
+	$sql="SELECT o_id, o_gedcom FROM {$TBLPREFIX}other WHERE o_file={$GEDCOMS[$GEDCOM]['id']} AND o_id NOT LIKE '%:%' AND o_type!='HEAD' AND o_type!='TRLR' ORDER BY o_id";
 	$res=dbquery($sql);
 	while ($row=$res->fetchRow()) {
-		//-- ignore any remote cached records
-		if (preg_match("/S\d+:\w+/", $row[0])==0) {
-			$rec=$row[1];
-			$rec=remove_custom_tags($rec, $remove);
-			if ($privatize_export=="yes") {
-				$rec=privatize_gedcom($rec);
-			}
-			if ($convert=="yes") {
-				$rec=utf8_decode($rec);
-			}
-			$rec=reformat_record_export($rec);
-			fwrite($gedout, $rec);
+		$rec=$row[1];
+		$rec=remove_custom_tags($rec, $remove);
+		if ($privatize_export=="yes") {
+			$rec=privatize_gedcom($rec);
 		}
+		if ($convert=="yes") {
+			$rec=utf8_decode($rec);
+		}
+		$rec=reformat_record_export($rec);
+		fwrite($gedout, $rec);
 	}
 	$res->free();
 
-	$sql="SELECT m_media, m_gedrec FROM {$TBLPREFIX}media WHERE m_gedfile={$GEDCOMS[$GEDCOM]['id']} ORDER BY m_media";
+	$sql="SELECT m_media, m_gedrec FROM {$TBLPREFIX}media WHERE m_gedfile={$GEDCOMS[$GEDCOM]['id']} AND m_media NOT LIKE '%:%' ORDER BY m_media";
 	$res=dbquery($sql);
 	while ($row=$res->fetchRow()) {
-		//-- ignore any remote cached records
-		if (preg_match("/S\d+:\w+/", $row[0])==0) {
-			$rec=$row[1];
-			$rec=remove_custom_tags($rec, $remove);
-			if ($privatize_export=="yes") {
-				$rec=privatize_gedcom($rec);
-			}
-			if ($convert=="yes") {
-				$rec=utf8_decode($rec);
-			}
-			$rec=reformat_record_export($rec);
-			fwrite($gedout, $rec);
+		$rec=$row[1];
+		$rec=remove_custom_tags($rec, $remove);
+		if ($privatize_export=="yes") {
+			$rec=privatize_gedcom($rec);
 		}
+		if ($convert=="yes") {
+			$rec=utf8_decode($rec);
+		}
+		$rec=reformat_record_export($rec);
+		fwrite($gedout, $rec);
 	}
 	$res->free();
 
