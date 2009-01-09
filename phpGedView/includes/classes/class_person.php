@@ -627,7 +627,7 @@ class Person extends GedcomRecord {
 	function getSpouseFamilyIds() {
 		if (!is_null($this->fams)) return $this->fams;
 		//$this->fams = find_families_in_record($this->gedrec, "FAMS");
-		preg_match_all("/1\s*FAMS\s*@(.+)@/", $this->gedrec, $match);
+		preg_match_all('/\n1 FAMS @('.PGV_REGEX_XREF.')@/', $this->gedrec, $match);
 		$this->fams = $match[1];
 		return $this->fams;
 	}
@@ -680,7 +680,7 @@ class Person extends GedcomRecord {
 	function getChildFamilyIds() {
 		if (!is_null($this->famc)) return $this->famc;
 		//$this->famc = find_families_in_record($this->gedrec, "FAMC");
-		preg_match_all("/1\s*FAMC\s*@(.+)@/", $this->gedrec, $match);
+		preg_match_all('/\n1 FAMC @('.PGV_REGEX_XREF.')@/', $this->gedrec, $match);
 		$this->famc = $match[1];
 		return $this->famc;
 	}
