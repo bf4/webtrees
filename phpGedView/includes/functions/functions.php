@@ -6,7 +6,7 @@
 * routines and sorting functions.
 *
 * phpGedView: Genealogy Viewer
-* Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
+* Copyright (C) 2002 to 2009 PGV Development Team.  All rights reserved.
 *
 * This program is free software; you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -789,14 +789,14 @@ function get_all_subrecords($gedrec, $ignore="", $families=true, $ApplyPriv=true
 	$repeats = array();
 
 	$id = "";
-	$gt = preg_match("/0 @(.+)@/", $gedrec, $gmatch);
+	$gt = preg_match('/0 @('.PGV_REGEX_XREF.')@/', $gedrec, $gmatch);
 	if ($gt > 0) {
 		$id = $gmatch[1];
 	}
 
 	$hasResn = strstr($gedrec, " RESN ");
 	$prev_tags = array();
-	$ct = preg_match_all("/\n1 (\w+)(.*)/", $gedrec, $match, PREG_SET_ORDER|PREG_OFFSET_CAPTURE);
+	$ct = preg_match_all('/\n1 ('.PGV_REGEX_TAG.')(.*)/', $gedrec, $match, PREG_SET_ORDER|PREG_OFFSET_CAPTURE);
 	for ($i=0; $i<$ct; $i++) {
 		$fact = trim($match[$i][1][0]);
 		$pos1 = $match[$i][0][1];
@@ -829,7 +829,7 @@ function get_all_subrecords($gedrec, $ignore="", $families=true, $ApplyPriv=true
 
 	//-- look for any records in FAMS records
 	if ($families) {
-		$ft = preg_match_all("/1 FAMS @(.+)@/", $gedrec, $fmatch, PREG_SET_ORDER);
+		$ft = preg_match_all('/\n1 FAMS @('.PGV_REGEX_XREF.')@/', $gedrec, $fmatch, PREG_SET_ORDER);
 		for ($f=0; $f<$ft; $f++) {
 			$famid = $fmatch[$f][1];
 			$famrec = find_family_record($fmatch[$f][1]);
@@ -839,7 +839,7 @@ function get_all_subrecords($gedrec, $ignore="", $families=true, $ApplyPriv=true
 			else
 				$spid = $parents["HUSB"];
 			$prev_tags = array();
-			$ct = preg_match_all("/\n1 (\w+)(.*)/", $famrec, $match, PREG_SET_ORDER);
+			$ct = preg_match_all('/\n1 ('.PGV_REGEX_TAG.')(.*)/', $famrec, $match, PREG_SET_ORDER);
 			for ($i=0; $i<$ct; $i++) {
 				$fact = trim($match[$i][1]);
 				if (empty($ignore) || strpos($ignore, $fact)===false) {
@@ -849,8 +849,7 @@ function get_all_subrecords($gedrec, $ignore="", $families=true, $ApplyPriv=true
 						else
 							$prev_tags[$fact] = 1;
 						$subrec = get_sub_record(1, "1 $fact", $famrec, $prev_tags[$fact]);
-						$subrec .= "\n2 _PGVS @$spid@\n";
-						$subrec .= "2 _PGVFS @$famid@\n";
+						$subrec .= "\n2 _PGVS @$spid@\n2 _PGVFS @$famid@\n";
 						if ($fact=="EVEN") {
 							$ct = preg_match("/2 TYPE (.*)/", $subrec, $tmatch);
 							if ($ct>0) {
@@ -1176,12 +1175,12 @@ function find_parents_in_record($famrec) {
 	if (empty($famrec))
 		return false;
 	$parents = array();
-	$ct = preg_match("/1 HUSB @(.*)@/", $famrec, $match);
+	$ct = preg_match('/1 HUSB @('.PGV_REGEX_XREF.')@/', $famrec, $match);
 	if ($ct>0)
 		$parents["HUSB"]=$match[1];
 	else
 		$parents["HUSB"]="";
-	$ct = preg_match("/1 WIFE @(.*)@/", $famrec, $match);
+	$ct = preg_match('/1 WIFE @('.PGV_REGEX_XREF.')@/', $famrec, $match);
 	if ($ct>0)
 		$parents["WIFE"]=$match[1];
 	else
@@ -1231,7 +1230,7 @@ function find_children_in_record($famrec, $me='') {
 	if (empty($famrec))
 		return $children;
 
-	$num = preg_match_all("/1\s*CHIL\s*@(.*)@/", $famrec, $match,PREG_SET_ORDER);
+	$num = preg_match_all('/\n1 CHIL @('.PGV_REGEX_XREF.')@/', $famrec, $match,PREG_SET_ORDER);
 	for ($i=0; $i<$num; $i++) {
 		$child = trim($match[$i][1]);
 		if ($child!=$me)
@@ -1275,7 +1274,7 @@ function find_sfamily_ids($pid) {
 * @return array array of family ids
 */
 function find_families_in_record($indirec, $tag) {
-	preg_match_all("/1\s*{$tag}\s*@(.+)@/", $indirec, $match);
+	preg_match_all("/\n1 {$tag} @(".PGV_REGEX_XREF.')@/', $indirec, $match);
 	return $match[1];
 }
 
@@ -1362,7 +1361,7 @@ function find_highlighted_object($pid, $indirec) {
 		require_once 'includes/classes/class_serviceclient.php';
 		$client = ServiceClient::getInstance($match[1]);
 		if (!is_null($client)) {
-			$mt = preg_match_all("/\d OBJE @(.*)@/", $indirec, $matches, PREG_SET_ORDER);
+			$mt = preg_match_all('/\n\d OBJE @('.PGV_REGEX_XREF.')@/', $indirec, $matches, PREG_SET_ORDER);
 			for ($i=0; $i<$mt; $i++) {
 				$mediaObj = Media::getInstance($matches[$i][1]);
 				$mrec = $mediaObj->getGedcomRecord();
