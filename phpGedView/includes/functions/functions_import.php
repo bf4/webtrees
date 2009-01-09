@@ -570,9 +570,9 @@ function import_record($gedrec, $update) {
 	global $DBCONN, $gid, $type, $TBLPREFIX, $GEDCOM_FILE, $FILE, $pgv_lang, $USE_RIN;
 	global $place_id, $WORD_WRAPPED_NOTES, $GEDCOMS, $MAX_IDS, $fpnewged, $GEDCOM, $GENERATE_UIDS;
 
-	$FILE = $GEDCOM;
+	$FILE=$GEDCOM;
 
- // Escaped @ signs (only if importing from file)
+	// Escaped @ signs (only if importing from file)
 	if (!$update) {
 		$gedrec=str_replace('@@', '@', $gedrec);
 	}
@@ -580,51 +580,46 @@ function import_record($gedrec, $update) {
 	// Standardise gedcom format
 	$gedrec=reformat_record_import($gedrec);
 
-	//-- import different types of records
-	$ct = preg_match('/^0 @(.*)@ ('.PGV_REGEX_XREF.')/', $gedrec, $match);
-	if ($ct > 0) {
-		$gid = $match[1];
-		$type = trim($match[2]);
-	} else {
-		$ct = preg_match("/0 (.*)/", $gedrec, $match);
-		if ($ct > 0) {
-			$gid = trim($match[1]);
-			$type = trim($match[1]);
-		} else {
-			print $pgv_lang["invalid_gedformat"] . "<br /><pre>$gedrec</pre>\n";
+	// import different types of records
+	if (preg_match('/^0 @('.PGV_REGEX_XREF.')@ ('.PGV_REGEX_TAG.')/', $gedrec, $match) > 0) {
+		list(,$gid, $type)=$match;
+		// check for a _UID, if the record doesn't have one, add one
+		if ($GENERATE_UIDS && !strpos($gedrec, "\n1 _UID ")) {
+			$gedrec.="\n1 _UID ".uuid();
 		}
+	} elseif (preg_match('/0 ('.PGV_REGEX_TAG.')/', $gedrec, $match)) {
+		$gid=$match[1];
+		$type=$match[1];
+	} else {
+		echo $pgv_lang['invalid_gedformat'], '<br /><pre>', $gedrec, '</pre>';
+		return;
 	}
 
-	//-- check for a _UID, if the record doesn't have one, add one
-	if ($GENERATE_UIDS && $type!='HEAD' && $type!='TRLR' && !strpos($gedrec, "\n1 _UID ")) {
-		$gedrec.="\n1 _UID ".uuid();
+	// keep track of the max id for each type as they are imported
+	if (!isset($MAX_IDS)) {
+		$MAX_IDS=array ();
+	}
+	if (preg_match('/(\d+)/', $gid, $match)) {
+		$idnum=(int)$match[1];
+	} else {
+		$idnum=0;
+	}
+	if (isset($MAX_IDS[$type])) {
+		$MAX_IDS[$type]=max($MAX_IDS[$type], $idnum);
+	} else {
+		$MAX_IDS[$type]=$idnum;
 	}
 
-	//-- keep track of the max id for each type as they are imported
-	if (!isset ($MAX_IDS)) {
-		$MAX_IDS = array ();
-	}
-	$idnum = 0;
-	$ct = preg_match("/(\d+)/", $gid, $match);
-	if ($ct > 0) {
-		$idnum = $match[1];
-	}
-	if (!isset ($MAX_IDS[$type])) {
-		$MAX_IDS[$type] = $idnum;
-	} elseif ($MAX_IDS[$type] < $idnum) {
-		$MAX_IDS[$type] = $idnum;
-	}
-
-	$newrec = update_media($gid, $gedrec, $update);
-	if ($newrec != $gedrec) {
-		$gedrec = $newrec;
-		//-- make sure we have the correct media id
-		$ct = preg_match('/0 @(.*)@ ('.PGV_REGEX_XREF.')/', $gedrec, $match);
-		if ($ct > 0) {
-			$gid = $match[1];
-			$type = trim($match[2]);
-		} else
-			$gid = '';
+	$newrec=update_media($gid, $gedrec, $update);
+	if ($newrec!=$gedrec) {
+		$gedrec=$newrec;
+		// make sure we have the correct media id
+		if (preg_match('/0 @('.PGV_REGEX_XREF.')@ ('.PGV_REGEX_TAG.')/', $gedrec, $match)) {
+			list(,$gid, $type)=$match;
+		} else {
+			echo $pgv_lang['invalid_gedformat'], '<br /><pre>', $gedrec, '</pre>';
+			return;
+		}
 	}
 
 	switch ($type) {
@@ -664,108 +659,67 @@ function import_record($gedrec, $update) {
 
 	switch ($type) {
 	case 'INDI':
-		$isdead = -1;
-		if ($USE_RIN && preg_match("/1 RIN (.+)/", $gedrec, $match)) {
-			$rin = trim($match[1]);
+		if ($USE_RIN && preg_match('/\n1 RIN (.+)/', $gedrec, $match)) {
+			$rin=$DBCONN->escapeSimple($match[1]);
 		} else {
-			$rin = $gid;
+			$rin=$xref;
 		}
-		$isdead = (int)is_dead($gedrec, '', true);
-		$sql = "INSERT INTO {$TBLPREFIX}individuals (i_id, i_file, i_rin, i_isdead, i_sex, i_gedcom) VALUES ('{$xref}',{$ged_id},'".$DBCONN->escapeSimple($rin)."','".$DBCONN->escapeSimple($isdead)."','".$record->getSex()."','".$DBCONN->escapeSimple($gedrec)."')";
-		$res = dbquery($sql);
+		$isdead=(int)is_dead($gedrec, '', true);
+		dbquery("INSERT INTO {$TBLPREFIX}individuals (i_id, i_file, i_rin, i_isdead, i_sex, i_gedcom) VALUES ('{$xref}',{$ged_id},'{$rin}','{$isdead}','".$record->getSex()."','".$DBCONN->escapeSimple($gedrec)."')");
 		break;
 	case 'FAM':
-		$parents = array ();
-		$ct = preg_match("/1 HUSB @(.*)@/", $gedrec, $match);
-		if ($ct > 0) {
-			$parents["HUSB"] = $match[1];
+		if (preg_match('/\n1 HUSB @('.PGV_REGEX_XREF.')@/', $gedrec, $match)) {
+			$husb=$match[1];
 		} else {
-			$parents["HUSB"] = false;
+			$husb=null;
 		}
-		$ct = preg_match("/1 WIFE @(.*)@/", $gedrec, $match);
-		if ($ct > 0) {
-			$parents["WIFE"] = $match[1];
+		if (preg_match('/\n1 WIFE @('.PGV_REGEX_XREF.')@/', $gedrec, $match)) {
+			$wife=$match[1];
 		} else {
-			$parents["WIFE"] = false;
+			$wife=null;
 		}
-		$ct = preg_match_all("/\d CHIL @(.*)@/", $gedrec, $match, PREG_SET_ORDER);
-		$chil = "";
-		for ($j = 0; $j < $ct; $j++) {
-			$chil .= $match[$j][1] . ";";
+		if ($nchi=preg_match_all('/\n1 CHIL @('.PGV_REGEX_XREF.')@/', $gedrec, $match)) {
+			$chil=implode(';', $match[1]).';';
+		} else {
+			$chil=null;
 		}
-		$nchi = get_gedcom_value("NCHI", 1, $gedrec);
-		if (!empty($nchi)) {
-			$ct = $nchi;
+		if (preg_match('/\n1 NCHI (\d+)/', $gedrec, $match)) {
+			$nchi=max($nchi, $match[1]);
 		}
-		$fam = array ();
-		$fam["HUSB"] = $parents["HUSB"];
-		$fam["WIFE"] = $parents["WIFE"];
-		$fam["CHIL"] = $chil;
-		$fam["gedcom"] = $gedrec;
-		$fam["gedfile"] = $GEDCOMS[$FILE]["id"];
-		$sql = "INSERT INTO {$TBLPREFIX}families (f_id, f_file, f_husb, f_wife, f_chil, f_gedcom, f_numchil) VALUES ('{$xref}',{$ged_id},'" . $DBCONN->escapeSimple($fam["HUSB"]) . "','" . $DBCONN->escapeSimple($fam["WIFE"]) . "','" . $DBCONN->escapeSimple($fam["CHIL"]) . "','" . $DBCONN->escapeSimple($fam["gedcom"]) . "','" . $DBCONN->escapeSimple($ct) . "')";
-		$res = dbquery($sql);
+		dbquery("INSERT INTO {$TBLPREFIX}families (f_id, f_file, f_husb, f_wife, f_chil, f_gedcom, f_numchil) VALUES ('{$xref}',{$ged_id},'{$husb}','{$wife}','{$chil}','".$DBCONN->escapeSimple($gedrec)."','{$ged_id}')");
 		break;
 	case 'SOUR':
-		$et = preg_match("/1 ABBR (.*)/", $gedrec, $smatch);
-		if ($et > 0) {
-			$name = $smatch[1];
+		if (preg_match('/\n1 TITL (.+)/', $gedrec, $match)) {
+			$name=$DBCONN->escapeSimple($match[1]);
+		} elseif (preg_match('/\n1 ABBR (.+)/', $gedrec, $match)) {
+			$name=$DBCONN->escapeSimple($match[1]);
+		} else {
+			$name=$gid;
 		}
-		$tt = preg_match("/1 TITL (.*)/", $gedrec, $smatch);
-		if ($tt > 0) {
-			$name = $smatch[1];
-		}
-		if (empty ($name)) {
-			$name = $gid;
-		}
-		$subindi = explode("1 TITL ", $gedrec);
-		if (count($subindi) > 1) {
-			$pos = strpos($subindi[1], "\n1", 0);
-			if ($pos) {
-				$subindi[1] = substr($subindi[1], 0, $pos);
-			}
-			$ct = preg_match_all("/2 CON[C|T] (.*)/", $subindi[1], $match, PREG_SET_ORDER);
-			for ($i = 0; $i < $ct; $i++) {
-				$name = trim($name);
-				if ($WORD_WRAPPED_NOTES) {
-					$name .= " " . $match[$i][1];
-				} else {
-					$name .= $match[$i][1];
-				}
-			}
-		}
-		if (strpos($gedrec, '1 _DBID')) {
+		if (strpos($gedrec, '\n1 _DBID')) {
 			$_dbid="'Y'";
 		} else {
 			$_dbid='NULL';
 		}
-		$sql = "INSERT INTO {$TBLPREFIX}sources (s_id, s_file, s_name, s_gedcom, s_dbid) VALUES ('{$xref}',{$ged_id},'" . $DBCONN->escapeSimple($name) . "','" . $DBCONN->escapeSimple($gedrec) . "',{$_dbid})";
-		$res = dbquery($sql);
+		dbquery("INSERT INTO {$TBLPREFIX}sources (s_id, s_file, s_name, s_gedcom, s_dbid) VALUES ('{$xref}',{$ged_id},'{$name}','".$DBCONN->escapeSimple($gedrec)."',{$_dbid})");
 		break;
 	case 'OBJE':
-		//-- don't duplicate OBJE records
-		//-- OBJE records are imported by update_media function
+		// OBJE records are imported by update_media function
 		break;
+	case 'HEAD':
+		if (!strpos($gedrec, "\n1 DATE ")) {
+			$gedrec.="\n1 DATE ".date('j M Y');
+		}
+		// no break
 	default:
-		if (preg_match("/_/", $type) == 0) {
-			if ($type == "HEAD") {
-				$ct = preg_match("/1 DATE (.*)/", $gedrec, $match);
-				if ($ct == 0) {
-					$gedrec = trim($gedrec);
-					$gedrec .= "\n1 DATE ".date('d M Y');
-				}
-			}
-			if ($gid=="") {
-				$gid = $type;
-			}
-			$sql = "INSERT INTO {$TBLPREFIX}other VALUES ('{$xref}',{$ged_id},'" . $DBCONN->escapeSimple($type) . "','" . $DBCONN->escapeSimple($gedrec) . "')";
-			$res = dbquery($sql);
+		if (substr($type, 0, 1)!='_') {
+			dbquery("INSERT INTO {$TBLPREFIX}other (o_id, o_file, o_type, o_gedcom) VALUES ('{$xref}',{$ged_id},'{$type}','".$DBCONN->escapeSimple($gedrec)."')");
 		}
 		break;
-	} // switch
+	}
 
-	//-- if this is not an update then write it to the new gedcom file
-	if (!$update && !empty ($fpnewged) && !(empty ($gedrec))) {
+	// if this is not an update then write it to the new gedcom file
+	if (!$update && !empty($fpnewged)) {
 		fwrite($fpnewged, reformat_record_export($gedrec));
 	}
 }
