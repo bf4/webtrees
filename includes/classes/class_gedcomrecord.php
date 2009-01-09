@@ -3,7 +3,7 @@
 * Base class for all gedcom records
 *
 * phpGedView: Genealogy Viewer
-* Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
+* Copyright (C) 2002 to 2009 PGV Development Team.  All rights reserved.
 *
 * This program is free software; you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -67,7 +67,7 @@ class GedcomRecord {
 		} else {
 			// Construct from raw GEDCOM data
 			$this->gedrec=$data;
-			if (preg_match('/^0 (?:@('.PGV_REGEX_XREF.')@ )?(\w+)/', $data, $match)) {
+			if (preg_match('/^0 (?:@('.PGV_REGEX_XREF.')@ )?('.PGV_REGEX_TAG.')/', $data, $match)) {
 				$this->xref=$match[1];
 				$this->type=$match[2];
 			}
@@ -182,57 +182,57 @@ class GedcomRecord {
 	}
 
 	/**
-	 * get the xref
-	 * @return string returns the person ID
-	 */
+	* get the xref
+	* @return string returns the person ID
+	*/
 	function getXref() {
 		return $this->xref;
 	}
 	/**
-	 * get the gedcom file
-	 * @return string returns the person ID
-	 */
+	* get the gedcom file
+	* @return string returns the person ID
+	*/
 	function getGedId() {
 		return $this->ged_id;
 	}
 	/**
-	 * get the object type
-	 * @return string returns the type of this object "INDI","FAM", etc.
-	 */
+	* get the object type
+	* @return string returns the type of this object "INDI","FAM", etc.
+	*/
 	function getType() {
 		return $this->type;
 	}
 	/**
-	 * get gedcom record
-	 */
+	* get gedcom record
+	*/
 	function getGedcomRecord() {
 		return $this->gedrec;
 	}
 	/**
-	 * set gedcom record
-	 */
+	* set gedcom record
+	*/
 	function setGedcomRecord($gcRec) {
 		$this->gedrec = $gcRec;
 	}
 	/**
-	 * set if this is a changed record from the gedcom file
-	 * @param boolean $changed
-	 */
+	* set if this is a changed record from the gedcom file
+	* @param boolean $changed
+	*/
 	function setChanged($changed) {
 		$this->changed = $changed;
 	}
 	/**
-	 * get if this is a changed record from the gedcom file
-	 * @return boolean
-	 */
+	* get if this is a changed record from the gedcom file
+	* @return boolean
+	*/
 	function getChanged() {
 		return $this->changed;
 	}
 
 	/**
-	 * is this person from another server
-	 * @return boolean  return true if this person was linked from another server
-	 */
+	* is this person from another server
+	* @return boolean  return true if this person was linked from another server
+	*/
 	function isRemote() {
 		if (is_null($this->rfn)) $this->rfn = get_gedcom_value('RFN', 1, $this->gedrec);
 		if (empty($this->rfn) || $this->xref!=$this->rfn) return false;
@@ -245,17 +245,17 @@ class GedcomRecord {
 	}
 
 	/**
-	 * check if this object is equal to the given object
-	 * @param GedcomRecord $obj
-	 */
+	* check if this object is equal to the given object
+	* @param GedcomRecord $obj
+	*/
 	function equals(&$obj) {
 		return !is_null($obj) && $this->xref==$obj->getXref();
 	}
 
 	/**
-	 * get the URL to link to this record
-	 * @string a url that can be used to link to this person
-	 */
+	* get the URL to link to this record
+	* @string a url that can be used to link to this person
+	*/
 	public function getLinkUrl() {
 		return $this->_getLinkUrl('gedcomrecord.php?pid=');
 	}
@@ -287,9 +287,9 @@ class GedcomRecord {
 	}
 
 	/**
-	 * Get the title that should be used in the link
-	 * @return string
-	 */
+	* Get the title that should be used in the link
+	* @return string
+	*/
 	function getLinkTitle() {
 		$title = get_gedcom_setting($this->ged_id, 'title');
 		if ($this->isRemote()) {
@@ -322,17 +322,17 @@ class GedcomRecord {
 	}
 
 	/**
-	 * return an absolute url for linking to this record from another site
-	 *
-	 */
+	* return an absolute url for linking to this record from another site
+	*
+	*/
 	function getAbsoluteLinkUrl() {
 		global $SERVER_URL;
 		return $SERVER_URL.$this->getLinkUrl();
 	}
 
 	/**
-	 * Undo the latest change to this gedcom record
-	 */
+	* Undo the latest change to this gedcom record
+	*/
 	function undoChange() {
 		global $GEDCOM, $pgv_changes;
 		require_once 'includes/functions/functions_edit.php';
@@ -351,9 +351,9 @@ class GedcomRecord {
 	}
 
 	/**
-	 * check if this record has been marked for deletion
-	 * @return boolean
-	 */
+	* check if this record has been marked for deletion
+	* @return boolean
+	*/
 	function isMarkedDeleted() {
 		global $pgv_changes, $GEDCOM;
 
@@ -370,17 +370,17 @@ class GedcomRecord {
 	}
 
 	/**
-	 * Can the details of this record be shown?
-	 * @return boolean
-	 */
+	* Can the details of this record be shown?
+	* @return boolean
+	*/
 	function canDisplayDetails() {
 		return $this->disp;
 	}
 
 	/**
-	 * Can the name of this record be shown?
-	 * @return boolean
-	 */
+	* Can the name of this record be shown?
+	* @return boolean
+	*/
 	function canDisplayName() {
 		return $this->dispname;
 	}
@@ -646,11 +646,11 @@ class GedcomRecord {
 	}
 
 	/**
-	 * Get the first Event for the given Fact type
-	 *
-	 * @param string $fact
-	 * @return Event
-	 */
+	* Get the first Event for the given Fact type
+	*
+	* @param string $fact
+	* @return Event
+	*/
 	function &getFactByType($factType) {
 		$this->parseFacts();
 		if (empty($this->facts)) {
@@ -665,11 +665,11 @@ class GedcomRecord {
 	}
 
 	/**
-	 * Return an array of events that match the given types
-	 *
-	 * @param mixed $factTypes  may be a single string or an array of strings
-	 * @return Event
-	 */
+	* Return an array of events that match the given types
+	*
+	* @param mixed $factTypes  may be a single string or an array of strings
+	* @return Event
+	*/
 	function getAllFactsByType($factTypes) {
 		$this->parseFacts();
 		if (is_string($factTypes)) {
@@ -687,19 +687,19 @@ class GedcomRecord {
 	}
 
 	/**
-	 * returns an array of all of the facts
-	 * @return Array
-	 */
+	* returns an array of all of the facts
+	* @return Array
+	*/
 	function getFacts($nfacts=NULL) {
 		$this->parseFacts($nfacts);
 		return $this->facts;
 	}
 
 	/**
-	 * Get the CHAN event for this record
-	 *
-	 * @return Event
-	 */
+	* Get the CHAN event for this record
+	*
+	* @return Event
+	*/
 	function getChangeEvent() {
 		if (is_null($this->changeEvent)) {
 			$this->changeEvent = $this->getFactByType('CHAN');
@@ -708,8 +708,8 @@ class GedcomRecord {
 	}
 
 	/**
-	 * Parse the facts from the record
-	 */
+	* Parse the facts from the record
+	*/
 	function parseFacts($nfacts=NULL) {
 		//-- only run this function once
 		if (!is_null($this->facts) && is_array($this->facts)) {
@@ -754,10 +754,10 @@ class GedcomRecord {
 	}
 
 	/**
-	 * Merge the facts from another GedcomRecord object into this object
-	 * for generating a diff view
-	 * @param GedcomRecord $diff the record to compare facts with
-	 */
+	* Merge the facts from another GedcomRecord object into this object
+	* for generating a diff view
+	* @param GedcomRecord $diff the record to compare facts with
+	*/
 	function diffMerge(&$diff) {
 		if (is_null($diff)) {
 			return;
