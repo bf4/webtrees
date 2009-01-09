@@ -1,28 +1,28 @@
 <?php
 /**
- * Various functions used to generate the PhpGedView RSS feed.
- *
- * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- *
- * @version $Id$
- * @package PhpGedView
- * @subpackage RSS
- */
+* Various functions used to generate the PhpGedView RSS feed.
+*
+* phpGedView: Genealogy Viewer
+* Copyright (C) 2002 to 2009 PGV Development Team.  All rights reserved.
+*
+* This program is free software; you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation; either version 2 of the License, or
+* (at your option) any later version.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+* GNU General Public License for more details.
+*
+* You should have received a copy of the GNU General Public License
+* along with this program; if not, write to the Free Software
+* Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+*
+* @version $Id$
+* @package PhpGedView
+* @subpackage RSS
+*/
 
 if (!defined('PGV_PHPGEDVIEW')) {
 	header('HTTP/1.0 403 Forbidden');
@@ -40,27 +40,26 @@ $month = date("M", $time);
 $year = date("Y", $time);
 
 /**
- * Returns an ISO8601 formatted date used for the RSS feed
- *
- * @param $time the time in the UNIX time format (milliseconds since Jan 1, 1970)
- * @return SO8601 formatted date in the format of 2005-07-06T20:52:16+00:00
- */
+* Returns an ISO8601 formatted date used for the RSS feed
+*
+* @param $time the time in the UNIX time format (milliseconds since Jan 1, 1970)
+* @return SO8601 formatted date in the format of 2005-07-06T20:52:16+00:00
+*/
 function iso8601_date($time) {
 	$tzd = date('O',$time);
-	$tzd = $tzd[0] . str_pad((int) ($tzd / 100), 2, "0", STR_PAD_LEFT) .
-				   ':' . str_pad((int) ($tzd % 100), 2, "0", STR_PAD_LEFT);
+	$tzd = $tzd[0].str_pad((int)($tzd/100), 2, "0", STR_PAD_LEFT).':'.str_pad((int)($tzd % 100), 2, "0", STR_PAD_LEFT);
 	$date = date('Y-m-d\TH:i:s', $time) . $tzd;
 	return $date;
 }
 
 /**
- * Returns the upcoming events array used for the RSS feed.
- * Uses configuration set for the blocks. If not configured, it will default to events in the
- * next 30 days, all events for living & and not living people
- *
- * @return the array with upcoming events data. the format is $dataArray[0] = title, $dataArray[1] = date,
- * 				$dataArray[2] = data
- */
+* Returns the upcoming events array used for the RSS feed.
+* Uses configuration set for the blocks. If not configured, it will default to events in the
+* next 30 days, all events for living & and not living people
+*
+* @return the array with upcoming events data. the format is $dataArray[0] = title, $dataArray[1] = date,
+* $dataArray[2] = data
+*/
 function getUpcomingEvents() {
 	global $pgv_lang, $month, $year, $day, $HIDE_LIVE_PEOPLE, $SHOW_ID_NUMBERS, $ctype, $TEXT_DIRECTION;
 	global $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $PGV_BLOCKS;
@@ -93,11 +92,11 @@ function getUpcomingEvents() {
 
 
 /**
- * Returns the today's events array used for the RSS feed
- *
- * @return the array with todays events data. the format is $dataArray[0] = title, $dataArray[1] = date,
- * 				$dataArray[2] = data
- */
+* Returns the today's events array used for the RSS feed
+*
+* @return the array with todays events data. the format is $dataArray[0] = title, $dataArray[1] = date,
+* $dataArray[2] = data
+*/
 function getTodaysEvents() {
 	global $pgv_lang, $month, $year, $day, $HIDE_LIVE_PEOPLE, $SHOW_ID_NUMBERS, $ctype, $TEXT_DIRECTION;
 	global $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $PGV_BLOCKS;
@@ -121,12 +120,12 @@ function getTodaysEvents() {
 }
 
 /**
- * Returns the GEDCOM stats.
- *
- * @return the array with GEDCOM stats data. the format is $dataArray[0] = title, $dataArray[1] = date,
- * 				$dataArray[2] = data
- * @TODO does not print the family with most children due to the embedded html in that function.
- */
+* Returns the GEDCOM stats.
+*
+* @return the array with GEDCOM stats data. the format is $dataArray[0] = title, $dataArray[1] = date,
+* $dataArray[2] = data
+* @TODO does not print the family with most children due to the embedded html in that function.
+*/
 function getGedcomStats() {
 	global $pgv_lang, $day, $month, $year, $PGV_BLOCKS, $GEDCOM, $GEDCOMS, $ALLOW_CHANGE_GEDCOM, $ctype, $COMMON_NAMES_THRESHOLD, $SERVER_URL, $RTLOrd;
 
@@ -208,12 +207,12 @@ function getGedcomStats() {
 }
 
 /**
- * Returns the gedcom news for the RSS feed
- *
- * @return array of GEDCOM news arrays. Each GEDCOM news array contains $itemArray[0] = title, $itemArray[1] = date,
- * 				$itemArray[2] = data, $itemArray[3] = anchor (so that the link will load the proper part of the PGV page)
- * @TODO prepend relative URL's in news items with $SERVER_URL
- */
+* Returns the gedcom news for the RSS feed
+*
+* @return array of GEDCOM news arrays. Each GEDCOM news array contains $itemArray[0] = title, $itemArray[1] = date,
+* $itemArray[2] = data, $itemArray[3] = anchor (so that the link will load the proper part of the PGV page)
+* @TODO prepend relative URL's in news items with $SERVER_URL
+*/
 function getGedcomNews() {
 	global $pgv_lang, $PGV_IMAGE_DIR, $PGV_IMAGES, $TEXT_DIRECTION, $GEDCOM, $ctype, $SERVER_URL;
 
@@ -276,12 +275,12 @@ function getGedcomNews() {
 }
 
 /**
- * Returns the top 10 surnames
- *
- * @return the array with the top 10 surname data. the format is $dataArray[0] = title, $dataArray[1] = date,
- * 				$dataArray[2] = data
- * @TODO Possibly turn list into a <ul> list
- */
+* Returns the top 10 surnames
+*
+* @return the array with the top 10 surname data. the format is $dataArray[0] = title, $dataArray[1] = date,
+* $dataArray[2] = data
+* @TODO Possibly turn list into a <ul> list
+*/
 function getTop10Surnames() {
 	global $pgv_lang, $GEDCOM,$SERVER_URL, $TEXT_DIRECTION;
 	global $COMMON_NAMES_ADD, $COMMON_NAMES_REMOVE, $COMMON_NAMES_THRESHOLD, $PGV_BLOCKS, $ctype, $PGV_IMAGES, $PGV_IMAGE_DIR;
@@ -347,13 +346,13 @@ function getTop10Surnames() {
 }
 
 /**
- * Returns the recent changes list for the RSS feed
- *
- * @return the array with recent changes data. the format is $dataArray[0] = title, $dataArray[1] = date,
- * 				$dataArray[2] = data
- * @TODO merge many changes from recent changes block
- * @TODO use date of most recent change instead of curent time
- */
+* Returns the recent changes list for the RSS feed
+*
+* @return the array with recent changes data. the format is $dataArray[0] = title, $dataArray[1] = date,
+* $dataArray[2] = data
+* @TODO merge many changes from recent changes block
+* @TODO use date of most recent change instead of curent time
+*/
 function getRecentChanges() {
 	global $pgv_lang, $factarray, $month, $year, $day, $HIDE_LIVE_PEOPLE, $SHOW_ID_NUMBERS, $ctype, $TEXT_DIRECTION;
 	global $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $ASC, $IGNORE_FACTS, $IGNORE_YEAR, $TOTAL_QUERIES, $LAST_QUERY, $PGV_BLOCKS, $SHOW_SOURCES;
@@ -388,8 +387,8 @@ function getRecentChanges() {
 			if (!empty($gedrec)) {
 				$type = "INDI";
 				$match = array();
-				$ct = preg_match("/0 @.*@ (\w*)/", $gedrec, $match);
-				if ($ct>0) $type = trim($match[1]);
+				$ct = preg_match('/0 @'.PGV_REGEX_XREF.'@ ('.PGV_REGEX_TAG.')/', $gedrec, $match);
+				if ($ct>0) $type = $match[1];
 				$disp = true;
 				switch($type) {
 					case 'INDI':
@@ -431,8 +430,8 @@ function getRecentChanges() {
 
 // Start output
 	if (count($found_facts)==0 and $HideEmpty=="yes") return false;
-//		Print block content
-	$pgv_lang["global_num1"] = $configDays;		// Make this visible
+// Print block content
+	$pgv_lang["global_num1"] = $configDays; // Make this visible
 	if (count($found_facts)==0) {
 		print_text("recent_changes_none", 0, 1);
 	} else {
@@ -456,12 +455,12 @@ function getRecentChanges() {
 }
 
 /**
- * Returns a random media for the RSS feed
- *
- * @return the array with random media data. the format is $dataArray[0] = title, $dataArray[1] = date,
- * 				$dataArray[2] = data, $dataArray[3] = file path, $dataArray[4] = mime type,
- *				$dataArray[5] = file size, $dataArray[5] = media title
- */
+* Returns a random media for the RSS feed
+*
+* @return the array with random media data. the format is $dataArray[0] = title, $dataArray[1] = date,
+* $dataArray[2] = data, $dataArray[3] = file path, $dataArray[4] = mime type,
+* $dataArray[5] = file size, $dataArray[5] = media title
+*/
 function getRandomMedia() {
 	global $pgv_lang, $GEDCOM, $foundlist, $MULTI_MEDIA, $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES;
 	global $MEDIA_EXTERNAL, $MEDIA_DIRECTORY, $SHOW_SOURCES;

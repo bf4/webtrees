@@ -1531,7 +1531,7 @@ function search_indis($query, $geds, $match, $skip) {
 		// SQL may have matched on private data or gedcom tags, so check again against privatized data.
 		$gedrec=UTF8_strtoupper($indi->getGedcomRecord());
 		foreach ($queryregex as $q) {
-			if (!preg_match('/\n\d\ \w+\ .*'.$q.'/i', $gedrec)) {
+			if (!preg_match('/\n\d\ '.PGV_REGEX_TAG.' .*'.$q.'/i', $gedrec)) {
 				continue 2;
 			}
 		}
@@ -1834,7 +1834,7 @@ function search_fams($query, $geds, $match, $skip) {
 		// SQL may have matched on private data or gedcom tags, so check again against privatized data.
 		$gedrec=UTF8_strtoupper($family->getGedcomRecord());
 		foreach ($queryregex as $q) {
-			if (!preg_match('/\n\d\ \w+\ .*'.$q.'/i', $gedrec)) {
+			if (!preg_match('/\n\d\ '.PGV_REGEX_TAG.' .*'.$q.'/i', $gedrec)) {
 				continue 2;
 			}
 		}
@@ -2011,7 +2011,7 @@ function search_sources($query, $geds, $match, $skip) {
 		// SQL may have matched on private data or gedcom tags, so check again against privatized data.
 		$gedrec=UTF8_strtoupper($source->getGedcomRecord());
 		foreach ($queryregex as $q) {
-			if (!preg_match('/\n\d\ \w+\ .*'.$q.'/i', $gedrec)) {
+			if (!preg_match('/\n\d\ '.PGV_REGEX_TAG.' .*'.$q.'/i', $gedrec)) {
 				continue 2;
 			}
 		}
