@@ -560,6 +560,14 @@ function print_header($title, $head="",$use_alternate_styles=true) {
 		}
 		return false;
 	}
+	
+	// BH Census-Assistant =======================
+	function census_assistant(pid) {
+		var win01 = window.open(\'module.php?mod=census_assistant&pgvaction=census_a&pid=\'+pid, \'win01\', \'resizable=1, menubar=0, scrollbars=1, left=200, top=100, HEIGHT=800, WIDTH=1150\');
+		if (window.focus) {win01.focus();}
+	}   
+	// ===========================================
+	
 	function deleteperson(pid) {
 		if (confirm(\''.$pgv_lang["confirm_delete_person"].'\')) {
 			window.open(\'edit_interface.php?action=deleteperson&pid=\'+pid+"&"+sessionname+"="+sessionid, \'_blank\', \'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1\');
@@ -582,6 +590,7 @@ function print_header($title, $head="",$use_alternate_styles=true) {
 		window.open(\'message.php?to=\'+username+\'&method=\'+method+\'&url=\'+url+\'&subject=\'+subject+"&"+sessionname+"="+sessionid, \'_blank\', \'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1\');
 		return false;
 	}
+
 	var whichhelp = \'help_'.basename($SCRIPT_NAME).'&action='.$action.'\';
 	//-->
 	</script>
@@ -1131,6 +1140,16 @@ function print_note_record($text, $nlevel, $nrec, $textOnly=false, $return=false
 	$data = "";
 	if (!empty($text)) {
 		$text = PrintReady($text);
+		// Check if Census Assistant Note ======================================= 
+		if (eregi("Name;Related", $text)) {
+			$text = "xxx<table><tr><td>" . $text;
+			$text = str_replace("<br /><br />", "</td></tr></table><p><table><tr><td>", $text);
+			$text = str_replace("<br />", "</td></tr><tr><td>", $text);
+			$text = str_replace(";", "&nbsp;&nbsp;</td><td>", $text);
+			$text = $text . "</td></tr></table>";
+			$text = str_replace("xxx", "&nbsp; Census Transcription <br /><p>", $text);
+		}
+		// ==========================================================
 		if ($textOnly) {
 			if (!$return) {
 				print $text;
@@ -2322,6 +2341,19 @@ function print_add_new_fact($id, $usedfacts, $type) {
 	print "<input type=\"button\" value=\"".$pgv_lang["add"]."\" onclick=\"add_record('$id', 'newfact');\" /> ";
 	foreach($quickfacts as $k=>$v) echo "&nbsp;<small><a href='javascript://$v' onclick=\"add_new_record('$id', '$v');return false;\">".$factarray["$v"]."</a></small>&nbsp;";
 
+	
+	//BH Census-Assistant =====================
+	if (file_exists('modules/census_assistant/census_1_ctrl.php')) {
+		global $pid;
+		if (	$quickfacts == preg_split("/[, ;:]+/", $INDI_FACTS_QUICK,  -1, PREG_SPLIT_NO_EMPTY)
+			||	$quickfacts == preg_split("/[, ;:]+/", $FAM_FACTS_QUICK,   -1, PREG_SPLIT_NO_EMPTY)
+			)
+		{
+		echo "&nbsp;<small><a href='javascript://CENS' onclick=\"census_assistant('$pid');return false;\">Census-Assistant</a></small>&nbsp;";
+		}
+	}
+	//BH ====================================
+	
 	print "</form>";
 	print "</td></tr>";
 }
