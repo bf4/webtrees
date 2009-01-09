@@ -1,11 +1,11 @@
 <?php
 /**
-*  Add Remote Link Page
+* Add Remote Link Page
 *
-*  Allow a user the ability to add links to people from other servers and other gedcoms.
+* Allow a user the ability to add links to people from other servers and other gedcoms.
 *
 * phpGedView: Genealogy Viewer
-* Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
+* Copyright (C) 2002 to 2009 PGV Development Team. All rights reserved.
 *
 * This program is free software; you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -14,12 +14,12 @@
 *
 * This program is distributed in the hope that it will be useful,
 * but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 * GNU General Public License for more details.
 *
 * You should have received a copy of the GNU General Public License
 * along with this program; if not, write to the Free Software
-* Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+* Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 *
 * @package PhpGedView
 * @subpackage Charts
@@ -62,14 +62,16 @@ class RemoteLinkController extends BaseController {
 			exit;
 		}
 
-		$this->pid   =safe_GET('pid', PGV_REGEX_XREF);
+		$this->pid=safe_REQUEST($_REQUEST, 'pid', PGV_REGEX_XREF);
+		$this->action=safe_REQUEST($_REQUEST, 'action', array('addlink'));
 
 		//check for pid
 		if (empty($this->pid)) {
 			$name="no name passed";
 		} else{
-			if (!isset($pgv_changes[$this->pid."_".$GEDCOM])) $this->person = Person::getInstance($this->pid);
-			else {
+			if (!isset($pgv_changes[$this->pid."_".$GEDCOM])) {
+				$this->person = Person::getInstance($this->pid);
+			} else {
 				$gedrec = find_updated_record($this->pid);
 				$this->person = new Person($gedrec);
 			}
@@ -128,8 +130,11 @@ class RemoteLinkController extends BaseController {
 			$link_pid = safe_POST('txtPID');
 			$relation_type = safe_POST('cbRelationship');
 			if (!empty($serverID)&&!empty($link_pid)) {
-				if (isset($pgv_changes[$this->pid."_".$GEDCOM])) $indirec = find_updated_record($this->pid);
-				else $indirec = find_person_record($this->pid);
+				if (isset($pgv_changes[$this->pid."_".$GEDCOM])) {
+					$indirec = find_updated_record($this->pid);
+				} else {
+					$indirec = find_person_record($this->pid);
+				}
 
 				switch ($relation_type) {
 				case "father":
@@ -260,13 +265,14 @@ class RemoteLinkController extends BaseController {
 						$pos1 = strpos($indirec, "\n1 CHAN");
 						if ($pos1!==false) {
 							$pos2 = strpos($indirec, "\n1", $pos1+5);
-							if ($pos2===false) $indirec = substr($indirec, 0, $pos1+1);
-							else $indirec= substr($indirec, 0, $pos1+1).substr($indirec, $pos2+1);
+							if ($pos2===false) {
+								$indirec = substr($indirec, 0, $pos1+1);
+							} else {
+								$indirec= substr($indirec, 0, $pos1+1).substr($indirec, $pos2+1);
+							}
 						}
-						//print "{".$indirec."}";
 						$indirec = $serviceClient->mergeGedcomRecord($link_pid, $indirec, true, true);
 					} else print "Unable to find server";
-					//$answer2 = replace_gedrec($pid, $indirec);
 					break;
 				}
 				print "<b>".$pgv_lang["link_success"]."</b>";
@@ -287,7 +293,9 @@ class RemoteLinkController extends BaseController {
 	* @return mixed the serverID of the server to link to
 	*/
 	function addRemoteServer($title, $url, $gedcom_id, $username, $password) {
-		if (preg_match("/\?wsdl$/", $url)==0) $url.="?wsdl";
+		if (preg_match("/\?wsdl$/", $url)==0) {
+			$url.="?wsdl";
+		}
 		$serverID = $this->checkExistingServer($url, $gedcom_id);
 		if ($serverID===false) {
 			$gedcom_string = "0 @new@ SOUR\n";
@@ -299,10 +307,15 @@ class RemoteLinkController extends BaseController {
 			$gedcom_string.= "3 RESN confidential\n";
 			$service = new ServiceClient($gedcom_string);
 			$sid = $service->authenticate();
-			if (PEAR::isError($sid)) $sid = '';
-			if (empty($sid)) print "<span class=\"error\">failed to authenticate to remote site</span>";
-			else {
-				if (empty($title)) $title = $service->getServiceTitle();
+			if (PEAR::isError($sid)) {
+				$sid = '';
+			}
+			if (empty($sid)) {
+				print "<span class=\"error\">failed to authenticate to remote site</span>";
+			}	else {
+				if (empty($title)) {
+					$title = $service->getServiceTitle();
+				}
 				$gedcom_string.= "1 TITL ".$title."\n";
 				$serverID = append_gedrec($gedcom_string);
 			}
@@ -333,10 +346,15 @@ class RemoteLinkController extends BaseController {
 			$gedcom_string.= "3 RESN confidential\n";
 			$service = new FamilySearchWrapper($gedcom_string);
 			$sid = $service->authenticate();
-			if (PEAR::isError($sid)) $sid = '';
-			if (empty($sid)) print "<span class=\"error\">failed to authenticate to remote site</span>";
-			else {
-				if (empty($title)) $title = $service->getServiceTitle();
+			if (PEAR::isError($sid)) {
+				$sid = '';
+			}
+			if (empty($sid)) {
+				print "<span class=\"error\">failed to authenticate to remote site</span>";
+			} else {
+				if (empty($title)) {
+					$title = $service->getServiceTitle();
+				}
 				$title = $service->getServiceTitle();
 				$gedcom_string.= "1 TITL ".$title."\n";
 				$serverID = append_gedrec($gedcom_string);
@@ -356,7 +374,9 @@ class RemoteLinkController extends BaseController {
 		$serverID = $this->checkExistingServer($SERVER_URL, $gedcom_id);
 		if ($serverID===false) {
 			$gedcom_string = "0 @new@ SOUR\n";
-			if (empty($title)) $title = $GEDCOMS[$gedcom_id]["title"];
+			if (empty($title)) {
+				$title = $GEDCOMS[$gedcom_id]["title"];
+			}
 			$gedcom_string.= "1 TITL ".$title."\n";
 			$gedcom_string.= "1 URL ".$SERVER_URL."\n";
 			$gedcom_string.= "1 _DBID ".$gedcom_id."\n";
@@ -414,10 +434,8 @@ class RemoteLinkController extends BaseController {
 	*/
 	function canAccess() {
 		global $ALLOW_EDIT_GEDCOM;
-		if (!$ALLOW_EDIT_GEDCOM) return false;
-		if (!PGV_USER_GEDCOM_ADMIN) return false;
-		if (!$this->person->canDisplayDetails()) return false;
-		return true;
+
+		return $ALLOW_EDIT_GEDCOM  && PGV_USER_GEDCOM_ADMIN && $this->person->canDisplayDetails();
 	}
 }
 
