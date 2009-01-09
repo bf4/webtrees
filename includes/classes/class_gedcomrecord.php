@@ -67,7 +67,7 @@ class GedcomRecord {
 		} else {
 			// Construct from raw GEDCOM data
 			$this->gedrec=$data;
-			if (preg_match('/^0 @(.+)@ (\w+)/', $data, $match)) {
+			if (preg_match('/^0 (?:@('.PGV_REGEX_XREF.')@ )?(\w+)/', $data, $match)) {
 				$this->xref=$match[1];
 				$this->type=$match[2];
 			}

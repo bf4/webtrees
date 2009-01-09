@@ -581,7 +581,7 @@ function import_record($gedrec, $update) {
 	$gedrec=reformat_record_import($gedrec);
 
 	//-- import different types of records
-	$ct = preg_match('/^0 @(.*)@ ([a-zA-Z_]+)/', $gedrec, $match);
+	$ct = preg_match('/^0 @(.*)@ ('.PGV_REGEX_XREF.')/', $gedrec, $match);
 	if ($ct > 0) {
 		$gid = $match[1];
 		$type = trim($match[2]);
@@ -619,7 +619,7 @@ function import_record($gedrec, $update) {
 	if ($newrec != $gedrec) {
 		$gedrec = $newrec;
 		//-- make sure we have the correct media id
-		$ct = preg_match("/0 @(.*)@ ([a-zA-Z_]+)/", $gedrec, $match);
+		$ct = preg_match('/0 @(.*)@ ('.PGV_REGEX_XREF.')/', $gedrec, $match);
 		if ($ct > 0) {
 			$gid = $match[1];
 			$type = trim($match[2]);
@@ -645,6 +645,7 @@ function import_record($gedrec, $update) {
 		break;
 	default:
 		$record=new GedcomRecord($gedrec);
+		$type=$record->getType();
 		break;
 	}
 
@@ -918,7 +919,7 @@ function update_rlinks($xref, $ged_id, $gedrec) {
 function update_links($xref, $ged_id, $gedrec) {
 	global $DBTYPE, $DBCONN, $TBLPREFIX;
 
-	if (preg_match_all("/^\d+ ([A-Z0-9_]+) @([^@#\n][^@\n]*)@/m", $gedrec, $matches, PREG_SET_ORDER)) {
+	if (preg_match_all('/^\d+ ([A-Z0-9_]+) @('.PGV_REGEX_XREF.')@/m', $gedrec, $matches, PREG_SET_ORDER)) {
 		$data=array();
 		foreach ($matches as $match) {
 			$match[2]=$DBCONN->escapeSimple($match[2]);
