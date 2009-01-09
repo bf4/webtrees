@@ -47,7 +47,7 @@ function reformat_record_import($rec) {
 	$rec=str_replace(array(PGV_UTF8_BOM, PGV_UTF8_LRM, PGV_UTF8_RLM), '', $rec);
 
 	// Strip out control characters and mac/msdos line endings
-	static $control1="\r\x01\x02\x03\x04\x05\x06\x07\x09\x0B\x0C\x0E\x0F\x10\x11\x12\x13\x14\x15\x16\x17\x18\x19\x1A\x1B\x1C\x1D\x1E\x1F\x7F";
+	static $control1="\r\x01\x02\x03\x04\x05\x06\x07\x08\x0B\x0C\x0E\x0F\x10\x11\x12\x13\x14\x15\x16\x17\x18\x19\x1A\x1B\x1C\x1D\x1E\x1F\x7F";
 	static $control2="\n?????????????????????????????";
 	$rec=strtr($rec, $control1, $control2);
 
