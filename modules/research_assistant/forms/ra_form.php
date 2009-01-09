@@ -306,7 +306,7 @@ class ra_form {
 	               foreach($people as $pid=>$person) {
 							if (!is_null($person)) {
 	               $pval .= ';'.$person->getXref();
-	               $out .= '<a id="link_'.$pid.'" href="', $person->getLinkUrl().'">'.$person->getFullName().'</a> <a id="rem_'.$pid.'" href="#" onclick="clearname(\'personid\', \'link_'.$pid.'\', \''.$pid.'\'); return false;" ><img src="images/remove.gif" border="0" alt="" /><br /></a>';
+	               $out .= '<a id="link_'.$pid.'" href="'.$person->getLinkUrl().'">'.$person->getFullName().'</a> <a id="rem_'.$pid.'" href="#" onclick="clearname(\'personid\', \'link_'.$pid.'\', \''.$pid.'\'); return false;" ><img src="images/remove.gif" border="0" alt="" /><br /></a>';
 							}
 	               }
 	                   $out .= '</div>
