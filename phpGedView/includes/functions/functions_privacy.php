@@ -93,7 +93,8 @@ function is_dead($indirec, $cyear="", $import=false) {
 			if ($cyear==date("Y")) {
 				$resn = get_gedcom_value("RESN", 2, $deathrec);
 				if (empty($resn) || ($resn!='confidential' && $resn!='privacy')) {
-					if (preg_match("/^1 {$tag}\s*(\n|Y)/", $deathrec)>0) {
+					// Gedcom asserts an event if either the value is Y, or a date/place is supplied.
+					if (strpos($deathrec, "1 DEAT Y\n")===0 || strpos($deathrec, "\n2 DATE ") || strpos($deathrec, "\n2 PLAC ")) {
 						return update_isdead($pid, get_id_from_gedcom($GEDCOM), true);
 					}
 				}

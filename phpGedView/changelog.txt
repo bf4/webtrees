@@ -10,6 +10,7 @@
 
 
 Version 4.2.0
+ - Fixed: [ 2473228 ] update_isdead while Gedcom import (fisharebest)
  - Fixed: [ 2481665 ] SVN 4632 age comp error (fisharebest)
  - Fixed: [ 2495180 ] [4719] Typo in RA (erostew)
  - Fixed: Incorrect block heading format on Index and Portal pages when page language is RTL (canajun2eh)
