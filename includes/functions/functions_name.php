@@ -249,9 +249,10 @@ function is_utf8($string) {
 }
 
 /**
- * determine the Daitch-Mokotoff Soundex code for a name
+ * determine the Daitch-Mokotoff Soundex code for a word
  * @param string $name	The name
  * @return array		The array of codes
+ * @author G. Kroll (canajun2eh), after a previous implementation by Boudewijn Sjouke
  */
 function DMSoundex($name) {
 	global $dmsounds, $maxchar;
@@ -273,7 +274,7 @@ function DMSoundex($name) {
 	$state = 1;						// 1: start of input string, 2: before vowel, 3: other
 	$result = array();				// accumulate complete 6-digit D-M codes here
 	$partialResult = array();		// accumulate incomplete D-M codes here
-	$partialResult[] = array('I');	// initialize 1st partial result  ('I' stops "duplicate sound" check)
+	$partialResult[] = array('!');	// initialize 1st partial result  ('!' stops "duplicate sound" check)
 
 	// Loop through the input string.  
 	// Stop when the string is exhausted or when no more partial results remain
@@ -311,7 +312,7 @@ function DMSoundex($name) {
 			if ($soundTableEntry[$state] == '') {		// empty means 'ignore this sound in this state'
 				foreach($workingResult as $workingEntry) {
 					$tempEntry = $workingEntry;
-					$tempEntry[count($tempEntry)-1] .= 'I';		// Prevent false 'doubles'
+					$tempEntry[count($tempEntry)-1] .= '!';		// Prevent false 'doubles'
 					$partialResult[] = $tempEntry;
 				}
 			} else {
@@ -332,8 +333,8 @@ function DMSoundex($name) {
 					if (count($workingEntry) < 7) $partialResult[] = $workingEntry;
 					else {
 						// This is the 6th code in the sequence
-						// We're looking for 7 entries because the first is 'I' and doesn't count
-						$tempResult = str_replace('I', '', implode('', $workingEntry)) . '000000';
+						// We're looking for 7 entries because the first is '!' and doesn't count
+						$tempResult = str_replace('!', '', implode('', $workingEntry)) . '000000';
 						$result[] = substr($tempResult, 0, 6);
 					}
 				}
@@ -344,7 +345,7 @@ function DMSoundex($name) {
 
 	// Zero-fill and copy all remaining partial results
 	foreach ($partialResult as $workingEntry) {
-		$tempResult = str_replace('I', '', implode('', $workingEntry)) . '000000';
+		$tempResult = str_replace('!', '', implode('', $workingEntry)) . '000000';
 		$result[] = substr($tempResult, 0, 6);
 	}
 
