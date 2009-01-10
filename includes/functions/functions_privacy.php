@@ -103,7 +103,6 @@ function is_dead($indirec, $cyear="", $import=false) {
 				if (preg_match('/\n2 DATE (.+)/', $deathrec, $match)) {
 					$date=new GedcomDate($match[1]);
 					$year=$date->gregorianYear();
-					var_dump($year);
 					return update_isdead($pid, get_id_from_gedcom($GEDCOM), $year + $cyear < date("Y"));
 				}
 			}
