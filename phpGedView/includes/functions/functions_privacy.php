@@ -100,8 +100,11 @@ function is_dead($indirec, $cyear="", $import=false) {
 					}
 				}
 			} else {
-				if (preg_match("/\d DATE.*\s(\d{3,4})\s/", $deathrec, $match)) {
-					return update_isdead($pid, get_id_from_gedcom($GEDCOM), $match[1] + $cyear < date("Y"));
+				if (preg_match('/\n2 DATE (.+)/', $deathrec, $match)) {
+					$date=new GedcomDate($match[1]);
+					$year=$date->gregorianYear();
+					var_dump($year);
+					return update_isdead($pid, get_id_from_gedcom($GEDCOM), $year + $cyear < date("Y"));
 				}
 			}
 		}
