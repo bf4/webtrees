@@ -8,6 +8,8 @@
 	# $Id$
 =====================================================================
 
+Version 4.2.0 CA
+ - Changed: Census Assistant Shared Note delimiter from ";" to "|" (windmillway)
 
 Version 4.2.0
  - Fixed: [ 2495180 ] [4719] Typo in RA (erostew)

@@ -563,7 +563,7 @@ function print_header($title, $head="",$use_alternate_styles=true) {
 	
 	// BH Census-Assistant =======================
 	function census_assistant(pid) {
-		var win01 = window.open(\'module.php?mod=census_assistant&pgvaction=census_a&pid=\'+pid, \'win01\', \'resizable=1, menubar=0, scrollbars=1, left=200, top=100, HEIGHT=800, WIDTH=1150\');
+		var win01 = window.open(\'module.php?mod=census_assistant&pgvaction=census_a&pid=\'+pid, \'win01\', \'resizable=1, menubar=0, scrollbars=1, left=200, top=100, HEIGHT=800, WIDTH=1000\');
 		if (window.focus) {win01.focus();}
 	}   
 	// ===========================================
@@ -1141,11 +1141,11 @@ function print_note_record($text, $nlevel, $nrec, $textOnly=false, $return=false
 	if (!empty($text)) {
 		$text = PrintReady($text);
 		// Check if Census Assistant Note ======================================= 
-		if (eregi("Name;Related", $text)) {
+		if (eregi("Name|Related", $text)) {
 			$text = "xxx<table><tr><td>" . $text;
 			$text = str_replace("<br /><br />", "</td></tr></table><p><table><tr><td>", $text);
 			$text = str_replace("<br />", "</td></tr><tr><td>", $text);
-			$text = str_replace(";", "&nbsp;&nbsp;</td><td>", $text);
+			$text = str_replace("|", "&nbsp;&nbsp;</td><td>", $text);
 			$text = $text . "</td></tr></table>";
 			$text = str_replace("xxx", "&nbsp; Census Transcription <br /><p>", $text);
 		}
