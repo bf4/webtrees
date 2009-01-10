@@ -82,7 +82,8 @@ function print_fact(&$eventObj, $noedit=false) {
 	$FACT_COUNT++;
 	$estimates = array("abt","aft","bef","est","cir");
 	$fact = $eventObj->getTag();
-	$event = htmlspecialchars($eventObj->getDetail(), ENT_COMPAT, 'UTF-8');
+	$rawEvent = $eventObj->getDetail();
+	$event = htmlspecialchars($rawEvent, ENT_COMPAT, 'UTF-8');
 	$factrec = $eventObj->getGedcomRecord();
 	$linenum = $eventObj->getLineNumber();
 	$parent = $eventObj->getParentObject();
@@ -155,7 +156,7 @@ function print_fact(&$eventObj, $noedit=false) {
 			print "\n\t\t<tr class=\"".$rowID."\">";
 			print "\n\t\t\t<td class=\"descriptionbox $styleadd center width20\">";
 			$label = $factref;
-			if (isset($factarray["$factref"])) $label = $factarray[$factref];
+			if (isset($factarray[$factref])) $label = $factarray[$factref];
 			if (isset($pgv_lang[$factref])) $label = $pgv_lang[$factref];
 			if ($SHOW_FACT_ICONS)
 				print $eventObj->Icon().' ';
@@ -231,7 +232,7 @@ function print_fact(&$eventObj, $noedit=false) {
 			else $rowID = "row_".$styleadd;
 			print "\n\t\t<tr class=\"".$rowID."\">";
 			$label = $factref;
-			if (isset($factarray["$factref"])) $label = $factarray[$factref];
+			if (isset($factarray[$factref])) $label = $factarray[$factref];
 			if (isset($pgv_lang[$factref])) $label = $pgv_lang[$factref];
 			print "<td class=\"descriptionbox $styleadd center width20\">";
 			if ($SHOW_FACT_ICONS)
@@ -381,7 +382,10 @@ function print_fact(&$eventObj, $noedit=false) {
 				} elseif (strstr('FAX PHON FILE ', $fact.' ')) {
 					print getLRM(). $event.' ' . getLRM();
 				} elseif ($event!='Y') {
-					if (!strstr('ADDR _RATID _CREM ', substr($fact,0,5).' ')) echo PrintReady($event);
+					if (!strstr('ADDR _RATID _CREM ', substr($fact,0,5).' ')) {
+						if ($factref=='file_size' || $factref=='image_size') echo PrintReady($rawEvent);
+						else echo PrintReady($event);
+					}
 					echo ' ';
 				}
 				$temp = trim(get_cont(2, $factrec), "\r\n");
@@ -393,17 +397,17 @@ function print_fact(&$eventObj, $noedit=false) {
 			//-- find description for some facts
 			$ct = preg_match("/2 DESC (.*)/", $factrec, $match);
 			if ($ct>0) print PrintReady($match[1]);
-				// -- print PLACe, TEMPle and STATus
-				echo format_fact_place($eventObj, true, true, true);
-				if (preg_match("/ (PLAC)|(STAT)|(TEMP)|(SOUR) /", $factrec)>0 || ($event && $fact!="ADDR")) print "<br />\n";
-				// -- print BURIal -> CEMEtery
-				$ct = preg_match("/2 CEME (.*)/", $factrec, $match);
-				if ($ct>0) {
-					if ($SHOW_FACT_ICONS && file_exists($PGV_IMAGE_DIR."/facts/CEME.gif"))
-						//print $eventObj->Icon().' '; // print incorrect fact icon !!!
-						print "<img src=\"{$PGV_IMAGE_DIR}/facts/CEME.gif\" alt=\"{$factarray["CEME"]}\" title=\"{$factarray["CEME"]}\" align=\"middle\" /> ";
-					print "<b>".$factarray["CEME"].":</b> ".$match[1]."<br />\n";
-				}
+			// -- print PLACe, TEMPle and STATus
+			echo format_fact_place($eventObj, true, true, true);
+			if (preg_match("/ (PLAC)|(STAT)|(TEMP)|(SOUR) /", $factrec)>0 || ($event && $fact!="ADDR")) print "<br />\n";
+			// -- print BURIal -> CEMEtery
+			$ct = preg_match("/2 CEME (.*)/", $factrec, $match);
+			if ($ct>0) {
+				if ($SHOW_FACT_ICONS && file_exists($PGV_IMAGE_DIR."/facts/CEME.gif"))
+					//print $eventObj->Icon().' '; // print incorrect fact icon !!!
+					print "<img src=\"{$PGV_IMAGE_DIR}/facts/CEME.gif\" alt=\"{$factarray["CEME"]}\" title=\"{$factarray["CEME"]}\" align=\"middle\" /> ";
+				print "<b>".$factarray["CEME"].":</b> ".$match[1]."<br />\n";
+			}
 			//-- print address structure
 			if ($fact!="ADDR") {
 				print_address_structure($factrec, 2);
