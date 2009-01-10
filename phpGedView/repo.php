@@ -52,10 +52,10 @@ if ($controller->repository->isMarkedDeleted()) {
 
 echo PGV_JS_START;
 echo 'function show_gedcom_record() {';
-echo ' var recwin=window.open("gedrecord.php?pid=', $controller->sid, '", "_blank", "top=0,left=0,width=600,height=400,scrollbars=1,scrollable=1,resizable=1");';
+echo ' var recwin=window.open("gedrecord.php?pid=', $controller->rid, '", "_blank", "top=0,left=0,width=600,height=400,scrollbars=1,scrollable=1,resizable=1");';
 echo '}';
 echo 'function showchanges() {';
-echo ' window.location="source.php?sid=', $controller->sid, '&show_changes=yes"';
+echo ' window.location="repository.php?rid=', $controller->rid, '&show_changes=yes"';
 echo '}';
 echo PGV_JS_END;
 
@@ -90,7 +90,7 @@ $repositoryfacts=$controller->repository->getFacts();
 foreach ($repositoryfacts as $fact) {
 	if ($fact) {
 		if ($fact->getTag()=='NOTE') {
-			print_main_notes($fact->getGedcomRecord(), 1, $controller->sid, $fact->getLineNumber());
+			print_main_notes($fact->getGedcomRecord(), 1, $controller->rid, $fact->getLineNumber());
 		} else {
 			print_fact($fact);
 		}
@@ -108,7 +108,7 @@ if (!$controller->isPrintPreview() && $controller->userCanEdit()) {
 	print_help_link('add_media_help', 'qm', 'add_media_lbl');
 	echo $pgv_lang['add_media_lbl'] . '</td>';
 	echo '<td class="optionbox">';
-	echo '<a href="javascript: ', $pgv_lang['add_media_lbl'], '" onclick="window.open(\'addmedia.php?action=showmediaform&linktoid=', $controller->sid, '\', \'_blank\', \'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1\'); return false;">', $pgv_lang['add_media'], '</a>';
+	echo '<a href="javascript: ', $pgv_lang['add_media_lbl'], '" onclick="window.open(\'addmedia.php?action=showmediaform&linktoid=', $controller->rid, '\', \'_blank\', \'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1\'); return false;">', $pgv_lang['add_media'], '</a>';
 	echo '<br />';
 	echo '<a href="javascript:;" onclick="window.open(\'inverselink.php?linktoid='.$controller->rid.'&linkto=repository\', \'_blank\', \'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1\'); return false;">'.$pgv_lang['link_to_existing_media'].'</a>';
 	echo '</td></tr>';
