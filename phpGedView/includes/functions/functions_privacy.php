@@ -5,7 +5,7 @@
 * See http://www.phpgedview.net/privacy.php for more information on privacy in PhpGedView
 *
 * phpGedView: Genealogy Viewer
-* Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
+* Copyright (C) 2002 to 2009 PGV Development Team.  All rights reserved.
 *
 * This program is free software; you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -77,14 +77,15 @@ function is_dead($indirec, $cyear="", $import=false) {
 	global $pgv_lang;
 	global $GEDCOM;
 
-	$ct = preg_match("/0 @(.*)@ INDI/", $indirec, $match);
-	if ($ct>0) {
-		$pid = trim($match[1]);
+	if (preg_match('/^0 @('.PGV_REGEX_XREF.')@ INDI/', $indirec, $match)) {
+		$pid=$match[1];
+	} else {
+		return false;
 	}
 
-	if (empty($pid)) return false;
-
-	if (empty($cyear)) $cyear = date("Y");
+	if (empty($cyear)) {
+		$cyear=date("Y");
+	}
 
 	// -- check for a death record
 	foreach (explode('|', PGV_EVENTS_DEAT) as $tag) {
