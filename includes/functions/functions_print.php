@@ -1909,7 +1909,6 @@ function print_asso_rela_record($pid, $factrec, $linebr=false, $type='INDI') {
 			}
 		}
 		if ($linebr) print "<br />";
-		print_fact_notes($assorec, $level+1);
 		if (substr($_SERVER["SCRIPT_NAME"],1) == "pedigree.php") {
 			print "<br />";
 			if (function_exists('print_fact_sources')) print_fact_sources($assorec, $level+1);
