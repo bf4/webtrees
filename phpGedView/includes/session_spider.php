@@ -3,7 +3,7 @@
  * Startup and session logic for handling Bots and Spiders
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2008  PGV Development Team.  All rights reserved.
+ * Copyright (C) 2008 to 2009  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -122,7 +122,9 @@ $worms = array(
 	'DotBot',
 	'HTTrack',
 	'AISearchBot',
-	'panscient.com'
+	'panscient.com',
+	'Mozilla(^/\d)',	// legitimate Mozilla-based browsers have something like "Mozilla/5.0"
+	'(Microsoft)|(Internet)|(Explorer)'		// Internet Explorer self-identifies with "MSIE"
 	);
 	$quitReason = "";
 
