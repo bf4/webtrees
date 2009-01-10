@@ -10,6 +10,7 @@
 
 
 Version 4.2.0
+ - Fixed: [ 2481665 ] SVN 4632 age comp error (fisharebest)
  - Fixed: [ 2495180 ] [4719] Typo in RA (erostew)
  - Fixed: Incorrect block heading format on Index and Portal pages when page language is RTL (canajun2eh)
  - Changed: Indi Navigator: Set 5 Tabs only: Facts/Notes/Sources/Media/Album pending config options. Removed on/off Toggle link (windmillway)
