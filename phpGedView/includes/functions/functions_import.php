@@ -567,7 +567,7 @@ function reformat_record_import($rec) {
 * @param boolean $update whether or not this is an updated record that has been accepted
 */
 function import_record($gedrec, $update) {
-	global $DBCONN, $gid, $type, $TBLPREFIX, $GEDCOM_FILE, $FILE, $pgv_lang, $USE_RIN;
+	global $DBCONN, $xtype, $TBLPREFIX, $GEDCOM_FILE, $FILE, $pgv_lang, $USE_RIN;
 	global $place_id, $WORD_WRAPPED_NOTES, $GEDCOMS, $MAX_IDS, $fpnewged, $GEDCOM, $GENERATE_UIDS;
 
 	$FILE=$GEDCOM;
@@ -722,6 +722,8 @@ function import_record($gedrec, $update) {
 	if (!$update && !empty($fpnewged)) {
 		fwrite($fpnewged, reformat_record_export($gedrec));
 	}
+
+	$xtype=$type; // Pass value back to uploadgedcom.php
 }
 
 /**
@@ -1029,14 +1031,13 @@ function insert_media($objrec, $objlevel, $update, $gid, $count) {
 		}
 	}
 	if (isset($m_media)) {
-	//-- add the entry to the media_mapping table
-	$mm_id = get_next_id("media_mapping", "mm_id");
-	$sql = "INSERT INTO {$TBLPREFIX}media_mapping (mm_id, mm_media, mm_gid, mm_order, mm_gedfile, mm_gedrec)";
-	$sql .= " VALUES ('" . $DBCONN->escapeSimple($mm_id) . "', '" . $DBCONN->escapeSimple($m_media) . "', '" . $DBCONN->escapeSimple($gid) . "', '" . $DBCONN->escapeSimple($count) . "', '" . $DBCONN->escapeSimple($GEDCOMS[$FILE]['id']) . "', '" . $DBCONN->escapeSimple($objref) . "')";
-	$res = dbquery($sql);
-	return $objref;
-	}
-	else {
+		//-- add the entry to the media_mapping table
+		$mm_id = get_next_id("media_mapping", "mm_id");
+		$sql = "INSERT INTO {$TBLPREFIX}media_mapping (mm_id, mm_media, mm_gid, mm_order, mm_gedfile, mm_gedrec)";
+		$sql .= " VALUES ('" . $DBCONN->escapeSimple($mm_id) . "', '" . $DBCONN->escapeSimple($m_media) . "', '" . $DBCONN->escapeSimple($gid) . "', '" . $DBCONN->escapeSimple($count) . "', '" . $DBCONN->escapeSimple($GEDCOMS[$FILE]['id']) . "', '" . $DBCONN->escapeSimple($objref) . "')";
+		$res = dbquery($sql);
+		return $objref;
+	} else {
 		print "Media reference error ".$objrec;
 		return "";
 	}
