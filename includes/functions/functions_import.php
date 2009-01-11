@@ -696,7 +696,7 @@ function import_record($gedrec, $update) {
 		} else {
 			$name=$gid;
 		}
-		if (strpos($gedrec, '\n1 _DBID')) {
+		if (strpos($gedrec, "\n1 _DBID")) {
 			$_dbid="'Y'";
 		} else {
 			$_dbid='NULL';
