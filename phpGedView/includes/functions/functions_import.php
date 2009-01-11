@@ -686,7 +686,7 @@ function import_record($gedrec, $update) {
 		if (preg_match('/\n1 NCHI (\d+)/', $gedrec, $match)) {
 			$nchi=max($nchi, $match[1]);
 		}
-		dbquery("INSERT INTO {$TBLPREFIX}families (f_id, f_file, f_husb, f_wife, f_chil, f_gedcom, f_numchil) VALUES ('{$xref}',{$ged_id},'{$husb}','{$wife}','{$chil}','".$DBCONN->escapeSimple($gedrec)."','{$ged_id}')");
+		dbquery("INSERT INTO {$TBLPREFIX}families (f_id, f_file, f_husb, f_wife, f_chil, f_gedcom, f_numchil) VALUES ('{$xref}',{$ged_id},'{$husb}','{$wife}','{$chil}','".$DBCONN->escapeSimple($gedrec)."','{$nchi}')");
 		break;
 	case 'SOUR':
 		if (preg_match('/\n1 TITL (.+)/', $gedrec, $match)) {
