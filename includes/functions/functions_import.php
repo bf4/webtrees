@@ -1797,6 +1797,7 @@ function empty_database($FILE, $keepmedia=false) {
 	dbquery("DELETE FROM {$TBLPREFIX}other       WHERE o_file ={$FILE}");
 	dbquery("DELETE FROM {$TBLPREFIX}places      WHERE p_file ={$FILE}");
 	dbquery("DELETE FROM {$TBLPREFIX}placelinks  WHERE pl_file={$FILE}");
+	dbquery("DELETE FROM {$TBLPREFIX}remotelinks WHERE r_file ={$FILE}");
 	dbquery("DELETE FROM {$TBLPREFIX}name        WHERE n_file ={$FILE}");
 	dbquery("DELETE FROM {$TBLPREFIX}dates       WHERE d_file ={$FILE}");
 
@@ -2070,74 +2071,54 @@ function update_record($gedrec, $delete = false) {
 		$FILE = $GEDCOM;
 	}
 
-	$tt = preg_match("/0 @(.+)@ (.+)/", $gedrec, $match);
-	if ($tt > 0) {
-		$gid = trim($match[1]);
-		$type = trim($match[2]);
+	if (preg_match('/^0 @('.PGV_REGEX_XREF.')@ ('.PGV_REGEX_TAG.')/', $gedrec, $match)) {
+		list(,$gid, $type)=$match;
 	} else {
 		print "ERROR: Invalid gedcom record.";
 		return false;
 	}
 
-	$sql = "SELECT pl_p_id FROM {$TBLPREFIX}placelinks WHERE pl_gid='" . $DBCONN->escapeSimple($gid) . "' AND pl_file='" . $DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"]) . "'";
-	$res = dbquery($sql);
+	$ged_id=get_id_from_gedcom($GEDCOM);
+
+	$res=dbquery("SELECT pl_p_id FROM {$TBLPREFIX}placelinks WHERE pl_gid='{$gid}' AND pl_file={$ged_id}");
 
 	$placeids = array ();
 	while ($row = & $res->fetchRow()) {
 		$placeids[] = $row[0];
 	}
-	$sql = "DELETE FROM {$TBLPREFIX}placelinks WHERE pl_gid='" . $DBCONN->escapeSimple($gid) . "' AND pl_file='" . $DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"]) . "'";
-	$res = dbquery($sql);
-
-	$sql = "DELETE FROM {$TBLPREFIX}dates WHERE d_gid='" . $DBCONN->escapeSimple($gid) . "' AND d_file='" . $DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"]) . "'";
-	$res = dbquery($sql);
+	dbquery("DELETE FROM {$TBLPREFIX}placelinks WHERE pl_gid='{$gid}' AND pl_file={$ged_id}");
+	dbquery("DELETE FROM {$TBLPREFIX}dates WHERE d_gid='{$gid}' AND d_file={$ged_id}");
 
 	//-- delete any unlinked places
 	foreach ($placeids as $indexval => $p_id) {
-		$sql = "SELECT count(pl_p_id) FROM {$TBLPREFIX}placelinks WHERE pl_p_id=$p_id AND pl_file='" . $DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"]) . "'";
-		$res = dbquery($sql);
+		dbquery("SELECT count(pl_p_id) FROM {$TBLPREFIX}placelinks WHERE pl_p_id=$p_id AND pl_file={$ged_id}");
 
 		$row = & $res->fetchRow();
 		if ($row[0] == 0) {
-			$sql = "DELETE FROM {$TBLPREFIX}places WHERE p_id=$p_id AND p_file='" . $DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"]) . "'";
-			$res = dbquery($sql);
-
+			dbquery("DELETE FROM {$TBLPREFIX}places WHERE p_id=$p_id AND p_file={$ged_id}");
 		}
 	}
 
-	//-- delete any media mapping references
-	$sql = "DELETE FROM {$TBLPREFIX}media_mapping WHERE mm_gid ".PGV_DB_LIKE." '" . $DBCONN->escapeSimple($gid) . "' AND mm_gedfile='" . $DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"]) . "'";
-	$res = dbquery($sql);
-
-	$sql = "DELETE FROM {$TBLPREFIX}remotelinks WHERE r_gid='" . $DBCONN->escapeSimple($gid) . "' AND r_file='" . $DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"]) . "'";
-	$res = dbquery($sql);
-
-	$sql = "DELETE FROM {$TBLPREFIX}name WHERE n_id ".PGV_DB_LIKE." '" . $DBCONN->escapeSimple($gid) . "' AND n_file='" . $DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"]) . "'";
-	$res = dbquery($sql);
-
-	$sql = "DELETE FROM {$TBLPREFIX}link WHERE l_from ".PGV_DB_LIKE." '" . $DBCONN->escapeSimple($gid) . "' AND l_file='" . $DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"]) . "'";
-	$res = dbquery($sql);
+	dbquery("DELETE FROM {$TBLPREFIX}media_mapping WHERE mm_gid='{$gid}' AND mm_gedfile={$ged_id}");
+	dbquery("DELETE FROM {$TBLPREFIX}remotelinks WHERE r_gid='{$gid}' AND r_file={$ged_id}");
+	dbquery("DELETE FROM {$TBLPREFIX}name WHERE n_id='{$gid}' AND n_file={$ged_id}");
+	dbquery("DELETE FROM {$TBLPREFIX}link WHERE l_from='{$gid}' AND l_file={$ged_id}");
 
 	switch ($type) {
 	case 'INDI':
-		$sql = "DELETE FROM {$TBLPREFIX}individuals WHERE i_id ".PGV_DB_LIKE." '" . $DBCONN->escapeSimple($gid) . "' AND i_file='" . $DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"]) . "'";
-		$res = dbquery($sql);
+		dbquery("DELETE FROM {$TBLPREFIX}individuals WHERE i_id='{$gid}' AND i_file={$ged_id}");
 		break;
 	case 'FAM':
-		$sql = "DELETE FROM {$TBLPREFIX}families WHERE f_id ".PGV_DB_LIKE." '" . $DBCONN->escapeSimple($gid) . "' AND f_file='" . $DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"]) . "'";
-		$res = dbquery($sql);
+		dbquery("DELETE FROM {$TBLPREFIX}families WHERE f_id='{$gid}' AND f_file={$ged_id}");
 		break;
 	case 'SOUR':
-		$sql = "DELETE FROM {$TBLPREFIX}sources WHERE s_id ".PGV_DB_LIKE." '" . $DBCONN->escapeSimple($gid) . "' AND s_file='" . $DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"]) . "'";
-		$res = dbquery($sql);
+		dbquery("DELETE FROM {$TBLPREFIX}sources WHERE s_id='{$gid}' AND s_file={$ged_id}");
 		break;
 	case 'OBJE':
-		$sql = "DELETE FROM {$TBLPREFIX}media WHERE m_media ".PGV_DB_LIKE." '" . $DBCONN->escapeSimple($gid) . "' AND m_gedfile='" . $DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"]) . "'";
-		$res = dbquery($sql);
+		dbquery("DELETE FROM {$TBLPREFIX}media WHERE m_media='{$gid}' AND m_gedfile={$ged_id}");
 		break;
 	default:
-		$sql = "DELETE FROM {$TBLPREFIX}other WHERE o_id ".PGV_DB_LIKE." '" . $DBCONN->escapeSimple($gid) . "' AND o_file='" . $DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"]) . "'";
-		$res = dbquery($sql);
+		dbquery("DELETE FROM {$TBLPREFIX}other WHERE o_id='{$gid}' AND o_file={$ged_id}");
 		break;
 	}
 
