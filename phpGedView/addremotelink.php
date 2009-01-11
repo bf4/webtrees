@@ -1,46 +1,46 @@
 <?php
 /**
- *  Add Remote Link Page
- *
- *  Allow a user the ability to add links to people from other servers and other gedcoms.
- *
- * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- *
- * @package PhpGedView
- * @subpackage Charts
- * @version $Id$
- */
+*  Add Remote Link Page
+*
+*  Allow a user the ability to add links to people from other servers and other gedcoms.
+*
+* phpGedView: Genealogy Viewer
+* Copyright (C) 2002 to 2009 PGV Development Team.  All rights reserved.
+*
+* This program is free software; you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation; either version 2 of the License, or
+* (at your option) any later version.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+* GNU General Public License for more details.
+*
+* You should have received a copy of the GNU General Public License
+* along with this program; if not, write to the Free Software
+* Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+*
+* @package PhpGedView
+* @subpackage Charts
+* @version $Id$
+*/
 
 require './config.php';
 
-require_once("includes/controllers/remotelink_ctrl.php");
-$controller = new RemoteLinkController();
+require './includes/controllers/remotelink_ctrl.php';
+
+$controller=new RemoteLinkController();
 $controller->init();
 
-print_simple_header($pgv_lang["title_remote_link"]);
+print_simple_header($pgv_lang['title_remote_link']);
 
 if (isset($_REQUEST['pid'])) 	$pid = $_REQUEST['pid'];
 if (isset($_REQUEST['famid']))  $famid = $_REQUEST['famid'];
+if (isset($_REQUEST['action']))  $action = $_REQUEST['action'];
 
 //-- only allow gedcom admins to create remote links
 if (!$controller->canAccess()) {
-	//print "pid: $pid<br />";
-	//print "gedrec: $gedrec<br />";
 	print '<span class="error">';
 	print $pgv_lang["access_denied"].'<br />';
 	//-- display messages as to why the editing access was denied
@@ -118,7 +118,7 @@ if ($action!="addlink") {
 		$record=GedcomRecord::getInstance($pid);
 		print PrintReady($record->getFullName());
 		print "&nbsp;&nbsp;";
- 		print PrintReady("(".$pid.")");
+		print PrintReady("(".$pid.")");
 	?></span> <br />
 <br />
 <table class="facts_table">
