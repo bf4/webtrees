@@ -28,6 +28,9 @@ require './config.php';
 require './includes/controllers/source_ctrl.php';
 require './includes/functions/functions_print_lists.php';
 
+// We have finished writing to $_SESSION, so release the lock
+session_write_close();
+
 $controller=new SourceController();
 $controller->init();
 
