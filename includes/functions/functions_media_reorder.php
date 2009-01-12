@@ -3,7 +3,7 @@
  * Reorder media Items using drag and drop
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
+ * Copyright (C) 2007 to 2009  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -37,9 +37,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
  * @param array $rowm        An array with the details about this media item
  * @param string $pid        The record id this media item was attached to
  */
-// -----------------------------------------------------------------------------
-// function media_reorder_row($rtype, $rowm, $pid) {
-// -----------------------------------------------------------------------------
+function media_reorder_row($rtype, $rowm, $pid) {
 
     global $PGV_IMAGE_DIR, $PGV_IMAGES, $view, $MEDIA_DIRECTORY, $TEXT_DIRECTION;
     global $SHOW_ID_NUMBERS, $GEDCOM, $factarray, $pgv_lang, $THUMBNAIL_WIDTH, $USE_MEDIA_VIEWER;
@@ -83,7 +81,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 
 		print "\n" . "<table class=\"pic\"><tr>" . "\n";
 		print "<td width=\"80\" valign=\"top\" align=\"center\" >". "\n";
-		
+
 		//Finally Print the thumbnail ---------------------------------
 			// If URL flv file (eg You Tube)
 			if (eregi("http://www.youtube.com" ,$rowm['m_file']) ) {
@@ -98,7 +96,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 			}else{
 				print "<img src=\"".$thumbnail."\" height=\"38\" border=\"0\" " ;
 			}
-			
+
 			if ($isExternal) {
 				print " width=\"".($THUMBNAIL_WIDTH * (38/80))."\"";
 			}
@@ -147,8 +145,5 @@ if (!defined('PGV_PHPGEDVIEW')) {
     print "\n\n";;
     return true;
 
-// -----------------------------------------------------------------------------
-// }
-// -----------------------------------------------------------------------------
-
+}
 ?>
