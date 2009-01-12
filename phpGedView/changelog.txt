@@ -10,6 +10,7 @@
 
 
 Version 4.2.0
+ - Changed: Patch [ 2486577 ] applied. Auto show of Notes in Lightbox window and in slide show. (windmillway) 
  - Fixed: [ 1864683 ] NOTE text is duplicated (SVN2450) (fisharebest)
  - Fixed: [ 2009275 ] privacy / is_dead calculations are improper (fisharebest)
  - Fixed: [ 2473228 ] update_isdead while Gedcom import (fisharebest)
