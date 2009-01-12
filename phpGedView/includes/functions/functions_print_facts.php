@@ -1778,17 +1778,12 @@ function print_main_media_row($rtype, $rowm, $pid) {
 //  Extra print_facts_functions for lightbox and reorder media
 // -----------------------------------------------------------------------------
 
-function lightbox_print_media($pid, $level=1, $related=false, $kind, $noedit=false ) {
-		include("modules/lightbox/functions/lightbox_print_media.php");
+if (file_exists('modules/lightbox/functions/lightbox_print_media.php')) {
+	require_once 'modules/lightbox/functions/lightbox_print_media.php';
+	require_once 'modules/lightbox/functions/lightbox_print_media_row.php';
 }
 
-function lightbox_print_media_row($rtype, $rowm, $pid) {
-		include("modules/lightbox/functions/lightbox_print_media_row.php");
-}
-
-function media_reorder_row($rtype, $rowm, $pid) {
-		include("media_reorder_row.php");
-}
+require_once 'includes/functions/functions_media_reorder.php';
 
 // -----------------------------------------------------------------------------
 //  End extra print_facts_functions for lightbox and reorder media

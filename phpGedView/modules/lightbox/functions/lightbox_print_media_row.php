@@ -38,9 +38,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
  * @param array $rowm        An array with the details about this media item
  * @param string $pid        The record id this media item was attached to
  */
-// -----------------------------------------------------------------------------
-// function lightbox_print_media_row($rtype, $rowm, $pid) {
-// -----------------------------------------------------------------------------
+function lightbox_print_media_row($rtype, $rowm, $pid) {
 
 	global $PGV_IMAGE_DIR, $PGV_IMAGES, $view, $MEDIA_DIRECTORY, $TEXT_DIRECTION;
 	global $SHOW_ID_NUMBERS, $GEDCOM, $factarray, $pgv_lang, $THUMBNAIL_WIDTH, $USE_MEDIA_VIEWER;
@@ -94,7 +92,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 			// If reorder media has been clicked
 			if (isset($reorder) && $reorder==1) {
 				print "<li class=\"facts_value\" style=\"border:0px;\" id=\"li_" . $rowm['m_media'] . "\" >";
-				
+
 			// Else If reorder media has NOT been clicked
 			// Highlight Album Thumbnails - Changed=new (blue), Changed=old (red), Changed=no (none)
 			}else if ($rtype=='new'){
@@ -106,12 +104,12 @@ if (!defined('PGV_PHPGEDVIEW')) {
 			}
 		}
 	}
-	
+
 	// Add blue or red borders
 	$styleadd="";
 	if ($rtype=='new') $styleadd = "change_new";
 	if ($rtype=='old') $styleadd = "change_old";
-	
+
 	// NOTE Start printing the media details
 	// if ($isExternal || media_exists($thumbnail)) {
 	if(!media_exists($mainMedia)) {
@@ -128,7 +126,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 		// echo $thumbnail;
 	}
 	$linenum = 0;
-	
+
 	// Check Filetype of media item ( URL, Local or Other ) ------------------------------------------
 	// URL FLV  ----------------------------------
 	if (eregi("http://www.youtube.com", $rowm['m_file'])) {
@@ -177,7 +175,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 		// Avoid special character problems
 		//make ready for RTL
 		$mediaTitle = PrintReady(htmlspecialchars($mediaTitle));
-		
+
 		//Get media item Notes
 		$haystack = $rowm["m_gedrec"];
 		$needle   = "1 NOTE";
@@ -186,7 +184,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 		$worked   = ereg_replace("1 NOTE", "1 NOTE<br />", $after);
 		$final    = $before.$needle.$worked;
 		$notes    = PrintReady(htmlspecialchars(addslashes(print_fact_notes($final, 1, true, true)),ENT_COMPAT,'UTF-8'));
-		
+
 		/*
 		//Get media item Notes
 		$notes=array();
@@ -203,7 +201,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 		$notes=ereg_replace("1 NOTE ", "", $notes);
 		$notes=ereg_replace("2 CONT ", "<br />", $notes);
 		*/
-		
+
 		//text alignment for Tooltips
 		if ($TEXT_DIRECTION=="rtl") {
 			$alignm = "right";
@@ -409,7 +407,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 					// Else Enable Lightbox (Or popup) and show thumbnail tooltip ----------
 					}else{
 						$name = trim($rowm["m_titl"]);
-						
+
 						// If URL FLV filetype (Lightbox)
 						if ($file_type == "url_flv") {
 							print "<a href=\"module.php?mod=JWplayer&amp;pgvaction=flvVideo&amp;flvVideo=" . str_replace('http://', '', $mainMedia) . "\" rel='clearbox(" . 445 . "," . 370 . ",click)' rev=\"" . $rowm["m_media"] . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name,ENT_COMPAT,'UTF-8')) . "::" . htmlspecialchars($notes,ENT_COMPAT,'UTF-8') . "\">" . "\n";
@@ -474,16 +472,16 @@ if (!defined('PGV_PHPGEDVIEW')) {
 						print "<img src=\"{$thumbnail}\" height=\"{$height}\" border=\"0\" " ;
 					}
 				}
-				
+
 				// print browser tooltips associated with image ----------------------------------------------
 				print " alt=\"\" title=\"" . Printready(strip_tags($mediaTitle)) . "\"  />";
-				
+
 				// Close anchor --------------------------------------------------------------
 				if ($mainFileExists) {
 					print "</a>" . "\n";
 				}
 				print "</td></tr>" . "\n";
-				
+
 				//View Edit Menu ----------------------------------
 				//If reordering media
 				if ( $reorder==1 ) {
@@ -498,13 +496,13 @@ if (!defined('PGV_PHPGEDVIEW')) {
 					print "<td width=\"5px\"></td>";
 					print "</tr>" . "\n";
 				}
-				
+
 				// print "</table>" . "\n";
 			}
-			
+
 		} // NOTE End If Show fact details
-		
-		
+
+
 	// If media file is missing but details are in Gedcom then add the menu as well
 	//if(!media_exists($rowm['m_file'])) {
 	if(!media_exists($mainMedia) ) {
@@ -518,10 +516,10 @@ if (!defined('PGV_PHPGEDVIEW')) {
 			print "</tr>" . "\n";
 		}
 	}
-	
+
 	//close off the table
 	print "</table>";
-	
+
 	$media_data = $rowm['m_media'];
 	print "<input type=\"hidden\" name=\"order1[$media_data]\" value=\"$sort_i\" />" . "\n";
 	$sort_i++;
@@ -530,9 +528,5 @@ if (!defined('PGV_PHPGEDVIEW')) {
     print "\n\n";;
     return true;
 
-// -----------------------------------------------------------------------------
-// }
-// -----------------------------------------------------------------------------
-
+}
 ?>
-
