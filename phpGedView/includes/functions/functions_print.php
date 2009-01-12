@@ -694,21 +694,13 @@ function google_analytics() {
 */
 function print_execution_stats() {
 	global $start_time, $pgv_lang, $TOTAL_QUERIES, $PRIVACY_CHECKS;
-	$end_time = microtime(true);
-	$exectime = $end_time - $start_time;
-	print "<br /><br />".$pgv_lang["exec_time"];
-	printf(" %.3f ".$pgv_lang["sec"], $exectime);
-	print "  ".$pgv_lang["total_queries"]." $TOTAL_QUERIES.";
-	if (!$PRIVACY_CHECKS) $PRIVACY_CHECKS=0;
-	print " ".$pgv_lang["total_privacy_checks"]." $PRIVACY_CHECKS.";
-	if (function_exists("memory_get_usage")) {
-		print " ".$pgv_lang["total_memory_usage"]." ";
-		if (function_exists("memory_get_peak_usage")) $mem = memory_get_peak_usage()/1024;
-		else $mem = memory_get_usage()/1024;
-		printf("%.2f", $mem);
-		print " KB.";
-	}
-	print "<br />";
+
+	printf("<div><br />{$pgv_lang['exec_time']} %.3f {$pgv_lang['sec']} {$pgv_lang['total_queries']} %d. {$pgv_lang['total_privacy_checks']} %d. {$pgv_lang['total_memory_usage']} %.0f KB.</div>",
+		microtime(true)-$start_time,
+		$TOTAL_QUERIES,
+		$PRIVACY_CHECKS,
+		memory_get_peak_usage(true)/1024
+	);
 }
 
 //-- print a form to change the language
