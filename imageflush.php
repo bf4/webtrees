@@ -68,12 +68,12 @@ if (isset($_SESSION['image_data'])) {
 }
 if (empty($image_data)) {
 	ImageFlushError('Error: $_SESSION["image_data"] or $_SESSION["'.$tempVarName.'"] is empty');
+} else {
+	// send data to browser
+	header('Content-Type: image/'.$image_type);
+	header('Cache-Control: no-store, no-cache, must-revalidate, post-check=0, pre-check=0');
+	header('Expires: Thu, 19 Nov 1981 08:52:00 GMT');
+	header('Pragma: no-cache');
+	echo $image_data;
 }
-
-// send data to browser
-header('Content-Type: image/'.$image_type);
-header('Cache-Control: no-store, no-cache, must-revalidate, post-check=0, pre-check=0');
-header('Expires: Thu, 19 Nov 1981 08:52:00 GMT');
-header('Pragma: no-cache');
-echo $image_data;
 ?>

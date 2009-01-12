@@ -40,10 +40,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
  * @param int $level        The level of media object to find
  * @param boolean $related        Whether or not to grab media from related records
  */
-
-// -----------------------------------------------------------------------------
-// function lightbox_print_main_media($pid, $level=1, $related=false, $noedit=false) {
-// -----------------------------------------------------------------------------
+function lightbox_print_media($pid, $level=1, $related=false, $kind, $noedit=false ) {
 
 	$t=$kind ;
 	$edit="1";
@@ -145,14 +142,14 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	for($i=0; $i<$ct; $i++) {
 		if (!isset($current_objes[$match[$i][1]])) {
 			$current_objes[$match[$i][1]] = 1;
-		}else{ 
+		}else{
 			$current_objes[$match[$i][1]]++;
 		}
 		$obje_links[$match[$i][1]][] = $match[$i][0];
 	}
-	
+
 	$media_found = false;
-	
+
 	// Get the related media items
 		// Adding DISTINCT is the fix for: [ 1488550 ] Family/Individual Media Duplications
 		// but it may not work for all RDBMS.
@@ -181,7 +178,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	$resmm = dbquery($sqlmm);
 	$foundObjs = array();
 	$numm = $resmm->numRows();
-	
+
 	// Begin to Layout the Album Media Rows
 	if ( ($t==1 && $numm>0 || $t==2 && $numm>0 || $t==3 && $numm>0 || $t==4 && $numm>0 || ($t==5 )) ) {
 		if ($t==5){ // do nothing
@@ -282,7 +279,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 					}
 				}
 			}
-			
+
 			foreach($rows as $rtype => $rowm) {
 				if ($t!=5){
 					$res = lightbox_print_media_row($rtype, $rowm, $pid);
@@ -292,13 +289,13 @@ if (!defined('PGV_PHPGEDVIEW')) {
 			}
 			// $mgedrec[] = $rowm["m_gedrec"];
 		}
-		
+
 		// =====================================================================================
 		if ($t==4){
 			//-- objects are removed from the $current_objes list as they are printed
 			//-- any objects left in the list are new objects recently added to the gedcom
 			//-- but not yet accepted into the database.  We will print them too.
-			
+
 			// NOTE this is not working just yet for new waiting to be accepted items - TODO
 			foreach($current_objes as $media_id=>$value) {
 				while($value>0) {
@@ -333,7 +330,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 						$row['m_media'] = $media_id;
 						$row['m_file'] = get_gedcom_value("FILE", 1, $newrec);
 						$row['m_titl'] = get_gedcom_value("TITL", 1, $newrec);
-						if (empty($row['m_titl'])) { 
+						if (empty($row['m_titl'])) {
 							$row['m_titl'] = get_gedcom_value("FILE:TITL", 1, $newrec);
 						}
 						$row['m_gedrec'] = $newrec;
@@ -354,7 +351,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 							 echo "<tr><td align=\"center\" colspan=\"4\">";
 							 echo $row['m_media'];
 							 echo "</td></tr>";
-							 
+
 							$res =  lightbox_print_media_row('new', $row, $pid);
 							$media_found = $media_found || $res;
 						//	$current_objes[$rowm['m_media']]--;
@@ -363,8 +360,8 @@ if (!defined('PGV_PHPGEDVIEW')) {
 					$value--;
 				}
 			}
-		} 
-		
+		}
+
 		if ($t==5) {
 		}else{
 			echo "</ul>";
@@ -383,18 +380,14 @@ if (!defined('PGV_PHPGEDVIEW')) {
 			echo '</tr>';
 			echo '</table>' . "\n\n";
 		}
-		
+
 	}
-	
+
 	// if ($media_found) return true;
 	// else return false;
-	
+
 	if ($media_found) return $is_media="YES" ;
 	else return $is_media="NO" ;
 
-// -----------------------------------------------------------------------------
-// }
-// -----------------------------------------------------------------------------
-
-
+}
 ?>

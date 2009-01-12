@@ -5,7 +5,7 @@
 * See http://www.phpgedview.net/privacy.php for more information on privacy in PhpGedView
 *
 * phpGedView: Genealogy Viewer
-* Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
+* Copyright (C) 2002 to 2009 PGV Development Team.  All rights reserved.
 *
 * This program is free software; you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -77,14 +77,15 @@ function is_dead($indirec, $cyear="", $import=false) {
 	global $pgv_lang;
 	global $GEDCOM;
 
-	$ct = preg_match("/0 @(.*)@ INDI/", $indirec, $match);
-	if ($ct>0) {
-		$pid = trim($match[1]);
+	if (preg_match('/^0 @('.PGV_REGEX_XREF.')@ INDI/', $indirec, $match)) {
+		$pid=$match[1];
+	} else {
+		return false;
 	}
 
-	if (empty($pid)) return false;
-
-	if (empty($cyear)) $cyear = date("Y");
+	if (empty($cyear)) {
+		$cyear=date("Y");
+	}
 
 	// -- check for a death record
 	foreach (explode('|', PGV_EVENTS_DEAT) as $tag) {
@@ -93,13 +94,16 @@ function is_dead($indirec, $cyear="", $import=false) {
 			if ($cyear==date("Y")) {
 				$resn = get_gedcom_value("RESN", 2, $deathrec);
 				if (empty($resn) || ($resn!='confidential' && $resn!='privacy')) {
-					if (preg_match("/^1 {$tag}\s*(\n|Y)/", $deathrec)>0) {
+					// Gedcom asserts an event if either the value is Y, or a date/place is supplied.
+					if (strpos($deathrec, "1 DEAT Y\n")===0 || strpos($deathrec, "\n2 DATE ") || strpos($deathrec, "\n2 PLAC ")) {
 						return update_isdead($pid, get_id_from_gedcom($GEDCOM), true);
 					}
 				}
 			} else {
-				if (preg_match("/\d DATE.*\s(\d{3,4})\s/", $deathrec, $match)) {
-					return update_isdead($pid, get_id_from_gedcom($GEDCOM), $match[1] + $cyear < date("Y"));
+				if (preg_match('/\n2 DATE (.+)/', $deathrec, $match)) {
+					$date=new GedcomDate($match[1]);
+					$year=$date->gregorianYear();
+					return update_isdead($pid, get_id_from_gedcom($GEDCOM), $year + $cyear < date("Y"));
 				}
 			}
 		}

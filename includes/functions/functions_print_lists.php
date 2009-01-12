@@ -576,8 +576,9 @@ function print_fam_table($datalist, $legend="", $option="") {
 				$birt_by_decade[floor($hdate->gregorianYear()/10)*10] .= $husb->getSex();
 			}
 			if ($mdate->isOK()) {
-				$hage =GedcomDate::GetAgeYears($hdate, $mdate);
-				print "<a name=\"".($mdate->MaxJD()-$hdate->MinJD())."\" title=\"".$pgv_lang["age"].": ".$hage."\" class=\"list_item age\">{$hage}</a>";
+				$hage=GedcomDate::GetAgeYears($hdate, $mdate);
+				$hage_jd = $mdate->MinJD()-$hdate->MinJD();
+				echo '<a name="', $hage_jd, '" class="list_item age">', $hage, '</a>';
 				$marr_by_age[max(0,min($MAX_ALIVE_AGE, $hage))] .= $husb->getSex();
 			} else {
 				echo '&nbsp;';
@@ -624,8 +625,9 @@ function print_fam_table($datalist, $legend="", $option="") {
 				$birt_by_decade[floor($wdate->gregorianYear()/10)*10] .= $wife->getSex();
 			}
 			if ($mdate->isOK()) {
-				$wage =GedcomDate::GetAgeYears($wdate, $mdate);
-				print "<a name=\"".($mdate->MaxJD()-$wdate->MinJD())."\" title=\"".$pgv_lang["age"].": ".$wage."\" class=\"list_item age\">{$wage}</a>";
+				$wage=GedcomDate::GetAgeYears($wdate, $mdate);
+				$wage_jd = $mdate->MinJD()-$wdate->MinJD();
+				echo '<a name="', $wage_jd, '" class="list_item age">', $wage, '</a>';
 				$marr_by_age[max(0,min($MAX_ALIVE_AGE, $wage))] .= $wife->getSex();
 			} else {
 				print "&nbsp;";

@@ -1,29 +1,29 @@
 <?php
 
 /**
- * Various functions used by the media DB interface
- *
- * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- *
- * @package PhpGedView
- * @subpackage MediaDB
- * @version $Id$
- */
+* Various functions used by the media DB interface
+*
+* phpGedView: Genealogy Viewer
+* Copyright (C) 2002 to 2009 PGV Development Team.  All rights reserved.
+*
+* This program is free software; you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation; either version 2 of the License, or
+* (at your option) any later version.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+* GNU General Public License for more details.
+*
+* You should have received a copy of the GNU General Public License
+* along with this program; if not, write to the Free Software
+* Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+*
+* @package PhpGedView
+* @subpackage MediaDB
+* @version $Id$
+*/
 
 if (!defined('PGV_PHPGEDVIEW')) {
 	header('HTTP/1.0 403 Forbidden');
@@ -37,19 +37,19 @@ $MEDIATYPE = array("a11","acb","adc","adf","afm","ai","aiff","aif","amg","anm","
 $BADMEDIA = array(".","..","CVS","thumbs","index.php","MediaInfo.txt", ".cvsignore", ".svn", "watermark");
 
 /*
- *******************************
- * Database Interface functions
- *******************************/
+*******************************
+* Database Interface functions
+*******************************/
 
 /**
- * Removes a media item from this gedcom.
- *
- * Removes the main media record and any associated links
- * to individuals.
- *
- * @param string $media The gid of the record to be removed in the form Mxxxx.
- * @param string $ged The gedcom file this action is to apply to.
- */
+* Removes a media item from this gedcom.
+*
+* Removes the main media record and any associated links
+* to individuals.
+*
+* @param string $media The gid of the record to be removed in the form Mxxxx.
+* @param string $ged The gedcom file this action is to apply to.
+*/
 function remove_db_media($media, $ged) {
 	global $TBLPREFIX;
 
@@ -69,15 +69,15 @@ function remove_db_media($media, $ged) {
 }
 
 /**
- * Removes a media item from a individual.
- *
- * Removes this link to an individual from the database.
- * All records attached to this link are lost also.
- *
- * @param string $media The gid of the record to be removed in the form Mxxxx.
- * @param string $indi The gid that this media is linked to Ixxx Fxxx ect.
- * @param string $ged The gedcom file this action is to apply to.
- */
+* Removes a media item from a individual.
+*
+* Removes this link to an individual from the database.
+* All records attached to this link are lost also.
+*
+* @param string $media The gid of the record to be removed in the form Mxxxx.
+* @param string $indi The gid that this media is linked to Ixxx Fxxx ect.
+* @param string $ged The gedcom file this action is to apply to.
+*/
 function unlink_db_item($media, $indi, $ged) {
 	global $TBLPREFIX;
 
@@ -89,13 +89,13 @@ function unlink_db_item($media, $indi, $ged) {
 }
 
 /**
- * Queries the existence of a link in the db.
- *
- * @param string $media The gid of the record to be removed in the form Mxxxx.
- * @param string $gedrec The gedcom record as a string without the gid.
- * @param string $indi The gid that this media is linked to Ixxx Fxxx ect.
- * @return boolean
- */
+* Queries the existence of a link in the db.
+*
+* @param string $media The gid of the record to be removed in the form Mxxxx.
+* @param string $gedrec The gedcom record as a string without the gid.
+* @param string $indi The gid that this media is linked to Ixxx Fxxx ect.
+* @return boolean
+*/
 function exists_db_link($media, $indi, $ged) {
 	global $DBCONN, $GEDCOMS, $TBLPREFIX;
 
@@ -107,14 +107,14 @@ function exists_db_link($media, $indi, $ged) {
 }
 
 /**
- * Updates any gedcom records associated with the media.
- *
- * Replace the gedrec for the media record.
- *
- * @param string $media The gid of the record to be removed in the form Mxxxx.
- * @param string $gedrec The gedcom record as a string without the gid.
- * @param string $ged The gedcom file this action is to apply to.
- */
+* Updates any gedcom records associated with the media.
+*
+* Replace the gedrec for the media record.
+*
+* @param string $media The gid of the record to be removed in the form Mxxxx.
+* @param string $gedrec The gedcom record as a string without the gid.
+* @param string $ged The gedcom file this action is to apply to.
+*/
 function update_db_media($media, $gedrec, $ged) {
 	global $GEDCOMS, $TBLPREFIX;
 
@@ -126,17 +126,17 @@ function update_db_media($media, $gedrec, $ged) {
 }
 
 /**
- * Updates any gedcom records associated with the link.
- *
- * Replace the gedrec for an existing link record.
- *
- * @param string $media The gid of the record to be updated in the form Mxxxx.
- * @param string $indi The gid that this media is linked to Ixxx Fxxx ect.
- * @param string $gedrec The gedcom record as a string without the gid.
- * @param string $ged The gedcom file this action is to apply to.
- * @param integer $order The order that this record should be displayed on the gid. If not supplied then
- *                       the order is not replaced.
- */
+* Updates any gedcom records associated with the link.
+*
+* Replace the gedrec for an existing link record.
+*
+* @param string $media The gid of the record to be updated in the form Mxxxx.
+* @param string $indi The gid that this media is linked to Ixxx Fxxx ect.
+* @param string $gedrec The gedcom record as a string without the gid.
+* @param string $ged The gedcom file this action is to apply to.
+* @param integer $order The order that this record should be displayed on the gid. If not supplied then
+*                       the order is not replaced.
+*/
 function update_db_link($media, $indi, $gedrec, $ged, $order = -1) {
 	global $TBLPREFIX, $GEDCOMS;
 
@@ -161,17 +161,17 @@ function update_db_link($media, $indi, $gedrec, $ged, $order = -1) {
 }
 
 /**
- * Adds a new link into the database.
- *
- * Replace the gedrec for an existing link record.
- *
- * @param string $media The gid of the record to be updated in the form Mxxxx.
- * @param string $indi The gid that this media is linked to Ixxx Fxxx ect.
- * @param string $gedrec The gedcom record as a string without the gid.
- * @param string $ged The gedcom file this action is to apply to.
- * @param integer $order The order that this record should be displayed on the gid. If not supplied then
- *                       the order is not replaced.
- */
+* Adds a new link into the database.
+*
+* Replace the gedrec for an existing link record.
+*
+* @param string $media The gid of the record to be updated in the form Mxxxx.
+* @param string $indi The gid that this media is linked to Ixxx Fxxx ect.
+* @param string $gedrec The gedcom record as a string without the gid.
+* @param string $ged The gedcom file this action is to apply to.
+* @param integer $order The order that this record should be displayed on the gid. If not supplied then
+*                       the order is not replaced.
+*/
 function add_db_link($media, $indi, $gedrec, $ged, $order = -1) {
 	global $TBLPREFIX, $GEDCOMS, $DBCONN;
 
@@ -197,26 +197,26 @@ function add_db_link($media, $indi, $gedrec, $ged, $order = -1) {
 }
 
 /*
- ****************************
- * general functions
- ****************************/
+****************************
+* general functions
+****************************/
 
 /**
- * Get the list of media from the database
- *
- * Searches the media table of the database for media items that
- * are associated with the currently active GEDCOM.
- *
- * The medialist that is returned contains the following elements:
- * - $media["ID"] the unique id of this media item in the table (Mxxxx)
- * - $media["GEDFILE"] the gedcom file the media item should be added to
- * - $media["FILE"] the filename of the media item
- * - $media["FORM"] the format of the item (ie JPG, PDF, etc)
- * - $media["TITL"] a title for the item, used for list display
- * - $media["NOTE"] gedcom record snippet
- *
- * @return mixed A media list array.
- */
+* Get the list of media from the database
+*
+* Searches the media table of the database for media items that
+* are associated with the currently active GEDCOM.
+*
+* The medialist that is returned contains the following elements:
+* - $media["ID"] the unique id of this media item in the table (Mxxxx)
+* - $media["GEDFILE"] the gedcom file the media item should be added to
+* - $media["FILE"] the filename of the media item
+* - $media["FORM"] the format of the item (ie JPG, PDF, etc)
+* - $media["TITL"] a title for the item, used for list display
+* - $media["NOTE"] gedcom record snippet
+*
+* @return mixed A media list array.
+*/
 function get_db_media_list() {
 	global $GEDCOM, $GEDCOMS;
 	global $TBLPREFIX;
@@ -242,21 +242,21 @@ function get_db_media_list() {
 }
 
 /**
- * Get the list of links to media from the database
- *
- * Searches the media table of the database for media items that
- * are associated with the currently active GEDCOM.
- *
- * The medialist that is returned contains the following elements:
- * - $mapping["ID"] Database id
- * - $mapping["INDI"] the gid of this media item is linked to (Ixxxx, Fxxx etc)
- * - $mapping["XREF"] the unique id of this media item in the table (Mxxxx)
- * - $mapping["ORDER"] the order the media item should be injected into the gedcom file
- * - $mapping["GEDFILE"] the gedcom file the media item should be added to
- * - $mapping["NOTE"] gedcom record snippet
- *
- * @return mixed A media list array.
- */
+* Get the list of links to media from the database
+*
+* Searches the media table of the database for media items that
+* are associated with the currently active GEDCOM.
+*
+* The medialist that is returned contains the following elements:
+* - $mapping["ID"] Database id
+* - $mapping["INDI"] the gid of this media item is linked to (Ixxxx, Fxxx etc)
+* - $mapping["XREF"] the unique id of this media item in the table (Mxxxx)
+* - $mapping["ORDER"] the order the media item should be injected into the gedcom file
+* - $mapping["GEDFILE"] the gedcom file the media item should be added to
+* - $mapping["NOTE"] gedcom record snippet
+*
+* @return mixed A media list array.
+*/
 function get_db_mapping_list() {
 	global $GEDCOM, $GEDCOMS, $TBLPREFIX;
 
@@ -278,23 +278,23 @@ function get_db_mapping_list() {
 }
 
 /**
- * Get the list of links to media from the database for a person/family/source
- *
- * Searches the media table of the database for media items that
- * are associated with a person/family/source.
- *
- * The medialist that is returned contains the following elements:
- * - $mapping["ID"] Database id
- * - $mapping["INDI"] the gid of this media item is linked to (Ixxxx, Fxxx etc)
- * - $mapping["XREF"] the unique id of this media item in the table (Mxxxx)
- * - $mapping["ORDER"] the order the media item should be injected into the gedcom file
- * - $mapping["GEDFILE"] the gedcom file the media item should be added to
- * - $mapping["NOTE"] gedcom record snippet
- * - $mapping["CHECK"] boolean for calling routine use, false by default.
- *
- * @param string $indi The person/family/source item to find media links for
- * @return mixed A media list array.
- */
+* Get the list of links to media from the database for a person/family/source
+*
+* Searches the media table of the database for media items that
+* are associated with a person/family/source.
+*
+* The medialist that is returned contains the following elements:
+* - $mapping["ID"] Database id
+* - $mapping["INDI"] the gid of this media item is linked to (Ixxxx, Fxxx etc)
+* - $mapping["XREF"] the unique id of this media item in the table (Mxxxx)
+* - $mapping["ORDER"] the order the media item should be injected into the gedcom file
+* - $mapping["GEDFILE"] the gedcom file the media item should be added to
+* - $mapping["NOTE"] gedcom record snippet
+* - $mapping["CHECK"] boolean for calling routine use, false by default.
+*
+* @param string $indi The person/family/source item to find media links for
+* @return mixed A media list array.
+*/
 function get_db_indi_mapping_list($indi) {
 	global $GEDCOM, $GEDCOMS, $TBLPREFIX, $DBCONN;
 
@@ -317,11 +317,11 @@ function get_db_indi_mapping_list($indi) {
 }
 
 /**
- * Converts a block of text into a gedcom NOTE record.
- *
- * @param integer $level  The indent number for the NOTE record.
- * @param string $txt Block of text to convert.
- * @return gedrec Gedcom NOTE record.
+* Converts a block of text into a gedcom NOTE record.
+*
+* @param integer $level  The indent number for the NOTE record.
+* @param string $txt Block of text to convert.
+* @return gedrec Gedcom NOTE record.
 */
 function textblock_to_note($level, $txt) {
 
@@ -330,13 +330,13 @@ function textblock_to_note($level, $txt) {
 }
 
 /**
- * Removes /./  /../  from the middle of any given path
- * User function as the php variant will expand leading ./ to full path which is not
- * required and could be security issue.
- *
- * @param string $path Filepath to check.
- * @return string Cleaned up path.
- */
+* Removes /./  /../  from the middle of any given path
+* User function as the php variant will expand leading ./ to full path which is not
+* required and could be security issue.
+*
+* @param string $path Filepath to check.
+* @return string Cleaned up path.
+*/
 function real_path($path) {
 	if ($path == "") {
 		return false;
@@ -383,14 +383,14 @@ function real_path($path) {
 }
 
 /**
- *
- * Construct the correct path for media files and thumbnails before moving them
- *
- * @param string $filename Filename including complete path
- * @param string $moveto Diretory where it should be moved to
- * @param boolean $thumb Specify whether it should be the thumbnail directory
- * @return string Cleaned up path.
- */
+*
+* Construct the correct path for media files and thumbnails before moving them
+*
+* @param string $filename Filename including complete path
+* @param string $moveto Diretory where it should be moved to
+* @param boolean $thumb Specify whether it should be the thumbnail directory
+* @return string Cleaned up path.
+*/
 function set_media_path($filename, $moveto, $thumb = false) {
 	$movefile = "";
 	if ($moveto == "..") {
@@ -421,12 +421,12 @@ function set_media_path($filename, $moveto, $thumb = false) {
 }
 
 /**
- *
- * Sanity check for the media folder. We need to check if the media and the thumbs folder
- * exist. If they don't exist we will try to create them otherwise we can't continue.
- *
- * @return boolean Specify whether we succeeded to create the media and thumbnail folder
- */
+*
+* Sanity check for the media folder. We need to check if the media and the thumbs folder
+* exist. If they don't exist we will try to create them otherwise we can't continue.
+*
+* @return boolean Specify whether we succeeded to create the media and thumbnail folder
+*/
 function check_media_structure() {
 	global $MEDIA_DIRECTORY, $pgv_lang;
 
@@ -472,31 +472,31 @@ function check_media_structure() {
 }
 
 /**
- * Get the list of media from the database
- *
- * Searches the media table of the database for media items that
- * are associated with the currently active GEDCOM.
- *
- * The medialist that is returned contains the following elements:
- * - $media["ID"] 		the unique id of this media item in the table (Mxxxx)
- * - $media["XREF"]		Another copy of the Media ID (not sure why there are two)
- * - $media["GEDFILE"] 	the gedcom file the media item should be added to
- * - $media["FILE"] 	the filename of the media item
- * - $media["EXISTS"] 	whether the file exists.  0=no, 1=external, 2=std dir, 3=protected dir
- * - $media["THUMB"]	the filename of the thumbnail
- * - $media["THUMBEXISTS"]	whether the thumbnail exists.  0=no, 1=external, 2=std dir, 3=protected dir
- * - $media["FORM"] 	the format of the item (ie bmp, gif, jpeg, pcx etc)
- * - $media["TYPE"]		the type of media item (ie certificate, document, photo, tombstone etc)
- * - $media["TITL"] 	a title for the item, used for list display
- * - $media["GEDCOM"] 	gedcom record snippet
- * - $media["LEVEL"]	level number (normally zero)
- * - $media["LINKED"] 	Flag for front end to indicate this is linked
- * - $media["LINKS"] 	Array of gedcom ids that this is linked to
- * - $media["CHANGE"]	Indicates the type of change waiting admin approval
- *
- * @param boolean $random If $random is true then the function will return 5 random pictures.
- * @return mixed A media list array.
- */
+* Get the list of media from the database
+*
+* Searches the media table of the database for media items that
+* are associated with the currently active GEDCOM.
+*
+* The medialist that is returned contains the following elements:
+* - $media["ID"]          the unique id of this media item in the table (Mxxxx)
+* - $media["XREF"]        Another copy of the Media ID (not sure why there are two)
+* - $media["GEDFILE"]     the gedcom file the media item should be added to
+* - $media["FILE"]        the filename of the media item
+* - $media["EXISTS"]      whether the file exists.  0=no, 1=external, 2=std dir, 3=protected dir
+* - $media["THUMB"]       the filename of the thumbnail
+* - $media["THUMBEXISTS"] whether the thumbnail exists.  0=no, 1=external, 2=std dir, 3=protected dir
+* - $media["FORM"]        the format of the item (ie bmp, gif, jpeg, pcx etc)
+* - $media["TYPE"]        the type of media item (ie certificate, document, photo, tombstone etc)
+* - $media["TITL"]        a title for the item, used for list display
+* - $media["GEDCOM"]      gedcom record snippet
+* - $media["LEVEL"]       level number (normally zero)
+* - $media["LINKED"]      Flag for front end to indicate this is linked
+* - $media["LINKS"]       Array of gedcom ids that this is linked to
+* - $media["CHANGE"]      Indicates the type of change waiting admin approval
+*
+* @param boolean $random If $random is true then the function will return 5 random pictures.
+* @return mixed A media list array.
+*/
 
 function get_medialist($currentdir = false, $directory = "", $linkonly = false, $random = false, $includeExternal = true) {
 	global $MEDIA_DIRECTORY_LEVELS, $BADMEDIA, $thumbdir, $TBLPREFIX, $MEDIATYPE, $DBCONN;
@@ -882,14 +882,13 @@ function get_medialist($currentdir = false, $directory = "", $linkonly = false, 
 	return $medialist;
 }
 /**
- * Determine whether the current Media item matches the filter criteria
- *
- * @param	array	$media		An item from the Media list produced by get_medialist()
- * @param	string	$filter		The filter to be looked for within various elements of
- *								the $media array
- * @param	string	$acceptExt	"http" if links to external media should be considered too
- * @return	bool				false if the Media item doesn't match the filter criteria
- */
+* Determine whether the current Media item matches the filter criteria
+*
+* @param array $media An item from the Media list produced by get_medialist()
+* @param string $filter The filter to be looked for within various elements of the $media array
+* @param string $acceptExt "http" if links to external media should be considered too
+* @return bool false if the Media item doesn't match the filter criteria
+*/
 function filterMedia($media, $filter, $acceptExt) {
 
 	if (empty ($filter) || strlen($filter) < 2)
@@ -949,16 +948,16 @@ function filterMedia($media, $filter, $acceptExt) {
 }
 //-- search through the gedcom records for individuals
 /**
- * Search the database for individuals that match the query
- *
- * uses a regular expression to search the gedcom records of all individuals and returns an
- * array list of the matching individuals
- *
- * @author roland-d
- * @param	string $query a regular expression query to search for
- * @param	boolean $allgeds setting if all gedcoms should be searched, default is false
- * @return	array $myindilist array with all individuals that matched the query
- */
+* Search the database for individuals that match the query
+*
+* uses a regular expression to search the gedcom records of all individuals and returns an
+* array list of the matching individuals
+*
+* @author roland-d
+* @param string $query a regular expression query to search for
+* @param boolean $allgeds setting if all gedcoms should be searched, default is false
+* @return array $myindilist array with all individuals that matched the query
+*/
 function search_media_pids($query, $allgeds = false, $ANDOR = "AND") {
 	global $TBLPREFIX, $GEDCOM, $DBCONN, $GEDCOMS;
 	$myindilist = array ();
@@ -1003,17 +1002,16 @@ function search_media_pids($query, $allgeds = false, $ANDOR = "AND") {
 }
 
 /**
- * Generates the thumbnail filename and path
- *
- * The full file path is taken and turned into the location of the thumbnail file.
- *
- * @author	roland-d
- * @param	string 	$filename 		The full filename of the media item
- * @param	bool	$generateThumb	'true' when thumbnail should be generated,
- *									'false' when only the file name should be returned
- * @param	bool	$overwrite		'true' to replace existing thumbnail
- * @return 	string the location of the thumbnail
- */
+* Generates the thumbnail filename and path
+*
+* The full file path is taken and turned into the location of the thumbnail file.
+*
+* @author roland-d
+* @param string $filename The full filename of the media item
+* @param bool $generateThumb 'true' when thumbnail should be generated, 'false' when only the file name should be returned
+* @param bool $overwrite 'true' to replace existing thumbnail
+* @return string the location of the thumbnail
+*/
 function thumbnail_file($filename, $generateThumb = true, $overwrite = false) {
 	global $MEDIA_DIRECTORY, $PGV_IMAGE_DIR, $PGV_IMAGES, $AUTO_GENERATE_THUMBS, $MEDIA_DIRECTORY_LEVELS;
 	global $MEDIA_EXTERNAL;
@@ -1060,7 +1058,7 @@ function thumbnail_file($filename, $generateThumb = true, $overwrite = false) {
 	}
 
 	// Thumbnail doesn't exist and could not be generated:
-	//		Return an icon image instead
+	// Return an icon image instead
 	switch ($thumbExt) {
 		case "pdf" :
 			$which = "pdf";
@@ -1079,33 +1077,33 @@ function thumbnail_file($filename, $generateThumb = true, $overwrite = false) {
 }
 
 /**
- * Validate the media depth
- *
- * When the user has a media depth greater than 0, all media needs to be
- * checked against this to ensure the proper path is in place. This function
- * takes a filename, split it in parts and then recreates it according to the
- * chosen media depth
- *
- * When the input file name is a URL, this routine does nothing.  Only http:// URLs
- * are supported.
- *
- * @author	roland-d
- * @param	string	$filename	The filename that needs to be checked for media depth
- * @param	string	$truncate	Controls which part of folder structure to truncate when
- *								number of folders exceeds $MEDIA_DIRECTORY_LEVELS
- *									"NOTRUNC":	Don't truncate
- *									"BACK":		Truncate at end, keeping front part
- *									"FRONT":	Truncate at front, keeping back part
- * @param	string	$noise		Controls the amount of chatting done by this function
- *									"VERBOSE"	Print messages
- *									"QUIET"		Don't print messages
- * @return 	string	A filename validated for the media depth
- *
- * NOTE: 	The "NOTRUNC" option is required so that media that were inserted into the
- *			database before $MEDIA_DIRECTORY_LEVELS was reduced will display properly.
- * NOTE:	The "QUIET" option is used during GEDCOM import, where we really don't need
- *			to know about every Media folder that's being created.
- */
+* Validate the media depth
+*
+* When the user has a media depth greater than 0, all media needs to be
+* checked against this to ensure the proper path is in place. This function
+* takes a filename, split it in parts and then recreates it according to the
+* chosen media depth
+*
+* When the input file name is a URL, this routine does nothing.  Only http:// URLs
+* are supported.
+*
+* @author roland-d
+* @param string $filename The filename that needs to be checked for media depth
+* @param string $truncate Controls which part of folder structure to truncate when
+*  number of folders exceeds $MEDIA_DIRECTORY_LEVELS
+*  "NOTRUNC": Don't truncate
+*  "BACK":  Truncate at end, keeping front part
+*  "FRONT": Truncate at front, keeping back part
+* @param string $noise  Controls the amount of chatting done by this function
+*  "VERBOSE" Print messages
+*  "QUIET"  Don't print messages
+* @return  string A filename validated for the media depth
+*
+* NOTE: The "NOTRUNC" option is required so that media that were inserted into the
+*  database before $MEDIA_DIRECTORY_LEVELS was reduced will display properly.
+* NOTE: The "QUIET" option is used during GEDCOM import, where we really don't need
+*  to know about every Media folder that's being created.
+*/
 function check_media_depth($filename, $truncate = "FRONT", $noise = "VERBOSE") {
 	global $MEDIA_DIRECTORY, $MEDIA_DIRECTORY_LEVELS, $MEDIA_EXTERNAL;
 	global $pgv_lang;
@@ -1288,9 +1286,9 @@ function retrieve_media_object($gedrec, $gid) {
 }
 
 /**
- * get the list of current folders in the media directory
- * @return array
- */
+* get the list of current folders in the media directory
+* @return array
+*/
 function get_media_folders() {
 	global $MEDIA_DIRECTORY, $MEDIA_DIRECTORY_LEVELS;
 
@@ -1332,8 +1330,8 @@ function get_media_folders() {
 }
 
 /**
- * process the form for uploading media files
- */
+* process the form for uploading media files
+*/
 function process_uploadMedia_form() {
 	global $pgv_lang, $TEXT_DIRECTION;
 	global $MEDIA_DIRECTORY, $USE_MEDIA_FIREWALL, $MEDIA_FIREWALL_THUMBS, $MEDIATYPE;
@@ -1351,8 +1349,8 @@ function process_uploadMedia_form() {
 
 			$_SESSION["upload_folder"] = $folderName; // store standard media folder in session
 
-			$destFolder = $folderName;		// This is where the actual image will be stored
-			$destThumbFolder = $thumbFolderName;		// ditto for the thumbnail
+			$destFolder = $folderName;  // This is where the actual image will be stored
+			$destThumbFolder = $thumbFolderName;  // ditto for the thumbnail
 
 			if ($USE_MEDIA_FIREWALL) {
 				$destFolder = get_media_firewall_path($folderName);
@@ -1372,7 +1370,7 @@ function process_uploadMedia_form() {
 			$parts = pathinfo($fileName);
 			if (!empty($parts["basename"])) {
 				// User supplied a name to be used on the server
-				$mediaFile = $parts["basename"];	// Use the supplied name
+				$mediaFile = $parts["basename"]; // Use the supplied name
 				if (empty($parts["extension"]) || !in_array(strtolower($parts["extension"]), $MEDIATYPE)) {
 					// Strip invalid extension from supplied name
 					$lastDot = strrpos($mediaFile, '.');
@@ -1456,10 +1454,10 @@ function process_uploadMedia_form() {
 }
 
 /**
- * print a form for uploading media files
- * @param string $URL		the URL the input form is to execute when the "Submit" button is pressed
- * @param bool   $showthumb	the setting of the "show thumbnail" option (required by media.php)
- */
+* print a form for uploading media files
+* @param string $URL  the URL the input form is to execute when the "Submit" button is pressed
+* @param bool   $showthumb the setting of the "show thumbnail" option (required by media.php)
+*/
 function show_mediaUpload_form($URL='media.php', $showthumb=false) {
 	global $AUTO_GENERATE_THUMBS, $MEDIA_DIRECTORY_LEVELS, $MEDIA_DIRECTORY;
 	global $pgv_lang, $TEXT_DIRECTION;
@@ -1469,14 +1467,14 @@ function show_mediaUpload_form($URL='media.php', $showthumb=false) {
 	// Check for thumbnail generation support
 	$thumbSupport = "";
 	if ($AUTO_GENERATE_THUMBS) {
-/*		"wbmp" is NOT "Windows BMP" -- it's "Wireless BMP", a simple B&W bit mapped format
+/*  "wbmp" is NOT "Windows BMP" -- it's "Wireless BMP", a simple B&W bit mapped format
 		if (function_exists("imagecreatefromwbmp") && function_exists("imagewbmp")) $thumbSupport .= ", BMP";
 */
 		if (function_exists("imagecreatefromgif") && function_exists("imagegif")) $thumbSupport .= ", GIF";
 		if (function_exists("imagecreatefromjpeg") && function_exists("imagejpeg")) $thumbSupport .= ", JPG";
 		if (function_exists("imagecreatefrompng") && function_exists("imagepng")) $thumbSupport .= ", PNG";
 	}
-	if ($thumbSupport != '') $thumbSupport = substr($thumbSupport, 2);	// Trim off first ", "
+	if ($thumbSupport != '') $thumbSupport = substr($thumbSupport, 2); // Trim off first ", "
 
 	// Determine file size limit
 	$filesize = ini_get('upload_max_filesize');
@@ -1584,14 +1582,14 @@ function show_mediaUpload_form($URL='media.php', $showthumb=false) {
 
 
 /**
- * print a form for editing or adding media items
- * @param string $pid		the id of the media item to edit
- * @param string $action	the action to take after the form is posted
- * @param string $filename	allows you to provide a filename to go in the FILE tag for new media items
- * @param string $linktoid	the id of the person/family/source to link a new media item to
- * @param int    $level		The level at which this media item should be added
- * @param int    $line		The line number in the GEDCOM record where this media item belongs
- */
+* print a form for editing or adding media items
+* @param string $pid  the id of the media item to edit
+* @param string $action the action to take after the form is posted
+* @param string $filename allows you to provide a filename to go in the FILE tag for new media items
+* @param string $linktoid the id of the person/family/source to link a new media item to
+* @param int    $level  The level at which this media item should be added
+* @param int    $line  The line number in the GEDCOM record where this media item belongs
+*/
 function show_media_form($pid, $action = "newentry", $filename = "", $linktoid = "", $level = 1, $line = 0) {
 	global $GEDCOM, $pgv_lang, $TEXT_DIRECTION, $GEDCOMS, $WORD_WRAPPED_NOTES;
 	global $pgv_changes, $MEDIA_DIRECTORY_LEVELS, $MEDIA_DIRECTORY;
@@ -1637,7 +1635,7 @@ function show_media_form($pid, $action = "newentry", $filename = "", $linktoid =
 		if ($filename != "")
 			$gedfile = "FILE " . $filename;
 	} else {
-		//		$gedfile = get_sub_record(1, "FILE", $gedrec);
+		//  $gedfile = get_sub_record(1, "FILE", $gedrec);
 		$gedfile = get_first_tag(1, "FILE", $gedrec);
 		if (empty ($gedfile))
 			$gedfile = "FILE";
@@ -1661,7 +1659,7 @@ function show_media_form($pid, $action = "newentry", $filename = "", $linktoid =
 		// Check for thumbnail generation support
 			$thumbSupport = "";
 			if ($AUTO_GENERATE_THUMBS) {
-/*				"wbmp" is NOT "Windows BMP" -- it's "Wireless BMP", a simple B&W bit mapped format
+/*    "wbmp" is NOT "Windows BMP" -- it's "Wireless BMP", a simple B&W bit mapped format
 				if (function_exists("imagecreatefromwbmp") && function_exists("imagewbmp")) $thumbSupport .= ", WBMP";
 */
 				if (function_exists("imagecreatefromgif") && function_exists("imagegif")) $thumbSupport .= ", GIF";
@@ -1719,7 +1717,7 @@ function show_media_form($pid, $action = "newentry", $filename = "", $linktoid =
 			else
 				print " /><br /><sub>" . $pgv_lang["server_file_advice"] . "</sub>";
 		} else {
-/*			$thumbnail = thumbnail_file($fileName, true, false, $pid);
+/*   $thumbnail = thumbnail_file($fileName, true, false, $pid);
 			if (!empty($thumbnail)) {
 				print "<img src=\"".$thumbnail."\" border=\"0\" align=\"" . ($TEXT_DIRECTION== "rtl"?"right": "left") . "\" class=\"thumbnail\"";
 				if ($isExternal) print " width=\"".$THUMBNAIL_WIDTH."\"";
@@ -1842,7 +1840,7 @@ function show_media_form($pid, $action = "newentry", $filename = "", $linktoid =
 		if ($gedrec == "")
 			$gedprim = "_PRIM";
 		else {
-			//		$gedprim = get_sub_record(1, "_PRIM", $gedrec);
+			//  $gedprim = get_sub_record(1, "_PRIM", $gedrec);
 			$gedprim = get_first_tag(1, "_PRIM", $gedrec);
 			if (empty ($gedprim))
 				$gedprim = "_PRIM";
@@ -1856,7 +1854,7 @@ function show_media_form($pid, $action = "newentry", $filename = "", $linktoid =
 		if ($gedrec == "")
 			$gedthum = "_THUM";
 		else {
-			//		$gedthum = get_sub_record(1, "_THUM", $gedrec);
+			//  $gedthum = get_sub_record(1, "_THUM", $gedrec);
 			$gedthum = get_first_tag(1, "_THUM", $gedrec);
 			if (empty ($gedthum))
 				$gedthum = "_THUM";
@@ -1981,11 +1979,11 @@ function findImageSize($file) {
 }
 
 /**
- * Print the list of persons, families, and sources that are mentioned in
- * the "LINKS" array of the current item from the Media list.
- *
- * This function is called from media.php, medialist.php, and random_media.php
- */
+* Print the list of persons, families, and sources that are mentioned in
+* the "LINKS" array of the current item from the Media list.
+*
+* This function is called from media.php, medialist.php, and random_media.php
+*/
 
 function PrintMediaLinks($links, $size = "small") {
 	;
@@ -2189,7 +2187,7 @@ function cropImage($image, $dest_image, $left, $top, $right, $bottom){ //$image 
 		imagegif($img,$dest_image);
 		imagedestroy($img);
 		break;
-/*		"wbmp" is NOT "Windows BMP" -- it's "Wireless BMP", a simple B&W bit mapped format
+/*  "wbmp" is NOT "Windows BMP" -- it's "Wireless BMP", a simple B&W bit mapped format
 		if (!function_exists('imagecreatefromwbmp') || !function_exists('imagewbmp')) break;
 		$img = imagecreatetruecolor(($ims[0]-$right)-$left,($ims[1]-$bottom)-$top);
 		$org_img = imagecreatefromwbmp($image);
@@ -2320,8 +2318,7 @@ function hasMemoryForImage($serverFilename, $debug_verboseLogging=false) {
 	if ($memoryAvailable == -1) return true;
 
 	// find out how much memory we are already using
-	// if the memory_get_usage() function doesn't exist, assume we are using 900k to load the PGV framework
-	$memoryUsed = ( function_exists('memory_get_usage') ) ? memory_get_usage() : 900000;
+	$memoryUsed=memory_get_usage();
 
 	$imgsize = @getimagesize($serverFilename);
 	// find out how much memory this image needs for processing, probably only works for jpegs
@@ -2346,10 +2343,10 @@ function hasMemoryForImage($serverFilename, $debug_verboseLogging=false) {
 }
 
 /**
- * function to generate a thumbnail image
- * @param string $filename
- * @param string $thumbnail
- */
+* function to generate a thumbnail image
+* @param string $filename
+* @param string $thumbnail
+*/
 function generate_thumbnail($filename, $thumbnail) {
 	global $MEDIA_DIRECTORY, $THUMBNAIL_WIDTH, $AUTO_GENERATE_THUMBS, $USE_MEDIA_FIREWALL, $MEDIA_FIREWALL_THUMBS;
 
@@ -2383,9 +2380,9 @@ function generate_thumbnail($filename, $thumbnail) {
 				}
 			}
 		}
-		if (!file_exists(filename_decode($filename))) return false;		// Can't thumbnail a non-existent image
+		if (!file_exists(filename_decode($filename))) return false;  // Can't thumbnail a non-existent image
 		$imgsize = getimagesize(filename_decode($filename));
-		if (!$imgsize) return false;		// Can't thumbnail an image of unknown size
+		if (!$imgsize) return false;  // Can't thumbnail an image of unknown size
 
 		//-- check if file is small enough to be its own thumbnail
 		if (($imgsize[0]<150)&&($imgsize[1]<150)) {

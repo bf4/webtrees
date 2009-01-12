@@ -972,13 +972,13 @@ if ($stage == 1) {
 
 			//-- calculate some statistics
 			if (!isset ($show_type)) {
-				$show_type = $type;
+				$show_type = $xtype;
 				$i_start = 1;
 				$exectime_start = 0;
 				$type_BYTES = 0;
 			}
 			$i ++;
-			if ($show_type != $type) {
+			if ($show_type != $xtype) {
 				$newtime = time();
 				$exectime = $newtime - $oldtime;
 				$show_exectime = $exectime - $exectime_start;
@@ -995,7 +995,7 @@ if ($stage == 1) {
 					$listtype[$show_type]["bytes"] += $type_BYTES;
 					$listtype[$show_type]["i"] += $show_i;
 				}
-				$show_type = $type;
+				$show_type = $xtype;
 				$i_start = $i;
 				$exectime_start = $exectime;
 				$type_BYTES = $TOTAL_BYTES;
@@ -1008,7 +1008,6 @@ if ($stage == 1) {
 				flush();
 			} else
 			print " ";
-			$show_gid = $gid;
 
 			//-- check if we are getting close to timing out
 			if ($i % 5 == 0) {
