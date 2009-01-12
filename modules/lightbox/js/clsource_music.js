@@ -1073,6 +1073,7 @@ var CB_Close_Win		= CB_Close_Win;
         }
         CB_Prv.style.display = "none";
         CB_Nxt.style.display = "none";
+
         if (a) {
             CB_ActImgId = parseInt(a);
         }
@@ -1123,12 +1124,15 @@ var CB_Close_Win		= CB_Close_Win;
     }
 
     function CB_AnimatePlease(a) {
-		CB_Speak.style.display = "none";
+	//	CB_Speak.style.display = "none";
+		tt_HideInit();
+		CB_tt="closed";
         CB_JumpX = CB_Jump_X;
         CB_JumpY = CB_Jump_Y;
         CB_AnimX = "false";
         CB_AnimY = "false";
         CB_IsAnimating = 1;
+
         if (CB_Animation == "double") {
             CB_WindowResizeX();
             CB_WindowResizeY();
@@ -1504,6 +1508,7 @@ var CB_Close_Win		= CB_Close_Win;
 		CB_SlideB.style.display = "none";
 		CB_ZoomS.style.display = "block";
 		CB_ZoomP.style.display = "none";		
+		
         if (CB_Gallery.length < 3) {		
 			CB_SlideS.style.display = "none";
 		}else{
@@ -1558,6 +1563,16 @@ var CB_Close_Win		= CB_Close_Win;
 	}
 	// ========================================================================================
 
+	function decode_htmlspecialchars(p_string) {
+		p_string = p_string.replace(/&amp;/g, '&');
+		p_string = p_string.replace(/&lt;/g, '<');
+		p_string = p_string.replace(/&gt;/g, '>');
+		p_string = p_string.replace(/\\&quot;/g, '"');
+		p_string = p_string.replace(/&quot;/g, '"');
+		p_string = p_string.replace(/&#039;/g, '\'');
+		return p_string;
+	};
+	
     function CB_ShowImage() {
 		// ---Adjust Title width to image ----------------------------
 		CB_Txt.style.width = CB_ImgWidth + "px";
@@ -1612,9 +1627,15 @@ var CB_Close_Win		= CB_Close_Win;
 				if (brs==9)  {spacer=spacer+55;}
 				if (brs==10) {spacer=spacer+65;}
 				//alert(brs + " - " + spacer);
-				CB_Txt3.innerHTML = "<a href=\"JavaScript:void(0);\" onclick=\"TipTog('<font color=#008800><b>" + CB_ImgNotes2 + ":</b></font><br />" + notey1 + "', CENTERWINDOW, true, DELAY, 0, TEXTALIGN, '" + CB_Alignm + "', WIDTH, "+CB_ImgWidth+"-30, BGCOLOR, '#fffbcc', BALLOON, true , BALLOONSTEMWIDTH, 0, ABOVE, true, BORDERCOLOR, '', TITLEBGCOLOR, '', CLOSEBTNTEXT, 'X', CLOSEBTN, false, CLOSEBTNCOLORS, ['#ff0000', '#ffffff', '#ffffff', '#ff0000'], OFFSETY, 150-" + ((DocSizeY-BrSizeY)/2) + ", OFFSETX, 0, STICKY, true, PADDING, 6, CLICKCLOSE, true );\" ></a>";
-				CB_Txt3a.innerHTML = "<a href=\"JavaScript:void(0);\" onclick=\"TipTog('<font color=#008800><b>" + CB_ImgNotes2 + ":</b></font><br />" + notey1 + "', CENTERWINDOW, true, DELAY, 0, TEXTALIGN, '" + CB_Alignm + "', WIDTH, "+CB_ImgWidth+"-30, BGCOLOR, '#fffbcc', BALLOON, true, BALLOONSTEMWIDTH, 0, ABOVE, true, BORDERCOLOR, '', TITLEBGCOLOR, '', CLOSEBTNTEXT, 'X', CLOSEBTN, false, CLOSEBTNCOLORS, ['#ff0000', '#ffffff', '#ffffff', '#ff0000'], OFFSETY, -10-" + ((DocSizeY-BrSizeY)/2) + "+" +(CB_ImgHeight/2)+ "-" +(spacer)+ ", OFFSETX, 0, STICKY, true, PADDING, 6, CLICKCLOSE, true );\" ><img id=\"CB_PicNotes\" title=\"" + CB_ImgNotes + "\" src=\"" + CB_PicDir + CB_PictureNotes + "\" alt=\"\" /></a>";
-			}
+				
+			//	CB_Txt3.innerHTML = "<a href=\"JavaScript:void(0);\" onclick=\"TipTog('<font color=#008800><b>" + CB_ImgNotes2 + ":</b></font><br />" + notey1 + "', CENTERWINDOW, true, DELAY, 0, TEXTALIGN, '" + CB_Alignm + "', WIDTH, "+CB_ImgWidth+"-30, BGCOLOR, '#fffbcc', BALLOON, true , BALLOONSTEMWIDTH, 0, ABOVE, true, BORDERCOLOR, '', TITLEBGCOLOR, '', CLOSEBTNTEXT, 'X', CLOSEBTN, false, CLOSEBTNCOLORS, ['#ff0000', '#ffffff', '#ffffff', '#ff0000'], OFFSETY, 150-" + ((DocSizeY-BrSizeY)/2) + ", OFFSETX, 0, STICKY, true, PADDING, 6, CLICKCLOSE, true );\" ></a>";
+			//	CB_Txt3a.innerHTML = "<a href=\"JavaScript:void(0);\" onclick=\"TipTog('<font color=#008800><b>" + CB_ImgNotes2 + ":</b></font><br />" + notey1 + "', CENTERWINDOW, true, DELAY, 0, TEXTALIGN, '" + CB_Alignm + "', WIDTH, "+CB_ImgWidth+"-30, BGCOLOR, '#fffbcc', BALLOON, true, BALLOONSTEMWIDTH, 0, ABOVE, true, BORDERCOLOR, '', TITLEBGCOLOR, '', CLOSEBTNTEXT, 'X', CLOSEBTN, false, CLOSEBTNCOLORS, ['#ff0000', '#ffffff', '#ffffff', '#ff0000'], OFFSETY, -10-" + ((DocSizeY-BrSizeY)/2) + "+" +(CB_ImgHeight/2)+ "-" +(spacer)+ ", OFFSETX, 0, STICKY, true, PADDING, 6, CLICKCLOSE, true );\" ><img id=\"CB_PicNotes\" title=\"" + CB_ImgNotes + "\" src=\"" + CB_PicDir + CB_PictureNotes + "\" alt=\"\" /></a>";
+				CB_Txt3.innerHTML = "<a href=\"JavaScript:void(0);\" onclick=\"TipTog('" + notey1 + "', CENTERWINDOW, true, DELAY, 0, TEXTALIGN, '" + CB_Alignm + "', WIDTH, "+CB_ImgWidth+"-30, BGCOLOR, '#fffbcc', BALLOON, true , BALLOONSTEMWIDTH, 0, ABOVE, true, BORDERCOLOR, '', TITLEBGCOLOR, '', CLOSEBTNTEXT, 'X', CLOSEBTN, false, CLOSEBTNCOLORS, ['#ff0000', '#ffffff', '#ffffff', '#ff0000'], OFFSETY, 150-" + ((DocSizeY-BrSizeY)/2) + ", OFFSETX, 0, STICKY, true, PADDING, 6, CLICKCLOSE, true );\" ></a>";
+				CB_Txt3a.innerHTML = "<a href=\"JavaScript:void(0);\" onclick=\"TipTog('" + notey1 + "', CENTERWINDOW, true, DELAY, 0, TEXTALIGN, '" + CB_Alignm + "', WIDTH, "+CB_ImgWidth+"-30, BGCOLOR, '#fffbcc', BALLOON, true, BALLOONSTEMWIDTH, 0, ABOVE, true, BORDERCOLOR, '', TITLEBGCOLOR, '', CLOSEBTNTEXT, 'X', CLOSEBTN, false, CLOSEBTNCOLORS, ['#ff0000', '#ffffff', '#ffffff', '#ff0000'], OFFSETY, -10-" + ((DocSizeY-BrSizeY)/2) + "+" +(CB_ImgHeight/2)+ "-" +(spacer)+ ", OFFSETX, 0, STICKY, true, PADDING, 6, CLICKCLOSE, true );\" ><img id=\"CB_PicNotes\" title=\"" + CB_ImgNotes + "\" src=\"" + CB_PicDir + CB_PictureNotes + "\" alt=\"\" /></a>";
+
+				Tip(decode_htmlspecialchars(notey1), CENTERWINDOW, true, DELAY, 0, TEXTALIGN, CB_Alignm, WIDTH, CB_ImgWidth-30, BGCOLOR, '#fffbcc', BALLOON, true, BALLOONSTEMWIDTH, 0, ABOVE, true, BORDERCOLOR, '', TITLEBGCOLOR, '', CLOSEBTNTEXT, 'X', CLOSEBTN, false, CLOSEBTNCOLORS, ['#ff0000', '#ffffff', '#ffffff', '#ff0000'], OFFSETY, -10-((DocSizeY-BrSizeY)/2)+(CB_ImgHeight/2)-(spacer), OFFSETX, 0, STICKY, true, PADDING, 6, CLICKCLOSE, true );
+
+				}
 		} else {
 			if (CB_ShowImgURL == "be") {
 				CB_Txt.innerHTML = CB_Gallery[CB_ActImgId][0].split("/")[CB_Gallery[CB_ActImgId][0].split("/").length - 1];
