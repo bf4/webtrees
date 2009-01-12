@@ -699,7 +699,7 @@ function print_execution_stats() {
 		microtime(true)-$start_time,
 		$TOTAL_QUERIES,
 		$PRIVACY_CHECKS,
-		memory_get_peak_usage(true)/1024
+		version_compare(PHP_VERSION, '5.2.1', '>=') ? (memory_get_peak_usage(true)/1024) : (memory_get_usage()/1024)
 	);
 }
 

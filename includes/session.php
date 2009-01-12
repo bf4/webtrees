@@ -45,7 +45,7 @@ define('PGV_DEBUG_SQL',  false);
 define('PGV_DEBUG_PRIV', false);
 
 // Environmental requirements
-define('PGV_REQUIRED_PHP_VERSION',     '5.2.1'); // 5.2.3 is recommended
+define('PGV_REQUIRED_PHP_VERSION',     '5.2.0'); // 5.2.3 is recommended
 define('PGV_REQUIRED_MYSQL_VERSION',   '4.1');   // Not enforced
 define('PGV_REQUIRED_SQLITE_VERSION',  '3.2.6'); // Not enforced, PHP5.2.0/PDO is 3.3.7
 define('PGV_REQUIRED_PRIVACY_VERSION', '3.1');
