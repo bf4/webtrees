@@ -1,32 +1,32 @@
 <?php
 /**
- * GEDCOM Statistics Class
- *
- * This class provides a quick & easy method for accessing statistics
- * about the GEDCOM.
- *
- * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- *
- * @version $Id$
- * @author Patrick Kellum
- * @package PhpGedView
- * @subpackage Lists
- */
+* GEDCOM Statistics Class
+*
+* This class provides a quick & easy method for accessing statistics
+* about the GEDCOM.
+*
+* phpGedView: Genealogy Viewer
+* Copyright (C) 2002 to 2009 PGV Development Team.  All rights reserved.
+*
+* This program is free software; you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation; either version 2 of the License, or
+* (at your option) any later version.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+* GNU General Public License for more details.
+*
+* You should have received a copy of the GNU General Public License
+* along with this program; if not, write to the Free Software
+* Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+*
+* @version $Id$
+* @author Patrick Kellum
+* @package PhpGedView
+* @subpackage Lists
+*/
 
 if (!defined('PGV_PHPGEDVIEW')) {
 	header('HTTP/1.0 403 Forbidden');
@@ -63,8 +63,8 @@ class stats {
 	}
 
 	/**
-	 * Return an array of all supported tags and an example of its output.
-	 */
+	* Return an array of all supported tags and an example of its output.
+	*/
 	function getAllTags() {
 		$examples = array();
 		$methods = get_class_methods('stats');
@@ -86,8 +86,8 @@ class stats {
 	}
 
 	/**
-	 * Return a string of all supported tags and an example of its output in table row form.
-	 */
+	* Return a string of all supported tags and an example of its output in table row form.
+	*/
 	function getAllTagsTable() {
 		global $TEXT_DIRECTION;
 		$examples = array();
@@ -124,8 +124,8 @@ class stats {
 	}
 
 	/**
-	 * Return a string of all supported tags in plain text.
-	 */
+	* Return a string of all supported tags in plain text.
+	*/
 	function getAllTagsText() {
 		$examples=array();
 		$methods=get_class_methods($this);
@@ -142,8 +142,8 @@ class stats {
 	}
 
 	/*
-	 * Get tags and their parsed results.
-	 */
+	* Get tags and their parsed results.
+	*/
 	function getTags($text) {
 		global $pgv_lang, $factarray;
 		static $funcs;
@@ -159,19 +159,16 @@ class stats {
 		$new_values = array(); // value to replace it with
 
 		/*
-		 * Parse block tags.
-		 */
+		* Parse block tags.
+		*/
 		for($i=0; $i < $c; $i++)
 		{
 			$full_tag = $tags[$i];
 			// Added for new parameter support
 			$params = explode(':', $tags[$i]);
-			if (count($params) > 1)
-			{
+			if (count($params) > 1) {
 				$tags[$i] = array_shift($params);
-			}
-			else
-			{
+			} else {
 				$params = null;
 			}
 
@@ -191,8 +188,8 @@ class stats {
 				$new_values[] = print_help_link(join(':', $params), 'qm', '', false, true);
 			}
 			/*
-			 * Parse language variables.
-			 */
+			* Parse language variables.
+			*/
 			// pgv_lang - long
 			elseif ($tags[$i] == 'lang')
 			{
@@ -351,10 +348,11 @@ class stats {
 		$highlight=false;
 		if (file_exists("images/gedcoms/{$this->_gedcom}.jpg")) {
 			$highlight="images/gedcoms/{$this->_gedcom}.jpg";
-		} else
+		} else {
 			if (file_exists("images/gedcoms/{$this->_gedcom}.png")) {
 				$highlight="images/gedcoms/{$this->_gedcom}.png";
 			}
+		}
 		if (!$highlight) {
 			return '';
 		}
@@ -367,10 +365,11 @@ class stats {
 		$highlight=false;
 		if (file_exists("images/gedcoms/{$this->_gedcom}.jpg")) {
 			$highlight="images/gedcoms/{$this->_gedcom}.jpg";
-		} else
+		} else {
 			if (file_exists("images/gedcoms/{$this->_gedcom}.png")) {
 				$highlight="images/gedcoms/{$this->_gedcom}.png";
 			}
+		}
 		if (!$highlight) {
 			return '';
 		}
@@ -522,16 +521,13 @@ class stats {
 	function totalSurnames($params = null)
 	{
 		global $DBTYPE, $TBLPREFIX;
-		if ($params !== null)
-		{
+		if ($params !== null) {
 			$dis = '';
 			$surnames = array();
 			foreach ($params as $surname) {$surnames[] = "n_surn='{$surname}'";}
 			$surnames = join(' OR ', $surnames);
 			$opt = " AND ({$surnames}) ";
-		}
-		else
-		{
+		} else {
 			$dis = ' DISTINCT ';
 			$opt = '';
 		}
@@ -541,44 +537,35 @@ class stats {
 			$res =& $tempsql;
 			$rows[0]['tot'] = $res->numRows();
 			$res->free();
-		}
-		else
+		} else {
 			$rows = self::_runSQL("SELECT COUNT({$dis}n_surn) AS tot FROM {$TBLPREFIX}name WHERE n_file={$this->_ged_id}{$opt}");
+		}
 		return $rows[0]['tot'];
 	}
 
 	function totalEvents($params = null)
 	{
 		global $TBLPREFIX;
-		if ($params !== null)
-		{
+		if ($params !== null) {
 			$types = array();
 			$no_types = array();
-			foreach ($params as $type)
-			{
-				if ($type{0} == '!')
-				{
+			foreach ($params as $type) {
+				if ($type{0} == '!') {
 					$type = substr($type, 1);
 					$no_types[] = "'{$type}'";
-				}
-				else
-				{
+				} else {
 					$types[] = "'{$type}'";
 				}
 			}
 			$opt = array();
-			if (count($types))
-			{
+			if (count($types)) {
 				$opt[] = ' AND d_fact IN ('.join(',', $types).') ';
 			}
-			if (count($no_types))
-			{
+			if (count($no_types)) {
 				$opt[] = ' AND d_fact NOT IN ('.join(',', $no_types).') ';
 			}
 			$opt = join('', $opt);
-		}
-		else
-		{
+		} else {
 			$opt = '';
 		}
 		$rows = self::_runSQL("SELECT COUNT(d_gid) AS tot FROM {$TBLPREFIX}dates WHERE d_file={$this->_ged_id} AND d_fact!='CHAN' AND d_gid!='HEAD'{$opt}");
@@ -668,18 +655,21 @@ class stats {
 		$tot_u = $this->totalSexUnknownPercentage();
 		if ($tot_u > 0) {
 			$chd = self::_array_to_extended_encoding(array($tot_u, $tot_f, $tot_m));
-			$chl = reverseText($pgv_lang['stat_unknown']).' ['.round($tot_u,1).'%]|'.
-				   reverseText($pgv_lang['stat_females']).' ['.round($tot_f,1).'%]|'.
-				   reverseText($pgv_lang['stat_males']).' ['.round($tot_m,1).'%]';
-			$chart_title = reverseText($pgv_lang['stat_males']).' ['.round($tot_m,1).'%], '.
-							reverseText($pgv_lang['stat_females']).' ['.round($tot_f,1).'%], '.
-							reverseText($pgv_lang['stat_unknown']).' ['.round($tot_u,1).'%]';
+			$chl =
+				reverseText($pgv_lang['stat_unknown']).' ['.round($tot_u,1).'%]|'.
+				reverseText($pgv_lang['stat_females']).' ['.round($tot_f,1).'%]|'.
+				reverseText($pgv_lang['stat_males']).' ['.round($tot_m,1).'%]';
+			$chart_title =
+				reverseText($pgv_lang['stat_males']).' ['.round($tot_m,1).'%], '.
+				reverseText($pgv_lang['stat_females']).' ['.round($tot_f,1).'%], '.
+				reverseText($pgv_lang['stat_unknown']).' ['.round($tot_u,1).'%]';
 			return "<img src=\"".encode_url("http://chart.apis.google.com/chart?cht=p3&chd=e:{$chd}&chs={$size}&chco={$color_unknown},{$color_female},{$color_male}&chf=bg,s,ffffff00&chl={$chl}")."\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" alt=\"".$chart_title."\" title=\"".$chart_title."\" />";
 		}
 		else {
 			$chd = self::_array_to_extended_encoding(array($tot_f, $tot_m));
-			$chl = reverseText($pgv_lang['stat_females']).' ['.round($tot_f,1).'%]|'.
-				   reverseText($pgv_lang['stat_males']).' ['.round($tot_m,1).'%]';
+			$chl =
+				reverseText($pgv_lang['stat_females']).' ['.round($tot_f,1).'%]|'.
+				reverseText($pgv_lang['stat_males']).' ['.round($tot_m,1).'%]';
 			$chart_title = reverseText($pgv_lang['stat_males']).' ['.round($tot_m,1).'%], '.
 							reverseText($pgv_lang['stat_females']).' ['.round($tot_f,1).'%]';
 			return "<img src=\"".encode_url("http://chart.apis.google.com/chart?cht=p3&chd=e:{$chd}&chs={$size}&chco={$color_female},{$color_male}&chf=bg,s,ffffff00&chl={$chl}")."\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" alt=\"".$chart_title."\" title=\"".$chart_title."\" />";
@@ -742,18 +732,21 @@ class stats {
 		$tot_u = $this->totalMortalityUnknownPercentage();
 		if ($tot_u > 0) {
 			$chd = self::_array_to_extended_encoding(array($tot_u, $tot_l, $tot_d));
-			$chl = reverseText($pgv_lang['total_unknown']).' ['.round($tot_u,1).'%]|'.
-				   reverseText($pgv_lang['total_living']).' ['.round($tot_l,1).'%]|'.
-				   reverseText($pgv_lang['total_dead']).' ['.round($tot_d,1).'%]';
-			$chart_title = reverseText($pgv_lang['total_living']).' ['.round($tot_l,1).'%], '.
-							reverseText($pgv_lang['total_dead']).' ['.round($tot_d,1).'%], '.
-							reverseText($pgv_lang['total_unknown']).' ['.round($tot_u,1).'%]';
+			$chl =
+				reverseText($pgv_lang['total_unknown']).' ['.round($tot_u,1).'%]|'.
+				reverseText($pgv_lang['total_living']).' ['.round($tot_l,1).'%]|'.
+				reverseText($pgv_lang['total_dead']).' ['.round($tot_d,1).'%]';
+			$chart_title =
+				reverseText($pgv_lang['total_living']).' ['.round($tot_l,1).'%], '.
+				reverseText($pgv_lang['total_dead']).' ['.round($tot_d,1).'%], '.
+				reverseText($pgv_lang['total_unknown']).' ['.round($tot_u,1).'%]';
 			return "<img src=\"".encode_url("http://chart.apis.google.com/chart?cht=p3&chd=e:{$chd}&chs={$size}&chco={$color_unknown},{$color_living},{$color_dead}&chf=bg,s,ffffff00&chl={$chl}")."\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" alt=\"".$chart_title."\" title=\"".$chart_title."\" />";
 		}
 		else {
 			$chd = self::_array_to_extended_encoding(array($tot_l, $tot_d));
-			$chl = reverseText($pgv_lang['total_living']).' ['.round($tot_l,1).'%]|'.
-				   reverseText($pgv_lang['total_dead']).' ['.round($tot_d,1).'%]|';
+			$chl =
+				reverseText($pgv_lang['total_living']).' ['.round($tot_l,1).'%]|'.
+				reverseText($pgv_lang['total_dead']).' ['.round($tot_d,1).'%]|';
 			$chart_title = reverseText($pgv_lang['total_living']).' ['.round($tot_l,1).'%], '.
 							reverseText($pgv_lang['total_dead']).' ['.round($tot_d,1).'%]';
 			return "<img src=\"".encode_url("http://chart.apis.google.com/chart?cht=p3&chd=e:{$chd}&chs={$size}&chco={$color_living},{$color_dead}&chf=bg,s,ffffff00&chl={$chl}")."\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" alt=\"".$chart_title."\" title=\"".$chart_title."\" />";
@@ -789,14 +782,10 @@ class stats {
 		if (!$MULTI_MEDIA) {return 0;}
 		if (!in_array($type, self::$_media_types) && $type != 'all' && $type != 'unknown') {return 0;}
 		$like = '';
-		if ($type != 'all')
-		{
-			if ($type != 'unknown')
-			{
+		if ($type != 'all') {
+			if ($type != 'unknown') {
 				$like = " AND m_gedrec ".PGV_DB_LIKE." '%3 TYPE {$type}%'";
-			}
-			else
-			{
+			} else {
 				// There has to be a better way then this :(
 				$nolike = array();
 				foreach (self::$_media_types as $t)
@@ -882,26 +871,19 @@ class stats {
 	function _mortalityQuery($type='full', $life_dir='ASC', $birth_death='BIRT')
 	{
 		global $TBLPREFIX, $pgv_lang, $SHOW_ID_NUMBERS, $listDir, $DBTYPE;
-		if ($birth_death == 'BIRT')
-		{
+		if ($birth_death == 'BIRT') {
 			$query_field = "'".str_replace('|', "','", PGV_EVENTS_BIRT)."'";
-		}
-		else
-		{
+		} else {
 			$birth_death = 'DEAT';
 			$query_field = "'".str_replace('|', "','", PGV_EVENTS_DEAT)."'";
 		}
-		if ($life_dir == 'ASC')
-		{
+		if ($life_dir == 'ASC') {
 			$dmod = 'MIN';
-		}
-		else
-		{
+		} else {
 			$dmod = 'MAX';
 			$life_dir = 'DESC';
 		}
-		switch($DBTYPE)
-		{
+		switch ($DBTYPE) {
 			// Testing new style
 			default:
 			{
@@ -1164,16 +1146,11 @@ class stats {
 	function _topTenOldest($type='list', $sex='BOTH', $params=null)
 	{
 		global $TBLPREFIX, $TEXT_DIRECTION, $pgv_lang;
-		if ($sex == 'F')
-		{
+		if ($sex == 'F') {
 			$sex_search = " AND i_sex='F'";
-		}
-		elseif ($sex == 'M')
-		{
+		} elseif ($sex == 'M') {
 			$sex_search = " AND i_sex='M'";
-		}
-		else
-		{
+		} else {
 			$sex_search = '';
 		}
 		if ($params !== null && isset($params[0])) {$total = $params[0];}else{$total = 10;}
@@ -1204,24 +1181,17 @@ class stats {
 		if (!isset($rows[0])) {return '';}
 		if(count($rows) < $total){$total = count($rows);}
 		$top10=array();
-		for($c = 0; $c < $total; $c++)
-		{
+		for($c = 0; $c < $total; $c++) {
 			$person=Person::getInstance($rows[$c]['d_gid']);
-			if ($type == 'list')
-			{
+			if ($type == 'list') {
 				$top10[]="\t<li><a href=\"".$person->getLinkUrl()."\">".PrintReady($person->getFullName())."</a> ".PrintReady("[".floor($rows[$c]['age']/365.25)." {$pgv_lang['years']}]")."</li>\n";
-			}
-			else
-			{
+			} else {
 				$top10[]="<a href=\"".$person->getLinkUrl()."\">".PrintReady($person->getFullName())."</a> [".PrintReady(floor($rows[$c]['age']/365.25))." {$pgv_lang['years']}]";
 			}
 		}
-		if ($type == 'list')
-		{
+		if ($type == 'list') {
 			$top10=join("\n", $top10);
-		}
-		else
-		{
+		} else {
 			$top10=join(';&nbsp; ', $top10);
 		}
 		if ($TEXT_DIRECTION=='rtl') {
@@ -1238,16 +1208,11 @@ class stats {
 	function _averageLifespanQuery($sex='BOTH')
 	{
 		global $TBLPREFIX;
-		if ($sex == 'F')
-		{
+		if ($sex == 'F') {
 			$sex_search = " AND i_sex='F'";
-		}
-		elseif ($sex == 'M')
-		{
+		} elseif ($sex == 'M') {
 			$sex_search = " AND i_sex='M'";
-		}
-		else
-		{
+		} else {
 			$sex_search = '';
 		}
 		$rows=self::_runSQL(''
@@ -1417,12 +1382,9 @@ class stats {
 				$id = '';
 				if ($SHOW_ID_NUMBERS)
 				{
-					if ($listDir == 'rtl')
-					{
+					if ($listDir == 'rtl') {
 						$id="&nbsp;&nbsp;" . getRLM() . "({$row['id']})" . getRLM();
-					}
-					else
-					{
+					} else {
 						$id="&nbsp;&nbsp;({$row['id']})";
 					}
 				}
@@ -1471,8 +1433,8 @@ class stats {
 ///////////////////////////////////////////////////////////////////////////////
 
 	/*
-	 * Query the database for marriage tags.
-	 */
+	* Query the database for marriage tags.
+	*/
 	function _marriageQuery($type='full', $age_dir='ASC', $sex='F')
 	{
 		global $TBLPREFIX, $pgv_lang;
@@ -1717,20 +1679,15 @@ class stats {
 				}
 			}
 		}
-		if ($type == 'list')
-		{
+		if ($type == 'list') {
 			$top10=join("\n", $top10);
-		}
-		else
-		{
+		} else {
 			$top10 = join(';&nbsp; ', $top10);
 		}
-		if ($TEXT_DIRECTION == 'rtl')
-		{
+		if ($TEXT_DIRECTION == 'rtl') {
 			$top10 = str_replace(array('[', ']', '(', ')', '+'), array('&rlm;[', '&rlm;]', '&rlm;(', '&rlm;)', '&rlm;+'), $top10);
 		}
-		if ($type == 'list')
-		{
+		if ($type == 'list') {
 			return "<ul>\n{$top10}</ul>\n";
 		}
 		return $top10;
@@ -1871,13 +1828,7 @@ class stats {
 			$surnames=array_merge($surnames, get_indilist_surns($surname, '', false, false, PGV_GED_ID));
 		}
 
-		//switch ($SURNAME_LIST_STYLE) {
-		//case 'style3':
-		//	return format_surname_tagcloud($surnames, 'indilist', $show_tot);
-		//case 'style2':
-		//default:
-			return format_surname_list($surnames, ($type=='list' ? 1 : 2), $show_tot);
-		//}
+		return format_surname_list($surnames, ($type=='list' ? 1 : 2), $show_tot);
 	}
 
 	function getCommonSurname($show_tot=false) {
@@ -1949,9 +1900,9 @@ class stats {
 ///////////////////////////////////////////////////////////////////////////////
 
 	/*
-	 * [ 1977282 ] Most Common Given Names Block
-	 * Original block created by kiwi_pgv
-	 */
+	* [ 1977282 ] Most Common Given Names Block
+	* Original block created by kiwi_pgv
+	*/
 	static function _commonGivenQuery($sex='B', $type='list', $show_tot=false, $params=null)
 	{
 		global $TEXT_DIRECTION, $GEDCOMS, $GEDCOM, $TBLPREFIX, $pgv_lang;
@@ -2089,14 +2040,10 @@ class stats {
 		$NumAnonymous = 0;
 		$loggedusers = array ();
 		$x = get_logged_in_users();
-		foreach ($x as $user_id=>$user_name)
-		{
-			if (PGV_USER_IS_ADMIN || get_user_setting($user_id, 'visibleonline') == 'Y')
-			{
+		foreach ($x as $user_id=>$user_name) {
+			if (PGV_USER_IS_ADMIN || get_user_setting($user_id, 'visibleonline') == 'Y') {
 				$loggedusers[$user_id] = $user_name;
-			}
-			else
-			{
+			} else {
 				$NumAnonymous++;
 			}
 		}
@@ -2113,61 +2060,44 @@ class stats {
 			$content .= '<b>'.print_text($Advisory, 0, 1).'</b>';
 		}
 		$Advisory = 'login_user';
-		if ($LoginUsers > 1) {$Advisory .= 's';}
-		if ($LoginUsers > 0)
-		{
+		if ($LoginUsers > 1) {
+			$Advisory .= 's';
+		}
+		if ($LoginUsers > 0) {
 			$pgv_lang['global_num1'] = $LoginUsers; // Make it visible
-			if ($NumAnonymous)
-			{
-				if ($type == 'list')
-				{
+			if ($NumAnonymous) {
+				if ($type == 'list') {
 					$content .= "<br /><br />\n";
-				}
-				else
-				{
+				} else {
 					$content .= " {$pgv_lang['and']} ";
 				}
 			}
-			if ($type == 'list')
-			{
+			if ($type == 'list') {
 				$content .= '<b>'.print_text($Advisory, 0, 1)."</b>\n<ul>\n";
-			}
-			else
-			{
+			} else {
 				$content .= '<b>'.print_text($Advisory, 0, 1)."</b>: ";
 			}
 		}
-		if (PGV_USER_ID)
-		{
-			foreach ($loggedusers as $user_id=>$user_name)
-			{
-				if ($type == 'list')
-				{
+		if (PGV_USER_ID) {
+			foreach ($loggedusers as $user_id=>$user_name) {
+				if ($type == 'list') {
 					$content .= "\t<li>".PrintReady(getUserFullName($user_id))." - {$user_name}";
-				}
-				else
-				{
+				} else {
 					$content .= PrintReady(getUserFullName($user_id))." - {$user_name}";
 				}
-				if (PGV_USER_ID != $user_id && get_user_setting($user_id, 'contactmethod') != 'none')
-				{
-					if ($type == 'list')
-					{
+				if (PGV_USER_ID != $user_id && get_user_setting($user_id, 'contactmethod') != 'none') {
+					if ($type == 'list') {
 						$content .= "<br /><a href=\"javascript:;\" onclick=\"return message('{$user_id}');\">{$pgv_lang['message']}</a>";
-					}
-					else
-					{
+					} else {
 						$content .= " <a href=\"javascript:;\" onclick=\"return message('{$user_id}');\">{$pgv_lang['message']}</a>";
 					}
 				}
-				if ($type == 'list')
-				{
+				if ($type == 'list') {
 					$content .= "</li>\n";
 				}
 			}
 		}
-		if ($type == 'list')
-		{
+		if ($type == 'list') {
 			$content .= '</ul>';
 		}
 		return $content;
@@ -2177,16 +2107,16 @@ class stats {
 	{
 		global $PGV_SESSION_TIME;
 
-		foreach (get_idle_users(time() - $PGV_SESSION_TIME) as $user_id=>$user_name)
-		{
-			if ($user_id != PGV_USER_ID) {userLogout($user_id);}
+		foreach (get_idle_users(time() - $PGV_SESSION_TIME) as $user_id=>$user_name) {
+			if ($user_id != PGV_USER_ID) {
+				userLogout($user_id);
+			}
 		}
 
 		$anon = 0;
 		$visible = 0;
 		$x = get_logged_in_users();
-		foreach ($x as $user_id=>$user_name)
-		{
+		foreach ($x as $user_id=>$user_name) {
 			if (PGV_USER_IS_ADMIN || get_user_setting($user_id, 'visibleonline') == 'Y') {$visible++;}else{$anon++;}
 		}
 		if ($type == 'anon') {return $anon;}
@@ -2304,8 +2234,8 @@ class stats {
 ///////////////////////////////////////////////////////////////////////////////
 
 	/*
-	 * Leave for backwards compatability? Anybody using this?
-	 */
+	* Leave for backwards compatability? Anybody using this?
+	*/
 	static function _getEventType($type)
 	{
 		global $pgv_lang;
@@ -2338,11 +2268,11 @@ class stats {
 	}
 
 	static function _name_name_sort($a, $b) {
-		return compareStrings(strip_prefix($a['name']), strip_prefix($b['name']), true);		// Case-insensitive compare
+		return compareStrings(strip_prefix($a['name']), strip_prefix($b['name']), true);  // Case-insensitive compare
 	}
 
 	static function _name_name_rsort($a, $b) {
-		return compareStrings(strip_prefix($b['name']), strip_prefix($a['name']), true);		// Case-insensitive compare
+		return compareStrings(strip_prefix($b['name']), strip_prefix($a['name']), true);  // Case-insensitive compare
 	}
 
 	static function _name_total_sort($a, $b)
@@ -2395,14 +2325,4 @@ class stats {
 	}
 }
 
-if(!function_exists('array_combine'))
-{
-	function array_combine($arr1, $arr2)
-	{
-		$out = array();
-		$arr1 = array_values($arr1);
-		$arr2 = array_values($arr2);
-		foreach($arr1 as $key1 => $value1){$out[(string)$value1] = $arr2[$key1];}
-		return $out;
-	}
-}
+?>
