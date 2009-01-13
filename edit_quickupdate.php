@@ -3,7 +3,7 @@
 * PopUp Window to provide users with a simple quick update form.
 *
 * phpGedView: Genealogy Viewer
-* Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
+* Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
 *
 * This program is free software; you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -1310,13 +1310,13 @@ if ($action=="choosepid") {
 		}
 		$ct = preg_match("/2 _MARNM (.*)/", $subrec, $match);
 		if ($ct>0) $MRSURN = trim($match[1]);
-		else {
-			$ct = preg_match("/1 NAME (.*)/", $subrec, $match);
-			if ($ct>0) {
-				$st = preg_match("~/(.*)/~", $match[1], $smatch);
-				if ($st>0) $MRSURN = $smatch[1];
-			}
-		}
+		//else {
+		//	$ct = preg_match("/1 NAME (.*)/", $subrec, $match);
+		//	if ($ct>0) {
+		//		$st = preg_match("~/(.*)/~", $match[1], $smatch);
+		//		if ($st>0) $MRSURN = $smatch[1];
+		//	}
+		//}
 		$HGIVN = "";
 		$HSURN = "";
 		$RGIVN = "";
