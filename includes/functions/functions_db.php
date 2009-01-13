@@ -500,19 +500,18 @@ function get_indilist_salpha($marnm, $fams, $ged_id) {
 		$exclude.=" AND n_sort NOT ".PGV_DB_LIKE." '{$digraph}%' {$DBCOLLATE}";
 	}
 	foreach ($digraphs as $to=>$from) { // Single-character digraphs
-		// TODO: some database let you ORDER BY a column alias.  Others seem to prefer the column expression.
-		// When we work out which DB wants which format, we can add some conditional code.
 		$include.=" UNION SELECT UPPER('{$to}' {$DBCOLLATE}) AS alpha FROM {$tables} WHERE {$join} AND n_sort ".PGV_DB_LIKE." '{$from}%' {$DBCOLLATE} GROUP BY alpha {$DBCOLLATE}";
-		//$include.=" UNION SELECT UPPER('{$to}' {$DBCOLLATE}) AS alpha FROM {$tables} WHERE {$join} AND n_sort ".PGV_DB_LIKE." '{$from}%' {$DBCOLLATE} GROUP BY {$column}";
 	}
-	$sql="SELECT {$column} AS alpha FROM {$tables} WHERE {$join} {$exclude} GROUP BY alpha {$DBCOLLATE} {$include} ORDER BY alpha='@', alpha=',', alpha {$DBCOLLATE}";
-	//$sql="SELECT {$column} AS alpha FROM {$tables} WHERE {$join} {$exclude} GROUP BY {$column} {$include} ORDER BY {$column}='@', {$column}=',', {$column}";
+	// TODO: some database let you ORDER BY a column alias.  Others seem to prefer the column expression.
+	// When we work out which DB wants which format, we can add some conditional code.
+	// Meanwhile, perform ordering in PHP.
+	$sql="SELECT {$column} AS alpha FROM {$tables} WHERE {$join} {$exclude} GROUP BY alpha {$DBCOLLATE} {$include}"; /* ORDER BY alpha='@', alpha=',', alpha {$DBCOLLATE} */
 	$res=dbquery($sql);
 
 	$list=array();
 	while ($row=$res->fetchRow(DB_FETCHMODE_ASSOC)) {
 		if ($DB_UTF8_COLLATION) {
-			$list[]=$row['alpha'];
+			$list[$row['alpha']]=$row['alpha'];
 		} else {
 			$letter=UTF8_strtoupper(UTF8_substr($row['alpha'],0,1));
 			$list[$letter]=$letter;
@@ -521,7 +520,8 @@ function get_indilist_salpha($marnm, $fams, $ged_id) {
 	$res->free();
 
 	// If we can't sort in the DB, sort ourselves
-	if (!$DB_UTF8_COLLATION) {
+	// TODO: until we can fix DB sorting, above, always sort in PHP
+	//if (!$DB_UTF8_COLLATION) {
 		uasort($list, 'stringsort');
 		// stringsort puts "," and "@" first, so force them to the end
 		if (in_array(',', $list)) {
@@ -532,7 +532,7 @@ function get_indilist_salpha($marnm, $fams, $ged_id) {
 			unset($list['@']);
 			$list['@']='@';
 		}
-	}
+	//}
 	return $list;
 }
 
@@ -579,19 +579,18 @@ function get_indilist_galpha($surn, $salpha, $marnm, $fams, $ged_id) {
 		$exclude.=" AND n_sort NOT ".PGV_DB_LIKE." '{$digraph}%' {$DBCOLLATE}";
 	}
 	foreach ($digraphs as $to=>$from) { // Single-character digraphs
-		// Bug in MySQL4.1 - can't combine COLLATE with GROUP/ORDER BY
-		//$include.=" UNION SELECT UPPER('{$to}' {$DBCOLLATE}) AS alpha FROM {$tables} WHERE {$join} AND n_sort ".PGV_DB_LIKE." '{$from}%' {$DBCOLLATE} GROUP BY alpha {$DBCOLLATE}";
 		$include.=" UNION SELECT UPPER('{$to}' {$DBCOLLATE}) AS alpha FROM {$tables} WHERE {$join} AND n_sort ".PGV_DB_LIKE." '{$from}%' {$DBCOLLATE} GROUP BY alpha {$DBCOLLATE}";
 	}
-	// Bug in MySQL4.1 - can't combine COLLATE with GROUP/ORDER BY
-	//$sql="SELECT {$column} AS alpha FROM {$tables} WHERE {$join} {$exclude} GROUP BY alpha {$DBCOLLATE} {$include} ORDER BY alpha='@', alpha=',', alpha {$DBCOLLATE}";
-	$sql="SELECT {$column} AS alpha FROM {$tables} WHERE {$join} {$exclude} GROUP BY {$column} {$include} ORDER BY {$column}='@', {$column}=',', {$column}";
+	// TODO: some database let you ORDER BY a column alias.  Others seem to prefer the column expression.
+	// When we work out which DB wants which format, we can add some conditional code.
+	// Meanwhile, perform ordering in PHP.
+	$sql="SELECT {$column} AS alpha FROM {$tables} WHERE {$join} {$exclude} GROUP BY alpha {$DBCOLLATE} {$include}"; /* ORDER BY alpha='@', alpha=',', alpha {$DBCOLLATE} */
 	$res=dbquery($sql);
 
 	$list=array();
 	while ($row=$res->fetchRow(DB_FETCHMODE_ASSOC)) {
 		if ($DB_UTF8_COLLATION) {
-			$list[]=$row['alpha'];
+			$list[$row['alpha']]=$row['alpha'];
 		} else {
 			$letter=UTF8_strtoupper(UTF8_substr($row['alpha'],0,1));
 			$list[$letter]=$letter;
@@ -600,7 +599,8 @@ function get_indilist_galpha($surn, $salpha, $marnm, $fams, $ged_id) {
 	$res->free();
 
 	// If we can't sort in the DB, sort ourselves
-	if (!$DB_UTF8_COLLATION) {
+	// TODO: until we can fix DB sorting, above, always sort in PHP
+	//if (!$DB_UTF8_COLLATION) {
 		uasort($list, 'stringsort');
 		// stringsort puts "," and "@" first, so force them to the end
 		if (in_array(',', $list)) {
@@ -611,7 +611,7 @@ function get_indilist_galpha($surn, $salpha, $marnm, $fams, $ged_id) {
 			unset($list['@']);
 			$list['@']='@';
 		}
-	}
+	//}
 	return $list;
 }
 
