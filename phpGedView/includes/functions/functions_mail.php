@@ -3,7 +3,7 @@
  * Mail specific functions
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
+ * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -127,27 +127,27 @@ function pgvMail($to, $from, $subject, $message) {
 	    $mail_object->Port = $PGV_SMTP_PORT;
 	    $mail_object->Hostname = $PGV_SMTP_HELO;
 	    $mail_object->From = $from;
-	    $mail_object->FromName = 
+	    $mail_object->FromName =
 	    $mail_object->AddAddress($to);
 	    $mail_object->Subject = hex4email( $subject, $CHARACTER_SET );
 	    $mail_object->ContentType = $mailFormatText;
 	    if ( $mailFormat != "multipart" ) {
-		$mail_object->ContentType = $mailFormatText . '; format="flowed"';
-		$mail_object->CharSet = $CHARACTER_SET;
-		$mail_object->Encoding = '8bit';
+			$mail_object->ContentType = $mailFormatText . '; format="flowed"';
+			$mail_object->CharSet = $CHARACTER_SET;
+			$mail_object->Encoding = '8bit';
 	    }
 	    if ( $mailFormat == "html" || $mailFormat == "multipart" ) {
-		$mail_object->AddCustomHeader( 'Mime-Version: 1.0' );
+			$mail_object->AddCustomHeader( 'Mime-Version: 1.0' );
 	    }
 	    $mail_object->Body = $message;
 	    // attempt to send mail
 	    if ( ! $mail_object->Send() ) {
-		print 'Message was not sent.<br />';
-		print 'Mailer error: ' . $mail_object->ErrorInfo . '<br /.';
-		return;
+			echo 'Message was not sent.<br />';
+			echo 'Mailer error: ' . $mail_object->ErrorInfo . '<br />';
+			return;
 	    } else {
-		print 'SMTP OK.<br />';
-		return;
+			// SMTP OK
+			return;
 	    }
 	} else {
 	    // use original PGV mail sending function	
