@@ -35,42 +35,36 @@ $controller->init();
 
 print_simple_header($pgv_lang['title_remote_link']);
 
-if (isset($_REQUEST['pid'])) 	$pid = $_REQUEST['pid'];
-if (isset($_REQUEST['famid']))  $famid = $_REQUEST['famid'];
-if (isset($_REQUEST['action']))  $action = $_REQUEST['action'];
+$pid=safe_REQUEST($_REQUEST, 'pid', PGV_REGEX_XREF);
+$action=safe_POST('action', array('addlink'));
 
 //-- only allow gedcom admins to create remote links
 if (!$controller->canAccess()) {
-	print '<span class="error">';
-	print $pgv_lang["access_denied"].'<br />';
-	//-- display messages as to why the editing access was denied
+	echo '<span class="error">', $pgv_lang['access_denied'], '<br />';
 	if (!PGV_USER_GEDCOM_ADMIN) {
-		print $pgv_lang["user_cannot_edit"];
+		echo $pgv_lang['user_cannot_edit'];
 	} else if (!$ALLOW_EDIT_GEDCOM) {
-		print $pgv_lang["gedcom_editing_disabled"];
+		echo $pgv_lang['gedcom_editing_disabled'];
 	} else {
-		print $pgv_lang["privacy_prevented_editing"];
-		if (!empty($pid)) print "<br />".$pgv_lang["privacy_not_granted"]." pid $pid.";
-		if (!empty($famid)) print "<br />".$pgv_lang["privacy_not_granted"]." famid $famid.";
+		echo $pgv_lang['privacy_prevented_editing'];
+		if ($pid) {
+			echo '<br />', $pgv_lang['privacy_not_granted'], ' ', $pid;
+		}
 	}
-	print '</span>';
-	print "<br /><br /><div class=\"center\"><a href=\"javascript: ".$pgv_lang["close_window"]."\" onclick=\"window.close();\">".$pgv_lang["close_window"]."</a></div>\n";
+	echo '</span><br /><br /><div class="center"><a href="javascript://', $pgv_lang['close_window'], '" onclick="window.close();">', $pgv_lang['close_window'], '</a></div>';
 	print_simple_footer();
 	exit;
 }
 
-$remoteServers = get_server_list();
-$gedcomList = get_all_gedcoms();
-
-$success = $controller->runAction();
+$success=$controller->runAction($action);
 
 echo PGV_JS_START;
 ?>
 function sameServer() {
-	alert('<?php print $pgv_lang["error_same"];?>');
+	alert('<?php echo $pgv_lang["error_same"]; ?>');
 }
 function remoteServer() {
-	alert('<?php print $pgv_lang["error_remote"];?>');
+	alert('<?php echo $pgv_lang["error_remote"]; ?>');
 }
 function swapComponents(btnPressed) {
 	var labelSite = document.getElementById('labelSite');
@@ -78,17 +72,17 @@ function swapComponents(btnPressed) {
 	var localContent = document.getElementById('localContent');
 	var remoteContent = document.getElementById('remoteContent');
 	if (btnPressed=="remote") {
-		labelSite.innerHTML = '<?php echo $pgv_lang["label_site"];?>';
+		labelSite.innerHTML = '<?php echo $pgv_lang["label_site"]; ?>';
 		existingContent.style.display='none';
 		localContent.style.display='none';
 		remoteContent.style.display='block';
 	} else if (btnPressed=="local") {
-		labelSite.innerHTML = '<?php echo $pgv_lang["label_gedcom_id"];?>';
+		labelSite.innerHTML = '<?php echo $pgv_lang["label_gedcom_id"]; ?>';
 		existingContent.style.display='none';
 		localContent.style.display='block';
 		remoteContent.style.display='none';
 	} else {
-		labelSite.innerHTML = '<?php echo $pgv_lang["label_site"];?>';
+		labelSite.innerHTML = '<?php echo $pgv_lang["label_site"]; ?>';
 		existingContent.style.display='block';
 		localContent.style.display='none';
 		remoteContent.style.display='none';
@@ -108,115 +102,138 @@ function checkform(frm) {
 <?php
 echo PGV_JS_END;
 
-if ($action!="addlink") {
-	$success = false;
+if (!$success) {
 ?>
 <form method="post" name="addRemoteRelationship" action="addremotelink.php" onsubmit="return checkform(this);">
-	<input type="hidden" name="action" value="addlink" />
-	<input type="hidden" name="pid" value="<?php print $pid;?>" />
-	<span class="title"><?php
-		$record=GedcomRecord::getInstance($pid);
-		print PrintReady($record->getFullName());
-		print "&nbsp;&nbsp;";
-		print PrintReady("(".$pid.")");
-	?></span> <br />
-<br />
+<input type="hidden" name="action" value="addlink" />
+<input type="hidden" name="pid" value="<?php echo $pid; ?>" />
+<span class="title">
+	<?php echo PrintReady($controller->person->getFullName()), '&nbsp;', PrintReady("(".$controller->person->getXref().")"); ?>
+</span><br /><br />
 <table class="facts_table">
 	<tr>
-		<td class="title" colspan="2"><?php print_help_link("link_remote_help", "qm"); ?>
-		<?php echo $pgv_lang["title_remote_link"];?></td>
+		<td class="title" colspan="2">
+			<?php print_help_link("link_remote_help", "qm"); echo $pgv_lang['title_remote_link']; ?>
+		</td>
 	</tr>
 	<tr>
-		<td class="descriptionbox wrap width20"><?php print_help_link('link_remote_rel_help', 'qm');?>
-		<?php echo $pgv_lang["label_rel_to_current"];?></td>
-		<td class="optionbox"><select id="cbRelationship"
-			name="cbRelationship">
-			<option value="self" selected="selected"><?php echo $pgv_lang["current_person"];?></option>
-			<!--  for now only allow creation of same person links... other links are confusing and cause problems
-			<option value="mother"><?php echo $pgv_lang["mother"];?></option>
-			<option value="father"><?php echo $pgv_lang["father"];?></option>
-			<option value="husband"><?php echo $pgv_lang["husband"];?></option>
-			<option value="wife"><?php echo $pgv_lang["wife"];?></option>
-			<option value="son"><?php echo $pgv_lang["son"];?></option>
-			<option value="daughter"><?php echo $pgv_lang["daughter"];?></option>
-			-->
-		</select></td>
-	</tr>
-	<?php if (count($remoteServers)>0 || count($gedcomList)>1) { ?>
-	<tr>
-		<td class="descriptionbox wrap width20"><?php print_help_link('link_remote_location_help', 'qm');?>
-		<?php echo $pgv_lang["label_location"];?></td>
+		<td class="descriptionbox wrap width20"><?php print_help_link('link_remote_rel_help', 'qm'); ?>
+			<?php echo $pgv_lang["label_rel_to_current"]; ?>
+		</td>
 		<td class="optionbox">
-			<?php if (count($gedcomList)>0) { ?>
-				<input type="radio" id="local" name="location" value="local" onclick="swapComponents('local')" />
-				<?php echo $pgv_lang["label_same_server"];?>&nbsp;&nbsp;&nbsp;
+			<select id="cbRelationship" name="cbRelationship">
+				<?php
+				foreach (array('current_person'/*, 'mother', 'father', 'husband', 'wife', 'son', 'daughter'*/) as $rel) {
+					echo '<option value="', $rel, '"';
+					if ($rel==$controller->form_cbRelationship) {
+						echo ' checked="checked"';
+					}
+					echo '>', $pgv_lang[$rel], '</option>';
+				}
+				?>
+			</select>
+		</td>
+	</tr>
+	<?php if ($controller->server_list || $controller->gedcom_list) { ?>
+	<tr>
+		<td class="descriptionbox wrap width20"><?php print_help_link('link_remote_location_help', 'qm'); ?>
+		<?php echo $pgv_lang["label_location"]; ?></td>
+		<td class="optionbox">
 			<?php
-			} if (count($remoteServers)>0) { ?>
-				<input type="radio" id="existing" name="location" value="existing" onclick="swapComponents('existing');" />
-				<?php echo $pgv_lang["lbl_server_list"];?>&nbsp;&nbsp;&nbsp;
-			<?php } ?>
-			<input type="radio" id="remote" name="location" value="remote" checked="checked" onclick="swapComponents('remote');" />
-			<?php echo $pgv_lang["label_diff_server"];?>
+				echo '<input type="radio" id="local" name="location" value="local" onclick="swapComponents(\'local\')"';
+				if (!$controller->gedcom_list) {
+					echo ' disabled';
+				}
+				if ($controller->form_location=='local') {
+					echo ' checked="checked"';
+				}
+				echo '/>', $pgv_lang['label_same_server'], '&nbsp;&nbsp;&nbsp';
+				echo '<input type="radio" id="existing" name="location" value="existing" onclick="swapComponents(\'existing\');"';
+				if (!$controller->server_list) {
+					echo ' disabled';
+				}
+				if ($controller->form_location=='existing') {
+					echo ' checked="checked"';
+				}
+				echo '/>', $pgv_lang['lbl_server_list'], '&nbsp;&nbsp;&nbsp;';
+				echo '<input type="radio" id="remote" name="location" value="remote" onclick="swapComponents(\'remote\');"';
+				if ($controller->form_location=='remote') {
+					echo ' checked="checked"';
+				}
+				echo '/>', $pgv_lang['label_diff_server'];
+			?>
 		</td>
 	</tr>
 	<?php } ?>
 
 	<tr>
 		<td class="descriptionbox wrap width20">
-		<?php print_help_link('link_person_id_help', 'qm');?>
-		<?php echo $pgv_lang["label_local_id"];?>
+			<?php
+				print_help_link('link_person_id_help', 'qm');
+				echo $pgv_lang["label_local_id"];
+			?>
 		</td>
-		<td class="optionbox"><input type="text" id="txtPID" name="txtPID" size="14" /></td>
+		<td class="optionbox">
+			<input type="text" id="txtPID" name="txtPID" size="14" value="<?php echo $controller->form_txtPID; ?>" />
+		</td>
 	</tr>
 	<tr>
-		<td class="descriptionbox wrap width20"><?php print_help_link('link_remote_site_help', 'qm');?>
-			<span id="labelSite"><?php echo $pgv_lang["label_site"];?></span>
+		<td class="descriptionbox wrap width20"><?php print_help_link('link_remote_site_help', 'qm'); ?>
+			<span id="labelSite">
+				<?php echo $pgv_lang['label_site']; ?>
+			</span>
 		</td>
 		<td class="optionbox" id="tdUrlText">
-			<div id="existingContent" style="display:none;">
-			<?php echo $pgv_lang["lbl_server_list"]; ?><br />
-			<select id="cbExistingServers" name="cbExistingServers"
-				style="width: 400px;">
-				<?php
-				foreach ($remoteServers as $key=>$server) {?>
-					<option value="<?php echo $key; ?>"><?php print PrintReady($server['name']);?></option>
-				<?php }
-				?>
-			</select> <br />
-			<br />
+			<div id="existingContent">
+				<?php echo $pgv_lang['lbl_server_list']; ?><br />
+				<select id="cbExistingServers" name="cbExistingServers"	style="width: 400px;">
+					<?php
+						foreach ($controller->server_list as $key=>$server) {
+							echo '<option value="', $key, '"';
+							if ($key==$controller->form_cbExistingServers) {
+								echo ' selected="selected"';
+							}
+							echo '/>', PrintReady($server['name']), '</option>';
+						}
+					?>
+				</select><br /><br />
 			</div>
-			<div id="remoteContent" style="display:block;">
-			<?php echo $pgv_lang["lbl_type_server"];?>
-			<table><tr>
-					<td ><?php echo $pgv_lang["title"];?></td>
-					<td><input type="text" id="txtTitle" name="txtTitle" size="66" /></td>
-				</tr><tr>
-					<td valign="top"><?php echo $pgv_lang["label_site_url"];?></td>
-					<td><input type="text" id="txtURL" name="txtURL" size="66" />
-					<br /><?php echo $pgv_lang["example"];?>&nbsp;&nbsp;http://www.remotesite.com/phpGedView/genservice.php?wsdl</td>
-				</tr><tr>
-					<td><?php echo $pgv_lang["label_gedcom_id2"];?></td>
-					<td><input type="text" id="txtGID" name="txtGID" /></td>
-				</tr><tr>
-					<td><?php echo $pgv_lang["label_username_id2"];?></td>
-					<td><input type="text" id="txtUsername" name="txtUsername" /></td>
-				</tr><tr>
-					<td><?php echo $pgv_lang["label_password_id2"];?></td>
-					<td><input type="password" id="txtPassword" name="txtPassword" /></td>
-				</tr></table>
+			<div id="remoteContent">
+				<?php echo $pgv_lang['lbl_type_server']; ?>
+				<table>
+					<tr>
+						<td ><?php echo $pgv_lang["title"]; ?></td>
+						<td><input type="text" id="txtTitle" name="txtTitle" size="66" value="<?php echo $controller->form_txtTitle; ?>" /></td>
+					</tr><tr>
+						<td valign="top"><?php echo $pgv_lang["label_site_url"]; ?></td>
+						<td><input type="text" id="txtURL" name="txtURL" size="66" value="<?php echo $controller->form_txtURL; ?>" />
+						<br /><?php echo $pgv_lang['example']; ?>&nbsp;&nbsp;http://www.remotesite.com/phpGedView/genservice.php?wsdl</td>
+					</tr><tr>
+						<td><?php echo $pgv_lang["label_gedcom_id2"]; ?></td>
+						<td><input type="text" id="txtGID" name="txtGID" value="<?php echo $controller->form_txtGID; ?>" /></td>
+					</tr><tr>
+						<td><?php echo $pgv_lang["label_username_id2"]; ?></td>
+						<td><input type="text" id="txtUsername" name="txtUsername" value="<?php echo $controller->form_txtUsername; ?>" /></td>
+					</tr><tr>
+						<td><?php echo $pgv_lang["label_password_id2"]; ?></td>
+						<td><input type="password" id="txtPassword" name="txtPassword" value="<?php echo $controller->form_txtPassword; ?>" /></td>
+					</tr>
+				</table>
 			</div>
-			<div id="localContent" style="display:none;">
+			<div id="localContent">
 			<table><tr>
-					<td ><?php echo $pgv_lang["title"];?></td>
-					<td><input type="text" id="txtCB_Title" name="txtCB_Title" size="66" /></td>
+					<td ><?php echo $pgv_lang["title"]; ?></td>
+					<td><input type="text" id="txtCB_Title" name="txtCB_Title" size="66" value="<?php echo $controller->form_txtCB_Title; ?>" /></td>
 				</tr><tr>
-					<td valign="top"><?php echo $pgv_lang["gedcom_file"];?></td>
+					<td valign="top"><?php echo $pgv_lang["gedcom_file"]; ?></td>
 					<td><select id="txtCB_GID" name="txtCB_GID">
 					<?php
-						foreach ($gedcomList as $ged_name) {
-							if ($ged_name != $GEDCOM) {
-								echo '<option value="', $ged_name, '">', $ged_name, '</option>';
+						foreach ($controller->gedcom_list as $ged_name) {
+							echo '<option value="', $ged_name, '"';
+							if ($ged_name==$controller->form_txtCB_GID) {
+								echo ' selected="selected"';
 							}
+							echo '>', $ged_name, '</option>';
 						}
 					?>
 					</select></td>
@@ -226,17 +243,18 @@ if ($action!="addlink") {
 	</tr>
 </table>
 <br />
-<input type="submit"
-	value="<?php echo $pgv_lang['label_add_remote_link'];?>" id="btnSubmit"
-	name="btnSubmit" value="add" /></form>
-		<?php
+<input type="submit" value="<?php echo $pgv_lang['label_add_remote_link']; ?>" id="btnSubmit" name="btnSubmit" />
+</form>
+<?php
+	echo PGV_JS_START, 'swapComponents("', $controller->form_location, '");', PGV_JS_END;
 }
+
 // autoclose window when update successful
 if ($success && $EDIT_AUTOCLOSE) {
 	echo PGV_JS_START, 'edit_close();', PGV_JS_END;
+} else {
+	echo '<div class="center"><a href="javascript://', $pgv_lang['close_window'], '" onclick="edit_close();">', $pgv_lang['close_window'], '</a></div>';
+	print_simple_footer();
 }
 
-print "<div class=\"center\"><a href=\"javascript:// ".$pgv_lang["close_window"]."\" onclick=\"edit_close();\">".$pgv_lang["close_window"]."</a></div><br />\n";
-
-print_simple_footer();
 ?>
