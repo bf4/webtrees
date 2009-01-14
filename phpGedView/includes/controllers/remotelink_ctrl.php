@@ -414,7 +414,9 @@ class RemoteLinkController extends BaseController {
 				break;
 			}
 			echo '<b>', $pgv_lang['link_success'], '</b>';
+			return true;
 		}
+		return false;
 	}
 
 	/**
