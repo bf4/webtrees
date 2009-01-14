@@ -997,25 +997,56 @@ class stats {
 		return $rows;
 	}
 	
-	function statsPlaces($fact='BIRT')
+	function statsPlaces($what='INDI', $fact=false)
 	{
 		global $TBLPREFIX;
-		$rows=self::_runSQL(''
-					.' SELECT'
-						.' d_fact,'
-						.' d_gid'
-					.' FROM'
-						." {$TBLPREFIX}dates"
-					.' WHERE'
-						." d_file={$this->_ged_id}"
-						." AND d_fact='$fact'"
-					);
-		if (!isset($rows[0])) {return '';}
-		else {
-			foreach ($rows as $row) {
-				$result[]=getPlaceCountry(format_fact_place(Person::getInstance($row['d_gid'])->getFactByType($row['d_fact']), false, false, false));
+		if ($fact) {
+			$sql = "SELECT i_gedcom FROM ${TBLPREFIX}individuals WHERE i_file={$this->_ged_id}";
+			$res = dbquery($sql);
+			$placelist = array();
+			while ($row =& $res->fetchRow()) {
+				$factrec = trim(get_sub_record(1, "1 {$fact}", $row[0], 1));
+				while (!empty($factrec)) {
+					if (preg_match("/2 PLAC (.+)/", $factrec, $match)) {
+						$place = trim($match[1]);
+						if (!isset($placelist[$place])) {
+							$placelist[$place] = 1;
+						}
+						else {
+							$placelist[$place] ++;
+						}
+					}
+					$factrec = trim(get_sub_record(1, "1 {$fact}", $row[0], 2));
+				}
 			}
-			return $result;
+			$res->free();
+			return $placelist;
+		}
+		else {
+			if ($what=='INDI') {
+				$join = " JOIN {$TBLPREFIX}individuals ON pl_file = i_file AND pl_gid = i_id ";
+			}
+			else if ($what=='FAM') {
+				$join = " JOIN {$TBLPREFIX}families ON pl_file = f_file AND pl_gid = f_id ";
+			}
+			else {
+				$join = "";
+			}
+			$rows=self::_runSQL(''
+					.' SELECT'
+						.' p_place AS country,'
+						.' COUNT(*)'
+					.' FROM'
+						." {$TBLPREFIX}places"
+					." JOIN {$TBLPREFIX}placelinks ON pl_file=p_file AND p_id=pl_p_id"
+					.$join
+					.' WHERE'
+						." p_file={$this->_ged_id}"
+						." AND p_parent_id='0'"
+					.' GROUP BY country'
+					);
+			if (!isset($rows[0])) {return '';}
+			return $rows;
 		}
 	}
 

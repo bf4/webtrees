@@ -842,21 +842,14 @@ function print_map_charts($chart_shows, $chart_type, $x_as, $surname) {
 	case 'indi_distribution_chart':
 		// Count how many people are events in each country
 		$surn_countries=array();
-		foreach (get_indi_list() as $person) {
-			if (preg_match_all('/^2 PLAC (?:.*, *)*(.*)/m', $person->gedrec, $matches)) {
-				// PGV uses 3 letter country codes and localised country names, but google uses 2 letter codes.
-				foreach ($matches[1] as $country) {
-					$country=UTF8_strtolower(trim($country));
-					if (array_key_exists($country, $country_to_iso3166)) {
-						if (array_key_exists($country_to_iso3166[$country], $surn_countries)) {
-							$surn_countries[$country_to_iso3166[$country]]++;
-						} else {
-							$surn_countries[$country_to_iso3166[$country]]=1;
-						}
-					}
-				}
+		$countries=$stats->statsPlaces('INDI');
+		// PGV uses 3 letter country codes and localised country names, but google uses 2 letter codes.
+		foreach ($countries as $place) {
+			$country=UTF8_strtolower(trim($place['country']));
+			if (array_key_exists($country, $country_to_iso3166)) {
+				$surn_countries[$country_to_iso3166[$country]]=$place['count(*)'];
 			}
-		};
+		}
 		$chart_url ="http://chart.apis.google.com/chart?cht=t&amp;chtm=".$chart_shows;
 		$chart_url.="&amp;chco=ffffff,c3dfff,84beff"; // country colours
 		$chart_url.="&amp;chf=bg,s,EAF7FE"; // sea colour
@@ -897,21 +890,18 @@ function print_map_charts($chart_shows, $chart_type, $x_as, $surname) {
 	case 'birth_distribution_chart':
 		// Count how many people were born in each country
 		$surn_countries=array();
-		foreach (get_indi_list() as $person) {
-			$birthplace = $person->getBirthPlace();
-			if ($birthplace != "") {
-				$birthplace = getPlaceCountry($birthplace);
-				$country=UTF8_strtolower(trim($birthplace));
-				// PGV uses 3 letter country codes and localised country names, but google uses 2 letter codes.
-				if (array_key_exists($country, $country_to_iso3166)) {
-					if (array_key_exists($country_to_iso3166[$country], $surn_countries)) {
-						$surn_countries[$country_to_iso3166[$country]]++;
-					} else {
-						$surn_countries[$country_to_iso3166[$country]]=1;
-					}
+		$countries=$stats->statsPlaces('INDI', 'BIRT');
+		foreach ($countries as $place=>$count) {
+			$country=UTF8_strtolower(getPlaceCountry($place));
+			if (array_key_exists($country, $country_to_iso3166)) {
+				if (!isset($surn_countries[$country_to_iso3166[$country]])) {
+					$surn_countries[$country_to_iso3166[$country]]=$count;
+				}
+				else {
+					$surn_countries[$country_to_iso3166[$country]]+=$count;
 				}
 			}
-		};
+		}
 		$chart_url ="http://chart.apis.google.com/chart?cht=t&amp;chtm=".$chart_shows;
 		$chart_url.="&amp;chco=ffffff,c3dfff,84beff"; // country colours
 		$chart_url.="&amp;chf=bg,s,EAF7FE"; // sea colour
@@ -924,21 +914,18 @@ function print_map_charts($chart_shows, $chart_type, $x_as, $surname) {
 	case 'death_distribution_chart':
 		// Count how many people were death in each country
 		$surn_countries=array();
-		foreach (get_indi_list() as $person) {
-			$deathplace = $person->getDeathPlace();
-			if ($deathplace != "") {
-				$deathplace = getPlaceCountry($deathplace);
-				$country=UTF8_strtolower(trim($deathplace));
-				// PGV uses 3 letter country codes and localised country names, but google uses 2 letter codes.
-				if (array_key_exists($country, $country_to_iso3166)) {
-					if (array_key_exists($country_to_iso3166[$country], $surn_countries)) {
-						$surn_countries[$country_to_iso3166[$country]]++;
-					} else {
-						$surn_countries[$country_to_iso3166[$country]]=1;
-					}
+		$countries=$stats->statsPlaces('INDI', 'DEAT');
+		foreach ($countries as $place=>$count) {
+			$country=UTF8_strtolower(getPlaceCountry($place));
+			if (array_key_exists($country, $country_to_iso3166)) {
+				if (!isset($surn_countries[$country_to_iso3166[$country]])) {
+					$surn_countries[$country_to_iso3166[$country]]=$count;
+				}
+				else {
+					$surn_countries[$country_to_iso3166[$country]]+=$count;
 				}
 			}
-		};
+		}
 		$chart_url ="http://chart.apis.google.com/chart?cht=t&amp;chtm=".$chart_shows;
 		$chart_url.="&amp;chco=ffffff,c3dfff,84beff"; // country colours
 		$chart_url.="&amp;chf=bg,s,EAF7FE"; // sea colour
@@ -951,21 +938,14 @@ function print_map_charts($chart_shows, $chart_type, $x_as, $surname) {
 	case 'marriage_distribution_chart':
 		// Count how many families got marriage in each country
 		$surn_countries=array();
-		foreach (get_fam_list() as $family) {
-			$marriageplace = $family->getMarriagePlace();
-			if ($marriageplace != "") {
-				$marriageplace = getPlaceCountry($marriageplace);
-				$country=UTF8_strtolower(trim($marriageplace));
-				// PGV uses 3 letter country codes and localised country names, but google uses 2 letter codes.
-				if (array_key_exists($country, $country_to_iso3166)) {
-					if (array_key_exists($country_to_iso3166[$country], $surn_countries)) {
-						$surn_countries[$country_to_iso3166[$country]]++;
-					} else {
-						$surn_countries[$country_to_iso3166[$country]]=1;
-					}
-				}
+		$countries=$stats->statsPlaces('FAM');
+		// PGV uses 3 letter country codes and localised country names, but google uses 2 letter codes.
+		foreach ($countries as $place) {
+			$country=UTF8_strtolower(trim($place['country']));
+			if (array_key_exists($country, $country_to_iso3166)) {
+				$surn_countries[$country_to_iso3166[$country]]=$place['count(*)'];
 			}
-		};
+		}
 		$chart_url ="http://chart.apis.google.com/chart?cht=t&amp;chtm=".$chart_shows;
 		$chart_url.="&amp;chco=ffffff,c3dfff,84beff"; // country colours
 		$chart_url.="&amp;chf=bg,s,EAF7FE"; // sea colour
@@ -1052,6 +1032,10 @@ if ($action=="update") {
 	unset($savedInput);
 }
 else {
+	if (!isset($_SESSION[$GEDCOM."statisticsplot"])) {
+		header("Location: statistics.php");
+		exit;
+	}
 	// Recover the saved input variables
 	$savedInput = $_SESSION[$GEDCOM."statisticsplot"];
 	$x_as = $savedInput["x_as"];
