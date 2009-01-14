@@ -718,6 +718,14 @@ class stats {
 		return $this->_getPercentage($this->totalMortalityUnknown(), 'individual');
 	}
 
+	function mortalityUnknown()
+	{
+		global $TBLPREFIX;
+		$rows=self::_runSQL("SELECT i_id AS id FROM {$TBLPREFIX}individuals WHERE i_file={$this->_ged_id} AND i_isdead=-1");
+		if (!isset($rows[0])) {return '';}
+		return $rows;
+	}
+
 	function chartMortality($params=null)
 	{
 		global $pgv_lang, $TEXT_DIRECTION;
@@ -806,6 +814,7 @@ class stats {
 	function totalMediaBook() {return $this->_totalMediaType('book');}
 	function totalMediaCard() {return $this->_totalMediaType('card');}
 	function totalMediaCertificate() {return $this->_totalMediaType('certificate');}
+	function totalMediaCoatOfArms() {return $this->_totalMediaType('coat');}
 	function totalMediaDocument() {return $this->_totalMediaType('document');}
 	function totalMediaElectronic() {return $this->_totalMediaType('electronic');}
 	function totalMediaMagazine() {return $this->_totalMediaType('magazine');}
@@ -997,7 +1006,7 @@ class stats {
 		return $rows;
 	}
 	
-	function statsPlaces($what='INDI', $fact=false)
+	function statsPlaces($what='INDI', $fact=false, $parent=0)
 	{
 		global $TBLPREFIX;
 		if ($fact) {
@@ -1021,6 +1030,32 @@ class stats {
 			}
 			$res->free();
 			return $placelist;
+		}
+		else if ($parent>0) {
+			if ($what=='INDI') {
+				$join = " JOIN {$TBLPREFIX}individuals ON pl_file = i_file AND pl_gid = i_id ";
+			}
+			else if ($what=='FAM') {
+				$join = " JOIN {$TBLPREFIX}families ON pl_file = f_file AND pl_gid = f_id ";
+			}
+			else {
+				$join = "";
+			}
+			$rows=self::_runSQL(''
+				.' SELECT'
+				.' p_place AS place,'
+				.' COUNT(*)'
+				.' FROM'
+					." {$TBLPREFIX}places"
+				." JOIN {$TBLPREFIX}placelinks ON pl_file=p_file AND p_id=pl_p_id"
+				." JOIN {$TBLPREFIX}placelocation ON pl_id={$parent} AND pl_place=p_place"
+				.$join
+				.' WHERE'
+					." p_file={$this->_ged_id}"
+				.' GROUP BY place'
+			);
+			if (!isset($rows[0])) {return '';}
+			return $rows;
 		}
 		else {
 			if ($what=='INDI') {
