@@ -397,7 +397,7 @@ class RemoteLinkController extends BaseController {
 				replace_gedrec($stub_id, $indistub,false);
 				break;
 			case 'current_person':
-				$indirec.="\n1 RFN {$serverID}:{$link_pid}\n1 SOUR @{$serverID}@";
+				$indirec.="\n1 RFN {$serverID}:{$link_pid}\n1 SOUR @{$serverID}@\n2 PAGE {$link_pid}";
 	
 				$serviceClient = ServiceClient::getInstance($serverID);
 				if (!is_null($serviceClient)) {
