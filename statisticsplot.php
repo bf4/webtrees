@@ -850,14 +850,6 @@ function print_map_charts($chart_shows, $chart_type, $x_as, $surname) {
 				$surn_countries[$country_to_iso3166[$country]]=$place['count(*)'];
 			}
 		}
-		$chart_url ="http://chart.apis.google.com/chart?cht=t&amp;chtm=".$chart_shows;
-		$chart_url.="&amp;chco=ffffff,c3dfff,84beff"; // country colours
-		$chart_url.="&amp;chf=bg,s,EAF7FE"; // sea colour
-		$chart_url.="&amp;chs=440x220"; // max size for maps is 440x220
-		$chart_url.="&amp;chld=".implode('', array_keys($surn_countries))."&amp;chd=s:";
-		foreach ($surn_countries as $count) {
-			$chart_url.=substr(PGV_GOOGLE_CHART_ENCODING, floor($count/max($surn_countries)*61), 1);
-		}
 		break;
 	case 'surname_distribution_chart':
 		// Count how many people are events in each country
@@ -878,14 +870,6 @@ function print_map_charts($chart_shows, $chart_type, $x_as, $surname) {
 				}
 			}
 		};
-		$chart_url ="http://chart.apis.google.com/chart?cht=t&amp;chtm=".$chart_shows;
-		$chart_url.="&amp;chco=ffffff,c3dfff,84beff"; // country colours
-		$chart_url.="&amp;chf=bg,s,EAF7FE"; // sea colour
-		$chart_url.="&amp;chs=440x220"; // max size for maps is 440x220
-		$chart_url.="&amp;chld=".implode('', array_keys($surn_countries))."&amp;chd=s:";
-		foreach ($surn_countries as $count) {
-			$chart_url.=substr(PGV_GOOGLE_CHART_ENCODING, floor($count/max($surn_countries)*61), 1);
-		}
 		break;
 	case 'birth_distribution_chart':
 		// Count how many people were born in each country
@@ -901,14 +885,6 @@ function print_map_charts($chart_shows, $chart_type, $x_as, $surname) {
 					$surn_countries[$country_to_iso3166[$country]]+=$count;
 				}
 			}
-		}
-		$chart_url ="http://chart.apis.google.com/chart?cht=t&amp;chtm=".$chart_shows;
-		$chart_url.="&amp;chco=ffffff,c3dfff,84beff"; // country colours
-		$chart_url.="&amp;chf=bg,s,EAF7FE"; // sea colour
-		$chart_url.="&amp;chs=440x220"; // max size for maps is 440x220
-		$chart_url.="&amp;chld=".implode('', array_keys($surn_countries))."&amp;chd=s:";
-		foreach ($surn_countries as $count) {
-			$chart_url.=substr(PGV_GOOGLE_CHART_ENCODING, floor($count/max($surn_countries)*61), 1);
 		}
 		break;
 	case 'death_distribution_chart':
@@ -926,14 +902,6 @@ function print_map_charts($chart_shows, $chart_type, $x_as, $surname) {
 				}
 			}
 		}
-		$chart_url ="http://chart.apis.google.com/chart?cht=t&amp;chtm=".$chart_shows;
-		$chart_url.="&amp;chco=ffffff,c3dfff,84beff"; // country colours
-		$chart_url.="&amp;chf=bg,s,EAF7FE"; // sea colour
-		$chart_url.="&amp;chs=440x220"; // max size for maps is 440x220
-		$chart_url.="&amp;chld=".implode('', array_keys($surn_countries))."&amp;chd=s:";
-		foreach ($surn_countries as $count) {
-			$chart_url.=substr(PGV_GOOGLE_CHART_ENCODING, floor($count/max($surn_countries)*61), 1);
-		}
 		break;
 	case 'marriage_distribution_chart':
 		// Count how many families got marriage in each country
@@ -946,18 +914,17 @@ function print_map_charts($chart_shows, $chart_type, $x_as, $surname) {
 				$surn_countries[$country_to_iso3166[$country]]=$place['count(*)'];
 			}
 		}
-		$chart_url ="http://chart.apis.google.com/chart?cht=t&amp;chtm=".$chart_shows;
-		$chart_url.="&amp;chco=ffffff,c3dfff,84beff"; // country colours
-		$chart_url.="&amp;chf=bg,s,EAF7FE"; // sea colour
-		$chart_url.="&amp;chs=440x220"; // max size for maps is 440x220
-		$chart_url.="&amp;chld=".implode('', array_keys($surn_countries))."&amp;chd=s:";
-		foreach ($surn_countries as $count) {
-			$chart_url.=substr(PGV_GOOGLE_CHART_ENCODING, floor($count/max($surn_countries)*61), 1);
-		}
 		break;
 	}
+	$chart_url ="http://chart.apis.google.com/chart?cht=t&amp;chtm=".$chart_shows;
+	$chart_url.="&amp;chco=ffffff,c3dfff,84beff"; // country colours
+	$chart_url.="&amp;chf=bg,s,EAF7FE"; // sea colour
+	$chart_url.="&amp;chs=440x220"; // max size for maps is 440x220
+	$chart_url.="&amp;chld=".implode('', array_keys($surn_countries))."&amp;chd=s:";
+	foreach ($surn_countries as $count) {
+		$chart_url.=substr(PGV_GOOGLE_CHART_ENCODING, floor($count/max($surn_countries)*61), 1);
+	}
 	$content='<div align="center"><img src="'.$chart_url.'" alt="'.$chart_title.'" title="'.$chart_title.'" class="gchart" />';
-
 	echo '<div id="google_charts" class="center">';
 	echo '<b>'.$title.'</b><br /><br />';
 	echo $content;
