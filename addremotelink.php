@@ -123,7 +123,7 @@ if (!$success) {
 		<td class="optionbox">
 			<select id="cbRelationship" name="cbRelationship">
 				<?php
-				foreach (array('current_person'/*, 'mother', 'father', 'husband', 'wife', 'son', 'daughter'*/) as $rel) {
+				foreach (array('current_person', 'mother', 'father', 'husband', 'wife', 'son', 'daughter') as $rel) {
 					echo '<option value="', $rel, '"';
 					if ($rel==$controller->form_cbRelationship) {
 						echo ' checked="checked"';
