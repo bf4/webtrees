@@ -1,32 +1,32 @@
 <?php
 /**
-* Add media to gedcom file
-*
-* This file allows the user to maintain a seperate table
-* of media files and associate them with individuals in the gedcom
-* and then add these records later.
-* Requires SQL mode.
-*
-* phpGedView: Genealogy Viewer
-* Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
-*
-* This program is free software; you can redistribute it and/or modify
-* it under the terms of the GNU General Public License as published by
-* the Free Software Foundation; either version 2 of the License, or
-* (at your option) any later version.
-*
-* This program is distributed in the hope that it will be useful,
-* but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-* GNU General Public License for more details.
-*
-* You should have received a copy of the GNU General Public License
-* along with this program; if not, write to the Free Software
-* Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
-* @package PhpGedView
-* @subpackage MediaDB
-* @version $Id$
-*/
+ * Add media to gedcom file
+ *
+ * This file allows the user to maintain a seperate table
+ * of media files and associate them with individuals in the gedcom
+ * and then add these records later.
+ * Requires SQL mode.
+ *
+ * phpGedView: Genealogy Viewer
+ * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * @package PhpGedView
+ * @subpackage MediaDB
+ * @version $Id$
+ */
 
 require './config.php';
 
@@ -57,6 +57,7 @@ $text       =safe_REQUEST($_REQUEST, 'text',        PGV_REGEX_UNSAFE);
 $tag        =safe_REQUEST($_REQUEST, 'tag',         PGV_REGEX_UNSAFE);
 $islink     =safe_REQUEST($_REQUEST, 'islink',      PGV_REGEX_UNSAFE);
 $glevels    =safe_REQUEST($_REQUEST, 'glevels',     PGV_REGEX_UNSAFE);
+$filename = decrypt($filename);
 
 print_simple_header($pgv_lang["add_media_tool"]);
 $disp = true;
@@ -144,20 +145,13 @@ if ($action=="newentry") {
 		$thumbFolderName = str_replace($MEDIA_DIRECTORY, $MEDIA_DIRECTORY."thumbs/", $folderName);
 
 		$_SESSION["upload_folder"] = $folderName; // store standard media folder in session
-
-		$destFolder = $folderName;  // This is where the actual image will be stored
-		$destThumbFolder = $thumbFolderName;  // ditto for the thumbnail
-
 		if ($USE_MEDIA_FIREWALL) {
-			$destFolder = get_media_firewall_path($folderName);
-			if ($MEDIA_FIREWALL_THUMBS) $destThumbFolder = get_media_firewall_path($thumbFolderName);
+			$folderName = get_media_firewall_path($folderName);
+			if ($MEDIA_FIREWALL_THUMBS) $thumbFolderName = get_media_firewall_path($thumbFolderName);
 		}
-
 		// make sure the dirs exist
 		@mkdirs($folderName);
-		@mkdirs($destFolder);
 		@mkdirs($thumbFolderName);
-		@mkdirs($destThumbFolder);
 
 		$error = "";
 
@@ -167,7 +161,7 @@ if ($action=="newentry") {
 		$parts = pathinfo($fileName);
 		if (!empty($parts["basename"])) {
 			// User supplied a name to be used on the server
-			$mediaFile = $parts["basename"]; // Use the supplied name
+			$mediaFile = $parts["basename"];	// Use the supplied name
 			if (empty($parts["extension"]) || !in_array(strtolower($parts["extension"]), $MEDIATYPE)) {
 				// Strip invalid extension from supplied name
 				$lastDot = strrpos($mediaFile, '.');
@@ -183,44 +177,46 @@ if ($action=="newentry") {
 			else $parts = pathinfo($_FILES["thumbnail"]["name"]);
 			$mediaFile = $parts["basename"];
 		}
-
 		if (!empty($_FILES["mediafile"]["name"])) {
+			$newFile = $folderName.$mediaFile;
 			// Copy main media file into the destination directory
-			if (file_exists(filename_decode($folderName.$mediaFile)) || file_exists(filename_decode($destFolder.$mediaFile))) {
-				$error .= $pgv_lang["media_exists"]."&nbsp;&nbsp;".$folderName.$mediaFile."<br />";
+			if (file_exists(filename_decode($newFile))) {
+				$error .= $pgv_lang["media_exists"]."&nbsp;&nbsp;".$newFile."<br />";
 			} else {
-				if (!move_uploaded_file($_FILES["mediafile"]["tmp_name"], filename_decode($destFolder.$mediaFile))) {
+				if (!move_uploaded_file($_FILES["mediafile"]["tmp_name"], filename_decode($newFile))) {
 					// the file cannot be copied
 					$error .= $pgv_lang["upload_error"]."<br />".file_upload_error_text($_FILES["mediafile"]["error"])."<br />";
 				} else {
-					@chmod(filename_decode($destFolder.$mediaFile), PGV_PERM_FILE);
-					AddToLog("Media file {$folderName}{$mediaFile} uploaded");
+					@chmod(filename_decode($newFile), PGV_PERM_FILE);
+					AddToLog("Media file {$newFile} uploaded");
 				}
 			}
 		}
 		if ($error=="" && !empty($_FILES["thumbnail"]["name"])) {
 			$newThum = $thumbFolderName.$mediaFile;
 			// Copy user-supplied thumbnail file into the destination directory
-			if (file_exists(filename_decode($thumbFolderName.$mediaFile)) || file_exists(filename_decode($destThumbFolder.$mediaFile))) {
-				$error .= $pgv_lang["media_thumb_exists"]."&nbsp;&nbsp;".$thumbFolderName.$mediaFile."<br />";
+			if (file_exists(filename_decode($newThum))) {
+				$error .= $pgv_lang["media_thumb_exists"]."&nbsp;&nbsp;".$newThum."<br />";
 			} else {
-				if (!move_uploaded_file($_FILES["thumbnail"]["tmp_name"], filename_decode($destThumbFolder.$mediaFile))) {
+				if (!move_uploaded_file($_FILES["thumbnail"]["tmp_name"], filename_decode($newThum))) {
 					// the file cannot be copied
-					$error .= $pgv_lang["upload_error"]."<br />".file_upload_error_text($_FILES["thumbnail".$i]["error"])."<br />";
+					$error .= $pgv_lang["upload_error"]."<br />".file_upload_error_text($_FILES["thumbnail"]["error"])."<br />";
 				} else {
-					@chmod(filename_decode($destThumbFolder.$mediaFile), PGV_PERM_FILE);
-					AddToLog("Media file {$thumbFolderName}{$mediaFile} uploaded");
+					@chmod(filename_decode($newThum), PGV_PERM_FILE);
+					AddToLog("Media file {$newThum} uploaded");
 				}
 			}
 		}
 		if ($error=="" && empty($_FILES["mediafile"]["name"]) && !empty($_FILES["thumbnail"]["name"])) {
 			// Copy user-supplied thumbnail file into the main destination directory
-			if (!copy(filename_decode($destThumbFolder.$mediaFile), filename_decode($destFolder.$mediaFile))) {
+			$whichFile1 = $thumbFolderName.$mediaFile;
+			$whichFile2 = $folderName.$mediaFile;
+			if (!copy(filename_decode($whichFile1), filename_decode($whichFile2))) {
 				// the file cannot be copied
-				$error .= $pgv_lang["upload_error"]."<br />".file_upload_error_text($_FILES["thumbnail".$i]["error"])."<br />";
+				$error .= $pgv_lang["upload_error"]."<br />".print_text('copy_error', 0, 1)."<br />";
 			} else {
-				@chmod(filename_decode($folderName.$mediaFile), PGV_PERM_FILE);
-				AddToLog("Media file {$folderName}{$mediaFile} copied from {$thumbFolderName}{$mediaFile}");
+				@chmod(filename_decode($whichFile2), PGV_PERM_FILE);
+				AddToLog("Media file {$whichFile2} copied from {$whichFile1}");
 			}
 		}
 		if ($error=="" && !empty($_FILES["mediafile"]["name"]) && empty($_FILES["thumbnail"]["name"])) {
@@ -567,7 +563,6 @@ if ($action=="delete") {
 	}
 }
 // **** end action "delete"
-
 
 // **** begin action "showmediaform"
 if ($action=="showmediaform") {

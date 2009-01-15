@@ -3,7 +3,7 @@
  * Displays a list of the multimedia objects
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
+ * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,7 +26,7 @@
 
 require './config.php';
 
-require_once('includes/functions/functions_print_facts.php');
+require_once 'includes/functions/functions_print_facts.php';
 
 
 loadLangFile("lightbox:lang");
@@ -51,9 +51,7 @@ print "\n\t<div class=\"center\"><h2>".$pgv_lang["multi_title"]."</h2></div>\n\t
 // Get Javascript variables from lb_config.php ---------------------------
  if (file_exists("modules/lightbox/album.php")) {
 	include('modules/lightbox/lb_defaultconfig.php');
-	if (file_exists('modules/lightbox/lb_config.php')) {
-		include('modules/lightbox/lb_config.php');
-	}
+	if (file_exists('modules/lightbox/lb_config.php')) include('modules/lightbox/lb_config.php');
 	include('modules/lightbox/functions/lb_call_js.php');
 
 	if ($theme_name=="Minimal") {
@@ -301,31 +299,9 @@ if ($ct>0) {
 			//$showFile = false;
 			if ($isExternal) $name = "URL";
 			else $name = basename($media["FILE"]);
-			}
-			print "\n\t\t\t<td class=\"list_value_wrap\" width=\"50%\">";
-			print "<table class=\"$TEXT_DIRECTION\">\n\t<tr>\n\t\t<td valign=\"top\" style=\"white-space: normal;\">";
-
-//LBox --------  change for Lightbox Album and JWplayer ---------------------------
-	// Check Filetype of media item ( URL, Local or Other )
-		// URL FLV  ----------------------------------
-		if (eregi("http://www.youtube.com", $media['FILE'])) {
-			$file_type = "url_flv";
-		// URL Image ------------------------------
-		}else if (eregi("http" ,$media["FILE"]) && eregi("\.(jpg|jpeg|gif|png|bmp)$", $media['FILE'])) {
-			$file_type = "url_image";
-		// URL page----------------------------------
-		}else if(eregi("http" ,$media["FILE"]) || eregi("\.pdf", $media['FILE']) || eregi("\.avi", $media['FILE']) ){
-			$file_type = "url_page";
-		// Local FLV----------------------------------
-		}else if (eregi("\.flv" ,$media['FILE'])) {
-			$file_type = "local_flv";
-		// Local Image ----------------------------------
-		}else if (eregi("\.(jpg|jpeg|gif|png|bmp)$", $media['FILE'])) {
-			$file_type = "local_image";
-		// Other ------------------------------
-		}else{
-			$file_type = "other";
 		}
+		print "\n\t\t\t<td class=\"list_value_wrap\" width=\"50%\">";
+		print "<table class=\"$TEXT_DIRECTION\">\n\t<tr>\n\t\t<td valign=\"top\" style=\"white-space: normal;\">";
 
 		//Get media item Notes
 		$haystack = $media["GEDCOM"];
@@ -336,79 +312,37 @@ if ($ct>0) {
 		$final    = $before.$needle.$worked;
 		$notes    = PrintReady(htmlspecialchars(addslashes(print_fact_notes($final, 1, true, true)),ENT_COMPAT,'UTF-8'));
 
-		// If Lightbox installed ------------------------------------
-			// if URL FLV  filetype  - e.g. You Tube link -  (Lightbox installed + JWplayer installed)
-			if (file_exists("modules/lightbox/album.php") && $file_type == "url_flv") {
-				print "<a href=\"module.php?mod=JWplayer&amp;pgvaction=flvVideo&amp;flvVideo=" . str_replace('http://', '', $media["FILE"]) . "\" rel='clearbox(" . 445 . "," . 370 . ",click)' rev=\"" . $media["XREF"] . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name,ENT_COMPAT,'UTF-8')) . "::" . htmlspecialchars($notes,ENT_COMPAT,'UTF-8') . "\">" . "\n";
-			// If URL image (Lightbox installed)
-			} else if (file_exists("modules/lightbox/album.php") && ($file_type == "url_image")) {
-				print "<a href=\"" . $media["FILE"] . "\" rel=\"clearbox[general]\" rev=\"" . $media["XREF"] . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name,ENT_COMPAT,'UTF-8')) . "::" . htmlspecialchars($notes,ENT_COMPAT,'UTF-8') . "\">" . "\n";
-			// Else If URL page filetype (Lightbox installed)
-			} else if (file_exists("modules/lightbox/album.php") && $file_type == "url_page") {
-				print 	"<a href=\"" . $media["FILE"] . "\" rel='clearbox(" . $LB_URL_WIDTH . "," . $LB_URL_HEIGHT . ",click)' rev=\"" . $media["XREF"] . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name,ENT_COMPAT,'UTF-8')) . "::" . htmlspecialchars($notes,ENT_COMPAT,'UTF-8') . "\">" . "\n";
-			// Else Local FLV file (Lightbox installed) + (JWplayer installed)
-			} else if (file_exists("modules/lightbox/album.php") && ($file_type == "local_flv") && is_dir('modules/JWplayer')) {
-				print "<a href=\"module.php?mod=JWplayer&amp;pgvaction=flvVideo&amp;flvVideo=" . $media["FILE"] . "\" rel='clearbox(" . 445 . "," . 370 . ",click)' rev=\"" . $media["XREF"] . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name,ENT_COMPAT,'UTF-8')) . "::" . htmlspecialchars($notes,ENT_COMPAT,'UTF-8') . "\">" . "\n";
-			// If Local image (Lightbox installed)
-			} else if (file_exists("modules/lightbox/album.php") && ($file_type == "local_image")) {
-				print "<a href=\"" . $media["FILE"] . "\" rel=\"clearbox[general]\" rev=\"" . $media["XREF"] . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name,ENT_COMPAT,'UTF-8')) . "::" . htmlspecialchars($notes,ENT_COMPAT,'UTF-8') . "\">" . "\n";
+		$imgUrl = mediaFileLink($media["FILE"], $media["XREF"], $name, $notes);
 
-		// Else if Lightbox NOT installed ------------------------
-			// If Use media viewer enabled in config
-			} else if ($USE_MEDIA_VIEWER) {
-				print "<a href=\"mediaviewer.php?mid=".$media["XREF"]."\">";
-			// Else if URL FLV   - e.g. You Tube link -  (JWplayer installed)
-			} elseif ($file_type == "url_flv") {
-				print "<a href=\"javascript:;\" onclick=\" var winflv = window.open('module.php?mod=JWplayer&amp;pgvaction=flvVideo&amp;flvVideo=" . str_replace('http://', '', $media["FILE"]) . "', 'winflv', 'width=445, height=365, left=600, top=200'); if (window.focus) {winflv.focus();}\">";
-			//else if URL image
-			} else if ($file_type == "url_image"){
-				$imageinfo = Getimagesize($media['FILE']);
-				$wth = $imageinfo[0];
-				$hgt = $imageinfo[1];
-				print "<a href=\"javascript:void(0)\" onclick=\"var winimg = window.open('".$media["FILE"]."', 'winimg', 'width=".$wth.", height=".$hgt.", left=200, top=200'); if (window.focus) {winimg.focus();} \">";
-			//else if URL page
-			} else if ($file_type == "url_page") {
-				print "<a href=\"javascript:;\" onclick=\"var winurl = window.open('".$media["FILE"]."', 'winurl', 'width=900, height=600, left=200, top=200'); if (window.focus) {winurl.focus();}\">";
-			// Else if Local FLV file  + (JWplayer installed)
-			} else if ( ($file_type == "local_flv") && is_dir('modules/JWplayer') ) {
-				print "<a href=\"javascript:;\" onclick=\" var winflv = window.open('module.php?mod=JWplayer&amp;pgvaction=flvVideo&amp;flvVideo=" . $media["FILE"] . "', 'winflv', 'width=445, height=365, left=600, top=200'); if (window.focus) {winflv.focus();}\">";
-			// else just use normal image viewer
-			} else {
-				print "<a href=\"#\" onclick=\"return openImage('".rawurlencode($media["FILE"])."',$imgwidth, $imgheight);\">";
-			}
 
-		// Finally print thumbnails
-			// If URL flv file (eg You Tube)
-			if ($file_type == "url_flv" && is_dir('modules/JWplayer')) {
-				print "<img src=\"modules/JWplayer/flashrem.png\" height=\"60\" border=\"0\" " ;
-			// If URL page, Print the Common URL Thumbnail
-			} else if ($file_type == "url_page" && !eregi("\.pdf",$media['FILE']) && !eregi("\.avi",$media['FILE'])) {
-				print "<img src=\"images/URL.png\" height=\"80\" border=\"0\" " ;
-			// If local flv file  + (JWplayer installed) and no uploaded thumbnail, print the common flv thumbnail
-			} else if ($file_type == "local_flv" && is_dir('modules/JWplayer') && eregi("\media.gif",$media["THUMB"]) ) {
-				print "<img src=\"modules/JWplayer/flash.png\" height=\"60\" border=\"0\" " ;
-			// Else Print the Regular Thumbnail if associated with a thumbnail image,
-			} else {
-				if (eregi("\.mp3", $media['FILE'])) {
-					if (media_exists("images/audio.png") && eregi("\media.gif",$media["THUMB"]) ) {
-						print "<img src=\"images/audio.png\" height=\"60\" border=\"0\" align=\"center\" class=\"thumbnail\" " ;
-					}else{
-						print "<img src=\"".$media["THUMB"]."\" border=\"0\" align=\"center" . ($TEXT_DIRECTION== "rtl"?"right": "left") . "\" class=\"thumbnail\"";
-					}
-				}else{
-					print "<img src=\"".$media["THUMB"]."\" border=\"0\" align=\"center" . ($TEXT_DIRECTION== "rtl"?"right": "left") . "\" class=\"thumbnail\"";
-				}
-				if ($isExternal) {
-						print " width=\"".$THUMBNAIL_WIDTH."\"";
-				}
-			}
-//LBox ----------- end change for Lightbox Album and JWplayer ---------------------------
+		$file_type = mediaFileType($media["FILE"]);
+		$widthThumb = '';
+		switch ($file_type) {
+		case 'url_flv':
+			$imgThumb = 'images/flashrem.png';
+			break;
+		case 'local_flv':
+			$imgThumb = 'images/flash.png';
+			break;
+		case 'url_page':
+		case 'local_page':
+			$imgThumb = 'images/globe.png';
+			break;
+		case 'url_audio':
+		case 'local_audio':
+			$imgThumb = 'images/audio.png';
+			break;
+		default:
+			$imgThumb = $media["THUMB"];
+			if ($isExternal) $widthThumb = ' width="'.$THUMBNAIL_WIDTH.'"';
+			break;
+		}
+		echo '<a href="', $imgUrl, '">';
+		echo '<img src="', $imgThumb, '" align="center" class="thumbnail" border="none"', $widthThumb;
+		echo ' alt="', PrintReady(htmlspecialchars($name,ENT_COMPAT,'UTF-8')), '" title="', PrintReady(htmlspecialchars($name,ENT_COMPAT,'UTF-8')), '" /></a>';
+		echo "</td>\n\t\t", '<td class="list_value_wrap" style="border: none;" width="100%">';
 
-		print " alt=\"" . PrintReady(htmlspecialchars($name,ENT_COMPAT,'UTF-8')) . "\" title=\"" . PrintReady(htmlspecialchars($name,ENT_COMPAT,'UTF-8')) . "\" /></a>";
-		print "</td>\n\t\t<td class=\"list_value_wrap\" style=\"border: none;\" width=\"100%\">";
-
-//LBox --------  added for Lightbox Album --------------------------------------------
-		if (file_exists("modules/lightbox/album.php")) {
+		if (file_exists('modules/lightbox/album.php')) {
 			if (PGV_USER_CAN_EDIT) {
 
 				if ($LB_ML_THUMB_LINKS != "none") {
@@ -455,7 +389,6 @@ if ($ct>0) {
 				print "<br />";
 			}
 		}
-//LBox ----------- end addition for Lightbox Album ---------------------------------------
 
 			print "<a href=\"mediaviewer.php?mid=".$media["XREF"]."\">";
 
@@ -572,7 +505,7 @@ if ($ct>0) {
 }
 print "\n</div>\n";
 /** not ready for 4.1
-require_once("includes/functions/functions_print_lists.php");
+require_once 'includes/functions/functions_print_lists.php';
 $legend = $pgv_lang["media"];
 if ($filter) $legend .= " : &laquo;".$filter."&raquo;";
 print_media_table($medialist, $legend);

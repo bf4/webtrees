@@ -3,7 +3,7 @@
  * Reorder media Items using drag and drop
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2007 to 2009  PGV Development Team.  All rights reserved.
+ * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -82,55 +82,59 @@ function media_reorder_row($rtype, $rowm, $pid) {
 		print "\n" . "<table class=\"pic\"><tr>" . "\n";
 		print "<td width=\"80\" valign=\"top\" align=\"center\" >". "\n";
 
+		$file_type = mediaFileType($mainMedia);
+		switch ($file_type) {
+			case 'url_flv':
+				$imgThumb = 'images/flashrem.png';
+				break;
+			case 'local_flv':
+				$imgThumb = 'images/flash.png';
+				break;
+			case 'url_page':
+			case 'local_page':
+				$imgThumb = "images/globe.png";
+				break;
+			case 'url_audio':
+			case 'local_audio':
+				$imgThumb = "images/audio.png";
+				break;
+			default:
+				$imgThumb = $thumbnail;
+		}
 		//Finally Print the thumbnail ---------------------------------
-			// If URL flv file (eg You Tube)
-			if (eregi("http://www.youtube.com" ,$rowm['m_file']) ) {
-				print "<img src=\"modules/JWplayer/flashrem.png\" width=\"38\" border=\"0\" " ;
-			// Else if Plain URL Print the Common URL Thumbnail
-			}else if (eregi("http",$rowm['m_file']) && !eregi("\.jpg",$rowm['m_file']) && !eregi("\.jpeg",$rowm['m_file']) && !eregi("\.gif",$rowm['m_file']) && !eregi("\.png",$rowm['m_file'])) {
-				print "<img src=\"images/URL.png\" height=\"48\" width=\"44\"border=\"0\" " ;
-			//Else If local flv file, print the common flash thumbnail
-			}else if (media_exists($thumbnail) && eregi("\media.gif",$thumbnail) && eregi("\.flv",$rowm['m_file'])) {
-				print "<img src=\"modules/JWplayer/flash.png\" height=\"38\" border=\"0\" " ;
-			// Else Print the Regular Thumbnail if associated with a thumbnail image,
-			}else{
-				print "<img src=\"".$thumbnail."\" height=\"38\" border=\"0\" " ;
-			}
+		print "<img src=\"".$imgThumb."\" height=\"38\" border=\"0\" " ;
 
-			if ($isExternal) {
-				print " width=\"".($THUMBNAIL_WIDTH * (38/80))."\"";
-			}
-			if ( eregi("1 SOUR",$rowm['m_gedrec'])) {
-				print " alt=\"" . PrintReady($mediaTitle) . "\" title=\"" . PrintReady($mediaTitle) . "\nSource info available\" />";
-			}else{
-				print " alt=\"" . PrintReady($mediaTitle) . "\" title=\"" . PrintReady($mediaTitle) . "\" />";
-			}
+		if ( eregi("1 SOUR",$rowm['m_gedrec'])) {
+			print " alt=\"" . PrintReady($mediaTitle) . "\" title=\"" . PrintReady($mediaTitle) . "\nSource info available\" />";
+		}else{
+			print " alt=\"" . PrintReady($mediaTitle) . "\" title=\"" . PrintReady($mediaTitle) . "\" />";
+		}
 
-			//print media info
-			$ttype2 = preg_match("/\d TYPE (.*)/", $rowm["m_gedrec"], $match);
-			if ($ttype2>0) {
-				$mediaType = trim($match[1]);
-				$varName = "TYPE__".strtolower($mediaType);
-				if (isset($pgv_lang[$varName])) $mediaType = $pgv_lang[$varName];
-//			print "\n\t\t\t<br /><span class=\"label\">".$pgv_lang["type"].": </span> <span class=\"field\">$mediaType</span>";
-			}
+		//print media info
+		$ttype2 = preg_match("/\d TYPE (.*)/", $rowm["m_gedrec"], $match);
+		if ($ttype2>0) {
+			$mediaType = trim($match[1]);
+			$varName = "TYPE__".strtolower($mediaType);
+			if (isset($pgv_lang[$varName])) $mediaType = $pgv_lang[$varName];
+//		print "\n\t\t\t<br /><span class=\"label\">".$pgv_lang["type"].": </span> <span class=\"field\">$mediaType</span>";
+		}
 
-			print "\n" . "</td><td>&nbsp;</td>" . "\n";
-			print "<td valign=\"top\" align=\"left\">";
-			//print "<font color=\"blue\">";
-			print $rowm['m_media'];
-			//print "</font>";
+		print "\n" . "</td><td>&nbsp;</td>" . "\n";
+		print "<td valign=\"top\" align=\"left\">";
+		//print "<font color=\"blue\">";
+		print $rowm['m_media'];
+		//print "</font>";
 
-			print "<b>";
-			print "&nbsp;&nbsp;" . $mediaType;
-			print "</b>";
+		print "<b>";
+		print "&nbsp;&nbsp;" . $mediaType;
+		print "</b>";
 
- 			print "<br>" . "\n";
-			print $mediaTitle . "\n";
+ 		print "<br>" . "\n";
+		print $mediaTitle . "\n";
 
-			print "</td>" . "\n";
-			print "</tr>";
-			print "</table>" . "\n";
+		print "</td>" . "\n";
+		print "</tr>";
+		print "</table>" . "\n";
 
     }
 	if (!isset($j)) {

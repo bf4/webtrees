@@ -3,7 +3,7 @@
  * Popup window that will allow a user to search for a media
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
+ * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -200,7 +200,7 @@ function set_perms($path) {
 $starttime = time();
 
 // TODO Determine source and validation requirements for these variables
-$filename=safe_REQUEST($_REQUEST, 'filename');
+$filename=decrypt(safe_REQUEST($_REQUEST, 'filename'));
 $directory=safe_REQUEST($_REQUEST, 'directory', PGV_REGEX_NOSCRIPT, $MEDIA_DIRECTORY);
 $movetodir=safe_REQUEST($_REQUEST, 'movetodir');
 $movefile=safe_REQUEST($_REQUEST, 'movefile');
@@ -1013,6 +1013,12 @@ if (check_media_structure()) {
 
 		// display the images
 		if (count($medialist) && ($subclick=='search' || $subclick=='all')) {
+			if (file_exists("modules/lightbox/album.php")) {
+				// Get Lightbox config variables
+				if (file_exists("modules/lightbox/lb_config.php")) include('modules/lightbox/lb_config.php');
+				else include('modules/lightbox/lb_defaultconfig.php');
+				include('modules/lightbox/functions/lb_call_js.php');
+			}
 			print "\n\t<table class=\"list_table width100\">";
 			if ($directory==$MEDIA_DIRECTORY) {
 				$httpFilter = "http";
@@ -1054,7 +1060,7 @@ if (check_media_structure()) {
 									$tempURL .= $linkToID;
 								}
 							} else {
-								$tempURL .= "showmediaform&filename={$media['FILE']}&linktoid=new";
+								$tempURL .= 'showmediaform&filename='.encrypt($media['FILE']).'&linktoid=new';
 							}
 							echo "<a href=\"javascript:".$pgv_lang["edit"]."\" onclick=\"window.open('", encode_url($tempURL, false), "', '_blank', 'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1'); return false;\">", $pgv_lang["edit"], "</a><br />";
 
@@ -1076,7 +1082,7 @@ if (check_media_structure()) {
 							if (!$isExternal && $objectCount<2) {
 								$tempURL = "media.php?";
 								if (!empty($filter)) $tempURL.= "filter={$filter}&";
-								$tempURL .= "action=deletefile&showthumb={$showthumb}&filter={$filter}&subclick={$subclick}&filename={$media['FILE']}&directory={$directory}&level={$level}&xref={$media['XREF']}&gedfile={$media['GEDFILE']}";
+								$tempURL .= "action=deletefile&showthumb={$showthumb}&filter={$filter}&subclick={$subclick}&filename=".encrypt($media['FILE'])."&directory={$directory}&level={$level}&xref={$media['XREF']}&gedfile={$media['GEDFILE']}";
 								print "<a href=\"".encode_url($tempURL)."\" onclick=\"return confirm('".$pgv_lang["confirm_delete_file"]."');\">".$pgv_lang["delete_file"]."</a><br />";
 							}
 
@@ -1084,7 +1090,7 @@ if (check_media_structure()) {
 							if (!empty($media["XREF"])) {
 								$tempURL = "media.php?";
 								if (!empty($filter)) $tempURL .= "filter={$filter}&";
-								$tempURL .= "action=removeobject&showthumb={$showthumb}&filter={$filter}&subclick={$subclick}&filename={$media['FILE']}&directory={$directory}&level={$level}&xref={$media['XREF']}&gedfile={$media['GEDFILE']}";
+								$tempURL .= "action=removeobject&showthumb={$showthumb}&filter={$filter}&subclick={$subclick}&filename=".encrypt($media['FILE'])."&directory={$directory}&level={$level}&xref={$media['XREF']}&gedfile={$media['GEDFILE']}";
 								print "<a href=\"".encode_url($tempURL)."\" onclick=\"return confirm('".$pgv_lang["confirm_remove_object"]."');\">".$pgv_lang["remove_object"]."</a><br />";
 							}
 
@@ -1092,7 +1098,7 @@ if (check_media_structure()) {
 							if ($media["LINKED"]) {
 								$tempURL = "media.php?";
 								if (!empty($filter)) $tempURL .= "filter={$filter}&";
-								$tempURL .= "action=removelinks&showthumb={$showthumb}&filter={$filter}&subclick={$subclick}&filename={$media['FILE']}&directory={$directory}&level={$level}&xref={$media['XREF']}&gedfile={$media['GEDFILE']}";
+								$tempURL .= "action=removelinks&showthumb={$showthumb}&filter={$filter}&subclick={$subclick}&filename=".encrypt($media['FILE'])."&directory={$directory}&level={$level}&xref={$media['XREF']}&gedfile={$media['GEDFILE']}";
 								print "<a href=\"".encode_url($tempURL)."\" onclick=\"return confirm('".$pgv_lang["confirm_remove_links"]."');\">".$pgv_lang["remove_links"]."</a><br />";
 							}
 
@@ -1108,7 +1114,7 @@ if (check_media_structure()) {
 								$tempURL = "media.php?";
 								if ($media["EXISTS"] == 2) $tempURL .= "action=moveprotected";
 								if ($media["EXISTS"] == 3) $tempURL .= "action=movestandard";
-								$tempURL .= "&showthumb={$showthumb}&filename={$media['FILE']}&directory={$directory}&level={$level}&xref={$media['XREF']}&gedfile=".$media["GEDFILE"];
+								$tempURL .= "&showthumb={$showthumb}&filename=".encrypt($media['FILE'])."&directory={$directory}&level={$level}&xref={$media['XREF']}&gedfile=".$media["GEDFILE"];
 								print "<a href=\"".encode_url($tempURL)."\">".$pgv_lang["moveto_".$media["EXISTS"]]."</a><br />";
 							}
 
@@ -1119,7 +1125,7 @@ if (check_media_structure()) {
 								if ($ext=="jpg" || $ext=="jpeg" || $ext=="gif" || $ext=="png") {
 									$tempURL = "media.php?";
 									if (!empty($filter)) $tempURL .= "filter={$filter}&";
-									$tempURL .= "action=thumbnail&all=no&level={$level}&directory={$directory}&filename=".$media["FILE"].$thumbget;
+									$tempURL .= "action=thumbnail&all=no&level={$level}&directory={$directory}&filename=".encrypt($media["FILE"]).$thumbget;
 									print "<a href=\"".encode_url($tempURL)."\">".$pgv_lang["gen_thumb"]."</a>";
 								}
 							}
@@ -1128,20 +1134,48 @@ if (check_media_structure()) {
 						// NOTE: Close column for file operations
 						print "</td>";
 
-						//-- thumbnail field
+
+						$name = trim($media["TITL"]);
+						//Get media item Notes
+						$haystack = $media["GEDCOM"];
+						$needle   = "1 NOTE";
+						$before   = substr($haystack, 0, strpos($haystack, $needle));
+						$after    = substr(strstr($haystack, $needle), strlen($needle));
+						$worked   = ereg_replace("1 NOTE", "1 NOTE<br />", $after);
+						$final    = $before.$needle.$worked;
+						$notes    = PrintReady(htmlspecialchars(addslashes(print_fact_notes($final, 1, true, true)),ENT_COMPAT,'UTF-8'));
+
+						$imgUrl = mediaFileLink($media["FILE"], $media["XREF"], $name, $notes);
+
+						$file_type = mediaFileType($media["FILE"]);
+						$widthThumb = '';
+						switch ($file_type) {
+							case 'url_flv':
+								$imgThumb = 'images/flashrem.png';
+								break;
+							case 'local_flv':
+								$imgThumb = 'images/flash.png';
+								break;
+							case 'url_page':
+							case 'local_page':
+								$imgThumb = "images/globe.png";
+								break;
+							case 'url_audio':
+							case 'local_audio':
+								$imgThumb = "images/audio.png";
+								break;
+							default:
+								$imgThumb = $media["THUMB"];
+								if ($isExternal) $widthThumb = ' width="'.$THUMBNAIL_WIDTH.'"';
+						}
+
+						//-- Thumbnail field
 						if ($showthumb) {
-							$mediaTitle = "";
-							if (isset($media["TITL"])) $mediaTitle = PrintReady($media["TITL"]);
-							else $mediaTitle = PrintReady(basename($media["FILE"]));
 							print "\n\t\t\t<td class=\"optionbox $changeClass $TEXT_DIRECTION width10\">";
-							if (!$isExternal) {
-								print "<a href=\"#\" onclick=\"return openImage('".encode_url($media["FILE"])."',$imgwidth, $imgheight);\">";
-								print "<img src=\"{$media['THUMB']}\" class=\"thumbnail\" border=\"0\" alt=\"{$mediaTitle}\" title=\"{$mediaTitle}\" /></a>\n";
-							} else {
-								print "<a href=\"#\" onclick=\"return openImage('".encode_url($media["FILE"])."',$imgwidth, $imgheight);\">";
-								print "<img src=\"{$media['FILE']}\" class=\"thumbnail\" width=\"{$THUMBNAIL_WIDTH}\" border=\"0\" alt=\"{$mediaTitle}\" title=\"{$mediaTitle}\" /></a>\n";
-							}
-							print "</td>";
+							echo '<center><a href="', $imgUrl, '">';
+							echo '<img src="', $imgThumb, '" align="middle" class="thumbnail" border="none"', $widthThumb;
+							echo ' alt="', $name, '" /></a></center>';
+							echo '</td>';
 						}
 
 						//-- name and size field
@@ -1162,18 +1196,17 @@ if (check_media_structure()) {
 							}
 						}
 						if (!$isExternal && !$media["EXISTS"]) print "<span dir=\"ltr\">".PrintReady($media["FILE"])."</span><br /><span class=\"error\">".$pgv_lang["file_not_exists"]."</span><br />";
-						else if ($isExternal) {
-							print "<a href=\"#\" onclick=\"return openImage('".encode_url($media["FILE"])."',$imgwidth, $imgheight);\"><b>URL</b></a><br />";
-						} else {
-							print "<a href=\"#\" onclick=\"return openImage('".encode_url($media["FILE"])."',$imgwidth, $imgheight);\"><span dir=\"ltr\">".PrintReady($media["FILE"])."</span></a><br />";
-							if (!empty($imgsize[0])) {
-								print "<sub>&nbsp;&nbsp;".$pgv_lang["image_size"]." -- ".$imgsize[0]."x".$imgsize[1]."</sub><br />";
-							}
+						else {
+							if (substr($file_type,0,4) == 'url_') $tempText = 'URL';
+							else $tempText = PrintReady($media["FILE"]);
+							echo '<a href="', 'mediaviewer.php?mid=', $media["XREF"], '"><span dir="ltr">', $tempText, '</span></a><br />';
+						}
+						if (substr($file_type,0,4) != 'url_' && !empty($imgsize[0])) {
+							print "<sub>&nbsp;&nbsp;".$pgv_lang["image_size"]." -- ".$imgsize[0]."x".$imgsize[1]."</sub><br />";
 						}
 						print_fact_notes($media["GEDCOM"], 1);
 						print_fact_sources($media["GEDCOM"], 1);
 						if ($media["LINKED"]) {
-							//print "<br />".$pgv_lang["media_linked"];
 							PrintMediaLinks($media["LINKS"], "normal");
 						} else {
 							print "<br />".$pgv_lang["media_not_linked"];

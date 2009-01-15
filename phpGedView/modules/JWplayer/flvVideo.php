@@ -2,10 +2,10 @@
 /**
  * JWplayer module for phpGedView
  *
- * Display flv video media Items using JW Player in PGV 
+ * Display flv video media Items using JW Player in PGV
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2007 to 2008  PGV Development Team.  All rights reserved.
+ * Copyright (C) 2007 to 2009  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -30,7 +30,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 	<META HTTP-EQUIV="Expires" CONTENT="Tue, 01 Jan 1980 1:00:00 GMT">
-	<META HTTP-EQUIV="Pragma" CONTENT="no-cache"> 
+	<META HTTP-EQUIV="Pragma" CONTENT="no-cache">
 	<title>JW Player for Flash</title>
 	<script type="text/javascript" src="modules/JWplayer/swfobject.js"></script>
 </head>
@@ -40,17 +40,13 @@
 <?php
 global $pgv_lang, $pid, $GEDCOM ;
 global $flvVideo, $SERVER_URL;
-$flvVideo=safe_GET('flvVideo');
+$flvVideo=decrypt(safe_GET('flvVideo'));
 $preview="";
 ?>
 
 	<div id="container"><a href="http://www.macromedia.com/go/getflashplayer">Get the Flash Player</a> to see this player.</div>
 	<script type="text/javascript">
-		<?php if (eregi("www", $flvVideo)) { ?>
-			var video 	= "<?php print "http://" . $flvVideo; ?>";
-		<?php } else { ?>
-			var video 	= "<?php print $SERVER_URL.$flvVideo; ?>";
-		<?php } ?>
+		var video 	= "<?php print $flvVideo; ?>";
 		var preview = "<?php print $preview; ?>";
 		var s1 = new SWFObject("modules/JWplayer/player.swf","ply","425","344","9","#000000");
 		s1.addParam("allowfullscreen","true");
