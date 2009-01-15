@@ -44,6 +44,8 @@ VERSION 4.2.
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change	codes and comments
 ----------------------------------------------------------------------------------------
++$pgv_lang["total_changes"]							15 Jan 2009				A
++$pgv_lang["total_links"]							15 Jan 2009				A
 +$pgv_lang["TYPE__coat"]							05 Jan 2009				A
 *$pgv_lang["view_fam_nav_details"]					04 Jan 2009				w
 +$pgv_lang["view_fam_nav_notes"]					04 Jan 2009				A

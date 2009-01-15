@@ -6,7 +6,7 @@
  * used on the indilist, famlist, find, and search pages.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
+ * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -1386,11 +1386,13 @@ function format_surname_list($surnames, $style, $totals) {
  *
  * @param array $datalist contain records that were extracted from the database.
  */
-function print_changes_table($datalist, $showChange=true) {
+function print_changes_table($datalist, $showChange=true, $total='') {
 	global $pgv_lang, $factarray, $SHOW_ID_NUMBERS, $SHOW_MARRIED_NAMES, $TEXT_DIRECTION;
 	if (count($datalist)<1) return;
 	require_once 'js/sorttable.js.htm';
 	require_once 'includes/classes/class_gedcomrecord.php';
+	if (empty($total)) $total = $pgv_lang["total_changes"];
+	$indi = false;
 	$table_id = "ID".floor(microtime()*1000000); // sorttable requires a unique ID
 	//-- table header
 	echo "<table id=\"".$table_id."\" class=\"sortable list_table center\">";
@@ -1439,6 +1441,7 @@ function print_changes_table($datalist, $showChange=true) {
 		echo "<a href=\"".encode_url($record->getLinkUrl())."\" class=\"list_item name2\" dir=\"".$TEXT_DIRECTION."\">".PrintReady($name)."</a>";
 		if ($record->type=="INDI") {
 			echo $record->getSexImage();
+			$indi=true;
 		}
 		$addname=$record->getAddName();
 		if ($addname) {
@@ -1473,11 +1476,13 @@ function print_changes_table($datalist, $showChange=true) {
 	//echo "<td></td>";
 	if ($SHOW_ID_NUMBERS) echo "<td></td>";
 	echo "<td class=\"list_label\">";
-	if ($n>1) {
+	if ($n>1 && $indi) {
 		echo '<a href="javascript:;" onclick="sortByOtherCol(this,1)"><img src="images/topdown.gif" alt="" border="0" /> '.$factarray["GIVN"].'</a><br />';
 	}
-	echo "<input id=\"cb_parents_$table_id\" type=\"checkbox\" onclick=\"toggleByClassName('DIV', 'parents_$table_id');\" /><label for=\"cb_parents_$table_id\">".$pgv_lang["show_parents"]."</label><br />";
-	echo $pgv_lang["total_names"].": ".$n;
+	if ($indi) {
+		echo "<input id=\"cb_parents_$table_id\" type=\"checkbox\" onclick=\"toggleByClassName('DIV', 'parents_$table_id');\" /><label for=\"cb_parents_$table_id\">".$pgv_lang["show_parents"]."</label><br />";
+	}
+	echo $total.": ".$n;
 	if ($hidden) echo "<br /><span class=\"warning\">".$pgv_lang["hidden"]." : ".$hidden."</span>";
 	if ($n>=$NMAX) echo "<br /><span class=\"warning\">".$pgv_lang["recent_changes"]." &gt; ".$NMAX."</span>";
 	echo "</td>";
