@@ -3884,7 +3884,7 @@ function mediaFileType($fileName) {
  */
 function mediaFileLink($fileName, $mid, $name='', $notes='') {
 	global $LB_URL_WIDTH, $LB_URL_HEIGHT;
-	global $SERVER_URL, $GEDCOM;
+	global $SERVER_URL, $GEDCOM, $USE_MEDIA_VIEWER;
 
 	$file_type = mediaFileType($fileName);
 
