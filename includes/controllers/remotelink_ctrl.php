@@ -62,10 +62,7 @@ class RemoteLinkController extends BaseController {
 	public $form_txtFS_Username=null;
 	public $form_txtFS_Password=null;
 
-	/**
-	* Initialize the controller for the add remote link
-	*
-	*/
+	// Initialize the controller for the add remote link
 	function init() {
 		// Cannot edit with a "remember me" login.
 		if ($_SESSION["cookie_login"]) {
@@ -85,7 +82,7 @@ class RemoteLinkController extends BaseController {
 		$this->person=Person::getInstance($this->pid);
 		$this->server_list=get_server_list();
 		$this->gedcom_list=get_all_gedcoms();
-		unset($this->getdcom_list[PGV_GED_ID]);
+		unset($this->gedcom_list[PGV_GED_ID]);
 
 		// Other input values come from the form
 		$this->form_txtPID           =safe_POST('txtPID', PGV_REGEX_XREF);
@@ -164,16 +161,14 @@ class RemoteLinkController extends BaseController {
 		return $serverID;
 	}
 
-	/**
-	* Add a familySearch server
-	*
-	* @param string $title
-	* @param string $url
-	* @param string $gedcom_id
-	* @param string $username
-	* @param string $password
-	* @return mixed the serverID of the server to link to
-	*/
+	// Add a familySearch server
+	//
+	// @param string $title
+	// @param string $url
+	// @param string $gedcom_id
+	// @param string $username
+	// @param string $password
+	// @return mixed the serverID of the server to link to
 	function addFamilySearchServer($title, $url, $gedcom_id, $username, $password) {
 		$serverID = $this->checkExistingServer($url, $gedcom_id);
 		if (!$serverID) {
@@ -204,12 +199,10 @@ class RemoteLinkController extends BaseController {
 		return $serverID;
 	}
 
-	/**
-	* Add a server record for a local remote link
-	*
-	* @param string $gedcom_id
-	* @return mixed the serverID of the server to link to
-	*/
+	// Add a server record for a local remote link
+	//
+	// @param string $gedcom_id
+	// @return mixed the serverID of the server to link to
 	function addLocalServer($title, $gedcom_id) {
 		global $SERVER_URL, $GEDCOMS;
 		$serverID = $this->checkExistingServer($SERVER_URL, $gedcom_id);
@@ -227,13 +220,11 @@ class RemoteLinkController extends BaseController {
 		return $serverID;
 	}
 
-	/**
-	* check if the server already exists
-	*
-	* @param string $url
-	* @param string $gedcom_id
-	* @return mixed the id of the server to link to or false if it does not exist
-	*/
+	// check if the server already exists
+	//
+	// @param string $url
+	// @param string $gedcom_id
+	// @return mixed the id of the server to link to or false if it does not exist
 	function checkExistingServer($url, $gedcom_id='') {
 		global $pgv_changes;
 		//-- get rid of the protocol
@@ -241,7 +232,7 @@ class RemoteLinkController extends BaseController {
 		//-- check the existing server list
 		foreach ($this->server_list as $id=>$server) {
 			if (stristr($server['url'], $turl)) {
-				if (empty($gedcom_id) || preg_match("/_DBID $gedcom_id/", $server['gedcom']))
+				if (empty($gedcom_id) || preg_match("/\n1 _DBID {$gedcom_id}/", $server['gedcom']))
 				return $id;
 			}
 		}
@@ -254,11 +245,11 @@ class RemoteLinkController extends BaseController {
 				$indirec = $change["undo"];
 				$surl = get_gedcom_value("URL", 1, $indirec);
 				if (!empty($surl) && stristr($surl, $turl)) {
-					if (preg_match("/0\s*@(.+)@\s*(\w+)/", $gedrec, $match)) {
+					if (preg_match('/^0 @('.PGV_REGEX_XREF.')@ *('.PGV_REGEX_TAG.')/', $indirec, $match)) {
 						$id = $match[1];
 						$type=$match[2];
 						if ($type=="SOUR") {
-							if (empty($gedcom_id) || preg_match("/_DBID $gedcom_id/", $indirec))
+							if (empty($gedcom_id) || preg_match("/\n1 _DBID {$gedcom_id}/", $indirec))
 								return $id;
 						}
 					}
@@ -283,8 +274,8 @@ class RemoteLinkController extends BaseController {
 			break;
 		case 'local':
 			$serverID=$this->addLocalServer(
-				$this->form_server_txtCB_Title,
-				$this->form_gedcom_txtCB_GID
+				$this->form_txtCB_Title,
+				$this->form_txtCB_GID
 			);
 			break;
 		case 'existing':
