@@ -3,7 +3,7 @@
  * Polish texts
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
+ * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -286,6 +286,7 @@ $pgv_lang["PGV_SMTP_PORT"] 			= "Port SMTP";
 $pgv_lang["PGV_SMTP_AUTH"] 			= "Użyj nazwy i hasła";
 $pgv_lang["PGV_SMTP_AUTH_USER"] 	= "Nazwa użytkownika";
 $pgv_lang["PGV_SMTP_AUTH_PASS"] 	= "Hasło";
+$pgv_lang["PGV_SMTP_FROM_NAME"] 	= "Nazwa nadawcy";
 $pgv_lang["PGV_STORE_MESSAGES"]		= "Zezwól na przechowywanie wiadomości online";
 $pgv_lang["phpinfo"]				= "PHPInfo";
 $pgv_lang["place_cleanup_detected"]	= "Wykryto miejsca z nieprawidłowym kodowaniem. Te błędy należy poprawić.";
