@@ -3,7 +3,7 @@
  * Polish texts
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team. All rights reserved.
+ * Copyright (C) 2002 to 2009  PGV Development Team. All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -251,11 +251,12 @@ $pgv_lang["ALLOW_USER_THEMES_help"]	= "~#pgv_lang[ALLOW_USER_THEMES]#~<br /><br 
 $pgv_lang["PGV_SIMPLE_MAIL_help"] = "~#pgv_lang[PGV_SIMPLE_MAIL]#~<br /><br />W zwykłych nagłówkach emaili zewnętrznych pokazuje się zarówno adres email, jak i nazwa użytkownika. Niektóre systemy pocztowe mogą odrzucać takie emaile. Wybranie <b>Tak</b> spowoduje, że w nagłówku pojawi się tylko adres email.<br /><br />Ustawia parametr \$PGV_SIMPLE_MAIL w pliku <i>config.php</i>.<br />";
 $pgv_lang["PGV_SMTP_ACTIVE_help"] = "~#pgv_lang[PGV_SMTP_ACTIVE]#~<br /><br />Umożliwia korzystanie z SMTP do wysyłania e-maili z PhpGedView.<br /><br />Ta opcja wymaga dostępu do serwera pocztowego SMTP. Gdy ustawiona jest na <b>#pgv_lang[no]#</b> PhpGedView użyje systemu e-mail wbudowanego w PHP na tym serwerze.<br />";
 $pgv_lang["PGV_SMTP_HOST_help"] = "~#pgv_lang[PGV_SMTP_HOST]#~<br /><br />Nazwa serwera SMTP używanego do wysyłania e-maili. Na przykład: <b>smtp.foo.pl</b>.<br />";
-$pgv_lang["PGV_SMTP_HELO_help"] = "~#pgv_lang[PGV_SMTP_HELO]#~<br /><br />Jest to część domenowa poprawnego adresu e-mail na serwerze SMTP.<br /><br />Na przykład, jeśli masz konto e-mail <b>nazwisko@abc.xyz.pl</b>, należy podać <b>abc.xyz.pl</b> here.<br />";
+$pgv_lang["PGV_SMTP_HELO_help"] = "~#pgv_lang[PGV_SMTP_HELO]#~<br /><br />Jest to część domenowa poprawnego adresu e-mail na serwerze SMTP.<br /><br />Na przykład, jeśli masz konto e-mail <b>nazwisko@abc.xyz.pl</b>, należy podać <b>abc.xyz.pl</b>.<br />";
 $pgv_lang["PGV_SMTP_PORT_help"] = "~#pgv_lang[PGV_SMTP_PORT]#~<br /><br />Numer portu SMTP używanego do połączeń z serwerem SMTP. Na ogół jest to port <b>25</b>.<br />";
 $pgv_lang["PGV_SMTP_AUTH_help"] = "~#pgv_lang[PGV_SMTP_AUTH]#~<br /><br />Włącz autoryzację (nazwa użytkownika i hasło) do połączeń z serwerem SMTP.<br /><br />Niektóre serwery SMTP wymagają uwierzytelnienia zanim zaczną przyjmować wychodzące wiadomości e-mail.<br />";
 $pgv_lang["PGV_SMTP_AUTH_USER_help"] = "~#pgv_lang[PGV_SMTP_AUTH_USER]#~<br /><br />Nazwa użytkownika wymagana do uwierzytelnienia na serwerze SMTP.<br />";
 $pgv_lang["PGV_SMTP_AUTH_PASS_help"] = "~#pgv_lang[PGV_SMTP_AUTH_PASS]#~<br /><br />Hasło wymagane do uwierzytelnienia na serwerze SMTP.<br />";
+$pgv_lang["PGV_SMTP_FROM_NAME_help"] = "~#pgv_lang[PGV_SMTP_FROM_NAME]#~<br /><br />W tym miejscu powinieneś podać swoje imię i nazwisko lub nazwę Twojej strony, aby możliwa była łatwa identyfikacja nadawcy wiadomości.<br />";
 $pgv_lang["gedcom_title"]			= "#pgv_lang[ged_title]#";
 $pgv_lang["gedcom_title_help"]		= "~#pgv_lang[gedcom_title]#~<br /><br />Wprowadź opisowy tytuł, który ułatwi użytkownikom rozpoznanie go wśród innych plików GEDCOM na twojej stronie.<br />";
 $pgv_lang["LOGFILE_CREATE"]		= "Archiwizuj pliki loga";

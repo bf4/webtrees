@@ -3,7 +3,7 @@
  * English Language file for PhpGedView.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team
+ * Copyright (C) 2002 to 2009  PGV Development Team. All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -375,6 +375,7 @@ $pgv_lang["PGV_SMTP_PORT_help"] = "~#pgv_lang[PGV_SMTP_PORT]#~<br /><br />The po
 $pgv_lang["PGV_SMTP_AUTH_help"] = "~#pgv_lang[PGV_SMTP_AUTH]#~<br /><br />Use name and password authentication to connect to the SMTP server.<br /><br />Some SMTP servers require all connections to be authenticated before they will accept outbound e-mails.<br />";
 $pgv_lang["PGV_SMTP_AUTH_USER_help"] = "~#pgv_lang[PGV_SMTP_AUTH_USER]#~<br /><br />The user name required for authentication with the SMTP server.<br />";
 $pgv_lang["PGV_SMTP_AUTH_PASS_help"] = "~#pgv_lang[PGV_SMTP_AUTH_PASS]#~<br /><br />The password required for authentication with the SMTP server.<br />";
+$pgv_lang["PGV_SMTP_FROM_NAME_help"] = "~#pgv_lang[PGV_SMTP_FROM_NAME]#~<br /><br />In this place you would enter your name or your site name. This helps to easily identify the sender of the message.<br />";
 $pgv_lang["gedcom_title"]			= "#pgv_lang[ged_title]#";
 $pgv_lang["gedcom_title_help"]		= "~#pgv_lang[gedcom_title]#~<br /><br />Enter a descriptive title to be displayed when users are choosing among GEDCOM datasets at your site.<br />";
 $pgv_lang["LOGFILE_CREATE"]		= "Archive log files";
