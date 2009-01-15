@@ -1585,7 +1585,9 @@ function print_main_media_row($rtype, $rowm, $pid) {
 			break;
 		}
 		echo '<a href="', mediaFileLink($rowm['m_file'], $rowm['m_media'], $name, $notes), '">';
-		echo '<img src="', $imgThumb, '" align="center" class="thumbnail" border="none"', $widthThumb;
+		echo '<img src="', $imgThumb, '"';
+		if ($TEXT_DIRECTION=="rtl") echo 'align="right" class="thumbnail" border="none"', $widthThumb;
+		else echo 'align="left" class="thumbnail" border="none"', $widthThumb;
 		echo ' alt="', PrintReady(htmlspecialchars($name,ENT_COMPAT,'UTF-8')), '" title="', PrintReady(htmlspecialchars($name,ENT_COMPAT,'UTF-8')), '" /></a>';
 
 		if(empty($SEARCH_SPIDER)) {
