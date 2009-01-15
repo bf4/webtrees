@@ -1,30 +1,30 @@
 <?php
 /**
-* Function for printing facts
-*
-* Various printing functions used to print fact records
-*
-* phpGedView: Genealogy Viewer
-* Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
-*
-* This program is free software; you can redistribute it and/or modify
-* it under the terms of the GNU General Public License as published by
-* the Free Software Foundation; either version 2 of the License, or
-* (at your option) any later version.
-*
-* This program is distributed in the hope that it will be useful,
-* but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-* GNU General Public License for more details.
-*
-* You should have received a copy of the GNU General Public License
-* along with this program; if not, write to the Free Software
-* Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
-*
-* @package PhpGedView
-* @subpackage Display
-* @version $Id$
-*/
+ * Function for printing facts
+ *
+ * Various printing functions used to print fact records
+ *
+ * phpGedView: Genealogy Viewer
+ * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *
+ * @package PhpGedView
+ * @subpackage Display
+ * @version $Id$
+ */
 
 if (!defined('PGV_PHPGEDVIEW')) {
 	header('HTTP/1.0 403 Forbidden');
@@ -36,12 +36,12 @@ define('PGV_FUNCTIONS_PRINT_FACTS_PHP', '');
 require_once 'includes/classes/class_person.php';
 
 /**
-* Turn URLs in text into HTML links.  Insert breaks into long URLs
-* so that the browser can word-wrap.
-*
-* @param string $text Text that may or may not contain URLs
-* @return string The text with URLs replaced by HTML links
-*/
+ * Turn URLs in text into HTML links.  Insert breaks into long URLs
+ * so that the browser can word-wrap.
+ *
+ * @param string $text	Text that may or may not contain URLs
+ * @return string	The text with URLs replaced by HTML links
+ */
 function expand_urls($text) {
 	// Some versions of RFC3987 have an appendix B which gives the following regex
 	// (([^:/?#]+):)?(//([^/?#]*))?([^?#]*)(\?([^#]*))?(#(.*))?
@@ -60,12 +60,12 @@ function expand_urls($text) {
 }
 
 /**
-* print a fact record
-*
-* prints a fact record designed for the personal facts and details page
-* @param Event $eventObj The Event object to print
-* @param boolean $noedit Hide or show edit links
-*/
+ * print a fact record
+ *
+ * prints a fact record designed for the personal facts and details page
+ * @param Event $eventObj	The Event object to print
+ * @param boolean $noedit	Hide or show edit links
+ */
 function print_fact(&$eventObj, $noedit=false) {
 	global $factarray;
 	global $nonfacts;
@@ -346,7 +346,7 @@ function print_fact(&$eventObj, $noedit=false) {
 				}
 			}
 			//-- print other characterizing fact information
-			if ($event && $fact!="ASSO") {
+			if ($event!="" && $fact!="ASSO") {
 				print " ";
 				$ct = preg_match("/@(.*)@/", $event, $match);
 				if ($ct>0) {
@@ -386,7 +386,6 @@ function print_fact(&$eventObj, $noedit=false) {
 						if ($factref=='file_size' || $factref=='image_size') echo PrintReady($rawEvent);
 						else echo PrintReady($event);
 					}
-					echo ' ';
 				}
 				$temp = trim(get_cont(2, $factrec), "\r\n");
 				if (strstr("PHON ADDR ", $fact." ")===false && $temp!="") {
@@ -515,11 +514,11 @@ function print_fact(&$eventObj, $noedit=false) {
 //------------------- end print fact function
 
 /**
-* print a submitter record
-*
-* find and print submitter information
-* @param string $sid  the Gedcom Xref ID of the submitter to print
-*/
+ * print a submitter record
+ *
+ * find and print submitter information
+ * @param string $sid  the Gedcom Xref ID of the submitter to print
+ */
 function print_submitter_info($sid) {
 	$srec = find_gedcom_record($sid);
 	preg_match("/1 NAME (.*)/", $srec, $match);
@@ -531,11 +530,11 @@ function print_submitter_info($sid) {
 }
 
 /**
-* print a repository record
-*
-* find and print repository information attached to a source
-* @param string $sid  the Gedcom Xref ID of the repository to print
-*/
+ * print a repository record
+ *
+ * find and print repository information attached to a source
+ * @param string $sid  the Gedcom Xref ID of the repository to print
+ */
 function print_repository_record($sid) {
 	global $TEXT_DIRECTION;
 	if (displayDetailsById($sid, "REPO")) {
@@ -556,14 +555,14 @@ function print_repository_record($sid) {
 }
 
 /**
-* print a source linked to a fact (2 SOUR)
-*
-* this function is called by the print_fact function and other functions to
-* print any source information attached to the fact
-* @param string $factrec The fact record to look for sources in
-* @param int $level  The level to look for sources at
-* @param boolean $return whether to return the data or print the data
-*/
+ * print a source linked to a fact (2 SOUR)
+ *
+ * this function is called by the print_fact function and other functions to
+ * print any source information attached to the fact
+ * @param string $factrec	The fact record to look for sources in
+ * @param int $level		The level to look for sources at
+ * @param boolean $return	whether to return the data or print the data
+ */
 function print_fact_sources($factrec, $level, $return=false) {
 	global $pgv_lang;
 	global $factarray;
@@ -681,13 +680,13 @@ function print_media_links($factrec, $level,$pid='') {
 				if ($isExternal || media_exists($thumbnail)) {
 
 					//LBox --------  change for Lightbox Album --------------------------------------------
-					if (file_exists("modules/lightbox/album.php")&& ( eregi("\.jpg",$mainMedia) || eregi("\.jpeg",$mainMedia) || eregi("\.gif",$mainMedia) || eregi("\.png",$mainMedia) ) ) {
+					if (file_exists("modules/lightbox/album.php") && eregi("\.(jpe?g|gif|png)$",$mainMedia)) {
 						$name = trim($row["m_titl"]);
 							print "<a href=\"" . $mainMedia . "\" rel=\"clearbox[general_1]\" rev=\"" . $media_id . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name, ENT_COMPAT, 'UTF-8')) . "\">" . "\n";
 					// ---------------------------------------------------------------------------------------------
-					}elseif ($USE_MEDIA_VIEWER) {
+					} else if ($USE_MEDIA_VIEWER) {
 						print "<a href=\"".encode_url("mediaviewer.php?mid={$media_id}")."\">";
-					}else{
+					} else {
 						print "<a href=\"javascript:;\" onclick=\"return openImage('".rawurlencode($mainMedia)."',$imgwidth, $imgheight);\">";
 					}
 
@@ -695,9 +694,9 @@ function print_media_links($factrec, $level,$pid='') {
 					if ($isExternal) print " width=\"".$THUMBNAIL_WIDTH."\"";
 					print " alt=\"" . PrintReady($mediaTitle) . "\"";
 					//LBox --------  change for Lightbox Album --------------------------------------------
-					if ($row["m_titl"]){
+					if ($row["m_titl"]) {
 						print " title=\"" . $row["m_titl"] . "\"";
-					}else{
+					} else {
 						print " title=\"" . basename($row["m_file"]) . "\"";
 					}
 					// ---------------------------------------------------------------------------------------------
@@ -768,12 +767,12 @@ function print_media_links($factrec, $level,$pid='') {
 	}
 }
 /**
-* print an address structure
-*
-* takes a gedcom ADDR structure and prints out a human readable version of it.
-* @param string $factrec The ADDR subrecord
-* @param int $level  The gedcom line level of the main ADDR record
-*/
+ * print an address structure
+ *
+ * takes a gedcom ADDR structure and prints out a human readable version of it.
+ * @param string $factrec	The ADDR subrecord
+ * @param int $level		The gedcom line level of the main ADDR record
+ */
 function print_address_structure($factrec, $level) {
 	global $factarray;
 	global $POSTAL_CODE;
@@ -1009,21 +1008,21 @@ function print_main_sources($factrec, $level, $pid, $linenum, $noedit=false) {
 }
 
 /**
-* Print SOUR structure
-*
-*  This function prints the input array of SOUR sub-records built by the
-*  getSourceStructure() function.
-*
-*  The input array is defined as follows:
-* $textSOUR["PAGE"] = +1  Source citation
-* $textSOUR["EVEN"] = +1  Event type
-* $textSOUR["ROLE"] = +2  Role in event
-* $textSOUR["DATA"] = +1  place holder (no text in this sub-record)
-* $textSOUR["DATE"] = +2  Entry recording date
-* $textSOUR["TEXT"] = +2  (array) Text from source
-* $textSOUR["QUAY"] = +1  Certainty assessment
-* $textSOUR["TEXT2"] = +1 (array) Text from source
-*/
+ *	Print SOUR structure
+ *
+ *  This function prints the input array of SOUR sub-records built by the
+ *  getSourceStructure() function.
+ *
+ *  The input array is defined as follows:
+ *	$textSOUR["PAGE"] = +1  Source citation
+ *	$textSOUR["EVEN"] = +1  Event type
+ *	$textSOUR["ROLE"] = +2  Role in event
+ *	$textSOUR["DATA"] = +1  place holder (no text in this sub-record)
+ *	$textSOUR["DATE"] = +2  Entry recording date
+ *	$textSOUR["TEXT"] = +2  (array) Text from source
+ *	$textSOUR["QUAY"] = +1  Certainty assessment
+ *	$textSOUR["TEXT2"] = +1 (array) Text from source
+ */
 function printSourceStructure($textSOUR) {
 	global $pgv_lang, $factarray;
 
@@ -1061,18 +1060,18 @@ function printSourceStructure($textSOUR) {
 }
 
 /**
-* Extract SOUR structure from the incoming Source sub-record
-*
-*  The output array is defined as follows:
-* $textSOUR["PAGE"] = +1  Source citation
-* $textSOUR["EVEN"] = +1  Event type
-* $textSOUR["ROLE"] = +2  Role in event
-* $textSOUR["DATA"] = +1  place holder (no text in this sub-record)
-* $textSOUR["DATE"] = +2  Entry recording date
-* $textSOUR["TEXT"] = +2  (array) Text from source
-* $textSOUR["QUAY"] = +1  Certainty assessment
-* $textSOUR["TEXT2"] = +1 (array) Text from source
-*/
+ * Extract SOUR structure from the incoming Source sub-record
+ *
+ *  The output array is defined as follows:
+ *	$textSOUR["PAGE"] = +1  Source citation
+ *	$textSOUR["EVEN"] = +1  Event type
+ *	$textSOUR["ROLE"] = +2  Role in event
+ *	$textSOUR["DATA"] = +1  place holder (no text in this sub-record)
+ *	$textSOUR["DATE"] = +2  Entry recording date
+ *	$textSOUR["TEXT"] = +2  (array) Text from source
+ *	$textSOUR["QUAY"] = +1  Certainty assessment
+ *	$textSOUR["TEXT2"] = +1 (array) Text from source
+ */
 function getSourceStructure($srec) {
 	global $WORD_WRAPPED_NOTES;
 
@@ -1119,15 +1118,15 @@ function getSourceStructure($srec) {
 }
 
 /**
-* print main note row
-*
-* this function will print a table row for a fact table for a level 1 note in the main record
-* @param string $factrec the raw gedcom sub record for this note
-* @param int $level  The start level for this note, usually 1
-* @param string $pid  The gedcom XREF id for the level 0 record that this note is a part of
-* @param int $linenum  The line number in the level 0 record where this record was found.  This is used for online editing.
-* @param boolean $noedit Whether or not to allow this fact to be edited
-*/
+ * print main note row
+ *
+ * this function will print a table row for a fact table for a level 1 note in the main record
+ * @param string $factrec	the raw gedcom sub record for this note
+ * @param int $level		The start level for this note, usually 1
+ * @param string $pid		The gedcom XREF id for the level 0 record that this note is a part of
+ * @param int $linenum		The line number in the level 0 record where this record was found.  This is used for online editing.
+ * @param boolean $noedit	Whether or not to allow this fact to be edited
+ */
 function print_main_notes($factrec, $level, $pid, $linenum, $noedit=false) {
 	global $pgv_lang, $pgv_changes, $GEDCOM;
 	global $factarray, $view;
@@ -1258,11 +1257,11 @@ function print_main_notes($factrec, $level, $pid, $linenum, $noedit=false) {
 }
 
 /**
-* Print the links to multi-media objects
-* @param string $pid The the xref id of the object to find media records related to
-* @param int $level The level of media object to find
-* @param boolean $related Whether or not to grab media from related records
-*/
+ * Print the links to multi-media objects
+ * @param string $pid	The the xref id of the object to find media records related to
+ * @param int $level	The level of media object to find
+ * @param boolean $related	Whether or not to grab media from related records
+ */
 function print_main_media($pid, $level=1, $related=false, $noedit=false) {
 	global $TBLPREFIX;
 	global $pgv_changes;
@@ -1427,8 +1426,8 @@ function print_main_media($pid, $level=1, $related=false, $noedit=false) {
 					if ($et>0) $ext = substr(trim($ematch[1]),1);
 					$row['m_ext'] = $ext;
 					$row['mm_gid'] = $pid;
-					$row['mm_gedrec'] = get_sub_record($objSubrec{0}, $objSubrec, $gedrec);
-						$res = print_main_media_row('normal', $row, $pid);
+						$row['mm_gedrec'] = get_sub_record($objSubrec{0}, $objSubrec, $gedrec);
+					$res = print_main_media_row('normal', $row, $pid);
 					$media_found = $media_found || $res;
 				}
 			} else {
@@ -1446,7 +1445,7 @@ function print_main_media($pid, $level=1, $related=false, $noedit=false) {
 				$row['m_ext'] = $ext;
 				$row['mm_gid'] = $pid;
 				$row['mm_gedrec'] = get_sub_record($objSubrec{0}, $objSubrec, $gedrec);
-					$res = print_main_media_row('new', $row, $pid);
+				$res = print_main_media_row('new', $row, $pid);
 				$media_found = $media_found || $res;
 			}
 			$value--;
@@ -1457,13 +1456,13 @@ function print_main_media($pid, $level=1, $related=false, $noedit=false) {
 }
 
 /**
-* print a media row in a table
-* @param string $rtype whether this is a 'new', 'old', or 'normal' media row... this is used to determine if the rows should be printed with an outline color
-* @param array $rowm An array with the details about this media item
-* @param string $pid The record id this media item was attached to
-*/
+ * print a media row in a table
+ * @param string $rtype whether this is a 'new', 'old', or 'normal' media row... this is used to determine if the rows should be printed with an outline color
+ * @param array $rowm	An array with the details about this media item
+ * @param string $pid	The record id this media item was attached to
+ */
 function print_main_media_row($rtype, $rowm, $pid) {
-	global $PGV_IMAGE_DIR, $PGV_IMAGES, $view, $TEXT_DIRECTION;
+	global $PGV_IMAGE_DIR, $PGV_IMAGES, $view, $TEXT_DIRECTION, $SERVER_URL;
 	global $SHOW_ID_NUMBERS, $GEDCOM, $factarray, $pgv_lang, $THUMBNAIL_WIDTH, $USE_MEDIA_VIEWER;
 	global $SEARCH_SPIDER;
 
@@ -1534,152 +1533,60 @@ function print_main_media_row($rtype, $rowm, $pid) {
 	if (showFactDetails("OBJE", $pid)) {
 		$mediaTitle = $rowm["m_titl"];
 		$subtitle = get_gedcom_value("TITL", 2, $rowm["mm_gedrec"]);
-		if (!empty($subtitle)) {
-			$mediaTitle = $subtitle;
-		}
+		if (!empty($subtitle)) $mediaTitle = $subtitle;
 		$mainMedia = check_media_depth($rowm["m_file"], "NOTRUNC");
-		if ($mediaTitle=="") {
-			$mediaTitle = basename($rowm["m_file"]);
+		if ($mediaTitle=="") $mediaTitle = basename($rowm["m_file"]);
+
+		$imgsize = findImageSize($mainMedia);
+		$imgwidth = $imgsize[0]+40;
+		$imgheight = $imgsize[1]+150;
+
+		// Check Filetype of media item ( URL, Local or Other )
+		if (eregi("^https?://", $rowm['m_file'])) $file_type = 'url_';
+		else $file_type = 'local_';
+		if (eregi("\.flv$", $rowm['m_file']) && file_exists('modules/JWplayer/flvVideo.php')) $file_type .= 'flv';
+		else if (eregi("\.(jpg|jpeg|gif|png)$", $rowm['m_file'])) $file_type .= 'image';
+		else if (eregi("\.(pdf|avi)$", $rowm['m_file'])) $file_type .= 'page';
+		else if (eregi("\.mp3$", $rowm['m_file'])) $file_type .= 'audio';
+		else $file_type = 'other';
+
+		//Get media item Notes
+		$haystack = $rowm["m_gedrec"];
+		$needle   = "1 NOTE";
+		$before   = substr($haystack, 0, strpos($haystack, $needle));
+		$after    = substr(strstr($haystack, $needle), strlen($needle));
+		$worked   = ereg_replace("1 NOTE", "1 NOTE<br />", $after);
+		$final    = $before.$needle.$worked;
+		$notes    = PrintReady(htmlspecialchars(addslashes(print_fact_notes($final, 1, true, true)),ENT_COMPAT,'UTF-8'));
+
+		$name = trim($rowm['m_titl']);
+
+		// Finally print thumbnails
+		$widthThumb = '';
+		$file_type = mediaFileType($rowm['m_file']);
+		switch ($file_type) {
+		case 'url_flv':
+			$imgThumb = 'images/flashrem.png';
+			break;
+		case 'local_flv':
+			$imgThumb = 'images/flash.png';
+			break;
+		case 'url_page':
+		case 'local_page':
+			$imgThumb = "images/globe.png";
+			break;
+		case 'url_audio':
+		case 'local_audio':
+			$imgThumb = "images/audio.png";
+			break;
+		default:
+			$imgThumb = $thumbnail;
+			if ($isExternal) $widthThumb = ' width="'.$THUMBNAIL_WIDTH.'"';
+			break;
 		}
-		if ($isExternal || media_exists($thumbnail)) {
-
-			$mainFileExists = false;
-			//if ($isExternal || media_exists($mainMedia)) {
-			if ($isExternal || media_exists($mainMedia) || media_exists($rowm['m_file']) ) {
-				$mainFileExists = true;
-				$imgsize = findImageSize($mainMedia);
-				$imgwidth = $imgsize[0]+40;
-				$imgheight = $imgsize[1]+150;
-
-				// Check Filetype of media item ( URL, Local or Other ) ------------------------------------------
-				// URL FLV  ----------------------------------
-				if (eregi("http://www.youtube.com", $rowm['m_file'])) {
-					$file_type = "url_flv";
-				// URL Image ------------------------------
-				}else if (eregi("http" ,$rowm['m_file']) && eregi("\.(jpg|jpeg|gif|png|bmp)$", $rowm['m_file'])) {
-					$file_type = "url_image";
-				// URL page----------------------------------
-				}else if(eregi("http" ,$rowm['m_file']) || eregi("\.pdf", $rowm['m_file']) || eregi("\.avi", $rowm['m_file']) ){
-					$file_type = "url_page";
-				// Local FLV----------------------------------
-				}else if (eregi("\.flv" ,$rowm['m_file'])) {
-					$file_type = "local_flv";
-				// Local Image ----------------------------------
-				}else if (eregi("\.(jpg|jpeg|gif|png|bmp)$", $rowm['m_file'])) {
-					$file_type = "local_image";
-				// Other ------------------------------
-				}else{
-					$file_type = "other";
-				}
-
-				//Get media item Notes
-				$haystack = $rowm["m_gedrec"];
-				$needle   = "1 NOTE";
-				$before   = substr($haystack, 0, strpos($haystack, $needle));
-				$after    = substr(strstr($haystack, $needle), strlen($needle));
-				$worked   = ereg_replace("1 NOTE", "1 NOTE<br />", $after);
-				$final    = $before.$needle.$worked;
-				$notes    = PrintReady(htmlspecialchars(addslashes(print_fact_notes($final, 1, true, true)),ENT_COMPAT,'UTF-8'));
-
-				// if Lightbox installed ------------------------------------------------------------------------------
-				if (file_exists("modules/lightbox/album.php") ) {
-					if (file_exists("modules/lightbox/lb_config.php") ) {
-						include('modules/lightbox/lb_config.php');
-					}else{
-						include('modules/lightbox/lb_defaultconfig.php');
-					}
-					$name = trim($rowm["m_titl"]);
-
-					// If URL FLV filetype (Lightbox)
-					if ($file_type == "url_flv") {
-						print "<a href=\"module.php?mod=JWplayer&amp;pgvaction=flvVideo&amp;flvVideo=" . str_replace('http://', '', $mainMedia) . "\" rel='clearbox(" . 445 . "," . 370 . ",click)' rev=\"" . $rowm["m_media"] . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name,ENT_COMPAT,'UTF-8')) . "::" . htmlspecialchars($notes,ENT_COMPAT,'UTF-8') . "\">" . "\n";
-					// Else if URL image (Lightbox)
-					} elseif ($file_type == "url_image") {
-						print "<a href=\"" . $mainMedia . "\" rel='clearbox[general_3]' rev=\"" . $rowm["m_media"] . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name,ENT_COMPAT,'UTF-8')) . "::" . htmlspecialchars($notes,ENT_COMPAT,'UTF-8') . "\">" . "\n";
-					// Else if URL page (Lightbox)
-					} elseif ($file_type == "url_page") {
-						print "<a href=\"" . $mainMedia . "\" rel='clearbox(" . $LB_URL_WIDTH . "," . $LB_URL_HEIGHT . ",click)' rev=\"" . $rowm["m_media"] . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name,ENT_COMPAT,'UTF-8')) . "::" . htmlspecialchars($notes,ENT_COMPAT,'UTF-8') . "\">" . "\n";
-					// Else if Local FLV  (Lightbox)
-					} else if ($file_type == "local_flv") {
-						print "<a href=\"module.php?mod=JWplayer&amp;pgvaction=flvVideo&amp;flvVideo=" . $mainMedia . "\" rel='clearbox(" . 445 . "," . 370 . ",click)' rev=\"" . $rowm["m_media"] . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name,ENT_COMPAT,'UTF-8')) . "::" . htmlspecialchars($notes,ENT_COMPAT,'UTF-8') . "\">" . "\n";
-					// Else if Local Image (Lightbox)
-					} else if ($file_type == "local_image") {
-						if(media_exists($mainMedia)) {
-							print "<a href=\"" . $mainMedia . "\" rel='clearbox[general_3]' rev=\"" . $rowm["m_media"] . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name,ENT_COMPAT,'UTF-8')) . "::" . htmlspecialchars($notes,ENT_COMPAT,'UTF-8') . "\">" . "\n";
-						}else{
-							print "<a href=\"" . $rowm["m_file"] . "\" rel='clearbox[general_3]' rev=\"" . $rowm["m_media"] . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name,ENT_COMPAT,'UTF-8')) . "::" . htmlspecialchars($notes,ENT_COMPAT,'UTF-8') . "\">" . "\n";
-						}
-					// Else Other filetype (Pop-up Window)
-					} else {
-						print "<a href=\"javascript:;\" onclick=\"return openImage('".rawurlencode($mainMedia)."',$imgwidth, $imgheight);\">";
-					}
-
-				// if Lightbox NOT installed or not enabled -------------------------
-				// else if Media viewer enabled
-				}elseif ($USE_MEDIA_VIEWER) {
-					print "<a href=\"".encode_url("mediaviewer.php?mid={$rowm['m_media']}")."\">";
-				// else if JWplayer installed and filetype=flvfile (Locally stored in media files )
-				}elseif ( file_exists("modules/JWplayer/flvVideo.php") && $file_type == "local_flv") {
-					print "<a href=\"javascript:;\" onclick=\" var winflv = window.open('module.php?mod=JWplayer&amp;pgvaction=flvVideo&amp;flvVideo=" . $mainMedia . "', 'winflv', 'width=445, height=365, left=600, top=200'); if (window.focus) {winflv.focus();}\">";
-				// else if JWplayer installed and filetype=flv (Remote flv file e.g. YouTube)
-				}elseif ( file_exists("modules/JWplayer/flvVideo.php") && $file_type == "url_flv" ) {
-					print "<a href=\"javascript:;\" onclick=\" var winflv = window.open('module.php?mod=JWplayer&amp;pgvaction=flvVideo&amp;flvVideo=" . str_replace('http://', '', $mainMedia) . "', 'winflv', 'width=445, height=365, left=600, top=200'); if (window.focus) {winflv.focus();}\">";
-				//else if URL image
-				}else if(eregi("http" ,$rowm['m_file']) && (eregi("\.jpg",$rowm['m_file']) || eregi("\.gif",$rowm['m_file']) || eregi("\.png",$rowm['m_file']) ) ){
-					$imageinfo = Getimagesize($rowm['m_file']);
-					$wth = $imageinfo[0];
-					$hgt = $imageinfo[1];
-					print "<a href=\"javascript:void(0)\" onclick=\"var winimg = window.open('".$rowm['m_file']."', 'winimg', 'width=".$wth.", height=".$hgt.", left=200, top=200'); if (window.focus) {winimg.focus();} \">";
-				//else if URL page
-				}else if(eregi("http" ,$rowm['m_file']) || eregi("\.pdf",$rowm['m_file']) ){
-					print "<a href=\"javascript:;\" onclick=\"var winurl = window.open('".$rowm['m_file']."', 'winurl', 'width=900, height=600, left=200, top=200'); if (window.focus) {winurl.focus();}\">";
-				// else just use normal image viewer
-				}else{
-					print "<a href=\"javascript:;\" onclick=\"return openImage('".rawurlencode($mainMedia)."',$imgwidth, $imgheight);\">";
-				}
-			}else{
-				$file_type = "none";
-			}
-
-			// Finally print thumbnail
-			// If URL flv file (eg You Tube)
-			if ($file_type == "url_flv" && is_dir('modules/JWplayer')) {
-				print "<img src=\"modules/JWplayer/flashrem.png\" width=\"60\" border=\"0\" align=\"" . ($TEXT_DIRECTION== "rtl"?"right": "left") . "\" class=\"thumbnail\" " ;
-			// If URL page, Print the Common URL Thumbnail
-			} else if ($file_type == "url_page" && !eregi("\.pdf",$rowm['m_file']) && !eregi("\.avi",$rowm['m_file'])) {
-				print "<img src=\"images/URL.png\" border=\"0\" align=\"" . ($TEXT_DIRECTION== "rtl"?"right": "left") . "\"  width=\"72\" height=\"80\" " ;
-			// If local flv file  + (JWplayer installed) and no uploaded thumbnail, print the common flv thumbnail
-			}else if (media_exists($thumbnail) && eregi("\media.gif",$thumbnail) && eregi("\.flv",$rowm['m_file'])) {
-				if (file_exists("modules/lightbox/album.php") || file_exists("modules/JWplayer/flvVideo.php") ) {
-					print "<img src=\"modules/JWplayer/flash.png\" height=\"60\" border=\"0\" align=\"" . ($TEXT_DIRECTION== "rtl"?"right": "left") . "\" class=\"thumbnail\" " ;
-				}else{
-					print "<img src=\"images/media.gif\" height=\"60\" border=\"0\" align=\"" . ($TEXT_DIRECTION== "rtl"?"right": "left") . "\" class=\"thumbnail\" " ;
-				}
-			// Else Print the Regular Thumbnail if associated with a thumbnail image,
-			}else{
-				// If audio file --------------------------------------------------
-				if (eregi("\.mp3", $rowm['m_file'])) {
-					if (media_exists("images/audio.png") && eregi("\media.gif",$thumbnail) ) {
-						print "<img src=\"images/audio.png\" height=\"60\" border=\"0\" align=\"center\" class=\"thumbnail\" " ;
-					}else if ($file_type=="none") {
-							print "<img src=\"images/media.gif\" height=\"60\" border=\"0\" align=\"" . ($TEXT_DIRECTION== "rtl"?"right": "left") . "\" class=\"thumbnail\"";
-					}else{
-						print "<img src=\"".$thumbnail."\" border=\"0\" align=\"" . ($TEXT_DIRECTION== "rtl"?"right": "left") . "\" class=\"thumbnail\"";
-					}
-				// Else if regular Image file -----------------------------------
-				}else{
-					print "<img src=\"".$thumbnail."\" border=\"0\" align=\"" . ($TEXT_DIRECTION== "rtl"?"right": "left") . "\" class=\"thumbnail\"";
-				}
-			}
-
-			if ($isExternal) {
-				print " width=\"".$THUMBNAIL_WIDTH."\"";
-			}
-			print " alt=\"" . PrintReady(htmlspecialchars($mediaTitle,ENT_COMPAT,'UTF-8')) . "\" title=\"" . PrintReady(htmlspecialchars($mediaTitle,ENT_COMPAT,'UTF-8')) . "\" />";
-			if ($mainFileExists) {
-				print "</a>";
-			}
-		}
+		echo '<a href="', mediaFileLink($rowm['m_file'], $rowm['m_media'], $name, $notes), '">';
+		echo '<img src="', $imgThumb, '" align="center" class="thumbnail" border="none"', $widthThumb;
+		echo ' alt="', PrintReady(htmlspecialchars($name,ENT_COMPAT,'UTF-8')), '" title="', PrintReady(htmlspecialchars($name,ENT_COMPAT,'UTF-8')), '" /></a>';
 
 		if(empty($SEARCH_SPIDER)) {
 			print "<a href=\"".encode_url("mediaviewer.php?mid={$rowm['m_media']}")."\">";
