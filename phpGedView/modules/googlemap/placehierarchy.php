@@ -34,6 +34,8 @@ if (file_exists('modules/googlemap/defaultconfig.php')) {
 	require("modules/googlemap/defaultconfig.php");
 	require "modules/googlemap/googlemap.php";
 }
+require_once 'includes/classes/class_stats.php';
+$stats = new stats($GEDCOM);
 
 function check_exist_table() {
 	global $DBCONN, $TBLPREFIX;
@@ -162,14 +164,12 @@ function check_place($place_names, $place) {
 }
 
 function print_how_many_people($level, $parent) {
-	global $GEDCOM, $pgv_lang;
-	require_once 'includes/classes/class_stats.php';
+	global $GEDCOM, $pgv_lang, $stats;
 
 	$place_count_indi = 0;
 	$place_count_fam = 0;
 	if (!isset($parent[$level-1])) $parent[$level-1]="";
 	$p_id = set_levelm($level, $parent);
-	$stats = new stats($GEDCOM);
 	$indi = $stats->statsPlaces('INDI', false, $p_id);
 	$fam = $stats->statsPlaces('FAM', false, $p_id);
 	if (!empty($indi)) {

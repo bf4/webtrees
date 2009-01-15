@@ -1006,7 +1006,7 @@ class stats {
 		return $rows;
 	}
 	
-	function statsPlaces($what='INDI', $fact=false, $parent=0)
+	function statsPlaces($what='INDI', $fact=false, $parent=0, $country=false)
 	{
 		global $TBLPREFIX;
 		if ($fact) {
@@ -1015,17 +1015,19 @@ class stats {
 			$placelist = array();
 			while ($row =& $res->fetchRow()) {
 				$factrec = trim(get_sub_record(1, "1 {$fact}", $row[0], 1));
-				while (!empty($factrec)) {
-					if (preg_match("/2 PLAC (.+)/", $factrec, $match)) {
-						$place = trim($match[1]);
-						if (!isset($placelist[$place])) {
-							$placelist[$place] = 1;
-						}
-						else {
-							$placelist[$place] ++;
-						}
+				if (!empty($factrec) && preg_match("/2 PLAC (.+)/", $factrec, $match)) {
+					if ($country) {
+						$place = getPlaceCountry(trim($match[1]));
 					}
-					$factrec = trim(get_sub_record(1, "1 {$fact}", $row[0], 2));
+					else {
+						$place = trim($match[1]);
+					}
+					if (!isset($placelist[$place])) {
+						$placelist[$place] = 1;
+					}
+					else {
+						$placelist[$place] ++;
+					}
 				}
 			}
 			$res->free();
