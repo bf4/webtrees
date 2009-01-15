@@ -3884,7 +3884,7 @@ function mediaFileType($fileName) {
  */
 function mediaFileLink($fileName, $mid, $name='', $notes='') {
 	global $LB_URL_WIDTH, $LB_URL_HEIGHT;
-	global $SERVER_URL, $GEDCOM, $USE_MEDIA_VIEWER;
+	global $SERVER_URL, $GEDCOM;
 
 	$file_type = mediaFileType($fileName);
 
@@ -3908,37 +3908,33 @@ function mediaFileLink($fileName, $mid, $name='', $notes='') {
 			}
 		}
 
-		// Lightbox is NOT installed or Lightbox is not appropriate for this media type
+		// Lightbox is not installed or Lightbox is not appropriate for this media type
 		switch ($file_type) {
-			case 'url_flv':
-				$imgUrl = "javascript:;\" onclick=\" var winflv = window.open('".encode_url('module.php?mod=JWplayer&pgvaction=flvVideo&flvVideo='.encrypt($fileName)) . "', 'winflv', 'width=445, height=365, left=600, top=200'); if (window.focus) {winflv.focus();}";
-				break 2;
-			case 'local_flv':
-				$imgUrl = "javascript:;\" onclick=\" var winflv = window.open('".encode_url('module.php?mod=JWplayer&pgvaction=flvVideo&flvVideo='.encrypt($SERVER_URL.$fileName)) . "', 'winflv', 'width=445, height=365, left=600, top=200'); if (window.focus) {winflv.focus();}";
-				break 2;
-			case 'url_image':
-				$imgsize = getimagesize($fileName);
-				$imgwidth = $imgsize[0]+40;
-				$imgheight = $imgsize[1]+150;
-				$imgUrl = "javascript:void(0)\" onclick=\"var winimg = window.open('".encode_url($fileName)."', 'winimg', 'width=".$imgwidth.", height=".$imgheight.", left=200, top=200'); if (window.focus) {winimg.focus();}";
-				break 2;
-			case 'url_audio':
-			case 'url_page':
-				$imgUrl = "javascript:;\" onclick=\"var winurl = window.open('".encode_url($fileName)."', 'winurl', 'width=900, height=600, left=200, top=200'); if (window.focus) {winurl.focus();}";
-				break 2;
-			case 'local_audio':
-			case 'local_page':
-				$imgUrl = "javascript:;\" onclick=\"var winurl = window.open('".encode_url($SERVER_URL.$fileName)."', 'winurl', 'width=900, height=600, left=200, top=200'); if (window.focus) {winurl.focus();}";
-				break 2;
-		}
-		if ($USE_MEDIA_VIEWER) {
-			$imgUrl = "mediaviewer.php?mid=".$mid;
-		} else {
-			$imgsize = findImageSize($fileName);
+		case 'url_flv':
+			$imgUrl = "javascript:;\" onclick=\" var winflv = window.open('".encode_url('module.php?mod=JWplayer&pgvaction=flvVideo&flvVideo='.encrypt($fileName)) . "', 'winflv', 'width=445, height=365, left=600, top=200'); if (window.focus) {winflv.focus();}";
+			break 2;
+		case 'local_flv':
+			$imgUrl = "javascript:;\" onclick=\" var winflv = window.open('".encode_url('module.php?mod=JWplayer&pgvaction=flvVideo&flvVideo='.encrypt($SERVER_URL.$fileName)) . "', 'winflv', 'width=445, height=365, left=600, top=200'); if (window.focus) {winflv.focus();}";
+			break 2;
+		case 'url_image':
+			$imgsize = getimagesize($fileName);
 			$imgwidth = $imgsize[0]+40;
 			$imgheight = $imgsize[1]+150;
-			$imgUrl = "#\" onclick=\"return openImage('".encrypt($fileName)."', $imgwidth, $imgheight);";
+			$imgUrl = "javascript:;\" onclick=\"var winimg = window.open('".encode_url($fileName)."', 'winimg', 'width=".$imgwidth.", height=".$imgheight.", left=200, top=200'); if (window.focus) {winimg.focus();}";
+			break 2;
+		case 'url_audio':
+		case 'url_page':
+			$imgUrl = "javascript:;\" onclick=\"var winurl = window.open('".encode_url($fileName)."', 'winurl', 'width=900, height=600, left=200, top=200'); if (window.focus) {winurl.focus();}";
+			break 2;
+		case 'local_audio':
+		case 'local_page':
+			$imgUrl = "javascript:;\" onclick=\"var winurl = window.open('".encode_url($SERVER_URL.$fileName)."', 'winurl', 'width=900, height=600, left=200, top=200'); if (window.focus) {winurl.focus();}";
+			break 2;
 		}
+		$imgsize = findImageSize($fileName);
+		$imgwidth = $imgsize[0]+40;
+		$imgheight = $imgsize[1]+150;
+		$imgUrl = "javascript:;\" onclick=\"return openImage('".encrypt($fileName)."', $imgwidth, $imgheight);";
 		break;
 	}
 

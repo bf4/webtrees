@@ -26,7 +26,8 @@
 
 require './config.php';
 
-$filename=decrypt(safe_GET('filename'));
+//$filename=decrypt(safe_GET('filename'));
+$filename=decrypt($_GET['filename']);		// We can't use function safe_GET here
 
 print_simple_header($pgv_lang["imageview"]);
 ?>
