@@ -44,6 +44,14 @@ VERSION 4.2.
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change	codes and comments
 ----------------------------------------------------------------------------------------
++$pgv_lang["months2"]								15 Jan 2009				A
++$pgv_lang["hour1"]									15 Jan 2009				A
++$pgv_lang["hours2"]								15 Jan 2009				A
++$pgv_lang["hours"]									15 Jan 2009				A
++$pgv_lang["minute1"]								15 Jan 2009				A
++$pgv_lang["minutes2"]								15 Jan 2009				A
++$pgv_lang["minutes"]								15 Jan 2009				A
++$pgv_lang["ago"]									15 Jan 2009				A
 *$pgv_lang["stat_males"]							15 Jan 2009				W
 *$pgv_lang["stat_females"]							15 Jan 2009				W
 *$pgv_lang["stat_unknown"]							15 Jan 2009				W

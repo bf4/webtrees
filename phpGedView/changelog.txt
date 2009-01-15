@@ -10,6 +10,7 @@
 
 
 Version 4.2.0
+ - Added: [ 2497934 ] Time since login (wooc)
  - Changed: Correct handling of various media file types (canajun2eh)
  - Changed: Correct handling of media files that are URLs (canajun2eh)
  - Changed: Patch [ 2486577 ] applied. Auto show of Notes in Lightbox window and in slide show. (windmillway) 
