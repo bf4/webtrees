@@ -874,9 +874,9 @@ function print_map_charts($chart_shows, $chart_type, $x_as, $surname) {
 	case 'birth_distribution_chart':
 		// Count how many people were born in each country
 		$surn_countries=array();
-		$countries=$stats->statsPlaces('INDI', 'BIRT');
+		$countries=$stats->statsPlaces('INDI', 'BIRT', 0, true);
 		foreach ($countries as $place=>$count) {
-			$country=UTF8_strtolower(getPlaceCountry($place));
+			$country=UTF8_strtolower($place);
 			if (array_key_exists($country, $country_to_iso3166)) {
 				if (!isset($surn_countries[$country_to_iso3166[$country]])) {
 					$surn_countries[$country_to_iso3166[$country]]=$count;
@@ -890,9 +890,9 @@ function print_map_charts($chart_shows, $chart_type, $x_as, $surname) {
 	case 'death_distribution_chart':
 		// Count how many people were death in each country
 		$surn_countries=array();
-		$countries=$stats->statsPlaces('INDI', 'DEAT');
+		$countries=$stats->statsPlaces('INDI', 'DEAT', 0, true);
 		foreach ($countries as $place=>$count) {
-			$country=UTF8_strtolower(getPlaceCountry($place));
+			$country=UTF8_strtolower($place);
 			if (array_key_exists($country, $country_to_iso3166)) {
 				if (!isset($surn_countries[$country_to_iso3166[$country]])) {
 					$surn_countries[$country_to_iso3166[$country]]=$count;
