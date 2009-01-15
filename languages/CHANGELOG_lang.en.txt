@@ -44,6 +44,13 @@ VERSION 4.2.
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change	codes and comments
 ----------------------------------------------------------------------------------------
+*$pgv_lang["stat_males"]							15 Jan 2009				W
+*$pgv_lang["stat_females"]							15 Jan 2009				W
+*$pgv_lang["stat_unknown"]							15 Jan 2009				W
+*$pgv_lang["total_unknown"]							15 Jan 2009				W
+*$pgv_lang["total_living"]							15 Jan 2009				W
+*$pgv_lang["total_dead"]							15 Jan 2009				W
+*$pgv_lang["total_not_born"]						15 Jan 2009				W
 +$pgv_lang["total_changes"]							15 Jan 2009				A
 +$pgv_lang["total_links"]							15 Jan 2009				A
 +$pgv_lang["TYPE__coat"]							05 Jan 2009				A

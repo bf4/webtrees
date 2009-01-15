@@ -311,6 +311,7 @@ $pgv_lang["PGV_SMTP_PORT"] 				= "TCP Port (SMTP)";
 $pgv_lang["PGV_SMTP_AUTH"] 				= "Name und Kennwort benutzen";
 $pgv_lang["PGV_SMTP_AUTH_USER"] 		= "Name";
 $pgv_lang["PGV_SMTP_AUTH_PASS"] 		= "Kennwort";
+$pgv_lang["PGV_SMTP_FROM_NAME"] 		= "Absender";
 $pgv_lang["PGV_STORE_MESSAGES"]			= "Erlauben Nachrichten online zu speichern";
 $pgv_lang["phpinfo"]					= "PHP Informationen";
 $pgv_lang["place_cleanup_detected"]		= "Ungültige Orts Angaben entdeckt. Diese Fehler sollten behoben werden. Beispiel einer ungültigen Ortsangabe:";

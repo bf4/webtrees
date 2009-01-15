@@ -45,6 +45,11 @@ VERSION 4.2.0
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 -----------------------------------------------------------------------------------------
+*$pgv_lang["stat_help_gwx"]							15 Jan 2009		   		WF
+*$pgv_lang["stat_help_gax"]							15 Jan 2009		   		WF
+*$pgv_lang["stat_help_gbx"]							15 Jan 2009		   		WF
+*$pgv_lang["stat_help_gcx"]							15 Jan 2009		   		WF
+*$pgv_lang["stat_help_gwz"]							15 Jan 2009		   		WF
 *$pgv_lang["stat_help_gwx"]							15 Jan 2009		   		w
 *$pgv_lang["stat_help_gax"]							15 Jan 2009		   		w
 *$pgv_lang["stat_help_gbx"]							15 Jan 2009		   		w
