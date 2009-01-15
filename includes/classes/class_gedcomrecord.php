@@ -500,8 +500,21 @@ class GedcomRecord {
 	}
 
 	// Static helper function to sort an array of objects by name
+	// Records whose names cannot be displayed are sorted at the end.
 	static function Compare($x, $y) {
-		return compareStrings($x->getSortName(), $y->getSortName());
+		if ($x->canDisplayName()) {
+			if ($y->canDisplayName()) {
+				return compareStrings($x->getSortName(), $y->getSortName());
+			} else {
+				return -1; // only $y is private
+			}
+		} else {
+			if ($y->canDisplayName()) {
+				return 1; // only $x is private
+			} else {
+				return 0; // both $x and $y private
+			}
+		}
 	}
 
 	// Static helper function to sort an array of objects by ID
