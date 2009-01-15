@@ -191,7 +191,7 @@ if ((!$controller->isPrintPreview())&&(empty($SEARCH_SPIDER))&&!empty($controlle
 			<?php
 				// PrintMediaLinks($links, "");
 				require_once 'includes/functions/functions_print_lists.php';
-				print_changes_table($links, $SHOW_LAST_CHANGE);
+				print_changes_table($links, $SHOW_LAST_CHANGE, $pgv_lang["total_links"]);
 			}	?>
 		</td>
 	</tr>
