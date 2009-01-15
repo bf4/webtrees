@@ -1061,6 +1061,7 @@ function fetch_person_record($xref, $ged_id) {
 		"SELECT 'INDI' AS type, i_id AS xref, {$ged_id} AS ged_id, i_gedcom AS gedrec, i_isdead, i_sex ".
 		"FROM {$TBLPREFIX}individuals WHERE i_id='{$xref}' AND i_file={$ged_id}"
 	);
+	if (DB::isError($res)) return "";
 	$row=$res->fetchRow(DB_FETCHMODE_ASSOC);
 	$res->free();
 	return $row;
@@ -1073,6 +1074,7 @@ function fetch_family_record($xref, $ged_id) {
 		"SELECT 'FAM' AS type, f_id AS xref, {$ged_id} AS ged_id, f_gedcom AS gedrec, f_husb, f_wife, f_chil, f_numchil ".
 		"FROM {$TBLPREFIX}families WHERE f_id='{$xref}' AND f_file={$ged_id}"
 	);
+	if (DB::isError($res)) return "";
 	$row=$res->fetchRow(DB_FETCHMODE_ASSOC);
 	$res->free();
 	return $row;
