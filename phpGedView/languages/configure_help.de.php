@@ -378,6 +378,7 @@ $pgv_lang["PGV_SMTP_PORT_help"]			= "~#pgv_lang[PGV_SMTP_PORT]#~<br /><br />Das 
 $pgv_lang["PGV_SMTP_AUTH_help"]			= "~#pgv_lang[PGV_SMTP_AUTH]#~<br /><br />Erfordert der SMTP Server die Eingabe eines Nutzernamens und dessen Kennwort?<br /><br />Manche SMTP Server erfordern dass Verbindungen authentifiziert sind, bevor sie das Senden von Mails erlauben.<br />";
 $pgv_lang["PGV_SMTP_AUTH_USER_help"]	= "~#pgv_lang[PGV_SMTP_AUTH_USER]#~<br /><br />Ein dem SMTP Server gültiger Nutzername.<br />";
 $pgv_lang["PGV_SMTP_AUTH_PASS_help"]	= "~#pgv_lang[PGV_SMTP_AUTH_PASS]#~<br /><br />Das zum obigen Nutzernamen passende Kennwort.<br />";
+$pgv_lang["PGV_SMTP_FROM_NAME_help"] 	= "~#pgv_lang[PGV_SMTP_FROM_NAME]#~<br /><br />Hier geben Sie den Namen ein, der im «Abs:» Feld aller Mails von dieser Site benutzt werden soll.<br /><br />Zum Beispiel, gegeben dass Sie <b>Johann Schmidt</b> heißen, und dass Sie Verwalter von der Site <b>Ahnenforschung Müller</b> sind, dann könnten Sie eventuell hier <b>Johann Schmidt</b> oder <b>Ahnenforschung Müller</b> oder vielleicht auch <b>Johann Schmidt, Verwalter: Ahnenforschung Müller</b> eingeben.  Sie können jeden beliebigen Text eingeben, aber beachten Sie bitte, dass HTML nicht erlaubt ist.<br />";
 $pgv_lang["gedcom_title"]				= "GEDCOM-Datei Bezeichnung";
 $pgv_lang["gedcom_title_help"]			= "~#pgv_lang[gedcom_title]#~<br /><br />Geben Sie eine Bezeichnung ein, die erscheint, wenn Besucher zwischen mehreren GEDCOM-Dateien auf Ihrer Seite wählen.<br />";
 $pgv_lang["LOGFILE_CREATE"]				= "Log-Dateien erzeugen";
