@@ -3,7 +3,7 @@
  * Media List Slide Show module for phpGedView
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  PGV Development Team
+ * Copyright (C) 2007 to 2009  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -43,9 +43,9 @@ var myImages = new Array();	// The preview images
 	$numImages = 0;
 	foreach($medialist as $mid=>$media) {
 		// privacy has already been checked by medialist.php
+		$file_type = mediaFileType($media['FILE']);
 		// Check to see if the item is a real image
-		$imgsize = findImageSize($media['FILE']);
-		if($imgsize != false){		
+		if ($file_type=='local_image') {		
 	 		echo "Pic[$ix] = '".addcslashes(check_media_depth($media['FILE']), "'")."';\n";
 			echo "myImages[$ix] = '".addcslashes(thumbnail_file($media['FILE']), "'")."';\n";
 			global $ix;
