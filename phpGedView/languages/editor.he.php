@@ -113,6 +113,7 @@ $pgv_lang["add_child_to_family"]	= "הוסף ילד/ה למשפחה";
 $pgv_lang["add_fact"]			= "הוסף עובדה חדשה";
 $pgv_lang["add_father"]		= "הוסף אבא חדש";
 $pgv_lang["add_husb"]		= "הוסף בעל";
+$pgv_lang["add_opf_child"]		= "הוסף ילד/ה וצור משפחה חד-הורית";
 $pgv_lang["add_husb_to_family"]	= "הוסף בעל למשפחה";
 $pgv_lang["add_media"]		= "הוסף מדיה חדשה";
 $pgv_lang["add_media_lbl"] 		= "הוסף מדיה";
