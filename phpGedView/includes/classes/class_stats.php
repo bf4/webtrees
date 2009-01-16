@@ -438,10 +438,10 @@ class stats {
 		$tot_indi_per = round(100 *  ($tot_indi-$tot_sindi) / $tot_indi, 2);
 		$tot_sindi_per = round(100 * $tot_sindi / $tot_indi, 2);
 		$chd = self::_array_to_extended_encoding(array($tot_sindi_per, 100-$tot_sindi_per));
-		$chl = reverseText($pgv_lang['stat_sindi']).' ['.round($tot_sindi_per,1).'%]|'.
-				reverseText($pgv_lang['others']).' ['.round($tot_indi_per,1).'%]';
-		$chart_title = reverseText($pgv_lang['stat_sindi']).' ['.round($tot_sindi_per,1).'%], '.
-						reverseText($pgv_lang['others']).' ['.round($tot_indi_per,1).'%]';
+		$chl =  $pgv_lang['stat_sindi'].' - '.round($tot_sindi_per,1).'%|'.
+				$pgv_lang['others'].' - '.round($tot_indi_per,1).'%';
+		$chart_title =  $pgv_lang['stat_sindi'].' ['.round($tot_sindi_per,1).'%], '.
+						$pgv_lang['others'].' ['.round($tot_indi_per,1).'%]';
 		return "<img src=\"".encode_url("http://chart.apis.google.com/chart?cht=p3&chd=e:{$chd}&chs={$size}&chco={$color_from},{$color_to}&chf=bg,s,ffffff00&chl={$chl}")."\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" alt=\"".$chart_title."\" title=\"".$chart_title."\" />";
 	}
 
@@ -482,10 +482,10 @@ class stats {
 		$tot_fam_per = round(100 *  ($tot_fam-$tot_sfam) / $tot_fam, 2);
 		$tot_sfam_per = round(100 * $tot_sfam / $tot_fam, 2);
 		$chd = self::_array_to_extended_encoding(array($tot_sfam_per, 100-$tot_sfam_per));
-		$chl = reverseText($pgv_lang['stat_sfam']).' ['.round($tot_sfam_per,1).'%]|'.
-				reverseText($pgv_lang['others']).' ['.round($tot_fam_per,1).'%]';
-		$chart_title = reverseText($pgv_lang['stat_sfam']).' ['.round($tot_sfam_per,1).'%], '.
-						reverseText($pgv_lang['others']).' ['.round($tot_fam_per,1).'%]';
+		$chl =  $pgv_lang['stat_sfam'].' - '.round($tot_sfam_per,1).'%|'.
+				$pgv_lang['others'].' - '.round($tot_fam_per,1).'%';
+		$chart_title =  $pgv_lang['stat_sfam'].' ['.round($tot_sfam_per,1).'%], '.
+						$pgv_lang['others'].' ['.round($tot_fam_per,1).'%]';
 		return "<img src=\"".encode_url("http://chart.apis.google.com/chart?cht=p3&chd=e:{$chd}&chs={$size}&chco={$color_from},{$color_to}&chf=bg,s,ffffff00&chl={$chl}")."\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" alt=\"".$chart_title."\" title=\"".$chart_title."\" />";
 	}
 
@@ -656,22 +656,22 @@ class stats {
 		if ($tot_u > 0) {
 			$chd = self::_array_to_extended_encoding(array($tot_u, $tot_f, $tot_m));
 			$chl =
-				reverseText($pgv_lang['stat_unknown']).' ['.round($tot_u,1).'%]|'.
-				reverseText($pgv_lang['stat_females']).' ['.round($tot_f,1).'%]|'.
-				reverseText($pgv_lang['stat_males']).' ['.round($tot_m,1).'%]';
+				$pgv_lang['stat_unknown'].' - '.round($tot_u,1).'%|'.
+				$pgv_lang['stat_females'].' - '.round($tot_f,1).'%|'.
+				$pgv_lang['stat_males'].' - '.round($tot_m,1).'%';
 			$chart_title =
-				reverseText($pgv_lang['stat_males']).' ['.round($tot_m,1).'%], '.
-				reverseText($pgv_lang['stat_females']).' ['.round($tot_f,1).'%], '.
-				reverseText($pgv_lang['stat_unknown']).' ['.round($tot_u,1).'%]';
+				$pgv_lang['stat_males'].' ['.round($tot_m,1).'%], '.
+				$pgv_lang['stat_females'].' ['.round($tot_f,1).'%], '.
+				$pgv_lang['stat_unknown'].' ['.round($tot_u,1).'%]';
 			return "<img src=\"".encode_url("http://chart.apis.google.com/chart?cht=p3&chd=e:{$chd}&chs={$size}&chco={$color_unknown},{$color_female},{$color_male}&chf=bg,s,ffffff00&chl={$chl}")."\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" alt=\"".$chart_title."\" title=\"".$chart_title."\" />";
 		}
 		else {
 			$chd = self::_array_to_extended_encoding(array($tot_f, $tot_m));
 			$chl =
-				reverseText($pgv_lang['stat_females']).' ['.round($tot_f,1).'%]|'.
-				reverseText($pgv_lang['stat_males']).' ['.round($tot_m,1).'%]';
-			$chart_title = reverseText($pgv_lang['stat_males']).' ['.round($tot_m,1).'%], '.
-							reverseText($pgv_lang['stat_females']).' ['.round($tot_f,1).'%]';
+				$pgv_lang['stat_females'].' - '.round($tot_f,1).'%|'.
+				$pgv_lang['stat_males'].' - '.round($tot_m,1).'%';
+			$chart_title =  $pgv_lang['stat_males'].' ['.round($tot_m,1).'%], '.
+							$pgv_lang['stat_females'].' ['.round($tot_f,1).'%]';
 			return "<img src=\"".encode_url("http://chart.apis.google.com/chart?cht=p3&chd=e:{$chd}&chs={$size}&chco={$color_female},{$color_male}&chf=bg,s,ffffff00&chl={$chl}")."\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" alt=\"".$chart_title."\" title=\"".$chart_title."\" />";
 		}
 	}
@@ -741,22 +741,22 @@ class stats {
 		if ($tot_u > 0) {
 			$chd = self::_array_to_extended_encoding(array($tot_u, $tot_l, $tot_d));
 			$chl =
-				reverseText($pgv_lang['total_unknown']).' ['.round($tot_u,1).'%]|'.
-				reverseText($pgv_lang['total_living']).' ['.round($tot_l,1).'%]|'.
-				reverseText($pgv_lang['total_dead']).' ['.round($tot_d,1).'%]';
+				$pgv_lang['total_unknown'].' - '.round($tot_u,1).'%|'.
+				$pgv_lang['total_living'].' - '.round($tot_l,1).'%|'.
+				$pgv_lang['total_dead'].' - '.round($tot_d,1).'%';
 			$chart_title =
-				reverseText($pgv_lang['total_living']).' ['.round($tot_l,1).'%], '.
-				reverseText($pgv_lang['total_dead']).' ['.round($tot_d,1).'%], '.
-				reverseText($pgv_lang['total_unknown']).' ['.round($tot_u,1).'%]';
+				$pgv_lang['total_living'].' ['.round($tot_l,1).'%], '.
+				$pgv_lang['total_dead'].' ['.round($tot_d,1).'%], '.
+				$pgv_lang['total_unknown'].' ['.round($tot_u,1).'%]';
 			return "<img src=\"".encode_url("http://chart.apis.google.com/chart?cht=p3&chd=e:{$chd}&chs={$size}&chco={$color_unknown},{$color_living},{$color_dead}&chf=bg,s,ffffff00&chl={$chl}")."\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" alt=\"".$chart_title."\" title=\"".$chart_title."\" />";
 		}
 		else {
 			$chd = self::_array_to_extended_encoding(array($tot_l, $tot_d));
 			$chl =
-				reverseText($pgv_lang['total_living']).' ['.round($tot_l,1).'%]|'.
-				reverseText($pgv_lang['total_dead']).' ['.round($tot_d,1).'%]|';
-			$chart_title = reverseText($pgv_lang['total_living']).' ['.round($tot_l,1).'%], '.
-							reverseText($pgv_lang['total_dead']).' ['.round($tot_d,1).'%]';
+				$pgv_lang['total_living'].' - '.round($tot_l,1).'%|'.
+				$pgv_lang['total_dead'].' - '.round($tot_d,1).'%|';
+			$chart_title =  $pgv_lang['total_living'].' ['.round($tot_l,1).'%], '.
+							$pgv_lang['total_dead'].' ['.round($tot_d,1).'%]';
 			return "<img src=\"".encode_url("http://chart.apis.google.com/chart?cht=p3&chd=e:{$chd}&chs={$size}&chco={$color_living},{$color_dead}&chf=bg,s,ffffff00&chl={$chl}")."\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" alt=\"".$chart_title."\" title=\"".$chart_title."\" />";
 		}
 	}
@@ -852,18 +852,18 @@ class stats {
 			$count = $this->_totalMediaType($type);
 			if ($count != 0) {
 				$mediaCounts[] = round(100 * $count / $tot, 0);
-				$mediaTypes .= reverseText($pgv_lang['TYPE__'.$type]);
-				$mediaTypes .= ' ['.$count.']|';
+				$mediaTypes .= $pgv_lang['TYPE__'.$type];
+				$mediaTypes .= ' - '.$count.'|';
 				$c += $count;
-				$chart_title .= reverseText($pgv_lang['TYPE__'.$type]).' ['.$count.'], ';
+				$chart_title .= $pgv_lang['TYPE__'.$type].' ['.$count.'], ';
 			}
 		}
 		$count = $this->_totalMediaType('unknown');
 		if ($count != 0) {
 			$mediaCounts[] = round(100 * $count / $tot, 0);
-			$mediaTypes .= reverseText($pgv_lang['unknown']);
-			$mediaTypes .= ' ['.($tot-$c).']|';
-			$chart_title .= reverseText($pgv_lang['unknown']).' ['.($tot-$c).']';
+			$mediaTypes .= $pgv_lang['unknown'];
+			$mediaTypes .= ' - '.($tot-$c).'|';
+			$chart_title .= $pgv_lang['unknown'].' ['.($tot-$c).']';
 		}
 		else {
 			$chart_title = substr($chart_title,0,-2);
@@ -1802,7 +1802,8 @@ class stats {
 			}
 			$chd .= self::_array_to_extended_encoding(array($per));
 			$family=Family::getInstance($rows[$i]['id']);
-			$chl[] = reverseText($family->getFullName()).' ['.$rows[$i]['tot'].']';
+//			$chl[] = $family->getFullName().' - '.$rows[$i]['tot'];
+			$chl[] = strip_tags(unhtmlentities($family->getFullName())).' - '.$rows[$i]['tot'];
 		}
 		$chl = join('|', $chl);
 		return "<img src=\"".encode_url("http://chart.apis.google.com/chart?cht=p3&chd=e:{$chd}&chs={$size}&chco={$color_from},{$color_to}&chf=bg,s,ffffff00&chl={$chl}")."\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" alt=\"".$pgv_lang["stat_21_nok"]."\" title=\"".$pgv_lang["stat_21_nok"]."\" />";
@@ -1950,14 +1951,14 @@ class stats {
 					$per = round(100 * count($indis) / $tot_indi, 0);
 				}
 				$chd .= self::_array_to_extended_encoding($per);
-				$chl[] = reverseText($spfxsurn).' ['.count($indis).']';
-				$chart_title .= reverseText($spfxsurn).' ['.count($indis).'], ';
+				$chl[] = $spfxsurn.' - '.count($indis);
+				$chart_title .= $spfxsurn.' ['.count($indis).'], ';
 			}
 		}
 		$per = round(100 * ($tot_indi-$tot) / $tot_indi, 0);
 		$chd .= self::_array_to_extended_encoding($per);
-		$chl[] = reverseText($pgv_lang["other"]).' ['.($tot_indi-$tot).']';
-		$chart_title .= reverseText($pgv_lang["other"]).' ['.($tot_indi-$tot).']';
+		$chl[] = $pgv_lang["other"].' - '.($tot_indi-$tot);
+		$chart_title .= $pgv_lang["other"].' ['.($tot_indi-$tot).']';
 		$chl = join('|', $chl);
 		return "<img src=\"".encode_url("http://chart.apis.google.com/chart?cht=p3&chd=e:{$chd}&chs={$size}&chco={$color_from},{$color_to}&chf=bg,s,ffffff00&chl={$chl}")."\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" alt=\"".$chart_title."\" title=\"".$chart_title."\" />";
 	}
