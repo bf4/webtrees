@@ -1,27 +1,27 @@
 <?php
 /**
- * System for generating menus.
- *
- * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- *
- * @package PhpGedView
- * @version $Id$
- */
+* System for generating menus.
+*
+* phpGedView: Genealogy Viewer
+* Copyright (C) 2002 to 2009 PGV Development Team. All rights reserved.
+*
+* This program is free software; you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation; either version 2 of the License, or
+* (at your option) any later version.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+* GNU General Public License for more details.
+*
+* You should have received a copy of the GNU General Public License
+* along with this program; if not, write to the Free Software
+* Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+*
+* @package PhpGedView
+* @version $Id$
+*/
 
 if (!defined('PGV_PHPGEDVIEW')) {
 	header('HTTP/1.0 403 Forbidden');
@@ -48,12 +48,12 @@ class Menu {
 	var $submenus;
 
 	/**
-	 * Constructor for the menu class
-	 * @param string $label 	the label for the menu item (usually a pgv_lang variable)
-	 * @param string $link		The link that the user should be taken to when clicking on the menuitem
-	 * @param string $pos 	The position of the label relative to the icon (right, left, top, bottom)
-	 * @param string $flyout	The direction where any submenus should appear relative to the menu item (right, down)
-	 */
+	* Constructor for the menu class
+	* @param string $label the label for the menu item (usually a pgv_lang variable)
+	* @param string $link The link that the user should be taken to when clicking on the menuitem
+	* @param string $pos The position of the label relative to the icon (right, left, top, bottom)
+	* @param string $flyout The direction where any submenus should appear relative to the menu item (right, down)
+	*/
 	function Menu($label=' ', $link='#', $pos='right', $flyout='down')
 	{
 		$this->submenus = array();
@@ -118,7 +118,7 @@ class Menu {
 		$this->submenus[] = $obj;
 	}
 
-	function addSeperator() {
+	function addSeparator() {
 		$submenu = new Menu();
 		$submenu->isSeperator();
 		$this->submenus[] = $submenu;
@@ -354,17 +354,17 @@ class Menu {
 	}
 
 	/**
-	 * returns the number of submenu's in this menu
-	 * @return int
-	 */
+	* returns the number of submenu's in this menu
+	* @return int
+	*/
 	function subCount() {
 		return count($this->submenus);
 	}
 
 	/**
-	 * convert an old array style menu to an object
-	 * @static
-	 */
+	* convert an old array style menu to an object
+	* @static
+	*/
 	static function convertMenu($menu) {
 		$conv = array(
 			'label'=>'label',
