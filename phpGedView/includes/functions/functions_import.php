@@ -788,8 +788,8 @@ function update_places($gid, $ged_id, $gedrec) {
 
 			//-- if we are not searching then we have to insert the place into the db
 			if (!$search) {
-				$std_soundex = soundex($place);
-				$dm_soundex = DMSoundex($place);
+				$std_soundex = soundex_std($place);
+				$dm_soundex = soundex_dm($place);
 				$p_id = get_next_id("places", "p_id");
 				$sql = 'INSERT INTO ' . $TBLPREFIX . 'places VALUES(' . $p_id . ',  \''.$DBCONN->escapeSimple($place) . '\', '.$level.', '.$parent_id.', '.$ged_id.', \''.$DBCONN->escapeSimple($std_soundex).'\', \''.$DBCONN->escapeSimple(implode(":",$dm_soundex)).'\')';
 				$res2 = dbquery($sql);
