@@ -2045,12 +2045,6 @@ function accept_changes($cid) {
 		if (!isset($manual_save) || $manual_save==false) {
 			write_changes();
 		}
-		if (isset ($_SESSION["recent_changes"]["user"][$GEDCOM])) {
-			unset ($_SESSION["recent_changes"]["user"][$GEDCOM]);
-		}
-		if (isset ($_SESSION["recent_changes"]["gedcom"][$GEDCOM])) {
-			unset ($_SESSION["recent_changes"]["gedcom"][$GEDCOM]);
-		}
 		$logline = AddToLog("Accepted change $cid " . $change["type"] . " into database");
 		check_in($logline, $GEDCOM, dirname($GEDCOMS[$GEDCOM]['path']));
 		if (isset ($change["linkpid"])) {
