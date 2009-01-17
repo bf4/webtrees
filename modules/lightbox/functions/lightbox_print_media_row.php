@@ -211,7 +211,8 @@ function lightbox_print_media_row($rtype, $rowm, $pid) {
 		$menu["labelpos"] = "right";
 		$menu["icon"] = "";
 		$menu["onclick"] = "";
-		$menu["link"] = mediaFileLink($mainMedia, $pid, $mediaTitle, $notes);
+		// Next line removed to avoid gallery thumbnail duplication
+		// $menu["link"] = mediaFileLink($mainMedia, $pid, $mediaTitle, $notes);
 		$menu["class"] = "";
 		$menu["hoverclass"] = "";
 		$menu["flyout"] = "down";
@@ -339,6 +340,7 @@ function lightbox_print_media_row($rtype, $rowm, $pid) {
 				print "<img src=\"images/flash.png\" align=\"center" . ($TEXT_DIRECTION== "rtl"?"right": "left") . "\" class=\"thumbnail\"";
 				break;
 			case 'url_page':
+			case 'url_other':
 			case 'local_page':
 				print "<img src=\"images/globe.png\" align=\"center" . ($TEXT_DIRECTION== "rtl"?"right": "left") . "\" class=\"thumbnail\"";
 				break;
