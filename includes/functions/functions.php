@@ -114,11 +114,13 @@ function check_db($ignore_previous=false) {
 	}
 
 	// Perform any database-specific initialisation
+	// Note that due to sequence of events in install.php, we can't
+	// use dbquery(), as it won't run until after we are configured.
 	switch ($DBTYPE) {
 	case 'mysql':
 	case 'mysqli':
 		if ($DB_UTF8_COLLATION) {
-			dbquery("SET NAMES UTF8");
+			$res=$DBCONN->query("SET NAMES UTF8");
 		}
 		$res=$DBCONN->query("SHOW VARIABLES LIKE 'version'");
 		$row=$res->fetchRow(DB_FETCHMODE_ORDERED);
@@ -127,14 +129,14 @@ function check_db($ignore_previous=false) {
 		break;
 	case 'pgsql':
 		if ($DB_UTF8_COLLATION) {
-			dbquery("SET NAMES 'UTF8'");
+			$res=$DBCONN->query("SET NAMES 'UTF8'");
 		}
 		$version=pg_version();
 		define('PGV_DB_VERSION', $version['server']);
 		break;
 	case 'sqlite':
 		if ($DB_UTF8_COLLATION) {
-			dbquery('PRAGMA encoding = "UTF-8"');
+			$res=$DBCONN->query('PRAGMA encoding = "UTF-8"');
 		}
 		define('PGV_DB_VERSION', sqlite_libversion()); // TODO: is this the version used by Pear::DB?
 		break;
