@@ -388,7 +388,7 @@ class IndividualControllerRoot extends BaseController {
 					//Lbox -----------------------------------------------------------------------------------------
 
 					if (!$USE_MEDIA_VIEWER && $imgsize) {
-						$result .= "<a href=\"javascript:;\" onclick=\"return openImage('".encode_url($firstmediarec["file"])."',$imgwidth, $imgheight);\">";
+						$result .= "<a href=\"javascript:;\" onclick=\"return openImage('".encode_url(encrypt($firstmediarec["file"]))."',$imgwidth, $imgheight);\">";
 					}else{
 						$result .= "<a href=\"mediaviewer.php?mid={$mid}\">";
 					}
@@ -1350,7 +1350,7 @@ class IndividualControllerRoot extends BaseController {
 		}
 		?>
 		</table>
-		<?php 
+		<?php
 		// ==================== Start Details Tab Navigator ========================================
 		if ($Fam_Navigator=="YES") {
 			?>
@@ -1362,7 +1362,7 @@ class IndividualControllerRoot extends BaseController {
 				<br />
 				</td></tr></table>
 			</td></tr></table>
-			<?php 
+			<?php
 		}
 		// ==================== End Details Tab Navigator ========================================= */
 		?>
@@ -1389,9 +1389,9 @@ class IndividualControllerRoot extends BaseController {
 		global $pgv_lang, $factarray, $CONTACT_EMAIL, $FACT_COUNT;
 		global $SHOW_LEVEL2_NOTES;
 		global $Fam_Navigator;
-		
+
 		//if (isset($_COOKIE['row_note2'])) $SHOW_LEVEL2_NOTES = ($_COOKIE['row_note2']);
-		
+
 		// Show or Hide Navigator -----------
 		if (isset($_COOKIE['famnav'])) {
 			$Fam_Navigator=$_COOKIE['famnav'];
@@ -1401,7 +1401,7 @@ class IndividualControllerRoot extends BaseController {
 		if ($Fam_Navigator=="YES") {
 			print "<table cellpadding=\"0\" ><tr><td valign=\"top\" width=\"100%\" >";
 		}
-		
+
 		?>
 		<table class="facts_table" >
 		<?php
@@ -1449,8 +1449,8 @@ class IndividualControllerRoot extends BaseController {
 		?>
 		</table>
 		<br />
-		
-		<?php 
+
+		<?php
 		// ==================== Start Notes Tab Navigator ========================================
 		if ($Fam_Navigator=="YES") {
 			?>
@@ -1462,9 +1462,9 @@ class IndividualControllerRoot extends BaseController {
 				<br />
 				</td></tr></table>
 			</td></tr></table>
-			<?php 
+			<?php
 		}
-		// ==================== End Notes Tab Navigator ========================================= 
+		// ==================== End Notes Tab Navigator =========================================
 		?>
 
 		<?php
@@ -1490,10 +1490,10 @@ class IndividualControllerRoot extends BaseController {
 		global $CONTACT_EMAIL, $pgv_lang, $FACT_COUNT;
 		global $SHOW_LEVEL2_NOTES;
 		global $Fam_Navigator;
-		
+
 		/*if (isset($_COOKIE['row_sour2'])) $SHOW_LEVEL2_SOURCES = ($_COOKIE['row_sour2']);
 		else*/ $SHOW_LEVEL2_SOURCES = $SHOW_LEVEL2_NOTES;
-		
+
 		// Show or Hide Navigator -----------
 		if (isset($_COOKIE['famnav'])) {
 			$Fam_Navigator=$_COOKIE['famnav'];
@@ -1503,7 +1503,7 @@ class IndividualControllerRoot extends BaseController {
 		if ($Fam_Navigator=="YES") {
 			print "<table cellpadding=\"0\" ><tr><td valign=\"top\" width=\"100%\" >";
 		}
-		
+
 		?>
 		<table class="facts_table">
 		<?php
@@ -1549,8 +1549,8 @@ class IndividualControllerRoot extends BaseController {
 		?>
 		</table>
 		<br />
-		
-		<?php 
+
+		<?php
 		// ==================== Start Sources Tab Navigator ========================================
 		if ($Fam_Navigator=="YES") {
 			?>
@@ -1562,11 +1562,11 @@ class IndividualControllerRoot extends BaseController {
 				<br />
 				</td></tr></table>
 			</td></tr></table>
-		<?php 
+		<?php
 		}
-		// ==================== End Sources Tab Navigator ========================================= 
+		// ==================== End Sources Tab Navigator =========================================
 		?>
-		
+
 		<?php
 		if (!$SHOW_LEVEL2_SOURCES) {
 		?>
@@ -1575,7 +1575,7 @@ class IndividualControllerRoot extends BaseController {
 			toggleByClassName('TR', 'row_sour2');
 			//-->
 			</script>
-			
+
 
 		<?php
 		}
@@ -1597,7 +1597,7 @@ class IndividualControllerRoot extends BaseController {
 	*/
 	function print_media_tab() {
 		global $CONTACT_EMAIL, $pgv_lang, $MULTI_MEDIA;
-		
+
 		// Show or Hide Navigator -----------
 		if (isset($_COOKIE['famnav'])) {
 			$Fam_Navigator=$_COOKIE['famnav'];
@@ -1607,7 +1607,7 @@ class IndividualControllerRoot extends BaseController {
 		if ($Fam_Navigator=="YES") {
 			print "<table cellpadding=\"0\" ><tr><td valign=\"top\" width=\"100%\" >";
 		}
-		
+
 		?>
 		<table class="facts_table">
 		<?php
@@ -1635,7 +1635,7 @@ class IndividualControllerRoot extends BaseController {
 		}
 		?>
 		</table>
-		<?php 
+		<?php
 		// ==================== Start Media Tab Navigator ========================================
 		if ($Fam_Navigator=="YES") {
 			?>
@@ -1647,7 +1647,7 @@ class IndividualControllerRoot extends BaseController {
 				<br />
 				</td></tr></table>
 			</td></tr></table>
-			<?php 
+			<?php
 		}
 		// ==================== End Media Tab Navigator =========================================
 		?>
@@ -1743,8 +1743,8 @@ class IndividualControllerRoot extends BaseController {
 			</table>
 		<?php
 		}
-		
-		// ==================== Start Relatives Tab Navigator ======================================== 
+
+		// ==================== Start Relatives Tab Navigator ========================================
 		if ($Fam_Navigator=="HIDE") {
 			?>
 			</td>
@@ -1757,8 +1757,8 @@ class IndividualControllerRoot extends BaseController {
 			</td></tr></table>
 			<?php
 		}
-		// ==================== End Tree Tab Navigator ========================================= 
-		
+		// ==================== End Tree Tab Navigator =========================================
+
 		if ($personcount==0) print "<table><tr><td id=\"no_tab5\" colspan=\"2\" class=\"facts_value\">".$pgv_lang["no_tab5"]."</td></tr></table>\n";
 		?>
 		<script type="text/javascript">
@@ -1845,12 +1845,12 @@ class IndividualControllerRoot extends BaseController {
 		<?php } ?>
 		<br />
 		<?php
-		
+
 		$ABBREVIATE_CHART_LABELS = $saved_ABBREVIATE_CHART_LABELS; // Restore GEDCOM configuration
 		unset($show_full);
 		if (isset($saved_show_full)) $show_full = $saved_show_full;
 	}
-	
+
 
 	function print_research_tab() {
 		global $pgv_lang, $SHOW_RESEARCH_ASSISTANT, $CONTACT_EMAIL, $GEDCOM, $INDEX_DIRECTORY, $factarray, $templefacts, $nondatefacts, $nonplacfacts;
@@ -1882,20 +1882,20 @@ class IndividualControllerRoot extends BaseController {
 		global $GOOGLEMAP_XSIZE, $GOOGLEMAP_YSIZE, $pgv_lang, $factarray, $SHOW_LIVING_NAMES, $PRIV_PUBLIC;
 		global $GOOGLEMAP_ENABLED, $TEXT_DIRECTION, $GM_DEFAULT_TOP_VALUE, $GOOGLEMAP_COORD;
 		global $GM_MARKER_COLOR, $GM_MARKER_SIZE, $GM_PREFIX, $GM_POSTFIX, $GM_PRE_POST_MODE;
-		
+
 		// Show or Hide Navigator -----------
 		if (isset($_COOKIE['famnav'])) {
 			$Fam_Navigator=$_COOKIE['famnav'];
 		}else{
 			$Fam_Navigator="YES";
 		}
-	
+
 		// LB Fix if no googlemaps ========================================================
 		if (file_exists("modules/googlemap/googlemap.php")) {
 			include_once('modules/googlemap/googlemap.php');
 		}
 		// LB Fix in no googlemaps ========================================================
-		
+
 		if ($GOOGLEMAP_ENABLED == "false") {
 			print "<table class=\"facts_table\">\n";
 			print "<tr><td colspan=\"2\" class=\"facts_value\">".$pgv_lang["gm_disabled"]."</td></tr>\n";
@@ -1935,22 +1935,22 @@ class IndividualControllerRoot extends BaseController {
 		// ==================== Start Map Tab Navigator ========================================
 		if ($Fam_Navigator=="HIDE") {
 			?>
-			<table id="map_nav" class="optionbox" width="220px" cellpadding=\"0\"><tr><td align="center"> 
+			<table id="map_nav" class="optionbox" width="220px" cellpadding=\"0\"><tr><td align="center">
 				<b><?php print $pgv_lang["view_fam_nav_map"]; ?></b><br /><br />
 				<?php include_once('includes/family_nav.php'); ?>
 				<br />
 			</td></tr></table>
 			<?php
 		}
-		// ==================== End Map Tab Navigator ========================================= 
+		// ==================== End Map Tab Navigator =========================================
 	}
 
 
 	function print_tree_tab() {
-	
+
 		//-- nothing to do here
 		//-- the tree is already ajax enabled
-		
+
 	/*
 		global $pgv_lang, $pgv_changes, $factarray, $view;
 		// Show or Hide Navigator -----------
@@ -1959,7 +1959,7 @@ class IndividualControllerRoot extends BaseController {
 		}else{
 			$Fam_Navigator="YES";
 		}
-		// ==================== Start Tree Tab Navigator ======================================== 
+		// ==================== Start Tree Tab Navigator ========================================
 		if ($Fam_Navigator=="YES") {
 			?>
 			<table id="tree_nav" class="optionbox" width="220px" cellpadding=\"0\"><tr><td align="center">
@@ -1969,9 +1969,9 @@ class IndividualControllerRoot extends BaseController {
 			</td></tr></table>
 			<?php
 		}
-		// ==================== End Tree Tab Navigator ========================================= 
+		// ==================== End Tree Tab Navigator =========================================
 	*/
-	
+
 	}
 
 
@@ -1986,7 +1986,7 @@ class IndividualControllerRoot extends BaseController {
 		global $cntm1, $cntm2, $cntm3, $cntm4, $t, $mgedrec ;
 		global $typ2b, $edit ;
 		global $CONTACT_EMAIL, $pid, $tabno;
-		
+
 		// Show or Hide Navigator -----------
 		if (isset($_COOKIE['famnav'])) {
 			$Fam_Navigator=$_COOKIE['famnav'];
@@ -1996,7 +1996,7 @@ class IndividualControllerRoot extends BaseController {
 		if ($Fam_Navigator=="YES") {
 			print "<table cellpadding=\"0\" ><tr><td valign=\"top\" width=\"100%\" >";
 		}
-		
+
 		$media_found = false;
 		if (!$this->indi->canDisplayDetails()) {
 			print "<table class=\"facts_table\" cellpadding=\"0\">\n";
@@ -2009,7 +2009,7 @@ class IndividualControllerRoot extends BaseController {
 				include_once('modules/lightbox/album.php');
 			}
 		}
-		
+
 		// ==================== Start Album Tab Navigator ========================================
 		if ($Fam_Navigator=="YES") {
 			?>
@@ -2025,18 +2025,18 @@ class IndividualControllerRoot extends BaseController {
 		}
 		// ==================== End Album Tab Navigator ========================================= */
 	}
-	
-	
-	
+
+
+
 	/** =================================================
 	* include family navigator
 	*/
 	function fam_nav() {
 		include_once('includes/family_nav.php');
 	}
-	
-	
-	
+
+
+
 	/** =================================================
 	* print the spare tab, ( which = getTab9() )
 	*/
@@ -2048,7 +2048,7 @@ class IndividualControllerRoot extends BaseController {
 		global $WORD_WRAPPED_NOTES, $MEDIA_DIRECTORY, $PGV_IMAGE_DIR, $PGV_IMAGES, $TEXT_DIRECTION, $is_media;
 		global $mgedrec ;
 		global $CONTACT_EMAIL, $pid, $tabno;
-		
+
 		// Show or Hide Navigator -----------
 		if (isset($_COOKIE['famnav'])) {
 			$Fam_Navigator=$_COOKIE['famnav'];
@@ -2058,7 +2058,7 @@ class IndividualControllerRoot extends BaseController {
 		if ($Fam_Navigator=="YES") {
 			print "<table cellpadding=\"0\" ><tr><td valign=\"top\" width=\"100%\" >";
 		}
-		
+
 		if (!$this->indi->canDisplayDetails()) {
 			print "<table class=\"facts_table\" cellpadding=\"0\">\n";
 			print "<tr><td class=\"facts_value\">";
@@ -2082,7 +2082,7 @@ class IndividualControllerRoot extends BaseController {
 			print "</table>";
 			//}
 		}
-		
+
 		// ==================== Start Spare Tab Navigator ========================================
 		if ($Fam_Navigator=="YES") {
 			?>
@@ -2096,7 +2096,7 @@ class IndividualControllerRoot extends BaseController {
 			</td></tr></table>
 			<?php
 		}
-		// ==================== End Spare Tab Navigator ========================================= 
+		// ==================== End Spare Tab Navigator =========================================
 	*/
 	}
 
