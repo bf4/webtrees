@@ -120,7 +120,7 @@ function check_db($ignore_previous=false) {
 		if ($DB_UTF8_COLLATION) {
 			dbquery("SET NAMES UTF8");
 		}
-		$res=dbquery("SHOW VARIABLES LIKE 'version'");
+		$res=$DBCONN->query("SHOW VARIABLES LIKE 'version'");
 		$row=$res->fetchRow(DB_FETCHMODE_ORDERED);
 		$res->free();
 		DEFINE('PGV_DB_VERSION', $row[1]);
