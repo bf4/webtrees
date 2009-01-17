@@ -10,6 +10,7 @@
 
 
 Version 4.2.0
+ - [ 2514630 ] Install Wizard fails to complete. (fisharebest)
  - Changed: modified JWplayer files to work with new YouTube changes to embedded files (windmillway)
  - Changed: Further Improvements to Gerry's new handling of various media file types (windmillway)
  - [ 2494959 ] addSeperator() spelling (fisharebest)
