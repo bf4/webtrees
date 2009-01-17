@@ -40,7 +40,7 @@ $linkToID=$controller->rid;
 print_header($controller->getPageTitle());
 
 // LightBox
-if ($MULTI_MEDIA && is_dir('./modules/lightbox')) {
+if ($MULTI_MEDIA && file_exists('./modules/lightbox.php')) {
 	include './modules/lightbox/lb_defaultconfig.php';
 	if (file_exists('modules/lightbox/lb_config.php')) {
 		include './modules/lightbox/lb_config.php';
