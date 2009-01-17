@@ -10,6 +10,7 @@
 
 
 Version 4.2.0
+ - Changed: Further Improvements to Gerry's new handling of various media file types (windmillway)
  - [ 2494959 ] addSeperator() spelling (fisharebest)
  - Added: [ 2497934 ] Time since login (wooc)
  - Changed: Correct handling of various media file types (canajun2eh)

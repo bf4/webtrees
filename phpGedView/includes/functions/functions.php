@@ -227,7 +227,8 @@ function safe_REQUEST($arr, $var, $regex=PGV_REGEX_NOSCRIPT, $default=null) {
 
 function encode_url($url, $entities=true) {
 	$url = decode_url($url, $entities); // Make sure we don't do any double conversions
-	$url = str_replace(array(' ', '+', '#', '"', "'"), array('%20', '%2b', '%23', '%22', '%27'), $url); // GEDCOM names can legitimately contain these chars
+	//$url = str_replace(array(' ', '+', '#', '"', "'"), array('%20', '%2b', '%23', '%22', '%27'), $url); // GEDCOM names can legitimately contain these chars
+	$url = str_replace(array(' ', '+', '"', "'"), array('%20', '%2b', '%22', '%27'), $url); // GEDCOM names can legitimately contain these chars
 	if ($entities) {
 		$url = htmlspecialchars($url,ENT_COMPAT,'UTF-8');
 	}
@@ -3908,6 +3909,7 @@ function mediaFileLink($fileName, $mid, $name='', $notes='', $obeyViewerOption=t
 				$imgUrl = encode_url($fileName) . "\" rel=\"clearbox[general]\" rev=\"" . $mid . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name,ENT_COMPAT,'UTF-8')) . "::" . htmlspecialchars($notes,ENT_COMPAT,'UTF-8');
 				break 2;
 			case 'url_page':
+			case 'url_other':
 			case 'local_page':
 				$imgUrl = encode_url($fileName) . "\" rel='clearbox({$LB_URL_WIDTH},{$LB_URL_HEIGHT},click)' rev=\"" . $mid . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name,ENT_COMPAT,'UTF-8')) . "::" . htmlspecialchars($notes,ENT_COMPAT,'UTF-8');
 				break 2;
@@ -3930,6 +3932,7 @@ function mediaFileLink($fileName, $mid, $name='', $notes='', $obeyViewerOption=t
 			break 2;
 		case 'url_audio':
 		case 'url_page':
+		case 'url_other':
 			$imgUrl = "javascript:;\" onclick=\"var winurl = window.open('".encode_url($fileName)."', 'winurl', 'width=900, height=600, left=200, top=200'); if (window.focus) {winurl.focus();}";
 			break 2;
 		case 'local_audio':
