@@ -3833,7 +3833,11 @@ function encrypt($string, $key='') {
 		$result .= chr($newOrd);
 	}
 
-	return base64_encode($result);
+	$fullResult = base64_encode($result);
+	$trimmedResult = rtrim($fullResult,'=');
+	$padLen = strlen($fullResult) - strlen($trimmedResult);
+
+	return $padLen . $trimmedResult;
 }
 
 /*
@@ -3842,16 +3846,25 @@ function encrypt($string, $key='') {
  */
 function decrypt($string, $key='') {
 	if (empty($key)) $key = session_id();
-	$result = '';
 
-	$string = base64_decode($string);
+	$padLen = substr($string, 0, 1);
+	if ($padLen=='0' || $padLen=='1' || $padLen=='2') {
+		// This appears to be a valid encryted string
+		$trimmedString = substr($string, 1);
+		$fullString = $trimmedString . substr('==', 0, $padLen);
+		$string = base64_decode($fullString);
 
-	for($i=0; $i<strlen($string); $i++) {
-		$char = substr($string, $i, 1);
-		$keychar = substr($key, ($i % strlen($key))-1, 1);
-		$newOrd = ord($char) - ord($keychar);
-		if ($newOrd < 0) $newOrd += 256;		// Make sure we stay within the 8-bit code table
-		$result .= chr($newOrd);
+		$result = '';
+		for($i=0; $i<strlen($string); $i++) {
+			$char = substr($string, $i, 1);
+			$keychar = substr($key, ($i % strlen($key))-1, 1);
+			$newOrd = ord($char) - ord($keychar);
+			if ($newOrd < 0) $newOrd += 256;		// Make sure we stay within the 8-bit code table
+			$result .= chr($newOrd);
+		}
+	} else {
+		// Pad length isn't legitimate: assume input is not encrypted
+		$result = $string;
 	}
 
 	return $result;
@@ -3874,7 +3887,10 @@ function mediaFileType($fileName) {
 	else if (eregi("\.(jpg|jpeg|gif|png)$", $fileName)) $file_type .= "image";
 	else if (eregi("\.(pdf|avi)$", $fileName)) $file_type .= "page";
 	else if (eregi("\.mp3$", $fileName)) $file_type .= "audio";
+	else if (substr($fileName,0,29)=='http://www.youtube.com/watch?' && is_dir('modules/JWplayer')) $file_type .= "flv";
 	else $file_type .= "other";
+
+	if ($file_type=='url_flvflv') $file_type = 'url_flv';
 
 	return $file_type;
 }
@@ -3882,9 +3898,9 @@ function mediaFileType($fileName) {
 /*
  * Determine the link that will handle this media file type
  */
-function mediaFileLink($fileName, $mid, $name='', $notes='') {
+function mediaFileLink($fileName, $mid, $name='', $notes='', $obeyViewerOption=true) {
 	global $LB_URL_WIDTH, $LB_URL_HEIGHT;
-	global $SERVER_URL, $GEDCOM;
+	global $SERVER_URL, $GEDCOM, $USE_MEDIA_VIEWER;
 
 	$file_type = mediaFileType($fileName);
 
@@ -3902,8 +3918,9 @@ function mediaFileLink($fileName, $mid, $name='', $notes='') {
 			case 'local_image':
 				$imgUrl = encode_url($fileName) . "\" rel=\"clearbox[general]\" rev=\"" . $mid . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name,ENT_COMPAT,'UTF-8')) . "::" . htmlspecialchars($notes,ENT_COMPAT,'UTF-8');
 				break 2;
-			case 'url_pagefoo':
-				$imgUrl = encode_url($fileName) . "\" rel='clearbox(" . $LB_URL_WIDTH . "," . $LB_URL_HEIGHT . ",click)' rev=\"" . $mid . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name,ENT_COMPAT,'UTF-8')) . "::" . htmlspecialchars($notes,ENT_COMPAT,'UTF-8');
+			case 'url_page':
+			case 'local_page':
+				$imgUrl = encode_url($fileName) . "\" rel='clearbox({$LB_URL_WIDTH},{$LB_URL_HEIGHT},click)' rev=\"" . $mid . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name,ENT_COMPAT,'UTF-8')) . "::" . htmlspecialchars($notes,ENT_COMPAT,'UTF-8');
 				break 2;
 			}
 		}
@@ -3917,7 +3934,7 @@ function mediaFileLink($fileName, $mid, $name='', $notes='') {
 			$imgUrl = "javascript:;\" onclick=\" var winflv = window.open('".encode_url('module.php?mod=JWplayer&pgvaction=flvVideo&flvVideo='.encrypt($SERVER_URL.$fileName)) . "', 'winflv', 'width=445, height=365, left=600, top=200'); if (window.focus) {winflv.focus();}";
 			break 2;
 		case 'url_image':
-			$imgsize = getimagesize($fileName);
+			$imgsize = findImageSize($fileName);
 			$imgwidth = $imgsize[0]+40;
 			$imgheight = $imgsize[1]+150;
 			$imgUrl = "javascript:;\" onclick=\"var winimg = window.open('".encode_url($fileName)."', 'winimg', 'width=".$imgwidth.", height=".$imgheight.", left=200, top=200'); if (window.focus) {winimg.focus();}";
@@ -3931,10 +3948,14 @@ function mediaFileLink($fileName, $mid, $name='', $notes='') {
 			$imgUrl = "javascript:;\" onclick=\"var winurl = window.open('".encode_url($SERVER_URL.$fileName)."', 'winurl', 'width=900, height=600, left=200, top=200'); if (window.focus) {winurl.focus();}";
 			break 2;
 		}
-		$imgsize = findImageSize($fileName);
-		$imgwidth = $imgsize[0]+40;
-		$imgheight = $imgsize[1]+150;
-		$imgUrl = "javascript:;\" onclick=\"return openImage('".encrypt($fileName)."', $imgwidth, $imgheight);";
+		if ($USE_MEDIA_VIEWER && $obeyViewerOption) {
+			$imgUrl = encode_url('mediaviewer.php?mid='.$mid);
+		} else {
+			$imgsize = findImageSize($fileName);
+			$imgwidth = $imgsize[0]+40;
+			$imgheight = $imgsize[1]+150;
+			$imgUrl = "javascript:;\" onclick=\"return openImage('".encode_url(encrypt($fileName))."', $imgwidth, $imgheight);";
+		}
 		break;
 	}
 

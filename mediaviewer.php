@@ -113,7 +113,7 @@ if ((!$controller->isPrintPreview())&&(empty($SEARCH_SPIDER))&&!empty($controlle
 
 
 					$name = trim($controller->mediaobject->getFullName());
-					$imgUrl = mediaFileLink($filename, $controller->pid, $name, '');
+					$imgUrl = mediaFileLink($filename, $controller->pid, $name, '', false);
 
 					// Now finally print the thumbnail  --------------------------------------------------
 					$file_type = mediaFileType($filename);
