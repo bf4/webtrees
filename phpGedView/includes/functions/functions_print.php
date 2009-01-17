@@ -1482,7 +1482,7 @@ function print_menu($menu, $parentmenu="") {
 	);
 	$obj = new Menu();
 	if ($menu == 'separator') {
-		$obj->isSeperator();
+		$obj->isSeparator();
 		$obj->printMenu();
 		return;
 	}
@@ -1501,7 +1501,7 @@ function print_menu($menu, $parentmenu="") {
 		foreach ($items as $sub) {
 			$sobj = new Menu();
 			if ($sub == 'separator') {
-				$sobj->isSeperator();
+				$sobj->isSeparator();
 				$obj->addSubmenu($sobj);
 				continue;
 			}

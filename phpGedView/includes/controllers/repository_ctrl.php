@@ -212,9 +212,9 @@ class RepositoryControllerRoot extends BaseController {
 
 		if (isset($pgv_changes[$this->rid.'_'.$GEDCOM]))
 		{
-			// edit_repo / seperator
+			// edit_repo / separator
 			$submenu = new Menu();
-			$submenu->isSeperator();
+			$submenu->isSeparator();
 			$menu->addSubmenu($submenu);
 
 			// edit_repo / show/hide changes

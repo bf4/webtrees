@@ -31,7 +31,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 define('PGV_CLASS_MENU_PHP', '');
 
 class Menu {
-	var $seperator = false;
+	var $separator = false;
 	var $label = ' ';
 	var $labelpos = 'right';
 	var $link = '#';
@@ -62,9 +62,9 @@ class Menu {
 		$this->addFlyout($flyout);
 	}
 
-	function isSeperator()
+	function isSeparator()
 	{
-		$this->seperator = true;
+		$this->separator = true;
 	}
 
 	function addLabel($label=' ', $pos='right')
@@ -120,13 +120,13 @@ class Menu {
 
 	function addSeparator() {
 		$submenu = new Menu();
-		$submenu->isSeperator();
+		$submenu->isSeparator();
 		$this->submenus[] = $submenu;
 	}
 
 	// Get the menu as a simple list - for accessible interfaces, search engines and CSS menus
 	function getMenuAsList() {
-		if ($this->seperator) {
+		if ($this->separator) {
 			return '<div class="hr"></div>'; // The <hr/> tag is difficult to style
 		}
 		if ($this->link) {
@@ -151,7 +151,7 @@ class Menu {
 
 	// Get the menu as a dropdown form element
 	function getMenuAsDropdown() {
-		if ($this->seperator || !$this->link && !$this->submenus) {
+		if ($this->separator || !$this->link && !$this->submenus) {
 			return '';
 		}
 		if ($this->submenus) {
@@ -167,7 +167,7 @@ class Menu {
 
 	// Get the menu as a list of icons
 	function getMenuAsIcons() {
-		if ($this->seperator || !$this->link && !$this->submenus) {
+		if ($this->separator || !$this->link && !$this->submenus) {
 			return '';
 		}
 		$icons=array();
@@ -200,9 +200,9 @@ class Menu {
 			$menucount++;
 		}
 		$id = $menucount.rand();
-		if ($this->seperator)
+		if ($this->separator)
 		{
-			$output = "<div id=\"menu{$id}\" class=\"menu_seperator\" style=\"clear: both;\">"
+			$output = "<div id=\"menu{$id}\" class=\"menu_separator\" style=\"clear: both;\">"
 			."<img src=\"{$PGV_IMAGE_DIR}/{$PGV_IMAGES['hline']['other']}\" style=\"width:8em;height:3px\" alt=\"\" /></div>";
 			return $output;
 		}
@@ -381,7 +381,7 @@ class Menu {
 		);
 		$obj = new Menu();
 		if ($menu == 'separator') {
-			$obj->isSeperator();
+			$obj->isSeparator();
 			$obj->printMenu();
 			return;
 		}
@@ -400,7 +400,7 @@ class Menu {
 			foreach ($items as $sub) {
 				$sobj = new Menu();
 				if ($sub == 'separator') {
-					$sobj->isSeperator();
+					$sobj->isSeparator();
 					$obj->addSubmenu($sobj);
 					continue;
 				}

@@ -389,9 +389,9 @@ class FamilyRoot extends BaseController
 
 		if (isset($pgv_changes[$this->getFamilyID().'_'.$GEDCOM]))
 		{
-			// edit_fam / seperator
+			// edit_fam / separator
 			$submenu = new Menu();
-			$submenu->isSeperator();
+			$submenu->isSeparator();
 			$menu->addSubmenu($submenu);
 
 			// edit_fam / show/hide changes
