@@ -719,7 +719,9 @@ function pgv_error_handler($errno, $errstr, $errfile, $errline) {
 		}
 		$fmt_msg="\n<br />ERROR {$errno}: {$errstr}<br />\n";
 		$log_msg="ERROR {$errno}: {$errstr}; ";
-		if ($errno<16 && strstr($errstr, "headers already sent by")===false) {
+		// Although debug_backtrace should always exist in PHP5, without this check, PHP sometimes crashes.
+		// Possibly calling it generates an error, which causes infinite recursion??
+		if ($errno<16 && function_exists("debug_backtrace") && strstr($errstr, "headers already sent by")===false) {
 			$backtrace=debug_backtrace();
 			$num=count($backtrace);
 			if ($ERROR_LEVEL==1) {
