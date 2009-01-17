@@ -3832,12 +3832,9 @@ function encrypt($string, $key='') {
 		if ($newOrd > 255) $newOrd -= 256;		// Make sure we stay within the 8-bit code table
 		$result .= chr($newOrd);
 	}
+	$result = strtr(base64_encode($result), '+/=', '-_#');		// Avoid characters that mess up URLs
 
-	$fullResult = base64_encode($result);
-	$trimmedResult = rtrim($fullResult,'=');
-	$padLen = strlen($fullResult) - strlen($trimmedResult);
-
-	return $padLen . $trimmedResult;
+	return $result;
 }
 
 /*
@@ -3847,24 +3844,16 @@ function encrypt($string, $key='') {
 function decrypt($string, $key='') {
 	if (empty($key)) $key = session_id();
 
-	$padLen = substr($string, 0, 1);
-	if ($padLen=='0' || $padLen=='1' || $padLen=='2') {
-		// This appears to be a valid encryted string
-		$trimmedString = substr($string, 1);
-		$fullString = $trimmedString . substr('==', 0, $padLen);
-		$string = base64_decode($fullString);
+	if (strpos($string, '/')!==false) return $string;		// Input is not a valid encrypted string
+	$string = base64_decode(strtr($string, '-_#', '+/='));
 
-		$result = '';
-		for($i=0; $i<strlen($string); $i++) {
-			$char = substr($string, $i, 1);
-			$keychar = substr($key, ($i % strlen($key))-1, 1);
-			$newOrd = ord($char) - ord($keychar);
-			if ($newOrd < 0) $newOrd += 256;		// Make sure we stay within the 8-bit code table
-			$result .= chr($newOrd);
-		}
-	} else {
-		// Pad length isn't legitimate: assume input is not encrypted
-		$result = $string;
+	$result = '';
+	for($i=0; $i<strlen($string); $i++) {
+		$char = substr($string, $i, 1);
+		$keychar = substr($key, ($i % strlen($key))-1, 1);
+		$newOrd = ord($char) - ord($keychar);
+		if ($newOrd < 0) $newOrd += 256;		// Make sure we stay within the 8-bit code table
+		$result .= chr($newOrd);
 	}
 
 	return $result;
