@@ -10,6 +10,7 @@
 
 
 Version 4.2.0
+ - Added: Small change to media handling to pick up globe thumbnail. Corrected wrong display of "\" in Lightbox Notes. (windmillway)
  - Changed: Importing/exporting places to/from GoogleMap with level>4 (wooc)
  - Fixed: [ 1752892 ] Maps not working right (wooc)
  - Fixed: [ 1864790 ] Problems with places and place maps (wooc)
