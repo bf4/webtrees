@@ -76,33 +76,17 @@ function media_reorder_row($rtype, $rowm, $pid) {
         $subtitle = get_gedcom_value("TITL", 2, $rowm["mm_gedrec"]);
 
         if (!empty($subtitle)) $mediaTitle = $subtitle;
-            $mainMedia = check_media_depth($rowm["m_file"], "NOTRUNC");
+		$mainMedia = check_media_depth($rowm["m_file"], "NOTRUNC");
         if ($mediaTitle=="") $mediaTitle = basename($rowm["m_file"]);
 
 		print "\n" . "<table class=\"pic\"><tr>" . "\n";
 		print "<td width=\"80\" valign=\"top\" align=\"center\" >". "\n";
 
-		$file_type = mediaFileType($mainMedia);
-		switch ($file_type) {
-			case 'url_flv':
-				$imgThumb = 'images/flashrem.png';
-				break;
-			case 'local_flv':
-				$imgThumb = 'images/flash.png';
-				break;
-			case 'url_page':
-			case 'local_page':
-				$imgThumb = "images/globe.png";
-				break;
-			case 'url_audio':
-			case 'local_audio':
-				$imgThumb = "images/audio.png";
-				break;
-			default:
-				$imgThumb = $thumbnail;
-		}
-		//Finally Print the thumbnail ---------------------------------
-		print "<img src=\"".$imgThumb."\" height=\"38\" border=\"0\" " ;
+		// Get info on how to handle this media file
+		$mediaInfo = mediaFileInfo($mainMedia, $thumbnail, $rowm["m_media"], $mediaTitle, '');
+
+		//-- Thumbnail field
+		print "<img src=\"".$mediaInfo['thumb']."\" height=\"38\" border=\"0\" " ;
 
 		if ( eregi("1 SOUR",$rowm['m_gedrec'])) {
 			print " alt=\"" . PrintReady($mediaTitle) . "\" title=\"" . PrintReady($mediaTitle) . "\nSource info available\" />";

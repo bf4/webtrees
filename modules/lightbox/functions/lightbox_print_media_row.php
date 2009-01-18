@@ -128,21 +128,17 @@ function lightbox_print_media_row($rtype, $rowm, $pid) {
 
 		//  Get the title of the media
 		$media=Media::getInstance($rowm["m_media"]);
-		//$mediaTitle = $media->getFullName();
-		$mediaTitle = $rowm["m_titl"]; // Changed back to old style because of Title error on Images which are not approved ---- Check with Greg Roach
+		$rawTitle = $rowm["m_titl"];
+		if (empty($rawTitle)) $rawTitle = get_gedcom_value("TITL", 2, $rowm["mm_gedrec"]);
+		if (empty($rawTitle)) $rawTitle = basename($rowm["m_file"]);
+		$mediaTitle = PrintReady(htmlspecialchars($rawTitle));
 
-		$subtitle = get_gedcom_value("TITL", 2, $rowm["mm_gedrec"]);
-
-		// If no title, use filename
-		if (!empty($subtitle)) $mediaTitle = $subtitle;
 		$mainMedia = check_media_depth($rowm["m_file"], "NOTRUNC");
 		$mainFileExists = true;
 		$imgsize = findImageSize($mainMedia);
 		$imgwidth = $imgsize[0]+40;
 		$imgheight = $imgsize[1]+150;
-		if ($mediaTitle=="") $mediaTitle = basename($rowm["m_file"]);
 
-		$mediaTitle = PrintReady(htmlspecialchars($mediaTitle));
 
 		// Get the tooltip link for source
 		$sour = get_gedcom_value("SOUR", 1, $rowm["m_gedrec"]);
@@ -155,6 +151,9 @@ function lightbox_print_media_row($rtype, $rowm, $pid) {
 		$worked   = ereg_replace("1 NOTE", "1 NOTE<br />", $after);
 		$final    = $before.$needle.$worked;
 		$notes    = PrintReady(htmlspecialchars(addslashes(print_fact_notes($final, 1, true, true)),ENT_COMPAT,'UTF-8'));
+
+		// Get info on how to handle this media file
+		$mediaInfo = mediaFileInfo($mainMedia, $thumbnail, $rowm["m_media"], $mediaTitle, $notes);
 
 		//text alignment for Tooltips
 		if ($TEXT_DIRECTION=="rtl") {
@@ -196,10 +195,10 @@ function lightbox_print_media_row($rtype, $rowm, $pid) {
 			$submenu_hoverclass		=	"submenuitem_hover";
 		}
 		$menu = array();
-		// If Media Title character length > 16,  Get the first 13 characters of the Media Title and add the ellipsis. (using UTF-8 Charset)
-		$mtitle = html_entity_decode(stripLRMRLM($mediaTitle), ENT_COMPAT,'UTF-8');
-		if (UTF8_strlen($mtitle)>16) $mtitle = UTF8_substr($mtitle, 0, 13).$pgv_lang["ellipsis"];
-		$mtitle = htmlentities($mtitle, ENT_COMPAT, 'UTF-8');
+		// Truncate media title to 13 chars and add ellipsis
+		$mtitle = $rawTitle;
+		if (UTF8_strlen($rawTitle)>16) $mtitle = UTF8_substr($rawTitle, 0, 13).$pgv_lang["ellipsis"];
+		$mtitle = PrintReady(htmlspecialchars($mtitle));
 
 		// Continue menu construction
 		// If media file is missing from "media" directory, but is referenced in Gedcom
@@ -212,7 +211,7 @@ function lightbox_print_media_row($rtype, $rowm, $pid) {
 		$menu["icon"] = "";
 		$menu["onclick"] = "";
 		// Next line removed to avoid gallery thumbnail duplication
-		// $menu["link"] = mediaFileLink($mainMedia, $pid, $mediaTitle, $notes);
+		// $menu["link"] = mediaInfo['url'];
 		$menu["class"] = "";
 		$menu["hoverclass"] = "";
 		$menu["flyout"] = "down";
@@ -311,8 +310,7 @@ function lightbox_print_media_row($rtype, $rowm, $pid) {
 				print "</td>". "\n";
 
 				// Check for Notes associated media item
-				if ($reorder!=1) {
-				} else {
+				if ($reorder) {
 					// If reorder media has been clicked
 					print "<td width=\"90% align=\"center\"><b><font size=\"2\" style=\"cursor:move;margin-bottom:2px;\">" . $rowm['m_media'] . "</font></b></td>";
 					print "</tr>";
@@ -320,41 +318,17 @@ function lightbox_print_media_row($rtype, $rowm, $pid) {
 				$item++;
 
 				print "<td colspan=\"3\" valign=\"middle\" align=\"center\" >". "\n";
-				//If reordering media, do NOT Enable Lightbox nor show thumbnail tooltip
-				if ($reorder==1) {
-				// Else Enable Lightbox (Or popup) and show thumbnail tooltip ----------
-				} else {
-					$name = trim($rowm["m_titl"]);
-
-					echo '<a href="', mediaFileLink($mainMedia, $rowm["m_media"], $name, $notes), '">';
+				// If not reordering, enable Lightbox or popup and show thumbnail tooltip ----------
+				if (!$reorder) {
+					echo '<a href="', $mediaInfo['url'], '">';
 				}
-			} // End If media is external or media_exists($mainmedia)
+			}
 
 			// Now finally print the thumbnail ----------------------------------
-			$file_type = mediaFileType($rowm['m_file']);
-			switch ($file_type) {
-			case 'url_flv':
-				print "<img src=\"images/flashrem.png\" align=\"center" . ($TEXT_DIRECTION== "rtl"?"right": "left") . "\" class=\"thumbnail\"";
-				break;
-			case 'local_flv':
-				print "<img src=\"images/flash.png\" align=\"center" . ($TEXT_DIRECTION== "rtl"?"right": "left") . "\" class=\"thumbnail\"";
-				break;
-			case 'url_page':
-			case 'url_other':
-			case 'local_page':
-				print "<img src=\"images/globe.png\" align=\"center" . ($TEXT_DIRECTION== "rtl"?"right": "left") . "\" class=\"thumbnail\"";
-				break;
-			case 'url_audio':
-			case 'local_audio':
-				print "<img src=\"images/audio.png\" align=\"center\" class=\"thumbnail\"";
-				break;
-			default:
-				$height = 78;
-				$size = findImageSize($thumbnail);
-				if ($size[1]<$height) $height = $size[1];
-				print "<img src=\"{$thumbnail}\" height=\"{$height}\" border=\"0\" " ;
-				break;
-			}
+			$height = 78;
+			$size = findImageSize($mediaInfo['thumb']);
+			if ($size[1]<$height) $height = $size[1];
+			print "<img src=\"{$mediaInfo['thumb']}\" border=\"0\" height=\"{$height}\"" ;
 
 			// print browser tooltips associated with image ----------------------------------------------
 			print " alt=\"\" title=\"" . Printready(strip_tags($mediaTitle)) . "\"  />";
@@ -366,11 +340,8 @@ function lightbox_print_media_row($rtype, $rowm, $pid) {
 			print "</td></tr>" . "\n";
 
 			//View Edit Menu ----------------------------------
-			//If reordering media
-			if ($reorder==1) {
-				//Print Nothing
-			} else {
-				//Else if not reordering media, print View or View-Edit Menu
+			if (!$reorder) {
+				// If not reordering media print View or View-Edit Menu
 				print "<tr>";
 				print "<td width=\"5px\"></td>";
 				print "<td valign=\"bottom\" align=\"center\" nowrap=\"nowrap\">";

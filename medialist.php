@@ -312,33 +312,12 @@ if ($ct>0) {
 		$final    = $before.$needle.$worked;
 		$notes    = PrintReady(htmlspecialchars(addslashes(print_fact_notes($final, 1, true, true)),ENT_COMPAT,'UTF-8'));
 
-		$imgUrl = mediaFileLink($media["FILE"], $media["XREF"], $name, $notes);
+		// Get info on how to handle this media file
+		$mediaInfo = mediaFileInfo($media["FILE"], $media["THUMB"], $media["XREF"], $name, $notes);
 
-
-		$file_type = mediaFileType($media["FILE"]);
-		$widthThumb = '';
-		switch ($file_type) {
-		case 'url_flv':
-			$imgThumb = 'images/flashrem.png';
-			break;
-		case 'local_flv':
-			$imgThumb = 'images/flash.png';
-			break;
-		case 'url_page':
-		case 'local_page':
-			$imgThumb = 'images/globe.png';
-			break;
-		case 'url_audio':
-		case 'local_audio':
-			$imgThumb = 'images/audio.png';
-			break;
-		default:
-			$imgThumb = $media["THUMB"];
-			if ($isExternal) $widthThumb = ' width="'.$THUMBNAIL_WIDTH.'"';
-			break;
-		}
-		echo '<a href="', $imgUrl, '">';
-		echo '<img src="', $imgThumb, '" align="center" class="thumbnail" border="none"', $widthThumb;
+		//-- Thumbnail field
+		echo '<a href="', $mediaInfo['url'], '">';
+		echo '<img src="', $mediaInfo['thumb'], '" align="center" class="thumbnail" border="none"', $mediaInfo['width'];
 		echo ' alt="', PrintReady(htmlspecialchars($name,ENT_COMPAT,'UTF-8')), '" title="', PrintReady(htmlspecialchars($name,ENT_COMPAT,'UTF-8')), '" /></a>';
 		echo "</td>\n\t\t", '<td class="list_value_wrap" style="border: none;" width="100%">';
 
