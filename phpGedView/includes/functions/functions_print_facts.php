@@ -1561,33 +1561,12 @@ function print_main_media_row($rtype, $rowm, $pid) {
 
 		$name = trim($rowm['m_titl']);
 
-		// Finally print thumbnails
-		$widthThumb = '';
-		$file_type = mediaFileType($rowm['m_file']);
-		switch ($file_type) {
-		case 'url_flv':
-			$imgThumb = 'images/flashrem.png';
-			break;
-		case 'local_flv':
-			$imgThumb = 'images/flash.png';
-			break;
-		case 'url_page':
-		case 'local_page':
-			$imgThumb = "images/globe.png";
-			break;
-		case 'url_audio':
-		case 'local_audio':
-			$imgThumb = "images/audio.png";
-			break;
-		default:
-			$imgThumb = $thumbnail;
-			if ($isExternal) $widthThumb = ' width="'.$THUMBNAIL_WIDTH.'"';
-			break;
-		}
-		echo '<a href="', mediaFileLink($rowm['m_file'], $rowm['m_media'], $name, $notes), '">';
-		echo '<img src="', $imgThumb, '"';
-		if ($TEXT_DIRECTION=="rtl") echo 'align="right" class="thumbnail" border="none"', $widthThumb;
-		else echo 'align="left" class="thumbnail" border="none"', $widthThumb;
+		// Get info on how to handle this media file
+		$mediaInfo = mediaFileInfo($rowm['m_file'], $thumbnail, $rowm['m_media'], $name, $notes);
+
+		//-- Thumbnail field
+		echo '<a href="', $mediaInfo['url'], '">';
+		echo '<img src="', $mediaInfo['thumb'], '" border="none" align="', ($TEXT_DIRECTION=="rtl" ? "right":"left"), '" class="thumbnail"', $mediaInfo['width'];
 		echo ' alt="', PrintReady(htmlspecialchars($name,ENT_COMPAT,'UTF-8')), '" title="', PrintReady(htmlspecialchars($name,ENT_COMPAT,'UTF-8')), '" /></a>';
 
 		if(empty($SEARCH_SPIDER)) {

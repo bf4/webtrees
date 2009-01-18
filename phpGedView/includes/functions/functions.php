@@ -3824,6 +3824,14 @@ function isFileExternal($file) {
 
 /*
  * Encrypt the input string
+ * 
+ * This function is used when a file name needs to be passed to another script by means of the
+ * GET method.  This method passes parameters to the script through the URL that launches the
+ * script.
+ *
+ * File names could themselves be legitimate URLs.  These legitimate URLs would normally be
+ * killed by the hacker detection code in "includes/session_spider.php".  This method avoids 
+ * that problem.
  *
  */
 function encrypt($string, $key='') {
@@ -3845,6 +3853,8 @@ function encrypt($string, $key='') {
 /*
  * Decrypt the input string
  *
+ * See above.
+ *
  */
 function decrypt($string, $key='') {
 	if (empty($key)) $key = session_id();
@@ -3865,97 +3875,155 @@ function decrypt($string, $key='') {
 }
 
 /*
- * Classify the media file name:
- *		url_xxxx
- *		local_xxxx
- *		xxxx_flv
- *		xxxx_image
- *		xxxx_page
- *		XXXX_audio
- *		xxxx_other
+ * Get useful information on how to handle this media file
  */
-function mediaFileType($fileName) {
-	if (eregi("^https?://", $fileName)) $file_type = "url_";
-	else $file_type = "local_";
-	if (eregi("\.flv$", $fileName) && is_dir('modules/JWplayer')) $file_type .= "flv";
-	else if (eregi("\.(jpg|jpeg|gif|png)$", $fileName)) $file_type .= "image";
-	else if (eregi("\.(pdf|avi)$", $fileName)) $file_type .= "page";
-	else if (eregi("\.mp3$", $fileName)) $file_type .= "audio";
-	else if (substr($fileName,0,29)=='http://www.youtube.com/watch?' && is_dir('modules/JWplayer')) $file_type .= "flv";
-	else $file_type .= "other";
-
-	if ($file_type=='url_flvflv') $file_type = 'url_flv';
-
-	return $file_type;
-}
-
-/*
- * Determine the link that will handle this media file type
- */
-function mediaFileLink($fileName, $mid, $name='', $notes='', $obeyViewerOption=true) {
+function mediaFileInfo($fileName, $thumbName, $mid, $name='', $notes='', $obeyViewerOption=true) {
+	global $THUMBNAIL_WIDTH, $PGV_IMAGE_DIR, $PGV_IMAGES;
 	global $LB_URL_WIDTH, $LB_URL_HEIGHT;
-	global $SERVER_URL, $GEDCOM, $USE_MEDIA_VIEWER;
+	global $SERVER_URL, $GEDCOM, $USE_MEDIA_VIEWER, $USE_MEDIA_FIREWALL, $MEDIA_FIREWALL_THUMBS;
 
-	$file_type = mediaFileType($fileName);
+	$result = array();
 
+	// -- Classify the incoming media file
+	if (eregi("^https?://", $fileName)) $type = "url_";
+	else $type = "local_";
+	if ((eregi("\.flv$", $fileName) || eregi("^https?://.*\.youtube\..*/watch\?", $fileName)) && is_dir('modules/JWplayer')) {
+		$type .= "flv";
+	} else if (eregi("^https?://picasaweb*\.google\..*/.*/", $fileName)) {
+		$type .= "picasa";
+	} else if (eregi("\.(jpg|jpeg|gif|png)$", $fileName)) {
+		$type .= "image";
+	} else if (eregi("\.(pdf|avi)$", $fileName)) {
+		$type .= "page";
+	} else if (eregi("\.mp3$", $fileName)) {
+		$type .= "audio";
+	} else $type .= "other";
+	// $type is now: (url | local) _ (flv | picasa | image | page | audio | other)
+	$result['type'] = $type;
+
+	// -- Determine the correct URL to open this media file
  	while (true) {
 		if (file_exists("modules/lightbox/album.php")) {
 			// Lightbox is installed
-			switch ($file_type) {
+			switch ($type) {
 			case 'url_flv':
-				$imgUrl = encode_url('module.php?mod=JWplayer&pgvaction=flvVideo&flvVideo='.encrypt($fileName)) . "\" rel='clearbox(445,370,click)' rev=\"" . $mid . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name,ENT_COMPAT,'UTF-8')) . "::" . htmlspecialchars($notes,ENT_COMPAT,'UTF-8');
+				$url = encode_url('module.php?mod=JWplayer&pgvaction=flvVideo&flvVideo='.encrypt($fileName)) . "\" rel='clearbox(445,370,click)' rev=\"" . $mid . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name,ENT_COMPAT,'UTF-8')) . "::" . htmlspecialchars($notes,ENT_COMPAT,'UTF-8');
 				break 2;
 			case 'local_flv':
-				$imgUrl = encode_url('module.php?mod=JWplayer&pgvaction=flvVideo&flvVideo='.encrypt($SERVER_URL.$fileName)) . "\" rel='clearbox(445,370,click)' rev=\"" . $mid . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name,ENT_COMPAT,'UTF-8')) . "::" . htmlspecialchars($notes,ENT_COMPAT,'UTF-8');
+				$url = encode_url('module.php?mod=JWplayer&pgvaction=flvVideo&flvVideo='.encrypt($SERVER_URL.$fileName)) . "\" rel='clearbox(445,370,click)' rev=\"" . $mid . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name,ENT_COMPAT,'UTF-8')) . "::" . htmlspecialchars($notes,ENT_COMPAT,'UTF-8');
 				break 2;
 			case 'url_image':
 			case 'local_image':
-				$imgUrl = encode_url($fileName) . "\" rel=\"clearbox[general]\" rev=\"" . $mid . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name,ENT_COMPAT,'UTF-8')) . "::" . htmlspecialchars($notes,ENT_COMPAT,'UTF-8');
+				$url = encode_url($fileName) . "\" rel=\"clearbox[general]\" rev=\"" . $mid . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name,ENT_COMPAT,'UTF-8')) . "::" . htmlspecialchars($notes,ENT_COMPAT,'UTF-8');
 				break 2;
+			case 'url_picasa':
 			case 'url_page':
 			case 'url_other':
 			case 'local_page':
-				$imgUrl = encode_url($fileName) . "\" rel='clearbox({$LB_URL_WIDTH},{$LB_URL_HEIGHT},click)' rev=\"" . $mid . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name,ENT_COMPAT,'UTF-8')) . "::" . htmlspecialchars($notes,ENT_COMPAT,'UTF-8');
+			case 'local_other':
+				$url = encode_url($fileName) . "\" rel='clearbox({$LB_URL_WIDTH},{$LB_URL_HEIGHT},click)' rev=\"" . $mid . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name,ENT_COMPAT,'UTF-8')) . "::" . htmlspecialchars($notes,ENT_COMPAT,'UTF-8');
 				break 2;
 			}
 		}
 
 		// Lightbox is not installed or Lightbox is not appropriate for this media type
-		switch ($file_type) {
+		switch ($type) {
 		case 'url_flv':
-			$imgUrl = "javascript:;\" onclick=\" var winflv = window.open('".encode_url('module.php?mod=JWplayer&pgvaction=flvVideo&flvVideo='.encrypt($fileName)) . "', 'winflv', 'width=445, height=365, left=600, top=200'); if (window.focus) {winflv.focus();}";
+			$url = "javascript:;\" onclick=\" var winflv = window.open('".encode_url('module.php?mod=JWplayer&pgvaction=flvVideo&flvVideo='.encrypt($fileName)) . "', 'winflv', 'width=445, height=365, left=600, top=200'); if (window.focus) {winflv.focus();}";
 			break 2;
 		case 'local_flv':
-			$imgUrl = "javascript:;\" onclick=\" var winflv = window.open('".encode_url('module.php?mod=JWplayer&pgvaction=flvVideo&flvVideo='.encrypt($SERVER_URL.$fileName)) . "', 'winflv', 'width=445, height=365, left=600, top=200'); if (window.focus) {winflv.focus();}";
+			$url = "javascript:;\" onclick=\" var winflv = window.open('".encode_url('module.php?mod=JWplayer&pgvaction=flvVideo&flvVideo='.encrypt($SERVER_URL.$fileName)) . "', 'winflv', 'width=445, height=365, left=600, top=200'); if (window.focus) {winflv.focus();}";
 			break 2;
 		case 'url_image':
 			$imgsize = findImageSize($fileName);
 			$imgwidth = $imgsize[0]+40;
 			$imgheight = $imgsize[1]+150;
-			$imgUrl = "javascript:;\" onclick=\"var winimg = window.open('".encode_url($fileName)."', 'winimg', 'width=".$imgwidth.", height=".$imgheight.", left=200, top=200'); if (window.focus) {winimg.focus();}";
+			$url = "javascript:;\" onclick=\"var winimg = window.open('".encode_url($fileName)."', 'winimg', 'width=".$imgwidth.", height=".$imgheight.", left=200, top=200'); if (window.focus) {winimg.focus();}";
 			break 2;
+		case 'url_picasa':
 		case 'url_audio':
 		case 'url_page':
 		case 'url_other':
-			$imgUrl = "javascript:;\" onclick=\"var winurl = window.open('".encode_url($fileName)."', 'winurl', 'width=900, height=600, left=200, top=200'); if (window.focus) {winurl.focus();}";
+			$url = "javascript:;\" onclick=\"var winurl = window.open('".encode_url($fileName)."', 'winurl', 'width=900, height=600, left=200, top=200'); if (window.focus) {winurl.focus();}";
 			break 2;
 		case 'local_audio':
 		case 'local_page':
-			$imgUrl = "javascript:;\" onclick=\"var winurl = window.open('".encode_url($SERVER_URL.$fileName)."', 'winurl', 'width=900, height=600, left=200, top=200'); if (window.focus) {winurl.focus();}";
+			$url = "javascript:;\" onclick=\"var winurl = window.open('".encode_url($SERVER_URL.$fileName)."', 'winurl', 'width=900, height=600, left=200, top=200'); if (window.focus) {winurl.focus();}";
 			break 2;
 		}
 		if ($USE_MEDIA_VIEWER && $obeyViewerOption) {
-			$imgUrl = encode_url('mediaviewer.php?mid='.$mid);
+			$url = encode_url('mediaviewer.php?mid='.$mid);
 		} else {
 			$imgsize = findImageSize($fileName);
 			$imgwidth = $imgsize[0]+40;
 			$imgheight = $imgsize[1]+150;
-			$imgUrl = "javascript:;\" onclick=\"return openImage('".encode_url(encrypt($fileName))."', $imgwidth, $imgheight);";
+			$url = "javascript:;\" onclick=\"return openImage('".encode_url(encrypt($fileName))."', $imgwidth, $imgheight);";
 		}
 		break;
 	}
+	// At this point, $url describes how to handle the image when its thumbnail is clicked
+	$result['url'] = $url;
 
-	return $imgUrl;
+	// -- Determine the correct thumbnail or pseudo-thumbnail
+	$width = '';
+	switch ($type) {
+		case 'url_flv':
+			$thumb = 'images/flashrem.png';
+			break;
+		case 'local_flv':
+			$thumb = 'images/flash.png';
+			break;
+		case 'url_picasa':
+			$thumb = 'images/picasa.png';
+			break;
+		case 'url_page':
+		case 'local_page':
+			$thumb = "images/globe.png";
+			break;
+		case 'url_audio':
+		case 'local_audio':
+			$thumb = "images/audio.png";
+			break;
+		default:
+			$thumb = $thumbName;
+			if (substr($type,0,4)=='url_') $width = ' width="'.$THUMBNAIL_WIDTH.'"';
+	}
+	
+	// -- Use an overriding thumbnail if one has been provided
+	// Don't accept any overriding thumbnails that are in the "images" or "themes" directories
+	if (substr($thumbName,0,7)!='images/' && substr($thumbName,0,7)!='themes/') {
+		if ($USE_MEDIA_FIREWALL && $MEDIA_FIREWALL_THUMBS) {
+			$tempThumbName = get_media_firewall_path($thumbName);
+		} else {
+			$tempThumbName = $thumbName;
+		}
+		if (file_exists($tempThumbName)) {
+			$thumb = $thumbName;
+		}
+	}
+
+	// -- Use the theme-specific media icon if nothing else works
+	$realThumb = $thumb;
+	if (substr($type,0,6)=='local_' && !file_exists($thumb)) {
+		if (!$USE_MEDIA_FIREWALL || !$MEDIA_FIREWALL_THUMBS) {
+			$thumb = $PGV_IMAGE_DIR.'/'.$PGV_IMAGES['media']['large'];
+			$realThumb = $thumb;
+		} else {
+			$realThumb = get_media_firewall_path($thumb);
+			if (!file_exists($realThumb)) {
+				$thumb = $PGV_IMAGE_DIR.'/'.$PGV_IMAGES['media']['large'];
+				$realThumb = $thumb;
+			}
+		}
+		$width = '';
+	}
+	
+	// At this point, $width, $realThumb, and $thumb describe the thumbnail to be displayed
+	$result['thumb'] = $thumb;
+	$result['realThumb'] = $realThumb;
+	$result['width'] = $width;
+
+	return $result;
 }
 
 // optional extra file

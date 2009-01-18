@@ -111,40 +111,17 @@ if ((!$controller->isPrintPreview())&&(empty($SEARCH_SPIDER))&&!empty($controlle
 					else $dwidth = 300;
 					if ($imgwidth<$dwidth) $dwidth = $imgwidth;
 
-
 					$name = trim($controller->mediaobject->getFullName());
-					$imgUrl = mediaFileLink($filename, $controller->pid, $name, '', false);
 
-					// Now finally print the thumbnail  --------------------------------------------------
-					$file_type = mediaFileType($filename);
-					$thumbWidth = '';
-					switch ($file_type) {
-					case 'url_flv':
-						$thumbImg = 'images/flashrem.png';
-						break;
-					case 'local_flv':
-						$thumbImg = 'images/flash.png';
-						break;
-					case 'local_page':
-					case 'url_page':
-						$thumbImg = 'images/globe.png';
-						break;
-					case 'local_audio':
-					case 'url_audio':
-						$thumbImg = 'images/audio.png';
-						break;
-					default:
-						$thumbImg = $controller->mediaobject->getThumbnail();
-						if (isFileExternal($filename)) $thumbWidth = ' width="'.$THUMBNAIL_WIDTH.'"';
-					}
-					echo '<a href="', $imgUrl, '">';
-					echo '<img src="', $thumbImg, '" border="0" align="', ($TEXT_DIRECTION=="rtl" ? "left":"right"), '" class="thumbnail"', $thumbWidth;
+					// Get info on how to handle this media file
+					$mediaInfo = mediaFileInfo($filename, $controller->mediaobject->getThumbnail(), $controller->pid, $name, '', false);
+
+					//-- Thumbnail field
+					echo '<a href="', $mediaInfo['url'], '">';
+					echo '<img src="', $mediaInfo['thumb'], '" border="0" align="', ($TEXT_DIRECTION=="rtl" ? "left":"right"), '" class="thumbnail"', $mediaInfo['width'];
 
 					// Finish off anchor and tooltips
-					print " alt=\"" . PrintReady(htmlspecialchars($name,ENT_COMPAT,'UTF-8')) . "\" title=\"" . PrintReady(htmlspecialchars($name,ENT_COMPAT,'UTF-8')) . "\" />";
-					if (isFileExternal($filename) || $controller->mediaobject->fileExists()) {
-						print "</a>";
-					}
+					print " alt=\"" . PrintReady(htmlspecialchars($name,ENT_COMPAT,'UTF-8')) . "\" title=\"" . PrintReady(htmlspecialchars($name,ENT_COMPAT,'UTF-8')) . "\" /></a>";
 
 					// If download
 					if ($SHOW_MEDIA_DOWNLOAD) {

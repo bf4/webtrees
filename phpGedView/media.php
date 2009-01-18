@@ -1136,7 +1136,7 @@ if (check_media_structure()) {
 
 
 						$name = trim($media["TITL"]);
-						//Get media item Notes
+						// Get media item Notes
 						$haystack = $media["GEDCOM"];
 						$needle   = "1 NOTE";
 						$before   = substr($haystack, 0, strpos($haystack, $needle));
@@ -1145,35 +1145,14 @@ if (check_media_structure()) {
 						$final    = $before.$needle.$worked;
 						$notes    = PrintReady(htmlspecialchars(addslashes(print_fact_notes($final, 1, true, true)),ENT_COMPAT,'UTF-8'));
 
-						$imgUrl = mediaFileLink($media["FILE"], $media["XREF"], $name, $notes);
-
-						$file_type = mediaFileType($media["FILE"]);
-						$widthThumb = '';
-						switch ($file_type) {
-							case 'url_flv':
-								$imgThumb = 'images/flashrem.png';
-								break;
-							case 'local_flv':
-								$imgThumb = 'images/flash.png';
-								break;
-							case 'url_page':
-							case 'local_page':
-								$imgThumb = "images/globe.png";
-								break;
-							case 'url_audio':
-							case 'local_audio':
-								$imgThumb = "images/audio.png";
-								break;
-							default:
-								$imgThumb = $media["THUMB"];
-								if ($isExternal) $widthThumb = ' width="'.$THUMBNAIL_WIDTH.'"';
-						}
+						// Get info on how to handle this media file
+						$mediaInfo = mediaFileInfo($media["FILE"], $media["THUMB"], $media["XREF"], $name, $notes);
 
 						//-- Thumbnail field
 						if ($showthumb) {
 							print "\n\t\t\t<td class=\"optionbox $changeClass $TEXT_DIRECTION width10\">";
-							echo '<center><a href="', $imgUrl, '">';
-							echo '<img src="', $imgThumb, '" align="middle" class="thumbnail" border="none"', $widthThumb;
+							echo '<center><a href="', $mediaInfo['url'], '">';
+							echo '<img src="', $mediaInfo['thumb'], '" align="middle" class="thumbnail" border="none"', $mediaInfo['width'];
 							echo ' alt="', $name, '" /></a></center>';
 							echo '</td>';
 						}
@@ -1197,11 +1176,11 @@ if (check_media_structure()) {
 						}
 						if (!$isExternal && !$media["EXISTS"]) print "<span dir=\"ltr\">".PrintReady($media["FILE"])."</span><br /><span class=\"error\">".$pgv_lang["file_not_exists"]."</span><br />";
 						else {
-							if (substr($file_type,0,4) == 'url_') $tempText = 'URL';
+							if (substr($mediaInfo['type'],0,4) == 'url_') $tempText = 'URL';
 							else $tempText = PrintReady($media["FILE"]);
 							echo '<a href="', 'mediaviewer.php?mid=', $media["XREF"], '"><span dir="ltr">', $tempText, '</span></a><br />';
 						}
-						if (substr($file_type,0,4) != 'url_' && !empty($imgsize[0])) {
+						if (substr($mediaInfo['type'],0,4) != 'url_' && !empty($imgsize[0])) {
 							print "<sub>&nbsp;&nbsp;".$pgv_lang["image_size"]." -- ".$imgsize[0]."x".$imgsize[1]."</sub><br />";
 						}
 						print_fact_notes($media["GEDCOM"], 1);
