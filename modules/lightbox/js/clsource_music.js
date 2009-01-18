@@ -1570,6 +1570,10 @@ var CB_Close_Win		= CB_Close_Win;
 		p_string = p_string.replace(/\\&quot;/g, '"');
 		p_string = p_string.replace(/&quot;/g, '"');
 		p_string = p_string.replace(/&#039;/g, '\'');
+		p_string=p_string.replace(/\\'/g,'\'');
+		p_string=p_string.replace(/\\"/g,'"');
+		p_string=p_string.replace(/\\\\/g,'\\');
+		p_string=p_string.replace(/\\0/g,'\0');
 		return p_string;
 	};
 	

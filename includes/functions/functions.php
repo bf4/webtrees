@@ -3985,6 +3985,7 @@ function mediaFileInfo($fileName, $thumbName, $mid, $name='', $notes='', $obeyVi
 			$thumb = 'images/picasa.png';
 			break;
 		case 'url_page':
+		case 'url_other':
 		case 'local_page':
 			$thumb = "images/globe.png";
 			break;
