@@ -718,13 +718,13 @@ if ($action == "listusers") {
 		echo "\t<td class=\"optionbox wrap\">";
 		if ((int)get_user_setting($user_id,'reg_timestamp') > (int)get_user_setting($user_id,'sessiontime')) {
 			echo $pgv_lang["never"];
-			if ($TEXT_DIRECTION != 'rtl')
-				 echo '<br />('.since_login((int)get_user_setting($user_id,'reg_timestamp')).' '.$pgv_lang["ago"].')';
+			if ($TEXT_DIRECTION != 'rtl' && $LANGUAGE != "german")
+				echo '<br />('.since_login((int)get_user_setting($user_id,'reg_timestamp')).' '.$pgv_lang["ago"].')';
 			else echo '<br />('.$pgv_lang["ago"].' '.since_login((int)get_user_setting($user_id,'reg_timestamp')).')';	
 		} else {
 			echo format_timestamp((int)get_user_setting($user_id,'sessiontime'));
-			if ($TEXT_DIRECTION != 'rtl')
-				 echo '<br />('.since_login((int)get_user_setting($user_id,'sessiontime')).' '.$pgv_lang["ago"].')';
+			if ($TEXT_DIRECTION != 'rtl'&& $LANGUAGE != "german")
+				echo '<br />('.since_login((int)get_user_setting($user_id,'sessiontime')).' '.$pgv_lang["ago"].')';
 			else echo '<br />('.$pgv_lang["ago"].' '.since_login((int)get_user_setting($user_id,'sessiontime')).')';
 		}
 		echo "</td>\n";
