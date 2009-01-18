@@ -1603,6 +1603,14 @@ function factsort($a, $b) {
 	return stringsort($a, $b);
 }
 /**
+ * Function to sort place names array
+ */
+function placesort($a, $b) {
+	$a = $a['place'];
+	$b = $b['place'];
+	return stringsort($a, $b);
+}
+/**
  * String sorting function
  * @param string $a
  * @param string $b
