@@ -3,7 +3,7 @@
  * Polish Language file for PhpGedView.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team. All rights reserved.
+ * Copyright (C) 2002 to 2009  PGV Development Team. All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -108,7 +108,9 @@ $pgv_lang["pl_precision"]			= "Precyzja współrzędnych";
 $pgv_lang["pl_country"]				= "Kraj";
 $pgv_lang["pl_countries"]			= "Państwa";
 $pgv_lang["pl_state"]				= "Województwo";
+$pgv_lang["pl_county"]				= "Powiat";
 $pgv_lang["pl_city"]				= "Miejscowość";
+$pgv_lang["pl_place"]				= "Miejsce";
 $pgv_lang["pl_neighborhood"]		= "Sąsiedztwo";
 $pgv_lang["pl_house"]				= "Dom";
 $pgv_lang["pl_max"]					= "Maksimum";

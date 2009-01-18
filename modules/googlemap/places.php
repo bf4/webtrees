@@ -3,7 +3,7 @@
  * Online UI for editing config.php site configuration variables
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team. All rights reserved.
+ * Copyright (C) 2002 to 2009  PGV Development Team. All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -111,6 +111,18 @@ function getHighestIndex() {
 		return $row[0];
 }
 
+function getHighestLevel() {
+	global $TBLPREFIX;
+	$sql="SELECT MAX(pl_level) FROM {$TBLPREFIX}placelocation WHERE 1=1";
+	$res=dbquery($sql);
+	$row=&$res->fetchRow();
+	$res->free();
+	if (empty($row[0]))
+		return 0;
+	else
+		return $row[0];
+}
+
 /**
  * Find all of the places in the hierarchy
  */
@@ -126,40 +138,52 @@ function get_place_list_loc($parent_id) {
 	$res=dbquery($sql);
 
 	$placelist=array();
-	while ($row=&$res->fetchRow())
+	while ($row=&$res->fetchRow()) {
 		$placelist[]=array("place_id"=>$row[0], "place"=>$row[1], "lati"=>$row[2], "long"=>$row[3], "zoom"=>$row[4], "icon"=>$row[5]);
+	}
 	$res->free();
+	uasort($placelist, "placesort");
 	return $placelist;
 }
 
 function outputLevel($parent_id) {
 	global $TBLPREFIX, $DBCONN;
-	$tmp=place_id_to_hierarchy($parent_id);
-	$prefix=implode(';', $tmp);
+	$tmp = place_id_to_hierarchy($parent_id);
+	$maxLevel = getHighestLevel();
+	if ($maxLevel>8) $maxLevel = 8;
+	$prefix = implode(';', $tmp);
 	if ($prefix!='')
 		$prefix.=';';
-	$suffix=str_repeat(';', 3-count($tmp));
+	$suffix=str_repeat(';', $maxLevel-count($tmp));
 	$level=count($tmp);
 
 	$sql="SELECT pl_id, pl_place,pl_long,pl_lati,pl_zoom,pl_icon FROM {$TBLPREFIX}placelocation WHERE pl_parent_id=".$DBCONN->escapeSimple($parent_id)." ORDER BY pl_place";
 	$res=dbquery($sql);
 	while ($row=&$res->fetchRow()) {
 		echo "{$level};{$prefix}{$row[1]}{$suffix};{$row[2]};{$row[3]};{$row[4]};{$row[5]}\r\n";
-		if ($level < 3)
+		if ($level < $maxLevel)
 			outputLevel($row[0]);
 	}
 	$res->free();
 }
 
-if ($action=="ExportFile" && PGV_USER_IS_ADMIN) {
-	$tmp=place_id_to_hierarchy($parent);
-	$tmp[0]="places";
-	$outputFileName=preg_replace('/[:;\/\\\(\)\{\}\[\] $]/', '_', implode('-', $tmp)).'.csv';
-	header('Content-Type: application/octet-stream');
-	header('Content-Disposition: attachment; filename="'.$outputFileName.'"');
-	echo "\"Level\";\"Country\";\"State\";\"County\";\"Place\";\"Longitude\";\"Latitude\";\"ZoomLevel\";\"Icon\"\r\n";
-	outputLevel($parent);
-	exit;
+/**
+ * recursively find all of the csv files on the server
+ *
+ * @param string $path
+ */
+function findFiles($path) {
+	global $placefiles;
+	if (file_exists($path)) {
+		$dir = dir($path);
+		while (false !== ($entry = $dir->read())) {
+			if ($entry!="." && $entry!=".." && $entry!=".svn") {
+				if (is_dir($path."/".$entry)) findFiles($path."/".$entry);
+				else if (strstr($entry, ".csv")!==false) $placefiles[] = preg_replace("~modules/googlemap/extra~", "", $path)."/".$entry;
+			}
+		}
+		$dir->close();
+	}
 }
 
 print_header($pgv_lang["edit_place_locations"]);
@@ -171,6 +195,31 @@ if (!PGV_USER_IS_ADMIN) {
 	echo "</td></tr></table>\n";
 	echo "<br /><br /><br />\n";
 	print_footer();
+	exit;
+}
+
+global $GOOGLEMAP_MAX_ZOOM;
+
+if ($action=="ExportFile" && PGV_USER_IS_ADMIN) {
+	$tmp = place_id_to_hierarchy($parent);
+	$maxLevel = getHighestLevel();
+	if ($maxLevel>8) $maxLevel=8;
+	$tmp[0] = "places";
+	$outputFileName=preg_replace('/[:;\/\\\(\)\{\}\[\] $]/', '_', implode('-', $tmp)).'.csv';
+	header('Content-Type: application/octet-stream');
+	header('Content-Disposition: attachment; filename="'.$outputFileName.'"');
+	echo "\"{$pgv_lang["gm_level"]}\";\"{$pgv_lang["pl_country"]}\";";
+	if ($maxLevel>0) echo "\"{$pgv_lang["pl_state"]}\";";
+	if ($maxLevel>1) echo "\"{$pgv_lang["pl_county"]}\";";
+	if ($maxLevel>2) echo "\"{$pgv_lang["pl_city"]}\";";
+	if ($maxLevel>3) echo "\"{$pgv_lang["pl_place"]}\";";
+	if ($maxLevel>4) echo "\"{$pgv_lang["pl_place"]}\";";
+	if ($maxLevel>5) echo "\"{$pgv_lang["pl_place"]}\";";
+	if ($maxLevel>6) echo "\"{$pgv_lang["pl_place"]}\";";
+	if ($maxLevel>7) echo "\"{$pgv_lang["pl_place"]}\";";
+	echo "\"{$pgv_lang["placecheck_long"]}\";\"{$pgv_lang["placecheck_lati"]}\";";
+	echo "\"{$pgv_lang["pl_zoom_factor"]}\";\"{$pgv_lang["pl_place_icon"]}\"\r\n";
+	outputLevel($parent);
 	exit;
 }
 
@@ -302,25 +351,6 @@ if ($action=="ImportGedcom") {
 }
 
 if ($action=="ImportFile") {
-	/**
-	 * recursively find all of the csv files on the server
-	 *
-	 * @param string $path
-	 */
-	function findFiles($path) {
-		global $placefiles;
-		if (file_exists($path)) {
-			$dir = dir($path);
-			while (false !== ($entry = $dir->read())) {
-				if ($entry!="." && $entry!=".." && $entry!=".svn") {
-					if (is_dir($path."/".$entry)) findFiles($path."/".$entry);
-					else if (strstr($entry, ".csv")!==false) $placefiles[] = preg_replace("~modules/googlemap/extra~", "", $path)."/".$entry;
-				}
-			}
-			$dir->close();
-		}
-	}
-
 	$placefiles = array();
 	findFiles("modules/googlemap/extra");
 	sort($placefiles);
@@ -339,7 +369,9 @@ if ($action=="ImportFile") {
 				<select name="localfile">
 					<option></option>
 					<?php foreach($placefiles as $p=>$placefile) { ?>
-					<option value="<?php echo htmlspecialchars($placefile); ?>"><?php echo $placefile; ?></option>
+					<option value="<?php echo htmlspecialchars($placefile); ?>"><?php 
+						if (substr($placefile,0,1)=="/") echo substr($placefile,1); 
+						else echo $placefile; ?></option>
 					<?php } ?>
 				</select>
 			</td>
@@ -366,6 +398,7 @@ if ($action=="ImportFile") {
 }
 
 if ($action=="ImportFile2") {
+	loadLangFile('pgv_country');
 	if (isset($_POST["cleardatabase"])) {
 		dbquery("DELETE FROM {$TBLPREFIX}placelocation WHERE 1=1");
 	}
@@ -382,19 +415,26 @@ if ($action=="ImportFile2") {
 		$fieldrec = explode(';', $placerec);
 		if($fieldrec[0] > $maxLevel) $maxLevel = $fieldrec[0];
 	}
+	$fields = count($fieldrec);
 	foreach ($lines as $p => $placerec){
 		$fieldrec = explode(';', $placerec);
-		if (is_numeric($fieldrec[0]) && $fieldrec[0]<=3) {
+		if (is_numeric($fieldrec[0]) && $fieldrec[0]<=$maxLevel) {
 			$placelist[$j] = array();
 			$placelist[$j]["place"] = "";
-			if ($fieldrec[0] > 2) $placelist[$j]["place"]  = $fieldrec[4].", ";
-			if ($fieldrec[0] > 1) $placelist[$j]["place"] .= $fieldrec[3].", ";
-			if ($fieldrec[0] > 0) $placelist[$j]["place"] .= $fieldrec[2].", ";
+			for ($ii=$fields-4; $ii>1; $ii--) {
+				if ($fieldrec[0] > $ii-2) $placelist[$j]["place"] .= $fieldrec[$ii].", ";
+			}
+			foreach ($countries as $countrycode => $countryname) {
+				if (UTF8_strtoupper($countrycode) == UTF8_strtoupper($fieldrec[1])) {
+					$fieldrec[1] = $countryname;
+					break;
+				}
+			}
 			$placelist[$j]["place"] .= $fieldrec[1];
-			$placelist[$j]["long"] = $fieldrec[5];
-			$placelist[$j]["lati"] = $fieldrec[6];
-			$placelist[$j]["zoom"] = $fieldrec[7];
-			$placelist[$j]["icon"] = trim($fieldrec[8]);
+			$placelist[$j]["long"] = $fieldrec[$fields-4];
+			$placelist[$j]["lati"] = $fieldrec[$fields-3];
+			$placelist[$j]["zoom"] = $fieldrec[$fields-2];
+			$placelist[$j]["icon"] = trim($fieldrec[$fields-1]);
 			$j = $j + 1;
 		}
 	}
@@ -452,11 +492,14 @@ if ($action=="ImportFile2") {
 					if (($i+1) == count($parent)) {
 						$zoomlevel = $place["zoom"];
 					}
-					else {
+					else if (isset($default_zoom_level[$i])) {
 						$zoomlevel = $default_zoom_level[$i];
 					}
+					else {
+						$zoomlevel = $GOOGLEMAP_MAX_ZOOM;
+					}
 					if (($place["lati"] == "0") || ($place["long"] == "0") || (($i+1) < count($parent))) {
-						$sql = "INSERT INTO ".$TBLPREFIX."placelocation (pl_id, pl_parent_id, pl_level, pl_place, pl_long, pl_lati, pl_zoom, pl_icon) VALUES (".$highestIndex.", $parent_id, ".$i.", '".$escparent."', NULL, NULL, ".$default_zoom_level[$i].",'".$place["icon"]."');";
+						$sql = "INSERT INTO ".$TBLPREFIX."placelocation (pl_id, pl_parent_id, pl_level, pl_place, pl_long, pl_lati, pl_zoom, pl_icon) VALUES (".$highestIndex.", $parent_id, ".$i.", '".$escparent."', NULL, NULL, ".$zoomlevel.",'".$place["icon"]."');";
 					}
 					else {
 						//delete leading zero
