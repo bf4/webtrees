@@ -147,13 +147,15 @@ if ($action=="newentry") {
 		$thumbFolderName = str_replace($MEDIA_DIRECTORY, $MEDIA_DIRECTORY."thumbs/", $folderName);
 
 		$_SESSION["upload_folder"] = $folderName; // store standard media folder in session
+		$realFolderName = $folderName;
+		$realThumbFolderName = $thumbFolderName;
 		if ($USE_MEDIA_FIREWALL) {
-			$folderName = get_media_firewall_path($folderName);
-			if ($MEDIA_FIREWALL_THUMBS) $thumbFolderName = get_media_firewall_path($thumbFolderName);
+			$realFolderName = get_media_firewall_path($folderName);
+			if ($MEDIA_FIREWALL_THUMBS) $realThumbFolderName = get_media_firewall_path($thumbFolderName);
 		}
 		// make sure the dirs exist
-		@mkdirs($folderName);
-		@mkdirs($thumbFolderName);
+		@mkdirs($realFolderName);
+		@mkdirs($realThumbFolderName);
 
 		$error = "";
 
@@ -180,7 +182,7 @@ if ($action=="newentry") {
 			$mediaFile = $parts["basename"];
 		}
 		if (!empty($_FILES["mediafile"]["name"])) {
-			$newFile = $folderName.$mediaFile;
+			$newFile = $realFolderName.$mediaFile;
 			// Copy main media file into the destination directory
 			if (file_exists(filename_decode($newFile))) {
 				$error .= $pgv_lang["media_exists"]."&nbsp;&nbsp;".$newFile."<br />";
@@ -190,12 +192,12 @@ if ($action=="newentry") {
 					$error .= $pgv_lang["upload_error"]."<br />".file_upload_error_text($_FILES["mediafile"]["error"])."<br />";
 				} else {
 					@chmod(filename_decode($newFile), PGV_PERM_FILE);
-					AddToLog("Media file {$newFile} uploaded");
+					AddToLog("Media file {$folderName}{$mediaFile} uploaded");
 				}
 			}
 		}
 		if ($error=="" && !empty($_FILES["thumbnail"]["name"])) {
-			$newThum = $thumbFolderName.$mediaFile;
+			$newThum = $realThumbFolderName.$mediaFile;
 			// Copy user-supplied thumbnail file into the destination directory
 			if (file_exists(filename_decode($newThum))) {
 				$error .= $pgv_lang["media_thumb_exists"]."&nbsp;&nbsp;".$newThum."<br />";
@@ -205,20 +207,20 @@ if ($action=="newentry") {
 					$error .= $pgv_lang["upload_error"]."<br />".file_upload_error_text($_FILES["thumbnail"]["error"])."<br />";
 				} else {
 					@chmod(filename_decode($newThum), PGV_PERM_FILE);
-					AddToLog("Media file {$newThum} uploaded");
+					AddToLog("Media file {$thumbFolderName}{$mediaFile} uploaded");
 				}
 			}
 		}
 		if ($error=="" && empty($_FILES["mediafile"]["name"]) && !empty($_FILES["thumbnail"]["name"])) {
 			// Copy user-supplied thumbnail file into the main destination directory
-			$whichFile1 = $thumbFolderName.$mediaFile;
-			$whichFile2 = $folderName.$mediaFile;
+			$whichFile1 = $realThumbFolderName.$mediaFile;
+			$whichFile2 = $realFolderName.$mediaFile;
 			if (!copy(filename_decode($whichFile1), filename_decode($whichFile2))) {
 				// the file cannot be copied
 				$error .= $pgv_lang["upload_error"]."<br />".print_text('copy_error', 0, 1)."<br />";
 			} else {
 				@chmod(filename_decode($whichFile2), PGV_PERM_FILE);
-				AddToLog("Media file {$whichFile2} copied from {$whichFile1}");
+				AddToLog("Media file {$folderName}{$mediaFile} copied from {$thumbFolderName}{$mediaFile}");
 			}
 		}
 		if ($error=="" && !empty($_FILES["mediafile"]["name"]) && empty($_FILES["thumbnail"]["name"])) {
