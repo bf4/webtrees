@@ -890,9 +890,9 @@ class MenuBar
 	* @return Menu the menu item
 	*/
 	static function &getThemeMenu() {
-		global $SEARCH_SPIDER, $ALLOW_THEME_DROPDOWN, $ALLOW_USER_THEMES, $THEME, $pgv_lang;
+		global $SEARCH_SPIDER, $ALLOW_THEME_DROPDOWN, $ALLOW_USER_THEMES, $THEME_DIR, $pgv_lang;
 
-		$current=$THEME;
+		$current=$THEME_DIR;
 		foreach (get_theme_names() as $themename=>$themedir) {
 			if ($themedir==get_user_setting(PGV_USER_ID, 'theme')) {
 				$current=$themename;
