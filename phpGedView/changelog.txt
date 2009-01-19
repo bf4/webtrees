@@ -10,6 +10,8 @@
 
 
 Version 4.2.0
+ - Changed: Slightly improved picasa thumbnail appearance on Simplyxxx themes (windmillway)
+ - Added: Include Lightbox config file in functions.php to pick up Lightbox iframe (url) width and height variables. (windmillway)
  - Added: Small change to media handling to pick up globe thumbnail. Corrected wrong display of "\" in Lightbox Notes. (windmillway)
  - Changed: Importing/exporting places to/from GoogleMap with level>4 (wooc)
  - Fixed: [ 1752892 ] Maps not working right (wooc)
