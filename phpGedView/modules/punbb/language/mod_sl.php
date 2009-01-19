@@ -1,9 +1,8 @@
 <?php
 /**
- * phpGedView Gallery 2 Module.
- *
+ * punBB Module
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team. All rights reserved.
+ * Copyright (C) 2002 to 2008	PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,15 +19,11 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  * @package PhpGedView
- * @subpackage Gallery2
+ * @subpackage punBB
  * @version $Id$
- * @author Clovis
+ * @author Patrick Kellum
  */
-$pgv_lang['mod_gallery2'] = 'Galeria de fotos';
-$pgv_lang['mod_gallery2_siteadmin'] = 'Admin';
-$pgv_lang['mod_gallery2_useralbum'] = 'Meu Album';
-$pgv_lang['mod_gallery2_advsearch'] = 'Busca avan&ccedil;ada';
-$pgv_lang['mod_gallery2_error_user_create'] = "Ocorreram erros durante o registro do usu&aacute;rio.";
-$pgv_lang['mod_gallery2_error_user_check'] = "Ocorreram erros enquanto se procedia a verifica&ccedil;&atilde;o se o usu&aacute;rio existia.";
-$pgv_lang['mod_gallery2_error_init'] = "Ocorreram erros durante a inicializa&ccedil;&atilde;o do m&oacute;dulo Gallery.";
+$pgv_lang['mod_punbb'] = 'Klepetalnica';
+$pgv_lang['mod_punbb_search'] = 'Išči';
+$pgv_lang['mod_punbb_admin'] = 'Upravljaj';
 ?>
