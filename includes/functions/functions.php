@@ -3853,7 +3853,7 @@ function encrypt($string, $key='') {
 		if ($newOrd > 255) $newOrd -= 256;		// Make sure we stay within the 8-bit code table
 		$result .= chr($newOrd);
 	}
-	$result = strtr(base64_encode($result), '+/=', '-_#');		// Avoid characters that mess up URLs
+	$result = '*'.strtr(base64_encode($result), '+/=', '-_#');		// Avoid characters that mess up URLs
 
 	return $result;
 }
@@ -3867,8 +3867,8 @@ function encrypt($string, $key='') {
 function decrypt($string, $key='') {
 	if (empty($key)) $key = session_id();
 
-	if (strpos($string, '/')!==false) return $string;		// Input is not a valid encrypted string
-	$string = base64_decode(strtr($string, '-_#', '+/='));
+	if (substr($string,0,1)!='*') return $string;		// Input is not a valid encrypted string
+	$string = base64_decode(strtr(substr($string,1), '-_#', '+/='));
 
 	$result = '';
 	for($i=0; $i<strlen($string); $i++) {

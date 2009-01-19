@@ -57,7 +57,9 @@ $text       =safe_REQUEST($_REQUEST, 'text',        PGV_REGEX_UNSAFE);
 $tag        =safe_REQUEST($_REQUEST, 'tag',         PGV_REGEX_UNSAFE);
 $islink     =safe_REQUEST($_REQUEST, 'islink',      PGV_REGEX_UNSAFE);
 $glevels    =safe_REQUEST($_REQUEST, 'glevels',     PGV_REGEX_UNSAFE);
-//$filename = decrypt($filename);
+
+$filename = decrypt($filename);
+$oldFilename = decrypt($oldFilename);
 
 print_simple_header($pgv_lang["add_media_tool"]);
 $disp = true;

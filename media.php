@@ -696,41 +696,39 @@ if (check_media_structure()) {
 		print "<tr><td class=\"messagebox wrap\">";
 		$xrefs = array($xref);
 		$onegedcom = true;
-		if ($allowDelete) {
-			//-- get all of the XREFS associated with this record
-			//-- and check if the file is used in multiple gedcoms
-			$myFile = str_replace($MEDIA_DIRECTORY, "", $filename);
-			//-- figure out how many levels are in this file
-			$mlevels = preg_split("~[/\\\]~", $filename);
-			$sql = "SELECT * FROM ".$TBLPREFIX."media WHERE m_file ".PGV_DB_LIKE." '%".$DBCONN->escapeSimple($myFile)."'";
-			$res = dbquery($sql);
+		//-- get all of the XREFS associated with this record
+		//-- and check if the file is used in multiple gedcoms
+		$myFile = str_replace($MEDIA_DIRECTORY, "", $filename);
+		//-- figure out how many levels are in this file
+		$mlevels = preg_split("~[/\\\]~", $filename);
+		$sql = "SELECT * FROM ".$TBLPREFIX."media WHERE m_file ".PGV_DB_LIKE." '%".$DBCONN->escapeSimple($myFile)."'";
+		$res = dbquery($sql);
 
-			while($row=$res->fetchRow(DB_FETCHMODE_ASSOC)) {
-				$rlevels = preg_split("~[/\\\]~", $row["m_file"]);
-				//-- make sure we only delete a file at the same level of directories
-				//-- see 1825257
-				$match = true;
-				$k=0;
-				$i=count($rlevels)-1;
-				$j=count($mlevels)-1;
-				while($i>=0 && $j>=0) {
-					if ($rlevels[$i] != $mlevels[$j]) {
-						$match = false;
-						break;
-					}
-					$j--;
-					$i--;
-					$k++;
-					if ($k>$MEDIA_DIRECTORY_LEVELS) break;
+		while($row=$res->fetchRow(DB_FETCHMODE_ASSOC)) {
+			$rlevels = preg_split("~[/\\\]~", $row["m_file"]);
+			//-- make sure we only delete a file at the same level of directories
+			//-- see 1825257
+			$match = true;
+			$k=0;
+			$i=count($rlevels)-1;
+			$j=count($mlevels)-1;
+			while($i>=0 && $j>=0) {
+				if ($rlevels[$i] != $mlevels[$j]) {
+					$match = false;
+					break;
 				}
-				if ($match) {
-					if ($row["m_gedfile"]!=PGV_GED_ID) $onegedcom = false;
-					else $xrefs[] = $row["m_media"];
-				}
+				$j--;
+				$i--;
+				$k++;
+				if ($k>$MEDIA_DIRECTORY_LEVELS) break;
 			}
-			$res->free();
-			$xrefs = array_unique($xrefs);
+			if ($match) {
+				if ($row["m_gedfile"]!=PGV_GED_ID) $onegedcom = false;
+				else $xrefs[] = $row["m_media"];
+			}
 		}
+		$res->free();
+		$xrefs = array_unique($xrefs);
 
 		$finalResult = true;
 		if ($allowDelete) {
