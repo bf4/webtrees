@@ -1087,6 +1087,162 @@ class stats {
 		}
 	}
 
+	function chartDistribution($chart_shows='world', $chart_type='', $surname='')
+	{
+		global $pgv_lang, $pgv_language, $countries;
+		// PGV uses 3-letter ISO/chapman codes, but google uses 2-letter ISO codes.  There is not a 1:1
+		// mapping, so Wales/Scotland/England all become GB, etc.
+		if (!isset($iso3166)) {
+			$iso3166=array(
+			'ABW'=>'AW', 'AFG'=>'AF', 'AGO'=>'AO', 'AIA'=>'AI', 'ALA'=>'AX', 'ALB'=>'AL', 'AND'=>'AD', 'ANT'=>'AN',
+			'ARE'=>'AE', 'ARG'=>'AR', 'ARM'=>'AM', 'ASM'=>'AS', 'ATA'=>'AQ', 'ATF'=>'TF', 'ATG'=>'AG', 'AUS'=>'AU',
+			'AUT'=>'AT', 'AZE'=>'AZ', 'BDI'=>'BI', 'BEL'=>'BE', 'BEN'=>'BJ', 'BFA'=>'BF', 'BGD'=>'BD', 'BGR'=>'BG',
+			'BHR'=>'BH', 'BHS'=>'BS', 'BIH'=>'BA', 'BLR'=>'BY', 'BLZ'=>'BZ', 'BMU'=>'BM', 'BOL'=>'BO', 'BRA'=>'BR',
+			'BRB'=>'BB', 'BRN'=>'BN', 'BTN'=>'BT', 'BVT'=>'BV', 'BWA'=>'BW', 'CAF'=>'CF', 'CAN'=>'CA', 'CCK'=>'CC',
+			'CHE'=>'CH', 'CHL'=>'CL', 'CHN'=>'CN', 'CHI'=>'JE', 'CIV'=>'CI', 'CMR'=>'CM', 'COD'=>'CD', 'COG'=>'CG',
+			'COK'=>'CK', 'COL'=>'CO', 'COM'=>'KM', 'CPV'=>'CV', 'CRI'=>'CR', 'CUB'=>'CU', 'CXR'=>'CX', 'CYM'=>'KY',
+			'CYP'=>'CY', 'CZE'=>'CZ', 'DEU'=>'DE', 'DJI'=>'DJ', 'DMA'=>'DM', 'DNK'=>'DK', 'DOM'=>'DO', 'DZA'=>'DZ',
+			'ECU'=>'EC', 'EGY'=>'EG', 'ENG'=>'GB', 'ERI'=>'ER', 'ESH'=>'EH', 'ESP'=>'ES', 'EST'=>'EE', 'ETH'=>'ET',
+			'FIN'=>'FI', 'FJI'=>'FJ', 'FLK'=>'FK', 'FRA'=>'FR', 'FRO'=>'FO', 'FSM'=>'FM', 'GAB'=>'GA', 'GBR'=>'GB',
+			'GEO'=>'GE', 'GHA'=>'GH', 'GIB'=>'GI', 'GIN'=>'GN', 'GLP'=>'GP', 'GMB'=>'GM', 'GNB'=>'GW', 'GNQ'=>'GQ',
+			'GRC'=>'GR', 'GRD'=>'GD', 'GRL'=>'GL', 'GTM'=>'GT', 'GUF'=>'GF', 'GUM'=>'GU', 'GUY'=>'GY', 'HKG'=>'HK',
+			'HMD'=>'HM', 'HND'=>'HN', 'HRV'=>'HR', 'HTI'=>'HT', 'HUN'=>'HU', 'IDN'=>'ID', 'IND'=>'IN', 'IOT'=>'IO',
+			'IRL'=>'IE', 'IRN'=>'IR', 'IRQ'=>'IQ', 'ISL'=>'IS', 'ISR'=>'IL', 'ITA'=>'IT', 'JAM'=>'JM', 'JOR'=>'JO',
+			'JPN'=>'JA', 'KAZ'=>'KZ', 'KEN'=>'KE', 'KGZ'=>'KG', 'KHM'=>'KH', 'KIR'=>'KI', 'KNA'=>'KN', 'KOR'=>'KO',
+			'KWT'=>'KW', 'LAO'=>'LA', 'LBN'=>'LB', 'LBR'=>'LR', 'LBY'=>'LY', 'LCA'=>'LC', 'LIE'=>'LI', 'LKA'=>'LK',
+			'LSO'=>'LS', 'LTU'=>'LT', 'LUX'=>'LU', 'LVA'=>'LV', 'MAC'=>'MO', 'MAR'=>'MA', 'MCO'=>'MC', 'MDA'=>'MD',
+			'MDG'=>'MG', 'MDV'=>'MV', 'MEX'=>'ME', 'MHL'=>'MH', 'MKD'=>'MK', 'MLI'=>'ML', 'MLT'=>'MT', 'MMR'=>'MM',
+			'MNG'=>'MN', 'MNP'=>'MP', 'MNT'=>'ME', 'MOZ'=>'MZ', 'MRT'=>'MR', 'MSR'=>'MS', 'MTQ'=>'MQ', 'MUS'=>'MU',
+			'MWI'=>'MW', 'MYS'=>'MY', 'MYT'=>'YT', 'NAM'=>'NA', 'NCL'=>'NC', 'NER'=>'NE', 'NFK'=>'NF', 'NGA'=>'NG',
+			'NIC'=>'NI', 'NIR'=>'GB', 'NIU'=>'NU', 'NLD'=>'NL', 'NOR'=>'NO', 'NPL'=>'NP', 'NRU'=>'NR', 'NZL'=>'NZ',
+			'OMN'=>'OM', 'PAK'=>'PK', 'PAN'=>'PA', 'PCN'=>'PN', 'PER'=>'PE', 'PHL'=>'PH', 'PLW'=>'PW', 'PNG'=>'PG',
+			'POL'=>'PL', 'PRI'=>'PR', 'PRK'=>'KP', 'PRT'=>'PO', 'PRY'=>'PY', 'PSE'=>'PS', 'PYF'=>'PF', 'QAT'=>'QA',
+			'REU'=>'RE', 'ROM'=>'RO', 'RUS'=>'RU', 'RWA'=>'RW', 'SAU'=>'SA', 'SCT'=>'GB', 'SDN'=>'SD', 'SEN'=>'SN',
+			'SER'=>'RS', 'SGP'=>'SG', 'SGS'=>'GS', 'SHN'=>'SH', 'SIC'=>'IT', 'SJM'=>'SJ', 'SLB'=>'SB', 'SLE'=>'SL',
+			'SLV'=>'SV', 'SMR'=>'SM', 'SOM'=>'SO', 'SPM'=>'PM', 'STP'=>'ST', 'SUN'=>'RU', 'SUR'=>'SR', 'SVK'=>'SK',
+			'SVN'=>'SI', 'SWE'=>'SE', 'SWZ'=>'SZ', 'SYC'=>'SC', 'SYR'=>'SY', 'TCA'=>'TC', 'TCD'=>'TD', 'TGO'=>'TG',
+			'THA'=>'TH', 'TJK'=>'TJ', 'TKL'=>'TK', 'TKM'=>'TM', 'TLS'=>'TL', 'TON'=>'TO', 'TTO'=>'TT', 'TUN'=>'TN',
+			'TUR'=>'TR', 'TUV'=>'TV', 'TWN'=>'TW', 'TZA'=>'TZ', 'UGA'=>'UG', 'UKR'=>'UA', 'UMI'=>'UM', 'URY'=>'UY',
+			'USA'=>'US', 'UZB'=>'UZ', 'VAT'=>'VA', 'VCT'=>'VC', 'VEN'=>'VE', 'VGB'=>'VG', 'VIR'=>'VI', 'VNM'=>'VN',
+			'VUT'=>'VU', 'WLF'=>'WF', 'WLS'=>'GB', 'WSM'=>'WS', 'YEM'=>'YE', 'ZAF'=>'ZA', 'ZMB'=>'ZM', 'ZWE'=>'ZW'
+			);
+		}
+		// The country names can be specified in any language or in the chapman code.
+		// Generate a combined list.
+		if (!isset($country_to_iso3166)) {
+			$country_to_iso3166=array();
+			foreach ($iso3166 as $three=>$two) {
+				$country_to_iso3166[UTF8_strtolower($three)]=$two;
+			}
+			foreach (array_keys($pgv_language) as $lang) {
+				loadLangFile('pgv_country', $lang);
+				foreach ($countries as $code => $country) {
+					if (array_key_exists($code, $iso3166)) {
+						$country_to_iso3166[UTF8_strtolower($country)]=$iso3166[$code];
+					}
+				}
+			}
+		}
+		switch ($chart_type) {
+		case 'surname_distribution_chart':
+			if ($surname=="") $surname = $this->getCommonSurname();
+			$chart_title=$pgv_lang["surname_distribution_chart"].': '.$surname;
+			// Count how many people are events in each country
+			$surn_countries=array();
+			$indis = get_indilist_indis(UTF8_strtoupper($surname), '', '', false, false, PGV_GED_ID);
+			foreach ($indis as $person) {
+				if (preg_match_all('/^2 PLAC (?:.*, *)*(.*)/m', $person->gedrec, $matches)) {
+					// PGV uses 3 letter country codes and localised country names, but google uses 2 letter codes.
+					foreach ($matches[1] as $country) {
+						$country=UTF8_strtolower(trim($country));
+						if (array_key_exists($country, $country_to_iso3166)) {
+							if (array_key_exists($country_to_iso3166[$country], $surn_countries)) {
+								$surn_countries[$country_to_iso3166[$country]]++;
+							} else {
+								$surn_countries[$country_to_iso3166[$country]]=1;
+							}
+						}
+					}
+				}
+			};
+			break;
+		case 'birth_distribution_chart':
+			$chart_title=$pgv_lang["stat_2_map"];
+			// Count how many people were born in each country
+			$surn_countries=array();
+			$countries=$this->statsPlaces('INDI', 'BIRT', 0, true);
+			foreach ($countries as $place=>$count) {
+				$country=UTF8_strtolower($place);
+				if (array_key_exists($country, $country_to_iso3166)) {
+					if (!isset($surn_countries[$country_to_iso3166[$country]])) {
+						$surn_countries[$country_to_iso3166[$country]]=$count;
+					}
+					else {
+						$surn_countries[$country_to_iso3166[$country]]+=$count;
+					}
+				}
+			}
+			break;
+		case 'death_distribution_chart':
+			$chart_title=$pgv_lang["stat_3_map"];
+			// Count how many people were death in each country
+			$surn_countries=array();
+			$countries=$this->statsPlaces('INDI', 'DEAT', 0, true);
+			foreach ($countries as $place=>$count) {
+				$country=UTF8_strtolower($place);
+				if (array_key_exists($country, $country_to_iso3166)) {
+					if (!isset($surn_countries[$country_to_iso3166[$country]])) {
+						$surn_countries[$country_to_iso3166[$country]]=$count;
+					}
+					else {
+						$surn_countries[$country_to_iso3166[$country]]+=$count;
+					}
+				}
+			}
+			break;
+		case 'marriage_distribution_chart':
+			$chart_title=$pgv_lang["stat_4_map"];
+			// Count how many families got marriage in each country
+			$surn_countries=array();
+			$countries=$this->statsPlaces('FAM');
+			// PGV uses 3 letter country codes and localised country names, but google uses 2 letter codes.
+			foreach ($countries as $place) {
+				$country=UTF8_strtolower(trim($place['country']));
+				if (array_key_exists($country, $country_to_iso3166)) {
+					$surn_countries[$country_to_iso3166[$country]]=$place['count(*)'];
+				}
+			}
+			break;
+		case 'indi_distribution_chart':
+		default:
+			$chart_title=$pgv_lang["indi_distribution_chart"];
+			// Count how many people are events in each country
+			$surn_countries=array();
+			$countries=$this->statsPlaces('INDI');
+			// PGV uses 3 letter country codes and localised country names, but google uses 2 letter codes.
+			foreach ($countries as $place) {
+				$country=UTF8_strtolower(trim($place['country']));
+				if (array_key_exists($country, $country_to_iso3166)) {
+					$surn_countries[$country_to_iso3166[$country]]=$place['count(*)'];
+				}
+			}
+			break;
+		}
+		$chart_url ="http://chart.apis.google.com/chart?cht=t&amp;chtm=".$chart_shows;
+		$chart_url.="&amp;chco=ffffff,c3dfff,84beff"; // country colours
+		$chart_url.="&amp;chf=bg,s,EAF7FE"; // sea colour
+		$chart_url.="&amp;chs=440x220"; // max size for maps is 440x220
+		$chart_url.="&amp;chld=".implode('', array_keys($surn_countries))."&amp;chd=s:";
+		foreach ($surn_countries as $count) {
+			$chart_url.=substr(PGV_GOOGLE_CHART_ENCODING, floor($count/max($surn_countries)*61), 1);
+		}
+		echo '<div id="google_charts" class="center">';
+		echo '<b>'.$chart_title.'</b><br /><br />';
+		echo '<div align="center"><img src="'.$chart_url.'" alt="'.$chart_title.'" title="'.$chart_title.'" class="gchart" />';
+		echo '<br /><table align="center" border="0" cellpadding="1" cellspacing="1"><tr><td bgcolor="84beff" width="12"></td><td>'.$pgv_lang["g_chart_high"].'&nbsp;&nbsp;</td><td bgcolor="c3dfff" width="12"></td><td>'.$pgv_lang["g_chart_low"].'&nbsp;&nbsp;</td><td bgcolor="ffffff" width="12"></td><td>'.$pgv_lang["g_chart_nobody"].'&nbsp;&nbsp;</td></tr></table>';
+		echo '</div></div>';
+	}
+
 	function statsDeath($sex=false, $year1=-1, $year2=-1)
 	{
 		global $TBLPREFIX;

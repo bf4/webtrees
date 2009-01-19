@@ -3490,11 +3490,11 @@ function check_in($logline, $filename, $dirname, $bInsert = false) {
  *	To load the file XXX for module YYY, call
  *		loadLangFile("YYY:XXX");
  */
-function loadLangFile($fileListNames="") {
+function loadLangFile($fileListNames="", $lang="") {
 	global $pgv_language, $confighelpfile, $helptextfile, $factsfile, $adminfile, $editorfile, $countryfile, $faqlistfile, $extrafile;
 	global $LANGUAGE, $lang_short_cut;
 	global $pgv_lang, $countries, $altCountryNames, $factarray, $factAbbrev, $faqlist;
-
+	if (empty($lang)) $lang=$LANGUAGE;
 	$allLists = "pgv_lang, pgv_confighelp, pgv_help, pgv_facts, pgv_admin, pgv_editor, pgv_country, pgv_faqlib";
 
 	// Empty list or "all" means "load complete file set"
@@ -3510,40 +3510,40 @@ function loadLangFile($fileListNames="") {
 		switch ($fileListName) {
 		case "pgv_lang":
 			$fileName1 = $pgv_language["english"];
-			$fileName2 = $pgv_language[$LANGUAGE];
+			$fileName2 = $pgv_language[$lang];
 			break;
 		case "pgv_confighelp":
 			$fileName1 = $confighelpfile["english"];
-			$fileName2 = $confighelpfile[$LANGUAGE];
+			$fileName2 = $confighelpfile[$lang];
 			break;
 		case "pgv_help":
 			$fileName1 = $helptextfile["english"];
-			$fileName2 = $helptextfile[$LANGUAGE];
+			$fileName2 = $helptextfile[$lang];
 			break;
 		case "pgv_facts":
 			$fileName1 = $factsfile["english"];
-			$fileName2 = $factsfile[$LANGUAGE];
+			$fileName2 = $factsfile[$lang];
 			break;
 		case "pgv_admin":
 			$fileName1 = $adminfile["english"];
-			$fileName2 = $adminfile[$LANGUAGE];
+			$fileName2 = $adminfile[$lang];
 			break;
 		case "pgv_editor":
 			$fileName1 = $editorfile["english"];
-			$fileName2 = $editorfile[$LANGUAGE];
+			$fileName2 = $editorfile[$lang];
 			break;
 		case "pgv_country":
 			$fileName1 = $countryfile["english"];
-			$fileName2 = $countryfile[$LANGUAGE];
+			$fileName2 = $countryfile[$lang];
 			break;
 		case "pgv_faqlib":
 			$fileName1 = $faqlistfile["english"];
-			$fileName2 = $faqlistfile[$LANGUAGE];
+			$fileName2 = $faqlistfile[$lang];
 			break;
 		default:
 			if (preg_match('/(.+):(.+)/', $fileListName, $match)) {
 				$fileName1 = 'modules/'.$match[1].'/languages/'.$match[2].'.'.$lang_short_cut['english'].'.php';
-				$fileName2 = 'modules/'.$match[1].'/languages/'.$match[2].'.'.$lang_short_cut[$LANGUAGE].'.php';
+				$fileName2 = 'modules/'.$match[1].'/languages/'.$match[2].'.'.$lang_short_cut[$lang].'.php';
 				break;
 			} else {
 				continue 2;
@@ -3552,7 +3552,7 @@ function loadLangFile($fileListNames="") {
 		if (file_exists($fileName1)) {
 			require $fileName1;
 		}
-		if ($LANGUAGE!='english' && file_exists($fileName2)) {
+		if ($lang!='english' && file_exists($fileName2)) {
 			require $fileName2;
 		}
 	}
@@ -3564,11 +3564,11 @@ function loadLangFile($fileListNames="") {
 	// In contrast to the preceding logic, we will NOT first load the English extra.xx.php
 	// file when trying for other languages.
 	//
-	if (file_exists("languages/lang.".$lang_short_cut[$LANGUAGE].".extra.php")) {
-		require "languages/lang.".$lang_short_cut[$LANGUAGE].".extra.php";
+	if (file_exists("languages/lang.".$lang_short_cut[$lang].".extra.php")) {
+		require "languages/lang.".$lang_short_cut[$lang].".extra.php";
 	}
-	if (file_exists($extrafile[$LANGUAGE])) {
-		require $extrafile[$LANGUAGE];
+	if (file_exists($extrafile[$lang])) {
+		require $extrafile[$lang];
 	}
 
 }
