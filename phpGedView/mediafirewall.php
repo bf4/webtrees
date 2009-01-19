@@ -56,19 +56,31 @@ function sendErrorAndExit($type, $line1, $line2 = false) {
 	if(!PGV_USER_CAN_EDIT) {
 		$line2 = false;
 	}
+	
+	// arbitrary maxlen to keep images from getting too wide
+	$maxlen = 100;
+	$numchars = UTF8_strlen($line1);
+	if ($numchars > $maxlen) {
+		$line1 = UTF8_substr($line1, $maxlen);
+		$numchars = $maxlen;
+	}	
+	$line1 = reverseText($line1);
+	if ($line2) {
+		$numchars2 = UTF8_strlen($line2);
+		if ($numchars2 > $maxlen) {
+			$line2 = UTF8_substr($line2, $maxlen);
+			$numchars2 = $maxlen;
+		}
+		if ($numchars2 > $numchars) {
+			$numchars = $numchars2;
+		}
+		$line2 = reverseText($line2);
+	}
 
 	$type = isImageTypeSupported($type);
 	if ( $type ){
-		// figure out how long the errr message is
-		$numchars = strlen($line1);
-		if ($line2 && (strlen($line2) > $numchars)) {
-			$numchars = strlen($line2);
-		}
-		// set an arbitrary max length
-		if ($numchars > 100) $numchars = 100;
-
 		// width of image is based on the number of characters
-		$width = $numchars * 6.5;
+		$width = ($numchars+1) * 6.5;
 		$height = 60;
 
 		$im  = imagecreatetruecolor($width, $height);  /* Create a black image */
@@ -188,6 +200,7 @@ function embedText($im, $text, $maxsize, $color, $font, $vpos, $hpos) {
 		if ($hpos=="top2bottom") $hpos = "bottom2top";
 	}
 
+	$text = reverseText(stripslashes($text));
 	$height = imagesy($im);
 	$width  = imagesx($im);
 	$calc_angle=rad2deg(atan($height/$width));
@@ -218,7 +231,7 @@ function embedText($im, $text, $maxsize, $color, $font, $vpos, $hpos) {
 				case "left":
 				$taille=textlength($maxsize,$hypoth,$text);
 				$pos_y=($height*.85-$taille);
-				$taille_text=($taille-2)*(strlen(stripslashes($text)));
+				$taille_text=($taille-2)*(UTF8_strlen($text));
 				$pos_x=$width*0.15;
 				$rotation=$calc_angle;
 				break;
@@ -249,15 +262,15 @@ function embedText($im, $text, $maxsize, $color, $font, $vpos, $hpos) {
 	if ($useTTF) {
 		// if imagettftext throws errors, catch them with a custom error handler
 		set_error_handler("imagettftextErrorHandler");
-		imagettftext($im, $taille, $rotation, $pos_x, $pos_y, $textcolor, 'includes/fonts/'.$font, stripslashes($text));
+		imagettftext($im, $taille, $rotation, $pos_x, $pos_y, $textcolor, 'includes/fonts/'.$font, $text);
 		restore_error_handler();
 	}
 	// don't use an 'else' here since imagettftextErrorHandler may have changed the value of $useTTF from true to false
 	if (!$useTTF) {
 		if ($rotation!=90) {
-			imagestring($im, 5, $pos_x, $pos_y, stripslashes($text),$textcolor);
+			imagestring($im, 5, $pos_x, $pos_y, $text,$textcolor);
 		} else {
-			imagestringup($im, 5, $pos_x, $pos_y, stripslashes($text),$textcolor);
+			imagestringup($im, 5, $pos_x, $pos_y, $text,$textcolor);
 		}
 	}
 
@@ -265,7 +278,8 @@ function embedText($im, $text, $maxsize, $color, $font, $vpos, $hpos) {
 
 function textlength($t,$mxl,$text) {
 	$taille_c = $t;
-	while (($taille_c-2)*(strlen(stripslashes($text))) > $mxl) {
+	$len = UTF8_strlen($text);
+	while (($taille_c-2)*($len) > $mxl) {
 		$taille_c--;
 		if ($taille_c == 2) break;
 	}
