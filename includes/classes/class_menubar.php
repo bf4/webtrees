@@ -893,9 +893,9 @@ class MenuBar
 		global $SEARCH_SPIDER, $ALLOW_THEME_DROPDOWN, $ALLOW_USER_THEMES, $THEME_DIR, $pgv_lang;
 
 		$current=$THEME_DIR;
-		foreach (get_theme_names() as $themename=>$themedir) {
+		foreach (get_theme_names() as $themedir) {
 			if ($themedir==get_user_setting(PGV_USER_ID, 'theme')) {
-				$current=$themename;
+				$current=$themedir;
 			}
 		}
 
@@ -916,7 +916,7 @@ class MenuBar
 			$menu->print_menu = null;
 			foreach (get_theme_names() as $themename=>$themedir) {
 				$submenu=new Menu($themename, encode_url("themechange.php?frompage={$frompage}&mytheme={$themedir}"));
-				if ($themename==$current) {
+				if ($themedir==$current) {
 					$submenu->addClass('favsubmenuitem_selected', 'favsubmenuitem_hover');
 				} else {
 					$submenu->addClass('favsubmenuitem', 'favsubmenuitem_hover');
