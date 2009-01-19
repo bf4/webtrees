@@ -3913,6 +3913,10 @@ function mediaFileInfo($fileName, $thumbName, $mid, $name='', $notes='', $obeyVi
  	while (true) {
 		if (file_exists("modules/lightbox/album.php")) {
 			// Lightbox is installed
+			include_once('modules/lightbox/lb_defaultconfig.php');
+			if (file_exists('modules/lightbox/lb_config.php')) {
+				include_once('modules/lightbox/lb_config.php');
+			}
 			switch ($type) {
 			case 'url_flv':
 				$url = encode_url('module.php?mod=JWplayer&pgvaction=flvVideo&flvVideo='.encrypt($fileName)) . "\" rel='clearbox(445,370,click)' rev=\"" . $mid . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name,ENT_COMPAT,'UTF-8')) . "::" . htmlspecialchars($notes,ENT_COMPAT,'UTF-8');
