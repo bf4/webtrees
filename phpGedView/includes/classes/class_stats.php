@@ -1089,7 +1089,7 @@ class stats {
 
 	function chartDistribution($chart_shows='world', $chart_type='', $surname='')
 	{
-		global $pgv_lang, $pgv_language, $countries;
+		global $pgv_lang, $pgv_lang_use, $countries;
 		// PGV uses 3-letter ISO/chapman codes, but google uses 2-letter ISO codes.  There is not a 1:1
 		// mapping, so Wales/Scotland/England all become GB, etc.
 		if (!isset($iso3166)) {
@@ -1134,11 +1134,13 @@ class stats {
 			foreach ($iso3166 as $three=>$two) {
 				$country_to_iso3166[UTF8_strtolower($three)]=$two;
 			}
-			foreach (array_keys($pgv_language) as $lang) {
-				loadLangFile('pgv_country', $lang);
-				foreach ($countries as $code => $country) {
-					if (array_key_exists($code, $iso3166)) {
-						$country_to_iso3166[UTF8_strtolower($country)]=$iso3166[$code];
+			foreach ($pgv_lang_use as $lang=>$use) {
+				if ($use) {
+					loadLangFile('pgv_country', $lang);
+					foreach ($countries as $code => $country) {
+						if (array_key_exists($code, $iso3166)) {
+							$country_to_iso3166[UTF8_strtolower($country)]=$iso3166[$code];
+						}
 					}
 				}
 			}
