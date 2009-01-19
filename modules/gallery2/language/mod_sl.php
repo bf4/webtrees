@@ -3,7 +3,7 @@
  * phpGedView Gallery 2 Module.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team. All rights reserved.
+ * Copyright (C) 2002 to 2005  John Finlay and Others
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,13 +22,13 @@
  * @package PhpGedView
  * @subpackage Gallery2
  * @version $Id$
- * @author Clovis
+ * @author Patrick Kellum
  */
-$pgv_lang['mod_gallery2'] = 'Galeria de fotos';
-$pgv_lang['mod_gallery2_siteadmin'] = 'Admin';
-$pgv_lang['mod_gallery2_useralbum'] = 'Meu Album';
-$pgv_lang['mod_gallery2_advsearch'] = 'Busca avan&ccedil;ada';
-$pgv_lang['mod_gallery2_error_user_create'] = "Ocorreram erros durante o registro do usu&aacute;rio.";
-$pgv_lang['mod_gallery2_error_user_check'] = "Ocorreram erros enquanto se procedia a verifica&ccedil;&atilde;o se o usu&aacute;rio existia.";
-$pgv_lang['mod_gallery2_error_init'] = "Ocorreram erros durante a inicializa&ccedil;&atilde;o do m&oacute;dulo Gallery.";
+$pgv_lang['mod_gallery2'] = 'Galerija';
+$pgv_lang['mod_gallery2_siteadmin'] = 'Upravljanje spletne strani';
+$pgv_lang['mod_gallery2_useralbum'] = 'Vaš album';
+$pgv_lang['mod_gallery2_advsearch'] = 'Napredno iskanje';
+$pgv_lang['mod_gallery2_error_user_create'] = "Napaka se je zgodila pri takojšnjem ustvarjanju uporabnika.";
+$pgv_lang['mod_gallery2_error_user_check'] = "Napaka se je zgodila pri preverjanju ali uporabnik že obstaja.";
+$pgv_lang['mod_gallery2_error_init'] = "Napaka se je zgodila pri vzpostavljanju Galerije.";
 ?>
