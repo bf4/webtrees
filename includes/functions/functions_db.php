@@ -496,7 +496,8 @@ function get_indilist_salpha($marnm, $fams, $ged_id) {
 
 	// Older versions of MySQL cannot sort/group on column aliases.
 	// Newer ones cannot sort/group on column expressions.
-	if (($DBTYPE=='mysql' || $DBTYPE=='mysqli') && version_compare(PGV_DB_VERSION, '5.0.0', '<')) {
+	// NOTE: Not sure of the exact cutoff.  5.0.67 is "new", 5.0.27 is "old"
+	if (($DBTYPE=='mysql' || $DBTYPE=='mysqli') && version_compare(PGV_DB_VERSION, '5.0.27', '<=')) {
 		$sort_group_col=$column;
 	} else {
 		$sort_group_col="alpha {$DBCOLLATE}";
@@ -580,7 +581,8 @@ function get_indilist_galpha($surn, $salpha, $marnm, $fams, $ged_id) {
 
 	// Older versions of MySQL cannot sort/group on column aliases.
 	// Newer ones cannot sort/group on column expressions.
-	if (($DBTYPE=='mysql' || $DBTYPE=='mysqli') && version_compare(PGV_DB_VERSION, '5.0.0', '<')) {
+	// NOTE: Not sure of the exact cutoff.  5.0.67 is "new", 5.0.27 is "old"
+	if (($DBTYPE=='mysql' || $DBTYPE=='mysqli') && version_compare(PGV_DB_VERSION, '5.0.27', '<=')) {
 		$sort_group_col=$column;
 	} else {
 		$sort_group_col="alpha {$DBCOLLATE}";
