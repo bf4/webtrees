@@ -28,7 +28,7 @@ setlocale(LC_CTYPE, $locale);
 $lang_common = array(
 
 // Text orientation and encoding
-'lang_direction'		=>	'smer pisanja jezika',	// ltr (Left-To-Right) or rtl (Right-To-Left)
+'lang_direction'		=>	'ltr',	// ltr (Left-To-Right) or rtl (Right-To-Left)
 'lang_encoding'			=>	'UTF-8',
 'lang_multibyte'		=>	false,
 
