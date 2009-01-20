@@ -2094,20 +2094,22 @@ function update_record($gedrec, $delete = false) {
 	$res=dbquery("SELECT pl_p_id FROM {$TBLPREFIX}placelinks WHERE pl_gid='{$gid}' AND pl_file={$ged_id}");
 
 	$placeids = array ();
-	while ($row = & $res->fetchRow()) {
-		$placeids[] = $row[0];
+	while ($row=$res->fetchRow()) {
+		$placeids[]=$row[0];
 	}
+	$res->free();
 	dbquery("DELETE FROM {$TBLPREFIX}placelinks WHERE pl_gid='{$gid}' AND pl_file={$ged_id}");
 	dbquery("DELETE FROM {$TBLPREFIX}dates WHERE d_gid='{$gid}' AND d_file={$ged_id}");
 
 	//-- delete any unlinked places
 	foreach ($placeids as $indexval => $p_id) {
-		dbquery("SELECT count(pl_p_id) FROM {$TBLPREFIX}placelinks WHERE pl_p_id=$p_id AND pl_file={$ged_id}");
+		$res=dbquery("SELECT count(pl_p_id) FROM {$TBLPREFIX}placelinks WHERE pl_p_id=$p_id AND pl_file={$ged_id}");
 
-		$row = & $res->fetchRow();
+		$row=$res->fetchRow();
 		if ($row[0] == 0) {
 			dbquery("DELETE FROM {$TBLPREFIX}places WHERE p_id=$p_id AND p_file={$ged_id}");
 		}
+		$res->free();
 	}
 
 	dbquery("DELETE FROM {$TBLPREFIX}media_mapping WHERE mm_gid='{$gid}' AND mm_gedfile={$ged_id}");
