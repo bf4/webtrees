@@ -73,7 +73,7 @@ setcookie('surname_sublist', $surname_sublist);
 // We use $SHOW_MARRIED_NAMES as the default value.
 $show_marnm=safe_GET('show_marnm', array('no','yes'));
 if (!$show_marnm) {
-	$show_marnm=safe_COOKIE('show_marnm_indilist', array('no','yes'), 'yes');
+	$show_marnm=safe_COOKIE('show_marnm_indilist', array('no','yes'));
 }
 if (!$show_marnm) {
 	$show_marnm=$SHOW_MARRIED_NAMES ? 'yes' : 'no';
