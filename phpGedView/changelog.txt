@@ -10,6 +10,7 @@
 
 
 Version 4.2.0
+ - Fixed: [ 2521121 ] [4841] - ASSO tag not linked (fisharebest)
  - Changed: Slightly improved picasa thumbnail appearance on Simplyxxx themes (windmillway)
  - Added: Include Lightbox config file in functions.php to pick up Lightbox iframe (url) width and height variables. (windmillway)
  - Added: Small change to media handling to pick up globe thumbnail. Corrected wrong display of "\" in Lightbox Notes. (windmillway)
