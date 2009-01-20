@@ -123,20 +123,20 @@ $worms = array(
 	'HTTrack',
 	'AISearchBot',
 	'panscient.com',
-	'Mozilla(^/\d)',	// legitimate Mozilla-based browsers have something like "Mozilla/5.0"
-	'(Microsoft)|(Internet)|(Explorer)'		// Internet Explorer self-identifies with "MSIE"
+	'Mozilla([^\/]|\/[^\d])',	// legitimate Mozilla-based browsers have something like "Mozilla/5.0"
+	'(Microsoft|Internet|Explorer)'		// Internet Explorer self-identifies with "MSIE"
 	);
 	$quitReason = "";
 
 	// check for attempt to redirect
-	if (eregi("=.*://", rawurldecode($_SERVER["REQUEST_URI"])!==false)) {
+	if (preg_match("/=.*:\/\//i", rawurldecode($_SERVER["REQUEST_URI"])!==false)) {
 		$quitReason = "Embedded URL detected";
 	}
 
 	// check for worms and bad bots
 	if ($quitReason == "") {
 		foreach ($worms as $worm) {
-			if (eregi($worm, $ua)!==false) {
+			if (preg_match('/'.$worm.'/i', $ua)) {
 				$quitReason = "Blocked crawler detected";
 				break;
 			}
