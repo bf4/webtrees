@@ -10,6 +10,7 @@
 
 
 Version 4.2.0
+ - Changed: new picasa album thumbnail (windmillway)
  - Fixed: [ 2495330 ] [4720] indilist shows married names not obeying config (fisharebest)
  - Fixed: [ 2521772 ] [4784] Serious bug in places (fisharebest)
  - Fixed: [ 2521121 ] [4841] - ASSO tag not linked (fisharebest)
