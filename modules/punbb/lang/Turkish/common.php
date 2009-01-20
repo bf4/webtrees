@@ -1,6 +1,5 @@
 <?php
 
-
 // Determine what locale to use
 switch (PHP_OS)
 {
@@ -12,11 +11,11 @@ switch (PHP_OS)
 	case 'FreeBSD':
 	case 'NetBSD':
 	case 'OpenBSD':
-		$locale = 'tr_TR.ISO8859-9';
+		$locale = 'tr-TR.utf-8';
 		break;
 
 	default:
-		$locale = 'tr_TR';
+		$locale = 'tr-TR';
 		break;
 }
 
@@ -29,8 +28,8 @@ $lang_common = array(
 
 // Text orientation and encoding
 'lang_direction'		=>	'ltr',	// ltr (Left-To-Right) or rtl (Right-To-Left)
-'lang_encoding'			=>	'iso-8859-9',
-'lang_multibyte'		=>	false,
+'lang_encoding'			=>	'utf-8',
+'lang_multibyte'		=>	true,
 
 // Notices
 'Bad request'			=>	'Hatalı Talep.Takip ettiğiniz link yanlış ya da güncel değil',
