@@ -3,7 +3,7 @@
  * Spanish language file for PhpGedView
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
+ * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -110,7 +110,7 @@ $pgv_lang["AUTO_GENERATE_THUMBS"]			= "Miniaturas generadas automáticamente";
 $pgv_lang["AUTO_GENERATE_THUMBS_help"]		= "~#pgv_lang[AUTO_GENERATE_THUMBS]#~<br /><br />Si debe el sistema generar automáticamente miniaturas para las imágenes que no las tengan.  Su instalación de PHP puede que no contemple esta funcionalidad.<br />";
 $pgv_lang["phpinfo_help"]				= "~#pgv_lang[phpinfo]#~<br /><br />Esta página proporciona gran cantidad de información acerca del servidor en el que está albergado PhpGedView.  Pueden verse muchos detalles de configuración del software del servidor relacionados con PHP y PhpGedView.<br />";
 $pgv_lang["config_help_help"]			= "~#pgv_lang[config_help]#~<br /><br />Esta página reúne todos las áreas principales de configuración en un solo sitio.  Puede ver esta información en pantalla o imprimirla para su uso posterior.<br />";
-$pgv_lang["more_config_hjaelp"]			= "<br /><b>Más ayuda</b><br />Puede obtener más ayuda haciendo clic el <b>?</b> que aparece junto a los elementos de la página.<br />";
+$pgv_lang["more_help_advice"]			= "<br /><b>Más ayuda</b><br />Puede obtener más ayuda haciendo clic el <b>?</b> que aparece junto a los elementos de la página.<br />";
 $pgv_lang["THUMBNAIL_WIDTH"]			= "Anchura de las miniaturas generadas";
 $pgv_lang["THUMBNAIL_WIDTH_help"]		= "~#pgv_lang[THUMBNAIL_WIDTH]#~<br /><br />Es la anchura (en pixels) a utilizar al generar automáticamente las miniaturas.  El valor predeterminado es 100.<br />";
 $pgv_lang["SHOW_SOURCES"]			= "Mostrar fuentes";
@@ -445,7 +445,7 @@ $pgv_lang["edit_exist_user_privacy_settings"]	= "Editar privacidad de un Usuario
 $pgv_lang["edit_exist_global_facts_settings"]	= "Modificar los ajustes existentes de privacidad global del hecho";
 $pgv_lang["edit_exist_person_facts_settings"]	= "Modificar ajustes existentes de privacidad de hechos por ID";
 $pgv_lang["general_privacy"]			= "Configuración general de privacidad";
-$pgv_lang["general_privacy_help"]		= "~#pgv_lang[general_privacy]#~<br /><br />Puede tener diferentes ajustes de Privacidad para cada GEDCOM de sus sitio PhpGedView.  Mire en el título de la página su está modificando el GEDCOM correcto.<br /><br />Estos ajustes generales pueden ser anulados utilizando los otros formularios de Privacidad en la página #pgv_lang[edit_privacy_title]#.<br />#pgv_lang[more_config_hjaelp]#";
+$pgv_lang["general_privacy_help"]		= "~#pgv_lang[general_privacy]#~<br /><br />Puede tener diferentes ajustes de Privacidad para cada GEDCOM de sus sitio PhpGedView.  Mire en el título de la página su está modificando el GEDCOM correcto.<br /><br />Estos ajustes generales pueden ser anulados utilizando los otros formularios de Privacidad en la página #pgv_lang[edit_privacy_title]#.<br />#pgv_lang[more_help_advice]#";
 $pgv_lang["person_privacy"]				= "Ajustes de privacidad por ID";
 $pgv_lang["person_privacy_help"]		= "~#pgv_lang[person_privacy]#~<br /><br />Estos ajustes permiten a los administradores definir un ajuste de privacidad específico para una persona, familia, fuente u objeto audiovisual en particular.<br /><br />Suponga, por ejemplo, que tuvo un hijo que falleció en la infancia. Normalmente como figura como fallecido sus detalles personales serían mostrados a todos los visitantes. Pero sin embargo Vd. y los demás de su familia aparecen aún como privados. No quiere borrar el registro de defunción del hijo pero quiere ocultar los detalles y hacerlos privados.  para usted y su familia esta información sigue perteneciendo al ámbito privado. A usted no le interesa borrar la fecha de la defunción de su hijo pero quiere ocultar su información y hacerla privada. Si su hijo tuviese un ID de I100 debería hacer los ajustes de privacidad como sigue: <br /><br />ID: I100<br />Visible para: \"Sólo para usuarios registrados\"<br /><br />También nos sirve para proceder a la inversa. Si quiere hacer públicos los detalles de alguien (ID 101) que sabe que ha fallecido pero desconoce la fecha, podría ajustar su privacidad de la siguiente forma:<br /><br />ID: I101<br />Visible para: \"Todo el mundo\"<br />";
 $pgv_lang["user_privacy"]				= "Ajustes de Privacidad de Usuario";

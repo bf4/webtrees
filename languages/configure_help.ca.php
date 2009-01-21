@@ -3,7 +3,7 @@
  * Catalan texts
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team. All rights reserved.
+ * Copyright (C) 2002 to 2009  PGV Development Team. All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -314,7 +314,7 @@ $pgv_lang["edit_exist_user_privacy_settings"]	= "Editar paràmetres de privadesa
 $pgv_lang["edit_exist_global_facts_settings"]	= "Editar els paràmetres existents de privadesa d'esdeveniments globals";
 $pgv_lang["edit_exist_person_facts_settings"]	= "Edita els paràmetres existents de privadesa d'esdeveniments per ID";
 $pgv_lang["general_privacy"]			= "Paràmetres generals de privadesa";
-$pgv_lang["general_privacy_help"]		= "~#pgv_lang[general_privacy]#~<br /><br />Podeu tenir diferents paràmetres de privadesa per cada GEDCOM del vostre lloc web PhpGedView. Comproveu sota el títol de la pàgina si esteu editant el GEDCOM correcte.<br /><br />Podeu saltar-vos aquests paràmetres general de privadesa fent servir els formularis de privadesa a la pàgina #pgv_lang[edit_privacy_title]# .<br />#pgv_lang[more_config_hjaelp]#";
+$pgv_lang["general_privacy_help"]		= "~#pgv_lang[general_privacy]#~<br /><br />Podeu tenir diferents paràmetres de privadesa per cada GEDCOM del vostre lloc web PhpGedView. Comproveu sota el títol de la pàgina si esteu editant el GEDCOM correcte.<br /><br />Podeu saltar-vos aquests paràmetres general de privadesa fent servir els formularis de privadesa a la pàgina #pgv_lang[edit_privacy_title]# .<br />#pgv_lang[more_help_advice]#";
 $pgv_lang["person_privacy"]				= "Paràmetres de privadesa per ID";
 $pgv_lang["accessible_by"]				= "Mostrar-ho a?";
 $pgv_lang["hide"]						= "Oculta";
@@ -637,7 +637,7 @@ $pgv_lang["AUTO_GENERATE_THUMBS"]			= "Genera miniatures automàticament";
 $pgv_lang["AUTO_GENERATE_THUMBS_help"]		= "~#pgv_lang[AUTO_GENERATE_THUMBS]#~<br /><br />Cal que el sistema generi automàticament miniatures de les imatges que no en tinguin? La vostra instal·lació PHP podria no suportar aquesta funcionalitat.<br /><br /><br />";
 $pgv_lang["phpinfo_help"]				= "~#pgv_lang[phpinfo]#~<br /><br />Aquesta pàgina forneix àmplia informació sobre el servidor on teniu hostatjat el PhpGedView. S'hi poden veure alguns detalls sobre el programari del servidor com els relatius a PHP i PhpGedView.<br />";
 $pgv_lang["config_help_help"]			= "~#pgv_lang[config_help]#~<br /><br />Aquesta pàgina és un recull de la majoria de temes de l'ajuda de configuració d'un lloc. Podeu veure la informació per pantalla o imprimir-la per a ús posterior.<br />";
-$pgv_lang["more_config_hjaelp"]			= "<br /><b>Més ajuda</b><br />Hi ha més ajuda disponible polsant el  <b>?</b> al costat dels ítems de la pàgina.<br />";
+$pgv_lang["more_help_advice"]			= "<br /><b>Més ajuda</b><br />Hi ha més ajuda disponible polsant el  <b>?</b> al costat dels ítems de la pàgina.<br />";
 $pgv_lang["THUMBNAIL_WIDTH"]			= "Amplada de les miniatures generades";
 $pgv_lang["THUMBNAIL_WIDTH_help"]		= "~#pgv_lang[THUMBNAIL_WIDTH]#~<br /><br />És l'amplada (en píxels) que el programa farà servir quan generi les miniatures automàticament. Es paràmetre per defecte és 100.<br /><br /><br />";
 $pgv_lang["SHOW_SOURCES"]			= "Mostra fonts";

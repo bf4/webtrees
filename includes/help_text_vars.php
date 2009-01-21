@@ -3,7 +3,7 @@
  * File contains var's to glue Help_text for PHPGedView together
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
+ * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -129,7 +129,7 @@ $pgv_lang["help_downloadgedcom.php"]		="#pgv_lang[download_gedcom_help]#";
 //-- Edit Gedcoms
 $pgv_lang["help_editgedcoms.php"]		="#pgv_lang[edit_gedcoms_help]#";
 //-- Edit Config Gedcoms
-$pgv_lang["help_editconfig_gedcom.php"]		="#pgv_lang[edit_config_gedcom_help]##pgv_lang[more_config_hjaelp]#<br /><br />#pgv_lang[readme_help]#";
+$pgv_lang["help_editconfig_gedcom.php"]		="#pgv_lang[edit_config_gedcom_help]##pgv_lang[more_help_advice]#<br /><br />#pgv_lang[readme_help]#";
 //-- Import Gedcom
 $pgv_lang["help_importgedcom.php"]		="#pgv_lang[import_gedcom_help]#";
 //-- Upload Gedcom
@@ -137,7 +137,7 @@ $pgv_lang["help_uploadgedcom.php"]		="#pgv_lang[upload_gedcom_help]#<br /><br />
 //-- Validate Gedcom
 $pgv_lang["help_validategedcom.php"]		="#pgv_lang[validate_gedcom_help]#";
 //-- Edit Privacy
-$pgv_lang["help_edit_privacy.php"]		="~#pgv_lang[edit_privacy_title]#~<br /><br />#pgv_lang[edit_privacy_help]##pgv_lang[more_config_hjaelp]#<br />#pgv_lang[readme_help]#";
+$pgv_lang["help_edit_privacy.php"]		="~#pgv_lang[edit_privacy_title]#~<br /><br />#pgv_lang[edit_privacy_help]##pgv_lang[more_help_advice]#<br />#pgv_lang[readme_help]#";
 
 //Specials for contents
 $vpos = strpos($pgv_lang["enter_terms"], ":", 0);

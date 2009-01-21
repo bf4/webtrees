@@ -3,7 +3,7 @@
  * Danish Language file for PhpGedView.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
+ * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -78,7 +78,7 @@ $pgv_lang["AUTO_GENERATE_THUMBS"]			= "Automatisk genererede miniaturebilleder";
 $pgv_lang["AUTO_GENERATE_THUMBS_help"]		= "~#pgv_lang[AUTO_GENERATE_THUMBS]#~<br /><br />Skal systemet automatisk generere miniaturebilleder for billeder, hvor der ikke findes nogle.  Din PHP installation understøtter muligvis ikke denne funktion.<br />";
 $pgv_lang["phpinfo_help"]				= "~#pgv_lang[phpinfo]#~<br /><br />Denne side giver uddybende information om den server hvor PhpGedView er installeret.  Mange konfigurationsmæssige detaljer om serverens software, der vedrører PHP og PhpGedView, kan ses.<br />";
 $pgv_lang["config_help_help"]			= "~#pgv_lang[config_help]#~<br /><br />Denne side samler alle hovedemnerne vedr. hjælp til konfigurationen på et sted.  Du kan se informationen på din skærm, eller du kan printe den til senere brug.<br />";
-$pgv_lang["more_config_hjaelp"]			= "<br /><b>Mere hjælp</b><br />Mere hjælp kan findes ved at klikke på <b>?</b> ved siden af elementerne på siden.<br />";
+$pgv_lang["more_help_advice"]			= "<br /><b>Mere hjælp</b><br />Mere hjælp kan findes ved at klikke på <b>?</b> ved siden af elementerne på siden.<br />";
 $pgv_lang["THUMBNAIL_WIDTH"]			= "Bredden af de genererede miniaturebilleder";
 $pgv_lang["THUMBNAIL_WIDTH_help"]		= "~#pgv_lang[THUMBNAIL_WIDTH]#~<br /><br />Dette er den bredde (i pixels), som programmet vil bruge nåsr den genererer miniaturebilleder automatisk.  Standard indstillingen er 100.<br />";
 $pgv_lang["SHOW_SOURCES"]				= "Vis kilder";
@@ -613,7 +613,7 @@ $pgv_lang["add_faq_body_help"] = "~FAQ-indhold~<br />FAQ-teksten skrives her.<br
 $pgv_lang["add_faq_order_help"] = "~FAQ-placering~<br />Dette felt styrer rækkefølgen af punkterne på FAQ-siden.<br /><br />Du behøver ikke at indsætte numrene i rækkefølge.  Hvis du laver huller i nummerrækkefølgen, kan du indsætte andre FAQ-punkter senere.  For eksempel, hvis du anvender numrene 1, 6, 11, 16, så kan du senere indsætte et punkt og nummerere det med et af de manglende numre i rækkefølgen.  Negative numre og nul er tilladte, og kan anvendes til at indsætte punkter foran det første i rækken.<br /><br />Når mere end et punkt på FAQ-siden har det samme positionsnummer, så kan kun en af disse punkter ses.<br />";
 $pgv_lang["time_limit_help"]			= "~#pgv_lang[time_limit]#~<br /><br />Den maximale importtid for en GEDCOM-fil.";
 
-// Media items 
+// Media items
 $pgv_lang["media_import_help"] = "~#pgv_lang[media_import]#~<br />Denne import vil konvertere multimedie links i din GEDCOM-fil til multimedie poster. For eksempel så vil de følgende medie links ændres fra:<blockquote><code>1 OBJE<br />2 FORM jpg<br />2 FILE media/farmor.jpg<br />2 TITL Foto af farmor</code></blockquote>til:<blockquote><code>0 @M1@ OBJE<br />1 FORM jpg<br />1 FILE media/farmor.jpg<br />1 TITL Foto af farmor</code></blockquote>Den nye multimedie post vil blive gemt separat i databasen. Links til eksterne multimedie filer vil blive ændret til referencer til den nye multimedie post, som til gengæld vil indeholde en reference til den eksterne fil. For eksempel så vil den følgende GEDCOM-post blive ændret fra:<blockquote><code>0 @I1@ INDI<br />1 NAME Dit/Navn/<br />1 OBJE<br />2 FORM jpg<br />2 FILE media/farmor.jpg<br />2 TITL Foto af farmor</code></blockquote>til:<blockquote><code>0 @I1@ INDI<br />1 NAME Dit/Navn/<br />1 OBJE @M1@<br /></code></blockquote>Fordelen ved at bruge multimedie poster er, at du let kan administrere dine mediefiler. Når du ændrer titlen på en multimedie post, ændres den i alle GEDCOM-poster, der linker til den. Adskillige personer, familier eller kilder kan linkes til den samme multimedie post.";
 $pgv_lang["ged_filter_results"] = "Resultat fundet";
 $pgv_lang["ged_filter_reset"] = "Tøm søgning";

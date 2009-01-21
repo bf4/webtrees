@@ -3,7 +3,7 @@
  * Slovak Language file for PhpGedView.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
+ * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -122,7 +122,7 @@ $pgv_lang["AUTO_GENERATE_THUMBS"]	= "Automaticky generovať náhľady";
 $pgv_lang["AUTO_GENERATE_THUMBS_help"]	= "|~#pgv_lang[AUTO_GENERATE_THUMBS]#~<br /><br />Systém by mal automaticky generovať náhľady pre obrázky, ktoré ich nemajú. Vaša PHP inštalácia nepodporuje túto funkčnosť.<br />";
 $pgv_lang["phpinfo_help"]		= "~#pgv_lang[phpinfo]#~<br /><br />Táto stránka poskytuje rozšírené informácie o servere na ktorom je hostovaný  PhpGedView. Veľa konfiguračných detailov o softvare na servere, ktorý je relevantný pre PHP a PhpGedView, môže byť zobrazených.<br />";
 $pgv_lang["config_help_help"]		= "~#pgv_lang[config_help]#~<br /><br />Táto stránka odsahuje hlavné položky nápovedy Konfigurácie. Môžete si infiormácie zobraziť, alebo vytlačiť pre neskoršie použitie.<br />";
-$pgv_lang["more_config_hjaelp"]		= "<br /><b>Ďalšia nápoveda</b><br />Ďalšia nápoveda je dostupná po kliknutí na <b>?</b> vedľa položky na stránke.<br />";
+$pgv_lang["more_help_advice"]		= "<br /><b>Ďalšia nápoveda</b><br />Ďalšia nápoveda je dostupná po kliknutí na <b>?</b> vedľa položky na stránke.<br />";
 $pgv_lang["THUMBNAIL_WIDTH"]		= "Šírka generovaných náhľadov";
 $pgv_lang["THUMBNAIL_WIDTH_help"]	= "~#pgv_lang[THUMBNAIL_WIDTH]#~<br /><br />Toto je šírka (v pixeloch) ktorú program použije keď automaticky generuje náhľady. Implicitné nastavenie je 100.<br />";
 $pgv_lang["SOURCE_ID_PREFIX"]		= "Zdroj&nbsp;ID prefix";

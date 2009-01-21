@@ -3,7 +3,7 @@
  * Hungarian texts
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
+ * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -440,7 +440,7 @@ $pgv_lang["hide_translated"]		= "Lefordított üzenetek elrejtése";
 $pgv_lang["lang_file_write_error"]	= "HIBA!!!<br /><br />A változásokat nem tudtuk rögzíteni a kiválasztott nyelvi állományba!<br />Kérjük, hogy ellenőrizze a(z) (#lang_filename#) írási jogosultságát!";
 $pgv_lang["no_open"]    = "HIBA!!!<br /><br />A(z) #lang_filename# állományt nem tudjuk megnyitni!";
 $pgv_lang["configured_languages"]	= "Használt nyelvek";
-	 
+
 //-- User Migration Tool messages
 $pgv_lang["um_header"] 			= "Felhasználói adat migrációs eszköz";
 $pgv_lang["um_proceed"] 		= "Végrehajtsuk az exportálást a felhasználói adatállományokból?<br /><br />";
@@ -505,7 +505,7 @@ $pgv_lang["AUTO_GENERATE_THUMBS"]			= "Automatikusan generált előnézet képek
 $pgv_lang["AUTO_GENERATE_THUMBS_help"]		= "~#pgv_lang[AUTO_GENERATE_THUMBS]#~<br /><br />A rendszer automatikus generáljon előnézet képeket amelyik fényképnek még nincs. Az ön PHP telepítése lehet hogy nem támogatja ezt a funkciót.<br />";
 $pgv_lang["phpinfo_help"]				= "~#pgv_lang[phpinfo]#~<br /><br />Ez az oldal részletes információkat mutat a szerverről ahova a PhpGedView telepítve lett. Konfiguráció részletek a szerver szoftverjéről, ahogy a PHP-hez és a PhpGedView -hoz kapcsolódik, itt tekinthető meg.<br />";
 $pgv_lang["config_help_help"]			= "~#pgv_lang[config_help]#~<br /><br />Ez az oldal összefoglalja nagyobb vonalakban a Konfiguráció Segitség -hez tartozó információkat. Az információ megtekinthető a képernyőn vagy elmenthető későbbi használathoz is.<br />";
-$pgv_lang["more_config_hjaelp"]			= "<br /><b>Részletes segítség</b><br />Részletes segítség kapható, ha az elem melletti <b>?</b> -re kattint.<br />";
+$pgv_lang["more_help_advice"]			= "<br /><b>Részletes segítség</b><br />Részletes segítség kapható, ha az elem melletti <b>?</b> -re kattint.<br />";
 $pgv_lang["THUMBNAIL_WIDTH"]			= "Generált előnézeti képek szélessége";
 $pgv_lang["THUMBNAIL_WIDTH_help"]		= "~#pgv_lang[THUMBNAIL_WIDTH]#~<br /><br />Ez a szélesség (pixelben) amit a program használni fog amikor automatikusan elönézeti képeket generál. Az alap beállítás 100.<br />";
 $pgv_lang["SHOW_SOURCES"]			= "Források mutatása";
