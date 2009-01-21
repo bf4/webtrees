@@ -494,15 +494,6 @@ function get_indilist_salpha($marnm, $fams, $ged_id) {
 		$column="SUBSTR(n_sort {$DBCOLLATE}, 1, 3)";
 	}
 
-	// Older versions of MySQL cannot sort/group on column aliases.
-	// Newer ones cannot sort/group on column expressions.
-	// NOTE: Not sure of the exact cutoff.  5.0.67 is "new", 5.0.27 is "old"
-	if (($DBTYPE=='mysql' || $DBTYPE=='mysqli') && version_compare(PGV_DB_VERSION, '5.0.27', '<=')) {
-		$sort_group_col=$column;
-	} else {
-		$sort_group_col="alpha {$DBCOLLATE}";
-	}
-
 	$exclude='';
 	$include='';
 	$digraphs=db_collation_digraphs();
@@ -510,9 +501,9 @@ function get_indilist_salpha($marnm, $fams, $ged_id) {
 		$exclude.=" AND n_sort NOT ".PGV_DB_LIKE." '{$digraph}%' {$DBCOLLATE}";
 	}
 	foreach ($digraphs as $to=>$from) { // Single-character digraphs
-		$include.=" UNION SELECT UPPER('{$to}' {$DBCOLLATE}) AS alpha FROM {$tables} WHERE {$join} AND n_sort ".PGV_DB_LIKE." '{$from}%' {$DBCOLLATE} GROUP BY {$sort_group_col}";
+		$include.=" UNION SELECT UPPER('{$to}' {$DBCOLLATE}) AS alpha FROM {$tables} WHERE {$join} AND n_sort ".PGV_DB_LIKE." '{$from}%' {$DBCOLLATE} GROUP BY 1";
 	}
-	$sql="SELECT {$column} AS alpha FROM {$tables} WHERE {$join} {$exclude} GROUP BY {$sort_group_col} {$DBCOLLATE} {$include} ORDER BY {$sort_group_col}";
+	$sql="SELECT {$column} AS alpha FROM {$tables} WHERE {$join} {$exclude} GROUP BY 1 {$include} ORDER BY 1";
 	$res=dbquery($sql);
 
 	$list=array();
@@ -579,15 +570,6 @@ function get_indilist_galpha($surn, $salpha, $marnm, $fams, $ged_id) {
 		$column="UPPER(SUBSTR(n_givn {$DBCOLLATE}, 1, 3))";
 	}
 
-	// Older versions of MySQL cannot sort/group on column aliases.
-	// Newer ones cannot sort/group on column expressions.
-	// NOTE: Not sure of the exact cutoff.  5.0.67 is "new", 5.0.27 is "old"
-	if (($DBTYPE=='mysql' || $DBTYPE=='mysqli') && version_compare(PGV_DB_VERSION, '5.0.27', '<=')) {
-		$sort_group_col=$column;
-	} else {
-		$sort_group_col="alpha {$DBCOLLATE}";
-	}
-
 	$exclude='';
 	$include='';
 	$digraphs=db_collation_digraphs();
@@ -595,12 +577,9 @@ function get_indilist_galpha($surn, $salpha, $marnm, $fams, $ged_id) {
 		$exclude.=" AND n_sort NOT ".PGV_DB_LIKE." '{$digraph}%' {$DBCOLLATE}";
 	}
 	foreach ($digraphs as $to=>$from) { // Single-character digraphs
-		$include.=" UNION SELECT UPPER('{$to}' {$DBCOLLATE}) AS alpha FROM {$tables} WHERE {$join} AND n_sort ".PGV_DB_LIKE." '{$from}%' {$DBCOLLATE} GROUP BY {$sort_group_col}";
+		$include.=" UNION SELECT UPPER('{$to}' {$DBCOLLATE}) AS alpha FROM {$tables} WHERE {$join} AND n_sort ".PGV_DB_LIKE." '{$from}%' {$DBCOLLATE} GROUP BY 1";
 	}
-	// TODO: some database let you ORDER BY a column alias.  Others seem to prefer the column expression.
-	// When we work out which DB wants which format, we can add some conditional code.
-	// Meanwhile, perform ordering in PHP.
-	$sql="SELECT {$column} AS alpha FROM {$tables} WHERE {$join} {$exclude} GROUP BY {$sort_group_col} {$DBCOLLATE} {$include} ORDER BY {$sort_group_col}";
+	$sql="SELECT {$column} AS alpha FROM {$tables} WHERE {$join} {$exclude} GROUP BY 1 {$include} ORDER BY 1";
 	$res=dbquery($sql);
 
 	$list=array();

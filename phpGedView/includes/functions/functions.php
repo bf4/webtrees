@@ -120,31 +120,22 @@ function check_db($ignore_previous=false) {
 	case 'mysql':
 	case 'mysqli':
 		if ($DB_UTF8_COLLATION) {
-			$res=$DBCONN->query("SET NAMES UTF8");
+			$DBCONN->query("SET NAMES UTF8");
 		}
-		$res=$DBCONN->query("SHOW VARIABLES LIKE 'version'");
-		$row=$res->fetchRow(DB_FETCHMODE_ORDERED);
-		$res->free();
-		DEFINE('PGV_DB_VERSION', $row[1]);
 		break;
 	case 'pgsql':
 		if ($DB_UTF8_COLLATION) {
-			$res=$DBCONN->query("SET NAMES 'UTF8'");
+			$DBCONN->query("SET NAMES 'UTF8'");
 		}
-		$version=pg_version();
-		define('PGV_DB_VERSION', $version['server']);
 		break;
 	case 'sqlite':
 		if ($DB_UTF8_COLLATION) {
-			$res=$DBCONN->query('PRAGMA encoding = "UTF-8"');
+			$DBCONN->query('PRAGMA encoding = "UTF-8"');
 		}
-		define('PGV_DB_VERSION', sqlite_libversion()); // TODO: is this the version used by Pear::DB?
 		break;
 	case 'mssql':
-		define('PGV_DB_VERSION', '0.0');
 		break;
 	default:
-		define('PGV_DB_VERSION', '0.0');
 	}
 
 	//-- protect the username and password on pages other than the Configuration page
