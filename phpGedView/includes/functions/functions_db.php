@@ -512,32 +512,32 @@ function get_indilist_salpha($marnm, $fams, $ged_id) {
 	foreach ($digraphs as $to=>$from) { // Single-character digraphs
 		$include.=" UNION SELECT UPPER('{$to}' {$DBCOLLATE}) AS alpha FROM {$tables} WHERE {$join} AND n_sort ".PGV_DB_LIKE." '{$from}%' {$DBCOLLATE} GROUP BY {$sort_group_col}";
 	}
-	$sql="SELECT {$column} AS alpha FROM {$tables} WHERE {$join} {$exclude} GROUP BY {$sort_group_col} {$DBCOLLATE} {$include} ORDER BY {$sort_group_col}='@', {$sort_group_col}=',', {$sort_group_col}";
+	$sql="SELECT {$column} AS alpha FROM {$tables} WHERE {$join} {$exclude} GROUP BY {$sort_group_col} {$DBCOLLATE} {$include} ORDER BY {$sort_group_col}";
 	$res=dbquery($sql);
 
 	$list=array();
 	while ($row=$res->fetchRow(DB_FETCHMODE_ASSOC)) {
 		if ($DB_UTF8_COLLATION) {
-			$list[]=$row['alpha'];
+			$letter=$row['alpha'];
 		} else {
 			$letter=UTF8_strtoupper(UTF8_substr($row['alpha'],0,1));
-			$list[$letter]=$letter;
 		}
+		$list[$letter]=$letter;
 	}
 	$res->free();
 
-	// If we can't sort in the DB, sort ourselves
+	// If we didn't sort in the DB, sort ourselves
 	if (!$DB_UTF8_COLLATION) {
 		uasort($list, 'stringsort');
-		// stringsort puts "," and "@" first, so force them to the end
-		if (in_array(',', $list)) {
-			unset($list[',']);
-			$list[',']=',';
-		}
-		if (in_array('@', $list)) {
-			unset($list['@']);
-			$list['@']='@';
-		}
+	}
+	// sorting puts "," and "@" first, so force them to the end
+	if (in_array(',', $list)) {
+		unset($list[',']);
+		$list[',']=',';
+	}
+	if (in_array('@', $list)) {
+		unset($list['@']);
+		$list['@']='@';
 	}
 	return $list;
 }
@@ -600,32 +600,32 @@ function get_indilist_galpha($surn, $salpha, $marnm, $fams, $ged_id) {
 	// TODO: some database let you ORDER BY a column alias.  Others seem to prefer the column expression.
 	// When we work out which DB wants which format, we can add some conditional code.
 	// Meanwhile, perform ordering in PHP.
-	$sql="SELECT {$column} AS alpha FROM {$tables} WHERE {$join} {$exclude} GROUP BY {$sort_group_col} {$DBCOLLATE} {$include} ORDER BY {$sort_group_col}='@', {$sort_group_col}=',', {$sort_group_col}";
+	$sql="SELECT {$column} AS alpha FROM {$tables} WHERE {$join} {$exclude} GROUP BY {$sort_group_col} {$DBCOLLATE} {$include} ORDER BY {$sort_group_col}";
 	$res=dbquery($sql);
 
 	$list=array();
 	while ($row=$res->fetchRow(DB_FETCHMODE_ASSOC)) {
 		if ($DB_UTF8_COLLATION) {
-			$list[]=$row['alpha'];
+			$letter=$row['alpha'];
 		} else {
 			$letter=UTF8_strtoupper(UTF8_substr($row['alpha'],0,1));
-			$list[$letter]=$letter;
 		}
+		$list[$letter]=$letter;
 	}
 	$res->free();
 
-	// If we can't sort in the DB, sort ourselves
+	// If we didn't sort in the DB, sort ourselves
 	if (!$DB_UTF8_COLLATION) {
 		uasort($list, 'stringsort');
-		// stringsort puts "," and "@" first, so force them to the end
-		if (in_array(',', $list)) {
-			unset($list[',']);
-			$list[',']=',';
-		}
-		if (in_array('@', $list)) {
-			unset($list['@']);
-			$list['@']='@';
-		}
+	}
+	// sorting puts "," and "@" first, so force them to the end
+	if (in_array(',', $list)) {
+		unset($list[',']);
+		$list[',']=',';
+	}
+	if (in_array('@', $list)) {
+		unset($list['@']);
+		$list['@']='@';
 	}
 	return $list;
 }
