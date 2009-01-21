@@ -604,7 +604,7 @@ $language_settings['finnish']=array(
 'MULTI_LETTER_ALPHABET'=>'',
 'MULTI_LETTER_EQUIV'=>'',
 'DICTIONARY_SORT'=>false,
-'COLLATION'=>'utf8_unicode_ci'
+'COLLATION'=>'utf8_swedish_ci'
 );
 
 //-- settings for swedish
