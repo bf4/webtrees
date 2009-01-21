@@ -3,7 +3,7 @@
  * German Language file for PhpGedView.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team
+ * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -111,7 +111,7 @@ $pgv_lang["AUTO_GENERATE_THUMBS"]		= "Automatisch Miniaturbilder erstellen";
 $pgv_lang["AUTO_GENERATE_THUMBS_help"]	= "~#pgv_lang[AUTO_GENERATE_THUMBS]#~<br /><br />Bestimmt ob PhpgedView automatisch fehlende Miniaturbilder erstellen darf oder nicht.  Es ist aber möglich dass Ihr PHP-Betriebssystem die Miniaturbilder-Erstellung nicht unterstützt.<br />";
 $pgv_lang["phpinfo_help"]				= "~#pgv_lang[phpinfo]#~<br /><br />Auf dieser Seite finden Sie ausführliche Auskunft über den Server wo PhpGedView sich befindet.  Sie finden dort viele Details über dessen Konfiguration, besonders wie sie die für PhpGedView erforderliche Betriebs-Systeme betreffen.<br />";
 $pgv_lang["config_help_help"]			= "~#pgv_lang[config_help]#~<br /><br />Auf dieser Seite sind die Haupt-Themen der Konfigurations-Hilfe von PhpGedView gesammelt.  Wenn Sie möchten, können Sie die Informationen drucken.<br />";
-$pgv_lang["more_config_hjaelp"]			= "<br /><br /><b>Mehr Hilfe</b><br /><br />Wenn sie das <b>?</b> neben den Elementen klicken, können Sie mehr Hilfe erhalten.<br />";
+$pgv_lang["more_help_advice"]			= "<br /><br /><b>Mehr Hilfe</b><br /><br />Wenn sie das <b>?</b> neben den Elementen klicken, können Sie mehr Hilfe erhalten.<br />";
 $pgv_lang["THUMBNAIL_WIDTH"]			= "Breite des erstellten Miniaturbildes";
 $pgv_lang["THUMBNAIL_WIDTH_help"]		= "~#pgv_lang[THUMBNAIL_WIDTH]#~<br /><br />Automatisch erstellte Miniaturbilder werden in dieser Breite erstellt.  Die standardmäßige Breite ist 100px.<br />";
 $pgv_lang["SHOW_SOURCES"]				= "Zeige Quellen";

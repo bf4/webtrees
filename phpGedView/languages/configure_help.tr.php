@@ -3,7 +3,7 @@
  * Turkish Language file for PhpGedView.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
+ * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -398,7 +398,7 @@ $pgv_lang["QUICK_ADD_FAMFACTS"]			= "Hızlı güncelleştirmede göstermek için
 $pgv_lang["QUICK_REQUIRED_FACTS"]			= "Hızlı güncellemede gerçekler her zaman göster";
 $pgv_lang["QUICK_ADD_FACTS"]			= "Hızlı güncelleştirmede göstermek için gerçekler";
 $pgv_lang["AUTO_GENERATE_THUMBS"]			= "Otomatikman tırnak önizleme üret";
-$pgv_lang["more_config_hjaelp"]			= "<br /><b>Daha çok Yardım</b><br />Daha çok yardım almak için sayfadaki <b>?</b> ikonu tıklayın.<br />";
+$pgv_lang["more_help_advice"]			= "<br /><b>Daha çok Yardım</b><br />Daha çok yardım almak için sayfadaki <b>?</b> ikonu tıklayın.<br />";
 $pgv_lang["THUMBNAIL_WIDTH"]			= "Üretilen tırnak önizleme genişliği";
 $pgv_lang["MEDIA_ID_PREFIX"]		= "Medya ID öneki";
 $pgv_lang["INDI_FACTS_ADD"] 			= "Kişisel Gerçekleri Ekle";

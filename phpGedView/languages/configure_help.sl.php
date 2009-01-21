@@ -3,7 +3,7 @@
  * Slovenian Language file for PhpGedView.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team
+ * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -67,7 +67,7 @@ $pgv_lang["QUICK_ADD_FAMFACTS"]			= "Dejstva za družine, ki se prikažejo pri H
 $pgv_lang["QUICK_REQUIRED_FACTS"]		= "Zahtevana dejstva za prikaz pri Hitri obnovitvi";
 $pgv_lang["QUICK_ADD_FACTS"]			= "Dejstva za prikaz pri Hitri obnovitvi";
 $pgv_lang["AUTO_GENERATE_THUMBS"]		= "Samodejno izdelaj sličice";
-$pgv_lang["more_config_hjaelp"]			= "<br /><b>Več pomoči</b><br />Več pomoč je na voljo s klikom na <b>?</b> poleg navedkov na strani.<br />";
+$pgv_lang["more_help_advice"]			= "<br /><b>Več pomoči</b><br />Več pomoč je na voljo s klikom na <b>?</b> poleg navedkov na strani.<br />";
 $pgv_lang["THUMBNAIL_WIDTH"]			= "Širina izdelanih sličic";
 $pgv_lang["SHOW_SOURCES"]			= "Pokaži vire";
 $pgv_lang["SPLIT_PLACES"]			= "Razdeli mesta v urejevalnem načinu";

@@ -3,7 +3,7 @@
  * French Language file for PhpGedView.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team. All rights reserved.
+ * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -64,7 +64,7 @@ $pgv_lang["QUICK_ADD_FAMFACTS"]         = "Événements Famille à ajouter en mo
 $pgv_lang["QUICK_REQUIRED_FACTS"]       = "Événements à toujours afficher en mode <i>Mise à jour rapide</i>";
 $pgv_lang["QUICK_ADD_FACTS"]            = "Événements à ajouter en mode <i>Mise à jour rapide</i>";
 $pgv_lang["AUTO_GENERATE_THUMBS"]       = "Créer automatiquement les vignettes";
-$pgv_lang["more_config_hjaelp"]         = "<br /> <b> Plus d'aide </ b> <br /> Plus d'aide est disponible en cliquant sur le <b>? </ b> qui se trouve à côté des éléments de la page. <br />";
+$pgv_lang["more_help_advice"]         = "<br /> <b> Plus d'aide </ b> <br /> Plus d'aide est disponible en cliquant sur le <b>? </ b> qui se trouve à côté des éléments de la page. <br />";
 $pgv_lang["THUMBNAIL_WIDTH"]            = "Largeur des vignettes";
 $pgv_lang["THUMBNAIL_WIDTH_help"]       = "~ # pgv_lang [THUMBNAIL_WIDTH] # ~ <br /> <br /> C'est la largeur (en pixels) que le programme utilisera lors de la génération automatique de vignettes. Le réglage par défaut est 100. <br />";
 $pgv_lang["SHOW_SOURCES"]               = "Montrer les sources ?";
