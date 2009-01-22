@@ -52,7 +52,7 @@ if ($export) {
 	echo '<h1>', $pgv_lang['ged_export'], '</h1>';
 	echo '<p>', htmlspecialchars(filename_decode($export)), ' => ', $filename, '</p>';
 	flush();
-	$fp=fopen($filename, 'w');
+	$fp=fopen($filename.'.tmp', 'w');
 	if ($fp) {
 		$start=microtime(true);
 		// Yuck - this function requres a global rather than a parameter
@@ -60,6 +60,8 @@ if ($export) {
 		print_gedcom('no', null, 'no', 'no', $fp);
 		$end=microtime(true);
 		fclose($fp);
+		unlink($filename);
+		rename($filename.'.tmp', $filename);
 		$stat=stat($filename);
 		echo sprintf('<p>%d bytes, %0.3f seconds</p>', $stat['size'], $end-$start);
 	} else {
