@@ -835,7 +835,12 @@ function get_indilist_indis($surn='', $salpha='', $galpha='', $marnm=false, $fam
 	while ($row=$res->fetchRow(DB_FETCHMODE_ASSOC)) {
 		$person=Person::getInstance($row);
 		$person->setPrimaryName($row['n_num']);
-		$list[]=$person;
+		// We need to clone $person, as we may have multiple references to the
+		// same person in this list, and the "primary name" would otherwise
+		// be shared amongst all of them.  This has some performance/memory
+		// implications, and there is probably a better way.  This, however,
+		// is clean, easy and works.
+		$list[]=clone $person;
 	}
 	$res->free();
 	if (!$DB_UTF8_COLLATION) {
@@ -1586,7 +1591,12 @@ function search_indis_names($query, $geds, $match) {
 		$indi=Person::getInstance($row);
 		if ($indi->canDisplayName()) {
 			$indi->setPrimaryName($row['n_num']);
-			$list[]=$indi;
+			// We need to clone $indi, as we may have multiple references to the
+			// same person in this list, and the "primary name" would otherwise
+			// be shared amongst all of them.  This has some performance/memory
+			// implications, and there is probably a better way.  This, however,
+			// is clean, easy and works.
+			$list[]=clone $indi;
 		}
 	}
 	$res->free();
