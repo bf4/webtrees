@@ -991,34 +991,16 @@ class GedcomDate {
 			array(' $1 ', ' ', '', ''),
 			strtolower($date)
 		);
-		// Some applications wrongly prefix the entire date string with a calendar
-		// escape, rather than prefixing each individual date.
-		// e.g. "@#DJULIAN@ BET 1520 AND 1530" instead of
-		// "BET @#DJULIAN@ 1520 AND @#DJULIAN@ 1530"
-		if (preg_match('/^(@#d[a-z ]+@) (from|bet) (.+) (and|to) (.+)/', $date, $match)) {
-			$this->qual1=$match[2];
-			$this->date1=$this->ParseDate("{$match[1]} {$match[3]}");
-			$this->qual2=$match[4];
-			$this->date2=$this->ParseDate("{$match[1]} {$match[5]}");
+		if (preg_match('/^(from|bet) (.+) (and|to) (.+)/', $date, $match)) {
+			$this->qual1=$match[1];
+			$this->date1=$this->ParseDate($match[2]);
+			$this->qual2=$match[3];
+			$this->date2=$this->ParseDate($match[4]);
+		} elseif (preg_match('/^(from|bet|to|and|bef|aft|cal|est|int|abt) (.+)/', $date, $match)) {
+			$this->qual1=$match[1];
+			$this->date1=$this->ParseDate($match[2]);
 		} else {
-			if (preg_match('/^(@#d[a-z ]+@) (from|bet|to|and|bef|aft|cal|est|int|abt|apx|cir) (.+)/', $date, $match)) {
-				$this->qual1=$match[2];
-				$this->date1=$this->ParseDate($match[1].' '.$match[3]);
-			} else {
-				if (preg_match('/^(from|bet) (.+) (and|to) (.+)/', $date, $match)) {
-					$this->qual1=$match[1];
-					$this->date1=$this->ParseDate($match[2]);
-					$this->qual2=$match[3];
-					$this->date2=$this->ParseDate($match[4]);
-				} else {
-					if (preg_match('/^(from|bet|to|and|bef|aft|cal|est|int|abt|apx|cir) (.+)/', $date, $match)) {
-						$this->qual1=$match[1];
-						$this->date1=$this->ParseDate($match[2]);
-					} else {
-						$this->date1=$this->ParseDate($date);
-					}
-				}
-			}
+			$this->date1=$this->ParseDate($date);
 		}
 	}
 
@@ -1041,7 +1023,7 @@ class GedcomDate {
 			$cal='';
 		}
 		// A date with a month: DM, M, MY or DMY
-		if (preg_match('/^(\d?\d?) ?(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec|tsh|csh|ksl|tvt|shv|adr|ads|nsn|iyr|svn|tmz|aav|ell|vend|brum|frim|nivo|pluv|vent|germ|flor|prai|mess|ther|fruc|comp|muhar|safar|rabi[at]|juma[at]|rajab|shaab|ramad|shaww|dhuaq|dhuah) ?(\d+(?: b ?c)?|\d\d\d\d \/ \d{1,4})?$/', $date, $match)) {
+		if (preg_match('/^(\d?\d?) ?(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec|tsh|csh|ksl|tvt|shv|adr|ads|nsn|iyr|svn|tmz|aav|ell|vend|brum|frim|nivo|pluv|vent|germ|flor|prai|mess|ther|fruc|comp|muhar|safar|rabi[at]|juma[at]|rajab|shaab|ramad|shaww|dhuaq|dhuah) ?((?:\d+(?: b ?c)?|\d\d\d\d \/ \d{1,4})?)$/', $date, $match)) {
 			$d=$match[1];
 			$m=$match[2];
 			$y=$match[3];
