@@ -3,7 +3,7 @@
  * Finnish Language file for PhpGedView.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team
+ * Copyright (C) 2002 to 2009  PGV Development Team
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -29,9 +29,9 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
-$pgv_lang["exact"]			= "Tarkka"; //@@
-$pgv_lang["more_fields"]		= "Lisää uusia kenttiä"; //@@
-$pgv_lang["install_step_8"] 		= "Aloita"; //@@
+$pgv_lang["exact"]			= "Tarkka"; 
+$pgv_lang["more_fields"]		= "Lisää uusia kenttiä"; 
+$pgv_lang["install_step_8"] 		= "Aloita"; 
 $pgv_lang["parent_family"]		= "Vanhempien perhe";
 $pgv_lang["step_parent_family"]	= "Puolivanhemman perhe";
 $pgv_lang["immediate_family"]	= "Oma perhe";
@@ -40,10 +40,10 @@ $pgv_lang["load_full_tree"]		= "Näytä tämä puu täyden sivun interaktiivisen
 $pgv_lang["hide_show_spouses"]	= "Näytä tai piilota useammat puolisot";
 
 $pgv_lang["interactive_tree"]		= "Interaktiivinen puu";
-$pgv_lang["example"]			= "Esimerkki:"; //@@
+$pgv_lang["example"]			= "Esimerkki:"; 
 $pgv_lang["tree"]			= "Puu";
 $pgv_lang["ellipsis"]			= "\xE2\x80\xA6";
-$pgv_lang["showUnknown"]		= "Näytä tuntematon sukupuoli"; //@@
+$pgv_lang["showUnknown"]		= "Näytä tuntematon sukupuoli"; 
 $pgv_lang["age_differences"]		= "Näytä ikäerot";
 $pgv_lang["date_of_entry"]		= "Alkuperäisen lähteen päiväys";
 $pgv_lang["multi_site_search"] 	= "Haku monesta palvelusta";
@@ -78,9 +78,9 @@ $pgv_lang["media_options"]		= "Media-asetukset";
 $pgv_lang["confirm_password"]	= "Salasana on toistettava.";
 $pgv_lang["enter_email"]		= "Sinun on täytettävä sähköpostiosoite.";
 $pgv_lang["name"]			= "Nimi";
-$pgv_lang["children"]			= "Lapset"; //@@
-$pgv_lang["child"]			= "Lapsi"; //@@
-$pgv_lang["family"] 			= "Perhe"; //@@
+$pgv_lang["children"]			= "Lapset"; 
+$pgv_lang["child"]			= "Lapsi"; 
+$pgv_lang["family"] 			= "Perhe"; 
 $pgv_lang["source_menu"]		= "Vaihtoehtoja lähteille";
 $pgv_lang["repo_menu"]		= "Vaihtoehtoja tietovarastolle";
 $pgv_lang["search_DM"]		= "Daitch-Mokotoff";
@@ -614,20 +614,22 @@ $pgv_lang["roots"]		 	= "Juuret";
 $pgv_lang["leaves"] 			= "Lehdet";
 $pgv_lang["widow"] 			= "Leski";
 $pgv_lang["widower"] 			= "Leski";
-$pgv_lang["show_parents"] 		= "Näytä vanhemmat"; //@@
+$pgv_lang["show_parents"] 		= "Näytä vanhemmat"; 
 
 //-- TIMELINE FILE MESSAGES
 $pgv_lang["age"]			= "Ikä";
 $pgv_lang["husb_age"]		= "Miehen ikä";
-$pgv_lang["wife_age"]			= "Vaimon ikä";
+$pgv_lang["wife_age"]		= "Vaimon ikä";
 $pgv_lang["days"]			= "päivää";
+$pgv_lang["weeks"]			= "viikkoa";
 $pgv_lang["months"]			= "kuukautta";
 $pgv_lang["years"]			= "vuotta";
 $pgv_lang["years2"]			= "vuotta";
 $pgv_lang["day1"]			= "päivä";
+$pgv_lang["week1"]			= "viikko";
 $pgv_lang["month1"]			= "kuukausi";
 $pgv_lang["year1"]			= "vuosi";
-$pgv_lang["after_death"]        		= "Kuoleman jälkeen";
+$pgv_lang["after_death"]        = "Kuoleman jälkeen";
 $pgv_lang["at_death_day"]      	= "päivänä, jona kuolema";
 $pgv_lang["timeline_title"]		= "PhpGedView aikajana";
 $pgv_lang["timeline_chart"]		= "Aikajana";
@@ -881,8 +883,8 @@ $pgv_lang["n_x_granddaughter_from_daughter"] = "tyttärentytär %2\$d. polvessa"
 // to allow fo language variations we specify different relationships for paternal and maternal
 // aunts and uncles
 // 1st generation
-$pgv_lang["sosa_uncle_2"] 			= "setä";
-$pgv_lang["sosa_uncle_3"] 			= "eno";
+$pgv_lang["sosa_uncle_2"] 			= "Setä"; 
+$pgv_lang["sosa_uncle_3"] 			= "Eno"; 
 // 2nd generation
 $pgv_lang["sosa_uncle_4"] 			= "isosetä";
 $pgv_lang["sosa_uncle_5"] 			= "isosetä";
@@ -1186,11 +1188,11 @@ $pgv_lang["upcoming_events_descr"]= "Tulevat tapahtumat -alue aktiivisessa GEDCO
 $pgv_lang["todays_events_block"]	= "Tänä päivänä alue";
 $pgv_lang["todays_events_descr"]	= "Tänä päivänä omassa historiassasi... alueella on luettelo tämän päivän tapahtumista. Mikäli tapahtumia ei löydy, ei aluetta näytetä. Käyttäjän OmaGedView sivun alueella luetteloidaan vain elävät, GEDCOM tervetuloa -sivulla näytetään kaikki henkilöt.";
 $pgv_lang["todo_block"] 		= "&quot;To Do&quot; tehtävät";
-$pgv_lang["todo_descr"] 		= "The To Do block lists all outstanding _TODO facts in the database."; //@@
+$pgv_lang["todo_descr"] 		= "The To Do block lists all outstanding _TODO facts in the database."; 
 $pgv_lang["todo_show_other"]     	= "Näytä muiden käyttäjien tehtävät";
 $pgv_lang["todo_show_unassigned"]	= "Näytä määrittämättömät tehtävät";
 $pgv_lang["todo_show_future"]    	= "Näytä tulevat tehtävät";
-$pgv_lang["todo_nothing"]        	= "Ei ole &quot;To Do&quot; tehtäviä."; //@@
+$pgv_lang["todo_nothing"]        	= "Ei ole &quot;To Do&quot; tehtäviä."; 
 $pgv_lang["yahrzeit_block"]		= "Tulevat jortsaitit";
 $pgv_lang["yahrzeit_descr"]		= "Tulevat jortsaitit-alue näyttää lähitulevaisuudessa esiintyvät kuolinaikojen vuosipäivät. Voit muokata näytettävää ajanjaksoa ja ylläpitäjä voi muokata miten kauaksi tulevaisuuten alueella katsotaan.";
 $pgv_lang["logged_in_users_block"]	= "Sisäänkirjautuneet-alue";

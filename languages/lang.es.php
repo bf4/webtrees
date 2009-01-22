@@ -3,7 +3,7 @@
  * Spanish language file for PhpGedView
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
+ * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -418,20 +418,20 @@ $pgv_lang["text"]					= "Texto de la fuente:";
 $pgv_lang["note"]					= "Nota";
 $pgv_lang["NN"] 					= "(apellido desconocido)";
 $pgv_lang["PN"] 					= "(nombre desconocido)";
-// $pgv_lang["NNhebrew"] 		= "(לא ידוע)";
-// $pgv_lang["PNhebrew"] 		= "(לא ידוע)";
-// $pgv_lang["NNarabic"] 		= "(غير معروف)";
-// $pgv_lang["PNarabic"] 		= "(غير معروف)";
-// $pgv_lang["NNgreek"] 			= "(άγνωστος/η)";
-// $pgv_lang["PNgreek"] 			= "(άγνωστος/η)";
-// $pgv_lang["NNrussian"] 		= "(неопределено)";
-// $pgv_lang["PNrussian"] 		= "(неопределено)";
-// $pgv_lang["NNchinese"] 		= "(未知)";
-// $pgv_lang["PNchinese"] 		= "(未知)";
-// $pgv_lang["NNvietnamese"] = "(vô danh)";
-// $pgv_lang["PNvietnamese"] = "(không biết tuổi)";
-// $pgv_lang["NNthai"] 			= "(unknown)";
-// $pgv_lang["PNthai"] 			= "(unknown)";
+$pgv_lang["NNhebrew"] 		= "(לא ידוע)";
+$pgv_lang["PNhebrew"] 		= "(לא ידוע)";
+$pgv_lang["NNarabic"] 		= "(غير معروف)";
+$pgv_lang["PNarabic"] 		= "(غير معروف)";
+$pgv_lang["NNgreek"] 			= "(άγνωστος/η)";
+$pgv_lang["PNgreek"] 			= "(άγνωστος/η)";
+$pgv_lang["NNrussian"] 		= "(неопределено)";
+$pgv_lang["PNrussian"] 		= "(неопределено)";
+$pgv_lang["NNchinese"] 		= "(未知)";
+$pgv_lang["PNchinese"] 		= "(未知)";
+$pgv_lang["NNvietnamese"] = "(vô danh)";
+$pgv_lang["PNvietnamese"] = "(không biết tuổi)";
+$pgv_lang["NNthai"] 			= "(apellido desconocido)";
+$pgv_lang["PNthai"] 			= "(nombre desconocido)";
 $pgv_lang["NNother"] 			= "(apellido desconocido)";
 $pgv_lang["PNother"] 			= "(nombre desconocido)";
 $pgv_lang["unrecognized_code"]		= "Código GEDCOM desconocido";
@@ -643,10 +643,12 @@ $pgv_lang["age"]					= "Edad";
 $pgv_lang["husb_age"]				= "Edad del esposo";
 $pgv_lang["wife_age"]				= "Edad de la esposa";
 $pgv_lang["days"]					= "días";
+$pgv_lang["weeks"]					= "semana";
 $pgv_lang["months"]					= "meses";
 $pgv_lang["years"]					= "años";	// >2 years
 $pgv_lang["years2"]					= "años";	// 2 years
 $pgv_lang["day1"]					= "día";
+$pgv_lang["week1"]					= "semana";
 $pgv_lang["month1"]					= "mes";
 $pgv_lang["year1"]					= "año";
 $pgv_lang["after_death"]			= "tras la defunción";

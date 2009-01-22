@@ -73,7 +73,9 @@ function DefaultAgeLocalisation(&$agestring, &$show_years) {
 			'/\b1m/i',
 			'/(\d+)m/i',
 			'/\b1d/i',
-			'/(\d+)d/i'
+			'/(\d+)d/i',
+			'/\b1w/i',      
+			'/(\d+)w/i'		
 		),
 		array(
 			$pgv_lang['child'],
@@ -84,7 +86,9 @@ function DefaultAgeLocalisation(&$agestring, &$show_years) {
 			'1 '.$pgv_lang['month1'],
 			'$1 '.$pgv_lang['months'],
 			'1 '.$pgv_lang['day1'],
-			'$1 '.$pgv_lang['days']
+			'$1 '.$pgv_lang['days'],
+	  	'1 '.$pgv_lang['week1'],		 
+			'$1 '.$pgv_lang['weeks']	
 		),
 		$agestring
 	);
