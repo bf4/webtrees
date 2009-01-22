@@ -58,7 +58,7 @@ echo 'function show_gedcom_record() {';
 echo ' var recwin=window.open("gedrecord.php?pid=', $controller->rid, '", "_blank", "top=0,left=0,width=600,height=400,scrollbars=1,scrollable=1,resizable=1");';
 echo '}';
 echo 'function showchanges() {';
-echo ' window.location="repository.php?rid=', $controller->rid, '&show_changes=yes"';
+echo ' window.location="repo.php?rid=', $controller->rid, '&show_changes=yes"';
 echo '}';
 echo PGV_JS_END;
 
