@@ -313,20 +313,6 @@ class Person extends GedcomRecord {
 	}
 
 	/**
-	* get the birth month
-	* @return string the month of birth
-	*/
-	function getBirthMonth($est = false, $cal = ""){
-		// TODO - change the design to use julian days, not gregorian years.
-		$this->_parseBirthDeath();
-		if (is_null($this->birthEvent)) {
-			return null;
-		}
-		$bdate = $this->birthEvent->getDate();
-		return $bdate->date1->m;
-	}
-
-	/**
 	* get death date
 	* @return GedcomDate the death date in the GEDCOM format of '1 JAN 2006'
 	*/
@@ -363,20 +349,6 @@ class Person extends GedcomRecord {
 		}
 		$ddate = $this->deathEvent->getDate();
 		return $ddate->date1->y;
-	}
-
-	/**
-	* get the death month
-	* @return string the month of death
-	*/
-	function getDeathMonth($est = false, $cal = ""){
-		// TODO - change the design to use julian days, not gregorian years.
-		$this->_parseBirthDeath();
-		if (is_null($this->deathEvent)) {
-			return null;
-		}
-		$ddate = $this->deathEvent->getDate();
-		return $ddate->date1->m;
 	}
 
 	// Get all the dates/places for births/deaths - for the INDI lists
