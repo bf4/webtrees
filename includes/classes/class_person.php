@@ -287,14 +287,6 @@ class Person extends GedcomRecord {
 	}
 
 	/**
-	* a function that returns the full GEDCOM line containing the birth date
-	* @return string the date line from the gedcom birth record in the format of '2 DATE 1 JAN 1900'
-	*/
-	function getGedcomBirthDate(){
-		return get_sub_record(2, "2 DATE", $this->getBirthRecord());
-	}
-
-	/**
 	* get the birth place
 	* @return string
 	*/
@@ -348,14 +340,6 @@ class Person extends GedcomRecord {
 			return new GedcomDate(NULL);
 		else
 			return $this->deathEvent->getDate($estimate);
-	}
-
-	/**
-	* a function that returns the full GEDCOM line containing the death date
-	* @return string the death date line from the gedcom in the format of '2 DATE 1 JAN 1900'
-	*/
-	function getGedcomDeathDate(){
-		return get_sub_record(2, "2 DATE", $this->getDeathRecord());
 	}
 
 	/**
