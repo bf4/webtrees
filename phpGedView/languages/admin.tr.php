@@ -3,7 +3,7 @@
  * Turkish Language file for PhpGedView.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
+ * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -181,7 +181,7 @@ $pgv_lang["ansi_encoding_detected"] 	= "ANSI ile kotlanmış saptanan dosya. Php
 $pgv_lang["ansi_to_utf8"]		= "ANSİ ile kodlanmış bu GEDCOM veritabanı UTF-8\'e dönüştürülsün mü?";
 $pgv_lang["apply_privacy"]				= "Mahremiyet ayarları uygula";
 $pgv_lang["back_useradmin"]				= "Kullanıcı Yönetimine geri don";
-$pgv_lang["bytes_read"]			= "Okunan byte miktarı:";
+$pgv_lang["bytes_read"]			= "Okunan bayt miktarı:";
 $pgv_lang["can_admin"]					= "Üye yöneticilik yapabilir";
 $pgv_lang["can_edit"]					= "Verilecek izinler";
 $pgv_lang["change_id"]					= "Bireysel ID sini Değiştir:";

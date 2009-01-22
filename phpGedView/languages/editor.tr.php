@@ -3,7 +3,7 @@
  * Turkish Language file for PhpGedView.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
+ * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -230,8 +230,8 @@ $pgv_lang["file_no_temp_dir"]		= "PHP geçici rehbere ihtiyaç duyuyor";
 $pgv_lang["file_cant_write"]		= "PHP diske yazmakta başarız";
 $pgv_lang["file_bad_extension"]		= "PHP uzantılar tarafından dosya engellendi";
 $pgv_lang["file_unkown_err"]		= "Bilinmeyen dosya yükleme hata kodu #pgv_lang[global_num1]#. Lütfen bu hatayı rapor edin.";
-$pgv_lang["gen_missing_thumbs"]		= "Tırnak önizleme ihtiyaç duyuyor oluşturun";
-$pgv_lang["gen_missing_thumbs_lbl"]	= "Tırnak önizlemeleri ihtiyaç duyuyor";
+$pgv_lang["gen_missing_thumbs"]		= "Eksik tırnak önizlemeleri oluştur";
+$pgv_lang["gen_missing_thumbs_lbl"]	= "Eksik tırnak önizlemeleri";
 $pgv_lang["paste_id_into_field"]	= "Yeni oluşturulan kaydı referans göstermesi için sizin düzenlediğiniz alanların ID numarasını yapıştır ";
 $pgv_lang["resn_disabled"]				= "Not: Etki almak bu özelliği 'GEDCOM (RESN) Gizlilik Kısıtlamayı Kullan' kurarak etkinleştirmelisiniz.";
 $pgv_lang["copy_error"]				= "Dosya #GLOBALS[whichFile1]# dan #GLOBALS[whichFile2]# ye kopyalanamaz.";

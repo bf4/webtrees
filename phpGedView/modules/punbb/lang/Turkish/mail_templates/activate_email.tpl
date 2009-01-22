@@ -7,6 +7,6 @@ Selam <username>,
 e-posta adreslerinizi değiştirmek için lütfen aşağıdaki bağlantıya tıklayın:
 <activation_url>
 
---
+-- 
 <board_mailer>
 (Lütfen bu mesaja cevap yazmayın)

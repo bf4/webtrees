@@ -3,7 +3,7 @@
  * Turkish Language file for PhpGedView.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
+ * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -284,7 +284,6 @@ $pgv_lang["unrecognized_code_msg"]	= "Bu düzeltmek istediğimiz bir hatadır. B
 $pgv_lang["indi_info"]			= "Kişisel bilgi";
 $pgv_lang["pedigree_chart"]		= "Soyağacı Ağaç Çizelgesi";
 $pgv_lang["individual"]				= "Kişisel";
-$pgv_lang["individual"]				= "Kişisel";
 $pgv_lang["family"]			= "Aile";
 $pgv_lang["family_with"]			= "Ailesiyle";
 $pgv_lang["as_spouse"]			= "Eşiyle Aile Tablosu";
@@ -329,8 +328,8 @@ $pgv_lang["no_tab5"]				= "Bu şahıs ile ilgili hiç bir yakın akraba bulunmam
 $pgv_lang["no_tab6"]				= "Bu kişisele bağlı hiç araştırma kütüğü yoktur.";
 $pgv_lang["show_fact_sources"]		= "Tüm kaynakları göster";
 $pgv_lang["show_fact_notes"]		= "Tüm notları göster";
-$pgv_lang["spouse"]			= "Hanımı";
-$pgv_lang["spouses"] 				= "Eşler";
+$pgv_lang["spouse"]			= "Eşi";
+$pgv_lang["spouses"] 				= "Eşleri";
 
 //-- FAMILY FILE MESSAGES
 $pgv_lang["family_info"]		= "Aile bilgisi";
@@ -1139,21 +1138,21 @@ $pgv_lang["add_media_tool"]		= "Medya dosyası ekleme aracı";
 $pgv_lang["media_linked"]			= "Bu multimedia nesnesi aşağıdaki kişiye bağlıdır:";
 $pgv_lang["media_not_linked"]		= "Bu media öbjesi hiçbir kişiye bağlı değil ve GEDCOM a kayıtlı değil.";
 $pgv_lang["media_dir_1"]			= "Bu media nesnesi dış sunucuda lokale yerleştirilir";
-$pgv_lang["media_dir_2"]			= "Bu media nesnesi standart media klasöründedir";
-$pgv_lang["media_dir_3"]			= "Bu media nesnesi korunmuş media klasöründedir";
+$pgv_lang["media_dir_2"]			= "Bu media nesnesi normal media klasöründedir";
+$pgv_lang["media_dir_3"]			= "Bu media nesnesi korumalı media klasöründedir";
 $pgv_lang["thumb_dir_1"]			= "Bu tırnak önizleme dış sunucuda lokale yerleştirilir";
-$pgv_lang["thumb_dir_2"]			= "Bu tırnak önizleme standart media klasöründedir";
-$pgv_lang["thumb_dir_3"]			= "Bu tırnak önizleme korunmuş media klasöründedir";
+$pgv_lang["thumb_dir_2"]			= "Bu tırnak önizleme normal media klasöründedir";
+$pgv_lang["thumb_dir_3"]			= "Bu tırnak önizleme korumalı media klasöründedir";
 $pgv_lang["moveto_2"]				= "Korumalı klasöre taşı";
-$pgv_lang["moveto_3"]				= "Standart klasöre taşı";
-$pgv_lang["move_standard"]			= "Standart da taşı";
-$pgv_lang["move_protected"]		= "Korunmuşa taşı";
+$pgv_lang["moveto_3"]				= "Normal klasöre taşı";
+$pgv_lang["move_standard"]			= "Normale taşı";
+$pgv_lang["move_protected"]		= "Korumalıya taşı";
 $pgv_lang["move_mediadirs"]			= "Media klasörleri taşı";
 $pgv_lang["setperms"]				= "Medya İzinleri Kur";
 
 
 $pgv_lang["setperms_success"]		= "İzinleri Kur";
-$pgv_lang["setperms_failure"]		= "İzinleri Kurma";
+$pgv_lang["setperms_failure"]		= "İzinler Kurulmamış";
 $pgv_lang["setperms_time_exceeded"]	= "İletişim limiti aşıldı. Küçük klasörle tekrar komutu dene.";
 $pgv_lang["move_time_exceeded"]	= "İletişim süre limitine ulaşıldı. Dosyaların bundan sonrası taşımak için tekrar komutu dene.";
 $pgv_lang["media_firewall_rootdir_no_exist"]			= "İstediğiniz bu media firewall kök klasörü yok. Önce bunu oluşturun.";
@@ -1566,7 +1565,7 @@ $pgv_lang["pentecost"]  = "Hamsin bayramı";
 $pgv_lang["assumption"] = "Kabulün";
 $pgv_lang["all_saints"] = "Tüm ermişler";
 $pgv_lang["muhar"]        = "Muharrem ayı";
-$pgv_lang["setperms_fix"]			= "Doğru okuma/yazma/izinleri işlet";
+$pgv_lang["setperms_fix"]			= "Düzgün okuma/yazma/izinleri uygula";
 $pgv_lang["media_firewall_invalid_dir"]	= "Not: Media Firewall bir dizinden medya dizininden başka yerden başlatıldı.";
 $pgv_lang["mail03_line03a"]			= "Siz herhangi bir hareketi almak zorunda değilsiniz. kullanıcı şimdi giriş yapabilir.";
 $pgv_lang["style3"]					= "Etiket kümesi";
@@ -1589,5 +1588,9 @@ $pgv_lang["pls_note06a"] 			= "Şimdi <b>#user_email#</b> email adresinize doğr
 $pgv_lang["welcome_text_auth_mode_2"]	= "<center><b>Bu Soyağacı Web Sitesine Hoş Geldiniz</b></center><br /> Bu soyağacı web sitesine erişim sadece <u>kayıtlı</u> kullanıcılara izin veriliyor.<br /><br /> Eğer siz bir kullanıcı hesaba sahip iseniz giriş yapabilirsiniz.<br /><br /> Eğer sizin bir kullanıcı hesabınız yoksa aşağıdaki uygun linki tıklatarak kayıt olabilirsiniz.<br /><br /> Kayıt sonrası hesabınızı doğruladıktan sonra son olarak yönetici hesabınızı onaylayacak veya reddedecektir. <br /><br />Yönetici hesabınıza uygulamadan sonra email ile size mesaj gönderilecektir.";
 $pgv_lang["message_instructions"]	= "<b>Lütfen Not:</b> Yaşayan bireylerin özel bilgileri sadece aile akrabaları ve yakın arkadaşlarına verilebilir. Herhangi bir özeri veriyi almadan önce ilişkinizi doğrulamak için sorulacaksınız. Bazen ölü kişilerin bilgisi aynı zamanda özel olabilir. Eğer durum bu ise, çünkü kişi hakkında kararlaştırmak için onları yaşayan olup olmadığı bilinen yeterli bilgi yoktur veya değildir ve muhtemelen bu kişi hakkında bizde bilgi yok. <br /><br />Bir soruyu sormadan önce lütfen kendisi sizin tarihler, yerler ve yakın akrabaları kontrol ederek doğru kişi hakkında soruyor olduğunu doğrular. Eğer siz soyada ait veride değişiklikler iletiyorsanız lütfen bunun nedeninin sebebi olan kaynağını da belirterek iletiniz.<br /><br />";
 $pgv_lang["portal_config_intructions"]	= "~#pgv_lang[customize_page]# <br /> #pgv_lang[customize_gedcom_page]#~<br /><br />Bunları istediğiniz gibi sayfaya blokları yerleştirerek sayfayı ihtiyacınıza göre özelleştirebilirsiniz.<br /><br /> Sayfa <b>Ana</b> ve <b>Sağ</b> bölümler içine bölünür. <b>Ana</b> bölüm blokları geniş belirirler ve sayfa başlığın altında belirir. <b>Sağ</b> bölüm sağda belirir ve sayfa başlığın altının sağında listelenir.<br /><br />Her bir bölüm listelendiği düzende sayfada yazılan blokların kendi listesine sahip olur.<br /><br />Blok listelerinin biri boş olduğunda kalan bloklar sayfanın tümünün genişliğini kapsayacaktır.<br /><br />";
+$pgv_lang["NNhebrew"] 		= "İbrani";
+$pgv_lang["PNhebrew"] 		= "İbrani";
+$pgv_lang["NNarabic"] 		= "Arap";
+$pgv_lang["PNarabic"] 		= "Arap";
 
 ?>

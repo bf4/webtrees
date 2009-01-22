@@ -3,7 +3,7 @@
  * Turkish Language file for PhpGedView.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
+ * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -377,4 +377,14 @@ $factarray["_CHR_MSIB" ] = "Annenin kardeşi vaftiz edilişi";
 $factarray["_BAPM_MSIB"] = "Annenin kardeşi vaftizi";
 $factarray["_MARB_MSIB"] = "Annenin kardeşi aforoz evliliği";
 $factarray["_MARB_COUS"] = "İlk kuzeninin aforoz evliliği";
+$factarray["_BRTM"]	= "Sünnet Olduğu";
+$factarray["__BRTM_CHIL"] = "Bir çocuğun sünnet oluşu";
+$factarray["__BRTM_GCHI"] = "Bir torunun sünnet oluşu";
+$factarray["__BRTM_GGCH"] = "Bir büyük torunun sünnet oluşu";
+$factarray["__BRTM_SIBL"] = "Bir kardeşin sünnet oluşu";
+$factarray["__BRTM_HSIB"] = "Üvey kardeşin sünnet oluşu";
+$factarray["__BRTM_NEPH"] = "Bir erkek yeğenin sünnet oluşu";
+$factarray["__BRTM_FSIB"] = "Amcanın sünnet oluşu";
+$factarray["__BRTM_MSIB"] = "Dayının sünnet oluşu";
+$factarray["__BRTM_COUS"] = "İlk kuzenin sünnet oluşu";
 ?>

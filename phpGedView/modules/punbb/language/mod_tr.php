@@ -2,7 +2,7 @@
 /**
  * punBB Module
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008	PGV Development Team.  All rights reserved.
+ * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,8 +22,14 @@
  * @subpackage punBB
  * @version $Id$
  * @author Patrick Kellum
- * @author Adem GENÇ uzayuydu@gmail.com http://www.muttafi.com
+ * @author Adem GENÇ uzayuydu@gmail.com http://www.muttafi.com 
  */
+ 
+if (!defined('PGV_PHPGEDVIEW')) {
+	header('HTTP/1.0 403 Forbidden');
+	exit;
+}
+
 $pgv_lang['mod_punbb'] = 'Mesaj Forumu';
 $pgv_lang['mod_punbb_search'] = 'Forumda Ara';
 $pgv_lang['mod_punbb_admin'] = 'Forum Yönetimi';
