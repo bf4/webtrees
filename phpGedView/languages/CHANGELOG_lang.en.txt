@@ -48,6 +48,10 @@ VERSION 4.2.
 ----------------------------------------------------------------------------------------
 +$pgv_lang["weeks"]									22 Jan 2009				A
 +$pgv_lang["week1"]									22 Jan 2009				A
++$pgv_lang["employee"]								22 Jan 2009				A
++$pgv_lang["employer"]								22 Jan 2009				A
++$pgv_lang["owner"]									22 Jan 2009				A
++$pgv_lang["slave"]									22 Jan 2009				A
 +$pgv_lang["months2"]								15 Jan 2009				A
 +$pgv_lang["hour1"]									15 Jan 2009				A
 +$pgv_lang["hours2"]								15 Jan 2009				A
