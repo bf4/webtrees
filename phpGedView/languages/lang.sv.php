@@ -3,7 +3,7 @@
  * Swedish Language file for PhpGedView.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team
+ * Copyright (C) 2002 to 2009  PGV Development Team
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -356,9 +356,11 @@ $pgv_lang["magnify"]			= "Förstora";
 //-- TIMELINE FILE MESSAGES
 $pgv_lang["age"]				= "Ålder";
 $pgv_lang["days"]					= "dagar";
+$pgv_lang["weeks"]					= "veckor";
 $pgv_lang["months"]					= "månader";
 $pgv_lang["years"]					= "år";
 $pgv_lang["day1"]					= "dag";
+$pgv_lang["week1"]					= "vecka";
 $pgv_lang["month1"]					= "månad";
 $pgv_lang["year1"]					= "år";
 $pgv_lang["after_death"]        ="efter döden";
