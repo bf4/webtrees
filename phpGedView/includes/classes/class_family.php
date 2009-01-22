@@ -34,17 +34,17 @@ define('PGV_CLASS_FAMILY_PHP', '');
 require_once 'includes/classes/class_gedcomrecord.php';
 
 class Family extends GedcomRecord {
-	var $husb = null;
-	var $wife = null;
-	var $children = array();
-	var $childrenIds = array();
-	var $marriage = null;
-	var $divorce = null;
-	var $marr_est = false; // estimate
-	var $marr_rec2 = null;
-	var $marr_date2 = null;
-	var $children_loaded = false;
-	var $numChildren = false;
+	private $husb = null;
+	private $wife = null;
+	private $children = array();
+	private $childrenIds = array();
+	private $marriage = null;
+	private $divorce = null;
+	private $marr_est = false; // estimate
+	private $marr_rec2 = null;
+	private $marr_date2 = null;
+	private $children_loaded = false;
+	private $numChildren = false;
 
 	// Create a Family object from either raw GEDCOM data or a database row
 	function Family($data, $simple=true) {
