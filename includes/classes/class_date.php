@@ -1041,7 +1041,7 @@ class GedcomDate {
 			$cal='';
 		}
 		// A date with a month: DM, M, MY or DMY
-		if (preg_match('/^(\d?\d?) (jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec|tsh|csh|ksl|tvt|shv|adr|ads|nsn|iyr|svn|tmz|aav|ell|vend|brum|frim|nivo|pluv|vent|germ|flor|prai|mess|ther|fruc|comp|muhar|safar|rabi[at]|juma[at]|rajab|shaab|ramad|shaww|dhuaq|dhuah) (\d+(?: b ?c)?|\d\d\d\d \/ \d{1,4})?$/', $date, $match)) {
+		if (preg_match('/^(\d?\d?) ?(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec|tsh|csh|ksl|tvt|shv|adr|ads|nsn|iyr|svn|tmz|aav|ell|vend|brum|frim|nivo|pluv|vent|germ|flor|prai|mess|ther|fruc|comp|muhar|safar|rabi[at]|juma[at]|rajab|shaab|ramad|shaww|dhuaq|dhuah) ?(\d+(?: b ?c)?|\d\d\d\d \/ \d{1,4})?$/', $date, $match)) {
 			$d=$match[1];
 			$m=$match[2];
 			$y=$match[3];
@@ -1056,9 +1056,10 @@ class GedcomDate {
 				$d='';
 				$m='';
 				$y='';
-				// Look for a 4 digit year anywhere in the date
-				if (preg_match('/\b(\d\d\d\d)\b/', $date, $match))
+				// Look for a 3/4 digit year anywhere in the date
+				if (preg_match('/\b(\d{3,4})\b/', $date, $match)) {
 					$y=$match[1];
+				}
 				// Look for a month anywhere in the date
 				if (preg_match('/(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec|tsh|csh|ksl|tvt|shv|adr|ads|nsn|iyr|svn|tmz|aav|ell|vend|brum|frim|nivo|pluv|vent|germ|flor|prai|mess|ther|fruc|comp|muhar|safar|rabi[at]|juma[at]|rajab|shaab|ramad|shaww|dhuaq|dhuah)/', $date, $match)) {
 					$m=$match[1];
