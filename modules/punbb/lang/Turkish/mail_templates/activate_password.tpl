@@ -9,6 +9,6 @@ Yeni şifreniz: <new_password>
 Şifrenizi değiştirmek için lütfen aşağıdaki bağlantıya tıklayınız:
 <activation_url>
 
---
+-- 
 <board_mailer>
 (Lütfen bu mesaja cevap yazmayınız!)

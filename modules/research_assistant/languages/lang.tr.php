@@ -3,7 +3,7 @@
  * phpGedView Research Assistant Tool - Form Loader Engine.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
+ * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,7 +21,7 @@
  *
  * @package PhpGedView
  * @subpackage Research_Assistant
- * @author Adem GENÇ uzayuydu@gmail.com http://www.muttafi.com
+ * @author Adem GENÇ uzayuydu@gmail.com http://www.muttafi.com 
  * @version $Id$
  */
 
@@ -44,7 +44,7 @@ $pgv_lang["manage_research_inst"]	= "Araştırma görevlerinizi yönetmek için 
 $pgv_lang["manage_research"]	= "Araştırma Yönetimi";
 $pgv_lang["manage_sources"]		= "Kayanklar Yönetimi";
 $pgv_lang["part_of"]			= "Bölüm (seçenek)";
-$pgv_lang["search_fhl"]			= "Aile Geçmiş Tarih Kütüphane Kataloğu Ara";
+$pgv_lang["search_fhl"]			= "Aile Geçmiş Tarih Kütüphane Kataloğu Ara"; 
 $pgv_lang["determine_sources"]	= "Mümkün Kaynakları Belirle";
 $pgv_lang["analyze_database"]	= "Veritabanı Analizi";
 $pgv_lang["pid_know_more"]		= "Siz kimin hakkında daha fazlayı öğrenmeyi istersiniz?";
@@ -85,7 +85,7 @@ $pgv_lang["Fields"]								= "Alanların Sayısı";
 $pgv_lang["FieldName"]							= "Alan Adı";
 $pgv_lang["InputType"]							= "Giriş Tipi";
 $pgv_lang["Values"]								= "Değerler";
-$pgv_lang["FormBuilder"]						= "Form Kur";
+$pgv_lang["FormBuilder"]						= "Form Kur"; 
 $pgv_lang["FormName"]							= "Form ismi gir";
 $pgv_lang["MultiplePeople"]						= "Form çok insanlara uygulansınmı?";
 $pgv_lang["EnterGEDCOMExtension"]				= "Lütfen formların gerçek tipi için GEDCOM uzantısını gir";
@@ -95,7 +95,7 @@ $pgv_lang["CustomField"]						= "Özel Alan İsmi";
 $pgv_lang["txt"]								= "Metin";
 $pgv_lang["checkbox"]							= "Seçim Kutusu";
 $pgv_lang["radiobutton"]						= "Radio Butonu";
-$pgv_lang["EnterResults"]						= "Sonuçları Gir";
+$pgv_lang["EnterResults"]						= "Sonuçları Gir"; 
 $pgv_lang["ra_submit"]							= "Gönder";
 $pgv_lang["ra_generate_tasks"]					= "TODO dan Görev Üret";
 $pgv_lang["TaskDescription"]					= "Görev Açıklaması";
@@ -137,10 +137,10 @@ $pgv_lang["Parent_Folder:"]             		= "Ana Klasör:";
 $pgv_lang["No_Parent"]                  		= "Ana Klasör Yok";
 $pgv_lang["Folder_Description:"]        		= "Klasör Açıklaması:";
 $pgv_lang["Folder_names_must_be_unique"]		= "Dosya isimleri tek olmalı.";
-$pgv_lang["folder_submitted"]          			= "Klasörünüz gönderildi";
+$pgv_lang["folder_submitted"]          			= "Klasörünüz gönderildi"; 
 $pgv_lang["folder_problem"]             		= "Dosyanızı eklemenizde bir sorun oluştur, Lütfen tekrar deneyin";
 
-// -- Missing Information Help
+// -- Missing Information Help 
 $pgv_lang["ra_missing_info_help"] = "This area displays Kayıp Bilgiler about the record. Select a checkbox and folder and click <b>Add Task</b> to create a task for the missing item. Existing tasks will show <b>View</b> instead of a checkbox.<br />";
 
 // -- RA_LISTLOGS MESSAGES
@@ -207,15 +207,15 @@ $pgv_lang["uk_county"]					= "İl";
 $pgv_lang["uk_boro"]						= "Şehir veya İlçe";
 $pgv_lang["uk_place"]					= "Yer";
 
-$pgv_lang["AssIndiFacts"]				= "Kişisel Gerçeği İlişkilendir";
-$pgv_lang["AssFamFacts"]				= "Aile Gerçeği İlişkilendir";
-$pgv_lang["ra_facts"]					= "Gerçekler";
-$pgv_lang["ra_fact"]					= "Gerçek";
-$pgv_lang["ra_remove"]					= "kaldır";
-$pgv_lang["ra_inferred_facts"]			= "Gerçekleri Anla";
-$pgv_lang["ra_person"]					= "Şahıs";
-$pgv_lang["ra_reason"]					= "Sebeb";
-$pgv_lang["success"]					= "Başarılı!";
+$pgv_lang["AssIndiFacts"]				= "Kişisel Gerçeği İlişkilendir"; 
+$pgv_lang["AssFamFacts"]				= "Aile Gerçeği İlişkilendir";  
+$pgv_lang["ra_facts"]					= "Gerçekler"; 	
+$pgv_lang["ra_fact"]					= "Gerçek"; 
+$pgv_lang["ra_remove"]					= "kaldır";   
+$pgv_lang["ra_inferred_facts"]			= "Gerçekleri Anla"; 
+$pgv_lang["ra_person"]					= "Şahıs"; 
+$pgv_lang["ra_reason"]					= "Sebeb"; 
+$pgv_lang["success"]					= "Başarılı!"; 
 
 $pgv_lang["registration_no"]			= "Kayıt Numarası:";
 $pgv_lang["serial_no"]					= "Serial No.:";
@@ -236,21 +236,21 @@ $pgv_lang["mytask_show_completed"]		= "Görevler tamamlandı göster?";
 $pgv_lang["autosearch_surname"]		    = "Soyadı içer:";
 $pgv_lang["autosearch_givenname"]	    = "İlk adları içer:";
 $pgv_lang["autosearch_byear"]		    = "Doğum yılını içer:";
-$pgv_lang["autosearch_bloc"]		    = "Doğum konumu içer:";
+$pgv_lang["autosearch_bloc"]		    = "Doğum konumu içer:";  
 $pgv_lang["autosearch_dyear"]		    = "Ölüm yılı içer:";
 $pgv_lang["autosearch_dloc"]		    = "Ölüm konumu içer:";
 $pgv_lang["autosearch_gender"]          = "Cinsiyeti içer:";
-$pgv_lang["autosearch_plugin_name"]     = "aaaaaa";
+$pgv_lang["autosearch_plugin_name"]     = "aaaaaa";  
 $pgv_lang["autosearch_fsurname"]		= "Babaların soyadını içer:";
 $pgv_lang["autosearch_fgivennames"]		= "Babaların ilk adlarını içer:";
 $pgv_lang["autosearch_msurname"]		= "Annelerin soyadını içer:";
-$pgv_lang["autosearch_mgivennames"]	    = "Annelerin ilk adını içer:";
-$pgv_lang["autosearch_country"]  	    = "Ülkeyi içer:";
+$pgv_lang["autosearch_mgivennames"]	    = "Annelerin ilk adını içer:"; 
+$pgv_lang["autosearch_country"]  	    = "Ülkeyi içer:"; 
 $pgv_lang["autosearch_plugin_name_ancestry"] = "Ancestry.com Plug-in";
 $pgv_lang["autosearch_plugin_name_ancestrycouk"] = "Ancestry.co.uk Plug-in";
 $pgv_lang["autosearch_plugin_name_ellisIsland"] = "EllisIslandRecords.org Plug-in";
 $pgv_lang["autosearch_plugin_name_genNet"] = "GeneaNet.com Plug-in";
-$pgv_lang["autosearch_plugin_name_gen"]  = "Genealogy.com Plug-in";
+$pgv_lang["autosearch_plugin_name_gen"]  = "Genealogy.com Plug-in"; 
 $pgv_lang["autosearch_plugin_name_fs"]   = "FamilySearch.org Plug-in";
 $pgv_lang["autosearch_plugin_name_werelate"]   = "Werelate.org Plug-in";
 $pgv_lang["autosearch_search"]           = "Ara";
