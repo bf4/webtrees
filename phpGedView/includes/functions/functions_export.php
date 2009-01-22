@@ -97,36 +97,36 @@ function gedcom_header($gedfile) {
 	global $CHARACTER_SET, $GEDCOMS, $pgv_lang, $TBLPREFIX;
 
 	// Default values for a new header
-	$HEAD="0 HEAD\n";
-	$SOUR="1 SOUR ".PGV_PHPGEDVIEW."\n2 NAME ".PGV_PHPGEDVIEW."\n2 VERS ".PGV_VERSION_TEXT."\n";
-	$DEST="1 DEST DISKETTE\n";
-	$DATE="1 DATE ".strtoupper(date("d M Y"))."\n2 TIME ".date("H:i:s")."\n";
-	$GEDC="1 GEDC\n2 VERS 5.5.1\n2 FORM Lineage-Linked\n";
-	$CHAR="1 CHAR {$CHARACTER_SET}\n";
-	$FILE="1 FILE {$gedfile}\n";
+	$HEAD="0 HEAD";
+	$SOUR="\n1 SOUR ".PGV_PHPGEDVIEW."\n2 NAME ".PGV_PHPGEDVIEW."\n2 VERS ".PGV_VERSION_TEXT;
+	$DEST="\n1 DEST DISKETTE";
+	$DATE="\n1 DATE ".strtoupper(date("d M Y"))."\n2 TIME ".date("H:i:s");
+	$GEDC="\n1 GEDC\n2 VERS 5.5.1\n2 FORM Lineage-Linked";
+	$CHAR="\n1 CHAR {$CHARACTER_SET}";
+	$FILE="\n1 FILE {$gedfile}";
 	$LANG="";
-	$PLAC="1 PLAC\n2 FORM {$pgv_lang['default_form']}\n";
+	$PLAC="\n1 PLAC\n2 FORM {$pgv_lang['default_form']}";
 	$COPR="";
 	$SUBN="";
-	$SUBM="1 SUBM @SUBM@\n0 @SUBM@ SUBM\n1 NAME ".PGV_USER_NAME."\n"; // The SUBM record is mandatory
+	$SUBM="\n1 SUBM @SUBM@\n0 @SUBM@ SUBM\n1 NAME ".PGV_USER_NAME; // The SUBM record is mandatory
 
 	// Preserve some values from the original header
 	if (isset($GEDCOMS[$gedfile]['imported']) && $GEDCOMS[$gedfile]['imported']) {
 		$head=find_gedcom_record("HEAD");
-		if (preg_match("/(1 CHAR [^\r\n]+)/", $head, $match)) {
-			$CHAR=$match[1]."\n";
+		if (preg_match("/\n1 CHAR .+/", $head, $match)) {
+			$CHAR=$match[0];
 		}
-		if (preg_match("/1 PLAC[\r\n]+2 FORM ([^\r\n]+)/", $head, $match)) {
-			$PLAC="1 PLAC\n2 FORM {$match[1]}\n";
+		if (preg_match("/\n1 PLAC\n2 FORM .+/", $head, $match)) {
+			$PLAC=$match[0];
 		}
-		if (preg_match("/(1 LANG [^\r\n]+)/", $head, $match)) {
-			$LANG=$match[1]."\n";
+		if (preg_match("/\n1 LANG .+/", $head, $match)) {
+			$LANG=$match[0];
 		}
-		if (preg_match("/(1 SUBN [^\r\n]+)/", $head, $match)) {
-			$SUBN=$match[1]."\n";
+		if (preg_match("/\n1 SUBN .+/", $head, $match)) {
+			$SUBN=$match[0];
 		}
-		if (preg_match("/(1 COPR [^\r\n]+)/", $head, $match)) {
-			$COPR=$match[1]."\n";
+		if (preg_match("/\n1 COPR .+/", $head, $match)) {
+			$COPR=$match[0];
 		}
 		// Link to SUBM/SUBN records, if they exist
 		$sql="SELECT o_id FROM ${TBLPREFIX}other WHERE o_type='SUBN' AND o_file=".$GEDCOMS[$gedfile]["id"];
@@ -134,7 +134,7 @@ function gedcom_header($gedfile) {
 		if (!DB::isError($res)) {
 			if ($res->numRows()>0) {
 				$row=$res->fetchRow();
-				$SUBN="1 SUBN @".$row[0]."@\n";
+				$SUBN="\n1 SUBN @".$row[0]."@";
 			}
 			$res->free();
 		}
@@ -143,13 +143,13 @@ function gedcom_header($gedfile) {
 		if (!DB::isError($res)) {
 			if ($res->numRows()>0) {
 				$row=$res->fetchRow();
-				$SUBM="1 SUBM @".$row[0]."@\n";
+				$SUBM="\n1 SUBM @".$row[0]."@";
 			}
 			$res->free();
 		}
 	}
 
-	return $HEAD.$SOUR.$DEST.$DATE.$GEDC.$CHAR.$FILE.$COPR.$LANG.$PLAC.$SUBN.$SUBM;
+	return $HEAD.$SOUR.$DEST.$DATE.$GEDC.$CHAR.$FILE.$COPR.$LANG.$PLAC.$SUBN.$SUBM."\n";
 }
 
 function print_gedcom($privatize_export, $privatize_export_level, $convert, $remove, $gedout) {
@@ -197,8 +197,9 @@ function print_gedcom($privatize_export, $privatize_export_level, $convert, $rem
 		$head=utf8_decode($head);
 	}
 	$head=remove_custom_tags($head, $remove);
-	$head=preg_replace('/[\r\n]+/', PGV_EOL, $head);
-	fwrite($gedout, $head);
+
+	// Buffer the output.  Lots of small fwrite() calls can be very slow when writing large gedcoms.
+	$buffer=reformat_record_export($head);
 
 	$sql="SELECT i_id, i_gedcom FROM {$TBLPREFIX}individuals WHERE i_file={$GEDCOMS[$GEDCOM]['id']} AND i_id NOT LIKE '%:%' ORDER BY i_id";
 	$res=dbquery($sql);
@@ -211,8 +212,11 @@ function print_gedcom($privatize_export, $privatize_export_level, $convert, $rem
 		if ($convert=="yes") {
 			$rec=utf8_decode($rec);
 		}
-		$rec=reformat_record_export($rec);
-		fwrite($gedout, $rec);
+		$buffer.=reformat_record_export($rec);
+		if (strlen($buffer)>65536) {
+			fwrite($gedout, $buffer);
+			$buffer='';
+		}
 	}
 	$res->free();
 
@@ -227,8 +231,11 @@ function print_gedcom($privatize_export, $privatize_export_level, $convert, $rem
 		if ($convert=="yes") {
 			$rec=utf8_decode($rec);
 		}
-		$rec=reformat_record_export($rec);
-		fwrite($gedout, $rec);
+		$buffer.=reformat_record_export($rec);
+		if (strlen($buffer)>65536) {
+			fwrite($gedout, $buffer);
+			$buffer='';
+		}
 	}
 	$res->free();
 
@@ -243,8 +250,11 @@ function print_gedcom($privatize_export, $privatize_export_level, $convert, $rem
 		if ($convert=="yes") {
 			$rec=utf8_decode($rec);
 		}
-		$rec=reformat_record_export($rec);
-		fwrite($gedout, $rec);
+		$buffer.=reformat_record_export($rec);
+		if (strlen($buffer)>65536) {
+			fwrite($gedout, $buffer);
+			$buffer='';
+		}
 	}
 	$res->free();
 
@@ -259,8 +269,11 @@ function print_gedcom($privatize_export, $privatize_export_level, $convert, $rem
 		if ($convert=="yes") {
 			$rec=utf8_decode($rec);
 		}
-		$rec=reformat_record_export($rec);
-		fwrite($gedout, $rec);
+		$buffer.=reformat_record_export($rec);
+		if (strlen($buffer)>65536) {
+			fwrite($gedout, $buffer);
+			$buffer='';
+		}
 	}
 	$res->free();
 
@@ -275,12 +288,15 @@ function print_gedcom($privatize_export, $privatize_export_level, $convert, $rem
 		if ($convert=="yes") {
 			$rec=utf8_decode($rec);
 		}
-		$rec=reformat_record_export($rec);
-		fwrite($gedout, $rec);
+		$buffer.=reformat_record_export($rec);
+		if (strlen($buffer)>65536) {
+			fwrite($gedout, $buffer);
+			$buffer='';
+		}
 	}
 	$res->free();
 
-	fwrite($gedout, "0 TRLR".PGV_EOL);
+	fwrite($gedout, $buffer."0 TRLR".PGV_EOL);
 
 	if ($privatize_export=="yes") {
 		if (isset ($_SESSION)) {
