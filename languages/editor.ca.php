@@ -23,7 +23,7 @@
  * @author Antoni Planas i Vilà
  * @package PhpGedView
  * @subpackage Languages
- * @version $Id: editor.ca.php
+ * @version $Id$
  */
 
 if (!defined('PGV_PHPGEDVIEW')) {
