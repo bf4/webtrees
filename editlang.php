@@ -3,7 +3,7 @@
  * Display a diff between two language files to help in translating.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
+ * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -350,7 +350,7 @@ case "edit" :
 						echo "<div style=\"display: inline;\" id=\"{$untranslatedPanel}\">";
 						print_help_link("google_translate_help", "qm");
 						echo "<a href=\"javascript:;\" onclick=\"translate('{$lang1}', '{$lang2}', {$ls01});\">{$pgv_lang["google_translate"]}</a> - ";
-						echo "<a style=\"color: #FF0000\" href=\"javascript:;\" onclick=\"return helpPopup00('", encode_url("ls01={$ls01}&ls02=", (0 - intval($lastfound) - 1), "&language2={$language2}&file_type={$file_type}&", session_name(), "=", session_id(), "&anchor=a1_{$ls01}"), "');\">";
+						echo "<a style=\"color: #FF0000\" href=\"javascript:;\" onclick=\"return helpPopup00('", encode_url("ls01={$ls01}&ls02=".(0 - intval($lastfound) - 1)."&language2={$language2}&file_type={$file_type}&".session_name()."=".session_id()."&anchor=a1_{$ls01}"), "');\">";
 						echo "<i>";
 						if ($translatedText == "") {
 							echo "&nbsp;";
