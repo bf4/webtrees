@@ -3,7 +3,7 @@
  * Catalan texts
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team. All rights reserved.
+ * Copyright (C) 2008 to 2009  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,10 +19,11 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
+ *
+ * @author Antoni Planas i Vilà
  * @package PhpGedView
  * @subpackage Languages
- * @author: Antoni Planas i Vilà
- * @version $Id$
+ * @version $Id: lang.ca.php
  */
 
 if (!defined('PGV_PHPGEDVIEW')) {
@@ -42,7 +43,7 @@ $pgv_lang["SHOW_ID_NUMBERS"]				= "Mostra els números d'ID al costat dels noms"
 $pgv_lang["SHOW_HIGHLIGHT_IMAGES"]			= "Mostra imatges als caixetins";
 $pgv_lang["view_img_details"]				= "Mostra els detalls de la imatge";
 $pgv_lang["server_folder"]				= "Nom del directori al servidor";
-$pgv_lang["medialist_recursive"]	= "Llista els fitxers en subdirectoris";
+$pgv_lang["medialist_recursive"]	= "Mostra els fitxers dels subdirectoris";
 $pgv_lang["media_options"]				= "Opcions Multimèdia";
 $pgv_lang["confirm_password"]				= "Cal que confirmeu la contrasenya.";
 $pgv_lang["enter_email"]				= "Cal que poseu una adreça de correu electrònic.";
@@ -145,7 +146,6 @@ $pgv_lang["apr_1st"]					= "Abril";
 $pgv_lang["mar_1st"]					= "Març";
 $pgv_lang["feb_1st"]					= "Feb";
 $pgv_lang["jan_1st"]					= "Gen";
-$pgv_lang["may_1st"]					= "Maig";
 $pgv_lang["dec_1st"]					= "Des";
 $pgv_lang["sep_1st"]					= "Set";
 $pgv_lang["nov_1st"]					= "Nov";
@@ -165,7 +165,7 @@ $pgv_lang["cookie_help"]				= "Aquest lloc fa servir galetes per fer el seguimen
 //new stuff
 
 //Individual
-$pgv_lang["indi_is_remote"]				= "La informació d'aquesta persona ha sigut enllaçada a un lloc remot";
+$pgv_lang["indi_is_remote"]				= "La informació d'aquesta persona prové d'un lloc remot:";
 $pgv_lang["link_remote"]            		= "Enllaça-la a una persona d'un lloc remot";
 //Add Remote Link
 $pgv_lang["title_search_link"]      		= "Afegiu un enllaç local";
@@ -175,7 +175,7 @@ $pgv_lang["label_site_url2"]        		= "URL del Lloc";
 $pgv_lang["cancel"]					= "Cancel·la";
 $pgv_lang["delete_family_confirm"]			= "Eliminant la família es perdran tots els vincles dels seus membres, però aquests romandran actius i a la base de dades. Segur que voleu suprimir aquesta família?";
 $pgv_lang["delete_family"]				= "Elimina la família";
-$pgv_lang["add_favorite"]				= "Afegeix un nou favorit";
+$pgv_lang["add_favorite"]				= "Afegiu un nou favorit";
 $pgv_lang["url"]						= "URL";
 $pgv_lang["add_fav_enter_note"]			= "Entreu una nota (opcional) sobre aquest favorit";
 $pgv_lang["add_fav_or_enter_url"]			= "O<br />\Entreu un URL i un títol";
@@ -292,7 +292,7 @@ $pgv_lang["qm_ah"]			= "?";
 $pgv_lang["page_help"]			= "Ajuda";
 $pgv_lang["help_for_this_page"]	= "Ajuda per a aquesta pàgina";
 $pgv_lang["help_contents"]		= "Índex d'ajuda";
-$pgv_lang["show_context_help"]	= "Mostra ajuda contextual";
+$pgv_lang["show_context_help"]	= "Mostra l'ajuda contextual";
 $pgv_lang["hide_context_help"]	= "Amaga l'ajuda contextual";
 $pgv_lang["sorry"]			= "<b> Ho sentim! encara no hi ha text d'ajuda per a aquesta pàgina o entrada</b>";
 $pgv_lang["help_not_exist"]		= "<b>Encara no hi ha disponible un text d'ajuda per a aquesta pàgina o entrada</b>";
@@ -325,7 +325,7 @@ $pgv_lang["my_pedigree"]		= "El vostre arbre";
 $pgv_lang["my_indi"]			= "La vostra fitxa";
 $pgv_lang["yes"]				= "Si";
 $pgv_lang["no"]				= "No";
-$pgv_lang["change_theme"]		= "Canvia la presentació";
+$pgv_lang["change_theme"]		= "Canvieu la presentació";
 
 //-- INDEX (PEDIGREE_TREE) FILE MESSAGES
 $pgv_lang["index_header"]		= "Arbre genealògic";
@@ -344,8 +344,6 @@ $pgv_lang["landscape"]			= "Apaïsat";
 $pgv_lang["start_at_parents"]		= "Començant pels seus pares";
 $pgv_lang["charts"]			= "Gràfics";
 $pgv_lang["lists"]			= "Llistes";
-$pgv_lang["max_generation"]		= "El màxim nombre de generacions d'avantpassats es de #PEDIGREE_GENERATIONS#.";
-$pgv_lang["min_generation"]		= "El nombre mínim de generacions d'avantpassats es de 3.";
 $pgv_lang["box_width"] 			= "Amplada del caixetí";
 
 //-- FUNCTIONS FILE MESSAGES
@@ -367,7 +365,7 @@ $pgv_lang["search"]			= "Cerca";
 $pgv_lang["clippings_cart"]         = "Cistell genealògic";
 $pgv_lang["print_preview"]		= "Format per imprimir";
 $pgv_lang["cancel_preview"]		= "Torna a vista normal";
-$pgv_lang["change_lang"]		= "Escolliu el idioma";
+$pgv_lang["change_lang"]		= "Escolliu L'idioma";
 $pgv_lang["print"]			= "Imprimeix";
 $pgv_lang["total_queries"]		= "Consultes a la Base de Dades: ";
 $pgv_lang["total_privacy_checks"]	= "Total comprovacions de privadesa ";
@@ -381,7 +379,7 @@ $pgv_lang["temple"]			= "Temple SUD";
 $pgv_lang["temple_code"]		= "Codi Temple SUD:";
 $pgv_lang["status"]			= "Estatus";
 $pgv_lang["source"]			= "Font";
-$pgv_lang["text"]				= "Text font:";
+$pgv_lang["text"]				= "Text de la font:";
 $pgv_lang["note"]				= "Nota:";
 $pgv_lang["NN"]				= "(desconegut)";
 $pgv_lang["PN"]				= "(desconegut)";
@@ -503,7 +501,7 @@ $pgv_lang["file_not_found"]		= "Fitxer inexistent";
 $pgv_lang["medialist_show"] 		= "Veure-ho ";
 $pgv_lang["per_page"]			= "objectes multimèdia per pàgina";
 $pgv_lang["media_format"]		= "Format multimèdia";
-$pgv_lang["image_size"]			= "Mides de la imatge";
+$pgv_lang["image_size"]			= "Mides de l'imatge";
 $pgv_lang["media_id"]			= "ID del multimèdia";
 $pgv_lang["invalid_id"]			= "En aquest fitxer GEDCOM no hi ha aquest ID.";
 $pgv_lang["record_updated"]		= "S'ha modificat correctament el registre #pid#.";
@@ -703,7 +701,7 @@ $pgv_lang["password_mismatch"]	= "Les contrasenyes no coincideixen.";
 $pgv_lang["enter_username"] 		= "Us cal posar un nom d'usuari.";
 $pgv_lang["enter_password"] 		= "Us cal posar una contrasenya.";
 $pgv_lang["save"]				= "Desa";
-$pgv_lang["saveandgo"]		= "Desa i ves a un nou registre";
+$pgv_lang["saveandgo"]		= "Desa i ves al nou registre";
 $pgv_lang["delete"] 			= "Elimina";
 $pgv_lang["edit"]				= "Edita";
 $pgv_lang["no_login"]			= "No s'ha pogut validar l'usuari.";
@@ -724,8 +722,6 @@ $pgv_lang["thumb_dir_1"]			= "Aquesta imatge en miniatura és a un servidor exte
 $pgv_lang["thumb_dir_2"]			= "Aquesta imatge en miniatura és al directori multimèdia estàndard";
 $pgv_lang["thumb_dir_3"]			= "Aquesta imatge en miniatura és al directori multimèdia protegit";
 $pgv_lang["moveto_2"]				= "Mou-lo al directori protegit";
-$pgv_lang["setperms_writable"]		= "Obre'l a l'escriptura";
-$pgv_lang["setperms_readonly"]		= "Qualifica'l com de només lectura";
 $pgv_lang["setperms_time_exceeded"]	= "S'ha superat el límit de temps d'execució. Torneu-ho a provar en un directori més petit.";
 $pgv_lang["move_time_exceeded"]		= "S'ha superat el límit de temps d'execució. Torneu-hi per moure la resta de fitxers.";
 $pgv_lang["media_firewall_rootdir_no_exist"]			= "No hi ha el directori arrel Tallafoc Multimèdia que heu demanat. Us cal crear-lo prèviament.";
@@ -734,7 +730,6 @@ $pgv_lang["media_firewall_protected_dir_not_writable"]	= "El directori multimèd
 $pgv_lang["media_firewall_invalid_dir"]	= "Error: el Tallafoc Multimèdia s'ha cridat des d'un directori diferent al multimèdia.";
 $pgv_lang["setperms_failure"]		= "No s'han ajustat els permisos";
 $pgv_lang["setperms_success"]		= "S'han ajustat els permisos";
-$pgv_lang["setperms_writable"]		= "";
 $pgv_lang["setperms"]				= "Ajusteu permisos multimèdia";
 $pgv_lang["move_mediadirs"]			= "Mou els directoris multimèdia";
 $pgv_lang["move_protected"]			= "Mou-la al protegit";
@@ -760,7 +755,7 @@ $pgv_lang["greatgrandchild"]		= "";
 $pgv_lang["brother"]			= "Germà";
 $pgv_lang["sister"] 			= "Germana";
 $pgv_lang["aunt"]				= "Tieta";
-$pgv_lang["uncle"]			= "Oncle";
+$pgv_lang["uncle"]				= "Oncle";
 $pgv_lang["niece"]				= "Neboda";
 $pgv_lang["nephew"]				= "Nebot";
 $pgv_lang["firstcousin"]		= "Cosí/na germà/na";
@@ -775,19 +770,19 @@ $pgv_lang["line_up_generations"]	= "Alinea generacions";
 $pgv_lang["oldest_top"]             = "Els més grans primer";
 
 // %1\$s replaced by first person, %2\$s by the relationship and %3\$s by the second person.
-$pgv_lang["relationship_male_1_is_the_2_of_3"] 		= "%1\$s és el %2\$s de %3\$s.";
-$pgv_lang["relationship_female_1_is_the_2_of_3"] 	= "%1\$s és el %2\$s de %3\$s.";
+$pgv_lang["relationship_male_1_is_the_2_of_3"] 		= "%1\$s és %2\$s de %3\$s.";
+$pgv_lang["relationship_female_1_is_the_2_of_3"] 	= "%1\$s és %2\$s de %3\$s.";
 
 $pgv_lang["mother_in_law"]		= "sogra";
 $pgv_lang["father_in_law"]		= "sogre";
 $pgv_lang["brother_in_law"]		= "cunyat";
 $pgv_lang["sister_in_law"]		= "cunyada";
-$pgv_lang["son_in_law"]		      = "fill polític";
-$pgv_lang["daughter_in_law"]		= "filla política";
-$pgv_lang["cousin_in_law"]			= "Cosí/na polític/a";
+$pgv_lang["son_in_law"]		    = "gendre";
+$pgv_lang["daughter_in_law"]	= "nora";
+$pgv_lang["cousin_in_law"]		= "Cosí/na polític/a";
 
-$pgv_lang["step_son"]		      = "fillastre";
-$pgv_lang["step_daughter"]	    	= "fillastra";
+$pgv_lang["step_son"]		    = "fillastre";
+$pgv_lang["step_daughter"]	  	= "fillastra";
 
 // the bosa_brothers_offspring name is used for fraternal nephews and nieces - the names below can be extended to any number
 // of generations just by adding more translations.
@@ -803,8 +798,8 @@ $pgv_lang["bosa_brothers_offspring_7"] 	= "besneboda";
 // in this text %1\$d is replaced with the number of generations
 //              %2\$d is replaced with the number of generations - 1
 //              %3\$d is replaced with the number of generations - 2
-$pgv_lang["n_x_brothers_son"]	  		= "%2\$d x besnebot";
-$pgv_lang["n_x_brothers_daughter"] 		= "%2\$d x besneboda";
+$pgv_lang["n_x_brothers_son"]	  		= "besnebot %2\$dè";
+$pgv_lang["n_x_brothers_daughter"] 		= "besneboda %2\$dena";
 // the bosa_sisters_offspring name is used for sisters nephews and nieces - the names below can be extended to any number
 // of generations just by adding more translations.
 // 1st generation
@@ -819,14 +814,8 @@ $pgv_lang["bosa_sisters_offspring_7"] 	= "besneboda";
 // in this text %1\$d is replaced with the number of generations
 //              %2\$d is replaced with the number of generations - 1
 //              %3\$d is replaced with the number of generations - 2
-$pgv_lang["n_x_sisters_son"]	  		= "%2\$d x besnebot";
-$pgv_lang["n_x_sisters_daughter"] 		= "%2\$d x besneboda";
-$pgv_lang["bosa_2"] 				= "fill";
-$pgv_lang["bosa_3"] 				= "filla";
-$pgv_lang["bosa_4"] 				= "nét";
-$pgv_lang["bosa_5"] 				= "néta";
-$pgv_lang["bosa_7"] 				= "néta";
-$pgv_lang["bosa_6"] 				= "nét";
+$pgv_lang["n_x_sisters_son"]	  		= "besnebot %2\$dè";
+$pgv_lang["n_x_sisters_daughter"] 		= "besneboda %2\$dena";
 
 // the bosa name is used for offspring - the names below can be extended to any number
 // of generations just by adding more translations.
@@ -834,7 +823,7 @@ $pgv_lang["bosa_6"] 				= "nét";
 $pgv_lang["bosa_2"] 				= "fill";
 $pgv_lang["bosa_3"] 				= "filla";
 // 2nd generation
-$pgv_lang["bosa_4"] 				= "avi";
+$pgv_lang["bosa_4"] 				= "nét";
 $pgv_lang["bosa_5"] 				= "néta";
 $pgv_lang["bosa_6"] 				= "nét";
 $pgv_lang["bosa_7"] 				= "néta";
@@ -847,72 +836,73 @@ $pgv_lang["bosa_12"] 			= "besnét";
 $pgv_lang["bosa_13"] 			= "besnéta";
 $pgv_lang["bosa_14"] 			= "besnét";
 $pgv_lang["bosa_15"] 			= "besnéta";
+
 // for the general case of offspring of the nth generation use the text below
 // in this text %1\$d is replaced with the number of generations
 //              %2\$d is replaced with the number of generations - 1
 //              %3\$d is replaced with the number of generations - 2
-$pgv_lang["n_x_grandson_from_son"]	  		= "%3\$d x besnét";
-$pgv_lang["n_x_granddaughter_from_son"] 		= "%3\$d x besnéta";
-$pgv_lang["n_x_grandson_from_daughter"]	  	= "%3\$d x besnét";
-$pgv_lang["n_x_granddaughter_from_daughter"] 	= "%3\$d x besnéta";
-$pgv_lang["sosa_uncle_3"] 				= "oncle";
-$pgv_lang["sosa_uncle_2"] 				= "oncle";
+$pgv_lang["n_x_grandson_from_son"]	  			= "nét %2\$dè";
+$pgv_lang["n_x_granddaughter_from_son"] 		= "néta %2\$dena";
+$pgv_lang["n_x_grandson_from_daughter"]	  		= "nét %2\$dè";
+$pgv_lang["n_x_granddaughter_from_daughter"] 	= "néta %2\$dena";
 
 // the sosa_uncle name is used for uncles - the names below can be extended to any number
 // of generations just by adding more translations.
 // to allow fo language variations we specify different relationships for paternal and maternal
 // aunts and uncles
 // 1st generation
-$pgv_lang["sosa_uncle_2"] 				= "oncle";
-$pgv_lang["sosa_uncle_3"] 				= "oncle";
+$pgv_lang["sosa_uncle_2"] 		= "oncle";
+$pgv_lang["sosa_uncle_3"] 		= "oncle";
+$pgv_lang["sosa_uncle_bm_2"] 	= "oncle";
+$pgv_lang["sosa_uncle_bm_3"] 	= "oncle";
 // 2nd generation
 $pgv_lang["sosa_uncle_4"] 		= "besoncle";
 $pgv_lang["sosa_uncle_5"] 		= "besoncle";
 $pgv_lang["sosa_uncle_6"] 		= "besoncle";
 $pgv_lang["sosa_uncle_7"] 		= "besoncle";
+$pgv_lang["sosa_uncle_bm_4"] 	= "besoncle";
+$pgv_lang["sosa_uncle_bm_5"] 	= "besoncle";
+$pgv_lang["sosa_uncle_bm_6"] 	= "besoncle";
+$pgv_lang["sosa_uncle_bm_7"] 	= "besoncle";
+
 // for the general case of uncles of the nth degree use the text below
 // in this text %1\$d is replaced with the number of generations
 //              %2\$d is replaced with the number of generations - 1
 //              %3\$d is replaced with the number of generations - 2
-$pgv_lang["n_x_paternal_uncle"]			= "%2\$d x besoncle";
-$pgv_lang["n_x_maternal_uncle"]	    		= "%2\$d x besoncle";
-$pgv_lang["sosa_aunt_3"] 				= "tia";
-$pgv_lang["sosa_aunt_2"] 				= "tia";
+$pgv_lang["n_x_paternal_uncle"]			= "oncle %1\$dè";
+$pgv_lang["n_x_maternal_uncle"]    		= "oncle %1\$dè";
+$pgv_lang["n_x_paternal_uncle_bm"]		= "oncle %1\$dè";
+$pgv_lang["n_x_maternal_uncle_bm"]	    = "oncle %1\$dè";
 
 // the sosa_aunt name is used for aunts - the names below can be extended to any number
 // of generations just by adding more translations.
 // to allow fo language variations we specify different relationships for paternal and maternal
 // aunts and aunts
+
 // 1st generation
-$pgv_lang["sosa_aunt_2"] 				= "tia";
-$pgv_lang["sosa_aunt_3"] 				= "tia";
+$pgv_lang["sosa_aunt_2"] 		= "oncle";
+$pgv_lang["sosa_aunt_3"] 		= "oncle";
+$pgv_lang["sosa_aunt_bm_2"] 	= "oncle";
+$pgv_lang["sosa_aunt_bm_3"] 	= "oncle";
 // 2nd generation
 $pgv_lang["sosa_aunt_4"] 		= "bestia";
 $pgv_lang["sosa_aunt_5"] 		= "bestia";
 $pgv_lang["sosa_aunt_6"] 		= "bestia";
 $pgv_lang["sosa_aunt_7"] 		= "bestia";
+$pgv_lang["sosa_aunt_bm_4"] 	= "bestia";
+$pgv_lang["sosa_aunt_bm_5"] 	= "bestia";
+$pgv_lang["sosa_aunt_bm_6"] 	= "bestia";
+$pgv_lang["sosa_aunt_bm_7"] 	= "bestia";
+
 // for the general case of aunts of the nth degree use the text below
 // in this text %1\$d is replaced with the number of generations
 //              %2\$d is replaced with the number of generations - 1
 //              %3\$d is replaced with the number of generations - 2
-$pgv_lang["sosa_uncle_bm_7"] 				= "besoncle";
-$pgv_lang["n_x_paternal_uncle_bm"]		= "%2\$d x besoncle";
-$pgv_lang["n_x_maternal_uncle_bm"]	    = "%2\$d x besoncle";
-$pgv_lang["sosa_aunt_bm_3"] 				= "tia";
-$pgv_lang["sosa_aunt_bm_7"] 				= "bestia";
-$pgv_lang["n_x_maternal_aunt_bm"]	    = "%2\$d x bestia";
-$pgv_lang["n_x_paternal_aunt_bm"]		= "%2\$d x bestia";
-$pgv_lang["sosa_aunt_bm_6"] 				= "bestia";
-$pgv_lang["sosa_aunt_bm_5"] 				= "bestia";
-$pgv_lang["sosa_aunt_bm_4"] 				= "bestia";
-$pgv_lang["sosa_aunt_bm_2"] 				= "tia";
-$pgv_lang["sosa_uncle_bm_6"] 				= "besoncle";
-$pgv_lang["sosa_uncle_bm_5"] 				= "besoncle";
-$pgv_lang["sosa_uncle_bm_4"] 				= "besoncle";
-$pgv_lang["sosa_uncle_bm_3"] 				= "oncle";
-$pgv_lang["sosa_uncle_bm_2"] 				= "oncle";
-$pgv_lang["n_x_paternal_aunt"]	= "%2\$d x bestia";
-$pgv_lang["n_x_maternal_aunt"]	= "%2\$d x bestia";
+
+$pgv_lang["n_x_paternal_aunt"]		= "tia %1\$dena";
+$pgv_lang["n_x_maternal_aunt"]		= "tia %2\$dena";
+$pgv_lang["n_x_paternal_aunt_bm"]	= "tia %2\$dena";
+$pgv_lang["n_x_maternal_aunt_bm"]	= "tia %2\$dena";
 
 // if a specific cousin relationship cannot be represented in a language translate as "";
 $pgv_lang["male_cousin_1"]          = "cosí germà";
@@ -935,7 +925,7 @@ $pgv_lang["male_cousin_17"]         = "cosí 17è";
 $pgv_lang["male_cousin_18"]         = "cosí 18è";
 $pgv_lang["male_cousin_19"]         = "cosí 19è";
 $pgv_lang["male_cousin_20"]         = "cosí 20è";
-$pgv_lang["male_cousin_n"]          = "%d x cosí";
+$pgv_lang["male_cousin_n"]          = "cosí %dè";
 $pgv_lang["female_cousin_1"]        = "cosina germana";
 $pgv_lang["female_cousin_2"]        = "cosina segona";
 $pgv_lang["female_cousin_3"]        = "cosina tercera";
@@ -956,7 +946,7 @@ $pgv_lang["female_cousin_17"]       = "cosina 17ena";
 $pgv_lang["female_cousin_18"]       = "cosina 18ena";
 $pgv_lang["female_cousin_19"]       = "cosina 19ena";
 $pgv_lang["female_cousin_20"]       = "cosina 20ena";
-$pgv_lang["female_cousin_n"]        = "%d x cosina";
+$pgv_lang["female_cousin_n"]        = "cosina %dena";
 
 // Only referenced from english specific functions
 $pgv_lang["removed_ascending_1"]   	= "";
@@ -1151,16 +1141,16 @@ $pgv_lang["anon_users"]			= "#pgv_lang[global_num1]# usuaris anònims";
 $pgv_lang["login_user"]			= "1 usuari amb accés";
 $pgv_lang["login_users"]		= "#pgv_lang[global_num1]# usuaris amb accés";
 $pgv_lang["no_login_users"]		= "Ni usuaris amb accés ni anònims";
-$pgv_lang["message"]			= "Envia un missatge";
+$pgv_lang["message"]			= "Envieu un missatge";
 $pgv_lang["my_messages"]		= "La meva bústia";
 $pgv_lang["date_created"]		= "Data de tramesa:";
-$pgv_lang["message_from"]		= "Adreça correu electrònic:";
+$pgv_lang["message_from"]		= "Correu electrònic:";
 $pgv_lang["message_from_name"]	= "El vostre nom:";
 $pgv_lang["message_to"] 		= "Missatge a:";
 $pgv_lang["message_subject"]		= "Títol:";
 $pgv_lang["message_body"]		= "Text:";
 $pgv_lang["no_to_user"] 		= "No hi ha destinatari. No puc continuar.";
-$pgv_lang["provide_email"]		= "Doneu la vostra adreça correu electrònic perquè puguem respondre-us.  La vostra adreça no serà utilitzada per a res més que per aquest fi.";
+$pgv_lang["provide_email"]		= "Doneu la vostra adreça de correu electrònic perquè puguem respondre-us.  La vostra adreça no serà utilitzada per a res més que per aquest fi.";
 $pgv_lang["reply"]			= "Resposta";
 $pgv_lang["message_deleted"]		= "Missatge esborrat";
 $pgv_lang["message_sent"]		= "El missatge s'ha enviat a #TO_USER#";
@@ -1186,9 +1176,9 @@ $pgv_lang["message_email3"]		= "Missatge enviat a l'Administrador PhpGedView:";
 $pgv_lang["viewing_url"]		= "Missatge redactat des d'aquesta pàgina: ";
 $pgv_lang["messaging2_help"]		= "Un cop enviat el missatge en rebreu una còpia per correu electrònic.";
 $pgv_lang["random_picture"]		= "Fitxer a l'atzar";
-$pgv_lang["message_instructions"]	= "<b>Atenció! </b> La informació privada de persones vives solament pot lliurar-se a familiars i amics.  Sereu interrogat sobre els vostres lligams de parentiu abans de rebre dades privades.  Algunes informacions sobre persones difuntes també poden resultat privades.  En aquest cas, és degut a que no hi ha informació coneguda d'aquesta persona per a determinar si és o no viva i probablement no tenim més altra informació sobre ella.<br /><br />Abans de demanar, verifiqueu que esteu demanant per la persona correcta comprovant dates, llocs i parents.  Si feu canvis a les dades genealògiques, inclogueu les fonts de on les heu tretes.<br /><br />";
+$pgv_lang["message_instructions"]	= "<b>Atenció! </b> La informació privada de persones vives solament pot lliurar-se a familiars i amics.  Sereu interrogat sobre els vostres vincles de parentiu abans de rebre dades privades.  Algunes informacions sobre persones difuntes també poden resultat privades.  En aquest cas, és degut a que no hi ha informació coneguda d'aquesta persona per a determinar si és o no viva i probablement no tenim cap altra informació sobre ella.<br /><br />Abans de fer la consulta, verifiqueu que esteu demanant per la persona correcta comprovant dates, llocs i parents.  Si feu canvis a les dades genealògiques, inclogueu les fonts d'on les heu tretes.<br /><br />";
 $pgv_lang["sending_to"]			= "Aquest missatge s'enviarà a #TO_USER#";
-$pgv_lang["preferred_lang"]	 	= "Aquest usuari prefereix rebre el correu en #USERLANG#";
+$pgv_lang["preferred_lang"]	 	= "Aquest usuari prefereix rebrer el correu en #USERLANG#";
 $pgv_lang["gedcom_created_using"]	= "Fitxer GEDCOM generat amb <b>#CREATED_SOFTWARE# #CREATED_VERSION#</b>";
 $pgv_lang["gedcom_created_on"]	= "Creat el <b>#CREATED_DATE#</b>";
 $pgv_lang["gedcom_created_on2"] 	= " el <b>#CREATED_DATE#</b>";
@@ -1202,7 +1192,7 @@ $pgv_lang["stat_latest_birth"] 	= "Natalici més recent";
 $pgv_lang["stat_earliest_death"] 	= "Defunció més antiga";
 $pgv_lang["stat_latest_death"] 	= "Defunció més recent";
 $pgv_lang["customize_page"]		= "Personalitzeu el Portal MyGedView";
-$pgv_lang["customize_gedcom_page"]	= "Personalitza la Pàgina d'Inici";
+$pgv_lang["customize_gedcom_page"]	= "Personalitzeu la Pàgina d'Inici";
 $pgv_lang["upcoming_events_block"]	= "Propers aniversaris";
 $pgv_lang["upcoming_events_descr"]	= "El bloc de propers aniversaris mostra esdeveniments que es commemoraran properament. Podeu configurar el nivells de detalls que us interessa veure-hi i l'administrador el marge de dies.";
 $pgv_lang["todays_events_block"]	= "En tal dia com avui...";
@@ -1254,10 +1244,10 @@ $pgv_lang["user_news_descr"]			= "El bloc d'Agenda permet a l'usuari guardar not
 $pgv_lang["my_journal"] 			= "La meva Agenda";
 $pgv_lang["no_journal"] 			= "A l'Agenda no hi ha cap entrada.";
 $pgv_lang["confirm_journal_delete"] 	= "Esteu segur que cal suprimir aquesta entrada de l'Agenda?";
-$pgv_lang["add_journal"]			= "Afegeix una nova entrada a l'Agenda";
+$pgv_lang["add_journal"]			= "Afegiu una nova entrada a l'Agenda";
 $pgv_lang["gedcom_news"]			= "Notícies";
 $pgv_lang["confirm_news_delete"]		= "Segur que cal suprimir aquesta Notícia?";
-$pgv_lang["add_news"]				= "Afegeix una Notícia";
+$pgv_lang["add_news"]				= "Afegiu una Notícia";
 $pgv_lang["no_news"]				= "No s'hi ha entrada cap Notícia.";
 $pgv_lang["edit_news"]				= "Afegiu/Editeu una entrada a Notícies";
 $pgv_lang["enter_title"]			= "Entreu el títol.";
@@ -1274,10 +1264,10 @@ $pgv_lang["move_left"]				= "Mou a l'esquerra";
 $pgv_lang["broadcast_all"]			= "A tots els usuaris";
 $pgv_lang["hit_count"]				= "Compta-visites:";
 $pgv_lang["phpgedview_message"] 		= "Missatge PhpGedView";
-$pgv_lang["common_surnames"]			= "Cognoms més corrents";
+$pgv_lang["common_surnames"]			= "Cognoms més habituals";
 
 $pgv_lang["default_news_title"] 		= "Benvingut a la vostra Genealogia!";
-$pgv_lang["default_news_text"]		= "La informació genealògica d'aquest lloc és presentada mitjançant <a href=\"http://www.phpgedview.net/\" target=\"_blank\">PhpGedView</a>. Aquesta és la pàgina d'inici i visió general.<br /><br />Per a accedir a les dades, escolliu un dels gràfics del menú, aneu a la llista de persones o cerqueu un nom o lloc.<br /><br />Si teniu algun dubte, polseu sobre el menú d'ajuda i obtindreu informació de com accedir i gestionar tots els seus recursos.<br /><br />Gràcies per visitar-nos!";
+$pgv_lang["default_news_text"]		= "La informació genealògica d'aquest lloc és presentada mitjançant <a href=\"http://www.phpgedview.net/\" target=\"_blank\">PhpGedView #VERSION#</a>. Aquesta és la pàgina d'inici i visió general.<br /><br />Per a accedir a les dades, escolliu un dels gràfics del menú, aneu a la llista de persones o cerqueu un nom o lloc.<br /><br />Si teniu algun dubte, polseu sobre el menú d'ajuda i obtindreu informació de com accedir i gestionar tots els seus recursos.<br /><br />Gràcies per visitar-nos!";
 $pgv_lang["reset_default_blocks"]		= "Restaura els blocs per defecte";
 $pgv_lang["recent_changes"] 			= "Canvis recents";
 $pgv_lang["recent_changes_block"]		= "Canvis recents";
@@ -1364,8 +1354,6 @@ $pgv_lang["sort_by"]			= "Ordena-ho per";
 $pgv_lang["cleanup"]			= "Neteja-ho";
 
 //-- CONFIGURE (extra) messages for programs patriarch and statistics
-$pgv_lang["dynasty_list"]		= "Resum de famílies";
-$pgv_lang["patriarch_list"] 		= "Llista de Caps de Família";
 $pgv_lang["statistics"] 		= "Estadístiques";
 
 //-- Merge Records
@@ -1390,51 +1378,51 @@ $pgv_lang["ancestry_chart"] 		= "Diagrama d'avantpassats";
 $pgv_lang["gen_ancestry_chart"]	= "Gràfic de #PEDIGREE_GENERATIONS# generacions d'avantpassats";
 $pgv_lang["chart_style"]		= "Estil de gràfic";
 $pgv_lang["chart_list"]			= "Llista";
-$pgv_lang["chart_booklet"]   		= "Fulletó";
+$pgv_lang["chart_booklet"]   	= "Fulletó";
 $pgv_lang["show_cousins"]		= "Veure els cosins";
 // 1st generation
-$pgv_lang["sosa_2"] 			= "Pare";
-$pgv_lang["sosa_3"] 			= "Mare";
+$pgv_lang["sosa_2"] 	= "Pare";
+$pgv_lang["sosa_3"] 	= "Mare";
 // 2nd generation
-$pgv_lang["sosa_4"] 			= "Avi";
-$pgv_lang["sosa_5"] 			= "Avia";
-$pgv_lang["sosa_6"] 			= "Avi";
-$pgv_lang["sosa_7"] 			= "Avia";
+$pgv_lang["sosa_4"] 	= "Avi";
+$pgv_lang["sosa_5"] 	= "Àvia";
+$pgv_lang["sosa_6"] 	= "Avi";
+$pgv_lang["sosa_7"] 	= "Àvia";
 // 3rd generation
-$pgv_lang["sosa_8"] 			= "Besavi";
-$pgv_lang["sosa_9"] 			= "Besàvia";
-$pgv_lang["sosa_10"]			= "Besavi";
-$pgv_lang["sosa_11"]			= "Besàvia";
-$pgv_lang["sosa_12"]			= "Besavi";
-$pgv_lang["sosa_13"]			= "Besàvia";
-$pgv_lang["sosa_14"]			= "Besavi";
-$pgv_lang["sosa_15"]			= "Besàvia";
+$pgv_lang["sosa_8"] 	= "Besavi";
+$pgv_lang["sosa_9"] 	= "Besàvia";
+$pgv_lang["sosa_10"]	= "Besavi";
+$pgv_lang["sosa_11"]	= "Besàvia";
+$pgv_lang["sosa_12"]	= "Besavi";
+$pgv_lang["sosa_13"]	= "Besàvia";
+$pgv_lang["sosa_14"]	= "Besavi";
+$pgv_lang["sosa_15"]	= "Besàvia";
 // 4th generation
-$pgv_lang["sosa_16"]			= "Rebesavi";
-$pgv_lang["sosa_17"]			= "Rebesàvia";
-$pgv_lang["sosa_18"]			= "Rebesavi";
-$pgv_lang["sosa_19"]			= "Rebesàvia";
-$pgv_lang["sosa_20"]			= "Rebesavi";
-$pgv_lang["sosa_21"]			= "Rebesàvia";
-$pgv_lang["sosa_22"]			= "Rebesavi";
-$pgv_lang["sosa_23"]			= "Rebesàvia";
-$pgv_lang["sosa_24"]			= "Rebesavi";
-$pgv_lang["sosa_25"]			= "Rebesàvia";
-$pgv_lang["sosa_26"]			= "Rebesavi";
-$pgv_lang["sosa_27"]			= "Rebesàvia";
-$pgv_lang["sosa_28"]			= "Rebesavi";
-$pgv_lang["sosa_29"]			= "Rebesàvia";
-$pgv_lang["sosa_30"]			= "Rebesavi";
-$pgv_lang["sosa_31"]			= "Rebesàvia";
+$pgv_lang["sosa_16"]	= "Rebesavi";
+$pgv_lang["sosa_17"]	= "Rebesàvia";
+$pgv_lang["sosa_18"]	= "Rebesavi";
+$pgv_lang["sosa_19"]	= "Rebesàvia";
+$pgv_lang["sosa_20"]	= "Rebesavi";
+$pgv_lang["sosa_21"]	= "Rebesàvia";
+$pgv_lang["sosa_22"]	= "Rebesavi";
+$pgv_lang["sosa_23"]	= "Rebesàvia";
+$pgv_lang["sosa_24"]	= "Rebesavi";
+$pgv_lang["sosa_25"]	= "Rebesàvia";
+$pgv_lang["sosa_26"]	= "Rebesavi";
+$pgv_lang["sosa_27"]	= "Rebesàvia";
+$pgv_lang["sosa_28"]	= "Rebesavi";
+$pgv_lang["sosa_29"]	= "Rebesàvia";
+$pgv_lang["sosa_30"]	= "Rebesavi";
+$pgv_lang["sosa_31"]	= "Rebesàvia";
 
 // for the general case of ancestors of the nth generation use the text below
 // in this text %1\$d is replaced with the number of generations
 //              %2\$d is replaced with the number of generations - 1
 //              %3\$d is replaced with the number of generations - 2
-$pgv_lang["sosa_paternal_female_n_generations"]	= "%3\$d x besavi";
-$pgv_lang["sosa_paternal_male_n_generations"]	= "%3\$d x besàvia";
-$pgv_lang["sosa_maternal_female_n_generations"]	= "%3\$d x besavi";
-$pgv_lang["sosa_maternal_male_n_generations"]	= "%3\$d x besàvia";
+$pgv_lang["sosa_paternal_female_n_generations"]	= "Àvia %2\$dena";
+$pgv_lang["sosa_paternal_male_n_generations"]	= "Avi %2\$dè";
+$pgv_lang["sosa_maternal_female_n_generations"]	= "Àvia %2\$dena";
+$pgv_lang["sosa_maternal_male_n_generations"]	= "Avi %2\$dè";
 
 //-- FAN CHART
 $pgv_lang["compact_chart"]		= "Gràfic compacte";
@@ -1460,21 +1448,24 @@ $pgv_lang["authenticated_feed"]	= "Fil Autenticat";
 // After any change in the following list, please check $assokeys in edit_interface.php
 $pgv_lang["attendant"] 			= "Vigilant";
 $pgv_lang["attending"] 			= "Assistent";
-$pgv_lang["best_man"] 			= "Padrí";
+$pgv_lang["best_man"] 			= "Padrí de boda";
 $pgv_lang["bridesmaid"] 		= "Dama d'honor";
 $pgv_lang["buyer"] 			= "Comprador";
 $pgv_lang["circumciser"] 		= "Circumcisor";
 $pgv_lang["civil_registrar"] 		= "Registrador civil";
-$pgv_lang["friend"] 			= "Amic";
+$pgv_lang["friend"] 			= "Amic/ga";
 $pgv_lang["godfather"] 			= "Padrí";
 $pgv_lang["godmother"] 			= "Padrina";
-$pgv_lang["godparent"] 			= "Padrí";
+$pgv_lang["godparent"] 			= "Padrí/na";
+$pgv_lang["godson"]		= "Fillol";
+$pgv_lang["goddaughter"] = "Fillola";
+$pgv_lang["godchild"]	= "Fillol/a";
 $pgv_lang["informant"] 			= "Informant";
 $pgv_lang["lodger"] 			= "Hoste";
 $pgv_lang["nurse"] 			= "Mainadera";
 $pgv_lang["priest"] 			= "Sacerdot";
 $pgv_lang["rabbi"] 			= "Rabí";
-$pgv_lang["registry_officer"] 	= "Oficial del registre";
+$pgv_lang["registry_officer"] 	= "Oficial del Registre";
 $pgv_lang["seller"] 			= "Venedor";
 $pgv_lang["servant"] 			= "Criat/da";
 $pgv_lang["twin"] 			= "Bessó/na";
@@ -1695,7 +1686,62 @@ $pgv_lang["changedate1"]			= "Fi del lapse de canvi de dates";
 $pgv_lang["invalid_search_input"] 	= "Entreu el nom de pila, el cognom o el lloc en relació a l'any";
 $pgv_lang["duplicate_username"] 	= "Nom d'usuari duplicat. Ja n'hi ha un amb el mateix nom. Escolliu-ne un altre.";
 $pgv_lang["cache_life"]				= "Fitxer cau lliure";
-$pgv_lang["genealogy"]				= "genealogia";
+$pgv_lang["genealogy"]					= "genealogia";
 $pgv_lang["search_place_word"]		= "Solament paraules senceres";
+$pgv_lang["advanced_search"] 	= "Cerca avançada";
+$pgv_lang["exact"]				= "Exactament";
+$pgv_lang["more_fields"]		= "Afegeix més camps";
+$pgv_lang["install_step_8"] 		= "Comenceu";
+$pgv_lang["parent_family"]			= "Família amb els pares";
+$pgv_lang["step_parent_family"]		= "Família amb el padrastre";
+$pgv_lang["ellipsis"]				= "\xE2\x80\xA6";
+$pgv_lang["count"]					= "Comptador";
+$pgv_lang["repo_menu"]			= "Opcions per l'Arxiu";
+$pgv_lang["stat_unknown"]			= "Total desconegut";
+$pgv_lang["may_1st"]					= "Maig";
+$pgv_lang["htmlplus_block_ui"]		= "Interfície extens";
+$pgv_lang["htmlplus_block_ui"]		= "Interfície extens";
+$pgv_lang["total_unknown"]			= "Total desconegut";
+$pgv_lang["first_letter_name"]		= "Escolliu una lletra per mostrar les famílies quin nom comenci amb aquesta lletra.";
+$pgv_lang["first_letter_iname"]		= "Escolliu una lletra per mostrar les persones quin cognom comenci per aquesta lletra";
+$pgv_lang["NNthai"] 			= "(desconegut)";
+$pgv_lang["PNthai"] 			= "(desconegut)";
+$pgv_lang["NNother"] 			= "(desconegut)";
+$pgv_lang["PNother"] 			= "(desconegut)";
+$pgv_lang["parent_age"] 			= "Edat del/la pare/mare";
+$pgv_lang["father_age"]				= "Edat del pare";
+$pgv_lang["mother_age"]				= "Edat de la mare";
+$pgv_lang["enter_person_generations"] = "Nombre de generacions:";
+$pgv_lang["apply_filter"]			= "Aplica el filtre";
+$pgv_lang["show_parents"] 			= "Mostra els pares";
+$pgv_lang["husb_age"]				= "Edat del marit";
+$pgv_lang["wife_age"]				= "Edat de la muller";
+$pgv_lang["years2"]					= "years";	// 2 anys";
+$pgv_lang["at_death_day"]      		= "en la data de funció";
+$pgv_lang["setperms_fix"]			= "Esmena els permisos de lectura/escriptura/execució";
+$pgv_lang["view_fam_nav_details"]	= "Mostra els detalls de...";
+$pgv_lang["uncle_in_law"]			= "Oncle polític";
+$pgv_lang["aunt_in_law"]			= "Tieta política";
+$pgv_lang["m_cousin_in_law"]		= "Cosí polític";
+$pgv_lang["f_cousin_in_law"]		= "Cosina política";
+$pgv_lang["todo_block"] = "Tasques &quot;pendents&quot;";
+$pgv_lang["todo_show_other"]     = "Mostra els altres usuaris les tasques de";
+$pgv_lang["todo_show_other"]     = "Mostra les tasques d'altres usuaris";
+$pgv_lang["todo_descr"] = "El bloc de tasques pendents és un llistat de tots els esdeveniments pendents _TODO a la base de dades.";
+$pgv_lang["todo_show_unassigned"]= "Mostra tasques pendents d'assignar";
+$pgv_lang["todo_show_future"]    = "Mostra tasques futures";
+$pgv_lang["todo_nothing"]        = "No hi han tasques &quot;pendents&quot;";
+$pgv_lang["block_givn_top10_title"]		= "Els 10 primers noms de pila";
+$pgv_lang["block_givn_top10"]			= "Els 10 primers noms de pila";
+$pgv_lang["block_givn_top10_descr"]		= "Aquest bloc mostra una taula amb dels 10 noms de pila més freqüents de la base de dades. El nombre de noms de pila a mostrar en aquest bloc és configurable.";
+$pgv_lang["TYPE__painting"] = "Pintura";
+$pgv_lang["TYPE__other"] = "Un altre";
+$pgv_lang["load_full_tree"]			= "Vegeu aquest arbre en l'arbre interactiu a tota plana";
+$pgv_lang["hide_show_spouses"]		= "Mostra o amaga múltiples cònjuges";
+$pgv_lang["interactive_tree"]		= "Arbre interactiu";
+$pgv_lang["example"]				= "Exemple:";
+$pgv_lang["tree"]					= "Arbre";
+$pgv_lang["showUnknown"]			= "Mostra el gènere desconegut";
+$pgv_lang["immediate_family"]		= "Pròpia família";
 
 ?>

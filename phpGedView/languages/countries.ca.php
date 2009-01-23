@@ -1,27 +1,43 @@
 <?php
 /**
- * Catalan texts
+ * see http://unstats.un.org/unsd/methods/m49/m49alpha.htm
+ * see http://www.foreignword.com/countries/  for a comprehensive list, with translations
+ * see http://susning.nu/Landskod  (list #7) for another list, taken from ISO standards
+ * see http://helpdesk.rootsweb.com/codes for a comprehensive list of Chapman codes.
+ * see http://www.rootsweb.com/~wlsgfhs/ChapmanCodes.htm for another list of Chapman codes
  *
- * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team. All rights reserved.
+ * The list that follows is the list of Chapman country codes, with additions from the
+ * other sources mentioned above.
  *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
+ * These codes do not appear in the two Chapman lists cited:
+ *		ALA		Åland Islands
+ *		COD		Congo (Brazzaville)		This country was known as Zaire
+ *		NFK		Norfolk Island
+ *		PRI		Puerto Rico				Chapman lists this as a state of the USA
+ *		SCG		Serbia and Montenegro	Chapman lists these separately
+ *		TLS		Timor-Leste
+ *		UMI		US Minor Outlying Islands
+ *		VIR		US Virgin Islands		Chapman lists this as a state of the USA
  *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * These Chapman country codes do not appear in the list following:
+ *		UEL		United Empire Loyalist		This is NOT a country or region, it's
+ *											a group of people
+ *		UK		United Kingdom				This is the only two-letter country code,
+ *											and GBR or one of its components should be
+ *											used instead.
+ *		SLK		Slovakia					This code, listed in the last source cited,
+ *											should be SVK
+ *		SLO		Slovenia					This code, listed in the last source cited,
+ *											should be SVN
+ *		SAM		South America				This code, listed in the last source cited,
+ *											is not precise enough
+ *		TMP		East Timor					Official name is TLS "Timor-Leste"
+ *		HOL		Holland						Official name is NLD "Netherlands"
+ *		ESM		Western Samoa				Official name is WSM "Samoa"
  *
  * @package PhpGedView
- * @subpackage Languages
  * @author Antoni Planas i Vilà
+ * @created 2006-12-16
  * @version $Id$
 */
 
@@ -73,7 +89,6 @@ $countries["BWI"]="Antilles britàniques";
 $countries["CAF"]="República Centreafricana";
 $countries["CAN"]="Canadà";
 $countries["CAP"]="Colònia del Cap";
-$countries["CAT"]="Catalunya";
 $countries["CCK"]="Illes Cocos (Keeling)";
 $countries["CHE"]="Suïssa";
 $countries["CHI"]="Illes Anglonormandes";
