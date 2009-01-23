@@ -205,6 +205,9 @@ case 0:
 	echo '<br />';
 	break;
 case 1:
+	// TODO: this should be a parameter to a function, not a global
+	$show_cousins=$controller->show_cousins;
+
 	// Booklet
 	// first page : show indi facts
 	print_pedigree_person($controller->rootid, 2, false, 1);
