@@ -116,7 +116,7 @@ echo PGV_JS_START, 'function showchanges() {window.location.reload();}', PGV_JS_
 				print $pgv_lang["system_time"];
 				print " ".format_timestamp(time());
 				print "<br />".$pgv_lang["user_time"];
-				print " ".format_timestamp();
+				print " ".format_timestamp(client_time());
 				if (PGV_USER_IS_ADMIN) {
 			if ($err_write) {
 				print "<br /><span class=\"error\">";

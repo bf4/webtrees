@@ -154,14 +154,12 @@ function default_edit_to_gedcom_date($datestr)
 // Don't attempt to convert into other calendars, as not all days start at
 // midnight, and we can only get it wrong.
 ////////////////////////////////////////////////////////////////////////////////
-function format_timestamp($time=NULL) {
+function format_timestamp($time) {
 	global $DATE_FORMAT, $TIME_FORMAT;
-	if (is_null($time)) {
-		$time=client_time();
-	}
+	
 	$date=new GregorianDate(timestamp_to_jd($time));
 	return $date->Format($DATE_FORMAT).' - '.date($TIME_FORMAT, $time);
-	}
+}
 
 ////////////////////////////////////////////////////////////////////////////////
 // Get the current julian day on the server

@@ -46,7 +46,7 @@ function print_gedcom_block($block = true, $config="", $side, $index) {
 	$id = "gedcom_welcome";
 	$title = PrintReady(get_gedcom_setting(PGV_GED_ID, 'title'));
 	$content = "<div class=\"center\">";
-	$content .= "<br />".format_timestamp()."<br />\n";
+	$content .= "<br />".format_timestamp(client_time())."<br />\n";
 	if ($SHOW_COUNTER)
 		$content .=  $pgv_lang["hit_count"]." ".$hitCount."<br />\n";
 	$content .=  "\n<br />";

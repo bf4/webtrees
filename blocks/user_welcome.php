@@ -58,7 +58,7 @@ function print_welcome_block($block=true, $config="", $side, $index) {
 	$content .= "</tr><tr><td class=\"center\" colspan=\"3\">";
 	$content .= print_help_link("mygedview_customize_help", "qm","",false,true);
 	$content .= "<a href=\"javascript:;\" onclick=\"window.open('".encode_url("index_edit.php?name=".PGV_USER_NAME."&ctype=user")."', '_blank', 'top=50,left=10,width=600,height=350,scrollbars=1,resizable=1');\">".$pgv_lang["customize_page"]."</a>";
-	$content .= "<br />".format_timestamp();
+	$content .= "<br />".format_timestamp(client_time());
 	$content .= "</td>";
 	$content .= "</tr></table>";
 
