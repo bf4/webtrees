@@ -3,7 +3,7 @@
  * Catalan texts
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team. All rights reserved.
+ * Copyright (C) 2008 to 2009  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,10 +19,11 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
+ *
+ * @author Antoni Planas i Vilà
  * @package PhpGedView
  * @subpackage Languages
- * @author Antoni Planas i Vilà
- * @version $Id$
+ * @version $Id: editor.ca.php
  */
 
 if (!defined('PGV_PHPGEDVIEW')) {
@@ -124,7 +125,7 @@ $pgv_lang["confirm_remove"]			= "Segur que voleu eliminar aquesta persona de la 
 $pgv_lang["confirm_remove_object"]	= "Segur que voleu eliminar aquest objecte de la base de dades?";
 $pgv_lang["create_repository"]		= "Crea arxiu";
 $pgv_lang["create_source"]			= "Crea una nova font";
-$pgv_lang["current_person"]         = "Igual que l'actual";
+$pgv_lang["current_person"]         = "Ell/a mateix/a";
 $pgv_lang["date"]					= "Data";
 $pgv_lang["deathdate_search"]		= "Data de defunció: ";
 $pgv_lang["deathplace_search"]		= "Lloc de defunció: ";
@@ -154,22 +155,21 @@ $pgv_lang["highlighted"]			= "Imatge principal";
 $pgv_lang["illegal_chars"]			= "Noms en blanc o caràcters prohibits al nom";
 $pgv_lang["invalid_search_multisite_input"] = "Entreu quelcom del següent:  Nom, Data de naixement, lloc de naixement, data de defunció i sexe ";
 $pgv_lang["invalid_search_multisite_input_gender"] = "Cerqueu-ho amb més informació que només el sexe";
-$pgv_lang["label_diff_server"]      = "Lloc diferent";
+$pgv_lang["label_diff_server"]      = "Nou lloc remot";
 $pgv_lang["label_location"]         = "Localització del lloc";
 $pgv_lang["label_password_id2"]		= "Contrasenya: ";
 $pgv_lang["label_rel_to_current"]   = "Parentiu amb aquesta persona";
-$pgv_lang["label_remote_id"]        = "ID remot de la persona";
-$pgv_lang["label_same_server"]      = "El mateix lloc";
+$pgv_lang["label_same_server"]      = "Lloc local";
 $pgv_lang["label_site"]             = "Lloc";
 $pgv_lang["label_site_url"]         = "URL del lloc:";
 $pgv_lang["label_username_id2"]		= "Nom d'usuari: ";
-$pgv_lang["lbl_server_list"]        = "Fes servir un lloc existent.";
+$pgv_lang["lbl_server_list"]        = "Un lloc remot existent";
 $pgv_lang["lbl_type_server"]        = "Entreu un nou lloc.";
 $pgv_lang["link_as_child"]			= "Vincula aquesta persona a una família existent com a fill/a";
 $pgv_lang["link_as_husband"]		= "Vincula'l a una família existent com a espòs";
 $pgv_lang["link_success"]			= "S'ha afegit correctament el vincle";
 $pgv_lang["link_to_existing_media"]	= "Vincula-la a un ítem multimèdia existent";
-$pgv_lang["max_media_depth"]		= "Solament podeu anar fins a #MEDIA_DIRECTORY_LEVELS# directoris inferiors";
+$pgv_lang["max_media_depth"]		= "No podeu entrar més de #GLOBALS[MEDIA_DIRECTORY_LEVELS]# noms de sotsdirectori";
 $pgv_lang["max_upload_size"]		= "Volum màxim a carregar: ";
 $pgv_lang["media_deleted"]			= "Eliminat correctament el Directori multimèdia";
 $pgv_lang["media_exists"]			= "El fitxer multimèdia ja existeix.";
@@ -211,7 +211,7 @@ $pgv_lang["upload_media"]			= "Carrega fitxers multimèdia";
 $pgv_lang["upload_media_help"]		= "~#pgv_lang[upload_media]#~<br /><br />Seleccioneu els fitxers del vostre ordinador a carregar al servidor. Tots els fitxers col·locaran al directori <b>#MEDIA_DIRECTORY#</b> o a un dels seus sotsdirectoris.<br /><br />Els noms de carpeta que especifiqueu s'afegiran a #MEDIA_DIRECTORY#. Per exemple, #MEDIA_DIRECTORY#lamevafamilia. Si el directori de miniatures no existeix, es crearà automàticament.";
 $pgv_lang["upload_successful"]		= "Càrrega correcta.";
 $pgv_lang["view_change_diff"]		= "Mostra el que s'ha canviat";
-$pgv_lang["add_marriage"]			= "Afegeix un nou casament";
+$pgv_lang["add_marriage"]			= "Afegiu detalls del casament";
 $pgv_lang["edit_concurrency_change"] = "El darrer a modificar aquest registre fou <i>#CHANGEUSER#</i> el #CHANGEDATE#";
 $pgv_lang["edit_concurrency_msg2"]	= "El registre amb l'id #PID# fou canviat per un altre usuari d'ençà el darrer cop que vareu accedir-lo.";
 $pgv_lang["edit_concurrency_msg1"]	= "Ha ocorregut un error tot creant el formulari d'edició. Un altre usuari deu haver canviat aquest registre d'ençà que us l'havíeu mirat.";
@@ -220,5 +220,20 @@ $pgv_lang["admin_override"]			= "Opció d'administració";
 $pgv_lang["no_update_CHAN"]			= "No canviïs el registre CHAN (darrer canvi)";
 $pgv_lang["select_events"]			= "Selecciona esdeveniments";
 $pgv_lang["source_events"]			= "Esdeveniments associats amb aquesta font";
+$pgv_lang["edit_repo"]				= "Edita Repositori";
+$pgv_lang["reorder_media"]					= "Reodeneu els ítems multimèdia";
+$pgv_lang["reorder_media_title"]			= "Per a redordenar els ítems multimèdia, arrossegueu i allibereu les imatges al nou lloc.";
+$pgv_lang["reorder_media_window"]			= "Reordenació multimèdia (finestra)";
+$pgv_lang["reorder_media_window_title"]		= "Per a reordenar els ítems multimèdia, cliqueu una fila i arrossegue-la fins al nou lloc.";
+$pgv_lang["reorder_media_save"]				= "Desa els multimèdia ordenats a la base de dades";
+$pgv_lang["reorder_media_reset"]			= "Restableix l'ordre original";
+$pgv_lang["reorder_media_cancel"]			= "Surt i torna";
+$pgv_lang["file_no_temp_dir"]		= "Manca el directori PHP temporal";
+$pgv_lang["file_cant_write"]		= "Error PHP en escriure al disc";
+$pgv_lang["file_bad_extension"]		= "PHP bloquejat per extensió d'arxiu";
+$pgv_lang["file_unkown_err"]		= "Error desconegut en la càrrega d'arxius. Codi d'error #pgv_lang [global_num1]#. Si us plau, informeu d'això com un error.";
+$pgv_lang["gen_missing_thumbs"]		= "Crea les miniatures faltants";
+$pgv_lang["gen_missing_thumbs_lbl"]	= "Manquen miniatures";
+$pgv_lang["copy_error"]				= "No es pot copiar l'arxiu #Globals [whichFile2]# des de #Globals [whichFile1]#";
 
 ?>

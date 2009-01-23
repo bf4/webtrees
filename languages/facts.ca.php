@@ -3,7 +3,7 @@
  * Catalan texts
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team. All rights reserved.
+ * Copyright (C) 2008 to 2009  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,10 +19,11 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
+ *
+ * @author Antoni Planas i Vilà
  * @package PhpGedView
  * @subpackage Languages
- * @author Antoni Planas i Vilà
- * @version $Id$
+ * @version $Id: facts.ca.php 
  */
 
 if (!defined('PGV_PHPGEDVIEW')) {
@@ -279,7 +280,7 @@ $factarray["_HNM"] = "Hebrew Name";
 // Pseudo-facts for relatives
 $factarray["_DEAT_SPOU"] = "Defunció del cònjuge";
 
-$factarray["_BIRT_CHIL"] = "Naixement d'un/a fill/a";
+$factarray["_BIRT_CHIL"] = "Naixement d'un fill";
 $factarray["_MARR_CHIL"] = "Casament d'un/a fill/a";
 $factarray["_DEAT_CHIL"] = "Defunció d'un/a fill/a";
 
@@ -310,8 +311,8 @@ $factarray["_DEAT_NEPH"] = "Defunció d'un nét o néta";
 $factarray["_DEAT_GPAR"] = "Defunció d'un/a avi/a";
 $factarray["_DEAT_GGPA"] = "Defunció d'un besavi";
 
-$factarray["_BIRT_FSIB"] = "Naixement d'un oncle/tieta patern/a";
-$factarray["_MARR_FSIB"] = "Casament d'un oncle/tieta patern/a";
+$factarray["_BIRT_FSIB"] = "Naixement d'un oncle patern";
+$factarray["_MARR_FSIB"] = "Casament d'un oncle patern";
 $factarray["_DEAT_FSIB"] = "Defunció d'un oncle/tieta patern/a";
 
 $factarray["_BIRT_MSIB"] = "Naixement d'un oncle/tieta matern/a";
@@ -328,5 +329,91 @@ $factarray["_FAMC_RESI"] = "Residència dels pares";
 $factarray["_THUM"]	= "Emprar aquesta imatge per la miniatura?";
 $factarray["_PGVU"]	= "Autor";
 $factarray["SERV"] 	= "Servidor remot";
-$factarray["_GEDF"] = "Fitxer GEDCOM";
+$factarray["FAMS:MARR:DATE"] = "Data de casament";
+$factarray["BIRT:DATE"] = "Data de naixement";
+$factarray["DEAT:DATE"] = "Data de defunció";
+$factarray["CHR:DATE"] = "Data de bateig";
+$factarray["BAPM:DATE"] = "Data de bateig";
+$factarray["MARR:DATE"] = "Data de casament";
+$factarray["BURI:DATE"] = "Data d'enterrament";
+$factarray["_NAMS"]	= "Homònim";
+$factarray["_BURI_SPOU"] = "Enterrament del cònjuge";
+$factarray["_CREM_SPOU"] = "Cremació del cònjuge";
+$factarray["_CHR_CHIL" ] = "Bateig d'un fill";
+$factarray["_BAPM_CHIL"] = "Bateig d'un fill";
+$factarray["__BRTM_CHIL"] = "Circumcisió d'un fill";
+$factarray["_ADOP_CHIL"] = "Adopció d'un fill";
+$factarray["_BURI_CHIL"] = "Entrerrament d'un fill";
+$factarray["_CREM_CHIL"] = "Cremació d'un fill";
+$factarray["_CHR_GCHI" ] = "Bateig d'un nét";
+$factarray["_BAPM_GCHI"] = "Baptisme d'un nét";
+$factarray["__BRTM_GCHI"] = "Circumcisió d'un nét";
+$factarray["_ADOP_GCHI"] = "Adopció d'un nét";
+$factarray["_BURI_GCHI"] = "Enterrament d'un nét";
+$factarray["_CREM_GCHI"] = "Cremació d'un nét";
+$factarray["_CHR_GGCH" ] = "Bateig d'un besnét";
+$factarray["_BAPM_GGCH"] = "Bateig d'un besnét";
+$factarray["_ADOP_GGCH"] = "Adopció d'un besnét";
+$factarray["_BURI_GGCH"] = "Entrerrament d'un besnét";
+$factarray["_BURI_FATH"] = "Enterrament del pare";
+$factarray["_CREM_FATH"] = "Cremació del pare";
+$factarray["_MARR_FAMC"] = "Casament dels pares";
+$factarray["_BURI_MOTH"] = "Enterrament de la mare";
+$factarray["_CREM_MOTH"] = "Cremació de la mare";
+$factarray["_CHR_SIBL" ] = "Bateig d'un germà";
+$factarray["_BURI_SIBL"] = "Enterrament d'un germà";
+$factarray["_ADOP_HSIB"] = "Adopció d'un germanastre";
+$factarray["_CHR_NEPH" ] = "Bateig d'un nebot o neboda";
+$factarray["_BAPM_NEPH"] = "Bateig d'un nebot o neboda";
+$factarray["_CREM_NEPH"] = "Cremació d'un nebot o neboda";
+$factarray["_BURI_GPAR"] = "Enterrament d'un avi";
+$factarray["_CREM_GPAR"] = "Cremació d'un avi";
+$factarray["_BURI_GGPA"] = "Enterrament d'un besavi";
+$factarray["_CREM_GGPA"] = "Cremació d'un besavi";
+$factarray["_CHR_FSIB" ] = "Bateig d'un oncle patern";
+$factarray["_BAPM_FSIB"] = "Bateig d'un oncle patern";
+$factarray["__BRTM_FSIB"] = "Circumcisió d'un oncle patern";
+$factarray["_ADOP_FSIB"] = "Adopció d'un oncle patern";
+$factarray["_BURI_FSIB"] = "Enterrament d'un oncle patern";
+$factarray["_CREM_FSIB"] = "Cremació d'un oncle patern";
+$factarray["_CHR_MSIB" ] = "Bateix d'un oncle matern";
+$factarray["__BRTM_MSIB"] = "Circumcisió d'un oncle matern";
+$factarray["_ADOP_MSIB"] = "Adopció d'un oncle matern";
+$factarray["_BURI_MSIB"] = "Enterrament d'un oncle matern";
+$factarray["_BAPM_COUS"] = "Bateig d'un cosí germà";
+$factarray["_BURI_COUS"] = "Enterrament d'un cosí germà";
+$factarray["_CREM_COUS"] = "Cremació d'un cosí germà";
+$factarray["_MARB_CHIL"] = "Amonestacions d'un fill/a";
+$factarray["_MARB_GCHI"] = "Amonestacions d'un";
+$factarray["_MARB_GCHI"] = "Amonestacions d'un nét";
+$factarray["__BRTM_GGCH"] = "Circumcisió d'un besnét";
+$factarray["_MARB_GGCH"] = "Amonestacions d'un besnét";
+$factarray["_CREM_GGCH"] = "Cremació d'un besnét";
+$factarray["_MARB_FATH"] = "Amonestacions del pare";
+$factarray["_MARB_FAMC"] = "Amonestacions dels pares";
+$factarray["_MARB_MOTH"] = "Amonestacions de la mare";
+$factarray["_BAPM_SIBL"] = "Bateig d'un germà";
+$factarray["_CREM_SIBL"] = "Cremació d'un germà";
+$factarray["_CHR_HSIB" ] = "Bateig d'un germanastre";
+$factarray["_BAPM_HSIB"] = "Bateig d'un germanastre";
+$factarray["__BRTM_HSIB"] = "Circumcisió d'un germanastre";
+$factarray["_MARB_HSIB"] = "Amonestacions d'un germanastre";
+$factarray["_BURI_HSIB"] = "Enterrament d'un germanastre";
+$factarray["_CREM_HSIB"] = "Cremació d'un germanastre";
+$factarray["__BRTM_NEPH"] = "Circumcisió d'un nebot";
+$factarray["_ADOP_NEPH"] = "Adopció d'un nebot o neboda";
+$factarray["_MARB_NEPH"] = "Amonestacions d'un nebot o neboda";
+$factarray["_BURI_NEPH"] = "Enterrament d'un nebot o neboda";
+$factarray["_MARB_FSIB"] = "Amonestacions d'un oncle patern";
+$factarray["_BAPM_MSIB"] = "Bateig d'un oncle matern";
+$factarray["_MARB_MSIB"] = "Amonestacions d'un oncle matern";
+$factarray["_CREM_MSIB"] = "Cremació d'un oncle matern";
+$factarray["_CHR_COUS"]  = "Bateig d'un cosí-germà";
+$factarray["__BRTM_COUS"] = "Circumcisió d'un cosí germà";
+$factarray["_ADOP_COUS"] = "Adopció d'un cosí-germà";
+$factarray["_MARB_COUS"] = "Amonestacions d'un cosí germà";
+$factarray["__BRTM_SIBL"] = "Circumcisió d'un germà";
+$factarray["_ADOP_SIBL"] = "Adopció d'un germà";
+$factarray["_MARB_SIBL"] = "Amonestacions d'un germà";
+$factarray["_GEDF"] 	= "Fitxer GEDCOM";
 ?>

@@ -3,7 +3,7 @@
  * Catalan language file for PhpGedView
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team. All rights reserved.
+ * Copyright (C) 2008 to 2009  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,6 +19,8 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
+ *
+ * @author PGV Developers
  * @translator: Antoni Planas i Vilà
  * @package PhpGedView
  * @subpackage Research Assistant
@@ -44,7 +46,7 @@ $pgv_lang["manage_research_inst"]	= "Aquests elements us ajudaran a gestionar le
 $pgv_lang["manage_research"]	= "Gestionar investigació";
 $pgv_lang["manage_sources"]		= "Gestionar fonts";
 $pgv_lang["part_of"]			= "Part de (opcional)";
-$pgv_lang["search_fhl"]			= "Buscar al Catàleg de la Biblioteca d'Història Familiar"; 
+$pgv_lang["search_fhl"]			= "Buscar al Catàleg de la Biblioteca d'Història Familiar";
 $pgv_lang["determine_sources"]	= "Determinar possibles fonts";
 $pgv_lang["analyze_database"]	= "Analitzar la base de dades";
 $pgv_lang["pid_know_more"]		= "De qui desitgeu saber-ne més?";
@@ -85,7 +87,7 @@ $pgv_lang["Fields"]								= "Nombre de camps";
 $pgv_lang["FieldName"]							= "Nome del camp";
 $pgv_lang["InputType"]							= "Tipus d'entrada";
 $pgv_lang["Values"]								= "Valors";
-$pgv_lang["FormBuilder"]						= "Constructor de formularis"; 
+$pgv_lang["FormBuilder"]						= "Constructor de formularis";
 $pgv_lang["FormName"]							= "Introduiu el nom del formulari";
 $pgv_lang["MultiplePeople"]						= "S'aplica aquest formulari a múltiples persones?";
 $pgv_lang["EnterGEDCOMExtension"]				= "Introduiu l'extensió GEDCOM per al tipus del fet del formulari";
@@ -95,7 +97,7 @@ $pgv_lang["CustomField"]						= "Nom del camp personalitzat";
 $pgv_lang["txt"]								= "Text";
 $pgv_lang["checkbox"]							= "Casella de selecció";
 $pgv_lang["radiobutton"]						= "Botó de ràdio";
-$pgv_lang["EnterResults"]						= "Introduiu resultats"; 
+$pgv_lang["EnterResults"]						= "Introduiu resultats";
 $pgv_lang["ra_submit"]							= "Enviar";
 $pgv_lang["ra_generate_tasks"]					= "Generar tasques a partir de TODO (pendents)";
 $pgv_lang["TaskDescription"]					= "Descripció de la Tasca";
@@ -137,10 +139,10 @@ $pgv_lang["Parent_Folder:"]             		= "Carpeta superior:";
 $pgv_lang["No_Parent"]                  		= "No hi ha carpeta superior";
 $pgv_lang["Folder_Description:"]        		= "Descripció de la carpeta:";
 $pgv_lang["Folder_names_must_be_unique"]		= "Els noms de les carpetes han d'ésser únics.";
-$pgv_lang["folder_submitted"]          			= "S'ha enviat la vostra carpeta"; 
+$pgv_lang["folder_submitted"]          			= "S'ha enviat la vostra carpeta";
 $pgv_lang["folder_problem"]             		= "Ha sorgit un problema tot afegint la vostra carpetat, intenteu-ho de nou si us plau.";
 
-// -- Missing Information Help 
+// -- Missing Information Help
 $pgv_lang["ra_missing_info_help"] = "Aquesta àrea mostra la informació que manca al registre. Seleccioneu una casella i una carpeta i polseu a <b>Afegir Tasca</b> par crear una tasca per a la dada que manca. Las tasques existents mostraran  <b>Veure</b> per comptes d'una casella.<br />";
 
 // -- RA_LISTLOGS MESSAGES
@@ -207,15 +209,15 @@ $pgv_lang["uk_county"]					= "Comtat";
 $pgv_lang["uk_boro"]						= "Població o Districte";
 $pgv_lang["uk_place"]					= "Lloc";
 
-$pgv_lang["AssIndiFacts"]				= "Associar Esdeveniments Personals"; 
-$pgv_lang["AssFamFacts"]				= "Associar Esdeveniments Familiars";  
-$pgv_lang["ra_facts"]					= "Esdeveniments"; 	
-$pgv_lang["ra_fact"]					= "Fet"; 
-$pgv_lang["ra_remove"]					= "eliminar";   
-$pgv_lang["ra_inferred_facts"]			= "Esdeveniments deduits"; 
-$pgv_lang["ra_person"]					= "Persona"; 
-$pgv_lang["ra_reason"]					= "Raó"; 
-$pgv_lang["success"]					= "Èxit!"; 
+$pgv_lang["AssIndiFacts"]				= "Associar Esdeveniments Personals";
+$pgv_lang["AssFamFacts"]				= "Associar Esdeveniments Familiars";
+$pgv_lang["ra_facts"]					= "Esdeveniments";
+$pgv_lang["ra_fact"]					= "Fet";
+$pgv_lang["ra_remove"]					= "eliminar";
+$pgv_lang["ra_inferred_facts"]			= "Esdeveniments deduits";
+$pgv_lang["ra_person"]					= "Persona";
+$pgv_lang["ra_reason"]					= "Raó";
+$pgv_lang["success"]					= "Èxit!";
 
 $pgv_lang["registration_no"]			= "Número de Registre:";
 $pgv_lang["serial_no"]					= "Número de sèrie:";
@@ -236,21 +238,21 @@ $pgv_lang["mytask_show_completed"]		= "Mostrar tasques completades?";
 $pgv_lang["autosearch_surname"]		    = "Incloure el cognom:";
 $pgv_lang["autosearch_givenname"]	    = "Incloure noms de pila:";
 $pgv_lang["autosearch_byear"]		    = "Incloure l'any de naixement:";
-$pgv_lang["autosearch_bloc"]		    = "Incloure el lloc de naixement";  
+$pgv_lang["autosearch_bloc"]		    = "Incloure el lloc de naixement";
 $pgv_lang["autosearch_dyear"]		    = "Incloure l'any de defunció:";
 $pgv_lang["autosearch_dloc"]		    = "Incloure el lloc de defunció:";
 $pgv_lang["autosearch_gender"]          = "Incloure el sexe:";
-// $pgv_lang["autosearch_plugin_name"]     = "";  
+// $pgv_lang["autosearch_plugin_name"]     = "";
 $pgv_lang["autosearch_fsurname"]		= "Incloure el cognom del pare:";
 $pgv_lang["autosearch_fgivennames"]		= "Inclure els noms de pila del pare:";
 $pgv_lang["autosearch_msurname"]		= "Incloure el cognom de la mare:";
-$pgv_lang["autosearch_mgivennames"]	    = "Inclure els noms de pila de la mare:"; 
-$pgv_lang["autosearch_country"]  	    = "Incluore el país:"; 
+$pgv_lang["autosearch_mgivennames"]	    = "Inclure els noms de pila de la mare:";
+$pgv_lang["autosearch_country"]  	    = "Incluore el país:";
 $pgv_lang["autosearch_plugin_name_ancestry"] = "Mòdulo per Ancestry.com";
 $pgv_lang["autosearch_plugin_name_ancestrycouk"] = "Mòdul per Ancestry.co.uk";
 $pgv_lang["autosearch_plugin_name_ellisIsland"] = "Mòdul per EllisIslandRecords.org";
 $pgv_lang["autosearch_plugin_name_genNet"] = "Mòdul per GeneaNet.com";
-$pgv_lang["autosearch_plugin_name_gen"]  = "Mòdul per Genealogy.com"; 
+$pgv_lang["autosearch_plugin_name_gen"]  = "Mòdul per Genealogy.com";
 $pgv_lang["autosearch_plugin_name_fs"]   = "Mòdul per FamilySearch.org";
 $pgv_lang["autosearch_plugin_name_werelate"]   = "Mòdul per Werelate.org";
 $pgv_lang["autosearch_search"]           = "Buscar";

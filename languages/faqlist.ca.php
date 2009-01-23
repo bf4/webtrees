@@ -1,9 +1,9 @@
 <?php
 /**
  * Catalan FAQ texts
-  *
+ *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team. All rights reserved.
+ * Copyright (C) 2008 to 2009  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,9 +19,9 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
+ * @author Antoni Planas i Vilà
  * @package PhpGedView
  * @subpackage Languages
- * @author Antoni Planas i Vilà
  * @version $Id$
  */
 
@@ -34,7 +34,7 @@ $faqlist["FAQ_000_head"] = "\"FAQ\":N'HE SENTIT PARLAR PERÒ, QUÈ ÉS?";
 $faqlist["FAQ_000_body"] = "<b>FAQ</b>és l'acrònim anglès de <b>F</b>requently <b>A</b>sked <b>Q</b>uestion. (Preguntes més freqüents) <br /><br />És una llistat de preguntes (juntament amb llurs respostes) que es fan sovint. Han sigut recopilades per l'equip del PhpGedView i es va revisant sovint.";
 
 $faqlist["FAQ_010_head"] = "BENVINGUTS A LES FAQ DE #GLOBALS[GEDCOM_TITLE]# ";
-$faqlist["FAQ_010_body"] = "Els membres de la família de #GLOBALS[GEDCOM_TITLE]# volem aprofitar aquesta oportunitat per donar la benvinguda a la genealogia a tots els nostres familiars i animar-vos a que us piqui el cuc d'investigar sobre els vostres avantpassats. Pot esdevenir una tasca d'amor -i odi- dons requereix una dedicació enorme. Però la recompensa és igual d'enorme. Us oferim l'oportunitat de gaudir de la genealogia mitjançant l'ús de <a href=\"http://www.phpgedview.net\" target=\"_blank\">PhpGedView</a>, creat pel talent en programació de John Finlay i el seu equip PGV - Un meravellós programa de genealogia fruit de la tecnologia de Codi Font Obert.";
+$faqlist["FAQ_010_body"] = "Els membres de la família de #GLOBALS[GEDCOM_TITLE]# volem aprofitar aquesta oportunitat per donar la benvinguda a la genealogia a tots els nostres familiars i animar-vos a que us piqui el cuc d'investigar sobre els vostres avantpassats. Pot esdevenir una tasca d'amor -i odi- doncs requereix una dedicació enorme. Però la recompensa és igual d'enorme. Us oferim l'oportunitat de gaudir de la genealogia mitjançant l'ús de <a href=\"http://www.phpgedview.net\" target=\"_blank\">PhpGedView</a>, creat pel talent en programació de John Finlay i el seu equip PGV - Un meravellós programa de genealogia fruit de la tecnologia de Codi Font Obert.";
 
 $faqlist["FAQ_015_head"] = "QUINA ÉS LA DIFERÈNCIA ENTRE AQUEST ARBRE PhpGedView I ALTRES ARBRES TEXTUALS I DINÀMICS?";
 $faqlist["FAQ_015_body"] = "Els arbres textuals i els dinàmics es presenten de diverses formes, però cap d'ells us permet configurar-lo, canviar-lo o actualitzar-lo. Solament l'administrador de webs pot fer-hi actualitzacions.<br /><br />El PhpGedView en canvi, és un arbre interactiu. Qualsevol de la família, en tota l'extensió de l'arbre, pot modificar, afegir i fer canvis de les seves branques properes. (Per a poder fer-ho cal registrar-se però prèviament).";
