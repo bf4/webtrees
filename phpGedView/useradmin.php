@@ -1018,8 +1018,7 @@ if ($action == "cleanup") {
 			$datelogin = (int)get_user_setting($user_id, 'sessiontime');
 		if ((mktime(0, 0, 0, (int)date("m")-$month, (int)date("d"), (int)date("Y")) > $datelogin) && (get_user_setting($user_id,'verified') == "yes") && (get_user_setting($user_id, 'verified_by_admin') == "yes")) {
 			?><tr><td class="descriptionbox"><?php echo $user_name." - ".$userName.":&nbsp;&nbsp;".$pgv_lang["usr_idle_toolong"];
-			$date=new GedcomDate(date("d M Y", $datelogin));
-			echo $date->Display(false);
+			echo timestamp_to_gedcom_date($datelogin)->Display(false);
 			$ucnt++;
 			?></td><td class="optionbox"><input type="checkbox" name="<?php echo "del_".str_replace(array(".","-"," "), array("_","_","_"), $user_name); ?>" value="yes" /></td></tr><?php
 		}

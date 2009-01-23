@@ -157,8 +157,10 @@ function default_edit_to_gedcom_date($datestr)
 function format_timestamp($time) {
 	global $DATE_FORMAT, $TIME_FORMAT;
 	
-	$date=new GregorianDate(timestamp_to_jd($time));
-	return $date->Format($DATE_FORMAT).' - '.date($TIME_FORMAT, $time);
+	return
+		strip_tags(timestamp_to_gedcom_date($time)->Display(false, $DATE_FORMAT)).
+		' - '.
+		date($TIME_FORMAT, $time);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -179,7 +181,14 @@ function client_jd() {
 // Convert a unix-style timestamp into a julian-day
 ////////////////////////////////////////////////////////////////////////////////
 function timestamp_to_jd($time) {
-	return GregorianDate::YMDtoJD(date('Y', $time), date('n', $time), date('j', $time));
+	return timestamp_to_gedcom_date($time)->JD();
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// Convert a unix-style timestamp into a GedcomDate object
+////////////////////////////////////////////////////////////////////////////////
+function timestamp_to_gedcom_date($time) {
+	return new GedcomDate(strtoupper(date('j M Y', $time)));
 }
 
 ////////////////////////////////////////////////////////////////////////////////
