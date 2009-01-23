@@ -10,6 +10,7 @@
 
 
 Version 4.2.0
+ - [ 2530830 ] 4881 Ancestry Chart, Show cousins (fisharebest)
  - [ 2529023 ] 404 on repo/show changes (fisharebest)
  - Changed: new picasa album thumbnail (windmillway)
  - Fixed: [ 2495330 ] [4720] indilist shows married names not obeying config (fisharebest)
