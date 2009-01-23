@@ -24,7 +24,7 @@
  * @author Adem GENÇ uzayuydu@gmail.com http://www.muttafi.com
  * @version $Id$
  */
- 
+
 if (!defined('PGV_PHPGEDVIEW')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
@@ -233,7 +233,8 @@ $pgv_lang["example_place"]						= "GEDCOM'unuzda geçersiz yer örneği:";
 $pgv_lang["fbsql"]								= "Temel Yazı Tipi";
 $pgv_lang["found_record"]		= "Bulunan kayıt";
 $pgv_lang["ged_download"]						= "İndir";
-$pgv_lang["ged_import"]			= "İçeri aktarımı (import)";
+$pgv_lang["ged_import"]			= "İçeri aktar";
+$pgv_lang["ged_export"] 						= "Dışarı aktar";
 $pgv_lang["ged_check"] 							= "Kontrol et";
 $pgv_lang["gedcom_adm_head"]					= "GEDCOM Yönetimi";
 $pgv_lang["gedcom_config_write_error"]	= "HATA!!! GEDCOM yapılandırma dosyasına yazamıyorum.";
@@ -300,6 +301,14 @@ $pgv_lang["pgv_registry"]		= "PhpGedView kullanan diğer sitelerin listesi";
 $pgv_lang["PGV_SESSION_SAVE_PATH"]	= "Oturum (session) kaydetme yolu";
 $pgv_lang["PGV_SESSION_TIME"]		= "Oturum (session) zaman aşımı";
 $pgv_lang["PGV_SIMPLE_MAIL"] = "Basit email alma sistemi kullan";
+$pgv_lang["PGV_SMTP_ACTIVE"] 					= "Emailleri göndermede harici SMTP kullan";
+$pgv_lang["PGV_SMTP_HOST"] 						= "Gönderen sunucu (SMTP) adı";
+$pgv_lang["PGV_SMTP_HELO"] 						= "Gönderen domain adı";
+$pgv_lang["PGV_SMTP_PORT"] 						= "SMTP Portu";
+$pgv_lang["PGV_SMTP_AUTH"] 						= "Kullanıcı adı ve şifre";
+$pgv_lang["PGV_SMTP_AUTH_USER"] 				= "Kullanıcı adı";
+$pgv_lang["PGV_SMTP_AUTH_PASS"] 				= "Şifre";
+$pgv_lang["PGV_SMTP_FROM_NAME"] 				= "Gönderen adı";
 $pgv_lang["PGV_STORE_MESSAGES"]		= "Mesajları veritabanına kaydet";
 $pgv_lang["phpinfo"]							= "PHP bilgisi";
 $pgv_lang["place_cleanup_detected"] 			= "Geçersiz yer şifrelemesi saptandı. Bu hatalar sabitleştirilmeliler.";
@@ -316,7 +325,6 @@ $pgv_lang["select_an_option"]		= "Aşağıdaki seçeneklerden birini seçin:";
 $pgv_lang["SERVER_URL"]			= "PhpGedView URL adresi";
 $pgv_lang["show_phpinfo"]						= "PHP bilgi sayfasını göster";
 $pgv_lang["siteadmin"]							= "Site yönetimi";
-$pgv_lang["skip_cleanup"]		= "Temizlemeyi atla";
 $pgv_lang["sqlite"]								= "SQLite";
 $pgv_lang["sybase"]								= "Sybase";
 $pgv_lang["sync_gedcom"]						= "GEDCOM verisi ile kullanıcı ayarlarını senkronize et";
@@ -415,4 +423,5 @@ $pgv_lang["sanity_warn4"]			= "XML işleyici kütüphanesi mevcut değil. PhpGed
 $pgv_lang["sanity_warn6"]			= "Takvim kütüphanesi mevcut değil. PhpGedView yinede iş görecek görecek ancak özelliklerin bir kismi, İbrani veya Fransız gibi diğer takvimlere dönüşüm gibi özellikler çalışmayacaktır. PhpGedView scripti çalıştırmak için bir engel değildir. Lütfen daha geniç bilgi için <a href='http://www.php.net/manual/en/ref.calendar.php'>http://www.php.net/manual/en/ref.calendar.php</a> siteye bakın.";
 $pgv_lang["download_note"]						= "<b>Not:</b> Büyük veritabanları indirme vermeden önce uzun bir zaman işlem yapabilir. Eğer PHP zaman aşımı uygularsa indirme bitmeden önce indirilen veritabanı dosyası tam olmayabilir.<br /><br /> Dosya doğru olarak indirildiğinden emin olmak için GEDCOM biçiminde indiriyorsanız son satırında <b>0&nbsp;TRLR</b> olduğunu kontrol edin, yada XML biçiminde indiriyorsanız son satırında <b>&lt;/database&gt;</b> olduğunu kontrol edin. <br /><br />Bu dosyalar metindir siz herhangi bir uygun metin editörü kullanarak açabilir içeriğini görebilirsiniz. İndirdiğiniz dosyaları kontrol için açtığınızda kesinlikle <b><u>kaydetmeyin</u></b> dosyanız bozulabilir.<br /><br /> Genelde GEDCOM dosya indirildiğinde uzun zaman alıyorsa içeri aktarırken de uzun zaman alabilir.";
 $pgv_lang["gedcheck_text"] = "Bu modül <a href=\"http://phpgedview.sourceforge.net/ged551-5.pdf\">5.5.1 GEDCOM tanımlamasına karşı</a> bir GEDCOM dosyanın biçimini kontrol eder. Ayrıca verinizin içindeki hataların sayısınız kontrol eder. Not tanımlamada birçok verisyonlar, uzantılar ve değişkenler olduğuna dikkat edin bü yüzden \"Kritik\" olarak o bayraktan başka herhangi bir konular ile ilgilenmemelisiniz. Yardım istemeden önce tüm hataların satırında yine aynı satırda hatalar hakkında tanımlamalar bulunabilir bu yüzden lütfen kontrol etmenizi rica ediyoruz.";
+$pgv_lang["tradition_polish"]		= "Polonya";
 ?>

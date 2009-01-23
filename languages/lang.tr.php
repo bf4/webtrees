@@ -31,6 +31,22 @@ if (!defined('PGV_PHPGEDVIEW')) {
 }
 
 $pgv_lang["changelog"]			= "v#VERSION# sürümündeki değişiklikler";
+$pgv_lang["begins_with"]		= "İle başlar";
+$pgv_lang["contains"]			= "Kapsamalar";
+$pgv_lang["sounds_like"]		= "Gibi sesler";
+$pgv_lang["others"]					= "Diğerleri";
+$pgv_lang["total_changes"]			= "Toplam değişenler";
+$pgv_lang["total_links"]			= "Toplam linkler";
+$pgv_lang["skip_marnms"]			= "Evli isimler hariç";
+$pgv_lang["show_marnms"]			= "Evli isimler dahil";
+$pgv_lang["months2"]				= "ay"; // 2 months
+$pgv_lang["hour1"]					= "saat";
+$pgv_lang["hours2"]					= "saat"; // 2 hours
+$pgv_lang["hours"]					= "saat"; // >2 hours
+$pgv_lang["minute1"]				= "dakika";
+$pgv_lang["minutes2"]				= "dakika"; // 2 minutes
+$pgv_lang["minutes"]				= "dakika"; // >2 minutes
+$pgv_lang["ago"]					= "önce";
 $pgv_lang["html_block_descr"]		= "Bu HTML blok PhpGedViewiniz için ziyaretçilerinize mesaj verebileceğiniz blok ve HTML kodlarını kullanabileceğiniz bir blok tur. Bu blok sayesinde ziyaretçilerinize vereceğiniz mesajı istediğiniz gibi HTML kodlarıyla şekillendirerek mesajlarınızı yayınlamanızı sağlar.";
 $pgv_lang["html_block_sample_part1"]	= "<p class=\"blockhc\"><b>Başlığınızı buraya yerleştirin</b></p><br /><p>Konfigürasyon düğmesini tıkla";
 $pgv_lang["html_block_sample_part2"]	= "açılacak sayfada mesajınızı yazın.</p>";
@@ -169,7 +185,6 @@ $pgv_lang["review_changes_email"]	= "Hatırlatıcı emailler gönder?";
 $pgv_lang["for_support"]		= "Teknik yardım ve bilgi için danışabileceğiniz kişi:";
 $pgv_lang["for_contact"]		= "Nesep tetkiki için temas edilecek kişi:";
 $pgv_lang["for_all_contact"]		= "Teknik yardım veya seçere ile ilgili sorular için danışabileceğiniz ilişki adresi:";
-$pgv_lang["build_error"]		= "GEDCOM dosyası güncelleştirildi.";
 $pgv_lang["choose_username"]		= "Kullanıcı adı";
 $pgv_lang["username"]			= "Kullanıcı Adı";
 $pgv_lang["invalid_username"]		= "Kullanıcı adı içinde geçersiz harfler bulunmaktadır";
@@ -536,7 +551,6 @@ $pgv_lang["apx"]			= "takriben";
 $pgv_lang["cir"]			= "dolaylarında";
 
 //-- Admin File Messages
-$pgv_lang["rebuild_indexes"]		= "İndeks dosyalarını yenile";
 $pgv_lang["user_admin"]			= "Kullanıcı Yönetimi";
 $pgv_lang["password_mismatch"]		= "Şifreler birbirine uymuyor.";
 $pgv_lang["enter_username"]		= "Üyenin kullanıcı adınızı işlemeniz gerekiyor.";
@@ -1279,21 +1293,27 @@ $pgv_lang["twin"] = "İkiz";
 $pgv_lang["twin_brother"] = "İkiz erkek kardeş";
 $pgv_lang["twin_sister"] = "İkiz kız kardeş";
 $pgv_lang["witness"] = "Tanık";
-$pgv_lang["statutci"]			= "İndeks yaratılamadı";
 
 //-- statistics utility
-$pgv_lang["statnnames"]			= "Soy isim sayısı =";
-$pgv_lang["statnfam"]			= "Aile sayısı =";
-$pgv_lang["statnmale"]			= "Erkek sayısı =";
-$pgv_lang["statnfemale"]		= "Kadın sayısı =";
+$pgv_lang["statutci"]			= "İndeksi oluşturamadı";
+$pgv_lang["statnnames"]			= "Toplam kişi";
+$pgv_lang["statnfam"]			= "Toplam aile";
+$pgv_lang["statnmale"]			= "Toplam erkek";
+$pgv_lang["statnfemale"]		= "Toplam kadın";
 $pgv_lang["statvars"]			= "Lütfen çizge için gerekli olan değişkenleri işleyin";
 $pgv_lang["statlxa"]			= "X-Ekseni boyunca:";
 $pgv_lang["statlya"]			= "Y-Ekseni boyunca";
 $pgv_lang["statlza"]			= "Z-Ekseni boyunca";
+$pgv_lang["stat_1_map"]			= "Kişisel dağılım";
+$pgv_lang["stat_2_map"]			= "Ülkeye göre doğum";
+$pgv_lang["stat_3_map"]			= "Ülkeye göre ölüm";
+$pgv_lang["stat_4_map"]			= "Ülkeye göre evlilik";
+$pgv_lang["stat_8_fam"]			= "Kaynaklar ile aileler";
+$pgv_lang["stat_9_indi"]		= "Kaynaklar ile kişiler";
 $pgv_lang["stat_10_none"]		= "Hiç biri";
-$pgv_lang["stat_11_mb"]			= "Doğum günlerinin ayı";
-$pgv_lang["stat_12_md"]			= "Vefat günlerinin ayı";
-$pgv_lang["stat_13_mm"]			= "Evlenme günlerinin ayı";
+$pgv_lang["stat_11_mb"]			= "Doğum ayı";
+$pgv_lang["stat_12_md"]			= "Vefat ayı";
+$pgv_lang["stat_13_mm"]			= "Evlenme ayı";
 $pgv_lang["stat_14_mb1"]		= "Bir ilişkide doğan 1. çocuğun doğum ayı";
 $pgv_lang["stat_15_mm1"]		= "İlk evlenme günlerinin ayı";
 $pgv_lang["stat_16_mmb"]		= "Evlilik ile 1. doğum arasındaki ay sayısı.";
@@ -1308,7 +1328,6 @@ $pgv_lang["stat_202_perc"]		= "Yüzdelik";
 $pgv_lang["stat_300_none"]		= "Hiç biri";
 $pgv_lang["stat_301_mf"]		= "Erkek / Kadın";
 $pgv_lang["stat_302_cgp"]		= "Dönemler. Periyorlar z-ekseni için doğru değerleri kontrol et";
-$pgv_lang["statmess1"]			= "Aşağıda yalnız x-ekseni ya da z-ekseni ile ilgili limit değerleri işleyin";
 $pgv_lang["statar_xgp"]			= "Periyotlar için gerekli olan limit değerler (x-ekseni):";
 $pgv_lang["statar_xgl"]			= "Yaşlar için gerekli olan limit değerler (x-ekseni):";
 $pgv_lang["statar_xgm"]			= "Aylar için gerekli olan limit değerler (x-ekseni):";
@@ -1320,14 +1339,11 @@ $pgv_lang["statistiek_list"]	= "İstatistik Alanı";
 
 //-- statisticsplot utility
 $pgv_lang["stpl"]			= "...";
-$pgv_lang["stplGDno"]			= "Grafik sergileme kütüphanesi mevcut değildir, Sistem yöneticinize PHP 4 sorun";
-$pgv_lang["stpljpgraphno"]		= "JPgraph modülleri rehber <i>PhpGedView/jpgraph/</i> da mevcut değiller. <br />Lütfen http://www.aditus.nu/jpgraph/jpdownload.php den onları önce alın<br> <br /><h3>Rehber <i>PhpGedView/jpgraph/</i></h3> da Jpgraph kurun<br>";
 $pgv_lang["stplinfo"]			= "Çizge için değişken";
 $pgv_lang["stpltype"]			= "Tipi:";
 $pgv_lang["stplnoim"]			= "Uygulanacak yok:";
 $pgv_lang["stplmf"]			= " / Erkek-Kadın";
 $pgv_lang["stplipot"]			= " / her dönem zamanı";
-$pgv_lang["stplgzas"]			= "Kenarları z-ekseni:";
 $pgv_lang["stplmonth"]			= "Ay";
 $pgv_lang["stplnumbers"]		= "Sayı";
 $pgv_lang["stplage"]			= "Yaş";
@@ -1520,8 +1536,20 @@ $pgv_lang["showUnknown"]			= "Bilinmeyen Cinsiyeti Göster";
 $pgv_lang["example"]				= "Örnek:";
 $pgv_lang["parent_family"]			= "Ebeveyn Aile";
 $pgv_lang["view_fam_nav_details"]	= "Detayları Görüntüleme ...";
+
+$pgv_lang["view_fam_nav_notes"]		= "için Notları Görüntüle ...";
+$pgv_lang["view_fam_nav_sources"]	= "için Kaynakları Görüntüle ...";
+$pgv_lang["view_fam_nav_media"]		= "için Media Görüntüle ...";
+$pgv_lang["view_fam_nav_album"]		= "için Albüm Görüntüle ...";
+$pgv_lang["view_fam_nav_relatives"]	= "için Akrabaları Görüntüle ...";
+$pgv_lang["view_fam_nav_tree"]		= "için Ağaç Görüntüle ...";
+$pgv_lang["view_fam_nav_research"]	= "için Araştırma Görüntüle ...";
+$pgv_lang["view_fam_nav_map"]		= "için Harita Görüntüle ...";
+$pgv_lang["view_fam_nav_spare"]		= "için Yedek-bilgi Görüntüle ...";
+$pgv_lang["navigator"]				= "Yön Gösterici";
+
 $pgv_lang["show_parents"] 			= "Ebeveynleri göster";
-$pgv_lang["years2"]					= "years";	// 2 Yıl";
+$pgv_lang["years2"]					= "yıl";	// 2 Yıl";
 $pgv_lang["advanced_search"] 	= "Gelişmiş Arama";
 $pgv_lang["more_fields"]		= "Daha Fazla Alan Ekle";
 $pgv_lang["step_parent_family"]		= "Üvey-Ebeveyn Aile";
@@ -1592,5 +1620,30 @@ $pgv_lang["NNhebrew"] 		= "İbrani";
 $pgv_lang["PNhebrew"] 		= "İbrani";
 $pgv_lang["NNarabic"] 		= "Arap";
 $pgv_lang["PNarabic"] 		= "Arap";
+$pgv_lang["stat_sindi"]			= "Kaynaklar ile kişiler";
+$pgv_lang["stat_sfam"]			= "Kaynaklar ile aileler";
+$pgv_lang["map_type"]			= "Harita tipi";
+$pgv_lang["less"]				= "daha az";
+$pgv_lang["over"]				= "üzerine";
+$pgv_lang["interval"]			= "arası";
+$pgv_lang["aft_marr"]			= "evlilikten sonra ay";
+$pgv_lang["bef_marr"]			= "evlilikten sonra ve önce ay";
+$pgv_lang["quarters"]			= "evlilikten sonra çeyrek";
+$pgv_lang["half_year"]			= "evlilikten yarım-yıl sonra";
+$pgv_lang["one_child"]			= "bir çocuk arası";
+$pgv_lang["two_children"]		= "iki çocuk arası";
+$pgv_lang["stplnuch"]			= "çocuk";
+$pgv_lang["indi_distribution_chart"]	= "Kişisel dağılım çizelge";
+$pgv_lang["surname_distribution_chart"]	= "Soyad dağılım çizelge";
+$pgv_lang["g_chart_high"]		= "En Yüksek Nüfuslu";
+$pgv_lang["g_chart_low"]		= "En Düşük Nüfuslu";
+$pgv_lang["g_chart_nobody"]		= "Hiç kimse hepsi";
+$pgv_lang["area_chart"]			= "Coğrafi alan";
+$pgv_lang["europe_chart"]		= "Evrupa";
+$pgv_lang["s_america_chart"]	= "Güney Amerika";
+$pgv_lang["asia_chart"]			= "Asya";
+$pgv_lang["middle_east_chart"]	= "Orta Doğu";
+$pgv_lang["africa_chart"]		= "Afrika";
+$pgv_lang["world_chart"]		= "Dünya";
 
 ?>

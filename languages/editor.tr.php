@@ -92,6 +92,7 @@ $pgv_lang["add_child_to_family"]	= "Bu aileye bir çocuk ekle";
 $pgv_lang["add_fact"]			= "Yeni hadise ekle";
 $pgv_lang["add_father"]			= "Yeni baba ekle";
 $pgv_lang["add_husb"]			= "Erkek eş ekle";
+$pgv_lang["add_opf_child"]				= "Bir bir-ebeveyn ailesi oluşturmak için bir çocuk ekle";
 $pgv_lang["add_husb_to_family"]		= "Bu aileye erkek eş ekle";
 $pgv_lang["add_media"]			= "Yeni multimedya nesne ekle";
 $pgv_lang["add_media_lbl"]		= "Multimedya nesne ekle";

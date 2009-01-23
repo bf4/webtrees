@@ -179,6 +179,15 @@ $factarray["FAMC:WIFE:FAMC:WIFE:GIVN"] = "Anne Tarafındaki Anneannenin Verilen 
 $factarray["FAMC:WIFE:FAMC:HUSB:GIVN"] = "Anne Tarafındaki Dedenin Verilen İsmi ";
 $factarray["FAMC:HUSB:FAMC:WIFE:GIVN"] = "Baba Tarafındaki Babaannenin Verilen İsmi ";
 $factarray["FAMS:CHIL:BIRT:PLAC"] = "Çocukların Doğum Yeri";
+$factarray["FAMS:NOTE"] = "Eş Notu";
+$factarray["FAMS:CENS:DATE"] = "Eş Sayım Tarihi";
+$factarray["FAMS:CENS:PLAC"] = "Eş Sayım Yeri";
+$factarray["FAMS:DIV:DATE"] = "Eş Boşanma Tarihi";
+$factarray["FAMS:DIV:PLAC"] = "Eş Boşanma Yeri";
+$factarray["FAMS:SLGS:DATE"] = "LDS Eş İzinname Tarihi";
+$factarray["FAMS:SLGS:PLAC"] = "LDS Eş İzinname Yeri";
+$factarray["FAMS:SLGS:TEMP"] = "LDS Eş İzinname İbadethane";
+
 $factarray["BIRT:PLAC"] = "Doğum Yeri";
 $factarray["DEAT:PLAC"] = "Ölüm Yeri";
 $factarray["CHR:PLAC"] = "Vaftiz eden yer ";
