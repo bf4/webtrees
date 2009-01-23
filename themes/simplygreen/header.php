@@ -31,8 +31,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 
 global $SEARCH_SPIDER, $TEXT_DIRECTION;
 
-$date=new GedcomDate(date('j M Y', client_time()));
-$displayDate = $date->Display(false);
+$displayDate=timestamp_to_gedcom_date(client_time())->Display(false);
 
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">

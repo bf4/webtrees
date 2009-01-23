@@ -683,7 +683,7 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 		$res = dbquery($sql);
 		while ($task = $res->fetchRow(DB_FETCHMODE_ASSOC)) {
 			$task = db_cleanup($task);
-			$date=new GedcomDate(date("d M Y", $task["t_startdate"]));
+			$date=timestamp_to_gedcom_date($task["t_startdate"]);
 			$out .= '<tr><td class="optionbox"><a href="module.php?mod=research_assistant&amp;action=viewtask&amp;taskid='.$task["t_id"].'">'.PrintReady($task["t_title"]).'</a></td><td class="optionbox">'.$date->Display(false).'</td><td class="optionbox" align="center">'.$this->checkComplete($task).'</td><td class="optionbox" align="center"><a href="module.php?mod=research_assistant&amp;action=edittask&amp;taskid='.$task["t_id"].'">'.$pgv_lang["edit"].'</a></td><td class="optionbox" align="center"><a href="module.php?mod=research_assistant&amp;action=deletetask&amp;taskid='.$task["t_id"].'&amp;folder='.$folderId.'">'.$pgv_lang["delete"].'</a></td></tr>';
 		}
 		$out .= '</table>';
@@ -791,7 +791,7 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 			$task = db_cleanup($task);
 			if (empty ($task['t_enddate'])) {
 				$completeLink = "<a href=\"module.php?mod=research_assistant&amp;action=completeTask&amp;taskid=".$task["t_id"]."\">".$pgv_lang["complete"]."</a>";
-				$date=new GedcomDate(date("d M Y", $task["t_startdate"]));
+				$date=timestamp_to_gedcom_date($task["t_startdate"]);
 				$out .= '<tr><td class="optionbox"><a href="module.php?mod=research_assistant&amp;action=viewtask&amp;taskid='.$task["t_id"].'">'.PrintReady($task["t_title"]).'</a></td><td class="optionbox">'.$date->Display(false).'</td><td class="optionbox" align="center">'.$this->checkComplete($task).'</td>
 						<td class="optionbox" align="center"><a href="module.php?mod=research_assistant&amp;action=edittask&amp;taskid='.$task["t_id"].'">'.$pgv_lang["edit"].'</a></td>
 						<td class="optionbox" align="center"><a href="module.php?mod=research_assistant&amp;action=deletetask&amp;taskid='.$task["t_id"].'">'.$pgv_lang["delete"].'</a></td>
@@ -800,7 +800,7 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 			else
 			{
 				$completeLink = '<a href="module.php?mod=research_assistant&amp;action=completeTask&amp;taskid='.$task["t_id"].'">'.$pgv_lang["editform"].'</a>';
-				$date=new GedcomDate(date("d M Y", $task["t_startdate"]));
+				$date=timestamp_to_gedcom_date($task["t_startdate"]);
 				$out .= '<tr><td class="optionbox"><a href="module.php?mod=research_assistant&amp;action=viewtask&amp;taskid='.$task["t_id"].'">'.PrintReady($task["t_title"]).'</a></td><td class="optionbox">'.$date->Display(false).'</td><td class="optionbox" align="center">'.$this->checkComplete($task).'</td><td class="optionbox" align="center"><a href="module.php?mod=research_assistant&amp;action=edittask&amp;taskid='.$task["t_id"].'">'.$pgv_lang["edit"].'</a></td><td class="optionbox" align="center"><a href="module.php?mod=research_assistant&amp;action=deletetask&amp;taskid='.$task["t_id"].'">'.$pgv_lang["delete"].'</a></td><td class="optionbox" align="center">'.$completeLink.'</td></tr>';
 			}
 		}
@@ -1024,7 +1024,7 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 		while ($task = & $res->fetchRow(DB_FETCHMODE_ASSOC)) {
 			$task = db_cleanup($task);
 			$out .= '<tr><td class="optionbox"><a href="module.php?mod=research_assistant&amp;action=viewtask&amp;taskid='.$task["t_id"].'">'.PrintReady($task["t_title"]).'</a></td>';
-			$date=new GedcomDate(date("d M Y", $task["t_startdate"]));
+			$date=timestamp_to_gedcom_date($task["t_startdate"]);
 			$out .= '<td class="optionbox">'.$date->Display(false).'</td>';
 			$out .= '<td class="optionbox" align="center">'.$this->checkComplete($task).'</td>';
 			$out .= '<td class="optionbox" align="center"><a href="module.php?mod=research_assistant&amp;action=edittask&amp;taskid='.$task["t_id"].'">'.$pgv_lang["edit"].'</a></td>';
@@ -1477,7 +1477,7 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 			// Loop through all the task ID's and pull the info we need on them,
 			// then format them nicely to show the user.
 			while ($taskid = $res->fetchrow(DB_FETCHMODE_ASSOC)) {
-				$date=new GedcomDate(date("d M Y", $taskid["t_startdate"]));
+				$date=timestamp_to_gedcom_date($taskid["t_startdate"]);
 				$out .= '<tr><td class="list_label"><a href="module.php?mod=research_assistant&amp;action=viewtask&amp;taskid='.$taskid['t_id'].'">'.PrintReady($pgv_lang['details']).'</a></td><td class="list_label">'.PrintReady($taskid['t_title']).'</td><td class="list_label">'.$this->checkComplete($taskid).'</td><td class="list_label">'.$date->Display(false).'</td></tr>';
 			}
 		}
@@ -1580,7 +1580,7 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 				if ($result->numRows()>0) {
 					$task = $result->fetchrow(DB_FETCHMODE_ASSOC);
 					$task = db_cleanup($task);
-					$date=new GedcomDate(date("d M Y", $task["t_startdate"]));
+					$date=timestamp_to_gedcom_date($task["t_startdate"]);
 					$out .= '<tr><td class="list_label"><a href="module.php?mod=research_assistant&amp;action=viewtask&amp;taskid='.$task['t_id'].'">'.$pgv_lang['details'].'</a></td><td class="list_label">'.PrintReady($task['t_title']).'</td><td class="list_label">'.$this->checkComplete($task).'</td><td class="list_label">'.$date->Display(false).'</td></tr>';
 				}
 				$result->free();
@@ -1954,7 +1954,7 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 
 		while($comment = $res->fetchRow(DB_FETCHMODE_ASSOC)){
 			$comment = db_cleanup($comment);
-			$date=new GedcomDate(date("d M Y", (int)$comment["uc_datetime"]));
+			$date=timestamp_to_gedcom_date($comment["uc_datetime"]);
 			$out .= '<div class="blockcontent"><div class="person_box" id="comment1"><span class="news_title">' .
 					$comment["uc_username"].'' . // INSERT username
 					'</span><br /><span class="news_date">' .

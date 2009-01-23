@@ -2402,8 +2402,6 @@ class stats {
 			case 'regdate':
 			{
 				if(is_array($params) && isset($params[0]) && $params[0] != ''){$datestamp = $params[0];}else{$datestamp = $DATE_FORMAT;}
-				//$d = new GedcomDate(date('j M Y', get_user_setting($user, 'reg_timestamp')));
-				//return strip_tags($d->Display(false, $DATE_FORMAT, array()));
 				return date($datestamp, get_user_setting($user, 'reg_timestamp'));
 			}
 			case 'regtime':
@@ -2440,7 +2438,7 @@ class stats {
 // Date & Time                                                               //
 ///////////////////////////////////////////////////////////////////////////////
 
-	static function serverDate() {$today=new GedcomDate(date('j M Y')); return $today->Display(false);}
+	static function serverDate() {return timestamp_to_gedcom_date(time())->Display(false);}
 
 	static function serverTime() {return date('g:i a');}
 
@@ -2448,7 +2446,7 @@ class stats {
 
 	static function serverTimezone() {return date('T');}
 
-	static function browserDate() {$today=new GedcomDate(date('j M Y'), client_time()); return $today->Display(false);}
+	static function browserDate() {return timestamp_to_gedcom_date(client_time())->Display(false);}
 
 	static function browserTime() {return date('g:i a', client_time());}
 
