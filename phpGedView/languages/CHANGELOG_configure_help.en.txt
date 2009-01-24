@@ -47,6 +47,7 @@ VERSION 4.2.0
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 -----------------------------------------------------------------------------------------
++$pgv_lang["lang_name_indonesian"]					24 Jan 2009				A
 #$pgv_lang["more_config_hjaelp"]					21 Jan 2009				R	"more_config_hjaelp" --> "more_help_advice"
 *$pgv_lang["general_privacy_help"]					21 Jan 2009				w	"more_config_hjaelp" --> "more_help_advice"
 *$pgv_lang["PGV_SMTP_FROM_NAME_help"]				15 Jan 2009				W
