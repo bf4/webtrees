@@ -565,6 +565,7 @@ $pgv_lang["lang_name_french"]		= "francuski";
 $pgv_lang["lang_name_german"]		= "niemiecki";
 $pgv_lang["lang_name_hebrew"]		= "hebrajski";
 $pgv_lang["lang_name_hungarian"]	= "węgierski";
+$pgv_lang["lang_name_indonesian"]	= "indonezyjski";
 $pgv_lang["lang_name_italian"]		= "włoski";
 $pgv_lang["lang_name_norwegian"]	= "norweski";
 $pgv_lang["lang_edit"]			= "Edytuj";
