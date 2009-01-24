@@ -3,7 +3,7 @@
  * UI for online updating of the GEDCOM config file.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
+ * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -278,6 +278,7 @@ if ($action=="update") {
 	$configtext = preg_replace('/\$ABBREVIATE_CHART_LABELS\s*=\s*.*;/', "\$ABBREVIATE_CHART_LABELS = ".$boolarray[$_POST["NEW_ABBREVIATE_CHART_LABELS"]].";", $configtext);
 	$configtext = preg_replace('/\$ADVANCED_NAME_FACTS\s*=\s*.*;/', "\$ADVANCED_NAME_FACTS = \"".$_POST["NEW_ADVANCED_NAME_FACTS"]."\";", $configtext);
 	$configtext = preg_replace('/\$ADVANCED_PLAC_FACTS\s*=\s*.*;/', "\$ADVANCED_PLAC_FACTS = \"".$_POST["NEW_ADVANCED_PLAC_FACTS"]."\";", $configtext);
+	$configtext = preg_replace('/\$USE_GEONAMES\s*=\s*.*;/', "\$USE_GEONAMES = ".$boolarray[$_POST["NEW_USE_GEONAMES"]].";", $configtext);
 	$configtext = preg_replace('/\$ALLOW_EDIT_GEDCOM\s*=\s*.*;/', "\$ALLOW_EDIT_GEDCOM = ".$boolarray[$_POST["NEW_ALLOW_EDIT_GEDCOM"]].";", $configtext);
 	$configtext = preg_replace('/\$ALLOW_THEME_DROPDOWN\s*=\s*.*;/', "\$ALLOW_THEME_DROPDOWN = ".$boolarray[$_POST["NEW_ALLOW_THEME_DROPDOWN"]].";", $configtext);
 	$configtext = preg_replace('/\$AUTO_GENERATE_THUMBS\s*=\s*.*;/', "\$AUTO_GENERATE_THUMBS = ".$boolarray[$_POST["NEW_AUTO_GENERATE_THUMBS"]].";", $configtext);
@@ -1510,6 +1511,7 @@ print "&nbsp;<a href=\"javascript: ".$pgv_lang["displ_layout_conf"]."\" onclick=
 				<option value="2" <?php if ($GEDCOM_DEFAULT_TAB==2) print "selected=\"selected\""; ?>><?php print $pgv_lang["ssourcess"]; ?></option>
 				<option value="3" <?php if ($GEDCOM_DEFAULT_TAB==3) print "selected=\"selected\""; ?>><?php print $pgv_lang["media"]; ?></option>
 				<option value="4" <?php if ($GEDCOM_DEFAULT_TAB==4) print "selected=\"selected\""; ?>><?php print $pgv_lang["relatives"]; ?></option>
+				<option value="5" <?php if ($GEDCOM_DEFAULT_TAB==5) print "selected=\"selected\""; ?>><?php print $pgv_lang["tree"]; ?></option>
 				<option value="-1" <?php if ($GEDCOM_DEFAULT_TAB==-1) print "selected=\"selected\""; ?>><?php print $pgv_lang["all"]; ?></option>
 				<option value="-2" <?php if ($GEDCOM_DEFAULT_TAB==-2) print "selected=\"selected\""; ?>><?php print $pgv_lang["lasttab"]; ?></option>
 			</select>
@@ -1910,6 +1912,14 @@ print "&nbsp;<a href=\"javascript: ".$pgv_lang["editopt_conf"]."\" onclick=\"exp
 	<tr>
 		<td class="descriptionbox wrap width20"><?php print_help_link("ADVANCED_PLAC_FACTS_help", "qm", "ADVANCED_PLAC_FACTS"); print $pgv_lang["ADVANCED_PLAC_FACTS"]; ?></td>
 		<td class="optionbox"><input type="text" name="NEW_ADVANCED_PLAC_FACTS" value="<?php print $ADVANCED_PLAC_FACTS; ?>" size="40" dir="ltr" tabindex="<?php $i++; print $i; ?>" onfocus="getHelp('ADVANCED_PLAC_FACTS_help');" /></td>
+	</tr>
+	<tr>
+		<td class="descriptionbox wrap width20"><?php print_help_link("USE_GEONAMES_help", "qm", "USE_GEONAMES"); print $pgv_lang["USE_GEONAMES"]; ?></td>
+		<td class="optionbox"><select name="NEW_USE_GEONAMES" tabindex="<?php $i++; print $i; ?>" onfocus="getHelp('USE_GEONAMES_help');">
+				<option value="yes" <?php if ($USE_GEONAMES) print "selected=\"selected\""; ?>><?php print $pgv_lang["yes"]; ?></option>
+				<option value="no" <?php if (!$USE_GEONAMES) print "selected=\"selected\""; ?>><?php print $pgv_lang["no"]; ?></option>
+			</select>
+		</td>
 	</tr>
 
 	<tr>
