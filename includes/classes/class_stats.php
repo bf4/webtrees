@@ -438,10 +438,10 @@ class stats {
 		$tot_indi_per = round(100 *  ($tot_indi-$tot_sindi) / $tot_indi, 2);
 		$tot_sindi_per = round(100 * $tot_sindi / $tot_indi, 2);
 		$chd = self::_array_to_extended_encoding(array($tot_sindi_per, 100-$tot_sindi_per));
-		$chl = reverseText($pgv_lang['stat_sindi']).' ['.round($tot_sindi_per,1).'%]|'.
-				reverseText($pgv_lang['others']).' ['.round($tot_indi_per,1).'%]';
-		$chart_title = reverseText($pgv_lang['stat_sindi']).' ['.round($tot_sindi_per,1).'%], '.
-						reverseText($pgv_lang['others']).' ['.round($tot_indi_per,1).'%]';
+		$chl =  $pgv_lang['stat_sindi'].' - '.round($tot_sindi_per,1).'%|'.
+				$pgv_lang['others'].' - '.round($tot_indi_per,1).'%';
+		$chart_title =  $pgv_lang['stat_sindi'].' ['.round($tot_sindi_per,1).'%], '.
+						$pgv_lang['others'].' ['.round($tot_indi_per,1).'%]';
 		return "<img src=\"".encode_url("http://chart.apis.google.com/chart?cht=p3&chd=e:{$chd}&chs={$size}&chco={$color_from},{$color_to}&chf=bg,s,ffffff00&chl={$chl}")."\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" alt=\"".$chart_title."\" title=\"".$chart_title."\" />";
 	}
 
@@ -482,10 +482,10 @@ class stats {
 		$tot_fam_per = round(100 *  ($tot_fam-$tot_sfam) / $tot_fam, 2);
 		$tot_sfam_per = round(100 * $tot_sfam / $tot_fam, 2);
 		$chd = self::_array_to_extended_encoding(array($tot_sfam_per, 100-$tot_sfam_per));
-		$chl = reverseText($pgv_lang['stat_sfam']).' ['.round($tot_sfam_per,1).'%]|'.
-				reverseText($pgv_lang['others']).' ['.round($tot_fam_per,1).'%]';
-		$chart_title = reverseText($pgv_lang['stat_sfam']).' ['.round($tot_sfam_per,1).'%], '.
-						reverseText($pgv_lang['others']).' ['.round($tot_fam_per,1).'%]';
+		$chl =  $pgv_lang['stat_sfam'].' - '.round($tot_sfam_per,1).'%|'.
+				$pgv_lang['others'].' - '.round($tot_fam_per,1).'%';
+		$chart_title =  $pgv_lang['stat_sfam'].' ['.round($tot_sfam_per,1).'%], '.
+						$pgv_lang['others'].' ['.round($tot_fam_per,1).'%]';
 		return "<img src=\"".encode_url("http://chart.apis.google.com/chart?cht=p3&chd=e:{$chd}&chs={$size}&chco={$color_from},{$color_to}&chf=bg,s,ffffff00&chl={$chl}")."\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" alt=\"".$chart_title."\" title=\"".$chart_title."\" />";
 	}
 
@@ -656,22 +656,22 @@ class stats {
 		if ($tot_u > 0) {
 			$chd = self::_array_to_extended_encoding(array($tot_u, $tot_f, $tot_m));
 			$chl =
-				reverseText($pgv_lang['stat_unknown']).' ['.round($tot_u,1).'%]|'.
-				reverseText($pgv_lang['stat_females']).' ['.round($tot_f,1).'%]|'.
-				reverseText($pgv_lang['stat_males']).' ['.round($tot_m,1).'%]';
+				$pgv_lang['stat_unknown'].' - '.round($tot_u,1).'%|'.
+				$pgv_lang['stat_females'].' - '.round($tot_f,1).'%|'.
+				$pgv_lang['stat_males'].' - '.round($tot_m,1).'%';
 			$chart_title =
-				reverseText($pgv_lang['stat_males']).' ['.round($tot_m,1).'%], '.
-				reverseText($pgv_lang['stat_females']).' ['.round($tot_f,1).'%], '.
-				reverseText($pgv_lang['stat_unknown']).' ['.round($tot_u,1).'%]';
+				$pgv_lang['stat_males'].' ['.round($tot_m,1).'%], '.
+				$pgv_lang['stat_females'].' ['.round($tot_f,1).'%], '.
+				$pgv_lang['stat_unknown'].' ['.round($tot_u,1).'%]';
 			return "<img src=\"".encode_url("http://chart.apis.google.com/chart?cht=p3&chd=e:{$chd}&chs={$size}&chco={$color_unknown},{$color_female},{$color_male}&chf=bg,s,ffffff00&chl={$chl}")."\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" alt=\"".$chart_title."\" title=\"".$chart_title."\" />";
 		}
 		else {
 			$chd = self::_array_to_extended_encoding(array($tot_f, $tot_m));
 			$chl =
-				reverseText($pgv_lang['stat_females']).' ['.round($tot_f,1).'%]|'.
-				reverseText($pgv_lang['stat_males']).' ['.round($tot_m,1).'%]';
-			$chart_title = reverseText($pgv_lang['stat_males']).' ['.round($tot_m,1).'%], '.
-							reverseText($pgv_lang['stat_females']).' ['.round($tot_f,1).'%]';
+				$pgv_lang['stat_females'].' - '.round($tot_f,1).'%|'.
+				$pgv_lang['stat_males'].' - '.round($tot_m,1).'%';
+			$chart_title =  $pgv_lang['stat_males'].' ['.round($tot_m,1).'%], '.
+							$pgv_lang['stat_females'].' ['.round($tot_f,1).'%]';
 			return "<img src=\"".encode_url("http://chart.apis.google.com/chart?cht=p3&chd=e:{$chd}&chs={$size}&chco={$color_female},{$color_male}&chf=bg,s,ffffff00&chl={$chl}")."\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" alt=\"".$chart_title."\" title=\"".$chart_title."\" />";
 		}
 	}
@@ -718,6 +718,14 @@ class stats {
 		return $this->_getPercentage($this->totalMortalityUnknown(), 'individual');
 	}
 
+	function mortalityUnknown()
+	{
+		global $TBLPREFIX;
+		$rows=self::_runSQL("SELECT i_id AS id FROM {$TBLPREFIX}individuals WHERE i_file={$this->_ged_id} AND i_isdead=-1");
+		if (!isset($rows[0])) {return '';}
+		return $rows;
+	}
+
 	function chartMortality($params=null)
 	{
 		global $pgv_lang, $TEXT_DIRECTION;
@@ -733,22 +741,22 @@ class stats {
 		if ($tot_u > 0) {
 			$chd = self::_array_to_extended_encoding(array($tot_u, $tot_l, $tot_d));
 			$chl =
-				reverseText($pgv_lang['total_unknown']).' ['.round($tot_u,1).'%]|'.
-				reverseText($pgv_lang['total_living']).' ['.round($tot_l,1).'%]|'.
-				reverseText($pgv_lang['total_dead']).' ['.round($tot_d,1).'%]';
+				$pgv_lang['total_unknown'].' - '.round($tot_u,1).'%|'.
+				$pgv_lang['total_living'].' - '.round($tot_l,1).'%|'.
+				$pgv_lang['total_dead'].' - '.round($tot_d,1).'%';
 			$chart_title =
-				reverseText($pgv_lang['total_living']).' ['.round($tot_l,1).'%], '.
-				reverseText($pgv_lang['total_dead']).' ['.round($tot_d,1).'%], '.
-				reverseText($pgv_lang['total_unknown']).' ['.round($tot_u,1).'%]';
+				$pgv_lang['total_living'].' ['.round($tot_l,1).'%], '.
+				$pgv_lang['total_dead'].' ['.round($tot_d,1).'%], '.
+				$pgv_lang['total_unknown'].' ['.round($tot_u,1).'%]';
 			return "<img src=\"".encode_url("http://chart.apis.google.com/chart?cht=p3&chd=e:{$chd}&chs={$size}&chco={$color_unknown},{$color_living},{$color_dead}&chf=bg,s,ffffff00&chl={$chl}")."\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" alt=\"".$chart_title."\" title=\"".$chart_title."\" />";
 		}
 		else {
 			$chd = self::_array_to_extended_encoding(array($tot_l, $tot_d));
 			$chl =
-				reverseText($pgv_lang['total_living']).' ['.round($tot_l,1).'%]|'.
-				reverseText($pgv_lang['total_dead']).' ['.round($tot_d,1).'%]|';
-			$chart_title = reverseText($pgv_lang['total_living']).' ['.round($tot_l,1).'%], '.
-							reverseText($pgv_lang['total_dead']).' ['.round($tot_d,1).'%]';
+				$pgv_lang['total_living'].' - '.round($tot_l,1).'%|'.
+				$pgv_lang['total_dead'].' - '.round($tot_d,1).'%|';
+			$chart_title =  $pgv_lang['total_living'].' ['.round($tot_l,1).'%], '.
+							$pgv_lang['total_dead'].' ['.round($tot_d,1).'%]';
 			return "<img src=\"".encode_url("http://chart.apis.google.com/chart?cht=p3&chd=e:{$chd}&chs={$size}&chco={$color_living},{$color_dead}&chf=bg,s,ffffff00&chl={$chl}")."\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" alt=\"".$chart_title."\" title=\"".$chart_title."\" />";
 		}
 	}
@@ -806,6 +814,7 @@ class stats {
 	function totalMediaBook() {return $this->_totalMediaType('book');}
 	function totalMediaCard() {return $this->_totalMediaType('card');}
 	function totalMediaCertificate() {return $this->_totalMediaType('certificate');}
+	function totalMediaCoatOfArms() {return $this->_totalMediaType('coat');}
 	function totalMediaDocument() {return $this->_totalMediaType('document');}
 	function totalMediaElectronic() {return $this->_totalMediaType('electronic');}
 	function totalMediaMagazine() {return $this->_totalMediaType('magazine');}
@@ -843,18 +852,18 @@ class stats {
 			$count = $this->_totalMediaType($type);
 			if ($count != 0) {
 				$mediaCounts[] = round(100 * $count / $tot, 0);
-				$mediaTypes .= reverseText($pgv_lang['TYPE__'.$type]);
-				$mediaTypes .= ' ['.$count.']|';
+				$mediaTypes .= $pgv_lang['TYPE__'.$type];
+				$mediaTypes .= ' - '.$count.'|';
 				$c += $count;
-				$chart_title .= reverseText($pgv_lang['TYPE__'.$type]).' ['.$count.'], ';
+				$chart_title .= $pgv_lang['TYPE__'.$type].' ['.$count.'], ';
 			}
 		}
 		$count = $this->_totalMediaType('unknown');
 		if ($count != 0) {
 			$mediaCounts[] = round(100 * $count / $tot, 0);
-			$mediaTypes .= reverseText($pgv_lang['unknown']);
-			$mediaTypes .= ' ['.($tot-$c).']|';
-			$chart_title .= reverseText($pgv_lang['unknown']).' ['.($tot-$c).']';
+			$mediaTypes .= $pgv_lang['unknown'];
+			$mediaTypes .= ' - '.($tot-$c).'|';
+			$chart_title .= $pgv_lang['unknown'].' ['.($tot-$c).']';
 		}
 		else {
 			$chart_title = substr($chart_title,0,-2);
@@ -997,26 +1006,243 @@ class stats {
 		return $rows;
 	}
 	
-	function statsPlaces($fact='BIRT')
+	function statsPlaces($what='INDI', $fact=false, $parent=0, $country=false)
 	{
 		global $TBLPREFIX;
-		$rows=self::_runSQL(''
-					.' SELECT'
-						.' d_fact,'
-						.' d_gid'
-					.' FROM'
-						." {$TBLPREFIX}dates"
-					.' WHERE'
-						." d_file={$this->_ged_id}"
-						." AND d_fact='$fact'"
-					);
-		if (!isset($rows[0])) {return '';}
-		else {
-			foreach ($rows as $row) {
-				$result[]=getPlaceCountry(format_fact_place(Person::getInstance($row['d_gid'])->getFactByType($row['d_fact']), false, false, false));
+		if ($fact) {
+			$sql = "SELECT i_gedcom FROM ${TBLPREFIX}individuals WHERE i_file={$this->_ged_id}";
+			$res = dbquery($sql);
+			$placelist = array();
+			while ($row =& $res->fetchRow()) {
+				$factrec = trim(get_sub_record(1, "1 {$fact}", $row[0], 1));
+				if (!empty($factrec) && preg_match("/2 PLAC (.+)/", $factrec, $match)) {
+					if ($country) {
+						$place = getPlaceCountry(trim($match[1]));
+					}
+					else {
+						$place = trim($match[1]);
+					}
+					if (!isset($placelist[$place])) {
+						$placelist[$place] = 1;
+					}
+					else {
+						$placelist[$place] ++;
+					}
+				}
 			}
-			return $result;
+			$res->free();
+			return $placelist;
 		}
+		else if ($parent>0) {
+			if ($what=='INDI') {
+				$join = " JOIN {$TBLPREFIX}individuals ON pl_file = i_file AND pl_gid = i_id ";
+			}
+			else if ($what=='FAM') {
+				$join = " JOIN {$TBLPREFIX}families ON pl_file = f_file AND pl_gid = f_id ";
+			}
+			else {
+				$join = "";
+			}
+			$rows=self::_runSQL(''
+				.' SELECT'
+				.' p_place AS place,'
+				.' COUNT(*)'
+				.' FROM'
+					." {$TBLPREFIX}places"
+				." JOIN {$TBLPREFIX}placelinks ON pl_file=p_file AND p_id=pl_p_id"
+				." JOIN {$TBLPREFIX}placelocation ON pl_id={$parent} AND pl_place=p_place"
+				.$join
+				.' WHERE'
+					." p_file={$this->_ged_id}"
+				.' GROUP BY place'
+			);
+			if (!isset($rows[0])) {return '';}
+			return $rows;
+		}
+		else {
+			if ($what=='INDI') {
+				$join = " JOIN {$TBLPREFIX}individuals ON pl_file = i_file AND pl_gid = i_id ";
+			}
+			else if ($what=='FAM') {
+				$join = " JOIN {$TBLPREFIX}families ON pl_file = f_file AND pl_gid = f_id ";
+			}
+			else {
+				$join = "";
+			}
+			$rows=self::_runSQL(''
+					.' SELECT'
+						.' p_place AS country,'
+						.' COUNT(*)'
+					.' FROM'
+						." {$TBLPREFIX}places"
+					." JOIN {$TBLPREFIX}placelinks ON pl_file=p_file AND p_id=pl_p_id"
+					.$join
+					.' WHERE'
+						." p_file={$this->_ged_id}"
+						." AND p_parent_id='0'"
+					.' GROUP BY country'
+					);
+			if (!isset($rows[0])) {return '';}
+			return $rows;
+		}
+	}
+
+	function chartDistribution($chart_shows='world', $chart_type='', $surname='')
+	{
+		global $pgv_lang, $pgv_lang_use, $countries;
+		// PGV uses 3-letter ISO/chapman codes, but google uses 2-letter ISO codes.  There is not a 1:1
+		// mapping, so Wales/Scotland/England all become GB, etc.
+		if (!isset($iso3166)) {
+			$iso3166=array(
+			'ABW'=>'AW', 'AFG'=>'AF', 'AGO'=>'AO', 'AIA'=>'AI', 'ALA'=>'AX', 'ALB'=>'AL', 'AND'=>'AD', 'ANT'=>'AN',
+			'ARE'=>'AE', 'ARG'=>'AR', 'ARM'=>'AM', 'ASM'=>'AS', 'ATA'=>'AQ', 'ATF'=>'TF', 'ATG'=>'AG', 'AUS'=>'AU',
+			'AUT'=>'AT', 'AZE'=>'AZ', 'BDI'=>'BI', 'BEL'=>'BE', 'BEN'=>'BJ', 'BFA'=>'BF', 'BGD'=>'BD', 'BGR'=>'BG',
+			'BHR'=>'BH', 'BHS'=>'BS', 'BIH'=>'BA', 'BLR'=>'BY', 'BLZ'=>'BZ', 'BMU'=>'BM', 'BOL'=>'BO', 'BRA'=>'BR',
+			'BRB'=>'BB', 'BRN'=>'BN', 'BTN'=>'BT', 'BVT'=>'BV', 'BWA'=>'BW', 'CAF'=>'CF', 'CAN'=>'CA', 'CCK'=>'CC',
+			'CHE'=>'CH', 'CHL'=>'CL', 'CHN'=>'CN', 'CHI'=>'JE', 'CIV'=>'CI', 'CMR'=>'CM', 'COD'=>'CD', 'COG'=>'CG',
+			'COK'=>'CK', 'COL'=>'CO', 'COM'=>'KM', 'CPV'=>'CV', 'CRI'=>'CR', 'CUB'=>'CU', 'CXR'=>'CX', 'CYM'=>'KY',
+			'CYP'=>'CY', 'CZE'=>'CZ', 'DEU'=>'DE', 'DJI'=>'DJ', 'DMA'=>'DM', 'DNK'=>'DK', 'DOM'=>'DO', 'DZA'=>'DZ',
+			'ECU'=>'EC', 'EGY'=>'EG', 'ENG'=>'GB', 'ERI'=>'ER', 'ESH'=>'EH', 'ESP'=>'ES', 'EST'=>'EE', 'ETH'=>'ET',
+			'FIN'=>'FI', 'FJI'=>'FJ', 'FLK'=>'FK', 'FRA'=>'FR', 'FRO'=>'FO', 'FSM'=>'FM', 'GAB'=>'GA', 'GBR'=>'GB',
+			'GEO'=>'GE', 'GHA'=>'GH', 'GIB'=>'GI', 'GIN'=>'GN', 'GLP'=>'GP', 'GMB'=>'GM', 'GNB'=>'GW', 'GNQ'=>'GQ',
+			'GRC'=>'GR', 'GRD'=>'GD', 'GRL'=>'GL', 'GTM'=>'GT', 'GUF'=>'GF', 'GUM'=>'GU', 'GUY'=>'GY', 'HKG'=>'HK',
+			'HMD'=>'HM', 'HND'=>'HN', 'HRV'=>'HR', 'HTI'=>'HT', 'HUN'=>'HU', 'IDN'=>'ID', 'IND'=>'IN', 'IOT'=>'IO',
+			'IRL'=>'IE', 'IRN'=>'IR', 'IRQ'=>'IQ', 'ISL'=>'IS', 'ISR'=>'IL', 'ITA'=>'IT', 'JAM'=>'JM', 'JOR'=>'JO',
+			'JPN'=>'JA', 'KAZ'=>'KZ', 'KEN'=>'KE', 'KGZ'=>'KG', 'KHM'=>'KH', 'KIR'=>'KI', 'KNA'=>'KN', 'KOR'=>'KO',
+			'KWT'=>'KW', 'LAO'=>'LA', 'LBN'=>'LB', 'LBR'=>'LR', 'LBY'=>'LY', 'LCA'=>'LC', 'LIE'=>'LI', 'LKA'=>'LK',
+			'LSO'=>'LS', 'LTU'=>'LT', 'LUX'=>'LU', 'LVA'=>'LV', 'MAC'=>'MO', 'MAR'=>'MA', 'MCO'=>'MC', 'MDA'=>'MD',
+			'MDG'=>'MG', 'MDV'=>'MV', 'MEX'=>'ME', 'MHL'=>'MH', 'MKD'=>'MK', 'MLI'=>'ML', 'MLT'=>'MT', 'MMR'=>'MM',
+			'MNG'=>'MN', 'MNP'=>'MP', 'MNT'=>'ME', 'MOZ'=>'MZ', 'MRT'=>'MR', 'MSR'=>'MS', 'MTQ'=>'MQ', 'MUS'=>'MU',
+			'MWI'=>'MW', 'MYS'=>'MY', 'MYT'=>'YT', 'NAM'=>'NA', 'NCL'=>'NC', 'NER'=>'NE', 'NFK'=>'NF', 'NGA'=>'NG',
+			'NIC'=>'NI', 'NIR'=>'GB', 'NIU'=>'NU', 'NLD'=>'NL', 'NOR'=>'NO', 'NPL'=>'NP', 'NRU'=>'NR', 'NZL'=>'NZ',
+			'OMN'=>'OM', 'PAK'=>'PK', 'PAN'=>'PA', 'PCN'=>'PN', 'PER'=>'PE', 'PHL'=>'PH', 'PLW'=>'PW', 'PNG'=>'PG',
+			'POL'=>'PL', 'PRI'=>'PR', 'PRK'=>'KP', 'PRT'=>'PO', 'PRY'=>'PY', 'PSE'=>'PS', 'PYF'=>'PF', 'QAT'=>'QA',
+			'REU'=>'RE', 'ROM'=>'RO', 'RUS'=>'RU', 'RWA'=>'RW', 'SAU'=>'SA', 'SCT'=>'GB', 'SDN'=>'SD', 'SEN'=>'SN',
+			'SER'=>'RS', 'SGP'=>'SG', 'SGS'=>'GS', 'SHN'=>'SH', 'SIC'=>'IT', 'SJM'=>'SJ', 'SLB'=>'SB', 'SLE'=>'SL',
+			'SLV'=>'SV', 'SMR'=>'SM', 'SOM'=>'SO', 'SPM'=>'PM', 'STP'=>'ST', 'SUN'=>'RU', 'SUR'=>'SR', 'SVK'=>'SK',
+			'SVN'=>'SI', 'SWE'=>'SE', 'SWZ'=>'SZ', 'SYC'=>'SC', 'SYR'=>'SY', 'TCA'=>'TC', 'TCD'=>'TD', 'TGO'=>'TG',
+			'THA'=>'TH', 'TJK'=>'TJ', 'TKL'=>'TK', 'TKM'=>'TM', 'TLS'=>'TL', 'TON'=>'TO', 'TTO'=>'TT', 'TUN'=>'TN',
+			'TUR'=>'TR', 'TUV'=>'TV', 'TWN'=>'TW', 'TZA'=>'TZ', 'UGA'=>'UG', 'UKR'=>'UA', 'UMI'=>'UM', 'URY'=>'UY',
+			'USA'=>'US', 'UZB'=>'UZ', 'VAT'=>'VA', 'VCT'=>'VC', 'VEN'=>'VE', 'VGB'=>'VG', 'VIR'=>'VI', 'VNM'=>'VN',
+			'VUT'=>'VU', 'WLF'=>'WF', 'WLS'=>'GB', 'WSM'=>'WS', 'YEM'=>'YE', 'ZAF'=>'ZA', 'ZMB'=>'ZM', 'ZWE'=>'ZW'
+			);
+		}
+		// The country names can be specified in any language or in the chapman code.
+		// Generate a combined list.
+		if (!isset($country_to_iso3166)) {
+			$country_to_iso3166=array();
+			foreach ($iso3166 as $three=>$two) {
+				$country_to_iso3166[UTF8_strtolower($three)]=$two;
+			}
+			foreach ($pgv_lang_use as $lang=>$use) {
+				if ($use) {
+					loadLangFile('pgv_country', $lang);
+					foreach ($countries as $code => $country) {
+						if (array_key_exists($code, $iso3166)) {
+							$country_to_iso3166[UTF8_strtolower($country)]=$iso3166[$code];
+						}
+					}
+				}
+			}
+		}
+		switch ($chart_type) {
+		case 'surname_distribution_chart':
+			if ($surname=="") $surname = $this->getCommonSurname();
+			$chart_title=$pgv_lang["surname_distribution_chart"].': '.$surname;
+			// Count how many people are events in each country
+			$surn_countries=array();
+			$indis = get_indilist_indis(UTF8_strtoupper($surname), '', '', false, false, PGV_GED_ID);
+			foreach ($indis as $person) {
+				if (preg_match_all('/^2 PLAC (?:.*, *)*(.*)/m', $person->gedrec, $matches)) {
+					// PGV uses 3 letter country codes and localised country names, but google uses 2 letter codes.
+					foreach ($matches[1] as $country) {
+						$country=UTF8_strtolower(trim($country));
+						if (array_key_exists($country, $country_to_iso3166)) {
+							if (array_key_exists($country_to_iso3166[$country], $surn_countries)) {
+								$surn_countries[$country_to_iso3166[$country]]++;
+							} else {
+								$surn_countries[$country_to_iso3166[$country]]=1;
+							}
+						}
+					}
+				}
+			};
+			break;
+		case 'birth_distribution_chart':
+			$chart_title=$pgv_lang["stat_2_map"];
+			// Count how many people were born in each country
+			$surn_countries=array();
+			$countries=$this->statsPlaces('INDI', 'BIRT', 0, true);
+			foreach ($countries as $place=>$count) {
+				$country=UTF8_strtolower($place);
+				if (array_key_exists($country, $country_to_iso3166)) {
+					if (!isset($surn_countries[$country_to_iso3166[$country]])) {
+						$surn_countries[$country_to_iso3166[$country]]=$count;
+					}
+					else {
+						$surn_countries[$country_to_iso3166[$country]]+=$count;
+					}
+				}
+			}
+			break;
+		case 'death_distribution_chart':
+			$chart_title=$pgv_lang["stat_3_map"];
+			// Count how many people were death in each country
+			$surn_countries=array();
+			$countries=$this->statsPlaces('INDI', 'DEAT', 0, true);
+			foreach ($countries as $place=>$count) {
+				$country=UTF8_strtolower($place);
+				if (array_key_exists($country, $country_to_iso3166)) {
+					if (!isset($surn_countries[$country_to_iso3166[$country]])) {
+						$surn_countries[$country_to_iso3166[$country]]=$count;
+					}
+					else {
+						$surn_countries[$country_to_iso3166[$country]]+=$count;
+					}
+				}
+			}
+			break;
+		case 'marriage_distribution_chart':
+			$chart_title=$pgv_lang["stat_4_map"];
+			// Count how many families got marriage in each country
+			$surn_countries=array();
+			$countries=$this->statsPlaces('FAM');
+			// PGV uses 3 letter country codes and localised country names, but google uses 2 letter codes.
+			foreach ($countries as $place) {
+				$country=UTF8_strtolower(trim($place['country']));
+				if (array_key_exists($country, $country_to_iso3166)) {
+					$surn_countries[$country_to_iso3166[$country]]=$place['count(*)'];
+				}
+			}
+			break;
+		case 'indi_distribution_chart':
+		default:
+			$chart_title=$pgv_lang["indi_distribution_chart"];
+			// Count how many people are events in each country
+			$surn_countries=array();
+			$countries=$this->statsPlaces('INDI');
+			// PGV uses 3 letter country codes and localised country names, but google uses 2 letter codes.
+			foreach ($countries as $place) {
+				$country=UTF8_strtolower(trim($place['country']));
+				if (array_key_exists($country, $country_to_iso3166)) {
+					$surn_countries[$country_to_iso3166[$country]]=$place['count(*)'];
+				}
+			}
+			break;
+		}
+		$chart_url ="http://chart.apis.google.com/chart?cht=t&amp;chtm=".$chart_shows;
+		$chart_url.="&amp;chco=ffffff,c3dfff,84beff"; // country colours
+		$chart_url.="&amp;chf=bg,s,EAF7FE"; // sea colour
+		$chart_url.="&amp;chs=440x220"; // max size for maps is 440x220
+		$chart_url.="&amp;chld=".implode('', array_keys($surn_countries))."&amp;chd=s:";
+		foreach ($surn_countries as $count) {
+			$chart_url.=substr(PGV_GOOGLE_CHART_ENCODING, floor($count/max($surn_countries)*61), 1);
+		}
+		echo '<div id="google_charts" class="center">';
+		echo '<b>'.$chart_title.'</b><br /><br />';
+		echo '<div align="center"><img src="'.$chart_url.'" alt="'.$chart_title.'" title="'.$chart_title.'" class="gchart" />';
+		echo '<br /><table align="center" border="0" cellpadding="1" cellspacing="1"><tr><td bgcolor="84beff" width="12"></td><td>'.$pgv_lang["g_chart_high"].'&nbsp;&nbsp;</td><td bgcolor="c3dfff" width="12"></td><td>'.$pgv_lang["g_chart_low"].'&nbsp;&nbsp;</td><td bgcolor="ffffff" width="12"></td><td>'.$pgv_lang["g_chart_nobody"].'&nbsp;&nbsp;</td></tr></table>';
+		echo '</div></div>';
 	}
 
 	function statsDeath($sex=false, $year1=-1, $year2=-1)
@@ -1734,7 +1960,8 @@ class stats {
 			}
 			$chd .= self::_array_to_extended_encoding(array($per));
 			$family=Family::getInstance($rows[$i]['id']);
-			$chl[] = reverseText($family->getFullName()).' ['.$rows[$i]['tot'].']';
+//			$chl[] = $family->getFullName().' - '.$rows[$i]['tot'];
+			$chl[] = strip_tags(unhtmlentities($family->getFullName())).' - '.$rows[$i]['tot'];
 		}
 		$chl = join('|', $chl);
 		return "<img src=\"".encode_url("http://chart.apis.google.com/chart?cht=p3&chd=e:{$chd}&chs={$size}&chco={$color_from},{$color_to}&chf=bg,s,ffffff00&chl={$chl}")."\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" alt=\"".$pgv_lang["stat_21_nok"]."\" title=\"".$pgv_lang["stat_21_nok"]."\" />";
@@ -1882,14 +2109,14 @@ class stats {
 					$per = round(100 * count($indis) / $tot_indi, 0);
 				}
 				$chd .= self::_array_to_extended_encoding($per);
-				$chl[] = reverseText($spfxsurn).' ['.count($indis).']';
-				$chart_title .= reverseText($spfxsurn).' ['.count($indis).'], ';
+				$chl[] = $spfxsurn.' - '.count($indis);
+				$chart_title .= $spfxsurn.' ['.count($indis).'], ';
 			}
 		}
 		$per = round(100 * ($tot_indi-$tot) / $tot_indi, 0);
 		$chd .= self::_array_to_extended_encoding($per);
-		$chl[] = reverseText($pgv_lang["other"]).' ['.($tot_indi-$tot).']';
-		$chart_title .= reverseText($pgv_lang["other"]).' ['.($tot_indi-$tot).']';
+		$chl[] = $pgv_lang["other"].' - '.($tot_indi-$tot);
+		$chart_title .= $pgv_lang["other"].' ['.($tot_indi-$tot).']';
 		$chl = join('|', $chl);
 		return "<img src=\"".encode_url("http://chart.apis.google.com/chart?cht=p3&chd=e:{$chd}&chs={$size}&chco={$color_from},{$color_to}&chf=bg,s,ffffff00&chl={$chl}")."\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" alt=\"".$chart_title."\" title=\"".$chart_title."\" />";
 	}
@@ -2175,8 +2402,6 @@ class stats {
 			case 'regdate':
 			{
 				if(is_array($params) && isset($params[0]) && $params[0] != ''){$datestamp = $params[0];}else{$datestamp = $DATE_FORMAT;}
-				//$d = new GedcomDate(date('j M Y', get_user_setting($user, 'reg_timestamp')));
-				//return strip_tags($d->Display(false, $DATE_FORMAT, array()));
 				return date($datestamp, get_user_setting($user, 'reg_timestamp'));
 			}
 			case 'regtime':
@@ -2213,7 +2438,7 @@ class stats {
 // Date & Time                                                               //
 ///////////////////////////////////////////////////////////////////////////////
 
-	static function serverDate() {$today=new GedcomDate(date('j M Y')); return $today->Display(false);}
+	static function serverDate() {return timestamp_to_gedcom_date(time())->Display(false);}
 
 	static function serverTime() {return date('g:i a');}
 
@@ -2221,7 +2446,7 @@ class stats {
 
 	static function serverTimezone() {return date('T');}
 
-	static function browserDate() {$today=new GedcomDate(date('j M Y'), client_time()); return $today->Display(false);}
+	static function browserDate() {return timestamp_to_gedcom_date(client_time())->Display(false);}
 
 	static function browserTime() {return date('g:i a', client_time());}
 

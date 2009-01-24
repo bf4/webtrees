@@ -1,48 +1,55 @@
 <?php
 /**
- * Returns data for autocompletion
- *
- * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- *
- * @package PhpGedView
- * @subpackage Edit
- * @version $Id$
- */
+* Returns data for autocompletion
+*
+* phpGedView: Genealogy Viewer
+* Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
+*
+* This program is free software; you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation; either version 2 of the License, or
+* (at your option) any later version.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+* GNU General Public License for more details.
+*
+* You should have received a copy of the GNU General Public License
+* along with this program; if not, write to the Free Software
+* Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+*
+* @package PhpGedView
+* @subpackage Edit
+* @version $Id$
+*/
+
 require './config.php';
 header("Content-Type: text/html; charset=$CHARACTER_SET");
 
+// We have finished writing to $_SESSION, so release the lock
+session_write_close();
+
 //-- args
 $FILTER = @$_GET["q"];
-if (has_utf8($FILTER))
+if (has_utf8($FILTER)) {
 	$FILTER = UTF8_strtoupper($FILTER);
+}
 $FILTER = $DBCONN->escapeSimple($FILTER);
 
 $OPTION = @$_GET["option"];
 
 $field = @$_GET["field"];
-if (!function_exists("autocomplete_{$field}"))
+if (!function_exists("autocomplete_{$field}")) {
 	die("Bad arg: field={$field}");
+}
 
 //-- database query
 define('PGV_AUTOCOMPLETE_LIMIT', 500);
 eval("\$data = autocomplete_".$field."();");
-if (empty($data))
+if (empty($data)) {
 	die();
+}
 
 //-- sort
 $data = array_unique($data);
@@ -55,9 +62,9 @@ foreach ($data as $k=>$v) {
 exit;
 
 /**
- * returns INDIviduals matching filter
- * @return Array of string
- */
+* returns INDIviduals matching filter
+* @return Array of string
+*/
 function autocomplete_INDI() {
 	global $TBLPREFIX, $DBTYPE, $DBCONN;
 	global $FILTER, $OPTION;
@@ -158,24 +165,26 @@ function autocomplete_INDI() {
 }
 
 /**
- * returns FAMilies matching filter
- * @return Array of string
- */
+* returns FAMilies matching filter
+* @return Array of string
+*/
 function autocomplete_FAM() {
 	global $TBLPREFIX, $DBTYPE, $DBCONN;
 	global $FILTER;
 
 	//-- search for INDI names
 	$ids = array();
-	foreach (autocomplete_INDI() as $k=>$v)
+	foreach (autocomplete_INDI() as $k=>$v) {
 		$ids[] = "'".$DBCONN->escapeSimple($k)."'";
+	}
 
-	if (empty($ids))
+	if (empty($ids)) {
 		//-- no match : search for FAM id
 		$where = " WHERE f_id ".PGV_DB_LIKE." '%".$FILTER."%'";
-	else
+	} else {
 		//-- search for spouses
 		$where = " WHERE (f_husb IN (".join(',', $ids).") OR f_wife IN (".join(',', $ids).") )";
+	}
 	$sql = "SELECT f_id".
 				" FROM {$TBLPREFIX}families".
 				$where.
@@ -186,21 +195,22 @@ function autocomplete_FAM() {
 	$data = array();
 	while ($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)) {
 		$family = Family::getInstance($row["f_id"]);
-		if ($family->canDisplayName())
+		if ($family->canDisplayName()) {
 			$data[$row["f_id"]] =
 				$family->getSortName().
 				" <u>".
 				ltrim($family->getMarriageYear(), "0").
 				"</u>";
+		}
 	}
 	$res->free();
 	return $data;
 }
 
 /**
- * returns SOURces matching filter
- * @return Array of string
- */
+* returns SOURces matching filter
+* @return Array of string
+*/
 function autocomplete_SOUR() {
 	global $TBLPREFIX, $DBTYPE, $DBCONN;
 	global $FILTER;
@@ -216,17 +226,18 @@ function autocomplete_SOUR() {
 	$data = array();
 	while ($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)) {
 		$source = Source::getInstance($row["s_id"]);
-		if ($source->canDisplayName())
-			$data[$row["s_id"]] = $source->getFullName(); //$row["s_name"];
+		if ($source->canDisplayName()) {
+			$data[$row["s_id"]] = $source->getFullName();
+		}
 	}
 	$res->free();
 	return $data;
 }
 
 /**
- * returns SOUR:TITL matching filter
- * @return Array of string
- */
+* returns SOUR:TITL matching filter
+* @return Array of string
+*/
 function autocomplete_SOUR_TITL() {
 	global $TBLPREFIX, $DBTYPE, $DBCONN;
 	global $FILTER;
@@ -241,17 +252,18 @@ function autocomplete_SOUR_TITL() {
 	$data = array();
 	while ($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)) {
 		$source = Source::getInstance($row["s_id"]);
-		if ($source->canDisplayName())
+		if ($source->canDisplayName()) {
 			$data[] = $source->getFullName();
+		}
 	}
 	$res->free();
 	return $data;
 }
 
 /**
- * returns INDI:SOUR:PAGE matching filter
- * @return Array of string
- */
+* returns INDI:SOUR:PAGE matching filter
+* @return Array of string
+*/
 function autocomplete_INDI_SOUR_PAGE() {
 	global $TBLPREFIX, $DBTYPE, $DBCONN;
 	global $FILTER, $OPTION;
@@ -274,8 +286,9 @@ function autocomplete_INDI_SOUR_PAGE() {
 				do {
 					$srec = get_sub_record("SOUR @{$OPTION}@", $level, $person->gedrec, $i++);
 					$page = get_gedcom_value("PAGE", $level+1, $srec);
-					if (stripos($page, $FILTER)!==false || empty($FILTER))
+					if (stripos($page, $FILTER)!==false || empty($FILTER)) {
 						$data[] = $page;
+					}
 				} while ($srec);
 			}
 		}
@@ -285,9 +298,9 @@ function autocomplete_INDI_SOUR_PAGE() {
 }
 
 /**
- * returns FAM:SOUR:PAGE matching filter
- * @return Array of string
- */
+* returns FAM:SOUR:PAGE matching filter
+* @return Array of string
+*/
 function autocomplete_FAM_SOUR_PAGE() {
 	global $TBLPREFIX, $DBTYPE, $DBCONN;
 	global $FILTER, $OPTION;
@@ -310,8 +323,9 @@ function autocomplete_FAM_SOUR_PAGE() {
 				do {
 					$srec = get_sub_record("SOUR @{$OPTION}@", $level, $family->gedrec, $i++);
 					$page = get_gedcom_value("PAGE", $level+1, $srec);
-					if (stripos($page, $FILTER)!==false || empty($FILTER))
+					if (stripos($page, $FILTER)!==false || empty($FILTER)) {
 						$data[] = $page;
+					}
 				} while ($srec);
 			}
 		}
@@ -321,9 +335,9 @@ function autocomplete_FAM_SOUR_PAGE() {
 }
 
 /**
- * returns SOUR:PAGE matching filter
- * @return Array of string
- */
+* returns SOUR:PAGE matching filter
+* @return Array of string
+*/
 function autocomplete_SOUR_PAGE() {
 	return array_merge(
 		autocomplete_INDI_SOUR_PAGE(),
@@ -331,9 +345,9 @@ function autocomplete_SOUR_PAGE() {
 }
 
 /**
- * returns REPOsitories matching filter
- * @return Array of string
- */
+* returns REPOsitories matching filter
+* @return Array of string
+*/
 function autocomplete_REPO() {
 	global $TBLPREFIX, $DBTYPE, $DBCONN;
 	global $FILTER;
@@ -350,17 +364,18 @@ function autocomplete_REPO() {
 	$data = array();
 	while ($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)) {
 		$repository = Repository::getInstance($row["o_id"]);
-		if ($repository->canDisplayName())
+		if ($repository->canDisplayName()) {
 			$data[$row["o_id"]] = $repository->getFullName();
+		}
 	}
 	$res->free();
 	return $data;
 }
 
 /**
- * returns REPO:NAME matching filter
- * @return Array of string
- */
+* returns REPO:NAME matching filter
+* @return Array of string
+*/
 function autocomplete_REPO_NAME() {
 	global $TBLPREFIX, $DBTYPE, $DBCONN;
 	global $FILTER;
@@ -376,17 +391,18 @@ function autocomplete_REPO_NAME() {
 	$data = array();
 	while ($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)) {
 		$repository = Repository::getInstance($row["o_id"]);
-		if ($repository->canDisplayName())
+		if ($repository->canDisplayName()) {
 			$data[] = $repository->getFullName();
+		}
 	}
 	$res->free();
 	return $data;
 }
 
 /**
- * returns OBJEcts matching filter
- * @return Array of string
- */
+* returns OBJEcts matching filter
+* @return Array of string
+*/
 function autocomplete_OBJE() {
 	global $TBLPREFIX, $DBTYPE, $DBCONN;
 	global $FILTER;
@@ -401,7 +417,7 @@ function autocomplete_OBJE() {
 	$data = array();
 	while ($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)) {
 		$media = Media::getInstance($row["m_media"]);
-		if ($media && $media->canDisplayDetails())
+		if ($media && $media->canDisplayDetails()) {
 			$data[$row["m_media"]] =
 				"<img alt=\"".
 				$media->getXref().
@@ -409,15 +425,16 @@ function autocomplete_OBJE() {
 				$media->getThumbnail().
 				"\" /> ".
 				$media->getFullName();
+		}
 	}
 	$res->free();
 	return $data;
 }
 
 /**
- * returns INDI FAM SOUR REPO OBJE matching filter
- * @return Array of string
- */
+* returns INDI FAM SOUR REPO OBJE matching filter
+* @return Array of string
+*/
 function autocomplete_IFSRO() {
 	global $GEDCOM_ID_PREFIX, $FAM_ID_PREFIX, $SOURCE_ID_PREFIX, $REPO_ID_PREFIX, $MEDIA_ID_PREFIX;
 	global $FILTER;
@@ -445,9 +462,9 @@ function autocomplete_IFSRO() {
 }
 
 /**
- * returns SURNames matching filter
- * @return Array of string
- */
+* returns SURNames matching filter
+* @return Array of string
+*/
 function autocomplete_SURN() {
 	global $TBLPREFIX, $DBCONN, $FILTER;
 
@@ -465,9 +482,9 @@ function autocomplete_SURN() {
 }
 
 /**
- * returns GIVenNames matching filter
- * @return Array of string
- */
+* returns GIVenNames matching filter
+* @return Array of string
+*/
 function autocomplete_GIVN() {
 	global $TBLPREFIX, $DBCONN, $FILTER;
 
@@ -492,9 +509,9 @@ function autocomplete_GIVN() {
 }
 
 /**
- * returns PLACes matching filter
- * @return Array of string City, County, State/Province, Country
- */
+* returns PLACes matching filter
+* @return Array of string City, County, State/Province, Country
+*/
 function autocomplete_PLAC() {
 	global $TBLPREFIX, $DBTYPE, $DBCONN;
 	global $lang_short_cut, $LANGUAGE;
@@ -519,11 +536,13 @@ function autocomplete_PLAC() {
 		//-- search for missing parents
 		$missing = array();
 		foreach($parent as $k=>$v) {
-			if ($v && !isset($place[$v]))
+			if ($v && !isset($place[$v])) {
 				$missing[] = $v;
+			}
 		}
-		if (count($missing)==0)
+		if (count($missing)==0) {
 			break;
+		}
 		$sql = "SELECT p_id, p_place, p_parent_id".
 					" FROM {$TBLPREFIX}places".
 					" WHERE p_id IN (".join(',', $missing).")".
@@ -538,13 +557,14 @@ function autocomplete_PLAC() {
 	do {
 		$repeat = false;
 		foreach($place as $k=>$v) {
-			if ($parent[$k]==0)
+			if ($parent[$k]==0) {
 				$data[$k] = $v;
-			else {
-				if (isset($data[$parent[$k]]))
+			} else {
+				if (isset($data[$parent[$k]])) {
 					$data[$k] = $v.", ".$data[$parent[$k]];
-				else
+				} else {
 					$repeat = true;
+				}
 			}
 		}
 	} while ($repeat);
@@ -564,33 +584,37 @@ function autocomplete_PLAC() {
 					"&fcode=CMTY&fcode=ADM4&fcode=PPL&fcode=PPLA&fcode=PPLC".
 					"&style=full";
 		// try to use curl when file_get_contents not allowed
-		if (ini_get('allow_url_fopen'))
+		if (ini_get('allow_url_fopen')) {
 			$json = file_get_contents($url);
-		elseif (function_exists('curl_init')) {
+		} elseif (function_exists('curl_init')) {
 			$ch = curl_init();
 			curl_setopt($ch, CURLOPT_URL, $url);
 			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 			$json = curl_exec($ch);
 			curl_close($ch);
+		} else {
+			return $data;
 		}
-		else
-		  return $data;
 		$places = json_decode($json, true);
-		if ($places["geonames"])
-			foreach ($places["geonames"] as $k => $place)
+		if ($places["geonames"]) {
+			foreach ($places["geonames"] as $k => $place) {
 				$data[] = $place["name"].", ".
 									$place["adminName2"].", ".
 									$place["adminName1"].", ".
 									$place["countryName"];
+			}
+		}
 	}
 
 	// split ?
 	if ($OPTION=="split") {
-		foreach ($data as $k=>$v)
+		foreach ($data as $k=>$v) {
 			list($data[$k]) = explode(",", $v);
+		}
 		$data = array_filter($data, "place_ok");
 	}
 
 	return $data;
 }
+
 ?>

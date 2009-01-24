@@ -45,12 +45,12 @@ function closeHelp() {
 function openImage(filename, width, height) {
 	height=height+50;
 	screenW = screen.width;
- 	screenH = screen.height;
- 	if (width>screenW-100) width=screenW-100;
- 	if (height>screenH-110) height=screenH-120;
-	if (filename.search(/\.(jpe?g|gif|png|bmp)$/gi)!=-1)
+	screenH = screen.height;
+	if (width>screenW-100) width=screenW-100;
+	if (height>screenH-110) height=screenH-120;
+//	if (filename.search(/\.(jpe?g|gif|png)$/gi)!=-1)
 		window.open('imageview.php?filename='+filename,'_blank','top=50,left=50,height='+height+',width='+width+',scrollbars=1,resizable=1');
-	else window.open(unescape(filename),'_blank','top=50,left=50,height='+height+',width='+width+',scrollbars=1,resizable=1');
+//	else window.open(unescape(filename),'_blank','top=50,left=50,height='+height+',width='+width+',scrollbars=1,resizable=1');
 	return false;
 }
 
@@ -983,6 +983,7 @@ function toggleStatus(sel) {
 	cbox.disabled=!(cbox.disabled);
 }
 
+
 function statusDisable(sel) {
 	var cbox = document.getElementById(sel);
 	cbox.checked = false;
@@ -1306,7 +1307,7 @@ function include_js(file) {
   {
     var curleft = 0;
     if(obj.offsetParent)
-        while(1) 
+        while(1)
         {
           curleft += obj.offsetLeft;
           if(!obj.offsetParent)

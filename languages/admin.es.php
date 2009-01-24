@@ -3,7 +3,7 @@
  * Spanish language file for PhpGedView
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
+ * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -36,7 +36,6 @@ if (!defined('PGV_PHPGEDVIEW')) {
 $pgv_lang["upload_a_gedcom"] 		= "Subir un archivo GEDCOM";
 $pgv_lang["start_entering"] 		= "Comenzar la introducción de datos";
 $pgv_lang["add_gedcom_from_path"] 	= "Añadir un GEDCOM a partir de un archivo ya subido";
-$pgv_lang["manage_gedcoms"]			= "Administrar GEDCOMs";
 $pgv_lang["get_started_instructions"]	= "Elija una de las opciones siguientes para comenzar a utilizar PhpGedView";
 
 $pgv_lang["admin_users_exists"]		= "Ya existen los siguientes usuarios administradores:";
@@ -241,6 +240,7 @@ $pgv_lang["fbsql"]								= "FrontBase";
 $pgv_lang["found_record"]						= "Registro encontrado";
 $pgv_lang["ged_download"]						= "Descargar";
 $pgv_lang["ged_import"] 						= "Importar";
+$pgv_lang["ged_export"] 						= "Exportar";
 $pgv_lang["ged_check"] 							= "Comprobar";
 $pgv_lang["gedcom_adm_head"]					= "Administración GEDCOM";
 $pgv_lang["gedcom_config_write_error"]			= "¡¡¡ E R R O R !!!<br />No se pudo escribir el archivo <i>#GLOBALS[whichFile]#</i>. Verifique si posee permisos de escritura adecuados.";
@@ -307,6 +307,14 @@ $pgv_lang["pgv_registry"]						= "Ver otros sitios que usan PhpGedView";
 $pgv_lang["PGV_SESSION_SAVE_PATH"]				= "Ruta para Guardar Sesión:";
 $pgv_lang["PGV_SESSION_TIME"]					= "Duración de la Sesión";
 $pgv_lang["PGV_SIMPLE_MAIL"] 					= "Usar encabezamientos simples en los correos electrónicos externos";
+$pgv_lang["PGV_SMTP_ACTIVE"] 					= "Utilizar SMTP para enviar el correo externo";
+$pgv_lang["PGV_SMTP_HOST"] 						= "Nombre del servidor de correo electrónico saliente (SMTP)";
+$pgv_lang["PGV_SMTP_HELO"] 						= "Nombre de dominio para el envío";
+$pgv_lang["PGV_SMTP_PORT"] 						= "Puerto de SMTP";
+$pgv_lang["PGV_SMTP_AUTH"] 						= "Utilizar identificador y contraseña";
+$pgv_lang["PGV_SMTP_AUTH_USER"] 				= "Identificador de usuario";
+$pgv_lang["PGV_SMTP_AUTH_PASS"] 				= "Contraseña";
+$pgv_lang["PGV_SMTP_FROM_NAME"] 				= "Nombre del remitente";
 $pgv_lang["PGV_STORE_MESSAGES"]					= "Permitir el almacenamiento de mensajes en línea:";
 $pgv_lang["phpinfo"]							= "PHPInfo";
 $pgv_lang["place_cleanup_detected"] 			= "Se detectaron codificaciones de lugar incorrectas. Estos errores deberían corregirse.";
@@ -323,7 +331,6 @@ $pgv_lang["select_an_option"]					= "Seleccione una opción:";
 $pgv_lang["SERVER_URL"]							= "URL de PhpGedView";
 $pgv_lang["show_phpinfo"]						= "Ver la página de información de PHP";
 $pgv_lang["siteadmin"]							= "Administrador del sitio";
-$pgv_lang["skip_cleanup"]						= "Omitir Limpieza";
 $pgv_lang["sqlite"]								= "SQLite";
 $pgv_lang["sybase"]								= "Sybase";
 $pgv_lang["sync_gedcom"]						= "Sincronizar los ajustes de usuario con los datos GEDCOM";
@@ -410,6 +417,7 @@ $pgv_lang["tradition_spanish"]		= "Español";
 $pgv_lang["tradition_portuguese"]	= "Portugués";
 $pgv_lang["tradition_icelandic"]	= "Islandés";
 $pgv_lang["tradition_paternal"]		= "Paterno";
-$pgv_lang["tradition_none"]			= "Ninguno";				
+$pgv_lang["tradition_polish"]		= "Polaca";
+$pgv_lang["tradition_none"]			= "Ninguno";
 
 ?>

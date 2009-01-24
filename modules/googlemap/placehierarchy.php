@@ -3,7 +3,7 @@
  * Displays a place hierachy
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team. All rights reserved.
+ * Copyright (C) 2002 to 2009  PGV Development Team. All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -34,6 +34,8 @@ if (file_exists('modules/googlemap/defaultconfig.php')) {
 	require("modules/googlemap/defaultconfig.php");
 	require "modules/googlemap/googlemap.php";
 }
+require_once 'includes/classes/class_stats.php';
+$stats = new stats($GEDCOM);
 
 function check_exist_table() {
 	global $DBCONN, $TBLPREFIX;
@@ -162,24 +164,22 @@ function check_place($place_names, $place) {
 }
 
 function print_how_many_people($level, $parent) {
-	global $pgv_lang, $positions;
+	global $GEDCOM, $pgv_lang, $stats;
+
 	$place_count_indi = 0;
 	$place_count_fam = 0;
-	$positions = array();
 	if (!isset($parent[$level-1])) $parent[$level-1]="";
-	$positions = get_place_positions($parent, $level);
-	for($i=0; $i<count($positions); $i++) {
-		$gid = $positions[$i];
-		$indirec=find_gedcom_record($gid);
-		$ct = preg_match("/0 @(.*)@ (.*)/", $indirec, $match);
-		if ($ct>0) {
-			$type = trim($match[2]);
-			if ($type == "INDI") {
-				$place_count_indi ++;
-			}
-			else if ($type == "FAM") {
-				$place_count_fam ++;
-			}
+	$p_id = set_levelm($level, $parent);
+	$indi = $stats->statsPlaces('INDI', false, $p_id);
+	$fam = $stats->statsPlaces('FAM', false, $p_id);
+	if (!empty($indi)) {
+		foreach ($indi as $place) {
+			$place_count_indi=$place['count(*)'];
+		}
+	}
+	if (!empty($fam)) {
+		foreach ($fam as $place) {
+			$place_count_fam=$place['count(*)'];
 		}
 	}
 	echo "<br /><br />".$pgv_lang["stat_individuals"].": ".$place_count_indi.", ".$pgv_lang["stat_families"].": ".$place_count_fam;

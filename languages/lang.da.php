@@ -3,7 +3,7 @@
  * Danish Language file for PhpGedView.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
+ * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -374,6 +374,10 @@ $pgv_lang["text"]				= "Kildetekst:";
 $pgv_lang["note"]				= "Note";
 $pgv_lang["NN"]					= "(ukendt)";
 $pgv_lang["PN"]					= "(ukendt)";
+$pgv_lang["NNthai"] 			= "(ukendt)";
+$pgv_lang["PNthai"] 			= "(ukendt)";
+$pgv_lang["NNother"] 			= "(ukendt)";
+$pgv_lang["PNother"] 			= "(ukendt)";
 $pgv_lang["unrecognized_code"]	= "Ukendt GEDCOM-kode";
 $pgv_lang["unrecognized_code_msg"]	= "Dette er en fejl, som vi ønsker at rette. Rapporter venligst denne fejl til";
 $pgv_lang["indi_info"]			= "Personoplysninger";
@@ -564,11 +568,13 @@ $pgv_lang["widow"] 					= "Enke";
 $pgv_lang["widower"] 				= "Enkemand";
 $pgv_lang["show_parents"] 			= "Vis forældre";
 //-- TIMELINE FILE MESSAGES
-$pgv_lang["age"]				= "Alder";
+$pgv_lang["age"]					= "Alder";
 $pgv_lang["days"]					= "dage";
+$pgv_lang["weeks"]					= "uger";
 $pgv_lang["months"]					= "måneder";
 $pgv_lang["years"]					= "år";
 $pgv_lang["day1"]					= "dag";
+$pgv_lang["week1"]					= "uge";
 $pgv_lang["month1"]					= "måned";
 $pgv_lang["year1"]					= "år";
 $pgv_lang["after_death"]        ="efter død";
@@ -719,6 +725,7 @@ $pgv_lang["utf8_to_ansi"]			= "Ønsker du at konvertere fra UTF-8 til ANSI (ISO-
 $pgv_lang["media_linked"]			= "Dette medieobjekt refererer til følgende:";
 $pgv_lang["media_not_linked"]		= "Dette medieobjekt refererer ikke til noget.";
 //-- Relationship chart messages
+$pgv_lang["view_fam_nav_details"]	= "Se Detaljer af ..."; 
 $pgv_lang["relationship_great"]		= "Fint";
 $pgv_lang["relationship_chart"]	= "Slægtskabsdiagram";
 $pgv_lang["person1"]			= "1. person";

@@ -3,7 +3,7 @@
  * English Language file for PhpGedView.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team
+ * Copyright (C) 2002 to 2009  PGV Development Team. All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -108,7 +108,7 @@ $pgv_lang["AUTO_GENERATE_THUMBS"]			= "Automatically generated thumbnails";
 $pgv_lang["AUTO_GENERATE_THUMBS_help"]		= "~#pgv_lang[AUTO_GENERATE_THUMBS]#~<br /><br />Should the system automatically generate thumbnails for images that do not have them.  Your PHP installation might not support this functionality.<br />";
 $pgv_lang["phpinfo_help"]				= "~#pgv_lang[phpinfo]#~<br /><br />This page provides extensive information about the server on which PhpGedView is being hosted.  Many configuration details about the server's software, as it relates to PHP and PhpGedView, can be viewed.<br />";
 $pgv_lang["config_help_help"]			= "~#pgv_lang[config_help]#~<br /><br />This page collects all of the major topics of Configuration Help into one place.  You can view the information on your screen, or you can print it for later use.<br />";
-$pgv_lang["more_config_hjaelp"]			= "<br /><b>More help</b><br />More help is available by clicking the <b>?</b> next to items on the page.<br />";
+$pgv_lang["more_help_advice"]			= "<br /><b>More help</b><br />More help is available by clicking the <b>?</b> next to items on the page.<br />";
 $pgv_lang["THUMBNAIL_WIDTH"]			= "Width of generated thumbnails";
 $pgv_lang["THUMBNAIL_WIDTH_help"]		= "~#pgv_lang[THUMBNAIL_WIDTH]#~<br /><br />This is the width (in pixels) that the program will use when automatically generating thumbnails.  The default setting is 100.<br />";
 $pgv_lang["SHOW_SOURCES"]			= "Show sources";
@@ -375,6 +375,7 @@ $pgv_lang["PGV_SMTP_PORT_help"] = "~#pgv_lang[PGV_SMTP_PORT]#~<br /><br />The po
 $pgv_lang["PGV_SMTP_AUTH_help"] = "~#pgv_lang[PGV_SMTP_AUTH]#~<br /><br />Use name and password authentication to connect to the SMTP server.<br /><br />Some SMTP servers require all connections to be authenticated before they will accept outbound e-mails.<br />";
 $pgv_lang["PGV_SMTP_AUTH_USER_help"] = "~#pgv_lang[PGV_SMTP_AUTH_USER]#~<br /><br />The user name required for authentication with the SMTP server.<br />";
 $pgv_lang["PGV_SMTP_AUTH_PASS_help"] = "~#pgv_lang[PGV_SMTP_AUTH_PASS]#~<br /><br />The password required for authentication with the SMTP server.<br />";
+$pgv_lang["PGV_SMTP_FROM_NAME_help"] = "~#pgv_lang[PGV_SMTP_FROM_NAME]#~<br /><br />Enter the name to be used in the &laquo;From:&raquo; field of e-mails originating at this site.<br /><br />For example, if your name is <b>John Smith</b> and you are the site administrator for a site that is  known as <b>Jones Genealogy</b>, you could enter something like <b>John Smith</b> or <b>Jones Genealogy</b> or even <b>John Smith, Administrator: Jones Genealogy</b>.  You may enter whatever you wish, but HTML is not permitted.<br />";
 $pgv_lang["gedcom_title"]			= "#pgv_lang[ged_title]#";
 $pgv_lang["gedcom_title_help"]		= "~#pgv_lang[gedcom_title]#~<br /><br />Enter a descriptive title to be displayed when users are choosing among GEDCOM datasets at your site.<br />";
 $pgv_lang["LOGFILE_CREATE"]		= "Archive log files";
@@ -447,7 +448,7 @@ $pgv_lang["edit_exist_user_privacy_settings"]	= "Edit existing settings for User
 $pgv_lang["edit_exist_global_facts_settings"]	= "Edit existing settings for Global Fact Privacy";
 $pgv_lang["edit_exist_person_facts_settings"]	= "Edit existing settings for Facts Privacy by ID";
 $pgv_lang["general_privacy"]			= "General Privacy settings";
-$pgv_lang["general_privacy_help"]		= "~#pgv_lang[general_privacy]#~<br /><br />You can have different Privacy settings for each GEDCOM on your PhpGedView web site.  Check under the page title whether you are editing the correct GEDCOM.<br /><br />You can override these general settings by using the other Privacy forms on the #pgv_lang[edit_privacy_title]# page.<br />#pgv_lang[more_config_hjaelp]#";
+$pgv_lang["general_privacy_help"]		= "~#pgv_lang[general_privacy]#~<br /><br />You can have different Privacy settings for each GEDCOM on your PhpGedView web site.  Check under the page title whether you are editing the correct GEDCOM.<br /><br />You can override these general settings by using the other Privacy forms on the #pgv_lang[edit_privacy_title]# page.<br />#pgv_lang[more_help_advice]#";
 $pgv_lang["person_privacy"]				= "Privacy settings by ID";
 $pgv_lang["person_privacy_help"]		= "~#pgv_lang[person_privacy]#~<br /><br />These settings allow administrators to override default privacy settings for a particular person, family, source, or media object.<br /><br />Suppose for example you have a child who died in infancy. Normally because the child is dead, its details would be shown to public users. However, you and everyone else in your family are still private. You don't want to remove the death record for the child but you want to hide the details and make them private. If this child had the ID of I100 you should enter the following privacy settings:<br />ID: I100<br />Show to: Show only to authenticated users<br /><br />This works the other way as well. If you wanted to make public the details of someone (ID I101) who you know to be dead but don't have a death date for, you could add the following:<br />ID: I101<br />Show to: Show to public<br />";
 $pgv_lang["user_privacy"]				= "User Privacy settings";
@@ -570,6 +571,7 @@ $pgv_lang["lang_name_german"]		= "German";
 $pgv_lang["lang_name_greek"]		= "Greek";
 $pgv_lang["lang_name_hebrew"]		= "Hebrew";
 $pgv_lang["lang_name_hungarian"]	= "Hungarian";
+$pgv_lang["lang_name_indonesian"]	= "Indonesian";
 $pgv_lang["lang_name_italian"]		= "Italian";
 $pgv_lang["lang_name_lithuanian"]	= "Lithuanian";
 $pgv_lang["lang_name_norwegian"]	= "Norwegian";

@@ -3,7 +3,7 @@
  * German Language file for PhpGedView.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team
+ * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -111,7 +111,7 @@ $pgv_lang["AUTO_GENERATE_THUMBS"]		= "Automatisch Miniaturbilder erstellen";
 $pgv_lang["AUTO_GENERATE_THUMBS_help"]	= "~#pgv_lang[AUTO_GENERATE_THUMBS]#~<br /><br />Bestimmt ob PhpgedView automatisch fehlende Miniaturbilder erstellen darf oder nicht.  Es ist aber möglich dass Ihr PHP-Betriebssystem die Miniaturbilder-Erstellung nicht unterstützt.<br />";
 $pgv_lang["phpinfo_help"]				= "~#pgv_lang[phpinfo]#~<br /><br />Auf dieser Seite finden Sie ausführliche Auskunft über den Server wo PhpGedView sich befindet.  Sie finden dort viele Details über dessen Konfiguration, besonders wie sie die für PhpGedView erforderliche Betriebs-Systeme betreffen.<br />";
 $pgv_lang["config_help_help"]			= "~#pgv_lang[config_help]#~<br /><br />Auf dieser Seite sind die Haupt-Themen der Konfigurations-Hilfe von PhpGedView gesammelt.  Wenn Sie möchten, können Sie die Informationen drucken.<br />";
-$pgv_lang["more_config_hjaelp"]			= "<br /><br /><b>Mehr Hilfe</b><br /><br />Wenn sie das <b>?</b> neben den Elementen klicken, können Sie mehr Hilfe erhalten.<br />";
+$pgv_lang["more_help_advice"]			= "<br /><br /><b>Mehr Hilfe</b><br /><br />Wenn sie das <b>?</b> neben den Elementen klicken, können Sie mehr Hilfe erhalten.<br />";
 $pgv_lang["THUMBNAIL_WIDTH"]			= "Breite des erstellten Miniaturbildes";
 $pgv_lang["THUMBNAIL_WIDTH_help"]		= "~#pgv_lang[THUMBNAIL_WIDTH]#~<br /><br />Automatisch erstellte Miniaturbilder werden in dieser Breite erstellt.  Die standardmäßige Breite ist 100px.<br />";
 $pgv_lang["SHOW_SOURCES"]				= "Zeige Quellen";
@@ -378,6 +378,7 @@ $pgv_lang["PGV_SMTP_PORT_help"]			= "~#pgv_lang[PGV_SMTP_PORT]#~<br /><br />Das 
 $pgv_lang["PGV_SMTP_AUTH_help"]			= "~#pgv_lang[PGV_SMTP_AUTH]#~<br /><br />Erfordert der SMTP Server die Eingabe eines Nutzernamens und dessen Kennwort?<br /><br />Manche SMTP Server erfordern dass Verbindungen authentifiziert sind, bevor sie das Senden von Mails erlauben.<br />";
 $pgv_lang["PGV_SMTP_AUTH_USER_help"]	= "~#pgv_lang[PGV_SMTP_AUTH_USER]#~<br /><br />Ein dem SMTP Server gültiger Nutzername.<br />";
 $pgv_lang["PGV_SMTP_AUTH_PASS_help"]	= "~#pgv_lang[PGV_SMTP_AUTH_PASS]#~<br /><br />Das zum obigen Nutzernamen passende Kennwort.<br />";
+$pgv_lang["PGV_SMTP_FROM_NAME_help"] 	= "~#pgv_lang[PGV_SMTP_FROM_NAME]#~<br /><br />Hier geben Sie den Namen ein, der im «Abs:» Feld aller Mails von dieser Site benutzt werden soll.<br /><br />Zum Beispiel, gegeben dass Sie <b>Johann Schmidt</b> heißen, und dass Sie Verwalter von der Site <b>Ahnenforschung Müller</b> sind, dann könnten Sie eventuell hier <b>Johann Schmidt</b> oder <b>Ahnenforschung Müller</b> oder vielleicht auch <b>Johann Schmidt, Verwalter: Ahnenforschung Müller</b> eingeben.  Sie können jeden beliebigen Text eingeben, aber beachten Sie bitte, dass HTML nicht erlaubt ist.<br />";
 $pgv_lang["gedcom_title"]				= "GEDCOM-Datei Bezeichnung";
 $pgv_lang["gedcom_title_help"]			= "~#pgv_lang[gedcom_title]#~<br /><br />Geben Sie eine Bezeichnung ein, die erscheint, wenn Besucher zwischen mehreren GEDCOM-Dateien auf Ihrer Seite wählen.<br />";
 $pgv_lang["LOGFILE_CREATE"]				= "Log-Dateien erzeugen";
@@ -573,6 +574,7 @@ $pgv_lang["lang_name_german"]			= "Deutsch";
 $pgv_lang["lang_name_greek"]			= "Griechisch";
 $pgv_lang["lang_name_hebrew"]			= "Hebräisch";
 $pgv_lang["lang_name_hungarian"]		= "Ungarisch";
+$pgv_lang["lang_name_indonesian"]		= "Indonesisch";
 $pgv_lang["lang_name_italian"]			= "Italienisch";
 $pgv_lang["lang_name_lithuanian"]		= "Litauisch";
 $pgv_lang["lang_name_norwegian"]		= "Norwegisch";

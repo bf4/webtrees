@@ -6,6 +6,6 @@ Bu iletinin bulunduğu bağlantıya gitmek için : <post_url>
 
 Bu konuyla ilgili aboneliğinizi ipal etmek için: <unsubscribe_url>
 
---
+-- 
 <board_mailer>
 (Lütfen bu iletiye cevap vermeyiniz!)

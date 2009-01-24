@@ -3,7 +3,7 @@
  * Norwegian texts
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
+ * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,11 +19,12 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
+ * # $Id$
  *
- * @author PGV Developers
+ * @translator Geir Håkon Eikland
+ * @translator Thomas Rindal
  * @package PhpGedView
  * @subpackage Languages
- * @version $Id$
  */
 
 if (!defined('PGV_PHPGEDVIEW')) {
@@ -31,6 +32,16 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
+##$pgv_lang["add_marriage"]			= "Add marriage details";
+##$pgv_lang["edit_concurrency_change"] = "This record was last changed by <i>#CHANGEUSER#</i> at #CHANGEDATE#";
+##$pgv_lang["edit_concurrency_msg2"]	= "The record with id #PID# was changed by another user since you last accessed it.";
+##$pgv_lang["edit_concurrency_msg1"]	= "An error occurred while creating the Edit form.  Another user may have changed this record since you previously viewed it.";
+##$pgv_lang["edit_concurrency_reload"]	= "Please reload the previous page to make sure you are working with the most recent record.";
+##$pgv_lang["admin_override"]			= "Admin Option";
+##$pgv_lang["no_update_CHAN"]			= "Do not update the CHAN (Last Change) record";
+##$pgv_lang["select_events"]			= "Select Events";
+##$pgv_lang["source_events"]			= "Associate events with this source";
+##$pgv_lang["advanced_name_fields"]	= "Additional names (nickname, married name, etc.)";
 $pgv_lang["accept_changes"]		= "Godta / Avvis endring(ene)";
 $pgv_lang["replace"]			= "Erstatt oppføring";
 $pgv_lang["append"]				= "Legg til en ny oppføring";
@@ -46,10 +57,18 @@ $pgv_lang["to_person"]			= "Til person";
 $pgv_lang["to_family"]			= "Til familie";
 $pgv_lang["to_source"]			= "Til kilde";
 $pgv_lang["edit_fam"]				= "Endre familie";
+##$pgv_lang["edit_repo"]				= "Edit Repository";
 $pgv_lang["copy"]					= "Kopier";
 $pgv_lang["cut"]					= "Klipp ut";
 $pgv_lang["sort_by_birth"]			= "Sorter på fødselsdato";
 $pgv_lang["reorder_children"]		= "Vis barn i annen rekkefølge";
+##$pgv_lang["reorder_media"]					= "Re-order media";
+##$pgv_lang["reorder_media_title"]			= "Drag-and-drop thumbnails to re-order media items";
+##$pgv_lang["reorder_media_window"]			= "Re-order media (window)";
+##$pgv_lang["reorder_media_window_title"]		= "Click a row, then drag-and-drop to re-order media ";
+##$pgv_lang["reorder_media_save"]				= "Saves the sorted media to the database";
+##$pgv_lang["reorder_media_reset"]			= "Reset to the original order";
+##$pgv_lang["reorder_media_cancel"]			= "Quit and return";
 $pgv_lang["add_from_clipboard"]		= "Legg til fra klippebordet: ";
 $pgv_lang["record_copied"]			= "Data er kopiert til klippebordet";
 $pgv_lang["add_unlinked_person"]	= "Legg til en person som ikke er knyttet til en familie";
@@ -70,6 +89,7 @@ $pgv_lang["main_media_fail0"]			= "Hovedmediafilen <b>#GLOBALS[oldMediaFolder]##
 $pgv_lang["main_media_fail1"]			= "Klarte ikke å gi hovedmediafilen <b>#GLOBALS[oldMediaName]#</b> det nye navnet <b>#GLOBALS[newMediaName]#</b>.";
 $pgv_lang["main_media_fail2"]			= "Klarte ikke å flytte hovedmediafilen <b>#GLOBALS[oldMediaName]#</b> fra <b>#GLOBALS[oldMediaFolder]#</b> til <b>#GLOBALS[newMediaFolder]#</b>.";
 $pgv_lang["main_media_fail3"]			= "Klarte ikke å flytte eller å gi nytt navn til hovedmediafilen fra <b>#GLOBALS[oldMediaFolder]##GLOBALS[oldMediaName]#</b> til <b>#GLOBALS[newMediaFolder]##GLOBALS[newMediaName]#</b>.";
+##$pgv_lang["resn_disabled"]				= "Note: You must enable the 'Use GEDCOM (RESN) Privacy restriction' feature for this setting to take effect.";
 $pgv_lang["thumb_media_ok1"]			= "Miniatyrbildefilen <b>#GLOBALS[oldMediaName]#</b> heter nå <b>#GLOBALS[newMediaName]#</b>.";
 $pgv_lang["thumb_media_ok2"]			= "Miniatyrbildefilen <b>#GLOBALS[oldMediaName]#</b> er nå flyttet fra <b>#GLOBALS[oldThumbFolder]#</b> til <b>#GLOBALS[newThumbFolder]#</b>.";
 $pgv_lang["thumb_media_ok3"]			= "Miniatyrbildefilen er flyttet eller gitt nytt navn fra <b>#GLOBALS[oldThumbFolder]##GLOBALS[oldMediaName]#</b> til <b>#GLOBALS[newThumbFolder]##GLOBALS[newMediaName]#</b>.";
@@ -94,6 +114,7 @@ $pgv_lang["add_child_to_family"]	= "Legg til et barn til denne familien";
 $pgv_lang["add_fact"]			= "Legg til nye fakta";
 $pgv_lang["add_father"]			= "Legg til en ny far";
 $pgv_lang["add_husb"]			= "Legg til ektemann";
+##$pgv_lang["add_opf_child"]				= "Add a child to create a one-parent family";
 $pgv_lang["add_husb_to_family"]	= "Legg til en ektemann/far til denne familien";
 $pgv_lang["add_media"]			= "Legg til en ny bilde- / mediefil";
 $pgv_lang["add_media_lbl"]		= "Legg til bilder/andre medier";
@@ -139,11 +160,17 @@ $pgv_lang["file_missing"]			= "Det ble ikke mottatt noen fil. Hent filen på nyt
 $pgv_lang["file_partial"]			= "Filen ble bare delvis lastet opp, forsøk på nytt";
 $pgv_lang["file_success"]			= "Filen er lastet opp";
 $pgv_lang["file_too_big"]			= "Opplastet fil overskrider tillatt størrelse";
+##$pgv_lang["file_no_temp_dir"]		= "Missing PHP temporary directory";
+##$pgv_lang["file_cant_write"]		= "PHP failed to write to disk";
+##$pgv_lang["file_bad_extension"]		= "PHP blocked file by extension";
+##$pgv_lang["file_unkown_err"]		= "Unknown file upload error code #pgv_lang[global_num1]#. Please report this as a bug.";
 $pgv_lang["folder"]		 		= "Mappe";
 $pgv_lang["gedcom_editing_disabled"]	= "Muligheten til å gjøre endringer i denne slektsbase er blitt deaktivert av system-administratoren.";
 $pgv_lang["gedcomid"]				= "Bruker ID<br />i slektsbasen";
 $pgv_lang["gedrec_deleted"]		= "Oppføringen i slektsfilen er nå slettet.";
 $pgv_lang["gen_thumb"]			= "Lag miniatyrbilde(r)";
+##$pgv_lang["gen_missing_thumbs"]		= "Create missing thumbnails";
+##$pgv_lang["gen_missing_thumbs_lbl"]	= "Missing thumbnails";
 $pgv_lang["gender_search"]			= "Kjønn: ";
 $pgv_lang["generate_thumbnail"]	= "Lag miniatyrbilde(r) automatisk fra ";
 $pgv_lang["hebrew_givn"]			= "Hebraisk fornavn";
@@ -157,24 +184,9 @@ $pgv_lang["label_diff_server"]      = "Annet nettsted";
 $pgv_lang["label_location"]         = "Plassering";
 $pgv_lang["label_password_id2"]		= "Passord: ";
 $pgv_lang["label_rel_to_current"]   = "Tilknytning til nåværende person";
-$pgv_lang["label_remote_id"]        = "ID til ekstern person";
-$pgv_lang["label_same_server"]      = "Samme nettsted";
-$pgv_lang["label_site"]             = "Nettsted";
-$pgv_lang["label_site_url"]         = "URL til nettsted:";
-$pgv_lang["label_username_id2"]		= "Brukernavn: ";
-$pgv_lang["lbl_server_list"]        = "Bruk et eksisterende nettsted.";
-$pgv_lang["lbl_type_server"]        = "Angi et nytt nettsted.";
-$pgv_lang["link_as_child"]		= "Knytt denne personen til en eksisterende familie som et barn";
-$pgv_lang["link_as_husband"]	= "Knytt denne personen til en eksisterende familie som en ektemann";
-$pgv_lang["link_success"]			= "Kobling er nå lagt til";
-$pgv_lang["link_to_existing_media"]		= "Kobling til et mediaobjekt som finnes fra før";
-$pgv_lang["max_media_depth"]	= "Du kan bare bruke #MEDIA_DIRECTORY_LEVELS# mappe-nivåer";
-$pgv_lang["max_upload_size"]		= "Maks størrelse for opplasting: ";
-$pgv_lang["media_deleted"]		= "Media-mappen er nå slettet.";
-$pgv_lang["media_exists"]		= "Media-fil finnes fra før.";
-$pgv_lang["media_file"]			= "Medie-fil";
-$pgv_lang["media_file_deleted"]		= "Media-fil er nå slettet.";
 $pgv_lang["media_file_not_moved"]	= "Klarte ikke å flytte mediafil.";
+##$pgv_lang["media_file_moved"]			= "Media file moved.";
+##$pgv_lang["media_file_not_moved"]	= "Media file could not be moved.";
 $pgv_lang["media_file_not_renamed"]	= "Klarte ikke å flytte eller å gi mediafilen et nytt navn.";
 $pgv_lang["media_thumb_exists"]	= "Media-miniatyrbilde finnes fra før.";
 $pgv_lang["multiple_gedcoms"]	= "Denne filen har en kobling til en annen slektsbase på dette nettstedet.  Filen kan derfor ikke slettes, flyttes eller gis nytt navn før disse koblingene er fjernet.";
@@ -192,6 +204,7 @@ $pgv_lang["photo_replace"] 			= "Ønsker du å erstatte et eldre bilde med dette
 $pgv_lang["privacy_not_granted"]	= "Du har ikke tilgang til";
 $pgv_lang["privacy_prevented_editing"]	= "På grunn av hensyn til personvern, kan du ikke endre opplysningene.";
 $pgv_lang["record_marked_deleted"]		= "Denne oppføringen er merket for sletting og venter på godkjenning av admin.";
+##$pgv_lang["replace_with"]			= "Replace with";
 $pgv_lang["show_changes"]		= "Denne oppføringen er blitt oppdatert. Klikk her for å se endring(ene).";
 $pgv_lang["thumb_genned"]		= "Miniatyrbilde(r) er lagd automatisk.";
 $pgv_lang["thumbgen_error"]		= "Klarte ikke å lage miniatyrbilde(r) for ";
@@ -204,10 +217,10 @@ $pgv_lang["undo_successful"]	= "Angring er utført";
 $pgv_lang["update_successful"]	= "Oppdatering er utført";
 $pgv_lang["upload"]				= "Hent (upload)";
 $pgv_lang["upload_error"]			= "Det oppstod en FEIL under henting (upload) av filen din.";
+##$pgv_lang["copy_error"]				= "The file #GLOBALS[whichFile2]# could not be copied from #GLOBALS[whichFile1]#";
 $pgv_lang["upload_media"]		= "Hent (upload) bilde- / mediefiler";
 $pgv_lang["upload_media_help"]		= "~#pgv_lang[upload_media]#~<br /><br />Velg en fil fra din lokale PC <b>#MEDIA_DIRECTORY#</b> eller i en av undermappene til denne.<br /><br />Navn på mapper du angir vil bli lagt til #MEDIA_DIRECTORY#. (Eksempel: #MEDIA_DIRECTORY#minfamilie)<br />Dersom mappen for miniatyrbilder ikke finnes fra før, vil denne bli lagd automatisk.";
 $pgv_lang["upload_successful"]	= "Overføring (upload) er utført";
 $pgv_lang["view_change_diff"]	= "Vis endring(er), forskjell(er)";
-
 
 ?>

@@ -708,7 +708,7 @@ function print_execution_stats() {
 		microtime(true)-$start_time,
 		$TOTAL_QUERIES,
 		$PRIVACY_CHECKS,
-		memory_get_peak_usage(true)/1024
+		version_compare(PHP_VERSION, '5.2.1', '>=') ? (memory_get_peak_usage(true)/1024) : (memory_get_usage()/1024)
 	);
 }
 
@@ -1501,7 +1501,7 @@ function print_menu($menu, $parentmenu="") {
 	);
 	$obj = new Menu();
 	if ($menu == 'separator') {
-		$obj->isSeperator();
+		$obj->isSeparator();
 		$obj->printMenu();
 		return;
 	}
@@ -1520,7 +1520,7 @@ function print_menu($menu, $parentmenu="") {
 		foreach ($items as $sub) {
 			$sobj = new Menu();
 			if ($sub == 'separator') {
-				$sobj->isSeperator();
+				$sobj->isSeparator();
 				$obj->addSubmenu($sobj);
 				continue;
 			}

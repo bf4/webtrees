@@ -213,9 +213,9 @@ class SourceControllerRoot extends BaseController {
 
 		if (isset($pgv_changes[$this->sid.'_'.$GEDCOM]))
 		{
-			// edit_sour / seperator
+			// edit_sour / separator
 			$submenu = new Menu();
-			$submenu->isSeperator();
+			$submenu->isSeparator();
 			$menu->addSubmenu($submenu);
 
 			// edit_sour / show/hide changes

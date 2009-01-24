@@ -1,9 +1,11 @@
 <?php
 /**
- * Catalan language file for PhpGedView
+ * Spanish language file for Lightbox Album module
+ *
+ * Display media Items using Lightbox
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team. All rights reserved.
+ * Copyright (C) 2008 to 2009  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,10 +21,11 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * @translator: Antoni Planas i Vilà
  * @package PhpGedView
- * @subpackage Lightbox
+ * @subpackage Module
  * @version $Id$
+ * @author Brian Holland
+ * @translator: Antoni Planas i Vilà
  */
 
 if (!defined('PGV_PHPGEDVIEW')) {
@@ -44,7 +47,7 @@ $pgv_lang["lb_music_fileLegend"]		= "Pista de so de la projecció de diapositive
 $pgv_lang["lb_music_file_help"]			= "~#pgv_lang[lb_music_fileLegend]#~<br />Aquesta opció us permet especificar una banda sonora a reproduir cada cop que s'activi la presentación. Si deixeu aquest camp en blanc, no es reproduirá cap só durant la presentació.<br /><br />Aquesta característica solament admet arxius en format mp3.<br />";
 $pgv_lang["lb_transitionLegend"]		= "Velocitat de transició entre imatges";
 $pgv_lang["lb_transition_help"]			= "~#pgv_lang[lb_transitionLegend]#~<br />Aquesta opció us permet especificar la velocitat de transició en el canvi d'imatges. Aquesta selecció s'aplica durant la presentació. També s'aplica si aneu a la imatge anterior o posterior, si la presentació està detinguda.<br /><br />La opció <b>#pgv_lang[lb_none]#</b> elimina les transicions entre imatges de forma que la nova imatge substitueix de forma immediata a l'anterior, sense adaptació perceptible a les mides de la nova imatge.<br />";
-$pgv_lang["lb_url_dimensionsLegend"]	= "Mides de les finestres per a la URL del Projector d'Imatges"; 
+$pgv_lang["lb_url_dimensionsLegend"]	= "Mides de les finestres per a la URL del Projector d'Imatges";
 $pgv_lang["lb_url_dimensions_help"]		= "~#pgv_lang[lb_url_dimensionsLegend]#~<br />Si polseu sobre la miniatura d'una imatge que correspon a una URL, aquesta opció us permet especificar les mides en píxels de la finestra del Projector d'Imatges per la URL.<br /><br />Les mides cal que siguin més petites que les de la finestra actual del navegador i, tanmateix, més petites que les de la vostra pantalla.<br />";
 
 ?>

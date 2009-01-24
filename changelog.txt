@@ -9,11 +9,34 @@
 =====================================================================
 
 Version 4.2.0 CA
+ - Merged: Merge changes r4762 - r4893 from the trunk (windmillway)
  - Added: New Shared Note List (from List Menu) and links to individual Shared Notes. (windmillway)
  - Changed: Census Assistant Shared Note delimiter from ";" to "|" (windmillway)
 
  
 Version 4.2.0
+ - Added: Support for Indonesian (canajun2eh)
+ - [ 2530830 ] 4881 Ancestry Chart, Show cousins (fisharebest)
+ - [ 2529023 ] 404 on repo/show changes (fisharebest)
+ - Changed: new picasa album thumbnail (windmillway)
+ - Fixed: [ 2495330 ] [4720] indilist shows married names not obeying config (fisharebest)
+ - Fixed: [ 2521772 ] [4784] Serious bug in places (fisharebest)
+ - Fixed: [ 2521121 ] [4841] - ASSO tag not linked (fisharebest)
+ - Changed: Slightly improved picasa thumbnail appearance on Simplyxxx themes (windmillway)
+ - Added: Include Lightbox config file in functions.php to pick up Lightbox iframe (url) width and height variables. (windmillway)
+ - Added: Small change to media handling to pick up globe thumbnail. Corrected wrong display of "\" in Lightbox Notes. (windmillway)
+ - Changed: Importing/exporting places to/from GoogleMap with level>4 (wooc)
+ - Fixed: [ 1752892 ] Maps not working right (wooc)
+ - Fixed: [ 1864790 ] Problems with places and place maps (wooc)
+ - Fixed: [ 1912861 ] Googlemap place names are language dependant (wooc)
+ - Fixed: [ 1912864 ] countries.csv inconsistent with countries.en.php (wooc)
+ - [ 2514630 ] Install Wizard fails to complete. (fisharebest)
+ - Changed: modified JWplayer files to work with new YouTube changes to embedded files (windmillway)
+ - Changed: Further Improvements to Gerry's new handling of various media file types (windmillway)
+ - [ 2494959 ] addSeperator() spelling (fisharebest)
+ - Added: [ 2497934 ] Time since login (wooc)
+ - Changed: Correct handling of various media file types (canajun2eh)
+ - Changed: Correct handling of media files that are URLs (canajun2eh)
  - Changed: Patch [ 2486577 ] applied. Auto show of Notes in Lightbox window and in slide show. (windmillway) 
  - Fixed: [ 1864683 ] NOTE text is duplicated (SVN2450) (fisharebest)
  - Fixed: [ 2009275 ] privacy / is_dead calculations are improper (fisharebest)

@@ -474,7 +474,7 @@ function db_collation_digraphs() {
 // $ged_id - only consider individuals from this gedcom
 ////////////////////////////////////////////////////////////////////////////////
 function get_indilist_salpha($marnm, $fams, $ged_id) {
-	global $DBCONN, $TBLPREFIX, $DB_UTF8_COLLATION, $DBCOLLATE;
+	global $DBTYPE, $DBCONN, $TBLPREFIX, $DB_UTF8_COLLATION, $DBCOLLATE;
 
 	$ged_id=(int)$ged_id;
 
@@ -493,6 +493,7 @@ function get_indilist_salpha($marnm, $fams, $ged_id) {
 	} else {
 		$column="SUBSTR(n_sort {$DBCOLLATE}, 1, 3)";
 	}
+
 	$exclude='';
 	$include='';
 	$digraphs=db_collation_digraphs();
@@ -500,38 +501,34 @@ function get_indilist_salpha($marnm, $fams, $ged_id) {
 		$exclude.=" AND n_sort NOT ".PGV_DB_LIKE." '{$digraph}%' {$DBCOLLATE}";
 	}
 	foreach ($digraphs as $to=>$from) { // Single-character digraphs
-		// TODO: some database let you ORDER BY a column alias.  Others seem to prefer the column expression.
-		// When we work out which DB wants which format, we can add some conditional code.
-		$include.=" UNION SELECT UPPER('{$to}' {$DBCOLLATE}) AS alpha FROM {$tables} WHERE {$join} AND n_sort ".PGV_DB_LIKE." '{$from}%' {$DBCOLLATE} GROUP BY alpha {$DBCOLLATE}";
-		//$include.=" UNION SELECT UPPER('{$to}' {$DBCOLLATE}) AS alpha FROM {$tables} WHERE {$join} AND n_sort ".PGV_DB_LIKE." '{$from}%' {$DBCOLLATE} GROUP BY {$column}";
+		$include.=" UNION SELECT UPPER('{$to}' {$DBCOLLATE}) AS alpha FROM {$tables} WHERE {$join} AND n_sort ".PGV_DB_LIKE." '{$from}%' {$DBCOLLATE} GROUP BY 1";
 	}
-	$sql="SELECT {$column} AS alpha FROM {$tables} WHERE {$join} {$exclude} GROUP BY alpha {$DBCOLLATE} {$include} ORDER BY alpha='@', alpha=',', alpha {$DBCOLLATE}";
-	//$sql="SELECT {$column} AS alpha FROM {$tables} WHERE {$join} {$exclude} GROUP BY {$column} {$include} ORDER BY {$column}='@', {$column}=',', {$column}";
+	$sql="SELECT {$column} AS alpha FROM {$tables} WHERE {$join} {$exclude} GROUP BY 1 {$include} ORDER BY 1";
 	$res=dbquery($sql);
 
 	$list=array();
 	while ($row=$res->fetchRow(DB_FETCHMODE_ASSOC)) {
 		if ($DB_UTF8_COLLATION) {
-			$list[]=$row['alpha'];
+			$letter=$row['alpha'];
 		} else {
 			$letter=UTF8_strtoupper(UTF8_substr($row['alpha'],0,1));
-			$list[$letter]=$letter;
 		}
+		$list[$letter]=$letter;
 	}
 	$res->free();
 
-	// If we can't sort in the DB, sort ourselves
+	// If we didn't sort in the DB, sort ourselves
 	if (!$DB_UTF8_COLLATION) {
 		uasort($list, 'stringsort');
-		// stringsort puts "," and "@" first, so force them to the end
-		if (in_array(',', $list)) {
-			unset($list[',']);
-			$list[',']=',';
-		}
-		if (in_array('@', $list)) {
-			unset($list['@']);
-			$list['@']='@';
-		}
+	}
+	// sorting puts "," and "@" first, so force them to the end
+	if (in_array(',', $list)) {
+		unset($list[',']);
+		$list[',']=',';
+	}
+	if (in_array('@', $list)) {
+		unset($list['@']);
+		$list['@']='@';
 	}
 	return $list;
 }
@@ -545,7 +542,7 @@ function get_indilist_salpha($marnm, $fams, $ged_id) {
 // $ged_id - only consider individuals from this gedcom
 ////////////////////////////////////////////////////////////////////////////////
 function get_indilist_galpha($surn, $salpha, $marnm, $fams, $ged_id) {
-	global $DBCONN, $TBLPREFIX, $DB_UTF8_COLLATION, $DBCOLLATE;
+	global $DBTYPE, $DBCONN, $TBLPREFIX, $DB_UTF8_COLLATION, $DBCOLLATE;
 
 	$ged_id=(int)$ged_id;
 	$surn  =$DBCONN->escapeSimple($surn);
@@ -572,6 +569,7 @@ function get_indilist_galpha($surn, $salpha, $marnm, $fams, $ged_id) {
 	} else {
 		$column="UPPER(SUBSTR(n_givn {$DBCOLLATE}, 1, 3))";
 	}
+
 	$exclude='';
 	$include='';
 	$digraphs=db_collation_digraphs();
@@ -579,38 +577,34 @@ function get_indilist_galpha($surn, $salpha, $marnm, $fams, $ged_id) {
 		$exclude.=" AND n_sort NOT ".PGV_DB_LIKE." '{$digraph}%' {$DBCOLLATE}";
 	}
 	foreach ($digraphs as $to=>$from) { // Single-character digraphs
-		// Bug in MySQL4.1 - can't combine COLLATE with GROUP/ORDER BY
-		//$include.=" UNION SELECT UPPER('{$to}' {$DBCOLLATE}) AS alpha FROM {$tables} WHERE {$join} AND n_sort ".PGV_DB_LIKE." '{$from}%' {$DBCOLLATE} GROUP BY alpha {$DBCOLLATE}";
-		$include.=" UNION SELECT UPPER('{$to}' {$DBCOLLATE}) AS alpha FROM {$tables} WHERE {$join} AND n_sort ".PGV_DB_LIKE." '{$from}%' {$DBCOLLATE} GROUP BY alpha {$DBCOLLATE}";
+		$include.=" UNION SELECT UPPER('{$to}' {$DBCOLLATE}) AS alpha FROM {$tables} WHERE {$join} AND n_sort ".PGV_DB_LIKE." '{$from}%' {$DBCOLLATE} GROUP BY 1";
 	}
-	// Bug in MySQL4.1 - can't combine COLLATE with GROUP/ORDER BY
-	//$sql="SELECT {$column} AS alpha FROM {$tables} WHERE {$join} {$exclude} GROUP BY alpha {$DBCOLLATE} {$include} ORDER BY alpha='@', alpha=',', alpha {$DBCOLLATE}";
-	$sql="SELECT {$column} AS alpha FROM {$tables} WHERE {$join} {$exclude} GROUP BY {$column} {$include} ORDER BY {$column}='@', {$column}=',', {$column}";
+	$sql="SELECT {$column} AS alpha FROM {$tables} WHERE {$join} {$exclude} GROUP BY 1 {$include} ORDER BY 1";
 	$res=dbquery($sql);
 
 	$list=array();
 	while ($row=$res->fetchRow(DB_FETCHMODE_ASSOC)) {
 		if ($DB_UTF8_COLLATION) {
-			$list[]=$row['alpha'];
+			$letter=$row['alpha'];
 		} else {
 			$letter=UTF8_strtoupper(UTF8_substr($row['alpha'],0,1));
-			$list[$letter]=$letter;
 		}
+		$list[$letter]=$letter;
 	}
 	$res->free();
 
-	// If we can't sort in the DB, sort ourselves
+	// If we didn't sort in the DB, sort ourselves
 	if (!$DB_UTF8_COLLATION) {
 		uasort($list, 'stringsort');
-		// stringsort puts "," and "@" first, so force them to the end
-		if (in_array(',', $list)) {
-			unset($list[',']);
-			$list[',']=',';
-		}
-		if (in_array('@', $list)) {
-			unset($list['@']);
-			$list['@']='@';
-		}
+	}
+	// sorting puts "," and "@" first, so force them to the end
+	if (in_array(',', $list)) {
+		unset($list[',']);
+		$list[',']=',';
+	}
+	if (in_array('@', $list)) {
+		unset($list['@']);
+		$list['@']='@';
 	}
 	return $list;
 }
@@ -841,7 +835,12 @@ function get_indilist_indis($surn='', $salpha='', $galpha='', $marnm=false, $fam
 	while ($row=$res->fetchRow(DB_FETCHMODE_ASSOC)) {
 		$person=Person::getInstance($row);
 		$person->setPrimaryName($row['n_num']);
-		$list[]=$person;
+		// We need to clone $person, as we may have multiple references to the
+		// same person in this list, and the "primary name" would otherwise
+		// be shared amongst all of them.  This has some performance/memory
+		// implications, and there is probably a better way.  This, however,
+		// is clean, easy and works.
+		$list[]=clone $person;
 	}
 	$res->free();
 	if (!$DB_UTF8_COLLATION) {
@@ -1048,6 +1047,7 @@ function fetch_person_record($xref, $ged_id) {
 		"SELECT 'INDI' AS type, i_id AS xref, {$ged_id} AS ged_id, i_gedcom AS gedrec, i_isdead, i_sex ".
 		"FROM {$TBLPREFIX}individuals WHERE i_id='{$xref}' AND i_file={$ged_id}"
 	);
+	if (DB::isError($res)) return "";
 	$row=$res->fetchRow(DB_FETCHMODE_ASSOC);
 	$res->free();
 	return $row;
@@ -1060,6 +1060,7 @@ function fetch_family_record($xref, $ged_id) {
 		"SELECT 'FAM' AS type, f_id AS xref, {$ged_id} AS ged_id, f_gedcom AS gedrec, f_husb, f_wife, f_chil, f_numchil ".
 		"FROM {$TBLPREFIX}families WHERE f_id='{$xref}' AND f_file={$ged_id}"
 	);
+	if (DB::isError($res)) return "";
 	$row=$res->fetchRow(DB_FETCHMODE_ASSOC);
 	$res->free();
 	return $row;
@@ -1612,7 +1613,12 @@ function search_indis_names($query, $geds, $match) {
 		$indi=Person::getInstance($row);
 		if ($indi->canDisplayName()) {
 			$indi->setPrimaryName($row['n_num']);
-			$list[]=$indi;
+			// We need to clone $indi, as we may have multiple references to the
+			// same person in this list, and the "primary name" would otherwise
+			// be shared amongst all of them.  This has some performance/memory
+			// implications, and there is probably a better way.  This, however,
+			// is clean, easy and works.
+			$list[]=clone $indi;
 		}
 	}
 	$res->free();

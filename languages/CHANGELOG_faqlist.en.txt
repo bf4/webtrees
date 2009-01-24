@@ -18,7 +18,8 @@ The CHANGELOG files are:
 		
 + $pgv_lang["text"] / means added
 - $pgv_lang["text"] / deleted
-* $pgv_lang["text"] / text was changed
+* $pgv_lang["text"] / translation was changed
+# $pgv_lang["text"] / keyword was changed
 
 Additional codes, to help Translators, follow the date as follows:
 	A - Added or moved from another file
@@ -28,6 +29,7 @@ Additional codes, to help Translators, follow the date as follows:
 	F - Major format change
 	p - Punctuation change  (doesn't affect translation)
 	M - Moved to another file
+	R - keyword was renamed (no translation changes required)
 	S - Spelling change		(doesn't affect translation)
 	w - Minor wording change
 	W - Major wording change or completely new text

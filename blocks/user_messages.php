@@ -5,7 +5,7 @@
  * This block will print a users messages
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
+ * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -108,7 +108,7 @@ function print_user_messages($block=true, $config="", $side, $index) {
 					$content .= " " . getRLM() . " - ".htmlspecialchars($user_id,ENT_COMPAT,'UTF-8') . getRLM();
 				}
 			} else {
-				$content .= "<a href=\"mailto:".$user_id."\">".preg_replace("/@/","@<span style=\"font-size:1px;\"> </span>",$user_id)."</a>";
+				$content .= "<a href=\"mailto:".$message["from"]."\">".preg_replace("/@/","@<span style=\"font-size:1px;\"> </span>",$message["from"])."</a>";
 			}
 			$content .= "</td>";
 			$content .= "</tr>";

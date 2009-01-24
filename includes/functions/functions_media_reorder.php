@@ -3,7 +3,7 @@
  * Reorder media Items using drag and drop
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2007 to 2009  PGV Development Team.  All rights reserved.
+ * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -76,61 +76,49 @@ function media_reorder_row($rtype, $rowm, $pid) {
         $subtitle = get_gedcom_value("TITL", 2, $rowm["mm_gedrec"]);
 
         if (!empty($subtitle)) $mediaTitle = $subtitle;
-            $mainMedia = check_media_depth($rowm["m_file"], "NOTRUNC");
+		$mainMedia = check_media_depth($rowm["m_file"], "NOTRUNC");
         if ($mediaTitle=="") $mediaTitle = basename($rowm["m_file"]);
 
 		print "\n" . "<table class=\"pic\"><tr>" . "\n";
 		print "<td width=\"80\" valign=\"top\" align=\"center\" >". "\n";
 
-		//Finally Print the thumbnail ---------------------------------
-			// If URL flv file (eg You Tube)
-			if (eregi("http://www.youtube.com" ,$rowm['m_file']) ) {
-				print "<img src=\"modules/JWplayer/flashrem.png\" width=\"38\" border=\"0\" " ;
-			// Else if Plain URL Print the Common URL Thumbnail
-			}else if (eregi("http",$rowm['m_file']) && !eregi("\.jpg",$rowm['m_file']) && !eregi("\.jpeg",$rowm['m_file']) && !eregi("\.gif",$rowm['m_file']) && !eregi("\.png",$rowm['m_file'])) {
-				print "<img src=\"images/URL.png\" height=\"48\" width=\"44\"border=\"0\" " ;
-			//Else If local flv file, print the common flash thumbnail
-			}else if (media_exists($thumbnail) && eregi("\media.gif",$thumbnail) && eregi("\.flv",$rowm['m_file'])) {
-				print "<img src=\"modules/JWplayer/flash.png\" height=\"38\" border=\"0\" " ;
-			// Else Print the Regular Thumbnail if associated with a thumbnail image,
-			}else{
-				print "<img src=\"".$thumbnail."\" height=\"38\" border=\"0\" " ;
-			}
+		// Get info on how to handle this media file
+		$mediaInfo = mediaFileInfo($mainMedia, $thumbnail, $rowm["m_media"], $mediaTitle, '');
 
-			if ($isExternal) {
-				print " width=\"".($THUMBNAIL_WIDTH * (38/80))."\"";
-			}
-			if ( eregi("1 SOUR",$rowm['m_gedrec'])) {
-				print " alt=\"" . PrintReady($mediaTitle) . "\" title=\"" . PrintReady($mediaTitle) . "\nSource info available\" />";
-			}else{
-				print " alt=\"" . PrintReady($mediaTitle) . "\" title=\"" . PrintReady($mediaTitle) . "\" />";
-			}
+		//-- Thumbnail field
+		print "<img src=\"".$mediaInfo['thumb']."\" height=\"38\" border=\"0\" " ;
 
-			//print media info
-			$ttype2 = preg_match("/\d TYPE (.*)/", $rowm["m_gedrec"], $match);
-			if ($ttype2>0) {
-				$mediaType = trim($match[1]);
-				$varName = "TYPE__".strtolower($mediaType);
-				if (isset($pgv_lang[$varName])) $mediaType = $pgv_lang[$varName];
-//			print "\n\t\t\t<br /><span class=\"label\">".$pgv_lang["type"].": </span> <span class=\"field\">$mediaType</span>";
-			}
+		if ( eregi("1 SOUR",$rowm['m_gedrec'])) {
+			print " alt=\"" . PrintReady($mediaTitle) . "\" title=\"" . PrintReady($mediaTitle) . "\nSource info available\" />";
+		}else{
+			print " alt=\"" . PrintReady($mediaTitle) . "\" title=\"" . PrintReady($mediaTitle) . "\" />";
+		}
 
-			print "\n" . "</td><td>&nbsp;</td>" . "\n";
-			print "<td valign=\"top\" align=\"left\">";
-			//print "<font color=\"blue\">";
-			print $rowm['m_media'];
-			//print "</font>";
+		//print media info
+		$ttype2 = preg_match("/\d TYPE (.*)/", $rowm["m_gedrec"], $match);
+		if ($ttype2>0) {
+			$mediaType = trim($match[1]);
+			$varName = "TYPE__".strtolower($mediaType);
+			if (isset($pgv_lang[$varName])) $mediaType = $pgv_lang[$varName];
+//		print "\n\t\t\t<br /><span class=\"label\">".$pgv_lang["type"].": </span> <span class=\"field\">$mediaType</span>";
+		}
 
-			print "<b>";
-			print "&nbsp;&nbsp;" . $mediaType;
-			print "</b>";
+		print "\n" . "</td><td>&nbsp;</td>" . "\n";
+		print "<td valign=\"top\" align=\"left\">";
+		//print "<font color=\"blue\">";
+		print $rowm['m_media'];
+		//print "</font>";
 
- 			print "<br>" . "\n";
-			print $mediaTitle . "\n";
+		print "<b>";
+		print "&nbsp;&nbsp;" . $mediaType;
+		print "</b>";
 
-			print "</td>" . "\n";
-			print "</tr>";
-			print "</table>" . "\n";
+ 		print "<br>" . "\n";
+		print $mediaTitle . "\n";
+
+		print "</td>" . "\n";
+		print "</tr>";
+		print "</table>" . "\n";
 
     }
 	if (!isset($j)) {

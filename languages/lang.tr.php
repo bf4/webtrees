@@ -3,7 +3,7 @@
  * Turkish Language file for PhpGedView.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
+ * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -31,6 +31,22 @@ if (!defined('PGV_PHPGEDVIEW')) {
 }
 
 $pgv_lang["changelog"]			= "v#VERSION# sürümündeki değişiklikler";
+$pgv_lang["begins_with"]		= "İle başlar";
+$pgv_lang["contains"]			= "Kapsamalar";
+$pgv_lang["sounds_like"]		= "Gibi sesler";
+$pgv_lang["others"]					= "Diğerleri";
+$pgv_lang["total_changes"]			= "Toplam değişenler";
+$pgv_lang["total_links"]			= "Toplam linkler";
+$pgv_lang["skip_marnms"]			= "Evli isimler hariç";
+$pgv_lang["show_marnms"]			= "Evli isimler dahil";
+$pgv_lang["months2"]				= "ay"; // 2 months
+$pgv_lang["hour1"]					= "saat";
+$pgv_lang["hours2"]					= "saat"; // 2 hours
+$pgv_lang["hours"]					= "saat"; // >2 hours
+$pgv_lang["minute1"]				= "dakika";
+$pgv_lang["minutes2"]				= "dakika"; // 2 minutes
+$pgv_lang["minutes"]				= "dakika"; // >2 minutes
+$pgv_lang["ago"]					= "önce";
 $pgv_lang["html_block_descr"]		= "Bu HTML blok PhpGedViewiniz için ziyaretçilerinize mesaj verebileceğiniz blok ve HTML kodlarını kullanabileceğiniz bir blok tur. Bu blok sayesinde ziyaretçilerinize vereceğiniz mesajı istediğiniz gibi HTML kodlarıyla şekillendirerek mesajlarınızı yayınlamanızı sağlar.";
 $pgv_lang["html_block_sample_part1"]	= "<p class=\"blockhc\"><b>Başlığınızı buraya yerleştirin</b></p><br /><p>Konfigürasyon düğmesini tıkla";
 $pgv_lang["html_block_sample_part2"]	= "açılacak sayfada mesajınızı yazın.</p>";
@@ -169,7 +185,6 @@ $pgv_lang["review_changes_email"]	= "Hatırlatıcı emailler gönder?";
 $pgv_lang["for_support"]		= "Teknik yardım ve bilgi için danışabileceğiniz kişi:";
 $pgv_lang["for_contact"]		= "Nesep tetkiki için temas edilecek kişi:";
 $pgv_lang["for_all_contact"]		= "Teknik yardım veya seçere ile ilgili sorular için danışabileceğiniz ilişki adresi:";
-$pgv_lang["build_error"]		= "GEDCOM dosyası güncelleştirildi.";
 $pgv_lang["choose_username"]		= "Kullanıcı adı";
 $pgv_lang["username"]			= "Kullanıcı Adı";
 $pgv_lang["invalid_username"]		= "Kullanıcı adı içinde geçersiz harfler bulunmaktadır";
@@ -284,7 +299,6 @@ $pgv_lang["unrecognized_code_msg"]	= "Bu düzeltmek istediğimiz bir hatadır. B
 $pgv_lang["indi_info"]			= "Kişisel bilgi";
 $pgv_lang["pedigree_chart"]		= "Soyağacı Ağaç Çizelgesi";
 $pgv_lang["individual"]				= "Kişisel";
-$pgv_lang["individual"]				= "Kişisel";
 $pgv_lang["family"]			= "Aile";
 $pgv_lang["family_with"]			= "Ailesiyle";
 $pgv_lang["as_spouse"]			= "Eşiyle Aile Tablosu";
@@ -329,8 +343,8 @@ $pgv_lang["no_tab5"]				= "Bu şahıs ile ilgili hiç bir yakın akraba bulunmam
 $pgv_lang["no_tab6"]				= "Bu kişisele bağlı hiç araştırma kütüğü yoktur.";
 $pgv_lang["show_fact_sources"]		= "Tüm kaynakları göster";
 $pgv_lang["show_fact_notes"]		= "Tüm notları göster";
-$pgv_lang["spouse"]			= "Hanımı";
-$pgv_lang["spouses"] 				= "Eşler";
+$pgv_lang["spouse"]			= "Eşi";
+$pgv_lang["spouses"] 				= "Eşleri";
 
 //-- FAMILY FILE MESSAGES
 $pgv_lang["family_info"]		= "Aile bilgisi";
@@ -537,7 +551,6 @@ $pgv_lang["apx"]			= "takriben";
 $pgv_lang["cir"]			= "dolaylarında";
 
 //-- Admin File Messages
-$pgv_lang["rebuild_indexes"]		= "İndeks dosyalarını yenile";
 $pgv_lang["user_admin"]			= "Kullanıcı Yönetimi";
 $pgv_lang["password_mismatch"]		= "Şifreler birbirine uymuyor.";
 $pgv_lang["enter_username"]		= "Üyenin kullanıcı adınızı işlemeniz gerekiyor.";
@@ -1139,21 +1152,21 @@ $pgv_lang["add_media_tool"]		= "Medya dosyası ekleme aracı";
 $pgv_lang["media_linked"]			= "Bu multimedia nesnesi aşağıdaki kişiye bağlıdır:";
 $pgv_lang["media_not_linked"]		= "Bu media öbjesi hiçbir kişiye bağlı değil ve GEDCOM a kayıtlı değil.";
 $pgv_lang["media_dir_1"]			= "Bu media nesnesi dış sunucuda lokale yerleştirilir";
-$pgv_lang["media_dir_2"]			= "Bu media nesnesi standart media klasöründedir";
-$pgv_lang["media_dir_3"]			= "Bu media nesnesi korunmuş media klasöründedir";
+$pgv_lang["media_dir_2"]			= "Bu media nesnesi normal media klasöründedir";
+$pgv_lang["media_dir_3"]			= "Bu media nesnesi korumalı media klasöründedir";
 $pgv_lang["thumb_dir_1"]			= "Bu tırnak önizleme dış sunucuda lokale yerleştirilir";
-$pgv_lang["thumb_dir_2"]			= "Bu tırnak önizleme standart media klasöründedir";
-$pgv_lang["thumb_dir_3"]			= "Bu tırnak önizleme korunmuş media klasöründedir";
+$pgv_lang["thumb_dir_2"]			= "Bu tırnak önizleme normal media klasöründedir";
+$pgv_lang["thumb_dir_3"]			= "Bu tırnak önizleme korumalı media klasöründedir";
 $pgv_lang["moveto_2"]				= "Korumalı klasöre taşı";
-$pgv_lang["moveto_3"]				= "Standart klasöre taşı";
-$pgv_lang["move_standard"]			= "Standart da taşı";
-$pgv_lang["move_protected"]		= "Korunmuşa taşı";
+$pgv_lang["moveto_3"]				= "Normal klasöre taşı";
+$pgv_lang["move_standard"]			= "Normale taşı";
+$pgv_lang["move_protected"]		= "Korumalıya taşı";
 $pgv_lang["move_mediadirs"]			= "Media klasörleri taşı";
 $pgv_lang["setperms"]				= "Medya İzinleri Kur";
 
 
 $pgv_lang["setperms_success"]		= "İzinleri Kur";
-$pgv_lang["setperms_failure"]		= "İzinleri Kurma";
+$pgv_lang["setperms_failure"]		= "İzinler Kurulmamış";
 $pgv_lang["setperms_time_exceeded"]	= "İletişim limiti aşıldı. Küçük klasörle tekrar komutu dene.";
 $pgv_lang["move_time_exceeded"]	= "İletişim süre limitine ulaşıldı. Dosyaların bundan sonrası taşımak için tekrar komutu dene.";
 $pgv_lang["media_firewall_rootdir_no_exist"]			= "İstediğiniz bu media firewall kök klasörü yok. Önce bunu oluşturun.";
@@ -1280,21 +1293,27 @@ $pgv_lang["twin"] = "İkiz";
 $pgv_lang["twin_brother"] = "İkiz erkek kardeş";
 $pgv_lang["twin_sister"] = "İkiz kız kardeş";
 $pgv_lang["witness"] = "Tanık";
-$pgv_lang["statutci"]			= "İndeks yaratılamadı";
 
 //-- statistics utility
-$pgv_lang["statnnames"]			= "Soy isim sayısı =";
-$pgv_lang["statnfam"]			= "Aile sayısı =";
-$pgv_lang["statnmale"]			= "Erkek sayısı =";
-$pgv_lang["statnfemale"]		= "Kadın sayısı =";
+$pgv_lang["statutci"]			= "İndeksi oluşturamadı";
+$pgv_lang["statnnames"]			= "Toplam kişi";
+$pgv_lang["statnfam"]			= "Toplam aile";
+$pgv_lang["statnmale"]			= "Toplam erkek";
+$pgv_lang["statnfemale"]		= "Toplam kadın";
 $pgv_lang["statvars"]			= "Lütfen çizge için gerekli olan değişkenleri işleyin";
 $pgv_lang["statlxa"]			= "X-Ekseni boyunca:";
 $pgv_lang["statlya"]			= "Y-Ekseni boyunca";
 $pgv_lang["statlza"]			= "Z-Ekseni boyunca";
+$pgv_lang["stat_1_map"]			= "Kişisel dağılım";
+$pgv_lang["stat_2_map"]			= "Ülkeye göre doğum";
+$pgv_lang["stat_3_map"]			= "Ülkeye göre ölüm";
+$pgv_lang["stat_4_map"]			= "Ülkeye göre evlilik";
+$pgv_lang["stat_8_fam"]			= "Kaynaklar ile aileler";
+$pgv_lang["stat_9_indi"]		= "Kaynaklar ile kişiler";
 $pgv_lang["stat_10_none"]		= "Hiç biri";
-$pgv_lang["stat_11_mb"]			= "Doğum günlerinin ayı";
-$pgv_lang["stat_12_md"]			= "Vefat günlerinin ayı";
-$pgv_lang["stat_13_mm"]			= "Evlenme günlerinin ayı";
+$pgv_lang["stat_11_mb"]			= "Doğum ayı";
+$pgv_lang["stat_12_md"]			= "Vefat ayı";
+$pgv_lang["stat_13_mm"]			= "Evlenme ayı";
 $pgv_lang["stat_14_mb1"]		= "Bir ilişkide doğan 1. çocuğun doğum ayı";
 $pgv_lang["stat_15_mm1"]		= "İlk evlenme günlerinin ayı";
 $pgv_lang["stat_16_mmb"]		= "Evlilik ile 1. doğum arasındaki ay sayısı.";
@@ -1309,7 +1328,6 @@ $pgv_lang["stat_202_perc"]		= "Yüzdelik";
 $pgv_lang["stat_300_none"]		= "Hiç biri";
 $pgv_lang["stat_301_mf"]		= "Erkek / Kadın";
 $pgv_lang["stat_302_cgp"]		= "Dönemler. Periyorlar z-ekseni için doğru değerleri kontrol et";
-$pgv_lang["statmess1"]			= "Aşağıda yalnız x-ekseni ya da z-ekseni ile ilgili limit değerleri işleyin";
 $pgv_lang["statar_xgp"]			= "Periyotlar için gerekli olan limit değerler (x-ekseni):";
 $pgv_lang["statar_xgl"]			= "Yaşlar için gerekli olan limit değerler (x-ekseni):";
 $pgv_lang["statar_xgm"]			= "Aylar için gerekli olan limit değerler (x-ekseni):";
@@ -1321,14 +1339,11 @@ $pgv_lang["statistiek_list"]	= "İstatistik Alanı";
 
 //-- statisticsplot utility
 $pgv_lang["stpl"]			= "...";
-$pgv_lang["stplGDno"]			= "Grafik sergileme kütüphanesi mevcut değildir, Sistem yöneticinize PHP 4 sorun";
-$pgv_lang["stpljpgraphno"]		= "JPgraph modülleri rehber <i>PhpGedView/jpgraph/</i> da mevcut değiller. <br />Lütfen http://www.aditus.nu/jpgraph/jpdownload.php den onları önce alın<br> <br /><h3>Rehber <i>PhpGedView/jpgraph/</i></h3> da Jpgraph kurun<br>";
 $pgv_lang["stplinfo"]			= "Çizge için değişken";
 $pgv_lang["stpltype"]			= "Tipi:";
 $pgv_lang["stplnoim"]			= "Uygulanacak yok:";
 $pgv_lang["stplmf"]			= " / Erkek-Kadın";
 $pgv_lang["stplipot"]			= " / her dönem zamanı";
-$pgv_lang["stplgzas"]			= "Kenarları z-ekseni:";
 $pgv_lang["stplmonth"]			= "Ay";
 $pgv_lang["stplnumbers"]		= "Sayı";
 $pgv_lang["stplage"]			= "Yaş";
@@ -1521,8 +1536,20 @@ $pgv_lang["showUnknown"]			= "Bilinmeyen Cinsiyeti Göster";
 $pgv_lang["example"]				= "Örnek:";
 $pgv_lang["parent_family"]			= "Ebeveyn Aile";
 $pgv_lang["view_fam_nav_details"]	= "Detayları Görüntüleme ...";
+
+$pgv_lang["view_fam_nav_notes"]		= "için Notları Görüntüle ...";
+$pgv_lang["view_fam_nav_sources"]	= "için Kaynakları Görüntüle ...";
+$pgv_lang["view_fam_nav_media"]		= "için Media Görüntüle ...";
+$pgv_lang["view_fam_nav_album"]		= "için Albüm Görüntüle ...";
+$pgv_lang["view_fam_nav_relatives"]	= "için Akrabaları Görüntüle ...";
+$pgv_lang["view_fam_nav_tree"]		= "için Ağaç Görüntüle ...";
+$pgv_lang["view_fam_nav_research"]	= "için Araştırma Görüntüle ...";
+$pgv_lang["view_fam_nav_map"]		= "için Harita Görüntüle ...";
+$pgv_lang["view_fam_nav_spare"]		= "için Yedek-bilgi Görüntüle ...";
+$pgv_lang["navigator"]				= "Yön Gösterici";
+
 $pgv_lang["show_parents"] 			= "Ebeveynleri göster";
-$pgv_lang["years2"]					= "years";	// 2 Yıl";
+$pgv_lang["years2"]					= "yıl";	// 2 Yıl";
 $pgv_lang["advanced_search"] 	= "Gelişmiş Arama";
 $pgv_lang["more_fields"]		= "Daha Fazla Alan Ekle";
 $pgv_lang["step_parent_family"]		= "Üvey-Ebeveyn Aile";
@@ -1566,7 +1593,7 @@ $pgv_lang["pentecost"]  = "Hamsin bayramı";
 $pgv_lang["assumption"] = "Kabulün";
 $pgv_lang["all_saints"] = "Tüm ermişler";
 $pgv_lang["muhar"]        = "Muharrem ayı";
-$pgv_lang["setperms_fix"]			= "Doğru okuma/yazma/izinleri işlet";
+$pgv_lang["setperms_fix"]			= "Düzgün okuma/yazma/izinleri uygula";
 $pgv_lang["media_firewall_invalid_dir"]	= "Not: Media Firewall bir dizinden medya dizininden başka yerden başlatıldı.";
 $pgv_lang["mail03_line03a"]			= "Siz herhangi bir hareketi almak zorunda değilsiniz. kullanıcı şimdi giriş yapabilir.";
 $pgv_lang["style3"]					= "Etiket kümesi";
@@ -1589,5 +1616,34 @@ $pgv_lang["pls_note06a"] 			= "Şimdi <b>#user_email#</b> email adresinize doğr
 $pgv_lang["welcome_text_auth_mode_2"]	= "<center><b>Bu Soyağacı Web Sitesine Hoş Geldiniz</b></center><br /> Bu soyağacı web sitesine erişim sadece <u>kayıtlı</u> kullanıcılara izin veriliyor.<br /><br /> Eğer siz bir kullanıcı hesaba sahip iseniz giriş yapabilirsiniz.<br /><br /> Eğer sizin bir kullanıcı hesabınız yoksa aşağıdaki uygun linki tıklatarak kayıt olabilirsiniz.<br /><br /> Kayıt sonrası hesabınızı doğruladıktan sonra son olarak yönetici hesabınızı onaylayacak veya reddedecektir. <br /><br />Yönetici hesabınıza uygulamadan sonra email ile size mesaj gönderilecektir.";
 $pgv_lang["message_instructions"]	= "<b>Lütfen Not:</b> Yaşayan bireylerin özel bilgileri sadece aile akrabaları ve yakın arkadaşlarına verilebilir. Herhangi bir özeri veriyi almadan önce ilişkinizi doğrulamak için sorulacaksınız. Bazen ölü kişilerin bilgisi aynı zamanda özel olabilir. Eğer durum bu ise, çünkü kişi hakkında kararlaştırmak için onları yaşayan olup olmadığı bilinen yeterli bilgi yoktur veya değildir ve muhtemelen bu kişi hakkında bizde bilgi yok. <br /><br />Bir soruyu sormadan önce lütfen kendisi sizin tarihler, yerler ve yakın akrabaları kontrol ederek doğru kişi hakkında soruyor olduğunu doğrular. Eğer siz soyada ait veride değişiklikler iletiyorsanız lütfen bunun nedeninin sebebi olan kaynağını da belirterek iletiniz.<br /><br />";
 $pgv_lang["portal_config_intructions"]	= "~#pgv_lang[customize_page]# <br /> #pgv_lang[customize_gedcom_page]#~<br /><br />Bunları istediğiniz gibi sayfaya blokları yerleştirerek sayfayı ihtiyacınıza göre özelleştirebilirsiniz.<br /><br /> Sayfa <b>Ana</b> ve <b>Sağ</b> bölümler içine bölünür. <b>Ana</b> bölüm blokları geniş belirirler ve sayfa başlığın altında belirir. <b>Sağ</b> bölüm sağda belirir ve sayfa başlığın altının sağında listelenir.<br /><br />Her bir bölüm listelendiği düzende sayfada yazılan blokların kendi listesine sahip olur.<br /><br />Blok listelerinin biri boş olduğunda kalan bloklar sayfanın tümünün genişliğini kapsayacaktır.<br /><br />";
+$pgv_lang["NNhebrew"] 		= "İbrani";
+$pgv_lang["PNhebrew"] 		= "İbrani";
+$pgv_lang["NNarabic"] 		= "Arap";
+$pgv_lang["PNarabic"] 		= "Arap";
+$pgv_lang["stat_sindi"]			= "Kaynaklar ile kişiler";
+$pgv_lang["stat_sfam"]			= "Kaynaklar ile aileler";
+$pgv_lang["map_type"]			= "Harita tipi";
+$pgv_lang["less"]				= "daha az";
+$pgv_lang["over"]				= "üzerine";
+$pgv_lang["interval"]			= "arası";
+$pgv_lang["aft_marr"]			= "evlilikten sonra ay";
+$pgv_lang["bef_marr"]			= "evlilikten sonra ve önce ay";
+$pgv_lang["quarters"]			= "evlilikten sonra çeyrek";
+$pgv_lang["half_year"]			= "evlilikten yarım-yıl sonra";
+$pgv_lang["one_child"]			= "bir çocuk arası";
+$pgv_lang["two_children"]		= "iki çocuk arası";
+$pgv_lang["stplnuch"]			= "çocuk";
+$pgv_lang["indi_distribution_chart"]	= "Kişisel dağılım çizelge";
+$pgv_lang["surname_distribution_chart"]	= "Soyad dağılım çizelge";
+$pgv_lang["g_chart_high"]		= "En Yüksek Nüfuslu";
+$pgv_lang["g_chart_low"]		= "En Düşük Nüfuslu";
+$pgv_lang["g_chart_nobody"]		= "Hiç kimse hepsi";
+$pgv_lang["area_chart"]			= "Coğrafi alan";
+$pgv_lang["europe_chart"]		= "Evrupa";
+$pgv_lang["s_america_chart"]	= "Güney Amerika";
+$pgv_lang["asia_chart"]			= "Asya";
+$pgv_lang["middle_east_chart"]	= "Orta Doğu";
+$pgv_lang["africa_chart"]		= "Afrika";
+$pgv_lang["world_chart"]		= "Dünya";
 
 ?>

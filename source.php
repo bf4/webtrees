@@ -28,6 +28,9 @@ require './config.php';
 require './includes/controllers/source_ctrl.php';
 require './includes/functions/functions_print_lists.php';
 
+// We have finished writing to $_SESSION, so release the lock
+session_write_close();
+
 $controller=new SourceController();
 $controller->init();
 
@@ -37,7 +40,7 @@ $linkToID=$controller->sid;
 print_header($controller->getPageTitle());
 
 // LightBox
-if ($MULTI_MEDIA && is_dir('./modules/lightbox')) {
+if ($MULTI_MEDIA && file_exists('./modules/lightbox.php')) {
 	include './modules/lightbox/lb_defaultconfig.php';
 	if (file_exists('modules/lightbox/lb_config.php')) {
 		include './modules/lightbox/lb_config.php';

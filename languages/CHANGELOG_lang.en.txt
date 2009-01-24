@@ -22,7 +22,8 @@ The CHANGELOG files are:
 
 + $pgv_lang["text"] / means added
 - $pgv_lang["text"] / deleted
-* $pgv_lang["text"] / text was changed
+* $pgv_lang["text"] / translation was changed
+# $pgv_lang["text"] / keyword was changed
 
 Additional codes, to help Translators, follow the date as follows:
 	A - Added or moved from another file
@@ -32,6 +33,7 @@ Additional codes, to help Translators, follow the date as follows:
 	F - Major format change
 	p - Punctuation change  (doesn't affect translation)
 	M - Moved to another file
+	R - keyword was renamed (no translation changes required)
 	S - Spelling change		(doesn't affect translation)
 	w - Minor wording change
 	W - Major wording change or completely new text
@@ -44,7 +46,6 @@ VERSION 4.2.
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change	codes and comments
 ----------------------------------------------------------------------------------------
-
 +$pgv_lang["shnote_menu"]							24 Jan 2009				A		Line 0092 in lang_en.php
 +$pgv_lang["edit_shnote"]							24 Jan 2009				A		Line 0197 in lang_en.php
 +$pgv_lang["shnote_list"]							24 Jan 2009				A		Line 0401 in lang_en.php
@@ -54,7 +55,29 @@ VERSION 4.2.
 +$pgv_lang["total_shnotes"]							24 Jan 2009				A		Line 0616 in lang_en.php
 +$pgv_lang["delete_shnote"]							24 Jan 2009				A		Line 1124 in lang_en.php
 +$pgv_lang["confirm_delete_shnote"]					24 Jan 2009				A		Line 1126 in lang_en.php
-
++$pgv_lang["weeks"]									22 Jan 2009				A
++$pgv_lang["week1"]									22 Jan 2009				A
++$pgv_lang["employee"]								22 Jan 2009				A
++$pgv_lang["employer"]								22 Jan 2009				A
++$pgv_lang["owner"]									22 Jan 2009				A
++$pgv_lang["slave"]									22 Jan 2009				A
++$pgv_lang["months2"]								15 Jan 2009				A
++$pgv_lang["hour1"]									15 Jan 2009				A
++$pgv_lang["hours2"]								15 Jan 2009				A
++$pgv_lang["hours"]									15 Jan 2009				A
++$pgv_lang["minute1"]								15 Jan 2009				A
++$pgv_lang["minutes2"]								15 Jan 2009				A
++$pgv_lang["minutes"]								15 Jan 2009				A
++$pgv_lang["ago"]									15 Jan 2009				A
+*$pgv_lang["stat_males"]							15 Jan 2009				W
+*$pgv_lang["stat_females"]							15 Jan 2009				W
+*$pgv_lang["stat_unknown"]							15 Jan 2009				W
+*$pgv_lang["total_unknown"]							15 Jan 2009				W
+*$pgv_lang["total_living"]							15 Jan 2009				W
+*$pgv_lang["total_dead"]							15 Jan 2009				W
+*$pgv_lang["total_not_born"]						15 Jan 2009				W
++$pgv_lang["total_changes"]							15 Jan 2009				A
++$pgv_lang["total_links"]							15 Jan 2009				A
 +$pgv_lang["TYPE__coat"]							05 Jan 2009				A
 *$pgv_lang["view_fam_nav_details"]					04 Jan 2009				w
 +$pgv_lang["view_fam_nav_notes"]					04 Jan 2009				A

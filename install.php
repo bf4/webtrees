@@ -3,7 +3,7 @@
  * Installation and Configuration
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2008  PGV Development Team.  All rights reserved.
+ * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -244,6 +244,7 @@ switch($step) {
 		if (isset($_POST["NEW_PGV_SMTP_AUTH"])) $_SESSION['install_config']['PGV_SMTP_AUTH'] =$_POST["NEW_PGV_SMTP_AUTH"]=="yes"?true:false;
 		if (isset($_POST["NEW_PGV_SMTP_AUTH_USER"])) $_SESSION['install_config']['PGV_SMTP_AUTH_USER'] =$_POST["NEW_PGV_SMTP_AUTH_USER"];
 		if (isset($_POST["NEW_PGV_SMTP_AUTH_PASS"])) $_SESSION['install_config']['PGV_SMTP_AUTH_PASS'] =$_POST["NEW_PGV_SMTP_AUTH_PASS"];
+		if (isset($_POST["NEW_PGV_SMTP_FROM_NAME"])) $_SESSION['install_config']['PGV_SMTP_FROM_NAME'] =$_POST["NEW_PGV_SMTP_FROM_NAME"];
 		if (isset($_POST['NEW_ALLOW_USER_THEMES'])) $_SESSION['install_config']['ALLOW_USER_THEMES'] = $_POST['NEW_ALLOW_USER_THEMES']=="yes"?true:false;
 		if (isset($_POST['NEW_ALLOW_REMEMBER_ME'])) $_SESSION['install_config']['ALLOW_REMEMBER_ME'] = $_POST['NEW_ALLOW_REMEMBER_ME']=="yes"?true:false;
 		if (isset($_POST['NEW_LOGFILE_CREATE'])) $_SESSION['install_config']['LOGFILE_CREATE'] = $_POST['NEW_LOGFILE_CREATE'];
@@ -734,7 +735,7 @@ function printDBForm() {
 function printConfigForm(){
 	global $TEXT_DIRECTION, $PGV_DXHTMLTAB_COLORS, $PGV_STORE_MESSAGES, $USE_REGISTRATION_MODULE, $REQUIRE_ADMIN_AUTH_REGISTRATION;
 	global $ALLOW_CHANGE_GEDCOM, $PGV_SIMPLE_MAIL, $ALLOW_USER_THEMES, $ALLOW_REMEMBER_ME, $LOGFILE_CREATE, $SERVER_URL;
-	global $PGV_SMTP_ACTIVE, $PGV_SMTP_HOST, $PGV_SMTP_HELO, $PGV_SMTP_PORT, $PGV_SMTP_AUTH, $PGV_SMTP_AUTH_USER, $PGV_SMTP_AUTH_PASS;
+	global $PGV_SMTP_ACTIVE, $PGV_SMTP_HOST, $PGV_SMTP_HELO, $PGV_SMTP_PORT, $PGV_SMTP_AUTH, $PGV_SMTP_AUTH_USER, $PGV_SMTP_AUTH_PASS, $PGV_SMTP_FROM_NAME;
 	global $LOGIN_URL, $SCRIPT_NAME, $PGV_SESSION_SAVE_PATH, $PGV_SESSION_TIME, $COMMIT_COMMAND, $PGV_MEMORY_LIMIT, $MAX_VIEWS;
 	global $MAX_VIEW_TIME, $INDEX_DIRECTORY;
 	global $BROWSERTYPE;		// MSIE and dhtmlXTabbar don't play friendly at the moment
@@ -759,6 +760,7 @@ function printConfigForm(){
 	if (isset($_SESSION['install_config']['PGV_SMTP_AUTH'])) $PGV_SMTP_AUTH = $_SESSION['install_config']['PGV_SMTP_AUTH'];
 	if (isset($_SESSION['install_config']['PGV_SMTP_AUTH_USER'])) $PGV_SMTP_AUTH_USER = $_SESSION['install_config']['PGV_SMTP_AUTH_USER'];
 	if (isset($_SESSION['install_config']['PGV_SMTP_AUTH_PASS'])) $PGV_SMTP_AUTH_PASS = $_SESSION['install_config']['PGV_SMTP_AUTH_PASS'];
+	if (isset($_SESSION['install_config']['PGV_SMTP_FROM_NAME'])) $PGV_SMTP_FROM_NAME = $_SESSION['install_config']['PGV_SMTP_FROM_NAME'];
 	if (isset($_SESSION['install_config']['PGV_SESSION_SAVE_PATH'])) $PGV_SESSION_SAVE_PATH = $_SESSION['install_config']['PGV_SESSION_SAVE_PATH'];
 	if (isset($_SESSION['install_config']['PGV_SESSION_TIME'])) $PGV_SESSION_TIME = $_SESSION['install_config']['PGV_SESSION_TIME'];
 	if (isset($_SESSION['install_config']['COMMIT_COMMAND'])) $COMMIT_COMMAND = $_SESSION['install_config']['COMMIT_COMMAND'];
@@ -961,6 +963,10 @@ function printConfigForm(){
 	<tr>
 		<td class="descriptionbox wrap width30"><?php print_help_link("PGV_SMTP_AUTH_PASS_help", "qm", "PGV_SMTP_AUTH_PASS"); print $pgv_lang["PGV_SMTP_AUTH_PASS"];?></td>
 		<td class="optionbox"><input type="password" name="NEW_PGV_SMTP_AUTH_PASS" value="<?php print $PGV_SMTP_AUTH_PASS?>" tabindex="<?php $i++; print $i?>" onfocus="getHelp('PGV_SMTP_AUTH_PASS_help');" /></td>
+	</tr>
+	<tr>
+		<td class="descriptionbox wrap width30"><?php print_help_link("PGV_SMTP_FROM_NAME_help", "qm", "PGV_SMTP_FROM_NAME"); print $pgv_lang["PGV_SMTP_FROM_NAME"];?></td>
+		<td class="optionbox"><input type="text" dir="ltr" size="50" name="NEW_PGV_SMTP_FROM_NAME" value="<?php print $PGV_SMTP_FROM_NAME?>" tabindex="<?php $i++; print $i?>" onfocus="getHelp('PGV_SMTP_FROM_NAME_help');" /></td>
 	</tr>
 	</table>
 		</div>

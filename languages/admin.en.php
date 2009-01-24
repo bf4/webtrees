@@ -3,7 +3,7 @@
  * English texts
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
+ * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -312,6 +312,7 @@ $pgv_lang["PGV_SMTP_PORT"] 						= "SMTP Port";
 $pgv_lang["PGV_SMTP_AUTH"] 						= "Use name and password";
 $pgv_lang["PGV_SMTP_AUTH_USER"] 				= "User name";
 $pgv_lang["PGV_SMTP_AUTH_PASS"] 				= "Password";
+$pgv_lang["PGV_SMTP_FROM_NAME"] 				= "Sender name";
 $pgv_lang["PGV_STORE_MESSAGES"]					= "Allow messages to be stored online";
 $pgv_lang["phpinfo"]							= "PHP information";
 $pgv_lang["place_cleanup_detected"] 			= "Invalid place encodings were detected.  These errors should be fixed.";

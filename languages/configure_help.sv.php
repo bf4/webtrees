@@ -3,7 +3,7 @@
  * Swedish Language file for PhpGedView.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2005  Patrik Hansson
+ * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -582,7 +582,7 @@ $pgv_lang["SHOW_SOURCES"]				= "Visa källor";
 $pgv_lang["SHOW_SOURCES_help"]			= "~#pgv_lang[SHOW_SOURCES]#~<br /><br />Sätt integritetsaccessnivå för alla källor. Om användaren inte har access till källor, käll-listorna kommer att tas bort ifrån listmenyn och källfliken kommer inte att visas på ansedelsidan.<br />";
 $pgv_lang["phpinfo_help"]				= "~#pgv_lang[phpinfo]#~<br /><br />Denna sida ger uttömande information om servern på vilken phpGedView körs. Många konfigurationsdetaljer om serverns mjukvara, som berör PHP och phpGedView kan kontrolleras.<br />";
 $pgv_lang["config_help_help"]			= "~#pgv_lang[config_help]#~<br /><br />Denna sida samlar ihop alla huvudämnena för konfigurationshjälp på samma ställe. Du kan se informationen på din skärm eller skriva ut den för att använda senare.<br />";
-$pgv_lang["more_config_hjaelp"]			= "<br /><b>Mer hjälp</b><br />Mer hjälp är tillgänglig genom att klicka på <b>?</b> intill artiklarna på sidorna.<br />";
+$pgv_lang["more_help_advice"]			= "<br /><b>Mer hjälp</b><br />Mer hjälp är tillgänglig genom att klicka på <b>?</b> intill artiklarna på sidorna.<br />";
 $pgv_lang["THUMBNAIL_WIDTH"]			= "Bredden på de genererade miniatyrbilderna";
 $pgv_lang["THUMBNAIL_WIDTH_help"]		= "~#pgv_lang[THUMBNAIL_WIDTH]#~<br /><br />Detta är bredden (i pixlar) som programmet kommer att använda vid automatisk generering av miniatyrbilderna. Standardinställningen är 100.<br />";
 

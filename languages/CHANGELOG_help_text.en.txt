@@ -22,7 +22,8 @@ The CHANGELOG files are:
 
 + $pgv_lang["text"] / means added
 - $pgv_lang["text"] / deleted
-* $pgv_lang["text"] / text was changed
+* $pgv_lang["text"] / translation was changed
+# $pgv_lang["text"] / keyword was changed
 
 Additional codes, to help Translators, follow the date as follows:
 	A - Added or moved from another file
@@ -32,6 +33,7 @@ Additional codes, to help Translators, follow the date as follows:
 	F - Major format change
 	p - Punctuation change  (doesn't affect translation)
 	M - Moved to another file
+	R - keyword was renamed (no translation changes required)
 	S - Spelling change		(doesn't affect translation)
 	w - Minor wording change
 	W - Major wording change or completely new text
@@ -45,7 +47,17 @@ VERSION 4.2.0
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 -----------------------------------------------------------------------------------------
-+$pgv_lang["add_opf_child_help"]          7 Jan 2009        A
+*$pgv_lang["stat_help_gwx"]							15 Jan 2009		   		WF
+*$pgv_lang["stat_help_gax"]							15 Jan 2009		   		WF
+*$pgv_lang["stat_help_gbx"]							15 Jan 2009		   		WF
+*$pgv_lang["stat_help_gcx"]							15 Jan 2009		   		WF
+*$pgv_lang["stat_help_gwz"]							15 Jan 2009		   		WF
+*$pgv_lang["stat_help_gwx"]							15 Jan 2009		   		w
+*$pgv_lang["stat_help_gax"]							15 Jan 2009		   		w
+*$pgv_lang["stat_help_gbx"]							15 Jan 2009		   		w
+*$pgv_lang["stat_help_gcx"]							15 Jan 2009		   		w
+*$pgv_lang["stat_help_gwz"]							15 Jan 2009		   		w
++$pgv_lang["add_opf_child_help"]					7 Jan 2009		   		A
 -$pgv_lang["skip_cleanup_help"]						28 Dec 2008				D
 +$pgv_lang["edit_ROMN_GIVN_help"]					21 Dec 2008				A
 +$pgv_lang["edit_ROMN_SURN_help"]					21 Dec 2008				A

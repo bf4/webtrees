@@ -2103,11 +2103,14 @@ function create_add_form($fact) {
 		$tags[0] = "MARR";
 		add_simple_tag("1 MARR");
 		insert_missing_subtags($fact);
-	}
-	else {
+	} else {
 		$tags[0] = $fact;
 		if ($fact=='_UID') {
 			$fact.=" ".uuid();
+		}
+		// These new level 1 tags need to be turned into links
+		if (in_array($fact, array('ASSO'))) {
+			$fact.=' @';
 		}
 		add_simple_tag("1 ".$fact);
 		insert_missing_subtags($tags[0]);

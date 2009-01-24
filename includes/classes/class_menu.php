@@ -1,27 +1,27 @@
 <?php
 /**
- * System for generating menus.
- *
- * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- *
- * @package PhpGedView
- * @version $Id$
- */
+* System for generating menus.
+*
+* phpGedView: Genealogy Viewer
+* Copyright (C) 2002 to 2009 PGV Development Team. All rights reserved.
+*
+* This program is free software; you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation; either version 2 of the License, or
+* (at your option) any later version.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+* GNU General Public License for more details.
+*
+* You should have received a copy of the GNU General Public License
+* along with this program; if not, write to the Free Software
+* Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+*
+* @package PhpGedView
+* @version $Id$
+*/
 
 if (!defined('PGV_PHPGEDVIEW')) {
 	header('HTTP/1.0 403 Forbidden');
@@ -31,7 +31,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 define('PGV_CLASS_MENU_PHP', '');
 
 class Menu {
-	var $seperator = false;
+	var $separator = false;
 	var $label = ' ';
 	var $labelpos = 'right';
 	var $link = '#';
@@ -48,12 +48,12 @@ class Menu {
 	var $submenus;
 
 	/**
-	 * Constructor for the menu class
-	 * @param string $label 	the label for the menu item (usually a pgv_lang variable)
-	 * @param string $link		The link that the user should be taken to when clicking on the menuitem
-	 * @param string $pos 	The position of the label relative to the icon (right, left, top, bottom)
-	 * @param string $flyout	The direction where any submenus should appear relative to the menu item (right, down)
-	 */
+	* Constructor for the menu class
+	* @param string $label the label for the menu item (usually a pgv_lang variable)
+	* @param string $link The link that the user should be taken to when clicking on the menuitem
+	* @param string $pos The position of the label relative to the icon (right, left, top, bottom)
+	* @param string $flyout The direction where any submenus should appear relative to the menu item (right, down)
+	*/
 	function Menu($label=' ', $link='#', $pos='right', $flyout='down')
 	{
 		$this->submenus = array();
@@ -62,9 +62,9 @@ class Menu {
 		$this->addFlyout($flyout);
 	}
 
-	function isSeperator()
+	function isSeparator()
 	{
-		$this->seperator = true;
+		$this->separator = true;
 	}
 
 	function addLabel($label=' ', $pos='right')
@@ -118,15 +118,15 @@ class Menu {
 		$this->submenus[] = $obj;
 	}
 
-	function addSeperator() {
+	function addSeparator() {
 		$submenu = new Menu();
-		$submenu->isSeperator();
+		$submenu->isSeparator();
 		$this->submenus[] = $submenu;
 	}
 
 	// Get the menu as a simple list - for accessible interfaces, search engines and CSS menus
 	function getMenuAsList() {
-		if ($this->seperator) {
+		if ($this->separator) {
 			return '<div class="hr"></div>'; // The <hr/> tag is difficult to style
 		}
 		if ($this->link) {
@@ -151,7 +151,7 @@ class Menu {
 
 	// Get the menu as a dropdown form element
 	function getMenuAsDropdown() {
-		if ($this->seperator || !$this->link && !$this->submenus) {
+		if ($this->separator || !$this->link && !$this->submenus) {
 			return '';
 		}
 		if ($this->submenus) {
@@ -167,7 +167,7 @@ class Menu {
 
 	// Get the menu as a list of icons
 	function getMenuAsIcons() {
-		if ($this->seperator || !$this->link && !$this->submenus) {
+		if ($this->separator || !$this->link && !$this->submenus) {
 			return '';
 		}
 		$icons=array();
@@ -200,9 +200,9 @@ class Menu {
 			$menucount++;
 		}
 		$id = $menucount.rand();
-		if ($this->seperator)
+		if ($this->separator)
 		{
-			$output = "<div id=\"menu{$id}\" class=\"menu_seperator\" style=\"clear: both;\">"
+			$output = "<div id=\"menu{$id}\" class=\"menu_separator\" style=\"clear: both;\">"
 			."<img src=\"{$PGV_IMAGE_DIR}/{$PGV_IMAGES['hline']['other']}\" style=\"width:8em;height:3px\" alt=\"\" /></div>";
 			return $output;
 		}
@@ -354,17 +354,17 @@ class Menu {
 	}
 
 	/**
-	 * returns the number of submenu's in this menu
-	 * @return int
-	 */
+	* returns the number of submenu's in this menu
+	* @return int
+	*/
 	function subCount() {
 		return count($this->submenus);
 	}
 
 	/**
-	 * convert an old array style menu to an object
-	 * @static
-	 */
+	* convert an old array style menu to an object
+	* @static
+	*/
 	static function convertMenu($menu) {
 		$conv = array(
 			'label'=>'label',
@@ -381,7 +381,7 @@ class Menu {
 		);
 		$obj = new Menu();
 		if ($menu == 'separator') {
-			$obj->isSeperator();
+			$obj->isSeparator();
 			$obj->printMenu();
 			return;
 		}
@@ -400,7 +400,7 @@ class Menu {
 			foreach ($items as $sub) {
 				$sobj = new Menu();
 				if ($sub == 'separator') {
-					$sobj->isSeperator();
+					$sobj->isSeparator();
 					$obj->addSubmenu($sobj);
 					continue;
 				}

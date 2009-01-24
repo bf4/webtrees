@@ -115,32 +115,40 @@ function age_localisation_pl(&$agestring, &$show_years) {
 			'/\b22m/i','/\b23m/i','/\b24m/i',
 			'/(\d+)m/i',
 			'/\b1d/i',
-			'/(\d+)d/i'
+			'/(\d+)d/i',
+			'/\b1w/i',
+			'/\b2w/i','/\b3w/i','/\b4w/i',
+			'/\b22w/i','/\b23w/i','/\b24w/i',
+			'/(\d+)w/i'
 		),
 		array(
 			$pgv_lang['child'],
 			$pgv_lang['infant'],
 	 		$pgv_lang['stillborn'],
 			$show_years ? '1 '.$pgv_lang['year1'] : '1',
-			$show_years ? '2 '."lata" : '2', $show_years ? '3 '."lata" : '3', $show_years ? '4 '."lata" : '4',
-			$show_years ? '22 '."lata" : '22', $show_years ? '23 '."lata" : '23', $show_years ? '24 '."lata" : '24',
-			$show_years ? '32 '."lata" : '32', $show_years ? '33 '."lata" : '33', $show_years ? '34 '."lata" : '34',
-			$show_years ? '42 '."lata" : '42', $show_years ? '43 '."lata" : '43', $show_years ? '44 '."lata" : '44',
-			$show_years ? '52 '."lata" : '52', $show_years ? '53 '."lata" : '53', $show_years ? '54 '."lata" : '54',
-			$show_years ? '62 '."lata" : '62', $show_years ? '63 '."lata" : '63', $show_years ? '64 '."lata" : '64',
-			$show_years ? '72 '."lata" : '72', $show_years ? '73 '."lata" : '73', $show_years ? '74 '."lata" : '74',
-			$show_years ? '82 '."lata" : '82', $show_years ? '83 '."lata" : '83', $show_years ? '84 '."lata" : '84',
-			$show_years ? '92 '."lata" : '92', $show_years ? '93 '."lata" : '93', $show_years ? '94 '."lata" : '94',
-			$show_years ? '102 '."lata" : '102', $show_years ? '103 '."lata" : '103', $show_years ? '104 '."lata" : '104',
-			$show_years ? '122 '."lata" : '122', $show_years ? '123 '."lata" : '123', $show_years ? '124 '."lata" : '124',
-			$show_years ? '132 '."lata" : '132', $show_years ? '133 '."lata" : '133', $show_years ? '134 '."lata" : '134',
+			$show_years ? '2 '.$pgv_lang["years2"] : '2', $show_years ? '3 '.$pgv_lang["years2"] : '3', $show_years ? '4 '.$pgv_lang["years2"] : '4',
+			$show_years ? '22 '.$pgv_lang["years2"] : '22', $show_years ? '23 '.$pgv_lang["years2"] : '23', $show_years ? '24 '.$pgv_lang["years2"] : '24',
+			$show_years ? '32 '.$pgv_lang["years2"] : '32', $show_years ? '33 '.$pgv_lang["years2"] : '33', $show_years ? '34 '.$pgv_lang["years2"] : '34',
+			$show_years ? '42 '.$pgv_lang["years2"] : '42', $show_years ? '43 '.$pgv_lang["years2"] : '43', $show_years ? '44 '.$pgv_lang["years2"] : '44',
+			$show_years ? '52 '.$pgv_lang["years2"] : '52', $show_years ? '53 '.$pgv_lang["years2"] : '53', $show_years ? '54 '.$pgv_lang["years2"] : '54',
+			$show_years ? '62 '.$pgv_lang["years2"] : '62', $show_years ? '63 '.$pgv_lang["years2"] : '63', $show_years ? '64 '.$pgv_lang["years2"] : '64',
+			$show_years ? '72 '.$pgv_lang["years2"] : '72', $show_years ? '73 '.$pgv_lang["years2"] : '73', $show_years ? '74 '.$pgv_lang["years2"] : '74',
+			$show_years ? '82 '.$pgv_lang["years2"] : '82', $show_years ? '83 '.$pgv_lang["years2"] : '83', $show_years ? '84 '.$pgv_lang["years2"] : '84',
+			$show_years ? '92 '.$pgv_lang["years2"] : '92', $show_years ? '93 '.$pgv_lang["years2"] : '93', $show_years ? '94 '.$pgv_lang["years2"] : '94',
+			$show_years ? '102 '.$pgv_lang["years2"] : '102', $show_years ? '103 '.$pgv_lang["years2"] : '103', $show_years ? '104 '.$pgv_lang["years2"] : '104',
+			$show_years ? '122 '.$pgv_lang["years2"] : '122', $show_years ? '123 '.$pgv_lang["years2"] : '123', $show_years ? '124 '.$pgv_lang["years2"] : '124',
+			$show_years ? '132 '.$pgv_lang["years2"] : '132', $show_years ? '133 '.$pgv_lang["years2"] : '133', $show_years ? '134 '.$pgv_lang["years2"] : '134',
 			$show_years ? '$1 '.$pgv_lang['years'] : '$1',
 			'1 '.$pgv_lang['month1'],
-			'2 '."miesiące", '3 '."miesiące", '4 '."miesiące",
-			'22 '."miesiące", '23 '."miesiące", '24 '."miesiące",
+			'2 '.$pgv_lang['months2'], '3 '.$pgv_lang['months2'], '4 '.$pgv_lang['months2'],
+			'22 '.$pgv_lang['months2'], '23 '.$pgv_lang['months2'], '24 '.$pgv_lang['months2'],
 	 		'$1 '.$pgv_lang['months'],
 			'1 '.$pgv_lang['day1'],
-			'$1 '.$pgv_lang['days']
+			'$1 '.$pgv_lang['days'],
+			'1 '.$pgv_lang['week1'],
+			'2 '."tygodnie", '3 '."tygodnie", '4 '."tygodnie",
+			'22 '."tygodnie", '23 '."tygodnie", '24 '."tygodnie",
+			'$1 '.$pgv_lang['weeks']
 		),
 		$agestring
 	);
@@ -153,11 +161,11 @@ function date_diff_localisation_pl(&$label, &$gap) {
 
 	$yrs = round($gap/12);
 	if ($gap == 12 || $gap == -12) $label .= $yrs." ".$pgv_lang["year1"]; // 1 rok
-	else if (($yrs > 1 && $yrs < 5) || ($yrs < -1 && $yrs < -5)) $label .= $yrs." lata"; // 2-4 lata
-	else if (($yrs > 21 || $yrs < -21) && substr($yrs, -1, 1) > 1 && substr($yrs, -1, 1) < 5 && substr($yrs, -2, 1) != 1) $label .= $yrs." lata";
+	else if (($yrs > 1 && $yrs < 5) || ($yrs < -1 && $yrs > -5)) $label .= $yrs." ".$pgv_lang["years2"]; // 2-4 lata
+	else if (($yrs > 21 || $yrs < -21) && substr($yrs, -1, 1) > 1 && substr($yrs, -1, 1) < 5 && substr($yrs, -2, 1) != 1) $label .= $yrs." ".$pgv_lang["years2"];
 	else if ($gap > 20 or $gap < -20) $label .= $yrs." ".$pgv_lang["years"]; // x lat
 	else if ($gap == 1 || $gap == -1) $label .= $gap." ".$pgv_lang["month1"]; // 1 miesiąc
-	else if (($gap > 1 && $gap < 5) || ($gap < -1 && $gap > -5)) $label .= $gap." miesiące"; // 2-4 miesiące
+	else if (($gap > 1 && $gap < 5) || ($gap < -1 && $gap > -5)) $label .= $gap." ".$pgv_lang["months2"]; // 2-4 miesiące
 	else if ($gap != 0) $label .= $gap." ".$pgv_lang["months"]; // x miesięcy
 }
 ////////////////////////////////////////////////////////////////////////////////

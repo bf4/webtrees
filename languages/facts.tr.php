@@ -3,7 +3,7 @@
  * Turkish Language file for PhpGedView.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
+ * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -179,6 +179,15 @@ $factarray["FAMC:WIFE:FAMC:WIFE:GIVN"] = "Anne Tarafındaki Anneannenin Verilen 
 $factarray["FAMC:WIFE:FAMC:HUSB:GIVN"] = "Anne Tarafındaki Dedenin Verilen İsmi ";
 $factarray["FAMC:HUSB:FAMC:WIFE:GIVN"] = "Baba Tarafındaki Babaannenin Verilen İsmi ";
 $factarray["FAMS:CHIL:BIRT:PLAC"] = "Çocukların Doğum Yeri";
+$factarray["FAMS:NOTE"] = "Eş Notu";
+$factarray["FAMS:CENS:DATE"] = "Eş Sayım Tarihi";
+$factarray["FAMS:CENS:PLAC"] = "Eş Sayım Yeri";
+$factarray["FAMS:DIV:DATE"] = "Eş Boşanma Tarihi";
+$factarray["FAMS:DIV:PLAC"] = "Eş Boşanma Yeri";
+$factarray["FAMS:SLGS:DATE"] = "LDS Eş İzinname Tarihi";
+$factarray["FAMS:SLGS:PLAC"] = "LDS Eş İzinname Yeri";
+$factarray["FAMS:SLGS:TEMP"] = "LDS Eş İzinname İbadethane";
+
 $factarray["BIRT:PLAC"] = "Doğum Yeri";
 $factarray["DEAT:PLAC"] = "Ölüm Yeri";
 $factarray["CHR:PLAC"] = "Vaftiz eden yer ";
@@ -377,4 +386,14 @@ $factarray["_CHR_MSIB" ] = "Annenin kardeşi vaftiz edilişi";
 $factarray["_BAPM_MSIB"] = "Annenin kardeşi vaftizi";
 $factarray["_MARB_MSIB"] = "Annenin kardeşi aforoz evliliği";
 $factarray["_MARB_COUS"] = "İlk kuzeninin aforoz evliliği";
+$factarray["_BRTM"]	= "Sünnet Olduğu";
+$factarray["__BRTM_CHIL"] = "Bir çocuğun sünnet oluşu";
+$factarray["__BRTM_GCHI"] = "Bir torunun sünnet oluşu";
+$factarray["__BRTM_GGCH"] = "Bir büyük torunun sünnet oluşu";
+$factarray["__BRTM_SIBL"] = "Bir kardeşin sünnet oluşu";
+$factarray["__BRTM_HSIB"] = "Üvey kardeşin sünnet oluşu";
+$factarray["__BRTM_NEPH"] = "Bir erkek yeğenin sünnet oluşu";
+$factarray["__BRTM_FSIB"] = "Amcanın sünnet oluşu";
+$factarray["__BRTM_MSIB"] = "Dayının sünnet oluşu";
+$factarray["__BRTM_COUS"] = "İlk kuzenin sünnet oluşu";
 ?>

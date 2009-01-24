@@ -1,9 +1,11 @@
 <?php
 /**
- * Catalan language file for PhpGedView
+ * Lightbox Album module for phpGedView
+ *
+ * Display media Items using Lightbox
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team. All rights reserved.
+ * Copyright (C) 2008 to 2009  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,10 +21,11 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * @translator: Antoni Planas i Vilà
  * @package PhpGedView
- * @subpackage Lightbox
+ * @subpackage Module
  * @version $Id$
+ * @author Brian Holland
+ * @translator: Antoni Planas i Vilà
  */
 
 if (!defined('PGV_PHPGEDVIEW')) {
@@ -31,7 +34,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 }
 
 //Config Parameters -------------------------------------
-// Added in VERSION 4.1.4 
+// Added in VERSION 4.1.4
 
 $pgv_lang["lb_details"]			= "Detalls";
 $pgv_lang["lb_detail_info"]		= "Veure els detalls d'aquest objecte ...  I altres opcions d'objectes - Pàgina del visor d'objectes";
@@ -45,7 +48,7 @@ $pgv_lang["lb_close_win"]		= "Tanca la finestra del 'Projector d'imatges'";
 
 
 
-// VERSION 4.1.3 
+// VERSION 4.1.3
 
 //Config Parameters -------------------------------------
 $pgv_lang["configure_lightbox"]			= "Configuració de l'Àlbum del Projector d'imatges";
@@ -77,7 +80,7 @@ $pgv_lang["lb_url_dimensions"]			= "Mides de les finestres de URL";
 $pgv_lang["lb_url_dimensionsAdvice"]	= "Amplada i alçada en píxels de les finestres per URL";
 $pgv_lang["lb_width"]					= "Amplada";
 $pgv_lang["lb_height"]					= "Alçada";
-									
+
 
 // ---------------------------------------------------------------------
 
@@ -87,13 +90,8 @@ $pgv_lang["lightbox"]		 = "Àlbum";
 $pgv_lang["showmenu"] 		 = "Mostra Menú:";
 
 $pgv_lang["TYPE__other"] 	 = "Un altre";
-$pgv_lang["TYPE__footnotes"] = "Notes al peu";
 
-$pgv_lang["ROW_TYPE__photo"] 		= $pgv_lang["TYPE__photo"];
-$pgv_lang["ROW_TYPE__document"] 	= $pgv_lang["TYPE__document"];
-$pgv_lang["ROW_TYPE__census"] 		= $factarray["CENS"];
-$pgv_lang["ROW_TYPE__other"] 		= $pgv_lang["TYPE__other"];
-$pgv_lang["ROW_TYPE__footnotes"]	= $pgv_lang["TYPE__footnotes"];
+$pgv_lang["TYPE__footnotes"] = "Notes al peu";
 
 $pgv_lang["census_text"]  	 = "\"Aquestes imatges del cens s'han obtingut d'\"Arxius Oficials\", custodis dels registres originals, ";
 $pgv_lang["census_text"] 	.= "i surten aquí amb llur autorització sota la condició de que no se'n faci ús comercial sense llur permís." . "\n" ;

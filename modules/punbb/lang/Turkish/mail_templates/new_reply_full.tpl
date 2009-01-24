@@ -13,6 +13,6 @@ Bu iletinin bulunduğu bağlantı: <post_url>
 
 Abonelikten çıkmak için şu bağlantıya gidiniz: <unsubscribe_url>
 
---
+-- 
 <board_mailer>
 (Lütfen bu mesaja cevap yazmayınız)

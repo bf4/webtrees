@@ -5,7 +5,7 @@
 * Menu options are changed to apply to a media object instead of an individual
 *
 * phpGedView: Genealogy Viewer
-* Copyright (C) 2002 to 2008 PGV Development Team.  All rights reserved.
+* Copyright (C) 2002 to 2009 PGV Development Team.  All rights reserved.
 *
 * This program is free software; you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -46,7 +46,7 @@ class MediaControllerRoot extends IndividualController{
 	function init() {
 		global $MEDIA_DIRECTORY, $USE_MEDIA_FIREWALL;
 
-		$filename=safe_GET('filename');
+		$filename=decrypt(safe_GET('filename'));
 		$mid     =safe_GET_xref('mid');
 
 		if ($USE_MEDIA_FIREWALL && empty($filename) && empty($mid)) {
@@ -54,8 +54,8 @@ class MediaControllerRoot extends IndividualController{
 
 			if (isset($_SERVER['REQUEST_URI'])) {
 				// NOTE: format of this server variable:
-				//   Apache: /phpGedView/media/a.jpg
-				//   IIS:    /phpGedView/mediafirewall.php?404;http://server/phpGedView/media/a.jpg
+				// Apache: /phpGedView/media/a.jpg
+				// IIS:    /phpGedView/mediafirewall.php?404;http://server/phpGedView/media/a.jpg
 				$requestedfile = $_SERVER['REQUEST_URI'];
 				// urldecode the request
 				$requestedfile = rawurldecode($requestedfile);
@@ -94,9 +94,9 @@ class MediaControllerRoot extends IndividualController{
 
 		// one final test to be sure we have a media object defined
 		// ways this can happen:
-		//   if user failed to pass in a filename or mid to mediaviewer.php
-		//   if the server did not set the environmental variables correctly for the media firewall
-		//   if media firewall is being called from outside the media directory
+		// if user failed to pass in a filename or mid to mediaviewer.php
+		// if the server did not set the environmental variables correctly for the media firewall
+		// if media firewall is being called from outside the media directory
 		if (is_null($this->mediaobject)) $this->mediaobject = new Media("0 @"."0"."@ OBJE");
 		$this->mediaobject->ged_id=PGV_GED_ID; // This record is from a file
 
@@ -253,7 +253,7 @@ class MediaControllerRoot extends IndividualController{
 			$menu->addSubmenu($submenu);
 		}
 		if (isset($pgv_changes[$this->pid."_".$GEDCOM])) {
-			$menu->addSeperator();
+			$menu->addSeparator();
 			if (!$this->show_changes) {
 				$label = $pgv_lang["show_changes"];
 				$link = "mediaviewer.php?mid={$this->pid}&show_changes=yes";
@@ -409,12 +409,11 @@ class MediaControllerRoot extends IndividualController{
 		if ($this->mediaobject->fileExists()) {
 			// get height and width of image, when available
 			if ($this->mediaobject->getWidth()) {
-				$facts[] = new Event("1 EVEN " . getLRM() . $this->mediaobject->getWidth()." x ".$this->mediaobject->getHeight() . getLRM() . "\n2 TYPE image_size");
+				$facts[] = new Event("1 EVEN " . '<span dir="ltr">' . $this->mediaobject->getWidth()." x ".$this->mediaobject->getHeight() . '</span>' . "\n2 TYPE image_size");
 			}
 			//Prints the file size
 			//Rounds the size of the image to 2 decimal places
-			$size = getLRM() . round($this->mediaobject->getFilesizeraw()/1024, 2)." kb" . getLRM();
-			$facts[] = new Event("1 EVEN ".$size."\n2 TYPE file_size");
+			$facts[] = new Event("1 EVEN " . '<span dir="ltr">' . round($this->mediaobject->getFilesizeraw()/1024, 2)." kb" . '</span>' . "\n2 TYPE file_size");
 		}
 
 		sort_facts($facts);

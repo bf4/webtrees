@@ -812,7 +812,7 @@ function PGVRCellEHandler() {
 function PGVRNowSHandler($attrs) {
 	global $currentElement;
 
-	$g = new GedcomDate(date("j M Y", client_time()));
+	$g = timestamp_to_gedcom_date(client_time());
 	$currentElement->addText($g->Display());
 }
 

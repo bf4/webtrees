@@ -142,8 +142,8 @@ class Base_AutoSearch {
 
 	function fgivennames($person) {
 		$parents=$person->getPrimaryChildFamily();
-		if ($parents && $parents->husb) {
-			return $this->givenname($parents->husb, 'fgivennames');
+		if ($parents && $parents->getHusband()) {
+			return $this->givenname($parents->getHusband(), 'fgivennames');
 		} else {
 			return '<input type="hidden" name="fgivennames" value="">';
 		}
@@ -151,8 +151,8 @@ class Base_AutoSearch {
 
 	function fsurname($person) {
 		$parents=$person->getPrimaryChildFamily();
-		if ($parents && $parents->husb) {
-			return $this->surname($parents->husb, 'fsurname');
+		if ($parents && $parents->getHusband()) {
+			return $this->surname($parents->getHusband(), 'fsurname');
 		} else {
 			return '<input type="hidden" name="fsurname" value="">';
 		}
@@ -160,8 +160,8 @@ class Base_AutoSearch {
 
 	function mgivennames($person) {
 		$parents=$person->getPrimaryChildFamily();
-		if ($parents && $parents->wife) {
-			return $this->givenname($parents->wife, 'mgivennames');
+		if ($parents && $parents->getWife()) {
+			return $this->givenname($parents->getWife(), 'mgivennames');
 		} else {
 			return '<input type="hidden" name="mgivennames" value="">';
 		}
@@ -169,8 +169,8 @@ class Base_AutoSearch {
 
 	function msurname($person) {
 		$parents=$person->getPrimaryChildFamily();
-		if ($parents && $parents->wife) {
-			return $this->surname($parents->wife, 'msurname');
+		if ($parents && $parents->getWife()) {
+			return $this->surname($parents->getWife(), 'msurname');
 		} else {
 			return '<input type="hidden" name="msurname" value="">';
 		}

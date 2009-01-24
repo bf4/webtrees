@@ -5,7 +5,7 @@
  * Display media Items using Lightbox
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2007 to 2008  PGV Development Team.  All rights reserved.
+ * Copyright (C) 2007 to 2009  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -125,25 +125,11 @@ $sort_i=0; // Used in sorting on lightbox_print_media_row.php page
 //	echo "<td valign=\"top\">";
 		echo "<table width=\"100%\" cellpadding=\"0\" border=\"0\"><tr>";
 		echo "<td width=\"100%\" valign=\"top\" >";
-		for ($t=1; $t <=5; $t++) {
-			if ($t==1) {
-				lightbox_print_media($pid, 0, true, 1);
-			}
-			elseif ($t==2) {
-				lightbox_print_media($pid, 0, true, 2);
-			}
-			elseif ($t==3) {
-				lightbox_print_media($pid, 0, true, 3);
-			}
-			elseif ($t==4) {
-				lightbox_print_media($pid, 0, true, 4);
-			}
-			elseif ($t==5 ) {
-				lightbox_print_media($pid, 0, true, 5);
-			}
-			else{
-			}
-		}
+		lightbox_print_media($pid, 0, true, 1);		// map, painting, photo, tombstone)
+		lightbox_print_media($pid, 0, true, 2);		// card, certificate, document, magazine, manuscript, newspaper
+		lightbox_print_media($pid, 0, true, 3);		// electronic, fiche, film
+		lightbox_print_media($pid, 0, true, 4);		// audio, book, coat, video, other
+		lightbox_print_media($pid, 0, true, 5);		// footnotes
 		echo "</td>";
 		echo "</tr></table>";
 //	echo "</td>";

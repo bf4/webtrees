@@ -1,6 +1,6 @@
 <?php
 /**
- * Solvenian Language file for PhpGedView.
+ * Slovenian Language file for PhpGedView.
  *
  * phpGedView: Genealogy Viewer
  * Copyright (C) 2002 to 2008  PGV Development Team
@@ -27,5 +27,8 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
+
+//-- Clippings Cart-page
+$pgv_lang["help_clippings.php"]			= "~KOŠARICA ZA IZREZE DRUŽINSKIH DREVES~<br />#pgv_lang[clip_cart]# vam omogoča, da vzamete izreze (\"clippings\") iz družinskega dreveda in jih združite v eno datoteko za prenosi in nadaljnji uvoz v vaše zasebno rodoslovno programje.  Datoteka za prenos je zapisana v obliki GEDCOM.<br /><ul><li>Kako narediti izreze?<br />To je resnično preprosto. Kadarkoli vidite klikabilno ime (oseba, družina ali vir) lahko greste na stran s podrobnistmi o tem imenu. Tam boste videli možnost <b>#pgv_lang[add_to_cart]#</b>.  Ko kliknete na povezavo se vam bodo odprle različne možnosti za prenos.</li><li>Kako prenesti?<br />Osebe v košarici prenesete s klikom na povezavo <b>Prenesi zdaj</b>.  Sledite navodilom in povezavam.</li></ul><br />";
 
 ?>

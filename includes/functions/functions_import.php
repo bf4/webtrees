@@ -788,10 +788,10 @@ function update_places($gid, $ged_id, $gedrec) {
 
 			//-- if we are not searching then we have to insert the place into the db
 			if (!$search) {
-				$std_soundex = soundex($place);
-				$dm_soundex = DMSoundex($place);
+				$std_soundex = soundex_std($place);
+				$dm_soundex = soundex_dm($place);
 				$p_id = get_next_id("places", "p_id");
-				$sql = 'INSERT INTO ' . $TBLPREFIX . 'places VALUES(' . $p_id . ',  \''.$DBCONN->escapeSimple($place) . '\', '.$level.', '.$parent_id.', '.$ged_id.', \''.$DBCONN->escapeSimple($std_soundex).'\', \''.$DBCONN->escapeSimple(implode(":",$dm_soundex)).'\')';
+				$sql = 'INSERT INTO ' . $TBLPREFIX . 'places VALUES(' . $p_id . ',  \''.$DBCONN->escapeSimple($place) . '\', '.$level.', '.$parent_id.', '.$ged_id.', \''.$DBCONN->escapeSimple($std_soundex).'\', \''.$DBCONN->escapeSimple($dm_soundex).'\')';
 				$res2 = dbquery($sql);
 			}
 
@@ -1975,35 +1975,36 @@ function accept_changes($cid) {
 				read_gedcom_file();
 			}
 			if ($change["type"]=="delete") {
-				$pos1 = strpos($fcontents, "\n0 @".$gid."@");
+				$pos1=find_newline_string($fcontents, "0 @{$gid}@");
 				if ($pos1!==false) {
-					$pos2 = strpos($fcontents, "\n0", $pos1+5);
+					$pos2=find_newline_string($fcontents, "0", $pos1+5);
 					if ($pos2===false) {
-						$fcontents = substr($fcontents, 0, $pos1+1)."0 TRLR";
+						$fcontents=substr($fcontents, 0, $pos1).'0 TRLR'.PGV_EOL;
 						AddToLog("Corruption found in GEDCOM $GEDCOM Attempted to correct");
 					} else {
-						$fcontents = substr($fcontents, 0, $pos1+1).substr($fcontents, $pos2+1);
+						$fcontents=substr($fcontents, 0, $pos1).substr($fcontents, $pos2);
 					}
 				} else {
 					AddToLog("Corruption found in GEDCOM $GEDCOM Attempted to correct.  Deleted gedcom record $gid was not found in the gedcom file.");
 				}
 			} elseif ($change["type"]=="append") {
-				$pos1 = strpos($fcontents, "\n0 TRLR");
-				$fcontents = substr($fcontents, 0, $pos1+1).trim($gedrec)."\n0 TRLR";
+				$pos1=find_newline_string($fcontents, "0 TRLR");
+				$fcontents=substr($fcontents, 0, $pos1).reformat_record_export($gedrec).'0 TRLR'.PGV_EOL;
 			} elseif ($change["type"]=="replace") {
-				$pos1 = strpos($fcontents, "\n0 @".$gid."@");
+				$pos1=find_newline_string($fcontents, "0 @{$gid}@");
 				if ($pos1!==false) {
-					$pos2 = strpos($fcontents, "\n0", $pos1+5);
+					$pos2=find_newline_string($fcontents, "0", $pos1+5);
 					if ($pos2===false) {
-						$fcontents = substr($fcontents, 0, $pos1+1)."0 TRLR";
+						$fcontents=substr($fcontents, 0, $pos1).'0 TRLR'.PGV_EOL;
 						AddToLog("Corruption found in GEDCOM $GEDCOM Attempted to correct");
+					} else {
+						$fcontents=substr($fcontents, 0, $pos1).reformat_record_export($gedrec).substr($fcontents, $pos2);
 					}
-					else $fcontents = substr($fcontents, 0, $pos1+1).trim($gedrec)."\n".substr($fcontents, $pos2+1);
 				} else {
 					//-- attempted to replace a record that doesn't exist
 					AddToLog("Corruption found in GEDCOM $GEDCOM Attempted to correct.  Replaced gedcom record $gid was not found in the gedcom file.");
-					$pos1 = strpos($fcontents, "\n0 TRLR");
-					$fcontents = substr($fcontents, 0, $pos1+1).trim($gedrec)."\n0 TRLR";
+					$pos1=find_newline_string($fcontents, "0 TRLR");
+					$fcontents=substr($fcontents, 0, $pos1).reformat_record_export($gedrec).'0 TRLR'.PGV_EOL;
 					AddToLog("Gedcom record $gid was appended back to the GEDCOM file.");
 				}
 			}
@@ -2045,12 +2046,6 @@ function accept_changes($cid) {
 		if (!isset($manual_save) || $manual_save==false) {
 			write_changes();
 		}
-		if (isset ($_SESSION["recent_changes"]["user"][$GEDCOM])) {
-			unset ($_SESSION["recent_changes"]["user"][$GEDCOM]);
-		}
-		if (isset ($_SESSION["recent_changes"]["gedcom"][$GEDCOM])) {
-			unset ($_SESSION["recent_changes"]["gedcom"][$GEDCOM]);
-		}
 		$logline = AddToLog("Accepted change $cid " . $change["type"] . " into database");
 		check_in($logline, $GEDCOM, dirname($GEDCOMS[$GEDCOM]['path']));
 		if (isset ($change["linkpid"])) {
@@ -2059,6 +2054,21 @@ function accept_changes($cid) {
 		return true;
 	}
 	return false;
+}
+
+// Find a string in a file, preceded by a any form of line-ending.
+// Although PGV always writes them as PGV_EOL, it is possible that the file was
+// edited externally by an editor that uses different endings.
+function find_newline_string($haystack, $needle, $offset=0) {
+	if ($pos=strpos($haystack, "\r\n{$needle}", $offset)) {
+		return $pos+2;
+	} elseif ($pos=strpos($haystack, "\n{$needle}", $offset)) {
+		return $pos+1;
+	} elseif ($pos=strpos($haystack, "\r{$needle}", $offset)) {
+		return $pos+1;
+	} else {
+		return false;
+	}
 }
 
 /**
@@ -2084,20 +2094,22 @@ function update_record($gedrec, $delete = false) {
 	$res=dbquery("SELECT pl_p_id FROM {$TBLPREFIX}placelinks WHERE pl_gid='{$gid}' AND pl_file={$ged_id}");
 
 	$placeids = array ();
-	while ($row = & $res->fetchRow()) {
-		$placeids[] = $row[0];
+	while ($row=$res->fetchRow()) {
+		$placeids[]=$row[0];
 	}
+	$res->free();
 	dbquery("DELETE FROM {$TBLPREFIX}placelinks WHERE pl_gid='{$gid}' AND pl_file={$ged_id}");
 	dbquery("DELETE FROM {$TBLPREFIX}dates WHERE d_gid='{$gid}' AND d_file={$ged_id}");
 
 	//-- delete any unlinked places
 	foreach ($placeids as $indexval => $p_id) {
-		dbquery("SELECT count(pl_p_id) FROM {$TBLPREFIX}placelinks WHERE pl_p_id=$p_id AND pl_file={$ged_id}");
+		$res=dbquery("SELECT count(pl_p_id) FROM {$TBLPREFIX}placelinks WHERE pl_p_id=$p_id AND pl_file={$ged_id}");
 
-		$row = & $res->fetchRow();
+		$row=$res->fetchRow();
 		if ($row[0] == 0) {
 			dbquery("DELETE FROM {$TBLPREFIX}places WHERE p_id=$p_id AND p_file={$ged_id}");
 		}
+		$res->free();
 	}
 
 	dbquery("DELETE FROM {$TBLPREFIX}media_mapping WHERE mm_gid='{$gid}' AND mm_gedfile={$ged_id}");

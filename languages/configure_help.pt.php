@@ -3,7 +3,7 @@
  * Portugese Language file for PhpGedView.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
+ * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -60,7 +60,7 @@ $pgv_lang["QUICK_ADD_FAMFACTS"]="Fatos da Família sempre exibidios na Edição 
 $pgv_lang["QUICK_REQUIRED_FACTS"]="Fatos exibidos na Edição Simplificada";
 $pgv_lang["QUICK_ADD_FACTS"]="Fatos exibidos na Edição Simplificada";
 $pgv_lang["AUTO_GENERATE_THUMBS"]="Miniaturas geradas automaticamente";
-$pgv_lang["more_config_hjaelp"]="<br /><b>Mais Ajuda</b><br />Mais ajuda pode ser obtida clicando em <b>?</b> ao lado dos itens da página.<br />";
+$pgv_lang["more_help_advice"]="<br /><b>Mais Ajuda</b><br />Mais ajuda pode ser obtida clicando em <b>?</b> ao lado dos itens da página.<br />";
 $pgv_lang["THUMBNAIL_WIDTH"]="Largura das Miniaturas geradas";
 $pgv_lang["SHOW_SOURCES"]="Exibir Fontes";
 $pgv_lang["REQUIRE_ADMIN_AUTH_REGISTRATION"]="Registro dos novos usuários deverão ser aprovados pelo administrador";

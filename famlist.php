@@ -73,7 +73,7 @@ setcookie('surname_sublist', $surname_sublist);
 // We default to exclude.
 $show_marnm=safe_GET('show_marnm', array('no','yes'));
 if (!$show_marnm) {
-	$show_marnm=safe_COOKIE('show_marnm_famlist', array('no','yes'), 'yes');
+	$show_marnm=safe_COOKIE('show_marnm_famlist', array('no','yes'));
 }
 if (!$show_marnm) {
 	$show_marnm='no';
