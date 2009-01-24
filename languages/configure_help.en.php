@@ -571,6 +571,7 @@ $pgv_lang["lang_name_german"]		= "German";
 $pgv_lang["lang_name_greek"]		= "Greek";
 $pgv_lang["lang_name_hebrew"]		= "Hebrew";
 $pgv_lang["lang_name_hungarian"]	= "Hungarian";
+$pgv_lang["lang_name_indonesian"]	= "Indonesian";
 $pgv_lang["lang_name_italian"]		= "Italian";
 $pgv_lang["lang_name_lithuanian"]	= "Lithuanian";
 $pgv_lang["lang_name_norwegian"]	= "Norwegian";

@@ -5,7 +5,7 @@
  * -> NEVER manually delete or edit this file <-
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
+ * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -423,6 +423,36 @@ $language_settings['dutch']=array(
 'ALPHABET_lower'=>'abcdefghijklmnopqrstuvwxyz',
 'MULTI_LETTER_ALPHABET'=>'',
 'MULTI_LETTER_EQUIV'=>'IJ=Ĳ,ij=ĳ',
+'DICTIONARY_SORT'=>false,
+'COLLATION'=>'utf8_unicode_ci'
+);
+
+//-- settings for indonesian
+$language_settings['indonesian']=array(
+'pgv_langname'=>'indonesian',
+'pgv_lang_use'=>false,
+'pgv_lang_self'=>'Bahasa Indonesia',
+'lang_short_cut'=>'id',
+'langcode'=>'id;',
+'pgv_language'=>'languages/lang.id.php',
+'confighelpfile'=>'languages/configure_help.id.php',
+'helptextfile'=>'languages/help_text.id.php',
+'flagsfile'=>'images/flags/indonesia.gif',
+'factsfile'=>'languages/facts.id.php',
+'adminfile'=>'languages/admin.id.php',
+'editorfile'=>'languages/editor.id.php',
+'countryfile'=>'languages/countries.id.php',
+'faqlistfile'=>'languages/faqlist.id.php',
+'extrafile'=>'languages/extra.id.php',
+'DATE_FORMAT'=>'D M Y',
+'TIME_FORMAT'=>'G:i:s',
+'WEEK_START'=>'1',
+'TEXT_DIRECTION'=>'ltr',
+'NAME_REVERSE'=>false,
+'ALPHABET_upper'=>'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
+'ALPHABET_lower'=>'abcdefghijklmnopqrstuvwxyz',
+'MULTI_LETTER_ALPHABET'=>'kh;ny;ng;sy',
+'MULTI_LETTER_EQUIV'=>'',
 'DICTIONARY_SORT'=>false,
 'COLLATION'=>'utf8_unicode_ci'
 );
