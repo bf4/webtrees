@@ -3,7 +3,7 @@
  * Polish texts
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team
+ * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,8 +19,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- *
- * @author Katarzyna Adamska <adamska_k AT wp DOT pl>
  * @author Łukasz Wileński <wooc@users.sourceforge.net>
  * @package PhpGedView
  * @subpackage Languages
@@ -105,5 +103,4 @@ $faqlist["FAQ_040_body2"] = "Oczywiście, żaden system nie jest doskonały ani 
 
 $faqlist["FAQ_050_head"] = "PODZIĘKOWANIA";
 $faqlist["FAQ_050_body"] = "Zgromadzenie i utrzymanie tej ilości informacji nie byłoby możliwe bez wsparcia licznego grona krewnych. Genealogia jest wielką przygodą i wspaniałym doświadczeniem edukacyjnym, poszerzającym zarówno naszą wiedzę o rodzinie, jak i wzbogacającym ją o ogólne fakty na temat geografii i socjologii. Mamy nadzieję, że przyniesie ci tyle radości, co nam, i liczymy na naszą wzajemną współpracę dzięki możliwościom, jakie daje PhpGedView i nasza strona.<br /><br />Nie wahaj się wysłać nam emaila, aby przedstawić się, poinformować o koniecznych zmianach, albo dowiedzieć się, czy należysz do rodziny. Większość naszej wiedzy (za wyjątkiem danych osób żyjących) jest udostępniona na naszej stronie.<br /><br />Dziękujemy!";
-
 ?>
