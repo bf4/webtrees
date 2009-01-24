@@ -198,6 +198,7 @@ $SEARCH_FACTS_DEFAULT = "NAME:GIVN:SDX,NAME:SURN:SDX,BIRT:DATE,BIRT:PLAC,FAMS:MA
 $GENERATE_UIDS = false;		//-- automatically generate _UID fields for records that do not already have them
 $ADVANCED_NAME_FACTS = "NICK,_HEB,ROMN";
 $ADVANCED_PLAC_FACTS = "";
+$USE_GEONAMES = false;	// use geonames.org with autocomplite function
 $SURNAME_TRADITION = "paternal";
 $FULL_SOURCES=true; // Include the quality-of-data and date-of-entry-in-original-source fields
 $PREFER_LEVEL2_SOURCES=false; // Default for checkboxes when adding close relatives
