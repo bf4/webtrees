@@ -3121,7 +3121,7 @@ function get_query_string() {
 					$qstring .= "{$key}={$value}&";
 				else
 					foreach ($value as $k=>$v)
-						$qstring .= "{$key}[{$k}]{$v}&";
+						$qstring .= "{$key}[{$k}]={$v}&";
 			}
 		}
 	} else {
