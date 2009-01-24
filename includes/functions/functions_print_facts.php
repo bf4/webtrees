@@ -628,7 +628,6 @@ function print_fact_sources($factrec, $level, $return=false) {
 			$data .= print_fact_notes($srec, $nlevel, false, true);
 			$data .= "</div>";
 			$data .= "</div>";
-
 			$printDone = true;
 		}
 	}
@@ -1029,7 +1028,7 @@ function printSourceStructure($textSOUR) {
 
 	$data='';
 	if ($textSOUR["PAGE"]!="") {
-		$data.="<br /><span class=\"label\">".$factarray["PAGE"].":&nbsp;</span><span class=\"field\">".PrintReady(expand_urls($textSOUR["PAGE"]))."</span>";
+		$data.="<br /><span class=\"label\">".$factarray["PAGE"].":&nbsp;&nbsp;</span><span class=\"field\">".PrintReady(expand_urls($textSOUR["PAGE"]))."</span>";
 	}
 
 	if ($textSOUR["EVEN"]!="") {
@@ -1046,7 +1045,21 @@ function printSourceStructure($textSOUR) {
 			$data.="<br />&nbsp;&nbsp;<span class=\"label\">".$pgv_lang["date_of_entry"].":&nbsp;</span><span class=\"field\">".$date->Display(false)."</span>";
 		}
 		foreach($textSOUR["TEXT"] as $text) {
-			$data.="<br />&nbsp;&nbsp;<span class=\"label\">".$factarray["TEXT"].":&nbsp;</span><span class=\"field\">".PrintReady(expand_urls($text))."</span>";
+			
+			// Check if Census Assistant Text or not ===================================== 
+			if (strstr($text, "|Head|")) {
+				$text = "<table><tr><td>" . $text;
+				$text = str_replace("<br /><br />", "</td></tr></table><p><table><tr><td>", $text);
+				$text = str_replace("<br />", "</td></tr><tr><td>", $text);
+				$text = str_replace("|", "&nbsp;&nbsp;</td><td>", $text);
+				$text = $text . "</td></tr></table>";
+				$data.= "<br />";
+				$data.= "<span class=\"label\">".$factarray["TEXT"].":&nbsp;</span>";
+				$data.= "<span class=\"field\">".PrintReady($text)."</span><br />";
+			}else{
+				$data.="<br />&nbsp;&nbsp;<span class=\"label\">".$factarray["TEXT"].":&nbsp;</span><span class=\"field\">".PrintReady(expand_urls($text))."</span>";
+			}
+			// ==================================================================
 		}
 	}
 

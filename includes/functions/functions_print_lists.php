@@ -921,6 +921,142 @@ T2;
 	}
 }
 
+
+// BH print a sortable list of Shared Notes
+/**
+ * print a sortable table of shared notes
+ *
+ * @param array $datalist contain shared notes that were extracted from the database.
+ * @param string $legend optional legend of the fieldset
+ */
+function print_shnote_table($datalist, $legend=null) {
+	global $pgv_lang, $factarray, $SHOW_ID_NUMBERS, $SHOW_LAST_CHANGE, $TEXT_DIRECTION;
+	global $PGV_IMAGE_DIR, $PGV_IMAGES;
+
+	if (count($datalist)<1) {
+		return;
+	}
+	require_once 'js/sorttable.js.htm';
+	require_once 'includes/classes/class_shnote.php';
+
+	echo '<fieldset><legend><img src="', $PGV_IMAGE_DIR, '/', $PGV_IMAGES['shnote']['small'], '" align="middle" /> ';
+	if ($legend) {
+		echo $legend;
+	} else {
+		echo $pgv_lang['shnotes'];
+	}
+	echo '</legend>';
+	$table_id = "ID".floor(microtime()*1000000); // sorttable requires a unique ID
+	//-- table header
+	echo '<table id="', $table_id, '" class="sortable list_table center"><tr><td></td>';
+	if ($SHOW_ID_NUMBERS) {
+		echo '<th class="list_label rela">NOTE</th>';
+	}
+	echo '<th class="list_label">', $factarray['TITL'], '</th>';
+	echo '<td class="list_label t2" style="display:none;">', $factarray['TITL'], ' 2</td>';
+	echo '<th class="list_label">', $factarray['AUTH'], '</th>';
+	echo '<th class="list_label">', $pgv_lang['individuals'], '</th>';
+	echo '<th class="list_label">', $pgv_lang['families'], '</th>';
+	echo '<th class="list_label">', $pgv_lang['media'], '</th>';
+	if ($SHOW_LAST_CHANGE) {
+		echo '<th class="list_label rela">', $factarray['CHAN'], '</th>';
+	}
+	echo '</tr>';
+	//-- table body
+	$t2=false;
+	$n=0;
+	foreach ($datalist as $key=>$value) {
+		if (is_object($value)) { // Array of objects
+			$shnote=$value;
+		} elseif (!is_array($value)) { // Array of IDs
+			$shnote=Shnote::getInstance($key); // from placelist
+			if (is_null($shnote)) {
+				$shnote=Shnote::getInstance($value);
+			}
+			unset($value);
+		} else { // Array of search results
+			$gid='';
+			if (isset($value['gid'])) {
+				$gid=$value['gid'];
+			}
+			if (isset($value['gedcom'])) {
+				$shnote=new Shnote($value['gedcom']);
+			} else {
+				$shnote=Shnote::getInstance($gid);
+			}
+		}
+		if (!$shnote || !$shnote->canDisplayDetails()) {
+			continue;
+		}
+		$link_url=encode_url($shnote->getLinkUrl());
+		//-- Counter
+		echo '<tr><td class="list_value_wrap rela list_item">', ++$n, '</td>';
+		//-- Shared Note ID
+		if ($SHOW_ID_NUMBERS) {
+			echo '<td class="list_value_wrap rela">'.$shnote->getXrefLink().'</td>';
+		}
+		//-- Shared Note name(s)
+		$tmp=$shnote->getFullName();
+		echo '<td class="list_value_wrap" align="', get_align($tmp), '"><a href="', $link_url, '" class="list_item name2">', PrintReady($tmp), '</a></td>';
+		// alternate title in a new column
+		$tmp=$shnote->getAddName();
+		if ($tmp) {
+			echo '<td class="list_value_wrap t2" style="display:none;" align="', get_align($tmp), '"><a href="', $link_url, '" class="list_item">', PrintReady($tmp), '</a></td>';
+			$t2=true;
+		} else {
+			echo '<td class="list_value_wrap t2" style="display:none;">&nbsp;</td>';
+		}
+		//-- Author
+//BH		$tmp=$shnote->getAuth();
+		if ($tmp) {
+			echo '<td class="list_value_wrap" align="', get_align($tmp), '"><a href="', $link_url, '" class="list_item">', PrintReady($tmp), '</a></td>';
+		} else {
+			echo '<td class="list_value_wrap">&nbsp;</td>';
+		}
+		//-- Linked INDIs
+		$tmp=$shnote->countLinkedIndividuals();
+		echo '<td class="list_value_wrap"><a href="', $link_url, '" class="list_item" name="', $tmp, '">', $tmp, '</a></td>';
+		//-- Linked FAMs
+		$tmp=$shnote->countLinkedfamilies();
+		echo '<td class="list_value_wrap"><a href="', $link_url, '" class="list_item" name="', $tmp, '">', $tmp, '</a></td>';
+		//-- Linked OBJEcts
+		$tmp=$shnote->countLinkedMedia();
+		echo '<td class="list_value_wrap"><a href="', $link_url, '" class="list_item" name="', $tmp, '">', $tmp, '</a></td>';
+		//-- Last change
+		if ($SHOW_LAST_CHANGE) {
+			print '<td class="'.strrev($TEXT_DIRECTION).' list_value_wrap rela">'.$shnote->LastChangeTimestamp(empty($SEARCH_SPIDER)).'</td>';
+		}
+		echo "</tr>\n";
+	}
+	//-- table footer
+	echo '<tr class="sortbottom"><td></td>';
+	if ($SHOW_ID_NUMBERS) {
+		echo '<td></td>';
+	}
+	echo '<td class="list_label">', $pgv_lang['total_shnotes'], ' : ', $n,  '</td><td></td><td class="t2" style="display:none;"></td><td></td><td></td><td></td><td></td>';
+	if ($SHOW_LAST_CHANGE) {
+		echo '<td></td>';
+	}
+	echo '</tr></table></fieldset>';
+	// show TITLE2 col if not empty
+	if ($t2) {
+		echo <<< T2
+		<script type="text/javascript">
+			var table = document.getElementById("$table_id");
+			cells = table.getElementsByTagName('td');
+			for (i=0;i<cells.length;i++) {
+				if (cells[i].className && (cells[i].className.indexOf('t2') != -1)) {
+					cells[i].style.display="";
+				}
+			}
+		</script>
+T2;
+	}
+}
+
+
+
+
 /**
  * print a sortable table of repositories
  *

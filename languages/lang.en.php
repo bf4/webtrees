@@ -89,8 +89,9 @@ $pgv_lang["children"]				= "Children";
 $pgv_lang["child"]					= "Child";
 $pgv_lang["family"] 				= "Family";
 $pgv_lang["as_child"]				= "Family with Parents";
+$pgv_lang["shnote_menu"]			= "Options for Shared Note";
 $pgv_lang["source_menu"]			= "Options for source";
-$pgv_lang["repo_menu"]			= "Options for repository";
+$pgv_lang["repo_menu"]				= "Options for repository";
 $pgv_lang["other_records"]			= "Records that link to this Source:";
 $pgv_lang["other_repo_records"]		= "Records that link to this Repository:";
 $pgv_lang["repo_info"]				= "Repository Information";
@@ -193,6 +194,7 @@ $pgv_lang["nov_1st"]					= "Nov";
 $pgv_lang["dec_1st"]					= "Dec";
 
 $pgv_lang["edit_source"]			= "Edit Source";
+$pgv_lang["edit_shnote"]			= "Edit Shared Note";
 $pgv_lang["familybook_chart"]		= "Family Book Chart";
 $pgv_lang["family_of"]				= "Family of:&nbsp;";
 $pgv_lang["descent_steps"]			= "Descent Steps";
@@ -396,6 +398,7 @@ $pgv_lang["descend_chart"]			= "Descendancy Chart";
 $pgv_lang["individual_list"]		= "Individual List";
 $pgv_lang["family_list"]			= "Family List";
 $pgv_lang["source_list"]			= "Source List";
+$pgv_lang["shnote_list"]			= "Shared Note List";
 $pgv_lang["place_list"] 			= "Place Hierarchy";
 $pgv_lang["place_list_aft"] 		= "Place Hierarchy after";
 $pgv_lang["media_list"] 			= "MultiMedia List";
@@ -572,6 +575,7 @@ $pgv_lang["record_not_added"]		= "Record #xref# could not be added to GEDCOM.";
 //-- SEARCH FILE MESSAGES
 $pgv_lang["soundex_search"] 		= "Search the way you think the name is written (Soundex)";
 $pgv_lang["sources"]				= "Sources";
+$pgv_lang["shnotes"]				= "Shared Notes";
 $pgv_lang["lastname_search"]		= "Last name";
 $pgv_lang["search_place"]			= "Place";
 $pgv_lang["search_year"]			= "Year";
@@ -579,6 +583,7 @@ $pgv_lang["no_results"] 			= "No results found.";
 $pgv_lang["search_soundex"]			= "Soundex Search";
 $pgv_lang["search_replace"]			= "Search and Replace";
 $pgv_lang["search_sources"]			= "Sources";
+$pgv_lang["search_shnotes"]			= "Shared Notes";
 $pgv_lang["search_more_chars"]      = "Please enter more than one character";
 $pgv_lang["search_soundextype"]		= "Soundex type:";
 $pgv_lang["search_russell"]			= "Basic";
@@ -605,6 +610,10 @@ $pgv_lang["source_info"]			= "Source Information";
 $pgv_lang["people"] 				= "People";
 $pgv_lang["families"]				= "Families";
 $pgv_lang["total_sources"]			= "Total Sources";
+
+//-- SHARED NOTE FILE MESSAGES
+$pgv_lang["shnote_info"]			= "Shared Note Information";
+$pgv_lang["total_shnotes"]			= "Total Shared Notes";
 
 //-- BUILDINDEX FILE MESSAGES
 $pgv_lang["invalid_gedformat"]		= "Invalid GEDCOM format";
@@ -1112,7 +1121,9 @@ $pgv_lang["confirm_delete_person"]	= "Are you sure you want to delete this perso
 $pgv_lang["find_media"] 			= "Find Media";
 $pgv_lang["set_link"]				= "Set link";
 $pgv_lang["delete_source"]			= "Delete this Source";
+$pgv_lang["delete_shnote"]			= "Delete this Shared Note";
 $pgv_lang["confirm_delete_source"]	= "Are you sure you want to delete this Source from the GEDCOM file?";
+$pgv_lang["confirm_delete_shnote"]	= "Are you sure you want to delete this Shared Note from the GEDCOM file?";
 $pgv_lang["find_family"]			= "Find Family";
 $pgv_lang["find_fam_list"]			= "Find Family List";
 $pgv_lang["edit_name"]				= "Edit Name";

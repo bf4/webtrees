@@ -1298,7 +1298,7 @@ function find_source_record($pid, $gedfile="") {
 
 
 /**
-* Find a repository record by its ID
+* Find a repository record by its ID   //BH or a shared note record by its id
 * @param string $rid the record id
 * @param string $gedfile the gedcom file id
 */
@@ -1475,6 +1475,28 @@ function get_fam_list() {
 	$res->free();
 	usort($fams, array('GedcomRecord', 'Compare'));
 	return $fams;
+}
+
+// BH ==============================================================
+//-- get the shared note list from the datastore
+function get_shnote_list($ged_id) {
+	global $TBLPREFIX;
+
+	$ged_id=(int)$ged_id;
+	$res=dbquery(
+		"SELECT 'NOTE' AS type, o_id AS xref, {$ged_id} AS ged_id, o_gedcom AS gedrec ".
+		"FROM {$TBLPREFIX}other WHERE o_type='NOTE' AND o_file={$ged_id}"
+	);
+	$list=array();
+	while ($row=$res->fetchRow(DB_FETCHMODE_ASSOC)) {
+		//BH Not working 
+		// $list[]=Shnote::getInstance($row);
+		$list[]=Shnote::getInstance($row);
+	}
+	$res->free();
+
+	usort($list, array('GedcomRecord', 'Compare'));
+	return $list;
 }
 
 // Search the gedcom records of indis
