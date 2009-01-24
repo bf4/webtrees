@@ -3,7 +3,7 @@
  * Spanish language file for PhpGedView
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
+ * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -36,7 +36,7 @@ $pgv_lang["add_marriage"]			= "Agregar detalles del matrimonio";
 $pgv_lang["edit_concurrency_change"] = "Este registro fue modificado por última vez por <i>#CHANGEUSER#</i> el #CHANGEDATE#";
 $pgv_lang["edit_concurrency_msg2"]	= "El registro con id #PID# fue modificado por otro usuario desde que accedió a él por última vez.";
 $pgv_lang["edit_concurrency_msg1"]	= "Ocurrió un error mientras se creaba el formulario de Edición.  Otro usuario puede haber cambiado este registro desde que lo visualizó.";
-$pgv_lang["edit_concurrency_reload"]	= "Por favor utilice el botón de Página Anterior de su navegador y recargue la página anterior para asegurarse de que trabaja con el registro más reciente.";
+$pgv_lang["edit_concurrency_reload"]	= "Por favor, recargue la página anterior para asegurarse de que trabaja con el registro más reciente.";
 $pgv_lang["admin_override"]			= "Opción de administración";
 $pgv_lang["no_update_CHAN"]			= "No actualizar el registro CHAN (último cambio)";
 $pgv_lang["select_events"]			= "Seleccionar eventos";
@@ -114,6 +114,7 @@ $pgv_lang["add_child_to_family"]	= "Agregar un hijo a esta familia";
 $pgv_lang["add_fact"]				= "Añadir nuevo hecho";
 $pgv_lang["add_father"] 			= "Agregar un nuevo padre";
 $pgv_lang["add_husb"]				= "Agregar esposo";
+$pgv_lang["add_opf_child"]				= "Agregar un hijo creando una familia sin cónyuge";
 $pgv_lang["add_husb_to_family"] 	= "Agregar esposo a esta familia";
 $pgv_lang["add_media"]				= "Agregar un nuevo objeto audiovisual";
 $pgv_lang["add_media_lbl"]			= "Agregar objetos audiovisuales";
@@ -193,7 +194,7 @@ $pgv_lang["link_as_child"]			= "Vincular esta persona como hijo o hija de una fa
 $pgv_lang["link_as_husband"]		= "Vincular esta persona como esposo en una familia ya existente";
 $pgv_lang["link_success"]			= "Vínculo agregado con éxito";
 $pgv_lang["link_to_existing_media"]		= "Vincular un objeto audiovisual ya existente";
-$pgv_lang["max_media_depth"]		= "Sólo puede descender #MEDIA_DIRECTORY_LEVELS# directorios";
+$pgv_lang["max_media_depth"]		= "No puede introducir más de #GLOBALS[MEDIA_DIRECTORY_LEVELS] nombres de subdirectorios";
 $pgv_lang["max_upload_size"]		= "Tamaño máximo de subida: ";
 $pgv_lang["media_deleted"]			= "Directorio de objetos audiovisuales eliminado con éxito.";
 $pgv_lang["media_exists"]			= "El archivo audiovisual ya existe.";
@@ -231,6 +232,7 @@ $pgv_lang["undo_successful"]		= "Se ha deshecho correctamente";
 $pgv_lang["update_successful"]		= "Actualizado correctamente";
 $pgv_lang["upload"]					= "Subir";
 $pgv_lang["upload_error"]			= "Hubo un error al subir su archivo.";
+$pgv_lang["copy_error"]				= "No se pudo copiar al archivo #GLOBALS[whichFile2]# el contenido del archivo #GLOBALS[whichFile1]#";
 $pgv_lang["upload_media"]			= "Subir archivos audiovisuales";
 $pgv_lang["upload_media_help"]		= "~#pgv_lang[upload_media]#~<br /><br />Seleccione los archivos de su equipo local a subir a su servidor.  Todos los archivos se subirán al directorio <b>#MEDIA_DIRECTORY#</b> o a uno de sus subdirectorios.<br /><br />Los nombres de carpeta que indique se añadirán a #MEDIA_DIRECTORY#. Por ejemplo, #MEDIA_DIRECTORY#myfamily. Si no existe el directorio de miniaturas, se creará automáticamente.";
 $pgv_lang["upload_successful"]		= "Proceso completo";

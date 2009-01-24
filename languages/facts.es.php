@@ -3,7 +3,7 @@
  * Spanish language file for PhpGedView
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
+ * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -158,14 +158,14 @@ $factarray["WILL"]	= "Testamento";
 $factarray["_EMAIL"]	= "Correo electrónico";
 $factarray["EMAIL"]	= "Correo electrónico";
 $factarray["_TODO"]	= "Pendiente de hacer";
-$factarray["_UID"]	= "Identificador Universal";
+$factarray["_UID"]	= "Identificador universal";
 $factarray["_PRIM"]	= "Imagen resaltada";
 $factarray["_DBID"] = "ID en la base de datos enlazada";
 
 // These facts are used in specific contexts
 $factarray["STAT:DATE"] = "Fecha del cambio de estado";
 
-//These facts are compounds for the view probabilities page
+//These facts are compounds for the view probabilities and the advanced search pages
 $factarray["FAMC:HUSB:SURN"] = "Apellido del padre";
 $factarray["FAMC:WIFE:SURN"] = "Apellido de la madre";
 $factarray["FAMC:HUSB:BIRT:PLAC"] = "Lugar de nacimiento del padre";
@@ -181,9 +181,17 @@ $factarray["FAMS:SPOUSE:BIRT:PLAC"] = "Lugar de nacimiento del cónyuge";
 $factarray["FAMC:WIFE:GIVN"] = "Nombre de pila de la madre";
 $factarray["FAMC:HUSB:FAMC:HUSB:GIVN"] = "Nombre de pila del abuelo paterno";
 $factarray["FAMC:WIFE:FAMC:WIFE:GIVN"] = "Nombre de pila de la abuela materna";
-$factarray["FAMC:WIFE:FAMC:HUSB:GIVN"] = "Nombre de pila del abuelo materno"; 
+$factarray["FAMC:WIFE:FAMC:HUSB:GIVN"] = "Nombre de pila del abuelo materno";
 $factarray["FAMC:HUSB:FAMC:WIFE:GIVN"] = "Nombre de pila de la abuela paterna";
 $factarray["FAMS:CHIL:BIRT:PLAC"] = "Lugar de nacimiento del hijo/a";
+$factarray["FAMS:NOTE"] = "Nota de la familia";
+$factarray["FAMS:CENS:DATE"] = "Fecha del censo de la familia";
+$factarray["FAMS:CENS:PLAC"] = "Lugar del censo de la familia";
+$factarray["FAMS:DIV:DATE"] = "Fecha de divorcio";
+$factarray["FAMS:DIV:PLAC"] = "Lugar del divorcio";
+$factarray["FAMS:SLGS:DATE"] = "Fecha del sellamiento SUD con el cónyuge";
+$factarray["FAMS:SLGS:PLAC"] = "Lugar del sellamiento SUD con el cónyuge";
+$factarray["FAMS:SLGS:TEMP"] = "Templo del sellamiento SUD con el cónyuge";
 
 // These facts are all colon delimited
 $factarray["BIRT:PLAC"] = "Lugar de nacimiento";
@@ -423,7 +431,7 @@ $factarray["_PGVU"]	= "Última modificación realizada por"; // last changed by
 $factarray["SERV"] = "Servidor remoto";
 $factarray["_GEDF"] = "Archivo GEDCOM";
 
-/*-- Fact abbreviations for use in Chart boxes.  
+/*-- Fact abbreviations for use in Chart boxes.
  *		Use these abbreviations in cases where the standard method of using the first
  *		letter of the spelled-out name results in an undesirable abbreviation or where
  *		you want to produce a different result (eg: "x" instead of "M" for "Married").
@@ -434,9 +442,9 @@ $factarray["_GEDF"] = "Archivo GEDCOM";
  *		These abbreviations are user-customizable. Just put them into file "extra.xx.php".
  *		The length of these abbreviations is not restricted to 1 letter.
  */
- 
-/*-- The following lines have been commented out.  They should serve as examples. 
- 
+
+/*-- The following lines have been commented out.  They should serve as examples.
+
 $factAbbrev["BIRT"]		= "B";
 $factAbbrev["MARR"]		= "M";
 $factAbbrev["DEAT"]		= "D";
