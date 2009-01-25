@@ -1480,6 +1480,11 @@ $pgv_lang["cleanup"]			= "Rydd";
 
 //-- CONFIGURE (extra) messages for programs patriarch and statistics
 $pgv_lang["statistics"]			= "Statistikk";
+##$pgv_lang["show_stats_charts"]	= "Show statistics charts";
+##$pgv_lang["decade_birth"]		= "Decade of birth";
+##$pgv_lang["decade_death"]		= "Decade of death";
+##$pgv_lang["decade_marriage"]	= "Decade of marriage";
+##$pgv_lang["avg_age"]			= "Average age";
 
 //-- Merge Records
 $pgv_lang["merge_same"]			= "Dataene er ikke av samme type.  Kan ikke flette data som er av forskjellig type!";
