@@ -3,7 +3,7 @@
  * Indonesian Language file for PhpGedView.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2009 PGV Development Team. All rights reserved.
+ * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,7 +19,10 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
+ * @author PGV Developers
+ * @translator  Arif Rahman Hakim
  * @package PhpGedView
+ * @subpackage Languages
  * @version $Id$
  */
 
@@ -54,7 +57,7 @@ $factarray["BURI"]	= "Makam";
 $factarray["CALN"]	= "Nomor Telepon";
 $factarray["CAST"]	= "Kasta / Status Sosial";
 $factarray["CAUS"]	= "Sebab kematian";
-$factarray["CEME"]  = "Makam";
+$factarray["CEME"]  	= "Makam";
 $factarray["CENS"]	= "Sensus";
 $factarray["CHAN"]	= "Perubahan terakhir";
 $factarray["CHAR"]	= "Karakter Set";
@@ -91,13 +94,13 @@ $factarray["FILE"]	= "Berkas Luar";
 $factarray["FORM"]	= "Format";
 $factarray["GIVN"]	= "Nama Depan";
 $factarray["GRAD"]	= "Kelulusan";
-$factarray["HUSB"]  = "Suami";
+$factarray["HUSB"]  	= "Suami";
 $factarray["IDNO"]	= "Nomor Identifikasi";
 $factarray["IMMI"]	= "Imigrasi";
 $factarray["LEGA"]	= "Legatee";
-$factarray["MARB"]	= "Marriage Bann";
-$factarray["MARC"]	= "Marriage Contract";
-$factarray["MARL"]	= "Marriage Licence";
+$factarray["MARB"]	= "Pengumuman Nikah";
+$factarray["MARC"]	= "Pertunangan";
+$factarray["MARL"]	= "Surat Nikah";
 $factarray["MARR"]	= "Pernikahan";
 $factarray["MARS"]	= "Marriage Settlement";
 $factarray["MEDI"]	= "Jenis Media";
@@ -149,45 +152,45 @@ $factarray["TEXT"]	= "Teks";
 $factarray["TIME"]	= "Waktu";
 $factarray["TITL"]	= "Judul";
 $factarray["TYPE"]	= "Jenis";
-$factarray["WIFE"]  = "Istri";
+$factarray["WIFE"]  	= "Istri";
 $factarray["WILL"]	= "Wasiat";
 $factarray["_EMAIL"]	= "Alamat Email";
 $factarray["EMAIL"]	= "Alamat Email";
 $factarray["_TODO"]	= "Hal Untuk Dilakukan";
 $factarray["_UID"]	= "Pengenal Universal";
 $factarray["_PRIM"]	= "Gambar Terhighlight";
-$factarray["_DBID"] = "ID Database Terangkai";
+$factarray["_DBID"] 	= "ID Database Terangkai";
 
 // These facts are used in specific contexts
 $factarray["STAT:DATE"] = "Tanggal Perubahan Status";
 
 //These facts are compounds for the view probabilities page
-$factarray["FAMC:HUSB:SURN"] = "Marga Ayah";
-$factarray["FAMC:WIFE:SURN"] = "Marga Ibu";
-$factarray["FAMC:HUSB:BIRT:PLAC"] = "Tempat Lahir Ayah";
-$factarray["FAMC:WIFE:BIRT:PLAC"] = "Tempat Lahir Ibu";
-$factarray["FAMC:MARR:PLAC"] = "Tempat Nikah Orangtua";
-$factarray["FAMC:HUSB:OCCU"] = "Pekerjaan Ayah";
-$factarray[":BIRT:PLAC"] = "Tempat Lahir";
-$factarray["FAMS:MARR:PLAC"] = "Tempat Nikah";
-$factarray["FAMS:MARR:DATE"] = "Tanggal Nikah";
-$factarray["FAMS:SPOUSE:DEAT:PLAC"] = "Tempat Meninggal Pasangan";
-$factarray["FAMC:HUSB:GIVN"] = "Nama Depan Ayah";
-$factarray["FAMS:SPOUSE:BIRT:PLAC"] = "Tempat Lahir Pasangan";
-$factarray["FAMC:WIFE:GIVN"] = "Nama Depan Ibu";
-$factarray["FAMC:HUSB:FAMC:HUSB:GIVN"] = "Nama Depan Kakek Ayah";
-$factarray["FAMC:WIFE:FAMC:WIFE:GIVN"] = "Nama Depan Nenek Ibu";
-$factarray["FAMC:WIFE:FAMC:HUSB:GIVN"] = "Nama Depan Kakek Ibu";
-$factarray["FAMC:HUSB:FAMC:WIFE:GIVN"] = "Nama Depan Nenek Ayah";
-$factarray["FAMS:CHIL:BIRT:PLAC"] = "Tempatlahir Anak";
+$factarray["FAMC:HUSB:SURN"]		= "Marga Ayah";
+$factarray["FAMC:WIFE:SURN"]		= "Marga Ibu";
+$factarray["FAMC:HUSB:BIRT:PLAC"]	= "Tempat Lahir Ayah";
+$factarray["FAMC:WIFE:BIRT:PLAC"]	= "Tempat Lahir Ibu";
+$factarray["FAMC:MARR:PLAC"]		= "Tempat Nikah Orangtua";
+$factarray["FAMC:HUSB:OCCU"]		= "Pekerjaan Ayah";
+$factarray[":BIRT:PLAC"]		= "Tempat Lahir";
+$factarray["FAMS:MARR:PLAC"]		= "Tempat Nikah";
+$factarray["FAMS:MARR:DATE"]		= "Tanggal Nikah";
+$factarray["FAMS:SPOUSE:DEAT:PLAC"]	= "Tempat Meninggal Pasangan";
+$factarray["FAMC:HUSB:GIVN"]		= "Nama Depan Ayah";
+$factarray["FAMS:SPOUSE:BIRT:PLAC"]	= "Tempat Lahir Pasangan";
+$factarray["FAMC:WIFE:GIVN"]		= "Nama Depan Ibu";
+$factarray["FAMC:HUSB:FAMC:HUSB:GIVN"]	= "Nama Depan Kakek Ayah";
+$factarray["FAMC:WIFE:FAMC:WIFE:GIVN"]	= "Nama Depan Nenek Ibu";
+$factarray["FAMC:WIFE:FAMC:HUSB:GIVN"]	= "Nama Depan Kakek Ibu";
+$factarray["FAMC:HUSB:FAMC:WIFE:GIVN"]	= "Nama Depan Nenek Ayah";
+$factarray["FAMS:CHIL:BIRT:PLAC"]	= "Tempat Lahir Anak";
 
 // These facts are all colon delimited
 $factarray["BIRT:PLAC"] = "Tempat Lahir";
 $factarray["BIRT:DATE"] = "Tanggal Lahir";
 $factarray["DEAT:PLAC"] = "Tempat Meninggal";
 $factarray["DEAT:DATE"] = "Tanggal Meninggal";
-$factarray["CHR:PLAC"] = "Tempat Pengkristenan";
-$factarray["CHR:DATE"] = "Tanggal Pengkristenan";
+$factarray["CHR:PLAC"] 	= "Tempat Pengkristenan";
+$factarray["CHR:DATE"] 	= "Tanggal Pengkristenan";
 $factarray["BAPM:PLAC"] = "Tempat Pembaptisan";
 $factarray["BAPM:DATE"] = "Tanggal Pembaptisan";
 $factarray["BURI:PLAC"] = "Tempat Pemakaman";
@@ -226,8 +229,8 @@ $factarray["FAX"] = "FAX";
 $factarray["FACT"] = "Fakta";
 $factarray["WWW"] = "Situs Web";
 $factarray["MAP"] = "Peta";
-$factarray["LATI"] = "Latitude";
-$factarray["LONG"] = "Longitude";
+$factarray["LATI"] = "Garis Lintang";
+$factarray["LONG"] = "Garis Bujur";
 $factarray["FONE"] = "Fonetik";
 $factarray["ROMN"] = "Latinisasi";
 
@@ -253,12 +256,12 @@ $factarray["_ADPM"]	= "Diadopsi Ibu";
 $factarray["_AKAN"]	= "Juga dikenal sebagai";
 $factarray["_AKA"] 	= "Juga dikenal sebagai";
 $factarray["_BRTM"]	= "Brit Mila";
-$factarray["_COML"]	= "Pernikahan Hukum Positif";
+$factarray["_COML"]	= "Pernikahan Sipil";
 $factarray["_EYEC"]	= "Warna Mata";
 $factarray["_FNRL"]	= "Pemakaman";
 $factarray["_HAIR"]	= "Warna Rambut";
 $factarray["_HEIG"]	= "Tinggi";
-$factarray["_HOL"]  = "Holocaust";
+$factarray["_HOL"]  	= "Holocaust";
 $factarray["_INTE"]	= "Interred";
 $factarray["_MARI"]	= "Tujuan Nikah";
 $factarray["_MBON"]	= "Ikatan Nikah";
@@ -270,18 +273,18 @@ $factarray["_NMAR"]	= "Tidak pernah menikah";
 $factarray["_PRMN"]	= "Nomor Tetap";
 $factarray["_WEIG"]	= "Berat";
 $factarray["_YART"]	= "Yahrzeit";
-$factarray["_MARNM"] = "Nama Pernikahan";
+$factarray["_MARNM"]	= "Nama Pernikahan";
 $factarray["_MARNM_SURN"] = "Marga Pernikahan";
 $factarray["_STAT"]	= "Status Nikah";
 $factarray["COMM"]	= "Komentar";
 
 // Aldfaer related facts
-$factarray["MARR_CIVIL"] = "Pernikahan Sipil";
-$factarray["MARR_RELIGIOUS"] = "Pernikahan Agama";
-$factarray["MARR_PARTNERS"] = "Hubungan Terdaftar";
-$factarray["MARR_UNKNOWN"] = "Jenis Nikah Tidak Diketahui";
+$factarray["MARR_CIVIL"]	= "Pernikahan Sipil";
+$factarray["MARR_RELIGIOUS"]	= "Pernikahan Agama";
+$factarray["MARR_PARTNERS"]	= "Hubungan Terdaftar";
+$factarray["MARR_UNKNOWN"]	= "Jenis Nikah Tidak Diketahui";
 
-$factarray["_HNM"] = "Bahasa Yahudi";
+$factarray["_HNM"]		= "Bahasa Yahudi";
 
 // Pseudo-facts for relatives
 $factarray["_DEAT_SPOU"] = "Kematian pasangan";
@@ -294,7 +297,7 @@ $factarray["_BAPM_CHIL"] = "Pembaptisan anak";
 $factarray["__BRTM_CHIL"] = "Brit Mila anak";
 $factarray["_ADOP_CHIL"] = "Adopsi anak";
 $factarray["_MARR_CHIL"] = "Pernikahan anak";
-$factarray["_MARB_CHIL"] = "Marriage Bann anak";
+$factarray["_MARB_CHIL"] = "Pengumuman Nikah anak";
 $factarray["_DEAT_CHIL"] = "Kematian anak";
 $factarray["_BURI_CHIL"] = "Makam anak";
 $factarray["_CREM_CHIL"] = "Kremasi of a child";
@@ -305,7 +308,7 @@ $factarray["_BAPM_GCHI"] = "Pembaptisan cucu";
 $factarray["__BRTM_GCHI"] = "Brit Mila cucu";
 $factarray["_ADOP_GCHI"] = "Adopsi cucu";
 $factarray["_MARR_GCHI"] = "Pernikahan cucu";
-$factarray["_MARB_GCHI"] = "Marriage Bann cucu";
+$factarray["_MARB_GCHI"] = "Pengumuman Nikah cucu";
 $factarray["_DEAT_GCHI"] = "Kematian cucu";
 $factarray["_BURI_GCHI"] = "Pemakaman cucu";
 $factarray["_CREM_GCHI"] = "Kremasi cucu";
@@ -316,22 +319,22 @@ $factarray["_BAPM_GGCH"] = "Pembaptisan cicit";
 $factarray["__BRTM_GGCH"] = "Brit Mila cicit";
 $factarray["_ADOP_GGCH"] = "Adopsi cicit";
 $factarray["_MARR_GGCH"] = "Pernikahan cicit";
-$factarray["_MARB_GGCH"] = "Marriage Bann cicit";
+$factarray["_MARB_GGCH"] = "Pengumuman Nikah cicit";
 $factarray["_DEAT_GGCH"] = "Kematian cicit";
 $factarray["_BURI_GGCH"] = "Makam cicit";
 $factarray["_CREM_GGCH"] = "Kremasi cicit";
 
 $factarray["_MARR_FATH"] = "Pernikahan ayah";
-$factarray["_MARB_FATH"] = "Marriage Bann ayah";
+$factarray["_MARB_FATH"] = "Pengumuman Nikah ayah";
 $factarray["_DEAT_FATH"] = "Kematian ayah";
 $factarray["_BURI_FATH"] = "Makam ayah";
 $factarray["_CREM_FATH"] = "Kremasi ayah";
 
 $factarray["_MARR_FAMC"] = "Pernikahan orangtua";
-$factarray["_MARB_FAMC"] = "Marriage Bann orangtua";
+$factarray["_MARB_FAMC"] = "Pengumuman Nikah orangtua";
 
 $factarray["_MARR_MOTH"] = "Pernikahan ibu";
-$factarray["_MARB_MOTH"] = "Marriage Bann ibu";
+$factarray["_MARB_MOTH"] = "Pengumuman Nikah ibu";
 $factarray["_DEAT_MOTH"] = "Kematian ibu";
 $factarray["_BURI_MOTH"] = "Makam ibu";
 $factarray["_CREM_MOTH"] = "Kremasi ibu";
@@ -342,7 +345,7 @@ $factarray["_BAPM_SIBL"] = "Pembaptisan saudara";
 $factarray["__BRTM_SIBL"] = "Brit Mila saudara";
 $factarray["_ADOP_SIBL"] = "Adopsi saudara";
 $factarray["_MARR_SIBL"] = "Pernikahan saudara";
-$factarray["_MARB_SIBL"] = "Marriage Bann saudara";
+$factarray["_MARB_SIBL"] = "Pengumuman Nikah saudara";
 $factarray["_DEAT_SIBL"] = "Kematian saudara";
 $factarray["_BURI_SIBL"] = "Makam saudara";
 $factarray["_CREM_SIBL"] = "Kremasi saudara";
@@ -353,7 +356,7 @@ $factarray["_BAPM_HSIB"] = "Pembaptisan saudara seayah/ibu";
 $factarray["__BRTM_HSIB"] = "Brit Mila saudara seayah/ibu";
 $factarray["_ADOP_HSIB"] = "Adopsi saudara seayah/ibu";
 $factarray["_MARR_HSIB"] = "Pernikahan saudara seayah/ibu";
-$factarray["_MARB_HSIB"] = "Marriage Bann saudara seayah/ibu";
+$factarray["_MARB_HSIB"] = "Pengumuman Nikah saudara seayah/ibu";
 $factarray["_DEAT_HSIB"] = "Kematian saudara seayah/ibu";
 $factarray["_BURI_HSIB"] = "Makam saudara seayah/ibu";
 $factarray["_CREM_HSIB"] = "Kremasi saudara seayah/ibu";
@@ -364,7 +367,7 @@ $factarray["_BAPM_NEPH"] = "Pembaptisan keponakan";
 $factarray["__BRTM_NEPH"] = "Brit Mila of a nephew";
 $factarray["_ADOP_NEPH"] = "Adopsi keponakan";
 $factarray["_MARR_NEPH"] = "Pernikahan keponakan";
-$factarray["_MARB_NEPH"] = "Marriage Bann keponakan";
+$factarray["_MARB_NEPH"] = "Pengumuman Nikah keponakan";
 $factarray["_DEAT_NEPH"] = "Kematian keponakan";
 $factarray["_BURI_NEPH"] = "Makam keponakan";
 $factarray["_CREM_NEPH"] = "Kremasi keponakan";
@@ -377,24 +380,24 @@ $factarray["_DEAT_GGPA"] = "Kematian buyut";
 $factarray["_BURI_GGPA"] = "Makam buyut";
 $factarray["_CREM_GGPA"] = "Kremasi buyut";
 
-$factarray["_BIRT_FSIB"] = "Birth saudara ayah";
-$factarray["_CHR_FSIB" ] = "Christening saudara ayah";
+$factarray["_BIRT_FSIB"] = "Kelahiran saudara ayah";
+$factarray["_CHR_FSIB" ] = "Pengkristenan saudara ayah";
 $factarray["_BAPM_FSIB"] = "Pembaptisan saudara ayah";
 $factarray["__BRTM_FSIB"] = "Brit Mila saudara ayah";
 $factarray["_ADOP_FSIB"] = "Adopsi saudara ayah";
 $factarray["_MARR_FSIB"] = "Pernikahan saudara ayah";
-$factarray["_MARB_FSIB"] = "Marriage Bann saudara ayah";
+$factarray["_MARB_FSIB"] = "Pengumuman Nikah saudara ayah";
 $factarray["_DEAT_FSIB"] = "Kematian saudara ayah";
 $factarray["_BURI_FSIB"] = "Makam saudara ayah";
 $factarray["_CREM_FSIB"] = "Kremasi saudara ayah";
 
-$factarray["_BIRT_MSIB"] = "Birth saudara ibu";
-$factarray["_CHR_MSIB" ] = "Christening saudara ibu";
+$factarray["_BIRT_MSIB"] = "Kelahiran saudara ibu";
+$factarray["_CHR_MSIB" ] = "Pengkristenan saudara ibu";
 $factarray["_BAPM_MSIB"] = "Pembaptisan saudara ibu";
 $factarray["__BRTM_MSIB"] = "Brit Mila saudara ibu";
 $factarray["_ADOP_MSIB"] = "Adopsi saudara ibu";
 $factarray["_MARR_MSIB"] = "Pernikahan saudara ibu";
-$factarray["_MARB_MSIB"] = "Marriage Bann saudara ibu";
+$factarray["_MARB_MSIB"] = "Pengumuman Nikah saudara ibu";
 $factarray["_DEAT_MSIB"] = "Kematian saudara ibu";
 $factarray["_BURI_MSIB"] = "Makam saudara ibu";
 $factarray["_CREM_MSIB"] = "Kremasi saudara ibu";
@@ -405,7 +408,7 @@ $factarray["_BAPM_COUS"] = "Pembaptisan sepupu sekali";
 $factarray["__BRTM_COUS"] = "Brit Mila sepupu sekali";
 $factarray["_ADOP_COUS"] = "Adopsi sepupu sekali";
 $factarray["_MARR_COUS"] = "Pernikahan sepupu sekali";
-$factarray["_MARB_COUS"] = "Marriage Bann sepupu sekali";
+$factarray["_MARB_COUS"] = "Pengumuman Nikah sepupu sekali";
 $factarray["_DEAT_COUS"] = "Kematian sepupu sekali";
 $factarray["_BURI_COUS"] = "Makam sepupu sekali";
 $factarray["_CREM_COUS"] = "Kremasi sepupu sekali";
@@ -416,10 +419,10 @@ $factarray["_FAMC_RESI"] = "Tempat tinggal orangtua";
 //-- PGV Only facts
 $factarray["_THUM"]	= "Gunakan gambar ini sebagai thumbnail?";
 $factarray["_PGVU"]	= "oleh"; // last changed by";
-$factarray["SERV"] = "Server Remote";
+$factarray["SERV"] = "Server Luar";
 $factarray["_GEDF"] = "Berkas GEDCOM";
 
-/*-- Fact abbreviations for use in Chart boxes.
+/*-- Fact abbreviations for use in Chart boxes.  
  *		Use these abbreviations in cases where the standard method of using the first
  *		letter of the spelled-out name results in an undesirable abbreviation or where
  *		you want to produce a different result (eg: "x" instead of "M" for "Married").
@@ -430,9 +433,9 @@ $factarray["_GEDF"] = "Berkas GEDCOM";
  *		These abbreviations are user-customizable. Just put them into file "extra.xx.php".
  *		The length of these abbreviations is not restricted to 1 letter.
  */
-
-/*-- The following lines have been commented out.  They should serve as examples.
-
+ 
+/*-- The following lines have been commented out.  They should serve as examples. 
+ 
 $factAbbrev["BIRT"]		= "B";
 $factAbbrev["MARR"]		= "M";
 $factAbbrev["DEAT"]		= "D";

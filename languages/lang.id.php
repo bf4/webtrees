@@ -21,6 +21,7 @@
  *
  *
  * @author PGV Developers
+ * @translator  Arif Rahman Hakim
  * @package PhpGedView
  * @subpackage Languages
  * @version $Id$
