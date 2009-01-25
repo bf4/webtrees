@@ -32,7 +32,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 global $SEARCH_SPIDER, $TEXT_DIRECTION, $DATE_FORMAT;
 
 $displayDate=timestamp_to_gedcom_date(client_time())->Display(false, $DATE_FORMAT);
-$view = safe_REQUEST($_REQUEST, 'view', PGV_REGEX_XREF);
+if (!isset($view)) $view = safe_REQUEST($_REQUEST, 'view', PGV_REGEX_XREF);
 
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -67,7 +67,7 @@ $view = safe_REQUEST($_REQUEST, 'view', PGV_REGEX_XREF);
 		FORM { margin-top: 0px; margin-bottom: 0px; }
 	</style>
 	<?php }
-	if ($view!="preview") { ?>
+	if ($view!="preview" && $view!="simple") { ?>
 		<?php if (!empty($META_AUTHOR)) { ?><meta name="author" content="<?php print PrintReady(strip_tags($META_AUTHOR), TRUE); ?>" /><?php } ?>
 		<?php if (!empty($META_PUBLISHER)) { ?><meta name="publisher" content="<?php print PrintReady(strip_tags($META_PUBLISHER), TRUE); ?>" /><?php } ?>
 		<?php if (!empty($META_COPYRIGHT)) { ?><meta name="copyright" content="<?php print PrintReady(strip_tags($META_COPYRIGHT), TRUE); ?>" /><?php } ?>
@@ -86,9 +86,8 @@ $view = safe_REQUEST($_REQUEST, 'view', PGV_REGEX_XREF);
 <body id="body" <?php print $bodyOnLoad; ?>>
 <!-- begin header section -->
 <?php
-if ($view!='simple')
 if ($view=='preview') include($print_headerfile);
-else {?>
+else if ($view!='simple'){?>
 <div id="header" class="<?php print $TEXT_DIRECTION; ?>">
 <table width="100%" border="0" cellspacing="0" cellpadding="1" bgcolor="#003399">
    <tr>
