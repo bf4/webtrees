@@ -5,7 +5,7 @@
  * This block will show the top 10 surnames that occur most frequently in the active gedcom
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
+ * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -61,7 +61,7 @@ function print_block_name_top10($block=true, $config="", $side, $index) {
 	}
 
 	// This next function is a bit out of date, and doesn't cope well with surname variants
-	$top_surnames=get_top_surnames($config["num"]);
+	$top_surnames=get_top_surnames($config["num"]-1);
 
 	$all_surnames=array();
 	foreach ($top_surnames as $top_surname) {
