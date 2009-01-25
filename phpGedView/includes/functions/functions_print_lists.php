@@ -1790,8 +1790,8 @@ function print_chart_by_age($data, $title) {
 		$count += $n;
 		$avg += $age*$n;
 	}
-	$avg = round($avg/$count);
 	if ($count<1) return;
+	$avg = round($avg/$count);
 	$chart_url = "http://chart.apis.google.com/chart?cht=bvs"; // chart type
 	$chart_url .= "&chs=725x150"; // size
 	$chart_url .= "&chbh=3,2,2"; // bvg : 4,1,2
