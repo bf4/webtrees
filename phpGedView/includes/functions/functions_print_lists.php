@@ -432,7 +432,7 @@ function print_indi_table($datalist, $legend="", $option="") {
  */
 function print_fam_table($datalist, $legend="", $option="") {
 	global $pgv_lang, $factarray, $SHOW_ID_NUMBERS, $SHOW_LAST_CHANGE, $SHOW_MARRIED_NAMES, $TEXT_DIRECTION;
-	global $PGV_IMAGE_DIR, $PGV_IMAGES, $SEARCH_SPIDER, $MAX_ALIVE_AGE;
+	global $PGV_IMAGE_DIR, $PGV_IMAGES, $SEARCH_SPIDER, $MAX_ALIVE_AGE, $lang_short_cut, $LANGUAGE;
 
 	if ($option=="BIRT_PLAC" || $option=="DEAT_PLAC") return;
 	if (count($datalist)<1) return;
@@ -643,28 +643,38 @@ function print_fam_table($datalist, $legend="", $option="") {
 					echo '<div>', $marriage_date->Display(!$SEARCH_SPIDER), '</div>';
 				} else if ($marriage_date->MinJD()!=0) {
 					echo '<div>', str_replace('<a', '<a name="'.$marriage_date->MinJD().'"', $marriage_date->Display(!$SEARCH_SPIDER)), '</div>';
-				} else {
-					$factdetail = explode(' ', trim($family->getMarriageRecord()));
-					if (isset($factdetail)) {
-						if (count($factdetail) == 3) {
-							if (strtoupper($factdetail[2]) == "Y")
-								echo '<div>', $pgv_lang["yes"], '<a name="9999998"></a></div>';
-							else if (strtoupper($factdetail[2]) == "N")
-								echo '<div>', $pgv_lang["no"], '<a name="9999999"></a></div>';
-						}
-						else echo '&nbsp;';
-					}
 				}
 			}
 			if ($marriage_dates[0]->gregorianYear()>=1550 && $marriage_dates[0]->gregorianYear()<2030) {
 				$marr_by_decade[floor($marriage_dates[0]->gregorianYear()/10)*10] .= $husb->getSex().$wife->getSex();
 			}
 		} else if (get_sub_record(1, "1 _NMR", find_family_record($family->getXref()))) {
+			// Allow special processing for different languages
+			$func="fact_NMR_localisation_{$lang_short_cut[$LANGUAGE]}";
+			if (function_exists($func)) {
+				// Localise the _NMR facts
+				$func("_NMR", $family->getXref());
+			}
 			echo '<div>', $factarray["_NMR"], '<a name="9999999"></a></div>';
 		} else if (get_sub_record(1, "1 _NMAR", find_family_record($family->getXref()))) {
+			// Allow special processing for different languages
+			$func="fact_NMR_localisation_{$lang_short_cut[$LANGUAGE]}";
+			if (function_exists($func)) {
+				// Localise the _NMR facts
+				$func("_NMAR", $family->getXref());
+			}
 			echo '<div>', $factarray["_NMAR"], '<a name="9999999"></a></div>';
 		} else {
-			echo '&nbsp;';
+			$factdetail = explode(' ', trim($family->getMarriageRecord()));
+			if (isset($factdetail)) {
+				if (count($factdetail) >= 3) {
+					if (strtoupper($factdetail[2]) != "N")
+						echo '<div>', $pgv_lang["yes"], '<a name="9999998"></a></div>';
+					else
+						echo '<div>', $pgv_lang["no"], '<a name="9999999"></a></div>';
+				}
+				else echo '&nbsp;';
+			}
 		}
 		echo "</td>";
 		//-- Marriage anniversary
