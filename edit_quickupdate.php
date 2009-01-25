@@ -1551,13 +1551,14 @@ function checkform(frm) {
 </tr>
 <?php $tabkey++; ?>
 <?php } ?>
-<?php if (!$NAME_REVERSE) { ?>
+<?php if (strstr($ADVANCED_NAME_FACTS, "_MARNM")!==false) { ?>
 <tr>
 	<td class="descriptionbox"><?php print_help_link("edit_surname_help", "qm"); echo $factarray["_MARNM"];?></td>
 	<td class="optionbox" colspan="3"><input size="50" type="text" tabindex="<?php echo $tabkey; ?>" name="MRSURN" value="<?php echo PrintReady(htmlspecialchars($MRSURN,ENT_COMPAT,'UTF-8')); ?>" /></td>
 </tr>
 <?php $tabkey++; ?>
 <?php } ?>
+<?php if (strstr($ADVANCED_NAME_FACTS, "_HEB")!==false) {?>
 <?php if ($NAME_REVERSE) { ?>
 <tr>
 	<td class="descriptionbox"><?php print_help_link("edit__HEB_SURN_help", "qm"); echo $pgv_lang["hebrew_surn"];?></td>
@@ -1577,6 +1578,8 @@ function checkform(frm) {
 </tr>
 <?php $tabkey++; ?>
 <?php } ?>
+<?php } ?>
+<?php if (strstr($ADVANCED_NAME_FACTS, "ROMN")!==false) { ?>
 <?php if ($NAME_REVERSE) { ?>
 <tr>
 	<td class="descriptionbox"><?php print_help_link("edit_ROMN_SURN_help", "qm"); echo $pgv_lang["roman_surn"];?></td>
@@ -1595,6 +1598,7 @@ function checkform(frm) {
 	<td class="optionbox" colspan="3"><input size="50" type="text" tabindex="<?php echo $tabkey; ?>" name="RSURN" value="<?php echo PrintReady(htmlspecialchars($RSURN,ENT_COMPAT,'UTF-8')); ?>" /></td>
 </tr>
 <?php $tabkey++; ?>
+<?php } ?>
 <?php } ?>
 <tr>
 	<td class="descriptionbox"><?php print_help_link("edit_sex_help", "qm"); echo $pgv_lang["sex"];?></td>
@@ -1922,13 +1926,14 @@ for($i=1; $i<=count($sfams); $i++) {
 </tr>
 <?php $tabkey++; ?>
 <?php } ?>
-<?php if (!$NAME_REVERSE) { ?>
+<?php if (strstr($ADVANCED_NAME_FACTS, "_MARNM")!==false) { ?>
 <tr>
 	<td class="descriptionbox"><?php print_help_link("edit_surname_help", "qm"); echo $factarray["_MARNM"];?></td>
 	<td class="optionbox" colspan="3"><input size="50" type="text" tabindex="<?php echo $tabkey; ?>" name="MSSURN<?php echo $i; ?>" /></td>
 </tr>
 <?php $tabkey++; ?>
 <?php } ?>
+<?php if (strstr($ADVANCED_NAME_FACTS, "_HEB")!==false) { ?>
 <?php if ($NAME_REVERSE) { ?>
 <tr>
 	<td class="descriptionbox"><?php print_help_link("edit__HEB_SURN_help", "qm"); echo $pgv_lang["hebrew_surn"];?></td>
@@ -1948,6 +1953,8 @@ for($i=1; $i<=count($sfams); $i++) {
 </tr>
 <?php $tabkey++; ?>
 <?php } ?>
+<?php } ?>
+<?php if (strstr($ADVANCED_NAME_FACTS, "ROMN")!==false) { ?>
 <?php if ($NAME_REVERSE) { ?>
 <tr>
 	<td class="descriptionbox"><?php print_help_link("edit_ROMN_SURN_help", "qm"); echo $pgv_lang["roman_surn"];?></td>
@@ -1966,6 +1973,7 @@ for($i=1; $i<=count($sfams); $i++) {
 	<td class="optionbox" colspan="3"><input size="50" type="text" tabindex="<?php echo $tabkey; ?>" name="RSSURN<?php echo $i; ?>" /></td>
 </tr>
 <?php $tabkey++; ?>
+<?php } ?>
 <?php } ?>
 <tr>
 	<td class="descriptionbox"><?php print_help_link("edit_sex_help", "qm"); echo $pgv_lang["sex"];?></td>
@@ -2213,6 +2221,7 @@ if (empty($child_surname)) $child_surname = "";
 </tr>
 <?php $tabkey++; ?>
 <?php } ?>
+<?php if (strstr($ADVANCED_NAME_FACTS, "_HEB")!==false) { ?>
 <?php if ($NAME_REVERSE) { ?>
 <tr>
 	<td class="descriptionbox"><?php print_help_link("edit__HEB_SURN_help", "qm"); echo $pgv_lang["hebrew_surn"];?></td>
@@ -2232,6 +2241,8 @@ if (empty($child_surname)) $child_surname = "";
 </tr>
 <?php $tabkey++; ?>
 <?php } ?>
+<?php } ?>
+<?php if (strstr($ADVANCED_NAME_FACTS, "ROMN")!==false) { ?>
 <?php if ($NAME_REVERSE) { ?>
 <tr>
 	<td class="descriptionbox"><?php print_help_link("edit_ROMN_SURN_help", "qm"); echo $pgv_lang["roman_surn"];?></td>
@@ -2250,6 +2261,7 @@ if (empty($child_surname)) $child_surname = "";
 	<td class="optionbox" colspan="3"><input size="50" type="text" tabindex="<?php echo $tabkey; ?>" name="RC<?php echo $i; ?>SURN" /></td>
 </tr>
 <?php $tabkey++; ?>
+<?php } ?>
 <?php } ?>
 <tr>
 	<td class="descriptionbox"><?php print_help_link("edit_sex_help", "qm"); echo $pgv_lang["sex"];?></td>
@@ -2321,13 +2333,14 @@ if (empty($child_surname)) $child_surname = "";
 </tr>
 <?php $tabkey++; ?>
 <?php } ?>
-<?php if (!$NAME_REVERSE) { ?>
+<?php if (strstr($ADVANCED_NAME_FACTS, "_MARNM")!==false) { ?>
 <tr>
 	<td class="descriptionbox"><?php print_help_link("edit_surname_help", "qm"); echo $factarray["_MARNM"];?></td>
 	<td class="optionbox" colspan="3"><input size="50" type="text" tabindex="<?php echo $tabkey; ?>" name="MSSURN" /></td>
 </tr>
 <?php $tabkey++; ?>
 <?php } ?>
+<?php if (strstr($ADVANCED_NAME_FACTS, "_HEB")!==false) { ?>
 <?php if ($NAME_REVERSE) { ?>
 <tr>
 	<td class="descriptionbox"><?php print_help_link("edit__HEB_SURN_help", "qm"); echo $pgv_lang["hebrew_surn"];?></td>
@@ -2347,6 +2360,8 @@ if (empty($child_surname)) $child_surname = "";
 </tr>
 <?php $tabkey++; ?>
 <?php } ?>
+<?php } ?>
+<?php if (strstr($ADVANCED_NAME_FACTS, "ROMN")!==false) { ?>
 <?php if ($NAME_REVERSE) { ?>
 <tr>
 	<td class="descriptionbox"><?php print_help_link("edit_ROMN_SURN_help", "qm"); echo $pgv_lang["roman_surn"];?></td>
@@ -2365,6 +2380,7 @@ if (empty($child_surname)) $child_surname = "";
 	<td class="optionbox" colspan="3"><input size="50" type="text" tabindex="<?php echo $tabkey; ?>" name="RSSURN" /></td>
 </tr>
 <?php $tabkey++; ?>
+<?php } ?>
 <?php } ?>
 <tr>
 	<td class="descriptionbox"><?php print_help_link("edit_sex_help", "qm"); echo $pgv_lang["sex"];?></td>
@@ -2458,6 +2474,7 @@ if (empty($child_surname)) $child_surname = "";
 </tr>
 <?php $tabkey++; ?>
 <?php } ?>
+<?php if (strstr($ADVANCED_NAME_FACTS, "_HEB")!==false) { ?>
 <?php if ($NAME_REVERSE) { ?>
 <tr>
 	<td class="descriptionbox"><?php print_help_link("edit__HEB_SURN_help", "qm"); echo $pgv_lang["hebrew_surn"];?></td>
@@ -2477,6 +2494,8 @@ if (empty($child_surname)) $child_surname = "";
 </tr>
 <?php $tabkey++; ?>
 <?php } ?>
+<?php } ?>
+<?php if (strstr($ADVANCED_NAME_FACTS, "ROMN")!==false) { ?>
 <?php if ($NAME_REVERSE) { ?>
 <tr>
 	<td class="descriptionbox"><?php print_help_link("edit_ROMN_SURN_help", "qm"); echo $pgv_lang["roman_surn"];?></td>
@@ -2495,6 +2514,7 @@ if (empty($child_surname)) $child_surname = "";
 	<td class="optionbox" colspan="3"><input size="50" type="text" tabindex="<?php echo $tabkey; ?>" name="RCSURN" /></td>
 </tr>
 <?php $tabkey++; ?>
+<?php } ?>
 <?php } ?>
 <tr>
 	<td class="descriptionbox"><?php print_help_link("edit_sex_help", "qm"); echo $pgv_lang["sex"];?></td>
@@ -2625,11 +2645,14 @@ for($j=1; $j<=count($cfams); $j++) {
 </tr>
 <?php $tabkey++; ?>
 <?php } ?>
+<?php if (strstr($ADVANCED_NAME_FACTS, "_MARNM")!==false) { ?>
 <tr>
 	<td class="descriptionbox"><?php print_help_link("edit_surname_help", "qm"); echo $factarray["_MARNM"];?></td>
 	<td class="optionbox" colspan="3"><input size="50" type="text" tabindex="<?php echo $tabkey; ?>" name="FMRSURN<?php echo $i; ?>" /></td>
 </tr>
 <?php $tabkey++; ?>
+<?php } ?>
+<?php if (strstr($ADVANCED_NAME_FACTS, "_HEB")!==false) { ?>
 <?php if ($NAME_REVERSE) { ?>
 <tr>
 	<td class="descriptionbox"><?php print_help_link("edit__HEB_SURN_help", "qm"); echo $pgv_lang["hebrew_surn"];?></td>
@@ -2649,6 +2672,8 @@ for($j=1; $j<=count($cfams); $j++) {
 </tr>
 <?php $tabkey++; ?>
 <?php } ?>
+<?php } ?>
+<?php if (strstr($ADVANCED_NAME_FACTS, "ROMN")!==false) { ?>
 <?php if ($NAME_REVERSE) { ?>
 <tr>
 	<td class="descriptionbox"><?php print_help_link("edit_ROMN_SURN_help", "qm"); echo $pgv_lang["roman_surn"];?></td>
@@ -2667,6 +2692,7 @@ for($j=1; $j<=count($cfams); $j++) {
 	<td class="optionbox" colspan="3"><input size="50" type="text" tabindex="<?php echo $tabkey; ?>" name="RFSURN<?php echo $i; ?>" /></td>
 </tr>
 <?php $tabkey++; ?>
+<?php } ?>
 <?php } ?>
 <tr>
 	<td class="descriptionbox"><?php print_help_link("edit_sex_help", "qm"); echo $pgv_lang["sex"];?></td>
@@ -2754,11 +2780,14 @@ for($j=1; $j<=count($cfams); $j++) {
 </tr>
 <?php $tabkey++; ?>
 <?php } ?>
+<?php if (strstr($ADVANCED_NAME_FACTS, "_MARNM")!==false) { ?>
 <tr>
 	<td class="descriptionbox"><?php print_help_link("edit_surname_help", "qm"); echo $factarray["_MARNM"];?></td>
 	<td class="optionbox" colspan="3"><input size="50" type="text" tabindex="<?php echo $tabkey; ?>" name="MMRSURN<?php echo $i; ?>" /></td>
 </tr>
 <?php $tabkey++; ?>
+<?php } ?>
+<?php if (strstr($ADVANCED_NAME_FACTS, "_HEB")!==false) { ?>
 <?php if ($NAME_REVERSE) { ?>
 </tr>
 	<td class="descriptionbox"><?php print_help_link("edit__HEB_SURN_help", "qm"); echo $pgv_lang["hebrew_surn"];?></td>
@@ -2778,6 +2807,8 @@ for($j=1; $j<=count($cfams); $j++) {
 </tr>
 <?php $tabkey++; ?>
 <?php } ?>
+<?php } ?>
+<?php if (strstr($ADVANCED_NAME_FACTS, "ROMN")!==false) { ?>
 <?php if ($NAME_REVERSE) { ?>
 </tr>
 	<td class="descriptionbox"><?php print_help_link("edit_ROMN_SURN_help", "qm"); echo $pgv_lang["roman_surn"];?></td>
@@ -2796,6 +2827,7 @@ for($j=1; $j<=count($cfams); $j++) {
 	<td class="optionbox" colspan="3"><input size="50" type="text" tabindex="<?php echo $tabkey; ?>" name="RMSURN<?php echo $i; ?>" /></td>
 </tr>
 <?php $tabkey++; ?>
+<?php } ?>
 <?php } ?>
 <tr>
 	<td class="descriptionbox"><?php print_help_link("edit_sex_help", "qm"); echo $pgv_lang["sex"];?></td>
@@ -3045,6 +3077,7 @@ $chil = find_children_in_record($famrec, $pid);
 </tr>
 <?php $tabkey++; ?>
 <?php } ?>
+<?php if (strstr($ADVANCED_NAME_FACTS, "_HEB")!==false) { ?>
 <?php if ($NAME_REVERSE) { ?>
 <tr>
 	<td class="descriptionbox"><?php print_help_link("edit__HEB_SURN_help", "qm"); echo $pgv_lang["hebrew_surn"];?></td>
@@ -3064,6 +3097,8 @@ $chil = find_children_in_record($famrec, $pid);
 </tr>
 <?php $tabkey++; ?>
 <?php } ?>
+<?php } ?>
+<?php if (strstr($ADVANCED_NAME_FACTS, "ROMN")!==false) { ?>
 <?php if ($NAME_REVERSE) { ?>
 <tr>
 	<td class="descriptionbox"><?php print_help_link("edit_ROMN_SURN_help", "qm"); echo $pgv_lang["roman_surn"];?></td>
@@ -3082,6 +3117,7 @@ $chil = find_children_in_record($famrec, $pid);
 	<td class="optionbox" colspan="3"><input size="50" type="text" tabindex="<?php echo $tabkey; ?>" name="RC<?php echo $i; ?>SURN" /></td>
 </tr>
 <?php $tabkey++; ?>
+<?php } ?>
 <?php } ?>
 <tr>
 	<td class="descriptionbox"><?php print_help_link("edit_sex_help", "qm"); echo $pgv_lang["sex"];?></td>
