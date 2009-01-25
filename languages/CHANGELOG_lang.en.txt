@@ -46,6 +46,11 @@ VERSION 4.2.
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change	codes and comments
 ----------------------------------------------------------------------------------------
++$pgv_lang["show_stats_charts"]						25 Jan 2009				A
++$pgv_lang["decade_birth"]							25 Jan 2009				A
++$pgv_lang["decade_death"]							25 Jan 2009				A
++$pgv_lang["decade_marriage"]						25 Jan 2009				A
++$pgv_lang["avg_age"]								25 Jan 2009				A
 +$pgv_lang["weeks"]									22 Jan 2009				A
 +$pgv_lang["week1"]									22 Jan 2009				A
 +$pgv_lang["employee"]								22 Jan 2009				A

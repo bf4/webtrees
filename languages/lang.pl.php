@@ -1475,6 +1475,11 @@ $pgv_lang["cleanup"]				= "Porządkowanie";
 
 //-- CONFIGURE (extra) messages for programs patriarch and statistics
 $pgv_lang["statistics"]				= "Statystyki";
+$pgv_lang["show_stats_charts"]		= "Pokaż wykresy statystyk";
+$pgv_lang["decade_birth"]			= "Dekada urodzin";
+$pgv_lang["decade_death"]			= "Dekada śmierci";
+$pgv_lang["decade_marriage"]		= "Dekada ślubu";
+$pgv_lang["avg_age"]				= "Średni wiek";
 
 //-- Merge Records
 $pgv_lang["merge_same"]			= "Wpisy nie są tego samego typu. Nie można scalać wpisów różnego typu.";
