@@ -1721,7 +1721,7 @@ function print_events_list($startjd, $endjd, $events='BIRT MARR DEAT', $only_liv
 
 	foreach($filtered_events as $value) {
 		$return .= "<a href=\"".encode_url($value['url'])."\" class=\"list_item name2\" dir=\"".$TEXT_DIRECTION."\">".PrintReady($value['name'])."</a>".$value['sex'];
-		$return .= "<div class=\"indent\">";
+		$return .= "<br /><div class=\"indent\">";
 		$return .= $factarray[$value['fact']].' - '.$value['date']->Display(true);
 		if ($value['anniv']!=0) $return .= " (" . str_replace("#year_var#", $value['anniv'], $pgv_lang["year_anniversary"]).")";
 		if (!empty($value['plac'])) $return .= " - <a href=\"".encode_url(get_place_url($value['plac']))."\">".$value['plac']."</a>";
