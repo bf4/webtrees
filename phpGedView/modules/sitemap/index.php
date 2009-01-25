@@ -3,7 +3,7 @@
  * Display a diff between two language files to help in translating.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
+ * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -43,6 +43,7 @@ $action				= safe_REQUEST($_REQUEST, 'action', PGV_REGEX_XREF);
 $welcome			= safe_REQUEST($_REQUEST, 'welcome', PGV_REGEX_XREF);
 $gedcom_name		= safe_REQUEST($_REQUEST, 'gedcom_name');
 $filename			= safe_REQUEST($_REQUEST, 'filename');
+$filenames			= safe_REQUEST($_REQUEST, 'filenames');
 $index				= safe_REQUEST($_REQUEST, 'index');
 $welcome_priority	= safe_REQUEST($_REQUEST, 'welcome_priority', PGV_REGEX_XREF);
 $welcome_update		= safe_REQUEST($_REQUEST, 'welcome_update', PGV_REGEX_XREF);
@@ -65,31 +66,31 @@ if ($action=="sendFiles") {
 
 	echo "<?xml version='1.0' encoding='UTF-8'?>\n";
 	echo "<?xml-stylesheet type=\"text/xsl\" href=\"".$SERVER_URL."modules/sitemap/gss.xsl\"?>\n";
-	echo "	<urlset xmlns=\"http://www.google.com/schemas/sitemap/0.84\"\n";
-	echo "	xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n";
-	echo "	xsi:schemaLocation=\"http://www.google.com/schemas/sitemap/0.84\n";
-	echo "	http://www.google.com/schemas/sitemap/0.84/sitemap.xsd\">\n";
+	echo "<urlset xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n";
+	echo "xsi:schemaLocation=\"http://www.sitemaps.org/schemas/sitemap/0.9\"\n";
+	echo "url=\"http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd\"\n";
+	echo "xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">\n";
 
 	if (isset($welcome)) {
-		echo "   <url>\n";
-		echo "	  <loc>".$SERVER_URL."index.php?command=gedcom&amp;ged=".urlencode($gedcom_name)."</loc>\n";
-		echo "	  <changefreq>".$welcome_update."</changefreq>\n";
-		echo "	  <priority>0.".$welcome_priority."</priority>\n";
-		echo "   </url>\n";
+		echo "	<url>\n";
+		echo "		<loc>".$SERVER_URL."index.php?command=gedcom&amp;ged=".urlencode($gedcom_name)."</loc>\n";
+		echo "		<changefreq>".$welcome_update."</changefreq>\n";
+		echo "		<priority>0.".$welcome_priority."</priority>\n";
+		echo "	</url>\n";
 	}
 
 	if (isset($indi_rec)) {
 		$sql = "SELECT i_id,i_gedcom FROM ".$TBLPREFIX."individuals WHERE i_file='".$index."'";
 		$res = dbquery($sql);
 		while ($row =& $res->fetchRow()) {
-			echo "   <url>\n";
-			echo "	  <loc>".$SERVER_URL."individual.php?pid=".$row[0]."&amp;ged=".urlencode($gedcom_name)."</loc>\n";
+			echo "	<url>\n";
+			echo "		<loc>".$SERVER_URL."individual.php?pid=".$row[0]."&amp;ged=".urlencode($gedcom_name)."</loc>\n";
 			$arec = get_sub_record(1, "1 CHAN", $row[1], 1);
 			if (!empty($arec) && preg_match("/2 DATE (.*)/", $arec, $datematch))
-			  echo "	  <lastmod>".date("Y-m-d", strtotime($datematch[1]))."</lastmod>\n";
-			echo "	  <changefreq>".$indirec_update."</changefreq>\n";
-			echo "	  <priority>0.".$indirec_priority."</priority>\n";
-			echo "   </url>\n";
+				echo "		<lastmod>".date("Y-m-d", strtotime($datematch[1]))."</lastmod>\n";
+			echo "		<changefreq>".$indirec_update."</changefreq>\n";
+			echo "		<priority>0.".$indirec_priority."</priority>\n";
+			echo "	</url>\n";
 		}
 		$res->free();
 	}
@@ -98,14 +99,14 @@ if ($action=="sendFiles") {
 		$sql = "SELECT f_id,f_gedcom FROM ".$TBLPREFIX."families WHERE f_file='".$index."'";
 		$res = dbquery($sql);
 		while ($row =& $res->fetchRow()) {
-			echo "   <url>\n";
-			echo "	  <loc>".$SERVER_URL."family.php?famid=".$row[0]."&amp;ged=".urlencode($gedcom_name)."</loc>\n";
+			echo "	<url>\n";
+			echo "		<loc>".$SERVER_URL."family.php?famid=".$row[0]."&amp;ged=".urlencode($gedcom_name)."</loc>\n";
 			$arec = get_sub_record(1, "1 CHAN", $row[1], 1);
 			if (!empty($arec) && preg_match("/2 DATE (.*)/", $arec, $datematch))
-			  echo "	  <lastmod>".date("Y-m-d", strtotime($datematch[1]))."</lastmod>\n";
-			echo "	  <changefreq>".$famrec_update."</changefreq>\n";
-			echo "	  <priority>0.".$famrec_priority."</priority>\n";
-			echo "   </url>\n";
+				echo "		<lastmod>".date("Y-m-d", strtotime($datematch[1]))."</lastmod>\n";
+			echo "		<changefreq>".$famrec_update."</changefreq>\n";
+			echo "		<priority>0.".$famrec_priority."</priority>\n";
+			echo "	</url>\n";
 		}
 		$res->free();
 	}
@@ -113,11 +114,11 @@ if ($action=="sendFiles") {
 	if (isset($fam_lists)) {
 		foreach(get_indilist_salpha($SHOW_MARRIED_NAMES, true, PGV_GED_ID) as $letter) {
 			if ($letter!='@') {
-				echo "   <url>\n";
-				echo "	  <loc>".$SERVER_URL."famlist.php?alpha=".urlencode($letter)."&amp;ged=".urlencode($gedcom_name)."</loc>\n";
-				echo "	  <changefreq>".$famlist_update."</changefreq>\n";
-				echo "	  <priority>0.".$famlist_priority."</priority>\n";
-				echo "   </url>\n";
+				echo "	<url>\n";
+				echo "		<loc>".$SERVER_URL."famlist.php?alpha=".urlencode($letter)."&amp;ged=".urlencode($gedcom_name)."</loc>\n";
+				echo "		<changefreq>".$famlist_update."</changefreq>\n";
+				echo "		<priority>0.".$famlist_priority."</priority>\n";
+				echo "	</url>\n";
 			}
 		}
 	}
@@ -125,11 +126,11 @@ if ($action=="sendFiles") {
 	if (isset($indi_lists)) {
 		foreach (get_indilist_salpha($SHOW_MARRIED_NAMES, false, PGV_GED_ID) as $letter) {
 			if ($letter!='@') {
-				echo "   <url>\n";
-				echo "	  <loc>".$SERVER_URL."indilist.php?alpha=".urlencode($letter)."&amp;ged=".urlencode($gedcom_name)."</loc>\n";
-				echo "	  <changefreq>".$indilist_update."</changefreq>\n";
-				echo "	  <priority>0.".$indilist_priority."</priority>\n";
-				echo "   </url>\n";
+				echo "	<url>\n";
+				echo "		<loc>".$SERVER_URL."indilist.php?alpha=".urlencode($letter)."&amp;ged=".urlencode($gedcom_name)."</loc>\n";
+				echo "		<changefreq>".$indilist_update."</changefreq>\n";
+				echo "		<priority>0.".$indilist_priority."</priority>\n";
+				echo "	</url>\n";
 			}
 		}
 	}
@@ -143,18 +144,22 @@ if ($action=="sendIndex") {
 
 	echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
 	echo "<?xml-stylesheet type=\"text/xsl\" href=\"".$SERVER_URL."modules/sitemap/gss.xsl\"?>\n";
-	echo "   <sitemapindex xmlns=\"http://www.google.com/schemas/sitemap/0.84\">\n";
+	echo "<sitemapindex xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n";
+	echo "xsi:schemaLocation=\"http://www.sitemaps.org/schemas/sitemap/0.9\"\n";
+	echo "url=\"http://www.sitemaps.org/schemas/sitemap/0.9/siteindex.xsd\"\n";
+	echo "xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">\n";
 
+	
 	if (isset($filenames)) {
 		foreach($filenames as $ged_index=>$ged_name) {
-			$xml_name = preg_replace("/\.ged/",".xml", $ged_name);
-			echo "   <sitemap>\n";
-			echo "	  <loc>".$SERVER_URL."SM_".$xml_name."</loc>\n";
-			echo "	  <lastmod>".date("Y-m-d")."</lastmod>\n ";
-			echo "   </sitemap>\n";
+			$xml_name = preg_replace("/\.ged/i",".xml", $ged_name);
+			echo "	<sitemap>\n";
+			echo "		<loc>".$SERVER_URL."SM_".$xml_name."</loc>\n";
+			echo "		<lastmod>".date("Y-m-d")."</lastmod>\n ";
+			echo "	</sitemap>\n";
 		}
 	}
-	echo "   </sitemapindex>\n";
+	echo "</sitemapindex>\n";
 	exit;
 }
 
@@ -183,7 +188,7 @@ if ($action=="generate") {
 	echo $pgv_lang["generate_sitemap"];
 	echo "</h3>\n";
 	echo "<table class=\"facts_table\">\n";
-	echo "   <tr><td class=\"topbottombar\">".$pgv_lang["selected_item"]."</td></tr>\n";
+	echo "<tr><td class=\"topbottombar\">".$pgv_lang["selected_item"]."</td></tr>\n";
 	if (isset($_POST["welcome_page"])) echo "<tr><td class=\"optionbox\">".$pgv_lang["welcome_page"]."</td></tr>\n";
 	if (isset($_POST["indi_recs"])) echo "<tr><td class=\"optionbox\">".$pgv_lang["sm_indi_info"]."</td></tr>\n";
 	if (isset($_POST["indi_list"])) echo "<tr><td class=\"optionbox\">".$pgv_lang["sm_individual_list"]."</td></tr>\n";
@@ -191,17 +196,17 @@ if ($action=="generate") {
 	if (isset($_POST["fam_list"])) echo "<tr><td class=\"optionbox\">".$pgv_lang["sm_family_list"]."</td></tr>\n";
 //  if (isset($_POST["GEDCOM_Privacy"])) echo "<tr><td class=\"optionbox\">".$pgv_lang["gedcoms_privacy"]."</td></tr>\n";
 
-	echo "   <tr><td class=\"topbottombar\">".$pgv_lang["gedcoms_selected"]."</td></tr>\n";
+	echo "<tr><td class=\"topbottombar\">".$pgv_lang["gedcoms_selected"]."</td></tr>\n";
 	foreach($GEDCOMS as $ged_index=>$ged_rec) {
 		if (isset($_POST["GEDCOM_".$ged_rec["id"]])) echo "<tr><td class=\"optionbox\">".$ged_rec["title"]."</td></tr>\n";
 	}
 
-	echo "   <tr><td class=\"topbottombar\">".$pgv_lang["sitemaps_generated"]."</td></tr>\n";
+	echo "<tr><td class=\"topbottombar\">".$pgv_lang["sitemaps_generated"]."</td></tr>\n";
 	$filecounter = 0;
 	foreach($GEDCOMS as $ged_index=>$ged_rec) {
 		if (isset($_POST["GEDCOM_".$ged_rec["id"]])) {
 			$filecounter += 1;
-			$sitemapFilename = "SM_".preg_replace("/\.ged/",".xml",$ged_rec["gedcom"]);
+			$sitemapFilename = "SM_".preg_replace("/\.ged/i",".xml",$ged_rec["gedcom"]);
 			echo "<tr><td class=\"optionbox\"><a href=\"module.php?mod=sitemap&action=sendFiles&index=".$ged_rec["id"]."&gedcom_name=".$ged_rec["gedcom"]."&filename=".$sitemapFilename;
 			if (isset($_POST["welcome_page"])) echo "&welcome=true&welcome_priority=".$welcome_priority."&welcome_update=".$welcome_update;
 			if (isset($_POST["indi_recs"])) echo "&indi_rec=true&indirec_priority=".$indirec_priority."&indirec_update=".$indirec_update;
@@ -221,13 +226,13 @@ if ($action=="generate") {
 		}
 		echo "\">SitemapIndex.xml</a></td></tr>\n";
 	}
-	echo "   <tr><td class=\"topbottombar\">".$pgv_lang["sitemaps_placement"]."</td></tr>\n";
+	echo "<tr><td class=\"topbottombar\">".$pgv_lang["sitemaps_placement"]."</td></tr>\n";
 	echo "</table>\n";
 	echo "<br />\n";
 }
 
 if ($action=="") {
-		$i = 0;
+	$i = 0;
 ?>
 
 <h3><?php print_help_link("SITEMAP_help", "qm", "SITEMAP"); echo $pgv_lang["generate_sitemap"]?></h3>
