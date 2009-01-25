@@ -293,7 +293,7 @@ if ($action=="update") {
 				else $namerec.="\n2 SURN $SURN";
 			}
 			//-- update the married surname
-			if (!isset($SURN) || isset($MRSURN) && $MRSURN!=$SURN) {
+			if (isset($MRSURN)) {
 				if (preg_match("/2 _MARNM/", $namerec)>0) $namerec = preg_replace("/2 _MARNM.*/", "2 _MARNM $MRSURN\n", $namerec);
 				else $namerec.="\n2 _MARNM $MRSURN";
 			}
