@@ -5,7 +5,7 @@
 * Various printing functions used by all scripts and included by the functions.php file.
 *
 * phpGedView: Genealogy Viewer
-* Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
+* Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
 *
 * This program is free software; you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -396,7 +396,7 @@ function print_pedigree_person($pid, $style=1, $show_famlink=true, $count=0, $pe
 * @param string $head
 * @param boolean $use_alternate_styles
 */
-function print_header($title, $head="",$use_alternate_styles=true) {
+function print_header($title, $head="", $use_alternate_styles=true) {
 	global $pgv_lang, $bwidth;
 	global $HOME_SITE_URL, $HOME_SITE_TEXT, $SERVER_URL;
 	global $BROWSERTYPE, $SEARCH_SPIDER;
@@ -671,7 +671,7 @@ function print_simple_footer() {
 	}
 	print "<br /><br /><div align=\"center\" style=\"width: 99%;\">";
 	print contact_links();
-	print '<a href="'.PGV_PHPGEDVIEW_URL.'" target="_blank"><img src="'.$PGV_IMAGE_DIR.'/'.$PGV_IMAGES['gedview']['other'].'" border="0" alt="'.PGV_PHPGEDVIEW." ".PGV_VERSION_TEXT.'" title="'.PGV_PHPGEDVIEW." ".PGV_VERSION_TEXT.'" /></a><br />';
+	print '<br /><a href="'.PGV_PHPGEDVIEW_URL.'" target="_blank"><img src="'.$PGV_IMAGE_DIR.'/'.$PGV_IMAGES['gedview']['other'].'" border="0" alt="'.PGV_PHPGEDVIEW." ".PGV_VERSION_TEXT.'" title="'.PGV_PHPGEDVIEW." ".PGV_VERSION_TEXT.'" /></a><br />';
 	if ($SHOW_STATS || PGV_DEBUG) {
 		print_execution_stats();
 	}
