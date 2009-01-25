@@ -1591,7 +1591,7 @@ function show_mediaUpload_form($URL='media.php', $showthumb=false) {
 * @param int    $line  The line number in the GEDCOM record where this media item belongs
 */
 function show_media_form($pid, $action = "newentry", $filename = "", $linktoid = "", $level = 1, $line = 0) {
-	global $GEDCOM, $pgv_lang, $TEXT_DIRECTION, $GEDCOMS, $WORD_WRAPPED_NOTES;
+	global $GEDCOM, $pgv_lang, $TEXT_DIRECTION, $GEDCOMS, $WORD_WRAPPED_NOTES, $ADVANCED_NAME_FACTS;
 	global $pgv_changes, $MEDIA_DIRECTORY_LEVELS, $MEDIA_DIRECTORY;
 	global $AUTO_GENERATE_THUMBS, $THUMBNAIL_WIDTH;
 
@@ -1813,7 +1813,8 @@ function show_media_form($pid, $action = "newentry", $filename = "", $linktoid =
 			$gedtitl = "TITL";
 	}
 	add_simple_tag("2 $gedtitl");
-
+	
+	if (strstr($ADVANCED_NAME_FACTS, "_HEB")!==false) {
 	// 3 _HEB
 	if ($gedrec == "")
 		$gedtitl = "_HEB";
@@ -1823,7 +1824,9 @@ function show_media_form($pid, $action = "newentry", $filename = "", $linktoid =
 			$gedtitl = "_HEB";
 	}
 	add_simple_tag("3 $gedtitl");
+	}
 
+	if (strstr($ADVANCED_NAME_FACTS, "ROMN")!==false) {
 	// 3 ROMN
 	if ($gedrec == "")
 		$gedtitl = "ROMN";
@@ -1833,6 +1836,7 @@ function show_media_form($pid, $action = "newentry", $filename = "", $linktoid =
 			$gedtitl = "ROMN";
 	}
 	add_simple_tag("3 $gedtitl");
+	}
 
 	//-- don't show _PRIM option to regular users
 	if (PGV_USER_GEDCOM_ADMIN) {
