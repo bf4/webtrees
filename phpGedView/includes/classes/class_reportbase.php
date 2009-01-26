@@ -2123,6 +2123,7 @@ function PGVRRelativesEHandler() {
 	foreach($list as $key=>$value) {
 		if (isset($value->generation)) $generation = $value->generation;
 //KN		if (displayDetailsById($key)) {
+			if (strpos($key,"empty")===0) continue; // key can be something like "empty7"
 			$tmp=GedcomRecord::getInstance($key);	$gedrec = $tmp->getGedcomRecord();
 			//-- start the sax parser
 			$repeat_parser = xml_parser_create();
