@@ -123,7 +123,7 @@ $worms = array(
 	'HTTrack',
 	'AISearchBot',
 	'panscient.com',
-	'Mozilla([^\/])|(\/[\D])',	// legitimate Mozilla-based browsers have something like "Mozilla/5.0"
+//	'Mozilla([^\/])|(\/[\D])',	// legitimate Mozilla-based browsers have something like "Mozilla/5.0"
 	'(Microsoft)|(Internet)|(Explorer)'		// Internet Explorer self-identifies with "MSIE"
 	);
 
