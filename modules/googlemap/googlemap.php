@@ -3,7 +3,7 @@
  * Google map module for phpGedView
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
+ * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -897,11 +897,11 @@ function build_indiv_map($indifacts, $famids) {
 			}
 		}
 		echo "}</script>";
-		echo "<div style=\"overflow: auto; overflow-x: hidden; overflow-y: auto; height:{$GOOGLEMAP_YSIZE}px;\"><table class=\"facts_table\">";
+		echo "<div style=\"overflow: auto; overflow-x: hidden; overflow-y: auto; height: {$GOOGLEMAP_YSIZE}px;\"><table class=\"facts_table\">";
 		foreach($markers as $marker) {
 			echo "<tr><td class=\"facts_label\">";
 			echo "<a href=\"javascript:highlight({$marker["index"]}, {$marker["tabindex"]})\">{$marker["fact"]}</a></td>";
-			echo "<td class=\"{$marker['class']}\">";
+			echo "<td class=\"{$marker['class']}\" style=\"white-space: normal\">";
 			if (!empty($marker["info"]))
 				echo "<span class=\"field\">{$marker["info"]}</span><br />";
 			if (!empty($marker["name"])) {

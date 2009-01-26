@@ -76,7 +76,7 @@
 				if(empty($SEARCH_SPIDER)) {
 					if($SESSION_HIDE_GOOGLEMAP == "false") {
 						include_once('modules/googlemap/googlemap.php');
-						print "<table width=\100%\" border=\"0\" class=\"facts_table\">\n";
+						print "<table width=\"100%\" border=\"0\" class=\"facts_table\">\n";
 						print "<tr><td valign=\"top\">\n";
 						print "<div id=\"googlemap_left\">\n";
 						print "<img src=\"images/hline.gif\" width=\"".$GOOGLEMAP_XSIZE."\" height=\"0\" alt=\"\" /><br/>";
@@ -96,7 +96,7 @@
 						}
 						print "</div>\n";
 						print "</td>\n";
-						print "<td valign=\"top\" width=\"28%\">\n";
+						print "<td valign=\"top\" width=\"30%\">\n";
 							print "<div id=\"googlemap_content\">\n";
 								setup_map();
 								if ($controller->default_tab==7) {
