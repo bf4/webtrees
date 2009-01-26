@@ -90,7 +90,7 @@ class MenuBar
 	static function &getMygedviewMenu() {
 		global $GEDCOMS, $MEDIA_DIRECTORY, $MULTI_MEDIA;
 		global $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $pgv_lang;
-		global $PEDIGREE_FULL_DETAILS, $PEDIGREE_LAYOUT;
+		global $PEDIGREE_FULL_DETAILS, $PEDIGREE_LAYOUT, $USE_QUICK_UPDATE;
 		if ($TEXT_DIRECTION=="rtl") $ff="_rtl"; else $ff="";
 
 		$showFull = ($PEDIGREE_FULL_DETAILS) ? 1 : 0;
@@ -127,13 +127,22 @@ class MenuBar
 			$menu->addSubmenu($submenu);
 		}
 		if (PGV_USER_GEDCOM_ID) {
-			//-- quick_update submenu
-			$submenu = new Menu($pgv_lang["quick_update_title"], "#");
-			$submenu->addOnclick("return quickEdit('".PGV_USER_GEDCOM_ID."', '', '".PGV_GEDCOM."');");
-			if (!empty($PGV_IMAGES["indis"]["small"]))
-				$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["indis"]["small"]);
-			$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
-			$menu->addSubmenu($submenu);
+			// Determine whether the Quick Update form can be shown
+			$showQuickForm = false;
+			if ($USE_QUICK_UPDATE) {
+				if ($USE_QUICK_UPDATE==='1' && PGV_USER_IS_ADMIN) $showQuickForm = true;
+				else if ($USE_QUICK_UPDATE==='2' && PGV_USER_GEDCOM_ADMIN) $showQuickForm = true;
+				else if (($USE_QUICK_UPDATE==='3' || $USE_QUICK_UPDATE===true) && PGV_USER_CAN_EDIT) $showQuickForm = true;
+			}
+			if ($showQuickForm) {
+				//-- quick_update submenu
+				$submenu = new Menu($pgv_lang["quick_update_title"], "#");
+				$submenu->addOnclick("return quickEdit('".PGV_USER_GEDCOM_ID."', '', '".PGV_GEDCOM."');");
+				if (!empty($PGV_IMAGES["indis"]["small"]))
+					$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["indis"]["small"]);
+				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
+				$menu->addSubmenu($submenu);
+			}
 			//-- my_pedigree submenu
 			$submenu = new Menu($pgv_lang["my_pedigree"], encode_url("pedigree.php?rootid=".PGV_USER_GEDCOM_ID."&show_full={$showFull}&talloffset={$showLayout}"));
 			if (!empty($PGV_IMAGES["pedigree"]["small"]))

@@ -393,7 +393,7 @@ if ($action=="update") {
 	$configtext = preg_replace('/\$SYNC_GEDCOM_FILE\s*=\s*.*;/', "\$SYNC_GEDCOM_FILE = ".$boolarray[$_POST["NEW_SYNC_GEDCOM_FILE"]].";", $configtext);
 	$configtext = preg_replace('/\$THUMBNAIL_WIDTH\s*=\s*".*";/', "\$THUMBNAIL_WIDTH = \"".$_POST["NEW_THUMBNAIL_WIDTH"]."\";", $configtext);
 	$configtext = preg_replace('/\$UNDERLINE_NAME_QUOTES\s*=\s*.*;/', "\$UNDERLINE_NAME_QUOTES = ".$boolarray[$_POST["NEW_UNDERLINE_NAME_QUOTES"]].";", $configtext);
-	$configtext = preg_replace('/\$USE_QUICK_UPDATE\s*=\s*.*;/', "\$USE_QUICK_UPDATE = ".$boolarray[$_POST["NEW_USE_QUICK_UPDATE"]].";", $configtext);
+	$configtext = preg_replace('/\$USE_QUICK_UPDATE\s*=\s*.*;/', "\$USE_QUICK_UPDATE = \"".$_POST["NEW_USE_QUICK_UPDATE"]."\";", $configtext);
 	$configtext = preg_replace('/\$USE_RIN\s*=\s*.*;/', "\$USE_RIN = ".$boolarray[$_POST["NEW_USE_RIN"]].";", $configtext);
 	$configtext = preg_replace('/\$USE_THUMBS_MAIN\s*=\s*.*;/', "\$USE_THUMBS_MAIN = ".$boolarray[$_POST["NEW_USE_THUMBS_MAIN"]].";", $configtext);
 	$configtext = preg_replace('/\$USE_MEDIA_VIEWER\s*=\s*.*;/', "\$USE_MEDIA_VIEWER = ".$boolarray[$_POST["NEW_USE_MEDIA_VIEWER"]].";", $configtext);
@@ -1863,8 +1863,10 @@ print "&nbsp;<a href=\"javascript: ".$pgv_lang["editopt_conf"]."\" onclick=\"exp
 	<tr>
 		<td class="descriptionbox wrap width20"><?php print_help_link("USE_QUICK_UPDATE_help", "qm", "USE_QUICK_UPDATE", true); print print_text("USE_QUICK_UPDATE"); ?></td>
 		<td class="optionbox"><select name="NEW_USE_QUICK_UPDATE" tabindex="<?php $i++; print $i; ?>" onfocus="getHelp('USE_QUICK_UPDATE_help');">
-				<option value="yes" <?php if ($USE_QUICK_UPDATE) print "selected=\"selected\""; ?>><?php print $pgv_lang["yes"]; ?></option>
-				<option value="no" <?php if (!$USE_QUICK_UPDATE) print "selected=\"selected\""; ?>><?php print $pgv_lang["no"]; ?></option>
+				<option value="0" <?php if (!$USE_QUICK_UPDATE) print "selected=\"selected\""; ?>><?php print $pgv_lang["nobody"]; ?></option>
+				<option value="1" <?php if ($USE_QUICK_UPDATE==='1') print "selected=\"selected\""; ?>><?php print $pgv_lang["site_admins"]; ?></option>
+				<option value="2" <?php if ($USE_QUICK_UPDATE==='2') print "selected=\"selected\""; ?>><?php print $pgv_lang["gedcom_admins"]; ?></option>
+				<option value="3" <?php if ($USE_QUICK_UPDATE===true || $USE_QUICK_UPDATE==='3') print "selected=\"selected\""; ?>><?php print $pgv_lang["editors"]; ?></option>
 			</select>
 		</td>
 	</tr>

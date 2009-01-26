@@ -164,7 +164,7 @@ $META_TITLE			= "";			//-- optional text that can be added to the html page <tit
 $META_SURNAME_KEYWORDS	= true;		//-- option to use the most common surnames in the keywords field
 
 $CHART_BOX_TAGS		= "";		//-- optional comma seperated gedcom tags to show in chart boxes
-$USE_QUICK_UPDATE	= true;		//-- whether or not to use the quick update form
+$USE_QUICK_UPDATE	= "1";		//-- who can use Quick Update: 0: nobody, 1: site admins, 2: GEDCOM admins, 3: editors
 $SHOW_QUICK_RESN	= false;	//-- whether or not to show RESN tags on the quick update form
 $QUICK_ADD_FACTS	= "BIRT,CHR,DEAT,BURI,CREM,ADOP,BAPM,BARM,BASM,BLES,CHRA,CONF,FCOM,ORDN,NATU,EMIG,IMMI,GRAD,BAPL,CONL,ENDL,SLGC,RELI";		//-- comma delimited list of facts that can be added on the quick update form
 $QUICK_REQUIRED_FACTS	= "BIRT,DEAT";	//-- comma delimited list of facts that will be required by default on the quick update
