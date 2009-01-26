@@ -1044,27 +1044,12 @@ function printSourceStructure($textSOUR) {
 			$data.="<br />&nbsp;&nbsp;<span class=\"label\">".$pgv_lang["date_of_entry"].":&nbsp;</span><span class=\"field\">".$date->Display(false)."</span>";
 		}
 		foreach($textSOUR["TEXT"] as $text) {
-/*
-			// Check if Census Assistant Text or not ===================================== 
-			if (strstr($text, "|Head|")) {
-				$text = "<table><tr><td>" . $text;
-				$text = str_replace("<br /><br />", "</td></tr></table><p><table><tr><td>", $text);
-				$text = str_replace("<br />", "</td></tr><tr><td>", $text);
-				$text = str_replace("|", "&nbsp;&nbsp;</td><td>", $text);
-				$text = $text . "</td></tr></table>";
-				$data.= "<br />";
-				$data.= "<span class=\"label\">".$factarray["TEXT"].":&nbsp;</span>";
-				$data.= "<span class=\"field\">".PrintReady($text)."</span><br />";
-			}else{
-				$data.="<br />&nbsp;&nbsp;<span class=\"label\">".$factarray["TEXT"].":&nbsp;</span><span class=\"field\">".PrintReady(expand_urls($text))."</span>";
-			}
-			// ==================================================================
-*/
+			
 			// Check if Census Assistant Note ======================================= 
 			// if (eregi("Head", $text)) {
 			if (strstr($text, "|Head|")) {
 				$text = "xCxAx<table><tr><td><br /><br />" . $text;
-				$text = str_replace("<br /><br />", "</td></tr></table><p><table><tr><td><b>Name</b>&nbsp;&nbsp;</td><td><b>Relation</b>&nbsp;&nbsp;</td><td><b>Gend</b>&nbsp;&nbsp;</td><td><b>Age</b>&nbsp;&nbsp;</td><td><b>Cond</b>&nbsp;&nbsp;</td><td><b>Occupation</b>&nbsp;&nbsp;</td><td><b>Birth place</b>&nbsp;&nbsp;</td> </tr><tr><td>", $text);
+				$text = str_replace("<br /><br />", "</td></tr></table><p><table><tr><td><b>Name</b>&nbsp;&nbsp;</td><td><b>Related</b>&nbsp;&nbsp;</td><td><b>Status</b>&nbsp;&nbsp;</td><td><b>Age</b>&nbsp;&nbsp;</td><td><b>Sex</b>&nbsp;&nbsp;</td><td><b>Occupation</b>&nbsp;&nbsp;</td><td><b>Birth place</b>&nbsp;&nbsp;</td> </tr><tr><td>", $text);
 				if (eregi("<br />.b.", $text)) {
 					$text = str_replace(".b.", "<font color=\"blue\">", $text);
 					$text = str_replace("|", "&nbsp;&nbsp;</font></td><td>", $text);
@@ -1081,7 +1066,7 @@ function printSourceStructure($textSOUR) {
 				$data.="<br />&nbsp;&nbsp;<span class=\"label\">".$factarray["TEXT"].":&nbsp;</span><span class=\"field\">".PrintReady(expand_urls($text))."</span>";
 			}
 			// ==========================================================
-
+			
 		}
 	}
 
