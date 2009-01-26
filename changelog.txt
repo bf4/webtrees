@@ -10,6 +10,7 @@
 
 
 Version 4.2.0
+ - Fixed: [ 2256627 ] Ahnentafel report crashes (ljm)
  - Fixed: [ 2193477 ] [4146] Printer Friendly View Problems (wooc)
  - Fixed: [ 2530481 ] Autocomplete error adding new place (wooc)
  - Fixed: [ 2430622 ] [4548] Places Error Possibly Caused by Autocomplete (wooc)

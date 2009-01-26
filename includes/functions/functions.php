@@ -3154,13 +3154,13 @@ function add_ancestors(&$list, $pid, $children=false, $generations=-1, $show_emp
 	$list[$pid]->generation = 1;
 	while (count($genlist)>0) {
 		$id = array_shift($genlist);
-		if ($id=="empty") continue;
+		if (strpos($id,"empty")===0) continue; // id can be something like "empty7"
 		$person = Person::getInstance($id);
 		$famids = $person->getChildFamilies();
 		if (count($famids)>0) {
 			if ($show_empty) {
 				for ($i=0;$i<$num_skipped;$i++) {
-					$list["empty" . $total_num_skipped] = new Person();
+					$list["empty" . $total_num_skipped] = new Person('');
 					$list["empty" . $total_num_skipped]->generation = $list[$id]->generation+1;
 					array_push($genlist, "empty" . $total_num_skipped);
 					$total_num_skipped++;
@@ -3175,7 +3175,7 @@ function add_ancestors(&$list, $pid, $children=false, $generations=-1, $show_emp
 					$list[$husband->getXref()]->generation = $list[$id]->generation+1;
 				} else
 					if ($show_empty) {
-						$list["empty" . $total_num_skipped] = new Person();
+						$list["empty" . $total_num_skipped] = new Person('');
 						$list["empty" . $total_num_skipped]->generation = $list[$id]->generation+1;
 					}
 				if ($wife) {
@@ -3183,7 +3183,7 @@ function add_ancestors(&$list, $pid, $children=false, $generations=-1, $show_emp
 					$list[$wife->getXref()]->generation = $list[$id]->generation+1;
 				} else
 					if ($show_empty) {
-						$list["empty" . $total_num_skipped] = new Person();
+						$list["empty" . $total_num_skipped] = new Person('');
 						$list["empty" . $total_num_skipped]->generation = $list[$id]->generation+1;
 					}
 				if ($generations == -1 || $list[$id]->generation+1 < $generations) {
