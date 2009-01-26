@@ -1878,7 +1878,7 @@ function search_fams_names($query, $geds, $match) {
 		if ($DB_UTF8_COLLATION || !has_utf8($q)) {
 			$querysql[]="(husb.n_full ".PGV_DB_LIKE." '%{$q}%' OR wife.n_full ".PGV_DB_LIKE." '%{$q}%')";
 		} else {
-			$querysql[]="(husb.n_full ".PGV_DB_LIKE." '%{$q}%' OR wife.n_full ".PGV_DB_LIKE." '%{$q}%' OR husb.n_full ".PGV_DB_LIKE." '%".UTF8_strtoupper($q)."%' OR husb.n_full ".PGV_DB_LIKE." '%".UTF8_strtolower($q)."% OR wife.n_full ".PGV_DB_LIKE." '%".UTF8_strtoupper($q)."%' OR wife.n_full ".PGV_DB_LIKE." '%".UTF8_strtolower($q)."%')";
+			$querysql[]="(husb.n_full ".PGV_DB_LIKE." '%{$q}%' OR wife.n_full ".PGV_DB_LIKE." '%{$q}%' OR husb.n_full ".PGV_DB_LIKE." '%".UTF8_strtoupper($q)."%' OR husb.n_full ".PGV_DB_LIKE." '%".UTF8_strtolower($q)."%' OR wife.n_full ".PGV_DB_LIKE." '%".UTF8_strtoupper($q)."%' OR wife.n_full ".PGV_DB_LIKE." '%".UTF8_strtolower($q)."%')";
 		}
 	}
 	
