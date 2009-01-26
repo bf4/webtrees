@@ -91,30 +91,43 @@ echo '</td></tr><tr><td colspan="2"><table border=\"0\" class="facts_table">';
 
 $shnotefacts=$controller->shnote->getFacts();
 echo "<br /><br />";
-foreach ($shnotefacts as $fact) {
-	if ($fact) {
-		if ($fact->getTag()=='NOTE') {
-//			print_fact($fact);
-//			print_main_notes($fact->getGedcomRecord(), 0, $controller->nid, $fact->getLineNumber());
-		} elseif ($fact->getTag()=='CONT') {
-			if ($fact->getLineNumber()=='1') {
-				echo '<tr><td align="center" class="descriptionbox">Shared Note</td><td class="optionbox">';
-			}else{
-				echo '<tr><td align="center" class="descriptionbox"></td><td class="optionbox">';
-			}
-			echo ereg_replace("1 CONT", "", PrintReady($fact->getGedcomRecord()) );
-			echo "<br />";
-			echo "</td></tr>";
 
-		} else {
-			print_fact($fact);
+$noterec = find_gedcom_record($controller->nid);
+
+// echo $noterec . "<br />";
+
+$nt = preg_match("/0 @$controller->nid@ NOTE (.*)/", $noterec, $n1match);
+$fred = print_note_record($n1match[1], 1, $noterec, false, true);
+
+
+
+echo '<tr><td align="center" class="descriptionbox">Shared Note</td><td class="optionbox">';
+echo $fred;
+echo "<br />";
+echo "</td></tr>";
+
+foreach ($shnotefacts as $fact) {
+	if ($fact->getTag()=='CONT') {
+/*
+	} elseif ($fact->getTag()=='CONT') {
+		if ($fact->getLineNumber()=='1') {
+			echo '<tr><td align="center" class="descriptionbox">Shared Note</td><td class="optionbox">';
+		}else{
+			echo '<tr><td align="center" class="descriptionbox"></td><td class="optionbox">';
 		}
+		echo ereg_replace("1 CONT", "", PrintReady($fact->getGedcomRecord()) );
+		echo "<br />";
+		echo "</td></tr>";
+*/
+	} else {
+		print_fact($fact);
 	}
 }
 
+			
 // Print media
 print_main_media($controller->nid);
-
+		
 // new fact link
 if (!$controller->isPrintPreview() && $controller->userCanEdit()) {
 	print_add_new_fact($controller->nid, $shnotefacts, 'NOTE');
