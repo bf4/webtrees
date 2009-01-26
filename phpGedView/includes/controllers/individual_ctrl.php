@@ -526,41 +526,35 @@ class IndividualControllerRoot extends BaseController {
 		if (!empty($PGV_IMAGES["edit_indi"]["small"]))
 			$menu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["edit_indi"]["small"]);
 		$menu->addClass("submenuitem$ff", "submenuitem_hover$ff", "submenu$ff");
-		//-- quickedit sub menu
-		if ($USE_QUICK_UPDATE) {
-			$submenu = new Menu($pgv_lang["quick_update_title"]);
-			$submenu->addOnclick("return quickEdit('".$this->pid."','','".$GEDCOM."');");
-			$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
-			$menu->addSubmenu($submenu);
-		}
 		if (PGV_USER_CAN_EDIT) {
-			if (PGV_USER_IS_ADMIN || $this->canShowGedcomRecord()) {
-				$submenu = new Menu($pgv_lang["edit_raw"]);
-				$submenu->addOnclick("return edit_raw('".$this->pid."');");
+			if ($USE_QUICK_UPDATE) {
+				$submenu = new Menu($pgv_lang["quick_update_title"]);
+				$submenu->addOnclick("return quickEdit('".$this->pid."','','".$GEDCOM."');");
 				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 				$menu->addSubmenu($submenu);
+				
+				$menu->addSeparator();
 			}
+			
 			if (count($this->indi->getSpouseFamilyIds())>1) {
 				$submenu = new Menu($pgv_lang["reorder_families"]);
 				$submenu->addOnclick("return reorder_families('".$this->pid."');");
 				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 				$menu->addSubmenu($submenu);
 			}
-			$submenu = new Menu($pgv_lang["delete_person"]);
-			$submenu->addOnclick("return deleteperson('".$this->pid."');");
-			$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
-			$menu->addSubmenu($submenu);
-			$menu->addSeparator();
+			
 			if ($this->total_names<2) {
 				$submenu = new Menu($pgv_lang["edit_name"]);
 				$submenu->addOnclick("return edit_name('".$this->pid."', $NAME_LINENUM);");
 				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 				$menu->addSubmenu($submenu);
 			}
+			
 			$submenu = new Menu($pgv_lang["add_name"]);
 			$submenu->addOnclick("return add_name('".$this->pid."');");
 			$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 			$menu->addSubmenu($submenu);
+			
 			if ($this->SEX_COUNT<2) {
 				$submenu = new Menu($pgv_lang["edit"]." ".$pgv_lang["sex"]);
 				if ($SEX_LINENUM=="new") $submenu->addOnclick("return add_new_record('".$this->pid."', 'SEX');");
@@ -568,14 +562,15 @@ class IndividualControllerRoot extends BaseController {
 				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 				$menu->addSubmenu($submenu);
 			}
-		}
-		if (isset($pgv_changes[$this->pid."_".$GEDCOM])) {
+			
 			$menu->addSeparator();
+		}
+		
+		if (isset($pgv_changes[$this->pid."_".$GEDCOM])) {
 			if (!$this->show_changes) {
 				$label = $pgv_lang["show_changes"];
 				$link = $this->indi->getLinkUrl()."&show_changes=yes";
-			}
-			else {
+			} else {
 				$label = $pgv_lang["hide_changes"];
 				$link = $this->indi->getLinkUrl()."&show_changes=no";
 			}
@@ -591,7 +586,22 @@ class IndividualControllerRoot extends BaseController {
 				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 				$menu->addSubmenu($submenu);
 			}
+			
+			$menu->addSeparator();
 		}
+		
+		if (PGV_USER_IS_ADMIN || $this->canShowGedcomRecord()) {
+			$submenu = new Menu($pgv_lang["edit_raw"]);
+			$submenu->addOnclick("return edit_raw('".$this->pid."');");
+			$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
+			$menu->addSubmenu($submenu);
+		}
+
+		$submenu = new Menu($pgv_lang["delete_person"]);
+		$submenu->addOnclick("return deleteperson('".$this->pid."');");
+		$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
+		$menu->addSubmenu($submenu);
+
 		//-- get the link for the first submenu and set it as the link for the main menu
 		if (isset($menu->submenus[0])) {
 			$link = $menu->submenus[0]->onclick;

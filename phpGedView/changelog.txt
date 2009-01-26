@@ -10,6 +10,7 @@
 
 
 Version 4.2.0
+ - Changed: [ 2481776 ] Change order of Edit menu entries on Indi and Family pages (canajun2eh)
  - Fixed: [ 2256627 ] Ahnentafel report crashes (ljm)
  - Fixed: [ 2193477 ] [4146] Printer Friendly View Problems (wooc)
  - Fixed: [ 2530481 ] Autocomplete error adding new place (wooc)
