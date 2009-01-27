@@ -325,6 +325,7 @@ $pgv_lang["stepbrother"]			= "Stebror";
 $pgv_lang["fams_charts"]			= "Valg for denne familien";
 $pgv_lang["indis_charts"]			= "Valg for denne personen";
 $pgv_lang["none"]					= "Ingen";
+##$pgv_lang["facts"]					= "Facts";
 $pgv_lang["locked"]					= "Ikke gjør endringer";
 $pgv_lang["privacy"]				= "Personvern";
 $pgv_lang["number_sign"]			= "#";

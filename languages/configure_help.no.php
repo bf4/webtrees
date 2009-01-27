@@ -145,7 +145,7 @@ $pgv_lang["CHART_BOX_TAGS"]				= "Vise andre fakta i diagram";
 $pgv_lang["CHART_BOX_TAGS_help"]		= "I tillegg til faktopplysninger om fødsel- og dødsdato vist i diagrammet Anetre, kan du her skrive inn fakta separert med mellomrom eller komma.  Denne listen krever at du bruker faktanavn slik de er beskrevet i GEDCOM 5.5.1 standarden.  For eksempel, dersom du ønsker å vise yrke i boksene, kan du legge til \"OCCU\" i feltet.";
 ##$pgv_lang["FULL_SOURCES"]		= "Use full source citations";
 ##$pgv_lang["FULL_SOURCES_help"]		= "~#pgv_lang[FULL_SOURCES]#~<br /><br />Source citations can include fields to record the quality of the data (primary, secondary, etc.) and the date the event was recorded in the source.  If you don't use these fields, you can disable them when creating new source citations.<br />";
-##$pgv_lang["PREFER_LEVEL2_SOURCES"]		= "Prefer fact sources";
+##$pgv_lang["PREFER_LEVEL2_SOURCES"]		= "Source type";
 ##$pgv_lang["PREFER_LEVEL2_SOURCES_help"]		= "~#pgv_lang[PREFER_LEVEL2_SOURCES]#~<br /><br />When adding new close relatives, you can add source citations to the records (e.g. INDI, FAM) or the facts (BIRT, MARR, DEAT).  This option controls which checkboxes are ticked by default.<br />";
 
 

@@ -345,7 +345,7 @@ if ($action=="update") {
 	$configtext = preg_replace('/\$PEDIGREE_LAYOUT\s*=\s*.*;/', "\$PEDIGREE_LAYOUT = ".$boolarray[$_POST["NEW_PEDIGREE_LAYOUT"]].";", $configtext);
 	$configtext = preg_replace('/\$PEDIGREE_ROOT_ID\s*=\s*".*";/', "\$PEDIGREE_ROOT_ID = \"".$_POST["NEW_PEDIGREE_ROOT_ID"]."\";", $configtext);
 	$configtext = preg_replace('/\$POSTAL_CODE\s*=\s*.*;/', "\$POSTAL_CODE = ".$boolarray[$_POST["NEW_POSTAL_CODE"]].";", $configtext);
-	$configtext = preg_replace('/\$PREFER_LEVEL2_SOURCES\s*=\s*.*;/', "\$PREFER_LEVEL2_SOURCES = ".$boolarray[$_POST["NEW_PREFER_LEVEL2_SOURCES"]].";", $configtext);
+	$configtext = preg_replace('/\$PREFER_LEVEL2_SOURCES\s*=\s*.*;/', "\$PREFER_LEVEL2_SOURCES = \"".$_POST["NEW_PREFER_LEVEL2_SOURCES"]."\";", $configtext);
 	$configtext = preg_replace('/\$QUICK_ADD_FACTS\s*=\s*".*";/', "\$QUICK_ADD_FACTS = \"".$_POST["NEW_QUICK_ADD_FACTS"]."\";", $configtext);
 	$configtext = preg_replace('/\$QUICK_ADD_FAMFACTS\s*=\s*".*";/', "\$QUICK_ADD_FAMFACTS = \"".$_POST["NEW_QUICK_ADD_FAMFACTS"]."\";", $configtext);
 	$configtext = preg_replace('/\$QUICK_REQUIRED_FACTS\s*=\s*".*";/', "\$QUICK_REQUIRED_FACTS = \"".$_POST["NEW_QUICK_REQUIRED_FACTS"]."\";", $configtext);
@@ -1936,8 +1936,9 @@ print "&nbsp;<a href=\"javascript: ".$pgv_lang["editopt_conf"]."\" onclick=\"exp
 	<tr>
 		<td class="descriptionbox wrap width20"><?php print_help_link("PREFER_LEVEL2_SOURCES_help", "qm", "PREFER_LEVEL2_SOURCES"); print $pgv_lang["PREFER_LEVEL2_SOURCES"]; ?></td>
 		<td class="optionbox"><select name="NEW_PREFER_LEVEL2_SOURCES" tabindex="<?php $i++; print $i; ?>" onfocus="getHelp('PREFER_LEVEL2_SOURCES_help');">
-				<option value="yes" <?php if ($PREFER_LEVEL2_SOURCES) print "selected=\"selected\""; ?>><?php print $pgv_lang["yes"]; ?></option>
-				<option value="no" <?php if (!$PREFER_LEVEL2_SOURCES) print "selected=\"selected\""; ?>><?php print $pgv_lang["no"]; ?></option>
+				<option value="0" <?php if ($PREFER_LEVEL2_SOURCES==='0') print " selected=\"selected\""; ?>><?php print $pgv_lang["none"]; ?></option>
+				<option value="1" <?php if ($PREFER_LEVEL2_SOURCES==='1' || $PREFER_LEVEL2_SOURCES===true) print " selected=\"selected\""; ?>><?php print $pgv_lang["facts"]; ?></option>
+				<option value="2" <?php if ($PREFER_LEVEL2_SOURCES==='2' || $PREFER_LEVEL2_SOURCES===false) print " selected=\"selected\""; ?>><?php print $pgv_lang["record"]; ?></option>
 			</select>
 		</td>
 	</tr>
