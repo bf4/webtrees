@@ -3214,10 +3214,10 @@ function add_ancestors(&$list, $pid, $children=false, $generations=-1, $show_emp
 		} else
 			if ($show_empty) {
 				if ($skipped_gen > $list[$id]->generation) {
-					$list["empty" . $total_num_skipped] = array();
+					$list["empty" . $total_num_skipped] = new Person('');
 					$list["empty" . $total_num_skipped]->generation = $list[$id]->generation+1;
 					$total_num_skipped++;
-					$list["empty" . $total_num_skipped] = array();
+					$list["empty" . $total_num_skipped] = new Person('');
 					$list["empty" . $total_num_skipped]->generation = $list[$id]->generation+1;
 					array_push($genlist, "empty" . ($total_num_skipped - 1));
 					array_push($genlist, "empty" . $total_num_skipped);

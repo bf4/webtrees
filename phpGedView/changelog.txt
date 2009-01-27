@@ -10,6 +10,7 @@
 
 
 Version 4.2.0
+ - Fixed: [ 2391927 ] Ahnentafel report crashes (ljm)
  - Changed: [ 2534555 ] Modify 'Prefer fact sources' option (canajun2eh)
  - Changed: [ 2481763 ] Change options that control the use of Quick Update (canajun2eh)
  - Changed: [ 2481776 ] Change order of Edit menu entries on Indi and Family pages (canajun2eh)
