@@ -144,7 +144,7 @@ $pgv_lang["CHART_BOX_TAGS"]				= "Andere auf Diagrammen zu zeigende Ereignisse";
 $pgv_lang["CHART_BOX_TAGS_help"]		= "~#pgv_lang[CHART_BOX_TAGS]#~<br /><br />Diese Liste, dessen Einträge durch Komma oder Leerzeichen getrennt sind, bestimmt die Ereignisse oder Fakten die in Boxen in Diagrammen auftreten dürfen.  Alle Einträge in dieser Liste müssen Fakten, wie sie im GEDCOM 5.5.1 Standard bestimmt sind, sein.  Zum Beispiel, falls der Beruf der Person in dessen Box zu zeigen ist, muss dieses Feld den Eintrag <b>OCCU</b> enthalten.<br />";
 $pgv_lang["FULL_SOURCES"]				= "Vollständige Quellen-Zitate benutzen";
 $pgv_lang["FULL_SOURCES_help"]			= "~#pgv_lang[FULL_SOURCES]#~<br /><br />Quellen-Zitate können Felder enthalten, die die Qualität der Daten oder das Datum des Eintrages in der Quelle beschreiben.  Wenn Sie solche Felder nicht benutzen, können Sie sie in neuen Quellen-Zitaten verbergen.<br />";
-$pgv_lang["PREFER_LEVEL2_SOURCES"]		= "Quellen-Zitate mit Fakten verbinden";
+$pgv_lang["PREFER_LEVEL2_SOURCES"]		= "Quellen-Zitatentyp";
 $pgv_lang["PREFER_LEVEL2_SOURCES_help"]	= "~#pgv_lang[PREFER_LEVEL2_SOURCES]#~<br /><br />Wenn Sie neue nahe Verwandte in die Datenbank eintragen, können Sie auch Quellen-Zitate den Datensätzen (INDI, FAM) hinzufügen.  Quellen-Zitate können auch den verschiedenen Fakten (BIRT, MARR, DEAT) hinzugefügt werden.  Diese Option bestimmt die ursprünglich angekreuzten Boxen.<br />";
 
 

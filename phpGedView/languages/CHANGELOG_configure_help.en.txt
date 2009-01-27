@@ -47,6 +47,7 @@ VERSION 4.2.0
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 -----------------------------------------------------------------------------------------
+*$pgv_lang["PREFER_LEVEL2_SOURCES"]					26 Jan 2009				W
 *$pgv_lang["USE_QUICK_UPDATE_help"]					26 Jan 2009				W
 *$pgv_lang["USE_GEONAMES_help"]						25 Jan 2009				W
 *$pgv_lang["USE_GEONAMES"]							24 Jan 2009				W

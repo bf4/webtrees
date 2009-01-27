@@ -201,7 +201,7 @@ $ADVANCED_PLAC_FACTS = "";
 $USE_GEONAMES = false;	// use geonames.org with autocomplite function
 $SURNAME_TRADITION = "paternal";
 $FULL_SOURCES=true; // Include the quality-of-data and date-of-entry-in-original-source fields
-$PREFER_LEVEL2_SOURCES=false; // Default for checkboxes when adding close relatives
+$PREFER_LEVEL2_SOURCES='1'; 	//-- When adding close relatives, which Source checkboxes are checked by default: 0: none, 1: facts, 2: record
 
 $ENABLE_RSS = true;
 $RSS_FORMAT = "ATOM";		//-- default feed format.

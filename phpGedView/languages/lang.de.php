@@ -325,6 +325,7 @@ $pgv_lang["stepbrother"]				= "Stiefbruder";
 $pgv_lang["fams_charts"]				= "Optionen für Familie";
 $pgv_lang["indis_charts"]				= "Optionen für Person";
 $pgv_lang["none"]						= "Keine";
+$pgv_lang["facts"]						= "Fakte";
 $pgv_lang["locked"]						= "Nicht ändern!";
 $pgv_lang["privacy"]					= "Datenschutz";
 $pgv_lang["number_sign"]				= "#";
