@@ -984,7 +984,7 @@ class MenuBar
 	*/
 	static function &getFavouritesMenu() {
 		global $REQUIRE_AUTHENTICATION, $pgv_lang, $GEDCOM, $QUERY_STRING, $SCRIPT_NAME, $PGV_IMAGE_DIR, $PGV_IMAGES, $TEXT_DIRECTION;
-		global $controller; // Pages with a controller can be added to the favourites
+		global $controller, $pid; // Pages with a controller can be added to the favourites
 		if ($TEXT_DIRECTION=="rtl") $ff="_rtl"; else $ff="";
 
 		if (PGV_USER_ID || !$REQUIRE_AUTHENTICATION) {
@@ -1001,7 +1001,7 @@ class MenuBar
 				$submenu->addClass('favsubmenuitem', 'favsubmenuitem_hover');
 				$menu->addSubMenu($submenu);
 				if (PGV_USER_ID && isset($controller)) {
-					$submenu=new Menu('<em>'.$pgv_lang['add_to_my_favorites'].'</em>', $SCRIPT_NAME.normalize_query_string($QUERY_STRING.'&amp;action=addfav'));
+					$submenu=new Menu('<em>'.$pgv_lang['add_to_my_favorites'].'</em>', $SCRIPT_NAME.normalize_query_string($QUERY_STRING.'&amp;action=addfav&amp;gid='.$controller->pid));
 					$submenu->addClass('favsubmenuitem', 'favsubmenuitem_hover');
 					$menu->addSubMenu($submenu);
 				}
