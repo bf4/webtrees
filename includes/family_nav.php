@@ -77,7 +77,13 @@ if (isset($_COOKIE['lastclick'])) {
 			$styleadd = "";
 			?>
 			<tr>
-				<td style="padding-bottom: 4px;" align="center" colspan="2"><b><?php echo $pgv_lang["parent_family"] ?></b></td>
+				<td style="padding-bottom: 4px;" align="center" colspan="2">
+				<?php 
+				echo "<a href=family.php?famid=".$famid.">"; 
+				echo "<b>". $pgv_lang["parent_family"] ."&nbsp;&nbsp;(".$famid.")</b>";
+				echo "</a>"; 
+				?>
+				</td>
 			</tr>
 			<?php
 			if (isset($people["husb"])) {
@@ -199,10 +205,22 @@ if (isset($_COOKIE['lastclick'])) {
 			if ($people){
 				echo "<tr><td><br /></td><td></td></tr>";
 			}
-
 			$styleadd = "";
 			$elderdate = "";
-			if (isset($people["husb"]) && $people["husb"]->getLabel() == ".") {
+			?>
+			<tr>
+				<td style="padding-bottom: 4px;" align="center" colspan="2">
+				<?php 
+				echo "<a href=family.php?famid=".$famid.">"; 
+				echo "<b>". $pgv_lang["step_parent_family"] ."&nbsp;&nbsp;(".$famid.")</b>";
+				echo "</a>"; 
+				?>
+				</td>
+			</tr>
+			<?php
+			
+			//if (isset($people["husb"]) && $people["husb"]->getLabel() == ".") {
+			if (isset($people["husb"]) ) {
 				$menu = array();
 				if ($people["husb"]->getLabel() == ".") {
 					$menu["label"] = "&nbsp;" . $pgv_lang["stepdad"] . "&nbsp;". "\n";
@@ -219,9 +237,7 @@ if (isset($_COOKIE['lastclick'])) {
 				if (PrintReady($people["husb"]->getDeathYear()) == 0) { $DeathYr = ""; }else{ $DeathYr = PrintReady($people["husb"]->getDeathYear()); }
 				if (PrintReady($people["husb"]->getBirthYear()) == 0) { $BirthYr = ""; }else{ $BirthYr = PrintReady($people["husb"]->getBirthYear()); }
 				?>
-				<tr>
-					<td style="padding-bottom: 4px;" align="center" colspan="2"><b><?php echo $pgv_lang["step_parent_family"] ?></b></td>
-				</tr>
+
 				<tr>
 					<td class="facts_label<?php print $styleadd; ?>" nowrap="nowrap">
 						<?php
@@ -242,7 +258,8 @@ if (isset($_COOKIE['lastclick'])) {
 			}
 
 			$styleadd = "";
-			if (isset($people["wife"]) && $people["wife"]->getLabel() == ".") {
+			//if (isset($people["wife"]) && $people["wife"]->getLabel() == ".") {
+			if (isset($people["wife"]) ) {
 				$menu = array();
 				if ($people["wife"]->getLabel() == ".") {
 					$menu["label"] = "&nbsp;" . $pgv_lang["stepmom"] . "&nbsp;". "\n";
@@ -321,7 +338,13 @@ if (isset($_COOKIE['lastclick'])) {
 		echo "<tr><td><br /></td><td></td></tr>";
 		?>
 			<tr>
-				<td style="padding-bottom: 4px;" align="center" colspan="2"><b><?php echo $pgv_lang["immediate_family"] ?></b></td>
+				<td style="padding-bottom: 4px;" align="center" colspan="2">
+				<?php 
+				echo "<a href=family.php?famid=".$famid.">"; 
+				echo "<b>". $pgv_lang["immediate_family"] ."&nbsp;&nbsp;(".$famid.")</b>";
+				echo "</a>"; 
+				?>
+				</td>
 			</tr>
 		<?php
 

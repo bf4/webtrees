@@ -354,7 +354,7 @@ function lightbox_print_media_row($rtype, $rowm, $pid) {
 			// print "</table>" . "\n";
 		}
 
-		} // NOTE End If Show fact details
+	} // NOTE End If Show fact details
 
 
 	// If media file is missing but details are in Gedcom then add the menu as well
