@@ -9,6 +9,8 @@
 =====================================================================
 
 Version 4.2.0 CA
+ - Merged: Merge changes r4937 - r4938 from the trunk. (Picked up missing r4938 on last merge) (windmillway)
+ - Merged: Merge changes r4936 - r4937 from the trunk. (Picked up missing r4936 on last merge) (windmillway)
  - Merged: Merge changes r4894 - r4935 from the trunk (windmillway)
  - Added: New Census Birthplace function for Census Assistant (windmillway)
  - Changed: Corrected Shared Note View first line, added various aesthetic changes. (windmillway) 
@@ -18,6 +20,9 @@ Version 4.2.0 CA
 
  
 Version 4.2.0
+ - Fixed: [ 2543891 ] Need to refresh to see approved changes (wooc)
+ - Fixed: [ 2542150 ] [4927] Cannot add date to MARR when SOUR is present (wooc)
+ - Fixed: [ 2536206 ] [4.1.6] Double Date Field on Census Re-edit (wooc)
  - Added: Quick Parents/Step/Immediate Family Page Link on Indi Page Family Navigator (windmillway)
  - Fixed: [ 2524544 ] AddFavourites() not working (canajun2eh)
  - Fixed: [ 2391927 ] Ahnentafel report crashes (ljm)
