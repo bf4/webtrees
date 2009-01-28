@@ -619,9 +619,8 @@ $pgv_lang["CHART_BOX_TAGS"]			= "Inne fakty widoczne na wykresach";
 $pgv_lang["CHART_BOX_TAGS_help"]	= "~#pgv_lang[CHART_BOX_TAGS]#~<br /><br />Powinna być to lista faktów rozdzielana przecinkami lub spacjami (dodatkowo poza urodzeniem i śmiercią), które mają być widoczne w ramkach wykresów, takich jak wykres rodowy. Ta lista wymaga użycia znaczników faktów, zdefiniowanych w standardzie GEDCOM 5.5.1. Na przykład, jeśli chcesz pokazać w ramce zawód, dodajesz do tego pola znacznik \"OCCU\".<br /><br />Ustawia zmienną \$CHART_BOX_TAGS w pliku <i><u>xxx</u>.GED_conf.php</i>.<br />";
 $pgv_lang["FULL_SOURCES"]			= "Użyj pełnych opisów źródeł";
 $pgv_lang["FULL_SOURCES_help"]		= "~#pgv_lang[FULL_SOURCES]#~<br /><br />Opisy źródeł mogą zawierać pola <b>Jakości danych</b> oraz <b>Daty wpisu w oryginalnym źródle</b>. Jeśli nie używasz tych pól możesz je wyłączyć, wówczas nie będą one widoczne podczas tworzenia nowego odwołania do źródła.<br />";
-$pgv_lang["PREFER_LEVEL2_SOURCES"]		= "Preferuj źródła faktów";
+$pgv_lang["PREFER_LEVEL2_SOURCES"]		= "Typ źródła";
 $pgv_lang["PREFER_LEVEL2_SOURCES_help"]	= "~#pgv_lang[PREFER_LEVEL2_SOURCES]#~<br /><br />Podczas dodawania nowej osoby, możesz powiązać źródło z osobą i rodziną (INDI, FAM) lub z faktami (BIRT, MARR, DEAT). Ta opcja pozwala na wybranie, który typ powiązań źródłowych jest domyślny.<br />";
-
 
 
 //-- CONFIGURE FILE MESSAGES

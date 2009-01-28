@@ -322,6 +322,7 @@ $pgv_lang["stepbrother"]			= "Brat przyrodni";
 $pgv_lang["fams_charts"]			= "Opcje dla rodziny";
 $pgv_lang["indis_charts"]			= "Opcje dla osoby";
 $pgv_lang["none"]					= "Brak";
+$pgv_lang["facts"]					= "Fakty";
 $pgv_lang["locked"]					= "Edycja zablokowana";
 $pgv_lang["privacy"]				= "Dane poufne";
 $pgv_lang["number_sign"]			= "#";
