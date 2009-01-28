@@ -10,6 +10,7 @@
 
 
 Version 4.2.0
+ - Added: Quick Parents/Step/Immediate Family Page Link on Indi Page Family Navigator (windmillway)
  - Fixed: [ 2524544 ] AddFavourites() not working (canajun2eh)
  - Fixed: [ 2391927 ] Ahnentafel report crashes (ljm)
  - Changed: [ 2534555 ] Modify 'Prefer fact sources' option (canajun2eh)
