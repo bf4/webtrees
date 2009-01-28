@@ -120,9 +120,9 @@ function checkChangeTime($pid, $gedrec, $last_time) {
 		}
 	}
 	if (isset($_REQUEST['linenum']) && $changeTime!=0 && $last_time && $changeTime > $last_time) {
-		print "<span class=\"error\">".preg_replace("/#PID#/", $pid, $pgv_lang["edit_concurrency_msg2"])."<br /><br />";
-		if (!empty($changeUser)) print preg_replace(array("/#CHANGEUSER#/", "/#CHANGEDATE#/"), array($changeUser,date("d M Y H:i:s", $changeTime)), $pgv_lang["edit_concurrency_change"])."<br /><br />";
-		print $pgv_lang["edit_concurrency_reload"]."</span>";
+		echo "<span class=\"error\">".preg_replace("/#PID#/", $pid, $pgv_lang["edit_concurrency_msg2"])."<br /><br />";
+		if (!empty($changeUser)) echo preg_replace(array("/#CHANGEUSER#/", "/#CHANGEDATE#/"), array($changeUser,date("d M Y H:i:s", $changeTime)), $pgv_lang["edit_concurrency_change"])."<br /><br />";
+		echo $pgv_lang["edit_concurrency_reload"]."</span>";
 		print_simple_footer();
 		exit;
 	}
@@ -305,11 +305,11 @@ function check_gedcom($gedrec, $chan=true) {
 
 	$ct = preg_match("/0 @(.*)@ (.*)/", $gedrec, $match);
 	if ($ct==0) {
-		print "ERROR 20: Invalid GEDCOM 5.5 format.\n";
+		echo "ERROR 20: Invalid GEDCOM 5.5 format.\n";
 		AddToChangeLog("ERROR 20: Invalid GEDCOM 5.5 format.->" . PGV_USER_NAME ."<-");
 		if (PGV_DEBUG) {
-			print "<pre>$gedrec</pre>\n";
-			print debug_print_backtrace();
+			echo "<pre>$gedrec</pre>\n";
+			echo debug_print_backtrace();
 		}
 		return false;
 	}
@@ -460,18 +460,18 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 
 	$bdm = ""; // used to copy '1 SOUR' to '2 SOUR' for BIRT DEAT MARR
 	init_calendar_popup();
-	print "<form method=\"post\" name=\"addchildform\" onsubmit=\"return checkform();\">\n";
-	print "<input type=\"hidden\" name=\"action\" value=\"$nextaction\" />\n";
-	print "<input type=\"hidden\" name=\"linenum\" value=\"$linenum\" />\n";
-	print "<input type=\"hidden\" name=\"famid\" value=\"$famid\" />\n";
-	print "<input type=\"hidden\" name=\"pid\" value=\"$pid\" />\n";
-	print "<input type=\"hidden\" name=\"famtag\" value=\"$famtag\" />\n";
-	print "<input type=\"submit\" value=\"".$pgv_lang["save"]."\" />\n";
-	print "<input type=\"hidden\" name=\"goto\" value=\"\" />\n";
+	echo "<form method=\"post\" name=\"addchildform\" onsubmit=\"return checkform();\">\n";
+	echo "<input type=\"hidden\" name=\"action\" value=\"$nextaction\" />\n";
+	echo "<input type=\"hidden\" name=\"linenum\" value=\"$linenum\" />\n";
+	echo "<input type=\"hidden\" name=\"famid\" value=\"$famid\" />\n";
+	echo "<input type=\"hidden\" name=\"pid\" value=\"$pid\" />\n";
+	echo "<input type=\"hidden\" name=\"famtag\" value=\"$famtag\" />\n";
+	echo "<input type=\"submit\" value=\"".$pgv_lang["save"]."\" />\n";
+	echo "<input type=\"hidden\" name=\"goto\" value=\"\" />\n";
 	if (preg_match('/^add(child|spouse|newparent|newrepository)/', $nextaction)) {
-		print "<input type=\"submit\" value=\"{$pgv_lang['saveandgo']}\" onclick=\"document.addchildform.goto.value='new';\"/>\n";
+		echo "<input type=\"submit\" value=\"{$pgv_lang['saveandgo']}\" onclick=\"document.addchildform.goto.value='new';\"/>\n";
 	}
-	print "<table class=\"facts_table\">";
+	echo "<table class=\"facts_table\">";
 
 	// When adding a new child, specify the pedigree
 	if ($nextaction=='addchildaction')
@@ -716,7 +716,7 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 
 	// If we are adding a new individual, add the basic details
 	if ($nextaction!='update') {
-		print '</table><br/><table class="facts_table">';
+		echo '</table><br/><table class="facts_table">';
 		// 1 SEX
 		if ($famtag=="HUSB" or $sextag=="M") add_simple_tag("0 SEX M");
 		else if ($famtag=="WIFE" or $sextag=="F") add_simple_tag("0 SEX F");
@@ -747,18 +747,18 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 		}
 	}
 	if (PGV_USER_IS_ADMIN) {
-		print "<tr><td class=\"descriptionbox ".$TEXT_DIRECTION." wrap width25\">";
+		echo "<tr><td class=\"descriptionbox ".$TEXT_DIRECTION." wrap width25\">";
 		print_help_link("no_update_CHAN_help", "qm");
-		print $pgv_lang["admin_override"]."</td><td class=\"optionbox wrap\">\n";
-		print "<input type=\"checkbox\" name=\"preserve_last_changed\" />\n";
-		print $pgv_lang["no_update_CHAN"]."<br />\n";
+		echo $pgv_lang["admin_override"]."</td><td class=\"optionbox wrap\">\n";
+		echo "<input type=\"checkbox\" name=\"preserve_last_changed\" />\n";
+		echo $pgv_lang["no_update_CHAN"]."<br />\n";
 		if (isset($famrec)) {
 			$event = new Event(get_sub_record(1, "1 CHAN", $famrec));
 			echo format_fact_date($event, false, true);
 		}
-		print "</td></tr>\n";
+		echo "</td></tr>\n";
 	}
-	print "</table>\n";
+	echo "</table>\n";
 	if ($nextaction=='update') { // GEDCOM 5.5.1 spec says NAME doesn't get a OBJE
 		print_add_layer('SOUR');
 		print_add_layer('NOTE');
@@ -767,11 +767,11 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 		print_add_layer('NOTE', 1);
 		print_add_layer('OBJE', 1);
 	}
-	print "<input type=\"submit\" value=\"".$pgv_lang["save"]."\" />\n";
+	echo "<input type=\"submit\" value=\"".$pgv_lang["save"]."\" />\n";
 	if (preg_match('/^add(child|spouse|newparent|source)/', $nextaction)) {
-		print "<input type=\"submit\" value=\"{$pgv_lang['saveandgo']}\" onclick=\"document.addchildform.goto.value='new';\"/>\n";
+		echo "<input type=\"submit\" value=\"{$pgv_lang['saveandgo']}\" onclick=\"document.addchildform.goto.value='new';\"/>\n";
 	}
-	print "</form>\n";
+	echo "</form>\n";
 	?>
 	<script type="text/javascript">
 	<!--
@@ -964,7 +964,7 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 * generates javascript code for calendar popup in user's language
 *
 * @param string id form text element id where to return date value
-* @param boolean $asString Whether or not to return this text as a string or print it
+* @param boolean $asString Whether or not to return this text as a string or echo it
 * @see init_calendar_popup()
 */
 function print_calendar_popup($id, $asString=false) {
@@ -980,7 +980,7 @@ function print_calendar_popup($id, $asString=false) {
 	$out .= "</a>\n";
 	$out .= "<div id=\"caldiv".$id."\" style=\"position:absolute;visibility:hidden;background-color:white;layer-background-color:white; z-index: 1000;\"></div>\n";
 	if ($asString) return $out;
-	else print $out;
+	else echo $out;
 }
 /**
 * @todo add comments
@@ -991,9 +991,9 @@ function print_addnewrepository_link($element_id) {
 	$text = $pgv_lang["create_repository"];
 	if (isset($PGV_IMAGES["addrepository"]["button"])) $Link = "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["addrepository"]["button"]."\" alt=\"".$text."\" title=\"".$text."\" border=\"0\" align=\"middle\" />";
 	else $Link = $text;
-	print "&nbsp;&nbsp;&nbsp;<a href=\"javascript:;\" onclick=\"addnewrepository(document.getElementById('".$element_id."')); return false;\">";
-	print $Link;
-	print "</a>";
+	echo "&nbsp;&nbsp;&nbsp;<a href=\"javascript:;\" onclick=\"addnewrepository(document.getElementById('".$element_id."')); return false;\">";
+	echo $Link;
+	echo "</a>";
 }
 
 /**
@@ -1005,9 +1005,9 @@ function print_addnewsource_link($element_id) {
 	$text = $pgv_lang["create_source"];
 	if (isset($PGV_IMAGES["addsource"]["button"])) $Link = "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["addsource"]["button"]."\" alt=\"".$text."\" title=\"".$text."\" border=\"0\" align=\"middle\" />";
 	else $Link = $text;
-	print "&nbsp;&nbsp;&nbsp;<a href=\"javascript:;\" onclick=\"addnewsource(document.getElementById('".$element_id."')); return false;\">";
-	print $Link;
-	print "</a>";
+	echo "&nbsp;&nbsp;&nbsp;<a href=\"javascript:;\" onclick=\"addnewsource(document.getElementById('".$element_id."')); return false;\">";
+	echo $Link;
+	echo "</a>";
 }
 
 /**
@@ -1023,7 +1023,7 @@ function print_addnewsource_link($element_id) {
 *
 * @param string $tag fact record to edit (eg 2 DATE xxxxx)
 * @param string $upperlevel optional upper level tag (eg BIRT)
-* @param string $label An optional label to print instead of the default from the $factarray
+* @param string $label An optional label to echo instead of the default from the $factarray
 * @param string $readOnly optional, when "READONLY", fact data can't be changed
 * @param string $noClose optional, when "NOCLOSE", final "</td></tr>" won't be printed
 * (so that additional text can be printed in the box)
@@ -1113,7 +1113,7 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 
 	// field value
 	$islink = (substr($value,0,1)=="@" and substr($value,0,2)!="@#");
-	if ($islink) $value=trim($value, " @\r");
+	if ($islink) $value=trim(trim(substr($tag, strlen($fact)+3)), " @\r");
 	else $value=trim(substr($tag, strlen($fact)+3));
 	if ($fact=='REPO' || $fact=='SOUR' || $fact=='OBJE' || $fact=='FAMC')
 		$islink = true;
@@ -1160,12 +1160,12 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 
 	// label
 	$style="";
-	print "<tr id=\"".$element_id."_tr\" ";
-	if ($fact=="MAP" || $fact=="LATI" || $fact=="LONG") print " style=\"display:none;\"";
-	print " >\n";
+	echo "<tr id=\"".$element_id."_tr\" ";
+	if ($fact=="MAP" || $fact=="LATI" || $fact=="LONG") echo " style=\"display:none;\"";
+	echo " >\n";
 	if (in_array($fact, $subnamefacts) || $fact=="LATI" || $fact=="LONG")
-			print "<td class=\"optionbox $TEXT_DIRECTION wrap width25\">";
-	else print "<td class=\"descriptionbox $TEXT_DIRECTION wrap width25\">";
+			echo "<td class=\"optionbox $TEXT_DIRECTION wrap width25\">";
+	else echo "<td class=\"descriptionbox $TEXT_DIRECTION wrap width25\">";
 
 	// help link
 	if (!in_array($fact, $emptyfacts)) {
@@ -1190,42 +1190,42 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 		}
 	}
 	if (PGV_DEBUG) {
-		print $element_name."<br />\n";
+		echo $element_name."<br />\n";
 	}
-	if (!empty($label)) print $label;
+	if (!empty($label)) echo $label;
 	else {
-		if (isset($pgv_lang[$fact])) print $pgv_lang[$fact];
-		else if (isset($factarray[$fact])) print $factarray[$fact];
-		else print $fact;
+		if (isset($pgv_lang[$fact])) echo $pgv_lang[$fact];
+		else if (isset($factarray[$fact])) echo $factarray[$fact];
+		else echo $fact;
 	}
-	print "\n";
+	echo "\n";
 
 	// tag level
 	if ($level>0) {
 		if ($fact=="TEXT" and $level>1) {
-			print "<input type=\"hidden\" name=\"glevels[]\" value=\"".($level-1)."\" />";
-			print "<input type=\"hidden\" name=\"islink[]\" value=\"0\" />";
-			print "<input type=\"hidden\" name=\"tag[]\" value=\"DATA\" />";
+			echo "<input type=\"hidden\" name=\"glevels[]\" value=\"".($level-1)."\" />";
+			echo "<input type=\"hidden\" name=\"islink[]\" value=\"0\" />";
+			echo "<input type=\"hidden\" name=\"tag[]\" value=\"DATA\" />";
 			//-- leave data text[] value empty because the following TEXT line will
 			//--- cause the DATA to be added
-			print "<input type=\"hidden\" name=\"text[]\" value=\"\" />";
+			echo "<input type=\"hidden\" name=\"text[]\" value=\"\" />";
 		}
-		print "<input type=\"hidden\" name=\"glevels[]\" value=\"".$level."\" />\n";
-		print "<input type=\"hidden\" name=\"islink[]\" value=\"".($islink)."\" />\n";
-		print "<input type=\"hidden\" name=\"tag[]\" value=\"".$fact."\" />\n";
+		echo "<input type=\"hidden\" name=\"glevels[]\" value=\"".$level."\" />\n";
+		echo "<input type=\"hidden\" name=\"islink[]\" value=\"".($islink)."\" />\n";
+		echo "<input type=\"hidden\" name=\"tag[]\" value=\"".$fact."\" />\n";
 	}
-	print "\n</td>";
+	echo "\n</td>";
 
 	// value
-	print "<td class=\"optionbox wrap\">\n";
+	echo "<td class=\"optionbox wrap\">\n";
 	if (PGV_DEBUG) {
-		print $tag."<br />\n";
+		echo $tag."<br />\n";
 	}
 
 	// retrieve linked NOTE
 	if ($fact=="NOTE" and $islink) {
 		$noteid = $value;
-		print "<input type=\"hidden\" name=\"text[]\" value=\"".$noteid."\" />\n";
+		echo "<input type=\"hidden\" name=\"text[]\" value=\"".$noteid."\" />\n";
 		if (!isset($pgv_changes[$noteid."_".$GEDCOM])) $noterec = find_gedcom_record($noteid);
 		else $noterec = find_updated_record($noteid);
 		$n1match = array();
@@ -1239,84 +1239,84 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 		//-- don't default anything to Y when adding events through people
 		//-- default to Y when specifically adding one of these events
 		if ($level==1) $value="Y"; // default YES
-		print "<input type=\"hidden\" id=\"".$element_id."\" name=\"".$element_name."\" value=\"".$value."\" />";
+		echo "<input type=\"hidden\" id=\"".$element_id."\" name=\"".$element_name."\" value=\"".$value."\" />";
 		if ($level<=1) {
-			print "<input type=\"checkbox\" ";
-			if ($value=="Y") print " checked=\"checked\"";
-			print " onclick=\"if (this.checked) ".$element_id.".value='Y'; else ".$element_id.".value=''; \" />";
-			print $pgv_lang["yes"];
+			echo "<input type=\"checkbox\" ";
+			if ($value=="Y") echo " checked=\"checked\"";
+			echo " onclick=\"if (this.checked) ".$element_id.".value='Y'; else ".$element_id.".value=''; \" />";
+			echo $pgv_lang["yes"];
 		}
 	}
 	else if ($fact=="TEMP") {
-		print "<select tabindex=\"".$tabkey."\" name=\"".$element_name."\" >\n";
-		print "<option value=''>".$pgv_lang["no_temple"]."</option>\n";
+		echo "<select tabindex=\"".$tabkey."\" name=\"".$element_name."\" >\n";
+		echo "<option value=''>".$pgv_lang["no_temple"]."</option>\n";
 		foreach($TEMPLE_CODES as $code=>$temple) {
-			print "<option value=\"$code\"";
-			if ($code==$value) print " selected=\"selected\"";
-			print ">$temple ($code)</option>\n";
+			echo "<option value=\"$code\"";
+			if ($code==$value) echo " selected=\"selected\"";
+			echo ">$temple ($code)</option>\n";
 		}
-		print "</select>\n";
+		echo "</select>\n";
 	}
 	else if ($fact=="ADOP") {
-		print "<select tabindex=\"".$tabkey."\" name=\"".$element_name."\" >";
+		echo "<select tabindex=\"".$tabkey."\" name=\"".$element_name."\" >";
 		foreach (array("BOTH"=>$factarray["HUSB"]."+".$factarray["WIFE"],
 										"HUSB"=>$factarray["HUSB"],
 										"WIFE"=>$factarray["WIFE"]) as $k=>$v) {
-			print "<option value='$k'";
+			echo "<option value='$k'";
 			if ($value==$k)
-				print " selected=\"selected\"";
-			print ">$v</option>";
+				echo " selected=\"selected\"";
+			echo ">$v</option>";
 		}
-		print "</select>\n";
+		echo "</select>\n";
 	}
 	else if ($fact=="PEDI") {
-		print "<select tabindex=\"".$tabkey."\" name=\"".$element_name."\" >";
+		echo "<select tabindex=\"".$tabkey."\" name=\"".$element_name."\" >";
 		foreach (array(""       =>$pgv_lang["unknown"],
 										"birth"  =>$factarray["BIRT"],
 										"adopted"=>$pgv_lang["adopted"],
 										"foster" =>$pgv_lang["foster"],
 										"sealing"=>$pgv_lang["sealing"]) as $k=>$v) {
-			print "<option value='$k'";
+			echo "<option value='$k'";
 			if (UTF8_strtolower($value)==$k)
-				print " selected=\"selected\"";
-			print ">$v</option>";
+				echo " selected=\"selected\"";
+			echo ">$v</option>";
 		}
-		print "</select>\n";
+		echo "</select>\n";
 	}
 	else if ($fact=="STAT") {
-		print "<select tabindex=\"".$tabkey."\" name=\"".$element_name."\" >\n";
-		print "<option value=''>No special status</option>\n";
+		echo "<select tabindex=\"".$tabkey."\" name=\"".$element_name."\" >\n";
+		echo "<option value=''>No special status</option>\n";
 		foreach($STATUS_CODES as $code=>$status) {
-			print "<option value=\"$code\"";
-			if ($code==$value) print " selected=\"selected\"";
-			print ">$status</option>\n";
+			echo "<option value=\"$code\"";
+			if ($code==$value) echo " selected=\"selected\"";
+			echo ">$status</option>\n";
 		}
-		print "</select>\n";
+		echo "</select>\n";
 	}
 	else if ($fact=="RELA") {
 		$text=strtolower($value);
 		// add current relationship if not found in default list
 		if (!array_key_exists($text, $assorela)) $assorela[$text]=$text;
-		print "<select tabindex=\"".$tabkey."\" id=\"".$element_id."\" name=\"".$element_name."\" >\n";
+		echo "<select tabindex=\"".$tabkey."\" id=\"".$element_id."\" name=\"".$element_name."\" >\n";
 		foreach ($assorela as $key=>$value) {
-			print "<option value=\"". $key . "\"";
-			if ($key==$text) print " selected=\"selected\"";
-			print ">" . $assorela["$key"] . "</option>\n";
+			echo "<option value=\"". $key . "\"";
+			if ($key==$text) echo " selected=\"selected\"";
+			echo ">" . $assorela["$key"] . "</option>\n";
 		}
-		print "</select>\n";
+		echo "</select>\n";
 	}
 	else if ($fact=="_PGVU") {
 		$text=strtolower($value);
-		print "<select tabindex=\"".$tabkey."\" id=\"".$element_id."\" name=\"".$element_name."\" >\n";
-		print '<option value=""';
-		if (''==$text) print ' selected="selected"';
-		print ">-</option>\n";
+		echo "<select tabindex=\"".$tabkey."\" id=\"".$element_id."\" name=\"".$element_name."\" >\n";
+		echo '<option value=""';
+		if (''==$text) echo ' selected="selected"';
+		echo ">-</option>\n";
 		foreach (get_all_users('asc', 'username') as $user_id=>$user_name) {
-			print "<option value=\"". $user_id . "\"";
-			if ($user_id==$text) print " selected=\"selected\"";
-			print ">" . $user_name . "</option>\n";
+			echo "<option value=\"". $user_id . "\"";
+			if ($user_id==$text) echo " selected=\"selected\"";
+			echo ">" . $user_name . "</option>\n";
 		}
-		print "</select>\n";
+		echo "</select>\n";
 	}
 	else if ($fact=="RESN") {
 		?>
@@ -1329,48 +1329,48 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 			document.getElementById("RESN_confidential").style.display="none";
 			document.getElementById("RESN_"+resn_val).style.display="inline";
 			if (resn_val=='none') resn_val='';
-			document.getElementById("<?php print $element_id?>").value=resn_val;
+			document.getElementById("<?php echo $element_id?>").value=resn_val;
 		}
 		//-->
 		</script>
 		<?php
 		if (!$PRIVACY_BY_RESN && $level==1) {
 			// warn user that level 1 RESN tags have no effect when PRIVACY_BY_RESN is false
-			print "<small>".$pgv_lang["resn_disabled"]."</small>";
+			echo "<small>".$pgv_lang["resn_disabled"]."</small>";
 		}
-		print "<input type=\"hidden\" id=\"".$element_id."\" name=\"".$element_name."\" value=\"".$value."\" />\n";
-		print "<table><tr valign=\"top\">\n";
+		echo "<input type=\"hidden\" id=\"".$element_id."\" name=\"".$element_name."\" value=\"".$value."\" />\n";
+		echo "<table><tr valign=\"top\">\n";
 		foreach (array("none", "locked", "privacy", "confidential") as $resn_index => $resn_val) {
 			if ($resn_val=="none") $resnv=""; else $resnv=$resn_val;
-			print "<td><input tabindex=\"".$tabkey."\" type=\"radio\" name=\"RESN_radio\" onclick=\"update_RESN_img('".$resn_val."')\"";
-			print " value=\"".$resnv."\"";
-			if ($value==$resnv) print " checked=\"checked\"";
-			print " /><small>".$pgv_lang[$resn_val]."</small>";
-			print "<br />&nbsp;<img id=\"RESN_".$resn_val."\" src=\"images/RESN_".$resn_val.".gif\"  alt=\"".$pgv_lang[$resn_val]."\" title=\"".$pgv_lang[$resn_val]."\" border=\"0\"";
-			if ($value==$resnv) print " style=\"display:inline\""; else print " style=\"display:none\"";
-			print " /></td>\n";
+			echo "<td><input tabindex=\"".$tabkey."\" type=\"radio\" name=\"RESN_radio\" onclick=\"update_RESN_img('".$resn_val."')\"";
+			echo " value=\"".$resnv."\"";
+			if ($value==$resnv) echo " checked=\"checked\"";
+			echo " /><small>".$pgv_lang[$resn_val]."</small>";
+			echo "<br />&nbsp;<img id=\"RESN_".$resn_val."\" src=\"images/RESN_".$resn_val.".gif\"  alt=\"".$pgv_lang[$resn_val]."\" title=\"".$pgv_lang[$resn_val]."\" border=\"0\"";
+			if ($value==$resnv) echo " style=\"display:inline\""; else echo " style=\"display:none\"";
+			echo " /></td>\n";
 		}
-		print "</tr></table>\n";
+		echo "</tr></table>\n";
 	}
 	else if ($fact=="_PRIM" or $fact=="_THUM") {
-		print "<select tabindex=\"".$tabkey."\" id=\"".$element_id."\" name=\"".$element_name."\" >\n";
-		print "<option value=\"\"></option>\n";
-		print "<option value=\"Y\"";
-		if ($value=="Y") print " selected=\"selected\"";
-		print ">".$pgv_lang["yes"]."</option>\n";
-		print "<option value=\"N\"";
-		if ($value=="N") print " selected=\"selected\"";
-		print ">".$pgv_lang["no"]."</option>\n";
-		print "</select>\n";
+		echo "<select tabindex=\"".$tabkey."\" id=\"".$element_id."\" name=\"".$element_name."\" >\n";
+		echo "<option value=\"\"></option>\n";
+		echo "<option value=\"Y\"";
+		if ($value=="Y") echo " selected=\"selected\"";
+		echo ">".$pgv_lang["yes"]."</option>\n";
+		echo "<option value=\"N\"";
+		if ($value=="N") echo " selected=\"selected\"";
+		echo ">".$pgv_lang["no"]."</option>\n";
+		echo "</select>\n";
 	}
 	else if ($fact=="SEX") {
-		print "<select tabindex=\"".$tabkey."\" id=\"".$element_id."\" name=\"".$element_name."\">\n<option value=\"M\"";
-		if ($value=="M") print " selected=\"selected\"";
-		print ">".$pgv_lang["male"]."</option>\n<option value=\"F\"";
-		if ($value=="F") print " selected=\"selected\"";
-		print ">".$pgv_lang["female"]."</option>\n<option value=\"U\"";
-		if ($value=="U" || empty($value)) print " selected=\"selected\"";
-		print ">".$pgv_lang["unknown"]."</option>\n</select>\n";
+		echo "<select tabindex=\"".$tabkey."\" id=\"".$element_id."\" name=\"".$element_name."\">\n<option value=\"M\"";
+		if ($value=="M") echo " selected=\"selected\"";
+		echo ">".$pgv_lang["male"]."</option>\n<option value=\"F\"";
+		if ($value=="F") echo " selected=\"selected\"";
+		echo ">".$pgv_lang["female"]."</option>\n<option value=\"U\"";
+		if ($value=="U" || empty($value)) echo " selected=\"selected\"";
+		echo ">".$pgv_lang["unknown"]."</option>\n</select>\n";
 	}
 	else if ($fact == "TYPE" && $level == '3') {
 		//-- Build array of currently defined values for this Media Fact
@@ -1386,46 +1386,46 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 		//-- Add "Other" at the end of the list
 		$type["other"] = $pgv_lang["TYPE__other"];
 		//-- Build the selector for the Media "TYPE" Fact
-		print "<select tabindex=\"".$tabkey."\" name=\"text[]\">";
-		if ($value=="") print "<option selected=\"selected\" value=\"\" > ".$pgv_lang["choose"]." </option>";
+		echo "<select tabindex=\"".$tabkey."\" name=\"text[]\">";
+		if ($value=="") echo "<option selected=\"selected\" value=\"\" > ".$pgv_lang["choose"]." </option>";
 		$selectedValue = strtolower($value);
 		foreach ($type as $typeName => $typeValue) {
-			print "<option value=\"".$typeName."\" ";
-			if ($selectedValue == $typeName) print "selected=\"selected\" ";
-			print "> ".$typeValue." </option>";
+			echo "<option value=\"".$typeName."\" ";
+			if ($selectedValue == $typeName) echo "selected=\"selected\" ";
+			echo "> ".$typeValue." </option>";
 		}
-		print "</select>";
+		echo "</select>";
 	}
 	else if (($fact=="NAME" && $upperlevel!='REPO') || $fact=="_MARNM") {
 		// Populated in javascript from sub-tags
-		print "<input type=\"hidden\" id=\"".$element_id."\" name=\"".$element_name."\" onchange=\"updateTextName('".$element_id."');\" value=\"".PrintReady(htmlspecialchars($value,ENT_COMPAT,'UTF-8'))."\" />";
-		print "<span id=\"".$element_id."_display\">".PrintReady(htmlspecialchars($value,ENT_COMPAT,'UTF-8'))."</span>";
-		print " <a href=\"#edit_name\" onclick=\"convertHidden('".$element_id."'); return false;\"> ";
-		if (isset($PGV_IMAGES["edit_indi"]["small"])) print "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["edit_indi"]["small"]."\" border=\"0\" width=\"20\" alt=\"".$pgv_lang["edit_name"]."\" align=\"top\" />";
-		else print "<span class=\"age\">[".$pgv_lang["edit_name"]."]</span>";
-		print "</a>";
+		echo "<input type=\"hidden\" id=\"".$element_id."\" name=\"".$element_name."\" onchange=\"updateTextName('".$element_id."');\" value=\"".PrintReady(htmlspecialchars($value,ENT_COMPAT,'UTF-8'))."\" />";
+		echo "<span id=\"".$element_id."_display\">".PrintReady(htmlspecialchars($value,ENT_COMPAT,'UTF-8'))."</span>";
+		echo " <a href=\"#edit_name\" onclick=\"convertHidden('".$element_id."'); return false;\"> ";
+		if (isset($PGV_IMAGES["edit_indi"]["small"])) echo "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["edit_indi"]["small"]."\" border=\"0\" width=\"20\" alt=\"".$pgv_lang["edit_name"]."\" align=\"top\" />";
+		else echo "<span class=\"age\">[".$pgv_lang["edit_name"]."]</span>";
+		echo "</a>";
 	} else {
 		// textarea
-		if ($rows>1) print "<textarea tabindex=\"".$tabkey."\" id=\"".$element_id."\" name=\"".$element_name."\" rows=\"".$rows."\" cols=\"".$cols."\">".PrintReady(htmlspecialchars($value,ENT_COMPAT,'UTF-8'))."</textarea><br />\n";
+		if ($rows>1) echo "<textarea tabindex=\"".$tabkey."\" id=\"".$element_id."\" name=\"".$element_name."\" rows=\"".$rows."\" cols=\"".$cols."\">".PrintReady(htmlspecialchars($value,ENT_COMPAT,'UTF-8'))."</textarea><br />\n";
 		else {
 			// text
-			print "<input tabindex=\"".$tabkey."\" type=\"text\" id=\"".$element_id."\" name=\"".$element_name."\" value=\"".PrintReady(htmlspecialchars($value,ENT_COMPAT,'UTF-8'))."\" size=\"".$cols."\" dir=\"ltr\"";
+			echo "<input tabindex=\"".$tabkey."\" type=\"text\" id=\"".$element_id."\" name=\"".$element_name."\" value=\"".PrintReady(htmlspecialchars($value,ENT_COMPAT,'UTF-8'))."\" size=\"".$cols."\" dir=\"ltr\"";
 			echo " class=\"{$fact}\"";
 			echo " autocomplete=\"off\"";
-			if (in_array($fact, $subnamefacts)) print " onblur=\"updatewholename();\" onkeyup=\"updatewholename();\"";
-			if ($fact=="DATE") print " onblur=\"valid_date(this);\" onmouseout=\"valid_date(this);\"";
-			if ($fact=="LATI") print " onblur=\"valid_lati_long(this, 'N', 'S');\" onmouseout=\"valid_lati_long(this, 'N', 'S');\"";
-			if ($fact=="LONG") print " onblur=\"valid_lati_long(this, 'E', 'W');\" onmouseout=\"valid_lati_long(this, 'E', 'W');\"";
-			//if ($fact=="FILE") print " onchange=\"if (updateFormat) updateFormat(this.value);\"";
-			print " ".$readOnly." />\n";
+			if (in_array($fact, $subnamefacts)) echo " onblur=\"updatewholename();\" onkeyup=\"updatewholename();\"";
+			if ($fact=="DATE") echo " onblur=\"valid_date(this);\" onmouseout=\"valid_date(this);\"";
+			if ($fact=="LATI") echo " onblur=\"valid_lati_long(this, 'N', 'S');\" onmouseout=\"valid_lati_long(this, 'N', 'S');\"";
+			if ($fact=="LONG") echo " onblur=\"valid_lati_long(this, 'E', 'W');\" onmouseout=\"valid_lati_long(this, 'E', 'W');\"";
+			//if ($fact=="FILE") echo " onchange=\"if (updateFormat) updateFormat(this.value);\"";
+			echo " ".$readOnly." />\n";
 		}
 		// split PLAC
 		if ($fact=="PLAC" && $readOnly=="") {
-			print "<div id=\"".$element_id."_pop\" style=\"display: inline;\">\n";
+			echo "<div id=\"".$element_id."_pop\" style=\"display: inline;\">\n";
 			print_specialchar_link($element_id, false);
 			print_findplace_link($element_id);
-			print "</div>\n";
-			print "<a href=\"javascript:;\" onclick=\"toggle_lati_long();\"><img src=\"images/buttons/target.gif\" border=\"0\" align=\"middle\" alt=\"".$factarray["LATI"]." / ".$factarray["LONG"]."\" title=\"".$factarray["LATI"]." / ".$factarray["LONG"]."\" /></a>";
+			echo "</div>\n";
+			echo "<a href=\"javascript:;\" onclick=\"toggle_lati_long();\"><img src=\"images/buttons/target.gif\" border=\"0\" align=\"middle\" alt=\"".$factarray["LATI"]." / ".$factarray["LONG"]."\" title=\"".$factarray["LATI"]." / ".$factarray["LONG"]."\" /></a>";
 			if ($SPLIT_PLACES) {
 				if (!function_exists("print_place_subfields")) require("includes/functions/functions_places.php");
 				setup_place_subfields($element_id);
@@ -1436,19 +1436,19 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 	}
 	// MARRiage TYPE : hide text field and show a selection list
 	if ($fact=="TYPE" and $tags[0]=="MARR") {
-		print "<script type='text/javascript'>";
-		print "document.getElementById('".$element_id."').style.display='none'";
-		print "</script>";
-		print "<select tabindex=\"".$tabkey."\" id=\"".$element_id."_sel\" onchange=\"document.getElementById('".$element_id."').value=this.value;\" >\n";
+		echo "<script type='text/javascript'>";
+		echo "document.getElementById('".$element_id."').style.display='none'";
+		echo "</script>";
+		echo "<select tabindex=\"".$tabkey."\" id=\"".$element_id."_sel\" onchange=\"document.getElementById('".$element_id."').value=this.value;\" >\n";
 		foreach (array("Unknown", "Civil", "Religious", "Partners") as $indexval => $key) {
-			if ($key=="Unknown") print "<option value=\"\"";
-			else print "<option value=\"".$key."\"";
+			if ($key=="Unknown") echo "<option value=\"\"";
+			else echo "<option value=\"".$key."\"";
 			$a=strtolower($key);
 			$b=strtolower($value);
-			if (@strpos($a, $b)!==false or @strpos($b, $a)!==false) print " selected=\"selected\"";
-			print ">".$factarray["MARR_".strtoupper($key)]."</option>\n";
+			if (@strpos($a, $b)!==false or @strpos($b, $a)!==false) echo " selected=\"selected\"";
+			echo ">".$factarray["MARR_".strtoupper($key)]."</option>\n";
 		}
-		print "</select>";
+		echo "</select>";
 	}
 
 	// popup links
@@ -1516,7 +1516,7 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 		}
 		if ($fact=="OBJE") print_findmedia_link($element_id, "1media");
 		if ($fact=="OBJE" && !$value) {
-			print '<br /><a href="javascript:;" onclick="pastefield=document.getElementById(\''.$element_id.'\'); window.open(\'addmedia.php?action=showmediaform&linktoid={$linkToID}&level={$level}\', \'_blank\', \'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1\'); return false;">'.$pgv_lang["add_media"].'</a>';
+			echo '<br /><a href="javascript:;" onclick="pastefield=document.getElementById(\''.$element_id.'\'); window.open(\'addmedia.php?action=showmediaform&linktoid={$linkToID}&level={$level}\', \'_blank\', \'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1\'); return false;">'.$pgv_lang["add_media"].'</a>';
 			$value = "new";
 		}
 	}
@@ -1553,7 +1553,7 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 		if ($fact=="FORM") print_autopaste_link($element_id, $FILE_FORM_accept, false, false);
 	}
 
-	if ($noClose != "NOCLOSE") print "</td></tr>\n";
+	if ($noClose != "NOCLOSE") echo "</td></tr>\n";
 
 	$tabkey++;
 	return $element_id;
@@ -1570,12 +1570,12 @@ function print_add_layer($tag, $level=2, $printSaveButton=true) {
 	global $gedrec, $FULL_SOURCES;
 	if ($tag=="SOUR") {
 		//-- Add new source to fact
-		print "<a href=\"javascript:;\" onclick=\"return expand_layer('newsource');\"><img id=\"newsource_img\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["plus"]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" title=\"\" /> ".$pgv_lang["add_source"]."</a>";
+		echo "<a href=\"javascript:;\" onclick=\"return expand_layer('newsource');\"><img id=\"newsource_img\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["plus"]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" title=\"\" /> ".$pgv_lang["add_source"]."</a>";
 		print_help_link("edit_add_SOUR_help", "qm");
-		print "<br />";
-		print "<div id=\"newsource\" style=\"display: none;\">\n";
-		if ($printSaveButton) print "<input type=\"submit\" value=\"".$pgv_lang["save"]."\" />";
-		print "<table class=\"facts_table center $TEXT_DIRECTION\">\n";
+		echo "<br />";
+		echo "<div id=\"newsource\" style=\"display: none;\">\n";
+		if ($printSaveButton) echo "<input type=\"submit\" value=\"".$pgv_lang["save"]."\" />";
+		echo "<table class=\"facts_table center $TEXT_DIRECTION\">\n";
 		// 2 SOUR
 		$source = "SOUR @";
 		add_simple_tag("$level $source");
@@ -1594,47 +1594,47 @@ function print_add_layer($tag, $level=2, $printSaveButton=true) {
 		}
 		// 3 OBJE
 		add_simple_tag(($level+1)." OBJE");
-		print "</table></div>";
+		echo "</table></div>";
 	}
 	if ($tag=="ASSO") {
 		//-- Add a new ASSOciate
-		print "<a href=\"javascript:;\" onclick=\"return expand_layer('newasso');\"><img id=\"newasso_img\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["plus"]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" title=\"\" /> ".$pgv_lang["add_asso"]."</a>";
+		echo "<a href=\"javascript:;\" onclick=\"return expand_layer('newasso');\"><img id=\"newasso_img\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["plus"]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" title=\"\" /> ".$pgv_lang["add_asso"]."</a>";
 		print_help_link("edit_add_ASSO_help", "qm");
-		print "<br />";
-		print "<div id=\"newasso\" style=\"display: none;\">\n";
-		if ($printSaveButton) print "<input type=\"submit\" value=\"".$pgv_lang["save"]."\" />";
-		print "<table class=\"facts_table center $TEXT_DIRECTION\">\n";
+		echo "<br />";
+		echo "<div id=\"newasso\" style=\"display: none;\">\n";
+		if ($printSaveButton) echo "<input type=\"submit\" value=\"".$pgv_lang["save"]."\" />";
+		echo "<table class=\"facts_table center $TEXT_DIRECTION\">\n";
 		// 2 ASSO
 		add_simple_tag(($level)." ASSO @");
 		// 3 RELA
 		add_simple_tag(($level+1)." RELA");
 		// 3 NOTE
 		add_simple_tag(($level+1)." NOTE");
-		print "</table></div>";
+		echo "</table></div>";
 	}
 	if ($tag=="NOTE") {
 		//-- Retrieve existing note or add new note to fact
 		$text = "";
-		print "<a href=\"javascript:;\" onclick=\"return expand_layer('newnote');\"><img id=\"newnote_img\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["plus"]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" title=\"\" /> ".$pgv_lang["add_note"]."</a>";
+		echo "<a href=\"javascript:;\" onclick=\"return expand_layer('newnote');\"><img id=\"newnote_img\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["plus"]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" title=\"\" /> ".$pgv_lang["add_note"]."</a>";
 		print_help_link("edit_add_NOTE_help", "qm");
-		print "<br />\n";
-		print "<div id=\"newnote\" style=\"display: none;\">\n";
-		if ($printSaveButton) print "<input type=\"submit\" value=\"".$pgv_lang["save"]."\" />";
-		print "<table class=\"facts_table center $TEXT_DIRECTION\">\n";
+		echo "<br />\n";
+		echo "<div id=\"newnote\" style=\"display: none;\">\n";
+		if ($printSaveButton) echo "<input type=\"submit\" value=\"".$pgv_lang["save"]."\" />";
+		echo "<table class=\"facts_table center $TEXT_DIRECTION\">\n";
 		// 2 NOTE
 		add_simple_tag(($level)." NOTE ".$text);
-		print "</table></div>";
+		echo "</table></div>";
 	}
 	if ($tag=="OBJE") {
 		//-- Add new obje to fact
-		print "<a href=\"javascript:;\" onclick=\"return expand_layer('newobje');\"><img id=\"newobje_img\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["plus"]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" title=\"\" /> ".$pgv_lang["add_obje"]."</a>";
+		echo "<a href=\"javascript:;\" onclick=\"return expand_layer('newobje');\"><img id=\"newobje_img\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["plus"]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" title=\"\" /> ".$pgv_lang["add_obje"]."</a>";
 		print_help_link("add_media_help", "qm");
-		print "<br />";
-		print "<div id=\"newobje\" style=\"display: none;\">\n";
-		if ($printSaveButton) print "<input type=\"submit\" value=\"".$pgv_lang["save"]."\" />";
-		print "<table class=\"facts_table center $TEXT_DIRECTION\">\n";
+		echo "<br />";
+		echo "<div id=\"newobje\" style=\"display: none;\">\n";
+		if ($printSaveButton) echo "<input type=\"submit\" value=\"".$pgv_lang["save"]."\" />";
+		echo "<table class=\"facts_table center $TEXT_DIRECTION\">\n";
 		add_simple_tag($level." OBJE");
-		print "</table></div>";
+		echo "</table></div>";
 	}
 	if ($tag=="RESN") {
 		if (!$PRIVACY_BY_RESN && $level==1) {
@@ -1643,15 +1643,15 @@ function print_add_layer($tag, $level=2, $printSaveButton=true) {
 		} else {
 			//-- Retrieve existing resn or add new resn to fact
 			$text = "";
-			print "<a href=\"javascript:;\" onclick=\"return expand_layer('newresn');\"><img id=\"newresn_img\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["plus"]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" title=\"\" /> ".$factarray["RESN"]."</a>";
+			echo "<a href=\"javascript:;\" onclick=\"return expand_layer('newresn');\"><img id=\"newresn_img\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["plus"]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" title=\"\" /> ".$factarray["RESN"]."</a>";
 			print_help_link("RESN_help", "qm");
-			print "<br />\n";
-			print "<div id=\"newresn\" style=\"display: none;\">\n";
-			if ($printSaveButton) print "<input type=\"submit\" value=\"".$pgv_lang["save"]."\" />";
-			print "<table class=\"facts_table center $TEXT_DIRECTION\">\n";
+			echo "<br />\n";
+			echo "<div id=\"newresn\" style=\"display: none;\">\n";
+			if ($printSaveButton) echo "<input type=\"submit\" value=\"".$pgv_lang["save"]."\" />";
+			echo "<table class=\"facts_table center $TEXT_DIRECTION\">\n";
 			// 2 RESN
 			add_simple_tag(($level)." RESN ".$text);
-			print "</table></div>";
+			echo "</table></div>";
 		}
 	}
 }
@@ -1938,13 +1938,13 @@ function handle_updates($newged, $levelOverride="no") {
 				$newline = "1 CONC ".rtrim(stripLRMRLM($NOTE[$text[$j]]));
 				$newnote .= breakConts($newline);
 				if (PGV_DEBUG) {
-					print "<pre>$newnote</pre>";
+					echo "<pre>$newnote</pre>";
 				}
 				replace_gedrec($text[$j], $newnote);
 			}
 		} //-- end of external note handling code
 
-		//print $glevels[$j]." ".$tag[$j];
+		//echo $glevels[$j]." ".$tag[$j];
 
 		// Look for empty SOUR reference with non-empty sub-records.
 		// This can happen when the SOUR entry is deleted but its sub-records
@@ -1996,7 +1996,7 @@ function handle_updates($newged, $levelOverride="no") {
 			if ($tag[$j]=="DATE" && !empty($text[$j])) {
 				$text[$j] = check_input_date($text[$j]);
 			}
-			// print $newline;
+			// echo $newline;
 			if ($text[$j]!="") {
 				if ($islink[$j]) $newline .= " @".$text[$j]."@";
 				else $newline .= " ".$text[$j];
@@ -2032,19 +2032,19 @@ function print_quick_resn($name) {
 	global $SHOW_QUICK_RESN, $align, $factarray, $pgv_lang, $tabkey;
 
 	if ($SHOW_QUICK_RESN) {
-		print "<tr><td class=\"descriptionbox\">";
+		echo "<tr><td class=\"descriptionbox\">";
 		print_help_link("RESN_help", "qm");
-		print $factarray["RESN"];
-		print "</td>\n";
-		print "<td class=\"optionbox\" colspan=\"3\">\n";
-		print "<select name=\"$name\" tabindex=\"".$tabkey."\" ><option value=\"\"></option><option value=\"confidential\"";
+		echo $factarray["RESN"];
+		echo "</td>\n";
+		echo "<td class=\"optionbox\" colspan=\"3\">\n";
+		echo "<select name=\"$name\" tabindex=\"".$tabkey."\" ><option value=\"\"></option><option value=\"confidential\"";
 		$tabkey++;
-		print ">".$pgv_lang["confidential"]."</option><option value=\"locked\"";
-		print ">".$pgv_lang["locked"]."</option><option value=\"privacy\"";
-		print ">".$pgv_lang["privacy"]."</option>";
-		print "</select>\n";
-		print "</td>\n";
-		print "</tr>\n";
+		echo ">".$pgv_lang["confidential"]."</option><option value=\"locked\"";
+		echo ">".$pgv_lang["locked"]."</option><option value=\"privacy\"";
+		echo ">".$pgv_lang["privacy"]."</option>";
+		echo "</select>\n";
+		echo "</td>\n";
+		echo "</tr>\n";
 	}
 }
 
@@ -2087,7 +2087,7 @@ function linkMedia($mediaid, $linktoid, $level=1) {
 
 		return true;
 	} else {
-		print "<br /><center>".$pgv_lang["invalid_id"]."</center>";
+		echo "<br /><center>".$pgv_lang["invalid_id"]."</center>";
 		return false;
 	}
 }
@@ -2144,16 +2144,16 @@ function create_edit_form($gedrec, $linenum, $level0type) {
 	$tags=array();
 	$gedlines = split("\n", $gedrec); // -- find the number of lines in the record
 	if (!isset($gedlines[$linenum])) {
-		print "<span class=\"error\">".$pgv_lang["edit_concurrency_msg1"]."<br /><br />";
-		print $pgv_lang["edit_concurrency_reload"]."</span>";
+		echo "<span class=\"error\">".$pgv_lang["edit_concurrency_msg1"]."<br /><br />";
+		echo $pgv_lang["edit_concurrency_reload"]."</span>";
 		return;
 	}
 	$fields = explode(' ', $gedlines[$linenum]);
 	$glevel = $fields[0];
 	$level = $glevel;
 	if ($level!=1) {
-		print "<span class=\"error\">".$pgv_lang["edit_concurrency_msg1"]."<br /><br />";
-		print $pgv_lang["edit_concurrency_reload"]."</span>";
+		echo "<span class=\"error\">".$pgv_lang["edit_concurrency_msg1"]."<br /><br />";
+		echo $pgv_lang["edit_concurrency_reload"]."</span>";
 		return;
 	}
 	$type = trim($fields[1]);
@@ -2166,6 +2166,7 @@ function create_edit_form($gedrec, $linenum, $level0type) {
 	$i = $linenum;
 	$inSource = false;
 	$levelSource = 0;
+	$add_date = true;
 	// List of tags we would expect at the next level
 	// NB add_missing_subtags() already takes care of the simple cases
 	// where a level 1 tag is missing a level 2 tag.  Here we only need to
@@ -2199,10 +2200,12 @@ function create_edit_form($gedrec, $linenum, $level0type) {
 			$text.=$conctxt;
 			$i++;
 		}
-
 		if ($type=="SOUR") {
 			$inSource = true;
 			$levelSource = $level;
+		}
+		else if ($levelSource>=$level){
+			$inSource = false;
 		}
 
 		if ($type!="DATA" && $type!="CONC" && $type!="CONT") {
@@ -2225,6 +2228,13 @@ function create_edit_form($gedrec, $linenum, $level0type) {
 			}
 			$subrecord = $level." ".$type." ".$text;
 			if ($inSource && $type=="DATE") add_simple_tag($subrecord, "", $pgv_lang["date_of_entry"]);
+			else if (!$inSource && $type=="DATE") {
+				if (isset($factarray[$level1type.':DATE']))
+					add_simple_tag($subrecord, $level1type, $factarray[$level1type.':DATE']);
+				else
+					add_simple_tag($subrecord, $level1type);
+				$add_date = false;
+			}
 			else add_simple_tag($subrecord, $level0type);
 		}
 
@@ -2265,7 +2275,7 @@ function create_edit_form($gedrec, $linenum, $level0type) {
 
 	}
 
-	insert_missing_subtags($level1type);
+	insert_missing_subtags($level1type, $add_date);
 	return $level1type;
 }
 
@@ -2273,7 +2283,7 @@ function create_edit_form($gedrec, $linenum, $level0type) {
 * Populates the global $tags array with any missing sub-tags.
 * @param string $level1tag the type of the level 1 gedcom record
 */
-function insert_missing_subtags($level1tag)
+function insert_missing_subtags($level1tag, $add_date=false)
 {
 	global $tags, $date_and_time, $templefacts, $level2_tags, $ADVANCED_PLAC_FACTS, $factarray;
 
@@ -2329,6 +2339,9 @@ function insert_missing_subtags($level1tag)
 					break;
 			}
 		}
+		else if ($key=="DATE" && $add_date) {
+			add_simple_tag("2 DATE", $level1tag, $factarray[$level1tag.':DATE']);
+		}
 	}
 	// Do something (anything!) with unrecognised custom tags
 	if (substr($level1tag, 0, 1)=='_' && $level1tag!='_UID' && $level1tag!='_TODO')
@@ -2342,7 +2355,6 @@ function insert_missing_subtags($level1tag)
 					add_simple_tag("3 MAP");
 					add_simple_tag("4 LATI");
 					add_simple_tag("4 LONG");
-
 				}
 			}
 }
@@ -2358,7 +2370,7 @@ function delete_person($pid, $gedrec='') {
 	global $pgv_lang, $GEDCOM;
 	if (PGV_DEBUG) {
 		phpinfo(INFO_VARIABLES);
-		print "<pre>$gedrec</pre>";
+		echo "<pre>$gedrec</pre>";
 	}
 
 	if (empty($gedrec)) $gedrec = find_person_record($pid);
@@ -2394,7 +2406,7 @@ function delete_person($pid, $gedrec='') {
 							else $indirec = find_updated_record($xref);
 							$indirec = preg_replace("/1.*@$famid@.*/", "", $indirec);
 							if (PGV_DEBUG) {
-								print "<pre>$indirec</pre>";
+								echo "<pre>$indirec</pre>";
 							}
 							replace_gedrec($xref, $indirec);
 						}
@@ -2429,7 +2441,7 @@ function delete_family($pid, $gedrec='') {
 			$type = $match[$i][1];
 			$id = $match[$i][2];
 			if (PGV_DEBUG) {
-				print $type." ".$id." ";
+				echo $type." ".$id." ";
 			}
 			if (!isset($pgv_changes[$id."_".$GEDCOM])) $indirec = find_gedcom_record($id);
 			else $indirec = find_updated_record($id);
