@@ -3,7 +3,7 @@
  * Hebrew texts
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team
+ * Copyright (C) 2002 to 2009  PGV Development Team
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -32,15 +32,15 @@ if (!defined('PGV_PHPGEDVIEW')) {
 }
 
 $pgv_lang["add_marriage"]		= "הוסף פירטי נישואין";
-$pgv_lang["edit_concurrency_change"] = "הרשומה הזו שונתה לאחרונה ע\"י <i>#CHANGEUSER#</i> ב-#CHANGEDATE#"; 
-$pgv_lang["edit_concurrency_msg2"]	= "הרשומה עם קוד זיהוי #PID# שונתה ע\"י משתמש אחר לאחר שניגשת אליה בפעם האחרונה ."; 
-$pgv_lang["edit_concurrency_msg1"]	= "הייתה שגיאה בזמן יצירת טופס העריכה.  יתכן שהרשומה שונתה ע\"י משתמש אחר אחרי שהסתכלת עליה בפעם הקודמת."; 
-$pgv_lang["edit_concurrency_reload"] = "העלה מחדש את הדף שהיית בו קודם כדי להבטיח שאתה עובד על רשומה עדכנית ביותר."; 
+$pgv_lang["edit_concurrency_change"] = "הרשומה הזו שונתה לאחרונה ע\"י <i>#CHANGEUSER#</i> ב-#CHANGEDATE#";
+$pgv_lang["edit_concurrency_msg2"]	= "הרשומה עם קוד זיהוי #PID# שונתה ע\"י משתמש אחר לאחר שניגשת אליה בפעם האחרונה .";
+$pgv_lang["edit_concurrency_msg1"]	= "הייתה שגיאה בזמן יצירת טופס העריכה.  יתכן שהרשומה שונתה ע\"י משתמש אחר אחרי שהסתכלת עליה בפעם הקודמת.";
+$pgv_lang["edit_concurrency_reload"] = "העלה מחדש את הדף שהיית בו קודם כדי להבטיח שאתה עובד על רשומה עדכנית ביותר.";
 $pgv_lang["admin_override"]		= " אופציית מנהלן";
-$pgv_lang["no_update_CHAN"]	= "אין לעדכן רשומת שינוי אחרון CHAN"; 
-$pgv_lang["select_events"]		= "בחר מאורעות"; 
+$pgv_lang["no_update_CHAN"]	= "אין לעדכן רשומת שינוי אחרון CHAN";
+$pgv_lang["select_events"]		= "בחר מאורעות";
 $pgv_lang["source_events"]		= "קשר מאורעות למקור זה";
-$pgv_lang["advanced_name_fields"]	= "שמות נוספים (שם כינוי, שם נישואין, וכו')"; 
+$pgv_lang["advanced_name_fields"]	= "שמות נוספים (שם כינוי, שם נישואין, וכו')";
 $pgv_lang["accept_changes"]		= "קבל/דחה את השינויים";
 $pgv_lang["replace"]			= "החלפת רשומה";
 $pgv_lang["append"]			= "הוספת רשומה בסוף";
@@ -56,7 +56,7 @@ $pgv_lang["to_person"]		= "לאדם";
 $pgv_lang["to_family"]			= "למשפחה";
 $pgv_lang["to_source"]		= "למקור";
 $pgv_lang["edit_fam"]			= "ערוך משפחה";
-$pgv_lang["edit_repo"]		= "ערוך מאגר"; 
+$pgv_lang["edit_repo"]		= "ערוך מאגר";
 $pgv_lang["copy"]			= "העתק";
 $pgv_lang["cut"]			= "חתוך";
 $pgv_lang["sort_by_birth"]		= "מיין לפי תאריכי לידה";
@@ -65,8 +65,8 @@ $pgv_lang["reorder_media"]		= "סדר מחדש מדיה";
 $pgv_lang["reorder_media_title"]	= "גרור ושחרר תמונות ממוזערות כדי לשנות את הסדר של המדיה";
 $pgv_lang["reorder_media_window"]	= "סדר מחדש מדיה (חלון)";
 $pgv_lang["reorder_media_window_title"] = "הקלק על שורה, אח\"כ \"גרור ושחרר\" כדי לשנות את הסדר של המדיה ";
-$pgv_lang["reorder_media_save"]	= "שומר את מיון המדיה למאגר הנתונים"; 
-$pgv_lang["reorder_media_reset"]	= "החזר את הסדר המקורי"; 
+$pgv_lang["reorder_media_save"]	= "שומר את מיון המדיה למאגר הנתונים";
+$pgv_lang["reorder_media_reset"]	= "החזר את הסדר המקורי";
 $pgv_lang["reorder_media_cancel"]	= "עזוב וחזור";
 $pgv_lang["add_from_clipboard"]	= "הוסף מלוח הגזירים: ";
 $pgv_lang["record_copied"]		= " הרשומה הועתקה ללוח הגזירים";
@@ -88,7 +88,7 @@ $pgv_lang["main_media_fail0"]	= "קובץ המדיה <b><span dir=\"ltr\">#GLOBA
 $pgv_lang["main_media_fail1"]	= "לא ניתן לשנות את שמו של קובץ המדיה הראשי <b>#GLOBALS[oldMediaName]#</b> ל-<b>#GLOBALS[newMediaName]#</b>.";
 $pgv_lang["main_media_fail2"]	= "לא ניתן להעביר את קובץ המדיה הראשי <b>#GLOBALS[oldMediaName]#</b> מ-<b><span dir=\"ltr\">#GLOBALS[oldMediaFolder]#</span></b> ל-<b><span dir=\"ltr\">#GLOBALS[newMediaFolder]#</span></b>.";
 $pgv_lang["main_media_fail3"]	= "לא ניתן להעביר את קובץ המדיה הראשי ולשנות את שמו  מ-<b><span dir=\"ltr\">#GLOBALS[oldMediaFolder]#</span>#GLOBALS[oldMediaName]#</b> ל-<b><span dir=\"ltr\">#GLOBALS[newMediaFolder]#</span>#GLOBALS[newMediaName]#</b>.";
-$pgv_lang["resn_disabled"]		= "הערה: יש לאפשר מאפיין 'השתמש בהגבלת הפרטיות של (GEDCOM (RESN' כדי שהערך הזה יופעל."; 
+$pgv_lang["resn_disabled"]		= "הערה: יש לאפשר מאפיין 'השתמש בהגבלת הפרטיות של (GEDCOM (RESN' כדי שהערך הזה יופעל.";
 $pgv_lang["thumb_media_ok1"]	= "השם של קובץ המדיה המזערי <b>#GLOBALS[oldMediaName]#</b> שונה בהצלחה ל-<b>#GLOBALS[newMediaName]#</b>.";
 $pgv_lang["thumb_media_ok2"]	= "קובץ המדיה המזערי <b>#GLOBALS[oldMediaName]#</b> הועבר בהצלחה מ-<b><span dir=\"ltr\">#GLOBALS[oldThumbFolder]#</span></b> ל-<b><span dir=\"ltr\">#GLOBALS[newThumbFolder]#</span></b>.";
 $pgv_lang["thumb_media_ok3"]	= "קובץ המדיה המזערי הועבר ושמו שונה מ-<b><span dir=\"ltr\">#GLOBALS[oldThumbFolder]#</span>#GLOBALS[oldMediaName]#</b> ל-<b><span dir=\"ltr\">#GLOBALS[newThumbFolder]#</span>#GLOBALS[newMediaName]#</b>.";
@@ -159,10 +159,10 @@ $pgv_lang["file_missing"]		= "שום קובץ לא התקבל. הבא שנית."
 $pgv_lang["file_partial"]		= "הקובץ עלה חלקית, נסה שנית.";
 $pgv_lang["file_success"]		= "הקובץ הועלה בהצלחה";
 $pgv_lang["file_too_big"]		= "קובץ ההעלאה גדול מהמותר";
-$pgv_lang["file_no_temp_dir"]           	= "חסרה תיקייה זמנית של PHP"; 
-$pgv_lang["file_cant_write"]            	= "PHP נכשל בכתיבה לדיסק"; 
-$pgv_lang["file_bad_extension"]         	= "PHP חסם קובץ לפי סיומת"; 
-$pgv_lang["file_unkown_err"]            	= "קוד שגיאה #pgv_lang[global_num1]# בטעינת קובץ לא ידוע. נא דווח על כך כשגיאה."; 
+$pgv_lang["file_no_temp_dir"]           	= "חסרה תיקייה זמנית של PHP";
+$pgv_lang["file_cant_write"]            	= "PHP נכשל בכתיבה לדיסק";
+$pgv_lang["file_bad_extension"]         	= "PHP חסם קובץ לפי סיומת";
+$pgv_lang["file_unkown_err"]            	= "קוד שגיאה #pgv_lang[global_num1]# בטעינת קובץ לא ידוע. נא דווח על כך כשגיאה.";
 $pgv_lang["folder"]		 	= "תיקייה על השרת";
 $pgv_lang["gedcom_editing_disabled"] = "אפשרות העריכה של ה-GEDCOM נפסלה ע\"י מנהלן המערכת.";
 $pgv_lang["gedcomid"]		= " קוד זיהוי של המשתמש הזה בקובץ ה-GEDCOM";
@@ -176,11 +176,11 @@ $pgv_lang["hebrew_givn"]		= "שמות פרטיים עבריים";
 $pgv_lang["hebrew_surn"]		= "שם משפחה עברי";
 $pgv_lang["hide_changes"]		= "לחץ כאן כדי להסתיר את השינויים.";
 $pgv_lang["highlighted"]		= "תמונה בהדגשה";
-$pgv_lang["illegal_chars"]		= "שם ריק או אותיות לא חוקיות בשם";  
+$pgv_lang["illegal_chars"]		= "שם ריק או אותיות לא חוקיות בשם";
 $pgv_lang["invalid_search_multisite_input"]  = "הכנס אחד מהפרטים הבאים: שם, תאריך לידה, מקום לידה, תאריך פטירה, מקום פטירה ומגדר ";
 $pgv_lang["invalid_search_multisite_input_gender"] 	= "אנא חפש שנית עם יותר נתונים, לא רק מגדר";
-$pgv_lang["label_diff_server"]      	= "אתר מרוחק חדש"; 
-$pgv_lang["label_location"]         	= "מיקום האתר"; 
+$pgv_lang["label_diff_server"]      	= "אתר מרוחק חדש";
+$pgv_lang["label_location"]         	= "מיקום האתר";
 $pgv_lang["label_password_id2"]	= "סיסמא: ";
 $pgv_lang["label_rel_to_current"]   	= "קשר לאדם הנוכחי";
 //$pgv_lang["label_remote_id"]        	= "קוד זיהוי אישי מרוחק";
@@ -194,13 +194,13 @@ $pgv_lang["link_as_child"]		= "קשר אדם זה למשפחה קיימת בתו
 $pgv_lang["link_as_husband"]		= "קשר אדם זה למשפחה קיימת בתור בעל";
 $pgv_lang["link_success"]		= "קישור התווסף בהצלחה";
 $pgv_lang["link_to_existing_media"]	= "קשר לישות מדיה קיימת";
-$pgv_lang["max_media_depth"]	= "לא ניתן להכניס יותר מ-#GLOBALS[MEDIA_DIRECTORY_LEVELS]# רמות של שמות תת-ספריות"; 
+$pgv_lang["max_media_depth"]	= "לא ניתן להכניס יותר מ-#GLOBALS[MEDIA_DIRECTORY_LEVELS]# רמות של שמות תת-ספריות";
 $pgv_lang["max_upload_size"]	= "גודל העלאה מכסימלי: ";
 $pgv_lang["media_deleted"]		= "תיקיית המדיה הוסרה בהצלחה.";
 $pgv_lang["media_exists"]		= "קובץ המדיה כבר קיים.";
 $pgv_lang["media_file"]		= "קובץ מדיה שאותו יש להעלות";
 $pgv_lang["media_file_deleted"]	= "קובץ מדיה נמחק בהצלחה.";
-$pgv_lang["media_file_moved"]	= "קובץ המדיה הועבר."; 
+$pgv_lang["media_file_moved"]	= "קובץ המדיה הועבר.";
 $pgv_lang["media_file_not_moved"]	= "לא ניתן להעביר את קובץ המדיה.";
 $pgv_lang["media_file_not_renamed"]	= "לא ניתן להעביר את או לשנות את השם של קובץ המדיה.";
 $pgv_lang["media_thumb_exists"]	= "תמונה מזערית של המדיה כבר קיימת";
@@ -232,7 +232,7 @@ $pgv_lang["undo_successful"]	= "הביטול הצליח";
 $pgv_lang["update_successful"]	= "העדכון הצליח";
 $pgv_lang["upload"]			= "העלה";
 $pgv_lang["upload_error"]		= "התגלתה שגיאה בהעלאת הקובץ שלך.";
-$pgv_lang["copy_error"]		= "לא ניתן להעתיק את קובץ #GLOBALS[whichFile2]# מ-#GLOBALS[whichFile1]#"; 
+$pgv_lang["copy_error"]		= "לא ניתן להעתיק את קובץ #GLOBALS[whichFile2]# מ-#GLOBALS[whichFile1]#";
 $pgv_lang["upload_media"]		= "העלאת קבצי מדיה";
 $pgv_lang["upload_media_help"]	= "~#pgv_lang[upload_media]#~<br /><br />בחר קבצים מהמחשב המקומי שלך להעלאה לשרת שלך. כל הקבצים מועלים לתיקיית <b><span dir=\"ltr\">#MEDIA_DIRECTORY#</span></b> או לאחת מהתיקיות מתחתיה.<br /><br />שמות החוצצים שאתה מציין יתווספו ל-<span dir=\"ltr\">#MEDIA_DIRECTORY#</span>, למשל, #MEDIA_DIRECTORY#myfamily. אם תיקיית התמונות המזעריות אינה קיימת, היא תיווצר בצורה אוטומטית.";
 $pgv_lang["upload_successful"]	= "ההעלאה הצליחה.";
