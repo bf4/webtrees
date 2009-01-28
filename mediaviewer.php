@@ -202,7 +202,7 @@ function show_gedcom_record(shownew) {
 }
 
 function showchanges() {
-	window.location = 'mediaviewer.php?mid=<?php print $controller->pid; ?>&showchanges=yes';
+	window.location = 'mediaviewer.php?mid=<?php print $controller->pid; ?>&show_changes=yes';
 }
 
 function ilinkitem(mediaid, type) {
