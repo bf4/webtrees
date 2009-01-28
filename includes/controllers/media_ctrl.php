@@ -40,6 +40,7 @@ require_once 'includes/functions/functions_import.php';
 
 class MediaControllerRoot extends IndividualController{
 
+	var $mid;
 	var $mediaobject;
 	var $show_changes=true;
 
@@ -47,9 +48,9 @@ class MediaControllerRoot extends IndividualController{
 		global $MEDIA_DIRECTORY, $USE_MEDIA_FIREWALL;
 
 		$filename=decrypt(safe_GET('filename'));
-		$mid     =safe_GET_xref('mid');
+		$this->mid     =safe_GET_xref('mid');
 
-		if ($USE_MEDIA_FIREWALL && empty($filename) && empty($mid)) {
+		if ($USE_MEDIA_FIREWALL && empty($filename) && empty($this->mid)) {
 			// this section used by mediafirewall.php to determine what media file was requested
 
 			if (isset($_SERVER['REQUEST_URI'])) {
@@ -71,25 +72,25 @@ class MediaControllerRoot extends IndividualController{
 
 		//Checks to see if the File Name ($filename) exists
 		if (!empty($filename)){
-			//If the File Name ($filename) is set, then it will call the method to get the Media ID ($mid) from the File Name ($filename)
-			$mid = get_media_id_from_file($filename);
-			if (!$mid){
+			//If the File Name ($filename) is set, then it will call the method to get the Media ID ($this->mid) from the File Name ($filename)
+			$this->mid = get_media_id_from_file($filename);
+			if (!$this->mid){
 				//This will set the Media ID to be false if the File given doesn't match to anything in the database
-				$mid = false;
+				$this->mid = false;
 				// create a very basic gedcom record for this file so that the functions of the media object will work
 				// this is used by the media firewall when requesting an object that exists in the media firewall directory but not in the gedcom
 				$this->mediaobject = new Media("0 @"."0"."@ OBJE\n1 FILE ".$filename);
 			}
 		}
 
-		//checks to see if the Media ID ($mid) is set. If the Media ID isn't set then there isn't any information avaliable for that picture the picture doesn't exist.
-		if ($mid){
-			//This creates a Media Object from the getInstance method of the Media Class. It takes the Media ID ($mid) and creates the object.
-			$this->mediaobject = Media::getInstance($mid);
+		//checks to see if the Media ID ($this->mid) is set. If the Media ID isn't set then there isn't any information avaliable for that picture the picture doesn't exist.
+		if ($this->mid){
+			//This creates a Media Object from the getInstance method of the Media Class. It takes the Media ID ($this->mid) and creates the object.
+			$this->mediaobject = Media::getInstance($this->mid);
 			//This sets the controller ID to be the Media ID
-			$this->pid = $mid;
+			$this->pid = $this->mid;
 
-			if (is_null($this->mediaobject)) $this->mediaobject = new Media("0 @".$mid."@ OBJE");
+			if (is_null($this->mediaobject)) $this->mediaobject = new Media("0 @".$this->mid."@ OBJE");
 		}
 
 		// one final test to be sure we have a media object defined
