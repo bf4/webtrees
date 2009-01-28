@@ -10,6 +10,8 @@
 
 
 Version 4.2.0
+ - Fixed: [ 2542150 ] [4927] Cannot add date to MARR when SOUR is present (wooc)
+ - Fixed: [ 2536206 ] [4.1.6] Double Date Field on Census Re-edit (wooc)
  - Added: Quick Parents/Step/Immediate Family Page Link on Indi Page Family Navigator (windmillway)
  - Fixed: [ 2524544 ] AddFavourites() not working (canajun2eh)
  - Fixed: [ 2391927 ] Ahnentafel report crashes (ljm)
