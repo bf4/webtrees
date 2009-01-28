@@ -326,6 +326,7 @@ $pgv_lang["stepbrother"]			= "Step-Brother";
 $pgv_lang["fams_charts"]			= "Options for family";
 $pgv_lang["indis_charts"]			= "Options for individual";
 $pgv_lang["none"]					= "None";
+$pgv_lang["facts"]					= "Facts";
 $pgv_lang["locked"]					= "Do not change";
 $pgv_lang["privacy"]				= "Privacy";
 $pgv_lang["number_sign"]			= "#";
@@ -1490,7 +1491,12 @@ $pgv_lang["sort_by"]				= "Sort by";
 $pgv_lang["cleanup"]				= "Cleanup";
 
 //-- CONFIGURE (extra) messages for programs patriarch and statistics
-$pgv_lang["statistics"] 			= "Statistics";
+$pgv_lang["statistics"]				= "Statistics";
+$pgv_lang["show_stats_charts"]		= "Show statistics charts";
+$pgv_lang["decade_birth"]			= "Decade of birth";
+$pgv_lang["decade_death"]			= "Decade of death";
+$pgv_lang["decade_marriage"]		= "Decade of marriage";
+$pgv_lang["avg_age"]				= "Average age";
 
 //-- Merge Records
 $pgv_lang["merge_same"] 			= "Records are not the same type.  Cannot merge records that are not the same type.";

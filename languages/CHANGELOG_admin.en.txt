@@ -44,9 +44,13 @@ occur in the respective language files.
 
 VERSION 4.2.0
 
-?$pgv_lang["whatever"]                dd Monthname, year		Change codes and comments
+?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 -----------------------------------------------------------------------------------------
-+$pgv_lang["PGV_SMTP_FROM_NAME"]					15 Jan 2008				A
++$pgv_lang["editors"]								26 Jan 2009				A
++$pgv_lang["gedcom_admins"]							26 Jan 2009				A
++$pgv_lang["site_admins"]							26 Jan 2009				A
++$pgv_lang["nobody"]								26 Jan 2009				A
++$pgv_lang["PGV_SMTP_FROM_NAME"]					15 Jan 2009				A
 -$pgv_lang["skip_cleanup"]							28 Dec 2008				D
 -$pgv_lang["manage_gedcoms"]						25 Dec 2008				D	Removed first occurrence of this var.
 *$pgv_lang["PGV_SMTP_HOST"]							21 Dec 2008				W

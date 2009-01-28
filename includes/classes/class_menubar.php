@@ -90,7 +90,7 @@ class MenuBar
 	static function &getMygedviewMenu() {
 		global $GEDCOMS, $MEDIA_DIRECTORY, $MULTI_MEDIA;
 		global $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $pgv_lang;
-		global $PEDIGREE_FULL_DETAILS, $PEDIGREE_LAYOUT;
+		global $PEDIGREE_FULL_DETAILS, $PEDIGREE_LAYOUT, $USE_QUICK_UPDATE;
 		if ($TEXT_DIRECTION=="rtl") $ff="_rtl"; else $ff="";
 
 		$showFull = ($PEDIGREE_FULL_DETAILS) ? 1 : 0;
@@ -127,13 +127,22 @@ class MenuBar
 			$menu->addSubmenu($submenu);
 		}
 		if (PGV_USER_GEDCOM_ID) {
-			//-- quick_update submenu
-			$submenu = new Menu($pgv_lang["quick_update_title"], "#");
-			$submenu->addOnclick("return quickEdit('".PGV_USER_GEDCOM_ID."', '', '".PGV_GEDCOM."');");
-			if (!empty($PGV_IMAGES["indis"]["small"]))
-				$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["indis"]["small"]);
-			$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
-			$menu->addSubmenu($submenu);
+			// Determine whether the Quick Update form can be shown
+			$showQuickForm = false;
+			if ($USE_QUICK_UPDATE) {
+				if ($USE_QUICK_UPDATE==='1' && PGV_USER_IS_ADMIN) $showQuickForm = true;
+				else if ($USE_QUICK_UPDATE==='2' && PGV_USER_GEDCOM_ADMIN) $showQuickForm = true;
+				else if (($USE_QUICK_UPDATE==='3' || $USE_QUICK_UPDATE===true) && PGV_USER_CAN_EDIT) $showQuickForm = true;
+			}
+			if ($showQuickForm) {
+				//-- quick_update submenu
+				$submenu = new Menu($pgv_lang["quick_update_title"], "#");
+				$submenu->addOnclick("return quickEdit('".PGV_USER_GEDCOM_ID."', '', '".PGV_GEDCOM."');");
+				if (!empty($PGV_IMAGES["indis"]["small"]))
+					$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["indis"]["small"]);
+				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
+				$menu->addSubmenu($submenu);
+			}
 			//-- my_pedigree submenu
 			$submenu = new Menu($pgv_lang["my_pedigree"], encode_url("pedigree.php?rootid=".PGV_USER_GEDCOM_ID."&show_full={$showFull}&talloffset={$showLayout}"));
 			if (!empty($PGV_IMAGES["pedigree"]["small"]))
@@ -980,12 +989,15 @@ class MenuBar
 		}
 	}
 	/**
-	* get the menu with links to the user/gedcom favourites
+	* get the menu with links to the user/gedcom favorites
 	* @return Menu the menu item
 	*/
-	static function &getFavouritesMenu() {
+	static function &getFavouritesMenu() {		// Don't break custom themes using the old name
+		return self::getFavoritesMenu();
+	}
+	static function &getFavoritesMenu() {
 		global $REQUIRE_AUTHENTICATION, $pgv_lang, $GEDCOM, $QUERY_STRING, $SCRIPT_NAME, $PGV_IMAGE_DIR, $PGV_IMAGES, $TEXT_DIRECTION;
-		global $controller; // Pages with a controller can be added to the favourites
+		global $controller; // Pages with a controller can be added to the favorites
 		if ($TEXT_DIRECTION=="rtl") $ff="_rtl"; else $ff="";
 
 		if (PGV_USER_ID || !$REQUIRE_AUTHENTICATION) {
@@ -995,16 +1007,37 @@ class MenuBar
 			}
 			$menu->addClass("menuitem$ff", "menuitem_hover$ff", "submenu$ff");
 			$menu->print_menu = null;
-			// User favourites
+			// User favorites
 			$userfavs=getUserFavorites(PGV_USER_ID);
 			if ($userfavs || PGV_USER_ID) {
 				$submenu=new Menu('<strong>'.$pgv_lang['my_favorites'].'</strong>');
 				$submenu->addClass('favsubmenuitem', 'favsubmenuitem_hover');
 				$menu->addSubMenu($submenu);
-				if (PGV_USER_ID && isset($controller)) {
-					$submenu=new Menu('<em>'.$pgv_lang['add_to_my_favorites'].'</em>', $SCRIPT_NAME.normalize_query_string($QUERY_STRING.'&amp;action=addfav'));
+				while (PGV_USER_ID && isset($controller)) {
+					// Get the right $gid from each supported controller type
+					switch (get_class($controller)) {
+					case 'IndividualController':
+						$gid = $controller->pid;
+						break;
+					case 'FamilyController':
+						$gid = $controller->famid;
+						break;
+					case 'MediaController':
+						$gid = $controller->mid;
+						break;
+					case 'SourceController':
+						$gid = $controller->sid;
+						break;
+					case 'RepositoryController':
+						$gid = $controller->rid;
+						break;
+					default:
+						break 2;
+					}
+					$submenu=new Menu('<em>'.$pgv_lang['add_to_my_favorites'].'</em>', $SCRIPT_NAME.normalize_query_string($QUERY_STRING.'&amp;action=addfav&amp;gid='.$gid));
 					$submenu->addClass('favsubmenuitem', 'favsubmenuitem_hover');
 					$menu->addSubMenu($submenu);
+					break;
 				}
 				foreach ($userfavs as $fav) {
 					$OLD_GEDCOM=$GEDCOM;
@@ -1032,7 +1065,7 @@ class MenuBar
 					$GEDCOM=$OLD_GEDCOM;
 				}
 			}
-			// Gedcom favourites
+			// Gedcom favorites
 			$gedfavs=getUserFavorites($GEDCOM);
 			if ($gedfavs) {
 				$submenu=new Menu('<strong>'.$pgv_lang['gedcom_favorites'].'</strong>');

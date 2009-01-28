@@ -322,6 +322,7 @@ $pgv_lang["stepbrother"]			= "Brat przyrodni";
 $pgv_lang["fams_charts"]			= "Opcje dla rodziny";
 $pgv_lang["indis_charts"]			= "Opcje dla osoby";
 $pgv_lang["none"]					= "Brak";
+$pgv_lang["facts"]					= "Fakty";
 $pgv_lang["locked"]					= "Edycja zablokowana";
 $pgv_lang["privacy"]				= "Dane poufne";
 $pgv_lang["number_sign"]			= "#";
@@ -1475,6 +1476,11 @@ $pgv_lang["cleanup"]				= "Porządkowanie";
 
 //-- CONFIGURE (extra) messages for programs patriarch and statistics
 $pgv_lang["statistics"]				= "Statystyki";
+$pgv_lang["show_stats_charts"]		= "Pokaż wykresy statystyk";
+$pgv_lang["decade_birth"]			= "Dekada urodzin";
+$pgv_lang["decade_death"]			= "Dekada śmierci";
+$pgv_lang["decade_marriage"]		= "Dekada ślubu";
+$pgv_lang["avg_age"]				= "Średni wiek";
 
 //-- Merge Records
 $pgv_lang["merge_same"]			= "Wpisy nie są tego samego typu. Nie można scalać wpisów różnego typu.";

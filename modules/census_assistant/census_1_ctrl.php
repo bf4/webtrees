@@ -15,6 +15,23 @@ $wholename = rtrim($nam[0]['givn'],'*')."&nbsp;".$nam[0]['surn'];
 $currpid=$pid;
 global $summary;
 
+// Various Debugs =========================================
+// var_dump($person->getAllNames()); 
+
+/*
+$fred = ($person->getAllBirthPlaces());
+$fredrev = explode(", ", $fred[0]);
+$fredrev = array_reverse($fredrev);
+$fredrev = implode(", ", $fredrev);
+echo $fred[0];
+echo "<br />";
+echo $fredrev;
+*/
+
+//=========================================================
+
+
+
 echo "<table border=0><tr>";
 echo "<td width=\"20%\">";
 echo "<center><font size=\"3\"><b>" . $censyear . " Census Assistant</b></font></center>";

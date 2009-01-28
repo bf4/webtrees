@@ -89,8 +89,11 @@ $pgv_lang["check_calendar"]			= "Sprawdzanie biblioteki Advanced Calendar (Zaawa
 $pgv_lang["cannot_use_calendar"]	= "Nie masz wsparcia zaawansowanego kalendarza. Nie będzie w stanie uruchomić niektórych zaawansowanych funkcji kalendarza.";
 $pgv_lang["warnings_passed"]		= "Test zakończony pomyślnie. Brak ograniczeń.";
 $pgv_lang["warning_instr"]			= "Jeżeli występują jakieś ograniczenia nadal możesz uruchomić PhpGedView na tym serwerze, ale niektóre funkcje mogą być wyłączone lub jakość ich działania może być niezadawalająca.";
-
 $pgv_lang["user"]					= "Użytkownik autoryzowany";
+$pgv_lang["editors"]				= "Użytkownicy z prawem edycji";
+$pgv_lang["gedcom_admins"]			= "Administratorzy pliku GEDCOM";
+$pgv_lang["site_admins"]			= "Administratorzy strony";
+$pgv_lang["nobody"]					= "Nikt";
 $pgv_lang["thumbnail_deleted"]		= "Plik miniaturek został usunięty.";
 $pgv_lang["thumbnail_not_deleted"]	= "Usuwanie pliku miniaturek nie powiodło się.";
 $pgv_lang["step2"]					= "Krok 2 z 4:";

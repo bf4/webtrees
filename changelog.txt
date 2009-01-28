@@ -9,6 +9,7 @@
 =====================================================================
 
 Version 4.2.0 CA
+ - Merged: Merge changes r4894 - r4935 from the trunk (windmillway)
  - Added: New Census Birthplace function for Census Assistant (windmillway)
  - Changed: Corrected Shared Note View first line, added various aesthetic changes. (windmillway) 
  - Merged: Merge changes r4762 - r4893 from the trunk (windmillway)
@@ -17,6 +18,16 @@ Version 4.2.0 CA
 
  
 Version 4.2.0
+ - Added: Quick Parents/Step/Immediate Family Page Link on Indi Page Family Navigator (windmillway)
+ - Fixed: [ 2524544 ] AddFavourites() not working (canajun2eh)
+ - Fixed: [ 2391927 ] Ahnentafel report crashes (ljm)
+ - Changed: [ 2534555 ] Modify 'Prefer fact sources' option (canajun2eh)
+ - Changed: [ 2481763 ] Change options that control the use of Quick Update (canajun2eh)
+ - Changed: [ 2481776 ] Change order of Edit menu entries on Indi and Family pages (canajun2eh)
+ - Fixed: [ 2256627 ] Ahnentafel report crashes (ljm)
+ - Fixed: [ 2193477 ] [4146] Printer Friendly View Problems (wooc)
+ - Fixed: [ 2530481 ] Autocomplete error adding new place (wooc)
+ - Fixed: [ 2430622 ] [4548] Places Error Possibly Caused by Autocomplete (wooc)
  - Added: Support for Indonesian (canajun2eh)
  - [ 2530830 ] 4881 Ancestry Chart, Show cousins (fisharebest)
  - [ 2529023 ] 404 on repo/show changes (fisharebest)

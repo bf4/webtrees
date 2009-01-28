@@ -398,9 +398,8 @@ function print_indi_table($datalist, $legend="", $option="") {
 	if ($tiny) echo "<td></td>"; // BIRT:Reminder
 	echo "<td></td>"; // BIRT:PLAC
 	if ($tiny) echo "<td></td>"; // Children
-	echo "<td></td>"; // DEAT:DATE
-	if ($tiny) echo "<td></td>"; // DEAT:Reminder
-	echo "<td></td>"; // DEAT:AGE
+	echo "<td class=\"list_label\" colspan=\"3\">";
+	echo "<input id=\"charts_$table_id\" type=\"checkbox\" onclick=\"toggleByClassName('DIV', '$table_id-charts');\" /><label for=\"charts_$table_id\">".$pgv_lang["show_stats_charts"]."</label></td>"; //DEAT:DATE, DEAT:Reminder, DEAT:AGE
 	echo "<td></td>"; // DEAT:PLAC
 	if ($tiny && $SHOW_LAST_CHANGE) echo "<td></td>"; // CHAN
 	echo "<td style=\"display:none\">SEX</td>";
@@ -412,16 +411,16 @@ function print_indi_table($datalist, $legend="", $option="") {
 	echo "</table>\n";
 	echo "</div>";
 	//-- charts
-	/*echo "<div id=\"".$table_id."-charts\">";
+	echo "<div class=\"".$table_id."-charts\" style=\"display:none\">";
 	echo "<table class=\"list_table center\">";
 	echo "<tr><td class=\"list_value_wrap\">";
-	print_chart_by_decade($birt_by_decade, "Decade of birth");
+	print_chart_by_decade($birt_by_decade, $pgv_lang["decade_birth"]);
 	echo "</td><td class=\"list_value_wrap\">";
-	print_chart_by_decade($deat_by_decade, "Decade of death");
+	print_chart_by_decade($deat_by_decade, $pgv_lang["decade_death"]);
 	echo "</td></tr><tr><td colspan=\"2\" class=\"list_value_wrap\">";
-	print_chart_by_age($deat_by_age, "Age at death");
+	print_chart_by_age($deat_by_age, $pgv_lang["stat_18_ard"]);
 	echo "</td></tr></table>";
-	echo "</div>";*/
+	echo "</div>";
 	echo "</fieldset>\n";
 }
 
@@ -433,7 +432,7 @@ function print_indi_table($datalist, $legend="", $option="") {
  */
 function print_fam_table($datalist, $legend="", $option="") {
 	global $pgv_lang, $factarray, $SHOW_ID_NUMBERS, $SHOW_LAST_CHANGE, $SHOW_MARRIED_NAMES, $TEXT_DIRECTION;
-	global $PGV_IMAGE_DIR, $PGV_IMAGES, $SEARCH_SPIDER, $MAX_ALIVE_AGE;
+	global $PGV_IMAGE_DIR, $PGV_IMAGES, $SEARCH_SPIDER, $MAX_ALIVE_AGE, $lang_short_cut, $LANGUAGE;
 
 	if ($option=="BIRT_PLAC" || $option=="DEAT_PLAC") return;
 	if (count($datalist)<1) return;
@@ -644,28 +643,38 @@ function print_fam_table($datalist, $legend="", $option="") {
 					echo '<div>', $marriage_date->Display(!$SEARCH_SPIDER), '</div>';
 				} else if ($marriage_date->MinJD()!=0) {
 					echo '<div>', str_replace('<a', '<a name="'.$marriage_date->MinJD().'"', $marriage_date->Display(!$SEARCH_SPIDER)), '</div>';
-				} else {
-					$factdetail = explode(' ', trim($family->getMarriageRecord()));
-					if (isset($factdetail)) {
-						if (count($factdetail) == 3) {
-							if (strtoupper($factdetail[2]) == "Y")
-								echo '<div>', $pgv_lang["yes"], '<a name="9999998"></a></div>';
-							else if (strtoupper($factdetail[2]) == "N")
-								echo '<div>', $pgv_lang["no"], '<a name="9999999"></a></div>';
-						}
-						else echo '&nbsp;';
-					}
 				}
 			}
 			if ($marriage_dates[0]->gregorianYear()>=1550 && $marriage_dates[0]->gregorianYear()<2030) {
 				$marr_by_decade[floor($marriage_dates[0]->gregorianYear()/10)*10] .= $husb->getSex().$wife->getSex();
 			}
 		} else if (get_sub_record(1, "1 _NMR", find_family_record($family->getXref()))) {
+			// Allow special processing for different languages
+			$func="fact_NMR_localisation_{$lang_short_cut[$LANGUAGE]}";
+			if (function_exists($func)) {
+				// Localise the _NMR facts
+				$func("_NMR", $family->getXref());
+			}
 			echo '<div>', $factarray["_NMR"], '<a name="9999999"></a></div>';
 		} else if (get_sub_record(1, "1 _NMAR", find_family_record($family->getXref()))) {
+			// Allow special processing for different languages
+			$func="fact_NMR_localisation_{$lang_short_cut[$LANGUAGE]}";
+			if (function_exists($func)) {
+				// Localise the _NMR facts
+				$func("_NMAR", $family->getXref());
+			}
 			echo '<div>', $factarray["_NMAR"], '<a name="9999999"></a></div>';
 		} else {
-			echo '&nbsp;';
+			$factdetail = explode(' ', trim($family->getMarriageRecord()));
+			if (isset($factdetail)) {
+				if (count($factdetail) >= 3) {
+					if (strtoupper($factdetail[2]) != "N")
+						echo '<div>', $pgv_lang["yes"], '<a name="9999998"></a></div>';
+					else
+						echo '<div>', $pgv_lang["no"], '<a name="9999999"></a></div>';
+				}
+				else echo '&nbsp;';
+			}
 		}
 		echo "</td>";
 		//-- Marriage anniversary
@@ -765,9 +774,8 @@ function print_fam_table($datalist, $legend="", $option="") {
 	echo "</td>";
 	echo "<td style=\"display:none\">WIFE:GIVN</td>";
 	echo "<td></td>"; // WIFE:AGE
-	echo "<td></td>"; // MARR:DATE
-	echo "<td></td>"; // MARR:Reminder
-	echo "<td></td>"; // MARR:PLAC
+	echo "<td class=\"list_label\" colspan=\"3\">";
+	echo "<input id=\"charts_$table_id\" type=\"checkbox\" onclick=\"toggleByClassName('DIV', '$table_id-charts');\" /><label for=\"charts_$table_id\">".$pgv_lang["show_stats_charts"]."</label></td>"; // MARR:DATE, MARR:Reminder, MARR:PLAC
 	if ($tiny) echo "<td></td>"; // FAM:ChildrenCount
 	if ($tiny && $SHOW_LAST_CHANGE) echo "<td></td>"; // FAM:CHAN
 	echo "<td style=\"display:none\">MARR</td>";
@@ -777,16 +785,16 @@ function print_fam_table($datalist, $legend="", $option="") {
 	echo "</table>\n";
 	echo "</div>";
 	//-- charts
-	/*echo "<div id=\"".$table_id."-charts\">";
+	echo "<div class=\"".$table_id."-charts\" style=\"display:none\">";
 	echo "<table class=\"list_table center\">";
 	echo "<tr><td class=\"list_value_wrap\">";
-	print_chart_by_decade($birt_by_decade, "Decade of birth");
+	print_chart_by_decade($birt_by_decade, $pgv_lang["decade_birth"]);
 	echo "</td><td class=\"list_value_wrap\">";
-	print_chart_by_decade($marr_by_decade, "Decade of marriage");
+	print_chart_by_decade($marr_by_decade, $pgv_lang["decade_marriage"]);
 	echo "</td></tr><tr><td colspan=\"2\" class=\"list_value_wrap\">";
-	print_chart_by_age($marr_by_age, "Age at marriage");
+	print_chart_by_age($marr_by_age, $pgv_lang["stat_19_arm"]);
 	echo "</td></tr></table>";
-	echo "</div>";*/
+	echo "</div>";
 	echo "</fieldset>\n";
 }
 
@@ -1857,7 +1865,7 @@ function print_events_list($startjd, $endjd, $events='BIRT MARR DEAT', $only_liv
 
 	foreach($filtered_events as $value) {
 		$return .= "<a href=\"".encode_url($value['url'])."\" class=\"list_item name2\" dir=\"".$TEXT_DIRECTION."\">".PrintReady($value['name'])."</a>".$value['sex'];
-		$return .= "<div class=\"indent\">";
+		$return .= "<br /><div class=\"indent\">";
 		$return .= $factarray[$value['fact']].' - '.$value['date']->Display(true);
 		if ($value['anniv']!=0) $return .= " (" . str_replace("#year_var#", $value['anniv'], $pgv_lang["year_anniversary"]).")";
 		if (!empty($value['plac'])) $return .= " - <a href=\"".encode_url(get_place_url($value['plac']))."\">".$value['plac']."</a>";
@@ -1911,17 +1919,20 @@ function print_chart_by_age($data, $title) {
 
 	$count = 0;
 	$vmax = 0;
+	$avg = 0;
 	foreach ($data as $age=>$v) {
 		$n = strlen($v);
 		$vmax = max($vmax, $n);
 		$count += $n;
+		$avg += $age*$n;
 	}
 	if ($count<1) return;
+	$avg = round($avg/$count);
 	$chart_url = "http://chart.apis.google.com/chart?cht=bvs"; // chart type
-	$chart_url .= "&chs=720x150"; // size
+	$chart_url .= "&chs=725x150"; // size
 	$chart_url .= "&chbh=3,2,2"; // bvg : 4,1,2
-	$chart_url .= "&chco=9ca3d4,ff2080"; // bar color
-	$chart_url .= "&chdl=".$pgv_lang["stat_males"]."|".$pgv_lang["stat_females"]; // legend
+	$chart_url .= "&chco=0000FF,FFA0CB,FFFFFF"; // bar color
+	$chart_url .= "&chdl=".$pgv_lang["male"]."|".$pgv_lang["female"]."|".$pgv_lang["avg_age"].": ".$avg; // legend
 	$chart_url .= "&chtt=".urlencode($title); // title
 	$chart_url .= "&chxt=x,y,r";
 	$chart_url .= "&chxl=0:|"; // label
@@ -1962,7 +1973,7 @@ function print_chart_by_decade($data, $title) {
 	$chart_url = "http://chart.apis.google.com/chart?cht=bvs"; // chart type
 	$chart_url .= "&chs=360x150"; // size
 	$chart_url .= "&chbh=3,3"; // bvg : 4,1,2
-	$chart_url .= "&chco=9ca3d4,ff2080"; // bar color
+	$chart_url .= "&chco=0000FF,FFA0CB"; // bar color
 	$chart_url .= "&chtt=".urlencode($title); // title
 	$chart_url .= "&chxt=x,y,r";
 	$chart_url .= "&chxl=0:|<|||"; // <1570

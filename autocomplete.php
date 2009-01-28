@@ -3,7 +3,7 @@
 * Returns data for autocompletion
 *
 * phpGedView: Genealogy Viewer
-* Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
+* Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
 *
 * This program is free software; you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -513,7 +513,7 @@ function autocomplete_GIVN() {
 * @return Array of string City, County, State/Province, Country
 */
 function autocomplete_PLAC() {
-	global $TBLPREFIX, $DBTYPE, $DBCONN;
+	global $TBLPREFIX, $DBTYPE, $DBCONN, $USE_GEONAMES;
 	global $lang_short_cut, $LANGUAGE;
 	global $FILTER, $OPTION;
 
@@ -576,9 +576,9 @@ function autocomplete_PLAC() {
 	}
 	$data = array_filter($data, "place_ok");
 
-	//-- no match => perform a geoNames query
-	if (empty($data)) {
-		$url = "http://ws.geonames.org/searchJSON".
+	//-- no match => perform a geoNames query if enabled
+	if (empty($data) && $USE_GEONAMES) {
+		$url = "http://ws5.geonames.org/searchJSON".
 					"?name_startsWith=".urlencode($FILTER).
 					"&lang=".$lang_short_cut[$LANGUAGE].
 					"&fcode=CMTY&fcode=ADM4&fcode=PPL&fcode=PPLA&fcode=PPLC".

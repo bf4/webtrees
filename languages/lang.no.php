@@ -325,6 +325,7 @@ $pgv_lang["stepbrother"]			= "Stebror";
 $pgv_lang["fams_charts"]			= "Valg for denne familien";
 $pgv_lang["indis_charts"]			= "Valg for denne personen";
 $pgv_lang["none"]					= "Ingen";
+##$pgv_lang["facts"]					= "Facts";
 $pgv_lang["locked"]					= "Ikke gjør endringer";
 $pgv_lang["privacy"]				= "Personvern";
 $pgv_lang["number_sign"]			= "#";
@@ -1480,6 +1481,11 @@ $pgv_lang["cleanup"]			= "Rydd";
 
 //-- CONFIGURE (extra) messages for programs patriarch and statistics
 $pgv_lang["statistics"]			= "Statistikk";
+##$pgv_lang["show_stats_charts"]	= "Show statistics charts";
+##$pgv_lang["decade_birth"]		= "Decade of birth";
+##$pgv_lang["decade_death"]		= "Decade of death";
+##$pgv_lang["decade_marriage"]	= "Decade of marriage";
+##$pgv_lang["avg_age"]			= "Average age";
 
 //-- Merge Records
 $pgv_lang["merge_same"]			= "Dataene er ikke av samme type.  Kan ikke flette data som er av forskjellig type!";

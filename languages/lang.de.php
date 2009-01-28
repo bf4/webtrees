@@ -325,6 +325,7 @@ $pgv_lang["stepbrother"]				= "Stiefbruder";
 $pgv_lang["fams_charts"]				= "Optionen für Familie";
 $pgv_lang["indis_charts"]				= "Optionen für Person";
 $pgv_lang["none"]						= "Keine";
+$pgv_lang["facts"]						= "Fakte";
 $pgv_lang["locked"]						= "Nicht ändern!";
 $pgv_lang["privacy"]					= "Datenschutz";
 $pgv_lang["number_sign"]				= "#";
@@ -1481,6 +1482,11 @@ $pgv_lang["cleanup"]					= "Korrigieren";
 
 //-- CONFIGURE (extra) messages for programs patriarch, slklist and statistics
 $pgv_lang["statistics"]					= "Statistiken";
+$pgv_lang["show_stats_charts"]			= "Statistiken-Diagramme zeigen";
+$pgv_lang["decade_birth"]				= "Geburten: Jahrzehnt";
+$pgv_lang["decade_death"]				= "Tode: Jahrzehnt";
+$pgv_lang["decade_marriage"]			= "Ehen: Jahrzehnt";
+$pgv_lang["avg_age"]					= "Durchschnitt: Todesalter";
 
 //-- Merge Records
 $pgv_lang["merge_same"]					= "Die Datensätze sind nicht vom gleichen Typ und können daher nicht zusammengefügt werden.";

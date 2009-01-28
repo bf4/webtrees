@@ -3,7 +3,7 @@
 * Various functions used by the Edit interface
 *
 * phpGedView: Genealogy Viewer
-* Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
+* Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
 *
 * This program is free software; you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -1465,7 +1465,10 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 			//-- checkboxes to apply '1 SOUR' to BIRT/MARR/DEAT as '2 SOUR'
 			if ($level==1) {
 				echo '<br />';
-				if ($PREFER_LEVEL2_SOURCES) {
+				if ($PREFER_LEVEL2_SOURCES==='0') {
+					$level1_checked='';
+					$level2_checked='';
+				} else if ($PREFER_LEVEL2_SOURCES==='1' || $PREFER_LEVEL2_SOURCES===true) {
 					$level1_checked='';
 					$level2_checked=' checked="checked"';
 				} else {
