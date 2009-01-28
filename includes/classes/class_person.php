@@ -297,6 +297,24 @@ class Person extends GedcomRecord {
 		}
 		return $this->birthEvent->getPlace();
 	}
+	
+	/**
+	* get the Census birth place
+	* @return string
+	*/
+	function getCensBirthPlace() {
+		$this->_parseBirthDeath();
+		if (is_null($this->birthEvent)) {
+			return "";
+		}
+		$censbirthplace = $this->birthEvent->getPlace();
+		$censbirthplace = explode(", ", $censbirthplace);
+		$censbirthplace = array_reverse($censbirthplace);
+		$censbirthplace = array_slice($censbirthplace, 1);
+		$censbirthplace = array_slice($censbirthplace, 0, 2);
+		$censbirthplace = implode(", ", $censbirthplace);
+		return $censbirthplace;
+	}
 
 	/**
 	* get the birth year

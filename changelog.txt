@@ -9,6 +9,7 @@
 =====================================================================
 
 Version 4.2.0 CA
+ - Added: New Census Birthplace function for Census Assistant (windmillway)
  - Changed: Corrected Shared Note View first line, added various aesthetic changes. (windmillway) 
  - Merged: Merge changes r4762 - r4893 from the trunk (windmillway)
  - Added: New Shared Note List (from List Menu) and links to individual Shared Notes. (windmillway)
