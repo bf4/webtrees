@@ -987,7 +987,13 @@ class MenuBar
 	}
 	static function &getFavoritesMenu() {
 		global $REQUIRE_AUTHENTICATION, $pgv_lang, $GEDCOM, $QUERY_STRING, $SCRIPT_NAME, $PGV_IMAGE_DIR, $PGV_IMAGES, $TEXT_DIRECTION;
+		global $SEARCH_SPIDER;
 		global $controller; // Pages with a controller can be added to the favorites
+
+		if (!empty($SEARCH_SPIDER)) {
+			return false; // show no favorites, because they taint every page that is indexed.
+		}
+
 		if ($TEXT_DIRECTION=="rtl") $ff="_rtl"; else $ff="";
 
 		if (PGV_USER_ID || !$REQUIRE_AUTHENTICATION) {
@@ -996,9 +1002,12 @@ class MenuBar
 				$menu->addIcon($PGV_IMAGE_DIR.'/'.$PGV_IMAGES['gedcom']['large']);
 			}
 			$menu->addClass("menuitem$ff", "menuitem_hover$ff", "submenu$ff");
-			$menu->print_menu = null;
-			// User favorites
+			$menu->print_menu = NULL;
+
 			$userfavs=getUserFavorites(PGV_USER_ID);
+			$gedfavs=getUserFavorites($GEDCOM);
+
+			// User favorites
 			if ($userfavs || PGV_USER_ID) {
 				$submenu=new Menu('<strong>'.$pgv_lang['my_favorites'].'</strong>');
 				$submenu->addClass('favsubmenuitem', 'favsubmenuitem_hover');
@@ -1054,9 +1063,11 @@ class MenuBar
 					}
 					$GEDCOM=$OLD_GEDCOM;
 				}
+				if ($gedfavs) {
+					$menu->addSeparator();
+				}
 			}
 			// Gedcom favorites
-			$gedfavs=getUserFavorites($GEDCOM);
 			if ($gedfavs) {
 				$submenu=new Menu('<strong>'.$pgv_lang['gedcom_favorites'].'</strong>');
 				$submenu->addClass('favsubmenuitem', 'favsubmenuitem_hover');
