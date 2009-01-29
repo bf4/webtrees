@@ -1811,9 +1811,9 @@ function print_chart_by_age($data, $title) {
 	$chart_url .= "&chg=100,".round(100*$step/$vmax,1).",1,5"; // grid
 	$chart_url .= "&chd=s:"; // data : simple encoding from A=0 to 9=61
 	$CHART_ENCODING61 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-	for ($age=0; $age<107; $age++) $chart_url .= $CHART_ENCODING61[floor(substr_count($data[$age], "M")*61/$vmax)];
+	for ($age=0; $age<$MAX_ALIVE_AGE; $age++) $chart_url .= $CHART_ENCODING61[floor(substr_count($data[$age], "M")*61/$vmax)];
 	$chart_url .= ",";
-	for ($age=0; $age<107; $age++) $chart_url .= $CHART_ENCODING61[floor(substr_count($data[$age], "F")*61/$vmax)];
+	for ($age=0; $age<$MAX_ALIVE_AGE; $age++) $chart_url .= $CHART_ENCODING61[floor(substr_count($data[$age], "F")*61/$vmax)];
 	echo "<img src=\"".$chart_url."\" alt=\"".$title."\" title=\"".$title."\" class=\"gchart\" />";
 }
 
