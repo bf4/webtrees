@@ -118,17 +118,20 @@ if (is_null($controller->descPerson)) {
 	echo '<span class="error">', $pgv_lang['record_not_found'], '</span>';
 }
 $controller->generations -= 1; // [ 1757792 ] Charts : wrong generations count
-if ($show_full==0) {
-	echo '<span class="details2">', $pgv_lang['charts_click_box'], '</span><br /><br />';
-}
 
 switch ($controller->chart_style) {
 case 0: //-- list
+	if ($show_full==0) {
+		echo '<span class="details2">', $pgv_lang['charts_click_box'], '</span><br /><br />';
+	}
 	echo '<ul style="list-style: none; display: block;" id="descendancy_chart', $TEXT_DIRECTION=='rtl' ? '_rtl' : '', '">';
 	$controller->print_child_descendancy($controller->descPerson, $controller->generations);
 	echo '</ul>';
 	break;
 case 1: //-- booklet
+	if ($show_full==0) {
+		echo '<span class="details2">', $pgv_lang['charts_click_box'], '</span><br /><br />';
+	}
 	$show_cousins = true;
 	$famids = find_sfamily_ids($controller->pid);
 	if (count($famids)) {
