@@ -3,7 +3,7 @@
  * Parses gedcom file and displays a descendancy tree.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
+ * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -157,7 +157,7 @@ function indi_desc($person, $n, $array) {
 	$array[$person->getXref()]=$person;
 	foreach ($person->getSpouseFamilies() as $family) {
 		$spouse=$family->getSpouse($person);
-		$array[$spouse->getXref()]=$spouse;
+		if (isset($spouse)) $array[$spouse->getXref()]=$spouse;
 		foreach ($family->getChildren() as $child) {
 			$array=indi_desc($child, $n-1, $array);
 		}
