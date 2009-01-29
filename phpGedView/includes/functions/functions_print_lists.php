@@ -44,8 +44,8 @@ require_once 'includes/functions/functions_places.php';
  * @param string $legend optional legend of the fieldset
  */
 function print_indi_table($datalist, $legend="", $option="") {
-	global $pgv_lang, $factarray, $SHOW_ID_NUMBERS, $SHOW_LAST_CHANGE, $SHOW_MARRIED_NAMES, $TEXT_DIRECTION;
-	global $PGV_IMAGE_DIR, $PGV_IMAGES, $SEARCH_SPIDER, $MAX_ALIVE_AGE, $SHOW_EST_LIST_DATES;
+	global $pgv_lang, $factarray, $GEDCOM, $SHOW_ID_NUMBERS, $SHOW_LAST_CHANGE, $SHOW_MARRIED_NAMES, $TEXT_DIRECTION;
+	global $PGV_IMAGE_DIR, $PGV_IMAGES, $SEARCH_SPIDER, $SHOW_EST_LIST_DATES;
 
 	if ($option=="MARR_PLAC") return;
 	if (count($datalist)<1) return;
@@ -53,8 +53,11 @@ function print_indi_table($datalist, $legend="", $option="") {
 	$name_subtags = array("", "_AKA", "_HEB", "ROMN");
 	if ($SHOW_MARRIED_NAMES) $name_subtags[] = "_MARNM";
 	require_once 'js/sorttable.js.htm';
+	require_once 'includes/classes/class_stats.php';
+	$stats = new stats($GEDCOM);
+	$max_age = $stats->LongestLifeAge()+1;
 	//-- init chart data
-	for ($age=0; $age<=$MAX_ALIVE_AGE; $age++) $deat_by_age[$age]="";
+	for ($age=0; $age<=$max_age; $age++) $deat_by_age[$age]="";
 	for ($year=1550; $year<2030; $year+=10) $birt_by_decade[$year]="";
 	for ($year=1550; $year<2030; $year+=10) $deat_by_decade[$year]="";
 	//-- fieldset
@@ -321,7 +324,7 @@ function print_indi_table($datalist, $legend="", $option="") {
 			$age = GedcomDate::GetAgeYears($birth_dates[0], $death_dates[0]);
 			$age_jd = $death_dates[0]->MinJD()-$birth_dates[0]->MinJD();
 			echo '<a name="', $age_jd, '" class="list_item age">', $age, '</a>';
-			$deat_by_age[max(0,min($MAX_ALIVE_AGE, $age))] .= $person->getSex();
+			$deat_by_age[max(0,min($max_age, $age))] .= $person->getSex();
 		} else {
 			echo '<a name="-1">&nbsp;</a>';
 		}
@@ -431,8 +434,8 @@ function print_indi_table($datalist, $legend="", $option="") {
  * @param string $legend optional legend of the fieldset
  */
 function print_fam_table($datalist, $legend="", $option="") {
-	global $pgv_lang, $factarray, $SHOW_ID_NUMBERS, $SHOW_LAST_CHANGE, $SHOW_MARRIED_NAMES, $TEXT_DIRECTION;
-	global $PGV_IMAGE_DIR, $PGV_IMAGES, $SEARCH_SPIDER, $MAX_ALIVE_AGE, $lang_short_cut, $LANGUAGE;
+	global $pgv_lang, $factarray, $GEDCOM, $SHOW_ID_NUMBERS, $SHOW_LAST_CHANGE, $SHOW_MARRIED_NAMES, $TEXT_DIRECTION;
+	global $PGV_IMAGE_DIR, $PGV_IMAGES, $SEARCH_SPIDER, $lang_short_cut, $LANGUAGE;
 
 	if ($option=="BIRT_PLAC" || $option=="DEAT_PLAC") return;
 	if (count($datalist)<1) return;
@@ -441,8 +444,11 @@ function print_fam_table($datalist, $legend="", $option="") {
 	//if ($SHOW_MARRIED_NAMES) $name_subtags[] = "_MARNM";
 	require_once 'js/sorttable.js.htm';
 	require_once 'includes/classes/class_family.php';
+	require_once 'includes/classes/class_stats.php';
+	$stats = new stats($GEDCOM);
+	$max_age = max($stats->oldestMarriageMaleAge(), $stats->oldestMarriageFemaleAge())+1;
 	//-- init chart data
-	for ($age=0; $age<=$MAX_ALIVE_AGE; $age++) $marr_by_age[$age]="";
+	for ($age=0; $age<=$max_age; $age++) $marr_by_age[$age]="";
 	for ($year=1550; $year<2030; $year+=10) $birt_by_decade[$year]="";
 	for ($year=1550; $year<2030; $year+=10) $marr_by_decade[$year]="";
 	//-- fieldset
@@ -578,7 +584,7 @@ function print_fam_table($datalist, $legend="", $option="") {
 				$hage=GedcomDate::GetAgeYears($hdate, $mdate);
 				$hage_jd = $mdate->MinJD()-$hdate->MinJD();
 				echo '<a name="', $hage_jd, '" class="list_item age">', $hage, '</a>';
-				$marr_by_age[max(0,min($MAX_ALIVE_AGE, $hage))] .= $husb->getSex();
+				$marr_by_age[max(0,min($max_age, $hage))] .= $husb->getSex();
 			} else {
 				echo '&nbsp;';
 			}
@@ -627,7 +633,7 @@ function print_fam_table($datalist, $legend="", $option="") {
 				$wage=GedcomDate::GetAgeYears($wdate, $mdate);
 				$wage_jd = $mdate->MinJD()-$wdate->MinJD();
 				echo '<a name="', $wage_jd, '" class="list_item age">', $wage, '</a>';
-				$marr_by_age[max(0,min($MAX_ALIVE_AGE, $wage))] .= $wife->getSex();
+				$marr_by_age[max(0,min($max_age, $wage))] .= $wife->getSex();
 			} else {
 				print "&nbsp;";
 			}
@@ -1779,14 +1785,25 @@ function print_events_list($startjd, $endjd, $events='BIRT MARR DEAT', $only_liv
  * @param string $title
  */
 function print_chart_by_age($data, $title) {
-	global $pgv_lang, $MAX_ALIVE_AGE;
+	global $pgv_lang, $GEDCOM;
+	//global $view, $stylesheet, $print_stylesheet;
+
+	// TODO parse CSS file
+	//include("includes/cssparser.inc.php");
+	//$css = new cssparser(false);
+	//if ($view=="preview") $css->Parse($print_stylesheet);
+	//else $css->Parse($stylesheet);
+	//$color = $css->Get(".google_chart", "color");
+	//if (empty($color)) $color = "FFFFFF";
 
 	$count = 0;
+	$agemax = 0;
 	$vmax = 0;
 	$avg = 0;
 	foreach ($data as $age=>$v) {
 		$n = strlen($v);
 		$vmax = max($vmax, $n);
+		$agemax = max($agemax, $age);
 		$count += $n;
 		$avg += $age*$n;
 	}
@@ -1795,25 +1812,27 @@ function print_chart_by_age($data, $title) {
 	$chart_url = "http://chart.apis.google.com/chart?cht=bvs"; // chart type
 	$chart_url .= "&chs=725x150"; // size
 	$chart_url .= "&chbh=3,2,2"; // bvg : 4,1,2
-	$chart_url .= "&chco=0000FF,FFA0CB,FFFFFF"; // bar color
-	$chart_url .= "&chdl=".$pgv_lang["male"]."|".$pgv_lang["female"]."|".$pgv_lang["avg_age"].": ".$avg; // legend
+	$chart_url .= "&chf=bg,s,FFFFFF99"; //background color
+	$chart_url .= "&chco=0000FF,FFA0CB,FF0000"; // bar color
+	$chart_url .= "&chdl=".$pgv_lang["males"]."|".$pgv_lang["females"]."|".$pgv_lang["avg_age"].": ".$avg; // legend & average age
 	$chart_url .= "&chtt=".urlencode($title); // title
-	$chart_url .= "&chxt=x,y,r";
+	$chart_url .= "&chxt=x,y,r"; // axis labels specification
+	$chart_url .= "&chm=V,FF0000,0,".($avg-0.3).",1"; // average age line marker
 	$chart_url .= "&chxl=0:|"; // label
-	for ($age=0; $age<$MAX_ALIVE_AGE; $age+=5) $chart_url .= $age."|||||"; // x axis
-	$chart_url .= ">||"; // age>=$MAX_ALIVE_AGE
+	for ($age=0; $age<=$agemax; $age+=5) $chart_url .= $age."|||||"; // x axis
 	$chart_url .= "|1:||".sprintf("%1.0f", $vmax/$count*100)." %"; // y axis
 	$chart_url .= "|2:||";
 	$step = $vmax;
 	for ($d=floor($vmax); $d>0; $d--) if ($vmax<($d*10+1) && fmod($vmax,$d)==0) $step = $d;
+	if ($step==floor($vmax)) for ($d=floor($vmax-1); $d>0; $d--) if (($vmax-1)<($d*10+1) && fmod(($vmax-1),$d)==0) $step = $d;
 	for ($n=$step; $n<$vmax; $n+=$step) $chart_url .= $n."|";
 	$chart_url .= $vmax." / ".$count; // r axis
 	$chart_url .= "&chg=100,".round(100*$step/$vmax,1).",1,5"; // grid
 	$chart_url .= "&chd=s:"; // data : simple encoding from A=0 to 9=61
 	$CHART_ENCODING61 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-	for ($age=0; $age<$MAX_ALIVE_AGE; $age++) $chart_url .= $CHART_ENCODING61[floor(substr_count($data[$age], "M")*61/$vmax)];
+	for ($age=0; $age<=$agemax; $age++) $chart_url .= $CHART_ENCODING61[floor(substr_count($data[$age], "M")*61/$vmax)];
 	$chart_url .= ",";
-	for ($age=0; $age<$MAX_ALIVE_AGE; $age++) $chart_url .= $CHART_ENCODING61[floor(substr_count($data[$age], "F")*61/$vmax)];
+	for ($age=0; $age<=$agemax; $age++) $chart_url .= $CHART_ENCODING61[floor(substr_count($data[$age], "F")*61/$vmax)];
 	echo "<img src=\"".$chart_url."\" alt=\"".$title."\" title=\"".$title."\" class=\"gchart\" />";
 }
 
@@ -1825,6 +1844,15 @@ function print_chart_by_age($data, $title) {
  */
 function print_chart_by_decade($data, $title) {
 	global $pgv_lang;
+	//global $view, $stylesheet, $print_stylesheet;
+
+	// TODO parse CSS file
+	//include("includes/cssparser.inc.php");
+	//$css = new cssparser(false);
+	//if ($view=="preview") $css->Parse($print_stylesheet);
+	//else $css->Parse($stylesheet);
+	//$color = $css->Get(".google_chart", "color");
+	//if (empty($color)) $color = "FFFFFF";
 
 	$count = 0;
 	$vmax = 0;
@@ -1837,15 +1865,17 @@ function print_chart_by_decade($data, $title) {
 	$chart_url = "http://chart.apis.google.com/chart?cht=bvs"; // chart type
 	$chart_url .= "&chs=360x150"; // size
 	$chart_url .= "&chbh=3,3"; // bvg : 4,1,2
+	$chart_url .= "&chf=bg,s,FFFFFF99"; //background color
 	$chart_url .= "&chco=0000FF,FFA0CB"; // bar color
 	$chart_url .= "&chtt=".urlencode($title); // title
-	$chart_url .= "&chxt=x,y,r";
+	$chart_url .= "&chxt=x,y,r"; // axis labels specification
 	$chart_url .= "&chxl=0:|<|||"; // <1570
 	for ($y=1600; $y<2030; $y+=50) $chart_url .= $y."|||||"; // x axis
 	$chart_url .= "|1:||".sprintf("%1.0f", $vmax/$count*100)." %"; // y axis
 	$chart_url .= "|2:||";
 	$step = $vmax;
 	for ($d=floor($vmax); $d>0; $d--) if ($vmax<($d*10+1) && fmod($vmax,$d)==0) $step = $d;
+	if ($step==floor($vmax)) for ($d=floor($vmax-1); $d>0; $d--) if (($vmax-1)<($d*10+1) && fmod(($vmax-1),$d)==0) $step = $d;
 	for ($n=$step; $n<$vmax; $n+=$step) $chart_url .= $n."|";
 	$chart_url .= $vmax." / ".$count; // r axis
 	$chart_url .= "&chg=100,".round(100*$step/$vmax,1).",1,5"; // grid

@@ -1695,8 +1695,8 @@ class stats {
 		, 1);
 		if (!isset($rows[0])) {return '';}
 		$row=$rows[0];
-		$family=Family::getInstance($row['f_id']);
-		$person=Person::getInstance($row[$sex_field]);
+		if (isset($row['f_id'])) $family=Family::getInstance($row['f_id']);
+		if (isset($row[$sex_field])) $person=Person::getInstance($row[$sex_field]);
 		switch($type)
 		{
 			default:
