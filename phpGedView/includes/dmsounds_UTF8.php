@@ -30,6 +30,73 @@ if (!defined('PGV_PHPGEDVIEW')) {
 
 define('PGV_DMSOUNDS_UTF8_PHP', '');
 
+// Hebrew alphabet
+define('ALEF', 'א');
+define('BET', 'ב');
+define('GIMEL', 'ג');
+define('DALET', 'ד');
+define('HE', 'ה');
+define('VAV', 'ו');
+define('ZAYIN', 'ז');
+define('HET', 'ח');
+define('TET', 'ט');
+define('YOD', 'י');
+define('FINAL_KAF', 'ך');
+define('KAF', 'כ');
+define('LAMED', 'ל');
+define('FINAL_MEM', 'ם');
+define('MEM', 'מ');
+define('FINAL_NUN', 'ן');
+define('NUN', 'נ');
+define('SAMEKH', 'ס');
+define('AYIN', 'ע');
+define('FINAL_PE', 'ף');
+define('PE', 'פ');
+define('FINAL_TSADI', 'ץ');
+define('TSADI', 'צ');
+define('QOF', 'ק');
+define('RESH', 'ר');
+define('SHIN', 'ש');
+define('TAV', 'ת');
+define('DOUBLE_VAV', 'װ');
+define('DOUBLE_YOD', 'ײ');
+define('VAV_YOD', 'ױ');
+
+/**
+ * Name transformation arrays.
+ *
+ * Used to transform the Name string to simplify the "sounds like" table.
+ * This is especially useful in Hebrew.
+ *
+ * Each array entry defines the "from" and "to" arguments of an ereg($from, $to, $text)
+ * function call to achieve the desired transformations.
+ *
+ * Note about the use of "\x01":
+ *		This code, which can't legitimately occur in the kind of text we're dealing with,
+ *		is used as a place-holder so that conditional string replacements can be done.
+ */
+$transformNameTable = array(
+	// Force Yiddish ligatures to be treated as separate letters
+	array(DOUBLE_VAV,		VAV.VAV),
+	array(DOUBLE_YOD,		YOD.YOD),
+	array(VAV_YOD,			VAV.YOD),
+	// Feature request 1511090, bullet (a)
+	array(BET.VAV,			BET.AYIN),
+	array(PE.VAV,			PE.AYIN),
+	array(VAV.MEM,			AYIN.MEM),
+	array(VAV.FINAL_MEM,	AYIN.FINAL_MEM),
+	array(VAV.NUN,			AYIN.NUN),
+	array(VAV.FINAL_NUN,	AYIN.FINAL_NUN),
+	// Feature request 1511090, bullet (b)
+	array(VAV.VAV,			BET),
+	// Feature request 1511090, bullet (c)
+	array("\x01",			''),
+	array(YOD.YOD.HE.'$',	"\x01".HE),
+	array(YOD.YOD.AYIN.'$',	"\x01".AYIN),
+	array(YOD.YOD,			AYIN),
+	array("\x01",			YOD.YOD)
+	);
+
 $maxchar = 7;		// Max. table key length (in ASCII bytes -- NOT in UTF-8 characters!)
 
 /**
@@ -53,7 +120,7 @@ $dmsounds["A"] = array('1',   '0','','');
 $dmsounds["À"] = array('1',   '0','','');
 $dmsounds["Á"] = array('1',   '0','','');
 $dmsounds["Â"] = array('1',   '0','','');
-$dmsounds["Ã"] = array('1',   '0','',''); 
+$dmsounds["Ã"] = array('1',   '0','','');
 $dmsounds["Ä"] = array('1',   '0','1','',   '0','','');
 $dmsounds["Å"] = array('1',   '0','','');
 $dmsounds["Ă"] = array('1',   '0','','');
@@ -147,7 +214,7 @@ $dmsounds["Ĩ"] = array('1',   '0','','');
 $dmsounds["Į"] = array('1',   '0','','');
 $dmsounds["İ"] = array('1',   '0','','');
 $dmsounds["Ỉ"] = array('1',   '0','','');
-$dmsounds["Ị"] = array('1',   '0','',''); 
+$dmsounds["Ị"] = array('1',   '0','','');
 $dmsounds["IA"] = array('1',   '1','','');
 $dmsounds["IE"] = array('1',   '1','','');
 $dmsounds["IO"] = array('1',   '1','','');
@@ -277,7 +344,7 @@ $dmsounds["Ứ"] = array('1',   '0','','');
 $dmsounds["Ừ"] = array('1',   '0','','');
 $dmsounds["Ử"] = array('1',   '0','','');
 $dmsounds["Ữ"] = array('1',   '0','','');
-$dmsounds["Ự"] = array('1',   '0','',''); 
+$dmsounds["Ự"] = array('1',   '0','','');
 $dmsounds["UE"] = array('1',   '0','','');
 $dmsounds["UI"] = array('1',   '0','1','');
 $dmsounds["UJ"] = array('1',   '0','1','');
@@ -292,7 +359,7 @@ $dmsounds["Ý"] = array('1',   '1','','');
 $dmsounds["Ỳ"] = array('1',   '1','','');
 $dmsounds["Ỵ"] = array('1',   '1','','');
 $dmsounds["Ỷ"] = array('1',   '1','','');
-$dmsounds["Ỹ"] = array('1',   '1','',''); 
+$dmsounds["Ỹ"] = array('1',   '1','','');
 $dmsounds["Z"] = array('0',   '4','4','4');
 $dmsounds["Ź"] = array('0',   '4','4','4');
 $dmsounds["Ż"] = array('0',   '4','4','4');
@@ -396,138 +463,157 @@ $dmsounds["Ω"] = array('1',   '0','','');
 $dmsounds["Ώ"] = array('1',   '0','','');
 
 // Hebrew alphabet
-$dmsounds["א"] = array('1',   '0','','');
-$dmsounds["או"] = array('1',   '0','7','');
-$dmsounds["אג"] = array('1',   '4','4','4',   '5','5','5',   '34','34','34');
-$dmsounds["בב"] = array('0',   '77','77','77');
-$dmsounds["ב"] = array('0',   '7','7','7');
-$dmsounds["גג"] = array('0',   '45','45','45',   '55','55','55');
-$dmsounds["גד"] = array('0',   '43','43','43',   '53','53','53');
-$dmsounds["גה"] = array('0',   '45','45','45',   '55','55','55');
-$dmsounds["גז"] = array('0',   '44','44','44',   '45','45','45');
-$dmsounds["גח"] = array('0',   '45','45','45',   '55','55','55');
-$dmsounds["גכ"] = array('0',   '45','45','45',   '55','55','55');
-$dmsounds["גך"] = array('0',   '45','45','45',   '55','55','55');
-$dmsounds["גצ"] = array('0',   '44','44','44',   '45','45','45');
-$dmsounds["גץ"] = array('0',   '44','44','44',   '45','45','45');
-$dmsounds["גק"] = array('0',   '45','45','45',   '54','54','54');
-$dmsounds["גש"] = array('0',   '44','44','44',   '54','54','54');
-$dmsounds["גת"] = array('0',   '43','43','43',   '53','53','53');
-$dmsounds["ג"] = array('0',   '4','4','4',   '5','5','5');
-$dmsounds["דז"] = array('0',   '4','4','4');
-$dmsounds["דד"] = array('0',   '33','33','33');
-$dmsounds["דט"] = array('0',   '33','33','33');
-$dmsounds["דש"] = array('0',   '4','4','4');
-$dmsounds["דצ"] = array('0',   '4','4','4');
-$dmsounds["דץ"] = array('0',   '4','4','4');
-$dmsounds["ד"] = array('0',   '3','3','3');
-$dmsounds["הג"] = array('0',   '54','54','54',   '55','55','55');
-$dmsounds["הכ"] = array('0',   '55','55','55');
-$dmsounds["הח"] = array('0',   '55','55','55');
-$dmsounds["הק"] = array('0',   '55','55','55',   '5','5','5');
-$dmsounds["ה"] = array('0',   '5','5','');
-$dmsounds["וי"] = array('1',   '','','',   '7','7','7');
-$dmsounds["ו"] = array('1',   '7','7','7',   '7','','');
-$dmsounds["וו"] = array('1',   '7','7','7',   '7','','');
-$dmsounds["וופ"] = array('1',   '7','7','7',   '77','77','77');
-$dmsounds["זש"] = array('0',   '4','4','4',   '44','44','44');
-$dmsounds["זדז"] = array('0',   '2','4','4');
-$dmsounds["ז"] = array('0',   '4','4','4');
-$dmsounds["זג"] = array('0',   '44','44','44',   '45','45','45');
-$dmsounds["זז"] = array('0',   '44','44','44');
-$dmsounds["זס"] = array('0',   '44','44','44');
-$dmsounds["זצ"] = array('0',   '44','44','44');
-$dmsounds["זץ"] = array('0',   '44','44','44');
-$dmsounds["חג"] = array('0',   '54','54','54',   '53','53','53');
-$dmsounds["חח"] = array('0',   '55','55','55');
-$dmsounds["חק"] = array('0',   '55','55','55',   '5','5','5');
-$dmsounds["חכ"] = array('0',   '45','45','45',   '55','55','55');
-$dmsounds["חס"] = array('0',   '5','54','54');
-$dmsounds["חש"] = array('0',   '5','54','54');
-$dmsounds["ח"] = array('0',   '5','5','5');
-$dmsounds["טש"] = array('0',   '4','4','4');
-$dmsounds["טד"] = array('0',   '33','33','33');
-$dmsounds["טי"] = array('0',   '3','3','3',   '4','4','4',   '3','3','34');
-$dmsounds["טת"] = array('0',   '33','33','33');
-$dmsounds["ט"] = array('0',   '3','3','3');
-$dmsounds["י"] = array('1',   '1','','');
-$dmsounds["יא"] = array('1',   '1','','',   '1','1','1');
-$dmsounds["כג"] = array('0',   '55','55','55',   '54','54','54');
-$dmsounds["כש"] = array('0',   '5','54','54');
-$dmsounds["כס"] = array('0',   '5','54','54');
-$dmsounds["כ"] = array('0',   '5','5','5');
-$dmsounds["כח"] = array('0',   '55','55','55',   '5','5','5');
-$dmsounds["ך"] = array('0',   '','5','5');
-$dmsounds["ל"] = array('0',   '8','8','8');
-$dmsounds["לל"] = array('0',   '88','88','88',   '8','8','8');
-$dmsounds["מנ"] = array('0',   '66','66','66');
-$dmsounds["מן"] = array('0',   '66','66','66');
-$dmsounds["ממ"] = array('0',   '66','66','66');
-$dmsounds["מ"] = array('0',   '6','6','6');
-$dmsounds["ם"] = array('0',   '','6','6');
-$dmsounds["נמ"] = array('0',   '66','66','66');
-$dmsounds["נם"] = array('0',   '66','66','66');
-$dmsounds["ננ"] = array('0',   '66','66','66');
-$dmsounds["נ"] = array('0',   '6','6','6');
-$dmsounds["ן"] = array('0',   '','6','6');
-$dmsounds["סתש"] = array('0',   '2','4','4');
-$dmsounds["סתז"] = array('0',   '2','4','4');
-$dmsounds["סטז"] = array('0',   '2','4','4');
-$dmsounds["סטש"] = array('0',   '2','4','4');
-$dmsounds["סצד"] = array('0',   '2','4','4');
-$dmsounds["סט"] = array('0',   '2','4','4',   '43','43','43');
-$dmsounds["סת"] = array('0',   '2','4','4',   '43','43','43');
-$dmsounds["סג"] = array('0',   '44','44','44',   '4','4','4');
-$dmsounds["סס"] = array('0',   '44','44','44');
-$dmsounds["סצ"] = array('0',   '44','44','44');
-$dmsounds["סץ"] = array('0',   '44','44','44');
-$dmsounds["סז"] = array('0',   '44','44','44');
-$dmsounds["סש"] = array('0',   '44','44','44');
-$dmsounds["ס"] = array('0',   '4','4','4');
-$dmsounds["ע"] = array('1',   '0','','');
-$dmsounds["פב"] = array('0',   '7','7','7',   '77','77','77');
-$dmsounds["פוו"] = array('0',   '7','7','7',   '77','77','77');
-$dmsounds["פפ"] = array('0',   '7','7','7',   '77','77','77');
-$dmsounds["פ"] = array('0',   '7','7','7');
-$dmsounds["ף"] = array('0',   '','7','7');
-$dmsounds["צג"] = array('0',   '44','44','44',   '45','45','45');
-$dmsounds["צז"] = array('0',   '44','44','44');
-$dmsounds["צס"] = array('0',   '44','44','44');
-$dmsounds["צצ"] = array('0',   '44','44','44');
-$dmsounds["צץ"] = array('0',   '44','44','44');
-$dmsounds["צש"] = array('0',   '44','44','44',   '4','4','4',   '5','5','5');
-$dmsounds["צ"] = array('0',   '4','4','4',   '5','5','5');
-$dmsounds["ץ"] = array('0',   '','4','4');
-$dmsounds["קה"] = array('0',   '55','55','5');
-$dmsounds["קס"] = array('0',   '5','54','54');
-$dmsounds["קש"] = array('0',   '5','54','54');
-$dmsounds["קק"] = array('0',   '55','55','55');
-$dmsounds["קח"] = array('0',   '55','55','55');
-$dmsounds["קכ"] = array('0',   '55','55','55');
-$dmsounds["קך"] = array('0',   '55','55','55');
-$dmsounds["קג"] = array('0',   '55','55','55',   '54','54','54');
-$dmsounds["ק"] = array('0',   '5','5','5');
-$dmsounds["רר"] = array('0',   '99','99','99',   '9','9','9');
-$dmsounds["ר"] = array('0',   '9','9','9');
-$dmsounds["שטז"] = array('0',   '2','4','4');
-$dmsounds["שתש"] = array('0',   '2','4','4');
-$dmsounds["שתז"] = array('0',   '2','4','4');
-$dmsounds["שטש"] = array('0',   '2','4','4');
-$dmsounds["שד"] = array('0',   '2','43','43');
-$dmsounds["שז"] = array('0',   '44','44','44');
-$dmsounds["שס"] = array('0',   '44','44','44');
-$dmsounds["שת"] = array('0',   '2','43','43');
-$dmsounds["שג"] = array('0',   '4','4','4',   '44','44','44',   '4','43','43');
-$dmsounds["שט"] = array('0',   '2','43','43',   '44','44','44');
-$dmsounds["שצ"] = array('0',   '44','44','44',   '45','45','45');
-$dmsounds["שץ"] = array('0',   '44','','44',   '45','','45');
-$dmsounds["שש"] = array('0',   '44','44','44');
-$dmsounds["ש"] = array('0',   '4','4','4');
-$dmsounds["תג"] = array('0',   '34','34','34');
-$dmsounds["תז"] = array('0',   '34','34','34');
-$dmsounds["תש"] = array('0',   '4','4','4');
-$dmsounds["תת"] = array('0',   '33','33','33',   '4','4','4');
-$dmsounds["ת"] = array('0',   '3','3','3',   '4','4','4');
+$dmsounds[ALEF] = array('1',   '0','','');
+$dmsounds[ALEF.VAV] = array('1',   '0','7','');
+$dmsounds[ALEF.GIMEL] = array('1',   '4','4','4',   '5','5','5',   '34','34','34');
+//$dmsounds[BET.BET] = array('0',   '77','77','77');
+$dmsounds[BET.BET] = array('0',   '7','7','7',   '77','77','77');
+$dmsounds[BET] = array('0',   '7','7','7');
+//$dmsounds[GIMEL.GIMEL] = array('0',   '45','45','45',   '55','55','55');
+$dmsounds[GIMEL.GIMEL] = array('0',   '4','4','4',   '5','5','5',   '45','45','45',   '55','55','55',   '54','54','54');
+$dmsounds[GIMEL.DALET] = array('0',   '43','43','43',   '53','53','53');
+$dmsounds[GIMEL.HE] = array('0',   '45','45','45',   '55','55','55');
+$dmsounds[GIMEL.ZAYIN] = array('0',   '44','44','44',   '45','45','45');
+$dmsounds[GIMEL.HET] = array('0',   '45','45','45',   '55','55','55');
+$dmsounds[GIMEL.KAF] = array('0',   '45','45','45',   '55','55','55');
+$dmsounds[GIMEL.FINAL_KAF] = array('0',   '45','45','45',   '55','55','55');
+$dmsounds[GIMEL.TSADI] = array('0',   '44','44','44',   '45','45','45');
+$dmsounds[GIMEL.FINAL_TSADI] = array('0',   '44','44','44',   '45','45','45');
+$dmsounds[GIMEL.QOF] = array('0',   '45','45','45',   '54','54','54');
+$dmsounds[GIMEL.SHIN] = array('0',   '44','44','44',   '54','54','54');
+$dmsounds[GIMEL.TAV] = array('0',   '43','43','43',   '53','53','53');
+$dmsounds[GIMEL] = array('0',   '4','4','4',   '5','5','5');
+$dmsounds[DALET.ZAYIN] = array('0',   '4','4','4');
+//$dmsounds[DALET.DALET] = array('0',   '33','33','33');
+$dmsounds[DALET.DALET] = array('0',   '3','3','3',   '33','33','33');
+$dmsounds[DALET.TET] = array('0',   '33','33','33');
+$dmsounds[DALET.SHIN] = array('0',   '4','4','4');
+$dmsounds[DALET.TSADI] = array('0',   '4','4','4');
+$dmsounds[DALET.FINAL_TSADI] = array('0',   '4','4','4');
+$dmsounds[DALET] = array('0',   '3','3','3');
+$dmsounds[HE.GIMEL] = array('0',   '54','54','54',   '55','55','55');
+$dmsounds[HE.KAF] = array('0',   '55','55','55');
+$dmsounds[HE.HET] = array('0',   '55','55','55');
+$dmsounds[HE.QOF] = array('0',   '55','55','55',   '5','5','5');
+$dmsounds[HE.HE] = array('0',   '5','5','',   '55','55','');	// -- added by GK
+$dmsounds[HE] = array('0',   '5','5','');
+$dmsounds[VAV.YOD] = array('1',   '','','',   '7','7','7');
+$dmsounds[VAV] = array('1',   '7','7','7',   '7','','');
+$dmsounds[VAV.VAV] = array('1',   '7','7','7',   '7','','');
+$dmsounds[VAV.VAV.PE] = array('1',   '7','7','7',   '77','77','77');
+$dmsounds[ZAYIN.SHIN] = array('0',   '4','4','4',   '44','44','44');
+$dmsounds[ZAYIN.DALET.ZAYIN] = array('0',   '2','4','4');
+$dmsounds[ZAYIN] = array('0',   '4','4','4');
+$dmsounds[ZAYIN.GIMEL] = array('0',   '44','44','44',   '45','45','45');
+//$dmsounds[ZAYIN.ZAYIN] = array('0',   '44','44','44');
+$dmsounds[ZAYIN.ZAYIN] = array('0',   '4','4','4',   '44','44','44');
+$dmsounds[ZAYIN.SAMEKH] = array('0',   '44','44','44');
+$dmsounds[ZAYIN.TSADI] = array('0',   '44','44','44');
+$dmsounds[ZAYIN.FINAL_TSADI] = array('0',   '44','44','44');
+$dmsounds[HET.GIMEL] = array('0',   '54','54','54',   '53','53','53');
+//$dmsounds[HET.HET] = array('0',   '55','55','55');
+$dmsounds[HET.HET] = array('0',   '5','5','5',   '55','55','55');
+$dmsounds[HET.QOF] = array('0',   '55','55','55',   '5','5','5');
+$dmsounds[HET.KAF] = array('0',   '45','45','45',   '55','55','55');
+$dmsounds[HET.SAMEKH] = array('0',   '5','54','54');
+$dmsounds[HET.SHIN] = array('0',   '5','54','54');
+$dmsounds[HET] = array('0',   '5','5','5');
+$dmsounds[TET.SHIN] = array('0',   '4','4','4');
+$dmsounds[TET.DALET] = array('0',   '33','33','33');
+$dmsounds[TET.YOD] = array('0',   '3','3','3',   '4','4','4',   '3','3','34');
+$dmsounds[TET.TAV] = array('0',   '33','33','33');
+$dmsounds[TET.TET] = array('0',   '3','3','3',   '33','33','33');	// -- added by GK
+$dmsounds[TET] = array('0',   '3','3','3');
+$dmsounds[YOD] = array('1',   '1','','');
+$dmsounds[YOD.ALEF] = array('1',   '1','','',   '1','1','1');
+$dmsounds[KAF.GIMEL] = array('0',   '55','55','55',   '54','54','54');
+$dmsounds[KAF.SHIN] = array('0',   '5','54','54');
+$dmsounds[KAF.SAMEKH] = array('0',   '5','54','54');
+$dmsounds[KAF.KAF] = array('0',   '5','5','5',   '55','55','55');	// == added by GK
+$dmsounds[KAF.FINAL_KAF] = array('0',   '5','5','5',   '55','55','55');	// == added by GK
+$dmsounds[KAF] = array('0',   '5','5','5');
+$dmsounds[KAF.HET] = array('0',   '55','55','55',   '5','5','5');
+$dmsounds[FINAL_KAF] = array('0',   '','5','5');
+$dmsounds[LAMED] = array('0',   '8','8','8');
+$dmsounds[LAMED.LAMED] = array('0',   '88','88','88',   '8','8','8');
+$dmsounds[MEM.NUN] = array('0',   '66','66','66');
+$dmsounds[MEM.FINAL_NUN] = array('0',   '66','66','66');
+//$dmsounds[MEM.MEM] = array('0',   '66','66','66');
+$dmsounds[MEM.MEM] = array('0',   '6','6','6',   '66','66','66');
+$dmsounds[MEM.FINAL_MEM] = array('0',   '6','6','6',   '66','66','66');	// -- added by GK
+$dmsounds[MEM] = array('0',   '6','6','6');
+$dmsounds[FINAL_MEM] = array('0',   '','6','6');
+$dmsounds[NUN.MEM] = array('0',   '66','66','66');
+$dmsounds[NUN.FINAL_MEM] = array('0',   '66','66','66');
+//$dmsounds[NUN.NUN] = array('0',   '66','66','66');
+$dmsounds[NUN.NUN] = array('0',   '6','6','6',   '66','66','66');
+$dmsounds[NUN.FINAL_NUN] = array('0',   '6','6','6',   '66','66','66');	// -- added by GK
+$dmsounds[NUN] = array('0',   '6','6','6');
+$dmsounds[FINAL_NUN] = array('0',   '','6','6');
+$dmsounds[SAMEKH.TAV.SHIN] = array('0',   '2','4','4');
+$dmsounds[SAMEKH.TAV.ZAYIN] = array('0',   '2','4','4');
+$dmsounds[SAMEKH.TET.ZAYIN] = array('0',   '2','4','4');
+$dmsounds[SAMEKH.TET.SHIN] = array('0',   '2','4','4');
+$dmsounds[SAMEKH.TSADI.DALET] = array('0',   '2','4','4');
+$dmsounds[SAMEKH.TET] = array('0',   '2','4','4',   '43','43','43');
+$dmsounds[SAMEKH.TAV] = array('0',   '2','4','4',   '43','43','43');
+$dmsounds[SAMEKH.GIMEL] = array('0',   '44','44','44',   '4','4','4');
+//$dmsounds[SAMEKH.SAMEKH] = array('0',   '44','44','44');
+$dmsounds[SAMEKH.SAMEKH] = array('0',   '4','4','4',   '44','44','44');
+$dmsounds[SAMEKH.TSADI] = array('0',   '44','44','44');
+$dmsounds[SAMEKH.FINAL_TSADI] = array('0',   '44','44','44');
+$dmsounds[SAMEKH.ZAYIN] = array('0',   '44','44','44');
+$dmsounds[SAMEKH.SHIN] = array('0',   '44','44','44');
+$dmsounds[SAMEKH] = array('0',   '4','4','4');
+$dmsounds[AYIN] = array('1',   '0','','');
+$dmsounds[PE.BET] = array('0',   '7','7','7',   '77','77','77');
+$dmsounds[PE.VAV.VAV] = array('0',   '7','7','7',   '77','77','77');
+$dmsounds[PE.PE] = array('0',   '7','7','7',   '77','77','77');
+$dmsounds[PE.FINAL_PE] = array('0',   '7','7','7',   '77','77','77');	// -- added by GK
+$dmsounds[PE] = array('0',   '7','7','7');
+$dmsounds[FINAL_PE] = array('0',   '','7','7');
+$dmsounds[TSADI.GIMEL] = array('0',   '44','44','44',   '45','45','45');
+$dmsounds[TSADI.ZAYIN] = array('0',   '44','44','44');
+$dmsounds[TSADI.SAMEKH] = array('0',   '44','44','44');
+//$dmsounds[TSADI.TSADI] = array('0',   '44','44','44');
+//$dmsounds[TSADI.FINAL_TSADI] = array('0',   '44','44','44');
+$dmsounds[TSADI.TSADI] = array('0',   '4','4','4',   '5','5','5',   '44','44','44',   '54','54','54',   '45','45','45');
+$dmsounds[TSADI.FINAL_TSADI] = array('0',   '4','4','4',   '5','5','5',   '44','44','44',   '54','54','54');
+$dmsounds[TSADI.SHIN] = array('0',   '44','44','44',   '4','4','4',   '5','5','5');
+$dmsounds[TSADI] = array('0',   '4','4','4',   '5','5','5');
+$dmsounds[FINAL_TSADI] = array('0',   '','4','4');
+$dmsounds[QOF.HE] = array('0',   '55','55','5');
+$dmsounds[QOF.SAMEKH] = array('0',   '5','54','54');
+$dmsounds[QOF.SHIN] = array('0',   '5','54','54');
+//$dmsounds[QOF.QOF] = array('0',   '55','55','55');
+$dmsounds[QOF.QOF] = array('0',   '5','5','5',   '55','55','55');
+$dmsounds[QOF.HET] = array('0',   '55','55','55');
+$dmsounds[QOF.KAF] = array('0',   '55','55','55');
+$dmsounds[QOF.FINAL_KAF] = array('0',   '55','55','55');
+$dmsounds[QOF.GIMEL] = array('0',   '55','55','55',   '54','54','54');
+$dmsounds[QOF] = array('0',   '5','5','5');
+$dmsounds[RESH.RESH] = array('0',   '99','99','99',   '9','9','9');
+$dmsounds[RESH] = array('0',   '9','9','9');
+$dmsounds[SHIN.TET.ZAYIN] = array('0',   '2','4','4');
+$dmsounds[SHIN.TAV.SHIN] = array('0',   '2','4','4');
+$dmsounds[SHIN.TAV.ZAYIN] = array('0',   '2','4','4');
+$dmsounds[SHIN.TET.SHIN] = array('0',   '2','4','4');
+$dmsounds[SHIN.DALET] = array('0',   '2','43','43');
+$dmsounds[SHIN.ZAYIN] = array('0',   '44','44','44');
+$dmsounds[SHIN.SAMEKH] = array('0',   '44','44','44');
+$dmsounds[SHIN.TAV] = array('0',   '2','43','43');
+$dmsounds[SHIN.GIMEL] = array('0',   '4','4','4',   '44','44','44',   '4','43','43');
+$dmsounds[SHIN.TET] = array('0',   '2','43','43',   '44','44','44');
+$dmsounds[SHIN.TSADI] = array('0',   '44','44','44',   '45','45','45');
+$dmsounds[SHIN.FINAL_TSADI] = array('0',   '44','','44',   '45','','45');
+$dmsounds[SHIN.SHIN] = array('0',   '4','4','4',   '44','44','44');
+$dmsounds[SHIN] = array('0',   '4','4','4');
+$dmsounds[TAV.GIMEL] = array('0',   '34','34','34');
+$dmsounds[TAV.ZAYIN] = array('0',   '34','34','34');
+$dmsounds[TAV.SHIN] = array('0',   '4','4','4');
+//$dmsounds[TAV.TAV] = array('0',   '33','33','33',   '4','4','4');
+$dmsounds[TAV.TAV] = array('0',   '3','3','3',   '4','4','4',   '33','33','33',   '44','44','44',   '34','34','34',   '43','43','43');
+$dmsounds[TAV] = array('0',   '3','3','3',   '4','4','4');
 
 // Arabic alphabet
 $dmsounds["ا"] = array('1',   '0','','');
@@ -552,8 +638,8 @@ $dmsounds["غ"] = array('0',   '0','','');
 $dmsounds["ف"] = array('0',   '7','7','7');
 $dmsounds["ق"] = array('0',   '5','5','5');
 $dmsounds["ك"] = array('0',   '5','5','5');
-$dmsounds["ل"] = array('0',   '8','8','8');    
-$dmsounds["لا"] = array('0',   '8','8','8'); 
+$dmsounds["ل"] = array('0',   '8','8','8');
+$dmsounds["لا"] = array('0',   '8','8','8');
 $dmsounds["م"] = array('0',   '6','6','6');
 $dmsounds["ن"] = array('0',   '6','6','6');
 $dmsounds["هن"] = array('0',   '66','66','66');
@@ -562,7 +648,7 @@ $dmsounds["و"] = array('1',   '','','',   '7','','');
 $dmsounds["ي"] = array('0',   '1','','');
 $dmsounds["آ"] = array('0',   '1','','');
 $dmsounds["ة"] = array('0',   '','','3');
-$dmsounds["ی"] = array('0',   '1','',''); 
-$dmsounds["ى"] = array('1',   '1','','');  
+$dmsounds["ی"] = array('0',   '1','','');
+$dmsounds["ى"] = array('1',   '1','','');
 
 ?>
