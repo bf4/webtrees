@@ -415,8 +415,10 @@ $pgv_lang["back"]					= "Back";
 //-- INDIVIDUAL FILE MESSAGES
 $pgv_lang["aka"]					= "AKAs";
 $pgv_lang["male"]					= "Male";
-$pgv_lang["female"] 				= "Female";
-$pgv_lang["temple"] 				= "LDS Temple";
+$pgv_lang["males"]					= "Males";
+$pgv_lang["female"]					= "Female";
+$pgv_lang["females"]				= "Females";
+$pgv_lang["temple"]					= "LDS Temple";
 $pgv_lang["temple_code"]			= "LDS Temple Code:";
 $pgv_lang["status"] 				= "Status";
 $pgv_lang["source"] 				= "Source";
