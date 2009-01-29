@@ -303,7 +303,7 @@ $pgv_lang["login_head"] 		= "PhpGedView Käyttäjän sisäänkirjautuminen";
 $pgv_lang["for_support"]		= "Teknisissä asioissa ota yhteys:";
 $pgv_lang["for_contact"]		= "Sukuasioissa ota yhteys:";
 $pgv_lang["for_all_contact"]		= "Teknisissä tai sukuasioissa ota yhteys:";
-$pgv_lang["build_error"]		= "GEDCOM-tiedosto on päivitetty.";
+//$pgv_lang["build_error"]		= "GEDCOM-tiedosto on päivitetty.";
 $pgv_lang["choose_username"]	= "Toivottu käyttäjätunnus";
 $pgv_lang["username"]		= "Käyttäjätunnus";
 $pgv_lang["invalid_username"]	= "Käyttäjätunnuksessa on virheellisiä merkkejä";
@@ -745,7 +745,7 @@ $pgv_lang["cir"]			= "noin";
 $pgv_lang["apx"]			= "noin";
 
 //-- Admin File Messages
-$pgv_lang["rebuild_indexes"]		= "Luo uudelleen indeksitiedostot";
+//$pgv_lang["rebuild_indexes"]		= "Luo uudelleen indeksitiedostot";
 $pgv_lang["user_admin"]		= "Käyttäjien hallinta";
 $pgv_lang["manage_media"]		= "Ylläpidä mediaa";
 $pgv_lang["password_mismatch"]	= "Salasana ei täsmää.";
@@ -1188,7 +1188,7 @@ $pgv_lang["upcoming_events_descr"]= "Tulevat tapahtumat -alue aktiivisessa GEDCO
 $pgv_lang["todays_events_block"]	= "Tänä päivänä alue";
 $pgv_lang["todays_events_descr"]	= "Tänä päivänä omassa historiassasi... alueella on luettelo tämän päivän tapahtumista. Mikäli tapahtumia ei löydy, ei aluetta näytetä. Käyttäjän OmaGedView sivun alueella luetteloidaan vain elävät, GEDCOM tervetuloa -sivulla näytetään kaikki henkilöt.";
 $pgv_lang["todo_block"] 		= "&quot;To Do&quot; tehtävät";
-$pgv_lang["todo_descr"] 		= "The To Do block lists all outstanding _TODO facts in the database."; 
+//$pgv_lang["todo_descr"] 		= "The To Do block lists all outstanding _TODO facts in the database."; 
 $pgv_lang["todo_show_other"]     	= "Näytä muiden käyttäjien tehtävät";
 $pgv_lang["todo_show_unassigned"]	= "Näytä määrittämättömät tehtävät";
 $pgv_lang["todo_show_future"]    	= "Näytä tulevat tehtävät";
@@ -1522,7 +1522,7 @@ $pgv_lang["stat_202_perc"]		= "Prosenttiosuus";
 $pgv_lang["stat_300_none"]		= "Ei mitään";
 $pgv_lang["stat_301_mf"]		= "Sukupuoli";
 $pgv_lang["stat_302_cgp"]		= " aikajaksoa. Tarkista väliarvot aikajaksoille z-akselilla.";
-$pgv_lang["statmess1"]		= "<b>Täytä seuraavat rivit aiempien x- tai y-akselin asetusten mukaisesti</b>";
+//$pgv_lang["statmess1"]		= "<b>Täytä seuraavat rivit aiempien x- tai y-akselin asetusten mukaisesti</b>";
 $pgv_lang["statar_xgp"]		= "Väliarvot aikajaksoille (x-akseli):";
 $pgv_lang["statar_xgl"]		= "Väliarvot ikäarvoille (x-akseli):";
 $pgv_lang["statar_xgm"]		= "Väliarvot kuukausille (x-akseli):";
@@ -1534,14 +1534,14 @@ $pgv_lang["statistiek_list"]		= "Tilastokuvaaja";
 
 //-- statisticsplot utility
 $pgv_lang["stpl"]			 = "...";
-$pgv_lang["stplGDno"]		= "Kuvaajakirjastoa ei ole käytettävissä PHP 4:ssä. Kysy ylläpitäjältä.";
-$pgv_lang["stpljpgraphno"]		= "JP grafiikkamodulit eivät ole käytettävissä kansiossa phpgedview/jpgraph. Hae ne osoitteesta http://www.aditus.nu/jpgraph/jpdownload.php<br /><h3>Asenna ensin JPgraph kansioon phpgedview/jpgraph/</h3><br />\";\$pgv_lang[\"stplinfo\"] = \"kuvaajainfo:";
+//$pgv_lang["stplGDno"]		= "Kuvaajakirjastoa ei ole käytettävissä PHP 4:ssä. Kysy ylläpitäjältä.";
+//$pgv_lang["stpljpgraphno"]		= "JP grafiikkamodulit eivät ole käytettävissä kansiossa phpgedview/jpgraph. Hae ne osoitteesta http://www.aditus.nu/jpgraph/jpdownload.php<br /><h3>Asenna ensin JPgraph kansioon phpgedview/jpgraph/</h3><br />\";\$pgv_lang[\"stplinfo\"] = \"kuvaajainfo:";
 $pgv_lang["stplinfo"]			= "Muuttujat kuvaajalle:";
 $pgv_lang["stpltype"]			= "tyyppi:";
 $pgv_lang["stplnoim"]			= "ei toteutettu:";
 $pgv_lang["stplmf"]			= " / sukupuoli";
 $pgv_lang["stplipot"]			= " / aikajaksoa kohti";
-$pgv_lang["stplgzas"]			= "z-akselin raja-arvot";
+//$pgv_lang["stplgzas"]			= "z-akselin raja-arvot";
 $pgv_lang["stplmonth"]		= "kuukausi";
 $pgv_lang["stplnumbers"]		= "lukumäärät";
 $pgv_lang["stplage"]			= "ikä";

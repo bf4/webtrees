@@ -16,7 +16,7 @@ $currpid=$pid;
 global $summary;
 
 // Various Debugs =========================================
-// var_dump($person->getAllNames()); 
+// var_dump($person->getFullName()); 
 
 /*
 $fred = ($person->getAllBirthPlaces());
