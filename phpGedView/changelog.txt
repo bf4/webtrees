@@ -10,6 +10,7 @@
 
 
 Version 4.2.0
+ - Changed: Reduced size of (Fxx) text in Navigator (windmillway)
  - Fixed: [ 2543891 ] Need to refresh to see approved changes (wooc)
  - Fixed: [ 2542150 ] [4927] Cannot add date to MARR when SOUR is present (wooc)
  - Fixed: [ 2536206 ] [4.1.6] Double Date Field on Census Re-edit (wooc)
