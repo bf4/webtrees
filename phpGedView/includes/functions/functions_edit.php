@@ -1660,9 +1660,7 @@ function print_add_layer($tag, $level=2, $printSaveButton=true) {
 function addSimpleTags($fact) {
 	global $ADVANCED_PLAC_FACTS;
 
-	// luk
-	// add_simple_tag("0 {$fact}");
-	add_simple_tag($fact=='MARR' ? '0 MARR Y' : "0 {$fact}");
+	add_simple_tag("0 {$fact}");
 	add_simple_tag("0 DATE", $fact);
 	add_simple_tag("0 PLAC", $fact);
 	if (preg_match_all('/('.PGV_REGEX_TAG.')/', $ADVANCED_PLAC_FACTS, $match))
