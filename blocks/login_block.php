@@ -71,7 +71,7 @@ function print_login_block($block = true, $config="", $side, $index) {
 		else $title .= print_help_link("index_login_help", "qm", "", false, true);
 		$title .= $pgv_lang["login"];
 		$content = "<div class=\"center\"><form method=\"post\" action=\"$LOGIN_URL\" name=\"loginform\" onsubmit=\"t = new Date(); document.loginform.usertime.value=t.getFullYear()+'-'+(t.getMonth()+1)+'-'+t.getDate()+' '+t.getHours()+':'+t.getMinutes()+':'+t.getSeconds(); return true;\">";
-		$content .= "<input type=\"hidden\" name=\"url\" value=\"index.php?ctype=user\" />";
+		$content .= "<input type=\"hidden\" name=\"url\" value=\"index.php\" />";
 		$content .= "<input type=\"hidden\" name=\"ged\" value=\"";
 		if (isset($GEDCOM)) $content .= $GEDCOM;
 		$content .= "\" />";

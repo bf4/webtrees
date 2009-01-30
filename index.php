@@ -4,7 +4,7 @@
  * to keep bookmarks, see a list of upcoming events, etc.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
+ * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -105,22 +105,22 @@ if (!isset($action)) $action="";
 //-- make sure that they have user status before they can use this page
 //-- otherwise have them login again
 if (!PGV_USER_ID) {
-	if (!empty($ctype)) {
-		if ($ctype=="user") {
-			header("Location: login.php?help_message=mygedview_login_help&url=".urlencode("index.php?ctype=user"));
-			exit;
-		}
+	if (!empty($ctype) && $ctype=="user") {
+		header("Location: login.php?help_message=mygedview_login_help&url=".urlencode("index.php?ctype=user"));
+		exit;
+	} else {
+		$ctype = 'gedcom';
 	}
-	$ctype="gedcom";
 }
 
 if (empty($ctype)) {
-	$ctype="user";
+	if ($PAGE_AFTER_LOGIN == 'welcome') $ctype = 'gedcom';
+	else $ctype = 'user';
 }
 
 if (PGV_USER_ID) {
 	//-- add favorites action
-	if (($action=="addfav")&&(!empty($gid))) {
+	if ($action=="addfav" && !empty($gid)) {
 		$gid = strtoupper($gid);
 		$indirec = find_gedcom_record($gid);
 		$ct = preg_match("/0 @(.*)@ (.*)/", $indirec, $match);
