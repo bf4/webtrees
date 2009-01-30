@@ -355,6 +355,7 @@ if ($action=="update") {
 	$configtext = preg_replace('/\$REPO_FACTS_UNIQUE\s*=\s*".*";/', "\$REPO_FACTS_UNIQUE = \"".$_POST["NEW_REPO_FACTS_UNIQUE"]."\";", $configtext);
 	$configtext = preg_replace('/\$REPO_ID_PREFIX\s*=\s*".*";/', "\$REPO_ID_PREFIX = \"".$_POST["NEW_REPO_ID_PREFIX"]."\";", $configtext);
 	$configtext = preg_replace('/\$REQUIRE_AUTHENTICATION\s*=\s*.*;/', "\$REQUIRE_AUTHENTICATION = ".$boolarray[$_POST["NEW_REQUIRE_AUTHENTICATION"]].";", $configtext);
+	$configtext = preg_replace('/\$PAGE_AFTER_LOGIN\s*=\s*.*;/', "\$PAGE_AFTER_LOGIN = \"".$_POST["NEW_PAGE_AFTER_LOGIN"]."\";", $configtext);
 	$configtext = preg_replace('/\$RSS_FORMAT\s*=\s*".*";/', "\$RSS_FORMAT = \"".$_POST["NEW_RSS_FORMAT"]."\";", $configtext);
 	$configtext = preg_replace('/\$SEARCHLOG_CREATE\s*=\s*".*";/', "\$SEARCHLOG_CREATE = \"".$_POST["NEW_SEARCHLOG_CREATE"]."\";", $configtext);
 	$configtext = preg_replace('/\$SHOW_AGE_DIFF\s*=\s*.*;/', "\$SHOW_AGE_DIFF = ".$boolarray[$_POST["NEW_SHOW_AGE_DIFF"]].";", $configtext);
@@ -1312,24 +1313,32 @@ print "&nbsp;<a href=\"javascript: ".$pgv_lang["accpriv_conf"]."\" onclick=\"exp
 	<tr>
 		<td class="descriptionbox wrap width20"><?php print_help_link("HIDE_LIVE_PEOPLE_help", "qm", "HIDE_LIVE_PEOPLE"); print $pgv_lang["HIDE_LIVE_PEOPLE"]; ?></td>
 		<td class="optionbox"><select name="NEW_HIDE_LIVE_PEOPLE" tabindex="<?php $i++; print $i; ?>" onfocus="getHelp('HIDE_LIVE_PEOPLE_help');">
-				<option value="yes" <?php if ($HIDE_LIVE_PEOPLE) print "selected=\"selected\""; ?>><?php print $pgv_lang["yes"]; ?></option>
-				<option value="no" <?php if (!$HIDE_LIVE_PEOPLE) print "selected=\"selected\""; ?>><?php print $pgv_lang["no"]; ?></option>
+				<option value="yes" <?php if ($HIDE_LIVE_PEOPLE) print " selected=\"selected\""; ?>><?php print $pgv_lang["yes"]; ?></option>
+				<option value="no" <?php if (!$HIDE_LIVE_PEOPLE) print " selected=\"selected\""; ?>><?php print $pgv_lang["no"]; ?></option>
 			</select>
 		</td>
 	</tr>
 	<tr>
 		<td class="descriptionbox wrap width20"><?php print_help_link("CHECK_CHILD_DATES_help", "qm", "CHECK_CHILD_DATES"); print $pgv_lang["CHECK_CHILD_DATES"]; ?></td>
 		<td class="optionbox"><select name="NEW_CHECK_CHILD_DATES" tabindex="<?php $i++; print $i; ?>" onfocus="getHelp('CHECK_CHILD_DATES_help');">
-				<option value="yes" <?php if ($CHECK_CHILD_DATES) print "selected=\"selected\""; ?>><?php print $pgv_lang["yes"]; ?></option>
-				<option value="no" <?php if (!$CHECK_CHILD_DATES) print "selected=\"selected\""; ?>><?php print $pgv_lang["no"]; ?></option>
+				<option value="yes" <?php if ($CHECK_CHILD_DATES) print " selected=\"selected\""; ?>><?php print $pgv_lang["yes"]; ?></option>
+				<option value="no" <?php if (!$CHECK_CHILD_DATES) print " selected=\"selected\""; ?>><?php print $pgv_lang["no"]; ?></option>
 			</select>
 		</td>
 	</tr>
 	<tr>
 		<td class="descriptionbox wrap width20"><?php print_help_link("REQUIRE_AUTHENTICATION_help", "qm", "REQUIRE_AUTHENTICATION"); print $pgv_lang["REQUIRE_AUTHENTICATION"]; ?></td>
 		<td class="optionbox"><select name="NEW_REQUIRE_AUTHENTICATION" tabindex="<?php $i++; print $i; ?>" onfocus="getHelp('REQUIRE_AUTHENTICATION_help');">
-				<option value="yes" <?php if ($REQUIRE_AUTHENTICATION) print "selected=\"selected\""; ?>><?php print $pgv_lang["yes"]; ?></option>
-				<option value="no" <?php if (!$REQUIRE_AUTHENTICATION) print "selected=\"selected\""; ?>><?php print $pgv_lang["no"]; ?></option>
+				<option value="yes" <?php if ($REQUIRE_AUTHENTICATION) print " selected=\"selected\""; ?>><?php print $pgv_lang["yes"]; ?></option>
+				<option value="no" <?php if (!$REQUIRE_AUTHENTICATION) print " selected=\"selected\""; ?>><?php print $pgv_lang["no"]; ?></option>
+			</select>
+		</td>
+	</tr>
+	<tr>
+		<td class="descriptionbox wrap width20"><?php print_help_link("PAGE_AFTER_LOGIN_help", "qm", "PAGE_AFTER_LOGIN"); print $pgv_lang["PAGE_AFTER_LOGIN"]; ?></td>
+		<td class="optionbox"><select name="NEW_PAGE_AFTER_LOGIN" tabindex="<?php $i++; print $i; ?>" onfocus="getHelp('PAGE_AFTER_LOGIN_help');">
+				<option value="welcome" <?php if ($PAGE_AFTER_LOGIN=='welcome') print " selected=\"selected\""; ?>><?php print $pgv_lang["welcome_page"]; ?></option>
+				<option value="mygedview" <?php if ($PAGE_AFTER_LOGIN=='mygedview') print " selected=\"selected\""; ?>><?php print $pgv_lang["mygedview"]; ?></option>
 			</select>
 		</td>
 	</tr>

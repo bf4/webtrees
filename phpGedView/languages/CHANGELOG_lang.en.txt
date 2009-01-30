@@ -46,6 +46,7 @@ VERSION 4.2.
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change	codes and comments
 ----------------------------------------------------------------------------------------
+*$pgv_lang["welcome_page"]							29 Jan 2009				C
 +$pgv_lang["males"]									29 Jan 2009				A
 +$pgv_lang["females"]								29 Jan 2009				A
 +$pgv_lang["facts"]									26 Jan 2009				A

@@ -10,6 +10,7 @@
 
 
 Version 4.2.0
+ - Added: GEDCOM config option to control Index or Portal page showing after Login (canajun2eh)
  - Fixed: [ 2544257 ] [4942] Show stat's charts ERROR 8's (wooc)
  - Changed: Reduced size of (Fxx) text in Navigator (windmillway)
  - Fixed: [ 2543891 ] Need to refresh to see approved changes (wooc)
