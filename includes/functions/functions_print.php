@@ -2478,6 +2478,22 @@ function print_findsource_link($element_id, $sourcename="", $asString=false, $ge
 	print $out;
 }
 
+// Shared Notes =============================================
+function print_findshnote_link($element_id, $shnotename="", $asString=false, $ged='') {
+	global $pgv_lang, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM;
+
+	if (empty($ged)) $ged=$GEDCOM;
+	$text = $pgv_lang["find_shnote"];
+	if (isset($PGV_IMAGES["note"]["button"])) $Link = "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["note"]["button"]."\" alt=\"".$text."\" title=\"".$text."\" border=\"0\" align=\"middle\" />";
+	else $Link = $text;
+	$out = " <a href=\"javascript:;\" onclick=\"findShnote(document.getElementById('".$element_id."'), document.getElementById('".$shnotename."'), '".$ged."'); findtype='shnote'; return false;\">";
+	$out .= $Link;
+	$out .= "</a>";
+	if ($asString) return $out;
+	print $out;
+}
+// ========================================================
+
 function print_findrepository_link($element_id, $ged='', $asString=false) {
 	global $pgv_lang, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM;
 

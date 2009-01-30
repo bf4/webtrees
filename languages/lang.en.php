@@ -615,8 +615,13 @@ $pgv_lang["families"]				= "Families";
 $pgv_lang["total_sources"]			= "Total Sources";
 
 //-- SHARED NOTE FILE MESSAGES
+$pgv_lang["shnote"]					= "Shared Note";
+$pgv_lang["shnote_list"]			= "Shared Notes List";
+$pgv_lang["shnotes_found"]			= "Shared Notes found";
+$pgv_lang["find_shnote"]			= "Find Shared Note";
 $pgv_lang["shnote_info"]			= "Shared Note Information";
 $pgv_lang["total_shnotes"]			= "Total Shared Notes";
+$pgv_lang["confirm_delete_shnote"]	= "Are you sure you want to delete this Shared Note from the database?";
 
 //-- BUILDINDEX FILE MESSAGES
 $pgv_lang["invalid_gedformat"]		= "Invalid GEDCOM format";
@@ -1725,6 +1730,7 @@ $pgv_lang["block_summary_table"]	= "&nbsp;";
 $pgv_lang["total_places"]			= "Places found";
 $pgv_lang["media_contains"]			= "Media contains:";
 $pgv_lang["repo_contains"]			= "Repository contains:";
+$pgv_lang["shnote_contains"]		= "Shared Note contains:";
 $pgv_lang["source_contains"]		= "Source contains:";
 $pgv_lang["display_all"]			= "Display all";
 

@@ -999,6 +999,20 @@ function print_addnewrepository_link($element_id) {
 /**
 * @todo add comments
 */
+function print_addnewshnote_link($element_id) {
+	global $pgv_lang, $PGV_IMAGE_DIR, $PGV_IMAGES;
+
+	$text = $pgv_lang["create_shnote"];
+	if (isset($PGV_IMAGES["addnote"]["button"])) $Link = "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["addnote"]["button"]."\" alt=\"".$text."\" title=\"".$text."\" border=\"0\" align=\"middle\" />";
+	else $Link = $text;
+	echo "&nbsp;&nbsp;&nbsp;<a href=\"javascript:;\" onclick=\"addnewshnote(document.getElementById('".$element_id."')); return false;\">";
+	echo $Link;
+	echo "</a>";
+}
+
+/**
+* @todo add comments
+*/
 function print_addnewsource_link($element_id) {
 	global $pgv_lang, $PGV_IMAGE_DIR, $PGV_IMAGES;
 
@@ -1037,7 +1051,7 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 	global $bdm, $PRIVACY_BY_RESN;
 	global $lang_short_cut, $LANGUAGE;
 	global $QUICK_REQUIRED_FACTS, $QUICK_REQUIRED_FAMFACTS, $PREFER_LEVEL2_SOURCES;
-
+	
 	if (substr($tag, 0, strpos($tag, "PLAC"))) {
 		?>
 <script type="text/javascript">
@@ -1140,10 +1154,20 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 		$rows=1;
 		$cols=50;
 		break;
-	case 'TEXT': case 'PUBL': case 'NOTE':
+	case 'TEXT': case 'PUBL': 
 		$rows=10;
 		$cols=70;
 		break;
+	case 'NOTE':
+		if ($islink){
+			$rows=1;
+			$cols=($islink ? 10 : 40);
+			break;
+		}else{
+			$rows=10;
+			$cols=70;
+			break;
+		}
 	case 'ADDR':
 		$rows=4;
 		$cols=40;
@@ -1224,14 +1248,26 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 
 	// retrieve linked NOTE
 	if ($fact=="NOTE" and $islink) {
+
 		$noteid = $value;
+		// BH Next line added for Shared Notes ==================
+		//echo "Shared Note Id: &nbsp;&nbsp;<b> ".$noteid."</b>";
+		echo $pgv_lang["shnote"].":&nbsp;";
+		// ====================================================
+/*
 		echo "<input type=\"hidden\" name=\"text[]\" value=\"".$noteid."\" />\n";
-		if (!isset($pgv_changes[$noteid."_".$GEDCOM])) $noterec = find_gedcom_record($noteid);
-		else $noterec = find_updated_record($noteid);
+		if (!isset($pgv_changes[$noteid."_".$GEDCOM])) {
+			$noterec = find_gedcom_record($noteid);
+		}else{
+			$noterec = find_updated_record($noteid);
+		}
 		$n1match = array();
 		$nt = preg_match("/0 @$value@ NOTE (.*)/", $noterec, $n1match);
-		if ($nt!==false) $value=trim(strip_tags(@$n1match[1].get_cont(1, $noterec, false)));
+		if ($nt!==false) {
+			$value=trim(strip_tags(@$n1match[1].get_cont(1, $noterec, false)));
+		}
 		$element_name="NOTE[".$noteid."]";
+*/
 	}
 
 	if (in_array($fact, $emptyfacts)&& (empty($value) || $value=="y" || $value=="Y")) {
@@ -1514,6 +1550,14 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 			print_findrepository_link($element_id);
 			print_addnewrepository_link($element_id);
 		}
+		
+		// Shared Notes ===========================================
+		if ($fact=="NOTE" and $islink) {
+			print_findshnote_link($element_id);
+			print_addnewshnote_link($element_id);
+		}
+		// ===========================================================
+		
 		if ($fact=="OBJE") print_findmedia_link($element_id, "1media");
 		if ($fact=="OBJE" && !$value) {
 			echo '<br /><a href="javascript:;" onclick="pastefield=document.getElementById(\''.$element_id.'\'); window.open(\'addmedia.php?action=showmediaform&linktoid={$linkToID}&level={$level}\', \'_blank\', \'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1\'); return false;">'.$pgv_lang["add_media"].'</a>';
@@ -2207,7 +2251,7 @@ function create_edit_form($gedrec, $linenum, $level0type) {
 		else if ($levelSource>=$level){
 			$inSource = false;
 		}
-
+		
 		if ($type!="DATA" && $type!="CONC" && $type!="CONT") {
 			$tags[]=$type;
 			if ($type=='DATE') {
@@ -2227,15 +2271,20 @@ function create_edit_form($gedrec, $linenum, $level0type) {
 				}
 			}
 			$subrecord = $level." ".$type." ".$text;
-			if ($inSource && $type=="DATE") add_simple_tag($subrecord, "", $pgv_lang["date_of_entry"]);
-			else if (!$inSource && $type=="DATE") {
-				if (isset($factarray[$level1type.':DATE']))
+			if ($inSource && $type=="DATE") {
+				add_simple_tag($subrecord, "", $pgv_lang["date_of_entry"]);
+			} else if (!$inSource && $type=="DATE") {
+				if (isset($factarray[$level1type.':DATE'])) {
 					add_simple_tag($subrecord, $level1type, $factarray[$level1type.':DATE']);
-				else
+				} else {
 					add_simple_tag($subrecord, $level1type);
+				}
 				$add_date = false;
+			} else {
+				add_simple_tag($subrecord, $level0type);
+
 			}
-			else add_simple_tag($subrecord, $level0type);
+
 		}
 
 		// Get a list of tags present at the next level
@@ -2267,16 +2316,19 @@ function create_edit_form($gedrec, $linenum, $level0type) {
 		if (isset($gedlines[$i])) {
 			$fields = explode(' ', $gedlines[$i]);
 			$level = $fields[0];
-			if (isset($fields[1])) $type = trim($fields[1]);
-			else $level = 0;
-		} else $level = 0;
-
+			if (isset($fields[1])) {
+				$type = trim($fields[1]);
+			} else {
+				$level = 0;
+			}
+		} else {
+			$level = 0;
+		}
 		if ($level<=$glevel) break;
-
 	}
 
 	insert_missing_subtags($level1type, $add_date);
-	return $level1type;
+	return $level1type; 
 }
 
 /**

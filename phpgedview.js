@@ -431,6 +431,13 @@ function addnewsource(field) {
 	return false;
 }
 
+function addnewshnote(field) {
+	pastefield = field;
+	// window.open('edit_interface.php?action=addnewshnote&pid=newshnote', '_blank', 'top=70,left=70,width=600,height=500,resizable=1,scrollbars=1');
+	window.open('edit_interface.php?action=addnewshnote&pid=newshnote', '_blank', 'top=70,left=70,width=600,height=500,resizable=1,scrollbars=1');
+	return false;
+}
+
 function valid_date(datefield) {
 	var months = new Array("JAN","FEB","MAR","APR","MAY","JUN","JUL","AUG","SEP","OCT","NOV","DEC");
 

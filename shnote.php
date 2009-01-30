@@ -97,12 +97,14 @@ $noterec = find_gedcom_record($controller->nid);
 // echo $noterec . "<br />";
 
 $nt = preg_match("/0 @$controller->nid@ NOTE (.*)/", $noterec, $n1match);
-$fred = print_note_record($n1match[1], 1, $noterec, false, true);
-
-
+if ($nt==1) {
+	$shnote = print_note_record($n1match[1], 1, $noterec, false, true);
+}else{
+	$shnote = "No Text";
+}
 
 echo '<tr><td align="center" class="descriptionbox">Shared Note</td><td class="optionbox">';
-echo $fred;
+echo $shnote;
 echo "<br />";
 echo "</td></tr>";
 

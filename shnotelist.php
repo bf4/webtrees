@@ -25,12 +25,29 @@
  */
 
 require './config.php';
-
 require_once 'includes/functions/functions_print_lists.php';
 
 print_header($pgv_lang['shnote_list']);
+
 echo '<div class="center"><h2>'.$pgv_lang['shnote_list'].'</h2>';
 print_shnote_table(get_shnote_list(PGV_GED_ID));
+?>
+<script language="javascript" type="text/javascript">
+<!--
+function addnew_shnote() {
+	win04 = window.open(
+	"edit_interface.php?action=addnewshnote&pid=newshnote", "win04", "top=70, left=70, width=600, height=500, resizable=1, scrollbars=1 ");
+	if (window.focus) {win04.focus();}
+}
+-->
+</script
+<?php
+echo "<a href=\"javascript: addnew_shnote()\"> ";
+echo "<b>".$pgv_lang['create_shnote']."</b>";
+echo "</a>";
 echo '</div>';
+
+echo "<br /><br />";
+
 print_footer();
 ?>

@@ -124,6 +124,13 @@ require 'js/autocomplete.js.htm';
 		findwin = window.open('find.php?type=source', '_blank', 'left=50,top=50,width=600,height=500,resizable=1,scrollbars=1');
 		return false;
 	}
+	// Shared Notes =========================
+	function findShnote(field) {
+		pastefield = field;
+		findwin = window.open('find.php?type=shnote', '_blank', 'left=50,top=50,width=600,height=500,resizable=1,scrollbars=1');
+		return false;
+	// =====================================
+	}
 	function findRepository(field) {
 		pastefield = field;
 		findwin = window.open('find.php?type=repo', '_blank', 'left=50,top=50,width=600,height=500,resizable=1,scrollbars=1');
@@ -208,7 +215,7 @@ function checkFactEdit($gedrec) {
 //-- end checkFactEdit function
 
 if (!empty($pid)) {
-	if (($pid!="newsour") && ($pid!="newrepo")) {
+	if (($pid!="newsour") && ($pid!="newrepo") && ($pid!="newshnote")) {
 		if (!isset($pgv_changes[$pid."_".$GEDCOM])) $gedrec = find_gedcom_record($pid);
 		else $gedrec = find_updated_record($pid);
 		$ct = preg_match("/0 @$pid@ (.*)/", $gedrec, $match);
@@ -389,7 +396,7 @@ case 'edit':
 	echo "<input type=\"hidden\" name=\"linenum\" value=\"$linenum\" />\n";
 	echo "<input type=\"hidden\" name=\"pid\" value=\"$pid\" />\n";
 	echo "<br /><input type=\"submit\" value=\"".$pgv_lang["save"]."\" /><br />\n";
-
+	
 	echo "<table class=\"facts_table\">";
 	$level1type = create_edit_form($gedrec, $linenum, $level0type);
 	if (PGV_USER_IS_ADMIN) {
@@ -749,6 +756,183 @@ case 'addsourceaction':
 		echo "<a href=\"javascript:// SOUR $xref\" onclick=\"openerpasteid('$xref'); return false;\">".$pgv_lang["paste_id_into_field"]." <b>$xref</b></a>\n";
 	}
 	break;
+
+//------------------------------------------------------------------------------
+//-- add new Shared Note
+case 'addnewshnote':
+
+	?>
+	<script type="text/javascript">
+	<!--
+		function check_form(frm) {
+			if (frm.TITL.value=="") {
+				alert('<?php echo $pgv_lang["must_provide"].$factarray["TITL"]; ?>');
+				frm.TITL.focus();
+				return false;
+			}
+			return true;
+		}
+	//-->
+	</script>
+	<b><?php echo $pgv_lang['create_shnote']; $tabkey = 1; ?></b>
+	<form method="post" action="edit_interface.php" onsubmit="return check_form(this);">
+		<input type="hidden" name="action" value="addshnoteaction" />
+		<input type="hidden" name="pid" value="newshnote" />
+		
+		<table class="facts_table">
+		
+			<tr><td class="descriptionbox <?php echo $TEXT_DIRECTION; ?> wrap width25"><?php print_help_link("edit_ABBR_help", "qm"); echo $factarray["ABBR"]; ?></td>
+			<td class="optionbox wrap"><input tabindex="<?php echo $tabkey; ?>" type="text" name="ABBR" id="ABBR" value="" size="40" maxlength="255" /> <?php print_specialchar_link("ABBR",false); ?></td></tr>
+			<?php $tabkey++; ?>
+			
+			<tr><td class="descriptionbox <?php echo $TEXT_DIRECTION; ?> wrap width25"><?php print_help_link("edit_TITL_help", "qm"); echo $factarray["TITL"]; ?></td>
+			<td class="optionbox wrap"><input tabindex="<?php echo $tabkey; ?>" type="text" name="TITL" id="TITL" value="" size="60" /> <?php print_specialchar_link("TITL",false); ?></td></tr>
+			<?php $tabkey++; ?>
+
+			<tr><td class="descriptionbox <?php echo $TEXT_DIRECTION; ?> wrap width25"><?php print_help_link("edit_DATE_help", "qm"); echo $factarray["DATE"]; ?></td>
+			<td class="optionbox wrap"><input tabindex="<?php echo $tabkey; ?>" type="text" name="DATE" id="DATE" value="" size="60" /> <?php print_specialchar_link("DATE",false); ?></td></tr>
+			<?php $tabkey++; ?>
+			
+		<!--
+			<tr><td class="descriptionbox <?php echo $TEXT_DIRECTION; ?> wrap width25"><?php print_help_link("edit_NOTE_help", "qm"); echo $factarray["NOTE"]; ?></td>
+			<td class="optionbox wrap"><input tabindex="<?php echo $tabkey; ?>" type="text" name="NOTE" id="NOTE" rows="5" cols="60" /> <?php print_specialchar_link("NOTE",false); ?></td></tr>
+			<?php $tabkey++; ?>
+		-->
+			
+		<!--
+			<?php if (strstr($ADVANCED_NAME_FACTS, "_HEB")!==false) { ?>
+			<tr><td class="descriptionbox <?php echo $TEXT_DIRECTION; ?> wrap width25"><?php print_help_link("edit__HEB_help", "qm"); echo $factarray["_HEB"]; ?></td>
+			<td class="optionbox wrap"><input tabindex="<?php echo $tabkey; ?>" type="text" name="_HEB" id="_HEB" value="" size="60" /> <?php print_specialchar_link("_HEB",false); ?></td></tr>
+			<?php $tabkey++; ?>
+			<?php } ?>
+			
+			<?php if (strstr($ADVANCED_NAME_FACTS, "ROMN")!==false) { ?>
+			<tr><td class="descriptionbox <?php echo $TEXT_DIRECTION; ?> wrap width25"><?php print_help_link("edit_ROMN_help", "qm"); echo $factarray["ROMN"]; ?></td>
+			<td class="optionbox wrap"><input tabindex="<?php echo $tabkey; ?>" type="text" name="ROMN" id="ROMN" value="" size="60" /> <?php print_specialchar_link("ROMN",false); ?></td></tr>
+			<?php $tabkey++; ?>
+			<?php } ?>
+			
+			<tr><td class="descriptionbox <?php echo $TEXT_DIRECTION; ?> wrap width25"><?php print_help_link("edit_AUTH_help", "qm"); echo $factarray["AUTH"]; ?></td>
+			<td class="optionbox wrap"><input tabindex="<?php echo $tabkey; ?>" type="text" name="AUTH" id="AUTH" value="" size="40" maxlength="255" /> <?php print_specialchar_link("AUTH",false); ?></td></tr>
+			<?php $tabkey++; ?>
+			
+			<tr><td class="descriptionbox <?php echo $TEXT_DIRECTION; ?> wrap width25"><?php print_help_link("edit_PUBL_help", "qm"); echo $factarray["PUBL"]; ?></td>
+			<td class="optionbox wrap"><textarea tabindex="<?php echo $tabkey; ?>" name="PUBL" id="PUBL" rows="5" cols="60"></textarea><br /><?php print_specialchar_link("PUBL",true); ?></td></tr>
+			<?php $tabkey++; ?>
+			
+			<tr><td class="descriptionbox <?php echo $TEXT_DIRECTION; ?> wrap width25"><?php print_help_link("edit_REPO_help", "qm"); echo $factarray["REPO"]; ?></td>
+			<td class="optionbox wrap"><input tabindex="<?php echo $tabkey; ?>" type="text" name="REPO" id="REPO" value="" size="10" /> <?php print_findrepository_link("REPO"); print_addnewrepository_link("REPO"); ?></td></tr>
+			<?php $tabkey++; ?>
+		-->
+		<!--
+			<tr><td class="descriptionbox <?php echo $TEXT_DIRECTION; ?> wrap width25"><?php print_help_link("edit_CALN_help", "qm"); echo $factarray["CALN"]; ?></td>
+			<td class="optionbox wrap"><input tabindex="<?php echo $tabkey; ?>" type="text" name="CALN" id="CALN" value="" /></td></tr>
+		-->
+		</table>
+	
+		
+			<?php
+ 
+			print_help_link("edit_SOUR_EVEN_help", "qm"); ?><a href="#"  onclick="return expand_layer('events');"><img id="events_img" src="<?php echo $PGV_IMAGE_DIR."/".$PGV_IMAGES["plus"]["other"]; ?>" border="0" width="11" height="11" alt="" title="" />
+			<?php echo $pgv_lang["source_events"]; 
+			?></a>
+		
+
+			<div id="events" style="display: none;">
+			<table class="facts_table">
+			<tr>
+				<td class="descriptionbox <?php echo $TEXT_DIRECTION; ?> wrap width25"><?php print_help_link("edit_SOUR_EVEN_help", "qm"); echo $pgv_lang['select_events']; ?></td>
+				<td class="optionbox wrap"><select name="EVEN[]" multiple="multiple" size="5">
+					<?php
+					$parts = explode(',', $INDI_FACTS_ADD);
+					foreach($parts as $p=>$key) {
+						?><option value="<?php echo $key; ?>"><?php echo $factarray[$key]. " ($key)"; ?></option>
+					<?php
+					}
+					$parts = explode(',', $FAM_FACTS_ADD);
+					foreach($parts as $p=>$key) {
+						?><option value="<?php echo $key; ?>"><?php echo $factarray[$key]. " ($key)"; ?></option>
+					<?php
+					}
+					?>
+				</select></td>
+			</tr>
+			<?php
+			add_simple_tag("0 DATE", "EVEN");
+			add_simple_tag("0 PLAC", "EVEN");
+			add_simple_tag("0 AGNC");
+			?>
+			</table>
+			</div>
+			
+		<br /><br />
+		
+		
+		<input type="submit" value="<?php echo $pgv_lang["create_shnote"]; ?>" />
+	</form>
+	<?php
+
+	break;
+//------------------------------------------------------------------------------
+//-- create a source record from the incoming variables
+case 'addshnoteaction':
+	if (PGV_DEBUG) {
+		phpinfo(INFO_VARIABLES);
+	}
+	// $newgedrec = "0 @XREF@ NOTE\n";
+	$newgedrec  = "0 @XREF@ NOTE Census Transcription\n";
+	
+	$newgedrec .= "1 CONT This is 1st continuation line \n";
+	$newgedrec .= "1 CONT This is 2nd continuation line \n";
+	$newgedrec .= "1 CONT This is 3rd continuation line \n";
+	
+	if (isset($_REQUEST['EVEN'])) $EVEN = $_REQUEST['EVEN'];
+	if (!empty($EVEN) && count($EVEN)>0) {
+		$newgedrec .= "1 DATA\n";
+		$newgedrec .= "2 EVEN ".implode(",", $EVEN)."\n";
+		if (!empty($EVEN_DATE)) $newgedrec .= "3 DATE ".check_input_date($EVEN_DATE)."\n";
+		if (!empty($EVEN_PLAC)) $newgedrec .= "3 PLAC ".$EVEN_PLAC."\n";
+		if (!empty($AGNC))      $newgedrec .= "2 AGNC ".$AGNC."\n";
+	}
+	if (isset($_REQUEST['ABBR'])) $ABBR = $_REQUEST['ABBR'];
+	if (isset($_REQUEST['TITL'])) $TITL = $_REQUEST['TITL'];
+	if (isset($_REQUEST['DATE'])) $DATE = $_REQUEST['DATE'];
+	if (isset($_REQUEST['_HEB'])) $_HEB = $_REQUEST['_HEB'];
+	if (isset($_REQUEST['ROMN'])) $ROMN = $_REQUEST['ROMN'];
+	if (isset($_REQUEST['AUTH'])) $AUTH = $_REQUEST['AUTH'];
+	if (isset($_REQUEST['PUBL'])) $PUBL = $_REQUEST['PUBL'];
+	if (isset($_REQUEST['REPO'])) $REPO = $_REQUEST['REPO'];
+	if (isset($_REQUEST['CALN'])) $CALN = $_REQUEST['CALN'];
+	if (!empty($ABBR)) $newgedrec .= "1 ABBR $ABBR\n";
+	if (!empty($TITL)) {
+		$newgedrec .= "1 TITL $TITL\n";
+		$newgedrec .= "2 DATE $DATE\n";
+		if (!empty($_HEB)) $newgedrec .= "2 _HEB $_HEB\n";
+		if (!empty($ROMN)) $newgedrec .= "2 ROMN $ROMN\n";
+	}
+	if (!empty($AUTH)) $newgedrec .= "1 AUTH $AUTH\n";
+	if (!empty($PUBL)) {
+		$newlines = preg_split("/\r?\n/",$PUBL,-1,PREG_SPLIT_NO_EMPTY);
+		for($k=0; $k<count($newlines); $k++) {
+			if ( $k==0 ) $newgedrec .= "1 PUBL $newlines[$k]\n";
+			else $newgedrec .= "2 CONT $newlines[$k]\n";
+		}
+	}
+	if (!empty($REPO)) {
+		$newgedrec .= "1 REPO @$REPO@\n";
+		if (!empty($CALN)) $newgedrec .= "2 CALN $CALN\n";
+	}
+	if (PGV_DEBUG) {
+		echo "<pre>$newgedrec</pre>";
+	}
+	$xref = append_gedrec($newgedrec);
+	$link = "shnote.php?nid=$xref&show_changes=yes";
+	if ($xref) {
+		echo "<br /><br />\n".$pgv_lang["new_shnote_created"]."<br /><br />";
+		echo "<a href=\"javascript:// NOTE $xref\" onclick=\"openerpasteid('$xref'); return false;\">".$pgv_lang["paste_id_into_field"]." <b>$xref</b></a>\n";
+	}
+	break;
+
 //------------------------------------------------------------------------------
 //-- add new repository
 case 'addnewrepository':
