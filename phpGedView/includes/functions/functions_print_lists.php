@@ -36,6 +36,7 @@ define('PGV_FUNCTIONS_PRINT_LISTS_PHP', '');
 
 require_once 'includes/classes/class_person.php';
 require_once 'includes/functions/functions_places.php';
+require_once 'includes/cssparser.inc.php';
 
 /**
  * print a sortable table of individuals
@@ -1786,16 +1787,19 @@ function print_events_list($startjd, $endjd, $events='BIRT MARR DEAT', $only_liv
  */
 function print_chart_by_age($data, $title) {
 	global $pgv_lang, $GEDCOM;
-	//global $view, $stylesheet, $print_stylesheet;
+	global $view, $stylesheet, $print_stylesheet;
 
-	// TODO parse CSS file
-	//include("includes/cssparser.inc.php");
-	//$css = new cssparser(false);
-	//if ($view=="preview") $css->Parse($print_stylesheet);
-	//else $css->Parse($stylesheet);
-	//$color = $css->Get(".google_chart", "color");
-	//if (empty($color)) $color = "FFFFFF";
-
+	$css = new cssparser(false);
+	if ($view=="preview") $css->Parse($print_stylesheet);
+	else $css->Parse($stylesheet);
+	$color = $css->Get("body", "background-color");
+	$color = str_replace("#", "", $color);
+	switch(strtoupper($color)) {
+	case "": case "FFFFFF": case "WHITE":
+	case "002540": case "004025": case "400025": // simply themes needs bright backgound
+		$color="FFFFFF99"; // opacity
+		break;
+	}
 	$count = 0;
 	$agemax = 0;
 	$vmax = 0;
@@ -1812,7 +1816,7 @@ function print_chart_by_age($data, $title) {
 	$chart_url = "http://chart.apis.google.com/chart?cht=bvs"; // chart type
 	$chart_url .= "&chs=725x150"; // size
 	$chart_url .= "&chbh=3,2,2"; // bvg : 4,1,2
-	$chart_url .= "&chf=bg,s,FFFFFF99"; //background color
+	$chart_url .= "&chf=bg,s,".$color; //background color
 	$chart_url .= "&chco=0000FF,FFA0CB,FF0000"; // bar color
 	$chart_url .= "&chdl=".$pgv_lang["males"]."|".$pgv_lang["females"]."|".$pgv_lang["avg_age"].": ".$avg; // legend & average age
 	$chart_url .= "&chtt=".urlencode($title); // title
@@ -1844,16 +1848,19 @@ function print_chart_by_age($data, $title) {
  */
 function print_chart_by_decade($data, $title) {
 	global $pgv_lang;
-	//global $view, $stylesheet, $print_stylesheet;
+	global $view, $stylesheet, $print_stylesheet;
 
-	// TODO parse CSS file
-	//include("includes/cssparser.inc.php");
-	//$css = new cssparser(false);
-	//if ($view=="preview") $css->Parse($print_stylesheet);
-	//else $css->Parse($stylesheet);
-	//$color = $css->Get(".google_chart", "color");
-	//if (empty($color)) $color = "FFFFFF";
-
+	$css = new cssparser(false);
+	if ($view=="preview") $css->Parse($print_stylesheet);
+	else $css->Parse($stylesheet);
+	$color = $css->Get("body", "background-color");
+	$color = str_replace("#", "", $color);
+	switch(strtoupper($color)) {
+	case "": case "FFFFFF": case "WHITE":
+	case "002540": case "004025": case "400025": // simply themes needs bright backgound
+		$color="FFFFFF99"; // opacity
+		break;
+	}
 	$count = 0;
 	$vmax = 0;
 	foreach ($data as $age=>$v) {
@@ -1865,7 +1872,7 @@ function print_chart_by_decade($data, $title) {
 	$chart_url = "http://chart.apis.google.com/chart?cht=bvs"; // chart type
 	$chart_url .= "&chs=360x150"; // size
 	$chart_url .= "&chbh=3,3"; // bvg : 4,1,2
-	$chart_url .= "&chf=bg,s,FFFFFF99"; //background color
+	$chart_url .= "&chf=bg,s,".$color; //background color
 	$chart_url .= "&chco=0000FF,FFA0CB"; // bar color
 	$chart_url .= "&chtt=".urlencode($title); // title
 	$chart_url .= "&chxt=x,y,r"; // axis labels specification
