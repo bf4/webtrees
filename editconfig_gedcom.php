@@ -1337,8 +1337,8 @@ print "&nbsp;<a href=\"javascript: ".$pgv_lang["accpriv_conf"]."\" onclick=\"exp
 	<tr>
 		<td class="descriptionbox wrap width20"><?php print_help_link("PAGE_AFTER_LOGIN_help", "qm", "PAGE_AFTER_LOGIN"); print $pgv_lang["PAGE_AFTER_LOGIN"]; ?></td>
 		<td class="optionbox"><select name="NEW_PAGE_AFTER_LOGIN" tabindex="<?php $i++; print $i; ?>" onfocus="getHelp('PAGE_AFTER_LOGIN_help');">
-				<option value="welcome" <?php if ($PAGE_AFTER_LOGIN=='welcome') print " selected=\"selected\""; ?>><?php print $pgv_lang["welcome_page"]; ?></option>
-				<option value="mygedview" <?php if ($PAGE_AFTER_LOGIN=='mygedview') print " selected=\"selected\""; ?>><?php print $pgv_lang["mygedview"]; ?></option>
+				<option value="welcome" <?php if ($PAGE_AFTER_LOGIN=='welcome') print " selected=\"selected\""; ?>><?php print $pgv_lang["welcome"]; ?></option>
+				<option value="mygedview" <?php if ($PAGE_AFTER_LOGIN=='mygedview') print " selected=\"selected\""; ?>><?php print $pgv_lang["mgv"]; ?></option>
 			</select>
 		</td>
 	</tr>
