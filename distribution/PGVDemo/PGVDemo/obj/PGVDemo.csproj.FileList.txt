@@ -1,8 +1,0 @@
-bin\Debug\PGVDemo.exe
-bin\Debug\PGVDemo.pdb
-obj\Debug\ResolveAssemblyReference.cache
-obj\Debug\PGVDemo.Form1.resources
-obj\Debug\PGVDemo.Properties.Resources.resources
-obj\Debug\PGVDemo.csproj.GenerateResource.Cache
-obj\Debug\PGVDemo.exe
-obj\Debug\PGVDemo.pdb
