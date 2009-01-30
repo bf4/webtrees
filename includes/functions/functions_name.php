@@ -255,17 +255,20 @@ function is_utf8($string) {
  * @author G. Kroll (canajun2eh), after a previous implementation by Boudewijn Sjouke
  */
 function DMSoundex($name) {
-	global $dmsounds, $maxchar;
+	global $transformNameTable, $dmsounds, $maxchar;
 
 	// If the code tables are not loaded, reload! Keep them global!
 	if (!defined('PGV_DMSOUNDS_UTF8_PHP')) {
 		require 'includes/dmsounds_UTF8.php';
 	}
 
-	// We'll deliberately not bother with caching the results.
+	// Apply special transformation rules to the input string
+	$name = UTF8_strtoupper($name);
+	foreach($transformNameTable as $transformRule) {
+		$name = ereg_replace($transformRule[0], $transformRule[1], $name);
+	}
 
 	// Initialize
-	$name = UTF8_strtoupper($name);
 	$nameLanguage = whatLanguage($name);
 	if ($nameLanguage == 'hebrew' || $nameLanguage == 'arabic') $noVowels = true;
 	else $noVowels = false;
@@ -276,7 +279,7 @@ function DMSoundex($name) {
 	$partialResult = array();		// accumulate incomplete D-M codes here
 	$partialResult[] = array('!');	// initialize 1st partial result  ('!' stops "duplicate sound" check)
 
-	// Loop through the input string.  
+	// Loop through the input string.
 	// Stop when the string is exhausted or when no more partial results remain
 	while (count($partialResult) !=0  && $currPos <= $lastPos) {
 		// Find the DM coding table entry for the chunk at the current position
@@ -322,11 +325,11 @@ function DMSoundex($name) {
 						$workingEntry[] = $soundTableEntry[$state];
 					} else {
 						// Incoming sound is a duplicate of the previous sound
-						// For Hebrew and Arabic, we need to create a pair of D-M sound codes, 
-						// one of the pair with only a single occurrence of the duplicate sound, 
+						// For Hebrew and Arabic, we need to create a pair of D-M sound codes,
+						// one of the pair with only a single occurrence of the duplicate sound,
 						// the other with both occurrences
 						if ($noVowels) {
-							$partialResult[] = $workingEntry;
+//							$partialResult[] = $workingEntry;
 							$workingEntry[] = $soundTableEntry[$state];
 						}
 					}
@@ -354,7 +357,7 @@ function DMSoundex($name) {
 	// We're done.  All that's left is to sort the result
 	sort($result);
 	return $result;
-}	
+}
 
 // Wrapper function for soundex function.  Return a colon separated list of values.
 function soundex_std($text) {

@@ -98,4 +98,5 @@ $pgv_lang["register_gedcomid_help"]	= "~#pgv_lang[gedcomid]#~<br /><br />Bu soya
 
 $pgv_lang["help_faq.php"] = "~Sıkça Sorulan Sorular~<br />#pgv_lang[text_faq_help]#<br />";
 
+$pgv_lang["help_clippings.php"]			= "~AİLE AĞACI KUPÜRÜ TAŞIMAK~<br />#pgv_lang[clip_cart]# bu aile soyağacının içinde size ait soyunuzu veya istediğiniz bölümleri (\"kupürleri\") kendi soyağacı programınızda kullanmanız için tek dosya içine zip formatında indirmenize izin veriyor. İndirilecek dosya GEDCOM formatında kaydedilecektir.<br /><ul><li>Kupürler nasıl alınır?<br />Bu gerçekten çok basittir. ID kimlik numaraları bilmiyorsanız (birey, aile veya kaynak) ikonları tıklatıp açılan sayfada isim girip aradığınızda detaylı bilgiler sayfada listelenecektir ve aradığınız ismi tıklayın. <b>#pgv_lang[add_to_cart]#</b> seçeneğinde göreceksiniz. Ekle butonu tıkladığınızda indirmeye eklemek için bir kaç seçenek sunacaktır. </li><li>Nasıl indirilir?<br /> Kupürleri taşıma alanına eklediğinizde <b>Şimdi İndir</b> linki göreceksiniz ve tıklayıp indirebileceksiniz. Talimatları ve linkleri izleyin.</li></ul><br />";
 ?>

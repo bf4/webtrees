@@ -9,6 +9,8 @@
 =====================================================================
 
 Version 4.2.0 CA
+ - Merged: Merge changes r4942 - r4969 from the trunk. (windmillway)
+ - Changed: Changes to enable Create New Shared Note (Only partially complete - more to do) (windmillway)
  - Merged: Merge changes r4939 - r4942 from the trunk. (windmillway)
  - Merged: Merge changes r4937 - r4938 from the trunk. (Picked up missing r4938 on last merge) (windmillway)
  - Merged: Merge changes r4936 - r4937 from the trunk. (Picked up missing r4936 on last merge) (windmillway)
@@ -21,6 +23,8 @@ Version 4.2.0 CA
 
  
 Version 4.2.0
+ - Added: GEDCOM config option to control Index or Portal page showing after Login (canajun2eh)
+ - Fixed: [ 2544257 ] [4942] Show stat's charts ERROR 8's (wooc)
  - Changed: Reduced size of (Fxx) text in Navigator (windmillway)
  - Fixed: [ 2543891 ] Need to refresh to see approved changes (wooc)
  - Fixed: [ 2542150 ] [4927] Cannot add date to MARR when SOUR is present (wooc)

@@ -2391,7 +2391,7 @@ function insert_missing_subtags($level1tag, $add_date=false)
 					break;
 			}
 		}
-		else if ($key=="DATE" && $add_date) {
+		else if ($key=="DATE" && $add_date && isset($factarray[$level1tag.':DATE'])) {
 			add_simple_tag("2 DATE", $level1tag, $factarray[$level1tag.':DATE']);
 		}
 	}

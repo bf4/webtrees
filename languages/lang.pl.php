@@ -412,8 +412,10 @@ $pgv_lang["back"]				= "Wstecz";
 
 //-- INDIVIDUAL FILE MESSAGES
 $pgv_lang["aka"]				= "znany(a) także jako";
-$pgv_lang["male"]				= "mężczyzna";
-$pgv_lang["female"]				= "kobieta";
+$pgv_lang["male"]				= "Mężczyzna";
+$pgv_lang["males"]				= "Mężczyźni";
+$pgv_lang["female"]				= "Kobieta";
+$pgv_lang["females"]			= "Kobiety";
 $pgv_lang["temple"]				= "Świątynia Mormońska";
 $pgv_lang["temple_code"]		= "Kod Świątyni Mormońskiej:";
 $pgv_lang["status"]				= "Status";

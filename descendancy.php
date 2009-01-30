@@ -3,7 +3,7 @@
  * Parses gedcom file and displays a descendancy tree.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
+ * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -118,17 +118,20 @@ if (is_null($controller->descPerson)) {
 	echo '<span class="error">', $pgv_lang['record_not_found'], '</span>';
 }
 $controller->generations -= 1; // [ 1757792 ] Charts : wrong generations count
-if ($show_full==0) {
-	echo '<span class="details2">', $pgv_lang['charts_click_box'], '</span><br /><br />';
-}
 
 switch ($controller->chart_style) {
 case 0: //-- list
+	if ($show_full==0) {
+		echo '<span class="details2">', $pgv_lang['charts_click_box'], '</span><br /><br />';
+	}
 	echo '<ul style="list-style: none; display: block;" id="descendancy_chart', $TEXT_DIRECTION=='rtl' ? '_rtl' : '', '">';
 	$controller->print_child_descendancy($controller->descPerson, $controller->generations);
 	echo '</ul>';
 	break;
 case 1: //-- booklet
+	if ($show_full==0) {
+		echo '<span class="details2">', $pgv_lang['charts_click_box'], '</span><br /><br />';
+	}
 	$show_cousins = true;
 	$famids = find_sfamily_ids($controller->pid);
 	if (count($famids)) {
@@ -157,7 +160,7 @@ function indi_desc($person, $n, $array) {
 	$array[$person->getXref()]=$person;
 	foreach ($person->getSpouseFamilies() as $family) {
 		$spouse=$family->getSpouse($person);
-		$array[$spouse->getXref()]=$spouse;
+		if (isset($spouse)) $array[$spouse->getXref()]=$spouse;
 		foreach ($family->getChildren() as $child) {
 			$array=indi_desc($child, $n-1, $array);
 		}

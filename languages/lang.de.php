@@ -416,7 +416,9 @@ $pgv_lang["back"]						= "zurück";
 //-- INDIVIDUAL FILE MESSAGES
 $pgv_lang["aka"]						= "auch bekannt als";
 $pgv_lang["male"]						= "männlich";
+$pgv_lang["males"]						= "männliche";
 $pgv_lang["female"]						= "weiblich";
+$pgv_lang["females"]					= "weibliche";
 $pgv_lang["temple"]						= "HLT Tempel";
 $pgv_lang["temple_code"]				= "HLT Tempel Code:";
 $pgv_lang["status"]						= "Status";

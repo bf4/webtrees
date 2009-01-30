@@ -71,4 +71,7 @@ $pgv_lang["bu_surname_add"]="Hanımının kızlık soyadı yeni soyadı olarak b
 $pgv_lang["bu_name_format"]="İsim kesikleri ve boşlukları ayarla";
 $pgv_lang["bu_name_format_desc"]="Doğru İSİM kayıtları 'Adem/GENÇ' veya 'Adem /GENÇ' olarak formdan eski soyağaco programı tarafından üretilir.";
 
+$pgv_lang["bu_duplicate_links"]="Kopya Linkleri Kaldır";
+$pgv_lang["bu_duplicate_links_desc"]="Aynı kayıtta birden fazla linklere sahip olmak ortak bir gedcom hatasıdır, örnek bir çocuk birden fazla ailede kayıt edilip listelenmesi.";
+
 ?>
