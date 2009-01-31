@@ -220,8 +220,7 @@ function safe_REQUEST($arr, $var, $regex=PGV_REGEX_NOSCRIPT, $default=null) {
 
 function encode_url($url, $entities=true) {
 	$url = decode_url($url, $entities); // Make sure we don't do any double conversions
-	//$url = str_replace(array(' ', '+', '#', '"', "'"), array('%20', '%2b', '%23', '%22', '%27'), $url); // GEDCOM names can legitimately contain these chars
-	$url = str_replace(array(' ', '+', '"', "'"), array('%20', '%2b', '%22', '%27'), $url); // GEDCOM names can legitimately contain these chars
+	$url = str_replace(array(' ', '+', '@#', '"', "'"), array('%20', '%2b', '@%23', '%22', '%27'), $url);
 	if ($entities) {
 		$url = htmlspecialchars($url,ENT_COMPAT,'UTF-8');
 	}
