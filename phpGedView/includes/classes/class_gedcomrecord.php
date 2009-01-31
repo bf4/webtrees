@@ -178,6 +178,8 @@ class GedcomRecord {
 
 		// Store it in the cache
 		$gedcom_record_cache[$object->xref][$object->ged_id]=&$object;
+		//-- also store it using its reference id (sid:pid and local gedcom for remote links)
+		$gedcom_record_cache[$pid][$ged_id]=&$object;
 		return $object;
 	}
 
