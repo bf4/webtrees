@@ -4,7 +4,7 @@
  * and other common errors.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team. All rights reserved.
+ * Copyright (C) 2002 to 2009  PGV Development Team. All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -70,12 +70,14 @@ if (count($all_geds)==0)
 
 // Default values
 if (!isset($ged))
-	if (isset($GEDCOM) && in_array($GEDCOM, $all_geds))
+	if (isset($GEDCOM) && array_key_exists($GEDCOM, $all_geds)) {
 		$ged=$GEDCOM;								// Current gedcom
+	}
 	else {
 		$tmp=array_keys($all_geds);
 		$ged=$tmp[0];								// First gedcom in directory
 	}
+
 if (!isset($openinnew)) $openinnew=0;				// Open links in same/new tab/window
 if (!isset($state))     $state='XYZ';
 if (!isset($country))   $country='XYZ';
@@ -208,7 +210,7 @@ while (($value=fgets($handle))!==false)
 //sort the array, limit to unique values, and count them
 $place_parts=array();
 $place_list=array_unique($place_list);
-sort($place_list);
+usort($place_list, "stringsort");
 $i=count($place_list);
 
 //calculate maximum no. of levels to display
