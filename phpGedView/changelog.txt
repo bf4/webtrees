@@ -10,6 +10,7 @@
 
 
 Version 4.2.1
+ - Fixed: [ 2555579 ] Interactive Tree box disappears when clicked (wooc)
  - Fixed: [ 2329962 ] autocomplete css (wooc)
  - Fixed: [ 2555011 ] Quick Update fails with suffix on name (wooc)
  - Fixed: [ 2554221 ] 4.2 Interactive tree shown for user and not the individual (canajun2eh)
