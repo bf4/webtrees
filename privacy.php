@@ -19,7 +19,7 @@
  * See http://www.phpgedview.net/modules.html for more information on modules in PhpGedView
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2005 PGV Development Team
+ * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -76,7 +76,7 @@ $SHOW_DEAD_PEOPLE = $PRIV_PUBLIC;
  * private.
  * @global integer $SHOW_LIVING_NAMES
  */
-$SHOW_LIVING_NAMES = $PRIV_USER;
+$SHOW_LIVING_NAMES = $PRIV_PUBLIC;
 
 /**
  * Set the access level for sources
