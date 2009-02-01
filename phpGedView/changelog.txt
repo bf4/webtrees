@@ -10,6 +10,7 @@
 
 
 Version 4.2.1
+ - Fixed: [ 2554221 ] 4.2 Interactive tree shown for user and not the individual (canajun2eh)
  - Fixed: [ 1969541 ] 4.1.5 Quick Update:  Address gets concatenated (wooc)
  - Fixed: [ 1803282 ] [4.1.2] Adding OCCU in Quick Update wont work (wooc)
 
