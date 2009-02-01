@@ -153,7 +153,7 @@ class TreeNav {
 		<div id="out_<?php print $this->name; ?>" dir="ltr" style="position: relative; <?php print $widthS.$heightS; ?>text-align: center; overflow: hidden;">
 			<div id="in_<?php print $this->name; ?>" style="position: relative; left: -20px; width: auto; cursor: move;" onmousedown="dragStart(event, 'in_<?php print $this->name; ?>', <?php print $this->name; ?>);" onmouseup="dragStop(event);">
 			<?php $parent=null;
-			if ($this->rootPerson!=null && !$this->rootPerson->canDisplayDetails()) print_privacy_error($CONTACT_EMAIL);
+			//if ($this->rootPerson!=null && !$this->rootPerson->canDisplayDetails()) print_privacy_error($CONTACT_EMAIL);
 			if (!$this->allSpouses) $this->drawPerson($this->rootPerson, $this->generations, 0, $parent);
 			else $this->drawPersonAllSpouses($this->rootPerson, $this->generations, 0);?>
 			</div>
@@ -243,10 +243,7 @@ class TreeNav {
 		global $pgv_lang, $factarray, $factAbbrev, $SHOW_ID_NUMBERS, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $SERVER_URL;
 
 		if (empty($person)) $person = $this->rootPerson;
-		if (!$person->canDisplayDetails()) {
-			echo $pgv_lang["private"];
-			return;
-		}
+		//if (!$person->canDisplayDetails()) return;
 
 		$families = array();
 		if (!empty($_REQUEST['famid'])) {
@@ -510,7 +507,7 @@ class TreeNav {
 							$spouse = $family->getSpouse($person);
 							if (!is_null($spouse)) {
 								$name = $spouse->getFullName();
-								print PrintReady("&nbsp;&nbsp;".$spouse->getSexImage('small', $style)." ".$name);
+								print PrintReady($spouse->getSexImage('small', $style)." ".$name);
 								print "<br />\n";
 							} else print "<br />\n";
 						}
