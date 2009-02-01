@@ -299,13 +299,16 @@ if ($action=="update") {
 				else {
 					$namerec = preg_replace("/1 NAME ([\w.\ -_]+)/", "1 NAME $1 /$SURN/\n", $namerec);
 				}
+				if (preg_match("/2 SPFX (.*)/", $namerec, $match)>0) {
+					$SURN = str_replace(trim($match[1])." ", "", $SURN);
+				}
 				if (preg_match("/2 SURN/", $namerec)>0) $namerec = preg_replace("/2 SURN.*/", "2 SURN $SURN\n", $namerec);
 				else $namerec.="\n2 SURN $SURN";
 			}
 			//-- update the married surname
 			if (isset($MRSURN) && !empty($MRSURN)) {
-				if (preg_match("/2 _MARNM/", $namerec)>0) $namerec = preg_replace("/2 _MARNM.*/", "2 _MARNM $MRSURN\n", $namerec);
-				else $namerec.="\n2 _MARNM $MRSURN";
+				if (preg_match("/2 _MARNM/", $namerec)>0) $namerec = preg_replace("/2 _MARNM.*/", "2 _MARNM /$MRSURN/\n", $namerec);
+				else $namerec.="\n2 _MARNM /$MRSURN/";
 			}
 			$pos1 = strpos($gedrec, "1 NAME");
 			if ($pos1!==false) {
@@ -318,7 +321,7 @@ if ($action=="update") {
 				}
 			}
 		}
-		else $gedrec .= "\n1 NAME $GIVN /$SURN/\n2 GIVN $GIVN\n2 SURN $SURN\n2 _MARNM $MRSURN";
+		else $gedrec .= "\n1 NAME $GIVN /$SURN/\n2 GIVN $GIVN\n2 SURN $SURN\n2 _MARNM /$MRSURN/";
 		$updated = true;
 	}
 
@@ -561,7 +564,7 @@ if ($action=="update") {
 			$spouserec .= "1 NAME ".$sgivn." /".$ssurn."/\n";
 			if (!empty($sgivn)) $spouserec .= "2 GIVN ".$sgivn."\n";
 			if (!empty($ssurn)) $spouserec .= "2 SURN ".$ssurn."\n";
-			if (!empty($mssurn)) $spouserec .= "2 _MARNM ".$mssurn."\n";
+			if (!empty($mssurn)) $spouserec .= "2 _MARNM /".$mssurn."/\n";
 
 			if (isset($_REQUEST['HSGIVN'.$i])) $hsgivn = $_REQUEST['HSGIVN'.$i];
 			if (isset($_REQUEST['HSSURN'.$i])) $hssurn = $_REQUEST['HSSURN'.$i];
@@ -753,7 +756,7 @@ if ($action=="update") {
 		$spouserec .= "1 NAME $SGIVN /$SSURN/\n";
 		if (!empty($SGIVN)) $spouserec .= "2 GIVN $SGIVN\n";
 		if (!empty($SSURN)) $spouserec .= "2 SURN $SSURN\n";
-		if (!empty($MSSURN)) $spouserec .= "2 _MARNM $MSSURN\n";
+		if (!empty($MSSURN)) $spouserec .= "2 _MARNM /$MSSURN/\n";
 		if (!empty($SSEX)) $spouserec .= "1 SEX $SSEX\n";
 		if (isset($_REQUEST['BDATE'])) $BDATE = $_REQUEST['BDATE'];
 		if (isset($_REQUEST['BPLAC'])) $BPLAC = $_REQUEST['BPLAC'];
@@ -923,7 +926,7 @@ if ($action=="update") {
 				$spouserec .= "1 NAME ".$sgivn." /".$ssurn."/\n";
 				if (!empty($sgivn)) $spouserec .= "2 GIVN ".$sgivn."\n";
 				if (!empty($ssurn)) $spouserec .= "2 SURN ".$ssurn."\n";
-				if (!empty($smsurn)) $spouserec .= "2 _MARNM ".$smsurn."\n";
+				if (!empty($smsurn)) $spouserec .= "2 _MARNM /".$smsurn."/\n";
 				$hsgivn = "";
 				$hssurn = "";
 				if (isset($_REQUEST["HFGIVN$i"])) $hsgivn = $_REQUEST["HFGIVN$i"];
@@ -1016,7 +1019,7 @@ if ($action=="update") {
 				$spouserec .= "1 NAME ".$sgivn." /".$ssurn."/\n";
 				if (!empty($sgivn)) $spouserec .= "2 GIVN ".$sgivn."\n";
 				if (!empty($ssurn)) $spouserec .= "2 SURN ".$ssurn."\n";
-				if (!empty($smsurn)) $spouserec .= "2 _MARNM ".$smsurn."\n";
+				if (!empty($smsurn)) $spouserec .= "2 _MARNM /".$smsurn."/\n";
 				$hsgivn = "";
 				$hssurn = "";
 				if (isset($_REQUEST["HMGIVN$i"])) $hsgivn = $_REQUEST["HMGIVN$i"];
@@ -1313,7 +1316,13 @@ if ($action=="choosepid") {
 			}
 		}
 		$ct = preg_match("/2 SURN (.*)/", $subrec, $match);
-		if ($ct>0) $SURN = trim($match[1]);
+		if ($ct>0) {
+			$SURN = trim($match[1]);
+			$ct = preg_match("/2 SPFX (.*)/", $subrec, $match);
+			if ($ct>0) {
+				$SURN = trim($match[1])." ".$SURN;
+			}
+		}
 		else {
 			$ct = preg_match("/1 NAME (.*)/", $subrec, $match);
 			if ($ct>0) {
@@ -1322,7 +1331,7 @@ if ($action=="choosepid") {
 			}
 		}
 		$ct = preg_match("/2 _MARNM (.*)/", $subrec, $match);
-		if ($ct>0) $MRSURN = trim($match[1]);
+		if ($ct>0) $MRSURN = trim(str_replace("/", "", $match[1]));
 		//else {
 		//	$ct = preg_match("/1 NAME (.*)/", $subrec, $match);
 		//	if ($ct>0) {
