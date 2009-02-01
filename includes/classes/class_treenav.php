@@ -240,10 +240,13 @@ class TreeNav {
 	* @param Person $person the person to print the details for
 	*/
 	function getDetails(&$person) {
-		global $factarray, $factAbbrev, $SHOW_ID_NUMBERS, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $SERVER_URL;
+		global $pgv_lang, $factarray, $factAbbrev, $SHOW_ID_NUMBERS, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $SERVER_URL;
 
 		if (empty($person)) $person = $this->rootPerson;
-		if (!$person->canDisplayDetails()) return;
+		if (!$person->canDisplayDetails()) {
+			echo $pgv_lang["private"];
+			return;
+		}
 
 		$families = array();
 		if (!empty($_REQUEST['famid'])) {
