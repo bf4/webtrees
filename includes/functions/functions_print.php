@@ -604,7 +604,8 @@ function print_header($title, $head="", $use_alternate_styles=true) {
 		$META_PAGE_TOPIC = $old_META_PAGE_TOPIC;
 	}
 	else {
-		include($print_headerfile);
+		//include($print_headerfile); // this not use CSS styles
+		include($headerfile);
 	}
 }
 
