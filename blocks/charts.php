@@ -5,7 +5,7 @@
  * This block prints pedigree, descendency, or hourglass charts for the chosen person
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
+ * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -42,7 +42,7 @@ $PGV_BLOCKS["print_charts_block"]["descr"]		= "charts_block_descr";
 $PGV_BLOCKS["print_charts_block"]["canconfig"]	= true;
 $PGV_BLOCKS["print_charts_block"]["config"]		= array(
 	"cache"=>1,
-	"rootId"=>'',
+	"pid"=>'',
 	"type"=>'pedigree',
 	"details"=>'no'
 	);
@@ -53,14 +53,14 @@ function print_charts_block($block = true, $config="", $side, $index) {
 
 	if (empty($config)) $config = $PGV_BLOCKS["print_charts_block"]["config"];
 	if (empty($config['details'])) $config['details'] = 'no';
-	if (empty($config["rootId"])) {
+	if (empty($config["pid"])) {
 		if (!PGV_USER_ID) {
-			$config["rootId"] = $PEDIGREE_ROOT_ID;
+			$config["pid"] = $PEDIGREE_ROOT_ID;
 		} else {
 			if (PGV_USER_GEDCOM_ID) {
-				$config["rootId"] = PGV_USER_GEDCOM_ID;
+				$config["pid"] = PGV_USER_GEDCOM_ID;
 			} else {
-				$config["rootId"] = $PEDIGREE_ROOT_ID;
+				$config["pid"] = $PEDIGREE_ROOT_ID;
 			}
 		}
 	}
@@ -79,17 +79,17 @@ function print_charts_block($block = true, $config="", $side, $index) {
 
 	if ($config['type']!='treenav') {
 		$controller = new HourglassController();
-		$controller->init($config["rootId"],0,3);
+		$controller->init($config["pid"],0,3);
 		$controller->setupJavascript();
 	}
 	else {
-		$nav = new TreeNav($config['rootId'],'blocknav',-1);
+		$nav = new TreeNav($config['pid'],'blocknav',-1);
 		$nav->generations = 2;
 	}
 
-	$person = Person::getInstance($config["rootId"]);
+	$person = Person::getInstance($config["pid"]);
 	if ($person==null) {
-		$config["rootId"] = $PEDIGREE_ROOT_ID;
+		$config["pid"] = $PEDIGREE_ROOT_ID;
 		$person = Person::getInstance($PEDIGREE_ROOT_ID);
 	}
 
@@ -180,6 +180,8 @@ function print_charts_block_config($config) {
 	if (empty($config)) $config = $PGV_BLOCKS["print_charts_block"]["config"];
 	if (empty($config["rootId"])) $config["rootId"] = $PEDIGREE_ROOT_ID;
 	if (empty($config['details'])) $config['details'] = 'no';
+	
+require 'js/autocomplete.js.htm';
 ?>
 	<tr><td class="descriptionbox wrap width33"><?php print $pgv_lang["chart_type"]; ?></td>
 	<td class="optionbox">
@@ -187,7 +189,7 @@ function print_charts_block_config($config) {
 			<option value="pedigree"<?php if ($config["type"]=="pedigree") print " selected=\"selected\""; ?>><?php print $pgv_lang["index_header"]; ?></option>
 			<option value="descendants"<?php if ($config["type"]=="descendants") print " selected=\"selected\""; ?>><?php print $pgv_lang["descend_chart"]; ?></option>
 			<option value="hourglass"<?php if ($config["type"]=="hourglass") print " selected=\"selected\""; ?>><?php print $pgv_lang["hourglass_chart"]; ?></option>
-			<?php if (file_exists("includes/treenav_class.php")) { ?>
+			<?php if (file_exists("includes/classes/class_treenav.php")) { ?>
 			<option value="treenav"<?php if ($config["type"]=="treenav") print " selected=\"selected\""; ?>><?php print $pgv_lang["interactive_tree"]; ?></option>
 			<?php } ?>
 		</select>
@@ -204,10 +206,10 @@ function print_charts_block_config($config) {
 	<tr>
 		<td class="descriptionbox wrap width33"><?php print $pgv_lang["root_person"]; ?></td>
 		<td class="optionbox">
-			<input type="text" name="rootId" id="rootId" value="<?php print $config['rootId']; ?>" size="5" />
+			<input type="text" name="pid" id="pid" value="<?php print $config['pid']; ?>" size="5" />
 			<?php
-			print_findindi_link('rootId','');
-			$root=Person::getInstance($config['rootId']);
+			print_findindi_link('pid','');
+			$root=Person::getInstance($config['pid']);
 			if ($root) {
 				echo '<span class="list_item">', $root->getFullName(), $root->format_first_major_fact(PGV_EVENTS_BIRT, 1), '</span>';
 			}
