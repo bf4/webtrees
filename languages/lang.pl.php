@@ -843,6 +843,7 @@ $pgv_lang["relationship_chart"]		= "Diagram pokrewieństwa";
 $pgv_lang["person1"]				= "Pierwsza osoba";
 $pgv_lang["person2"]				= "Druga osoba";
 $pgv_lang["no_link_found"]			= "Nie znaleziono powiązania między tymi osobami.";
+$pgv_lang["no_other_link_found"]	= "Nie znaleziono innego powiązania między tymi osobami.";
 $pgv_lang["sibling"]				= "Rodzeństwo";
 $pgv_lang["follow_spouse"]			= "Sprawdź pokrewieństwo przez małżeństwo";
 $pgv_lang["timeout_error"]			= "Przekroczono limit czasu przed zakończeniem poszukiwania.";

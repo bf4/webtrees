@@ -3,7 +3,7 @@
  * Calculates the relationship between two individuals in the gedcom
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
+ * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -261,7 +261,7 @@ function getRelationshipSentence($node, $pid1, $pid2)
 		}
 	}
 	// check for step siblings
-	else if($numberOfSpouses == 1 && $generationsYounger == 1 && $generationsOlder == 1 && !$firstRelationshipIsSpouse && !$lastRelationshipIsSpouse && $numberOfSiblings == 0)
+	else if($numberOfSpouses == 1 && $generationsYounger == 1 && $generationsOlder == 1 && !$firstRelationshipIsSpouse && !$lastRelationshipIsSpouse && $numberOfSiblings == 0 && $bosa < 3)
 	{
 		if (isset($pgv_lang["stepsister"]) &&$mf=="F")
 		{
@@ -813,7 +813,9 @@ if ($view!="preview") {
 		print "</tr><tr>";
 		if (($disp)&&(!$check_node)) {
 			print "<td class=\"topbottombar wrap vmiddle center\" colspan=\"2\">";
-			if (isset($_SESSION["relationships"])) print "<span class=\"error\">".$pgv_lang["no_link_found"]."</span><br />";
+			if (isset($_SESSION["relationships"])) 
+				if ($path_to_find==0) print "<span class=\"error\">".$pgv_lang["no_link_found"]."</span><br />";
+				else print "<span class=\"error\">".$pgv_lang["no_other_link_found"]."</span><br />";
 			if (!$followspouse) {
 				?>
 				<script language="JavaScript" type="text/javascript">

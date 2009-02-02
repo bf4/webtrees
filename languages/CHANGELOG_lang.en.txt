@@ -42,6 +42,13 @@ The above list of codes may be amended as new situations arise.
 For massive changes, the variable names should be listed in the order in which they
 occur in the respective language files.
 
+VERSION 4.2.1
+
+?$pgv_lang["whatever"]								dd Monthname, year		Change	codes and comments
+----------------------------------------------------------------------------------------
+*$pgv_lang["no_link_found"]							02 Feb 2009				W	remove "(other) "
++$pgv_lang["no_other_link_found"]					02 Feb 2009				A
+
 VERSION 4.2.
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change	codes and comments
