@@ -186,8 +186,6 @@ function findFiles($path) {
 	}
 }
 
-print_header($pgv_lang["edit_place_locations"]);
-
 if (!PGV_USER_IS_ADMIN) {
 	echo "<span class=\"subheaders\">{$pgv_lang['edit_place_locations']}</span><br /><br />";
 	echo "<table class=\"facts_table\">\n";
@@ -222,6 +220,8 @@ if ($action=="ExportFile" && PGV_USER_IS_ADMIN) {
 	outputLevel($parent);
 	exit;
 }
+
+print_header($pgv_lang["edit_place_locations"]);
 
 if ($action=="ImportGedcom") {
 	$placelist = array();
