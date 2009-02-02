@@ -1087,7 +1087,7 @@ if ((!empty($pid1))&&(!empty($pid2))) {
 			$sentence = getRelationshipSentence($node, $pid1, $pid2);
 			if($sentence != false)
 			{
-				print "<div style=\"position:absolute; ".($TEXT_DIRECTION=="ltr"?"left":"right").":1px; top:".($Dbaseyoffset-70)."px; z-index:1;\">";
+				print "<div style=\"position:absolute; ".($TEXT_DIRECTION=="ltr"?"left":"right").":1px; top:".abs($Dbaseyoffset-70)."px; z-index:1;\">";
 				print "<h4>";
 				print $sentence;
 				print "</h4></div>\n";
