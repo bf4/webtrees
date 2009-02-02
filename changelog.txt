@@ -10,6 +10,7 @@
 
 
 Version 4.2.1
+ - Fixed: [ 2555840 ] Interactive Tree doesn't work when living names hidden (canajun2eh)
  - Fixed: [ 2555574 ] Interactive Tree incorrect text spacing inside box (canajun2eh)
  - Added: Preparatory work to enable config option to turn on/off each Tab Navigator on Indi page (windmillway)
  - Fixed: [ 2555579 ] Interactive Tree box disappears when clicked (wooc)
