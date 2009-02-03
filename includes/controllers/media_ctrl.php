@@ -129,8 +129,8 @@ class MediaControllerRoot extends IndividualController{
 		}
 		if (!empty($_REQUEST["gid"])) {
 			$gid = strtoupper($_REQUEST["gid"]);
-			$indirec = find_media_record($gid);
-			if ($indirec) {
+			$mediarec = find_media_record($gid);
+			if ($mediarec) {
 				$favorite = array();
 				$favorite["username"] = PGV_USER_NAME;
 				$favorite["gid"] = $gid;
@@ -146,7 +146,7 @@ class MediaControllerRoot extends IndividualController{
 
 	/**
 	* Accept any edit changes into the database
-	* Also update the indirec we will use to generate the page
+	* Also update the mediarec we will use to generate the page
 	*/
 	function acceptChanges() {
 		global $GEDCOM, $medialist;
@@ -156,13 +156,14 @@ class MediaControllerRoot extends IndividualController{
 			$this->accept_success=true;
 			//-- delete the record from the cache and refresh it
 			if (isset($medialist[$this->pid])) unset($medialist[$this->pid]);
-			$indirec = find_media_record($this->pid);
+			$mediarec = find_media_record($this->pid);
 			//-- check if we just deleted the record and redirect to index
-			if (empty($indirec)) {
+			if (empty($mediarec)) {
 				header("Location: index.php?ctype=gedcom");
 				exit;
 			}
-			$this->mediaobject = Media::getInstance($this->pid);
+			//$this->mediaobject = Media::getInstance($this->pid);
+			$this->mediaobject = new Media($mediarec);
 		}
 		//This sets the controller ID to be the Media ID
 		if (is_null($this->mediaobject)) $this->mediaobject = new Media("0 @".$this->pid."@ OBJE");
