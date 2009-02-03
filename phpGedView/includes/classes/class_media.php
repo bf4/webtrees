@@ -60,6 +60,7 @@ class Media extends GedcomRecord {
 			}
 			$this->file = get_gedcom_value('FILE', 1, $data);
 		}
+		if (empty($this->title)) $this->title = $this->file;
 
 		parent::GedcomRecord($data);
 	}
@@ -121,6 +122,14 @@ class Media extends GedcomRecord {
 		//-- also store it using its reference id (sid:pid and local gedcom for remote links)
 		$gedcom_record_cache[$pid][$ged_id]=&$object;
 		return $object;
+	}
+
+	/**
+	 *
+	 * get the title of the media item
+	 */
+	function getFullName() {
+		return $this->title;
 	}
 
 	/**
