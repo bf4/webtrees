@@ -90,7 +90,7 @@ if ((!$controller->isPrintPreview())&&(empty($SEARCH_SPIDER))&&!empty($controlle
 <table width="70%">
 	<tr>
 		<td class="name_head" colspan="2">
-			<?php print PrintReady($controller->mediaobject->getFullName()); if ($SHOW_ID_NUMBERS && !empty($controller->pid)) print " " . getLRM() . "(".$controller->pid.")" . getLRM(); ?>
+			<?php print PrintReady($controller->mediaobject->getFullName()); if ($SHOW_ID_NUMBERS && !empty($controller->pid)) print "&nbsp;&nbsp;&nbsp;" . getLRM() . "(".$controller->pid.")" . getLRM(); ?>
 			<?php print PrintReady($controller->mediaobject->getAddName()); ?> <br /><br />
 			<?php if ($controller->mediaobject->isMarkedDeleted()) print "<span class=\"error\">".$pgv_lang["record_marked_deleted"]."</span>"; ?>
 		</td>
