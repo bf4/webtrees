@@ -1016,8 +1016,8 @@ function print_favorite_selector($option=0) {
 					}
 				}
 			}
-			print_menu($menu);
 		}
+		print_menu($menu);
 		break;
 	default:
 		print "<form name=\"favoriteform\" action=\"$SCRIPT_NAME";
