@@ -239,8 +239,8 @@ switch($step) {
 		if (isset($_POST["NEW_PGV_SMTP_ACTIVE"])) $_SESSION['install_config']['PGV_SMTP_ACTIVE'] =$_POST["NEW_PGV_SMTP_ACTIVE"]=="yes"?true:false;
 		if (isset($_POST["NEW_PGV_SMTP_HOST"])) $_SESSION['install_config']['PGV_SMTP_HOST'] = $_POST['NEW_PGV_SMTP_HOST'];
 		if (isset($_POST["NEW_PGV_SMTP_HELO"])) $_SESSION['install_config']['PGV_SMTP_HELO'] =$_POST["NEW_PGV_SMTP_HELO"];
-		if (empty($_SESSION['install_config']['PGV_SMTP_PORT'])) $_SESSION['install_config']['PGV_SMTP_PORT'] = '25';
 		if (isset($_POST["NEW_PGV_SMTP_PORT"])) $_SESSION['install_config']['PGV_SMTP_PORT'] =$_POST["NEW_PGV_SMTP_PORT"];
+		if (empty($_SESSION['install_config']['PGV_SMTP_PORT'])) $_SESSION['install_config']['PGV_SMTP_PORT'] = '25';
 		if (isset($_POST["NEW_PGV_SMTP_AUTH"])) $_SESSION['install_config']['PGV_SMTP_AUTH'] =$_POST["NEW_PGV_SMTP_AUTH"]=="yes"?true:false;
 		if (isset($_POST["NEW_PGV_SMTP_AUTH_USER"])) $_SESSION['install_config']['PGV_SMTP_AUTH_USER'] =$_POST["NEW_PGV_SMTP_AUTH_USER"];
 		if (isset($_POST["NEW_PGV_SMTP_AUTH_PASS"])) $_SESSION['install_config']['PGV_SMTP_AUTH_PASS'] =$_POST["NEW_PGV_SMTP_AUTH_PASS"];
