@@ -513,6 +513,7 @@ class PHPMailer {
 	* @return bool
 	*/
 	public function SmtpSend($header, $body) {
+		global $PGV_SMTP_HELO, $PGV_SMTP_AUTH_USER;
 		include_once($this->PluginDir . 'class_smtp.php');
 		$error = '';
 		$bad_rcpt = array();
@@ -522,8 +523,17 @@ class PHPMailer {
 		}
 
 		$smtp_from = ($this->Sender == '') ? $this->From : $this->Sender;
-		if(!$this->smtp->Mail($smtp_from)) {
-			$error = $this->Lang('from_failed') . $smtp_from;
+		if (strstr($PGV_SMTP_AUTH_USER, "@")!==False) {
+			$from_user = $PGV_SMTP_AUTH_USER;
+		}
+		else {
+			$from_user = $PGV_SMTP_AUTH_USER.'@'.$PGV_SMTP_HELO;
+		}
+		if($this->smtp->Mail($from_user)) {
+			$smtp_from = $from_user;
+		}
+		else {
+			$error = $this->Lang('from_failed: ') . $smtp_from;
 			$this->SetError($error);
 			$this->smtp->Reset();
 			return false;
