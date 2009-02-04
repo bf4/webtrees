@@ -124,6 +124,9 @@ function pgvMail($to, $from, $subject, $message) {
 			$mail_object->Username = $PGV_SMTP_AUTH_USER;
 			$mail_object->Password = $PGV_SMTP_AUTH_PASS;
 		}
+		if ($PGV_SMTP_HOST == "smtp.gmail.com") {
+			$mail_object->SMTPSecure = "ssl";
+		}
 		$mail_object->Host = $PGV_SMTP_HOST;
 		$mail_object->Port = $PGV_SMTP_PORT;
 		$mail_object->Hostname = $PGV_SMTP_HELO;
@@ -144,6 +147,7 @@ function pgvMail($to, $from, $subject, $message) {
 		}
 		if ( $mailFormat == "html" || $mailFormat == "multipart" ) {
 			$mail_object->AddCustomHeader( 'Mime-Version: 1.0' );
+			$mail->IsHTML(true);
 		}
 		$mail_object->Body = $message;
 		// attempt to send mail
