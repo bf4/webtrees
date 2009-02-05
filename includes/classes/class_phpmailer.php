@@ -523,20 +523,22 @@ class PHPMailer {
 		}
 
 		$smtp_from = ($this->Sender == '') ? $this->From : $this->Sender;
-		if (strstr($PGV_SMTP_AUTH_USER, "@")!==False) {
-			$from_user = $PGV_SMTP_AUTH_USER;
-		}
-		else {
-			$from_user = $PGV_SMTP_AUTH_USER.'@'.$PGV_SMTP_HELO;
-		}
-		if($this->smtp->Mail($from_user)) {
-			$smtp_from = $from_user;
-		}
-		else {
-			$error = $this->Lang('from_failed: ') . $smtp_from;
-			$this->SetError($error);
-			$this->smtp->Reset();
-			return false;
+		if(!$this->smtp->Mail($smtp_from)) {
+			if (strstr($PGV_SMTP_AUTH_USER, "@")!==False) {
+				$from_user = $PGV_SMTP_AUTH_USER;
+			}
+			else {
+				$from_user = $PGV_SMTP_AUTH_USER.'@'.$PGV_SMTP_HELO;
+			}
+			if($this->smtp->Mail($from_user)) {
+				$smtp_from = $from_user;
+			}
+			else {
+				$error = $this->Lang('from_failed') . $smtp_from;
+				$this->SetError($error);
+				$this->smtp->Reset();
+				return false;
+			}
 		}
 
 		/* Attempt to send attach all recipients */
