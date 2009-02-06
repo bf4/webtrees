@@ -287,9 +287,10 @@ $pgv_lang["others"]					= "Pozostałe";
 $pgv_lang["sort_by_marriage"]		= "Sortuj według daty ślubu";
 $pgv_lang["reorder_families"]		= "Uporządkuj rodziny";
 $pgv_lang["indis_with_surname"]		= "Osoby o nazwisku #surname#";
-$pgv_lang["first_letter_name"]		= "Wybierz literę na jaką mają się zaczynać nazwiska pokazanych rodzin.";
-$pgv_lang["first_letter_iname"]		= "Wybierz literę na jaką mają się zaczynać nazwiska pokazanych osób.";
-$pgv_lang["first_letter_fname"]		= "Wybierz literę, aby wyświetlić osoby o imieniu zaczynającym się od tej litery.";
+$pgv_lang["first_letter_name"]		= "Wybierz pierwszą literę nazwiska członków rodziny";
+$pgv_lang["first_letter_sfname"]	= "Wybierz pierwszą literę imienia członków rodziny";
+$pgv_lang["first_letter_iname"]		= "Wybierz pierwszą literę nazwiska osoby";
+$pgv_lang["first_letter_fname"]		= "Wybierz pierwszą literę imienia osoby";
 $pgv_lang["total_names"]			= "Wszystkich nazwisk";
 $pgv_lang["total_changes"]			= "Wszystkich zmian";
 $pgv_lang["total_links"]			= "Wszystkich powiązań";
@@ -871,8 +872,8 @@ $pgv_lang["line_up_generations"]	= "Pokaż te same pokolenia w jednej linii";
 $pgv_lang["oldest_top"]				= "Pokaż starszych u góry";
 
 // %1\$s replaced by first person, %2\$s by the relationship and %3\$s by the second person.
-$pgv_lang["relationship_male_1_is_the_2_of_3"] 		= "Osoba: %1\$s to %2\$s dla osoby: %3\$s.";
-$pgv_lang["relationship_female_1_is_the_2_of_3"] 	= "Osoba: %1\$s to %2\$s dla osoby: %3\$s.";
+$pgv_lang["relationship_male_1_is_the_2_of_3"]		= "%1\$s to %2\$s dla osoby: %3\$s.";
+$pgv_lang["relationship_female_1_is_the_2_of_3"]	= "%1\$s to %2\$s dla osoby: %3\$s.";
 
 $pgv_lang["mother_in_law"]		= "Teściowa";
 $pgv_lang["father_in_law"]		= "Teść";
