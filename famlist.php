@@ -261,7 +261,7 @@ if ($showList) {
 				}
 				echo '<p class="center">';
 				print_help_link('alpha_help', 'qm', 'alpha_index');
-				echo $pgv_lang['first_letter_fname'], '<br />';
+				echo $pgv_lang['first_letter_sfname'], '<br />';
 				echo join(' | ', $list), '</p>';
 			}
 		}
