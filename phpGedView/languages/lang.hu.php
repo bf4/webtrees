@@ -3,7 +3,7 @@
  * Hungarian texts
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
+ * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -855,7 +855,7 @@ $pgv_lang["mail04_line01"]					= "Kedves #user_fullname# ...";
 $pgv_lang["mail04_line02"]					= "Az Ön felhasználónevéhez új jelszót igényeltek!";
 $pgv_lang["mail04_line03"]					= "Ajánlások:";
 $pgv_lang["mail04_line04"]					= "Kattintson az alábbi hivatkozásra, jelentkezzen be az új jelszóval majd változtassa meg ahhoz hogy az adatai biztonságban maradjanak.";
-$pgv_lang["mail04_line05"]					= "Miután be jelentkezett, válassza a \\\'#pgv_lang[myuserdata]#\\\' linket a \\\'#pgv_lang[mygedview]#\\\' menü alatt és töltse ki a jelszó mezőket hogy megváltoztassa a jelszavát.";
+$pgv_lang["mail04_line05"]					= "Miután be jelentkezett, válassza a '#pgv_lang[myuserdata]#' linket a '#pgv_lang[mygedview]#' menü alatt és töltse ki a jelszó mezőket hogy megváltoztassa a jelszavát.";
 $pgv_lang["mail04_subject"]					= "Adat kérése a(z) #SERVER_NAME# szerveren";
 $pgv_lang["pwreqinfo"]						= "Tisztelt Felhasználó!<br /><br />Egy emailt küldtünk a (#user[email]#) címre, amiben benne van az új jelszó.<br /><br />Kérjük, nézze meg a levelesládáját, mert ez a levél perceken belül megérkezhet.<br /><br />Javaslat:<br /><br />Miután megkapta az új jelszavát emailben, jelentkezzen be az új jelszóval majd változtassa meg ahhoz hogy az adatai biztonságban maradjanak.";
 $pgv_lang["editowndata"]					= "Felhasználói adataim";
