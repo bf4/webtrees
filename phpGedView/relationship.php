@@ -147,10 +147,20 @@ function getRelationshipSentence($node, $pid1, $pid2) {
 		else {
 			// step relationship
 			if (isset($pgv_lang["stepmom"]) && $mf=="F") {
-				$relationshipDescription = $pgv_lang["stepmom"];
+				if (!empty($firstRelationshipIsSpouse) || $path_to_find>0) {
+					$relationshipDescription = $pgv_lang["sosa_3"];
+				}
+				else {
+					$relationshipDescription = $pgv_lang["stepmom"];
+				}
 			}
 			else if (isset($pgv_lang["stepdad"])) {
-				$relationshipDescription = $pgv_lang["stepdad"];
+				if (!empty($firstRelationshipIsSpouse) || $path_to_find>0) {
+					$relationshipDescription = $pgv_lang["sosa_2"];
+				}
+				else {
+					$relationshipDescription = $pgv_lang["stepdad"];
+				}
 			}
 		}
 	}
