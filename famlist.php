@@ -168,7 +168,7 @@ if (!$SEARCH_SPIDER) {
 }
 echo '<p class="center">';
 print_help_link('alpha_help', 'qm', 'alpha_index');
-print $pgv_lang["first_letter_fname"]."<br />";
+print $pgv_lang["first_letter_name"]."<br />";
 echo join(' | ', $list), '</p>';
 
 // Search spiders don't get an option to show/hide the surname sublists,
