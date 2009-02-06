@@ -8,7 +8,7 @@
 * cache arrays are checked first before querying the database.
 *
 * phpGedView: Genealogy Viewer
-* Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
+* Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
 *
 * This program is free software; you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -485,7 +485,7 @@ function get_indilist_salpha($marnm, $fams, $ged_id) {
 		$tables="{$TBLPREFIX}name, {$TBLPREFIX}individuals";
 		$join="n_file={$ged_id} AND i_file=n_file AND i_id=n_id";
 	}
-	if ($marnm) {
+	if (!$marnm) {
 		$join.=" AND n_type!='_MARNM'";
 	}
 	if ($DB_UTF8_COLLATION) {
