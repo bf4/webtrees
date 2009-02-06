@@ -291,6 +291,7 @@ $pgv_lang["sort_by_marriage"]			= "Nach Ehedatum sortieren";
 $pgv_lang["reorder_families"]			= "Familien neu ordnen";
 $pgv_lang["indis_with_surname"]			= "Personen mit dem Nachnamen #surname#";
 $pgv_lang["first_letter_name"]			= "Wählen Sie einen Buchstaben, um Familien zu sehen, deren Namen diesen Anfangsbuchstaben haben.";
+$pgv_lang["first_letter_sfname"]		= "Wählen Sie einen Buchstaben, um Familien zu sehen, deren Ehegatten-Vornamen diesen Anfangsbuchstaben haben.";
 $pgv_lang["first_letter_iname"]			= "Wählen Sie einen Buchstaben, um Personen zu sehen, deren Familiennamen diesen Anfangsbuchstaben haben.";
 $pgv_lang["first_letter_fname"]			= "Wählen Sie einen Buchstaben, um Personen zu sehen, deren Vornamen diesen Anfangsbuchstaben haben.";
 $pgv_lang["total_names"]				= "Nachnamen Anzahl";
