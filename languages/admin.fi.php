@@ -241,7 +241,7 @@ $pgv_lang["select_an_option"]	= "Valitse allaolevista vaihtoehdoista:";
 $pgv_lang["SERVER_URL"]		= "PhpGedView URL";
 $pgv_lang["show_phpinfo"]		= "Näytä PHP informaatio sivu";
 $pgv_lang["siteadmin"]		= "Palvelun ylläpitäjä";
-$pgv_lang["skip_cleanup"]		= "Ohita siivous";
+//$pgv_lang["skip_cleanup"]		= "Ohita siivous";
 $pgv_lang["sqlite"]			= "SQLite";
 $pgv_lang["sybase"]			= "Sybase";
 $pgv_lang["sync_gedcom"]		= "Synkronoidaan käyttäjä asetukset GEDCOM datan kanssa";
@@ -354,6 +354,6 @@ $pgv_lang["associated_files"]		= "Liitetyt tiedostot:";
 $pgv_lang["remove_all_files"]		= "Poista kaikki turhat tiedostot.";
 $pgv_lang["warn_file_delete"]		= "Tämä tiedosto sisältää tärkeätä tietoa kuten kieliasetuksia tai kesken olevia tietomuutoksia. Oletko varma, että haluat poistaa tämän tiedoston?";
 $pgv_lang["deleted_files"]          	= "Poistetut tiedostot:";
-$pgv_lang["index_dir_cleanup_inst"]	= "Poistaaksesi tiedoston tai alikansion indeksi-kansiosta raahaa se roskakoriin tai valitse sen valintaruutu. Klikkaa Poista-painiketta poistaaksesi merkityt tiedostot lopullisesti.<br /><br />. Tiedostot, jotka on merkitty <img src=\\\"./images/RESN_confidential.gif\\\" /> ovat välttämättömiä ohjelman toiminnan kannalta eikä niitä voi poistaa.<br />Tiedostot, jotka on merkitty <img src=\\\"./images/RESN_locked.gif\\\" />, sisältävät tärkeitä asetuksia tai kesken olevia tietomuutoksia. Niitä ei tulisi poistaa, ellet varmasti tiedä mitä olet tekemässä.<br /><br />";
+$pgv_lang["index_dir_cleanup_inst"]	= "Poistaaksesi tiedoston tai alikansion indeksi-kansiosta raahaa se roskakoriin tai valitse sen valintaruutu. Klikkaa Poista-painiketta poistaaksesi merkityt tiedostot lopullisesti.<br /><br />. Tiedostot, jotka on merkitty <img src=\"./images/RESN_confidential.gif\" /> ovat välttämättömiä ohjelman toiminnan kannalta eikä niitä voi poistaa.<br />Tiedostot, jotka on merkitty <img src=\"./images/RESN_locked.gif\" />, sisältävät tärkeitä asetuksia tai kesken olevia tietomuutoksia. Niitä ei tulisi poistaa, ellet varmasti tiedä mitä olet tekemässä.<br /><br />";
 $pgv_lang["index_dir_cleanup"]	= "Siivoa indeksi-kansio";
 ?>
