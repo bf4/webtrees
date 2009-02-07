@@ -29,9 +29,9 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
-$pgv_lang["exact"]			= "Tarkka"; 
-$pgv_lang["more_fields"]		= "Lisää uusia kenttiä"; 
-$pgv_lang["install_step_8"] 		= "Aloita"; 
+$pgv_lang["exact"]			= "Tarkka";
+$pgv_lang["more_fields"]		= "Lisää uusia kenttiä";
+$pgv_lang["install_step_8"] 		= "Aloita";
 $pgv_lang["parent_family"]		= "Vanhempien perhe";
 $pgv_lang["step_parent_family"]	= "Puolivanhemman perhe";
 $pgv_lang["immediate_family"]	= "Oma perhe";
@@ -40,10 +40,10 @@ $pgv_lang["load_full_tree"]		= "Näytä tämä puu täyden sivun interaktiivisen
 $pgv_lang["hide_show_spouses"]	= "Näytä tai piilota useammat puolisot";
 
 $pgv_lang["interactive_tree"]		= "Interaktiivinen puu";
-$pgv_lang["example"]			= "Esimerkki:"; 
+$pgv_lang["example"]			= "Esimerkki:";
 $pgv_lang["tree"]			= "Puu";
 $pgv_lang["ellipsis"]			= "\xE2\x80\xA6";
-$pgv_lang["showUnknown"]		= "Näytä tuntematon sukupuoli"; 
+$pgv_lang["showUnknown"]		= "Näytä tuntematon sukupuoli";
 $pgv_lang["age_differences"]		= "Näytä ikäerot";
 $pgv_lang["date_of_entry"]		= "Alkuperäisen lähteen päiväys";
 $pgv_lang["multi_site_search"] 	= "Haku monesta palvelusta";
@@ -78,13 +78,13 @@ $pgv_lang["media_options"]		= "Media-asetukset";
 $pgv_lang["confirm_password"]	= "Salasana on toistettava.";
 $pgv_lang["enter_email"]		= "Sinun on täytettävä sähköpostiosoite.";
 $pgv_lang["name"]			= "Nimi";
-$pgv_lang["children"]			= "Lapset"; 
-$pgv_lang["child"]			= "Lapsi"; 
-$pgv_lang["family"] 			= "Perhe"; 
+$pgv_lang["children"]			= "Lapset";
+$pgv_lang["child"]			= "Lapsi";
+$pgv_lang["family"] 			= "Perhe";
 $pgv_lang["source_menu"]		= "Vaihtoehtoja lähteille";
 $pgv_lang["repo_menu"]		= "Vaihtoehtoja tietovarastolle";
 $pgv_lang["search_DM"]		= "Daitch-Mokotoff";
-$pgv_lang["other_searches"]		= "Muita hakuja"; 
+$pgv_lang["other_searches"]		= "Muita hakuja";
 $pgv_lang["welcome_page"]		= "Tervetulosivu";
 $pgv_lang["loading"]			= "Ladataan...";
 $pgv_lang["clear_chart"]		= "Tyhjennä kaavio";
@@ -614,7 +614,7 @@ $pgv_lang["roots"]		 	= "Juuret";
 $pgv_lang["leaves"] 			= "Lehdet";
 $pgv_lang["widow"] 			= "Leski";
 $pgv_lang["widower"] 			= "Leski";
-$pgv_lang["show_parents"] 		= "Näytä vanhemmat"; 
+$pgv_lang["show_parents"] 		= "Näytä vanhemmat";
 
 //-- TIMELINE FILE MESSAGES
 $pgv_lang["age"]			= "Ikä";
@@ -736,10 +736,10 @@ $pgv_lang["bef"]			= "ennen";
 $pgv_lang["bet"]			= "välillä";
 $pgv_lang["cal"]			= "laskettu";
 $pgv_lang["est"]			= "arviolta";
-$pgv_lang["from"]			= "lähtien"; // "täältä"; 
+$pgv_lang["from"]			= "lähtien"; // "täältä";
 
 $pgv_lang["int"]			= "tulkittu";
-$pgv_lang["to"]			= "saakka"; // "tänne"; 
+$pgv_lang["to"]			= "saakka"; // "tänne";
 
 $pgv_lang["cir"]			= "noin";
 $pgv_lang["apx"]			= "noin";
@@ -883,8 +883,8 @@ $pgv_lang["n_x_granddaughter_from_daughter"] = "tyttärentytär %2\$d. polvessa"
 // to allow fo language variations we specify different relationships for paternal and maternal
 // aunts and uncles
 // 1st generation
-$pgv_lang["sosa_uncle_2"] 			= "Setä"; 
-$pgv_lang["sosa_uncle_3"] 			= "Eno"; 
+$pgv_lang["sosa_uncle_2"] 			= "Setä";
+$pgv_lang["sosa_uncle_3"] 			= "Eno";
 // 2nd generation
 $pgv_lang["sosa_uncle_4"] 			= "isosetä";
 $pgv_lang["sosa_uncle_5"] 			= "isosetä";
@@ -1101,7 +1101,7 @@ $pgv_lang["welcome_text_auth_mode_1"] = "<center><b>Tervetuloa tähän sukututki
 $pgv_lang["welcome_text_auth_mode_2"] = "<center><b>Tervetuloa tähän sukututkimuksen verkkopalveluun.</b></center><br />Pääsy näille sivuille on sallittu vain niille käyttäjille, joille on annettu <b>käyttöoikeus</b>.<br /><br />Mikäli sinulla jo on käyttäjätili, voit kirjautua järjestelmään tällä sivulla. Mikäli sinulla ei ole käyttäjätiliä, voit pyytää sellaista klikkaamalla asianomaista linkkiä tällä sivulla.<br /><br />Varmistuttuaan antamistasi tiedoista ylläpitäjä joko hyväksyy tai hylkää pyyntösi. Tulet saamaan sähköpostiviestin kun pyyntösi on hyväksytty.";
 $pgv_lang["welcome_text_auth_mode_3"] = "<center><b>Tervetuloa tähän sukututkimuksen verkkopalveluun</b></center><br />Pääsy tänne on sallittu ainoastaan <u>sukulaisille</u>.<br /><br />Mikäli sinulla on käyttäjätili voit kirjautua sivustolle. Mikäli sinulla ei vielä ole käyttäjätiliä, voit pyytää sellaista klikkaamalla asianomaista linkkiä tällä sivulla.<br /><br />Tarkistettuaan tietosi sivun ylläpitäjä joko hyväksyy tai hylkää pyyntösi. Saat sähköpostiviestin kun pyyntösi on hyväksytty.";
 $pgv_lang["welcome_text_cust_head"]	= "<center><b>Tervetuloa tähän sukututkimuksen verkkopalveluun</b></center><br />Pääsy on sallittu käyttäjille, joilla on käyttäjätunnus ja salasana tähän verkkopalveluun.<br />";
-$pgv_lang["acceptable_use"]		= "<div class=\\\"largeError\\\">Huomautus:</div><div class=\\\"error\\\">Täyttämällä ja lähettämällä tämän lomakkeen sitoudut:<ul><li>suojaamaan sivustoillamme esiintyvien elävien henkilöiden yksityisyyden;</li><li>ja kertomaan alla olevassa tekstikentässä kenelle olet sukua tai toimittamaan meille tietoa henkilöstä, jonka tulisi olla sivustollamme.</li></ul></div>";
+$pgv_lang["acceptable_use"]		= "<div class=\"largeError\">Huomautus:</div><div class=\"error\">Täyttämällä ja lähettämällä tämän lomakkeen sitoudut:<ul><li>suojaamaan sivustoillamme esiintyvien elävien henkilöiden yksityisyyden;</li><li>ja kertomaan alla olevassa tekstikentässä kenelle olet sukua tai toimittamaan meille tietoa henkilöstä, jonka tulisi olla sivustollamme.</li></ul></div>";
 //-- mygedview page
 $pgv_lang["welcome"]			= "Tervetuloa";
 $pgv_lang["upcoming_events"]	= "Tulevat tapahtumat";
@@ -1192,7 +1192,7 @@ $pgv_lang["todo_block"] 		= "&quot;To Do&quot; tehtävät";
 $pgv_lang["todo_show_other"]     	= "Näytä muiden käyttäjien tehtävät";
 $pgv_lang["todo_show_unassigned"]	= "Näytä määrittämättömät tehtävät";
 $pgv_lang["todo_show_future"]    	= "Näytä tulevat tehtävät";
-$pgv_lang["todo_nothing"]        	= "Ei ole &quot;To Do&quot; tehtäviä."; 
+$pgv_lang["todo_nothing"]        	= "Ei ole &quot;To Do&quot; tehtäviä.";
 $pgv_lang["yahrzeit_block"]		= "Tulevat jortsaitit";
 $pgv_lang["yahrzeit_descr"]		= "Tulevat jortsaitit-alue näyttää lähitulevaisuudessa esiintyvät kuolinaikojen vuosipäivät. Voit muokata näytettävää ajanjaksoa ja ylläpitäjä voi muokata miten kauaksi tulevaisuuten alueella katsotaan.";
 $pgv_lang["logged_in_users_block"]	= "Sisäänkirjautuneet-alue";
@@ -1496,10 +1496,10 @@ $pgv_lang["witness"] 			= "Todistaja";
 
 //-- statistics utility
 $pgv_lang["statutci"]			= "Indeksiä ei voi luoda";
-$pgv_lang["statnnames"]         		= "nimien lukumäärä =";
-$pgv_lang["statnfam"]           		= "perheiden lukumäärä =";
-$pgv_lang["statnfemale"]        		= "naisten lukumäärä =";
-$pgv_lang["statnmale"]          		= "miesten lukumäärä =";
+$pgv_lang["statnnames"]         		= "nimien lukumäärä";
+$pgv_lang["statnfam"]           		= "perheiden lukumäärä";
+$pgv_lang["statnfemale"]        		= "naisten lukumäärä";
+$pgv_lang["statnmale"]          		= "miesten lukumäärä";
 $pgv_lang["statvars"]			= "Täytä kuvaajaa varten seuraavat muuttujat";
 $pgv_lang["statlxa"]			= "pitkin x-akselia";
 $pgv_lang["statlya"]			= "pitkin y-akselia";
@@ -1690,4 +1690,40 @@ $pgv_lang["button_SEX_U"] 		= "Näytä vain tuntematonta sukupuolta olevat henki
 $pgv_lang["button_TREE_L"] 		= "Näytä &laquo;lehti&raquo;parit tai henkilöt. Nämä ovat elossa olevia henkilöitä, joilla ei ole lapsia tietokannassa. ";
 $pgv_lang["button_TREE_R"] 	= "Näytä &laquo;juuri&raquo;parit tai henkilöt. Heitä voi myös kutsua &laquo;patriarkoiksi&raquo;. He ovat henkilöitä, joilla ei ole vanhempia tietokannassa.  ";
 $pgv_lang["sort_column"] 		= "Lajittele tämän sarakkeen mukaisesti.";
+$pgv_lang["asia_chart"]			= "Aasia";
+$pgv_lang["africa_chart"]		= "Afrikka";
+$pgv_lang["world_chart"]		= "Maailma";
+$pgv_lang["middle_east_chart"]	= "Lähi-itä";
+$pgv_lang["europe_chart"]		= "Eurooppa";
+$pgv_lang["area_chart"]			= "Maantieteellinen alue";
+$pgv_lang["s_america_chart"]	= "Etelä-Amerikka";
+$pgv_lang["stat_unknown"]			= "tuntematon";
+$pgv_lang["contains"]			= "Sisältää";
+$pgv_lang["htmlplus_block_ui"]		= "Laajennettu käyttöliittymä";
+$pgv_lang["total_unknown"]			= "tuntematon";
+$pgv_lang["first_letter_name"]		= "Valitse kirjain, joilla näytettävien perheiden nimi alkaa.";
+$pgv_lang["first_letter_iname"]		= "Valitse kirjain, jolla näytettävien henkilöiden sukunimi alkaa.";
+$pgv_lang["total_links"]			= "Linkkejä yhteensä";
+$pgv_lang["total_changes"]			= "Muutoksia yhteensä";
+$pgv_lang["stepparent"]				= "Ottoisä tai -äiti";
+$pgv_lang["males"]					= "Miespuoleisia";
+$pgv_lang["females"]				= "Naispuolisia";
+$pgv_lang["others"]					= "Muita";
+$pgv_lang["parent_age"] 			= "Vanhempien ikä";
+$pgv_lang["father_age"]				= "Isän ikä";
+$pgv_lang["mother_age"]				= "Äidin ikä";
+$pgv_lang["enter_person_generations"] = "Sukupolvien lukumäärä:";
+$pgv_lang["show_marnms"]			= "Sisällytä avionimet";
+$pgv_lang["skip_marnms"]			= "Älä sisällytä avionimiä";
+$pgv_lang["no_other_link_found"]	= "Muita linkkejä henkilköiden välillä ei löytynyt.";
+$pgv_lang["aft_marr"]			= "kuukausia avioliiton jälkeen";
+$pgv_lang["show_stats_charts"]		= "Näytä tilastokuvat";
+$pgv_lang["avg_age"]				= "Keskimääräinen ikä";
+$pgv_lang["employee"] = "Työntekijä";
+$pgv_lang["employer"] = "Työnantaja";
+$pgv_lang["owner"] = "Omistaja";
+$pgv_lang["slave"] = "Orja";
+$pgv_lang["less"]				= "vähemmän kuin";
+$pgv_lang["over"]				= "enemmän kuin";
+$pgv_lang["g_chart_nobody"]		= "Ei kukaan";
 ?>
