@@ -10,6 +10,7 @@
 
 
 Version 4.2.1
+ - Added: .wmv support to JWplayer module. (windmillway)
  - Fixed: [ 2116080 ] [3870] Favourites missing from Xenea (wooc)
  - Fixed: [ 2477810 ] Media Title Not Displaying on mediaviewer.php (canajun2eh)
  - Fixed: [ 2350355 ] PGV 4.1.6 "Printer-friendly version" (wooc)
