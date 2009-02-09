@@ -2,7 +2,7 @@
 /**
  * JWplayer module for phpGedView
  *
- * Display flv video media Items using JW Player in PGV
+ * Display wmv video media Items using JW Player in PGV
  *
  * phpGedView: Genealogy Viewer
  * Copyright (C) 2007 to 2009  PGV Development Team.  All rights reserved.
@@ -31,32 +31,37 @@
 <head>
 	<META HTTP-EQUIV="Expires" CONTENT="Tue, 01 Jan 1980 1:00:00 GMT">
 	<META HTTP-EQUIV="Pragma" CONTENT="no-cache">
-	<title>JW Player for Flash</title>
-	<script type="text/javascript" src="modules/JWplayer/swfobject.js"></script>
+	<title>JW Player for Windows Media Videos</title>
+	<script type="text/javascript" src="modules/JWplayer/silverlight.js"></script>
+	<script type="text/javascript" src="modules/JWplayer/wmvplayer.js"></script>
 </head>
 <body bgcolor="#000000">
 <center>
 
 <?php
 global $pgv_lang, $pid, $GEDCOM ;
-global $flvVideo, $SERVER_URL;
-$flvVideo=decrypt(safe_GET('flvVideo'));
-$preview="";
+global $wmvVideo, $SERVER_URL;
+$wmvVideo=decrypt(safe_GET('wmvVideo'));
 ?>
 
-	<div id="container"><a href="http://www.macromedia.com/go/getflashplayer">Get the Flash Player</a> to see this player.</div>
-	<script type="text/javascript">
-		var video 	= "<?php print $flvVideo; ?>";
-		var preview = "<?php print $preview; ?>";
-		var s1 = new SWFObject("modules/JWplayer/player.swf","ply","480","365","9","#000000");
-		s1.addParam("allowfullscreen","true");
-		s1.addParam("allowscriptaccess","always");
-		s1.addParam("stretching","fill");
-		s1.addParam("flashvars","file=" +video+ "&image=" +preview+ "&autostart=true" );
-		s1.write("container");
-  </script>
+<div id="myplayer">The player will be placed here</div>
+
+<script type="text/javascript">
+	var elm = document.getElementById("myplayer");
+	var src = 'modules/JWplayer/wmvplayer.xaml';
+	var cfg = {
+		file:'<?php echo $wmvVideo; ?>',
+		<?php if (eregi("\.mp3$", $wmvVideo)) { ?>
+			logo:'images/audio.png',
+		<?php } ?>
+		autostart:'true',
+		overstretch:'true',
+		width:'480',
+		height:'365'
+	};
+	var ply = new jeroenwijering.Player(elm,src,cfg);
+</script>
 
 </center>
 </body>
-
 </html>
