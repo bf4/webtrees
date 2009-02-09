@@ -1240,9 +1240,12 @@ class stats {
 		}
 		echo '<div id="google_charts" class="center">';
 		echo '<b>'.$chart_title.'</b><br /><br />';
-		echo '<div align="center"><img src="'.$chart_url.'" alt="'.$chart_title.'" title="'.$chart_title.'" class="gchart" />';
-		echo '<br /><table align="center" border="0" cellpadding="1" cellspacing="1"><tr><td bgcolor="84beff" width="12"></td><td>'.$pgv_lang["g_chart_high"].'&nbsp;&nbsp;</td><td bgcolor="c3dfff" width="12"></td><td>'.$pgv_lang["g_chart_low"].'&nbsp;&nbsp;</td><td bgcolor="ffffff" width="12"></td><td>'.$pgv_lang["g_chart_nobody"].'&nbsp;&nbsp;</td></tr></table>';
-		echo '</div></div>';
+		echo '<div align="center"><img src="'.$chart_url.'" alt="'.$chart_title.'" title="'.$chart_title.'" class="gchart" /><br />';
+		echo '<table align="center" border="0" cellpadding="1" cellspacing="1"><tr>';
+		echo '<td bgcolor="#84BEFF" width="12"></td><td>'.$pgv_lang["g_chart_high"].'&nbsp;&nbsp;</td>';
+		echo '<td bgcolor="#C3DFFF" width="12"></td><td>'.$pgv_lang["g_chart_low"].'&nbsp;&nbsp;</td>';
+		echo '<td bgcolor="#FFFFFF" width="12"></td><td>'.$pgv_lang["g_chart_nobody"].'&nbsp;&nbsp;</td>';
+		echo '</tr></table></div></div>';
 	}
 
 	function statsDeath($sex=false, $year1=-1, $year2=-1)
@@ -2485,6 +2488,7 @@ class stats {
 		$encoding = '';
 		foreach ($a as $value)
 		{
+			if ($value<0) $value = 0;
 			$first = floor($value / 64);
 			$second = $value % 64;
 			$encoding .= self::$_xencoding[$first].self::$_xencoding[$second];
