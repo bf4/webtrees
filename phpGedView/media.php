@@ -204,7 +204,6 @@ $filename=decrypt(safe_REQUEST($_REQUEST, 'filename'));
 $directory=safe_REQUEST($_REQUEST, 'directory', PGV_REGEX_NOSCRIPT, $MEDIA_DIRECTORY);
 $movetodir=safe_REQUEST($_REQUEST, 'movetodir');
 $movefile=safe_REQUEST($_REQUEST, 'movefile');
-$newdir=safe_REQUEST($_REQUEST, 'newdir');
 $action=safe_REQUEST($_REQUEST, 'action', PGV_REGEX_ALPHA, 'filter');
 $subclick=safe_REQUEST($_REQUEST, 'subclick', PGV_REGEX_ALPHA, 'none');
 $media=safe_REQUEST($_REQUEST, 'media');
@@ -299,111 +298,11 @@ function showchanges() {
 //-->
 </script>
 <script src="phpgedview.js" language="JavaScript" type="text/javascript"></script>
-<form name="managemedia" method="post" onsubmit="return checknames(this);" action="media.php">
-	<input type="hidden" name="directory" value="<?php print $directory; ?>" />
-	<input type="hidden" name="thumbdir" value="<?php print $thumbdir; ?>" />
-	<input type="hidden" name="level" value="<?php print $level; ?>" />
-	<input type="hidden" name="all" value="true" />
-	<input type="hidden" name="subclick" />
-	<table class="fact_table center width100 <?php print $TEXT_DIRECTION; ?>">
-	<tr><td class="topbottombar" colspan="6"><?php print_help_link("manage_media_help","qm","manage_media");print $pgv_lang["manage_media"]; ?></td></tr>
-	<!-- // NOTE: Filter options -->
-	<tr><td class="descriptionbox wrap width25"><?php print_help_link("simple_filter_help","qm","filter"); print $pgv_lang["filter"];?></td>
-	<td class="optionbox wrap"><input type="text" name="filter" value="<?php if($filter) print $filter;?>" /><br /><input type="submit" name="search" value="<?php print $pgv_lang["filter"];?>" onclick="this.form.subclick.value=this.name" />&nbsp;&nbsp;&nbsp;<input type="submit" name="all" value="<?php print $pgv_lang["display_all"]; ?>" onclick="this.form.subclick.value=this.name" /></td>
-
-	<!-- // NOTE: Upload media files -->
-	<td class="descriptionbox wrap width25"><?php print_help_link("upload_media_help","qm","upload_media"); print $pgv_lang["upload_media"]; ?></td>
-	<td class="optionbox wrap"><?php print "<a href=\"#\" onclick=\"expand_layer('uploadmedia');\">".$pgv_lang["upload_media"]."</a>"; ?></td></tr>
-
-	<!-- // NOTE: Show thumbnails -->
-	<tr><td class="descriptionbox wrap width25"><?php print_help_link("show_thumb_help","qm", "show_thumbnail"); ?><?php print $pgv_lang["show_thumbnail"]; ?></td>
-	<td class="optionbox wrap"><input type="checkbox" name="showthumb" value="true" <?php if ($showthumb) print "checked=\"checked\""; ?> onclick="submit();" /></td>
-
-	<!-- // NOTE: Add media -->
-	<td class="descriptionbox wrap width25"><?php print_help_link("add_media_help", "qm"); ?><?php print $pgv_lang["add_media_lbl"]; ?></td>
-	<td class="optionbox wrap"><a href="javascript: <?php echo $pgv_lang["add_media_lbl"]; ?>" onclick="window.open('addmedia.php?action=showmediaform&linktoid=new', '_blank', 'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1'); return false;"> <?php echo $pgv_lang["add_media"]; ?></a></td></tr>
-
-	<!-- // NOTE: empty -->
-	<tr><td class="descriptionbox wrap width25"></td>
-	<td class="optionbox wrap"></td>
-
-	<!-- // NOTE: Generate missing thumbnails -->
-	<?php
-		$tempURL = "media.php?";
-		if (!empty($filter)) $tempURL .= "filter={$filter}&";
-		if (!empty($subclick)) $tempURL .= "subclick={$subclick}&";
-		$tempURL .= "action=thumbnail&all=yes&level={$level}&directory={$directory}".$thumbget;
-		?>
-	<td class="descriptionbox wrap width25"><?php print_help_link("gen_missing_thumbs_help", "qm"); ?><?php print $pgv_lang["gen_missing_thumbs_lbl"]; ?></td>
-	<td class="optionbox wrap"><a href="<?php print encode_url($tempURL);?>"><?php print $pgv_lang["gen_missing_thumbs"];?></a></td></tr>
-	</table>
-</form>
 <?php
-
-// NOTE: Here is checked if the media structure is OK, if not , we cannot continue
 if (check_media_structure()) {
-/**
- * This action creates a new directory in the current directory
- *
- * Checks are made for relative filename exploits.
- * The index.php is created which points back to the medialist page
- * The same is done for the thumbnail directory to keep filesystem consistent
- *
- * Directory access checks are done during menu creation so the user
- * cannot create directories deeper than the configured level
- *
- * @name $action->newdir
- */
-	if ($action == "newdir") {
-		print "<table class=\"list_table $TEXT_DIRECTION width100\">";
-		print "<tr><td class=\"messagebox wrap\">";
-		// security checks, no names with . .. / \ in them
-		// add more if required
-		$clean = !empty($newdir);
-		$badchars = array(".","/","\\");
-		for ($i = 0; $i < sizeof($badchars); $i++) {
-			$pos = strpos($newdir,$badchars[$i]);
-			if (is_bool($pos)) continue;
-			$clean = false;
-			break;
-		}
-		if ($clean) {
-			$res = mkdir($directory.$newdir);
-			$res = mkdir($thumbdir.$newdir);
-			if (file_exists($directory."index.php")) {
-				$inddata = file_get_contents($directory."index.php");
-				$inddata = str_replace(": ../",": ../../",$inddata);
-				$fp = @fopen($directory.$newdir."/index.php","w+");
-				if (!$fp) print "<div class=\"error\">".$pgv_lang["security_no_create"].$directory.$newdir."</div>";
-				else {
-					fputs($fp,$inddata);
-					fclose($fp);
-				}
-			}
-			else print "<div class=\"error\">".$pgv_lang["security_not_exist"].$directory."</div>";
-
-			if (file_exists($thumbdir."index.php")) {
-				$inddata = file_get_contents($thumbdir."index.php");
-				$inddata = str_replace(": ../",": ../../",$inddata);
-				$fp = @fopen($thumbdir.$newdir."/index.php","w+");
-				if (!$fp) print "<div class=\"error\">".$pgv_lang["security_no_create"].$thumbdir.$newdir."</div>";
-				else {
-					fputs($fp,$inddata);
-					fclose($fp);
-				}
-			}
-			else print "<div class=\"error\">".$pgv_lang["security_not_exist"].$thumbdir."</div>";
-		}
-		else {
-			print "<div class=\"error\">".$pgv_lang["illegal_chars"]."</div>";
-		}
-
-		$action="filter";
-		print "</td></tr></table>";
-	}
-
 	if ($action == "deletedir") {
-		print "<table class=\"list_table center width100\">";
+		ob_start();		// Save output until action table has been printed
+		print "<table class=\"list_table width100\">";
 		print "<tr><td class=\"messagebox\">";
 		// Check if media directory and thumbs directory are empty
 		$clean = false;
@@ -420,8 +319,7 @@ if (check_media_structure()) {
 			while (false !== ($file = readdir($handle))) {
 				if (!in_array($file, $BADMEDIA)) $files[] = $file;
 			}
-		}
-		else {
+		} else {
 			print "<div class=\"error\">".$directory." ".$pgv_lang["directory_not_exist"]."</div>";
 			AddToLog($directory." ".$pgv_lang["directory_not_exist"]);
 		}
@@ -527,13 +425,13 @@ if (check_media_structure()) {
 		$action="filter";
 		print "</td></tr></table>";
 	}
-
 /**
  * This action generates a thumbnail for the file
  *
  * @name $action->thumbnail
  */
 	if ($action == "thumbnail") {
+		ob_start();		// Save output until action table has been printed
 		print "<table class=\"list_table $TEXT_DIRECTION width100\">";
 		print "<tr><td class=\"messagebox wrap\">";
 		// TODO: add option to generate thumbnails for all images on page
@@ -584,6 +482,7 @@ if (check_media_structure()) {
 
 	// Move single file and optionally its corresponding thumbnail to protected dir
 	if ($action == "moveprotected") {
+		ob_start();		// Save output until action table has been printed
 		print "<table class=\"list_table $TEXT_DIRECTION width100\">";
 		print "<tr><td class=\"messagebox wrap\">";
 		if (strpos($filename,"../") !== false) {
@@ -606,6 +505,7 @@ if (check_media_structure()) {
 
 	// Move single file and its corresponding thumbnail to standard dir
 	if ($action == "movestandard") {
+		ob_start();		// Save output until action table has been printed
 		print "<table class=\"list_table $TEXT_DIRECTION width100\">";
 		print "<tr><td class=\"messagebox wrap\">";
 		if (strpos($filename,"../") !== false) {
@@ -626,6 +526,7 @@ if (check_media_structure()) {
 
 	// Move entire dir and all subdirs to protected dir
 	if ($action == "movedirprotected") {
+		ob_start();		// Save output until action table has been printed
 		print "<table class=\"list_table $TEXT_DIRECTION width100\">";
 		print "<tr><td class=\"messagebox wrap\">";
 		print "<strong>".$pgv_lang["move_protected"]."<br />";
@@ -636,6 +537,7 @@ if (check_media_structure()) {
 
 	// Move entire dir and all subdirs to standard dir
 	if ($action == "movedirstandard") {
+		ob_start();		// Save output until action table has been printed
 		print "<table class=\"list_table $TEXT_DIRECTION width100\">";
 		print "<tr><td class=\"messagebox wrap\">";
 		print "<strong>".$pgv_lang["move_standard"]."<br />";
@@ -645,6 +547,7 @@ if (check_media_structure()) {
 	}
 
 	if ($action == "setpermsfix") {
+		ob_start();		// Save output until action table has been printed
 		print "<table class=\"list_table $TEXT_DIRECTION width100\">";
 		print "<tr><td class=\"messagebox wrap\">";
 		print "<strong>".$pgv_lang["setperms_fix"]."<br />";
@@ -656,6 +559,7 @@ if (check_media_structure()) {
 
 	// Upload media items
 	if ($action == "upload") {
+		ob_start();		// Save output until action table has been printed
 		process_uploadMedia_form();
 		$medialist = get_medialist();
 		$action = "filter";
@@ -692,6 +596,7 @@ if (check_media_structure()) {
 
 	// Delete file
 	if ($action == "deletefile") {
+		ob_start();		// Save output until action table has been printed
 		print "<table class=\"list_table $TEXT_DIRECTION width100\">";
 		print "<tr><td class=\"messagebox wrap\">";
 		$xrefs = array($xref);
@@ -884,6 +789,70 @@ if (check_media_structure()) {
 		print_menu($menu);
 	}
 
+	$savedOutput = @ob_get_clean();
+
+?>
+
+<form name="managemedia" method="post" onsubmit="return checknames(this);" action="media.php">
+	<input type="hidden" name="thumbdir" value="<?php print $thumbdir; ?>" />
+	<input type="hidden" name="level" value="<?php print $level; ?>" />
+	<input type="hidden" name="all" value="true" />
+	<input type="hidden" name="subclick" />
+	<table class="fact_table center width100 <?php print $TEXT_DIRECTION; ?>">
+	<tr><td class="topbottombar" colspan="6"><?php print_help_link("manage_media_help","qm","manage_media");print $pgv_lang["manage_media"]; ?></td></tr>
+	<!-- // NOTE: Filter options -->
+	<tr><td class="descriptionbox wrap width25"><?php print_help_link("simple_filter_help","qm","filter"); print $pgv_lang["filter"];?></td>
+	<td class="optionbox wrap">
+		<?php
+			// Directory pick list
+			if (empty($directory)) {
+				if (!empty($_SESSION['upload_folder'])) $directory = $_SESSION['upload_folder'];
+				else $directory = $MEDIA_DIRECTORY;
+			}
+			if ($MEDIA_DIRECTORY_LEVELS > 0) {
+				$folders = get_media_folders();
+				print "<span dir=\"ltr\"><select name=\"directory\">\n";
+				foreach($folders as $f) {
+					print "<option value=\"".$f."\"";
+					if ($directory==$f) print " selected=\"selected\"";
+					print ">{$f}</option>\n";
+				}
+				print "</select></span><br />";
+			} else print "<input name=\"directory\" type=\"hidden\" value=\"ALL\" />";
+		?>
+		<input type="text" name="filter" value="<?php if($filter) print $filter;?>" /><br /><input type="submit" name="search" value="<?php print $pgv_lang["filter"];?>" onclick="this.form.subclick.value=this.name" />&nbsp;&nbsp;&nbsp;<input type="submit" name="all" value="<?php print $pgv_lang["display_all"]; ?>" onclick="this.form.subclick.value=this.name" /></td>
+
+	<!-- // NOTE: Upload media files -->
+	<td class="descriptionbox wrap width25"><?php print_help_link("upload_media_help","qm","upload_media"); print $pgv_lang["upload_media"]; ?></td>
+	<td class="optionbox wrap"><?php print "<a href=\"#\" onclick=\"expand_layer('uploadmedia');\">".$pgv_lang["upload_media"]."</a>"; ?></td></tr>
+
+	<!-- // NOTE: Show thumbnails -->
+	<tr><td class="descriptionbox wrap width25"><?php print_help_link("show_thumb_help","qm", "show_thumbnail"); ?><?php print $pgv_lang["show_thumbnail"]; ?></td>
+	<td class="optionbox wrap"><input type="checkbox" name="showthumb" value="true" <?php if ($showthumb) print "checked=\"checked\""; ?> onclick="submit();" /></td>
+
+	<!-- // NOTE: Add media -->
+	<td class="descriptionbox wrap width25"><?php print_help_link("add_media_help", "qm"); ?><?php print $pgv_lang["add_media_lbl"]; ?></td>
+	<td class="optionbox wrap"><a href="javascript: <?php echo $pgv_lang["add_media_lbl"]; ?>" onclick="window.open('addmedia.php?action=showmediaform&linktoid=new', '_blank', 'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1'); return false;"> <?php echo $pgv_lang["add_media"]; ?></a></td></tr>
+
+	<!-- // NOTE: empty -->
+	<tr><td class="descriptionbox wrap width25"></td>
+	<td class="optionbox wrap"></td>
+
+	<!-- // NOTE: Generate missing thumbnails -->
+	<?php
+		$tempURL = "media.php?";
+		if (!empty($filter)) $tempURL .= "filter={$filter}&";
+		if (!empty($subclick)) $tempURL .= "subclick={$subclick}&";
+		$tempURL .= "action=thumbnail&all=yes&level={$level}&directory={$directory}".$thumbget;
+		?>
+	<td class="descriptionbox wrap width25"><?php print_help_link("gen_missing_thumbs_help", "qm"); ?><?php print $pgv_lang["gen_missing_thumbs_lbl"]; ?></td>
+	<td class="optionbox wrap"><a href="<?php print encode_url($tempURL);?>"><?php print $pgv_lang["gen_missing_thumbs"];?></a></td></tr>
+	</table>
+</form>
+<?php
+
+	if (!empty($savedOutput)) print $savedOutput;		// Print everything we have saved up
+
 	if ($action == "filter") {
 		if (empty($directory)) $directory = $MEDIA_DIRECTORY;
 		$medialist = get_medialist(true, $directory);
@@ -898,11 +867,10 @@ if (check_media_structure()) {
  * @name $action->filter
  */
 		// Show link to previous folder
-		if ($level>0) {
-			$levels = explode("/", $directory);
-			$pdir = "";
-			for($i=0; $i<count($levels)-2; $i++) $pdir.=$levels[$i]."/";
-
+		$levels = explode('/', $directory);
+		$pdir = '';
+		for($i=0; $i<count($levels)-2; $i++) $pdir.=$levels[$i].'/';
+		if ($pdir != '') {
 			$uplink = "<a href=\"".encode_url("media.php?directory={$pdir}&level=".($level-1).$thumbget)."\">";
 			if ($TEXT_DIRECTION=="rtl") $uplink .= getLRM();
 			$uplink .= $pdir;
@@ -910,13 +878,12 @@ if (check_media_structure()) {
 			$uplink .= "</a>\n";
 
 			$uplink2 = "<a href=\"".encode_url("media.php?directory={$pdir}&level=".($level-1).$thumbget)."\"><img class=\"icon\" src=\"".$PGV_IMAGE_DIR."/";
-			if ($TEXT_DIRECTION=="ltr") $uplink2 .= $PGV_IMAGES["larrow"]["other"];
-			else $uplink2 .= $PGV_IMAGES["rarrow"]["other"];
-			$uplink2 .= "\" alt=\"".PrintReady($pdir)."\" title=\"".PrintReady($pdir)."\" /></a>\n";
+			$uplink2 .= $PGV_IMAGES["larrow"]["other"];
+			$uplink2 .= "\" alt=\"\" /></a>\n";
 		}
 
 		// Start of media directory table
-		print "<table class=\"list_table width100 $TEXT_DIRECTION\">";
+		print "<table class=\"list_table width50 $TEXT_DIRECTION\">";
 
 		// Tell the user where he is
 		print "<tr>";
@@ -947,11 +914,11 @@ if (check_media_structure()) {
 		print "</tr>";
 
 		// display the directory list
-		if (count($dirs) || $level) {
+		if (count($dirs) || $pdir != '') {
 			sort($dirs);
-			if ($level){
+			if ($pdir != '') {
 				print "<tr>";
-					print "<td class=\"optionbox $TEXT_DIRECTION width10\">";
+					print "<td class=\"optionbox center width10\">";
 						print $uplink2;
 					print "</td>";
 					print "<td class=\"descriptionbox $TEXT_DIRECTION\">";
@@ -963,7 +930,7 @@ if (check_media_structure()) {
 			foreach ($dirs as $indexval => $dir) {
 				if ($dir{0}!=".") {
 				print "<tr>";
-					print "<td class=\"optionbox $TEXT_DIRECTION width10\">";
+					print "<td class=\"optionbox center width10\">";
 						// directory options
 						print "<form name=\"blah\" action=\"media.php\" method=\"post\">";
 						print "<input type=\"hidden\" name=\"directory\" value=\"".$directory.$dir."/\" />";
@@ -974,8 +941,8 @@ if (check_media_structure()) {
 						print "<input type=\"hidden\" name=\"showthumb\" value=\"{$showthumb}\" />";
 						print "<input type=\"image\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["remove"]["other"]."\" alt=\"".$pgv_lang['delete']."\" onclick=\"this.form.action.value='deletedir';return confirm('".$pgv_lang["confirm_folder_delete"]."');\" />";
 						if ($USE_MEDIA_FIREWALL) {
-							print "<input type=\"submit\" value=\"".$pgv_lang["move_standard"]."\" onclick=\"this.form.level.value=(this.form.level.value*1)+1;this.form.action.value='movedirstandard';\" />";
-							print "<input type=\"submit\" value=\"".$pgv_lang["move_protected"]."\" onclick=\"this.form.level.value=(this.form.level.value*1)+1;this.form.action.value='movedirprotected';\" />";
+							print "<br /><input type=\"submit\" value=\"".$pgv_lang["move_standard"]."\" onclick=\"this.form.level.value=(this.form.level.value*1)+1;this.form.action.value='movedirstandard';\" />";
+							print "<br /><input type=\"submit\" value=\"".$pgv_lang["move_protected"]."\" onclick=\"this.form.level.value=(this.form.level.value*1)+1;this.form.action.value='movedirprotected';\" />";
 						}
 
 						print "</form>";
@@ -990,21 +957,6 @@ if (check_media_structure()) {
 				print "</tr>";
 				}
 			}
-		}
-		// Form for ceating a new directory
-		// Checks admin user can write and is not trying to create deeper level dir
-		// than the configured number of levels
-		if (PGV_USER_IS_ADMIN && $fileaccess && ($level < $MEDIA_DIRECTORY_LEVELS)) {
-			print "<tr>";
-				print "<td class=\"list_value $TEXT_DIRECTION\" colspan=\"2\">";
-					print "<form action=\"media.php\" method=\"get\">";
-					print "<input type=\"hidden\" name=\"directory\" value=\"".$directory."\" />";
-					print "<input type=\"hidden\" name=\"level\" value=\"".$level."\" />";
-					print "<input type=\"hidden\" name=\"action\" value=\"newdir\" />";
-					print "<input type=\"submit\" value=\"".$pgv_lang["add"]."\" />";
-					print "<input type=\"text\" name=\"newdir\" size=\"100%\" /></form>";
-				print "</td>";
-			print "</tr>";
 		}
 		print "</table>";
 		print "<br />";
