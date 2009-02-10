@@ -668,6 +668,9 @@ function get_indilist_surns($surn, $salpha, $marnm, $fams, $ged_id) {
 		$list[$row['n_surn']][$row['n_surname']][$row['n_id']]=true;
 	}
 	$res->free();
+	if (!$DB_UTF8_COLLATION) {
+		uksort($list, 'stringsort');
+	}
 	return $list;
 }
 
@@ -726,6 +729,9 @@ function get_famlist_surns($surn, $salpha, $marnm, $ged_id) {
 		$list[$row['n_surn']][$row['n_surname']][$row['l_to']]=true;
 	}
 	$res->free();
+	if (!$DB_UTF8_COLLATION) {
+		uksort($list, 'stringsort');
+	}
 	return $list;
 }
 
