@@ -214,7 +214,6 @@ $pgv_lang["no_temple"]				= "Kein Tempel - Ordinanz zu Lebzeiten";
 $pgv_lang["no_upload"]				= "Multimedia Dateien können nicht hochgeladen werden, weil Multimedia Objekte deaktiviert sind oder weil für das Medien Verzeichnis keine Schreibrechte bestehen.";
 $pgv_lang["paste_id_into_field"]	= "Fügen Sie diese ID Nummer in das jeweilige Eingabefeld ein, um auf diesen neu erstandenen Datensatz zu verweisen: ";
 $pgv_lang["paste_rid_into_field"]	= "Fügen Sie die folgende ID ein, um auf dieses Archiv zu verweisen ";
-$pgv_lang["photo_replace"]			= "Möchten Sie ein älteres Foto durch dieses ersetzen?";
 $pgv_lang["privacy_not_granted"]	= "Sie haben keinen Zugriff auf";
 $pgv_lang["privacy_prevented_editing"] = "Die Datenschutz Einstellungen verhindern, dass Sie diesen Datensatz bearbeiten können.";
 $pgv_lang["record_marked_deleted"]	= "Dieser Datensatz wird gelöscht, nachdem der Verwalter es genehmigt hat.";

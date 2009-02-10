@@ -312,7 +312,6 @@ $pgv_lang["quick_update_instructions"]	= "Auf dieser Seite können Sie schnell d
 $pgv_lang["update_name"]				= "Namen bearbeiten";
 $pgv_lang["update_fact"]				= "Ereignis bearbeiten";
 $pgv_lang["update_fact_restricted"]		= "Die Bearbeitung dieses Ereignisses ist eingeschränkt:";
-$pgv_lang["update_photo"]				= "Foto aktualisieren";
 $pgv_lang["select_fact"]				= "Ein Ereignis wählen...";
 $pgv_lang["update_address"]				= "Adresse bearbeiten";
 $pgv_lang["top10_pageviews_descr"]		= "Dieser Block zeigt die 10 Datensätze an, die am häufigsten aufgerufen wurden. Sie müssen dazu in der GEDCOM Konfiguration die Zähler zunächst aktivieren.";

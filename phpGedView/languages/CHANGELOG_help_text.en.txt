@@ -47,6 +47,7 @@ VERSION 4.2.0
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 -----------------------------------------------------------------------------------------
+-$pgv_lang["quick_update_photo_help"]				10 Feb 2009				D
 *$pgv_lang["stat_help_gwx"]							15 Jan 2009		   		WF
 *$pgv_lang["stat_help_gax"]							15 Jan 2009		   		WF
 *$pgv_lang["stat_help_gbx"]							15 Jan 2009		   		WF

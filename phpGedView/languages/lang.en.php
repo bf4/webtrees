@@ -311,7 +311,6 @@ $pgv_lang["quick_update_instructions"] = "This page allows you to quickly update
 $pgv_lang["update_name"] = "Update Name";
 $pgv_lang["update_fact"] = "Update a Fact";
 $pgv_lang["update_fact_restricted"] = "Update of this fact is restricted:";
-$pgv_lang["update_photo"] = "Update Photo";
 $pgv_lang["select_fact"] = "Select a fact...";
 $pgv_lang["update_address"] = "Update Address";
 $pgv_lang["top10_pageviews_descr"]	= "This block will show the 10 records that have been viewed the most.  This block requires that Hit Counters be enabled in the GEDCOM configuration settings.";
