@@ -41,13 +41,10 @@ if ((isset($_POST["preserve_last_changed"])) && ($_POST["preserve_last_changed"]
 else
 	$update_CHAN = true;
 
-//-- @TODO make list a configurable list
 $addfacts = preg_split("/[,; ]/", $QUICK_ADD_FACTS);
 usort($addfacts, "factsort");
-
 $reqdfacts = preg_split("/[,; ]/", $QUICK_REQUIRED_FACTS);
 
-//-- @TODO make list a configurable list
 $famaddfacts = preg_split("/[,; ]/", $QUICK_ADD_FAMFACTS);
 usort($famaddfacts, "factsort");
 $famreqdfacts = preg_split("/[,; ]/", $QUICK_REQUIRED_FAMFACTS);
@@ -1775,39 +1772,6 @@ if (count($addfacts)>0) { ?>
 	<?php print_quick_resn("RESN"); ?>
 <?php }
 
-// NOTE: Add photo
-if ($MULTI_MEDIA && (is_writable($MEDIA_DIRECTORY))) { ?>
-<tr><td>&nbsp;</td></tr>
-<tr><td class="topbottombar" colspan="4"><b><?php print_help_link("quick_update_photo_help", "qm"); echo $pgv_lang["update_photo"]; ?></b></td></tr>
-<tr>
-	<td class="descriptionbox">
-		<?php echo $factarray["TITL"]; ?>
-	</td>
-	<td class="optionbox" colspan="3">
-		<input type="text" tabindex="<?php echo $tabkey; ?>" name="TITL" size="40" />
-	</td>
-	<?php $tabkey++; ?>
-</tr>
-<tr>
-	<td class="descriptionbox">
-		<?php echo $factarray["FILE"]; ?>
-	</td>
-	<td class="optionbox" colspan="3">
-		<input type="file" tabindex="<?php echo $tabkey; ?>" name="FILE" size="40" />
-	</td>
-	<?php $tabkey++; ?>
-</tr>
-<?php if (preg_match("/1 OBJE/", $gedrec)>0) { ?>
-<tr>
-	<td class="descriptionbox">&nbsp;</td>
-	<td class="optionbox" colspan="3">
-		<input type="checkbox" tabindex="<?php echo $tabkey; ?>" name="replace" value="yes" /> <?php echo $pgv_lang["photo_replace"]; ?>
-	</td>
-	<?php $tabkey++; ?>
-</tr>
-<?php } ?>
-<?php }
-
 // Address update
 if ($person && !$person->isDead() || !empty($ADDR) || !empty($PHON) || !empty($FAX) || !empty($EMAIL)) { //-- don't show address for dead people
 ?>
@@ -2068,7 +2032,7 @@ foreach($famfacts as $f=>$eventObj) {
 								$check = true;
 						?>
 						&nbsp;&nbsp;
-						<input type="checkbox" dir="ltr" tabindex="<?php echo $tabkey; ?>" size="5" name="F<?php echo $i; ?>MARRY" id="F<?php echo $i; ?>MARRY" 
+						<input type="checkbox" dir="ltr" tabindex="<?php echo $tabkey; ?>" size="5" name="F<?php echo $i; ?>MARRY" id="F<?php echo $i; ?>MARRY"
 						<?php
 						if ($check) {
 							echo 'checked="checked">';
@@ -2085,7 +2049,7 @@ foreach($famfacts as $f=>$eventObj) {
 								$check = true;
 						?>
 						&nbsp;&nbsp;
-						<input type="checkbox" dir="ltr" tabindex="<?php echo $tabkey; ?>" size="5" name="F<?php echo $i; ?>DIV" id="F<?php echo $i; ?>DIV" 
+						<input type="checkbox" dir="ltr" tabindex="<?php echo $tabkey; ?>" size="5" name="F<?php echo $i; ?>DIV" id="F<?php echo $i; ?>DIV"
 						<?php
 						if ($check) {
 							echo 'checked="checked">';
@@ -2927,7 +2891,7 @@ foreach($famfacts as $f=>$eventObj) {
 						$check = true;
 				?>
 				&nbsp;&nbsp;
-				<input type="checkbox" dir="ltr" tabindex="<?php echo $tabkey; ?>" size="5" name="F<?php echo $i; ?>MARRY" id="F<?php echo $i; ?>MARRY" 
+				<input type="checkbox" dir="ltr" tabindex="<?php echo $tabkey; ?>" size="5" name="F<?php echo $i; ?>MARRY" id="F<?php echo $i; ?>MARRY"
 				<?php
 				if ($check) {
 					echo 'checked="checked">';
@@ -2944,7 +2908,7 @@ foreach($famfacts as $f=>$eventObj) {
 						$check = true;
 				?>
 				&nbsp;&nbsp;
-				<input type="checkbox" dir="ltr" tabindex="<?php echo $tabkey; ?>" size="5" name="F<?php echo $i; ?>DIV" id="F<?php echo $i; ?>DIV" 
+				<input type="checkbox" dir="ltr" tabindex="<?php echo $tabkey; ?>" size="5" name="F<?php echo $i; ?>DIV" id="F<?php echo $i; ?>DIV"
 				<?php
 				if ($check) {
 					echo 'checked="checked">';

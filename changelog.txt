@@ -10,6 +10,7 @@
 
 
 Version 4.2.1
+ - Changed: Removed "Update Photo" option from Quick Update (canajun2eh)
  - Changed: Improved user interface in Manage Media (canajun2eh)
  - Fixed: [ 2580303 ] GoogleMap - Add place not working in FireFox (wooc)
  - Added: .wmv support to JWplayer module. (windmillway)

@@ -214,7 +214,6 @@ $pgv_lang["no_temple"]				= "No Temple - Living Ordinance";
 $pgv_lang["no_upload"]				= "Uploading media files is not allowed because multi-media items have been disabled or because the media directory is not writable.";
 $pgv_lang["paste_id_into_field"]	= "Paste the following ID into your editing fields to reference the newly created record ";
 $pgv_lang["paste_rid_into_field"]	= "Paste the following Repository ID into your editing fields to reference this Repository ";
-$pgv_lang["photo_replace"] = "Do you want to replace an older photo with this one?";
 $pgv_lang["privacy_not_granted"]	= "You have no access to";
 $pgv_lang["privacy_prevented_editing"]	= "Privacy settings prevent you from editing this record.";
 $pgv_lang["record_marked_deleted"]		= "This record has been marked for deletion upon admin approval.";
