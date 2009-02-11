@@ -147,7 +147,7 @@ function pgvMail($to, $from, $subject, $message) {
 		}
 		if ( $mailFormat == "html" || $mailFormat == "multipart" ) {
 			$mail_object->AddCustomHeader( 'Mime-Version: 1.0' );
-			$mail->IsHTML(true);
+			$mail_object->IsHTML(true);
 		}
 		$mail_object->Body = $message;
 		// attempt to send mail
