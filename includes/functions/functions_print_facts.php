@@ -1562,7 +1562,8 @@ function print_main_media_row($rtype, $rowm, $pid) {
 		$name = trim($rowm['m_titl']);
 
 		// Get info on how to handle this media file
-		$mediaInfo = mediaFileInfo($rowm['m_file'], $thumbnail, $rowm['m_media'], $name, $notes);
+		//$mediaInfo = mediaFileInfo($rowm['m_file'], $thumbnail, $rowm['m_media'], $name, $notes);
+		$mediaInfo = mediaFileInfo($mainMedia, $thumbnail, $rowm['m_media'], $name, $notes);
 
 		//-- Thumbnail field
 		echo '<a href="', $mediaInfo['url'], '">';
