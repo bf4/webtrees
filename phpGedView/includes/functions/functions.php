@@ -2472,7 +2472,7 @@ function get_relationship($pid1, $pid2, $followspouse=true, $maxlength=0, $ignor
 						$famrec = find_family_record($fam);
 					if ($followspouse) {
 						$parents = find_parents_in_record($famrec);
-						if ((!empty($parents["HUSB"]))&&(!isset($visited[$parents["HUSB"]]))) {
+						if ((!empty($parents["HUSB"]))&&(!in_arrayr($parents["HUSB"], $node1))) {
 							$node1 = $node;
 							$node1["length"]+=$spouseh;
 							$node1["path"][] = $parents["HUSB"];
@@ -2492,7 +2492,7 @@ function get_relationship($pid1, $pid2, $followspouse=true, $maxlength=0, $ignor
 								$NODE_CACHE["$pid1-".$node1["pid"]] = $node1;
 							}
 						}
-						if ((!empty($parents["WIFE"]))&&(!isset($visited[$parents["WIFE"]]))) {
+						if ((!empty($parents["WIFE"]))&&(!in_arrayr($parents["WIFE"], $node1))) {
 							$node1 = $node;
 							$node1["length"]+=$spouseh;
 							$node1["path"][] = $parents["WIFE"];
@@ -3105,6 +3105,21 @@ function pgv_array_merge($array1, $array2) {
 		$array1[$key] = $value;
 	}
 	return $array1;
+}
+
+/**
+ * checks if the value is in an array recursively
+ * @param string $needle
+ * @param array $haystack
+ */
+function in_arrayr($needle, $haystack) {
+	foreach ($haystack as $v) {
+		if ($needle == $v) return true;
+		else if (is_array($v)) {
+			if (in_arrayr($needle, $v) === true) return true;
+		}
+	}
+	return false;
 }
 
 /**
