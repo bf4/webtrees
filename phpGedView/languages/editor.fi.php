@@ -213,7 +213,6 @@ $pgv_lang["no_temple"]		= "Ei temppeliä - elävä";
 $pgv_lang["no_upload"]		= "Mediatiedostojen lähetys palvelimelle ei ole sallittu, koska multimediakohteet eivät ole sallittuja tai koska mediakansioon ei voi kirjoittaa.";
 $pgv_lang["paste_id_into_field"]	= "Liitä seuraava ID muokkauskenttiisi viitataksesi tähän uuteen lähteeseen.";
 $pgv_lang["paste_rid_into_field"]	= "Liitä seuraava tietovaraston ID muokattaviin kenttiisi viittaukseksi tähän tietovarastoon.";
-$pgv_lang["photo_replace"] 		= "Haluatko korvata vanhemman valokuvan tällä?";
 $pgv_lang["privacy_not_granted"]	= "Sinulla ei ole pääsyoikeutta";
 $pgv_lang["privacy_prevented_editing"]= "Yksityisyysasetukset estävät tämän tietueen muokkauksen.";
 $pgv_lang["record_marked_deleted"]	= "Tämä tietue on merkitty ylläpitäjän hyväksymisen jälkeen poistettavaksi.";
@@ -234,4 +233,9 @@ $pgv_lang["upload_media"]		= "Lähetä mediatiedostot palvelimelle";
 $pgv_lang["upload_media_help"]	= "~#pgv_lang[upload_media]#~<br /><br />Valitse palvelimelle lähetettävät tiedostot omalta tietokoneeltasi. Kaikki tiedostot siirtyvät kansioon <b>#MEDIA_DIRECTORY#</b> tai johonkin sen alikansioon.<br /><br />Määrittelemäsi kansionimet lisätään #MEDIA_DIRECTORY#:n perään. Esimerkiksi #MEDIA_DIRECTORY#myfamily. Mikäli pienoiskuvakansiota ei vielä ole olemassa, se luodaan automaattisesti.";
 $pgv_lang["upload_successful"]	= "Lähetys onnistui.";
 $pgv_lang["view_change_diff"]	= "Näytä muutokset";
+$pgv_lang["gen_missing_thumbs_lbl"]	= "Puuttuvat miniatyyrikuvia";
+$pgv_lang["gen_missing_thumbs_lbl"]	= "Puuttuvat pienoiskuvat";
+$pgv_lang["gen_missing_thumbs"]		= "Luo puuttuvat pienoiskuvat";
+$pgv_lang["add_opf_child"]				= "Lisää lapsi ja luo yhden vanhemman perhe";
+$pgv_lang["copy_error"]				= "Tiedostoa #GLOBALS [whichFile2]# ei voitu kopioida #GLOBALS [whichFile1]#sta";
 ?>
