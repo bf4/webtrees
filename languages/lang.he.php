@@ -312,7 +312,6 @@ $pgv_lang["quick_update_instructions"] = "הדף מאפשר עדכון מהיר 
 $pgv_lang["update_name"] 		= "עדכן שם";
 $pgv_lang["update_fact"] 		= "עדכן עובדה";
 $pgv_lang["update_fact_restricted"] 	= "עדכון של עובדה זו מוגבל:";
-$pgv_lang["update_photo"] 		= "עדכן תמונה";
 $pgv_lang["select_fact"] 		= "בחר עובדה...";
 $pgv_lang["update_address"] 		= "עדכן כתובת";
 $pgv_lang["top10_pageviews_descr"] = "אזור זה מציג את עשרת הרשומות הכי נצפות. מונה הפגיעות בהגדרת התצורה של ה-GEDCOM חייב לפעול כדי שהאזור יהיה פעיל.";

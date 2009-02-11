@@ -356,4 +356,27 @@ $pgv_lang["warn_file_delete"]		= "Tämä tiedosto sisältää tärkeätä tietoa
 $pgv_lang["deleted_files"]          	= "Poistetut tiedostot:";
 $pgv_lang["index_dir_cleanup_inst"]	= "Poistaaksesi tiedoston tai alikansion indeksi-kansiosta raahaa se roskakoriin tai valitse sen valintaruutu. Klikkaa Poista-painiketta poistaaksesi merkityt tiedostot lopullisesti.<br /><br />. Tiedostot, jotka on merkitty <img src=\"./images/RESN_confidential.gif\" /> ovat välttämättömiä ohjelman toiminnan kannalta eikä niitä voi poistaa.<br />Tiedostot, jotka on merkitty <img src=\"./images/RESN_locked.gif\" />, sisältävät tärkeitä asetuksia tai kesken olevia tietomuutoksia. Niitä ei tulisi poistaa, ellet varmasti tiedä mitä olet tekemässä.<br /><br />";
 $pgv_lang["index_dir_cleanup"]	= "Siivoa indeksi-kansio";
+$pgv_lang["upload_a_gedcom"] 		= "Lataa GEDCOM-tiedosto";
+$pgv_lang["start_entering"] 		= "Aloita tiedon syöttäminen";
+$pgv_lang["get_started_instructions"]	= "Valitse joku näistä vaihtoehdoista aloittaaksesi PhpGedView:n käytön.";
+$pgv_lang["admin_users_exists"]		= "Seuraavat ylläpitäjät ovat jo olemassa:";
+$pgv_lang["install_step_1"] = "Tarkista käyttöympäristö";
+$pgv_lang["install_step_2"] = "Tietokantayhteys";
+$pgv_lang["install_step_3"] = "Luo taulut";
+$pgv_lang["install_step_5"] = "Kielet";
+$pgv_lang["install_step_6"] = "Tallenna asetukset";
+$pgv_lang["install_step_7"] = "Luo ylläpitäjätili";
+$pgv_lang["install_wizard"] = "Asennusvelho";
+$pgv_lang["basic_site_config"] = "Perusasetukset";
+$pgv_lang["adv_site_config"] = "Lisäasetukset";
+$pgv_lang["config_not_saved"] = "*Asetuksesi eivät<br />tallennu ennen vaihetta 6 ";
+$pgv_lang["download_config"] = "Lataa config.php koneeseesi";
+$pgv_lang["site_unavailable"] = "Palvelua ei ole parhaillaan käytettävissä";
+$pgv_lang["db_tables_created"] = "Tietokantataulut on luotu.";
+$pgv_lang["config_saved"] = "Asetukset on tallennettu.";
+$pgv_lang["checking_errors"]		= "Tarkistetaan virheitä...";
+$pgv_lang["checking_php_version"]		= "Tarkistetaan tarvittava PHP-versio:";
+$pgv_lang["failed"]		= "Epäonnistui";
+$pgv_lang["pgv_requires_version"]		= "PhpGedView vaatii vähintään PHP-version ".PGV_REQUIRED_PHP_VERSION."";
+$pgv_lang["using_php_version"]		= "Käytät PHP-versiota ".PHP_VERSION;
 ?>
