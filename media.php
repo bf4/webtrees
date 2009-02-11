@@ -300,8 +300,21 @@ function showchanges() {
 <script src="phpgedview.js" language="JavaScript" type="text/javascript"></script>
 <?php
 if (check_media_structure()) {
+	print "<div id=\"uploadmedia\" style=\"display:none\">";
+	// Check if Media Directory is writeable or if Media features are enabled
+	// If one of these is not true then do not continue
+	if (!dir_is_writable($MEDIA_DIRECTORY) || !$MULTI_MEDIA) {
+		print "<span class=\"error\"><b>";
+		print $pgv_lang["no_upload"];
+		print "</b></span><br />";
+	} else {
+		show_mediaUpload_form('media.php', $showthumb);		// We have the green light to upload media, print the form
+	}
+	print "</div><br />";
+
+	ob_start();		// Save output until action table has been printed
+
 	if ($action == "deletedir") {
-		ob_start();		// Save output until action table has been printed
 		print "<table class=\"list_table width100\">";
 		print "<tr><td class=\"messagebox\">";
 		// Check if media directory and thumbs directory are empty
@@ -431,7 +444,6 @@ if (check_media_structure()) {
  * @name $action->thumbnail
  */
 	if ($action == "thumbnail") {
-		ob_start();		// Save output until action table has been printed
 		print "<table class=\"list_table $TEXT_DIRECTION width100\">";
 		print "<tr><td class=\"messagebox wrap\">";
 		// TODO: add option to generate thumbnails for all images on page
@@ -482,7 +494,6 @@ if (check_media_structure()) {
 
 	// Move single file and optionally its corresponding thumbnail to protected dir
 	if ($action == "moveprotected") {
-		ob_start();		// Save output until action table has been printed
 		print "<table class=\"list_table $TEXT_DIRECTION width100\">";
 		print "<tr><td class=\"messagebox wrap\">";
 		if (strpos($filename,"../") !== false) {
@@ -505,7 +516,6 @@ if (check_media_structure()) {
 
 	// Move single file and its corresponding thumbnail to standard dir
 	if ($action == "movestandard") {
-		ob_start();		// Save output until action table has been printed
 		print "<table class=\"list_table $TEXT_DIRECTION width100\">";
 		print "<tr><td class=\"messagebox wrap\">";
 		if (strpos($filename,"../") !== false) {
@@ -526,7 +536,6 @@ if (check_media_structure()) {
 
 	// Move entire dir and all subdirs to protected dir
 	if ($action == "movedirprotected") {
-		ob_start();		// Save output until action table has been printed
 		print "<table class=\"list_table $TEXT_DIRECTION width100\">";
 		print "<tr><td class=\"messagebox wrap\">";
 		print "<strong>".$pgv_lang["move_protected"]."<br />";
@@ -537,7 +546,6 @@ if (check_media_structure()) {
 
 	// Move entire dir and all subdirs to standard dir
 	if ($action == "movedirstandard") {
-		ob_start();		// Save output until action table has been printed
 		print "<table class=\"list_table $TEXT_DIRECTION width100\">";
 		print "<tr><td class=\"messagebox wrap\">";
 		print "<strong>".$pgv_lang["move_standard"]."<br />";
@@ -547,7 +555,6 @@ if (check_media_structure()) {
 	}
 
 	if ($action == "setpermsfix") {
-		ob_start();		// Save output until action table has been printed
 		print "<table class=\"list_table $TEXT_DIRECTION width100\">";
 		print "<tr><td class=\"messagebox wrap\">";
 		print "<strong>".$pgv_lang["setperms_fix"]."<br />";
@@ -559,24 +566,10 @@ if (check_media_structure()) {
 
 	// Upload media items
 	if ($action == "upload") {
-		ob_start();		// Save output until action table has been printed
 		process_uploadMedia_form();
 		$medialist = get_medialist();
 		$action = "filter";
 	}
-
-	print "<div id=\"uploadmedia\" style=\"display:none\">";
-	// Check if Media Directory is writeable or if Media features are enabled
-	// If one of these is not true then do not continue
-	if (!dir_is_writable($MEDIA_DIRECTORY) || !$MULTI_MEDIA) {
-		print "<span class=\"error\"><b>";
-		print $pgv_lang["no_upload"];
-		print "</b></span><br />";
-	} else {
-		show_mediaUpload_form('media.php', $showthumb);		// We have the green light to upload media, print the form
-	}
-
-	print "</div><br />";
 
 	$allowDelete = true;
 	$removeObject = true;
@@ -596,7 +589,6 @@ if (check_media_structure()) {
 
 	// Delete file
 	if ($action == "deletefile") {
-		ob_start();		// Save output until action table has been printed
 		print "<table class=\"list_table $TEXT_DIRECTION width100\">";
 		print "<tr><td class=\"messagebox wrap\">";
 		$xrefs = array($xref);
@@ -789,7 +781,7 @@ if (check_media_structure()) {
 		print_menu($menu);
 	}
 
-	$savedOutput = @ob_get_clean();
+	$savedOutput = ob_get_clean();
 
 ?>
 
