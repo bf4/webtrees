@@ -1,16 +1,16 @@
 "Level";"Country";"State";"County";"Place";"Longitude";"Latitude";"ZoomLevel";"Icon"
-2;NLD;Overijssel;Almelo;;E6.689;N52.348;11;places/NLD/flags/OV/Almelo.png
+2;NLD;Overijssel;Almelo;;E6.689;N52.348;11;places/NLD/flags/OV/Almelo.gif
 3;NLD;Overijssel;Almelo;Aadorp;E6.626;N52.378;12;
 3;NLD;Overijssel;Almelo;Almelo;E6.660;N52.353;12;
 3;NLD;Overijssel;Almelo;Bavinkel;E6.688;N52.341;12;
 3;NLD;Overijssel;Almelo;Bornerbroek;E6.656;N52.309;12;
 3;NLD;Overijssel;Almelo;Mariaparochie;E6.705;N52.379;12;
 3;NLD;Overijssel;Almelo;Tusveld;E6.689;N52.323;12;
-2;NLD;Overijssel;Borne;;E6.724;N52.312;12;places/NLD/flags/OV/Borne.png
+2;NLD;Overijssel;Borne;;E6.724;N52.312;12;places/NLD/flags/OV/Borne.gif
 3;NLD;Overijssel;Borne;Borne;E6.750;N52.300;12;
 3;NLD;Overijssel;Borne;Hertme;E6.761;N52.319;12;
 3;NLD;Overijssel;Borne;Zenderen;E6.724;N52.323;12;
-2;NLD;Overijssel;Dalfsen;;E6.294;N52.540;10;places/NLD/flags/OV/Dalfsen.png
+2;NLD;Overijssel;Dalfsen;;E6.294;N52.540;10;places/NLD/flags/OV/Dalfsen.gif
 3;NLD;Overijssel;Dalfsen;Ankum;E6.243;N52.521;13;
 3;NLD;Overijssel;Dalfsen;Beze;E6.222;N52.520;13;
 3;NLD;Overijssel;Dalfsen;Broekhuizen;E6.224;N52.517;12;
@@ -94,14 +94,14 @@
 3;NLD;Overijssel;Enschede;Glanerbrug;E6.968;N52.214;12;
 3;NLD;Overijssel;Enschede;Lonneker;E6.910;N52.249;12;
 3;NLD;Overijssel;Enschede;Usselo;E6.833;N52.200;12;
-2;NLD;Overijssel;Haaksbergen;;E6.733;N52.160;11;places/NLD/flags/OV/Haaksbergen.png
+2;NLD;Overijssel;Haaksbergen;;E6.733;N52.160;11;places/NLD/flags/OV/Haaksbergen.gif
 3;NLD;Overijssel;Haaksbergen;Brammelo;E6.683;N52.150;12;
 3;NLD;Overijssel;Haaksbergen;Buurse;E6.831;N52.146;12;
 3;NLD;Overijssel;Haaksbergen;Haaksbergen;E6.735;N52.160;12;
 3;NLD;Overijssel;Haaksbergen;Langelo;E6.708;N52.137;12;
 3;NLD;Overijssel;Haaksbergen;Sint Isodorushoeve;E6.701;N52.176;12;
 3;NLD;Overijssel;Haaksbergen;Stepelo;E6.733;N52.200;12;
-2;NLD;Overijssel;Hardenberg;;E6.669;N52.585;10;places/NLD/flags/OV/Hardenberg.jpg
+2;NLD;Overijssel;Hardenberg;;E6.669;N52.585;10;places/NLD/flags/OV/Hardenberg.gif
 3;NLD;Overijssel;Hardenberg;'t Bergje;E6.483;N52.617;13;
 3;NLD;Overijssel;Hardenberg;Ane;E6.649;N52.614;12;
 3;NLD;Overijssel;Hardenberg;Anerveen;E6.660;N52.632;12;
@@ -151,7 +151,7 @@
 3;NLD;Overijssel;Hardenberg;Sponturfwijk;E6.417;N52.600;13;
 3;NLD;Overijssel;Hardenberg;Strooiendorp;E6.433;N52.617;13;
 3;NLD;Overijssel;Hardenberg;Venebrugge;E6.669;N52.561;12;
-2;NLD;Overijssel;Hellendoorn;;E6.466;N52.404;11;places/NLD/flags/OV/Hellendoornvlag.PNG
+2;NLD;Overijssel;Hellendoorn;;E6.466;N52.404;11;places/NLD/flags/OV/Hellendoorn.gif
 3;NLD;Overijssel;Hellendoorn;Daarle;E6.538;N52.433;12;
 3;NLD;Overijssel;Hellendoorn;Daarlerveen;E6.578;N52.441;12;
 3;NLD;Overijssel;Hellendoorn;Eelen en Rhaan;E6.452;N52.423;13;
@@ -163,7 +163,7 @@
 3;NLD;Overijssel;Hellendoorn;Marle;E6.483;N52.421;12;
 3;NLD;Overijssel;Hellendoorn;Nijverdal;E6.463;N52.361;12;
 3;NLD;Overijssel;Hellendoorn;Schuilenburg;E6.466;N52.408;12;
-2;NLD;Overijssel;Hengelo;;E6.792;N52.256;11;places/NLD/flags/NH/Hengelo.png
+2;NLD;Overijssel;Hengelo;;E6.792;N52.256;11;places/NLD/flags/OV/Hengelo.gif
 3;NLD;Overijssel;Hengelo;Beckum;E6.741;N52.211;12;
 3;NLD;Overijssel;Hengelo;Hasselo;E6.823;N52.287;12;
 3;NLD;Overijssel;Hengelo;Hengelo;E6.792;N52.263;12;
@@ -190,7 +190,7 @@
 3;NLD;Overijssel;Hof van Twente;Stokkum;E6.510;N52.215;12;
 3;NLD;Overijssel;Hof van Twente;Wiene;E6.646;N52.236;12;
 3;NLD;Overijssel;Hof van Twente;Zeldam;E6.622;N52.254;12;
-2;NLD;Overijssel;Kampen;;E6.010;N52.550;11;places/NLD/flags/OV/Kampen.png
+2;NLD;Overijssel;Kampen;;E6.010;N52.550;11;places/NLD/flags/OV/Kampen.gif
 3;NLD;Overijssel;Kampen;'s-Heerenbroek;E6.017;N52.533;12;
 3;NLD;Overijssel;Kampen;Brunnepe;E5.907;N52.565;13;
 3;NLD;Overijssel;Kampen;De Zande;E5.960;N52.514;12;
@@ -210,9 +210,9 @@
 3;NLD;Overijssel;Losser;Glane;E7.000;N52.233;12;
 3;NLD;Overijssel;Losser;Losser;E7.004;N52.259;12;
 3;NLD;Overijssel;Losser;Overdinkel;E7.033;N52.233;12;
-2;NLD;Overijssel;Oldenzaal;;E6.929;N52.310;12;places/NLD/flags/OV/Oldenzaal.png
+2;NLD;Overijssel;Oldenzaal;;E6.929;N52.310;12;places/NLD/flags/OV/Oldenzaal.gif
 3;NLD;Overijssel;Oldenzaal;Oldenzaal;E6.929;N52.312;12;
-2;NLD;Overijssel;Olst-Wijhe;;E6.150;N52.376;11;places/NLD/flags/OV/Olst-Wijhe.jpg
+2;NLD;Overijssel;Olst-Wijhe;;E6.150;N52.376;11;places/NLD/flags/OV/Olst-Wijhe.gif
 3;NLD;Overijssel;Olst-Wijhe;Boerhaar;E6.149;N52.375;12;
 3;NLD;Overijssel;Olst-Wijhe;Boskamp;E6.127;N52.331;12;
 3;NLD;Overijssel;Olst-Wijhe;Den Nul;E6.109;N52.357;12;
@@ -232,7 +232,7 @@
 3;NLD;Overijssel;Olst-Wijhe;Wesepe;E6.214;N52.330;12;
 3;NLD;Overijssel;Olst-Wijhe;Wijhe;E6.133;N52.383;12;
 3;NLD;Overijssel;Olst-Wijhe;Wijnvoorden;E6.150;N52.400;13;
-2;NLD;Overijssel;Ommen;;E6.435;N52.530;10;places/NLD/flags/OV/Ommen.png
+2;NLD;Overijssel;Ommen;;E6.435;N52.530;10;places/NLD/flags/OV/Ommen.gif
 3;NLD;Overijssel;Ommen;Archem;E6.434;N52.473;12;
 3;NLD;Overijssel;Ommen;Arriën;E6.448;N52.527;12;
 3;NLD;Overijssel;Ommen;Arriërveld;E6.433;N52.562;12;
@@ -256,7 +256,7 @@
 3;NLD;Overijssel;Ommen;Vinkenbuurt;E6.352;N52.577;12;
 3;NLD;Overijssel;Ommen;Witharen;E6.395;N52.559;12;
 3;NLD;Overijssel;Ommen;Zeesse;E6.435;N52.512;13;
-2;NLD;Overijssel;Raalte;;;N52.383;10;places/NLD/flags/OV/Raalte.png
+2;NLD;Overijssel;Raalte;;;N52.383;10;places/NLD/flags/OV/Raalte.gif
 3;NLD;Overijssel;Raalte;Beumershoek;E6.267;N52.345;13;
 3;NLD;Overijssel;Raalte;Boxbelterhoek;E6.247;N52.330;13;
 3;NLD;Overijssel;Raalte;Broekland;E6.199;N52.361;12;
@@ -282,7 +282,7 @@
 3;NLD;Overijssel;Rijssen-Holten;Look;E6.442;N52.281;12;
 3;NLD;Overijssel;Rijssen-Holten;Neerdorp;E6.388;N52.286;12;
 3;NLD;Overijssel;Rijssen-Holten;Rijssen;E6.517;N52.307;12;
-2;NLD;Overijssel;Staphorst;;E6.215;N52.637;10;places/NLD/flags/OV/Staphorst.png
+2;NLD;Overijssel;Staphorst;;E6.215;N52.637;10;places/NLD/flags/OV/Staphorst.gif
 3;NLD;Overijssel;Staphorst;De Leijen;;;12;
 3;NLD;Overijssel;Staphorst;Den Hulst;E6.300;N52.600;13;
 3;NLD;Overijssel;Staphorst;Halfweg;E6.260;N52.665;12;
@@ -348,7 +348,7 @@
 3;NLD;Overijssel;Steenwijkerland;Willemsoord;E6.063;N52.825;12;
 3;NLD;Overijssel;Steenwijkerland;Witte Paarden;E6.077;N52.808;12;
 3;NLD;Overijssel;Steenwijkerland;Zuidveen;E6.110;N52.777;13;
-2;NLD;Overijssel;Tubbergen;;E6.833;N52.424;11;places/NLD/flags/OV/Tubbergen.png
+2;NLD;Overijssel;Tubbergen;;E6.833;N52.424;11;places/NLD/flags/OV/Tubbergen.gif
 3;NLD;Overijssel;Tubbergen;Albergen;E6.759;N52.370;12;
 3;NLD;Overijssel;Tubbergen;Fleringen;E6.805;N52.380;12;
 3;NLD;Overijssel;Tubbergen;Geesteren;E6.737;N52.421;12;
@@ -382,7 +382,7 @@
 3;NLD;Overijssel;Wierden;Rectum;E6.573;N52.328;12;
 3;NLD;Overijssel;Wierden;Wierden;E6.596;N52.360;12;
 3;NLD;Overijssel;Wierden;Zuna;E6.509;N52.329;12;
-2;NLD;Overijssel;Zwartewaterland;;E6.072;N52.617;11;places/NLD/flags/OV/Zwartewaterland.png
+2;NLD;Overijssel;Zwartewaterland;;E6.072;N52.617;11;places/NLD/flags/OV/Zwartewaterland.gif
 3;NLD;Overijssel;Zwartewaterland;Baarlo;E6.105;N52.663;12;
 3;NLD;Overijssel;Zwartewaterland;Cellemuiden;E6.058;N52.626;12;
 3;NLD;Overijssel;Zwartewaterland;De Velde;E6.088;N52.622;12;

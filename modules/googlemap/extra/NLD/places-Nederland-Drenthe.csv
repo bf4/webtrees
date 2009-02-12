@@ -1,5 +1,5 @@
 "Level";"Country";"State";"County";"Place";"Longitude";"Latitude";"ZoomLevel";"Icon"
-2;NLD;Drenthe;Aa en Hunze;;E6.666;N53.01;9;places/NLD/flags/DR/AaenHunze.gif
+2;NLD;Drenthe;Aa en Hunze;;E6.666;N53.01;9;places/NLD/flags/DR/Aa_en_Hunze.gif
 3;NLD;Drenthe;Aa en Hunze;Achter 't Hout;;;12;
 3;NLD;Drenthe;Aa en Hunze;Amen;E6.61;N52.94;12;
 3;NLD;Drenthe;Aa en Hunze;Anderen;E6.68;N53.00;12;
@@ -53,7 +53,7 @@
 3;NLD;Drenthe;Aa en Hunze;Torenveen;E6.833;N53.000;12;
 3;NLD;Drenthe;Aa en Hunze;Veenhof;E6.817;N53.000;12;
 3;NLD;Drenthe;Aa en Hunze;Vredenheim;E6.666;N52.949;12;
-2;NLD;Drenthe;Assen;;E6.52;N53.00;11;places/NLD/flags/DR/Assen.jpg
+2;NLD;Drenthe;Assen;;E6.52;N53.00;11;places/NLD/flags/DR/Assen.gif
 3;NLD;Drenthe;Assen;Anreep;E6.584;N52.976;13;
 3;NLD;Drenthe;Assen;Assen;E6.55;N53.00;12;
 3;NLD;Drenthe;Assen;De Haar;E6.53;N52.97;12;
@@ -147,7 +147,7 @@
 3;NLD;Drenthe;Coevorden;Wezuperbrug;E6.72;N52.84;12;
 3;NLD;Drenthe;Coevorden;Zweeloo;E6.72;N52.79;12;
 3;NLD;Drenthe;Coevorden;Zwinderen;E6.675;N52.727;12;
-2;NLD;Drenthe;De Wolden;;E6.428;N52.71;10;
+2;NLD;Drenthe;De Wolden;;E6.428;N52.71;10;places/NLD/flags/DR/De_Wolden.gif
 3;NLD;Drenthe;De Wolden;Alteveer;E6.488;N52.676;12;
 3;NLD;Drenthe;De Wolden;Anholt;E6.418;N52.781;12;
 3;NLD;Drenthe;De Wolden;Ansen;E6.334;N52.783;13;
@@ -249,7 +249,7 @@
 3;NLD;Drenthe;Emmen;Zandpol;E6.865;N52.696;12;
 3;NLD;Drenthe;Emmen;Zuidbarge;E6.904;N52.748;12;
 3;NLD;Drenthe;Emmen;Zwartemeer;E7.040;N52.721;12;
-2;NLD;Drenthe;Hoogeveen;;E6.500;N52.73;11;places/NLD/flags/DR/Hoogeveen.jpg
+2;NLD;Drenthe;Hoogeveen;;E6.500;N52.73;11;places/NLD/flags/DR/Hoogeveen.gif
 3;NLD;Drenthe;Hoogeveen;Achterom;E6.517;N52.733;12;
 3;NLD;Drenthe;Hoogeveen;Elim;E6.583;N52.683;12;
 3;NLD;Drenthe;Hoogeveen;Fluitenberg;E6.454;N52.735;12;
