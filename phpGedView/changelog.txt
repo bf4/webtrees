@@ -10,7 +10,8 @@
 
 
 Version 4.2.1
- - Fixed [ 2567389 ] "Media Viewer using full GEDCOM Media URL"; Also "source.php error with Lightbox"; (windmillway)
+ - Fixed: [ 2534707 ] [4897] MARR source not added when date is missing.
+ - Fixed: [ 2567389 ] "Media Viewer using full GEDCOM Media URL"; Also "source.php error with Lightbox"; (windmillway)
  - Changed: Removed "Update Photo" option from Quick Update (canajun2eh)
  - Changed: Improved user interface in Manage Media (canajun2eh)
  - Fixed: [ 2580303 ] GoogleMap - Add place not working in FireFox (wooc)
