@@ -1,5 +1,5 @@
 "Level";"Country";"State";"County";"Place";"Longitude";"Latitude";"ZoomLevel";"Icon"
-2;NLD;Noord-Brabant;'s-Hertogenbosch;;E5.367;N51.719;12;places/NLD/flags/NB/s-Hertogenbosch.jpg
+2;NLD;Noord-Brabant;'s-Hertogenbosch;;E5.367;N51.719;12;places/NLD/flags/NB/'s-Hertogenbosch.gif
 3;NLD;Noord-Brabant;'s-Hertogenbosch;'s-Hertogenbosch;E5.303;N51.693;12;
 3;NLD;Noord-Brabant;'s-Hertogenbosch;Bokhoven;E5.231;N51.737;13;
 3;NLD;Noord-Brabant;'s-Hertogenbosch;Coudewater;E5.366;N51.702;13;
@@ -12,7 +12,7 @@
 3;NLD;Noord-Brabant;'s-Hertogenbosch;Meerwijk;E5.333;N51.733;13;
 3;NLD;Noord-Brabant;'s-Hertogenbosch;Orthen;E5.305;N51.704;12;
 3;NLD;Noord-Brabant;'s-Hertogenbosch;Rosmalen;E5.367;N51.717;12;
-2;NLD;Noord-Brabant;Aalburg;;E5.128;N51.760;12;places/NLD/flags/NB/Aalburg.png
+2;NLD;Noord-Brabant;Aalburg;;E5.128;N51.760;12;places/NLD/flags/NB/Aalburg.gif
 3;NLD;Noord-Brabant;Aalburg;Aalburg;E5.133;N51.751;13;
 3;NLD;Noord-Brabant;Aalburg;Babyloniënbroek;E5.019;N51.744;13;
 3;NLD;Noord-Brabant;Aalburg;Biesheuvel;E5.052;N51.761;13;
@@ -22,7 +22,7 @@
 3;NLD;Noord-Brabant;Aalburg;Meeuwen;E5.013;N51.728;13;
 3;NLD;Noord-Brabant;Aalburg;Veen;E5.110;N51.779;12;
 3;NLD;Noord-Brabant;Aalburg;Wijk en Aalburg;E5.128;N51.756;12;
-2;NLD;Noord-Brabant;Alphen-Chaam;;E4.869;N51.516;11;places/NLD/flags/NB/Alphen-Chaam.png
+2;NLD;Noord-Brabant;Alphen-Chaam;;E4.869;N51.516;11;places/NLD/flags/NB/Alphen-Chaam.gif
 3;NLD;Noord-Brabant;Alphen-Chaam;'t Zand;;;12;
 3;NLD;Noord-Brabant;Alphen-Chaam;Alphen;E4.960;N51.482;12;
 3;NLD;Noord-Brabant;Alphen-Chaam;Alphen en Riel;;;12;
@@ -56,11 +56,11 @@
 3;NLD;Noord-Brabant;Alphen-Chaam;Strijbeek;E4.800;N51.500;12;
 3;NLD;Noord-Brabant;Alphen-Chaam;Terover;E4.967;N51.467;13;
 3;NLD;Noord-Brabant;Alphen-Chaam;Venweg;;;12;
-2;NLD;Noord-Brabant;Asten;;E5.746;N51.406;12;places/NLD/flags/NB/Asten.png
+2;NLD;Noord-Brabant;Asten;;E5.746;N51.406;12;places/NLD/flags/NB/Asten.gif
 3;NLD;Noord-Brabant;Asten;Asten;E5.746;N51.402;12;
 3;NLD;Noord-Brabant;Asten;Heusden;E5.764;N51.383;12;
 3;NLD;Noord-Brabant;Asten;Ommel;E5.746;N51.423;13;
-2;NLD;Noord-Brabant;Baarle-Nassau;;E4.856;N51.438;11;places/NLD/flags/NB/Baarle-Nassau.png
+2;NLD;Noord-Brabant;Baarle-Nassau;;E4.856;N51.438;11;places/NLD/flags/NB/Baarle-Nassau.gif
 3;NLD;Noord-Brabant;Baarle-Nassau;Baarle-Nassau;E4.929;N51.446;13;
 3;NLD;Noord-Brabant;Baarle-Nassau;Castelre;E4.779;N51.425;13;
 3;NLD;Noord-Brabant;Baarle-Nassau;Ulicoten;E4.856;N51.457;12;
@@ -79,7 +79,7 @@
 3;NLD;Noord-Brabant;Bergeijk;Walik;E5.370;N51.359;13;
 3;NLD;Noord-Brabant;Bergeijk;Weebosch;E5.297;N51.307;13;
 3;NLD;Noord-Brabant;Bergeijk;Westerhoven;E5.400;N51.333;12;
-2;NLD;Noord-Brabant;Bergen op Zoom;;E4.287;N51.517;11;places/NLD/flags/NB/Bergen_op_Zoom.png
+2;NLD;Noord-Brabant;Bergen op Zoom;;E4.287;N51.517;11;places/NLD/flags/NB/Bergen_op_Zoom.gif
 3;NLD;Noord-Brabant;Bergen op Zoom;Bergen op Zoom;E4.288;N51.494;12;
 3;NLD;Noord-Brabant;Bergen op Zoom;Borgvliet;;;12;
 3;NLD;Noord-Brabant;Bergen op Zoom;Halsteren;E4.270;N51.527;12;
@@ -88,7 +88,7 @@
 3;NLD;Noord-Brabant;Bergen op Zoom;Klutsdorp;E4.295;N51.551;13;
 3;NLD;Noord-Brabant;Bergen op Zoom;Lepelstraat;E4.276;N51.548;13;
 3;NLD;Noord-Brabant;Bergen op Zoom;Vrederust;;;12;
-2;NLD;Noord-Brabant;Bernheze;;E5.567;N51.689;11;places/NLD/flags/NB/Bernheze.png
+2;NLD;Noord-Brabant;Bernheze;;E5.567;N51.689;11;places/NLD/flags/NB/Bernheze.gif
 3;NLD;Noord-Brabant;Bernheze;Dinther;E5.484;N51.647;12;
 3;NLD;Noord-Brabant;Bernheze;Heesch;E5.529;N51.733;12;
 3;NLD;Noord-Brabant;Bernheze;Heeswijk;E5.471;N51.651;13;
@@ -101,13 +101,13 @@
 3;NLD;Noord-Brabant;Best;Aarle;E5.367;N51.517;13;
 3;NLD;Noord-Brabant;Best;Best;E5.394;N51.509;12;
 3;NLD;Noord-Brabant;Best;Vleut;E5.417;N51.533;13;
-2;NLD;Noord-Brabant;Bladel;;E5.206;N51.387;12;places/NLD/flags/NB/Bladel.png
+2;NLD;Noord-Brabant;Bladel;;E5.206;N51.387;12;places/NLD/flags/NB/Bladel.gif
 3;NLD;Noord-Brabant;Bladel;Bladel;E5.217;N51.367;12;
 3;NLD;Noord-Brabant;Bladel;Casteren;E5.238;N51.396;12;
 3;NLD;Noord-Brabant;Bladel;Hapert;E5.250;N51.367;12;
 3;NLD;Noord-Brabant;Bladel;Hoogeloon;E5.268;N51.397;12;
 3;NLD;Noord-Brabant;Bladel;Netersel;E5.206;N51.403;12;
-2;NLD;Noord-Brabant;Boekel;;E5.740;N51.609;12;places/NLD/flags/NB/Boekel.png
+2;NLD;Noord-Brabant;Boekel;;E5.740;N51.609;12;places/NLD/flags/NB/Boekel.gif
 3;NLD;Noord-Brabant;Boekel;Boekel;E5.673;N51.601;12;
 3;NLD;Noord-Brabant;Boekel;Venhorst;E5.740;N51.608;12;
 2;NLD;Noord-Brabant;Boxmeer;;E5.971;N51.623;11;places/NLD/flags/NB/Boxmeer.gif
@@ -129,7 +129,7 @@
 3;NLD;Noord-Brabant;Boxtel;Gemonde;E5.358;N51.619;12;
 3;NLD;Noord-Brabant;Boxtel;Lennisheuvel;E5.314;N51.571;13;
 3;NLD;Noord-Brabant;Boxtel;Liempde;E5.373;N51.567;12;
-2;NLD;Noord-Brabant;Breda;;E4.800;N51.577;11;places/NLD/flags/NB/Breda.png
+2;NLD;Noord-Brabant;Breda;;E4.800;N51.577;11;places/NLD/flags/NB/Breda.gif
 3;NLD;Noord-Brabant;Breda;Bavel;E4.830;N51.564;12;
 3;NLD;Noord-Brabant;Breda;Bolberg;E4.850;N51.567;13;
 3;NLD;Noord-Brabant;Breda;Breda;E4.774;N51.585;12;
@@ -155,7 +155,7 @@
 3;NLD;Noord-Brabant;Breda;Tervoort;E4.833;N51.583;13;
 3;NLD;Noord-Brabant;Breda;Teteringen;E4.818;N51.611;12;
 3;NLD;Noord-Brabant;Breda;Ulvenhout;E4.800;N51.550;12;
-2;NLD;Noord-Brabant;Cranendonck;;E5.567;N51.274;11;places/NLD/flags/NB/Cranendonck.jpg
+2;NLD;Noord-Brabant;Cranendonck;;E5.567;N51.274;11;places/NLD/flags/NB/Cranendonck.gif
 3;NLD;Noord-Brabant;Cranendonck;Berg;E5.550;N51.283;13;
 3;NLD;Noord-Brabant;Cranendonck;Bosch;E5.600;N51.267;13;
 3;NLD;Noord-Brabant;Cranendonck;Broekkant;E5.600;N51.283;12;
@@ -174,7 +174,7 @@
 3;NLD;Noord-Brabant;Cranendonck;Schoordijk;E5.583;N51.283;13;
 3;NLD;Noord-Brabant;Cranendonck;Soerendonk;E5.575;N51.302;13;
 3;NLD;Noord-Brabant;Cranendonck;Toom;E5.567;N51.267;13;
-2;NLD;Noord-Brabant;Cuijk;;E5.858;N51.717;11;places/NLD/flags/NB/Cuijk.png
+2;NLD;Noord-Brabant;Cuijk;;E5.858;N51.717;11;places/NLD/flags/NB/Cuijk.gif
 3;NLD;Noord-Brabant;Cuijk;Beers;E5.826;N51.726;13;
 3;NLD;Noord-Brabant;Cuijk;Cuijk;E5.874;N51.730;12;
 3;NLD;Noord-Brabant;Cuijk;Gassel;E5.781;N51.741;13;
@@ -183,7 +183,7 @@
 3;NLD;Noord-Brabant;Cuijk;Linden;E5.853;N51.749;12;
 3;NLD;Noord-Brabant;Cuijk;Sint Agatha;E5.915;N51.714;13;
 3;NLD;Noord-Brabant;Cuijk;Vianen;E5.858;N51.718;13;
-2;NLD;Noord-Brabant;Deurne;;E5.816;N51.423;11;places/NLD/flags/NB/Deurne.png
+2;NLD;Noord-Brabant;Deurne;;E5.816;N51.423;11;places/NLD/flags/NB/Deurne.gif
 3;NLD;Noord-Brabant;Deurne;Deurne;E5.795;N51.463;12;
 3;NLD;Noord-Brabant;Deurne;Helenaveen;E5.921;N51.387;12;
 3;NLD;Noord-Brabant;Deurne;Liessel;E5.824;N51.414;12;
@@ -191,12 +191,12 @@
 3;NLD;Noord-Brabant;Deurne;Schans;E5.883;N51.367;12;
 3;NLD;Noord-Brabant;Deurne;Vlierden;E5.758;N51.445;12;
 3;NLD;Noord-Brabant;Deurne;Zeilberg;E5.816;N51.454;13;
-2;NLD;Noord-Brabant;Dongen;;E4.947;N51.647;12;places/NLD/flags/NB/Dongen.png
+2;NLD;Noord-Brabant;Dongen;;E4.947;N51.647;12;places/NLD/flags/NB/Dongen.gif
 3;NLD;Noord-Brabant;Dongen;'s Gravenmoer;E4.942;N51.658;12;
 3;NLD;Noord-Brabant;Dongen;Dongen;E4.947;N51.625;12;
 3;NLD;Noord-Brabant;Dongen;Klein-Dongen;E4.967;N51.633;13;
 3;NLD;Noord-Brabant;Dongen;Vaart;;;12;
-2;NLD;Noord-Brabant;Drimmelen;;E4.747;N51.689;11;places/NLD/flags/NB/Drimmelen.png
+2;NLD;Noord-Brabant;Drimmelen;;E4.747;N51.689;11;places/NLD/flags/NB/Drimmelen.gif
 3;NLD;Noord-Brabant;Drimmelen;Binnen-Moerdijk;E4.668;N51.713;13;
 3;NLD;Noord-Brabant;Drimmelen;Blauwe Sluis;E4.717;N51.700;13;
 3;NLD;Noord-Brabant;Drimmelen;Drimmelen;E4.806;N51.708;13;
@@ -231,20 +231,20 @@
 3;NLD;Noord-Brabant;Eersel;Vessem;E5.288;N51.420;13;
 3;NLD;Noord-Brabant;Eersel;Wintelre;E5.340;N51.443;12;
 3;NLD;Noord-Brabant;Eersel;Wolfshoek;E5.367;N51.400;13;
-2;NLD;Noord-Brabant;Eindhoven;;E5.476;N51.453;12;places/NLD/flags/NB/Eindhoven.png
+2;NLD;Noord-Brabant;Eindhoven;;E5.476;N51.453;12;places/NLD/flags/NB/Eindhoven.gif
 3;NLD;Noord-Brabant;Eindhoven;Acht;E5.430;N51.478;12;
 3;NLD;Noord-Brabant;Eindhoven;Eindhoven;E5.476;N51.439;11;
-2;NLD;Noord-Brabant;Etten-Leur;;E4.634;N51.566;12;places/NLD/flags/NB/Etten-Leur.png
+2;NLD;Noord-Brabant;Etten-Leur;;E4.634;N51.566;12;places/NLD/flags/NB/Etten-Leur.gif
 3;NLD;Noord-Brabant;Etten-Leur;Etten-Leur;E4.634;N51.567;12;
-2;NLD;Noord-Brabant;Geertruidenberg;;E4.876;N51.704;12;places/NLD/flags/NB/Geertruidenberg.png
+2;NLD;Noord-Brabant;Geertruidenberg;;E4.876;N51.704;12;places/NLD/flags/NB/Geertruidenberg.gif
 3;NLD;Noord-Brabant;Geertruidenberg;Geertruidenberg;E4.853;N51.700;12;
 3;NLD;Noord-Brabant;Geertruidenberg;Keizersveer;E4.899;N51.713;13;
 3;NLD;Noord-Brabant;Geertruidenberg;Raamsdonk;E4.910;N51.687;12;
 3;NLD;Noord-Brabant;Geertruidenberg;Raamsdonksveer;E4.876;N51.692;12;
-2;NLD;Noord-Brabant;Geldrop-Mierlo;;E5.622;N51.433;12;places/NLD/flags/NB/Geldrop-Mierlo.png
+2;NLD;Noord-Brabant;Geldrop-Mierlo;;E5.622;N51.433;12;places/NLD/flags/NB/Geldrop-Mierlo.gif
 3;NLD;Noord-Brabant;Geldrop-Mierlo;Geldrop;E5.555;N51.420;12;
 3;NLD;Noord-Brabant;Geldrop-Mierlo;Mierlo;E5.622;N51.444;12;
-2;NLD;Noord-Brabant;Gemert-Bakel;;E5.750;N51.537;11;places/NLD/flags/NB/Gemert-Bakel.png
+2;NLD;Noord-Brabant;Gemert-Bakel;;E5.750;N51.537;11;places/NLD/flags/NB/Gemert-Bakel.gif
 3;NLD;Noord-Brabant;Gemert-Bakel;Bakel;E5.741;N51.502;12;
 3;NLD;Noord-Brabant;Gemert-Bakel;Bakelsebrug;E5.717;N51.500;13;
 3;NLD;Noord-Brabant;Gemert-Bakel;Bankert;E5.800;N51.500;13;
@@ -291,21 +291,21 @@
 3;NLD;Noord-Brabant;Gemert-Bakel;Wolfsbosch;E5.717;N51.567;13;
 3;NLD;Noord-Brabant;Gemert-Bakel;Zaarvlaas;E5.733;N51.517;13;
 3;NLD;Noord-Brabant;Gemert-Bakel;Zand;E5.750;N51.517;13;
-2;NLD;Noord-Brabant;Gilze en Rijen;;E4.918;N51.570;12;places/NLD/flags/NB/Gilze-en-Rijen.png
+2;NLD;Noord-Brabant;Gilze en Rijen;;E4.918;N51.570;12;places/NLD/flags/NB/Gilze_en_Rijen.gif
 3;NLD;Noord-Brabant;Gilze en Rijen;Gilze;E4.943;N51.544;12;
 3;NLD;Noord-Brabant;Gilze en Rijen;Hulten;E4.954;N51.571;13;
 3;NLD;Noord-Brabant;Gilze en Rijen;Molenschot;E4.883;N51.572;12;
 3;NLD;Noord-Brabant;Gilze en Rijen;Rijen;E4.918;N51.588;12;
-2;NLD;Noord-Brabant;Goirle;;E5.024;N51.519;12;places/NLD/flags/NB/Goirle.png
+2;NLD;Noord-Brabant;Goirle;;E5.024;N51.519;12;places/NLD/flags/NB/Goirle.gif
 3;NLD;Noord-Brabant;Goirle;Breehees;E5.083;N51.500;12;
 3;NLD;Noord-Brabant;Goirle;Goirle;E5.067;N51.522;12;
 3;NLD;Noord-Brabant;Goirle;Riel;E5.024;N51.526;13;
-2;NLD;Noord-Brabant;Grave;;E5.717;N51.758;12;places/NLD/flags/NB/Grave.png
+2;NLD;Noord-Brabant;Grave;;E5.717;N51.758;12;places/NLD/flags/NB/Grave.gif
 3;NLD;Noord-Brabant;Grave;Escharen;E5.746;N51.742;12;
 3;NLD;Noord-Brabant;Grave;Gassel;E5.781;N51.740;13;
 3;NLD;Noord-Brabant;Grave;Grave;E5.735;N51.757;12;
 3;NLD;Noord-Brabant;Grave;Velp;E5.717;N51.767;13;
-2;NLD;Noord-Brabant;Haaren;;E5.217;N51.619;12;places/NLD/flags/NB/HaarenNB.gif
+2;NLD;Noord-Brabant;Haaren;;E5.217;N51.619;12;places/NLD/flags/NB/Haaren.gif
 3;NLD;Noord-Brabant;Haaren;'t Eind;;;12;
 3;NLD;Noord-Brabant;Haaren;Belvert;E5.250;N51.600;13;
 3;NLD;Noord-Brabant;Haaren;Biezenmortel;E5.179;N51.624;13;
@@ -321,14 +321,14 @@
 3;NLD;Noord-Brabant;Haaren;Molenstraat;E5.233;N51.617;13;
 3;NLD;Noord-Brabant;Haaren;Noenes;E5.250;N51.617;13;
 3;NLD;Noord-Brabant;Haaren;Raam;E5.217;N51.617;13;
-2;NLD;Noord-Brabant;Halderberge;;E4.437;N51.587;11;places/NLD/flags/NB/Halderberge.png
+2;NLD;Noord-Brabant;Halderberge;;E4.437;N51.587;11;places/NLD/flags/NB/Halderberge.gif
 3;NLD;Noord-Brabant;Halderberge;Bosschenhoofd;E4.541;N51.560;12;
 3;NLD;Noord-Brabant;Halderberge;Hoeven;E4.582;N51.578;12;
 3;NLD;Noord-Brabant;Halderberge;Nieuw Gastel;E4.450;N51.600;13;
 3;NLD;Noord-Brabant;Halderberge;Oud Gastel;E4.461;N51.588;12;
 3;NLD;Noord-Brabant;Halderberge;Oudenbosch;E4.525;N51.589;12;
 3;NLD;Noord-Brabant;Halderberge;Stampersgat;E4.437;N51.614;12;
-2;NLD;Noord-Brabant;Heeze-Leende;;E5.567;N51.358;12;places/NLD/flags/NB/Heeze-Leende.png
+2;NLD;Noord-Brabant;Heeze-Leende;;E5.567;N51.358;12;places/NLD/flags/NB/Heeze-Leende.gif
 3;NLD;Noord-Brabant;Heeze-Leende;Boschhoven;;;12;
 3;NLD;Noord-Brabant;Heeze-Leende;Bruggerhuizen;E5.483;N51.333;13;
 3;NLD;Noord-Brabant;Heeze-Leende;Heeze;E5.571;N51.381;12;
@@ -338,12 +338,12 @@
 3;NLD;Noord-Brabant;Heeze-Leende;Sterksel;E5.617;N51.350;12;
 3;NLD;Noord-Brabant;Heeze-Leende;Valkenhorst;E5.500;N51.350;13;
 3;NLD;Noord-Brabant;Heeze-Leende;Zevenhuizen;E5.567;N51.333;13;
-2;NLD;Noord-Brabant;Helmond;;E5.617;N51.474;12;places/NLD/flags/NB/Helmond.png
+2;NLD;Noord-Brabant;Helmond;;E5.617;N51.474;12;places/NLD/flags/NB/Helmond.gif
 3;NLD;Noord-Brabant;Helmond;Brouwhuis;E5.703;N51.459;12;
 3;NLD;Noord-Brabant;Helmond;Helmond;E5.660;N51.481;12;
 3;NLD;Noord-Brabant;Helmond;Mierlo-Hout;E5.633;N51.467;12;
 3;NLD;Noord-Brabant;Helmond;Stiphout;E5.617;N51.483;12;
-2;NLD;Noord-Brabant;Heusden;;E5.217;N51.704;11;places/NLD/flags/NB/Heusden.png
+2;NLD;Noord-Brabant;Heusden;;E5.217;N51.704;11;places/NLD/flags/NB/Heusden.gif
 3;NLD;Noord-Brabant;Heusden;De Hoeven;E5.183;N51.717;13;
 3;NLD;Noord-Brabant;Heusden;Doeveren;E5.089;N51.720;12;
 3;NLD;Noord-Brabant;Heusden;Drunen;E5.131;N51.683;12;
@@ -360,7 +360,7 @@
 3;NLD;Noord-Brabant;Heusden;Oud-Heusden;E5.137;N51.723;12;
 3;NLD;Noord-Brabant;Heusden;Oudheusden;;;12;
 3;NLD;Noord-Brabant;Heusden;Vlijmen;E5.217;N51.694;12;
-2;NLD;Noord-Brabant;Hilvarenbeek;;E5.167;N51.475;11;places/NLD/flags/NB/Hilvarenbeek.png
+2;NLD;Noord-Brabant;Hilvarenbeek;;E5.167;N51.475;11;places/NLD/flags/NB/Hilvarenbeek.gif
 3;NLD;Noord-Brabant;Hilvarenbeek;Baarschot;E5.183;N51.458;13;
 3;NLD;Noord-Brabant;Hilvarenbeek;Beerten;E5.150;N51.483;13;
 3;NLD;Noord-Brabant;Hilvarenbeek;Biest;E5.155;N51.508;13;
@@ -383,7 +383,7 @@
 3;NLD;Noord-Brabant;Hilvarenbeek;Rovert;E5.083;N51.467;13;
 3;NLD;Noord-Brabant;Hilvarenbeek;Slibbroek;E5.136;N51.495;13;
 3;NLD;Noord-Brabant;Hilvarenbeek;Westerwijk;E5.167;N51.467;13;
-2;NLD;Noord-Brabant;Laarbeek;;E5.626;N51.513;12;places/NLD/flags/NB/Laarbeek.png
+2;NLD;Noord-Brabant;Laarbeek;;E5.626;N51.513;12;places/NLD/flags/NB/Laarbeek.gif
 3;NLD;Noord-Brabant;Laarbeek;'t Hof;;;12;
 3;NLD;Noord-Brabant;Laarbeek;Aarle-Rixtel;E5.638;N51.510;12;
 3;NLD;Noord-Brabant;Laarbeek;Achterbosch;E5.567;N51.517;12;
@@ -407,11 +407,11 @@
 3;NLD;Noord-Brabant;Laarbeek;Scheepstal;E5.683;N51.500;13;
 3;NLD;Noord-Brabant;Laarbeek;Strijp;E5.633;N51.500;12;
 3;NLD;Noord-Brabant;Laarbeek;Wolfsputten;;;12;
-2;NLD;Noord-Brabant;Landerd;;E5.675;N51.724;12;places/NLD/flags/NB/Landerd.png
+2;NLD;Noord-Brabant;Landerd;;E5.675;N51.724;12;places/NLD/flags/NB/Landerd.gif
 3;NLD;Noord-Brabant;Landerd;Reek;E5.682;N51.745;12;
 3;NLD;Noord-Brabant;Landerd;Schaijk;E5.632;N51.745;12;
 3;NLD;Noord-Brabant;Landerd;Zeeland;E5.675;N51.696;12;
-2;NLD;Noord-Brabant;Lith;;E5.488;N51.798;11;places/NLD/flags/NB/Lith.png
+2;NLD;Noord-Brabant;Lith;;E5.488;N51.798;11;places/NLD/flags/NB/Lith.gif
 3;NLD;Noord-Brabant;Lith;Het Wild;E5.365;N51.764;12;
 3;NLD;Noord-Brabant;Lith;Kessel;E5.404;N51.804;13;
 3;NLD;Noord-Brabant;Lith;Lith;E5.440;N51.805;12;
@@ -419,11 +419,11 @@
 3;NLD;Noord-Brabant;Lith;Maren-Kessel;E5.395;N51.796;12;
 3;NLD;Noord-Brabant;Lith;Oijen;E5.504;N51.823;12;
 3;NLD;Noord-Brabant;Lith;Teeffelen;E5.488;N51.798;12;
-2;NLD;Noord-Brabant;Loon op Zand;;E5.041;N51.640;12;places/NLD/flags/NB/Loon_op_zand.png
+2;NLD;Noord-Brabant;Loon op Zand;;E5.041;N51.640;12;places/NLD/flags/NB/Loon_op_Aand.gif
 3;NLD;Noord-Brabant;Loon op Zand;De Moer;E5.007;N51.622;12;
 3;NLD;Noord-Brabant;Loon op Zand;Kaatsheuvel;E5.037;N51.657;12;
 3;NLD;Noord-Brabant;Loon op Zand;Loon op Zand;E5.079;N51.626;12;
-2;NLD;Noord-Brabant;Maasdonk;;E5.460;N51.721;12;places/NLD/flags/NB/Maadonk.png
+2;NLD;Noord-Brabant;Maasdonk;;E5.460;N51.721;12;places/NLD/flags/NB/Maasdonk.gif
 3;NLD;Noord-Brabant;Maasdonk;Geffen;E5.464;N51.740;12;
 3;NLD;Noord-Brabant;Maasdonk;Heeseind;;;12;
 3;NLD;Noord-Brabant;Maasdonk;Heiduinen;;;12;
@@ -433,12 +433,12 @@
 3;NLD;Noord-Brabant;Maasdonk;Papendijk;E5.467;N51.733;13;
 3;NLD;Noord-Brabant;Maasdonk;Runrot;;;12;
 3;NLD;Noord-Brabant;Maasdonk;Vinkel;E5.461;N51.704;12;
-2;NLD;Noord-Brabant;Mill en Sint Hubert;;E5.773;N51.680;12;places/NLD/flags/NB/Mill-en-Sint-Hubert.png
+2;NLD;Noord-Brabant;Mill en Sint Hubert;;E5.773;N51.680;12;places/NLD/flags/NB/Mill_en_Sint_Hubert.gif
 3;NLD;Noord-Brabant;Mill en Sint Hubert;Langenboom;E5.733;N51.700;12;
 3;NLD;Noord-Brabant;Mill en Sint Hubert;Mill;E5.783;N51.683;12;
 3;NLD;Noord-Brabant;Mill en Sint Hubert;Sint Hubert;E5.807;N51.678;12;
 3;NLD;Noord-Brabant;Mill en Sint Hubert;Wilbertoord;E5.777;N51.654;12;
-2;NLD;Noord-Brabant;Moerdijk;;E4.587;N51.663;11;places/NLD/flags/NB/Moerdijk.png
+2;NLD;Noord-Brabant;Moerdijk;;E4.587;N51.663;11;places/NLD/flags/NB/Moerdijk.gif
 3;NLD;Noord-Brabant;Moerdijk;Achterdijk;E4.617;N51.650;13;
 3;NLD;Noord-Brabant;Moerdijk;Binnen-Moerdijk;E4.670;N51.714;13;
 3;NLD;Noord-Brabant;Moerdijk;Blauwe Sluis;E4.717;N51.700;13;
@@ -467,22 +467,22 @@
 3;NLD;Noord-Brabant;Moerdijk;Zevenbergen;E4.599;N51.645;12;
 3;NLD;Noord-Brabant;Moerdijk;Zevenbergschen Hoek;E4.679;N51.672;12;
 3;NLD;Noord-Brabant;Moerdijk;Zwingelspaan;E4.495;N51.659;12;
-2;NLD;Noord-Brabant;Nuenen Gerwen en Nederwetten;;E5.541;N51.474;12;places/NLD/flags/NB/Nuenen.png
+2;NLD;Noord-Brabant;Nuenen Gerwen en Nederwetten;;E5.541;N51.474;12;places/NLD/flags/NB/Nuenen_Gerwen_en_Nederwetten.gif
 3;NLD;Noord-Brabant;Nuenen Gerwen en Nederwetten;Eeneind;E5.550;N51.450;12;
 3;NLD;Noord-Brabant;Nuenen Gerwen en Nederwetten;Gerwen;E5.567;N51.483;11;
 3;NLD;Noord-Brabant;Nuenen Gerwen en Nederwetten;Nederwetten;E5.524;N51.492;12;
 3;NLD;Noord-Brabant;Nuenen Gerwen en Nederwetten;Nuenen;E5.547;N51.472;12;
-2;NLD;Noord-Brabant;Oirschot;;E5.265;N51.496;12;places/NLD/flags/NB/Oirschot.png
+2;NLD;Noord-Brabant;Oirschot;;E5.265;N51.496;12;places/NLD/flags/NB/Oirschot.gif
 3;NLD;Noord-Brabant;Oirschot;Middelbeers;E5.250;N51.467;12;
 3;NLD;Noord-Brabant;Oirschot;Oirschot;E5.311;N51.506;12;
 3;NLD;Noord-Brabant;Oirschot;Oostelbeers;E5.268;N51.472;12;
 3;NLD;Noord-Brabant;Oirschot;Spoordonk;E5.267;N51.517;12;
 3;NLD;Noord-Brabant;Oirschot;Westelbeers;E5.213;N51.441;12;
-2;NLD;Noord-Brabant;Oisterwijk;;E5.182;N51.561;12;places/NLD/flags/NB/Oisterwijk.png
+2;NLD;Noord-Brabant;Oisterwijk;;E5.182;N51.561;12;places/NLD/flags/NB/Oisterwijk.gif
 3;NLD;Noord-Brabant;Oisterwijk;Heukelom;E5.169;N51.576;12;
 3;NLD;Noord-Brabant;Oisterwijk;Moergestel;E5.181;N51.544;13;
 3;NLD;Noord-Brabant;Oisterwijk;Oisterwijk;E5.197;N51.577;12;
-2;NLD;Noord-Brabant;Oosterhout;;E4.850;N51.633;11;places/NLD/flags/NB/Oosterhout.png
+2;NLD;Noord-Brabant;Oosterhout;;E4.850;N51.633;11;places/NLD/flags/NB/Oosterhout.gif
 3;NLD;Noord-Brabant;Oosterhout;Baarschot;E4.833;N51.583;13;
 3;NLD;Noord-Brabant;Oosterhout;Den Hout;E4.813;N51.657;12;
 3;NLD;Noord-Brabant;Oosterhout;Dorst;E4.861;N51.590;12;
@@ -499,7 +499,7 @@
 3;NLD;Noord-Brabant;Oosterhout;Ter Aalst;E4.817;N51.633;13;
 3;NLD;Noord-Brabant;Oosterhout;Vijfhuizen;E4.883;N51.650;13;
 3;NLD;Noord-Brabant;Oosterhout;Vrachelen;E4.833;N51.650;13;
-2;NLD;Noord-Brabant;Oss;;E5.611;N51.795;12;places/NLD/flags/NB/Oss.png
+2;NLD;Noord-Brabant;Oss;;E5.611;N51.795;12;places/NLD/flags/NB/Oss.gif
 3;NLD;Noord-Brabant;Oss;Berghem;E5.574;N51.769;12;
 3;NLD;Noord-Brabant;Oss;Demen;E5.630;N51.815;12;
 3;NLD;Noord-Brabant;Oss;Dennenburg;E5.619;N51.804;13;
@@ -516,12 +516,12 @@
 3;NLD;Noord-Brabant;Oss;Oss;E5.533;N51.767;12;
 3;NLD;Noord-Brabant;Oss;Overlangel;E5.674;N51.775;12;
 3;NLD;Noord-Brabant;Oss;Ravenstein;E5.647;N51.793;12;
-2;NLD;Noord-Brabant;Reusel-De Mierden;;E5.158;N51.394;11;places/NLD/flags/NB/Reusel-De-Mierden.png
+2;NLD;Noord-Brabant;Reusel-De Mierden;;E5.158;N51.394;11;places/NLD/flags/NB/Reusel-De_Mierden.gif
 3;NLD;Noord-Brabant;Reusel-De Mierden;Hooge Mierde;E5.133;N51.386;12;
 3;NLD;Noord-Brabant;Reusel-De Mierden;Hulsel;E5.177;N51.388;13;
 3;NLD;Noord-Brabant;Reusel-De Mierden;Lage Mierde;E5.150;N51.405;12;
 3;NLD;Noord-Brabant;Reusel-De Mierden;Reusel;E5.163;N51.362;12;
-2;NLD;Noord-Brabant;Roosendaal;;E4.432;N51.534;11;places/NLD/flags/NB/Roosendaal.png
+2;NLD;Noord-Brabant;Roosendaal;;E4.432;N51.534;11;places/NLD/flags/NB/Roosendaal.gif
 3;NLD;Noord-Brabant;Roosendaal;Boeiink;E4.417;N51.533;13;
 3;NLD;Noord-Brabant;Roosendaal;Borteldonk;E4.467;N51.500;13;
 3;NLD;Noord-Brabant;Roosendaal;Brembosch;E4.433;N51.500;13;
@@ -542,17 +542,17 @@
 3;NLD;Noord-Brabant;Roosendaal;Vroenhout;E4.417;N51.550;13;
 3;NLD;Noord-Brabant;Roosendaal;Wouw;E4.388;N51.520;12;
 3;NLD;Noord-Brabant;Roosendaal;Wouwse Plantage;E4.383;N51.483;12;
-2;NLD;Noord-Brabant;Rucphen;;E4.544;N51.536;11;places/NLD/flags/NB/Rucphen.png
+2;NLD;Noord-Brabant;Rucphen;;E4.544;N51.536;11;places/NLD/flags/NB/Rucphen.gif
 3;NLD;Noord-Brabant;Rucphen;Rucphen;E4.562;N51.532;12;
 3;NLD;Noord-Brabant;Rucphen;Schijf;E4.560;N51.499;12;
 3;NLD;Noord-Brabant;Rucphen;Sint. Willebrord;E4.586;N51.550;12;
 3;NLD;Noord-Brabant;Rucphen;Sprundel;E4.595;N51.536;12;
 3;NLD;Noord-Brabant;Rucphen;Zegge;E4.514;N51.556;12;
-2;NLD;Noord-Brabant;Schijndel;;E5.433;N51.617;11;places/NLD/flags/NB/Schijndel.png
+2;NLD;Noord-Brabant;Schijndel;;E5.433;N51.617;11;places/NLD/flags/NB/Schijndel.gif
 3;NLD;Noord-Brabant;Schijndel;Gemonde;E5.358;N51.620;12;
 3;NLD;Noord-Brabant;Schijndel;Schijndel;E5.437;N51.617;12;
 3;NLD;Noord-Brabant;Schijndel;Wijbosch;E5.467;N51.617;12;
-2;NLD;Noord-Brabant;Sint Anthonis;;E5.842;N51.624;11;places/NLD/flags/NB/Sint-Anthonis.png
+2;NLD;Noord-Brabant;Sint Anthonis;;E5.842;N51.624;11;places/NLD/flags/NB/Sint_Anthonis.gif
 3;NLD;Noord-Brabant;Sint Anthonis;Landhorst;E5.789;N51.617;12;
 3;NLD;Noord-Brabant;Sint Anthonis;Ledeacker;E5.876;N51.634;12;
 3;NLD;Noord-Brabant;Sint Anthonis;Oploo;E5.875;N51.609;12;
@@ -561,7 +561,7 @@
 3;NLD;Noord-Brabant;Sint Anthonis;Stevensbeek;E5.913;N51.603;12;
 3;NLD;Noord-Brabant;Sint Anthonis;Wanroij;E5.819;N51.656;12;
 3;NLD;Noord-Brabant;Sint Anthonis;Westerbeek;E5.862;N51.582;12;
-2;NLD;Noord-Brabant;Sint-Michielsgestel;;E5.352;N51.648;11;places/NLD/flags/NB/St_michielsgestel.png
+2;NLD;Noord-Brabant;Sint-Michielsgestel;;E5.352;N51.648;11;places/NLD/flags/NB/Sint-Michielsgestel.gif
 3;NLD;Noord-Brabant;Sint-Michielsgestel;Berlicum;E5.400;N51.679;12;
 3;NLD;Noord-Brabant;Sint-Michielsgestel;Den Dungen;E5.372;N51.663;12;
 3;NLD;Noord-Brabant;Sint-Michielsgestel;Gemonde;E5.357;N51.619;12;
@@ -569,7 +569,7 @@
 3;NLD;Noord-Brabant;Sint-Michielsgestel;Maaskantje;E5.367;N51.667;13;
 3;NLD;Noord-Brabant;Sint-Michielsgestel;Middelrode;E5.419;N51.666;12;
 3;NLD;Noord-Brabant;Sint-Michielsgestel;Sint Michielsgestel;E5.348;N51.638;12;
-2;NLD;Noord-Brabant;Sint-Oedenrode;;E5.394;N51.581;11;places/NLD/flags/NB/Sint-Oedenrode.png
+2;NLD;Noord-Brabant;Sint-Oedenrode;;E5.394;N51.581;11;places/NLD/flags/NB/Sint-Oedenrode.gif
 3;NLD;Noord-Brabant;Sint-Oedenrode;Boskant;E5.424;N51.550;12;
 3;NLD;Noord-Brabant;Sint-Oedenrode;Gemonde;E5.358;N51.619;12;
 3;NLD;Noord-Brabant;Sint-Oedenrode;Nijnsel;E5.483;N51.550;12;
@@ -600,10 +600,10 @@
 3;NLD;Noord-Brabant;Someren;Vaarsche Hoef;E5.683;N51.400;12;
 3;NLD;Noord-Brabant;Someren;Vlas;E5.717;N51.367;13;
 3;NLD;Noord-Brabant;Someren;Winkelstraat;E5.650;N51.433;13;
-2;NLD;Noord-Brabant;Son en Breugel;;E5.500;N51.516;12;places/NLD/flags/NB/Son-en-Breugel.png
+2;NLD;Noord-Brabant;Son en Breugel;;E5.500;N51.516;12;places/NLD/flags/NB/Son_en_Breugel.gif
 3;NLD;Noord-Brabant;Son en Breugel;Breugel;E5.510;N51.519;12;
 3;NLD;Noord-Brabant;Son en Breugel;Son;E5.492;N51.510;12;
-2;NLD;Noord-Brabant;Steenbergen;;E4.317;N51.583;11;places/NLD/flags/NB/Steenbergen.png
+2;NLD;Noord-Brabant;Steenbergen;;E4.317;N51.583;11;places/NLD/flags/NB/Steenbergen.gif
 3;NLD;Noord-Brabant;Steenbergen;Blauwe Sluis;E4.362;N51.596;13;
 3;NLD;Noord-Brabant;Steenbergen;De Heen;E4.274;N51.610;13;
 3;NLD;Noord-Brabant;Steenbergen;Dinteloord;E4.367;N51.633;12;
@@ -612,7 +612,7 @@
 3;NLD;Noord-Brabant;Steenbergen;Nieuw-Vossemeer;E4.217;N51.589;12;
 3;NLD;Noord-Brabant;Steenbergen;Steenbergen;E4.317;N51.583;12;
 3;NLD;Noord-Brabant;Steenbergen;Welberg;E4.328;N51.577;12;
-2;NLD;Noord-Brabant;Tilburg;;E5.129;N51.584;12;places/NLD/flags/NB/Tilburg.png
+2;NLD;Noord-Brabant;Tilburg;;E5.129;N51.584;12;places/NLD/flags/NB/Tilburg.gif
 3;NLD;Noord-Brabant;Tilburg;'t Hoekske;;;12;
 3;NLD;Noord-Brabant;Tilburg;Berkel-Enschot;E5.142;N51.583;12;
 3;NLD;Noord-Brabant;Tilburg;Brem;;;12;
@@ -627,7 +627,7 @@
 3;NLD;Noord-Brabant;Tilburg;Oisterwijkse Hoeven;;;8;
 3;NLD;Noord-Brabant;Tilburg;Tilburg;E5.087;N51.554;12;
 3;NLD;Noord-Brabant;Tilburg;Udenhout;E5.145;N51.609;12;
-2;NLD;Noord-Brabant;Uden;;E5.639;N51.646;12;places/NLD/flags/NB/Uden.png
+2;NLD;Noord-Brabant;Uden;;E5.639;N51.646;12;places/NLD/flags/NB/Uden.gif
 3;NLD;Noord-Brabant;Uden;Bedaf;E5.574;N51.661;13;
 3;NLD;Noord-Brabant;Uden;Eikenheuvel;E5.617;N51.633;13;
 3;NLD;Noord-Brabant;Uden;Heikant;E5.667;N51.633;12;
@@ -636,13 +636,13 @@
 3;NLD;Noord-Brabant;Uden;Oosterens;E5.667;N51.650;13;
 3;NLD;Noord-Brabant;Uden;Uden;E5.618;N51.655;12;
 3;NLD;Noord-Brabant;Uden;Volkel;E5.654;N51.643;12;
-2;NLD;Noord-Brabant;Valkenswaard;;E5.455;N51.327;12;places/NLD/flags/NB/Valkenswaard.png
+2;NLD;Noord-Brabant;Valkenswaard;;E5.455;N51.327;12;places/NLD/flags/NB/Valkenswaard.gif
 3;NLD;Noord-Brabant;Valkenswaard;Borkel;E5.439;N51.297;13;
 3;NLD;Noord-Brabant;Valkenswaard;Borkel en Schaft;E5.445;N51.298;13;
 3;NLD;Noord-Brabant;Valkenswaard;Dommelen;E5.430;N51.354;12;
 3;NLD;Noord-Brabant;Valkenswaard;Schaft;E5.453;N51.297;12;
 3;NLD;Noord-Brabant;Valkenswaard;Valkenswaard;E5.458;N51.349;12;
-2;NLD;Noord-Brabant;Veghel;;E5.580;N51.606;11;places/NLD/flags/NB/Veghel.png
+2;NLD;Noord-Brabant;Veghel;;E5.580;N51.606;11;places/NLD/flags/NB/Veghel.gif
 3;NLD;Noord-Brabant;Veghel;Boerdonk;E5.626;N51.561;12;
 3;NLD;Noord-Brabant;Veghel;Eerde;E5.500;N51.600;12;
 3;NLD;Noord-Brabant;Veghel;Erp;E5.607;N51.600;12;
@@ -650,12 +650,12 @@
 3;NLD;Noord-Brabant;Veghel;Mariaheide;E5.578;N51.633;12;
 3;NLD;Noord-Brabant;Veghel;Veghel;E5.543;N51.615;12;
 3;NLD;Noord-Brabant;Veghel;Zijtaart;E5.542;N51.591;12;
-2;NLD;Noord-Brabant;Veldhoven;;E5.396;N51.422;12;places/NLD/flags/NB/Veldhoven.jpg
+2;NLD;Noord-Brabant;Veldhoven;;E5.396;N51.422;12;places/NLD/flags/NB/Veldhoven.gif
 3;NLD;Noord-Brabant;Veldhoven;Meerveldhoven;E5.416;N51.411;12;
 3;NLD;Noord-Brabant;Veldhoven;Oerle;E5.372;N51.423;13;
 3;NLD;Noord-Brabant;Veldhoven;Veldhoven;E5.403;N51.417;12;
 3;NLD;Noord-Brabant;Veldhoven;Zeelst;E5.414;N51.424;13;
-2;NLD;Noord-Brabant;Vught;;E5.271;N51.657;12;places/NLD/flags/NB/Vught.png
+2;NLD;Noord-Brabant;Vught;;E5.271;N51.657;12;places/NLD/flags/NB/Vught.gif
 3;NLD;Noord-Brabant;Vught;Cromvoirt;E5.233;N51.660;12;
 3;NLD;Noord-Brabant;Vught;Vught;E5.295;N51.653;12;
 2;NLD;Noord-Brabant;Waalre;;E5.464;N51.391;13;places/NLD/flags/NB/Waalre.gif
@@ -666,7 +666,7 @@
 3;NLD;Noord-Brabant;Waalre;Loon;E5.450;N51.383;13;
 3;NLD;Noord-Brabant;Waalre;Timmereind;E5.433;N51.383;13;
 3;NLD;Noord-Brabant;Waalre;Waalre;E5.445;N51.384;12;
-2;NLD;Noord-Brabant;Waalwijk;;E5.021;N51.685;12;places/NLD/flags/NB/Waalwijk.png
+2;NLD;Noord-Brabant;Waalwijk;;E5.021;N51.685;12;places/NLD/flags/NB/Waalwijk.gif
 3;NLD;Noord-Brabant;Waalwijk;Baardwijk;E5.096;N51.693;12;
 3;NLD;Noord-Brabant;Waalwijk;Besoyen;E5.049;N51.688;13;
 3;NLD;Noord-Brabant;Waalwijk;Capelle;E4.986;N51.693;12;
@@ -677,7 +677,7 @@
 3;NLD;Noord-Brabant;Waalwijk;Waalwijk;E5.067;N51.683;12;
 3;NLD;Noord-Brabant;Waalwijk;Waspik;E4.943;N51.684;12;
 3;NLD;Noord-Brabant;Waalwijk;Waspik-Boven;E4.967;N51.683;13;
-2;NLD;Noord-Brabant;Werkendam;;E4.921;N51.779;11;places/NLD/flags/NB/Werkendam.jpg
+2;NLD;Noord-Brabant;Werkendam;;E4.921;N51.779;11;places/NLD/flags/NB/Werkendam.gif
 3;NLD;Noord-Brabant;Werkendam;Biesbosch;E4.784;N51.744;12;
 3;NLD;Noord-Brabant;Werkendam;De Baan;E4.983;N51.729;12;
 3;NLD;Noord-Brabant;Werkendam;Dussen;E4.964;N51.730;12;
@@ -690,7 +690,7 @@
 3;NLD;Noord-Brabant;Werkendam;Sleeuwijk;E4.951;N51.813;12;
 3;NLD;Noord-Brabant;Werkendam;Vierbannen;E4.917;N51.750;13;
 3;NLD;Noord-Brabant;Werkendam;Werkendam;E4.892;N51.810;12;
-2;NLD;Noord-Brabant;Woensdrecht;;E4.356;N51.406;11;places/NLD/flags/NB/Woensdrecht.png
+2;NLD;Noord-Brabant;Woensdrecht;;E4.356;N51.406;11;places/NLD/flags/NB/Woensdrecht.gif
 3;NLD;Noord-Brabant;Woensdrecht;Aanwas;E4.317;N51.383;13;
 3;NLD;Noord-Brabant;Woensdrecht;Calfven;E4.317;N51.408;12;
 3;NLD;Noord-Brabant;Woensdrecht;Hoogerheide;E4.324;N51.420;12;
@@ -700,7 +700,7 @@
 3;NLD;Noord-Brabant;Woensdrecht;Plaatsluis;E4.333;N51.383;13;
 3;NLD;Noord-Brabant;Woensdrecht;Putte;E4.393;N51.358;12;
 3;NLD;Noord-Brabant;Woensdrecht;Woensdrecht;E4.305;N51.430;12;
-2;NLD;Noord-Brabant;Woudrichem;;E4.998;N51.797;12;places/NLD/flags/NB/Woudrichem.png
+2;NLD;Noord-Brabant;Woudrichem;;E4.998;N51.797;12;places/NLD/flags/NB/Woudrichem.gif
 3;NLD;Noord-Brabant;Woudrichem;Almkerk;E4.960;N51.771;12;
 3;NLD;Noord-Brabant;Woudrichem;Andel;E5.057;N51.782;13;
 3;NLD;Noord-Brabant;Woudrichem;Giessen;E5.034;N51.789;12;
@@ -709,7 +709,7 @@
 3;NLD;Noord-Brabant;Woudrichem;Uitwijk;E5.006;N51.785;12;
 3;NLD;Noord-Brabant;Woudrichem;Waardhuizen;E5.011;N51.778;12;
 3;NLD;Noord-Brabant;Woudrichem;Woudrichem;E4.998;N51.813;12;
-2;NLD;Noord-Brabant;Zundert;;E4.683;N51.510;11;places/NLD/flags/NB/Zundert.png
+2;NLD;Noord-Brabant;Zundert;;E4.683;N51.510;11;places/NLD/flags/NB/Zundert.gif
 3;NLD;Noord-Brabant;Zundert;Achtmaal;E4.583;N51.450;12;
 3;NLD;Noord-Brabant;Zundert;Breedschot;E4.717;N51.517;13;
 3;NLD;Noord-Brabant;Zundert;Hazeldonk;E4.746;N51.496;12;

@@ -1,5 +1,5 @@
 "Level";"Country";"State";"County";"Place";"Longitude";"Latitude";"ZoomLevel";"Icon"
-2;NLD;Zeeland;Borsele;;E3.824;N51.443;11;places/NLD/flags/ZL/Borsele.png
+2;NLD;Zeeland;Borsele;;E3.824;N51.443;11;places/NLD/flags/ZL/Borsele.gif
 3;NLD;Zeeland;Borsele;'s-Gravenpolder;E3.902;N51.460;12;
 3;NLD;Zeeland;Borsele;'s-Heer Abtskerke;E3.883;N51.467;12;
 3;NLD;Zeeland;Borsele;'s-Heerenhoek;E3.767;N51.450;12;
@@ -18,7 +18,7 @@
 3;NLD;Zeeland;Borsele;Nisse;E3.853;N51.456;13;
 3;NLD;Zeeland;Borsele;Oudelande;E3.853;N51.408;12;
 3;NLD;Zeeland;Borsele;Ovezande;E3.821;N51.429;12;
-2;NLD;Zeeland;Goes;;E3.871;N51.513;11;places/NLD/flags/ZL/Goes.png
+2;NLD;Zeeland;Goes;;E3.871;N51.513;11;places/NLD/flags/ZL/Goes.gif
 3;NLD;Zeeland;Goes;'s-Heer Arendskerke;E3.822;N51.491;12;
 3;NLD;Zeeland;Goes;'s-Heer Hendrikskinderen;E3.862;N51.502;13;
 3;NLD;Zeeland;Goes;Goes;E3.883;N51.500;12;
@@ -27,7 +27,7 @@
 3;NLD;Zeeland;Goes;Oud Sabbinge;E3.800;N51.533;13;
 3;NLD;Zeeland;Goes;Wilhelminadorp;E3.895;N51.528;12;
 3;NLD;Zeeland;Goes;Wolphaartsdijk;E3.818;N51.531;12;
-2;NLD;Zeeland;Hulst;;E4.058;N51.332;10;places/NLD/flags/ZL/hulst.gif
+2;NLD;Zeeland;Hulst;;E4.058;N51.332;10;places/NLD/flags/ZL/Hulst.gif
 3;NLD;Zeeland;Hulst;Absdale;E4.000;N51.267;12;
 3;NLD;Zeeland;Hulst;Boschkapelle;;;12;
 3;NLD;Zeeland;Hulst;Clinge;E4.089;N51.271;12;
@@ -47,7 +47,7 @@
 3;NLD;Zeeland;Hulst;Vogelwaarde;E3.974;N51.325;12;
 3;NLD;Zeeland;Hulst;Walsoorden;E4.029;N51.380;12;
 3;NLD;Zeeland;Hulst;Zandberg;E4.102;N51.306;12;
-2;NLD;Zeeland;Kapelle;;E3.970;N51.499;11;places/NLD/flags/ZL/Kapelle.png
+2;NLD;Zeeland;Kapelle;;E3.970;N51.499;11;places/NLD/flags/ZL/Kapelle.gif
 3;NLD;Zeeland;Kapelle;Biezelinge;E3.963;N51.474;12;
 3;NLD;Zeeland;Kapelle;Biezelingseham;;;12;
 3;NLD;Zeeland;Kapelle;Kapelle;E3.972;N51.643;12;
@@ -62,14 +62,14 @@
 3;NLD;Zeeland;Middelburg;Middelburg;E3.613;N51.495;12;
 3;NLD;Zeeland;Middelburg;Nieuw- en Sint Joosland;E3.657;N51.481;12;
 3;NLD;Zeeland;Middelburg;Sint Laurens;E3.605;N51.526;12;
-2;NLD;Zeeland;Noord-Beveland;;E3.805;N51.577;11;places/NLD/flags/ZL/Noordbev.gif
+2;NLD;Zeeland;Noord-Beveland;;E3.805;N51.577;11;places/NLD/flags/ZL/Noord-Beveland.gif
 3;NLD;Zeeland;Noord-Beveland;Colijnsplaat;E3.847;N51.597;12;
 3;NLD;Zeeland;Noord-Beveland;Geersdijk;E3.769;N51.565;12;
 3;NLD;Zeeland;Noord-Beveland;Kamperland;E3.706;N51.571;12;
 3;NLD;Zeeland;Noord-Beveland;Kats;E3.886;N51.568;12;
 3;NLD;Zeeland;Noord-Beveland;Kortgene;E3.799;N51.557;12;
 3;NLD;Zeeland;Noord-Beveland;Wissenkerke;E3.747;N51.582;12;
-2;NLD;Zeeland;Reimerswaal;;E4.086;N51.457;11;places/NLD/flags/ZL/Reimerswaal.png
+2;NLD;Zeeland;Reimerswaal;;E4.086;N51.457;11;places/NLD/flags/ZL/Reimerswaal.gif
 3;NLD;Zeeland;Reimerswaal;Bath;E4.210;N51.401;12;
 3;NLD;Zeeland;Reimerswaal;Hansweert;E4.001;N51.448;12;
 3;NLD;Zeeland;Reimerswaal;Krabbendijke;E4.111;N51.431;12;
@@ -78,7 +78,7 @@
 3;NLD;Zeeland;Reimerswaal;Rilland;E4.179;N51.417;12;
 3;NLD;Zeeland;Reimerswaal;Waarde;E4.067;N51.417;12;
 3;NLD;Zeeland;Reimerswaal;Yerseke;E4.047;N51.493;12;
-2;NLD;Zeeland;Schouwen-Duiveland;;E3.903;N51.707;10;places/NLD/flags/ZL/Schouwenduiveland.jpg
+2;NLD;Zeeland;Schouwen-Duiveland;;E3.903;N51.707;10;places/NLD/flags/ZL/Schouwen-Duiveland.gif
 3;NLD;Zeeland;Schouwen-Duiveland;Brijdorpe;E3.872;N51.719;12;
 3;NLD;Zeeland;Schouwen-Duiveland;Brouwershaven;E3.912;N51.726;13;
 3;NLD;Zeeland;Schouwen-Duiveland;Bruinisse;E4.094;N51.661;12;
@@ -132,7 +132,7 @@
 3;NLD;Zeeland;Sluis;Waterlandkerkje;E3.556;N51.317;12;
 3;NLD;Zeeland;Sluis;Zuidzande;E3.452;N51.341;13;
 3;NLD;Zeeland;Sluis;Zwindorp;;;12;
-2;NLD;Zeeland;Terneuzen;;E3.862;N51.266;10;places/NLD/flags/ZL/Terneuzen.png
+2;NLD;Zeeland;Terneuzen;;E3.862;N51.266;10;places/NLD/flags/ZL/Terneuzen.gif
 3;NLD;Zeeland;Terneuzen;Axel;E3.911;N51.265;12;
 3;NLD;Zeeland;Terneuzen;Biervliet;E3.688;N51.328;12;
 3;NLD;Zeeland;Terneuzen;Bouchauterhaven;E3.733;N51.283;12;
@@ -151,7 +151,7 @@
 3;NLD;Zeeland;Terneuzen;Zaamslag;E3.914;N51.312;12;
 3;NLD;Zeeland;Terneuzen;Zandstraat;E3.813;N51.264;12;
 3;NLD;Zeeland;Terneuzen;Zuiddorpe;E3.901;N51.234;12;
-2;NLD;Zeeland;Tholen;;E4.157;N51.586;11;places/NLD/flags/ZL/Tholen.png
+2;NLD;Zeeland;Tholen;;E4.157;N51.586;11;places/NLD/flags/ZL/Tholen.gif
 3;NLD;Zeeland;Tholen;Anna Jacobapolder;E4.130;N51.638;13;
 3;NLD;Zeeland;Tholen;Botshoofd;E4.228;N51.556;12;
 3;NLD;Zeeland;Tholen;De Sluis;E3.750;N51.517;13;
@@ -181,7 +181,7 @@
 3;NLD;Zeeland;Veere;Vrouwenpolder;E3.617;N51.575;12;
 3;NLD;Zeeland;Veere;Westkapelle;E3.439;N51.529;12;
 3;NLD;Zeeland;Veere;Zoutelande;E3.486;N51.501;12;
-2;NLD;Zeeland;Vlissingen;;E3.594;N51.456;12;places/NLD/flags/ZL/vlissingen.gif
+2;NLD;Zeeland;Vlissingen;;E3.594;N51.456;12;places/NLD/flags/ZL/Vlissingen.gif
 3;NLD;Zeeland;Vlissingen;Oost-Souburg;E3.601;N51.462;12;
 3;NLD;Zeeland;Vlissingen;Ritthem;E3.627;N51.451;12;
 3;NLD;Zeeland;Vlissingen;Vlissingen;E3.575;N51.453;12;
