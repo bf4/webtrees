@@ -1729,13 +1729,17 @@ function addNewFact($fact) {
 				$gedrec.="3 MAP\n4 LATI {$LATI}\n4 LONG {$LONG}\n";
 			}
 		}
-		$SOUR=safe_POST_bool("SOUR_{$fact}");
-		if ($SOUR && count($tagSOUR)>0) {
-			$gedrec=updateSOUR($gedrec, 2);
+		if (safe_POST_bool("SOUR_{$fact}")) {
+			return updateSOUR($gedrec, 2);
+		} else {
+			return $gedrec;
 		}
-		return $gedrec;
 	} elseif ($FACT) {
-		return "1 {$fact} Y\n";
+		if (safe_POST_bool("SOUR_{$fact}")) {
+			return updateSOUR("1 {$fact} Y\n", 2);
+		} else {
+			return "1 {$fact} Y\n";
+		}
 	} else {
 		return '';
 	}
