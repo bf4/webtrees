@@ -51,8 +51,8 @@ if (file_exists($INDEX_DIRECTORY.$GEDCOM."_ra_priv.php")) include_once($INDEX_DI
 define("BASEPATH", 'modules/research_assistant/');
 $emptyfacts = array("BIRT","CHR","DEAT","BURI","CREM","ADOP","BAPM","BARM","BASM","BLES","CHRA","CONF","FCOM","ORDN","NATU","EMIG","IMMI","CENS","PROB","WILL","GRAD","RETI","BAPL","CONL","ENDL","SLGC","EVEN","MARR","SLGS","MARL","ANUL","CENS","DIV","DIVF","ENGA","MARB","MARC","MARS","CHAN","_SEPR","RESI", "DATA", "MAP");
 $templefacts = array("SLGC","SLGS","BAPL","ENDL","CONL");
-$nonplacfacts = array("ENDL","NCHI","SLGC","SLGS","SSN");
-$nondatefacts = array("ABBR","ADDR","AFN","AUTH","EMAIL","FAX","NAME","NCHI","NOTE","OBJE","PHON","PUBL","REFN","REPO","SEX","SOUR","SSN","TEXT","TITL","WWW","_EMAIL");
+$nonplacfacts = array("ENDL","NCHI","SLGC","SLGS","SSN","CHAN","_UID");
+$nondatefacts = array("ABBR","ADDR","AFN","AUTH","EMAIL","FAX","NAME","NCHI","NOTE","OBJE","PHON","PUBL","REFN","REPO","SEX","SOUR","SSN","TEXT","TITL","WWW","_EMAIL","_UID");
 
 if (!function_exists("find_updated_record")) {
 	/**
@@ -1198,7 +1198,7 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 				}
 			}
 			$source = get_gedcom_value("SOUR", 2, $far->getGedComRecord());
-			if (empty ($source))
+			if (empty ($source) && !in_array($fact, $nonplacfacts) && !in_array($fact, $nondatefacts))
 				$MissingReturn[] = array ($fact, "SOUR");
 			$plac = $far->getPlace();
 			if (empty ($plac)) {
