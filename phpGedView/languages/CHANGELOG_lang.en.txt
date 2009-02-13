@@ -46,6 +46,7 @@ VERSION 4.2.1
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change	codes and comments
 ----------------------------------------------------------------------------------------
+*$pgv_lang["manage_media"]							13 Feb 2009				W
 -$pgv_lang["update_photo"]							10 Feb 2009				D
 +$pgv_lang["first_letter_sfname"]					06 Feb 2008				A
 *$pgv_lang["first_letter_fname"]					06 Feb 2008				w
