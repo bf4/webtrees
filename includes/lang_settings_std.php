@@ -599,12 +599,42 @@ $language_settings['slovak']=array(
 'WEEK_START'=>'1',
 'TEXT_DIRECTION'=>'ltr',
 'NAME_REVERSE'=>false,
-'ALPHABET_upper'=>'AÁÄBCČDĎEÉFGHCHIÍJKLĽĹMNŇOÓÔPQRŔSŠTŤUÚVWXYÝZŽ',
-'ALPHABET_lower'=>'aáäbcčdďeéfghchiíjklľĺmnňoóôpqrŕsštťuúvwxyýzž',
+'ALPHABET_upper'=>'AÁÄBCČDĎEÉFGHIÍJKLĽĹMNŇOÓÔPQRŔSŠTŤUÚVWXYÝZŽ',
+'ALPHABET_lower'=>'aáäbcčdďeéfghiíjklľĺmnňoóôpqrŕsštťuúvwxyýzž',
 'MULTI_LETTER_ALPHABET'=>'dz,ch',
 'MULTI_LETTER_EQUIV'=>'DŽ=Ǆ,Dž=ǅ,dž=ǆ,DZ=Ǳ,Dz=ǲ,dz=ǳ',
 'DICTIONARY_SORT'=>true,
 'COLLATION'=>'utf8_slovak_ci'
+);
+
+//-- settings for serbian-latin
+$language_settings['serbian-la']=array(
+'pgv_langname'=>'serbian-la',
+'pgv_lang_use'=>false,
+'pgv_lang_self'=>'Srpski',
+'lang_short_cut'=>'sr',
+'langcode'=>'sr;',
+'pgv_language'=>'languages/lang.sr.php',
+'confighelpfile'=>'languages/configure_help.sr.php',
+'helptextfile'=>'languages/help_text.sr.php',
+'flagsfile'=>'images/flags/serbia.gif',
+'factsfile'=>'languages/facts.sr.php',
+'adminfile'=>'languages/admin.sr.php',
+'editorfile'=>'languages/editor.sr.php',
+'countryfile'=>'languages/countries.sr.php',
+'faqlistfile'=>'languages/faqlist.sr.php',
+'extrafile'=>'languages/extra.sr.php',
+'DATE_FORMAT'=>'D M Y',
+'TIME_FORMAT'=>'g:i:sa',
+'WEEK_START'=>'0',
+'TEXT_DIRECTION'=>'ltr',
+'NAME_REVERSE'=>false,
+'ALPHABET_upper'=>'ABCČĆDĐEFGHIJKLMNOPRSŠTUVZŽ',
+'ALPHABET_lower'=>'abcčćdđefghijklmnoprsštuvzž',
+'MULTI_LETTER_ALPHABET'=>'',
+'MULTI_LETTER_EQUIV'=>'',
+'DICTIONARY_SORT'=>true,
+'COLLATION'=>'utf8_slovenian_ci'
 );
 
 //-- settings for slovenian
