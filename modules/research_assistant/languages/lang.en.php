@@ -31,6 +31,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 
 $pgv_lang["autosearch_ssurname"] = "Include spouse's surname:";
 $pgv_lang["autosearch_sgivennames"] = "Include spouse's given names:";
+$pgv_lang["autosearch_sfullname"] = "Include spouse's name:";
 $pgv_lang["autosearch_plugin_name_gensearchhelp"] = "Genealogy-Search-Help.com Plug-in";
 
 $pgv_lang["add_task_inst"]		= "If a task for your research results has not yet been created, you should create the task first and then choose the option to save and complete the task.";
@@ -244,8 +245,10 @@ $pgv_lang["autosearch_gender"]          = "Include gender:";
 $pgv_lang["autosearch_plugin_name"]     = "";  
 $pgv_lang["autosearch_fsurname"]		= "Include father's surname:";
 $pgv_lang["autosearch_fgivennames"]		= "Include father's given names:";
+$pgv_lang["autosearch_ffullname"]		= "Include father's name:";
 $pgv_lang["autosearch_msurname"]		= "Include mother's surname:";
 $pgv_lang["autosearch_mgivennames"]	    = "Include mother's given names:"; 
+$pgv_lang["autosearch_mfullname"]		= "Include mother's name:";
 $pgv_lang["autosearch_country"]  	    = "Include country:"; 
 $pgv_lang["autosearch_plugin_name_ancestry"] = "Ancestry.com Plug-in";
 $pgv_lang["autosearch_plugin_name_ancestrycouk"] = "Ancestry.co.uk Plug-in";

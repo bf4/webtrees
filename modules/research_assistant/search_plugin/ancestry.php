@@ -46,10 +46,16 @@ class AutoSearch extends Base_AutoSearch {
 			//  function = defined in Base_AutoSearch and $pgv_lang["autosearch_XXXX"]
 			//  extra    = extra html to add to the checkbox
 			array(
-				'gsln'=>array('function'=>'surname',   'extra'=>'checked="checked"'),
 				'gsfn'=>array('function'=>'givenname', 'extra'=>'checked="checked"'),
+				'gsln'=>array('function'=>'surname',   'extra'=>'checked="checked"'),
 				'gsby'=>array('function'=>'byear',     'extra'=>'checked="checked"'),
-				'gsdy'=>array('function'=>'dyear')
+				'msbpn__ftp'=>array('function'=>'bloc'),
+				'gsdy'=>array('function'=>'dyear'),
+				'msdpn__ftp'=>array('function'=>'dloc'),
+				'_8000C000'=>array('function'=>'ffullname'),
+				'_80008000'=>array('function'=>'mfullname'),
+				'_80018000'=>array('function'=>'sfullname'),
+				'gskw'=>array('function'=>'keywords',  'extra'=>'checked="checked" style="display:none;"')
 			)
 		);
 	}
