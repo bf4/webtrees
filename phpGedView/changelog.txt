@@ -10,6 +10,7 @@
 
 
 Version 4.2.1
+ - Fixed: [ 2328664 ] Research Assistent (fisharebest)
  - Added: Support for Serbian (Latin alphabet) (canajun2eh)
  - Fixed: [ 2534707 ] [4897] MARR source not added when date is missing. (fisharebest)
  - Fixed: [ 2567389 ] "Media Viewer using full GEDCOM Media URL"; Also "source.php error with Lightbox"; (windmillway)
