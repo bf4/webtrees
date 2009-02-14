@@ -1519,9 +1519,9 @@ function search_indis($query, $geds, $match, $skip) {
 
 	// Tags we might not want to search
 	if (PGV_USER_IS_ADMIN) {
-		$skipregex='/^1 (_UID|_PGVU|FILE|FORM|TYPE|CHAN|SUBM|REFN) .*('.implode('|', $queryregex).')/im';
+		$skipregex='/^\d (_UID|_PGVU|FILE|FORM|TYPE|CHAN|SUBM|REFN) .*('.implode('|', $queryregex).')/im';
 	} else {
-		$skipregex='/^1 (_UID|_PGVU|FILE|FORM|TYPE|CHAN|SUBM|REFN|RESN) .*('.implode('|', $queryregex).')/im';
+		$skipregex='/^\d (_UID|_PGVU|FILE|FORM|TYPE|CHAN|SUBM|REFN|RESN) .*('.implode('|', $queryregex).')/im';
 	}
 
 	$list=array();
@@ -1827,9 +1827,9 @@ function search_fams($query, $geds, $match, $skip) {
 
 	// Tags we might not want to search
 	if (PGV_USER_IS_ADMIN) {
-		$skipregex='/^1 (_UID|_PGVU|FILE|FORM|TYPE|CHAN|SUBM|REFN) .*('.implode('|', $queryregex).')/im';
+		$skipregex='/^\d (_UID|_PGVU|FILE|FORM|TYPE|CHAN|SUBM|REFN) .*('.implode('|', $queryregex).')/im';
 	} else {
-		$skipregex='/^1 (_UID|_PGVU|FILE|FORM|TYPE|CHAN|SUBM|REFN|RESN) .*('.implode('|', $queryregex).')/im';
+		$skipregex='/^\d (_UID|_PGVU|FILE|FORM|TYPE|CHAN|SUBM|REFN|RESN) .*('.implode('|', $queryregex).')/im';
 	}
 
 	$list=array();
@@ -2004,9 +2004,9 @@ function search_sources($query, $geds, $match, $skip) {
 
 	// Tags we might not want to search
 	if (PGV_USER_IS_ADMIN) {
-		$skipregex='/^1 (_UID|_PGVU|FILE|FORM|TYPE|CHAN|SUBM|REFN) .*('.implode('|', $queryregex).')/im';
+		$skipregex='/^\d (_UID|_PGVU|FILE|FORM|TYPE|CHAN|SUBM|REFN) .*('.implode('|', $queryregex).')/im';
 	} else {
-		$skipregex='/^1 (_UID|_PGVU|FILE|FORM|TYPE|CHAN|SUBM|REFN|RESN) .*('.implode('|', $queryregex).')/im';
+		$skipregex='/^\d (_UID|_PGVU|FILE|FORM|TYPE|CHAN|SUBM|REFN|RESN) .*('.implode('|', $queryregex).')/im';
 	}
 
 	$list=array();
