@@ -291,11 +291,9 @@ class TreeNav {
 				if (isset ($factAbbrev["BIRT"])) print $factAbbrev["BIRT"];
 				else print get_first_letter($factarray['BIRT']);
 				?>:</b>
-			<?php
-				$bdate = $person->getBirthDate();
-				if (!is_null($bdate)) print $bdate->Display();
-			?>
-			<?php $place = $person->getBirthPlace();  if (!empty($place)) print PrintReady($place); ?>
+				<?php
+				echo $person->getBirthDate()->Display(), ' ', PrintReady($person->getBirthPlace());
+				?>
 			<br />
 			<b><?php
 			if ($person->isDead()) {
@@ -303,10 +301,7 @@ class TreeNav {
 				else print get_first_letter($factarray['DEAT']);
 				?>:</b>
 				<?php
-				$ddate = $person->getDeathDate(false);
-				if (!is_null($ddate)) print $ddate->Display();
-				?>
-				<?php $place = $person->getDeathPlace();  if (!empty($place)) print PrintReady($place);
+				echo $person->getDeathDate()->Display(), ' ', PrintReady($person->getDeathPlace());
 			} ?>
 		</div>
 		<br />
@@ -329,10 +324,8 @@ class TreeNav {
 					else print get_first_letter($factarray['BIRT']);
 					?>:</b>
 				<?php
-					$bdate = $spouse->getBirthDate();
-					if (!is_null($bdate)) print $bdate->Display();
+				echo $spouse->getBirthDate()->Display(), ' ', PrintReady($spouse->getBirthPlace());
 				?>
-				<?php $place = $spouse->getBirthPlace();  if (!empty($place)) print PrintReady($place); ?>
 				<br />
 				<b><?php
 					if (isset ($factAbbrev["MARR"])) print $factAbbrev["MARR"];
@@ -355,10 +348,7 @@ class TreeNav {
 					}
 					?>:</b>
 					<?php
-					$ddate = $spouse->getDeathDate(false);
-					if (!is_null($ddate)) print $ddate->Display();
-					?>
-					<?php $place = $spouse->getDeathPlace();  if (!empty($place)) print PrintReady($place);
+					echo $spouse->getDeathDate()->Display(), ' ', PrintReady($spouse->getDeathPlace());
 				} ?>
 				</div>
 				<?php
