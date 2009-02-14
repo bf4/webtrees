@@ -421,4 +421,24 @@ $pgv_lang["tradition_paternal"]		= "väterliche";
 $pgv_lang["tradition_polish"]		= "polnische";
 $pgv_lang["tradition_none"]			= "keine";
 
+// -- The following text is used to build the phrase "i years, j months, k days, l hours, m minutes"
+// -- for use in text such as "xxx ago" or "after xxx" or "in xxx"
+$pgv_lang["elapsedYear1"]	=	"1 Jahr";
+$pgv_lang["elapsedYear2"]	=	"#pgv_lang[global_num1]# Jahren";	// used in Polish for 2,3,4 or 22,23,24 or 32,33,34 etc.
+$pgv_lang["elapsedYears"]	=	"#pgv_lang[global_num1]# Jahren";
+$pgv_lang["elapsedMonth1"]	=	"1 Monat";
+$pgv_lang["elapsedMonth2"]	=	"#pgv_lang[global_num1]# Monaten";	// used in Polish for 2,3,4 or 22,23,24 or 32,33,34 etc.
+$pgv_lang["elapsedMonths"]	=	"#pgv_lang[global_num1]# Monaten";
+$pgv_lang["elapsedDay1"]	=	"1 Tag";
+$pgv_lang["elapsedDay2"]	=	"#pgv_lang[global_num1]# Tagen";	// used in Polish for 2,3,4 or 22,23,24 or 32,33,34 etc.
+$pgv_lang["elapsedDays"]	=	"#pgv_lang[global_num1]# Tagen";
+$pgv_lang["elapsedHour1"]	=	"1 Stunde";
+$pgv_lang["elapsedHour2"]	=	"#pgv_lang[global_num1]# Stunden";	// used in Polish for 2,3,4 or 22,23,24 or 32,33,34 etc.
+$pgv_lang["elapsedHours"]	=	"#pgv_lang[global_num1]# Stunden";
+$pgv_lang["elapsedMinute1"]	=	"1 Minute";
+$pgv_lang["elapsedMinute2"]	=	"#pgv_lang[global_num1]# Minuten";	// used in Polish for 2,3,4 or 22,23,24 or 32,33,34 etc.
+$pgv_lang["elapsedMinutes"]	=	"#pgv_lang[global_num1]# Minuten";
+
+$pgv_lang["elapsedAgo"]		=	"vor #pgv_lang[global_string1]#";
+
 ?>
