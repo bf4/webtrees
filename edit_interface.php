@@ -2101,8 +2101,7 @@ case 'reorder_fams':
 			$person = Person::getInstance($pid);
 			$fams = $person->getSpouseFamilies();
 			if ((!empty($option))&&($option=="bymarriage")) {
-				$sortby = "MARR";
-				uasort($fams, "compare_date_gedcomrec");
+				uasort($fams, array('Family', 'CompareMarrDate'));
 			}
 			$i=0;
 			foreach($fams as $famid=>$family) {

@@ -220,6 +220,11 @@ class Family extends GedcomRecord {
 		return $this->childrenIds;
 	}
 
+	// Static helper function to sort an array of families by marriage date
+	static function CompareMarrDate($x, $y) {
+		return GedcomDate::Compare($x->getMarriageDate(), $y->getMarriageDate());
+	}
+
 	/**
 	 * Load the children from the database
 	 * We used to load the children when the family was created, but that has performance issues

@@ -40,11 +40,6 @@ class Person extends GedcomRecord {
 	var $globalfacts = array();
 	var $mediafacts = array();
 	var $facts_parsed = false;
-	var $bd_parsed = false;
-	var $birthEvent = null;
-	var $deathEvent = null;
-	var $best = false;
-	var $dest = false;
 	var $fams = null;
 	var $famc = null;
 	var $spouseFamilies = null;
@@ -143,6 +138,16 @@ class Person extends GedcomRecord {
 		return $object;
 	}
 
+	// Static helper function to sort an array of people by birth date
+	static function CompareBirtDate($x, $y) {
+		return GedcomDate::Compare($x->getEstimatedBirthDate(), $y->getEstimatedBirthDate());
+	}
+
+	// Static helper function to sort an array of people by death date
+	static function CompareDeatDate($x, $y) {
+		return GedcomDate::Compare($x->getEstimatedDeathDate(), $y->getEstimatedDeathDate());
+	}
+
 	/**
 	* Return whether or not this person is already dead
 	* @return boolean true if dead, false if alive
@@ -163,83 +168,6 @@ class Person extends GedcomRecord {
 			$this->highlightedimage = find_highlighted_object($this->xref, $this->gedrec);
 		}
 		return $this->highlightedimage;
-	}
-	/**
-	* parse birth and death records
-	*/
-	function _parseBirthDeath() {
-		global $MAX_ALIVE_AGE, $SHOW_EST_LIST_DATES, $pgv_lang;
-
-		if ($this->bd_parsed) return;
-		$this->bd_parsed = true;
-
-		$brec = get_sub_record(1, "1 BIRT", $this->gedrec);
-		$drec = get_sub_record(1, "1 DEAT", $this->gedrec);
-		//-- if no birth look for christening or baptism
-		if (empty($brec)) {
-			$brec = get_sub_record(1, "1 CHR", $this->gedrec);
-			if (empty($brec)) {
-				$brec = get_sub_record(1, "1 BAPM", $this->gedrec);
-			}
-		}
-		if (!empty($brec)) {
-			$this->birthEvent = new Event($brec);
-			$this->birthEvent->setParentObject($this);
-		}
-		//-- if no death look for burial
-		if (empty($drec)) {
-			$drec = get_sub_record(1, "1 BURI", $this->gedrec);
-			$this->deathEvent = new Event($drec);
-			$this->deathEvent->setParentObject($this);
-		}
-		if (!empty($drec)) {
-			$this->deathEvent = new Event($drec);
-			$this->deathEvent->setParentObject($this);
-		}
-
-		//-- if no death estimate from birth
-		$bdate = null;
-		$ddate = null;
-		if (!is_null($this->birthEvent)) $bdate = $this->birthEvent->getDate();
-		if (!is_null($this->deathEvent)) $ddate = $this->deathEvent->getDate();
-		if (is_null($ddate) && !is_null($bdate) && $SHOW_EST_LIST_DATES) {
-			if ($bdate->date1->y>0) {
-				$this->dest = true;
-				$nddate = $bdate->AddYears($MAX_ALIVE_AGE, 'BEF');
-				if (!is_null($this->deathEvent)) $this->deathEvent->setDate($nddate);
-				else $this->deathEvent = new Event("1 DEAT\n2 DATE BEF ".($bdate->date1->y+$MAX_ALIVE_AGE));
-			}
-		}
-		//-- if no birth estimate from death
-		if (is_null($bdate) && !is_null($ddate) && $SHOW_EST_LIST_DATES) {
-			if ($ddate->date1->y>0) {
-				$this->best = true;
-				$nbdate = $ddate->AddYears(0-$MAX_ALIVE_AGE, 'AFT');
-				if (!is_null($this->birthEvent)) $this->birthEvent->setDate($nbdate);
-				else $this->birthEvent = new Event("1 BIRT\n2 DATE AFT ".($ddate->date1->y-$MAX_ALIVE_AGE));
-			}
-		}
-	}
-
-	/**
-	* get birth Event
-	* @return Event
-	*/
-	function getBirthEvent($estimate=true) {
-		if (!$this->bd_parsed) {
-			$this->_parseBirthDeath();
-		}
-		return $this->birthEvent;
-	}
-	/**
-	* get death Event
-	* @return Event
-	*/
-	function getDeathEvent($estimate=true) {
-		if (!$this->bd_parsed) {
-			$this->_parseBirthDeath();
-		}
-		return $this->deathEvent;
 	}
 
 	/**
