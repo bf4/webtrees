@@ -46,6 +46,14 @@ VERSION 4.2.1
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change	codes and comments
 ----------------------------------------------------------------------------------------
+-$pgv_lang["months2"]								14 Feb 2009				D
+-$pgv_lang["hour1"]									14 Feb 2009				D
+-$pgv_lang["hours2"]								14 Feb 2009				D
+-$pgv_lang["hours"]									14 Feb 2009				D
+-$pgv_lang["minute1"]								14 Feb 2009				D
+-$pgv_lang["minutes2"]								14 Feb 2009				D
+-$pgv_lang["minutes"]								14 Feb 2009				D
+-$pgv_lang["ago"]									14 Feb 2009				D
 *$pgv_lang["manage_media"]							13 Feb 2009				W
 -$pgv_lang["update_photo"]							10 Feb 2009				D
 +$pgv_lang["first_letter_sfname"]					06 Feb 2008				A
@@ -321,7 +329,7 @@ VERSION 4.1.3
 +$pgv_lang["changes_pending_tot"]					31 Oct 2007				A
 +$pgv_lang["changes_accepted_tot"]					31 Oct 2007				A
 *$pgv_lang["sosa_paternal_male_n_generations"]		27 Oct 2007				} Switch "male" and "female"
-*$pgv_lang["sosa_paternal_female_n_generations"]	27 Oct 2007				} in variable names so that 
+*$pgv_lang["sosa_paternal_female_n_generations"]	27 Oct 2007				} in variable names so that
 *$pgv_lang["sosa_maternal_male_n_generations"]		27 Oct 2007				} the variable name reflects
 *$pgv_lang["sosa_maternal_female_n_generations"]	27 Oct 2007				} the text
 +$pgv_lang["self"] 									25 Oct 2007             A
@@ -553,16 +561,16 @@ VERSION 4.1
 *$pgv_lang["maxviews_exceeded"]						28 Jan 2007				W
 +$pgv_lang["duplicate_username"]					26 Jan 2007				M		Moved from admin.en.php
 +$pgv_lang["cache_life"]							25 Jan 2007				A
-*$pgv_lang["bosa_2"]								17 Jan 2007				S		}  Removed reference to     
+*$pgv_lang["bosa_2"]								17 Jan 2007				S		}  Removed reference to
 *$pgv_lang["bosa_3"]								17 Jan 2007				S		}  other $pgv_lang variables
 *$pgv_lang["bosa_4"]								17 Jan 2007				S		}  in the value declarations
-*$pgv_lang["bosa_5"]								17 Jan 2007				S		}  and used their real      
-*$pgv_lang["bosa_6"]								17 Jan 2007				S		}  string values instead.   
-*$pgv_lang["bosa_7"]								17 Jan 2007				S		}  
-*$pgv_lang["sosa_uncle_2"]							17 Jan 2007				S		}  The Translator Tool didn't  
+*$pgv_lang["bosa_5"]								17 Jan 2007				S		}  and used their real
+*$pgv_lang["bosa_6"]								17 Jan 2007				S		}  string values instead.
+*$pgv_lang["bosa_7"]								17 Jan 2007				S		}
+*$pgv_lang["sosa_uncle_2"]							17 Jan 2007				S		}  The Translator Tool didn't
 *$pgv_lang["sosa_uncle_3"]							17 Jan 2007				S		}  like the references to the
 *$pgv_lang["sosa_aunt_2"]							17 Jan 2007				S		}  $pgv_lang variables.
-*$pgv_lang["sosa_aunt_3"]							17 Jan 2007				S		}  
+*$pgv_lang["sosa_aunt_3"]							17 Jan 2007				S		}
 *$pgv_lang["advanced_options"]						16 Jan 2007				S
 *$pgv_lang["mail01_line02"]							12 Jan 2007				fw
 *$pgv_lang["mail01_line04"]							12 Jan 2007				w

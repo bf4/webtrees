@@ -37,48 +37,6 @@ if (!PGV_USER_IS_ADMIN) {
 	exit;
 }
 
-function since_login($login_time) {
-	global $pgv_lang;
-	$rtn = '';
-	$time_since = time() - $login_time;
-	if ($time_since > 30*24*3600) {
-		//A month or more 
-		$tmp = floor($time_since / (30*24*3600));
-		if ($tmp==1) $rtn .= $tmp." ".$pgv_lang["month1"];
-		else if (($tmp==2||$tmp==3||$tmp==4)||(($tmp>21)&&(substr($tmp,-1,1)>1)&&(substr($tmp,-1,1)<5)&&(substr($tmp,-2,1)!= 1)))
-			$rtn .= $tmp." ".$pgv_lang["months2"];
-		else $rtn .= $tmp." ".$pgv_lang["months"];
-		$time_since -= $tmp*30*24*3600;
-	}
-	if($time_since > 24*3600) {
-		//A day or more
-		if (!empty($rtn)) $rtn .= ' ';
-		$tmp = floor($time_since / (24*3600));
-		if ($tmp==1) $rtn .= $tmp." ".$pgv_lang["day1"];
-		else $rtn .= $tmp." ".$pgv_lang["days"];
-		$time_since -= $tmp*24*3600;
-	}
-	else if($time_since > 3600) {
-		//An hour or more
-		$tmp = floor($time_since / (3600));
-		if ($tmp==1) $rtn .= $tmp." ".$pgv_lang["hour1"];
-		else if (($tmp==2||$tmp==3||$tmp==4)||(($tmp>21)&&(substr($tmp,-1,1)>1)&&(substr($tmp,-1,1)<5)&&(substr($tmp,-2,1)!= 1)))
-			$rtn .= $tmp." ".$pgv_lang["hours2"];
-		else $rtn .= $tmp." ".$pgv_lang["hours"];
-		$time_since -= $tmp*3600;
-	}
-	else if($time_since >= 0) {
-		//An minute or more
-		$tmp = floor($time_since / (60));
-		if ($tmp<=1) $rtn .= "1 ".$pgv_lang["minute1"];
-		else if (($tmp==2||$tmp==3||$tmp==4)||(($tmp>21)&&(substr($tmp,-1,1)>1)&&(substr($tmp,-1,1)<5)&&(substr($tmp,-2,1)!= 1)))
-			$rtn .= $tmp." ".$pgv_lang["minutes2"];
-		else $rtn .= $tmp." ".$pgv_lang["minutes"];
-		$time_since -= $tmp;
-	}
-	return $rtn;
-}
-
 // Valid values for form variables
 $ALL_ACTIONS=array('cleanup', 'cleanup2', 'createform', 'createuser', 'deleteuser', 'edituser', 'edituser2', 'listusers');
 $ALL_CONTACT_METHODS=array('messaging', 'messaging2', 'messaging3', 'mailto', 'none');
@@ -718,14 +676,12 @@ if ($action == "listusers") {
 		echo "\t<td class=\"optionbox wrap\">";
 		if ((int)get_user_setting($user_id,'reg_timestamp') > (int)get_user_setting($user_id,'sessiontime')) {
 			echo $pgv_lang["never"];
-			if ($TEXT_DIRECTION != 'rtl' && $LANGUAGE != "german")
-				echo '<br />('.since_login((int)get_user_setting($user_id,'reg_timestamp')).' '.$pgv_lang["ago"].')';
-			else echo '<br />('.$pgv_lang["ago"].' '.since_login((int)get_user_setting($user_id,'reg_timestamp')).')';	
+			$pgv_lang["global_string1"] = formatElapsedTime(time() - (int)get_user_setting($user_id,'reg_timestamp'));
+			echo '<br />', getLRM(), '(', print_text('elapsedAgo', 0, 1), getLRM(), ')';
 		} else {
+			$pgv_lang["global_string1"] = formatElapsedTime(time() - (int)get_user_setting($user_id,'sessiontime'));
 			echo format_timestamp((int)get_user_setting($user_id,'sessiontime'));
-			if ($TEXT_DIRECTION != 'rtl'&& $LANGUAGE != "german")
-				echo '<br />('.since_login((int)get_user_setting($user_id,'sessiontime')).' '.$pgv_lang["ago"].')';
-			else echo '<br />('.$pgv_lang["ago"].' '.since_login((int)get_user_setting($user_id,'sessiontime')).')';
+			echo '<br />', getLRM(), '(', print_text('elapsedAgo', 0, 1), getLRM(), ')';
 		}
 		echo "</td>\n";
 		echo "\t<td class=\"optionbox wrap\">";

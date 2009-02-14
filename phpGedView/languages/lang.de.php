@@ -20,9 +20,9 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  * @package PhpGedView
- * @translator Jürgen Bach 
+ * @translator Jürgen Bach
  * @translator Gerd Kroll
- * @translator Kurt Norgaz 
+ * @translator Kurt Norgaz
  * @translator Peter Pluntke
  * @version $Id$
  */
@@ -42,7 +42,7 @@ $pgv_lang["install_step_8"] 			= "Hier beginnen";
 $pgv_lang["parent_family"]				= "Familie der Eltern";
 $pgv_lang["step_parent_family"]			= "Familie der Stiefeltern";
 $pgv_lang["immediate_family"]			= "Eigene Familie";
-                                    	
+
 $pgv_lang["load_full_tree"]				= "Diesen Stammbaum im vollen interaktiven Baumdiagramm zeigen";
 $pgv_lang["hide_show_spouses"]			= "Alle oder nur den letzten Partner zeigen";
 $pgv_lang["interactive_tree"]			= "Interaktives Baumdiagramm";
@@ -654,22 +654,14 @@ $pgv_lang["age"]						= "Alter";
 $pgv_lang["husb_age"]					= "Alter, Gatte";
 $pgv_lang["wife_age"]					= "Alter, Gattin";
 $pgv_lang["year1"]						= "Jahr";
-$pgv_lang["years2"]						= "Jahre";	// 2 years
-$pgv_lang["years"]						= "Jahre";	// >2 years
+$pgv_lang["years2"]						= "Jahre";	// For Polish 2,3,4 or 22,23,24 or 32,33,34 etc.
+$pgv_lang["years"]						= "Jahre";
 $pgv_lang["month1"]						= "Monat";
-$pgv_lang["months2"]					= "Monate"; // 2 months
-$pgv_lang["months"]						= "Monate"; // >2 months
+$pgv_lang["months"]						= "Monate";
 $pgv_lang["week1"]						= "Woche";
 $pgv_lang["weeks"]						= "Wochen";
 $pgv_lang["day1"]						= "Tag";
 $pgv_lang["days"]						= "Tage";
-$pgv_lang["hour1"]						= "Stunde";
-$pgv_lang["hours2"]						= "Stunden"; // 2 hours
-$pgv_lang["hours"]						= "Stunden"; // >2 hours
-$pgv_lang["minute1"]					= "Minute";
-$pgv_lang["minutes2"]					= "Minuten"; // 2 minutes
-$pgv_lang["minutes"]					= "Minuten"; // >2 minutes
-$pgv_lang["ago"]						= "vor";
 $pgv_lang["after_death"]        		= "nach Tod";
 $pgv_lang["at_death_day"]      			= "am Sterbedatum";
 $pgv_lang["timeline_title"]				= "Lebensspanne";
