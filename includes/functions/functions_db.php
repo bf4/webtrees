@@ -2557,17 +2557,19 @@ function get_anniversary_events($jd, $facts='', $ged_id=PGV_GED_ID) {
 						} else {
 							$plac='';
 						}
-						$found_facts[]=array(
-							'record'=>$record,
-							'id'=>$row['xref'],
-							'objtype'=>$row['type'],
-							'fact'=>$row['d_fact'],
-							'factrec'=>$factrec,
-							'jd'=>$jd,
-							'anniv'=>($row['d_year']==0?0:$anniv->y-$row['d_year']),
-							'date'=>$date,
-							'plac'=>$plac
-						);
+						if (showFactDetails($row['d_fact'], $row['xref']) && !FactViewRestricted($row['xref'], $factrec)) {
+							$found_facts[]=array(
+								'record'=>$record,
+								'id'=>$row['xref'],
+								'objtype'=>$row['type'],
+								'fact'=>$row['d_fact'],
+								'factrec'=>$factrec,
+								'jd'=>$jd,
+								'anniv'=>($row['d_year']==0?0:$anniv->y-$row['d_year']),
+								'date'=>$date,
+								'plac'=>$plac
+							);
+						}
 					}
 				}
 			}
@@ -2640,16 +2642,18 @@ function get_calendar_events($jd1, $jd2, $facts='', $ged_id=PGV_GED_ID) {
 					} else {
 						$plac='';
 					}
-					$found_facts[]=array(
-						'id'=>$row[0],
-						'objtype'=>$row[2],
-						'fact'=>$row[7],
-						'factrec'=>$factrec,
-						'jd'=>$jd1,
-						'anniv'=>0,
-						'date'=>$date,
-						'plac'=>$plac
-					);
+					if (showFactDetails($row[7], $row[0]) && !FactViewRestricted($row[0], $factrec)) {
+						$found_facts[]=array(
+							'id'=>$row[0],
+							'objtype'=>$row[2],
+							'fact'=>$row[7],
+							'factrec'=>$factrec,
+							'jd'=>$jd1,
+							'anniv'=>0,
+							'date'=>$date,
+							'plac'=>$plac
+						);
+					}
 				}
 			}
 		}
