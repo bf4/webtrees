@@ -418,4 +418,25 @@ $pgv_lang["index_dir_cleanup"]		= "Wyczyść katalog Index";
 $pgv_lang["error_remote_duplicate"]	= "Ta baza danych istnieje na liście jako <i>#GLOBALS[whichFile]#</i>";
 $pgv_lang["error_remove_site"]			= "Zdalny serwer nie może być usunięty.";
 $pgv_lang["error_remove_site_linked"]	= "Zdalny serwer nie może być usunięty ponieważ jego lista połączeń nie jest pusta.";
+
+// -- The following text is used to build the phrase "i years, j months, k days, l hours, m minutes"
+// -- for use in text such as "xxx ago" or "after xxx" or "in xxx"
+$pgv_lang["elapsedYear1"]	=	"1 rok";
+$pgv_lang["elapsedYear2"]	=	"#pgv_lang[global_num1]# lata";	// used in Polish for 2,3,4 or 22,23,24 or 32,33,34 etc.
+$pgv_lang["elapsedYears"]	=	"#pgv_lang[global_num1]# lat";
+$pgv_lang["elapsedMonth1"]	=	"1 miesiąc";
+$pgv_lang["elapsedMonth2"]	=	"#pgv_lang[global_num1]# miesiące";	// used in Polish for 2,3,4 or 22,23,24 or 32,33,34 etc.
+$pgv_lang["elapsedMonths"]	=	"#pgv_lang[global_num1]# miesięcy";
+$pgv_lang["elapsedDay1"]	=	"1 dzień";
+$pgv_lang["elapsedDay2"]	=	"#pgv_lang[global_num1]# dni";		// used in Polish for 2,3,4 or 22,23,24 or 32,33,34 etc.
+$pgv_lang["elapsedDays"]	=	"#pgv_lang[global_num1]# dni";
+$pgv_lang["elapsedHour1"]	=	"1 godzinę";
+$pgv_lang["elapsedHour2"]	=	"#pgv_lang[global_num1]# godziny";	// used in Polish for 2,3,4 or 22,23,24 or 32,33,34 etc.
+$pgv_lang["elapsedHours"]	=	"#pgv_lang[global_num1]# godzin";
+$pgv_lang["elapsedMinute1"]	=	"1 minutę";
+$pgv_lang["elapsedMinute2"]	=	"#pgv_lang[global_num1]# minuty";	// used in Polish for 2,3,4 or 22,23,24 or 32,33,34 etc.
+$pgv_lang["elapsedMinutes"]	=	"#pgv_lang[global_num1]# minut";
+
+$pgv_lang["elapsedAgo"]		=	"#pgv_lang[global_string1]# temu";
+
 ?>
