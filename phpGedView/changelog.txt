@@ -10,6 +10,7 @@
 
 
 Version 4.2.1
+ - Fixed: [ 2555000 ] 4.2 Anniversary Calendar no privacy rules (fisharebest)
  - Added: [ 2522082 ] Go To Merged Record (fisharebest)
  - Added: [ 2580275 ] 4.2 R.A. improved functionality for Autosearch on Ancestry (erostew/fisharebest)
  - Fixed: [ 2567372 ] Admin does not always see changes to approve correctly
