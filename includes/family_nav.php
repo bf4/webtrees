@@ -194,7 +194,7 @@ if (isset($_COOKIE['lastclick'])) {
 						</td>
 					</tr>
 					<?php
-					$elderdate = $child->getBirthDate(false);
+					$elderdate = $child->getBirthDate();
 				}
 			}
 		}
@@ -255,7 +255,7 @@ if (isset($_COOKIE['lastclick'])) {
 					</td>
 				</tr>
 				<?php
-				$elderdate = $people["husb"]->getBirthDate(false);
+				$elderdate = $people["husb"]->getBirthDate();
 			}
 
 			$styleadd = "";
@@ -328,7 +328,7 @@ if (isset($_COOKIE['lastclick'])) {
 						</td>
 					</tr>
 					<?php
-					//$elderdate = $child->getBirthDate(false);
+					//$elderdate = $child->getBirthDate();
 				}
 			}
 		}

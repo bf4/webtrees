@@ -344,7 +344,7 @@ class Event {
 
 		// If no year, use birth date as fallback
 		if ($date->date1->y==0 && is_object($this->parentObject) && $this->parentObject->getType()=='INDI')
-			$date=$this->parentObject->getBirthDate();
+			$date=$this->parentObject->getEstimatedBirthDate();
 
 		$gdate=new GregorianDate($date->MinDate());
 		$century=floor($gdate->y/100).'00';

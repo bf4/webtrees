@@ -153,7 +153,7 @@ function autocomplete_INDI() {
 			}
 			// display
 			$data[$person->getXref()]=check_NN($row['n_list']);
-			if ($OPTION && $event_date && $person->getBirthDate()) {
+			if ($OPTION && $event_date && $person->getBirthDate()->isOK()) {
 				$data[$person->getXref()].=" <span class=\"age\">(".$pgv_lang["age"]." ".$person->getBirthDate()->MinDate()->getAge(false, $event_jd).")</span>";
 			} else {
 				$data[$person->getXref()].=" <u>".ltrim($person->getBirthYear(), "0")."-".ltrim($person->getDeathYear(), "0")."</u>";

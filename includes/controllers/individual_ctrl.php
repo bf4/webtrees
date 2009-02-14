@@ -1030,7 +1030,7 @@ class IndividualControllerRoot extends BaseController {
 				</td>
 			</tr>
 			<?php
-			$elderdate = $people["newhusb"]->getBirthDate(false);
+			$elderdate = $people["newhusb"]->getBirthDate();
 		}
 		//-- father/husband
 		if (isset($people["husb"])) {
@@ -1042,7 +1042,7 @@ class IndividualControllerRoot extends BaseController {
 				</td>
 			</tr>
 			<?php
-			$elderdate = $people["husb"]->getBirthDate(false);
+			$elderdate = $people["husb"]->getBirthDate();
 		}
 		//-- missing father
 		if ($type=="parents" && !isset($people["husb"]) && !isset($people["newhusb"])) {

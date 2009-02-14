@@ -246,17 +246,25 @@ class Person extends GedcomRecord {
 	* get birth date
 	* @return GedcomDate the birth date
 	*/
-	function getBirthDate($estimate = true) {
+	function getBirthDate() {
 		global $pgv_lang;
-		if (!$this->canDisplayDetails()) {
-			return new GedcomDate("({$pgv_lang['private']})");
+		
+		if (is_null($this->_getBirthDate)) {
+			if ($this->canDisplayDetails()) {
+				foreach ($this->getAllBirthDates() as $date) {
+					if ($date->isOK()) {
+						$this->_getBirthDate=$date;
+						break;
+					}
+				}
+				if (is_null($this->_getBirthDate)) {
+					$this->_getBirthDate=new GedcomDate('');
+				}
+			} else {
+				$this->_getBirthDate=new GedcomDate("({$pgv_lang['private']})");
+			}
 		}
-		$this->_parseBirthDeath();
-		if (empty($this->birthEvent)) {
-			return new GedcomDate(NULL);
-		} else {
-			return $this->birthEvent->getDate($estimate);
-		}
+		return $this->_getBirthDate;
 	}
 
 	/**
@@ -264,25 +272,32 @@ class Person extends GedcomRecord {
 	* @return string
 	*/
 	function getBirthPlace() {
-		$this->_parseBirthDeath();
-		if (is_null($this->birthEvent)) {
-			return "";
+		global $pgv_lang;
+		
+		if (is_null($this->_getBirthPlace)) {
+			if ($this->canDisplayDetails()) {
+				foreach ($this->getAllBirthPlaces() as $place) {
+					if ($place) {
+						$this->_getBirthPlace=$place;
+						break;
+					}
+				}
+				if (is_null($this->_getBirthPlace)) {
+					$this->_getBirthPlace='';
+				}
+			} else {
+				$this->_getBirthPlace=$pgv_lang['private'];
+			}
 		}
-		return $this->birthEvent->getPlace();
+		return $this->_getBirthPlace;
 	}
 
 	/**
 	* get the birth year
 	* @return string the year of birth
 	*/
-	function getBirthYear($est = true, $cal = ""){
-		// TODO - change the design to use julian days, not gregorian years.
-		$this->_parseBirthDeath();
-		if (is_null($this->birthEvent)) {
-			return null;
-		}
-		$bdate = $this->birthEvent->getDate();
-		return $bdate->date1->y;
+	function getBirthYear(){
+		return $this->getBirthDate()->MinDate()->Format('Y');
 	}
 
 	/**
@@ -291,14 +306,23 @@ class Person extends GedcomRecord {
 	*/
 	function getDeathDate($estimate = true) {
 		global $pgv_lang;
-		if (!$this->canDisplayDetails()) {
-			return new GedcomDate("({$pgv_lang['private']})");
+		
+		if (is_null($this->_getDeathDate)) {
+			if ($this->canDisplayDetails()) {
+				foreach ($this->getAllDeathDates() as $date) {
+					if ($date->isOK()) {
+						$this->_getDeathDate=$date;
+						break;
+					}
+				}
+				if (is_null($this->_getDeathDate)) {
+					$this->_getDeathDate=new GedcomDate('');
+				}
+			} else {
+				$this->_getDeathDate=new GedcomDate("({$pgv_lang['private']})");
+			}
 		}
-		$this->_parseBirthDeath();
-		if (empty($this->deathEvent))
-			return new GedcomDate(NULL);
-		else
-			return $this->deathEvent->getDate($estimate);
+		return $this->_getDeathDate;
 	}
 
 	/**
@@ -306,22 +330,32 @@ class Person extends GedcomRecord {
 	* @return string
 	*/
 	function getDeathPlace() {
-		$this->_parseBirthDeath();
-		return $this->deathEvent->getPlace();
+		global $pgv_lang;
+		
+		if (is_null($this->_getDeathPlace)) {
+			if ($this->canDisplayDetails()) {
+				foreach ($this->getAllDeathPlaces() as $place) {
+					if ($place) {
+						$this->_getDeathPlace=$place;
+						break;
+					}
+				}
+				if (is_null($this->_getDeathPlace)) {
+					$this->_getDeathPlace='';
+				}
+			} else {
+				$this->_getDeathPlace=$pgv_lang['private'];
+			}
+		}
+		return $this->_getDeathPlace;
 	}
 
 	/**
 	* get the death year
 	* @return string the year of death
 	*/
-	function getDeathYear($est = true, $cal = "") {
-		// TODO - change the design to use julian days, not gregorian years.
-		$this->_parseBirthDeath();
-		if (is_null($this->deathEvent)) {
-			return null;
-		}
-		$ddate = $this->deathEvent->getDate();
-		return $ddate->date1->y;
+	function getDeathYear() {
+		return $this->getDeathDate()->MinDate()->Format('Y');
 	}
 
 	// Get all the dates/places for births/deaths - for the INDI lists
@@ -967,11 +1001,11 @@ class Person extends GedcomRecord {
 		if (is_null($person)) return;
 		if (!$SHOW_RELATIVES_EVENTS) return;
 		if ($sosa>7) return; // sosa max for recursive call
-		$this->_parseBirthDeath();
+
 		$fams = $person->getChildFamilies();
 		// Only include events between birth and death
-		$bDate=$this->getBirthDate();
-		$dDate=$this->getDeathDate();
+		$bDate=$this->getEstimatedBirthDate();
+		$dDate=$this->getEstimatedDeathDate();
 
 		//-- find family as child
 		/* @var $family Family */
@@ -1087,11 +1121,10 @@ class Person extends GedcomRecord {
 		if ($option=="2") $option="_FSIB";
 		if ($option=="3") $option="_MSIB";
 		if (strstr($SHOW_RELATIVES_EVENTS, $option)===false) return;
-		if (empty($this->brec)) $this->_parseBirthDeath();
 
 		// Only include events between birth and death
-		$bDate=$this->getBirthDate();
-		$dDate=$this->getDeathDate();
+		$bDate=$this->getEstimatedBirthDate();
+		$dDate=$this->getEstimatedDeathDate();
 
 		$children = $family->getChildren();
 		foreach ($children as $key=>$child) {
@@ -1286,10 +1319,9 @@ class Person extends GedcomRecord {
 		if (preg_match('/\n1 (?:'.PGV_EVENTS_DIV.')\b/', $famrec)) {
 			return;
 		}
-		if (empty($this->brec)) $this->_parseBirthDeath();
 		// Only include events between birth and death
-		$bDate=$this->getBirthDate();
-		$dDate=$this->getDeathDate();
+		$bDate=$this->getEstimatedBirthDate();
+		$dDate=$this->getEstimatedDeathDate();
 
 		// add spouse death
 		if ($spouse && strstr($SHOW_RELATIVES_EVENTS, '_DEAT_SPOU')) {
@@ -1339,10 +1371,10 @@ class Person extends GedcomRecord {
 		global $LANGUAGE, $lang_short_cut;
 		global $SHOW_RELATIVES_EVENTS;
 		if (!$SHOW_RELATIVES_EVENTS) return;
-		if (empty($this->brec)) $this->_parseBirthDeath();
+
 		// Only include events between birth and death
-		$bDate=$this->getBirthDate();
-		$dDate=$this->getDeathDate();
+		$bDate=$this->getEstimatedBirthDate();
+		$dDate=$this->getEstimatedDeathDate();
 		if (!$bDate->isOK()) return;
 
 		if ($SHOW_RELATIVES_EVENTS && file_exists('languages/histo.'.$lang_short_cut[$LANGUAGE].'.php')) {
