@@ -143,8 +143,8 @@ class Base_AutoSearch {
 	function fullname(&$person, $inputname='fullname') {
 		$all_full=array();
 		foreach ($person->getAllNames() as $name) {
-			if ($name['surname']!='@N.N.') {
-				$all_full[]=htmlspecialchars(strip_tags($name['full']));
+			if ($name['givn']!='@N.N.' && $name['surname']!='@N.N.') {
+				$all_full[]=htmlspecialchars("{$name['givn']} {$name['surname']}");
 			}
 		}
 		$all_full=array_unique($all_full);
@@ -178,7 +178,6 @@ class Base_AutoSearch {
 		}
 	}
 	
-	// Function added to get full name of father for Ancestry websites.
 	function ffullname($person) {
 		$parents=$person->getPrimaryChildFamily();
 		if ($parents && $parents->getHusband()) {
@@ -206,10 +205,9 @@ class Base_AutoSearch {
 		}
 	}
 	
-	// Function added to get full name of mother for Ancestry websites.
 	function mfullname($person) {
 		$parents=$person->getPrimaryChildFamily();
-		if ($parents->getWife()) {
+		if ($parents && $parents->getWife()) {
 			return $this->fullname($parents->getWife(), 'mfullname');
 		} else {
 			return '<input type="hidden" name="mfullname" value="">';
@@ -234,7 +232,6 @@ class Base_AutoSearch {
 		}
 	}
 
-	// Function added to get full name of spouse for Ancestry websites.
 	function sfullname($person) {
 		$spouse=$person->getCurrentSpouse();
 		if ($spouse) {
