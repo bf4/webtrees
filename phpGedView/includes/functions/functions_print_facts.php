@@ -1607,12 +1607,15 @@ function print_main_media_row($rtype, $rowm, $pid) {
 		print "<br />\n";
 		//-- print spouse name for marriage events
 		if ($rowm['mm_gid']!=$pid) {
+			$spouse=null;
 			$parents = find_parents($rowm['mm_gid']);
 			if ($parents) {
-				if (!empty($parents['HUSB']) && $parents['HUSB']!=$pid) $spouse = Person::getInstance($parents['HUSB']);
-				if (!empty($parents['WIFE']) && $parents['WIFE']!=$pid) $spouse = Person::getInstance($parents['WIFE']);
-			} else {
-				$spouse=null;
+				if (!empty($parents['HUSB']) && $parents['HUSB']!=$pid) {
+					$spouse = Person::getInstance($parents['HUSB']);
+				}
+				if (!empty($parents['WIFE']) && $parents['WIFE']!=$pid) {
+					$spouse = Person::getInstance($parents['WIFE']);
+				}
 			}
 			if ($spouse) {
 				print "<a href=\"".$spouse->getLinkUrl()."\">";
