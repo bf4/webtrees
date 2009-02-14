@@ -43,8 +43,6 @@ class Person extends GedcomRecord {
 	var $bd_parsed = false;
 	var $birthEvent = null;
 	var $deathEvent = null;
-	var $birthEvent2 = null;
-	var $deathEvent2 = null;
 	var $best = false;
 	var $dest = false;
 	var $fams = null;
@@ -198,11 +196,6 @@ class Person extends GedcomRecord {
 			$this->deathEvent = new Event($drec);
 			$this->deathEvent->setParentObject($this);
 		}
-		//-- 2nd record with alternate date (hebrew...)
-		$this->birthEvent2 = new Event(get_sub_record(1, "1 BIRT", $this->gedrec, 2));
-		$this->birthEvent2->setParentObject($this);
-		$this->deathEvent2 = new Event(get_sub_record(1, "1 DEAT", $this->gedrec, 2));
-		$this->deathEvent2->setParentObject($this);
 
 		//-- if no death estimate from birth
 		$bdate = null;
