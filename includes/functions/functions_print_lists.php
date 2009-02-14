@@ -968,39 +968,18 @@ function print_shnote_table($datalist, $legend=null) {
 		echo '<th class="list_label rela">NOTE</th>';
 	}
 	echo '<th class="list_label">', $factarray['TITL'], '</th>';
-	echo '<td class="list_label t2" style="display:none;">', $factarray['TITL'], ' 2</td>';
-	echo '<th class="list_label">', $factarray['AUTH'], '</th>';
 	echo '<th class="list_label">', $pgv_lang['individuals'], '</th>';
 	echo '<th class="list_label">', $pgv_lang['families'], '</th>';
 	echo '<th class="list_label">', $pgv_lang['media'], '</th>';
+	echo '<th class="list_label">', $pgv_lang['sources'], '</th>';
 	if ($SHOW_LAST_CHANGE) {
 		echo '<th class="list_label rela">', $factarray['CHAN'], '</th>';
 	}
 	echo '</tr>';
 	//-- table body
-	$t2=false;
 	$n=0;
-	foreach ($datalist as $key=>$value) {
-		if (is_object($value)) { // Array of objects
-			$shnote=$value;
-		} elseif (!is_array($value)) { // Array of IDs
-			$shnote=Shnote::getInstance($key); // from placelist
-			if (is_null($shnote)) {
-				$shnote=Shnote::getInstance($value);
-			}
-			unset($value);
-		} else { // Array of search results
-			$gid='';
-			if (isset($value['gid'])) {
-				$gid=$value['gid'];
-			}
-			if (isset($value['gedcom'])) {
-				$shnote=new Shnote($value['gedcom']);
-			} else {
-				$shnote=Shnote::getInstance($gid);
-			}
-		}
-		if (!$shnote || !$shnote->canDisplayDetails()) {
+	foreach ($datalist as $shnote) {
+		if (!$shnote->canDisplayDetails()) {
 			continue;
 		}
 		$link_url=encode_url($shnote->getLinkUrl());
@@ -1013,21 +992,6 @@ function print_shnote_table($datalist, $legend=null) {
 		//-- Shared Note name(s)
 		$tmp=$shnote->getFullName();
 		echo '<td class="list_value_wrap" align="', get_align($tmp), '"><a href="', $link_url, '" class="list_item name2">', PrintReady($tmp), '</a></td>';
-		// alternate title in a new column
-		$tmp=$shnote->getAddName();
-		if ($tmp) {
-			echo '<td class="list_value_wrap t2" style="display:none;" align="', get_align($tmp), '"><a href="', $link_url, '" class="list_item">', PrintReady($tmp), '</a></td>';
-			$t2=true;
-		} else {
-			echo '<td class="list_value_wrap t2" style="display:none;">&nbsp;</td>';
-		}
-		//-- Author
-//BH		$tmp=$shnote->getAuth();
-		if ($tmp) {
-			echo '<td class="list_value_wrap" align="', get_align($tmp), '"><a href="', $link_url, '" class="list_item">', PrintReady($tmp), '</a></td>';
-		} else {
-			echo '<td class="list_value_wrap">&nbsp;</td>';
-		}
 		//-- Linked INDIs
 		$tmp=$shnote->countLinkedIndividuals();
 		echo '<td class="list_value_wrap"><a href="', $link_url, '" class="list_item" name="', $tmp, '">', $tmp, '</a></td>';
@@ -1036,6 +1000,9 @@ function print_shnote_table($datalist, $legend=null) {
 		echo '<td class="list_value_wrap"><a href="', $link_url, '" class="list_item" name="', $tmp, '">', $tmp, '</a></td>';
 		//-- Linked OBJEcts
 		$tmp=$shnote->countLinkedMedia();
+		echo '<td class="list_value_wrap"><a href="', $link_url, '" class="list_item" name="', $tmp, '">', $tmp, '</a></td>';
+		//-- Linked SOURs
+		$tmp=$shnote->countLinkedSources();
 		echo '<td class="list_value_wrap"><a href="', $link_url, '" class="list_item" name="', $tmp, '">', $tmp, '</a></td>';
 		//-- Last change
 		if ($SHOW_LAST_CHANGE) {
@@ -1048,29 +1015,12 @@ function print_shnote_table($datalist, $legend=null) {
 	if ($SHOW_ID_NUMBERS) {
 		echo '<td></td>';
 	}
-	echo '<td class="list_label">', $pgv_lang['total_shnotes'], ' : ', $n,  '</td><td></td><td class="t2" style="display:none;"></td><td></td><td></td><td></td><td></td>';
+	echo '<td class="list_label">', $pgv_lang['total_shnotes'], ' : ', $n,  '</td><td></td><td class="t2" style="display:none;"></td><td></td><td></td><td></td>';
 	if ($SHOW_LAST_CHANGE) {
 		echo '<td></td>';
 	}
 	echo '</tr></table></fieldset>';
-	// show TITLE2 col if not empty
-	if ($t2) {
-		echo <<< T2
-		<script type="text/javascript">
-			var table = document.getElementById("$table_id");
-			cells = table.getElementsByTagName('td');
-			for (i=0;i<cells.length;i++) {
-				if (cells[i].className && (cells[i].className.indexOf('t2') != -1)) {
-					cells[i].style.display="";
-				}
-			}
-		</script>
-T2;
-	}
 }
-
-
-
 
 /**
  * print a sortable table of repositories

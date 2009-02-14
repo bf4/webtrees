@@ -93,14 +93,6 @@ class Shnote extends GedcomRecord {
 	}
 
 	/**
-	 * get the author of this shared note record
-	 * @return string
-	 */
-	function getAuth() {
-		return get_gedcom_value('AUTH', 1, $this->gedrec, '', false);
-	}
-
-	/**
 	 * get the URL to link to this shnote
 	 * @string a url that can be used to link to this shared note
 	 */
@@ -110,7 +102,9 @@ class Shnote extends GedcomRecord {
 
 	// Get an array of structures containing all the names in the record
 	function getAllNames() {
-		return parent::getAllNames('TITL');
+		// Uniquely, the NOTE objects have data in their level 0 record.
+		// Hence the REGEX passed in the second parameter
+		return parent::getAllNames('NOTE', "0 @".PGV_REGEX_XREF."@");
 	}
 }
 ?>
