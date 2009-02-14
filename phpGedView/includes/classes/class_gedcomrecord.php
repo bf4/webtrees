@@ -524,6 +524,25 @@ class GedcomRecord {
 		return strcmp($x->getXref(), $y->getXref());
 	}
 
+	// Static helper function to sort an array of objects by Change Date
+	static function CompareChanDate($x, $y) {
+		$chan_x = $x->getChangeEvent();
+		$chan_y = $y->getChangeEvent();
+		$tmp=GedcomDate::Compare($chan_x->getDate(), $chan_y->getDate());
+		if ($tmp) {
+			return $tmp;
+		} else {
+			if (
+				preg_match('/^\d\d:\d\d:\d\d/', get_gedcom_value('DATE:TIME', 2, $chan_x->getGedComRecord(), '', false).':00', $match_x) &&
+				preg_match('/^\d\d:\d\d:\d\d/', get_gedcom_value('DATE:TIME', 2, $chan_y->getGedComRecord(), '', false).':00', $match_y)
+			) {
+				return strcmp($match_x[0], $match_y[0]);
+			} else {
+				return 0;
+			}
+		}
+	}
+
 	// Get the three variants of the name
 	function getFullName() {
 		global $pgv_lang;

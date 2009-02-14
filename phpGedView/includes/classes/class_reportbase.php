@@ -1297,21 +1297,18 @@ function PGVRFactsSHandler($attrs) {
 		foreach($facts as $event) {
 			if (strpos($tag.",",$event->getTag())===false) $repeats[]=$event->getGedComRecord();
 		}
-	}
-	else {
+	} else {
 		global $nonfacts;
 		$nonfacts = preg_split("/[\s,;:]/", $tag);
 		$person = new Person($gedrec);
-//		print "<pre>".$gedrec."</pre>";
 		$oldPerson = Person::getInstance($person->getXref());
-//		print "<pre>".$oldPerson->getGedcomRecord()."</pre>";
 		$oldPerson->diffMerge($person);
 		$facts = $oldPerson->getIndiFacts();
-		foreach($facts as $f=>$fact) {
-			if (strstr($fact[1], "PGV_NEW")!==false) $repeats[] = $fact[1];
-//			else if (strstr($fact[1], "PGV_OLD")!==false) $repeats[] = $fact[1];
+		foreach ($facts as $f=>$fact) {
+			if (strstr($fact->getGedcomRecord(), "PGV_NEW")!==false) {
+				$repeats[]=$fact->getGedcomRecord();
+			}
 		}
-//		var_dump($repeats);
 	}
 }
 
@@ -1774,11 +1771,11 @@ function PGVRListSHandler($attrs) {
 			}
 			break;
 		case "pending":
-			$list = array();
-			foreach($pgv_changes as $cid=>$changes) {
-				$change = end($changes);
-				if ($change["gedcom"]==$GEDCOM) {
-					$list[$change['gid']] = $change;
+			$list=array();
+			foreach ($pgv_changes as $changes) {
+				$change=end($changes);
+				if ($change['gedcom']==$GEDCOM) {
+					$list[]=new GedcomRecord($change['undo']);
 				}
 			}
 			break;
@@ -1878,11 +1875,30 @@ function PGVRListSHandler($attrs) {
 		}
 		$list = $mylist;
 	}
-	if ($sortby=="NAME") uasort($list, array('GedcomRecord', 'Compare'));
-	else if ($sortby=="ID") uasort($list, array('GedcomRecord', 'CompareId'));
-	else if ($sortby=="CHAN") uasort($list, "compare_date_descending");
-	else uasort($list, "compare_date");
-	//print count($list);
+	switch ($sortby) {
+	case 'NAME':
+		uasort($list, array('GedcomRecord', 'Compare'));
+		break;
+	case 'ID':
+		uasort($list, array('GedcomRecord', 'CompareId'));
+		break;
+	case 'CHAN':
+		uasort($list, array('GedcomRecord', 'CompareChanDate'));
+		break;
+	case 'BIRT':
+		uasort($list, array('Person', 'CompareBirtDate'));
+		break;
+	case 'DEAT':
+		uasort($list, array('Person', 'CompareDeatDate'));
+		break;
+	case 'MARR':
+		uasort($list, array('Family', 'CompareMarrDate'));
+		break;
+	default:
+		// unsorted
+		break;
+	}
+
 	array_push($repeatsStack, array($repeats, $repeatBytes));
 	$repeatBytes = xml_get_current_line_number($parser)+1;
 }
@@ -1923,10 +1939,9 @@ function PGVRListEHandler() {
 	$oldgedrec = $gedrec;
 	$list_total = count($list);
 	$list_private = 0;
-	foreach($list as $key=>$value) {
-		if (displayDetailsById($key)) {
-			if (isset($value["undo"])) $gedrec = $value["undo"];
-			else $gedrec = find_gedcom_record($key);
+	foreach ($list as $record) {
+		if ($record->canDisplayDetails()) {
+			$gedrec=$record->getGedcomRecord();
 			//-- start the sax parser
 			$repeat_parser = xml_parser_create();
 			$parser = $repeat_parser;
@@ -2062,25 +2077,31 @@ function PGVRRelativesSHandler($attrs) {
 		}
 	}
 
-	if ($sortby!="none") {
-		if ($sortby=="NAME") uasort($list, array('GedcomRecord', 'Compare'));
-		else if ($sortby=="ID") uasort($list, array('GedcomRecord', 'CompareId'));
-		else if ($sortby=="generation") {
-			$newarray = array();
-			reset($list);
-			$genCounter = 1;
-			while (count($newarray) < count($list)) {
-				foreach ($list as $key => $value) {
-					$generation = $value->generation;
-					if ($generation == $genCounter) {
-						$newarray[$key]->generation=$generation;
-					}
+	switch ($sortby) {
+	case 'NAME':
+		uasort($list, array('GedcomRecord', 'Compare'));
+		break;
+	case 'ID':
+		uasort($list, array('GedcomRecord', 'CompareId'));
+		break;
+	case 'generation':
+		$newarray = array();
+		reset($list);
+		$genCounter = 1;
+		while (count($newarray) < count($list)) {
+			foreach ($list as $key => $value) {
+				$generation = $value->generation;
+				if ($generation == $genCounter) {
+					$newarray[$key]->generation=$generation;
 				}
-				$genCounter++;
 			}
-			$list = $newarray;
+			$genCounter++;
 		}
-		else uasort($list, "compare_date");
+		$list = $newarray;
+		break;
+	default:
+		// unsorted
+		break;
 	}
 //	print count($list);
 	array_push($repeatsStack, array($repeats, $repeatBytes));
