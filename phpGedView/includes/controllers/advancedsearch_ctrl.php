@@ -74,6 +74,8 @@ class AdvancedSearchController extends SearchController {
 	}
 
 	function getOtherFields() {
+		global $INDI_FACTS_ADD;
+
 		$ofields = array("ADDR","ADDR:CITY","ADDR:STAE","ADDR:CTRY","ADDR:POST",
 			"AFN","EMAIL","FAX",
 			"CHR:DATE","CHR:PLAC",
@@ -98,6 +100,18 @@ class AdvancedSearchController extends SearchController {
 			"SLGC:DATE","SLGC:PLAC","SLGC:TEMP",
 			"FAMS:SLGS:DATE","FAMS:SLGS:PLAC","FAMS:SLGS:TEMP"
 		);
+		// Allow (some of) the user-specified fields to be selected
+		foreach (explode(',', $INDI_FACTS_ADD) as $fact) {
+			if (
+				$fact!='BIRT' &&
+				$fact!='DEAT' &&
+				!in_array($fact, $ofields) &&
+				!in_array("{$fact}:DATE", $ofields) &&
+				!in_array("{$fact}:DATE", $ofields)
+			) {
+				$ofields[]=$fact;
+			}
+		}
 		return $ofields;
 	}
 
