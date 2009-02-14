@@ -540,6 +540,7 @@ $pgv_lang["lang_name_polish"]		= "polski";
 $pgv_lang["lang_name_portuguese"]	= "portugalski";
 $pgv_lang["lang_name_romanian"]		= "rumuński";
 $pgv_lang["lang_name_russian"]		= "rosyjski";
+$pgv_lang["lang_name_serbian-la"]	= "serbski (alfabet łaciński)";
 $pgv_lang["lang_name_spanish"]		= "hiszpański";
 $pgv_lang["lang_name_spanish-ar"]	= "hiszpański (Ameryka Łacińska)";
 $pgv_lang["lang_name_swedish"]		= "szwedzki";
