@@ -227,28 +227,6 @@ class Person extends GedcomRecord {
 			}
 		}
 	}
-	/**
-	* get birth record
-	* @param boolean $estimate Provide an estimated birth date for people without a birth record
-	* @return string
-	*/
-	function getBirthRecord($estimate=true) {
-		if (!$this->bd_parsed) {
-			$this->_parseBirthDeath();
-		}
-		return $this->birthEvent->getGedcomRecord();
-	}
-	/**
-	* get death record
-	* @param boolean $estimate Provide an estimated death date for people without a death record
-	* @return string
-	*/
-	function getDeathRecord($estimate=true) {
-		if (!$this->bd_parsed) {
-			$this->_parseBirthDeath();
-		}
-		return $this->deathEvent->getGedcomRecord();
-	}
 
 	/**
 	* get birth Event
