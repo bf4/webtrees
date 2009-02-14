@@ -463,7 +463,7 @@ class GedcomRecord {
 					break;
 				default:
 					foreach ($this->getAllNames() as $n=>$name) {
-						if (whatLanguage($name['sort'])=='other') {
+						if ($name['type']!='_MARNM' && whatLanguage($name['sort'])=='other') {
 							$this->_getPrimaryName=$n;
 							break;
 						}
