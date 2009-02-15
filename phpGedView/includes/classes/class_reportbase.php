@@ -1736,7 +1736,7 @@ function PGVRListSHandler($attrs) {
 					$sql_where[]="{$attr}.n_file ".PGV_DB_LIKE." '%". $DBCONN->escapeSimple($match[1])."%'";
 					if ($sortby=='NAME') {
 						$sortby='';
-						$sql_order_by[]="{$attr}name.n_sort";
+						$sql_order_by[]="{$attr}.n_sort";
 					}
 					unset($attrs[$attr]); // This filter has been fully processed
 				} elseif (preg_match('/^:PLAC CONTAINS (.+)$/', $value, $match)) {
