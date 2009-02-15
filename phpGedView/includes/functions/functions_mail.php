@@ -36,7 +36,7 @@ define('PGV_FUNCTIONS_MAIL_PHP', '');
  * for deatiled info on MIME (RFC 1521) email see: http://www.freesoft.org/CIE/RFC/1521/index.htm
  */
 function pgvMail($to, $from, $subject, $message) {
-	global $PGV_SMTP_ACTIVE, $PGV_SMTP_HOST, $PGV_SMTP_HELO, $PGV_SMTP_FROM_NAME, $PGV_SMTP_PORT, $PGV_SMTP_AUTH, $PGV_SMTP_AUTH_USER, $PGV_SMTP_AUTH_PASS;
+	global $PGV_SMTP_ACTIVE, $PGV_SMTP_HOST, $PGV_SMTP_HELO, $PGV_SMTP_FROM_NAME, $PGV_SMTP_PORT, $PGV_SMTP_AUTH, $PGV_SMTP_AUTH_USER, $PGV_SMTP_AUTH_PASS, $PGV_SMTP_SSL;
 	global $pgv_lang, $CHARACTER_SET, $LANGUAGE, $PGV_STORE_MESSAGES, $TEXT_DIRECTION;
 	$mailFormat = "plain";
 	//$mailFormat = "html";
@@ -124,7 +124,7 @@ function pgvMail($to, $from, $subject, $message) {
 			$mail_object->Username = $PGV_SMTP_AUTH_USER;
 			$mail_object->Password = $PGV_SMTP_AUTH_PASS;
 		}
-		if ($PGV_SMTP_HOST == "smtp.gmail.com") {
+		if ($PGV_SMTP_SSL) {
 			$mail_object->SMTPSecure = "ssl";
 		}
 		$mail_object->Host = $PGV_SMTP_HOST;

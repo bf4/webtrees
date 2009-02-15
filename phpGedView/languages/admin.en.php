@@ -316,6 +316,7 @@ $pgv_lang["PGV_SMTP_PORT"] 						= "SMTP Port";
 $pgv_lang["PGV_SMTP_AUTH"] 						= "Use name and password";
 $pgv_lang["PGV_SMTP_AUTH_USER"] 				= "User name";
 $pgv_lang["PGV_SMTP_AUTH_PASS"] 				= "Password";
+$pgv_lang["PGV_SMTP_SSL"] 						= "Login via SSL";
 $pgv_lang["PGV_SMTP_FROM_NAME"] 				= "Sender name";
 $pgv_lang["PGV_STORE_MESSAGES"]					= "Allow messages to be stored online";
 $pgv_lang["phpinfo"]							= "PHP information";

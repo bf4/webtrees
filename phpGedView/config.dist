@@ -73,6 +73,7 @@ $PGV_SMTP_PORT = "25";							//-- The port number talk to the SMTP smarthost
 $PGV_SMTP_AUTH = false;							//-- Enable the use of SMTP authorization
 $PGV_SMTP_AUTH_USER = "";						//-- User name for SMTP authorization
 $PGV_SMTP_AUTH_PASS = "";						//-- Password for SMTP authorization
+$PGV_SMTP_SSL = false;							//-- Use SSL for SMTP authorization
 $PGV_SMTP_FROM_NAME = "";						//-- Sender name
 
 $CONFIGURED = false;

@@ -244,6 +244,7 @@ switch($step) {
 		if (isset($_POST["NEW_PGV_SMTP_AUTH"])) $_SESSION['install_config']['PGV_SMTP_AUTH'] =$_POST["NEW_PGV_SMTP_AUTH"]=="yes"?true:false;
 		if (isset($_POST["NEW_PGV_SMTP_AUTH_USER"])) $_SESSION['install_config']['PGV_SMTP_AUTH_USER'] =$_POST["NEW_PGV_SMTP_AUTH_USER"];
 		if (isset($_POST["NEW_PGV_SMTP_AUTH_PASS"])) $_SESSION['install_config']['PGV_SMTP_AUTH_PASS'] =$_POST["NEW_PGV_SMTP_AUTH_PASS"];
+		if (isset($_POST["NEW_PGV_SMTP_SSL"])) $_SESSION['install_config']['PGV_SMTP_SSL'] =$_POST["NEW_PGV_SMTP_SSL"]=="yes"?true:false;
 		if (isset($_POST["NEW_PGV_SMTP_FROM_NAME"])) $_SESSION['install_config']['PGV_SMTP_FROM_NAME'] =$_POST["NEW_PGV_SMTP_FROM_NAME"];
 		if (isset($_POST['NEW_ALLOW_USER_THEMES'])) $_SESSION['install_config']['ALLOW_USER_THEMES'] = $_POST['NEW_ALLOW_USER_THEMES']=="yes"?true:false;
 		if (isset($_POST['NEW_ALLOW_REMEMBER_ME'])) $_SESSION['install_config']['ALLOW_REMEMBER_ME'] = $_POST['NEW_ALLOW_REMEMBER_ME']=="yes"?true:false;
@@ -735,7 +736,7 @@ function printDBForm() {
 function printConfigForm(){
 	global $TEXT_DIRECTION, $PGV_DXHTMLTAB_COLORS, $PGV_STORE_MESSAGES, $USE_REGISTRATION_MODULE, $REQUIRE_ADMIN_AUTH_REGISTRATION;
 	global $ALLOW_CHANGE_GEDCOM, $PGV_SIMPLE_MAIL, $ALLOW_USER_THEMES, $ALLOW_REMEMBER_ME, $LOGFILE_CREATE, $SERVER_URL;
-	global $PGV_SMTP_ACTIVE, $PGV_SMTP_HOST, $PGV_SMTP_HELO, $PGV_SMTP_PORT, $PGV_SMTP_AUTH, $PGV_SMTP_AUTH_USER, $PGV_SMTP_AUTH_PASS, $PGV_SMTP_FROM_NAME;
+	global $PGV_SMTP_ACTIVE, $PGV_SMTP_HOST, $PGV_SMTP_HELO, $PGV_SMTP_PORT, $PGV_SMTP_AUTH, $PGV_SMTP_AUTH_USER, $PGV_SMTP_AUTH_PASS, $PGV_SMTP_SSL, $PGV_SMTP_FROM_NAME;
 	global $LOGIN_URL, $SCRIPT_NAME, $PGV_SESSION_SAVE_PATH, $PGV_SESSION_TIME, $COMMIT_COMMAND, $PGV_MEMORY_LIMIT, $MAX_VIEWS;
 	global $MAX_VIEW_TIME, $INDEX_DIRECTORY;
 	global $BROWSERTYPE;		// MSIE and dhtmlXTabbar don't play friendly at the moment
@@ -760,6 +761,7 @@ function printConfigForm(){
 	if (isset($_SESSION['install_config']['PGV_SMTP_AUTH'])) $PGV_SMTP_AUTH = $_SESSION['install_config']['PGV_SMTP_AUTH'];
 	if (isset($_SESSION['install_config']['PGV_SMTP_AUTH_USER'])) $PGV_SMTP_AUTH_USER = $_SESSION['install_config']['PGV_SMTP_AUTH_USER'];
 	if (isset($_SESSION['install_config']['PGV_SMTP_AUTH_PASS'])) $PGV_SMTP_AUTH_PASS = $_SESSION['install_config']['PGV_SMTP_AUTH_PASS'];
+	if (isset($_SESSION['install_config']['PGV_SMTP_SSL'])) $PGV_SMTP_SSL = $_SESSION['install_config']['PGV_SMTP_SSL'];
 	if (isset($_SESSION['install_config']['PGV_SMTP_FROM_NAME'])) $PGV_SMTP_FROM_NAME = $_SESSION['install_config']['PGV_SMTP_FROM_NAME'];
 	if (isset($_SESSION['install_config']['PGV_SESSION_SAVE_PATH'])) $PGV_SESSION_SAVE_PATH = $_SESSION['install_config']['PGV_SESSION_SAVE_PATH'];
 	if (isset($_SESSION['install_config']['PGV_SESSION_TIME'])) $PGV_SESSION_TIME = $_SESSION['install_config']['PGV_SESSION_TIME'];
@@ -923,19 +925,19 @@ function printConfigForm(){
 			</tr>
 			</table>
 		</div>
-		
-		<!--  smtp settings -->
-		<div id="conf_smtp" name="SMTP" class="indent">
-			<table>
-		<?php if ($BROWSERTYPE=='msie') { ?>
-			<tr><td colspan="2" class="center"><br /><b>SMTP</b></td></tr>
-		<?php } ?>
+	
+	<!--  smtp settings -->
+	<div id="conf_smtp" name="SMTP" class="indent">
+		<table>
+	<?php if ($BROWSERTYPE=='msie') { ?>
+		<tr><td colspan="2" class="center"><br /><b>SMTP</b></td></tr>
+	<?php } ?>
 	<tr>
-			<td class="descriptionbox wrap width30"><?php print_help_link("PGV_SMTP_ACTIVE_help", "qm", "PGV_SMTP_ACTIVE"); print $pgv_lang["PGV_SMTP_ACTIVE"];?></td>
+		<td class="descriptionbox wrap width30"><?php print_help_link("PGV_SMTP_ACTIVE_help", "qm", "PGV_SMTP_ACTIVE"); print $pgv_lang["PGV_SMTP_ACTIVE"];?></td>
 		<td class="optionbox"><select name="NEW_PGV_SMTP_ACTIVE" tabindex="<?php $i++; print $i?>" onfocus="getHelp('PGV_SMTP_ACTIVE_help');">
-				<option value="yes" <?php if ($PGV_SMTP_ACTIVE) print "selected=\"selected\""; ?>><?php print $pgv_lang["yes"];?></option>
-				<option value="no" <?php if (!$PGV_SMTP_ACTIVE) print "selected=\"selected\""; ?>><?php print $pgv_lang["no"];?></option>
-			</select>
+			<option value="yes" <?php if ($PGV_SMTP_ACTIVE) print "selected=\"selected\""; ?>><?php print $pgv_lang["yes"];?></option>
+			<option value="no" <?php if (!$PGV_SMTP_ACTIVE) print "selected=\"selected\""; ?>><?php print $pgv_lang["no"];?></option>
+		</select>
 	</tr>
 	<tr>
 		<td class="descriptionbox wrap width30"><?php print_help_link("PGV_SMTP_HOST_help", "qm", "PGV_SMTP_HOST"); print $pgv_lang["PGV_SMTP_HOST"];?></td>
@@ -952,9 +954,9 @@ function printConfigForm(){
 	<tr>
 		<td class="descriptionbox wrap width30"><?php print_help_link("PGV_SMTP_AUTH_help", "qm", "PGV_SMTP_AUTH"); print $pgv_lang["PGV_SMTP_AUTH"];?></td>
 		<td class="optionbox"><select name="NEW_PGV_SMTP_AUTH" tabindex="<?php $i++; print $i?>" onfocus="getHelp('PGV_SMTP_AUTH_help');">
-				<option value="yes" <?php if ($PGV_SMTP_AUTH) print "selected=\"selected\""; ?>><?php print $pgv_lang["yes"];?></option>
-				<option value="no" <?php if (!$PGV_SMTP_AUTH) print "selected=\"selected\""; ?>><?php print $pgv_lang["no"];?></option>
-			</select>
+			<option value="yes" <?php if ($PGV_SMTP_AUTH) print "selected=\"selected\""; ?>><?php print $pgv_lang["yes"];?></option>
+			<option value="no" <?php if (!$PGV_SMTP_AUTH) print "selected=\"selected\""; ?>><?php print $pgv_lang["no"];?></option>
+		</select>
 	</tr>
 	<tr>
 		<td class="descriptionbox wrap width30"><?php print_help_link("PGV_SMTP_AUTH_USER_help", "qm", "PGV_SMTP_AUTH_USER"); print $pgv_lang["PGV_SMTP_AUTH_USER"];?></td>
@@ -963,6 +965,13 @@ function printConfigForm(){
 	<tr>
 		<td class="descriptionbox wrap width30"><?php print_help_link("PGV_SMTP_AUTH_PASS_help", "qm", "PGV_SMTP_AUTH_PASS"); print $pgv_lang["PGV_SMTP_AUTH_PASS"];?></td>
 		<td class="optionbox"><input type="password" name="NEW_PGV_SMTP_AUTH_PASS" value="<?php print $PGV_SMTP_AUTH_PASS?>" tabindex="<?php $i++; print $i?>" onfocus="getHelp('PGV_SMTP_AUTH_PASS_help');" /></td>
+	</tr>
+	<tr>
+		<td class="descriptionbox wrap width30"><?php print_help_link("PGV_SMTP_SSL_help", "qm", "PGV_SMTP_SSL"); print $pgv_lang["PGV_SMTP_SSL"];?></td>
+		<td class="optionbox"><select name="NEW_PGV_SMTP_SSL" tabindex="<?php $i++; print $i?>" onfocus="getHelp('PGV_SMTP_SSL_help');">
+			<option value="yes" <?php if ($PGV_SMTP_SSL) print "selected=\"selected\""; ?>><?php print $pgv_lang["yes"];?></option>
+			<option value="no" <?php if (!$PGV_SMTP_SSL) print "selected=\"selected\""; ?>><?php print $pgv_lang["no"];?></option>
+		</select>
 	</tr>
 	<tr>
 		<td class="descriptionbox wrap width30"><?php print_help_link("PGV_SMTP_FROM_NAME_help", "qm", "PGV_SMTP_FROM_NAME"); print $pgv_lang["PGV_SMTP_FROM_NAME"];?></td>
