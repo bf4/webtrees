@@ -501,6 +501,11 @@ class GedcomRecord {
 		$this->_getSecondaryName=null;
 	}
 
+	// Allow native PHP functions such as array_intersect() to work with objects
+	public function __toString() {
+		return $this->xref.'@'.$this->ged_id;
+	}
+
 	// Static helper function to sort an array of objects by name
 	// Records whose names cannot be displayed are sorted at the end.
 	static function Compare($x, $y) {
