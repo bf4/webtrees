@@ -1730,7 +1730,9 @@ function PGVRListSHandler($attrs) {
 						$sortby='';
 						$sql_order_by[]="{$attr}.d_julianday1";
 					}
-					unset($attrs[$attr]); // This filter has been fully processed
+					if (substr($value, 0, 1)==':') {
+						unset($attrs[$attr]); // This filter has been fully processed
+					}
 				} elseif ($listname=='individual' && preg_match('/^NAME CONTAINS (.+)$/', $value, $match)) {
 					$sql_join[]="JOIN {$TBLPREFIX}name AS {$attr} ON (n_file={$sql_col_prefix}file AND n_id={$sql_col_prefix}id)";
 					$sql_where[]="{$attr}.n_sort ".PGV_DB_LIKE." '%". $DBCONN->escapeSimple($match[1])."%'";
@@ -1846,9 +1848,18 @@ function PGVRListSHandler($attrs) {
 			$j++;
 		}
 	}
-
 	//-- apply other filters to the list that could not be added to the search string
-	if (count($filters2)>0) {
+	if ($filters) {
+		foreach ($list as $key=>$record) {
+			foreach ($filters as $filter) {
+				if (!preg_match('/'.$filter.'/i', $record->getGedcomRecord())) {
+					unset($list[$key]);
+					break;
+				}
+			}
+		}
+	}
+	if ($filters2) {
 		$mylist = array();
 		foreach($list as $indi) {
 			$key=$indi->getXref();
