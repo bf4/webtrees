@@ -1731,8 +1731,19 @@ function PGVRListSHandler($attrs) {
 						$sql_order_by[]="{$attr}.d_julianday1";
 					}
 					unset($attrs[$attr]); // This filter has been fully processed
-				} elseif (preg_match('/^NAME CONTAINS (.+)$/', $value, $match)) {
+				} elseif ($listname=='individual' && preg_match('/^NAME CONTAINS (.+)$/', $value, $match)) {
 					$sql_join[]="JOIN {$TBLPREFIX}name AS {$attr} ON (n_file={$sql_col_prefix}file AND n_id={$sql_col_prefix}id)";
+					$sql_where[]="{$attr}.n_sort ".PGV_DB_LIKE." '%". $DBCONN->escapeSimple($match[1])."%'";
+					if ($sortby=='NAME') {
+						$sortby='';
+						$sql_order_by[]="{$attr}.n_sort";
+					}
+					unset($attrs[$attr]); // This filter has been fully processed
+				} elseif ($listname=='family' && preg_match('/^NAME CONTAINS (.+)$/', $value, $match)) {
+					// Eventually, family "names" will be stored in pgv_name.  Until then, an extra is needed....
+					$sql_join[]="JOIN {$TBLPREFIX}link AS {$attr}a ON ({$attr}a.l_file={$sql_col_prefix}file AND {$attr}a.l_from={$sql_col_prefix}id)";
+					$sql_join[]="JOIN {$TBLPREFIX}name AS {$attr}b ON ({$attr}b.n_file={$sql_col_prefix}file AND n_id={$sql_col_prefix}id)";
+					$sql_where[]="{$attr}a.l_type=IN ('HUSB, 'WIFE')";
 					$sql_where[]="{$attr}.n_sort ".PGV_DB_LIKE." '%". $DBCONN->escapeSimple($match[1])."%'";
 					if ($sortby=='NAME') {
 						$sortby='';
