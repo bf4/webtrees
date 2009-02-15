@@ -361,7 +361,7 @@ class PGVRCellHTML extends PGVRCell {
 
 	function render(&$pdf) {
 		global $TEXT_DIRECTION, $embed_fonts;
-		if (strstr($this->text, "{nb}")!==false) return;
+		if (strstr($this->text, "{{nb}}")!==false) return;
 		/* -- commenting out because it causes too many problems
 		if ($TEXT_DIRECTION=='rtl') {
 			if ($this->align=='L') $this->align='R';
