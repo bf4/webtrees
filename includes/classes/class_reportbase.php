@@ -1674,7 +1674,7 @@ function PGVRLineSHandler($attrs) {
 
 function PGVRListSHandler($attrs) {
 	global $pgvreport, $gedrec, $repeats, $repeatBytes, $list, $repeatsStack, $processRepeats, $parser, $vars, $sortby;
-	global $pgv_changes, $GEDCOM;
+	global $pgv_changes, $GEDCOM, $DBCONN, $TBLPREFIX;
 
 	$processRepeats++;
 	if ($processRepeats>1) return;
@@ -1693,6 +1693,71 @@ function PGVRListSHandler($attrs) {
 		$listname=$attrs["list"];
 	} else {
 		$listname = "individual";
+	}
+
+	// Some filters/sorts can be applied using SQL, while others require PHP
+	switch ($listname) {
+	case 'pending':
+		$list=array();
+		foreach ($pgv_changes as $changes) {
+			$change=end($changes);
+			if ($change['gedcom']==$GEDCOM) {
+				$list[]=new GedcomRecord($change['undo']);
+			}
+		}
+		break;
+	case 'individual':
+	case 'family':
+		$sql_col_prefix=substr($listname,0,1).'_'; // i_ for individual, f_ for family, etc.
+		$sql_join=array();
+		$sql_where=array($sql_col_prefix."file=".PGV_GED_ID);
+		$sql_order_by=array();
+		foreach ($attrs as $attr=>$value) {
+			if (strpos($attr, 'filter')===0 && $value) {
+				// Substitute global vars
+				$value=preg_replace('/\$(\w+)/e', '$vars["\\1"]["id"]', $value);
+				// Convert the various filters into SQL
+				if (preg_match('/^(\w+):DATE (LTE|GTE) (.+)$/', $value, $match)) {
+					$sql_join[]="JOIN {$TBLPREFIX}dates AS {$attr} ON ({$attr}.d_file={$sql_col_prefix}file AND {$attr}.d_gid={$sql_col_prefix}id)";
+					$sql_where[]="{$attr}.d_fact='{$match[1]}'";
+					$date=new GedcomDate($match[3]);
+					if ($match[2]=='LTE') {
+						$sql_where[]="{$attr}.d_julianday2<=".$date->minJD();
+					} else {
+						$sql_where[]="{$attr}.d_julianday1>=".$date->minJD();
+					}
+					if ($sortby==$match[1]) {
+						$sortby='';
+						$sql_order_by[]="{$attr}.d_julianday1";
+					}
+					unset($attrs[$attr]); // This filter has been fully processed
+				} elseif (preg_match('/^NAME CONTAINS (.+)$/', $value, $match)) {
+					$sql_join[]="JOIN {$TBLPREFIX}name AS {$attr} ON (n_file={$sql_col_prefix}file AND n_id={$sql_col_prefix}id)";
+					$sql_where[]="{$attr}.n_file ".PGV_DB_LIKE." '%". $DBCONN->escapeSimple($match[1])."%'";
+					if ($sortby=='NAME') {
+						$sortby='';
+						$sql_order_by[]="{$attr}name.n_sort";
+					}
+					unset($attrs[$attr]); // This filter has been fully processed
+				} elseif (preg_match('/^:PLAC CONTAINS (.+)$/', $value, $match)) {
+					$sql_join[]="JOIN {$TBLPREFIX}places AS {$attr}a ON ({$attr}a.p_file={$sql_col_prefix}file)";
+					$sql_join[]="JOIN {$TBLPREFIX}placelinks AS {$attr}b ON ({$attr}a.p_file={$attr}b.pl_file AND {$attr}b.pl_p_id={$attr}a.p_id AND {$attr}b.pl_gid={$sql_col_prefix}id)";
+					$sql_where[]="{$attr}a.p_place ".PGV_DB_LIKE." '". $DBCONN->escapeSimple($match[1])."'";
+					unset($attrs[$attr]); // This filter has been fully processed
+				} else {
+					// TODO: what other filters can we apply in SQL?
+					//var_dump($value);
+				}
+			}
+		}
+		if ($listname=='family') {
+			$list=search_fams_custom($sql_join, $sql_where, $sql_order_by);
+		} else {
+			$list=search_indis_custom($sql_join, $sql_where, $sql_order_by);
+		}
+		break;
+	default:
+		die("Invalid list name: $listname");
 	}
 
 	$filters = array();
@@ -1768,63 +1833,7 @@ function PGVRListSHandler($attrs) {
 			$j++;
 		}
 	}
-	switch($listname) {
-		case "family":
-			if (count($filters)>0) {
-				$list = search_fams($filters, array(PGV_GED_ID), 'AND', true);
-			} else {
-				$list = get_fam_list();
-			}
-			break;
-		case "pending":
-			$list=array();
-			foreach ($pgv_changes as $changes) {
-				$change=end($changes);
-				if ($change['gedcom']==$GEDCOM) {
-					$list[]=new GedcomRecord($change['undo']);
-				}
-			}
-			break;
-		case "individual":
-			if ($filters) {
-				$list=search_indis($filters, array(PGV_GED_ID), 'AND', true);
-			}
-			if ($filters2) {
-				//-- handle date specific searches
-				foreach ($filters2 as $f=>$filter) {
-					$tags = explode(':', $filter["tag"]);
-					if (end($tags)=="DATE") {
-						if ($filter['expr']=='LTE') {
-							$enddate = new GedcomDate($filter['val']);
-							$endtag = $tags[0];
-							unset($filters2[$f]);
-						} elseif ($filter['expr']=='GTE') {
-							$startdate = new GedcomDate($filter['val']);
-							$starttag = $tags[0];
-							unset($filters2[$f]);
-						}
-					}
-				}
-				if (isset($startdate) && isset($enddate)) {
-					if ($filters) {
-						// Intersect two lists
-						$list=array_intersect(
-							$list,
-							search_indis_daterange($startdate->MinJD(), $enddate->MaxJD(), $starttag.",".$endtag)
-						);
-					} else {
-						$list=search_indis_daterange($startdate->MinJD(), $enddate->MaxJD(), $starttag.",".$endtag);
-					}
-				} else {
-					$list=get_indi_list();
-				}
-			} else {
-				$list=get_indi_list();
-			}
-			break;
-		default:
-			die("Invalid list name: $listname");
-	}
+
 	//-- apply other filters to the list that could not be added to the search string
 	if (count($filters2)>0) {
 		$mylist = array();
@@ -1906,7 +1915,7 @@ function PGVRListSHandler($attrs) {
 		uasort($list, array('Family', 'CompareMarrDate'));
 		break;
 	default:
-		// unsorted
+		// unsorted or already sorted by SQL
 		break;
 	}
 
