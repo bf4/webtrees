@@ -47,6 +47,7 @@ VERSION 4.2.1
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 -----------------------------------------------------------------------------------------
++$pgv_lang["PGV_SMTP_SSL"] 							15 Feb 2009				A
 +$pgv_lang["elapsedYear1"]							14 Feb 2009				A
 +$pgv_lang["elapsedYear2"]							14 Feb 2009				A
 +$pgv_lang["elapsedYears"]							14 Feb 2009				A

@@ -47,6 +47,7 @@ VERSION 4.2.1
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 -----------------------------------------------------------------------------------------
++$pgv_lang["PGV_SMTP_SSL_help"]						15 Feb 2009				A
 *$pgv_lang["USE_THUMBS_MAIN_help"]					13 Feb 2009				w
 +$pgv_lang["lang_name_serbian-la"]					12 Feb 2009				A
 
