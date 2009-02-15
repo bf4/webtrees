@@ -1679,15 +1679,21 @@ function PGVRListSHandler($attrs) {
 	$processRepeats++;
 	if ($processRepeats>1) return;
 
-	$sortby = "NAME";
-	if (isset($attrs["sortby"])) $sortby = $attrs["sortby"];
-	if (preg_match("/\\$(\w+)/", $sortby, $vmatch)>0) {
-		$sortby = $vars[$vmatch[1]]["id"];
-		$sortby = trim($sortby);
+	if (isset($attrs["sortby"])) {
+		$sortby = $attrs["sortby"];
+		if (preg_match("/\\$(\w+)/", $sortby, $vmatch)>0) {
+			$sortby = $vars[$vmatch[1]]["id"];
+			$sortby = trim($sortby);
+		}
+	} else {
+		$sortby = "NAME";
 	}
-	$list = array();
-	$listname = "individual";
-	if (isset($attrs["list"])) $listname=$attrs["list"];
+
+	if (isset($attrs["list"])) {
+		$listname=$attrs["list"];
+	} else {
+		$listname = "individual";
+	}
 
 	$filters = array();
 	$filters2 = array();
@@ -1779,40 +1785,45 @@ function PGVRListSHandler($attrs) {
 				}
 			}
 			break;
-		default:
-			if (count($filters)>0) {
-//				var_dump($filters);
-				$list = search_indis($filters, array(PGV_GED_ID), 'AND', true);
+		case "individual":
+			if ($filters) {
+				$list=search_indis($filters, array(PGV_GED_ID), 'AND', true);
 			}
-			//-- handle date specific searches
-			foreach($filters2 as $f=>$filter) {
-				$tags = explode(':', $filter["tag"]);
-				if (end($tags)=="DATE") {
-					if ($filter['expr']=='LTE') {
-						$enddate = new GedcomDate($filter['val']);
-						$endtag = $tags[0];
-					}
-					if ($filter['expr']=='GTE') {
-						$startdate = new GedcomDate($filter['val']);
-						$starttag = $tags[0];
+			if ($filters2) {
+				//-- handle date specific searches
+				foreach ($filters2 as $f=>$filter) {
+					$tags = explode(':', $filter["tag"]);
+					if (end($tags)=="DATE") {
+						if ($filter['expr']=='LTE') {
+							$enddate = new GedcomDate($filter['val']);
+							$endtag = $tags[0];
+							unset($filters2[$f]);
+						} elseif ($filter['expr']=='GTE') {
+							$startdate = new GedcomDate($filter['val']);
+							$starttag = $tags[0];
+							unset($filters2[$f]);
+						}
 					}
 				}
-			}
-			if (isset($startdate) && isset($enddate)) {
-				$dlist = search_indis_daterange($startdate->MinJD(), $enddate->MaxJD(), $starttag.",".$endtag);
-				if (!isset($list) || count($list)==0)
-					$list = $dlist;
-				else {
-					//-- intersect the lists
-					$newlist = array();
-					foreach($list as $id=>$indi) {
-						if (isset($dlist[$id])) $newlist[$id] = $indi;
+				if (isset($startdate) && isset($enddate)) {
+					if ($filters) {
+						// Intersect two lists
+						$list=array_intersect(
+							$list,
+							search_indis_daterange($startdate->MinJD(), $enddate->MaxJD(), $starttag.",".$endtag)
+						);
+					} else {
+						$list=search_indis_daterange($startdate->MinJD(), $enddate->MaxJD(), $starttag.",".$endtag);
 					}
-					$list = $newlist;
+				} else {
+					$list=get_indi_list();
 				}
+			} else {
+				$list=get_indi_list();
 			}
-			if (!isset($list)) $list = get_indi_list();
 			break;
+		default:
+			die("Invalid list name: $listname");
 	}
 	//-- apply other filters to the list that could not be added to the search string
 	if (count($filters2)>0) {

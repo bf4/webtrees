@@ -1761,15 +1761,11 @@ function search_indis_daterange($start, $end, $facts) {
 
 	$sql="SELECT 'INDI' AS type, i_id AS xref, i_file AS ged_id, i_gedcom AS gedrec, i_isdead, i_sex FROM {$TBLPREFIX}individuals JOIN {$TBLPREFIX}dates ON i_id=d_gid AND i_file=d_file WHERE i_file=".PGV_GED_ID." AND d_julianday1 BETWEEN {$start} AND {$end}";
 	if ($facts) {
-		$facts=preg_split('/[, ;]+/', $facts);
+		$facts=explode(',', $facts);
 		foreach ($facts as $key=>$value) {
-			if ($value[0]=='!') {
-				$facts[$key]="d_fact!='".$DBCONN->escapeSimple(substr($value,1))."'";
-			} else {
-				$facts[$key]="d_fact='".$DBCONN->escapeSimple($value)."'";
-			}
+			$facts[$key]="'".$DBCONN->escapeSimple($value)."'";
 		}
-		$sql.=' AND '.implode(' AND ', $facts);
+		$sql.=' AND d_fact IN ('.implode(',', $facts).')';
 	}
 
 	$list=array();
