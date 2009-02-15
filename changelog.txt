@@ -10,6 +10,7 @@
 
 
 Version 4.2.1
+ - Fixed: [ 2556004 ] 4.2.0 - Reports without data output (fisharebest)
  - Fixed: [ 2562498 ] 4993 General Search - last change (fisharebest)
  - Fixed: [ 2555000 ] 4.2 Anniversary Calendar no privacy rules (fisharebest)
  - Added: [ 2522082 ] Go To Merged Record (fisharebest)
