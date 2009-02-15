@@ -825,7 +825,7 @@ function PGVRPageNumSHandler($attrs) {
 function PGVRTotalPagesSHandler($attrs) {
 	global $currentElement;
 
-	$currentElement->addText("{nb}");
+	$currentElement->addText("{{nb}}");
 }
 
 function PGVRGedcomSHandler($attrs) {
