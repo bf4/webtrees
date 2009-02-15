@@ -1733,7 +1733,7 @@ function PGVRListSHandler($attrs) {
 					unset($attrs[$attr]); // This filter has been fully processed
 				} elseif (preg_match('/^NAME CONTAINS (.+)$/', $value, $match)) {
 					$sql_join[]="JOIN {$TBLPREFIX}name AS {$attr} ON (n_file={$sql_col_prefix}file AND n_id={$sql_col_prefix}id)";
-					$sql_where[]="{$attr}.n_file ".PGV_DB_LIKE." '%". $DBCONN->escapeSimple($match[1])."%'";
+					$sql_where[]="{$attr}.n_sort ".PGV_DB_LIKE." '%". $DBCONN->escapeSimple($match[1])."%'";
 					if ($sortby=='NAME') {
 						$sortby='';
 						$sql_order_by[]="{$attr}.n_sort";
