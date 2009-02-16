@@ -1449,14 +1449,11 @@ class stats {
 				.' AVG(death.d_julianday2-birth.d_julianday1) AS age'
 			.' FROM'
 				." {$TBLPREFIX}dates AS death,"
-				." {$TBLPREFIX}dates AS birth,"
-				." {$TBLPREFIX}individuals AS indi"
+				." {$TBLPREFIX}dates AS birth"
 			.' WHERE'
-				.' indi.i_id=birth.d_gid AND'
 				.' birth.d_gid=death.d_gid AND'
 				." death.d_file={$this->_ged_id} AND"
 				.' birth.d_file=death.d_file AND'
-				.' birth.d_file=indi.i_file AND'
 				." birth.d_fact IN ('BIRT', 'CHR', 'BAPM', '_BRTM') AND"
 				." death.d_fact IN ('DEAT', 'BURI', 'CREM') AND"
 				.' birth.d_julianday1!=0 AND'
