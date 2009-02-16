@@ -235,6 +235,7 @@ class IndividualControllerRoot extends BaseController {
 		//-- only allow editors or users who are editing their own individual or their immediate relatives
 		if ($this->indi->canDisplayDetails()) {
 			$this->canedit = PGV_USER_CAN_EDIT;
+/* Disable self-editing completely until we have a GEDCOM config option to control this
 			if (!$this->canedit && $USE_QUICK_UPDATE) {
 				$my_id=PGV_USER_GEDCOM_ID;
 				if ($my_id) {
@@ -249,6 +250,7 @@ class IndividualControllerRoot extends BaseController {
 					}
 				}
 			}
+*/
 		}
 
 		//-- handle ajax calls
