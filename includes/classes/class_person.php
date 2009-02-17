@@ -201,7 +201,6 @@ class Person extends GedcomRecord {
 	*/
 	function getBirthPlace() {
 		global $pgv_lang;
-		
 		if (is_null($this->_getBirthPlace)) {
 			if ($this->canDisplayDetails()) {
 				foreach ($this->getAllBirthPlaces() as $place) {
@@ -221,15 +220,27 @@ class Person extends GedcomRecord {
 	}
 	
 	/**
-	* get the Census birth place
+	* get the Census birth place (Town and County (reversed))
 	* @return string
 	*/
 	function getCensBirthPlace() {
-		$this->_parseBirthDeath();
-		if (is_null($this->birthEvent)) {
-			return "";
+		global $pgv_lang;
+		if (is_null($this->_getBirthPlace)) {
+			if ($this->canDisplayDetails()) {
+				foreach ($this->getAllBirthPlaces() as $place) {
+					if ($place) {
+						$this->_getBirthPlace=$place;
+						break;
+					}
+				}
+				if (is_null($this->_getBirthPlace)) {
+					$this->_getBirthPlace='';
+				}
+			} else {
+				$this->_getBirthPlace=$pgv_lang['private'];
+			}
 		}
-		$censbirthplace = $this->birthEvent->getPlace();
+		$censbirthplace = $this->_getBirthPlace;
 		$censbirthplace = explode(", ", $censbirthplace);
 		$censbirthplace = array_reverse($censbirthplace);
 		$censbirthplace = array_slice($censbirthplace, 1);
