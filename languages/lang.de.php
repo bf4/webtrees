@@ -20,9 +20,9 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  * @package PhpGedView
- * @translator Jürgen Bach 
+ * @translator Jürgen Bach
  * @translator Gerd Kroll
- * @translator Kurt Norgaz 
+ * @translator Kurt Norgaz
  * @translator Peter Pluntke
  * @version $Id$
  */
@@ -42,7 +42,7 @@ $pgv_lang["install_step_8"] 			= "Hier beginnen";
 $pgv_lang["parent_family"]				= "Familie der Eltern";
 $pgv_lang["step_parent_family"]			= "Familie der Stiefeltern";
 $pgv_lang["immediate_family"]			= "Eigene Familie";
-                                    	
+
 $pgv_lang["load_full_tree"]				= "Diesen Stammbaum im vollen interaktiven Baumdiagramm zeigen";
 $pgv_lang["hide_show_spouses"]			= "Alle oder nur den letzten Partner zeigen";
 $pgv_lang["interactive_tree"]			= "Interaktives Baumdiagramm";
@@ -291,6 +291,7 @@ $pgv_lang["sort_by_marriage"]			= "Nach Ehedatum sortieren";
 $pgv_lang["reorder_families"]			= "Familien neu ordnen";
 $pgv_lang["indis_with_surname"]			= "Personen mit dem Nachnamen #surname#";
 $pgv_lang["first_letter_name"]			= "Wählen Sie einen Buchstaben, um Familien zu sehen, deren Namen diesen Anfangsbuchstaben haben.";
+$pgv_lang["first_letter_sfname"]		= "Wählen Sie einen Buchstaben, um Familien zu sehen, deren Ehegatten-Vornamen diesen Anfangsbuchstaben haben.";
 $pgv_lang["first_letter_iname"]			= "Wählen Sie einen Buchstaben, um Personen zu sehen, deren Familiennamen diesen Anfangsbuchstaben haben.";
 $pgv_lang["first_letter_fname"]			= "Wählen Sie einen Buchstaben, um Personen zu sehen, deren Vornamen diesen Anfangsbuchstaben haben.";
 $pgv_lang["total_names"]				= "Nachnamen Anzahl";
@@ -311,7 +312,6 @@ $pgv_lang["quick_update_instructions"]	= "Auf dieser Seite können Sie schnell d
 $pgv_lang["update_name"]				= "Namen bearbeiten";
 $pgv_lang["update_fact"]				= "Ereignis bearbeiten";
 $pgv_lang["update_fact_restricted"]		= "Die Bearbeitung dieses Ereignisses ist eingeschränkt:";
-$pgv_lang["update_photo"]				= "Foto aktualisieren";
 $pgv_lang["select_fact"]				= "Ein Ereignis wählen...";
 $pgv_lang["update_address"]				= "Adresse bearbeiten";
 $pgv_lang["top10_pageviews_descr"]		= "Dieser Block zeigt die 10 Datensätze an, die am häufigsten aufgerufen wurden. Sie müssen dazu in der GEDCOM Konfiguration die Zähler zunächst aktivieren.";
@@ -654,22 +654,14 @@ $pgv_lang["age"]						= "Alter";
 $pgv_lang["husb_age"]					= "Alter, Gatte";
 $pgv_lang["wife_age"]					= "Alter, Gattin";
 $pgv_lang["year1"]						= "Jahr";
-$pgv_lang["years2"]						= "Jahre";	// 2 years
-$pgv_lang["years"]						= "Jahre";	// >2 years
+$pgv_lang["years2"]						= "Jahre";	// For Polish 2,3,4 or 22,23,24 or 32,33,34 etc.
+$pgv_lang["years"]						= "Jahre";
 $pgv_lang["month1"]						= "Monat";
-$pgv_lang["months2"]					= "Monate"; // 2 months
-$pgv_lang["months"]						= "Monate"; // >2 months
+$pgv_lang["months"]						= "Monate";
 $pgv_lang["week1"]						= "Woche";
 $pgv_lang["weeks"]						= "Wochen";
 $pgv_lang["day1"]						= "Tag";
 $pgv_lang["days"]						= "Tage";
-$pgv_lang["hour1"]						= "Stunde";
-$pgv_lang["hours2"]						= "Stunden"; // 2 hours
-$pgv_lang["hours"]						= "Stunden"; // >2 hours
-$pgv_lang["minute1"]					= "Minute";
-$pgv_lang["minutes2"]					= "Minuten"; // 2 minutes
-$pgv_lang["minutes"]					= "Minuten"; // >2 minutes
-$pgv_lang["ago"]						= "vor";
 $pgv_lang["after_death"]        		= "nach Tod";
 $pgv_lang["at_death_day"]      			= "am Sterbedatum";
 $pgv_lang["timeline_title"]				= "Lebensspanne";
@@ -845,7 +837,8 @@ $pgv_lang["relationship_great"]			= "Ur";
 $pgv_lang["relationship_chart"]			= "Verwandtschaftsberechnung";
 $pgv_lang["person1"]					= "Person 1";
 $pgv_lang["person2"]					= "Person 2";
-$pgv_lang["no_link_found"]				= "Keine (weitere) Verbindung zwischen den beiden Personen gefunden.";
+$pgv_lang["no_link_found"]				= "Keine Verbindung zwischen den beiden Personen gefunden.";
+$pgv_lang["no_other_link_found"]		= "Keine weitere Verbindung zwischen den beiden Personen gefunden.";
 $pgv_lang["sibling"]					= "Geschwister";
 $pgv_lang["follow_spouse"]				= "Verwandtschaft anhand der Ehen überprüfen";
 $pgv_lang["timeout_error"]				= "Die maximal zulässige Ausführungszeit wurde überschritten, bevor ein Verwandtschaftsverhältnis gefunden werden konnte.";

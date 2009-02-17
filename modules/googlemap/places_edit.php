@@ -3,7 +3,7 @@
  * Interface to edit place locations
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team. All rights reserved.
+ * Copyright (C) 2002 to 2009  PGV Development Team. All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -682,10 +682,19 @@ if ($action=="add") {
 		language_filter = lang;
 		magnify = mag;
 	}
+
+	function edit_close(newurl) {
+		if (newurl)
+			window.opener.location=newurl;
+		else
+			if (window.opener.showchanges)
+				window.opener.showchanges();
+		window.close();
+	}
 	//-->
 </script>
 
-<form method="post" id="editplaces" name="editplaces" action="module.php?mod=googlemap&pgvaction=places_edit">
+<form method="post" id="editplaces" name="editplaces" action="module.php?mod=googlemap&amp;pgvaction=places_edit">
 	<input type="hidden" name="action" value="<?php echo $action;?>record" />
 	<input type="hidden" name="placeid" value="<?php echo $placeid;?>" />
 	<input type="hidden" name="level" value="<?php echo $level;?>" />
@@ -695,7 +704,7 @@ if ($action=="add") {
 	<input type="hidden" name="place_lati" value="<?php echo $place_lati;?>" />
 	<input type="hidden" name="parent_long" value="<?php echo $parent_long;?>" />
 	<input type="hidden" name="parent_lati" value="<?php echo $parent_lati;?>" />
-	<input id="savebutton" name="save1" type="submit" value="<?php echo $pgv_lang["save"];?>" /><br />
+	<input name="save1" type="submit" value="<?php echo $pgv_lang["save"];?>" /><br />
 
 	<table class="facts_table">
 	<tr>
@@ -712,8 +721,8 @@ if ($action=="add") {
 	 	 <td class="optionbox"><input type="text" id="new_pl_name" name="NEW_PLACE_NAME" value="<?php echo htmlspecialchars(PrintReady($place_name));?>" size="25" class="address_input" tabindex="<?php echo ++$i;?>" />
 		<div id="INDI_PLAC_pop" style="display: inline;">
 		<?php print_specialchar_link("NEW_PLACE_NAME", false);?></div>
-		<label for="new_pl_name"><a href="javascript:;" onclick="showLocation_level(NEW_PLACE_NAME.value); return false">&nbsp;<?php echo $pgv_lang["pl_search_level"]?></a></label>&nbsp;&nbsp;|
-	 	<label for="new_pl_name"><a href="javascript:;" onclick="showLocation_all(NEW_PLACE_NAME.value); return false">&nbsp;<?php echo $pgv_lang["pl_search_all"]?></a></label>
+		<label for="new_pl_name"><a href="javascript:;" onclick="showLocation_level(document.getElementById('new_pl_name').value); return false">&nbsp;<?php echo $pgv_lang["pl_search_level"]?></a></label>&nbsp;&nbsp;|
+	 	<label for="new_pl_name"><a href="javascript:;" onclick="showLocation_all(document.getElementById('new_pl_name').value); return false">&nbsp;<?php echo $pgv_lang["pl_search_all"]?></a></label>
 		</td>
 	</tr>
 	<tr>
@@ -730,17 +739,17 @@ if ($action=="add") {
 			else if ($precision > 5) $precision = 5;
 		?>
 		<td class="optionbox">
-			<input type="radio" id="new_prec_0" name="NEW_PRECISION" onchange="updateMap();" <?php if($precision==$GOOGLEMAP_PRECISION_0) echo "checked "?>value="<?php echo $GOOGLEMAP_PRECISION_0;?>" tabindex="<?php echo ++$i;?>" />
+			<input type="radio" id="new_prec_0" name="NEW_PRECISION" onchange="updateMap();" <?php if($precision==$GOOGLEMAP_PRECISION_0) echo "checked=\"checked\"";?> value="<?php echo $GOOGLEMAP_PRECISION_0;?>" tabindex="<?php echo ++$i;?>" />
 			<label for="new_prec_0"><?php echo $pgv_lang["pl_country"];?></label>
-			<input type="radio" id="new_prec_1" name="NEW_PRECISION" onchange="updateMap();" <?php if($precision==$GOOGLEMAP_PRECISION_1) echo "checked "?>value="<?php echo $GOOGLEMAP_PRECISION_1;?>" tabindex="<?php echo ++$i;?>" />
+			<input type="radio" id="new_prec_1" name="NEW_PRECISION" onchange="updateMap();" <?php if($precision==$GOOGLEMAP_PRECISION_1) echo "checked=\"checked\"";?> value="<?php echo $GOOGLEMAP_PRECISION_1;?>" tabindex="<?php echo ++$i;?>" />
 			<label for="new_prec_1"><?php echo $pgv_lang["pl_state"];?></label>
-			<input type="radio" id="new_prec_2" name="NEW_PRECISION" onchange="updateMap();" <?php if($precision==$GOOGLEMAP_PRECISION_2) echo "checked "?>value="<?php echo $GOOGLEMAP_PRECISION_2;?>" tabindex="<?php echo ++$i;?>" />
+			<input type="radio" id="new_prec_2" name="NEW_PRECISION" onchange="updateMap();" <?php if($precision==$GOOGLEMAP_PRECISION_2) echo "checked=\"checked\"";?> value="<?php echo $GOOGLEMAP_PRECISION_2;?>" tabindex="<?php echo ++$i;?>" />
 			<label for="new_prec_2"><?php echo $pgv_lang["pl_city"];?></label>
-			<input type="radio" id="new_prec_3" name="NEW_PRECISION" onchange="updateMap();" <?php if($precision==$GOOGLEMAP_PRECISION_3) echo "checked "?>value="<?php echo $GOOGLEMAP_PRECISION_3;?>" tabindex="<?php echo ++$i;?>" />
+			<input type="radio" id="new_prec_3" name="NEW_PRECISION" onchange="updateMap();" <?php if($precision==$GOOGLEMAP_PRECISION_3) echo "checked=\"checked\"";?> value="<?php echo $GOOGLEMAP_PRECISION_3;?>" tabindex="<?php echo ++$i;?>" />
 			<label for="new_prec_3"><?php echo $pgv_lang["pl_neighborhood"];?></label>
-			<input type="radio" id="new_prec_4" name="NEW_PRECISION" onchange="updateMap();"<?php if($precision==$GOOGLEMAP_PRECISION_4) echo "checked "?>value="<?php echo $GOOGLEMAP_PRECISION_4;?>" tabindex="<?php echo ++$i;?>" />
+			<input type="radio" id="new_prec_4" name="NEW_PRECISION" onchange="updateMap();"<?php if($precision==$GOOGLEMAP_PRECISION_4) echo "checked=\"checked\"";?> value="<?php echo $GOOGLEMAP_PRECISION_4;?>" tabindex="<?php echo ++$i;?>" />
 			<label for="new_prec_4"><?php echo $pgv_lang["pl_house"];?></label>
-			<input type="radio" id="new_prec_5" name="NEW_PRECISION" onchange="updateMap();"<?php if($precision>$GOOGLEMAP_PRECISION_4) echo "checked "?>value="<?php echo $GOOGLEMAP_PRECISION_5;?>" />
+			<input type="radio" id="new_prec_5" name="NEW_PRECISION" onchange="updateMap();"<?php if($precision>$GOOGLEMAP_PRECISION_4) echo "checked=\"checked\"";?> value="<?php echo $GOOGLEMAP_PRECISION_5;?>" />
 			<label for="new_prec_5"><?php echo $pgv_lang["pl_max"];?></label>
 		</td>
 	</tr>
@@ -778,17 +787,18 @@ if ($action=="add") {
 				<a href="javascript:;" onclick="change_icon();return false;"><?php echo $pgv_lang["pl_change_flag"]?></a>
 <?php   }
 		else { ?>
-				<img src="<?php echo $place_icon;?>">&nbsp;&nbsp;
+				<img alt="<?php echo $pgv_lang["pl_flag"]?>" src="<?php echo $place_icon;?>"/>&nbsp;&nbsp;
 				<a href="javascript:;" onclick="change_icon();return false;"><?php echo $pgv_lang["pl_change_flag"]?></a>&nbsp;&nbsp;
 				<a href="javascript:;" onclick="remove_icon();return false;"><?php echo $pgv_lang["pl_remove_flag"]?></a>
 <?php   } ?>
 			</div></td>
 	</tr>
 	</table>
-	<input id="savebutton" name="save2" type="submit" value="<?php echo $pgv_lang["save"];?>" /><br />
+	<input name="save2" type="submit" value="<?php echo $pgv_lang["save"];?>" /><br />
 </form>
 <?php
-echo "<center><br /><br /><br /><a href=\"#\" onclick=\"if (window.opener.showchanges) window.opener.showchanges(); window.close();\">".$pgv_lang["close_window"]."</a><br /></center>\n";
+$link = 'module.php?mod=googlemap&pgvaction=places&parent='.$placeid;
+echo "<center><br /><br /><br /><a href=\"javascript:;\" onclick=\"edit_close('{$link}')\">".$pgv_lang["close_window"]."</a><br /></center>\n";
 
 print_simple_footer();
 ?>

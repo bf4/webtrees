@@ -140,6 +140,26 @@ class Base_AutoSearch {
 		}
 	}
 
+	function fullname(&$person, $inputname='fullname') {
+		$all_full=array();
+		foreach ($person->getAllNames() as $name) {
+			if ($name['givn']!='@N.N.' && $name['surname']!='@N.N.') {
+				$all_full[]=htmlspecialchars("{$name['givn']} {$name['surname']}");
+			}
+		}
+		$all_full=array_unique($all_full);
+		if (count($all_full)==1) {
+			return '<input type="hidden" name="'.$inputname.'" value="'.$all_full[0].'">'.$all_full[0];
+		} else {
+			$html='<select name="'.$inputname.'">';
+			foreach ($all_full as $full) {
+				$html.='<option value="'.$full.'">'.$full.'</option>';
+			}
+			$html.='</select>';
+			return $html;
+		}
+	}
+
 	function fgivennames($person) {
 		$parents=$person->getPrimaryChildFamily();
 		if ($parents && $parents->getHusband()) {
@@ -148,13 +168,22 @@ class Base_AutoSearch {
 			return '<input type="hidden" name="fgivennames" value="">';
 		}
 	}
-
+	
 	function fsurname($person) {
 		$parents=$person->getPrimaryChildFamily();
 		if ($parents && $parents->getHusband()) {
 			return $this->surname($parents->getHusband(), 'fsurname');
 		} else {
 			return '<input type="hidden" name="fsurname" value="">';
+		}
+	}
+	
+	function ffullname($person) {
+		$parents=$person->getPrimaryChildFamily();
+		if ($parents && $parents->getHusband()) {
+			return $this->fullname($parents->getHusband(), 'ffullname');
+		} else {
+			return '<input type="hidden" name="ffullname" value="">';
 		}
 	}
 
@@ -175,6 +204,16 @@ class Base_AutoSearch {
 			return '<input type="hidden" name="msurname" value="">';
 		}
 	}
+	
+	function mfullname($person) {
+		$parents=$person->getPrimaryChildFamily();
+		if ($parents && $parents->getWife()) {
+			return $this->fullname($parents->getWife(), 'mfullname');
+		} else {
+			return '<input type="hidden" name="mfullname" value="">';
+		}
+	}
+
 	function sgivennames($person) {
 		$spouse=$person->getCurrentSpouse();
 		if ($spouse) {
@@ -190,6 +229,15 @@ class Base_AutoSearch {
 			return $this->surname($spouse, 'ssurname');
 		} else {
 			return '<input type="hidden" name="ssurname" value="">';
+		}
+	}
+
+	function sfullname($person) {
+		$spouse=$person->getCurrentSpouse();
+		if ($spouse) {
+			return $this->fullname($spouse, 'sfullname');
+		} else {
+			return '<input type="hidden" name="sfullname" value="">';
 		}
 	}
 

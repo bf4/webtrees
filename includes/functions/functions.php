@@ -220,8 +220,7 @@ function safe_REQUEST($arr, $var, $regex=PGV_REGEX_NOSCRIPT, $default=null) {
 
 function encode_url($url, $entities=true) {
 	$url = decode_url($url, $entities); // Make sure we don't do any double conversions
-	//$url = str_replace(array(' ', '+', '#', '"', "'"), array('%20', '%2b', '%23', '%22', '%27'), $url); // GEDCOM names can legitimately contain these chars
-	$url = str_replace(array(' ', '+', '"', "'"), array('%20', '%2b', '%22', '%27'), $url); // GEDCOM names can legitimately contain these chars
+	$url = str_replace(array(' ', '+', '@#', '"', "'"), array('%20', '%2b', '@%23', '%22', '%27'), $url);
 	if ($entities) {
 		$url = htmlspecialchars($url,ENT_COMPAT,'UTF-8');
 	}
@@ -2047,71 +2046,6 @@ function sort_facts(&$arr) {
 
 }
 
-/**
- * fact date sort
- *
- * compare individuals by a fact date
- */
-function compare_date($a, $b) {
-	global $sortby;
-
-	$tag = "BIRT";
-	if (!empty($sortby))
-		$tag = $sortby;
-	if (is_object($a)) {
-		//-- use estimated dates for sorting
-		if ($tag=='BIRT') $afact = $a->getBirthEvent();
-		else if ($tag=='DEAT') $afact = $a->getDeathEvent();
-		else $afact = $a->getFactByType($tag);
-		if ($tag=='BIRT') $bfact = $b->getBirthEvent();
-		else if ($tag=='DEAT') $bfact = $b->getDeathEvent();
-		else $bfact = $b->getFactByType($tag);
-		if (!is_null($afact) && !is_null($bfact)) {
-			$cmp=GedcomDate::Compare($afact->getDate(), $bfact->getDate());
-			if ($cmp!=0)
-				return $cmp;
-		}
-		if (is_null($afact) && !is_null($bfact)) return -1;
-		if (!is_null($afact) && is_null($bfact)) return 1;
-		return GedcomRecord::Compare($a, $b);
-	}
-	else if (isset($a["undo"])) {
-		// Look at record in pgv_changes.php
-		$adate=get_gedcom_value("$tag:DATE", 1, $a['undo'], '', false);
-		$bdate=get_gedcom_value("$tag:DATE", 1, $b['undo'], '', false);
-	} else {
-		$adate=get_gedcom_value("$tag:DATE", 1, $a['gedcom'], '', false);
-		$bdate=get_gedcom_value("$tag:DATE", 1, $b['gedcom'], '', false);
-	}
-	if (!empty($adate) && !empty($bdate)){
-		$adate=new GedcomDate($adate);
-		$bdate=new GedcomDate($bdate);
-		$cmp=GedcomDate::Compare($adate, $bdate);
-		if ($cmp!=0)
-			return $cmp;
-	}
-	// Same date?  Sort by name
-	GedcomRecord::Compare($a, $b);
-}
-function compare_date_descending($a, $b) {
-	$result = compare_date($a, $b);
-	return (0 - $result);
-}
-/**
- * Compare dates for facts in GedcomRec objects (or derived classes)
- *
- * fact to interrogate in global $sortby eg "MARR"
- */
-function compare_date_gedcomrec($a, $b) {
-	global $sortby;
-
-	$tag = "BIRT";
-	if (!empty($sortby)) $tag = $sortby;
-	$adate = get_sub_record(1, "1 $tag", $a->getGedcomRecord());
-	$bdate = get_sub_record(1, "1 $tag", $b->getGedcomRecord());
-	return compare_facts_date($adate, $bdate);
-}
-
 function gedcomsort($a, $b) {
 	$aname = UTF8_strtoupper($a["title"]);
 	$bname = UTF8_strtoupper($b["title"]);
@@ -2473,7 +2407,7 @@ function get_relationship($pid1, $pid2, $followspouse=true, $maxlength=0, $ignor
 						$famrec = find_family_record($fam);
 					if ($followspouse) {
 						$parents = find_parents_in_record($famrec);
-						if ((!empty($parents["HUSB"]))&&(!isset($visited[$parents["HUSB"]]))) {
+						if ((!empty($parents["HUSB"]))&&(!in_arrayr($parents["HUSB"], $node1))) {
 							$node1 = $node;
 							$node1["length"]+=$spouseh;
 							$node1["path"][] = $parents["HUSB"];
@@ -2493,7 +2427,7 @@ function get_relationship($pid1, $pid2, $followspouse=true, $maxlength=0, $ignor
 								$NODE_CACHE["$pid1-".$node1["pid"]] = $node1;
 							}
 						}
-						if ((!empty($parents["WIFE"]))&&(!isset($visited[$parents["WIFE"]]))) {
+						if ((!empty($parents["WIFE"]))&&(!in_arrayr($parents["WIFE"], $node1))) {
 							$node1 = $node;
 							$node1["length"]+=$spouseh;
 							$node1["path"][] = $parents["WIFE"];
@@ -3106,6 +3040,21 @@ function pgv_array_merge($array1, $array2) {
 		$array1[$key] = $value;
 	}
 	return $array1;
+}
+
+/**
+ * checks if the value is in an array recursively
+ * @param string $needle
+ * @param array $haystack
+ */
+function in_arrayr($needle, $haystack) {
+	foreach ($haystack as $v) {
+		if ($needle == $v) return true;
+		else if (is_array($v)) {
+			if (in_arrayr($needle, $v) === true) return true;
+		}
+	}
+	return false;
 }
 
 /**
@@ -3896,6 +3845,8 @@ function mediaFileInfo($fileName, $thumbName, $mid, $name='', $notes='', $obeyVi
 		$type .= "page";
 	} else if (eregi("\.mp3$", $fileName)) {
 		$type .= "audio";
+	} else if (eregi("\.wmv$", $fileName)) {
+		$type .= "wmv";
 	} else $type .= "other";
 	// $type is now: (url | local) _ (flv | picasa | image | page | audio | other)
 	$result['type'] = $type;
@@ -3910,10 +3861,17 @@ function mediaFileInfo($fileName, $thumbName, $mid, $name='', $notes='', $obeyVi
 			}
 			switch ($type) {
 			case 'url_flv':
-				$url = encode_url('module.php?mod=JWplayer&pgvaction=flvVideo&flvVideo='.encrypt($fileName)) . "\" rel='clearbox(445,370,click)' rev=\"" . $mid . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name,ENT_COMPAT,'UTF-8')) . "::" . htmlspecialchars($notes,ENT_COMPAT,'UTF-8');
+				$url = encode_url('module.php?mod=JWplayer&pgvaction=flvVideo&flvVideo='.encrypt($fileName)) . "\" rel='clearbox(500,392,click)' rev=\"" . $mid . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name,ENT_COMPAT,'UTF-8')) . "::" . htmlspecialchars($notes,ENT_COMPAT,'UTF-8');
 				break 2;
 			case 'local_flv':
-				$url = encode_url('module.php?mod=JWplayer&pgvaction=flvVideo&flvVideo='.encrypt($SERVER_URL.$fileName)) . "\" rel='clearbox(445,370,click)' rev=\"" . $mid . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name,ENT_COMPAT,'UTF-8')) . "::" . htmlspecialchars($notes,ENT_COMPAT,'UTF-8');
+				$url = encode_url('module.php?mod=JWplayer&pgvaction=flvVideo&flvVideo='.encrypt($SERVER_URL.$fileName)) . "\" rel='clearbox(500,392,click)' rev=\"" . $mid . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name,ENT_COMPAT,'UTF-8')) . "::" . htmlspecialchars($notes,ENT_COMPAT,'UTF-8');
+				break 2;
+			case 'url_wmv':
+				$url = encode_url('module.php?mod=JWplayer&pgvaction=wmvVideo&wmvVideo='.encrypt($fileName)) . "\" rel='clearbox(500,392,click)' rev=\"" . $mid . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name,ENT_COMPAT,'UTF-8')) . "::" . htmlspecialchars($notes,ENT_COMPAT,'UTF-8');
+				break 2;
+			case 'local_audio':
+			case 'local_wmv':
+				$url = encode_url('module.php?mod=JWplayer&pgvaction=wmvVideo&wmvVideo='.encrypt($SERVER_URL.$fileName)) . "\" rel='clearbox(500,392,click)' rev=\"" . $mid . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name,ENT_COMPAT,'UTF-8')) . "::" . htmlspecialchars($notes,ENT_COMPAT,'UTF-8');
 				break 2;
 			case 'url_image':
 			case 'local_image':
@@ -3923,7 +3881,7 @@ function mediaFileInfo($fileName, $thumbName, $mid, $name='', $notes='', $obeyVi
 			case 'url_page':
 			case 'url_other':
 			case 'local_page':
-			case 'local_other':
+			// case 'local_other':
 				$url = encode_url($fileName) . "\" rel='clearbox({$LB_URL_WIDTH},{$LB_URL_HEIGHT},click)' rev=\"" . $mid . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name,ENT_COMPAT,'UTF-8')) . "::" . htmlspecialchars($notes,ENT_COMPAT,'UTF-8');
 				break 2;
 			}
@@ -3932,10 +3890,17 @@ function mediaFileInfo($fileName, $thumbName, $mid, $name='', $notes='', $obeyVi
 		// Lightbox is not installed or Lightbox is not appropriate for this media type
 		switch ($type) {
 		case 'url_flv':
-			$url = "javascript:;\" onclick=\" var winflv = window.open('".encode_url('module.php?mod=JWplayer&pgvaction=flvVideo&flvVideo='.encrypt($fileName)) . "', 'winflv', 'width=445, height=365, left=600, top=200'); if (window.focus) {winflv.focus();}";
+			$url = "javascript:;\" onclick=\" var winflv = window.open('".encode_url('module.php?mod=JWplayer&pgvaction=flvVideo&flvVideo='.encrypt($fileName)) . "', 'winflv', 'width=500, height=392, left=600, top=200'); if (window.focus) {winflv.focus();}";
 			break 2;
 		case 'local_flv':
-			$url = "javascript:;\" onclick=\" var winflv = window.open('".encode_url('module.php?mod=JWplayer&pgvaction=flvVideo&flvVideo='.encrypt($SERVER_URL.$fileName)) . "', 'winflv', 'width=445, height=365, left=600, top=200'); if (window.focus) {winflv.focus();}";
+			$url = "javascript:;\" onclick=\" var winflv = window.open('".encode_url('module.php?mod=JWplayer&pgvaction=flvVideo&flvVideo='.encrypt($SERVER_URL.$fileName)) . "', 'winflv', 'width=500, height=392, left=600, top=200'); if (window.focus) {winflv.focus();}";
+			break 2;
+		case 'url_wmv':
+			$url = "javascript:;\" onclick=\" var winwmv = window.open('".encode_url('module.php?mod=JWplayer&pgvaction=wmvVideo&wmvVideo='.encrypt($fileName)) . "', 'winwmv', 'width=500, height=392, left=600, top=200'); if (window.focus) {winwmv.focus();}";
+			break 2;
+		case 'local_wmv':
+		case 'local_audio':
+			$url = "javascript:;\" onclick=\" var winwmv = window.open('".encode_url('module.php?mod=JWplayer&pgvaction=wmvVideo&wmvVideo='.encrypt($SERVER_URL.$fileName)) . "', 'winwmv', 'width=500, height=392, left=600, top=200'); if (window.focus) {winwmv.focus();}";
 			break 2;
 		case 'url_image':
 			$imgsize = findImageSize($fileName);
@@ -3944,12 +3909,11 @@ function mediaFileInfo($fileName, $thumbName, $mid, $name='', $notes='', $obeyVi
 			$url = "javascript:;\" onclick=\"var winimg = window.open('".encode_url($fileName)."', 'winimg', 'width=".$imgwidth.", height=".$imgheight.", left=200, top=200'); if (window.focus) {winimg.focus();}";
 			break 2;
 		case 'url_picasa':
-		case 'url_audio':
 		case 'url_page':
 		case 'url_other':
+		case 'local_other';
 			$url = "javascript:;\" onclick=\"var winurl = window.open('".encode_url($fileName)."', 'winurl', 'width=900, height=600, left=200, top=200'); if (window.focus) {winurl.focus();}";
 			break 2;
-		case 'local_audio':
 		case 'local_page':
 			$url = "javascript:;\" onclick=\"var winurl = window.open('".encode_url($SERVER_URL.$fileName)."', 'winurl', 'width=900, height=600, left=200, top=200'); if (window.focus) {winurl.focus();}";
 			break 2;
@@ -3966,7 +3930,7 @@ function mediaFileInfo($fileName, $thumbName, $mid, $name='', $notes='', $obeyVi
 	}
 	// At this point, $url describes how to handle the image when its thumbnail is clicked
 	$result['url'] = $url;
-
+	
 	// -- Determine the correct thumbnail or pseudo-thumbnail
 	$width = '';
 	switch ($type) {
@@ -3975,6 +3939,12 @@ function mediaFileInfo($fileName, $thumbName, $mid, $name='', $notes='', $obeyVi
 			break;
 		case 'local_flv':
 			$thumb = 'images/flash.png';
+			break;
+		case 'url_wmv':
+			$thumb = 'images/wmvrem.png';
+			break;
+		case 'local_wmv':
+			$thumb = 'images/wmv.png';
 			break;
 		case 'url_picasa':
 			$thumb = 'images/picasa.png';

@@ -140,6 +140,8 @@ class Family extends GedcomRecord {
 
 		// Store it in the cache
 		$gedcom_record_cache[$object->xref][$object->ged_id]=&$object;
+		//-- also store it using its reference id (sid:pid and local gedcom for remote links)
+		$gedcom_record_cache[$pid][$ged_id]=&$object;
 		return $object;
 	}
 
@@ -216,6 +218,11 @@ class Family extends GedcomRecord {
 	function getChildrenIds() {
 		if (!$this->children_loaded) $this->loadChildren();
 		return $this->childrenIds;
+	}
+
+	// Static helper function to sort an array of families by marriage date
+	static function CompareMarrDate($x, $y) {
+		return GedcomDate::Compare($x->getMarriageDate(), $y->getMarriageDate());
 	}
 
 	/**

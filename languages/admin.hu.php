@@ -3,7 +3,7 @@
  * Hungarian texts
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
+ * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -259,7 +259,7 @@ $pgv_lang["critical"]     				= "Kritikus";
 $pgv_lang["level"]        				= "Szint";                   // Szint";
 $pgv_lang["gedcheck_text"]				= "Ez a modul a GEDCOM fájl formátumát ellenőrzi le, hogy megfelel-e a következő specifikációnak: <a href=\"http://phpgedview.sourceforge.net/ged551-5.pdf\">5.5.1 GEDCOM Specification</a>. További szokványos hibát is leellenőriz. Érdemes megjegyezni, hogy mivel sok variációjú verzió, kiterjesztés és variáció létezik, ezért ami nem \"Kritikus\" besorolású, azzal nem biztos hogy foglalkoznia kell. A specifikációban megtalálható a sorról sorra történő magyarázat, ezek tanulmányozása után kérjen csak segítséget.";
 $pgv_lang["gedcheck"]     				= "Gedcom ellenőrző";
-$pgv_lang["admin_OK_message"]				= "A #SERVER_NAME# PhpGedView oldal adminisztrátora elfogadta a felhasználói jelentkezését. A következő hivatkozásra kattintva jelentkezhet be:\\r\\n\\r\\n#SERVER_NAME#\\r\\n";
+$pgv_lang["admin_OK_message"]				= "A #SERVER_NAME# PhpGedView oldal adminisztrátora elfogadta a felhasználói jelentkezését. A következő hivatkozásra kattintva jelentkezhet be:\r\n\r\n#SERVER_NAME#\r\n";
 $pgv_lang["admin_OK_subject"]				= "Felhasználó elfogadása itt: #SERVER_NAME#";
 $pgv_lang["yearly"]					= "Éves";
 $pgv_lang["welcome_new"] 		= "Üdvözöljük az Ön új PhpGedView honlapján.";
@@ -332,7 +332,7 @@ $pgv_lang["sanity_warn0"]				= "Figyelmeztetések:";
 $pgv_lang["sanity_warn1"]				= "A <i>#GLOBALS[MEDIA_DIRECTORY]#</i> könyvtár nem írható. A média fájlok feltöltése, illetve a kiskép generálás nem fog működni.";
 $pgv_lang["sanity_warn2"]				= "A <i>#GLOBALS[MEDIA_DIRECTORY]#thumbs</i> könyvtár nem írható. Nem fog tudni feltölteni, illetve generálni előnézeti képeket.";
 $pgv_lang["sanity_warn3"]				= "A GD képfeldolgozó könyvtár nem elérhető. A PhpGedView funkcionálisan működni fog ugyan, de néhány lehetőség úgy mint az előnézeti képek generálása, vagy a kördiagram létrehozása nem fog működni e nélkül. További információért látogasson el ide: <a href=\'http://www.php.net/manual/en/ref.image.php\'>http://www.php.net/manual/en/ref.image.php</a>.";
-$pgv_lang["sanity_warn4"]				= "Az XML Parser könyvtár nem elérhető. A PhpGedView továbbra is funkcionál, de néhány funkció úgy mint különböző riportok generálása nem fog működni e nélkül. További információért látogasson el ide: <a href=\\\'http://www.php.net/manual/en/ref.xml.php\\\'>http://www.php.net/manual/en/ref.xml.php</a>.";
+$pgv_lang["sanity_warn4"]				= "Az XML Parser könyvtár nem elérhető. A PhpGedView továbbra is funkcionál, de néhány funkció úgy mint különböző riportok generálása nem fog működni e nélkül. További információért látogasson el ide: <a href='http://www.php.net/manual/en/ref.xml.php'>http://www.php.net/manual/en/ref.xml.php</a>.";
 $pgv_lang["query"]					= "Lekérdezés";
 $pgv_lang["searchtype"]					= "Keresés típusa";
 $pgv_lang["log_message"]				= "Log üzenet";

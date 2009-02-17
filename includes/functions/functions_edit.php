@@ -1158,10 +1158,16 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 		$rows=10;
 		$cols=70;
 		break;
+	case 'shnote':
+			$islink=1;
+			$fact="NOTE";
+			$rows=1;
+			$cols=($islink ? 8 : 20);
+			break;
 	case 'NOTE':
 		if ($islink){
 			$rows=1;
-			$cols=($islink ? 10 : 40);
+			$cols=($islink ? 8 : 40);
 			break;
 		}else{
 			$rows=10;
@@ -1178,7 +1184,7 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 		break;
 	default:
 		$rows=1;
-		$cols=($islink ? 10 : 40);
+		$cols=($islink ? 8 : 40);
 		break;
 	}
 
@@ -1216,11 +1222,20 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 	if (PGV_DEBUG) {
 		echo $element_name."<br />\n";
 	}
-	if (!empty($label)) echo $label;
-	else {
-		if (isset($pgv_lang[$fact])) echo $pgv_lang[$fact];
-		else if (isset($factarray[$fact])) echo $factarray[$fact];
-		else echo $fact;
+	if (!empty($label)) {
+			 echo $label;
+	} else {
+		if (isset($pgv_lang[$fact])) {
+				echo $pgv_lang[$fact];
+		} else if (isset($factarray[$fact])) {
+			if ($fact=="NOTE" && $islink){ 
+				echo $pgv_lang["shnote"];
+			}else{
+				echo $factarray[$fact];
+			}
+		}else{
+			echo $fact;
+		}
 	}
 	echo "\n";
 
@@ -1237,6 +1252,8 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 		echo "<input type=\"hidden\" name=\"glevels[]\" value=\"".$level."\" />\n";
 		echo "<input type=\"hidden\" name=\"islink[]\" value=\"".($islink)."\" />\n";
 		echo "<input type=\"hidden\" name=\"tag[]\" value=\"".$fact."\" />\n";
+// BH Debug ------------
+// echo $level . "," . $islink . "," . $fact . "," . $value;
 	}
 	echo "\n</td>";
 
@@ -1247,15 +1264,18 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 	}
 
 	// retrieve linked NOTE
-	if ($fact=="NOTE" and $islink) {
+	if ($fact=="NOTE" && $islink) {
 
 		$noteid = $value;
 		// BH Next line added for Shared Notes ==================
-		//echo "Shared Note Id: &nbsp;&nbsp;<b> ".$noteid."</b>";
-		echo $pgv_lang["shnote"].":&nbsp;";
+		// echo $pgv_lang["shnote"]." Id: &nbsp;&nbsp;<b>".$noteid."</b>";
+		// echo $pgv_lang["shnote"].":&nbsp;&nbsp;";
 		// ====================================================
+
+//		echo "<input type=\"hidden\" name=\"text[]\" value=\"".$noteid."\" />\n";
+
+
 /*
-		echo "<input type=\"hidden\" name=\"text[]\" value=\"".$noteid."\" />\n";
 		if (!isset($pgv_changes[$noteid."_".$GEDCOM])) {
 			$noterec = find_gedcom_record($noteid);
 		}else{
@@ -1268,6 +1288,8 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 		}
 		$element_name="NOTE[".$noteid."]";
 */
+
+
 	}
 
 	if (in_array($fact, $emptyfacts)&& (empty($value) || $value=="y" || $value=="Y")) {
@@ -1571,7 +1593,8 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 			$date=new GedcomDate($value);
 			echo $date->Display(false);
 		}
-		if (($fact=="ASSO" || $fact=="SOUR") && $value) {
+		// if (($fact=="ASSO" || $fact=="SOUR") && $value) {
+		if (($fact=="ASSO" || $fact=="SOUR" || ($fact=="NOTE" && $islink)) && $value) {
 			$record=GedcomRecord::getInstance($value);
 			if ($record) {
 				echo ' ', PrintReady($record->getFullName()), ' (', $value, ')';
@@ -1612,6 +1635,7 @@ function print_add_layer($tag, $level=2, $printSaveButton=true) {
 	global $factarray, $pgv_lang, $PGV_IMAGE_DIR, $PGV_IMAGES;
 	global $MEDIA_DIRECTORY, $TEXT_DIRECTION, $PRIVACY_BY_RESN;
 	global $gedrec, $FULL_SOURCES;
+	global $islink;
 	if ($tag=="SOUR") {
 		//-- Add new source to fact
 		echo "<a href=\"javascript:;\" onclick=\"return expand_layer('newsource');\"><img id=\"newsource_img\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["plus"]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" title=\"\" /> ".$pgv_lang["add_source"]."</a>";
@@ -1669,6 +1693,22 @@ function print_add_layer($tag, $level=2, $printSaveButton=true) {
 		add_simple_tag(($level)." NOTE ".$text);
 		echo "</table></div>";
 	}
+
+	if ($tag=="SHNOTE") {
+		//-- Retrieve existing shared note or add new shared note to fact
+		$text = "";
+		echo "<a href=\"javascript:;\" onclick=\"return expand_layer('newshnote');\"><img id=\"newnote_img\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["plus"]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" title=\"\" /> ".$pgv_lang["add_shnote"]."</a>";
+		print_help_link("edit_add_NOTE_help", "qm");
+		echo "<br />\n";
+		echo "<div id=\"newshnote\" style=\"display: none;\">\n";
+		if ($printSaveButton) echo "<input type=\"submit\" value=\"".$pgv_lang["save"]."\" />";
+		echo "<table class=\"facts_table center $TEXT_DIRECTION\">\n";
+		// 2 NOTE
+		add_simple_tag(($level)." shnote ");
+		
+		echo "</table></div>";
+	}
+
 	if ($tag=="OBJE") {
 		//-- Add new obje to fact
 		echo "<a href=\"javascript:;\" onclick=\"return expand_layer('newobje');\"><img id=\"newobje_img\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["plus"]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" title=\"\" /> ".$pgv_lang["add_obje"]."</a>";
@@ -1773,13 +1813,17 @@ function addNewFact($fact) {
 				$gedrec.="3 MAP\n4 LATI {$LATI}\n4 LONG {$LONG}\n";
 			}
 		}
-		$SOUR=safe_POST_bool("SOUR_{$fact}");
-		if ($SOUR && count($tagSOUR)>0) {
-			$gedrec=updateSOUR($gedrec, 2);
+		if (safe_POST_bool("SOUR_{$fact}")) {
+			return updateSOUR($gedrec, 2);
+		} else {
+			return $gedrec;
 		}
-		return $gedrec;
 	} elseif ($FACT) {
-		return "1 {$fact} Y\n";
+		if (safe_POST_bool("SOUR_{$fact}")) {
+			return updateSOUR("1 {$fact} Y\n", 2);
+		} else {
+			return "1 {$fact} Y\n";
+		}
 	} else {
 		return '';
 	}
@@ -1971,6 +2015,10 @@ function handle_updates($newged, $levelOverride="no") {
 	else $levelAdjust = $levelOverride - $glevels[0];
 
 	for($j=0; $j<count($glevels); $j++) {
+	
+// BH These following lines destroyed the Shared Note
+// Therefore they have been removed
+/*
 		//-- update external note records first
 		if (($islink[$j])&&($tag[$j]=="NOTE")) {
 			if (empty($NOTE[$text[$j]])) {
@@ -1987,6 +2035,7 @@ function handle_updates($newged, $levelOverride="no") {
 				replace_gedrec($text[$j], $newnote);
 			}
 		} //-- end of external note handling code
+*/
 
 		//echo $glevels[$j]." ".$tag[$j];
 
@@ -2251,7 +2300,6 @@ function create_edit_form($gedrec, $linenum, $level0type) {
 		else if ($levelSource>=$level){
 			$inSource = false;
 		}
-		
 		if ($type!="DATA" && $type!="CONC" && $type!="CONT") {
 			$tags[]=$type;
 			if ($type=='DATE') {

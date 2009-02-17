@@ -244,6 +244,9 @@ if ($action!="choose") {
 					replace_gedrec($gid1, $newgedrec);
 					if ($SYNC_GEDCOM_FILE) write_file();
 					write_changes();
+					$rec=GedcomRecord::getInstance($gid1);
+					$pid=$rec->getXrefLink(); // $pid is embedded in $pgv_lang['record_updated']
+					echo '<br />', print_text('record_updated', 0, 1), '<br />';
 					print "<br /><a href=\"edit_merge.php?action=choose\">".$pgv_lang["merge_more"]."</a><br />\n";
 					print "<br /><br /><br />\n";
 				}

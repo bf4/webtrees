@@ -41,13 +41,10 @@ if ((isset($_POST["preserve_last_changed"])) && ($_POST["preserve_last_changed"]
 else
 	$update_CHAN = true;
 
-//-- @TODO make list a configurable list
 $addfacts = preg_split("/[,; ]/", $QUICK_ADD_FACTS);
 usort($addfacts, "factsort");
-
 $reqdfacts = preg_split("/[,; ]/", $QUICK_REQUIRED_FACTS);
 
-//-- @TODO make list a configurable list
 $famaddfacts = preg_split("/[,; ]/", $QUICK_ADD_FAMFACTS);
 usort($famaddfacts, "factsort");
 $famreqdfacts = preg_split("/[,; ]/", $QUICK_REQUIRED_FAMFACTS);
@@ -143,6 +140,9 @@ if ($action=="update") {
 		$famrec = trim($famrec);
 		$famupdate = false;
 		$repeat_tags = array();
+		$var = $prefix.$i."DESCS";
+		if (!empty($_POST[$var])) $DESCS = $_POST[$var];
+		else $DESCS = array();
 		$var = $prefix.$i."DATES";
 		if (!empty($_POST[$var])) $DATES = $_POST[$var];
 		else $DATES = array();
@@ -174,6 +174,7 @@ if ($action=="update") {
 				$DATES[$j] = check_input_date($DATES[$j]);
 				if (!isset($REMS[$j])) $REMS[$j] = 0;
 				if ($REMS[$j]==1) {
+					$DESCS[$j]="";
 					$DATES[$j]="";
 					$PLACS[$j]="";
 					$TEMPS[$j]="";
@@ -185,8 +186,10 @@ if ($action=="update") {
 					else $factrec="";
 				}
 				else {
-					if (!in_array($fact, $typefacts)) $factrec = "1 $fact\n";
-					else $factrec = "1 EVEN\n2 TYPE $fact\n";
+					if (!in_array($fact, $typefacts)) $factrec = "1 $fact";
+					else $factrec = "1 EVEN\n2 TYPE $fact";
+					if (!empty($DESCS[$j])) $factrec .= " $DESCS[$j]\n";
+					else $factrec .= "\n";
 					if (!empty($DATES[$j])) $factrec .= "2 DATE $DATES[$j]\n";
 					if (!empty($PLACS[$j])) $factrec .= "2 PLAC $PLACS[$j]\n";
 					if (!empty($TEMPS[$j])) $factrec .= "2 TEMP $TEMPS[$j]\n";
@@ -219,6 +222,10 @@ if ($action=="update") {
 						}
 						else if (!empty($oldfac) && !empty($factrec)) {
 							$factrec = $oldfac;
+							if (!empty($DESCS[$j])) {
+								if (strstr($factrec, "1 $fact")) $factrec = preg_replace("/1 $fact.*/", "1 $fact $DESCS[$j]", $factrec);
+								else $factrec = $factrec."\n1 $fact $DESCS[$j]";
+							}
 							if (!empty($DATES[$j])) {
 								if (strstr($factrec, "\n2 DATE")) $factrec = preg_replace("/2 DATE.*/", "2 DATE $DATES[$j]", $factrec);
 								else $factrec = $factrec."\n2 DATE $DATES[$j]";
@@ -289,13 +296,16 @@ if ($action=="update") {
 				else {
 					$namerec = preg_replace("/1 NAME ([\w.\ -_]+)/", "1 NAME $1 /$SURN/\n", $namerec);
 				}
+				if (preg_match("/2 SPFX (.*)/", $namerec, $match)>0) {
+					$SURN = str_replace(trim($match[1])." ", "", $SURN);
+				}
 				if (preg_match("/2 SURN/", $namerec)>0) $namerec = preg_replace("/2 SURN.*/", "2 SURN $SURN\n", $namerec);
 				else $namerec.="\n2 SURN $SURN";
 			}
 			//-- update the married surname
 			if (isset($MRSURN) && !empty($MRSURN)) {
-				if (preg_match("/2 _MARNM/", $namerec)>0) $namerec = preg_replace("/2 _MARNM.*/", "2 _MARNM $MRSURN\n", $namerec);
-				else $namerec.="\n2 _MARNM $MRSURN";
+				if (preg_match("/2 _MARNM/", $namerec)>0) $namerec = preg_replace("/2 _MARNM.*/", "2 _MARNM /$MRSURN/\n", $namerec);
+				else $namerec.="\n2 _MARNM /$MRSURN/";
 			}
 			$pos1 = strpos($gedrec, "1 NAME");
 			if ($pos1!==false) {
@@ -308,7 +318,7 @@ if ($action=="update") {
 				}
 			}
 		}
-		else $gedrec .= "\n1 NAME $GIVN /$SURN/\n2 GIVN $GIVN\n2 SURN $SURN\n2 _MARNM $MRSURN";
+		else $gedrec .= "\n1 NAME $GIVN /$SURN/\n2 GIVN $GIVN\n2 SURN $SURN\n2 _MARNM /$MRSURN/";
 		$updated = true;
 	}
 
@@ -384,9 +394,12 @@ if ($action=="update") {
 	if (isset($_REQUEST['PLAC'])) $PLAC = $_REQUEST['PLAC'];
 	if (isset($_REQUEST['TEMP'])) $TEMP = $_REQUEST['TEMP'];
 	if (isset($_REQUEST['RESN'])) $RESN = $_REQUEST['RESN'];
+	if (isset($_REQUEST['DESC'])) $DESC = $_REQUEST['DESC'];
 	if (!empty($newfact)) {
-		if (!in_array($newfact, $typefacts)) $factrec = "1 $newfact\n";
-		else $factrec = "1 EVEN\n2 TYPE $newfact\n";
+		if (!in_array($newfact, $typefacts)) $factrec = "1 $newfact";
+		else $factrec = "1 EVEN\n2 TYPE $newfact";
+		if (!empty($DESC)) $factrec .= " $DESC\n";
+		else $factrec .= "\n";
 		if (!empty($DATE)) {
 			$DATE = check_input_date($DATE);
 			$factrec .= "2 DATE $DATE\n";
@@ -395,7 +408,7 @@ if ($action=="update") {
 		if (!empty($TEMP)) $factrec .= "2 TEMP $TEMP\n";
 		if (!empty($RESN)) $factrec .= "2 RESN $RESN\n";
 		//-- make sure that there is at least a Y
-		if (preg_match("/\n2 \w*/", $factrec)==0) $factrec = "1 $newfact Y\n";
+		if (preg_match("/\n2 \w*/", $factrec)==0 && empty($DESC)) $factrec = "1 $newfact Y\n";
 		$gedrec .= "\n".$factrec;
 		$updated = true;
 	}
@@ -548,7 +561,7 @@ if ($action=="update") {
 			$spouserec .= "1 NAME ".$sgivn." /".$ssurn."/\n";
 			if (!empty($sgivn)) $spouserec .= "2 GIVN ".$sgivn."\n";
 			if (!empty($ssurn)) $spouserec .= "2 SURN ".$ssurn."\n";
-			if (!empty($mssurn)) $spouserec .= "2 _MARNM ".$mssurn."\n";
+			if (!empty($mssurn)) $spouserec .= "2 _MARNM /".$mssurn."/\n";
 
 			if (isset($_REQUEST['HSGIVN'.$i])) $hsgivn = $_REQUEST['HSGIVN'.$i];
 			if (isset($_REQUEST['HSSURN'.$i])) $hssurn = $_REQUEST['HSSURN'.$i];
@@ -740,7 +753,7 @@ if ($action=="update") {
 		$spouserec .= "1 NAME $SGIVN /$SSURN/\n";
 		if (!empty($SGIVN)) $spouserec .= "2 GIVN $SGIVN\n";
 		if (!empty($SSURN)) $spouserec .= "2 SURN $SSURN\n";
-		if (!empty($MSSURN)) $spouserec .= "2 _MARNM $MSSURN\n";
+		if (!empty($MSSURN)) $spouserec .= "2 _MARNM /$MSSURN/\n";
 		if (!empty($SSEX)) $spouserec .= "1 SEX $SSEX\n";
 		if (isset($_REQUEST['BDATE'])) $BDATE = $_REQUEST['BDATE'];
 		if (isset($_REQUEST['BPLAC'])) $BPLAC = $_REQUEST['BPLAC'];
@@ -910,7 +923,7 @@ if ($action=="update") {
 				$spouserec .= "1 NAME ".$sgivn." /".$ssurn."/\n";
 				if (!empty($sgivn)) $spouserec .= "2 GIVN ".$sgivn."\n";
 				if (!empty($ssurn)) $spouserec .= "2 SURN ".$ssurn."\n";
-				if (!empty($smsurn)) $spouserec .= "2 _MARNM ".$smsurn."\n";
+				if (!empty($smsurn)) $spouserec .= "2 _MARNM /".$smsurn."/\n";
 				$hsgivn = "";
 				$hssurn = "";
 				if (isset($_REQUEST["HFGIVN$i"])) $hsgivn = $_REQUEST["HFGIVN$i"];
@@ -1003,7 +1016,7 @@ if ($action=="update") {
 				$spouserec .= "1 NAME ".$sgivn." /".$ssurn."/\n";
 				if (!empty($sgivn)) $spouserec .= "2 GIVN ".$sgivn."\n";
 				if (!empty($ssurn)) $spouserec .= "2 SURN ".$ssurn."\n";
-				if (!empty($smsurn)) $spouserec .= "2 _MARNM ".$smsurn."\n";
+				if (!empty($smsurn)) $spouserec .= "2 _MARNM /".$smsurn."/\n";
 				$hsgivn = "";
 				$hssurn = "";
 				if (isset($_REQUEST["HMGIVN$i"])) $hsgivn = $_REQUEST["HMGIVN$i"];
@@ -1300,7 +1313,13 @@ if ($action=="choosepid") {
 			}
 		}
 		$ct = preg_match("/2 SURN (.*)/", $subrec, $match);
-		if ($ct>0) $SURN = trim($match[1]);
+		if ($ct>0) {
+			$SURN = trim($match[1]);
+			$ct = preg_match("/2 SPFX (.*)/", $subrec, $match);
+			if ($ct>0) {
+				$SURN = trim($match[1])." ".$SURN;
+			}
+		}
 		else {
 			$ct = preg_match("/1 NAME (.*)/", $subrec, $match);
 			if ($ct>0) {
@@ -1309,7 +1328,7 @@ if ($action=="choosepid") {
 			}
 		}
 		$ct = preg_match("/2 _MARNM (.*)/", $subrec, $match);
-		if ($ct>0) $MRSURN = trim($match[1]);
+		if ($ct>0) $MRSURN = trim(str_replace("/", "", $match[1]));
 		//else {
 		//	$ct = preg_match("/1 NAME (.*)/", $subrec, $match);
 		//	if ($ct>0) {
@@ -1346,7 +1365,10 @@ if ($action=="choosepid") {
 		$ct = preg_match("/1 ADDR (.*)/", $subrec, $match);
 		if ($ct>0) $ADDR = trim($match[1]);
 		$ADDR_CONT = get_cont(2, $subrec);
-		if (!empty($ADDR_CONT)) $ADDR .= $ADDR_CONT;
+		if (!empty($ADDR_CONT)) {
+			$ADDR .= $ADDR_CONT;
+			$ADDR = str_replace("<br />", "\n", $ADDR);
+		}
 		else {
 			$_NAME = get_gedcom_value("_NAME", 2, $subrec);
 			if (!empty($_NAME)) $ADDR .= "\n". $_NAME;
@@ -1640,7 +1662,7 @@ foreach($indifacts as $f=>$fact) {
 	</td>
 	<?php if (!in_array($fact_tag, $emptyfacts)) { ?>
 	<td class="optionbox" colspan="2">
-		<input type="text" name="DESCS[]" size="40" value="<?php echo PrintReady(htmlspecialchars($desc,ENT_COMPAT,'UTF-8')); ?>" />
+		<input type="text" name="DESCS[]" size="61" value="<?php echo PrintReady(htmlspecialchars($desc,ENT_COMPAT,'UTF-8')); ?>" />
 		<input type="hidden" name="DATES[]" value="<?php echo htmlspecialchars($date,ENT_COMPAT,'UTF-8'); ?>" />
 		<input type="hidden" name="PLACS[]" value="<?php echo htmlspecialchars($plac,ENT_COMPAT,'UTF-8'); ?>" />
 		<input type="hidden" name="TEMPS[]" value="<?php echo htmlspecialchars($temp,ENT_COMPAT,'UTF-8'); ?>" />
@@ -1737,7 +1759,7 @@ if (count($addfacts)>0) { ?>
 	?>
 		</select>
 		<div id="descFact" style="display:none;"><br />
-			<?php echo $pgv_lang["description"]; ?><input type="text" size="35" name="DESC" />
+			<?php echo $pgv_lang["description"]." "; ?><input type="text" size="35" name="DESC" />
 		</div>
 	</td>
 	<td class="optionbox"><input type="text" dir="ltr" tabindex="<?php echo $tabkey; ?>" size="15" name="DATE" id="DATE" onblur="valid_date(this);" />&nbsp;<?php print_calendar_popup("DATE");?></td>
@@ -1748,39 +1770,6 @@ if (count($addfacts)>0) { ?>
 	<td class="optionbox">&nbsp;</td></tr>
 	<?php $tabkey++; ?>
 	<?php print_quick_resn("RESN"); ?>
-<?php }
-
-// NOTE: Add photo
-if ($MULTI_MEDIA && (is_writable($MEDIA_DIRECTORY))) { ?>
-<tr><td>&nbsp;</td></tr>
-<tr><td class="topbottombar" colspan="4"><b><?php print_help_link("quick_update_photo_help", "qm"); echo $pgv_lang["update_photo"]; ?></b></td></tr>
-<tr>
-	<td class="descriptionbox">
-		<?php echo $factarray["TITL"]; ?>
-	</td>
-	<td class="optionbox" colspan="3">
-		<input type="text" tabindex="<?php echo $tabkey; ?>" name="TITL" size="40" />
-	</td>
-	<?php $tabkey++; ?>
-</tr>
-<tr>
-	<td class="descriptionbox">
-		<?php echo $factarray["FILE"]; ?>
-	</td>
-	<td class="optionbox" colspan="3">
-		<input type="file" tabindex="<?php echo $tabkey; ?>" name="FILE" size="40" />
-	</td>
-	<?php $tabkey++; ?>
-</tr>
-<?php if (preg_match("/1 OBJE/", $gedrec)>0) { ?>
-<tr>
-	<td class="descriptionbox">&nbsp;</td>
-	<td class="optionbox" colspan="3">
-		<input type="checkbox" tabindex="<?php echo $tabkey; ?>" name="replace" value="yes" /> <?php echo $pgv_lang["photo_replace"]; ?>
-	</td>
-	<?php $tabkey++; ?>
-</tr>
-<?php } ?>
 <?php }
 
 // Address update
@@ -1807,7 +1796,7 @@ if ($person && !$person->isDead() || !empty($ADDR) || !empty($PHON) || !empty($F
 			</table>
 
 		<?php } else { ?>
-		<textarea name="ADDR" tabindex="<?php echo $tabkey; ?>" cols="35" rows="4"><?php echo PrintReady(htmlspecialchars(strip_tags($ADDR),ENT_COMPAT,'UTF-8')); ?></textarea>
+		<textarea name="ADDR" tabindex="<?php echo $tabkey; ?>" cols="40" rows="4"><?php echo PrintReady(htmlspecialchars(strip_tags($ADDR),ENT_COMPAT,'UTF-8')); ?></textarea>
 		<?php } ?>
 	</td>
 	<?php $tabkey++; ?>
@@ -2043,7 +2032,7 @@ foreach($famfacts as $f=>$eventObj) {
 								$check = true;
 						?>
 						&nbsp;&nbsp;
-						<input type="checkbox" dir="ltr" tabindex="<?php echo $tabkey; ?>" size="5" name="F<?php echo $i; ?>MARRY" id="F<?php echo $i; ?>MARRY" 
+						<input type="checkbox" dir="ltr" tabindex="<?php echo $tabkey; ?>" size="5" name="F<?php echo $i; ?>MARRY" id="F<?php echo $i; ?>MARRY"
 						<?php
 						if ($check) {
 							echo 'checked="checked">';
@@ -2060,7 +2049,7 @@ foreach($famfacts as $f=>$eventObj) {
 								$check = true;
 						?>
 						&nbsp;&nbsp;
-						<input type="checkbox" dir="ltr" tabindex="<?php echo $tabkey; ?>" size="5" name="F<?php echo $i; ?>DIV" id="F<?php echo $i; ?>DIV" 
+						<input type="checkbox" dir="ltr" tabindex="<?php echo $tabkey; ?>" size="5" name="F<?php echo $i; ?>DIV" id="F<?php echo $i; ?>DIV"
 						<?php
 						if ($check) {
 							echo 'checked="checked">';
@@ -2902,7 +2891,7 @@ foreach($famfacts as $f=>$eventObj) {
 						$check = true;
 				?>
 				&nbsp;&nbsp;
-				<input type="checkbox" dir="ltr" tabindex="<?php echo $tabkey; ?>" size="5" name="F<?php echo $i; ?>MARRY" id="F<?php echo $i; ?>MARRY" 
+				<input type="checkbox" dir="ltr" tabindex="<?php echo $tabkey; ?>" size="5" name="F<?php echo $i; ?>MARRY" id="F<?php echo $i; ?>MARRY"
 				<?php
 				if ($check) {
 					echo 'checked="checked">';
@@ -2919,7 +2908,7 @@ foreach($famfacts as $f=>$eventObj) {
 						$check = true;
 				?>
 				&nbsp;&nbsp;
-				<input type="checkbox" dir="ltr" tabindex="<?php echo $tabkey; ?>" size="5" name="F<?php echo $i; ?>DIV" id="F<?php echo $i; ?>DIV" 
+				<input type="checkbox" dir="ltr" tabindex="<?php echo $tabkey; ?>" size="5" name="F<?php echo $i; ?>DIV" id="F<?php echo $i; ?>DIV"
 				<?php
 				if ($check) {
 					echo 'checked="checked">';

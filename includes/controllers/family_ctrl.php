@@ -154,6 +154,7 @@ class FamilyRoot extends BaseController {
 						header("Location: index.php?ctype=gedcom");
 						exit;
 					}
+					$this->family = new Family($famrec);
 					$this->parents = find_parents($_REQUEST['famid']);
 				}
 			}

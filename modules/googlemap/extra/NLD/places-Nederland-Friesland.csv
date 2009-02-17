@@ -1,5 +1,5 @@
 "Level";"Country";"State";"County";"Place";"Longitude";"Latitude";"ZoomLevel";"Icon"
-2;NLD;Friesland;Achtkarspelen;;E6.05;N53.22;11;places/NLD/flags/FR/Achtkarspelen.jpg
+2;NLD;Friesland;Achtkarspelen;;E6.05;N53.22;11;places/NLD/flags/FR/Achtkarspelen.gif
 3;NLD;Friesland;Achtkarspelen;Augustinusga;E6.163;N53.217;12;
 3;NLD;Friesland;Achtkarspelen;Blauwverlaat;E6.174;N53.225;12;
 3;NLD;Friesland;Achtkarspelen;Boelenslaan;E6.14;N53.16;12;
@@ -13,7 +13,7 @@
 3;NLD;Friesland;Achtkarspelen;Surhuizum;E6.180;N53.206;12;
 3;NLD;Friesland;Achtkarspelen;Twijzel;E6.090;N53.231;12;
 3;NLD;Friesland;Achtkarspelen;Twijzelerheide;E6.05;N53.24;12;
-2;NLD;Friesland;Ameland;;E5.774;N53.45;11;places/NLD/flags/FR/Ameland.jpg
+2;NLD;Friesland;Ameland;;E5.774;N53.45;11;places/NLD/flags/FR/Ameland.gif
 3;NLD;Friesland;Ameland;Ameland;E5.78;N53.45;11;
 3;NLD;Friesland;Ameland;Ballum;E5.689;N53.445;12;
 3;NLD;Friesland;Ameland;Buren;E5.80;N53.45;12;
@@ -21,7 +21,7 @@
 3;NLD;Friesland;Ameland;Nes;E5.774;N53.445;12;
 2;NLD;Friesland;Bolsward;;E5.52;N53.05;11;places/NLD/flags/FR/Bolsward.gif
 3;NLD;Friesland;Bolsward;Bolsward;E5.52;N53.06;12;
-2;NLD;Friesland;Boornsterhem;;E5.85;N53.11;10;places/NLD/flags/FR/Boarnsterhim.jpg
+2;NLD;Friesland;Boornsterhem;;E5.85;N53.11;10;places/NLD/flags/FR/Boornsterhem.gif
 3;NLD;Friesland;Boornsterhem;Abbengawier;E5.789;N53.064;12;
 3;NLD;Friesland;Boornsterhem;Aegum;E5.83;N53.13;12;
 3;NLD;Friesland;Boornsterhem;Akkrum;E5.83;N53.05;12;
@@ -56,7 +56,7 @@
 3;NLD;Friesland;Boornsterhem;Warten;E5.90;N53.15;12;
 3;NLD;Friesland;Boornsterhem;Wartena;E5.90;N53.15;12;
 3;NLD;Friesland;Boornsterhem;Wergea;E5.85;N53.15;12;
-2;NLD;Friesland;Dantumadeel;;E6.040;N53.27;11;places/NLD/flags/FR/Dantumadeel.png
+2;NLD;Friesland;Dantumadeel;;E6.040;N53.27;11;places/NLD/flags/FR/Dantumadeel.gif
 3;NLD;Friesland;Dantumadeel;Akkerwoude;E5.970;N53.280;12;
 3;NLD;Friesland;Dantumadeel;Akkerwoudsterbroek;;;12;
 3;NLD;Friesland;Dantumadeel;Broeksterwoude;E5.998;N53.274;12;
@@ -70,7 +70,7 @@
 3;NLD;Friesland;Dantumadeel;Veenwoudsterwal;E5.973;N53.227;12;
 3;NLD;Friesland;Dantumadeel;Wouterswoude;E6.03;N53.30;12;
 3;NLD;Friesland;Dantumadeel;Zwaagwesteinde;E6.040;N53.254;12;
-2;NLD;Friesland;Dongeradeel;;E6.02;N53.36;11;places/NLD/flags/FR/Dongeradeel.jpg
+2;NLD;Friesland;Dongeradeel;;E6.02;N53.36;11;places/NLD/flags/FR/Dongeradeel.gif
 3;NLD;Friesland;Dongeradeel;Aalsum;E6.00;N53.33;12;
 3;NLD;Friesland;Dongeradeel;Anjum;E6.126;N53.373;12;
 3;NLD;Friesland;Dongeradeel;Bollingawier;E6.05;N53.38;12;
@@ -107,7 +107,7 @@
 3;NLD;Friesland;Dongeradeel;Wetsens;E6.035;N53.347;12;
 3;NLD;Friesland;Dongeradeel;Wetzens;E6.031;N53.348;12;
 3;NLD;Friesland;Dongeradeel;Wierum;E6.02;N53.40;12;
-2;NLD;Friesland;Ferwerderadeel;;E5.847;N53.324;11;places/NLD/flags/FR/Ferwerderadeel.png
+2;NLD;Friesland;Ferwerderadeel;;E5.847;N53.324;11;places/NLD/flags/FR/Ferwerderadeel.gif
 3;NLD;Friesland;Ferwerderadeel;Bartlehiem;E5.843;N53.277;12;
 3;NLD;Friesland;Ferwerderadeel;Birdaard;E5.878;N53.294;12;
 3;NLD;Friesland;Ferwerderadeel;Blija;E5.862;N53.352;12;
@@ -123,7 +123,7 @@
 3;NLD;Friesland;Ferwerderadeel;Reitsum;E5.889;N53.321;13;
 3;NLD;Friesland;Ferwerderadeel;Tergracht;E5.844;N53.286;12;
 3;NLD;Friesland;Ferwerderadeel;Wanswerd;E5.847;N53.301;12;
-2;NLD;Friesland;Franekeradeel;;E5.607;N53.204;11;places/NLD/flags/FR/Franekeradeel.jpg
+2;NLD;Friesland;Franekeradeel;;E5.607;N53.204;11;places/NLD/flags/FR/Franekeradeel.gif
 3;NLD;Friesland;Franekeradeel;Achlum;E5.483;N53.148;12;
 3;NLD;Friesland;Franekeradeel;Arkens;E5.554;N53.191;12;
 3;NLD;Friesland;Franekeradeel;Boer;E5.564;N53.215;12;
@@ -142,7 +142,7 @@
 3;NLD;Friesland;Franekeradeel;Tzum;E5.564;N53.158;12;
 3;NLD;Friesland;Franekeradeel;Tzummarum;E5.543;N53.237;12;
 3;NLD;Friesland;Franekeradeel;Zweins;E5.607;N53.190;12;
-2;NLD;Friesland;Gaasterland-Sloten;;E5.624;N52.887;11;places/NLD/flags/FR/Gaasterland.jpg
+2;NLD;Friesland;Gaasterland-Sloten;;E5.624;N52.887;11;places/NLD/flags/FR/Gaasterland-Sloten.gif
 3;NLD;Friesland;Gaasterland-Sloten;Bakhuizen;E5.450;N52.867;12;
 3;NLD;Friesland;Gaasterland-Sloten;Balk;E5.583;N52.897;12;
 3;NLD;Friesland;Gaasterland-Sloten;Elahuizen;E5.537;N52.922;12;
@@ -157,12 +157,12 @@
 3;NLD;Friesland;Gaasterland-Sloten;Sloten;E5.646;N52.894;12;
 3;NLD;Friesland;Gaasterland-Sloten;Sondel;E5.596;N52.872;12;
 3;NLD;Friesland;Gaasterland-Sloten;Wijckel;E5.624;N52.888;12;
-2;NLD;Friesland;Harlingen;;E5.461;N53.18;12;places/NLD/flags/FR/Harlingen.jpg
-3;NLD;Friesland;Harlingen;Almenum;E5.438;N53.184;13;
+2;NLD;Friesland;Harlingen;;E5.461;N53.18;11;places/NLD/flags/FR/Harlingen.gif
+3;NLD;Friesland;Harlingen;Almenum;E5.438;N53.184;12;
 3;NLD;Friesland;Harlingen;Harlingen;E5.42;N53.17;12;
 3;NLD;Friesland;Harlingen;Midlum;E5.45;N53.18;12;
 3;NLD;Friesland;Harlingen;Wijnaldum;E5.461;N53.195;12;
-2;NLD;Friesland;Heerenveen;;E5.943;N52.973;11;places/NLD/flags/FR/Heerenveen.jpg
+2;NLD;Friesland;Heerenveen;;E5.943;N52.973;11;places/NLD/flags/FR/Heerenveen.gif
 3;NLD;Friesland;Heerenveen;Annaburen;;;12;
 3;NLD;Friesland;Heerenveen;Benedenknijpe;E5.967;N52.967;13;
 3;NLD;Friesland;Heerenveen;Bontebok;E6.027;N52.962;12;
@@ -183,14 +183,14 @@
 3;NLD;Friesland;Heerenveen;Oudeschoot;E5.967;N52.933;12;
 3;NLD;Friesland;Heerenveen;Terband;E5.904;N52.996;12;
 3;NLD;Friesland;Heerenveen;Tjalleberd;E5.943;N52.997;12;
-2;NLD;Friesland;het Bildt;;E5.557;N53.277;11;places/NLD/flags/FR/Het_Bildt.png
+2;NLD;Friesland;het Bildt;;E5.557;N53.277;11;places/NLD/flags/FR/het_Bildt.gif
 3;NLD;Friesland;het Bildt;Minnertsga;E5.594;N53.251;12;
 3;NLD;Friesland;het Bildt;Oude Bildtzijl;E5.717;N53.300;12;
 3;NLD;Friesland;het Bildt;Sint Annaparochie;E5.661;N53.277;12;
 3;NLD;Friesland;het Bildt;Sint Jacobiparochie;E5.607;N53.273;12;
 3;NLD;Friesland;het Bildt;Vrouwenparochie;E5.700;N53.280;12;
 3;NLD;Friesland;het Bildt;Westhoek;E5.557;N53.272;12;
-2;NLD;Friesland;Kollumerland en Nieuwkruisland;;E6.045;N53.285;11;places/NLD/flags/FR/Kollumerland.png
+2;NLD;Friesland;Kollumerland en Nieuwkruisland;;E6.045;N53.285;11;places/NLD/flags/FR/Kollumerland.gif
 3;NLD;Friesland;Kollumerland en Nieuwkruisland;Augsbuurt;E6.162;N53.266;12;
 3;NLD;Friesland;Kollumerland en Nieuwkruisland;Burum;E6.230;N53.272;12;
 3;NLD;Friesland;Kollumerland en Nieuwkruisland;Kollum;E6.145;N53.280;12;
@@ -203,7 +203,7 @@
 3;NLD;Friesland;Kollumerland en Nieuwkruisland;Warfstermolen;E6.231;N53.296;12;
 3;NLD;Friesland;Kollumerland en Nieuwkruisland;Westergeest;E6.085;N53.289;12;
 3;NLD;Friesland;Kollumerland en Nieuwkruisland;Zwagerbosch;E6.045;N53.248;12;
-2;NLD;Friesland;Leeuwarden;;E5.784;N53.197;11;places/NLD/flags/FR/Leeuwarden.png
+2;NLD;Friesland;Leeuwarden;;E5.784;N53.197;11;places/NLD/flags/FR/Leeuwarden.gif
 3;NLD;Friesland;Leeuwarden;Goutum;E5.805;N53.178;12;
 3;NLD;Friesland;Leeuwarden;Hempens;E5.841;N53.178;12;
 3;NLD;Friesland;Leeuwarden;Leeuwarden;E5.793;N53.197;12;
@@ -214,7 +214,7 @@
 3;NLD;Friesland;Leeuwarden;Teerns;E5.834;N53.181;13;
 3;NLD;Friesland;Leeuwarden;Wirdum;E5.802;N53.150;12;
 3;NLD;Friesland;Leeuwarden;Wytgaard;E5.784;N53.141;12;
-2;NLD;Friesland;Leeuwarderadeel;;E5.760;N53.264;11;places/NLD/flags/FR/Leeuwarderadeel.jpg
+2;NLD;Friesland;Leeuwarderadeel;;E5.760;N53.264;11;places/NLD/flags/FR/Leeuwarderadeel.gif
 3;NLD;Friesland;Leeuwarderadeel;Bartlehiem;E5.840;N53.276;12;
 3;NLD;Friesland;Leeuwarderadeel;Britsum;E5.781;N53.252;12;
 3;NLD;Friesland;Leeuwarderadeel;Cornjum;E5.780;N53.243;12;
@@ -223,7 +223,7 @@
 3;NLD;Friesland;Leeuwarderadeel;Jelsum;E5.780;N53.233;12;
 3;NLD;Friesland;Leeuwarderadeel;Oude Leije;E5.728;N53.289;12;
 3;NLD;Friesland;Leeuwarderadeel;Stiens;E5.760;N53.262;12;
-2;NLD;Friesland;Lemsterland;;E5.775;N52.855;11;places/NLD/flags/FR/Lemsterland.png
+2;NLD;Friesland;Lemsterland;;E5.775;N52.855;11;places/NLD/flags/FR/Lemsterland.gif
 3;NLD;Friesland;Lemsterland;Bantega;E5.797;N52.841;12;
 3;NLD;Friesland;Lemsterland;Brakkenpolder;E5.693;N52.853;13;
 3;NLD;Friesland;Lemsterland;Delfstrahuizen;E5.822;N52.873;12;
@@ -233,7 +233,7 @@
 3;NLD;Friesland;Lemsterland;Follega;E5.733;N52.883;12;
 3;NLD;Friesland;Lemsterland;Lemmer;E5.710;N52.844;12;
 3;NLD;Friesland;Lemsterland;Oosterzee;E5.775;N52.873;12;
-2;NLD;Friesland;Littenseradeel;;E5.587;N53.132;11;places/NLD/flags/FR/Littenseradiel.jpg
+2;NLD;Friesland;Littenseradeel;;E5.587;N53.132;11;places/NLD/flags/FR/Littenseradeel.gif
 3;NLD;Friesland;Littenseradeel;Baard;E5.669;N53.143;12;
 3;NLD;Friesland;Littenseradeel;Baijum;E5.630;N53.164;12;
 3;NLD;Friesland;Littenseradeel;Beers;E5.735;N53.155;12;
@@ -266,7 +266,7 @@
 3;NLD;Friesland;Littenseradeel;Wieuwerd;E5.689;N53.109;12;
 3;NLD;Friesland;Littenseradeel;Winsum;E5.633;N53.150;12;
 3;NLD;Friesland;Littenseradeel;Wommels;E5.587;N53.108;12;
-2;NLD;Friesland;Menaldumadeel;;E5.624;N53.226;11;places/NLD/flags/FR/Menaldumadeel.jpg
+2;NLD;Friesland;Menaldumadeel;;E5.624;N53.226;11;places/NLD/flags/FR/Menaldumadeel.gif
 3;NLD;Friesland;Menaldumadeel;Beetgum;E5.688;N53.236;13;
 3;NLD;Friesland;Menaldumadeel;Beetgumermolen;E5.702;N53.234;12;
 3;NLD;Friesland;Menaldumadeel;Berlikum;E5.650;N53.243;12;
@@ -280,7 +280,7 @@
 3;NLD;Friesland;Menaldumadeel;Schingen;E5.617;N53.200;12;
 3;NLD;Friesland;Menaldumadeel;Slappeterp;E5.620;N53.212;12;
 3;NLD;Friesland;Menaldumadeel;Wier;E5.624;N53.252;12;
-2;NLD;Friesland;Nijefurd;;E5.447;N52.935;11;places/NLD/flags/FR/Nijefurd.jpg
+2;NLD;Friesland;Nijefurd;;E5.447;N52.935;11;places/NLD/flags/FR/Nijefurd.gif
 3;NLD;Friesland;Nijefurd;Brandeburen;E5.502;N52.948;13;
 3;NLD;Friesland;Nijefurd;Hemelum;E5.456;N52.882;12;
 3;NLD;Friesland;Nijefurd;Hindeloopen;E5.403;N52.941;12;
@@ -291,7 +291,7 @@
 3;NLD;Friesland;Nijefurd;Stavoren;E5.361;N52.885;12;
 3;NLD;Friesland;Nijefurd;Warns;E5.404;N52.882;12;
 3;NLD;Friesland;Nijefurd;Workum;E5.447;N52.978;12;
-2;NLD;Friesland;Ooststellingwerf;;E6.278;N53.000;10;places/NLD/flags/FR/Ooststellingwerf.jpg
+2;NLD;Friesland;Ooststellingwerf;;E6.278;N53.000;10;places/NLD/flags/FR/Ooststellingwerf.gif
 3;NLD;Friesland;Ooststellingwerf;Aekinga;E6.325;N52.952;12;
 3;NLD;Friesland;Ooststellingwerf;Appelscha;E6.354;N52.956;12;
 3;NLD;Friesland;Ooststellingwerf;Buttinga;E6.283;N52.983;12;
@@ -308,7 +308,7 @@
 3;NLD;Friesland;Ooststellingwerf;Oosterwolde;E6.293;N52.991;12;
 3;NLD;Friesland;Ooststellingwerf;Ravenswoud;E6.379;N52.964;12;
 3;NLD;Friesland;Ooststellingwerf;Waskemeer;E6.278;N53.056;12;
-2;NLD;Friesland;Opsterland;;E6.208;N53.066;10;places/NLD/flags/FR/Opsterland.png
+2;NLD;Friesland;Opsterland;;E6.208;N53.066;10;places/NLD/flags/FR/Opsterland.gif
 3;NLD;Friesland;Opsterland;Allardsoog;E6.294;N53.095;12;
 3;NLD;Friesland;Opsterland;Bakkeveen;E6.259;N53.080;13;
 3;NLD;Friesland;Opsterland;Beets;E5.996;N53.068;12;
@@ -327,7 +327,7 @@
 3;NLD;Friesland;Opsterland;Tijnje;E5.988;N53.031;12;
 3;NLD;Friesland;Opsterland;Ureterp;E6.170;N53.095;12;
 3;NLD;Friesland;Opsterland;Wijnjewoude;E6.208;N53.055;12;
-2;NLD;Friesland;Scharsterland;;E5.867;N52.977;10;places/NLD/flags/FR/Skarsterlan.gif
+2;NLD;Friesland;Scharsterland;;E5.867;N52.977;10;places/NLD/flags/FR/Scharsterland.gif
 3;NLD;Friesland;Scharsterland;Akmarijp;E5.789;N53.004;12;
 3;NLD;Friesland;Scharsterland;Boornzwaag;E5.745;N52.958;12;
 3;NLD;Friesland;Scharsterland;Broek;E5.777;N52.983;12;
@@ -359,9 +359,9 @@
 3;NLD;Friesland;Scharsterland;Teroele;E5.693;N52.935;12;
 3;NLD;Friesland;Scharsterland;Tjerkgaast;E5.678;N52.903;12;
 3;NLD;Friesland;Scharsterland;Vegelinsoord;E5.867;N53.000;12;
-2;NLD;Friesland;Schiermonnikoog;;E6.161;N53.488;11;places/NLD/flags/FR/Schiermonnikoog.png
+2;NLD;Friesland;Schiermonnikoog;;E6.161;N53.488;11;places/NLD/flags/FR/Schiermonnikoog.gif
 3;NLD;Friesland;Schiermonnikoog;Schiermonnikoog;E6.161;N53.479;12;
-2;NLD;Friesland;Smallingerland;;E6.021;N53.125;11;places/NLD/flags/FR/Smallingerland.jpg
+2;NLD;Friesland;Smallingerland;;E6.021;N53.125;11;places/NLD/flags/FR/Smallingerland.gif
 3;NLD;Friesland;Smallingerland;Boornbergum;E6.050;N53.083;12;
 3;NLD;Friesland;Smallingerland;Buitenstverlaat;E6.050;N53.100;12;
 3;NLD;Friesland;Smallingerland;De Tike;E6.038;N53.152;12;
@@ -377,12 +377,12 @@
 3;NLD;Friesland;Smallingerland;Oudega;E5.999;N53.125;12;
 3;NLD;Friesland;Smallingerland;Rottevalle;E6.105;N53.145;12;
 3;NLD;Friesland;Smallingerland;Smalle Ee;E6.021;N53.104;13;
-2;NLD;Friesland;Sneek;;E5.661;N53.031;12;places/NLD/flags/FR/Sneek.png
+2;NLD;Friesland;Sneek;;E5.661;N53.031;12;places/NLD/flags/FR/Sneek.gif
 3;NLD;Friesland;Sneek;IJsbrechtum;E5.632;N53.042;13;
 3;NLD;Friesland;Sneek;Loënga;E5.680;N53.050;13;
 3;NLD;Friesland;Sneek;Offingawier;E5.695;N53.032;13;
 3;NLD;Friesland;Sneek;Sneek;E5.661;N53.032;12;
-2;NLD;Friesland;Terschelling;;E5.215;N53.400;10;places/NLD/flags/FR/Terschelling.png
+2;NLD;Friesland;Terschelling;;E5.215;N53.400;10;places/NLD/flags/FR/Terschelling.gif
 3;NLD;Friesland;Terschelling;Baaiduinen;E5.274;N53.378;13;
 3;NLD;Friesland;Terschelling;Formerum;E5.311;N53.390;13;
 3;NLD;Friesland;Terschelling;Hee;E5.254;N53.375;13;
@@ -398,7 +398,7 @@
 3;NLD;Friesland;Terschelling;Seerijp;E5.300;N53.376;13;
 3;NLD;Friesland;Terschelling;Terschelling;E5.217;N53.365;13;
 3;NLD;Friesland;Terschelling;West-Terschelling;E5.215;N53.360;12;
-2;NLD;Friesland;Tietjerksteradeel;;E5.833;N53.224;10;places/NLD/flags/FR/Tytsjerksteradiel.jpg
+2;NLD;Friesland;Tietjerksteradeel;;E5.833;N53.224;10;places/NLD/flags/FR/Tietsjerksteradeel.gif
 3;NLD;Friesland;Tietjerksteradeel;Bartlehiem;E5.843;N53.277;12;
 3;NLD;Friesland;Tietjerksteradeel;Bergum;E5.994;N53.194;12;
 3;NLD;Friesland;Tietjerksteradeel;Bergumerdam;E5.989;N53.194;13;
@@ -419,10 +419,10 @@
 3;NLD;Friesland;Tietjerksteradeel;Tergracht;E5.850;N53.283;12;
 3;NLD;Friesland;Tietjerksteradeel;Tietjerk;E5.912;N53.213;12;
 3;NLD;Friesland;Tietjerksteradeel;Wijns;E5.833;N53.250;12;
-2;NLD;Friesland;Vlieland;;E5.074;N53.256;11;places/NLD/flags/FR/Vlieland.jpg
+2;NLD;Friesland;Vlieland;;E5.074;N53.256;11;places/NLD/flags/FR/Vlieland.gif
 3;NLD;Friesland;Vlieland;Oost-Vlieland;E5.087;N53.297;13;
 3;NLD;Friesland;Vlieland;Vlieland;E5.074;N53.296;13;
-2;NLD;Friesland;Weststellingwerf;;E6.151;N52.873;10;places/NLD/flags/FR/Weststellingwerf.jpg
+2;NLD;Friesland;Weststellingwerf;;E6.151;N52.873;10;places/NLD/flags/FR/Weststellingwerf.gif
 3;NLD;Friesland;Weststellingwerf;Blesdijke;E6.014;N52.831;12;
 3;NLD;Friesland;Weststellingwerf;Boijl;E6.200;N52.910;12;
 3;NLD;Friesland;Weststellingwerf;De Blesse;E6.040;N52.843;12;
@@ -450,7 +450,7 @@
 3;NLD;Friesland;Weststellingwerf;Vinkega;E6.116;N52.873;12;
 3;NLD;Friesland;Weststellingwerf;Wolvega;E5.998;N52.877;12;
 3;NLD;Friesland;Weststellingwerf;Zandhuizen;E6.151;N52.910;12;
-2;NLD;Friesland;Wonseradeel;;E5.397;N53.078;10;places/NLD/flags/FR/Wonseradeel.png
+2;NLD;Friesland;Wonseradeel;;E5.397;N53.078;10;places/NLD/flags/FR/Wonseradeel.gif
 3;NLD;Friesland;Wonseradeel;Allenga;;;12;
 3;NLD;Friesland;Wonseradeel;Allingawier;E5.445;N53.047;12;
 3;NLD;Friesland;Wonseradeel;Arkum;E5.501;N53.030;13;
@@ -507,7 +507,7 @@
 3;NLD;Friesland;Wonseradeel;Wonneburen;E5.433;N53.017;12;
 3;NLD;Friesland;Wonseradeel;Wons;E5.424;N53.083;12;
 3;NLD;Friesland;Wonseradeel;Zurich;E5.397;N53.112;12;
-2;NLD;Friesland;Wymbritseradeel;;E5.604;N52.995;10;places/NLD/flags/FR/Wymbritseradiel.jpg
+2;NLD;Friesland;Wymbritseradeel;;E5.604;N52.995;10;places/NLD/flags/FR/Wymbritseradeel.gif
 3;NLD;Friesland;Wymbritseradeel;Abbega;E5.573;N53.018;12;
 3;NLD;Friesland;Wymbritseradeel;Blauwhuis;E5.533;N53.022;12;
 3;NLD;Friesland;Wymbritseradeel;Folsgare;E5.606;N53.036;12;

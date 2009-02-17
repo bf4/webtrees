@@ -1,5 +1,5 @@
 "Level";"Country";"State";"County";"Place";"Longitude";"Latitude";"ZoomLevel";"Icon"
-1;NLD;Drenthe;;;;;7;
+1;NLD;Drenthe;;;;;7;places/NLD/flags/DR.gif
 2;NLD;Drenthe;Aa en Hunze;;;;10;
 3;NLD;Drenthe;Aa en Hunze;Achter 't Hout;;;12;
 3;NLD;Drenthe;Aa en Hunze;Amen;;;12;
@@ -8,7 +8,7 @@
 3;NLD;Drenthe;Aa en Hunze;Annen;;;12;
 3;NLD;Drenthe;Aa en Hunze;Annerveen;;;12;
 3;NLD;Drenthe;Aa en Hunze;Annerveensche Kanaal;;;12;
-3;NLD;Drenthe;Aa en Hunze;Balloërveld;;;12;
+3;NLD;Drenthe;Aa en Hunze;BalloÃ«rveld;;;12;
 3;NLD;Drenthe;Aa en Hunze;Balloo;;;12;
 3;NLD;Drenthe;Aa en Hunze;Bareveld;;;12;
 3;NLD;Drenthe;Aa en Hunze;Bonnen;;;12;
@@ -84,13 +84,13 @@
 3;NLD;Drenthe;Borger-Odoorn;Eesergroen;;;12;
 3;NLD;Drenthe;Borger-Odoorn;Eeserveen;;;12;
 3;NLD;Drenthe;Borger-Odoorn;Ellertshaar;;;12;
-3;NLD;Drenthe;Borger-Odoorn;Exloërveen;;;12;
+3;NLD;Drenthe;Borger-Odoorn;ExloÃ«rveen;;;12;
 3;NLD;Drenthe;Borger-Odoorn;Exloo;;;12;
 3;NLD;Drenthe;Borger-Odoorn;Klijndijk;;;12;
 3;NLD;Drenthe;Borger-Odoorn;Nieuw-Buinen;;;12;
 3;NLD;Drenthe;Borger-Odoorn;Odoorn;;;12;
 3;NLD;Drenthe;Borger-Odoorn;Odoornerveen;;;12;
-3;NLD;Drenthe;Borger-Odoorn;Tweede Exloërmond;;;12;
+3;NLD;Drenthe;Borger-Odoorn;Tweede ExloÃ«rmond;;;12;
 3;NLD;Drenthe;Borger-Odoorn;Tweede Valthermond;;;12;
 3;NLD;Drenthe;Borger-Odoorn;Valthe;;;12;
 3;NLD;Drenthe;Borger-Odoorn;Valthermond;;;12;
@@ -222,7 +222,7 @@
 3;NLD;Drenthe;Emmen;Angelso;;;12;
 3;NLD;Drenthe;Emmen;Barger Erfsch Veen;;;12;
 3;NLD;Drenthe;Emmen;Barger Oosterveen;;;12;
-3;NLD;Drenthe;Emmen;Barger-Compascuüm;;;12;
+3;NLD;Drenthe;Emmen;Barger-CompascuÃ¼m;;;12;
 3;NLD;Drenthe;Emmen;Barger-Erfafscheidenveen;;;12;
 3;NLD;Drenthe;Emmen;Barger-Oosterveen;;;12;
 3;NLD;Drenthe;Emmen;Barger-Oosterveld;;;12;
@@ -423,7 +423,7 @@
 3;NLD;Drenthe;Westerveld;Witteveen;;;12;
 3;NLD;Drenthe;Westerveld;Zoerte;;;12;
 3;NLD;Drenthe;Westerveld;Zorgvlied;;;12;
-1;NLD;Flevoland;;;;;7;
+1;NLD;Flevoland;;;;;7;places/NLD/flags/FL.gif
 2;NLD;Flevoland;Almere;;;;10;
 3;NLD;Flevoland;Almere;Almere;;;12;
 3;NLD;Flevoland;Almere;Almere-Buiten;;;12;
@@ -455,7 +455,7 @@
 3;NLD;Flevoland;Urk;Urk;;;12;
 2;NLD;Flevoland;Zeewolde;;;;10;
 3;NLD;Flevoland;Zeewolde;Zeewolde;;;12;
-1;NLD;Friesland;;;E5.7;N53.1;8;
+1;NLD;Friesland;;;E5.7;N53.1;8;places/NLD/flags/FR.gif
 2;NLD;Friesland;Achtkarspelen;;;;10;
 3;NLD;Friesland;Achtkarspelen;Augustinusga;;;12;
 3;NLD;Friesland;Achtkarspelen;Blauwverlaat;;;12;
@@ -715,7 +715,7 @@
 3;NLD;Friesland;Littenseradeel;Hilaard;;;12;
 3;NLD;Friesland;Littenseradeel;Hinnaard;;;12;
 3;NLD;Friesland;Littenseradeel;Huins;E5.66632450855576;N53.1616128575408;12;
-3;NLD;Friesland;Littenseradeel;Húns;;;12;
+3;NLD;Friesland;Littenseradeel;HÃºns;;;12;
 3;NLD;Friesland;Littenseradeel;Iens;;;12;
 3;NLD;Friesland;Littenseradeel;Itens;;;12;
 3;NLD;Friesland;Littenseradeel;Jellum;;;12;
@@ -730,7 +730,7 @@
 3;NLD;Friesland;Littenseradeel;Oosterend;;;12;
 3;NLD;Friesland;Littenseradeel;Oosterlittens;;;12;
 3;NLD;Friesland;Littenseradeel;Oosterwierum;;;12;
-3;NLD;Friesland;Littenseradeel;Reahûs;;;12;
+3;NLD;Friesland;Littenseradeel;ReahÃ»s;;;12;
 3;NLD;Friesland;Littenseradeel;Rien;;;12;
 3;NLD;Friesland;Littenseradeel;Roodhuis;;;12;
 3;NLD;Friesland;Littenseradeel;Spannum;;;12;
@@ -794,7 +794,7 @@
 3;NLD;Friesland;Opsterland;Frieschepalen;;;12;
 3;NLD;Friesland;Opsterland;Gorredijk;E6.06445324706804;N53.0047541481568;12;
 3;NLD;Friesland;Opsterland;Hemrik;;;12;
-3;NLD;Friesland;Opsterland;Jonkerslân;;;12;
+3;NLD;Friesland;Opsterland;JonkerslÃ¢n;;;12;
 3;NLD;Friesland;Opsterland;Langezwaag;;;12;
 3;NLD;Friesland;Opsterland;Lippenhuizen;;;12;
 3;NLD;Friesland;Opsterland;Luxwoude;;;12;
@@ -850,7 +850,7 @@
 3;NLD;Friesland;Smallingerland;Drachten;E6.09856107734896;N53.1028698155841;12;
 3;NLD;Friesland;Smallingerland;Drachtster compagnie;;;12;
 3;NLD;Friesland;Smallingerland;Drachtstercompagnie;;;12;
-3;NLD;Friesland;Smallingerland;Goëngahuizen;;;12;
+3;NLD;Friesland;Smallingerland;GoÃ«ngahuizen;;;12;
 3;NLD;Friesland;Smallingerland;Houtigehage;;;12;
 3;NLD;Friesland;Smallingerland;Kortehemmen;;;12;
 3;NLD;Friesland;Smallingerland;Nijega;;;12;
@@ -860,7 +860,7 @@
 3;NLD;Friesland;Smallingerland;Smalle Ee;;;12;
 2;NLD;Friesland;Sneek;;;;10;
 3;NLD;Friesland;Sneek;IJsbrechtum;;;12;
-3;NLD;Friesland;Sneek;Loënga;;;12;
+3;NLD;Friesland;Sneek;LoÃ«nga;;;12;
 3;NLD;Friesland;Sneek;Offingawier;;;12;
 3;NLD;Friesland;Sneek;Sneek;;;12;
 3;NLD;Friesland;Sneek;Ysbrechtum;;;12;
@@ -903,7 +903,7 @@
 3;NLD;Friesland;Tietjerksteradeel;Bergum Noord;;;12;
 3;NLD;Friesland;Tietjerksteradeel;Bergumerdam;;;12;
 3;NLD;Friesland;Tietjerksteradeel;Burgum;;;12;
-3;NLD;Friesland;Tietjerksteradeel;Earnewâld;;;12;
+3;NLD;Friesland;Tietjerksteradeel;EarnewÃ¢ld;;;12;
 3;NLD;Friesland;Tietjerksteradeel;Eastermar;;;12;
 3;NLD;Friesland;Tietjerksteradeel;Eernewoude;;;12;
 3;NLD;Friesland;Tietjerksteradeel;Eestrum;;;12;
@@ -929,7 +929,7 @@
 3;NLD;Friesland;Tietjerksteradeel;Suameer;;;12;
 3;NLD;Friesland;Tietjerksteradeel;Suawoude;;;12;
 3;NLD;Friesland;Tietjerksteradeel;Sumar;;;12;
-3;NLD;Friesland;Tietjerksteradeel;Suwâld;;;12;
+3;NLD;Friesland;Tietjerksteradeel;SuwÃ¢ld;;;12;
 3;NLD;Friesland;Tietjerksteradeel;Tergracht;;;12;
 3;NLD;Friesland;Tietjerksteradeel;Tietjerk;;;12;
 3;NLD;Friesland;Tietjerksteradeel;Tytsjerk;;;12;
@@ -1029,7 +1029,7 @@
 3;NLD;Friesland;Wymbritseradeel;Folsgare;;;12;
 3;NLD;Friesland;Wymbritseradeel;Gaastmeer;;;12;
 3;NLD;Friesland;Wymbritseradeel;Gauw;E5.71392153556064;N53.0592180765985;12;
-3;NLD;Friesland;Wymbritseradeel;Goënga;;;12;
+3;NLD;Friesland;Wymbritseradeel;GoÃ«nga;;;12;
 3;NLD;Friesland;Wymbritseradeel;Greonterp;;;12;
 3;NLD;Friesland;Wymbritseradeel;Heeg;;;12;
 3;NLD;Friesland;Wymbritseradeel;Hommerts;;;12;
@@ -1056,7 +1056,7 @@
 3;NLD;Friesland;Wymbritseradeel;Wolsum;;;12;
 3;NLD;Friesland;Wymbritseradeel;Woudsend;;;12;
 3;NLD;Friesland;Wymbritseradeel;Ypecolsga;;;12;
-1;NLD;Gelderland;;;;;7;
+1;NLD;Gelderland;;;;;7;places/NLD/flags/GE.gif
 2;NLD;Gelderland;Aalten;;;;10;
 3;NLD;Gelderland;Aalten;'t Klooster;;;12;
 3;NLD;Gelderland;Aalten;Aalten;;;12;
@@ -1141,7 +1141,7 @@
 3;NLD;Gelderland;Berkelland;Lochuizen;;;12;
 3;NLD;Gelderland;Berkelland;Loo;;;12;
 3;NLD;Gelderland;Berkelland;Mallem;;;12;
-3;NLD;Gelderland;Berkelland;Mariënvelde;;;12;
+3;NLD;Gelderland;Berkelland;MariÃ«nvelde;;;12;
 3;NLD;Gelderland;Berkelland;Neede;;;12;
 3;NLD;Gelderland;Berkelland;Noordijk;;;12;
 3;NLD;Gelderland;Berkelland;Noordijkerveld;;;12;
@@ -1729,7 +1729,7 @@
 3;NLD;Gelderland;Zutphen;Warken;;;12;
 3;NLD;Gelderland;Zutphen;Warnsveld;;;12;
 3;NLD;Gelderland;Zutphen;Zutphen;;;12;
-1;NLD;Groningen;;;E6.75;N53.21;8;
+1;NLD;Groningen;;;E6.75;N53.21;8;places/NLD/flags/GR.gif
 2;NLD;Groningen;Aduard;;;;10;
 2;NLD;Groningen;Appingedam;;;;10;
 3;NLD;Groningen;Appingedam;Appingedam;E6.84962660773014;N53.3170474724827;12;
@@ -2016,7 +2016,7 @@
 3;NLD;Groningen;Stadskanaal;Ceresdorp;;;12;
 3;NLD;Groningen;Stadskanaal;Holte;;;12;
 3;NLD;Groningen;Stadskanaal;Horsten;;;12;
-3;NLD;Groningen;Stadskanaal;Höchte;;;12;
+3;NLD;Groningen;Stadskanaal;HÃ¶chte;;;12;
 3;NLD;Groningen;Stadskanaal;Jipsingboermussel;;;12;
 3;NLD;Groningen;Stadskanaal;Kopstukken;;;12;
 3;NLD;Groningen;Stadskanaal;Mussel;;;12;
@@ -2236,7 +2236,7 @@
 3;NLD;Groningen;Zuidhorn;Visvliet;;;12;
 3;NLD;Groningen;Zuidhorn;Wierumerschouw;;;12;
 3;NLD;Groningen;Zuidhorn;Zuidhorn;E6.400566101074219;N53.24559794831132;12;
-1;NLD;Limburg;;;;;7;
+1;NLD;Limburg;;;;;7;places/NLD/flags/LI.gif
 2;NLD;Limburg;Ambt Montfort;;;;10;
 3;NLD;Limburg;Ambt Montfort;Holst;;;12;
 3;NLD;Limburg;Ambt Montfort;Lerop;;;12;
@@ -2245,8 +2245,8 @@
 3;NLD;Limburg;Ambt Montfort;Posterholt;;;12;
 3;NLD;Limburg;Ambt Montfort;Putbroek;;;12;
 3;NLD;Limburg;Ambt Montfort;Reutje;;;12;
-3;NLD;Limburg;Ambt Montfort;Sint Odiliënberg;;;12;
-3;NLD;Limburg;Ambt Montfort;St Odiliënberg;;;12;
+3;NLD;Limburg;Ambt Montfort;Sint OdiliÃ«nberg;;;12;
+3;NLD;Limburg;Ambt Montfort;St OdiliÃ«nberg;;;12;
 3;NLD;Limburg;Ambt Montfort;Voorst;;;12;
 3;NLD;Limburg;Ambt Montfort;Voorsterveld;;;12;
 2;NLD;Limburg;Arcen en Velden;;;;10;
@@ -2364,7 +2364,7 @@
 3;NLD;Limburg;Gulpen-Wittem;Helle;;;12;
 3;NLD;Limburg;Gulpen-Wittem;Hilleshagen;;;12;
 3;NLD;Limburg;Gulpen-Wittem;Hurpesch;;;12;
-3;NLD;Limburg;Gulpen-Wittem;Höfke;;;12;
+3;NLD;Limburg;Gulpen-Wittem;HÃ¶fke;;;12;
 3;NLD;Limburg;Gulpen-Wittem;Ingber;;;12;
 3;NLD;Limburg;Gulpen-Wittem;Kapolder;;;12;
 3;NLD;Limburg;Gulpen-Wittem;Kleeberg;;;12;
@@ -2434,7 +2434,7 @@
 3;NLD;Limburg;Horst aan de Maas;Broekeind;;;12;
 3;NLD;Limburg;Horst aan de Maas;Broekhuizen;;;12;
 3;NLD;Limburg;Horst aan de Maas;Broekhuizenvorst;;;12;
-3;NLD;Limburg;Horst aan de Maas;Californië;;;12;
+3;NLD;Limburg;Horst aan de Maas;CaliforniÃ«;;;12;
 3;NLD;Limburg;Horst aan de Maas;De Steegh;;;12;
 3;NLD;Limburg;Horst aan de Maas;Griendtsveen;;;12;
 3;NLD;Limburg;Horst aan de Maas;Grubbenvorst;;;12;
@@ -2460,7 +2460,7 @@
 3;NLD;Limburg;Kerkrade;Beerenbos;;;12;
 3;NLD;Limburg;Kerkrade;Bleijerheide;;;12;
 3;NLD;Limburg;Kerkrade;Bovenste Locht;;;12;
-3;NLD;Limburg;Kerkrade;Chèvremont;;;12;
+3;NLD;Limburg;Kerkrade;ChÃ¨vremont;;;12;
 3;NLD;Limburg;Kerkrade;Eygelshoven;;;12;
 3;NLD;Limburg;Kerkrade;Haanrade;;;12;
 3;NLD;Limburg;Kerkrade;Hopel;;;12;
@@ -2499,8 +2499,8 @@
 3;NLD;Limburg;Maasbracht;Linne;;;12;
 3;NLD;Limburg;Maasbracht;Maasbracht;;;12;
 3;NLD;Limburg;Maasbracht;Maasbracht-Beek;;;12;
-3;NLD;Limburg;Maasbracht;Ohé;;;12;
-3;NLD;Limburg;Maasbracht;Ohé en Laak;;;12;
+3;NLD;Limburg;Maasbracht;OhÃ©;;;12;
+3;NLD;Limburg;Maasbracht;OhÃ© en Laak;;;12;
 3;NLD;Limburg;Maasbracht;Sint Joost;;;12;
 3;NLD;Limburg;Maasbracht;St Joost;;;12;
 3;NLD;Limburg;Maasbracht;Stevensweert;;;12;
@@ -2771,7 +2771,7 @@
 3;NLD;Limburg;Weert;Swartbroek;;;12;
 3;NLD;Limburg;Weert;Tungelroy;;;12;
 3;NLD;Limburg;Weert;Weert;;;12;
-1;NLD;Noord Brabant;;;;;7;
+1;NLD;Noord Brabant;;;;;7;places/NLD/flags/DR.gif
 2;NLD;Noord Brabant;'s-Hertogenbosch;;;;10;
 3;NLD;Noord Brabant;'s-Hertogenbosch;'s-Hertogenbosch;;;12;
 3;NLD;Noord Brabant;'s-Hertogenbosch;Bokhoven;;;12;
@@ -2787,7 +2787,7 @@
 3;NLD;Noord Brabant;'s-Hertogenbosch;Rosmalen;;;12;
 2;NLD;Noord Brabant;Aalburg;;;;10;
 3;NLD;Noord Brabant;Aalburg;Aalburg;;;12;
-3;NLD;Noord Brabant;Aalburg;Babyloniënbroek;;;12;
+3;NLD;Noord Brabant;Aalburg;BabyloniÃ«nbroek;;;12;
 3;NLD;Noord Brabant;Aalburg;Biesheuvel;;;12;
 3;NLD;Noord Brabant;Aalburg;Drongelen;;;12;
 3;NLD;Noord Brabant;Aalburg;Eethen;;;12;
@@ -3513,7 +3513,7 @@
 3;NLD;Noord Brabant;Zundert;Tiggeltseberg;;;12;
 3;NLD;Noord Brabant;Zundert;Wernhout;;;12;
 3;NLD;Noord Brabant;Zundert;Zundert;;;12;
-1;NLD;Noord Holland;;;;;7;
+1;NLD;Noord Holland;;;;;7;places/NLD/flags/NH.gif
 2;NLD;Noord Holland;Aalsmeer;;;;10;
 3;NLD;Noord Holland;Aalsmeer;Aalsmeer;;;12;
 3;NLD;Noord Holland;Aalsmeer;Kalslagen;;;12;
@@ -3989,7 +3989,7 @@
 3;NLD;Noord Holland;Zijpe;Stroet;;;12;
 3;NLD;Noord Holland;Zijpe;Valkkoog;;;12;
 3;NLD;Noord Holland;Zijpe;Zijpersluis;;;12;
-1;NLD;Overijssel;;;;;7;
+1;NLD;Overijssel;;;;;7;places/NLD/flags/OV.gif
 2;NLD;Overijssel;Almelo;;;;10;
 3;NLD;Overijssel;Almelo;Aadorp;;;12;
 3;NLD;Overijssel;Almelo;Almelo;;;12;
@@ -4130,7 +4130,7 @@
 3;NLD;Overijssel;Hardenberg;Loozen;;;12;
 3;NLD;Overijssel;Hardenberg;Lutten;;;12;
 3;NLD;Overijssel;Hardenberg;Lutten-Oever;;;12;
-3;NLD;Overijssel;Hardenberg;Mariënberg;;;12;
+3;NLD;Overijssel;Hardenberg;MariÃ«nberg;;;12;
 3;NLD;Overijssel;Hardenberg;Noord-Stegeren;;;12;
 3;NLD;Overijssel;Hardenberg;Oud Avereest;;;12;
 3;NLD;Overijssel;Hardenberg;Oud-Avereest;;;12;
@@ -4228,8 +4228,8 @@
 3;NLD;Overijssel;Olst-Wijhe;Wijnvoorden;;;12;
 2;NLD;Overijssel;Ommen;;;;10;
 3;NLD;Overijssel;Ommen;Archem;;;12;
-3;NLD;Overijssel;Ommen;Arriën;;;12;
-3;NLD;Overijssel;Ommen;Arriërveld;;;12;
+3;NLD;Overijssel;Ommen;ArriÃ«n;;;12;
+3;NLD;Overijssel;Ommen;ArriÃ«rveld;;;12;
 3;NLD;Overijssel;Ommen;Beerze;;;12;
 3;NLD;Overijssel;Ommen;Beerzerhaar;;;12;
 3;NLD;Overijssel;Ommen;Beerzerveld;;;12;
@@ -4259,7 +4259,7 @@
 3;NLD;Overijssel;Raalte;Laag Zuthem;;;12;
 3;NLD;Overijssel;Raalte;Lierderholthuis;;;12;
 3;NLD;Overijssel;Raalte;Luttenberg;;;12;
-3;NLD;Overijssel;Raalte;Mariënheem;;;12;
+3;NLD;Overijssel;Raalte;MariÃ«nheem;;;12;
 3;NLD;Overijssel;Raalte;Nieuw-Heeten;;;12;
 3;NLD;Overijssel;Raalte;Raalte;;;12;
 3;NLD;Overijssel;Raalte;Schoonheeten;;;12;
@@ -4414,11 +4414,11 @@
 3;NLD;Overijssel;Zwolle;Westenholte;;;12;
 3;NLD;Overijssel;Zwolle;Wijthmen;;;12;
 3;NLD;Overijssel;Zwolle;Windesheim;;;12;
-3;NLD;Overijssel;Zwolle;Zalné;;;12;
+3;NLD;Overijssel;Zwolle;ZalnÃ©;;;12;
 3;NLD;Overijssel;Zwolle;Zwolle;E6.08850960021164;N52.5123760561744;12;
 1;NLD;Unknown;;;;;7;
 2;NLD;Unknown;Noordzee ter hoogte van Friesche Gat;;;;10;
-1;NLD;Utrecht;;;;;7;
+1;NLD;Utrecht;;;;;7;places/NLD/flags/UT.gif
 2;NLD;Utrecht;Abcoude;;;;10;
 3;NLD;Utrecht;Abcoude;Abcoude;;;12;
 3;NLD;Utrecht;Abcoude;Baambrugge;;;12;
@@ -4586,7 +4586,7 @@
 3;NLD;Utrecht;Zeist;Den Dolder;;;12;
 3;NLD;Utrecht;Zeist;Huis ter Heide;;;12;
 3;NLD;Utrecht;Zeist;Zeist;;;12;
-1;NLD;Zeeland;;;;;7;
+1;NLD;Zeeland;;;;;7;places/NLD/flags/ZL.gif
 2;NLD;Zeeland;Borsele;;;;10;
 3;NLD;Zeeland;Borsele;'s-Gravenpolder;;;12;
 3;NLD;Zeeland;Borsele;'s-Heer Abtskerke;;;12;
@@ -4782,7 +4782,7 @@
 3;NLD;Zeeland;Vlissingen;Ritthem;;;12;
 3;NLD;Zeeland;Vlissingen;Vlissingen;;;12;
 3;NLD;Zeeland;Vlissingen;West-Souburg;;;12;
-1;NLD;Zuid Holland;;;;;7;
+1;NLD;Zuid Holland;;;;;7;places/NLD/flags/ZH.gif
 2;NLD;Zuid Holland;'s-Gravendeel;;;;10;
 3;NLD;Zuid Holland;'s-Gravendeel;'s-Gravendeel;;;12;
 3;NLD;Zuid Holland;'s-Gravendeel;De Wacht;;;12;

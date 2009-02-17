@@ -361,14 +361,11 @@ function print_td_person($n) {
 		$text .= "<br />";
 		if ($indi->canDisplayDetails()) {
 			$text.="<span class='details1'>";
-			$birth=$indi->getBirthDate();
-			$death=$indi->getDeathDate();
-			$text.=$birth->date1->Format('Y');
-			$text.='-';
-			$text.=$death->date1->Format('Y');
-			$age=GedcomDate::GetAgeYears($birth, $death);
-			if ($age)
- 			$text.=" <span class=\"age\">".PrintReady("({$age})")."</span>";
+			$text.=$indi->getBirthYear().'-'.$indi->getDeathYear();
+			$age=GedcomDate::GetAgeYears($indi->getBirthDate(), $indi->getDeathDate());
+			if ($age) {
+	 			$text.=" <span class=\"age\">".PrintReady("({$age})")."</span>";
+			}
 			$text.="</span>";
 		}
 	}

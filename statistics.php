@@ -326,20 +326,35 @@ else {
 	echo "\" /><label for=\"z_time\">".$pgv_lang["stat_302_cgp"]."</label><br /><br />";
 	print_help_link("stat_help_gwz","qm");
 	echo $pgv_lang["statar_zgp"]."<br />";
+
+	// Allow special processing for different languages
+	$func="date_localisation_{$lang_short_cut[$LANGUAGE]}";
+	if (!function_exists($func))
+		$func="DefaultDateLocalisation";
+	// Localise the date
+	$q1='from'; $d1='';
+	$q2=''; $d2=''; $q3='';
+	$func($q1, $d1, $q2, $d2, $q3);
 	?>
 	<select id="zas-grenzen-periode" name="zas-grenzen-periode">
 		<option value="1700,1750,1800,1850,1900,1950,2000" selected="selected"><?php
-			echo $pgv_lang["from"]." 1700 ".$pgv_lang["interval"]." 50 ".$pgv_lang["years"];?></option>
+			$d1 = 1700;
+			echo trim("{$q1} {$d1} {$q2} {$d2} {$q3}")." ".$pgv_lang["interval"]." 50 ".$pgv_lang["years"];?></option>
 		<option value="1800,1840,1880,1920,1950,1970,2000"><?php
-			echo $pgv_lang["from"]." 1800 ".$pgv_lang["interval"]." 40 ".$pgv_lang["years"];?></option>
+			$d1 = 1800;
+			echo trim("{$q1} {$d1} {$q2} {$d2} {$q3}")." ".$pgv_lang["interval"]." 40 ".$pgv_lang["years"];?></option>
 		<option value="1800,1850,1900,1950,2000"><?php
-			echo $pgv_lang["from"]." 1800 ".$pgv_lang["interval"]." 50 ".$pgv_lang["years"];?></option>
+			$d1 = 1800;
+			echo trim("{$q1} {$d1} {$q2} {$d2} {$q3}")." ".$pgv_lang["interval"]." 50 ".$pgv_lang["years"];?></option>
 		<option value="1900,1920,1940,1960,1980,1990,2000"><?php
-			echo $pgv_lang["from"]." 1900 ".$pgv_lang["interval"]." 20 ".$pgv_lang["years"];?></option>
+			$d1 = 1900;
+			echo trim("{$q1} {$d1} {$q2} {$d2} {$q3}")." ".$pgv_lang["interval"]." 20 ".$pgv_lang["years"];?></option>
 		<option value="1900,1925,1950,1975,2000"><?php
-			echo $pgv_lang["from"]." 1900 ".$pgv_lang["interval"]." 25 ".$pgv_lang["years"];?></option>
+			$d1 = 1900;
+			echo trim("{$q1} {$d1} {$q2} {$d2} {$q3}")." ".$pgv_lang["interval"]." 25 ".$pgv_lang["years"];?></option>
 		<option value="1940,1950,1960,1970,1980,1990,2000"><?php
-			echo $pgv_lang["from"]." 1940 ".$pgv_lang["interval"]." 10 ".$pgv_lang["years"];?></option>
+			$d1 = 1940;
+			echo trim("{$q1} {$d1} {$q2} {$d2} {$q3}")." ".$pgv_lang["interval"]." 10 ".$pgv_lang["years"];?></option>
 	</select>
 	<br /><br />
 	<?php

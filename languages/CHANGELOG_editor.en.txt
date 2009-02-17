@@ -42,12 +42,25 @@ The above list of codes may be amended as new situations arise.
 For massive changes, the variable names should be listed in the order in which they
 occur in the respective language files.
 
+VERSION 4.2.1 CA
+
+?$pgv_lang["whatever"]								dd Monthname, year		Change	codes and comments
+-----------------------------------------------------------------------------------------
++$pgv_lang["add_shnote"]							16 Feb 2009				A		Line 0126 in editor_en.php
++$pgv_lang["add_shnote_lbl"]						16 Feb 2009				A		Line 0127 in editor_en.php
++$pgv_lang["create_shnote"]							16 Feb 2009				A		Line 0147 in editor_en.php
++$pgv_lang["new_shnote_created"] 					16 Feb 2009				A		Line 0213 in editor_en.php
+
+
+
 VERSION 4.2.0
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 -----------------------------------------------------------------------------------------
-+$pgv_lang["add_opf_child"]                  9 Jan 2009         A
+-$pgv_lang["photo_replace"]							10 Feb 2009				D
++$pgv_lang["add_opf_child"]							9 Jan 2009				A
 *$pgv_lang["edit_concurrency_reload"]				11 December 2008		W
+
 
 
 VERSION 4.1.6

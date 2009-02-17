@@ -8,7 +8,10 @@
 	# $Id$
 =====================================================================
 
+
 Version 4.2.0 CA
+ - Added:  Shared Note Support (Also when in Add Census Event mode - removed conversion from Shared to inline Note) (windmillway)
+ - Merged: Merge changes r4969 - r5062 from the trunk. (windmillway)
  - Merged: Merge changes r4942 - r4969 from the trunk. (windmillway)
  - Changed: Changes to enable Create New Shared Note (Only partially complete - more to do) (windmillway)
  - Merged: Merge changes r4939 - r4942 from the trunk. (windmillway)
@@ -21,8 +24,37 @@ Version 4.2.0 CA
  - Added: New Shared Note List (from List Menu) and links to individual Shared Notes. (windmillway)
  - Changed: Census Assistant Shared Note delimiter from ";" to "|" (windmillway)
 
- 
-Version 4.2.0
+
+Version 4.2.1
+ - Fixed: [ 2556004 ] 4.2.0 - Reports without data output (fisharebest)
+ - Fixed: [ 2562498 ] 4993 General Search - last change (fisharebest)
+ - Fixed: [ 2555000 ] 4.2 Anniversary Calendar no privacy rules (fisharebest)
+ - Added: [ 2522082 ] Go To Merged Record (fisharebest)
+ - Added: [ 2580275 ] 4.2 R.A. improved functionality for Autosearch on Ancestry (erostew/fisharebest)
+ - Fixed: [ 2567372 ] Admin does not always see changes to approve correctly (fisharebest)
+ - Fixed: [ 2328664 ] Research Assistent (fisharebest)
+ - Added: Support for Serbian (Latin alphabet) (canajun2eh)
+ - Fixed: [ 2534707 ] [4897] MARR source not added when date is missing. (fisharebest)
+ - Fixed: [ 2567389 ] "Media Viewer using full GEDCOM Media URL"; Also "source.php error with Lightbox"; (windmillway)
+ - Changed: Removed "Update Photo" option from Quick Update (canajun2eh)
+ - Changed: Improved user interface in Manage Media (canajun2eh)
+ - Fixed: [ 2580303 ] GoogleMap - Add place not working in FireFox (wooc)
+ - Added: .wmv support to JWplayer module. (windmillway)
+ - Fixed: [ 2116080 ] [3870] Favourites missing from Xenea (wooc)
+ - Fixed: [ 2477810 ] Media Title Not Displaying on mediaviewer.php (canajun2eh)
+ - Fixed: [ 2350355 ] PGV 4.1.6 "Printer-friendly version" (wooc)
+ - Fixed: [ 2556175 ] Error 2 w Edit geographic place locations (wooc)
+ - Fixed: [ 2555840 ] Interactive Tree doesn't work when living names hidden (canajun2eh)
+ - Fixed: [ 2555574 ] Interactive Tree incorrect text spacing inside box (canajun2eh)
+ - Added: Preparatory work to enable config option to turn on/off each Tab Navigator on Indi page (windmillway)
+ - Fixed: [ 2555579 ] Interactive Tree box disappears when clicked (wooc)
+ - Fixed: [ 2329962 ] autocomplete css (wooc)
+ - Fixed: [ 2555011 ] Quick Update fails with suffix on name (wooc)
+ - Fixed: [ 2554221 ] 4.2 Interactive tree shown for user and not the individual (canajun2eh)
+ - Fixed: [ 1969541 ] 4.1.5 Quick Update:  Address gets concatenated (wooc)
+ - Fixed: [ 1803282 ] [4.1.2] Adding OCCU in Quick Update wont work (wooc)
+
+Version 4.2.0 2009-01-31
  - Added: GEDCOM config option to control Index or Portal page showing after Login (canajun2eh)
  - Fixed: [ 2544257 ] [4942] Show stat's charts ERROR 8's (wooc)
  - Changed: Reduced size of (Fxx) text in Navigator (windmillway)

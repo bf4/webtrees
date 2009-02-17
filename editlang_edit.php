@@ -3,7 +3,7 @@
  * Edit a language file
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
+ * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -29,7 +29,6 @@ require './config.php';
 loadLangFile("pgv_confighelp");
 
 require  "includes/functions/functions_editlang.php";
-// if (file_exists( "includes/functions/rs_functions.php")) require  "includes/functions/rs_functions.php";		what IS this??
 
 //-- make sure that they have admin status before they can use this page
 //-- otherwise have them login again
@@ -51,14 +50,7 @@ print_simple_header($pgv_lang["editlang"]);
 
 print "<script language=\"JavaScript\" type=\"text/javascript\">self.focus();</script>\n";
 
-$fromEscapedChars	= array("&",     "<",    ">",    "\\\"");
-$toPlainChars		= array("&amp;", "&lt;", "&gt;", "\\\\&quot;");
-
-$fromPlainChars		= array("\\\\&quot;", "&gt;", "&lt;", "&amp;");
-$toEscapedChars		= array("\\\"", ">",    "<",    "&");
-
-switch ($file_type)
-{
+switch ($file_type) {
 case "facts":
 	$lang_filename = $factsfile[$language2];
 	$lang_filename_orig = $factsfile["english"];
@@ -128,7 +120,7 @@ if ($action != "save") {
 	print "</tr>\n";
 	print "<tr>\n";
 	print "<td class=\"facts_value\" style=\"text-align:center; color: blue\" >";
-	print "<strong style=\"color: red\">|</strong>" . str_replace($fromEscapedChars, $toPlainChars, find_in_file($ls01, $lang_filename_orig)) . "<strong style=\"color: red\">|</strong>\n";
+	print "<strong style=\"color: red\">|</strong>" . mask_all(find_in_file($ls01, $lang_filename_orig)) . "<strong style=\"color: red\">|</strong>\n";
 	print "</td>\n";
 	print "</tr>\n";
 	print "</table>\n";
@@ -142,7 +134,7 @@ if ($action != "save") {
 	print "<tr>\n";
 	print "<td class=\"facts_value\" style=\"text-align:center; \" >\n";
 	print "<textarea rows=\"10\" name=\"new_message\" cols=\"75\" style=\"color: red\" >";
-	if ($ls02>0) print str_replace($fromEscapedChars, $toPlainChars, find_in_file($ls02, $lang_filename));
+	if ($ls02>0) print mask_all(find_in_file($ls02, $lang_filename));
 	print "</textarea>\n";
 	print "</td>\n";
 	print "</tr>\n";
@@ -175,11 +167,12 @@ if ($action == "save") {
 	// $file_type defines which language file
 
 	//$new_message = safe_POST('new_message'); 	//generates errors while editing texts contains brackets
-	if (isset($_REQUEST['new_message'])) $new_message = $_REQUEST['new_message'];
+	if (isset($_POST['new_message'])) $new_message = $_POST['new_message'];
 	else $new_message = '';
 
-	if (get_magic_quotes_gpc()) $new_message = stripslashes($new_message);	// Remove escaping backslashes added by POST
-
+// session.php looks after getting rid of escaping slashes added to $_POST input when the PHP
+// configuration option "magic_quotes_gpc" is set "on".
+	
 	switch ($file_type) {
 	case "facts":
 		// read facts.en.php file into array
@@ -265,7 +258,7 @@ if ($action == "save") {
 		break;
 	}
 
-	$new_message = str_replace($fromPlainChars, $toEscapedChars, $new_message);
+	$new_message = unmask_all($new_message);
 	$new_message_line = (-1);
 
 	if (isset($new_language_array[$ls02])) $dummyArray = $new_language_array[$ls02];
@@ -321,7 +314,7 @@ if ($action == "save") {
 	if ($Write_Ok) {
 		print "<tr>\n";
 		print "<td class=\"facts_value\" style=\"text-align:center; color: blue\" >";
-		print "<strong style=\"color: red\">|</strong>".str_replace($fromEscapedChars, $toPlainChars, find_in_file($ls01, $lang_filename_orig))."<strong style=\"color: red\">|</strong>\n";
+		print "<strong style=\"color: red\">|</strong>".mask_all(find_in_file($ls01, $lang_filename_orig))."<strong style=\"color: red\">|</strong>\n";
 		print "</td>\n";
 		print "</tr>\n";
 	}
@@ -339,7 +332,7 @@ if ($action == "save") {
 
 		print "<tr>\n";
 		print "<td class=\"facts_value\" style=\"text-align:center; color: blue\" >";
-		print "<strong style=\"color: red; \">|</strong>" . str_replace($fromEscapedChars, $toPlainChars, $new_message) . "<strong style=\"color: red\">|</strong>\n";
+		print "<strong style=\"color: red; \">|</strong>" . mask_all($new_message) . "<strong style=\"color: red\">|</strong>\n";
 		print "</td>\n";
 		print "</tr>\n";
 		print "</table>\n";

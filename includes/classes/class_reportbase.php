@@ -825,7 +825,7 @@ function PGVRPageNumSHandler($attrs) {
 function PGVRTotalPagesSHandler($attrs) {
 	global $currentElement;
 
-	$currentElement->addText("{nb}");
+	$currentElement->addText("{{nb}}");
 }
 
 function PGVRGedcomSHandler($attrs) {
@@ -1297,21 +1297,18 @@ function PGVRFactsSHandler($attrs) {
 		foreach($facts as $event) {
 			if (strpos($tag.",",$event->getTag())===false) $repeats[]=$event->getGedComRecord();
 		}
-	}
-	else {
+	} else {
 		global $nonfacts;
 		$nonfacts = preg_split("/[\s,;:]/", $tag);
 		$person = new Person($gedrec);
-//		print "<pre>".$gedrec."</pre>";
 		$oldPerson = Person::getInstance($person->getXref());
-//		print "<pre>".$oldPerson->getGedcomRecord()."</pre>";
 		$oldPerson->diffMerge($person);
 		$facts = $oldPerson->getIndiFacts();
-		foreach($facts as $f=>$fact) {
-			if (strstr($fact[1], "PGV_NEW")!==false) $repeats[] = $fact[1];
-//			else if (strstr($fact[1], "PGV_OLD")!==false) $repeats[] = $fact[1];
+		foreach ($facts as $f=>$fact) {
+			if (strstr($fact->getGedcomRecord(), "PGV_NEW")!==false) {
+				$repeats[]=$fact->getGedcomRecord();
+			}
 		}
-//		var_dump($repeats);
 	}
 }
 
@@ -1677,20 +1674,106 @@ function PGVRLineSHandler($attrs) {
 
 function PGVRListSHandler($attrs) {
 	global $pgvreport, $gedrec, $repeats, $repeatBytes, $list, $repeatsStack, $processRepeats, $parser, $vars, $sortby;
-	global $pgv_changes, $GEDCOM;
+	global $pgv_changes, $GEDCOM, $DBCONN, $TBLPREFIX;
 
 	$processRepeats++;
 	if ($processRepeats>1) return;
 
-	$sortby = "NAME";
-	if (isset($attrs["sortby"])) $sortby = $attrs["sortby"];
-	if (preg_match("/\\$(\w+)/", $sortby, $vmatch)>0) {
-		$sortby = $vars[$vmatch[1]]["id"];
-		$sortby = trim($sortby);
+	if (isset($attrs["sortby"])) {
+		$sortby = $attrs["sortby"];
+		if (preg_match("/\\$(\w+)/", $sortby, $vmatch)>0) {
+			$sortby = $vars[$vmatch[1]]["id"];
+			$sortby = trim($sortby);
+		}
+	} else {
+		$sortby = "NAME";
 	}
-	$list = array();
-	$listname = "individual";
-	if (isset($attrs["list"])) $listname=$attrs["list"];
+
+	if (isset($attrs["list"])) {
+		$listname=$attrs["list"];
+	} else {
+		$listname = "individual";
+	}
+
+	// Some filters/sorts can be applied using SQL, while others require PHP
+	switch ($listname) {
+	case 'pending':
+		$list=array();
+		foreach ($pgv_changes as $changes) {
+			$change=end($changes);
+			if ($change['gedcom']==$GEDCOM) {
+				$list[]=new GedcomRecord($change['undo']);
+			}
+		}
+		break;
+	case 'individual':
+	case 'family':
+		$sql_col_prefix=substr($listname,0,1).'_'; // i_ for individual, f_ for family, etc.
+		$sql_join=array();
+		$sql_where=array($sql_col_prefix."file=".PGV_GED_ID);
+		$sql_order_by=array();
+		foreach ($attrs as $attr=>$value) {
+			if (strpos($attr, 'filter')===0 && $value) {
+				// Substitute global vars
+				$value=preg_replace('/\$(\w+)/e', '$vars["\\1"]["id"]', $value);
+				// Convert the various filters into SQL
+				if (preg_match('/^(\w+):DATE (LTE|GTE) (.+)$/', $value, $match)) {
+					$sql_join[]="JOIN {$TBLPREFIX}dates AS {$attr} ON ({$attr}.d_file={$sql_col_prefix}file AND {$attr}.d_gid={$sql_col_prefix}id)";
+					$sql_where[]="{$attr}.d_fact='{$match[1]}'";
+					$date=new GedcomDate($match[3]);
+					if ($match[2]=='LTE') {
+						$sql_where[]="{$attr}.d_julianday2<=".$date->minJD();
+					} else {
+						$sql_where[]="{$attr}.d_julianday1>=".$date->minJD();
+					}
+					if ($sortby==$match[1]) {
+						$sortby='';
+						$sql_order_by[]="{$attr}.d_julianday1";
+					}
+					if (substr($value, 0, 1)==':') {
+						unset($attrs[$attr]); // This filter has been fully processed
+					}
+				} elseif ($listname=='individual' && preg_match('/^NAME CONTAINS (.+)$/', $value, $match)) {
+					$sql_join[]="JOIN {$TBLPREFIX}name AS {$attr} ON (n_file={$sql_col_prefix}file AND n_id={$sql_col_prefix}id)";
+					$sql_where[]="{$attr}.n_sort ".PGV_DB_LIKE." '%". $DBCONN->escapeSimple($match[1])."%'";
+					if ($sortby=='NAME') {
+						$sortby='';
+						$sql_order_by[]="{$attr}.n_sort";
+					}
+					unset($attrs[$attr]); // This filter has been fully processed
+				} elseif ($listname=='family' && preg_match('/^NAME CONTAINS (.+)$/', $value, $match)) {
+					// Eventually, family "names" will be stored in pgv_name.  Until then, an extra is needed....
+					$sql_join[]="JOIN {$TBLPREFIX}link AS {$attr}a ON ({$attr}a.l_file={$sql_col_prefix}file AND {$attr}a.l_from={$sql_col_prefix}id)";
+					$sql_join[]="JOIN {$TBLPREFIX}name AS {$attr}b ON ({$attr}b.n_file={$sql_col_prefix}file AND n_id={$sql_col_prefix}id)";
+					$sql_where[]="{$attr}a.l_type=IN ('HUSB, 'WIFE')";
+					$sql_where[]="{$attr}.n_sort ".PGV_DB_LIKE." '%". $DBCONN->escapeSimple($match[1])."%'";
+					if ($sortby=='NAME') {
+						$sortby='';
+						$sql_order_by[]="{$attr}.n_sort";
+					}
+					unset($attrs[$attr]); // This filter has been fully processed
+				} elseif (preg_match('/^(?:\w+):PLAC CONTAINS (.+)$/', $value, $match)) {
+					$sql_join[]="JOIN {$TBLPREFIX}places AS {$attr}a ON ({$attr}a.p_file={$sql_col_prefix}file)";
+					$sql_join[]="JOIN {$TBLPREFIX}placelinks AS {$attr}b ON ({$attr}a.p_file={$attr}b.pl_file AND {$attr}b.pl_p_id={$attr}a.p_id AND {$attr}b.pl_gid={$sql_col_prefix}id)";
+					$sql_where[]="{$attr}a.p_place ".PGV_DB_LIKE." '". $DBCONN->escapeSimple($match[1])."'";
+					if (substr($value, 0, 1)==':') {
+						unset($attrs[$attr]); // This filter has been fully processed
+					}
+				} else {
+					// TODO: what other filters can we apply in SQL?
+					//var_dump($value);
+				}
+			}
+		}
+		if ($listname=='family') {
+			$list=search_fams_custom($sql_join, $sql_where, $sql_order_by);
+		} else {
+			$list=search_indis_custom($sql_join, $sql_where, $sql_order_by);
+		}
+		break;
+	default:
+		die("Invalid list name: $listname");
+	}
 
 	$filters = array();
 	$filters2 = array();
@@ -1765,60 +1848,18 @@ function PGVRListSHandler($attrs) {
 			$j++;
 		}
 	}
-	switch($listname) {
-		case "family":
-			if (count($filters)>0) {
-				$list = search_fams($filters, array(PGV_GED_ID), 'AND', true);
-			} else {
-				$list = get_fam_list();
-			}
-			break;
-		case "pending":
-			$list = array();
-			foreach($pgv_changes as $cid=>$changes) {
-				$change = end($changes);
-				if ($change["gedcom"]==$GEDCOM) {
-					$list[$change['gid']] = $change;
-				}
-			}
-			break;
-		default:
-			if (count($filters)>0) {
-//				var_dump($filters);
-				$list = search_indis($filters, array(PGV_GED_ID), 'AND', true);
-			}
-			//-- handle date specific searches
-			foreach($filters2 as $f=>$filter) {
-				$tags = explode(':', $filter["tag"]);
-				if (end($tags)=="DATE") {
-					if ($filter['expr']=='LTE') {
-						$enddate = new GedcomDate($filter['val']);
-						$endtag = $tags[0];
-					}
-					if ($filter['expr']=='GTE') {
-						$startdate = new GedcomDate($filter['val']);
-						$starttag = $tags[0];
-					}
-				}
-			}
-			if (isset($startdate) && isset($enddate)) {
-				$dlist = search_indis_daterange($startdate->MinJD(), $enddate->MaxJD(), $starttag.",".$endtag);
-				if (!isset($list) || count($list)==0)
-					$list = $dlist;
-				else {
-					//-- intersect the lists
-					$newlist = array();
-					foreach($list as $id=>$indi) {
-						if (isset($dlist[$id])) $newlist[$id] = $indi;
-					}
-					$list = $newlist;
-				}
-			}
-			if (!isset($list)) $list = get_indi_list();
-			break;
-	}
 	//-- apply other filters to the list that could not be added to the search string
-	if (count($filters2)>0) {
+	if ($filters) {
+		foreach ($list as $key=>$record) {
+			foreach ($filters as $filter) {
+				if (!preg_match('/'.$filter.'/i', $record->getGedcomRecord())) {
+					unset($list[$key]);
+					break;
+				}
+			}
+		}
+	}
+	if ($filters2) {
 		$mylist = array();
 		foreach($list as $indi) {
 			$key=$indi->getXref();
@@ -1878,11 +1919,30 @@ function PGVRListSHandler($attrs) {
 		}
 		$list = $mylist;
 	}
-	if ($sortby=="NAME") uasort($list, array('GedcomRecord', 'Compare'));
-	else if ($sortby=="ID") uasort($list, array('GedcomRecord', 'CompareId'));
-	else if ($sortby=="CHAN") uasort($list, "compare_date_descending");
-	else uasort($list, "compare_date");
-	//print count($list);
+	switch ($sortby) {
+	case 'NAME':
+		uasort($list, array('GedcomRecord', 'Compare'));
+		break;
+	case 'ID':
+		uasort($list, array('GedcomRecord', 'CompareId'));
+		break;
+	case 'CHAN':
+		uasort($list, array('GedcomRecord', 'CompareChanDate'));
+		break;
+	case 'BIRT':
+		uasort($list, array('Person', 'CompareBirtDate'));
+		break;
+	case 'DEAT':
+		uasort($list, array('Person', 'CompareDeatDate'));
+		break;
+	case 'MARR':
+		uasort($list, array('Family', 'CompareMarrDate'));
+		break;
+	default:
+		// unsorted or already sorted by SQL
+		break;
+	}
+
 	array_push($repeatsStack, array($repeats, $repeatBytes));
 	$repeatBytes = xml_get_current_line_number($parser)+1;
 }
@@ -1923,10 +1983,9 @@ function PGVRListEHandler() {
 	$oldgedrec = $gedrec;
 	$list_total = count($list);
 	$list_private = 0;
-	foreach($list as $key=>$value) {
-		if (displayDetailsById($key)) {
-			if (isset($value["undo"])) $gedrec = $value["undo"];
-			else $gedrec = find_gedcom_record($key);
+	foreach ($list as $record) {
+		if ($record->canDisplayDetails()) {
+			$gedrec=$record->getGedcomRecord();
 			//-- start the sax parser
 			$repeat_parser = xml_parser_create();
 			$parser = $repeat_parser;
@@ -2062,25 +2121,31 @@ function PGVRRelativesSHandler($attrs) {
 		}
 	}
 
-	if ($sortby!="none") {
-		if ($sortby=="NAME") uasort($list, array('GedcomRecord', 'Compare'));
-		else if ($sortby=="ID") uasort($list, array('GedcomRecord', 'CompareId'));
-		else if ($sortby=="generation") {
-			$newarray = array();
-			reset($list);
-			$genCounter = 1;
-			while (count($newarray) < count($list)) {
-				foreach ($list as $key => $value) {
-					$generation = $value->generation;
-					if ($generation == $genCounter) {
-						$newarray[$key]->generation=$generation;
-					}
+	switch ($sortby) {
+	case 'NAME':
+		uasort($list, array('GedcomRecord', 'Compare'));
+		break;
+	case 'ID':
+		uasort($list, array('GedcomRecord', 'CompareId'));
+		break;
+	case 'generation':
+		$newarray = array();
+		reset($list);
+		$genCounter = 1;
+		while (count($newarray) < count($list)) {
+			foreach ($list as $key => $value) {
+				$generation = $value->generation;
+				if ($generation == $genCounter) {
+					$newarray[$key]->generation=$generation;
 				}
-				$genCounter++;
 			}
-			$list = $newarray;
+			$genCounter++;
 		}
-		else uasort($list, "compare_date");
+		$list = $newarray;
+		break;
+	default:
+		// unsorted
+		break;
 	}
 //	print count($list);
 	array_push($repeatsStack, array($repeats, $repeatBytes));

@@ -410,7 +410,7 @@ case 'edit':
 		echo "</td></tr>\n";
 	}
 	echo "</table>";
-	if ($level0type=="SOUR" || $level0type=="REPO" || $level0type=="OBJE") {
+	if ($level0type=="SOUR" || $level0type=="REPO" || $level0type=="OBJE" ) {
 		if ($level1type!="NOTE") print_add_layer("NOTE");
 	} else {
 		if ($level1type!="SEX") {
@@ -461,6 +461,8 @@ case 'add':
 			if ($fact!="ASSO" && $fact!="SOUR" && $fact!="REPO") print_add_layer("ASSO");
 			if ($fact!="SOUR" && $fact!="REPO") print_add_layer("SOUR");
 			if ($fact!="NOTE") print_add_layer("NOTE");
+			// BH Shared Note addition ------------
+			if ($fact!="SHNOTE") print_add_layer("SHNOTE");
 			if ($fact!="REPO") print_add_layer("OBJE");
 		}
 	}
@@ -760,7 +762,6 @@ case 'addsourceaction':
 //------------------------------------------------------------------------------
 //-- add new Shared Note
 case 'addnewshnote':
-
 	?>
 	<script type="text/javascript">
 	<!--
@@ -781,25 +782,20 @@ case 'addnewshnote':
 		
 		<table class="facts_table">
 		
-			<tr><td class="descriptionbox <?php echo $TEXT_DIRECTION; ?> wrap width25"><?php print_help_link("edit_ABBR_help", "qm"); echo $factarray["ABBR"]; ?></td>
+		<!--	<tr><td class="descriptionbox <?php echo $TEXT_DIRECTION; ?> wrap width25"><?php print_help_link("edit_ABBR_help", "qm"); echo $factarray["ABBR"]; ?></td>
 			<td class="optionbox wrap"><input tabindex="<?php echo $tabkey; ?>" type="text" name="ABBR" id="ABBR" value="" size="40" maxlength="255" /> <?php print_specialchar_link("ABBR",false); ?></td></tr>
 			<?php $tabkey++; ?>
-			
+		-->	
 			<tr><td class="descriptionbox <?php echo $TEXT_DIRECTION; ?> wrap width25"><?php print_help_link("edit_TITL_help", "qm"); echo $factarray["TITL"]; ?></td>
 			<td class="optionbox wrap"><input tabindex="<?php echo $tabkey; ?>" type="text" name="TITL" id="TITL" value="" size="60" /> <?php print_specialchar_link("TITL",false); ?></td></tr>
 			<?php $tabkey++; ?>
-
-			<tr><td class="descriptionbox <?php echo $TEXT_DIRECTION; ?> wrap width25"><?php print_help_link("edit_DATE_help", "qm"); echo $factarray["DATE"]; ?></td>
-			<td class="optionbox wrap"><input tabindex="<?php echo $tabkey; ?>" type="text" name="DATE" id="DATE" value="" size="60" /> <?php print_specialchar_link("DATE",false); ?></td></tr>
-			<?php $tabkey++; ?>
 			
-		<!--
 			<tr><td class="descriptionbox <?php echo $TEXT_DIRECTION; ?> wrap width25"><?php print_help_link("edit_NOTE_help", "qm"); echo $factarray["NOTE"]; ?></td>
-			<td class="optionbox wrap"><input tabindex="<?php echo $tabkey; ?>" type="text" name="NOTE" id="NOTE" rows="5" cols="60" /> <?php print_specialchar_link("NOTE",false); ?></td></tr>
+			<td class="optionbox wrap"><textarea tabindex="<?php echo $tabkey; ?>" name="NOTE" id="NOTE" rows="5" cols="60"></textarea><br /><?php print_specialchar_link("NOTE",true); ?></td></tr>
 			<?php $tabkey++; ?>
-		-->
-			
-		<!--
+		
+		<?php
+		/*
 			<?php if (strstr($ADVANCED_NAME_FACTS, "_HEB")!==false) { ?>
 			<tr><td class="descriptionbox <?php echo $TEXT_DIRECTION; ?> wrap width25"><?php print_help_link("edit__HEB_help", "qm"); echo $factarray["_HEB"]; ?></td>
 			<td class="optionbox wrap"><input tabindex="<?php echo $tabkey; ?>" type="text" name="_HEB" id="_HEB" value="" size="60" /> <?php print_specialchar_link("_HEB",false); ?></td></tr>
@@ -823,16 +819,17 @@ case 'addnewshnote':
 			<tr><td class="descriptionbox <?php echo $TEXT_DIRECTION; ?> wrap width25"><?php print_help_link("edit_REPO_help", "qm"); echo $factarray["REPO"]; ?></td>
 			<td class="optionbox wrap"><input tabindex="<?php echo $tabkey; ?>" type="text" name="REPO" id="REPO" value="" size="10" /> <?php print_findrepository_link("REPO"); print_addnewrepository_link("REPO"); ?></td></tr>
 			<?php $tabkey++; ?>
-		-->
-		<!--
+			
 			<tr><td class="descriptionbox <?php echo $TEXT_DIRECTION; ?> wrap width25"><?php print_help_link("edit_CALN_help", "qm"); echo $factarray["CALN"]; ?></td>
 			<td class="optionbox wrap"><input tabindex="<?php echo $tabkey; ?>" type="text" name="CALN" id="CALN" value="" /></td></tr>
-		-->
+		*/ 
+		?>
+		
 		</table>
-	
 		
 			<?php
- 
+// BH Remove the Associated stuff
+/*
 			print_help_link("edit_SOUR_EVEN_help", "qm"); ?><a href="#"  onclick="return expand_layer('events');"><img id="events_img" src="<?php echo $PGV_IMAGE_DIR."/".$PGV_IMAGES["plus"]["other"]; ?>" border="0" width="11" height="11" alt="" title="" />
 			<?php echo $pgv_lang["source_events"]; 
 			?></a>
@@ -864,28 +861,22 @@ case 'addnewshnote':
 			?>
 			</table>
 			</div>
-			
+*/ ?>
 		<br /><br />
-		
-		
 		<input type="submit" value="<?php echo $pgv_lang["create_shnote"]; ?>" />
 	</form>
 	<?php
 
 	break;
 //------------------------------------------------------------------------------
-//-- create a source record from the incoming variables
+//-- create a shared note record from the incoming variables
 case 'addshnoteaction':
 	if (PGV_DEBUG) {
 		phpinfo(INFO_VARIABLES);
 	}
 	// $newgedrec = "0 @XREF@ NOTE\n";
-	$newgedrec  = "0 @XREF@ NOTE Census Transcription\n";
-	
-	$newgedrec .= "1 CONT This is 1st continuation line \n";
-	$newgedrec .= "1 CONT This is 2nd continuation line \n";
-	$newgedrec .= "1 CONT This is 3rd continuation line \n";
-	
+	$newgedrec  = "0 @XREF@ NOTE\n";
+
 	if (isset($_REQUEST['EVEN'])) $EVEN = $_REQUEST['EVEN'];
 	if (!empty($EVEN) && count($EVEN)>0) {
 		$newgedrec .= "1 DATA\n";
@@ -897,16 +888,26 @@ case 'addshnoteaction':
 	if (isset($_REQUEST['ABBR'])) $ABBR = $_REQUEST['ABBR'];
 	if (isset($_REQUEST['TITL'])) $TITL = $_REQUEST['TITL'];
 	if (isset($_REQUEST['DATE'])) $DATE = $_REQUEST['DATE'];
+	if (isset($_REQUEST['NOTE'])) $NOTE = $_REQUEST['NOTE'];
 	if (isset($_REQUEST['_HEB'])) $_HEB = $_REQUEST['_HEB'];
 	if (isset($_REQUEST['ROMN'])) $ROMN = $_REQUEST['ROMN'];
 	if (isset($_REQUEST['AUTH'])) $AUTH = $_REQUEST['AUTH'];
 	if (isset($_REQUEST['PUBL'])) $PUBL = $_REQUEST['PUBL'];
 	if (isset($_REQUEST['REPO'])) $REPO = $_REQUEST['REPO'];
 	if (isset($_REQUEST['CALN'])) $CALN = $_REQUEST['CALN'];
+	
+	if (!empty($NOTE)) {
+		$newlines = preg_split("/\r?\n/",$NOTE,-1,PREG_SPLIT_NO_EMPTY);
+		for($k=0; $k<count($newlines); $k++) {
+			if ( $k==0 ) $newgedrec .= "1 CONT $newlines[$k]\n";
+			else $newgedrec .= "1 CONT $newlines[$k]\n";
+		}
+	}
+	
 	if (!empty($ABBR)) $newgedrec .= "1 ABBR $ABBR\n";
 	if (!empty($TITL)) {
 		$newgedrec .= "1 TITL $TITL\n";
-		$newgedrec .= "2 DATE $DATE\n";
+		// $newgedrec .= "2 DATE $DATE\n";
 		if (!empty($_HEB)) $newgedrec .= "2 _HEB $_HEB\n";
 		if (!empty($ROMN)) $newgedrec .= "2 ROMN $ROMN\n";
 	}
@@ -918,8 +919,8 @@ case 'addshnoteaction':
 			else $newgedrec .= "2 CONT $newlines[$k]\n";
 		}
 	}
-	if (!empty($REPO)) {
-		$newgedrec .= "1 REPO @$REPO@\n";
+	if (!empty($NOTE)) {
+		$newgedrec .= "1 NOTE @$NOTE@\n";
 		if (!empty($CALN)) $newgedrec .= "2 CALN $CALN\n";
 	}
 	if (PGV_DEBUG) {
@@ -1046,10 +1047,12 @@ case 'updateraw':
 //------------------------------------------------------------------------------
 //-- reconstruct the gedcom from the incoming fields and store it in the file
 case 'update':
+
 	if (PGV_DEBUG) {
 		phpinfo(INFO_VARIABLES);
 		echo "<pre>$gedrec</pre>";
 	}
+
 	// add or remove Y
 	if ($text[0]=="Y" or $text[0]=="y") $text[0]="";
 	if (in_array($tag[0], $emptyfacts) && array_unique($text)==array("") && !$islink[0]) $text[0]="Y";
@@ -1117,6 +1120,7 @@ case 'update':
 	if (!empty($SURN)) $newged .= "2 SURN $SURN\n";
 	if (!empty($NSFX)) $newged .= "2 NSFX $NSFX\n";
 
+
 	//-- Refer to Bug [ 1329644 ] Add Married Name - Wrong Sequence
 	//-- _HEB/ROMN/FONE have to be before _AKA, even if _AKA exists in input and the others are now added
 	if (!empty($ROMN)) $newged .= "2 ROMN $ROMN\n";
@@ -1132,9 +1136,12 @@ case 'update':
 		$newged .= trim($gedlines[$i])."\n";
 		$i++;
 	}
+
 	if (PGV_DEBUG) {
+		echo "<br /><br />";
 		echo "<pre>$newged</pre>";
 	}
+
 	$success = (replace_gedrec($pid, $newged, $update_CHAN));
 	if ($success) echo "<br /><br />".$pgv_lang["update_successful"];
 	break;
@@ -1201,7 +1208,7 @@ case 'addchildaction':
 			$gedrec = $family->gedrec;
 			$done = false;
 			foreach($family->getChildren() as $key=>$child) {
-				if (GedcomDate::Compare($newchild->getBirthDate(), $child->getBirthDate())<0) {
+				if (GedcomDate::Compare($newchild->getEstimatedBirthDate(), $child->getEstimatedBirthDate())<0) {
 					// new child is older : insert before
 					$gedrec = str_replace("1 CHIL @".$child->getXref()."@",
 																"1 CHIL @$xref@\n1 CHIL @".$child->getXref()."@",
@@ -1680,6 +1687,91 @@ case 'deletesource':
 		if ($success) echo "<br /><br />".$pgv_lang["gedrec_deleted"];
 	}
 	break;
+	
+//------------------------------------------------------------------------------
+case 'deleteshnote':
+	if (PGV_DEBUG) {
+		phpinfo(INFO_VARIABLES);
+		echo "<pre>$gedrec</pre>";
+	}
+	if (!empty($gedrec)) {
+		$success = true;
+		$query = "NOTE @$pid@";
+		// -- array of names
+		$myindilist = array();
+		$myfamlist = array();
+
+		$myindilist = search_indis(array($query), array(PGV_GED_ID), 'AND', false);
+		foreach($myindilist as $indi) {
+			if (isset($pgv_changes[$indi->getXref().'_'.$GEDCOM])) {
+				$indirec=find_updated_record($indi->getXref());
+			} else {
+				$indirec=$indi->getGedcomRecord();
+			}
+			$lines = explode("\n", $indirec);
+			$newrec = "";
+			$skipline = false;
+			$glevel = 0;
+			foreach($lines as $indexval => $line) {
+				if ((preg_match("/@$pid@/", $line)==0)&&(!$skipline)) $newrec .= $line."\n";
+				else {
+					if (!$skipline) {
+						$glevel = $line{0};
+						$skipline = true;
+					}
+					else {
+						if ($line{0}<=$glevel) {
+							$skipline = false;
+							$newrec .= $line."\n";
+						}
+					}
+				}
+			}
+			if (PGV_DEBUG) {
+				echo "<pre>$newrec</pre>";
+			}
+			$success = $success && replace_gedrec($indi->getXref(), $newrec);
+		}
+
+
+		$myfamlist = search_fams(array($query), array(PGV_GED_ID), 'AND', false);
+		foreach($myfamlist as $family) {
+			if (isset($pgv_changes[$family->getXref().'_'.$GEDCOM])) {
+				$indirec=find_updated_record($family->getXref());
+			} else {
+				$indirec=$family->getGedcomRecord();
+			}
+			$lines = explode("\n", $indirec);
+			$newrec = "";
+			$skipline = false;
+			$glevel = 0;
+			foreach($lines as $indexval => $line) {
+				if ((preg_match("/@$pid@/", $line)==0)&&(!$skipline)) $newrec .= $line."\n";
+				else {
+					if (!$skipline) {
+						$glevel = $line{0};
+						$skipline = true;
+					}
+					else {
+						if ($line{0}<=$glevel) {
+							$skipline = false;
+							$newrec .= $line."\n";
+						}
+					}
+				}
+			}
+			if (PGV_DEBUG) {
+				echo "<pre>$newrec</pre>";
+			}
+			$success = $success && replace_gedrec($family->getXref(), $newrec);
+		}
+		if ($success) {
+			$success = $success && delete_gedrec($pid);
+		}
+		if ($success) echo "<br /><br />".$pgv_lang["gedrec_deleted"];
+	}
+	break;
+	
 //------------------------------------------------------------------------------
 case 'deleterepo':
 	if (PGV_DEBUG) {
@@ -2285,8 +2377,7 @@ case 'reorder_fams':
 			$person = Person::getInstance($pid);
 			$fams = $person->getSpouseFamilies();
 			if ((!empty($option))&&($option=="bymarriage")) {
-				$sortby = "MARR";
-				uasort($fams, "compare_date_gedcomrec");
+				uasort($fams, array('Family', 'CompareMarrDate'));
 			}
 			$i=0;
 			foreach($fams as $famid=>$family) {

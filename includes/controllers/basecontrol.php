@@ -42,7 +42,7 @@ class BaseController {
 	function BaseController() {
 		$this->view        =safe_GET('view', 'preview');
 		$this->action      =safe_GET('action');
-		$this->show_changes=safe_GET_bool('show_changes');
+		$this->show_changes=safe_GET('show_changes', 'no', 'yes')=='yes'; // if not specified, then default to "yes"
 	}
 
 	/**

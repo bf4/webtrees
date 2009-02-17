@@ -613,7 +613,8 @@ function print_header($title, $head="", $use_alternate_styles=true) {
 		$META_PAGE_TOPIC = $old_META_PAGE_TOPIC;
 	}
 	else {
-		include($print_headerfile);
+		//include($print_headerfile); // this not use CSS styles
+		include($headerfile);
 	}
 }
 
@@ -1024,8 +1025,8 @@ function print_favorite_selector($option=0) {
 					}
 				}
 			}
-			print_menu($menu);
 		}
+		print_menu($menu);
 		break;
 	default:
 		print "<form name=\"favoriteform\" action=\"$SCRIPT_NAME";
@@ -1126,16 +1127,24 @@ function print_note_record($text, $nlevel, $nrec, $textOnly=false, $return=false
 	if (!isset($EXPAND_NOTES)) $EXPAND_NOTES = $EXPAND_SOURCES; // FIXME
 	$elementID = "N-".floor(microtime()*1000000);
 	$text = trim($text);
-	$text .= get_cont($nlevel, $nrec);
+	// Check if Census Assistant Note =======================
+	if (strstr(get_cont($nlevel, $nrec), "|Head|")) {
+		$centitl  = str_replace("~~", "", $text);
+		$centitl  = str_replace("<br />", "", $centitl);
+		$text = get_cont($nlevel, $nrec);
+	}else{
+		$text .= get_cont($nlevel, $nrec);
+	}
 	$text = str_replace("~~", "<br />", $text);
 	$text = trim(expand_urls(stripLRMRLM($text)));
 	$data = "";
-	
+
 	if (!empty($text)) {
 		$text = PrintReady($text);
 		// Check if Census Assistant Note ======================================= 
 		if (strstr($text, "|Head|")) {
 			$text = "xCxAx<table><tr><td>" . $text;
+			// $text = $tit ."<table><tr><td>" . $text;
 			$text = str_replace("<br /><br />", "</td></tr></table><p><table><tr><td><b>Name</b>&nbsp;&nbsp;</td><td><b>Related</b>&nbsp;&nbsp;</td><td><b>Status</b>&nbsp;&nbsp;</td><td><b>Age</b>&nbsp;&nbsp;</td><td><b>Sex</b>&nbsp;&nbsp;</td><td><b>Occupation</b>&nbsp;&nbsp;</td><td><b>Birth place</b>&nbsp;&nbsp;</td> </tr><tr><td>", $text);
 			if (eregi("<br />.b.", $text)) {
 				$text = str_replace(".b.", "<b>", $text);
@@ -1145,9 +1154,9 @@ function print_note_record($text, $nlevel, $nrec, $textOnly=false, $return=false
 			}
 			$text = str_replace("<br />", "</td></tr><tr><td>", $text);
 			$text = $text . "</td></tr></table>";
-			$text = str_replace("xCxAx", "&nbsp;&nbsp;Census Transcription<br />", $text);
+			// $text = str_replace("xCxAx", "&nbsp;&nbsp;Census Transcription<br />", $text);
+			$text = str_replace("xCxAx", "&nbsp;&nbsp;".$centitl."<br />", $text);
 		}
-		// ==========================================================
 
 		if ($textOnly) {
 			if (!$return) {
@@ -1162,7 +1171,13 @@ function print_note_record($text, $nlevel, $nrec, $textOnly=false, $return=false
 			if ($EXPAND_NOTES) $plusminus="minus"; else $plusminus="plus";
 			$data .= "<a href=\"javascript:;\" onclick=\"expand_layer('$elementID'); return false;\"><img id=\"{$elementID}_img\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES[$plusminus]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"".$pgv_lang["show_details"]."\" title=\"".$pgv_lang["show_details"]."\" /></a> ";
 		}
-		$data .= $pgv_lang["note"].": </span><span class=\"field\">";
+		// Check if Shared Note ===========================================
+		// if (strstr(get_cont($nlevel, $nrec), "|Head|")) { 
+		if (eregi("0 @N.*@ NOTE", $nrec)) { 
+			$data .= $pgv_lang["shnote"].": </span><span class=\"field\">";
+		}else{
+			$data .= $pgv_lang["note"].": </span><span class=\"field\">";
+		}
 		if ($brpos !== false) {
 			$data .= substr($text, 0, $brpos);
 			$data .= "<span id=\"$elementID\"";
@@ -1875,7 +1890,7 @@ function print_asso_rela_record($pid, $factrec, $linebr=false, $type='INDI') {
 				$tmp=new Person($gedrec);
 				$birth_date=$tmp->getBirthDate();
 				$event_date=new GedcomDate($dmatch[1]);
-				$death_date=$tmp->getDeathDate(false);
+				$death_date=$tmp->getDeathDate();
 				$ageText = '';
 
 				if (!strstr($factrec, "_BIRT_") && !strstr($factrec, "_DEAT_") && GedcomDate::Compare($event_date, $death_date)>=0 && $tmp->isDead()) {
@@ -2034,8 +2049,8 @@ function format_fact_date(&$eventObj, $anchor=false, $time=false) {
 			}
 			// age at event
 			else if ($fact!='CHAN' && $fact!='_TODO') {
-				$birth_date=$person->getBirthDate(false);
-				$death_date=$person->getDeathDate(false);
+				$birth_date=$person->getBirthDate();
+				$death_date=$person->getDeathDate();
 				$ageText = '';
 				if ((GedcomDate::Compare($date, $death_date)<=0 || !$person->isDead()) || $fact=='DEAT') {
 					// Before death, print age
@@ -2067,8 +2082,8 @@ function format_fact_date(&$eventObj, $anchor=false, $time=false) {
 		else if (!is_null($person) && $person->getType()=='FAM') {
 			$indirec=find_person_record($pid);
 			$indi=new Person($indirec);
-			$birth_date=$indi->getBirthDate(false);
-			$death_date=$indi->getDeathDate(false);
+			$birth_date=$indi->getBirthDate();
+			$death_date=$indi->getDeathDate();
 			$ageText = '';
 			if (GedcomDate::Compare($date, $death_date)<=0) {
 				$age=GedcomDate::GetAgeGedcom($birth_date, $date);
@@ -2347,7 +2362,7 @@ function print_add_new_fact($id, $usedfacts, $type) {
 			||	$quickfacts == preg_split("/[, ;:]+/", $FAM_FACTS_QUICK,   -1, PREG_SPLIT_NO_EMPTY)
 			)
 		{
-		echo "&nbsp;<small><a href='javascript://CENS' onclick=\"census_assistant('$pid');return false;\">Census-Assistant</a></small>&nbsp;";
+		echo "&nbsp;<small><a href='javascript://CENS-ASSIST' onclick=\"census_assistant('$pid');return false;\">Census-Assistant</a></small>&nbsp;";
 		}
 	}
 	//BH ====================================

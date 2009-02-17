@@ -1,5 +1,5 @@
 "Level";"Country";"State";"County";"Place";"Longitude";"Latitude";"ZoomLevel";"Icon"
-2;NLD;Limburg;Ambt Montfort;;E6.034;N51.131;11;places/NLD/flags/LI/Ambt_Montfoort.png
+2;NLD;Limburg;Ambt Montfort;;E6.034;N51.131;11;places/NLD/flags/LI/Ambt_Montfoort.gif
 3;NLD;Limburg;Ambt Montfort;Holst;E6.051;N51.131;13;
 3;NLD;Limburg;Ambt Montfort;Lerop;E5.983;N51.167;12;
 3;NLD;Limburg;Ambt Montfort;Montfort;E5.948;N51.126;12;
@@ -15,7 +15,7 @@
 3;NLD;Limburg;Arcen en Velden;Lomm;E6.169;N51.447;12;
 3;NLD;Limburg;Arcen en Velden;Schandelo;E6.184;N51.424;12;
 3;NLD;Limburg;Arcen en Velden;Velden;E6.167;N51.412;12;
-2;NLD;Limburg;Beek;;E5.840;N50.940;12;places/NLD/flags/LI/Beek.png
+2;NLD;Limburg;Beek;;E5.840;N50.940;12;places/NLD/flags/LI/Beek.gif
 3;NLD;Limburg;Beek;Beek;E5.797;N50.937;12;
 3;NLD;Limburg;Beek;Geverik;E5.783;N50.933;13;
 3;NLD;Limburg;Beek;Groot Genhout;E5.823;N50.928;13;
@@ -23,11 +23,11 @@
 3;NLD;Limburg;Beek;Klein Genhout;E5.803;N50.927;13;
 3;NLD;Limburg;Beek;Neerbeek;E5.817;N50.950;12;
 3;NLD;Limburg;Beek;Spaubeek;E5.840;N50.938;12;
-2;NLD;Limburg;Beesel;;E6.083;N51.279;12;places/NLD/flags/LI/Beesel.png
+2;NLD;Limburg;Beesel;;E6.083;N51.279;12;places/NLD/flags/LI/Beesel.gif
 3;NLD;Limburg;Beesel;Beesel;E6.033;N51.267;12;
 3;NLD;Limburg;Beesel;Offenbeek;E6.100;N51.283;13;
 3;NLD;Limburg;Beesel;Reuver;E6.083;N51.283;12;
-2;NLD;Limburg;Bergen;;E6.133;N51.601;10;places/NLD/flags/LI/Bergen_limburg.png
+2;NLD;Limburg;Bergen;;E6.133;N51.601;10;places/NLD/flags/LI/Bergen.gif
 3;NLD;Limburg;Bergen;Afferden;E6.017;N51.633;12;
 3;NLD;Limburg;Bergen;Aijen;E6.043;N51.583;12;
 3;NLD;Limburg;Bergen;Augustinus;;;12;
@@ -43,7 +43,7 @@
 3;NLD;Limburg;Brunssum;Brunssum;E5.969;N50.946;12;
 3;NLD;Limburg;Brunssum;Rumpen;E5.968;N50.940;13;
 3;NLD;Limburg;Brunssum;Treebeek;E5.938;N50.931;12;
-2;NLD;Limburg;Echt-Susteren;;E5.800;N51.087;11;places/NLD/flags/LI/Echt_Susteren.png
+2;NLD;Limburg;Echt-Susteren;;E5.800;N51.087;11;places/NLD/flags/LI/Echt-Susteren.gif
 3;NLD;Limburg;Echt-Susteren;Aasterberg;E5.850;N51.100;12;
 3;NLD;Limburg;Echt-Susteren;Annendaal;E6.030;N51.109;12;
 3;NLD;Limburg;Echt-Susteren;Baakhoven;E5.833;N51.067;12;
@@ -69,7 +69,7 @@
 3;NLD;Limburg;Echt-Susteren;Slek;E5.883;N51.083;12;
 3;NLD;Limburg;Echt-Susteren;Susteren;E5.850;N51.062;12;
 3;NLD;Limburg;Echt-Susteren;Visserweert;E5.800;N51.067;13;
-2;NLD;Limburg;Eijsden;;E5.720;N50.788;12;places/NLD/flags/LI/Eijsden.png
+2;NLD;Limburg;Eijsden;;E5.720;N50.788;12;places/NLD/flags/LI/Eijsden.gif
 3;NLD;Limburg;Eijsden;Breust;E5.720;N50.780;13;
 3;NLD;Limburg;Eijsden;Eijsden;E5.710;N50.778;12;
 3;NLD;Limburg;Eijsden;Gronsveld;E5.732;N50.810;12;
@@ -79,7 +79,7 @@
 3;NLD;Limburg;Eijsden;Oost-Maarland;;;12;
 3;NLD;Limburg;Eijsden;Rijckholt;E5.733;N50.800;12;
 3;NLD;Limburg;Eijsden;Withuis;E5.720;N50.767;13;
-2;NLD;Limburg;Gennep;;E6.017;N51.707;11;places/NLD/flags/LI/Gennep.jpg
+2;NLD;Limburg;Gennep;;E6.017;N51.707;11;places/NLD/flags/LI/Gennep.gif
 3;NLD;Limburg;Gennep;Aaldonk;E6.000;N51.717;13;
 3;NLD;Limburg;Gennep;Dam;E6.033;N51.714;12;
 3;NLD;Limburg;Gennep;De Looi;E6.017;N51.700;13;
@@ -92,7 +92,7 @@
 3;NLD;Limburg;Gennep;Smele;;;12;
 3;NLD;Limburg;Gennep;Ven-Zelderheide;E6.022;N51.712;13;
 3;NLD;Limburg;Gennep;Zelder;E6.017;N51.700;13;
-2;NLD;Limburg;Gulpen-Wittem;;E5.912;N50.813;11;places/NLD/flags/LI/Gulpen-Wittem.png
+2;NLD;Limburg;Gulpen-Wittem;;E5.912;N50.813;11;places/NLD/flags/LI/Gulpen-Wittem.gif
 3;NLD;Limburg;Gulpen-Wittem;Beertsenhoven;E5.883;N50.833;13;
 3;NLD;Limburg;Gulpen-Wittem;Berghem;E5.900;N50.800;13;
 3;NLD;Limburg;Gulpen-Wittem;Berghof;;;12;
@@ -150,17 +150,17 @@
 3;NLD;Limburg;Gulpen-Wittem;Wahlwiller;E5.937;N50.810;12;
 3;NLD;Limburg;Gulpen-Wittem;Wijlre;E5.895;N50.832;12;
 3;NLD;Limburg;Gulpen-Wittem;Wittem;E5.912;N50.812;12;
-2;NLD;Limburg;Haelen;;E5.962;N51.229;12;places/NLD/flags/LI/Haelen.png
+2;NLD;Limburg;Haelen;;E5.962;N51.229;12;places/NLD/flags/LI/Haelen.gif
 3;NLD;Limburg;Haelen;Buggenum;E5.977;N51.232;12;
 3;NLD;Limburg;Haelen;Haelen;E5.956;N51.234;12;
 3;NLD;Limburg;Haelen;Horn;E5.946;N51.209;12;
 3;NLD;Limburg;Haelen;Nunhem;E5.962;N51.243;12;
-2;NLD;Limburg;Heel;;E5.881;N51.178;12;places/NLD/flags/LI/Heel.png
+2;NLD;Limburg;Heel;;E5.881;N51.178;12;places/NLD/flags/LI/Heel.gif
 3;NLD;Limburg;Heel;Beegden;E5.921;N51.189;12;
 3;NLD;Limburg;Heel;Heel;E5.898;N51.179;12;
 3;NLD;Limburg;Heel;Panheel;E5.874;N51.175;12;
 3;NLD;Limburg;Heel;Wessem;E5.881;N51.161;12;
-2;NLD;Limburg;Heerlen;;E5.963;N50.883;11;places/NLD/flags/LI/Heerlen.png
+2;NLD;Limburg;Heerlen;;E5.963;N50.883;11;places/NLD/flags/LI/Heerlen.gif
 3;NLD;Limburg;Heerlen;Beersdal;E5.962;N50.903;13;
 3;NLD;Limburg;Heerlen;Beitel;E6.004;N50.846;12;
 3;NLD;Limburg;Heerlen;Benzenrade;E5.977;N50.865;12;
@@ -172,21 +172,21 @@
 3;NLD;Limburg;Heerlen;Onderste Locht;;;12;
 3;NLD;Limburg;Heerlen;Palemig;E5.971;N50.902;13;
 3;NLD;Limburg;Heerlen;Welten;E5.963;N50.874;12;
-2;NLD;Limburg;Helden;;E5.982;N51.341;12;places/NLD/flags/LI/Helden.png
+2;NLD;Limburg;Helden;;E5.982;N51.341;12;places/NLD/flags/LI/Helden.gif
 3;NLD;Limburg;Helden;Beringe;E5.946;N51.336;12;
 3;NLD;Limburg;Helden;Egchel;E5.970;N51.313;12;
 3;NLD;Limburg;Helden;Grashoek;E5.943;N51.361;12;
 3;NLD;Limburg;Helden;Helden;E6.000;N51.317;12;
 3;NLD;Limburg;Helden;Koningslust;E5.997;N51.356;12;
 3;NLD;Limburg;Helden;Panningen;E5.982;N51.327;12;
-2;NLD;Limburg;Heythuysen;;E5.828;N51.221;12;places/NLD/flags/LI/Heythuysen.png
+2;NLD;Limburg;Heythuysen;;E5.828;N51.221;12;places/NLD/flags/LI/Heythuysen.gif
 3;NLD;Limburg;Heythuysen;Baexem;E5.884;N51.225;12;
 3;NLD;Limburg;Heythuysen;Grathem;E5.856;N51.192;12;
 3;NLD;Limburg;Heythuysen;Heythuysen;E5.895;N51.249;12;
 3;NLD;Limburg;Heythuysen;Kelpen;E5.823;N51.222;13;
 3;NLD;Limburg;Heythuysen;Kelpen-Oler;E5.828;N51.218;13;
 3;NLD;Limburg;Heythuysen;Oler;E5.828;N51.214;13;
-2;NLD;Limburg;Horst aan de Maas;;E6.148;N51.457;11;places/NLD/flags/LI/Horstadmaas.png
+2;NLD;Limburg;Horst aan de Maas;;E6.148;N51.457;11;places/NLD/flags/LI/Horst_aan_de_Maas.gif
 3;NLD;Limburg;Horst aan de Maas;America;E5.983;N51.433;12;
 3;NLD;Limburg;Horst aan de Maas;Broekeind;E6.142;N51.422;12;
 3;NLD;Limburg;Horst aan de Maas;Broekhuizen;E6.167;N51.483;12;
@@ -207,13 +207,13 @@
 3;NLD;Limburg;Horst aan de Maas;Raaieind;E6.143;N51.396;12;
 3;NLD;Limburg;Horst aan de Maas;Wielder;;;12;
 3;NLD;Limburg;Horst aan de Maas;Zwaanenheike;E6.148;N51.460;13;
-2;NLD;Limburg;Hunsel;;E5.802;N51.199;11;places/NLD/flags/LI/Hunsel.png
+2;NLD;Limburg;Hunsel;;E5.802;N51.199;11;places/NLD/flags/LI/Hunsel.gif
 3;NLD;Limburg;Hunsel;Ell;E5.796;N51.220;12;
 3;NLD;Limburg;Hunsel;Haler;E5.779;N51.187;12;
 3;NLD;Limburg;Hunsel;Hunsel;E5.810;N51.188;12;
 3;NLD;Limburg;Hunsel;Ittervoort;E5.817;N51.167;12;
 3;NLD;Limburg;Hunsel;Neeritter;E5.802;N51.165;12;
-2;NLD;Limburg;Kerkrade;;E6.025;N50.874;12;places/NLD/flags/LI/Kerkrade.png
+2;NLD;Limburg;Kerkrade;;E6.025;N50.874;12;places/NLD/flags/LI/Kerkrade.gif
 3;NLD;Limburg;Kerkrade;Beerenbos;E6.082;N50.873;13;
 3;NLD;Limburg;Kerkrade;Bleijerheide;E6.066;N50.854;13;
 3;NLD;Limburg;Kerkrade;Bovenste Locht;;;12;
@@ -225,7 +225,7 @@
 3;NLD;Limburg;Kerkrade;Kerkrade;E6.061;N50.864;12;
 3;NLD;Limburg;Kerkrade;Spekholzerheide;E6.025;N50.856;13;
 3;NLD;Limburg;Kerkrade;Terwinselen;E6.025;N50.867;13;
-2;NLD;Limburg;Kessel;;E6.050;N51.306;12;places/NLD/flags/LI/Kessel.png
+2;NLD;Limburg;Kessel;;E6.050;N51.306;12;places/NLD/flags/LI/Kessel.gif
 3;NLD;Limburg;Kessel;Broek;E6.047;N51.296;13;
 3;NLD;Limburg;Kessel;Dijk;E6.033;N51.300;12;
 3;NLD;Limburg;Kessel;Donk;E6.067;N51.317;13;
@@ -237,7 +237,7 @@
 3;NLD;Limburg;Kessel;Oijen;E6.100;N51.317;13;
 3;NLD;Limburg;Kessel;Spurkt;E6.033;N51.283;13;
 3;NLD;Limburg;Kessel;Veers;E6.050;N51.283;13;
-2;NLD;Limburg;Landgraaf;;E6.050;N50.913;13;places/NLD/flags/LI/Landgraaf.png
+2;NLD;Limburg;Landgraaf;;E6.050;N50.913;13;places/NLD/flags/LI/Landgraaf.gif
 3;NLD;Limburg;Landgraaf;Abdissenbosch;E6.032;N50.922;12;
 3;NLD;Limburg;Landgraaf;Kakert;E6.005;N50.903;12;
 3;NLD;Limburg;Landgraaf;Landgraaf;E6.030;N50.906;12;
@@ -260,12 +260,12 @@
 3;NLD;Limburg;Maasbracht;Ohé en Laak;E5.832;N51.112;12;
 3;NLD;Limburg;Maasbracht;Sint Joost;E5.900;N51.117;12;
 3;NLD;Limburg;Maasbracht;Stevensweert;E5.845;N51.131;13;
-2;NLD;Limburg;Maasbree;;E6.026;N51.353;12;places/NLD/flags/LI/Maasbree.png
+2;NLD;Limburg;Maasbree;;E6.026;N51.353;12;places/NLD/flags/LI/Maasbree.gif
 3;NLD;Limburg;Maasbree;Baarlo;E6.094;N51.330;12;
 3;NLD;Limburg;Maasbree;Maasbree;E6.049;N51.359;12;
 3;NLD;Limburg;Maasbree;Rooth;E6.079;N51.364;12;
 3;NLD;Limburg;Maasbree;Tongerlo;E6.026;N51.372;12;
-2;NLD;Limburg;Maastricht;;E5.686;N50.867;11;places/NLD/flags/LI/Maastricht.png
+2;NLD;Limburg;Maastricht;;E5.686;N50.867;11;places/NLD/flags/LI/Maastricht.gif
 3;NLD;Limburg;Maastricht;Amby;E5.731;N50.863;12;
 3;NLD;Limburg;Maastricht;Biesland;E5.677;N50.842;12;
 3;NLD;Limburg;Maastricht;Borgharen;E5.687;N50.876;12;
@@ -276,7 +276,7 @@
 3;NLD;Limburg;Maastricht;Itteren;E5.704;N50.897;12;
 3;NLD;Limburg;Maastricht;Limmel;E5.704;N50.865;12;
 3;NLD;Limburg;Maastricht;Maastricht;E5.686;N50.848;12;
-2;NLD;Limburg;Margraten;;;N50.811;11;places/NLD/flags/LI/Margraten.png
+2;NLD;Limburg;Margraten;;;N50.811;11;places/NLD/flags/LI/Margraten.gif
 3;NLD;Limburg;Margraten;'t Rooth;E5.787;N50.837;12;
 3;NLD;Limburg;Margraten;Banholt;E5.807;N50.789;12;
 3;NLD;Limburg;Margraten;Bemelen;E5.763;N50.846;12;
@@ -304,14 +304,14 @@
 3;NLD;Limburg;Margraten;Terlinden;;;12;
 3;NLD;Limburg;Margraten;Termaar;;;12;
 3;NLD;Limburg;Margraten;Wolfshuis;;;12;
-2;NLD;Limburg;Meerlo-Wanssum;;E6.077;N51.520;11;places/NLD/flags/LI/Meerlo_Wanssum.png
+2;NLD;Limburg;Meerlo-Wanssum;;E6.077;N51.520;11;places/NLD/flags/LI/Meerlo-Wanssum.gif
 3;NLD;Limburg;Meerlo-Wanssum;Blitterswijck;E6.109;N51.531;12;
 3;NLD;Limburg;Meerlo-Wanssum;Geijsteren;E6.050;N51.550;12;
 3;NLD;Limburg;Meerlo-Wanssum;Meerlo;E6.084;N51.513;12;
 3;NLD;Limburg;Meerlo-Wanssum;Swolgen;E6.116;N51.492;12;
 3;NLD;Limburg;Meerlo-Wanssum;Tienray;E6.096;N51.494;12;
 3;NLD;Limburg;Meerlo-Wanssum;Wanssum;E6.077;N51.537;12;
-2;NLD;Limburg;Meerssen;;E5.781;N50.908;12;places/NLD/flags/LI/Meerssen.png
+2;NLD;Limburg;Meerssen;;E5.781;N50.908;12;places/NLD/flags/LI/Meerssen.gif
 3;NLD;Limburg;Meerssen;Brommelen;E5.736;N50.912;13;
 3;NLD;Limburg;Meerssen;Bunde;E5.730;N50.896;12;
 3;NLD;Limburg;Meerssen;Geulle;E5.747;N50.921;12;
@@ -322,14 +322,14 @@
 3;NLD;Limburg;Meerssen;Rothem;E5.738;N50.877;12;
 3;NLD;Limburg;Meerssen;Smeermaas;;;12;
 3;NLD;Limburg;Meerssen;Ulestraten;E5.781;N50.905;12;
-2;NLD;Limburg;Meijel;;E5.885;N51.340;12;places/NLD/flags/LI/Meijel.png
+2;NLD;Limburg;Meijel;;E5.885;N51.340;12;places/NLD/flags/LI/Meijel.gif
 3;NLD;Limburg;Meijel;Meijel;E5.885;N51.342;12;
-2;NLD;Limburg;Mook en Middelaar;;E5.921;N51.746;12;places/NLD/flags/LI/Mookmiddelaar.png
+2;NLD;Limburg;Mook en Middelaar;;E5.921;N51.746;12;places/NLD/flags/LI/Mook_en_Middelaar.gif
 3;NLD;Limburg;Mook en Middelaar;Middelaar;E5.914;N51.725;12;
 3;NLD;Limburg;Mook en Middelaar;Molenhoek;E5.875;N51.766;12;
 3;NLD;Limburg;Mook en Middelaar;Mook;E5.883;N51.750;12;
 3;NLD;Limburg;Mook en Middelaar;Plasmolen;E5.921;N51.736;12;
-2;NLD;Limburg;Nederweert;;E5.764;N51.277;12;places/NLD/flags/LI/Nederweert.png
+2;NLD;Limburg;Nederweert;;E5.764;N51.277;12;places/NLD/flags/LI/Nederweert.gif
 3;NLD;Limburg;Nederweert;Boeket;E5.727;N51.287;12;
 3;NLD;Limburg;Nederweert;Budschap;E5.761;N51.283;13;
 3;NLD;Limburg;Nederweert;Hulsen;E5.756;N51.280;12;
@@ -338,7 +338,7 @@
 3;NLD;Limburg;Nederweert;Nederweert Eind;E5.782;N51.275;12;
 3;NLD;Limburg;Nederweert;Ospel;E5.782;N51.298;12;
 3;NLD;Limburg;Nederweert;Schoor;E5.764;N51.265;13;
-2;NLD;Limburg;Nuth;;E5.881;N50.903;12;places/NLD/flags/LI/Nuth.png
+2;NLD;Limburg;Nuth;;E5.881;N50.903;12;places/NLD/flags/LI/Nuth.gif
 3;NLD;Limburg;Nuth;Aalbeek;E5.850;N50.900;12;
 3;NLD;Limburg;Nuth;Arensgenhout;E5.840;N50.888;13;
 3;NLD;Limburg;Nuth;Haasdal;E5.817;N50.883;13;
@@ -363,11 +363,11 @@
 3;NLD;Limburg;Onderbanken;Raath;E5.933;N50.967;12;
 3;NLD;Limburg;Onderbanken;Schinveld;E5.979;N50.970;12;
 3;NLD;Limburg;Onderbanken;Viel;E5.917;N50.967;13;
-2;NLD;Limburg;Roerdalen;;E6.076;N51.147;12;places/NLD/flags/LI/Roerdalen.png
+2;NLD;Limburg;Roerdalen;;E6.076;N51.147;12;places/NLD/flags/LI/Roerdalen.gif
 3;NLD;Limburg;Roerdalen;Herkenbosch;E6.067;N51.150;12;
 3;NLD;Limburg;Roerdalen;Melick;E6.018;N51.159;12;
 3;NLD;Limburg;Roerdalen;Vlodrop;E6.076;N51.131;12;
-2;NLD;Limburg;Roermond;;E5.994;N51.190;12;places/NLD/flags/LI/Roermond.png
+2;NLD;Limburg;Roermond;;E5.994;N51.190;12;places/NLD/flags/LI/Roermond.gif
 3;NLD;Limburg;Roermond;Asenray;E6.049;N51.194;13;
 3;NLD;Limburg;Roermond;Azenray;E6.048;N51.191;13;
 3;NLD;Limburg;Roermond;Herten;E5.961;N51.182;13;
@@ -380,22 +380,22 @@
 3;NLD;Limburg;Roggel en Neer;Heibloem;E5.895;N51.299;12;
 3;NLD;Limburg;Roggel en Neer;Neer;E5.991;N51.261;12;
 3;NLD;Limburg;Roggel en Neer;Roggel;E5.926;N51.262;12;
-2;NLD;Limburg;Schinnen;;E5.846;N50.954;12;places/NLD/flags/LI/Schinnen.png
+2;NLD;Limburg;Schinnen;;E5.846;N50.954;12;places/NLD/flags/LI/Schinnen.gif
 3;NLD;Limburg;Schinnen;Amstenrade;E5.921;N50.939;12;
 3;NLD;Limburg;Schinnen;Doenrade;E5.908;N50.968;13;
 3;NLD;Limburg;Schinnen;Oirsbeek;E5.910;N50.948;12;
 3;NLD;Limburg;Schinnen;Puth;E5.873;N50.953;12;
 3;NLD;Limburg;Schinnen;Schinnen;E5.888;N50.942;12;
 3;NLD;Limburg;Schinnen;Sweikhuizen;E5.846;N50.952;12;
-2;NLD;Limburg;Sevenum;;E6.038;N51.410;12;places/NLD/flags/LI/Sevenum.png
+2;NLD;Limburg;Sevenum;;E6.038;N51.410;12;places/NLD/flags/LI/Sevenum.gif
 3;NLD;Limburg;Sevenum;Evertsoord;E5.959;N51.402;12;
 3;NLD;Limburg;Sevenum;Kronenberg;E6.001;N51.414;12;
 3;NLD;Limburg;Sevenum;Sevenum;E6.038;N51.411;12;
-2;NLD;Limburg;Simpelveld;;E5.983;N50.827;12;places/NLD/flags/LI/Simpelveld.png
+2;NLD;Limburg;Simpelveld;;E5.983;N50.827;12;places/NLD/flags/LI/Simpelveld.gif
 3;NLD;Limburg;Simpelveld;Baneheide;E5.977;N50.817;12;
 3;NLD;Limburg;Simpelveld;Bocholtz;E6.007;N50.816;12;
 3;NLD;Limburg;Simpelveld;Simpelveld;E5.983;N50.833;12;
-2;NLD;Limburg;Sittard-Geleen;;E5.888;N51.027;11;places/NLD/flags/LI/Sittard.png
+2;NLD;Limburg;Sittard-Geleen;;E5.888;N51.027;11;places/NLD/flags/LI/Sittard-Geleen.gif
 3;NLD;Limburg;Sittard-Geleen;Abshoven;E5.850;N50.970;13;
 3;NLD;Limburg;Sittard-Geleen;Born;E5.809;N51.033;12;
 3;NLD;Limburg;Sittard-Geleen;Broeksittard;E5.895;N51.000;12;
@@ -416,7 +416,7 @@
 3;NLD;Limburg;Sittard-Geleen;Schipperskerk;E5.792;N51.045;13;
 3;NLD;Limburg;Sittard-Geleen;Sittard;E5.863;N50.996;12;
 3;NLD;Limburg;Sittard-Geleen;Windraak;E5.888;N50.972;13;
-2;NLD;Limburg;Stein;;E5.733;N50.985;11;places/NLD/flags/LI/Stein.png
+2;NLD;Limburg;Stein;;E5.733;N50.985;11;places/NLD/flags/LI/Stein.gif
 3;NLD;Limburg;Stein;Berg;E5.767;N51.000;12;
 3;NLD;Limburg;Stein;Berg aan de Maas;E5.771;N51.005;13;
 3;NLD;Limburg;Stein;Catsop;E5.767;N50.939;12;
@@ -428,13 +428,13 @@
 3;NLD;Limburg;Stein;Terhagen;E5.759;N50.948;13;
 3;NLD;Limburg;Stein;Urmond;E5.773;N50.990;12;
 3;NLD;Limburg;Stein;Veldschuur;E5.733;N50.967;13;
-2;NLD;Limburg;Swalmen;;E6.039;N51.226;12;places/NLD/flags/LI/Swalmen.png
+2;NLD;Limburg;Swalmen;;E6.039;N51.226;12;places/NLD/flags/LI/Swalmen.gif
 3;NLD;Limburg;Swalmen;Asselt;E6.013;N51.226;12;
 3;NLD;Limburg;Swalmen;Boukoul;E6.046;N51.215;12;
 3;NLD;Limburg;Swalmen;Swalmen;E6.039;N51.230;12;
-2;NLD;Limburg;Thorn;;E5.841;N51.162;12;places/NLD/flags/LI/Thorn.png
+2;NLD;Limburg;Thorn;;E5.841;N51.162;12;places/NLD/flags/LI/Thorn.gif
 3;NLD;Limburg;Thorn;Thorn;E5.841;N51.164;12;
-2;NLD;Limburg;Vaals;;E6.003;N50.779;12;places/NLD/flags/LI/Vaals.png
+2;NLD;Limburg;Vaals;;E6.003;N50.779;12;places/NLD/flags/LI/Vaals.gif
 3;NLD;Limburg;Vaals;Camerig;E5.933;N50.767;12;
 3;NLD;Limburg;Vaals;Cottessen;E5.939;N50.761;12;
 3;NLD;Limburg;Vaals;Harles;E5.977;N50.782;12;
@@ -448,7 +448,7 @@
 3;NLD;Limburg;Vaals;Vaals;E6.018;N50.772;12;
 3;NLD;Limburg;Vaals;Vijlen;E5.962;N50.789;12;
 3;NLD;Limburg;Vaals;Wolfhaag;E6.003;N50.757;12;
-2;NLD;Limburg;Valkenburg aan de Geul;;E5.867;N50.864;12;places/NLD/flags/LI/Valkenburg_ad_geul.png
+2;NLD;Limburg;Valkenburg aan de Geul;;E5.867;N50.864;12;places/NLD/flags/LI/Valkenburg_aan_de_Geul.gif
 3;NLD;Limburg;Valkenburg aan de Geul;Berg en Terblijt;E5.785;N50.860;12;
 3;NLD;Limburg;Valkenburg aan de Geul;Broekhem;E5.823;N50.870;13;
 3;NLD;Limburg;Valkenburg aan de Geul;Geulhem;E5.783;N50.867;12;
@@ -463,7 +463,7 @@
 3;NLD;Limburg;Valkenburg aan de Geul;Valkenburg;E5.831;N50.865;12;
 3;NLD;Limburg;Valkenburg aan de Geul;Vilt;E5.811;N50.856;12;
 3;NLD;Limburg;Valkenburg aan de Geul;Walem;E5.867;N50.867;12;
-2;NLD;Limburg;Venlo;;E6.175;N51.347;11;places/NLD/flags/LI/Venlo.png
+2;NLD;Limburg;Venlo;;E6.175;N51.347;11;places/NLD/flags/LI/Venlo.gif
 3;NLD;Limburg;Venlo;'t Ven;;;12;
 3;NLD;Limburg;Venlo;Beerendonck;;;12;
 3;NLD;Limburg;Venlo;Belfeld;E6.117;N51.313;12;
@@ -474,7 +474,7 @@
 3;NLD;Limburg;Venlo;Steyl;E6.124;N51.333;12;
 3;NLD;Limburg;Venlo;Tegelen;E6.139;N51.341;12;
 3;NLD;Limburg;Venlo;Venlo;E6.175;N51.370;12;
-2;NLD;Limburg;Venray;;E5.896;N51.517;11;places/NLD/flags/LI/Venray.png
+2;NLD;Limburg;Venray;;E5.896;N51.517;11;places/NLD/flags/LI/Venray.gif
 3;NLD;Limburg;Venray;Castenray;E6.033;N51.483;12;
 3;NLD;Limburg;Venray;Heide;E5.950;N51.505;13;
 3;NLD;Limburg;Venray;Leunen;E5.981;N51.509;12;

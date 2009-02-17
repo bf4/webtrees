@@ -405,7 +405,7 @@ class MenuBar
 
 			case "treenav":
 				//-- interactive tree
-				$link = "treenav.php?ged=".$ged;
+				$link = "treenav.php?ged={$ged}&rootid={$rootid}";
 				$submenu = new Menu($pgv_lang["interactive_tree"], encode_url($link));
 				if (!empty($PGV_IMAGES["gedcom"]["small"]))
 					$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["gedcom"]["small"]);

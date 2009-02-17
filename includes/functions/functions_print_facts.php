@@ -1583,7 +1583,8 @@ function print_main_media_row($rtype, $rowm, $pid) {
 		$name = trim($rowm['m_titl']);
 
 		// Get info on how to handle this media file
-		$mediaInfo = mediaFileInfo($rowm['m_file'], $thumbnail, $rowm['m_media'], $name, $notes);
+		//$mediaInfo = mediaFileInfo($rowm['m_file'], $thumbnail, $rowm['m_media'], $name, $notes);
+		$mediaInfo = mediaFileInfo($mainMedia, $thumbnail, $rowm['m_media'], $name, $notes);
 
 		//-- Thumbnail field
 		echo '<a href="', $mediaInfo['url'], '">';
@@ -1627,12 +1628,15 @@ function print_main_media_row($rtype, $rowm, $pid) {
 		print "<br />\n";
 		//-- print spouse name for marriage events
 		if ($rowm['mm_gid']!=$pid) {
+			$spouse=null;
 			$parents = find_parents($rowm['mm_gid']);
 			if ($parents) {
-				if (!empty($parents['HUSB']) && $parents['HUSB']!=$pid) $spouse = Person::getInstance($parents['HUSB']);
-				if (!empty($parents['WIFE']) && $parents['WIFE']!=$pid) $spouse = Person::getInstance($parents['WIFE']);
-			} else {
-				$spouse=null;
+				if (!empty($parents['HUSB']) && $parents['HUSB']!=$pid) {
+					$spouse = Person::getInstance($parents['HUSB']);
+				}
+				if (!empty($parents['WIFE']) && $parents['WIFE']!=$pid) {
+					$spouse = Person::getInstance($parents['WIFE']);
+				}
 			}
 			if ($spouse) {
 				print "<a href=\"".$spouse->getLinkUrl()."\">";

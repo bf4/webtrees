@@ -40,13 +40,6 @@ class Person extends GedcomRecord {
 	var $globalfacts = array();
 	var $mediafacts = array();
 	var $facts_parsed = false;
-	var $bd_parsed = false;
-	var $birthEvent = null;
-	var $deathEvent = null;
-	var $birthEvent2 = null;
-	var $deathEvent2 = null;
-	var $best = false;
-	var $dest = false;
 	var $fams = null;
 	var $famc = null;
 	var $spouseFamilies = null;
@@ -140,7 +133,19 @@ class Person extends GedcomRecord {
 
 		// Store it in the cache
 		$gedcom_record_cache[$object->xref][$object->ged_id]=&$object;
+		//-- also store it using its reference id (sid:pid and local gedcom for remote links)
+		$gedcom_record_cache[$pid][$ged_id]=&$object;
 		return $object;
+	}
+
+	// Static helper function to sort an array of people by birth date
+	static function CompareBirtDate($x, $y) {
+		return GedcomDate::Compare($x->getEstimatedBirthDate(), $y->getEstimatedBirthDate());
+	}
+
+	// Static helper function to sort an array of people by death date
+	static function CompareDeatDate($x, $y) {
+		return GedcomDate::Compare($x->getEstimatedDeathDate(), $y->getEstimatedDeathDate());
 	}
 
 	/**
@@ -164,126 +169,30 @@ class Person extends GedcomRecord {
 		}
 		return $this->highlightedimage;
 	}
-	/**
-	* parse birth and death records
-	*/
-	function _parseBirthDeath() {
-		global $MAX_ALIVE_AGE, $SHOW_EST_LIST_DATES, $pgv_lang;
-
-		if ($this->bd_parsed) return;
-		$this->bd_parsed = true;
-
-		$brec = get_sub_record(1, "1 BIRT", $this->gedrec);
-		$drec = get_sub_record(1, "1 DEAT", $this->gedrec);
-		//-- if no birth look for christening or baptism
-		if (empty($brec)) {
-			$brec = get_sub_record(1, "1 CHR", $this->gedrec);
-			if (empty($brec)) {
-				$brec = get_sub_record(1, "1 BAPM", $this->gedrec);
-			}
-		}
-		if (!empty($brec)) {
-			$this->birthEvent = new Event($brec);
-			$this->birthEvent->setParentObject($this);
-		}
-		//-- if no death look for burial
-		if (empty($drec)) {
-			$drec = get_sub_record(1, "1 BURI", $this->gedrec);
-			$this->deathEvent = new Event($drec);
-			$this->deathEvent->setParentObject($this);
-		}
-		if (!empty($drec)) {
-			$this->deathEvent = new Event($drec);
-			$this->deathEvent->setParentObject($this);
-		}
-		//-- 2nd record with alternate date (hebrew...)
-		$this->birthEvent2 = new Event(get_sub_record(1, "1 BIRT", $this->gedrec, 2));
-		$this->birthEvent2->setParentObject($this);
-		$this->deathEvent2 = new Event(get_sub_record(1, "1 DEAT", $this->gedrec, 2));
-		$this->deathEvent2->setParentObject($this);
-
-		//-- if no death estimate from birth
-		$bdate = null;
-		$ddate = null;
-		if (!is_null($this->birthEvent)) $bdate = $this->birthEvent->getDate();
-		if (!is_null($this->deathEvent)) $ddate = $this->deathEvent->getDate();
-		if (is_null($ddate) && !is_null($bdate) && $SHOW_EST_LIST_DATES) {
-			if ($bdate->date1->y>0) {
-				$this->dest = true;
-				$nddate = $bdate->AddYears($MAX_ALIVE_AGE, 'BEF');
-				if (!is_null($this->deathEvent)) $this->deathEvent->setDate($nddate);
-				else $this->deathEvent = new Event("1 DEAT\n2 DATE BEF ".($bdate->date1->y+$MAX_ALIVE_AGE));
-			}
-		}
-		//-- if no birth estimate from death
-		if (is_null($bdate) && !is_null($ddate) && $SHOW_EST_LIST_DATES) {
-			if ($ddate->date1->y>0) {
-				$this->best = true;
-				$nbdate = $ddate->AddYears(0-$MAX_ALIVE_AGE, 'AFT');
-				if (!is_null($this->birthEvent)) $this->birthEvent->setDate($nbdate);
-				else $this->birthEvent = new Event("1 BIRT\n2 DATE AFT ".($ddate->date1->y-$MAX_ALIVE_AGE));
-			}
-		}
-	}
-	/**
-	* get birth record
-	* @param boolean $estimate Provide an estimated birth date for people without a birth record
-	* @return string
-	*/
-	function getBirthRecord($estimate=true) {
-		if (!$this->bd_parsed) {
-			$this->_parseBirthDeath();
-		}
-		return $this->birthEvent->getGedcomRecord();
-	}
-	/**
-	* get death record
-	* @param boolean $estimate Provide an estimated death date for people without a death record
-	* @return string
-	*/
-	function getDeathRecord($estimate=true) {
-		if (!$this->bd_parsed) {
-			$this->_parseBirthDeath();
-		}
-		return $this->deathEvent->getGedcomRecord();
-	}
-
-	/**
-	* get birth Event
-	* @return Event
-	*/
-	function getBirthEvent($estimate=true) {
-		if (!$this->bd_parsed) {
-			$this->_parseBirthDeath();
-		}
-		return $this->birthEvent;
-	}
-	/**
-	* get death Event
-	* @return Event
-	*/
-	function getDeathEvent($estimate=true) {
-		if (!$this->bd_parsed) {
-			$this->_parseBirthDeath();
-		}
-		return $this->deathEvent;
-	}
 
 	/**
 	* get birth date
 	* @return GedcomDate the birth date
 	*/
-	function getBirthDate($estimate = true) {
+	function getBirthDate() {
 		global $pgv_lang;
-		if (!$this->canDisplayDetails()) {
-			return new GedcomDate("({$pgv_lang['private']})");
+		
+		if (is_null($this->_getBirthDate)) {
+			if ($this->canDisplayDetails()) {
+				foreach ($this->getAllBirthDates() as $date) {
+					if ($date->isOK()) {
+						$this->_getBirthDate=$date;
+						break;
+					}
+				}
+				if (is_null($this->_getBirthDate)) {
+					$this->_getBirthDate=new GedcomDate('');
+				}
+			} else {
+				$this->_getBirthDate=new GedcomDate("({$pgv_lang['private']})");
+			}
 		}
-		$this->_parseBirthDeath();
-		if (empty($this->birthEvent)) {
-			return new GedcomDate(NULL);
-		} else {
-			return $this->birthEvent->getDate($estimate);
-		}
+		return $this->_getBirthDate;
 	}
 
 	/**
@@ -291,11 +200,24 @@ class Person extends GedcomRecord {
 	* @return string
 	*/
 	function getBirthPlace() {
-		$this->_parseBirthDeath();
-		if (is_null($this->birthEvent)) {
-			return "";
+		global $pgv_lang;
+		
+		if (is_null($this->_getBirthPlace)) {
+			if ($this->canDisplayDetails()) {
+				foreach ($this->getAllBirthPlaces() as $place) {
+					if ($place) {
+						$this->_getBirthPlace=$place;
+						break;
+					}
+				}
+				if (is_null($this->_getBirthPlace)) {
+					$this->_getBirthPlace='';
+				}
+			} else {
+				$this->_getBirthPlace=$pgv_lang['private'];
+			}
 		}
-		return $this->birthEvent->getPlace();
+		return $this->_getBirthPlace;
 	}
 	
 	/**
@@ -320,14 +242,8 @@ class Person extends GedcomRecord {
 	* get the birth year
 	* @return string the year of birth
 	*/
-	function getBirthYear($est = true, $cal = ""){
-		// TODO - change the design to use julian days, not gregorian years.
-		$this->_parseBirthDeath();
-		if (is_null($this->birthEvent)) {
-			return null;
-		}
-		$bdate = $this->birthEvent->getDate();
-		return $bdate->date1->y;
+	function getBirthYear(){
+		return $this->getBirthDate()->MinDate()->Format('Y');
 	}
 
 	/**
@@ -336,14 +252,23 @@ class Person extends GedcomRecord {
 	*/
 	function getDeathDate($estimate = true) {
 		global $pgv_lang;
-		if (!$this->canDisplayDetails()) {
-			return new GedcomDate("({$pgv_lang['private']})");
+		
+		if (is_null($this->_getDeathDate)) {
+			if ($this->canDisplayDetails()) {
+				foreach ($this->getAllDeathDates() as $date) {
+					if ($date->isOK()) {
+						$this->_getDeathDate=$date;
+						break;
+					}
+				}
+				if (is_null($this->_getDeathDate)) {
+					$this->_getDeathDate=new GedcomDate('');
+				}
+			} else {
+				$this->_getDeathDate=new GedcomDate("({$pgv_lang['private']})");
+			}
 		}
-		$this->_parseBirthDeath();
-		if (empty($this->deathEvent))
-			return new GedcomDate(NULL);
-		else
-			return $this->deathEvent->getDate($estimate);
+		return $this->_getDeathDate;
 	}
 
 	/**
@@ -351,22 +276,32 @@ class Person extends GedcomRecord {
 	* @return string
 	*/
 	function getDeathPlace() {
-		$this->_parseBirthDeath();
-		return $this->deathEvent->getPlace();
+		global $pgv_lang;
+		
+		if (is_null($this->_getDeathPlace)) {
+			if ($this->canDisplayDetails()) {
+				foreach ($this->getAllDeathPlaces() as $place) {
+					if ($place) {
+						$this->_getDeathPlace=$place;
+						break;
+					}
+				}
+				if (is_null($this->_getDeathPlace)) {
+					$this->_getDeathPlace='';
+				}
+			} else {
+				$this->_getDeathPlace=$pgv_lang['private'];
+			}
+		}
+		return $this->_getDeathPlace;
 	}
 
 	/**
 	* get the death year
 	* @return string the year of death
 	*/
-	function getDeathYear($est = true, $cal = "") {
-		// TODO - change the design to use julian days, not gregorian years.
-		$this->_parseBirthDeath();
-		if (is_null($this->deathEvent)) {
-			return null;
-		}
-		$ddate = $this->deathEvent->getDate();
-		return $ddate->date1->y;
+	function getDeathYear() {
+		return $this->getDeathDate()->MinDate()->Format('Y');
 	}
 
 	// Get all the dates/places for births/deaths - for the INDI lists
@@ -1012,11 +947,11 @@ class Person extends GedcomRecord {
 		if (is_null($person)) return;
 		if (!$SHOW_RELATIVES_EVENTS) return;
 		if ($sosa>7) return; // sosa max for recursive call
-		$this->_parseBirthDeath();
+
 		$fams = $person->getChildFamilies();
 		// Only include events between birth and death
-		$bDate=$this->getBirthDate();
-		$dDate=$this->getDeathDate();
+		$bDate=$this->getEstimatedBirthDate();
+		$dDate=$this->getEstimatedDeathDate();
 
 		//-- find family as child
 		/* @var $family Family */
@@ -1132,11 +1067,10 @@ class Person extends GedcomRecord {
 		if ($option=="2") $option="_FSIB";
 		if ($option=="3") $option="_MSIB";
 		if (strstr($SHOW_RELATIVES_EVENTS, $option)===false) return;
-		if (empty($this->brec)) $this->_parseBirthDeath();
 
 		// Only include events between birth and death
-		$bDate=$this->getBirthDate();
-		$dDate=$this->getDeathDate();
+		$bDate=$this->getEstimatedBirthDate();
+		$dDate=$this->getEstimatedDeathDate();
 
 		$children = $family->getChildren();
 		foreach ($children as $key=>$child) {
@@ -1331,10 +1265,9 @@ class Person extends GedcomRecord {
 		if (preg_match('/\n1 (?:'.PGV_EVENTS_DIV.')\b/', $famrec)) {
 			return;
 		}
-		if (empty($this->brec)) $this->_parseBirthDeath();
 		// Only include events between birth and death
-		$bDate=$this->getBirthDate();
-		$dDate=$this->getDeathDate();
+		$bDate=$this->getEstimatedBirthDate();
+		$dDate=$this->getEstimatedDeathDate();
 
 		// add spouse death
 		if ($spouse && strstr($SHOW_RELATIVES_EVENTS, '_DEAT_SPOU')) {
@@ -1384,10 +1317,10 @@ class Person extends GedcomRecord {
 		global $LANGUAGE, $lang_short_cut;
 		global $SHOW_RELATIVES_EVENTS;
 		if (!$SHOW_RELATIVES_EVENTS) return;
-		if (empty($this->brec)) $this->_parseBirthDeath();
+
 		// Only include events between birth and death
-		$bDate=$this->getBirthDate();
-		$dDate=$this->getDeathDate();
+		$bDate=$this->getEstimatedBirthDate();
+		$dDate=$this->getEstimatedDeathDate();
 		if (!$bDate->isOK()) return;
 
 		if ($SHOW_RELATIVES_EVENTS && file_exists('languages/histo.'.$lang_short_cut[$LANGUAGE].'.php')) {

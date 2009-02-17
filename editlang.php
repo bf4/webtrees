@@ -45,12 +45,6 @@ $execute               =safe_GET_bool('execute');
 
 $lang_shortcut = $language_settings[$language2]["lang_short_cut"];
 
-$fromEscapedChars = array("&",     "<",    ">",    "\\\"");
-$toPlainChars     = array("&amp;", "&lt;", "&gt;", "\\\\&quot;");
-
-$fromPlainChars = array("\\\\&quot;", "&gt;", "&lt;", "&amp;");
-$toEscapedChars = array("\\\"", ">",    "<",    "&");
-
 switch ($action) {
 case 'edit':
 	print_header($pgv_lang['edit_lang_utility']);
@@ -304,7 +298,7 @@ case "edit" :
 				$dummy_output .= "</td>";
 				$dummy_output .= "<td class=\"facts_value wrap\">";
 				$dummy_output .= "<a name=\"a1_".$ls01."\"></a>";
-				$untranslatedText = str_replace($fromEscapedChars, $toPlainChars, $english_language_array[$ls01][1]);
+				$untranslatedText = mask_all($english_language_array[$ls01][1]);
 
 					if ($untranslatedText == "") {
 						$dummy_output .= "<strong style=\"color: #FF0000\">".str_replace("#LANGUAGE_FILE#", $pgv_language[$language1], $pgv_lang["message_empty_warning"])."</strong>";
@@ -323,7 +317,7 @@ case "edit" :
 						if ($new_language_array[$y][0] == $english_language_array[$ls01][0]) {
 							$dDummy =  $new_language_array[$y][1];
 							$dummy_output_02 .= "<a href=\"javascript:;\" onclick=\"return helpPopup00('".encode_url("ls01={$ls01}&ls02={$y}&language2={$language2}&file_type={$file_type}&".session_name()."=".session_id()."&anchor=a1_{$ls01}")."');\">";
-							$translatedText = str_replace($fromEscapedChars, $toPlainChars, $dDummy);
+							$translatedText = mask_all($dDummy);
 							$dummy_output_02 .= $translatedText;
 							if ($translatedText == "") {
 								$dummy_output_02 .= "<strong style=\"color: #FF0000\">".str_replace("#LANGUAGE_FILE#", $pgv_language[$language2], $pgv_lang["message_empty_warning"])."</strong>";
@@ -345,7 +339,7 @@ case "edit" :
 						$translatedDiv = "tr_{$ls01}";
 						$untranslatedPanel = "{$translatedDiv}_pre";
 						$translatedPanel = "{$translatedDiv}_post";
-						$translatedText = str_replace($fromEscapedChars, $toPlainChars, $english_language_array[$ls01][1]);
+						$translatedText = mask_all($english_language_array[$ls01][1]);
 
 						echo "<div style=\"display: inline;\" id=\"{$untranslatedPanel}\">";
 						print_help_link("google_translate_help", "qm");
@@ -656,7 +650,7 @@ case "compare" :
 				foreach($list1 as $key=>$value) {
 					if (!array_key_exists($key, $list2)) {
 						echo "<tr><td class=\"facts_label\">", $key, "</td>";
-						echo "<td class=\"facts_value\">", str_replace($fromEscapedChars, $toPlainChars, $value), "</td></tr>";
+						echo "<td class=\"facts_value\">", mask_all($value), "</td></tr>";
 						$count++;
 					}
 				}
@@ -672,7 +666,7 @@ case "compare" :
 				foreach($list2 as $key=>$value) {
 					if (!array_key_exists($key, $list1)) {
 						echo "<tr><td class=\"facts_label\">", $key, "</td>";
-						echo "<td class=\"facts_value\">", str_replace($fromEscapedChars, $toPlainChars, $value), "</td></tr>";
+						echo "<td class=\"facts_value\">", mask_all($value), "</td></tr>";
 						$count++;
 					}
 				}

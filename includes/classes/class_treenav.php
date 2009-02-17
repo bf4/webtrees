@@ -48,6 +48,10 @@ class TreeNav {
 	* @param int $zoom The starting zoom level
 	*/
 	function TreeNav($rootid='', $name='nav', $zoom=0) {
+		global $SHOW_PRIVATE_RELATIONSHIPS;
+
+		$SHOW_PRIVATE_RELATIONSHIPS = true;		// Interactive Tree doesn't work if this is "false"
+
 		if ($rootid!='none') {
 			$rootid = check_rootid($rootid);
 			$this->zoomLevel = $zoom;
@@ -153,7 +157,7 @@ class TreeNav {
 		<div id="out_<?php print $this->name; ?>" dir="ltr" style="position: relative; <?php print $widthS.$heightS; ?>text-align: center; overflow: hidden;">
 			<div id="in_<?php print $this->name; ?>" style="position: relative; left: -20px; width: auto; cursor: move;" onmousedown="dragStart(event, 'in_<?php print $this->name; ?>', <?php print $this->name; ?>);" onmouseup="dragStop(event);">
 			<?php $parent=null;
-			if ($this->rootPerson!=null && !$this->rootPerson->canDisplayDetails()) print_privacy_error($CONTACT_EMAIL);
+			//if ($this->rootPerson!=null && !$this->rootPerson->canDisplayDetails()) print_privacy_error($CONTACT_EMAIL);
 			if (!$this->allSpouses) $this->drawPerson($this->rootPerson, $this->generations, 0, $parent);
 			else $this->drawPersonAllSpouses($this->rootPerson, $this->generations, 0);?>
 			</div>
@@ -240,10 +244,10 @@ class TreeNav {
 	* @param Person $person the person to print the details for
 	*/
 	function getDetails(&$person) {
-		global $factarray, $factAbbrev, $SHOW_ID_NUMBERS, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $SERVER_URL;
+		global $pgv_lang, $factarray, $factAbbrev, $SHOW_ID_NUMBERS, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $SERVER_URL;
 
 		if (empty($person)) $person = $this->rootPerson;
-		if (!$person->canDisplayDetails()) return;
+		//if (!$person->canDisplayDetails()) return;
 
 		$families = array();
 		if (!empty($_REQUEST['famid'])) {
@@ -287,11 +291,9 @@ class TreeNav {
 				if (isset ($factAbbrev["BIRT"])) print $factAbbrev["BIRT"];
 				else print get_first_letter($factarray['BIRT']);
 				?>:</b>
-			<?php
-				$bdate = $person->getBirthDate();
-				if (!is_null($bdate)) print $bdate->Display();
-			?>
-			<?php $place = $person->getBirthPlace();  if (!empty($place)) print PrintReady($place); ?>
+				<?php
+				echo $person->getBirthDate()->Display(), ' ', PrintReady($person->getBirthPlace());
+				?>
 			<br />
 			<b><?php
 			if ($person->isDead()) {
@@ -299,10 +301,7 @@ class TreeNav {
 				else print get_first_letter($factarray['DEAT']);
 				?>:</b>
 				<?php
-				$ddate = $person->getDeathDate(false);
-				if (!is_null($ddate)) print $ddate->Display();
-				?>
-				<?php $place = $person->getDeathPlace();  if (!empty($place)) print PrintReady($place);
+				echo $person->getDeathDate()->Display(), ' ', PrintReady($person->getDeathPlace());
 			} ?>
 		</div>
 		<br />
@@ -325,10 +324,8 @@ class TreeNav {
 					else print get_first_letter($factarray['BIRT']);
 					?>:</b>
 				<?php
-					$bdate = $spouse->getBirthDate();
-					if (!is_null($bdate)) print $bdate->Display();
+				echo $spouse->getBirthDate()->Display(), ' ', PrintReady($spouse->getBirthPlace());
 				?>
-				<?php $place = $spouse->getBirthPlace();  if (!empty($place)) print PrintReady($place); ?>
 				<br />
 				<b><?php
 					if (isset ($factAbbrev["MARR"])) print $factAbbrev["MARR"];
@@ -351,10 +348,7 @@ class TreeNav {
 					}
 					?>:</b>
 					<?php
-					$ddate = $spouse->getDeathDate(false);
-					if (!is_null($ddate)) print $ddate->Display();
-					?>
-					<?php $place = $spouse->getDeathPlace();  if (!empty($place)) print PrintReady($place);
+					echo $spouse->getDeathDate()->Display(), ' ', PrintReady($spouse->getDeathPlace());
 				} ?>
 				</div>
 				<?php
@@ -507,7 +501,7 @@ class TreeNav {
 							$spouse = $family->getSpouse($person);
 							if (!is_null($spouse)) {
 								$name = $spouse->getFullName();
-								print PrintReady("&nbsp;&nbsp;".$spouse->getSexImage('small', $style)." ".$name);
+								print PrintReady($spouse->getSexImage('small', $style)." ".$name);
 								print "<br />\n";
 							} else print "<br />\n";
 						}

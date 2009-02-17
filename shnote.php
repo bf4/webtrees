@@ -96,9 +96,18 @@ $noterec = find_gedcom_record($controller->nid);
 
 // echo $noterec . "<br />";
 
-$nt = preg_match("/0 @$controller->nid@ NOTE (.*)/", $noterec, $n1match);
+$nt = preg_match("/0 @$controller->nid@ NOTE(.*)/", $noterec, $n1match);
+/*
+print_r($n1match);
+echo "<br /><br />";
+print_r($noterec);
+echo "<br /><br />";
+echo $nt;
+echo "<br /><br />";
+*/
+
 if ($nt==1) {
-	$shnote = print_note_record($n1match[1], 1, $noterec, false, true);
+	$shnote = print_note_record("<br />".$n1match[1], 1, $noterec, false, true);
 }else{
 	$shnote = "No Text";
 }
@@ -122,7 +131,7 @@ foreach ($shnotefacts as $fact) {
 		echo "</td></tr>";
 */
 	} else {
-		print_fact($fact);
+	// 	print_fact($fact);
 	}
 }
 

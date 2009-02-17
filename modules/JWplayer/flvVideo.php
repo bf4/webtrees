@@ -48,10 +48,11 @@ $preview="";
 	<script type="text/javascript">
 		var video 	= "<?php print $flvVideo; ?>";
 		var preview = "<?php print $preview; ?>";
-		var s1 = new SWFObject("modules/JWplayer/player.swf","ply","425","344","9","#000000");
+		var s1 = new SWFObject("modules/JWplayer/player.swf","ply","480","365","9","#000000");
 		s1.addParam("allowfullscreen","true");
 		s1.addParam("allowscriptaccess","always");
-		s1.addParam("flashvars","file=" +video+ "&image=" +preview+ "&autostart=true");
+		s1.addParam("stretching","fill");
+		s1.addParam("flashvars","file=" +video+ "&image=" +preview+ "&autostart=true" );
 		s1.write("container");
   </script>
 

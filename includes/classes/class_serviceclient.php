@@ -700,9 +700,12 @@ class ServiceClient extends GedcomRecord {
 	* @return string
 	*/
 	function checkIds($gedrec) {
+		$ids_checked = array();
 		$ct = preg_match_all("/@(".$this->xref.":.*)@/", $gedrec, $match, PREG_SET_ORDER);
 		for($i=0; $i<$ct; $i++) {
 			$id = trim($match[$i][1]);
+			if (isset($ids_checked[$id])) continue;
+			$ids_checked[$id]=true;
 			$gid = get_remote_id($id);
 			if ($gid!==false)
 				$gedrec = preg_replace("/@".$id."@/", "@".$gid."@", $gedrec);

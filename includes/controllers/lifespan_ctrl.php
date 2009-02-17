@@ -410,8 +410,8 @@ class LifespanControllerRoot extends BaseController {
 				}
 
 				$lifespan = "<span dir=\"ltr\">$birthYear-</span>";
-				$deathReal = $value->getDeathDate(false)->isOK();
-				$birthReal = $value->getBirthDate(false)->isOK();
+				$deathReal = $value->getDeathDate()->isOK();
+				$birthReal = $value->getBirthDate()->isOK();
 				if ($value->isDead() && $deathReal) $lifespan .= "<span dir=\"ltr\">$deathYear</span>";
 				$lifespannumeral = $deathYear - $birthYear;
 

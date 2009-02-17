@@ -74,24 +74,129 @@ function DefaultAgeLocalisation(&$agestring, &$show_years) {
 			'/(\d+)m/i',
 			'/\b1d/i',
 			'/(\d+)d/i',
-			'/\b1w/i',      
-			'/(\d+)w/i'		
+			'/\b1w/i',
+			'/(\d+)w/i'
 		),
 		array(
-			$pgv_lang['child'],
-			$pgv_lang['infant'],
-			$pgv_lang['stillborn'],
-			($show_years || preg_match('/[dm]/', $agestring)) ? '1 '.$pgv_lang['year1'] : '1',
-			($show_years || preg_match('/[dm]/', $agestring)) ? '$1 '.$pgv_lang['years'] : '$1',
-			'1 '.$pgv_lang['month1'],
-			'$1 '.$pgv_lang['months'],
-			'1 '.$pgv_lang['day1'],
-			'$1 '.$pgv_lang['days'],
-	  	'1 '.$pgv_lang['week1'],		 
-			'$1 '.$pgv_lang['weeks']	
+			$pgv_lang["child"],
+			$pgv_lang["infant"],
+			$pgv_lang["stillborn"],
+			($show_years || preg_match('/[dm]/', $agestring)) ? '1 '.$pgv_lang["year1"] : '1',
+			($show_years || preg_match('/[dm]/', $agestring)) ? '$1 '.$pgv_lang["years"] : '$1',
+			'1 '.$pgv_lang["month1"],
+			'$1 '.$pgv_lang["months"],
+			'1 '.$pgv_lang["day1"],
+			'$1 '.$pgv_lang["days"],
+	  	'1 '.$pgv_lang["week1"],
+			'$1 '.$pgv_lang["weeks"]
 		),
 		$agestring
 	);
+}
+
+/*
+ * Format elapsed time
+ *
+ * The output of this function is a string, expressed as "i years, j months, k days, l hours, m minutes",
+ * ready to be inserted into a message such as "xxx ago" or "after xxx" or "in xxx".  
+ *
+ * The output is NOT suitable for insertion into a message such as "xxx after death" in all languages 
+ * because cases of words such as "months" and "days" can vary according to context.
+ *
+ * Example:  
+ * In English you say "after 2 months" and "2 months after death".  The German equivalents of these
+ * expressions use different forms of the plural for "month": "nach 2 Monaten" and "2 Monate nach Tod"
+ *
+ * The input parameter $truncate determines whether the full string should be output or whether the output
+ * should be truncated after "days" when the time span is 7 days or more.
+ */
+function formatElapsedTime($elapsedTime, $truncate=true) {
+	global $pgv_lang;
+	$rtn = '';
+
+	$years = floor($elapsedTime / 31536000);		// 365 * 24 * 60 * 60 seconds per year
+	if ($years > 0) {
+		if ($years==1) {
+			$rtn .= $pgv_lang["elapsedYear1"];
+		} else {
+			$pgv_lang["global_num1"] = $years;		// Make this visible to function print_text()
+			// Polish requires special handling of 2,3,4 or 22,23,24 or 32,33,34 etc.
+			$units = substr($years,-1,1);
+			$tens = substr('0'.$years,-2,1);
+			if ($tens!='1' && ($units=='2' || $units=='3' || $units=='4')) $rtn .= print_text("elapsedYear2", 0, 1);
+			else $rtn .= print_text("elapsedYears", 0, 1);
+		}
+		$rtn .= ", ";
+		$elapsedTime -= $years * 31536000;
+	}
+
+
+	$months = floor($elapsedTime / 2592000);		// 30 * 24 * 60 * 60 seconds per month
+	if ($months > 0) {
+		if ($months==1) {
+			$rtn .= $pgv_lang["elapsedMonth1"];
+		} else {
+			$pgv_lang["global_num1"] = $months;		// Make this visible to function print_text()
+			// Polish requires special handling of 2,3,4 or 22,23,24 or 32,33,34 etc.
+			$units = substr($months,-1,1);
+			$tens = substr('0'.$months,-2,1);
+			if ($tens!='1' && ($units=='2' || $units=='3' || $units=='4')) $rtn .= print_text("elapsedMonth2", 0, 1);
+			else $rtn .= print_text("elapsedMonths", 0, 1);
+		}
+		$rtn .= ", ";
+		$elapsedTime -= $months * 2592000;
+	}
+
+	$days = floor($elapsedTime / 86400);			// 24 * 60 * 60 seconds per day
+	if ($days > 0) {
+		if ($days==1) {
+			$rtn .= $pgv_lang["elapsedDay1"];
+		} else {
+			$pgv_lang["global_num1"] = $days;		// Make this visible to function print_text()
+			// Polish requires special handling of 2,3,4 or 22,23,24 or 32,33,34 etc.
+			$units = substr($days,-1,1);
+			$tens = substr('0'.$days,-2,1);
+			if ($tens!='1' && ($units=='2' || $units=='3' || $units=='4')) $rtn .= print_text("elapsedDay2", 0, 1);
+			else $rtn .= print_text("elapsedDays", 0, 1);
+		}
+		$rtn .= ", ";
+		$elapsedTime -= $days * 86400;
+	}
+
+	if (!$truncate || ($years==0 && $months==0 && $days<7)) {
+		$hours = floor($elapsedTime / 3600);			// 60 * 60 seconds per hour
+		if ($hours > 0) {
+			if ($hours==1) {
+				$rtn .= $pgv_lang["elapsedHour1"];
+			} else {
+				$pgv_lang["global_num1"] = $hours;		// Make this visible to function print_text()
+				// Polish requires special handling of 2,3,4 or 22,23,24 or 32,33,34 etc.
+				$units = substr($hours,-1,1);
+				$tens = substr('0'.$hours,-2,1);
+				if ($tens!='1' && ($units=='2' || $units=='3' || $units=='4')) $rtn .= print_text("elapsedHour2", 0, 1);
+				else $rtn .= print_text("elapsedHours", 0, 1);
+			}
+			$rtn .= ", ";
+			$elapsedTime -= $hours * 3600;
+		}
+
+		$mins = floor($elapsedTime / 60);				// 60 seconds per minute
+		if ($mins > 0) {
+			if ($mins==1) {
+				$rtn .= $pgv_lang["elapsedMinute1"];
+			} else {
+				$pgv_lang["global_num1"] = $mins;		// Make this visible to function print_text()
+				// Polish requires special handling of 2,3,4 or 22,23,24 or 32,33,34 etc.
+				$units = substr($mins,-1,1);
+				$tens = substr('0'.$mins,-2,1);
+				if ($tens!='1' && ($units=='2' || $units=='3' || $units=='4')) $rtn .= print_text("elapsedMinute2", 0, 1);
+				else $rtn .= print_text("elapsedMinutes", 0, 1);
+			}
+			$rtn .= ", ";
+		}
+	}
+	if ($rtn=='') return $pgv_lang["elapsedMinute1"];
+	return substr($rtn,0,-2);
 }
 
 /**
@@ -105,9 +210,9 @@ function parse_time($timestr)
 	$time[0] = min(((int) $time[0]), 23); // Hours: integer, 0 to 23
 	$time[1] = min(((int) $time[1]), 59); // Minutes: integer, 0 to 59
 	$time[2] = min(((int) $time[2]), 59); // Seconds: integer, 0 to 59
-	$time['hour'] = $time[0];
-	$time['minutes'] = $time[1];
-	$time['seconds'] = $time[2];
+	$time["hour"] = $time[0];
+	$time["minutes"] = $time[1];
+	$time["seconds"] = $time[2];
 
 	return $time;
 }
@@ -156,7 +261,7 @@ function default_edit_to_gedcom_date($datestr)
 ////////////////////////////////////////////////////////////////////////////////
 function format_timestamp($time) {
 	global $DATE_FORMAT, $TIME_FORMAT;
-	
+
 	return
 		strip_tags(timestamp_to_gedcom_date($time)->Display(false, $DATE_FORMAT)).
 		' - '.
@@ -195,8 +300,8 @@ function timestamp_to_gedcom_date($time) {
 // Get the current timestamp of the client, not the server
 ////////////////////////////////////////////////////////////////////////////////
 function client_time() {
-	if (isset($_SESSION['timediff'])) {
-		return time()-$_SESSION['timediff'];
+	if (isset($_SESSION["timediff"])) {
+		return time()-$_SESSION["timediff"];
 	} else {
 		return time();
 	}

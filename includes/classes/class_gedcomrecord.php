@@ -183,6 +183,8 @@ class GedcomRecord {
 
 		// Store it in the cache
 		$gedcom_record_cache[$object->xref][$object->ged_id]=&$object;
+		//-- also store it using its reference id (sid:pid and local gedcom for remote links)
+		$gedcom_record_cache[$pid][$ged_id]=&$object;
 		return $object;
 	}
 
@@ -466,7 +468,7 @@ class GedcomRecord {
 					break;
 				default:
 					foreach ($this->getAllNames() as $n=>$name) {
-						if (whatLanguage($name['sort'])=='other') {
+						if ($name['type']!='_MARNM' && whatLanguage($name['sort'])=='other') {
 							$this->_getPrimaryName=$n;
 							break;
 						}
@@ -504,6 +506,11 @@ class GedcomRecord {
 		$this->_getSecondaryName=null;
 	}
 
+	// Allow native PHP functions such as array_intersect() to work with objects
+	public function __toString() {
+		return $this->xref.'@'.$this->ged_id;
+	}
+
 	// Static helper function to sort an array of objects by name
 	// Records whose names cannot be displayed are sorted at the end.
 	static function Compare($x, $y) {
@@ -525,6 +532,25 @@ class GedcomRecord {
 	// Static helper function to sort an array of objects by ID
 	static function CompareId($x, $y) {
 		return strcmp($x->getXref(), $y->getXref());
+	}
+
+	// Static helper function to sort an array of objects by Change Date
+	static function CompareChanDate($x, $y) {
+		$chan_x = $x->getChangeEvent();
+		$chan_y = $y->getChangeEvent();
+		$tmp=GedcomDate::Compare($chan_x->getDate(), $chan_y->getDate());
+		if ($tmp) {
+			return $tmp;
+		} else {
+			if (
+				preg_match('/^\d\d:\d\d:\d\d/', get_gedcom_value('DATE:TIME', 2, $chan_x->getGedComRecord(), '', false).':00', $match_x) &&
+				preg_match('/^\d\d:\d\d:\d\d/', get_gedcom_value('DATE:TIME', 2, $chan_y->getGedComRecord(), '', false).':00', $match_y)
+			) {
+				return strcmp($match_x[0], $match_y[0]);
+			} else {
+				return 0;
+			}
+		}
 	}
 
 	// Get the three variants of the name

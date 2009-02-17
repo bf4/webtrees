@@ -513,6 +513,7 @@ class PHPMailer {
 	* @return bool
 	*/
 	public function SmtpSend($header, $body) {
+		global $PGV_SMTP_HELO, $PGV_SMTP_AUTH_USER;
 		include_once($this->PluginDir . 'class_smtp.php');
 		$error = '';
 		$bad_rcpt = array();
@@ -523,10 +524,21 @@ class PHPMailer {
 
 		$smtp_from = ($this->Sender == '') ? $this->From : $this->Sender;
 		if(!$this->smtp->Mail($smtp_from)) {
-			$error = $this->Lang('from_failed') . $smtp_from;
-			$this->SetError($error);
-			$this->smtp->Reset();
-			return false;
+			if (strstr($PGV_SMTP_AUTH_USER, "@")!==False) {
+				$from_user = $PGV_SMTP_AUTH_USER;
+			}
+			else {
+				$from_user = $PGV_SMTP_AUTH_USER.'@'.$PGV_SMTP_HELO;
+			}
+			if($this->smtp->Mail($from_user)) {
+				$smtp_from = $from_user;
+			}
+			else {
+				$error = $this->Lang('from_failed') . $smtp_from;
+				$this->SetError($error);
+				$this->smtp->Reset();
+				return false;
+			}
 		}
 
 		/* Attempt to send attach all recipients */
@@ -660,10 +672,25 @@ class PHPMailer {
 	* @return bool
 	*/
 	function SetLanguage($lang_type = 'en', $lang_path = 'language/') {
-		if( !(@include $lang_path.'phpmailer.lang-'.$lang_type.'.php') ) {
-			$this->SetError('Could not load language file');
-			return false;
-		}
+		//if( !(@include $lang_path.'phpmailer.lang-'.$lang_type.'.php') ) {
+		//	$this->SetError('Could not load language file');
+		//	return false;
+		//}
+		// language variables moved from language file
+		$PHPMAILER_LANG = array();
+		$PHPMAILER_LANG["provide_address"]		= 'You must provide at least one recipient email address.';
+		$PHPMAILER_LANG["mailer_not_supported"] = ' mailer is not supported.';
+		$PHPMAILER_LANG["execute"]				= 'Could not execute: ';
+		$PHPMAILER_LANG["instantiate"]			= 'Could not instantiate mail function.';
+		$PHPMAILER_LANG["authenticate"]			= 'SMTP Error: Could not authenticate.';
+		$PHPMAILER_LANG["from_failed"]			= 'The following From address failed: ';
+		$PHPMAILER_LANG["recipients_failed"]	= 'SMTP Error: The following recipients failed: ';
+		$PHPMAILER_LANG["data_not_accepted"]	= 'SMTP Error: Data not accepted.';
+		$PHPMAILER_LANG["connect_host"]			= 'SMTP Error: Could not connect to SMTP host.';
+		$PHPMAILER_LANG["file_access"]			= 'Could not access file: ';
+		$PHPMAILER_LANG["file_open"]			= 'File Error: Could not open file: ';
+		$PHPMAILER_LANG["encoding"]				= 'Unknown encoding: ';
+		$PHPMAILER_LANG["signing"]				= 'Signing Error: ';
 		$this->language = $PHPMAILER_LANG;
 		return true;
 	}

@@ -668,14 +668,23 @@ function calc_axis($xas_grenzen) {
 }
 
 function calc_legend($grenzen_zas) {
-	global $legend, $zmax, $zgrenzen, $pgv_lang;
+	global $legend, $zmax, $zgrenzen, $pgv_lang, $lang_short_cut, $LANGUAGE;
 
 	// calculate the legend values
 	$hulpar = array();
 	//-- get numbers out of $grenzen_zas
 	$hulpar = explode(",", $grenzen_zas);
 	$i=1;
-	$legend[0] = $pgv_lang["bef"]." ".$hulpar[0];
+	// Allow special processing for different languages
+	$func="date_localisation_{$lang_short_cut[$LANGUAGE]}";
+	if (!function_exists($func))
+		$func="DefaultDateLocalisation";
+	// Localise the date
+	$q1='bef';
+	$d1=$hulpar[0];
+	$q2=''; $d2=''; $q3='';
+	$func($q1, $d1, $q2, $d2, $q3);
+	$legend[0] = trim("{$q1} {$d1} {$q2} {$d2} {$q3}");
 	$zgrenzen[0] = $hulpar[0]-1;
 	while (isset($hulpar[$i])) {
 		$i1 = $i-1;
@@ -685,7 +694,11 @@ function calc_legend($grenzen_zas) {
 	}
 	$zmax = $i;
 	$zmax1 = $zmax-1;
-	$legend[$zmax] = $pgv_lang["from"]." ".$hulpar[$zmax1];
+	// Localise the date
+	$q1='from';
+	$d1 = $hulpar[$zmax1];
+	$func($q1, $d1, $q2, $d2, $q3);
+	$legend[$zmax] = trim("{$q1} {$d1} {$q2} {$d2} {$q3}");
 	$zgrenzen[$zmax] = 10000;
 	$zmax = $zmax+1;
 	if ($zmax > 8) $zmax=8;
