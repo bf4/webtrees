@@ -258,7 +258,6 @@ if ($action == "save") {
 		break;
 	}
 
-	$new_message = unmask_all($new_message);
 	$new_message_line = (-1);
 
 	if (isset($new_language_array[$ls02])) $dummyArray = $new_language_array[$ls02];
@@ -272,6 +271,7 @@ if ($action == "save") {
 		$new_message_line = sizeof($new_language_array) - 2;
 	}
 
+//	$new_message = unmask_all($new_message);
 	$new_message = crlf_lf_to_br($new_message);
 	$dummyArray[1] = $new_message;
 	$dummyArray[3] = substr($dummyArray[3], 0, $dummyArray[2]) . $new_message . "\";";
