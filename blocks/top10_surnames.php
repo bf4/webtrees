@@ -99,8 +99,6 @@ function print_block_name_top10($block=true, $config="", $side, $index) {
 		}
 	}
 
-	uasort($all_surnames, "top_surname_sort");
-
 	$id="top10surnames";
 	$title = print_help_link("index_common_names_help", "qm","",false,true);
 	if ($PGV_BLOCKS["print_block_name_top10"]["canconfig"]) {
@@ -118,10 +116,12 @@ function print_block_name_top10($block=true, $config="", $side, $index) {
 
 	switch ($SURNAME_LIST_STYLE) {
 	case 'style3':
+		uksort($all_surnames,'stringsort');	
 		$content=format_surname_tagcloud($all_surnames, 'indilist', true);
 		break;
 	case 'style2':
 	default:
+		uasort($all_surnames, "top_surname_sort");	
 		$content=format_surname_table($all_surnames, 'indilist');
 		break;
 	}

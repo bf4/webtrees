@@ -58,7 +58,8 @@ define('PGV_REGEX_ALPHA',    '[a-zA-Z]+');
 define('PGV_REGEX_ALPHANUM', '[a-zA-Z0-9]+');
 define('PGV_REGEX_BYTES',    '[0-9]+[bBkKmMgG]?');
 define('PGV_REGEX_PASSWORD', '.{6,}');
-define('PGV_REGEX_NOSCRIPT', '[^<>"&%{};]+');
+//define('PGV_REGEX_NOSCRIPT', '[^<>"&%{};]+');
+define('PGV_REGEX_NOSCRIPT', '[^<>"%{};]+');
 define('PGV_REGEX_URL',      '[\/0-9A-Za-z_!~*\'().;?:@&=+$,%#-]+'); // Simple list of valid chars
 define('PGV_REGEX_EMAIL',    '[^\s<>"&%{};@]+@[^\s<>"&%{};@]+');
 define('PGV_REGEX_UNSAFE',   '[\x00-\xFF]*'); // Use with care and apply additional validation!

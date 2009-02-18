@@ -173,7 +173,7 @@ $factarray["FAMC:MARR:PLAC"] 		= "Vanhempien hääpaikka";
 $factarray["FAMC:HUSB:OCCU"] 		= "Isän ammatti";
 $factarray[":BIRT:PLAC"] 			= "Syntymäpaikka";
 $factarray["FAMS:MARR:PLAC"] 		= "Hääpaikka";
-$factarray["FAMS:MARR:DATE"] 		= "Hääpäivä"; 
+$factarray["FAMS:MARR:DATE"] 		= "Hääpäivä";
 $factarray["FAMS:SPOUSE:DEAT:PLAC"] 	= "Puolison kuolinpaikka";
 $factarray["FAMC:HUSB:GIVN"] 		= "Isän etunimi";
 $factarray["FAMS:SPOUSE:BIRT:PLAC"] 	= "Puolison syntymäpaikka";
@@ -193,8 +193,8 @@ $factarray["CHR:PLAC"] 	= "Ristiäispaikka";
 $factarray["CHR:DATE"] 	= "Ristiäispäivä";
 $factarray["BAPM:PLAC"] 	= "Kastepaikka";
 $factarray["BAPM:DATE"] 	= "Kastepäivä";
-$factarray["_BRTM:PLAC"] 	= "Brit Mila paikka"; 
-$factarray["_BRTM:DATE"] 	= "Brit Mila päivä"; 
+$factarray["_BRTM:PLAC"] 	= "Brit Mila paikka";
+$factarray["_BRTM:DATE"] 	= "Brit Mila päivä";
 $factarray["BURI:PLAC"] 	= "Hautauspaikka";
 $factarray["BURI:DATE"] 	= "Hautauspäivä";
 $factarray["MARR:PLAC"] 	= "Hääpaikka";
@@ -224,7 +224,7 @@ $factarray["_MREL"] 	= "Suhde äitiin";
 $factarray["_FREL"] 	= "Suhde isään";
 $factarray["_MSTAT"] 	= "Avioliiton alkutilanne";
 $factarray["_MEND"] 	= "Avioliiton lopputilanne";
-$factarray["_NAMS"]	= "Kaima"; //@@
+$factarray["_NAMS"]	= "Kaima";
 
 // GEDCOM 5.5.1 related facts
 $factarray["FAX"] 	= "Faksi";
@@ -423,4 +423,6 @@ $factarray["_THUM"]	= "Käytä tätä kuvaa pienoiskuvana?";
 $factarray["_PGVU"]	= "muuttaja";
 $factarray["SERV"] 	= "Ulkoinen palvelin";
 $factarray["_GEDF"] 	= "GEDCOM-tiedosto";
+$factarray["FAMS:DIV:DATE"] = "Puolison avioeropäivä";
+$factarray["FAMS:DIV:PLAC"] = "Puolison avioeropaikka";
 ?>
