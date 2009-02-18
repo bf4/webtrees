@@ -10,6 +10,7 @@
 
 
 Version 4.2.0 CA
+ - Added: Theme dependant note.gif and addnote.gif to each respective theme (windmillway)
  - Fixed: Census Assistant error. Corrected function getCensBirthPlace() in class_person.php (windmillway)
  - Added:  Shared Note Support (Also when in Add Census Event mode - removed conversion from Shared to inline Note) (windmillway)
  - Merged: Merge changes r4969 - r5062 from the trunk. (windmillway)
