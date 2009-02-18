@@ -2,12 +2,11 @@ PHPGEDVIEW LANGUAGE FILE CHANGELOG
 
 # $Id$
 
-For changes prior to 2005.03.15, please refer to LANG_CHANGELOG_bef.20050315.txt
-For changes between 2005.03.15 and 2005.12.08, refer to LANG_CHANGELOG_bef.2005.12.08.txt
-The LANG_CHANGELOG.txt file was getting too big to work with easily.
+For information on changes prior to the release of PGV 4.2.0 (16 Nov. 2008), please 
+refer to the files in ZIP file "languages/CHANGELOG_bef.20081117.zip"
 
 Use this file to follow the changes made to the English language files
-between different versions of phpGedView.  There are eight separate CHANGELOG files,
+between different versions of PhpGedView.  There are eight separate CHANGELOG files,
 one to correspond to each file that together make up the entire set of English text.
 
 The CHANGELOG files are:
@@ -39,42 +38,15 @@ Additional codes, to help Translators, follow the date as follows:
 	W - Major wording change or completely new text
 
 The above list of codes may be amended as new situations arise.
-For massive changes, the variable names should be listed in the order in which they
-occur in the respective language files.
 
 
-VERSION 4.1.6
+VERSION 4.2.1
 
 ?$countries["whatever"]								dd Monthname, year		Change codes and comments
 -----------------------------------------------------------------------------------------
-+$countries["CAT"]									5 July 2008				A
 
 
-VERSION 4.1
+VERSION 4.2.0
 
 ?$countries["whatever"]								dd Monthname, year		Change codes and comments
 -----------------------------------------------------------------------------------------
-*$countries["FLK"]									23 July 2007			w	removed "(Malvinas)"
-*$countries["FSM"]									23 July 2007			w	removed "(Federated States of)"
-*$countries["GBR"]									23 July 2007			w	removed "(of Great Britain and Northern Ireland)"
-*$countries["IRN"]									23 July 2007			w	removed "(Islamic Republic of)"
-*$countries["KOR"]									23 July 2007			w	removed "(Republic of)"
-*$countries["LAO"]									23 July 2007			Sw	removed "People's Democratic Republic"
-*$countries["LBY"]									23 July 2007			w	removed "n Arab Jamahiriya";
-*$countries["MDA"]									23 July 2007			w	removed "(Republic of)"
-*$countries["MKD"]									23 July 2007			w	removed "(The former Yugoslav Republic of)"
-*$countries["MMR"]									23 July 2007			w	removed "(Burma)"
-*$countries["MOZ"]									23 July 2007			S	Changed to English spelling
-*$countries["PLW"]									23 July 2007			w	removed "(Belau)"
-*$countries["PRK"]									23 July 2007			w	removed "(Democratic People's Republic of Korea)"
-*$countries["SAU"]									23 July 2007			w	removed "(Kingdom of)"
-*$countries["SUN"]									23 July 2007			W	removed "." and "(Soviet Union)"
-*$countries["TZA"]									23 July 2007			w	removed "(United Republic of)"
-*$countries["VAT"]									23 July 2007			w	removed "(Holy See)"
-+$countries["???"]									23 July 2007			A	added "Unknown"
-
-23 July 2007:  See also countries.en.php for a method of adding language-specific synonyms for
-the various Chapman codes.  These synonyms are NOT supported by the Translator tool, and are
-treated as normal text when they occur.  The synonyms should only appear in the countries.xx.php
-file for the language in which they occur.
-
