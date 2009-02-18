@@ -3,7 +3,7 @@
  * Hebrew Language file for PhpGedView.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team. All rights reserved.
+ * Copyright (C) 2002 to 2009  PGV Development Team. All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -31,17 +31,17 @@ if (!defined('PGV_PHPGEDVIEW')) {
 
 $pgv_lang["googlemap"]              	= "מפה";
 $pgv_lang["no_gmtab"]               	= "אין נתוני מפה עבור אדם זה";
-$pgv_lang["gm_disabled"]            	= "מודול GoogleMap נוטרל"; 
+$pgv_lang["gm_disabled"]            	= "מודול GoogleMap נוטרל";
 
 $pgv_lang["gm_redraw_map"]          	= "צייר מפה מחדש";
 $pgv_lang["gm_map"]                 	= "מפה";
-$pgv_lang["gm_physical"]            	= "פיסית"; 
+$pgv_lang["gm_physical"]            	= "פיסית";
 $pgv_lang["gm_satellite"]           	= "לוויין";
 $pgv_lang["gm_hybrid"]              	= "משולבת";
 
 // Configuration texts
 $pgv_lang["gm_manage"]              	= "נהל תצורת GoogleMap";
-$pgv_lang["configure_googlemap"]   = "קנפג GoogleMap"; 
+$pgv_lang["configure_googlemap"]   = "קנפג GoogleMap";
 $pgv_lang["gm_admin_error"]         	= "דף רק של מנהלנים";
 $pgv_lang["gm_db_error"]            	= "טבלת מיקום לא נימצאה במאגר הנתונים";
 $pgv_lang["gm_table_created"]       	= "טבלת מיקום נוצרה";
@@ -69,16 +69,16 @@ $pgv_lang["gm_pp_pr_po_b_n"]      	= "תחילית, סיומת, שניהם, נו
 $pgv_lang["gm_pp_po_pr_b_n"]      	= "סיומת, תחילית, שניהם, נורמאלי";
 $pgv_lang["gm_pp_pr_po_n_b"]        	= "תחילית, סיומת, נורמאלי, שניהם";
 $pgv_lang["gm_pp_po_pr_n_b"]        	= "סיומת, תחילית, נורמאלי, שניהם";
-$pgv_lang["googlemap_coord"]        	= "הצג קואורדינטות של המפה"; 
+$pgv_lang["googlemap_coord"]        	= "הצג קואורדינטות של המפה";
 
 //wooc place hierarchy
-$pgv_lang["gm_place_hierarchy"]	= "השתמש ב-Googlemap עבור היררכית המקומות"; 
+$pgv_lang["gm_place_hierarchy"]	= "השתמש ב-Googlemap עבור היררכית המקומות";
 $pgv_lang["gm_ph_map_size"]	= "גודל מפה של היררכיית מקומות (בפיקסלים)";
-$pgv_lang["gm_ph_marker_type"]	= "סוג מראי מקומות בהיררכית המקומות"; 
-$pgv_lang["gm_standard_marker"]	= "רגיל"; 
-$pgv_lang["gm_no_coord"]		= "למקום הזה אין קואורדינטות"; 
-$pgv_lang["gm_ph_placenames"]	= "הצג שמות מקוצרים של מקומות?"; 
-$pgv_lang["gm_ph_count"]		=  "הצג ספירה של אנשים ומשפחות?"; 
+$pgv_lang["gm_ph_marker_type"]	= "סוג מראי מקומות בהיררכית המקומות";
+$pgv_lang["gm_standard_marker"]	= "רגיל";
+$pgv_lang["gm_no_coord"]		= "למקום הזה אין קואורדינטות";
+$pgv_lang["gm_ph_placenames"]	= "הצג שמות מקוצרים של מקומות?";
+$pgv_lang["gm_ph_count"]		=  "הצג ספירה של אנשים ומשפחות?";
 $pgv_lang["gm_ph_wheel"]		= "השתמש בגלגל העכבר לזום?";
 $pgv_lang["gm_ph_controls"]		= "החבא בקרת מפה";
 
@@ -108,31 +108,33 @@ $pgv_lang["pl_precision"]           	= "דיוק";
 $pgv_lang["pl_country"]             	= "ארץ";
 $pgv_lang["pl_countries"]		= "ארצות";
 $pgv_lang["pl_state"]               		= "מדינה";
+$pgv_lang["pl_county"]		= "מחוז"; //@@
 $pgv_lang["pl_city"]                		= "עיר";
+$pgv_lang["pl_place"]			= "מקום"; //@@
 $pgv_lang["pl_neighborhood"]        	= "שכונה";
 $pgv_lang["pl_house"]               	= "בית";
 $pgv_lang["pl_max"]                 	= "מכסימלי";
-$pgv_lang["pl_delete"]              	= "מחק מקום גיאוגרפי"; 
-$pgv_lang["pl_unknown"]		= "לא ידוע"; 
+$pgv_lang["pl_delete"]              	= "מחק מקום גיאוגרפי";
+$pgv_lang["pl_unknown"]		= "לא ידוע";
 $pgv_lang["pl_flag"]                		= "דגל";
 $pgv_lang["pl_search_level"]		= "חפש ברמה זו";
-$pgv_lang["pl_search_all"]		= "חפש הכל"; 
+$pgv_lang["pl_search_all"]		= "חפש הכל";
 $pgv_lang["flags_edit"]             	= "בחר דגל";
 $pgv_lang["pl_change_flag"]         	= "החלף דגל";
 $pgv_lang["pl_remove_flag"]         	= "הסר דגל";
 
 $pgv_lang["pl_remove_location"]     	= "?הסר המיקום";
 $pgv_lang["pl_delete_error"]        	= "המיקום לא הורד: המיקום כולל תתי מיקומים";
-$pgv_lang["list_inactive"]        		= "לחץ כאן כדי להראות מקומות שאינם בשימוש"; 
+$pgv_lang["list_inactive"]        		= "לחץ כאן כדי להראות מקומות שאינם בשימוש";
 
 //Placecheck specific text
 $pgv_lang["placecheck"]		= "בדיקת מקום";
 $pgv_lang["placecheck_text"]		= "זה יבנה רשימה של כל המקומות מקובץ ה-GEDCOM הנבחר. לפי ברירת מחדל זה <b>אינו</b> כולל מקומות עם התאמה מלאה בין קובץ ה-GEDCOM וטבלאות ה-GoogleMap";
-$pgv_lang["placecheck_top"]		= "מקום של רמה עליונה"; 
+$pgv_lang["placecheck_top"]		= "מקום של רמה עליונה";
 $pgv_lang["placecheck_one"]		= "מקום של רמה ראשונה";
 $pgv_lang["placecheck_select1"]	= "בחר את הרמה העליונה...";
 $pgv_lang["placecheck_select2"]	= "בחר את הרמה הבאה...";
-$pgv_lang["placecheck_key"]		= "מפתח לצבעים שבשימוש למטה"; 
+$pgv_lang["placecheck_key"]		= "מפתח לצבעים שבשימוש למטה";
 $pgv_lang["placecheck_key1"]	= "מקום זה והקואורדינאטות שלו אינן קיימות בטבלאות ה-GoogleMap";
 $pgv_lang["placecheck_key2"]	= "מקום זה קיים בטבלאות GoogleMap, אבל ללא קואורדינאטות";
 $pgv_lang["placecheck_key3"]	= "רמת מקום זו ריקה בקובץ ה-GEDCOM שלך. יש להוסיף אותו <br/>למקומות GoogleMap כ\"בלתי ידוע\" עם הקואורדינאטות של רמת ההורה שלו<br/>לפני שמוסיפים מקום ברמה הבאה";
@@ -140,7 +142,7 @@ $pgv_lang["placecheck_key4"]           	= "רשימת מקומות עבור בק
 $pgv_lang["placecheck_head"]	= "הרמה הזו של רשימת מקומות ריקה בקובץ ה-GEDCOM שלך, אבל קיימת כ'בלתי ידוע'<br/>בטבלת המקומות של GoogleMap עם קואורדינאטות. שום פעולה אינה נדרשת<br/>עד שמוסיפים את הרמה החסרה";
 $pgv_lang["placecheck_gedheader"]	= "נתוני המקומות של קובץ GEDCOM<br/>2 PLAC";
 $pgv_lang["placecheck_gm_header"]	= "נתוני טבלת המקומות של GoogleMap";
-$pgv_lang["placecheck_unique"]	= "סה\"כ מקומות ייחודיים"; 
+$pgv_lang["placecheck_unique"]	= "סה\"כ מקומות ייחודיים";
 $pgv_lang["placecheck_zoom"]         	= "זום=";
 $pgv_lang["placecheck_options"]     	= "אופציות של רשימת בדיקת מקום";
 $pgv_lang["placecheck_filter_text"] 	= "תציג אופציות של הפילטר";
