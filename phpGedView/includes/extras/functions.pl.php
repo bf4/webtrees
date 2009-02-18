@@ -165,7 +165,7 @@ function date_diff_localisation_pl(&$label, &$gap) {
 	else if (($yrs > 21 || $yrs < -21) && substr($yrs, -1, 1) > 1 && substr($yrs, -1, 1) < 5 && substr($yrs, -2, 1) != 1) $label .= $yrs." ".$pgv_lang["years2"];
 	else if ($gap > 20 or $gap < -20) $label .= $yrs." ".$pgv_lang["years"]; // x lat
 	else if ($gap == 1 || $gap == -1) $label .= $gap." ".$pgv_lang["month1"]; // 1 miesiąc
-	else if (($gap > 1 && $gap < 5) || ($gap < -1 && $gap > -5)) $label .= $gap." ".$pgv_lang["months2"]; // 2-4 miesiące
+	else if (($gap > 1 && $gap < 5) || ($gap < -1 && $gap > -5)) $label .= $gap." miesiące"; // 2-4 miesiące
 	else if ($gap != 0) $label .= $gap." ".$pgv_lang["months"]; // x miesięcy
 }
 ////////////////////////////////////////////////////////////////////////////////

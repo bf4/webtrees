@@ -202,7 +202,6 @@ $pgv_lang["no_temple"]				= "Brak świątyni - Living Ordinance";
 $pgv_lang["no_upload"]				= "Nie można wgrać pliku multimedialnego ponieważ wgrywanie multimediów zostało zablokowane lub katalog multimediów jest chroniony przed zapisem.";
 $pgv_lang["paste_id_into_field"]	= "Wklej poniższy identyfikator w pola edycji aby odwołać się do nowo utworzonego wpisu.";
 $pgv_lang["paste_rid_into_field"]	= "Wklej poniższy identyfikator w pole edycji aby odwołać się do tego repozytorium.";
-$pgv_lang["photo_replace"]			= "Czy chcesz zastąpić stare zdjęcie nowym?";
 $pgv_lang["privacy_not_granted"]	= "Brak dostępu do ";
 $pgv_lang["privacy_prevented_editing"]	= "Ustawienia poufności uniemożliwiają edycję tego wpisu.";
 $pgv_lang["record_marked_deleted"]	= "Ten wpis został zaznaczony do usunięcia po zatwierdzeniu przez administratora.";
