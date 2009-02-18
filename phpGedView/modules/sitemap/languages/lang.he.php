@@ -3,7 +3,7 @@
  * Hebrew Language file for PhpGedView.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team
+ * Copyright (C) 2002 to 2009  PGV Development Team
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -30,13 +30,13 @@ if (!defined('PGV_PHPGEDVIEW')) {
 }
 
 // Admin menu
-$pgv_lang["sitemap"]       		= "מיפוי של האתר"; 
+$pgv_lang["sitemap"]       		= "מיפוי של האתר";
 $pgv_lang["generate_sitemap"]    	= "צור קבצי מיפוי של האתר";
 
 // Sitemap pages
 $pgv_lang["selected_item"]          	= "בחר פריטים לשמירה במפת האתר:";
 $pgv_lang["gedcoms_selected"]       	= "קבצי GEDCOM שניתן לשמור במפת האתר:";
-$pgv_lang["sitemaps_generated"]     	= "קובצי מיפוי של האתר הבאים נוצרו וניתנים להורדה:"; 
+$pgv_lang["sitemaps_generated"]     	= "קובצי מיפוי של האתר הבאים נוצרו וניתנים להורדה:";
 $pgv_lang["sitemaps_placement"]     	= "הצב את כל הקבצים בתקיה הראשית (root) של התקנת ה-PhpGedView שלך.";
 $pgv_lang["sm_indi_info"]		= "נתוני אנשים";
 $pgv_lang["sm_family_info"]		= "נתוני משפחה";

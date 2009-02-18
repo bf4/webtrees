@@ -318,6 +318,7 @@ $pgv_lang["PGV_SMTP_PORT"] 	= "SMTP Port";
 $pgv_lang["PGV_SMTP_AUTH"] 	= "השתמש בשם וסיסמא";
 $pgv_lang["PGV_SMTP_AUTH_USER"]	= "שם משתמש";
 $pgv_lang["PGV_SMTP_AUTH_PASS"]	= "סיסמא";
+$pgv_lang["PGV_SMTP_SSL"] 	= "התחברות SSL";
 $pgv_lang["PGV_SMTP_FROM_NAME"]	= "שם השולח";
 $pgv_lang["PGV_STORE_MESSAGES"]  = "הרשה שמירת הודעות מקוונת";
 $pgv_lang["phpinfo"]			= "נתוני PHP";
@@ -424,4 +425,23 @@ $pgv_lang["tradition_paternal"]	= "לפי אב";
 $pgv_lang["tradition_polish"]		= "פולני";
 $pgv_lang["tradition_none"]		= "אין";
 
+// -- The following text is used to build the phrase "i years, j months, k days, l hours, m minutes"
+// -- for use in text such as "xxx ago" or "after xxx" or "in xxx"
+$pgv_lang["elapsedYear1"]	=	"שנה 1";
+$pgv_lang["elapsedYear2"]	=	"#pgv_lang[global_num1]# שנים";	// used in Polish for 2,3,4 or 22,23,24 or 32,33,34 etc.
+$pgv_lang["elapsedYears"]	=	"#pgv_lang[global_num1]# שנים";
+$pgv_lang["elapsedMonth1"]	=	"חודש 1";
+$pgv_lang["elapsedMonth2"]	=	"#pgv_lang[global_num1]# חודשים";	// used in Polish for 2,3,4 or 22,23,24 or 32,33,34 etc.
+$pgv_lang["elapsedMonths"]	=	"#pgv_lang[global_num1]# חודשים";
+$pgv_lang["elapsedDay1"]	=	"יום 1";
+$pgv_lang["elapsedDay2"]	=	"#pgv_lang[global_num1]# ימים";		// used in Polish for 2,3,4 or 22,23,24 or 32,33,34 etc.
+$pgv_lang["elapsedDays"]	=	"#pgv_lang[global_num1]# ימים";
+$pgv_lang["elapsedHour1"]	=	"שעה 1";
+$pgv_lang["elapsedHour2"]	=	"#pgv_lang[global_num1]# שעות";	// used in Polish for 2,3,4 or 22,23,24 or 32,33,34 etc.
+$pgv_lang["elapsedHours"]	=	"#pgv_lang[global_num1]# שעות";
+$pgv_lang["elapsedMinute1"]	=	"דקה 1";
+$pgv_lang["elapsedMinute2"]	=	"#pgv_lang[global_num1]# דקות";	// used in Polish for 2,3,4 or 22,23,24 or 32,33,34 etc.
+$pgv_lang["elapsedMinutes"]	=	"#pgv_lang[global_num1]# דקות";
+
+$pgv_lang["elapsedAgo"]	=	"לפני #pgv_lang[global_string1]#";
 ?>
