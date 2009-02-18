@@ -2,12 +2,11 @@ PHPGEDVIEW LANGUAGE FILE CHANGELOG
 
 # $Id$
 
-For changes prior to 2005.03.15, please refer to LANG_CHANGELOG_bef.20050315.txt
-For changes between 2005.03.15 and 2005.12.08, refer to LANG_CHANGELOG_bef.2005.12.08.txt
-The LANG_CHANGELOG.txt file was getting too big to work with easily.
+For information on changes prior to the release of PGV 4.2.0 (16 Nov. 2008), please 
+refer to the files in ZIP file "languages/CHANGELOG_bef.20081117.zip"
 
 Use this file to follow the changes made to the English language files
-between different versions of phpGedView.  There are eight separate CHANGELOG files,
+between different versions of PhpGedView.  There are eight separate CHANGELOG files,
 one to correspond to each file that together make up the entire set of English text.
 
 The CHANGELOG files are:
@@ -41,6 +40,7 @@ Additional codes, to help Translators, follow the date as follows:
 The above list of codes may be amended as new situations arise.
 For massive changes, the variable names should be listed in the order in which they
 occur in the respective language files.
+
 
 VERSION 4.2.0
 

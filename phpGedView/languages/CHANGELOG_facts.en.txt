@@ -2,12 +2,11 @@ PHPGEDVIEW LANGUAGE FILE CHANGELOG
 
 # $Id$
 
-For changes prior to 2005.03.15, please refer to LANG_CHANGELOG_bef.20050315.txt
-For changes between 2005.03.15 and 2005.12.08, refer to LANG_CHANGELOG_bef.2005.12.08.txt
-The LANG_CHANGELOG.txt file was getting too big to work with easily.
+For information on changes prior to the release of PGV 4.2.0 (16 Nov. 2008), please 
+refer to the files in ZIP file "languages/CHANGELOG_bef.20081117.zip"
 
 Use this file to follow the changes made to the English language files
-between different versions of phpGedView.  There are eight separate CHANGELOG files,
+between different versions of PhpGedView.  There are eight separate CHANGELOG files,
 one to correspond to each file that together make up the entire set of English text.
 
 The CHANGELOG files are:
@@ -39,8 +38,13 @@ Additional codes, to help Translators, follow the date as follows:
 	W - Major wording change or completely new text
 
 The above list of codes may be amended as new situations arise.
-For massive changes, the variable names should be listed in the order in which they
-occur in the respective language files.
+
+
+VERSION 4.2.1
+
+?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
+-----------------------------------------------------------------------------------------
+
 
 VERSION 4.2.0
 
@@ -55,167 +59,3 @@ VERSION 4.2.0
 +$factarray["FAMS:SLGS:PLAC"]						17 Dec 2008				A
 +$factarray["FAMS:SLGS:TEMP"]						17 Dec 2008				A
 *$factarray["_UID"]									8 Dec 2008				W
-
-
-VERSION 4.1.6
-
-?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
--------------------------------------------------------------------------------------------
-+$factarray["MARR:DATE"]							13 Oct 2008				A
-+$factarray["BIRT:DATE"]							8 Oct 2008				A
-+$factarray["DEAT:DATE"]							8 Oct 2008				A
-+$factarray["CHR:DATE"]								8 Oct 2008				A
-+$factarray["BAPM:DATE"]							8 Oct 2008				A
-+$factarray["BURI:DATE"]							8 Oct 2008				A
-+$factarray["FAMS:MARR:DATE"]						6 Oct 2008				A
-+$factarray["_NAMS"]	    						30 Sep 2008				A
-+$factarray["_MARB_FAMC"]							12 Aug 2008				A
-+$factarray["_MARR_FAMC"]							12 Aug 2008				A
-+$factarray["_MARB_CHIL"]							23 Jun 2008				A
-+$factarray["_MARB_GCHI"]							23 Jun 2008				A
-+$factarray["_MARB_GGCH"]							23 Jun 2008				A
-+$factarray["_MARB_SIBL"]							23 Jun 2008				A
-+$factarray["_MARB_HSIB"]							23 Jun 2008				A
-+$factarray["_MARB_NEPH"]							23 Jun 2008				A
-+$factarray["_MARB_FSIB"]							23 Jun 2008				A
-+$factarray["_MARB_MSIB"]							23 Jun 2008				A
-+$factarray["_MARB_COUS"]							23 Jun 2008				A
-+$factarray["__BRTM_CHIL"]							24 May 2008				A
-+$factarray["__BRTM_GCHI"]							24 May 2008				A
-+$factarray["__BRTM_GGCH"]							24 May 2008				A
-+$factarray["__BRTM_SIBL"]							24 May 2008				A
-+$factarray["__BRTM_HSIB"]							24 May 2008				A
-+$factarray["__BRTM_NEPH"]							24 May 2008				A
-+$factarray["__BRTM_FSIB"]							24 May 2008				A
-+$factarray["__BRTM_MSIB"]							24 May 2008				A
-+$factarray["__BRTM_COUS"]							24 May 2008				A
-+$factarray["_CHR_SIBL"]							23 May 2008  			A
-+$factarray["_BAPM_SIBL"]							23 May 2008  			A
-+$factarray["_ADOP_SIBL"]							23 May 2008  			A
-+$factarray["_CHR_HSIB"]							23 May 2008  			A
-+$factarray["_BAPM_HSIB"]							23 May 2008  			A
-+$factarray["_ADOP_HSIB"]							23 May 2008  			A
-+$factarray["_CHR_NEPH"]							23 May 2008  			A
-+$factarray["_BAPM_NEPH"]							23 May 2008  			A
-+$factarray["_ADOP_NEPH"]							23 May 2008  			A
-+$factarray["_CHR_MSIB"]							23 May 2008  			A
-+$factarray["_BAPM_MSIB"]							23 May 2008  			A
-+$factarray["_ADOP_MSIB"]							23 May 2008  			A
-+$factarray["_CHR_HSIB"]							23 May 2008  			A
-+$factarray["_BAPM_COUS"]							23 May 2008  			A
-+$factarray["_ADOP_COUS"]							23 May 2008  			A
-+$factarray["_CHR_COUS"]							23 May 2008  			A
-+$factarray["_BAPM_HSIB"]							23 May 2008  			A
-+$factarray["_ADOP_HSIB"]							23 May 2008  			A
-+$factarray["_CHR_CHIL"]							23 May 2008  			A
-+$factarray["_CHR_GCHI"]							23 May 2008  			A
-+$factarray["_CHR_GGCH"]							23 May 2008  			A
-+$factarray["_BAPM_CHIL"]							23 May 2008  			A
-+$factarray["_BAPM_GCHI"]							23 May 2008  			A
-+$factarray["_BAPM_GGCH"]							23 May 2008  			A
-+$factarray["_ADOP_CHIL"]							23 May 2008  			A
-+$factarray["_ADOP_GCHI"]							23 May 2008  			A
-+$factarray["_ADOP_GGCH"]							23 May 2008  			A
-+$factarray["_BURI_SPOU"]							30 April 2008			A
-+$factarray["_CREM_SPOU"]							30 April 2008			A
-+$factarray["_BURI_CHIL"]							30 April 2008			A
-+$factarray["_CREM_CHIL"]							30 April 2008			A
-+$factarray["_BURI_GCHI"]							30 April 2008			A
-+$factarray["_CREM_GCHI"]							30 April 2008			A
-+$factarray["_BURI_GGCH"]							30 April 2008			A
-+$factarray["_CREM_GGCH"]							30 April 2008			A
-+$factarray["_BURI_FATH"]							30 April 2008			A
-+$factarray["_CREM_FATH"]							30 April 2008			A
-+$factarray["_BURI_MOTH"]							30 April 2008			A
-+$factarray["_CREM_MOTH"]							30 April 2008			A
-*$factarray["_BIRT_SIBL"]							30 April 2008			w	"of a" -> "of"
-*$factarray["_MARR_SIBL"]							30 April 2008			w	"of a" -> "of"
-*$factarray["_DEAT_SIBL"]							30 April 2008			w	"of a" -> "of"
-+$factarray["_BURI_SIBL"]							30 April 2008			A
-+$factarray["_CREM_SIBL"]							30 April 2008			A
-*$factarray["_BIRT_HSIB"]							30 April 2008			w	"of a" -> "of"
-*$factarray["_MARR_HSIB"]							30 April 2008			w	"of a" -> "of"
-*$factarray["_DEAT_HSIB"]							30 April 2008			w	"of a" -> "of"
-+$factarray["_BURI_HSIB"]							30 April 2008			A
-+$factarray["_CREM_HSIB"]							30 April 2008			A
-+$factarray["_BURI_NEPH"]							30 April 2008			A
-+$factarray["_CREM_NEPH"]							30 April 2008			A
-+$factarray["_BURI_GPAR"]							30 April 2008			A
-+$factarray["_CREM_GPAR"]							30 April 2008			A
-+$factarray["_BURI_GGPA"]							30 April 2008			A
-+$factarray["_CREM_GGPA"]							30 April 2008			A
-*$factarray["_BIRT_FSIB"]							30 April 2008			w	"of a" -> "of"
-*$factarray["_MARR_FSIB"]							30 April 2008			w	"of a" -> "of"
-*$factarray["_DEAT_FSIB"]							30 April 2008			w	"of a" -> "of"
-+$factarray["_BURI_FSIB"]							30 April 2008			A
-+$factarray["_CREM_FSIB"]							30 April 2008			A
-*$factarray["_BIRT_MSIB"]							30 April 2008			w	"of a" -> "of"
-*$factarray["_MARR_MSIB"]							30 April 2008			w	"of a" -> "of"
-*$factarray["_DEAT_MSIB"]							30 April 2008			w	"of a" -> "of"
-+$factarray["_BURI_MSIB"]							30 April 2008			A
-+$factarray["_CREM_MSIB"]							30 April 2008			A
-+$factarray["_BURI_COUS"]							30 April 2008			A
-+$factarray["_CREM_COUS"]							30 April 2008			A
-
-
-VERSION 4.1.4
-
-?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
--------------------------------------------------------------------------------------------
-+$factarray["_BIRT_GGCH"]							12 Dec 2007				A
-+$factarray["_MARR_GGCH"]							12 Dec 2007				A
-+$factarray["_DEAT_GGCH"]							12 Dec 2007				A
-+$factarray["_DEAT_GGPA"]							12 Dec 2007				A
-
-
-VERSION 4.1.3
-
-?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
--------------------------------------------------------------------------------------------
-+$factarray["FAMC:WIFE:FAMC:HUSB:GIVN"]				24 Oct 2007				A
-+$factarray["FAMC:HUSB:FAMC:WIFE:GIVN"]				24 Oct 2007				A
-+$factarray["FAMS:CHIL:BIRT:PLAC"]					24 Oct 2007				A
-+$factarray["_BIRT_NEPH"]							20 Oct 2007				A   [ 1671286 ]
-+$factarray["_MARR_NEPH"]							20 Oct 2007				A   [ 1671286 ]
-+$factarray["_DEAT_NEPH"]							20 Oct 2007				A   [ 1671286 ]
-+$factarray["_FAMC_EMIG"]							20 Oct 2007				A   [ 1671286 ]
-+$factarray["_FAMC_RESI"]							20 Oct 2007				A   [ 1671286 ]
-
-
-VERSION 4.1
-
-?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
--------------------------------------------------------------------------------------------
-*$factarray["_YART"]								2 Oct 2007				S
-*$factarray["SEX"]									13 July 2007			w	"sex" -> "gender"
-+$factarray["STAT:DATE"]							16 May 2007				A
-+$factarray["_MARNM_SURN"]							9 Mar 2007				A
-*$factarray["FAMC:HUSB:FAMC:HUSB:GIVN"]				7 Mar 2007				W
-*$factarray["FAMC:WIFE:FAMC:WIFE:GIVN"]				7 Mar 2007				W
-+$factarray["MARR:PLAC"]							7 Mar 2007				A
-*$factarray["_DBID"]								27 Jan 2007				C
-+$factarray["_DBID"]								26 Jan 2007				A
-*$factarray["FAMC:MARR:PLAC"]						25 Jan 2007				S
-+$factarray["FAMC:HUSB:SURN"]						25 Jan 2007				A
-+$factarray["FAMC:WIFE:SURN"]						25 Jan 2007				A
-+$factarray["FAMC:HUSB:BIRT:PLAC"]					25 Jan 2007				A
-+$factarray["FAMC:WIFE:BIRT:PLAC"]					25 Jan 2007				A
-+$factarray["FAMC:MARR:PLAC"]						25 Jan 2007				A
-+$factarray["FAMC:HUSB:OCCU"]						25 Jan 2007				A
-+$factarray[":BIRT:PLAC"]							25 Jan 2007				A
-+$factarray["FAMS:MARR:PLAC"]						25 Jan 2007				A
-+$factarray["FAMS:SPOUSE:DEAT:PLAC"]				25 Jan 2007				A
-+$factarray["FAMC:HUSB:GIVN"]						25 Jan 2007				A
-+$factarray["FAMS:SPOUSE:BIRT:PLAC"]				25 Jan 2007				A
-+$factarray["FAMC:WIFE:GIVN"]						25 Jan 2007				A
-+$factarray["FAMC:HUSB:FAMC:HUSB:GIVN"]				25 Jan 2007				A
-+$factarray["FAMC:WIFE:FAMC:WIFE:GIVN"]				25 Jan 2007				A
-*$factarray["_PGVU"]								04 Nov 2006       		w
-+$factarray["_URL"]									28 Jun 2006				A
-
-
-VERSION 4.0
-
-?$factarray["whatever"]								dd Monthname, year		Change codes and comments
------------------------------------------------------------------------------------------
-*$factarray["_PGVU"]								15 Mar 2006				C

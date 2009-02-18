@@ -2,8 +2,11 @@ PHPGEDVIEW LANGUAGE FILE CHANGELOG
 
 # $Id$
 
+For information on changes prior to the release of PGV 4.2.0 (16 Nov. 2008), please 
+refer to the files in ZIP file "languages/CHANGELOG_bef.20081117.zip"
+
 Use this file to follow the changes made to the English language files
-between different versions of phpGedView.  There are eight separate CHANGELOG files,
+between different versions of PhpGedView.  There are eight separate CHANGELOG files,
 one to correspond to each file that together make up the entire set of English text.
 
 The CHANGELOG files are:
@@ -35,150 +38,13 @@ Additional codes, to help Translators, follow the date as follows:
 	W - Major wording change or completely new text
 
 The above list of codes may be amended as new situations arise.
-For massive changes, the variable names should be listed in the order in which they
-occur in the respective language files.
 
-VERSION 4.1.6
+
+VERSION 4.2.1
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 -----------------------------------------------------------------------------------------
-*$faqlist["FAQ_030_GIVEN"]							17 May 2008				W
-+$faqlist["FAQ_030_GIVEN1"]						17 May 2008				A
-*$faqlist["FAQ_030_NAMES2"]						17 May 2008				w
-*$faqlist["FAQ_030_HEBNAME"]						16 May 2008				w
-*$faqlist["FAQ_030_NAMES2"]						15 May 2008				W
-*$faqlist["FAQ_010_body"]							14 May 2008				W (replace URL with CONSTANT)
-*$faqlist["FAQ_030_SURNAME2"]						12 May 2008				f (added leading space)
-+$faqlist["FAQ_030_NAMES2"]						12 May 2008				A
 
-VERSION 4.1.1
 
+VERSION 4.2.0
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 -----------------------------------------------------------------------------------------
-*$faqlist["FAQ_030_PLACES4"]						08 September 2007       w
-*$faqlist["FAQ_030_MARRNAME2"						08 September 2007       p
-*$faqlist["FAQ_030_PLACES3"]						07 September 2007       w	
-*$faqlist["FAQ_030_PLACES4"]						07 September 2007       w	
-*$faqlist["FAQ_030_PLACES5"]						07 September 2007		W
-*$faqlist["FAQ_030_AKANAME"]						07 September 2007		W
-*$faqlist["FAQ_030_AKANAME2"]						07 September 2007		w
-*$faqlist["FAQ_030_PLACES3"]						07 September 2007       f	
-*$faqlist["FAQ_030_PLACES4"]						07 September 2007       f	
-+$faqlist["FAQ_030_PLACES5"]						07 September 2007		A
-*$faqlist["FAQ_030_AKANAME"]						07 September 2007		w
-*$faqlist["FAQ_030_AKANAME2"]						07 September 2007		A
-*$faqlist["FAQ_010_body"]							07 September 2007		fw
-*$faqlist["FAQ_015_body"]							07 September 2007		C
-*$faqlist["FAQ_017_body"]							07 September 2007		wC
-*$faqlist["FAQ_022_body"]							07 September 2007		C
-*$faqlist["FAQ_027_body"]							07 September 2007		S
-*$faqlist["FAQ_030_HELP"]							07 September 2007		w
-*$faqlist["FAQ_030_PLACES"]							07 September 2007		w
-*$faqlist["FAQ_030_NAMES"]							07 September 2007		W
-*$faqlist["FAQ_030_PREFIX"]							07 September 2007		W
-*$faqlist["FAQ_030_GIVN"]							07 September 2007		W
-*$faqlist["FAQ_030_SURNAME"]						07 September 2007		W
-*$faqlist["FAQ_030_NICKNAME"]						07 September 2007		w
-*$faqlist["FAQ_030_AKANAME"]						07 September 2007		W
-*$faqlist["FAQ_030_MARRNAME"]						07 September 2007		W
-*$faqlist["FAQ_030_MARRNAME2"]						07 September 2007		w
-*$faqlist["FAQ_030_CHNG"]							07 September 2007		w
-*$faqlist["FAQ_030_MEDIA2"]							07 September 2007		w
-*$faqlist["FAQ_032_body"]							07 September 2007		w
-*$faqlist["FAQ_037_body2"]							07 September 2007		S
-*$faqlist["FAQ_040_body"]							07 September 2007		w
-*$faqlist["FAQ_040_body2"]							07 September 2007		w
-*$faqlist["FAQ_015_body"]							06 September 2007		pwf
-*$faqlist["FAQ_017_head"]							06 September 2007		pw  also: fix missing </ul>
-*$faqlist["FAQ_020_body"]							06 September 2007		w
-*$faqlist["FAQ_020_body2"]							06 September 2007		wf
-*$faqlist["FAQ_020_body3"]							06 September 2007		wf
-*$faqlist["FAQ_020_body4"]							06 September 2007		f
-*$faqlist["FAQ_022_body"]							06 September 2007		w
-*$faqlist["FAQ_025_body"]							06 September 2007		w
-*$faqlist["FAQ_027_head"]							06 September 2007		w
-*$faqlist["FAQ_027_body"]							06 September 2007		w
-*$faqlist["FAQ_030_HELP"]							06 September 2007		w
-*$faqlist["FAQ_030_DATES"]							06 September 2007		w
-*$faqlist["FAQ_030_HDATES"]							06 September 2007		w
-*$faqlist["FAQ_030_PLACES"]							06 September 2007		wf
-*$faqlist["FAQ_030_PLACES2"]						06 September 2007		wf
-*$faqlist["FAQ_030_PLACES3"]						06 September 2007		wf
-*$faqlist["FAQ_030_PLACES4"]						06 September 2007		wf
-*$faqlist["FAQ_030_NAMES"]							06 September 2007		w
-*$faqlist["FAQ_030_PREFIX"]							06 September 2007		w
-*$faqlist["FAQ_030_GIVN2"]							06 September 2007		w
-*$faqlist["FAQ_030_SURNAME"]						06 September 2007		w
-*$faqlist["FAQ_030_SURNAME2"]						06 September 2007		w
-*$faqlist["FAQ_030_NICKNAME"]						06 September 2007		w
-*$faqlist["FAQ_030_AKANAME"]						06 September 2007		wf
-*$faqlist["FAQ_030_MARRNAME"]						06 September 2007		f
-*$faqlist["FAQ_030_SOURC"]							06 September 2007		wf
-*$faqlist["FAQ_030_CHNG"]							06 September 2007		wf
-*$faqlist["FAQ_032_body"]							06 September 2007		wf
-*$faqlist["FAQ_037_body2"]							06 September 2007		w
-*$faqlist["FAQ_040_body"]							06 September 2007		w
-*$faqlist["FAQ_040_body2"]							06 September 2007		w
-*$faqlist["FAQ_050_body"]							06 September 2007		w
-+$faqlist["FAQ_010_head"]							06 September 2007		A
-+$faqlist["FAQ_010_body"]							06 September 2007		A
-+$faqlist["FAQ_015_head"]							06 September 2007		A
-+$faqlist["FAQ_015_body"]							06 September 2007		A
-+$faqlist["FAQ_017_head"]							06 September 2007		A
-+$faqlist["FAQ_017_body"]							06 September 2007		A
-+$faqlist["FAQ_020_head"]							06 September 2007		A
-+$faqlist["FAQ_020_body"]							06 September 2007		A
-+$faqlist["FAQ_020_body2"]							06 September 2007		A
-+$faqlist["FAQ_020_body3"]							06 September 2007		A
-+$faqlist["FAQ_020_body4"]							06 September 2007		A
-+$faqlist["FAQ_022_head"]							06 September 2007		A
-+$faqlist["FAQ_022_body"]							06 September 2007		A
-+$faqlist["FAQ_025_head"]							06 September 2007		A
-+$faqlist["FAQ_025_body"]							06 September 2007		A
-+$faqlist["FAQ_027_head"]							06 September 2007		A
-+$faqlist["FAQ_027_body"]							06 September 2007		A
-+$faqlist["FAQ_030_head"]							06 September 2007		A
-+$faqlist["FAQ_030_body"]							06 September 2007		A
-+$faqlist["FAQ_030_body2"]							06 September 2007		A
-+$faqlist["FAQ_030_body3"]							06 September 2007		A
-+$faqlist["FAQ_030_HELP"]							06 September 2007		A
-+$faqlist["FAQ_030_DATES"]							06 September 2007		A
-+$faqlist["FAQ_030_HDATES"]							06 September 2007		A
-+$faqlist["FAQ_030_PLACES"]							06 September 2007		A
-+$faqlist["FAQ_030_PLACES2"]						06 September 2007		A
-+$faqlist["FAQ_030_PLACES3"]						06 September 2007		A
-+$faqlist["FAQ_030_PLACES4"]						06 September 2007		A
-+$faqlist["FAQ_030_NAMES"]							06 September 2007		A
-+$faqlist["FAQ_030_PREFIX"]							06 September 2007		A
-+$faqlist["FAQ_030_GIVN"]							06 September 2007		A
-+$faqlist["FAQ_030_GIVN2"]							06 September 2007		A
-+$faqlist["FAQ_030_SURNAME"]						06 September 2007		A
-+$faqlist["FAQ_030_SURNAME2"]						06 September 2007		A
-+$faqlist["FAQ_030_SUFFIX"]							06 September 2007		A
-+$faqlist["FAQ_030_NICKNAME"]						06 September 2007		A
-+$faqlist["FAQ_030_HEBNAME"]						06 September 2007		A
-+$faqlist["FAQ_030_AKANAME"]						06 September 2007		A
-+$faqlist["FAQ_030_MARRNAME"]						06 September 2007		A
-+$faqlist["FAQ_030_MARRNAME2"]						06 September 2007		A
-+$faqlist["FAQ_030_SOURC"]							06 September 2007		A
-+$faqlist["FAQ_030_CHNG"]							06 September 2007		A
-+$faqlist["FAQ_030_MEDIA"]							06 September 2007		A
-+$faqlist["FAQ_030_MEDIA2"]							06 September 2007		A
-+$faqlist["FAQ_030_NAVIGATE"]						06 September 2007		A
-+$faqlist["FAQ_032_head"]							06 September 2007		A
-+$faqlist["FAQ_032_body"]							06 September 2007		A
-+$faqlist["FAQ_037_head"]							06 September 2007		A
-+$faqlist["FAQ_037_body"]							06 September 2007		A
-+$faqlist["FAQ_037_body2"]							06 September 2007		A
-+$faqlist["FAQ_040_head"]							06 September 2007		A
-+$faqlist["FAQ_040_body"]							06 September 2007		A
-+$faqlist["FAQ_040_body2"]							06 September 2007		A
-+$faqlist["FAQ_050_head"]							06 September 2007		A
-+$faqlist["FAQ_050_body"]							06 September 2007		A
-
-
-VERSION 4.1
-
-?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
------------------------------------------------------------------------------------------
-+$faqlist["FAQ_000_head"]							20 July 2007			A
-+$faqlist["FAQ_000_body"]							20 July 2007			A
