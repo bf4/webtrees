@@ -2297,7 +2297,12 @@ function print_add_new_fact($id, $usedfacts, $type) {
 	if (!empty($_SESSION["clipboard"])) {
 		foreach($_SESSION["clipboard"] as $key=>$fact) {
 			if ($fact["type"]==$type || $fact["type"]=='all') {
-				echo '<option value="clipboard_', $key, '">', $pgv_lang['add_from_clipboard'], ' ', $factarray[$fact['fact']];
+				if (array_key_exists($factarray, $fact['fact'])) {
+					$fact_type=$factarray[$fact['fact']];
+				} else {
+					$fact_type=$fact['fact'];
+				}
+				echo '<option value="clipboard_', $key, '">', $pgv_lang['add_from_clipboard'], ' ', $fact_type;
 				// TODO use the event class to store/parse the clipboard events
 				if (preg_match('/^2 DATE (.+)/m', $fact['factrec'], $match)) {
 					$tmp=new GedcomDate($match[1]);
