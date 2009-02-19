@@ -31,6 +31,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
+$pgv_lang["sortby"]				= "Sequence";
 $pgv_lang["exact"]				= "Exact";
 $pgv_lang["begins_with"]		= "Begins with";
 $pgv_lang["contains"]			= "Contains";
@@ -562,7 +563,7 @@ $pgv_lang["next"]					= "Next &gt;";
 $pgv_lang["next_image"]				= "Next image";
 $pgv_lang["file_not_found"] 		= "File not found.";
 $pgv_lang["medialist_show"] 		= "Show";
-$pgv_lang["per_page"]				= "media objects per page";
+$pgv_lang["per_page"]				= "Media objects per page";
 $pgv_lang["media_format"]			= "Media Format";
 $pgv_lang["image_size"]				= "Image Dimensions";
 $pgv_lang["media_id"]				= "Media ID";

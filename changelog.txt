@@ -10,6 +10,7 @@
 
 
 Version 4.2.1
+ - Changed: Add option to sort Manage Media list and MultiMedia list (canajun2eh)
  - Fixed: [ 2612938 ] 4.2.1 svn rev.5059 - Translation error (fisharebest)
  - Fixed: [ 2608286 ] Copy EVENT causes error in option field (fisharebest)
  - Fixed: [ 2556004 ] 4.2.0 - Reports without data output (fisharebest)
