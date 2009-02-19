@@ -1910,6 +1910,27 @@ function mediasort($a, $b) {
 							$bKey = basename($b["file"]);
 	return compareStrings($aKey, $bKey, true);		// Case-insensitive compare
 }
+/**
+ * sort an array according to the file name
+ *
+ */
+
+function filesort($a, $b) {
+	$aKey = "";
+	if (!empty($a["FILE"])) {
+		$aKey = basename($a["FILE"]);
+	} else if (!empty($a["file"])) {
+		$aKey = basename($a["file"]);
+	}
+
+	$bKey = "";
+	if (!empty($b["FILE"])) {
+		$bKey = basename($b["FILE"]);
+	} else if (!empty($b["file"])) {
+		$bKey = basename($b["file"]);
+	}
+	return compareStrings($aKey, $bKey, true);		// Case-insensitive compare
+}
 
 // Helper function to sort facts.
 function compare_facts_date($arec, $brec) {

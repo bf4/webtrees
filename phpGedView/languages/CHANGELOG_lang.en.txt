@@ -44,6 +44,8 @@ VERSION 4.2.1
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change	codes and comments
 ----------------------------------------------------------------------------------------
+*$pgv_lang["per_page"]								18 Feb 2009				C
++$pgv_lang["sortby"]								18 Feb 2009				A
 -$pgv_lang["months2"]								14 Feb 2009				D
 -$pgv_lang["hour1"]									14 Feb 2009				D
 -$pgv_lang["hours2"]								14 Feb 2009				D

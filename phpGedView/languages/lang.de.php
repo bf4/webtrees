@@ -32,6 +32,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
+$pgv_lang["sortby"]						= "Reihenfolge";
 $pgv_lang["exact"]						= "Genau";
 $pgv_lang["begins_with"]				= "Beginnt mit";
 $pgv_lang["contains"]					= "Enthält";
