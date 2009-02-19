@@ -30,6 +30,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
+$pgv_lang["sortby"]				= "Sortuj według";
 $pgv_lang["exact"]				= "Dokładna data";
 $pgv_lang["begins_with"]		= "Zaczyna się od";
 $pgv_lang["contains"]			= "Zawiera";
@@ -78,7 +79,7 @@ $pgv_lang["SHOW_ID_NUMBERS"]		= "Pokaż identyfikatory obok nazwisk";
 $pgv_lang["SHOW_HIGHLIGHT_IMAGES"]	= "Pokaż wyróżnione zdjęcia";
 $pgv_lang["view_img_details"]		= "Pokaż szczegóły zdjęcia";
 $pgv_lang["server_folder"]			= "Nazwa katalogu na serwerze";
-$pgv_lang["medialist_recursive"]	= "Lista plików w podkatalogach";
+$pgv_lang["medialist_recursive"]	= "Pokaż pliki w podkatalogach";
 $pgv_lang["media_options"]			= "Opcje multimediów";
 $pgv_lang["confirm_password"]	= "Potwierdź hasło.";
 $pgv_lang["enter_email"]		= "Musisz podać adres email.";
@@ -560,7 +561,7 @@ $pgv_lang["next"]					= "następna >";
 $pgv_lang["next_image"]				= "następny obraz";
 $pgv_lang["file_not_found"]			= "Nie znaleziono pliku:";
 $pgv_lang["medialist_show"] 		= "Pokaż";
-$pgv_lang["per_page"]				= "obiektów medialnych na stronę";
+$pgv_lang["per_page"]				= "Liczba obiektów na stronę";
 $pgv_lang["media_format"]			= "Format multimediów";
 $pgv_lang["image_size"]				= "Wymiary obrazka";
 $pgv_lang["media_id"]				= "Identyfikator multimediów";
