@@ -6,7 +6,7 @@
  * with id = $rootid in the GEDCOM file.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
+ * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -295,7 +295,8 @@ if ($controller->rootPerson->canDisplayDetails()) {
 		foreach($cfamids as $ind=>$family) {
 			if ($family!=null) {
 				$children = $family->getChildren();
-				if (count($children)>1) print "<span class=\"name1\"><br />".$pgv_lang["siblings"]."<br /></span>";
+				if (count($children)>2) print "<span class=\"name1\"><br />".$pgv_lang["siblings"]."<br /></span>";
+				if (count($children)==2) print "<span class=\"name1\"><br />".$pgv_lang["sibling"]."<br /></span>";
 				foreach($children as $ind2=>$child) {
 					if (!$controller->rootPerson->equals($child) && !is_null($child)) {
 						print "\n\t\t\t\t&nbsp;&nbsp;<a href=\"".encode_url("pedigree.php?PEDIGREE_GENERATIONS={$controller->PEDIGREE_GENERATIONS}&rootid=".$child->getXref()."&show_full={$controller->show_full}&talloffset={$controller->talloffset}")."\"><span ";

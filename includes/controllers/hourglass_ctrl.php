@@ -3,7 +3,7 @@
  * Controller for the Hourglass Page
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
+ * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -458,7 +458,8 @@ class HourglassControllerRoot extends BaseController {
 							}
 							$children = $family->getChildren();
 							$num = $family->getNumberOfChildren();
-							if ($num>1) print "<span class=\"name1\"><br />".$pgv_lang["siblings"]."<br /></span>";
+							if ($num>2) print "<span class=\"name1\"><br />".$pgv_lang["siblings"]."<br /></span>";
+							if ($num==2) print "<span class=\"name1\"><br />".$pgv_lang["sibling"]."<br /></span>";
 							foreach($children as $id=>$child) {
 								$cid = $child->getXref();
 								if ($cid!=$pid) {
