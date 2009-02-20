@@ -1127,8 +1127,8 @@ function print_note_record($text, $nlevel, $nrec, $textOnly=false, $return=false
 	if (!isset($EXPAND_NOTES)) $EXPAND_NOTES = $EXPAND_SOURCES; // FIXME
 	$elementID = "N-".floor(microtime()*1000000);
 	$text = trim($text);
-	// Check if Census Assistant Note =======================
-	if (strstr(get_cont($nlevel, $nrec), "|Head|")) {
+	// Check if Shared Note ---------------------
+	if (eregi("0 @N.*@ NOTE", $nrec)) {
 		$centitl  = str_replace("~~", "", $text);
 		$centitl  = str_replace("<br />", "", $centitl);
 		$text = get_cont($nlevel, $nrec);
@@ -1140,12 +1140,15 @@ function print_note_record($text, $nlevel, $nrec, $textOnly=false, $return=false
 	$data = "";
 
 	if (!empty($text)) {
-		$text = PrintReady($text);
-		// Check if Census Assistant Note ======================================= 
-		if (strstr($text, "|Head|")) {
+		// Check if Shared Note -----------------------------------------
+		if (eregi("0 @N.*@ NOTE", $nrec)) {
+			$text = PrintReady($text);
 			$text = "xCxAx<table><tr><td>" . $text;
-			// $text = $tit ."<table><tr><td>" . $text;
-			$text = str_replace("<br /><br />", "</td></tr></table><p><table><tr><td><b>Name</b>&nbsp;&nbsp;</td><td><b>Related</b>&nbsp;&nbsp;</td><td><b>Status</b>&nbsp;&nbsp;</td><td><b>Age</b>&nbsp;&nbsp;</td><td><b>Sex</b>&nbsp;&nbsp;</td><td><b>Occupation</b>&nbsp;&nbsp;</td><td><b>Birth place</b>&nbsp;&nbsp;</td> </tr><tr><td>", $text);
+			// Check if Census Formatted Shared Note --------------------
+			if (strstr($text, "|Head|")) {
+				$text = str_replace("<br /><br />", "</td></tr></table><p><table><tr><td><b>Name</b>&nbsp;&nbsp;</td><td><b>Relation</b>&nbsp;&nbsp;</td><td><b>Status</b>&nbsp;&nbsp;</td><td><b>Age</b>&nbsp;&nbsp;</td><td><b>Sex</b>&nbsp;&nbsp;</td><td><b>Occupation</b>&nbsp;&nbsp;</td><td><b>Birth place</b>&nbsp;&nbsp;</td> </tr><tr><td>", $text);
+			}
+			// Check for Highlighting -----------------------------------
 			if (eregi("<br />.b.", $text)) {
 				$text = str_replace(".b.", "<b>", $text);
 				$text = str_replace("|", "&nbsp;&nbsp;</b></td><td>", $text);
@@ -1154,10 +1157,9 @@ function print_note_record($text, $nlevel, $nrec, $textOnly=false, $return=false
 			}
 			$text = str_replace("<br />", "</td></tr><tr><td>", $text);
 			$text = $text . "</td></tr></table>";
-			// $text = str_replace("xCxAx", "&nbsp;&nbsp;Census Transcription<br />", $text);
 			$text = str_replace("xCxAx", "&nbsp;&nbsp;".$centitl."<br />", $text);
 		}
-
+		
 		if ($textOnly) {
 			if (!$return) {
 				print $text;
@@ -1171,8 +1173,7 @@ function print_note_record($text, $nlevel, $nrec, $textOnly=false, $return=false
 			if ($EXPAND_NOTES) $plusminus="minus"; else $plusminus="plus";
 			$data .= "<a href=\"javascript:;\" onclick=\"expand_layer('$elementID'); return false;\"><img id=\"{$elementID}_img\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES[$plusminus]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"".$pgv_lang["show_details"]."\" title=\"".$pgv_lang["show_details"]."\" /></a> ";
 		}
-		// Check if Shared Note ===========================================
-		// if (strstr(get_cont($nlevel, $nrec), "|Head|")) { 
+		// Check if Shared Note ------------------------------------------
 		if (eregi("0 @N.*@ NOTE", $nrec)) { 
 			$data .= $pgv_lang["shnote"].": </span><span class=\"field\">";
 		}else{

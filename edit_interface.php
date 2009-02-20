@@ -782,7 +782,8 @@ case 'addnewshnote':
 		
 		<table class="facts_table">
 		
-		<!--	<tr><td class="descriptionbox <?php echo $TEXT_DIRECTION; ?> wrap width25"><?php print_help_link("edit_ABBR_help", "qm"); echo $factarray["ABBR"]; ?></td>
+		<!--
+			<tr><td class="descriptionbox <?php echo $TEXT_DIRECTION; ?> wrap width25"><?php print_help_link("edit_ABBR_help", "qm"); echo $factarray["ABBR"]; ?></td>
 			<td class="optionbox wrap"><input tabindex="<?php echo $tabkey; ?>" type="text" name="ABBR" id="ABBR" value="" size="40" maxlength="255" /> <?php print_specialchar_link("ABBR",false); ?></td></tr>
 			<?php $tabkey++; ?>
 		-->	
@@ -874,7 +875,6 @@ case 'addshnoteaction':
 	if (PGV_DEBUG) {
 		phpinfo(INFO_VARIABLES);
 	}
-	// $newgedrec = "0 @XREF@ NOTE\n";
 	$newgedrec  = "0 @XREF@ NOTE\n";
 
 	if (isset($_REQUEST['EVEN'])) $EVEN = $_REQUEST['EVEN'];
@@ -899,7 +899,7 @@ case 'addshnoteaction':
 	if (!empty($NOTE)) {
 		$newlines = preg_split("/\r?\n/",$NOTE,-1,PREG_SPLIT_NO_EMPTY);
 		for($k=0; $k<count($newlines); $k++) {
-			if ( $k==0 ) $newgedrec .= "1 CONT $newlines[$k]\n";
+			if ( $k==0 ) $newgedrec = "0 @XREF@ NOTE $newlines[$k]\n";
 			else $newgedrec .= "1 CONT $newlines[$k]\n";
 		}
 	}
@@ -920,7 +920,7 @@ case 'addshnoteaction':
 		}
 	}
 	if (!empty($NOTE)) {
-		$newgedrec .= "1 NOTE @$NOTE@\n";
+		//$newgedrec .= "1 NOTE @$NOTE@\n";
 		if (!empty($CALN)) $newgedrec .= "2 CALN $CALN\n";
 	}
 	if (PGV_DEBUG) {
