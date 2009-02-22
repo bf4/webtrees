@@ -97,6 +97,8 @@ $noterec = find_gedcom_record($controller->nid);
 // echo $noterec . "<br />";
 
 $nt = preg_match("/0 @$controller->nid@ NOTE(.*)/", $noterec, $n1match);
+
+// echo $controller->nid;
 /*
 print_r($n1match);
 echo "<br /><br />";
@@ -113,6 +115,25 @@ if ($nt==1) {
 }
 
 echo '<tr><td align="center" class="descriptionbox">Shared Note</td><td class="optionbox">';
+?>
+<script>
+<!--
+function edit_shnote() {
+	win04 = window.open(
+	"edit_interface.php?action=editshnote&pid=<?php echo $linkToID; ?>", "win04", "top=70, left=70, width=600, height=500, resizable=1, scrollbars=1 ");
+	if (window.focus) {win04.focus();}
+}
+-->
+</script>
+<?
+
+echo '<tr><td align="left" class="descriptionbox">';
+echo '&nbsp;&nbsp;' . $pgv_lang["shnote"];
+echo '<br /><br />';
+echo "<a href=\"javascript: edit_shnote()\"> ";
+echo "&nbsp;&nbsp;".$pgv_lang['edit'];
+echo "</a>";
+echo '</td><td class="optionbox">';
 echo $shnote;
 echo "<br />";
 echo "</td></tr>";
@@ -153,6 +174,7 @@ if (!$controller->isPrintPreview() && $controller->userCanEdit()) {
 	echo '</td></tr>';
 }
 echo '</table><br /><br /></td></tr><tr class="center"><td colspan="2">';
+
 
 // Print the tasks table
 //BH NOT WORKING YET

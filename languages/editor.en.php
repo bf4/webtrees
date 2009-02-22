@@ -211,6 +211,7 @@ $pgv_lang["must_provide"]			= "You must provide a ";
 $pgv_lang["name_search"]			= "Name: ";
 $pgv_lang["new_repo_created"]		= "New Repository created";
 $pgv_lang["new_shnote_created"] 	= "New Shared Note created successfully.";
+$pgv_lang["shnote_updated"] 		= "Shared Note updated successfully.";
 $pgv_lang["new_source_created"] 	= "New source created successfully.";
 $pgv_lang["no_changes"] 			= "There are currently no changes to be reviewed.";
 $pgv_lang["no_known_servers"]		= "No known Servers<br />No results will be found";

@@ -50,6 +50,8 @@ VERSION 4.2.1 CA
 +$pgv_lang["add_shnote_lbl"]						16 Feb 2009				A		Line 0127 in editor_en.php
 +$pgv_lang["create_shnote"]							16 Feb 2009				A		Line 0147 in editor_en.php
 +$pgv_lang["new_shnote_created"] 					16 Feb 2009				A		Line 0213 in editor_en.php
++$pgv_lang["shnote_updated"]						21 Feb 2009				A		Line 0214 in editor_en.php
+
 
 
 VERSION 4.2.0

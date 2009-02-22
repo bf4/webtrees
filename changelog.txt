@@ -10,6 +10,7 @@
 
 
 Version 4.2.0 CA
+ - Changed: Improved Shared/Linked Notes handling - add sh_note/edit sh_note/find link/add link/delete link. Only delete shared note remains. (windmillway)
  - Changed: Improved Shared Note "detection for formatting" a little more (windmillway)
  - Merged: Merge changes r5063 - r5073 from the trunk. (windmillway)
  - Added: Theme dependant note.gif and addnote.gif to each respective theme (windmillway)

@@ -129,8 +129,9 @@ require 'js/autocomplete.js.htm';
 		pastefield = field;
 		findwin = window.open('find.php?type=shnote', '_blank', 'left=50,top=50,width=600,height=500,resizable=1,scrollbars=1');
 		return false;
-	// =====================================
 	}
+	
+	// =====================================
 	function findRepository(field) {
 		pastefield = field;
 		findwin = window.open('find.php?type=repo', '_blank', 'left=50,top=50,width=600,height=500,resizable=1,scrollbars=1');
@@ -417,6 +418,8 @@ case 'edit':
 			if ($level1type!="ASSO" && $level1type!="REPO") print_add_layer("ASSO");
 			if ($level1type!="SOUR" && $level1type!="REPO") print_add_layer("SOUR");
 			if ($level1type!="NOTE") print_add_layer("NOTE");
+			// Shared Note addition ------------
+			if ($level1type!="SHNOTE") print_add_layer("SHNOTEADD");
 			if ($level1type!="OBJE" && $level1type!="REPO" && $level1type!="NOTE" && $MULTI_MEDIA) print_add_layer("OBJE");
 			//-- RESN missing in new structure, RESN can be added to all level 1 tags
 			if (!in_array("RESN", $tags)) print_add_layer("RESN");
@@ -461,8 +464,8 @@ case 'add':
 			if ($fact!="ASSO" && $fact!="SOUR" && $fact!="REPO") print_add_layer("ASSO");
 			if ($fact!="SOUR" && $fact!="REPO") print_add_layer("SOUR");
 			if ($fact!="NOTE") print_add_layer("NOTE");
-			// BH Shared Note addition ------------
-			if ($fact!="SHNOTE") print_add_layer("SHNOTE");
+			// Shared Note addition ------------
+			if ($fact!="SHNOTE") print_add_layer("SHNOTEADD");
 			if ($fact!="REPO") print_add_layer("OBJE");
 		}
 	}
@@ -758,7 +761,7 @@ case 'addsourceaction':
 		echo "<a href=\"javascript:// SOUR $xref\" onclick=\"openerpasteid('$xref'); return false;\">".$pgv_lang["paste_id_into_field"]." <b>$xref</b></a>\n";
 	}
 	break;
-
+	
 //------------------------------------------------------------------------------
 //-- add new Shared Note
 case 'addnewshnote':
@@ -781,94 +784,18 @@ case 'addnewshnote':
 		<input type="hidden" name="pid" value="newshnote" />
 		
 		<table class="facts_table">
-		
-		<!--
-			<tr><td class="descriptionbox <?php echo $TEXT_DIRECTION; ?> wrap width25"><?php print_help_link("edit_ABBR_help", "qm"); echo $factarray["ABBR"]; ?></td>
-			<td class="optionbox wrap"><input tabindex="<?php echo $tabkey; ?>" type="text" name="ABBR" id="ABBR" value="" size="40" maxlength="255" /> <?php print_specialchar_link("ABBR",false); ?></td></tr>
-			<?php $tabkey++; ?>
-		-->	
-			<tr><td class="descriptionbox <?php echo $TEXT_DIRECTION; ?> wrap width25"><?php print_help_link("edit_TITL_help", "qm"); echo $factarray["TITL"]; ?></td>
-			<td class="optionbox wrap"><input tabindex="<?php echo $tabkey; ?>" type="text" name="TITL" id="TITL" value="" size="60" /> <?php print_specialchar_link("TITL",false); ?></td></tr>
-			<?php $tabkey++; ?>
-			
-			<tr><td class="descriptionbox <?php echo $TEXT_DIRECTION; ?> wrap width25"><?php print_help_link("edit_NOTE_help", "qm"); echo $factarray["NOTE"]; ?></td>
-			<td class="optionbox wrap"><textarea tabindex="<?php echo $tabkey; ?>" name="NOTE" id="NOTE" rows="5" cols="60"></textarea><br /><?php print_specialchar_link("NOTE",true); ?></td></tr>
-			<?php $tabkey++; ?>
-		
-		<?php
-		/*
-			<?php if (strstr($ADVANCED_NAME_FACTS, "_HEB")!==false) { ?>
-			<tr><td class="descriptionbox <?php echo $TEXT_DIRECTION; ?> wrap width25"><?php print_help_link("edit__HEB_help", "qm"); echo $factarray["_HEB"]; ?></td>
-			<td class="optionbox wrap"><input tabindex="<?php echo $tabkey; ?>" type="text" name="_HEB" id="_HEB" value="" size="60" /> <?php print_specialchar_link("_HEB",false); ?></td></tr>
-			<?php $tabkey++; ?>
-			<?php } ?>
-			
-			<?php if (strstr($ADVANCED_NAME_FACTS, "ROMN")!==false) { ?>
-			<tr><td class="descriptionbox <?php echo $TEXT_DIRECTION; ?> wrap width25"><?php print_help_link("edit_ROMN_help", "qm"); echo $factarray["ROMN"]; ?></td>
-			<td class="optionbox wrap"><input tabindex="<?php echo $tabkey; ?>" type="text" name="ROMN" id="ROMN" value="" size="60" /> <?php print_specialchar_link("ROMN",false); ?></td></tr>
-			<?php $tabkey++; ?>
-			<?php } ?>
-			
-			<tr><td class="descriptionbox <?php echo $TEXT_DIRECTION; ?> wrap width25"><?php print_help_link("edit_AUTH_help", "qm"); echo $factarray["AUTH"]; ?></td>
-			<td class="optionbox wrap"><input tabindex="<?php echo $tabkey; ?>" type="text" name="AUTH" id="AUTH" value="" size="40" maxlength="255" /> <?php print_specialchar_link("AUTH",false); ?></td></tr>
-			<?php $tabkey++; ?>
-			
-			<tr><td class="descriptionbox <?php echo $TEXT_DIRECTION; ?> wrap width25"><?php print_help_link("edit_PUBL_help", "qm"); echo $factarray["PUBL"]; ?></td>
-			<td class="optionbox wrap"><textarea tabindex="<?php echo $tabkey; ?>" name="PUBL" id="PUBL" rows="5" cols="60"></textarea><br /><?php print_specialchar_link("PUBL",true); ?></td></tr>
-			<?php $tabkey++; ?>
-			
-			<tr><td class="descriptionbox <?php echo $TEXT_DIRECTION; ?> wrap width25"><?php print_help_link("edit_REPO_help", "qm"); echo $factarray["REPO"]; ?></td>
-			<td class="optionbox wrap"><input tabindex="<?php echo $tabkey; ?>" type="text" name="REPO" id="REPO" value="" size="10" /> <?php print_findrepository_link("REPO"); print_addnewrepository_link("REPO"); ?></td></tr>
-			<?php $tabkey++; ?>
-			
-			<tr><td class="descriptionbox <?php echo $TEXT_DIRECTION; ?> wrap width25"><?php print_help_link("edit_CALN_help", "qm"); echo $factarray["CALN"]; ?></td>
-			<td class="optionbox wrap"><input tabindex="<?php echo $tabkey; ?>" type="text" name="CALN" id="CALN" value="" /></td></tr>
-		*/ 
-		?>
-		
-		</table>
-		
-			<?php
-// BH Remove the Associated stuff
-/*
-			print_help_link("edit_SOUR_EVEN_help", "qm"); ?><a href="#"  onclick="return expand_layer('events');"><img id="events_img" src="<?php echo $PGV_IMAGE_DIR."/".$PGV_IMAGES["plus"]["other"]; ?>" border="0" width="11" height="11" alt="" title="" />
-			<?php echo $pgv_lang["source_events"]; 
-			?></a>
-		
-
-			<div id="events" style="display: none;">
-			<table class="facts_table">
 			<tr>
-				<td class="descriptionbox <?php echo $TEXT_DIRECTION; ?> wrap width25"><?php print_help_link("edit_SOUR_EVEN_help", "qm"); echo $pgv_lang['select_events']; ?></td>
-				<td class="optionbox wrap"><select name="EVEN[]" multiple="multiple" size="5">
-					<?php
-					$parts = explode(',', $INDI_FACTS_ADD);
-					foreach($parts as $p=>$key) {
-						?><option value="<?php echo $key; ?>"><?php echo $factarray[$key]. " ($key)"; ?></option>
-					<?php
-					}
-					$parts = explode(',', $FAM_FACTS_ADD);
-					foreach($parts as $p=>$key) {
-						?><option value="<?php echo $key; ?>"><?php echo $factarray[$key]. " ($key)"; ?></option>
-					<?php
-					}
-					?>
-				</select></td>
+				<td class="descriptionbox <?php echo $TEXT_DIRECTION; ?> wrap width25"><?php print_help_link("edit_NOTE_help", "qm"); echo $factarray["NOTE"]; ?></td>
+				<td class="optionbox wrap"><textarea tabindex="<?php echo $tabkey; ?>" name="NOTE" id="NOTE" rows="10" cols="60"></textarea><br /><?php print_specialchar_link("NOTE",true); ?></td>
 			</tr>
-			<?php
-			add_simple_tag("0 DATE", "EVEN");
-			add_simple_tag("0 PLAC", "EVEN");
-			add_simple_tag("0 AGNC");
-			?>
-			</table>
-			</div>
-*/ ?>
+			<?php $tabkey++; ?>
+		</table>
 		<br /><br />
 		<input type="submit" value="<?php echo $pgv_lang["create_shnote"]; ?>" />
 	</form>
 	<?php
-
 	break;
+	
 //------------------------------------------------------------------------------
 //-- create a shared note record from the incoming variables
 case 'addshnoteaction':
@@ -899,14 +826,21 @@ case 'addshnoteaction':
 	if (!empty($NOTE)) {
 		$newlines = preg_split("/\r?\n/",$NOTE,-1,PREG_SPLIT_NO_EMPTY);
 		for($k=0; $k<count($newlines); $k++) {
-			if ( $k==0 ) $newgedrec = "0 @XREF@ NOTE $newlines[$k]\n";
-			else $newgedrec .= "1 CONT $newlines[$k]\n";
+			if ( $k==0 && count($newlines)>1) {
+				$newgedrec = "0 @XREF@ NOTE $newlines[$k]\n";
+			}elseif ( $k==0 ) {
+				$newgedrec = "0 @XREF@ NOTE $newlines[$k]\n1 CONT\n";
+			}else if (strstr($newlines[$k], "|Head|")) {
+				$newgedrec .= "1 CONT\n1 CONT $newlines[$k]\n";
+			} else { 
+				$newgedrec .= "1 CONT $newlines[$k]\n";
+			}
 		}
 	}
 	
 	if (!empty($ABBR)) $newgedrec .= "1 ABBR $ABBR\n";
 	if (!empty($TITL)) {
-		$newgedrec .= "1 TITL $TITL\n";
+		// $newgedrec .= "1 TITL $TITL\n";
 		// $newgedrec .= "2 DATE $DATE\n";
 		if (!empty($_HEB)) $newgedrec .= "2 _HEB $_HEB\n";
 		if (!empty($ROMN)) $newgedrec .= "2 ROMN $ROMN\n";
@@ -931,6 +865,139 @@ case 'addshnoteaction':
 	if ($xref) {
 		echo "<br /><br />\n".$pgv_lang["new_shnote_created"]."<br /><br />";
 		echo "<a href=\"javascript:// NOTE $xref\" onclick=\"openerpasteid('$xref'); return false;\">".$pgv_lang["paste_id_into_field"]." <b>$xref</b></a>\n";
+	}
+	break;
+
+
+//------------------------------------------------------------------------------
+//-- edit a Shared Note
+case 'editshnote':
+	?>
+	<script type="text/javascript">
+	<!--
+		function check_form(frm) {
+			if (frm.TITL.value=="") {
+				alert('<?php echo $pgv_lang["must_provide"].$factarray["TITL"]; ?>');
+				frm.TITL.focus();
+				return false;
+			}
+			return true;
+		}
+	//-->
+	</script>
+	<b><?php echo $pgv_lang['edit_shnote']; $tabkey = 1; echo "&nbsp;&nbsp;(" . $pid . ")";?></b><br /><br />
+	<form method="post" action="edit_interface.php" onsubmit="return check_form(this);">
+		<input type="hidden" name="action" value="updateshnoteaction" />
+		<input type="hidden" name="pid" value="<?php echo $pid; ?>" />
+		
+		<?php
+		if (!isset($pgv_changes[$pid."_".$GEDCOM])) {
+			//$noterec = find_gedcom_record($pid);
+			$gedrec = find_gedcom_record($pid);
+		}else{
+			$gedrec = find_updated_record($pid);
+		}
+		$n1match = array();
+		$nt = preg_match("/0 @$value@ NOTE (.*)/", $gedrec, $n1match);
+		// Debug ----
+		//	echo $gedrec;
+		// ----------
+		$record=GedcomRecord::getInstance($pid);
+		$noteLine=PrintReady($record->getFullName());
+		if ($nt!==false) {
+			$shnote_content  = $noteLine."\n";
+			$shnote_content .= trim(strip_tags(@$n1match[1].get_cont(1, $gedrec, false)));
+		}
+		?>
+		<table class="facts_table">
+			<tr>
+				<td class="descriptionbox <?php echo $TEXT_DIRECTION; ?> wrap width25"><?php print_help_link("edit_NOTE_help", "qm"); echo $factarray["NOTE"]; ?></td>
+				<td class="optionbox wrap">
+					<textarea tabindex="<?php echo $tabkey; ?>" name="NOTE" id="NOTE" rows="15" cols="90"><?php 
+						echo $shnote_content; 
+					?></textarea><br /><?php print_specialchar_link("NOTE",true); ?>
+				</td>
+			</tr>
+			<?php $tabkey++; ?>
+		</table>
+		<br /><br />
+		<input type="submit" value="<?php echo $pgv_lang["save"]; ?>" />
+	</form>
+	<?php
+	break;
+	
+//------------------------------------------------------------------------------
+//-- create a shared note record from the incoming variables
+case 'updateshnoteaction':
+	if (PGV_DEBUG) {
+		phpinfo(INFO_VARIABLES);
+	}
+	$newgedrec  = "0 @$pid@ NOTE\n";
+	if (PGV_DEBUG) {
+		echo "<pre>$newgedrec</pre>";
+	}
+
+	if (isset($_REQUEST['EVEN'])) $EVEN = $_REQUEST['EVEN'];
+	if (!empty($EVEN) && count($EVEN)>0) {
+		$newgedrec .= "1 DATA\n";
+		$newgedrec .= "2 EVEN ".implode(",", $EVEN)."\n";
+		if (!empty($EVEN_DATE)) $newgedrec .= "3 DATE ".check_input_date($EVEN_DATE)."\n";
+		if (!empty($EVEN_PLAC)) $newgedrec .= "3 PLAC ".$EVEN_PLAC."\n";
+		if (!empty($AGNC))      $newgedrec .= "2 AGNC ".$AGNC."\n";
+	}
+	if (isset($_REQUEST['ABBR'])) $ABBR = $_REQUEST['ABBR'];
+	if (isset($_REQUEST['TITL'])) $TITL = $_REQUEST['TITL'];
+	if (isset($_REQUEST['DATE'])) $DATE = $_REQUEST['DATE'];
+	if (isset($_REQUEST['NOTE'])) $NOTE = $_REQUEST['NOTE'];
+	if (isset($_REQUEST['_HEB'])) $_HEB = $_REQUEST['_HEB'];
+	if (isset($_REQUEST['ROMN'])) $ROMN = $_REQUEST['ROMN'];
+	if (isset($_REQUEST['AUTH'])) $AUTH = $_REQUEST['AUTH'];
+	if (isset($_REQUEST['PUBL'])) $PUBL = $_REQUEST['PUBL'];
+	if (isset($_REQUEST['REPO'])) $REPO = $_REQUEST['REPO'];
+	if (isset($_REQUEST['CALN'])) $CALN = $_REQUEST['CALN'];
+	
+	if (!empty($NOTE)) {
+		$newlines = preg_split("/\r?\n/",$NOTE,-1,PREG_SPLIT_NO_EMPTY);
+		for($k=0; $k<count($newlines); $k++) {
+			if ( $k==0 && count($newlines)>1) {
+				$newgedrec = "0 @$pid@ NOTE $newlines[$k]\n";
+			}elseif ( $k==0 ) {
+				$newgedrec = "0 @$pid@ NOTE $newlines[$k]\n1 CONT\n";
+			}else if (strstr($newlines[$k], "|Head|")) {
+				$newgedrec .= "1 CONT\n1 CONT $newlines[$k]\n";
+			} else { 
+				$newgedrec .= "1 CONT $newlines[$k]\n";
+			}
+		}
+	}
+	
+	if (!empty($ABBR)) $newgedrec .= "1 ABBR $ABBR\n";
+	if (!empty($TITL)) {
+		// $newgedrec .= "1 TITL $TITL\n";
+		// $newgedrec .= "2 DATE $DATE\n";
+		if (!empty($_HEB)) $newgedrec .= "2 _HEB $_HEB\n";
+		if (!empty($ROMN)) $newgedrec .= "2 ROMN $ROMN\n";
+	}
+	if (!empty($AUTH)) $newgedrec .= "1 AUTH $AUTH\n";
+	if (!empty($PUBL)) {
+		$newlines = preg_split("/\r?\n/",$PUBL,-1,PREG_SPLIT_NO_EMPTY);
+		for($k=0; $k<count($newlines); $k++) {
+			if ( $k==0 ) $newgedrec .= "1 PUBL $newlines[$k]\n";
+			else $newgedrec .= "2 CONT $newlines[$k]\n";
+		}
+	}
+	if (!empty($NOTE)) {
+		//$newgedrec .= "1 NOTE @$NOTE@\n";
+		if (!empty($CALN)) $newgedrec .= "2 CALN $CALN\n";
+	}
+	if (PGV_DEBUG) {
+		echo "<pre>$newgedrec</pre>";
+	}
+	$pids = (replace_gedrec($pid, $newgedrec, $update_CHAN));
+	$link = "shnote.php?nid=$pid&show_changes=yes";
+	if ($pid) {
+		echo "<br /><br />\n".$pid." ".$pgv_lang["shnote_updated"]."<br /><br />";
+		//echo "<a href=\"javascript:// NOTE $pid\" onclick=\"openerpasteid('$pid'); return false;\">".$pgv_lang["paste_id_into_field"]." <b>$pid</b></a>\n";
 	}
 	break;
 
@@ -1110,6 +1177,9 @@ case 'update':
 	if (isset($_REQUEST['_HEB'])) $_HEB = $_REQUEST['_HEB'];
 	if (isset($_REQUEST['_AKA'])) $_AKA = $_REQUEST['_AKA'];
 	if (isset($_REQUEST['_MARNM'])) $_MARNM = $_REQUEST['_MARNM'];
+	
+//	if (isset($_REQUEST['NOTE'])) $NOTE = $_REQUEST['NOTE'];
+//	if (!empty($NOTE)) $newged .= "$NOTE\n";
 
 	if (!empty($NAME)) $newged .= "1 NAME $NAME\n";
 	if (!empty($TYPE)) $newged .= "2 TYPE $TYPE\n";
@@ -1119,6 +1189,7 @@ case 'update':
 	if (!empty($SPFX)) $newged .= "2 SPFX $SPFX\n";
 	if (!empty($SURN)) $newged .= "2 SURN $SURN\n";
 	if (!empty($NSFX)) $newged .= "2 NSFX $NSFX\n";
+	
 
 
 	//-- Refer to Bug [ 1329644 ] Add Married Name - Wrong Sequence
