@@ -125,6 +125,7 @@ $countries["HTI"]="Haiti";
 $countries["HUN"]="Ungarn";
 $countries["IDN"]="Indonesien";
 $countries["IND"]="Indien";
+$countries["IOM"]="Insel Man";
 $countries["IOT"]="Britisches Territorium im Indischen Ozean";
 $countries["IRL"]="Irland";
 $countries["IRN"]="Iran";
