@@ -28,9 +28,6 @@ require './config.php';
 require './includes/controllers/shnote_ctrl.php';
 require './includes/functions/functions_print_lists.php';
 
-// require_once './includes/functions/functions_print_facts.php';
-// require_once './includes/functions/functions_print.php';
-
 $controller=new ShnoteController();
 $controller->init();
 
@@ -98,24 +95,14 @@ $noterec = find_gedcom_record($controller->nid);
 
 $nt = preg_match("/0 @$controller->nid@ NOTE(.*)/", $noterec, $n1match);
 
-// echo $controller->nid;
-/*
-print_r($n1match);
-echo "<br /><br />";
-print_r($noterec);
-echo "<br /><br />";
-echo $nt;
-echo "<br /><br />";
-*/
-
 if ($nt==1) {
 	$shnote = print_note_record("<br />".$n1match[1], 1, $noterec, false, true);
 }else{
 	$shnote = "No Text";
 }
-
-echo '<tr><td align="center" class="descriptionbox">Shared Note</td><td class="optionbox">';
+// echo '<tr><td align="center" class="descriptionbox">Shared Note</td><td class="optionbox">';
 ?>
+
 <script>
 <!--
 function edit_shnote() {
@@ -138,46 +125,11 @@ echo $shnote;
 echo "<br />";
 echo "</td></tr>";
 
-foreach ($shnotefacts as $fact) {
-	if ($fact->getTag()=='CONT') {
-/*
-	} elseif ($fact->getTag()=='CONT') {
-		if ($fact->getLineNumber()=='1') {
-			echo '<tr><td align="center" class="descriptionbox">Shared Note</td><td class="optionbox">';
-		}else{
-			echo '<tr><td align="center" class="descriptionbox"></td><td class="optionbox">';
-		}
-		echo ereg_replace("1 CONT", "", PrintReady($fact->getGedcomRecord()) );
-		echo "<br />";
-		echo "</td></tr>";
-*/
-	} else {
-	// 	print_fact($fact);
-	}
-}
-
-			
-// Print media
-print_main_media($controller->nid);
-		
-// new fact link
-if (!$controller->isPrintPreview() && $controller->userCanEdit()) {
-	print_add_new_fact($controller->nid, $shnotefacts, 'NOTE');
-	// new media
-	echo '<tr><td class="descriptionbox">';
-	print_help_link('add_media_help', 'qm', 'add_media_lbl');
-	echo $pgv_lang['add_media_lbl'] . '</td>';
-	echo '<td class="optionbox">';
-	echo '<a href="javascript: ', $pgv_lang['add_media_lbl'], '" onclick="window.open(\'addmedia.php?action=showmediaform&linktoid=', $controller->nid, '\', \'_blank\', \'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1\'); return false;">', $pgv_lang['add_media'], '</a>';
-	echo '<br />';
-	echo '<a href="javascript:;" onclick="window.open(\'inverselink.php?linktoid='.$controller->nid.'&linkto=shnote\', \'_blank\', \'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1\'); return false;">'.$pgv_lang['link_to_existing_media'].'</a>';
-	echo '</td></tr>';
-}
 echo '</table><br /><br /></td></tr><tr class="center"><td colspan="2">';
 
 
 // Print the tasks table
-//BH NOT WORKING YET
+// NOT WORKING YET
 /*
 if (file_exists('./modules/research_assistant/research_assistant.php') && $SHOW_RESEARCH_ASSISTANT>=PGV_USER_ACCESS_LEVEL) {
 	include_once './modules/research_assistant/research_assistant.php';
