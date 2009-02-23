@@ -189,49 +189,49 @@ class ShnoteControllerRoot extends BaseController {
 		$menu = new Menu($pgv_lang['edit_shnote']);
 		if ($SHOW_GEDCOM_RECORD || PGV_USER_IS_ADMIN)
 			$menu->addOnclick('return edit_raw(\''.$this->nid.'\');');
-		if (!empty($PGV_IMAGES["edit_note"]["small"]))
-			$menu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['edit_note']['small']}");
+		if (!empty($PGV_IMAGES["notes"]["small"]))
+			$menu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['notes']['small']}");
 		$menu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}", "submenu{$ff}");
 
 		// edit shared note / edit_raw
 		if ($SHOW_GEDCOM_RECORD || PGV_USER_IS_ADMIN) {
 			$submenu = new Menu($pgv_lang['edit_raw']);
 			$submenu->addOnclick("return edit_raw('".$this->nid."');");
-			if (!empty($PGV_IMAGES["edit_note"]["small"]))
-				$submenu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['edit_note']['small']}");
+			if (!empty($PGV_IMAGES["notes"]["small"]))
+				$submenu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['notes']['small']}");
 			$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}");
 			$menu->addSubmenu($submenu);
 		}
 
 		// edit shared note / delete_shared note
 		$submenu = new Menu($pgv_lang['delete_shnote']);
-		$submenu->addOnclick("if (confirm('".$pgv_lang["confirm_delete_shnote"]."')) return deleteshnote('".$this->nid."'); else return false;");
-		if (!empty($PGV_IMAGES["edit_note"]["small"]))
-			$submenu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['edit_note']['small']}");
+		$submenu->addOnclick("if (confirm('".$pgv_lang["confirm_delete_source"]."')) return deletesource('".$this->nid."'); else return false;");
+		if (!empty($PGV_IMAGES["notes"]["small"]))
+			$submenu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['notes']['small']}");
 		$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}");
 		$menu->addSubmenu($submenu);
 
 		if (isset($pgv_changes[$this->nid.'_'.$GEDCOM]))
 		{
-			// edit_note / seperator
+			// edit_note / separator
 			$submenu = new Menu();
-			$submenu->isSeperator();
+			$submenu->isSeparator();
 			$menu->addSubmenu($submenu);
 
 			// edit_note / show/hide changes
 			if (!$this->show_changes)
 			{
 				$submenu = new Menu($pgv_lang['show_changes'], encode_url("shnote.php?nid={$this->nid}&show_changes=yes"));
-				if (!empty($PGV_IMAGES["edit_note"]["small"]))
-					$submenu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['edit_note']['small']}");
+				if (!empty($PGV_IMAGES["notes"]["small"]))
+					$submenu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['notes']['small']}");
 				$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}");
 				$menu->addSubmenu($submenu);
 			}
 			else
 			{
 				$submenu = new Menu($pgv_lang['hide_changes'], encode_url("shnote.php?nid={$this->nid}&show_changes=no"));
-				if (!empty($PGV_IMAGES["edit_note"]["small"]))
-					$submenu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['edit_note']['small']}");
+				if (!empty($PGV_IMAGES["notes"]["small"]))
+					$submenu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['notes']['small']}");
 				$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}");
 				$menu->addSubmenu($submenu);
 			}
@@ -241,12 +241,12 @@ class ShnoteControllerRoot extends BaseController {
 				// edit_shared note / accept_all
 				$submenu = new Menu($pgv_lang["undo_all"], encode_url("shnote.php?nid={$this->nid}&action=undo"));
 				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
-				if (!empty($PGV_IMAGES["edit_note"]["small"]))
-					$submenu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['edit_note']['small']}");
+				if (!empty($PGV_IMAGES["notes"]["small"]))
+					$submenu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['notes']['small']}");
 				$menu->addSubmenu($submenu);
 				$submenu = new Menu($pgv_lang['accept_all'], encode_url("shnote.php?nid={$this->nid}&action=accept"));
-				if (!empty($PGV_IMAGES["edit_note"]["small"]))
-					$submenu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['edit_note']['small']}");
+				if (!empty($PGV_IMAGES["notes"]["small"]))
+					$submenu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['notes']['small']}");
 				$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}");
 				$menu->addSubmenu($submenu);
 			}
