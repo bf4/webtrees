@@ -29,19 +29,19 @@
 require './config.php';
 
 // Extract query parameters
-$url     =safe_POST('url', PGV_REGEX_URL);
-$type    =safe_POST('type', array('full', 'simple'));
+$url     =safe_POST('url',      PGV_REGEX_URL);
+$type    =safe_POST('type',     array('full', 'simple'));
 $action  =safe_POST('action');
-$username=safe_POST('username');
-$password=safe_POST('password');
+$username=safe_POST('username', PGV_REGEX_USERNAME);
+$password=safe_POST('password', PGV_REGEX_PASSWORD);
 $remember=safe_POST('remember', 'yes','no');
 $usertime=safe_POST('usertime');
-$pid     =safe_POST('pid');
-$ged     =safe_POST('ged', get_all_gedcoms(), $GEDCOM);
+$pid     =safe_POST('pid',      PGV_REGEX_XREF);
+$ged     =safe_POST('ged',      get_all_gedcoms(), $GEDCOM);
 $help_message=safe_GET('help_messge');
 
 // Some variables can come from the URL as well as the form
-if (!$url)    $url   =safe_GET('url', PGV_REGEX_URL);
+if (!$url)    $url   =safe_GET('url',  PGV_REGEX_URL);
 if (!$type)   $type  =safe_GET('type', array('full', 'simple'), 'full');
 if (!$action) $action=safe_GET('action');
 

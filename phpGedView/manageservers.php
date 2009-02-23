@@ -216,11 +216,11 @@ if ($action=='deleteSearch') {
 * Adds a server to the outbound remote linking list
 */
 if ($action=='addServer') {
-	$serverTitle = trim(stripslashes(safe_POST('serverTitle', '[^<>"%{};]+'))); // same as PGV_REGEX_NOSCRIPT, but allow ampersand in title
-	$serverURL = trim(stripslashes(safe_POST('serverURL', PGV_REGEX_URL)));
-	$gedcom_id = trim(stripslashes(safe_POST('gedcom_id')));
-	$username = trim(stripslashes(safe_POST('username')));
-	$password = trim(stripslashes(safe_POST('password')));
+	$serverTitle = safe_POST('serverTitle', '[^<>"%{};]+'); // same as PGV_REGEX_NOSCRIPT, but allow ampersand in title
+	$serverURL = safe_POST('serverURL', PGV_REGEX_URL);
+	$gedcom_id = safe_POST('gedcom_id');
+	$username  = safe_POST('username', PGV_REGEX_USERNAME);
+	$password  = safe_POST('password', PGV_REGEX_PASSWORD);
 
 	if (!$serverTitle=="" || !$serverURL=="") {
 		$errorServer = '';
