@@ -40,9 +40,11 @@ define('PGV_REGISTRY_URL',    'http://registry.phpgedview.net/index.php');
 define('PGV_TRANSLATORS_URL', 'http://sourceforge.net/forum/forum.php?forum_id=294245');
 
 // Enable debugging output?
-define('PGV_DEBUG',      false);
-define('PGV_DEBUG_SQL',  false);
-define('PGV_DEBUG_PRIV', false);
+define('PGV_DEBUG',       false);
+define('PGV_DEBUG_SQL',   false);
+define('PGV_DEBUG_PRIV',  false);
+// Error reporting
+define('PGV_ERROR_LEVEL', 2); // 0=none, 1=minimal, 2=full
 
 // Environmental requirements
 define('PGV_REQUIRED_PHP_VERSION',     '5.2.0'); // 5.2.3 is recommended
@@ -89,6 +91,11 @@ define('PGV_JS_END',   "\n//]]>\n</script>\n");
 
 // Used in Google charts
 define ('PGV_GOOGLE_CHART_ENCODING', 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-.');
+
+// New setting, added to config.php in 4.2.0
+if (!isset($DB_UTF8_COLLATION)) {
+	$DB_UTF8_COLLATION=false;
+}
 
 @ini_set('arg_separator.output', '&amp;');
 @ini_set('error_reporting', 0);

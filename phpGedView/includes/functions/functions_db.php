@@ -39,11 +39,6 @@ define('PGV_FUNCTIONS_DB_PHP', '');
 //-- load the PEAR:DB files
 require_once 'DB.php';
 
-// New setting, added to config.php in 4.2.0
-if (!isset($DB_UTF8_COLLATION)) {
-	$DB_UTF8_COLLATION=false;
-}
-
 /**
 * Field and function definition variances between sql databases
 */
