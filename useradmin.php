@@ -50,20 +50,20 @@ $ALL_EDIT_OPTIONS=array('none', 'access', 'edit', 'accept', 'admin');
 // Extract form actions (GET overrides POST if both set)
 $action                  =safe_POST('action',  $ALL_ACTIONS);
 $usrlang                 =safe_POST('usrlang', array_keys($pgv_language));
-$username                =safe_POST('username' );
+$username                =safe_POST('username' PGV_REGEX_USERNAME);
 $filter                  =safe_POST('filter'   );
 $sort                    =safe_POST('sort'     );
 $ged                     =safe_POST('ged'      );
 
-$action                  =safe_GET('action',   $ALL_ACTIONS,               $action);
-$usrlang                 =safe_GET('usrlang',  array_keys($pgv_language),  $usrlang);
-$username                =safe_GET('username', PGV_REGEX_NOSCRIPT,         $username);
-$filter                  =safe_GET('filter',   PGV_REGEX_NOSCRIPT,         $filter);
-$sort                    =safe_GET('sort',     PGV_REGEX_NOSCRIPT,         $sort);
-$ged                     =safe_GET('ged',      PGV_REGEX_NOSCRIPT,         $ged);
+$action                  =safe_GET('action',   $ALL_ACTIONS,              $action);
+$usrlang                 =safe_GET('usrlang',  array_keys($pgv_language), $usrlang);
+$username                =safe_GET('username', PGV_REGEX_USERNAME,        $username);
+$filter                  =safe_GET('filter',   PGV_REGEX_NOSCRIPT,        $filter);
+$sort                    =safe_GET('sort',     PGV_REGEX_NOSCRIPT,        $sort);
+$ged                     =safe_GET('ged',      PGV_REGEX_NOSCRIPT,        $ged);
 
 // Extract form variables
-$oldusername             =safe_POST('oldusername');
+$oldusername             =safe_POST('oldusername',  PGV_REGEX_USERNAME);
 $firstname               =safe_POST('firstname'  );
 $lastname                =safe_POST('lastname'   );
 $pass1                   =safe_POST('pass1',        PGV_REGEX_PASSWORD);

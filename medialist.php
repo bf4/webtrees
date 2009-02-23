@@ -37,6 +37,8 @@ $action = safe_GET('action');
 $filter = safe_GET('filter');
 $filter = stripLRMRLM(stripslashes($filter));
 $search = safe_GET('search');
+$sortby = safe_GET('sortby', 'file', 'title');
+$max = safe_GET('max', array('10', '20', '30', '40', '50', '75', '100', '125', '150', '200'), '20');
 $folder = safe_GET('folder');
 if (empty($folder)) $folder = $MEDIA_DIRECTORY;
 if (!isset($_SESSION["medialist"])) $search = "yes";
@@ -47,9 +49,8 @@ print "\n\t<div class=\"center\"><h2>".$pgv_lang["multi_title"]."</h2></div>\n\t
 
 
 
-// LBox =============================================================================
 // Get Javascript variables from lb_config.php ---------------------------
- if (file_exists("modules/lightbox/album.php")) {
+if (file_exists("modules/lightbox/album.php")) {
 	include('modules/lightbox/lb_defaultconfig.php');
 	if (file_exists('modules/lightbox/lb_config.php')) include('modules/lightbox/lb_config.php');
 	include('modules/lightbox/functions/lb_call_js.php');
@@ -60,10 +61,8 @@ print "\n\t<div class=\"center\"><h2>".$pgv_lang["multi_title"]."</h2></div>\n\t
 		if ($LB_AL_THUMB_LINKS!="none") $LB_AL_THUMB_LINKS = "text";
 		if ($LB_ML_THUMB_LINKS!="none") $LB_ML_THUMB_LINKS = "text";
 	}
-
 }
 
-// LBox  ================================================================================
 
 //-- automatically generate an image
 if (PGV_USER_IS_ADMIN && $action=="generate" && !empty($file) && !empty($thumb)) {
@@ -110,80 +109,73 @@ if ($search == "yes") {
 <form action="medialist.php" method="get">
 	<input type="hidden" name="action" value="filter" />
 	<input type="hidden" name="search" value="yes" />
-	<table class="list-table center width50 <?php print $TEXT_DIRECTION; ?>">
+	<table class="list-table center width75 <?php print $TEXT_DIRECTION; ?>">
+	<?php
+	if ($TEXT_DIRECTION=='ltr') $legendAlign = 'align="right"';
+	else $legendAlign = 'align="left"';
+	?>
+
+	<!-- // NOTE: Row 1, left: Sort sequence -->
+	<tr><td class="descriptionbox wrap width25" <?php print $legendAlign;?>><?php print_help_link("sortby_help","qm", "sortby"); ?><?php print $pgv_lang["sortby"]; ?></td>
+	<td class="optionbox wrap"><select name="sortby">
+		<option value="title" <?php if ($sortby=='title') print "selected=\"selected\"";?>><?php print $factarray["TITL"];?></option>
+		<option value="file" <?php if ($sortby=='file') print "selected=\"selected\"";?>><?php print $factarray["FILE"];?></option>
+	</select></td>
+
+	<!-- // NOTE: Row 1, right: Objects per page -->
+	<td class="descriptionbox wrap width25" <?php print $legendAlign;?>><?php print $pgv_lang["per_page"]; ?></td>
+	<td class="optionbox wrap width25">
+		<select name="max">
 		<?php
-			// Box for user to choose the folder
-			print "<tr><td class=\"list_label width25\">";
-			if ($MEDIA_DIRECTORY_LEVELS > 0) {
-				print_help_link("view_server_folder_help", "qm");
-				if (empty($folder)) {
-					if (!empty($_SESSION['upload_folder'])) $folder = $_SESSION['upload_folder'];
-					else $folder = "ALL";
-				}
-				print $pgv_lang["server_folder"]."</td><td class=\"list_label wrap\">";
-				$folders = array_merge(array("ALL"), get_media_folders());
-				print "<span dir=\"ltr\"><select name=\"folder\">\n";
-				foreach($folders as $f) {
-					print "<option value=\"".$f."\"";
-					if ($folder==$f) print " selected=\"selected\"";
-					print ">";
-					if ($f=="ALL") print $pgv_lang["all"];
-					else print $f;
-					print "</option>\n";
-				}
-				print "</select></span>";
-			} else print "<input name=\"folder\" type=\"hidden\" value=\"ALL\" />";
-			print "</td></tr>";
+			foreach (array('10', '20', '30', '40', '50', '75', '100', '125', '150', '200') as $selectEntry) {
+				print "<option value=\"$selectEntry\"";
+				if ($selectEntry==$max) print " selected=\"selected\"";
+				print ">".$selectEntry."</option>";
+			}
 		?>
-		<?php if ($MEDIA_DIRECTORY_LEVELS > 0) { ?>
-		<tr>
-			<td class="list_label" colspan="2">
-				<label for="subdirs"><?php print $pgv_lang["medialist_recursive"]; ?></label>
-				&nbsp;<input type="checkbox" id="subdirs" name="subdirs" <?php if (!$currentdironly) { ?>checked="checked"<?php } ?> />
-			</td>
-		</tr>
-		<?php } ?>
-		<tr>
-			<td class="list_label" colspan="2">
-				<?php print_help_link("simple_filter_help","qm"); print $pgv_lang["filter"]; ?>
-				&nbsp;<input id="filter" name="filter" value="<?php print htmlentities(PrintReady($filter)); ?>"/>
-			</td>
-		</tr>
-		<tr>
-			<td class="list_label" colspan="2">
-				<select name="max">
-				<?php
-					if (empty($max)) $max=20;
-					foreach (array("10", "20", "30", "40", "50", "75", "100", "125", "150", "200") as $selectEntry) {
-						print "<option value=\"$selectEntry\"";
-						if ($selectEntry==$max) print " selected=\"selected\"";
-						print ">".$selectEntry."</option>";
-					}
-					print "</select> ".$pgv_lang["per_page"];
-				?>
-			</td>
-		</tr>
-		<tr>
-			<td class="list_label" colspan="2">
-				<input type="submit" value="<?php echo $pgv_lang["apply_filter"];?>"/>
-			</td>
-		</tr>
-<!-- LBox =========================== added for Lightbox Album ============================== -->
+		</select>
+	</td></tr>
+
+	<!-- // NOTE: Row 2 left: Filter options -->
+	<tr><td class="descriptionbox wrap width25" <?php print $legendAlign;?>><?php print_help_link("simple_filter_help","qm","filter"); print $pgv_lang["filter"];?></td>
+	<td class="optionbox wrap width25">
 		<?php
-		if (file_exists("modules/lightbox/album.php")) {
-			// do not need slideshow bar
-		}elseif (file_exists("modules/slideshow.php")) { ?>
-<!-- LBox ========================= end addition for Lightbox Album ========================== -->
-		<tr>
-			<td class="list_label" colspan="2">
-					<?php
-					print "<a href=\"#\" onclick=\"runSlideShow(); showMe(); return false;\">$pgv_lang[view_slideshow]</a>\n";
-					?>
-			</td>
-		</tr>
-<!-- LBox ======================= BH changed for Lightbox Album ============================ -->
-		<?php }else{} ?>
-<!-- LBox ======================= end change for Lightbox Album ============================= -->
+		// Directory pick list
+		if ($MEDIA_DIRECTORY_LEVELS > 0) {
+			if (empty($folder)) {
+				if (!empty($_SESSION['upload_folder'])) $folder = $_SESSION['upload_folder'];
+				else $folder = "ALL";
+			}
+			$folders = array_merge(array("ALL"), get_media_folders());
+			print "<span dir=\"ltr\"><select name=\"folder\">\n";
+			foreach($folders as $f) {
+				print "<option value=\"".$f."\"";
+				if ($folder==$f) print " selected=\"selected\"";
+				print ">";
+				if ($f=="ALL") print $pgv_lang["all"];
+				else print $f;
+				print "</option>\n";
+			}
+			print "</select></span><br />";
+		} else print "<input name=\"folder\" type=\"hidden\" value=\"ALL\" />";
+		// Text field for filter and "submit" button
+		?>
+		<input id="filter" name="filter" value="<?php print htmlentities(PrintReady($filter)); ?>"/><br />
+		<input type="submit" value="<?php echo $pgv_lang["apply_filter"];?>"
+	</td>
+
+	<!-- // NOTE: Row 2 right: Recursive directory list -->
+	<?php if ($MEDIA_DIRECTORY_LEVELS > 0) { ?>
+	<td class="descriptionbox wrap width25" <?php print $legendAlign;?>><?php print_help_link("medialist_recursive_help","qm","medialist_recursive"); print $pgv_lang["medialist_recursive"];?></td>
+	<td class="optionbox wrap width25">
+		<input type="checkbox" id="subdirs" name="subdirs" <?php if (!$currentdironly) { ?>checked="checked"<?php } ?> />
+	</td></tr>
+	<?php } else { ?>
+	<td class="descriptionbox wrap width25" <?php print $legendAlign;?>>&nbsp;</td>
+	<td class="optionbox wrap">
+		&nbsp;
+	</td></tr>
+	<?php } ?>
 
 	</table>
 </form>
@@ -202,8 +194,13 @@ if ($search=="yes") {
 } else {
 	$medialist = $_SESSION["medialist"];
 }
+
+// Sort the media list according to the user's wishes
+$sortedMediaList = $medialist;	// Default sort (by title) has already been done
+if ($sortby=='file') usort($sortedMediaList, 'filesort');
+
 // Count the number of items in the medialist
-$ct=count($medialist);
+$ct=count($sortedMediaList);
 $start = 0;
 $max = 20;
 if (isset($_GET["start"])) $start = $_GET["start"];
@@ -231,24 +228,24 @@ if ($ct>0) {
 	if ($TEXT_DIRECTION=="ltr") {
 		if ($ct>$max) {
 			if ($currentPage > 1) {
-				print "<a href=\"".encode_url("medialist.php?folder={$folder}&filter={$filter}&search=no&start=0&max={$max}")."\">".$IconLDarrow."</a>\n";
+				print "<a href=\"".encode_url("medialist.php?folder={$folder}&filter={$filter}&sortby={$sortby}&search=no&start=0&max={$max}")."\">".$IconLDarrow."</a>\n";
 			}
 			if ($start>0) {
 				$newstart = $start-$max;
 				if ($start<0) $start = 0;
-				print "<a href=\"".encode_url("medialist.php?folder={$folder}&filter={$filter}&search=no&start={$newstart}&max={$max}")."\">".$IconLarrow."</a>\n";
+				print "<a href=\"".encode_url("medialist.php?folder={$folder}&filter={$filter}&sortby={$sortby}&search=no&start={$newstart}&max={$max}")."\">".$IconLarrow."</a>\n";
 			}
 		}
 	} else {
 		if ($ct>$max) {
 			if ($currentPage < $lastPage) {
 				$lastStart = ((int) ($ct / $max)) * $max;
-				print "<a href=\"".encode_url("medialist.php?folder={$folder}&filter={$filter}&search=no&start={$lastStart}&max={$max}")."\">".$IconRDarrow."</a>\n";
+				print "<a href=\"".encode_url("medialist.php?folder={$folder}&filter={$filter}&sortby={$sortby}&search=no&start={$lastStart}&max={$max}")."\">".$IconRDarrow."</a>\n";
 			}
 			if ($start+$max < $ct) {
 				$newstart = $start+$count;
 				if ($start<0) $start = 0;
-				print "<a href=\"".encode_url("medialist.php?folder={$folder}&filter={$filter}&search=no&start={$newstart}&max={$max}")."\">".$IconRarrow."</a>\n";
+				print "<a href=\"".encode_url("medialist.php?folder={$folder}&filter={$filter}&sortby={$sortby}&search=no&start={$newstart}&max={$max}")."\">".$IconRarrow."</a>\n";
 			}
 		}
 	}
@@ -260,11 +257,11 @@ if ($ct>0) {
 			if ($start+$max < $ct) {
 				$newstart = $start+$count;
 				if ($start<0) $start = 0;
-				print "<a href=\"".encode_url("medialist.php?folder={$folder}&filter={$filter}&search=no&start={$newstart}&max={$max}")."\">".$IconRarrow."</a>\n";
+				print "<a href=\"".encode_url("medialist.php?folder={$folder}&filter={$filter}&sortby={$sortby}&search=no&start={$newstart}&max={$max}")."\">".$IconRarrow."</a>\n";
 			}
 			if ($currentPage < $lastPage) {
 				$lastStart = ((int) ($ct / $max)) * $max;
-				print "<a href=\"".encode_url("medialist.php?folder={$folder}&filter={$filter}&search=no&start={$lastStart}&max={$max}")."\">".$IconRDarrow."</a>\n";
+				print "<a href=\"".encode_url("medialist.php?folder={$folder}&filter={$filter}&sortby={$sortby}&search=no&start={$lastStart}&max={$max}")."\">".$IconRDarrow."</a>\n";
 			}
 		}
 	} else {
@@ -272,11 +269,11 @@ if ($ct>0) {
 			if ($start>0) {
 				$newstart = $start-$max;
 				if ($start<0) $start = 0;
-				print "<a href=\"".encode_url("medialist.php?folder={$folder}&filter={$filter}&search=no&start={$newstart}&max={$max}")."\">".$IconLarrow."</a>\n";
+				print "<a href=\"".encode_url("medialist.php?folder={$folder}&filter={$filter}&sortby={$sortby}&search=no&start={$newstart}&max={$max}")."\">".$IconLarrow."</a>\n";
 			}
 			if ($currentPage > 1) {
 				$lastStart = ((int) ($ct / $max)) * $max;
-				print "<a href=\"".encode_url("medialist.php?folder={$folder}&filter={$filter}&search=no&start=0&max={$max}")."\">".$IconLDarrow."</a>\n";
+				print "<a href=\"".encode_url("medialist.php?folder={$folder}&filter={$filter}&sortby={$sortby}&search=no&start=0&max={$max}")."\">".$IconLDarrow."</a>\n";
 			}
 		}
 	}
@@ -287,7 +284,7 @@ if ($ct>0) {
 	print "\n<tr>\n";
 
 	for ($i=0; $i<$count; $i++) {
-		$media = $medialist[$start+$i];
+		$media = $sortedMediaList[$start+$i];
 		$isExternal = isFileExternal($media["FILE"]);
 		$imgsize = findImageSize($media["FILE"]);
 		$imgwidth = $imgsize[0]+40;
@@ -429,24 +426,24 @@ if ($ct>0) {
 	if ($TEXT_DIRECTION=="ltr") {
 		if ($ct>$max) {
 			if ($currentPage > 1) {
-				print "<a href=\"".encode_url("medialist.php?folder={$folder}&filter={$filter}&search=no&start=0&max={$max}")."\">".$IconLDarrow."</a>\n";
+				print "<a href=\"".encode_url("medialist.php?folder={$folder}&filter={$filter}&sortby={$sortby}&search=no&start=0&max={$max}")."\">".$IconLDarrow."</a>\n";
 			}
 			if ($start>0) {
 				$newstart = $start-$max;
 				if ($start<0) $start = 0;
-				print "<a href=\"".encode_url("medialist.php?folder={$folder}&filter={$filter}&search=no&start={$newstart}&max={$max}")."\">".$IconLarrow."</a>\n";
+				print "<a href=\"".encode_url("medialist.php?folder={$folder}&filter={$filter}&sortby={$sortby}&search=no&start={$newstart}&max={$max}")."\">".$IconLarrow."</a>\n";
 			}
 		}
 	} else {
 		if ($ct>$max) {
 			if ($currentPage < $lastPage) {
 				$lastStart = ((int) ($ct / $max)) * $max;
-				print "<a href=\"".encode_url("medialist.php?folder={$folder}&filter={$filter}&search=no&start={$lastStart}&max={$max}")."\">".$IconRDarrow."</a>\n";
+				print "<a href=\"".encode_url("medialist.php?folder={$folder}&filter={$filter}&sortby={$sortby}&search=no&start={$lastStart}&max={$max}")."\">".$IconRDarrow."</a>\n";
 			}
 			if ($start+$max < $ct) {
 				$newstart = $start+$count;
 				if ($start<0) $start = 0;
-				print "<a href=\"".encode_url("medialist.php?folder={$folder}&filter={$filter}&search=no&start={$newstart}&max={$max}")."\">".$IconRarrow."</a>\n";
+				print "<a href=\"".encode_url("medialist.php?folder={$folder}&filter={$filter}&sortby={$sortby}&search=no&start={$newstart}&max={$max}")."\">".$IconRarrow."</a>\n";
 			}
 		}
 	}
@@ -458,11 +455,11 @@ if ($ct>0) {
 			if ($start+$max < $ct) {
 				$newstart = $start+$count;
 				if ($start<0) $start = 0;
-				print "<a href=\"".encode_url("medialist.php?folder={$folder}&filter={$filter}&search=no&start={$newstart}&max={$max}")."\">".$IconRarrow."</a>\n";
+				print "<a href=\"".encode_url("medialist.php?folder={$folder}&filter={$filter}&sortby={$sortby}&search=no&start={$newstart}&max={$max}")."\">".$IconRarrow."</a>\n";
 			}
 			if ($currentPage < $lastPage) {
 				$lastStart = ((int) ($ct / $max)) * $max;
-				print "<a href=\"".encode_url("medialist.php?folder={$folder}&filter={$filter}&search=no&start={$lastStart}&max={$max}")."\">".$IconRDarrow."</a>\n";
+				print "<a href=\"".encode_url("medialist.php?folder={$folder}&filter={$filter}&sortby={$sortby}&search=no&start={$lastStart}&max={$max}")."\">".$IconRDarrow."</a>\n";
 			}
 		}
 	} else {
@@ -470,11 +467,11 @@ if ($ct>0) {
 			if ($start>0) {
 				$newstart = $start-$max;
 				if ($start<0) $start = 0;
-				print "<a href=\"".encode_url("medialist.php?folder={$folder}&filter={$filter}&search=no&start={$newstart}&max={$max}")."\">".$IconLarrow."</a>\n";
+				print "<a href=\"".encode_url("medialist.php?folder={$folder}&filter={$filter}&sortby={$sortby}&search=no&start={$newstart}&max={$max}")."\">".$IconLarrow."</a>\n";
 			}
 			if ($currentPage > 1) {
 				$lastStart = ((int) ($ct / $max)) * $max;
-				print "<a href=\"".encode_url("medialist.php?folder={$folder}&filter={$filter}&search=no&start=0&max={$max}")."\">".$IconLDarrow."</a>\n";
+				print "<a href=\"".encode_url("medialist.php?folder={$folder}&filter={$filter}&sortby={$sortby}&search=no&start=0&max={$max}")."\">".$IconLDarrow."</a>\n";
 			}
 		}
 	}
@@ -483,12 +480,6 @@ if ($ct>0) {
 	print "</table><br />";
 }
 print "\n</div>\n";
-/** not ready for 4.1
-require_once 'includes/functions/functions_print_lists.php';
-$legend = $pgv_lang["media"];
-if ($filter) $legend .= " : &laquo;".$filter."&raquo;";
-print_media_table($medialist, $legend);
-**/
 // -- load up the slideshow code
 if (!file_exists("modules/lightbox/album.php")) {
 	if (file_exists("modules/slideshow/slideshow.php")) {

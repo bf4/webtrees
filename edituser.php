@@ -55,7 +55,7 @@ foreach (get_theme_names() as $themename=>$themedir) {
 
 // Extract form variables
 $form_action        =safe_POST('form_action'   );
-$form_username      =safe_POST('form_username' );
+$form_username      =safe_POST('form_username',       PGV_REGEX_USERNAME);
 $form_firstname     =safe_POST('form_firstname');
 $form_lastname      =safe_POST('form_lastname' );
 $form_pass1         =safe_POST('form_pass1',          PGV_REGEX_PASSWORD);

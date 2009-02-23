@@ -32,6 +32,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
+$pgv_lang["sortby"]						= "Reihenfolge";
 $pgv_lang["exact"]						= "Genau";
 $pgv_lang["begins_with"]				= "Beginnt mit";
 $pgv_lang["contains"]					= "Enthält";
@@ -457,7 +458,7 @@ $pgv_lang["suffix"]						= "Namenszusatz:";
 $pgv_lang["sex"]						= "Geschlecht";
 $pgv_lang["personal_facts"]				= "Persönliche Fakten und Details";
 $pgv_lang["type"]						= "Typ";
-$pgv_lang["parents"]					= "Eltern:";
+$pgv_lang["parents"]					= "Eltern";
 $pgv_lang["siblings"]					= "Geschwister";
 $pgv_lang["father"]						= "Vater";
 $pgv_lang["mother"]						= "Mutter";

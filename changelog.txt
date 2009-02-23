@@ -10,6 +10,7 @@
 
 
 Version 4.2.0 CA
+ - Merged: Merge changes r5074 - r5084 from the trunk. (windmillway)
  - Changed: Shared Notes: Minor adjustments to edit window size, Fixed error when user does not have Accept Change Auth. (windmillway)
  - Changed: Fixed delete Shared Note on Edit Options on shnote.php page (windmillway)
  - Changed: shnote.php - Hide Edit link when not logged in, cleaned up JavaScript code to conform with PGV norms. (windmillway)
@@ -35,6 +36,7 @@ Version 4.2.0 CA
 
 
 Version 4.2.1
+ - Changed: Add option to sort Manage Media list and MultiMedia list (canajun2eh)
  - Fixed: [ 2612938 ] 4.2.1 svn rev.5059 - Translation error (fisharebest)
  - Fixed: [ 2608286 ] Copy EVENT causes error in option field (fisharebest)
  - Fixed: [ 2556004 ] 4.2.0 - Reports without data output (fisharebest)

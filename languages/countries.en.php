@@ -13,6 +13,7 @@
  *		ALA		Åland Islands
  *		CAT		Catalonia
  *		COD		Congo (Brazzaville)		This country was known as Zaire
+ *		IOM		Isle of Man				Chapman lists this as part of the UK -- it's not!!
  *		NFK		Norfolk Island
  *		PRI		Puerto Rico				Chapman lists this as a state of the USA
  *		SCG		Serbia and Montenegro	Chapman lists these separately
@@ -157,6 +158,7 @@ $countries["HTI"]="Haiti";
 $countries["HUN"]="Hungary";
 $countries["IDN"]="Indonesia";
 $countries["IND"]="India";
+$countries["IOM"]="Isle of Man";
 $countries["IOT"]="British Indian Ocean Territory";
 $countries["IRL"]="Ireland";
 $countries["IRN"]="Iran";
