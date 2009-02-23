@@ -39,11 +39,6 @@ define('PGV_FUNCTIONS_DB_PHP', '');
 //-- load the PEAR:DB files
 require_once 'DB.php';
 
-// New setting, added to config.php in 4.2.0
-if (!isset($DB_UTF8_COLLATION)) {
-	$DB_UTF8_COLLATION=false;
-}
-
 /**
 * Field and function definition variances between sql databases
 */
@@ -1034,6 +1029,24 @@ function fetch_linked_obje($xref, $link, $ged_id) {
 	$list=array();
 	while ($row=$res->fetchRow(DB_FETCHMODE_ASSOC)) {
 		$list[]=Media::getInstance($row);
+	}
+	$res->free();
+	return $list;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// Fetch all records linked to a record - when deleting an object, we must
+// also delete all links to it.
+////////////////////////////////////////////////////////////////////////////////
+function fetch_all_links($xref, $ged_id) {
+	global $TBLPREFIX, $DBCONN;
+	$xref=$DBCONN->escapeSimple($xref);
+	$ged_id=(int)$ged_id;
+	$res=dbquery("SELECT l_from FROM {$TBLPREFIX}link WHERE l_file={$ged_id} AND l_to='{$xref}'");
+
+	$list=array();
+	while ($row=$res->fetchRow(DB_FETCHMODE_ASSOC)) {
+		$list[]=$row['l_from'];
 	}
 	$res->free();
 	return $list;

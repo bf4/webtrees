@@ -37,16 +37,6 @@ require_once 'includes/classes/class_mutex.php';
 require_once 'includes/classes/class_media.php';
 require_once 'includes/functions/functions_UTF8.php';
 
-if (PGV_DEBUG) {
-	$ERROR_LEVEL = 2;
-} else {
-	// If you don't want errors displayed on production servers, change this to
-	// $ERROR_LEVEL = 0 will not print any errors
-	// $ERROR_LEVEL = 1 will only print the last function that was called
-	// $ERROR_LEVEL = 2 will print a full stack trace with function arguments.
-	$ERROR_LEVEL = 2;
-}
-
 // ************************************************* START OF INITIALIZATION FUNCTIONS ********************************* //
 /**
  * initialize and check the database
@@ -700,10 +690,8 @@ function file_is_writeable($file) {
  * @see http://us2.php.net/manual/en/function.set-error-handler.php
  */
 function pgv_error_handler($errno, $errstr, $errfile, $errline) {
-	global $ERROR_LEVEL;
-
 	if ((error_reporting() > 0)&&($errno<2048)) {
-		if ($ERROR_LEVEL==0) {
+		if (PGV_ERROR_LEVEL==0) {
 			return;
 		}
 		if (stristr($errstr,"by reference")==true) {
@@ -716,7 +704,7 @@ function pgv_error_handler($errno, $errstr, $errfile, $errline) {
 		if ($errno<16 && function_exists("debug_backtrace") && strstr($errstr, "headers already sent by")===false) {
 			$backtrace=debug_backtrace();
 			$num=count($backtrace);
-			if ($ERROR_LEVEL==1) {
+			if (PGV_ERROR_LEVEL==1) {
 				$num=1;
 			}
 			for ($i=0; $i<$num; $i++) {

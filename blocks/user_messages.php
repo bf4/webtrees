@@ -33,6 +33,8 @@ if (!defined('PGV_PHPGEDVIEW')) {
 
 define('PGV_USER_MESSAGES_PHP', '');
 
+require_once 'includes/functions/functions_print_facts.php';
+
 $PGV_BLOCKS["print_user_messages"]["name"]		= $pgv_lang["user_messages_block"];
 $PGV_BLOCKS["print_user_messages"]["descr"]		= "user_messages_descr";
 $PGV_BLOCKS["print_user_messages"]["type"]		= "user";
@@ -43,7 +45,7 @@ $PGV_BLOCKS["print_user_messages"]["config"]	= array("cache"=>0);
 function print_user_messages($block=true, $config="", $side, $index) {
 	global $pgv_lang, $PGV_IMAGE_DIR, $TEXT_DIRECTION, $PGV_STORE_MESSAGES, $PGV_IMAGES;
 
-		$usermessages = getUserMessages(PGV_USER_NAME);
+	$usermessages = getUserMessages(PGV_USER_NAME);
 
 	$id="user_messages";
 	$title = print_help_link("mygedview_message_help", "qm", "", false, true);

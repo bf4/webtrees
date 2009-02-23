@@ -50,7 +50,7 @@ $ALL_EDIT_OPTIONS=array('none', 'access', 'edit', 'accept', 'admin');
 // Extract form actions (GET overrides POST if both set)
 $action                  =safe_POST('action',  $ALL_ACTIONS);
 $usrlang                 =safe_POST('usrlang', array_keys($pgv_language));
-$username                =safe_POST('username' PGV_REGEX_USERNAME);
+$username                =safe_POST('username',PGV_REGEX_USERNAME);
 $filter                  =safe_POST('filter'   );
 $sort                    =safe_POST('sort'     );
 $ged                     =safe_POST('ged'      );
