@@ -10,6 +10,7 @@
 
 
 Version 4.2.0 CA
+ - Changed: Shared Notes: Minor adjustments to edit window size, Fixed error when user does not have Accept Change Auth. (windmillway)
  - Changed: Fixed delete Shared Note on Edit Options on shnote.php page (windmillway)
  - Changed: shnote.php - Hide Edit link when not logged in, cleaned up JavaScript code to conform with PGV norms. (windmillway)
  - Changed: Tidy up of Shared Note Viewing (windmillway)

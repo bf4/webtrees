@@ -58,7 +58,7 @@ echo 'function showchanges() {';
 echo ' window.location="shnote.php?nid=', $controller->nid, '&show_changes=yes"';
 echo '}';
 echo 'function edit_shnote() {';
-echo ' var win04 = window.open("edit_interface.php?action=editshnote&pid='.$linkToID.'", "win04", "top=70,left=70,width=600,height=500,resizable=1,scrollbars=1");';
+echo ' var win04 = window.open("edit_interface.php?action=editshnote&pid='.$linkToID.'", "win04", "top=70,left=70,width=620,height=500,resizable=1,scrollbars=1");';
 echo ' if (window.focus) {win04.focus();}';
 echo '}';
 echo PGV_JS_END;

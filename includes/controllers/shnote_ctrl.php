@@ -205,7 +205,7 @@ class ShnoteControllerRoot extends BaseController {
 
 		// edit shared note / delete_shared note
 		$submenu = new Menu($pgv_lang['delete_shnote']);
-		$submenu->addOnclick("if (confirm('".$pgv_lang["confirm_delete_source"]."')) return deletesource('".$this->nid."'); else return false;");
+		$submenu->addOnclick("if (confirm('".$pgv_lang["confirm_delete_shnote"]."')) return deletesource('".$this->nid."'); else return false;");
 		if (!empty($PGV_IMAGES["notes"]["small"]))
 			$submenu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['notes']['small']}");
 		$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}");

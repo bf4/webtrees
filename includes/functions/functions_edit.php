@@ -1019,7 +1019,7 @@ function print_editshnote_link($shnote_id) {
 	$text = $pgv_lang["edit_shnote"];
 	if (isset($PGV_IMAGES["note"]["button"])) $Link = "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["note"]["button"]."\" alt=\"".$text."\" title=\"".$text."\" border=\"0\" align=\"middle\" />";
 	else $Link = $text;
-	echo "<a href=\"javascript: var win02=window.open('edit_interface.php?action=editshnote&pid=$shnote_id', 'win02', 'top=70, left=70, width=600, height=500, resizable=1, scrollbars=1 ' )\">";
+	echo "<a href=\"javascript: var win02=window.open('edit_interface.php?action=editshnote&pid=$shnote_id', 'win02', 'top=70, left=70, width=620, height=500, resizable=1, scrollbars=1 ' )\">";
 	echo $Link;
 	echo "</a>";
 }
