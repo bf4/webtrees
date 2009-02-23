@@ -57,6 +57,10 @@ echo '}';
 echo 'function showchanges() {';
 echo ' window.location="shnote.php?nid=', $controller->nid, '&show_changes=yes"';
 echo '}';
+echo 'function edit_shnote() {';
+echo ' var win04 = window.open("edit_interface.php?action=editshnote&pid='.$linkToID.'", "win04", "top=70,left=70,width=600,height=500,resizable=1,scrollbars=1");';
+echo ' if (window.focus) {win04.focus();}';
+echo '}';
 echo PGV_JS_END;
 
 echo '<table class="list_table"><tr><td>';
@@ -101,29 +105,19 @@ if ($nt==1) {
 	$shnote = "No Text";
 }
 // echo '<tr><td align="center" class="descriptionbox">Shared Note</td><td class="optionbox">';
-?>
 
-<script>
-<!--
-function edit_shnote() {
-	win04 = window.open(
-	"edit_interface.php?action=editshnote&pid=<?php echo $linkToID; ?>", "win04", "top=70, left=70, width=600, height=500, resizable=1, scrollbars=1 ");
-	if (window.focus) {win04.focus();}
-}
--->
-</script>
-<?
-
-echo '<tr><td align="left" class="descriptionbox">';
-echo '&nbsp;&nbsp;' . $pgv_lang["shnote"];
-echo '<br /><br />';
-echo "<a href=\"javascript: edit_shnote()\"> ";
-echo "&nbsp;&nbsp;".$pgv_lang['edit'];
-echo "</a>";
-echo '</td><td class="optionbox">';
-echo $shnote;
-echo "<br />";
-echo "</td></tr>";
+	echo '<tr><td align="left" class="descriptionbox">';
+		echo '&nbsp;&nbsp;' . $pgv_lang["shnote"];
+		echo '<br /><br />';
+		if (PGV_USER_CAN_EDIT) {
+			echo "<a href=\"javascript: edit_shnote()\"> ";
+			echo "&nbsp;&nbsp;".$pgv_lang['edit'];
+			echo "</a>";
+		}
+		echo '</td><td class="optionbox">';
+		echo $shnote;
+		echo "<br />";
+	echo "</td></tr>";
 
 echo '</table><br /><br /></td></tr><tr class="center"><td colspan="2">';
 
