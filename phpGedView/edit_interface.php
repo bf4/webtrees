@@ -1415,88 +1415,6 @@ case 'deletefamily':
 	break;
 //------------------------------------------------------------------------------
 case 'deletesource':
-	if (PGV_DEBUG) {
-		phpinfo(INFO_VARIABLES);
-		echo "<pre>$gedrec</pre>";
-	}
-	if (!empty($gedrec)) {
-		$success = true;
-		$query = "SOUR @$pid@";
-		// -- array of names
-		$myindilist = array();
-		$myfamlist = array();
-
-		$myindilist = search_indis(array($query), array(PGV_GED_ID), 'AND', false);
-		foreach($myindilist as $indi) {
-			if (isset($pgv_changes[$indi->getXref().'_'.$GEDCOM])) {
-				$indirec=find_updated_record($indi->getXref());
-			} else {
-				$indirec=$indi->getGedcomRecord();
-			}
-			$lines = explode("\n", $indirec);
-			$newrec = "";
-			$skipline = false;
-			$glevel = 0;
-			foreach($lines as $indexval => $line) {
-				if ((preg_match("/@$pid@/", $line)==0)&&(!$skipline)) $newrec .= $line."\n";
-				else {
-					if (!$skipline) {
-						$glevel = $line{0};
-						$skipline = true;
-					}
-					else {
-						if ($line{0}<=$glevel) {
-							$skipline = false;
-							$newrec .= $line."\n";
-						}
-					}
-				}
-			}
-			if (PGV_DEBUG) {
-				echo "<pre>$newrec</pre>";
-			}
-			$success = $success && replace_gedrec($indi->getXref(), $newrec);
-		}
-
-
-		$myfamlist = search_fams(array($query), array(PGV_GED_ID), 'AND', false);
-		foreach($myfamlist as $family) {
-			if (isset($pgv_changes[$family->getXref().'_'.$GEDCOM])) {
-				$indirec=find_updated_record($family->getXref());
-			} else {
-				$indirec=$family->getGedcomRecord();
-			}
-			$lines = explode("\n", $indirec);
-			$newrec = "";
-			$skipline = false;
-			$glevel = 0;
-			foreach($lines as $indexval => $line) {
-				if ((preg_match("/@$pid@/", $line)==0)&&(!$skipline)) $newrec .= $line."\n";
-				else {
-					if (!$skipline) {
-						$glevel = $line{0};
-						$skipline = true;
-					}
-					else {
-						if ($line{0}<=$glevel) {
-							$skipline = false;
-							$newrec .= $line."\n";
-						}
-					}
-				}
-			}
-			if (PGV_DEBUG) {
-				echo "<pre>$newrec</pre>";
-			}
-			$success = $success && replace_gedrec($family->getXref(), $newrec);
-		}
-		if ($success) {
-			$success = $success && delete_gedrec($pid);
-		}
-		if ($success) echo "<br /><br />".$pgv_lang["gedrec_deleted"];
-	}
-	break;
-//------------------------------------------------------------------------------
 case 'deleterepo':
 	if (PGV_DEBUG) {
 		phpinfo(INFO_VARIABLES);
@@ -1504,18 +1422,19 @@ case 'deleterepo':
 	}
 	if (!empty($gedrec)) {
 		$success = true;
-		foreach(search_sources(array("REPO @$pid@"), array(PGV_GED_ID), 'AND', false) as $source) {
-			if (isset($pgv_changes[$source->getXref().'_'.$GEDCOM])) {
-				$sourrec=find_updated_record($source->getXref());
+		// Delete links to this record
+		foreach (fetch_all_links($pid, PGV_GED_ID) as $xref) {
+			if (isset($pgv_changes[$xref.'_'.$GEDCOM])) {
+				$gedrec=find_updated_record($xref);
 			} else {
-				$sourrec=$source->getGedcomRecord();
+				$gedrec=find_gedcom_record($xref);
 			}
-			$lines = explode("\n", $sourrec);
+			$lines = explode("\n", $gedrec);
 			$newrec = "";
 			$skipline = false;
 			$glevel = 0;
 			foreach($lines as $indexval => $line) {
-				if ((preg_match("/@$pid@/", $line)==0)&&(!$skipline)) $newrec .= $line."\n";
+				if ((preg_match("/^\d ".PGV_REGEX_TAG." @$pid@/", $line)==0)&&(!$skipline)) $newrec .= $line."\n";
 				else {
 					if (!$skipline) {
 						$glevel = $line{0};
@@ -1532,14 +1451,13 @@ case 'deleterepo':
 			if (PGV_DEBUG) {
 				echo "<pre>$newrec</pre>";
 			}
-			$success=$success && replace_gedrec($source->getXref(), $newrec);
+			$success = $success && replace_gedrec($xref, $newrec);
 		}
+
 		if ($success) {
-			$success=$success && delete_gedrec($pid);
+			$success = $success && delete_gedrec($pid);
 		}
-		if ($success) {
-			echo '<br /><br />', $pgv_lang['gedrec_deleted'];
-		}
+		if ($success) echo "<br /><br />".$pgv_lang["gedrec_deleted"];
 	}
 	break;
 //------------------------------------------------------------------------------

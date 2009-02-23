@@ -1035,6 +1035,24 @@ function fetch_linked_obje($xref, $link, $ged_id) {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
+// Fetch all records linked to a record - when deleting an object, we must
+// also delete all links to it.
+////////////////////////////////////////////////////////////////////////////////
+function fetch_all_links($xref, $ged_id) {
+	global $TBLPREFIX, $DBCONN;
+	$xref=$DBCONN->escapeSimple($xref);
+	$ged_id=(int)$ged_id;
+	$res=dbquery("SELECT l_from FROM {$TBLPREFIX}link WHERE l_file={$ged_id} AND l_to='{$xref}'");
+
+	$list=array();
+	while ($row=$res->fetchRow(DB_FETCHMODE_ASSOC)) {
+		$list[]=$row['l_from'];
+	}
+	$res->free();
+	return $list;
+}
+
+////////////////////////////////////////////////////////////////////////////////
 // Fetch a row from the database, corresponding to a gedcom record.
 // These functions are used to create gedcom objects.
 // To simplify common processing, the xref, gedcom id and gedcom record are
