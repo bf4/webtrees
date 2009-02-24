@@ -1175,10 +1175,8 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 	case 'shnote':
 			$islink=1;
 			$fact="NOTE";
-			$rows=10;
+			$rows=15;
 			$cols=90;
-			//$rows=1;
-			//$cols=($islink ? 8 : 20);
 			break;
 	case 'shnoteadd':
 			$islink=1;

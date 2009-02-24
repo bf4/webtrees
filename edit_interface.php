@@ -127,7 +127,7 @@ require 'js/autocomplete.js.htm';
 	// Shared Notes =========================
 	function findShnote(field) {
 		pastefield = field;
-		findwin = window.open('find.php?type=shnote', '_blank', 'left=50,top=50,width=600,height=500,resizable=1,scrollbars=1');
+		findwin = window.open('find.php?type=shnote', '_blank', 'left=50,top=50,width=600,height=520,resizable=1,scrollbars=1');
 		return false;
 	}
 	
@@ -785,13 +785,13 @@ case 'addnewshnote':
 		
 		<table class="facts_table">
 			<tr>
-				<td class="descriptionbox <?php echo $TEXT_DIRECTION; ?> wrap width25"><?php print_help_link("edit_NOTE_help", "qm"); echo $factarray["NOTE"]; ?></td>
-				<td class="optionbox wrap"><textarea tabindex="<?php echo $tabkey; ?>" name="NOTE" id="NOTE" rows="10" cols="60"></textarea><br /><?php print_specialchar_link("NOTE",true); ?></td>
+				<td class="descriptionbox <?php echo $TEXT_DIRECTION; ?> wrap="nowrap"><?php print_help_link("edit_NOTE_help", "qm"); echo $pgv_lang["shnote"]; ?></td>
+				<td class="optionbox wrap"><textarea tabindex="<?php echo $tabkey; ?>" name="NOTE" id="NOTE" rows="15" cols="88"></textarea><br /><?php print_specialchar_link("NOTE",true); ?></td>
 			</tr>
 			<?php $tabkey++; ?>
 		</table>
 		<br /><br />
-		<input type="submit" value="<?php echo $pgv_lang["create_shnote"]; ?>" />
+		<input type="submit" value="<?php echo $pgv_lang["save"]; ?>" />
 	</form>
 	<?php
 	break;
