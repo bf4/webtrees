@@ -574,7 +574,7 @@ class IndividualControllerRoot extends BaseController {
 			$menu->addSubmenu($submenu);
 			
 			if ($this->SEX_COUNT<2) {
-				$submenu = new Menu($pgv_lang["edit"]." ".$pgv_lang["sex"]);
+				$submenu = new Menu($pgv_lang["edit_sex"]);
 				if ($SEX_LINENUM=="new") $submenu->addOnclick("return add_new_record('".$this->pid."', 'SEX');");
 				else $submenu->addOnclick("return edit_record('".$this->pid."', $SEX_LINENUM);");
 				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
