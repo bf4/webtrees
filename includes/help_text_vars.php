@@ -85,7 +85,7 @@ $pgv_lang["index_myged_help"]			= "#pgv_lang[mygedview_portal_help_blocks]#<br /
 
 //Login
 $pgv_lang["help_login.php"]			= "#pgv_lang[login_page_help]#<br />#pgv_lang[mygedview_login_help]#";
-$pgv_lang["help_login_register.php"]		= "~#pgv_lang[requestaccount]#~<br /><br />#pgv_lang[register_info_01]#";
+$pgv_lang["help_login_register.php"]		= "#pgv_lang[register_info_01]#";
 $pgv_lang["help_login_lost_pw.php"]		= "~#pgv_lang[lost_pw_reset]#~<br /><br />#pgv_lang[pls_note11]#";
 $pgv_lang["index_login_register_help"]		= "#pgv_lang[index_login_help]#<br />#pgv_lang[new_user_help]#<br /><br />#pgv_lang[new_password_help]#<br />";
 

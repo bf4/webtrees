@@ -10,6 +10,7 @@
 
 
 Version 4.2.0 CA
+ - Merged: Merge changes r5091 - r5095 from the trunk. (windmillway)
  - Added: auto-complete feature to Shared Note edit field (windmillway)
  - Merged: Merge changes r5085 - r5090 from the trunk, fix: deletion of links to deleted notes. (fisharebest)
  - Merged: Merge changes r5074 - r5084 from the trunk. (windmillway)
