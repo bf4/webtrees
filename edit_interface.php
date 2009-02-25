@@ -465,7 +465,7 @@ case 'add':
 			if ($fact!="SOUR" && $fact!="REPO") print_add_layer("SOUR");
 			if ($fact!="NOTE") print_add_layer("NOTE");
 			// Shared Note addition ------------
-			if ($fact!="SHNOTE") print_add_layer("SHNOTEADD");
+			if ($fact!="SHNOTE" && $fact!="NOTE") print_add_layer("SHNOTEADD");
 			if ($fact!="REPO") print_add_layer("OBJE");
 		}
 	}

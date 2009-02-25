@@ -10,6 +10,7 @@
 
 
 Version 4.2.0 CA
+ - Changed: Prevent (for now) [+]Add Shared Note menu appearing under add "Regular" NOTE menu (windmillway)
  - Changed: Corrected error in SQL in auto-complete feature for Shared Note edit field. (windmillway)
  - Merged: Merge changes r5091 - r5095 from the trunk. (windmillway)
  - Added: auto-complete feature to Shared Note edit field (windmillway)
