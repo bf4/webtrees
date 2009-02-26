@@ -211,7 +211,7 @@ require 'js/autocomplete.js.htm';
 			print_findindi_link('pid','');
 			$root=Person::getInstance($config['pid']);
 			if ($root) {
-				echo '<span class="list_item">', $root->getFullName(), $root->format_first_major_fact(PGV_EVENTS_BIRT, 1), '</span>';
+				echo ' <span class="list_item">', $root->getFullName(), $root->format_first_major_fact(PGV_EVENTS_BIRT, 1), '</span>';
 			}
 			?>
 		</td>
