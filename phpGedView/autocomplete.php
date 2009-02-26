@@ -509,6 +509,42 @@ function autocomplete_GIVN() {
 }
 
 /**
+* returns NAMEs matching filter
+* @return Array of string
+*/
+function autocomplete_NAME() {
+	global $TBLPREFIX, $DBCONN, $FILTER;
+
+	$sql = "SELECT DISTINCT n_givn".
+				" FROM {$TBLPREFIX}name".
+				" WHERE n_givn ".PGV_DB_LIKE." '%".$FILTER."%'".
+				" AND n_file=".PGV_GED_ID. // comment this line to search all Gedcoms
+				" LIMIT ".PGV_AUTOCOMPLETE_LIMIT;
+	$res=dbquery($sql);
+	$data=array();
+	while ($row=$res->fetchRow(DB_FETCHMODE_ASSOC)) {
+		$givn=$row['n_givn'];
+		list($givn) = explode("/", $givn);
+		list($givn) = explode(",", $givn);
+		list($givn) = explode("*", $givn);
+		list($givn) = explode(" ", $givn);
+		if ($givn) {
+			$data[]=$row['n_givn'];
+		}
+	}
+	$sql = "SELECT DISTINCT n_surname".
+				" FROM {$TBLPREFIX}name".
+				" WHERE n_surname ".PGV_DB_LIKE." '%".$FILTER."%'".
+				" AND n_file=".PGV_GED_ID. // comment this line to search all Gedcoms
+				" LIMIT ".PGV_AUTOCOMPLETE_LIMIT;
+	$res=dbquery($sql);
+	while ($row=$res->fetchRow(DB_FETCHMODE_ASSOC)) {
+		$data[]=$row['n_surname'];
+	}
+	return $data;
+}
+
+/**
 * returns PLACes matching filter
 * @return Array of string City, County, State/Province, Country
 */

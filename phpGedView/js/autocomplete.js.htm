@@ -128,13 +128,13 @@ jQuery(document).ready(function($){
 		minChars: 2
 	});
 	// PLAC : full [City, County, State/Province, Country]
-	$(".PLAC, #place, input[id*=place], input[name^=PLAC], input[name$=PLAC]").autocomplete("autocomplete.php", {
+	$(".PLAC, #place, input[id=place], input[name^=PLAC], input[name$=PLAC]").autocomplete("autocomplete.php", {
 		extraParams: {field:'PLAC'},
 		width: 400,
 		minChars: 2
 	});
 	// PLAC : splitted (mainly for search.php)
-	$("input[name=place]").autocomplete("autocomplete.php", {
+	$("input[name=place], input[id=birthplace], input[id=marrplace], input[id=deathplace]").autocomplete("autocomplete.php", {
 		extraParams: {
 			field:'PLAC',
 			option:'split'
@@ -152,6 +152,12 @@ jQuery(document).ready(function($){
 		extraParams: {field:'SURN'},
 		width: 300,
 		minChars: 1
+	});
+	// NAME
+	$("#NAME, input[name*=NAME], input[name=name], input[id=name]").autocomplete("autocomplete.php", {
+		extraParams: {field:'NAME'},
+		width: 300,
+		minChars: 2
 	});
 	// NPFX
 	var npfx_accept = new Array(<?php if (isset($NPFX_accept)) foreach($NPFX_accept as $k=>$v) echo "'".$v."',"; echo "''";?>);

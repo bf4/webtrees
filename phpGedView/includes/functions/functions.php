@@ -1022,11 +1022,11 @@ function get_gedcom_value($tag, $level, $gedrec, $truncate='', $convert=true) {
 			$g = new GedcomDate($value);
 			$value = $g->Display();
 			if (!empty($truncate)) {
-				if (strlen($value)>$truncate) {
+				if (UTF8_strlen($value)>$truncate) {
 					$value = preg_replace("/\(.+\)/", "", $value);
-					if (strlen($value)>$truncate) {
-						$value = preg_replace_callback("/([^0-9\W]+)/", create_function('$matches', 'return substr($matches[1], 0, 3);'), $value);
-					}
+					//if (UTF8_strlen($value)>$truncate) {
+					//	$value = preg_replace_callback("/([a-zśź]+)/ui", create_function('$matches', 'return UTF8_substr($matches[1], 0, 3);'), $value);
+					//}
 				}
 			}
 		} else
@@ -2416,7 +2416,7 @@ function get_relationship($pid1, $pid2, $followspouse=true, $maxlength=0, $ignor
 						$famrec = find_family_record($fam);
 					if ($followspouse) {
 						$parents = find_parents_in_record($famrec);
-						if ((!empty($parents["HUSB"]))&&(!in_arrayr($parents["HUSB"], $node1))) {
+						if ((!empty($parents["HUSB"]))&&((!in_arrayr($parents["HUSB"], $node1))||(!isset($visited[$parents["HUSB"]])))) {
 							$node1 = $node;
 							$node1["length"]+=$spouseh;
 							$node1["path"][] = $parents["HUSB"];
@@ -2436,7 +2436,7 @@ function get_relationship($pid1, $pid2, $followspouse=true, $maxlength=0, $ignor
 								$NODE_CACHE["$pid1-".$node1["pid"]] = $node1;
 							}
 						}
-						if ((!empty($parents["WIFE"]))&&(!in_arrayr($parents["WIFE"], $node1))) {
+						if ((!empty($parents["WIFE"]))&&((!in_arrayr($parents["WIFE"], $node1))||(!isset($visited[$parents["WIFE"]])))) {
 							$node1 = $node;
 							$node1["length"]+=$spouseh;
 							$node1["path"][] = $parents["WIFE"];
@@ -2474,8 +2474,9 @@ function get_relationship($pid1, $pid2, $followspouse=true, $maxlength=0, $ignor
 									$found=true;
 									$resnode = $node1;
 								}
-							} else
+							} else {
 								$visited[$child] = true;
+							}
 							if ($USE_RELATIONSHIP_PRIVACY) {
 								$NODE_CACHE["$pid1-".$node1["pid"]] = $node1;
 							}
@@ -3781,13 +3782,13 @@ function isFileExternal($file) {
 
 /*
  * Encrypt the input string
- * 
+ *
  * This function is used when a file name needs to be passed to another script by means of the
  * GET method.  This method passes parameters to the script through the URL that launches the
  * script.
  *
  * File names could themselves be legitimate URLs.  These legitimate URLs would normally be
- * killed by the hacker detection code in "includes/session_spider.php".  This method avoids 
+ * killed by the hacker detection code in "includes/session_spider.php".  This method avoids
  * that problem.
  *
  */
@@ -3939,7 +3940,7 @@ function mediaFileInfo($fileName, $thumbName, $mid, $name='', $notes='', $obeyVi
 	}
 	// At this point, $url describes how to handle the image when its thumbnail is clicked
 	$result['url'] = $url;
-	
+
 	// -- Determine the correct thumbnail or pseudo-thumbnail
 	$width = '';
 	switch ($type) {
@@ -3971,7 +3972,7 @@ function mediaFileInfo($fileName, $thumbName, $mid, $name='', $notes='', $obeyVi
 			$thumb = $thumbName;
 			if (substr($type,0,4)=='url_') $width = ' width="'.$THUMBNAIL_WIDTH.'"';
 	}
-	
+
 	// -- Use an overriding thumbnail if one has been provided
 	// Don't accept any overriding thumbnails that are in the "images" or "themes" directories
 	if (substr($thumbName,0,7)!='images/' && substr($thumbName,0,7)!='themes/') {
@@ -4000,7 +4001,7 @@ function mediaFileInfo($fileName, $thumbName, $mid, $name='', $notes='', $obeyVi
 		}
 		$width = '';
 	}
-	
+
 	// At this point, $width, $realThumb, and $thumb describe the thumbnail to be displayed
 	$result['thumb'] = $thumb;
 	$result['realThumb'] = $realThumb;
