@@ -115,6 +115,7 @@ $countries["HND"]="Honduras";
 $countries["HMD"]="Wyspy Heard i McDonalda";
 $countries["HKG"]="Hong Kong";
 $countries["IND"]="Indie";
+$countries["IOM"]="Wyspa Man";
 $countries["IOT"]="Brytyjskie Terytorium Oceanu Indyjskiego";
 $countries["IDN"]="Indonezja";
 $countries["IRQ"]="Irak";
