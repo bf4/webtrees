@@ -202,8 +202,8 @@ class PGVRPDF extends TCPDF {
 	}
 
 	function Body() {
-		global $TEXT_DIRECTION;
 		$this->AddPage();
+		$this->SetY(41);
 		$this->currentStyle = "";
 		foreach($this->bodyElements as $indexval => $element) {
 			if (is_string($element) && $element=="footnotetexts") $this->Footnotes();

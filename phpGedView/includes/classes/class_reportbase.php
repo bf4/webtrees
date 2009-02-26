@@ -124,8 +124,7 @@ class PGVReportBase {
 	}
 
 	function setProcessing($p) {
-		// [ 2637256 ] Extended Relatives Report Header Overwritten
-		//$this->processing = $p;
+		$this->processing = $p;
 	}
 
 	function addElement(&$element) {
@@ -775,6 +774,7 @@ function PGVRFooterSHandler($attrs) {
 function PGVRBodySHandler($attrs) {
 	global $pgvreport;
 
+	// [ 2637256 ] Extended Relatives Report Header Overwritten
 	$pgvreport->setProcessing("B");
 }
 
@@ -1693,6 +1693,8 @@ function PGVRListSHandler($attrs) {
 			$sortby = $vars[$vmatch[1]]["id"];
 			$sortby = trim($sortby);
 		}
+		$sortby = explode(":", $sortby);
+		$sortby = $sortby[0];
 	} else {
 		$sortby = "NAME";
 	}

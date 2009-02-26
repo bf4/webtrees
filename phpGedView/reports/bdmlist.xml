@@ -12,7 +12,7 @@
 	<PGVRInput name="birthdate2" lookup="DATE" type="text"><PGVRvar var="pgv_lang[birthdate2]" /></PGVRInput>
 	<PGVRInput name="deathdate1" lookup="DATE" type="text"><PGVRvar var="pgv_lang[deathdate1]" /></PGVRInput>
 	<PGVRInput name="deathdate2" lookup="DATE" type="text"><PGVRvar var="pgv_lang[deathdate2]" /></PGVRInput>
-	<PGVRInput name="sortby" type="select" options="BIRT,DEAT,ID,NAME"><PGVRvar var="pgv_lang[sort_by]" /></PGVRInput>
+	<PGVRInput name="sortby" type="select" options="BIRT:DATE,DEAT:DATE,NAME,ID"><PGVRvar var="pgv_lang[sort_by]" /></PGVRInput>
 	<PGVRInput name="pageSize" type="select" options="letter,A4,A3,A5,legal"><PGVRvar var="pgv_lang[page_size]" /></PGVRInput>
 	<PGVRStyle name="header" font="dejavusans" size="16" style="b" />
 	<PGVRStyle name="pagenum" font="dejavusans" size="8" style="" />

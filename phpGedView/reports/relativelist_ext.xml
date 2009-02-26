@@ -4,7 +4,7 @@
 	<PGVRDescription>Prints a list of individuals related to a specific person</PGVRDescription>
 	<PGVRInput name="pid" lookup="INDI" type="text"><PGVRvar var="pgv_lang[enter_pid]" /></PGVRInput>
 	<PGVRInput name="relatives" type="select" options="child-family,spouse-family,direct-ancestors,ancestors,descendants,all"><PGVRvar var="pgv_lang[choose_relatives]" /></PGVRInput>
-	<PGVRInput name="sortby" type="select" options="none,BIRT,DEAT,NAME"><PGVRvar var="pgv_lang[sort_by]" /></PGVRInput>
+	<PGVRInput name="sortby" type="select" options="none,NAME,BIRT:DATE,DEAT:DATE"><PGVRvar var="pgv_lang[sort_by]" /></PGVRInput>
 	<PGVRInput name="pageSize" type="select" options="letter,A4,A3,A5,legal"><PGVRvar var="pgv_lang[page_size]" /></PGVRInput>
 	<PGVRStyle name="header" font="dejavusans" size="14" style="b" />
 	<PGVRStyle name="pagenum" font="dejavusans" size="8" style="" />
