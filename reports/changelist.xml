@@ -4,7 +4,7 @@
 	<PGVRDescription>Prints a list of individuals matching specific change criteria</PGVRDescription>
 	<PGVRInput name="changeRangeStart" lookup="DATE" type="text" default="NOW-30"><PGVRvar var="pgv_lang[changedate2]" /></PGVRInput>
 	<PGVRInput name="changeRangeEnd" lookup="DATE" type="text" default="NOW"><PGVRvar var="pgv_lang[changedate1]" /></PGVRInput>
-	<PGVRInput name="sortby" type="select" options="CHAN,NAME,BIRT"><PGVRvar var="pgv_lang[sort_by]" /></PGVRInput>
+	<PGVRInput name="sortby" type="select" options="CHAN,NAME,BIRT:DATE"><PGVRvar var="pgv_lang[sort_by]" /></PGVRInput>
 	<PGVRInput name="pending" type="select" options="yes,no"><PGVRvar var="pgv_lang[show_pending]" /></PGVRInput>
 	<PGVRInput name="pageSize" type="select" options="letter,A4,A3,A5,legal"><PGVRvar var="pgv_lang[page_size]" /></PGVRInput>
 	<PGVRStyle name="header" font="dejavusans" size="16" style="b" />
