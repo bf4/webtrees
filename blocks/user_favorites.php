@@ -5,7 +5,7 @@
  * This block will print a users favorites
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
+ * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -34,6 +34,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 define('PGV_USER_FAVORITES_PHP', '');
 
 require_once("includes/functions/functions_print_lists.php");
+
 $PGV_BLOCKS["print_user_favorites"]["name"]			= $pgv_lang["user_favorites_block"];
 $PGV_BLOCKS["print_user_favorites"]["descr"]		= "user_favorites_descr";
 $PGV_BLOCKS["print_user_favorites"]["type"]			= "user";
@@ -45,6 +46,7 @@ function print_user_favorites($block=true, $config="", $side, $index) {
 	global $pgv_lang, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $TEXT_DIRECTION, $INDEX_DIRECTORY, $MEDIA_DIRECTORY, $MULTI_MEDIA, $MEDIA_DIRECTORY_LEVELS, $ctype;
 	global $show_full, $PEDIGREE_FULL_DETAILS, $BROWSERTYPE;
 
+	require_once("js/autocomplete.js.htm");
 	// Override GEDCOM configuration temporarily
 	if (isset($show_full)) $saveShowFull = $show_full;
 	$savePedigreeFullDetails = $PEDIGREE_FULL_DETAILS;
