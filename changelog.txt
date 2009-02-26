@@ -10,6 +10,7 @@
 
 
 Version 4.2.1
+ - Fixed: [ 2637256 ] Extended Relatives Report Header Overwritten (wooc)
  - Fixed: [ 2639453 ] Place check indicating X is difficult to tell the colour (fisharebest)
  - Changed: Add option to sort Manage Media list and MultiMedia list (canajun2eh)
  - Fixed: [ 2612938 ] 4.2.1 svn rev.5059 - Translation error (fisharebest)

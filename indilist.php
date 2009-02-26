@@ -246,7 +246,7 @@ if ($showList) {
 					}
 					$list[]=$html;
 				}
-				// Seach spiders don't get the "show all" option as the other links give them everything.
+				// Search spiders don't get the "show all" option as the other links give them everything.
 				if (!$SEARCH_SPIDER) {
 					if ($show_all_firstnames=='yes') {
 						$list[]='<span class="warning">'.$pgv_lang['all'].'</span>';
