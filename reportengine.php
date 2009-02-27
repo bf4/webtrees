@@ -5,7 +5,7 @@
  * Processes PGV XML Reports and generates a report
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
+ * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -127,6 +127,7 @@ if ($action=="choose") {
 //-- setup report to run
 else if ($action=="setup") {
 	print_header($pgv_lang["enter_report_values"]);
+	require 'js/autocomplete.js.htm';
 	//-- make sure the report exists
 	if (!file_exists($report)) {
 		print "<span class=\"error\">".$pgv_lang["file_not_found"]."</span> ".$report."\n";
@@ -218,7 +219,7 @@ function paste_id(value) {
 						?>
 						<script language="JavaScript" type="text/javascript">
 						<!--
-							document.getElementById('<?php print $input["name"]; ?>').focus();
+							//document.getElementById('<?php print $input["name"]; ?>').focus();
 						//-->
 						</script>
 						<?php

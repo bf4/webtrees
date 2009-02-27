@@ -6,7 +6,7 @@
 	<PGVRInput name="birthplace" lookup="PLAC" type="text"><PGVRvar var="pgv_lang[birthplace]" /> </PGVRInput>
 	<PGVRInput name="birthdate1" lookup="DATE" type="text"><PGVRvar var="pgv_lang[birthdate1]" /></PGVRInput>
 	<PGVRInput name="birthdate2" lookup="DATE" type="text"><PGVRvar var="pgv_lang[birthdate2]" /></PGVRInput>
-	<PGVRInput name="sortby" type="select" options="NAME,BIRT"><PGVRvar var="pgv_lang[sort_by]" /></PGVRInput>
+	<PGVRInput name="sortby" type="select" options="NAME,BIRT:DATE"><PGVRvar var="pgv_lang[sort_by]" /></PGVRInput>
 	<PGVRInput name="pageSize" type="select" options="letter,A4,A3,A5,legal"><PGVRvar var="pgv_lang[page_size]" /></PGVRInput>
 	<PGVRStyle name="header" font="dejavusans" size="16" style="b" />
 	<PGVRStyle name="pagenum" font="dejavusans" size="8" style="" />

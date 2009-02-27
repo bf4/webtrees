@@ -5,7 +5,7 @@
  * This block prints the active gedcom favorites
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
+ * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -43,7 +43,7 @@ function print_gedcom_favorites($block = true, $config="", $side, $index) {
 	global $pgv_lang, $factarray, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $ctype, $TEXT_DIRECTION;
 	global $show_full, $PEDIGREE_FULL_DETAILS, $BROWSERTYPE;
 
-	// Override GEDCOM configuration temporarily
+	require_once("js/autocomplete.js.htm");// Override GEDCOM configuration temporarily
 	if (isset($show_full)) $saveShowFull = $show_full;
 	$savePedigreeFullDetails = $PEDIGREE_FULL_DETAILS;
 	$show_full = 1;

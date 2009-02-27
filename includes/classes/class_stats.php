@@ -2213,7 +2213,7 @@ class stats {
 			switch ($type) {
 			case 'table':
 				$lookup=array('M'=>$pgv_lang['male'], 'F'=>$pgv_lang['female'], 'U'=>$pgv_lang['unknown'], 'B'=>$pgv_lang['all']);
-				return '<table><tr><td colspan="2" class="descriptionbox center">'.$lookup[$sex].'</td></tr><tr><td class="descriptionbox center">'.$pgv_lang['name'].'</td><td class="descriptionbox center">'.$pgv_lang['count'].'</td></tr>'.join('', $common).'</table>';
+				return '<table><tr><td colspan="2" class="descriptionbox center">'.$lookup[$sex].'</td></tr><tr><td class="descriptionbox center">'.$pgv_lang['names'].'</td><td class="descriptionbox center">'.$pgv_lang['count'].'</td></tr>'.join('', $common).'</table>';
 			case 'list':
 				return "<ul>\n".join("\n", $common)."</ul>\n";
 			case 'nolist':

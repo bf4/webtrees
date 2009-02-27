@@ -5,7 +5,7 @@
  * used by the SAX parser to generate reports from the XML report file.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
+ * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -586,18 +586,18 @@ $elementHandler["PGVRFootnote"]["end"]		= "PGVRFootnoteEHandler";
 $elementHandler["PGVRFootnoteTexts"]["start"]	= "PGVRFootnoteTextsSHandler";
 $elementHandler["br"]["start"]				= "brSHandler";
 $elementHandler["sp"]["start"]				= "spSHandler";
-$elementHandler["PGVRPageHeader"]["start"] 		= "PGVRPageHeaderSHandler";
-$elementHandler["PGVRPageHeader"]["end"] 		= "PGVRPageHeaderEHandler";
-$elementHandler["PGVRHighlightedImage"]["start"] 		= "PGVRHighlightedImageSHandler";
+$elementHandler["PGVRPageHeader"]["start"] 	= "PGVRPageHeaderSHandler";
+$elementHandler["PGVRPageHeader"]["end"] 	= "PGVRPageHeaderEHandler";
+$elementHandler["PGVRHighlightedImage"]["start"] = "PGVRHighlightedImageSHandler";
 $elementHandler["PGVRImage"]["start"] 		= "PGVRImageSHandler";
 $elementHandler["PGVRLine"]["start"] 		= "PGVRLineSHandler";
 $elementHandler["PGVRList"]["start"] 		= "PGVRListSHandler";
-$elementHandler["PGVRList"]["end"] 		= "PGVRListEHandler";
-$elementHandler["PGVRListTotal"]["start"]       = "PGVRListTotalSHandler";
-$elementHandler["PGVRRelatives"]["start"] 		= "PGVRRelativesSHandler";
-$elementHandler["PGVRRelatives"]["end"] 		= "PGVRRelativesEHandler";
-$elementHandler["PGVRGeneration"]["start"]      = "PGVRGenerationSHandler";
-$elementHandler["PGVRNewPage"]["start"]			= "PGVRNewPageSHandler";
+$elementHandler["PGVRList"]["end"] 			= "PGVRListEHandler";
+$elementHandler["PGVRListTotal"]["start"]	= "PGVRListTotalSHandler";
+$elementHandler["PGVRRelatives"]["start"] 	= "PGVRRelativesSHandler";
+$elementHandler["PGVRRelatives"]["end"] 	= "PGVRRelativesEHandler";
+$elementHandler["PGVRGeneration"]["start"]	= "PGVRGenerationSHandler";
+$elementHandler["PGVRNewPage"]["start"]		= "PGVRNewPageSHandler";
 
 $pgvreportStack = array();
 $currentElement = new PGVRElement();
@@ -774,6 +774,7 @@ function PGVRFooterSHandler($attrs) {
 function PGVRBodySHandler($attrs) {
 	global $pgvreport;
 
+	// [ 2637256 ] Extended Relatives Report Header Overwritten
 	$pgvreport->setProcessing("B");
 }
 
@@ -1248,16 +1249,23 @@ function PGVRvarSHandler($attrs) {
 }
 
 function PGVRvarLetterSHandler($attrs) {
-	global $currentElement, $factarray, $fact, $desc;
+	global $currentElement, $factarray, $factAbbrev, $fact, $desc;
 
 	$var = $attrs["var"];
 	if (!empty($var)) {
 		$tfact = $fact;
 		$var = preg_replace(array("/\[/","/\]/","/@fact/","/@desc/"), array("['","']",$tfact,$desc), $var);
-		eval("if (!empty(\$$var)) \$var = \$$var;");
-
-		$letter = get_first_letter($var);
-
+		
+		$abbr = str_replace("factarray", "factAbbrev", $var);
+		eval("if (!empty(\$$abbr)) {
+				\$var = \$$abbr;
+				\$letter = \$var;
+			}
+			else if (!empty(\$$var)) {
+				\$var = \$$var;
+				\$letter = get_first_letter(\$var);
+			}"
+		);
 		$currentElement->addText($letter);
 	}
 }
@@ -1685,6 +1693,8 @@ function PGVRListSHandler($attrs) {
 			$sortby = $vars[$vmatch[1]]["id"];
 			$sortby = trim($sortby);
 		}
+		$sortby = explode(":", $sortby);
+		$sortby = $sortby[0];
 	} else {
 		$sortby = "NAME";
 	}

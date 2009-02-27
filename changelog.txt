@@ -10,6 +10,7 @@
 
 
 Version 4.2.0 CA
+ - Merged: Merge changes r5096 - r5104 from the trunk. (windmillway)
  - Changed: File name shnote_ctrl to note_ctrl (windmillway)
  - Changed: File names shnote.php, shnotelist.php, class_shnote.php to note.php, notelist.php, class_note.php. (windmillway)
  - Changed: Changed wording "shnote" to "shared_note" in all language files and references (windmillway)
@@ -44,6 +45,8 @@ Version 4.2.0 CA
 
 
 Version 4.2.1
+ - Fixed: [ 2637256 ] Extended Relatives Report Header Overwritten (wooc)
+ - Fixed: [ 2639453 ] Place check indicating X is difficult to tell the colour (fisharebest)
  - Changed: Add option to sort Manage Media list and MultiMedia list (canajun2eh)
  - Fixed: [ 2612938 ] 4.2.1 svn rev.5059 - Translation error (fisharebest)
  - Fixed: [ 2608286 ] Copy EVENT causes error in option field (fisharebest)
