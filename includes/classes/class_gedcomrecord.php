@@ -35,7 +35,7 @@ require_once 'includes/classes/class_person.php';
 require_once 'includes/classes/class_family.php';
 require_once 'includes/classes/class_source.php';
 require_once 'includes/classes/class_repository.php';
-require_once 'includes/classes/class_shnote.php';
+require_once 'includes/classes/class_note.php';
 require_once 'includes/classes/class_media.php';
 require_once 'includes/classes/class_event.php';
 require_once 'includes/classes/class_serviceclient.php';

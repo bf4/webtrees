@@ -952,7 +952,7 @@ function print_shnote_table($datalist, $legend=null) {
 		return;
 	}
 	require_once 'js/sorttable.js.htm';
-	require_once 'includes/classes/class_shnote.php';
+	require_once 'includes/classes/class_note.php';
 
 	echo '<fieldset><legend><img src="', $PGV_IMAGE_DIR, '/', $PGV_IMAGES['shnote']['small'], '" align="middle" /> ';
 	if ($legend) {

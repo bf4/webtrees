@@ -33,7 +33,7 @@ define('PGV_SHNOTE_CTRL_PHP', '');
 
 require_once 'includes/functions/functions_print_facts.php';
 require_once 'includes/controllers/basecontrol.php';
-require_once 'includes/classes/class_shnote.php';
+require_once 'includes/classes/class_note.php';
 require_once 'includes/classes/class_menu.php';
 require_once 'includes/functions/functions_import.php';
 
@@ -221,7 +221,7 @@ class ShnoteControllerRoot extends BaseController {
 			// edit_note / show/hide changes
 			if (!$this->show_changes)
 			{
-				$submenu = new Menu($pgv_lang['show_changes'], encode_url("shnote.php?nid={$this->nid}&show_changes=yes"));
+				$submenu = new Menu($pgv_lang['show_changes'], encode_url("note.php?nid={$this->nid}&show_changes=yes"));
 				if (!empty($PGV_IMAGES["notes"]["small"]))
 					$submenu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['notes']['small']}");
 				$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}");
@@ -229,7 +229,7 @@ class ShnoteControllerRoot extends BaseController {
 			}
 			else
 			{
-				$submenu = new Menu($pgv_lang['hide_changes'], encode_url("shnote.php?nid={$this->nid}&show_changes=no"));
+				$submenu = new Menu($pgv_lang['hide_changes'], encode_url("note.php?nid={$this->nid}&show_changes=no"));
 				if (!empty($PGV_IMAGES["notes"]["small"]))
 					$submenu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['notes']['small']}");
 				$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}");
@@ -239,12 +239,12 @@ class ShnoteControllerRoot extends BaseController {
 			if (PGV_USER_CAN_ACCEPT)
 			{
 				// edit_shared note / accept_all
-				$submenu = new Menu($pgv_lang["undo_all"], encode_url("shnote.php?nid={$this->nid}&action=undo"));
+				$submenu = new Menu($pgv_lang["undo_all"], encode_url("note.php?nid={$this->nid}&action=undo"));
 				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 				if (!empty($PGV_IMAGES["notes"]["small"]))
 					$submenu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['notes']['small']}");
 				$menu->addSubmenu($submenu);
-				$submenu = new Menu($pgv_lang['accept_all'], encode_url("shnote.php?nid={$this->nid}&action=accept"));
+				$submenu = new Menu($pgv_lang['accept_all'], encode_url("note.php?nid={$this->nid}&action=accept"));
 				if (!empty($PGV_IMAGES["notes"]["small"]))
 					$submenu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['notes']['small']}");
 				$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}");
@@ -319,7 +319,7 @@ class ShnoteControllerRoot extends BaseController {
 		if ($this->shnote->canDisplayDetails() && !empty($this->uname))
 		{
 				// other / add_to_my_favorites
-				$submenu = new Menu($pgv_lang['add_to_my_favorites'], encode_url("shnote.php?action=addfav&nid={$this->nid}&gid={$this->nid}"));
+				$submenu = new Menu($pgv_lang['add_to_my_favorites'], encode_url("note.php?action=addfav&nid={$this->nid}&gid={$this->nid}"));
 				$submenu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['gedcom']['small']}");
 				$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}");
 				$menu->addSubmenu($submenu);

@@ -97,7 +97,7 @@ class Shnote extends GedcomRecord {
 	 * @string a url that can be used to link to this shared note
 	 */
 	public function getLinkUrl() {
-		return parent::_getLinkUrl('shnote.php?nid=');
+		return parent::_getLinkUrl('note.php?nid=');
 	}
 
 	// Get an array of structures containing all the names in the record

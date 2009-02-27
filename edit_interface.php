@@ -861,7 +861,7 @@ case 'addshnoteaction':
 		echo "<pre>$newgedrec</pre>";
 	}
 	$xref = append_gedrec($newgedrec);
-	$link = "shnote.php?nid=$xref&show_changes=yes";
+	$link = "note.php?nid=$xref&show_changes=yes";
 	if ($xref) {
 		echo "<br /><br />\n".$pgv_lang["new_shared_note_created"]."<br /><br />";
 		echo "<a href=\"javascript:// NOTE $xref\" onclick=\"openerpasteid('$xref'); return false;\">".$pgv_lang["paste_id_into_field"]." <b>$xref</b></a>\n";
@@ -994,7 +994,7 @@ case 'updateshnoteaction':
 		echo "<pre>$newgedrec</pre>";
 	}
 	$pids = (replace_gedrec($pid, $newgedrec, $update_CHAN));
-	$link = "shnote.php?nid=$pid&show_changes=yes";
+	$link = "note.php?nid=$pid&show_changes=yes";
 	if ($pid) {
 		echo "<br /><br />\n".$pid." ".$pgv_lang["shared_note_updated"]."<br /><br />";
 		//echo "<a href=\"javascript:// NOTE $pid\" onclick=\"openerpasteid('$pid'); return false;\">".$pgv_lang["paste_id_into_field"]." <b>$pid</b></a>\n";

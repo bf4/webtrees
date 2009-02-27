@@ -1508,8 +1508,6 @@ function get_shnote_list($ged_id) {
 	);
 	$list=array();
 	while ($row=$res->fetchRow(DB_FETCHMODE_ASSOC)) {
-		//BH Not working
-		// $list[]=Shnote::getInstance($row);
 		$list[]=Shnote::getInstance($row);
 	}
 	$res->free();
