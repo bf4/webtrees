@@ -5,7 +5,7 @@
  * used by the SAX parser to generate PDF reports from the XML report file.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
+ * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -203,7 +203,7 @@ class PGVRPDF extends TCPDF {
 
 	function Body() {
 		$this->AddPage();
-		$this->SetY(41);
+		$this->SetY(45);
 		$this->currentStyle = "";
 		foreach($this->bodyElements as $indexval => $element) {
 			if (is_string($element) && $element=="footnotetexts") $this->Footnotes();
