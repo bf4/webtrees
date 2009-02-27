@@ -14,7 +14,7 @@
 	<PGVRStyle name="minibold" font="dejavusans" size="8" style="b" />
 	<PGVRStyle name="label" font="dejavusans" size="10" style="b" />
 	<PGVRDoc pageSize="$pageSize" orientation="L" margin="24">
-        <PGVRSetVar name="height1" value="10" />
+        <PGVRSetVar name="height1" value="14" />
         <PGVRSetVar name="height2" value="10" />
         <PGVRSetVar name="width1" value="40" />
         <PGVRSetVar name="width2" value="150" />
@@ -29,7 +29,7 @@
 		<PGVRHeader>
 			<PGVRCell width="0" height="20" align="center" style="header"><PGVRvar var="pgv_lang[relatives_report_ext]" /></PGVRCell>
 			<PGVRCell width="0" height="10" align="right" style="pagenum"><PGVRvar var="pgv_lang[page]" /> <PGVRPageNum /> <PGVRvar var="pgv_lang[of]" /> <PGVRTotalPages /></PGVRCell>
-			<PGVRTextBox width="" height="3" border="0" newline="1"></PGVRTextBox>
+			<PGVRTextBox width="" height="2" border="0" newline="1"></PGVRTextBox>
 			<PGVRTextBox width="$width1" height="$height1" border="1">
 				<PGVRText style="label">ID</PGVRText>
 			</PGVRTextBox>
