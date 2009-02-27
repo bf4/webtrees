@@ -35,7 +35,7 @@ require_once 'includes/classes/class_gedcomrecord.php';
 require_once 'includes/classes/class_serviceclient.php';
 
 class Shnote extends GedcomRecord {
-	// Get an instance of a Shnote.  We either specify
+	// Get an instance of a Shared note.  We either specify
 	// an XREF (in the current gedcom), or we can provide a row
 	// from the database (if we anticipate the record hasn't
 	// been fetched previously).
@@ -93,7 +93,7 @@ class Shnote extends GedcomRecord {
 	}
 
 	/**
-	 * get the URL to link to this shnote
+	 * get the URL to link to this shared note
 	 * @string a url that can be used to link to this shared note
 	 */
 	public function getLinkUrl() {

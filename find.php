@@ -103,7 +103,7 @@ switch ($type) {
 		$action="filter";
 		break;
 	case "shnote" :
-		print_simple_header($pgv_lang["find_shnote"]);
+		print_simple_header($pgv_lang["find_shared_note"]);
 		$action="filter";
 		break;
 	case "source" :
@@ -192,7 +192,7 @@ switch ($type) {
 		print $pgv_lang["repo_list"];
 		break;
 	case "shnote" :
-		print $pgv_lang["find_shnote"];
+		print $pgv_lang["find_shared_note"];
 		break;
 	case "source" :
 		print $pgv_lang["find_source"];
@@ -331,7 +331,7 @@ if ($type == "shnote" && $SHOW_SOURCES>=PGV_USER_ACCESS_LEVEL) {
 	print "<input type=\"hidden\" name=\"subclick\">"; // This is for passing the name of which submit button was clicked
 	print "<table class=\"list_table $TEXT_DIRECTION width100\" border=\"0\">";
 	print "<tr><td class=\"list_label width10\" style=\"padding: 5px;\">";
-	print $pgv_lang["shnote_contains"]." <input type=\"text\" name=\"filter\" value=\"";
+	print $pgv_lang["shared_note_contains"]." <input type=\"text\" name=\"filter\" value=\"";
 	if ($filter) print $filter;
 	print "\" />";
 	print "</td></tr>";
@@ -663,7 +663,7 @@ if ($action=="filter") {
 				echo "</span></a></li>";
 			}
 			print "</ul></td></tr>";
-			print "<tr><td class=\"list_label\">".$pgv_lang["shnotes_found"]." ".count($shnote_list);
+			print "<tr><td class=\"list_label\">".$pgv_lang["shared_notes_found"]." ".count($shnote_list);
 			print "</td></tr>";
 		}
 		else {

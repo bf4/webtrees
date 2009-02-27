@@ -1002,7 +1002,7 @@ function print_addnewrepository_link($element_id) {
 function print_addnewshnote_link($element_id) {
 	global $pgv_lang, $PGV_IMAGE_DIR, $PGV_IMAGES;
 
-	$text = $pgv_lang["create_shnote"];
+	$text = $pgv_lang["create_shared_note"];
 	if (isset($PGV_IMAGES["addnote"]["button"])) $Link = "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["addnote"]["button"]."\" alt=\"".$text."\" title=\"".$text."\" border=\"0\" align=\"middle\" />";
 	else $Link = $text;
 	echo "&nbsp;&nbsp;&nbsp;<a href=\"javascript:ADD;\" onclick=\"addnewshnote(document.getElementById('".$element_id."')); return false;\">";
@@ -1016,7 +1016,7 @@ function print_addnewshnote_link($element_id) {
 
 function print_editshnote_link($shnote_id) {
 	global $pgv_lang, $PGV_IMAGE_DIR, $PGV_IMAGES;
-	$text = $pgv_lang["edit_shnote"];
+	$text = $pgv_lang["edit_shared_note"];
 	if (isset($PGV_IMAGES["note"]["button"])) $Link = "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["note"]["button"]."\" alt=\"".$text."\" title=\"".$text."\" border=\"0\" align=\"middle\" />";
 	else $Link = $text;
 	echo "<a href=\"javascript: var win02=window.open('edit_interface.php?action=editshnote&pid=$shnote_id', 'win02', 'top=70, left=70, width=620, height=500, resizable=1, scrollbars=1 ' )\">";
@@ -1249,7 +1249,7 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 				echo $pgv_lang[$fact];
 		} else if (isset($factarray[$fact])) {
 			if ($fact=="NOTE" && $islink){ 
-				echo $pgv_lang["shnote"];
+				echo $pgv_lang["shared_note"];
 			}else{
 				echo $factarray[$fact];
 			}
@@ -1292,8 +1292,8 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 
 		$noteid = $value;
 		// BH Next line added for Shared Notes ==================
-		// echo $pgv_lang["shnote"]." Id: &nbsp;&nbsp;<b>".$noteid."</b>";
-		// echo $pgv_lang["shnote"].":&nbsp;&nbsp;";
+		// echo $pgv_lang["shared_note"]." Id: &nbsp;&nbsp;<b>".$noteid."</b>";
+		// echo $pgv_lang["shared_note"].":&nbsp;&nbsp;";
 		// ====================================================
 /*
 		echo "<input type=\"hidden\" name=\"text[]\" value=\"".$noteid."\" />\n";
@@ -1723,7 +1723,7 @@ function print_add_layer($tag, $level=2, $printSaveButton=true) {
 	if ($tag=="SHNOTE") {
 		//-- Retrieve existing shared note or add new shared note to fact
 		$text = "";
-		echo "<a href=\"javascript:;\" onclick=\"return expand_layer('newshnote');\"><img id=\"newnote_img\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["plus"]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" title=\"\" /> ".$pgv_lang["add_shnote"]."</a>";
+		echo "<a href=\"javascript:;\" onclick=\"return expand_layer('newshnote');\"><img id=\"newnote_img\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["plus"]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" title=\"\" /> ".$pgv_lang["add_shared_note"]."</a>";
 		print_help_link("edit_add_NOTE_help", "qm");
 		echo "<br />\n";
 		echo "<div id=\"newshnote\" style=\"display: none;\">\n";
@@ -1738,7 +1738,7 @@ function print_add_layer($tag, $level=2, $printSaveButton=true) {
 	if ($tag=="SHNOTEADD") {
 		//-- Retrieve existing shared note or add new shared note to fact
 		$text = "";
-		echo "<a href=\"javascript:;\" onclick=\"return expand_layer('newshnote');\"><img id=\"newnote_img\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["plus"]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" title=\"\" /> ".$pgv_lang["add_shnote"]."</a>";
+		echo "<a href=\"javascript:;\" onclick=\"return expand_layer('newshnote');\"><img id=\"newnote_img\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["plus"]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" title=\"\" /> ".$pgv_lang["add_shared_note"]."</a>";
 		print_help_link("edit_add_NOTE_help", "qm");
 		echo "<br />\n";
 		echo "<div id=\"newshnote\" style=\"display: none;\">\n";

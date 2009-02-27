@@ -958,7 +958,7 @@ function print_shnote_table($datalist, $legend=null) {
 	if ($legend) {
 		echo $legend;
 	} else {
-		echo $pgv_lang['shnotes'];
+		echo $pgv_lang['shared_notes'];
 	}
 	echo '</legend>';
 	$table_id = "ID".floor(microtime()*1000000); // sorttable requires a unique ID
@@ -1015,7 +1015,7 @@ function print_shnote_table($datalist, $legend=null) {
 	if ($SHOW_ID_NUMBERS) {
 		echo '<td></td>';
 	}
-	echo '<td class="list_label">', $pgv_lang['total_shnotes'], ' : ', $n,  '</td><td></td><td class="t2" style="display:none;"></td><td></td><td></td><td></td>';
+	echo '<td class="list_label">', $pgv_lang['total_shared_notes'], ' : ', $n,  '</td><td></td><td class="t2" style="display:none;"></td><td></td><td></td><td></td>';
 	if ($SHOW_LAST_CHANGE) {
 		echo '<td></td>';
 	}

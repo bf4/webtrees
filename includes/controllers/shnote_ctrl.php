@@ -72,7 +72,7 @@ class ShnoteControllerRoot extends BaseController {
 		$this->shnote->ged_id=PGV_GED_ID; // This record is from a file
 
 		if (!$this->shnote->canDisplayDetails()) {
-			print_header($pgv_lang["private"]." ".$pgv_lang["shnote_info"]);
+			print_header($pgv_lang["private"]." ".$pgv_lang["shared_note_info"]);
 			print_privacy_error($CONTACT_EMAIL);
 			print_footer();
 			exit;
@@ -160,7 +160,7 @@ class ShnoteControllerRoot extends BaseController {
 	*/
 	function getPageTitle() {
 		global $pgv_lang;
-		return $this->shnote->getFullName()." - ".$this->nid." - ".$pgv_lang["shnote_info"];
+		return $this->shnote->getFullName()." - ".$this->nid." - ".$pgv_lang["shared_note_info"];
 	}
 	/**
 	* check if use can edit this person
@@ -186,7 +186,7 @@ class ShnoteControllerRoot extends BaseController {
 		}
 
 		// edit shared note menu
-		$menu = new Menu($pgv_lang['edit_shnote']);
+		$menu = new Menu($pgv_lang['edit_shared_note']);
 		if ($SHOW_GEDCOM_RECORD || PGV_USER_IS_ADMIN)
 			$menu->addOnclick('return edit_raw(\''.$this->nid.'\');');
 		if (!empty($PGV_IMAGES["notes"]["small"]))
@@ -204,8 +204,8 @@ class ShnoteControllerRoot extends BaseController {
 		}
 
 		// edit shared note / delete_shared note
-		$submenu = new Menu($pgv_lang['delete_shnote']);
-		$submenu->addOnclick("if (confirm('".$pgv_lang["confirm_delete_shnote"]."')) return deletesource('".$this->nid."'); else return false;");
+		$submenu = new Menu($pgv_lang['delete_shared_note']);
+		$submenu->addOnclick("if (confirm('".$pgv_lang["confirm_delete_shared_note"]."')) return deletesource('".$this->nid."'); else return false;");
 		if (!empty($PGV_IMAGES["notes"]["small"]))
 			$submenu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['notes']['small']}");
 		$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}");

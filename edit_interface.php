@@ -778,14 +778,14 @@ case 'addnewshnote':
 		}
 	//-->
 	</script>
-	<b><?php echo $pgv_lang['create_shnote']; $tabkey = 1; ?></b>
+	<b><?php echo $pgv_lang['create_shared_note']; $tabkey = 1; ?></b>
 	<form method="post" action="edit_interface.php" onsubmit="return check_form(this);">
 		<input type="hidden" name="action" value="addshnoteaction" />
 		<input type="hidden" name="pid" value="newshnote" />
 		
 		<table class="facts_table">
 			<tr>
-				<td class="descriptionbox <?php echo $TEXT_DIRECTION; ?> wrap="nowrap"><?php print_help_link("edit_NOTE_help", "qm"); echo $pgv_lang["shnote"]; ?></td>
+				<td class="descriptionbox <?php echo $TEXT_DIRECTION; ?> wrap="nowrap"><?php print_help_link("edit_NOTE_help", "qm"); echo $pgv_lang["shared_note"]; ?></td>
 				<td class="optionbox wrap"><textarea tabindex="<?php echo $tabkey; ?>" name="NOTE" id="NOTE" rows="15" cols="88"></textarea><br /><?php print_specialchar_link("NOTE",true); ?></td>
 			</tr>
 			<?php $tabkey++; ?>
@@ -863,7 +863,7 @@ case 'addshnoteaction':
 	$xref = append_gedrec($newgedrec);
 	$link = "shnote.php?nid=$xref&show_changes=yes";
 	if ($xref) {
-		echo "<br /><br />\n".$pgv_lang["new_shnote_created"]."<br /><br />";
+		echo "<br /><br />\n".$pgv_lang["new_shared_note_created"]."<br /><br />";
 		echo "<a href=\"javascript:// NOTE $xref\" onclick=\"openerpasteid('$xref'); return false;\">".$pgv_lang["paste_id_into_field"]." <b>$xref</b></a>\n";
 	}
 	break;
@@ -885,7 +885,7 @@ case 'editshnote':
 		}
 	//-->
 	</script>
-	<b><?php echo $pgv_lang['edit_shnote']; $tabkey = 1; echo "&nbsp;&nbsp;(" . $pid . ")";?></b><br /><br />
+	<b><?php echo $pgv_lang['edit_shared_note']; $tabkey = 1; echo "&nbsp;&nbsp;(" . $pid . ")";?></b><br /><br />
 	<form method="post" action="edit_interface.php" onsubmit="return check_form(this);">
 		<input type="hidden" name="action" value="updateshnoteaction" />
 		<input type="hidden" name="pid" value="<?php echo $pid; ?>" />
@@ -911,7 +911,7 @@ case 'editshnote':
 		?>
 		<table class="facts_table">
 			<tr>
-				<td class="descriptionbox <?php echo $TEXT_DIRECTION; ?> wrap width25"><?php print_help_link("edit_NOTE_help", "qm"); echo $pgv_lang["shnote"]; ?></td>
+				<td class="descriptionbox <?php echo $TEXT_DIRECTION; ?> wrap width25"><?php print_help_link("edit_NOTE_help", "qm"); echo $pgv_lang["shared_note"]; ?></td>
 				<td class="optionbox wrap">
 					<textarea tabindex="<?php echo $tabkey; ?>" name="NOTE" id="NOTE" rows="15" cols="90"><?php 
 						echo $shnote_content; 
@@ -996,7 +996,7 @@ case 'updateshnoteaction':
 	$pids = (replace_gedrec($pid, $newgedrec, $update_CHAN));
 	$link = "shnote.php?nid=$pid&show_changes=yes";
 	if ($pid) {
-		echo "<br /><br />\n".$pid." ".$pgv_lang["shnote_updated"]."<br /><br />";
+		echo "<br /><br />\n".$pid." ".$pgv_lang["shared_note_updated"]."<br /><br />";
 		//echo "<a href=\"javascript:// NOTE $pid\" onclick=\"openerpasteid('$pid'); return false;\">".$pgv_lang["paste_id_into_field"]." <b>$pid</b></a>\n";
 	}
 	break;

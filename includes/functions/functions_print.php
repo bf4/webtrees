@@ -1175,7 +1175,7 @@ function print_note_record($text, $nlevel, $nrec, $textOnly=false, $return=false
 		}
 		// Check if Shared Note ------------------------------------------
 		if (eregi("0 @N.*@ NOTE", $nrec)) { 
-			$data .= $pgv_lang["shnote"].": </span><span class=\"field\">";
+			$data .= $pgv_lang["shared_note"].": </span><span class=\"field\">";
 		}else{
 			$data .= $pgv_lang["note"].": </span><span class=\"field\">";
 		}
@@ -2504,7 +2504,7 @@ function print_findshnote_link($element_id, $shnotename="", $asString=false, $ge
 	global $pgv_lang, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM;
 
 	if (empty($ged)) $ged=$GEDCOM;
-	$text = $pgv_lang["find_shnote"];
+	$text = $pgv_lang["find_shared_note"];
 	if (isset($PGV_IMAGES["note"]["button"])) $Link = "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["note"]["button"]."\" alt=\"".$text."\" title=\"".$text."\" border=\"0\" align=\"middle\" />";
 	else $Link = $text;
 	$out = " <a href=\"javascript:;\" onclick=\"findShnote(document.getElementById('".$element_id."'), document.getElementById('".$shnotename."'), '".$ged."'); findtype='shnote'; return false;\">";

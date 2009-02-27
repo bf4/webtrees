@@ -77,7 +77,7 @@ if (!$controller->isPrintPreview()) {
 	$othermenu=$controller->getOtherMenu();
 	if ($editmenu || $othermenu) {
 		echo '<table class="sublinks_table" cellspacing="4" cellpadding="0">';
-		echo '<tr><td class="list_label ', $TEXT_DIRECTION, '" colspan="2">', $pgv_lang['shnote_menu'], '</td></tr>';
+		echo '<tr><td class="list_label ', $TEXT_DIRECTION, '" colspan="2">', $pgv_lang['shared_note_menu'], '</td></tr>';
 		echo '<tr>';
 		if ($editmenu) {
 			echo '<td class="sublinks_cell ', $TEXT_DIRECTION, '">', $editmenu->printMenu(), '</td>';
@@ -107,7 +107,7 @@ if ($nt==1) {
 // echo '<tr><td align="center" class="descriptionbox">Shared Note</td><td class="optionbox">';
 
 	echo '<tr><td align="left" class="descriptionbox">';
-		echo '&nbsp;&nbsp;' . $pgv_lang["shnote"];
+		echo '&nbsp;&nbsp;' . $pgv_lang["shared_note"];
 		echo '<br /><br />';
 		if (PGV_USER_CAN_EDIT) {
 			echo "<a href=\"javascript: edit_shnote()\"> ";
