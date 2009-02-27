@@ -1679,7 +1679,7 @@ case 'deletefamily':
 	
 //----------------------------------------------------------------------------------
 // This case will delete Shared notes as well, as $pid is passed with call
-// from source_ctrl.php or shnote_ctrl.php (line 208  submenu->addOnclick ..... etc)
+// from source_ctrl.php or note_ctrl.php (line 208  submenu->addOnclick ..... etc)
 // i.e. return deletesource($pid) where $pid = Sxxx (source) OR Nxxx (shared note)
 // ---------------------------------------------------------------------------------
 case 'deletesource': 

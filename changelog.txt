@@ -10,6 +10,7 @@
 
 
 Version 4.2.0 CA
+ - Changed: File name shnote_ctrl to note_ctrl (windmillway)
  - Changed: File names shnote.php, shnotelist.php, class_shnote.php to note.php, notelist.php, class_note.php. (windmillway)
  - Changed: Changed wording "shnote" to "shared_note" in all language files and references (windmillway)
  - Changed: Prevent (for now) [+]Add Shared Note menu appearing under add "Regular" NOTE menu (windmillway)

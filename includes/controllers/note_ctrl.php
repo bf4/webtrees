@@ -29,7 +29,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
-define('PGV_SHNOTE_CTRL_PHP', '');
+define('PGV_NOTE_CTRL_PHP', '');
 
 require_once 'includes/functions/functions_print_facts.php';
 require_once 'includes/controllers/basecontrol.php';
@@ -41,7 +41,7 @@ $nonfacts = array();
 /**
 * Main controller class for the shared note page.
 */
-class ShnoteControllerRoot extends BaseController {
+class NoteControllerRoot extends BaseController {
 	var $nid;
 	/* @var Shnote */
 	var $shnote = null;
@@ -53,7 +53,7 @@ class ShnoteControllerRoot extends BaseController {
 	/**
 	* constructor
 	*/
-	function ShnoteRootController() {
+	function NoteRootController() {
 		parent::BaseController();
 	}
 
@@ -329,13 +329,13 @@ class ShnoteControllerRoot extends BaseController {
 }
 // -- end of class
 //-- load a user extended class if one exists
-if (file_exists('includes/controllers/shnote_ctrl_user.php'))
+if (file_exists('includes/controllers/note_ctrl_user.php'))
 {
-	include_once 'includes/controllers/shnote_ctrl_user.php';
+	include_once 'includes/controllers/note_ctrl_user.php';
 }
 else
 {
-	class ShnoteController extends ShnoteControllerRoot
+	class NoteController extends NoteControllerRoot
 	{
 	}
 }

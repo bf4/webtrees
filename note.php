@@ -25,10 +25,10 @@
 */
 
 require './config.php';
-require './includes/controllers/shnote_ctrl.php';
+require './includes/controllers/note_ctrl.php';
 require './includes/functions/functions_print_lists.php';
 
-$controller=new ShnoteController();
+$controller=new NoteController();
 $controller->init();
 
 // Tell addmedia.php what to link to
