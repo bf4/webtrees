@@ -2267,13 +2267,11 @@ function create_edit_form($gedrec, $linenum, $level0type) {
 					if (!$inSource || $subtag!="DATA") {
 						add_simple_tag(($level+1).' '.$subtag, '', fact_label("{$type}:{$subtag}"));
 					}
-					if (!empty($expected_subtags[$subtag]))
-						foreach ($expected_subtags[$subtag] as $subsubtag)
-							if ($inSource && $subsubtag=="DATE") {
-								add_simple_tag(($level+2).' '.$subsubtag, "", $factarray["DATA:DATE"]);
-							} else {
-								add_simple_tag(($level+2).' '.$subsubtag);
-							}
+					if (!empty($expected_subtags[$subtag])) {
+						foreach ($expected_subtags[$subtag] as $subsubtag) {
+							add_simple_tag(($level+2).' '.$subsubtag, '', fact_label("{$type}:{$subtag}:{$subsubtag}"));
+						}
+					}
 				}
 
 		// Awkward special cases
