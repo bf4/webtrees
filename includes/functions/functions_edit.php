@@ -2195,34 +2195,36 @@ function create_edit_form($gedrec, $linenum, $level0type) {
 		$expected_subtags['SOUR'][]='QUAY';
 		$expected_subtags['DATA'][]='DATE';
 	}
-	if (preg_match_all('/('.PGV_REGEX_TAG.')/', $ADVANCED_PLAC_FACTS, $match))
+	if (preg_match_all('/('.PGV_REGEX_TAG.')/', $ADVANCED_PLAC_FACTS, $match)) {
 		$expected_subtags['PLAC']=array_merge($match[1], $expected_subtags['PLAC']);
+	}
 
+	$stack=array(0=>$level0type);
 	// Loop on existing tags :
 	while (true) {
+		// Keep track of our hierarchy, e.g. 1=>BIRT, 2=>PLAC, 3=>FONE
+		$stack[(int)$level]=$type;
+		// Merge them together, e.g. BIRT:PLAC:FONE
+		$label=implode(':', array_slice($stack, 1, $level));
+
 		$text = "";
 		for($j=2; $j<count($fields); $j++) {
 			if ($j>2) $text .= " ";
 			$text .= $fields[$j];
 		}
 		$text = rtrim($text);
-		while(($i+1<count($gedlines))&&(preg_match("/".($level+1)." (CON[CT])\s?(.*)/", $gedlines[$i+1], $cmatch)>0)) {
-			if ($cmatch[1]=="CONT") $text.="\n";
-			else if ($WORD_WRAPPED_NOTES) $text .= " ";
-			$conctxt = $cmatch[2];
-			$conctxt = preg_replace("/[\r\n]/","",$conctxt);
-			$text.=$conctxt;
+		while(($i+1<count($gedlines))&&(preg_match("/".($level+1)." CONT ?(.*)/", $gedlines[$i+1], $cmatch)>0)) {
+			$text.="\n".$cmatch[1];
 			$i++;
 		}
 		if ($type=="SOUR") {
 			$inSource = true;
 			$levelSource = $level;
-		}
-		else if ($levelSource>=$level){
+		} elseif ($levelSource>=$level){
 			$inSource = false;
 		}
 
-		if ($type!="DATA" && $type!="CONC" && $type!="CONT") {
+		if ($type!="DATA" && $type!="CONT") {
 			$tags[]=$type;
 			if ($type=='DATE') {
 				// Allow the user to edit the date in his/her own natural language
@@ -2242,15 +2244,12 @@ function create_edit_form($gedrec, $linenum, $level0type) {
 			}
 			$subrecord = $level." ".$type." ".$text;
 			if ($inSource && $type=="DATE") {
-				add_simple_tag($subrecord, "", $factarray["DATA:DATE"]);
+				add_simple_tag($subrecord, "", fact_label($label));
 			} elseif (!$inSource && $type=="DATE") {
-				if (isset($factarray[$level1type.':DATE']))
-					add_simple_tag($subrecord, $level1type, $factarray[$level1type.':DATE']);
-				else
-					add_simple_tag($subrecord, $level1type);
+				add_simple_tag($subrecord, $level1type, fact_label($label));
 				$add_date = false;
 			} else {
-				add_simple_tag($subrecord, $level0type);
+				add_simple_tag($subrecord, $level0type, fact_label($label));
 			}
 		}
 
@@ -2261,18 +2260,20 @@ function create_edit_form($gedrec, $linenum, $level0type) {
 				$subtags[]=$mm[2];
 
 		// Insert missing tags
-		if (!empty($expected_subtags[$type]))
-			foreach ($expected_subtags[$type] as $subtag)
+		if (!empty($expected_subtags[$type])) {
+			foreach ($expected_subtags[$type] as $subtag) {
 				if (!in_array($subtag, $subtags)) {
 					if (!$inSource || $subtag!="DATA") {
-						add_simple_tag(($level+1).' '.$subtag, '', fact_label("{$type}:{$subtag}"));
+						add_simple_tag(($level+1).' '.$subtag, '', fact_label("{$label}:{$subtag}"));
 					}
 					if (!empty($expected_subtags[$subtag])) {
 						foreach ($expected_subtags[$subtag] as $subsubtag) {
-							add_simple_tag(($level+2).' '.$subsubtag, '', fact_label("{$type}:{$subtag}:{$subsubtag}"));
+							add_simple_tag(($level+2).' '.$subsubtag, '', fact_label("{$label}:{$subtag}:{$subsubtag}"));
 						}
 					}
 				}
+			}
+		}
 
 		// Awkward special cases
 		if ($level==2 && $type=='DATE' && in_array($level1type, $date_and_time) && !in_array('TIME', $subtags)) {
