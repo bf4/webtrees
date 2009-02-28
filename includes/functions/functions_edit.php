@@ -1595,7 +1595,7 @@ function print_add_layer($tag, $level=2, $printSaveButton=true) {
 		add_simple_tag(($level+2)." $text");
 		if ($FULL_SOURCES) {
 			// 4 DATE
-			add_simple_tag(($level+2)." DATE", "", $pgv_lang["date_of_entry"]);
+			add_simple_tag(($level+2)." DATE", "", $factarray["DATA:DATE"]);
 			// 3 QUAY
 			add_simple_tag(($level+1)." QUAY");
 		}
@@ -2136,7 +2136,7 @@ function create_add_form($fact) {
 			add_simple_tag("2 PAGE");
 			add_simple_tag("3 TEXT");
 			if ($FULL_SOURCES) {
-				add_simple_tag("3 DATE", "", $pgv_lang["date_of_entry"]);
+				add_simple_tag("3 DATE", "", $factarray["DATA:DATE"]);
 				add_simple_tag("2 QUAY");
 			}
 		}
@@ -2242,7 +2242,7 @@ function create_edit_form($gedrec, $linenum, $level0type) {
 			}
 			$subrecord = $level." ".$type." ".$text;
 			if ($inSource && $type=="DATE") {
-				add_simple_tag($subrecord, "", $pgv_lang["date_of_entry"]);
+				add_simple_tag($subrecord, "", $factarray["DATA:DATE"]);
 			} elseif (!$inSource && $type=="DATE") {
 				if (isset($factarray[$level1type.':DATE']))
 					add_simple_tag($subrecord, $level1type, $factarray[$level1type.':DATE']);
@@ -2270,7 +2270,7 @@ function create_edit_form($gedrec, $linenum, $level0type) {
 					if (!empty($expected_subtags[$subtag]))
 						foreach ($expected_subtags[$subtag] as $subsubtag)
 							if ($inSource && $subsubtag=="DATE") {
-								add_simple_tag(($level+2).' '.$subsubtag, "", $pgv_lang["date_of_entry"]);
+								add_simple_tag(($level+2).' '.$subsubtag, "", $factarray["DATA:DATE"]);
 							} else {
 								add_simple_tag(($level+2).' '.$subsubtag);
 							}

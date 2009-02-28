@@ -160,6 +160,7 @@ $factarray["_DBID"] = "Linked database ID";
 
 // These facts are used in specific contexts
 $factarray["STAT:DATE"] = "Status Change Date";
+$factarray["DATA:DATE"] = "Date of entry in original source";
 
 //These facts are compounds for the view probabilities and the advanced search pages
 $factarray["FAMC:HUSB:SURN"] = "Father's Surname";

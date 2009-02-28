@@ -190,7 +190,7 @@ class ra_form {
 			<td class="optionbox"><textarea name="TEXT" rows="5" cols="55">'.$citation['ts_text'].'</textarea></td>
 		</tr>
 		<tr>
-			<td class="descriptionbox">'.print_help_link("edit_DATE_help", "qm",'',false,true).$pgv_lang['date_of_entry'].'</td>
+			<td class="descriptionbox">'.print_help_link("edit_DATE_help", "qm",'',false,true).$factarray["DATA:DATE"].'</td>
 			<td class="optionbox"><input type="text" name="DATE" id="date" onblur="valid_date(this);" value="'.$citation['ts_date'].'" />'.print_calendar_popup('date', true).'</td>
 		</tr>
 		<tr>
