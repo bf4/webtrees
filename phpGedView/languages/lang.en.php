@@ -52,7 +52,6 @@ $pgv_lang["ellipsis"]				= "\xE2\x80\xA6";
 $pgv_lang["showUnknown"]			= "Show unknown gender";
 $pgv_lang["count"]					= "Count";
 $pgv_lang["age_differences"]		= "Show Date Differences";
-$pgv_lang["date_of_entry"]			= "Date of entry in original source";
 $pgv_lang["multi_site_search"] 		= "Multi Site Search";
 $pgv_lang["switch_lifespan"]		= "Show Lifespan chart";
 $pgv_lang["switch_timeline"]		= "Show Timeline chart";
