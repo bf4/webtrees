@@ -642,8 +642,9 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 	}
 
 	// Edit the standard name fields
-	foreach($name_fields as $tag=>$value)
+	foreach($name_fields as $tag=>$value) {
 		add_simple_tag("0 $tag $value");
+	}
 
 	// Get the advanced name fields
 	$adv_name_fields=array();
@@ -664,6 +665,8 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 					if ($mnsct>0) $marnm_surn = $match2[1];
 					add_simple_tag("2 _MARNM ".$value);
 					add_simple_tag("2 _MARNM_SURN ".$marnm_surn);
+				} elseif (array_key_exists("NAME:{$tag}", $factarray)) {
+					add_simple_tag("2 $tag $value", "", $factarray["NAME:{$tag}"]);
 				} else {
 					add_simple_tag("2 $tag $value");
 				}
@@ -673,8 +676,11 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 				if ($tag=='_MARNM') {
 					add_simple_tag("0 _MARNM");
 					add_simple_tag("0 _MARNM_SURN $new_marnm");
-				} else
+				} elseif (array_key_exists("NAME:{$tag}", $factarray)) {
+					add_simple_tag("0 $tag", "", $factarray["NAME:{$tag}"]);
+				} else {
 					add_simple_tag("0 $tag");
+				}
 	}
 
 	// Handle any other NAME subfields that aren't included above (SOUR, NOTE, _CUSTOM, etc)
@@ -1658,14 +1664,36 @@ function print_add_layer($tag, $level=2, $printSaveButton=true) {
 
 // Add some empty tags to create a new fact
 function addSimpleTags($fact) {
-	global $ADVANCED_PLAC_FACTS;
+	global $ADVANCED_PLAC_FACTS, $factarray;
 
 	add_simple_tag("0 {$fact}");
-	add_simple_tag("0 DATE", $fact);
-	add_simple_tag("0 PLAC", $fact);
-	if (preg_match_all('/('.PGV_REGEX_TAG.')/', $ADVANCED_PLAC_FACTS, $match))
-		foreach ($match[1] as $tag)
-			add_simple_tag("0 {$tag}", $fact);
+
+	// Use label for "Birthdate", if such exists
+	if (array_key_exists("{$fact}:DATE", $factarray)) {
+		add_simple_tag("0 DATE", $fact, $factarray["{$fact}:DATE"]);
+	} else {
+		add_simple_tag("0 DATE", $fact);
+	}
+
+	// Use label for "Birthplace", if such exists
+	if (array_key_exists("{$fact}:PLAC", $factarray)) {
+		add_simple_tag("0 PLAC", $fact, $factarray["{$fact}:PLAC"]);
+	} else {
+		add_simple_tag("0 PLAC", $fact);
+	}
+
+	if (preg_match_all('/('.PGV_REGEX_TAG.')/', $ADVANCED_PLAC_FACTS, $match)) {
+		foreach ($match[1] as $tag) {
+			// Use label for "Hebrew birthplace" or "Hebrew place", if such exists
+			if (array_key_exists("{$fact}:PLAC:{$tag}", $factarray)) {
+				add_simple_tag("0 {$tag}", $fact, $factarray["{$fact}:PLAC:{$tag}"]);
+			} elseif (array_key_exists("PLAC:{$tag}", $factarray)) {
+				add_simple_tag("0 {$tag}", $fact, $factarray["PLAC:{$tag}"]);
+			} else {
+				add_simple_tag("0 {$tag}", $fact);
+			}
+		}
+	}
 	add_simple_tag("0 MAP", $fact);
 	add_simple_tag("0 LATI", $fact);
 	add_simple_tag("0 LONG", $fact);
@@ -2231,8 +2259,9 @@ function create_edit_form($gedrec, $linenum, $level0type) {
 				}
 			}
 			$subrecord = $level." ".$type." ".$text;
-			if ($inSource && $type=="DATE") add_simple_tag($subrecord, "", $pgv_lang["date_of_entry"]);
-			else if (!$inSource && $type=="DATE") {
+			if ($inSource && $type=="DATE") {
+				add_simple_tag($subrecord, "", $pgv_lang["date_of_entry"]);
+			} elseif (!$inSource && $type=="DATE") {
 				if (isset($factarray[$level1type.':DATE']))
 					add_simple_tag($subrecord, $level1type, $factarray[$level1type.':DATE']);
 				else
