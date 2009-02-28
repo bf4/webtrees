@@ -2265,7 +2265,7 @@ function create_edit_form($gedrec, $linenum, $level0type) {
 			foreach ($expected_subtags[$type] as $subtag)
 				if (!in_array($subtag, $subtags)) {
 					if (!$inSource || $subtag!="DATA") {
-						add_simple_tag(($level+1).' '.$subtag);
+						add_simple_tag(($level+1).' '.$subtag, '', fact_label("{$type}:{$subtag}"));
 					}
 					if (!empty($expected_subtags[$subtag]))
 						foreach ($expected_subtags[$subtag] as $subsubtag)
@@ -2361,8 +2361,8 @@ function insert_missing_subtags($level1tag, $add_date=false)
 						add_simple_tag("3 ADOP BOTH");
 					break;
 			}
-		} elseif ($key=="DATE" && $add_date && isset($factarray[$level1tag.':DATE'])) {
-			add_simple_tag("2 DATE", $level1tag, $factarray[$level1tag.':DATE']);
+		} elseif ($key=="DATE" && $add_date) {
+			add_simple_tag("2 DATE", $level1tag, fact_label("{$level1tag}:DATE"));
 		}
 	}
 	// Do something (anything!) with unrecognised custom tags
