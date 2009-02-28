@@ -474,8 +474,9 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 	echo "<table class=\"facts_table\">";
 
 	// When adding a new child, specify the pedigree
-	if ($nextaction=='addchildaction')
+	if ($nextaction=='addchildaction') {
 		add_simple_tag("0 PEDI");
+	}
 
 	// Populate the standard NAME field and subfields
 	$name_fields=array();
@@ -724,9 +725,13 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 	if ($nextaction!='update') {
 		echo '</table><br/><table class="facts_table">';
 		// 1 SEX
-		if ($famtag=="HUSB" or $sextag=="M") add_simple_tag("0 SEX M");
-		else if ($famtag=="WIFE" or $sextag=="F") add_simple_tag("0 SEX F");
-		else add_simple_tag("0 SEX");
+		if ($famtag=="HUSB" || $sextag=="M") {
+			add_simple_tag("0 SEX M");
+		} elseif ($famtag=="WIFE" || $sextag=="F") {
+			add_simple_tag("0 SEX F");
+		}	else {
+			add_simple_tag("0 SEX");
+		}
 		$bdm = "BD";
 		if (preg_match_all('/('.PGV_REGEX_TAG.')/', $QUICK_REQUIRED_FACTS, $matches)) {
 			foreach ($matches[1] as $match) {
@@ -2267,8 +2272,9 @@ function create_edit_form($gedrec, $linenum, $level0type) {
 				else
 					add_simple_tag($subrecord, $level1type);
 				$add_date = false;
+			} else {
+				add_simple_tag($subrecord, $level0type);
 			}
-			else add_simple_tag($subrecord, $level0type);
 		}
 
 		// Get a list of tags present at the next level
@@ -2286,15 +2292,20 @@ function create_edit_form($gedrec, $linenum, $level0type) {
 					}
 					if (!empty($expected_subtags[$subtag]))
 						foreach ($expected_subtags[$subtag] as $subsubtag)
-							if ($inSource && $subsubtag=="DATE") add_simple_tag(($level+2).' '.$subsubtag, "", $pgv_lang["date_of_entry"]);
-							else add_simple_tag(($level+2).' '.$subsubtag);
+							if ($inSource && $subsubtag=="DATE") {
+								add_simple_tag(($level+2).' '.$subsubtag, "", $pgv_lang["date_of_entry"]);
+							} else {
+								add_simple_tag(($level+2).' '.$subsubtag);
+							}
 				}
 
 		// Awkward special cases
-		if ($level==2 && $type=='DATE' && in_array($level1type, $date_and_time) && !in_array('TIME', $subtags))
+		if ($level==2 && $type=='DATE' && in_array($level1type, $date_and_time) && !in_array('TIME', $subtags)) {
 			add_simple_tag("3 TIME"); // TIME is NOT a valid 5.5.1 tag
-		if ($level==2 && $type=='STAT' && in_array($level1type, $templefacts) && !in_array('DATE', $subtags))
+		}
+		if ($level==2 && $type=='STAT' && in_array($level1type, $templefacts) && !in_array('DATE', $subtags)) {
 			add_simple_tag("3 DATE", "", $factarray['STAT:DATE']);
+		}
 
 		$i++;
 		if (isset($gedlines[$i])) {
@@ -2340,9 +2351,17 @@ function insert_missing_subtags($level1tag, $add_date=false)
 			}
 			switch ($key) { // Add level 3/4 tags as appropriate
 				case "PLAC":
-					if (preg_match_all('/('.PGV_REGEX_TAG.')/', $ADVANCED_PLAC_FACTS, $match))
-						foreach ($match[1] as $tag)
-							add_simple_tag("3 $tag");
+					if (preg_match_all('/('.PGV_REGEX_TAG.')/', $ADVANCED_PLAC_FACTS, $match)) {
+						foreach ($match[1] as $tag) {
+							if (array_key_exists("{$level1tag}:PLAC:{$tag}", $factarray)) {
+								add_simple_tag("3 $tag", "", $factarray["{$level1tag}:PLAC:{$tag}"]);
+							} elseif (array_key_exists("PLAC:{$tag}", $factarray)) {
+								add_simple_tag("3 $tag", "", $factarray["PLAC:{$tag}"]);
+							} else {
+								add_simple_tag("3 $tag");
+							}
+						}
+					}
 					add_simple_tag("3 MAP");
 					add_simple_tag("4 LATI");
 					add_simple_tag("4 LONG");
@@ -2371,8 +2390,7 @@ function insert_missing_subtags($level1tag, $add_date=false)
 						add_simple_tag("3 ADOP BOTH");
 					break;
 			}
-		}
-		else if ($key=="DATE" && $add_date && isset($factarray[$level1tag.':DATE'])) {
+		} elseif ($key=="DATE" && $add_date && isset($factarray[$level1tag.':DATE'])) {
 			add_simple_tag("2 DATE", $level1tag, $factarray[$level1tag.':DATE']);
 		}
 	}
@@ -2382,9 +2400,17 @@ function insert_missing_subtags($level1tag, $add_date=false)
 			if (!in_array($tag, $tags)) {
 				add_simple_tag("2 {$tag}");
 				if ($tag=='PLAC') {
-					if (preg_match_all('/('.PGV_REGEX_TAG.')/', $ADVANCED_PLAC_FACTS, $match))
-						foreach ($match[1] as $atag)
-							add_simple_tag("3 $atag");
+					if (preg_match_all('/('.PGV_REGEX_TAG.')/', $ADVANCED_PLAC_FACTS, $match)) {
+						foreach ($match[1] as $tag) {
+							if (array_key_exists("{$level1tag}:PLAC:{$tag}", $factarray)) {
+								add_simple_tag("3 $tag", "", $factarray["{$level1tag}:PLAC:{$tag}"]);
+							} elseif (array_key_exists("PLAC:{$tag}", $factarray)) {
+								add_simple_tag("3 $tag", "", $factarray["PLAC:{$tag}"]);
+							} else {
+								add_simple_tag("3 $tag");
+							}
+						}
+					}
 					add_simple_tag("3 MAP");
 					add_simple_tag("4 LATI");
 					add_simple_tag("4 LONG");
