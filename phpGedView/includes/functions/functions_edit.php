@@ -643,7 +643,7 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 	}
 
 	// Edit the standard name fields
-	foreach($name_fields as $tag=>$value) {
+	foreach ($name_fields as $tag=>$value) {
 		add_simple_tag("0 $tag $value");
 	}
 
@@ -666,10 +666,8 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 					if ($mnsct>0) $marnm_surn = $match2[1];
 					add_simple_tag("2 _MARNM ".$value);
 					add_simple_tag("2 _MARNM_SURN ".$marnm_surn);
-				} elseif (array_key_exists("NAME:{$tag}", $factarray)) {
-					add_simple_tag("2 $tag $value", "", $factarray["NAME:{$tag}"]);
 				} else {
-					add_simple_tag("2 $tag $value");
+					add_simple_tag("2 $tag $value", "", fact_label("NAME:{$tag}"));
 				}
 			}
 			// Allow a new row to be entered if there was no row provided
@@ -677,10 +675,8 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 				if ($tag=='_MARNM') {
 					add_simple_tag("0 _MARNM");
 					add_simple_tag("0 _MARNM_SURN $new_marnm");
-				} elseif (array_key_exists("NAME:{$tag}", $factarray)) {
-					add_simple_tag("0 $tag", "", $factarray["NAME:{$tag}"]);
 				} else {
-					add_simple_tag("0 $tag");
+					add_simple_tag("0 $tag", "", fact_label("NAME:{$tag}"));
 				}
 	}
 
@@ -1672,31 +1668,12 @@ function addSimpleTags($fact) {
 	global $ADVANCED_PLAC_FACTS, $factarray;
 
 	add_simple_tag("0 {$fact}");
-
-	// Use label for "Birthdate", if such exists
-	if (array_key_exists("{$fact}:DATE", $factarray)) {
-		add_simple_tag("0 DATE", $fact, $factarray["{$fact}:DATE"]);
-	} else {
-		add_simple_tag("0 DATE", $fact);
-	}
-
-	// Use label for "Birthplace", if such exists
-	if (array_key_exists("{$fact}:PLAC", $factarray)) {
-		add_simple_tag("0 PLAC", $fact, $factarray["{$fact}:PLAC"]);
-	} else {
-		add_simple_tag("0 PLAC", $fact);
-	}
+	add_simple_tag("0 DATE", $fact, fact_label("{$fact}:DATE"));
+	add_simple_tag("0 PLAC", $fact, fact_label("{$fact}:PLAC"));
 
 	if (preg_match_all('/('.PGV_REGEX_TAG.')/', $ADVANCED_PLAC_FACTS, $match)) {
 		foreach ($match[1] as $tag) {
-			// Use label for "Hebrew birthplace" or "Hebrew place", if such exists
-			if (array_key_exists("{$fact}:PLAC:{$tag}", $factarray)) {
-				add_simple_tag("0 {$tag}", $fact, $factarray["{$fact}:PLAC:{$tag}"]);
-			} elseif (array_key_exists("PLAC:{$tag}", $factarray)) {
-				add_simple_tag("0 {$tag}", $fact, $factarray["PLAC:{$tag}"]);
-			} else {
-				add_simple_tag("0 {$tag}", $fact);
-			}
+			add_simple_tag("0 {$tag}", $fact, fact_label("{$fact}:PLAC:{$tag}"));
 		}
 	}
 	add_simple_tag("0 MAP", $fact);
@@ -2353,13 +2330,7 @@ function insert_missing_subtags($level1tag, $add_date=false)
 				case "PLAC":
 					if (preg_match_all('/('.PGV_REGEX_TAG.')/', $ADVANCED_PLAC_FACTS, $match)) {
 						foreach ($match[1] as $tag) {
-							if (array_key_exists("{$level1tag}:PLAC:{$tag}", $factarray)) {
-								add_simple_tag("3 $tag", "", $factarray["{$level1tag}:PLAC:{$tag}"]);
-							} elseif (array_key_exists("PLAC:{$tag}", $factarray)) {
-								add_simple_tag("3 $tag", "", $factarray["PLAC:{$tag}"]);
-							} else {
-								add_simple_tag("3 $tag");
-							}
+							add_simple_tag("3 $tag", "", fact_label("{$level1tag}:PLAC:{$tag}"));
 						}
 					}
 					add_simple_tag("3 MAP");
@@ -2402,13 +2373,7 @@ function insert_missing_subtags($level1tag, $add_date=false)
 				if ($tag=='PLAC') {
 					if (preg_match_all('/('.PGV_REGEX_TAG.')/', $ADVANCED_PLAC_FACTS, $match)) {
 						foreach ($match[1] as $tag) {
-							if (array_key_exists("{$level1tag}:PLAC:{$tag}", $factarray)) {
-								add_simple_tag("3 $tag", "", $factarray["{$level1tag}:PLAC:{$tag}"]);
-							} elseif (array_key_exists("PLAC:{$tag}", $factarray)) {
-								add_simple_tag("3 $tag", "", $factarray["PLAC:{$tag}"]);
-							} else {
-								add_simple_tag("3 $tag");
-							}
+							add_simple_tag("3 $tag", "", fact_label("{$level1tag}:PLAC:{$tag}"));
 						}
 					}
 					add_simple_tag("3 MAP");
@@ -2529,4 +2494,22 @@ function delete_family($pid, $gedrec='') {
 	}
 	return false;
 }
+
+// Create a label for editing tags, such as BIRT:DATE, BIRT:PLAC:_HEB
+// or PLAC:FONE.  Use specific labels, if available.  Use general ones if not.
+function fact_label($tag) {
+	global $factarray;
+
+	while ($tag) {
+		if (array_key_exists($tag, $factarray)) {
+			return $factarray[$tag];
+		} elseif (strpos($tag, ':')) {
+			list(, $tag)=explode(':', $tag, 2);
+		} else {
+			return '';
+		}
+	}
+	return '';
+}
+
 ?>
