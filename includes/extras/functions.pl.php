@@ -351,6 +351,13 @@ function rela_localisation_pl(&$rela) {
 
 	print " ".ucfirst($rela).": ";
 }
+
+function getRelationshipText_pl($relationshipDescription, $node, $pid1, $pid2) {
+	if ($relationshipDescription != false) {
+		return UTF8_strtolower($relationshipDescription);
+	}
+	return false;
+}
 //-- functions to calculate polish specific genitive names
 function getFirstRelationsName_pl($pid) {
 	// In Polish we want the genitive form of the name
