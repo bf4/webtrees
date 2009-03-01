@@ -36,7 +36,7 @@ print_note_table(get_note_list(PGV_GED_ID));
 <!--
 function addnew_note() {
 	win04 = window.open(
-	"edit_interface.php?action=addnewshnote&pid=newshnote", "win04", "top=70, left=70, width=600, height=500, resizable=1, scrollbars=1 ");
+	"edit_interface.php?action=addnewnote&pid=newnote", "win04", "top=70, left=70, width=600, height=500, resizable=1, scrollbars=1 ");
 	if (window.focus) {win04.focus();}
 }
 -->

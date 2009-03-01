@@ -1005,7 +1005,7 @@ function print_addnewnote_link($element_id) {
 	$text = $pgv_lang["create_shared_note"];
 	if (isset($PGV_IMAGES["addnote"]["button"])) $Link = "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["addnote"]["button"]."\" alt=\"".$text."\" title=\"".$text."\" border=\"0\" align=\"middle\" />";
 	else $Link = $text;
-	echo "&nbsp;&nbsp;&nbsp;<a href=\"javascript:ADD;\" onclick=\"addnewshnote(document.getElementById('".$element_id."')); return false;\">";
+	echo "&nbsp;&nbsp;&nbsp;<a href=\"javascript:ADD;\" onclick=\"addnewnote(document.getElementById('".$element_id."')); return false;\">";
 	echo $Link;
 	echo "</a>";
 }

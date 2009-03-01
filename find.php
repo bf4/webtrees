@@ -102,7 +102,7 @@ switch ($type) {
 		print_simple_header($pgv_lang["repo_list"]);
 		$action="filter";
 		break;
-	case "shnote" :
+	case "note" :
 		print_simple_header($pgv_lang["find_shared_note"]);
 		$action="filter";
 		break;
@@ -167,7 +167,7 @@ $options["form"][]= "formfam";
 $options["form"][]= "formmedia";
 $options["form"][]= "formplace";
 $options["form"][]= "formrepo";
-$options["form"][]= "formshnote";
+$options["form"][]= "formnote";
 $options["form"][]= "formsource";
 $options["form"][]= "formspecialchar";
 
@@ -191,7 +191,7 @@ switch ($type) {
 	case "repo" :
 		print $pgv_lang["repo_list"];
 		break;
-	case "shnote" :
+	case "note" :
 		print $pgv_lang["find_shared_note"];
 		break;
 	case "source" :
@@ -322,11 +322,11 @@ if ($type == "repo" && $SHOW_SOURCES>=PGV_USER_ACCESS_LEVEL) {
 }
 
 // Show Shared Notes and hide the rest
-if ($type == "shnote" && $SHOW_SOURCES>=PGV_USER_ACCESS_LEVEL) {
+if ($type == "note" && $SHOW_SOURCES>=PGV_USER_ACCESS_LEVEL) {
 	print "<div align=\"center\">";
-	print "<form name=\"filtershnote\" method=\"get\" onsubmit=\"return checknames(this);\" action=\"find.php\">";
+	print "<form name=\"filternote\" method=\"get\" onsubmit=\"return checknames(this);\" action=\"find.php\">";
 	print "<input type=\"hidden\" name=\"action\" value=\"filter\" />";
-	print "<input type=\"hidden\" name=\"type\" value=\"shnote\" />";
+	print "<input type=\"hidden\" name=\"type\" value=\"note\" />";
 	print "<input type=\"hidden\" name=\"callback\" value=\"$callback\" />";
 	print "<input type=\"hidden\" name=\"subclick\">"; // This is for passing the name of which submit button was clicked
 	print "<table class=\"list_table $TEXT_DIRECTION width100\" border=\"0\">";
@@ -652,7 +652,7 @@ if ($action=="filter") {
 	}
 	
 	// Output Shared Notes
-	if ($type == "shnote") {
+	if ($type == "note") {
 		print "<table class=\"tabs_table $TEXT_DIRECTION width90\"><tr>";
 		$note_list = get_note_list(PGV_GED_ID);
 		if ($note_list) {

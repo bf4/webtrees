@@ -127,7 +127,7 @@ require 'js/autocomplete.js.htm';
 	// Shared Notes =========================
 	function findnote(field) {
 		pastefield = field;
-		findwin = window.open('find.php?type=shnote', '_blank', 'left=50,top=50,width=600,height=520,resizable=1,scrollbars=1');
+		findwin = window.open('find.php?type=note', '_blank', 'left=50,top=50,width=600,height=520,resizable=1,scrollbars=1');
 		return false;
 	}
 	
@@ -216,7 +216,7 @@ function checkFactEdit($gedrec) {
 //-- end checkFactEdit function
 
 if (!empty($pid)) {
-	if (($pid!="newsour") && ($pid!="newrepo") && ($pid!="newshnote")) {
+	if (($pid!="newsour") && ($pid!="newrepo") && ($pid!="newnote")) {
 		if (!isset($pgv_changes[$pid."_".$GEDCOM])) $gedrec = find_gedcom_record($pid);
 		else $gedrec = find_updated_record($pid);
 		$ct = preg_match("/0 @$pid@ (.*)/", $gedrec, $match);
@@ -764,7 +764,7 @@ case 'addsourceaction':
 	
 //------------------------------------------------------------------------------
 //-- add new Shared Note
-case 'addnewshnote':
+case 'addnewnote':
 	?>
 	<script type="text/javascript">
 	<!--
@@ -781,7 +781,7 @@ case 'addnewshnote':
 	<b><?php echo $pgv_lang['create_shared_note']; $tabkey = 1; ?></b>
 	<form method="post" action="edit_interface.php" onsubmit="return check_form(this);">
 		<input type="hidden" name="action" value="addnoteaction" />
-		<input type="hidden" name="pid" value="newshnote" />
+		<input type="hidden" name="pid" value="newnote" />
 		
 		<table class="facts_table">
 			<tr>
@@ -1678,10 +1678,10 @@ case 'deletefamily':
 	
 	
 //----------------------------------------------------------------------------------
-// This case will delete Shared notes as well, as $pid is passed with call
+// This case will now delete Shared notes as well, as $pid is passed with call
 // from source_ctrl.php or note_ctrl.php (line 208  submenu->addOnclick ..... etc)
-// i.e. return deletesource($pid) where $pid = Sxxx (source) OR Nxxx (shared note)
 // ---------------------------------------------------------------------------------
+case 'deletenote':
 case 'deletesource': 
 case 'deleterepo':
 	if (PGV_DEBUG) {
