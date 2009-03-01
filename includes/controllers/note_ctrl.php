@@ -43,10 +43,10 @@ $nonfacts = array();
 */
 class NoteControllerRoot extends BaseController {
 	var $nid;
-	/* @var Shnote */
-	var $shnote = null;
+	/* @var Note */
+	var $note = null;
 	var $uname = "";
-	var $diffshnote = null;
+	var $diffnote = null;
 	var $accept_success = false;
 	var $canedit = false;
 
@@ -65,13 +65,13 @@ class NoteControllerRoot extends BaseController {
 
 		$this->nid = safe_GET_xref('nid');
 
-		$shnoterec = find_other_record($this->nid);
-		if (!$shnoterec) $shnoterec = "0 @".$this->nid."@ NOTE\n";
+		$noterec = find_other_record($this->nid);
+		if (!$noterec) $noterec = "0 @".$this->nid."@ NOTE\n";
 
-		$this->shnote = new Shnote($shnoterec);
-		$this->shnote->ged_id=PGV_GED_ID; // This record is from a file
+		$this->note = new Note($noterec);
+		$this->note->ged_id=PGV_GED_ID; // This record is from a file
 
-		if (!$this->shnote->canDisplayDetails()) {
+		if (!$this->note->canDisplayDetails()) {
 			print_header($pgv_lang["private"]." ".$pgv_lang["shared_note_info"]);
 			print_privacy_error($CONTACT_EMAIL);
 			print_footer();
@@ -89,7 +89,7 @@ class NoteControllerRoot extends BaseController {
 				$this->acceptChanges();
 				break;
 			case "undo":
-				$this->shnote->undoChange();
+				$this->note->undoChange();
 				break;
 		}
 
@@ -97,17 +97,17 @@ class NoteControllerRoot extends BaseController {
 		//-- if the user can edit and there are changes then get the new changes
 		if ($this->show_changes && PGV_USER_CAN_EDIT && isset($pgv_changes[$this->nid."_".$GEDCOM])) {
 			$newrec = find_updated_record($this->nid);
-			$this->diffshnote = new Shnote($newrec);
-			$this->diffshnote->setChanged(true);
-			$shnoterec = $newrec;
+			$this->diffnote = new Note($newrec);
+			$this->diffnote->setChanged(true);
+			$noterec = $newrec;
 		}
 
-		if ($this->shnote->canDisplayDetails()) {
+		if ($this->note->canDisplayDetails()) {
 			$this->canedit = PGV_USER_CAN_EDIT;
 		}
 
 		if ($this->show_changes && $this->canedit) {
-			$this->shnote->diffMerge($this->diffshnote);
+			$this->note->diffMerge($this->diffnote);
 		}
 	}
 
@@ -150,7 +150,7 @@ class NoteControllerRoot extends BaseController {
 				header("Location: index.php?ctype=gedcom");
 				exit;
 			}
-			$this->shnote = new Shnote($indirec);
+			$this->note = new Note($indirec);
 		}
 	}
 
@@ -160,7 +160,7 @@ class NoteControllerRoot extends BaseController {
 	*/
 	function getPageTitle() {
 		global $pgv_lang;
-		return $this->shnote->getFullName()." - ".$this->nid." - ".$pgv_lang["shared_note_info"];
+		return $this->note->getFullName()." - ".$this->nid." - ".$pgv_lang["shared_note_info"];
 	}
 	/**
 	* check if use can edit this person
@@ -265,7 +265,7 @@ class NoteControllerRoot extends BaseController {
 		if ($TEXT_DIRECTION=="rtl") $ff="_rtl";
 		else $ff="";
 
-		if (!$this->shnote->canDisplayDetails() || (!$SHOW_GEDCOM_RECORD && $ENABLE_CLIPPINGS_CART < PGV_USER_ACCESS_LEVEL)) {
+		if (!$this->note->canDisplayDetails() || (!$SHOW_GEDCOM_RECORD && $ENABLE_CLIPPINGS_CART < PGV_USER_ACCESS_LEVEL)) {
 			$tempvar = false;
 			return $tempvar;
 		}
@@ -316,7 +316,7 @@ class NoteControllerRoot extends BaseController {
 				$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}");
 				$menu->addSubmenu($submenu);
 		}
-		if ($this->shnote->canDisplayDetails() && !empty($this->uname))
+		if ($this->note->canDisplayDetails() && !empty($this->uname))
 		{
 				// other / add_to_my_favorites
 				$submenu = new Menu($pgv_lang['add_to_my_favorites'], encode_url("note.php?action=addfav&nid={$this->nid}&gid={$this->nid}"));

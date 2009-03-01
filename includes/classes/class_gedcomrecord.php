@@ -165,7 +165,7 @@ class GedcomRecord {
 			break;
 		//BH ==================
 		case 'NOTE':
-			$object=new Shnote($data, $simple);
+			$object=new Note($data, $simple);
 			break;
 		case 'REPO':
 			$object=new Repository($data, $simple);

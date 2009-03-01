@@ -125,7 +125,7 @@ require 'js/autocomplete.js.htm';
 		return false;
 	}
 	// Shared Notes =========================
-	function findShnote(field) {
+	function findnote(field) {
 		pastefield = field;
 		findwin = window.open('find.php?type=shnote', '_blank', 'left=50,top=50,width=600,height=520,resizable=1,scrollbars=1');
 		return false;
@@ -419,7 +419,7 @@ case 'edit':
 			if ($level1type!="SOUR" && $level1type!="REPO") print_add_layer("SOUR");
 			if ($level1type!="NOTE") print_add_layer("NOTE");
 			// Shared Note addition ------------
-			if ($level1type!="SHNOTE") print_add_layer("SHNOTEADD");
+			if ($level1type!="SHARED_NOTE") print_add_layer("SHARED_NOTE");
 			if ($level1type!="OBJE" && $level1type!="REPO" && $level1type!="NOTE" && $MULTI_MEDIA) print_add_layer("OBJE");
 			//-- RESN missing in new structure, RESN can be added to all level 1 tags
 			if (!in_array("RESN", $tags)) print_add_layer("RESN");
@@ -465,7 +465,7 @@ case 'add':
 			if ($fact!="SOUR" && $fact!="REPO") print_add_layer("SOUR");
 			if ($fact!="NOTE") print_add_layer("NOTE");
 			// Shared Note addition ------------
-			if ($fact!="SHNOTE" && $fact!="NOTE") print_add_layer("SHNOTEADD");
+			if ($fact!="SHARED_NOTE" && $fact!="NOTE") print_add_layer("SHARED_NOTE");
 			if ($fact!="REPO") print_add_layer("OBJE");
 		}
 	}
@@ -780,7 +780,7 @@ case 'addnewshnote':
 	</script>
 	<b><?php echo $pgv_lang['create_shared_note']; $tabkey = 1; ?></b>
 	<form method="post" action="edit_interface.php" onsubmit="return check_form(this);">
-		<input type="hidden" name="action" value="addshnoteaction" />
+		<input type="hidden" name="action" value="addnoteaction" />
 		<input type="hidden" name="pid" value="newshnote" />
 		
 		<table class="facts_table">
@@ -798,7 +798,7 @@ case 'addnewshnote':
 	
 //------------------------------------------------------------------------------
 //-- create a shared note record from the incoming variables
-case 'addshnoteaction':
+case 'addnoteaction':
 	if (PGV_DEBUG) {
 		phpinfo(INFO_VARIABLES);
 	}
@@ -871,7 +871,7 @@ case 'addshnoteaction':
 
 //------------------------------------------------------------------------------
 //-- edit a Shared Note
-case 'editshnote':
+case 'editnote':
 	?>
 	<script type="text/javascript">
 	<!--
@@ -887,7 +887,7 @@ case 'editshnote':
 	</script>
 	<b><?php echo $pgv_lang['edit_shared_note']; $tabkey = 1; echo "&nbsp;&nbsp;(" . $pid . ")";?></b><br /><br />
 	<form method="post" action="edit_interface.php" onsubmit="return check_form(this);">
-		<input type="hidden" name="action" value="updateshnoteaction" />
+		<input type="hidden" name="action" value="updatenoteaction" />
 		<input type="hidden" name="pid" value="<?php echo $pid; ?>" />
 		
 		<?php
@@ -905,8 +905,8 @@ case 'editshnote':
 		$record=GedcomRecord::getInstance($pid);
 		$noteLine=PrintReady($record->getFullName());
 		if ($nt!==false) {
-			$shnote_content  = $noteLine."\n";
-			$shnote_content .= trim(strip_tags(@$n1match[1].get_cont(1, $gedrec, false)));
+			$note_content  = $noteLine."\n";
+			$note_content .= trim(strip_tags(@$n1match[1].get_cont(1, $gedrec, false)));
 		}
 		?>
 		<table class="facts_table">
@@ -914,7 +914,7 @@ case 'editshnote':
 				<td class="descriptionbox <?php echo $TEXT_DIRECTION; ?> wrap width25"><?php print_help_link("edit_NOTE_help", "qm"); echo $pgv_lang["shared_note"]; ?></td>
 				<td class="optionbox wrap">
 					<textarea tabindex="<?php echo $tabkey; ?>" name="NOTE" id="NOTE" rows="15" cols="90"><?php 
-						echo $shnote_content; 
+						echo $note_content; 
 					?></textarea><br /><?php print_specialchar_link("NOTE",true); ?>
 				</td>
 			</tr>
@@ -928,7 +928,7 @@ case 'editshnote':
 	
 //------------------------------------------------------------------------------
 //-- create a shared note record from the incoming variables
-case 'updateshnoteaction':
+case 'updatenoteaction':
 	if (PGV_DEBUG) {
 		phpinfo(INFO_VARIABLES);
 	}

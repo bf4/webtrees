@@ -46,7 +46,7 @@ if ($MULTI_MEDIA && is_dir('./modules/lightbox')) {
 	loadLangFile('lightbox:lang');
 }
 
-if ($controller->shnote->isMarkedDeleted()) {
+if ($controller->note->isMarkedDeleted()) {
 	echo '<span class="error">', $pgv_lang['record_marked_deleted'], '</span>';
 }
 
@@ -57,8 +57,8 @@ echo '}';
 echo 'function showchanges() {';
 echo ' window.location="note.php?nid=', $controller->nid, '&show_changes=yes"';
 echo '}';
-echo 'function edit_shnote() {';
-echo ' var win04 = window.open("edit_interface.php?action=editshnote&pid='.$linkToID.'", "win04", "top=70,left=70,width=620,height=500,resizable=1,scrollbars=1");';
+echo 'function edit_note() {';
+echo ' var win04 = window.open("edit_interface.php?action=editnote&pid='.$linkToID.'", "win04", "top=70,left=70,width=620,height=500,resizable=1,scrollbars=1");';
 echo ' if (window.focus) {win04.focus();}';
 echo '}';
 echo PGV_JS_END;
@@ -67,7 +67,7 @@ echo '<table class="list_table"><tr><td>';
 if ($controller->accept_success) {
 	echo '<b>', $pgv_lang['accept_successful'], '</b><br />';
 }
-echo '<span class="name_head">', PrintReady($controller->shnote->getFullName());
+echo '<span class="name_head">', PrintReady($controller->note->getFullName());
 if ($SHOW_ID_NUMBERS) {
 	echo ' ', getLRM(), '(', $controller->nid, ')', getLRM(); 
 }
@@ -90,7 +90,7 @@ if (!$controller->isPrintPreview()) {
 }
 echo '</td></tr><tr><td colspan="2"><table border=\"0\" class="facts_table">';
 
-$shnotefacts=$controller->shnote->getFacts();
+$notefacts=$controller->note->getFacts();
 echo "<br /><br />";
 
 $noterec = find_gedcom_record($controller->nid);
@@ -100,9 +100,9 @@ $noterec = find_gedcom_record($controller->nid);
 $nt = preg_match("/0 @$controller->nid@ NOTE(.*)/", $noterec, $n1match);
 
 if ($nt==1) {
-	$shnote = print_note_record("<br />".$n1match[1], 1, $noterec, false, true);
+	$note = print_note_record("<br />".$n1match[1], 1, $noterec, false, true);
 }else{
-	$shnote = "No Text";
+	$note = "No Text";
 }
 // echo '<tr><td align="center" class="descriptionbox">Shared Note</td><td class="optionbox">';
 
@@ -110,12 +110,12 @@ if ($nt==1) {
 		echo '&nbsp;&nbsp;' . $pgv_lang["shared_note"];
 		echo '<br /><br />';
 		if (PGV_USER_CAN_EDIT) {
-			echo "<a href=\"javascript: edit_shnote()\"> ";
+			echo "<a href=\"javascript: edit_note()\"> ";
 			echo "&nbsp;&nbsp;".$pgv_lang['edit'];
 			echo "</a>";
 		}
 		echo '</td><td class="optionbox">';
-		echo $shnote;
+		echo $note;
 		echo "<br />";
 	echo "</td></tr>";
 
@@ -129,18 +129,18 @@ if (file_exists('./modules/research_assistant/research_assistant.php') && $SHOW_
 	include_once './modules/research_assistant/research_assistant.php';
 	$mod=new ra_functions();
 	$mod->Init();
-	echo $mod->getShnoteTasks($controller->nid), '</td></tr><tr class="center"><td colspan="2">';
+	echo $mod->getNoteTasks($controller->nid), '</td></tr><tr class="center"><td colspan="2">';
 }
 */
 
 // Individuals linked to this shared note
-if ($controller->shnote->countLinkedIndividuals()) {
-	print_indi_table($controller->shnote->fetchLinkedIndividuals(), $controller->shnote->getFullName());
+if ($controller->note->countLinkedIndividuals()) {
+	print_indi_table($controller->note->fetchLinkedIndividuals(), $controller->note->getFullName());
 }
 
 // Families linked to this shared note
-if ($controller->shnote->countLinkedFamilies()) {
-	print_fam_table($controller->shnote->fetchLinkedFamilies(), $controller->shnote->getFullName());
+if ($controller->note->countLinkedFamilies()) {
+	print_fam_table($controller->note->fetchLinkedFamilies(), $controller->note->getFullName());
 }
 
 echo '</td></tr></table>';

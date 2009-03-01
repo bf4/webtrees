@@ -1498,7 +1498,7 @@ function get_fam_list() {
 }
 
 //-- get the shared note list from the datastore
-function get_shnote_list($ged_id) {
+function get_note_list($ged_id) {
 	global $TBLPREFIX;
 
 	$ged_id=(int)$ged_id;
@@ -1508,7 +1508,7 @@ function get_shnote_list($ged_id) {
 	);
 	$list=array();
 	while ($row=$res->fetchRow(DB_FETCHMODE_ASSOC)) {
-		$list[]=Shnote::getInstance($row);
+		$list[]=Note::getInstance($row);
 	}
 	$res->free();
 

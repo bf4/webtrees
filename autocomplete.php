@@ -226,7 +226,7 @@ function autocomplete_NOTE() {
 
 	$data = array();
 	while ($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)) {
-		$note = Shnote::getInstance($row["o_id"]);
+		$note = Note::getInstance($row["o_id"]);
 		if ($note->canDisplayName()) {
 			$data[$row["o_id"]] = $note->getFullName();
 		}

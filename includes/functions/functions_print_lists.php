@@ -944,7 +944,7 @@ T2;
  * @param array $datalist contain shared notes that were extracted from the database.
  * @param string $legend optional legend of the fieldset
  */
-function print_shnote_table($datalist, $legend=null) {
+function print_note_table($datalist, $legend=null) {
 	global $pgv_lang, $factarray, $SHOW_ID_NUMBERS, $SHOW_LAST_CHANGE, $TEXT_DIRECTION;
 	global $PGV_IMAGE_DIR, $PGV_IMAGES;
 
@@ -954,7 +954,7 @@ function print_shnote_table($datalist, $legend=null) {
 	require_once 'js/sorttable.js.htm';
 	require_once 'includes/classes/class_note.php';
 
-	echo '<fieldset><legend><img src="', $PGV_IMAGE_DIR, '/', $PGV_IMAGES['shnote']['small'], '" align="middle" /> ';
+	echo '<fieldset><legend><img src="', $PGV_IMAGE_DIR, '/', $PGV_IMAGES['note']['small'], '" align="middle" /> ';
 	if ($legend) {
 		echo $legend;
 	} else {
@@ -978,35 +978,35 @@ function print_shnote_table($datalist, $legend=null) {
 	echo '</tr>';
 	//-- table body
 	$n=0;
-	foreach ($datalist as $shnote) {
-		if (!$shnote->canDisplayDetails()) {
+	foreach ($datalist as $note) {
+		if (!$note->canDisplayDetails()) {
 			continue;
 		}
-		$link_url=encode_url($shnote->getLinkUrl());
+		$link_url=encode_url($note->getLinkUrl());
 		//-- Counter
 		echo '<tr><td class="list_value_wrap rela list_item">', ++$n, '</td>';
 		//-- Shared Note ID
 		if ($SHOW_ID_NUMBERS) {
-			echo '<td class="list_value_wrap rela">'.$shnote->getXrefLink().'</td>';
+			echo '<td class="list_value_wrap rela">'.$note->getXrefLink().'</td>';
 		}
 		//-- Shared Note name(s)
-		$tmp=$shnote->getFullName();
+		$tmp=$note->getFullName();
 		echo '<td class="list_value_wrap" align="', get_align($tmp), '"><a href="', $link_url, '" class="list_item name2">', PrintReady($tmp), '</a></td>';
 		//-- Linked INDIs
-		$tmp=$shnote->countLinkedIndividuals();
+		$tmp=$note->countLinkedIndividuals();
 		echo '<td class="list_value_wrap"><a href="', $link_url, '" class="list_item" name="', $tmp, '">', $tmp, '</a></td>';
 		//-- Linked FAMs
-		$tmp=$shnote->countLinkedfamilies();
+		$tmp=$note->countLinkedfamilies();
 		echo '<td class="list_value_wrap"><a href="', $link_url, '" class="list_item" name="', $tmp, '">', $tmp, '</a></td>';
 		//-- Linked OBJEcts
-		$tmp=$shnote->countLinkedMedia();
+		$tmp=$note->countLinkedMedia();
 		echo '<td class="list_value_wrap"><a href="', $link_url, '" class="list_item" name="', $tmp, '">', $tmp, '</a></td>';
 		//-- Linked SOURs
-		$tmp=$shnote->countLinkedSources();
+		$tmp=$note->countLinkedSources();
 		echo '<td class="list_value_wrap"><a href="', $link_url, '" class="list_item" name="', $tmp, '">', $tmp, '</a></td>';
 		//-- Last change
 		if ($SHOW_LAST_CHANGE) {
-			print '<td class="'.strrev($TEXT_DIRECTION).' list_value_wrap rela">'.$shnote->LastChangeTimestamp(empty($SEARCH_SPIDER)).'</td>';
+			print '<td class="'.strrev($TEXT_DIRECTION).' list_value_wrap rela">'.$note->LastChangeTimestamp(empty($SEARCH_SPIDER)).'</td>';
 		}
 		echo "</tr>\n";
 	}

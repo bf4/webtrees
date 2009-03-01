@@ -159,7 +159,7 @@ $options["option"][]= "findfam";
 $options["option"][]= "findmedia";
 $options["option"][]= "findplace";
 $options["option"][]= "findrepo";
-$options["option"][]= "findshnote";
+$options["option"][]= "findnote";
 $options["option"][]= "findsource";
 $options["option"][]= "findspecialchar";
 $options["form"][]= "formindi";
@@ -321,7 +321,7 @@ if ($type == "repo" && $SHOW_SOURCES>=PGV_USER_ACCESS_LEVEL) {
 	print "</form></div>";
 }
 
-// Show shnote and hide the rest
+// Show Shared Notes and hide the rest
 if ($type == "shnote" && $SHOW_SOURCES>=PGV_USER_ACCESS_LEVEL) {
 	print "<div align=\"center\">";
 	print "<form name=\"filtershnote\" method=\"get\" onsubmit=\"return checknames(this);\" action=\"find.php\">";
@@ -654,16 +654,16 @@ if ($action=="filter") {
 	// Output Shared Notes
 	if ($type == "shnote") {
 		print "<table class=\"tabs_table $TEXT_DIRECTION width90\"><tr>";
-		$shnote_list = get_shnote_list(PGV_GED_ID);
-		if ($shnote_list) {
+		$note_list = get_note_list(PGV_GED_ID);
+		if ($note_list) {
 			print "<td class=\"list_value_wrap\"><ul>";
-			foreach ($shnote_list as $shnote) {
-				echo "<li><a href=\"javascript:;\" onclick=\"pasteid('".$shnote->getXref()."');\"><span class=\"list_item\">".$shnote->getListName()."&nbsp;&nbsp;&nbsp;";
-				echo PGV_LPARENS.$shnote->getXref().PGV_RPARENS;
+			foreach ($note_list as $note) {
+				echo "<li><a href=\"javascript:;\" onclick=\"pasteid('".$note->getXref()."');\"><span class=\"list_item\">".$note->getListName()."&nbsp;&nbsp;&nbsp;";
+				echo PGV_LPARENS.$note->getXref().PGV_RPARENS;
 				echo "</span></a></li>";
 			}
 			print "</ul></td></tr>";
-			print "<tr><td class=\"list_label\">".$pgv_lang["shared_notes_found"]." ".count($shnote_list);
+			print "<tr><td class=\"list_label\">".$pgv_lang["shared_notes_found"]." ".count($note_list);
 			print "</td></tr>";
 		}
 		else {

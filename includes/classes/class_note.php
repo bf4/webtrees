@@ -29,12 +29,12 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
-define('PGV_CLASS_SHNOTE_PHP', '');
+define('PGV_CLASS_NOTE_PHP', '');
 
 require_once 'includes/classes/class_gedcomrecord.php';
 require_once 'includes/classes/class_serviceclient.php';
 
-class Shnote extends GedcomRecord {
+class Note extends GedcomRecord {
 	// Get an instance of a Shared note.  We either specify
 	// an XREF (in the current gedcom), or we can provide a row
 	// from the database (if we anticipate the record hasn't
@@ -82,7 +82,7 @@ class Shnote extends GedcomRecord {
 		}
 
 		// Create the object
-		$object=new Shnote($data, $simple);
+		$object=new Note($data, $simple);
 		if (!empty($fromfile)) {
 			$object->setChanged(true);
 		}
