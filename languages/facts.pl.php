@@ -162,6 +162,7 @@ $factarray["_DBID"]	= "Indentyfikator dołączonej bazy danych";
 
 // These facts are used in specific contexts
 $factarray["STAT:DATE"] = "Data zmiany statusu";
+$factarray["DATA:DATE"]	= "Data wpisu w oryginalnym źródle";
 
 //These facts are compounds for the view probabilities page
 $factarray["FAMC:HUSB:SURN"]		= "Nazwisko ojca";

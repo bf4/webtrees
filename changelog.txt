@@ -10,6 +10,7 @@
 
 
 Version 4.2.0 CA
+ - Merged: Merge changes r5105 - r5121 from the trunk. (windmillway)
  - Added: Level 1 NOTE @Nxxx@ Shared Note support for Indi - Notes Tab page (windmillway)
  - Fixed: case 'deletenote' in edit_interface.php (By adding function deletesource() in phpgedview.js). (windmillway)
  - Changed: all "shnote" occurrences removed. (windmillway)

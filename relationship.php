@@ -167,7 +167,12 @@ function getRelationshipSentence($node, $pid1, $pid2) {
 	//checks for brother in law, sister in law realtionships
 	else if ($numberOfSpouses == 1 && $numberOfSiblings == 1 && $generationsYounger == 0 && $generationsOlder == 0) {
 		if (isset($pgv_lang["sister_in_law"]) && $mf=="F") {
-			$relationshipDescription = $pgv_lang["sister_in_law"];
+			if (in_arrayr("brother", $node)) {
+				$relationshipDescription = $pgv_lang["brothers_wife"];
+			}
+			else {
+				$relationshipDescription = $pgv_lang["sister_in_law"];
+			}
 		}
 		else if (isset($pgv_lang["brother_in_law"])) {
 			$relationshipDescription = $pgv_lang["brother_in_law"];

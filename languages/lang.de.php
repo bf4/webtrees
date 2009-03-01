@@ -87,6 +87,7 @@ $pgv_lang["confirm_password"]			= "Sie müssen das Kennwort bestätigen.";
 $pgv_lang["enter_email"]				= "Sie müssen eine Mail Adresse angeben.";
 $pgv_lang["enter_fullname"]				= "Sie müssen einen vollständigen Namen eingeben.";
 $pgv_lang["name"]						= "Name";
+$pgv_lang["names"]						= "Namen";
 $pgv_lang["children"]					= "Kinder";
 $pgv_lang["child"]						= "Kind";
 $pgv_lang["family"]						= "Familie";
