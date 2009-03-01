@@ -44,7 +44,8 @@ VERSION 4.2.1
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change	codes and comments
 ----------------------------------------------------------------------------------------
--$pgv_lang["date_of_entry"]           28 Feb 2009     M Moved to $factarray["DATA:DATE"]
++$pgv_lang["brothers_wife"]							01 Mar 2009				A
+-$pgv_lang["date_of_entry"]							28 Feb 2009				M Moved to $factarray["DATA:DATE"]
 +$pgv_lang["names"]									26 Feb 2009				A
 *$pgv_lang["parents"]								19 Feb 2009				p	"Parents:" --> "Parents"
 *$pgv_lang["siblings"]								19 Feb 2009				w	"Sibling" --> "Siblings"

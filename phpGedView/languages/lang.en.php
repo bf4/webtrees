@@ -851,9 +851,9 @@ $pgv_lang["greatgranddaughter"]		= "Great granddaughter";
 $pgv_lang["brother"]				= "Brother";
 $pgv_lang["sister"] 				= "Sister";
 $pgv_lang["aunt"]					= "Aunt";
-$pgv_lang["uncle"]				= "Uncle";
-$pgv_lang["nephew"]				= "Nephew";
-$pgv_lang["niece"]				= "Niece";
+$pgv_lang["uncle"]					= "Uncle";
+$pgv_lang["nephew"]					= "Nephew";
+$pgv_lang["niece"]					= "Niece";
 $pgv_lang["firstcousin"]			= "First cousin";
 $pgv_lang["femalecousin"]			= "Female cousin";
 $pgv_lang["malecousin"]				= "Male cousin";
@@ -863,36 +863,37 @@ $pgv_lang["rela_wife"]				= "Relationship to wife";
 $pgv_lang["next_path"]				= "Find next path";
 $pgv_lang["show_path"]				= "Show path";
 $pgv_lang["line_up_generations"]	= "Line up the same generations";
-$pgv_lang["oldest_top"]             = "Show oldest top";
+$pgv_lang["oldest_top"]				= "Show oldest top";
 
 // %1\$s replaced by first person, %2\$s by the relationship and %3\$s by the second person.
 $pgv_lang["relationship_male_1_is_the_2_of_3"] = "%1\$s is the %2\$s of %3\$s.";
 $pgv_lang["relationship_female_1_is_the_2_of_3"] = "%1\$s is the %2\$s of %3\$s.";
 
-$pgv_lang["mother_in_law"]		    = "Mother-in-law";
-$pgv_lang["father_in_law"]		    = "Father-in-law";
-$pgv_lang["brother_in_law"]		    = "Brother-in-law";
-$pgv_lang["sister_in_law"]		    = "Sister-in-law";
-$pgv_lang["son_in_law"]		        = "Son-in-law";
+$pgv_lang["mother_in_law"]			= "Mother-in-law";
+$pgv_lang["father_in_law"]			= "Father-in-law";
+$pgv_lang["brother_in_law"]			= "Brother-in-law";
+$pgv_lang["sister_in_law"]			= "Sister-in-law";
+$pgv_lang["brothers_wife"]			= "Sister-in-law"; // brother's wife
+$pgv_lang["son_in_law"]				= "Son-in-law";
 $pgv_lang["daughter_in_law"]		= "Daughter-in-law";
 $pgv_lang["uncle_in_law"]			= "Uncle-in-law";
 $pgv_lang["aunt_in_law"]			= "Aunt-in-law";
 $pgv_lang["cousin_in_law"]			= "Cousin-in-law";
 $pgv_lang["m_cousin_in_law"]		= "Cousin-in-law";
 $pgv_lang["f_cousin_in_law"]		= "Cousin-in-law";
-$pgv_lang["step_son"]		        = "step son";
-$pgv_lang["step_daughter"]	    	= "step daughter";
+$pgv_lang["step_son"]				= "step son";
+$pgv_lang["step_daughter"]			= "step daughter";
 
 // the bosa_brothers_offspring name is used for fraternal nephews and nieces - the names below can be extended to any number
 // of generations just by adding more translations.
 // 1st generation
-$pgv_lang["bosa_brothers_offspring_2"] 				= "nephew";             // brother's son
-$pgv_lang["bosa_brothers_offspring_3"] 				= "niece";              // brother's daughter
+$pgv_lang["bosa_brothers_offspring_2"]				= "nephew";             // brother's son
+$pgv_lang["bosa_brothers_offspring_3"]				= "niece";              // brother's daughter
 // 2nd generation
-$pgv_lang["bosa_brothers_offspring_4"] 				= "great nephew";       // brother's son's son
-$pgv_lang["bosa_brothers_offspring_5"] 				= "great niece";        // brother's son's daughter
-$pgv_lang["bosa_brothers_offspring_6"] 				= "great nephew";       // brother's daughter's son
-$pgv_lang["bosa_brothers_offspring_7"] 				= "great niece";        // brother's daughter's daughter
+$pgv_lang["bosa_brothers_offspring_4"]				= "great nephew";       // brother's son's son
+$pgv_lang["bosa_brothers_offspring_5"]				= "great niece";        // brother's son's daughter
+$pgv_lang["bosa_brothers_offspring_6"]				= "great nephew";       // brother's daughter's son
+$pgv_lang["bosa_brothers_offspring_7"]				= "great niece";        // brother's daughter's daughter
 // for the general case of offspring of the nth generation use the text below
 // in this text %1\$d is replaced with the number of generations
 //              %2\$d is replaced with the number of generations - 1
