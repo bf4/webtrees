@@ -1272,11 +1272,11 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 		echo "<input type=\"hidden\" name=\"glevels[]\" value=\"".$level."\" />\n";
 		echo "<input type=\"hidden\" name=\"islink[]\" value=\"".($islink)."\" />\n";
 		echo "<input type=\"hidden\" name=\"tag[]\" value=\"".$fact."\" />\n";
-		// BH Debug --------------------
-		//	echo "<br />Level = ".$level;
-		//	echo "<br />Link = ".$islink;
-		//	echo "<br />Fact = ".$fact;
-		//	echo "<br />Value = ".$value;
+		// Shared Notes Debug --------------------
+			// echo "<br />Level = ".$level;
+			// echo "<br />Link = ".$islink;
+			// echo "<br />Fact = ".$fact;
+			// echo "<br />Value = ".$value;
 		// End Debug -------------------
 	}
 	echo "\n</td>";
@@ -1729,7 +1729,7 @@ function print_add_layer($tag, $level=2, $printSaveButton=true) {
 		echo "<div id=\"newnote_1\" style=\"display: none;\">\n";
 		if ($printSaveButton) echo "<input type=\"submit\" value=\"".$pgv_lang["save"]."\" />";
 		echo "<table class=\"facts_table center $TEXT_DIRECTION\">\n";
-		// 2 NOTE
+		// 1 NOTE (edit)
 		add_simple_tag(($level)." SHARED_NOTE_EDIT ");
 		
 		echo "</table></div>";
@@ -1744,7 +1744,7 @@ function print_add_layer($tag, $level=2, $printSaveButton=true) {
 		echo "<div id=\"newnote_2\" style=\"display: none;\">\n";
 		if ($printSaveButton) echo "<input type=\"submit\" value=\"".$pgv_lang["save"]."\" />";
 		echo "<table class=\"facts_table center $TEXT_DIRECTION\">\n";
-		// 2 NOTE
+		// 1 NOTE
 		add_simple_tag(($level)." SHARED_NOTE ");
 		
 		echo "</table></div>";
