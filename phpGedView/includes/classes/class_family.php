@@ -39,7 +39,6 @@ class Family extends GedcomRecord {
 	private $children = array();
 	private $childrenIds = array();
 	private $marriage = null;
-	private $divorce = null;
 	private $marr_est = false; // estimate
 	private $marr_rec2 = null;
 	private $marr_date2 = null;
@@ -314,8 +313,6 @@ class Family extends GedcomRecord {
 	function _parseMarriageRecord() {
 		$this->marriage = new Event(trim(get_sub_record(1, "1 MARR", $this->gedrec)), -1);
 		$this->marriage->setParentObject($this);
-		$this->divorce = new Event(trim(get_sub_record(1, "1 DIV", $this->gedrec)), -1);
-		$this->divorce->setParentObject($this);
 		//-- 2nd record with alternate date (hebrew...)
 		$this->marr_rec2 = trim(get_sub_record(1, "1 MARR", $this->gedrec, 2));
 		$this->marr_date2 = get_gedcom_value("DATE", 2, $this->marr_rec2, '', false);
@@ -340,20 +337,6 @@ class Family extends GedcomRecord {
 		return $this->marriage->getGedcomRecord();
 	}
 
-	function getDivorce() {
-		if (is_null($this->divorce)) $this->_parseMarriageRecord();
-		return $this->divorce;
-	}
-
-	/**
-	 * get divorce record
-	 * @return string
-	 */
-	function getDivorceRecord() {
-		if (is_null($this->divorce)) $this->_parseMarriageRecord();
-		return $this->divorce->getGedcomRecord();
-	}
-
 	/**
 	 * Return whether or not this family ended in a divorce.
 	 * Current implementation returns true if there is a non-empty divorce record.
@@ -361,7 +344,7 @@ class Family extends GedcomRecord {
 	 */
 	function isDivorced() {
 		// Bypass privacy rules so we can differentiate Spouse from Ex-Spouse
-		return preg_match('/[\r\n]1 DIV( Y)?[\r\n]/', find_family_record($this->xref));
+		return preg_match('/\n1 DIV( Y|\n)/', find_family_record($this->xref));
 	}
 
 	/**
@@ -419,33 +402,6 @@ class Family extends GedcomRecord {
 	function getMarriagePlace() {
 		$marriage = $this->getMarriage();
 		return $marriage->getPlace();
-	}
-
-	/**
-	 * get divorce date
-	 * @return string
-	 */
-	function getDivorceDate() {
-		$drec = $this->getDivorce();
-		return $drec->getDate();
-	}
-
-	/**
-	 * get the type for this marriage
-	 * @return string
-	 */
-	function getDivorceType() {
-		$drec = $this->getDivorce();
-		return $drec->getType();
-	}
-
-	/**
-	 * get the divorce place
-	 * @return string
-	 */
-	function getDivorcePlace() {
-		$drec = $this->getDivorce();
-		return $drec->getPlace();
 	}
 
 	// Get all the dates/places for marriages - for the FAM lists
