@@ -39,9 +39,6 @@ class Family extends GedcomRecord {
 	private $children = array();
 	private $childrenIds = array();
 	private $marriage = null;
-	private $marr_est = false; // estimate
-	private $marr_rec2 = null;
-	private $marr_date2 = null;
 	private $children_loaded = false;
 	private $numChildren = false;
 
@@ -313,9 +310,6 @@ class Family extends GedcomRecord {
 	function _parseMarriageRecord() {
 		$this->marriage = new Event(trim(get_sub_record(1, "1 MARR", $this->gedrec)), -1);
 		$this->marriage->setParentObject($this);
-		//-- 2nd record with alternate date (hebrew...)
-		$this->marr_rec2 = trim(get_sub_record(1, "1 MARR", $this->gedrec, 2));
-		$this->marr_date2 = get_gedcom_value("DATE", 2, $this->marr_rec2, '', false);
 	}
 
 	/**
