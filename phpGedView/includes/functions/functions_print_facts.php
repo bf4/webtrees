@@ -627,7 +627,6 @@ function print_fact_sources($factrec, $level, $return=false) {
 			$data .= print_fact_notes($srec, $nlevel, false, true);
 			$data .= "</div>";
 			$data .= "</div>";
-
 			$printDone = true;
 		}
 	}
@@ -1028,7 +1027,7 @@ function printSourceStructure($textSOUR) {
 
 	$data='';
 	if ($textSOUR["PAGE"]!="") {
-		$data.="<br /><span class=\"label\">".$factarray["PAGE"].":&nbsp;</span><span class=\"field\">".PrintReady(expand_urls($textSOUR["PAGE"]))."</span>";
+		$data.="<br /><span class=\"label\">".$factarray["PAGE"].":&nbsp;&nbsp;</span><span class=\"field\">".PrintReady(expand_urls($textSOUR["PAGE"]))."</span>";
 	}
 
 	if ($textSOUR["EVEN"]!="") {
@@ -1042,10 +1041,32 @@ function printSourceStructure($textSOUR) {
 		// $data.="<br /><span class=\"label\">".$factarray["DATA"]."</span>";
 		if ($textSOUR["DATE"]!="") {
 			$date=new GedcomDate($textSOUR["DATE"]);
-			$data.="<br />&nbsp;&nbsp;<span class=\"label\">".$factarray["DATA:DATE"].":&nbsp;</span><span class=\"field\">".$date->Display(false)."</span>";
+			$data.="<br />&nbsp;&nbsp;<span class=\"label\">".$pgv_lang["date_of_entry"].":&nbsp;</span><span class=\"field\">".$date->Display(false)."</span>";
 		}
 		foreach($textSOUR["TEXT"] as $text) {
-			$data.="<br />&nbsp;&nbsp;<span class=\"label\">".$factarray["TEXT"].":&nbsp;</span><span class=\"field\">".PrintReady(expand_urls($text))."</span>";
+			
+			// Check if Census Assistant Note ======================================= 
+			// if (eregi("Head", $text)) {
+			if (strstr($text, "|Head|")) {
+				$text = "xCxAx<table><tr><td><br /><br />" . $text;
+				$text = str_replace("<br /><br />", "</td></tr></table><p><table><tr><td><b>Name</b>&nbsp;&nbsp;</td><td><b>Related</b>&nbsp;&nbsp;</td><td><b>Status</b>&nbsp;&nbsp;</td><td><b>Age</b>&nbsp;&nbsp;</td><td><b>Sex</b>&nbsp;&nbsp;</td><td><b>Occupation</b>&nbsp;&nbsp;</td><td><b>Birth place</b>&nbsp;&nbsp;</td> </tr><tr><td>", $text);
+				if (eregi("<br />.b.", $text)) {
+					$text = str_replace(".b.", "<b>", $text);
+					$text = str_replace("|", "&nbsp;&nbsp;</b></td><td>", $text);
+				}else{
+					$text = str_replace("|", "&nbsp;&nbsp;</td><td>", $text);
+				}
+				$text = str_replace("<br />", "</td></tr><tr><td>", $text);
+				$text = $text . "</td></tr></table>";
+				$text = str_replace("xCxAx", "&nbsp;&nbsp;Census Transcription<br />", $text);
+				$data.= "<br />";
+				$data.= "<span class=\"label\">".$factarray["TEXT"].":&nbsp;</span>";
+				$data.= "<span class=\"field\">".PrintReady($text)."</span><br />";
+			}else{
+				$data.="<br />&nbsp;&nbsp;<span class=\"label\">".$factarray["TEXT"].":&nbsp;</span><span class=\"field\">".PrintReady(expand_urls($text))."</span>";
+			}
+			// ==========================================================
+			
 		}
 	}
 

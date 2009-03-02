@@ -121,6 +121,7 @@ $PGV_IMAGES["timeline"]["small"] = "small/timeline.gif";
 //- PGV buttons for data entry pages
 $PGV_IMAGES["addrepository"]["button"] = "buttons/addrepository.gif";
 $PGV_IMAGES["addsource"]["button"] = "buttons/addsource.gif";
+$PGV_IMAGES["addnote"]["button"] = "buttons/addnote.gif";
 $PGV_IMAGES["autocomplete"]["button"] = "buttons/autocomplete.gif";
 $PGV_IMAGES["calendar"]["button"] = "buttons/calendar.gif";
 $PGV_IMAGES["family"]["button"] = "buttons/family.gif";
@@ -130,6 +131,7 @@ $PGV_IMAGES["media"]["button"] = "buttons/media.gif";
 $PGV_IMAGES["place"]["button"] = "buttons/place.gif";
 $PGV_IMAGES["repository"]["button"] = "buttons/repository.gif";
 $PGV_IMAGES["source"]["button"] = "buttons/source.gif";
+$PGV_IMAGES["note"]["button"] = "buttons/note.gif";
 
 // Media images
 $PGV_IMAGES["media"]["doc"] = "../../../images/media/doc.gif";

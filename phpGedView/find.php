@@ -102,6 +102,10 @@ switch ($type) {
 		print_simple_header($pgv_lang["repo_list"]);
 		$action="filter";
 		break;
+	case "note" :
+		print_simple_header($pgv_lang["find_shared_note"]);
+		$action="filter";
+		break;
 	case "source" :
 		print_simple_header($pgv_lang["find_source"]);
 		$action="filter";
@@ -155,6 +159,7 @@ $options["option"][]= "findfam";
 $options["option"][]= "findmedia";
 $options["option"][]= "findplace";
 $options["option"][]= "findrepo";
+$options["option"][]= "findnote";
 $options["option"][]= "findsource";
 $options["option"][]= "findspecialchar";
 $options["form"][]= "formindi";
@@ -162,6 +167,7 @@ $options["form"][]= "formfam";
 $options["form"][]= "formmedia";
 $options["form"][]= "formplace";
 $options["form"][]= "formrepo";
+$options["form"][]= "formnote";
 $options["form"][]= "formsource";
 $options["form"][]= "formspecialchar";
 
@@ -184,6 +190,9 @@ switch ($type) {
 		break;
 	case "repo" :
 		print $pgv_lang["repo_list"];
+		break;
+	case "note" :
+		print $pgv_lang["find_shared_note"];
 		break;
 	case "source" :
 		print $pgv_lang["find_source"];
@@ -302,6 +311,27 @@ if ($type == "repo" && $SHOW_SOURCES>=PGV_USER_ACCESS_LEVEL) {
 	print "<table class=\"list_table $TEXT_DIRECTION width100\" border=\"0\">";
 	print "<tr><td class=\"list_label width10\" style=\"padding: 5px;\">";
 	print $pgv_lang["repo_contains"]." <input type=\"text\" name=\"filter\" value=\"";
+	if ($filter) print $filter;
+	print "\" />";
+	print "</td></tr>";
+	print "<tr><td class=\"list_label width10\" style=\"padding: 5px;\">";
+	print "<input type=\"submit\" name=\"search\" value=\"".$pgv_lang["filter"]."\" onclick=\"this.form.subclick.value=this.name\" />&nbsp;";
+	print "<input type=\"submit\" name=\"all\" value=\"".$pgv_lang["display_all"]."\" onclick=\"this.form.subclick.value=this.name\" />";
+	print "</td></tr></table>";
+	print "</form></div>";
+}
+
+// Show Shared Notes and hide the rest
+if ($type == "note" && $SHOW_SOURCES>=PGV_USER_ACCESS_LEVEL) {
+	print "<div align=\"center\">";
+	print "<form name=\"filternote\" method=\"get\" onsubmit=\"return checknames(this);\" action=\"find.php\">";
+	print "<input type=\"hidden\" name=\"action\" value=\"filter\" />";
+	print "<input type=\"hidden\" name=\"type\" value=\"note\" />";
+	print "<input type=\"hidden\" name=\"callback\" value=\"$callback\" />";
+	print "<input type=\"hidden\" name=\"subclick\">"; // This is for passing the name of which submit button was clicked
+	print "<table class=\"list_table $TEXT_DIRECTION width100\" border=\"0\">";
+	print "<tr><td class=\"list_label width10\" style=\"padding: 5px;\">";
+	print $pgv_lang["shared_note_contains"]." <input type=\"text\" name=\"filter\" value=\"";
 	if ($filter) print $filter;
 	print "\" />";
 	print "</td></tr>";
@@ -619,8 +649,31 @@ if ($action=="filter") {
 			print "</td></tr>";
 		}
 		print "</table>";
-
 	}
+	
+	// Output Shared Notes
+	if ($type == "note") {
+		print "<table class=\"tabs_table $TEXT_DIRECTION width90\"><tr>";
+		$note_list = get_note_list(PGV_GED_ID);
+		if ($note_list) {
+			print "<td class=\"list_value_wrap\"><ul>";
+			foreach ($note_list as $note) {
+				echo "<li><a href=\"javascript:;\" onclick=\"pasteid('".$note->getXref()."');\"><span class=\"list_item\">".$note->getListName()."&nbsp;&nbsp;&nbsp;";
+				echo PGV_LPARENS.$note->getXref().PGV_RPARENS;
+				echo "</span></a></li>";
+			}
+			print "</ul></td></tr>";
+			print "<tr><td class=\"list_label\">".$pgv_lang["shared_notes_found"]." ".count($note_list);
+			print "</td></tr>";
+		}
+		else {
+			print "<tr><td class=\"list_value_wrap\">";
+			print $pgv_lang["no_results"];
+			print "</td></tr>";
+		}
+		print "</table>";
+	}
+
 	// Output Sources
 	if ($type=="source") {
 		echo '<table class="tabs_table ', $TEXT_DIRECTION, ' width90"><tr><td class="list_value"><tr>';

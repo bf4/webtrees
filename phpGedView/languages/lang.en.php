@@ -52,6 +52,7 @@ $pgv_lang["ellipsis"]				= "\xE2\x80\xA6";
 $pgv_lang["showUnknown"]			= "Show unknown gender";
 $pgv_lang["count"]					= "Count";
 $pgv_lang["age_differences"]		= "Show Date Differences";
+$pgv_lang["date_of_entry"]			= "Date of entry in original source";
 $pgv_lang["multi_site_search"] 		= "Multi Site Search";
 $pgv_lang["switch_lifespan"]		= "Show Lifespan chart";
 $pgv_lang["switch_timeline"]		= "Show Timeline chart";
@@ -90,8 +91,9 @@ $pgv_lang["children"]				= "Children";
 $pgv_lang["child"]					= "Child";
 $pgv_lang["family"] 				= "Family";
 $pgv_lang["as_child"]				= "Family with Parents";
+$pgv_lang["shared_note_menu"]		= "Options for Shared Note";
 $pgv_lang["source_menu"]			= "Options for source";
-$pgv_lang["repo_menu"]			= "Options for repository";
+$pgv_lang["repo_menu"]				= "Options for repository";
 $pgv_lang["other_records"]			= "Records that link to this Source:";
 $pgv_lang["other_repo_records"]		= "Records that link to this Repository:";
 $pgv_lang["repo_info"]				= "Repository Information";
@@ -194,6 +196,7 @@ $pgv_lang["nov_1st"]					= "Nov";
 $pgv_lang["dec_1st"]					= "Dec";
 
 $pgv_lang["edit_source"]			= "Edit Source";
+$pgv_lang["edit_shared_note"]		= "Edit Shared Note";
 $pgv_lang["familybook_chart"]		= "Family Book Chart";
 $pgv_lang["family_of"]				= "Family of:&nbsp;";
 $pgv_lang["descent_steps"]			= "Descent Steps";
@@ -400,6 +403,7 @@ $pgv_lang["descend_chart"]			= "Descendancy Chart";
 $pgv_lang["individual_list"]		= "Individual List";
 $pgv_lang["family_list"]			= "Family List";
 $pgv_lang["source_list"]			= "Source List";
+$pgv_lang["shared_note_list"]		= "Shared Note List";
 $pgv_lang["place_list"] 			= "Place Hierarchy";
 $pgv_lang["place_list_aft"] 		= "Place Hierarchy after";
 $pgv_lang["media_list"] 			= "MultiMedia List";
@@ -578,6 +582,7 @@ $pgv_lang["record_not_added"]		= "Record #xref# could not be added to GEDCOM.";
 //-- SEARCH FILE MESSAGES
 $pgv_lang["soundex_search"] 		= "Search the way you think the name is written (Soundex)";
 $pgv_lang["sources"]				= "Sources";
+$pgv_lang["shared_notes"]			= "Shared Notes";
 $pgv_lang["lastname_search"]		= "Last name";
 $pgv_lang["search_place"]			= "Place";
 $pgv_lang["search_year"]			= "Year";
@@ -585,6 +590,7 @@ $pgv_lang["no_results"] 			= "No results found.";
 $pgv_lang["search_soundex"]			= "Soundex Search";
 $pgv_lang["search_replace"]			= "Search and Replace";
 $pgv_lang["search_sources"]			= "Sources";
+$pgv_lang["search_shared_notes"]	= "Shared Notes";
 $pgv_lang["search_more_chars"]      = "Please enter more than one character";
 $pgv_lang["search_soundextype"]		= "Soundex type:";
 $pgv_lang["search_russell"]			= "Basic";
@@ -611,6 +617,15 @@ $pgv_lang["source_info"]			= "Source Information";
 $pgv_lang["people"] 				= "People";
 $pgv_lang["families"]				= "Families";
 $pgv_lang["total_sources"]			= "Total Sources";
+
+//-- SHARED NOTE FILE MESSAGES
+$pgv_lang["shared_note"]				= "Shared Note";
+$pgv_lang["shared_note_list"]			= "Shared Notes List";
+$pgv_lang["shared_notes_found"]			= "Shared Notes found";
+$pgv_lang["find_shared_note"]			= "Find Shared Note";
+$pgv_lang["shared_note_info"]			= "Shared Note Information";
+$pgv_lang["total_shared_notes"]			= "Total Shared Notes";
+$pgv_lang["confirm_delete_shared_note"]	= "Are you sure you want to delete this Shared Note from the database?";
 
 //-- BUILDINDEX FILE MESSAGES
 $pgv_lang["invalid_gedformat"]		= "Invalid GEDCOM format";
@@ -851,9 +866,9 @@ $pgv_lang["greatgranddaughter"]		= "Great granddaughter";
 $pgv_lang["brother"]				= "Brother";
 $pgv_lang["sister"] 				= "Sister";
 $pgv_lang["aunt"]					= "Aunt";
-$pgv_lang["uncle"]					= "Uncle";
-$pgv_lang["nephew"]					= "Nephew";
-$pgv_lang["niece"]					= "Niece";
+$pgv_lang["uncle"]				= "Uncle";
+$pgv_lang["nephew"]				= "Nephew";
+$pgv_lang["niece"]				= "Niece";
 $pgv_lang["firstcousin"]			= "First cousin";
 $pgv_lang["femalecousin"]			= "Female cousin";
 $pgv_lang["malecousin"]				= "Male cousin";
@@ -863,37 +878,36 @@ $pgv_lang["rela_wife"]				= "Relationship to wife";
 $pgv_lang["next_path"]				= "Find next path";
 $pgv_lang["show_path"]				= "Show path";
 $pgv_lang["line_up_generations"]	= "Line up the same generations";
-$pgv_lang["oldest_top"]				= "Show oldest top";
+$pgv_lang["oldest_top"]             = "Show oldest top";
 
 // %1\$s replaced by first person, %2\$s by the relationship and %3\$s by the second person.
 $pgv_lang["relationship_male_1_is_the_2_of_3"] = "%1\$s is the %2\$s of %3\$s.";
 $pgv_lang["relationship_female_1_is_the_2_of_3"] = "%1\$s is the %2\$s of %3\$s.";
 
-$pgv_lang["mother_in_law"]			= "Mother-in-law";
-$pgv_lang["father_in_law"]			= "Father-in-law";
-$pgv_lang["brother_in_law"]			= "Brother-in-law";
-$pgv_lang["sister_in_law"]			= "Sister-in-law";
-$pgv_lang["brothers_wife"]			= "Sister-in-law"; // brother's wife
-$pgv_lang["son_in_law"]				= "Son-in-law";
+$pgv_lang["mother_in_law"]		    = "Mother-in-law";
+$pgv_lang["father_in_law"]		    = "Father-in-law";
+$pgv_lang["brother_in_law"]		    = "Brother-in-law";
+$pgv_lang["sister_in_law"]		    = "Sister-in-law";
+$pgv_lang["son_in_law"]		        = "Son-in-law";
 $pgv_lang["daughter_in_law"]		= "Daughter-in-law";
 $pgv_lang["uncle_in_law"]			= "Uncle-in-law";
 $pgv_lang["aunt_in_law"]			= "Aunt-in-law";
 $pgv_lang["cousin_in_law"]			= "Cousin-in-law";
 $pgv_lang["m_cousin_in_law"]		= "Cousin-in-law";
 $pgv_lang["f_cousin_in_law"]		= "Cousin-in-law";
-$pgv_lang["step_son"]				= "step son";
-$pgv_lang["step_daughter"]			= "step daughter";
+$pgv_lang["step_son"]		        = "step son";
+$pgv_lang["step_daughter"]	    	= "step daughter";
 
 // the bosa_brothers_offspring name is used for fraternal nephews and nieces - the names below can be extended to any number
 // of generations just by adding more translations.
 // 1st generation
-$pgv_lang["bosa_brothers_offspring_2"]				= "nephew";             // brother's son
-$pgv_lang["bosa_brothers_offspring_3"]				= "niece";              // brother's daughter
+$pgv_lang["bosa_brothers_offspring_2"] 				= "nephew";             // brother's son
+$pgv_lang["bosa_brothers_offspring_3"] 				= "niece";              // brother's daughter
 // 2nd generation
-$pgv_lang["bosa_brothers_offspring_4"]				= "great nephew";       // brother's son's son
-$pgv_lang["bosa_brothers_offspring_5"]				= "great niece";        // brother's son's daughter
-$pgv_lang["bosa_brothers_offspring_6"]				= "great nephew";       // brother's daughter's son
-$pgv_lang["bosa_brothers_offspring_7"]				= "great niece";        // brother's daughter's daughter
+$pgv_lang["bosa_brothers_offspring_4"] 				= "great nephew";       // brother's son's son
+$pgv_lang["bosa_brothers_offspring_5"] 				= "great niece";        // brother's son's daughter
+$pgv_lang["bosa_brothers_offspring_6"] 				= "great nephew";       // brother's daughter's son
+$pgv_lang["bosa_brothers_offspring_7"] 				= "great niece";        // brother's daughter's daughter
 // for the general case of offspring of the nth generation use the text below
 // in this text %1\$d is replaced with the number of generations
 //              %2\$d is replaced with the number of generations - 1
@@ -1122,7 +1136,9 @@ $pgv_lang["confirm_delete_person"]	= "Are you sure you want to delete this perso
 $pgv_lang["find_media"] 			= "Find Media";
 $pgv_lang["set_link"]				= "Set link";
 $pgv_lang["delete_source"]			= "Delete this Source";
+$pgv_lang["delete_shared_note"]		= "Delete this Shared Note";
 $pgv_lang["confirm_delete_source"]	= "Are you sure you want to delete this Source from the GEDCOM file?";
+$pgv_lang["confirm_delete_shared_note"]		= "Are you sure you want to delete this Shared Note from the GEDCOM file?";
 $pgv_lang["find_family"]			= "Find Family";
 $pgv_lang["find_fam_list"]			= "Find Family List";
 $pgv_lang["edit_name"]				= "Edit Name";
@@ -1711,6 +1727,7 @@ $pgv_lang["block_summary_table"]	= "&nbsp;";
 $pgv_lang["total_places"]			= "Places found";
 $pgv_lang["media_contains"]			= "Media contains:";
 $pgv_lang["repo_contains"]			= "Repository contains:";
+$pgv_lang["shared_note_contains"]	= "Shared Note contains:";
 $pgv_lang["source_contains"]		= "Source contains:";
 $pgv_lang["display_all"]			= "Display all";
 

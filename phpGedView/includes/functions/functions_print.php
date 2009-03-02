@@ -560,6 +560,14 @@ function print_header($title, $head="", $use_alternate_styles=true) {
 		}
 		return false;
 	}
+	
+	// BH Census-Assistant =======================
+	function census_assistant(pid) {
+		var win01 = window.open(\'module.php?mod=census_assistant&pgvaction=census_a&pid=\'+pid, \'win01\', \'resizable=1, menubar=0, scrollbars=1, left=200, top=100, HEIGHT=800, WIDTH=1000\');
+		if (window.focus) {win01.focus();}
+	}   
+	// ===========================================
+	
 	function deleteperson(pid) {
 		if (confirm(\''.$pgv_lang["confirm_delete_person"].'\')) {
 			window.open(\'edit_interface.php?action=deleteperson&pid=\'+pid+"&"+sessionname+"="+sessionid, \'_blank\', \'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1\');
@@ -582,6 +590,7 @@ function print_header($title, $head="", $use_alternate_styles=true) {
 		window.open(\'message.php?to=\'+username+\'&method=\'+method+\'&url=\'+url+\'&subject=\'+subject+"&"+sessionname+"="+sessionid, \'_blank\', \'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1\');
 		return false;
 	}
+
 	var whichhelp = \'help_'.basename($SCRIPT_NAME).'&action='.$action.'\';
 	//-->
 	</script>
@@ -1118,12 +1127,39 @@ function print_note_record($text, $nlevel, $nrec, $textOnly=false, $return=false
 	if (!isset($EXPAND_NOTES)) $EXPAND_NOTES = $EXPAND_SOURCES; // FIXME
 	$elementID = "N-".floor(microtime()*1000000);
 	$text = trim($text);
-	$text .= get_cont($nlevel, $nrec);
+	// Check if Shared Note ---------------------
+	if (eregi("0 @N.*@ NOTE", $nrec)) {
+		$centitl  = str_replace("~~", "", $text);
+		$centitl  = str_replace("<br />", "", $centitl);
+		$text = get_cont($nlevel, $nrec);
+	}else{
+		$text .= get_cont($nlevel, $nrec);
+	}
 	$text = str_replace("~~", "<br />", $text);
 	$text = trim(expand_urls(stripLRMRLM($text)));
 	$data = "";
+
 	if (!empty($text)) {
-		$text = PrintReady($text);
+		// Check if Shared Note -----------------------------------------
+		if (eregi("0 @N.*@ NOTE", $nrec)) {
+			$text = PrintReady($text);
+			$text = "xCxAx<table><tr><td>" . $text;
+			// Check if Census Formatted Shared Note --------------------
+			if (strstr($text, "|Head|")) {
+				$text = str_replace("<br /><br />", "</td></tr></table><p><table><tr><td><b>Name</b>&nbsp;&nbsp;</td><td><b>Relation</b>&nbsp;&nbsp;</td><td><b>Status</b>&nbsp;&nbsp;</td><td><b>Age</b>&nbsp;&nbsp;</td><td><b>Sex</b>&nbsp;&nbsp;</td><td><b>Occupation</b>&nbsp;&nbsp;</td><td><b>Birth place</b>&nbsp;&nbsp;</td> </tr><tr><td>", $text);
+			}
+			// Check for Highlighting -----------------------------------
+			if (eregi("<br />.b.", $text)) {
+				$text = str_replace(".b.", "<b>", $text);
+				$text = str_replace("|", "&nbsp;&nbsp;</b></td><td>", $text);
+			}else{
+				$text = str_replace("|", "&nbsp;&nbsp;</td><td>", $text);
+			}
+			$text = str_replace("<br />", "</td></tr><tr><td>", $text);
+			$text = $text . "</td></tr></table>";
+			$text = str_replace("xCxAx", "&nbsp;&nbsp;".$centitl."<br />", $text);
+		}
+		
 		if ($textOnly) {
 			if (!$return) {
 				print $text;
@@ -1137,7 +1173,12 @@ function print_note_record($text, $nlevel, $nrec, $textOnly=false, $return=false
 			if ($EXPAND_NOTES) $plusminus="minus"; else $plusminus="plus";
 			$data .= "<a href=\"javascript:;\" onclick=\"expand_layer('$elementID'); return false;\"><img id=\"{$elementID}_img\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES[$plusminus]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"".$pgv_lang["show_details"]."\" title=\"".$pgv_lang["show_details"]."\" /></a> ";
 		}
-		$data .= $pgv_lang["note"].": </span><span class=\"field\">";
+		// Check if Shared Note ------------------------------------------
+		if (eregi("0 @N.*@ NOTE", $nrec)) { 
+			$data .= $pgv_lang["shared_note"].": </span><span class=\"field\">";
+		}else{
+			$data .= $pgv_lang["note"].": </span><span class=\"field\">";
+		}
 		if ($brpos !== false) {
 			$data .= substr($text, 0, $brpos);
 			$data .= "<span id=\"$elementID\"";
@@ -2252,9 +2293,9 @@ function CheckFactUnique($uniquefacts, $recfacts, $type) {
 */
 function print_add_new_fact($id, $usedfacts, $type) {
 	global $factarray, $pgv_lang;
-	global $INDI_FACTS_ADD,    $FAM_FACTS_ADD,    $SOUR_FACTS_ADD,    $REPO_FACTS_ADD;
-	global $INDI_FACTS_UNIQUE, $FAM_FACTS_UNIQUE, $SOUR_FACTS_UNIQUE, $REPO_FACTS_UNIQUE;
-	global $INDI_FACTS_QUICK,  $FAM_FACTS_QUICK,  $SOUR_FACTS_QUICK,  $REPO_FACTS_QUICK;
+	global $INDI_FACTS_ADD,    $FAM_FACTS_ADD,    $NOTE_FACTS_ADD,    $SOUR_FACTS_ADD,    $REPO_FACTS_ADD;
+	global $INDI_FACTS_UNIQUE, $FAM_FACTS_UNIQUE, $NOTE_FACTS_UNIQUE, $SOUR_FACTS_UNIQUE, $REPO_FACTS_UNIQUE;
+	global $INDI_FACTS_QUICK,  $FAM_FACTS_QUICK,  $NOTE_FACTS_QUICK,  $SOUR_FACTS_QUICK,  $REPO_FACTS_QUICK;
 
 	switch ($type) {
 	case "INDI":
@@ -2271,6 +2312,11 @@ function print_add_new_fact($id, $usedfacts, $type) {
 		$addfacts   =preg_split("/[, ;:]+/", $SOUR_FACTS_ADD,    -1, PREG_SPLIT_NO_EMPTY);
 		$uniquefacts=preg_split("/[, ;:]+/", $SOUR_FACTS_UNIQUE, -1, PREG_SPLIT_NO_EMPTY);
 		$quickfacts =preg_split("/[, ;:]+/", $SOUR_FACTS_QUICK,  -1, PREG_SPLIT_NO_EMPTY);
+		break;
+	case "NOTE":
+		$addfacts   =preg_split("/[, ;:]+/", $NOTE_FACTS_ADD,    -1, PREG_SPLIT_NO_EMPTY);
+		$uniquefacts=preg_split("/[, ;:]+/", $NOTE_FACTS_UNIQUE, -1, PREG_SPLIT_NO_EMPTY);
+		$quickfacts =preg_split("/[, ;:]+/", $NOTE_FACTS_QUICK,  -1, PREG_SPLIT_NO_EMPTY);
 		break;
 	case "REPO":
 		$addfacts   =preg_split("/[, ;:]+/", $REPO_FACTS_ADD,    -1, PREG_SPLIT_NO_EMPTY);
@@ -2319,6 +2365,19 @@ function print_add_new_fact($id, $usedfacts, $type) {
 	print "<input type=\"button\" value=\"".$pgv_lang["add"]."\" onclick=\"add_record('$id', 'newfact');\" /> ";
 	foreach($quickfacts as $k=>$v) echo "&nbsp;<small><a href='javascript://$v' onclick=\"add_new_record('$id', '$v');return false;\">".$factarray["$v"]."</a></small>&nbsp;";
 
+	
+	//BH Census-Assistant =====================
+	if (file_exists('modules/census_assistant/census_1_ctrl.php')) {
+		global $pid;
+		if (	$quickfacts == preg_split("/[, ;:]+/", $INDI_FACTS_QUICK,  -1, PREG_SPLIT_NO_EMPTY)
+			||	$quickfacts == preg_split("/[, ;:]+/", $FAM_FACTS_QUICK,   -1, PREG_SPLIT_NO_EMPTY)
+			)
+		{
+		echo "&nbsp;<small><a href='javascript://CENS-ASSIST' onclick=\"census_assistant('$pid');return false;\">Census-Assistant</a></small>&nbsp;";
+		}
+	}
+	//BH ====================================
+	
 	print "</form>";
 	print "</td></tr>";
 }
@@ -2444,6 +2503,22 @@ function print_findsource_link($element_id, $sourcename="", $asString=false, $ge
 	if ($asString) return $out;
 	print $out;
 }
+
+// Shared Notes =============================================
+function print_findnote_link($element_id, $notename="", $asString=false, $ged='') {
+	global $pgv_lang, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM;
+
+	if (empty($ged)) $ged=$GEDCOM;
+	$text = $pgv_lang["find_shared_note"];
+	if (isset($PGV_IMAGES["note"]["button"])) $Link = "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["note"]["button"]."\" alt=\"".$text."\" title=\"".$text."\" border=\"0\" align=\"middle\" />";
+	else $Link = $text;
+	$out = "<a href=\"javascript:;\" onclick=\"findnote(document.getElementById('".$element_id."'), document.getElementById('".$notename."'), '".$ged."'); findtype='note'; return false;\">";
+	$out .= $Link;
+	$out .= "</a>";
+	if ($asString) return $out;
+	print $out;
+}
+// ========================================================
 
 function print_findrepository_link($element_id, $ged='', $asString=false) {
 	global $pgv_lang, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM;

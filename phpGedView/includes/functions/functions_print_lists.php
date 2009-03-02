@@ -936,6 +936,92 @@ T2;
 	}
 }
 
+
+// BH print a sortable list of Shared Notes
+/**
+ * print a sortable table of shared notes
+ *
+ * @param array $datalist contain shared notes that were extracted from the database.
+ * @param string $legend optional legend of the fieldset
+ */
+function print_note_table($datalist, $legend=null) {
+	global $pgv_lang, $factarray, $SHOW_ID_NUMBERS, $SHOW_LAST_CHANGE, $TEXT_DIRECTION;
+	global $PGV_IMAGE_DIR, $PGV_IMAGES;
+
+	if (count($datalist)<1) {
+		return;
+	}
+	require_once 'js/sorttable.js.htm';
+	require_once 'includes/classes/class_note.php';
+
+	echo '<fieldset><legend><img src="', $PGV_IMAGE_DIR, '/', $PGV_IMAGES['note']['small'], '" align="middle" /> ';
+	if ($legend) {
+		echo $legend;
+	} else {
+		echo $pgv_lang['shared_notes'];
+	}
+	echo '</legend>';
+	$table_id = "ID".floor(microtime()*1000000); // sorttable requires a unique ID
+	//-- table header
+	echo '<table id="', $table_id, '" class="sortable list_table center"><tr><td></td>';
+	if ($SHOW_ID_NUMBERS) {
+		echo '<th class="list_label rela">NOTE</th>';
+	}
+	echo '<th class="list_label">', $factarray['TITL'], '</th>';
+	echo '<th class="list_label">', $pgv_lang['individuals'], '</th>';
+	echo '<th class="list_label">', $pgv_lang['families'], '</th>';
+	echo '<th class="list_label">', $pgv_lang['media'], '</th>';
+	echo '<th class="list_label">', $pgv_lang['sources'], '</th>';
+	if ($SHOW_LAST_CHANGE) {
+		echo '<th class="list_label rela">', $factarray['CHAN'], '</th>';
+	}
+	echo '</tr>';
+	//-- table body
+	$n=0;
+	foreach ($datalist as $note) {
+		if (!$note->canDisplayDetails()) {
+			continue;
+		}
+		$link_url=encode_url($note->getLinkUrl());
+		//-- Counter
+		echo '<tr><td class="list_value_wrap rela list_item">', ++$n, '</td>';
+		//-- Shared Note ID
+		if ($SHOW_ID_NUMBERS) {
+			echo '<td class="list_value_wrap rela">'.$note->getXrefLink().'</td>';
+		}
+		//-- Shared Note name(s)
+		$tmp=$note->getFullName();
+		echo '<td class="list_value_wrap" align="', get_align($tmp), '"><a href="', $link_url, '" class="list_item name2">', PrintReady($tmp), '</a></td>';
+		//-- Linked INDIs
+		$tmp=$note->countLinkedIndividuals();
+		echo '<td class="list_value_wrap"><a href="', $link_url, '" class="list_item" name="', $tmp, '">', $tmp, '</a></td>';
+		//-- Linked FAMs
+		$tmp=$note->countLinkedfamilies();
+		echo '<td class="list_value_wrap"><a href="', $link_url, '" class="list_item" name="', $tmp, '">', $tmp, '</a></td>';
+		//-- Linked OBJEcts
+		$tmp=$note->countLinkedMedia();
+		echo '<td class="list_value_wrap"><a href="', $link_url, '" class="list_item" name="', $tmp, '">', $tmp, '</a></td>';
+		//-- Linked SOURs
+		$tmp=$note->countLinkedSources();
+		echo '<td class="list_value_wrap"><a href="', $link_url, '" class="list_item" name="', $tmp, '">', $tmp, '</a></td>';
+		//-- Last change
+		if ($SHOW_LAST_CHANGE) {
+			print '<td class="'.strrev($TEXT_DIRECTION).' list_value_wrap rela">'.$note->LastChangeTimestamp(empty($SEARCH_SPIDER)).'</td>';
+		}
+		echo "</tr>\n";
+	}
+	//-- table footer
+	echo '<tr class="sortbottom"><td></td>';
+	if ($SHOW_ID_NUMBERS) {
+		echo '<td></td>';
+	}
+	echo '<td class="list_label">', $pgv_lang['total_shared_notes'], ' : ', $n,  '</td><td></td><td class="t2" style="display:none;"></td><td></td><td></td><td></td>';
+	if ($SHOW_LAST_CHANGE) {
+		echo '<td></td>';
+	}
+	echo '</tr></table></fieldset>';
+}
+
 /**
  * print a sortable table of repositories
  *
