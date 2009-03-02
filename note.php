@@ -31,6 +31,7 @@ require './includes/functions/functions_print_lists.php';
 $controller=new NoteController();
 $controller->init();
 
+
 // Tell addmedia.php what to link to
 $linkToID=$controller->nid;
 
@@ -90,34 +91,54 @@ if (!$controller->isPrintPreview()) {
 }
 echo '</td></tr><tr><td colspan="2"><table border=\"0\" class="facts_table">';
 
-$notefacts=$controller->note->getFacts();
-echo "<br /><br />";
-
-$noterec = find_gedcom_record($controller->nid);
-
-// echo $noterec . "<br />";
-
-$nt = preg_match("/0 @$controller->nid@ NOTE(.*)/", $noterec, $n1match);
-
-if ($nt==1) {
-	$note = print_note_record("<br />".$n1match[1], 1, $noterec, false, true);
-}else{
-	$note = "No Text";
-}
-// echo '<tr><td align="center" class="descriptionbox">Shared Note</td><td class="optionbox">';
-
+	// Shared Note details ---------------------
+	$noterec = find_gedcom_record($controller->nid);
+	$nt = preg_match("/0 @$controller->nid@ NOTE(.*)/", $noterec, $n1match);
+	if ($nt==1) {
+		$note = print_note_record("<br />".$n1match[1], 1, $noterec, false, true);
+	}else{
+		$note = "No Text";
+	}
 	echo '<tr><td align="left" class="descriptionbox">';
-		echo '&nbsp;&nbsp;' . $pgv_lang["shared_note"];
+		echo "<center>".$pgv_lang["shared_note"]."</center>";
 		echo '<br /><br />';
 		if (PGV_USER_CAN_EDIT) {
 			echo "<a href=\"javascript: edit_note()\"> ";
-			echo "&nbsp;&nbsp;".$pgv_lang['edit'];
+			echo $pgv_lang['edit'];
 			echo "</a>";
 		}
 		echo '</td><td class="optionbox">';
 		echo $note;
 		echo "<br />";
 	echo "</td></tr>";
+
+	$notefacts=$controller->note->getFacts();
+	foreach ($notefacts as $fact) {
+		if ($fact && $fact->getTag()!='CONT') {
+			if ($fact->getTag()=='NOTE' ) {
+			
+			} else {
+				print_fact($fact);
+			}
+		}
+	}
+
+	// Print media
+	print_main_media($controller->nid);
+
+	// new fact link
+	if (!$controller->isPrintPreview() && $controller->userCanEdit()) {
+		print_add_new_fact($controller->nid, $notefacts, 'NOTE');
+		// new media
+		echo '<tr><td class="descriptionbox">';
+		print_help_link('add_media_help', 'qm', 'add_media_lbl');
+		echo $pgv_lang['add_media_lbl'] . '</td>';
+		echo '<td class="optionbox">';
+		echo '<a href="javascript: ', $pgv_lang['add_media_lbl'], '" onclick="window.open(\'addmedia.php?action=showmediaform&linktoid=', $controller->nid, '\', \'_blank\', \'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1\'); return false;">', $pgv_lang['add_media'], '</a>';
+		echo '<br />';
+		echo '<a href="javascript:;" onclick="window.open(\'inverselink.php?linktoid='.$controller->nid.'&linkto=note\', \'_blank\', \'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1\'); return false;">'.$pgv_lang['link_to_existing_media'].'</a>';
+		echo '</td></tr>';
+	}
 
 echo '</table><br /><br /></td></tr><tr class="center"><td colspan="2">';
 

@@ -2293,9 +2293,9 @@ function CheckFactUnique($uniquefacts, $recfacts, $type) {
 */
 function print_add_new_fact($id, $usedfacts, $type) {
 	global $factarray, $pgv_lang;
-	global $INDI_FACTS_ADD,    $FAM_FACTS_ADD,    $SOUR_FACTS_ADD,    $REPO_FACTS_ADD;
-	global $INDI_FACTS_UNIQUE, $FAM_FACTS_UNIQUE, $SOUR_FACTS_UNIQUE, $REPO_FACTS_UNIQUE;
-	global $INDI_FACTS_QUICK,  $FAM_FACTS_QUICK,  $SOUR_FACTS_QUICK,  $REPO_FACTS_QUICK;
+	global $INDI_FACTS_ADD,    $FAM_FACTS_ADD,    $NOTE_FACTS_ADD,    $SOUR_FACTS_ADD,    $REPO_FACTS_ADD;
+	global $INDI_FACTS_UNIQUE, $FAM_FACTS_UNIQUE, $NOTE_FACTS_UNIQUE, $SOUR_FACTS_UNIQUE, $REPO_FACTS_UNIQUE;
+	global $INDI_FACTS_QUICK,  $FAM_FACTS_QUICK,  $NOTE_FACTS_QUICK,  $SOUR_FACTS_QUICK,  $REPO_FACTS_QUICK;
 
 	switch ($type) {
 	case "INDI":
@@ -2312,6 +2312,11 @@ function print_add_new_fact($id, $usedfacts, $type) {
 		$addfacts   =preg_split("/[, ;:]+/", $SOUR_FACTS_ADD,    -1, PREG_SPLIT_NO_EMPTY);
 		$uniquefacts=preg_split("/[, ;:]+/", $SOUR_FACTS_UNIQUE, -1, PREG_SPLIT_NO_EMPTY);
 		$quickfacts =preg_split("/[, ;:]+/", $SOUR_FACTS_QUICK,  -1, PREG_SPLIT_NO_EMPTY);
+		break;
+	case "NOTE":
+		$addfacts   =preg_split("/[, ;:]+/", $NOTE_FACTS_ADD,    -1, PREG_SPLIT_NO_EMPTY);
+		$uniquefacts=preg_split("/[, ;:]+/", $NOTE_FACTS_UNIQUE, -1, PREG_SPLIT_NO_EMPTY);
+		$quickfacts =preg_split("/[, ;:]+/", $NOTE_FACTS_QUICK,  -1, PREG_SPLIT_NO_EMPTY);
 		break;
 	case "REPO":
 		$addfacts   =preg_split("/[, ;:]+/", $REPO_FACTS_ADD,    -1, PREG_SPLIT_NO_EMPTY);
