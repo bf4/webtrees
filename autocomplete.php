@@ -217,9 +217,8 @@ function autocomplete_NOTE() {
 
 	$sql = "SELECT o_id".
 				" FROM {$TBLPREFIX}other".
-				" WHERE (o_gedcom ".PGV_DB_LIKE." '%".$FILTER."%'".
-				" OR o_id ".PGV_DB_LIKE." '%".$FILTER."%')".
-				" AND o_type ".PGV_DB_LIKE." '%NOTE%'".
+				" WHERE o_gedcom ".PGV_DB_LIKE." '%".$FILTER."%'".
+				" AND o_type='NOTE'".
 				" AND o_file=".PGV_GED_ID.
 				" LIMIT ".PGV_AUTOCOMPLETE_LIMIT;
 	$res = dbquery($sql);
