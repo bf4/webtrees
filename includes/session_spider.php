@@ -130,7 +130,7 @@ $worms = array(
 $quitReason = "";
 
 // check for attempt to redirect
-if (preg_match("/=.*:\/\//i", rawurldecode($_SERVER["REQUEST_URI"])!==false)) {
+if (preg_match("/=.*:\/\//i", rawurldecode($_SERVER["REQUEST_URI"]))) {
 	$quitReason = "Embedded URL detected";
 }
 
