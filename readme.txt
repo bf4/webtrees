@@ -1,8 +1,8 @@
 =======================================================
     PhpGedView
 
-    Version 4.1
-    Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
+    Version 4.2
+    Copyright (C) 2002 to 2009 PGV Development Team. All rights reserved.
 
     This and other information can be found online at
     http://www.PhpGedView.net
@@ -38,7 +38,7 @@ CONTENTS
 LICENSE
 
 PhpGedView: Genealogy Viewer
-Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
+Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -77,7 +77,7 @@ project.
 -------------------------------------------------------
 SYSTEM REQUIREMENTS
 
-PhpGedView requires a web server with at least PHP v4.3.5 and around 20MB of
+PhpGedView requires a web server with at least PHP v5.2 and around 20MB of
 web space.  The default installations of PHP on most servers should provide
 you with all of the PHP functionality you should need.
 
@@ -332,40 +332,12 @@ If you need help or support visit  http://www.PhpGedView.net/support.php
 -------------------------------------------------------
 UPGRADING
 
-UPGRADING 4.1 to 4.1.x
-
-1. To upgrade from 4.1 to 4.1.1 or any other 4.1.x version, simply replace 
-   the files on the server with the new files.
-2. Some of the internal structures have changed, so you should also delete
-   your cache files.  This can be done from the "Customize Welcome Page" link
-   or by manually deleting the files from the "index" directory. 
-
-
-UPGRADING 4.0.x to 4.1.x
-
-Use the following steps to upgrade to v4.1.  These steps assume that you 
-are familiar with PhpGedView and have successfully installed it before.
-
-Version 4.x no longer includes support for index files.  If you do not have 
-PHP 5 with built-in SQLite support or a database account then you should not 
-upgrade to PhpGedView 4.x.  Maintenance releases will continue for the 3.3.x 
-version.
+See http://wiki.phpgedview.net/en/index.php?title=Upgrading
 
 **Note to SQLite users: Unfortunately SQLite does not support the ALTER TABLE
   SQL command.  This means that we must first drop the tables and recrate
   them.  It is highly reccomended that you run the backup before upgrading.
 
-1.  Upload the new 4.1 files to your server replacing the old files with the 
-	new files.  Do not replace the config.php file or the index directory.
-2.  In order to create the data required for the new version, you will
-    have to re-import your GEDCOM. Please see the section on UPDATING
-    GEDCOMS below.
-3.  You can now use your upgraded site.
-4.  If you are using a customized theme you will need to update your theme
-    with new stylesheets and variables.  An excellent tool that can help 
-    you to merge themes is the WinMerge project 
-    http://winmerge.sourceforge.net/
-    
 -------------------------------------------------------
 UPDATING GEDCOMS
 

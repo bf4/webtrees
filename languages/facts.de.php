@@ -164,6 +164,7 @@ $factarray["_DBID"] = "ID der fremden Datenbank";
 
 // These facts are used in specific contexts
 $factarray["STAT:DATE"] = "Datum der Statusänderung";
+$factarray["DATA:DATE"] = "Datum des Eintrages in der ursprünglichen Quelle";
 
 //These facts are compounds for the view probabilities and the advanced search pages
 $factarray["FAMC:HUSB:SURN"] = "Nachname des Vaters";
