@@ -208,6 +208,34 @@ function autocomplete_FAM() {
 }
 
 /**
+* returns NOTEs (Shared) matching filter
+* @return Array of string
+*/
+function autocomplete_NOTE() {
+	global $TBLPREFIX, $DBTYPE, $DBCONN;
+	global $FILTER;
+
+	$sql = "SELECT o_id".
+				" FROM {$TBLPREFIX}other".
+				" WHERE (o_gedcom ".PGV_DB_LIKE." '%".$FILTER."%'".
+				" OR o_id ".PGV_DB_LIKE." '%".$FILTER."%')".
+				" AND o_type ".PGV_DB_LIKE." '%NOTE%'".
+				" AND o_file=".PGV_GED_ID.
+				" LIMIT ".PGV_AUTOCOMPLETE_LIMIT;
+	$res = dbquery($sql);
+
+	$data = array();
+	while ($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)) {
+		$note = Note::getInstance($row["o_id"]);
+		if ($note->canDisplayName()) {
+			$data[$row["o_id"]] = $note->getFullName();
+		}
+	}
+	$res->free();
+	return $data;
+}
+
+/**
 * returns SOURces matching filter
 * @return Array of string
 */

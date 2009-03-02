@@ -44,6 +44,18 @@ jQuery(document).ready(function($){
 		width: 400,
 		minChars: 0
 	});
+	// NOTE
+	$(".NOTE").autocomplete("autocomplete.php", {
+		extraParams: {field:'NOTE'},
+		formatItem: function(row, i) {
+			return row[0] + " (" + row[1] + ")";
+		},
+		formatResult: function(row) {
+			return row[1];
+		},
+		width: 400,
+		minChars: 0
+	});
 	// SOUR
 	$(".SOUR").autocomplete("autocomplete.php", {
 		extraParams: {field:'SOUR'},

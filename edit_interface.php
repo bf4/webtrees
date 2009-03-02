@@ -124,6 +124,14 @@ require 'js/autocomplete.js.htm';
 		findwin = window.open('find.php?type=source', '_blank', 'left=50,top=50,width=600,height=500,resizable=1,scrollbars=1');
 		return false;
 	}
+	// Shared Notes =========================
+	function findnote(field) {
+		pastefield = field;
+		findwin = window.open('find.php?type=note', '_blank', 'left=50,top=50,width=600,height=520,resizable=1,scrollbars=1');
+		return false;
+	}
+	
+	// =====================================
 	function findRepository(field) {
 		pastefield = field;
 		findwin = window.open('find.php?type=repo', '_blank', 'left=50,top=50,width=600,height=500,resizable=1,scrollbars=1');
@@ -208,7 +216,7 @@ function checkFactEdit($gedrec) {
 //-- end checkFactEdit function
 
 if (!empty($pid)) {
-	if (($pid!="newsour") && ($pid!="newrepo")) {
+	if (($pid!="newsour") && ($pid!="newrepo") && ($pid!="newnote")) {
 		if (!isset($pgv_changes[$pid."_".$GEDCOM])) $gedrec = find_gedcom_record($pid);
 		else $gedrec = find_updated_record($pid);
 		$ct = preg_match("/0 @$pid@ (.*)/", $gedrec, $match);
@@ -389,7 +397,7 @@ case 'edit':
 	echo "<input type=\"hidden\" name=\"linenum\" value=\"$linenum\" />\n";
 	echo "<input type=\"hidden\" name=\"pid\" value=\"$pid\" />\n";
 	echo "<br /><input type=\"submit\" value=\"".$pgv_lang["save"]."\" /><br />\n";
-
+	
 	echo "<table class=\"facts_table\">";
 	$level1type = create_edit_form($gedrec, $linenum, $level0type);
 	if (PGV_USER_IS_ADMIN) {
@@ -407,10 +415,12 @@ case 'edit':
 		if ($level1type!="NOTE") print_add_layer("NOTE");
 	} else {
 		if ($level1type!="SEX") {
-			if ($level1type!="ASSO" && $level1type!="REPO") print_add_layer("ASSO");
-			if ($level1type!="SOUR" && $level1type!="REPO") print_add_layer("SOUR");
+			if ($level1type!="ASSO" && $level1type!="REPO" && $level1type!="NOTE") print_add_layer("ASSO");
+			if ($level1type!="SOUR" && $level1type!="REPO" ) print_add_layer("SOUR");
 			if ($level1type!="NOTE") print_add_layer("NOTE");
-			if ($level1type!="OBJE" && $level1type!="REPO" && $level1type!="NOTE" && $MULTI_MEDIA) print_add_layer("OBJE");
+			// Shared Note addition ------------
+			if ($level1type!="SHARED_NOTE" && $level1type!="NOTE") print_add_layer("SHARED_NOTE");
+			if ($level1type!="OBJE" && $level1type!="REPO" && $MULTI_MEDIA) print_add_layer("OBJE");
 			//-- RESN missing in new structure, RESN can be added to all level 1 tags
 			if (!in_array("RESN", $tags)) print_add_layer("RESN");
 		}
@@ -447,13 +457,15 @@ case 'add':
 	}
 	echo "</table>";
 
-	if ($level0type=="SOUR" || $level0type=="REPO") {
+	if ($level0type=="SOUR" || $level0type=="REPO" ) {
 		if ($fact!="NOTE") print_add_layer("NOTE");
 	} else {
-		if ($fact!="OBJE") {
-			if ($fact!="ASSO" && $fact!="SOUR" && $fact!="REPO") print_add_layer("ASSO");
-			if ($fact!="SOUR" && $fact!="REPO") print_add_layer("SOUR");
-			if ($fact!="NOTE") print_add_layer("NOTE");
+		if ($fact!="OBJE" ) {
+			if ($fact!="ASSO" && $fact!="SOUR" && $fact!="REPO" && $fact!="SHARED_NOTE") print_add_layer("ASSO");
+			if ($fact!="SOUR" && $fact!="REPO" ) print_add_layer("SOUR");
+			if ($fact!="NOTE" && $fact!="SHARED_NOTE") print_add_layer("NOTE");
+			// Shared Note addition ------------
+			if ($fact!="SHARED_NOTE" && $fact!="NOTE") print_add_layer("SHARED_NOTE");
 			if ($fact!="REPO") print_add_layer("OBJE");
 		}
 	}
@@ -749,6 +761,246 @@ case 'addsourceaction':
 		echo "<a href=\"javascript:// SOUR $xref\" onclick=\"openerpasteid('$xref'); return false;\">".$pgv_lang["paste_id_into_field"]." <b>$xref</b></a>\n";
 	}
 	break;
+	
+//------------------------------------------------------------------------------
+//-- add new Shared Note
+case 'addnewnote':
+	?>
+	<script type="text/javascript">
+	<!--
+		function check_form(frm) {
+			if (frm.TITL.value=="") {
+				alert('<?php echo $pgv_lang["must_provide"].$factarray["TITL"]; ?>');
+				frm.TITL.focus();
+				return false;
+			}
+			return true;
+		}
+	//-->
+	</script>
+	<b><?php echo $pgv_lang['create_shared_note']; $tabkey = 1; ?></b>
+	<form method="post" action="edit_interface.php" onsubmit="return check_form(this);">
+		<input type="hidden" name="action" value="addnoteaction" />
+		<input type="hidden" name="pid" value="newnote" />
+		
+		<table class="facts_table">
+			<tr>
+				<td class="descriptionbox <?php echo $TEXT_DIRECTION; ?> wrap="nowrap"><?php print_help_link("edit_NOTE_help", "qm"); echo $pgv_lang["shared_note"]; ?></td>
+				<td class="optionbox wrap"><textarea tabindex="<?php echo $tabkey; ?>" name="NOTE" id="NOTE" rows="15" cols="88"></textarea><br /><?php print_specialchar_link("NOTE",true); ?></td>
+			</tr>
+			<?php $tabkey++; ?>
+		</table>
+		<br /><br />
+		<input type="submit" value="<?php echo $pgv_lang["save"]; ?>" />
+	</form>
+	<?php
+	break;
+	
+//------------------------------------------------------------------------------
+//-- create a shared note record from the incoming variables
+case 'addnoteaction':
+	if (PGV_DEBUG) {
+		phpinfo(INFO_VARIABLES);
+	}
+	$newgedrec  = "0 @XREF@ NOTE\n";
+
+	if (isset($_REQUEST['EVEN'])) $EVEN = $_REQUEST['EVEN'];
+	if (!empty($EVEN) && count($EVEN)>0) {
+		$newgedrec .= "1 DATA\n";
+		$newgedrec .= "2 EVEN ".implode(",", $EVEN)."\n";
+		if (!empty($EVEN_DATE)) $newgedrec .= "3 DATE ".check_input_date($EVEN_DATE)."\n";
+		if (!empty($EVEN_PLAC)) $newgedrec .= "3 PLAC ".$EVEN_PLAC."\n";
+		if (!empty($AGNC))      $newgedrec .= "2 AGNC ".$AGNC."\n";
+	}
+	if (isset($_REQUEST['ABBR'])) $ABBR = $_REQUEST['ABBR'];
+	if (isset($_REQUEST['TITL'])) $TITL = $_REQUEST['TITL'];
+	if (isset($_REQUEST['DATE'])) $DATE = $_REQUEST['DATE'];
+	if (isset($_REQUEST['NOTE'])) $NOTE = $_REQUEST['NOTE'];
+	if (isset($_REQUEST['_HEB'])) $_HEB = $_REQUEST['_HEB'];
+	if (isset($_REQUEST['ROMN'])) $ROMN = $_REQUEST['ROMN'];
+	if (isset($_REQUEST['AUTH'])) $AUTH = $_REQUEST['AUTH'];
+	if (isset($_REQUEST['PUBL'])) $PUBL = $_REQUEST['PUBL'];
+	if (isset($_REQUEST['REPO'])) $REPO = $_REQUEST['REPO'];
+	if (isset($_REQUEST['CALN'])) $CALN = $_REQUEST['CALN'];
+	
+	if (!empty($NOTE)) {
+		$newlines = preg_split("/\r?\n/",$NOTE,-1,PREG_SPLIT_NO_EMPTY);
+		for($k=0; $k<count($newlines); $k++) {
+			if ( $k==0 && count($newlines)>1) {
+				$newgedrec = "0 @XREF@ NOTE $newlines[$k]\n";
+			}elseif ( $k==0 ) {
+				$newgedrec = "0 @XREF@ NOTE $newlines[$k]\n1 CONT\n";
+			}else if (strstr($newlines[$k], "|Head|")) {
+				$newgedrec .= "1 CONT\n1 CONT $newlines[$k]\n";
+			} else { 
+				$newgedrec .= "1 CONT $newlines[$k]\n";
+			}
+		}
+	}
+	
+	if (!empty($ABBR)) $newgedrec .= "1 ABBR $ABBR\n";
+	if (!empty($TITL)) {
+		// $newgedrec .= "1 TITL $TITL\n";
+		// $newgedrec .= "2 DATE $DATE\n";
+		if (!empty($_HEB)) $newgedrec .= "2 _HEB $_HEB\n";
+		if (!empty($ROMN)) $newgedrec .= "2 ROMN $ROMN\n";
+	}
+	if (!empty($AUTH)) $newgedrec .= "1 AUTH $AUTH\n";
+	if (!empty($PUBL)) {
+		$newlines = preg_split("/\r?\n/",$PUBL,-1,PREG_SPLIT_NO_EMPTY);
+		for($k=0; $k<count($newlines); $k++) {
+			if ( $k==0 ) $newgedrec .= "1 PUBL $newlines[$k]\n";
+			else $newgedrec .= "2 CONT $newlines[$k]\n";
+		}
+	}
+	if (!empty($NOTE)) {
+		//$newgedrec .= "1 NOTE @$NOTE@\n";
+		if (!empty($CALN)) $newgedrec .= "2 CALN $CALN\n";
+	}
+	if (PGV_DEBUG) {
+		echo "<pre>$newgedrec</pre>";
+	}
+	$xref = append_gedrec($newgedrec);
+	$link = "note.php?nid=$xref&show_changes=yes";
+	if ($xref) {
+		echo "<br /><br />\n".$pgv_lang["new_shared_note_created"]."<br /><br />";
+		echo "<a href=\"javascript:// NOTE $xref\" onclick=\"openerpasteid('$xref'); return false;\">".$pgv_lang["paste_id_into_field"]." <b>$xref</b></a>\n";
+	}
+	break;
+
+
+//------------------------------------------------------------------------------
+//-- edit a Shared Note
+case 'editnote':
+	?>
+	<script type="text/javascript">
+	<!--
+		function check_form(frm) {
+			if (frm.TITL.value=="") {
+				alert('<?php echo $pgv_lang["must_provide"].$factarray["TITL"]; ?>');
+				frm.TITL.focus();
+				return false;
+			}
+			return true;
+		}
+	//-->
+	</script>
+	<b><?php echo $pgv_lang['edit_shared_note']; $tabkey = 1; echo "&nbsp;&nbsp;(" . $pid . ")";?></b><br /><br />
+	<form method="post" action="edit_interface.php" onsubmit="return check_form(this);">
+		<input type="hidden" name="action" value="updatenoteaction" />
+		<input type="hidden" name="pid" value="<?php echo $pid; ?>" />
+		
+		<?php
+		if (!isset($pgv_changes[$pid."_".$GEDCOM])) {
+			//$noterec = find_gedcom_record($pid);
+			$gedrec = find_gedcom_record($pid);
+		}else{
+			$gedrec = find_updated_record($pid);
+		}
+		$n1match = array();
+		$nt = preg_match("/0 @$value@ NOTE (.*)/", $gedrec, $n1match);
+		// Debug ----
+		//	echo $gedrec;
+		// ----------
+		$record=GedcomRecord::getInstance($pid);
+		$noteLine=PrintReady($record->getFullName());
+		if ($nt!==false) {
+			$note_content  = $noteLine."\n";
+			$note_content .= trim(strip_tags(@$n1match[1].get_cont(1, $gedrec, false)));
+		}
+		?>
+		<table class="facts_table">
+			<tr>
+				<td class="descriptionbox <?php echo $TEXT_DIRECTION; ?> wrap width25"><?php print_help_link("edit_NOTE_help", "qm"); echo $pgv_lang["shared_note"]; ?></td>
+				<td class="optionbox wrap">
+					<textarea tabindex="<?php echo $tabkey; ?>" name="NOTE" id="NOTE" rows="15" cols="90"><?php 
+						echo $note_content; 
+					?></textarea><br /><?php print_specialchar_link("NOTE",true); ?>
+				</td>
+			</tr>
+			<?php $tabkey++; ?>
+		</table>
+		<br /><br />
+		<input type="submit" value="<?php echo $pgv_lang["save"]; ?>" />
+	</form>
+	<?php
+	break;
+	
+//------------------------------------------------------------------------------
+//-- create a shared note record from the incoming variables
+case 'updatenoteaction':
+	if (PGV_DEBUG) {
+		phpinfo(INFO_VARIABLES);
+	}
+	$newgedrec  = "0 @$pid@ NOTE\n";
+	if (PGV_DEBUG) {
+		echo "<pre>$newgedrec</pre>";
+	}
+
+	if (isset($_REQUEST['EVEN'])) $EVEN = $_REQUEST['EVEN'];
+	if (!empty($EVEN) && count($EVEN)>0) {
+		$newgedrec .= "1 DATA\n";
+		$newgedrec .= "2 EVEN ".implode(",", $EVEN)."\n";
+		if (!empty($EVEN_DATE)) $newgedrec .= "3 DATE ".check_input_date($EVEN_DATE)."\n";
+		if (!empty($EVEN_PLAC)) $newgedrec .= "3 PLAC ".$EVEN_PLAC."\n";
+		if (!empty($AGNC))      $newgedrec .= "2 AGNC ".$AGNC."\n";
+	}
+	if (isset($_REQUEST['ABBR'])) $ABBR = $_REQUEST['ABBR'];
+	if (isset($_REQUEST['TITL'])) $TITL = $_REQUEST['TITL'];
+	if (isset($_REQUEST['DATE'])) $DATE = $_REQUEST['DATE'];
+	if (isset($_REQUEST['NOTE'])) $NOTE = $_REQUEST['NOTE'];
+	if (isset($_REQUEST['_HEB'])) $_HEB = $_REQUEST['_HEB'];
+	if (isset($_REQUEST['ROMN'])) $ROMN = $_REQUEST['ROMN'];
+	if (isset($_REQUEST['AUTH'])) $AUTH = $_REQUEST['AUTH'];
+	if (isset($_REQUEST['PUBL'])) $PUBL = $_REQUEST['PUBL'];
+	if (isset($_REQUEST['REPO'])) $REPO = $_REQUEST['REPO'];
+	if (isset($_REQUEST['CALN'])) $CALN = $_REQUEST['CALN'];
+	
+	if (!empty($NOTE)) {
+		$newlines = preg_split("/\r?\n/",$NOTE,-1,PREG_SPLIT_NO_EMPTY);
+		for($k=0; $k<count($newlines); $k++) {
+			if ( $k==0 && count($newlines)>1) {
+				$newgedrec = "0 @$pid@ NOTE $newlines[$k]\n";
+			}elseif ( $k==0 ) {
+				$newgedrec = "0 @$pid@ NOTE $newlines[$k]\n1 CONT\n";
+			}else if (strstr($newlines[$k], "|Head|")) {
+				$newgedrec .= "1 CONT\n1 CONT $newlines[$k]\n";
+			} else { 
+				$newgedrec .= "1 CONT $newlines[$k]\n";
+			}
+		}
+	}
+	
+	if (!empty($ABBR)) $newgedrec .= "1 ABBR $ABBR\n";
+	if (!empty($TITL)) {
+		// $newgedrec .= "1 TITL $TITL\n";
+		// $newgedrec .= "2 DATE $DATE\n";
+		if (!empty($_HEB)) $newgedrec .= "2 _HEB $_HEB\n";
+		if (!empty($ROMN)) $newgedrec .= "2 ROMN $ROMN\n";
+	}
+	if (!empty($AUTH)) $newgedrec .= "1 AUTH $AUTH\n";
+	if (!empty($PUBL)) {
+		$newlines = preg_split("/\r?\n/",$PUBL,-1,PREG_SPLIT_NO_EMPTY);
+		for($k=0; $k<count($newlines); $k++) {
+			if ( $k==0 ) $newgedrec .= "1 PUBL $newlines[$k]\n";
+			else $newgedrec .= "2 CONT $newlines[$k]\n";
+		}
+	}
+	if (!empty($NOTE)) {
+		//$newgedrec .= "1 NOTE @$NOTE@\n";
+		if (!empty($CALN)) $newgedrec .= "2 CALN $CALN\n";
+	}
+	if (PGV_DEBUG) {
+		echo "<pre>$newgedrec</pre>";
+	}
+	$pids = (replace_gedrec($pid, $newgedrec, $update_CHAN));
+	$link = "note.php?nid=$pid&show_changes=yes";
+	if ($pid) {
+		echo "<br /><br />\n".$pid." ".$pgv_lang["shared_note_updated"]."<br /><br />";
+		//echo "<a href=\"javascript:// NOTE $pid\" onclick=\"openerpasteid('$pid'); return false;\">".$pgv_lang["paste_id_into_field"]." <b>$pid</b></a>\n";
+	}
+	break;
+
 //------------------------------------------------------------------------------
 //-- add new repository
 case 'addnewrepository':
@@ -862,10 +1114,12 @@ case 'updateraw':
 //------------------------------------------------------------------------------
 //-- reconstruct the gedcom from the incoming fields and store it in the file
 case 'update':
+
 	if (PGV_DEBUG) {
 		phpinfo(INFO_VARIABLES);
 		echo "<pre>$gedrec</pre>";
 	}
+
 	// add or remove Y
 	if ($text[0]=="Y" or $text[0]=="y") $text[0]="";
 	if (in_array($tag[0], $emptyfacts) && array_unique($text)==array("") && !$islink[0]) $text[0]="Y";
@@ -923,6 +1177,9 @@ case 'update':
 	if (isset($_REQUEST['_HEB'])) $_HEB = $_REQUEST['_HEB'];
 	if (isset($_REQUEST['_AKA'])) $_AKA = $_REQUEST['_AKA'];
 	if (isset($_REQUEST['_MARNM'])) $_MARNM = $_REQUEST['_MARNM'];
+	
+//	if (isset($_REQUEST['NOTE'])) $NOTE = $_REQUEST['NOTE'];
+//	if (!empty($NOTE)) $newged .= "$NOTE\n";
 
 	if (!empty($NAME)) $newged .= "1 NAME $NAME\n";
 	if (!empty($TYPE)) $newged .= "2 TYPE $TYPE\n";
@@ -932,6 +1189,8 @@ case 'update':
 	if (!empty($SPFX)) $newged .= "2 SPFX $SPFX\n";
 	if (!empty($SURN)) $newged .= "2 SURN $SURN\n";
 	if (!empty($NSFX)) $newged .= "2 NSFX $NSFX\n";
+	
+
 
 	//-- Refer to Bug [ 1329644 ] Add Married Name - Wrong Sequence
 	//-- _HEB/ROMN/FONE have to be before _AKA, even if _AKA exists in input and the others are now added
@@ -948,9 +1207,12 @@ case 'update':
 		$newged .= trim($gedlines[$i])."\n";
 		$i++;
 	}
+
 	if (PGV_DEBUG) {
+		echo "<br /><br />";
 		echo "<pre>$newged</pre>";
 	}
+
 	$success = (replace_gedrec($pid, $newged, $update_CHAN));
 	if ($success) echo "<br /><br />".$pgv_lang["update_successful"];
 	break;
@@ -1413,8 +1675,14 @@ case 'deletefamily':
 		if (delete_family($famid, $gedrec)) echo "<br /><br />".$pgv_lang["gedrec_deleted"];
 	}
 	break;
-//------------------------------------------------------------------------------
-case 'deletesource':
+	
+	
+//----------------------------------------------------------------------------------
+// This case will now delete Shared notes as well, as $pid is passed with call
+// from source_ctrl.php or note_ctrl.php (line 208  submenu->addOnclick ..... etc)
+// ---------------------------------------------------------------------------------
+case 'deletenote':
+case 'deletesource': 
 case 'deleterepo':
 	if (PGV_DEBUG) {
 		phpinfo(INFO_VARIABLES);

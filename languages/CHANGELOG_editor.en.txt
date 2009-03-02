@@ -42,6 +42,18 @@ For massive changes, the variable names should be listed in the order in which t
 occur in the respective language files.
 
 
+VERSION 4.2.1 
+
+?$pgv_lang["whatever"]								dd Monthname, year		Change	codes and comments
+-----------------------------------------------------------------------------------------
++$pgv_lang["add_shared_note"]						16 Feb 2009				A
++$pgv_lang["add_shared_note_lbl"]					16 Feb 2009				A
++$pgv_lang["create_shared_note"]					16 Feb 2009				A
++$pgv_lang["new_shared_note_created"] 				16 Feb 2009				A
++$pgv_lang["shared_note_updated"]					21 Feb 2009				A
+
+
+
 VERSION 4.2.0
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments

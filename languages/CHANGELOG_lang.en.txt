@@ -44,6 +44,21 @@ VERSION 4.2.1
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change	codes and comments
 ----------------------------------------------------------------------------------------
++$pgv_lang["shared_note_menu"]						24 Jan 2009				A
++$pgv_lang["edit_shared_note"]						24 Jan 2009				A
++$pgv_lang["shared_note_list"]						24 Jan 2009				A
++$pgv_lang["shared_notes"]							24 Jan 2009				A
++$pgv_lang["search_shared_notes"]					24 Jan 2009				A
++$pgv_lang["shared_note"]							24 Jan 2009				A
++$pgv_lang["shared_note_list"]						24 Jan 2009				A
++$pgv_lang["shared_notes_found"]					24 Jan 2009				A
++$pgv_lang["find_shared_note"]						24 Jan 2009				A
++$pgv_lang["shared_note_info"]						24 Jan 2009				A
++$pgv_lang["total_shared_notes"]					24 Jan 2009				A
++$pgv_lang["confirm_delete_shared_note"]			24 Jan 2009				A
++$pgv_lang["delete_shared_note"]					24 Jan 2009				A
++$pgv_lang["confirm_delete_shared_note"]			24 Jan 2009				A
+
 +$pgv_lang["brothers_wife"]							01 Mar 2009				A
 -$pgv_lang["date_of_entry"]							28 Feb 2009				M Moved to $factarray["DATA:DATE"]
 +$pgv_lang["names"]									26 Feb 2009				A

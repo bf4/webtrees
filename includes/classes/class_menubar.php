@@ -477,6 +477,7 @@ class MenuBar
 		$menuList["individual"] = $pgv_lang["individual_list"];
 		if (file_exists("famlist.php")) $menuList["family"] = $pgv_lang["family_list"];
 		if (!$surname && file_exists("sourcelist.php") && $SHOW_SOURCES>=PGV_USER_ACCESS_LEVEL) $menuList["source"] = $pgv_lang["source_list"];
+		if (!$surname && file_exists("notelist.php") && $SHOW_SOURCES>=PGV_USER_ACCESS_LEVEL) $menuList["note"] = $pgv_lang["shared_note_list"];
 		if (!$surname && file_exists("repolist.php")) $menuList["repository"] = $pgv_lang["repo_list"];
 		if (!$surname && file_exists("placelist.php")) $menuList["places"] = $pgv_lang["place_list"];
 		if (!$surname && file_exists("medialist.php") && $MULTI_MEDIA) $menuList["media"] = $pgv_lang["media_list"];
@@ -513,6 +514,15 @@ class MenuBar
 				$submenu = new Menu($pgv_lang["source_list"], encode_url('sourcelist.php?ged='.$GEDCOM));
 				if (!empty($PGV_IMAGES["menu_source"]["small"]))
 					$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["menu_source"]["small"]);
+				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
+				$menu->addSubmenu($submenu);
+				break;
+
+			case "note":
+				//-- shared note
+				$submenu = new Menu($pgv_lang["shared_note_list"], encode_url('notelist.php?ged='.$GEDCOM));
+				if (!empty($PGV_IMAGES["notes"]["small"]))
+					$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["notes"]["small"]);
 				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 				$menu->addSubmenu($submenu);
 				break;
