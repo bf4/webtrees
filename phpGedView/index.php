@@ -375,7 +375,7 @@ if (count($ublocks["main"])!=0) {
 			print_execution_stats();
 		}
 		if (function_exists($block[0]) && !loadCachedBlock($block, "main".$bindex)) {
-			$url="ajax_block.php?name={$block[0]}&block=false&ctype={$ctype}&config=".urlencode(serialize($block[1]))."&side=main&index={$bindex}";
+			$url="index.php?action=ajax&block={$block[0]}&side=main&bindex={$bindex}&ctype={$ctype}";
 			if ($SEARCH_SPIDER || PGV_DEBUG || strlen($url)>2000) {
 				// Search spiders get the blocks directly
 				ob_start();
@@ -409,7 +409,7 @@ if (count($ublocks["right"])!=0) {
 			print_execution_stats();
 		}
 		if (function_exists($block[0]) && !loadCachedBlock($block, "right".$bindex)) {
-			$url="ajax_block.php?name={$block[0]}&block=true&ctype={$ctype}&config=".urlencode(serialize($block[1]))."&side=right&index={$bindex}";
+			$url="index.php?action=ajax&block={$block[0]}&side=right&bindex={$bindex}&ctype={$ctype}";
 			if ($SEARCH_SPIDER || PGV_DEBUG || strlen($url)>2000) {
 				// Search spiders get the blocks directly
 				ob_start();
