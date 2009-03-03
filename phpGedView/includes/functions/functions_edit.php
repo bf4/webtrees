@@ -1296,28 +1296,7 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 
 	// retrieve linked NOTE
 	if ($fact=="NOTE" && $islink) {
-
 		$noteid = $value;
-		// BH Next line added for Shared Notes ==================
-		// echo $pgv_lang["shared_note"]." Id: &nbsp;&nbsp;<b>".$noteid."</b>";
-		// echo $pgv_lang["shared_note"].":&nbsp;&nbsp;";
-		// ====================================================
-/*
-		echo "<input type=\"hidden\" name=\"text[]\" value=\"".$noteid."\" />\n";
-		if (!isset($pgv_changes[$noteid."_".$GEDCOM])) {
-			$noterec = find_gedcom_record($noteid);
-		}else{
-			$noterec = find_updated_record($noteid);
-		}
-		$n1match = array();
-		$nt = preg_match("/0 @$value@ NOTE (.*)/", $noterec, $n1match);
-		if ($nt!==false) {
-			$value=trim(strip_tags(@$n1match[1].get_cont(1, $noterec, false)));
-		}
-		$element_name="NOTE[".$noteid."]";
-*/
-
-
 	}
 
 	if (in_array($fact, $emptyfacts)&& (empty($value) || $value=="y" || $value=="Y")) {
@@ -2241,7 +2220,7 @@ function linkMedia($mediaid, $linktoid, $level=1) {
 * @param string $fact the new fact we are adding
 */
 function create_add_form($fact) {
-	global $tags, $pgv_lang, $FULL_SOURCES;
+	global $tags, $pgv_lang, $factarray, $FULL_SOURCES;
 
 	$tags = array();
 

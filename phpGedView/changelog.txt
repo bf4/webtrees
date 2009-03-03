@@ -10,6 +10,7 @@
 
 
 Version 4.2.1
+ - Added: Sour Tag for shared Notes on note.php page(windmillway)
  - Added: Shared Notes (or Linked Notes) support (windmillway)
  - Fixed: [ 2637256 ] Extended Relatives Report Header Overwritten (wooc)
  - Fixed: [ 2639453 ] Place check indicating X is difficult to tell the colour (fisharebest)
