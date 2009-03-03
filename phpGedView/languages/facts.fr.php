@@ -158,6 +158,7 @@ $factarray["_PRIM"]                     = "Image principale";
 $factarray["_DBID"]                     = "Bases liées";
 // These facts are used in specific contexts
 $factarray["STAT:DATE"]                 = "Date de modification du statut";
+$factarray["DATA:DATE"] 				= "Date d'entrée dans le document original";
 //These facts are compounds for the view probabilities page
 $factarray["FAMC:HUSB:SURN"]            = "Nom de famille du père";
 $factarray["FAMC:WIFE:SURN"]            = "Nom de famille de la mère";
