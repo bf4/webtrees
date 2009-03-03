@@ -175,7 +175,6 @@ if ($MULTI_MEDIA) {
 
 				$content = "";
 				$id = "";
-			if ($action!="ajax") {
 					$id = "random_picture$index";
 					$title = print_help_link("index_media_help", "qm", "random_picture", false, true);
 				if ($PGV_BLOCKS["print_random_media"]["canconfig"]) {
@@ -194,7 +193,7 @@ if ($MULTI_MEDIA) {
 				if ($config['controls']=='yes') {
 					if ($config['start']=='yes' || (isset($_COOKIE['rmblockplay'])&&$_COOKIE['rmblockplay']=='true')) $image = "stop";
 					else $image = "rarrow";
-					$linkNextImage = "<a href=\"javascript: ".$pgv_lang["next_image"]."\" onclick=\"return ajaxBlock('random_picture_content$index', 'print_random_media', '$side', $index, '$ctype', true);\"><img src=\"{$PGV_IMAGE_DIR}/{$PGV_IMAGES['rdarrow']['other']}\" border=\"0\" alt=\"{$pgv_lang['next_image']}\" title=\"{$pgv_lang['next_image']}\" /></a>";
+					$linkNextImage = "<a href=\"javascript: ".$pgv_lang["next_image"]."\" onclick=\"return ajaxBlock('random_picture$index', 'print_random_media', '$side', $index, '$ctype', true);\"><img src=\"{$PGV_IMAGE_DIR}/{$PGV_IMAGES['rdarrow']['other']}\" border=\"0\" alt=\"{$pgv_lang['next_image']}\" title=\"{$pgv_lang['next_image']}\" /></a>";
 
 						$content .= "<div class=\"center\" id=\"random_picture_controls$index\"><br />";
 						if ($TEXT_DIRECTION=="rtl") $content .= $linkNextImage;
@@ -224,8 +223,8 @@ if ($MULTI_MEDIA) {
 
 						function playSlideShow() {
 							if (play) {
-									ajaxBlock(\'random_picture_content'.$index.'\', \'print_random_media\', \''.$side.'\', '.$index.', \''.$ctype.'\', false);
-								window.setTimeout(\'playSlideShow()\', 4000);
+								ajaxBlock(\'random_picture'.$index.'\', \'print_random_media\', \''.$side.'\', '.$index.', \''.$ctype.'\', false);
+								window.setTimeout(\'playSlideShow()\', 6000);
 							}
 						}
 					//-->
@@ -238,12 +237,11 @@ if ($MULTI_MEDIA) {
 						play = true;
 						imgid = document.getElementById("play_stop");
 						imgid.src = \''.$PGV_IMAGE_DIR."/".$PGV_IMAGES["stop"]['other'].'\';
-						window.setTimeout("playSlideShow()", 4000);
+						window.setTimeout("playSlideShow()", 6000);
 					//-->
 					</script>';
 				}
 					$content .= "<div class=\"center\" id=\"random_picture_content$index\">";
-			}
 			$imgsize = findImageSize($medialist[$value]["FILE"]);
 			$imgwidth = $imgsize[0]+40;
 			$imgheight = $imgsize[1]+150;
@@ -317,11 +315,8 @@ function openPic(filename, width, height) {
 			$content .= "</td></tr></table>";
 			$content .= "</div>"; // random_picture_content
 			$content .= "</div>"; // random_picture_container
-			if ($action!="ajax") {
-					global $THEME_DIR;
-					include($THEME_DIR."templates/block_main_temp.php");
-			}
-				else print $content;
+			global $THEME_DIR;
+			include($THEME_DIR."templates/block_main_temp.php");
 		}
 	}
 
