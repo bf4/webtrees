@@ -2056,4 +2056,5 @@ function load_behaviour() {
 	</script>
 <?php
 }
+
 ?>
