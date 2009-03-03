@@ -30,25 +30,14 @@ require_once 'includes/functions/functions_print_lists.php';
 print_header($pgv_lang['shared_note_list']);
 
 echo '<div class="center"><h2>'.$pgv_lang['shared_note_list'].'</h2>';
-print_note_table(get_note_list(PGV_GED_ID));
-?>
-<script language="javascript" type="text/javascript">
-<!--
-function addnew_note() {
-	win04 = window.open(
-	"edit_interface.php?action=addnewnote&pid=newnote", "win04", "top=70, left=70, width=600, height=500, resizable=1, scrollbars=1 ");
-	if (window.focus) {win04.focus();}
-}
--->
-</script
-<?php
 if (PGV_USER_CAN_EDIT) {
-	echo "<a href=\"javascript: addnew_note()\"> ";
-	echo "<b>".$pgv_lang["create_shared_note"]."</b>";
-	echo "</a>";
+?>
+<?php print_help_link("edit_add_unlinked_note_help", "qm"); ?><a href="javascript: <?php print $pgv_lang["add_unlinked_note"]; ?>" onclick="addnewnote(''); return false;"><?php print $pgv_lang["add_unlinked_note"]; ?></a>
+<?php
 }
-echo '</div>';
+print_note_table(get_note_list(PGV_GED_ID));
 
+echo '</div>';
 echo "<br /><br />";
 
 print_footer();

@@ -785,7 +785,7 @@ case 'addnewnote':
 		
 		<table class="facts_table">
 			<tr>
-				<td class="descriptionbox <?php echo $TEXT_DIRECTION; ?> wrap="nowrap"><?php print_help_link("edit_NOTE_help", "qm"); echo $pgv_lang["shared_note"]; ?></td>
+				<td class="descriptionbox <?php echo $TEXT_DIRECTION; ?> wrap="nowrap"><?php print_help_link("edit_SHARED_NOTE_help", "qm"); echo $pgv_lang["shared_note"]; ?></td>
 				<td class="optionbox wrap"><textarea tabindex="<?php echo $tabkey; ?>" name="NOTE" id="NOTE" rows="15" cols="88"></textarea><br /><?php print_specialchar_link("NOTE",true); ?></td>
 			</tr>
 			<?php $tabkey++; ?>
@@ -911,7 +911,7 @@ case 'editnote':
 		?>
 		<table class="facts_table">
 			<tr>
-				<td class="descriptionbox <?php echo $TEXT_DIRECTION; ?> wrap width25"><?php print_help_link("edit_NOTE_help", "qm"); echo $pgv_lang["shared_note"]; ?></td>
+				<td class="descriptionbox <?php echo $TEXT_DIRECTION; ?> wrap width25"><?php print_help_link("edit_SHARED_NOTE_help", "qm"); echo $pgv_lang["shared_note"]; ?></td>
 				<td class="optionbox wrap">
 					<textarea tabindex="<?php echo $tabkey; ?>" name="NOTE" id="NOTE" rows="15" cols="90"><?php 
 						echo $note_content; 
