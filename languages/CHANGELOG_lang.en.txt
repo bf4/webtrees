@@ -44,21 +44,28 @@ VERSION 4.2.1
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change	codes and comments
 ----------------------------------------------------------------------------------------
-+$pgv_lang["shared_note_menu"]						24 Jan 2009				A
-+$pgv_lang["edit_shared_note"]						24 Jan 2009				A
-+$pgv_lang["shared_note_list"]						24 Jan 2009				A
-+$pgv_lang["shared_notes"]							24 Jan 2009				A
-+$pgv_lang["search_shared_notes"]					24 Jan 2009				A
-+$pgv_lang["shared_note"]							24 Jan 2009				A
-+$pgv_lang["shared_note_list"]						24 Jan 2009				A
-+$pgv_lang["shared_notes_found"]					24 Jan 2009				A
-+$pgv_lang["find_shared_note"]						24 Jan 2009				A
-+$pgv_lang["shared_note_info"]						24 Jan 2009				A
-+$pgv_lang["total_shared_notes"]					24 Jan 2009				A
-+$pgv_lang["confirm_delete_shared_note"]			24 Jan 2009				A
-+$pgv_lang["delete_shared_note"]					24 Jan 2009				A
-+$pgv_lang["confirm_delete_shared_note"]			24 Jan 2009				A
-
+*$pgv_lang["shared_note_menu"]						3 Mar 2009				C
+*$pgv_lang["shared_note_list"]						3 Mar 2009				w
+*$pgv_lang["confirm_delete_repo"]					3 Mar 2009				w
+*$pgv_lang["check_delete"]							3 Mar 2009				w
+*$pgv_lang["confirm_delete_person"]					3 Mar 2009				w
+*$pgv_lang["confirm_delete_source"]					3 Mar 2009				w
+*$pgv_lang["confirm_delete_shared_note"]			3 Mar 2009				w
+*$pgv_lang["confirm_faq_delete"]					3 Mar 2009				w
++$pgv_lang["shared_note_menu"]						2 Mar 2009				A
++$pgv_lang["edit_shared_note"]						2 Mar 2009				A
++$pgv_lang["shared_note_list"]						2 Mar 2009				A
++$pgv_lang["shared_notes"]							2 Mar 2009				A
++$pgv_lang["search_shared_notes"]					2 Mar 2009				A
++$pgv_lang["shared_note"]							2 Mar 2009				A
++$pgv_lang["shared_note_list"]						2 Mar 2009				A
++$pgv_lang["shared_notes_found"]					2 Mar 2009				A
++$pgv_lang["find_shared_note"]						2 Mar 2009				A
++$pgv_lang["shared_note_info"]						2 Mar 2009				A
++$pgv_lang["total_shared_notes"]					2 Mar 2009				A
++$pgv_lang["delete_shared_note"]					2 Mar 2009				A
++$pgv_lang["confirm_delete_shared_note"]			2 Mar 2009				A
++$pgv_lang["shared_note_contains"]					2 Mar 2009				A
 +$pgv_lang["brothers_wife"]							01 Mar 2009				A
 -$pgv_lang["date_of_entry"]							28 Feb 2009				M Moved to $factarray["DATA:DATE"]
 +$pgv_lang["names"]									26 Feb 2009				A

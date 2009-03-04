@@ -90,7 +90,7 @@ $pgv_lang["children"]				= "Children";
 $pgv_lang["child"]					= "Child";
 $pgv_lang["family"] 				= "Family";
 $pgv_lang["as_child"]				= "Family with Parents";
-$pgv_lang["shared_note_menu"]		= "Options for Shared Note";
+$pgv_lang["shared_note_menu"]		= "Options for shared note";
 $pgv_lang["source_menu"]			= "Options for source";
 $pgv_lang["repo_menu"]				= "Options for repository";
 $pgv_lang["other_records"]			= "Records that link to this Source:";
@@ -609,7 +609,7 @@ $pgv_lang["repo_list"]				= "Repository List";
 $pgv_lang["repos_found"]			= "Repositories found";
 $pgv_lang["find_repository"]		= "Find Repository";
 $pgv_lang["total_repositories"]		= "Total Repositories";
-$pgv_lang["confirm_delete_repo"]	= "Are you sure you want to delete this Repository from the database?";
+$pgv_lang["confirm_delete_repo"]	= "Are you sure you want to delete this Repository?";
 
 //-- SOURCE FILE MESSAGES
 $pgv_lang["source_info"]			= "Source Information";
@@ -619,12 +619,10 @@ $pgv_lang["total_sources"]			= "Total Sources";
 
 //-- SHARED NOTE FILE MESSAGES
 $pgv_lang["shared_note"]				= "Shared Note";
-$pgv_lang["shared_note_list"]			= "Shared Notes List";
 $pgv_lang["shared_notes_found"]			= "Shared Notes found";
 $pgv_lang["find_shared_note"]			= "Find Shared Note";
 $pgv_lang["shared_note_info"]			= "Shared Note Information";
 $pgv_lang["total_shared_notes"]			= "Total Shared Notes";
-$pgv_lang["confirm_delete_shared_note"]	= "Are you sure you want to delete this Shared Note from the database?";
 
 //-- BUILDINDEX FILE MESSAGES
 $pgv_lang["invalid_gedformat"]		= "Invalid GEDCOM format";
@@ -1122,7 +1120,7 @@ $pgv_lang["removed_descending_19"] = " nineteen times removed descending";
 $pgv_lang["removed_descending_20"] = " twenty times removed descending";
 
 //-- GEDCOM edit utility
-$pgv_lang["check_delete"]			= "Are you sure you want to delete this GEDCOM fact?";
+$pgv_lang["check_delete"]			= "Are you sure you want to delete this fact?";
 $pgv_lang["access_denied"]			= "<b>Access Denied</b><br />You do not have access to this resource.";
 $pgv_lang["changes_exist"]			= "Changes have been made to this GEDCOM.";
 $pgv_lang["find_place"] 			= "Find Place";
@@ -1132,13 +1130,13 @@ $pgv_lang["place_contains"] 		= "Place contains:";
 $pgv_lang["add"]					= "Add";
 $pgv_lang["custom_event"]			= "Custom Event";
 $pgv_lang["delete_person"]			= "Delete this individual";
-$pgv_lang["confirm_delete_person"]	= "Are you sure you want to delete this person from the GEDCOM file?";
+$pgv_lang["confirm_delete_person"]	= "Are you sure you want to delete this person?";
 $pgv_lang["find_media"] 			= "Find Media";
 $pgv_lang["set_link"]				= "Set link";
 $pgv_lang["delete_source"]			= "Delete this Source";
 $pgv_lang["delete_shared_note"]		= "Delete this Shared Note";
-$pgv_lang["confirm_delete_source"]	= "Are you sure you want to delete this Source from the GEDCOM file?";
-$pgv_lang["confirm_delete_shared_note"]		= "Are you sure you want to delete this Shared Note from the GEDCOM file?";
+$pgv_lang["confirm_delete_source"]	= "Are you sure you want to delete this Source?";
+$pgv_lang["confirm_delete_shared_note"]		= "Are you sure you want to delete this Shared Note?";
 $pgv_lang["find_family"]			= "Find Family";
 $pgv_lang["find_fam_list"]			= "Find Family List";
 $pgv_lang["edit_name"]				= "Edit Name";
@@ -1770,7 +1768,7 @@ $pgv_lang["add_faq_visibility"] = "FAQ Visibility";
 $pgv_lang["no_faq_items"] = "The FAQ list is empty.";
 $pgv_lang["position_item"] = "Position item";
 $pgv_lang["faq_list"] = "FAQ List";
-$pgv_lang["confirm_faq_delete"] = "Are you sure you want to delete the FAQ entry";
+$pgv_lang["confirm_faq_delete"] = "Are you sure you want to delete this FAQ entry?";
 $pgv_lang["preview"] =  "Preview";
 $pgv_lang["no_id"] = "No FAQ ID has been specified !";
 
