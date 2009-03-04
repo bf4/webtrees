@@ -48,12 +48,11 @@ VERSION 4.2.1
 -----------------------------------------------------------------------------------------
 +$pgv_lang["add_unlinked_note"]						03 Mar 2009				A
 +$pgv_lang["add_unlinked"]							03 Mar 2009				A
-+$pgv_lang["add_shared_note"]						03 Mar 2009				A
-+$pgv_lang["add_shared_note_lbl"]					03 Mar 2009				A
-+$pgv_lang["create_shared_note"]					03 Mar 2009				A
-+$pgv_lang["new_shared_note_created"] 				03 Mar 2009				A
-+$pgv_lang["shared_note_updated"]					03 Mar 2009				A
-
++$pgv_lang["add_shared_note"]						02 Mar 2009				A
++$pgv_lang["add_shared_note_lbl"]					02 Mar 2009				A
++$pgv_lang["create_shared_note"]					02 Mar 2009				A
++$pgv_lang["new_shared_note_created"] 				02 Mar 2009				A
++$pgv_lang["shared_note_updated"]					02 Mar 2009				A
 
 
 VERSION 4.2.0
