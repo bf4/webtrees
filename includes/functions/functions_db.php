@@ -2228,8 +2228,8 @@ function search_notes($query, $geds, $match, $skip) {
 		// SQL may have matched on private data or gedcom tags, so check again against privatized data.
 		$gedrec=UTF8_strtoupper($note->getGedcomRecord());
 		foreach ($queryregex as $q) {
-			if (!preg_match('/\n\d\ '.PGV_REGEX_TAG.' .*'.$q.'/i', $gedrec) ) {
-//				continue 2;
+			if ( !preg_match('/\n\d\ '.PGV_REGEX_TAG.' .*'.$q.'/i', $gedrec) && !preg_match('/0 @'.PGV_REGEX_XREF.'@ '.PGV_REGEX_TAG.' .*'.$q.'/i', $gedrec) ) {
+				continue 2;
 			}
 		}
 		if ($skip && preg_match($skipregex, $gedrec)) {
