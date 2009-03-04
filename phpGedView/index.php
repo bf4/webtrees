@@ -240,6 +240,9 @@ if (!empty($_SESSION['clearcache'])) {
 	clearCache();
 }
 
+// We have finished writing to $_SESSION, so release the lock
+session_write_close();
+
 //-- handle block AJAX calls
 /**
  * In order for a block to make an AJAX call the following request parameters must be set
@@ -261,10 +264,13 @@ if ($action=="ajax") {
 	if (isset($_REQUEST['bindex'])) {
 		if (isset($ublocks[$side][$_REQUEST['bindex']])) {
 			$blockval = $ublocks[$side][$_REQUEST['bindex']];
-			if ($blockval[0]==$block && function_exists($blockval[0])) {
-				if ($side=="main") $param1 = "false";
-				else $param1 = "true";
-				if (function_exists($blockval[0]) && !loadCachedBlock($blockval, $side.$_REQUEST['bindex'])) {
+			if ($blockval[0]==$block && array_key_exists($blockval[0], $PGV_BLOCKS)) {
+				if ($side=="main") {
+					$param1 = "false";
+				} else {
+					$param1 = "true";
+				}
+				if (array_key_exists($blockval[0], $PGV_BLOCKS) && !loadCachedBlock($blockval, $side.$_REQUEST['bindex'])) {
 					ob_start();
 					eval($blockval[0]."($param1, \$blockval[1], \"$side\", ".$_REQUEST['bindex'].");");
 					$content = ob_get_contents();
@@ -281,13 +287,13 @@ if ($action=="ajax") {
 		if (PGV_DEBUG) {
 			print_execution_stats();
 		}
-		if ($blockval[0]==$block && function_exists($blockval[0])) eval($blockval[0]."(false, \$blockval[1], \"main\", $bindex);");
+		if ($blockval[0]==$block && array_key_exists($blockval[0], $PGV_BLOCKS)) eval($blockval[0]."(false, \$blockval[1], \"main\", $bindex);");
 	}
 	foreach($ublocks["right"] as $bindex=>$blockval) {
 		if (PGV_DEBUG) {
 			print_execution_stats();
 		}
-		if ($blockval[0]==$block && function_exists($blockval[0])) eval($blockval[0]."(true, \$blockval[1], \"right\", $bindex);");
+		if ($blockval[0]==$block && array_key_exists($blockval[0], $PGV_BLOCKS)) eval($blockval[0]."(true, \$blockval[1], \"right\", $bindex);");
 	}
 	exit;
 }
@@ -361,22 +367,22 @@ if ($ctype=="user") {
 	print "<div align=\"center\" style=\"width: 99%;\">";
 	print "<h1>".$pgv_lang["mygedview"]."</h1>";
 	print $pgv_lang["mygedview_desc"];
-	print "<br /><br /></div>\n";
+	print "<br /><br /></div>";
 }
 if (count($ublocks["main"])!=0) {
 	if (count($ublocks["right"])!=0) {
-		print "\t<div id=\"index_main_blocks\">\n";
+		print "<div id=\"index_main_blocks\">";
 	} else {
-		print "\t<div id=\"index_full_blocks\">\n";
+		print "<div id=\"index_full_blocks\">";
 	}
 	echo '<script src="js/jquery/jquery.min.js" type="text/javascript"></script>';
 	foreach($ublocks["main"] as $bindex=>$block) {
 		if (PGV_DEBUG) {
 			print_execution_stats();
 		}
-		if (function_exists($block[0]) && !loadCachedBlock($block, "main".$bindex)) {
+		if (array_key_exists($block[0], $PGV_BLOCKS) && !loadCachedBlock($block, "main".$bindex)) {
 			$url="index.php?action=ajax&block={$block[0]}&side=main&bindex={$bindex}&ctype={$ctype}";
-			if ($SEARCH_SPIDER || PGV_DEBUG || strlen($url)>2000) {
+			if ($SEARCH_SPIDER || PGV_DEBUG) {
 				// Search spiders get the blocks directly
 				ob_start();
 				eval($block[0]."(false, \$block[1], \"main\", $bindex);");
@@ -393,24 +399,24 @@ if (count($ublocks["main"])!=0) {
 			}
 		}
 	}
-	print "</div>\n";
+	print "</div>";
 }
 //-- end of main content section
 
 //-- start of blocks section
 if (count($ublocks["right"])!=0) {
 	if (count($ublocks["main"])!=0) {
-		print "\t<div id=\"index_small_blocks\">\n";
+		print "<div id=\"index_small_blocks\">";
 	} else {
-		print "\t<div id=\"index_full_blocks\">\n";
+		print "<div id=\"index_full_blocks\">";
 	}
 	foreach($ublocks["right"] as $bindex=>$block) {
 		if (PGV_DEBUG) {
 			print_execution_stats();
 		}
-		if (function_exists($block[0]) && !loadCachedBlock($block, "right".$bindex)) {
+		if (array_key_exists($block[0], $PGV_BLOCKS) && !loadCachedBlock($block, "right".$bindex)) {
 			$url="index.php?action=ajax&block={$block[0]}&side=right&bindex={$bindex}&ctype={$ctype}";
-			if ($SEARCH_SPIDER || PGV_DEBUG || strlen($url)>2000) {
+			if ($SEARCH_SPIDER || PGV_DEBUG) {
 				// Search spiders get the blocks directly
 				ob_start();
 				eval($block[0]."(true, \$block[1], \"right\", $bindex);");
@@ -424,22 +430,22 @@ if (count($ublocks["right"])!=0) {
 			}
 		}
 	}
-	print "\t</div>\n";
+	print "</div>";
 }
 //-- end of blocks section
 
 print "</td></tr></table><br />";		// Close off that table
 
-if (($ctype=="user") and (!$welcome_block_present)) {
+if ($ctype=="user" && !$welcome_block_present) {
 	print "<div align=\"center\" style=\"width: 99%;\">";
 	print_help_link("mygedview_customize_help", "qm");
-	print "<a href=\"javascript:;\" onclick=\"window.open('index_edit.php?name=".PGV_USER_NAME."&ctype=user', '_blank', 'top=50,left=10,width=600,height=500,scrollbars=1,resizable=1');\">".$pgv_lang["customize_page"]."</a>\n";
+	print "<a href=\"javascript:;\" onclick=\"window.open('index_edit.php?name=".PGV_USER_NAME."&ctype=user', '_blank', 'top=50,left=10,width=600,height=500,scrollbars=1,resizable=1');\">".$pgv_lang["customize_page"]."</a>";
 	print "</div>";
 }
-if (($ctype=="gedcom") and (!$gedcom_block_present)) {
+if ($ctype=="gedcom" && !$gedcom_block_present) {
 	if (PGV_USER_IS_ADMIN) {
 		print "<div align=\"center\" style=\"width: 99%;\">";
-		print "<a href=\"javascript:;\" onclick=\"window.open('".encode_url("index_edit.php?name={$GEDCOM}&ctype=gedcom", false)."', '_blank', 'top=50,left=10,width=600,height=500,scrollbars=1,resizable=1');\">".$pgv_lang["customize_gedcom_page"]."</a>\n";
+		print "<a href=\"javascript:;\" onclick=\"window.open('".encode_url("index_edit.php?name={$GEDCOM}&ctype=gedcom", false)."', '_blank', 'top=50,left=10,width=600,height=500,scrollbars=1,resizable=1');\">".$pgv_lang["customize_gedcom_page"]."</a>";
 		print "</div>";
 	}
 }
