@@ -10,6 +10,7 @@
 
 
 Version 4.2.1
+ - Fixed: Minimal and Wood Themes not appearing in Change Theme Dropdown list (windmillway)
  - Fixed: Corrected Tag exclusion on Filtering when finding Shared Notes (Thanks Greg) (windmillway)
  - Fixed: Enabled Filtering when finding Shared Notes (Find.php) (Just a pending email to Greg on tag exclusion) (windmillway)
  - Fixed: Error to $factarray caused by previous update svn5132 (windmillway)

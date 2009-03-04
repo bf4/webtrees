@@ -1,6 +1,6 @@
 <?php
 /**
- * Xenea theme
+ * Wood theme
  *
  * PhpGedView: Genealogy Viewer
  * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
@@ -29,7 +29,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
-$theme_name = "Xenea";		//-- the name of this theme
+$theme_name = "Wood";		//-- the name of this theme
 
 $stylesheet = $THEME_DIR."style.css";	//-- CSS level 2 stylesheet to use
 $rtl_stylesheet = $THEME_DIR."style_rtl.css";	//-- CSS level 2 stylesheet to use
@@ -39,7 +39,8 @@ $headerfile = $THEME_DIR."header.php";	//-- Header information for the site
 $footerfile = $THEME_DIR."footer.php";	//-- Footer information for the site
 $print_footerfile = $THEME_DIR."print_footer.php";	//-- Print Preview Footer information for the site
 $print_headerfile = $THEME_DIR."print_header.php";	//-- Print Preview Header information for the site
-$PGV_IMAGE_DIR = "themes/xenea/images";		//-- directory to look for images
+
+$PGV_IMAGE_DIR = "themes/wood/images";		//-- directory to look for images
 
 $PGV_USE_HELPIMG = true;		// set to true to use image for help questionmark, set to false to use $pgv_lang["qm"]
 
@@ -49,14 +50,11 @@ $PGV_IMAGES["calendar"]["large"] = "calendar.gif";
 $PGV_IMAGES["clippings"]["large"] = "clippings.gif";
 $PGV_IMAGES["gedcom"]["large"] = "gedcom.gif";
 $PGV_IMAGES["help"]["large"] = "help.gif";
-$PGV_IMAGES["home"]["large"] = "home.gif";
 $PGV_IMAGES["indis"]["large"] = "indis.gif";
 $PGV_IMAGES["media"]["large"] = "media.gif";
-$PGV_IMAGES["mygedview"]["large"] = "my_gedview.gif";
 $PGV_IMAGES["notes"]["large"] = "notes.gif";
 $PGV_IMAGES["pedigree"]["large"] = "pedigree.gif";
-$PGV_IMAGES["reports"]["large"] = "report.gif";
-$PGV_IMAGES["repository"]["large"] = "repository.gif";
+$PGV_IMAGES["reports"]["large"] = "reports.gif";
 $PGV_IMAGES["search"]["large"] = "search.gif";
 $PGV_IMAGES["sfamily"]["large"] = "sfamily.gif";
 $PGV_IMAGES["source"]["large"] = "source.gif";
@@ -78,8 +76,6 @@ $PGV_IMAGES["clippings"]["small"] = "small/clippings.gif";
 $PGV_IMAGES["descendant"]["small"] = "small/descendancy.gif";
 $PGV_IMAGES["edit_fam"]["small"] = "small/edit_fam.gif";
 $PGV_IMAGES["edit_indi"]["small"] = "small/edit_indi.gif";
-$PGV_IMAGES["edit_sour"]["small"] = "small/edit_sour.gif";
-$PGV_IMAGES["edit_repo"]["small"] = "small/edit_repo.gif";
 $PGV_IMAGES["fambook"]["small"] = "small/fambook.gif";
 $PGV_IMAGES["fanchart"]["small"] = "small/fanchart.gif";
 $PGV_IMAGES["gedcom"]["small"] = "small/gedcom.gif";
@@ -87,17 +83,17 @@ $PGV_IMAGES["help"]["small"] = "small/help.gif";
 $PGV_IMAGES["hourglass"]["small"] = "small/hourglass.gif";
 $PGV_IMAGES["indis"]["small"] = "small/indis.gif";
 $PGV_IMAGES["media"]["small"] = "small/media.gif";
-$PGV_IMAGES["menu_help"]["small"] = "small/menu_help.gif";
-$PGV_IMAGES["menu_media"]["small"] = "small/menu_media.gif";
-$PGV_IMAGES["menu_repository"]["small"] = "small/menu_repository.gif";
-$PGV_IMAGES["menu_source"]["small"] = "small/menu_source.gif";
+$PGV_IMAGES["menu_help"]["small"] = "small/help.gif";
+$PGV_IMAGES["menu_media"]["small"] = "small/media.gif";
+$PGV_IMAGES["menu_repository"]["small"] = "small/repository.gif";
+$PGV_IMAGES["menu_source"]["small"] = "small/source.gif";
 $PGV_IMAGES["mygedview"]["small"] = "small/my_gedview.gif";
 $PGV_IMAGES["notes"]["small"] = "small/notes.gif";
 $PGV_IMAGES["patriarch"]["small"] = "small/patriarch.gif";
 $PGV_IMAGES["pedigree"]["small"] = "small/pedigree.gif";
 $PGV_IMAGES["place"]["small"] = "small/place.gif";
 $PGV_IMAGES["relationship"]["small"] = "small/relationship.gif";
-$PGV_IMAGES["reports"]["small"] = "small/report.gif";
+$PGV_IMAGES["reports"]["small"] = "small/reports.gif";
 $PGV_IMAGES["repository"]["small"] = "small/repository.gif";
 $PGV_IMAGES["search"]["small"] = "small/search.gif";
 $PGV_IMAGES["sex"]["small"] = "small/male.gif";
@@ -162,26 +158,30 @@ $PGV_IMAGES["lsdnarrow"]["other"] = "lsdnarrow.gif";
 $PGV_IMAGES["lsuparrow"]["other"] = "lsuparrow.gif";
 
 //-- This section defines variables for the pedigree chart
-$bwidth = 220;		// -- width of boxes on pedigree chart
+$bwidth = 240;		// -- width of boxes on pedigree chart
 $bheight = 80;		// -- height of boxes on pedigree chart
 $baseyoffset = 10;	// -- position the entire pedigree tree relative to the top of the page
 $basexoffset = 10;	// -- position the entire pedigree tree relative to the left of the page
-$bxspacing = 1;		// -- horizontal spacing between boxes on the pedigree chart
-$byspacing = 5;		// -- vertical spacing between boxes on the pedigree chart
-$brborder = 1;		// -- box right border thickness
+$bxspacing = 2;		// -- horizontal spacing between boxes on the pedigree chart
+$byspacing = 7;		// -- vertical spacing between boxes on the pedigree chart
+$brborder = 3;		// -- box right border thickness
 
 // -- global variables for the descendancy chart
 $Dbaseyoffset = 0;	// -- position the entire descendancy tree relative to the top of the page
 $Dbasexoffset = 0;	// -- position the entire descendancy tree relative to the left of the page
-$Dbxspacing = 1;	// -- horizontal spacing between boxes
-$Dbyspacing = 2;	// -- vertical spacing between boxes
+$Dbxspacing = 0;	// -- horizontal spacing between boxes
+$Dbyspacing = 1;	// -- vertical spacing between boxes
 $Dbwidth = 270;		// -- width of DIV layer boxes
 $Dbheight = 80;		// -- height of DIV layer boxes
 $Dindent = 15;		// -- width to indent descendancy boxes
 $Darrowwidth = 15;	// -- additional width to include for the up arrows
 
-$CHARTS_CLOSE_HTML = true;		//-- should the charts, pedigree, descendacy, etc close the HTML on the page
-$PGV_DXHTMLTAB_COLORS = "#b1cff0,#f2f5f9";
+$PEDIGREE_LAYOUT = false;		//-- default this theme to the portrait mode of the pedigree chart
+$CHARTS_CLOSE_HTML = false;		//-- should the charts, pedigree, descendacy, etc clost the HTML on the page
+$PGV_DXHTMLTAB_COLORS = "#c7974d,#eae0d4";
+
+
+$ONLOADFUNCTION = "onloadfunction();";		//-- function that should be called in the <body onload="
 
 // Arrow symbol or icon for up-page links on Help pages
 // This icon is referred to in Help text by: #GLOBALS[UpArrow]#
