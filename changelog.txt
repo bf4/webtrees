@@ -10,6 +10,7 @@
 
 
 Version 4.2.1
+ - Fixed: Enabled Filtering when finding Shared Notes (Find.php) (Just a pending email to Greg on tag exclusion) (windmillway)
  - Fixed: Error to $factarray caused by previous update svn5132 (windmillway)
  - Added: Admin page, Add "unlinked note" and reorganised sections.(Thanks for the code Nigel). Added: various Help Texts for Shared Notes. (windmillway)
  - Changed: added missing Shared Note icon references to Xenea Theme (windmillway)
