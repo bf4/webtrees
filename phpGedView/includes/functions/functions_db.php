@@ -1096,6 +1096,18 @@ function fetch_source_record($xref, $ged_id) {
 	$res->free();
 	return $row;
 }
+function fetch_note_record($xref, $ged_id) {
+	global $TBLPREFIX, $DBCONN;
+	$xref=$DBCONN->escapeSimple($xref);
+	$ged_id=(int)$ged_id;
+	$res=dbquery(
+		"SELECT 'NOTE' AS type, o_id AS xref, {$ged_id} AS ged_id, o_gedcom AS gedrec ".
+		"FROM {$TBLPREFIX}other WHERE o_id='{$xref}' AND o_file={$ged_id}"
+	);
+	$row=$res->fetchRow(DB_FETCHMODE_ASSOC);
+	$res->free();
+	return $row;
+}
 function fetch_media_record($xref, $ged_id) {
 	global $TBLPREFIX, $DBCONN;
 	$xref=$DBCONN->escapeSimple($xref);
@@ -1314,6 +1326,38 @@ function find_source_record($pid, $gedfile="") {
 	$row=$res->fetchRow();
 	$res->free();
 	return $row[0];
+}
+
+/**
+* Find a shared note record by its ID
+* @param string $nid the record id
+* @param string $gedfile the gedcom file id
+*/
+function find_note_record($pid, $gedfile="") {
+	global $TBLPREFIX, $GEDCOM, $DBCONN;
+
+	if (!$pid) {
+		return null;
+	}
+
+	if ($gedfile) {
+		$ged_id=get_id_from_gedcom($gedfile);
+	} else {
+		$ged_id=get_id_from_gedcom($GEDCOM);
+	}
+
+	$pid=$DBCONN->escapeSimple($pid);
+	$res=dbquery(
+		"SELECT o_gedcom FROM {$TBLPREFIX}other WHERE o_id='{$pid}' AND o_file={$ged_id}"
+	);
+	$row=$res->fetchRow();
+	$res->free();
+
+	if ($row) {
+		return $row[0];
+	} else {
+		return null;
+	}
 }
 
 
@@ -2120,6 +2164,78 @@ function search_sources($query, $geds, $match, $skip) {
 			continue;
 		}
 		$list[]=$source;
+	}
+	$res->free();
+	// Switch privacy file if necessary
+	if ($GED_ID!=PGV_GED_ID) {
+		$GEDCOM=get_gedcom_from_id(PGV_GED_ID);
+		load_privacy_file(PGV_GED_ID);
+	}
+	return $list;
+}
+
+// Search the gedcom records of shared notes
+// $query - array of search terms
+// $geds - array of gedcoms to search
+// $match - AND or OR
+// $skip - ignore data in certain tags
+function search_notes($query, $geds, $match, $skip) {
+	global $TBLPREFIX, $GEDCOM, $DBCONN, $DB_UTF8_COLLATION;
+
+	// No query => no results
+	if (!$query) {
+		return array();
+	}
+
+	// Convert the query into a SQL expression
+	$querysql=array();
+	// Convert the query into a regular expression
+	$queryregex=array();
+	
+	foreach ($query as $q) {
+		$queryregex[]=preg_quote(UTF8_strtoupper($q), '/');
+		$q=$DBCONN->escapeSimple($q);
+		if ($DB_UTF8_COLLATION || !has_utf8($q)) {
+			$querysql[]='o_gedcom '.PGV_DB_LIKE." '%{$q}%'";
+		} else {
+			$querysql[]='(o_gedcom '.PGV_DB_LIKE." '%{$q}%' OR o_gedcom ".PGV_DB_LIKE." '%".UTF8_strtoupper($q)."%' OR o_gedcom ".PGV_DB_LIKE." '%".UTF8_strtolower($q)."%')";
+		}
+	}
+
+	$sql="SELECT 'NOTE' AS type, o_id AS xref, o_file AS ged_id, o_gedcom AS gedrec FROM {$TBLPREFIX}other WHERE (".implode(" {$match} ", $querysql).') AND o_type="NOTE" AND o_file IN ('.implode(',', $geds).')';
+
+	// Group results by gedcom, to minimise switching between privacy files
+	$sql.=' ORDER BY ged_id';
+
+	// Tags we might not want to search
+	if (PGV_USER_IS_ADMIN) {
+		$skipregex='/^\d (_UID|_PGVU|FILE|FORM|TYPE|CHAN|SUBM|REFN) .*('.implode('|', $queryregex).')/im';
+	} else {
+		$skipregex='/^\d (_UID|_PGVU|FILE|FORM|TYPE|CHAN|SUBM|REFN|RESN) .*('.implode('|', $queryregex).')/im';
+	}
+
+	$list=array();
+	$res=dbquery($sql);
+	$GED_ID=PGV_GED_ID;
+	while ($row=$res->fetchRow(DB_FETCHMODE_ASSOC)) {
+		// Switch privacy file if necessary
+		if ($row['ged_id']!=$GED_ID) {
+			$GEDCOM=get_gedcom_from_id($row['ged_id']);
+			load_privacy_file($row['ged_id']);
+			$GED_ID=$row['ged_id'];
+		}
+		$note=Note::getInstance($row);
+		// SQL may have matched on private data or gedcom tags, so check again against privatized data.
+		$gedrec=UTF8_strtoupper($note->getGedcomRecord());
+		foreach ($queryregex as $q) {
+			if (!preg_match('/\n\d\ '.PGV_REGEX_TAG.' .*'.$q.'/i', $gedrec) ) {
+//				continue 2;
+			}
+		}
+		if ($skip && preg_match($skipregex, $gedrec)) {
+			continue;
+		}
+		$list[]=$note;
 	}
 	$res->free();
 	// Switch privacy file if necessary
