@@ -322,7 +322,7 @@ if ($type == "repo" && $SHOW_SOURCES>=PGV_USER_ACCESS_LEVEL) {
 }
 
 // Show Shared Notes and hide the rest
-if ($type == "note" && $SHOW_SOURCES>=PGV_USER_ACCESS_LEVEL) {
+if ($type == "note">=PGV_USER_ACCESS_LEVEL) {
 	print "<div align=\"center\">";
 	print "<form name=\"filternote\" method=\"get\" onsubmit=\"return checknames(this);\" action=\"find.php\">";
 	print "<input type=\"hidden\" name=\"action\" value=\"filter\" />";
@@ -396,6 +396,7 @@ print "<br />";
 if ($action=="filter") {
 	$filter = trim($filter);
 	$filter_array=explode(' ', preg_replace('/ {2,}/', ' ', $filter));
+	
 	// Output Individual
 	if ($type == "indi") {
 		print "<table class=\"tabs_table $TEXT_DIRECTION width90\"><tr>";
@@ -650,7 +651,7 @@ if ($action=="filter") {
 		}
 		print "</table>";
 	}
-	
+/*
 	// Output Shared Notes
 	if ($type == "note") {
 		print "<table class=\"tabs_table $TEXT_DIRECTION width90\"><tr>";
@@ -672,6 +673,32 @@ if ($action=="filter") {
 			print "</td></tr>";
 		}
 		print "</table>";
+	}
+*/
+	// Output Shared Notes
+	if ($type=="note") {
+		echo '<table class="tabs_table ', $TEXT_DIRECTION, ' width90"><tr><td class="list_value"><tr>';
+		if ($filter) {
+			$mynotelist = search_notes($filter_array, array(PGV_GED_ID), 'AND', true);
+		} else {
+			$mynotelist = get_note_list(PGV_GED_ID);
+		}
+		if ($mynotelist) {
+			usort($mynotelist, array('GedcomRecord', 'Compare'));
+			echo '<td class="list_value_wrap"><ul>';
+			foreach ($mynotelist as $note) {
+				echo '<li><a href="javascript:;" onclick="pasteid(\'', $note->getXref(), "', '", preg_replace("/(['\"])/", "\\$1", PrintReady($note->getListName())), '\'); return false;"><span class="list_item">', PrintReady($note->getListName()), '</span></a></li>';
+			}
+			echo '</ul></td></tr><tr><td class="list_label">', $pgv_lang['shared_notes_found'], ' ', count($mynotelist), '</td></tr>';
+		}
+		else {
+			echo '<tr><td class="list_value_wrap">', $pgv_lang['no_results'], '</td></tr>';
+		}
+		print '</table>';
+		if (PGV_USER_CAN_EDIT) {
+			print_help_link('edit_add_unlinked_note_help', 'qm'); ?><a href="javascript: <?php print $pgv_lang['add_unlinked_note']; ?>" onclick="addnewnote(''); return false;"><?php print $pgv_lang['add_unlinked_note']; ?></a>
+		<?php
+		}
 	}
 
 	// Output Sources

@@ -91,6 +91,7 @@ $pgv_lang["children"]					= "Kinder";
 $pgv_lang["child"]						= "Kind";
 $pgv_lang["family"]						= "Familie";
 $pgv_lang["as_child"]					= "Familiendaten als Kind";
+$pgv_lang["shared_note_menu"]			= "Optionen für gemeinsame Bemerkungen";
 $pgv_lang["source_menu"]				= "Quellenoptionen";
 $pgv_lang["repo_menu"]					= "Archivoptionen";
 $pgv_lang["other_records"]				= "Datensätze, die auf diese Quelle verweisen:";
@@ -195,6 +196,7 @@ $pgv_lang["nov_1st"]					= "Nov";
 $pgv_lang["dec_1st"]					= "Dez";
 
 $pgv_lang["edit_source"]				= "Quelle bearbeiten";
+$pgv_lang["edit_shared_note"]			= "Gemeinsame Bemerkung bearbeiten";
 $pgv_lang["familybook_chart"]			= "Familienbuch Diagramm";
 $pgv_lang["family_of"]					= "Familie von:&nbsp;";
 $pgv_lang["descent_steps"]				= "Nachfahren Stufen";
@@ -210,7 +212,7 @@ $pgv_lang["title_search_link"]			= "Lokale Verbindung hinzufügen";
 $pgv_lang["label_site_url2"]			= "Internetseiten-Adresse";
 //new stuff
 
-$pgv_lang["delete_family_confirm"]		= "Das Löschen der Familie wird jede Verbindung von allen anderen lösen. Alle ehemalige Familienmitglieder bleiben als freistehende Personen ohne Familienverbund. Möchten Sie wirklich diese Familie löschen?";
+$pgv_lang["delete_family_confirm"]		= "Das Löschen der Familie wird jede Verbindung von allen anderen lösen. Alle ehemalige Familienmitglieder bleiben als freistehende Personen ohne Familienverbund. Möchten Sie diese Familie wirklich löschen?";
 $pgv_lang["delete_family"]				= "Familie löschen";
 $pgv_lang["add_favorite"]				= "Neues Lesezeichen hinzufügen";
 $pgv_lang["url"]						= "URL";
@@ -401,6 +403,7 @@ $pgv_lang["descend_chart"]				= "Nachfahrenbaum";
 $pgv_lang["individual_list"]			= "Personenliste";
 $pgv_lang["family_list"]				= "Familienliste";
 $pgv_lang["source_list"]				= "Quellenliste";
+$pgv_lang["shared_note_list"]			= "Liste der gemeinsamen Bemerkungen";
 $pgv_lang["place_list"]					= "Hierarchie der Orte";
 $pgv_lang["place_list_aft"]				= "Hierarchie der Orte unter";
 $pgv_lang["media_list"]					= "Multimedialiste";
@@ -579,6 +582,7 @@ $pgv_lang["record_not_added"]			= "Datensatz #xref# konnte der Datei nicht hinzu
 //-- SEARCH FILE MESSAGES
 $pgv_lang["soundex_search"]				= "Den Namen nach Aussprache suchen (Soundex-Methode)";
 $pgv_lang["sources"]					= "Quellen";
+$pgv_lang["shared_notes"]				= "Gemeinsame Bemerkungen";
 $pgv_lang["lastname_search"]			= "Nachname";
 $pgv_lang["search_place"]				= "Ort";
 $pgv_lang["search_year"]				= "Jahr";
@@ -586,6 +590,7 @@ $pgv_lang["no_results"]					= "Keine Ergebnisse gefunden.";
 $pgv_lang["search_soundex"]				= "Soundex Suche";
 $pgv_lang["search_replace"]				= "Suchen und ändern";
 $pgv_lang["search_sources"]				= "Quellen";
+$pgv_lang["search_shared_notes"]		= "Gemeinsame Bemerkungen";
 $pgv_lang["search_more_chars"]			= "Bitte mehr als einen Buchstaben eingeben";
 $pgv_lang["search_soundextype"]			= "Soundex Variante:";
 $pgv_lang["search_russell"]				= "Russell";
@@ -605,13 +610,20 @@ $pgv_lang["repo_list"]					= "Archiv Liste";
 $pgv_lang["repos_found"]				= "gefundene Archive";
 $pgv_lang["find_repository"]			= "Archiv suchen";
 $pgv_lang["total_repositories"]			= "Anzahl Archive";
-$pgv_lang["confirm_delete_repo"]		= "Möchten Sie dieses Archiv wirklich aus der Datenbank löschen?";
+$pgv_lang["confirm_delete_repo"]		= "Möchten Sie dieses Archiv wirklich löschen?";
 
 //-- SOURCE FILE MESSAGES
 $pgv_lang["source_info"]				= "Informationen zur Quelle";
 $pgv_lang["people"]						= "Personen";
 $pgv_lang["families"]					= "Familien";
 $pgv_lang["total_sources"]				= "Anzahl Quellen:";
+
+//-- SHARED NOTE FILE MESSAGES
+$pgv_lang["shared_note"]				= "Gemeinsame Bemerkung";
+$pgv_lang["shared_notes_found"]			= "Gemeinsame Bemerkungen gefunden";
+$pgv_lang["find_shared_note"]			= "Suche gemeinsame Bemerkung";
+$pgv_lang["shared_note_info"]			= "Inhalt der gemeinsamen Bemerkung";
+$pgv_lang["total_shared_notes"]			= "Anzahl gemeinsamer Bemerkungen";
 
 //-- BUILDINDEX FILE MESSAGES
 $pgv_lang["invalid_gedformat"]			= "Format entspricht nicht dem GEDCOM Standard";
@@ -1119,11 +1131,13 @@ $pgv_lang["place_contains"]				= "Ort enthält:";
 $pgv_lang["add"]						= "hinzufügen";
 $pgv_lang["custom_event"]				= "Benutzerdefiniertes Ereignis";
 $pgv_lang["delete_person"]				= "Diese Person löschen";
-$pgv_lang["confirm_delete_person"]		= "Möchten Sie diese Person wirklich aus der GEDCOM Datei löschen?";
+$pgv_lang["confirm_delete_person"]		= "Möchten Sie diese Person wirklich löschen?";
 $pgv_lang["find_media"]					= "Multimedia Datei suchen";
 $pgv_lang["set_link"]					= "Verbindung setzen";
 $pgv_lang["delete_source"]				= "Diese Quelle löschen";
-$pgv_lang["confirm_delete_source"]		= "Möchten Sie diese Quelle wirklich aus der GEDCOM Datei löschen?";
+$pgv_lang["delete_shared_note"]		= "Diese gemeinsame Bemerkung löschen";
+$pgv_lang["confirm_delete_source"]		= "Möchten Sie diese Quelle wirklich löschen?";
+$pgv_lang["confirm_delete_shared_note"]		= "Möchten Sie diese gemeinsame Bemerkung wirklich löschen?";
 $pgv_lang["find_family"]				= "Familie suchen";
 $pgv_lang["find_fam_list"]				= "Familienliste suchen";
 $pgv_lang["edit_name"]					= "Namen bearbeiten";
@@ -1368,7 +1382,7 @@ $pgv_lang["no_journal"]					= "Sie haben noch keine Einträge angelegt.";
 $pgv_lang["confirm_journal_delete"]		= "Möchten Sie diesen Eintrag wirklich löschen?";
 $pgv_lang["add_journal"]				= "Einen neuen Eintrag hinzufügen";
 $pgv_lang["gedcom_news"]				= "Neuigkeiten";
-$pgv_lang["confirm_news_delete"]		= "Möchten Sie diesen Eintrag wirklich löschen?";
+$pgv_lang["confirm_news_delete"]		= "Möchten Sie diesen Artikel wirklich löschen?";
 $pgv_lang["add_news"]					= "Einen Artikel unter Neuigkeiten eintragen";
 $pgv_lang["no_news"]					= "Es sind keine Neuigkeiten eingetragen.";
 $pgv_lang["edit_news"]					= "Einträge hinzufügen oder bearbeiten";
@@ -1712,6 +1726,7 @@ $pgv_lang["block_summary_table"]		= "&nbsp;";
 $pgv_lang["total_places"]				= "Gefundene Orte";
 $pgv_lang["media_contains"]				= "Inhalt der Medien:";
 $pgv_lang["repo_contains"]				= "Inhalt des Archivs:";
+$pgv_lang["shared_note_contains"]		= "Inhalt der gemeinsamen Bemerkung:";
 $pgv_lang["source_contains"]			= "Inhalt der Quelle:";
 $pgv_lang["display_all"]				= "Alles zeigen";
 
@@ -1755,7 +1770,7 @@ $pgv_lang["add_faq_visibility"] 		= "FAQ Sichtbarkeit";
 $pgv_lang["no_faq_items"]				= "Die FAQ Liste ist leer.";
 $pgv_lang["position_item"]				= "Eintrag ordnen";
 $pgv_lang["faq_list"]					= "FAQ Liste";
-$pgv_lang["confirm_faq_delete"]			= "Möchten Sie wirklich diesen Eintrag löschen?";
+$pgv_lang["confirm_faq_delete"]			= "Möchten Sie diesen FAQ Eintrag wirklich löschen?";
 $pgv_lang["preview"]					= "Vorschau";
 $pgv_lang["no_id"]						= "Es wurde keine bestimmte FAQ ID erwähnt!";
 

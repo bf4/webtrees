@@ -138,6 +138,7 @@ $countries["HTI"]                       ="Haïti";
 $countries["HUN"]                       ="Hongrie";
 $countries["IDN"]                       ="Indonésie";
 $countries["IND"]                       ="Inde";
+$countries["IOM"]						="Île de Man";
 $countries["IOT"]                       ="Territoire britannique de l'océan Indien";
 $countries["IRL"]                       ="Irlande";
 $countries["IRN"]                       ="Iran (République islamique d')";

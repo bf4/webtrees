@@ -1487,7 +1487,7 @@ class IndividualControllerRoot extends BaseController {
 					</td>
 				</tr>
 				<tr>
-					<td class="facts_label"><?php print_help_link("add_note_help", "qm"); ?><?php echo $pgv_lang["add_shared_note_lbl"]; ?></td>
+					<td class="facts_label"><?php print_help_link("add_shared_note_help", "qm"); ?><?php echo $pgv_lang["add_shared_note_lbl"]; ?></td>
 					<td class="facts_value">
 					<a href="javascript:;" onclick="add_new_record('<?php echo $this->pid; ?>','SHARED_NOTE'); return false;"><?php echo $pgv_lang["add_shared_note"]; ?></a>
 					<br />

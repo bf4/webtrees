@@ -148,14 +148,14 @@ echo PGV_JS_START, 'function showchanges() {window.location.reload();}', PGV_JS_
 	</tr>
 	<tr>
 		<td class="optionbox width50"><?php print_help_link("readmefile_help", "qm"); ?><a href="readme.txt" target="manual" title="<?php print $pgv_lang["view_readme"]; ?>"><?php print $pgv_lang["readme_documentation"];?></a></td>
-			<td class="optionbox width50"><?php print_help_link("phpinfo_help", "qm"); ?><a href="pgvinfo.php?action=phpinfo" title="<?php print $pgv_lang["show_phpinfo"]; ?>"><?php print $pgv_lang["phpinfo"];?></a></td>
+		<td class="optionbox width50"><?php print_help_link("phpinfo_help", "qm"); ?><a href="pgvinfo.php?action=phpinfo" title="<?php print $pgv_lang["show_phpinfo"]; ?>"><?php print $pgv_lang["phpinfo"];?></a></td>
 	</tr>
 	<tr>
-			<td class="optionbox width50"><?php print_help_link("config_help_help", "qm"); ?><a href="pgvinfo.php?action=confighelp"><?php print $pgv_lang["config_help"];?></a></td>
+		<td class="optionbox width50"><?php print_help_link("config_help_help", "qm"); ?><a href="pgvinfo.php?action=confighelp"><?php print $pgv_lang["config_help"];?></a></td>
 		<td class="optionbox width50"><?php print_help_link("changelog_help", "qm"); ?><a href="changelog.php" target="manual" title="<?php print $pgv_lang["view_changelog"]; ?>"><?php print_text("changelog"); ?></a></td>
 	</tr>
 	<tr>
-			<td class="optionbox width50"><?php print_help_link("registry_help", "qm"); ?><a href="<?php echo PGV_REGISTRY_URL; ?>" target="_blank"><?php print $pgv_lang["pgv_registry"];?></a></td>
+		<td class="optionbox width50"><?php print_help_link("registry_help", "qm"); ?><a href="<?php echo PGV_REGISTRY_URL; ?>" target="_blank"><?php print $pgv_lang["pgv_registry"];?></a></td>
 		<td class="optionbox width50">&nbsp;</td>
 	</tr>
 	<tr>
@@ -165,15 +165,9 @@ echo PGV_JS_START, 'function showchanges() {window.location.reload();}', PGV_JS_
 		<td class="optionbox width50"><?php print_help_link("edit_gedcoms_help", "qm"); ?><a href="editgedcoms.php"><?php print $pgv_lang["manage_gedcoms"];?></a></td>
 		<td class="optionbox width50"><?php print_help_link("help_edit_merge.php", "qm"); ?><a href="edit_merge.php"><?php print $pgv_lang["merge_records"]; ?></a></td>
 	</tr>
-<?php if (PGV_USER_CAN_EDIT) { ?>
 	<tr>
-		<td class="optionbox with50"><?php print_help_link("edit_add_unlinked_person_help", "qm"); ?><a href="javascript: <?php print $pgv_lang["add_unlinked_person"]; ?>" onclick="addnewchild(''); return false;"><?php print $pgv_lang["add_unlinked_person"]; ?></a></td>
-		<td class="optionbox width50"><?php print_help_link("edit_add_unlinked_source_help", "qm"); ?><a href="javascript: <?php print $pgv_lang["add_unlinked_source"]; ?>" onclick="addnewsource(''); return false;"><?php print $pgv_lang["add_unlinked_source"]; ?></a></td>
-	</tr>
-<?php } ?>
-	<tr>
-			<td class="optionbox width50"><?php if (PGV_USER_IS_ADMIN) { print_help_link("help_dir_editor.php", "qm"); print "<a href=\"dir_editor.php\">".$pgv_lang["index_dir_cleanup"]."</a>"; } ?>&nbsp;</td>
-			<td class="optionbox width50"><?php if ($d_pgv_changes != "") print $d_pgv_changes; else print "&nbsp;"; ?></td>
+		<td class="optionbox width50"><?php if (PGV_USER_IS_ADMIN) { print_help_link("help_dir_editor.php", "qm"); print "<a href=\"dir_editor.php\">".$pgv_lang["index_dir_cleanup"]."</a>"; } ?>&nbsp;</td>
+		<td class="optionbox width50"><?php if ($d_pgv_changes != "") print $d_pgv_changes; else print "&nbsp;"; ?></td>
 	</tr>
 <?php if (PGV_USER_GEDCOM_ADMIN && is_dir('./modules/batch_update')) { ?>
 	<tr>
@@ -181,7 +175,20 @@ echo PGV_JS_START, 'function showchanges() {window.location.reload();}', PGV_JS_
 		<td class="optionbox width50">&nbsp;</td>
 	</tr>
 <?php } ?>
-	<?php if (PGV_USER_IS_ADMIN) { ?>
+<?php if (PGV_USER_CAN_EDIT) { ?>
+	<tr>
+		<td colspan="2" class="topbottombar" style="text-align:center; "><?php print $pgv_lang["add_unlinked"]; ?></td>
+	</tr>
+	<tr>
+		<td class="optionbox with50"><?php print_help_link("edit_add_unlinked_person_help", "qm"); ?><a href="javascript: <?php print $pgv_lang["add_unlinked_person"]; ?>" onclick="addnewchild(''); return false;"><?php print $pgv_lang["add_unlinked_person"]; ?></a></td>
+		<td class="optionbox width50"><?php print_help_link("edit_add_unlinked_source_help", "qm"); ?><a href="javascript: <?php print $pgv_lang["add_unlinked_source"]; ?>" onclick="addnewsource(''); return false;"><?php print $pgv_lang["add_unlinked_source"]; ?></a></td>
+	</tr>
+	<tr>
+		<td class="optionbox with50"><?php print_help_link("edit_add_unlinked_note_help", "qm"); ?><a href="javascript: <?php print $pgv_lang["add_unlinked_note"]; ?>" onclick="addnewnote(''); return false;"><?php print $pgv_lang["add_unlinked_note"]; ?></a></td>
+		<td class="optionbox width50">&nbsp;</td>
+	</tr>
+<?php } ?>
+<?php if (PGV_USER_IS_ADMIN) { ?>
 	<tr>
 		<td colspan="2" class="topbottombar" style="text-align:center; "><?php print $pgv_lang["admin_site"]; ?></td>
 	</tr>

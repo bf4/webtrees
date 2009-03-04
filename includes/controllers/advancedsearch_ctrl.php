@@ -4,7 +4,7 @@
  * Controller for the Advanced Search Page
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008	PGV Development Team. All rights reserved.
+ * Copyright (C) 2002 to 2009	PGV Development Team. All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -123,7 +123,7 @@ class AdvancedSearchController extends SearchController {
 
 	function getValue($i) {
 		$val = "";
-		if (isset($this->values[$i])) $val = htmlentities($this->values[$i]);
+		if (isset($this->values[$i])) $val = $this->values[$i];
 		return $val;
 	}
 
