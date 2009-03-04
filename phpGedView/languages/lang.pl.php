@@ -103,6 +103,7 @@ $pgv_lang["search_fams"]		= "Rodziny";
 $pgv_lang["search_gedcom"]		= "Przeszukaj plik GEDCOM";
 $pgv_lang["search_geds"]		= "Bazy do przeszukania";
 $pgv_lang["search_indis"]		= "Osoby";
+$pgv_lang["search_notes"]		= "Wspólne notatki";
 $pgv_lang["search_inrecs"]		= "Szukany typ danych";
 $pgv_lang["search_prtall"]		= "Wszystkie nazwiska";
 $pgv_lang["search_prthit"]		= "Tylko pasujące";
@@ -404,6 +405,7 @@ $pgv_lang["shared_note_list"]	= "Lista wspólnych notatek";
 $pgv_lang["place_list"]			= "Hierarchia miejsc";
 $pgv_lang["place_list_aft"] 	= "Lista miejsc po";
 $pgv_lang["media_list"]			= "Lista multimediów";
+$pgv_lang["repo_list"]			= "Lista repozytoriów";
 $pgv_lang["search"]				= "Szukaj";
 $pgv_lang["clippings_cart"]		= "Wycinki";
 $pgv_lang["print_preview"]		= "Wersja do druku";
@@ -603,7 +605,6 @@ $pgv_lang["titles_found"]			= "Tytuły";
 $pgv_lang["find_source"]			= "Znajdź źrodło";
 
 //-- REPOLIST FILE MESSAGES
-$pgv_lang["repo_list"]				= "Lista repozytoriów";
 $pgv_lang["repos_found"]			= "Znaleziono repozytoria";
 $pgv_lang["find_repository"]		= "Znajdź repozytorium";
 $pgv_lang["total_repositories"]		= "Wszystkich repozytoriów";
