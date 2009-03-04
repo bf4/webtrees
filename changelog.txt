@@ -10,7 +10,8 @@
 
 
 Version 4.2.1
- - Changed: removed superfluous "add unlinked note/source link on find.php pop-up (windmillway)
+ - Changed: removed superfluous "add unlinked note" link on notelist.php page (windmillway)
+ - Changed: removed superfluous "add unlinked note/source" link on find.php pop-up (windmillway)
  - Fixed: Minimal and Wood Themes not appearing in Change Theme Dropdown list (windmillway)
  - Fixed: Corrected Tag exclusion on Filtering when finding Shared Notes (Thanks Greg) (windmillway)
  - Fixed: Enabled Filtering when finding Shared Notes (Find.php) (Just a pending email to Greg on tag exclusion) (windmillway)
