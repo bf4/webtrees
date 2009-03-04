@@ -558,7 +558,7 @@ class GedcomRecord {
 		global $pgv_lang;
 		if ($this->canDisplayName()) {
 			$tmp=$this->getAllNames();
-			return $tmp[$this->getPrimaryName()]['full'];
+			return UTF8_substr($tmp[$this->getPrimaryName()]['full'],0,100);	// Shared Notes need a reasonable limit here
 		} else {
 			return $pgv_lang['private'];
 		}

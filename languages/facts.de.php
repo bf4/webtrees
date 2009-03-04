@@ -3,7 +3,7 @@
  * German Language file for PhpGedView.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team
+ * Copyright (C) 2002 to 2009  PGV Development Team
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,9 +20,9 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  * @package PhpGedView
- * @author Jürgen Bach 
- * @author Gerd Kroll 
- * @author Kurt Norgaz 
+ * @author Jürgen Bach
+ * @author Gerd Kroll
+ * @author Kurt Norgaz
  * @author Peter Pluntke
  * @version $Id$
  */
@@ -111,7 +111,7 @@ $factarray["NATU"]	= "Einbürgerung";
 $factarray["NCHI"]	= "Anzahl der Kinder";
 $factarray["NICK"]	= "Spitzname";
 $factarray["NMR"]	= "Anzahl der Ehen";
-$factarray["NOTE"]	= "Anmerkung";
+$factarray["NOTE"]	= "Bemerkung";
 $factarray["NPFX"]	= "Präfix";
 $factarray["NSFX"]	= "Namenszusatz";
 $factarray["OBJE"]	= "Multimedia Objekt";

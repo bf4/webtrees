@@ -400,13 +400,14 @@ $pgv_lang["private"]				= "Private";
 $pgv_lang["birth"]					= "Birth:";
 $pgv_lang["death"]					= "Death:";
 $pgv_lang["descend_chart"]			= "Descendancy Chart";
-$pgv_lang["individual_list"]		= "Individual List";
-$pgv_lang["family_list"]			= "Family List";
-$pgv_lang["source_list"]			= "Source List";
-$pgv_lang["shared_note_list"]		= "Shared Note List";
+$pgv_lang["individual_list"]		= "Individuals";
+$pgv_lang["family_list"]			= "Families";
+$pgv_lang["source_list"]			= "Sources";
+$pgv_lang["shared_note_list"]		= "Shared Notes";
 $pgv_lang["place_list"] 			= "Place Hierarchy";
 $pgv_lang["place_list_aft"] 		= "Place Hierarchy after";
-$pgv_lang["media_list"] 			= "MultiMedia List";
+$pgv_lang["media_list"] 			= "MultiMedia";
+$pgv_lang["repo_list"]				= "Repositories";
 $pgv_lang["search"] 				= "Search";
 $pgv_lang["clippings_cart"] 		= "Family Tree Clippings Cart";
 $pgv_lang["print_preview"]			= "Printer-friendly Version";
@@ -556,7 +557,7 @@ $pgv_lang["total_unic_places"]		= "Total Unique Places";
 
 //-- MEDIALIST FILE MESSAGES
 $pgv_lang["external_objects"]		= "External objects";
-$pgv_lang["multi_title"]			= "MultiMedia Object List";
+$pgv_lang["multi_title"]			= "MultiMedia Objects";
 $pgv_lang["media_found"]			= "Media Objects found";
 $pgv_lang["view_person"]			= "View Person";
 $pgv_lang["view_family"]			= "View Family";
@@ -606,7 +607,6 @@ $pgv_lang["titles_found"]			= "Titles";
 $pgv_lang["find_source"]			= "Find Source";
 
 //-- REPOLIST FILE MESSAGES
-$pgv_lang["repo_list"]				= "Repository List";
 $pgv_lang["repos_found"]			= "Repositories found";
 $pgv_lang["find_repository"]		= "Find Repository";
 $pgv_lang["total_repositories"]		= "Total Repositories";
