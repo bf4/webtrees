@@ -2202,7 +2202,7 @@ function search_notes($query, $geds, $match, $skip) {
 		}
 	}
 
-	$sql="SELECT 'NOTE' AS type, o_id AS xref, o_file AS ged_id, o_gedcom AS gedrec FROM {$TBLPREFIX}other WHERE (".implode(" {$match} ", $querysql).') AND o_type="NOTE" AND o_file IN ('.implode(',', $geds).')';
+	$sql="SELECT 'NOTE' AS type, o_id AS xref, o_file AS ged_id, o_gedcom AS gedrec FROM {$TBLPREFIX}other WHERE (".implode(" {$match} ", $querysql).") AND o_type='NOTE' AND o_file IN (".implode(',', $geds).')';
 
 	// Group results by gedcom, to minimise switching between privacy files
 	$sql.=' ORDER BY ged_id';
@@ -2228,7 +2228,7 @@ function search_notes($query, $geds, $match, $skip) {
 		// SQL may have matched on private data or gedcom tags, so check again against privatized data.
 		$gedrec=UTF8_strtoupper($note->getGedcomRecord());
 		foreach ($queryregex as $q) {
-			if ( !preg_match('/\n\d\ '.PGV_REGEX_TAG.' .*'.$q.'/i', $gedrec) && !preg_match('/0 @'.PGV_REGEX_XREF.'@ '.PGV_REGEX_TAG.' .*'.$q.'/i', $gedrec) ) {
+			if (!preg_match('/(\n\d|^0 @'.PGV_REGEX_XREF.'@) '.PGV_REGEX_TAG.' .*'.$q.'/i', $gedrec)) {
 				continue 2;
 			}
 		}
