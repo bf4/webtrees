@@ -44,6 +44,7 @@ VERSION 4.2.1
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 -----------------------------------------------------------------------------------------
+*$pgv_lang["edit_add_SHARED_NOTE_help"]				04 Mar 2009				w	eill->will
 +$pgv_lang["edit_SHARED_NOTE_help"]					03 Mar 2009				A
 +$pgv_lang["add_shared_note_help"]					03 Mar 2009				A
 +$pgv_lang["edit_add_SHARED_NOTE_help"]				03 Mar 2009				A

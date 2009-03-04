@@ -607,7 +607,7 @@ $pgv_lang["repo_list"]				= "Lista repozytoriów";
 $pgv_lang["repos_found"]			= "Znaleziono repozytoria";
 $pgv_lang["find_repository"]		= "Znajdź repozytorium";
 $pgv_lang["total_repositories"]		= "Wszystkich repozytoriów";
-$pgv_lang["confirm_delete_repo"]	= "Czy na pewno chcesz usunąć to repozytorium z bazy danych?";
+$pgv_lang["confirm_delete_repo"]	= "Czy na pewno chcesz usunąć to repozytorium?";
 
 //-- SOURCE FILE MESSAGES
 $pgv_lang["source_info"]			= "Dane źródła";
@@ -622,7 +622,6 @@ $pgv_lang["shared_notes_found"]			= "Znalezionych notatek";
 $pgv_lang["find_shared_note"]			= "Znajdź wspólną notatkę";
 $pgv_lang["shared_note_info"]			= "Dane wspólnej notatki";
 $pgv_lang["total_shared_notes"]			= "Wszystkich notatek";
-$pgv_lang["confirm_delete_shared_note"]	= "Czy na pewno chcesz usunąć tą notatkę z bazy danych?";
 
 //-- BUILDINDEX FILE MESSAGES
 $pgv_lang["invalid_gedformat"]		= "Nieprawidłowy format GEDCOM 5.5";
@@ -1120,7 +1119,7 @@ $pgv_lang["removed_descending_2"]	= "dwa razy przesunięty(a) w dół";
 $pgv_lang["removed_descending_1"]	= "raz przesunięty(a) w dół";
 
 //-- GEDCOM edit utility
-$pgv_lang["check_delete"]			= "Czy na pewno chcesz usunąć ten fakt GEDCOM?";
+$pgv_lang["check_delete"]			= "Czy na pewno chcesz usunąć ten fakt?";
 $pgv_lang["access_denied"]			= "<b>Brak dostępu</b><br />Nie masz uprawnień dostępu do tego zasobu.";
 $pgv_lang["changes_exist"]			= "Plik GEDCOM został zmieniony.";
 $pgv_lang["find_place"]				= "Znajdź miejsce";
@@ -1130,13 +1129,13 @@ $pgv_lang["place_contains"]			= "Miejsce zawiera:";
 $pgv_lang["add"]					= "Dodaj";
 $pgv_lang["custom_event"]			= "Inne wydarzenie";
 $pgv_lang["delete_person"]			= "Usuń tę osobę";
-$pgv_lang["confirm_delete_person"]	= "Czy na pewno chcesz usunąć tę osobę z pliku GEDCOM?";
+$pgv_lang["confirm_delete_person"]	= "Czy na pewno chcesz usunąć tą osobę?";
 $pgv_lang["find_media"]				= "Znajdź multimedia";
 $pgv_lang["set_link"]				= "Ustaw odnośnik";
 $pgv_lang["delete_source"]			= "Usuń to źródło";
 $pgv_lang["delete_shared_note"]		= "Usuń tą wspólną notatkę";
-$pgv_lang["confirm_delete_source"]	= "Czy na pewno chcesz usunąć to źródło z pliku GEDCOM?";
-$pgv_lang["confirm_delete_shared_note"] = "Czy na pewno chcesz usunąć tą notatkę z pliku GEDCOM?";
+$pgv_lang["confirm_delete_source"]	= "Czy na pewno chcesz usunąć to źródło?";
+$pgv_lang["confirm_delete_shared_note"] = "Czy na pewno chcesz usunąć tą notatkę?";
 $pgv_lang["find_family"]			= "Znajdź rodzinę";
 $pgv_lang["find_fam_list"]			= "Znajdź rodziny";
 $pgv_lang["edit_name"]				= "Edytuj imię i nazwisko";
