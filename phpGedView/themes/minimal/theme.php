@@ -1,6 +1,6 @@
 <?php
 /**
- * Ocean theme
+ * Minimal theme
  *
  * PhpGedView: Genealogy Viewer
  * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
@@ -29,10 +29,10 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
-$theme_name = "Ocean";		//-- the name of this theme
+$theme_name = "Minimal";		//-- the name of this theme
 
 $stylesheet = $THEME_DIR."style.css";	//-- CSS level 2 stylesheet to use
-$rtl_stylesheet = $THEME_DIR."style_rtl.css";           //-- CSS level 2 stylesheet to use
+$rtl_stylesheet = $THEME_DIR."style_rtl.css";	//-- CSS level 2 stylesheet to use
 $print_stylesheet = $THEME_DIR."print.css";	//-- CSS level 2 print stylesheet to use
 $toplinks = $THEME_DIR."toplinks.php";	//-- File to display the icons and links to different sections
 $headerfile = $THEME_DIR."header.php";	//-- Header information for the site
@@ -40,34 +40,22 @@ $footerfile = $THEME_DIR."footer.php";	//-- Footer information for the site
 $print_footerfile = $THEME_DIR."print_footer.php";	//-- Print Preview Footer information for the site
 $print_headerfile = $THEME_DIR."print_header.php";	//-- Print Preview Header information for the site
 
-$PGV_IMAGE_DIR = "images";		//-- directory where images reside
+$PGV_USE_HELPIMG = false;		// set to true to use image for help questionmark, set to false to use $pgv_lang["qm"]
 
-$PGV_USE_HELPIMG = true;		// set to true to use image for help questionmark, set to false to use $pgv_lang["qm"]
-
+$PGV_IMAGE_DIR = $THEME_DIR."images";        //-- directory to look for images
 
 //-- variables for image names
 //- PGV main icons
-$PGV_IMAGES["calendar"]["large"] = "calendar.gif";
-$PGV_IMAGES["clippings"]["large"] = "clippings.gif";
 $PGV_IMAGES["gedcom"]["large"] = "gedcom.gif";
 $PGV_IMAGES["help"]["large"] = "help.gif";
 $PGV_IMAGES["indis"]["large"] = "indis.gif";
 $PGV_IMAGES["media"]["large"] = "media.gif";
 $PGV_IMAGES["notes"]["large"] = "notes.gif";
 $PGV_IMAGES["pedigree"]["large"] = "pedigree.gif";
-$PGV_IMAGES["reports"]["large"] = "reports.gif";
-$PGV_IMAGES["repository"]["large"] = "repository.gif";
+$PGV_IMAGES["reports"]["large"] = "report.gif";
 $PGV_IMAGES["search"]["large"] = "search.gif";
 $PGV_IMAGES["sfamily"]["large"] = "sfamily.gif";
 $PGV_IMAGES["source"]["large"] = "source.gif";
-$PGV_IMAGES["sex"]["large"] = "male.gif";
-$PGV_IMAGES["sexf"]["large"] = "female.gif";
-$PGV_IMAGES["sexn"]["large"] = "fe_male.gif";
-
-//- PGV main icons for optional modules
-$PGV_IMAGES["menu_gallery"]["large"] = "menu_gallery.gif";
-$PGV_IMAGES["menu_punbb"]["large"] = "menu_punbb.gif";
-$PGV_IMAGES["menu_research"]["large"] = "menu_research.gif";
 
 //- PGV small icons
 $PGV_IMAGES["admin"]["small"] = "small/admin.gif";
@@ -75,58 +63,40 @@ $PGV_IMAGES["ancestry"]["small"] = "small/ancestry.gif";
 $PGV_IMAGES["calendar"]["small"] = "small/calendar.gif";
 $PGV_IMAGES["cfamily"]["small"] = "small/cfamily.gif";
 $PGV_IMAGES["clippings"]["small"] = "small/clippings.gif";
-$PGV_IMAGES["descendant"]["small"] = "small/descendancy.gif";
-$PGV_IMAGES["edit_fam"]["small"] = "small/edit_fam.gif";
-$PGV_IMAGES["edit_indi"]["small"] = "small/edit_indi.gif";
-$PGV_IMAGES["edit_sour"]["small"] = "small/edit_sour.gif";
-$PGV_IMAGES["edit_repo"]["small"] = "small/edit_repo.gif";
 $PGV_IMAGES["fambook"]["small"] = "small/fambook.gif";
 $PGV_IMAGES["fanchart"]["small"] = "small/fanchart.gif";
 $PGV_IMAGES["gedcom"]["small"] = "small/gedcom.gif";
 $PGV_IMAGES["help"]["small"] = "small/help.gif";
-$PGV_IMAGES["hourglass"]["small"] = "small/hourglass.gif";
 $PGV_IMAGES["indis"]["small"] = "small/indis.gif";
 $PGV_IMAGES["media"]["small"] = "small/media.gif";
-$PGV_IMAGES["menu_help"]["small"] = "small/help.gif";
-$PGV_IMAGES["menu_media"]["small"] = "small/media.gif";
-$PGV_IMAGES["menu_repository"]["small"] = "small/repository.gif";
-$PGV_IMAGES["menu_source"]["small"] = "small/source.gif";
 $PGV_IMAGES["mygedview"]["small"] = "small/my_gedview.gif";
 $PGV_IMAGES["notes"]["small"] = "small/notes.gif";
 $PGV_IMAGES["patriarch"]["small"] = "small/patriarch.gif";
 $PGV_IMAGES["pedigree"]["small"] = "small/pedigree.gif";
 $PGV_IMAGES["place"]["small"] = "small/place.gif";
-$PGV_IMAGES["relationship"]["small"] = "small/relationship.gif";
-$PGV_IMAGES["reports"]["small"] = "small/reports.gif";
 $PGV_IMAGES["repository"]["small"] = "small/repository.gif";
 $PGV_IMAGES["search"]["small"] = "small/search.gif";
-$PGV_IMAGES["sex"]["small"] = "small/male.gif";
-$PGV_IMAGES["sexf"]["small"] = "small/female.gif";
-$PGV_IMAGES["sexn"]["small"] = "small/fe_male.gif";
-$PGV_IMAGES["sfamily"]["small"] = "small/sfamily.gif";
+$PGV_IMAGES["sfamily"]["small"] = "sfamily.gif";
 $PGV_IMAGES["source"]["small"] = "small/source.gif";
-$PGV_IMAGES["statistic"]["small"] = "small/statistic.gif";
 $PGV_IMAGES["timeline"]["small"] = "small/timeline.gif";
 
 //- PGV buttons for data entry pages
-$PGV_IMAGES["addrepository"]["button"] = "buttons/addrepository.gif";
-$PGV_IMAGES["addsource"]["button"] = "buttons/addsource.gif";
-$PGV_IMAGES["addnote"]["button"] = "buttons/addnote.gif";
+// $PGV_IMAGES["addrepository"]["button"] = "buttons/addrepository.gif";
+// $PGV_IMAGES["addsource"]["button"] = "buttons/addsource.gif";
 $PGV_IMAGES["autocomplete"]["button"] = "buttons/autocomplete.gif";
-$PGV_IMAGES["calendar"]["button"] = "buttons/calendar.gif";
-$PGV_IMAGES["family"]["button"] = "buttons/family.gif";
-$PGV_IMAGES["indi"]["button"] = "buttons/indi.gif";
+// $PGV_IMAGES["calendar"]["button"] = "buttons/calendar.gif";
+// $PGV_IMAGES["family"]["button"] = "buttons/family.gif";
+// $PGV_IMAGES["indi"]["button"] = "buttons/indi.gif";
 $PGV_IMAGES["keyboard"]["button"] = "buttons/keyboard.gif";
-$PGV_IMAGES["media"]["button"] = "buttons/media.gif";
-$PGV_IMAGES["place"]["button"] = "buttons/place.gif";
-$PGV_IMAGES["repository"]["button"] = "buttons/repository.gif";
-$PGV_IMAGES["source"]["button"] = "buttons/source.gif";
-$PGV_IMAGES["note"]["button"] = "buttons/note.gif";
+// $PGV_IMAGES["media"]["button"] = "buttons/media.gif";
+// $PGV_IMAGES["place"]["button"] = "buttons/place.gif";
+// $PGV_IMAGES["repository"]["button"] = "buttons/repository.gif";
+// $PGV_IMAGES["source"]["button"] = "buttons/source.gif";
 
 // Media images
-$PGV_IMAGES["media"]["doc"] = "media/doc.gif";
-$PGV_IMAGES["media"]["ged"] = "media/ged.gif";
-$PGV_IMAGES["media"]["pdf"] = "media/pdf.gif";
+$PGV_IMAGES["media"]["doc"] = "../../../images/media/doc.gif";
+$PGV_IMAGES["media"]["ged"] = "../../../images/media/ged.gif";
+$PGV_IMAGES["media"]["pdf"] = "../../../images/media/pdf.gif";
 
 //- other images
 $PGV_IMAGES["darrow"]["other"] = "darrow.gif";
@@ -181,7 +151,7 @@ $Dindent = 15;		// -- width to indent descendancy boxes
 $Darrowwidth = 15;	// -- additional width to include for the up arrows
 
 $CHARTS_CLOSE_HTML = true;		//-- should the charts, pedigree, descendacy, etc close the HTML on the page
-$PGV_DXHTMLTAB_COLORS = "#f1f5ff,#648add";
+$PGV_DXHTMLTAB_COLORS = "#FFFFFF,#bababa";
 
 // Arrow symbol or icon for up-page links on Help pages
 // This icon is referred to in Help text by: #GLOBALS[UpArrow]#
