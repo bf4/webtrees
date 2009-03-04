@@ -44,6 +44,7 @@ VERSION 4.2.1
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change	codes and comments
 ----------------------------------------------------------------------------------------
++$pgv_lang["search_notes"]			          4 Mar 2009        A
 *$pgv_lang["shared_note_menu"]						3 Mar 2009				C
 *$pgv_lang["shared_note_list"]						3 Mar 2009				w
 *$pgv_lang["confirm_delete_repo"]					3 Mar 2009				w

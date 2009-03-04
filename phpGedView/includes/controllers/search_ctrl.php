@@ -43,6 +43,7 @@ class SearchControllerRoot extends BaseController {
 	var $topsearch;
 	var $srfams;
 	var $srindi;
+	var $srnote;
 	var $srsour;
 	var $resultsPageNum = 0;
 	var $resultsPerPage = 50;
@@ -85,19 +86,10 @@ class SearchControllerRoot extends BaseController {
 	var $myyear;
 	var $sgeds = array ();
 	var $Sites = array ();
-	var $indi_total = array ();
-	var $indi_hide = array ();
-	var $indi_private = array ();
-	var $fam_total = array ();
-	var $fam_hide = array ();
-	var $fam_private = array ();
-	var $repo_total = array ();
-	var $repo_hide = array ();
-	var $source_total = array ();
-	var $source_hide = array ();
 	var $myindilist = array ();
 	var $mysourcelist = array ();
 	var $myfamlist = array ();
+	var $mynotelist = array ();
 	var $multisiteResults = array ();
 	var $inputFieldNames = array ();
 	var $replace = false;
@@ -129,7 +121,7 @@ class SearchControllerRoot extends BaseController {
 			$this->srfams = 'yes';
 			$this->srindi = 'yes';
 			$this->srsour = 'yes';
-			$this->srrepo = 'yes';
+			$this->srnote = 'yes';
 		}
 
 		// Get the query and remove slashes
@@ -153,21 +145,8 @@ class SearchControllerRoot extends BaseController {
 		}
 
 		// Aquire all the variables values from the $_REQUEST
-		$varNames = array ("isPostBack", "action", "topsearch", "srfams", "srindi", "srsour", "view", "soundex", "subaction", "nameprt", "tagfilter", "showasso", "resultsPageNum", "resultsPerPage", "totalResults", "totalGeneralResults", "indiResultsPrinted", "famResultsPrinted", "multiTotalResults", "srcResultsPrinted", "multiResultsPerPage", "indi_total", "indi_hide", "indi_private", "fam_total", "fam_hide", "fam_private", "repo_total", "repo_hide", "source_total", "source_hide", "mysourcelist", "myfamlist");
+		$varNames = array ("isPostBack", "action", "topsearch", "srfams", "srindi", "srsour", "srnote", "view", "soundex", "subaction", "nameprt", "tagfilter", "showasso", "resultsPageNum", "resultsPerPage", "totalResults", "totalGeneralResults", "indiResultsPrinted", "famResultsPrinted", "multiTotalResults", "srcResultsPrinted", "multiResultsPerPage", "myindilist", "mysourcelist", "mynotelist", "myfamlist");
 		$this->setRequestValues($varNames);
-
-		if ($this->action == "reset") {
-			$this->indi_total = array ();
-			$this->indi_private = array ();
-			$this->indi_hide = array ();
-			$this->fam_total = array ();
-			$this->fam_private = array ();
-			$this->fam_hide = array ();
-			$this->source_total = array ();
-			$this->source_hide = array ();
-			$this->repo_total = array ();
-			$this->repo_hide = array ();
-		}
 
 		if (!$this->isPostBack) {
 			// Enable the default gedcom for search
@@ -279,6 +258,7 @@ class SearchControllerRoot extends BaseController {
 		$this->inputFieldNames[] = "srindi";
 		$this->inputFieldNames[] = "srfams";
 		$this->inputFieldNames[] = "srsour";
+		$this->inputFieldNames[] = "srnote";
 		$this->inputFieldNames[] = "showasso";
 		$this->inputFieldNames[] = "firstname";
 		$this->inputFieldNames[] = "lastname";
@@ -430,26 +410,41 @@ class SearchControllerRoot extends BaseController {
 				$this->mysourcelist=array();
 			}
 
+			// Search the notes
+			if (isset ($this->srnote)) {
+				if (!empty ($this->query))
+				$this->mynotelist=search_notes($query_terms, $ged_ids, 'AND', $this->tagfilter=='on');
+			} else {
+				$this->mynotelist=array();
+			}
+
 			// If only 1 item is returned, automatically forward to that item
 			// If ID cannot be displayed, continue to the search page.
-			if (count($this->myindilist)==1 && !$this->myfamlist && !$this->mysourcelist) {
+			if (count($this->myindilist)==1 && !$this->myfamlist && !$this->mysourcelist && !$this->mynotelist) {
 				$indi=$this->myindilist[0];
 				if (!count_linked_indi($indi->getXref(), 'ASSO', $indi->getGedId()) && !count_linked_fam($indi->getXref(), 'ASSO', $indi->getGedId()) && $indi->canDisplayName()) {
 					header("Location: ".encode_url($indi->getLinkUrl(), false));
 					exit;
 				}
 			}
-			if (!$this->myindilist && count($this->myfamlist)==1 && !$this->mysourcelist) {
+			if (!$this->myindilist && count($this->myfamlist)==1 && !$this->mysourcelist && !$this->mynotelist) {
 				$fam=$this->myfamlist[0];
 				if ($fam->canDisplayName()) {
 					header("Location: ".encode_url($fam->getLinkUrl(), false));
 					exit;
 				}
 			}
-			if (!$this->myindilist && !$this->myfamlist && count($this->mysourcelist)==1) {
+			if (!$this->myindilist && !$this->myfamlist && count($this->mysourcelist)==1 && !$this->mynotelist) {
 				$sour=$this->mysourcelist[0];
 				if ($sour->canDisplayName()) {
 					header("Location: ".encode_url($sour->getLinkUrl(), false));
+					exit;
+				}
+			}
+			if (!$this->myindilist && !$this->myfamlist && !$this->mysourcelist && count($this->mynotelist)==1) {
+				$note=$this->mynotelist[0];
+				if ($note->canDisplayName()) {
+					header("Location: ".encode_url($note->getLinkUrl(), false));
 					exit;
 				}
 			}
@@ -467,11 +462,12 @@ class SearchControllerRoot extends BaseController {
 		$this->srindi = "yes";
 		$this->srfams = "yes";
 		$this->srsour = "yes";
+		$this->srnote = "yes";
 		$oldquery = $this->query;
 		$this->GeneralSearch();
 
 		//-- don't try to make any changes if nothing was found
-		if (!$this->myindilist && !$this->myfamlist && !$this->mysourcelist) {
+		if (!$this->myindilist && !$this->myfamlist && !$this->mysourcelist && !$this->mynotelist) {
 			return;
 		}
 
@@ -570,6 +566,26 @@ class SearchControllerRoot extends BaseController {
 				replace_gedrec($source->getXref(), $newRecord);
 			}	else {
 				unset($this->mysourcelist[$id]);
+			}
+		}
+
+		foreach ($this->mynotelist as $id=>$note) {
+			if (isset($pgv_changes[$note->getXref().'_'.$GEDCOM])) {
+				$indirec=find_updated_record($note->getXref());
+			} else {
+				$indirec=$note->getGedcomRecord();
+			}
+			$oldRecord = $indirec;
+			$newRecord = $indirec;
+
+			if ($this->replaceAll) {
+				$newRecord = preg_replace("~".$oldquery."~i", $this->replace, $newRecord);
+			}
+			//-- if the record changed replace the record otherwise remove it from the search results
+			if($newRecord != $oldRecord) {
+				replace_gedrec($note->getXref(), $newRecord);
+			}	else {
+				unset($this->mynotelist[$id]);
 			}
 		}
 
@@ -729,7 +745,7 @@ class SearchControllerRoot extends BaseController {
 		$somethingPrinted = false;	// whether anything printed
 		// ---- section to search and display results on a general keyword search
 		if ($this->action=="general" || $this->action=="soundex" || $this->action=="replace") {
-			if ($this->myindilist || $this->myfamlist || $this->mysourcelist) {
+			if ($this->myindilist || $this->myfamlist || $this->mysourcelist || $this->mynotelist) {
 				echo '<br />';
 
 				$OLD_GEDCOM=$GEDCOM;
@@ -778,11 +794,26 @@ class SearchControllerRoot extends BaseController {
 						print_sour_table($datalist, $pgv_lang['sources'].' : &laquo;'.$this->myquery.'&raquo; @ '.PrintReady($GEDCOMS[$gedcom]['title'], true));
 					}
 				}
+				// Split notes by gedcom
+				foreach ($this->sgeds as $gedcom) {
+					$datalist = array();
+					foreach ($this->mynotelist as $note) {
+						if ($note->getGedId()==get_id_from_gedcom($gedcom)) {
+							$datalist[]=$note;
+						}
+					}
+					if ($datalist) {
+						$somethingPrinted = true;
+						usort($datalist, array('GedcomRecord', 'Compare'));
+						$GEDCOM=$gedcom;
+						print_note_table($datalist, $pgv_lang['notes'].' : &laquo;'.$this->myquery.'&raquo; @ '.PrintReady($GEDCOMS[$gedcom]['title'], true));
+					}
+				}
 				$GEDCOM=$OLD_GEDCOM;
 			} else
 			if (isset ($this->query)) {
 				print "<br /><div class=\"warning\" style=\" text-align: center;\"><i>".$pgv_lang["no_results"]."</i><br />";
-				if (!isset ($this->srindi) && !isset ($this->srfams) && !isset ($this->srsour)) {
+				if (!isset ($this->srindi) && !isset ($this->srfams) && !isset ($this->srsour) && !isset ($this->srnote)) {
 					print "<i>".$pgv_lang["no_search_for"]."</i><br />";
 				}
 				echo '</div>';

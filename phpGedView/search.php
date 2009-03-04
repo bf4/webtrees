@@ -202,6 +202,13 @@ require 'js/autocomplete.js.htm';
 ?>
 				value="yes" name="srsour" />
 				<?php print $pgv_lang["search_sources"]; ?><br />
+			<input type="checkbox"
+				<?php
+	if (isset ($controller->srnote))
+		print " checked=\"checked\" ";
+?>
+				value="yes" name="srnote" />
+				<?php print $pgv_lang["search_notes"]; ?><br />
 		</td>
 	</tr>
 	<!-- Choice to Exclude non-genealogical data -->

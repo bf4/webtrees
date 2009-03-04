@@ -104,6 +104,7 @@ $pgv_lang["search_fams"]			= "Families";
 $pgv_lang["search_gedcom"]			= "Search databases";
 $pgv_lang["search_geds"]			= "Databases to search in";
 $pgv_lang["search_indis"]			= "Individuals";
+$pgv_lang["search_notes"]			= "Shared Notes";
 $pgv_lang["search_inrecs"]			= "Search for";
 $pgv_lang["search_prtall"]			= "All names";
 $pgv_lang["search_prthit"]			= "Names with hit";
