@@ -672,10 +672,6 @@ if ($action=="filter") {
 			echo '<tr><td class="list_value_wrap">', $pgv_lang['no_results'], '</td></tr>';
 		}
 		print '</table>';
-		if (PGV_USER_CAN_EDIT) {
-			print_help_link('edit_add_unlinked_note_help', 'qm'); ?><a href="javascript: <?php print $pgv_lang['add_unlinked_note']; ?>" onclick="addnewnote(''); return false;"><?php print $pgv_lang['add_unlinked_note']; ?></a>
-		<?php
-		}
 	}
 
 	// Output Sources
@@ -698,10 +694,6 @@ if ($action=="filter") {
 			echo '<tr><td class="list_value_wrap">', $pgv_lang['no_results'], '</td></tr>';
 		}
 		print '</table>';
-		if (PGV_USER_CAN_EDIT) {
-			print_help_link('edit_add_unlinked_source_help', 'qm'); ?><a href="javascript: <?php print $pgv_lang['add_unlinked_source']; ?>" onclick="addnewsource(''); return false;"><?php print $pgv_lang['add_unlinked_source']; ?></a>
-		<?php
-		}
 	}
 
 	// Output Special Characters
