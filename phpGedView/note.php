@@ -4,7 +4,7 @@
 * reference this shared note.
 *
 * phpGedView: Genealogy Viewer
-* Copyright (C) 2002 to 2009 PGV Development Team.  All rights reserved.
+* Copyright (C) 2009 PGV Development Team.  All rights reserved.
 *
 * This program is free software; you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -70,7 +70,7 @@ if ($controller->accept_success) {
 }
 echo '<span class="name_head">', PrintReady($controller->note->getFullName());
 if ($SHOW_ID_NUMBERS) {
-	echo ' ', getLRM(), '(', $controller->nid, ')', getLRM(); 
+	echo ' ', getLRM(), '(', $controller->nid, ')', getLRM();
 }
 echo '</span><br /></td><td valign="top" class="noprint">';
 if (!$controller->isPrintPreview()) {
@@ -116,7 +116,7 @@ echo '</td></tr><tr><td colspan="2"><table border=\"0\" class="facts_table">';
 	foreach ($notefacts as $fact) {
 		if ($fact && $fact->getTag()!='CONT') {
 			if ($fact->getTag()=='NOTE' ) {
-			
+
 			} else {
 				print_fact($fact);
 			}

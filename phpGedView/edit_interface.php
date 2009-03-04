@@ -130,7 +130,7 @@ require 'js/autocomplete.js.htm';
 		findwin = window.open('find.php?type=note', '_blank', 'left=50,top=50,width=600,height=520,resizable=1,scrollbars=1');
 		return false;
 	}
-	
+
 	// =====================================
 	function findRepository(field) {
 		pastefield = field;
@@ -397,7 +397,7 @@ case 'edit':
 	echo "<input type=\"hidden\" name=\"linenum\" value=\"$linenum\" />\n";
 	echo "<input type=\"hidden\" name=\"pid\" value=\"$pid\" />\n";
 	echo "<br /><input type=\"submit\" value=\"".$pgv_lang["save"]."\" /><br />\n";
-	
+
 	echo "<table class=\"facts_table\">";
 	$level1type = create_edit_form($gedrec, $linenum, $level0type);
 	if (PGV_USER_IS_ADMIN) {
@@ -761,7 +761,7 @@ case 'addsourceaction':
 		echo "<a href=\"javascript:// SOUR $xref\" onclick=\"openerpasteid('$xref'); return false;\">".$pgv_lang["paste_id_into_field"]." <b>$xref</b></a>\n";
 	}
 	break;
-	
+
 //------------------------------------------------------------------------------
 //-- add new Shared Note
 case 'addnewnote':
@@ -782,7 +782,7 @@ case 'addnewnote':
 	<form method="post" action="edit_interface.php" onsubmit="return check_form(this);">
 		<input type="hidden" name="action" value="addnoteaction" />
 		<input type="hidden" name="pid" value="newnote" />
-		
+
 		<table class="facts_table">
 			<tr>
 				<td class="descriptionbox <?php echo $TEXT_DIRECTION; ?> wrap="nowrap"><?php print_help_link("edit_SHARED_NOTE_help", "qm"); echo $pgv_lang["shared_note"]; ?></td>
@@ -795,7 +795,7 @@ case 'addnewnote':
 	</form>
 	<?php
 	break;
-	
+
 //------------------------------------------------------------------------------
 //-- create a shared note record from the incoming variables
 case 'addnoteaction':
@@ -822,7 +822,7 @@ case 'addnoteaction':
 	if (isset($_REQUEST['PUBL'])) $PUBL = $_REQUEST['PUBL'];
 	if (isset($_REQUEST['REPO'])) $REPO = $_REQUEST['REPO'];
 	if (isset($_REQUEST['CALN'])) $CALN = $_REQUEST['CALN'];
-	
+
 	if (!empty($NOTE)) {
 		$newlines = preg_split("/\r?\n/",$NOTE,-1,PREG_SPLIT_NO_EMPTY);
 		for($k=0; $k<count($newlines); $k++) {
@@ -832,12 +832,12 @@ case 'addnoteaction':
 				$newgedrec = "0 @XREF@ NOTE $newlines[$k]\n1 CONT\n";
 			}else if (strstr($newlines[$k], "|Head|")) {
 				$newgedrec .= "1 CONT\n1 CONT $newlines[$k]\n";
-			} else { 
+			} else {
 				$newgedrec .= "1 CONT $newlines[$k]\n";
 			}
 		}
 	}
-	
+
 	if (!empty($ABBR)) $newgedrec .= "1 ABBR $ABBR\n";
 	if (!empty($TITL)) {
 		// $newgedrec .= "1 TITL $TITL\n";
@@ -889,7 +889,7 @@ case 'editnote':
 	<form method="post" action="edit_interface.php" onsubmit="return check_form(this);">
 		<input type="hidden" name="action" value="updatenoteaction" />
 		<input type="hidden" name="pid" value="<?php echo $pid; ?>" />
-		
+
 		<?php
 		if (!isset($pgv_changes[$pid."_".$GEDCOM])) {
 			//$noterec = find_gedcom_record($pid);
@@ -913,8 +913,8 @@ case 'editnote':
 			<tr>
 				<td class="descriptionbox <?php echo $TEXT_DIRECTION; ?> wrap width25"><?php print_help_link("edit_SHARED_NOTE_help", "qm"); echo $pgv_lang["shared_note"]; ?></td>
 				<td class="optionbox wrap">
-					<textarea tabindex="<?php echo $tabkey; ?>" name="NOTE" id="NOTE" rows="15" cols="90"><?php 
-						echo $note_content; 
+					<textarea tabindex="<?php echo $tabkey; ?>" name="NOTE" id="NOTE" rows="15" cols="90"><?php
+						echo $note_content;
 					?></textarea><br /><?php print_specialchar_link("NOTE",true); ?>
 				</td>
 			</tr>
@@ -925,7 +925,7 @@ case 'editnote':
 	</form>
 	<?php
 	break;
-	
+
 //------------------------------------------------------------------------------
 //-- create a shared note record from the incoming variables
 case 'updatenoteaction':
@@ -955,7 +955,7 @@ case 'updatenoteaction':
 	if (isset($_REQUEST['PUBL'])) $PUBL = $_REQUEST['PUBL'];
 	if (isset($_REQUEST['REPO'])) $REPO = $_REQUEST['REPO'];
 	if (isset($_REQUEST['CALN'])) $CALN = $_REQUEST['CALN'];
-	
+
 	if (!empty($NOTE)) {
 		$newlines = preg_split("/\r?\n/",$NOTE,-1,PREG_SPLIT_NO_EMPTY);
 		for($k=0; $k<count($newlines); $k++) {
@@ -965,12 +965,12 @@ case 'updatenoteaction':
 				$newgedrec = "0 @$pid@ NOTE $newlines[$k]\n1 CONT\n";
 			}else if (strstr($newlines[$k], "|Head|")) {
 				$newgedrec .= "1 CONT\n1 CONT $newlines[$k]\n";
-			} else { 
+			} else {
 				$newgedrec .= "1 CONT $newlines[$k]\n";
 			}
 		}
 	}
-	
+
 	if (!empty($ABBR)) $newgedrec .= "1 ABBR $ABBR\n";
 	if (!empty($TITL)) {
 		// $newgedrec .= "1 TITL $TITL\n";
@@ -1177,7 +1177,7 @@ case 'update':
 	if (isset($_REQUEST['_HEB'])) $_HEB = $_REQUEST['_HEB'];
 	if (isset($_REQUEST['_AKA'])) $_AKA = $_REQUEST['_AKA'];
 	if (isset($_REQUEST['_MARNM'])) $_MARNM = $_REQUEST['_MARNM'];
-	
+
 //	if (isset($_REQUEST['NOTE'])) $NOTE = $_REQUEST['NOTE'];
 //	if (!empty($NOTE)) $newged .= "$NOTE\n";
 
@@ -1189,7 +1189,7 @@ case 'update':
 	if (!empty($SPFX)) $newged .= "2 SPFX $SPFX\n";
 	if (!empty($SURN)) $newged .= "2 SURN $SURN\n";
 	if (!empty($NSFX)) $newged .= "2 NSFX $NSFX\n";
-	
+
 
 
 	//-- Refer to Bug [ 1329644 ] Add Married Name - Wrong Sequence
@@ -1617,7 +1617,7 @@ case 'addopfchildaction':
 	} else {
 		$gedrec=updateRest($gedrec);
 	}
-	
+
 	$famrec="0 @$newfamxref@ FAM\n1 CHIL @{$newindixref}@";
 	$person=Person::getInstance($pid);
 	if ($person->getSex()=='F') {
@@ -1675,14 +1675,14 @@ case 'deletefamily':
 		if (delete_family($famid, $gedrec)) echo "<br /><br />".$pgv_lang["gedrec_deleted"];
 	}
 	break;
-	
-	
+
+
 //----------------------------------------------------------------------------------
 // This case will now delete Shared notes as well, as $pid is passed with call
 // from source_ctrl.php or note_ctrl.php (line 208  submenu->addOnclick ..... etc)
 // ---------------------------------------------------------------------------------
 case 'deletenote':
-case 'deletesource': 
+case 'deletesource':
 case 'deleterepo':
 	if (PGV_DEBUG) {
 		phpinfo(INFO_VARIABLES);

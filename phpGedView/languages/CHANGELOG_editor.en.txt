@@ -2,7 +2,7 @@ PHPGEDVIEW LANGUAGE FILE CHANGELOG
 
 # $Id$
 
-For information on changes prior to the release of PGV 4.2.0 (16 Nov. 2008), please 
+For information on changes prior to the release of PGV 4.2.0 (16 Nov. 2008), please
 refer to the files in ZIP file "languages/CHANGELOG_bef.20081117.zip"
 
 Use this file to follow the changes made to the English language files
@@ -18,7 +18,7 @@ The CHANGELOG files are:
 		CHANGELOG_faqlist.en.txt
 		CHANGELOG_help_text.en.txt
 		CHANGELOG_lang.en.txt
-		
+
 + $pgv_lang["text"] / means added
 - $pgv_lang["text"] / deleted
 * $pgv_lang["text"] / translation was changed
@@ -42,7 +42,7 @@ For massive changes, the variable names should be listed in the order in which t
 occur in the respective language files.
 
 
-VERSION 4.2.1 
+VERSION 4.2.1
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change	codes and comments
 -----------------------------------------------------------------------------------------
@@ -108,7 +108,7 @@ VERSION 4.1.2
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 -----------------------------------------------------------------------------------------
--$pgv_lang["date_of_entry"]							19 Oct 2007				M	Moved to lang.xx.php	
+-$pgv_lang["date_of_entry"]							19 Oct 2007				M	Moved to lang.xx.php
 *$pgv_lang["edit_concurrency_msg1"]					12 Oct 2007				w
 *$pgv_lang["edit_concurrency_reload"]				12 Oct 2007				w
 +$pgv_lang["edit_concurrency_change"]				11 Oct 2007				A
@@ -116,8 +116,8 @@ VERSION 4.1.2
 +$pgv_lang["edit_concurrency_msg1"]					11 Oct 2007				A
 +$pgv_lang["edit_concurrency_reload"]				11 Oct 2007				A
 -$pgv_lang["multi_site_search"]						01 Oct 2007				M	Moved to lang.xx.php
-*$pgv_lang["media_file_moved"]						08 Sep 2007				A	
-*$pgv_lang["resn_disabled"]							05 Aug 2007				A	
+*$pgv_lang["media_file_moved"]						08 Sep 2007				A
+*$pgv_lang["resn_disabled"]							05 Aug 2007				A
 
 
 VERSION 4.1

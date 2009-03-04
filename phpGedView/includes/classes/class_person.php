@@ -3,7 +3,7 @@
 * Class file for a person
 *
 * phpGedView: Genealogy Viewer
-* Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
+* Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
 *
 * This program is free software; you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -176,7 +176,7 @@ class Person extends GedcomRecord {
 	*/
 	function getBirthDate() {
 		global $pgv_lang;
-		
+
 		if (is_null($this->_getBirthDate)) {
 			if ($this->canDisplayDetails()) {
 				foreach ($this->getAllBirthDates() as $date) {
@@ -218,7 +218,7 @@ class Person extends GedcomRecord {
 		}
 		return $this->_getBirthPlace;
 	}
-	
+
 	/**
 	* get the Census birth place (Town and County (reversed))
 	* @return string
@@ -263,7 +263,7 @@ class Person extends GedcomRecord {
 	*/
 	function getDeathDate($estimate = true) {
 		global $pgv_lang;
-		
+
 		if (is_null($this->_getDeathDate)) {
 			if ($this->canDisplayDetails()) {
 				foreach ($this->getAllDeathDates() as $date) {
@@ -288,7 +288,7 @@ class Person extends GedcomRecord {
 	*/
 	function getDeathPlace() {
 		global $pgv_lang;
-		
+
 		if (is_null($this->_getDeathPlace)) {
 			if ($this->canDisplayDetails()) {
 				foreach ($this->getAllDeathPlaces() as $place) {

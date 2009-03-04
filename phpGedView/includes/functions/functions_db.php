@@ -1638,7 +1638,7 @@ function search_indis($query, $geds, $match, $skip) {
 	$querysql=array();
 	// Convert the query into a regular expression
 	$queryregex=array();
-	
+
 	foreach ($query as $q) {
 		$queryregex[]=preg_quote(UTF8_strtoupper($q), '/');
 		$q=$DBCONN->escapeSimple($q);
@@ -1715,7 +1715,7 @@ function search_indis_names($query, $geds, $match) {
 			$querysql[]='(n_full '.PGV_DB_LIKE." '%{$q}%' OR n_full ".PGV_DB_LIKE." '%".UTF8_strtoupper($q)."%' OR n_full ".PGV_DB_LIKE." '%".UTF8_strtolower($q)."%')";
 		}
 	}
-	
+
 	$sql="SELECT DISTINCT 'INDI' AS type, i_id AS xref, i_file AS ged_id, i_gedcom AS gedrec, i_isdead, i_sex, n_num FROM {$TBLPREFIX}individuals JOIN {$TBLPREFIX}name ON i_id=n_id AND i_file=n_file WHERE (".implode(" {$match} ", $querysql).') AND i_file IN ('.implode(',', $geds).')';
 
 	// Group results by gedcom, to minimise switching between privacy files
@@ -1916,7 +1916,7 @@ function search_indis_daterange($start, $end, $facts) {
 
 // Search for people who had events in a given year range
 function search_indis_year_range($startyear, $endyear) {
-	// TODO: We should use Julian-days, rather than gregorian years, 
+	// TODO: We should use Julian-days, rather than gregorian years,
 	// to allow
 	// the lifespan chart, etc., to use other calendars.
 	$startjd=GregorianDate::YMDtoJD($startyear, 1, 1);
@@ -1942,7 +1942,7 @@ function search_fams($query, $geds, $match, $skip) {
 	$querysql=array();
 	// Convert the query into a regular expression
 	$queryregex=array();
-	
+
 	foreach ($query as $q) {
 		$queryregex[]=preg_quote(UTF8_strtoupper($q), '/');
 		$q=$DBCONN->escapeSimple($q);
@@ -2020,7 +2020,7 @@ function search_fams_names($query, $geds, $match) {
 			$querysql[]="(husb.n_full ".PGV_DB_LIKE." '%{$q}%' OR wife.n_full ".PGV_DB_LIKE." '%{$q}%' OR husb.n_full ".PGV_DB_LIKE." '%".UTF8_strtoupper($q)."%' OR husb.n_full ".PGV_DB_LIKE." '%".UTF8_strtolower($q)."%' OR wife.n_full ".PGV_DB_LIKE." '%".UTF8_strtoupper($q)."%' OR wife.n_full ".PGV_DB_LIKE." '%".UTF8_strtolower($q)."%')";
 		}
 	}
-	
+
 	$sql="SELECT DISTINCT 'FAM' AS type, f_id AS xref, f_file AS ged_id, f_gedcom AS gedrec, f_husb, f_wife, f_chil, f_numchil FROM {$TBLPREFIX}families LEFT OUTER JOIN {$TBLPREFIX}name husb ON f_husb=husb.n_id AND f_file=husb.n_file LEFT OUTER JOIN {$TBLPREFIX}name wife ON f_wife=wife.n_id AND f_file=wife.n_file WHERE (".implode(" {$match} ", $querysql).') AND f_file IN ('.implode(',', $geds).')';
 
 	// Group results by gedcom, to minimise switching between privacy files
@@ -2072,7 +2072,7 @@ function search_fams_members($query, $geds, $match) {
 			$querysql[]="(n_full ".PGV_DB_LIKE." '%{$q}%' OR n_full ".PGV_DB_LIKE." '%".UTF8_strtoupper($q)."%' OR n_full ".PGV_DB_LIKE." '%".UTF8_strtoupper($q)."%')";
 		}
 	}
-	
+
 	$sql="SELECT DISTINCT 'FAM' AS type, f_id AS xref, f_file AS ged_id, f_gedcom AS gedrec, f_husb, f_wife, f_chil, f_numchil FROM {$TBLPREFIX}families JOIN {$TBLPREFIX}link ON f_file=l_file AND f_id=l_to AND l_type IN ('FAMS', 'FAMC') JOIN {$TBLPREFIX}name ON n_file=l_file AND n_from=n_id WHERE (".implode(" {$match} ", $querysql).') AND f_file IN ('.implode(',', $geds).')';
 
 	// Group results by gedcom, to minimise switching between privacy files
@@ -2119,7 +2119,7 @@ function search_sources($query, $geds, $match, $skip) {
 	$querysql=array();
 	// Convert the query into a regular expression
 	$queryregex=array();
-	
+
 	foreach ($query as $q) {
 		$queryregex[]=preg_quote(UTF8_strtoupper($q), '/');
 		$q=$DBCONN->escapeSimple($q);

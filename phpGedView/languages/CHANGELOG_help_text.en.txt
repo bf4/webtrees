@@ -2,7 +2,7 @@ PHPGEDVIEW LANGUAGE FILE CHANGELOG
 
 # $Id$
 
-For information on changes prior to the release of PGV 4.2.0 (16 Nov. 2008), please 
+For information on changes prior to the release of PGV 4.2.0 (16 Nov. 2008), please
 refer to the files in ZIP file "languages/CHANGELOG_bef.20081117.zip"
 
 Use this file to follow the changes made to the English language files
@@ -44,11 +44,15 @@ VERSION 4.2.1
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 -----------------------------------------------------------------------------------------
-*$pgv_lang["edit_add_SHARED_NOTE_help"]				04 Mar 2009				w	eill->will
-+$pgv_lang["edit_SHARED_NOTE_help"]					03 Mar 2009				A
-+$pgv_lang["add_shared_note_help"]					03 Mar 2009				A
-+$pgv_lang["edit_add_SHARED_NOTE_help"]				03 Mar 2009				A
-+$pgv_lang["edit_add_unlinked_note_help"]			03 Mar 2009				A
+*$pgv_lang["edit_SHARED_NOTE_help"]					4 Mar 2009				W
+*$pgv_lang["add_shared_note_help"]					4 Mar 2009				W
+*$pgv_lang["edit_add_SHARED_NOTE_help"]				4 Mar 2009				W
+*$pgv_lang["edit_add_unlinked_note_help"]			4 Mar 2009				wf
+*$pgv_lang["edit_add_SHARED_NOTE_help"]				4 Mar 2009				w	eill->will
++$pgv_lang["edit_SHARED_NOTE_help"]					3 Mar 2009				A
++$pgv_lang["add_shared_note_help"]					3 Mar 2009				A
++$pgv_lang["edit_add_SHARED_NOTE_help"]				3 Mar 2009				A
++$pgv_lang["edit_add_unlinked_note_help"]			3 Mar 2009				A
 +$pgv_lang["medialist_recursive_help"]				18 Feb 2009				A
 +$pgv_lang["sortby_help"]							18 Feb 2009				A
 *$pgv_lang["add_media_linkid"]						13 Feb 2009				w

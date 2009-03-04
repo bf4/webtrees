@@ -3,7 +3,7 @@
  * Popup window that will allow a user to search for a family id, person id
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
+ * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -84,36 +84,36 @@ require 'includes/specialchars.php';
 // End variables for Find Special Character
 
 switch ($type) {
-	case "indi" :
-		print_simple_header($pgv_lang["find_individual"]);
-		break;
-	case "fam" :
-		print_simple_header($pgv_lang["find_fam_list"]);
-		break;
-	case "media" :
-		print_simple_header($pgv_lang["find_media"]);
-		$action="filter";
-		break;
-	case "place" :
-		print_simple_header($pgv_lang["find_place"]);
-		$action="filter";
-		break;
-	case "repo" :
-		print_simple_header($pgv_lang["repo_list"]);
-		$action="filter";
-		break;
-	case "note" :
-		print_simple_header($pgv_lang["find_shared_note"]);
-		$action="filter";
-		break;
-	case "source" :
-		print_simple_header($pgv_lang["find_source"]);
-		$action="filter";
-		break;
-	case "specialchar" :
-		print_simple_header($pgv_lang["find_specialchar"]);
-		$action="filter";
-		break;
+case "indi":
+	print_simple_header($pgv_lang["find_individual"]);
+	break;
+case "fam":
+	print_simple_header($pgv_lang["find_fam_list"]);
+	break;
+case "media":
+	print_simple_header($pgv_lang["find_media"]);
+	$action="filter";
+	break;
+case "place":
+	print_simple_header($pgv_lang["find_place"]);
+	$action="filter";
+	break;
+case "repo":
+	print_simple_header($pgv_lang["repo_list"]);
+	$action="filter";
+	break;
+case "note":
+	print_simple_header($pgv_lang["find_shared_note"]);
+	$action="filter";
+	break;
+case "source":
+	print_simple_header($pgv_lang["find_source"]);
+	$action="filter";
+	break;
+case "specialchar":
+	print_simple_header($pgv_lang["find_specialchar"]);
+	$action="filter";
+	break;
 }
 
 echo PGV_JS_START;
@@ -176,30 +176,30 @@ print "<table class=\"list_table $TEXT_DIRECTION width90\" border=\"0\">";
 print "<tr><td style=\"padding: 10px;\" valign=\"top\" class=\"facts_label03 width90\">"; // start column for find text header
 
 switch ($type) {
-	case "indi" :
-		print $pgv_lang["find_individual"];
-		break;
-	case "fam" :
-		print $pgv_lang["find_fam_list"];
-		break;
-	case "media" :
-		print $pgv_lang["find_media"];
-		break;
-	case "place" :
-		print $pgv_lang["find_place"];
-		break;
-	case "repo" :
-		print $pgv_lang["repo_list"];
-		break;
-	case "note" :
-		print $pgv_lang["find_shared_note"];
-		break;
-	case "source" :
-		print $pgv_lang["find_source"];
-		break;
-	case "specialchar" :
-		print $pgv_lang["find_specialchar"];
-		break;
+case "indi":
+	print $pgv_lang["find_individual"];
+	break;
+case "fam":
+	print $pgv_lang["find_fam_list"];
+	break;
+case "media":
+	print $pgv_lang["find_media"];
+	break;
+case "place":
+	print $pgv_lang["find_place"];
+	break;
+case "repo":
+	print $pgv_lang["repo_list"];
+	break;
+case "note":
+	print $pgv_lang["find_shared_note"];
+	break;
+case "source":
+	print $pgv_lang["find_source"];
+	break;
+case "specialchar":
+	print $pgv_lang["find_specialchar"];
+	break;
 }
 
 print "</td>"; // close column for find text header
@@ -396,7 +396,7 @@ print "<br />";
 if ($action=="filter") {
 	$filter = trim($filter);
 	$filter_array=explode(' ', preg_replace('/ {2,}/', ' ', $filter));
-	
+
 	// Output Individual
 	if ($type == "indi") {
 		print "<table class=\"tabs_table $TEXT_DIRECTION width90\"><tr>";
