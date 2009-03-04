@@ -651,33 +651,10 @@ if ($action=="filter") {
 		}
 		print "</table>";
 	}
-/*
-	// Output Shared Notes
-	if ($type == "note") {
-		print "<table class=\"tabs_table $TEXT_DIRECTION width90\"><tr>";
-		$note_list = get_note_list(PGV_GED_ID);
-		if ($note_list) {
-			print "<td class=\"list_value_wrap\"><ul>";
-			foreach ($note_list as $note) {
-				echo "<li><a href=\"javascript:;\" onclick=\"pasteid('".$note->getXref()."');\"><span class=\"list_item\">".$note->getListName()."&nbsp;&nbsp;&nbsp;";
-				echo PGV_LPARENS.$note->getXref().PGV_RPARENS;
-				echo "</span></a></li>";
-			}
-			print "</ul></td></tr>";
-			print "<tr><td class=\"list_label\">".$pgv_lang["shared_notes_found"]." ".count($note_list);
-			print "</td></tr>";
-		}
-		else {
-			print "<tr><td class=\"list_value_wrap\">";
-			print $pgv_lang["no_results"];
-			print "</td></tr>";
-		}
-		print "</table>";
-	}
-*/
+
 	// Output Shared Notes
 	if ($type=="note") {
-		echo '<table class="tabs_table ', $TEXT_DIRECTION, ' width90"><tr><td class="list_value"><tr>';
+		echo '<table class="tabs_table ', $TEXT_DIRECTION, ' width90">';
 		if ($filter) {
 			$mynotelist = search_notes($filter_array, array(PGV_GED_ID), 'AND', true);
 		} else {
@@ -685,7 +662,7 @@ if ($action=="filter") {
 		}
 		if ($mynotelist) {
 			usort($mynotelist, array('GedcomRecord', 'Compare'));
-			echo '<td class="list_value_wrap"><ul>';
+			echo '<tr><td class="list_value_wrap"><ul>';
 			foreach ($mynotelist as $note) {
 				echo '<li><a href="javascript:;" onclick="pasteid(\'', $note->getXref(), "', '", preg_replace("/(['\"])/", "\\$1", PrintReady($note->getListName())), '\'); return false;"><span class="list_item">', PrintReady($note->getListName()), '</span></a></li>';
 			}
@@ -703,7 +680,7 @@ if ($action=="filter") {
 
 	// Output Sources
 	if ($type=="source") {
-		echo '<table class="tabs_table ', $TEXT_DIRECTION, ' width90"><tr><td class="list_value"><tr>';
+		echo '<table class="tabs_table ', $TEXT_DIRECTION, ' width90">';
 		if ($filter) {
 			$mysourcelist = search_sources($filter_array, array(PGV_GED_ID), 'AND', true);
 		} else {
@@ -711,7 +688,7 @@ if ($action=="filter") {
 		}
 		if ($mysourcelist) {
 			usort($mysourcelist, array('GedcomRecord', 'Compare'));
-			echo '<td class="list_value_wrap"><ul>';
+			echo '<tr><td class="list_value_wrap"><ul>';
 			foreach ($mysourcelist as $source) {
 				echo '<li><a href="javascript:;" onclick="pasteid(\'', $source->getXref(), "', '", preg_replace("/(['\"])/", "\\$1", PrintReady($source->getFullName())), '\'); return false;"><span class="list_item">', PrintReady($source->getFullName()), '</span></a></li>';
 			}
