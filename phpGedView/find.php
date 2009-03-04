@@ -322,7 +322,7 @@ if ($type == "repo" && $SHOW_SOURCES>=PGV_USER_ACCESS_LEVEL) {
 }
 
 // Show Shared Notes and hide the rest
-if ($type == "note">=PGV_USER_ACCESS_LEVEL) {
+if ($type == "note") {
 	print "<div align=\"center\">";
 	print "<form name=\"filternote\" method=\"get\" onsubmit=\"return checknames(this);\" action=\"find.php\">";
 	print "<input type=\"hidden\" name=\"action\" value=\"filter\" />";
