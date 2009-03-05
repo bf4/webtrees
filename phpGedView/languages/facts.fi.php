@@ -131,7 +131,7 @@ $factarray["RELA"]	= "Sukulaisuussuhde";
 $factarray["RELI"]	= "Uskonto";
 $factarray["RESI"]	= "Asuinpaikka";
 $factarray["RESN"]	= "Käyttörajoitus";
-$factarray["RETI"]	= "Eläköityminen";
+$factarray["RETI"]	= "Eläke";
 $factarray["RFN"]	= "Tietueen numero";
 $factarray["RIN"]	= "Tietueen tunniste";
 $factarray["ROLE"]	= "Rooli";
@@ -164,6 +164,16 @@ $factarray["_DBID"] 	= "Yhdistetyn tietokannan ID";
 // These facts are used in specific contexts
 $factarray["STAT:DATE"] = "Tilan muutosaika";
 
+$factarray["NAME:_HEB"]	= "Nimi hepreaksi";
+$factarray["PLAC:_HEB"]	= "Paikka hepreaksi";
+$factarray["TITL:_HEB"]	= "Otsikko hepreaksi";
+$factarray["NAME:ROMN"]	= "Romanisoitu nimi";
+$factarray["PLAC:ROMN"]	= "Romanisoitu paikka";
+$factarray["TITL:ROMN"]	= "Romanisoitu otsikko";
+$factarray["NAME:FONE"]	= "Foneettinen nimi";
+$factarray["PLAC:FONE"]	= "Foneettinen paikka";
+$factarray["TITL:FONE"]	= "Foneettinen otsikko";
+
 //These facts are compounds for the view probabilities page
 $factarray["FAMC:HUSB:SURN"] 		= "Isän sukunimi";
 $factarray["FAMC:WIFE:SURN"] 		= "Äidin sukunimi";
@@ -182,7 +192,7 @@ $factarray["FAMC:HUSB:FAMC:HUSB:GIVN"] = "Isänisän etunimi";
 $factarray["FAMC:WIFE:FAMC:WIFE:GIVN"] = "Äidinäidin etunimi";
 $factarray["FAMC:WIFE:FAMC:HUSB:GIVN"] = "Äidinisän etunimi";
 $factarray["FAMC:HUSB:FAMC:WIFE:GIVN"] = "Isänäidin etunimi";
-$factarray["FAMS:CHIL:BIRT:PLAC"] 	= "Lapsen syntymäpaikkä";
+$factarray["FAMS:CHIL:BIRT:PLAC"] 	= "Lapsen syntymäpaikka";
 
 // These facts are all colon delimited
 $factarray["BIRT:PLAC"] 	= "Syntymäpaikka";
@@ -425,4 +435,10 @@ $factarray["SERV"] 	= "Ulkoinen palvelin";
 $factarray["_GEDF"] 	= "GEDCOM-tiedosto";
 $factarray["FAMS:DIV:DATE"] = "Puolison avioeropäivä";
 $factarray["FAMS:DIV:PLAC"] = "Puolison avioeropaikka";
+$factarray["FAMS:NOTE"] = "Puolison kommentti";
+$factarray["FAMS:CENS:DATE"] = "Puolison väestölaskentapäivä";
+$factarray["FAMS:CENS:PLAC"] = "Puolison väestölaskentapaikka";
+$factarray["FAMS:SLGS:DATE"] = "MAP puolison sinetöintipäivä";
+$factarray["FAMS:SLGS:PLAC"] = "MAP puolison sinetöintipaikka";
+$factarray["FAMS:SLGS:TEMP"] = "MAP puolison sinetöintitemppeli";
 ?>

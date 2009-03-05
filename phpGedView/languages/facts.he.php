@@ -163,6 +163,17 @@ $factarray["_DBID"] 	= "קוד זיהוי של מאגר נתונים מקושר"
 
 // These facts are used in specific contexts
 $factarray["STAT:DATE"] = "תאריך שינוי הסטאטוס";
+$factarray["DATA:DATE"] = "תאריך הכניסה במקור";
+
+$factarray["NAME:_HEB"]	= "שם בעברית";
+$factarray["PLAC:_HEB"]	= "מקום בעברית";
+$factarray["TITL:_HEB"]	= "כותרת בעברית";
+$factarray["NAME:ROMN"]	= "שם לטיני";
+$factarray["PLAC:ROMN"]	= "מקום לטיני";
+$factarray["TITL:ROMN"]	= "כותרת לטינית";
+$factarray["NAME:FONE"]	= "שם פונטי";
+$factarray["PLAC:FONE"]	= "מקום פונטי";
+$factarray["TITL:FONE"]	= "כותרת פונטית";
 
 //These facts are compounds for the view probabilities page
 $factarray["FAMC:HUSB:SURN"] = "שם המשפחה של האב";
