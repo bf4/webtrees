@@ -162,6 +162,16 @@ $factarray["_DBID"] = "Linked database ID";
 $factarray["STAT:DATE"] = "Status Change Date";
 $factarray["DATA:DATE"] = "Date of entry in original source";
 
+$factarray["NAME:_HEB"]	= "Name in Hebrew";
+$factarray["PLAC:_HEB"]	= "Place in Hebrew";
+$factarray["TITL:_HEB"]	= "Title in Hebrew";
+$factarray["NAME:ROMN"]	= "Romanized Name";
+$factarray["PLAC:ROMN"]	= "Romanized Place";
+$factarray["TITL:ROMN"]	= "Romanized Title";
+$factarray["NAME:FONE"]	= "Phonetic Name";
+$factarray["PLAC:FONE"]	= "Phonetic Place";
+$factarray["TITL:FONE"]	= "Phonetic Title";
+
 //These facts are compounds for the view probabilities and the advanced search pages
 $factarray["FAMC:HUSB:SURN"] = "Father's Surname";
 $factarray["FAMC:WIFE:SURN"] = "Mother's Surname";

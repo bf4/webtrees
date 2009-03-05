@@ -44,6 +44,15 @@ VERSION 4.2.1
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 -----------------------------------------------------------------------------------------
++$factarray["NAME:_HEB"]							02 Mar 2009				A
++$factarray["PLAC:_HEB"]							02 Mar 2009				A
++$factarray["TITL:_HEB"]							02 Mar 2009				A
++$factarray["NAME:ROMN"]							02 Mar 2009				A
++$factarray["PLAC:ROMN"]							02 Mar 2009				A
++$factarray["TITL:ROMN"]							02 Mar 2009				A
++$factarray["NAME:FONE"]							02 Mar 2009				A
++$factarray["PLAC:FONE"]							02 Mar 2009				A
++$factarray["TITL:FONE"]							02 Mar 2009				A
 +$pgv_lang["DATA:DATE"]               28 Feb 2009     A Previously $pgv_lang["date_of_entry"]
 
 
