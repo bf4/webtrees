@@ -954,7 +954,7 @@ function print_note_table($datalist, $legend=null) {
 	require_once 'js/sorttable.js.htm';
 	require_once 'includes/classes/class_note.php';
 
-	echo '<fieldset><legend><img src="', $PGV_IMAGE_DIR, '/', $PGV_IMAGES['note']['small'], '" align="middle" /> ';
+	echo '<fieldset><legend><img src="', $PGV_IMAGE_DIR, '/', $PGV_IMAGES['notes']['small'], '" align="middle" /> ';
 	if ($legend) {
 		echo $legend;
 	} else {

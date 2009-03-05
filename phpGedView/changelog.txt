@@ -10,6 +10,7 @@
 
 
 Version 4.2.1
+ - Fixed: Log Error: admin - ERROR 8: Undefined index: small; (windmillway)
  - Changed: removed superfluous "add unlinked note" link on notelist.php page (windmillway)
  - Changed: removed superfluous "add unlinked note/source" link on find.php pop-up (windmillway)
  - Fixed: Minimal and Wood Themes not appearing in Change Theme Dropdown list (windmillway)
