@@ -896,10 +896,10 @@ case 'editnote':
 		} else {
 			$gedrec = find_updated_record($pid);
 		}
-		if (preg_match("/0 @$pid@ NOTE (.*)/", $gedrec, $n1match)) {
+		if (preg_match("/^0 @$pid@ NOTE ?(.*)/", $gedrec, $n1match)) {
 			$note_content=$n1match[1].get_cont(1, $gedrec, false);
 		} else {
-			$ntoe_content='';
+			$note_content='';
 		}
 		?>
 		<table class="facts_table">
