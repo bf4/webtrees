@@ -892,21 +892,14 @@ case 'editnote':
 
 		<?php
 		if (!isset($pgv_changes[$pid."_".$GEDCOM])) {
-			//$noterec = find_gedcom_record($pid);
 			$gedrec = find_gedcom_record($pid);
-		}else{
+		} else {
 			$gedrec = find_updated_record($pid);
 		}
-		$n1match = array();
-		$nt = preg_match("/0 @$value@ NOTE (.*)/", $gedrec, $n1match);
-		// Debug ----
-		//	echo $gedrec;
-		// ----------
-		$record=GedcomRecord::getInstance($pid);
-		$noteLine=PrintReady($record->getFullName());
-		if ($nt!==false) {
-			$note_content  = $noteLine."\n";
-			$note_content .= trim(strip_tags(@$n1match[1].get_cont(1, $gedrec, false)));
+		if (preg_match("/0 @$pid@ NOTE (.*)/", $gedrec, $n1match)) {
+			$note_content=$n1match[1].get_cont(1, $gedrec, false);
+		} else {
+			$ntoe_content='';
 		}
 		?>
 		<table class="facts_table">
@@ -914,7 +907,7 @@ case 'editnote':
 				<td class="descriptionbox <?php echo $TEXT_DIRECTION; ?> wrap width25"><?php print_help_link("edit_SHARED_NOTE_help", "qm"); echo $pgv_lang["shared_note"]; ?></td>
 				<td class="optionbox wrap">
 					<textarea tabindex="<?php echo $tabkey; ?>" name="NOTE" id="NOTE" rows="15" cols="90"><?php
-						echo $note_content;
+						echo htmlspecialchars($note_content);
 					?></textarea><br /><?php print_specialchar_link("NOTE",true); ?>
 				</td>
 			</tr>
