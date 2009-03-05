@@ -554,11 +554,14 @@ class GedcomRecord {
 	}
 
 	// Get the three variants of the name
+	// Truncate titles of Shared Notes to something reasonable
 	function getFullName() {
 		global $pgv_lang;
 		if ($this->canDisplayName()) {
 			$tmp=$this->getAllNames();
-			return UTF8_substr($tmp[$this->getPrimaryName()]['full'],0,100);	// Shared Notes need a reasonable limit here
+			$tempResult = $tmp[$this->getPrimaryName()]['full'];
+			if ($this->type=='NOTE') $tempResult = UTF8_substr($tempResult,0,100);
+			return $tempResult;
 		} else {
 			return $pgv_lang['private'];
 		}
@@ -566,13 +569,17 @@ class GedcomRecord {
 	function getSortName() {
 		// The sortable name is never displayed, no need to call canDisplayName()
 		$tmp=$this->getAllNames();
-		return UTF8_substr($tmp[$this->getPrimaryName()]['sort'],0,100);		// Shared Notes need a reasonable limit here
+		$tempResult = $tmp[$this->getPrimaryName()]['sort'];
+		if ($this->type=='NOTE') $tempResult = UTF8_substr($tempResult,0,100);
+		return $tempResult;
 	}
 	function getListName() {
 		global $pgv_lang;
 		if ($this->canDisplayName()) {
 			$tmp=$this->getAllNames();
-			return UTF8_substr($tmp[$this->getPrimaryName()]['list'],0,100);	// Shared Notes need a reasonable limit here
+			$tempResult = $tmp[$this->getPrimaryName()]['list'];
+			if ($this->type=='NOTE') $tempResult = UTF8_substr($tempResult,0,100);
+			return $tempResult;
 		} else {
 			return $pgv_lang['private'];
 		}
@@ -581,7 +588,9 @@ class GedcomRecord {
 	function getAddName() {
 		if ($this->canDisplayName() && $this->getPrimaryName()!=$this->getSecondaryName()) {
 			$all_names=$this->getAllNames();
-			return UTF8_substr($all_names[$this->getSecondaryName()]['full'],0,100);	// Shared Notes need a reasonable limit here
+			$tempResult = $all_names[$this->getSecondaryName()]['full'];
+			if ($this->type=='NOTE') $tempResult = UTF8_substr($tempResult,0,100);
+			return $tempResult;
 		} else {
 			return null;
 		}
