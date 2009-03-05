@@ -566,13 +566,13 @@ class GedcomRecord {
 	function getSortName() {
 		// The sortable name is never displayed, no need to call canDisplayName()
 		$tmp=$this->getAllNames();
-		return $tmp[$this->getPrimaryName()]['sort'];
+		return UTF8_substr($tmp[$this->getPrimaryName()]['sort'],0,100);		// Shared Notes need a reasonable limit here
 	}
 	function getListName() {
 		global $pgv_lang;
 		if ($this->canDisplayName()) {
 			$tmp=$this->getAllNames();
-			return $tmp[$this->getPrimaryName()]['list'];
+			return UTF8_substr($tmp[$this->getPrimaryName()]['list'],0,100);	// Shared Notes need a reasonable limit here
 		} else {
 			return $pgv_lang['private'];
 		}
@@ -581,7 +581,7 @@ class GedcomRecord {
 	function getAddName() {
 		if ($this->canDisplayName() && $this->getPrimaryName()!=$this->getSecondaryName()) {
 			$all_names=$this->getAllNames();
-			return $all_names[$this->getSecondaryName()]['full'];
+			return UTF8_substr($all_names[$this->getSecondaryName()]['full'],0,100);	// Shared Notes need a reasonable limit here
 		} else {
 			return null;
 		}
