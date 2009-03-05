@@ -133,7 +133,7 @@ $pgv_lang["edit_privacy"]			= "Muokkaa yksityisyyttä";
 $pgv_lang["hide"]				= "Piilota";
 $pgv_lang["show_question"]			= "Näytä?";
 $pgv_lang["user_name"]			= "Tunnus";
-$pgv_lang["name_of_fact"]			= "";$pgv_lang["choice"]				= "Valitse";
+$pgv_lang["choice"]				= "Valitse";
 $pgv_lang["privacy_header"]			= "Muokkaa yksityisyys asetuksia";
 $pgv_lang["SHOW_DEAD_PEOPLE"]	= "Näytä kuolleet ihmiset";
 
