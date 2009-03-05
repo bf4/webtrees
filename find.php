@@ -3,7 +3,7 @@
  * Popup window that will allow a user to search for a family id, person id
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
+ * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -84,36 +84,36 @@ require 'includes/specialchars.php';
 // End variables for Find Special Character
 
 switch ($type) {
-	case "indi" :
-		print_simple_header($pgv_lang["find_individual"]);
-		break;
-	case "fam" :
-		print_simple_header($pgv_lang["find_fam_list"]);
-		break;
-	case "media" :
-		print_simple_header($pgv_lang["find_media"]);
-		$action="filter";
-		break;
-	case "place" :
-		print_simple_header($pgv_lang["find_place"]);
-		$action="filter";
-		break;
-	case "repo" :
-		print_simple_header($pgv_lang["repo_list"]);
-		$action="filter";
-		break;
-	case "note" :
-		print_simple_header($pgv_lang["find_shared_note"]);
-		$action="filter";
-		break;
-	case "source" :
-		print_simple_header($pgv_lang["find_source"]);
-		$action="filter";
-		break;
-	case "specialchar" :
-		print_simple_header($pgv_lang["find_specialchar"]);
-		$action="filter";
-		break;
+case "indi":
+	print_simple_header($pgv_lang["find_individual"]);
+	break;
+case "fam":
+	print_simple_header($pgv_lang["find_fam_list"]);
+	break;
+case "media":
+	print_simple_header($pgv_lang["find_media"]);
+	$action="filter";
+	break;
+case "place":
+	print_simple_header($pgv_lang["find_place"]);
+	$action="filter";
+	break;
+case "repo":
+	print_simple_header($pgv_lang["repo_list"]);
+	$action="filter";
+	break;
+case "note":
+	print_simple_header($pgv_lang["find_shared_note"]);
+	$action="filter";
+	break;
+case "source":
+	print_simple_header($pgv_lang["find_source"]);
+	$action="filter";
+	break;
+case "specialchar":
+	print_simple_header($pgv_lang["find_specialchar"]);
+	$action="filter";
+	break;
 }
 
 echo PGV_JS_START;
@@ -176,30 +176,30 @@ print "<table class=\"list_table $TEXT_DIRECTION width90\" border=\"0\">";
 print "<tr><td style=\"padding: 10px;\" valign=\"top\" class=\"facts_label03 width90\">"; // start column for find text header
 
 switch ($type) {
-	case "indi" :
-		print $pgv_lang["find_individual"];
-		break;
-	case "fam" :
-		print $pgv_lang["find_fam_list"];
-		break;
-	case "media" :
-		print $pgv_lang["find_media"];
-		break;
-	case "place" :
-		print $pgv_lang["find_place"];
-		break;
-	case "repo" :
-		print $pgv_lang["repo_list"];
-		break;
-	case "note" :
-		print $pgv_lang["find_shared_note"];
-		break;
-	case "source" :
-		print $pgv_lang["find_source"];
-		break;
-	case "specialchar" :
-		print $pgv_lang["find_specialchar"];
-		break;
+case "indi":
+	print $pgv_lang["find_individual"];
+	break;
+case "fam":
+	print $pgv_lang["find_fam_list"];
+	break;
+case "media":
+	print $pgv_lang["find_media"];
+	break;
+case "place":
+	print $pgv_lang["find_place"];
+	break;
+case "repo":
+	print $pgv_lang["repo_list"];
+	break;
+case "note":
+	print $pgv_lang["find_shared_note"];
+	break;
+case "source":
+	print $pgv_lang["find_source"];
+	break;
+case "specialchar":
+	print $pgv_lang["find_specialchar"];
+	break;
 }
 
 print "</td>"; // close column for find text header
@@ -322,7 +322,7 @@ if ($type == "repo" && $SHOW_SOURCES>=PGV_USER_ACCESS_LEVEL) {
 }
 
 // Show Shared Notes and hide the rest
-if ($type == "note">=PGV_USER_ACCESS_LEVEL) {
+if ($type == "note") {
 	print "<div align=\"center\">";
 	print "<form name=\"filternote\" method=\"get\" onsubmit=\"return checknames(this);\" action=\"find.php\">";
 	print "<input type=\"hidden\" name=\"action\" value=\"filter\" />";
@@ -396,7 +396,7 @@ print "<br />";
 if ($action=="filter") {
 	$filter = trim($filter);
 	$filter_array=explode(' ', preg_replace('/ {2,}/', ' ', $filter));
-	
+
 	// Output Individual
 	if ($type == "indi") {
 		print "<table class=\"tabs_table $TEXT_DIRECTION width90\"><tr>";
@@ -651,33 +651,10 @@ if ($action=="filter") {
 		}
 		print "</table>";
 	}
-/*
-	// Output Shared Notes
-	if ($type == "note") {
-		print "<table class=\"tabs_table $TEXT_DIRECTION width90\"><tr>";
-		$note_list = get_note_list(PGV_GED_ID);
-		if ($note_list) {
-			print "<td class=\"list_value_wrap\"><ul>";
-			foreach ($note_list as $note) {
-				echo "<li><a href=\"javascript:;\" onclick=\"pasteid('".$note->getXref()."');\"><span class=\"list_item\">".$note->getListName()."&nbsp;&nbsp;&nbsp;";
-				echo PGV_LPARENS.$note->getXref().PGV_RPARENS;
-				echo "</span></a></li>";
-			}
-			print "</ul></td></tr>";
-			print "<tr><td class=\"list_label\">".$pgv_lang["shared_notes_found"]." ".count($note_list);
-			print "</td></tr>";
-		}
-		else {
-			print "<tr><td class=\"list_value_wrap\">";
-			print $pgv_lang["no_results"];
-			print "</td></tr>";
-		}
-		print "</table>";
-	}
-*/
+
 	// Output Shared Notes
 	if ($type=="note") {
-		echo '<table class="tabs_table ', $TEXT_DIRECTION, ' width90"><tr><td class="list_value"><tr>';
+		echo '<table class="tabs_table ', $TEXT_DIRECTION, ' width90">';
 		if ($filter) {
 			$mynotelist = search_notes($filter_array, array(PGV_GED_ID), 'AND', true);
 		} else {
@@ -685,7 +662,7 @@ if ($action=="filter") {
 		}
 		if ($mynotelist) {
 			usort($mynotelist, array('GedcomRecord', 'Compare'));
-			echo '<td class="list_value_wrap"><ul>';
+			echo '<tr><td class="list_value_wrap"><ul>';
 			foreach ($mynotelist as $note) {
 				echo '<li><a href="javascript:;" onclick="pasteid(\'', $note->getXref(), "', '", preg_replace("/(['\"])/", "\\$1", PrintReady($note->getListName())), '\'); return false;"><span class="list_item">', PrintReady($note->getListName()), '</span></a></li>';
 			}
@@ -695,15 +672,11 @@ if ($action=="filter") {
 			echo '<tr><td class="list_value_wrap">', $pgv_lang['no_results'], '</td></tr>';
 		}
 		print '</table>';
-		if (PGV_USER_CAN_EDIT) {
-			print_help_link('edit_add_unlinked_note_help', 'qm'); ?><a href="javascript: <?php print $pgv_lang['add_unlinked_note']; ?>" onclick="addnewnote(''); return false;"><?php print $pgv_lang['add_unlinked_note']; ?></a>
-		<?php
-		}
 	}
 
 	// Output Sources
 	if ($type=="source") {
-		echo '<table class="tabs_table ', $TEXT_DIRECTION, ' width90"><tr><td class="list_value"><tr>';
+		echo '<table class="tabs_table ', $TEXT_DIRECTION, ' width90">';
 		if ($filter) {
 			$mysourcelist = search_sources($filter_array, array(PGV_GED_ID), 'AND', true);
 		} else {
@@ -711,7 +684,7 @@ if ($action=="filter") {
 		}
 		if ($mysourcelist) {
 			usort($mysourcelist, array('GedcomRecord', 'Compare'));
-			echo '<td class="list_value_wrap"><ul>';
+			echo '<tr><td class="list_value_wrap"><ul>';
 			foreach ($mysourcelist as $source) {
 				echo '<li><a href="javascript:;" onclick="pasteid(\'', $source->getXref(), "', '", preg_replace("/(['\"])/", "\\$1", PrintReady($source->getFullName())), '\'); return false;"><span class="list_item">', PrintReady($source->getFullName()), '</span></a></li>';
 			}
@@ -721,10 +694,6 @@ if ($action=="filter") {
 			echo '<tr><td class="list_value_wrap">', $pgv_lang['no_results'], '</td></tr>';
 		}
 		print '</table>';
-		if (PGV_USER_CAN_EDIT) {
-			print_help_link('edit_add_unlinked_source_help', 'qm'); ?><a href="javascript: <?php print $pgv_lang['add_unlinked_source']; ?>" onclick="addnewsource(''); return false;"><?php print $pgv_lang['add_unlinked_source']; ?></a>
-		<?php
-		}
 	}
 
 	// Output Special Characters

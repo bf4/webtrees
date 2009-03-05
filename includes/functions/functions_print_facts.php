@@ -1044,8 +1044,8 @@ function printSourceStructure($textSOUR) {
 			$data.="<br />&nbsp;&nbsp;<span class=\"label\">".$factarray["DATA:DATE"].":&nbsp;</span><span class=\"field\">".$date->Display(false)."</span>";
 		}
 		foreach($textSOUR["TEXT"] as $text) {
-			
-			// Check if Census Assistant Note ======================================= 
+
+			// Check if Census Assistant Note =======================================
 			// if (eregi("Head", $text)) {
 			if (strstr($text, "|Head|")) {
 				$text = "xCxAx<table><tr><td><br /><br />" . $text;
@@ -1066,7 +1066,7 @@ function printSourceStructure($textSOUR) {
 				$data.="<br />&nbsp;&nbsp;<span class=\"label\">".$factarray["TEXT"].":&nbsp;</span><span class=\"field\">".PrintReady(expand_urls($text))."</span>";
 			}
 			// ==========================================================
-			
+
 		}
 	}
 

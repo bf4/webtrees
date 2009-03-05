@@ -1591,7 +1591,7 @@ function show_mediaUpload_form($URL='media.php', $showthumb=false) {
 * @param int    $line  The line number in the GEDCOM record where this media item belongs
 */
 function show_media_form($pid, $action = "newentry", $filename = "", $linktoid = "", $level = 1, $line = 0) {
-	global $GEDCOM, $pgv_lang, $TEXT_DIRECTION, $GEDCOMS, $WORD_WRAPPED_NOTES, $ADVANCED_NAME_FACTS;
+	global $GEDCOM, $pgv_lang, $factarray, $TEXT_DIRECTION, $GEDCOMS, $WORD_WRAPPED_NOTES, $ADVANCED_NAME_FACTS;
 	global $pgv_changes, $MEDIA_DIRECTORY_LEVELS, $MEDIA_DIRECTORY;
 	global $AUTO_GENERATE_THUMBS, $THUMBNAIL_WIDTH;
 

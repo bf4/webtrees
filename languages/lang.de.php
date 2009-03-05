@@ -105,6 +105,7 @@ $pgv_lang["search_fams"]				= "Familien";
 $pgv_lang["search_gedcom"]				= "Dateien durchsuchen";
 $pgv_lang["search_geds"]				= "Dateien in denen gesucht wird";
 $pgv_lang["search_indis"]				= "Personen";
+$pgv_lang["search_notes"]				= "Gemeinsame Bemerkungen";
 $pgv_lang["search_inrecs"]				= "Suchen nach";
 $pgv_lang["search_prtall"]				= "Alle Namen";
 $pgv_lang["search_prthit"]				= "Namen mit Treffern";
@@ -392,21 +393,22 @@ $pgv_lang["lists"]						= "Listen";
 $pgv_lang["box_width"]					= "Box Breite";
 
 //-- FUNCTIONS FILE MESSAGES
-$pgv_lang["unable_to_find_family"]		= "Kann die Familie mit folgender ID nicht finden:";
-$pgv_lang["unable_to_find_record"]		= "Kann den Datensatz mit folgender ID nicht finden:";
+$pgv_lang["unable_to_find_family"]		= "Kann die Familie mit folgendem ID nicht finden:";
+$pgv_lang["unable_to_find_record"]		= "Kann den Datensatz mit folgendem ID nicht finden:";
 $pgv_lang["title"]						= "Titel";
 $pgv_lang["living"]						= "Lebt";
 $pgv_lang["private"]					= "Vertraulich";
 $pgv_lang["birth"]						= "Geburt:";
 $pgv_lang["death"]						= "Tod:";
 $pgv_lang["descend_chart"]				= "Nachfahrenbaum";
-$pgv_lang["individual_list"]			= "Personenliste";
-$pgv_lang["family_list"]				= "Familienliste";
-$pgv_lang["source_list"]				= "Quellenliste";
-$pgv_lang["shared_note_list"]			= "Liste der gemeinsamen Bemerkungen";
+$pgv_lang["individual_list"]			= "Personen";
+$pgv_lang["family_list"]				= "Familien";
+$pgv_lang["source_list"]				= "Quellen";
+$pgv_lang["shared_note_list"]			= "Gemeinsame Bemerkungen";
 $pgv_lang["place_list"]					= "Hierarchie der Orte";
 $pgv_lang["place_list_aft"]				= "Hierarchie der Orte unter";
-$pgv_lang["media_list"]					= "Multimedialiste";
+$pgv_lang["media_list"]					= "Multimedia";
+$pgv_lang["repo_list"]					= "Archive";
 $pgv_lang["search"]						= "Suche";
 $pgv_lang["clippings_cart"]				= "Sammelbehälter";
 $pgv_lang["print_preview"]				= "Drucker-optimierte Version";
@@ -556,7 +558,7 @@ $pgv_lang["total_unic_places"]			= "Anzahl Orte";
 
 //-- MEDIALIST FILE MESSAGES
 $pgv_lang["external_objects"]			= "Externe Objekte";
-$pgv_lang["multi_title"]				= "Liste der Multimedia Objekte";
+$pgv_lang["multi_title"]				= "Multimedia Objekte";
 $pgv_lang["media_found"]				= "Multimedia Objekte gefunden";
 $pgv_lang["view_person"]				= "Person zeigen";
 $pgv_lang["view_family"]				= "Familie zeigen";
@@ -606,7 +608,6 @@ $pgv_lang["titles_found"]				= "Titel";
 $pgv_lang["find_source"]				= "Quelle suchen";
 
 //-- REPOLIST FILE MESSAGES
-$pgv_lang["repo_list"]					= "Archiv Liste";
 $pgv_lang["repos_found"]				= "gefundene Archive";
 $pgv_lang["find_repository"]			= "Archiv suchen";
 $pgv_lang["total_repositories"]			= "Anzahl Archive";
