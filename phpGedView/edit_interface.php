@@ -963,8 +963,6 @@ case 'updatenoteaction':
 				$newgedrec = "0 @$pid@ NOTE $newlines[$k]\n";
 			}elseif ( $k==0 ) {
 				$newgedrec = "0 @$pid@ NOTE $newlines[$k]\n1 CONT\n";
-			}else if (strstr($newlines[$k], "|Head|")) {
-				$newgedrec .= "1 CONT\n1 CONT $newlines[$k]\n";
 			} else {
 				$newgedrec .= "1 CONT $newlines[$k]\n";
 			}
