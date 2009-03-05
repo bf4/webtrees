@@ -100,6 +100,13 @@ class Note extends GedcomRecord {
 		return parent::_getLinkUrl('note.php?nid=');
 	}
 
+	
+	// The "name" of a note record is the first line.  This can be
+	// somewhat unwieldy if lots of CONC records are used.  Limit to 100 chars
+	function _addName($type, $value, $gedrec) {
+		parent::_addName($type, UTF8_substr($value, 0, 100), $gedrec);
+	}
+
 	// Get an array of structures containing all the names in the record
 	function getAllNames() {
 		// Uniquely, the NOTE objects have data in their level 0 record.
