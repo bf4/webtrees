@@ -107,7 +107,7 @@ echo '</td></tr><tr><td colspan="2"><table border=\"0\" class="facts_table">';
 			echo $pgv_lang['edit'];
 			echo "</a>";
 		}
-		echo '</td><td class="optionbox wrap">';
+		echo '</td><td class="optionbox wrap" width="400px">';
 		echo $note;
 		echo "<br />";
 	echo "</td></tr>";
