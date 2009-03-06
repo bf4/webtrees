@@ -58,7 +58,7 @@ class Family extends GedcomRecord {
 			}
 			$this->numChildren=$data['f_numchil'];
 			// Check for divorce *before* we privatize the data so we can correctly label spouses/ex-spouses
-			$this->_isDivorced=(bool)preg_match('/\n1 DIV( Y|\n)/', $data['gedrec']);
+			$this->_isDivorced=(bool)preg_match('/\n1 ('.PGV_EVENTS_DIV.')( Y|\n)/', $data['gedrec']);
 		} else {
 			// Construct from raw GEDCOM data
 			if (preg_match('/^1 HUSB @(.+)@/m', $data, $match)) {
@@ -76,7 +76,7 @@ class Family extends GedcomRecord {
 				$this->numChildren=count($this->childrenIds);
 			}
 			// Check for divorce *before* we privatize the data so we can correctly label spouses/ex-spouses
-			$this->_isDivorced=(bool)preg_match('/\n1 DIV( Y|\n)/', $data);
+			$this->_isDivorced=(bool)preg_match('/\n1 ('.PGV_EVENTS_DIV.')( Y|\n)/', $data);
 		}
 
 		// Make sure husb/wife are the right way round.
