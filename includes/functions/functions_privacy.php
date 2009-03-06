@@ -360,7 +360,7 @@ function displayDetailsById($pid, $type = "INDI") {
 		if (isset($backtrace[2])) $temp .= basename($backtrace[2]["file"])." (".$backtrace[2]["line"].")";
 		if (isset($backtrace[1])) $temp .= basename($backtrace[1]["file"])." (".$backtrace[1]["line"].")";
 		$temp .= basename($backtrace[0]["file"])." (".$backtrace[0]["line"].")";
-		fwrite($fp, date("Y-m-d H:i:s")."\t".$_SERVER["SCRIPT_NAME"]."\t".$temp."\t".$PRIVACY_CHECKS."- checking privacy for ".$type." ".$pid."\r\n");
+		fwrite($fp, date("Y-m-d H:i:s")."\t".$_SERVER["SCRIPT_NAME"]."\t".$temp."\t".$PRIVACY_CHECKS."- checking privacy for ".$type." ".$pid.PGV_EOL);
 		fclose($fp);
 	}
 
