@@ -1958,6 +1958,7 @@ function show_media_form($pid, $action = "newentry", $filename = "", $linktoid =
 
 	print_add_layer("SOUR", 1);
 	print_add_layer("NOTE", 1);
+	print_add_layer("SHARED_NOTE", 1);
 	print_add_layer("RESN", 1);
 	print "<input type=\"submit\" value=\"" . $pgv_lang["save"] . "\" />";
 	print "</form>\n";
