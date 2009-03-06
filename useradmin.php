@@ -212,9 +212,9 @@ if ($action=='createuser' || $action=='edituser2') {
 							$person=Person::getInstance($myid);
 							if ($person) {
 								if (preg_match('/\d _?EMAIL/', $person->getGedcomRecord())) {
-									replace_gedrec($myid, preg_replace("/(\d _?EMAIL)[^\r\n]*/", '$1 '.$emailaddress, $person->getGedcomRecord()));
+									replace_gedrec($myid, preg_replace("/(\n\d _?EMAIL).*/", '$1 '.$emailaddress, $person->getGedcomRecord()));
 								} else {
-									replace_gedrec($myid, $person->getGedcomRecord()."\r\n1 EMAIL ".$emailaddress);
+									replace_gedrec($myid, $person->getGedcomRecord()."\n1 EMAIL ".$emailaddress);
 								}
 							}
 							$GEDCOM=$OLDGEDCOM;
