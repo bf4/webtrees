@@ -172,6 +172,8 @@ $factarray["NAME:FONE"]	= "Phonetic Name";
 $factarray["PLAC:FONE"]	= "Phonetic Place";
 $factarray["TITL:FONE"]	= "Phonetic Title";
 
+$factarray["SHARED_NOTE"]	= "Shared Note";
+
 //These facts are compounds for the view probabilities and the advanced search pages
 $factarray["FAMC:HUSB:SURN"] = "Father's Surname";
 $factarray["FAMC:WIFE:SURN"] = "Mother's Surname";

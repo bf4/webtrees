@@ -1733,7 +1733,7 @@ function print_add_layer($tag, $level=2, $printSaveButton=true) {
 		//-- Retrieve existing shared note or add new shared note to fact
 		$text = "";
 		echo "<a href=\"javascript:;\" onclick=\"return expand_layer('newnote_2');\"><img id=\"newnote_img\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["plus"]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" title=\"\" /> ".$pgv_lang["add_shared_note"]."</a>";
-		print_help_link("edit_add_NOTE_help", "qm");
+		print_help_link("edit_add_SHARED_NOTE_help", "qm");
 		echo "<br />\n";
 		echo "<div id=\"newnote_2\" style=\"display: none;\">\n";
 		if ($printSaveButton) echo "<input type=\"submit\" value=\"".$pgv_lang["save"]."\" />";

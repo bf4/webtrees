@@ -96,7 +96,6 @@ function print_fact(&$eventObj, $noedit=false) {
 
 	if ($fact=="NOTE") return print_main_notes($factrec, 1, $pid, $linenum, $noedit);
 	if ($fact=="SOUR") return print_main_sources($factrec, 1, $pid, $linenum, $noedit);
-
 	$styleadd="";
 	$ct = preg_match("/PGV_NEW/", $factrec, $match);
 	if ($ct>0) $styleadd="change_new";
@@ -1154,7 +1153,6 @@ function print_main_notes($factrec, $level, $pid, $linenum, $noedit=false) {
 	global $PGV_IMAGE_DIR;
 	global $PGV_IMAGES;
 	global $TEXT_DIRECTION;
-
 	$styleadd="";
 	$ct = preg_match("/PGV_NEW/", $factrec, $match);
 	if ($ct>0) $styleadd="change_new";
@@ -1179,8 +1177,14 @@ function print_main_notes($factrec, $level, $pid, $linenum, $noedit=false) {
 		print "<td valign=\"top\" class=\"descriptionbox";
 		if ($level==2) print " rela";
 		print " $styleadd center width20\">";
-		if ($level<2) print "<img class=\"icon\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["notes"]["small"]."\" alt=\"\" /><br />".$factarray["NOTE"];
-		else {
+		if ($level<2) {
+			echo "<img class=\"icon\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["notes"]["small"]."\" alt=\"\" />";
+			if (strstr($factrec, "1 NOTE @" )) {
+				echo "<br />".$factarray["SHARED_NOTE"];
+			} else {
+				echo "<br />".$factarray["NOTE"];
+			}
+		} else {
 			$factlines = explode("\n", $factrec); // 1 BIRT Y\n2 NOTE ...
 			$factwords = explode(" ", $factlines[0]); // 1 BIRT Y
 			$factname = $factwords[1]; // BIRT
@@ -1188,8 +1192,11 @@ function print_main_notes($factrec, $level, $pid, $linenum, $noedit=false) {
 				$factwords = explode(" ", $factlines[1]); // 1 EVEN\n2 TYPE MDCL\n2 NOTE
 				$factname = $factwords[2]; // MDCL
 			}
-			if (isset($factarray[$factname])) print $factarray[$factname];
-			else print $factname;
+			if (isset($factarray[$factname])) {
+				print $factarray[$factname];
+			} else {
+				print $factname;
+			}
 		}
 		if (!$noedit && PGV_USER_CAN_EDIT && !FactEditRestricted($pid, $factrec) && $styleadd!="change_old" && $view!="preview") {
 			$menu = array();
