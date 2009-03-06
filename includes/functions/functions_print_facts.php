@@ -386,7 +386,7 @@ function print_fact(&$eventObj, $noedit=false) {
 						else echo PrintReady($event);
 					}
 				}
-				$temp = trim(get_cont(2, $factrec), "\r\n");
+				$temp = trim(get_cont(2, $factrec));
 				if (strstr("PHON ADDR ", $fact." ")===false && $temp!="") {
 					if ($WORD_WRAPPED_NOTES) print " ";
 					print PrintReady($temp);
@@ -423,11 +423,11 @@ function print_fact(&$eventObj, $noedit=false) {
 				print "<img src=\"images/RESN_".$resn_value.".gif\" alt=\"".$pgv_lang[$resn_value]."\" title=\"".$pgv_lang[$resn_value]."\" />\n";
 				print_help_link("RESN_help", "qm");
 			}
-			if (preg_match("/[\r\n]2 FAMC @(.+)@/", $factrec, $match)) {
+			if (preg_match("/\n2 FAMC @(.+)@/", $factrec, $match)) {
 				print "<br/><span class=\"label\">".$factarray["FAMC"].":</span> ";
 				$family=Family::getInstance($match[1]);
 				echo "<a href=\"".encode_url($family->getLinkUrl())."\">", $family->getFullName(), "</a>";
-				if (preg_match("/[\r\n]3 ADOP (HUSB|WIFE|BOTH)/", UTF8_strtoupper($factrec), $match)) {
+				if (preg_match("/\n3 ADOP (HUSB|WIFE|BOTH)/", UTF8_strtoupper($factrec), $match)) {
 					print '<br/><span class="indent"><span class="label">'.$factarray['ADOP'].':</span> ';
 					print '<span class="field">';
 					switch ($match[1]) {
