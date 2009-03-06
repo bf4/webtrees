@@ -41,6 +41,7 @@ class Family extends GedcomRecord {
 	private $marriage = null;
 	private $children_loaded = false;
 	private $numChildren = false;
+	private $_isDivorced = null;
 
 	// Create a Family object from either raw GEDCOM data or a database row
 	function Family($data, $simple=true) {
@@ -56,6 +57,8 @@ class Family extends GedcomRecord {
 				$this->childrenIds=explode(';', trim($data['f_chil'], ';'));
 			}
 			$this->numChildren=$data['f_numchil'];
+			// Check for divorce *before* we privatize the data so we can correctly label spouses/ex-spouses
+			$this->_isDivorced=(bool)preg_match('/\n1 DIV( Y|\n)/', $data['gedrec']);
 		} else {
 			// Construct from raw GEDCOM data
 			if (preg_match('/^1 HUSB @(.+)@/m', $data, $match)) {
@@ -72,6 +75,8 @@ class Family extends GedcomRecord {
 			} else {
 				$this->numChildren=count($this->childrenIds);
 			}
+			// Check for divorce *before* we privatize the data so we can correctly label spouses/ex-spouses
+			$this->_isDivorced=(bool)preg_match('/\n1 DIV( Y|\n)/', $data);
 		}
 
 		// Make sure husb/wife are the right way round.
@@ -331,14 +336,12 @@ class Family extends GedcomRecord {
 		return $this->marriage->getGedcomRecord();
 	}
 
-	/**
-	 * Return whether or not this family ended in a divorce.
-	 * Current implementation returns true if there is a non-empty divorce record.
-	 * @return boolean true if there is a non-empty divorce record, false if no divorce record exists
-	 */
+	// Return whether or not this family ended in a divorce.
+	// Note that this is calculated prior to privatizing the data, so we can
+	// always distinguish spouses from ex-spouses.  This apparant leaking of
+	// private data was discussed and agreed on the pgv forum.
 	function isDivorced() {
-		// Bypass privacy rules so we can differentiate Spouse from Ex-Spouse
-		return preg_match('/\n1 DIV( Y|\n)/', find_family_record($this->xref));
+		return $this->_isDivorced;
 	}
 
 	/**
