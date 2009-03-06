@@ -264,41 +264,6 @@ function is_dead($indirec, $cyear="", $import=false) {
 }
 
 //-- allow users to overide functions in privacy file
-if (!function_exists("displayDetails")) {
-/**
-* check if the details of the GEDCOM record should be shown
-*
-*
-* This function checks if the details of the given GEDCOM record represented by <var>$indirec</var>
-* should be shown.  This function has been depricated and now all it does is looks up the GEDCOM
-* XRef ID and type from the gedcom record and pass them as parameters to the
-* <var>displayDetailsById</var> function.
-*
-* @deprecated This function has been deprecated by the displayDetailsById function, it is still
-* provided for backwards compatibility but it should no longer be used in new code
-* @param string $indirec the raw gedcom record to check privacy settings for
-* @return boolean return true to show the persons details, return false to keep them private
-*/
-function displayDetails($indirec) {
-	global $HIDE_LIVE_PEOPLE;
-
-	if (!$HIDE_LIVE_PEOPLE) return true;
-
-	$ct = preg_match("/0 @(.*)@ (.*)/", $indirec, $match);
-	if ($ct>0) {
-		$pid = $match[1];
-		$type = trim($match[2]);
-	}
-	else {
-		$pid=0;
-		$type = "INDI";
-	}
-
-	return displayDetailsById($pid, $type);
-}
-}
-
-//-- allow users to overide functions in privacy file
 if (!function_exists("displayDetailsById")) {
 
 /**
@@ -639,34 +604,6 @@ function displayDetailsById($pid, $type = "INDI") {
 	}
 	$privacy_cache[$pkey] = true;
 	return true;
-}
-}
-
-//-- allow users to overide functions in privacy file
-if (!function_exists("showLivingName")) {
-/**
-* check if the name of the GEDCOM record should be shown
-*
-*
-* This function checks if the name of the given GEDCOM record represented by <var>$indirec</var>
-* should be shown.  This function has been depricated and now all it does is looks up the GEDCOM
-* XRef ID and type from the gedcom record and pass them as parameters to the
-* <code>showLivingNameById</code> function.
-*
-* @deprecated This function has been deprecated by the showLivingNameById function, it is still
-* provided for backwards compatibility but it should no longer be used in new code
-* @param string $indirec the raw gedcom record to check privacy settings for
-* @return boolean return true to show the persons details, return false to keep them private
-*/
-function showLivingName($indirec) {
-	global $SHOW_LIVING_NAMES, $PRIV_PUBLIC, $PRIV_USER, $PRIV_NONE;
-
-	//-- get the id from the record
-	$ct = preg_match("/0 @(.*)@ INDI/", $indirec, $match);
-	if ($ct>0) $pid = $match[1];
-	else $pid=0;
-
-	return showLivingNameById($pid);
 }
 }
 
