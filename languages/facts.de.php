@@ -166,6 +166,16 @@ $factarray["_DBID"] = "ID der fremden Datenbank";
 $factarray["STAT:DATE"] = "Datum der Statusänderung";
 $factarray["DATA:DATE"] = "Datum des Eintrages in der ursprünglichen Quelle";
 
+$factarray["NAME:_HEB"]	= "Name (hebräisch)";
+$factarray["PLAC:_HEB"]	= "Ort (hebräisch)";
+$factarray["TITL:_HEB"]	= "Titel (hebräisch)";
+$factarray["NAME:ROMN"]	= "Name (romanisiert)";
+$factarray["PLAC:ROMN"]	= "Ort (romanisiert)";
+$factarray["TITL:ROMN"]	= "Titel (romanisiert)";
+$factarray["NAME:FONE"]	= "Name (phonetisch)";
+$factarray["PLAC:FONE"]	= "Ort (phonetisch)";
+$factarray["TITL:FONE"]	= "Titel (phonetisch)";
+
 //These facts are compounds for the view probabilities and the advanced search pages
 $factarray["FAMC:HUSB:SURN"] = "Nachname des Vaters";
 $factarray["FAMC:WIFE:SURN"] = "Nachname der Mutter";

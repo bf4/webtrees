@@ -143,7 +143,7 @@ function print_indi_table($datalist, $legend="", $option="") {
 		}
 		/* @var $person Person */
 		if (is_null($person)) continue;
-		if ($person->type !== "INDI") continue;
+		if ($person->getType() !== "INDI") continue;
 		if (!$person->canDisplayName()) {
 			$hidden++;
 			continue;
@@ -203,7 +203,7 @@ function print_indi_table($datalist, $legend="", $option="") {
 		}
 		echo implode('<br/>', $names_html);
 		// Indi parents
-		if ($person->xref) print $person->getPrimaryParentsNames("parents_$table_id details1", "none");
+		echo $person->getPrimaryParentsNames("parents_$table_id details1", "none");
 		echo "</td>";
 		//-- GIVN/SURN
 		echo '<td style="display:none">', $givn, ',', $surn, '</td>';
@@ -213,7 +213,7 @@ function print_indi_table($datalist, $legend="", $option="") {
 			echo "<td class=\"list_value_wrap\">";
 			$sosa = $key;
 			$rootid = $datalist[1];
-			echo "<a href=\"".encode_url("relationship.php?pid1={$rootid}&pid2={$person->xref}")."\"".
+			echo "<a href=\"".encode_url("relationship.php?pid1={$rootid}&pid2=".$person->getXref())."\"".
 			" title=\"".$pgv_lang["relationship_chart"]."\"".
 			" name=\"{$sosa}\"".
 			" class=\"list_item name2\">".$sosa."</a>";
@@ -525,7 +525,7 @@ function print_fam_table($datalist, $legend="", $option="") {
 			else $family = Family::getInstance($gid);
 		}
 		if (is_null($family)) continue;
-		if ($family->type !== "FAM") continue;
+		if ($family->getType() !== "FAM") continue;
 		//-- Retrieve husband and wife
 		$husb = $family->getHusband();
 		if (is_null($husb)) $husb = new Person('');
@@ -563,12 +563,12 @@ function print_fam_table($datalist, $legend="", $option="") {
 		if (!$husb->getChildFamilyIds()) $tdclass .= " patriarch";
 		echo "<td class=\"".$tdclass."\" align=\"".get_align($names[$n1]['list'])."\">";
 		echo "<a href=\"".encode_url($family->getLinkUrl())."\" class=\"list_item name2\" dir=\"".$TEXT_DIRECTION."\">".PrintReady($names[$n1]['list'])."</a>";
-		if ($tiny && $husb->xref) echo $husb->getSexImage();
+		if ($tiny) echo $husb->getSexImage();
 		if ($n1!=$n2) {
 			echo "<br /><a href=\"".encode_url($family->getLinkUrl())."\" class=\"list_item\">".PrintReady($names[$n2]['list'])."</a>";
 		}
 		// Husband parents
-		if ($husb->xref) echo $husb->getPrimaryParentsNames("parents_$table_id details1", "none");
+		echo $husb->getPrimaryParentsNames("parents_$table_id details1", "none");
 		echo "</td>";
 		//-- Husb GIVN
 		list($surn,$givn)=explode(',', $husb->getSortName());
@@ -612,12 +612,12 @@ function print_fam_table($datalist, $legend="", $option="") {
 		if (!$wife->getChildFamilyIds()) $tdclass .= " patriarch";
 		echo "<td class=\"".$tdclass."\" align=\"".get_align($names[$n1]['list'])."\">";
 		echo "<a href=\"".encode_url($family->getLinkUrl())."\" class=\"list_item name2\" dir=\"".$TEXT_DIRECTION."\">".PrintReady($names[$n1]['list'])."</a>";
-		if ($tiny && $wife->xref) echo $wife->getSexImage();
+		if ($tiny) echo $wife->getSexImage();
 		if ($n1!=$n2) {
 			echo "<br /><a href=\"".encode_url($family->getLinkUrl())."\" class=\"list_item\">".PrintReady($names[$n2]['list'])."</a>";
 		}
 		// Wife parents
-		if ($wife->xref) echo $wife->getPrimaryParentsNames("parents_$table_id details1", "none");
+		echo $wife->getPrimaryParentsNames("parents_$table_id details1", "none");
 		echo "</td>";
 		//-- Wife GIVN
 		list($surn,$givn)=explode(',', $wife->getSortName());
@@ -1540,7 +1540,7 @@ function print_changes_table($datalist, $showChange=true, $total='') {
 		$name = $record->getFullName();
 		echo "<td class=\"list_value_wrap\" align=\"".get_align($name)."\">";
 		echo "<a href=\"".encode_url($record->getLinkUrl())."\" class=\"list_item name2\" dir=\"".$TEXT_DIRECTION."\">".PrintReady($name)."</a>";
-		if ($record->type=="INDI") {
+		if ($record->getType()=="INDI") {
 			echo $record->getSexImage();
 			$indi=true;
 		}
@@ -1548,7 +1548,7 @@ function print_changes_table($datalist, $showChange=true, $total='') {
 		if ($addname) {
 			echo "<br /><a href=\"".encode_url($record->getLinkUrl())."\" class=\"list_item\">".PrintReady($addname)."</a>";
 		}
-		if ($record->type=='INDI') {
+		if ($record->getType()=='INDI') {
 			if ($SHOW_MARRIED_NAMES) {
 				foreach ($record->getAllNames() as $name) {
 					if ($name['type']=='_MARNM') {
@@ -1660,7 +1660,7 @@ function print_events_table($startjd, $endjd, $events='BIRT MARR DEAT', $only_li
 		print "<tr class=\"vevent\">"; // hCalendar:vevent
 		//-- Record name(s)
 		$name = $record->getListName();
-		if ($record->type=="FAM") {
+		if ($record->getType()=="FAM") {
 			$exp = explode("<br />", $name);
 			$husb = $record->getHusband();
 			if ($husb) $exp[0] .= $husb->getPrimaryParentsNames("parents_$table_id details1", "none");
@@ -1670,11 +1670,9 @@ function print_events_table($startjd, $endjd, $events='BIRT MARR DEAT', $only_li
 		}
 		print "<td class=\"list_value_wrap\" align=\"".get_align($name)."\">";
 		print "<a href=\"".encode_url($record->getLinkUrl())."\" class=\"list_item name2\" dir=\"".$TEXT_DIRECTION."\">".PrintReady($name)."</a>";
-		if ($record->type=="INDI") {
-			print $record->getSexImage();
-			if ($record->xref) {
-				echo $record->getPrimaryParentsNames("parents_$table_id details1", "none");
-			}
+		if ($record->getType()=="INDI") {
+			echo $record->getSexImage();
+			echo $record->getPrimaryParentsNames("parents_$table_id details1", "none");
 		}
 		print "</td>";
 		//-- GIVN
@@ -1783,11 +1781,11 @@ function print_events_list($startjd, $endjd, $events='BIRT MARR DEAT', $only_liv
 		$record = GedcomRecord::getInstance($value['id']);
 		//-- only living people ?
 		if ($only_living) {
-			if ($record->type=="INDI" && $record->isDead()) {
+			if ($record->getType()=="INDI" && $record->isDead()) {
 				$filter ++;
 				continue;
 			}
-			if ($record->type=="FAM") {
+			if ($record->getType()=="FAM") {
 				$husb = $record->getHusband();
 				if (is_null($husb) || $husb->isDead()) {
 					$filter ++;
@@ -1810,7 +1808,7 @@ function print_events_list($startjd, $endjd, $events='BIRT MARR DEAT', $only_liv
 
 		$value['name'] = $record->getListName();
 		$value['url'] = $record->getLinkUrl();
-		if ($record->type=="INDI")
+		if ($record->getType()=="INDI")
 			$value['sex'] = $record->getSexImage();
 		else
 			$value['sex'] = '';

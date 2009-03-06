@@ -10,6 +10,7 @@
 
 
 Version 4.2.0 CA
+ - Merged: Merge changes r5162 - r5175 from the trunk. (windmillway)
  - Merged: Merge changes r5149 - r5161 from the trunk. (windmillway)
  - Merged: Merge changes r5128 - r5148 from the trunk. (windmillway)
  - Merged: Merge changes r5122 - r5127 from the trunk. (windmillway)

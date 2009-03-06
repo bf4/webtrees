@@ -1138,15 +1138,40 @@ function print_note_record($text, $nlevel, $nrec, $textOnly=false, $return=false
 	$text = str_replace("~~", "<br />", $text);
 	$text = trim(expand_urls(stripLRMRLM($text)));
 	$data = "";
-
+	
+// BH TEST =================================================================
+/*
 	if (!empty($text)) {
 		// Check if Shared Note -----------------------------------------
 		if (eregi("0 @N.*@ NOTE", $nrec)) {
+			// If Census Formatted Shared Note 
+			if (strstr($text, "|")) {
+				$text = $centitl."<table cellpadding=0>".$text;
+				$text = str_replace("<br /><br />", "<p><tr><td><b>Name</b>&nbsp;&nbsp;</td><td><b>Relation</b>&nbsp;&nbsp;</td><td><b>Status</b>&nbsp;&nbsp;</td><td><b>Age</b>&nbsp;&nbsp;</td><td><b>Sex</b>&nbsp;&nbsp;</td><td><b>Occupation</b>&nbsp;&nbsp;</td><td><b>Birth place</b>&nbsp;&nbsp;</td> </tr><tr><td>", $text);
+				// Check for Highlighting 
+				if (eregi("<br />.b.", $text)) {
+					$text = str_replace(".b.", "<b>", $text);
+					$text = str_replace("|", "&nbsp;&nbsp;</b></td><td>", $text);
+				}else{
+					$text = str_replace("|", "&nbsp;&nbsp;</td><td>", $text);
+				}
+				$text = str_replace("<br />", "&nbsp;&nbsp;</td></tr><tr><td>", $text);
+				$text = $text . "</td></tr></table>";
+			}else{
+				$text = "&nbsp;&nbsp;".PrintReady($centitl."<br />".$text);
+			}
+		}
+*/
+// END BH TEST =================================================================
+
+	if (!empty($text)) {
+		// Check if Formatted Shared Note -----------------------------------------
+		if (eregi("0 @N.*@ NOTE", $nrec) && strstr($text, "|")) {
 			$text = PrintReady($text);
-			$text = "xCxAx<table><tr><td>" . $text;
+			$text = "xCxAx<table cellpadding=\"0\"><tr><td>" . $text;
 			// Check if Census Formatted Shared Note --------------------
-			if (strstr($text, "|Head|")) {
-				$text = str_replace("<br /><br />", "</td></tr></table><p><table><tr><td><b>Name</b>&nbsp;&nbsp;</td><td><b>Relation</b>&nbsp;&nbsp;</td><td><b>Status</b>&nbsp;&nbsp;</td><td><b>Age</b>&nbsp;&nbsp;</td><td><b>Sex</b>&nbsp;&nbsp;</td><td><b>Occupation</b>&nbsp;&nbsp;</td><td><b>Birth place</b>&nbsp;&nbsp;</td> </tr><tr><td>", $text);
+			if (strstr($text, "|")) {
+				$text = str_replace("<br /><br />", "</td></tr></table><p><table cellpadding=\"0\"><tr><td>&nbsp;<b>Name</b>&nbsp;&nbsp;</td><td><b>Relation</b>&nbsp;&nbsp;</td><td><b>Status</b>&nbsp;&nbsp;</td><td><b>Age</b>&nbsp;&nbsp;</td><td><b>Sex</b>&nbsp;&nbsp;</td><td><b>Occupation</b>&nbsp;&nbsp;</td><td><b>Birth place</b>&nbsp;&nbsp;</td></tr><tr><td>&nbsp;", $text);
 			}
 			// Check for Highlighting -----------------------------------
 			if (eregi("<br />.b.", $text)) {
@@ -1155,9 +1180,12 @@ function print_note_record($text, $nlevel, $nrec, $textOnly=false, $return=false
 			}else{
 				$text = str_replace("|", "&nbsp;&nbsp;</td><td>", $text);
 			}
-			$text = str_replace("<br />", "</td></tr><tr><td>", $text);
+			$text = str_replace("<br />", "</td></tr><tr><td>&nbsp;", $text);
 			$text = $text . "</td></tr></table>";
 			$text = str_replace("xCxAx", "&nbsp;&nbsp;".$centitl."<br />", $text);
+		// Unformatted Shared Note --------------------------------------------------
+		}else if (eregi("0 @N.*@ NOTE", $nrec)) {
+			$text="&nbsp;&nbsp;".$centitl.$text;
 		}
 
 		if ($textOnly) {
@@ -1167,6 +1195,7 @@ function print_note_record($text, $nlevel, $nrec, $textOnly=false, $return=false
 			}
 			else return $text;
 		}
+		
 		$brpos = strpos($text, "<br />");
 		$data .= "<br /><span class=\"label\">";
 		if ($brpos !== false) {
@@ -1179,6 +1208,7 @@ function print_note_record($text, $nlevel, $nrec, $textOnly=false, $return=false
 		}else{
 			$data .= $pgv_lang["note"].": </span><span class=\"field\">";
 		}
+		
 		if ($brpos !== false) {
 			$data .= substr($text, 0, $brpos);
 			$data .= "<span id=\"$elementID\"";

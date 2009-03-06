@@ -31,6 +31,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
+$pgv_lang["sortby"]				= "סדר";
 $pgv_lang["exact"]				= "בדיוק";
 $pgv_lang["begins_with"]			= "מתחיל ב-";
 $pgv_lang["contains"]				= "כולל";
@@ -51,7 +52,7 @@ $pgv_lang["ellipsis"]				= "\xE2\x80\xA6";
 $pgv_lang["showUnknown"]			= "הראה מין לא ידוע";
 $pgv_lang["count"]				= "ספירה";
 $pgv_lang["age_differences"]			= "הראה הפרשי תאריכים";
-$pgv_lang["date_of_entry"]			= "תאריך רישום במקור האוריגינלי";
+//$pgv_lang["date_of_entry"]			= "תאריך רישום במקור האוריגינלי";
 $pgv_lang["multi_site_search"] 		= "חיפוש רב אתרים";
 $pgv_lang["switch_lifespan"]			= "הראה תרשים תוחלת חיים";
 $pgv_lang["switch_timeline"]			= "הראה תרשים קו הזמן";
@@ -85,10 +86,12 @@ $pgv_lang["confirm_password"]		= "עליך לאשר את הסיסמא.";
 $pgv_lang["enter_email"]			= "עליך להכניס כתובת דואר אלקטרוני.";
 $pgv_lang["enter_fullname"] 			= "עליך למלא שם פרטי ושם משפחה.";
 $pgv_lang["name"]				= "שם";
+$pgv_lang["names"]				= "שמות";
 $pgv_lang["children"]				= "ילדים";
 $pgv_lang["child"]				= "ילד/ה";
 $pgv_lang["family"]				= "משפחה";
 $pgv_lang["as_child"]				= "משפחה עם הורים";
+$pgv_lang["shared_note_menu"]		= "בחירות עבור הערה משותפת";
 $pgv_lang["source_menu"]			= "בחירות עבור מקור";
 $pgv_lang["repo_menu"]			= "בחירות עבור מאגר";
 $pgv_lang["other_records"]			= "הנתונים הקשורים למקור זה:";
@@ -102,10 +105,11 @@ $pgv_lang["search_fams"]			= "משפחות";
 $pgv_lang["search_gedcom"]			= "חפש מאגרי נתונים";
 $pgv_lang["search_geds"]			= "מאגרי נתונים בהם יש לחפש";
 $pgv_lang["search_indis"]			= "אנשים";
+$pgv_lang["search_notes"]			= "הערות משותפות";
 $pgv_lang["search_inrecs"]			= "חפש";
 $pgv_lang["search_prtall"]			= "כל השמות";
 $pgv_lang["search_prthit"]			= "שמות שנמצאו";
-$pgv_lang["results_per_page"]		= "תוצאות לדף";
+$pgv_lang["results_per_page"]		= "ישויות מדיה לדף";
 $pgv_lang["firstname_search"]		= "פרטי";
 $pgv_lang["search_prtnames"]		= "שמות אנשים<br />להדפסה:";
 $pgv_lang["other_searches"]			= "חיפושים אחרים";
@@ -193,6 +197,7 @@ $pgv_lang["nov_1st"]				= "נובמבר";
 $pgv_lang["dec_1st"]				= "דצמבר";
 
 $pgv_lang["edit_source"]		= "ערוך מקור";
+$pgv_lang["edit_shared_note"]	= "ערוך הערה משותפת";
 $pgv_lang["familybook_chart"]		= "תרשים ספר משפחה";
 $pgv_lang["family_of"]			= "משפחה של:&nbsp;";
 $pgv_lang["descent_steps"]		= "רמות צאצאים";
@@ -397,12 +402,14 @@ $pgv_lang["private"]			= "אישי";
 $pgv_lang["birth"]			= "לידה:";
 $pgv_lang["death"]			= "פטירה:";
 $pgv_lang["descend_chart"]		= "תרשים צאצאים";
-$pgv_lang["individual_list"]		= "רשימת השמות";
-$pgv_lang["family_list"]		= "רשימת המשפחות";
-$pgv_lang["source_list"]		= "רשימת המקורות";
+$pgv_lang["individual_list"]		= "אנשים";
+$pgv_lang["family_list"]		= "משפחות";
+$pgv_lang["source_list"]		= "מקורות";
+$pgv_lang["shared_note_list"]		= "הערות משותפות";
 $pgv_lang["place_list"]		= "היררכית המקומות";
 $pgv_lang["place_list_aft"] 		= "היררכית המקומות אחרי";
-$pgv_lang["media_list"]		= "רשימת המולטימדיה";
+$pgv_lang["media_list"]		= "מולטימדיה";
+$pgv_lang["repo_list"]			= "מאגרים";
 $pgv_lang["search"]			= "חפש";
 $pgv_lang["clippings_cart"]		= "עגלת גזירי העץ";
 $pgv_lang["print_preview"]		= "גרסה ידידותית להדפסה";
@@ -457,8 +464,8 @@ $pgv_lang["suffix"]			= "סיומת:";
 $pgv_lang["sex"]			= "מגדר";
 $pgv_lang["personal_facts"]		= "עובדות אישיות בפרוט";
 $pgv_lang["type"]			= "סוג";
-$pgv_lang["parents"] 			= "הורים:";
-$pgv_lang["siblings"] 			= "אח/אחות";
+$pgv_lang["parents"] 			= "הורים";
+$pgv_lang["siblings"] 			= "אחים/אחיות";
 $pgv_lang["father"] 			= "אב";
 $pgv_lang["mother"] 			= "אם";
 $pgv_lang["parent"] 			= "הורה";
@@ -553,6 +560,7 @@ $pgv_lang["total_unic_places"]	= "סה\"כ מקומות שונים";
 //-- MEDIALIST FILE MESSAGES
 $pgv_lang["external_objects"]		= "ישויות חיצוניות";
 $pgv_lang["multi_title"]			= "רשימת מולטימדיה";
+//$pgv_lang["multi_title"]			= "MultiMedia Objects";
 $pgv_lang["media_found"]		= "ישויות מולטימדיה נמצאו";
 $pgv_lang["view_person"]		= "הצג אדם";
 $pgv_lang["view_family"]		= "הצג משפחה";
@@ -563,7 +571,7 @@ $pgv_lang["next"]			= "הבא &gt;";
 $pgv_lang["next_image"]		= "האימז' הבא";
 $pgv_lang["file_not_found"]		= "הקובץ לא נימצא";
 $pgv_lang["medialist_show"]             	= "הראה";
-$pgv_lang["per_page"]                   	= "לדף";
+$pgv_lang["per_page"]                   	= "ישויות מדיה לדף";
 $pgv_lang["media_format"]		= "מבנה המדיה";
 $pgv_lang["image_size"]		= "מימדי התמונה";
 $pgv_lang["media_id"]			= "קוד זיהוי של מדיה";
@@ -578,6 +586,7 @@ $pgv_lang["record_not_added"]	= "לא ניתן להוסיף את רשומת ה-#
 //-- SEARCH FILE MESSAGES
 $pgv_lang["soundex_search"] 	= "חפש לפי האיות שאתה משער (סאונדקס)";
 $pgv_lang["sources"]			= "מקורות";
+$pgv_lang["shared_notes"]		= "הערות משותפות";
 $pgv_lang["lastname_search"]	= "משפחה";
 $pgv_lang["search_place"]		= "מקום";
 $pgv_lang["search_year"]		= "שנה";
@@ -585,6 +594,7 @@ $pgv_lang["no_results"]		= "לא נמצאו תוצאות";
 $pgv_lang["search_soundex"]		= "חיפוש סאונדקס";
 $pgv_lang["search_replace"]		= "חפש והחלף";
 $pgv_lang["search_sources"]		= "מקורות";
+$pgv_lang["search_shared_notes"]	= "הערות משותפות";
 $pgv_lang["search_more_chars"]        = "נא הכנס יותר מתו אחד";
 $pgv_lang["search_soundextype"]	= "סוג סאונדקס:";
 $pgv_lang["search_russell"]                 = "בסיסי";
@@ -600,17 +610,23 @@ $pgv_lang["titles_found"]		= "כותרות";
 $pgv_lang["find_source"]		= "מצא מקור";
 
 //-- REPOLIST FILE MESSAGES
-$pgv_lang["repo_list"]			= "רשימת מאגרים";
 $pgv_lang["repos_found"]		= "נמצאו מאגרים";
 $pgv_lang["find_repository"]		= "מצא מאגר";
 $pgv_lang["total_repositories"]	= "סה\"כ מאגרים";
-$pgv_lang["confirm_delete_repo"]	= "האם באמת למחוק את המאגר ממאגר הנתונים?";
+$pgv_lang["confirm_delete_repo"]	= "האם באמת למחוק את המאגר הזה?";
 
 //-- SOURCE FILE MESSAGES
 $pgv_lang["source_info"]		= "נתוני מקור";
 $pgv_lang["people"]			= "אנשים";
 $pgv_lang["families"]			= "משפחות";
 $pgv_lang["total_sources"]		= "סה\"כ מקורות";
+
+//-- SHARED NOTE FILE MESSAGES
+$pgv_lang["shared_note"]				= "הערה משותפת";
+$pgv_lang["shared_notes_found"]			= "נמצאו הערות משותפות";
+$pgv_lang["find_shared_note"]			= "מצא הערה משותפת";
+$pgv_lang["shared_note_info"]			= "מידע על הערה משותפת";
+$pgv_lang["total_shared_notes"]			= "סה\"כ הערות משותפות";
 
 //-- BUILDINDEX FILE MESSAGES
 $pgv_lang["invalid_gedformat"]	= "מבנה GEDCOM שגוי";
@@ -875,6 +891,7 @@ $pgv_lang["mother_in_law"]		= "חמות";
 $pgv_lang["father_in_law"]		= "חם";
 $pgv_lang["brother_in_law"]		= "גיס";
 $pgv_lang["sister_in_law"]		= "גיסה";
+$pgv_lang["brothers_wife"]		= "גיסה";
 $pgv_lang["son_in_law"]		= "חתן";  // the husband of your daughter
 $pgv_lang["daughter_in_law"]		= "כלה"; // the wife of your son
 $pgv_lang["uncle_in_law"]		= "דוד באמצעות נישואין";   //Uncle-in-law";
@@ -1107,7 +1124,7 @@ $pgv_lang["removed_descending_19"] = " במרחק 19 יורד";
 $pgv_lang["removed_descending_20"] = " במרחק 20 יורד";
 
 //-- GEDCOM edit utility
-$pgv_lang["check_delete"]		= "?זו GEDCOM האם הנך בטוח שברצונך למחוק עובדת";
+$pgv_lang["check_delete"]		= " האם הנך בטוח שברצונך למחוק עובדה זו?";
 $pgv_lang["access_denied"]		= "<b>גישה נאסרה</b><br />אין לך גישה למשאב זה.";
 $pgv_lang["changes_exist"]		= "ה-GEDCOM הזה שונה.";
 $pgv_lang["find_place"]		= "מצא מקום";
@@ -1117,11 +1134,13 @@ $pgv_lang["place_contains"]		= "מקום מכיל:";
 $pgv_lang["add"]			= "הוסף";
 $pgv_lang["custom_event"]		= "מאורע מותאם";
 $pgv_lang["delete_person"]		= "מחק המידע על אדם זה";
-$pgv_lang["confirm_delete_person"]	= "?GEDCOM-האם באמת להסיר את האדם מקובץ ה";
+$pgv_lang["confirm_delete_person"]	= "?האם באמת להסיר את האדם";
 $pgv_lang["find_media"]		= "מצא מדיה";
 $pgv_lang["set_link"]			= "הצב קישור";
 $pgv_lang["delete_source"]		= "מחק המקור";
-$pgv_lang["confirm_delete_source"]	= "?GEDCOM-האם באמת למחוק את המקור מקובץ ה";
+$pgv_lang["delete_shared_note"]	= "מחק הערה משותפת זו";
+$pgv_lang["confirm_delete_source"]	= "האם באמת למחוק מקור זה?";
+$pgv_lang["confirm_delete_shared_note"]= "האם באמת למחוק הערה משותפת זו?";
 $pgv_lang["find_family"]		= "מצא משפחה";
 $pgv_lang["find_fam_list"]		= "מצא רשימת משפחה";
 $pgv_lang["edit_name"]		= "ערוך שם";
@@ -1709,6 +1728,7 @@ $pgv_lang["block_summary_table"]	= "&nbsp;";
 $pgv_lang["total_places"]		= "נמצאו מקומות";
 $pgv_lang["media_contains"]		= "מדיה מכילה:";
 $pgv_lang["repo_contains"]		= "מאגר מכיל:";
+$pgv_lang["shared_note_contains"]	= "ההערה המשותפת מכילה:";
 $pgv_lang["source_contains"]		= "מקור מכיל:";
 $pgv_lang["display_all"]		= "הצג הכול";
 
