@@ -161,8 +161,18 @@ $factarray["_PRIM"]	= "Wyróżnione zdjęcie";
 $factarray["_DBID"]	= "Indentyfikator dołączonej bazy danych";
 
 // These facts are used in specific contexts
-$factarray["STAT:DATE"] = "Data zmiany statusu";
+$factarray["STAT:DATE"]	= "Data zmiany statusu";
 $factarray["DATA:DATE"]	= "Data wpisu w oryginalnym źródle";
+
+$factarray["NAME:_HEB"]	= "Nazwa w języku hebrajskim";
+$factarray["PLAC:_HEB"]	= "Miejsce w języku hebrajskim";
+$factarray["TITL:_HEB"]	= "Tytuł w języku hebrajskim";
+$factarray["NAME:ROMN"]	= "Nazwa zlatynizowanie";
+$factarray["PLAC:ROMN"]	= "Miejsce zlatynizowanie";
+$factarray["TITL:ROMN"]	= "Tytuł zlatynizowany";
+$factarray["NAME:FONE"]	= "Nazwa fonetycznie";
+$factarray["PLAC:FONE"]	= "Miejsce fonetycznie";
+$factarray["TITL:FONE"]	= "Tytuł fonetycznie";
 
 //These facts are compounds for the view probabilities page
 $factarray["FAMC:HUSB:SURN"]		= "Nazwisko ojca";
