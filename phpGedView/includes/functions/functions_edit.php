@@ -628,7 +628,7 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 
 	// Populate any missing 2 XXXX fields from the 1 NAME field
 	$npfx_accept=implode('|', $NPFX_accept);
-	if (preg_match ("/((($npfx_accept)\.?\s+)*)([^\r\n\/\"]*)(\"(.*)\")?\s*\/(([a-z]{2,3}\s+)*)(.*)\/\s*([^\r\n]*)/i", $name_fields['NAME'], $name_bits)) {
+	if (preg_match ("/((($npfx_accept)\.? +)*)([^\n\/\"]*)(\"(.*)\")? *\/(([a-z]{2,3} +)*)(.*)\/ *(.*)/i", $name_fields['NAME'], $name_bits)) {
 		if (empty($name_fields['NPFX'])) $name_fields['NPFX']=$name_bits[1];
 		if (!$NAME_REVERSE && empty($name_fields['GIVN'])) $name_fields['GIVN']=$name_bits[4];
 		if (empty($name_fields['SPFX']) && empty($name_fields['SURN'])) {
