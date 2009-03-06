@@ -118,9 +118,9 @@ if ($form_action=='update') {
 							$person=Person::getInstance($myid);
 							if ($person) {
 								if (preg_match('/\d _?EMAIL/', $person->getGedcomRecord())) {
-									replace_gedrec($myid, preg_replace("/(\d _?EMAIL)[^\r\n]*/", '$1 '.$form_email, $person->getGedcomRecord()));
+									replace_gedrec($myid, preg_replace("/(\n\d _?EMAIL).*/", '$1 '.$form_email, $person->getGedcomRecord()));
 								} else {
-									replace_gedrec($myid, $person->getGedcomRecord()."\r\n1 EMAIL ".$form_email);
+									replace_gedrec($myid, $person->getGedcomRecord()."\n1 EMAIL ".$form_email);
 								}
 							}
 							$GEDCOM=$OLDGEDCOM;
