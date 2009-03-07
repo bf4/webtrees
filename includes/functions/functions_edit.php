@@ -177,7 +177,7 @@ function replace_gedrec($gid, $gedrec, $chan=true, $linkpid='') {
 			$change["user"] = PGV_USER_NAME;
 			$change["time"] = time();
 			if (!empty($linkpid)) $change["linkpid"] = $linkpid;
-			$change["undo"] = $gedrec;
+			$change["undo"] = reformat_record_import($gedrec);
 			if (!isset($pgv_changes[$gid."_".$GEDCOM])) $pgv_changes[$gid."_".$GEDCOM] = array();
 			else {
 				$lastchange = end($pgv_changes[$gid."_".$GEDCOM]);
@@ -233,7 +233,7 @@ function append_gedrec($gedrec, $chan=true, $linkpid='') {
 		$change["user"] = PGV_USER_NAME;
 		$change["time"] = time();
 		if (!empty($linkpid)) $change["linkpid"] = $linkpid;
-		$change["undo"] = $gedrec;
+		$change["undo"] = reformat_record_import($gedrec);
 		if (!isset($pgv_changes[$xref."_".$GEDCOM])) $pgv_changes[$xref."_".$GEDCOM] = array();
 		$pgv_changes[$xref."_".$GEDCOM][] = $change;
 
@@ -628,7 +628,7 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 
 	// Populate any missing 2 XXXX fields from the 1 NAME field
 	$npfx_accept=implode('|', $NPFX_accept);
-	if (preg_match ("/((($npfx_accept)\.?\s+)*)([^\r\n\/\"]*)(\"(.*)\")?\s*\/(([a-z]{2,3}\s+)*)(.*)\/\s*([^\r\n]*)/i", $name_fields['NAME'], $name_bits)) {
+	if (preg_match ("/((($npfx_accept)\.? +)*)([^\n\/\"]*)(\"(.*)\")? *\/(([a-z]{2,3} +)*)(.*)\/ *(.*)/i", $name_fields['NAME'], $name_bits)) {
 		if (empty($name_fields['NPFX'])) $name_fields['NPFX']=$name_bits[1];
 		if (!$NAME_REVERSE && empty($name_fields['GIVN'])) $name_fields['GIVN']=$name_bits[4];
 		if (empty($name_fields['SPFX']) && empty($name_fields['SURN'])) {
@@ -1733,7 +1733,7 @@ function print_add_layer($tag, $level=2, $printSaveButton=true) {
 		//-- Retrieve existing shared note or add new shared note to fact
 		$text = "";
 		echo "<a href=\"javascript:;\" onclick=\"return expand_layer('newnote_2');\"><img id=\"newnote_img\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["plus"]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" title=\"\" /> ".$pgv_lang["add_shared_note"]."</a>";
-		print_help_link("edit_add_NOTE_help", "qm");
+		print_help_link("edit_add_SHARED_NOTE_help", "qm");
 		echo "<br />\n";
 		echo "<div id=\"newnote_2\" style=\"display: none;\">\n";
 		if ($printSaveButton) echo "<input type=\"submit\" value=\"".$pgv_lang["save"]."\" />";

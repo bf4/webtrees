@@ -3,7 +3,7 @@
  * English Language file for PhpGedView.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008 PGV Development Team. All rights reserved.
+ * Copyright (C) 2002 to 2009 PGV Development Team. All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -171,6 +171,8 @@ $factarray["TITL:ROMN"]	= "Romanized Title";
 $factarray["NAME:FONE"]	= "Phonetic Name";
 $factarray["PLAC:FONE"]	= "Phonetic Place";
 $factarray["TITL:FONE"]	= "Phonetic Title";
+
+$factarray["SHARED_NOTE"]	= "Shared Note";
 
 //These facts are compounds for the view probabilities and the advanced search pages
 $factarray["FAMC:HUSB:SURN"] = "Father's Surname";

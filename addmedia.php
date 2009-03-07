@@ -93,6 +93,12 @@ if (!PGV_USER_CAN_EDIT || !$disp || !$ALLOW_EDIT_GEDCOM) {
 
 echo PGV_JS_START;
 ?>
+	// Shared Notes =========================
+	function findnote(field) {
+		pastefield = field;
+		findwin = window.open('find.php?type=note', '_blank', 'left=50,top=50,width=600,height=520,resizable=1,scrollbars=1');
+		return false;
+	}
 	var language_filter, magnify;
 	var pastefield;
 	language_filter = "";

@@ -451,7 +451,7 @@ function reformat_record_import($rec) {
 			$tag='SSN';
 			break;
 		case 'SEX':
-			switch ($data) {
+			switch (trim($data)) {
 			case 'M':
 			case 'F':
 			case 'U':

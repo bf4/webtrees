@@ -75,14 +75,15 @@ class Event {
 	function getValue($code) {
 		if (is_null($this->values)) {
 			$this->values=array();
-			preg_match_all('/\n2 ('.PGV_REGEX_TAG.') (.*)/', $this->gedComRecord, $matches, PREG_SET_ORDER);
+			preg_match_all('/\n2 ('.PGV_REGEX_TAG.') (.+)/', $this->gedComRecord, $matches, PREG_SET_ORDER);
 			foreach ($matches as $match) {
-				$this->values[$match[1]]=trim(preg_replace("/@/", "", $match[2]), "\r\n");
+				$this->values[$match[1]]=trim($match[2], "@");
 			}
 		}
-		if (array_key_exists($code, $this->values))
+		if (array_key_exists($code, $this->values)) {
 			return $this->values[$code];
-		return NULL;
+		}
+		return null;
 	}
 
 	/**

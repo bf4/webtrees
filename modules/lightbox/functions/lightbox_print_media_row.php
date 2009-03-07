@@ -139,7 +139,6 @@ function lightbox_print_media_row($rtype, $rowm, $pid) {
 		$imgwidth = $imgsize[0]+40;
 		$imgheight = $imgsize[1]+150;
 
-
 		// Get the tooltip link for source
 		$sour = get_gedcom_value("SOUR", 1, $rowm["m_gedrec"]);
 
@@ -148,8 +147,7 @@ function lightbox_print_media_row($rtype, $rowm, $pid) {
 		$needle   = "1 NOTE";
 		$before   = substr($haystack, 0, strpos($haystack, $needle));
 		$after    = substr(strstr($haystack, $needle), strlen($needle));
-		$worked   = ereg_replace("1 NOTE", "1 NOTE<br />", $after);
-		$final    = $before.$needle.$worked;
+		$final    = $before.$needle.$after;
 		$notes    = PrintReady(htmlspecialchars(addslashes(print_fact_notes($final, 1, true, true)),ENT_COMPAT,'UTF-8'));
 
 		// Get info on how to handle this media file

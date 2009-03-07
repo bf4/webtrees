@@ -493,15 +493,25 @@ function print_family_facts(&$family, $sosa = 0) {
 		// -- new fact link
 		if ($view!="preview" && $sosa==0 && PGV_USER_CAN_EDIT) {
 			print_add_new_fact($famid, $indifacts, "FAM");
+			
 			// -- new note
 			print "<tr><td class=\"descriptionbox\">";
 			print_help_link("add_note_help", "qm" ,"add_note_lbl");
 			print $pgv_lang["add_note_lbl"] . "</td>";
 			print "<td class=\"optionbox\">";
 			print "<a href=\"javascript:;\" onclick=\"return add_new_record('$famid','NOTE');\">" . $pgv_lang["add_note"] . "</a>";
-
 			print "<br />\n";
 			print "</td></tr>\n";
+			
+			// -- new shared note
+			print "<tr><td class=\"descriptionbox\">";
+			print_help_link("add_shared_note_help", "qm" ,"add_shared_note_lbl");
+			print $pgv_lang["add_shared_note_lbl"] . "</td>";
+			print "<td class=\"optionbox\">";
+			print "<a href=\"javascript:;\" onclick=\"return add_new_record('$famid','SHARED_NOTE');\">" . $pgv_lang["add_shared_note"] . "</a>";
+			print "<br />\n";
+			print "</td></tr>\n";
+			
 			// -- new media
 			print "<tr><td class=\"descriptionbox\">";
 			print_help_link("add_media_help", "qm", "add_media_lbl");
@@ -511,6 +521,7 @@ function print_family_facts(&$family, $sosa = 0) {
 			print "<br />\n";
 			print "<a href=\"javascript:;\" onclick=\"window.open('inverselink.php?linktoid={$famid}&linkto=family', '_blank', 'top=50,left=50,width=400,height=300,resizable=1,scrollbars=1'); return false;\">".$pgv_lang["link_to_existing_media"]."</a>";
 			print "</td></tr>\n";
+			
 			// -- new source citation
 			print "<tr><td class=\"descriptionbox\">";
 			print_help_link("add_source_help", "qm", "add_source_lbl");

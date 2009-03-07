@@ -96,7 +96,6 @@ function print_fact(&$eventObj, $noedit=false) {
 
 	if ($fact=="NOTE") return print_main_notes($factrec, 1, $pid, $linenum, $noedit);
 	if ($fact=="SOUR") return print_main_sources($factrec, 1, $pid, $linenum, $noedit);
-
 	$styleadd="";
 	$ct = preg_match("/PGV_NEW/", $factrec, $match);
 	if ($ct>0) $styleadd="change_new";
@@ -387,7 +386,7 @@ function print_fact(&$eventObj, $noedit=false) {
 						else echo PrintReady($event);
 					}
 				}
-				$temp = trim(get_cont(2, $factrec), "\r\n");
+				$temp = trim(get_cont(2, $factrec));
 				if (strstr("PHON ADDR ", $fact." ")===false && $temp!="") {
 					if ($WORD_WRAPPED_NOTES) print " ";
 					print PrintReady($temp);
@@ -424,11 +423,11 @@ function print_fact(&$eventObj, $noedit=false) {
 				print "<img src=\"images/RESN_".$resn_value.".gif\" alt=\"".$pgv_lang[$resn_value]."\" title=\"".$pgv_lang[$resn_value]."\" />\n";
 				print_help_link("RESN_help", "qm");
 			}
-			if (preg_match("/[\r\n]2 FAMC @(.+)@/", $factrec, $match)) {
+			if (preg_match("/\n2 FAMC @(.+)@/", $factrec, $match)) {
 				print "<br/><span class=\"label\">".$factarray["FAMC"].":</span> ";
 				$family=Family::getInstance($match[1]);
 				echo "<a href=\"".encode_url($family->getLinkUrl())."\">", $family->getFullName(), "</a>";
-				if (preg_match("/[\r\n]3 ADOP (HUSB|WIFE|BOTH)/", UTF8_strtoupper($factrec), $match)) {
+				if (preg_match("/\n3 ADOP (HUSB|WIFE|BOTH)/", UTF8_strtoupper($factrec), $match)) {
 					print '<br/><span class="indent"><span class="label">'.$factarray['ADOP'].':</span> ';
 					print '<span class="field">';
 					switch ($match[1]) {
@@ -1154,7 +1153,6 @@ function print_main_notes($factrec, $level, $pid, $linenum, $noedit=false) {
 	global $PGV_IMAGE_DIR;
 	global $PGV_IMAGES;
 	global $TEXT_DIRECTION;
-
 	$styleadd="";
 	$ct = preg_match("/PGV_NEW/", $factrec, $match);
 	if ($ct>0) $styleadd="change_new";
@@ -1179,8 +1177,14 @@ function print_main_notes($factrec, $level, $pid, $linenum, $noedit=false) {
 		print "<td valign=\"top\" class=\"descriptionbox";
 		if ($level==2) print " rela";
 		print " $styleadd center width20\">";
-		if ($level<2) print "<img class=\"icon\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["notes"]["small"]."\" alt=\"\" /><br />".$factarray["NOTE"];
-		else {
+		if ($level<2) {
+			echo "<img class=\"icon\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["notes"]["small"]."\" alt=\"\" />";
+			if (strstr($factrec, "1 NOTE @" )) {
+				echo "<br />".$factarray["SHARED_NOTE"];
+			} else {
+				echo "<br />".$factarray["NOTE"];
+			}
+		} else {
 			$factlines = explode("\n", $factrec); // 1 BIRT Y\n2 NOTE ...
 			$factwords = explode(" ", $factlines[0]); // 1 BIRT Y
 			$factname = $factwords[1]; // BIRT
@@ -1188,8 +1192,11 @@ function print_main_notes($factrec, $level, $pid, $linenum, $noedit=false) {
 				$factwords = explode(" ", $factlines[1]); // 1 EVEN\n2 TYPE MDCL\n2 NOTE
 				$factname = $factwords[2]; // MDCL
 			}
-			if (isset($factarray[$factname])) print $factarray[$factname];
-			else print $factname;
+			if (isset($factarray[$factname])) {
+				print $factarray[$factname];
+			} else {
+				print $factname;
+			}
 		}
 		if (!$noedit && PGV_USER_CAN_EDIT && !FactEditRestricted($pid, $factrec) && $styleadd!="change_old" && $view!="preview") {
 			$menu = array();
@@ -1576,8 +1583,7 @@ function print_main_media_row($rtype, $rowm, $pid) {
 		$needle   = "1 NOTE";
 		$before   = substr($haystack, 0, strpos($haystack, $needle));
 		$after    = substr(strstr($haystack, $needle), strlen($needle));
-		$worked   = ereg_replace("1 NOTE", "1 NOTE<br />", $after);
-		$final    = $before.$needle.$worked;
+		$final    = $before.$needle.$after;
 		$notes    = PrintReady(htmlspecialchars(addslashes(print_fact_notes($final, 1, true, true)),ENT_COMPAT,'UTF-8'));
 
 		$name = trim($rowm['m_titl']);
