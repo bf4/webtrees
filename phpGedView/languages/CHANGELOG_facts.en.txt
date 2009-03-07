@@ -44,6 +44,7 @@ VERSION 4.2.1
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 -----------------------------------------------------------------------------------------
++$factarray["SHARED_NOTE"]							6 Mar 2009				A
 +$factarray["NAME:_HEB"]							5 Mar 2009				A
 +$factarray["PLAC:_HEB"]							5 Mar 2009				A
 +$factarray["TITL:_HEB"]							5 Mar 2009				A
