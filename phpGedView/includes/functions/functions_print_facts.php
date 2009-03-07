@@ -1583,8 +1583,7 @@ function print_main_media_row($rtype, $rowm, $pid) {
 		$needle   = "1 NOTE";
 		$before   = substr($haystack, 0, strpos($haystack, $needle));
 		$after    = substr(strstr($haystack, $needle), strlen($needle));
-		$worked   = ereg_replace("1 NOTE", "1 NOTE<br />", $after);
-		$final    = $before.$needle.$worked;
+		$final    = $before.$needle.$after;
 		$notes    = PrintReady(htmlspecialchars(addslashes(print_fact_notes($final, 1, true, true)),ENT_COMPAT,'UTF-8'));
 
 		$name = trim($rowm['m_titl']);

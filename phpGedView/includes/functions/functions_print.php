@@ -1137,32 +1137,8 @@ function print_note_record($text, $nlevel, $nrec, $textOnly=false, $return=false
 	}
 	$text = str_replace("~~", "<br />", $text);
 	$text = trim(expand_urls(stripLRMRLM($text)));
+	$text = $text;
 	$data = "";
-	
-// BH TEST =================================================================
-/*
-	if (!empty($text)) {
-		// Check if Shared Note -----------------------------------------
-		if (eregi("0 @N.*@ NOTE", $nrec)) {
-			// If Census Formatted Shared Note 
-			if (strstr($text, "|")) {
-				$text = $centitl."<table cellpadding=0>".$text;
-				$text = str_replace("<br /><br />", "<p><tr><td><b>Name</b>&nbsp;&nbsp;</td><td><b>Relation</b>&nbsp;&nbsp;</td><td><b>Status</b>&nbsp;&nbsp;</td><td><b>Age</b>&nbsp;&nbsp;</td><td><b>Sex</b>&nbsp;&nbsp;</td><td><b>Occupation</b>&nbsp;&nbsp;</td><td><b>Birth place</b>&nbsp;&nbsp;</td> </tr><tr><td>", $text);
-				// Check for Highlighting 
-				if (eregi("<br />.b.", $text)) {
-					$text = str_replace(".b.", "<b>", $text);
-					$text = str_replace("|", "&nbsp;&nbsp;</b></td><td>", $text);
-				}else{
-					$text = str_replace("|", "&nbsp;&nbsp;</td><td>", $text);
-				}
-				$text = str_replace("<br />", "&nbsp;&nbsp;</td></tr><tr><td>", $text);
-				$text = $text . "</td></tr></table>";
-			}else{
-				$text = "&nbsp;&nbsp;".PrintReady($centitl."<br />".$text);
-			}
-		}
-*/
-// END BH TEST =================================================================
 
 	if (!empty($text)) {
 		// Check if Formatted Shared Note -----------------------------------------
@@ -1185,15 +1161,16 @@ function print_note_record($text, $nlevel, $nrec, $textOnly=false, $return=false
 			$text = str_replace("xCxAx", "&nbsp;&nbsp;".$centitl."<br />", $text);
 		// Unformatted Shared Note --------------------------------------------------
 		}else if (eregi("0 @N.*@ NOTE", $nrec)) {
-			$text="&nbsp;&nbsp;".$centitl.$text;
+			$text=$centitl.$text;
 		}
-
+		
 		if ($textOnly) {
 			if (!$return) {
 				print $text;
 				return true;
+			} else { 
+				return $text;
 			}
-			else return $text;
 		}
 		
 		$brpos = strpos($text, "<br />");
@@ -1277,7 +1254,11 @@ function print_fact_notes($factrec, $level, $textOnly=false, $return=false) {
 			}
 		}
 		if($closeSpan){
-			$data .= "</span>";
+		    if ($j==$ct-1 || $textOnly==false) {
+				$data .= "</span>";
+			} else {
+				$data .= "</span><br /><br />";
+			}
 		}
 		$printDone = true;
 	}
