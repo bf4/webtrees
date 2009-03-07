@@ -174,6 +174,8 @@ $factarray["NAME:FONE"]	= "Nazwa fonetycznie";
 $factarray["PLAC:FONE"]	= "Miejsce fonetycznie";
 $factarray["TITL:FONE"]	= "Tytuł fonetycznie";
 
+$factarray["SHARED_NOTE"] = "Wspólna notatka";
+
 //These facts are compounds for the view probabilities page
 $factarray["FAMC:HUSB:SURN"]		= "Nazwisko ojca";
 $factarray["FAMC:WIFE:SURN"]		= "Nazwisko matki";
