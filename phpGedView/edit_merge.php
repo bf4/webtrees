@@ -64,10 +64,6 @@ if ($action!="choose") {
 		else $gedrec2 = find_updated_record($gid2);
 		$GEDCOM=$ged;
 
-		// Ensure line endings are the same, otherwise we can't match records
-		$gedrec1=preg_replace('/[\r\n]+/', "\n", $gedrec1);
-		$gedrec2=preg_replace('/[\r\n]+/', "\n", $gedrec2);
-
 		// Fetch the original XREF - may differ in case from the supplied value
 		$tmp=new Person($gedrec1); $gid1=$tmp->getXref();
 		$tmp=new Person($gedrec2); $gid2=$tmp->getXref();
