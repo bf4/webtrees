@@ -177,7 +177,7 @@ function replace_gedrec($gid, $gedrec, $chan=true, $linkpid='') {
 			$change["user"] = PGV_USER_NAME;
 			$change["time"] = time();
 			if (!empty($linkpid)) $change["linkpid"] = $linkpid;
-			$change["undo"] = $gedrec;
+			$change["undo"] = reformat_record_import($gedrec);
 			if (!isset($pgv_changes[$gid."_".$GEDCOM])) $pgv_changes[$gid."_".$GEDCOM] = array();
 			else {
 				$lastchange = end($pgv_changes[$gid."_".$GEDCOM]);
@@ -233,7 +233,7 @@ function append_gedrec($gedrec, $chan=true, $linkpid='') {
 		$change["user"] = PGV_USER_NAME;
 		$change["time"] = time();
 		if (!empty($linkpid)) $change["linkpid"] = $linkpid;
-		$change["undo"] = $gedrec;
+		$change["undo"] = reformat_record_import($gedrec);
 		if (!isset($pgv_changes[$xref."_".$GEDCOM])) $pgv_changes[$xref."_".$GEDCOM] = array();
 		$pgv_changes[$xref."_".$GEDCOM][] = $change;
 
