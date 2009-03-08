@@ -154,6 +154,12 @@ jQuery(document).ready(function($){
 		width: 300,
 		minChars: 2
 	});
+	// INDI:BURI:CEME
+	$("input[id^=CEME]").autocomplete("autocomplete.php", {
+		extraParams: {field:'INDI_BURI_CEME'},
+		width: 300,
+		minChars: 2
+	});
 	// GIVN
 	$("#GIVN, input[name*=GIVN], input[name*=firstname]").autocomplete("autocomplete.php", {
 		extraParams: {field:'GIVN'},
@@ -191,5 +197,5 @@ jQuery(document).ready(function($){
 	$("#FILE_FORM").autocomplete(file_form_accept, {
 		minChars: 0
 	});
-});
+}); 
 </script>

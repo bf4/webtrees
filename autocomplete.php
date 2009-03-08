@@ -78,10 +78,9 @@ function autocomplete_INDI() {
 		$tmp=new GedcomDate($event_date);
 		$event_jd=$tmp->JD();
 		// INDI
+		$indi_birth_jd = 0;
 		if ($record && $record->getType()=="INDI") {
 			$indi_birth_jd=$record->getEstimatedBirthDate()->minJD();
-		} else {
-			$indi_birth_jd=0;
 		}
 		// HUSB & WIFE
 		$husb_birth_jd = 0;
@@ -281,6 +280,39 @@ function autocomplete_SOUR_TITL() {
 		$source = Source::getInstance($row["s_id"]);
 		if ($source->canDisplayName()) {
 			$data[] = $source->getFullName();
+		}
+	}
+	$res->free();
+	return $data;
+}
+
+/**
+* returns INDI_BURI_CEME matching filter
+* @return Array of string
+*/
+function autocomplete_INDI_BURI_CEME() {
+	global $TBLPREFIX, $DBTYPE, $DBCONN;
+	global $FILTER, $OPTION;
+
+	$sql = "SELECT i_id".
+				" FROM {$TBLPREFIX}individuals".
+				" WHERE (i_gedcom ".PGV_DB_LIKE." '%1 BURI%2 CEME %{$FILTER}%\n%')".
+				" AND i_file=".PGV_GED_ID.
+				" LIMIT ".PGV_AUTOCOMPLETE_LIMIT;
+	$res = dbquery($sql);
+
+	$data = array();
+	while ($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)) {
+		$person = Person::getInstance($row["i_id"]);
+		if ($person->canDisplayDetails()) {
+			$i = 1;
+			do {
+				$srec = get_sub_record("BURI", 1, $person->gedrec, $i++);
+				$ceme = get_gedcom_value("CEME", 2, $srec);
+				if (stripos($ceme, $FILTER)!==false || empty($FILTER)) {
+					$data[] = $ceme;
+				}
+			} while ($srec);
 		}
 	}
 	$res->free();
