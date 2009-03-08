@@ -93,7 +93,7 @@ function autocomplete_INDI() {
 			}
 			$wife=$record->getWife();
 			if ($wife) {
-				$wife_birth_jdr = $wife->getEstimatedBirthDate()->minJD();
+				$wife_birth_jd = $wife->getEstimatedBirthDate()->minJD();
 			}
 		}
 	}
