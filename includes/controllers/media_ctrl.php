@@ -384,25 +384,25 @@ class MediaControllerRoot extends IndividualController{
 			for($i=0; $i<count($facts); $i++) {
 				$found=false;
 				foreach($newfacts as $indexval => $newfact) {
-					if (trim($newfact->gedComRecord)==trim($facts[$i]->gedComRecord)) {
+					if (trim($newfact->gedcomRecord)==trim($facts[$i]->gedcomRecord)) {
 						$found=true;
 						break;
 					}
 				}
 				if (!$found) {
-					$facts[$i]->gedComRecord.="\nPGV_OLD\n";
+					$facts[$i]->gedcomRecord.="\nPGV_OLD\n";
 				}
 			}
 			foreach($newfacts as $indexval => $newfact) {
 				$found=false;
 				foreach($facts as $indexval => $fact) {
-					if (trim($fact->gedComRecord)==trim($newfact->gedComRecord)) {
+					if (trim($fact->gedcomRecord)==trim($newfact->gedcomRecord)) {
 						$found=true;
 						break;
 					}
 				}
 				if (!$found) {
-					$newfact->gedComRecord.="\nPGV_NEW\n";
+					$newfact->gedcomRecord.="\nPGV_NEW\n";
 					$facts[]=$newfact;
 				}
 			}
