@@ -44,8 +44,8 @@ function pgvMail($to, $from, $subject, $message) {
 
 	$mailFormatText = "text/plain";
 
-	$boundry = "PGV-123454321-PGV"; //unique identifier for multipart
-	$boundry2 = "PGV-123454321-PGV2";
+	$boundary = "PGV-123454321-PGV"; //unique identifier for multipart
+	$boundary2 = "PGV-123454321-PGV2";
 
 	if ($TEXT_DIRECTION == "rtl") { // needed for rtl but we can change this to a global config
 		$mailFormat = "html";
@@ -54,24 +54,22 @@ function pgvMail($to, $from, $subject, $message) {
 	if ($mailFormat == "html") {
 		$mailFormatText = "text/html";
 	} else if ($mailFormat == "multipart") {
-		$mailFormatText = "multipart/related; \r\n\tboundary=\"$boundry\""; //for double display use:multipart/mixed
+		$mailFormatText = "multipart/related; \n\tboundary=\"$boundary\""; //for double display use:multipart/mixed
 	} else {
 		$mailFormatText = "text/plain";
 	}
 
-	$extraHeaders = "From: $from\r\nContent-type: $mailFormatText;";
+	$extraHeaders = "From: $from\nContent-type: $mailFormatText;";
 
 	if ($mailFormat != "multipart") {
-		$extraHeaders .= "\tcharset=\"$CHARACTER_SET\";\tformat=\"flowed\"\r\nContent-Transfer-Encoding: 8bit";
+		$extraHeaders .= "\tcharset=\"$CHARACTER_SET\";\tformat=\"flowed\"\nContent-Transfer-Encoding: 8bit";
 	}
 
 	if ($mailFormat == "html" || $mailFormat == "multipart") {
-		$extraHeaders .= "\r\nMime-Version: 1.0";
+		$extraHeaders .= "\nMime-Version: 1.0";
 	}
 
-	//-- doesn't this line just concatenate onto itself?
-	//$extraHeaders .= $extraHeaders; //add custom extra header
-	$extraHeaders .= "\r\n";
+	$extraHeaders .= "\n";
 
 
 	if ($mailFormat == "html") {
@@ -89,13 +87,13 @@ function pgvMail($to, $from, $subject, $message) {
 		$message = $htmlMessage;
 	} else if ($mailFormat == "multipart") {
 		//wrap message in html
-		$htmlMessage = "--$boundry\r\n";
-		$htmlMessage .= "Content-Type: multipart/alternative; \r\n\tboundry=--$boundry2\r\n\r\n";
-		$htmlMessage = "--$boundry2\r\n";
-		$htmlMessage .= "Content-Type: text/plain; \r\n\tcharset=\"$CHARACTER_SET\";\r\n\tformat=\"flowed\"\r\nContent-Transfer-Encoding: 8bit\r\n\r\n";
+		$htmlMessage = "--$boundary\n";
+		$htmlMessage .= "Content-Type: multipart/alternative; \n\tboundary=--$boundary2\n\n";
+		$htmlMessage = "--$boundary2\n";
+		$htmlMessage .= "Content-Type: text/plain; \n\tcharset=\"$CHARACTER_SET\";\n\tformat=\"flowed\"\nContent-Transfer-Encoding: 8bit\n\n";
 		$htmlMessage .= $message;
-		$htmlMessage .= "\r\n\r\n--$boundry2\r\n";
-		$htmlMessage .= "Content-Type: text/html; \r\n\tcharset=\"$CHARACTER_SET\";\r\n\tformat=\"flowed\"\r\nContent-Transfer-Encoding: 8bit\r\n\r\n";
+		$htmlMessage .= "\n\n--$boundary2\n";
+		$htmlMessage .= "Content-Type: text/html; \n\tcharset=\"$CHARACTER_SET\";\n\tformat=\"flowed\"\nContent-Transfer-Encoding: 8bit\n\n";
 		$htmlMessage .= "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">";
 		$htmlMessage .= "<html xmlns=\"http://www.w3.org/1999/xhtml\">";
 		$htmlMessage .= "<head>";
@@ -107,10 +105,10 @@ function pgvMail($to, $from, $subject, $message) {
 		$htmlMessage .= "<img src=\"cid:pgvlogo@pgvserver\" alt=\"\" style=\"border: 0px; display: block; margin-left: auto; margin-right: auto;\" />";
 		$htmlMessage .= "</body>";
 		$htmlMessage .= "</html>";
-		$htmlMessage .= "\r\n--$boundry2--\r\n";
-		$htmlMessage .= "\r\n--$boundry\r\n";
+		$htmlMessage .= "\n--$boundary2--\n";
+		$htmlMessage .= "\n--$boundary\n";
 		$htmlMessage .= getPgvMailLogo();
-		$htmlMessage .= "\r\n\r\n\r\n\r\n--$boundry--";
+		$htmlMessage .= "\n\n\n\n--$boundary--";
 		$message = $htmlMessage;
 	}
 	// if SMTP mail is set active AND we have SMTP settings available, use the PHPMailer classes
