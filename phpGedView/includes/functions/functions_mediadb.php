@@ -525,7 +525,7 @@ function get_medialist($currentdir = false, $directory = "", $linkonly = false, 
 	// Create the medialist array of media in the DB and on disk
 	// NOTE: Get the media in the DB
 	$medialist = array ();
-	if (empty ($directory))
+	if (empty($directory))
 		$directory = $MEDIA_DIRECTORY;
 	$myDir = str_replace($MEDIA_DIRECTORY, "", $directory);
 	$sql = "SELECT m_id, m_file, m_media, m_gedrec, m_titl FROM {$TBLPREFIX}media WHERE m_gedfile={$GEDCOMS[$GEDCOM]['id']}";
@@ -544,7 +544,7 @@ function get_medialist($currentdir = false, $directory = "", $linkonly = false, 
 	// but weed out any folders we're not interested in
 	while ($row = & $res->fetchRow(DB_FETCHMODE_ASSOC)) {
 		if ($row) {
-			if (!empty ($row["m_file"])) {
+			if (!empty($row["m_file"])) {
 				$fileName = check_media_depth(stripslashes($row["m_file"]), "NOTRUNC", "QUIET");
 				$isExternal = isFileExternal($fileName);
 				if ( $isExternal && (!$MEDIA_EXTERNAL || !$includeExternal) ) {
@@ -603,7 +603,7 @@ function get_medialist($currentdir = false, $directory = "", $linkonly = false, 
 					break;
 
 				$gedrec = $change['undo'];
-				if (empty ($gedrec))
+				if (empty($gedrec))
 					break;
 
 				$ct = preg_match("/0 @.*@ (\w*)/", $gedrec, $match);
@@ -667,7 +667,7 @@ function get_medialist($currentdir = false, $directory = "", $linkonly = false, 
 				}
 
 				// And a few more blanks
-				if (empty ($media["FILE"]))
+				if (empty($media["FILE"]))
 					break;
 				$fileName = check_media_depth(stripslashes($media["FILE"]), "NOTRUNC", "QUIET");
 				if ($MEDIA_EXTERNAL && isFileExternal($media["FILE"])) {
@@ -891,9 +891,9 @@ function get_medialist($currentdir = false, $directory = "", $linkonly = false, 
 */
 function filterMedia($media, $filter, $acceptExt) {
 
-	if (empty ($filter) || strlen($filter) < 2)
+	if (empty($filter) || strlen($filter) < 2)
 		$filter = "";
-	if (empty ($acceptExt) || $acceptExt != "http")
+	if (empty($acceptExt) || $acceptExt != "http")
 		$acceptExt = "";
 
 	//-- Check Privacy first.  No point in proceeding if Privacy says "don't show"
@@ -1108,10 +1108,10 @@ function check_media_depth($filename, $truncate = "FRONT", $noise = "VERBOSE") {
 	global $MEDIA_DIRECTORY, $MEDIA_DIRECTORY_LEVELS, $MEDIA_EXTERNAL;
 	global $pgv_lang;
 
-	if (empty ($filename) || ($MEDIA_EXTERNAL && isFileExternal($filename)))
+	if (empty($filename) || ($MEDIA_EXTERNAL && isFileExternal($filename)))
 		return $filename;
 
-	if (empty ($truncate) || ($truncate != "NOTRUNC" && $truncate != "BACK" && $truncate != "FRONT"))
+	if (empty($truncate) || ($truncate != "NOTRUNC" && $truncate != "BACK" && $truncate != "FRONT"))
 		$truncate = "FRONT";
 	if ($truncate == "NOTRUNC")
 		$truncate = "FRONT"; // **** temporary over-ride *****
@@ -1121,18 +1121,18 @@ function check_media_depth($filename, $truncate = "FRONT", $noise = "VERBOSE") {
 		$noise = "QUIET";
 	}
 
-	if (empty ($noise) || ($noise != "VERBOSE" && $noise != "QUIET"))
+	if (empty($noise) || ($noise != "VERBOSE" && $noise != "QUIET"))
 		$noise = "VERBOSE";
 
 	// NOTE: Check media depth
 	$parts = pathinfo($filename);
 	//print_r($parts); print "<br />";
-	if (empty ($parts["dirname"]) || ($MEDIA_DIRECTORY_LEVELS == 0 && $truncate != "NOTRUNC"))
+	if (empty($parts["dirname"]) || ($MEDIA_DIRECTORY_LEVELS == 0 && $truncate != "NOTRUNC"))
 		return $MEDIA_DIRECTORY . $parts["basename"];
 
 	$fileName = $parts["basename"];
 
-	if (empty ($parts["dirname"]))
+	if (empty($parts["dirname"]))
 		$folderName = $MEDIA_DIRECTORY;
 	else
 		$folderName = $parts["dirname"] . "/";
@@ -1257,7 +1257,7 @@ function retrieve_media_object($gedrec, $gid) {
 			$line = $gedreclines[$linecounter];
 		else
 			$line = " ";
-		if (empty ($line))
+		if (empty($line))
 			$line = " ";
 		if (preg_match("/[0-9]\sOBJE/", $line) > 0)
 			$objectline = $linecounter;
@@ -1600,7 +1600,7 @@ function show_media_form($pid, $action = "newentry", $filename = "", $linktoid =
 	print "<input type=\"hidden\" name=\"action\" value=\"$action\" />\n";
 	print "<input type=\"hidden\" name=\"ged\" value=\"$GEDCOM\" />\n";
 	print "<input type=\"hidden\" name=\"pid\" value=\"$pid\" />\n";
-	if (!empty ($linktoid)) print "<input type=\"hidden\" name=\"linktoid\" value=\"$linktoid\" />\n";
+	if (!empty($linktoid)) print "<input type=\"hidden\" name=\"linktoid\" value=\"$linktoid\" />\n";
 	print "<input type=\"hidden\" name=\"level\" value=\"$level\" />\n";
 	print "<table class=\"facts_table center $TEXT_DIRECTION\">\n";
 	print "<tr><td class=\"topbottombar\" colspan=\"2\">";
@@ -1637,7 +1637,7 @@ function show_media_form($pid, $action = "newentry", $filename = "", $linktoid =
 	} else {
 		//  $gedfile = get_sub_record(1, "FILE", $gedrec);
 		$gedfile = get_first_tag(1, "FILE", $gedrec);
-		if (empty ($gedfile))
+		if (empty($gedfile))
 			$gedfile = "FILE";
 	}
 	if ($gedfile != "FILE") {
@@ -1784,7 +1784,7 @@ function show_media_form($pid, $action = "newentry", $filename = "", $linktoid =
 		$gedform = "FORM";
 	else {
 		$gedform = get_first_tag(2, "FORM", $gedrec);
-		if (empty ($gedform))
+		if (empty($gedform))
 			$gedform = "FORM";
 	}
 	$formid = add_simple_tag("2 $gedform");
@@ -1795,7 +1795,7 @@ function show_media_form($pid, $action = "newentry", $filename = "", $linktoid =
 	else {
 		$temp = str_replace("\r\n", "\n", $gedrec) . "\n";
 		$types = preg_match("/3 TYPE(.*)\n/", $temp, $matches);
-		if (empty ($matches[0]))
+		if (empty($matches[0]))
 			$gedtype = "TYPE";
 		else
 			$gedtype = "TYPE " . trim($matches[1]);
@@ -1807,68 +1807,68 @@ function show_media_form($pid, $action = "newentry", $filename = "", $linktoid =
 		$gedtitl = "TITL";
 	else {
 		$gedtitl = get_first_tag(2, "TITL", $gedrec);
-		if (empty ($gedtitl))
+		if (empty($gedtitl))
 			$gedtitl = get_first_tag(1, "TITL", $gedrec);
-		if (empty ($gedtitl))
+		if (empty($gedtitl))
 			$gedtitl = "TITL";
 	}
 	add_simple_tag("2 $gedtitl");
 	
 	if (strstr($ADVANCED_NAME_FACTS, "_HEB")!==false) {
-	// 3 _HEB
-	if ($gedrec == "")
-		$gedtitl = "_HEB";
-	else {
-		$gedtitl = get_first_tag(3, "_HEB", $gedrec);
-		if (empty ($gedtitl))
+		// 3 _HEB
+		if ($gedrec == "")
 			$gedtitl = "_HEB";
-	}
-	add_simple_tag("3 $gedtitl");
+		else {
+			$gedtitl = get_first_tag(3, "_HEB", $gedrec);
+			if (empty($gedtitl))
+				$gedtitl = "_HEB";
+		}
+		add_simple_tag("3 $gedtitl");
 	}
 
 	if (strstr($ADVANCED_NAME_FACTS, "ROMN")!==false) {
-	// 3 ROMN
-	if ($gedrec == "")
-		$gedtitl = "ROMN";
-	else {
-		$gedtitl = get_first_tag(3, "ROMN", $gedrec);
-		if (empty ($gedtitl))
+		// 3 ROMN
+		if ($gedrec == "")
 			$gedtitl = "ROMN";
-	}
-	add_simple_tag("3 $gedtitl");
+		else {
+			$gedtitl = get_first_tag(3, "ROMN", $gedrec);
+			if (empty($gedtitl))
+				$gedtitl = "ROMN";
+		}
+		add_simple_tag("3 $gedtitl");
 	}
 
 	//-- don't show _PRIM option to regular users
-	if (PGV_USER_GEDCOM_ADMIN) {
+//	if (PGV_USER_GEDCOM_ADMIN) {
 		// 2 _PRIM
 		if ($gedrec == "")
 			$gedprim = "_PRIM";
 		else {
 			//  $gedprim = get_sub_record(1, "_PRIM", $gedrec);
 			$gedprim = get_first_tag(1, "_PRIM", $gedrec);
-			if (empty ($gedprim))
+			if (empty($gedprim))
 				$gedprim = "_PRIM";
 		}
 		add_simple_tag("1 $gedprim");
-	}
+//	}
 
 	//-- don't show _THUM option to regular users
-	if (PGV_USER_GEDCOM_ADMIN) {
+//	if (PGV_USER_GEDCOM_ADMIN) {
 		// 2 _THUM
 		if ($gedrec == "")
 			$gedthum = "_THUM";
 		else {
 			//  $gedthum = get_sub_record(1, "_THUM", $gedrec);
 			$gedthum = get_first_tag(1, "_THUM", $gedrec);
-			if (empty ($gedthum))
-				$gedthum = "_THUM";
+			if (empty($gedthum))
+				$gedthum = "_THUM N";
 		}
 		add_simple_tag("1 $gedthum");
-	}
+//	}
 
 	//-- print out editing fields for any other data in the media record
 	$sourceSOUR = "";
-	if (!empty ($gedrec)) {
+	if (!empty($gedrec)) {
 		$subrecs = get_all_subrecords($gedrec, "FILE,FORM,TYPE,TITL,_PRIM,_THUM,CHAN,DATA");
 		foreach ($subrecs as $ind => $subrec) {
 			$pieces = explode("\n", $subrec);
@@ -1923,7 +1923,7 @@ function show_media_form($pid, $action = "newentry", $filename = "", $linktoid =
 				}
 
 				// Output anything that isn't part of a source reference
-				if (!empty ($fact) && $fact != "CONC" && $fact != "CONT" && $fact != "DATA") {
+				if (!empty($fact) && $fact != "CONC" && $fact != "CONT" && $fact != "DATA") {
 					add_simple_tag($subLevel ." ". $fact ." ". $event);
 				}
 			}
