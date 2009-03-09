@@ -1131,6 +1131,11 @@ function print_note_record($text, $nlevel, $nrec, $textOnly=false, $return=false
 	if (eregi("0 @N.*@ NOTE", $nrec)) {
 		$centitl  = str_replace("~~", "", $text);
 		$centitl  = str_replace("<br />", "", $centitl);
+		preg_match('/@N*[0-9]@/', $nrec, $match_nid);
+		if ($match_nid) {
+			$nid = preg_replace("/@/", "", $match_nid[0]);
+		}
+		$centitl = "<a href=\"note.php?nid=$nid\">".$centitl."</a>";
 		$text = get_cont($nlevel, $nrec);
 	}else{
 		$text .= get_cont($nlevel, $nrec);
@@ -1158,7 +1163,7 @@ function print_note_record($text, $nlevel, $nrec, $textOnly=false, $return=false
 			}
 			$text = str_replace("<br />", "</td></tr><tr><td>&nbsp;", $text);
 			$text = $text . "</td></tr></table>";
-			$text = str_replace("xCxAx", "&nbsp;&nbsp;".$centitl."<br />", $text);
+			$text = str_replace("xCxAx", $centitl."<br />", $text);
 		// Unformatted Shared Note --------------------------------------------------
 		}else if (eregi("0 @N.*@ NOTE", $nrec)) {
 			$text=$centitl.$text;

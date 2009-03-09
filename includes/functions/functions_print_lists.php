@@ -840,6 +840,7 @@ function print_sour_table($datalist, $legend=null) {
 	echo '<th class="list_label">', $pgv_lang['individuals'], '</th>';
 	echo '<th class="list_label">', $pgv_lang['families'], '</th>';
 	echo '<th class="list_label">', $pgv_lang['media'], '</th>';
+	echo '<th class="list_label">', $pgv_lang['shared_notes'], '</th>';
 	if ($SHOW_LAST_CHANGE) {
 		echo '<th class="list_label rela">', $factarray['CHAN'], '</th>';
 	}
@@ -904,6 +905,9 @@ function print_sour_table($datalist, $legend=null) {
 		//-- Linked OBJEcts
 		$tmp=$source->countLinkedMedia();
 		echo '<td class="list_value_wrap"><a href="', $link_url, '" class="list_item" name="', $tmp, '">', $tmp, '</a></td>';
+		//-- Linked NOTEs
+		$tmp=$source->countLinkedNotes();
+		echo '<td class="list_value_wrap"><a href="', $link_url, '" class="list_item" name="', $tmp, '">', $tmp, '</a></td>';
 		//-- Last change
 		if ($SHOW_LAST_CHANGE) {
 			print '<td class="'.strrev($TEXT_DIRECTION).' list_value_wrap rela">'.$source->LastChangeTimestamp(empty($SEARCH_SPIDER)).'</td>';
@@ -963,7 +967,7 @@ function print_note_table($datalist, $legend=null) {
 	echo '</legend>';
 	$table_id = "ID".floor(microtime()*1000000); // sorttable requires a unique ID
 	//-- table header
-	echo '<table id="', $table_id, '" class="sortable list_table center"><tr><td></td>';
+	echo '<table id="', $table_id, '" class="sortable list_table center" ><tr><td></td>';
 	if ($SHOW_ID_NUMBERS) {
 		echo '<th class="list_label rela">NOTE</th>';
 	}
@@ -1104,7 +1108,7 @@ function print_media_table($datalist, $legend="") {
 	echo "<fieldset><legend>".$legend."</legend>";
 	$table_id = "ID".floor(microtime()*1000000); // sorttable requires a unique ID
 	//-- table header
-	echo "<table id=\"".$table_id."\" class=\"sortable list_table center\">";
+	echo "<table width=\"100%\" id=\"".$table_id."\" class=\"sortable list_table center\">";
 	echo "<tr>";
 	echo "<td></td>";
 	if ($SHOW_ID_NUMBERS) echo "<th class=\"list_label rela\">OBJE</th>";
@@ -1135,11 +1139,22 @@ function print_media_table($datalist, $legend="") {
 		echo "<td class=\"list_value_wrap\" align=\"".get_align($name)."\">";
 		echo "<a href=\"".encode_url($media->getLinkUrl())."\" class=\"list_item name2\">".PrintReady($name)."</a>";
 		echo "<br /><a href=\"".encode_url($media->getLinkUrl())."\">".basename($media->file)."</a>";
-		echo "<br />".$media->getFiletype();
-		echo "&nbsp;&nbsp;".$media->width."x".$media->height;
-		echo "&nbsp;&nbsp;".$media->getFilesize()."kB";
+		//echo "<br />".$media->getFiletype();
+		//echo "&nbsp;&nbsp;".$media->width."x".$media->height;
+		//echo "&nbsp;&nbsp;".$media->getFilesize()."kB";
 		print_fact_notes("1 NOTE ".$media->getNote(),1);
 		echo "</td>";
+		
+		//-- Linked INDIs
+		$tmp=$media->countLinkedIndividuals();
+		echo '<td class="list_value_wrap"><a href="', encode_url($media->getLinkUrl()), '" class="list_item" name="', $tmp, '">', $tmp, '</a></td>';
+		//-- Linked FAMs
+		$tmp=$media->countLinkedfamilies();
+		echo '<td class="list_value_wrap"><a href="', encode_url($media->getLinkUrl()), '" class="list_item" name="', $tmp, '">', $tmp, '</a></td>';
+		//-- Linked SOURces
+		$tmp=$media->countLinkedSources();
+		echo '<td class="list_value_wrap"><a href="', encode_url($media->getLinkUrl()), '" class="list_item" name="', $tmp, '">', $tmp, '</a></td>';
+/*
 		//-- Linked records
 		foreach (array("INDI", "FAM", "SOUR") as $rectype) {
 			$resu = array();
@@ -1155,6 +1170,7 @@ function print_media_table($datalist, $legend="") {
 			foreach ($resu as $txt) echo "<a href=\"".encode_url($record->getLinkUrl())."\" class=\"list_item\">".PrintReady("&bull; ".$txt)."</a><br />";
 			echo "</td>";
 		}
+*/
 		//-- Last change
 		if ($SHOW_LAST_CHANGE)
 			print "<td class=\"".strrev($TEXT_DIRECTION)." list_value_wrap rela\">".$media->LastChangeTimestamp(empty($SEARCH_SPIDER))."</td>";

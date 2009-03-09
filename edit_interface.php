@@ -784,10 +784,8 @@ case 'addnewnote':
 		<input type="hidden" name="pid" value="newnote" />
 
 		<table class="facts_table">
-			<tr>
-				<td class="descriptionbox <?php echo $TEXT_DIRECTION; ?> wrap="nowrap"><?php print_help_link("edit_SHARED_NOTE_help", "qm"); echo $pgv_lang["shared_note"]; ?></td>
-				<td class="optionbox wrap"><textarea tabindex="<?php echo $tabkey; ?>" name="NOTE" id="NOTE" rows="15" cols="88"></textarea><br /><?php print_specialchar_link("NOTE",true); ?></td>
-			</tr>
+			<tr><td class="descriptionbox <?php echo $TEXT_DIRECTION; ?> wrap="nowrap"><?php print_help_link("edit_SHARED_NOTE_help", "qm"); echo $pgv_lang["shared_note"]; ?></td>
+			<td class="optionbox wrap"><textarea tabindex="<?php echo $tabkey; ?>" name="NOTE" id="NOTE" rows="15" cols="88"></textarea><br /><?php print_specialchar_link("NOTE",true); ?></td></tr>
 			<?php $tabkey++; ?>
 		</table>
 		<br /><br />
@@ -887,7 +885,7 @@ case 'editnote':
 	</script>
 	<b><?php echo $pgv_lang['edit_shared_note']; $tabkey = 1; echo "&nbsp;&nbsp;(" . $pid . ")";?></b><br /><br />
 	<form method="post" action="edit_interface.php" onsubmit="return check_form(this);">
-		<input type="hidden" name="action" value="updatenoteaction" />
+		<input type="hidden" name="action" value="update" />
 		<input type="hidden" name="pid" value="<?php echo $pid; ?>" />
 
 		<?php
@@ -917,79 +915,6 @@ case 'editnote':
 		<input type="submit" value="<?php echo $pgv_lang["save"]; ?>" />
 	</form>
 	<?php
-	break;
-
-//------------------------------------------------------------------------------
-//-- create a shared note record from the incoming variables
-case 'updatenoteaction':
-	if (PGV_DEBUG) {
-		phpinfo(INFO_VARIABLES);
-	}
-	$newgedrec  = "0 @$pid@ NOTE\n";
-	if (PGV_DEBUG) {
-		echo "<pre>$newgedrec</pre>";
-	}
-
-	if (isset($_REQUEST['EVEN'])) $EVEN = $_REQUEST['EVEN'];
-	if (!empty($EVEN) && count($EVEN)>0) {
-		$newgedrec .= "1 DATA\n";
-		$newgedrec .= "2 EVEN ".implode(",", $EVEN)."\n";
-		if (!empty($EVEN_DATE)) $newgedrec .= "3 DATE ".check_input_date($EVEN_DATE)."\n";
-		if (!empty($EVEN_PLAC)) $newgedrec .= "3 PLAC ".$EVEN_PLAC."\n";
-		if (!empty($AGNC))      $newgedrec .= "2 AGNC ".$AGNC."\n";
-	}
-	if (isset($_REQUEST['ABBR'])) $ABBR = $_REQUEST['ABBR'];
-	if (isset($_REQUEST['TITL'])) $TITL = $_REQUEST['TITL'];
-	if (isset($_REQUEST['DATE'])) $DATE = $_REQUEST['DATE'];
-	if (isset($_REQUEST['NOTE'])) $NOTE = $_REQUEST['NOTE'];
-	if (isset($_REQUEST['_HEB'])) $_HEB = $_REQUEST['_HEB'];
-	if (isset($_REQUEST['ROMN'])) $ROMN = $_REQUEST['ROMN'];
-	if (isset($_REQUEST['AUTH'])) $AUTH = $_REQUEST['AUTH'];
-	if (isset($_REQUEST['PUBL'])) $PUBL = $_REQUEST['PUBL'];
-	if (isset($_REQUEST['REPO'])) $REPO = $_REQUEST['REPO'];
-	if (isset($_REQUEST['CALN'])) $CALN = $_REQUEST['CALN'];
-
-	if (!empty($NOTE)) {
-		$newlines = preg_split("/\r?\n/",$NOTE,-1);
-		for($k=0; $k<count($newlines); $k++) {
-			if ( $k==0 && count($newlines)>1) {
-				$newgedrec = "0 @$pid@ NOTE $newlines[$k]\n";
-			}elseif ( $k==0 ) {
-				$newgedrec = "0 @$pid@ NOTE $newlines[$k]\n1 CONT\n";
-			} else {
-				$newgedrec .= "1 CONT $newlines[$k]\n";
-			}
-		}
-	}
-
-	if (!empty($ABBR)) $newgedrec .= "1 ABBR $ABBR\n";
-	if (!empty($TITL)) {
-		// $newgedrec .= "1 TITL $TITL\n";
-		// $newgedrec .= "2 DATE $DATE\n";
-		if (!empty($_HEB)) $newgedrec .= "2 _HEB $_HEB\n";
-		if (!empty($ROMN)) $newgedrec .= "2 ROMN $ROMN\n";
-	}
-	if (!empty($AUTH)) $newgedrec .= "1 AUTH $AUTH\n";
-	if (!empty($PUBL)) {
-		$newlines = preg_split("/\r?\n/",$PUBL,-1,PREG_SPLIT_NO_EMPTY);
-		for($k=0; $k<count($newlines); $k++) {
-			if ( $k==0 ) $newgedrec .= "1 PUBL $newlines[$k]\n";
-			else $newgedrec .= "2 CONT $newlines[$k]\n";
-		}
-	}
-	if (!empty($NOTE)) {
-		//$newgedrec .= "1 NOTE @$NOTE@\n";
-		if (!empty($CALN)) $newgedrec .= "2 CALN $CALN\n";
-	}
-	if (PGV_DEBUG) {
-		echo "<pre>$newgedrec</pre>";
-	}
-	$pids = (replace_gedrec($pid, $newgedrec, $update_CHAN));
-	$link = "note.php?nid=$pid&show_changes=yes";
-	if ($pid) {
-		echo "<br /><br />\n".$pid." ".$pgv_lang["shared_note_updated"]."<br /><br />";
-		//echo "<a href=\"javascript:// NOTE $pid\" onclick=\"openerpasteid('$pid'); return false;\">".$pgv_lang["paste_id_into_field"]." <b>$pid</b></a>\n";
-	}
 	break;
 
 //------------------------------------------------------------------------------
@@ -1109,8 +1034,9 @@ case 'update':
 	if (PGV_DEBUG) {
 		phpinfo(INFO_VARIABLES);
 		echo "<pre>$gedrec</pre>";
+		echo "<br /><br />"; 
 	}
-
+	
 	// add or remove Y
 	if ($text[0]=="Y" or $text[0]=="y") $text[0]="";
 	if (in_array($tag[0], $emptyfacts) && array_unique($text)==array("") && !$islink[0]) $text[0]="Y";
@@ -1154,6 +1080,7 @@ case 'update':
 		$i++;
 		while(($i<count($gedlines))&&($gedlines[$i]{0}>$glevel)) $i++;
 	}
+	
 	if (!isset($glevels)) $glevels = array();
 	if (isset($_REQUEST['NAME'])) $NAME = $_REQUEST['NAME'];
 	if (isset($_REQUEST['TYPE'])) $TYPE = $_REQUEST['TYPE'];
@@ -1169,9 +1096,6 @@ case 'update':
 	if (isset($_REQUEST['_AKA'])) $_AKA = $_REQUEST['_AKA'];
 	if (isset($_REQUEST['_MARNM'])) $_MARNM = $_REQUEST['_MARNM'];
 
-//	if (isset($_REQUEST['NOTE'])) $NOTE = $_REQUEST['NOTE'];
-//	if (!empty($NOTE)) $newged .= "$NOTE\n";
-
 	if (!empty($NAME)) $newged .= "1 NAME $NAME\n";
 	if (!empty($TYPE)) $newged .= "2 TYPE $TYPE\n";
 	if (!empty($NPFX)) $newged .= "2 NPFX $NPFX\n";
@@ -1180,6 +1104,18 @@ case 'update':
 	if (!empty($SPFX)) $newged .= "2 SPFX $SPFX\n";
 	if (!empty($SURN)) $newged .= "2 SURN $SURN\n";
 	if (!empty($NSFX)) $newged .= "2 NSFX $NSFX\n";
+	
+	if (isset($_REQUEST['NOTE'])) $NOTE = $_REQUEST['NOTE'];
+	if (!empty($NOTE)) {
+		$newlines = preg_split("/\r?\n/",$NOTE,-1 );
+		for($k=0; $k<count($newlines); $k++) {
+			if ( $k==0 && count($newlines)>1) {
+				$gedlines[$k] = "0 @$pid@ NOTE $newlines[$k]\n";
+			} else {
+				$gedlines[$k] = " 1 CONT $newlines[$k]\n";
+			}
+		}
+	}
 
 
 
@@ -2357,8 +2293,8 @@ if (empty($goto) || empty($link))
 //------------------------------------------------------------------------------
 // autoclose window when update successful
 if ($success && $EDIT_AUTOCLOSE && !PGV_DEBUG) {
-	if ($action=="copy") echo "\n<script type=\"text/javascript\">\n<!--\nwindow.close();\n//-->\n</script>";
-	else echo "\n<script type=\"text/javascript\">\n<!--\nedit_close('{$link}');\n//-->\n</script>";
+//	if ($action=="copy") echo "\n<script type=\"text/javascript\">\n<!--\nwindow.close();\n//-->\n</script>";
+//	else echo "\n<script type=\"text/javascript\">\n<!--\nedit_close('{$link}');\n//-->\n</script>";
 }
 
 
