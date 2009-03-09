@@ -10,6 +10,7 @@
 
 
 Version 4.2.0 CA
+ - Merged: Merge changes r5196 - r5203 from the trunk. (windmillway)
  - Merged: Merge changes r5176 - r5195 from the trunk. (windmillway)
  - Merged: Merge changes r5162 - r5175 from the trunk. (windmillway)
  - Merged: Merge changes r5149 - r5161 from the trunk. (windmillway)
@@ -56,6 +57,7 @@ Version 4.2.0 CA
 
 
 Version 4.2.1
+ - Fixed: [ 2672126 ] Media Highlight/Thumb selectors not shown to editing users (canajun2eh)
  - Fixed: Log Error: admin - ERROR 8: Undefined index: small; (windmillway)
  - Changed: removed superfluous "add unlinked note" link on notelist.php page (windmillway)
  - Changed: removed superfluous "add unlinked note/source" link on find.php pop-up (windmillway)

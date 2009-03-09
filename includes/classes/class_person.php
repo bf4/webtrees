@@ -922,10 +922,10 @@ class Person extends GedcomRecord {
 				// -- handle special source fact case
 				if (($fact!="SOUR") && ($fact!="NOTE") && ($fact!="CHAN") && ($fact!="_UID") && ($fact!="RIN")) {
 					if ((!in_array($fact, $nonfacts))&&(!in_array($fact, $nonfamfacts))) {
-						$factrec = $event->getGedComRecord();
+						$factrec = $event->getGedcomRecord();
 						if (!is_null($spouse)) $factrec.="\n2 _PGVS @".$spouse->getXref()."@";
 						$factrec.="\n2 _PGVFS @$famid@\n";
-						$event->gedComRecord = $factrec;
+						$event->gedcomRecord = $factrec;
 						if ($fact!="OBJE") $this->indifacts[] = $event;
 						else $this->otherfacts[]=$event;
 					}
@@ -979,7 +979,7 @@ class Person extends GedcomRecord {
 					}
 					if ($parent && strstr($SHOW_RELATIVES_EVENTS, $fact)) {
 						foreach ($parent->getAllFactsByType(explode('|', PGV_EVENTS_DEAT)) as $sEvent) {
-							$srec = $sEvent->getGedComRecord();
+							$srec = $sEvent->getGedcomRecord();
 							if (GedcomDate::Compare($bDate, $sEvent->getDate())<0 && GedcomDate::Compare($sEvent->getDate(), $dDate)<=0) {
 								$fact=str_replace('DEAT', $sEvent->getTag(), $fact); // BURI, CREM, etc.
 								$factrec="1 ".$fact."\n".get_sub_record(2, '2 DATE', $srec)."\n".get_sub_record(2, '2 PLAC', $srec);
@@ -1031,7 +1031,7 @@ class Person extends GedcomRecord {
 					foreach ($sfamids as $sfamid=>$sfamily) {
 						if ($sfamid==$famid && $rela=="mother") continue; // show current family marriage only for father
 						$sEvent = $sfamily->getMarriage();
-						$srec = $sEvent->getGedComRecord();
+						$srec = $sEvent->getGedcomRecord();
 						if (GedcomDate::Compare($bDate, $sEvent->getDate())<0 && GedcomDate::Compare($sEvent->getDate(), $dDate)<=0) {
 							if ($sfamid==$famid) $fact="_MARR_FAMC";
 							$factrec = "1 ".$fact;
@@ -1140,7 +1140,7 @@ class Person extends GedcomRecord {
 					/* @var $child Person */
 					/* @var $sEvent Event */
 					foreach ($child->getAllFactsByType(explode('|', PGV_EVENTS_BIRT)) as $sEvent) {
-						$srec = $sEvent->getGedComRecord();
+						$srec = $sEvent->getGedcomRecord();
 						$sgdate=$sEvent->getDate();
 						if ($option=='_CHIL' || $sgdate->isOK() && GedcomDate::Compare($this->getEstimatedBirthDate(), $sgdate)<=0 && GedcomDate::Compare($sgdate, $this->getEstimatedDeathDate())<=0) {
 							$factrec='1 _'.$sEvent->getTag().$option;
@@ -1182,7 +1182,7 @@ class Person extends GedcomRecord {
 					/* @var $sEvent Event */
 					foreach ($child->getAllFactsByType(explode('|', PGV_EVENTS_DEAT)) as $sEvent) {
 						$sgdate=$sEvent->getDate();
-						$srec = $sEvent->getGedComRecord();
+						$srec = $sEvent->getGedcomRecord();
 						if ($sgdate->isOK() && GedcomDate::Compare($this->getEstimatedBirthDate(), $sgdate)<=0 && GedcomDate::Compare($sgdate, $this->getEstimatedDeathDate())<=0) {
 							$factrec='1 _'.$sEvent->getTag().$option;
 							$factrec.="\n".get_sub_record(2, '2 DATE', $srec)."\n".get_sub_record(2, '2 PLAC', $srec);
@@ -1202,7 +1202,7 @@ class Person extends GedcomRecord {
 					foreach ($child->getSpouseFamilies() as $sfamid=>$sfamily) {
 						$sEvent = $sfamily->getMarriage();
 						$sgdate=$sEvent->getDate();
-						$srec = $sEvent->getGedComRecord();
+						$srec = $sEvent->getGedcomRecord();
 						if ($sgdate->isOK() && GedcomDate::Compare($this->getEstimatedBirthDate(), $sgdate)<=0 && GedcomDate::Compare($sgdate, $this->getEstimatedDeathDate())<=0) {
 							$factrec='1 _'.$sEvent->getTag().$option;
 							$factrec.="\n".get_sub_record(2, '2 DATE', $srec)."\n".get_sub_record(2, '2 PLAC', $srec);
@@ -1284,7 +1284,7 @@ class Person extends GedcomRecord {
 		if ($spouse && strstr($SHOW_RELATIVES_EVENTS, '_DEAT_SPOU')) {
 			foreach ($spouse->getAllFactsByType(explode('|', PGV_EVENTS_DEAT)) as $sEvent) {
 				$sdate=$sEvent->getDate();
-				$srec = $sEvent->getGedComRecord();
+				$srec = $sEvent->getGedcomRecord();
 				if ($sdate->isOK() && GedcomDate::Compare($this->getEstimatedBirthDate(), $sdate)<=0 && GedcomDate::Compare($sdate, $this->getEstimatedDeathDate())<=0) {
 					$srec=preg_replace('/^1 .*/', "1 _".$sEvent->getTag()."_SPOU ", $srec);
 					$srec.="\n".get_sub_record(2, '2 ASSO @'.$this->xref.'@', $srec);
@@ -1361,7 +1361,7 @@ class Person extends GedcomRecord {
 		);
 		foreach ($associates as $associate) {
 			foreach ($associate->getFacts() as $event) {
-				$srec = $event->getGedComRecord();
+				$srec = $event->getGedcomRecord();
 				$arec = get_sub_record(2, "2 ASSO @".$this->getXref()."@", $srec);
 				if ($arec) {
 					$fact = $event->getTag();
@@ -1405,8 +1405,8 @@ class Person extends GedcomRecord {
 					// check if this fact already exists in the list
 					$found = false;
 					if ($sdate) foreach ($this->indifacts as $k=>$v) {
-						if (strpos($v->getGedComRecord(), $sdate)
-						&& strpos($v->getGedComRecord(), "2 ASSO @".$this->getXref()."@")) {
+						if (strpos($v->getGedcomRecord(), $sdate)
+						&& strpos($v->getGedcomRecord(), "2 ASSO @".$this->getXref()."@")) {
 							$found = true;
 							break;
 						}
@@ -1444,7 +1444,7 @@ class Person extends GedcomRecord {
 			}
 			//-- fact was deleted?
 			if (!$found) {
-				$this->indifacts[$i]->gedComRecord.="\nPGV_OLD\n";
+				$this->indifacts[$i]->gedcomRecord.="\nPGV_OLD\n";
 			}
 		}
 		//-- check for any new facts being added
@@ -1459,7 +1459,7 @@ class Person extends GedcomRecord {
 				}
 			}
 			if (!$found) {
-				$newfact->gedComRecord.="\nPGV_NEW\n";
+				$newfact->gedcomRecord.="\nPGV_NEW\n";
 				$this->indifacts[]=$newfact;
 			}
 		}
@@ -1474,7 +1474,7 @@ class Person extends GedcomRecord {
 				}
 			}
 			if (!$found) {
-				$this->otherfacts[$i]->gedComRecord.="\nPGV_OLD\n";
+				$this->otherfacts[$i]->gedcomRecord.="\nPGV_OLD\n";
 			}
 		}
 		foreach ($diff->otherfacts as $indexval => $newfact) {
@@ -1486,7 +1486,7 @@ class Person extends GedcomRecord {
 				}
 			}
 			if (!$found) {
-				$newfact->gedComRecord.="\nPGV_NEW\n";
+				$newfact->gedcomRecord.="\nPGV_NEW\n";
 				$this->otherfacts[]=$newfact;
 			}
 		}
@@ -1502,7 +1502,7 @@ class Person extends GedcomRecord {
 				}
 			}
 			if (!$found) {
-				$this->globalfacts[$i]->gedComRecord.="\nPGV_OLD\n";
+				$this->globalfacts[$i]->gedcomRecord.="\nPGV_OLD\n";
 			}
 		}
 		foreach ($diff->globalfacts as $indexval => $newfact) {
@@ -1514,7 +1514,7 @@ class Person extends GedcomRecord {
 				}
 			}
 			if (!$found) {
-				$newfact->gedComRecord.="\nPGV_NEW\n";
+				$newfact->gedcomRecord.="\nPGV_NEW\n";
 				$this->globalfacts[]=$newfact;
 			}
 		}

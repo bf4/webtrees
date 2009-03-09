@@ -136,6 +136,16 @@ if ($controller->source->countLinkedFamilies()) {
 	print_fam_table($controller->source->fetchLinkedFamilies(), $controller->source->getFullName());
 }
 
+// Media Items linked to this source
+if ($controller->source->countLinkedMedia()) {
+	print_media_table($controller->source->fetchLinkedMedia(), $controller->source->getFullName());
+}
+
+// TO DO Shared Notes linked to this source
+if ($controller->source->countLinkedNotes()) {
+	print_note_table($controller->source->fetchLinkedNotes(), $controller->source->getFullName());
+}
+
 echo '</td></tr></table>';
 
 print_footer();

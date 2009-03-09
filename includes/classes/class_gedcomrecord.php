@@ -543,8 +543,8 @@ class GedcomRecord {
 			return $tmp;
 		} else {
 			if (
-				preg_match('/^\d\d:\d\d:\d\d/', get_gedcom_value('DATE:TIME', 2, $chan_x->getGedComRecord(), '', false).':00', $match_x) &&
-				preg_match('/^\d\d:\d\d:\d\d/', get_gedcom_value('DATE:TIME', 2, $chan_y->getGedComRecord(), '', false).':00', $match_y)
+				preg_match('/^\d\d:\d\d:\d\d/', get_gedcom_value('DATE:TIME', 2, $chan_x->getGedcomRecord(), '', false).':00', $match_x) &&
+				preg_match('/^\d\d:\d\d:\d\d/', get_gedcom_value('DATE:TIME', 2, $chan_y->getGedcomRecord(), '', false).':00', $match_y)
 			) {
 				return strcmp($match_x[0], $match_y[0]);
 			} else {
@@ -642,6 +642,9 @@ class GedcomRecord {
 	function countLinkedFamilies() {
 		return count_linked_fam($this->getXref(), $this->getType(), $this->ged_id);
 	}
+	function countLinkedNotes() {
+		return count_linked_note($this->getXref(), $this->getType(), $this->ged_id);
+	}
 	function countLinkedSources() {
 		return count_linked_sour($this->getXref(), $this->getType(), $this->ged_id);
 	}
@@ -655,6 +658,9 @@ class GedcomRecord {
 	}
 	function fetchLinkedFamilies() {
 		return fetch_linked_fam($this->getXref(), $this->getType(), $this->ged_id);
+	}
+	function fetchLinkedNotes() {
+		return fetch_linked_note($this->getXref(), $this->getType(), $this->ged_id);
 	}
 	function fetchLinkedSources() {
 		return fetch_linked_sour($this->getXref(), $this->getType(), $this->ged_id);
@@ -680,7 +686,7 @@ class GedcomRecord {
 	function getAllEventPlaces($event) {
 		$places=array();
 		foreach ($this->getAllFactsByType($event) as $event) {
-			if (preg_match_all('/\n(?:2 PLAC|3 (?:ROMN|FONE|_HEB)) +(.+)/', $event->getGedComRecord(), $ged_places)) {
+			if (preg_match_all('/\n(?:2 PLAC|3 (?:ROMN|FONE|_HEB)) +(.+)/', $event->getGedcomRecord(), $ged_places)) {
 				foreach ($ged_places[1] as $ged_place) {
 					$places[]=$ged_place;
 				}
@@ -813,7 +819,7 @@ class GedcomRecord {
 		foreach($this->facts as $key=>$event) {
 			$found = false;
 			foreach($diff->facts as $indexval => $newevent) {
-				$newfact = $newevent->getGedComRecord();
+				$newfact = $newevent->getGedcomRecord();
 				$newfact=preg_replace("/\\\/", "/", $newfact);
 				if (trim($newfact)==trim($event->getGedcomRecord())) {
 					$found = true;
@@ -821,7 +827,7 @@ class GedcomRecord {
 				}
 			}
 			if (!$found) {
-				$this->facts[$key]->gedComRecord.="\nPGV_OLD\n";
+				$this->facts[$key]->gedcomRecord.="\nPGV_OLD\n";
 			}
 		}
 		//-- look for new facts
@@ -836,7 +842,7 @@ class GedcomRecord {
 				}
 			}
 			if (!$found) {
-				$newevent->gedComRecord.="\nPGV_NEW\n";
+				$newevent->gedcomRecord.="\nPGV_NEW\n";
 				$this->facts[]=$newevent;
 			}
 		}
@@ -876,7 +882,7 @@ class GedcomRecord {
 		}
 
 		$d = $chan->getDate();
-		if (preg_match('/^(\d\d):(\d\d):(\d\d)/', get_gedcom_value('DATE:TIME', 2, $chan->getGedComRecord(), '', false).':00', $match)) {
+		if (preg_match('/^(\d\d):(\d\d):(\d\d)/', get_gedcom_value('DATE:TIME', 2, $chan->getGedcomRecord(), '', false).':00', $match)) {
 			$t=mktime($match[1], $match[2], $match[3]);
 			$sort=$d->MinJD().$match[1].$match[2].$match[3];
 			$text=strip_tags($d->Display(false, "{$DATE_FORMAT} -", array()).date(" {$TIME_FORMAT}", $t));

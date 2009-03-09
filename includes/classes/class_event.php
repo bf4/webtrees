@@ -54,7 +54,7 @@ class Event {
 	var $tag = NULL;
 	var $date = NULL;
 	var $place = null;
-	var $gedComRecord = null;
+	var $gedcomRecord = null;
 	var $resn = null;
 	var $dest = false;
 	var $label = null;
@@ -75,7 +75,7 @@ class Event {
 	function getValue($code) {
 		if (is_null($this->values)) {
 			$this->values=array();
-			preg_match_all('/\n2 ('.PGV_REGEX_TAG.') (.+)/', $this->gedComRecord, $matches, PREG_SET_ORDER);
+			preg_match_all('/\n2 ('.PGV_REGEX_TAG.') (.+)/', $this->gedcomRecord, $matches, PREG_SET_ORDER);
 			foreach ($matches as $match) {
 				$this->values[$match[1]]=trim($match[2], "@");
 			}
@@ -100,7 +100,7 @@ class Event {
 			$this->tag=$match[1];
 			$this->detail=$match[2];
 			$this->lineNumber=$lineNumber;
-			$this->gedComRecord=$subrecord;
+			$this->gedcomRecord=$subrecord;
 			// Store 1 EVEN/2 TYPE XXXX as a XXXX event.  Makes subsequent processing easier.
 			if (($this->tag=='EVEN' || $this->tag=='FACT') && preg_match('/2 TYPE (\w+)/', $subrecord, $match) && array_key_exists($match[1], $factarray))
 				$this->tag=$match[1];
@@ -122,9 +122,9 @@ class Event {
 	 */
 	function canShow() {
 		if (is_null($this->canShow)) {
-			if (empty($this->gedComRecord)) $this->canShow = false;
+			if (empty($this->gedcomRecord)) $this->canShow = false;
 			else if (!is_null($this->parentObject)) {
-				$this->canShow = showFact($this->tag, $this->parentObject->getXref()) && !FactViewRestricted($this->parentObject->getXref(), $this->gedComRecord);
+				$this->canShow = showFact($this->tag, $this->parentObject->getXref()) && !FactViewRestricted($this->parentObject->getXref(), $this->gedcomRecord);
 			}
 			else $this->canShow = true;
 		}
@@ -156,7 +156,7 @@ class Event {
 		if (!$this->canShowDetails()) return false;
 		if (is_null($this->canEdit)) {
 			if (!is_null($this->parentObject)) {
-				$this->canEdit = !FactEditRestricted($this->parentObject->getXref(), $this->gedComRecord);
+				$this->canEdit = !FactEditRestricted($this->parentObject->getXref(), $this->gedcomRecord);
 			}
 			else $this->canEdit = true;
 		}
@@ -222,8 +222,8 @@ class Event {
 	 *
 	 * @return string
 	 */
-	function getGedComRecord() {
-		return $this->gedComRecord;
+	function getGedcomRecord() {
+		return $this->gedcomRecord;
 	}
 
 	/**
@@ -308,7 +308,7 @@ class Event {
 
 		if (!$this->canShow()) return "";
 		$data = "";
-		if ($this->gedComRecord != "1 DEAT"){
+		if ($this->gedcomRecord != "1 DEAT"){
 		   $data .= "<span class=\"details_label\">".$this->getLabel($ABBREVIATE_CHART_LABELS)."</span> ";
 		}
 		if ($this->canShowDetails()) {
