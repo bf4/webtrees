@@ -642,6 +642,9 @@ class GedcomRecord {
 	function countLinkedFamilies() {
 		return count_linked_fam($this->getXref(), $this->getType(), $this->ged_id);
 	}
+	function countLinkedNotes() {
+		return count_linked_note($this->getXref(), $this->getType(), $this->ged_id);
+	}
 	function countLinkedSources() {
 		return count_linked_sour($this->getXref(), $this->getType(), $this->ged_id);
 	}
@@ -655,6 +658,9 @@ class GedcomRecord {
 	}
 	function fetchLinkedFamilies() {
 		return fetch_linked_fam($this->getXref(), $this->getType(), $this->ged_id);
+	}
+	function fetchLinkedNotes() {
+		return fetch_linked_note($this->getXref(), $this->getType(), $this->ged_id);
 	}
 	function fetchLinkedSources() {
 		return fetch_linked_sour($this->getXref(), $this->getType(), $this->ged_id);

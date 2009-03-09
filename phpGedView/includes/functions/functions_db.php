@@ -912,6 +912,8 @@ function count_all_records($ged_id) {
 		" UNION ALL ".
 		"SELECT 'FAM'  AS type, COUNT(*) AS num FROM {$TBLPREFIX}families    WHERE f_file={$ged_id}".
 		" UNION ALL ".
+		"SELECT 'NOTE' AS type, COUNT(*) AS num FROM {$TBLPREFIX}other       WHERE o_file={$ged_id}".
+		" UNION ALL ".
 		"SELECT 'SOUR' AS type, COUNT(*) AS num FROM {$TBLPREFIX}sources     WHERE s_file={$ged_id}".
 		" UNION ALL ".
 		"SELECT 'OBJE' AS type, COUNT(*) AS num FROM {$TBLPREFIX}media       WHERE m_gedfile={$ged_id}".
@@ -946,6 +948,17 @@ function count_linked_fam($xref, $link, $ged_id) {
 	$link=$DBCONN->escapeSimple($link);
 	$ged_id=(int)$ged_id;
 	$res=dbquery("SELECT COUNT(*) FROM {$TBLPREFIX}link, {$TBLPREFIX}families WHERE f_file=l_file AND f_id=l_from AND l_file={$ged_id} AND l_type='{$link}' AND l_to='{$xref}'");
+
+	$row=$res->fetchRow();
+	$res->free();
+	return $row[0];
+}
+function count_linked_note($xref, $link, $ged_id) {
+	global $TBLPREFIX, $DBCONN;
+	$xref=$DBCONN->escapeSimple($xref);
+	$link=$DBCONN->escapeSimple($link);
+	$ged_id=(int)$ged_id;
+	$res=dbquery("SELECT COUNT(*) FROM {$TBLPREFIX}link, {$TBLPREFIX}other WHERE o_file=l_file AND o_id=l_from AND l_file={$ged_id} AND l_type='{$link}' AND l_to='{$xref}'");
 
 	$row=$res->fetchRow();
 	$res->free();
@@ -1001,6 +1014,20 @@ function fetch_linked_fam($xref, $link, $ged_id) {
 	$list=array();
 	while ($row=$res->fetchRow(DB_FETCHMODE_ASSOC)) {
 		$list[]=Family::getInstance($row);
+	}
+	$res->free();
+	return $list;
+}
+function fetch_linked_note($xref, $link, $ged_id) {
+	global $TBLPREFIX, $DBCONN;
+	$xref=$DBCONN->escapeSimple($xref);
+	$link=$DBCONN->escapeSimple($link);
+	$ged_id=(int)$ged_id;
+	$res=dbquery("SELECT 'NOTE' AS type, o_id AS xref, {$ged_id} AS ged_id, o_gedcom AS gedrec FROM {$TBLPREFIX}link, {$TBLPREFIX}other o WHERE o_file=l_file AND o_id=l_from AND l_file={$ged_id} AND l_type='{$link}' AND l_to='{$xref}'");
+
+	$list=array();
+	while ($row=$res->fetchRow(DB_FETCHMODE_ASSOC)) {
+		$list[]=Note::getInstance($row);
 	}
 	$res->free();
 	return $list;
