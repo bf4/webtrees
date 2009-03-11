@@ -1034,9 +1034,9 @@ case 'update':
 	if (PGV_DEBUG) {
 		phpinfo(INFO_VARIABLES);
 		echo "<pre>$gedrec</pre>";
-		echo "<br /><br />"; 
+		echo "<br /><br />";
 	}
-	
+
 	// add or remove Y
 	if ($text[0]=="Y" or $text[0]=="y") $text[0]="";
 	if (in_array($tag[0], $emptyfacts) && array_unique($text)==array("") && !$islink[0]) $text[0]="Y";
@@ -1080,7 +1080,7 @@ case 'update':
 		$i++;
 		while(($i<count($gedlines))&&($gedlines[$i]{0}>$glevel)) $i++;
 	}
-	
+
 	if (!isset($glevels)) $glevels = array();
 	if (isset($_REQUEST['NAME'])) $NAME = $_REQUEST['NAME'];
 	if (isset($_REQUEST['TYPE'])) $TYPE = $_REQUEST['TYPE'];
@@ -1104,7 +1104,7 @@ case 'update':
 	if (!empty($SPFX)) $newged .= "2 SPFX $SPFX\n";
 	if (!empty($SURN)) $newged .= "2 SURN $SURN\n";
 	if (!empty($NSFX)) $newged .= "2 NSFX $NSFX\n";
-	
+
 	if (isset($_REQUEST['NOTE'])) $NOTE = $_REQUEST['NOTE'];
 	if (!empty($NOTE)) {
 		$newlines = preg_split("/\r?\n/",$NOTE,-1 );
@@ -1699,7 +1699,7 @@ case 'copy':
 			$ct = preg_match("/2 TYPE (.*)/", $factrec, $match);
 			if ($ct>0) $fact = trim($match[1]);
 		}
-		if (count($_SESSION["clipboard"])>4) array_pop($_SESSION["clipboard"]);
+		if (count($_SESSION["clipboard"])>9) array_pop($_SESSION["clipboard"]);
 		$_SESSION["clipboard"][] = array("type"=>$type, "factrec"=>$factrec, "fact"=>$fact);
 		echo "<b>".$pgv_lang["record_copied"]."</b>\n";
 		$success = true;

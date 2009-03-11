@@ -3,7 +3,7 @@
  * English texts
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team
+ * Copyright (C) 2002 to 2009  PGV Development Team
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -68,7 +68,7 @@ $pgv_lang["reorder_media_window_title"]		= "Click a row, then drag-and-drop to r
 $pgv_lang["reorder_media_save"]				= "Saves the sorted media to the database";
 $pgv_lang["reorder_media_reset"]			= "Reset to the original order";
 $pgv_lang["reorder_media_cancel"]			= "Quit and return";
-$pgv_lang["add_from_clipboard"]		= "Add from Clipboard: ";
+$pgv_lang["add_from_clipboard"]		= "Add from clipboard";
 $pgv_lang["record_copied"]			= "Record copied to clipboard";
 $pgv_lang["add_unlinked_person"]	= "Add an unlinked person";
 $pgv_lang["add_unlinked_source"]	= "Add an unlinked source";
