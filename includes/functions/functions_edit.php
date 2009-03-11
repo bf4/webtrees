@@ -1682,6 +1682,8 @@ function print_add_layer($tag, $level=2, $printSaveButton=true) {
 		}
 		// 3 OBJE
 		add_simple_tag(($level+1)." OBJE");
+		// 3 SHARED_NOTE
+		add_simple_tag(($level+1)." SHARED_NOTE");
 		echo "</table></div>";
 	}
 	if ($tag=="ASSO") {
@@ -1698,6 +1700,8 @@ function print_add_layer($tag, $level=2, $printSaveButton=true) {
 		add_simple_tag(($level+1)." RELA");
 		// 3 NOTE
 		add_simple_tag(($level+1)." NOTE");
+		// 3 SHARED_NOTE
+		add_simple_tag(($level+1)." SHARED_NOTE");
 		echo "</table></div>";
 	}
 	if ($tag=="NOTE") {
