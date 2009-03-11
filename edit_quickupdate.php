@@ -390,6 +390,7 @@ if ($action=="update") {
 
 	//-- check for new fact
 	if (isset($_REQUEST['newfact'])) $newfact = $_REQUEST['newfact'];
+	if (isset($_REQUEST['newClipboardFact'])) $newfact = $_REQUEST['newClipboardFact'];		// The name mis-match is deliberate
 	if (isset($_REQUEST['DATE'])) $DATE = $_REQUEST['DATE'];
 	if (isset($_REQUEST['PLAC'])) $PLAC = $_REQUEST['PLAC'];
 	if (isset($_REQUEST['TEMP'])) $TEMP = $_REQUEST['TEMP'];

@@ -10,6 +10,7 @@
 
 
 Version 4.2.1
+ - Changed: improved user interface for adding new fact from clipboard (canajun2eh)
  - Fixed: [ 2672126 ] Media Highlight/Thumb selectors not shown to editing users (canajun2eh)
  - Fixed: Log Error: admin - ERROR 8: Undefined index: small; (windmillway)
  - Changed: removed superfluous "add unlinked note" link on notelist.php page (windmillway)
@@ -94,7 +95,7 @@ Version 4.2.0 2009-01-31
  - Added: [ 2497934 ] Time since login (wooc)
  - Changed: Correct handling of various media file types (canajun2eh)
  - Changed: Correct handling of media files that are URLs (canajun2eh)
- - Changed: Patch [ 2486577 ] applied. Auto show of Notes in Lightbox window and in slide show. (windmillway) 
+ - Changed: Patch [ 2486577 ] applied. Auto show of Notes in Lightbox window and in slide show. (windmillway)
  - Fixed: [ 1864683 ] NOTE text is duplicated (SVN2450) (fisharebest)
  - Fixed: [ 2009275 ] privacy / is_dead calculations are improper (fisharebest)
  - Fixed: [ 2473228 ] update_isdead while Gedcom import (fisharebest)
@@ -120,13 +121,13 @@ Version 4.2.0 2009-01-31
  - Fixed: [ 2457278 ] Advanced search doesn't work right (canajun2eh)
  - Fixed: Quick Update, Edit Name, and Add Person forms don't obey "Surname First" option (canajun2eh)
  - Fixed: Help for Hebrew and Romanized Names in Quick Update form need improvement (canajun2eh)
- - Changed: Remove "Use RTL Functions" option in GEDCOM configuration (canajun2eh) 
+ - Changed: Remove "Use RTL Functions" option in GEDCOM configuration (canajun2eh)
  - Fixed: [ 2454091 ] Error 8 in Indi list (canajun2eh)
  - Fixed: [ 2445781 ] 4559 Events of close relatives (wooc)
  - Fixed: Incorrect Default Audio thumbnail showing when on Mediaviewer or Medialist pages with mp3 media (windmillway)
  - Fixed: [ 2388981 ] gdbi fails with 4.1.6 (fisharebest)
  - Changed: Album Tab: Fixed and Reinstated inline Media sort. (windmillway)
- - Fixed: Advanced Search "Add More Fields" option doesn't work in IE (canajun2eh) 
+ - Fixed: Advanced Search "Add More Fields" option doesn't work in IE (canajun2eh)
  - Added: [ 2271529 ] Export gedcom to index directory (fisharebest)
  - Fixed: [ 2432314 ] client.php 4498 inconsistency (fisharebest)
  - Fixed: [ 2432443 ] error in item called by client.php
