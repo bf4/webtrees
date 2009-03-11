@@ -1128,10 +1128,10 @@ function print_note_record($text, $nlevel, $nrec, $textOnly=false, $return=false
 	$elementID = "N-".floor(microtime()*1000000);
 	$text = trim($text);
 	// Check if Shared Note and if so enable url link on title -------------------
-	if (eregi("0 @N.*@ NOTE", $nrec)) {
+	if (eregi("0 @N([0-9])+@ NOTE", $nrec)) {
 		$centitl  = str_replace("~~", "", $text);
 		$centitl  = str_replace("<br />", "", $centitl);
-		if (preg_match('/@N*[0-9]@/', $nrec, $match_nid)) {
+		if (preg_match("/@N([0-9])+@/", $nrec, $match_nid)) {
 			$nid = preg_replace("/@/", "", $match_nid[0]);
 			$centitl = "<a href=\"note.php?nid=$nid\">".$centitl."</a>";
 		}
@@ -1146,7 +1146,7 @@ function print_note_record($text, $nlevel, $nrec, $textOnly=false, $return=false
 	if (!empty($text)) {
 		$text = PrintReady($text);
 		// Check if Formatted Shared Note -----------------------------------------
-		if (eregi("0 @N.*@ NOTE", $nrec) && strstr($text, "|")) {
+		if (eregi("0 @N([0-9])+@ NOTE", $nrec) && strstr($text, "|")) {
 			$text = "xCxAx<table cellpadding=\"0\"><tr><td>" . $text;
 			// Check if Census Formatted Shared Note --------------------
 			if (strstr($text, "|")) {
@@ -1163,7 +1163,7 @@ function print_note_record($text, $nlevel, $nrec, $textOnly=false, $return=false
 			$text = $text . "</td></tr></table>";
 			$text = str_replace("xCxAx", $centitl."<br />", $text);
 		// Unformatted Shared Note --------------------------------------------------
-		}else if (eregi("0 @N.*@ NOTE", $nrec)) {
+		}else if (eregi("0 @N([0-9])+@ NOTE", $nrec)) {
 			$text=$centitl.$text;
 		}
 
