@@ -1127,28 +1127,26 @@ function print_note_record($text, $nlevel, $nrec, $textOnly=false, $return=false
 	if (!isset($EXPAND_NOTES)) $EXPAND_NOTES = $EXPAND_SOURCES; // FIXME
 	$elementID = "N-".floor(microtime()*1000000);
 	$text = trim($text);
-	// Check if Shared Note ---------------------
+	// Check if Shared Note and if so enable url link on title -------------------
 	if (eregi("0 @N.*@ NOTE", $nrec)) {
 		$centitl  = str_replace("~~", "", $text);
 		$centitl  = str_replace("<br />", "", $centitl);
-		preg_match('/@N*[0-9]@/', $nrec, $match_nid);
-		if ($match_nid) {
+		if (preg_match('/@N*[0-9]@/', $nrec, $match_nid)) {
 			$nid = preg_replace("/@/", "", $match_nid[0]);
+			$centitl = "<a href=\"note.php?nid=$nid\">".$centitl."</a>";
 		}
-		$centitl = "<a href=\"note.php?nid=$nid\">".$centitl."</a>";
 		$text = get_cont($nlevel, $nrec);
 	}else{
 		$text .= get_cont($nlevel, $nrec);
 	}
 	$text = str_replace("~~", "<br />", $text);
 	$text = trim(expand_urls(stripLRMRLM($text)));
-	$text = $text;
 	$data = "";
 
 	if (!empty($text)) {
+		$text = PrintReady($text);
 		// Check if Formatted Shared Note -----------------------------------------
 		if (eregi("0 @N.*@ NOTE", $nrec) && strstr($text, "|")) {
-			$text = PrintReady($text);
 			$text = "xCxAx<table cellpadding=\"0\"><tr><td>" . $text;
 			// Check if Census Formatted Shared Note --------------------
 			if (strstr($text, "|")) {
@@ -1168,16 +1166,16 @@ function print_note_record($text, $nlevel, $nrec, $textOnly=false, $return=false
 		}else if (eregi("0 @N.*@ NOTE", $nrec)) {
 			$text=$centitl.$text;
 		}
-		
+
 		if ($textOnly) {
 			if (!$return) {
 				print $text;
 				return true;
-			} else { 
+			} else {
 				return $text;
 			}
 		}
-		
+
 		$brpos = strpos($text, "<br />");
 		$data .= "<br /><span class=\"label\">";
 		if ($brpos !== false) {
@@ -1190,7 +1188,7 @@ function print_note_record($text, $nlevel, $nrec, $textOnly=false, $return=false
 		}else{
 			$data .= $pgv_lang["note"].": </span><span class=\"field\">";
 		}
-		
+
 		if ($brpos !== false) {
 			$data .= substr($text, 0, $brpos);
 			$data .= "<span id=\"$elementID\"";
@@ -2313,6 +2311,44 @@ function print_add_new_fact($id, $usedfacts, $type) {
 	global $INDI_FACTS_UNIQUE, $FAM_FACTS_UNIQUE, $NOTE_FACTS_UNIQUE, $SOUR_FACTS_UNIQUE, $REPO_FACTS_UNIQUE;
 	global $INDI_FACTS_QUICK,  $FAM_FACTS_QUICK,  $NOTE_FACTS_QUICK,  $SOUR_FACTS_QUICK,  $REPO_FACTS_QUICK;
 
+	// -- Add from clipboard
+	if (!empty($_SESSION["clipboard"])) {
+		$newRow = true;
+		foreach($_SESSION["clipboard"] as $key=>$fact) {
+			if ($fact["type"]==$type || $fact["type"]=='all') {
+				if ($newRow) {
+					$newRow = false;
+					echo '<tr><td class="descriptionbox">';
+					print_help_link("add_from_clipboard_help", "qm");
+					echo $pgv_lang["add_from_clipboard"], '</td>';
+					echo '<td class="optionbox wrap"><form method="get" name="newFromClipboard" action="" onsubmit="return false;">';
+					echo '<select id="newClipboardFact" name="newClipboardFact">';
+				}
+				if (array_key_exists($fact['fact'], $factarray)) {
+					$fact_type=$factarray[$fact['fact']];
+				} else {
+					$fact_type=$fact['fact'];
+				}
+				echo '<option value="clipboard_', $key, '">', $fact_type;
+				// TODO use the event class to store/parse the clipboard events
+				if (preg_match('/^2 DATE (.+)/m', $fact['factrec'], $match)) {
+					$tmp=new GedcomDate($match[1]);
+					echo '; ', $tmp->minDate()->Format('Y');
+				}
+				if (preg_match('/^2 PLAC ([^,\n]+)/m', $fact['factrec'], $match)) {
+					echo '; ', $match[1];
+				}
+				echo '</option>';
+			}
+		}
+		if (!$newRow) {
+			echo '</select>';
+			echo '&nbsp;&nbsp;<input type="button" value="', $pgv_lang["add"], "\" onclick=\"addClipboardRecord('$id', 'newClipboardFact');\" /> ";
+			echo '</form></td></tr>', "\n";
+		}
+	}
+
+	// -- Add from pick list
 	switch ($type) {
 	case "INDI":
 		$addfacts   =preg_split("/[, ;:]+/", $INDI_FACTS_ADD,    -1, PREG_SPLIT_NO_EMPTY);
@@ -2356,29 +2392,8 @@ function print_add_new_fact($id, $usedfacts, $type) {
 		print PrintReady("<option value=\"$fact\">".$factarray[$fact]. " [".$fact."]</option>");
 	}
 	if (($type == "INDI") || ($type == "FAM")) print "<option value=\"EVEN\">".$pgv_lang["custom_event"]." [EVEN]</option>";
-	if (!empty($_SESSION["clipboard"])) {
-		foreach($_SESSION["clipboard"] as $key=>$fact) {
-			if ($fact["type"]==$type || $fact["type"]=='all') {
-				if (array_key_exists($factarray, $fact['fact'])) {
-					$fact_type=$factarray[$fact['fact']];
-				} else {
-					$fact_type=$fact['fact'];
-				}
-				echo '<option value="clipboard_', $key, '">', $pgv_lang['add_from_clipboard'], ' ', $fact_type;
-				// TODO use the event class to store/parse the clipboard events
-				if (preg_match('/^2 DATE (.+)/m', $fact['factrec'], $match)) {
-					$tmp=new GedcomDate($match[1]);
-					echo '; ', $tmp->minDate()->Format('Y');
-				}
-				if (preg_match('/^2 PLAC ([^,\n]+)/m', $fact['factrec'], $match)) {
-					echo '; ', $match[1];
-				}
-				echo '</option>';
-			}
-		}
-	}
 	print "</select>";
-	print "<input type=\"button\" value=\"".$pgv_lang["add"]."\" onclick=\"add_record('$id', 'newfact');\" /> ";
+	print "&nbsp;&nbsp;<input type=\"button\" value=\"".$pgv_lang["add"]."\" onclick=\"add_record('$id', 'newfact');\" /> ";
 	foreach($quickfacts as $k=>$v) echo "&nbsp;<small><a href='javascript://$v' onclick=\"add_new_record('$id', '$v');return false;\">".$factarray["$v"]."</a></small>&nbsp;";
 
 
