@@ -175,6 +175,8 @@ $factarray["NAME:FONE"]	= "שם פונטי";
 $factarray["PLAC:FONE"]	= "מקום פונטי";
 $factarray["TITL:FONE"]	= "כותרת פונטית";
 
+$factarray["SHARED_NOTE"]	= "הערה משותפת";
+
 //These facts are compounds for the view probabilities page
 $factarray["FAMC:HUSB:SURN"] = "שם המשפחה של האב";
 $factarray["FAMC:WIFE:SURN"] = "שם המשפחה של האם";
