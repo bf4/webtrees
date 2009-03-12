@@ -10,6 +10,7 @@
 
 
 Version 4.2.1
+ - Added: [ 2684836 ] Files created with sitemap give an error on Google (borkhuis/wooc)
  - Changed: improved user interface for adding new fact from clipboard (canajun2eh)
  - Fixed: [ 2672126 ] Media Highlight/Thumb selectors not shown to editing users (canajun2eh)
  - Fixed: Log Error: admin - ERROR 8: Undefined index: small; (windmillway)
