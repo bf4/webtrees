@@ -1856,7 +1856,7 @@ function show_media_form($pid, $action = "newentry", $filename = "", $linktoid =
 //	if (PGV_USER_GEDCOM_ADMIN) {
 		// 2 _THUM
 		if ($gedrec == "")
-			$gedthum = "_THUM";
+			$gedthum = "_THUM N";
 		else {
 			//  $gedthum = get_sub_record(1, "_THUM", $gedrec);
 			$gedthum = get_first_tag(1, "_THUM", $gedrec);
