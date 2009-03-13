@@ -107,7 +107,7 @@ $factarray["MARS"]	= "Dote";
 $factarray["MEDI"]	= "Tipo de objeto";
 $factarray["NAME"]	= "Nombre";
 $factarray["NATI"]	= "Nacionalidad";
-$factarray["NATU"]	= "Natural";
+$factarray["NATU"]	= "Naturalización";
 $factarray["NCHI"]	= "Número de hijos";
 $factarray["NICK"]	= "Apodo";
 $factarray["NMR"]	= "Número de matrimonios";
@@ -164,6 +164,19 @@ $factarray["_DBID"] = "ID en la base de datos enlazada";
 
 // These facts are used in specific contexts
 $factarray["STAT:DATE"] = "Fecha del cambio de estado";
+$factarray["DATA:DATE"] = "Fecha de la entrada en la fuente original";
+
+$factarray["NAME:_HEB"]	= "Nombre en hebreo";
+$factarray["PLAC:_HEB"]	= "Lugar en hebreo";
+$factarray["TITL:_HEB"]	= "Título en hebreo";
+$factarray["NAME:ROMN"]	= "Nombre romanizado";
+$factarray["PLAC:ROMN"]	= "Lugar romanizado";
+$factarray["TITL:ROMN"]	= "Título romanizado";
+$factarray["NAME:FONE"]	= "Nombre fonético";
+$factarray["PLAC:FONE"]	= "Lugar fonético";
+$factarray["TITL:FONE"]	= "Título fonético";
+
+$factarray["SHARED_NOTE"]	= "Nota compartida";
 
 //These facts are compounds for the view probabilities and the advanced search pages
 $factarray["FAMC:HUSB:SURN"] = "Apellido del padre";

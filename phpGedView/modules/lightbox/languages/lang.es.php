@@ -1,39 +1,3 @@
-<?php
-/**
- * Lightbox Album module for phpGedView
- *
- * Display media Items using Lightbox
- *
- * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- *
- * @package PhpGedView
- * @subpackage Module
- * @version $Id$
- * @author Brian Holland
- * @translator: Julio Sánchez Fernández
- */
-
-if (!defined('PGV_PHPGEDVIEW')) {
-	header('HTTP/1.0 403 Forbidden');
-	exit;
-}
-
-// Added in VERSION 4.1.6
 $pgv_lang["lb_toAdminConfigPage"]	= "Volver a la página de Administración";
 $pgv_lang["lb_manage"]				= "Gestionar la configuración de Lightbox";
 $pgv_lang["lb_generalhelp"]			= "Página personal - Ayuda general de Lightbox";
@@ -50,9 +14,9 @@ $pgv_lang["lb_ttAppearance"]		= "Notas - Apariencia de la ayuda";
 $pgv_lang["view_lightbox"]			= "Ver álbum de ...";
 $pgv_lang["lb_notes"]				= "Notas";
 // $pgv_lang["lb_notes_info"]			= "";
- 
 
-// Added in VERSION 4.1.4 
+
+// Added in VERSION 4.1.4
 $pgv_lang["lb_details"]			= "Detalles";
 $pgv_lang["lb_detail_info"]		= "Ver los detalles de este objeto ...  Y otras opciones de objetos - Página del visor de objetos";
 $pgv_lang["lb_pause_ss"]		= "Pausar la presentación";
@@ -63,7 +27,7 @@ $pgv_lang["lb_zoom_on"]			= "Zoom activado ... Use la rueda o las teclas i y o p
 $pgv_lang["lb_close_win"]		= "Cerrar la ventana de Lightbox";
 
 
-// VERSION 4.1.3 
+// VERSION 4.1.3
 
 //Config Parameters -------------------------------------
 $pgv_lang["configure_lightbox"]			= "Configuración del Álbum Lightbox";
@@ -95,7 +59,7 @@ $pgv_lang["lb_url_dimensions"]			= "Dimensiones de las ventanas de URL";
 $pgv_lang["lb_url_dimensionsAdvice"]	= "Anchura y altura en píxeles de las ventanas para URL";
 $pgv_lang["lb_width"]					= "Anchura";
 $pgv_lang["lb_height"]					= "Altura";
-									
+
 
 // ---------------------------------------------------------------------
 
