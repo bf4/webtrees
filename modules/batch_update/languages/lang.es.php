@@ -22,7 +22,7 @@
  * @translator: Julio Sánchez Fernández
  * @package PhpGedView
  * @subpackage BatchUpdate
- * @version $Id: lang.es.php,v 1.1 2008/09/06 06:33:59 jsanchez Exp jsanchez $
+ * @version $Id$
  */
 if (!defined('PGV_PHPGEDVIEW')) {
 	header('HTTP/1.0 403 Forbidden');
