@@ -3,7 +3,7 @@
  * Spanish language file for PhpGedView
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
+ * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -34,6 +34,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 
 $pgv_lang["autosearch_ssurname"] = "Incluir apellido del cónyuge:";
 $pgv_lang["autosearch_sgivennames"] = "Incluir los nombres de pila del cónyuge:";
+$pgv_lang["autosearch_sfullname"] = "Incluir el nombre del cónyuge:";
 $pgv_lang["autosearch_plugin_name_gensearchhelp"] = "Módulo para Genealogy-Search-Help.com";
 
 $pgv_lang["add_task_inst"]		= "Si no se ha creado una tarea aún para sus resultados de investigación, debería crearla antes y después elegir la opción de Guardar y completar la tarea.";
@@ -46,7 +47,7 @@ $pgv_lang["manage_research_inst"]	= "Estos elementos le ayudarán a gestionar su
 $pgv_lang["manage_research"]	= "Gestionar investigación";
 $pgv_lang["manage_sources"]		= "Gestionar fuentes";
 $pgv_lang["part_of"]			= "Parte de (opcional)";
-$pgv_lang["search_fhl"]			= "Buscar en el Catálogo de la Biblioteca de Historia Familiar"; 
+$pgv_lang["search_fhl"]			= "Buscar en el Catálogo de la Biblioteca de Historia Familiar";
 $pgv_lang["determine_sources"]	= "Determinar posibles fuentes";
 $pgv_lang["analyze_database"]	= "Analizar la base de datos";
 $pgv_lang["pid_know_more"]		= "¿De quién desea saber más?";
@@ -87,7 +88,7 @@ $pgv_lang["Fields"]								= "Número de campos";
 $pgv_lang["FieldName"]							= "Nombre del campo";
 $pgv_lang["InputType"]							= "Tipo de entrada";
 $pgv_lang["Values"]								= "Valores";
-$pgv_lang["FormBuilder"]						= "Constructor de formularios"; 
+$pgv_lang["FormBuilder"]						= "Constructor de formularios";
 $pgv_lang["FormName"]							= "Introduzca el nombre del formulario";
 $pgv_lang["MultiplePeople"]						= "¿Se aplica este formulario a múltiples personas?";
 $pgv_lang["EnterGEDCOMExtension"]				= "Introduzca por favor la extensión GEDCOM para el tipo del hecho del formulario";
@@ -97,7 +98,7 @@ $pgv_lang["CustomField"]						= "Nombre del campo personalizado";
 $pgv_lang["txt"]								= "Texto";
 $pgv_lang["checkbox"]							= "Casilla de selección";
 $pgv_lang["radiobutton"]						= "Botón de radio";
-$pgv_lang["EnterResults"]						= "Introducir resultados"; 
+$pgv_lang["EnterResults"]						= "Introducir resultados";
 $pgv_lang["ra_submit"]							= "Enviar";
 $pgv_lang["ra_generate_tasks"]					= "Generar tareas a partir de TODO (pendientes)";
 $pgv_lang["TaskDescription"]					= "Descripción de la Tarea";
@@ -139,10 +140,10 @@ $pgv_lang["Parent_Folder:"]             		= "Carpeta superior:";
 $pgv_lang["No_Parent"]                  		= "No hay carpeta superior";
 $pgv_lang["Folder_Description:"]        		= "Descripción de la carpeta:";
 $pgv_lang["Folder_names_must_be_unique"]		= "Los nombres de la carpetas deben ser únicos.";
-$pgv_lang["folder_submitted"]          			= "Su carpeta se ha enviado"; 
+$pgv_lang["folder_submitted"]          			= "Su carpeta se ha enviado";
 $pgv_lang["folder_problem"]             		= "Ha habido problemas agregando su carpeta, inténtelo otra vez, por favor";
 
-// -- Missing Information Help 
+// -- Missing Information Help
 $pgv_lang["ra_missing_info_help"] = "Esta área muestra la información que falta acerca del registro. Seleccione una casilla y una carpeta y haga clic en <b>Agregar Tarea</b> para crear una tarea para el dato que falta. Las tareas existentes mostrarán <b>Ver</b> en vez de una casilla.<br />";
 
 // -- RA_LISTLOGS MESSAGES
@@ -209,15 +210,15 @@ $pgv_lang["uk_county"]					= "Condado";
 $pgv_lang["uk_boro"]						= "Población o Distrito";
 $pgv_lang["uk_place"]					= "Lugar";
 
-$pgv_lang["AssIndiFacts"]				= "Asociar Hechos Personales"; 
-$pgv_lang["AssFamFacts"]				= "Asociar Hechos Familiares";  
-$pgv_lang["ra_facts"]					= "Hechos"; 	
-$pgv_lang["ra_fact"]					= "Hecho"; 
-$pgv_lang["ra_remove"]					= "eliminar";   
-$pgv_lang["ra_inferred_facts"]			= "Hechos deducidos"; 
-$pgv_lang["ra_person"]					= "Persona"; 
-$pgv_lang["ra_reason"]					= "Razón"; 
-$pgv_lang["success"]					= "¡Éxito!"; 
+$pgv_lang["AssIndiFacts"]				= "Asociar Hechos Personales";
+$pgv_lang["AssFamFacts"]				= "Asociar Hechos Familiares";
+$pgv_lang["ra_facts"]					= "Hechos";
+$pgv_lang["ra_fact"]					= "Hecho";
+$pgv_lang["ra_remove"]					= "eliminar";
+$pgv_lang["ra_inferred_facts"]			= "Hechos deducidos";
+$pgv_lang["ra_person"]					= "Persona";
+$pgv_lang["ra_reason"]					= "Razón";
+$pgv_lang["success"]					= "¡Éxito!";
 
 $pgv_lang["registration_no"]			= "Número de Registro:";
 $pgv_lang["serial_no"]					= "Número de serie:";
@@ -238,23 +239,25 @@ $pgv_lang["mytask_show_completed"]		= "¿Mostrar tareas completadas?";
 $pgv_lang["autosearch_surname"]		    = "Incluir apellido:";
 $pgv_lang["autosearch_givenname"]	    = "Incluir nombres de pila:";
 $pgv_lang["autosearch_byear"]		    = "Incluir año de nacimiento:";
-$pgv_lang["autosearch_bloc"]		    = "Incluir el lugar de nacimiento:";  
+$pgv_lang["autosearch_bloc"]		    = "Incluir el lugar de nacimiento:";
 $pgv_lang["autosearch_myear"]		    = "Incluir año de matrimonio:";
 $pgv_lang["autosearch_mloc"]		    = "Incluir el lugar de matrimonio:";
 $pgv_lang["autosearch_dyear"]		    = "Incluir año de defunción:";
 $pgv_lang["autosearch_dloc"]		    = "Incluir el lugar de defunción:";
 $pgv_lang["autosearch_gender"]          = "Incluir sexo:";
-// $pgv_lang["autosearch_plugin_name"]     = "";  
+// $pgv_lang["autosearch_plugin_name"]     = "";
 $pgv_lang["autosearch_fsurname"]		= "Incluir el apellido del padre:";
 $pgv_lang["autosearch_fgivennames"]		= "Incluir los nombres de pila del padre:";
+$pgv_lang["autosearch_ffullname"]		= "Incluir el nombre del padre:";
 $pgv_lang["autosearch_msurname"]		= "Incluir el apellido de la madre:";
-$pgv_lang["autosearch_mgivennames"]	    = "Incluir los nombres de pila de la madre:"; 
-$pgv_lang["autosearch_country"]  	    = "Incluir país:"; 
+$pgv_lang["autosearch_mgivennames"]	    = "Incluir los nombres de pila de la madre:";
+$pgv_lang["autosearch_mfullname"]		= "Incluir el nombre de la madre:";
+$pgv_lang["autosearch_country"]  	    = "Incluir país:";
 $pgv_lang["autosearch_plugin_name_ancestry"] = "Módulo para Ancestry.com";
 $pgv_lang["autosearch_plugin_name_ancestrycouk"] = "Módulo para Ancestry.co.uk";
 $pgv_lang["autosearch_plugin_name_ellisisland"] = "Módulo para EllisIslandRecords.org";
 $pgv_lang["autosearch_plugin_name_geneanet"] = "Módulo para GeneaNet.com";
-$pgv_lang["autosearch_plugin_name_genealogy"]  = "Módulo para Genealogy.com"; 
+$pgv_lang["autosearch_plugin_name_genealogy"]  = "Módulo para Genealogy.com";
 $pgv_lang["autosearch_plugin_name_familysearch"]   = "Módulo para FamilySearch.org";
 $pgv_lang["autosearch_plugin_name_werelate"]   = "Módulo para Werelate.org";
 $pgv_lang["autosearch_search"]           = "Buscar";
