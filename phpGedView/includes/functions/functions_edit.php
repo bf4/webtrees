@@ -2427,6 +2427,7 @@ function create_edit_form($gedrec, $linenum, $level0type) {
 function insert_missing_subtags($level1tag, $add_date=false)
 {
 	global $tags, $date_and_time, $templefacts, $level2_tags, $ADVANCED_PLAC_FACTS, $factarray;
+	global $nondatefacts, $nonplacfacts;
 
 	// handle  MARRiage TYPE
 	$type_val = "";
@@ -2436,6 +2437,9 @@ function insert_missing_subtags($level1tag, $add_date=false)
 	}
 
 	foreach ($level2_tags as $key=>$value) {
+		if ($key=='DATE' && in_array($level1tag, $nondatefacts) || $key=='PLAC' && in_array($level1tag, $nonplacfacts)) {
+			break;
+		}
 		if (in_array($level1tag, $value) && !in_array($key, $tags)) {
 			if ($key=="TYPE") {
 				add_simple_tag("2 TYPE ".$type_val);
