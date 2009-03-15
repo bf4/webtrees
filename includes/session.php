@@ -243,8 +243,8 @@ foreach ($language_settings as $key => $value) {
 }
 // Don't let incoming request change to an unsupported or inactive language
 if (isset($_REQUEST["NEWLANGUAGE"])) {
-	if (empty($pgv_lang_use[$_REQUEST["NEWLANGUAGE"]])) break;
-	if (!$pgv_lang_use[$_REQUEST["NEWLANGUAGE"]]) break;
+	if (empty($pgv_lang_use[$_REQUEST["NEWLANGUAGE"]])) unset($_REQUEST["NEWLANGUAGE"]);
+	else if (!$pgv_lang_use[$_REQUEST["NEWLANGUAGE"]]) unset($_REQUEST["NEWLANGUAGE"]);
 }
 
 /**
