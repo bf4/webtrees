@@ -50,9 +50,9 @@ $pgv_lang["lb_ttAppearance"]		= "Notas - Apariencia de la ayuda";
 $pgv_lang["view_lightbox"]			= "Ver álbum de ...";
 $pgv_lang["lb_notes"]				= "Notas";
 // $pgv_lang["lb_notes_info"]			= "";
- 
 
-// Added in VERSION 4.1.4 
+
+// Added in VERSION 4.1.4
 $pgv_lang["lb_details"]			= "Detalles";
 $pgv_lang["lb_detail_info"]		= "Ver los detalles de este objeto ...  Y otras opciones de objetos - Página del visor de objetos";
 $pgv_lang["lb_pause_ss"]		= "Pausar la presentación";
@@ -63,7 +63,7 @@ $pgv_lang["lb_zoom_on"]			= "Zoom activado ... Use la rueda o las teclas i y o p
 $pgv_lang["lb_close_win"]		= "Cerrar la ventana de Lightbox";
 
 
-// VERSION 4.1.3 
+// VERSION 4.1.3
 
 //Config Parameters -------------------------------------
 $pgv_lang["configure_lightbox"]			= "Configuración del Álbum Lightbox";

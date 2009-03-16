@@ -53,13 +53,13 @@ $pgv_lang["lb_general_help7"]		 = "<li>~Ver la presentación~<br />Haga clic en 
 $pgv_lang["lb_general_help8"]		 = "<li>~Navegación ...~<br />Use la tabla <b>#pgv_lang[view_lightbox]#</b> a la derecha de la tabla de iconos de imágenes para escoger directamente el Álbum de otra persona.<br /><br /></li>";
 $pgv_lang["lb_general_help9"]		 = "<li>~Nota:~<br />Las miniaturas que no son imágenes, sino archivos PDF y objetos de tipo audio, libro o vídeo, pueden visualizarse individualmente, pero no aparecerán en la presentación.<br /><br /></li>";
 $pgv_lang["lb_general_help10"]		 = "<li>~Nota para el administrador:~<br />Si algún archivo de los formatos de imagen habituales (jpg, bmp, gif, etc.) contiene un tipo de imagen como foto, certificado, documento, etc. y aparece en la fila <b>Otros</b>, se debe a que no se ha fijado el valor <b>#factarray[TYPE]#</b> para estos objetos.  Puede desear modificar los detalles del objeto para fijar este valor.</li>";
-//End Lightbox General Help File ----------------------------------------------------------------------------------------------------------------------------- 
+//End Lightbox General Help File -----------------------------------------------------------------------------------------------------------------------------
 
 $pgv_lang["lb_tt_balloonLegend"]		= "Miniatura de pestaña de álbum - Ayuda de enlaces superiores";
 $pgv_lang["lb_tt_balloon_help"]			= "~#pgv_lang[lb_tt_balloonLegend]#~<br />Esta opción le permite determinar si los vínculos sobre cada miniatura deben mostrar una ayuda tipo \"Globo\" o \"Normal\" al hacer clic en ellos. <br /><br />Estos vínculos le muestran las notas asociadas a un objeto o los vínculos a los detalles o fuentes (si existen) de los objetos.<br />";
 
 
-// VERSION 4.1.3 
+// VERSION 4.1.3
 $pgv_lang["mediatabLegend"]				= "Apariencia de la pestaña de objetos";
 $pgv_lang["mediatab_help"]				= "~#pgv_lang[mediatabLegend]#~<br />Esta opción le permite determinar si se muestra la pestaña de Objetos en la página #pgv_lang[indi_info]#.<br /><br />Si se fija esta opción a <b>#pgv_lang[hide]#</b>, sólo se muestra la pestaña <b>#pgv_lang[lightbox]#</b>.<br />";
 $pgv_lang["lb_al_head_linksLegend"]		= "Apariencia del vínculo al encabezamiento en la pestaña Álbum";
@@ -74,7 +74,7 @@ $pgv_lang["lb_music_fileLegend"]		= "Pista de sonido para la presentación";
 $pgv_lang["lb_music_file_help"]			= "~#pgv_lang[lb_music_fileLegend]#~<br />Esta opción le permite especificar una banda sonora a reproducir cada vez que se active la presentación.  Si deja este campo en blanco, no se reproducirá ningún sonido durante la presentación.<br /><br />Esta característica sólo admite archivos en formato mp3.<br />";
 $pgv_lang["lb_transitionLegend"]		= "Velocidad de transición entre imágenes";
 $pgv_lang["lb_transition_help"]			= "~#pgv_lang[lb_transitionLegend]#~<br />Esta opción le permite especificar la velocidad de transición en los cambios de imagen.  Esta selección se aplica durante la presentación.  También se aplica si se desplaza a la imagen anterior o posterior si la presentación está detenida.<br /><br />La opción <b>#pgv_lang[lb_none]#</b> elimina las transiciones entre imágenes de modo que la nueva imagen sustituye de forma inmediata la anterior sin adaptación perceptible a las dimensiones de la nueva imagen.<br />";
-$pgv_lang["lb_url_dimensionsLegend"]	= "Dimensiones para las ventanas para URL de Lightbox"; 
+$pgv_lang["lb_url_dimensionsLegend"]	= "Dimensiones para las ventanas para URL de Lightbox";
 $pgv_lang["lb_url_dimensions_help"]		= "~#pgv_lang[lb_url_dimensionsLegend]#~<br />Si se hace clic en la miniatura de una imagen que corresponde a una URL, esta opción le permite especificar las dimensiones en píxeles de la ventana de Lightbox para la URL.<br /><br />Las dimensiones deberían ser menores que las de la ventana actual de navegador y, desde luego, menores que las de su pantalla.<br />";
 
 ?>

@@ -32,7 +32,6 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
-// $pgv_lang["upload_a_gedcom"] 		= "Upload a GEDCOM file";
 $pgv_lang["upload_a_gedcom"] 		= "Subir un archivo GEDCOM";
 $pgv_lang["start_entering"] 		= "Comenzar la introducción de datos";
 $pgv_lang["add_gedcom_from_path"] 	= "Añadir un GEDCOM a partir de un archivo ya subido";
@@ -120,6 +119,10 @@ $pgv_lang["log_message"]			= "Mensaje en el registro";
 $pgv_lang["searchtype"]				= "Tipo de búsqueda";
 $pgv_lang["query"]					= "Búsqueda";
 $pgv_lang["user"]					= "Usuario autenticado";
+$pgv_lang["editors"]				= "Modificadores";
+$pgv_lang["gedcom_admins"]			= "Administradores del GEDCOM";
+$pgv_lang["site_admins"]			= "Administradores del sitio";
+$pgv_lang["nobody"]					= "Nadie";
 $pgv_lang["thumbnail_deleted"]		= "Archivo de miniatura borrado con éxito.";
 $pgv_lang["thumbnail_not_deleted"]	= "No se pudo borrar el archivo de miniatura.";
 $pgv_lang["step2"]					= "Paso 2 de 4:";
@@ -314,6 +317,7 @@ $pgv_lang["PGV_SMTP_PORT"] 						= "Puerto de SMTP";
 $pgv_lang["PGV_SMTP_AUTH"] 						= "Utilizar identificador y contraseña";
 $pgv_lang["PGV_SMTP_AUTH_USER"] 				= "Identificador de usuario";
 $pgv_lang["PGV_SMTP_AUTH_PASS"] 				= "Contraseña";
+$pgv_lang["PGV_SMTP_SSL"] 						= "Usar SSL";
 $pgv_lang["PGV_SMTP_FROM_NAME"] 				= "Nombre del remitente";
 $pgv_lang["PGV_STORE_MESSAGES"]					= "Permitir el almacenamiento de mensajes en línea:";
 $pgv_lang["phpinfo"]							= "PHPInfo";
@@ -419,5 +423,25 @@ $pgv_lang["tradition_icelandic"]	= "Islandés";
 $pgv_lang["tradition_paternal"]		= "Paterno";
 $pgv_lang["tradition_polish"]		= "Polaca";
 $pgv_lang["tradition_none"]			= "Ninguno";
+
+// -- The following text is used to build the phrase "i years, j months, k days, l hours, m minutes"
+// -- for use in text such as "xxx ago" or "after xxx" or "in xxx"
+$pgv_lang["elapsedYear1"]	=	"1 año";
+$pgv_lang["elapsedYear2"]	=	"#pgv_lang[global_num1]# años";	// used in Polish for 2,3,4 or 22,23,24 or 32,33,34 etc.
+$pgv_lang["elapsedYears"]	=	"#pgv_lang[global_num1]# años";
+$pgv_lang["elapsedMonth1"]	=	"1 mes";
+$pgv_lang["elapsedMonth2"]	=	"#pgv_lang[global_num1]# meses";	// used in Polish for 2,3,4 or 22,23,24 or 32,33,34 etc.
+$pgv_lang["elapsedMonths"]	=	"#pgv_lang[global_num1]# meses";
+$pgv_lang["elapsedDay1"]	=	"1 día";
+$pgv_lang["elapsedDay2"]	=	"#pgv_lang[global_num1]# días";		// used in Polish for 2,3,4 or 22,23,24 or 32,33,34 etc.
+$pgv_lang["elapsedDays"]	=	"#pgv_lang[global_num1]# días";
+$pgv_lang["elapsedHour1"]	=	"1 hora";
+$pgv_lang["elapsedHour2"]	=	"#pgv_lang[global_num1]# horas";	// used in Polish for 2,3,4 or 22,23,24 or 32,33,34 etc.
+$pgv_lang["elapsedHours"]	=	"#pgv_lang[global_num1]# horas";
+$pgv_lang["elapsedMinute1"]	=	"1 minuto";
+$pgv_lang["elapsedMinute2"]	=	"#pgv_lang[global_num1]# minutos";	// used in Polish for 2,3,4 or 22,23,24 or 32,33,34 etc.
+$pgv_lang["elapsedMinutes"]	=	"#pgv_lang[global_num1]# minutos";
+
+$pgv_lang["elapsedAgo"]		=	"#pgv_lang[global_string1]# atrás";
 
 ?>

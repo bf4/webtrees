@@ -38,7 +38,7 @@ $pgv_lang["SITEMAP_help"]           = "~#pgv_lang[SITEMAP]#~<br /><br />Mediante
 $pgv_lang["SM_GEDCOM_SELECT"]       = "Seleccionar GEDCOMs";
 $pgv_lang["SM_GEDCOM_SELECT_help"]  = "~#pgv_lang[SM_GEDCOM_SELECT]#~<br /><br />Seleccionar los GEDCOMs para los que desea crear un archivo sitemap. Seleccione al menos uno.<br/>Si se selecciona la opción \"Sin vínculos a información privada\", sólo se incluirán los vínculos a los datos disponibles públicamente.";
 
-$pgv_lang["SM_ITEM_SELECT"]         = "~#pgv_lang[SM_ITEM_SELECT]#~<br /><br />Seleccione los elementos a poner en el archivo sitemap. Para todos los elementos seleccionados se puede dar una prioridad. Esta prioridad es relativa a las otras prioridades del archivo.<br/>También se puede dar la frecuencia de actualización. Ésta es la frecuencia con la que podrían cambiar los datos en estos elementos. Esto puede influenciar el tiempo entre visitas del robot del motor de búsqueda y, por tanto, influenciar el volumen de tráfico generado por el sitio.";
+$pgv_lang["SM_ITEM_SELECT"]         = "Seleccionar elementos";
 $pgv_lang["SM_ITEM_SELECT_help"]    = "~#pgv_lang[SM_ITEM_SELECT]#~<br /><br />Seleccione los elementos a poner en el archivo sitemap. Para todos los elementos seleccionados se puede dar una prioridad. Esta prioridad es relativa a las otras prioridades del archivo.<br/>También se puede dar la frecuencia de actualización. Ésta es la frecuencia con la que podrían cambiar los datos en estos elementos. Esto puede influenciar el tiempo entre visitas del robot del motor de búsqueda y, por tanto, influenciar el volumen de tráfico generado por el sitio.";
 
 ?>

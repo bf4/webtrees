@@ -420,7 +420,7 @@ class IndividualControllerRoot extends BaseController {
 	* @param Event $event the event object
 	*/
 	function print_name_record(&$event) {
-		global $pgv_lang, $factarray, $NAME_REVERSE;
+		global $pgv_lang, $factarray, $UNDERLINE_NAME_QUOTES, $NAME_REVERSE;
 		global $lang_short_cut, $LANGUAGE;
 
 		if (!$event->canShowDetails()) return false;
@@ -459,6 +459,8 @@ class IndividualControllerRoot extends BaseController {
 					$name = trim($nmatch[$i][2]);
 					$name = preg_replace("'/,'", ",", $name);
 					$name = preg_replace("'/'", " ", $name);
+					if ($UNDERLINE_NAME_QUOTES) $name=preg_replace('/"([^"]*)"/', '<span class="starredname">\\1</span>', $name);
+					$name=preg_replace('/(\S*)\*/', '<span class="starredname">\\1</span>', $name);
 					print PrintReady($name);
 				}
 				print " </span><br />";

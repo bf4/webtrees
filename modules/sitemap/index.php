@@ -66,10 +66,10 @@ if ($action=="sendFiles") {
 
 	echo "<?xml version='1.0' encoding='UTF-8'?>\n";
 	echo "<?xml-stylesheet type=\"text/xsl\" href=\"".$SERVER_URL."modules/sitemap/gss.xsl\"?>\n";
-	echo "<urlset xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n";
-	echo "xsi:schemaLocation=\"http://www.sitemaps.org/schemas/sitemap/0.9\"\n";
-	echo "url=\"http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd\"\n";
-	echo "xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">\n";
+	echo "<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\"\n"; 
+	echo "		xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n"; 
+	echo "		xsi:schemaLocation=\"http://www.sitemaps.org/schemas/sitemap/0.9\n"; 
+	echo "						http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd\">\n"; 
 
 	if (isset($welcome)) {
 		echo "	<url>\n";
