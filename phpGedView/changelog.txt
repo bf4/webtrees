@@ -10,6 +10,7 @@
 
 
 Version 4.2.1
+ - Fixed: [ 2687480 ] Language file editor wrong output when string is ";" (canajun2eh)
  - Fixed: [ 2685597 ] Missing underline for Preferred Name on Personal Details page (canajun2eh)
  - Added: [ 2684836 ] Files created with sitemap give an error on Google (borkhuis/wooc)
  - Changed: improved user interface for adding new fact from clipboard (canajun2eh)
