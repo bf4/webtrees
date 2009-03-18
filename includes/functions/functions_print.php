@@ -1135,8 +1135,13 @@ function print_note_record($text, $nlevel, $nrec, $textOnly=false, $return=false
 			$nid = preg_replace("/@/", "", $match_nid[0]);
 			$centitl = "<a href=\"note.php?nid=$nid\">".$centitl."</a>";
 		}
-		$text = $centitl;
-		return $text;
+		if ($textOnly) {
+			$text = $centitl;
+			return $text;
+		}
+		else {
+			$text = get_cont($nlevel, $nrec);
+		}
 	}else{
 		$text .= get_cont($nlevel, $nrec);
 	}
