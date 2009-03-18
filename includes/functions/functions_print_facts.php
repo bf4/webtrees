@@ -1041,7 +1041,7 @@ function printSourceStructure($textSOUR) {
 		$noterec = find_gedcom_record(str_replace("@", "", $textSOUR["NOTE"]));
 		$nt = preg_match("/0 ".$textSOUR["NOTE"]." NOTE(.*)/", $noterec, $n1match);
 		if ($nt==1) {
-			$note_data.="&nbsp;&nbsp;<span class=\"field\">".print_note_record($n1match[1], 1, $noterec, false, true)."</span>";
+			$note_data.="&nbsp;&nbsp;<span class=\"field\">".print_note_record($n1match[1], 1, $noterec,  true, true)."</span>";
 		}
 	}
 
@@ -1183,10 +1183,10 @@ function print_main_notes($factrec, $level, $pid, $linenum, $noedit=false) {
 				print_main_notes($factrec, $level, $pid, $linenum, $noedit);
 			}
 		}
-		if ($level==2) print "<tr class=\"row_note2\">";
+		if ($level>=2) print "<tr class=\"row_note2\">";
 		else print "<tr>";
 		print "<td valign=\"top\" class=\"descriptionbox";
-		if ($level==2) print " rela";
+		if ($level>=2) print " rela";
 		print " $styleadd center width20\">";
 		if ($level<2) {
 			echo "<img class=\"icon\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["notes"]["small"]."\" alt=\"\" />";
