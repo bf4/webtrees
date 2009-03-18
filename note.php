@@ -89,7 +89,7 @@ if (!$controller->isPrintPreview()) {
 		echo '</tr></table>';
 	}
 }
-echo '</td></tr><tr><td colspan="2"><table border=\"0\" class="facts_table">';
+echo '</td></tr><tr><td colspan="2"><table border="0" class="facts_table width80 center">';
 
 	// Shared Note details ---------------------
 	$noterec = find_gedcom_record($controller->nid);
@@ -99,7 +99,7 @@ echo '</td></tr><tr><td colspan="2"><table border=\"0\" class="facts_table">';
 	}else{
 		$note = "No Text";
 	}
-	echo '<tr><td align="left" class="descriptionbox">';
+	echo '<tr><td align="left" class="descriptionbox '.$TEXT_DIRECTION.'">';
 		echo "<center>".$pgv_lang["shared_note"]."</center>";
 		echo '<br /><br />';
 		if (PGV_USER_CAN_EDIT) {
@@ -107,7 +107,7 @@ echo '</td></tr><tr><td colspan="2"><table border=\"0\" class="facts_table">';
 			echo $pgv_lang['edit'];
 			echo "</a>";
 		}
-		echo '</td><td class="optionbox wrap" width="400px">';
+		echo '</td><td class="optionbox wrap width80 '.$TEXT_DIRECTION.'">';
 		echo $note;
 		echo "<br />";
 	echo "</td></tr>";
@@ -130,10 +130,10 @@ echo '</td></tr><tr><td colspan="2"><table border=\"0\" class="facts_table">';
 	if (!$controller->isPrintPreview() && $controller->userCanEdit()) {
 		print_add_new_fact($controller->nid, $notefacts, 'NOTE');
 		// new media
-		echo '<tr><td class="descriptionbox">';
+		echo '<tr><td class="descriptionbox '.$TEXT_DIRECTION.'">';
 		print_help_link('add_media_help', 'qm', 'add_media_lbl');
 		echo $pgv_lang['add_media_lbl'] . '</td>';
-		echo '<td class="optionbox">';
+		echo '<td class="optionbox '.$TEXT_DIRECTION.'">';
 		echo '<a href="javascript: ', $pgv_lang['add_media_lbl'], '" onclick="window.open(\'addmedia.php?action=showmediaform&linktoid=', $controller->nid, '\', \'_blank\', \'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1\'); return false;">', $pgv_lang['add_media'], '</a>';
 		echo '<br />';
 		echo '<a href="javascript:;" onclick="window.open(\'inverselink.php?linktoid='.$controller->nid.'&linkto=note\', \'_blank\', \'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1\'); return false;">'.$pgv_lang['link_to_existing_media'].'</a>';

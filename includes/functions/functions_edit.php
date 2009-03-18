@@ -1028,7 +1028,7 @@ function print_editnote_link($note_id) {
 	else $Link = $text;
 	echo "<a href=\"javascript: var win02=window.open('edit_interface.php?action=editnote&pid=$note_id', 'win02', 'top=70, left=70, width=620, height=500, resizable=1, scrollbars=1 ' )\">";
 	echo $Link;
-	echo "</a>";
+	echo "</a><br />";
 }
 
 /**
