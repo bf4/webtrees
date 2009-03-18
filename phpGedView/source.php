@@ -40,12 +40,12 @@ $linkToID=$controller->sid;
 print_header($controller->getPageTitle());
 
 // If LightBox installed ---------------------------------
-if ($MULTI_MEDIA && file_exists('modules/lightbox.php')) {
-	include 'modules/lightbox/lb_defaultconfig.php';
-	if (file_exists('modules/lightbox/lb_config.php')) {
-		include 'modules/lightbox/lb_config.php';
+if ($MULTI_MEDIA && file_exists('./modules/lightbox.php')) {
+	include './modules/lightbox/lb_defaultconfig.php';
+	if (file_exists('./modules/lightbox/lb_config.php')) {
+		include './modules/lightbox/lb_config.php';
 	}
-	include 'modules/lightbox/functions/lb_call_js.php';
+	include './modules/lightbox/functions/lb_call_js.php';
 	loadLangFile('lightbox:lang');
 }
 
