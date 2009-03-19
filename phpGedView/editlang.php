@@ -236,40 +236,40 @@ case "edit" :
 		switch ($file_type) {
 		case "facts":
 			$whichFile = $factsfile;
-			$whichVars = "factarray[";
+			$whichVars = '$factarray[';
 			break;
 		case "configure_help":
 			$whichFile = $confighelpfile;
-			$whichVars = "pgv_lang[";
+			$whichVars = '$pgv_lang[';
 			break;
 		case "help_text":
 			$whichFile = $helptextfile;
-			$whichVars = "pgv_lang[";
+			$whichVars = '$pgv_lang[';
 			break;
 		case "admin":
 			$whichFile = $adminfile;
-			$whichVars = "pgv_lang[";
+			$whichVars = '$pgv_lang[';
 			break;
 		case "editor":
 			$whichFile = $editorfile;
-			$whichVars = "pgv_lang[";
+			$whichVars = '$pgv_lang[';
 			break;
 		case "countries":
 			$whichFile = $countryfile;
-			$whichVars = "countries[";
+			$whichVars = '$countries[';
 			break;
 		case "faqlist":
 			$whichFile = $faqlistfile;
-			$whichVars = "faqlist[";
+			$whichVars = '$faqlist[';
 			break;
 		case "extra":
 			$whichFile = $extrafile;
-			$whichVars = array("pgv_lang[", "factarray[", "countries[", "faqlist[");
+			$whichVars = array('$pgv_lang[', '$factarray[', '$countries[', '$faqlist[');
 			break;
 		case "lang":
 		default:
 			$whichFile = $pgv_language;
-			$whichVars = "pgv_lang[";
+			$whichVars = '$pgv_lang[';
 			break;
 		}
 		// read the english language file into array
@@ -300,11 +300,11 @@ case "edit" :
 				$dummy_output .= "<a name=\"a1_".$ls01."\"></a>";
 				$untranslatedText = mask_all($english_language_array[$ls01][1]);
 
-					if ($untranslatedText == "") {
-						$dummy_output .= "<strong style=\"color: #FF0000\">".str_replace("#LANGUAGE_FILE#", $pgv_language[$language1], $pgv_lang["message_empty_warning"])."</strong>";
-					} else {
-						$dummy_output .= "<i><span id=\"untr_{$ls01}\">".$untranslatedText."</span></i>";
-					}
+				if ($untranslatedText == "") {
+					$dummy_output .= "<strong style=\"color: #FF0000\">".str_replace("#LANGUAGE_FILE#", $pgv_language[$language1], $pgv_lang["message_empty_warning"])."</strong>";
+				} else {
+					$dummy_output .= "<i><span id=\"untr_{$ls01}\">".$untranslatedText."</span></i>";
+				}
 				$dummy_output .= "</td>";
 				$dummy_output .= "</tr>";
 				$dummy_output_02 = "";
@@ -312,9 +312,12 @@ case "edit" :
 				$dummy_output_02 .= "<td class=\"facts_value wrap\">";
 
 				$found = false;
+				$englishTarget1 = $english_language_array[$ls01][0];
+				$englishTarget2 = str_replace('"', "'", $englishTarget1);		// Var name could be enclosed in apostrophes
+				$englishTarget3 = str_replace("'", '"', $englishTarget1);		// Var name could be enclosed in apostrophes
 				for ($y = 0; $y < sizeof($new_language_array); $y++) {
 					if (isset($new_language_array[$y][1])) {
-						if ($new_language_array[$y][0] == $english_language_array[$ls01][0]) {
+						if ($new_language_array[$y][0] == $englishTarget1 || $new_language_array[$y][0] == $englishTarget2 || $new_language_array[$y][0] == $englishTarget3) {
 							$dDummy =  $new_language_array[$y][1];
 							$dummy_output_02 .= "<a href=\"javascript:;\" onclick=\"return helpPopup00('".encode_url("ls01={$ls01}&ls02={$y}&language2={$language2}&file_type={$file_type}&".session_name()."=".session_id()."&anchor=a1_{$ls01}")."');\">";
 							$translatedText = mask_all($dDummy);
@@ -648,7 +651,9 @@ case "compare" :
 				echo "<table class=\"facts_table $TEXT_DIRECTION\">";
 				$count=0;
 				foreach($list1 as $key=>$value) {
-					if (!array_key_exists($key, $list2)) {
+					$key2 = str_replace('"', "'", $key);		// Var name could be enclosed in apostrophes
+					$key3 = str_replace("'", '"', $key);		// Var name could be enclosed in apostrophes
+					if (!array_key_exists($key, $list2) && !array_key_exists($key2, $list2) & !array_key_exists($key3, $list2)) {
 						echo "<tr><td class=\"facts_label\">", $key, "</td>";
 						echo "<td class=\"facts_value\">", mask_all($value), "</td></tr>";
 						$count++;
@@ -664,7 +669,9 @@ case "compare" :
 				echo "<table class=\"facts_table $TEXT_DIRECTION\">";
 				$count=0;
 				foreach($list2 as $key=>$value) {
-					if (!array_key_exists($key, $list1)) {
+					$key2 = str_replace('"', "'", $key);		// Var name could be enclosed in apostrophes
+					$key3 = str_replace("'", '"', $key);		// Var name could be enclosed in apostrophes
+					if (!array_key_exists($key, $list1) && !array_key_exists($key2, $list1) && !array_key_exists($key3, $list1)) {
 						echo "<tr><td class=\"facts_label\">", $key, "</td>";
 						echo "<td class=\"facts_value\">", mask_all($value), "</td></tr>";
 						$count++;
