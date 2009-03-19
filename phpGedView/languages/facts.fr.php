@@ -3,7 +3,7 @@
  * French Language file for PhpGedView.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team. All rights reserved.
+ * Copyright (C) 2002 to 2009  PGV Development Team. All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -275,7 +275,7 @@ $factarray["_DEAT_SPOU"]                = "Décès du conjoint";
 $factarray["_BURI_SPOU"]                = "Enterrement du conjoint";
 $factarray["_CREM_SPOU"]                = "Crémation du conjoint";
 $factarray["_BIRT_CHIL"]                = "Naissance d'un enfant";
-$factarray["_CHR_CHIL" ]                = "Baptême d'un enfant";
+$factarray["_CHR_CHIL"]                = "Baptême d'un enfant";
 $factarray["_BAPM_CHIL"]                = "Baptême d'un enfant";
 $factarray["__BRTM_CHIL"]               = "Brit Mila d'un enfant";
 $factarray["_ADOP_CHIL"]                = "Adoption d'un enfant";
@@ -285,7 +285,7 @@ $factarray["_DEAT_CHIL"]                = "Décès d'un enfant";
 $factarray["_BURI_CHIL"]                = "Enterrement d'un enfant";
 $factarray["_CREM_CHIL"]                = "Crémation d'un enfant";
 $factarray["_BIRT_GCHI"]                = "Naissance d'un petit-enfant";
-$factarray["_CHR_GCHI" ]                = "Baptême d'un petit-enfant";
+$factarray["_CHR_GCHI"]                = "Baptême d'un petit-enfant";
 $factarray["_BAPM_GCHI"]                = "Baptême d'un petit-enfant";
 $factarray["__BRTM_GCHI"]               = "Brit Mila d'un petit-enfant";
 $factarray["_ADOP_GCHI"]                = "Adoption d'un petit-enfant";
@@ -295,7 +295,7 @@ $factarray["_DEAT_GCHI"]                = "Décès d'un petit-enfant";
 $factarray["_BURI_GCHI"]                = "Enterrement d'un petit-enfant";
 $factarray["_CREM_GCHI"]                = "Crémation d'un petit-enfant";
 $factarray["_BIRT_GGCH"]                = "Naissance d'un arrière-petit-enfant";
-$factarray["_CHR_GGCH" ]                = "Baptême d'un arrière-petit-enfant";
+$factarray["_CHR_GGCH"]                = "Baptême d'un arrière-petit-enfant";
 $factarray["_BAPM_GGCH"]                = "Baptême d'un arrière-petit-enfant";
 $factarray["__BRTM_GGCH"]               = "Brit Mila d'un arrière-petit-enfant";
 $factarray["_ADOP_GGCH"]                = "Adoption d'un arrière-petit-enfant";
@@ -317,7 +317,7 @@ $factarray["_DEAT_MOTH"]                = "Décès de la mère";
 $factarray["_BURI_MOTH"]                = "Enterrement de la mère";
 $factarray["_CREM_MOTH"]                = "Crémation de la mère";
 $factarray["_BIRT_SIBL"]                = "Naissance frère/sœur";
-$factarray["_CHR_SIBL" ]                = "Baptême frère/sœur";
+$factarray["_CHR_SIBL"]                = "Baptême frère/sœur";
 $factarray["_BAPM_SIBL"]                = "Baptême frère/sœur";
 $factarray["__BRTM_SIBL"]               = "Brit Mila frère/sœur";
 $factarray["_ADOP_SIBL"]                = "Adoption frère/sœur";
@@ -327,7 +327,7 @@ $factarray["_DEAT_SIBL"]                = "Décès frère/sœur";
 $factarray["_BURI_SIBL"]                = "Enterrement frère/sœur";
 $factarray["_CREM_SIBL"]                = "Crémation frère/sœur";
 $factarray["_BIRT_HSIB"]                = "Naissance demi-frère/sœur";
-$factarray["_CHR_HSIB" ]                = "Baptême demi-frère/sœur";
+$factarray["_CHR_HSIB"]                = "Baptême demi-frère/sœur";
 $factarray["_BAPM_HSIB"]                = "Baptême demi-frère/sœur";
 $factarray["__BRTM_HSIB"]               = "Brit Mila demi-frère/sœur";
 $factarray["_ADOP_HSIB"]                = "Adoption demi-frère/sœur";
@@ -337,7 +337,7 @@ $factarray["_DEAT_HSIB"]                = "Décès demi-frère/sœur";
 $factarray["_BURI_HSIB"]                = "Enterrement demi-frère/sœur";
 $factarray["_CREM_HSIB"]                = "Crémation demi-frère/sœur";
 $factarray["_BIRT_NEPH"]                = "Naissance neveu/nièce";
-$factarray["_CHR_NEPH" ]                = "Baptême neveu/nièce";
+$factarray["_CHR_NEPH"]                = "Baptême neveu/nièce";
 $factarray["_BAPM_NEPH"]                = "Baptême neveu/nièce";
 $factarray["__BRTM_NEPH"]               = "Brit Mila neveu";
 $factarray["_ADOP_NEPH"]                = "Adoption neveu/nièce";
@@ -353,7 +353,7 @@ $factarray["_DEAT_GGPA"]                = "Décès d'un arrière-grand-parent";
 $factarray["_BURI_GGPA"]                = "Enterrement d'un arrière grand-parent";
 $factarray["_CREM_GGPA"]                = "Crémation d'un arrière grand-parent";
 $factarray["_BIRT_FSIB"]                = "Naissance frère/sœur du père";
-$factarray["_CHR_FSIB" ]                = "Baptême frère/sœur du père";
+$factarray["_CHR_FSIB"]                = "Baptême frère/sœur du père";
 $factarray["_BAPM_FSIB"]                = "Baptême frère/sœur du père";
 $factarray["__BRTM_FSIB"]               = "Brit Mila frère/sœur du père";
 $factarray["_ADOP_FSIB"]                = "Adoption frère/sœur du père";
@@ -363,7 +363,7 @@ $factarray["_DEAT_FSIB"]                = "Décès frère/sœur du père";
 $factarray["_BURI_FSIB"]                = "Enterrement frère/sœur du père";
 $factarray["_CREM_FSIB"]                = "Crémation frère/sœur du père";
 $factarray["_BIRT_MSIB"]                = "Naissance frère/sœur de la mère";
-$factarray["_CHR_MSIB" ]                = "Baptême frère/sœur de la mère";
+$factarray["_CHR_MSIB"]                = "Baptême frère/sœur de la mère";
 $factarray["_BAPM_MSIB"]                = "Baptême frère/sœur de la mère";
 $factarray["__BRTM_MSIB"]               = "Brit Mila frère/sœur de la mère";
 $factarray["_ADOP_MSIB"]                = "Adoption frère/sœur de la mère";

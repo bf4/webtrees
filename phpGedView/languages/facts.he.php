@@ -336,7 +336,7 @@ $factarray["_BURI_SPOU"] = "קבורת בן/בת זוג";
 $factarray["_CREM_SPOU"] = "שריפת בן/בת זוג";
 
 $factarray["_BIRT_CHIL"] = "לידת בן/בת";
-$factarray["_CHR_CHIL" ] = "הטבלת בן/בת";
+$factarray["_CHR_CHIL"] = "הטבלת בן/בת";
 $factarray["_BAPM_CHIL"] = "טבילת בן/בת";
 $factarray["__BRTM_CHIL"] = "ברית מילה של בן";
 $factarray["_ADOP_CHIL"] = "אמוץ של בן/בת";
@@ -347,7 +347,7 @@ $factarray["_BURI_CHIL"] = "קבורת בן/בת";
 $factarray["_CREM_CHIL"] = "שריפת בן/בת";
 
 $factarray["_BIRT_GCHI"] = "לידת נכד/ה";
-$factarray["_CHR_GCHI" ] = "הטבלת נכד/ה";
+$factarray["_CHR_GCHI"] = "הטבלת נכד/ה";
 $factarray["_BAPM_GCHI"] = "טבילת נכד/ה";
 $factarray["__BRTM_GCHI"] = "ברית מילה של נכד";
 $factarray["_ADOP_GCHI"] = "אמוץ נכד/ה";
@@ -358,7 +358,7 @@ $factarray["_BURI_GCHI"] = "קבורת נכד/ה";
 $factarray["_CREM_GCHI"] = "שריפת נכד/ה";
 
 $factarray["_BIRT_GGCH"] = "לידת שלש/ה";
-$factarray["_CHR_GGCH" ] = "הטבלת שלש/ה";
+$factarray["_CHR_GGCH"] = "הטבלת שלש/ה";
 $factarray["_BAPM_GGCH"] = "טבילת שלש/ה";
 $factarray["__BRTM_GGCH"] = "ברית מילה של שלש";
 $factarray["_ADOP_GGCH"] = "אמוץ שלש/ה";
@@ -384,7 +384,7 @@ $factarray["_BURI_MOTH"] = "קבורת אם";
 $factarray["_CREM_MOTH"] = "שריפת אם";
 
 $factarray["_BIRT_SIBL"] = "לידת אח/ות";
-$factarray["_CHR_SIBL" ] = "הטבלת אח/ות";
+$factarray["_CHR_SIBL"] = "הטבלת אח/ות";
 $factarray["_BAPM_SIBL"] = "טבילת אח/ות";
 $factarray["__BRTM_SIBL"] = "ברית מילה של אח";
 $factarray["_ADOP_SIBL"] = "אמוץ אח/ות";
@@ -395,7 +395,7 @@ $factarray["_BURI_SIBL"] = "קבורת אח/ות";
 $factarray["_CREM_SIBL"] = "שריפת אח/ות";
 
 $factarray["_BIRT_HSIB"] = "לידת אח/ות למחצה";
-$factarray["_CHR_HSIB" ] = "הטבלת אח/ות למחצה";
+$factarray["_CHR_HSIB"] = "הטבלת אח/ות למחצה";
 $factarray["_BAPM_HSIB"] = "טבילת אח/ות למחצה";
 $factarray["__BRTM_HSIB"] = "ברית מילה של אח למחצה";
 $factarray["_ADOP_HSIB"] = "אמוץ אח/ות למחצה";
@@ -406,7 +406,7 @@ $factarray["_BURI_HSIB"] = "קבורת אח/ות למחצה";
 $factarray["_CREM_HSIB"] = "שריפת אח/ות למחצה";
 
 $factarray["_BIRT_NEPH"] = "לידת אחיין/אחיינית";
-$factarray["_CHR_NEPH" ] = "הטבלת אחיין/אחיינית";
+$factarray["_CHR_NEPH"] = "הטבלת אחיין/אחיינית";
 $factarray["_BAPM_NEPH"] = "טבילת אחיין/אחיינית";
 $factarray["__BRTM_NEPH"] = "ברית מילה של אחיין";
 $factarray["_ADOP_NEPH"] = "אמוץ אחיין/אחיינית";
@@ -425,7 +425,7 @@ $factarray["_BURI_GGPA"] = "קבורת סבא רבא/סבתא רבתא";
 $factarray["_CREM_GGPA"] = "שריפת סבא רבא/סבתא רבתא";
 
 $factarray["_BIRT_FSIB"] = "לידת אח/ות האב";
-$factarray["_CHR_FSIB" ] = "הטבלת אח/ות האב";
+$factarray["_CHR_FSIB"] = "הטבלת אח/ות האב";
 $factarray["_BAPM_FSIB"] = "טבילת אח/ות האב";
 $factarray["__BRTM_FSIB"] = "ברית מילה של אח האב";
 $factarray["_ADOP_FSIB"] = "אמוץ אח/ות האב";
@@ -436,7 +436,7 @@ $factarray["_BURI_FSIB"] = "קבורת אח/ות האב";
 $factarray["_CREM_FSIB"] = "שריפת אח/ות האב";
 
 $factarray["_BIRT_MSIB"] = "לידת אח/ות האם";
-$factarray["_CHR_MSIB" ] = "הטבלת אח/ות האם";
+$factarray["_CHR_MSIB"] = "הטבלת אח/ות האם";
 $factarray["_BAPM_MSIB"] = "טבילת אח/ות האם";
 $factarray["__BRTM_MSIB"] = "ברית מילה של אח האם";
 $factarray["_ADOP_MSIB"] = "אמוץ אח/ות האם";

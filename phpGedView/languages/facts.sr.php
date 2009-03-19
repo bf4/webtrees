@@ -298,7 +298,7 @@ $factarray["_BURI_SPOU"] = "Pokop supružnika";
 $factarray["_CREM_SPOU"] = "Kremacija supružnika";
 
 $factarray["_BIRT_CHIL"] = "Rođenje deteta";
-$factarray["_CHR_CHIL" ] = "Krštenje deteta";
+$factarray["_CHR_CHIL"] = "Krštenje deteta";
 ##$factarray["_BAPM_CHIL"] = "Baptism of a child";
 ##$factarray["__BRTM_CHIL"] = "Brit Mila of a child";
 $factarray["_ADOP_CHIL"] = "Usvojenje deteta";
@@ -309,7 +309,7 @@ $factarray["_BURI_CHIL"] = "Pokop deteta";
 $factarray["_CREM_CHIL"] = "Kremacija deteta";
 
 $factarray["_BIRT_GCHI"] = "Rođenje unučeta";
-$factarray["_CHR_GCHI" ] = "Krštenje unučeta";
+$factarray["_CHR_GCHI"] = "Krštenje unučeta";
 ##$factarray["_BAPM_GCHI"] = "Baptism of a grandchild";
 ##$factarray["__BRTM_GCHI"] = "Brit Mila of a grandchild";
 ##$factarray["_ADOP_GCHI"] = "Adoption of a grandchild";
@@ -320,7 +320,7 @@ $factarray["_CHR_GCHI" ] = "Krštenje unučeta";
 ##$factarray["_CREM_GCHI"] = "Cremation of a grandchild";
 
 ##$factarray["_BIRT_GGCH"] = "Birth of a great-grandchild";
-##$factarray["_CHR_GGCH" ] = "Christening of a great-grandchild";
+##$factarray["_CHR_GGCH"] = "Christening of a great-grandchild";
 ##$factarray["_BAPM_GGCH"] = "Baptism of a great-grandchild";
 ##$factarray["__BRTM_GGCH"] = "Brit Mila of a great-grandchild";
 ##$factarray["_ADOP_GGCH"] = "Adoption of a great-grandchild";
@@ -346,7 +346,7 @@ $factarray["_DEAT_MOTH"] = "Smrt majke";
 ##$factarray["_CREM_MOTH"] = "Cremation of mother";
 
 $factarray["_BIRT_SIBL"] = "Rođenje brata/sestre";
-##$factarray["_CHR_SIBL" ] = "Christening of sibling";
+##$factarray["_CHR_SIBL"] = "Christening of sibling";
 ##$factarray["_BAPM_SIBL"] = "Baptism of sibling";
 ##$factarray["__BRTM_SIBL"] = "Brit Mila of sibling";
 ##$factarray["_ADOP_SIBL"] = "Adoption of sibling";
@@ -357,7 +357,7 @@ $factarray["_DEAT_SIBL"] = "Smrt brata/sestre";
 ##$factarray["_CREM_SIBL"] = "Cremation of sibling";
 
 ##$factarray["_BIRT_HSIB"] = "Birth of half-sibling";
-##$factarray["_CHR_HSIB" ] = "Christening of half-sibling";
+##$factarray["_CHR_HSIB"] = "Christening of half-sibling";
 ##$factarray["_BAPM_HSIB"] = "Baptism of half-sibling";
 ##$factarray["__BRTM_HSIB"] = "Brit Mila of half-sibling";
 ##$factarray["_ADOP_HSIB"] = "Adoption of half-sibling";
@@ -368,7 +368,7 @@ $factarray["_DEAT_SIBL"] = "Smrt brata/sestre";
 ##$factarray["_CREM_HSIB"] = "Cremation of half-sibling";
 
 ##$factarray["_BIRT_NEPH"] = "Birth of a nephew or niece";
-##$factarray["_CHR_NEPH" ] = "Christening of a nephew or niece";
+##$factarray["_CHR_NEPH"] = "Christening of a nephew or niece";
 ##$factarray["_BAPM_NEPH"] = "Baptism of a nephew or niece";
 ##$factarray["__BRTM_NEPH"] = "Brit Mila of a nephew";
 ##$factarray["_ADOP_NEPH"] = "Adoption of a nephew or niece";
@@ -387,7 +387,7 @@ $factarray["_DEAT_GGPA"] = "Smrt pradede ili prababe";
 ##$factarray["_CREM_GGPA"] = "Cremation of a great-grand-parent";
 
 $factarray["_BIRT_FSIB"] = "Rođenje očevog brata ili sestre";
-##$factarray["_CHR_FSIB" ] = "Christening of father's sibling";
+##$factarray["_CHR_FSIB"] = "Christening of father's sibling";
 ##$factarray["_BAPM_FSIB"] = "Baptism of father's sibling";
 ##$factarray["__BRTM_FSIB"] = "Brit Mila of father's sibling";
 ##$factarray["_ADOP_FSIB"] = "Adoption of father's sibling";
@@ -398,7 +398,7 @@ $factarray["_BIRT_FSIB"] = "Rođenje očevog brata ili sestre";
 ##$factarray["_CREM_FSIB"] = "Cremation of father's sibling";
 
 ##$factarray["_BIRT_MSIB"] = "Birth of mother's sibling";
-##$factarray["_CHR_MSIB" ] = "Christening of mother's sibling";
+##$factarray["_CHR_MSIB"] = "Christening of mother's sibling";
 ##$factarray["_BAPM_MSIB"] = "Baptism of mother's sibling";
 ##$factarray["__BRTM_MSIB"] = "Brit Mila of mother's sibling";
 ##$factarray["_ADOP_MSIB"] = "Adoption of mother's sibling";
