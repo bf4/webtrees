@@ -312,7 +312,7 @@ $factarray["_BURI_SPOU"] = "Pogrzeb współmałżonka";
 $factarray["_CREM_SPOU"] = "Kremacja współmałżonka";
 
 $factarray["_BIRT_CHIL"] = "Narodziny dziecka";
-$factarray["_CHR_CHIL" ] = "Chrzest dziecka";
+$factarray["_CHR_CHIL"] = "Chrzest dziecka";
 $factarray["_BAPM_CHIL"] = "Chrzest mormoński dziecka";
 $factarray["__BRTM_CHIL"]= "Obrzezanie dziecka";
 $factarray["_ADOP_CHIL"] = "Adopcja dziecka";
@@ -323,7 +323,7 @@ $factarray["_BURI_CHIL"] = "Pogrzeb dziecka";
 $factarray["_CREM_CHIL"] = "Kremacja dziecka";
 
 $factarray["_BIRT_GCHI"] = "Narodziny wnuka/wnuczki";
-$factarray["_CHR_GCHI" ] = "Chrzest wnuka/wnuczki";
+$factarray["_CHR_GCHI"] = "Chrzest wnuka/wnuczki";
 $factarray["_BAPM_GCHI"] = "Chrzest mormoński wnuka/wnuczki";
 $factarray["__BRTM_GCHI"]= "Obrzezanie wnuka/wnuczki";
 $factarray["_ADOP_GCHI"] = "Adopcja wnuka/wnuczki";
@@ -334,7 +334,7 @@ $factarray["_BURI_GCHI"] = "Pogrzeb wnuka/wnuczki";
 $factarray["_CREM_GCHI"] = "Kremacja wnuka/wnuczki";
 
 $factarray["_BIRT_GGCH"] = "Narodziny prawnuka/prawnuczki";
-$factarray["_CHR_GGCH" ] = "Chrzest prawnuka/prawnuczki";
+$factarray["_CHR_GGCH"] = "Chrzest prawnuka/prawnuczki";
 $factarray["_BAPM_GGCH"] = "Chrzest mormoński prawnuka/prawnuczki";
 $factarray["__BRTM_GGCH"]= "Obrzezanie prawnuka/prawnuczki";
 $factarray["_ADOP_GGCH"] = "Adopcja prawnuka/prawnuczki";
@@ -360,7 +360,7 @@ $factarray["_BURI_MOTH"] = "Pogrzeb matki";
 $factarray["_CREM_MOTH"] = "Kremacja matki";
 
 $factarray["_BIRT_SIBL"] = "Narodziny brata/siostry";
-$factarray["_CHR_SIBL" ] = "Chrzest brata/siostry";
+$factarray["_CHR_SIBL"] = "Chrzest brata/siostry";
 $factarray["_BAPM_SIBL"] = "Chrzest mormoński brata/siostry";
 $factarray["__BRTM_SIBL"]= "Obrzezanie brata/siostry";
 $factarray["_ADOP_SIBL"] = "Adopcja brata/siostry";
@@ -371,7 +371,7 @@ $factarray["_BURI_SIBL"] = "Pogrzeb brata/siostry";
 $factarray["_CREM_SIBL"] = "Kremacja brata/siostry";
 
 $factarray["_BIRT_HSIB"] = "Narodziny brata przyrodniego/siostry przyrodniej";
-$factarray["_CHR_HSIB" ] = "Chrzest brata przyrodniego/siostry przyrodniej";
+$factarray["_CHR_HSIB"] = "Chrzest brata przyrodniego/siostry przyrodniej";
 $factarray["_BAPM_HSIB"] = "Chrzest mormoński brata przyrodniego/siostry przyrodniej";
 $factarray["__BRTM_HSIB"]= "Obrzezanie brata przyrodniego/siostry przyrodniej";
 $factarray["_ADOP_HSIB"] = "Adopcja brata przyrodniego/siostry przyrodniej";
@@ -382,7 +382,7 @@ $factarray["_BURI_HSIB"] = "Pogrzeb brata przyrodniego/siostry przyrodniej";
 $factarray["_CREM_HSIB"] = "Kremacja brata przyrodniego/siostry przyrodniej";
 
 $factarray["_BIRT_NEPH"] = "Narodziny siostrzeńca/bratanka lub siostrzenicy/bratanicy";
-$factarray["_CHR_NEPH" ] = "Chrzest bratanka/bratanicy lub siostrzeńca/siostrzenicy";
+$factarray["_CHR_NEPH"] = "Chrzest bratanka/bratanicy lub siostrzeńca/siostrzenicy";
 $factarray["_BAPM_NEPH"] = "Chrzest mormoński bratanka/bratanicy lub siostrzeńca/siostrzenicy";
 $factarray["__BRTM_NEPH"]= "Obrzezanie bratanka/bratanicy lub siostrzeńca/siostrzenicy";
 $factarray["_ADOP_NEPH"] = "Adopcja bratanka/bratanicy lub siostrzeńca/siostrzenicy";
@@ -401,7 +401,7 @@ $factarray["_BURI_GGPA"] = "Pogrzeb pradziadka/prababci";
 $factarray["_CREM_GGPA"] = "Kremacja pradziadka/prababci";
 
 $factarray["_BIRT_FSIB"] = "Narodziny brata/siostry ojca";
-$factarray["_CHR_FSIB" ] = "Chrzest wuja/ciotki";
+$factarray["_CHR_FSIB"] = "Chrzest wuja/ciotki";
 $factarray["_BAPM_FSIB"] = "Chrzest wuja/ciotki";
 $factarray["__BRTM_FSIB"]= "Obrzezanie wuja/ciotki";
 $factarray["_ADOP_FSIB"] = "Adopcja wuja/ciotki";
@@ -412,7 +412,7 @@ $factarray["_BURI_FSIB"] = "Pogrzeb rodzeństwa ojca";
 $factarray["_CREM_FSIB"] = "Kremacja rodzeństwa ojca";
 
 $factarray["_BIRT_MSIB"] = "Narodziny brata/siostry matki";
-$factarray["_CHR_MSIB" ] = "Chrzest wuja/ciotki";
+$factarray["_CHR_MSIB"] = "Chrzest wuja/ciotki";
 $factarray["_BAPM_MSIB"] = "Chrzest wuja/ciotki";
 $factarray["__BRTM_MSIB"]= "Obrzezanie wuja/ciotki";
 $factarray["_ADOP_MSIB"] = "Adopcja wuja/ciotki";

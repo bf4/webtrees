@@ -301,7 +301,7 @@ $factarray["_BURI_SPOU"] = "Begravelse til ektefelle";
 $factarray["_CREM_SPOU"] = "Kremasjon av ektefelle";
 
 $factarray["_BIRT_CHIL"] = "Fødsel til barn";
-$factarray["_CHR_CHIL" ] = "Barnedåp for barn";
+$factarray["_CHR_CHIL"] = "Barnedåp for barn";
 $factarray["_BAPM_CHIL"] = "Dåp forbarn";
 $factarray["__BRTM_CHIL"] = "Barns Brit Mila";
 $factarray["_ADOP_CHIL"] = "Adopsjon av barn";
@@ -312,7 +312,7 @@ $factarray["_BURI_CHIL"] = "Begravelse av barn";
 $factarray["_CREM_CHIL"] = "Kremasjon av barn";
 
 $factarray["_BIRT_GCHI"] = "Fødsel til et barnebarn";
-$factarray["_CHR_GCHI" ] = "Barnedåp til et barnebarn";
+$factarray["_CHR_GCHI"] = "Barnedåp til et barnebarn";
 $factarray["_BAPM_GCHI"] = "Dåp for et barnebarn";
 $factarray["__BRTM_GCHI"] = "Brit Mila for et barnebarn";
 $factarray["_ADOP_GCHI"] = "Adopsjon til et barnebarn";
@@ -323,7 +323,7 @@ $factarray["_BURI_GCHI"] = "Begravelse av et barnebarn";
 $factarray["_CREM_GCHI"] = "Kremasjon av et barnebarn";
 
 $factarray["_BIRT_GGCH"] = "Fødsel til et oldebarn";
-$factarray["_CHR_GGCH" ] = "Barnedåp for et oldebarn";
+$factarray["_CHR_GGCH"] = "Barnedåp for et oldebarn";
 $factarray["_BAPM_GGCH"] = "Dåp til et oldebarn";
 $factarray["__BRTM_GGCH"] = "Brit Mila til et oldebarn";
 $factarray["_ADOP_GGCH"] = "Adopsjon til et oldebarn";
@@ -349,7 +349,7 @@ $factarray["_BURI_MOTH"] = "Morens begravelse";
 $factarray["_CREM_MOTH"] = "Kremasjon av moren";
 
 $factarray["_BIRT_SIBL"] = "Fødsel til et søsken";
-$factarray["_CHR_SIBL" ] = "Barnedåp for et søsken";
+$factarray["_CHR_SIBL"] = "Barnedåp for et søsken";
 $factarray["_BAPM_SIBL"] = "Dåp av et søsken";
 $factarray["__BRTM_SIBL"] = "Brit Mila for et søsken";
 $factarray["_ADOP_SIBL"] = "Adopsjon til et søsken";
@@ -360,7 +360,7 @@ $factarray["_BURI_SIBL"] = "Begravelse av et søsken";
 $factarray["_CREM_SIBL"] = "Kremasjon av et søsken";
 
 $factarray["_BIRT_HSIB"] = "Fødsel til et halvsøsken";
-$factarray["_CHR_HSIB" ] = "Barnedåp for et halvsøsken";
+$factarray["_CHR_HSIB"] = "Barnedåp for et halvsøsken";
 $factarray["_BAPM_HSIB"] = "Dåp av et halvsøsken";
 $factarray["__BRTM_HSIB"] = "Brit Mila for et halvsøsken";
 $factarray["_ADOP_HSIB"] = "Adopsjon til et halvsøsken";
@@ -371,7 +371,7 @@ $factarray["_BURI_HSIB"] = "Begravelse av et halvsøsken";
 $factarray["_CREM_HSIB"] = "Kremasjon av et halvsøsken";
 
 $factarray["_BIRT_NEPH"] = "Fødsel til et søskenbarn";
-$factarray["_CHR_NEPH" ] = "Barnedåp for et søskenbarn";
+$factarray["_CHR_NEPH"] = "Barnedåp for et søskenbarn";
 $factarray["_BAPM_NEPH"] = "Dåp for et søskenbarn";
 $factarray["__BRTM_NEPH"] = "Brit Mila for et søskenbarn";
 $factarray["_ADOP_NEPH"] = "Adopsjon til et søskenbarn";
@@ -389,7 +389,7 @@ $factarray["_BURI_GGPA"] = "Begravelse av en av oldeforeldrene";
 $factarray["_CREM_GGPA"] = "Kremasjon av en av oldeforeldrene";
 
 $factarray["_BIRT_FSIB"] = "Fødsel til en av farens søsken";
-$factarray["_CHR_FSIB" ] = "Barnedåp for en av farens søsken";
+$factarray["_CHR_FSIB"] = "Barnedåp for en av farens søsken";
 $factarray["_BAPM_FSIB"] = "Dåp for en av farens søsken";
 $factarray["__BRTM_FSIB"] = "Brit Mila for en av farens søsken";
 $factarray["_ADOP_FSIB"] = "Adopsjon til en av farens søsken";
@@ -400,7 +400,7 @@ $factarray["_BURI_FSIB"] = "Begravelse av en av farens søsken";
 $factarray["_CREM_FSIB"] = "Kremasjon av en av farens søsken";
 
 $factarray["_BIRT_MSIB"] = "Fødsel til en av morens søsken ";
-$factarray["_CHR_MSIB" ] = "Barnedåp for en av morens søsken";
+$factarray["_CHR_MSIB"] = "Barnedåp for en av morens søsken";
 $factarray["_BAPM_MSIB"] = "Dåp for en av morens søsken";
 $factarray["__BRTM_MSIB"] = "Brit Mila for en av morens søsken";
 $factarray["_ADOP_MSIB"] = "Adopsjon til en av morens søsken";

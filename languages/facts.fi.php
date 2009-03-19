@@ -3,7 +3,7 @@
  * Finnish Language file for PhpGedView.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team
+ * Copyright (C) 2002 to 2009  PGV Development Team
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -304,7 +304,7 @@ $factarray["_BURI_SPOU"] 	= "Puolison hautaaminen";
 $factarray["_CREM_SPOU"] 	= "Puolison polttohautaus";
 
 $factarray["_BIRT_CHIL"] 	= "Lapsen syntymä";
-$factarray["_CHR_CHIL" ] 	= "Lapsen ristiminen";
+$factarray["_CHR_CHIL"] 	= "Lapsen ristiminen";
 $factarray["_BAPM_CHIL"] 	= "Lapsen kaste";
 $factarray["__BRTM_CHIL"] 	= "Lapsen Brit mila";
 $factarray["_ADOP_CHIL"] 	= "Lapsen adoptio";
@@ -315,7 +315,7 @@ $factarray["_BURI_CHIL"] 	= "Lapsen hautaaminen";
 $factarray["_CREM_CHIL"] 	= "Lapsen polttohautaus";
 
 $factarray["_BIRT_GCHI"] 	= "Lapsenlapsen syntymä";
-$factarray["_CHR_GCHI" ] 	= "Lapsenlapsen ristiminen";
+$factarray["_CHR_GCHI"] 	= "Lapsenlapsen ristiminen";
 $factarray["_BAPM_GCHI"] 	= "Lapsenlapsen kaste";
 $factarray["__BRTM_GCHI"] 	= "Lapsenlapsen Brit mila";
 $factarray["_ADOP_GCHI"] 	= "Lapsenlapsen adoptio";
@@ -326,7 +326,7 @@ $factarray["_BURI_GCHI"] 	= "Lapsenlapsen hautaaminen";
 $factarray["_CREM_GCHI"] 	= "Lapsenlapsen polttohautaus";
 
 $factarray["_BIRT_GGCH"] 	= "Lapsenlapsen lapsen syntymä";
-$factarray["_CHR_GGCH" ] 	= "Lapsenlapsen lapsen ristiminen";
+$factarray["_CHR_GGCH"] 	= "Lapsenlapsen lapsen ristiminen";
 $factarray["_BAPM_GGCH"] 	= "Lapsenlapsen lapsen kaste";
 $factarray["__BRTM_GGCH"] = "Lapsenlapsen lapsen Brit mila";
 $factarray["_ADOP_GGCH"] 	= "Lapsenlapsen lapsen adoptio";
@@ -352,7 +352,7 @@ $factarray["_BURI_MOTH"]	= "Äidin hautaaminen";
 $factarray["_CREM_MOTH"] 	= "Äidin polttohautaus";
 
 $factarray["_BIRT_SIBL"] 	= "Sisaruksen syntymä";
-$factarray["_CHR_SIBL" ] 	= "Sisaruksen ristiminen";
+$factarray["_CHR_SIBL"] 	= "Sisaruksen ristiminen";
 $factarray["_BAPM_SIBL"] 	= "Sisaruksen kaste";
 $factarray["__BRTM_SIBL"] 	= "Sisaruksen Brit mila";
 $factarray["_ADOP_SIBL"] 	= "Sisaruksen adoptointi";
@@ -363,7 +363,7 @@ $factarray["_BURI_SIBL"] 	= "Sisaruksen hautaaminen";
 $factarray["_CREM_SIBL"] 	= "Sisaruksen polttohautaus";
 
 $factarray["_BIRT_HSIB"] 	= "Puolisisaruksen syntymä";
-$factarray["_CHR_HSIB" ] 	= "Puolisisaruksen ristiminen";
+$factarray["_CHR_HSIB"] 	= "Puolisisaruksen ristiminen";
 $factarray["_BAPM_HSIB"] 	= "Puolisisaruksen kaste";
 $factarray["__BRTM_HSIB"] 	= "Puolisisaruksen Brit mila";
 $factarray["_ADOP_HSIB"] 	= "Puolisisaruksen adoptointi";
@@ -374,7 +374,7 @@ $factarray["_BURI_HSIB"] 	= "Puolisisaruksen hautaaminen";
 $factarray["_CREM_HSIB"] 	= "Puolisisaruksen polttohautaus";
 
 $factarray["_BIRT_NEPH"] 	= "Sisaruksen lapsen syntymä";
-$factarray["_CHR_NEPH" ] 	= "Sisaruksen lapsen ristiminen";
+$factarray["_CHR_NEPH"] 	= "Sisaruksen lapsen ristiminen";
 $factarray["_BAPM_NEPH"] 	= "Sisaruksen lapsen kaste";
 $factarray["__BRTM_NEPH"] 	= "Sisaruksen lapsen Brit mila";
 $factarray["_ADOP_NEPH"] 	= "Sisaruksen lapsen adoptio";
@@ -393,7 +393,7 @@ $factarray["_BURI_GGPA"] 	= "Iso-isovanhemman hautaaminen";
 $factarray["_CREM_GGPA"] 	= "Iso-isovanhemman polttohautaus";
 
 $factarray["_BIRT_FSIB"] 	= "Isän sisaruksen syntymä";
-$factarray["_CHR_FSIB" ] 	= "Isän sisaruksen ristiminen";
+$factarray["_CHR_FSIB"] 	= "Isän sisaruksen ristiminen";
 $factarray["_BAPM_FSIB"] 	= "Isän sisaruksen kaste";
 $factarray["__BRTM_FSIB"] 	= "Isän sisaruksen Brit mila";
 $factarray["_ADOP_FSIB"] 	= "Isän sisaruksen adoptio";
@@ -404,7 +404,7 @@ $factarray["_BURI_FSIB"] 	= "Isän sisaruksen hautaaminen";
 $factarray["_CREM_FSIB"] 	= "Isän sisaruksen polttohautaus";
 
 $factarray["_BIRT_MSIB"] 	= "Äidin sisaruksen syntymä";
-$factarray["_CHR_MSIB" ] 	= "Äidin sisaruksen ristiminen";
+$factarray["_CHR_MSIB"] 	= "Äidin sisaruksen ristiminen";
 $factarray["_BAPM_MSIB"] 	= "Äidin sisaruksen kaste";
 $factarray["__BRTM_MSIB"] 	= "Äidin sisaruksen Brit mila";
 $factarray["_ADOP_MSIB"] 	= "Äidin sisaruksen adoptio";

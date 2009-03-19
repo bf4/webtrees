@@ -293,7 +293,7 @@ $factarray["_BURI_SPOU"]		= "Makam pasangan";
 $factarray["_CREM_SPOU"]		= "Kremasi pasangan";
 
 $factarray["_BIRT_CHIL"]		= "Kelahiran anak";
-$factarray["_CHR_CHIL" ]		= "Pengkristenan anak";
+$factarray["_CHR_CHIL"]		= "Pengkristenan anak";
 $factarray["_BAPM_CHIL"]		= "Pembaptisan anak";
 $factarray["__BRTM_CHIL"]		= "Brit Mila anak";
 $factarray["_ADOP_CHIL"]		= "Adopsi anak";
@@ -304,7 +304,7 @@ $factarray["_BURI_CHIL"]		= "Makam anak";
 $factarray["_CREM_CHIL"]		= "Kremasi of a child";
 
 $factarray["_BIRT_GCHI"]		= "Kelahiran cucu";
-$factarray["_CHR_GCHI" ]		= "Pengkristenan cucu";
+$factarray["_CHR_GCHI"]		= "Pengkristenan cucu";
 $factarray["_BAPM_GCHI"]		= "Pembaptisan cucu";
 $factarray["__BRTM_GCHI"]		= "Brit Mila cucu";
 $factarray["_ADOP_GCHI"]		= "Adopsi cucu";
@@ -315,7 +315,7 @@ $factarray["_BURI_GCHI"]		= "Pemakaman cucu";
 $factarray["_CREM_GCHI"]		= "Kremasi cucu";
 
 $factarray["_BIRT_GGCH"]		= "Kelahiran cicit";
-$factarray["_CHR_GGCH" ]		= "Pengkristenan cicit";
+$factarray["_CHR_GGCH"]		= "Pengkristenan cicit";
 $factarray["_BAPM_GGCH"]		= "Pembaptisan cicit";
 $factarray["__BRTM_GGCH"]		= "Brit Mila cicit";
 $factarray["_ADOP_GGCH"]		= "Adopsi cicit";
@@ -341,7 +341,7 @@ $factarray["_BURI_MOTH"]		= "Makam ibu";
 $factarray["_CREM_MOTH"]		= "Kremasi ibu";
 
 $factarray["_BIRT_SIBL"]		= "Kelahiran saudara";
-$factarray["_CHR_SIBL" ]		= "Pengkristenan saudara";
+$factarray["_CHR_SIBL"]		= "Pengkristenan saudara";
 $factarray["_BAPM_SIBL"]		= "Pembaptisan saudara";
 $factarray["__BRTM_SIBL"]		= "Brit Mila saudara";
 $factarray["_ADOP_SIBL"]		= "Adopsi saudara";
@@ -352,7 +352,7 @@ $factarray["_BURI_SIBL"]		= "Makam saudara";
 $factarray["_CREM_SIBL"]		= "Kremasi saudara";
 
 $factarray["_BIRT_HSIB"]		= "Kelahiran saudara seayah/ibu";
-$factarray["_CHR_HSIB" ]		= "Pengkristenan saudara seayah/ibu";
+$factarray["_CHR_HSIB"]		= "Pengkristenan saudara seayah/ibu";
 $factarray["_BAPM_HSIB"]		= "Pembaptisan saudara seayah/ibu";
 $factarray["__BRTM_HSIB"]		= "Brit Mila saudara seayah/ibu";
 $factarray["_ADOP_HSIB"]		= "Adopsi saudara seayah/ibu";
@@ -363,7 +363,7 @@ $factarray["_BURI_HSIB"]		= "Makam saudara seayah/ibu";
 $factarray["_CREM_HSIB"]		= "Kremasi saudara seayah/ibu";
 
 $factarray["_BIRT_NEPH"]		= "Kelahiran keponakan";
-$factarray["_CHR_NEPH" ]		= "Pengkristenan keponakan";
+$factarray["_CHR_NEPH"]		= "Pengkristenan keponakan";
 $factarray["_BAPM_NEPH"]		= "Pembaptisan keponakan";
 $factarray["__BRTM_NEPH"]		= "Brit Mila of a nephew";
 $factarray["_ADOP_NEPH"]		= "Adopsi keponakan";
@@ -382,7 +382,7 @@ $factarray["_BURI_GGPA"]		= "Makam buyut";
 $factarray["_CREM_GGPA"]		= "Kremasi buyut";
 
 $factarray["_BIRT_FSIB"]		= "Kelahiran saudara ayah";
-$factarray["_CHR_FSIB" ]		= "Pengkristenan saudara ayah";
+$factarray["_CHR_FSIB"]		= "Pengkristenan saudara ayah";
 $factarray["_BAPM_FSIB"]		= "Pembaptisan saudara ayah";
 $factarray["__BRTM_FSIB"]		= "Brit Mila saudara ayah";
 $factarray["_ADOP_FSIB"]		= "Adopsi saudara ayah";
@@ -393,7 +393,7 @@ $factarray["_BURI_FSIB"]		= "Makam saudara ayah";
 $factarray["_CREM_FSIB"]		= "Kremasi saudara ayah";
 
 $factarray["_BIRT_MSIB"]		= "Kelahiran saudara ibu";
-$factarray["_CHR_MSIB" ]		= "Pengkristenan saudara ibu";
+$factarray["_CHR_MSIB"]		= "Pengkristenan saudara ibu";
 $factarray["_BAPM_MSIB"]		= "Pembaptisan saudara ibu";
 $factarray["__BRTM_MSIB"]		= "Brit Mila saudara ibu";
 $factarray["_ADOP_MSIB"]		= "Adopsi saudara ibu";

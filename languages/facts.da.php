@@ -3,7 +3,7 @@
  * Danish Language file for PhpGedView.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
+ * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -287,7 +287,7 @@ $factarray["_BIRT_CHIL"] = "Barns fødsel";
 $factarray["_ADOP_CHIL"] = "Et barns adoption";
 $factarray["_BAPM_CHIL"] = "Et barns babtistdåb";
 $factarray["__BRTM_CHIL"] = "Et barns religiøse omskæring";
-$factarray["_CHR_CHIL" ] = "Et barns dåb";
+$factarray["_CHR_CHIL"] = "Et barns dåb";
 $factarray["_MARR_CHIL"] = "Barns Ægteskab";
 $factarray["_MARB_CHIL"] = "Lysning af et barns bryllup";
 $factarray["_DEAT_CHIL"] = "Barns død";
@@ -298,7 +298,7 @@ $factarray["_BIRT_GCHI"] = "Barnebarns fødsel";
 $factarray["_ADOP_GCHI"] = "Et barnebarns adoption";
 $factarray["__BRTM_GCHI"] = "En barnebarns religiøse omskæring";
 $factarray["_BAPM_GCHI"] = "Et barnebarns babtistdåb";
-$factarray["_CHR_GCHI" ] = "Et barnebarns dåb";
+$factarray["_CHR_GCHI"] = "Et barnebarns dåb";
 $factarray["_MARB_GCHI"] = "Lysning af et barnebarns bryllup";
 $factarray["_MARR_GCHI"] = "Barnebarns Ægteskab";
 $factarray["_DEAT_GCHI"] = "Barnebarns død";
@@ -306,7 +306,7 @@ $factarray["_CREM_GCHI"] = "Barnebarns kremering";
 $factarray["__BRTM_GGCH"] = "Et oldebarns religiøse omskæring";
 $factarray["_ADOP_GGCH"] = "Et oldebarns adoption";
 $factarray["_BAPM_GGCH"] = "Et oldebarns babtistdåb";
-$factarray["_CHR_GGCH" ] = "Et oldebarns dåb";
+$factarray["_CHR_GGCH"] = "Et oldebarns dåb";
 $factarray["_BURI_GCHI"] = "Barnebarns begravelse";
 
 $factarray["_MARB_GGCH"] = "Lysning af et oldebarns bryllup";
@@ -331,7 +331,7 @@ $factarray["_BURI_MOTH"] = "Moders begravelse";
 $factarray["__BRTM_SIBL"] = "En søskenes religiøse omskæring";
 $factarray["_MARB_SIBL"] = "Lysning af en søskendes bryllup";
 $factarray["_BIRT_SIBL"] = "Søskendes fødsel";
-$factarray["_CHR_SIBL" ] = "En søskenes dåb";
+$factarray["_CHR_SIBL"] = "En søskenes dåb";
 $factarray["_BAPM_SIBL"] = "En søskenes babtistdåb";
 $factarray["_ADOP_SIBL"] = "En søskenes adoption";
 $factarray["_MARR_SIBL"] = "Søskendes ægteskab";
@@ -342,7 +342,7 @@ $factarray["__BRTM_HSIB"] = "En halvsøskenes religiøse omskæring";
 $factarray["_MARB_HSIB"] = "Lysning af en halvsøskendes bryllup";
 
 $factarray["_BIRT_HSIB"] = "Halvsøskendes fødsel";
-$factarray["_CHR_HSIB" ] = "En halvsøskenes dåb";
+$factarray["_CHR_HSIB"] = "En halvsøskenes dåb";
 $factarray["_BAPM_HSIB"] = "En halvsøkenes babtistdåb";
 $factarray["_ADOP_HSIB"] = "En halvsøskenes adoption";
 $factarray["_MARR_HSIB"] = "Halvsøskendes ægteskab";
@@ -353,7 +353,7 @@ $factarray["_MARB_NEPH"] = "Lysning af en nevø eller nieces bryllup";
 $factarray["_BURI_HSIB"] = "Halvsøskenes begravelse";
 
 $factarray["_BIRT_NEPH"] = "Nevø eller nieces Fødsel";
-$factarray["_CHR_NEPH" ] = "En nevø eller nieces dåb";
+$factarray["_CHR_NEPH"] = "En nevø eller nieces dåb";
 $factarray["_BAPM_NEPH"] = "En nevø eller nieces babtisdåb";
 $factarray["_ADOP_NEPH"] = "En nevø eller nieces adoption";
 $factarray["_MARR_NEPH"] = "Nevø eller nieces ægteskab";
@@ -374,7 +374,7 @@ $factarray["_BURI_GPAR"] = "Bedsteforælders begravelse";
 $factarray["_BIRT_FSIB"] = "Faders søskendes fødsel";
 $factarray["_ADOP_FSIB"] = "En fars søskenes adoption";
 $factarray["_BAPM_FSIB"] = "En fars søskenes babtisdåb";
-$factarray["_CHR_FSIB" ] = "En fars søskenes dåb";
+$factarray["_CHR_FSIB"] = "En fars søskenes dåb";
 $factarray["_MARR_FSIB"] = "Faders søskendes ægteskab";
 $factarray["_DEAT_FSIB"] = "Faders søskendes dødsfald";
 $factarray["__BRTM_MSIB"] = "En moders søskenes religiøse omskæring";
@@ -383,7 +383,7 @@ $factarray["_CREM_FSIB"] = "Faders søskenes kremering";
 $factarray["_BURI_FSIB"] = "Faders søskenes begravelse";
 
 $factarray["_BIRT_MSIB"] = "En moders søskendes fødsel";
-$factarray["_CHR_MSIB" ] = "En mors søskenes dåb";
+$factarray["_CHR_MSIB"] = "En mors søskenes dåb";
 $factarray["_ADOP_MSIB"] = "En mors søskenes adoption";
 $factarray["__BRTM_COUS"] = "En fætters religiøse omskæring";
 $factarray["_BAPM_MSIB"] = "En mors søskenes babtistdåb";
