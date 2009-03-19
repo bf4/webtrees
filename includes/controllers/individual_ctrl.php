@@ -2150,12 +2150,12 @@ class IndividualControllerRoot extends BaseController {
 			print "<tr><td class=\"facts_value\">";
 					echo "<h2><center>Spare Tab</center></h2>";
 					echo "<center>This is where the Spare Tab info goes</center>";
-					echo "<br>";
+					echo "<br />";
 					echo "<center>You will also need to write your own help (Top left of this div. It shows the Lightbox help for now)</center>";
-					echo "<br>";
+					echo "<br />";
 					echo "<center>For the moment Lightbox MUST be installed (I'll fix this later if necessary)</center>";
-					echo "<br>";
-					echo "<br>";
+					echo "<br />";
+					echo "<br />";
 			print "</td></tr>";
 			print "</table>";
 			//}
