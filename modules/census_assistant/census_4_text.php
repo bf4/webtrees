@@ -48,76 +48,85 @@ function openInNewWindow(frm)
 	// submit
 	frm.submit();
 }
+function help_window2(frm)
+{
+	// open a blank window
+	var aWindow = window.open('modules/census_assistant/tableaddrow_nw.html', 'TableAddRow2NewWindow',
+	'scrollbars=yes,menubar=yes,resizable=yes,location=no,toolbar=no,width=400,height=700');
+	aWindow.focus();
+	
+	// set the target to the blank window
+	frm.target = 'TableAddRow2NewWindow';
+	
+	// submit
+	//frm.submit();
+}
+function help_window() {
+var win02 = window.open(
+"modules/census_assistant/tableaddrow_nw.html", "win02", "resizable=1, menubar=0, scrollbars=1, top=20, HEIGHT=840, WIDTH=450 ");
+if (window.focus) {win02.focus();}
+}
+
+function preview(){
+	var NoteTitl = document.getElementById('Titl');
+		str = NoteTitl.value;
+		str += "\n";
+	var tbl = document.getElementById('tblSample');
+	for(var i=1; i<tbl.rows.length; i++){ // start at i=1 because we need to avoid header
+		var tr = tbl.rows[i];
+		var strRow = '';
+		for(var j=2; j<tr.cells.length; j++){
+			if (j==5 || j==7 || j>10) {
+				//	dont show col	0	index
+				//	dont show col	1	pid
+				//	miss out col	5	yob
+				//	miss out col	7	YMD
+				//	miss out col	11	delete button
+				//	miss out col	12	radio buttom
+				continue;
+			}else{
+				strRow += (strRow==''?'':'|') + tr.cells[j].childNodes[0].value;
+			}
+		}
+		str += (str==''?'':'\n') + strRow;
+	}
+	var mem = document.getElementById('NOTE');
+	mem.value = str;
+}
+
 </script>
 
+			<!--   ---- The proposed Census Text -------- -->
 			<table class="facts_table" width="60%" border=3>
-				<!--   ---- The proposed Census Text -------- -->
 				<tr>
 					<td align="center" class="descriptionbox" colspan="1">
-						<input type="button" value="Help" onclick="openInNewWindow(this.form);" />
+						<input type="button" value="Help" onclick="javascript: help_window2(this.form)" />
 					</td>
 					<td align="center" class="descriptionbox" colspan="2">
 						<b> The Proposed Census Text </b>&nbsp;&nbsp;
-						<font size="1">( Check to copy Input Fields Information: 
-						<input type="checkbox" name="copy" OnClick="javascript:InputToOutput(this.form);" value="checkbox"> )
+						<font size="1">
+						<input type="button" value="Preview" onclick="preview();" />
+						&nbsp;&nbsp; Click "Preview" to copy Input Fields Information.
 						</font>
 					</td>
 					<td align="center" class="descriptionbox" colspan="1">
-						<input type="button" value="Save Census Text" onclick="openInNewWindow(this.form);" />
+					<?php
+						echo "<input type=\"submit\" value=\"".$pgv_lang["save"]."\" />";
+					?>
 					</td>
 				</tr>
 				
 				<tr>
-					<td class="facts_value" width="100%" colspan="7" >
-						<table border="0" class="facts_table" cellspacing="0" >
-							<?php 
-							if ($theme_name=="SimplyGreen" || $theme_name=="SimplyBlue" || $theme_name=="SimplyRed") {
-								$fontcolr="white";
-							}else{
-								$fontcolr="black";
-							}
-							?>
-							<tr>
-								<td colspan="7" ><font size="1">
-									<b>&nbsp;Census: &nbsp;</b>
-									<input id="OutputCensusSource" STYLE="color:<?php echo $fontcolr ?>; font-size: 10px; border: 0px; background-color: transparent" type="text" size="15" maxlength="20" />
-									<input id="OutputCensusPlace"  STYLE="color:<?php echo $fontcolr ?>; font-size: 10px; border: 0px; background-color: transparent" type="text" size="70" maxlength="70" />
-									</font>
-								</td>
-							</tr>
-							<tr>
-								<td colspan="7" ><font size="1">
-									<b>&nbsp;Citation: &nbsp;</b>
-									<b>Class:</b><input id="OutputClass" STYLE="color:<?php echo $fontcolr ?>; font-size: 10px; border: 0px; background-color: transparent" type="text" size="4" maxlength="5" />
-									<b>Piece:</b><input id="OutputPiece" STYLE="color:<?php echo $fontcolr ?>; font-size: 10px; border: 0px; background-color: transparent" type="text" size="4" maxlength="5" />
-									<b>Folio:</b><input id="OutputFolio" STYLE="color:<?php echo $fontcolr ?>; font-size: 10px; border: 0px; background-color: transparent" type="text" size="4" maxlength="5" />
-									<b>Page:</b> <input id="OutputPage"  STYLE="color:<?php echo $fontcolr ?>; font-size: 10px; border: 0px; background-color: transparent" type="text" size="4" maxlength="5" />
-									</font>
-								</td>
-							</tr>
-							<tr>
-								<td colspan="7" ><font size="1">
-									<b>&nbsp;Address: </b>
-									<input id="OutputAddress" STYLE="color:<?php echo $fontcolr ?>; font-size: 10px; border: 0px; background-color: transparent" type="text" size="70" maxlength="80" />
-									</font>
-									<br /><br />
-								</td>
-							</tr>
-								
-							<?php
-							//-- Census Immediate Family
-							?>
-							<tr>
-								<td colspan="7" id="head" class="option_box" style="border: 0px solid transparent;">
-									<?php
-									include('modules/census_assistant/census_4_text_info.php');
-									?> 
-								</td>
-							</tr>
-
-						</table>
-
-					</td>
+					<?php
+					echo "<td class=\"descriptionbox\" ".$TEXT_DIRECTION." wrap=\"nowrap\">";
+						print_help_link("edit_SHARED_NOTE_help", "qm");
+					echo $pgv_lang["shared_note"];
+					echo "</td>";
+					echo "<td class=\"optionbox wrap\" ><center><textarea name=\"NOTE\" id=\"NOTE\" rows=\"20\" cols=\"88\"></textarea></center>";
+						print_specialchar_link("NOTE",true);
+					echo "</td>";
+					echo "<td class=\"facts_value wrap\" colspan=2></td>";
+					?>
 				</tr>
 			</table>
 			

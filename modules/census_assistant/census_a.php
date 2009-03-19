@@ -43,27 +43,19 @@ global $SEARCH_SPIDER, $GOOGLEMAP_PH_CONTROLS;
 		
 		global $famid;
 		
-print_simple_header("Census");
+// print_simple_header("Census");
 
-			// print "<table><tr><td>";
-			// Display summary birth/death info.  Note this info can come from various BIRT/CHR/BAPM/etc. records
-			$summary=$controller->indi->format_first_major_fact(PGV_EVENTS_BIRT, 2);
-			if (!($controller->indi->isDead())) {
-				// If alive display age
-				$bdate=$controller->indi->getBirthDate();
-				$age = GedcomDate::GetAgeGedcom($bdate);
-				if ($age!="")
-					$summary.= "<span class=\"label\">".$pgv_lang["age"].":</span><span class=\"field\"> ".get_age_at_event($age, true)."</span>";
-			}
-			$summary.=$controller->indi->format_first_major_fact(PGV_EVENTS_DEAT, 2);
-//			if ($summary) {
-//				echo '<table><tr><td width="10"><br /></td><td valign="top" colspan="', $maxcols-$col, '">', $summary, '</td></tr></table>';
-//			}
-//			print "</td>";
+		$summary=$controller->indi->format_first_major_fact(PGV_EVENTS_BIRT, 2);
+		if (!($controller->indi->isDead())) {
+			// If alive display age
+			$bdate=$controller->indi->getBirthDate();
+			$age = GedcomDate::GetAgeGedcom($bdate);
+			if ($age!="")
+				$summary.= "<span class=\"label\">".$pgv_lang["age"].":</span><span class=\"field\"> ".get_age_at_event($age, true)."</span>";
+		}
+		$summary.=$controller->indi->format_first_major_fact(PGV_EVENTS_DEAT, 2);
 
-
-// include('modules/census_assistant/census_1_ctrl.php');
-$controller->census_assistant();
+		$controller->census_assistant();
 
 // include ('modules/research_assistant/forms/CensusUK1841.php');
 // print_footer();

@@ -10,6 +10,7 @@
 
 
 Version 4.2.0 CA
+ - Changed: Added Shared note input using "Assistant". Now creates shared note (windmillway)
  - Merged: Merge changes r5214 - r5224 from the trunk. (windmillway)
  - Merged: Merge changes r5209 - r5213 from the trunk. (windmillway)
  - Merged: Merge changes r5208 - r5208 from the trunk. (windmillway)

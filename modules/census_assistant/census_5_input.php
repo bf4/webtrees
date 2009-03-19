@@ -49,11 +49,11 @@ echo '<script src="modules/census_assistant/census_5_input.js" type="text/javasc
 			<th class="descriptionbox" style="border: 0px solid transparent;" align="left"><font size=1>Indi ID:</font></th>
 			<th width="17%" class="descriptionbox" style="border: 0px solid transparent;" align="left"><font size=1>Name:</font></th>
 			<th class="descriptionbox" style="border: 0px solid transparent;" align="left"><font size=1>Relation:</font></th>
-			<th class="descriptionbox" style="border: 0px solid transparent;" align="left"><font size=1>Gend:</font></th>
-			<th class="descriptionbox" style="border: 0px solid transparent;" align="left"><font size=1>Cond:</font></th>
+			<th class="descriptionbox" style="border: 0px solid transparent;" align="left"><font size=1>Status:</font></th>
 			<th class="descriptionbox" style="border: 0px solid transparent;" align="left"><font size=1>YOB:</font></th>
 			<th class="descriptionbox" style="border: 0px solid transparent;" align="left"><font size=1>Age:</font></th>
-			<th class="descriptionbox" style="border: 0px solid transparent;" align="left"><font size=1>YMD:</font></th>
+			<th class="descriptionbox" style="border: 0px solid transparent;" align="left"><font size=1>Y/M/D:</font></th>
+			<th class="descriptionbox" style="border: 0px solid transparent;" align="left"><font size=1>Sex:</font></th>
 			<th width="13%" class="descriptionbox" style="border: 0px solid transparent;" align="left"><font size=1>Occupation:</font></th>
 			<th width="28%" class="descriptionbox" style="border: 0px solid transparent;" align="left"><font size=1>Birthplace:</font></th>
 			<th class="descriptionbox" style="border: 0px solid transparent;" align="left"><font size=1>Del</font></th>

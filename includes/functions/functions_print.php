@@ -560,14 +560,15 @@ function print_header($title, $head="", $use_alternate_styles=true) {
 		}
 		return false;
 	}
-
+/*
 	// BH Census-Assistant =======================
 	function census_assistant(pid) {
-		var win01 = window.open(\'module.php?mod=census_assistant&pgvaction=census_a&pid=\'+pid, \'win01\', \'resizable=1, menubar=0, scrollbars=1, left=200, top=100, HEIGHT=800, WIDTH=1000\');
+		// var win01 = window.open(\'module.php?mod=census_assistant&pgvaction=census_a&pid=\'+pid, \'win01\', \'resizable=1, menubar=0, scrollbars=1, left=200, top=100, HEIGHT=800, WIDTH=1000\');
+		var win01 = window.open(\'edit_interface.php?action=addnewnote&pid=\'+pid+\'&fact=CENS&assist=yes\', \'win01\', \'resizable=1, menubar=0, scrollbars=1, left=200, top=100, HEIGHT=800, WIDTH=1000\');
 		if (window.focus) {win01.focus();}
 	}
 	// ===========================================
-
+*/
 	function deleteperson(pid) {
 		if (confirm(\''.$pgv_lang["confirm_delete_person"].'\')) {
 			window.open(\'edit_interface.php?action=deleteperson&pid=\'+pid+"&"+sessionname+"="+sessionid, \'_blank\', \'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1\');
@@ -2396,7 +2397,7 @@ function print_add_new_fact($id, $usedfacts, $type) {
 	print "&nbsp;&nbsp;<input type=\"button\" value=\"".$pgv_lang["add"]."\" onclick=\"add_record('$id', 'newfact');\" /> ";
 	foreach($quickfacts as $k=>$v) echo "&nbsp;<small><a href='javascript://$v' onclick=\"add_new_record('$id', '$v');return false;\">".$factarray["$v"]."</a></small>&nbsp;";
 
-
+/*
 	//BH Census-Assistant =====================
 	if (file_exists('modules/census_assistant/census_1_ctrl.php')) {
 		global $pid;
@@ -2408,6 +2409,7 @@ function print_add_new_fact($id, $usedfacts, $type) {
 		}
 	}
 	//BH ====================================
+*/
 
 	print "</form>";
 	print "</td></tr>";

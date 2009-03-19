@@ -147,6 +147,7 @@ $pgv_lang["confirm_remove"]			= "Are you sure you want to remove this person fro
 $pgv_lang["confirm_remove_object"]	= "Are you sure you want to remove this object from the database?";
 $pgv_lang["create_repository"]		= "Create Repository";
 $pgv_lang["create_shared_note"]		= "Create a new Shared Note";
+$pgv_lang["create_shared_note_assisted"]	= "Create a new Shared Note using Assistant";
 $pgv_lang["create_source"]			= "Create a new source";
 $pgv_lang["current_person"]         = "Same as current";
 $pgv_lang["date"]					= "Date";

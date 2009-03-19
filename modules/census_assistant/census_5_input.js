@@ -146,7 +146,7 @@ function addRowToTable(num, pid, nam, label, gend, cond, yob, age, YMD, occu, bi
 			txtInp4.setAttribute('type', 'text');
 			txtInp4.setAttribute('id', INPUT_NAME_PREFIX + iteration + '_4');
 			txtInp4.setAttribute('size', '1');
-			txtInp4.setAttribute('value', gend); // iteration included for debug purposes
+			txtInp4.setAttribute('value', cond); // iteration included for debug purposes
 			txtInp4.style.color=txtcolor;
 			txtInp4.style.fontSize="10px";
 		cell4.appendChild(txtInp4);
@@ -157,8 +157,8 @@ function addRowToTable(num, pid, nam, label, gend, cond, yob, age, YMD, occu, bi
 		var txtInp5 = document.createElement('input');
 			txtInp5.setAttribute('type', 'text');
 			txtInp5.setAttribute('id', INPUT_NAME_PREFIX + iteration + '_5');
-			txtInp5.setAttribute('size', '1');
-			txtInp5.setAttribute('value', cond); // iteration included for debug purposes
+			txtInp5.setAttribute('size', '2');
+			txtInp5.setAttribute('value', yob); // iteration included for debug purposes
 			txtInp5.style.color=txtcolor;
 			txtInp5.style.fontSize="10px";
 		cell5.appendChild(txtInp5);
@@ -170,7 +170,7 @@ function addRowToTable(num, pid, nam, label, gend, cond, yob, age, YMD, occu, bi
 			txtInp6.setAttribute('type', 'text');
 			txtInp6.setAttribute('id', INPUT_NAME_PREFIX + iteration + '_6');
 			txtInp6.setAttribute('size', '2');
-			txtInp6.setAttribute('value', yob); // iteration included for debug purposes
+			txtInp6.setAttribute('value', age); // iteration included for debug purposes
 			txtInp6.style.color=txtcolor;
 			txtInp6.style.fontSize="10px";
 		cell6.appendChild(txtInp6);
@@ -181,8 +181,8 @@ function addRowToTable(num, pid, nam, label, gend, cond, yob, age, YMD, occu, bi
 		var txtInp7 = document.createElement('input');
 			txtInp7.setAttribute('type', 'text');
 			txtInp7.setAttribute('id', INPUT_NAME_PREFIX + iteration + '_7');
-			txtInp7.setAttribute('size', '2');
-			txtInp7.setAttribute('value', age); // iteration included for debug purposes
+			txtInp7.setAttribute('size', '1');
+			txtInp7.setAttribute('value', YMD); // iteration included for debug purposes
 			txtInp7.style.color=txtcolor;
 			txtInp7.style.fontSize="10px";
 		cell7.appendChild(txtInp7);
@@ -194,7 +194,7 @@ function addRowToTable(num, pid, nam, label, gend, cond, yob, age, YMD, occu, bi
 			txtInp8.setAttribute('type', 'text');
 			txtInp8.setAttribute('id', INPUT_NAME_PREFIX + iteration + '_8');
 			txtInp8.setAttribute('size', '1');
-			txtInp8.setAttribute('value', YMD); // iteration included for debug purposes
+			txtInp8.setAttribute('value', gend); // iteration included for debug purposes
 			txtInp8.style.color=txtcolor;
 			txtInp8.style.fontSize="10px";
 		cell8.appendChild(txtInp8);
