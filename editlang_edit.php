@@ -172,89 +172,89 @@ if ($action == "save") {
 
 // session.php looks after getting rid of escaping slashes added to $_POST input when the PHP
 // configuration option "magic_quotes_gpc" is set "on".
-	
+
 	switch ($file_type) {
 	case "facts":
 		// read facts.en.php file into array
 		$english_language_array = array();
-		$english_language_array = read_complete_file_into_array($factsfile["english"], "factarray[");
+		$english_language_array = read_complete_file_into_array($factsfile["english"], '$factarray[');
 		// read facts.xx.php file into array
 		$new_language_array = array();
 		$new_language_file =  $factsfile[$language2];
-		$new_language_array = read_complete_file_into_array($new_language_file, "factarray[");
+		$new_language_array = read_complete_file_into_array($new_language_file, '$factarray[');
 		break;
 	case "configure_help":
 		// read configure_help.en.php file into array
 		$english_language_array = array();
-		$english_language_array = read_complete_file_into_array($confighelpfile["english"], "pgv_lang[");
+		$english_language_array = read_complete_file_into_array($confighelpfile["english"], '$pgv_lang[');
 		// read configure_help.xx.php file into array
 		$new_language_array = array();
 		$new_language_file =  $confighelpfile[$language2];
-		$new_language_array = read_complete_file_into_array($new_language_file, "pgv_lang[");
+		$new_language_array = read_complete_file_into_array($new_language_file, '$pgv_lang[');
 		break;
 	case "help_text":
 		// read help_text.en.php file into array
 		$english_language_array = array();
-		$english_language_array = read_complete_file_into_array($helptextfile["english"], "pgv_lang[");
+		$english_language_array = read_complete_file_into_array($helptextfile["english"], '$pgv_lang[');
 		// read help_text.xx.php file into array
 		$new_language_array = array();
 		$new_language_file =  $helptextfile[$language2];
-		$new_language_array = read_complete_file_into_array($new_language_file, "pgv_lang[");
+		$new_language_array = read_complete_file_into_array($new_language_file, '$pgv_lang[');
 		break;
 	case "admin":
 		// read admin.en.php file into array
 		$english_language_array = array();
-		$english_language_array = read_complete_file_into_array($adminfile["english"], "pgv_lang[");
+		$english_language_array = read_complete_file_into_array($adminfile["english"], '$pgv_lang[');
 		// read admin.xx.php file into array
 		$new_language_array = array();
 		$new_language_file =  $adminfile[$language2];
-		$new_language_array = read_complete_file_into_array($new_language_file, "pgv_lang[");
+		$new_language_array = read_complete_file_into_array($new_language_file, '$pgv_lang[');
 		break;
 	case "editor":
 		// read editor.en.php file into array
 		$english_language_array = array();
-		$english_language_array = read_complete_file_into_array($editorfile["english"], "pgv_lang[");
+		$english_language_array = read_complete_file_into_array($editorfile["english"], '$pgv_lang[');
 		// read editor.xx.php file into array
 		$new_language_array = array();
 		$new_language_file =  $editorfile[$language2];
-		$new_language_array = read_complete_file_into_array($new_language_file, "pgv_lang[");
+		$new_language_array = read_complete_file_into_array($new_language_file, '$pgv_lang[');
 		break;
 	case "countries":
 		// read countries.en.php file into array
 		$english_language_array = array();
-		$english_language_array = read_complete_file_into_array($countryfile["english"], "countries[");
+		$english_language_array = read_complete_file_into_array($countryfile["english"], '$countries[');
 		// read countries.xx.php file into array
 		$new_language_array = array();
 		$new_language_file =  $countryfile[$language2];
-		$new_language_array = read_complete_file_into_array($new_language_file, "countries[");
+		$new_language_array = read_complete_file_into_array($new_language_file, '$countries[');
 		break;
 	case "faqlist":
 		// read faqlist.en.php file into array
 		$english_language_array = array();
-		$english_language_array = read_complete_file_into_array($faqlistfile["english"], "faqlist[");
+		$english_language_array = read_complete_file_into_array($faqlistfile["english"], '$faqlist[');
 		// read faqlist.xx.php file into array
 		$new_language_array = array();
 		$new_language_file =  $faqlistfile[$language2];
-		$new_language_array = read_complete_file_into_array($new_language_file, "faqlist[");
+		$new_language_array = read_complete_file_into_array($new_language_file, '$faqlist[');
 		break;
 	case "extra":
 		// read extra.en.php file into array
 		$english_language_array = array();
-		$english_language_array = read_complete_file_into_array($extrafile["english"], "pgv_lang[", "factarray[", "countries[", "faqlist[");
+		$english_language_array = read_complete_file_into_array($extrafile["english"], '$pgv_lang[', '$factarray[', '$countries[', '$faqlist[');
 		// read extra.xx.php file into array
 		$new_language_array = array();
 		$new_language_file =  $extrafile[$language2];
-		$new_language_array = read_complete_file_into_array($new_language_file, "pgv_lang[", "factarray[", "countries[", "faqlist[");
+		$new_language_array = read_complete_file_into_array($new_language_file, '$pgv_lang[', '$factarray[', '$countries[', '$faqlist[');
 		break;
 	case "lang":
 	default:
 		// read lang.en.php file into array
 		$english_language_array = array();
-		$english_language_array = read_complete_file_into_array($pgv_language["english"], "pgv_lang[");
+		$english_language_array = read_complete_file_into_array($pgv_language["english"], '$pgv_lang[');
 		// read lang.xx.php file into array
 		$new_language_array = array();
 		$new_language_file =  $pgv_language[$language2];
-		$new_language_array = read_complete_file_into_array($new_language_file, "pgv_lang[");
+		$new_language_array = read_complete_file_into_array($new_language_file, '$pgv_lang[');
 		break;
 	}
 
@@ -274,7 +274,9 @@ if ($action == "save") {
 //	$new_message = unmask_all($new_message);
 	$new_message = crlf_lf_to_br($new_message);
 	$dummyArray[1] = $new_message;
-	$dummyArray[3] = substr($dummyArray[3], 0, $dummyArray[2]) . $new_message . "\";";
+	$textTerminator = substr($dummyArray[3], ($dummyArray[2]-1), 1).';';		// Repeat the leading quote or apostrophe
+	$comment = substr($dummyArray[3], (strrpos($dummyArray[3], $textTerminator)+2));
+	$dummyArray[3] = substr($dummyArray[3], 0, $dummyArray[2]) . $new_message . $textTerminator . $comment;
 
 	if ($ls02 > 0) {
 		$new_language_array[$ls02] = $dummyArray;
@@ -366,9 +368,12 @@ if ($action == "save") {
 	// if ls02 (the line of the translated sentence) variable has not been set, try to find the row in the translated file
 	if ($ls02 == "") {
 		$ls02 = 0;
+		$englishTarget1 = $english_language_array[$ls01][0];
+		$englishTarget2 = str_replace('"', "'", $englishTarget1);		// Var name could be inside apostrophes
+		$englishTarget3 = str_replace("'", '"', $englishTarget1);		// Var name could be inside apostrophes
 		for ($y = 0; $y < sizeof($new_language_array); $y++) {
 			if (isset($new_language_array[$y][1])) {
-				if ($new_language_array[$y][0] == $english_language_array[$ls01][0]) {
+				if ($new_language_array[$y][0] == $englishTarget1 || $new_language_array[$y][0] == $englishTarget2 || $new_language_array[$y][0] == $englishTarget3) {
 					$ls02 = $y;
 					break;
 				}
