@@ -1136,7 +1136,13 @@ function print_note_record($text, $nlevel, $nrec, $textOnly=false, $return=false
 			$nid = preg_replace("/@/", "", $match_nid[0]);
 			$centitl = "<a href=\"note.php?nid=$nid\">".$centitl."</a>";
 		}
-		$text = get_cont($nlevel, $nrec);
+		if ($textOnly) {
+			$text = $centitl;
+			return $text;
+		}
+		else {
+			$text = get_cont($nlevel, $nrec);
+		}
 	}else{
 		$text .= get_cont($nlevel, $nrec);
 	}
@@ -1144,7 +1150,7 @@ function print_note_record($text, $nlevel, $nrec, $textOnly=false, $return=false
 	$text = trim(expand_urls(stripLRMRLM($text)));
 	$data = "";
 
-	if (!empty($text)) {
+	if (!empty($text) || !empty($centitl)) {
 		$text = PrintReady($text);
 		// Check if Formatted Shared Note -----------------------------------------
 		if (eregi("0 @N([0-9])+@ NOTE", $nrec) && strstr($text, "|")) {
@@ -2307,7 +2313,7 @@ function CheckFactUnique($uniquefacts, $recfacts, $type) {
 * @param string $type the type of record INDI, FAM, SOUR etc
 */
 function print_add_new_fact($id, $usedfacts, $type) {
-	global $factarray, $pgv_lang;
+	global $factarray, $pgv_lang, $TEXT_DIRECTION;
 	global $INDI_FACTS_ADD,    $FAM_FACTS_ADD,    $NOTE_FACTS_ADD,    $SOUR_FACTS_ADD,    $REPO_FACTS_ADD;
 	global $INDI_FACTS_UNIQUE, $FAM_FACTS_UNIQUE, $NOTE_FACTS_UNIQUE, $SOUR_FACTS_UNIQUE, $REPO_FACTS_UNIQUE;
 	global $INDI_FACTS_QUICK,  $FAM_FACTS_QUICK,  $NOTE_FACTS_QUICK,  $SOUR_FACTS_QUICK,  $REPO_FACTS_QUICK;
@@ -2319,7 +2325,7 @@ function print_add_new_fact($id, $usedfacts, $type) {
 			if ($fact["type"]==$type || $fact["type"]=='all') {
 				if ($newRow) {
 					$newRow = false;
-					echo '<tr><td class="descriptionbox">';
+					echo '<tr><td class="descriptionbox '.$TEXT_DIRECTION.'">';
 					print_help_link("add_from_clipboard_help", "qm");
 					echo $pgv_lang["add_from_clipboard"], '</td>';
 					echo '<td class="optionbox wrap"><form method="get" name="newFromClipboard" action="" onsubmit="return false;">';
@@ -2383,10 +2389,10 @@ function print_add_new_fact($id, $usedfacts, $type) {
 	$quickfacts=array_intersect($quickfacts, $addfacts);
 
 	usort($addfacts, "factsort");
-	print "<tr><td class=\"descriptionbox\">";
+	print "<tr><td class=\"descriptionbox ".$TEXT_DIRECTION."\">";
 	print_help_link("add_new_facts_help", "qm");
 	print $pgv_lang["add_fact"]."</td>";
-	print "<td class=\"optionbox wrap\">";
+	print "<td class=\"optionbox wrap ".$TEXT_DIRECTION."\">";
 	print "<form method=\"get\" name=\"newfactform\" action=\"\" onsubmit=\"return false;\">";
 	print "<select id=\"newfact\" name=\"newfact\">";
 	foreach($addfacts as $indexval => $fact) {

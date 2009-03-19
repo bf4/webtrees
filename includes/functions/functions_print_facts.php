@@ -1025,6 +1025,7 @@ function printSourceStructure($textSOUR) {
 	global $pgv_lang, $factarray;
 
 	$data='';
+	$note_data='';
 	if ($textSOUR["PAGE"]!="") {
 		$data.="<br /><span class=\"label\">".$factarray["PAGE"].":&nbsp;&nbsp;</span><span class=\"field\">".PrintReady(expand_urls($textSOUR["PAGE"]))."</span>";
 	}
@@ -1033,6 +1034,14 @@ function printSourceStructure($textSOUR) {
 		$data.="<br /><span class=\"label\">".$factarray["EVEN"].":&nbsp;</span><span class=\"field\">".PrintReady($textSOUR["EVEN"])."</span>";
 		if ($textSOUR["ROLE"]!="") {
 			$data.="<br />&nbsp;&nbsp;&nbsp;&nbsp;<span class=\"label\">".$factarray["ROLE"].":&nbsp;</span><span class=\"field\">".PrintReady($textSOUR["ROLE"])."</span>";
+		}
+	}
+	
+	if (isset($textSOUR["NOTE"]) && $textSOUR["NOTE"]!="") {
+		$noterec = find_gedcom_record(str_replace("@", "", $textSOUR["NOTE"]));
+		$nt = preg_match("/0 ".$textSOUR["NOTE"]." NOTE(.*)/", $noterec, $n1match);
+		if ($nt==1) {
+			$note_data.="&nbsp;&nbsp;<span class=\"field\">".print_note_record($n1match[1], 1, $noterec,  true, true)."</span>";
 		}
 	}
 
@@ -1063,6 +1072,8 @@ function printSourceStructure($textSOUR) {
 				$data.= "<span class=\"field\">".PrintReady($text)."</span><br />";
 			}else{
 				$data.="<br />&nbsp;&nbsp;<span class=\"label\">".$factarray["TEXT"].":&nbsp;</span><span class=\"field\">".PrintReady(expand_urls($text))."</span>";
+				if (!empty($text) && !empty($note_data)) $data.="<br />";
+				$data.=$note_data;
 			}
 			// ==========================================================
 
@@ -1172,10 +1183,10 @@ function print_main_notes($factrec, $level, $pid, $linenum, $noedit=false) {
 				print_main_notes($factrec, $level, $pid, $linenum, $noedit);
 			}
 		}
-		if ($level==2) print "<tr class=\"row_note2\">";
+		if ($level>=2) print "<tr class=\"row_note2\">";
 		else print "<tr>";
 		print "<td valign=\"top\" class=\"descriptionbox";
-		if ($level==2) print " rela";
+		if ($level>=2) print " rela";
 		print " $styleadd center width20\">";
 		if ($level<2) {
 			echo "<img class=\"icon\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["notes"]["small"]."\" alt=\"\" />";

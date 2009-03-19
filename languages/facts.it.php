@@ -3,7 +3,7 @@
  * Italian Language file
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
+ * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -219,7 +219,7 @@ $factarray["_DEAT_SPOU"] = "Morte del coniuge";
 $factarray["_BURI_SPOU"] = "Sepoltura del coniuge";
 $factarray["_CREM_SPOU"] = "Cremazione del coniuge";
 $factarray["_BIRT_CHIL"] = "Nascita di un figlio";
-$factarray["_CHR_CHIL" ] = "Battesimo di un figlio";
+$factarray["_CHR_CHIL"] = "Battesimo di un figlio";
 $factarray["_BAPM_CHIL"] = "Battesimo di un figlio";
 $factarray["__BRTM_CHIL"] = "Brit Mila di un figlio";
 $factarray["_ADOP_CHIL"] = "Adozione di un figlio ";

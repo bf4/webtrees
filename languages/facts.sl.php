@@ -3,7 +3,7 @@
  * Slovenian Language file for PhpGedView.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008 PGV Development Team. All rights reserved.
+ * Copyright (C) 2002 to 2009 PGV Development Team. All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms the GNU General Public License as published by
@@ -298,7 +298,7 @@ $factarray["_BURI_SPOU"] = "Pokop soproga";
 $factarray["_CREM_SPOU"] = "Upepelitev soproga";
 
 $factarray["_BIRT_CHIL"] = "Rojstvo otroka";
-$factarray["_CHR_CHIL" ] = "Krst otroka";
+$factarray["_CHR_CHIL"] = "Krst otroka";
 $factarray["_BAPM_CHIL"] = "Baptizem otroka";
 $factarray["__BRTM_CHIL"] = "Brit Mila otroka";
 $factarray["_ADOP_CHIL"] = "Posvojitev otroka";
@@ -309,7 +309,7 @@ $factarray["_BURI_CHIL"] = "Pokop otroka";
 $factarray["_CREM_CHIL"] = "Upepelitev otroka";
 
 $factarray["_BIRT_GCHI"] = "Rojstvo vnuka";
-$factarray["_CHR_GCHI" ] = "Krst vnuka";
+$factarray["_CHR_GCHI"] = "Krst vnuka";
 $factarray["_BAPM_GCHI"] = "Krst vnuka";
 $factarray["__BRTM_GCHI"] = "Brit Mila vnuka";
 $factarray["_ADOP_GCHI"] = "Posvojitev vnuka";
@@ -320,7 +320,7 @@ $factarray["_BURI_GCHI"] = "Pokop vnuka";
 $factarray["_CREM_GCHI"] = "Upepelitev vnuka";
 
 $factarray["_BIRT_GGCH"] = "Rojstvo pravnuk";
-$factarray["_CHR_GGCH" ] = "Krst pravnuka";
+$factarray["_CHR_GGCH"] = "Krst pravnuka";
 $factarray["_BAPM_GGCH"] = "Krst pravnuka";
 $factarray["__BRTM_GGCH"] = "Brit Mila pravnuka";
 $factarray["_ADOP_GGCH"] = "Posvojitev pravnuka";
@@ -346,7 +346,7 @@ $factarray["_BURI_MOTH"] = "Pokop matere";
 $factarray["_CREM_MOTH"] = "Upepelitev matere";
 
 $factarray["_BIRT_SIBL"] = "Rojstvo brata/sestre";
-$factarray["_CHR_SIBL" ] = "Krst brata/sestre";
+$factarray["_CHR_SIBL"] = "Krst brata/sestre";
 $factarray["_BAPM_SIBL"] = "Krst brata/sestre";
 $factarray["__BRTM_SIBL"] = "Brit Mila brata/sestre";
 $factarray["_ADOP_SIBL"] = "Posvojitev brata/sestre";
@@ -357,7 +357,7 @@ $factarray["_BURI_SIBL"] = "Pokop brata/sestre";
 $factarray["_CREM_SIBL"] = "Upepelitev brata/sestre";
 
 $factarray["_BIRT_HSIB"] = "Rojstvo polbrata/polsestre";
-$factarray["_CHR_HSIB" ] = "Krst polbrata/polsestre";
+$factarray["_CHR_HSIB"] = "Krst polbrata/polsestre";
 $factarray["_BAPM_HSIB"] = "Krst polbrata/polsestre";
 $factarray["__BRTM_HSIB"] = "Brit Mila polbrata/polsestre";
 $factarray["_ADOP_HSIB"] = "Posvojitev polbrata/polsestre";
@@ -368,7 +368,7 @@ $factarray["_BURI_HSIB"] = "Pokop polbrata/polsestre";
 $factarray["_CREM_HSIB"] = "Upepelitev polbrata/polsestre";
 
 $factarray["_BIRT_NEPH"] = "Rojstvo nečaka ali nečakinje";
-$factarray["_CHR_NEPH" ] = "Krst nečaka ali nečakinje";
+$factarray["_CHR_NEPH"] = "Krst nečaka ali nečakinje";
 $factarray["_BAPM_NEPH"] = "Krst nečaka ali nečakinje";
 $factarray["__BRTM_NEPH"] = "Brit Mila a nephew";
 $factarray["_ADOP_NEPH"] = "Posvojitev nečaka ali nečakinje";
@@ -387,7 +387,7 @@ $factarray["_BURI_GGPA"] = "Pokop praprastarša";
 $factarray["_CREM_GGPA"] = "Upepelitev praprastarša";
 
 $factarray["_BIRT_FSIB"] = "Rojstvo očetovega brata/sestre";
-$factarray["_CHR_FSIB" ] = "Krst očetovega brata/sestre";
+$factarray["_CHR_FSIB"] = "Krst očetovega brata/sestre";
 $factarray["_BAPM_FSIB"] = "Krst očetovega brata/sestre";
 $factarray["__BRTM_FSIB"] = "Brit Mila očetovega brata/sestre";
 $factarray["_ADOP_FSIB"] = "Posvojitev očetovega brata/sestre";
@@ -398,7 +398,7 @@ $factarray["_BURI_FSIB"] = "Pokop očetovega brata/sestre";
 $factarray["_CREM_FSIB"] = "Upepelitev očetovega brata/sestre";
 
 $factarray["_BIRT_MSIB"] = "Rojstvo materine sestre/brata";
-$factarray["_CHR_MSIB" ] = "Krst materine sestre/brata";
+$factarray["_CHR_MSIB"] = "Krst materine sestre/brata";
 $factarray["_BAPM_MSIB"] = "Krst materine sestre/brata";
 $factarray["__BRTM_MSIB"] = "Brit Mila materine sestre/brata";
 $factarray["_ADOP_MSIB"] = "Posvojitev materine sestre/brata";
