@@ -403,11 +403,12 @@ class TreeNav {
 		$thumbnail = "";
 		if ($MULTI_MEDIA && $SHOW_HIGHLIGHT_IMAGES && showFact("OBJE", $person->getXref())) {
 			$object = $person->findHighlightedMedia();
-			if (!empty($object["thumb"])) {
-				$size = findImageSize($object["thumb"]);
+			if (!empty($object)) {
+				$whichFile = thumb_or_main($object);	// Do we send the main image or a thumbnail?
+				$size = findImageSize($whichFile);
 				$class = "pedigree_image_portrait";
 				if ($size[0]>$size[1]) $class = "pedigree_image_landscape";
-				if($TEXT_DIRECTION == "rtl") $class .= "_rtl";
+				if ($TEXT_DIRECTION == "rtl") $class .= "_rtl";
 				// NOTE: IMG ID
 				$imgsize = findImageSize($object["file"]);
 				$imgwidth = $imgsize[0]+50;
@@ -415,10 +416,10 @@ class TreeNav {
 
 				if (!empty($object['mid']) && $USE_MEDIA_VIEWER) {
 					$thumbnail .= "<a href=\"".encode_url("mediaviewer.php?mid=".$object['mid'])."\" >";
-				}else{
+				} else {
 					$thumbnail .= "<a href=\"javascript:;\" onclick=\"return openImage('".rawurlencode($object["file"])."',$imgwidth, $imgheight);\">";
 				}
-				$thumbnail .= "<img src=\"".$SERVER_URL.$object["thumb"]."\" vspace=\"0\" hspace=\"0\" class=\"$class\" alt=\"\" title=\"\"";
+				$thumbnail .= "<img src=\"".$SERVER_URL.$whichFile."\" vspace=\"0\" hspace=\"0\" class=\"$class\" alt=\"\" title=\"\"";
 				if ($imgsize) $thumbnail .= " /></a>";
 				else $thumbnail .= " />";
 			}

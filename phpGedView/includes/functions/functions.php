@@ -1412,10 +1412,9 @@ function exists_pending_change($user_id=PGV_USER_ID, $ged_id=PGV_GED_ID) {
  * find the highlighted media object for a gedcom entity
  *
  * Rules for finding the highlighted media object:
- * 1. The first _THUM Y object will be used regardless of the object's level in the gedcom record
- * 2. The first _PRIM Y object will be used if no _THUM Y exists regardless of level in gedcom record
- * 3. The first level 1 object will be used if there is no _THUM Y or _PRIM Y and if its doesn't have _THUM N or _PRIM N (level 1 objects appear on the media tab on the individual page)
- * 4. Adding _PRIM N to any object will cause it not to be shown as a highlighted media.
+ * 1. The first _PRIM Y object will be used regardless of level in gedcom record
+ * 2. The first level 1 object will be used if there if it doesn't have _PRIM N (level 1 objects appear on the media tab on the individual page)
+ *
  * @param string $pid the individual, source, or family id
  * @param string $indirec the gedcom record to look in
  * @return array an object array with indexes "thumb" and "file" for thumbnail and filename
@@ -1459,7 +1458,6 @@ function find_highlighted_object($pid, $indirec) {
 		$res->free();
 	}
 
-	//-- for the given media choose the
 	foreach ($media as $i=>$row) {
 		if (displayDetailsById($row[0], 'OBJE') && !FactViewRestricted($row[0], $row[2])) {
 			$level=0;
@@ -1474,34 +1472,43 @@ function find_highlighted_object($pid, $indirec) {
 				$thum = get_gedcom_value('_THUM', 1, $row[2]);
 				$prim = get_gedcom_value('_PRIM', 1, $row[2]);
 			}
-			//-- always take _THUM Y objects
-			if ($thum=='Y') {
+			if ($prim=='N') continue;		// Skip _PRIM N objects
+			if ($prim=='Y') {
+				//-- take the first _PRIM Y object
 				$object["file"] = check_media_depth($row[1]);
-				$object["thumb"] = $object["file"];
+				$object["thumb"] = thumbnail_file($row[1], true, false, $pid);
+//				$object["_PRIM"] = $prim;	// Not sure whether this is needed.
+				$object["_THUM"] = $thum;	// This overrides GEDCOM's "Use main image as thumbnail" option
 				$object["level"] = $level;
 				$object["mid"] = $row[0];
 				break;
-			} else
-				if ($prim=='Y') {
-					//-- take the first _PRIM Y object... _PRIM Y overrides first level 1 object
-					if (!isset($object['prim']) || !isset($object['level']) || $object['level']>$level) {
-						$object["file"] = check_media_depth($row[1]);
-						$object["thumb"] = thumbnail_file($row[1], true, false, $pid);
-						$object["prim"] = $prim;
-						$object["level"] = $level;
-						$object["mid"] = $row[0];
-					}
-				} else
-					if (empty($object['file']) && $level==1 && $thum!='N' && $prim!='N') {
-						//-- take the first level 1 object if we don't already have one and it doesn't have _THUM N or _PRIM N
-						$object["file"] = check_media_depth($row[1]);
-						$object["thumb"] = thumbnail_file($row[1], true, false, $pid);
-						$object["level"] = $level;
-						$object["mid"] = $row[0];
-					}
+			}
+			if ($level==1) {
+				//-- take the first level 1 object
+				$object["file"] = check_media_depth($row[1]);
+				$object["thumb"] = thumbnail_file($row[1], true, false, $pid);
+//				$object["_PRIM"] = $prim;	// Not sure whether this is needed.
+				$object["_THUM"] = $thum;	// This overrides GEDCOM's "Use main image as thumbnail" option
+				$object["level"] = $level;
+				$object["mid"] = $row[0];
+				break;
+			}
 		}
 	}
 	return $object;
+}
+
+/**
+ * Determine whether the main image or a thumbnail should be sent to the browser
+ */
+function thumb_or_main($object) {
+	global $USE_THUMBS_MAIN;
+
+	if ($object['_THUM']=='Y' || !$USE_THUMBS_MAIN) $file = 'file';
+	else $file = 'thumb';
+
+	// Here we should check whether the selected file actually exists
+	return($object[$file]);
 }
 
 /**

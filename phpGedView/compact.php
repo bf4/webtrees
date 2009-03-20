@@ -3,7 +3,7 @@
  * Compact pedigree tree
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
+ * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -320,29 +320,26 @@ function print_td_person($n) {
 		$name=$indi->getFullName();
 		$addname=$indi->getAddName();
 
-		if (($showthumbs) && $MULTI_MEDIA && $SHOW_HIGHLIGHT_IMAGES && showFact("OBJE", $pid)) {
+		if ($showthumbs && $MULTI_MEDIA && $SHOW_HIGHLIGHT_IMAGES && showFact("OBJE", $pid)) {
 			$object = find_highlighted_object($pid, $indi->gedrec);
-			if (!empty($object["thumb"])) {
-				$size = findImageSize($object["thumb"]);
+			if (!empty($object)) {
+				$whichFile = thumb_or_main($object);	// Do we send the main image or a thumbnail?
+				$size = findImageSize($whichFile);
 				$class = "pedigree_image_portrait";
 				if ($size[0]>$size[1]) $class = "pedigree_image_landscape";
-				if($TEXT_DIRECTION == "rtl") $class .= "_rtl";
+				if ($TEXT_DIRECTION == "rtl") $class .= "_rtl";
 				// NOTE: IMG ID
 				$imgsize = findImageSize($object["file"]);
 				$imgwidth = $imgsize[0]+50;
 				$imgheight = $imgsize[1]+150;
-//LBox --------  change for Lightbox Album --------------------------------------------
 				if ($MULTI_MEDIA && file_exists("modules/lightbox/album.php")) {
 					$text .= "<a href=\"" . $object["file"] . "\" rel=\"clearbox[general]\" rev=\"" . $object['mid'] . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name,ENT_QUOTES,'UTF-8')) . "\">" . "\n";
-				}else{
-// ---------------------------------------------------------------------------------------------
+				} else {
 					$text .= "<a href=\"javascript:;\" onclick=\"return openImage('".rawurlencode($object["file"])."',$imgwidth, $imgheight);\">";
-//LBox --------  change for Lightbox Album --------------------------------------------
 				}
-// ---------------------------------------------------------------------------------------------
 				$birth_date=$indi->getBirthDate();
 				$death_date=$indi->getDeathDate();
-				$text .= "<img id=\"box-$pid\" src=\"".$object["thumb"]."\"vspace=\"0\" hspace=\"0\" class=\"$class\" alt =\"\" title=\"".PrintReady(htmlspecialchars(strip_tags($name), ENT_QUOTES, 'UTF-8'))." - ".strip_tags(html_entity_decode($birth_date->Display(false)." - ".$death_date->Display(false),ENT_QUOTES,'UTF-8'))."\"";
+				$text .= "<img id=\"box-$pid\" src=\"".$whichFile."\"vspace=\"0\" hspace=\"0\" class=\"$class\" alt =\"\" title=\"".PrintReady(htmlspecialchars(strip_tags($name), ENT_QUOTES, 'UTF-8'))." - ".strip_tags(html_entity_decode($birth_date->Display(false)." - ".$death_date->Display(false),ENT_QUOTES,'UTF-8'))."\"";
 				if ($imgsize) $text .= " /></a>\n";
 				else $text .= " />\n";
 			}
