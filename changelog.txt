@@ -10,6 +10,7 @@
 
 
 Version 4.2.1
+ - Fixed: [ 2694015 ] Incorrect handling of Highlighted image (canajun2eh)
  - Changed: Add language editor support for comments on variable definition lines (canajun2eh)
  - Changed: Add language editor support for var. names or text enclosed in apostrophes (canajun2eh)
  - Fixed: [ 2687480 ] Language file editor wrong output when string is ";" (canajun2eh)

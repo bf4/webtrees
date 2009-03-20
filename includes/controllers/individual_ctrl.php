@@ -370,15 +370,10 @@ class IndividualControllerRoot extends BaseController {
 		if ($this->canShowHighlightedObject()) {
 			$firstmediarec = $this->indi->findHighlightedMedia();
 			if (!empty($firstmediarec)) {
-				if ($USE_THUMBS_MAIN) {
-					$filename = $firstmediarec["thumb"];
-					$class = "thumbnail";
-				} else {
-					$filename = $firstmediarec["file"];
+				$filename = thumb_or_main($firstmediarec);		// Do we send the main image or a thumbnail?
+				if (!$USE_THUMBS_MAIN || $firstmediarec["_THUM"]=='Y') {
 					$class = "image";
-				}
-				if (empty($filename)) {
-					$filename = $firstmediarec["thumb"];
+				} else {
 					$class = "thumbnail";
 				}
 				$isExternal = isFileExternal($filename);
@@ -391,19 +386,16 @@ class IndividualControllerRoot extends BaseController {
 					//Gets the Media View Link Information and Concatenate
 					$mid = $firstmediarec['mid'];
 
-					//LBox -------- addition for Lightbox Album --------------------------------------------
 					$name = $this->indi->getFullName();
 					if (file_exists("modules/lightbox/album.php")) {
 						print "<a href=\"" . $firstmediarec["file"] . "\" rel=\"clearbox[general_1]\" rev=\"" . $mid . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name,ENT_QUOTES,'UTF-8')) . "\">" . "\n";
 					}else
-					//Lbox -----------------------------------------------------------------------------------------
 
 					if (!$USE_MEDIA_VIEWER && $imgsize) {
 						$result .= "<a href=\"javascript:;\" onclick=\"return openImage('".encode_url(encrypt($firstmediarec["file"]))."',$imgwidth, $imgheight);\">";
 					}else{
 						$result .= "<a href=\"mediaviewer.php?mid={$mid}\">";
 					}
-					//LBox ---- $result .= "<img src=\"$filename\" align=\"left\" class=\"".$class."\" border=\"none\" alt=\"".$firstmediarec["file"]."\" />";
 					$result .= "<img src=\"$filename\" align=\"left\" class=\"".$class."\" border=\"none\" title=\"".PrintReady(htmlspecialchars(strip_tags($name),ENT_QUOTES,'UTF-8'))."\" alt=\"".PrintReady(htmlspecialchars(strip_tags($name),ENT_QUOTES,'UTF-8'))."\" />";
 					$result .= "</a>";
 					return $result;
