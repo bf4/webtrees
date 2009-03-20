@@ -95,7 +95,7 @@ echo '</td></tr><tr><td colspan="2"><table border="0" class="facts_table width80
 	$noterec = find_gedcom_record($controller->nid);
 	$nt = preg_match("/0 @$controller->nid@ NOTE(.*)/", $noterec, $n1match);
 	if ($nt==1) {
-		$note = print_note_record("<br />".$n1match[1], 1, $noterec, true, true);
+		$note = print_note_record("<br />".$n1match[1], 1, $noterec, false, true);
 	}else{
 		$note = "No Text";
 	}
