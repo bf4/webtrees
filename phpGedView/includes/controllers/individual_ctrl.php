@@ -651,23 +651,17 @@ class IndividualControllerRoot extends BaseController {
 		//-- main other menu item
 		$menu = new Menu($pgv_lang["other"]);
 		if ($SHOW_GEDCOM_RECORD) {
-			if (!empty($PGV_IMAGES["gedcom"]["small"]))
-				$menu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["gedcom"]["small"]);
-			if ($this->show_changes && PGV_USER_CAN_EDIT)
-				$menu->addOnclick("return show_gedcom_record('new');");
-			else
-				$menu->addOnclick("return show_gedcom_record('');");
-		}
-		else {
-			if (!empty($PGV_IMAGES["clippings"]["small"]))
-				$menu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["clippings"]["small"]);
+			if (!empty($PGV_IMAGES["gedcom"]["small"])) $menu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["gedcom"]["small"]);
+			if ($this->show_changes && PGV_USER_CAN_EDIT) $menu->addOnclick("return show_gedcom_record('new');");
+			else $menu->addOnclick("return show_gedcom_record('');");
+		} else {
+			if (!empty($PGV_IMAGES["clippings"]["small"])) $menu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["clippings"]["small"]);
 			$menu->addLink(encode_url("clippings.php?action=add&id={$this->pid}&type=indi"));
 		}
 		$menu->addClass("submenuitem$ff", "submenuitem_hover$ff", "submenu$ff");
-		if ($this->canShowGedcomRecord()) {
+		if ($SHOW_GEDCOM_RECORD) {
 			$submenu = new Menu($pgv_lang["view_gedcom"]);
-			if (!empty($PGV_IMAGES["gedcom"]["small"]))
-				$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["gedcom"]["small"]);
+			if (!empty($PGV_IMAGES["gedcom"]["small"])) $submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["gedcom"]["small"]);
 			if ($this->show_changes && PGV_USER_CAN_EDIT) $submenu->addOnclick("return show_gedcom_record('new');");
 			else $submenu->addOnclick("return show_gedcom_record();");
 			$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
@@ -675,15 +669,13 @@ class IndividualControllerRoot extends BaseController {
 		}
 		if ($this->indi->canDisplayDetails() && $ENABLE_CLIPPINGS_CART>=PGV_USER_ACCESS_LEVEL) {
 			$submenu = new Menu($pgv_lang["add_to_cart"], encode_url("clippings.php?action=add&id={$this->pid}&type=indi"));
-			if (!empty($PGV_IMAGES["clippings"]["small"]))
-				$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["clippings"]["small"]);
+			if (!empty($PGV_IMAGES["clippings"]["small"])) $submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["clippings"]["small"]);
 			$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 			$menu->addSubmenu($submenu);
 		}
 		if ($this->indi->canDisplayDetails() && PGV_USER_NAME) {
 			$submenu = new Menu($pgv_lang["add_to_my_favorites"], encode_url($this->indi->getLinkUrl()."&action=addfav&gid={$this->pid}"));
-			if (!empty($PGV_IMAGES["gedcom"]["small"]))
-				$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["gedcom"]["small"]);
+			if (!empty($PGV_IMAGES["gedcom"]["small"])) $submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["gedcom"]["small"]);
 			$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 			$menu->addSubmenu($submenu);
 		}
