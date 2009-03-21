@@ -435,7 +435,7 @@ $factarray["_FAMC_EMIG"] = "Emigration of parents";
 $factarray["_FAMC_RESI"] = "Residence of parents";
 
 //-- PGV Only facts
-$factarray["_THUM"]	= "Use this image as the thumbnail?";
+$factarray["_THUM"]	= "Always use main image?";
 $factarray["_PGVU"]	= "by"; // last changed by
 $factarray["SERV"] = "Remote Server";
 $factarray["_GEDF"] = "GEDCOM File";
