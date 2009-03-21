@@ -1007,12 +1007,26 @@ function print_addnewrepository_link($element_id) {
 * @todo add comments
 */
 function print_addnewnote_link($element_id) {
-	global $pgv_lang, $PGV_IMAGE_DIR, $PGV_IMAGES;
-
+	global $pgv_lang, $PGV_IMAGE_DIR, $PGV_IMAGES, $pid;
+	
 	$text = $pgv_lang["create_shared_note"];
 	if (isset($PGV_IMAGES["addnote"]["button"])) $Link = "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["addnote"]["button"]."\" alt=\"".$text."\" title=\"".$text."\" border=\"0\" align=\"middle\" />";
 	else $Link = $text;
 	echo "&nbsp;&nbsp;&nbsp;<a href=\"javascript:ADD;\" onclick=\"addnewnote(document.getElementById('".$element_id."')); return false;\">";
+	echo $Link;
+	echo "</a>";
+}
+
+/**
+* @todo add comments
+*/
+function print_addnewnote_assisted_link($element_id) {
+	global $pgv_lang, $PGV_IMAGE_DIR, $PGV_IMAGES, $pid;
+	
+	$text = $pgv_lang["create_shared_note_assisted"];
+	if (isset($PGV_IMAGES["addnote"]["button"])) $Link = "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["addnote"]["button"]."\" alt=\"".$text."\" title=\"".$text."\" border=\"0\" align=\"middle\" />";
+	else $Link = $text;
+	echo "&nbsp;&nbsp;&nbsp;<a href=\"javascript:ADD;\" onclick=\"addnewnote_assisted(document.getElementById('".$element_id."'), '".$pid."' ); return false;\">";
 	echo $Link;
 	echo "</a>";
 }
@@ -1232,9 +1246,9 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 			print_help_link($fact."_help", "qm");
 		} else {
 			if ($fact=="NOTE" && $islink){
-			print_help_link("edit_add_SHARED_NOTE_help", "qm");
+				print_help_link("edit_add_SHARED_NOTE_help", "qm");
 			} else {
-			print_help_link("edit_".$fact."_help", "qm");
+				print_help_link("edit_".$fact."_help", "qm");
 			}
 		}
 	}
@@ -1597,6 +1611,9 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 		if ($fact=="NOTE" && $islink) {
 			print_findnote_link($element_id);
 			print_addnewnote_link($element_id);
+			if (file_exists('modules/GEDFact_assistant/CENS/census_1_ctrl.php')) {
+				print_addnewnote_assisted_link($element_id);
+			}
 			echo "&nbsp;&nbsp;&nbsp;";
 			$record=GedcomRecord::getInstance($value);
 		}
