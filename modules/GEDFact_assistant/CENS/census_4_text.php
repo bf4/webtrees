@@ -100,12 +100,12 @@ function preview(){
 			<table class="facts_table" width="60%" border=3>
 				<tr>
 					<td align="center" class="descriptionbox" colspan="1">
-						<input type="button" value="Help" onclick="javascript: help_window2(this.form)" />
+						<input type="button" value="<?php echo $pgv_lang["page_help"]; ?>" onclick="javascript: help_window2(this.form)" />
 					</td>
 					<td align="center" class="descriptionbox" colspan="2">
 						<b> The Proposed Census Text </b>&nbsp;&nbsp;
 						<font size="1">
-						<input type="button" value="Preview" onclick="preview();" />
+						<input type="button" value="<?php echo $pgv_lang["preview"]; ?>" onclick="preview();" />
 						&nbsp;&nbsp; Click "Preview" to copy Input Fields Information.
 						</font>
 					</td>

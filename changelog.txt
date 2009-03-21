@@ -10,6 +10,7 @@
 
 
 Version 4.2.0 CA
+ - Changed: Fixed wrong path for "Find" function. Tidied up a few Navigator married names (windmillway)
  - Merged: Merge changes r5235 - r5244 from the trunk. (windmillway)
  - Changed: Paths to files in new GEDFact_assistant/CENS/ directory <windmillway)
  - Added: New subdirectories to GEDFact_assistant module {windmillway)

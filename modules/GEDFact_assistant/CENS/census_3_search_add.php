@@ -51,7 +51,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 						//	continue;
 						//}else{
 							var win02 = window.open(
-								"module.php?mod=GEDFact_assistant&pgvaction=census_3_find&callback=paste_id&action=filter&type=indi&multiple=&filter="+txt, "win02", "resizable=1, menubar=0, scrollbars=1, top=180, left=600, HEIGHT=400, WIDTH=450 ");
+								"module.php?mod=GEDFact_assistant&pgvaction=CENS/census_3_find&callback=paste_id&action=filter&type=indi&multiple=&filter="+txt, "win02", "resizable=1, menubar=0, scrollbars=1, top=180, left=600, HEIGHT=400, WIDTH=450 ");
 							if (window.focus) {win02.focus();}
 						//}
 					}
@@ -139,7 +139,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 								<td align="left" class="facts_value" style="display:block; background-color:#bb9900;">
 									<font size=1>
 										<?php 
-										print "<a href=\"".encode_url("edit_interface.php?action=add&pid=".$people["husb"]->getXref()."&fact=CENS&assist=yes&gedcom={$GEDCOM}")."\">";
+										print "<a href=\"".encode_url("edit_interface.php?action=addnewnote_assisted&noteid=newnote&pid=".$people["husb"]->getXref()."&gedcom={$GEDCOM}")."\">";
 										print "H";
 										print "</a>";
 										?>
@@ -226,7 +226,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 								<td align="left" class="facts_value" style="background-color:#bb9900;">
 									<font size=1>
 										<?php 
-										print "<a href=\"".encode_url("edit_interface.php?action=add&pid=".$people["wife"]->getXref()."&fact=CENS&assist=yes&gedcom={$GEDCOM}")."\">";
+										print "<a href=\"".encode_url("edit_interface.php?action=addnewnote_assisted&noteid=newnote&pid=".$people["wife"]->getXref()."&gedcom={$GEDCOM}")."\">";
 										print "H";
 										print "</a>";
 										?>
@@ -265,9 +265,14 @@ if (!defined('PGV_PHPGEDVIEW')) {
 											print "";														 // occu = Occupation
 										?>", "<?php
 											print PrintReady($people["wife"]->getcensbirthplace());			 //  birthpl = Census Place of Birth 
-										?>");'><?php
-											print PrintReady($people["wife"]->getFullName());				 // Name 
-										?> 
+										?>");'>
+										<?php 
+										if ($married>=0 && isset($nam[1])){
+											print PrintReady($fulmn);			 							 // Full Married Name
+										} else {
+											print PrintReady($fulln);			 							 // Full Name
+										}
+										?>
 									</a> 
 									<?php print "\n" ;
 									}else{
@@ -283,93 +288,96 @@ if (!defined('PGV_PHPGEDVIEW')) {
 						if (isset($people["children"])) {
 							$elderdate = $family->getMarriageDate();
 							foreach($people["children"] as $key=>$child) {
-									$nam   = $child->getAllNames();
-									$fulln = rtrim($nam[0]['givn'],'*')."&nbsp;".$nam[0]['surname'];
-									$givn  = rtrim($nam[0]['givn'],'*');
-									$surn  = $nam[0]['surname'];
-									if (isset($nam[1])) {
-										$fulmn = rtrim($nam[1]['givn'],'*')."&nbsp;".$nam[1]['surname'];
-										$marn  = $nam[1]['surname'];
-									}
-									
-									$menu = array();
-									$menu["label"] = "&nbsp;" . $child->getLabel() . "&nbsp;". "\n";
-									$menu["submenuclass"] = "submenu";
-									$menu["items"] =  array();
-									$submenu = array();
-									$submenu["label"]  = print_pedigree_person_nav2($child->getXref(), 2, !$this->isPrintPreview(), 0, $personcount++, $currpid, $censyear);
-									//Note: removed PrintReady() as this caused problem
-										// $submenu["label"] .= PrintReady($spouselinks);
-									$submenu["label"] .= $spouselinks;
-									$menu["items"][] = $submenu;
-								?>
-								<tr>
-									<td align="left" class="optionbox">
-										<font size=1>
-										<?php 
-										if ($child->getXref()==$pid) {
-											print $child->getLabel();
-										}else{
-											print_menu($menu);
-										}
-										?>
-										</font>
-									</td>
-								<td align="left" class="facts_value" style="background-color:#bb9900;">
-									<font size=1>
-										<?php 
-										print "<a href=\"".encode_url("edit_interface.php?action=add&pid=".$child->getXref()."&fact=CENS&assist=yes&gedcom={$GEDCOM}")."\">";
-										print "H";
-										print "</a>";
-										?>
-									</font>
-								</td>
-									<td align="left" class="facts_value" nowrap="nowrap">
-										<font size=1>
-										<?php
-										if ( ($child->canDisplayDetails()) ) {
-											?>
-											<a href='javaScript:insertRowToTable("<?php 
-													print $child->getXref() ;							 // pid = PID
-												?>", "<?php 
-													print PrintReady($fulln);							 // nam = Name
-													?>", "<?php
-													if ($child->getXref()==$pid) {
-														print "Head";									 // label = Head
-													}else{
-														print PrintReady($child->getLabel());			 // label = Relationship
-													}
-												?>", "<?php
-													print PrintReady($child->getSex());					 // gend = Gender
-												?>", "<?php
-													print "?";											 // cond = Condition (Married or Single)
-												?>", "<?php
-													print PrintReady($child->getbirthyear());			 // yob = Year of Birth
-												?>", "<?php
-													print PrintReady($censyear-$child->getbirthyear());	 //  age = Census Date minus YOB
-												?>", "<?php
-													print "Y";											 // YMD
-												?>", "<?php
-													print "";											 // occu = Occupation
-												?>", "<?php
-													print PrintReady($child->getcensbirthplace());		 //  birthpl = Census Place of Birth 
-												?>");'><?php
-													print PrintReady($child->getFullName());			 // Name 
-												?>
-											</a>
-											<?php print "\n" ;
-										}else{
-												print $pgv_lang["private"];
-										}
+								$nam   = $child->getAllNames();
+								$fulln = rtrim($nam[0]['givn'],'*')."&nbsp;".$nam[0]['surname'];
+								$givn  = rtrim($nam[0]['givn'],'*');
+								$surn  = $nam[0]['surname'];
+								if (isset($nam[1])) {
+									$fulmn = rtrim($nam[1]['givn'],'*')."&nbsp;".$nam[1]['surname'];
+									$marn  = $nam[1]['surname'];
+								}
+								
+								$menu = array();
+								$menu["label"] = "&nbsp;" . $child->getLabel() . "&nbsp;". "\n";
+								$menu["submenuclass"] = "submenu";
+								$menu["items"] =  array();
+								$submenu = array();
+								$submenu["label"]  = print_pedigree_person_nav2($child->getXref(), 2, !$this->isPrintPreview(), 0, $personcount++, $currpid, $censyear);
+								//Note: removed PrintReady() as this caused problem
+									// $submenu["label"] .= PrintReady($spouselinks);
+								$submenu["label"] .= $spouselinks;
+								$menu["items"][] = $submenu;
+								
+								if ($child->getXref()==$pid) {
+									//Only print Head of Family in Immediate Family Block
+								} else {
+									?>
+									<tr>
+										<td align="left" class="optionbox">
+											<font size=1>
+											<?php 
+											if ($child->getXref()==$pid) {
+												print $child->getLabel();
+											}else{
+												print_menu($menu);
+											}
 											?>
 											</font>
-										<?php
-									?>
-								</tr>
-								<?php
+										</td>
+										<td align="left" class="facts_value" style="background-color:#bb9900;">
+											<font size=1>
+												<?php 
+												print "<a href=\"".encode_url("edit_interface.php?action=addnewnote_assisted&noteid=newnote&pid=".$child->getXref()."&gedcom={$GEDCOM}")."\">";
+												print "H";
+												print "</a>";
+												?>
+											</font>
+										</td>
+										<td align="left" class="facts_value" nowrap="nowrap">
+											<font size=1>
+											<?php
+											if ( ($child->canDisplayDetails()) ) {
+												?>
+												<a href='javaScript:insertRowToTable("<?php 
+														print $child->getXref() ;							 // pid = PID
+													?>", "<?php 
+														print PrintReady($fulln);							 // nam = Name
+														?>", "<?php
+														if ($child->getXref()==$pid) {
+															print "Head";									 // label = Head
+														}else{
+															print PrintReady($child->getLabel());			 // label = Relationship
+														}
+													?>", "<?php
+														print PrintReady($child->getSex());					 // gend = Gender
+													?>", "<?php
+														print "?";											 // cond = Condition (Married or Single)
+													?>", "<?php
+														print PrintReady($child->getbirthyear());			 // yob = Year of Birth
+													?>", "<?php
+														print PrintReady($censyear-$child->getbirthyear());	 //  age = Census Date minus YOB
+													?>", "<?php
+														print "Y";											 // YMD
+													?>", "<?php
+														print "";											 // occu = Occupation
+													?>", "<?php
+														print PrintReady($child->getcensbirthplace());		 //  birthpl = Census Place of Birth 
+													?>");'><?php
+														print PrintReady($child->getFullName());			 // Name 
+													?>
+												</a>
+												<?php print "\n" ;
+											}else{
+													print $pgv_lang["private"];
+											}
+											?>
+											</font>
+										</td>
+									</tr>
+									<?php
 								}
-								$elderdate = $child->getBirthDate(false);
-							//}
+							}
+							$elderdate = $child->getBirthDate(false);
 						}
 					}
 					
@@ -422,7 +430,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 								<td align="left" class="facts_value" style="background-color:#bb9900;">
 									<font size=1>
 										<?php 
-										print "<a href=\"".encode_url("edit_interface.php?action=add&pid=".$people["husb"]->getXref()."&fact=CENS&assist=yes&gedcom={$GEDCOM}")."\">";
+										print "<a href=\"".encode_url("edit_interface.php?action=addnewnote_assisted&noteid=newnote&pid=".$people["husb"]->getXref()."&gedcom={$GEDCOM}")."\">";
 										print "H";
 										print "</a>";
 										?>
@@ -519,7 +527,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 								<td align="left" class="facts_value" style="background-color:#bb9900;">
 									<font size=1>
 										<?php 
-										print "<a href=\"".encode_url("edit_interface.php?action=add&pid=".$people["wife"]->getXref()."&fact=CENS&assist=yes&gedcom={$GEDCOM}")."\">";
+										print "<a href=\"".encode_url("edit_interface.php?action=addnewnote_assisted&noteid=newnote&pid=".$people["wife"]->getXref()."&gedcom={$GEDCOM}")."\">";
 										print "H";
 										print "</a>";
 										?>
@@ -563,8 +571,13 @@ if (!defined('PGV_PHPGEDVIEW')) {
 										?>", "<?php
 											print PrintReady($people["wife"]->getcensbirthplace());			 //  birthpl = Census Place of Birth 
 										?>");'>
-										<?php print PrintReady($people["wife"]->getFullName());				 // Name
-										?> 
+										<?php 
+										if ($married>=0 && isset($nam[1])){
+											print PrintReady($fulmn);			 							 // Full Married Name
+										} else {
+											print PrintReady($fulln);			 							 // Full Name
+										}
+										?>
 									</a> 
 									<?php print "\n" ;
 									}else{
@@ -612,8 +625,8 @@ if (!defined('PGV_PHPGEDVIEW')) {
 									</td>
 									<td align="left" class="facts_value" style="background-color:#bb9900;">
 										<font size=1>
-											<?php 
-											print "<a href=\"".encode_url("edit_interface.php?action=add&pid=".$child->getXref()."&fact=CENS&assist=yes&gedcom={$GEDCOM}")."\">";
+											<?php
+										print "<a href=\"".encode_url("edit_interface.php?action=addnewnote_assisted&noteid=newnote&pid=".$child->getXref()."&gedcom={$GEDCOM}")."\">";
 											print "H";
 											print "</a>";
 											?>
@@ -731,8 +744,8 @@ if (!defined('PGV_PHPGEDVIEW')) {
 								</td>
 								<td align="left" class="facts_value" style="background-color:#bb9900;">
 									<font size=1>
-										<?php 
-										print "<a href=\"".encode_url("edit_interface.php?action=add&pid=".$people["husb"]->getXref()."&fact=CENS&assist=yes&gedcom={$GEDCOM}")."\">";
+										<?php
+										print "<a href=\"".encode_url("edit_interface.php?action=addnewnote_assisted&noteid=newnote&pid=".$people["husb"]->getXref()."&gedcom={$GEDCOM}")."\">";
 										print "H";
 										print "</a>";
 										?>
@@ -830,7 +843,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 								<td align="left" class="facts_value" style="background-color:#bb9900;">
 									<font size=1>
 										<?php 
-										print "<a href=\"".encode_url("edit_interface.php?action=add&pid=".$people["wife"]->getXref()."&fact=CENS&assist=yes&gedcom={$GEDCOM}")."\">";
+										print "<a href=\"".encode_url("edit_interface.php?action=addnewnote_assisted&noteid=newnote&pid=".$people["wife"]->getXref()."&gedcom={$GEDCOM}")."\">";
 										print "H";
 										print "</a>";
 										?>
@@ -845,9 +858,9 @@ if (!defined('PGV_PHPGEDVIEW')) {
 												print $people["wife"]->getXref() ;							 // pid = PID
 										?>", "<?php 
 											if ($married>=0 && isset($nam[1])){
-												echo PrintReady($fulmn);									 // nam = Married Name
+												echo PrintReady($fulmn);									 // nam = Full Married Name
 											}else{
-												echo PrintReady($fulln);									 // nam = Name
+												echo PrintReady($fulln);									 // nam = Full Name
 											}
 										?>", "<?php
 											if ($people["wife"]->getXref()==$pid) {
@@ -874,8 +887,13 @@ if (!defined('PGV_PHPGEDVIEW')) {
 										?>", "<?php
 											print PrintReady($people["wife"]->getcensbirthplace());			 //  birthpl = Census Place of Birth 
 										?>");'>
-											<?php print PrintReady($people["wife"]->getFullName());			 // Name
-										?>
+											<?php 
+											if ($married>=0 && isset($nam[1])){
+												print PrintReady($fulmn);			 						 // Full Married Name
+											} else {
+												print PrintReady($fulln);			 						 // Full Name
+											}
+											?>
 										</a>
 										<?php print "\n" ;
 									}else{
@@ -920,8 +938,8 @@ if (!defined('PGV_PHPGEDVIEW')) {
 								</td>
 								<td align="left" class="facts_value" style="background-color:#bb9900;">
 									<font size=1>
-										<?php 
-										print "<a href=\"".encode_url("edit_interface.php?action=add&pid=".$child->getXref()."&fact=CENS&assist=yes&gedcom={$GEDCOM}")."\">";
+										<?php
+										print "<a href=\"".encode_url("edit_interface.php?action=addnewnote_assisted&noteid=newnote&pid=".$child->getXref()."&gedcom={$GEDCOM}")."\">";
 										print "H";
 										print "</a>";
 										?>
@@ -1074,7 +1092,8 @@ function print_pedigree_person_nav2($pid, $style=1, $show_famlink=true, $count=0
 								$tmp=$husb->getXref();
 								if ($husb->canDisplayName()) {
 									$nam   = $husb->getAllNames();
-									$fulln = rtrim($nam[0]['givn'],'*')."&nbsp;".$nam[0]['surn'];
+									//$fulln = rtrim($nam[0]['givn'],'*')."&nbsp;".$nam[0]['surn'];
+									$fulln = $husb->getFullName();
 									$givn  = rtrim($nam[0]['givn'],'*');
 									$surn  = $nam[0]['surn'];
 									if (isset($nam[1]) ) {
@@ -1128,35 +1147,48 @@ function print_pedigree_person_nav2($pid, $style=1, $show_famlink=true, $count=0
 								}
 								$tmp=$wife->getXref();
 								if ($wife->canDisplayName()) {
+									$married = GedcomDate::Compare($censdate, $marrdate);
 									$nam   = $wife->getAllNames();
 									$fulln = rtrim($nam[0]['givn'],'*')."&nbsp;".$nam[0]['surname'];
 									$givn  = rtrim($nam[0]['givn'],'*');
 									$surn  = $nam[0]['surname'];
 									if (isset($nam[1])) {
-										$fulmn = rtrim($nam[1]['givn'],'*')."&nbsp;".$nam[1]['surname'];
+										//$fulmn = rtrim($nam[1]['givn'],'*')."&nbsp;".$nam[1]['surname'];
+										$fulmn = $nam[1]['fullNN'];
 										$marn  = $nam[1]['surname'];
 									}
 									$parentlinks .= "<a href=\"javascript:insertRowToTable(";
 									$parentlinks .=	"'".PrintReady($wife->getXref())."',";						// pid		=	PID
-									$parentlinks .=	"'".PrintReady($fulln)."',";								// nam	=	Name
+									// $parentlinks .=	"'".PrintReady($fulln)."',";							// nam	=	Name
+									
+									if ($married>=0 && isset($nam[1])){
+										$parentlinks .= "'".PrintReady($fulmn)."',";							// nam		=	Full Married Name
+									} else {
+										$parentlinks .= "'".PrintReady($fulln)."',";	 						// nam		=	Full Name
+									}
+									
 									if ($currpid=="Wife" || $currpid=="Husband") {
 										$parentlinks .= "'Mother in Law',";										// label	=	1st Gen Female Relationship
 									}else{
 										$parentlinks .= "'Grand-Mother',";										// label	=	2st Gen Female Relationship
 									}
-									$parentlinks .=	"'".PrintReady($wife->getSex())."',";						// sex	=	Gender
-									$parentlinks .=	"''".",";													// cond	=	Condition (Married etc)
-									$parentlinks .=	"'".PrintReady($wife->getbirthyear())."',";					// yob	=	Year of Birth
+									$parentlinks .=	"'".PrintReady($wife->getSex())."',";						// sex		=	Gender
+									$parentlinks .=	"''".",";													// cond		=	Condition (Married etc)
+									$parentlinks .=	"'".PrintReady($wife->getbirthyear())."',";					// yob		=	Year of Birth
 									if ($wife->getbirthyear()>=1) {
-										$parentlinks .=	"'".PrintReady($censyear-$wife->getbirthyear())."',";	// age	= 	Census Year - Year of Birth
+										$parentlinks .=	"'".PrintReady($censyear-$wife->getbirthyear())."',";	// age		= 	Census Year - Year of Birth
 									}else{
-										$parentlinks .=	"''".",";												// age	= 	Undefined
+										$parentlinks .=	"''".",";												// age		= 	Undefined
 									}
 									$parentlinks .=	"'Y'".",";													// Y/M/D	=	Age in Years/Months/Days
 									$parentlinks .=	"''".",";													// occu 	=	Occupation
 									$parentlinks .=	"'".PrintReady($wife->getcensbirthplace())."'";				// birthpl	=	Birthplace
 									$parentlinks .=	");\">";
-									$parentlinks .= PrintReady($wife->getFullName());
+									if ($married>=0 && isset($nam[1])){
+										$parentlinks .= $fulmn;			 										// Full Married Name
+									} else {
+										$parentlinks .= $fulln;							 						// Full Name
+									}
 									$parentlinks .= "</a>";
 								}else{
 									$parentlinks .= $pgv_lang["private"];
@@ -1197,7 +1229,8 @@ function print_pedigree_person_nav2($pid, $style=1, $show_famlink=true, $count=0
 									$tmp=$husb->getXref();
 									if ($husb->canDisplayName()) {
 										$nam   = $husb->getAllNames();
-										$fulln = rtrim($nam[0]['givn'],'*')."&nbsp;".$nam[0]['surname'];
+										// $fulln = rtrim($nam[0]['givn'],'*')."&nbsp;".$nam[0]['surname'];
+										$fulln = $husb->getFullName();
 										$givn  = rtrim($nam[0]['givn'],'*');
 										$surn  = $nam[0]['surname'];
 										if (isset($nam[1])) {
@@ -1234,6 +1267,7 @@ function print_pedigree_person_nav2($pid, $style=1, $show_famlink=true, $count=0
 									}
 									$tmp=$wife->getXref();
 									if ($wife->canDisplayName()) {
+										$married = GedcomDate::Compare($censdate, $marrdate);
 										$nam   = $wife->getAllNames();
 										$fulln = rtrim($nam[0]['givn'],'*')."&nbsp;".$nam[0]['surname'];
 										$givn  = rtrim($nam[0]['givn'],'*');
@@ -1279,6 +1313,7 @@ function print_pedigree_person_nav2($pid, $style=1, $show_famlink=true, $count=0
 								}
 								$tmp=$spouse->getXref();
 								if ($spouse->canDisplayName()) {
+									$married = GedcomDate::Compare($censdate, $marrdate);
 									$nam   = $spouse->getAllNames();
 									$fulln = rtrim($nam[0]['givn'],'*')."&nbsp;".$nam[0]['surname'];
 									$givn  = rtrim($nam[0]['givn'],'*');
@@ -1290,7 +1325,12 @@ function print_pedigree_person_nav2($pid, $style=1, $show_famlink=true, $count=0
 									
 									$spouselinks .= "<a href=\"javascript:insertRowToTable(";
 									$spouselinks .=	"'".PrintReady($spouse->getXref())."',";					// pid		=	PID
-									$spouselinks .=	"'".PrintReady($fulln)."',";								// nam	=	Name
+									//$spouselinks .=	"'".PrintReady($fulln)."',";							// nam	=	Name
+									if ($married>=0 && isset($nam[1])){
+										$spouselinks .= "'".PrintReady($fulmn)."',";							// Full Married Name
+									} else {
+										$spouselinks .= "'".PrintReady($fulln)."',";	 						// Full Name
+									}
 									if ($currpid=="Son" || $currpid=="Daughter") {
 										if ($spouse->getSex()=="M") {
 											$spouselinks .=	"'Son in Law',";									// label	=	Male Relationship
@@ -1316,7 +1356,12 @@ function print_pedigree_person_nav2($pid, $style=1, $show_famlink=true, $count=0
 										$spouselinks .=	"''".",";												// occu 	=	Occupation
 										$spouselinks .=	"'".PrintReady($spouse->getcensbirthplace())."'";		// birthpl	=	Birthplace
 										$spouselinks .=	");\">";
-										$spouselinks .= PrintReady($fulln);
+										// $spouselinks .= PrintReady($fulln);
+										if ($married>=0 && isset($nam[1])){
+											$spouselinks .= "'".PrintReady($fulmn)."',";							// Full Married Name
+										} else {
+											$spouselinks .= "'".PrintReady($fulln)."',";	 						// Full Name
+										}
 										$spouselinks .= "</a>";
 								}else{
 									$spouselinks .= $pgv_lang["private"];
@@ -1347,32 +1392,32 @@ function print_pedigree_person_nav2($pid, $style=1, $show_famlink=true, $count=0
 										}
 									
 										$spouselinks .= "<a href=\"javascript:insertRowToTable(";
-										$spouselinks .=	"'".PrintReady($child->getXref())."',";				// pid		=	PID
-										$spouselinks .=	"'".PrintReady($fulln)."',";						// nam	=	Name
+										$spouselinks .=	"'".PrintReady($child->getXref())."',";					// pid		=	PID
+										$spouselinks .=	"'".PrintReady($fulln)."',";							// nam		=	Name
 									if ($currpid=="Son" || $currpid=="Daughter") {
 										if ($child->getSex()=="M") {
-											$spouselinks .=	"'Grand-Son',";									// label	=	Male Relationship
+											$spouselinks .=	"'Grand-Son',";										// label	=	Male Relationship
 										}else{
 											$spouselinks .=	"'Grand-Daughter',";								// label	=	Female Relationship
 										}
 									}else{
 										if ($child->getSex()=="M") {
-											$spouselinks .=	"'Nephew',";									// label	=	Male Relationship
+											$spouselinks .=	"'Nephew',";										// label	=	Male Relationship
 										}else{
-											$spouselinks .=	"'Niece',";										// label	=	Female Relationship
+											$spouselinks .=	"'Niece',";											// label	=	Female Relationship
 										}
 									}
-									$spouselinks .=	"'".PrintReady($child->getSex())."',";					// sex	=	Gender
-									$spouselinks .=	"''".",";												// cond	=	Condition (Married etc)
-									$spouselinks .=	"'".PrintReady($child->getbirthyear())."',";			// yob	=	Year of Birth
+									$spouselinks .=	"'".PrintReady($child->getSex())."',";						// sex		=	Gender
+									$spouselinks .=	"''".",";													// cond		=	Condition (Married etc)
+									$spouselinks .=	"'".PrintReady($child->getbirthyear())."',";				// yob		=	Year of Birth
 									if ($child->getbirthyear()>=1) {
-										$spouselinks .=	"'".PrintReady($censyear-$child->getbirthyear())."',";	// age	= 	Census Year - Year of Birth
+										$spouselinks .=	"'".PrintReady($censyear-$child->getbirthyear())."',";	// age		= 	Census Year - Year of Birth
 									}else{
-										$spouselinks .=	"''".",";											// age	= 	Undefined
+										$spouselinks .=	"''".",";												// age		= 	Undefined
 									}
-									$spouselinks .=	"'Y'".",";												// Y/M/D	=	Age in Years/Months/Days
-									$spouselinks .=	"''".",";												// occu 	=	Occupation
-									$spouselinks .=	"'".PrintReady($child->getcensbirthplace())."'";		// birthpl	=	Birthplace
+									$spouselinks .=	"'Y'".",";													// Y/M/D	=	Age in Years/Months/Days
+									$spouselinks .=	"''".",";													// occu 	=	Occupation
+									$spouselinks .=	"'".PrintReady($child->getcensbirthplace())."'";			// birthpl	=	Birthplace
 									$spouselinks .=	");\">";
 									$spouselinks .= PrintReady($fulln);
 									$spouselinks .= "</a>";
