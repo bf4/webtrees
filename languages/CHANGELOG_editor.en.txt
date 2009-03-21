@@ -46,6 +46,7 @@ VERSION 4.2.1
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change	codes and comments
 -----------------------------------------------------------------------------------------
++$pgv_lang["create_shared_note_assisted"]			21 Mar 2009				A
 *$pgv_lang["add_from_clipboard"]					11 Mar 2009				w
 +$pgv_lang["add_unlinked_note"]						03 Mar 2009				A
 +$pgv_lang["add_unlinked"]							03 Mar 2009				A
