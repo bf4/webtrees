@@ -51,6 +51,9 @@ $type   =safe_REQUEST($_REQUEST, 'type',    PGV_REGEX_UNSAFE);
 $fact   =safe_REQUEST($_REQUEST, 'fact',    PGV_REGEX_UNSAFE);
 $option =safe_REQUEST($_REQUEST, 'option',  PGV_REGEX_UNSAFE);
 
+$assist =safe_REQUEST($_REQUEST, 'assist',  PGV_REGEX_UNSAFE);
+$noteid =safe_REQUEST($_REQUEST, 'noteid',  PGV_REGEX_UNSAFE);
+
 $update_CHAN=!safe_POST_bool('preserve_last_changed');
 
 $uploaded_files = array();
@@ -130,7 +133,6 @@ require 'js/autocomplete.js.htm';
 		findwin = window.open('find.php?type=note', '_blank', 'left=50,top=50,width=600,height=520,resizable=1,scrollbars=1');
 		return false;
 	}
-
 	// =====================================
 	function findRepository(field) {
 		pastefield = field;
@@ -216,7 +218,7 @@ function checkFactEdit($gedrec) {
 //-- end checkFactEdit function
 
 if (!empty($pid)) {
-	if (($pid!="newsour") && ($pid!="newrepo") && ($pid!="newnote")) {
+	if (($pid!="newsour") && ($pid!="newrepo") && ($noteid!="newnote")) {
 		if (!isset($pgv_changes[$pid."_".$GEDCOM])) $gedrec = find_gedcom_record($pid);
 		else $gedrec = find_updated_record($pid);
 		$ct = preg_match("/0 @$pid@ (.*)/", $gedrec, $match);
@@ -244,8 +246,8 @@ else if (!empty($famid)) {
 		checkChangeTime($famid, $gedrec, safe_GET('accesstime', PGV_REGEX_INTEGER));
 	}
 }
-else if (($action!="addchild")&&($action!="addchildaction")&&($action!="addnewsource")&&($action!="mod_edit_fact")) {
-	echo "<span class=\"error\">The \$pid variable was empty. Unable to perform $action.</span>";
+else if (($action!="addchild")&&($action!="addchildaction")&&($action!="addnewsource")&&($action!="mod_edit_fact")&&($action!="addnewnote")&&($action!="addnoteaction")) {
+	echo "<span class=\"error\">The \$pid variable was empty. Unable to perform $action xxx.</span>";
 	print_simple_footer();
 	$disp = true;
 }
@@ -474,6 +476,7 @@ case 'add':
 
 	echo "<br /><input type=\"submit\" value=\"".$pgv_lang["add"]."\" /><br />\n";
 	echo "</form>\n";
+// }
 	break;
 //------------------------------------------------------------------------------
 case 'addchild':
@@ -781,15 +784,52 @@ case 'addnewnote':
 	<b><?php echo $pgv_lang['create_shared_note']; $tabkey = 1; ?></b>
 	<form method="post" action="edit_interface.php" onsubmit="return check_form(this);">
 		<input type="hidden" name="action" value="addnoteaction" />
-		<input type="hidden" name="pid" value="newnote" />
-
-		<table class="facts_table">
-			<tr><td class="descriptionbox <?php echo $TEXT_DIRECTION; ?> wrap="nowrap"><?php print_help_link("edit_SHARED_NOTE_help", "qm"); echo $pgv_lang["shared_note"]; ?></td>
-			<td class="optionbox wrap"><textarea tabindex="<?php echo $tabkey; ?>" name="NOTE" id="NOTE" rows="15" cols="88"></textarea><br /><?php print_specialchar_link("NOTE",true); ?></td></tr>
-			<?php $tabkey++; ?>
-		</table>
-		<br /><br />
-		<input type="submit" value="<?php echo $pgv_lang["save"]; ?>" />
+		<input type="hidden" name="noteid" value="newnote" />
+		<!-- <input type="hidden" name="pid" value="$pid" /> -->
+		<?php
+			echo "<table class=\"facts_table\">";
+				echo "<tr>";
+					echo "<td class=\"descriptionbox\" ".$TEXT_DIRECTION." wrap=\"nowrap\">";
+						print_help_link("edit_SHARED_NOTE_help", "qm");
+					echo $pgv_lang["shared_note"];
+					echo "</td>";
+					echo "<td class=\"optionbox wrap\" ><textarea name=\"NOTE\" id=\"NOTE\" rows=\"15\" cols=\"88\"></textarea>";
+						print_specialchar_link("NOTE",true);
+					echo "</td>";
+				echo "</tr>";
+				$tabkey++;
+			echo "</table>";
+			echo "<br /><br />";
+			echo "<input type=\"submit\" value=\"".$pgv_lang["save"]."\" />";
+		?>
+	</form>
+	<?php
+	break;
+	
+//------------------------------------------------------------------------------
+//-- add new Shared Note
+case 'addnewnote_assisted':
+	?>
+	<script type="text/javascript">
+	<!--
+		function check_form(frm) {
+			if (frm.TITL.value=="") {
+				alert('<?php echo $pgv_lang["must_provide"].$factarray["TITL"]; ?>');
+				frm.TITL.focus();
+				return false;
+			}
+			return true;
+		}
+	//-->
+	</script>
+	<b><?php echo $pgv_lang['create_shared_note']." using Assistant."; $tabkey = 1; ?></b>
+	<form method="post" action="edit_interface.php" onsubmit="return check_form(this);">
+		<input type="hidden" name="action" value="addnoteaction" />
+		<input type="hidden" name="noteid" value="newnote" />
+		<!-- <input type="hidden" name="pid" value="$pid" /> -->
+		<?php
+			include ('modules/GEDFact_assistant/GEDFact_ctrl.php');
+		?>
 	</form>
 	<?php
 	break;

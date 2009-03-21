@@ -443,10 +443,14 @@ function addnewsource(field) {
 	window.open('edit_interface.php?action=addnewsource&pid=newsour', '_blank', 'top=70,left=70,width=600,height=500,resizable=1,scrollbars=1');
 	return false;
 }
-
 function addnewnote(field) {
 	pastefield = field;
-	window.open('edit_interface.php?action=addnewnote&pid=newnote', '_blank', 'top=70,left=70,width=600,height=500,resizable=1,scrollbars=1');
+	window.open('edit_interface.php?action=addnewnote&noteid=newnote', '_blank', 'top=70,left=70,width=600,height=500,resizable=1,scrollbars=1');
+	return false;
+}
+function addnewnote_assisted(field, iid) {
+	pastefield = field;
+	window.open('edit_interface.php?action=addnewnote_assisted&noteid=newnote&pid='+iid, '_blank', 'top=70,left=70,width=1000,height=800,resizable=1,scrollbars=1');
 	return false;
 }
 
