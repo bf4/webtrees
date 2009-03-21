@@ -147,6 +147,7 @@ $pgv_lang["confirm_remove"]			= "Möchten Sie wirklich diese Person aus dieser F
 $pgv_lang["confirm_remove_object"]	= "Möchten Sie wirklich dieses Objekt entfernen?";
 $pgv_lang["create_repository"]		= "Archiv erstellen";
 $pgv_lang["create_shared_note"]		= "Neue gemeinsame Bemerkung erstellen";
+$pgv_lang["create_shared_note_assisted"]	= "Neue gemeinsame Bemerkung mit Hilfe des Assistents erstellen";
 $pgv_lang["create_source"]			= "Neue Quelle erstellen";
 $pgv_lang["current_person"]		 	= "gleiche Person";
 $pgv_lang["date"]					= "Datum";
