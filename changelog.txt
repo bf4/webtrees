@@ -10,6 +10,7 @@
 
 
 Version 4.2.0 CA
+ - Added: New subdirectories to GEDFact_assistant module {windmillway)
  - Changed: Renamed census_assistant module to GEDFact_assistant module (windmillway)
  - Changed: Added condition to only allow Shared note "assisted" icon when Census assistant module is present (windmillway)
  - Merged: Merge changes r5225 - r5234 from the trunk. (windmillway)
