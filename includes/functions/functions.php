@@ -1474,24 +1474,23 @@ function find_highlighted_object($pid, $indirec) {
 			}
 			if ($prim=='N') continue;		// Skip _PRIM N objects
 			if ($prim=='Y') {
-				//-- take the first _PRIM Y object
+				// Take the first _PRIM Y object
 				$object["file"] = check_media_depth($row[1]);
 				$object["thumb"] = thumbnail_file($row[1], true, false, $pid);
 //				$object["_PRIM"] = $prim;	// Not sure whether this is needed.
 				$object["_THUM"] = $thum;	// This overrides GEDCOM's "Use main image as thumbnail" option
 				$object["level"] = $level;
 				$object["mid"] = $row[0];
-				break;
+				break;		// Stop looking: we found a suitable image
 			}
-			if ($level==1) {
-				//-- take the first level 1 object
+			if ($level==1 && empty($object)) {
+				// Take the first level 1 object, but keep looking for an overriding _PRIM Y
 				$object["file"] = check_media_depth($row[1]);
 				$object["thumb"] = thumbnail_file($row[1], true, false, $pid);
 //				$object["_PRIM"] = $prim;	// Not sure whether this is needed.
 				$object["_THUM"] = $thum;	// This overrides GEDCOM's "Use main image as thumbnail" option
 				$object["level"] = $level;
 				$object["mid"] = $row[0];
-				break;
 			}
 		}
 	}
