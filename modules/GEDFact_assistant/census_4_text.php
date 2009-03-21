@@ -32,7 +32,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 }
 
 global $theme_name; 
-// echo '<script src="modules/census_assistant/census_4_text.js" type="text/javascript"></script>';
+
 ?>
 <script>
 function openInNewWindow(frm)
@@ -51,7 +51,7 @@ function openInNewWindow(frm)
 function help_window2(frm)
 {
 	// open a blank window
-	var aWindow = window.open('modules/census_assistant/tableaddrow_nw.html', 'TableAddRow2NewWindow',
+	var aWindow = window.open('modules/GEDFact_assistant/tableaddrow_nw.html', 'TableAddRow2NewWindow',
 	'scrollbars=yes,menubar=yes,resizable=yes,location=no,toolbar=no,width=400,height=700');
 	aWindow.focus();
 	
@@ -63,7 +63,7 @@ function help_window2(frm)
 }
 function help_window() {
 var win02 = window.open(
-"modules/census_assistant/tableaddrow_nw.html", "win02", "resizable=1, menubar=0, scrollbars=1, top=20, HEIGHT=840, WIDTH=450 ");
+"modules/GEDFact_assistant/tableaddrow_nw.html", "win02", "resizable=1, menubar=0, scrollbars=1, top=20, HEIGHT=840, WIDTH=450 ");
 if (window.focus) {win02.focus();}
 }
 

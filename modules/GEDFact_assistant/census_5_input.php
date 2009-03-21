@@ -50,8 +50,7 @@
 </style>
 
 <?php
-// echo '<script src="modules/census_assistant/tabledeleterow.js" type="text/javascript"></script>';
-echo '<script src="modules/census_assistant/census_5_input.js" type="text/javascript"></script>';
+echo '<script src="modules/GEDFact_assistant/census_5_input.js" type="text/javascript"></script>';
 ?>
 
 <center>

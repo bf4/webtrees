@@ -51,7 +51,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 						//	continue;
 						//}else{
 							var win02 = window.open(
-								"module.php?mod=census_assistant&pgvaction=census_3_find&callback=paste_id&action=filter&type=indi&multiple=&filter="+txt, "win02", "resizable=1, menubar=0, scrollbars=1, top=180, left=600, HEIGHT=400, WIDTH=450 ");
+								"module.php?mod=GEDFact_assistant&pgvaction=census_3_find&callback=paste_id&action=filter&type=indi&multiple=&filter="+txt, "win02", "resizable=1, menubar=0, scrollbars=1, top=180, left=600, HEIGHT=400, WIDTH=450 ");
 							if (window.focus) {win02.focus();}
 						//}
 					}
@@ -139,7 +139,6 @@ if (!defined('PGV_PHPGEDVIEW')) {
 								<td align="left" class="facts_value" style="display:block; background-color:#bb9900;">
 									<font size=1>
 										<?php 
-										// print "<a href=\"".encode_url("module.php?mod=census_assistant&pgvaction=census_a&pid=".$people["husb"]->getXref()."&gedcom={$GEDCOM}")."\">";
 										print "<a href=\"".encode_url("edit_interface.php?action=add&pid=".$people["husb"]->getXref()."&fact=CENS&assist=yes&gedcom={$GEDCOM}")."\">";
 										print "H";
 										print "</a>";
@@ -227,7 +226,6 @@ if (!defined('PGV_PHPGEDVIEW')) {
 								<td align="left" class="facts_value" style="background-color:#bb9900;">
 									<font size=1>
 										<?php 
-										// print "<a href=\"".encode_url("module.php?mod=census_assistant&pgvaction=census_a&pid=".$people["wife"]->getXref()."&gedcom={$GEDCOM}")."\">";
 										print "<a href=\"".encode_url("edit_interface.php?action=add&pid=".$people["wife"]->getXref()."&fact=CENS&assist=yes&gedcom={$GEDCOM}")."\">";
 										print "H";
 										print "</a>";
@@ -320,7 +318,6 @@ if (!defined('PGV_PHPGEDVIEW')) {
 								<td align="left" class="facts_value" style="background-color:#bb9900;">
 									<font size=1>
 										<?php 
-										// print "<a href=\"".encode_url("module.php?mod=census_assistant&pgvaction=census_a&pid=".$child->getXref()."&gedcom={$GEDCOM}")."\">";
 										print "<a href=\"".encode_url("edit_interface.php?action=add&pid=".$child->getXref()."&fact=CENS&assist=yes&gedcom={$GEDCOM}")."\">";
 										print "H";
 										print "</a>";
@@ -425,7 +422,6 @@ if (!defined('PGV_PHPGEDVIEW')) {
 								<td align="left" class="facts_value" style="background-color:#bb9900;">
 									<font size=1>
 										<?php 
-										// print "<a href=\"".encode_url("module.php?mod=census_assistant&pgvaction=census_a&pid=".$people["husb"]->getXref()."&gedcom={$GEDCOM}")."\">";
 										print "<a href=\"".encode_url("edit_interface.php?action=add&pid=".$people["husb"]->getXref()."&fact=CENS&assist=yes&gedcom={$GEDCOM}")."\">";
 										print "H";
 										print "</a>";
@@ -523,7 +519,6 @@ if (!defined('PGV_PHPGEDVIEW')) {
 								<td align="left" class="facts_value" style="background-color:#bb9900;">
 									<font size=1>
 										<?php 
-										// print "<a href=\"".encode_url("module.php?mod=census_assistant&pgvaction=census_a&pid=".$people["wife"]->getXref()."&gedcom={$GEDCOM}")."\">";
 										print "<a href=\"".encode_url("edit_interface.php?action=add&pid=".$people["wife"]->getXref()."&fact=CENS&assist=yes&gedcom={$GEDCOM}")."\">";
 										print "H";
 										print "</a>";
@@ -618,7 +613,6 @@ if (!defined('PGV_PHPGEDVIEW')) {
 									<td align="left" class="facts_value" style="background-color:#bb9900;">
 										<font size=1>
 											<?php 
-											// print "<a href=\"".encode_url("module.php?mod=census_assistant&pgvaction=census_a&pid=".$child->getXref()."&gedcom={$GEDCOM}")."\">";
 											print "<a href=\"".encode_url("edit_interface.php?action=add&pid=".$child->getXref()."&fact=CENS&assist=yes&gedcom={$GEDCOM}")."\">";
 											print "H";
 											print "</a>";
@@ -738,7 +732,6 @@ if (!defined('PGV_PHPGEDVIEW')) {
 								<td align="left" class="facts_value" style="background-color:#bb9900;">
 									<font size=1>
 										<?php 
-										// print "<a href=\"".encode_url("module.php?mod=census_assistant&pgvaction=census_a&pid=".$people["husb"]->getXref()."&gedcom={$GEDCOM}")."\">";
 										print "<a href=\"".encode_url("edit_interface.php?action=add&pid=".$people["husb"]->getXref()."&fact=CENS&assist=yes&gedcom={$GEDCOM}")."\">";
 										print "H";
 										print "</a>";
@@ -837,7 +830,6 @@ if (!defined('PGV_PHPGEDVIEW')) {
 								<td align="left" class="facts_value" style="background-color:#bb9900;">
 									<font size=1>
 										<?php 
-										// print "<a href=\"".encode_url("module.php?mod=census_assistant&pgvaction=census_a&pid=".$people["wife"]->getXref()."&gedcom={$GEDCOM}")."\">";
 										print "<a href=\"".encode_url("edit_interface.php?action=add&pid=".$people["wife"]->getXref()."&fact=CENS&assist=yes&gedcom={$GEDCOM}")."\">";
 										print "H";
 										print "</a>";
@@ -929,7 +921,6 @@ if (!defined('PGV_PHPGEDVIEW')) {
 								<td align="left" class="facts_value" style="background-color:#bb9900;">
 									<font size=1>
 										<?php 
-										// print "<a href=\"".encode_url("module.php?mod=census_assistant&pgvaction=census_a&pid=".$child->getXref()."&gedcom={$GEDCOM}")."\">";
 										print "<a href=\"".encode_url("edit_interface.php?action=add&pid=".$child->getXref()."&fact=CENS&assist=yes&gedcom={$GEDCOM}")."\">";
 										print "H";
 										print "</a>";

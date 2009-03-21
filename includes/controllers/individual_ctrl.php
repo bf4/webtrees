@@ -2185,8 +2185,8 @@ class IndividualControllerRoot extends BaseController {
 	/**
 	* include Census controller
 	*/
-	function census_assistant() {
-		require 'modules/census_assistant/census_1_ctrl.php';
+	function GEDFact_assistant() {
+		require 'modules/GEDFact_assistant/census_1_ctrl.php';
 	}
 // -----------------------------------------------------------------------------
 // End Census Assistant Functions

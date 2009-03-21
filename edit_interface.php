@@ -436,11 +436,6 @@ case 'add':
 	//
 	// Start of add section...
 	//
-//If using fact assistant --------------
-//if (file_exists('modules/census_assistant/census_1_ctrl.php') && $assist=="yes") {
-//		include ('modules/census_assistant/census_a.php');
-//} else {
-
 	init_calendar_popup();
 	echo "<form method=\"post\" action=\"edit_interface.php\" enctype=\"multipart/form-data\">\n";
 	echo "<input type=\"hidden\" name=\"action\" value=\"update\" />\n";
@@ -833,7 +828,7 @@ case 'addnewnote_assisted':
 		<input type="hidden" name="noteid" value="newnote" />
 		<!-- <input type="hidden" name="pid" value="$pid" /> -->
 		<?php
-			include ('modules/census_assistant/census_a.php');
+			include ('modules/GEDFact_assistant/GEDFact_ctrl.php');
 		?>
 	</form>
 	<?php

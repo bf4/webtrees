@@ -81,21 +81,21 @@ echo "</tr></table>";
 		<td valign="top" width="60%">
 			<?php 
 			//-- Census & Source Information Area ============================================= 
-			include('modules/census_assistant/census_2_source_input.php');
+			include('modules/GEDFact_assistant/census_2_source_input.php');
 			?>
 		</td>
 		
 		<td rowspan="2" valign="top" width ="220">
 			<?php 
 			//-- Search  and Add Family Members Area ========================================= 
-			include('modules/census_assistant/census_3_search_add.php'); ?>
+			include('modules/GEDFact_assistant/census_3_search_add.php'); ?>
 		</td>
 	</tr>
 	<tr>
 		<td align="left" valign="bottom" width="80%">
 			<?php
 			//-- Proposed Census Text Area ==================================================
-			include('modules/census_assistant/census_4_text.php');
+			include('modules/GEDFact_assistant/census_4_text.php');
 			?>
 		</td>
 	</tr>
@@ -112,7 +112,7 @@ echo "</tr></table>";
 							<tr>
 								<td colspan="12" id="5678" class="option_box" style="border: 0px solid transparent;">
 									<?php
-									include('modules/census_assistant/census_5_input.php');
+									include('modules/GEDFact_assistant/census_5_input.php');
 									?> 
 								</td>
 							</tr>

@@ -1,8 +1,8 @@
 <?php
   /**
- * Census Page
+ * GEDFact page
  *
- * Census information about an individual
+ * GEDFact information about an individual
  *
  * phpGedView: Genealogy Viewer
  * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
@@ -55,7 +55,7 @@ global $SEARCH_SPIDER, $GOOGLEMAP_PH_CONTROLS;
 		}
 		$summary.=$controller->indi->format_first_major_fact(PGV_EVENTS_DEAT, 2);
 
-		$controller->census_assistant();
+		$controller->GEDFact_assistant();
 
 // include ('modules/research_assistant/forms/CensusUK1841.php');
 // print_footer();
