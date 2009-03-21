@@ -112,7 +112,7 @@ echo "</tr></table>";
 							<tr>
 								<td colspan="12" id="5678" class="option_box" style="border: 0px solid transparent;">
 									<?php
-									include('modules/GEDFact_assistant/census_5_input.php');
+									include('modules/GEDFact_assistant/CENS/census_5_input.php');
 									?> 
 								</td>
 							</tr>

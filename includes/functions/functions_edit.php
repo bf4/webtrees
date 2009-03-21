@@ -1611,7 +1611,7 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 		if ($fact=="NOTE" && $islink) {
 			print_findnote_link($element_id);
 			print_addnewnote_link($element_id);
-			if (file_exists('modules/GEDFact_assistant/census_1_ctrl.php')) {
+			if (file_exists('modules/GEDFact_assistant/CENS/census_1_ctrl.php')) {
 				print_addnewnote_assisted_link($element_id);
 			}
 			echo "&nbsp;&nbsp;&nbsp;";
