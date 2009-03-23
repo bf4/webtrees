@@ -44,6 +44,7 @@ VERSION 4.2.1
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 -----------------------------------------------------------------------------------------
+*$pgv_lang["edit__THUM_help"]						22 Mar 2009				W
 *$pgv_lang["add_from_clipboard_help"]				11 Mar 2009				W
 *$pgv_lang["edit_SHARED_NOTE_help"]					4 Mar 2009				W
 *$pgv_lang["add_shared_note_help"]					4 Mar 2009				W
