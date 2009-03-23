@@ -633,29 +633,29 @@ function get_indilist_surns($surn, $salpha, $marnm, $fams, $ged_id) {
 	$includes=array();
 	if ($surn) {
 		// Match a surname
-		$includes[]="n_sort {$DBCOLLATE} ".PGV_DB_LIKE." '{$surn},%'";
+		$includes[]="n_surn {$DBCOLLATE} ".PGV_DB_LIKE." '{$surn}'";
 	} elseif ($salpha==',') {
 		// Match a surname-less name
-		$includes[]="n_sort {$DBCOLLATE} ".PGV_DB_LIKE." ',%'";
+		$includes[]="n_surn {$DBCOLLATE} = ''";
 	} elseif ($salpha) {
 		// Match a surname initial
 		foreach ($s_incl as $s) {
-			$includes[]="n_sort {$DBCOLLATE} ".PGV_DB_LIKE." '{$s}%'";
+			$includes[]="n_surn {$DBCOLLATE} ".PGV_DB_LIKE." '{$s}%'";
 		}
 		foreach ($s_excl as $s) {
-			$where[]="n_sort {$DBCOLLATE} NOT ".PGV_DB_LIKE." '{$s}%'";
+			$where[]="n_surn {$DBCOLLATE} NOT ".PGV_DB_LIKE." '{$s}%'";
 		}
 	} else {
 		// Match all individuals
-		$where[]="n_sort {$DBCOLLATE} NOT ".PGV_DB_LIKE." '@N.N.,%'";
-		$where[]="n_sort {$DBCOLLATE} NOT ".PGV_DB_LIKE." ',%'";
+		$where[]="n_surn {$DBCOLLATE} <>'@N.N.'";
+		$where[]="n_surn {$DBCOLLATE} <> ''";
 	}
 
 	if ($includes) {
 		$where[]='('.implode(' OR ', $includes).')';
 	}
 
-	$sql.=" WHERE ".implode(' AND ', $where)." ORDER BY n_sort";
+	$sql.=" WHERE ".implode(' AND ', $where)." ORDER BY n_surn";
 
 	$list=array();
 	$res=dbquery($sql);
@@ -694,29 +694,29 @@ function get_famlist_surns($surn, $salpha, $marnm, $ged_id) {
 	$includes=array();
 	if ($surn) {
 		// Match a surname
-		$includes[]="n_sort {$DBCOLLATE} ".PGV_DB_LIKE." '{$surn},%'";
+		$includes[]="n_surn {$DBCOLLATE} ".PGV_DB_LIKE." '{$surn}'";
 	} elseif ($salpha==',') {
 		// Match a surname-less name
-		$includes[]="n_sort {$DBCOLLATE} ".PGV_DB_LIKE." ',%'";
+		$includes[]="n_surn {$DBCOLLATE} = ''";
 	} elseif ($salpha) {
 		// Match a surname initial
 		foreach ($s_incl as $s) {
-			$includes[]="n_sort {$DBCOLLATE} ".PGV_DB_LIKE." '{$s}%'";
+			$includes[]="n_surn {$DBCOLLATE} ".PGV_DB_LIKE." '{$s}%'";
 		}
 		foreach ($s_excl as $s) {
-			$where[]="n_sort {$DBCOLLATE} NOT ".PGV_DB_LIKE." '{$s}%'";
+			$where[]="n_surn {$DBCOLLATE} NOT ".PGV_DB_LIKE." '{$s}%'";
 		}
 	} else {
 		// Match all individuals
-		$where[]="n_sort {$DBCOLLATE} NOT ".PGV_DB_LIKE." '@N.N.,%'";
-		$where[]="n_sort {$DBCOLLATE} NOT ".PGV_DB_LIKE." ',%'";
+		$where[]="n_surn {$DBCOLLATE} <> '@N.N.'";
+		$where[]="n_surn {$DBCOLLATE} <> ''";
 	}
 
 	if ($includes) {
 		$where[]='('.implode(' OR ', $includes).')';
 	}
 
-	$sql.=" WHERE ".implode(' AND ', $where)." ORDER BY n_sort";
+	$sql.=" WHERE ".implode(' AND ', $where)." ORDER BY n_surn";
 
 	$list=array();
 	$res=dbquery($sql);
