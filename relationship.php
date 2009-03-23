@@ -66,7 +66,7 @@ function getRelationshipSentence($node, $pid1, $pid2) {
 			$lastRelationshipButOneIsSibling = $lastRelationshipIsSibling;
 			$lastRelationshipIsSibling = false;
 			// look to see if we can find a relationship
-			switch( $node["relations"][$index]) {
+			switch ($node["relations"][$index]) {
 			case "self":
 				break;
 			case "sister":
@@ -229,11 +229,11 @@ function getRelationshipSentence($node, $pid1, $pid2) {
 		}
 	}
 	// check for step siblings
-	else if($numberOfSpouses == 1 && $generationsYounger == 1 && $generationsOlder == 1 && !$firstRelationshipIsSpouse && !$lastRelationshipIsSpouse && $numberOfSiblings == 0 && $bosa < 3) {
-		if (isset($pgv_lang["stepsister"]) && $mf=="F") {
+	else if($numberOfSpouses == 1 && $generationsYounger == 1 && $generationsOlder == 1 && !$firstRelationshipIsSpouse && !$lastRelationshipIsSpouse && $numberOfSiblings == 0 && $bosa <= 3) {
+		if ($node["length"]!=8 && isset($pgv_lang["stepsister"]) && $mf=="F") {
 			$relationshipDescription = $pgv_lang["stepsister"];
 		}
-		else if (isset($pgv_lang["stepbrother"])) {
+		else if ($node["length"]!=8 && isset($pgv_lang["stepbrother"])) {
 			$relationshipDescription = $pgv_lang["stepbrother"];
 		}
 	}

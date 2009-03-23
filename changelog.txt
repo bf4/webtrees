@@ -10,6 +10,7 @@
 
 
 Version 4.2.1
+ - Fixed: [ 2333142 ] Relationship error (wooc)
  - Fixed: [ 2702570 ] [4.2-4.2.5241] autocomplete not active in quickupd. fields (wooc)
  - Fixed: [ 2702575 ] [4.2-4.2.5241] place with ( or with ) in googlemaps module (wooc)
  - Added: Extra language file for Shared Notes (windmillway)
