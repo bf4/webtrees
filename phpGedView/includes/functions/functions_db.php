@@ -754,7 +754,7 @@ function get_indilist_indis($surn='', $salpha='', $galpha='', $marnm=false, $fam
 	$galpha=$DBCONN->escapeSimple($galpha);
 	$ged_id=(int)$ged_id;
 
-	$sql="SELECT DISTINCT 'INDI' AS type, i_id AS xref, i_file AS ged_id, i_gedcom AS gedrec, i_isdead, i_sex, n_surn, n_surname, n_num FROM {$TBLPREFIX}individuals JOIN {$TBLPREFIX}name ON (i_id=n_id AND i_file=n_file)";
+	$sql="SELECT 'INDI' AS type, i_id AS xref, i_file AS ged_id, i_gedcom AS gedrec, i_isdead, i_sex, n_surn, n_surname, n_num FROM {$TBLPREFIX}individuals JOIN {$TBLPREFIX}name ON (i_id=n_id AND i_file=n_file)";
 	if ($fams) {
 		$sql.=" JOIN {$TBLPREFIX}link ON (i_id=l_from AND i_file=l_file)";
 	}
@@ -1542,7 +1542,7 @@ function get_repo_list($ged_id) {
 function get_indi_list() {
 	global $TBLPREFIX, $DBCOLLATE;
 
-	$sql="SELECT DISTINCT 'INDI' AS type, i_id AS xref, i_file AS ged_id, i_gedcom AS gedrec, i_isdead, i_sex FROM {$TBLPREFIX}name, {$TBLPREFIX}individuals WHERE n_file=".PGV_GED_ID." AND i_file=n_file AND i_id=n_id AND n_num=0 ORDER BY n_sort {$DBCOLLATE}";
+	$sql="SELECT 'INDI' AS type, i_id AS xref, i_file AS ged_id, i_gedcom AS gedrec, i_isdead, i_sex FROM {$TBLPREFIX}name, {$TBLPREFIX}individuals WHERE n_file=".PGV_GED_ID." AND i_file=n_file AND i_id=n_id AND n_num=0 ORDER BY n_sort {$DBCOLLATE}";
 	$res=dbquery($sql);
 	$indis=array();
 	while ($row=$res->fetchRow(DB_FETCHMODE_ASSOC)) {
@@ -1557,7 +1557,7 @@ function get_indi_list() {
 function get_fam_list() {
 	global $TBLPREFIX, $DBCOLLATE;
 
-	$sql="SELECT DISTINCT 'FAM' AS type, f_id AS xref, f_file AS ged_id, f_gedcom AS gedrec, f_husb, f_wife, f_chil, f_numchil FROM {$TBLPREFIX}name, {$TBLPREFIX}families WHERE n_file=".PGV_GED_ID." AND f_file=n_file AND f_id=n_id AND n_num=0 ORDER BY n_sort {$DBCOLLATE}";
+	$sql="SELECT 'FAM' AS type, f_id AS xref, f_file AS ged_id, f_gedcom AS gedrec, f_husb, f_wife, f_chil, f_numchil FROM {$TBLPREFIX}name, {$TBLPREFIX}families WHERE n_file=".PGV_GED_ID." AND f_file=n_file AND f_id=n_id AND n_num=0 ORDER BY n_sort {$DBCOLLATE}";
 	$res=dbquery($sql);
 	$fams=array();
 	while ($row=$res->fetchRow(DB_FETCHMODE_ASSOC)) {
