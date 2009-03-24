@@ -337,12 +337,16 @@ while ($x<$i) {
 			}
 		}
 		$plac[$z]="<td class='facts_value'>".$placestr2."</td>\n";
-		if ($row['pl_lati']!='') {
+		if ($row['pl_lati']=='0'){
+			$lati[$z]="<td class='facts_value error'><strong>".$row['pl_lati']."</strong></td>";
+		} else if ($row['pl_lati']!='') {
 			$lati[$z]="<td class='facts_value'>".$row['pl_lati']."</td>";
 		} else {
 			$lati[$z]="<td class='facts_value error' align='center'><strong>X</strong></td>";$matched[$x]++;
 		}
-		if ($row['pl_long']!='') {
+		if ($row['pl_long']=='0'){
+			$long[$z]="<td class='facts_value error'><strong>".$row['pl_long']."</strong></td>";
+		} else if ($row['pl_long']!='') {
 			$long[$z]="<td class='facts_value'>".$row['pl_long']."</td>";
 		} else {
 			$long[$z]="<td class='facts_value error' align='center'><strong>X</strong></td>";$matched[$x]++;
