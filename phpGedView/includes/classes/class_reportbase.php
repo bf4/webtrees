@@ -1899,7 +1899,7 @@ function PGVRListSHandler($attrs) {
 								if ($t=="DATE") {
 									$date1 = new GedcomDate($v);
 									$date2 = new GedcomDate($val);
-									$keep = (GedcomDate::Compare($date1, $date2)>0);
+									$keep = (GedcomDate::Compare($date1, $date2)>=0);
 								}
 								else if ($val >= $v) $keep=true;
 							break;
@@ -1907,7 +1907,7 @@ function PGVRListSHandler($attrs) {
 								if ($t=="DATE") {
 									$date1 = new GedcomDate($v);
 									$date2 = new GedcomDate($val);
-									$keep = (GedcomDate::Compare($date1, $date2)<0);
+									$keep = (GedcomDate::Compare($date1, $date2)<=0);
 								}
 								else if ($val >= $v) $keep=true;
 							break;
@@ -1925,7 +1925,7 @@ function PGVRListSHandler($attrs) {
 					}
 				}
 			}
-			if ($keep) $mylist[$key]=$value;
+			if ($keep) $mylist[$key]=$indi;
 		}
 		$list = $mylist;
 	}
