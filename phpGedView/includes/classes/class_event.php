@@ -474,9 +474,12 @@ class Event {
 				"CHAN", "_TODO"
 			));
 
-		// Facts from different families stay grouped together
-		if ($a->getFamilyId() && $a->getFamilyId()==$b->getFamilyId())
-			return 0;
+		// Facts from same families stay grouped together
+		// Keep MARR and DIV from the same families from mixing with events from other FAMs
+		// Use the original order in which the facts were added
+		if ($a->getFamilyId() && $b->getFamilyId() && $a->getFamilyId()!=$b->getFamilyId()) {
+			return $a->sortOrder - $b->sortOrder;
+		}
 
 		$atag = $a->getTag();
 		$btag = $b->getTag();
@@ -497,7 +500,8 @@ class Event {
 		//-- treat dated after BURI facts as BURI instead
 		if ($a->getValue('DATE')!=NULL && $factsort[$atag]>$factsort['BURI'] && $factsort[$atag]<$factsort['CHAN']) $atag='BURI';
 		$ret = $factsort[$atag]-$factsort[$btag];
-
+		//-- if no sorting preference, then keep original ordering
+		if ($ret==0) $ret = $a->sortOrder - $b->sortOrder;
 		return $ret;
 	}
 }
