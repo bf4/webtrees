@@ -1837,8 +1837,12 @@ function addNewFact($fact) {
 	$FACT=safe_POST($fact,          PGV_REGEX_UNSAFE);
 	$DATE=safe_POST("{$fact}_DATE", PGV_REGEX_UNSAFE);
 	$PLAC=safe_POST("{$fact}_PLAC", PGV_REGEX_UNSAFE);
-	if ($DATE || $PLAC) {
-		$gedrec="1 {$fact}\n";
+	if ($DATE || $PLAC || $FACT && $FACT!='Y') {
+		if ($FACT && $FACT!='Y') {
+			$gedrec="1 {$fact} {$FACT}\n";
+		} else {
+			$gedrec="1 {$fact}\n";
+		}
 		if ($DATE) {
 			$DATE=check_input_date($DATE);
 			$gedrec.="2 DATE {$DATE}\n";
@@ -1865,7 +1869,7 @@ function addNewFact($fact) {
 		} else {
 			return $gedrec;
 		}
-	} elseif ($FACT) {
+	} elseif ($FACT=='Y') {
 		if (safe_POST_bool("SOUR_{$fact}")) {
 			return updateSOUR("1 {$fact} Y\n", 2);
 		} else {
