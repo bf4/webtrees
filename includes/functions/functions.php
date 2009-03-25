@@ -2023,7 +2023,10 @@ function sort_facts(&$arr) {
 	$dated = array();
 	$nondated = array();
 	//-- split the array into dated and non-dated arrays
+	$order = 0;
 	foreach($arr as $event) {
+		$event->sortOrder = $order;
+		$order++;
 		if ($event->getValue("DATE")==NULL) $nondated[] = $event;
 		else $dated[] = $event;
 	}
