@@ -10,6 +10,7 @@
 
 
 Version 4.2.1
+ - Fixed: [ 2604802 ] In the "Find Place" link the "Display all" list doesn't show (wooc)
  - Fixed: [ 2711647 ] Privacy option changes not working (canajun2eh)
  - Fixed: [ 2708857 ] [4.2.1svn5259] Lifespan chart reversed up/down arrows (wooc)
  - Fixed: [ 2333142 ] Relationship error (wooc)
