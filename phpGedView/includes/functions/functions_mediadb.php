@@ -906,6 +906,11 @@ function filterMedia($media, $filter, $acceptExt) {
 		}
 	}
 
+	//-- Accept when filter string contained in Media item's id
+	if ($media["XREF"] == $filter) {
+		return true;
+	}
+
 	//-- Accept external Media only if specifically told to do so
 	if (isFileExternal($media["FILE"]) && $acceptExt != "http")
 		return false;

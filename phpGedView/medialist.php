@@ -45,6 +45,7 @@ if (!isset($_SESSION["medialist"])) $search = "yes";
 
 $currentdironly = (isset($_REQUEST['subdirs']) && $_REQUEST['subdirs']=="on") ? false : true;
 print_header($pgv_lang["multi_title"]);
+require 'js/autocomplete.js.htm';
 print "\n\t<div class=\"center\"><h2>".$pgv_lang["multi_title"]."</h2></div>\n\t";
 
 
@@ -160,7 +161,7 @@ if ($search == "yes") {
 		} else print "<input name=\"folder\" type=\"hidden\" value=\"ALL\" />";
 		// Text field for filter and "submit" button
 		?>
-		<input id="filter" name="filter" value="<?php print htmlentities(PrintReady($filter)); ?>"/><br />
+		<input id="filter" name="filter" value="<?php print PrintReady($filter); ?>"/><br />
 		<input type="submit" value="<?php echo $pgv_lang["apply_filter"];?>"
 	</td>
 
