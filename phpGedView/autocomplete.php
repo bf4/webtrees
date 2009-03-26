@@ -151,7 +151,7 @@ function autocomplete_INDI() {
 				}
 			}
 			// display
-			$data[$person->getXref()]=check_NN($row['n_list']);
+			$data[$person->getXref()]=check_NN($person->getFullName());
 			if ($OPTION && $event_date && $person->getBirthDate()->isOK()) {
 				$data[$person->getXref()].=" <span class=\"age\">(".$pgv_lang["age"]." ".$person->getBirthDate()->MinDate()->getAge(false, $event_jd).")</span>";
 			} else {
@@ -196,7 +196,7 @@ function autocomplete_FAM() {
 		$family = Family::getInstance($row["f_id"]);
 		if ($family->canDisplayName()) {
 			$data[$row["f_id"]] =
-				$family->getSortName().
+				$family->getFullName().
 				" <u>".
 				ltrim($family->getMarriageYear(), "0").
 				"</u>";
@@ -469,8 +469,8 @@ function autocomplete_OBJE() {
 	$sql = "SELECT m_media".
 				" FROM {$TBLPREFIX}media".
 				" WHERE (m_titl ".PGV_DB_LIKE." '%".$FILTER."%'".
-				" OR m_media ".PGV_DB_LIKE." '".$FILTER."%')".
-				" AND m_file=".PGV_GED_ID.
+				" OR m_media ".PGV_DB_LIKE." '%".$FILTER."%')".
+				" AND m_gedfile=".PGV_GED_ID.
 				" LIMIT ".PGV_AUTOCOMPLETE_LIMIT;
 	$res = dbquery($sql);
 	$data = array();
@@ -482,7 +482,7 @@ function autocomplete_OBJE() {
 				$media->getXref().
 				"\" src=\"".
 				$media->getThumbnail().
-				"\" /> ".
+				"\" width=\"40\" /> ".
 				$media->getFullName();
 		}
 	}
