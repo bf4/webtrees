@@ -43,7 +43,8 @@ function print_gedcom_favorites($block = true, $config="", $side, $index) {
 	global $pgv_lang, $factarray, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $ctype, $TEXT_DIRECTION;
 	global $show_full, $PEDIGREE_FULL_DETAILS, $BROWSERTYPE;
 
-	require_once("js/autocomplete.js.htm");// Override GEDCOM configuration temporarily
+	require_once("js/autocomplete.js.htm");
+	// Override GEDCOM configuration temporarily
 	if (isset($show_full)) $saveShowFull = $show_full;
 	$savePedigreeFullDetails = $PEDIGREE_FULL_DETAILS;
 	$show_full = 1;
@@ -142,9 +143,12 @@ function print_gedcom_favorites($block = true, $config="", $side, $index) {
 		$content .= "<tr><td>".$pgv_lang["add_fav_enter_id"]." <br />";
 		$content .= "<input class=\"pedigree_form\" type=\"text\" name=\"gid\" id=\"gid{$uniqueID}\" size=\"5\" value=\"\" />";
 
-		$content .= print_findindi_link("gid{$uniqueID}","",true);
-		$content .= print_findfamily_link("gid{$uniqueID}","",true);
-		$content .= print_findsource_link("gid{$uniqueID}","",true);
+		$content .= print_findindi_link("gid{$uniqueID}",'',true)."\n";
+		$content .= print_findfamily_link("gid{$uniqueID}",'',true)."\n";
+		$content .= print_findsource_link("gid{$uniqueID}",'',true)."\n";
+		$content .= print_findrepository_link("gid{$uniqueID}",'',true)."\n";
+		$content .= print_findnote_link("gid{$uniqueID}",'',true)."\n";
+		$content .= print_findmedia_link("gid{$uniqueID}",'1','',true)."\n";
 
 		$content .= "\n<br />".$pgv_lang["add_fav_or_enter_url"];
 		$content .= "\n<table><tr><td>".$pgv_lang["url"]."</td><td><input type=\"text\" name=\"url\" size=\"40\" value=\"\" /></td></tr>";

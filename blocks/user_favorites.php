@@ -145,9 +145,12 @@ function print_user_favorites($block=true, $config="", $side, $index) {
 	$content .= "<tr><td>".$pgv_lang["add_fav_enter_id"]." <br />";
 	$content .= "<input class=\"pedigree_form\" type=\"text\" name=\"gid\" id=\"gid{$uniqueID}\" size=\"5\" value=\"\" />";
 
-	$content .= print_findindi_link("gid{$uniqueID}","",true);
-	$content .= print_findfamily_link("gid{$uniqueID}",'',true);
-	$content .= print_findsource_link("gid{$uniqueID}",'',true);
+	$content .= print_findindi_link("gid{$uniqueID}",'',true)."\n";
+	$content .= print_findfamily_link("gid{$uniqueID}",'',true)."\n";
+	$content .= print_findsource_link("gid{$uniqueID}",'',true)."\n";
+	$content .= print_findrepository_link("gid{$uniqueID}",'',true)."\n";
+	$content .= print_findnote_link("gid{$uniqueID}",'',true)."\n";
+	$content .= print_findmedia_link("gid{$uniqueID}",'1','',true)."\n";
 
 	$content .= "<br />".$pgv_lang["add_fav_or_enter_url"];
 	$content .= "<table><tr><td>".$pgv_lang["url"]."</td><td><input type=\"text\" name=\"url\" size=\"40\" value=\"\" /></td></tr>";

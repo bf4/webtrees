@@ -116,7 +116,7 @@ jQuery(document).ready(function($){
 		minChars: 0
 	});*/
 	// OBJE
-	$(".OBJE, #OBJE").autocomplete("autocomplete.php", {
+	$(".OBJE, #OBJE, #mediaid, #filter").autocomplete("autocomplete.php", {
 		extraParams: {field:'OBJE'},
 		formatItem: function(row, i) {
 			return row[0] + " (" + row[1] + ")";
