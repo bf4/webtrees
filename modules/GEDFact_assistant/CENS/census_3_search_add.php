@@ -288,6 +288,12 @@ if (!defined('PGV_PHPGEDVIEW')) {
 						if (isset($people["children"])) {
 							$elderdate = $family->getMarriageDate();
 							foreach($people["children"] as $key=>$child) {
+								// Get child's marriage status
+								$married="";
+								foreach ($child->getSpouseFamilies() as $childfamily) {
+									$tmp=$childfamily->getMarriageDate();
+									$married = GedcomDate::Compare($censdate, $tmp);
+								}
 								$nam   = $child->getAllNames();
 								$fulln = rtrim($nam[0]['givn'],'*')."&nbsp;".$nam[0]['surname'];
 								$givn  = rtrim($nam[0]['givn'],'*');
@@ -341,7 +347,11 @@ if (!defined('PGV_PHPGEDVIEW')) {
 												<a href='javaScript:insertRowToTable("<?php 
 														print $child->getXref() ;							 // pid = PID
 													?>", "<?php 
-														print PrintReady($fulln);							 // nam = Name
+													if ($married>=0 && isset($nam[1])){
+														echo PrintReady($fulmn);							 // nam = Married Name
+													}else{
+														echo PrintReady($fulln);							 // nam = Married Name
+													}
 														?>", "<?php
 														if ($child->getXref()==$pid) {
 															print "Head";									 // label = Head
@@ -351,19 +361,29 @@ if (!defined('PGV_PHPGEDVIEW')) {
 													?>", "<?php
 														print PrintReady($child->getSex());					 // gend = Gender
 													?>", "<?php
-														print "?";											 // cond = Condition (Married or Single)
+														if ($married>0) {
+															echo "M";										 // cond = Condition (Married)
+														} else if ($married<0 || ($married=="0") ) {
+															echo "S";										 // cond = Condition (Single)
+														} else {
+															echo "";										 // cond = Condition (Not Known)
+														}
 													?>", "<?php
 														print PrintReady($child->getbirthyear());			 // yob = Year of Birth
 													?>", "<?php
-														print PrintReady($censyear-$child->getbirthyear());	 //  age = Census Date minus YOB
+														print PrintReady($censyear-$child->getbirthyear());	 // age = Census Date minus YOB
 													?>", "<?php
 														print "Y";											 // YMD
 													?>", "<?php
 														print "";											 // occu = Occupation
 													?>", "<?php
-														print PrintReady($child->getcensbirthplace());		 //  birthpl = Census Place of Birth 
+														print PrintReady($child->getcensbirthplace());		 // birthpl = Census Place of Birth 
 													?>");'><?php
-														print PrintReady($child->getFullName());			 // Name 
+														if ($married>=0 && isset($nam[1])){
+															print PrintReady($fulmn);			 			 // Full Married Name
+														} else {
+															print PrintReady($fulln);			 			 // Full Name
+														}
 													?>
 												</a>
 												<?php print "\n" ;
@@ -906,7 +926,13 @@ if (!defined('PGV_PHPGEDVIEW')) {
 						}
 							
 						// Children
-						foreach($people["children"] as $key=>$child) {  
+						foreach($people["children"] as $key=>$child) {
+								// Get child's marriage status
+								$married="";
+								foreach ($child->getSpouseFamilies() as $childfamily) {
+									$tmp=$childfamily->getMarriageDate();
+									$married = GedcomDate::Compare($censdate, $tmp);
+								}
 								$nam   = $child->getAllNames();
 								$fulln = rtrim($nam[0]['givn'],'*')."&nbsp;".$nam[0]['surname'];
 								$givn  = rtrim($nam[0]['givn'],'*');
@@ -914,8 +940,10 @@ if (!defined('PGV_PHPGEDVIEW')) {
 								if (isset($nam[1])) {
 									$fulmn = rtrim($nam[1]['givn'],'*')."&nbsp;".$nam[1]['surname'];
 									$marn  = $nam[1]['surname'];
+								}else{
+									$fulmn = $fulln;
+									$marn  = $surn;
 								}
-								
 								$menu = array();
 								$menu["label"] = "&nbsp;" . $child->getLabel() . "&nbsp;". "\n";
 								$menu["submenuclass"] = "submenu";
@@ -953,13 +981,23 @@ if (!defined('PGV_PHPGEDVIEW')) {
 									<a href='javaScript:insertRowToTable("<?php 
 											print $child->getXref() ;							 // pid = PID
 										?>", "<?php 
-											print PrintReady($fulln);							 // nam = Name
+											if ($married>0 && isset($nam[1])){
+												echo PrintReady($fulmn);						 // nam = Full Married Name
+											}else{
+												echo PrintReady($fulln);						 // nam = Full Name
+											}
 											?>", "<?php
 											print PrintReady($child->getLabel());				 // label = Relationship
 										?>", "<?php
 											print PrintReady($child->getSex());					 // gend = Gender
 										?>", "<?php
-											print "";											 // cond = Condition (Married or Single)
+											if ($married>0) {
+												echo "M";										 // cond = Condition (Married)
+											} else if ($married<0 || ($married=="0") ) {
+												echo "S";										 // cond = Condition (Single)
+											} else {
+												echo "";										 // cond = Condition (Not Known)
+											}
 										?>", "<?php
 											print PrintReady($child->getbirthyear());			 // yob = Year of Birth
 										?>", "<?php
@@ -971,8 +1009,13 @@ if (!defined('PGV_PHPGEDVIEW')) {
 										?>", "<?php
 											print PrintReady($child->getcensbirthplace());		 //  birthpl = Census Place of Birth 
 										?>");'>
-										<?php print PrintReady($child->getFullName());			 // Name
-										?>
+											<?php 
+											if ($married>=0 && isset($nam[1])){
+												print PrintReady($fulmn);			 			 // Full Married Name
+											} else {
+												print PrintReady($fulln);			 			 // Full Name
+											}
+											?>
 									</a>
 									<?php print "\n" ;
 								}else{

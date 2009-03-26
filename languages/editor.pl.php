@@ -135,6 +135,7 @@ $pgv_lang["confirm_remove"]				= "Czy na pewno chcesz usunąć tę osobę z rodz
 $pgv_lang["confirm_remove_object"]		= "Czy na pewno chcesz usunąć ten obiekt z bazy danych?";
 $pgv_lang["create_repository"]			= "Utwórz repozytorium";
 $pgv_lang["create_shared_note"]			= "Utwórz nową wspólną notatkę";
+$pgv_lang["create_shared_note_assisted"]= "Utwórz nową wspólną notatkę używając Asystenta";
 $pgv_lang["create_source"]				= "Utwórz nowe źródło";
 $pgv_lang["current_person"]				= "Bieżąca osoba";
 $pgv_lang["date"]						= "Data";

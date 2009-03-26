@@ -439,7 +439,7 @@ $factarray["_FAMC_EMIG"] = "Auswanderung der Eltern";
 $factarray["_FAMC_RESI"] = "Wohnort der Eltern";
 
 //-- PGV Only facts
-$factarray["_THUM"]	= "Dieses Bild auch als Miniaturbild verwenden?";
+$factarray["_THUM"]	= "Immer das Hauptbild verwenden?";
 $factarray["_PGVU"]	= "von"; // Zuletzt geändert von";
 $factarray["SERV"] = "Fremder Server";
 $factarray["_GEDF"] = "GEDCOM Datei";

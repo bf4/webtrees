@@ -35,11 +35,12 @@ global $summary, $theme_name, $pgv_lang, $factarray;
  
 $pid = safe_get('pid');
 // echo $pid;
-$censevent = new Event("1 CENS\n2 DATE 03 JAN 1901");
-$censdate  = $censevent->getDate();
-$censyear  = $censdate->date1->y;
-$censctry  = "UK";
-$married   = GedcomDate::Compare($censdate, $marrdate);
+$year = "1901";
+$censevent  = new Event("1 CENS\n2 DATE 03 MAR".$year."");
+$censdate   = $censevent->getDate();
+$censyear   = $censdate->date1->y;
+$ctry       = "UK";
+$married    = GedcomDate::Compare($censdate, $marrdate);
 
 $person=Person::getInstance($pid);
 // var_dump($person->getAllNames());
@@ -73,7 +74,7 @@ echo $fredrev;
 
 echo "<table border=0><tr>";
 	echo "<td width=\"10%\" wrap=\"nowrap\">";
-		echo "<center><font size=\"2\"><b>".$censyear."&nbsp;".$censctry."&nbsp;".$factarray["CENS"]."</b></font></center>";
+		echo "<center><font size=\"2\"><b>".$censyear."&nbsp;".$ctry."&nbsp;".$factarray["CENS"]."</b></font></center>";
 	echo "</td>";
 	echo "<td width=\"25%\" wrap=\"nowrap\">";
 		echo "<center><font size=\"2\"><b>&nbsp;&nbsp; </font><font size=\"2\">";

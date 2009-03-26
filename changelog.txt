@@ -10,6 +10,8 @@
 
 
 Version 4.2.0 CA
+ - Changed: Tidied up a few more Navigator married names (Still Step Families to do)(windmillway)
+ - Merged: Merge changes r5245 - r5274 from the trunk. (windmillway)
  - Changed: Fixed wrong path for "Find" function. Tidied up a few Navigator married names (windmillway)
  - Merged: Merge changes r5235 - r5244 from the trunk. (windmillway)
  - Changed: Paths to files in new GEDFact_assistant/CENS/ directory <windmillway)
@@ -69,6 +71,14 @@ Version 4.2.0 CA
 
 
 Version 4.2.1
+ - Fixed: [ 2634211 ] [4.2]+[4.1.6] Individual Add(ed) Facts not stored (fisharebest)
+ - Fixed: [ 2604802 ] In the "Find Place" link the "Display all" list doesn't show (wooc)
+ - Fixed: [ 2711647 ] Privacy option changes not working (canajun2eh)
+ - Fixed: [ 2708857 ] [4.2.1svn5259] Lifespan chart reversed up/down arrows (wooc)
+ - Fixed: [ 2333142 ] Relationship error (wooc)
+ - Fixed: [ 2702570 ] [4.2-4.2.5241] autocomplete not active in quickupd. fields (wooc)
+ - Fixed: [ 2702575 ] [4.2-4.2.5241] place with ( or with ) in googlemaps module (wooc)
+ - Added: Extra language file for Shared Notes (windmillway)
  - Fixed: [ 2694015 ] Incorrect handling of Highlighted image (canajun2eh)
  - Changed: Add language editor support for comments on variable definition lines (canajun2eh)
  - Changed: Add language editor support for var. names or text enclosed in apostrophes (canajun2eh)

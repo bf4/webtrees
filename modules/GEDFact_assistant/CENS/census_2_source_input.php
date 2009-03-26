@@ -73,7 +73,7 @@ global $pgv_lang, $TEXT_DIRECTION;
 					?>
 					<td align="left" class="descriptionbox" width="15%"><font size=1>Census Year:</font></td>
 					<td align="left" class="facts_value" width="15%">
-						<input name="InputCensusYear" type="text" size="9" STYLE="font-size: 10px;" value="1901" /></td>
+						<input name="InputCensusYear" type="text" size="9" STYLE="font-size: 10px;" value="<?php echo $censyear; ?>" /></td>
 				</tr>
 			</table>
 			
