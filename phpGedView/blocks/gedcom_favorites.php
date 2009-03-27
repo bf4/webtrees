@@ -43,7 +43,6 @@ function print_gedcom_favorites($block = true, $config="", $side, $index) {
 	global $pgv_lang, $factarray, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $ctype, $TEXT_DIRECTION;
 	global $show_full, $PEDIGREE_FULL_DETAILS, $BROWSERTYPE;
 
-	require_once("js/autocomplete.js.htm");
 	// Override GEDCOM configuration temporarily
 	if (isset($show_full)) $saveShowFull = $show_full;
 	$savePedigreeFullDetails = $PEDIGREE_FULL_DETAILS;
@@ -60,7 +59,30 @@ function print_gedcom_favorites($block = true, $config="", $side, $index) {
 	$title .= "(".count($userfavs).")";
 	if ($TEXT_DIRECTION=="rtl") $title .= getRLM();
 
-	$content = "";
+	if (PGV_USER_IS_ADMIN) {
+		$content = '<script type="text/javascript" src="js/jquery/jquery.min.js"></script>
+		<script type="text/javascript" src="js/jquery/jquery.autocomplete.js"></script>
+		<script type="text/javascript" src="js/jquery/jquery.ajaxQueue.js"></script>
+		<script type="text/javascript">
+		jQuery.noConflict(); // @see http://docs.jquery.com/Using_jQuery_with_Other_Libraries/
+		jQuery(document).ready(function($){
+			$("input[name^=gid]").autocomplete("autocomplete.php", {
+				extraParams: {field:"IFSRO"},
+				formatItem: function(row, i) {
+					return row[0] + " (" + row[1] + ")";
+				},
+				formatResult: function(row) {
+					return row[1];
+				},
+				width: 400,
+				minChars: 2
+			});
+		}); 
+		</script>';
+	}
+	else {
+		$content = '';
+	}
 	if ($block) {
 		$style = 2;		// 1 means "regular box", 2 means "wide box"
 		$tableWidth = ($BROWSERTYPE=="msie") ? "95%" : "99%";	// IE needs to have room for vertical scroll bar inside the box
