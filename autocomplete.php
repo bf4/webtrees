@@ -491,11 +491,11 @@ function autocomplete_OBJE() {
 }
 
 /**
-* returns INDI FAM SOUR REPO OBJE matching filter
+* returns INDI FAM SOUR NOTE REPO OBJE matching filter
 * @return Array of string
 */
 function autocomplete_IFSRO() {
-	global $GEDCOM_ID_PREFIX, $FAM_ID_PREFIX, $SOURCE_ID_PREFIX, $REPO_ID_PREFIX, $MEDIA_ID_PREFIX;
+	global $GEDCOM_ID_PREFIX, $FAM_ID_PREFIX, $SOURCE_ID_PREFIX, $NOTE_ID_PREFIX, $REPO_ID_PREFIX, $MEDIA_ID_PREFIX;
 	global $FILTER;
 
 	// is input text a gedcom xref ?
@@ -507,6 +507,8 @@ function autocomplete_IFSRO() {
 			return autocomplete_FAM();
 		if ($prefix == $SOURCE_ID_PREFIX)
 			return autocomplete_SOUR();
+		if ($prefix == $NOTE_ID_PREFIX)
+			return autocomplete_NOTE();
 		if ($prefix == $REPO_ID_PREFIX)
 			return autocomplete_REPO();
 		if ($prefix == $MEDIA_ID_PREFIX)
@@ -516,6 +518,7 @@ function autocomplete_IFSRO() {
 		autocomplete_INDI(),
 		autocomplete_FAM(),
 		autocomplete_SOUR(),
+		autocomplete_NOTE(),
 		autocomplete_REPO(),
 		autocomplete_OBJE());
 }
