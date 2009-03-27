@@ -111,7 +111,6 @@ $PGV_IMAGES["timeline"]["small"] = "small/timeline.gif";
 $PGV_IMAGES["addrepository"]["button"] = "buttons/addrepository.gif";
 $PGV_IMAGES["addsource"]["button"] = "buttons/addsource.gif";
 $PGV_IMAGES["addnote"]["button"] = "buttons/addnote.gif";
-$PGV_IMAGES["autocomplete"]["button"] = "buttons/autocomplete.gif";
 $PGV_IMAGES["calendar"]["button"] = "buttons/calendar.gif";
 $PGV_IMAGES["family"]["button"] = "buttons/family.gif";
 $PGV_IMAGES["indi"]["button"] = "buttons/indi.gif";
