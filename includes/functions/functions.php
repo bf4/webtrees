@@ -625,9 +625,8 @@ function update_lang_settings() {
 			fwrite($fp, "// Array definition of language_settings".PGV_EOL);
 			fwrite($fp, "\$language_settings = array();".PGV_EOL);
 			foreach ($language_settings as $key => $value) {
-				if (!isset($languages[$key]) || (isset($pgv_language[$key]) && !file_exists($pgv_language[$key]))) {
-					continue;
-				}
+//				if (!isset($languages[$key]) || (isset($pgv_language[$key]) && !file_exists($pgv_language[$key]))) continue;
+				if (!isset($languages[$key])) continue;
 				fwrite($fp, PGV_EOL);
 				fwrite($fp, "//-- settings for {$languages[$key]}".PGV_EOL);
 				fwrite($fp, "\$language_settings['{$languages[$key]}']=array(".PGV_EOL);
