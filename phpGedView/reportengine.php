@@ -127,7 +127,9 @@ if ($action=="choose") {
 //-- setup report to run
 else if ($action=="setup") {
 	print_header($pgv_lang["enter_report_values"]);
-	require 'js/autocomplete.js.htm';
+
+	if ($ENABLE_AUTOCOMPLETE) require './js/autocomplete.js.htm';
+
 	//-- make sure the report exists
 	if (!file_exists($report)) {
 		print "<span class=\"error\">".$pgv_lang["file_not_found"]."</span> ".$report."\n";

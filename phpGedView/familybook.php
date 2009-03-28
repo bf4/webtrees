@@ -28,7 +28,7 @@
 
 require './config.php';
 
-require_once("includes/functions/functions_charts.php");
+require_once './includes/functions/functions_charts.php';
 
 // Extract form variables
 $pid        =safe_GET_xref('pid');
@@ -369,7 +369,8 @@ function print_family_book($pid, $descent)
 
 // -- print html header information
 print_header(PrintReady($name)." ".$pgv_lang["familybook_chart"]);
-require 'js/autocomplete.js.htm';
+
+if ($ENABLE_AUTOCOMPLETE) require './js/autocomplete.js.htm';
 
 // LBox =====================================================================================
 if ($MULTI_MEDIA && file_exists("modules/lightbox/album.php")) {

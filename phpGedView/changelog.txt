@@ -10,6 +10,7 @@
 
 
 Version 4.2.1
+ - Added: Make Autocomplete an option in the GEDCOM config, Edit section (canajun2eh)
  - Fixed: [ 2634211 ] [4.2]+[4.1.6] Individual Add(ed) Facts not stored (fisharebest)
  - Fixed: [ 2604802 ] In the "Find Place" link the "Display all" list doesn't show (wooc)
  - Fixed: [ 2711647 ] Privacy option changes not working (canajun2eh)

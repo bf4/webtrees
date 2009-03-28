@@ -5,7 +5,7 @@
 * This page will allow you to merge 2 gedcom records
 *
 * phpGedView: Genealogy Viewer
-* Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
+* Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
 *
 * This program is free software; you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -28,8 +28,8 @@
 
 require './config.php';
 
-require_once 'includes/functions/functions_edit.php';
-require_once 'includes/functions/functions_import.php';
+require_once './includes/functions/functions_edit.php';
+require_once './includes/functions/functions_import.php';
 
 $ged=$GEDCOM;
 $gid1=safe_POST_xref('gid1');
@@ -42,7 +42,8 @@ if (empty($keep1)) $keep1=array();
 if (empty($keep2)) $keep2=array();
 
 print_header($pgv_lang["merge_records"]);
-require 'js/autocomplete.js.htm';
+
+if ($ENABLE_AUTOCOMPLETE) require './js/autocomplete.js.htm';
 
 //-- make sure they have accept access privileges
 if (!PGV_USER_CAN_ACCEPT) {

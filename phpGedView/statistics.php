@@ -28,11 +28,13 @@
  */
 
 require './config.php';
-require_once 'includes/classes/class_stats.php';
-require_once 'includes/functions/functions_places.php';
+
+require_once './includes/classes/class_stats.php';
+require_once './includes/functions/functions_places.php';
 
 print_header($pgv_lang["statistics"]);
-require 'js/autocomplete.js.htm';
+
+if ($ENABLE_AUTOCOMPLETE) require './js/autocomplete.js.htm';
 ?>
 <script language="JavaScript" type="text/javascript">
 <!--
@@ -106,7 +108,7 @@ echo "<td class=\"facts_value\" align=\"center\">".$stats->totalSexFemales()."</
 echo "<td class=\"facts_value\" align=\"center\">".$stats->totalFamilies()."</td>";
 echo "<td class=\"facts_value\" align=\"center\">".$stats->totalIndividuals()."</td></tr>";
 echo "<tr><td class=\"facts_label\" colspan=\"2\">".$pgv_lang["statnnames"]."</td>";
-echo "<td class=\"facts_label\" colspan=\"2\">".$pgv_lang["statnnames"]."</td></tr>"; 
+echo "<td class=\"facts_label\" colspan=\"2\">".$pgv_lang["statnnames"]."</td></tr>";
 echo "<tr><td class=\"facts_value\" colspan=\"2\" align=\"center\">".$stats->chartSex()."</td>";
 echo "<td class=\"facts_value\" colspan=\"2\" align=\"center\">".$stats->chartMortality()."</td></tr>";
 echo "<tr><td class=\"facts_label\" colspan=\"2\" >".$pgv_lang["stat_surnames"]."</td>";

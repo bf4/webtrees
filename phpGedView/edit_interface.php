@@ -25,7 +25,6 @@
 */
 
 require './config.php';
-
 require 'includes/functions/functions_edit.php';
 
 loadLangFile("pgv_country");
@@ -100,7 +99,8 @@ foreach ($assokeys as $indexval => $key) {
 uasort($assorela, "stringsort");
 
 print_simple_header('Edit Interface');
-require 'js/autocomplete.js.htm';
+
+if ($ENABLE_AUTOCOMPLETE) require './js/autocomplete.js.htm';
 ?>
 <script type="text/javascript">
 <!--
@@ -805,7 +805,7 @@ case 'addnewnote':
 	</form>
 	<?php
 	break;
-	
+
 //------------------------------------------------------------------------------
 //-- add new Shared Note
 case 'addnewnote_assisted':

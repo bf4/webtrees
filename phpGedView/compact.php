@@ -26,7 +26,7 @@
 
 require './config.php';
 
-require_once("includes/functions/functions_charts.php");
+require_once './includes/functions/functions_charts.php';
 
 // Extract form variables
 $rootid    =safe_GET_xref('rootid');
@@ -42,7 +42,8 @@ $addname=$person->getAddName();
 
 // -- print html header information
 print_header(PrintReady($name) . " " . $pgv_lang["compact_chart"]);
-require 'js/autocomplete.js.htm';
+
+if ($ENABLE_AUTOCOMPLETE) require './js/autocomplete.js.htm';
 
 // LBox =====================================================================================
 if ($MULTI_MEDIA && file_exists("modules/lightbox/album.php")) {
