@@ -77,8 +77,6 @@ if ($action=="update" || $action=="newentry") {
 	}
 }
 
-require 'js/autocomplete.js.htm';
-
 if (!PGV_USER_CAN_EDIT || !$disp || !$ALLOW_EDIT_GEDCOM) {
 	print $pgv_lang["access_denied"];
 	//-- display messages as to why the editing access was denied
@@ -93,6 +91,7 @@ if (!PGV_USER_CAN_EDIT || !$disp || !$ALLOW_EDIT_GEDCOM) {
 	exit;
 }
 
+if ($ENABLE_AUTOCOMPLETE) require './js/autocomplete.js.htm';
 echo PGV_JS_START;
 ?>
 	// Shared Notes =========================

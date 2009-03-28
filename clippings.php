@@ -6,7 +6,7 @@
  * @TODO print a message if people are not included due to privacy
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
+ * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -29,14 +29,16 @@
 
 require './config.php';
 
-require_once 'includes/controllers/clippings_ctrl.php';
+require_once './includes/controllers/clippings_ctrl.php';
+
 $controller = new ClippingsController();
 $controller->init();
 
 // -- print html header information
 print_header($pgv_lang["clip_cart"]);
-require 'js/autocomplete.js.htm';
-require 'js/sorttable.js.htm';
+
+if ($ENABLE_AUTOCOMPLETE) require './js/autocomplete.js.htm';
+require './js/sorttable.js.htm';
 
 echo PGV_JS_START;
 echo 'function radAncestors(elementid) {var radFamilies=document.getElementById(elementid);radFamilies.checked=true;}';
@@ -76,10 +78,10 @@ if ($controller->action=='add') {
 			<tr><td class="optionbox"><input type="radio" name="others" value="parents" /><?php print $pgv_lang["person_parents_sibs"]?></td></tr>
 			<tr><td class="optionbox"><input type="radio" name="others" value="ancestors" id="ancestors" /><?php print $pgv_lang["person_ancestors"]?><br />
 				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php print $pgv_lang["enter_person_generations"] ?> <input type="text" size="5" name="level1" value="<?php print $MAX_PEDIGREE_GENERATIONS; ?>" onfocus="radAncestors('ancestors');"/></td></tr>
-			<tr><td class="optionbox"><input type="radio" name="others" value="ancestorsfamilies" id="ancestorsfamilies" /><?php print $pgv_lang["person_ancestor_fams"]?><br > 
+			<tr><td class="optionbox"><input type="radio" name="others" value="ancestorsfamilies" id="ancestorsfamilies" /><?php print $pgv_lang["person_ancestor_fams"]?><br >
 				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php print $pgv_lang["enter_person_generations"] ?> <input type="text" size="5" name="level2" value="<?php print $MAX_PEDIGREE_GENERATIONS; ?>" onfocus="radAncestors('ancestorsfamilies');" /></td></tr>
 			<tr><td class="optionbox"><input type="radio" name="others" value="members" /><?php print $pgv_lang["person_spouse"]?></td></tr>
-			<tr><td class="optionbox"><input type="radio" name="others" value="descendants" id="descendants" /><?php print $pgv_lang["person_desc"]?><br > 
+			<tr><td class="optionbox"><input type="radio" name="others" value="descendants" id="descendants" /><?php print $pgv_lang["person_desc"]?><br >
 				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php print $pgv_lang["enter_person_generations"] ?> <input type="text" size="5" name="level3" value="<?php print $MAX_PEDIGREE_GENERATIONS; ?>" onfocus="radAncestors('descendants');" /></td></tr>
 			<tr><td class="topbottombar"><input type="submit" value="<?php print $pgv_lang["continue"]?>" />
 		</table>

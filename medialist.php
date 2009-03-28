@@ -26,7 +26,7 @@
 
 require './config.php';
 
-require_once 'includes/functions/functions_print_facts.php';
+require_once './includes/functions/functions_print_facts.php';
 
 
 loadLangFile("lightbox:lang");
@@ -45,10 +45,10 @@ if (!isset($_SESSION["medialist"])) $search = "yes";
 
 $currentdironly = (isset($_REQUEST['subdirs']) && $_REQUEST['subdirs']=="on") ? false : true;
 print_header($pgv_lang["multi_title"]);
-require 'js/autocomplete.js.htm';
+
+if ($ENABLE_AUTOCOMPLETE) require './js/autocomplete.js.htm';
+
 print "\n\t<div class=\"center\"><h2>".$pgv_lang["multi_title"]."</h2></div>\n\t";
-
-
 
 // Get Javascript variables from lb_config.php ---------------------------
 if (file_exists("modules/lightbox/album.php")) {

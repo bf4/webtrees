@@ -28,7 +28,7 @@
 
 require './config.php';
 
-require("includes/functions/functions_edit.php");
+require './includes/functions/functions_edit.php';
 
 //-- page parameters and checking
 
@@ -55,7 +55,8 @@ if (empty($linktoid) || empty($linkto)) {
 }
 
 print_simple_header($pgv_lang["link_media"]." ".$toitems);
-require 'js/autocomplete.js.htm';
+
+if ($ENABLE_AUTOCOMPLETE) require './js/autocomplete.js.htm';
 
 //-- check for admin
 $paramok =  PGV_USER_CAN_EDIT;

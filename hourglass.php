@@ -5,7 +5,7 @@
  * Set the root person using the $pid variable
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
+ * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -30,13 +30,15 @@
 
 require './config.php';
 
-require_once 'includes/controllers/hourglass_ctrl.php';
+require_once './includes/controllers/hourglass_ctrl.php';
+
 $controller = new HourglassController();
 $controller->init();
 
 // -- print html header information
 print_header(PrintReady($controller->name)." ".$pgv_lang["hourglass_chart"]);
-require 'js/autocomplete.js.htm';
+
+if ($ENABLE_AUTOCOMPLETE) require './js/autocomplete.js.htm';
 
 if ($controller->view=="preview") {
 	print "<h2 style=\"text-align: center\">".$pgv_lang["hourglass_chart"].":&nbsp;&nbsp;&nbsp;".PrintReady($controller->name)."</h2>";

@@ -30,7 +30,8 @@
 
 require './config.php';
 
-require_once 'includes/controllers/lifespan_ctrl.php';
+require_once './includes/controllers/lifespan_ctrl.php';
+
 $controller = new LifespanController();
 $controller->init();
 
@@ -38,7 +39,8 @@ $zoomfactor = 10;
 //if peeps !null then pass new array for zooming
 
 print_header($pgv_lang["lifespan_chart"]);
-require 'js/autocomplete.js.htm';
+
+if ($ENABLE_AUTOCOMPLETE) require './js/autocomplete.js.htm';
 ?>
 	<script language="JavaScript" type="text/javascript">
 	<!--

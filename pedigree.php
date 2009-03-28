@@ -31,13 +31,15 @@
 
 require './config.php';
 
-require 'includes/controllers/pedigree_ctrl.php';
+require './includes/controllers/pedigree_ctrl.php';
+
 $controller = new PedigreeController();
 $controller->init();
 
 // -- print html header information
 print_header($controller->getPageTitle());
-require 'js/autocomplete.js.htm';
+
+if ($ENABLE_AUTOCOMPLETE) require './js/autocomplete.js.htm';
 
 print "<div id=\"pedigree_chart_options"; print ($TEXT_DIRECTION=="ltr")?"":"_rtl";print "\" style=\"position: relative; z-index: 1; width:98%;\">";
 if ($controller->isPrintPreview()) print "<h2>".str_replace("#PEDIGREE_GENERATIONS#", $PEDIGREE_GENERATIONS, $pgv_lang["gen_ped_chart"]).":";

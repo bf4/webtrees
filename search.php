@@ -27,14 +27,16 @@
 
 require './config.php';
 
-require_once 'includes/controllers/search_ctrl.php';
-require_once 'includes/functions/functions_print_lists.php';
+require_once './includes/controllers/search_ctrl.php';
+require_once './includes/functions/functions_print_lists.php';
+
 $controller = new SearchController();
 $controller->init();
 
 // Print the top header
 print_header($pgv_lang["search"]);
-require 'js/autocomplete.js.htm';
+
+if ($ENABLE_AUTOCOMPLETE) require './js/autocomplete.js.htm';
 ?>
 <script language="JavaScript" type="text/javascript">
 <!--
