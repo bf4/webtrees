@@ -33,7 +33,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 
 define('PGV_USER_FAVORITES_PHP', '');
 
-require_once("includes/functions/functions_print_lists.php");
+require_once './includes/functions/functions_print_lists.php';
 
 $PGV_BLOCKS["print_user_favorites"]["name"]			= $pgv_lang["user_favorites_block"];
 $PGV_BLOCKS["print_user_favorites"]["descr"]		= "user_favorites_descr";
@@ -44,7 +44,7 @@ $PGV_BLOCKS["print_user_favorites"]["config"]		= array("cache"=>0);
 //-- print user favorites
 function print_user_favorites($block=true, $config="", $side, $index) {
 	global $pgv_lang, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $TEXT_DIRECTION, $INDEX_DIRECTORY, $MEDIA_DIRECTORY, $MULTI_MEDIA, $MEDIA_DIRECTORY_LEVELS, $ctype;
-	global $show_full, $PEDIGREE_FULL_DETAILS, $BROWSERTYPE;
+	global $show_full, $PEDIGREE_FULL_DETAILS, $BROWSERTYPE, $ENABLE_AUTOCOMPLETE;
 
 	// Override GEDCOM configuration temporarily
 	if (isset($show_full)) $saveShowFull = $show_full;
@@ -62,25 +62,28 @@ function print_user_favorites($block=true, $config="", $side, $index) {
 	$title .= "(".count($userfavs).")";
 	if ($TEXT_DIRECTION=="rtl") $title .= getRLM();
 
-	$content = '<script type="text/javascript" src="js/jquery/jquery.min.js"></script>
-	<script type="text/javascript" src="js/jquery/jquery.autocomplete.js"></script>
-	<script type="text/javascript" src="js/jquery/jquery.ajaxQueue.js"></script>
-	<script type="text/javascript">
-	jQuery.noConflict(); // @see http://docs.jquery.com/Using_jQuery_with_Other_Libraries/
-	jQuery(document).ready(function($){
-		$("input[name^=gid]").autocomplete("autocomplete.php", {
-			extraParams: {field:"IFSRO"},
-			formatItem: function(row, i) {
-				return row[0] + " (" + row[1] + ")";
-			},
-			formatResult: function(row) {
-				return row[1];
-			},
-			width: 400,
-			minChars: 2
+	if ($ENABLE_AUTOCOMPLETE) {
+		$content = '<script type="text/javascript" src="js/jquery/jquery.min.js"></script>
+		<script type="text/javascript" src="js/jquery/jquery.autocomplete.js"></script>
+		<script type="text/javascript" src="js/jquery/jquery.ajaxQueue.js"></script>
+		<script type="text/javascript">
+		jQuery.noConflict(); // @see http://docs.jquery.com/Using_jQuery_with_Other_Libraries/
+		jQuery(document).ready(function($){
+			$("input[name^=gid]").autocomplete("autocomplete.php", {
+				extraParams: {field:"IFSRO"},
+				formatItem: function(row, i) {
+					return row[0] + " (" + row[1] + ")";
+				},
+				formatResult: function(row) {
+					return row[1];
+				},
+				width: 400,
+				minChars: 2
+			});
 		});
-	}); 
-	</script>';
+		</script>';
+	} else $content = '';
+
 	if ($block) {
 		$style = 2;		// 1 means "regular box", 2 means "wide box"
 		$tableWidth = ($BROWSERTYPE=="msie") ? "95%" : "99%";	// IE needs to have room for vertical scroll bar inside the box

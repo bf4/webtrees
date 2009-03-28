@@ -41,7 +41,7 @@ $PGV_BLOCKS["print_gedcom_favorites"]["config"]   = array("cache"=>7);
 //-- print gedcom favorites
 function print_gedcom_favorites($block = true, $config="", $side, $index) {
 	global $pgv_lang, $factarray, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $ctype, $TEXT_DIRECTION;
-	global $show_full, $PEDIGREE_FULL_DETAILS, $BROWSERTYPE;
+	global $show_full, $PEDIGREE_FULL_DETAILS, $BROWSERTYPE, $ENABLE_AUTOCOMPLETE;
 
 	// Override GEDCOM configuration temporarily
 	if (isset($show_full)) $saveShowFull = $show_full;
@@ -59,7 +59,7 @@ function print_gedcom_favorites($block = true, $config="", $side, $index) {
 	$title .= "(".count($userfavs).")";
 	if ($TEXT_DIRECTION=="rtl") $title .= getRLM();
 
-	if (PGV_USER_IS_ADMIN) {
+	if (PGV_USER_IS_ADMIN && $ENABLE_AUTOCOMPLETE) {
 		$content = '<script type="text/javascript" src="js/jquery/jquery.min.js"></script>
 		<script type="text/javascript" src="js/jquery/jquery.autocomplete.js"></script>
 		<script type="text/javascript" src="js/jquery/jquery.ajaxQueue.js"></script>
@@ -77,12 +77,10 @@ function print_gedcom_favorites($block = true, $config="", $side, $index) {
 				width: 400,
 				minChars: 2
 			});
-		}); 
+		});
 		</script>';
-	}
-	else {
-		$content = '';
-	}
+	} else $content = '';
+
 	if ($block) {
 		$style = 2;		// 1 means "regular box", 2 means "wide box"
 		$tableWidth = ($BROWSERTYPE=="msie") ? "95%" : "99%";	// IE needs to have room for vertical scroll bar inside the box
@@ -148,7 +146,7 @@ function print_gedcom_favorites($block = true, $config="", $side, $index) {
 		function paste_id(value) {
 			pastefield.value=value;
 		}
-		//-->
+		-->
 		</script>
 		<br />
 		';
