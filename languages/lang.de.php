@@ -228,7 +228,6 @@ $pgv_lang["link_new_wife"]				= "Eine existierende Person als Ehefrau hinzufüge
 $pgv_lang["address_labels"]				= "Adress-Etiketten";
 $pgv_lang["filter_address"]				= "Adressen mit folgendem Enthalt zeigen:";
 $pgv_lang["address_list"]				= "Adressen Liste";
-$pgv_lang["autocomplete"]				= "Automatisch eingeben";
 $pgv_lang["index_edit_advice"]			= "Markieren Sie den Namen eines Blocks und klicken Sie auf einen der Pfeile, um den markierten Block in die gewünschte Richtung zu bewegen.";
 $pgv_lang["changelog"]					= "Änderungen in Version #VERSION#";
 $pgv_lang["html_block_descr"]			= "Mit diesem Block können Sie einen beliebigen Text auf Ihrer Seite einfügen.";
