@@ -161,7 +161,7 @@ function print_charts_block($block = true, $config="", $side, $index) {
 		$content .= '<script language="JavaScript" type="text/javascript">
 			<!--
 			if (sizeLines) sizeLines();
-			//-->
+			-->
 			</script>';
 	} else {
 		$content=$pgv_lang['invalid_id'];
@@ -176,12 +176,12 @@ function print_charts_block($block = true, $config="", $side, $index) {
 }
 
 function print_charts_block_config($config) {
-	global $pgv_lang, $ctype, $PGV_BLOCKS, $TEXT_DIRECTION, $PEDIGREE_ROOT_ID;
+	global $pgv_lang, $ctype, $PGV_BLOCKS, $TEXT_DIRECTION, $PEDIGREE_ROOT_ID, $ENABLE_AUTOCOMPLETE;
 	if (empty($config)) $config = $PGV_BLOCKS["print_charts_block"]["config"];
 	if (empty($config["rootId"])) $config["rootId"] = $PEDIGREE_ROOT_ID;
 	if (empty($config['details'])) $config['details'] = 'no';
-	
-require 'js/autocomplete.js.htm';
+
+	if ($ENABLE_AUTOCOMPLETE) require './js/autocomplete.js.htm';
 ?>
 	<tr><td class="descriptionbox wrap width33"><?php print $pgv_lang["chart_type"]; ?></td>
 	<td class="optionbox">
