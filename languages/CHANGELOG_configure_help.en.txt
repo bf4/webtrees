@@ -44,6 +44,8 @@ VERSION 4.2.1
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 -----------------------------------------------------------------------------------------
+*$pgv_lang["ENABLE_AUTOCOMPLETE"] 					27 Mar 2009				A
+*$pgv_lang["ENABLE_AUTOCOMPLETE_help"] 				27 Mar 2009				A
 *$pgv_lang["USE_THUMBS_MAIN_help"]					22 Mar 2009				W
 *$pgv_lang["PGV_SMTP_SSL_help"]						15 Feb 2009				W
 +$pgv_lang["PGV_SMTP_SSL_help"]						15 Feb 2009				A
