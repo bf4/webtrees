@@ -227,7 +227,6 @@ $pgv_lang["link_new_wife"]			= "Add a wife using an existing person";
 $pgv_lang["address_labels"]			= "Address Labels";
 $pgv_lang["filter_address"]			= "Show addresses that contain:";
 $pgv_lang["address_list"]			= "Address List";
-$pgv_lang["autocomplete"]			= "Autocomplete";
 $pgv_lang["index_edit_advice"]		= "Highlight a  block name and then click on one of the arrow icons to move that highlighted block in the indicated direction.";
 $pgv_lang["changelog"]				= "Version #VERSION# changes";
 $pgv_lang["html_block_descr"]		= "This is a simple HTML block that you can place on your page to add any sort of message you may want.";
