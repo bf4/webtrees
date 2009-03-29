@@ -140,7 +140,7 @@ jQuery(document).ready(function($){
 		minChars: 2
 	});
 	// PLAC : full [City, County, State/Province, Country]
-	$(".PLAC, #place, input[id=place], input[name*=PLAC], input[name^=PLAC], input[name$=PLAC]").autocomplete("autocomplete.php", {
+	$(".PLAC, #place, input[id=place], input[name*=PLACS], input[name*=PLAC3], input[name^=PLAC], input[name$=PLAC]").autocomplete("autocomplete.php", {
 		extraParams: {field:'PLAC'},
 		width: 400,
 		minChars: 2
@@ -172,7 +172,7 @@ jQuery(document).ready(function($){
 		minChars: 1
 	});
 	// NAME
-	$("#NAME, input[name*=NAME], input[name=name], input[id=name]").autocomplete("autocomplete.php", {
+	$("#NAME, input[id=name]").autocomplete("autocomplete.php", {
 		extraParams: {field:'NAME'},
 		width: 300,
 		minChars: 2
