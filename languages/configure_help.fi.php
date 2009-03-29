@@ -3,7 +3,7 @@
  * Finnish Language file for PhpGedView.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team
+ * Copyright (C) 2002 to 2009  PGV Development Team
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -164,7 +164,7 @@ $pgv_lang["new_language"]			= "Lähde kieli";
 $pgv_lang["new_language_help"]		= "#pgv_lang[compare_lang_utility]# >> <b>#pgv_lang[new_language]#</b><br /><br />Tästä pudotusvalikosta voit valita sen kielen, jonka haluat lähteeksi verrataksesi sitä toiseen kieleen.<br /><br />Kaikki muutokset ja lisäykset tehdään ensin <b>englanninkieliseen</b> kielitiedostoon.";
 $pgv_lang["old_language"]			= "Verrattava kieli";
 $pgv_lang["old_language_help"]		= "#pgv_lang[compare_lang_utility]# >> <b>#pgv_lang[old_language]#</b><br /><br />Tästä pudotusvalikosta voit valita kielen jota haluat verrata <b>lähteen</b> pudotusvalikosta valittuun kieleen.<br /><br />Kun ole tehnyt valinnan, klikkaa <b>vertaa</b> painiketta ja saat luettelon kaikista lisäyksistä ja poistoista.<br /><br />Varmuudeksi:<br /><b>lisäys</b> tarkoittaa: se <b>on jo olemassa</b> lähdetiedostossa mutta <b>ei</b> vertailutiedostossa.<br /><br /><b>Poistaminen</b> tarkoittaa: se <b>ei</b> ole enää lähdetiedostossa, mutta <b>on</b> (vielä) vertailutiedostossa.";
-$pgv_lang["compare"]				= "Vertailu";
+$pgv_lang["compare"]				= "Vertaile";
 $pgv_lang["comparing"]			= "Kielitiedostot joita vertaillaan";
 $pgv_lang["additions"]				= "Lisäys";
 $pgv_lang["no_additions"]			= "Ei lisäyksiä";
