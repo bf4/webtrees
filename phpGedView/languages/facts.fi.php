@@ -441,4 +441,6 @@ $factarray["FAMS:CENS:PLAC"] = "Puolison väestölaskentapaikka";
 $factarray["FAMS:SLGS:DATE"] = "MAP puolison sinetöintipäivä";
 $factarray["FAMS:SLGS:PLAC"] = "MAP puolison sinetöintipaikka";
 $factarray["FAMS:SLGS:TEMP"] = "MAP puolison sinetöintitemppeli";
+$factarray["DATA:DATE"] = "Kirjauspäivä alkuperäisessä lähteessä";
+$factarray["SHARED_NOTE"]	= "Jaettu lisätieto";
 ?>

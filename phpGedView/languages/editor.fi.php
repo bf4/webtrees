@@ -3,7 +3,7 @@
  * Finnish texts
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team
+ * Copyright (C) 2002 to 2009  PGV Development Team
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -238,4 +238,12 @@ $pgv_lang["add_opf_child"]				= "Lisää lapsi ja luo yhden vanhemman perhe";
 $pgv_lang["copy_error"]				= "Tiedostoa #GLOBALS [whichFile2]# ei voitu kopioida #GLOBALS [whichFile1]#sta";
 $pgv_lang["admin_override"]			= "Ylläpitäjävalinta";
 $pgv_lang["no_update_CHAN"]			= "Älä päivitä CHAN (viimeinen muutos) tietuetta";
+$pgv_lang["add_unlinked_note"]		= "Lisää yhteydetön lisätieto";
+$pgv_lang["add_unlinked"]			= "Yhteydettömät tietueet";
+$pgv_lang["add_shared_note"]		= "Lisää uusi jaettu lisätieto";
+$pgv_lang["add_shared_note_lbl"]	= "Lisää jaettu lisätieto";
+$pgv_lang["create_shared_note"]		= "Luo uusi jaettu lisätieto";
+$pgv_lang["create_shared_note_assisted"]	= "Lisää uusi jaettu lisätieto käyttäen avustajaa";
+$pgv_lang["new_shared_note_created"] 	= "Uuden jaetun lisätiedon luonti onnistui.";
+$pgv_lang["shared_note_updated"] 	= "Uuden jaetun lisätiedon päivitys onnistui.";
 ?>

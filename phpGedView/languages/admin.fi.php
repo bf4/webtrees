@@ -3,7 +3,7 @@
  * Finnish texts
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
+ * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,7 +23,7 @@
  * @author PGV Developers
  * @package PhpGedView
  * @subpackage Languages
- * @author Matti Valve, Marko Kohtala 
+ * @author Matti Valve, Marko Kohtala
  * @version $Id$
  */
 
@@ -32,7 +32,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
-$pgv_lang["user"]			= "Autentikoitu käyttäjä";
+$pgv_lang["user"]			= "Tunnistettu käyttäjä";
 $pgv_lang["thumbnail_deleted"]	= "Pienoiskuvatiedosto poistettu.";
 $pgv_lang["thumbnail_not_deleted"]	= "Pienoiskuvatiedostoa ei voitu poistaa.";
 $pgv_lang["step2"]			= "Vaihe 2/4:";
@@ -148,7 +148,7 @@ $pgv_lang["error_ban_server"]       	= "Hylätäksesi palvelimen se on valittava
 $pgv_lang["error_delete_person"]    	= "Sinun on valittava se henkilö, jonka yhteyden toiseen verkkopalveluun haluat poistaa.";
 $pgv_lang["error_header_write"] 	= "GEDCOM-tiedosto <b>#GEDCOM#</b> ei ole kirjoituskelpoinen. Tarkista atribuutit ja oikeudet.";
 $pgv_lang["error_siteauth_failed"]	= "Etäsivustolle kytkeytyminen epäonnistui";
-$pgv_lang["error_url_blank"]		= "Lisää myös joko etäsivuston nimi tai URL.";
+$pgv_lang["error_url_blank"]		= "Lisää myös joko etäsivuston nimi tai URL";
 $pgv_lang["error_view_info"]        	= "Katsoaksesi henkilön tietoja, henkilö on valittava.";
 $pgv_lang["fbsql"]			= "FrontBase";
 $pgv_lang["ged_download"]		= "Lataa";
@@ -190,8 +190,8 @@ $pgv_lang["label_password_id"]	= "Salasana";
 $pgv_lang["label_server_info"]      	= "Kaikki henkilöt, jotka on yhdistetty toisen verkkopalvelun kautta:";
 $pgv_lang["label_server_url"]       	= " URL/IP";
 $pgv_lang["label_username_id"]	= "Käyttäjätunnus";
-$pgv_lang["label_view_local"]       	= "Näytä henkilön tiedot paikallisella palvelimella.";
-$pgv_lang["label_view_remote"]      	= "Näytä henkilön tiedot toisella palvelimella.";
+$pgv_lang["label_view_local"]       	= "Näytä henkilön paikalliset tiedot";
+$pgv_lang["label_view_remote"]      	= "Näytä henkilön tiedot etäpalvelimella";
 $pgv_lang["last_login"]		= "Viimeksi kirjautunut";
 $pgv_lang["LANGUAGE_DEFAULT"]	 = "Et ole määritellyt kieliä joita sivustosi tukee.<br />PhpGedView käyttää oletus asetusta.";
 $pgv_lang["LANG_SELECTION"] 	= "Tuetut kielet";
@@ -371,7 +371,7 @@ $pgv_lang["basic_site_config"] = "Perusasetukset";
 $pgv_lang["adv_site_config"] = "Lisäasetukset";
 $pgv_lang["config_not_saved"] = "*Asetuksesi eivät<br />tallennu ennen vaihetta 6 ";
 $pgv_lang["download_config"] = "Lataa config.php koneeseesi";
-$pgv_lang["site_unavailable"] = "Palvelua ei ole parhaillaan käytettävissä";
+$pgv_lang["site_unavailable"] = "Palvelu ei ole parhaillaan käytettävissä";
 $pgv_lang["db_tables_created"] = "Tietokantataulut on luotu.";
 $pgv_lang["config_saved"] = "Asetukset on tallennettu.";
 $pgv_lang["checking_errors"]		= "Tarkistetaan virheitä...";
@@ -409,7 +409,7 @@ $pgv_lang["check_calendar"]		= "Tarkistetaan laajennettu kalenterikirjasto:";
 $pgv_lang["cannot_use_calendar"]		= "Sinulla ei ole tukea laajennetulle kalenterille. Et voi suorittaa joitakin laajennetun kalenterin toimintoa.";
 $pgv_lang["warnings_passed"]		= "Kaikki varoitustarkistukset hyväksytty.";
 $pgv_lang["warning_instr"]		= "Vaikka jotakin varoitusta ei ole hyväksytty, voit kuitenkin ajaa PhpGedView-ohjelmaa tällä palvelimella, mutta jotkut ominaisuudet saattavat olla kytketty pois tai toiminta voi olla hidasta.";
-$pgv_lang["editors"]				= "Editorit";
+$pgv_lang["editors"]				= "Muokkaajat";
 $pgv_lang["gedcom_admins"]			= "GEDCOM ylläpitäjät";
 $pgv_lang["site_admins"]			= "Palvelun ylläpitäjät";
 $pgv_lang["nobody"]					= "Ei kukaan";
@@ -435,4 +435,16 @@ $pgv_lang["ged_export"] 						= "Vie";
 $pgv_lang["install_step_4"] = "Sivuston asetus";
 $pgv_lang["add_gedcom_from_path"] 	= "Lisää GEDCOM tiedoston paikasta";
 $pgv_lang["using_php_version"]		= "Käytät PHP-versiota ";
+$pgv_lang["checking_db_support"]		= "Etsitään vähintään tietokannan tuki:";
+$pgv_lang["checking_db_support"]		= "Tarkistetaan tietokannan vähimmäistuki:";
+$pgv_lang["error_remove_site_linked"]			= "Etäpalvelinta ei voitu poistaa koska siihen on vielä yhteyksiä.";
+$pgv_lang["PGV_SMTP_ACTIVE"] 					= "Käytä SMTP -protokollaan ulkoisten viestien lähettämiseen";
+$pgv_lang["PGV_SMTP_HOST"] 						= "Lähtevän postin (SMTP) palvelimen nimi";
+$pgv_lang["PGV_SMTP_HELO"] 						= "Lähettävä domain-nimi";
+$pgv_lang["PGV_SMTP_PORT"] 						= "SMTP portti";
+$pgv_lang["PGV_SMTP_AUTH"] 						= "Käyttäjänimi ja salasana";
+$pgv_lang["PGV_SMTP_AUTH_USER"] 				= "Käyttäjänimi";
+$pgv_lang["PGV_SMTP_AUTH_PASS"] 				= "Salasana";
+$pgv_lang["PGV_SMTP_SSL"] 						= "SSL kirjautuminen";
+$pgv_lang["PGV_SMTP_FROM_NAME"] 				= "Lähettäjän nimi";
 ?>
