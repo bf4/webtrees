@@ -171,10 +171,9 @@ define('PGV_DB_COL_TAG',  PGV_DB_VARCHAR_TYPE.'(15)');           // Gedcom tags/
 * this function will perform the given SQL query on the database
 * @param string $sql the sql query to execture
 * @param boolean $show_error whether or not to show any error messages
-* @param int $count the number of records to return, 0 returns all
 * @return DB_result the connection result
 */
-function &dbquery($sql, $show_error=true, $count=0) {
+function &dbquery($sql, $show_error=true) {
 	global $DBCONN, $TOTAL_QUERIES, $INDEX_DIRECTORY, $LAST_QUERY, $CONFIGURED;
 
 	if (!$CONFIGURED) {
@@ -198,9 +197,6 @@ function &dbquery($sql, $show_error=true, $count=0) {
 	if (preg_match('/[^\\\]"/', $sql)>0) {
 		pgv_error_handler(2, "<span class=\"error\">Incompatible SQL syntax. Double quote query: $sql</span><br />","","");
 	}
-	if (preg_match('/LIMIT \d/', $sql)>0) {
-		pgv_error_handler(2,"<span class=\"error\">Incompatible SQL syntax. Limit query error, use dbquery \$count parameter instead: $sql</span><br />","","");
-	}
 	if (preg_match('/(&&)|(\|\|)/', $sql)>0) {
 		pgv_error_handler(2,"<span class=\"error\">Incompatible SQL syntax.  Use 'AND' instead of '&&'.  Use 'OR' instead of '||'.: $sql</span><br />","","");
 	}
@@ -209,11 +205,7 @@ function &dbquery($sql, $show_error=true, $count=0) {
 	if (PGV_DEBUG_SQL) {
 		$start_time2 = microtime(true);
 	}
-	if ($count == 0) {
-		$res =& $DBCONN->query($sql);
-	} else {
-		$res =& $DBCONN->limitQuery($sql, 0, $count);
-	}
+	$res =& $DBCONN->query($sql);
 
 	$LAST_QUERY = $sql;
 	$TOTAL_QUERIES++;
@@ -222,10 +214,6 @@ function &dbquery($sql, $show_error=true, $count=0) {
 		$end_time = microtime(true);
 		$exectime = $end_time - $start_time;
 		$exectime2 = $end_time - $start_time2;
-
-		if ($count>0) {
-			$sql = $DBCONN->modifyLimitQuery($sql, 0, $count);
-		}
 
 		$fp = fopen($INDEX_DIRECTORY."/sql_log.txt", "a");
 		$backtrace = debug_backtrace();
