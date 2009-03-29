@@ -304,6 +304,16 @@ function edit_raw(pid) {
 	return false;
 }
 
+function edit_note(pid) {
+	window.open('edit_interface.php?action=editnote&pid='+pid+'&linenum=1&'+sessionname+"="+sessionid+"&accesstime="+accesstime, '_blank', 'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1');
+	return false;
+}
+
+function edit_source(pid) {
+	window.open('edit_interface.php?action=editsource&pid='+pid+'&linenum=1&'+sessionname+"="+sessionid+"&accesstime="+accesstime, '_blank', 'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1');
+	return false;
+}
+
 function add_record(pid, fact) {
 	factfield = document.getElementById(fact);
 	if (factfield) {

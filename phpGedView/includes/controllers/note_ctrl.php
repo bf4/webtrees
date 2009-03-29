@@ -188,7 +188,7 @@ class NoteControllerRoot extends BaseController {
 		// edit shared note menu
 		$menu = new Menu($pgv_lang['edit_shared_note']);
 		if ($SHOW_GEDCOM_RECORD || PGV_USER_IS_ADMIN)
-			$menu->addOnclick('return edit_raw(\''.$this->nid.'\');');
+			$menu->addOnclick('return edit_note(\''.$this->nid.'\');');
 		if (!empty($PGV_IMAGES["notes"]["small"]))
 			$menu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['notes']['small']}");
 		$menu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}", "submenu{$ff}");
