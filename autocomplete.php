@@ -100,7 +100,7 @@ function autocomplete_INDI() {
 	$sql=
 		"SELECT 'INDI' AS type, i_id AS xref, i_file AS ged_id, i_gedcom AS gedrec, i_isdead, i_sex, n_list".
 		" FROM {$TBLPREFIX}individuals, {$TBLPREFIX}name".
-		" WHERE n_full ".PGV_DB_LIKE." '%".$FILTER."%'".
+		" WHERE n_sort ".PGV_DB_LIKE." '%".UTF8_strtoupper($FILTER)."%'".
 		" AND i_id=n_id AND i_file=n_file".
 		" AND i_file=".PGV_GED_ID.
 		" ORDER BY n_sort".
