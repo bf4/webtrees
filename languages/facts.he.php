@@ -461,7 +461,7 @@ $factarray["_FAMC_EMIG"] = "הגירת הורים";
 $factarray["_FAMC_RESI"] = "מגורי הורים";
 
 //-- PGV Only facts
-$factarray["_THUM"] = "השתמש בתמונה זו כתמונה ממוזערת?";
+$factarray["_THUM"] = "השתמש תמיד בתמונה הראשית?";
 $factarray["_PGVU"] = "ע\"י";
 $factarray["SERV"]  = "שרת מרוחק";
 $factarray["_GEDF"] = "קובץ GEDCOM";
