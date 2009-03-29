@@ -77,7 +77,12 @@ class Event {
 			$this->values=array();
 			preg_match_all('/\n2 ('.PGV_REGEX_TAG.') (.+)/', $this->gedcomRecord, $matches, PREG_SET_ORDER);
 			foreach ($matches as $match) {
-				$this->values[$match[1]]=trim($match[2], "@");
+				// If this is a link, remove the "@"
+				if (preg_match('/^@'.PGV_REGEX_XREF.'@$/', $match[2])) {
+					$this->values[$match[1]]=trim($match[2], "@");
+				} else {
+					$this->values[$match[1]]=$match[2];
+				}
 			}
 		}
 		if (array_key_exists($code, $this->values)) {
