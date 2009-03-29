@@ -135,7 +135,7 @@ class TimelineControllerRoot extends BaseController {
 							$this->topyear=max($this->topyear, date('Y'));
 						$event->temp = $p;
 						//-- do not add the same fact twice (prevents marriages from being added multiple times)
-						if (!in_array($event, $this->indifacts, true)) $this->indifacts[] = $event;
+ 						if (!in_array($event, $this->indifacts, true)) $this->indifacts[] = $event;
 					}
 				}
 			}
@@ -275,11 +275,11 @@ class TimelineControllerRoot extends BaseController {
 						if (empty($ageh)) print '<span class="age"> '.PrintReady("({$pgv_lang["age"]} {$agew})").'</span>';
 						else print PrintReady("{$pgv_lang["wife_age"]} {$agew})").'</span>';
 				}
-				print " {$desc}";
+				print " ".PrintReady($desc);
 				if ($SHOW_PEDIGREE_PLACES>0) {
 					$place = $event->getPlace();
 					if ($place!=null) {
-						print " - ";
+						if ($desc!=null) print " - ";
 						$plevels = explode(',', $place);
 						for($plevel=0; $plevel<$SHOW_PEDIGREE_PLACES; $plevel++) {
 							if (!empty($plevels[$plevel])) {
