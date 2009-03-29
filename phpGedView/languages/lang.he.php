@@ -228,7 +228,7 @@ $pgv_lang["link_new_wife"]		= "הוסף אישה ע\"י שימוש באדם קי
 $pgv_lang["address_labels"]		= "מדבקות כתובת";
 $pgv_lang["filter_address"]		= "הראה כתובות המכילות:";
 $pgv_lang["address_list"]		= "רשימת כתובות";
-$pgv_lang["autocomplete"]		= "סיום אוטומטי";
+//$pgv_lang["autocomplete"]		= "סיום אוטומטי";
 $pgv_lang["index_edit_advice"]	= "הדגש שם אזור ולחץ על אחד מצלמיות החץ כדי להעביר את האזור המודגש לכיוון המוצבע.";
 $pgv_lang["changelog"]		= "שינויי מהדורה #VERSION#";
 $pgv_lang["html_block_descr"]		= "זהו אזור HTML פשוט שתוכל לשים על הדף שלך ולהוסיף בו כל הודעה שתרצה.";
@@ -559,15 +559,14 @@ $pgv_lang["total_unic_places"]	= "סה\"כ מקומות שונים";
 
 //-- MEDIALIST FILE MESSAGES
 $pgv_lang["external_objects"]		= "ישויות חיצוניות";
-$pgv_lang["multi_title"]			= "רשימת מולטימדיה";
-//$pgv_lang["multi_title"]			= "MultiMedia Objects";
+$pgv_lang["multi_title"]			= "ישויות מולטימדיה";
 $pgv_lang["media_found"]		= "ישויות מולטימדיה נמצאו";
 $pgv_lang["view_person"]		= "הצג אדם";
 $pgv_lang["view_family"]		= "הצג משפחה";
 $pgv_lang["view_source"]		= "הצג מקור";
 $pgv_lang["view_object"]		= "הצג ישות מדיה";
-$pgv_lang["prev"]			= "&lt; הקודם";
-$pgv_lang["next"]			= "הבא &gt;";
+$pgv_lang["prev"]			= "הקודם &gt;";
+$pgv_lang["next"]			= "&lt; הבא";
 $pgv_lang["next_image"]		= "האימז' הבא";
 $pgv_lang["file_not_found"]		= "הקובץ לא נימצא";
 $pgv_lang["medialist_show"]             	= "הראה";
