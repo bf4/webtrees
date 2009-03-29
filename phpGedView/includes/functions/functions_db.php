@@ -39,12 +39,19 @@ define('PGV_FUNCTIONS_DB_PHP', '');
 //-- load the PEAR:DB files
 require_once 'DB.php';
 
-/**
-* Field and function definition variances between sql databases
-*/
+
+// Definitions and functions to hide differences between sql databases
 switch ($DBTYPE) {
 case 'mssql':
-	function sql_mod_function($x,$y) { return "MOD($x,$y)"; } // Modulus function
+	// Limit a selct query to $n rows
+	function sql_limit_select_query($sql, $n) {
+		$n=(int)$n;
+		return preg_replace('/^\s*SELECT /i', "SELECT TOP {$n} ", $sql);
+	}
+	// Modulus function
+	function sql_mod_function($x,$y) {
+		return "MOD($x,$y)";
+	}
 	define('PGV_DB_AUTO_ID_TYPE',  'INTEGER IDENTITY');
 	define('PGV_DB_INT1_TYPE',     'INTEGER');
 	define('PGV_DB_INT2_TYPE',     'INTEGER');
@@ -63,7 +70,15 @@ case 'mssql':
 	define('PGV_DB_UTF8_TABLE',    '');
 	break;
 case 'sqlite':
-	function sql_mod_function($x,$y) { return "(($x)%($y))"; } // Modulus function
+	// Limit a selct query to $n rows
+	function sql_limit_select_query($sql, $n) {
+		$n=(int)$n;
+		return "{$sql} LIMIT {$n}";
+	}
+	// Modulus function
+	function sql_mod_function($x,$y) {
+		return "(($x)%($y))";
+	}
 	define('PGV_DB_AUTO_ID_TYPE',  'INTEGER AUTOINCREMENT');
 	define('PGV_DB_INT1_TYPE',     'INTEGER');
 	define('PGV_DB_INT2_TYPE',     'INTEGER');
@@ -82,7 +97,15 @@ case 'sqlite':
 	define('PGV_DB_UTF8_TABLE',    '');
 	break;
 case 'pgsql':
-	function sql_mod_function($x,$y) { return "MOD($x,$y)"; } // Modulus function
+	// Limit a selct query to $n rows
+	function sql_limit_select_query($sql, $n) {
+		$n=(int)$n;
+		return "{$sql} LIMIT {$n}";
+	}
+	// Modulus function
+	function sql_mod_function($x,$y) {
+		return "MOD($x,$y)";
+	}
 	define('PGV_DB_AUTO_ID_TYPE',  'SERIAL');
 	define('PGV_DB_INT1_TYPE',     'SMALLINT');
 	define('PGV_DB_INT2_TYPE',     'SMALLINT');
@@ -103,7 +126,15 @@ case 'pgsql':
 case 'mysql':
 case 'mysqli':
 default:
-	function sql_mod_function($x,$y) { return "MOD($x,$y)"; } // Modulus function
+	// Limit a selct query to $n rows
+	function sql_limit_select_query($sql, $n) {
+		$n=(int)$n;
+		return "{$sql} LIMIT {$n}";
+	}
+	// Modulus function
+	function sql_mod_function($x,$y) {
+		return "MOD($x,$y)";
+	}
 	define('PGV_DB_AUTO_ID_TYPE',  'INTEGER UNSIGNED AUTO_INCREMENT');
 	define('PGV_DB_INT1_TYPE',     'TINYINT');
 	define('PGV_DB_INT2_TYPE',     'SMALLINT');
@@ -1456,8 +1487,8 @@ function find_media_record($pid, $gedfile='') {
 function find_first_person() {
 	global $TBLPREFIX;
 
-	$sql = "SELECT i_id FROM ".$TBLPREFIX."individuals WHERE i_file=".PGV_GED_ID." ORDER BY i_id";
-	$res = dbquery($sql,false,1);
+	$sql = "SELECT MIN(i_id) FROM {$TBLPREFIX}individuals WHERE i_file=".PGV_GED_ID;
+	$res = dbquery($sql,false);
 	$row = $res->fetchRow();
 	$res->free();
 	if (!DB::isError($row)) {
@@ -2451,7 +2482,8 @@ function get_top_surnames($num) {
 
 	$surnames = array();
 	$sql = "SELECT COUNT(n_surname) AS count, n_surn FROM {$TBLPREFIX}name WHERE n_file=".PGV_GED_ID." AND n_type!='_MARNM' AND n_surn NOT IN ('@N.N.', '', '?', 'UNKNOWN')GROUP BY n_surn ORDER BY count DESC";
-	$res = dbquery($sql, true, $num+1);
+	$sql = sql_limit_select_query($sql, $num+1);
+	$res = dbquery($sql, true);
 
 	if (!DB::isError($res)) {
 		while ($row =& $res->fetchRow()) {
