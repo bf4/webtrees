@@ -51,8 +51,8 @@ class TimelineControllerRoot extends BaseController {
 	var $people = array();
 	var $pidlinks = "";
 	var $scale = 2;
-	// GEDCOM elements that will be found but should not be displayed
-	var $nonfacts = array("FAMS","FAMC","MAY","BLOB","OBJE","SEX","NAME","SOUR","NOTE","BAPL","ENDL","SLGC","SLGS","_TODO","CHAN","HUSB","WIFE","CHIL");
+	// GEDCOM elements that may have DATE data, but should not be displayed
+	var $nonfacts = array("BAPL","ENDL","SLGC","SLGS","_TODO","CHAN");
 	/**
 	* constructor
 	*/
@@ -117,25 +117,25 @@ class TimelineControllerRoot extends BaseController {
 					}
 				}
 				// find all the fact information
-				$indi->parseFacts($this->nonfacts);
 				$indi->add_family_facts(false);
-				$facts = $indi->getIndiFacts($this->nonfacts);
-				foreach($facts as $indexval => $event) {
+				foreach($indi->getIndiFacts() as $event) {
 					//-- get the fact type
 					$fact = $event->getTag();
-					//-- check for a date
-					$date = $event->getDate();
-					$date=$date->MinDate();
-					$date=$date->convert_to_cal('gregorian');
-					if ($date->y) {
-						$this->baseyear=min($this->baseyear, $date->y);
-						$this->topyear =max($this->topyear,  $date->y);
-
-						if (!$indi->isDead())
-							$this->topyear=max($this->topyear, date('Y'));
-						$event->temp = $p;
-						//-- do not add the same fact twice (prevents marriages from being added multiple times)
- 						if (!in_array($event, $this->indifacts, true)) $this->indifacts[] = $event;
+					if (!in_array($fact, $this->nonfacts)) {
+						//-- check for a date
+						$date = $event->getDate();
+						$date=$date->MinDate();
+						$date=$date->convert_to_cal('gregorian');
+						if ($date->y) {
+							$this->baseyear=min($this->baseyear, $date->y);
+							$this->topyear =max($this->topyear,  $date->y);
+	
+							if (!$indi->isDead())
+								$this->topyear=max($this->topyear, date('Y'));
+							$event->temp = $p;
+							//-- do not add the same fact twice (prevents marriages from being added multiple times)
+	 						if (!in_array($event, $this->indifacts, true)) $this->indifacts[] = $event;
+						}
 					}
 				}
 			}
