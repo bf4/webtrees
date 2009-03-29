@@ -1055,7 +1055,7 @@ function printLanguageForm() {
 							print "checked=\"checked\"";
 						}
 						print "/></td>";
-						print "<td class=\"descriptionbox width30\">".PrintReady($pgv_lang_self[$LangName]." [".$LocalName."]")."</td>";
+						print "<td class=\"descriptionbox width30\">".PrintReady($pgv_lang_self[$LangName])."&nbsp;[".PrintReady($LocalName)."]</td>";
 					} else {
 						print "<td class=\"optionbox\">&nbsp;</td>";
 						print "<td class=\"descriptionbox width30\">&nbsp;</td>";
