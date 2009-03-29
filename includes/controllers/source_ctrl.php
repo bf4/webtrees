@@ -3,7 +3,7 @@
 * Controller for the source page view
 *
 * phpGedView: Genealogy Viewer
-* Copyright (C) 2002 to 2008 PGV Development Team.  All rights reserved.
+* Copyright (C) 2002 to 2009 PGV Development Team.  All rights reserved.
 *
 * This program is free software; you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -188,7 +188,7 @@ class SourceControllerRoot extends BaseController {
 		// edit source menu
 		$menu = new Menu($pgv_lang['edit_source']);
 		if ($SHOW_GEDCOM_RECORD || PGV_USER_IS_ADMIN)
-			$menu->addOnclick('return edit_raw(\''.$this->sid.'\');');
+			$menu->addOnclick('return edit_source(\''.$this->sid.'\');');
 		if (!empty($PGV_IMAGES["edit_sour"]["small"]))
 			$menu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['edit_sour']['small']}");
 		$menu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}", "submenu{$ff}");

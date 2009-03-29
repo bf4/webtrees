@@ -713,6 +713,7 @@ case 'addnewsource':
 	</form>
 	<?php
 	break;
+
 //------------------------------------------------------------------------------
 //-- create a source record from the incoming variables
 case 'addsourceaction':
@@ -906,6 +907,41 @@ case 'addnoteaction':
 	}
 	break;
 
+//-- edit source
+case 'editsource':
+	init_calendar_popup();
+	echo "<form method=\"post\" action=\"edit_interface.php\" enctype=\"multipart/form-data\">\n";
+	echo "<input type=\"hidden\" name=\"action\" value=\"update\" />\n";
+	echo "<input type=\"hidden\" name=\"linenum\" value=\"$linenum\" />\n";
+	echo "<input type=\"hidden\" name=\"pid\" value=\"$pid\" />\n";
+	echo "<br /><input type=\"submit\" value=\"".$pgv_lang["save"]."\" /><br />\n";
+
+	echo "<table class=\"facts_table\">";
+	$gedlines = split("\n", $gedrec); // -- find the number of lines in the record
+	for ($i=$linenum; $i<count($gedlines); $i++) {
+		if (substr($gedlines[$i], 0, 1)<2) {
+			$level1type = create_edit_form($gedrec, $i, $level0type);
+		}
+	}
+	if (PGV_USER_IS_ADMIN) {
+		echo "<tr><td class=\"descriptionbox ".$TEXT_DIRECTION." wrap width25\">";
+		print_help_link("no_update_CHAN_help", "qm");
+		echo $pgv_lang["admin_override"]."</td><td class=\"optionbox wrap\">\n";
+		echo "<input type=\"checkbox\" name=\"preserve_last_changed\" />\n";
+		echo $pgv_lang["no_update_CHAN"]."<br />\n";
+		$event = new Event(get_sub_record(1, "1 CHAN", $gedrec));
+		echo format_fact_date($event, false, true);
+		echo "</td></tr>\n";
+	}
+	echo "</table>";
+	print_add_layer("NOTE");
+	print_add_layer("SHARED_NOTE");
+	print_add_layer("OBJE");
+	//-- RESN missing in new structure, RESN can be added to all level 1 tags
+	if (!in_array("RESN", $tags)) print_add_layer("RESN");
+	echo "<br /><input type=\"submit\" value=\"".$pgv_lang["save"]."\" /><br />\n";
+	echo "</form>\n";
+	break;
 
 //------------------------------------------------------------------------------
 //-- edit a Shared Note
