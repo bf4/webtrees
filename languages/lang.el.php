@@ -716,7 +716,7 @@ $pgv_lang["media_table_created"]				= "Successfully updated <i>media</i> table."
 $pgv_lang["click_to_add_media"]					= "Click here to Add the Media listed above to GEDCOM #GEDCOM#";
 $pgv_lang["adds_completed"]						= "Media successfully added to GEDCOM file.";
 //-- hourglass chart
-$pgv_lang["hourglass_chart"]					= "Διάγραμμα σε σχήμα Κλεψύδρας";
+$pgv_lang["hourglass_chart"]					= "Διάγραμμα κλεψύδρας";
 //-- report engine
 $pgv_lang["choose_report"]						= "Επιλογή αναφοράς";
 $pgv_lang["enter_report_values"]				= "Enter report values";
