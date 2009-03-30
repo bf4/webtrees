@@ -169,7 +169,7 @@ $GedCount = 0;
 			if ($TEXT_DIRECTION=="rtl") print getRLM() . "(".$ged_id.")" . getRLM();
 			else print getLRM() . "(".$ged_id.")" . getLRM();
 			if ($DEFAULT_GEDCOM==$ged_name) print "</span>";
-			print "&nbsp;&nbsp;<a href=\"".encode_url("editconfig_gedcom.php?source=replace_form&path=".get_gedcom_setting($ged_id, 'path'))."\">".$pgv_lang['upload_replacement']."</a>\n";
+			print "&nbsp;&nbsp;<a href=\"".encode_url("editconfig_gedcom.php?source=replace_form&path=".get_gedcom_setting($ged_id, 'path'))."&oldged=".get_gedcom_setting($ged_id, 'gedcom')."\">".$pgv_lang['upload_replacement']."</a>\n";
 			print "</td>";
 			print "</tr>";
 
