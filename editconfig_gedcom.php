@@ -173,13 +173,15 @@ if (isset($GEDCOMPATH)) {
 if (isset($ged)) {
 	if (isset($GEDCOMS[$ged])) {
 		$GEDCOMPATH = $GEDCOMS[$ged]["path"];
-		$path = "";
-		$parts = preg_split("/[\/\\\]/", $GEDCOMPATH);
-		$ctparts = count($parts)-1;
-		if (count($parts) == 1) $path = $INDEX_DIRECTORY;
-		else {
-			foreach ($parts as $key => $pathpart) {
-				if ($key < $ctparts) $path .= $pathpart."/";
+		if (empty($path)) {
+			$path = "";
+			$parts = preg_split("/[\/\\\]/", $GEDCOMPATH);
+			$ctparts = count($parts)-1;
+			if (count($parts) == 1) $path = $INDEX_DIRECTORY;
+			else {
+				foreach ($parts as $key => $pathpart) {
+					if ($key < $ctparts) $path .= $pathpart."/";
+				}
 			}
 		}
 		$GEDFILENAME = $ged;
@@ -888,7 +890,7 @@ print "&nbsp;<a href=\"javascript: ".$pgv_lang["gedcom_conf"]."\" onclick=\"expa
 		<input type="text" name="GEDCOMPATH" value="<?php print preg_replace('/\\*/', '\\', $GEDCOMPATH); ?>" size="40" dir ="ltr" tabindex="<?php $i++; print $i; ?>" onfocus="getHelp('gedcom_path_help');" />
 		<?php
 		}
-			if ($GEDCOMPATH != "" || $GEDFILENAME != "") {
+			if ($source!="replace_form" && ($GEDCOMPATH != "" || $GEDFILENAME != "")) {
 				if (!file_exists($path.$GEDFILENAME) && !empty($GEDCOMPATH)) {
 					//-- gedcom not found so try looking for it with a .ged extension
 					if (strtolower(substr(trim($path.$GEDFILENAME), -4)) != ".ged") $GEDFILENAME .= ".ged";

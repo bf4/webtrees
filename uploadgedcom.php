@@ -555,7 +555,7 @@ if ($verify == "validate_form") {
 		// then we won't ask the user to choose between DMY and YMD.
 
 		//-- read the gedcom and test it in 8KB chunks
-		while (!feof($fp)) {
+		while ($fp && !feof($fp)) {
 			$fcontents = fread($fp, 1024 * 8);
 			if (!$l_BOMcleanup && need_BOM_cleanup()) $l_BOMcleanup = true;
 			if (!$l_headcleanup && need_head_cleanup()) $l_headcleanup = true;
