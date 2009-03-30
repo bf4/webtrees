@@ -74,7 +74,7 @@ function print_fact(&$eventObj, $noedit=false) {
 	global $lang_short_cut, $LANGUAGE;
 	global $WORD_WRAPPED_NOTES;
 	global $TEXT_DIRECTION;
-	global $HIDE_GEDCOM_ERRORS, $SHOW_ID_NUMBERS, $SHOW_FACT_ICONS;
+	global $HIDE_GEDCOM_ERRORS, $SHOW_ID_NUMBERS, $SHOW_FACT_ICONS, $SHOW_MEDIA_FILENAME;
 	global $CONTACT_EMAIL, $view, $FACT_COUNT;
 	global $n_chil, $n_gchi, $n_ggch;
 	global $SEARCH_SPIDER;
@@ -378,8 +378,10 @@ function print_fact(&$eventObj, $noedit=false) {
 					print "<a href=\"mailto:".$event."\">".$event."</a>";
 				} elseif (strstr("AFN", $fact)) {
 					print '<a href="http://www.familysearch.org/Eng/Search/customsearchresults.asp?LDS=0&file_number='.urlencode($event).'" target="new">'.$event.'</a>';
-				} elseif (strstr('FAX PHON FILE ', $fact.' ')) {
+				} elseif (strstr('FAX PHON ', $fact.' ')) {
 					print getLRM(). $event.' ' . getLRM();
+				} elseif (strstr('FILE ', $fact.' ')) {
+					if ($SHOW_MEDIA_FILENAME || PGV_USER_GEDCOM_ADMIN) print getLRM(). $event.' ' . getLRM();
 				} elseif ($event!='Y') {
 					if (!strstr('ADDR _RATID _CREM ', substr($fact,0,5).' ')) {
 						if ($factref=='file_size' || $factref=='image_size') echo PrintReady($rawEvent);
