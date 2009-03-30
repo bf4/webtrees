@@ -355,7 +355,7 @@ function getTop10Surnames() {
 */
 function getRecentChanges() {
 	global $pgv_lang, $factarray, $month, $year, $day, $HIDE_LIVE_PEOPLE, $SHOW_ID_NUMBERS, $ctype, $TEXT_DIRECTION;
-	global $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $ASC, $IGNORE_FACTS, $IGNORE_YEAR, $TOTAL_QUERIES, $LAST_QUERY, $PGV_BLOCKS, $SHOW_SOURCES;
+	global $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $ASC, $IGNORE_FACTS, $IGNORE_YEAR, $LAST_QUERY, $PGV_BLOCKS, $SHOW_SOURCES;
 	global $objectlist, $SERVER_URL;
 
 	if ($ctype=="user") $filter = "living";
@@ -378,7 +378,6 @@ function getRecentChanges() {
 
 	if (count($changes)>0) {
 		$found_facts = array();
-		$last_total = $TOTAL_QUERIES;
 		foreach($changes as $id=>$change) {
 			$gid = $change['d_gid'];
 			$gedrec = find_gedcom_record($change['d_gid']);
