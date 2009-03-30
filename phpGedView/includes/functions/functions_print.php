@@ -427,9 +427,9 @@ function print_header($title, $head="", $use_alternate_styles=true) {
 
 	if (empty($META_TITLE)) $metaTitle = ' - '.PGV_PHPGEDVIEW;
 	else $metaTitle = " - ".$META_TITLE.' - '.PGV_PHPGEDVIEW;
-
-	$title = stripLRMRLM(PrintReady(strip_tags($title.$metaTitle), TRUE));
-
+	
+	$title = PrintReady(stripLRMRLM(strip_tags($title.$metaTitle), TRUE));
+	
 	$GEDCOM_TITLE = get_gedcom_setting(PGV_GED_ID, 'title');
 	if ($ENABLE_RSS){
 		$applicationType = "application/rss+xml";
@@ -2385,7 +2385,7 @@ function print_add_new_fact($id, $usedfacts, $type) {
 	echo "<form method=\"get\" name=\"newfactform\" action=\"\" onsubmit=\"return false;\">";
 	echo "<select id=\"newfact\" name=\"newfact\">";
 	foreach($addfacts as $indexval => $fact) {
-		echo stripLRMRLM(PrintReady("<option value=\"$fact\">".$factarray[$fact]. " [".$fact."]</option>"));
+		echo PrintReady(stripLRMRLM("<option value=\"$fact\">".$factarray[$fact]. " [".$fact."]</option>"));
 	}
 	if (($type == "INDI") || ($type == "FAM")) echo "<option value=\"EVEN\">".$pgv_lang["custom_event"]." [EVEN]</option>";
 	echo "</select>";
