@@ -92,7 +92,7 @@ function print_gedcom_news($block = true, $config='', $side, $index)
 	}
 	$c = 0;
 	$td = time();
-	foreach($usernews as $key=>$news)
+	foreach($usernews as $news)
 	{
 		if ($config['limit'] == 'count') {
 			if ($c >= $config['flag']) {
@@ -155,8 +155,8 @@ function print_gedcom_news($block = true, $config='', $side, $index)
 		// Print Admin options for this News item
 		if(PGV_USER_GEDCOM_ADMIN) {
 			$content .= "<hr size=\"1\" />"
-			."<a href=\"javascript:;\" onclick=\"editnews('{$key}'); return false;\">{$pgv_lang['edit']}</a> | "
-			."<a href=\"".encode_url("index.php?action=deletenews&news_id={$key}&ctype={$ctype}")."\" onclick=\"return confirm('{$pgv_lang['confirm_news_delete']}');\">{$pgv_lang['delete']}</a><br />";
+			."<a href=\"javascript:;\" onclick=\"editnews('".$news['id']."'); return false;\">{$pgv_lang['edit']}</a> | "
+			."<a href=\"".encode_url("index.php?action=deletenews&news_id=".$news['id']."&ctype={$ctype}")."\" onclick=\"return confirm('{$pgv_lang['confirm_news_delete']}');\">{$pgv_lang['delete']}</a><br />";
 		}
 		$content .= "</div>\n";
 	}
