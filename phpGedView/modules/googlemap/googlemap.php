@@ -738,7 +738,7 @@ function build_indiv_map($indifacts, $famids) {
 					if (!empty($markers[$j]["name"])) {
 						$person=Person::getInstance($markers[$j]['name']);
 						if ($person) {
-							echo ': <a href=\"', $person->getLinkUrl(), '\">', $person->canDisplayName() ? addcslashes($person->getFullName(), '"') : $pgv_lang['private'], '</a>';
+							echo ': <a href=\"', $person->getLinkUrl(), '\">', $person->canDisplayName() ? PrintReady(addcslashes($person->getFullName(), '"')) : $pgv_lang['private'], '</a>';
 						}
 					}
 					echo "<br />";
@@ -792,7 +792,7 @@ function build_indiv_map($indifacts, $famids) {
 					if (!empty($markers[$j]["name"])) {
 						$person=Person::getInstance($markers[$j]['name']);
 						if ($person) {
-							echo ': <a href=\"', $person->getLinkUrl(), '\">', $person->canDisplayName() ? addcslashes($person->getFullName(), '"') : $pgv_lang['private'], '</a>';
+							echo ': <a href=\"', $person->getLinkUrl(), '\">', $person->canDisplayName() ? PrintReady(addcslashes($person->getFullName(), '"')) : $pgv_lang['private'], '</a>';
 						}
 					}
 					echo "<br />";
@@ -859,7 +859,7 @@ function build_indiv_map($indifacts, $famids) {
 							if (!empty($markers[$k]["name"])) {
 								$person=Person::getInstance($markers[$k]['name']);
 								if ($person) {
-									echo ': <a href=\"', $person->getLinkUrl(), '\">', $person->canDisplayName() ? addcslashes($person->getFullName(), '"') : $pgv_lang['private'], '</a>';
+									echo ': <a href=\"', $person->getLinkUrl(), '\">', $person->canDisplayName() ? PrintReady(addcslashes($person->getFullName(), '"')) : $pgv_lang['private'], '</a>';
 								}
 							}
 							echo "<br />";
@@ -907,7 +907,7 @@ function build_indiv_map($indifacts, $famids) {
 			if (!empty($marker["name"])) {
 				$person=Person::getInstance($marker['name']);
 				if ($person) {
-					echo '<a href="', $person->getLinkUrl(), '">', $person->canDisplayName() ? $person->getFullName() : $pgv_lang['private'], '</a>';
+					echo '<a href="', $person->getLinkUrl(), '">', $person->canDisplayName() ? PrintReady($person->getFullName()) : $pgv_lang['private'], '</a>';
 				}
 				echo '<br />';
 			}
