@@ -264,7 +264,7 @@ if ($action=="update") {
 
 	$person=Person::getInstance($pid);
 	echo "<h2>".$pgv_lang["quick_update_title"]."</h2>\n";
-	echo "<b>".stripLRMRLM(PrintReady($person->getFullName()))."</b><br /><br />";
+	echo "<b>".PrintReady(stripLRMRLM($person->getFullName()))."</b><br /><br />";
 
 	AddToChangeLog("Quick update attempted for $pid by >".PGV_USER_NAME."<");
 
@@ -1455,7 +1455,7 @@ if ($action=="choosepid") {
 
 	$tabkey = 1;
 	$person=Person::getInstance($pid);
-	echo '<b>', stripLRMRLM(PrintReady($person->getFullName()));
+	echo '<b>', PrintReady(stripLRMRLM($person->getFullName()));
 	if ($SHOW_ID_NUMBERS) {
 		echo PrintReady("&nbsp;&nbsp;(".$pid.")");
 	}
@@ -1518,9 +1518,9 @@ function checkform(frm) {
 			echo "<td id=\"pagetab$i\" class=\"tab_cell_inactive\" onclick=\"switch_tab($i); return false;\"><a href=\"javascript: ".$pgv_lang["family_with"]."&nbsp;";
 			$person=Person::getInstance($spid);
 			if ($person) {
-				echo stripLRMRLM(PrintReady(strip_tags($person->getFullName())));
+				echo PrintReady(stripLRMRLM(strip_tags($person->getFullName())));
 				echo "\" onclick=\"switch_tab($i); return false;\">".$pgv_lang["family_with"]." ";
-				echo stripLRMRLM(PrintReady($person->getFullName()));
+				echo PrintReady(stripLRMRLM($person->getFullName()));
 			} else {
 				echo "\" onclick=\"switch_tab($i); return false;\">".$pgv_lang["family_with"]." ".$pgv_lang["unknown"];
 			}
@@ -1859,8 +1859,8 @@ for($i=1; $i<=count($sfams); $i++) {
 	$person=Person::getInstance($spid);
 	if ($person) {
 		echo "<a href=\"#\" onclick=\"return quickEdit('".$person->getXref()."','','{$GEDCOM}');\">";
-		$name = stripLRMRLM(PrintReady($person->getFullName()));
-		if ($SHOW_ID_NUMBERS) $name .= " (".$person->getXref().")";
+		$name = PrintReady(stripLRMRLM($person->getFullName()));
+		if ($SHOW_ID_NUMBERS) $name .= PrintReady(" (".$person->getXref().")");
 		$name .= " [".$pgv_lang["edit"]."]";
 		echo $name."</a>\n";
 	}
@@ -2154,7 +2154,7 @@ $chil = find_children_in_record($famrec);
 					if ($SHOW_ID_NUMBERS) $name .= " (".$child.")";
 					$name .= " [".$pgv_lang["edit"]."]";
 					echo "<a href=\"#\" onclick=\"return quickEdit('".$child."','','{$GEDCOM}');\">";
-					echo stripLRMRLM(PrintReady($name));
+					echo PrintReady(stripLRMRLM($name));
 					echo "</a>";
 					$childrec = find_person_record($child);
 					echo "</td>\n<td class=\"optionbox center\">";
@@ -2606,7 +2606,7 @@ for($j=1; $j<=count($cfams); $j++) {
 		$name = $person->getFullname();
 		if ($SHOW_ID_NUMBERS) $name .= " (".$parents["HUSB"].")";
 		$name .= " [".$pgv_lang["edit"]."]";
-		echo ($name)."</a>\n";
+		echo PrintReady(stripLRMRLM($name))."</a>\n";		
 	} else {
 		echo $pgv_lang["unknown"];
 	}
@@ -2741,7 +2741,7 @@ for($j=1; $j<=count($cfams); $j++) {
 		$name = $person->getFullName();
 		if ($SHOW_ID_NUMBERS) $name .= " (".$parents["WIFE"].")";
 		$name .= " [".$pgv_lang["edit"]."]";
-		echo stripLRMRLM(PrintReady($name))."</a>\n";
+		echo PrintReady(stripLRMRLM($name))."</a>\n";
 	} else {
 		echo $pgv_lang['unknown'];
 	}
@@ -3016,7 +3016,7 @@ $chil = find_children_in_record($famrec, $pid);
 			if ($SHOW_ID_NUMBERS) $name .= " (".$child.")";
 			$name .= " [".$pgv_lang["edit"]."]";
 			echo "<a href=\"#\" onclick=\"return quickEdit('".$child."','','{$GEDCOM}');\">";
-			echo stripLRMRLM(PrintReady($name));
+			echo PrintReady(stripLRMRLM($name));
 			echo "</a>";
 			echo "</td>\n<td class=\"optionbox center\">";
 			$sex = $person->getSex();
