@@ -718,7 +718,7 @@ if ($action=="add") {
 	</tr>
 	<tr>
 		<td class="descriptionbox"><?php print_help_link("PLE_PLACES_help", "qm", "PLE_PLACES");?><?php echo $factarray["PLAC"];?></td>
-	 	 <td class="optionbox"><input type="text" id="new_pl_name" name="NEW_PLACE_NAME" value="<?php echo htmlspecialchars(stripLRMRLM(PrintReady($place_name)));?>" size="25" class="address_input" tabindex="<?php echo ++$i;?>" />
+		 <td class="optionbox"><input type="text" id="new_pl_name" name="NEW_PLACE_NAME" value="<?php echo PrintReady(stripLRMRLM($place_name)) ?>" size="25" class="address_input" tabindex="<?php echo ++$i;?>" />		 
 		<div id="INDI_PLAC_pop" style="display: inline;">
 		<?php print_specialchar_link("NEW_PLACE_NAME", false);?></div>
 		<label for="new_pl_name"><a href="javascript:;" onclick="showLocation_level(document.getElementById('new_pl_name').value); return false">&nbsp;<?php echo $pgv_lang["pl_search_level"]?></a></label>&nbsp;&nbsp;|
