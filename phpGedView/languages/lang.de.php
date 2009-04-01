@@ -267,7 +267,7 @@ $pgv_lang["direct-ancestors"]			= "Vorfahren in direkter Linie";
 $pgv_lang["ancestors"]					= "Vorfahren in direkter Linie und deren Familien";
 $pgv_lang["descendants"]				= "Nachfahren";
 $pgv_lang["choose_relatives"]			= "Verwandte wählen";
-$pgv_lang["relatives_report"]			= "Verwandten Bericht";
+$pgv_lang["relatives_report"]			= "Verwandtenbericht";
 $pgv_lang["total_unknown"]				= "unbekannt";
 $pgv_lang["total_living"]				= "lebend";
 $pgv_lang["total_dead"]					= "verstorben";
@@ -1432,8 +1432,8 @@ $pgv_lang["pdf_reports"]				= "Berichte im PDF Format";
 $pgv_lang["html_reports"]				= "Berichte im HTML Format";
 
 //-- Ahnentafel report
-$pgv_lang["ahnentafel_report"]			= "Ahnentafel Bericht";
-$pgv_lang["ahnentafel_header"]			= "Ahnentafel Bericht für ";
+$pgv_lang["ahnentafel_report"]			= "Ahnentafelbericht";
+$pgv_lang["ahnentafel_header"]			= "Ahnentafelbericht für ";
 $pgv_lang["ahnentafel_generation"]		= "Generation ";
 $pgv_lang["ahnentafel_pronoun_m"]		= "Er ";
 $pgv_lang["ahnentafel_pronoun_f"]		= "Sie ";
@@ -1451,13 +1451,13 @@ $pgv_lang["ahnentafel_place"]			= " in ";
 $pgv_lang["ahnentafel_no_details"]		= " aber die Einzelheiten sind nicht bekannt";
 
 //-- Changes report
-$pgv_lang["changes_report"]				= "Änderungen Bericht";
+$pgv_lang["changes_report"]				= "Änderungenbericht";
 $pgv_lang["changes_pending_tot"]		= "Noch nicht akzeptierte Änderungen insgesamt: ";
 $pgv_lang["changes_accepted_tot"]		= "Schon akzeptierte Änderungen insgesamt: ";
 
 //-- Descendancy report
-$pgv_lang["descend_report"]				= "Nachfahren Bericht";
-$pgv_lang["descendancy_header"]			= "Nachfahren Bericht von ";
+$pgv_lang["descend_report"]				= "Nachfahrenbericht";
+$pgv_lang["descendancy_header"]			= "Nachfahrenbericht von ";
 
 $pgv_lang["family_group_report"]		= "Familienbericht";
 $pgv_lang["page"]						= "Seite";
@@ -1475,19 +1475,20 @@ $pgv_lang["individual_report"]			= "Personenbericht";
 $pgv_lang["enter_pid"]					= "Personen-ID eingeben";
 $pgv_lang["generated_by"]				= "Erstellt mit";
 $pgv_lang["list_children"]				= "Alle Kinder nach Geburtsdatum geordnet zeigen.";
-$pgv_lang["birth_report"]				= "Geburtsdaten u. -Orte Bericht";
+$pgv_lang["birth_report"]				= "Geburtsdaten u. -Ortebericht";
 $pgv_lang["birthplace"]					= "Geburtsort enthält";
 $pgv_lang["birthdate1"]					= "Geburtsdatenbereich Anfang";
 $pgv_lang["birthdate2"]					= "Geburtsdatenbereich Ende";
-$pgv_lang["death_report"]				= "Sterbedaten u. -Orte Bericht";
+$pgv_lang["death_report"]				= "Sterbedaten u. -Ortebericht";
 $pgv_lang["deathplace"]					= "Sterbeort enthält";
 $pgv_lang["deathdate1"]					= "Sterbedatenbereich Anfang";
 $pgv_lang["deathdate2"]					= "Sterbedatenbereich Ende";
-$pgv_lang["marr_report"]				= "Ehedaten u. -Orte Bericht";
+$pgv_lang["marr_report"]				= "Ehedaten u. -Ortebericht";
 $pgv_lang["marrplace"]					= "Eheort enthält";
 $pgv_lang["marrdate1"]					= "Ehedatenbereich Anfang";
 $pgv_lang["marrdate2"]					= "Ehedatenbereich Ende";
 $pgv_lang["sort_by"]					= "Sortieren nach";
+$pgv_lang["cemetery_report"]			= "Friedhofenbericht";
 
 $pgv_lang["cleanup"]					= "Korrigieren";
 
