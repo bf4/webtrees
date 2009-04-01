@@ -266,7 +266,7 @@ if ($action=="add") {
 }
 
 ?>
-<script src="http://maps.google.com/maps?file=api&amp;v=2.x&amp;key=<?php echo $GOOGLEMAP_API_KEY?>" type="text/javascript"></script>
+<script src="http://maps.google.com/maps?file=api&amp;v=2&amp;sensor=false&amp;key=<?php echo $GOOGLEMAP_API_KEY?>" type="text/javascript"></script>
 <script type="text/javascript">
 <!--
 	if (window.attachEvent) {
