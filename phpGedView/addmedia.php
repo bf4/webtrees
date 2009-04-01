@@ -169,7 +169,7 @@ if ($action=="newentry") {
 		// Determine file name on server
 		if (PGV_USER_GEDCOM_ADMIN && !empty($text[0])) $fileName = trim(trim($text[0]), '/');
 		else $fileName = '';
-		$parts = pathinfo($fileName);
+		$parts = pathinfo_utf($fileName);
 		if (!empty($parts["basename"])) {
 			// User supplied a name to be used on the server
 			$mediaFile = $parts["basename"];	// Use the supplied name
@@ -178,14 +178,14 @@ if ($action=="newentry") {
 				$lastDot = strrpos($mediaFile, '.');
 				if ($lastDot !== false) $mediaFile = substr($mediaFile, 0, $lastDot);
 				// Use extension of original uploaded file name
-				if (!empty($_FILES["mediafile"]["name"])) $parts = pathinfo($_FILES["mediafile"]["name"]);
-				else $parts = pathinfo($_FILES["thumbnail"]["name"]);
+				if (!empty($_FILES["mediafile"]["name"])) $parts = pathinfo_utf($_FILES["mediafile"]["name"]);
+				else $parts = pathinfo_utf($_FILES["thumbnail"]["name"]);
 				if (!empty($parts["extension"])) $mediaFile .= ".".$parts["extension"];
 			}
 		} else {
 			// User did not specify a name to be used on the server:  use the original uploaded file name
-			if (!empty($_FILES["mediafile"]["name"])) $parts = pathinfo($_FILES["mediafile"]["name"]);
-			else $parts = pathinfo($_FILES["thumbnail"]["name"]);
+			if (!empty($_FILES["mediafile"]["name"])) $parts = pathinfo_utf($_FILES["mediafile"]["name"]);
+			else $parts = pathinfo_utf($_FILES["thumbnail"]["name"]);
 			$mediaFile = $parts["basename"];
 		}
 		if (!empty($_FILES["mediafile"]["name"])) {
@@ -233,7 +233,7 @@ if ($action=="newentry") {
 		if ($error=="" && !empty($_FILES["mediafile"]["name"]) && empty($_FILES["thumbnail"]["name"])) {
 			if (safe_POST('genthumb', 'yes', 'no') == 'yes') {
 				// Generate thumbnail from main image
-				$parts = pathinfo($mediaFile);
+				$parts = pathinfo_utf($mediaFile);
 				if (!empty($parts["extension"])) {
 					$ext = strtolower($parts["extension"]);
 					if (isImageTypeSupported($ext)) {
@@ -289,9 +289,9 @@ if ($action=="newentry") {
 
 			// Handle Admin request to rename or move media file
 			if ($filename!=$oldFilename) {
-				$parts = pathinfo($filename);
+				$parts = pathinfo_utf($filename);
 				if (empty($parts["extension"]) || !in_array(strtolower($parts["extension"]), $MEDIATYPE)) {
-					$parts = pathinfo($oldFilename);
+					$parts = pathinfo_utf($oldFilename);
 					$filename .= ".".$parts["extension"];
 				}
 			}
@@ -444,9 +444,9 @@ if ($action == "update") {
 	// Handle Admin request to rename or move media file
 	if (!$isExternal) {
 		if ($filename!=$oldFilename) {
-			$parts = pathinfo($filename);
+			$parts = pathinfo_utf($filename);
 			if (empty($parts["extension"]) || !in_array(strtolower($parts["extension"]), $MEDIATYPE)) {
-				$parts = pathinfo($oldFilename);
+				$parts = pathinfo_utf($oldFilename);
 				$filename .= ".".$parts["extension"];
 			}
 		}

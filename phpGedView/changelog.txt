@@ -10,6 +10,7 @@
 
 
 Version 4.2.1
+ - [2595714] Truncated first letter of thumb name if non-ASCII character
  - Added: Cemetery report (canajun2eh)
  - Fixed: [ 2721892 ] Media Viewer ignores "Hide file name" config option (canajun2eh)
  - Fixed: [ 2702565 ] [4.2-4.2.5241] autocomplete not working when accented charac (wooc)
