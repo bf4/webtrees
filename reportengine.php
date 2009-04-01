@@ -206,6 +206,11 @@ function paste_id(value) {
 						}
 						if ($input["lookup"]=="FAM") {
 							if (!empty($famid)) $input["default"] = $famid;
+							else {
+								$famid = find_sfamily_ids(check_rootid($input["default"]));
+								if (empty($famid)) $famid = find_family_ids(check_rootid($input["default"]));
+								if (isset($famid[0])) $input["default"] = $famid[0];
+							}
 						}
 						if ($input["lookup"]=="SOUR") {
 							if (!empty($sid)) $input["default"] = $sid;
