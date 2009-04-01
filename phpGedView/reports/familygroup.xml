@@ -25,7 +25,7 @@
 			<PGVRSetVar name="ignore" value="CHAN,NAME,SEX,SOUR,NOTE,OBJE,FAMC,FAMS,TITL,CHIL,HUSB,WIFE,MARR,BIRT,CHR,DEAT,BURI,_UID,_PGV_OBJS" />
 		</PGVRif>
 		<PGVRif condition="$blanks!=1">
-			<PGVRSetVar name="ignore" value="CHAN,NAME,SEX,SOUR,NOTE,OBJE,FAMC,FAMS,TITL,CHIL,HUSB,WIFE,_UID_PGV_OBJS" />
+			<PGVRSetVar name="ignore" value="CHAN,NAME,SEX,SOUR,NOTE,OBJE,FAMC,FAMS,TITL,CHIL,HUSB,WIFE,_UID,_PGV_OBJS" />
 		</PGVRif>
 		<!-- set the default widths -->
 		<PGVRSetVar name="width" value="0" />
