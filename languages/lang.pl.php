@@ -1483,6 +1483,7 @@ $pgv_lang["marrplace"]				= "Miejsce zawiera";
 $pgv_lang["marrdate1"]				= "Początek zakresu dat ślubów";
 $pgv_lang["marrdate2"]				= "Koniec zakresu dat ślubów";
 $pgv_lang["sort_by"]				= "Kryterium sortowania";
+$pgv_lang["cemetery_report"]		= "Raport o cmentarzach";
 
 $pgv_lang["cleanup"]				= "Porządkowanie";
 
