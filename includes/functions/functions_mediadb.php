@@ -1034,7 +1034,7 @@ function thumbnail_file($filename, $generateThumb = true, $overwrite = false) {
 
 	$filename = check_media_depth($filename, "NOTRUNC");
 
-	$parts = pathinfo($filename);
+	$parts = pathinfo_utf($filename);
 	$mainDir = $parts["dirname"] . "/";
 	$thumbDir = str_replace($MEDIA_DIRECTORY, $MEDIA_DIRECTORY . "thumbs/", $mainDir);
 	$thumbName = $parts["basename"];
@@ -1130,7 +1130,7 @@ function check_media_depth($filename, $truncate = "FRONT", $noise = "VERBOSE") {
 		$noise = "VERBOSE";
 
 	// NOTE: Check media depth
-	$parts = pathinfo($filename);
+	$parts = pathinfo_utf($filename);
 	//print_r($parts); print "<br />";
 	if (empty($parts["dirname"]) || ($MEDIA_DIRECTORY_LEVELS == 0 && $truncate != "NOTRUNC"))
 		return $MEDIA_DIRECTORY . $parts["basename"];
@@ -1372,7 +1372,7 @@ function process_uploadMedia_form() {
 
 			// Determine file name on server
 			$fileName = trim(trim(safe_POST('filename'.$i, PGV_REGEX_NOSCRIPT)), '/');
-			$parts = pathinfo($fileName);
+			$parts = pathinfo_utf($fileName);
 			if (!empty($parts["basename"])) {
 				// User supplied a name to be used on the server
 				$mediaFile = $parts["basename"]; // Use the supplied name
@@ -1381,14 +1381,14 @@ function process_uploadMedia_form() {
 					$lastDot = strrpos($mediaFile, '.');
 					if ($lastDot !== false) $mediaFile = substr($mediaFile, 0, $lastDot);
 					// Use extension of original uploaded file name
-					if (!empty($_FILES["mediafile".$i]["name"])) $parts = pathinfo($_FILES["mediafile".$i]["name"]);
-					else $parts = pathinfo($_FILES["thumbnail".$i]["name"]);
+					if (!empty($_FILES["mediafile".$i]["name"])) $parts = pathinfo_utf($_FILES["mediafile".$i]["name"]);
+					else $parts = pathinfo_utf($_FILES["thumbnail".$i]["name"]);
 					if (!empty($parts["extension"])) $mediaFile .= ".".$parts["extension"];
 				}
 			} else {
 				// User did not specify a name to be used on the server:  use the original uploaded file name
-				if (!empty($_FILES["mediafile".$i]["name"])) $parts = pathinfo($_FILES["mediafile".$i]["name"]);
-				else $parts = pathinfo($_FILES["thumbnail".$i]["name"]);
+				if (!empty($_FILES["mediafile".$i]["name"])) $parts = pathinfo_utf($_FILES["mediafile".$i]["name"]);
+				else $parts = pathinfo_utf($_FILES["thumbnail".$i]["name"]);
 				$mediaFile = $parts["basename"];
 			}
 
@@ -1425,7 +1425,7 @@ function process_uploadMedia_form() {
 			if ($error=="" && !empty($_FILES["mediafile".$i]["name"]) && empty($_FILES["thumbnail".$i]["name"])) {
 				if (safe_POST('genthumb'.$i, 'yes', 'no') == 'yes') {
 					// Generate thumbnail from main image
-					$parts = pathinfo($mediaFile);
+					$parts = pathinfo_utf($mediaFile);
 					if (!empty($parts["extension"])) {
 						$ext = strtolower($parts["extension"]);
 						if (isImageTypeSupported($ext)) {
@@ -1703,7 +1703,7 @@ function show_media_form($pid, $action = "newentry", $filename = "", $linktoid =
 			$fileName = substr($gedfile, 5);
 			$folder = "";
 		} else {
-			$parts = pathinfo(substr($gedfile, 5));
+			$parts = pathinfo_utf(substr($gedfile, 5));
 			$fileName = $parts["basename"];
 			$folder = $parts["dirname"] . "/";
 		}
@@ -2364,7 +2364,7 @@ function generate_thumbnail($filename, $thumbnail) {
 	if (!is_writable($MEDIA_DIRECTORY."thumbs")) return false;
 
 	// Can we generate thumbnails for this file type?
-	$parts = pathinfo($filename);
+	$parts = pathinfo_utf($filename);
 	if (isset($parts["extension"])) $ext = strtolower($parts["extension"]);
 	else $ext = "";
 	$type = isImageTypeSupported($ext);
