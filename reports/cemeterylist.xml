@@ -21,7 +21,7 @@
 				<PGVRText style="label"><PGVRvar var="pgv_lang[name]" /></PGVRText>
 			</PGVRTextBox>
 			<PGVRTextBox width="100" height="12" border="1">
-				<PGVRText style="label"><PGVRvar var="pgv_lang[date]" /></PGVRText>
+				<PGVRText style="label"><PGVRvar var="factarray[DATE]" /></PGVRText>
 			</PGVRTextBox>
 			<PGVRTextBox width="150" height="12" border="1">
 				<PGVRText style="label"><PGVRvar var="factarray[CEME]" /></PGVRText>
