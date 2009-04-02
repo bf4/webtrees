@@ -52,7 +52,6 @@ $pgv_lang["ellipsis"]				= "\xE2\x80\xA6";
 $pgv_lang["showUnknown"]			= "הראה מין לא ידוע";
 $pgv_lang["count"]				= "ספירה";
 $pgv_lang["age_differences"]			= "הראה הפרשי תאריכים";
-//$pgv_lang["date_of_entry"]			= "תאריך רישום במקור האוריגינלי";
 $pgv_lang["multi_site_search"] 		= "חיפוש רב אתרים";
 $pgv_lang["switch_lifespan"]			= "הראה תרשים תוחלת חיים";
 $pgv_lang["switch_timeline"]			= "הראה תרשים קו הזמן";
@@ -228,7 +227,6 @@ $pgv_lang["link_new_wife"]		= "הוסף אישה ע\"י שימוש באדם קי
 $pgv_lang["address_labels"]		= "מדבקות כתובת";
 $pgv_lang["filter_address"]		= "הראה כתובות המכילות:";
 $pgv_lang["address_list"]		= "רשימת כתובות";
-//$pgv_lang["autocomplete"]		= "סיום אוטומטי";
 $pgv_lang["index_edit_advice"]	= "הדגש שם אזור ולחץ על אחד מצלמיות החץ כדי להעביר את האזור המודגש לכיוון המוצבע.";
 $pgv_lang["changelog"]		= "שינויי מהדורה #VERSION#";
 $pgv_lang["html_block_descr"]		= "זהו אזור HTML פשוט שתוכל לשים על הדף שלך ולהוסיף בו כל הודעה שתרצה.";
@@ -1490,6 +1488,7 @@ $pgv_lang["marrplace"]		= "מקום הנישואין מכיל";
 $pgv_lang["marrdate1"]		= "התחלת תחום תאריכי נישואין";
 $pgv_lang["marrdate2"]		= "סיום תחום תאריכי נישואין";
 $pgv_lang["sort_by"]			= "מיין לפי";
+$pgv_lang["cemetery_report"]		= "דו\"ח בתי קברות";
 
 $pgv_lang["cleanup"]			= "ניקיון";
 

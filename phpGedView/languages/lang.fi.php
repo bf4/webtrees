@@ -1778,4 +1778,5 @@ $pgv_lang["brothers_wife"]		= "Käly"; // brother's wife
 $pgv_lang["delete_shared_note"]		= "Poista tämä jaettu lisätieto";
 $pgv_lang["confirm_delete_shared_note"]		= "Haluatko varmasti poistaa tämän jaetun lisätiedon?";
 $pgv_lang["shared_note_contains"]	= "Jaettu lisätieto sisältää:";
+$pgv_lang["cemetery_report"]		= "Hautausmaaraportti";
 ?>
