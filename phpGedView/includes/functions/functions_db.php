@@ -212,26 +212,28 @@ function &dbquery($sql, $show_error=true) {
 	if (PGV_DEBUG_SQL) {
 		global $start_time;
 		$end_time = microtime(true);
-		$exectime = $end_time - $start_time;
-		$exectime2 = $end_time - $start_time2;
+		$exectime = $end_time - $start_time2;
 
 		$fp = fopen($INDEX_DIRECTORY."/sql_log.txt", "a");
 		$backtrace = debug_backtrace();
-		$temp = "";
+		$rows = "- rows";
 		if (!DB::isError($res) && is_object($res)) {
-			$temp .= "\t".$res->numRows()."\t";
+			$rows=$res->numRows();
+			$rows.=$rows==1?' row':' rows';
 		}
-		if (isset($backtrace[3])) {
-			$temp .= basename($backtrace[3]["file"])." (".$backtrace[3]["line"].")";
+		$stack=array();
+		foreach (debug_backtrace() as $trace) {
+			$stack[]=basename($trace['file']).':'.$trace['line'];
 		}
-		if (isset($backtrace[2])) {
-			$temp .= basename($backtrace[2]["file"])." (".$backtrace[2]["line"].")";
-		}
-		if (isset($backtrace[1])) {
-			$temp .= basename($backtrace[1]["file"])." (".$backtrace[1]["line"].")";
-		}
-		$temp .= basename($backtrace[0]["file"])." (".$backtrace[0]["line"].")";
-		fwrite($fp, date("Y-m-d H:i:s")."\t".sprintf(" %.4f %.4f sec", $exectime, $exectime2).$_SERVER["SCRIPT_NAME"]."\t".$temp."\t".$TOTAL_QUERIES."-".$sql.PGV_EOL);
+		fwrite($fp,	sprintf(
+			"%s\t%s\t%.3f ms\t%s\t%s\t%s".PGV_EOL,
+			date("Y-m-d H:i:s"),
+			basename($_SERVER["SCRIPT_NAME"]).'-'.$TOTAL_QUERIES,
+			$exectime * 1000,
+			$rows,
+			$sql,
+			implode(', ', array_reverse($stack))
+		));
 		fclose($fp);
 	}
 	if (DB::isError($res) && $show_error) {
