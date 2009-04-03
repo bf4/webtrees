@@ -238,7 +238,7 @@ class PGVRPDF extends TCPDF {
 
 	function addPageHeader(&$element) {
 		$this->pageHeaderElements[] = $element;
-		return count($this->headerElements)-1;
+		return count($this->pageHeaderElements)-1;
 	}
 
 	function addFooter(&$element) {
@@ -587,8 +587,14 @@ class PGVRTextPDF extends PGVRText {
 		$styleh = $pdf->getCurrentStyleHeight();
 		if (count($lines)>0) {
 			foreach($lines as $indexval => $line) {
+				if ($cury>$pdf->getPageHeight()-40) {
+					$pdf->addPage();
+					$cury = 46;
+				}
+				$tab = explode('.', $cury);
+				if ($cury<46 && !isset($tab[1])) $cury = 46;
+				//print  $pdf->getPageHeight()." ".$pdf->PageNo()." [$cury $line]<br />";
 				$pdf->SetXY($x, $cury);
-//				print "[$x $cury $line]";
 				$pdf->Write($styleh,$line);
 				$cury+=$styleh+1;
 				if ($cury>$pdf->getPageHeight()) $cury = $pdf->getY()+$styleh+1;

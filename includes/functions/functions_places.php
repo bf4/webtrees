@@ -3,7 +3,7 @@
  * Functions for places selection (clickable maps, autocompletion...)
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
+ * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -329,7 +329,6 @@ function print_place_subfields($element_id) {
 			print " <img id=\"".$element_id."_PLAC_CTRY_flag\" name=\"".$element_id."_PLAC_CTRY_flag\" src=\"places/flags/blank.gif\" class=\"brightflag border1\" style=\"vertical-align:bottom\" alt=\"\" /> ";
 			print "<select id=\"".$subtagid."_select\" name=\"".$subtagname."_select\" class=\"submenuitem\"";
 			print " onchange=\"setPlaceCountry(this.value, '".$element_id."');\"";
-//			print " acdropdown=\"true\" autocomplete_complete=\"true\"";
 			print " >\n";
 			print "<option value=\"???\">??? : ".$countries["???"]."</option>\n";
 			foreach ($countries as $alpha3=>$country) {
@@ -340,14 +339,7 @@ function print_place_subfields($element_id) {
 				}
 			}
 			print "</select>\n";
-		}
-		else {
-			/**if ($icountry<$i and $i<=$icity) {
-				$text = $pgv_lang["autocomplete"];
-				if (isset($PGV_IMAGES["autocomplete"]["button"])) $Link = "<img id=\"".$subtagid."_auto\" name=\"".$subtagname."_auto\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["autocomplete"]["button"]."\" alt=\"".$text."\" title=\"".$text."\" />";
-				else $Link = $text;
-				print "&nbsp;".$Link."&nbsp;";
-			}**/
+		} else {
 			print_specialchar_link($subtagid, false);
 		}
 		// clickable map

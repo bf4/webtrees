@@ -365,7 +365,7 @@ class MediaControllerRoot extends IndividualController{
 
 		$facts = $this->mediaobject->getFacts($ignore);
 		sort_facts($facts);
-		if ($includeFileName) $facts[] = new Event("1 FILE ".$this->mediaobject->getFilename());
+//		if ($includeFileName) $facts[] = new Event("1 FILE ".$this->mediaobject->getFilename());
 		$mediaType = $this->mediaobject->getMediatype();
 		if (isset($pgv_lang["TYPE__".$mediaType])) $facts[] = new Event("1 TYPE ".$pgv_lang["TYPE__".$mediaType]);
 		else $facts[] = new Event("1 TYPE ".$pgv_lang["TYPE__other"]);

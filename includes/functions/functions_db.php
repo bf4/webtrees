@@ -39,12 +39,19 @@ define('PGV_FUNCTIONS_DB_PHP', '');
 //-- load the PEAR:DB files
 require_once 'DB.php';
 
-/**
-* Field and function definition variances between sql databases
-*/
+
+// Definitions and functions to hide differences between sql databases
 switch ($DBTYPE) {
 case 'mssql':
-	function sql_mod_function($x,$y) { return "MOD($x,$y)"; } // Modulus function
+	// Limit a selct query to $n rows
+	function sql_limit_select_query($sql, $n) {
+		$n=(int)$n;
+		return preg_replace('/^\s*SELECT /i', "SELECT TOP {$n} ", $sql);
+	}
+	// Modulus function
+	function sql_mod_function($x,$y) {
+		return "MOD($x,$y)";
+	}
 	define('PGV_DB_AUTO_ID_TYPE',  'INTEGER IDENTITY');
 	define('PGV_DB_INT1_TYPE',     'INTEGER');
 	define('PGV_DB_INT2_TYPE',     'INTEGER');
@@ -63,7 +70,15 @@ case 'mssql':
 	define('PGV_DB_UTF8_TABLE',    '');
 	break;
 case 'sqlite':
-	function sql_mod_function($x,$y) { return "(($x)%($y))"; } // Modulus function
+	// Limit a selct query to $n rows
+	function sql_limit_select_query($sql, $n) {
+		$n=(int)$n;
+		return "{$sql} LIMIT {$n}";
+	}
+	// Modulus function
+	function sql_mod_function($x,$y) {
+		return "(($x)%($y))";
+	}
 	define('PGV_DB_AUTO_ID_TYPE',  'INTEGER AUTOINCREMENT');
 	define('PGV_DB_INT1_TYPE',     'INTEGER');
 	define('PGV_DB_INT2_TYPE',     'INTEGER');
@@ -82,7 +97,15 @@ case 'sqlite':
 	define('PGV_DB_UTF8_TABLE',    '');
 	break;
 case 'pgsql':
-	function sql_mod_function($x,$y) { return "MOD($x,$y)"; } // Modulus function
+	// Limit a selct query to $n rows
+	function sql_limit_select_query($sql, $n) {
+		$n=(int)$n;
+		return "{$sql} LIMIT {$n}";
+	}
+	// Modulus function
+	function sql_mod_function($x,$y) {
+		return "MOD($x,$y)";
+	}
 	define('PGV_DB_AUTO_ID_TYPE',  'SERIAL');
 	define('PGV_DB_INT1_TYPE',     'SMALLINT');
 	define('PGV_DB_INT2_TYPE',     'SMALLINT');
@@ -103,7 +126,15 @@ case 'pgsql':
 case 'mysql':
 case 'mysqli':
 default:
-	function sql_mod_function($x,$y) { return "MOD($x,$y)"; } // Modulus function
+	// Limit a selct query to $n rows
+	function sql_limit_select_query($sql, $n) {
+		$n=(int)$n;
+		return "{$sql} LIMIT {$n}";
+	}
+	// Modulus function
+	function sql_mod_function($x,$y) {
+		return "MOD($x,$y)";
+	}
 	define('PGV_DB_AUTO_ID_TYPE',  'INTEGER UNSIGNED AUTO_INCREMENT');
 	define('PGV_DB_INT1_TYPE',     'TINYINT');
 	define('PGV_DB_INT2_TYPE',     'SMALLINT');
@@ -140,10 +171,9 @@ define('PGV_DB_COL_TAG',  PGV_DB_VARCHAR_TYPE.'(15)');           // Gedcom tags/
 * this function will perform the given SQL query on the database
 * @param string $sql the sql query to execture
 * @param boolean $show_error whether or not to show any error messages
-* @param int $count the number of records to return, 0 returns all
 * @return DB_result the connection result
 */
-function &dbquery($sql, $show_error=true, $count=0) {
+function &dbquery($sql, $show_error=true) {
 	global $DBCONN, $TOTAL_QUERIES, $INDEX_DIRECTORY, $LAST_QUERY, $CONFIGURED;
 
 	if (!$CONFIGURED) {
@@ -167,9 +197,6 @@ function &dbquery($sql, $show_error=true, $count=0) {
 	if (preg_match('/[^\\\]"/', $sql)>0) {
 		pgv_error_handler(2, "<span class=\"error\">Incompatible SQL syntax. Double quote query: $sql</span><br />","","");
 	}
-	if (preg_match('/LIMIT \d/', $sql)>0) {
-		pgv_error_handler(2,"<span class=\"error\">Incompatible SQL syntax. Limit query error, use dbquery \$count parameter instead: $sql</span><br />","","");
-	}
 	if (preg_match('/(&&)|(\|\|)/', $sql)>0) {
 		pgv_error_handler(2,"<span class=\"error\">Incompatible SQL syntax.  Use 'AND' instead of '&&'.  Use 'OR' instead of '||'.: $sql</span><br />","","");
 	}
@@ -178,41 +205,35 @@ function &dbquery($sql, $show_error=true, $count=0) {
 	if (PGV_DEBUG_SQL) {
 		$start_time2 = microtime(true);
 	}
-	if ($count == 0) {
-		$res =& $DBCONN->query($sql);
-	} else {
-		$res =& $DBCONN->limitQuery($sql, 0, $count);
-	}
+	$res =& $DBCONN->query($sql);
 
 	$LAST_QUERY = $sql;
 	$TOTAL_QUERIES++;
 	if (PGV_DEBUG_SQL) {
 		global $start_time;
 		$end_time = microtime(true);
-		$exectime = $end_time - $start_time;
-		$exectime2 = $end_time - $start_time2;
-
-		if ($count>0) {
-			$sql = $DBCONN->modifyLimitQuery($sql, 0, $count);
-		}
+		$exectime = $end_time - $start_time2;
 
 		$fp = fopen($INDEX_DIRECTORY."/sql_log.txt", "a");
 		$backtrace = debug_backtrace();
-		$temp = "";
+		$rows = "- rows";
 		if (!DB::isError($res) && is_object($res)) {
-			$temp .= "\t".$res->numRows()."\t";
+			$rows=$res->numRows();
+			$rows.=$rows==1?' row':' rows';
 		}
-		if (isset($backtrace[3])) {
-			$temp .= basename($backtrace[3]["file"])." (".$backtrace[3]["line"].")";
+		$stack=array();
+		foreach (debug_backtrace() as $trace) {
+			$stack[]=basename($trace['file']).':'.$trace['line'];
 		}
-		if (isset($backtrace[2])) {
-			$temp .= basename($backtrace[2]["file"])." (".$backtrace[2]["line"].")";
-		}
-		if (isset($backtrace[1])) {
-			$temp .= basename($backtrace[1]["file"])." (".$backtrace[1]["line"].")";
-		}
-		$temp .= basename($backtrace[0]["file"])." (".$backtrace[0]["line"].")";
-		fwrite($fp, date("Y-m-d H:i:s")."\t".sprintf(" %.4f %.4f sec", $exectime, $exectime2).$_SERVER["SCRIPT_NAME"]."\t".$temp."\t".$TOTAL_QUERIES."-".$sql.PGV_EOL);
+		fwrite($fp,	sprintf(
+			"%s\t%s\t%.3f ms\t%s\t%s\t%s".PGV_EOL,
+			date("Y-m-d H:i:s"),
+			basename($_SERVER["SCRIPT_NAME"]).'-'.$TOTAL_QUERIES,
+			$exectime * 1000,
+			$rows,
+			$sql,
+			implode(', ', array_reverse($stack))
+		));
 		fclose($fp);
 	}
 	if (DB::isError($res) && $show_error) {
@@ -1456,8 +1477,8 @@ function find_media_record($pid, $gedfile='') {
 function find_first_person() {
 	global $TBLPREFIX;
 
-	$sql = "SELECT i_id FROM ".$TBLPREFIX."individuals WHERE i_file=".PGV_GED_ID." ORDER BY i_id";
-	$res = dbquery($sql,false,1);
+	$sql = "SELECT MIN(i_id) FROM {$TBLPREFIX}individuals WHERE i_file=".PGV_GED_ID;
+	$res = dbquery($sql,false);
 	$row = $res->fetchRow();
 	$res->free();
 	if (!DB::isError($row)) {
@@ -2451,7 +2472,8 @@ function get_top_surnames($num) {
 
 	$surnames = array();
 	$sql = "SELECT COUNT(n_surname) AS count, n_surn FROM {$TBLPREFIX}name WHERE n_file=".PGV_GED_ID." AND n_type!='_MARNM' AND n_surn NOT IN ('@N.N.', '', '?', 'UNKNOWN')GROUP BY n_surn ORDER BY count DESC";
-	$res = dbquery($sql, true, $num+1);
+	$sql = sql_limit_select_query($sql, $num+1);
+	$res = dbquery($sql, true);
 
 	if (!DB::isError($res)) {
 		while ($row =& $res->fetchRow()) {

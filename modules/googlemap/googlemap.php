@@ -303,7 +303,7 @@ function setup_map() {
 		return;
 	}
 	?>
-	<script src="http://maps.google.com/maps?file=api&amp;v=2.x&amp;key=<?php echo $GOOGLEMAP_API_KEY; ?>" type="text/javascript"></script>
+	<script src="http://maps.google.com/maps?file=api&amp;v=2&amp;sensor=false&amp;key=<?php echo $GOOGLEMAP_API_KEY; ?>" type="text/javascript"></script>
 	<script src="modules/googlemap/pgvGoogleMap.js" type="text/javascript"></script>
 	<script type="text/javascript">
 	// <![CDATA[
@@ -738,7 +738,7 @@ function build_indiv_map($indifacts, $famids) {
 					if (!empty($markers[$j]["name"])) {
 						$person=Person::getInstance($markers[$j]['name']);
 						if ($person) {
-							echo ': <a href=\"', $person->getLinkUrl(), '\">', $person->canDisplayName() ? addcslashes($person->getFullName(), '"') : $pgv_lang['private'], '</a>';
+							echo ': <a href=\"', $person->getLinkUrl(), '\">', $person->canDisplayName() ? PrintReady(addcslashes($person->getFullName(), '"')) : $pgv_lang['private'], '</a>';
 						}
 					}
 					echo "<br />";
@@ -792,7 +792,7 @@ function build_indiv_map($indifacts, $famids) {
 					if (!empty($markers[$j]["name"])) {
 						$person=Person::getInstance($markers[$j]['name']);
 						if ($person) {
-							echo ': <a href=\"', $person->getLinkUrl(), '\">', $person->canDisplayName() ? addcslashes($person->getFullName(), '"') : $pgv_lang['private'], '</a>';
+							echo ': <a href=\"', $person->getLinkUrl(), '\">', $person->canDisplayName() ? PrintReady(addcslashes($person->getFullName(), '"')) : $pgv_lang['private'], '</a>';
 						}
 					}
 					echo "<br />";
@@ -859,7 +859,7 @@ function build_indiv_map($indifacts, $famids) {
 							if (!empty($markers[$k]["name"])) {
 								$person=Person::getInstance($markers[$k]['name']);
 								if ($person) {
-									echo ': <a href=\"', $person->getLinkUrl(), '\">', $person->canDisplayName() ? addcslashes($person->getFullName(), '"') : $pgv_lang['private'], '</a>';
+									echo ': <a href=\"', $person->getLinkUrl(), '\">', $person->canDisplayName() ? PrintReady(addcslashes($person->getFullName(), '"')) : $pgv_lang['private'], '</a>';
 								}
 							}
 							echo "<br />";
@@ -907,7 +907,7 @@ function build_indiv_map($indifacts, $famids) {
 			if (!empty($marker["name"])) {
 				$person=Person::getInstance($marker['name']);
 				if ($person) {
-					echo '<a href="', $person->getLinkUrl(), '">', $person->canDisplayName() ? $person->getFullName() : $pgv_lang['private'], '</a>';
+					echo '<a href="', $person->getLinkUrl(), '">', $person->canDisplayName() ? PrintReady($person->getFullName()) : $pgv_lang['private'], '</a>';
 				}
 				echo '<br />';
 			}

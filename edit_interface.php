@@ -25,7 +25,6 @@
 */
 
 require './config.php';
-
 require 'includes/functions/functions_edit.php';
 
 loadLangFile("pgv_country");
@@ -100,7 +99,8 @@ foreach ($assokeys as $indexval => $key) {
 uasort($assorela, "stringsort");
 
 print_simple_header('Edit Interface');
-require 'js/autocomplete.js.htm';
+
+if ($ENABLE_AUTOCOMPLETE) require './js/autocomplete.js.htm';
 ?>
 <script type="text/javascript">
 <!--
@@ -393,15 +393,18 @@ case 'editraw':
 //------------------------------------------------------------------------------
 //-- edit a fact record in a form
 case 'edit':
+	
 	init_calendar_popup();
 	echo "<form method=\"post\" action=\"edit_interface.php\" enctype=\"multipart/form-data\">\n";
 	echo "<input type=\"hidden\" name=\"action\" value=\"update\" />\n";
 	echo "<input type=\"hidden\" name=\"linenum\" value=\"$linenum\" />\n";
 	echo "<input type=\"hidden\" name=\"pid\" value=\"$pid\" />\n";
 	echo "<br /><input type=\"submit\" value=\"".$pgv_lang["save"]."\" /><br />\n";
-
+	
 	echo "<table class=\"facts_table\">";
+	
 	$level1type = create_edit_form($gedrec, $linenum, $level0type);
+		
 	if (PGV_USER_IS_ADMIN) {
 		echo "<tr><td class=\"descriptionbox ".$TEXT_DIRECTION." wrap width25\">";
 		print_help_link("no_update_CHAN_help", "qm");
@@ -713,6 +716,7 @@ case 'addnewsource':
 	</form>
 	<?php
 	break;
+
 //------------------------------------------------------------------------------
 //-- create a source record from the incoming variables
 case 'addsourceaction':
@@ -798,6 +802,11 @@ case 'addnewnote':
 					echo "</td>";
 				echo "</tr>";
 				$tabkey++;
+			?>
+			<tr><td class="descriptionbox <?php echo $TEXT_DIRECTION; ?> wrap width25"><?php print_help_link("edit_REPO_help", "qm"); echo $factarray["REPO"]; ?></td>
+			<td class="optionbox wrap"><input tabindex="<?php echo $tabkey; ?>" type="text" name="REPO" id="REPO" value="" size="10" /> <?php print_findrepository_link("REPO"); print_addnewrepository_link("REPO"); ?></td></tr>
+			<?php $tabkey++; ?>
+			<?php
 			echo "</table>";
 			echo "<br /><br />";
 			echo "<input type=\"submit\" value=\"".$pgv_lang["save"]."\" />";
@@ -805,7 +814,7 @@ case 'addnewnote':
 	</form>
 	<?php
 	break;
-	
+
 //------------------------------------------------------------------------------
 //-- add new Shared Note
 case 'addnewnote_assisted':
@@ -906,6 +915,41 @@ case 'addnoteaction':
 	}
 	break;
 
+//-- edit source
+case 'editsource':
+	init_calendar_popup();
+	echo "<form method=\"post\" action=\"edit_interface.php\" enctype=\"multipart/form-data\">\n";
+	echo "<input type=\"hidden\" name=\"action\" value=\"update\" />\n";
+	echo "<input type=\"hidden\" name=\"linenum\" value=\"$linenum\" />\n";
+	echo "<input type=\"hidden\" name=\"pid\" value=\"$pid\" />\n";
+	echo "<br /><input type=\"submit\" value=\"".$pgv_lang["save"]."\" /><br />\n";
+
+	echo "<table class=\"facts_table\">";
+	$gedlines = split("\n", $gedrec); // -- find the number of lines in the record
+	for ($i=$linenum; $i<count($gedlines); $i++) {
+		if (substr($gedlines[$i], 0, 1)<2) {
+			$level1type = create_edit_form($gedrec, $i, $level0type);
+		}
+	}
+	if (PGV_USER_IS_ADMIN) {
+		echo "<tr><td class=\"descriptionbox ".$TEXT_DIRECTION." wrap width25\">";
+		print_help_link("no_update_CHAN_help", "qm");
+		echo $pgv_lang["admin_override"]."</td><td class=\"optionbox wrap\">\n";
+		echo "<input type=\"checkbox\" name=\"preserve_last_changed\" />\n";
+		echo $pgv_lang["no_update_CHAN"]."<br />\n";
+		$event = new Event(get_sub_record(1, "1 CHAN", $gedrec));
+		echo format_fact_date($event, false, true);
+		echo "</td></tr>\n";
+	}
+	echo "</table>";
+	print_add_layer("NOTE");
+	print_add_layer("SHARED_NOTE");
+	print_add_layer("OBJE");
+	//-- RESN missing in new structure, RESN can be added to all level 1 tags
+	if (!in_array("RESN", $tags)) print_add_layer("RESN");
+	echo "<br /><input type=\"submit\" value=\"".$pgv_lang["save"]."\" /><br />\n";
+	echo "</form>\n";
+	break;
 
 //------------------------------------------------------------------------------
 //-- edit a Shared Note
@@ -950,6 +994,17 @@ case 'editnote':
 				</td>
 			</tr>
 			<?php $tabkey++; ?>
+
+			<tr>
+				<td class="descriptionbox <?php echo $TEXT_DIRECTION; ?> wrap width25"><?php print_help_link("edit_SOUR_help", "qm"); echo $factarray["SOUR"]; ?></td>
+				<td class="optionbox wrap">
+					<input tabindex="<?php echo $tabkey; ?>" type="text" name="SOUR" id="SOUR" value="" size="10" /><?php 
+						print_findsource_link("SOUR"); 
+						print_addnewsource_link("SOUR"); ?>
+				</td>
+			</tr>
+			<?php $tabkey++; ?>
+
 		</table>
 		<br /><br />
 		<input type="submit" value="<?php echo $pgv_lang["save"]; ?>" />
@@ -1070,119 +1125,137 @@ case 'updateraw':
 //------------------------------------------------------------------------------
 //-- reconstruct the gedcom from the incoming fields and store it in the file
 case 'update':
+	global $cens_pids;
 
-	if (PGV_DEBUG) {
-		phpinfo(INFO_VARIABLES);
-		echo "<pre>$gedrec</pre>";
-		echo "<br /><br />";
+	// $cens_pids is an array from the CENS GEDFact Assistant -----------
+	// $cens_pids = array($pid, 'I1', 'I2');  // ** This line is a Test only **
+	if (!isset($cens_pids)){
+		$cens_pids = array($pid);
+	}else{
+		$cens_pids = $cens_pids;
 	}
+	
+	// When $cens_pids is present, cycle through each individual concerned.
+	foreach ($cens_pids as $pid) {
+		$gedrec = find_gedcom_record($pid);
 
-	// add or remove Y
-	if ($text[0]=="Y" or $text[0]=="y") $text[0]="";
-	if (in_array($tag[0], $emptyfacts) && array_unique($text)==array("") && !$islink[0]) $text[0]="Y";
-	//-- check for photo update
-	if (count($_FILES)>0) {
-		if (isset($_REQUEST['folder'])) $folder = $_REQUEST['folder'];
-		$uploaded_files = array();
-		if (substr($folder,0,1) == "/") $folder = substr($folder,1);
-		if (substr($folder,-1,1) != "/") $folder .= "/";
-		foreach($_FILES as $upload) {
-			if (!empty($upload['tmp_name'])) {
-				if (!move_uploaded_file($upload['tmp_name'], $MEDIA_DIRECTORY.$folder.basename($upload['name']))) {
-					$error .= "<br />".$pgv_lang["upload_error"]."<br />".file_upload_error_text($upload['error']);
-					$uploaded_files[] = "";
-				}
-				else {
-					$filename = $MEDIA_DIRECTORY.$folder.basename($upload['name']);
-					$uploaded_files[] = $MEDIA_DIRECTORY.$folder.basename($upload['name']);
-					if (!is_dir($MEDIA_DIRECTORY."thumbs/".$folder)) mkdir($MEDIA_DIRECTORY."thumbs/".$folder);
-					$thumbnail = $MEDIA_DIRECTORY."thumbs/".$folder.basename($upload['name']);
-					generate_thumbnail($filename, $thumbnail);
-					if (!empty($error)) {
-						echo "<span class=\"error\">".$error."</span>";
+		if (PGV_DEBUG) {
+			phpinfo(INFO_VARIABLES);
+			echo "<pre>$gedrec</pre>";
+			echo "<br /><br />";
+		}
+
+		// add or remove Y
+		if ($text[0]=="Y" or $text[0]=="y") $text[0]="";
+		if (in_array($tag[0], $emptyfacts) && array_unique($text)==array("") && !$islink[0]) $text[0]="Y";
+		//-- check for photo update
+		if (count($_FILES)>0) {
+			if (isset($_REQUEST['folder'])) $folder = $_REQUEST['folder'];
+			$uploaded_files = array();
+			if (substr($folder,0,1) == "/") $folder = substr($folder,1);
+			if (substr($folder,-1,1) != "/") $folder .= "/";
+			foreach($_FILES as $upload) {
+				if (!empty($upload['tmp_name'])) {
+					if (!move_uploaded_file($upload['tmp_name'], $MEDIA_DIRECTORY.$folder.basename($upload['name']))) {
+						$error .= "<br />".$pgv_lang["upload_error"]."<br />".file_upload_error_text($upload['error']);
+						$uploaded_files[] = "";
+					}
+					else {
+						$filename = $MEDIA_DIRECTORY.$folder.basename($upload['name']);
+						$uploaded_files[] = $MEDIA_DIRECTORY.$folder.basename($upload['name']);
+						if (!is_dir($MEDIA_DIRECTORY."thumbs/".$folder)) mkdir($MEDIA_DIRECTORY."thumbs/".$folder);
+						$thumbnail = $MEDIA_DIRECTORY."thumbs/".$folder.basename($upload['name']);
+						generate_thumbnail($filename, $thumbnail);
+						if (!empty($error)) {
+							echo "<span class=\"error\">".$error."</span>";
+						}
 					}
 				}
-			}
-			else $uploaded_files[] = "";
-		}
-	}
-	$gedlines = explode("\n", trim($gedrec));
-	//-- for new facts set linenum to number of lines
-	if ($linenum=="new") $linenum = count($gedlines);
-	$newged = "";
-	for($i=0; $i<$linenum; $i++) {
-		$newged .= $gedlines[$i]."\n";
-	}
-	//-- for edits get the level from the line
-	if (isset($gedlines[$linenum])) {
-		$fields = explode(' ', $gedlines[$linenum]);
-		$glevel = $fields[0];
-		$i++;
-		while(($i<count($gedlines))&&($gedlines[$i]{0}>$glevel)) $i++;
-	}
-
-	if (!isset($glevels)) $glevels = array();
-	if (isset($_REQUEST['NAME'])) $NAME = $_REQUEST['NAME'];
-	if (isset($_REQUEST['TYPE'])) $TYPE = $_REQUEST['TYPE'];
-	if (isset($_REQUEST['NPFX'])) $NPFX = $_REQUEST['NPFX'];
-	if (isset($_REQUEST['GIVN'])) $GIVN = $_REQUEST['GIVN'];
-	if (isset($_REQUEST['NICK'])) $NICK = $_REQUEST['NICK'];
-	if (isset($_REQUEST['SPFX'])) $SPFX = $_REQUEST['SPFX'];
-	if (isset($_REQUEST['SURN'])) $SURN = $_REQUEST['SURN'];
-	if (isset($_REQUEST['NSFX'])) $NSFX = $_REQUEST['NSFX'];
-	if (isset($_REQUEST['ROMN'])) $ROMN = $_REQUEST['ROMN'];
-	if (isset($_REQUEST['FONE'])) $FONE = $_REQUEST['FONE'];
-	if (isset($_REQUEST['_HEB'])) $_HEB = $_REQUEST['_HEB'];
-	if (isset($_REQUEST['_AKA'])) $_AKA = $_REQUEST['_AKA'];
-	if (isset($_REQUEST['_MARNM'])) $_MARNM = $_REQUEST['_MARNM'];
-
-	if (!empty($NAME)) $newged .= "1 NAME $NAME\n";
-	if (!empty($TYPE)) $newged .= "2 TYPE $TYPE\n";
-	if (!empty($NPFX)) $newged .= "2 NPFX $NPFX\n";
-	if (!empty($GIVN)) $newged .= "2 GIVN $GIVN\n";
-	if (!empty($NICK)) $newged .= "2 NICK $NICK\n";
-	if (!empty($SPFX)) $newged .= "2 SPFX $SPFX\n";
-	if (!empty($SURN)) $newged .= "2 SURN $SURN\n";
-	if (!empty($NSFX)) $newged .= "2 NSFX $NSFX\n";
-
-	if (isset($_REQUEST['NOTE'])) $NOTE = $_REQUEST['NOTE'];
-	if (!empty($NOTE)) {
-		$newlines = preg_split("/\r?\n/",$NOTE,-1 );
-		for($k=0; $k<count($newlines); $k++) {
-			if ( $k==0 && count($newlines)>1) {
-				$gedlines[$k] = "0 @$pid@ NOTE $newlines[$k]\n";
-			} else {
-				$gedlines[$k] = " 1 CONT $newlines[$k]\n";
+				else $uploaded_files[] = "";
 			}
 		}
-	}
+		$linenum="new";
+		$gedlines = explode("\n", trim($gedrec));
+		//-- for new facts set linenum to number of lines
+		if ($linenum=="new") $linenum = count($gedlines);
+		$newged = "";
+		for($i=0; $i<$linenum; $i++) {
+			$newged .= $gedlines[$i]."\n";
+		}
+		//-- for edits get the level from the line
+		if (isset($gedlines[$linenum])) {
+			$fields = explode(' ', $gedlines[$linenum]);
+			$glevel = $fields[0];
+			$i++;
+			while(($i<count($gedlines))&&($gedlines[$i]{0}>$glevel)) $i++;
+		}
 
+		if (!isset($glevels)) $glevels = array();
+		if (isset($_REQUEST['NAME'])) $NAME = $_REQUEST['NAME'];
+		if (isset($_REQUEST['TYPE'])) $TYPE = $_REQUEST['TYPE'];
+		if (isset($_REQUEST['NPFX'])) $NPFX = $_REQUEST['NPFX'];
+		if (isset($_REQUEST['GIVN'])) $GIVN = $_REQUEST['GIVN'];
+		if (isset($_REQUEST['NICK'])) $NICK = $_REQUEST['NICK'];
+		if (isset($_REQUEST['SPFX'])) $SPFX = $_REQUEST['SPFX'];
+		if (isset($_REQUEST['SURN'])) $SURN = $_REQUEST['SURN'];
+		if (isset($_REQUEST['NSFX'])) $NSFX = $_REQUEST['NSFX'];
+		if (isset($_REQUEST['ROMN'])) $ROMN = $_REQUEST['ROMN'];
+		if (isset($_REQUEST['FONE'])) $FONE = $_REQUEST['FONE'];
+		if (isset($_REQUEST['_HEB'])) $_HEB = $_REQUEST['_HEB'];
+		if (isset($_REQUEST['_AKA'])) $_AKA = $_REQUEST['_AKA'];
+		if (isset($_REQUEST['_MARNM'])) $_MARNM = $_REQUEST['_MARNM'];
 
+		if (!empty($NAME)) $newged .= "1 NAME $NAME\n";
+		if (!empty($TYPE)) $newged .= "2 TYPE $TYPE\n";
+		if (!empty($NPFX)) $newged .= "2 NPFX $NPFX\n";
+		if (!empty($GIVN)) $newged .= "2 GIVN $GIVN\n";
+		if (!empty($NICK)) $newged .= "2 NICK $NICK\n";
+		if (!empty($SPFX)) $newged .= "2 SPFX $SPFX\n";
+		if (!empty($SURN)) $newged .= "2 SURN $SURN\n";
+		if (!empty($NSFX)) $newged .= "2 NSFX $NSFX\n";
 
-	//-- Refer to Bug [ 1329644 ] Add Married Name - Wrong Sequence
-	//-- _HEB/ROMN/FONE have to be before _AKA, even if _AKA exists in input and the others are now added
-	if (!empty($ROMN)) $newged .= "2 ROMN $ROMN\n";
-	if (!empty($FONE)) $newged .= "2 FONE $FONE\n";
-	if (!empty($_HEB)) $newged .= "2 _HEB $_HEB\n";
+		if (isset($_REQUEST['NOTE'])) $NOTE = $_REQUEST['NOTE'];
+		if (!empty($NOTE)) {
+			$newlines = preg_split("/\r?\n/",$NOTE,-1 );
+			for($k=0; $k<count($newlines); $k++) {
+				if ( $k==0 && count($newlines)>1) {
+					$gedlines[$k] = "0 @$pid@ NOTE $newlines[$k]\n";
+				} else {
+					$gedlines[$k] = " 1 CONT $newlines[$k]\n";
+				}
+			}
+		}
 
-	$newged = handle_updates($newged);
+		//-- Refer to Bug [ 1329644 ] Add Married Name - Wrong Sequence
+		//-- _HEB/ROMN/FONE have to be before _AKA, even if _AKA exists in input and the others are now added
+		if (!empty($ROMN)) $newged .= "2 ROMN $ROMN\n";
+		if (!empty($FONE)) $newged .= "2 FONE $FONE\n";
+		if (!empty($_HEB)) $newged .= "2 _HEB $_HEB\n";
 
-	if (!empty($_AKA)) $newged .= "2 _AKA $_AKA\n";
-	if (!empty($_MARNM)) $newged .= "2 _MARNM $_MARNM\n";
+		$newged = handle_updates($newged);
 
-	while($i<count($gedlines)) {
-		$newged .= trim($gedlines[$i])."\n";
-		$i++;
-	}
+		if (!empty($_AKA)) $newged .= "2 _AKA $_AKA\n";
+		if (!empty($_MARNM)) $newged .= "2 _MARNM $_MARNM\n";
 
-	if (PGV_DEBUG) {
-		echo "<br /><br />";
-		echo "<pre>$newged</pre>";
-	}
+		while($i<count($gedlines)) {
+			$newged .= trim($gedlines[$i])."\n";
+			$i++;
+		}
 
-	$success = (replace_gedrec($pid, $newged, $update_CHAN));
-	if ($success) echo "<br /><br />".$pgv_lang["update_successful"];
+		if (PGV_DEBUG) {
+			echo "<br /><br />";
+			echo "<pre>$newged</pre>";
+		}
+		// $success = (replace_gedrec($pid, $newged, $update_CHAN));
+		// if ($success) {
+			echo "<br /><br />".$pgv_lang["update_successful"] . " - " . $pid;
+		// }
+		
+	} // end foreach
+	
+
 	break;
+	
 //------------------------------------------------------------------------------
 case 'addchildaction':
 	if (PGV_DEBUG) {
@@ -2333,8 +2406,8 @@ if (empty($goto) || empty($link))
 //------------------------------------------------------------------------------
 // autoclose window when update successful
 if ($success && $EDIT_AUTOCLOSE && !PGV_DEBUG) {
-	if ($action=="copy") echo "\n<script type=\"text/javascript\">\n<!--\nwindow.close();\n//-->\n</script>";
-	else echo "\n<script type=\"text/javascript\">\n<!--\nedit_close('{$link}');\n//-->\n</script>";
+//	if ($action=="copy") echo "\n<script type=\"text/javascript\">\n<!--\nwindow.close();\n//-->\n</script>";
+//	else echo "\n<script type=\"text/javascript\">\n<!--\nedit_close('{$link}');\n//-->\n</script>";
 }
 
 

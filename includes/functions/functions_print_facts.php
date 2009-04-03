@@ -74,7 +74,7 @@ function print_fact(&$eventObj, $noedit=false) {
 	global $lang_short_cut, $LANGUAGE;
 	global $WORD_WRAPPED_NOTES;
 	global $TEXT_DIRECTION;
-	global $HIDE_GEDCOM_ERRORS, $SHOW_ID_NUMBERS, $SHOW_FACT_ICONS;
+	global $HIDE_GEDCOM_ERRORS, $SHOW_ID_NUMBERS, $SHOW_FACT_ICONS, $SHOW_MEDIA_FILENAME;
 	global $CONTACT_EMAIL, $view, $FACT_COUNT;
 	global $n_chil, $n_gchi, $n_ggch;
 	global $SEARCH_SPIDER;
@@ -378,8 +378,10 @@ function print_fact(&$eventObj, $noedit=false) {
 					print "<a href=\"mailto:".$event."\">".$event."</a>";
 				} elseif (strstr("AFN", $fact)) {
 					print '<a href="http://www.familysearch.org/Eng/Search/customsearchresults.asp?LDS=0&file_number='.urlencode($event).'" target="new">'.$event.'</a>';
-				} elseif (strstr('FAX PHON FILE ', $fact.' ')) {
+				} elseif (strstr('FAX PHON ', $fact.' ')) {
 					print getLRM(). $event.' ' . getLRM();
+				} elseif (strstr('FILE ', $fact.' ')) {
+					if ($SHOW_MEDIA_FILENAME || PGV_USER_GEDCOM_ADMIN) print getLRM(). $event.' ' . getLRM();
 				} elseif ($event!='Y') {
 					if (!strstr('ADDR _RATID _CREM ', substr($fact,0,5).' ')) {
 						if ($factref=='file_size' || $factref=='image_size') echo PrintReady($rawEvent);
@@ -1025,7 +1027,7 @@ function printSourceStructure($textSOUR) {
 	global $pgv_lang, $factarray;
 
 	$data='';
-	$note_data='';
+//	$note_data='';
 	if ($textSOUR["PAGE"]!="") {
 		$data.="<br /><span class=\"label\">".$factarray["PAGE"].":&nbsp;&nbsp;</span><span class=\"field\">".PrintReady(expand_urls($textSOUR["PAGE"]))."</span>";
 	}
@@ -1036,47 +1038,14 @@ function printSourceStructure($textSOUR) {
 			$data.="<br />&nbsp;&nbsp;&nbsp;&nbsp;<span class=\"label\">".$factarray["ROLE"].":&nbsp;</span><span class=\"field\">".PrintReady($textSOUR["ROLE"])."</span>";
 		}
 	}
-	
-	if (isset($textSOUR["NOTE"]) && $textSOUR["NOTE"]!="") {
-		$noterec = find_gedcom_record(str_replace("@", "", $textSOUR["NOTE"]));
-		$nt = preg_match("/0 ".$textSOUR["NOTE"]." NOTE(.*)/", $noterec, $n1match);
-		if ($nt==1) {
-			$note_data.="&nbsp;&nbsp;<span class=\"field\">".print_note_record($n1match[1], 1, $noterec,  true, true)."</span>";
-		}
-	}
 
 	if ($textSOUR["DATE"]!="" || count($textSOUR["TEXT"])!=0) {
-		// $data.="<br /><span class=\"label\">".$factarray["DATA"]."</span>";
 		if ($textSOUR["DATE"]!="") {
 			$date=new GedcomDate($textSOUR["DATE"]);
 			$data.="<br />&nbsp;&nbsp;<span class=\"label\">".$factarray["DATA:DATE"].":&nbsp;</span><span class=\"field\">".$date->Display(false)."</span>";
 		}
 		foreach($textSOUR["TEXT"] as $text) {
-
-			// Check if Census Assistant Note =======================================
-			// if (eregi("Head", $text)) {
-			if (strstr($text, "|Head|")) {
-				$text = "xCxAx<table><tr><td><br /><br />" . $text;
-				$text = str_replace("<br /><br />", "</td></tr></table><p><table><tr><td><b>Name</b>&nbsp;&nbsp;</td><td><b>Relation</b>&nbsp;&nbsp;</td><td><b>Status</b>&nbsp;&nbsp;</td><td><b>Age</b>&nbsp;&nbsp;</td><td><b>Sex</b>&nbsp;&nbsp;</td><td><b>Occupation</b>&nbsp;&nbsp;</td><td><b>Birth place</b>&nbsp;&nbsp;</td> </tr><tr><td>", $text);
-				if (eregi("<br />.b.", $text)) {
-					$text = str_replace(".b.", "<b>", $text);
-					$text = str_replace("|", "&nbsp;&nbsp;</b></td><td>", $text);
-				}else{
-					$text = str_replace("|", "&nbsp;&nbsp;</td><td>", $text);
-				}
-				$text = str_replace("<br />", "</td></tr><tr><td>", $text);
-				$text = $text . "</td></tr></table>";
-				$text = str_replace("xCxAx", "&nbsp;&nbsp;Census Transcription<br />", $text);
-				$data.= "<br />";
-				$data.= "<span class=\"label\">".$factarray["TEXT"].":&nbsp;</span>";
-				$data.= "<span class=\"field\">".PrintReady($text)."</span><br />";
-			}else{
-				$data.="<br />&nbsp;&nbsp;<span class=\"label\">".$factarray["TEXT"].":&nbsp;</span><span class=\"field\">".PrintReady(expand_urls($text))."</span>";
-				if (!empty($text) && !empty($note_data)) $data.="<br />";
-				$data.=$note_data;
-			}
-			// ==========================================================
-
+			$data.="<br />&nbsp;&nbsp;<span class=\"label\">".$factarray["TEXT"].":&nbsp;</span><span class=\"field\">".PrintReady(expand_urls($text))."</span>";
 		}
 	}
 

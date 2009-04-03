@@ -26,8 +26,8 @@
 
 require './config.php';
 
-require 'includes/functions/functions_print_lists.php';
-include 'includes/functions/functions_edit.php';
+require './includes/functions/functions_print_lists.php';
+include './includes/functions/functions_edit.php';
 
 // cannot edit account using a cookie login - login with password first
 if (!PGV_USER_ID || $_SESSION['cookie_login']) {
@@ -145,7 +145,8 @@ if ($form_action=='update') {
 	}
 } else {
 	print_header($pgv_lang['user_admin']);
-	require 'js/autocomplete.js.htm';
+
+	if ($ENABLE_AUTOCOMPLETE) require './js/autocomplete.js.htm';
 }
 
 // Form validation

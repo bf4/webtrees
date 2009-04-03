@@ -90,15 +90,15 @@ if ($view=='preview') include($print_headerfile);
 else {?>
 <div id="header" class="<?php print $TEXT_DIRECTION; ?>">
 	<?php if(empty($SEARCH_SPIDER)) { ?>
-	<img src="<?php print $THEME_DIR?>images/loading.gif" width="70" height="25" id="ProgBar" name="ProgBar" style="position:absolute;margin-left:auto;margin-right:auto;left:47%;top:48%;margin-bottom:auto;margin-top:auto;" alt="loading..." />
+	<img src="<?php print $PGV_IMAGE_DIR;?>/loading.gif" width="70" height="25" id="ProgBar" name="ProgBar" style="position:absolute;margin-left:auto;margin-right:auto;left:47%;top:48%;margin-bottom:auto;margin-top:auto;" alt="loading..." />
 	<?php } ?>
 	<table width="100%" border="0" cellspacing="0" cellpadding="0" style="border-left:1px solid #003399;border-top:1px solid #003399;border-right:1px solid #003399;" >
 		<tr>
 			<td>
-				<table width="100%" border="0" cellspacing="0" cellpadding="0" style="background:url('<?php print $PGV_IMAGE_DIR; ?>/clouds.gif');height:38px;white-space: nowrap;" >
+				<table width="100%" border="0" cellspacing="0" cellpadding="0" style="background:url('<?php print $PGV_IMAGE_DIR;?>/clouds.gif');height:38px;white-space: nowrap;" >
 					<tr>
 						<td width="10" >
-							<img src="<?php print $PGV_IMAGE_DIR; ?>/pixel.gif" width="1" height="1" alt="" />
+							<img src="<?php print $PGV_IMAGE_DIR;?>/pixel.gif" width="1" height="1" alt="" />
 						</td>
 						<td align="<?php print $TEXT_DIRECTION=="ltr"?"left":"right" ?>" valign="middle" >
 							<div class="title" style="<?php print $TEXT_DIRECTION=="rtl"?"left":"right" ?>">
@@ -124,7 +124,7 @@ else {?>
 											<input type="text" class="formbut" accesskey="<?php print $pgv_lang["accesskey_search"]?>" name="query" size="15" value="<?php print $pgv_lang['search']?>"
 												onfocus="if (this.value == '<?php print $pgv_lang['search']?>') this.value=''; focusHandler();"
 												onblur="if (this.value == '') this.value='<?php print $pgv_lang['search']?>';" />
-											<input type="image" src="<?php print $THEME_DIR ?>/images/go.gif" align="top" title="<?php print $pgv_lang['search']?>
+											<input type="image" src="<?php print $PGV_IMAGE_DIR;?>/go.gif" align="top" title="<?php print $pgv_lang['search']?>
 											" />
 										</form>
 									</td>
@@ -138,7 +138,7 @@ else {?>
 						</td>
 						<?php } ?>
 						<td width="10">
-							<img src="<?php print $PGV_IMAGE_DIR; ?>/pixel.gif" width="1" height="1" alt="" />
+							<img src="<?php print $PGV_IMAGE_DIR;?>/pixel.gif" width="1" height="1" alt="" />
 						</td>
 					</tr>
 				</table>
@@ -150,7 +150,7 @@ else {?>
 							<table cellspacing="0" cellpadding="0" border="0" style="min-width:200px;height:26px;" align="<?php print $TEXT_DIRECTION=="ltr"?"left":"right" ?>">
 								<tr>
 									<td>
-										<img src="<?php print $PGV_IMAGE_DIR; ?>/pixel.gif" width="1" height="1" alt="" />
+										<img src="<?php print $PGV_IMAGE_DIR;?>/pixel.gif" width="1" height="1" alt="" />
 									</td>
 
 								<?php
@@ -264,7 +264,7 @@ else {?>
 						</td>
 						<?php } ?>
 						<td width="10">
-							<img src="<?php print $PGV_IMAGE_DIR; ?>/pixel.gif" width="1" height="1" alt="" />
+							<img src="<?php print $PGV_IMAGE_DIR;?>/pixel.gif" width="1" height="1" alt="" />
 						</td>
 					</tr>
 				</table>

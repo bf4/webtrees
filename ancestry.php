@@ -5,7 +5,7 @@
 * ($rootid=1, father=2, mother=3 ...)
 *
 * phpGedView: Genealogy Viewer
-* Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
+* Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
 *
 * This program is free software; you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -36,7 +36,7 @@ $controller->init();
 
 print_header($controller->name . " " . $pgv_lang['ancestry_chart']);
 
-require 'js/autocomplete.js.htm';
+if ($ENABLE_AUTOCOMPLETE) require './js/autocomplete.js.htm';
 
 // LightBox
 if ($MULTI_MEDIA && file_exists('./modules/lightbox.php')) {

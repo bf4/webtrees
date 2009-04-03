@@ -38,6 +38,141 @@ require_once 'includes/classes/class_person.php';
 require_once 'includes/functions/functions_places.php';
 require_once 'includes/cssparser.inc.php';
 
+
+/**
+ * print a list of individuals
+ *
+ * @param array $datalist contain individuals that were extracted from the database.
+ * @param string $legend optional legend of the fieldset
+ */
+function print_indi_list($datalist, $legend="", $option="") {
+	global $pgv_lang, $factarray, $GEDCOM, $SHOW_ID_NUMBERS, $SHOW_LAST_CHANGE, $SHOW_MARRIED_NAMES, $TEXT_DIRECTION;
+	global $PGV_IMAGE_DIR, $PGV_IMAGES, $SEARCH_SPIDER, $SHOW_EST_LIST_DATES;
+
+	if ($option=="MARR_PLAC") return;
+	if (count($datalist)<1) return;
+	$tiny = (count($datalist)<=500);
+	$name_subtags = array("", "_AKA", "_HEB", "ROMN");
+	if ($SHOW_MARRIED_NAMES) $name_subtags[] = "_MARNM";
+	require_once 'js/sorttable.js.htm';
+	require_once 'includes/classes/class_stats.php';
+	$stats = new stats($GEDCOM);
+	$max_age = $stats->LongestLifeAge()+1;
+	//-- init chart data
+	for ($age=0; $age<=$max_age; $age++) $deat_by_age[$age]="";
+	for ($year=1550; $year<2030; $year+=10) $birt_by_decade[$year]="";
+	for ($year=1550; $year<2030; $year+=10) $deat_by_decade[$year]="";
+	
+	$table_id = "ID".floor(microtime()*1000000); // sorttable requires a unique ID
+	echo '<div id="'.$table_id.'-table" class="center">';
+	echo "<table id=\"".$table_id."\" >";
+	
+	//-- table header
+	echo "<thead><tr>";
+	echo "<td></td>";
+	if ($SHOW_ID_NUMBERS) echo "<th class=\"list_label rela\">&nbsp; INDI &nbsp;</th>";
+	echo '<th class="list_label">'.$factarray['NAME'].'</th>';
+	echo "<th class=\"list_label\">&nbsp;".$pgv_lang["add"]."&nbsp; </th>";
+	echo "</tr></thead>\n";
+
+	//-- table body
+	echo "<tbody>";
+	$hidden = 0;
+	$n = 0;
+	$d100y=new GedcomDate(date('Y')-100);  // 100 years ago
+	$dateY = date("Y");
+	$unique_indis=array(); // Don't double-count indis with multiple names.
+	foreach($datalist as $key => $value) {
+		if (is_object($value)) { // Array of objects
+			$person=$value;
+		} elseif (!is_array($value)) { // Array of IDs
+			$person = Person::getInstance($value);
+		} else { // Array of search results
+			$gid = $key;
+			if (isset($value["gid"])) $gid = $value["gid"]; // from indilist
+			if (isset($value[4])) $gid = $value[4]; // from indilist ALL
+			$person = Person::getInstance($gid);
+		}
+		/* @var $person Person */
+		if (is_null($person)) continue;
+		if ($person->getType() !== "INDI") continue;
+		if (!$person->canDisplayName()) {
+			$hidden++;
+			continue;
+		}
+		$unique_indis[$person->getXref()]=true;
+		//-- place filtering
+		if ($option=="BIRT_PLAC" && strstr($person->getBirthPlace(), $filter)===false) continue;
+		if ($option=="DEAT_PLAC" && strstr($person->getDeathPlace(), $filter)===false) continue;
+		
+
+		//-- Counter
+		echo "<tr>";
+		echo "<td class=\"list_value_wrap rela list_item\">".++$n."</td>";
+		
+		//-- Gedcom ID
+		if ($SHOW_ID_NUMBERS)
+			echo '<td class="list_value_wrap rela">'.$person->getXref("_blank").'</td>';
+			
+		//-- Indi name(s)
+		$tdclass = "list_value_wrap";
+		if (!$person->isDead()) $tdclass .= " alive";
+		if (!$person->getChildFamilyIds()) $tdclass .= " patriarch";
+		echo "<td class=\"".$tdclass."\" align=\"".get_align($person->getListName())."\">";
+		$names_html=array();
+		list($surn, $givn)=explode(',', $person->getSortName());
+		// If we're showing search results, then the highlighted name is not
+		// necessarily the person's primary name.
+		$primary=$person->getPrimaryName();
+		$names=$person->getAllNames();
+		foreach ($names as $num=>$name) {
+			// Exclude duplicate names, which can occur when individuals have
+			// multiple surnames, such as in Spain/Portugal
+			$dupe_found=false;
+			foreach ($names as $dupe_num=>$dupe_name) {
+				if ($dupe_num>$num && $dupe_name['type']==$name['type'] && $dupe_name['full']==$name['full']) {
+					// Take care not to skip the "primary" name
+					if ($num==$primary) {
+						$primary=$dupe_num;
+					}
+					$dupe_found=true;
+					break;
+				}
+			}
+			if ($dupe_found) {
+				continue;
+			}
+			if ($title=$name['type']=='_MARNM') {
+				$title='title="'.$factarray['_MARNM'].'"';
+			} else {
+				$title='';
+			}
+			if ($num==$primary) {
+				$class='list_item name2';
+				$sex_image=$person->getSexImage();
+				list($surn, $givn)=explode(',', $name['sort']);
+			} else {
+				$class='list_item';
+				$sex_image='';
+			}
+			$names_html[]='<span '.$title.' class="'.$class.'">'.PrintReady($name['list']).'</span>'.$sex_image;
+			}
+		echo implode('<br/>', $names_html);
+
+		//-- Birth date
+		echo "<td class=\"list_value_wrap rela\">";
+		echo "[x]";
+		echo "</td";
+		
+		echo "</tr>\n";
+	}
+	echo "</tbody>";
+	echo "</table>\n";
+	echo "</div>";
+	
+}
+
+
 /**
  * print a sortable table of individuals
  *

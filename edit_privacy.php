@@ -125,7 +125,8 @@ function search_ID_details($checkVar, $outputVar) {
 $PRIVACY_MODULE = get_privacy_file();
 
 print_header($pgv_lang["privacy_header"]);
-require 'js/autocomplete.js.htm';
+
+if ($ENABLE_AUTOCOMPLETE) require './js/autocomplete.js.htm';
 ?>
 <table class="facts_table <?php print $TEXT_DIRECTION; ?>">
 	<tr>

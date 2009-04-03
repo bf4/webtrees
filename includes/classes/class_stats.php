@@ -2519,31 +2519,19 @@ class stats {
 		global $DBTYPE;
 		static $cache = array();
 		$id = md5($sql)."_{$count}";
-		if (isset($cache[$id]))
-		{
+		if (isset($cache[$id])) {
 			return $cache[$id];
 		}
-		// If we alter the SQL for a specific database for LIMIT reasons, clear the $count so we don't alter it more later
-		switch($DBTYPE)
-		{
-			case 'mssql':
-			case 'sybase':
-			{
-				if ($count > 0)
-				{
-					$sql = preg_replace('/^([\s(])*SELECT/i', "SELECT TOP {$count}", $sql);
-					$count = 0;
-				}
-				break;
-			}
+
+		if ($count) {
+			$sql=sql_limit_select_query($sql, $count);
 		}
+
 		$rows = array();
-		$tempsql = dbquery($sql, true, $count);
-		if (!DB::isError($tempsql))
-		{
+		$tempsql = dbquery($sql, true);
+		if (!DB::isError($tempsql)) {
 			$res=& $tempsql;
-			while($row =& $res->fetchRow(DB_FETCHMODE_ASSOC))
-			{
+			while ($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)) {
 				$rows[] = $row;
 			}
 			$res->free();

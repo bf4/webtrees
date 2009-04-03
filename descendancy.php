@@ -25,6 +25,7 @@
  */
 
 require './config.php';
+
 require './includes/controllers/descendancy_ctrl.php';
 require './includes/functions/functions_print_lists.php';
 
@@ -32,7 +33,8 @@ $controller=new DescendancyController();
 $controller->init();
 
 print_header($controller->name." ".$pgv_lang["descend_chart"]);
-require './js/autocomplete.js.htm';
+
+if ($ENABLE_AUTOCOMPLETE) require './js/autocomplete.js.htm';
 
 // LBox =====================================================================================
 if ($MULTI_MEDIA && file_exists("modules/lightbox/album.php")) {

@@ -28,8 +28,8 @@
 
 require './config.php';
 
-require_once("includes/functions/functions_charts.php");
-require_once("includes/classes/class_person.php");
+require_once './includes/functions/functions_charts.php';
+require_once './includes/classes/class_person.php';
 
 function getRelationshipSentence($node, $pid1, $pid2) {
 	global $pgv_lang, $lang_short_cut, $LANGUAGE, $path_to_find;
@@ -485,7 +485,8 @@ $disp = true;
 $title_string .= $pgv_lang["relationship_chart"];
 // -- print html header information
 print_header($title_string);
-require 'js/autocomplete.js.htm';
+
+if ($ENABLE_AUTOCOMPLETE) require './js/autocomplete.js.htm';
 
 // Lbox additions if installed ---------------------------------------------------------------------------------------------
 if ($MULTI_MEDIA && file_exists("modules/lightbox/album.php")) {
@@ -725,7 +726,7 @@ if ($view!="preview") {
 		print "</tr><tr>";
 		if (($disp)&&(!$check_node)) {
 			print "<td class=\"topbottombar wrap vmiddle center\" colspan=\"2\">";
-			if (isset($_SESSION["relationships"])) 
+			if (isset($_SESSION["relationships"]))
 				if ($path_to_find==0) print "<span class=\"error\">".$pgv_lang["no_link_found"]."</span><br />";
 				else print "<span class=\"error\">".$pgv_lang["no_other_link_found"]."</span><br />";
 			if (!$followspouse) {

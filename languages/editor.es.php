@@ -148,6 +148,7 @@ $pgv_lang["confirm_remove"]			= "¿Está seguro de que quiere desvincular esta p
 $pgv_lang["confirm_remove_object"]	= "¿Está seguro de querer borrar este objeto de la base de datos?";
 $pgv_lang["create_repository"]		= "Crear Repositorio";
 $pgv_lang["create_shared_note"]		= "Crear una nueva nota compartida";
+$pgv_lang["create_shared_note_assisted"]	= "Crear una nueva nota compartida usando el ayudante";
 $pgv_lang["create_source"]			= "Crear una nueva fuente";
 $pgv_lang["current_person"]         = "La misma persona";
 $pgv_lang["date"]					= "Fecha";

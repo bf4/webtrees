@@ -427,9 +427,9 @@ function print_header($title, $head="", $use_alternate_styles=true) {
 
 	if (empty($META_TITLE)) $metaTitle = ' - '.PGV_PHPGEDVIEW;
 	else $metaTitle = " - ".$META_TITLE.' - '.PGV_PHPGEDVIEW;
-
-	$title = stripLRMRLM(PrintReady(strip_tags($title.$metaTitle), TRUE));
-
+	
+	$title = PrintReady(stripLRMRLM(strip_tags($title.$metaTitle), TRUE));
+	
 	$GEDCOM_TITLE = get_gedcom_setting(PGV_GED_ID, 'title');
 	if ($ENABLE_RSS){
 		$applicationType = "application/rss+xml";
@@ -2213,7 +2213,7 @@ function format_fact_place(&$eventObj, $anchor=false, $sub=false, $lds=false) {
 				$map_lati=trim(strtr($map_lati,"NSEW,�"," - -. ")); // S5,6789 ==> -5.6789
 				$map_long=trim(strtr($map_long,"NSEW,�"," - -. ")); // E3.456� ==> 3.456
 				$html.=' <a target="_BLANK" href="'.encode_url("http://www.mapquest.com/maps/map.adp?searchtype=address&formtype=latlong&latlongtype=decimal&latitude={$map_lati}&longitude={$map_long}").'"><img src="images/mapq.gif" border="0" alt="Mapquest &copy;" title="Mapquest &copy;" /></a>';
-				$html.=' <a target="_BLANK" href="'.encode_url("http://maps.google.com/maps?q={$map_lati},{$map_long}").'"><img src="images/bubble.gif" border="0" alt="Google Maps &copy;" title="Google Maps &copy;" /></a>';
+				$html.=' <a target="_BLANK" href="'.encode_url("http://maps.google.com/maps?q={$map_lati},{$map_long}($place)").'"><img src="images/bubble.gif" border="0" alt="Google Maps &copy;" title="Google Maps &copy;" /></a>';
 				$html.=' <a target="_BLANK" href="'.encode_url("http://www.multimap.com/map/browse.cgi?lat={$map_lati}&lon={$map_long}&scale=&icon=x").'"><img src="images/multim.gif" border="0" alt="Multimap &copy;" title="Multimap &copy;" /></a>';
 				$html.=' <a target="_BLANK" href="'.encode_url("http://www.terraserver.com/imagery/image_gx.asp?cpx={$map_long}&cpy={$map_lati}&res=30&provider_id=340").'"><img src="images/terrasrv.gif" border="0" alt="TerraServer &copy;" title="TerraServer &copy;" /></a>';
 			}
@@ -2385,7 +2385,7 @@ function print_add_new_fact($id, $usedfacts, $type) {
 	echo "<form method=\"get\" name=\"newfactform\" action=\"\" onsubmit=\"return false;\">";
 	echo "<select id=\"newfact\" name=\"newfact\">";
 	foreach($addfacts as $indexval => $fact) {
-		echo stripLRMRLM(PrintReady("<option value=\"$fact\">".$factarray[$fact]. " [".$fact."]</option>"));
+		echo PrintReady(stripLRMRLM("<option value=\"$fact\">".$factarray[$fact]. " [".$fact."]</option>"));
 	}
 	if (($type == "INDI") || ($type == "FAM")) echo "<option value=\"EVEN\">".$pgv_lang["custom_event"]." [EVEN]</option>";
 	echo "</select>";
@@ -2525,7 +2525,7 @@ function print_findnote_link($element_id, $notename="", $asString=false, $ged=''
 	$text = $pgv_lang["find_shared_note"];
 	if (isset($PGV_IMAGES["note"]["button"])) $Link = "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["note"]["button"]."\" alt=\"".$text."\" title=\"".$text."\" border=\"0\" align=\"middle\" />";
 	else $Link = $text;
-	$out = "<a href=\"javascript:;\" onclick=\"findnote(document.getElementById('".$element_id."'), document.getElementById('".$notename."'), '".$ged."'); findtype='note'; return false;\">";
+	$out = " <a href=\"javascript:;\" onclick=\"findnote(document.getElementById('".$element_id."'), document.getElementById('".$notename."'), '".$ged."'); findtype='note'; return false;\">";
 	$out .= $Link;
 	$out .= "</a>";
 	if ($asString) return $out;
@@ -2550,13 +2550,12 @@ function print_findrepository_link($element_id, $ged='', $asString=false) {
 function print_findmedia_link($element_id, $choose="", $ged='', $asString=false) {
 	global $pgv_lang, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM;
 
-	$out = '';
-	$text = $pgv_lang["find_media"];
 	if (empty($ged)) $ged=$GEDCOM;
+	$text = $pgv_lang["find_media"];
 	if (isset($PGV_IMAGES["media"]["button"])) $Link = "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["media"]["button"]."\" alt=\"".$text."\" title=\"".$text."\" border=\"0\" align=\"middle\" />";
 	else $Link = $text;
-	$out .= " <a href=\"javascript:;\" onclick=\"findMedia(document.getElementById('".$element_id."'), '".$choose."', '".$ged."'); return false;\">";
-	$out .=  $Link;
+	$out = " <a href=\"javascript:;\" onclick=\"findMedia(document.getElementById('".$element_id."'), '".$choose."', '".$ged."'); return false;\">";
+	$out .= $Link;
 	$out .= "</a>";
 	if ($asString) return $out;
 	echo $out;
