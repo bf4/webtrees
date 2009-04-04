@@ -4023,17 +4023,18 @@ function mediaFileInfo($fileName, $thumbName, $mid, $name='', $notes='', $obeyVi
 function pathinfo_utf($path) {
 	if (strpos($path, '/')!==false) {
 		$basename=end(explode('/', $path));
+		$dirname=substr($path, 0, strlen($path) - strlen($basename) - 1);
 	} elseif (strpos($path, '\\') !== false) {
 		$basename=end(explode('\\', $path));
+		$dirname=substr($path, 0, strlen($path) - strlen($basename) - 1);
 	}	else {
-		return false;
+		$basename=$path;
+		$dirname='.';
 	}
 	
 	if (empty($basename)) {
 		return false;
 	}
-
-	$dirname=substr($path, 0, strlen($path) - strlen($basename) - 1);
 
 	if (strpos($basename, '.')!==false) {
 		$extension=end(explode('.', $path));
