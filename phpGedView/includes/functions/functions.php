@@ -4021,27 +4021,26 @@ function mediaFileInfo($fileName, $thumbName, $mid, $name='', $notes='', $obeyVi
 // PHP's native pathinfo() function does not work with filenames that contain UTF8 characters.
 // See http://uk.php.net/pathinfo
 function pathinfo_utf($path) {
-	if (strpos($path, '/')!==false) {
-		$basename=end(explode('/', $path));
-		$dirname=substr($path, 0, strlen($path) - strlen($basename) - 1);
-	} elseif (strpos($path, '\\') !== false) {
-		$basename=end(explode('\\', $path));
-		$dirname=substr($path, 0, strlen($path) - strlen($basename) - 1);
-	}	else {
-		$basename=$path;
-		$dirname='.';
+	if (empty($path)) {
+		return array('dirname'=>'', 'basename'=>'', 'extension'=>'', 'filename'=>'');
 	}
-	
-	if (empty($basename)) {
-		return false;
+	if (strpos($path, '/')!==false) {
+		$basename = end(explode('/', $path));
+		$dirname = substr($path, 0, strlen($path) - strlen($basename) - 1);
+	} else if (strpos($path, '\\') !== false) {
+		$basename = end(explode('\\', $path));
+		$dirname = substr($path, 0, strlen($path) - strlen($basename) - 1);
+	} else {
+		$basename = $path;		// We have just a file name
+		$dirname = '';
 	}
 
 	if (strpos($basename, '.')!==false) {
-		$extension=end(explode('.', $path));
-		$filename=substr($basename, 0, strlen($basename) - strlen($extension) - 1);
+		$extension = end(explode('.', $path));
+		$filename = substr($basename, 0, strlen($basename) - strlen($extension) - 1);
 	} else {
-		$extension='';
-		$filename=$basename;
+		$extension = '';
+		$filename = $basename;
 	}
 
 	return array('dirname'=>$dirname, 'basename'=>$basename, 'extension'=>$extension, 'filename'=>$filename);
