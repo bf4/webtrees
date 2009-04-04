@@ -4032,7 +4032,7 @@ function pathinfo_utf($path) {
 		$dirname = substr($path, 0, strlen($path) - strlen($basename) - 1);
 	} else {
 		$basename = $path;		// We have just a file name
-		$dirname = '';
+		$dirname = '.';       // For compatibility with pathinfo()
 	}
 
 	if (strpos($basename, '.')!==false) {
