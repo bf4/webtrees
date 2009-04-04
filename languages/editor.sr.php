@@ -224,7 +224,7 @@ $pgv_lang["replace_with"]			= "Zemeni sa";
 $pgv_lang["undo"]					= "Opozovi";
 $pgv_lang["undo_all"]				= "Opozovi sve promene";
 ##$pgv_lang["undo_all_confirm"]		= "Are you sure you want to undo all of the changes for this GEDCOM?";
-$pgv_lang["undo_successful"]		= "Opoziv useo";
+$pgv_lang["undo_successful"]		= "Opoziv uspeo";
 $pgv_lang["update_successful"]		= "Uspešno ažurirano";
 ##$pgv_lang["upload"]					= "Upload";
 ##$pgv_lang["upload_error"]			= "There was an error uploading your file.";
@@ -234,4 +234,12 @@ $pgv_lang["update_successful"]		= "Uspešno ažurirano";
 ##$pgv_lang["upload_successful"]		= "Upload successful.";
 ##$pgv_lang["view_change_diff"]		= "View Change Diff";
 
+$pgv_lang["add_opf_child"]				= "Dodaj dete i započni porodicu sa samo jednim roditeljem";
+$pgv_lang["add_shared_note"]		= "Dodaj novu zajedničku belešku";
+$pgv_lang["add_shared_note_lbl"]	= "Dodaj zajedničku belešku";
+$pgv_lang["birthplace_search"]		= "Mesto rođenja:";
+$pgv_lang["change"]					= "Promeni";
+$pgv_lang["create_shared_note"]		= "Napravi novu zajedničku belešku";
+$pgv_lang["link_as_child"]			= "Dodaj ovu osobu kao dete već upisanoj porodici";
+$pgv_lang["link_as_husband"]		= "Dodaj ovu osobu kao supruga već upisanoj porodici";
 ?>
