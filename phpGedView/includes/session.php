@@ -350,6 +350,17 @@ if (file_exists($INDEX_DIRECTORY."gedcoms.php")) {
 
 //-- connect to the database
 $DBPASS = str_replace(array("\\\\", "\\\"", "\\\$"), array("\\", "\"", "\$"), $DBPASS); // remove escape codes before using PW
+
+// New PDO-based connection
+require_once 'includes/classes/class_pgv_db.php';
+try {
+	PGV_DB::createInstance($DBTYPE, $DBHOST, $DBPORT, $DBNAME, $DBUSER, $DBPASS, $DBPERSIST, $DB_UTF8_COLLATION);
+	//unset($DBUSER, $DBPASS);
+	$PGV_DB_CONNECTED=true;
+} catch (PDOException $ex) {
+	$PGV_DB_CONNECTED=false;
+}
+
 $PGV_DB_CONNECTED = check_db();
 
 $logout=safe_GET_bool('logout');
