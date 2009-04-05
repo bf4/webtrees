@@ -227,6 +227,9 @@ class PGV_DB {
 
 	// Add logging/functionality to prepare()
 	public static function prepare($statement) {
+		if (!self::$pdo instanceof PDO) {
+			throw new PDOException("No Connection Established");
+		}
 		return new PGV_DBStatement(self::$pdo->prepare($statement));
 	}
 	
