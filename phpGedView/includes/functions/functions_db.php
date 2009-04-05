@@ -3064,6 +3064,24 @@ function get_user_count() {
 		->fetchOne();
 }
 
+function get_admin_user_count() {
+	global $TBLPREFIX;
+
+	return
+		PGV_DB::prepare("SELECT COUNT(*) FROM {$TBLPREFIX}users WHERE u_canadmin=?")
+		->bindValue(1, 'Y')
+		->fetchOne();
+}
+
+function get_non_admin_user_count() {
+	global $TBLPREFIX;
+
+	return
+		PGV_DB::prepare("SELECT COUNT(*) FROM {$TBLPREFIX}users WHERE u_canadmin<>?")
+		->bindValue(1, 'Y')
+		->fetchOne();
+}
+
 // Get a list of logged-in users
 function get_logged_in_users() {
 	global $TBLPREFIX;
