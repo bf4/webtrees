@@ -152,7 +152,7 @@ class PGV_DB {
 	}
 
 	// Display the query log as a table, for debugging
-	public function getQueryLog() {
+	public static function getQueryLog() {
 		return '<table border="1"><tr><th>Query</th><th>Rows</th><th>Time (ms)</th></tr>'.implode('', self::$log).'</table>';
 	}
 
@@ -290,7 +290,7 @@ class PGV_DBStatement {
 		case 'fetchAll':
 			// Automatically execute the query
 			if (!$this->executed) {
-				$this->pdostatement->execute();
+				$this->execute();
 				$this->executed=true;
 			}
 			// no break;
@@ -306,7 +306,7 @@ class PGV_DBStatement {
 	// Fetch one row, and close the cursor.  e.g. SELECT * FROM foo WHERE pk=bar
 	public function fetchOneRow($fetch_style=PDO::FETCH_OBJ) {
 		if (!$this->executed) {
-			$this->pdostatement->execute();
+			$this->execute();
 		}
 		$row=$this->pdostatement->fetch($fetch_style);
 		$this->pdostatement->closeCursor();
@@ -317,7 +317,7 @@ class PGV_DBStatement {
 	// Fetch one value and close the cursor.  e.g. SELECT MAX(foo) FROM bar
 	public function fetchOne() {
 		if (!$this->executed) {
-			$this->pdostatement->execute();
+			$this->execute();
 		}
 		$row=$this->pdostatement->fetch(PDO::FETCH_NUM);
 		$this->pdostatement->closeCursor();
@@ -332,7 +332,7 @@ class PGV_DBStatement {
 	// Fetch two columns, and return an associative array of col1=>col2
 	public function fetchAssoc() {
 		if (!$this->executed) {
-			$this->pdostatement->execute();
+			$this->execute();
 		}
 		$rows=array();
 		while ($row=$this->pdostatement->fetch(PDO::FETCH_NUM)) {
