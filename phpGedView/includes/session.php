@@ -97,6 +97,11 @@ if (!isset($DB_UTF8_COLLATION)) {
 	$DB_UTF8_COLLATION=false;
 }
 
+// New setting, added to config.php in 4.?.? (TODO - when the svn server stops sucking, fill this version in).
+if (!isset($DBPORT)) {
+	$DBPORT='';
+}
+
 @ini_set('arg_separator.output', '&amp;');
 @ini_set('error_reporting', 0);
 @ini_set('display_errors', '1');
