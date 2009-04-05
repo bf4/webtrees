@@ -65,8 +65,6 @@ case 'mssql':
 	define('PGV_DB_RANDOM',        'NEWID');
 	define('PGV_DB_TEXT_TYPE',     'TEXT');
 	define('PGV_DB_LONGTEXT_TYPE', 'TEXT');
-	define('PGV_DB_BEGIN_TRANS',   'BEGIN TRANSACTION');
-	define('PGV_DB_COMMIT_TRANS',  'COMMIT TRANSACTION');
 	define('PGV_DB_UTF8_TABLE',    '');
 	break;
 case 'sqlite':
@@ -92,8 +90,6 @@ case 'sqlite':
 	define('PGV_DB_RANDOM',        'RANDOM()');
 	define('PGV_DB_TEXT_TYPE',     'TEXT');
 	define('PGV_DB_LONGTEXT_TYPE', 'TEXT');
-	define('PGV_DB_BEGIN_TRANS',   'BEGIN');
-	define('PGV_DB_COMMIT_TRANS',  'COMMIT');
 	define('PGV_DB_UTF8_TABLE',    '');
 	break;
 case 'pgsql':
@@ -119,8 +115,6 @@ case 'pgsql':
 	define('PGV_DB_RANDOM',        'RANDOM()');
 	define('PGV_DB_TEXT_TYPE',     'TEXT');
 	define('PGV_DB_LONGTEXT_TYPE', 'TEXT');
-	define('PGV_DB_BEGIN_TRANS',   'BEGIN');
-	define('PGV_DB_COMMIT_TRANS',  'COMMIT');
 	define('PGV_DB_UTF8_TABLE',    '');
 	break;
 case 'mysql':
@@ -148,8 +142,6 @@ default:
 	define('PGV_DB_RANDOM',        'RAND()');
 	define('PGV_DB_TEXT_TYPE',     'TEXT');
 	define('PGV_DB_LONGTEXT_TYPE', 'LONGTEXT');
-	define('PGV_DB_BEGIN_TRANS',   'BEGIN');
-	define('PGV_DB_COMMIT_TRANS',  'COMMIT');
 	// Since install.php creates the tables before saving the configuration settings to config.php,
 	// we must check its temporary configuration settings as well.
 	if (isset($_SESSION['install_config']['DB_UTF8_COLLATION']) && $_SESSION['install_config']['DB_UTF8_COLLATION'] || $DB_UTF8_COLLATION) {
