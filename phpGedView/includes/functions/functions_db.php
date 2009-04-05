@@ -3059,9 +3059,15 @@ function get_all_users($order='ASC', $key1='lastname', $key2='firstname') {
 function get_user_count() {
 	global $TBLPREFIX;
 
-	return
-		PGV_DB::prepare("SELECT COUNT(*) FROM {$TBLPREFIX}users")
-		->fetchOne();
+	try {
+		return
+			PGV_DB::prepare("SELECT COUNT(*) FROM {$TBLPREFIX}users")
+			->fetchOne();
+	}
+	catch (PDOException $ex) {
+		// We may call this function before creating the table, so must check for errors.
+		return null;
+	}
 }
 
 function get_admin_user_count() {
@@ -3086,25 +3092,37 @@ function get_non_admin_user_count() {
 function get_logged_in_users() {
 	global $TBLPREFIX;
 
-	return
-		PGV_DB::prepare(
-			"SELECT u_username, u_username FROM {$TBLPREFIX}users WHERE u_loggedin=?"
-		)
-		->bindValue(1, 'Y')
-		->fetchAssoc();
+	try {
+		return
+			PGV_DB::prepare(
+				"SELECT u_username, u_username FROM {$TBLPREFIX}users WHERE u_loggedin=?"
+			)
+			->bindValue(1, 'Y')
+			->fetchAssoc();
+	}
+	catch (PDOException $ex) {
+		// We may call this function before creating the table, so must check for errors.
+		return array();
+	}
 }
 
 // Get a list of logged-in users who haven't been active recently
 function get_idle_users($time) {
 	global $TBLPREFIX;
 
-	return
-		PGV_DB::prepare(
-			"SELECT u_username, u_username FROM {$TBLPREFIX}users WHERE u_loggedin=? AND u_sessiontime BETWEEN 1 AND ?"
-		)
-		->bindValue(1, 'Y')
-		->bindValue(2, (int)$time)
-		->fetchAssoc();
+	try {
+		return
+			PGV_DB::prepare(
+				"SELECT u_username, u_username FROM {$TBLPREFIX}users WHERE u_loggedin=? AND u_sessiontime BETWEEN 1 AND ?"
+			)
+			->bindValue(1, 'Y')
+			->bindValue(2, (int)$time)
+			->fetchAssoc();
+	}
+	catch (PDOException $ex) {
+		// We may call this function before creating the table, so must check for errors.
+		return array();
+	}
 }
 
 // Get the ID for a username
