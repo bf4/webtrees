@@ -763,25 +763,21 @@ class stats {
 
 	static function totalUsers($params=null)
 	{
-		$adj = 0;
-		if(isset($params[0]) && $params[0] != '') {$adj = (integer)$params[0];}else{$adj = 0;}
-		return get_user_count() + $adj;
+		if (!empty($params[0])) {
+			return get_user_count() + (int)$params[0];
+		} else {
+			return get_user_count();
+		}
 	}
 
 	static function totalAdmins()
 	{
-		global $TBLPREFIX;
-		$rows = self::_runSQL("SELECT COUNT(u_username) AS tot FROM {$TBLPREFIX}users WHERE u_canadmin='Y'");
-		if (!isset($rows[0])) {return 0;}
-		return $rows[0]['tot'];
+		return get_admin_user_count();
 	}
 
 	static function totalNonAdmins()
 	{
-		global $TBLPREFIX;
-		$rows = self::_runSQL("SELECT COUNT(u_username) AS tot FROM {$TBLPREFIX}users WHERE u_canadmin!='Y'");
-		if (!isset($rows[0])) {return 0;}
-		return $rows[0]['tot'];
+		return get_non_admin_user_count();
 	}
 
 	function _totalMediaType($type='all')
