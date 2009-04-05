@@ -9,6 +9,9 @@
 =====================================================================
 
 
+Version 4.2.2
+ - Fixed [ 2734393 ] Review Changes Diff for Appended fails (fisharebest)
+
 Version 4.2.1
  - Fixed: [ 2730614 ] SVN 5320: Media Upload fails (canajun2eh)
  - Fixed: [ 2595714 ] Truncated first letter of thumb name if non-ASCII character (fisharebest)

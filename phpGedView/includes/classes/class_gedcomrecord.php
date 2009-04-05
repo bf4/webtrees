@@ -177,6 +177,12 @@ class GedcomRecord {
 			$object=new GedcomRecord($data, $simple);
 			break;
 		}
+		
+		// This is an object from the database, but we created it from raw gedcom
+		// rather than a database row.  Set the gedcom to indicate that it is not
+		// a dynamically created record.
+		$object->ged_id=$ged_id;
+
 		if (!empty($fromfile)) {
 			$object->setChanged(true);
 		}
