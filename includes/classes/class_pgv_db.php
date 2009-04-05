@@ -321,4 +321,17 @@ class PGV_DBStatement {
 			return $row;
 		}
 	}
+
+	// Fetch two columns, and return an associative array of col1=>col2
+	public function fetchAssoc() {
+		if (!$this->executed) {
+			$this->pdostatement->execute();
+		}
+		$rows=array();
+		while ($row=$this->pdostatement->fetch(PDO::FETCH_NUM)) {
+			$rows[$row[0]]=$row[1];
+		}
+		$this->pdostatement->closeCursor();
+		return $rows;
+	}
 }
