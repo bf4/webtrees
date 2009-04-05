@@ -227,7 +227,6 @@ class PGV_DB {
 
 	// Add logging/functionality to prepare()
 	public static function prepare($statement) {
-		if (is_null(self::$pdo)) var_dump($eek);
 		return new PGV_DBStatement(self::$pdo->prepare($statement));
 	}
 	
