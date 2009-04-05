@@ -3049,75 +3049,63 @@ function delete_user($user_id) {
 }
 
 function get_all_users($order='ASC', $key1='lastname', $key2='firstname') {
-	global $DBCONN, $TBLPREFIX;
+	global $TBLPREFIX;
 
-	$users=array();
-	$res=dbquery("SELECT u_username FROM {$TBLPREFIX}users ORDER BY u_{$key1} {$order}, u_{$key2} {$order}");
-	while ($row=$res->fetchRow()) {
-		$users[$row[0]]=$row[0];
-	}
-	$res->free();
-	return $users;
+	return
+		PGV_DB::prepare("SELECT u_username, u_username FROM {$TBLPREFIX}users ORDER BY u_{$key1} {$order}, u_{$key2} {$order}")
+		->fetchAssoc();
 }
 
 function get_user_count() {
 	global $TBLPREFIX;
 
-	$res=dbquery("SELECT count(u_username) FROM {$TBLPREFIX}users");
-	$row=$res->fetchRow();
-	$res->free();
-	return $row[0];
+	return
+		PGV_DB::prepare("SELECT COUNT(*) FROM {$TBLPREFIX}users")
+		->fetchOne();
 }
 
 // Get a list of logged-in users
 function get_logged_in_users() {
-	global $DBCONN, $TBLPREFIX;
+	global $TBLPREFIX;
 
-	$users=array();
-	$res=dbquery("SELECT u_username FROM {$TBLPREFIX}users WHERE u_loggedin='Y'");
-	while ($row=$res->fetchRow()) {
-		$users[$row[0]]=$row[0];
-	}
-	$res->free();
-	return $users;
+	return
+		PGV_DB::prepare(
+			"SELECT u_username, u_username FROM {$TBLPREFIX}users WHERE u_loggedin=?"
+		)
+		->bindValue(1, 'Y')
+		->fetchAssoc();
 }
 
 // Get a list of logged-in users who haven't been active recently
 function get_idle_users($time) {
-	global $DBCONN, $TBLPREFIX;
+	global $TBLPREFIX;
 
-	$time=(int)($time);
-	$users=array();
-	$res=dbquery("SELECT u_username FROM {$TBLPREFIX}users WHERE u_loggedin='Y' AND u_sessiontime BETWEEN 1 AND {$time}");
-	while ($row=$res->fetchRow()) {
-		$users[$row[0]]=$row[0];
-	}
-	$res->free();
-	return $users;
+	return
+		PGV_DB::prepare(
+			"SELECT u_username, u_username FROM {$TBLPREFIX}users WHERE u_loggedin=? AND u_sessiontime BETWEEN 1 AND ?"
+		)
+		->bindValue(1, 'Y')
+		->bindValue(2, (int)$time)
+		->fetchAssoc();
 }
 
 // Get the ID for a username
 // (Currently ID is the same as username, but this will change in the future)
 function get_user_id($username) {
-	global $DBCONN, $TBLPREFIX;
+	global $TBLPREFIX;
 
-	if (!is_object($DBCONN) || DB::isError($DBCONN)) {
-		return false;
+	try {
+		return
+			PGV_DB::prepare(
+				"SELECT u_username FROM {$TBLPREFIX}users WHERE u_username=?"
+			)
+			->bindValue(1, $username)
+			->fetchOne();
 	}
-
-	$username=$DBCONN->escapeSimple($username);
-
-	$res=dbquery("SELECT u_username FROM {$TBLPREFIX}users WHERE u_username='{$username}'", false);
-	// We may call this function before creating the table, so must check for errors.
-	if ($res!=false && !DB::isError($res)) {
-		if ($row=$res->fetchRow()) {
-			$res->free();
-			return $row[0];
-		} else {
-			return null;
-		}
+	catch (PDOException $ex) {
+		// We may call this function before creating the table, so must check for errors.
+		return null;
 	}
-	return null;
 }
 
 // Get the username for a user ID
@@ -3127,11 +3115,12 @@ function get_user_name($user_id) {
 }
 
 function set_user_password($user_id, $password) {
-	global $DBCONN, $TBLPREFIX;
+	global $TBLPREFIX;
 
-	$user_id=$DBCONN->escapeSimple($user_id);
-	$password=$DBCONN->escapeSimple($password);
-	dbquery("UPDATE {$TBLPREFIX}users SET u_password='{$password}' WHERE u_username='{$user_id}'");
+	PGV_DB::prepare(
+		"UPDATE {$TBLPREFIX}users SET u_password=? WHERE u_username=?"
+	)
+	->execute(array($password, $user_id));
 
 	global $PGV_USERS_cache;
 	if (isset($PGV_USERS_cache[$user_id])) {
@@ -3140,17 +3129,14 @@ function set_user_password($user_id, $password) {
 }
 
 function get_user_password($user_id) {
-	global $DBCONN, $TBLPREFIX;
+	global $TBLPREFIX;
 
-	$user_id=$DBCONN->escapeSimple($user_id);
-	$res=dbquery("SELECT u_password FROM {$TBLPREFIX}users WHERE u_username='{$user_id}'");
-	$row=$res->fetchRow();
-	$res->free();
-	if ($row) {
-		return $row[0];
-	} else {
-		return null;
-	}
+	return
+		PGV_DB::prepare(
+			"SELECT u_password FROM {$TBLPREFIX}users WHERE u_username=?"
+		)
+		->bindValue(1, $user_id)
+		->fetchOne();
 }
 
 ////////////////////////////////////////////////////////////////////////////////
