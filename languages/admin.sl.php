@@ -3,7 +3,7 @@
  * Slovenian texts
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
+ * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -117,13 +117,17 @@ $pgv_lang["ip_address"]				= "IP naslov";
 $pgv_lang["date_time"]				= "Datum in čas";
 $pgv_lang["log_message"]			= "Sporočilo dnevnika";
 $pgv_lang["searchtype"]				= "Tip iskanja";
-$pgv_lang["query"]					= "Poizvedba";
-$pgv_lang["user"]					= "Prijavljen uporabnik";
-$pgv_lang["thumbnail_deleted"]				= "Sličica je bila uspešno izbrisana.";
-$pgv_lang["thumbnail_not_deleted"]			= "Sličice ni bilo mogoče izbrisati.";
-$pgv_lang["step2"]					= "Korak 2 od 4:";
+$pgv_lang["query"]				= "Poizvedba";
+$pgv_lang["user"]				= "Prijavljen uporabnik";
+$pgv_lang["editors"]				= "Uredniki";
+$pgv_lang["gedcom_admins"]			= "GEDCOM Upravitelji";
+$pgv_lang["site_admins"]			= "Upravitelji spletne strani";
+$pgv_lang["nobody"]				= "Nihče";
+$pgv_lang["thumbnail_deleted"]			= "Sličica je bila uspešno izbrisana.";
+$pgv_lang["thumbnail_not_deleted"]		= "Sličice ni bilo mogoče izbrisati.";
+$pgv_lang["step2"]				= "Korak 2 od 4:";
 $pgv_lang["refresh"]				= "Osveži";
-$pgv_lang["move_file_success"]		= "Datoteke fotografij in sličic so bile uspešno premeščene.";
+$pgv_lang["move_file_success"]			= "Datoteke fotografij in sličic so bile uspešno premeščene.";
 $pgv_lang["media_folder_corrupt"]	= "Imenik fotografij je pokvarjen.";
 $pgv_lang["media_file_not_deleted"]	= "Datoteka fotografije ne more biti izbrisana.";
 $pgv_lang["gedcom_deleted"] 		= "GEDCOM [#GED#] uspešno izbrisan.";
@@ -313,6 +317,8 @@ $pgv_lang["PGV_SMTP_PORT"] 						= "SMTP Vrata";
 $pgv_lang["PGV_SMTP_AUTH"] 						= "Uporabi ime in geslo";
 $pgv_lang["PGV_SMTP_AUTH_USER"] 				= "Uporabniško ime";
 $pgv_lang["PGV_SMTP_AUTH_PASS"] 				= "Geslo";
+$pgv_lang["PGV_SMTP_SSL"]					= "SSL Prijava";
+$pgv_lang["PGV_SMTP_FROM_NAME"]					= "Ime pošiljatelja";
 $pgv_lang["PGV_STORE_MESSAGES"]					= "Dovoli, da se sporočila shranijo na spletno stran";
 $pgv_lang["phpinfo"]							= "Informacije o PHP";
 $pgv_lang["place_cleanup_detected"] 					= "Zaznane napake kodiranja.  Te napake se mora odpraviti";
@@ -410,12 +416,31 @@ $pgv_lang["tag"]          = "oznaka";
 $pgv_lang["spacing"]      = "razmik";
 $pgv_lang["ADVANCED_NAME_FACTS"] = "Napredno ime dejstev";
 $pgv_lang["ADVANCED_PLAC_FACTS"] = "Napredno ime dejstev kraja";
-$pgv_lang["SURNAME_TRADITION"]		= "Tradisija priimka";
+$pgv_lang["SURNAME_TRADITION"]		= "Tradicija priimka";
 $pgv_lang["tradition_spanish"]		= "Španska";
 $pgv_lang["tradition_portuguese"]	= "Portugalska";
 $pgv_lang["tradition_icelandic"]	= "Islandska";
 $pgv_lang["tradition_paternal"]		= "Očetova";
 $pgv_lang["tradition_polish"]		= "Poljska";
 $pgv_lang["tradition_none"]		= "Nobena";
+
+// -- The following text is used to build the phrase "i years, j months, k days, l hours, m minutes"
+// -- for use in text such as "xxx ago" or "after xxx" or "in xxx"
+$pgv_lang["elapsedYear1"]	=	"1 leti";
+$pgv_lang["elapsedYear2"]	=	"#pgv_lang[global_num1]# letoma";	// used in Polish for 2,3,4 or 22,23,24 or 32,33,34 etc.
+$pgv_lang["elapsedYears"]	=	"#pgv_lang[global_num1]# leti";
+$pgv_lang["elapsedMonth1"]	=	"1 mesecem";
+$pgv_lang["elapsedMonth2"]	=	"#pgv_lang[global_num1]# mesecema";	// used in Polish for 2,3,4 or 22,23,24 or 32,33,34 etc.
+$pgv_lang["elapsedMonths"]	=	"#pgv_lang[global_num1]# meseci";
+$pgv_lang["elapsedDay1"]	=	"1 dnevom";
+$pgv_lang["elapsedDay2"]	=	"#pgv_lang[global_num1]# dnevi";	// used in Polish for 2,3,4 or 22,23,24 or 32,33,34 etc.
+$pgv_lang["elapsedDays"]	=	"#pgv_lang[global_num1]# dnevi";
+$pgv_lang["elapsedHour1"]	=	"1 uro";
+$pgv_lang["elapsedHour2"]	=	"#pgv_lang[global_num1]# urama";	// used in Polish for 2,3,4 or 22,23,24 or 32,33,34 etc.
+$pgv_lang["elapsedHours"]	=	"#pgv_lang[global_num1]# urami";
+$pgv_lang["elapsedMinute1"]	=	"1 minuto";
+$pgv_lang["elapsedMinute2"]	=	"#pgv_lang[global_num1]# minutami";	// used in Polish for 2,3,4 or 22,23,24 or 32,33,34 etc.
+$pgv_lang["elapsedMinutes"]	=	"#pgv_lang[global_num1]# minutami";
+$pgv_lang["elapsedAgo"]		=	"pred #pgv_lang[global_string1]#";
 
 ?>
