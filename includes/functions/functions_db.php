@@ -265,114 +265,140 @@ function check_for_import($ged) {
 
 //-- gets the first record in the gedcom
 function get_first_xref($type, $ged_id=PGV_GED_ID) {
-	global $TBLPREFIX, $DBCONN;
+	global $TBLPREFIX;
 
 	switch ($type) {
 	case "INDI":
-		$sql="SELECT MIN(i_id) FROM {$TBLPREFIX}individuals WHERE i_file=".$ged_id;
+		return
+			PGV_DB::prepare("SELECT MIN(i_id) FROM {$TBLPREFIX}individuals WHERE i_file=?")
+			->execute(array($ged_id))
+			->fetchOne();
 		break;
 	case "FAM":
-		$sql="SELECT MIN(f_id) FROM ".$TBLPREFIX."families WHERE f_file=".$ged_id;
-		break;
+		return
+			PGV_DB::prepare("SELECT MIN(f_id) FROM {$TBLPREFIX}families WHERE f_file=?")
+			->execute(array($ged_id))
+			->fetchOne();
 	case "SOUR":
-		$sql="SELECT MIN(s_id) FROM ".$TBLPREFIX."sources WHERE s_file=".$ged_id;
-		break;
+		return
+			PGV_DB::prepare("SELECT MIN(s_id) FROM {$TBLPREFIX}sources WHERE s_file=?")
+			->execute(array($ged_id))
+			->fetchOne();
 	case "OBJE":
-		$sql="SELECT MIN(m_media) FROM ".$TBLPREFIX."media WHERE m_gedfile=".$ged_id;
-		break;
+		return
+			PGV_DB::prepare("SELECT MIN(m_media) FROM {$TBLPREFIX}media WHERE m_gedfile=?")
+			->execute(array($ged_id))
+			->fetchOne();
 	default:
-		$sql="SELECT MIN(o_id) FROM ".$TBLPREFIX."other WHERE o_file=".$ged_id." AND o_type='{$type}'";
-		break;
+		return
+			PGV_DB::prepare("SELECT MIN(o_id) FROM {$TBLPREFIX}other WHERE o_file=? AND o_type=?")
+			->execute(array($ged_id, $type))
+			->fetchOne();
 	}
-	$res=dbquery($sql);
-	$row=$res->fetchRow();
-	$res->free();
-	return $row[0];
 }
 
 //-- gets the last record in the gedcom
 function get_last_xref($type, $ged_id=PGV_GED_ID) {
-	global $TBLPREFIX, $DBCONN;
+	global $TBLPREFIX;
 
 	switch ($type) {
 	case "INDI":
-		$sql="SELECT MAX(i_id) FROM {$TBLPREFIX}individuals WHERE i_file=".$ged_id;
+		return
+			PGV_DB::prepare("SELECT MAX(i_id) FROM {$TBLPREFIX}individuals WHERE i_file=?")
+			->execute(array($ged_id))
+			->fetchOne();
 		break;
 	case "FAM":
-		$sql="SELECT MAX(f_id) FROM ".$TBLPREFIX."families WHERE f_file=".$ged_id;
-		break;
+		return
+			PGV_DB::prepare("SELECT MAX(f_id) FROM {$TBLPREFIX}families WHERE f_file=?")
+			->execute(array($ged_id))
+			->fetchOne();
 	case "SOUR":
-		$sql="SELECT MAX(s_id) FROM ".$TBLPREFIX."sources WHERE s_file=".$ged_id;
-		break;
+		return
+			PGV_DB::prepare("SELECT MAX(s_id) FROM {$TBLPREFIX}sources WHERE s_file=?")
+			->execute(array($ged_id))
+			->fetchOne();
 	case "OBJE":
-		$sql="SELECT MAX(m_media) FROM ".$TBLPREFIX."media WHERE m_gedfile=".$ged_id;
-		break;
+		return
+			PGV_DB::prepare("SELECT MAX(m_media) FROM {$TBLPREFIX}media WHERE m_gedfile=?")
+			->execute(array($ged_id))
+			->fetchOne();
 	default:
-		$sql="SELECT MAX(o_id) FROM ".$TBLPREFIX."other WHERE o_file=".$ged_id." AND o_type='{$type}'";
-		break;
+		return
+			PGV_DB::prepare("SELECT MAX(o_id) FROM {$TBLPREFIX}other WHERE o_file=? AND o_type=?")
+			->execute(array($ged_id, $type))
+			->fetchOne();
 	}
-	$res=dbquery($sql);
-	$row=$res->fetchRow();
-	$res->free();
-	return $row[0];
 }
 
 //-- gets the next person in the gedcom
 function get_next_xref($pid, $ged_id=PGV_GED_ID) {
-	global $TBLPREFIX, $DBCONN;
+	global $TBLPREFIX;
 
 	$type=gedcom_record_type($pid, $ged_id);
-	$pid=$DBCONN->escapeSimple($pid);
 	switch ($type) {
 	case "INDI":
-		$sql="SELECT MIN(i_id) FROM {$TBLPREFIX}individuals WHERE i_file={$ged_id} AND i_id>'{$pid}'";
+		return
+			PGV_DB::prepare("SELECT MIN(i_id) FROM {$TBLPREFIX}individuals WHERE i_file=? AND i_id>?")
+			->execute(array($ged_id, $pid))
+			->fetchOne();
 		break;
 	case "FAM":
-		$sql="SELECT MIN(f_id) FROM ".$TBLPREFIX."families WHERE f_file=".$ged_id." AND f_id>'{$pid}'";
-		break;
+		return
+			PGV_DB::prepare("SELECT MIN(f_id) FROM {$TBLPREFIX}families WHERE f_file=? AND f_id>?")
+			->execute(array($ged_id, $pid))
+			->fetchOne();
 	case "SOUR":
-		$sql="SELECT MIN(s_id) FROM ".$TBLPREFIX."sources WHERE s_file=".$ged_id." AND s_id>'{$pid}'";
-		break;
+		return
+			PGV_DB::prepare("SELECT MIN(s_id) FROM {$TBLPREFIX}sources WHERE s_file=? AND s_id>?")
+			->execute(array($ged_id, $pid))
+			->fetchOne();
 	case "OBJE":
-		$sql="SELECT MIN(m_media) FROM ".$TBLPREFIX."media WHERE m_gedfile=".$ged_id." AND m_media>'{$pid}'";
-		break;
+		return
+			PGV_DB::prepare("SELECT MIN(m_media) FROM {$TBLPREFIX}media WHERE m_gedfile=? AND m_media>?")
+			->execute(array($ged_id, $pid))
+			->fetchOne();
 	default:
-		$sql="SELECT MIN(o_id) FROM ".$TBLPREFIX."other WHERE o_file=".$ged_id." AND o_id>'{$pid}' AND o_type='{$type}'";
-		break;
+		return
+			PGV_DB::prepare("SELECT MIN(o_id) FROM {$TBLPREFIX}other WHERE o_file=? AND o_type=? AND o_id>?")
+			->execute(array($ged_id, $type, $pid))
+			->fetchOne();
 	}
-	$res=dbquery($sql);
-	$row=$res->fetchRow();
-	$res->free();
-	return $row[0];
 }
 
 //-- gets the previous person in the gedcom
 function get_prev_xref($pid, $ged_id=PGV_GED_ID) {
-	global $TBLPREFIX, $DBCONN;
+	global $TBLPREFIX;
 
 	$type=gedcom_record_type($pid, $ged_id);
-	$pid=$DBCONN->escapeSimple($pid);
 	switch ($type) {
 	case "INDI":
-		$sql="SELECT MAX(i_id) FROM {$TBLPREFIX}individuals WHERE i_file={$ged_id} AND i_id<'{$pid}'";
+		return
+			PGV_DB::prepare("SELECT MAX(i_id) FROM {$TBLPREFIX}individuals WHERE i_file=? AND i_id<?")
+			->execute(array($ged_id, $pid))
+			->fetchOne();
 		break;
 	case "FAM":
-		$sql="SELECT MAX(f_id) FROM ".$TBLPREFIX."families WHERE f_file=".$ged_id." AND f_id<'{$pid}'";
-		break;
+		return
+			PGV_DB::prepare("SELECT MAX(f_id) FROM {$TBLPREFIX}families WHERE f_file=? AND f_id<?")
+			->execute(array($ged_id, $pid))
+			->fetchOne();
 	case "SOUR":
-		$sql="SELECT MAX(s_id) FROM ".$TBLPREFIX."sources WHERE s_file=".$ged_id." AND s_id<'{$pid}'";
-		break;
+		return
+			PGV_DB::prepare("SELECT MAX(s_id) FROM {$TBLPREFIX}sources WHERE s_file=? AND s_id<?")
+			->execute(array($ged_id, $pid))
+			->fetchOne();
 	case "OBJE":
-		$sql="SELECT MAX(m_media) FROM ".$TBLPREFIX."media WHERE m_gedfile=".$ged_id." AND m_media<'{$pid}'";
-		break;
+		return
+			PGV_DB::prepare("SELECT MAX(m_media) FROM {$TBLPREFIX}media WHERE m_gedfile=? AND m_media<?")
+			->execute(array($ged_id, $pid))
+			->fetchOne();
 	default:
-		$sql="SELECT MAX(o_id) FROM ".$TBLPREFIX."other WHERE o_file=".$ged_id." AND o_id<'{$pid}' AND o_type='{$type}'";
-		break;
+		return
+			PGV_DB::prepare("SELECT MAX(o_id) FROM {$TBLPREFIX}other WHERE o_file=? AND o_type=? AND o_id<?")
+			->execute(array($ged_id, $type, $pid))
+			->fetchOne();
 	}
-	$res=dbquery($sql);
-	$row=$res->fetchRow();
-	$res->free();
-	return $row[0];
 }
 
 ////////////////////////////////////////////////////////////////////////////////
