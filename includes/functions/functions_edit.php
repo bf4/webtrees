@@ -2309,6 +2309,7 @@ function create_edit_form($gedrec, $linenum, $level0type) {
 	global $WORD_WRAPPED_NOTES, $pgv_lang, $factarray;
 	global $pid, $tags, $ADVANCED_PLAC_FACTS, $date_and_time, $templefacts;
 	global $lang_short_cut, $LANGUAGE, $FULL_SOURCES, $TEXT_DIRECTION;
+	// global $TEXT_DIRECTION, $TBLPREFIX, $DBHOST, $DBUSER, $DBPASS, $DBNAME, $SERVER_URL;
 
 	$tags=array();
 	$gedlines = split("\n", $gedrec); // -- find the number of lines in the record
@@ -2330,7 +2331,25 @@ function create_edit_form($gedrec, $linenum, $level0type) {
 	$type = trim($fields[1]);
 	$level1type = $type;
 	
-
+	// GEDFact_assistant ================================================
+	if ($type=="CENS" && file_exists('modules/GEDFact_assistant/mysql_query1.html') ) {
+		echo "<tr><td class=\"descriptionbox ".$TEXT_DIRECTION." wrap width25\">";
+			// print_help_link("edit_add_SHARED_NOTE_help", "qm");
+			echo "If using Shared Notes,<br />";
+			echo "before you Save:<br /><br />";
+			echo "1. Click \"Refresh\" then, ";
+			echo "<br /><br />";
+			echo "To add this CENS event<br />";
+			echo "to all listed individuals: <br ><br />";
+			echo "2. Click &nbsp;";
+			$save_copy  = "<input type=\"button\" name=\"Button2\" value=\"Save & Copy\" ";
+			$save_copy .= "onClick=\"javascript:#\" />";
+			echo $save_copy."<br /><br />";
+		echo "</td><td class=\"optionbox wrap\">\n";
+			include ('modules/GEDFact_assistant/mysql_query1.php');
+		echo "</td></tr>\n";
+	}
+	// ==================================================================
 	
 	if (count($fields)>2) {
 		$ct = preg_match("/@.*@/",$fields[2]);

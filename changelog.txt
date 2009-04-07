@@ -10,6 +10,7 @@
 
 
 Version 4.2.0 CA
+ - Added: List of linked indis for edit CENSUS page (Not finished yet) (windmillway)
  - Merged: Merge changes r5275 - r5323 from the trunk. (windmillway)
  - Changed: Tidied up a few more Navigator married names (Still Step Families to do)(windmillway)
  - Merged: Merge changes r5245 - r5274 from the trunk. (windmillway)
