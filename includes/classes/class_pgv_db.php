@@ -70,13 +70,9 @@ class PGV_DB {
 		self::$dbtype=$DBTYPE;
 		// Create the underlying PDO object
 		self::$pdo=new PDO(
-			self::createDSN($DBTYPE, $DBHOST, $DBPORT, $DBNAME), $DBUSER, $DBPASS,
-			array(
-				PDO::ATTR_PERSISTENT=>(bool)$DBPERSIST,
-				PDO::ATTR_AUTOCOMMIT=>true,
-				PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION,
-				PDO::ATTR_DEFAULT_FETCH_MODE=>PDO::FETCH_OBJ
-			)
+			self::createDSN($DBTYPE, $DBHOST, $DBPORT, $DBNAME),
+			$DBUSER, $DBPASS,
+			self::createOptions($DBTYPE, $DBPERSIST)
 		);
 		// Perform DB-specific initialisation
 		self::initialiseConnection($DBTYPE, $DB_UTF8_COLLATION);
@@ -94,6 +90,9 @@ class PGV_DB {
 
 	// Create a PDO-style DSN from PGV's database connection parameters
 	private static function createDSN($DBTYPE, $DBHOST, $DBPORT, $DBNAME) {
+		if ($DBTYPE=='sqlite') {
+			return 'sqlite2:'.$DBNAME;
+		}
 		// localhost can be problematic with non-default ports, so use IP address
 		if ($DBHOST=='localhost' && $DBPORT) {
 			$DBHOST='host=127.0.0.1;';
@@ -105,6 +104,25 @@ class PGV_DB {
 			$DBHOST.=';port='.(int)$DBPORT;
 		}
 		return "{$DBTYPE}:{$DBHOST}dbname={$DBNAME}";
+	}
+
+	// Create an array of connection options
+	private static function createOptions($DBTYPE, $DBPERSIST) {
+		switch ($DBTYPE) {
+		case 'sqlite':
+			return array(
+				PDO::ATTR_PERSISTENT=>(bool)$DBPERSIST,
+				PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION,
+				PDO::ATTR_DEFAULT_FETCH_MODE=>PDO::FETCH_OBJ
+			);
+		default:
+			return array(
+				PDO::ATTR_PERSISTENT=>(bool)$DBPERSIST,
+				PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION,
+				PDO::ATTR_DEFAULT_FETCH_MODE=>PDO::FETCH_OBJ,
+				PDO::ATTR_AUTOCOMMIT=>true
+			);
+		}
 	}
 
 	// One-off initialisation of a new PDO connection
