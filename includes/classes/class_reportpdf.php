@@ -587,7 +587,7 @@ class PGVRTextPDF extends PGVRText {
 		$styleh = $pdf->getCurrentStyleHeight();
 		if (count($lines)>0) {
 			foreach($lines as $indexval => $line) {
-				if ($cury>$pdf->getPageHeight()-40) {
+				if ($cury>$pdf->getPageHeight()-45 && $line!="") {
 					$pdf->addPage();
 					$cury = 46;
 				}

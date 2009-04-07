@@ -228,7 +228,6 @@ $pgv_lang["link_new_wife"]			= "Agregar como esposa una persona ya existente";
 $pgv_lang["address_labels"]			= "Etiquetas de dirección";
 $pgv_lang["filter_address"]			= "Mostrar direcciones que contengan:";
 $pgv_lang["address_list"]			= "Lista de direcciones";
-$pgv_lang["autocomplete"]			= "Autocompletar";
 $pgv_lang["index_edit_advice"]		= "Resalte un nombre de bloque y haga clic a continuación en uno de los iconos de flecha para mover ese bloque en la dirección indicada.";
 $pgv_lang["changelog"]				= "Cambios en la versión #VERSION#";
 $pgv_lang["html_block_descr"]		= "Es un bloque de HTML simple que puede colocar en su página para añadir cualquier tipo de mensaje que desee.";
@@ -1489,6 +1488,7 @@ $pgv_lang["marrplace"]				= "El lugar de matrimonio contiene";
 $pgv_lang["marrdate1"]				= "Comienzo del rango de fechas de matrimonio";
 $pgv_lang["marrdate2"]				= "Fin del rango de fechas de matrimonio";
 $pgv_lang["sort_by"]				= "Ordenar por";
+$pgv_lang["cemetery_report"]		= "Informe de cementerios";
 
 $pgv_lang["cleanup"]				= "Limpieza";
 
