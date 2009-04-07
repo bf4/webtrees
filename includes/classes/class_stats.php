@@ -2520,7 +2520,7 @@ class stats {
 		}
 
 		if ($count) {
-			$sql=sql_limit_select_query($sql, $count);
+			$sql=PGV_DB::limit_query($sql, $count);
 		}
 
 		$rows = array();
