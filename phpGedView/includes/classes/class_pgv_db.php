@@ -325,7 +325,7 @@ class PGV_DBStatement {
 		if (is_array($row)) {
 			return $row[0];
 		} else {
-			return $row;
+			return null;
 		}
 	}
 
@@ -340,5 +340,18 @@ class PGV_DBStatement {
 		}
 		$this->pdostatement->closeCursor();
 		return $rows;
+	}
+
+	// Fetch all the first column, as an array
+	public function fetchOneColumn() {
+		if (!$this->executed) {
+			$this->execute();
+		}
+		$list=array();
+		while ($row=$this->pdostatement->fetch(PDO::FETCH_NUM)) {
+			$list[]=$row[0];
+		}
+		$this->pdostatement->closeCursor();
+		return $list;
 	}
 }
