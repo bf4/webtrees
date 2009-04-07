@@ -1385,24 +1385,6 @@ function find_media_record($xref, $gedfile='') {
 }
 
 /**
-* find and return the id of the first person in the gedcom
-* @return string the gedcom xref id of the first person in the gedcom
-*/
-function find_first_person() {
-	global $TBLPREFIX;
-
-	$sql = "SELECT MIN(i_id) FROM {$TBLPREFIX}individuals WHERE i_file=".PGV_GED_ID;
-	$res = dbquery($sql,false);
-	$row = $res->fetchRow();
-	$res->free();
-	if (!DB::isError($row)) {
-		return $row[0];
-	} else {
-		return "I1";
-	}
-}
-
-/**
 * update the is_dead status in the database
 *
 * this function will update the is_dead field in the individuals table with the correct value

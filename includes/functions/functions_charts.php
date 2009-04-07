@@ -582,7 +582,11 @@ function check_rootid($rootid) {
 				if (find_person_record(trim($PEDIGREE_ROOT_ID))) {
 					$rootid=trim($PEDIGREE_ROOT_ID);
 				} else {
-					$rootid=find_first_person();
+					$rootid=get_first_xref('INDI', PGV_GED_ID);
+					// If there are no users in the gedcom, do something.
+					if (!$rootid) {
+						$rootid='I1';
+					}
 				}
 			}
 		}
