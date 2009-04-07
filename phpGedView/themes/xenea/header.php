@@ -104,7 +104,7 @@ else if ($view!='simple'){?>
 			  <tr>
 				<td width="10"><img src="<?php echo $PGV_IMAGE_DIR; ?>/pixel.gif" width="1" height="1" alt="" /></td>
 				<td valign="middle"><font color="#FFFFFF" size="5" face="Verdana, Arial, Helvetica, sans-serif">
-				<?php global $GEDCOMS, $GEDCOM; if ((count($GEDCOMS)>0)||(!empty($GEDCOM))) echo PrintReady($GEDCOMS[$GEDCOM]["title"], TRUE); ?>
+				<?php echo PrintReady($GEDCOM_TITLE, true); ?>
 				</font></td>
 		<?php if(empty($SEARCH_SPIDER)) { ?>
 				<td align="<?php echo $TEXT_DIRECTION=="rtl"?"left":"right" ?>">
