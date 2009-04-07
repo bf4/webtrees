@@ -1478,6 +1478,19 @@ function setup_database() {
 	if (!$has_name) {
 		create_name_table();
 	}
+	/*-- commenting out as it seems to cause more problems than it helps
+	$sql = "LOCK TABLE {$TBLPREFIX}individuals WRITE, {$TBLPREFIX}families WRITE, {$TBLPREFIX}sources WRITE, {$TBLPREFIX}other WRITE, {$TBLPREFIX}places WRITE, {$TBLPREFIX}users WRITE";
+	$res = dbquery($sql); */
+	if (preg_match("/mysql|pgsql/", $DBTYPE) > 0) {
+		$DBCONN->autoCommit(false);
+	}
+	//-- start a transaction
+	if ($DBTYPE == 'mssql') {
+		$sql = "BEGIN TRANSACTION";
+	} else {
+		$sql = "BEGIN";
+	}
+	$res = dbquery($sql);
 }
 /**
 * Create the individuals table
@@ -1829,7 +1842,10 @@ function empty_database($FILE, $keepmedia=false) {
 */
 function cleanup_database() {
 	global $DBTYPE, $DBCONN, $TBLPREFIX, $MAX_IDS, $GEDCOMS, $FILE;
-
+	/*-- commenting out as it seems to cause more problems than it helps
+	$sql = "UNLOCK TABLES";
+	$res = dbquery($sql); */
+	//-- end the transaction
 	if (isset ($MAX_IDS)) {
 		$sql = "DELETE FROM {$TBLPREFIX}nextid WHERE ni_gedfile='" . $DBCONN->escapeSimple($GEDCOMS[$FILE]['id']) . "'";
 		$res = dbquery($sql);
@@ -1838,6 +1854,14 @@ function cleanup_database() {
 			$res = dbquery($sql);
 		}
 	}
+	if ($DBTYPE == 'mssql') {
+		$sql = "COMMIT TRANSACTION";
+	} else {
+		$sql = "COMMIT";
+	}
+	$res = dbquery($sql);
+
+	//if (preg_match("/mysql|pgsql/", $DBTYPE)>0) $DBCONN->autoCommit(false);
 	return;
 }
 

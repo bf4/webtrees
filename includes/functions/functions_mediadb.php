@@ -1796,12 +1796,12 @@ function show_media_form($pid, $action = "newentry", $filename = "", $linktoid =
 
 	// 3 TYPE
 	if ($gedrec == "")
-		$gedtype = "TYPE photo";		// default to "Photo" unless told otherwise
+		$gedtype = "TYPE";
 	else {
 		$temp = str_replace("\r\n", "\n", $gedrec) . "\n";
 		$types = preg_match("/3 TYPE(.*)\n/", $temp, $matches);
 		if (empty($matches[0]))
-			$gedtype = "TYPE photo";	// default to "Photo" unless told otherwise
+			$gedtype = "TYPE";
 		else
 			$gedtype = "TYPE " . trim($matches[1]);
 	}

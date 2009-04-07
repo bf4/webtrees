@@ -260,9 +260,6 @@ class IndividualControllerRoot extends BaseController {
 			header("Content-Type: text/html; charset=$CHARACTER_SET");//AJAX calls do not have the meta tag headers and need this set
 			$this->getTab($tab);
 			//-- only get the requested tab and then exit
-			if (PGV_DEBUG_SQL) {
-				echo PGV_DB::getQueryLog();
-			}
 			exit;
 		}
 	}

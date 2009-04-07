@@ -31,7 +31,7 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 
 // Identify ourself
 define('PGV_PHPGEDVIEW',      'PhpGedView');
-define('PGV_VERSION',         '4.2.2');
+define('PGV_VERSION',         '4.2.1');
 define('PGV_VERSION_RELEASE', 'svn'); // 'svn', 'beta', 'rc1', '', etc.
 define('PGV_VERSION_TEXT',    trim(PGV_VERSION.' '.PGV_VERSION_RELEASE));
 define('PGV_PHPGEDVIEW_URL',  'http://www.phpgedview.net');
@@ -95,11 +95,6 @@ define ('PGV_GOOGLE_CHART_ENCODING', 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnop
 // New setting, added to config.php in 4.2.0
 if (!isset($DB_UTF8_COLLATION)) {
 	$DB_UTF8_COLLATION=false;
-}
-
-// New setting, added to config.php in 4.?.? (TODO - when the svn server stops sucking, fill this version in).
-if (!isset($DBPORT)) {
-	$DBPORT='';
 }
 
 @ini_set('arg_separator.output', '&amp;');
@@ -355,17 +350,6 @@ if (file_exists($INDEX_DIRECTORY."gedcoms.php")) {
 
 //-- connect to the database
 $DBPASS = str_replace(array("\\\\", "\\\"", "\\\$"), array("\\", "\"", "\$"), $DBPASS); // remove escape codes before using PW
-
-// New PDO-based connection
-require_once 'includes/classes/class_pgv_db.php';
-try {
-	PGV_DB::createInstance($DBTYPE, $DBHOST, $DBPORT, $DBNAME, $DBUSER, $DBPASS, $DBPERSIST, $DB_UTF8_COLLATION);
-	//unset($DBUSER, $DBPASS);
-	$PGV_DB_CONNECTED=true;
-} catch (PDOException $ex) {
-	$PGV_DB_CONNECTED=false;
-}
-
 $PGV_DB_CONNECTED = check_db();
 
 $logout=safe_GET_bool('logout');

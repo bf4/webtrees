@@ -65,6 +65,8 @@ case 'mssql':
 	define('PGV_DB_RANDOM',        'NEWID');
 	define('PGV_DB_TEXT_TYPE',     'TEXT');
 	define('PGV_DB_LONGTEXT_TYPE', 'TEXT');
+	define('PGV_DB_BEGIN_TRANS',   'BEGIN TRANSACTION');
+	define('PGV_DB_COMMIT_TRANS',  'COMMIT TRANSACTION');
 	define('PGV_DB_UTF8_TABLE',    '');
 	break;
 case 'sqlite':
@@ -90,6 +92,8 @@ case 'sqlite':
 	define('PGV_DB_RANDOM',        'RANDOM()');
 	define('PGV_DB_TEXT_TYPE',     'TEXT');
 	define('PGV_DB_LONGTEXT_TYPE', 'TEXT');
+	define('PGV_DB_BEGIN_TRANS',   'BEGIN');
+	define('PGV_DB_COMMIT_TRANS',  'COMMIT');
 	define('PGV_DB_UTF8_TABLE',    '');
 	break;
 case 'pgsql':
@@ -115,6 +119,8 @@ case 'pgsql':
 	define('PGV_DB_RANDOM',        'RANDOM()');
 	define('PGV_DB_TEXT_TYPE',     'TEXT');
 	define('PGV_DB_LONGTEXT_TYPE', 'TEXT');
+	define('PGV_DB_BEGIN_TRANS',   'BEGIN');
+	define('PGV_DB_COMMIT_TRANS',  'COMMIT');
 	define('PGV_DB_UTF8_TABLE',    '');
 	break;
 case 'mysql':
@@ -142,6 +148,8 @@ default:
 	define('PGV_DB_RANDOM',        'RAND()');
 	define('PGV_DB_TEXT_TYPE',     'TEXT');
 	define('PGV_DB_LONGTEXT_TYPE', 'LONGTEXT');
+	define('PGV_DB_BEGIN_TRANS',   'BEGIN');
+	define('PGV_DB_COMMIT_TRANS',  'COMMIT');
 	// Since install.php creates the tables before saving the configuration settings to config.php,
 	// we must check its temporary configuration settings as well.
 	if (isset($_SESSION['install_config']['DB_UTF8_COLLATION']) && $_SESSION['install_config']['DB_UTF8_COLLATION'] || $DB_UTF8_COLLATION) {
@@ -215,10 +223,7 @@ function &dbquery($sql, $show_error=true) {
 		}
 		$stack=array();
 		foreach (debug_backtrace() as $trace) {
-			// The backtrace can include lambda functions, etc.
-			if (isset($trace['file'])) {
-				$stack[]=basename($trace['file']).':'.$trace['line'];
-			}
+			$stack[]=basename($trace['file']).':'.$trace['line'];
 		}
 		fwrite($fp,	sprintf(
 			"%s\t%s\t%.3f ms\t%s\t%s\t%s".PGV_EOL,
@@ -1102,73 +1107,78 @@ function fetch_all_links($xref, $ged_id) {
 // renamed consistently.  The other columns are fetched as they are.
 ////////////////////////////////////////////////////////////////////////////////
 function fetch_person_record($xref, $ged_id) {
-	global $TBLPREFIX;
-	static $statement=null;
-
-	if (is_null($statement)) {
-		$statement=
-			PGV_DB::prepare(
-			"SELECT 'INDI' AS type, i_id AS xref, i_file AS ged_id, i_gedcom AS gedrec, i_isdead, i_sex ".
-			"FROM {$TBLPREFIX}individuals WHERE i_id=? AND i_file=?"
-		);
-	}
-	return $statement->execute(array($xref, $ged_id))->fetchOneRow(PDO::FETCH_ASSOC);
+	global $TBLPREFIX, $DBCONN;
+	$xref=$DBCONN->escapeSimple($xref);
+	$ged_id=(int)$ged_id;
+	$res=dbquery(
+		"SELECT 'INDI' AS type, i_id AS xref, {$ged_id} AS ged_id, i_gedcom AS gedrec, i_isdead, i_sex ".
+		"FROM {$TBLPREFIX}individuals WHERE i_id='{$xref}' AND i_file={$ged_id}"
+	);
+	if (DB::isError($res)) return "";
+	$row=$res->fetchRow(DB_FETCHMODE_ASSOC);
+	$res->free();
+	return $row;
 }
 function fetch_family_record($xref, $ged_id) {
-	global $TBLPREFIX;
-	static $statement=null;
-
-	if (is_null($statement)) {
-		$statement=
-			PGV_DB::prepare(
-			"SELECT 'FAM' AS type, f_id AS xref, f_file AS ged_id, f_gedcom AS gedrec, f_husb, f_wife, f_chil, f_numchil ".
-			"FROM {$TBLPREFIX}families WHERE f_id=? AND f_file=?"
-		);
-	}
-	return $statement->execute(array($xref, $ged_id))->fetchOneRow(PDO::FETCH_ASSOC);
+	global $TBLPREFIX, $DBCONN;
+	$xref=$DBCONN->escapeSimple($xref);
+	$ged_id=(int)$ged_id;
+	$res=dbquery(
+		"SELECT 'FAM' AS type, f_id AS xref, {$ged_id} AS ged_id, f_gedcom AS gedrec, f_husb, f_wife, f_chil, f_numchil ".
+		"FROM {$TBLPREFIX}families WHERE f_id='{$xref}' AND f_file={$ged_id}"
+	);
+	if (DB::isError($res)) return "";
+	$row=$res->fetchRow(DB_FETCHMODE_ASSOC);
+	$res->free();
+	return $row;
 }
 function fetch_source_record($xref, $ged_id) {
-	global $TBLPREFIX;
-	static $statement=null;
-
-	if (is_null($statement)) {
-		$statement=
-			PGV_DB::prepare(
-			"SELECT 'SOUR' AS type, s_id AS xref, s_file AS ged_id, s_gedcom AS gedrec ".
-			"FROM {$TBLPREFIX}sources WHERE s_id=? AND s_file=?"
-		);
-	}
-	return $statement->execute(array($xref, $ged_id))->fetchOneRow(PDO::FETCH_ASSOC);
+	global $TBLPREFIX, $DBCONN;
+	$xref=$DBCONN->escapeSimple($xref);
+	$ged_id=(int)$ged_id;
+	$res=dbquery(
+		"SELECT 'SOUR' AS type, s_id AS xref, {$ged_id} AS ged_id, s_gedcom AS gedrec ".
+		"FROM {$TBLPREFIX}sources WHERE s_id='{$xref}' AND s_file={$ged_id}"
+	);
+	$row=$res->fetchRow(DB_FETCHMODE_ASSOC);
+	$res->free();
+	return $row;
 }
 function fetch_note_record($xref, $ged_id) {
-	// Notes are (currently) stored in the other table
-	return fetch_other_record($xref, $ged_id);
+	global $TBLPREFIX, $DBCONN;
+	$xref=$DBCONN->escapeSimple($xref);
+	$ged_id=(int)$ged_id;
+	$res=dbquery(
+		"SELECT 'NOTE' AS type, o_id AS xref, {$ged_id} AS ged_id, o_gedcom AS gedrec ".
+		"FROM {$TBLPREFIX}other WHERE o_id='{$xref}' AND o_file={$ged_id}"
+	);
+	$row=$res->fetchRow(DB_FETCHMODE_ASSOC);
+	$res->free();
+	return $row;
 }
 function fetch_media_record($xref, $ged_id) {
-	global $TBLPREFIX;
-	static $statement=null;
-
-	if (is_null($statement)) {
-		$statement=
-			PGV_DB::prepare(
-			"SELECT 'OBJE' AS type, m_media AS xref, m_gedfile AS ged_id, m_gedrec AS gedrec, m_titl, m_file ".
-			"FROM {$TBLPREFIX}media WHERE m_media=? AND m_gedfile=?"
-		);
-	}
-	return $statement->execute(array($xref, $ged_id))->fetchOneRow(PDO::FETCH_ASSOC);
+	global $TBLPREFIX, $DBCONN;
+	$xref=$DBCONN->escapeSimple($xref);
+	$ged_id=(int)$ged_id;
+	$res=dbquery(
+		"SELECT 'OBJE' AS type, m_media AS xref, {$ged_id} AS ged_id, m_gedrec AS gedrec, m_titl, m_file ".
+		"FROM {$TBLPREFIX}media WHERE m_media='{$xref}' AND m_gedfile={$ged_id}"
+	);
+	$row=$res->fetchRow(DB_FETCHMODE_ASSOC);
+	$res->free();
+	return $row;
 }
 function fetch_other_record($xref, $ged_id) {
-	global $TBLPREFIX;
-	static $statement=null;
-
-	if (is_null($statement)) {
-		$statement=
-			PGV_DB::prepare(
-			"SELECT o_type AS type, o_id AS xref, o_file AS ged_id, o_gedcom AS gedrec ".
-			"FROM {$TBLPREFIX}other WHERE o_id=? AND o_file=?"
-		);
-	}
-	return $statement->execute(array($xref, $ged_id))->fetchOneRow(PDO::FETCH_ASSOC);
+	global $TBLPREFIX, $DBCONN;
+	$xref=$DBCONN->escapeSimple($xref);
+	$ged_id=(int)$ged_id;
+	$res=dbquery(
+		"SELECT o_type AS type, o_id AS xref, {$ged_id} AS ged_id, o_gedcom AS gedrec ".
+		"FROM {$TBLPREFIX}other WHERE o_id='{$xref}' AND o_file={$ged_id}"
+	);
+	$row=$res->fetchRow(DB_FETCHMODE_ASSOC);
+	$res->free();
+	return $row;
 }
 function fetch_gedcom_record($xref, $ged_id) {
 	if ($row=fetch_person_record($xref, $ged_id)) {
@@ -1191,9 +1201,12 @@ function fetch_gedcom_record($xref, $ged_id) {
 * @param string $famid the unique gedcom xref id of the family record to retrieve
 * @return string the raw gedcom record is returned
 */
-function find_family_record($xref, $gedfile='') {
-	global $TBLPREFIX, $GEDCOM;
-	static $statement=null;
+function find_family_record($pid, $gedfile='') {
+	global $TBLPREFIX, $GEDCOM, $DBCONN;
+
+	if (!$pid) {
+		return null;
+	}
 
 	if ($gedfile) {
 		$ged_id=get_id_from_gedcom($gedfile);
@@ -1201,12 +1214,19 @@ function find_family_record($xref, $gedfile='') {
 		$ged_id=get_id_from_gedcom($GEDCOM);
 	}
 
-	if (is_null($statement)) {
-		$statement=PGV_DB::prepare(
-			"SELECT f_gedcom FROM {$TBLPREFIX}families WHERE f_id=? AND f_file=?"
-		);
+	// Look in the table.
+	$escpid=$DBCONN->escapeSimple($pid);
+	$res=dbquery(
+		"SELECT f_gedcom, f_husb, f_wife, f_numchil FROM {$TBLPREFIX}families ".
+		"WHERE f_id='{$escpid}' AND f_file={$ged_id}"
+	);
+	if (DB::isError($res)) {
+		return "";
 	}
-	return $statement->execute(array($xref, $ged_id))->fetchOne();
+	$row=$res->fetchRow();
+	$res->free();
+
+	return $row[0];
 }
 
 /**
@@ -1216,9 +1236,12 @@ function find_family_record($xref, $gedfile='') {
 * @param string $pid the unique gedcom xref id of the individual record to retrieve
 * @return string the raw gedcom record is returned
 */
-function find_person_record($xref, $gedfile='') {
-	global $TBLPREFIX, $GEDCOM;
-	static $statement=null;
+function find_person_record($pid, $gedfile='') {
+	global $TBLPREFIX, $GEDCOM, $DBCONN;
+
+	if (!$pid) {
+		return null;
+	}
 
 	if ($gedfile) {
 		$ged_id=get_id_from_gedcom($gedfile);
@@ -1226,12 +1249,18 @@ function find_person_record($xref, $gedfile='') {
 		$ged_id=get_id_from_gedcom($GEDCOM);
 	}
 
-	if (is_null($statement)) {
-		$statement=PGV_DB::prepare(
-			"SELECT i_gedcom FROM {$TBLPREFIX}individuals WHERE i_id=? AND i_file=?"
-		);
+	// Look in the table.
+	$escpid=$DBCONN->escapeSimple($pid);
+	$res=dbquery(
+		"SELECT i_gedcom, i_isdead  FROM {$TBLPREFIX}individuals ".
+		"WHERE i_id='{$escpid}' AND i_file={$ged_id}"
+	);
+	if (DB::isError($res)) {
+		return "";
 	}
-	return $statement->execute(array($xref, $ged_id))->fetchOne();
+	$row=$res->fetchRow();
+	$res->free();
+	return $row[0];
 }
 
 /**
@@ -1321,9 +1350,12 @@ function gedcom_record_type($xref, $ged_id) {
 * @param string $sid the unique gedcom xref id of the source record to retrieve
 * @return string the raw gedcom record is returned
 */
-function find_source_record($xref, $gedfile="") {
-	global $TBLPREFIX, $GEDCOM;
-	static $statement=null;
+function find_source_record($pid, $gedfile="") {
+	global $TBLPREFIX, $GEDCOM, $DBCONN;
+
+	if (!$pid) {
+		return null;
+	}
 
 	if ($gedfile) {
 		$ged_id=get_id_from_gedcom($gedfile);
@@ -1331,12 +1363,17 @@ function find_source_record($xref, $gedfile="") {
 		$ged_id=get_id_from_gedcom($GEDCOM);
 	}
 
-	if (is_null($statement)) {
-		$statement=PGV_DB::prepare(
-			"SELECT s_gedcom FROM {$TBLPREFIX}sources WHERE s_id=? AND s_file=?"
-		);
+	// Look in the table.
+	$pid=$DBCONN->escapeSimple($pid);
+	$res=dbquery(
+		"SELECT s_gedcom, s_name FROM {$TBLPREFIX}sources WHERE s_id='{$pid}' AND s_file={$ged_id}"
+	);
+	if (DB::isError($res)) {
+		return "";
 	}
-	return $statement->execute(array($xref, $ged_id))->fetchOne();
+	$row=$res->fetchRow();
+	$res->free();
+	return $row[0];
 }
 
 /**
@@ -1344,8 +1381,31 @@ function find_source_record($xref, $gedfile="") {
 * @param string $nid the record id
 * @param string $gedfile the gedcom file id
 */
-function find_note_record($xref, $gedfile="") {
-	return find_other_record($xref, $gedfile);
+function find_note_record($pid, $gedfile="") {
+	global $TBLPREFIX, $GEDCOM, $DBCONN;
+
+	if (!$pid) {
+		return null;
+	}
+
+	if ($gedfile) {
+		$ged_id=get_id_from_gedcom($gedfile);
+	} else {
+		$ged_id=get_id_from_gedcom($GEDCOM);
+	}
+
+	$pid=$DBCONN->escapeSimple($pid);
+	$res=dbquery(
+		"SELECT o_gedcom FROM {$TBLPREFIX}other WHERE o_id='{$pid}' AND o_file={$ged_id}"
+	);
+	$row=$res->fetchRow();
+	$res->free();
+
+	if ($row) {
+		return $row[0];
+	} else {
+		return null;
+	}
 }
 
 
@@ -1354,9 +1414,12 @@ function find_note_record($xref, $gedfile="") {
 * @param string $rid the record id
 * @param string $gedfile the gedcom file id
 */
-function find_other_record($xref, $gedfile="") {
-	global $TBLPREFIX, $GEDCOM;
-	static $statement=null;
+function find_other_record($pid, $gedfile="") {
+	global $TBLPREFIX, $GEDCOM, $DBCONN;
+
+	if (!$pid) {
+		return null;
+	}
 
 	if ($gedfile) {
 		$ged_id=get_id_from_gedcom($gedfile);
@@ -1364,21 +1427,30 @@ function find_other_record($xref, $gedfile="") {
 		$ged_id=get_id_from_gedcom($GEDCOM);
 	}
 
-	if (is_null($statement)) {
-		$statement=PGV_DB::prepare(
-			"SELECT o_gedcom FROM {$TBLPREFIX}other WHERE o_id=? AND o_file=?"
-		);
+	$pid=$DBCONN->escapeSimple($pid);
+	$res=dbquery(
+		"SELECT o_gedcom FROM {$TBLPREFIX}other WHERE o_id='{$pid}' AND o_file={$ged_id}"
+	);
+	$row=$res->fetchRow();
+	$res->free();
+
+	if ($row) {
+		return $row[0];
+	} else {
+		return null;
 	}
-	return $statement->execute(array($xref, $ged_id))->fetchOne();
 }
 
 /**
 * Find a media record by its ID
 * @param string $rid the record id
 */
-function find_media_record($xref, $gedfile='') {
-	global $TBLPREFIX, $GEDCOM;
-	static $statement=null;
+function find_media_record($pid, $gedfile='') {
+	global $TBLPREFIX, $GEDCOM, $DBCONN, $MULTI_MEDIA;
+
+	if (!$pid || !$MULTI_MEDIA) {
+		return null;
+	}
 
 	if ($gedfile) {
 		$ged_id=get_id_from_gedcom($gedfile);
@@ -1386,12 +1458,16 @@ function find_media_record($xref, $gedfile='') {
 		$ged_id=get_id_from_gedcom($GEDCOM);
 	}
 
-	if (is_null($statement)) {
-		$statement=PGV_DB::prepare(
-			"SELECT m_gedrec FROM {$TBLPREFIX}media WHERE m_media=? AND m_gedfile=?"
-		);
-	}
-	return $statement->execute(array($xref, $ged_id))->fetchOne();
+	// Look in the table.
+	$escpid=$DBCONN->escapeSimple($pid);
+	$res=dbquery(
+		"SELECT m_gedrec, m_file, m_titl, m_ext FROM {$TBLPREFIX}media ".
+		"WHERE m_media='{$escpid}' AND m_gedfile={$ged_id}"
+	);
+	$row=$res->fetchRow();
+	$res->free();
+
+	return $row[0];
 }
 
 /**
@@ -2978,99 +3054,75 @@ function delete_user($user_id) {
 }
 
 function get_all_users($order='ASC', $key1='lastname', $key2='firstname') {
-	global $TBLPREFIX;
+	global $DBCONN, $TBLPREFIX;
 
-	return
-		PGV_DB::prepare("SELECT u_username, u_username FROM {$TBLPREFIX}users ORDER BY u_{$key1} {$order}, u_{$key2} {$order}")
-		->fetchAssoc();
+	$users=array();
+	$res=dbquery("SELECT u_username FROM {$TBLPREFIX}users ORDER BY u_{$key1} {$order}, u_{$key2} {$order}");
+	while ($row=$res->fetchRow()) {
+		$users[$row[0]]=$row[0];
+	}
+	$res->free();
+	return $users;
 }
 
 function get_user_count() {
 	global $TBLPREFIX;
 
-	try {
-		return
-			PGV_DB::prepare("SELECT COUNT(*) FROM {$TBLPREFIX}users")
-			->fetchOne();
-	}
-	catch (PDOException $ex) {
-		// We may call this function before creating the table, so must check for errors.
-		return null;
-	}
-}
-
-function get_admin_user_count() {
-	global $TBLPREFIX;
-
-	return
-		PGV_DB::prepare("SELECT COUNT(*) FROM {$TBLPREFIX}users WHERE u_canadmin=?")
-		->bindValue(1, 'Y')
-		->fetchOne();
-}
-
-function get_non_admin_user_count() {
-	global $TBLPREFIX;
-
-	return
-		PGV_DB::prepare("SELECT COUNT(*) FROM {$TBLPREFIX}users WHERE u_canadmin<>?")
-		->bindValue(1, 'Y')
-		->fetchOne();
+	$res=dbquery("SELECT count(u_username) FROM {$TBLPREFIX}users");
+	$row=$res->fetchRow();
+	$res->free();
+	return $row[0];
 }
 
 // Get a list of logged-in users
 function get_logged_in_users() {
-	global $TBLPREFIX;
+	global $DBCONN, $TBLPREFIX;
 
-	try {
-		return
-			PGV_DB::prepare(
-				"SELECT u_username, u_username FROM {$TBLPREFIX}users WHERE u_loggedin=?"
-			)
-			->bindValue(1, 'Y')
-			->fetchAssoc();
+	$users=array();
+	$res=dbquery("SELECT u_username FROM {$TBLPREFIX}users WHERE u_loggedin='Y'");
+	while ($row=$res->fetchRow()) {
+		$users[$row[0]]=$row[0];
 	}
-	catch (PDOException $ex) {
-		// We may call this function before creating the table, so must check for errors.
-		return array();
-	}
+	$res->free();
+	return $users;
 }
 
 // Get a list of logged-in users who haven't been active recently
 function get_idle_users($time) {
-	global $TBLPREFIX;
+	global $DBCONN, $TBLPREFIX;
 
-	try {
-		return
-			PGV_DB::prepare(
-				"SELECT u_username, u_username FROM {$TBLPREFIX}users WHERE u_loggedin=? AND u_sessiontime BETWEEN 1 AND ?"
-			)
-			->bindValue(1, 'Y')
-			->bindValue(2, (int)$time)
-			->fetchAssoc();
+	$time=(int)($time);
+	$users=array();
+	$res=dbquery("SELECT u_username FROM {$TBLPREFIX}users WHERE u_loggedin='Y' AND u_sessiontime BETWEEN 1 AND {$time}");
+	while ($row=$res->fetchRow()) {
+		$users[$row[0]]=$row[0];
 	}
-	catch (PDOException $ex) {
-		// We may call this function before creating the table, so must check for errors.
-		return array();
-	}
+	$res->free();
+	return $users;
 }
 
 // Get the ID for a username
 // (Currently ID is the same as username, but this will change in the future)
 function get_user_id($username) {
-	global $TBLPREFIX;
+	global $DBCONN, $TBLPREFIX;
 
-	try {
-		return
-			PGV_DB::prepare(
-				"SELECT u_username FROM {$TBLPREFIX}users WHERE u_username=?"
-			)
-			->bindValue(1, $username)
-			->fetchOne();
+	if (!is_object($DBCONN) || DB::isError($DBCONN)) {
+		return false;
 	}
-	catch (PDOException $ex) {
-		// We may call this function before creating the table, so must check for errors.
-		return null;
+
+	$username=$DBCONN->escapeSimple($username);
+
+	$res=dbquery("SELECT u_username FROM {$TBLPREFIX}users WHERE u_username='{$username}'", false);
+	// We may call this function before creating the table, so must check for errors.
+	if ($res!=false && !DB::isError($res)) {
+		if ($row=$res->fetchRow()) {
+			$res->free();
+			return $row[0];
+		} else {
+			return null;
+		}
 	}
+	return null;
 }
 
 // Get the username for a user ID
@@ -3080,12 +3132,11 @@ function get_user_name($user_id) {
 }
 
 function set_user_password($user_id, $password) {
-	global $TBLPREFIX;
+	global $DBCONN, $TBLPREFIX;
 
-	PGV_DB::prepare(
-		"UPDATE {$TBLPREFIX}users SET u_password=? WHERE u_username=?"
-	)
-	->execute(array($password, $user_id));
+	$user_id=$DBCONN->escapeSimple($user_id);
+	$password=$DBCONN->escapeSimple($password);
+	dbquery("UPDATE {$TBLPREFIX}users SET u_password='{$password}' WHERE u_username='{$user_id}'");
 
 	global $PGV_USERS_cache;
 	if (isset($PGV_USERS_cache[$user_id])) {
@@ -3094,14 +3145,17 @@ function set_user_password($user_id, $password) {
 }
 
 function get_user_password($user_id) {
-	global $TBLPREFIX;
+	global $DBCONN, $TBLPREFIX;
 
-	return
-		PGV_DB::prepare(
-			"SELECT u_password FROM {$TBLPREFIX}users WHERE u_username=?"
-		)
-		->bindValue(1, $user_id)
-		->fetchOne();
+	$user_id=$DBCONN->escapeSimple($user_id);
+	$res=dbquery("SELECT u_password FROM {$TBLPREFIX}users WHERE u_username='{$user_id}'");
+	$row=$res->fetchRow();
+	$res->free();
+	if ($row) {
+		return $row[0];
+	} else {
+		return null;
+	}
 }
 
 ////////////////////////////////////////////////////////////////////////////////

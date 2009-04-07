@@ -655,9 +655,6 @@ function print_footer() {
 	if (function_exists("load_behaviour")) {
 		load_behaviour();  // @see function_print_lists.php
 	}
-	if (PGV_DEBUG_SQL) {
-		echo PGV_DB::getQueryLog();
-	}
 	echo google_analytics();
 	echo '</body></html>';
 }
@@ -677,9 +674,6 @@ function print_simple_footer() {
 	echo '<br /><a href="'.PGV_PHPGEDVIEW_URL.'" target="_blank"><img src="'.$PGV_IMAGE_DIR.'/'.$PGV_IMAGES['gedview']['other'].'" border="0" alt="'.PGV_PHPGEDVIEW." ".PGV_VERSION_TEXT.'" title="'.PGV_PHPGEDVIEW." ".PGV_VERSION_TEXT.'" /></a><br />';
 	if ($SHOW_STATS || PGV_DEBUG) {
 		print_execution_stats();
-	}
-	if (PGV_DEBUG_SQL) {
-		echo PGV_DB::getQueryLog();
 	}
 	echo "</div></body></html>";
 }

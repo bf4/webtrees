@@ -277,12 +277,6 @@ if ($action=="ajax") {
 					saveCachedBlock($blockval, $side.$_REQUEST['bindex'], $content);
 					ob_end_flush();
 				}
-				if (PGV_DEBUG) {
-					print_execution_stats();
-				}
-				if (PGV_DEBUG_SQL) {
-					echo PGV_DB::getQueryLog();
-				}
 				exit;
 			}
 		}
@@ -290,14 +284,16 @@ if ($action=="ajax") {
 
 	//-- not sure which block to call so call the first one we find
 	foreach($ublocks["main"] as $bindex=>$blockval) {
-		if ($blockval[0]==$block && array_key_exists($blockval[0], $PGV_BLOCKS)) {
-			eval($blockval[0]."(false, \$blockval[1], \"main\", $bindex);");
+		if (PGV_DEBUG) {
+			print_execution_stats();
 		}
+		if ($blockval[0]==$block && array_key_exists($blockval[0], $PGV_BLOCKS)) eval($blockval[0]."(false, \$blockval[1], \"main\", $bindex);");
 	}
 	foreach($ublocks["right"] as $bindex=>$blockval) {
-		if ($blockval[0]==$block && array_key_exists($blockval[0], $PGV_BLOCKS)) {
-			eval($blockval[0]."(true, \$blockval[1], \"right\", $bindex);");
+		if (PGV_DEBUG) {
+			print_execution_stats();
 		}
+		if ($blockval[0]==$block && array_key_exists($blockval[0], $PGV_BLOCKS)) eval($blockval[0]."(true, \$blockval[1], \"right\", $bindex);");
 	}
 	exit;
 }
