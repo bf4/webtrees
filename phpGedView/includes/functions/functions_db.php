@@ -1181,15 +1181,11 @@ function fetch_gedcom_record($xref, $ged_id) {
 * @param string $famid the unique gedcom xref id of the family record to retrieve
 * @return string the raw gedcom record is returned
 */
-function find_family_record($xref, $gedfile='') {
+function find_family_record($xref) {
 	global $TBLPREFIX, $GEDCOM;
 	static $statement=null;
 
-	if ($gedfile) {
-		$ged_id=get_id_from_gedcom($gedfile);
-	} else {
-		$ged_id=get_id_from_gedcom($GEDCOM);
-	}
+	$ged_id=get_id_from_gedcom($GEDCOM);
 
 	if (is_null($statement)) {
 		$statement=PGV_DB::prepare(
@@ -1206,19 +1202,73 @@ function find_family_record($xref, $gedfile='') {
 * @param string $pid the unique gedcom xref id of the individual record to retrieve
 * @return string the raw gedcom record is returned
 */
-function find_person_record($xref, $gedfile='') {
+function find_person_record($xref) {
 	global $TBLPREFIX, $GEDCOM;
 	static $statement=null;
 
-	if ($gedfile) {
-		$ged_id=get_id_from_gedcom($gedfile);
-	} else {
-		$ged_id=get_id_from_gedcom($GEDCOM);
-	}
+	$ged_id=get_id_from_gedcom($GEDCOM);
 
 	if (is_null($statement)) {
 		$statement=PGV_DB::prepare(
 			"SELECT i_gedcom FROM {$TBLPREFIX}individuals WHERE i_id=? AND i_file=?"
+		);
+	}
+	return $statement->execute(array($xref, $ged_id))->fetchOne();
+}
+
+/**
+* find the gedcom record for a source
+*
+* @link http://phpgedview.sourceforge.net/devdocs/arrays.php#source
+* @param string $sid the unique gedcom xref id of the source record to retrieve
+* @return string the raw gedcom record is returned
+*/
+function find_source_record($xref) {
+	global $TBLPREFIX, $GEDCOM;
+	static $statement=null;
+
+	$ged_id=get_id_from_gedcom($GEDCOM);
+
+	if (is_null($statement)) {
+		$statement=PGV_DB::prepare(
+			"SELECT s_gedcom FROM {$TBLPREFIX}sources WHERE s_id=? AND s_file=?"
+		);
+	}
+	return $statement->execute(array($xref, $ged_id))->fetchOne();
+}
+
+/**
+* Find a repository record by its ID
+* @param string $rid the record id
+* @param string $gedfile the gedcom file id
+*/
+function find_other_record($xref) {
+	global $TBLPREFIX, $GEDCOM;
+	static $statement=null;
+
+	$ged_id=get_id_from_gedcom($GEDCOM);
+
+	if (is_null($statement)) {
+		$statement=PGV_DB::prepare(
+			"SELECT o_gedcom FROM {$TBLPREFIX}other WHERE o_id=? AND o_file=?"
+		);
+	}
+	return $statement->execute(array($xref, $ged_id))->fetchOne();
+}
+
+/**
+* Find a media record by its ID
+* @param string $rid the record id
+*/
+function find_media_record($xref) {
+	global $TBLPREFIX, $GEDCOM;
+	static $statement=null;
+
+	$ged_id=get_id_from_gedcom($GEDCOM);
+
+	if (is_null($statement)) {
+		$statement=PGV_DB::prepare(
+			"SELECT m_gedrec FROM {$TBLPREFIX}media WHERE m_media=? AND m_gedfile=?"
 		);
 	}
 	return $statement->execute(array($xref, $ged_id))->fetchOne();
@@ -1302,86 +1352,6 @@ function gedcom_record_type($xref, $ged_id) {
 			"SELECT o_type FROM {$TBLPREFIX}other       WHERE o_id   ='{$xref}' AND o_file   ={$ged_id}"
 		);
 	}
-}
-
-/**
-* find the gedcom record for a source
-*
-* @link http://phpgedview.sourceforge.net/devdocs/arrays.php#source
-* @param string $sid the unique gedcom xref id of the source record to retrieve
-* @return string the raw gedcom record is returned
-*/
-function find_source_record($xref, $gedfile="") {
-	global $TBLPREFIX, $GEDCOM;
-	static $statement=null;
-
-	if ($gedfile) {
-		$ged_id=get_id_from_gedcom($gedfile);
-	} else {
-		$ged_id=get_id_from_gedcom($GEDCOM);
-	}
-
-	if (is_null($statement)) {
-		$statement=PGV_DB::prepare(
-			"SELECT s_gedcom FROM {$TBLPREFIX}sources WHERE s_id=? AND s_file=?"
-		);
-	}
-	return $statement->execute(array($xref, $ged_id))->fetchOne();
-}
-
-/**
-* Find a shared note record by its ID
-* @param string $nid the record id
-* @param string $gedfile the gedcom file id
-*/
-function find_note_record($xref, $gedfile="") {
-	return find_other_record($xref, $gedfile);
-}
-
-
-/**
-* Find a repository record by its ID
-* @param string $rid the record id
-* @param string $gedfile the gedcom file id
-*/
-function find_other_record($xref, $gedfile="") {
-	global $TBLPREFIX, $GEDCOM;
-	static $statement=null;
-
-	if ($gedfile) {
-		$ged_id=get_id_from_gedcom($gedfile);
-	} else {
-		$ged_id=get_id_from_gedcom($GEDCOM);
-	}
-
-	if (is_null($statement)) {
-		$statement=PGV_DB::prepare(
-			"SELECT o_gedcom FROM {$TBLPREFIX}other WHERE o_id=? AND o_file=?"
-		);
-	}
-	return $statement->execute(array($xref, $ged_id))->fetchOne();
-}
-
-/**
-* Find a media record by its ID
-* @param string $rid the record id
-*/
-function find_media_record($xref, $gedfile='') {
-	global $TBLPREFIX, $GEDCOM;
-	static $statement=null;
-
-	if ($gedfile) {
-		$ged_id=get_id_from_gedcom($gedfile);
-	} else {
-		$ged_id=get_id_from_gedcom($GEDCOM);
-	}
-
-	if (is_null($statement)) {
-		$statement=PGV_DB::prepare(
-			"SELECT m_gedrec FROM {$TBLPREFIX}media WHERE m_media=? AND m_gedfile=?"
-		);
-	}
-	return $statement->execute(array($xref, $ged_id))->fetchOne();
 }
 
 /**
