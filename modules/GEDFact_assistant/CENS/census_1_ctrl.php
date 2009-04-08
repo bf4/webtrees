@@ -84,7 +84,7 @@ echo "<table border=0><tr>";
 	echo "</td>";
 	echo "<td width=\"35%\">";
 		if ($summary) {
-			echo '<table><tr><td width="10"><center><br /></td><td valign="top" colspan="', $maxcols-$col, '"><font size="1">', $summary, '</font></center></td></tr></table>';
+			echo '<table><tr><td width="10"><center><br /></td><td valign="top" ><font size="1">', $summary, '</font></center></td></tr></table>';
 		}
 	echo "</td>";
 echo "</tr></table>";

@@ -10,6 +10,9 @@
 
 
 Version 4.2.0 CA
+ - Fixed: Undefined Variable ERROR in logfiles (windmillway)
+ - ROLL-BACK: Merged changes r5324 - r5351 from the trunk. (catastrophic errors) (windmillway)
+ - Merged: Merge changes r5324 - r5351 from the trunk. (windmillway)
  - Added: List of linked indis for edit CENSUS page (Not finished yet) (windmillway)
  - Merged: Merge changes r5275 - r5323 from the trunk. (windmillway)
  - Changed: Tidied up a few more Navigator married names (Still Step Families to do)(windmillway)
