@@ -2184,6 +2184,8 @@ function format_fact_place(&$eventObj, $anchor=false, $sub=false, $lds=false) {
 				}
 			}
 		}
+	} else {
+		$place='????';
 	}
 	$ctn=0;
 	if ($sub) {
