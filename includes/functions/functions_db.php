@@ -223,7 +223,10 @@ function &dbquery($sql, $show_error=true) {
 		}
 		$stack=array();
 		foreach (debug_backtrace() as $trace) {
-			$stack[]=basename($trace['file']).':'.$trace['line'];
+			// The backtrace can include lambda functions, etc.
+			if (isset($trace['file'])) {
+				$stack[]=basename($trace['file']).':'.$trace['line'];
+			}
 		}
 		fwrite($fp,	sprintf(
 			"%s\t%s\t%.3f ms\t%s\t%s\t%s".PGV_EOL,
