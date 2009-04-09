@@ -3,7 +3,7 @@
  * Slovenian texts
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team
+ * Copyright (C) 2002 to 2009  PGV Development Team
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -73,6 +73,8 @@ $pgv_lang["add_from_clipboard"]			= "Dodaj v odložišče: ";
 $pgv_lang["record_copied"]			= "Zapis je bil shranjen v odložišče";
 $pgv_lang["add_unlinked_person"]		= "Dodaj nepovezano osebo";
 $pgv_lang["add_unlinked_source"]		= "Dodaj nepovezan vir";
+$pgv_lang["add_unlinked_note"]			= "Dodaj nepoveyan zapisek";
+$pgv_lang["add_unlinked"]			= "Nepovezani  zapisi";
 $pgv_lang["server_file"]			= "Ime datoteke na strežniku";
 $pgv_lang["server_file_advice"]			= "Ne spreminjaj za ohranitev prvotnega imena datoteke.";
 $pgv_lang["server_file_advice2"]		= "Lahko vnesete URL, ki se začne z &laquo;http://&raquo;.";
@@ -123,6 +125,8 @@ $pgv_lang["add_new_husb"]			= "Dodaj moža";
 $pgv_lang["add_new_wife"]			= "Dodaj novo ženo";
 $pgv_lang["add_note"]				= "Dodaj novo opombo";
 $pgv_lang["add_note_lbl"]			= "Dodaj opombo";
+$pgv_lang["add_shared_note"]			= "Dodaj nov skupen zapisek";
+$pgv_lang["add_shared_note_lbl"]		= "Dodaj skupen zapisek";
 $pgv_lang["add_sibling"]			= "Dodaj brata ali sestro";
 $pgv_lang["add_son_daughter"]			= "Dodaj sina ali hčer";
 $pgv_lang["add_source"] 			= "Dodaj vir sklicevanja";
@@ -141,7 +145,9 @@ $pgv_lang["change_family_members"]		= "Spremeni družinske člane";
 $pgv_lang["changes_occurred"]			= "Na zapsu so bile narejene naslednje spremembe:";
 $pgv_lang["confirm_remove"]			= "Ali res želite odstraniti to osebo iz družine?";
 $pgv_lang["confirm_remove_object"]		= "Ali res želite odstraniti ta objekt iz baze podatkov?";
-$pgv_lang["create_repository"]			= "Izdelaj skladišče";
+$pgv_lang["create_repository"]			= "Ustvari skladišče";
+$pgv_lang["create_shared_note"]			= "Ustvari nov skupen zapisek";
+$pgv_lang["create_shared_note_assisted"]	= "S pomočnikom ustvari nov skupen zapisek";
 $pgv_lang["create_source"]			= "Izdelaj nov vir";
 $pgv_lang["current_person"]         		= "Isto kot tekoči";
 $pgv_lang["date"]				= "Datum";
@@ -207,7 +213,9 @@ $pgv_lang["multiple_gedcoms"]			= "Ta datoteka je povezana na drug rodovnik na t
 $pgv_lang["must_provide"]			= "Podati morate ";
 $pgv_lang["name_search"]			= "Ime: ";
 $pgv_lang["new_repo_created"]			= "Novo skladišče je narejeno";
-$pgv_lang["new_source_created"] 		= "Nov vir je bil uspešno nerejen.";
+$pgv_lang["new_shared_note_created"]		= "Nov skupen zapisek je bil uspešno ustvarjen.";
+$pgv_lang["shared_note_updated"]		= "Skupen zapisek je bil uspešno popravljen.";
+$pgv_lang["new_source_created"] 		= "Nov vir je bil uspešno narejen.";
 $pgv_lang["no_changes"] 			= "Trenutno ni nobenih sprememb za pregled.";
 $pgv_lang["no_known_servers"]			= "Ni znanih strežnikov<br />Rezultati iskanja bodo nični";
 $pgv_lang["no_temple"]				= "Ni cerkve - verskih obredov";

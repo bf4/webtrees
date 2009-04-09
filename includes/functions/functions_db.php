@@ -43,15 +43,6 @@ require_once 'DB.php';
 // Definitions and functions to hide differences between sql databases
 switch ($DBTYPE) {
 case 'mssql':
-	// Limit a selct query to $n rows
-	function sql_limit_select_query($sql, $n) {
-		$n=(int)$n;
-		return preg_replace('/^\s*SELECT /i', "SELECT TOP {$n} ", $sql);
-	}
-	// Modulus function
-	function sql_mod_function($x,$y) {
-		return "MOD($x,$y)";
-	}
 	define('PGV_DB_AUTO_ID_TYPE',  'INTEGER IDENTITY');
 	define('PGV_DB_INT1_TYPE',     'INTEGER');
 	define('PGV_DB_INT2_TYPE',     'INTEGER');
@@ -65,20 +56,9 @@ case 'mssql':
 	define('PGV_DB_RANDOM',        'NEWID');
 	define('PGV_DB_TEXT_TYPE',     'TEXT');
 	define('PGV_DB_LONGTEXT_TYPE', 'TEXT');
-	define('PGV_DB_BEGIN_TRANS',   'BEGIN TRANSACTION');
-	define('PGV_DB_COMMIT_TRANS',  'COMMIT TRANSACTION');
 	define('PGV_DB_UTF8_TABLE',    '');
 	break;
 case 'sqlite':
-	// Limit a selct query to $n rows
-	function sql_limit_select_query($sql, $n) {
-		$n=(int)$n;
-		return "{$sql} LIMIT {$n}";
-	}
-	// Modulus function
-	function sql_mod_function($x,$y) {
-		return "(($x)%($y))";
-	}
 	define('PGV_DB_AUTO_ID_TYPE',  'INTEGER AUTOINCREMENT');
 	define('PGV_DB_INT1_TYPE',     'INTEGER');
 	define('PGV_DB_INT2_TYPE',     'INTEGER');
@@ -92,20 +72,9 @@ case 'sqlite':
 	define('PGV_DB_RANDOM',        'RANDOM()');
 	define('PGV_DB_TEXT_TYPE',     'TEXT');
 	define('PGV_DB_LONGTEXT_TYPE', 'TEXT');
-	define('PGV_DB_BEGIN_TRANS',   'BEGIN');
-	define('PGV_DB_COMMIT_TRANS',  'COMMIT');
 	define('PGV_DB_UTF8_TABLE',    '');
 	break;
 case 'pgsql':
-	// Limit a selct query to $n rows
-	function sql_limit_select_query($sql, $n) {
-		$n=(int)$n;
-		return "{$sql} LIMIT {$n}";
-	}
-	// Modulus function
-	function sql_mod_function($x,$y) {
-		return "MOD($x,$y)";
-	}
 	define('PGV_DB_AUTO_ID_TYPE',  'SERIAL');
 	define('PGV_DB_INT1_TYPE',     'SMALLINT');
 	define('PGV_DB_INT2_TYPE',     'SMALLINT');
@@ -119,22 +88,11 @@ case 'pgsql':
 	define('PGV_DB_RANDOM',        'RANDOM()');
 	define('PGV_DB_TEXT_TYPE',     'TEXT');
 	define('PGV_DB_LONGTEXT_TYPE', 'TEXT');
-	define('PGV_DB_BEGIN_TRANS',   'BEGIN');
-	define('PGV_DB_COMMIT_TRANS',  'COMMIT');
 	define('PGV_DB_UTF8_TABLE',    '');
 	break;
 case 'mysql':
 case 'mysqli':
 default:
-	// Limit a selct query to $n rows
-	function sql_limit_select_query($sql, $n) {
-		$n=(int)$n;
-		return "{$sql} LIMIT {$n}";
-	}
-	// Modulus function
-	function sql_mod_function($x,$y) {
-		return "MOD($x,$y)";
-	}
 	define('PGV_DB_AUTO_ID_TYPE',  'INTEGER UNSIGNED AUTO_INCREMENT');
 	define('PGV_DB_INT1_TYPE',     'TINYINT');
 	define('PGV_DB_INT2_TYPE',     'SMALLINT');
@@ -148,8 +106,6 @@ default:
 	define('PGV_DB_RANDOM',        'RAND()');
 	define('PGV_DB_TEXT_TYPE',     'TEXT');
 	define('PGV_DB_LONGTEXT_TYPE', 'LONGTEXT');
-	define('PGV_DB_BEGIN_TRANS',   'BEGIN');
-	define('PGV_DB_COMMIT_TRANS',  'COMMIT');
 	// Since install.php creates the tables before saving the configuration settings to config.php,
 	// we must check its temporary configuration settings as well.
 	if (isset($_SESSION['install_config']['DB_UTF8_COLLATION']) && $_SESSION['install_config']['DB_UTF8_COLLATION'] || $DB_UTF8_COLLATION) {
@@ -309,114 +265,140 @@ function check_for_import($ged) {
 
 //-- gets the first record in the gedcom
 function get_first_xref($type, $ged_id=PGV_GED_ID) {
-	global $TBLPREFIX, $DBCONN;
+	global $TBLPREFIX;
 
 	switch ($type) {
 	case "INDI":
-		$sql="SELECT MIN(i_id) FROM {$TBLPREFIX}individuals WHERE i_file=".$ged_id;
+		return
+			PGV_DB::prepare("SELECT MIN(i_id) FROM {$TBLPREFIX}individuals WHERE i_file=?")
+			->execute(array($ged_id))
+			->fetchOne();
 		break;
 	case "FAM":
-		$sql="SELECT MIN(f_id) FROM ".$TBLPREFIX."families WHERE f_file=".$ged_id;
-		break;
+		return
+			PGV_DB::prepare("SELECT MIN(f_id) FROM {$TBLPREFIX}families WHERE f_file=?")
+			->execute(array($ged_id))
+			->fetchOne();
 	case "SOUR":
-		$sql="SELECT MIN(s_id) FROM ".$TBLPREFIX."sources WHERE s_file=".$ged_id;
-		break;
+		return
+			PGV_DB::prepare("SELECT MIN(s_id) FROM {$TBLPREFIX}sources WHERE s_file=?")
+			->execute(array($ged_id))
+			->fetchOne();
 	case "OBJE":
-		$sql="SELECT MIN(m_media) FROM ".$TBLPREFIX."media WHERE m_gedfile=".$ged_id;
-		break;
+		return
+			PGV_DB::prepare("SELECT MIN(m_media) FROM {$TBLPREFIX}media WHERE m_gedfile=?")
+			->execute(array($ged_id))
+			->fetchOne();
 	default:
-		$sql="SELECT MIN(o_id) FROM ".$TBLPREFIX."other WHERE o_file=".$ged_id." AND o_type='{$type}'";
-		break;
+		return
+			PGV_DB::prepare("SELECT MIN(o_id) FROM {$TBLPREFIX}other WHERE o_file=? AND o_type=?")
+			->execute(array($ged_id, $type))
+			->fetchOne();
 	}
-	$res=dbquery($sql);
-	$row=$res->fetchRow();
-	$res->free();
-	return $row[0];
 }
 
 //-- gets the last record in the gedcom
 function get_last_xref($type, $ged_id=PGV_GED_ID) {
-	global $TBLPREFIX, $DBCONN;
+	global $TBLPREFIX;
 
 	switch ($type) {
 	case "INDI":
-		$sql="SELECT MAX(i_id) FROM {$TBLPREFIX}individuals WHERE i_file=".$ged_id;
+		return
+			PGV_DB::prepare("SELECT MAX(i_id) FROM {$TBLPREFIX}individuals WHERE i_file=?")
+			->execute(array($ged_id))
+			->fetchOne();
 		break;
 	case "FAM":
-		$sql="SELECT MAX(f_id) FROM ".$TBLPREFIX."families WHERE f_file=".$ged_id;
-		break;
+		return
+			PGV_DB::prepare("SELECT MAX(f_id) FROM {$TBLPREFIX}families WHERE f_file=?")
+			->execute(array($ged_id))
+			->fetchOne();
 	case "SOUR":
-		$sql="SELECT MAX(s_id) FROM ".$TBLPREFIX."sources WHERE s_file=".$ged_id;
-		break;
+		return
+			PGV_DB::prepare("SELECT MAX(s_id) FROM {$TBLPREFIX}sources WHERE s_file=?")
+			->execute(array($ged_id))
+			->fetchOne();
 	case "OBJE":
-		$sql="SELECT MAX(m_media) FROM ".$TBLPREFIX."media WHERE m_gedfile=".$ged_id;
-		break;
+		return
+			PGV_DB::prepare("SELECT MAX(m_media) FROM {$TBLPREFIX}media WHERE m_gedfile=?")
+			->execute(array($ged_id))
+			->fetchOne();
 	default:
-		$sql="SELECT MAX(o_id) FROM ".$TBLPREFIX."other WHERE o_file=".$ged_id." AND o_type='{$type}'";
-		break;
+		return
+			PGV_DB::prepare("SELECT MAX(o_id) FROM {$TBLPREFIX}other WHERE o_file=? AND o_type=?")
+			->execute(array($ged_id, $type))
+			->fetchOne();
 	}
-	$res=dbquery($sql);
-	$row=$res->fetchRow();
-	$res->free();
-	return $row[0];
 }
 
 //-- gets the next person in the gedcom
 function get_next_xref($pid, $ged_id=PGV_GED_ID) {
-	global $TBLPREFIX, $DBCONN;
+	global $TBLPREFIX;
 
 	$type=gedcom_record_type($pid, $ged_id);
-	$pid=$DBCONN->escapeSimple($pid);
 	switch ($type) {
 	case "INDI":
-		$sql="SELECT MIN(i_id) FROM {$TBLPREFIX}individuals WHERE i_file={$ged_id} AND i_id>'{$pid}'";
+		return
+			PGV_DB::prepare("SELECT MIN(i_id) FROM {$TBLPREFIX}individuals WHERE i_file=? AND i_id>?")
+			->execute(array($ged_id, $pid))
+			->fetchOne();
 		break;
 	case "FAM":
-		$sql="SELECT MIN(f_id) FROM ".$TBLPREFIX."families WHERE f_file=".$ged_id." AND f_id>'{$pid}'";
-		break;
+		return
+			PGV_DB::prepare("SELECT MIN(f_id) FROM {$TBLPREFIX}families WHERE f_file=? AND f_id>?")
+			->execute(array($ged_id, $pid))
+			->fetchOne();
 	case "SOUR":
-		$sql="SELECT MIN(s_id) FROM ".$TBLPREFIX."sources WHERE s_file=".$ged_id." AND s_id>'{$pid}'";
-		break;
+		return
+			PGV_DB::prepare("SELECT MIN(s_id) FROM {$TBLPREFIX}sources WHERE s_file=? AND s_id>?")
+			->execute(array($ged_id, $pid))
+			->fetchOne();
 	case "OBJE":
-		$sql="SELECT MIN(m_media) FROM ".$TBLPREFIX."media WHERE m_gedfile=".$ged_id." AND m_media>'{$pid}'";
-		break;
+		return
+			PGV_DB::prepare("SELECT MIN(m_media) FROM {$TBLPREFIX}media WHERE m_gedfile=? AND m_media>?")
+			->execute(array($ged_id, $pid))
+			->fetchOne();
 	default:
-		$sql="SELECT MIN(o_id) FROM ".$TBLPREFIX."other WHERE o_file=".$ged_id." AND o_id>'{$pid}' AND o_type='{$type}'";
-		break;
+		return
+			PGV_DB::prepare("SELECT MIN(o_id) FROM {$TBLPREFIX}other WHERE o_file=? AND o_type=? AND o_id>?")
+			->execute(array($ged_id, $type, $pid))
+			->fetchOne();
 	}
-	$res=dbquery($sql);
-	$row=$res->fetchRow();
-	$res->free();
-	return $row[0];
 }
 
 //-- gets the previous person in the gedcom
 function get_prev_xref($pid, $ged_id=PGV_GED_ID) {
-	global $TBLPREFIX, $DBCONN;
+	global $TBLPREFIX;
 
 	$type=gedcom_record_type($pid, $ged_id);
-	$pid=$DBCONN->escapeSimple($pid);
 	switch ($type) {
 	case "INDI":
-		$sql="SELECT MAX(i_id) FROM {$TBLPREFIX}individuals WHERE i_file={$ged_id} AND i_id<'{$pid}'";
+		return
+			PGV_DB::prepare("SELECT MAX(i_id) FROM {$TBLPREFIX}individuals WHERE i_file=? AND i_id<?")
+			->execute(array($ged_id, $pid))
+			->fetchOne();
 		break;
 	case "FAM":
-		$sql="SELECT MAX(f_id) FROM ".$TBLPREFIX."families WHERE f_file=".$ged_id." AND f_id<'{$pid}'";
-		break;
+		return
+			PGV_DB::prepare("SELECT MAX(f_id) FROM {$TBLPREFIX}families WHERE f_file=? AND f_id<?")
+			->execute(array($ged_id, $pid))
+			->fetchOne();
 	case "SOUR":
-		$sql="SELECT MAX(s_id) FROM ".$TBLPREFIX."sources WHERE s_file=".$ged_id." AND s_id<'{$pid}'";
-		break;
+		return
+			PGV_DB::prepare("SELECT MAX(s_id) FROM {$TBLPREFIX}sources WHERE s_file=? AND s_id<?")
+			->execute(array($ged_id, $pid))
+			->fetchOne();
 	case "OBJE":
-		$sql="SELECT MAX(m_media) FROM ".$TBLPREFIX."media WHERE m_gedfile=".$ged_id." AND m_media<'{$pid}'";
-		break;
+		return
+			PGV_DB::prepare("SELECT MAX(m_media) FROM {$TBLPREFIX}media WHERE m_gedfile=? AND m_media<?")
+			->execute(array($ged_id, $pid))
+			->fetchOne();
 	default:
-		$sql="SELECT MAX(o_id) FROM ".$TBLPREFIX."other WHERE o_file=".$ged_id." AND o_id<'{$pid}' AND o_type='{$type}'";
-		break;
+		return
+			PGV_DB::prepare("SELECT MAX(o_id) FROM {$TBLPREFIX}other WHERE o_file=? AND o_type=? AND o_id<?")
+			->execute(array($ged_id, $type, $pid))
+			->fetchOne();
 	}
-	$res=dbquery($sql);
-	$row=$res->fetchRow();
-	$res->free();
-	return $row[0];
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -1110,78 +1092,73 @@ function fetch_all_links($xref, $ged_id) {
 // renamed consistently.  The other columns are fetched as they are.
 ////////////////////////////////////////////////////////////////////////////////
 function fetch_person_record($xref, $ged_id) {
-	global $TBLPREFIX, $DBCONN;
-	$xref=$DBCONN->escapeSimple($xref);
-	$ged_id=(int)$ged_id;
-	$res=dbquery(
-		"SELECT 'INDI' AS type, i_id AS xref, {$ged_id} AS ged_id, i_gedcom AS gedrec, i_isdead, i_sex ".
-		"FROM {$TBLPREFIX}individuals WHERE i_id='{$xref}' AND i_file={$ged_id}"
-	);
-	if (DB::isError($res)) return "";
-	$row=$res->fetchRow(DB_FETCHMODE_ASSOC);
-	$res->free();
-	return $row;
+	global $TBLPREFIX;
+	static $statement=null;
+
+	if (is_null($statement)) {
+		$statement=
+			PGV_DB::prepare(
+			"SELECT 'INDI' AS type, i_id AS xref, i_file AS ged_id, i_gedcom AS gedrec, i_isdead, i_sex ".
+			"FROM {$TBLPREFIX}individuals WHERE i_id=? AND i_file=?"
+		);
+	}
+	return $statement->execute(array($xref, $ged_id))->fetchOneRow(PDO::FETCH_ASSOC);
 }
 function fetch_family_record($xref, $ged_id) {
-	global $TBLPREFIX, $DBCONN;
-	$xref=$DBCONN->escapeSimple($xref);
-	$ged_id=(int)$ged_id;
-	$res=dbquery(
-		"SELECT 'FAM' AS type, f_id AS xref, {$ged_id} AS ged_id, f_gedcom AS gedrec, f_husb, f_wife, f_chil, f_numchil ".
-		"FROM {$TBLPREFIX}families WHERE f_id='{$xref}' AND f_file={$ged_id}"
-	);
-	if (DB::isError($res)) return "";
-	$row=$res->fetchRow(DB_FETCHMODE_ASSOC);
-	$res->free();
-	return $row;
+	global $TBLPREFIX;
+	static $statement=null;
+
+	if (is_null($statement)) {
+		$statement=
+			PGV_DB::prepare(
+			"SELECT 'FAM' AS type, f_id AS xref, f_file AS ged_id, f_gedcom AS gedrec, f_husb, f_wife, f_chil, f_numchil ".
+			"FROM {$TBLPREFIX}families WHERE f_id=? AND f_file=?"
+		);
+	}
+	return $statement->execute(array($xref, $ged_id))->fetchOneRow(PDO::FETCH_ASSOC);
 }
 function fetch_source_record($xref, $ged_id) {
-	global $TBLPREFIX, $DBCONN;
-	$xref=$DBCONN->escapeSimple($xref);
-	$ged_id=(int)$ged_id;
-	$res=dbquery(
-		"SELECT 'SOUR' AS type, s_id AS xref, {$ged_id} AS ged_id, s_gedcom AS gedrec ".
-		"FROM {$TBLPREFIX}sources WHERE s_id='{$xref}' AND s_file={$ged_id}"
-	);
-	$row=$res->fetchRow(DB_FETCHMODE_ASSOC);
-	$res->free();
-	return $row;
+	global $TBLPREFIX;
+	static $statement=null;
+
+	if (is_null($statement)) {
+		$statement=
+			PGV_DB::prepare(
+			"SELECT 'SOUR' AS type, s_id AS xref, s_file AS ged_id, s_gedcom AS gedrec ".
+			"FROM {$TBLPREFIX}sources WHERE s_id=? AND s_file=?"
+		);
+	}
+	return $statement->execute(array($xref, $ged_id))->fetchOneRow(PDO::FETCH_ASSOC);
 }
 function fetch_note_record($xref, $ged_id) {
-	global $TBLPREFIX, $DBCONN;
-	$xref=$DBCONN->escapeSimple($xref);
-	$ged_id=(int)$ged_id;
-	$res=dbquery(
-		"SELECT 'NOTE' AS type, o_id AS xref, {$ged_id} AS ged_id, o_gedcom AS gedrec ".
-		"FROM {$TBLPREFIX}other WHERE o_id='{$xref}' AND o_file={$ged_id}"
-	);
-	$row=$res->fetchRow(DB_FETCHMODE_ASSOC);
-	$res->free();
-	return $row;
+	// Notes are (currently) stored in the other table
+	return fetch_other_record($xref, $ged_id);
 }
 function fetch_media_record($xref, $ged_id) {
-	global $TBLPREFIX, $DBCONN;
-	$xref=$DBCONN->escapeSimple($xref);
-	$ged_id=(int)$ged_id;
-	$res=dbquery(
-		"SELECT 'OBJE' AS type, m_media AS xref, {$ged_id} AS ged_id, m_gedrec AS gedrec, m_titl, m_file ".
-		"FROM {$TBLPREFIX}media WHERE m_media='{$xref}' AND m_gedfile={$ged_id}"
-	);
-	$row=$res->fetchRow(DB_FETCHMODE_ASSOC);
-	$res->free();
-	return $row;
+	global $TBLPREFIX;
+	static $statement=null;
+
+	if (is_null($statement)) {
+		$statement=
+			PGV_DB::prepare(
+			"SELECT 'OBJE' AS type, m_media AS xref, m_gedfile AS ged_id, m_gedrec AS gedrec, m_titl, m_file ".
+			"FROM {$TBLPREFIX}media WHERE m_media=? AND m_gedfile=?"
+		);
+	}
+	return $statement->execute(array($xref, $ged_id))->fetchOneRow(PDO::FETCH_ASSOC);
 }
 function fetch_other_record($xref, $ged_id) {
-	global $TBLPREFIX, $DBCONN;
-	$xref=$DBCONN->escapeSimple($xref);
-	$ged_id=(int)$ged_id;
-	$res=dbquery(
-		"SELECT o_type AS type, o_id AS xref, {$ged_id} AS ged_id, o_gedcom AS gedrec ".
-		"FROM {$TBLPREFIX}other WHERE o_id='{$xref}' AND o_file={$ged_id}"
-	);
-	$row=$res->fetchRow(DB_FETCHMODE_ASSOC);
-	$res->free();
-	return $row;
+	global $TBLPREFIX;
+	static $statement=null;
+
+	if (is_null($statement)) {
+		$statement=
+			PGV_DB::prepare(
+			"SELECT o_type AS type, o_id AS xref, o_file AS ged_id, o_gedcom AS gedrec ".
+			"FROM {$TBLPREFIX}other WHERE o_id=? AND o_file=?"
+		);
+	}
+	return $statement->execute(array($xref, $ged_id))->fetchOneRow(PDO::FETCH_ASSOC);
 }
 function fetch_gedcom_record($xref, $ged_id) {
 	if ($row=fetch_person_record($xref, $ged_id)) {
@@ -1204,32 +1181,18 @@ function fetch_gedcom_record($xref, $ged_id) {
 * @param string $famid the unique gedcom xref id of the family record to retrieve
 * @return string the raw gedcom record is returned
 */
-function find_family_record($pid, $gedfile='') {
-	global $TBLPREFIX, $GEDCOM, $DBCONN;
+function find_family_record($xref) {
+	global $TBLPREFIX, $GEDCOM;
+	static $statement=null;
 
-	if (!$pid) {
-		return null;
+	$ged_id=get_id_from_gedcom($GEDCOM);
+
+	if (is_null($statement)) {
+		$statement=PGV_DB::prepare(
+			"SELECT f_gedcom FROM {$TBLPREFIX}families WHERE f_id=? AND f_file=?"
+		);
 	}
-
-	if ($gedfile) {
-		$ged_id=get_id_from_gedcom($gedfile);
-	} else {
-		$ged_id=get_id_from_gedcom($GEDCOM);
-	}
-
-	// Look in the table.
-	$escpid=$DBCONN->escapeSimple($pid);
-	$res=dbquery(
-		"SELECT f_gedcom, f_husb, f_wife, f_numchil FROM {$TBLPREFIX}families ".
-		"WHERE f_id='{$escpid}' AND f_file={$ged_id}"
-	);
-	if (DB::isError($res)) {
-		return "";
-	}
-	$row=$res->fetchRow();
-	$res->free();
-
-	return $row[0];
+	return $statement->execute(array($xref, $ged_id))->fetchOne();
 }
 
 /**
@@ -1239,31 +1202,76 @@ function find_family_record($pid, $gedfile='') {
 * @param string $pid the unique gedcom xref id of the individual record to retrieve
 * @return string the raw gedcom record is returned
 */
-function find_person_record($pid, $gedfile='') {
-	global $TBLPREFIX, $GEDCOM, $DBCONN;
+function find_person_record($xref) {
+	global $TBLPREFIX, $GEDCOM;
+	static $statement=null;
 
-	if (!$pid) {
-		return null;
-	}
+	$ged_id=get_id_from_gedcom($GEDCOM);
 
-	if ($gedfile) {
-		$ged_id=get_id_from_gedcom($gedfile);
-	} else {
-		$ged_id=get_id_from_gedcom($GEDCOM);
+	if (is_null($statement)) {
+		$statement=PGV_DB::prepare(
+			"SELECT i_gedcom FROM {$TBLPREFIX}individuals WHERE i_id=? AND i_file=?"
+		);
 	}
+	return $statement->execute(array($xref, $ged_id))->fetchOne();
+}
 
-	// Look in the table.
-	$escpid=$DBCONN->escapeSimple($pid);
-	$res=dbquery(
-		"SELECT i_gedcom, i_isdead  FROM {$TBLPREFIX}individuals ".
-		"WHERE i_id='{$escpid}' AND i_file={$ged_id}"
-	);
-	if (DB::isError($res)) {
-		return "";
+/**
+* find the gedcom record for a source
+*
+* @link http://phpgedview.sourceforge.net/devdocs/arrays.php#source
+* @param string $sid the unique gedcom xref id of the source record to retrieve
+* @return string the raw gedcom record is returned
+*/
+function find_source_record($xref) {
+	global $TBLPREFIX, $GEDCOM;
+	static $statement=null;
+
+	$ged_id=get_id_from_gedcom($GEDCOM);
+
+	if (is_null($statement)) {
+		$statement=PGV_DB::prepare(
+			"SELECT s_gedcom FROM {$TBLPREFIX}sources WHERE s_id=? AND s_file=?"
+		);
 	}
-	$row=$res->fetchRow();
-	$res->free();
-	return $row[0];
+	return $statement->execute(array($xref, $ged_id))->fetchOne();
+}
+
+/**
+* Find a repository record by its ID
+* @param string $rid the record id
+* @param string $gedfile the gedcom file id
+*/
+function find_other_record($xref) {
+	global $TBLPREFIX, $GEDCOM;
+	static $statement=null;
+
+	$ged_id=get_id_from_gedcom($GEDCOM);
+
+	if (is_null($statement)) {
+		$statement=PGV_DB::prepare(
+			"SELECT o_gedcom FROM {$TBLPREFIX}other WHERE o_id=? AND o_file=?"
+		);
+	}
+	return $statement->execute(array($xref, $ged_id))->fetchOne();
+}
+
+/**
+* Find a media record by its ID
+* @param string $rid the record id
+*/
+function find_media_record($xref) {
+	global $TBLPREFIX, $GEDCOM;
+	static $statement=null;
+
+	$ged_id=get_id_from_gedcom($GEDCOM);
+
+	if (is_null($statement)) {
+		$statement=PGV_DB::prepare(
+			"SELECT m_gedrec FROM {$TBLPREFIX}media WHERE m_media=? AND m_gedfile=?"
+		);
+	}
+	return $statement->execute(array($xref, $ged_id))->fetchOne();
 }
 
 /**
@@ -1343,151 +1351,6 @@ function gedcom_record_type($xref, $ged_id) {
 			"SELECT 'OBJE' FROM {$TBLPREFIX}media       WHERE m_media='{$xref}' AND m_gedfile={$ged_id} UNION ALL ".
 			"SELECT o_type FROM {$TBLPREFIX}other       WHERE o_id   ='{$xref}' AND o_file   ={$ged_id}"
 		);
-	}
-}
-
-/**
-* find the gedcom record for a source
-*
-* @link http://phpgedview.sourceforge.net/devdocs/arrays.php#source
-* @param string $sid the unique gedcom xref id of the source record to retrieve
-* @return string the raw gedcom record is returned
-*/
-function find_source_record($pid, $gedfile="") {
-	global $TBLPREFIX, $GEDCOM, $DBCONN;
-
-	if (!$pid) {
-		return null;
-	}
-
-	if ($gedfile) {
-		$ged_id=get_id_from_gedcom($gedfile);
-	} else {
-		$ged_id=get_id_from_gedcom($GEDCOM);
-	}
-
-	// Look in the table.
-	$pid=$DBCONN->escapeSimple($pid);
-	$res=dbquery(
-		"SELECT s_gedcom, s_name FROM {$TBLPREFIX}sources WHERE s_id='{$pid}' AND s_file={$ged_id}"
-	);
-	if (DB::isError($res)) {
-		return "";
-	}
-	$row=$res->fetchRow();
-	$res->free();
-	return $row[0];
-}
-
-/**
-* Find a shared note record by its ID
-* @param string $nid the record id
-* @param string $gedfile the gedcom file id
-*/
-function find_note_record($pid, $gedfile="") {
-	global $TBLPREFIX, $GEDCOM, $DBCONN;
-
-	if (!$pid) {
-		return null;
-	}
-
-	if ($gedfile) {
-		$ged_id=get_id_from_gedcom($gedfile);
-	} else {
-		$ged_id=get_id_from_gedcom($GEDCOM);
-	}
-
-	$pid=$DBCONN->escapeSimple($pid);
-	$res=dbquery(
-		"SELECT o_gedcom FROM {$TBLPREFIX}other WHERE o_id='{$pid}' AND o_file={$ged_id}"
-	);
-	$row=$res->fetchRow();
-	$res->free();
-
-	if ($row) {
-		return $row[0];
-	} else {
-		return null;
-	}
-}
-
-
-/**
-* Find a repository record by its ID
-* @param string $rid the record id
-* @param string $gedfile the gedcom file id
-*/
-function find_other_record($pid, $gedfile="") {
-	global $TBLPREFIX, $GEDCOM, $DBCONN;
-
-	if (!$pid) {
-		return null;
-	}
-
-	if ($gedfile) {
-		$ged_id=get_id_from_gedcom($gedfile);
-	} else {
-		$ged_id=get_id_from_gedcom($GEDCOM);
-	}
-
-	$pid=$DBCONN->escapeSimple($pid);
-	$res=dbquery(
-		"SELECT o_gedcom FROM {$TBLPREFIX}other WHERE o_id='{$pid}' AND o_file={$ged_id}"
-	);
-	$row=$res->fetchRow();
-	$res->free();
-
-	if ($row) {
-		return $row[0];
-	} else {
-		return null;
-	}
-}
-
-/**
-* Find a media record by its ID
-* @param string $rid the record id
-*/
-function find_media_record($pid, $gedfile='') {
-	global $TBLPREFIX, $GEDCOM, $DBCONN, $MULTI_MEDIA;
-
-	if (!$pid || !$MULTI_MEDIA) {
-		return null;
-	}
-
-	if ($gedfile) {
-		$ged_id=get_id_from_gedcom($gedfile);
-	} else {
-		$ged_id=get_id_from_gedcom($GEDCOM);
-	}
-
-	// Look in the table.
-	$escpid=$DBCONN->escapeSimple($pid);
-	$res=dbquery(
-		"SELECT m_gedrec, m_file, m_titl, m_ext FROM {$TBLPREFIX}media ".
-		"WHERE m_media='{$escpid}' AND m_gedfile={$ged_id}"
-	);
-	$row=$res->fetchRow();
-	$res->free();
-
-	return $row[0];
-}
-
-/**
-* find and return the id of the first person in the gedcom
-* @return string the gedcom xref id of the first person in the gedcom
-*/
-function find_first_person() {
-	global $TBLPREFIX;
-
-	$sql = "SELECT MIN(i_id) FROM {$TBLPREFIX}individuals WHERE i_file=".PGV_GED_ID;
-	$res = dbquery($sql,false);
-	$row = $res->fetchRow();
-	$res->free();
-	if (!DB::isError($row)) {
-		return $row[0];
-	} else {
-		return "I1";
 	}
 }
 
@@ -2475,7 +2338,7 @@ function get_top_surnames($num) {
 
 	$surnames = array();
 	$sql = "SELECT COUNT(n_surname) AS count, n_surn FROM {$TBLPREFIX}name WHERE n_file=".PGV_GED_ID." AND n_type!='_MARNM' AND n_surn NOT IN ('@N.N.', '', '?', 'UNKNOWN')GROUP BY n_surn ORDER BY count DESC";
-	$sql = sql_limit_select_query($sql, $num+1);
+	$sql = PGV_DB::limit_query($sql, $num+1);
 	$res = dbquery($sql, true);
 
 	if (!DB::isError($res)) {
@@ -2740,7 +2603,7 @@ function get_anniversary_events($jd, $facts='', $ged_id=PGV_GED_ID) {
 					$where.=" AND d_day={$anniv->d}";
 				}
 				if ($anniv->IsLeapYear()) {
-					$where.=" AND (d_mon=6 AND ".sql_mod_function("7*d_year+1","19")."<7)";
+					$where.=" AND (d_mon=6 AND ".PGV_DB::mod_function("7*d_year+1","19")."<7)";
 				} else {
 					$where.=" AND (d_mon=6 OR d_mon=7)";
 				}
@@ -2753,7 +2616,7 @@ function get_anniversary_events($jd, $facts='', $ged_id=PGV_GED_ID) {
 				} else {
 					$where.=" AND d_day={$anniv->d}";
 				}
-				$where.=" AND (d_mon=6 AND ".sql_mod_function("7*d_year+1","19").">=7 OR d_mon=7)";
+				$where.=" AND (d_mon=6 AND ".PGV_DB::mod_function("7*d_year+1","19").">=7 OR d_mon=7)";
 				break;
 			case 8: // 1 NSN includes 30 ADR, if this year is non-leap
 				if ($anniv->d==1) {
@@ -3057,75 +2920,99 @@ function delete_user($user_id) {
 }
 
 function get_all_users($order='ASC', $key1='lastname', $key2='firstname') {
-	global $DBCONN, $TBLPREFIX;
+	global $TBLPREFIX;
 
-	$users=array();
-	$res=dbquery("SELECT u_username FROM {$TBLPREFIX}users ORDER BY u_{$key1} {$order}, u_{$key2} {$order}");
-	while ($row=$res->fetchRow()) {
-		$users[$row[0]]=$row[0];
-	}
-	$res->free();
-	return $users;
+	return
+		PGV_DB::prepare("SELECT u_username, u_username FROM {$TBLPREFIX}users ORDER BY u_{$key1} {$order}, u_{$key2} {$order}")
+		->fetchAssoc();
 }
 
 function get_user_count() {
 	global $TBLPREFIX;
 
-	$res=dbquery("SELECT count(u_username) FROM {$TBLPREFIX}users");
-	$row=$res->fetchRow();
-	$res->free();
-	return $row[0];
+	try {
+		return
+			PGV_DB::prepare("SELECT COUNT(*) FROM {$TBLPREFIX}users")
+			->fetchOne();
+	}
+	catch (PDOException $ex) {
+		// We may call this function before creating the table, so must check for errors.
+		return null;
+	}
+}
+
+function get_admin_user_count() {
+	global $TBLPREFIX;
+
+	return
+		PGV_DB::prepare("SELECT COUNT(*) FROM {$TBLPREFIX}users WHERE u_canadmin=?")
+		->bindValue(1, 'Y')
+		->fetchOne();
+}
+
+function get_non_admin_user_count() {
+	global $TBLPREFIX;
+
+	return
+		PGV_DB::prepare("SELECT COUNT(*) FROM {$TBLPREFIX}users WHERE u_canadmin<>?")
+		->bindValue(1, 'Y')
+		->fetchOne();
 }
 
 // Get a list of logged-in users
 function get_logged_in_users() {
-	global $DBCONN, $TBLPREFIX;
+	global $TBLPREFIX;
 
-	$users=array();
-	$res=dbquery("SELECT u_username FROM {$TBLPREFIX}users WHERE u_loggedin='Y'");
-	while ($row=$res->fetchRow()) {
-		$users[$row[0]]=$row[0];
+	try {
+		return
+			PGV_DB::prepare(
+				"SELECT u_username, u_username FROM {$TBLPREFIX}users WHERE u_loggedin=?"
+			)
+			->bindValue(1, 'Y')
+			->fetchAssoc();
 	}
-	$res->free();
-	return $users;
+	catch (PDOException $ex) {
+		// We may call this function before creating the table, so must check for errors.
+		return array();
+	}
 }
 
 // Get a list of logged-in users who haven't been active recently
 function get_idle_users($time) {
-	global $DBCONN, $TBLPREFIX;
+	global $TBLPREFIX;
 
-	$time=(int)($time);
-	$users=array();
-	$res=dbquery("SELECT u_username FROM {$TBLPREFIX}users WHERE u_loggedin='Y' AND u_sessiontime BETWEEN 1 AND {$time}");
-	while ($row=$res->fetchRow()) {
-		$users[$row[0]]=$row[0];
+	try {
+		return
+			PGV_DB::prepare(
+				"SELECT u_username, u_username FROM {$TBLPREFIX}users WHERE u_loggedin=? AND u_sessiontime BETWEEN 1 AND ?"
+			)
+			->bindValue(1, 'Y')
+			->bindValue(2, (int)$time)
+			->fetchAssoc();
 	}
-	$res->free();
-	return $users;
+	catch (PDOException $ex) {
+		// We may call this function before creating the table, so must check for errors.
+		return array();
+	}
 }
 
 // Get the ID for a username
 // (Currently ID is the same as username, but this will change in the future)
 function get_user_id($username) {
-	global $DBCONN, $TBLPREFIX;
+	global $TBLPREFIX;
 
-	if (!is_object($DBCONN) || DB::isError($DBCONN)) {
-		return false;
+	try {
+		return
+			PGV_DB::prepare(
+				"SELECT u_username FROM {$TBLPREFIX}users WHERE u_username=?"
+			)
+			->bindValue(1, $username)
+			->fetchOne();
 	}
-
-	$username=$DBCONN->escapeSimple($username);
-
-	$res=dbquery("SELECT u_username FROM {$TBLPREFIX}users WHERE u_username='{$username}'", false);
-	// We may call this function before creating the table, so must check for errors.
-	if ($res!=false && !DB::isError($res)) {
-		if ($row=$res->fetchRow()) {
-			$res->free();
-			return $row[0];
-		} else {
-			return null;
-		}
+	catch (PDOException $ex) {
+		// We may call this function before creating the table, so must check for errors.
+		return null;
 	}
-	return null;
 }
 
 // Get the username for a user ID
@@ -3135,11 +3022,12 @@ function get_user_name($user_id) {
 }
 
 function set_user_password($user_id, $password) {
-	global $DBCONN, $TBLPREFIX;
+	global $TBLPREFIX;
 
-	$user_id=$DBCONN->escapeSimple($user_id);
-	$password=$DBCONN->escapeSimple($password);
-	dbquery("UPDATE {$TBLPREFIX}users SET u_password='{$password}' WHERE u_username='{$user_id}'");
+	PGV_DB::prepare(
+		"UPDATE {$TBLPREFIX}users SET u_password=? WHERE u_username=?"
+	)
+	->execute(array($password, $user_id));
 
 	global $PGV_USERS_cache;
 	if (isset($PGV_USERS_cache[$user_id])) {
@@ -3148,17 +3036,14 @@ function set_user_password($user_id, $password) {
 }
 
 function get_user_password($user_id) {
-	global $DBCONN, $TBLPREFIX;
+	global $TBLPREFIX;
 
-	$user_id=$DBCONN->escapeSimple($user_id);
-	$res=dbquery("SELECT u_password FROM {$TBLPREFIX}users WHERE u_username='{$user_id}'");
-	$row=$res->fetchRow();
-	$res->free();
-	if ($row) {
-		return $row[0];
-	} else {
-		return null;
-	}
+	return
+		PGV_DB::prepare(
+			"SELECT u_password FROM {$TBLPREFIX}users WHERE u_username=?"
+		)
+		->bindValue(1, $user_id)
+		->fetchOne();
 }
 
 ////////////////////////////////////////////////////////////////////////////////

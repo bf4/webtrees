@@ -10,6 +10,7 @@
 
 
 Version 4.2.x CA
+ - Merged: Merge changes r5331 - r5366 from the trunk. (windmillway)
  - Merged: Merge changes r5324 - r5330 from the trunk. (4.2.1 Release level) (windmillway)
  - Fixed: Undefined Variable ERROR in logfiles (windmillway)
  - ROLL-BACK: Merged changes r5324 - r5351 from the trunk. (catastrophic errors) (windmillway)
@@ -75,6 +76,9 @@ Version 4.2.x CA
  - Added: New Shared Note List (from List Menu) and links to individual Shared Notes. (windmillway)
  - Changed: Census Assistant Shared Note delimiter from ";" to "|" (windmillway)
 
+
+Version 4.2.2
+ - Fixed [ 2734393 ] Review Changes Diff for Appended fails (fisharebest)
 
 Version 4.2.1
  - Fixed: [ 2730614 ] SVN 5320: Media Upload fails (canajun2eh)

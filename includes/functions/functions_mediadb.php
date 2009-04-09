@@ -530,7 +530,7 @@ function get_medialist($currentdir = false, $directory = "", $linkonly = false, 
 	$myDir = str_replace($MEDIA_DIRECTORY, "", $directory);
 	$sql = "SELECT m_id, m_file, m_media, m_gedrec, m_titl FROM {$TBLPREFIX}media WHERE m_gedfile={$GEDCOMS[$GEDCOM]['id']}";
 	if ($random == true) {
-		$sql=sql_limit_select_query("{$sql} ORDER BY ".PGV_DB_RANDOM, 5);
+		$sql=PGV_DB::limit_query("{$sql} ORDER BY ".PGV_DB_RANDOM, 5);
 		$res = & dbquery($sql, true);
 	} else {
 		$sql .= " AND (m_file ".PGV_DB_LIKE." '%" . $DBCONN->escapeSimple($myDir) . "%' OR m_file ".PGV_DB_LIKE." '%://%') ORDER BY m_id desc";
@@ -1796,12 +1796,12 @@ function show_media_form($pid, $action = "newentry", $filename = "", $linktoid =
 
 	// 3 TYPE
 	if ($gedrec == "")
-		$gedtype = "TYPE";
+		$gedtype = "TYPE photo";		// default to "Photo" unless told otherwise
 	else {
 		$temp = str_replace("\r\n", "\n", $gedrec) . "\n";
 		$types = preg_match("/3 TYPE(.*)\n/", $temp, $matches);
 		if (empty($matches[0]))
-			$gedtype = "TYPE";
+			$gedtype = "TYPE photo";	// default to "Photo" unless told otherwise
 		else
 			$gedtype = "TYPE " . trim($matches[1]);
 	}

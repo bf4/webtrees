@@ -101,7 +101,7 @@ function autocomplete_INDI() {
 		" WHERE n_sort ".PGV_DB_LIKE." '%".UTF8_strtoupper($FILTER)."%'".
 		" AND i_id=n_id AND i_file=n_file AND i_file=".PGV_GED_ID.
 		" ORDER BY n_sort";
-	$sql=sql_limit_select_query($sql, PGV_AUTOCOMPLETE_LIMIT);
+	$sql=PGV_DB::limit_query($sql, PGV_AUTOCOMPLETE_LIMIT);
 	$res=dbquery($sql);
 
 	$data=array();
@@ -182,7 +182,7 @@ function autocomplete_FAM() {
 	}
 
 	$sql="SELECT 'FAM' AS type, f_id AS xref, f_file AS ged_id, f_gedcom AS gedrec, f_husb, f_wife, f_chil, f_numchil FROM {$TBLPREFIX}families WHERE {$where} AND f_file=".PGV_GED_ID;
-	$sql=sql_limit_select_query($sql, PGV_AUTOCOMPLETE_LIMIT);
+	$sql=PGV_DB::limit_query($sql, PGV_AUTOCOMPLETE_LIMIT);
 	$res=dbquery($sql);
 
 	$data = array();
@@ -208,7 +208,7 @@ function autocomplete_NOTE() {
 	global $TBLPREFIX, $FILTER;
 
 	$sql="SELECT o_type AS type, o_id AS xref, o_file AS ged_id, o_gedcom AS gedrec FROM {$TBLPREFIX}other WHERE o_gedcom ".PGV_DB_LIKE." '%{$FILTER}%' AND o_type='NOTE' AND o_file=".PGV_GED_ID;
-	$sql=sql_limit_select_query($sql, PGV_AUTOCOMPLETE_LIMIT);
+	$sql=PGV_DB::limit_query($sql, PGV_AUTOCOMPLETE_LIMIT);
 	$res=dbquery($sql);
 
 	$data = array();
@@ -230,7 +230,7 @@ function autocomplete_SOUR() {
 	global $TBLPREFIX, $FILTER;
 
 	$sql="SELECT 'SOUR' AS type, s_id AS xref, s_file AS ged_id, s_gedcom AS gedrec FROM {$TBLPREFIX}sources WHERE (s_name ".PGV_DB_LIKE." '%{$FILTER}%' OR s_id ".PGV_DB_LIKE." '%{$FILTER}%') AND s_file=".PGV_GED_ID." ORDER BY s_name";
-	$sql=sql_limit_select_query($sql, PGV_AUTOCOMPLETE_LIMIT);
+	$sql=PGV_DB::limit_query($sql, PGV_AUTOCOMPLETE_LIMIT);
 	$res=dbquery($sql);
 
 	$data = array();
@@ -252,7 +252,7 @@ function autocomplete_SOUR_TITL() {
 	global $TBLPREFIX, $FILTER;
 
 	$sql="SELECT 'SOUR' AS type, s_id AS xref, s_file AS ged_id, s_gedcom AS gedrec FROM {$TBLPREFIX}sources WHERE s_name ".PGV_DB_LIKE." '%{$FILTER}%' AND s_file=".PGV_GED_ID." ORDER BY s_name";
-	$sql=sql_limit_select_query($sql, PGV_AUTOCOMPLETE_LIMIT);
+	$sql=PGV_DB::limit_query($sql, PGV_AUTOCOMPLETE_LIMIT);
 	$res=dbquery($sql);
 
 	$data = array();
@@ -277,7 +277,7 @@ function autocomplete_INDI_BURI_CEME() {
 				" FROM {$TBLPREFIX}individuals".
 				" WHERE (i_gedcom ".PGV_DB_LIKE." '%1 BURI%2 CEME %{$FILTER}%')".
 				" AND i_file=".PGV_GED_ID;
-	$sql=sql_limit_select_query($sql, PGV_AUTOCOMPLETE_LIMIT);
+	$sql=PGV_DB::limit_query($sql, PGV_AUTOCOMPLETE_LIMIT);
 	$res=dbquery($sql);
 
 	$data = array();
@@ -310,7 +310,7 @@ function autocomplete_INDI_SOUR_PAGE() {
 		" WHERE (i_gedcom ".PGV_DB_LIKE." '%1 SOUR @{$OPTION}@%2 PAGE %{$FILTER}%'".
 		" OR     i_gedcom ".PGV_DB_LIKE." '%2 SOUR @{$OPTION}@%3 PAGE %{$FILTER}%')".
 		" AND i_file=".PGV_GED_ID;
-	$sql=sql_limit_select_query($sql, PGV_AUTOCOMPLETE_LIMIT);
+	$sql=PGV_DB::limit_query($sql, PGV_AUTOCOMPLETE_LIMIT);
 	$res=dbquery($sql);
 
 	$data = array();
@@ -346,7 +346,7 @@ function autocomplete_FAM_SOUR_PAGE() {
 		" WHERE (f_gedcom ".PGV_DB_LIKE." '%1 SOUR @{$OPTION}@%2 PAGE %{$FILTER}%'".
 		" OR     f_gedcom ".PGV_DB_LIKE." '%2 SOUR @{$OPTION}@%3 PAGE %{$FILTER}%')".
 		" AND f_file=".PGV_GED_ID;
-	$sql=sql_limit_select_query($sql, PGV_AUTOCOMPLETE_LIMIT);
+	$sql=PGV_DB::limit_query($sql, PGV_AUTOCOMPLETE_LIMIT);
 	$res=dbquery($sql);
 
 	$data = array();
@@ -393,7 +393,7 @@ function autocomplete_REPO() {
 				" OR o_id ".PGV_DB_LIKE." '%".$FILTER."%')".
 				" AND o_file=".PGV_GED_ID.
 				" AND o_type='REPO'";
-	$sql=sql_limit_select_query($sql, PGV_AUTOCOMPLETE_LIMIT);
+	$sql=PGV_DB::limit_query($sql, PGV_AUTOCOMPLETE_LIMIT);
 	$res=dbquery($sql);
 
 	$data = array();
@@ -420,7 +420,7 @@ function autocomplete_REPO_NAME() {
 				" AND o_file=".PGV_GED_ID.
 				" AND o_type='REPO'".
 				" LIMIT ".PGV_AUTOCOMPLETE_LIMIT;
-	$sql=sql_limit_select_query($sql, PGV_AUTOCOMPLETE_LIMIT);
+	$sql=PGV_DB::limit_query($sql, PGV_AUTOCOMPLETE_LIMIT);
 	$res=dbquery($sql);
 
 	$data = array();
@@ -442,7 +442,7 @@ function autocomplete_OBJE() {
 	global $TBLPREFIX, $FILTER;
 
 	$sql="SELECT m_media FROM {$TBLPREFIX}media WHERE (m_titl ".PGV_DB_LIKE." '%{$FILTER}%' OR m_media ".PGV_DB_LIKE." '%{$FILTER}%') AND m_gedfile=".PGV_GED_ID;
-	$sql=sql_limit_select_query($sql, PGV_AUTOCOMPLETE_LIMIT);
+	$sql=PGV_DB::limit_query($sql, PGV_AUTOCOMPLETE_LIMIT);
 	$res=dbquery($sql);
 
 	$data = array();
@@ -502,7 +502,7 @@ function autocomplete_SURN() {
 	global $TBLPREFIX, $FILTER;
 
 	$sql="SELECT DISTINCT n_surname FROM {$TBLPREFIX}name WHERE n_surname ".PGV_DB_LIKE." '%{$FILTER}%' AND n_file=".PGV_GED_ID;
-	$sql=sql_limit_select_query($sql, PGV_AUTOCOMPLETE_LIMIT);
+	$sql=PGV_DB::limit_query($sql, PGV_AUTOCOMPLETE_LIMIT);
 	$res=dbquery($sql);
 
 	$data=array();
@@ -520,7 +520,7 @@ function autocomplete_GIVN() {
 	global $TBLPREFIX, $FILTER;
 
 	$sql="SELECT DISTINCT n_givn FROM {$TBLPREFIX}name WHERE n_givn ".PGV_DB_LIKE." '%{$FILTER}%' AND n_file=".PGV_GED_ID;
-	$sql=sql_limit_select_query($sql, PGV_AUTOCOMPLETE_LIMIT);
+	$sql=PGV_DB::limit_query($sql, PGV_AUTOCOMPLETE_LIMIT);
 	$res=dbquery($sql);
 
 	$data=array();
@@ -545,7 +545,7 @@ function autocomplete_NAME() {
 	global $TBLPREFIX, $FILTER;
 
 	$sql="SELECT DISTINCT n_givn FROM {$TBLPREFIX}name WHERE n_givn ".PGV_DB_LIKE." '%{$FILTER}%' AND n_file=".PGV_GED_ID;
-	$sql=sql_limit_select_query($sql, PGV_AUTOCOMPLETE_LIMIT);
+	$sql=PGV_DB::limit_query($sql, PGV_AUTOCOMPLETE_LIMIT);
 	$res=dbquery($sql);
 
 	$data=array();
@@ -560,7 +560,7 @@ function autocomplete_NAME() {
 		}
 	}
 	$sql="SELECT DISTINCT n_surname FROM {$TBLPREFIX}name WHERE n_surname ".PGV_DB_LIKE." '%{$FILTER}%' AND n_file=".PGV_GED_ID;
-	$sql=sql_limit_select_query($sql, PGV_AUTOCOMPLETE_LIMIT);
+	$sql=PGV_DB::limit_query($sql, PGV_AUTOCOMPLETE_LIMIT);
 	$res=dbquery($sql);
 
 	while ($row=$res->fetchRow(DB_FETCHMODE_ASSOC)) {
@@ -577,7 +577,7 @@ function autocomplete_PLAC() {
 	global $TBLPREFIX, $USE_GEONAMES, $lang_short_cut, $LANGUAGE, $FILTER, $OPTION;
 
 	$sql="SELECT p_id, p_place, p_parent_id FROM {$TBLPREFIX}places WHERE p_place ".PGV_DB_LIKE." '%{$FILTER}%' AND p_file=".PGV_GED_ID;
-	$sql=sql_limit_select_query($sql, PGV_AUTOCOMPLETE_LIMIT);
+	$sql=PGV_DB::limit_query($sql, PGV_AUTOCOMPLETE_LIMIT);
 	$res=dbquery($sql);
 
 	$place = array();
@@ -599,7 +599,7 @@ function autocomplete_PLAC() {
 			break;
 		}
 		$sql="SELECT p_id, p_place, p_parent_id FROM {$TBLPREFIX}places WHERE p_id IN (".implode(',', $missing).") AND p_file=".PGV_GED_ID;
-		$sql=sql_limit_select_query($sql, PGV_AUTOCOMPLETE_LIMIT);
+		$sql=PGV_DB::limit_query($sql, PGV_AUTOCOMPLETE_LIMIT);
 		$res=dbquery($sql);
 	} while (true);
 

@@ -38,17 +38,17 @@ if (!isset($view)) $view = safe_REQUEST($_REQUEST, 'view', PGV_REGEX_XREF);
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=<?php print $CHARACTER_SET; ?>" />
-		<?php if( $FAVICON ) { ?><link rel="shortcut icon" href="<?php print $FAVICON; ?>" type="image/x-icon" /> <?php	} ?>
+		<meta http-equiv="Content-Type" content="text/html; charset=<?php echo $CHARACTER_SET; ?>" />
+		<?php if( $FAVICON ) { ?><link rel="shortcut icon" href="<?php echo $FAVICON; ?>" type="image/x-icon" /> <?php	} ?>
 
-		<title><?php print $title; ?></title>
+		<title><?php echo $title; ?></title>
 		<?php if ($ENABLE_RSS && !$REQUIRE_AUTHENTICATION){ ?>
-			<link href="<?php print encode_url("{$SERVER_URL}rss.php?ged={$GEDCOM}"); ?>" rel="alternate" type="<?php print $applicationType; ?>" title=" <?php print PrintReady(strip_tags($GEDCOM_TITLE), TRUE); ?>" />
+			<link href="<?php echo encode_url("{$SERVER_URL}rss.php?ged={$GEDCOM}"); ?>" rel="alternate" type="<?php echo $applicationType; ?>" title=" <?php echo PrintReady(strip_tags($GEDCOM_TITLE), TRUE); ?>" />
 		<?php } ?>
-		<link rel="stylesheet" href="<?php print $stylesheet; ?>" type="text/css" media="all" />
-		<?php if ((!empty($rtl_stylesheet))&&($TEXT_DIRECTION=="rtl")) {?> <link rel="stylesheet" href="<?php print $rtl_stylesheet; ?>" type="text/css" media="all" /> <?php } ?>
+		<link rel="stylesheet" href="<?php echo $stylesheet; ?>" type="text/css" media="all" />
+		<?php if ((!empty($rtl_stylesheet))&&($TEXT_DIRECTION=="rtl")) {?> <link rel="stylesheet" href="<?php echo $rtl_stylesheet; ?>" type="text/css" media="all" /> <?php } ?>
 		<?php if ($use_alternate_styles && $BROWSERTYPE != "other") { ?>
-			<link rel="stylesheet" href="<?php print $THEME_DIR.$BROWSERTYPE; ?>.css" type="text/css" media="all" />
+			<link rel="stylesheet" href="<?php echo $THEME_DIR.$BROWSERTYPE; ?>.css" type="text/css" media="all" />
 		<?php	}
 		// Additional css files required (Only if Lightbox installed)
 		if (is_dir('modules/lightbox/css')) {
@@ -61,72 +61,74 @@ if (!isset($view)) $view = safe_REQUEST($_REQUEST, 'view', PGV_REGEX_XREF);
 			}
 		} ?>
 
-	<link rel="stylesheet" href="<?php print $print_stylesheet; ?>" type="text/css" media="print" />
+	<link rel="stylesheet" href="<?php echo $print_stylesheet; ?>" type="text/css" media="print" />
 	<?php if ($BROWSERTYPE == "msie") { ?>
 	<style type="text/css">
 		FORM { margin-top: 0px; margin-bottom: 0px; }
 	</style>
 	<?php }
 	if ($view!="preview" && $view!="simple") { ?>
-		<?php if (!empty($META_AUTHOR)) { ?><meta name="author" content="<?php print PrintReady(strip_tags($META_AUTHOR), TRUE); ?>" /><?php } ?>
-		<?php if (!empty($META_PUBLISHER)) { ?><meta name="publisher" content="<?php print PrintReady(strip_tags($META_PUBLISHER), TRUE); ?>" /><?php } ?>
-		<?php if (!empty($META_COPYRIGHT)) { ?><meta name="copyright" content="<?php print PrintReady(strip_tags($META_COPYRIGHT), TRUE); ?>" /><?php } ?>
-		<meta name="keywords" content="<?php print PrintReady(strip_tags($META_KEYWORDS), TRUE).PrintReady(strip_tags($surnameList), TRUE);?>" />
-		<?php if (!empty($META_DESCRIPTION)) {?><meta name="description" content="<?php print preg_replace("/\"/", "", PrintReady(strip_tags($META_DESCRIPTION), TRUE));?>" /><?php } ?>
-		<?php if (!empty($META_PAGE_TOPIC)) {?><meta name="page-topic" content="<?php print preg_replace("/\"/", "", PrintReady(strip_tags($META_PAGE_TOPIC), TRUE));?>" /><?php } ?>
-		<?php if (!empty($META_AUDIENCE)) {?><meta name="audience" content="<?php print PrintReady(strip_tags($META_AUDIENCE), TRUE);?>" /><?php } ?>
-		<?php if (!empty($META_PAGE_TYPE)) {?><meta name="page-type" content="<?php print PrintReady(strip_tags($META_PAGE_TYPE), TRUE);?>" /><?php } ?>
-		<?php if (!empty($META_ROBOTS)) {?><meta name="robots" content="<?php print PrintReady(strip_tags($META_ROBOTS), TRUE);?>" /><?php } ?>
-		<?php if (!empty($META_REVISIT)) {?><meta name="revisit-after" content="<?php print PrintReady(strip_tags($META_REVISIT), TRUE);?>" /><?php } ?>
+		<?php if (!empty($META_AUTHOR)) { ?><meta name="author" content="<?php echo PrintReady(strip_tags($META_AUTHOR), TRUE); ?>" /><?php } ?>
+		<?php if (!empty($META_PUBLISHER)) { ?><meta name="publisher" content="<?php echo PrintReady(strip_tags($META_PUBLISHER), TRUE); ?>" /><?php } ?>
+		<?php if (!empty($META_COPYRIGHT)) { ?><meta name="copyright" content="<?php echo PrintReady(strip_tags($META_COPYRIGHT), TRUE); ?>" /><?php } ?>
+		<meta name="keywords" content="<?php echo PrintReady(strip_tags($META_KEYWORDS), TRUE).PrintReady(strip_tags($surnameList), TRUE);?>" />
+		<?php if (!empty($META_DESCRIPTION)) {?><meta name="description" content="<?php echo preg_replace("/\"/", "", PrintReady(strip_tags($META_DESCRIPTION), TRUE));?>" /><?php } ?>
+		<?php if (!empty($META_PAGE_TOPIC)) {?><meta name="page-topic" content="<?php echo preg_replace("/\"/", "", PrintReady(strip_tags($META_PAGE_TOPIC), TRUE));?>" /><?php } ?>
+		<?php if (!empty($META_AUDIENCE)) {?><meta name="audience" content="<?php echo PrintReady(strip_tags($META_AUDIENCE), TRUE);?>" /><?php } ?>
+		<?php if (!empty($META_PAGE_TYPE)) {?><meta name="page-type" content="<?php echo PrintReady(strip_tags($META_PAGE_TYPE), TRUE);?>" /><?php } ?>
+		<?php if (!empty($META_ROBOTS)) {?><meta name="robots" content="<?php echo PrintReady(strip_tags($META_ROBOTS), TRUE);?>" /><?php } ?>
+		<?php if (!empty($META_REVISIT)) {?><meta name="revisit-after" content="<?php echo PrintReady(strip_tags($META_REVISIT), TRUE);?>" /><?php } ?>
 		<meta name="generator" content="<?php echo PGV_PHPGEDVIEW." - ".PGV_PHPGEDVIEW_URL;?>" />
 	<?php }	?>
-	<?php print $javascript; ?>
-	<?php print $head; //-- additional header information ?>
+	<?php echo $javascript; ?>
+	<?php echo $head; //-- additional header information ?>
 </head>
-<body id="body" <?php print $bodyOnLoad; ?>>
+<body id="body" <?php echo $bodyOnLoad; ?>>
 <!-- begin header section -->
 <?php
 if ($view=='preview') include($print_headerfile);
 else if ($view!='simple'){?>
-<div id="header" class="<?php print $TEXT_DIRECTION; ?>">
+<div id="header" class="<?php echo $TEXT_DIRECTION; ?>">
 <table width="100%" border="0" cellspacing="0" cellpadding="1" bgcolor="#003399">
    <tr>
-      <td>
-      <table width="100%" border="0" cellspacing="0" cellpadding="0" style="background-image:url('<?php
-      		if ($TEXT_DIRECTION=="ltr") {
-	      		print $PGV_IMAGE_DIR."/cabeza.jpg'); ";
-	      		print "background-position:left top; ";
+	  <td>
+	  <table width="100%" border="0" cellspacing="0" cellpadding="0" style="background-image:url('<?php
+	  		if ($TEXT_DIRECTION=="ltr") {
+		  		echo $PGV_IMAGE_DIR."/cabeza.jpg'); ";
+		  		echo "background-position:left top; ";
   			} else {
-	  			print $PGV_IMAGE_DIR."/cabeza_rtl.jpg'); ";
-	  			print "background-position:right top; ";
+	  			echo $PGV_IMAGE_DIR."/cabeza_rtl.jpg'); ";
+	  			echo "background-position:right top; ";
   			}
-      		?>background-repeat:repeat-y; height:40px;">
-              <tr>
-                <td width="10"><img src="<?php print $PGV_IMAGE_DIR; ?>/pixel.gif" width="1" height="1" alt="" /></td>
-                <td valign="middle"><font color="#FFFFFF" size="5" face="Verdana, Arial, Helvetica, sans-serif"><?php global $GEDCOMS, $GEDCOM; print PrintReady($GEDCOMS[$GEDCOM]["title"], TRUE); ?></font></td>
+	  		?>background-repeat:repeat-y; height:40px;">
+			  <tr>
+				<td width="10"><img src="<?php echo $PGV_IMAGE_DIR; ?>/pixel.gif" width="1" height="1" alt="" /></td>
+				<td valign="middle"><font color="#FFFFFF" size="5" face="Verdana, Arial, Helvetica, sans-serif">
+				<?php echo PrintReady($GEDCOM_TITLE, true); ?>
+				</font></td>
 		<?php if(empty($SEARCH_SPIDER)) { ?>
-                <td align="<?php print $TEXT_DIRECTION=="rtl"?"left":"right" ?>">
-               	<form action="search.php" method="get">
+				<td align="<?php echo $TEXT_DIRECTION=="rtl"?"left":"right" ?>">
+			   	<form action="search.php" method="get">
 				<input type="hidden" name="action" value="general" />
 				<input type="hidden" name="topsearch" value="yes" />
-				<input type="text" name="query" accesskey="<?php print $pgv_lang["accesskey_search"]?>" size="12" value="<?php print $pgv_lang['search']?>" onfocus="if (this.value == '<?php print $pgv_lang['search']?>') this.value=''; focusHandler();" onblur="if (this.value == '') this.value='<?php print $pgv_lang['search']?>';" />
+				<input type="text" name="query" accesskey="<?php echo $pgv_lang["accesskey_search"]?>" size="12" value="<?php echo $pgv_lang['search']?>" onfocus="if (this.value == '<?php echo $pgv_lang['search']?>') this.value=''; focusHandler();" onblur="if (this.value == '') this.value='<?php echo $pgv_lang['search']?>';" />
 				<input type="submit" name="search" value="&gt;" />
 				</form>
 				</td>
-				<td width="10"><img src="<?php print $PGV_IMAGE_DIR; ?>/pixel.gif" width="1" height="1" alt="" /></td>
+				<td width="10"><img src="<?php echo $PGV_IMAGE_DIR; ?>/pixel.gif" width="1" height="1" alt="" /></td>
 		<?php } ?>
-              </tr></table>
+			  </tr></table>
 		<?php if(empty($SEARCH_SPIDER)) { ?>
-			  <table width="100%" border="0" cellspacing="0" cellpadding="0" bgcolor="#84beff" style="background-image:url('<?php print $PGV_IMAGE_DIR; ?>/barra.gif');">
-              <tr>
-                <td width="10"><img src="<?php print $PGV_IMAGE_DIR; ?>/pixel.gif" width="1" height="18" alt="" /></td>
-                <td><div id="favtheme" align="<?php print $TEXT_DIRECTION=="rtl"?"right":"left" ?>" class="blanco"><?php print_theme_dropdown(1); ?></div><?php print_user_links(); ?></td>
+			  <table width="100%" border="0" cellspacing="0" cellpadding="0" bgcolor="#84beff" style="background-image:url('<?php echo $PGV_IMAGE_DIR; ?>/barra.gif');">
+			  <tr>
+				<td width="10"><img src="<?php echo $PGV_IMAGE_DIR; ?>/pixel.gif" width="1" height="18" alt="" /></td>
+				<td><div id="favtheme" align="<?php echo $TEXT_DIRECTION=="rtl"?"right":"left" ?>" class="blanco"><?php print_theme_dropdown(1); ?></div><?php print_user_links(); ?></td>
 				<td valign="top"></td>
-                <td><div align="center"><?php print_lang_form(1); ?></div></td>
-				<td><div id="favdate" align="<?php print $TEXT_DIRECTION=="rtl"?"left":"right" ?>" class="blanco"><?php print_favorite_selector(1); ?><?php print $displayDate; ?>
+				<td><div align="center"><?php print_lang_form(1); ?></div></td>
+				<td><div id="favdate" align="<?php echo $TEXT_DIRECTION=="rtl"?"left":"right" ?>" class="blanco"><?php print_favorite_selector(1); ?><?php echo $displayDate; ?>
 
 
-                </div></td><td width="10"><img src="<?php print $PGV_IMAGE_DIR; ?>/pixel.gif" width="1" height="1" alt="" /></td></tr></table>
+				</div></td><td width="10"><img src="<?php echo $PGV_IMAGE_DIR; ?>/pixel.gif" width="1" height="1" alt="" /></td></tr></table>
 		<?php } ?>
 <?php include($toplinks);
 } ?>
