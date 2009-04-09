@@ -161,6 +161,19 @@ $factarray["_DBID"]     = "ID povezane podatkovne baze";
 
 // These facts are used in specific contexts
 $factarray["STAT:DATE"] = "Datum spremembe statusa";
+$factarray["DATA:DATE"] = "Date of entry in original source";
+
+$factarray["NAME:_HEB"]		= "Ime v hebrejščini";
+$factarray["PLAC:_HEB"]		= "Kraj v hebrejščini";
+$factarray["TITL:_HEB"]		= "Naziv v hebrejščini";
+$factarray["NAME:ROMN"]		= "Romanizirano ime";
+$factarray["PLAC:ROMN"]		= "Romaniziran kraj";
+$factarray["TITL:ROMN"]		= "Romaniziran naziv";
+$factarray["NAME:FONE"]		= "Fonetično ime";
+$factarray["PLAC:FONE"]		= "Fonetičen kraj";
+$factarray["TITL:FONE"]		= "Fonetičen naziv";
+
+$factarray["SHARED_NOTE"]	= "Deljen zapisek";
 
 //These facts are compounds for the view probabilities and the advanced search page
 $factarray["FAMC:HUSB:SURN"] = "Očetov priimek";
@@ -426,7 +439,7 @@ $factarray["_FAMC_RESI"] = "Domovanje staršev";
 $factarray["_THUM"]	= "Uporabi kot sličico?";
 $factarray["_PGVU"]	= " "; // last changed by
 $factarray["SERV"] = "Oddaljeni strežnik";
-$factarray["_GEDF"] = "Datoteka GEDCOM";
+$factarray["_GEDF"] = "GEDCOM datoteka";
 
 /*-- Fact abbreviations for use in Chart boxes.  
  *		Use these abbreviations in cases where the standard method using the first
