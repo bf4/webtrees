@@ -173,6 +173,8 @@ $pgv_lang["no_family_facts"]		= "No facts for this family.";
 $pgv_lang["stat_males"]				= "males";
 $pgv_lang["stat_females"]			= "females";
 $pgv_lang["stat_unknown"]			= "unknown";
+$pgv_lang["stat_link"]				= "Click here for more analysis on the Statistics Charts";
+$pgv_lang["print_stat_link"]		= "Show link to the Statistics Charts";
 
 $pgv_lang["sunday_1st"]				= "Su";
 $pgv_lang["monday_1st"]				= "M";
