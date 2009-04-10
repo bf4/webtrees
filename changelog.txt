@@ -10,6 +10,7 @@
 
 
 Version 4.2.2
+ - Fixed [ 1694445 ] SVN 1593: Individual Report, Text align (wooc)
  - Added [ 2671412 ] Link to Statistics Charts from GEDCOM Statistics Block (wooc)
  - Fixed [ 2734393 ] Review Changes Diff for Appended fails (fisharebest)
 

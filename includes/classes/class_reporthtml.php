@@ -5,7 +5,7 @@
  * used by the SAX parser to generate HTML reports from the XML report file.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
+ * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -451,7 +451,7 @@ class PGVRTextBoxHTML extends PGVRTextBox {
 	}
 
 	function render(&$pdf) {
-		global $lastheight;
+		global $lastheight, $count;
 
 		if (!empty($lastheight)) {
 			if ($this->height < $lastheight) $this->height = $lastheight;
@@ -538,6 +538,10 @@ class PGVRTextBoxHTML extends PGVRTextBox {
 		if ($h>$this->height) $this->height=$h;
 		//if (($this->width>0)&&($this->width<$w)) $this->width=$w;
 
+		if ($count<=2) $count++;
+		if ($count==2) {
+			$pdf->SetY(36, false);
+		}
 		$curx = $pdf->GetX();
 		$cury = $pdf->GetY();
 		$curn = $pdf->PageNo();
