@@ -73,6 +73,7 @@ function print_gedcom_stats($block = true, $config="", $side, $index) {
 	if (!isset($config['stat_first_death'])) $config['stat_first_death'] = $PGV_BLOCKS["print_gedcom_stats"]["config"]['stat_first_death'];
 	if (!isset($config['stat_last_death'])) $config['stat_last_death'] = $PGV_BLOCKS["print_gedcom_stats"]["config"]['stat_last_death'];
 	if (!isset($config['stat_media'])) $config['stat_media'] = $PGV_BLOCKS["print_gedcom_stats"]["config"]['stat_media'];
+	if (!isset($config['stat_link'])) $config['stat_link'] = $PGV_BLOCKS["print_gedcom_stats"]["config"]['stat_link'];
 
 	$id = "gedcom_stats";
 	$title = print_help_link("index_stats_help", "qm", "", false, true);
@@ -250,6 +251,10 @@ function print_gedcom_stats_config($config) {
 	global $pgv_lang, $ctype, $PGV_BLOCKS, $TEXT_DIRECTION;
 	if (empty($config)) $config = $PGV_BLOCKS["print_gedcom_stats"]["config"];
 	if (!isset($config["stat_indi"])) $config = $PGV_BLOCKS["print_gedcom_stats"]["config"];
+	if (!isset($config['stat_first_death'])) $config['stat_first_death'] = $PGV_BLOCKS["print_gedcom_stats"]["config"]['stat_first_death'];
+	if (!isset($config['stat_last_death'])) $config['stat_last_death'] = $PGV_BLOCKS["print_gedcom_stats"]["config"]['stat_last_death'];
+	if (!isset($config['stat_media'])) $config['stat_media'] = $PGV_BLOCKS["print_gedcom_stats"]["config"]['stat_media'];
+	if (!isset($config['stat_link'])) $config['stat_link'] = $PGV_BLOCKS["print_gedcom_stats"]["config"]['stat_link'];
 	if (!isset($config["cache"])) $config["cache"] = $PGV_BLOCKS["print_gedcom_stats"]["config"]["cache"];
 
 	?><tr><td class="descriptionbox wrap width33"> <?php echo $pgv_lang["gedcom_stats_show_surnames"]; ?></td>
