@@ -174,6 +174,8 @@ $pgv_lang["no_family_facts"]			= "Keine Ereignisse für diese Familie.";
 $pgv_lang["stat_males"]					= "männlich";
 $pgv_lang["stat_females"]				= "weiblich";
 $pgv_lang["stat_unknown"]				= "unbekannt";
+$pgv_lang["stat_link"]					= "Statistiken als Diagramme zeigen";
+$pgv_lang["print_stat_link"]			= "Link zu Statistiken-Diagrammen zeigen?";
 
 $pgv_lang["sunday_1st"]					= "So";
 $pgv_lang["monday_1st"]					= "Mo";

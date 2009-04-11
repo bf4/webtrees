@@ -214,11 +214,11 @@ function print_gedcom_stats($block = true, $config="", $side, $index) {
 		}
 		$content .= '</tr>';
 	}
-	if ($config["stat_link"]=="yes") {
-		$content .= '<tr><td class="facts_value" colspan="3"><a href="'.encode_url('statistics.php').'" class="list_item">'.$pgv_lang["stat_link"].'</a></td></tr>';
-	}
 	$content .= "</table>";
 	$content .= "</td></tr></table>";
+	if ($config["stat_link"]=="yes") {
+		$content .= '<a href="statistics.php"><b>'.$pgv_lang["stat_link"].'</b></a><br />';
+	}
 	// NOTE: Print the most common surnames
 	if ($config["show_common_surnames"]=="yes") {
 		$surnames = get_common_surnames_index($GEDCOM);
@@ -333,14 +333,17 @@ function print_gedcom_stats_config($config) {
 		<?php if ($config['stat_avg_chil']=="yes") echo "checked=\"checked\""; ?> />
 		<?php echo $pgv_lang["stat_average_children"]; ?></td>
 	</tr>
-	<tr>
-		<td>&nbsp;</td>
-		<td><input type="checkbox" value="yes" name="stat_link"
-		<?php if ($config['stat_link']=="yes") echo "checked=\"checked\""; ?> />
-		<?php echo $pgv_lang["print_stat_link"]; ?></td>
-	</tr>
 </table>
 </td>
+</tr>
+<tr>
+	<td class="descriptionbox wrap width33"> <?php echo $pgv_lang["print_stat_link"]; ?></td>
+	<td class="optionbox">
+		<select name="stat_link">
+			<option value="yes" <?php if ($config['stat_link']=='yes') echo ' selected="selected"'; ?>><?php echo $pgv_lang["yes"]; ?></option>
+			<option value="no" <?php if ($config['stat_link']=='no') echo ' selected="selected"'; ?>><?php echo $pgv_lang["no"]; ?></option>
+		</select>
+	</td>
 </tr>
 <?php
 
