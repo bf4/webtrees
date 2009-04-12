@@ -817,9 +817,8 @@ function set_params($current, $indfam, $xg, $zg, $titstr, $xt, $yt, $gx, $gz, $m
 }
 
 function print_sources_stats_chart($type){
-	global $pgv_lang, $GEDCOM;
-	require_once 'includes/classes/class_stats.php';
-	$stats = new stats($GEDCOM);
+	global $pgv_lang, $GEDCOM, $stats;
+
 	$params[0] = "700x200";
 	$params[1] = "ffffff";
 	$params[2] = "84beff";
@@ -964,16 +963,16 @@ case '21':
 	set_params(21,"FAM", false,	false, "stat_21_nok", "stplnuch",	$y_as,	$xga,	$zgp, "nuch");  //plot Number of children
 	break;
 case '1':
-	$stats->chartDistribution($chart_shows, $chart_type, $surname);
+	echo $stats->chartDistribution($chart_shows, $chart_type, $surname);
 	break;
 case '2':
-	$stats->chartDistribution($chart_shows, 'birth_distribution_chart');
+	echo $stats->chartDistribution($chart_shows, 'birth_distribution_chart');
 	break;
 case '3':
-	$stats->chartDistribution($chart_shows, 'death_distribution_chart');
+	echo $stats->chartDistribution($chart_shows, 'death_distribution_chart');
 	break;
 case '4':
-	$stats->chartDistribution($chart_shows, 'marriage_distribution_chart');
+	echo $stats->chartDistribution($chart_shows, 'marriage_distribution_chart');
 	break;
 case '8':
 case '9':
