@@ -113,7 +113,7 @@ $pgv_lang["results_per_page"]		= "Resultados por página";
 $pgv_lang["firstname_search"]		= "Nombre";
 $pgv_lang["search_prtnames"]		= "Nombres de las<br />personas a mostrar:";
 $pgv_lang["other_searches"]			= "Otras búsquedas";
-$pgv_lang["add_to_cart"]			= "Añadir al Carrito";
+$pgv_lang["add_to_cart"]			= "Añadir al carrito";
 $pgv_lang["view_gedcom"]			= "Ver el registro GEDCOM";
 $pgv_lang["welcome"]				= "Bienvenido";
 $pgv_lang["son"]					= "Hijo";
@@ -174,6 +174,8 @@ $pgv_lang["no_family_facts"]		= "No hay hechos para esta familia.";
 $pgv_lang["stat_males"]				= "hombres";
 $pgv_lang["stat_females"]			= "mujeres";
 $pgv_lang["stat_unknown"]			= "sexo desconocido";
+$pgv_lang["stat_link"]				= "Mostrar las estadísticas en gráficos";
+$pgv_lang["print_stat_link"]		= "¿Mostrar vínculo a los gráficos estadísticos?";
 
 $pgv_lang["sunday_1st"]				= "D";
 $pgv_lang["monday_1st"]				= "L";
@@ -498,7 +500,7 @@ $pgv_lang["show_fact_notes"]		= "Mostrar todas las notas";
 
 //-- FAMILY FILE MESSAGES
 $pgv_lang["family_info"]			= "Información de familia";
-$pgv_lang["family_group_info"]		= "Información del Grupo Familiar";
+$pgv_lang["family_group_info"]		= "Información del grupo familiar";
 $pgv_lang["husband"]				= "Esposo";
 $pgv_lang["wife"]					= "Esposa";
 $pgv_lang["marriage"]				= "Matrimonio:";
@@ -613,7 +615,7 @@ $pgv_lang["total_repositories"]		= "Total de repositorios";
 $pgv_lang["confirm_delete_repo"]	= "¿Seguro que quiere borrar este repositorio?";
 
 //-- SOURCE FILE MESSAGES
-$pgv_lang["source_info"]			= "Información de la Fuente";
+$pgv_lang["source_info"]			= "Información de la fuente";
 $pgv_lang["people"] 				= "Personas";
 $pgv_lang["families"]				= "Familias";
 $pgv_lang["total_sources"]			= "Número total de fuentes";
@@ -1134,14 +1136,14 @@ $pgv_lang["delete_person"]			= "Borrar esta persona";
 $pgv_lang["confirm_delete_person"]	= "¿Seguro que quiere borrar esta persona?";
 $pgv_lang["find_media"] 			= "Buscar objeto audiovisual";
 $pgv_lang["set_link"]				= "Fijar vínculo";
-$pgv_lang["delete_source"]			= "Borrar esta Fuente";
+$pgv_lang["delete_source"]			= "Borrar esta fuente";
 $pgv_lang["delete_shared_note"]		= "Borrar esta nota compartida";
 $pgv_lang["confirm_delete_source"]	= "¿Seguro que quiere borrar esta fuente?";
 $pgv_lang["confirm_delete_shared_note"]		= "¿Seguro que quiere borrar esta nota compartida?";
 $pgv_lang["find_family"]			= "Buscar Familia";
 $pgv_lang["find_fam_list"]			= "Buscar familia";
-$pgv_lang["edit_name"]				= "Editar Nombre";
-$pgv_lang["delete_name"]			= "Borrar Nombre";
+$pgv_lang["edit_name"]				= "Editar nombre";
+$pgv_lang["delete_name"]			= "Borrar nombre";
 $pgv_lang["select_date"]			= "Seleccione una fecha";
 $pgv_lang["user_cannot_edit"]		= "Este usuario no puede editar este GEDCOM.";
 $pgv_lang["ged_noshow"]				= "Esta página ha sido deshabilitada por el administrador del sitio";
@@ -1528,8 +1530,8 @@ $pgv_lang["show_cousins"]			= "Mostrar primos";
 $pgv_lang["sosa_2"] 				= "Padre";
 $pgv_lang["sosa_3"] 				= "Madre";
 // 2nd generation
-$pgv_lang["sosa_4"] 				= "Abuelo Paterno";
-$pgv_lang["sosa_5"] 				= "Abuela Paterna";
+$pgv_lang["sosa_4"] 				= "Abuelo paterno";
+$pgv_lang["sosa_5"] 				= "Abuela paterna";
 $pgv_lang["sosa_6"] 				= "Abuelo materno";
 $pgv_lang["sosa_7"] 				= "Abuela materna";
 // 3rd generation
