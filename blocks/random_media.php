@@ -35,45 +35,45 @@ define('PGV_RANDOM_MEDIA_PHP', '');
 
 //-- only enable this block if multi media has been enabled
 if ($MULTI_MEDIA) {
-	$PGV_BLOCKS["print_random_media"]["name"]		= $pgv_lang["random_media_block"];
-	$PGV_BLOCKS["print_random_media"]["descr"]		= "random_media_descr";
-	$PGV_BLOCKS["print_random_media"]["canconfig"]	= true;
-	$PGV_BLOCKS["print_random_media"]["config"]		= array(
-		"cache"   =>0,
-		"filter"  =>"all",
-		"controls"=>"yes",
-		"start"   =>"no",
+	$PGV_BLOCKS['print_random_media']['name']		= $pgv_lang['random_media_block'];
+	$PGV_BLOCKS['print_random_media']['descr']		= 'random_media_descr';
+	$PGV_BLOCKS['print_random_media']['canconfig']	= true;
+	$PGV_BLOCKS['print_random_media']['config']		= array(
+		'cache'   =>0,
+		'filter'  =>'all',
+		'controls'=>'yes',
+		'start'   =>'no',
 
-		"filter_avi"  =>"no",
-		"filter_bmp"  =>"yes",
-		"filter_gif"  =>"yes",
-		"filter_jpeg" =>"yes",
-		"filter_mp3"  =>"no",
-		"filter_ole"  =>"yes",
-		"filter_pcx"  =>"yes",
-		"filter_pdf"  =>"no",
-		"filter_png"  =>"yes",
-		"filter_tiff" =>"yes",
-		"filter_wav"  =>"no",
+		'filter_avi'  =>'no',
+		'filter_bmp'  =>'yes',
+		'filter_gif'  =>'yes',
+		'filter_jpeg' =>'yes',
+		'filter_mp3'  =>'no',
+		'filter_ole'  =>'yes',
+		'filter_pcx'  =>'yes',
+		'filter_pdf'  =>'no',
+		'filter_png'  =>'yes',
+		'filter_tiff' =>'yes',
+		'filter_wav'  =>'no',
 
-		"filter_audio"		=>"no",
-		"filter_book"		=>"yes",
-		"filter_card"		=>"yes",
-		"filter_certificate"=>"yes",
-		"filter_coat"		=>"yes",
-		"filter_document"	=>"yes",
-		"filter_electronic"	=>"yes",
-		"filter_fiche"		=>"yes",
-		"filter_film"		=>"yes",
-		"filter_magazine"	=>"yes",
-		"filter_manuscript"	=>"yes",
-		"filter_map"		=>"yes",
-		"filter_newspaper"	=>"yes",
-		"filter_other"		=>"yes",
-		"filter_painting"	=>"yes",
-		"filter_photo"		=>"yes",
-		"filter_tombstone"	=>"yes",
-		"filter_video"		=>"no"
+		'filter_audio'		=>'no',
+		'filter_book'		=>'yes',
+		'filter_card'		=>'yes',
+		'filter_certificate'=>'yes',
+		'filter_coat'		=>'yes',
+		'filter_document'	=>'yes',
+		'filter_electronic'	=>'yes',
+		'filter_fiche'		=>'yes',
+		'filter_film'		=>'yes',
+		'filter_magazine'	=>'yes',
+		'filter_manuscript'	=>'yes',
+		'filter_map'		=>'yes',
+		'filter_newspaper'	=>'yes',
+		'filter_other'		=>'yes',
+		'filter_painting'	=>'yes',
+		'filter_photo'		=>'yes',
+		'filter_tombstone'	=>'yes',
+		'filter_video'		=>'no'
 	);
 
 	require_once 'includes/functions/functions_print_facts.php';
@@ -324,46 +324,16 @@ function openPic(filename, width, height) {
 	function print_random_media_config($config) {
 		global $pgv_lang, $factarray, $PGV_BLOCKS, $TEXT_DIRECTION;
 
-		if (empty($config)) $config = $PGV_BLOCKS["print_random_media"]["config"];
-		if (!isset($config["filter"])) $config["filter"] = "all";
-		if (!isset($config["controls"])) $config["controls"] = "yes";
-		if (!isset($config["start"])) $config["start"] = "no";
+		$defaultConfig = $PGV_BLOCKS['print_random_media']['config'];
+		if (empty($config)) $config = $defaultConfig;
 
-		if (!isset($config["filter_avi"])) {
-			$config["filter_avi"]	= "no";
-			$config["filter_bmp"]	= "yes";
-			$config["filter_gif"]	= "yes";
-			$config["filter_jpeg"]	= "yes";
-			$config["filter_mp3"]	= "no";
-			$config["filter_ole"]	= "yes";
-			$config["filter_pcx"]	= "yes";
-			$config["filter_pdf"]	= "no";
-			$config["filter_png"]	= "yes";
-			$config["filter_tiff"]	= "yes";
-			$config["filter_wav"]	= "no";
-
-			$config["filter_audio"]			= "no";
-			$config["filter_book"]			= "yes";
-			$config["filter_card"]			= "yes";
-			$config["filter_certificate"]	= "yes";
-			$config["filter_coat"]			= "yes";
-			$config["filter_document"]		= "yes";
-			$config["filter_electronic"]	= "yes";
-			$config["filter_fiche"]			= "yes";
-			$config["filter_film"]			= "yes";
-			$config["filter_magazine"]		= "yes";
-			$config["filter_manuscript"]	= "yes";
-			$config["filter_map"]			= "yes";
-			$config["filter_newspaper"]		= "yes";
-			$config["filter_photo"]			= "yes";
-			$config["filter_tombstone"]		= "yes";
-			$config["filter_video"]			= "no";
+		// Add options missing from old block configurations
+		foreach ($defaultConfig as $option => $setting) {
+			if (!isset($config[$option])) $config[$option] = $setting;
 		}
-		if (!isset($config["filter_other"])) $config["filter_other"] = "yes";
-		if (!isset($config["filter_painting"])) $config["filter_painting"] = "yes";
 
 		print "<tr><td class=\"descriptionbox wrap width33\">";
-				print_help_link("random_media_persons_or_all_help", "qm");
+			print_help_link("random_media_persons_or_all_help", "qm");
 			print $pgv_lang["random_media_persons_or_all"];
 		print "</td>";?>
 	<td class="optionbox"><select name="filter">
