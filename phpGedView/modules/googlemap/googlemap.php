@@ -261,6 +261,16 @@ function create_possible_place_names ($placename, $level) {
 	return $retlist;
 }
 
+function abbreviate($text) {
+	if (UTF8_strlen($text)>13) {
+		if (trim(UTF8_substr($text, 10, 1))!="") 
+			$desc = UTF8_substr($text, 0, 11).".";
+		else $desc = trim(UTF8_substr($text, 0, 11));
+	}
+	else $desc = $text;
+	return $desc;
+}
+
 function get_lati_long_placelocation ($place) {
 	global $DBCONN, $TBLPREFIX;
 	$parent = explode (",", $place);
@@ -786,7 +796,7 @@ function build_indiv_map($indifacts, $famids) {
 					$markers[$j]["index"] = $indexcounter;
 					$markers[$j]["tabindex"] = $tabcounter;
 					$tabcounter = $tabcounter + 1;
-					echo "new GInfoWindowTab(\"".$markers[$j]["fact"]."\", \"<div class='iwstyle'>".PrintReady($markers[$j]["fact"]);
+					echo "new GInfoWindowTab(\"".abbreviate($markers[$j]["fact"])."\", \"<div class='iwstyle'>".PrintReady($markers[$j]["fact"]);
 					if (!empty($markers[$j]['info']))
 						echo ": {$markers[$j]['info']}";
 					if (!empty($markers[$j]["name"])) {
@@ -853,7 +863,7 @@ function build_indiv_map($indifacts, $famids) {
 							$markers[$k]["index"] = $indexcounter;
 							$markers[$k]["tabindex"] = $tabcounter;
 							$tabcounter = $tabcounter + 1;
-							echo "new GInfoWindowTab(\"".$markers[$k]["fact"]."\", \"<div class='iwstyle'>".$markers[$k]["fact"];
+							echo "new GInfoWindowTab(\"".abbreviate($markers[$k]["fact"])."\", \"<div class='iwstyle'>".$markers[$k]["fact"];
 							if (!empty($markers[$k]['info']))
 								echo ": {$markers[$k]['info']}";
 							if (!empty($markers[$k]["name"])) {
