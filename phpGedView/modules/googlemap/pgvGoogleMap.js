@@ -82,7 +82,7 @@
 			{
 				map_type.refresh();
 			});
-            map.addControl(new GLargeMapControl());
+            map.addControl(new GLargeMapControl3D());
             map.addControl(new GScaleControl());
 			var mini = new GOverviewMapControl();
 			map.addControl(mini);
