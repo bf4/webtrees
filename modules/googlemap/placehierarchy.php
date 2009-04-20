@@ -459,11 +459,14 @@ function map_scripts($numfound, $level, $parent, $linklevels, $placelevels, $pla
 		map_type.refresh();
 	});
 	var bounds = new GLatLngBounds();
-	place_map.addControl(new GSmallMapControl());
+	// for further street view
+	//place_map.addControl(new GLargeMapControl3D(true));
+	place_map.addControl(new GLargeMapControl3D(true));
 	place_map.addControl(new GScaleControl());
 	var mini = new GOverviewMapControl();
 	place_map.addControl(mini);
-	mini.hide();
+	// displays blank minimap - probably google api's bug
+	//mini.hide();
 	<?php
 	if (check_exist_table()) {
 		$levelm = set_levelm($level, $parent);

@@ -140,9 +140,9 @@ $level=count($where_am_i);
 
 if ($action=='addrecord') {
 	if (($_POST['LONG_CONTROL'] == '') || ($_POST['NEW_PLACE_LONG'] == '') || ($_POST['NEW_PLACE_LATI'] == '')) {
-		$sql = "INSERT INTO {$TBLPREFIX}placelocation (pl_id, pl_parent_id, pl_level, pl_place, pl_long, pl_lati, pl_zoom, pl_icon) VALUES (".(getHighestIndex()+1).", {$placeid}, {$level}, '".$DBCONN->escapeSimple($_POST['NEW_PLACE_NAME'])."', '' , '', {$_POST['NEW_ZOOM_FACTOR']}, '{$_POST['icon']}');";
+		$sql = "INSERT INTO {$TBLPREFIX}placelocation (pl_id, pl_parent_id, pl_level, pl_place, pl_long, pl_lati, pl_zoom, pl_icon) VALUES (".(getHighestIndex()+1).", {$placeid}, {$level}, '".$DBCONN->escapeSimple(stripLRMRLM($_POST['NEW_PLACE_NAME']))."', '' , '', {$_POST['NEW_ZOOM_FACTOR']}, '{$_POST['icon']}');";
 	} else {
-		$sql = "INSERT INTO {$TBLPREFIX}placelocation (pl_id, pl_parent_id, pl_level, pl_place, pl_long, pl_lati, pl_zoom, pl_icon) VALUES (".(getHighestIndex()+1).", {$placeid}, {$level}, '".$DBCONN->escapeSimple($_POST['NEW_PLACE_NAME'])."', '{$_POST['LONG_CONTROL'][3]}{$_POST['NEW_PLACE_LONG']}', '{$_POST['LATI_CONTROL'][3]}{$_POST['NEW_PLACE_LATI']}', {$_POST['NEW_ZOOM_FACTOR']}, '{$_POST['icon']}');";
+		$sql = "INSERT INTO {$TBLPREFIX}placelocation (pl_id, pl_parent_id, pl_level, pl_place, pl_long, pl_lati, pl_zoom, pl_icon) VALUES (".(getHighestIndex()+1).", {$placeid}, {$level}, '".$DBCONN->escapeSimple(stripLRMRLM($_POST['NEW_PLACE_NAME']))."', '{$_POST['LONG_CONTROL'][3]}{$_POST['NEW_PLACE_LONG']}', '{$_POST['LATI_CONTROL'][3]}{$_POST['NEW_PLACE_LATI']}', {$_POST['NEW_ZOOM_FACTOR']}, '{$_POST['icon']}');";
 	}
 	if (PGV_USER_IS_ADMIN) {
 		$res = dbquery($sql);
@@ -155,9 +155,9 @@ if ($action=='addrecord') {
 
 if ($action=='updaterecord') {
 	if (($_POST['LONG_CONTROL'] == '') || ($_POST['NEW_PLACE_LONG'] == '') || ($_POST['NEW_PLACE_LATI'] == '')) {
-		$sql = "UPDATE {$TBLPREFIX}placelocation SET pl_place='".$DBCONN->escapeSimple($_POST['NEW_PLACE_NAME'])."', pl_lati='', pl_long='', pl_zoom={$_POST['NEW_ZOOM_FACTOR']}, pl_icon='{$_POST['icon']}' WHERE pl_id={$placeid}";
+		$sql = "UPDATE {$TBLPREFIX}placelocation SET pl_place='".$DBCONN->escapeSimple(stripLRMRLM($_POST['NEW_PLACE_NAME']))."', pl_lati='', pl_long='', pl_zoom={$_POST['NEW_ZOOM_FACTOR']}, pl_icon='{$_POST['icon']}' WHERE pl_id={$placeid}";
 	} else {
-		$sql = "UPDATE {$TBLPREFIX}placelocation SET pl_place='".$DBCONN->escapeSimple($_POST['NEW_PLACE_NAME'])."',pl_lati='{$_POST['LATI_CONTROL'][3]}{$_POST['NEW_PLACE_LATI']}', pl_long='{$_POST['LONG_CONTROL'][3]}{$_POST['NEW_PLACE_LONG']}',pl_zoom={$_POST['NEW_ZOOM_FACTOR']}, pl_icon='{$_POST['icon']}' WHERE pl_id={$placeid}";
+		$sql = "UPDATE {$TBLPREFIX}placelocation SET pl_place='".$DBCONN->escapeSimple(stripLRMRLM($_POST['NEW_PLACE_NAME']))."',pl_lati='{$_POST['LATI_CONTROL'][3]}{$_POST['NEW_PLACE_LATI']}', pl_long='{$_POST['LONG_CONTROL'][3]}{$_POST['NEW_PLACE_LONG']}',pl_zoom={$_POST['NEW_ZOOM_FACTOR']}, pl_icon='{$_POST['icon']}' WHERE pl_id={$placeid}";
 	}
 	if (PGV_USER_IS_ADMIN) {
 		$res = dbquery($sql);
@@ -431,7 +431,7 @@ if ($action=="add") {
 		var zoom;
 		if (GBrowserIsCompatible()) {
 			map = new GMap2(document.getElementById("map_pane"));
-			map.addControl(new GSmallMapControl());
+			map.addControl(new GSmallZoomControl3D());
 			map.addControl(new GScaleControl()) ;
 			var bounds = new GLatLngBounds();
 			var map_type;
@@ -718,7 +718,7 @@ if ($action=="add") {
 	</tr>
 	<tr>
 		<td class="descriptionbox"><?php print_help_link("PLE_PLACES_help", "qm", "PLE_PLACES");?><?php echo $factarray["PLAC"];?></td>
-		 <td class="optionbox"><input type="text" id="new_pl_name" name="NEW_PLACE_NAME" value="<?php echo PrintReady(stripLRMRLM($place_name)) ?>" size="25" class="address_input" tabindex="<?php echo ++$i;?>" />		 
+		 <td class="optionbox"><input type="text" id="new_pl_name" name="NEW_PLACE_NAME" value="<?php echo PrintReady($place_name) ?>" size="25" class="address_input" tabindex="<?php echo ++$i;?>" />
 		<div id="INDI_PLAC_pop" style="display: inline;">
 		<?php print_specialchar_link("NEW_PLACE_NAME", false);?></div>
 		<label for="new_pl_name"><a href="javascript:;" onclick="showLocation_level(document.getElementById('new_pl_name').value); return false">&nbsp;<?php echo $pgv_lang["pl_search_level"]?></a></label>&nbsp;&nbsp;|
