@@ -451,7 +451,6 @@ $errormsg = "";
 					checkTableExists();
 					//-- setup genealogy tables
 					setup_database();
-					cleanup_database();
 					$CONFIGURED = $saveConfigured;
 					print "<span class=\"pass\">".$pgv_lang["db_tables_created"]."</span><br /><br /><br />";
 					$success = true;

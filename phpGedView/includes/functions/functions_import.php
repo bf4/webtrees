@@ -1760,25 +1760,19 @@ function empty_database($ged_id, $keepmedia) {
 	clearCache();
 }
 
-/**
-* perform any database cleanup
-*
-* during the import process it might be necessary to cleanup some database values.  In index mode
-* the file handles need to be closed.  For database mode we probably don't need to do anything in
-* this funciton.
-*/
-function cleanup_database() {
-	global $DBTYPE, $DBCONN, $TBLPREFIX, $MAX_IDS, $GEDCOMS, $FILE;
+//
+// While importing a gedcom, we keep track of the the maximum ID values for each
+// record type.  Write these to the database in one go.
+//
+function import_max_ids($ged_id, $MAX_IDS) {
+	global $TBLPREFIX;
 
-	if (isset ($MAX_IDS)) {
-		$sql = "DELETE FROM {$TBLPREFIX}nextid WHERE ni_gedfile='" . $DBCONN->escapeSimple($GEDCOMS[$FILE]['id']) . "'";
-		$res = dbquery($sql);
-		foreach ($MAX_IDS as $type => $id) {
-			$sql = "INSERT INTO {$TBLPREFIX}nextid (ni_id, ni_type, ni_gedfile) VALUES('" . $DBCONN->escapeSimple($id +1) . "', '" . $DBCONN->escapeSimple($type) . "', '" . $GEDCOMS[$FILE]["id"] . "')";
-			$res = dbquery($sql);
-		}
+	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}nextid WHERE ni_gedfile=?")->execute(array($ged_id));
+
+	$statement=PGV_DB::prepare("INSERT INTO {$TBLPREFIX}nextid (ni_id, ni_type, ni_gedfile) VALUES (?, ?, ?)");
+	foreach ($MAX_IDS as $type => $id) {
+		$statement->execute(array($id+1, $type, $ged_id));
 	}
-	return;
 }
 
 /**
@@ -2028,26 +2022,26 @@ function update_record($gedrec, $delete = false) {
 		$res->free();
 	}
 
-	dbquery("DELETE FROM {$TBLPREFIX}media_mapping WHERE mm_gid='{$gid}' AND mm_gedfile={$ged_id}");
-	dbquery("DELETE FROM {$TBLPREFIX}remotelinks WHERE r_gid='{$gid}' AND r_file={$ged_id}");
-	dbquery("DELETE FROM {$TBLPREFIX}name WHERE n_id='{$gid}' AND n_file={$ged_id}");
-	dbquery("DELETE FROM {$TBLPREFIX}link WHERE l_from='{$gid}' AND l_file={$ged_id}");
+	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}media_mapping WHERE mm_gid=? AND mm_gedfile=?")->execute(array($gid, $ged_id));
+	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}remotelinks WHERE r_gid=? AND r_file=?")->execute(array($gid, $ged_id));
+	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}name WHERE n_id=? AND n_file=?")->execute(array($gid, $ged_id));
+	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}link WHERE l_from=? AND l_file=?")->execute(array($gid, $ged_id));
 
 	switch ($type) {
 	case 'INDI':
-		dbquery("DELETE FROM {$TBLPREFIX}individuals WHERE i_id='{$gid}' AND i_file={$ged_id}");
+		PGV_DB::prepare("DELETE FROM {$TBLPREFIX}individuals WHERE i_id=? AND i_file=?")->execute(array($gid, $ged_id));
 		break;
 	case 'FAM':
-		dbquery("DELETE FROM {$TBLPREFIX}families WHERE f_id='{$gid}' AND f_file={$ged_id}");
+		PGV_DB::prepare("DELETE FROM {$TBLPREFIX}families WHERE f_id=? AND f_file=?")->execute(array($gid, $ged_id));
 		break;
 	case 'SOUR':
-		dbquery("DELETE FROM {$TBLPREFIX}sources WHERE s_id='{$gid}' AND s_file={$ged_id}");
+		PGV_DB::prepare("DELETE FROM {$TBLPREFIX}sources WHERE s_id=? AND s_file=?")->execute(array($gid, $ged_id));
 		break;
 	case 'OBJE':
-		dbquery("DELETE FROM {$TBLPREFIX}media WHERE m_media='{$gid}' AND m_gedfile={$ged_id}");
+		PGV_DB::prepare("DELETE FROM {$TBLPREFIX}media WHERE m_media=? AND m_gedfile=?")->execute(array($gid, $ged_id));
 		break;
 	default:
-		dbquery("DELETE FROM {$TBLPREFIX}other WHERE o_id='{$gid}' AND o_file={$ged_id}");
+		PGV_DB::prepare("DELETE FROM {$TBLPREFIX}other WHERE o_id=? AND o_file=?")->execute(array($gid, $ged_id));
 		break;
 	}
 
