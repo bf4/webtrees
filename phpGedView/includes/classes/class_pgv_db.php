@@ -171,7 +171,9 @@ class PGV_DB {
 
 	// Display the query log as a table, for debugging
 	public static function getQueryLog() {
-		return '<table border="1"><tr><th>Query</th><th>Rows</th><th>Time (ms)</th></tr>'.implode('', self::$log).'</table>';
+		$html='<table border="1"><tr><th>Query</th><th>Rows</th><th>Time (ms)</th></tr>'.implode('', self::$log).'</table>';
+		self::$log=array();
+		return $html;
 	}
 
 	//////////////////////////////////////////////////////////////////////////////
