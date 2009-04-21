@@ -442,8 +442,9 @@ if ($action=="add") {
 				map_type.refresh();
 			});
 			GEvent.addListener(map, 'click', function(overlay, point) {
-				if (overlay) {  //probably not needed in this case
-								//map.removeOverlay(overlay);
+				if (overlay) {
+					//probably not needed in this case
+					//map.removeOverlay(overlay);
 				} else if (point) {
 					map.clearOverlays();
 					// Create our "tiny" yellow marker icon where the user clicked,
@@ -553,9 +554,16 @@ if ($action=="add") {
 		if ($show_marker == true) {
 			if (($place_icon == NULL) || ($place_icon == "")) {
 				if (($place_lati == null) || ($place_long == null)) {?>
-			map.addOverlay(new GMarker(new GLatLng(<?php echo $parent_lati.", ".$parent_long;?>)));
+					var icon_type = new GIcon();
+					icon_type.image = "modules/googlemap/marker_yellow.png";
+					icon_type.shadow = "modules/googlemap/shadow50.png";
+					icon_type.iconSize = new GSize(20, 34);
+					icon_type.shadowSize = new GSize(37, 34);
+					icon_type.iconAnchor = new GPoint(6, 20);
+					icon_type.infoWindowAnchor = new GPoint(5, 1);
+					map.addOverlay(new GMarker(new GLatLng(<?php echo $parent_lati.", ".$parent_long;?>), icon_type));
 <?php			} else { ?>
-			map.addOverlay(new GMarker(new GLatLng(<?php echo $place_lati.", ".$place_long;?>)));
+					map.addOverlay(new GMarker(new GLatLng(<?php echo $place_lati.", ".$place_long;?>)));
 <?php			}
 			}
 			else { ?>

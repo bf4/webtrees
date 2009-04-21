@@ -188,7 +188,13 @@ function print_how_many_people($level, $parent) {
 function print_gm_markers($place2, $level, $parent, $levelm, $linklevels, $placelevels, $lastlevel=false){
 	global $GOOGLEMAP_COORD, $GOOGLEMAP_PH_MARKER, $GM_DISP_SHORT_PLACE, $GM_DISP_COUNT, $pgv_lang;
 	if (($place2['lati'] == NULL) || ($place2['long'] == NULL) || (($place2['lati'] == "0") && ($place2['long'] == "0"))) {
-		echo "var icon_type = new GIcon(G_DEFAULT_ICON);\n";
+		echo "var icon_type = new GIcon();\n";
+			echo "	icon_type.image = \"modules/googlemap/marker_yellow.png\";\n";
+			echo "	icon_type.shadow = \"modules/googlemap/shadow50.png\";\n";
+			echo "	icon_type.iconSize = new GSize(20, 34);\n";
+			echo "	icon_type.shadowSize = new GSize(37, 34);\n";
+			echo "	icon_type.iconAnchor = new GPoint(6, 20);\n";
+			echo "	icon_type.infoWindowAnchor = new GPoint(5, 1);\n";
 		echo "var point = new GLatLng(0,0);\n";
 		if ($lastlevel)
 			echo "var marker = createMarker(point, \"<td width='100%'><div class='iwstyle' style='width: 250px;'><a href='?level=".$level.$linklevels."'><br />";
@@ -461,7 +467,7 @@ function map_scripts($numfound, $level, $parent, $linklevels, $placelevels, $pla
 	var bounds = new GLatLngBounds();
 	// for further street view
 	//place_map.addControl(new GLargeMapControl3D(true));
-	place_map.addControl(new GLargeMapControl3D(true));
+	place_map.addControl(new GLargeMapControl3D());
 	place_map.addControl(new GScaleControl());
 	var mini = new GOverviewMapControl();
 	place_map.addControl(mini);
@@ -506,6 +512,24 @@ function map_scripts($numfound, $level, $parent, $linklevels, $placelevels, $pla
 							if ($place2['place_id']==$levelo[$level])
 								print_gm_markers($place2, $level, $parent, $levelo[($level-1)], $linklevels, $placelevels, true);
 						}
+						else {
+							echo "var icon_type = new GIcon();\n";
+							echo "icon_type.image = \"modules/googlemap/marker_yellow.png\"\n";
+							echo "icon_type.shadow = \"modules/googlemap/shadow50.png\";\n";
+							echo "icon_type.iconSize = new GSize(20, 34);\n";
+							echo "icon_type.shadowSize = new GSize(37, 34);\n";
+							echo "icon_type.iconAnchor = new GPoint(6, 20);\n";
+							echo "icon_type.infoWindowAnchor = new GPoint(5, 1);\n";
+							echo "var point = new GLatLng(0,0);\n";
+							echo "var marker = createMarker(point, \"<td width='100%'><div class='iwstyle' style='width: 250px;'><b>";
+							echo substr($placelevels,2)."</b><br />".$pgv_lang["gm_no_coord"];
+							if (PGV_USER_IS_ADMIN)
+								echo "<br /><a href='module.php?mod=googlemap&pgvaction=places&parent=0&display=inactive'>".$pgv_lang["pl_edit"]."</a>";
+							echo "<br /></div></td>\", icon_type, \"".$pgv_lang["pl_edit"]."\");\n";
+							echo "place_map.addOverlay(marker);\n";
+							echo "bounds.extend(point);\n";
+							break;
+						}
 					}
 				}
 				else {
@@ -546,7 +570,8 @@ function map_scripts($numfound, $level, $parent, $linklevels, $placelevels, $pla
 		}
 	}
 	else {
-		echo "var icon_type = new GIcon(G_DEFAULT_ICON);\n";
+		echo "var icon_type = new GIcon();\n";
+		echo "icon_type.image = \"modules/googlemap/marker_yellow.png\"";
 		echo "var point = new GLatLng(0,0);\n";
 		echo "var marker = createMarker(point, \"<td width='100%'><div class='iwstyle' style='width: 250px;'>";
 		echo "<br />".$pgv_lang["gm_no_coord"];
