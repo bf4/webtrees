@@ -1073,7 +1073,6 @@ if ($stage == 1) {
 					</script>
 					<?php
 					}
-					cleanup_database();
 					print_footer();
 					session_write_close();
 					exit;
@@ -1145,7 +1144,7 @@ if ($stage == 1) {
 	}
 	print "</td></tr></table>\n";
 	// NOTE: Finished Links
-	cleanup_database();
+	import_max_ids(get_id_from_gedcom($FILE), $MAX_IDS);
 	$GEDCOMS[$ged]["imported"] = true;
 	$GEDCOMS[$ged]["pgv_ver" ] = PGV_VERSION;
 	store_gedcoms();
