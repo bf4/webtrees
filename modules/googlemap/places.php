@@ -639,8 +639,14 @@ foreach ($placelist as $place) {
 	echo "<td class=\"optionbox\">{$place['zoom']}</td>";
 	echo "<td class=\"optionbox\">";
 	if (($place["icon"] == NULL) || ($place["icon"] == "")) {
-		echo "&nbsp;";
-		echo "<img src=\"http://labs.google.com/ridefinder/images/mm_20_red.png\">";
+		if (($place['lati'] == NULL) || ($place['long'] == NULL) || (($place['lati'] == "0") && ($place['long'] == "0"))) {
+			echo "&nbsp;";
+			echo "<img src=\"http://labs.google.com/ridefinder/images/mm_20_yellow.png\">";
+		}
+		else {
+			echo "&nbsp;";
+			echo "<img src=\"http://labs.google.com/ridefinder/images/mm_20_red.png\">";
+		}
 	} else {
 		echo "<img src=\"".$place["icon"]." \"width=\"25\" height=\"15\">";
 	}
