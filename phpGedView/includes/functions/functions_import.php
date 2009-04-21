@@ -1986,7 +1986,7 @@ function find_newline_string($haystack, $needle, $offset=0) {
 * @param string $gedrec
 */
 function update_record($gedrec, $delete = false) {
-	global $TBLPREFIX, $GEDCOM, $DBCONN, $GEDCOMS, $FILE;
+	global $TBLPREFIX, $GEDCOM, $FILE;
 
 	if (empty ($FILE)) {
 		$FILE = $GEDCOM;
@@ -1999,7 +1999,7 @@ function update_record($gedrec, $delete = false) {
 		return false;
 	}
 
-	$ged_id=get_id_from_gedcom($GEDCOM);
+	$ged_id=get_id_from_gedcom($FILE);
 
 	$res=dbquery("SELECT pl_p_id FROM {$TBLPREFIX}placelinks WHERE pl_gid='{$gid}' AND pl_file={$ged_id}");
 
@@ -2008,8 +2008,8 @@ function update_record($gedrec, $delete = false) {
 		$placeids[]=$row[0];
 	}
 	$res->free();
-	dbquery("DELETE FROM {$TBLPREFIX}placelinks WHERE pl_gid='{$gid}' AND pl_file={$ged_id}");
-	dbquery("DELETE FROM {$TBLPREFIX}dates WHERE d_gid='{$gid}' AND d_file={$ged_id}");
+	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}placelinks WHERE pl_gid=? AND pl_file=?")->execute(array($gid, $ged_id));
+	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}dates      WHERE d_gid =? AND d_file =?")->execute(array($gid, $ged_id));
 
 	//-- delete any unlinked places
 	foreach ($placeids as $indexval => $p_id) {
