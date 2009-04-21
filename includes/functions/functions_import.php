@@ -2001,25 +2001,26 @@ function update_record($gedrec, $delete = false) {
 
 	$ged_id=get_id_from_gedcom($FILE);
 
-	$res=dbquery("SELECT pl_p_id FROM {$TBLPREFIX}placelinks WHERE pl_gid='{$gid}' AND pl_file={$ged_id}");
+	// TODO deleting unlinked places can be done more efficiently in a single query
+	$placeids=
+		PGV_DB::prepare("SELECT pl_p_id FROM {$TBLPREFIX}placelinks WHERE pl_gid=? AND pl_file=?")
+		->bindValue(1, $gid,    PDO::PARAM_STR)
+		->bindValue(2, $ged_id, PDO::PARAM_INT)
+		->fetchOneColumn();
 
-	$placeids = array ();
-	while ($row=$res->fetchRow()) {
-		$placeids[]=$row[0];
-	}
-	$res->free();
 	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}placelinks WHERE pl_gid=? AND pl_file=?")->execute(array($gid, $ged_id));
 	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}dates      WHERE d_gid =? AND d_file =?")->execute(array($gid, $ged_id));
 
 	//-- delete any unlinked places
-	foreach ($placeids as $indexval => $p_id) {
-		$res=dbquery("SELECT count(pl_p_id) FROM {$TBLPREFIX}placelinks WHERE pl_p_id=$p_id AND pl_file={$ged_id}");
-
-		$row=$res->fetchRow();
-		if ($row[0] == 0) {
-			dbquery("DELETE FROM {$TBLPREFIX}places WHERE p_id=$p_id AND p_file={$ged_id}");
+	foreach ($placeids as $p_id) {
+		$num=
+			PGV_DB::prepare("SELECT count(pl_p_id) FROM {$TBLPREFIX}placelinks WHERE pl_p_id=? AND pl_file=?")
+			->bindValue(1, $p_id,   PDO::PARAM_STR)
+			->bindValue(2, $ged_id, PDO::PARAM_INT)
+			->fetchOne();
+		if ($num==0) {
+			PGV_DB::prepare("DELETE FROM {$TBLPREFIX}places WHERE p_id=? AND p_file=?")->execute(array($p_id, $ged_id));
 		}
-		$res->free();
 	}
 
 	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}media_mapping WHERE mm_gid=? AND mm_gedfile=?")->execute(array($gid, $ged_id));
