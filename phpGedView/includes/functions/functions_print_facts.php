@@ -447,22 +447,29 @@ function print_fact(&$eventObj, $noedit=false) {
 				}
 			}
 			// 0 SOUR/1 DATA/2 EVEN/3 DATE/3 PLAC
-			for ($even_num=1; $even_rec=get_sub_record(2, "2 EVEN", $factrec, $even_num); ++$even_num) {
-				$tmp1=get_gedcom_value('EVEN', 2, $even_rec, $truncate='', $convert=false);
-				$tmp2=new GedcomDate(get_gedcom_value('DATE', 3, $even_rec, $truncate='', $convert=false));
-				$tmp3=get_gedcom_value('PLAC', 3, $even_rec, $truncate='', $convert=false);
-				if ($even_num>1)
-					print "<br />";
-				print "<b>";
-				foreach (preg_split('/\W+/', $tmp1) as $key=>$value) {
-					if ($key>0)
-						print ", ";
-					if (empty($factarray[$value]))
-						print htmlspecialchars($value, ENT_COMPAT, 'UTF-8');
-					else
-						print $factarray[$value];
+			$data_rec = get_sub_record(1, "1 DATA", $factrec, 1);
+			if (!empty($data_rec)) {
+				for ($even_num=1; $even_rec=get_sub_record(2, "2 EVEN", $data_rec, $even_num); ++$even_num) {
+					$tmp1=get_gedcom_value('EVEN', 2, $even_rec, $truncate='', $convert=false);
+					$tmp2=new GedcomDate(get_gedcom_value('DATE', 3, $even_rec, $truncate='', $convert=false));
+					$tmp3=get_gedcom_value('PLAC', 3, $even_rec, $truncate='', $convert=false);
+					$fact_string = "";
+					if ($even_num>1)
+						$fact_string .= "<br />";
+					$fact_string .= "<b>";
+					foreach (preg_split('/\W+/', $tmp1) as $key=>$value) {
+						if ($key>0)
+							$fact_string .= ", ";
+						if (empty($factarray[$value]))
+							$fact_string .= htmlspecialchars($value, ENT_COMPAT, 'UTF-8');
+						else
+							$fact_string .= $factarray[$value];
+					}
+					$fact_string .= "</b>";
+					if ($tmp2->Display(false, '', array())!="&nbsp;") $fact_string .= " - ".$tmp2->Display(false, '', array());
+					if ($tmp3!='') $fact_string .= " - ".$tmp3;
+					print $fact_string;
 				}
-				print "</b> - ".$tmp2->Display(false, '', array())." - {$tmp3}";
 			}
 			if ($fact!="ADDR") {
 				//-- catch all other facts that could be here
