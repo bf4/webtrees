@@ -728,7 +728,16 @@ function build_indiv_map($indifacts, $famids) {
 
 				if ($multimarker == 0) {        // Only one location with this long/lati combination
 					$markers[$j]["placed"] = "yes";
-					if (empty($markers[$j]["icon"])) {
+					if (($markers[$j]["lati"] == NULL) || ($markers[$j]["lng"] == NULL) || (($markers[$j]["lati"] == "0") && ($markers[$j]["lng"] == "0"))) { 
+						echo "var Marker{$j}_flag = new GIcon();\n";
+						echo "	Marker{$j}_flag.image = \"modules/googlemap/marker_yellow.png\";\n";
+						echo "	Marker{$j}_flag.shadow = \"modules/googlemap/shadow50.png\";\n";
+						echo "	Marker{$j}_flag.iconSize = new GSize(20, 34);\n";
+						echo "	Marker{$j}_flag.shadowSize = new GSize(37, 34);\n";
+						echo "	Marker{$j}_flag.iconAnchor = new GPoint(6, 20);\n";
+						echo "	Marker{$j}_flag.infoWindowAnchor = new GPoint(5, 1);\n";
+						echo "var Marker{$j} = new GMarker(new GLatLng(0, 0), {icon:Marker{$j}_flag, title:\"".addslashes($tooltip)."\"});\n";
+					} else if (empty($markers[$j]["icon"])) {
 						echo "var Marker{$j} = new GMarker(new GLatLng({$markers[$j]["lati"]}, {$markers[$j]["lng"]}), {icon:icon, title:\"".addslashes($tooltip)."\"});\n";
 					} else {
 						echo "var Marker{$j}_flag = new GIcon();\n";
@@ -761,13 +770,19 @@ function build_indiv_map($indifacts, $famids) {
 						$date=new GedcomDate($markers[$j]["date"]);
 						echo "<br />".addslashes($date->Display(true));
 					}
-					if ($GOOGLEMAP_COORD == "false"){
+					if (($markers[$j]["lati"] == NULL) || ($markers[$j]["lng"] == NULL) || (($markers[$j]["lati"] == "0") && ($markers[$j]["lng"] == "0"))) {
+						echo "<br /><br />".$pgv_lang["gm_no_coord"];
+						if (PGV_USER_IS_ADMIN)
+							echo '<br /><a href=\"module.php?mod=googlemap&pgvaction=places&display=inactive\">'.$pgv_lang["pl_edit"].'</a>';
+						echo "\");\n";
+					}
+					else if ($GOOGLEMAP_COORD == "false"){
 						echo "\");\n";
 					} else {
 						echo "<br /><br />";
-						if ($markers[$j]["lati"]>='0'){echo "N".str_replace('-', '', $markers[$j]["lati"]);}else{ echo str_replace('-', 'S', $markers[$j]["lati"]);}
+						if ($markers[$j]["lati"]>'0'){echo "N".str_replace('-', '', $markers[$j]["lati"]);}else{ echo str_replace('-', 'S', $markers[$j]["lati"]);}
 						echo ", ";
-						if ($markers[$j]["lng"]>='0'){echo "E".str_replace('-', '', $markers[$j]["lng"]);}else{ echo str_replace('-', 'W', $markers[$j]["lng"]);}
+						if ($markers[$j]["lng"]>'0'){echo "E".str_replace('-', '', $markers[$j]["lng"]);}else{ echo str_replace('-', 'W', $markers[$j]["lng"]);}
 						echo "\");\n";
 					}
 					echo "});\n";
