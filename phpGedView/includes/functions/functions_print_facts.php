@@ -350,12 +350,14 @@ function print_fact(&$eventObj, $noedit=false) {
 				$ct = preg_match("/@(.*)@/", $event, $match);
 				if ($ct>0) {
 					$gedrec=GedcomRecord::getInstance($match[1]);
-					if ($gedrec->getType()=='INDI') {
-						echo '<a href="', encode_url($gedrec->getLinkUrl()), '">', $gedrec->getFullName(), '</a><br />';
-					} elseif ($fact=='REPO') {
-						print_repository_record($match[1]);
-					} else {
-						print_submitter_info($match[1]);
+					if (is_object($gedrec)) {
+						if ($gedrec->getType()=='INDI') {
+							echo '<a href="', encode_url($gedrec->getLinkUrl()), '">', $gedrec->getFullName(), '</a><br />';
+						} elseif ($fact=='REPO') {
+							print_repository_record($match[1]);
+						} else {
+							print_submitter_info($match[1]);
+						}
 					}
 				}
 				else if ($fact=="ALIA") {
