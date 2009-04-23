@@ -943,7 +943,18 @@ function update_names($xref, $ged_id, $record) {
 * @param int $count The count of OBJE records in the parent record
 */
 function insert_media($objrec, $objlevel, $update, $gid, $count) {
-	global $TBLPREFIX, $media_count, $GEDCOMS, $FILE, $DBCONN, $found_ids, $fpnewged;
+	global $TBLPREFIX, $media_count, $GEDCOMS, $FILE, $found_ids, $fpnewged;
+
+	static $sql_insert_media=null;
+	static $sql_insert_media_mapping=null;
+	if (!$sql_insert_media) {
+		$sql_insert_media=PGV_DB::prepare(
+			"INSERT INTO {$TBLPREFIX}media (m_id, m_media, m_ext, m_titl, m_file, m_gedfile, m_gedrec) VALUES (?, ?, ?, ?, ?, ?, ?)"
+		);
+		$sql_insert_media_mapping=PGV_DB::prepare(
+			"INSERT INTO {$TBLPREFIX}media_mapping (mm_id, mm_media, mm_gid, mm_order, mm_gedfile, mm_gedrec) VALUES (?, ?, ?, ?, ?, ?)"
+		);
+	}
 
 	//-- check for linked OBJE records
 	//-- linked records don't need to insert to media table
@@ -973,10 +984,7 @@ function insert_media($objrec, $objlevel, $update, $gid, $count) {
 		$new_media = Media::in_obje_list($media);
 		if ($new_media === false) {
 			//-- add it to the media database table
-			$m_id = get_next_id("media", "m_id");
-			$sql = "INSERT INTO {$TBLPREFIX}media (m_id, m_media, m_ext, m_titl, m_file, m_gedfile, m_gedrec)";
-			$sql .= " VALUES('" . $DBCONN->escapeSimple($m_id) . "', '" . $DBCONN->escapeSimple($m_media) . "', '" . $DBCONN->escapeSimple($media->ext) . "', '" . $DBCONN->escapeSimple($media->title) . "', '" . $DBCONN->escapeSimple($media->file) . "', '" . $DBCONN->escapeSimple($GEDCOMS[$FILE]["id"]) . "', '" . $DBCONN->escapeSimple($objrec) . "')";
-			$res = dbquery($sql);
+			$sql_insert_media->execute(array(get_next_id('media', 'm_id'), $m_media, $media->ext, $media->title, $media->file, $GEDCOMS[$FILE]["id"], $objrec));
 			$media_count++;
 			//-- if this is not an update then write it to the new gedcom file
 			if (!$update && !empty ($fpnewged)) {
@@ -990,10 +998,7 @@ function insert_media($objrec, $objlevel, $update, $gid, $count) {
 	}
 	if (isset($m_media)) {
 		//-- add the entry to the media_mapping table
-		$mm_id = get_next_id("media_mapping", "mm_id");
-		$sql = "INSERT INTO {$TBLPREFIX}media_mapping (mm_id, mm_media, mm_gid, mm_order, mm_gedfile, mm_gedrec)";
-		$sql .= " VALUES ('" . $DBCONN->escapeSimple($mm_id) . "', '" . $DBCONN->escapeSimple($m_media) . "', '" . $DBCONN->escapeSimple($gid) . "', '" . $DBCONN->escapeSimple($count) . "', '" . $DBCONN->escapeSimple($GEDCOMS[$FILE]['id']) . "', '" . $DBCONN->escapeSimple($objref) . "')";
-		$res = dbquery($sql);
+		$sql_insert_media_mapping->execute(array(get_next_id('media_mapping', 'mm_id'), $m_media, $gid, $count, $GEDCOMS[$FILE]['id'], $objref));
 		return $objref;
 	} else {
 		print "Media reference error ".$objrec;
@@ -1009,6 +1014,13 @@ function update_media($gid, $gedrec, $update = false) {
 	global $GEDCOMS, $FILE, $TBLPREFIX, $DBCONN, $media_count, $found_ids;
 	global $zero_level_media, $fpnewged, $MAX_IDS, $keepmedia;
 
+	static $sql_insert_media=null;
+	if (!$sql_insert_media) {
+		$sql_insert_media=PGV_DB::prepare(
+			"INSERT INTO {$TBLPREFIX}media (m_id, m_media, m_ext, m_titl, m_file, m_gedfile, m_gedrec) VALUES (?, ?, ?, ?, ?, ?, ?)"
+		);
+	}
+
 	if (!isset ($media_count)) {
 		$media_count = 0;
 	}
@@ -1022,11 +1034,10 @@ function update_media($gid, $gedrec, $update = false) {
 		if (!$keepmedia) {
 			$MAX_IDS["OBJE"] = 1;
 		} else {
-			$sql = "SELECT ni_id FROM {$TBLPREFIX}nextid WHERE ni_type='OBJE' AND ni_gedfile='".$GEDCOMS[$FILE]['id']."'";
-			$res = dbquery($sql);
-			$row =& $res->fetchRow();
-			$MAX_IDS["OBJE"] = $row[0];
-			$res->free();
+			$MAX_IDS["OBJE"]=
+				PGV_DB::prepare("SELECT ni_id FROM {$TBLPREFIX}nextid WHERE ni_type=? AND ni_gedfile=?")
+				->execute(array('OBJE', $GEDCOMS[$FILE]['id']))
+				->fetchOne();
 		}
 	}
 
@@ -1060,9 +1071,7 @@ function update_media($gid, $gedrec, $update = false) {
 		//--check if we already have a similar object
 		$new_media = Media::in_obje_list($media);
 		if ($new_media === false) {
-			$sql = "INSERT INTO {$TBLPREFIX}media (m_id, m_media, m_ext, m_titl, m_file, m_gedfile, m_gedrec)";
-			$sql .= " VALUES('" . $DBCONN->escapeSimple($m_id) . "', '" . $DBCONN->escapeSimple($new_m_media) . "', '" . $DBCONN->escapeSimple($media->ext) . "', '" . $DBCONN->escapeSimple($media->title) . "', '" . $DBCONN->escapeSimple($media->file) . "', '" . $DBCONN->escapeSimple($GEDCOMS[$FILE]["id"]) . "', '" . $DBCONN->escapeSimple($gedrec) . "')";
-			$res = dbquery($sql);
+			$sql_insert_media->execute(array($m_id, $new_m_media, $media->ext, $media->title, $media->file, $GEDCOMS[$FILE]["id"], $gedrec));
 			$media_count++;
 		} else {
 			$new_m_media = $new_media;
@@ -1076,13 +1085,10 @@ function update_media($gid, $gedrec, $update = false) {
 	}
 
 	if ($keepmedia) {
-		$sql = "SELECT mm_media, mm_gedrec FROM {$TBLPREFIX}media_mapping WHERE mm_gid='".$DBCONN->escapeSimple($gid)."' AND mm_gedfile='".$GEDCOMS[$FILE]['id']."'";
-		$res = dbquery($sql);
-		$old_linked_media = array();
-		while ($row =& $res->fetchRow()) {
-			$old_linked_media[] = $row;
-		}
-		$res->free();
+		$old_linked_media=
+			PGV_DB::prepare("SELECT mm_media, mm_gedrec FROM {$TBLPREFIX}media_mapping WHERE mm_gid=? AND mm_gedfile=?")
+			->execute(array($gid, $GEDCOMS[$FILE]['id']))
+			->fetchAll(PDO::FETCH_NUM);
 	}
 
 	//-- check to see if there are any media records
@@ -2004,8 +2010,7 @@ function update_record($gedrec, $delete = false) {
 	// TODO deleting unlinked places can be done more efficiently in a single query
 	$placeids=
 		PGV_DB::prepare("SELECT pl_p_id FROM {$TBLPREFIX}placelinks WHERE pl_gid=? AND pl_file=?")
-		->bindValue(1, $gid,    PDO::PARAM_STR)
-		->bindValue(2, $ged_id, PDO::PARAM_INT)
+		->execute(array($gid, $ged_id))
 		->fetchOneColumn();
 
 	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}placelinks WHERE pl_gid=? AND pl_file=?")->execute(array($gid, $ged_id));
@@ -2015,8 +2020,7 @@ function update_record($gedrec, $delete = false) {
 	foreach ($placeids as $p_id) {
 		$num=
 			PGV_DB::prepare("SELECT count(pl_p_id) FROM {$TBLPREFIX}placelinks WHERE pl_p_id=? AND pl_file=?")
-			->bindValue(1, $p_id,   PDO::PARAM_STR)
-			->bindValue(2, $ged_id, PDO::PARAM_INT)
+			->execute(array($p_id, $ged_id))
 			->fetchOne();
 		if ($num==0) {
 			PGV_DB::prepare("DELETE FROM {$TBLPREFIX}places WHERE p_id=? AND p_file=?")->execute(array($p_id, $ged_id));
