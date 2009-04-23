@@ -1747,8 +1747,8 @@ function empty_database($ged_id, $keepmedia) {
 	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}dates       WHERE d_file =?")->execute(array($ged_id));;
 
 	if ($keepmedia) {
-		PGV_DB::prepare("DELETE FROM {$TBLPREFIX}link   WHERE l_file    =? AND l_type! =?")->execute(array($ged_id, 'OBJE'));
-		PGV_DB::prepare("DELETE FROM {$TBLPREFIX}nextid WHERE ni_gedfile=? AND ni_type!=?")->execute(array($ged_id, 'OBJE'));
+		PGV_DB::prepare("DELETE FROM {$TBLPREFIX}link   WHERE l_file    =? AND l_type<> ?")->execute(array($ged_id, 'OBJE'));
+		PGV_DB::prepare("DELETE FROM {$TBLPREFIX}nextid WHERE ni_gedfile=? AND ni_type<>?")->execute(array($ged_id, 'OBJE'));
 	} else {
 		PGV_DB::prepare("DELETE FROM {$TBLPREFIX}link          WHERE l_file    =?")->execute(array($ged_id));
 		PGV_DB::prepare("DELETE FROM {$TBLPREFIX}nextid        WHERE ni_gedfile=?")->execute(array($ged_id));
