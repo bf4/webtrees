@@ -143,10 +143,16 @@ class ClippingsControllerRoot extends BaseController {
 			if ($ret) {
 				if ($this->type == 'sour') {
 					if ($others == 'linked') {
-						foreach (search_indis(" SOUR @$this->id@", array(PGV_GED_ID), 'AND', true) as $indi=>$dummy)
-						$ret=$this->add_clipping(array('type'=>'indi', 'id'=>$indi));
-						foreach (search_fams(" SOUR @$this->id@", array(PGV_GED_ID), 'AND', true) as $fam=>$dummy)
-						$ret=$this->add_clipping(array('type'=>'fam', 'id'=>$fam));
+						foreach (fetch_linked_indi($this->id, 'SOUR', PGV_GED_ID) as $indi) {
+							if ($indi->canDisplayName()) {
+								$this->add_clipping(array('type'=>'indi', 'id'=>$indi->getXref()));
+							}
+						}
+						foreach (fetch_linked_fam($this->id, 'SOUR', PGV_GED_ID) as $fam) {
+							if ($fam->canDisplayName()) {
+								$this->add_clipping(array('type'=>'fam', 'id'=>$fam->getXref()));
+							}
+						}
 					}
 				}
 				if ($this->type == 'fam') {
