@@ -59,6 +59,7 @@ if (!isset($view)) $view = safe_REQUEST($_REQUEST, 'view', PGV_REGEX_XREF);
 		} ?>
 
 	<link rel="stylesheet" href="<?php print $print_stylesheet; ?>" type="text/css" media="print" />
+	<link rel="search" type="application/opensearchdescription+xml" title="<?php print $GEDCOMS[$GEDCOM]["title"]; ?>" href="<?php print $SERVER_URL . "opensearch.php"; ?>" />
 	<?php if ($BROWSERTYPE == "msie") { ?>
 	<style type="text/css">
 		FORM { margin-top: 0px; margin-bottom: 0px; }
