@@ -1620,8 +1620,8 @@ function print_changes_table($datalist, $showChange=true, $total='') {
  *
  * @param array $datalist contain records that were extracted from the database.
  */
-function print_events_table($startjd, $endjd, $events='BIRT MARR DEAT', $only_living=false, $allow_download=false) {
-	global $pgv_lang, $factarray, $SHOW_ID_NUMBERS, $SHOW_MARRIED_NAMES, $TEXT_DIRECTION, $SERVER_URL;
+function print_events_table($startjd, $endjd, $events='BIRT MARR DEAT', $only_living=false, $allow_download=false, $sort_by_event=false) {
+	global $pgv_lang, $factarray, $TEXT_DIRECTION, $SERVER_URL;
 	require_once 'js/sorttable.js.htm';
 	require_once 'includes/classes/class_gedcomrecord.php';
 	$table_id = "ID".floor(microtime()*1000000); // sorttable requires a unique ID
@@ -1631,9 +1631,9 @@ function print_events_table($startjd, $endjd, $events='BIRT MARR DEAT', $only_li
 	$filter = 0;
 	$private = 0;
 
-	// Which types of name do we display for an INDI
-	$name_subtags = array("", "_AKA", "_HEB", "ROMN");
-	if ($SHOW_MARRIED_NAMES) $name_subtags[] = "_MARNM";
+	$return = '';
+
+	$filtered_events = array();
 
 	foreach (get_events_list($startjd, $endjd, $events) as $value) {
 		$record=$value['record'];
@@ -1664,82 +1664,97 @@ function print_events_table($startjd, $endjd, $events='BIRT MARR DEAT', $only_li
 		}
 		//-- Counter
 		$output ++;
+
 		if ($output==1) {
 			//-- First table row:  start table headers, etc. first
-			print "<table id=\"".$table_id."\" class=\"sortable list_table center\">";
-			print "<tr>";
-			print "<th class=\"list_label\">".$pgv_lang["record"]."</th>";
-			print "<th style=\"display:none\">GIVN</th>";
-			print "<th class=\"list_label\">".$factarray["DATE"]."</th>";
-			print "<th class=\"list_label\"><img src=\"./images/reminder.gif\" alt=\"".$pgv_lang["anniversary"]."\" title=\"".$pgv_lang["anniversary"]."\" border=\"0\" /></th>";
-			print "<th class=\"list_label\">".$factarray["EVEN"]."</th>";
-			print "</tr>\n";
+			$return .= "<table id=\"".$table_id."\" class=\"sortable list_table center\">";
+			$return .= "<tr>";
+			$return .= "<th class=\"list_label\">".$pgv_lang["record"]."</th>";
+			$return .= "<th style=\"display:none\">GIVN</th>";
+			$return .= "<th class=\"list_label\">".$factarray["DATE"]."</th>";
+			$return .= "<th class=\"list_label\"><img src=\"./images/reminder.gif\" alt=\"".$pgv_lang["anniversary"]."\" title=\"".$pgv_lang["anniversary"]."\" border=\"0\" /></th>";
+			$return .= "<th class=\"list_label\">".$factarray["EVEN"]."</th>";
+			$return .= "</tr>\n";
 		}
 
-		print "<tr class=\"vevent\">"; // hCalendar:vevent
+		$value['name'] = $record->getListName();
+		$value['url'] = $record->getLinkUrl();
+		if ($record->getType()=="INDI")
+			$value['sex'] = $record->getSexImage();
+		else
+			$value['sex'] = '';
+		$filtered_events[] = $value;
+	}
+
+	// Now we've filtered the list, we can sort by event, if required
+	if ($sort_by_event) uasort($filtered_events, 'event_sort');
+
+	foreach($filtered_events as $value) {
+		$return .= "<tr class=\"vevent\">"; // hCalendar:vevent
 		//-- Record name(s)
-		$name = $record->getListName();
-		if ($record->getType()=="FAM") {
+		$name = $value['name'];
+		if ($value['record']->getType()=="FAM") {
 			$exp = explode("<br />", $name);
-			$husb = $record->getHusband();
+			$husb = $value['record']->getHusband();
 			if ($husb) $exp[0] .= $husb->getPrimaryParentsNames("parents_$table_id details1", "none");
-			$wife = $record->getWife();
+			$wife = $value['record']->getWife();
 			if ($wife) $exp[1] .= $wife->getPrimaryParentsNames("parents_$table_id details1", "none");
 			$name = implode("<div></div>", $exp); // <div></div> is better here than <br />
 		}
-		print "<td class=\"list_value_wrap\" align=\"".get_align($name)."\">";
-		print "<a href=\"".encode_url($record->getLinkUrl())."\" class=\"list_item name2\" dir=\"".$TEXT_DIRECTION."\">".PrintReady($name)."</a>";
-		if ($record->getType()=="INDI") {
-			echo $record->getSexImage();
-			echo $record->getPrimaryParentsNames("parents_$table_id details1", "none");
+		$return .= "<td class=\"list_value_wrap\" align=\"".get_align($name)."\">";
+		$return .= "<a href=\"".encode_url($value['url'])."\" class=\"list_item name2\" dir=\"".$TEXT_DIRECTION."\">".PrintReady($name)."</a>";
+		if ($value['record']->getType()=="INDI") {
+			$return .= $value['sex'];
+			$return .= $value['record']->getPrimaryParentsNames("parents_$table_id details1", "none");
 		}
-		print "</td>";
+		$return .= "</td>";
 		//-- GIVN
-		print "<td style=\"display:none\">";
+		$return .= "<td style=\"display:none\">";
 		$exp = explode(",", str_replace('<', ',', $name).",");
-		print $exp[1];
-		print "</td>";
+		$return .= $exp[1];
+		$return .= "</td>";
 		//-- Event date
-		print "<td class=\"".strrev($TEXT_DIRECTION)." list_value_wrap\">";
-		print str_replace('<a', '<a name="'.$value['jd'].'"', $value['date']->Display(empty($SEARCH_SPIDER)));
-		print "</td>";
+		$return .= "<td class=\"".strrev($TEXT_DIRECTION)." list_value_wrap\">";
+		$return .= str_replace('<a', '<a name="'.$value['jd'].'"', $value['date']->Display(empty($SEARCH_SPIDER)));
+		$return .= "</td>";
 		//-- Anniversary
-		print "<td class=\"list_value_wrap rela\">";
+		$return .= "<td class=\"list_value_wrap rela\">";
 		$anniv = $value['anniv'];
-		if ($anniv==0) print '<a name="-1">&nbsp;</a>';
-		else print "<a name=\"{$anniv}\">{$anniv}</a>";
+		if ($anniv==0) $return .= '<a name="-1">&nbsp;</a>';
+		else $return .= "<a name=\"{$anniv}\">{$anniv}</a>";
 		if ($allow_download) {
 			// hCalendar:dtstart and hCalendar:summary
-			print "<abbr class=\"dtstart\" title=\"".strip_tags($value['date']->Display(false,'Ymd',array()))."\"></abbr>";
-			print "<abbr class=\"summary\" title=\"".$pgv_lang["anniversary"]." #$anniv ".$factarray[$value['fact']]." : ".PrintReady(strip_tags($record->getFullName()))."\"></abbr>";
+			$return .= "<abbr class=\"dtstart\" title=\"".strip_tags($value['date']->Display(false,'Ymd',array()))."\"></abbr>";
+			$return .= "<abbr class=\"summary\" title=\"".$pgv_lang["anniversary"]." #$anniv ".$factarray[$value['fact']]." : ".PrintReady(strip_tags($record->getFullName()))."\"></abbr>";
 		}
-		print "</td>";
+		$return .= "</td>";
 		//-- Event name
-		print "<td class=\"list_value_wrap\">";
-		print "<a href=\"".encode_url($record->getLinkUrl())."\" class=\"list_item url\">".$factarray[$value['fact']]."</a>"; // hCalendar:url
-		print "&nbsp;</td>";
+		$return .= "<td class=\"list_value_wrap\">";
+		$return .= "<a href=\"".encode_url($value['url'])."\" class=\"list_item url\">".$factarray[$value['fact']]."</a>"; // hCalendar:url
+		$return .= "&nbsp;</td>";
 
-		print "</tr>\n";
+		$return .= "</tr>\n";
 	}
+
 	if ($output!=0) {
 		//-- table footer
-		print "<tr class=\"sortbottom\">";
-		print "<td class=\"list_label\">";
-		print "<input id=\"cb_parents_$table_id\" type=\"checkbox\" onclick=\"toggleByClassName('DIV', 'parents_$table_id');\" /><label for=\"cb_parents_$table_id\">&nbsp;&nbsp;".$pgv_lang["show_parents"]."</label><br />";
-		print "</td><td class=\"list_label\" colspan=\"3\">";
-		print $pgv_lang["stat_events"].": ".$output;
+		$return .= "<tr class=\"sortbottom\">";
+		$return .= "<td class=\"list_label\">";
+		$return .= "<input id=\"cb_parents_$table_id\" type=\"checkbox\" onclick=\"toggleByClassName('DIV', 'parents_$table_id');\" /><label for=\"cb_parents_$table_id\">&nbsp;&nbsp;".$pgv_lang["show_parents"]."</label><br />";
+		$return .= "</td><td class=\"list_label\" colspan=\"3\">";
+		$return .= $pgv_lang["stat_events"].": ".$output;
 		if ($allow_download) {
 			$uri = $SERVER_URL.basename($_SERVER["REQUEST_URI"]);
 			global $whichFile;
 			$whichFile = "hCal-events.ics";
 			$title = print_text("download_file",0,1);
-			print "<br /><a href=\"".encode_url("http://feeds.technorati.com/events/{$uri}")."\"><img src=\"images/hcal.png\" border=\"0\" alt=\"".$title."\" title=\"".$title."\" /></a>";
+			$return .= "<br /><a href=\"".encode_url("http://feeds.technorati.com/events/{$uri}")."\"><img src=\"images/hcal.png\" border=\"0\" alt=\"".$title."\" title=\"".$title."\" /></a>";
 		}
-		print "</td>";
-		print "<td></td>";
-		print "<td></td>";
-		print "</tr>";
-		print "</table>\n";
+		$return .= "</td>";
+		$return .= "<td></td>";
+		$return .= "<td></td>";
+		$return .= "</tr>";
+		$return .= "</table>\n";
 	}
 
 	// Print a final summary message about restricted/filtered facts
@@ -1772,11 +1787,12 @@ function print_events_table($startjd, $endjd, $events='BIRT MARR DEAT', $only_li
 		if ($summary!="" && $endjd==$startjd) $summary .= "1";
 	}
 	if ($summary!="") {
-		print "<b>";
-		print_text($summary);
-		print "</b>";
+		$return .= "<b>";
+		$return .= print_text($summary, 0, 1);
+		$return .= "</b>";
 	}
 
+	return $return;
 }
 
 /**
@@ -1784,8 +1800,8 @@ function print_events_table($startjd, $endjd, $events='BIRT MARR DEAT', $only_li
  *
  * This performs the same function as print_events_table(), but formats the output differently.
  */
-function print_events_list($startjd, $endjd, $events='BIRT MARR DEAT', $only_living=false, $sort_by_name=false) {
-	global $pgv_lang, $factarray, $SHOW_ID_NUMBERS, $SHOW_MARRIED_NAMES, $TEXT_DIRECTION;
+function print_events_list($startjd, $endjd, $events='BIRT MARR DEAT', $only_living=false, $sort_by_event=false) {
+	global $pgv_lang, $factarray, $TEXT_DIRECTION;
 
 	// Did we have any output?  Did we skip anything?
 	$output = 0;
@@ -1834,8 +1850,8 @@ function print_events_list($startjd, $endjd, $events='BIRT MARR DEAT', $only_liv
 		$filtered_events[] = $value;
 	}
 
-	// Now we've filtered the list, we can sort by name, if required
-	if ($sort_by_name) uasort($filtered_events, 'event_sort');
+	// Now we've filtered the list, we can sort by event, if required
+	if ($sort_by_event) uasort($filtered_events, 'event_sort');
 
 	foreach($filtered_events as $value) {
 		$return .= "<a href=\"".encode_url($value['url'])."\" class=\"list_item name2\" dir=\"".$TEXT_DIRECTION."\">".PrintReady($value['name'])."</a>".$value['sex'];

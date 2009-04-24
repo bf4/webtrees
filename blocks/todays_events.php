@@ -5,7 +5,7 @@
  * This block will print a list of today's events
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
+ * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -53,7 +53,7 @@ function print_todays_events($block=true, $config="", $side, $index) {
   global $pgv_lang, $SHOW_ID_NUMBERS, $ctype, $TEXT_DIRECTION;
   global $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $PGV_BLOCKS;
 
-  $block = true;      // Always restrict this block's height
+  $block = true;		// Always restrict this block's height
 
 	$todayjd=client_jd();
 
@@ -74,15 +74,15 @@ function print_todays_events($block=true, $config="", $side, $index) {
   $id ="on_this_day_events";
   $title = print_help_link("index_onthisday_help", "qm","",false,true);
   if ($PGV_BLOCKS["print_todays_events"]["canconfig"]) {
-    if ($ctype=="gedcom" && PGV_USER_GEDCOM_ADMIN || $ctype=="user" && PGV_USER_ID) {
+	if ($ctype=="gedcom" && PGV_USER_GEDCOM_ADMIN || $ctype=="user" && PGV_USER_ID) {
 			if ($ctype=="gedcom") {
 				$name = preg_replace("/'/", "\'", $GEDCOM);
 			} else {
 				$name = PGV_USER_NAME;
 			}
-      $title .= "<a href=\"javascript: configure block\" onclick=\"window.open('".encode_url("index_edit.php?name={$name}&ctype={$ctype}&action=configure&side={$side}&index={$index}")."', '_blank', 'top=50,left=50,width=600,height=350,scrollbars=1,resizable=1'); return false;\">";
-      $title .= "<img class=\"adminicon\" src=\"$PGV_IMAGE_DIR/".$PGV_IMAGES["admin"]["small"]."\" width=\"15\" height=\"15\" border=\"0\" alt=\"".$pgv_lang["config_block"]."\" /></a>";
-    }
+	  $title .= "<a href=\"javascript: configure block\" onclick=\"window.open('".encode_url("index_edit.php?name={$name}&ctype={$ctype}&action=configure&side={$side}&index={$index}")."', '_blank', 'top=50,left=50,width=600,height=350,scrollbars=1,resizable=1'); return false;\">";
+	  $title .= "<img class=\"adminicon\" src=\"$PGV_IMAGE_DIR/".$PGV_IMAGES["admin"]["small"]."\" width=\"15\" height=\"15\" border=\"0\" alt=\"".$pgv_lang["config_block"]."\" /></a>";
+	}
   }
   $title .= $pgv_lang["on_this_day"];
 
@@ -95,7 +95,7 @@ function print_todays_events($block=true, $config="", $side, $index) {
 	case "style2":
 		// Style 2: New format, tables, big text, etc.  Not too good on right side of page
 		ob_start();
-		print_events_table($todayjd, $todayjd, $onlyBDM=='yes'?'BIRT MARR DEAT':'', $filter=='living', $allowDownload=='yes');
+		$content .= print_events_table($todayjd, $todayjd, $onlyBDM=='yes'?'BIRT MARR DEAT':'', $filter=='living', $allowDownload=='yes', true);
 		$content .= ob_get_clean();
 		break;
 	}
