@@ -1752,7 +1752,10 @@ class Person extends GedcomRecord {
 		// A comma separated list of surnames (from the SURN, not from the NAME) indicates
 		// multiple surnames (e.g. Spanish).  Each one is a separate sortable name.
 
-		$GIVN=UTF8_strtoupper($givn);
+		// Where nicknames are entered in the given name field, these will break
+		// sorting, so strip them out.
+		$GIVN=preg_replace('/["\'()]/', '', UTF8_strtoupper($givn));
+
 		foreach ($surns as $n=>$surn) {
 			$SURN=UTF8_strtoupper($surn);
 			// Scottish "Mc and Mac" prefixes sort under "Mac"
