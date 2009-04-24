@@ -10,6 +10,7 @@
 
 
 Version 4.2.2
+ = Fixed [ 2779222 ] Adding a wrong date destroys all individual lists (fisharebest)
  - Fixed [ 2780483 ] nick name ordering error/mess (fisharebest)
  - Fixed [ 2780414 ] Clippings Cart MySQL Error (fisharebest)
  - Fixed [ 2774786 ] [G Map Module] GOverviewMapControl Defaults to Empty Display (wooc)
