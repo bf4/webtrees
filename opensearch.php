@@ -29,6 +29,7 @@ echo '<ShortName>' . $GEDCOMS[$GEDCOM]["title"] . ' ' . $pgv_lang["search"]  . '
 echo '<Description>' . $GEDCOMS[$GEDCOM]["title"] . ' ' . $pgv_lang["search"] . '</Description>';
 echo '<InputEncoding>UTF-8</InputEncoding>';
 echo '<Url type="text/html" template="' . $SERVER_URL. 'search.php?action=general&amp;topsearch=yes&amp;query={searchTerms}"/>';
+echo '<Url type="application/x-suggestions+json" template="' . $SERVER_URL. 'autocomplete.php?limit=20&amp;field=NAME&amp;fmt=json&amp;q={searchTerms}"/>';
 echo'<Image height="16" width="16" type="image/x-icon">' . $SERVER_URL. $FAVICON . '</Image>';
 echo '</OpenSearchDescription>';
 ?>
