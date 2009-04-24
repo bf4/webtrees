@@ -1,12 +1,5 @@
 <?php
 /**
- * Add media to gedcom file
- *
- * This file allows the user to maintain a seperate table
- * of media files and associate them with individuals in the gedcom
- * and then add these records later.
- * Requires SQL mode.
- *
  * phpGedView: Genealogy Viewer
  * Copyright (C) 2009  PGV Development Team.  All rights reserved.
  *
@@ -25,7 +18,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  * @package PhpGedView
  * @subpackage search
- * @version $Id: opensearch.php 5320 2009-04-23 22:16:41Z kosherjava $
+ * @version $Id$
  */
 require './config.php';
 header('Content-Type: application/opensearchdescription+xml; charset=utf-8');
