@@ -5,7 +5,7 @@
  * This block will print a list of upcoming events
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
+ * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -106,7 +106,7 @@ function print_upcoming_events($block=true, $config="", $side, $index) {
 	case "style2":
 		// Style 2: New format, tables, big text, etc.  Not too good on right side of page
 		ob_start();
-		print_events_table($startjd, $endjd, $onlyBDM=='yes'?'BIRT MARR DEAT':'', $filter=='living', $allowDownload=='yes');
+		$content .= print_events_table($startjd, $endjd, $onlyBDM=='yes'?'BIRT MARR DEAT':'', $filter=='living', $allowDownload=='yes', true);
 		$content .= ob_get_clean();
 		break;
 	}

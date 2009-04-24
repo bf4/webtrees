@@ -1852,7 +1852,12 @@ function compareStrings($aName, $bName, $ignoreCase=true) {
 ////////////////////////////////////////////////////////////////////////////////
 function event_sort($a, $b) {
 	if ($a['jd']==$b['jd']) {
-		return compareStrings($a['name'], $b['name']);
+		if ($a['anniv']==$b['anniv']) {
+			return compareStrings($a['fact'], $b['fact']);
+		}
+		else {
+			return compareStrings($a['anniv'], $b['anniv']);
+		}
 	} else {
 		return $a['jd']-$b['jd'];
 	}
