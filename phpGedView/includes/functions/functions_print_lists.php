@@ -46,7 +46,7 @@ require_once 'includes/cssparser.inc.php';
  */
 function print_indi_table($datalist, $legend="", $option="") {
 	global $pgv_lang, $factarray, $GEDCOM, $SHOW_ID_NUMBERS, $SHOW_LAST_CHANGE, $SHOW_MARRIED_NAMES, $TEXT_DIRECTION;
-	global $PGV_IMAGE_DIR, $PGV_IMAGES, $SEARCH_SPIDER, $SHOW_EST_LIST_DATES;
+	global $PGV_IMAGE_DIR, $PGV_IMAGES, $SEARCH_SPIDER, $SHOW_EST_LIST_DATES, $MAX_ALIVE_AGE;
 
 	if ($option=="MARR_PLAC") return;
 	if (count($datalist)<1) return;
@@ -56,7 +56,10 @@ function print_indi_table($datalist, $legend="", $option="") {
 	require_once 'js/sorttable.js.htm';
 	require_once 'includes/classes/class_stats.php';
 	$stats = new stats($GEDCOM);
-	$max_age = $stats->LongestLifeAge()+1;
+
+	// Bad data can cause "longest life" to be huge, blowing memory limits
+	$max_age = min($MAX_ALIVE_AGE, $stats->LongestLifeAge())+1;
+
 	//-- init chart data
 	for ($age=0; $age<=$max_age; $age++) $deat_by_age[$age]="";
 	for ($year=1550; $year<2030; $year+=10) $birt_by_decade[$year]="";
