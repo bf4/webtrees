@@ -193,6 +193,16 @@ class SourceControllerRoot extends BaseController {
 			$menu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['edit_sour']['small']}");
 		$menu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}", "submenu{$ff}");
 
+		// edit source / edit_source
+		$submenu = new Menu($pgv_lang['edit_source']);
+		if ($SHOW_GEDCOM_RECORD || PGV_USER_IS_ADMIN) {
+			$submenu->addOnclick('return edit_source(\''.$this->sid.'\');');
+			if (!empty($PGV_IMAGES["edit_sour"]["small"]))
+				$submenu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['edit_sour']['small']}");
+			$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}", "submenu{$ff}");
+			$menu->addSubmenu($submenu);
+		}
+
 		// edit source / edit_raw
 		if ($SHOW_GEDCOM_RECORD || PGV_USER_IS_ADMIN) {
 			$submenu = new Menu($pgv_lang['edit_raw']);
