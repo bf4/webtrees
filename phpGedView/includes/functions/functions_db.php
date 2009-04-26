@@ -2808,7 +2808,6 @@ function get_events_list($jd1, $jd2, $events='') {
 
 ////////////////////////////////////////////////////////////////////////////////
 // Check if a media file is shared (i.e. used by another gedcom)
-// Return the number of other gedcoms
 ////////////////////////////////////////////////////////////////////////////////
 function is_media_used_in_other_gedcom($file_name, $ged_id) {
 	global $TBLPREFIX;
