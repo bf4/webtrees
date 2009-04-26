@@ -2807,6 +2807,19 @@ function get_events_list($jd1, $jd2, $events='') {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
+// Check if a media file is shared (i.e. used by another gedcom)
+// Return the number of other gedcoms
+////////////////////////////////////////////////////////////////////////////////
+function is_media_used_in_other_gedcom($file_name, $ged_id) {
+	global $TBLPREFIX;
+
+	return
+		(bool)PGV_DB::prepare("SELECT COUNT(*) FROM {$TBLPREFIX}media WHERE m_file ".PGV_DB_LIKE." ? AND m_gedfile<>?")
+		->execute(array("%{$file_name}", $ged_id))
+		->fetchOne();
+}
+
+////////////////////////////////////////////////////////////////////////////////
 // Functions to access the PGV_GEDCOM table
 // A future version of PGV will have a table PGV_GEDCOM, which will
 // contain the values currently stored the array $GEDCOMS[].
