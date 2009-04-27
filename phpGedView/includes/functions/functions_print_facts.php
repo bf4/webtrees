@@ -1307,7 +1307,6 @@ function print_main_media($pid, $level=1, $related=false, $noedit=false) {
 		else $sort_current_objes[$sort_match[$i][1]]++;
 		$sort_obje_links[$sort_match[$i][1]][] = $sort_match[$i][0];
 	}
-	$sort_media_found = false;
 	// -----------------------------------------------------------------------------------------------
 
 	// create ORDER BY list from Gedcom sorted records list  ---------------------------

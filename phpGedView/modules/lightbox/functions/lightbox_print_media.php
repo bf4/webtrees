@@ -126,7 +126,6 @@ function lightbox_print_media($pid, $level=1, $related=false, $kind=1, $noedit=f
 		else $sort_current_objes[$sort_match[$i][1]]++;
 		$sort_obje_links[$sort_match[$i][1]][] = $sort_match[$i][0];
 	}
-	$sort_media_found = false;
 
 	// create ORDER BY list from Gedcom sorted records list  ---------------------------
 	$orderbylist = 'ORDER BY '; // initialize
