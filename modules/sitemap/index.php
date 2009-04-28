@@ -80,9 +80,8 @@ if ($action=="sendFiles") {
 	}
 
 	if (isset($indi_rec)) {
-		$sql = "SELECT i_id,i_gedcom FROM ".$TBLPREFIX."individuals WHERE i_file='".$index."'";
-		$res = dbquery($sql);
-		while ($row =& $res->fetchRow()) {
+		$statement=PGV_DB::prepare("SELECT i_id, i_gedcom FROM {$TBLPREFIX}individuals WHERE i_file=?")->execute(array(PGV_GED_ID));
+		while ($row=$statement->fetch(PDO::FETCH_NUM)) {
 			echo "	<url>\n";
 			echo "		<loc>".$SERVER_URL."individual.php?pid=".$row[0]."&amp;ged=".urlencode($gedcom_name)."</loc>\n";
 			$arec = get_sub_record(1, "1 CHAN", $row[1], 1);
@@ -92,13 +91,12 @@ if ($action=="sendFiles") {
 			echo "		<priority>0.".$indirec_priority."</priority>\n";
 			echo "	</url>\n";
 		}
-		$res->free();
+		$statement->closeCursor();
 	}
 
 	if (isset($fam_rec)) {
-		$sql = "SELECT f_id,f_gedcom FROM ".$TBLPREFIX."families WHERE f_file='".$index."'";
-		$res = dbquery($sql);
-		while ($row =& $res->fetchRow()) {
+		$statement=PGV_DB::prepare("SELECT f_id, f_gedcom FROM {$TBLPREFIX}families WHERE f_file=?")->execute(array(PGV_GED_ID));
+		while ($row=$statement->fetch(PDO::FETCH_NUM)) {
 			echo "	<url>\n";
 			echo "		<loc>".$SERVER_URL."family.php?famid=".$row[0]."&amp;ged=".urlencode($gedcom_name)."</loc>\n";
 			$arec = get_sub_record(1, "1 CHAN", $row[1], 1);
@@ -108,7 +106,7 @@ if ($action=="sendFiles") {
 			echo "		<priority>0.".$famrec_priority."</priority>\n";
 			echo "	</url>\n";
 		}
-		$res->free();
+		$statement->closeCursor();
 	}
 
 	if (isset($fam_lists)) {
