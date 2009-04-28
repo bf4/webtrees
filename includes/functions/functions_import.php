@@ -543,6 +543,7 @@ function reformat_record_import($rec) {
 		case 'TEXT':
 		case 'DATA':
 		case 'CONT':
+		case 'FILE':
 			// Don't strip tabs, even though they are not valid in gedcom data.
 			if ($newrec) {
 				$newrec.="\n";
