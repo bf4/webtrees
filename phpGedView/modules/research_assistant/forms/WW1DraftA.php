@@ -464,10 +464,6 @@ return false;}return true;}
 	}
 
 	function step2() {
-		global $GEDCOM, $GEDCOMS, $TBLPREFIX, $DBCONN, $factarray, $pgv_lang;
-		global $INDI_FACTS_ADD;
-
-
 		$personid = "";
 		for($number = 0; $number < $_POST['numOfRows']; $number++)
 		{
@@ -554,7 +550,7 @@ return false;}return true;}
 	}
 
 	function step3() {
-		global $GEDCOM, $GEDCOMS, $TBLPREFIX, $DBCONN, $pgv_lang;
+		global $pgv_lang;
 
 		$out = $this->processFactsForm();
 
@@ -586,10 +582,9 @@ return false;}return true;}
 	 * Override method from ra_form
 	 */
 	function processSimpleCitation() {
-		global $TBLPREFIX, $DBCONN;
-    //-- delete any old census records
-		$sql = "DELETE FROM ".$TBLPREFIX."taskfacts WHERE tf_t_id='".$DBCONN->escapeSimple($_REQUEST['taskid'])."' AND tf_factrec ".PGV_DB_LIKE." '1 _MILI%'";
-		$res = dbquery($sql);
+		global $TBLPREFIX;
+		//-- delete any old census records
+		PGV_DB::prepare("DELETE FROM {$TBLPREFIX}taskfacts WHERE tf_t_id=? AND tf_factrec ".PGV_DB_LIKE." ?")->execute(array($_REQUEST['taskid'], '1 _MILI%'));
 
 		// Set our output to nothing, this supresses a warning that we would otherwise get.
 		$out = "";
@@ -601,11 +596,7 @@ return false;}return true;}
 		$people = $this->getPeople();
 		$pids = array_keys($people);
 		//-- store the fact associations in the database
-		$sql = "INSERT INTO ".$TBLPREFIX."taskfacts VALUES('".get_next_id("taskfacts", "tf_id")."'," .
-			"'".$DBCONN->escapeSimple($_REQUEST['taskid'])."'," .
-			"'".$DBCONN->escapeSimple($factrec)."'," .
-			"'".$DBCONN->escapeSimple(implode(";", $pids))."', 'Y', 'indi')";
-		$res = dbquery($sql);
+		PGV_DB::prepare("INSERT INTO {$TBLPREFIX}taskfacts (tf_id, tf_t_id, tf_factrec, tf_people, tf_multiple, tf_type) VALUES (?, ?, ?, ?, ?, ?)")->execute(array(get_next_id("taskfacts", "tf_id"), $_REQUEST['taskid'], $factrec, implode(";", $pids), 'Y', 'indi'));
 
 		$rows = array();
 		$text = $_POST['city0'].", ".$_POST['county0'].", ".$_POST['state0'].", World War 1 Draft Card A";

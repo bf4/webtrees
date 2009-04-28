@@ -1,8 +1,4 @@
 function step2() {
-	global $GEDCOM, $GEDCOMS, $TBLPREFIX, $DBCONN, $factarray, $pgv_lang;
-		global $INDI_FACTS_ADD;
-		
-			
 		$personid = "";
 		for($number = 0; $number < $_POST['numOfRows']; $number++)
 		{

@@ -133,9 +133,6 @@ END_OUT;
 	}
 
 	function step2() {
-		global $GEDCOM, $GEDCOMS, $TBLPREFIX, $DBCONN, $factarray, $pgv_lang;
-		global $INDI_FACTS_ADD;
-
 		$this->processSourceCitation();
 		$task = ra_functions::getTask($_REQUEST['taskid']);
 
@@ -146,7 +143,7 @@ END_OUT;
 	}
 
 	function step3() {
-		global $GEDCOM, $GEDCOMS, $TBLPREFIX, $DBCONN, $pgv_lang;
+		global $pgv_lang;
 
 		$out = $this->processFactsForm();
 
@@ -154,7 +151,7 @@ END_OUT;
 		ra_functions::completeTask($_REQUEST['taskid'], $_REQUEST['form']);
 		// Tell the user their form submitted successfully.
 		$out .= ra_functions::print_menu();
-		$out .= ra_functions::printMessage("Success!",true);
+		$out .= ra_functions::printMessage($pgv_lang["success"],true);
 
 		// Return it to the buffer.
 		return $out;
