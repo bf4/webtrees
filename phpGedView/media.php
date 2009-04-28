@@ -598,10 +598,9 @@ if (check_media_structure()) {
 		$myFile = str_replace($MEDIA_DIRECTORY, "", $filename);
 		//-- figure out how many levels are in this file
 		$mlevels = preg_split("~[/\\\]~", $filename);
-		$sql = "SELECT * FROM ".$TBLPREFIX."media WHERE m_file ".PGV_DB_LIKE." '%".$DBCONN->escapeSimple($myFile)."'";
-		$res = dbquery($sql);
 
-		while($row=$res->fetchRow(DB_FETCHMODE_ASSOC)) {
+		$statement=PGV_DB::prepare("SELECT * FROM {$TBLPREFIX}media WHERE m_file ".PGV_DB_LIKE." ?")->execute(array("%{$myFile}"));
+		while ($row=$statement->fetch(PDO::FETCH_ASSOC)) {
 			$rlevels = preg_split("~[/\\\]~", $row["m_file"]);
 			//-- make sure we only delete a file at the same level of directories
 			//-- see 1825257
@@ -624,7 +623,7 @@ if (check_media_structure()) {
 				else $xrefs[] = $row["m_media"];
 			}
 		}
-		$res->free();
+		$statement->closeCursor();
 		$xrefs = array_unique($xrefs);
 
 		$finalResult = true;
