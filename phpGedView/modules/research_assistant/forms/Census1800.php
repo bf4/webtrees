@@ -211,9 +211,6 @@ class Census1800 extends ra_form {
 	}
 
 	function step2() {
-		global $GEDCOM, $GEDCOMS, $TBLPREFIX, $DBCONN, $factarray, $pgv_lang;
-		global $INDI_FACTS_ADD;
-
 		$this->processSourceCitation();
 
 		$out = $this->header("module.php?mod=research_assistant&form=Census1800&action=func&func=step3&taskid=" . $_REQUEST['taskid'], "center", "1800 United States Federal Census");
@@ -224,7 +221,7 @@ class Census1800 extends ra_form {
 	}
 
 	function step3() {
-		global $GEDCOM, $GEDCOMS, $TBLPREFIX, $DBCONN, $pgv_lang;
+		global $pgv_lang;
 
 		$out = $this->processFactsForm();
 
