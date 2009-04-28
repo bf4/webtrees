@@ -490,10 +490,7 @@ return false;}return true;}
 
     }
 
-    function step2() {
-		global $GEDCOM, $GEDCOMS, $TBLPREFIX, $DBCONN, $factarray, $pgv_lang;
-		global $INDI_FACTS_ADD;
-
+  function step2() {
 		$people = array();
 		$pids = array();
 		$positions = array();
@@ -583,7 +580,7 @@ return false;}return true;}
 	}
 
 	function step3() {
-		global $GEDCOM, $GEDCOMS, $TBLPREFIX, $DBCONN, $pgv_lang;
+		global $pgv_lang;
 
 		$out = $this->processFactsForm();
 
