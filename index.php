@@ -251,6 +251,7 @@ session_write_close();
  * bindex = the number of the block on that side, first block = 0
  */
 if ($action=="ajax") {
+	header("Content-Type: text/html; charset=$CHARACTER_SET");
 	//--  if a block wasn't sent then exit with nothing
 	if (!isset($_REQUEST['block'])) {
 		print "Block not sent";
