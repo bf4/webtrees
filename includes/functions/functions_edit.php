@@ -769,9 +769,11 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 	if ($nextaction=='update') { // GEDCOM 5.5.1 spec says NAME doesn't get a OBJE
 		print_add_layer('SOUR');
 		print_add_layer('NOTE');
+		print_add_layer('SHARED_NOTE');
 	} else {
 		print_add_layer('SOUR', 1);
 		print_add_layer('NOTE', 1);
+		print_add_layer('SHARED_NOTE', 1);
 		print_add_layer('OBJE', 1);
 	}
 	echo "<input type=\"submit\" value=\"".$pgv_lang["save"]."\" />\n";
