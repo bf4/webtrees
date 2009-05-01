@@ -58,6 +58,8 @@ $tag        =safe_REQUEST($_REQUEST, 'tag',         PGV_REGEX_UNSAFE);
 $islink     =safe_REQUEST($_REQUEST, 'islink',      PGV_REGEX_UNSAFE);
 $glevels    =safe_REQUEST($_REQUEST, 'glevels',     PGV_REGEX_UNSAFE);
 
+$update_CHAN=!safe_POST_bool('preserve_last_changed');
+
 $filename = decrypt($filename);
 $oldFilename = decrypt($oldFilename);
 
@@ -542,7 +544,7 @@ if ($action == "update") {
 		//-- look for the old record media in the file
 		//-- if the old media record does not exist that means it was
 		//-- generated at import and we need to append it
-		if (replace_gedrec($pid, $newrec)) AddToChangeLog("Media ID ".$pid." successfully updated.");
+		if (replace_gedrec($pid, $newrec, $update_CHAN)) AddToChangeLog("Media ID ".$pid." successfully updated.");
 
 		if ($pid && $linktoid!="") {
 			$link = linkMedia($pid, $linktoid, $level);
