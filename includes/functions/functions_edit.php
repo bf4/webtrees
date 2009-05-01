@@ -45,8 +45,8 @@ $emptyfacts = array("_HOL", "_NMR", "_SEPR", "ADOP", "ANUL", "BAPL", "BAPM", "BA
 "PROB", "RESI", "RETI", "SLGC", "SLGS", "WIFE", "WILL");
 $templefacts = array("SLGC","SLGS","BAPL","ENDL","CONL");
 $nonplacfacts = array("ENDL","NCHI","SLGC","SLGS");
-$nondatefacts = array("ABBR","ADDR","AFN","AUTH","EMAIL","FAX","NAME","NCHI","NOTE","OBJE",
-"PHON","PUBL","REFN","REPO","SEX","SOUR","SSN","TEXT","TITL","WWW","_EMAIL");
+$nondatefacts = array("ABBR","ADDR","AFN","AUTH","CHIL","EMAIL","FAX","HUSB","NAME","NCHI","NOTE","OBJE",
+"PHON","PUBL","REFN","REPO","SEX","SOUR","SSN","TEXT","TITL","WIFE","WWW","_EMAIL");
 $typefacts = array(); //-- special facts that go on 2 TYPE lines
 
 // Next two vars used by insert_missing_subtags()
@@ -1650,11 +1650,13 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 			$date=new GedcomDate($value);
 			echo $date->Display(false);
 		}
-		// if (($fact=="ASSO" || $fact=="SOUR") && $value) {
-		if (($fact=="ASSO" || $fact=="SOUR" || ($fact=="NOTE" && $islink)) && $value) {
+		if (($fact=="ASSO" || $fact=="SOUR" || $fact=="OBJE" || ($fact=="NOTE" && $islink)) && $value) {
 			$record=GedcomRecord::getInstance($value);
 			if ($record) {
 				echo ' ', PrintReady($record->getFullName()), ' (', $value, ')';
+			}
+			else if ($value!="new") {
+				echo ' ', $value;
 			}
 		}
 	} else {
@@ -1662,10 +1664,13 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 			$date=new GedcomDate($value);
 			echo getRLM(), $date->Display(false), getRLM();
 		}
-		if (($fact=="ASSO" || $fact=="SOUR") && $value) {
+		if (($fact=="ASSO" || $fact=="SOUR" || $fact=="OBJE" || ($fact=="NOTE" && $islink)) && $value) {
 			$record=GedcomRecord::getInstance($value);
 			if ($record) {
-				echo ' ', PrintReady($record->getFullName()), ' ', getLRM(), '(', $value, ')', getLRM();
+				echo getRLM(), PrintReady($record->getFullName()), ' ', getLRM(), '(', $value, ') ', getLRM(), getRLM();
+			}
+			else if ($value!="new") {
+				echo getRLM(), $value, ' ', getRLM();
 			}
 		}
 	}
@@ -2462,7 +2467,7 @@ function create_edit_form($gedrec, $linenum, $level0type) {
 */
 function insert_missing_subtags($level1tag, $add_date=false)
 {
-	global $tags, $date_and_time, $templefacts, $level2_tags, $ADVANCED_PLAC_FACTS, $factarray;
+	global $tags, $date_and_time, $templefacts, $level2_tags, $ADVANCED_PLAC_FACTS, $ADVANCED_NAME_FACTS, $factarray;
 	global $nondatefacts, $nonplacfacts;
 
 	// handle  MARRiage TYPE
@@ -2483,7 +2488,9 @@ function insert_missing_subtags($level1tag, $add_date=false)
 				add_simple_tag("2 ".$key." ".strtoupper(date('d F Y')));
 			} elseif ($level1tag=='_TODO' && $key=='_PGVU') {
 				add_simple_tag("2 ".$key." ".PGV_USER_NAME);
-			} else {
+			} else if ($level1tag=='TITL' && strstr($ADVANCED_NAME_FACTS, $key)!==false) {
+				add_simple_tag("2 ".$key);
+			} else if ($level1tag!='TITL') {
 				add_simple_tag("2 ".$key);
 			}
 			switch ($key) { // Add level 3/4 tags as appropriate
