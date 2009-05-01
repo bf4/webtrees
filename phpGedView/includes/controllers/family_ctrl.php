@@ -324,10 +324,20 @@ class FamilyRoot extends BaseController {
 
 		// edit_fam menu
 		$menu = new Menu($pgv_lang['edit_fam']);
+		$menu->addOnclick("return edit_family('".$this->getFamilyID()."');");
 		if (!empty($PGV_IMAGES["edit_fam"]["small"])) {
 			$menu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['edit_fam']['small']}");
 		}
 		$menu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}", "submenu{$ff}");
+
+		// edit_fam / edit_fam
+		$submenu = new Menu($pgv_lang['edit_fam']);
+		$submenu->addOnclick("return edit_family('".$this->getFamilyID()."');");
+		if (!empty($PGV_IMAGES["edit_fam"]["small"])) {
+			$submenu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['edit_fam']['small']}");
+		}
+		$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}");
+		$menu->addSubmenu($submenu);
 
 		// edit_fam / members
 		$submenu = new Menu($pgv_lang['change_family_members']);
