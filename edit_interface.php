@@ -986,7 +986,17 @@ case 'editnote':
 					?></textarea><br /><?php print_specialchar_link("NOTE",true); ?>
 				</td>
 			</tr>
-			<?php $tabkey++; ?>
+			<?php $tabkey++; 
+			if (PGV_USER_IS_ADMIN) {
+			echo "<tr><td class=\"descriptionbox ".$TEXT_DIRECTION." wrap width25\">";
+			print_help_link("no_update_CHAN_help", "qm");
+			echo $pgv_lang["admin_override"]."</td><td class=\"optionbox wrap\">\n";
+			echo "<input type=\"checkbox\" name=\"preserve_last_changed\" />\n";
+			echo $pgv_lang["no_update_CHAN"]."<br />\n";
+			$event = new Event(get_sub_record(1, "1 CHAN", $gedrec));
+			echo format_fact_date($event, false, true);
+			echo "</td></tr>\n";
+			} ?>
 		</table>
 		<br /><br />
 		<input type="submit" value="<?php echo $pgv_lang["save"]; ?>" />
