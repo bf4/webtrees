@@ -2,7 +2,7 @@
 /**
 * Menu for punBB Module
 * phpGedView: Genealogy Viewer
-* Copyright (C) 2002 to 2009 John Finlay and Others
+ * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
 *
 * This program is free software; you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -46,7 +46,7 @@ class punbb_ModuleMenu
 	{
 		global $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $pgv_lang;
 		global $gallery;
-		if(!file_exists('modules/punbb.php')){return null;}
+		if(!file_exists('modules/punbb.php') || !file_exists('modules/punbb/config.php')){return null;}
 
 		if($TEXT_DIRECTION == 'rtl'){$ff = '_rtl';}else{$ff = '';}
 
