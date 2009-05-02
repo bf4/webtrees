@@ -2167,16 +2167,19 @@ class IndividualControllerRoot extends BaseController {
 
 
 // -----------------------------------------------------------------------------
-// Functions for Census Assistant
+// Functions for GedFact Assistant
 // -----------------------------------------------------------------------------
 	/**
-	* include Census controller
+	* include GedFact controller
 	*/
 	function GEDFact_assistant() {
 		require 'modules/GEDFact_assistant/CENS/census_1_ctrl.php';
 	}
+	function medialink_assistant() {
+		require 'modules/GEDFact_assistant/MEDIA/media_1_ctrl.php';
+	}
 // -----------------------------------------------------------------------------
-// End Census Assistant Functions
+// End GedFact Assistant Functions
 // -----------------------------------------------------------------------------
 
 

@@ -246,7 +246,7 @@ else if (!empty($famid)) {
 		checkChangeTime($famid, $gedrec, safe_GET('accesstime', PGV_REGEX_INTEGER));
 	}
 }
-else if (($action!="addchild")&&($action!="addchildaction")&&($action!="addnewsource")&&($action!="mod_edit_fact")&&($action!="addnewnote")&&($action!="addnoteaction")) {
+else if (($action!="addchild")&&($action!="addchildaction")&&($action!="addnewsource")&&($action!="mod_edit_fact")&&($action!="addnewnote")&&($action!="addmedia_links")&&($action!="addnoteaction")) {
 	echo "<span class=\"error\">The \$pid variable was empty. Unable to perform $action xxx.</span>";
 	print_simple_footer();
 	$disp = true;
@@ -393,18 +393,15 @@ case 'editraw':
 //------------------------------------------------------------------------------
 //-- edit a fact record in a form
 case 'edit':
-	
 	init_calendar_popup();
 	echo "<form method=\"post\" action=\"edit_interface.php\" enctype=\"multipart/form-data\">\n";
 	echo "<input type=\"hidden\" name=\"action\" value=\"update\" />\n";
 	echo "<input type=\"hidden\" name=\"linenum\" value=\"$linenum\" />\n";
 	echo "<input type=\"hidden\" name=\"pid\" value=\"$pid\" />\n";
 	echo "<br /><input type=\"submit\" value=\"".$pgv_lang["save"]."\" /><br />\n";
-	
+
 	echo "<table class=\"facts_table\">";
-	
 	$level1type = create_edit_form($gedrec, $linenum, $level0type);
-		
 	if (PGV_USER_IS_ADMIN) {
 		echo "<tr><td class=\"descriptionbox ".$TEXT_DIRECTION." wrap width25\">";
 		print_help_link("no_update_CHAN_help", "qm");
@@ -802,11 +799,6 @@ case 'addnewnote':
 					echo "</td>";
 				echo "</tr>";
 				$tabkey++;
-			?>
-			<tr><td class="descriptionbox <?php echo $TEXT_DIRECTION; ?> wrap width25"><?php print_help_link("edit_REPO_help", "qm"); echo $factarray["REPO"]; ?></td>
-			<td class="optionbox wrap"><input tabindex="<?php echo $tabkey; ?>" type="text" name="REPO" id="REPO" value="" size="10" /> <?php print_findrepository_link("REPO"); print_addnewrepository_link("REPO"); ?></td></tr>
-			<?php $tabkey++; ?>
-			<?php
 			echo "</table>";
 			echo "<br /><br />";
 			echo "<input type=\"submit\" value=\"".$pgv_lang["save"]."\" />";
@@ -914,21 +906,50 @@ case 'addnoteaction':
 		echo "<a href=\"javascript:// NOTE $xref\" onclick=\"openerpasteid('$xref'); return false;\">".$pgv_lang["paste_id_into_field"]." <b>$xref</b></a>\n";
 	}
 	break;
+	
+//------------------------------------------------------------------------------
+//-- add new Media Links
+case 'addmedia_links':
+	?>
+	<script type="text/javascript">
+	<!--
+		function check_form(frm) {
+			if (frm.TITL.value=="") {
+				alert('<?php echo $pgv_lang["must_provide"].$factarray["TITL"]; ?>');
+				frm.TITL.focus();
+				return false;
+			}
+			return true;
+		}
+	//-->
+	</script>
+	<b><?php echo "Add Media Links using Assistant."; $tabkey = 1; ?></b>
+	<form method="post" action="edit_interface.php" onsubmit="return check_form(this);">
+		<input type="hidden" name="action" value="addnoteaction" />
+		<input type="hidden" name="noteid" value="newnote" />
+		<!-- <input type="hidden" name="pid" value="$pid" /> -->
+		<?php
+		include ('modules/GEDFact_assistant/MEDIA_ctrl.php');
+		?>
+	</form>
+	<?php
+	break;
 
 //-- edit source
 case 'editsource':
 	init_calendar_popup();
 	echo "<form method=\"post\" action=\"edit_interface.php\" enctype=\"multipart/form-data\">\n";
 	echo "<input type=\"hidden\" name=\"action\" value=\"update\" />\n";
-	echo "<input type=\"hidden\" name=\"linenum\" value=\"$linenum\" />\n";
 	echo "<input type=\"hidden\" name=\"pid\" value=\"$pid\" />\n";
 	echo "<br /><input type=\"submit\" value=\"".$pgv_lang["save"]."\" /><br />\n";
 
 	echo "<table class=\"facts_table\">";
 	$gedlines = split("\n", $gedrec); // -- find the number of lines in the record
 	for ($i=$linenum; $i<count($gedlines); $i++) {
-		if (substr($gedlines[$i], 0, 1)<2) {
+		$fields = explode(' ', $gedlines[$i]);
+		if ((substr($gedlines[$i], 0, 1)<2) && $fields[1]!="CHAN") {
 			$level1type = create_edit_form($gedrec, $i, $level0type);
+			echo "<input type=\"hidden\" name=\"linenum[]\" value=\"$i\" />\n";
 		}
 	}
 	if (PGV_USER_IS_ADMIN) {
@@ -993,18 +1014,17 @@ case 'editnote':
 					?></textarea><br /><?php print_specialchar_link("NOTE",true); ?>
 				</td>
 			</tr>
-			<?php $tabkey++; ?>
-
-			<tr>
-				<td class="descriptionbox <?php echo $TEXT_DIRECTION; ?> wrap width25"><?php print_help_link("edit_SOUR_help", "qm"); echo $factarray["SOUR"]; ?></td>
-				<td class="optionbox wrap">
-					<input tabindex="<?php echo $tabkey; ?>" type="text" name="SOUR" id="SOUR" value="" size="10" /><?php 
-						print_findsource_link("SOUR"); 
-						print_addnewsource_link("SOUR"); ?>
-				</td>
-			</tr>
-			<?php $tabkey++; ?>
-
+			<?php $tabkey++; 
+			if (PGV_USER_IS_ADMIN) {
+			echo "<tr><td class=\"descriptionbox ".$TEXT_DIRECTION." wrap width25\">";
+			print_help_link("no_update_CHAN_help", "qm");
+			echo $pgv_lang["admin_override"]."</td><td class=\"optionbox wrap\">\n";
+			echo "<input type=\"checkbox\" name=\"preserve_last_changed\" />\n";
+			echo $pgv_lang["no_update_CHAN"]."<br />\n";
+			$event = new Event(get_sub_record(1, "1 CHAN", $gedrec));
+			echo format_fact_date($event, false, true);
+			echo "</td></tr>\n";
+			} ?>
 		</table>
 		<br /><br />
 		<input type="submit" value="<?php echo $pgv_lang["save"]; ?>" />
@@ -1174,9 +1194,10 @@ case 'update':
 				else $uploaded_files[] = "";
 			}
 		}
-		$linenum="new";
-		$gedlines = explode("\n", trim($gedrec));
-		//-- for new facts set linenum to number of lines
+	}
+	$gedlines = explode("\n", trim($gedrec));
+	//-- for new facts set linenum to number of lines
+	if (!is_array($linenum)) {
 		if ($linenum=="new") $linenum = count($gedlines);
 		$newged = "";
 		for($i=0; $i<$linenum; $i++) {
@@ -1241,21 +1262,82 @@ case 'update':
 			$newged .= trim($gedlines[$i])."\n";
 			$i++;
 		}
+	}
+	else {
+		$newged = "";
+		$current = 0;
+		foreach ($linenum as $editline) {
+			for($i=$current; $i<$editline; $i++) {
+				$newged .= $gedlines[$i]."\n";
+			}
+			//-- for edits get the level from the line
+			if (isset($gedlines[$editline])) {
+				$fields = explode(' ', $gedlines[$editline]);
+				$glevel = $fields[0];
+				$i++;
+				while(($i<count($gedlines))&&($gedlines[$i]{0}>$glevel)) $i++;
+			}
 
-		if (PGV_DEBUG) {
-			echo "<br /><br />";
-			echo "<pre>$newged</pre>";
+			if (!isset($glevels)) $glevels = array();
+			if (isset($_REQUEST['NAME'])) $NAME = $_REQUEST['NAME'];
+			if (isset($_REQUEST['TYPE'])) $TYPE = $_REQUEST['TYPE'];
+			if (isset($_REQUEST['NPFX'])) $NPFX = $_REQUEST['NPFX'];
+			if (isset($_REQUEST['GIVN'])) $GIVN = $_REQUEST['GIVN'];
+			if (isset($_REQUEST['NICK'])) $NICK = $_REQUEST['NICK'];
+			if (isset($_REQUEST['SPFX'])) $SPFX = $_REQUEST['SPFX'];
+			if (isset($_REQUEST['SURN'])) $SURN = $_REQUEST['SURN'];
+			if (isset($_REQUEST['NSFX'])) $NSFX = $_REQUEST['NSFX'];
+			if (isset($_REQUEST['ROMN'])) $ROMN = $_REQUEST['ROMN'];
+			if (isset($_REQUEST['FONE'])) $FONE = $_REQUEST['FONE'];
+			if (isset($_REQUEST['_HEB'])) $_HEB = $_REQUEST['_HEB'];
+			if (isset($_REQUEST['_AKA'])) $_AKA = $_REQUEST['_AKA'];
+			if (isset($_REQUEST['_MARNM'])) $_MARNM = $_REQUEST['_MARNM'];
+
+			if (!empty($NAME)) $newged .= "1 NAME $NAME\n";
+			if (!empty($TYPE)) $newged .= "2 TYPE $TYPE\n";
+			if (!empty($NPFX)) $newged .= "2 NPFX $NPFX\n";
+			if (!empty($GIVN)) $newged .= "2 GIVN $GIVN\n";
+			if (!empty($NICK)) $newged .= "2 NICK $NICK\n";
+			if (!empty($SPFX)) $newged .= "2 SPFX $SPFX\n";
+			if (!empty($SURN)) $newged .= "2 SURN $SURN\n";
+			if (!empty($NSFX)) $newged .= "2 NSFX $NSFX\n";
+
+			if (isset($_REQUEST['NOTE'])) $NOTE = $_REQUEST['NOTE'];
+			if (!empty($NOTE)) {
+				$newlines = preg_split("/\r?\n/",$NOTE,-1 );
+				for($k=0; $k<count($newlines); $k++) {
+					if ($k==0 && count($newlines)>1) {
+						$gedlines[$k] = "0 @$pid@ NOTE $newlines[$k]\n";
+					} else {
+						$gedlines[$k] = " 1 CONT $newlines[$k]\n";
+					}
+				}
+			}
+			//-- Refer to Bug [ 1329644 ] Add Married Name - Wrong Sequence
+			//-- _HEB/ROMN/FONE have to be before _AKA, even if _AKA exists in input and the others are now added
+			if (!empty($ROMN)) $newged .= "2 ROMN $ROMN\n";
+			if (!empty($FONE)) $newged .= "2 FONE $FONE\n";
+			if (!empty($_HEB)) $newged .= "2 _HEB $_HEB\n";
+
+			if (!empty($_AKA)) $newged .= "2 _AKA $_AKA\n";
+			if (!empty($_MARNM)) $newged .= "2 _MARNM $_MARNM\n";
+			
+			$newged = handle_updates($newged);
+			$current = $editline;
+			break;
 		}
-		// $success = (replace_gedrec($pid, $newged, $update_CHAN));
-		// if ($success) {
-			echo "<br /><br />".$pgv_lang["update_successful"] . " - " . $pid;
-		// }
 		
-	} // end foreach
-	
+	}
+	if (PGV_DEBUG) {
+		echo "<br /><br />";
+		echo "<pre>$newged</pre>";
+	}
 
+	$success = (replace_gedrec($pid, $newged, $update_CHAN));
+	if ($success) {
+		echo "<br /><br />".$pgv_lang["update_successful"];
+	}
 	break;
-	
 //------------------------------------------------------------------------------
 case 'addchildaction':
 	if (PGV_DEBUG) {
@@ -2287,6 +2369,50 @@ case 'changefamily_update':
 	}
 	break;
 //------------------------------------------------------------------------------
+//-- edit a fact record in a form
+case 'edit_family':
+	init_calendar_popup();
+	echo "<form method=\"post\" action=\"edit_interface.php\" enctype=\"multipart/form-data\">\n";
+	echo "<input type=\"hidden\" name=\"action\" value=\"update\" />\n";
+	echo "<input type=\"hidden\" name=\"famid\" value=\"$famid\" />\n";
+	echo "<br /><input type=\"submit\" value=\"".$pgv_lang["save"]."\" /><br />\n";
+	echo "<table class=\"facts_table\">";
+
+	$gedlines = split("\n", $gedrec); // -- find the number of lines in the record
+	$empty = true;
+	for ($i=$linenum; $i<count($gedlines); $i++) {
+		$fields = explode(' ', $gedlines[$i]);
+		if ((substr($gedlines[$i], 0, 1)<2) && $fields[1]!="HUSB" && $fields[1]!="WIFE" && $fields[1]!="CHIL" && $fields[1]!="CHAN") {
+			$level1type = create_edit_form($gedrec, $i, $level0type);
+			echo "<input type=\"hidden\" name=\"linenum[]\" value=\"$i\" />\n";
+			$empty = false;
+		}
+	}
+	if ($empty) {
+		$linenum=count($gedlines);
+		create_add_form("MARR");
+		echo "<input type=\"hidden\" name=\"linenum[]\" value=\"$i\" />\n";
+	}
+	if (PGV_USER_IS_ADMIN) {
+		echo "<tr><td class=\"descriptionbox ".$TEXT_DIRECTION." wrap width25\">";
+		print_help_link("no_update_CHAN_help", "qm");
+		echo $pgv_lang["admin_override"]."</td><td class=\"optionbox wrap\">\n";
+		echo "<input type=\"checkbox\" name=\"preserve_last_changed\" />\n";
+		echo $pgv_lang["no_update_CHAN"]."<br />\n";
+		$event = new Event(get_sub_record(1, "1 CHAN", $gedrec));
+		echo format_fact_date($event, false, true);
+		echo "</td></tr>\n";
+	}
+	echo "</table>";
+	print_add_layer("NOTE");
+	print_add_layer("SHARED_NOTE");
+	print_add_layer("OBJE");
+	//-- RESN missing in new structure, RESN can be added to all level 1 tags
+	if (!in_array("RESN", $tags)) print_add_layer("RESN");
+	echo "<br /><input type=\"submit\" value=\"".$pgv_lang["save"]."\" /><br />\n";
+	echo "</form>\n";
+	break;
+//------------------------------------------------------------------------------
 case 'reorder_update':
 	if (PGV_DEBUG) {
 		phpinfo(INFO_VARIABLES);
@@ -2406,11 +2532,18 @@ if (empty($goto) || empty($link))
 //------------------------------------------------------------------------------
 // autoclose window when update successful
 if ($success && $EDIT_AUTOCLOSE && !PGV_DEBUG) {
-//	if ($action=="copy") echo "\n<script type=\"text/javascript\">\n<!--\nwindow.close();\n//-->\n</script>";
-//	else echo "\n<script type=\"text/javascript\">\n<!--\nedit_close('{$link}');\n//-->\n</script>";
+	if ($action=="copy") echo "\n<script type=\"text/javascript\">\n<!--\nwindow.close();\n//-->\n</script>";
+	else echo "\n<script type=\"text/javascript\">\n<!--\nedit_close('{$link}');\n//-->\n</script>";
 }
 
+// Decide whether to print footer or not ===========================================
+if ($action == 'addmedia_links') {
+	// Do not print footer.
+	echo "<br />";
+	echo "<div class=\"center\"><a href=\"javascript:;\" onclick=\"edit_close('{$link}');\">".$pgv_lang["close_window"]."</a></div><br />\n";
+}else{
+	echo "<div class=\"center\"><a href=\"javascript:;\" onclick=\"edit_close('{$link}');\">".$pgv_lang["close_window"]."</a></div><br />\n";
+	print_simple_footer();
+}
 
-echo "<div class=\"center\"><a href=\"javascript:;\" onclick=\"edit_close('{$link}');\">".$pgv_lang["close_window"]."</a></div><br />\n";
-print_simple_footer();
 ?>

@@ -45,8 +45,8 @@ $emptyfacts = array("_HOL", "_NMR", "_SEPR", "ADOP", "ANUL", "BAPL", "BAPM", "BA
 "PROB", "RESI", "RETI", "SLGC", "SLGS", "WIFE", "WILL");
 $templefacts = array("SLGC","SLGS","BAPL","ENDL","CONL");
 $nonplacfacts = array("ENDL","NCHI","SLGC","SLGS");
-$nondatefacts = array("ABBR","ADDR","AFN","AUTH","EMAIL","FAX","NAME","NCHI","NOTE","OBJE",
-"PHON","PUBL","REFN","REPO","SEX","SOUR","SSN","TEXT","TITL","WWW","_EMAIL");
+$nondatefacts = array("ABBR","ADDR","AFN","AUTH","CHIL","EMAIL","FAX","HUSB","NAME","NCHI","NOTE","OBJE",
+"PHON","PUBL","REFN","REPO","SEX","SOUR","SSN","TEXT","TITL","WIFE","WWW","_EMAIL");
 $typefacts = array(); //-- special facts that go on 2 TYPE lines
 
 // Next two vars used by insert_missing_subtags()
@@ -769,9 +769,11 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 	if ($nextaction=='update') { // GEDCOM 5.5.1 spec says NAME doesn't get a OBJE
 		print_add_layer('SOUR');
 		print_add_layer('NOTE');
+		print_add_layer('SHARED_NOTE');
 	} else {
 		print_add_layer('SOUR', 1);
 		print_add_layer('NOTE', 1);
+		print_add_layer('SHARED_NOTE', 1);
 		print_add_layer('OBJE', 1);
 	}
 	echo "<input type=\"submit\" value=\"".$pgv_lang["save"]."\" />\n";
@@ -1031,11 +1033,10 @@ function print_addnewnote_link($element_id) {
 }
 
 /**
-* @todo add comments
+* // Used in GEDFact CENS assistant =====================
 */
 function print_addnewnote_assisted_link($element_id) {
 	global $pgv_lang, $PGV_IMAGE_DIR, $PGV_IMAGES, $pid;
-	
 	$text = $pgv_lang["create_shared_note_assisted"];
 	if (isset($PGV_IMAGES["addnote"]["button"])) $Link = "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["addnote"]["button"]."\" alt=\"".$text."\" title=\"".$text."\" border=\"0\" align=\"middle\" />";
 	else $Link = $text;
@@ -1649,11 +1650,13 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 			$date=new GedcomDate($value);
 			echo $date->Display(false);
 		}
-		// if (($fact=="ASSO" || $fact=="SOUR") && $value) {
-		if (($fact=="ASSO" || $fact=="SOUR" || ($fact=="NOTE" && $islink)) && $value) {
+		if (($fact=="ASSO" || $fact=="SOUR" || $fact=="OBJE" || ($fact=="NOTE" && $islink)) && $value) {
 			$record=GedcomRecord::getInstance($value);
 			if ($record) {
 				echo ' ', PrintReady($record->getFullName()), ' (', $value, ')';
+			}
+			else if ($value!="new") {
+				echo ' ', $value;
 			}
 		}
 	} else {
@@ -1661,10 +1664,13 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 			$date=new GedcomDate($value);
 			echo getRLM(), $date->Display(false), getRLM();
 		}
-		if (($fact=="ASSO" || $fact=="SOUR") && $value) {
+		if (($fact=="ASSO" || $fact=="SOUR" || $fact=="OBJE" || ($fact=="NOTE" && $islink)) && $value) {
 			$record=GedcomRecord::getInstance($value);
 			if ($record) {
-				echo ' ', PrintReady($record->getFullName()), ' ', getLRM(), '(', $value, ')', getLRM();
+				echo getRLM(), PrintReady($record->getFullName()), ' ', getLRM(), '(', $value, ') ', getLRM(), getRLM();
+			}
+			else if ($value!="new") {
+				echo getRLM(), $value, ' ', getRLM();
 			}
 		}
 	}
@@ -2334,19 +2340,26 @@ function create_edit_form($gedrec, $linenum, $level0type) {
 	// GEDFact_assistant ================================================
 	if ($type=="CENS" && file_exists('modules/GEDFact_assistant/mysql_query1.html') ) {
 		echo "<tr><td class=\"descriptionbox ".$TEXT_DIRECTION." wrap width25\">";
-			// print_help_link("edit_add_SHARED_NOTE_help", "qm");
-			echo "If using Shared Notes,<br />";
-			echo "before you Save:<br /><br />";
-			echo "1. Click \"Refresh\" then, ";
-			echo "<br /><br />";
-			echo "To add this CENS event<br />";
-			echo "to all listed individuals: <br ><br />";
-			echo "2. Click &nbsp;";
-			$save_copy  = "<input type=\"button\" name=\"Button2\" value=\"Save & Copy\" ";
-			$save_copy .= "onClick=\"javascript:#\" />";
-			echo $save_copy."<br /><br />";
+			print_help_link("edit_add_SHARED_NOTE_help", "qm");
+			echo "Currently Linked to: <br />";
+		//	echo "If using Shared Notes,<br />";
+		//	echo "before you Save:<br /><br />";
+		//	echo "1. Click \"Refresh\" then, ";
+		//	echo "<br /><br />";
+		//	echo "To add this CENS event<br />";
+		//	echo "to all listed individuals: <br ><br />";
+		//	echo "2. Click &nbsp;";
+		//	$save_copy  = "<input type=\"button\" name=\"Button2\" value=\"Save & Copy\" ";
+		//	$save_copy .= "onClick=\"javascript:#\" />";
+		//	echo $save_copy."<br /><br />";
 		echo "</td><td class=\"optionbox wrap\">\n";
 			include ('modules/GEDFact_assistant/mysql_query1.php');
+		echo "</td></tr>\n";
+		echo "<tr><td class=\"descriptionbox ".$TEXT_DIRECTION." wrap width25\">";
+			print_help_link("edit_add_SHARED_NOTE_help", "qm");
+			echo "Add Other Links: <br />";
+		echo "</td><td class=\"optionbox wrap\">\n";
+			include ('modules/GEDFact_assistant/mysql_query1a.php');
 		echo "</td></tr>\n";
 	}
 	// ==================================================================
@@ -2494,7 +2507,7 @@ function create_edit_form($gedrec, $linenum, $level0type) {
 */
 function insert_missing_subtags($level1tag, $add_date=false)
 {
-	global $tags, $date_and_time, $templefacts, $level2_tags, $ADVANCED_PLAC_FACTS, $factarray;
+	global $tags, $date_and_time, $templefacts, $level2_tags, $ADVANCED_PLAC_FACTS, $ADVANCED_NAME_FACTS, $factarray;
 	global $nondatefacts, $nonplacfacts;
 
 	// handle  MARRiage TYPE
@@ -2515,7 +2528,9 @@ function insert_missing_subtags($level1tag, $add_date=false)
 				add_simple_tag("2 ".$key." ".strtoupper(date('d F Y')));
 			} elseif ($level1tag=='_TODO' && $key=='_PGVU') {
 				add_simple_tag("2 ".$key." ".PGV_USER_NAME);
-			} else {
+			} else if ($level1tag=='TITL' && strstr($ADVANCED_NAME_FACTS, $key)!==false) {
+				add_simple_tag("2 ".$key);
+			} else if ($level1tag!='TITL') {
 				add_simple_tag("2 ".$key);
 			}
 			switch ($key) { // Add level 3/4 tags as appropriate

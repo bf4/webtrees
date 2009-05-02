@@ -74,7 +74,7 @@ class stats {
 				continue;
 			}
 			$examples[$methods[$i]] = $this->$methods[$i]();
-			if (stristr($methods[$i], 'percentage') || $methods[$i]=='averageChildren') {
+			if (stristr($methods[$i], 'percentage')) {
 				$examples[$methods[$i]] .='%';
 			}
 			if (stristr($methods[$i], 'highlight')) {
@@ -98,7 +98,7 @@ class stats {
 				continue;
 			} // Include this method name to prevent bad stuff happening
 			$examples[$methods[$i]] = $this->$methods[$i]();
-			if (stristr($methods[$i], 'percentage') || $methods[$i]=='averageChildren') {
+			if (stristr($methods[$i], 'percentage')) {
 				$examples[$methods[$i]] .='%';
 			}
 			if (stristr($methods[$i], 'highlight')) {
@@ -399,6 +399,9 @@ class stats {
 			case 'source':
 				$per=round(100 * $total / $this->totalSources(), 2);
 				break;
+			case 'note':
+				$per=round(100 * $total / $this->totalNotes(), 2);
+				break;
 			case 'other':
 				$per=round(100 * $total / $this->totalOtherRecords(), 2);
 				break;
@@ -506,10 +509,22 @@ class stats {
 		return $this->_getPercentage($this->totalSources(), 'all', 2);
 	}
 
+	function totalNotes()
+	{
+		global $TBLPREFIX;
+		$rows=self::_runSQL("SELECT COUNT(o_file) AS tot FROM {$TBLPREFIX}other WHERE o_type='NOTE' AND o_file=".$this->_ged_id);
+		return $rows[0]['tot'];
+	}
+
+	function totalNotesPercentage()
+	{
+		return $this->_getPercentage($this->totalNotes(), 'all', 2);
+	}
+
 	function totalOtherRecords()
 	{
 		global $TBLPREFIX;
-		$rows=self::_runSQL("SELECT COUNT(o_file) AS tot FROM {$TBLPREFIX}other WHERE o_file=".$this->_ged_id);
+		$rows=self::_runSQL("SELECT COUNT(o_file) AS tot FROM {$TBLPREFIX}other WHERE o_type!='NOTE' AND o_file=".$this->_ged_id);
 		return $rows[0]['tot'];
 	}
 
@@ -1234,14 +1249,15 @@ class stats {
 		foreach ($surn_countries as $count) {
 			$chart_url.=substr(PGV_GOOGLE_CHART_ENCODING, floor($count/max($surn_countries)*61), 1);
 		}
-		echo '<div id="google_charts" class="center">';
-		echo '<b>'.$chart_title.'</b><br /><br />';
-		echo '<div align="center"><img src="'.$chart_url.'" alt="'.$chart_title.'" title="'.$chart_title.'" class="gchart" /><br />';
-		echo '<table align="center" border="0" cellpadding="1" cellspacing="1"><tr>';
-		echo '<td bgcolor="#84BEFF" width="12"></td><td>'.$pgv_lang["g_chart_high"].'&nbsp;&nbsp;</td>';
-		echo '<td bgcolor="#C3DFFF" width="12"></td><td>'.$pgv_lang["g_chart_low"].'&nbsp;&nbsp;</td>';
-		echo '<td bgcolor="#FFFFFF" width="12"></td><td>'.$pgv_lang["g_chart_nobody"].'&nbsp;&nbsp;</td>';
-		echo '</tr></table></div></div>';
+		$chart = '<div id="google_charts" class="center">';
+		$chart .= '<b>'.$chart_title.'</b><br /><br />';
+		$chart .= '<div align="center"><img src="'.$chart_url.'" alt="'.$chart_title.'" title="'.$chart_title.'" class="gchart" /><br />';
+		$chart .= '<table align="center" border="0" cellpadding="1" cellspacing="1"><tr>';
+		$chart .= '<td bgcolor="#84BEFF" width="12"></td><td>'.$pgv_lang["g_chart_high"].'&nbsp;&nbsp;</td>';
+		$chart .= '<td bgcolor="#C3DFFF" width="12"></td><td>'.$pgv_lang["g_chart_low"].'&nbsp;&nbsp;</td>';
+		$chart .= '<td bgcolor="#FFFFFF" width="12"></td><td>'.$pgv_lang["g_chart_nobody"].'&nbsp;&nbsp;</td>';
+		$chart .= '</tr></table></div></div>';
+		return $chart;
 	}
 
 	function statsDeath($sex=false, $year1=-1, $year2=-1)

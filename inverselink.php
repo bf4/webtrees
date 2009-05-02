@@ -122,6 +122,17 @@ if ($action == "choose" && $paramok) {
 		print_findmedia_link("mediaid","1media");
 		print "</td></tr>";
 	}
+	
+	// GEDFact assistant Current Media Links ===================
+	echo "<tr>";
+	echo "<td class=\"descriptionbox width20 wrap\">";
+	echo "Current links:";
+	echo"</td>";
+	echo "<td class=\"optionbox wrap\">";
+		include ('modules/GEDFact_assistant/MEDIA/media_query_1a.php');
+	echo "</td></tr>";
+	// =========================================================
+	
 
 	if (!isset($linktoid)) $linktoid = "";
 	print "<tr><td class=\"descriptionbox\">";
@@ -170,6 +181,17 @@ if ($action == "choose" && $paramok) {
 		}
 	}
 	print "</td></tr>";
+	
+	// GEDFact assistant Add Media Links =======================
+	echo "<tr>";
+	echo "<td class=\"descriptionbox width20 wrap\">";
+	echo "Add more links:";
+	echo"</td>";
+	echo "<td class=\"optionbox wrap\">";
+		include ('modules/GEDFact_assistant/MEDIA/media_query_2a.php');
+	echo "</td></tr>";
+	// =========================================================
+	
 	print "<tr><td class=\"topbottombar\" colspan=\"2\"><input type=\"submit\" value=\"".$pgv_lang["set_link"]."\" /></td></tr>";
 	print "</table>";
 	print "</form>\n";

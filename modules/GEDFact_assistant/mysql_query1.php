@@ -78,23 +78,38 @@ background-color: #FFFFFF;
 </head>
 <body onLoad="javascript:attach_file('modules/GEDFact_assistant/mysql_query2.php?noteid=N1'); show_status('OK'); ">
 
+<?php
+// Test of PDO TABLE ========================================================
+/*
+	$statement=PGV_DB::prepare("SELECT 'INDI' AS type, l_from, l_to FROM {$TBLPREFIX}link, {$TBLPREFIX}individuals WHERE l_from LIKE 'I%' AND i_file=l_file AND i_id=l_from AND l_file='1' AND l_type='NOTE' AND l_to='N1'")->execute();
+	echo '<table width="220" border="0" cellpadding="1" cellspacing="3" class="table1">';
+	while ($rows = $statement->fetch(PDO::FETCH_NUM)) {
+		echo "<tr><td> $rows[0]</td><td> $rows[1]</td><td> $rows[2]</td></tr>";
+	}
+	echo "</table>";
+	$statement->closeCursor();
+*/
+// ==========================================================================
+?>
+
 <table width="220" border="0" cellpadding="1" cellspacing="3" class="table1">
 <tr>
 <td>
 <?php
 $refresh  = "<input class=\"button\" type=\"button\" name=\"Button\" value=\"Refresh\" ";
 $refresh .= "onClick=\"javascript:attach_file('modules/GEDFact_assistant/mysql_query2.php";
-$refresh .= "?noteid='+INDI_NOTE.value+'";
-$refresh .= "&tblprefix=$TBLPREFIX";
-$refresh .= "&dbhost=$DBHOST";
-$refresh .= "&dbuser=$DBUSER";
-$refresh .= "&dbpass=$DBPASS";
-$refresh .= "&dbname=$DBNAME";
+$refresh .= "?noteid='+INDI_NOTE.value+'";			// 
+$refresh .= "&tblprefix=$TBLPREFIX";				//
+$refresh .= "&dbtype=$DBTYPE";						//  
+$refresh .= "&dbhost=$DBHOST";						// 
+$refresh .= "&dbuser=$DBUSER";						// 
+$refresh .= "&dbpass=$DBPASS";						// 
+$refresh .= "&dbname=$DBNAME";						// 
 $refresh .= "'); show_status('Busy...'); \" >";
 echo $refresh;
 ?>
 </td>
-<td width="120" nowrap="nowrap"><span><b>&nbsp;&nbsp; Individual List </b></span> </td>
+<td width="120" nowrap="nowrap"><span><b>&nbsp;&nbsp; Linked to: </b></span> </td>
 <td width="60" ><span id="status" /></span> </td>
 </tr>
 </table>

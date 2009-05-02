@@ -5,7 +5,7 @@
  * module of phpGedView
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team. All rights reserved.
+ * Copyright (C) 2002 to 2009  PGV Development Team. All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -82,11 +82,14 @@
 			{
 				map_type.refresh();
 			});
-            map.addControl(new GLargeMapControl());
+			// for further street view
+			//map.addControl(new GLargeMapControl3D(true));
+            map.addControl(new GLargeMapControl3D());
             map.addControl(new GScaleControl());
 			var mini = new GOverviewMapControl();
 			map.addControl(mini);
-			mini.hide();
+			// displays blank minimap - probably google api's bug
+			//mini.hide();
             map.setCenter(new GLatLng( 0.0, 0.0), 0, maptype );
             mapready = 1;
             ResizeMap();

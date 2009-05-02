@@ -257,10 +257,7 @@ class Census1820 extends ra_form {
         return $out;
     }
 
-    function step2() {
-		global $GEDCOM, $GEDCOMS, $TBLPREFIX, $DBCONN, $factarray, $pgv_lang;
-		global $INDI_FACTS_ADD;
-
+  function step2() {
 		$this->processSourceCitation();
 
 		$out = $this->header("module.php?mod=research_assistant&form=Census1820&action=func&func=step3&taskid=" . $_REQUEST['taskid'], "center", "1820 United States Federal Census");
@@ -270,7 +267,7 @@ class Census1820 extends ra_form {
 	}
 
 	function step3() {
-		global $GEDCOM, $GEDCOMS, $TBLPREFIX, $DBCONN, $pgv_lang;
+		global $pgv_lang;
 
 		$out = $this->processFactsForm();
 
@@ -287,11 +284,10 @@ class Census1820 extends ra_form {
 	/**
 	 * Override method from ra_form
 	 */
-    function processSimpleCitation() {
-     global $TBLPREFIX, $DBCONN;
-     //-- delete any old census records
-     $sql = "DELETE FROM ".$TBLPREFIX."taskfacts WHERE tf_t_id='".$DBCONN->escapeSimple($_REQUEST['taskid'])."' AND tf_factrec ".PGV_DB_LIKE." '1 CENS%'";
-     $res = dbquery($sql);
+  function processSimpleCitation() {
+		global $TBLPREFIX;
+		//-- delete any old census records
+		PGV_DB::prepare("DELETE FROM {$TBLPREFIX}taskfacts WHERE tf_t_id=? AND tf_factrec ".PGV_DB_LIKE." ?")->execute(array($_REQUEST['taskid'], '1 CENS%'));
 
 		// Set our output to nothing, this supresses a warning that we would otherwise get.
 		$out = "";
@@ -303,11 +299,7 @@ class Census1820 extends ra_form {
 		$people = $this->getPeople();
 		$pids = array_keys($people);
 		//-- store the fact associations in the database
-		$sql = "INSERT INTO ".$TBLPREFIX."taskfacts VALUES('".get_next_id("taskfacts", "tf_id")."'," .
-			"'".$DBCONN->escapeSimple($_REQUEST['taskid'])."'," .
-			"'".$DBCONN->escapeSimple($factrec)."'," .
-			"'".$DBCONN->escapeSimple(implode(";", $pids))."', 'Y', 'indi')";
-		$res = dbquery($sql);
+		PGV_DB::prepare("INSERT INTO {$TBLPREFIX}taskfacts (tf_id, tf_t_id, tf_factrec, tf_people, tf_multiple, tf_type) VALUES (?, ?, ?, ?, ?, ?)")->execute(array(get_next_id("taskfacts", "tf_id"), $_REQUEST['taskid'], $factrec, implode(";", $pids), 'Y', 'indi'));
 
 		$rows = array();
 		$text = $_POST['city'].", ".$_POST['county'].", ".$_POST['state'].", 1820 US Census";

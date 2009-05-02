@@ -543,6 +543,7 @@ function reformat_record_import($rec) {
 		case 'TEXT':
 		case 'DATA':
 		case 'CONT':
+		case 'FILE':
 			// Don't strip tabs, even though they are not valid in gedcom data.
 			if ($newrec) {
 				$newrec.="\n";
@@ -567,10 +568,29 @@ function reformat_record_import($rec) {
 * @param boolean $update whether or not this is an updated record that has been accepted
 */
 function import_record($gedrec, $update) {
-	global $DBCONN, $xtype, $TBLPREFIX, $GEDCOM_FILE, $FILE, $pgv_lang, $USE_RIN;
+	global $xtype, $TBLPREFIX, $GEDCOM_FILE, $FILE, $pgv_lang, $USE_RIN;
 	global $place_id, $WORD_WRAPPED_NOTES, $GEDCOMS, $MAX_IDS, $fpnewged, $GEDCOM, $GENERATE_UIDS;
 
 	$FILE=$GEDCOM;
+
+	static $sql_insert_indi=null;
+	static $sql_insert_fam=null;
+	static $sql_insert_sour=null;
+	static $sql_insert_other=null;
+	if (!$sql_insert_indi) {
+		$sql_insert_indi=PGV_DB::prepare(
+			"INSERT INTO {$TBLPREFIX}individuals (i_id, i_file, i_rin, i_isdead, i_sex, i_gedcom) VALUES (?,?,?,?,?,?)"
+		);
+		$sql_insert_fam=PGV_DB::prepare(
+			"INSERT INTO {$TBLPREFIX}families (f_id, f_file, f_husb, f_wife, f_chil, f_gedcom, f_numchil) VALUES (?,?,?,?,?,?,?)"
+		);
+		$sql_insert_sour=PGV_DB::prepare(
+			"INSERT INTO {$TBLPREFIX}sources (s_id, s_file, s_name, s_gedcom, s_dbid) VALUES (?,?,?,?,?)"
+		);
+		$sql_insert_other=PGV_DB::prepare(
+			"INSERT INTO {$TBLPREFIX}other (o_id, o_file, o_type, o_gedcom) VALUES (?,?,?,?)"
+		);
+	}
 
 	// Escaped @ signs (only if importing from file)
 	if (!$update) {
@@ -649,8 +669,8 @@ function import_record($gedrec, $update) {
 	$record->dispname=true;
 
 	// Update the cross-reference/index tables.
-	$ged_id=(int)($GEDCOMS[$GEDCOM]["id"]);
-	$xref  =$DBCONN->escapeSimple($gid);
+	$ged_id=$GEDCOMS[$GEDCOM]["id"];
+	$xref  =$gid;
 	update_places($xref, $ged_id, $gedrec);
 	update_dates ($xref, $ged_id, $gedrec);
 	update_links ($xref, $ged_id, $gedrec);
@@ -660,48 +680,47 @@ function import_record($gedrec, $update) {
 	switch ($type) {
 	case 'INDI':
 		if ($USE_RIN && preg_match('/\n1 RIN (.+)/', $gedrec, $match)) {
-			$rin=$DBCONN->escapeSimple($match[1]);
+			$rin=$match[1];
 		} else {
 			$rin=$xref;
 		}
-		$isdead=(int)is_dead($gedrec, '', true);
-		dbquery("INSERT INTO {$TBLPREFIX}individuals (i_id, i_file, i_rin, i_isdead, i_sex, i_gedcom) VALUES ('{$xref}',{$ged_id},'{$rin}','{$isdead}','".$record->getSex()."','".$DBCONN->escapeSimple($gedrec)."')");
+		$sql_insert_indi->execute(array($xref, $ged_id, $rin, is_dead($gedrec, '', true), $record->getSex(), $gedrec));
 		break;
 	case 'FAM':
 		if (preg_match('/\n1 HUSB @('.PGV_REGEX_XREF.')@/', $gedrec, $match)) {
 			$husb=$match[1];
 		} else {
-			$husb=null;
+			$husb='';
 		}
 		if (preg_match('/\n1 WIFE @('.PGV_REGEX_XREF.')@/', $gedrec, $match)) {
 			$wife=$match[1];
 		} else {
-			$wife=null;
+			$wife='';
 		}
 		if ($nchi=preg_match_all('/\n1 CHIL @('.PGV_REGEX_XREF.')@/', $gedrec, $match)) {
 			$chil=implode(';', $match[1]).';';
 		} else {
-			$chil=null;
+			$chil='';
 		}
 		if (preg_match('/\n1 NCHI (\d+)/', $gedrec, $match)) {
 			$nchi=max($nchi, $match[1]);
 		}
-		dbquery("INSERT INTO {$TBLPREFIX}families (f_id, f_file, f_husb, f_wife, f_chil, f_gedcom, f_numchil) VALUES ('{$xref}',{$ged_id},'{$husb}','{$wife}','{$chil}','".$DBCONN->escapeSimple($gedrec)."','{$nchi}')");
+		$sql_insert_fam->execute(array($xref, $ged_id, $husb, $wife, $chil, $gedrec, $nchi));
 		break;
 	case 'SOUR':
 		if (preg_match('/\n1 TITL (.+)/', $gedrec, $match)) {
-			$name=$DBCONN->escapeSimple($match[1]);
+			$name=$match[1];
 		} elseif (preg_match('/\n1 ABBR (.+)/', $gedrec, $match)) {
-			$name=$DBCONN->escapeSimple($match[1]);
+			$name=$match[1];
 		} else {
 			$name=$gid;
 		}
 		if (strpos($gedrec, "\n1 _DBID")) {
-			$_dbid="'Y'";
+			$_dbid='Y';
 		} else {
-			$_dbid='NULL';
+			$_dbid=null;
 		}
-		dbquery("INSERT INTO {$TBLPREFIX}sources (s_id, s_file, s_name, s_gedcom, s_dbid) VALUES ('{$xref}',{$ged_id},'{$name}','".$DBCONN->escapeSimple($gedrec)."',{$_dbid})");
+		$sql_insert_sour->execute(array($xref, $ged_id, $name, $gedrec, $_dbid));
 		break;
 	case 'OBJE':
 		// OBJE records are imported by update_media function
@@ -713,7 +732,7 @@ function import_record($gedrec, $update) {
 		// no break
 	default:
 		if (substr($type, 0, 1)!='_') {
-			dbquery("INSERT INTO {$TBLPREFIX}other (o_id, o_file, o_type, o_gedcom) VALUES ('{$xref}',{$ged_id},'{$type}','".$DBCONN->escapeSimple($gedrec)."')");
+			$sql_insert_other->execute(array($xref, $ged_id, $type, $gedrec));
 		}
 		break;
 	}
@@ -808,34 +827,26 @@ function update_places($gid, $ged_id, $gedrec) {
 
 // extract all the dates from the given record and insert them into the database
 function update_dates($xref, $ged_id, $gedrec) {
-	global $DBTYPE, $DBCONN, $TBLPREFIX, $factarray;
+	global $TBLPREFIX, $factarray;
+
+	static $sql_insert_date=null;
+	if (!$sql_insert_date) {
+		$sql_insert_date=PGV_DB::prepare(
+			"INSERT INTO {$TBLPREFIX}dates (d_day,d_month,d_mon,d_year,d_julianday1,d_julianday2,d_fact,d_gid,d_file,d_type) VALUES (?,?,?,?,?,?,?,?,?,?)"
+		);
+	}
 
 	if (strpos($gedrec, '2 DATE ') && preg_match_all("/\n1 (\w+).*(?:\n[2-9].*)*(?:\n2 DATE (.+))(?:\n[2-9].*)*/", $gedrec, $matches, PREG_SET_ORDER)) {
-		$data=array();
 		foreach ($matches as $match) {
-				$fact=$match[1];
+			$fact=$match[1];
 			if (($fact=='FACT' || $fact=='EVEN') && preg_match("/\n2 TYPE (\w+)/", $match[0], $tmatch) && array_key_exists($tmatch[1], $factarray)) {
 				$fact=$tmatch[1];
 			}
 			$date=new GedcomDate($match[2]);
-			$fact=$DBCONN->escapeSimple($fact);
-			$data[]="({$date->date1->d},'".$date->date1->Format('O')."',{$date->date1->m},{$date->date1->y},{$date->date1->minJD},{$date->date1->maxJD},'{$fact}','{$xref}',{$ged_id},'".$date->date1->CALENDAR_ESCAPE()."')";
+			$sql_insert_date->execute(array($date->date1->d, $date->date1->Format('O'), $date->date1->m, $date->date1->y, $date->date1->minJD, $date->date1->maxJD, $fact, $xref, $ged_id, $date->date1->CALENDAR_ESCAPE()));
 			if ($date->date2) {
-				$data[]="({$date->date2->d},'".$date->date2->Format('O')."',{$date->date2->m},{$date->date2->y},{$date->date2->minJD},{$date->date2->maxJD},'{$fact}','{$xref}',{$ged_id},'".$date->date2->CALENDAR_ESCAPE()."')";
-		}
-	}
-
-		switch ($DBTYPE) {
-		case 'mysql':
-		case 'mysqli':
-			// MySQL can insert multiple rows in one statement
-			dbquery("INSERT INTO {$TBLPREFIX}dates (d_day,d_month,d_mon,d_year,d_julianday1,d_julianday2,d_fact,d_gid,d_file,d_type) VALUES ".implode(',', $data));
-			break;
-		default:
-			foreach ($data as $datum) {
-				dbquery("INSERT INTO {$TBLPREFIX}dates (d_day,d_month,d_mon,d_year,d_julianday1,d_julianday2,d_fact,d_gid,d_file,d_type) VALUES ".$datum);
-}
-			break;
+				$sql_insert_date->execute(array($date->date2->d, $date->date2->Format('O'), $date->date2->m, $date->date2->y, $date->date2->minJD, $date->date2->maxJD, $fact, $xref, $ged_id, $date->date2->CALENDAR_ESCAPE()));
+			}
 		}
 	}
 	return;
@@ -843,115 +854,83 @@ function update_dates($xref, $ged_id, $gedrec) {
 
 // extract all the remote links from the given record and insert them into the database
 function update_rlinks($xref, $ged_id, $gedrec) {
-	global $DBTYPE, $DBCONN, $TBLPREFIX;
+	global $TBLPREFIX;
 
-	if (preg_match_all("/^1 RFN (.+)/m", $gedrec, $matches, PREG_SET_ORDER)) {
-		$data=array();
+	static $sql_insert_rlink=null;
+	if (!$sql_insert_rlink) {
+		$sql_insert_rlink=PGV_DB::prepare("INSERT INTO {$TBLPREFIX}remotelinks (r_gid,r_linkid,r_file) VALUES (?,?,?)");
+	}
+
+	if (preg_match_all("/\n1 RFN (".PGV_REGEX_XREF.')/', $gedrec, $matches, PREG_SET_ORDER)) {
 		foreach ($matches as $match) {
-			$match[1]=$DBCONN->escapeSimple($match[1]);
-			$sql="('{$xref}','{$match[1]}',{$ged_id})";
-			// Include each remote link once only.
-			if (!in_array($sql, $data)) {
-				$data[]=$sql;
+			// Ignore any errors, which may be caused by "duplicates" that differ on case/collation, e.g. "S1" and "s1"
+			try {
+				$sql_insert_rlink->execute(array($xref, $match[1], $ged_id));
+			} catch (PDOException $e) {
+				// We could display a warning here....
 			}
-		}
-
-		switch ($DBTYPE) {
-		case 'mysql':
-		case 'mysqli':
-			// MySQL can insert multiple rows in one statement
-			dbquery("INSERT INTO {$TBLPREFIX}remotelinks (r_gid, r_linkid, r_file) VALUES ".implode(',', $data));
-			break;
-		default:
-			foreach ($data as $datum) {
-				dbquery("INSERT INTO {$TBLPREFIX}remotelinks (r_gid, r_linkid, r_file) VALUES ".$datum);
-			}
-			break;
 		}
 	}
 }
 
 // extract all the links from the given record and insert them into the database
 function update_links($xref, $ged_id, $gedrec) {
-	global $DBTYPE, $DBCONN, $TBLPREFIX;
+	global $TBLPREFIX;
+
+	static $sql_insert_link=null;
+	if (!$sql_insert_link) {
+		$sql_insert_link=PGV_DB::prepare("INSERT INTO {$TBLPREFIX}link (l_from,l_to,l_type,l_file) VALUES (?,?,?,?)");
+	}
 
 	if (preg_match_all('/^\d+ ('.PGV_REGEX_TAG.') @('.PGV_REGEX_XREF.')@/m', $gedrec, $matches, PREG_SET_ORDER)) {
 		$data=array();
 		foreach ($matches as $match) {
-			$match[2]=$DBCONN->escapeSimple($match[2]);
-			$sql="('{$xref}','{$match[2]}','{$match[1]}',{$ged_id})";
 			// Include each link once only.
-			if (!in_array($sql, $data)) {
-				$data[]=$sql;
+			if (!in_array($match[1].$match[2], $data)) {
+				$data[]=$match[1].$match[2];
+				// Ignore any errors, which may be caused by "duplicates" that differ on case/collation, e.g. "S1" and "s1"
+				try {
+					$sql_insert_link->execute(array($xref, $match[2], $match[1], $ged_id));
+				} catch (PDOException $e) {
+					// We could display a warning here....
+				}
 			}
-		}
-
-		switch ($DBTYPE) {
-		case 'mysql':
-		case 'mysqli':
-			// MySQL can insert multiple rows in one statement
-			// Use REPLACE INTO in case we have "duplicates" that differ on case, e.g. "S1" and "s1"
-			dbquery("REPLACE INTO {$TBLPREFIX}link (l_from,l_to,l_type,l_file) VALUES ".implode(',', $data));
-			break;
-		default:
-			foreach ($data as $datum) {
-				// Ignore any errors, which may be caused by "duplicates" that differ on case, e.g. "S1" and "s1"
-				dbquery("INSERT INTO {$TBLPREFIX}link (l_from,l_to,l_type,l_file) VALUES ".$datum, false);
-		}
-			break;
 		}
 	}
 }
 
 // extract all the names from the given record and insert them into the database
 function update_names($xref, $ged_id, $record) {
-	global $DBTYPE, $DBCONN, $TBLPREFIX;
+	global $TBLPREFIX;
+
+	static $sql_insert_name_indi=null;
+	static $sql_insert_name_other=null;
+	if (!$sql_insert_name_indi) {
+		$sql_insert_name_indi=PGV_DB::prepare("INSERT INTO {$TBLPREFIX}name (n_file,n_id,n_num,n_type,n_sort,n_full,n_list,n_surname,n_surn,n_givn,n_soundex_givn_std,n_soundex_surn_std,n_soundex_givn_dm,n_soundex_surn_dm) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+		$sql_insert_name_other=PGV_DB::prepare("INSERT INTO {$TBLPREFIX}name (n_file,n_id,n_num,n_type,n_sort,n_full,n_list) VALUES (?,?,?,?,?,?,?)");
+	}
 
 	if ($record->getType()!='FAM' && $record->getXref()) {
-		$data=array();
-
 		foreach ($record->getAllNames() as $n=>$name) {
-			$tmp="({$ged_id},'{$xref}',{$n},'{$name['type']}','".$DBCONN->escapeSimple($name['sort'])."',";
 			if ($record->getType()=='INDI') {
 				if ($name['givn']=='@P.N.') {
-					$soundex_givn_std="NULL";
-					$soundex_givn_dm="NULL";
+					$soundex_givn_std=null;
+					$soundex_givn_dm=null;
 				} else {
 					$soundex_givn_std="'".soundex_std($name['givn'])."'";
 					$soundex_givn_dm="'".soundex_dm($name['givn'])."'";
 				}
 				if ($name['surn']=='@N.N.') {
-					$soundex_surn_std="NULL";
-					$soundex_surn_dm="NULL";
+					$soundex_surn_std=null;
+					$soundex_surn_dm=null;
 				} else {
 					$soundex_surn_std="'".soundex_std($name['surname'])."'";
 					$soundex_surn_dm="'".soundex_dm($name['surname'])."'";
 				}
-				$data[]=$tmp."'".$DBCONN->escapeSimple($name['fullNN'])."','".$DBCONN->escapeSimple($name['listNN'])."','".$DBCONN->escapeSimple($name['surname'])."','".$DBCONN->escapeSimple($name['surn'])."','".$DBCONN->escapeSimple($name['givn'])."',{$soundex_givn_std},{$soundex_surn_std},{$soundex_givn_dm},{$soundex_surn_dm})";
+				$sql_insert_name_indi->execute(array($ged_id, $xref, $n, $name['type'], $name['sort'], $name['fullNN'], $name['listNN'], $name['surname'], $name['surn'], $name['givn'], $soundex_givn_std, $soundex_surn_std, $soundex_givn_dm, $soundex_surn_dm));
 			} else {
-				$data[]=$tmp."'".$DBCONN->escapeSimple($name['full'])."','".$DBCONN->escapeSimple($name['list'])."')";
+				$sql_insert_name_other->execute(array($ged_id, $xref, $n, $name['type'], $name['sort'], $name['full'], $name['list']));
 			}
-		}
-
-		switch ($DBTYPE) {
-		case 'mysql':
-		case 'mysqli':
-			// MySQL can insert multiple rows in one statement
-			if ($record->getType()=='INDI') {
-				dbquery("INSERT INTO {$TBLPREFIX}name (n_file,n_id,n_num,n_type,n_sort,n_full,n_list,n_surname,n_surn,n_givn,n_soundex_givn_std,n_soundex_surn_std,n_soundex_givn_dm,n_soundex_surn_dm) VALUES ".implode(',', $data));
-			} else {
-				dbquery("INSERT INTO {$TBLPREFIX}name (n_file,n_id,n_num,n_type,n_sort,n_full,n_list) VALUES ".implode(',', $data));
-			}
-			break;
-		default:
-			foreach ($data as $datum) {
-				if ($record->getType()=='INDI') {
-					dbquery("INSERT INTO {$TBLPREFIX}name (n_file,n_id,n_num,n_type,n_sort,n_full,n_list,n_surname,n_surn,n_givn,n_soundex_givn_std,n_soundex_surn_std,n_soundex_givn_dm,n_soundex_surn_dm) VALUES ".$datum);
-				} else {
-					dbquery("INSERT INTO {$TBLPREFIX}name (n_file,n_id,n_num,n_type,n_sort,n_full,n_list) VALUES ".$datum);
-				}
-			}
-			break;
 		}
 	}
 }
@@ -965,7 +944,18 @@ function update_names($xref, $ged_id, $record) {
 * @param int $count The count of OBJE records in the parent record
 */
 function insert_media($objrec, $objlevel, $update, $gid, $count) {
-	global $TBLPREFIX, $media_count, $GEDCOMS, $FILE, $DBCONN, $found_ids, $fpnewged;
+	global $TBLPREFIX, $media_count, $GEDCOMS, $FILE, $found_ids, $fpnewged;
+
+	static $sql_insert_media=null;
+	static $sql_insert_media_mapping=null;
+	if (!$sql_insert_media) {
+		$sql_insert_media=PGV_DB::prepare(
+			"INSERT INTO {$TBLPREFIX}media (m_id, m_media, m_ext, m_titl, m_file, m_gedfile, m_gedrec) VALUES (?, ?, ?, ?, ?, ?, ?)"
+		);
+		$sql_insert_media_mapping=PGV_DB::prepare(
+			"INSERT INTO {$TBLPREFIX}media_mapping (mm_id, mm_media, mm_gid, mm_order, mm_gedfile, mm_gedrec) VALUES (?, ?, ?, ?, ?, ?)"
+		);
+	}
 
 	//-- check for linked OBJE records
 	//-- linked records don't need to insert to media table
@@ -974,28 +964,8 @@ function insert_media($objrec, $objlevel, $update, $gid, $count) {
 		//-- get the old id
 		$old_m_media = $match[1];
 		$objref = $objrec;
-		/**
-		* Hiding some code in order to fix a very annoying bug
-		* [ 1579889 ] Upgrading breaks Media links
-		*
-		* Don't understand the logic of renumbering media objects ??
-		*
-		//-- if this is an import not an update get the updated ID
-		if (!$update) {
-			if (isset ($found_ids[$old_m_media])) {
-				$new_m_media = $found_ids[$old_m_media]["new_id"];
-			} else {
-				$new_m_media = get_new_xref("OBJE");
-				$found_ids[$old_m_media]["old_id"] = $old_m_media;
-				$found_ids[$old_m_media]["new_id"] = $new_m_media;
-			}
-		}
-		//-- an update so the ID won't change
-		else $new_m_media = $old_m_media;
-		**/
 		$new_m_media = $old_m_media;
 		$m_media = $new_m_media;
-		//print "LINK: old $old_m_media new $new_m_media $objref<br />";
 		if ($m_media != $old_m_media) {
 			$objref = preg_replace("/@$old_m_media@/", "@$m_media@", $objref);
 		}
@@ -1015,10 +985,7 @@ function insert_media($objrec, $objlevel, $update, $gid, $count) {
 		$new_media = Media::in_obje_list($media);
 		if ($new_media === false) {
 			//-- add it to the media database table
-			$m_id = get_next_id("media", "m_id");
-			$sql = "INSERT INTO {$TBLPREFIX}media (m_id, m_media, m_ext, m_titl, m_file, m_gedfile, m_gedrec)";
-			$sql .= " VALUES('" . $DBCONN->escapeSimple($m_id) . "', '" . $DBCONN->escapeSimple($m_media) . "', '" . $DBCONN->escapeSimple($media->ext) . "', '" . $DBCONN->escapeSimple($media->title) . "', '" . $DBCONN->escapeSimple($media->file) . "', '" . $DBCONN->escapeSimple($GEDCOMS[$FILE]["id"]) . "', '" . $DBCONN->escapeSimple($objrec) . "')";
-			$res = dbquery($sql);
+			$sql_insert_media->execute(array(get_next_id('media', 'm_id'), $m_media, $media->ext, $media->title, $media->file, $GEDCOMS[$FILE]["id"], $objrec));
 			$media_count++;
 			//-- if this is not an update then write it to the new gedcom file
 			if (!$update && !empty ($fpnewged)) {
@@ -1032,10 +999,7 @@ function insert_media($objrec, $objlevel, $update, $gid, $count) {
 	}
 	if (isset($m_media)) {
 		//-- add the entry to the media_mapping table
-		$mm_id = get_next_id("media_mapping", "mm_id");
-		$sql = "INSERT INTO {$TBLPREFIX}media_mapping (mm_id, mm_media, mm_gid, mm_order, mm_gedfile, mm_gedrec)";
-		$sql .= " VALUES ('" . $DBCONN->escapeSimple($mm_id) . "', '" . $DBCONN->escapeSimple($m_media) . "', '" . $DBCONN->escapeSimple($gid) . "', '" . $DBCONN->escapeSimple($count) . "', '" . $DBCONN->escapeSimple($GEDCOMS[$FILE]['id']) . "', '" . $DBCONN->escapeSimple($objref) . "')";
-		$res = dbquery($sql);
+		$sql_insert_media_mapping->execute(array(get_next_id('media_mapping', 'mm_id'), $m_media, $gid, $count, $GEDCOMS[$FILE]['id'], $objref));
 		return $objref;
 	} else {
 		print "Media reference error ".$objrec;
@@ -1051,6 +1015,13 @@ function update_media($gid, $gedrec, $update = false) {
 	global $GEDCOMS, $FILE, $TBLPREFIX, $DBCONN, $media_count, $found_ids;
 	global $zero_level_media, $fpnewged, $MAX_IDS, $keepmedia;
 
+	static $sql_insert_media=null;
+	if (!$sql_insert_media) {
+		$sql_insert_media=PGV_DB::prepare(
+			"INSERT INTO {$TBLPREFIX}media (m_id, m_media, m_ext, m_titl, m_file, m_gedfile, m_gedrec) VALUES (?, ?, ?, ?, ?, ?, ?)"
+		);
+	}
+
 	if (!isset ($media_count)) {
 		$media_count = 0;
 	}
@@ -1064,11 +1035,10 @@ function update_media($gid, $gedrec, $update = false) {
 		if (!$keepmedia) {
 			$MAX_IDS["OBJE"] = 1;
 		} else {
-			$sql = "SELECT ni_id FROM {$TBLPREFIX}nextid WHERE ni_type='OBJE' AND ni_gedfile='".$GEDCOMS[$FILE]['id']."'";
-			$res = dbquery($sql);
-			$row =& $res->fetchRow();
-			$MAX_IDS["OBJE"] = $row[0];
-			$res->free();
+			$MAX_IDS["OBJE"]=
+				PGV_DB::prepare("SELECT ni_id FROM {$TBLPREFIX}nextid WHERE ni_type=? AND ni_gedfile=?")
+				->execute(array('OBJE', $GEDCOMS[$FILE]['id']))
+				->fetchOne();
 		}
 	}
 
@@ -1102,9 +1072,7 @@ function update_media($gid, $gedrec, $update = false) {
 		//--check if we already have a similar object
 		$new_media = Media::in_obje_list($media);
 		if ($new_media === false) {
-			$sql = "INSERT INTO {$TBLPREFIX}media (m_id, m_media, m_ext, m_titl, m_file, m_gedfile, m_gedrec)";
-			$sql .= " VALUES('" . $DBCONN->escapeSimple($m_id) . "', '" . $DBCONN->escapeSimple($new_m_media) . "', '" . $DBCONN->escapeSimple($media->ext) . "', '" . $DBCONN->escapeSimple($media->title) . "', '" . $DBCONN->escapeSimple($media->file) . "', '" . $DBCONN->escapeSimple($GEDCOMS[$FILE]["id"]) . "', '" . $DBCONN->escapeSimple($gedrec) . "')";
-			$res = dbquery($sql);
+			$sql_insert_media->execute(array($m_id, $new_m_media, $media->ext, $media->title, $media->file, $GEDCOMS[$FILE]["id"], $gedrec));
 			$media_count++;
 		} else {
 			$new_m_media = $new_media;
@@ -1118,13 +1086,10 @@ function update_media($gid, $gedrec, $update = false) {
 	}
 
 	if ($keepmedia) {
-		$sql = "SELECT mm_media, mm_gedrec FROM {$TBLPREFIX}media_mapping WHERE mm_gid='".$DBCONN->escapeSimple($gid)."' AND mm_gedfile='".$GEDCOMS[$FILE]['id']."'";
-		$res = dbquery($sql);
-		$old_linked_media = array();
-		while ($row =& $res->fetchRow()) {
-			$old_linked_media[] = $row;
-		}
-		$res->free();
+		$old_linked_media=
+			PGV_DB::prepare("SELECT mm_media, mm_gedrec FROM {$TBLPREFIX}media_mapping WHERE mm_gid=? AND mm_gedfile=?")
+			->execute(array($gid, $GEDCOMS[$FILE]['id']))
+			->fetchAll(PDO::FETCH_NUM);
 	}
 
 	//-- check to see if there are any media records
@@ -1775,70 +1740,46 @@ function create_nextid_table() {
 * @param string $FILE the gedcom to remove from the database
 * @param boolean $keepmedia Whether or not to keep media and media links in the tables
 */
-function empty_database($FILE, $keepmedia=false) {
+function empty_database($ged_id, $keepmedia) {
 	global $TBLPREFIX;
 
-	$FILE=get_id_from_gedcom($FILE);
-	dbquery("DELETE FROM {$TBLPREFIX}individuals WHERE i_file ={$FILE}");
-	dbquery("DELETE FROM {$TBLPREFIX}families    WHERE f_file ={$FILE}");
-	dbquery("DELETE FROM {$TBLPREFIX}sources     WHERE s_file ={$FILE}");
-	dbquery("DELETE FROM {$TBLPREFIX}other       WHERE o_file ={$FILE}");
-	dbquery("DELETE FROM {$TBLPREFIX}places      WHERE p_file ={$FILE}");
-	dbquery("DELETE FROM {$TBLPREFIX}placelinks  WHERE pl_file={$FILE}");
-	dbquery("DELETE FROM {$TBLPREFIX}remotelinks WHERE r_file ={$FILE}");
-	dbquery("DELETE FROM {$TBLPREFIX}name        WHERE n_file ={$FILE}");
-	dbquery("DELETE FROM {$TBLPREFIX}dates       WHERE d_file ={$FILE}");
+	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}individuals WHERE i_file =?")->execute(array($ged_id));
+	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}families    WHERE f_file =?")->execute(array($ged_id));
+	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}sources     WHERE s_file =?")->execute(array($ged_id));
+	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}other       WHERE o_file =?")->execute(array($ged_id));
+	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}places      WHERE p_file =?")->execute(array($ged_id));
+	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}placelinks  WHERE pl_file=?")->execute(array($ged_id));
+	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}remotelinks WHERE r_file =?")->execute(array($ged_id));
+	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}name        WHERE n_file =?")->execute(array($ged_id));
+	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}dates       WHERE d_file =?")->execute(array($ged_id));;
 
-	if (!$keepmedia) {
-		dbquery("DELETE FROM {$TBLPREFIX}link          WHERE l_file    ={$FILE}");
-		dbquery("DELETE FROM {$TBLPREFIX}media         WHERE m_gedfile ={$FILE}");
-		dbquery("DELETE FROM {$TBLPREFIX}media_mapping WHERE mm_gedfile={$FILE}");
+	if ($keepmedia) {
+		PGV_DB::prepare("DELETE FROM {$TBLPREFIX}link   WHERE l_file    =? AND l_type<> ?")->execute(array($ged_id, 'OBJE'));
+		PGV_DB::prepare("DELETE FROM {$TBLPREFIX}nextid WHERE ni_gedfile=? AND ni_type<>?")->execute(array($ged_id, 'OBJE'));
 	} else {
-		dbquery("DELETE FROM {$TBLPREFIX}link WHERE l_file={$FILE} AND l_type!='OBJE'");
-		//-- make sure that we keep the correct IDs for media
-		$sql = "SELECT ni_id FROM {$TBLPREFIX}nextid WHERE ni_type='OBJE' AND ni_gedfile='{$FILE}'";
-		$res =& dbquery($sql);
-		if ($res->numRows() > 0) {
-			$row =& $res->fetchRow();
-			$num = $row[0];
-		}
-		$res->free();
-	}
-
-	dbquery("DELETE FROM {$TBLPREFIX}nextid WHERE ni_gedfile={$FILE}");
-	if ($keepmedia && isset($num)) {
-		dbquery(
-			"INSERT INTO {$TBLPREFIX}nextid (".
-			" ni_id, ni_type, ni_gedfile".
-			") VALUES (".
-			(int)($num-1).", 'OBJE', {$FILE}".
-			")"
-		);
+		PGV_DB::prepare("DELETE FROM {$TBLPREFIX}link          WHERE l_file    =?")->execute(array($ged_id));
+		PGV_DB::prepare("DELETE FROM {$TBLPREFIX}nextid        WHERE ni_gedfile=?")->execute(array($ged_id));
+		PGV_DB::prepare("DELETE FROM {$TBLPREFIX}media         WHERE m_gedfile =?")->execute(array($ged_id));
+		PGV_DB::prepare("DELETE FROM {$TBLPREFIX}media_mapping WHERE mm_gedfile=?")->execute(array($ged_id));
 	}
 
 	//-- clear all of the cache files for this gedcom
 	clearCache();
 }
 
-/**
-* perform any database cleanup
-*
-* during the import process it might be necessary to cleanup some database values.  In index mode
-* the file handles need to be closed.  For database mode we probably don't need to do anything in
-* this funciton.
-*/
-function cleanup_database() {
-	global $DBTYPE, $DBCONN, $TBLPREFIX, $MAX_IDS, $GEDCOMS, $FILE;
+//
+// While importing a gedcom, we keep track of the the maximum ID values for each
+// record type.  Write these to the database in one go.
+//
+function import_max_ids($ged_id, $MAX_IDS) {
+	global $TBLPREFIX;
 
-	if (isset ($MAX_IDS)) {
-		$sql = "DELETE FROM {$TBLPREFIX}nextid WHERE ni_gedfile='" . $DBCONN->escapeSimple($GEDCOMS[$FILE]['id']) . "'";
-		$res = dbquery($sql);
-		foreach ($MAX_IDS as $type => $id) {
-			$sql = "INSERT INTO {$TBLPREFIX}nextid (ni_id, ni_type, ni_gedfile) VALUES('" . $DBCONN->escapeSimple($id +1) . "', '" . $DBCONN->escapeSimple($type) . "', '" . $GEDCOMS[$FILE]["id"] . "')";
-			$res = dbquery($sql);
-		}
+	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}nextid WHERE ni_gedfile=?")->execute(array($ged_id));
+
+	$statement=PGV_DB::prepare("INSERT INTO {$TBLPREFIX}nextid (ni_id, ni_type, ni_gedfile) VALUES (?, ?, ?)");
+	foreach ($MAX_IDS as $type => $id) {
+		$statement->execute(array($id+1, $type, $ged_id));
 	}
-	return;
 }
 
 /**
@@ -2052,7 +1993,7 @@ function find_newline_string($haystack, $needle, $offset=0) {
 * @param string $gedrec
 */
 function update_record($gedrec, $delete = false) {
-	global $TBLPREFIX, $GEDCOM, $DBCONN, $GEDCOMS, $FILE;
+	global $TBLPREFIX, $GEDCOM, $FILE;
 
 	if (empty ($FILE)) {
 		$FILE = $GEDCOM;
@@ -2065,49 +2006,48 @@ function update_record($gedrec, $delete = false) {
 		return false;
 	}
 
-	$ged_id=get_id_from_gedcom($GEDCOM);
+	$ged_id=get_id_from_gedcom($FILE);
 
-	$res=dbquery("SELECT pl_p_id FROM {$TBLPREFIX}placelinks WHERE pl_gid='{$gid}' AND pl_file={$ged_id}");
+	// TODO deleting unlinked places can be done more efficiently in a single query
+	$placeids=
+		PGV_DB::prepare("SELECT pl_p_id FROM {$TBLPREFIX}placelinks WHERE pl_gid=? AND pl_file=?")
+		->execute(array($gid, $ged_id))
+		->fetchOneColumn();
 
-	$placeids = array ();
-	while ($row=$res->fetchRow()) {
-		$placeids[]=$row[0];
-	}
-	$res->free();
-	dbquery("DELETE FROM {$TBLPREFIX}placelinks WHERE pl_gid='{$gid}' AND pl_file={$ged_id}");
-	dbquery("DELETE FROM {$TBLPREFIX}dates WHERE d_gid='{$gid}' AND d_file={$ged_id}");
+	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}placelinks WHERE pl_gid=? AND pl_file=?")->execute(array($gid, $ged_id));
+	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}dates      WHERE d_gid =? AND d_file =?")->execute(array($gid, $ged_id));
 
 	//-- delete any unlinked places
-	foreach ($placeids as $indexval => $p_id) {
-		$res=dbquery("SELECT count(pl_p_id) FROM {$TBLPREFIX}placelinks WHERE pl_p_id=$p_id AND pl_file={$ged_id}");
-
-		$row=$res->fetchRow();
-		if ($row[0] == 0) {
-			dbquery("DELETE FROM {$TBLPREFIX}places WHERE p_id=$p_id AND p_file={$ged_id}");
+	foreach ($placeids as $p_id) {
+		$num=
+			PGV_DB::prepare("SELECT count(pl_p_id) FROM {$TBLPREFIX}placelinks WHERE pl_p_id=? AND pl_file=?")
+			->execute(array($p_id, $ged_id))
+			->fetchOne();
+		if ($num==0) {
+			PGV_DB::prepare("DELETE FROM {$TBLPREFIX}places WHERE p_id=? AND p_file=?")->execute(array($p_id, $ged_id));
 		}
-		$res->free();
 	}
 
-	dbquery("DELETE FROM {$TBLPREFIX}media_mapping WHERE mm_gid='{$gid}' AND mm_gedfile={$ged_id}");
-	dbquery("DELETE FROM {$TBLPREFIX}remotelinks WHERE r_gid='{$gid}' AND r_file={$ged_id}");
-	dbquery("DELETE FROM {$TBLPREFIX}name WHERE n_id='{$gid}' AND n_file={$ged_id}");
-	dbquery("DELETE FROM {$TBLPREFIX}link WHERE l_from='{$gid}' AND l_file={$ged_id}");
+	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}media_mapping WHERE mm_gid=? AND mm_gedfile=?")->execute(array($gid, $ged_id));
+	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}remotelinks WHERE r_gid=? AND r_file=?")->execute(array($gid, $ged_id));
+	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}name WHERE n_id=? AND n_file=?")->execute(array($gid, $ged_id));
+	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}link WHERE l_from=? AND l_file=?")->execute(array($gid, $ged_id));
 
 	switch ($type) {
 	case 'INDI':
-		dbquery("DELETE FROM {$TBLPREFIX}individuals WHERE i_id='{$gid}' AND i_file={$ged_id}");
+		PGV_DB::prepare("DELETE FROM {$TBLPREFIX}individuals WHERE i_id=? AND i_file=?")->execute(array($gid, $ged_id));
 		break;
 	case 'FAM':
-		dbquery("DELETE FROM {$TBLPREFIX}families WHERE f_id='{$gid}' AND f_file={$ged_id}");
+		PGV_DB::prepare("DELETE FROM {$TBLPREFIX}families WHERE f_id=? AND f_file=?")->execute(array($gid, $ged_id));
 		break;
 	case 'SOUR':
-		dbquery("DELETE FROM {$TBLPREFIX}sources WHERE s_id='{$gid}' AND s_file={$ged_id}");
+		PGV_DB::prepare("DELETE FROM {$TBLPREFIX}sources WHERE s_id=? AND s_file=?")->execute(array($gid, $ged_id));
 		break;
 	case 'OBJE':
-		dbquery("DELETE FROM {$TBLPREFIX}media WHERE m_media='{$gid}' AND m_gedfile={$ged_id}");
+		PGV_DB::prepare("DELETE FROM {$TBLPREFIX}media WHERE m_media=? AND m_gedfile=?")->execute(array($gid, $ged_id));
 		break;
 	default:
-		dbquery("DELETE FROM {$TBLPREFIX}other WHERE o_id='{$gid}' AND o_file={$ged_id}");
+		PGV_DB::prepare("DELETE FROM {$TBLPREFIX}other WHERE o_id=? AND o_file=?")->execute(array($gid, $ged_id));
 		break;
 	}
 

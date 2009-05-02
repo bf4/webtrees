@@ -91,7 +91,6 @@ include_once("includes/functions/functions_print_facts.php");
 		else $sort_current_objes[$sort_match[$i][1]]++;
 		$sort_obje_links[$sort_match[$i][1]][] = $sort_match[$i][0];
 	}
-	$sort_media_found = false;
 	// -----------------------------------------------------------------------------------------------
 
 	// create ORDER BY list from Gedcom sorted records list  ---------------------------

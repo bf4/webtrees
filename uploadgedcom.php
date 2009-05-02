@@ -872,7 +872,7 @@ if ($stage == 0) {
 	$_SESSION["resumed"] = 0;
 	if (file_exists($INDEX_DIRECTORY.basename($GEDCOM_FILE).".new"))
 	unlink($INDEX_DIRECTORY.basename($GEDCOM_FILE).".new");
-	empty_database($FILE, $keepmedia);
+	empty_database(get_id_from_gedcom($FILE), $keepmedia);
 	//-- erase any of the changes
 	foreach ($pgv_changes as $cid => $changes) {
 		if ($changes[0]["gedcom"] == $ged)
@@ -1073,7 +1073,6 @@ if ($stage == 1) {
 					</script>
 					<?php
 					}
-					cleanup_database();
 					print_footer();
 					session_write_close();
 					exit;
@@ -1145,7 +1144,7 @@ if ($stage == 1) {
 	}
 	print "</td></tr></table>\n";
 	// NOTE: Finished Links
-	cleanup_database();
+	import_max_ids(get_id_from_gedcom($FILE), $MAX_IDS);
 	$GEDCOMS[$ged]["imported"] = true;
 	$GEDCOMS[$ged]["pgv_ver" ] = PGV_VERSION;
 	store_gedcoms();

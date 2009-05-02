@@ -400,7 +400,7 @@ class PGVRTextBoxPDF extends PGVRTextBox {
 	}
 
 	function render(&$pdf) {
-		global $lastheight;
+		global $lastheight, $count;
 
 		if (!empty($lastheight)) {
 			if ($this->height < $lastheight) $this->height = $lastheight;
@@ -487,6 +487,10 @@ class PGVRTextBoxPDF extends PGVRTextBox {
 		if ($h>$this->height) $this->height=$h;
 		//if (($this->width>0)&&($this->width<$w)) $this->width=$w;
 
+		if ($count<=2) $count++;
+		if ($count==2) {
+			$pdf->SetY(72, false);
+		}
 		$curx = $pdf->GetX();
 		$cury = $pdf->GetY();
 		$curn = $pdf->PageNo();

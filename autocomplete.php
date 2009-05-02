@@ -39,6 +39,8 @@ $FILTER = $DBCONN->escapeSimple($FILTER);
 
 $OPTION = @$_GET["option"];
 
+$FORMAT = @$_GET["fmt"];
+
 $field = @$_GET["field"];
 if (!function_exists("autocomplete_{$field}")) {
 	die("Bad arg: field={$field}");
@@ -56,8 +58,17 @@ $data = array_unique($data);
 uasort($data, "stringsort");
 
 //-- output
-foreach ($data as $k=>$v) {
-	echo "$v|$k\n";
+if ($FORMAT=="json") {
+	//echo json_encode(array($FILTER, $data));//does not seem to work for some reason
+	$results=array();
+	foreach ($data as $k=>$v) {
+		$results[]=$v;
+	}
+	printf('["%s", %s]',$FILTER, json_encode($results));
+} else {
+	foreach ($data as $k=>$v) {
+		echo "$v|$k\n";
+	}
 }
 exit;
 

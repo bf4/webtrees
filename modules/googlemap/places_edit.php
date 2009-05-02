@@ -140,9 +140,9 @@ $level=count($where_am_i);
 
 if ($action=='addrecord') {
 	if (($_POST['LONG_CONTROL'] == '') || ($_POST['NEW_PLACE_LONG'] == '') || ($_POST['NEW_PLACE_LATI'] == '')) {
-		$sql = "INSERT INTO {$TBLPREFIX}placelocation (pl_id, pl_parent_id, pl_level, pl_place, pl_long, pl_lati, pl_zoom, pl_icon) VALUES (".(getHighestIndex()+1).", {$placeid}, {$level}, '".$DBCONN->escapeSimple($_POST['NEW_PLACE_NAME'])."', '' , '', {$_POST['NEW_ZOOM_FACTOR']}, '{$_POST['icon']}');";
+		$sql = "INSERT INTO {$TBLPREFIX}placelocation (pl_id, pl_parent_id, pl_level, pl_place, pl_long, pl_lati, pl_zoom, pl_icon) VALUES (".(getHighestIndex()+1).", {$placeid}, {$level}, '".$DBCONN->escapeSimple(stripLRMRLM($_POST['NEW_PLACE_NAME']))."', '' , '', {$_POST['NEW_ZOOM_FACTOR']}, '{$_POST['icon']}');";
 	} else {
-		$sql = "INSERT INTO {$TBLPREFIX}placelocation (pl_id, pl_parent_id, pl_level, pl_place, pl_long, pl_lati, pl_zoom, pl_icon) VALUES (".(getHighestIndex()+1).", {$placeid}, {$level}, '".$DBCONN->escapeSimple($_POST['NEW_PLACE_NAME'])."', '{$_POST['LONG_CONTROL'][3]}{$_POST['NEW_PLACE_LONG']}', '{$_POST['LATI_CONTROL'][3]}{$_POST['NEW_PLACE_LATI']}', {$_POST['NEW_ZOOM_FACTOR']}, '{$_POST['icon']}');";
+		$sql = "INSERT INTO {$TBLPREFIX}placelocation (pl_id, pl_parent_id, pl_level, pl_place, pl_long, pl_lati, pl_zoom, pl_icon) VALUES (".(getHighestIndex()+1).", {$placeid}, {$level}, '".$DBCONN->escapeSimple(stripLRMRLM($_POST['NEW_PLACE_NAME']))."', '{$_POST['LONG_CONTROL'][3]}{$_POST['NEW_PLACE_LONG']}', '{$_POST['LATI_CONTROL'][3]}{$_POST['NEW_PLACE_LATI']}', {$_POST['NEW_ZOOM_FACTOR']}, '{$_POST['icon']}');";
 	}
 	if (PGV_USER_IS_ADMIN) {
 		$res = dbquery($sql);
@@ -155,9 +155,9 @@ if ($action=='addrecord') {
 
 if ($action=='updaterecord') {
 	if (($_POST['LONG_CONTROL'] == '') || ($_POST['NEW_PLACE_LONG'] == '') || ($_POST['NEW_PLACE_LATI'] == '')) {
-		$sql = "UPDATE {$TBLPREFIX}placelocation SET pl_place='".$DBCONN->escapeSimple($_POST['NEW_PLACE_NAME'])."', pl_lati='', pl_long='', pl_zoom={$_POST['NEW_ZOOM_FACTOR']}, pl_icon='{$_POST['icon']}' WHERE pl_id={$placeid}";
+		$sql = "UPDATE {$TBLPREFIX}placelocation SET pl_place='".$DBCONN->escapeSimple(stripLRMRLM($_POST['NEW_PLACE_NAME']))."', pl_lati='', pl_long='', pl_zoom={$_POST['NEW_ZOOM_FACTOR']}, pl_icon='{$_POST['icon']}' WHERE pl_id={$placeid}";
 	} else {
-		$sql = "UPDATE {$TBLPREFIX}placelocation SET pl_place='".$DBCONN->escapeSimple($_POST['NEW_PLACE_NAME'])."',pl_lati='{$_POST['LATI_CONTROL'][3]}{$_POST['NEW_PLACE_LATI']}', pl_long='{$_POST['LONG_CONTROL'][3]}{$_POST['NEW_PLACE_LONG']}',pl_zoom={$_POST['NEW_ZOOM_FACTOR']}, pl_icon='{$_POST['icon']}' WHERE pl_id={$placeid}";
+		$sql = "UPDATE {$TBLPREFIX}placelocation SET pl_place='".$DBCONN->escapeSimple(stripLRMRLM($_POST['NEW_PLACE_NAME']))."',pl_lati='{$_POST['LATI_CONTROL'][3]}{$_POST['NEW_PLACE_LATI']}', pl_long='{$_POST['LONG_CONTROL'][3]}{$_POST['NEW_PLACE_LONG']}',pl_zoom={$_POST['NEW_ZOOM_FACTOR']}, pl_icon='{$_POST['icon']}' WHERE pl_id={$placeid}";
 	}
 	if (PGV_USER_IS_ADMIN) {
 		$res = dbquery($sql);
@@ -431,7 +431,7 @@ if ($action=="add") {
 		var zoom;
 		if (GBrowserIsCompatible()) {
 			map = new GMap2(document.getElementById("map_pane"));
-			map.addControl(new GSmallMapControl());
+			map.addControl(new GSmallZoomControl3D());
 			map.addControl(new GScaleControl()) ;
 			var bounds = new GLatLngBounds();
 			var map_type;
@@ -442,8 +442,9 @@ if ($action=="add") {
 				map_type.refresh();
 			});
 			GEvent.addListener(map, 'click', function(overlay, point) {
-				if (overlay) {  //probably not needed in this case
-								//map.removeOverlay(overlay);
+				if (overlay) {
+					//probably not needed in this case
+					//map.removeOverlay(overlay);
 				} else if (point) {
 					map.clearOverlays();
 					// Create our "tiny" yellow marker icon where the user clicked,
@@ -553,9 +554,16 @@ if ($action=="add") {
 		if ($show_marker == true) {
 			if (($place_icon == NULL) || ($place_icon == "")) {
 				if (($place_lati == null) || ($place_long == null)) {?>
-			map.addOverlay(new GMarker(new GLatLng(<?php echo $parent_lati.", ".$parent_long;?>)));
+					var icon_type = new GIcon();
+					icon_type.image = "modules/googlemap/marker_yellow.png";
+					icon_type.shadow = "modules/googlemap/shadow50.png";
+					icon_type.iconSize = new GSize(20, 34);
+					icon_type.shadowSize = new GSize(37, 34);
+					icon_type.iconAnchor = new GPoint(6, 20);
+					icon_type.infoWindowAnchor = new GPoint(5, 1);
+					map.addOverlay(new GMarker(new GLatLng(<?php echo $parent_lati.", ".$parent_long;?>), icon_type));
 <?php			} else { ?>
-			map.addOverlay(new GMarker(new GLatLng(<?php echo $place_lati.", ".$place_long;?>)));
+					map.addOverlay(new GMarker(new GLatLng(<?php echo $place_lati.", ".$place_long;?>)));
 <?php			}
 			}
 			else { ?>
@@ -718,7 +726,7 @@ if ($action=="add") {
 	</tr>
 	<tr>
 		<td class="descriptionbox"><?php print_help_link("PLE_PLACES_help", "qm", "PLE_PLACES");?><?php echo $factarray["PLAC"];?></td>
-		 <td class="optionbox"><input type="text" id="new_pl_name" name="NEW_PLACE_NAME" value="<?php echo PrintReady(stripLRMRLM($place_name)) ?>" size="25" class="address_input" tabindex="<?php echo ++$i;?>" />		 
+		 <td class="optionbox"><input type="text" id="new_pl_name" name="NEW_PLACE_NAME" value="<?php echo PrintReady($place_name) ?>" size="25" class="address_input" tabindex="<?php echo ++$i;?>" />
 		<div id="INDI_PLAC_pop" style="display: inline;">
 		<?php print_specialchar_link("NEW_PLACE_NAME", false);?></div>
 		<label for="new_pl_name"><a href="javascript:;" onclick="showLocation_level(document.getElementById('new_pl_name').value); return false">&nbsp;<?php echo $pgv_lang["pl_search_level"]?></a></label>&nbsp;&nbsp;|

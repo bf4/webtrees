@@ -479,7 +479,7 @@ class FormBuilder extends ra_form {
 
 
 	function step3() {
-		global $GEDCOM, $GEDCOMS, $TBLPREFIX, $DBCONN, $pgv_lang;
+		global $pgv_lang;
 
 		$out = $this->processFactsForm();
 

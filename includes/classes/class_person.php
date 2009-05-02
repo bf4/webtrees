@@ -1638,7 +1638,7 @@ class Person extends GedcomRecord {
 					if ($key%2==1) {
 						if ($value) {
 							// Strip SPFX
-							if (preg_match('/^((?:(?:A|AAN|AB|AF|AL|AP|AS|AUF|AV|BAT|BIJ|BIN|BINT|DA|DE|DEL|DELLA|DEM|DEN|DER|DI|DU|EL|FITZ|HET|IBN|LA|LAS|LE|LES|LOS|ONDER|OP|OVER|\'S|ST|\'T|TE|TEN|TER|TILL|TOT|UIT|UIJT|VAN|VANDEN|VON|VOOR|VOR)[ -]+)+(?:[DL]\')?)(.+)$/i', $value, $match)) {
+							if (preg_match('/^((?:(?:A|AAN|AB|AF|AL|AP|AS|AUF|AV|BAT|BIJ|BIN|BINT|DA|DE|DEL|DELLA|DEM|DEN|DER|DI|DU|EL|FITZ|HET|IBN|LA|LAS|LE|LES|LOS|ONDER|OP|OVER|\'S|ST|\'T|TE|TEN|TER|TILL|TOT|UIT|UIJT|VAN|VANDEN|VON|VOOR|VOR) )+(?:[DL]\')?)(.+)$/i', $value, $match)) {
 								$spfx=trim($match[1]);
 								$value=$match[2];
 							}
@@ -1752,7 +1752,10 @@ class Person extends GedcomRecord {
 		// A comma separated list of surnames (from the SURN, not from the NAME) indicates
 		// multiple surnames (e.g. Spanish).  Each one is a separate sortable name.
 
-		$GIVN=UTF8_strtoupper($givn);
+		// Where nicknames are entered in the given name field, these will break
+		// sorting, so strip them out.
+		$GIVN=preg_replace('/["\'()]/', '', UTF8_strtoupper($givn));
+
 		foreach ($surns as $n=>$surn) {
 			$SURN=UTF8_strtoupper($surn);
 			// Scottish "Mc and Mac" prefixes sort under "Mac"

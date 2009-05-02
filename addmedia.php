@@ -58,6 +58,8 @@ $tag        =safe_REQUEST($_REQUEST, 'tag',         PGV_REGEX_UNSAFE);
 $islink     =safe_REQUEST($_REQUEST, 'islink',      PGV_REGEX_UNSAFE);
 $glevels    =safe_REQUEST($_REQUEST, 'glevels',     PGV_REGEX_UNSAFE);
 
+$update_CHAN=!safe_POST_bool('preserve_last_changed');
+
 $filename = decrypt($filename);
 $oldFilename = decrypt($oldFilename);
 
@@ -280,12 +282,7 @@ if ($action=="newentry") {
 			//-- check if the file is used in more than one gedcom
 			//-- do not allow it to be moved or renamed if it is
 			$myFile = str_replace($MEDIA_DIRECTORY, "", $oldFolder.$oldFilename);
-			$sql = "SELECT 1 FROM {$TBLPREFIX}media WHERE m_file ".PGV_DB_LIKE." '%".$DBCONN->escapeSimple($myFile)."' AND m_gedfile<>".PGV_GED_ID;
-			$res = dbquery($sql);
-			$onegedcom = true;
-			if ($row=$res->fetchRow(DB_FETCHMODE_ASSOC))
-				$onegedcom = false;
-			$res->free();
+			$multi_gedcom=is_media_used_in_other_gedcom($myFile, PGV_GED_ID);
 
 			// Handle Admin request to rename or move media file
 			if ($filename!=$oldFilename) {
@@ -307,7 +304,7 @@ if ($action=="newentry") {
 
 			$finalResult = true;
 			if ($filename!=$oldFilename || $folder!=$oldFolder) {
-				if (!$onegedcom) {
+				if ($multi_gedcom) {
 					echo '<span class="error">', $pgv_lang["multiple_gedcoms"], '<br /><br /><b>';
 					if ($filename!=$oldFilename) print $pgv_lang["media_file_not_renamed"];
 					else print $pgv_lang["media_file_not_moved"];
@@ -431,12 +428,7 @@ if ($action == "update") {
 	//-- check if the file is used in more than one gedcom
 	//-- do not allow it to be moved or renamed if it is
 	$myFile = str_replace($MEDIA_DIRECTORY, "", $oldFolder.$oldFilename);
-	$sql = "SELECT 1 FROM {$TBLPREFIX}media WHERE m_file ".PGV_DB_LIKE." '%".$DBCONN->escapeSimple($myFile)."' AND m_gedfile<>".PGV_GED_ID;
-	$res = dbquery($sql);
-	$onegedcom = true;
-	if ($row=$res->fetchRow(DB_FETCHMODE_ASSOC))
-		$onegedcom = false;
-	$res->free();
+	$multi_gedcom=is_media_used_in_other_gedcom($myFile, PGV_GED_ID);
 
 	$isExternal = isFileExternal($oldFilename) || isFileExternal($filename);
 	$finalResult = true;
@@ -463,7 +455,7 @@ if ($action == "update") {
 	}
 
 	if ($filename!=$oldFilename || $folder!=$oldFolder) {
-		if (!$onegedcom) {
+		if ($multi_gedcom) {
 			echo '<span class="error">', $pgv_lang["multiple_gedcoms"], '<br /><br /><b>';
 			if ($filename!=$oldFilename) print $pgv_lang["media_file_not_renamed"];
 			else print $pgv_lang["media_file_not_moved"];
@@ -552,7 +544,7 @@ if ($action == "update") {
 		//-- look for the old record media in the file
 		//-- if the old media record does not exist that means it was
 		//-- generated at import and we need to append it
-		if (replace_gedrec($pid, $newrec)) AddToChangeLog("Media ID ".$pid." successfully updated.");
+		if (replace_gedrec($pid, $newrec, $update_CHAN)) AddToChangeLog("Media ID ".$pid." successfully updated.");
 
 		if ($pid && $linktoid!="") {
 			$link = linkMedia($pid, $linktoid, $level);

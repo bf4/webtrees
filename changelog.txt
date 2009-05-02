@@ -10,6 +10,7 @@
 
 
 Version 4.2.x CA
+ - Merged: Merge changes r5367 - r5442 from the trunk. (windmillway)
  - Merged: Merge changes r5331 - r5366 from the trunk. (windmillway)
  - Merged: Merge changes r5324 - r5330 from the trunk. (4.2.1 Release level) (windmillway)
  - Fixed: Undefined Variable ERROR in logfiles (windmillway)
@@ -78,9 +79,15 @@ Version 4.2.x CA
 
 
 Version 4.2.2
+ = Fixed [ 2779222 ] Adding a wrong date destroys all individual lists (fisharebest)
+ - Fixed [ 2780483 ] nick name ordering error/mess (fisharebest)
+ - Fixed [ 2780414 ] Clippings Cart MySQL Error (fisharebest)
+ - Fixed [ 2774786 ] [G Map Module] GOverviewMapControl Defaults to Empty Display (wooc)
+ - Fixed [ 1694445 ] SVN 1593: Individual Report, Text align (wooc)
+ - Added [ 2671412 ] Link to Statistics Charts from GEDCOM Statistics Block (wooc)
  - Fixed [ 2734393 ] Review Changes Diff for Appended fails (fisharebest)
 
-Version 4.2.1
+Version 4.2.1 2009-04-05
  - Fixed: [ 2730614 ] SVN 5320: Media Upload fails (canajun2eh)
  - Fixed: [ 2595714 ] Truncated first letter of thumb name if non-ASCII character (fisharebest)
  - Added: Cemetery report (canajun2eh)
