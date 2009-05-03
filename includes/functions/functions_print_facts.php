@@ -1007,7 +1007,13 @@ function print_main_sources($factrec, $level, $pid, $linenum, $noedit=false) {
 					print printSourceStructure(getSourceStructure($srec));
 					print "<div class=\"indent\">";
 					print_media_links($srec, $nlevel);
+					if ($nlevel==2) {
+						print_media_links($source->getGedcomRecord(), 1);
+					}
 					print_fact_notes($srec, $nlevel);
+					if ($nlevel==2) {
+						print_fact_notes($source->getGedcomRecord(), 1);
+					}
 					print "</div>";
 				}
 			}
