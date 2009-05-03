@@ -129,7 +129,7 @@ if ($action == "choose" && $paramok) {
 		print $pgv_lang["enter_pid"]."</td>";
 		print "<td class=\"optionbox wrap\">";
 		if ($linktoid=="") {
-			print "<input class=\"pedigree_form\" type=\"text\" name=\"linktoid\" id=\"linktoid\" size=\"3\" value=\"$linktoid\" />";
+			print "<input class=\"pedigree_form\" type=\"text\" name=\"linktoid\" id=\"linktopid\" size=\"3\" value=\"$linktoid\" />";
 			print_findindi_link("linktoid","");
 		} else {
 			$record=Person::getInstance($linktoid);
@@ -144,7 +144,7 @@ if ($action == "choose" && $paramok) {
 		print $pgv_lang["family"]."</td>";
 		print "<td class=\"optionbox wrap\">";
 		if ($linktoid=="") {
-			print "<input class=\"pedigree_form\" type=\"text\" name=\"linktoid\" id=\"linktoid\" size=\"3\" value=\"$linktoid\" />";
+			print "<input class=\"pedigree_form\" type=\"text\" name=\"linktoid\" id=\"linktofamid\" size=\"3\" value=\"$linktoid\" />";
 			print_findfamily_link("linktoid");
 		} else {
 			$record=Family::getInstance($linktoid);
@@ -159,7 +159,7 @@ if ($action == "choose" && $paramok) {
 		print $pgv_lang["source"]."</td>";
 		print "<td  class=\"optionbox wrap\">";
 		if ($linktoid=="") {
-			print "<input class=\"pedigree_form\" type=\"text\" name=\"linktoid\" id=\"linktoid\" size=\"3\" value=\"$linktoid\" />";
+			print "<input class=\"pedigree_form\" type=\"text\" name=\"linktoid\" id=\"linktosid\" size=\"3\" value=\"$linktoid\" />";
 			print_findsource_link("linktoid");
 		} else {
 			$record=Source::getInstance($linktoid);
@@ -188,7 +188,6 @@ else {
 	print "<br/><br/><center><a href=\"javascript:;\" onclick=\"if (window.opener.showchanges) window.opener.showchanges(); window.close();\">".$pgv_lang["close_window"]."</a><br /></center>\n";
 
 	print_simple_footer();
-
-} // $paramok
+}
 
 ?>
