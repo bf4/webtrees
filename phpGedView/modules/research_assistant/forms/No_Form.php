@@ -131,28 +131,22 @@ class No_Form extends ra_form {
 	 */
 	function save() {
 		// Specify the global var GEDCOM so we know what file were using.
-		global $GEDCOM, $TBLPREFIX, $mod;
-
-
+		global $TBLPREFIX, $mod;
 
 		// Set our output to nothing, this supresses a warning that we would otherwise get.
 		$out = "";
-
 
 		// Complete the Task.
 		ra_functions::completeTask($_REQUEST['taskid'], $_REQUEST['results']);
 		// Tell the user their form submitted successfully.
 		$out .= $mod->print_menu("", $_REQUEST['taskid']);
 		//$out .= ra_functions::printMessage("Success!",true);
-		$sql = "select t_fr_id from ".$TBLPREFIX."tasks where t_id = ".$_REQUEST['taskid'];
-			$result = dbquery($sql);
-			if ($result->numRows() > 0)
-			{
-				$row = $result->fetchRow();
-				$folderid = $row[0];
-			}
+		$folderid=
+			PGV_DB::prepare("SELECT t_fr_id FROM {$TBLPREFIX}tasks WHERE t_id=?")
+			->execute(array($_REQUEST['taskid']))
+			->fetchOne();
 		$out .= $mod->print_folder_view($folderid);
-				$out .= $mod->print_list($folderid);
+		$out .= $mod->print_list($folderid);
 
 		// Return it to the buffer.
 		return $out;
