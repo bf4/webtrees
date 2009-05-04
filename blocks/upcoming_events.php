@@ -38,6 +38,7 @@ require_once './includes/functions/functions_print_lists.php';
 $PGV_BLOCKS["print_upcoming_events"]["name"]		= $pgv_lang["upcoming_events_block"];
 $PGV_BLOCKS["print_upcoming_events"]["descr"]		= "upcoming_events_descr";
 $PGV_BLOCKS["print_upcoming_events"]["infoStyle"]	= "style2";
+$PGV_BLOCKS["print_upcoming_events"]["sortStyle"]	= "alpha";
 $PGV_BLOCKS["print_upcoming_events"]["canconfig"]	= true;
 $PGV_BLOCKS["print_upcoming_events"]["config"]		= array(
 	"cache"=>1,
@@ -45,6 +46,7 @@ $PGV_BLOCKS["print_upcoming_events"]["config"]		= array(
 	"filter"=>"all",
 	"onlyBDM"=>"no",
 	"infoStyle"=>"style2",
+	"sortStyle"=>"alpha",
 	"allowDownload"=>"yes"
 	);
 
@@ -67,6 +69,8 @@ function print_upcoming_events($block=true, $config="", $side, $index) {
 	else $onlyBDM = "no";
 	if (isset($config["infoStyle"])) $infoStyle = $config["infoStyle"];  // "style1" or "style2"
 	else $infoStyle = "style2";
+	if (isset($config["sortStyle"])) $sortStyle = $config["sortStyle"];  // "alpha" or "anniv"
+	else $sortStyle = "alpha";
 	if (isset($config["allowDownload"])) $allowDownload = $config["allowDownload"];	// "yes" or "no"
 	else $allowDownload = "yes";
 
@@ -101,12 +105,12 @@ function print_upcoming_events($block=true, $config="", $side, $index) {
 	switch ($infoStyle) {
 	case "style1":
 		// Output style 1:  Old format, no visible tables, much smaller text.  Better suited to right side of page.
-		$content .= print_events_list($startjd, $endjd, $onlyBDM=='yes'?'BIRT MARR DEAT':'', $filter=='living', true);
+		$content .= print_events_list($startjd, $endjd, $onlyBDM=='yes'?'BIRT MARR DEAT':'', $filter=='living', $sortStyle);
 		break;
 	case "style2":
 		// Style 2: New format, tables, big text, etc.  Not too good on right side of page
 		ob_start();
-		$content .= print_events_table($startjd, $endjd, $onlyBDM=='yes'?'BIRT MARR DEAT':'', $filter=='living', $allowDownload=='yes', true);
+		$content .= print_events_table($startjd, $endjd, $onlyBDM=='yes'?'BIRT MARR DEAT':'', $filter=='living', $allowDownload=='yes', $sortStyle);
 		$content .= ob_get_clean();
 		break;
 	}
@@ -127,14 +131,15 @@ function print_upcoming_events_config($config) {
 	if (!isset($config["filter"])) $config["filter"] = "all";
 	if (!isset($config["onlyBDM"])) $config["onlyBDM"] = "no";
 	if (!isset($config["infoStyle"])) $config["infoStyle"] = "style2";
+	if (!isset($config["sortStyle"])) $config["sortStyle"] = "alpha";
 	if (!isset($config["allowDownload"])) $config["allowDownload"] = "yes";
 
 	if ($config["days"] < 1) $config["days"] = 1;
 	if ($config["days"] > $DAYS_TO_SHOW_LIMIT) $config["days"] = $DAYS_TO_SHOW_LIMIT;  // valid: 1 to limit
 
 	?>
-		<tr><td class="descriptionbox wrap width33">
-		<?php
+	<tr><td class="descriptionbox wrap width33">
+	<?php
 	print_help_link("days_to_show_help", "qm");
 	print $pgv_lang["days_to_show"];
 	?>
@@ -142,30 +147,30 @@ function print_upcoming_events_config($config) {
 		<input type="text" name="days" size="2" value="<?php print $config["days"]; ?>" />
 	</td></tr>
 
-		<tr><td class="descriptionbox wrap width33">
-		<?php
-		print $pgv_lang["living_or_all"];
-		?>
-		</td><td class="optionbox">
-	<select name="filter">
-		<option value="all"<?php if ($config["filter"]=="all") print " selected=\"selected\"";?>><?php print $pgv_lang["no"]; ?></option>
-		<option value="living"<?php if ($config["filter"]=="living") print " selected=\"selected\"";?>><?php print $pgv_lang["yes"]; ?></option>
-	</select>
+	<tr><td class="descriptionbox wrap width33">
+	<?php
+	print $pgv_lang["living_or_all"];
+	?>
+	</td><td class="optionbox">
+		<select name="filter">
+			<option value="all"<?php if ($config["filter"]=="all") print " selected=\"selected\"";?>><?php print $pgv_lang["no"]; ?></option>
+			<option value="living"<?php if ($config["filter"]=="living") print " selected=\"selected\"";?>><?php print $pgv_lang["yes"]; ?></option>
+		</select>
 	</td></tr>
 
-		<tr><td class="descriptionbox wrap width33">
+	<tr><td class="descriptionbox wrap width33">
 	<?php
 	print_help_link("basic_or_all_help", "qm");
 	print $pgv_lang["basic_or_all"];
 	?>
 	</td><td class="optionbox">
 		<select name="onlyBDM">
-		<option value="no"<?php if ($config["onlyBDM"]=="no") print " selected=\"selected\"";?>><?php print $pgv_lang["no"]; ?></option>
-		<option value="yes"<?php if ($config["onlyBDM"]=="yes") print " selected=\"selected\"";?>><?php print $pgv_lang["yes"]; ?></option>
+			<option value="no"<?php if ($config["onlyBDM"]=="no") print " selected=\"selected\"";?>><?php print $pgv_lang["no"]; ?></option>
+			<option value="yes"<?php if ($config["onlyBDM"]=="yes") print " selected=\"selected\"";?>><?php print $pgv_lang["yes"]; ?></option>
 		</select>
 	</td></tr>
 
-		<tr><td class="descriptionbox wrap width33">
+	<tr><td class="descriptionbox wrap width33">
 	<?php
 	print_help_link("style_help", "qm");
 	print $pgv_lang["style"];
@@ -177,19 +182,30 @@ function print_upcoming_events_config($config) {
 		</select>
 	</td></tr>
 
-		<tr><td class="descriptionbox wrap width33">
-		<?php
+	<tr><td class="descriptionbox wrap width33">
+	<?php
+	print_help_link("sort_style_help", "qm");
+	print $pgv_lang["sort_style"]."</td>";
+	?>
+	<td class="optionbox">
+		<select name="sortStyle">
+			<option value="alpha"<?php if ($config["sortStyle"]=="alpha") print " selected=\"selected\"";?>><?php print $pgv_lang["by_alpha"]; ?></option>
+			<option value="anniv"<?php if ($config["sortStyle"]=="anniv") print " selected=\"selected\"";?>><?php print $pgv_lang["by_anniv"]; ?></option>
+		</select>
+	</td></tr>
+
+	<tr><td class="descriptionbox wrap width33">
+	<?php
  	print_help_link("cal_dowload_help", "qm");
-		print $pgv_lang["cal_download"]."</td>";
-		?>
-		<td class="optionbox">
+	print $pgv_lang["cal_download"]."</td>";
+	?>
+	<td class="optionbox">
 		<select name="allowDownload">
 			<option value="yes"<?php if ($config["allowDownload"]=="yes") print " selected=\"selected\"";?>><?php print $pgv_lang["yes"]; ?></option>
 			<option value="no"<?php if ($config["allowDownload"]=="no") print " selected=\"selected\"";?>><?php print $pgv_lang["no"]; ?></option>
 		</select>
 		<input type="hidden" name="cache" value="1" />
-		</td></tr>
+	</td></tr>
 	<?php
-
 }
 ?>

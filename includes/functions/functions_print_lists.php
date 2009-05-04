@@ -1688,7 +1688,8 @@ function print_events_table($startjd, $endjd, $events='BIRT MARR DEAT', $only_li
 	}
 
 	// Now we've filtered the list, we can sort by event, if required
-	if ($sort_by_event) uasort($filtered_events, 'event_sort');
+	if ($sort_by_event=="anniv") uasort($filtered_events, 'event_sort');
+	else if ($sort_by_event) uasort($filtered_events, 'event_sort_name');
 
 	foreach($filtered_events as $value) {
 		$return .= "<tr class=\"vevent\">"; // hCalendar:vevent
@@ -1852,7 +1853,8 @@ function print_events_list($startjd, $endjd, $events='BIRT MARR DEAT', $only_liv
 	}
 
 	// Now we've filtered the list, we can sort by event, if required
-	if ($sort_by_event) uasort($filtered_events, 'event_sort');
+	if ($sort_by_event=="anniv") uasort($filtered_events, 'event_sort');
+	else if ($sort_by_event) uasort($filtered_events, 'event_sort_name');
 
 	foreach($filtered_events as $value) {
 		$return .= "<a href=\"".encode_url($value['url'])."\" class=\"list_item name2\" dir=\"".$TEXT_DIRECTION."\">".PrintReady($value['name'])."</a>".$value['sex'];
