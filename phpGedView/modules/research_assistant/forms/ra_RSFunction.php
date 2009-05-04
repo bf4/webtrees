@@ -44,7 +44,7 @@ require_once("includes/classes/class_person.php");
 	//an individual will have the same birth, marriage and death place
 	//at each index of the array will be a description as well as a percentage liklihood of the given correlation
 	function personalinferences($pid) {
-		global $DBCONN, $TBLPREFIX, $GEDCOMS, $GEDCOM, $indilist, $famlist;
+		global $TBLPREFIX, $GEDCOMS, $GEDCOM, $indilist, $famlist;
 
 		$inferences[] = array('local'=>'SURN', 'record'=>'FAMC:HUSB', 'comp'=>'SURN', 'value'=>0, 'count'=>0);
 		$inferences[] = array('local'=>'SURN', 'record'=>'FAMC:WIFE', 'comp'=>'SURN', 'value'=>0, 'count'=>0);
@@ -302,37 +302,30 @@ require_once("includes/classes/class_person.php");
 				$tempFullArray[] = $factInfer;
 			}
 		}
-			$sql = "select * from ".$TBLPREFIX."probabilities where pr_file=".$GEDCOMS[$GEDCOM]['id']." AND pr_f_lvl ".PGV_DB_LIKE." '".$factType."%' ORDER BY (pr_matches / pr_count) DESC";
-			$result = dbquery($sql);
-			//Create an array to hold global inferences
-			$globalInference = array();
-			//Check and see if global inferences have been run
-			if($result->numRows()!=0)
-			{
-				while($row = $result->fetchRow(DB_FETCHMODE_ASSOC))
-				{
-					foreach($tempFullArray as $tempInferKey=>$inferVal)
-					{
+		$rows=
+			PGV_DB::prepare("SELECT * FROM {$TBLPREFIX}probabilities WHERE pr_file=? AND pr_f_lvl ".PGV_DB_LIKE." ? ORDER BY (pr_matches/pr_count) DESC")
+			->execute(array(PGV_GED_ID, "{$factType}%"))
+			->fetchAll();
 
-						if($inferVal->getFactTag() === $row['pr_f_lvl'] && $inferVal->getRelationTag() === $row['pr_s_lvl'] && $inferVal->getCompareTag() === $row['pr_rel'])
-						{
-							if($row['pr_count'] != 0)
-							{
-								$tempAvg = $row['pr_matches'] / $row['pr_count'];
-							}
-							else
-							{
-								$tempAvg = 0;
-							}
-							$inferVal->setGlobalFactPercentage($tempAvg);
-							$inferVal->setGlobalFactCount($row['pr_count']);
-						}
+		//Create an array to hold global inferences
+		$globalInference = array();
+		//Check and see if global inferences have been run
+		foreach ($rows as $row) {
+			foreach($tempFullArray as $tempInferKey=>$inferVal) {
+
+				if($inferVal->getFactTag() === $row->pr_f_lvl && $inferVal->getRelationTag() === $row->pr_s_lvl && $inferVal->getCompareTag() === $row->pr_rel) {
+					if($row->pr_count != 0) {
+						$tempAvg = $row->pr_matches / $row->pr_count;
+					} else {
+						$tempAvg = 0;
 					}
+					$inferVal->setGlobalFactPercentage($tempAvg);
+					$inferVal->setGlobalFactCount($row->pr_count);
 				}
-
 			}
-			return $tempFullArray;
-	 }
+		}
+		return $tempFullArray;
+	}
 
 
 
@@ -392,38 +385,33 @@ require_once("includes/classes/class_person.php");
 
 	function getGlobalinferences()
 	{
-		global $TBLPREFIX,$DBCONN, $GEDCOMS, $GEDCOM;
+		global $TBLPREFIX,$GEDCOMS, $GEDCOM;
 		global $LANGUAGE, $factarray, $pgv_lang;
 
-		$sql = "select * from ".$TBLPREFIX."probabilities where pr_file=".$GEDCOMS[$GEDCOM]['id']." ORDER BY (pr_matches / pr_count) DESC";
-			$result = dbquery($sql);
-			if($result->numRows()==0) {
-				return false;
-			}
+		$rows=
+			PGV_DB::prepare("SELECT * FROM {$TBLPREFIX}probabilities WHERE pr_file=? ORDER BY (pr_matches/pr_count) DESC")
+			->execute(array(PGV_GED_ID))
+			->fetchAll();
 
-				if($result->numRows()>0)
-			{
-				$inferenceArray = array();
-				while($row = $result->fetchRow(DB_FETCHMODE_ASSOC))
-					{
-						$tempArray = array();
-						$tempArray[] = $row['pr_f_lvl'];
-						$tempArray[] = $row['pr_s_lvl'];
-						$tempArray[] = $row['pr_rel'];
-						if($row['pr_matches'] != 0 && $row['pr_count'] != 0)
-						{
-							$tempArray["GlobalProb"] = $row['pr_matches'] / $row['pr_count'];
-							$tempArray["GlobalCount"] = $row['pr_matches'];
-
-						}
-						else
-						{
-						$tempArray["GlobalProb"] = 0;
-						$tempArray["GlobalCount"] = 0;
-						}
-						$inferenceArray[] = $tempArray;
-					}
+		if (empty($rows)) {
+			return false;
+		}
+		
+		$inferenceArray = array();
+		foreach ($rows as $row) {
+			$tempArray = array();
+			$tempArray[] = $row->pr_f_lvl;
+			$tempArray[] = $row->pr_s_lvl;
+			$tempArray[] = $row->pr_rel;
+			if($row->pr_matches != 0 && $row->pr_count != 0) {
+				$tempArray["GlobalProb"] = $row->pr_matches / $row->pr_count;
+				$tempArray["GlobalCount"] = $row->pr_matches;
+			} else {
+				$tempArray["GlobalProb"] = 0;
+				$tempArray["GlobalCount"] = 0;
 			}
+			$inferenceArray[]=$tempArray;
+		}
 		return $inferenceArray;
 	}
 
