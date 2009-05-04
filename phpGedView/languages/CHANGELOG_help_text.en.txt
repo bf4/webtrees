@@ -39,6 +39,12 @@ Additional codes, to help Translators, follow the date as follows:
 
 The above list of codes may be amended as new situations arise.
 
+VERSION 4.2.2
+
+?$pgv_lang["whatever"]								dd Monthname, year		Change	codes and comments
+----------------------------------------------------------------------------------------
++$pgv_lang["sort_style_help"]						04 May 2009				A
+
 
 VERSION 4.2.1
 

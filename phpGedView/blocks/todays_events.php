@@ -38,12 +38,14 @@ require_once 'includes/functions/functions_print_lists.php';
 $PGV_BLOCKS["print_todays_events"]["name"]		= $pgv_lang["todays_events_block"];
 $PGV_BLOCKS["print_todays_events"]["descr"]		= "todays_events_descr";
 $PGV_BLOCKS["print_todays_events"]["infoStyle"]	= "style2";
+$PGV_BLOCKS["print_todays_events"]["sortStyle"]	= "alpha";
 $PGV_BLOCKS["print_todays_events"]["canconfig"]	= true;
 $PGV_BLOCKS["print_todays_events"]["config"]	= array(
 	"cache"=>1,
 	"filter"=>"all",
 	"onlyBDM"=>"no",
 	"infoStyle"=>"style2",
+	"sortStyle"=>"alpha",
 	"allowDownload"=>"yes"
 	);
 
@@ -64,6 +66,8 @@ function print_todays_events($block=true, $config="", $side, $index) {
   else $onlyBDM = "no";
   if (isset($config["infoStyle"])) $infoStyle = $config["infoStyle"];  // "style1" or "style2"
   else $infoStyle = "style2";
+  if (isset($config["sortStyle"])) $sortStyle = $config["sortStyle"];  // "alpha" or "anniv"
+  else $sortStyle = "alpha";
   if (isset($config["allowDownload"])) $allowDownload = $config["allowDownload"];	// "yes" or "no"
   else $allowDownload = "yes";
 
@@ -90,12 +94,12 @@ function print_todays_events($block=true, $config="", $side, $index) {
 	switch ($infoStyle) {
 	case "style1":
 		// Output style 1:  Old format, no visible tables, much smaller text.  Better suited to right side of page.
-		$content .= print_events_list($todayjd, $todayjd, $onlyBDM=='yes'?'BIRT MARR DEAT':'', $filter=='living', true);
+		$content .= print_events_list($todayjd, $todayjd, $onlyBDM=='yes'?'BIRT MARR DEAT':'', $filter=='living', $sortStyle);
 		break;
 	case "style2":
 		// Style 2: New format, tables, big text, etc.  Not too good on right side of page
 		ob_start();
-		$content .= print_events_table($todayjd, $todayjd, $onlyBDM=='yes'?'BIRT MARR DEAT':'', $filter=='living', $allowDownload=='yes', true);
+		$content .= print_events_table($todayjd, $todayjd, $onlyBDM=='yes'?'BIRT MARR DEAT':'', $filter=='living', $allowDownload=='yes', $sortStyle);
 		$content .= ob_get_clean();
 		break;
 	}
@@ -114,6 +118,7 @@ function print_todays_events_config($config) {
 	if (!isset($config["filter"])) $config["filter"] = "all";
 	if (!isset($config["onlyBDM"])) $config["onlyBDM"] = "no";
 	if (!isset($config["infoStyle"])) $config["infoStyle"] = "style2";
+	if (!isset($config["sortStyle"])) $config["sortStyle"] = "alpha";
 	if (!isset($config["allowDownload"])) $config["allowDownload"] = "yes";
 
 	?>
@@ -149,6 +154,18 @@ function print_todays_events_config($config) {
 		<select name="infoStyle">
 			<option value="style1"<?php if ($config["infoStyle"]=="style1") print " selected=\"selected\"";?>><?php print $pgv_lang["style1"]; ?></option>
 			<option value="style2"<?php if ($config["infoStyle"]=="style2") print " selected=\"selected\"";?>><?php print $pgv_lang["style2"]; ?></option>
+		</select>
+	</td></tr>
+
+	<tr><td class="descriptionbox wrap width33">
+	<?php
+	print_help_link("sort_style_help", "qm");
+	print $pgv_lang["sort_style"]."</td>";
+	?>
+	<td class="optionbox">
+		<select name="sortStyle">
+			<option value="alpha"<?php if ($config["sortStyle"]=="alpha") print " selected=\"selected\"";?>><?php print $pgv_lang["by_alpha"]; ?></option>
+			<option value="anniv"<?php if ($config["sortStyle"]=="anniv") print " selected=\"selected\"";?>><?php print $pgv_lang["by_anniv"]; ?></option>
 		</select>
 	</td></tr>
 
