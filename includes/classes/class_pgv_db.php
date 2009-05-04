@@ -215,6 +215,43 @@ class PGV_DB {
 	}
 
 	//////////////////////////////////////////////////////////////////////////////
+	// INTERROGATE DATA DICTIONARY
+	//////////////////////////////////////////////////////////////////////////////
+	public static function table_exists($table) {
+		switch (self::$dbtype) {
+		case 'mysql':
+		case 'sqlite':
+		case 'pgsql':
+		case 'mssql':
+			// TODO: read the data dictionary tables for each $DBTYPE
+		default:
+			try {
+				PGV_DB::prepare("SELECT 1 FROM {$table}")->fetchOne();
+				return true;
+			} catch (PDOException $ex) {
+				return false;
+			}
+		}
+	}
+
+	public static function column_exists($table, $column) {
+		switch (self::$dbtype) {
+		case 'mysql':
+		case 'sqlite':
+		case 'pgsql':
+		case 'mssql':
+			// TODO: read the data dictionary tables for each $DBTYPE
+		default:
+			try {
+				PGV_DB::prepare("SELECT {$column} FROM {$table}")->fetchOne();
+				return true;
+			} catch (PDOException $ex) {
+				return false;
+			}
+		}
+	}
+
+	//////////////////////////////////////////////////////////////////////////////
 	// FUNCTIONALITY ENHANCEMENTS
 	//////////////////////////////////////////////////////////////////////////////
 
