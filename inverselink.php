@@ -124,21 +124,26 @@ if ($action == "choose" && $paramok) {
 	}
 	
 	// GEDFact assistant Current Media Links ===================
-	echo "<tr>";
-	echo "<td class=\"descriptionbox width20 wrap\">";
-	echo "Current links:";
-	echo"</td>";
-	echo "<td class=\"optionbox wrap\">";
-		include ('modules/GEDFact_assistant/MEDIA/media_query_1a.php');
-	echo "</td></tr>";
+	if (file_exists('modules/GEDFact_assistant/MEDIA/media_1_ctrl.php')) {
+		echo "<tr>";
+		echo "<td class=\"descriptionbox width20 wrap\">";
+		echo "Current links:";
+		echo"</td>";
+		echo "<td class=\"optionbox wrap\">";
+			include ('modules/GEDFact_assistant/MEDIA/media_query_1a.php');
+		echo "</td></tr>";
+	}
 	// =========================================================
 	
 
 	if (!isset($linktoid)) $linktoid = "";
 	print "<tr><td class=\"descriptionbox\">";
+	
 	if ($linkto == "person") {
-		print $pgv_lang["enter_pid"]."</td>";
+		// print $pgv_lang["enter_pid"]."</td>";
+		echo "Add more links:";
 		print "<td class=\"optionbox wrap\">";
+		echo "First, enter a Base individual ID<br />";
 		if ($linktoid=="") {
 			print "<input class=\"pedigree_form\" type=\"text\" name=\"linktoid\" id=\"linktoid\" size=\"3\" value=\"$linktoid\" />";
 			print_findindi_link("linktoid","");
@@ -149,6 +154,21 @@ if ($action == "choose" && $paramok) {
 			print "(".$linktoid.")";
 			if ($TEXT_DIRECTION=="rtl") print getRLM();
 		}
+		echo "<br /><br />";
+		echo "Then, click Add to add more Individual Links";
+		echo "<br />";
+		
+		// GEDFact assistant Add Media Links =======================
+		if (file_exists('modules/GEDFact_assistant/MEDIA/media_1_ctrl.php')) {
+			include ('modules/GEDFact_assistant/MEDIA/media_query_2a.php');
+			echo "</td></tr>";
+			echo "<tr><td class=\"topbottombar\" colspan=\"2\">";
+			echo "<input type=\"button\" value=\"".$pgv_lang["set_link"]."s\" onclick=\"javascript:alert('Clicking \'Set Links\' will eventually parse and save the Current and Added Links');\" />";
+			echo "</td></tr>";
+		}else{
+		print "<tr><td class=\"topbottombar\" colspan=\"2\"><input type=\"submit\" value=\"".$pgv_lang["set_link"]."\" /></td></tr>";
+		}
+
 	}
 
 	if ($linkto == "family") {
@@ -164,6 +184,8 @@ if ($action == "choose" && $paramok) {
 			print "(".$linktoid.")";
 			if ($TEXT_DIRECTION=="rtl") print getRLM();
 		}
+		print "</td></tr>";
+		print "<tr><td class=\"topbottombar\" colspan=\"2\"><input type=\"submit\" value=\"".$pgv_lang["set_link"]."\" /></td></tr>";
 	}
 
 	if ($linkto == "source") {
@@ -179,20 +201,13 @@ if ($action == "choose" && $paramok) {
 			print "(".$linktoid.")";
 			if ($TEXT_DIRECTION=="rtl") print getRLM();
 		}
+		print "</td></tr>";
+		print "<tr><td class=\"topbottombar\" colspan=\"2\"><input type=\"submit\" value=\"".$pgv_lang["set_link"]."\" /></td></tr>";
 	}
-	print "</td></tr>";
+
 	
-	// GEDFact assistant Add Media Links =======================
-	echo "<tr>";
-	echo "<td class=\"descriptionbox width20 wrap\">";
-	echo "Add more links:";
-	echo"</td>";
-	echo "<td class=\"optionbox wrap\">";
-		include ('modules/GEDFact_assistant/MEDIA/media_query_2a.php');
-	echo "</td></tr>";
-	// =========================================================
 	
-	print "<tr><td class=\"topbottombar\" colspan=\"2\"><input type=\"submit\" value=\"".$pgv_lang["set_link"]."\" /></td></tr>";
+
 	print "</table>";
 	print "</form>\n";
 	print "<br/><br/><center><a href=\"javascript:;\" onclick=\"if (window.opener.showchanges) window.opener.showchanges(); window.close();\">".$pgv_lang["close_window"]."</a><br /></center>\n";
