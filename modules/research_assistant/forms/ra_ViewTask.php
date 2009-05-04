@@ -45,15 +45,10 @@ global $pgv_lang;
 function getTitle(){
 	global $TBLPREFIX;
 
-	$sql = "SELECT t_title FROM " . $TBLPREFIX . "tasks WHERE t_id='$_REQUEST[taskid]'";
-	$res = dbquery($sql);
-	$out = "";
-
-	while($title =& $res->fetchRow(DB_FETCHMODE_ASSOC)){
-		$out = db_cleanup($title["t_title"]);
-	}
-
-	return $out;
+	return
+		PGV_DB::prepare("SELECT t_title FROM {$TBLPREFIX}tasks WHERE t_id=?")
+		->execute(array($_REQUEST['taskid']))
+		->fetchOne();
 }
 
 /**
@@ -64,25 +59,21 @@ function getTitle(){
 function getDates(){
 	global $TBLPREFIX;
 
-	$sql = "SELECT t_startdate, t_enddate FROM " . $TBLPREFIX . "tasks WHERE t_id='$_REQUEST[taskid]'";
-	$res = dbquery($sql);
-
-	$s_date = "";
-	$e_date = "";
-	$out = "";
-
-	while($dates =& $res->fetchRow(DB_FETCHMODE_ASSOC)) {
-		$s_date = $dates["t_startdate"];
-		$e_date = $dates["t_enddate"];
-	}
+	$s_date=
+		PGV_DB::prepare("SELECT t_startdate FROM {$TBLPREFIX}tasks WHERE t_id=?")
+		->execute(array($_REQUEST['taskid']))
+		->fetchOne();
+	$e_date=
+		PGV_DB::prepare("SELECT t_enddate FROM {$TBLPREFIX}tasks WHERE t_id=?")
+		->execute(array($_REQUEST['taskid']))
+		->fetchOne();
 
 	// Display either the starting and ending date or just the ending date
-	if(empty($e_date))
-		$out .= "opened: $s_date";
-	else
-		$out .= "$s_date - $e_date";
-
-	return $out;
+	if (empty($e_date)) {
+		return "opened: $s_date";
+	} else {
+		return "$s_date - $e_date";
+	}
 }
 
 /**
@@ -93,14 +84,12 @@ function getDates(){
 function getFolders() {
 	global $TBLPREFIX;
 
-	$sql = "select fr_name, fr_id from " . $TBLPREFIX . "folders";
-	$res = dbquery($sql);
+	$rows=PGV_DB::prepare("SELECT fr_name, fr_id FROM {$TBLPREFIX}folders")->fetchAll();
 
 	$out = "";
-	while($foldername =& $res->fetchRow(DB_FETCHMODE_ASSOC)){
-		$out .= '<option value="'.$foldername['fr_id'].'">'.$foldername['fr_name'] . '</option>';
+	foreach ($rows as $row) {
+		$out.='<option value="'.htmlspecialchars($row->fr_id).'">'.htmlspecialchars($row->fr_name).'</option>';
 	}
-
 	return $out;
 }
 
@@ -110,18 +99,20 @@ function getFolders() {
 * @return mixed people associated with the task
 */
 function getPeople(){
-	global $TBLPREFIX, $DBCONN;
+	global $TBLPREFIX;
 
-	$sql = "SELECT it_i_id FROM ".$TBLPREFIX."individualtask WHERE it_t_id='" . $DBCONN->escapeSimple($_REQUEST["taskid"])."'";
-	$res = dbquery($sql);
+	$ids=
+		PGV_DB::prepare("SELECT it_i_id FROM {$TBLPREFIX}individualtask WHERE it_t_id=?")
+		->execute(array($_REQUEST['taskid']))
+		->fetchOneColumn();
 
-	$out = "";
-	while($people =& $res->fetchRow()){
-		$person = Person::getInstance($people[0]);
-		if (!is_null($person)) {
+	$out="";
+	foreach ($ids as $id) {
+		$person=Person::getInstance($id);
+		if ($person) {
 			$bdate=$person->getEstimatedBirthDate();
 			$byear=$bdate->gregorianYear();
-			$out .= '<a href="individual.php?pid='.$person->getLinkUrl().'">'.PrintReady($person->getFullName()." - ".$byear).'</a><br />';
+			$out.='<a href="individual.php?pid='.$person->getLinkUrl().'">'.PrintReady($person->getFullName()." - ".$byear).'</a><br />';
 		}
 	}
 
@@ -136,15 +127,10 @@ function getPeople(){
 function getDescription(){
 	global $TBLPREFIX;
 
-	$sql = "SELECT t_description FROM " . $TBLPREFIX . "tasks WHERE t_id='" . $_REQUEST["taskid"] . "'";
-	$res = dbquery($sql);
-
-	$out = "";
-	while($desc = $res->fetchRow()){
-		$out = db_cleanup($desc[0]);
-	}
-
-	return $out;
+	return
+		PGV_DB::prepare("SELECT t_description FROM {$TBLPREFIX}tasks WHERE t_id=?")
+		->execute(array($_REQUEST['taskid']))
+		->fetchOne();
 }
 
 /**
@@ -153,17 +139,12 @@ function getDescription(){
 * @return mixed description of the task
 */
 function getResults(){
-	global $TBLPREFIX, $DBCONN;
+	global $TBLPREFIX;
 
-	$sql = "SELECT t_results FROM " . $TBLPREFIX . "tasks WHERE t_id='" . $DBCONN->escapeSimple($_REQUEST["taskid"]). "'";
-	$res = dbquery($sql);
-
-	$out = "";
-	while($desc = $res->fetchRow()){
-		$out = db_cleanup($desc[0]);
-	}
-
-	return $out;
+	return
+		PGV_DB::prepare("SELECT t_results FROM {$TBLPREFIX}tasks WHERE t_id=?")
+		->execute(array($_REQUEST['taskid']))
+		->fetchOne();
 }
 
 /**
@@ -172,16 +153,17 @@ function getResults(){
 * @return sources associated with the task
 */
 function getSources(){
-	global $TBLPREFIX, $DBCONN, $GEDCOMS, $GEDCOM;
+	global $TBLPREFIX;
 
-	$sql = "SELECT s_name, s_id FROM " . $TBLPREFIX . "sources, ".$TBLPREFIX."tasksource WHERE s_file=".$GEDCOMS[$GEDCOM]['id']." AND ts_s_id=s_id AND ts_t_id='" . $DBCONN->escapeSimple($_REQUEST["taskid"]) . "'";
-	$res = dbquery($sql);
+	$rows=
+		PGV_DB::prepare("SELECT s_name, s_id FROM {$TBLPREFIX}sources, {$TBLPREFIX}tasksource WHERE s_file=? AND ts_s_id=s_id AND ts_t_id=?")
+		->execute(array(PGV_GED_ID, $_REQUEST['taskid']))
+		->fetchAll();
 
 	$sources = array();
-	while($source =& $res->fetchRow(DB_FETCHMODE_ASSOC)){
-		$sources[$source["s_id"]] = $source["s_name"];
+	foreach ($rows as $row) {
+		$sources[$row->s_id]=$row->s_name;
 	}
-
 	return $sources;
 }
 
@@ -191,30 +173,28 @@ function getSources(){
 * @return mixed comments associated with the task
 */
 function getComments(){
-	global $pgv_lang, $TBLPREFIX;
-	$sql =  "SELECT c_u_username, c_body, c_datetime, c_id " .
-			"FROM " . $TBLPREFIX . "comments " .
-			"WHERE c_t_id='" . $_REQUEST["taskid"] . "' " .
-			"ORDER BY c_datetime DESC";
-	$res = dbquery($sql);
-	$out = "";
+	global $TBLPREFIX, $pgv_lang;
 
-	while($comment = $res->fetchRow(DB_FETCHMODE_ASSOC)){
-		$comment = db_cleanup($comment);
-		$date=timestamp_to_gedcom_date($comment["c_datetime"]);
+	$rows=
+		PGV_DB::prepare("SELECT c_u_username, c_body, c_datetime, c_id FROM {$TBLPREFIX}comments WHERE c_t_id='" . $_REQUEST["taskid"] . "' ORDER BY c_datetime DESC")
+		->fetchAll();
+
+	$out='';
+	foreach ($rows as $row) {
+		$date=timestamp_to_gedcom_date($row->c_datetime);
 		$out .= '<div class="blockcontent"><div class="person_box" id="comment1"><span class="news_title">' .
-			$comment["c_u_username"] .  // INSERT username
+			$row->c_u_username .  // INSERT username
 			'</span><br /><span class="news_date">' .
-			$date->Display(false).' - '. date("g:i:s A",(int)$comment["c_datetime"]). // INSERT datetime
+			$date->Display(false).' - '. date("g:i:s A",(int)$row->c_datetime). // INSERT datetime
 			'</span><br /><br />' .
-			nl2br($comment["c_body"]) . // INSERT body
+			nl2br($row->c_body) . // INSERT body
 			'<hr size="1" />';
 
-		if(PGV_USER_IS_ADMIN || PGV_USER_NAME==$comment["c_u_username"]){
+		if(PGV_USER_IS_ADMIN || PGV_USER_NAME==$row->c_u_username){
 			$out .= '<a href="javascript:;" onclick="editcomment(' .
-				$comment["c_id"] . // INSERT commentid
+				$row->c_id . // INSERT commentid
 				')">'.$pgv_lang["edit"].'</a> | <a href="" onclick="confirm_prompt(\''.$pgv_lang["comment_delete_check"].'\', ' .
-				$comment["c_id"] . // INSERT commentid
+				$row->c_id . // INSERT commentid
 				'); return false;">'.$pgv_lang["delete"].'</a>';
 		}
 		$out .= '<br /></div></div><br/>';
@@ -223,10 +203,10 @@ function getComments(){
 }
 
 
-if(isset($_REQUEST['delete']) && !empty($_REQUEST['delete'])){
+if (isset($_REQUEST['delete']) && !empty($_REQUEST['delete'])){
 	// TODO: Verify user
-	$sql = "DELETE FROM " . $TBLPREFIX . "comments WHERE c_id='$_REQUEST[delete]'";
-	$res = dbquery($sql);
+	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}comments WHERE c_id=?")
+		->execute(array($_REQUEST['delete']));
 }
 ?>
 
