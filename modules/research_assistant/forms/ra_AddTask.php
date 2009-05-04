@@ -45,19 +45,21 @@ global $pgv_lang, $TBLPREFIX, $SOURCE_ID_PREFIX;
 	 * @return all available folders
 	 */
 
-    function getFolders() {
-        global $TBLPREFIX;
+	function getFolders() {
+		global $TBLPREFIX;
 
-        $out = "";
-		$sql = "select fr_name, fr_id from " . $TBLPREFIX . "folders";
-        $res = dbquery($sql);
+		$rows=
+			PGV_DB::prepare("select fr_name, fr_id from {$TBLPREFIX}folders")
+			->fetchAll();
 
-		while($foldername =& $res->fetchRow(DB_FETCHMODE_ASSOC)){
-		    $out .= '<option value="'.$foldername['fr_id'].'"';
-		    if (!empty($_REQUEST['folderid']) && $_REQUEST['folderid']==$foldername['fr_id']) $out .= '" selected="selected"';
-			$out .= '>'.$foldername['fr_name'] . '</option>';
-        }
-
+		$out = "";
+		foreach ($rows as $row) {
+			$out .= '<option value="'.$row->fr_id.'"';
+			if (!empty($_REQUEST['folderid']) && $_REQUEST['folderid']==$row->fr_id) {
+				$out .= '" selected="selected"';
+			}
+			$out .= '>'.$row->fr_name.'</option>';
+		}
 		return $out;
 	}
 
