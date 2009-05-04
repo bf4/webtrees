@@ -155,11 +155,11 @@ class ra_functions {
 
 		if(empty($factLookingFor))
 		{
-			$sql = 'Select * from '.$TBLPREFIX.'factlookup WHERE StartDate <= '.$endDate.' AND EndDate >= '.$startDate;
+			$sql = "SELECT * FROM {$TBLPREFIX}factlookup WHERE StartDate <= ".$endDate.' AND EndDate >= '.$startDate;
 		}
 		else
 		{
-			$sql = 'Select * from '.$TBLPREFIX.'factlookup WHERE StartDate <= '.$endDate.' AND EndDate >= '.$startDate.' AND Gedcom_fact like \'%'.$factLookingFor.'%\'';
+			$sql = "SELECT * FROM {$TBLPREFIX}factlookup WHERE StartDate <= ".$endDate.' AND EndDate >= '.$startDate.' AND Gedcom_fact like \'%'.$factLookingFor.'%\'';
 		}
 
 		if (!empty($place)) {
@@ -428,7 +428,7 @@ class ra_functions {
 	 */
 	function getTask($taskid) {
 		global $TBLPREFIX, $DBCONN;
-		$sql = "select * from ".$TBLPREFIX."tasks where t_id='".$DBCONN->escapeSimple($taskid)."'";
+		$sql = "SELECT * FROM {$TBLPREFIX}tasks WHERE t_id='".$DBCONN->escapeSimple($taskid)."'";
 		$res = dbquery($sql);
 		$row = $res->fetchRow(DB_FETCHMODE_ASSOC);
 		$res->free();
@@ -453,7 +453,7 @@ class ra_functions {
 		$width = 150;
 
 		if (empty ($folderid) && !empty ($taskid)) {
-			$sql = "select t_fr_id from ".$TBLPREFIX."tasks where t_id = $taskid";
+			$sql = "SELECT t_fr_id FROM {$TBLPREFIX}tasks WHERE t_id = $taskid";
 			$result = dbquery($sql);
 			if ($result->numRows() > 0) {
 				$row = $result->fetchRow();
@@ -488,7 +488,7 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 		// Below here is "in folder" relevant information. These are only shown when the user is inside a folder.
 		if (!empty ($folderid)) {
 			// Lets check to see if we can go up a folder.
-			$sql = "SELECT * FROM ".$TBLPREFIX."folders WHERE fr_id = ".(int) $folderid;
+			$sql = "SELECT * FROM {$TBLPREFIX}folders WHERE fr_id = ".(int) $folderid;
 			$result = dbquery($sql);
 			$folderinfo = $result->fetchRow(DB_FETCHMODE_ASSOC);
 
@@ -660,9 +660,9 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 			// Switch order by
 			$this->switch_order();
 
-			$sql = "Select * From ".$TBLPREFIX."tasks Where t_fr_id =".(int) $folderId." order by ".$orderby." ".$_REQUEST["type"];
+			$sql = "SELECT * FROM {$TBLPREFIX}tasks WHERE t_fr_id =".(int) $folderId." ORDER BY ".$orderby." ".$_REQUEST["type"];
 		} else {
-			$sql = "Select * From ".$TBLPREFIX."tasks Where t_fr_id =".(int) $folderId;
+			$sql = "SELECT * FROM {$TBLPREFIX}tasks WHERE t_fr_id =".(int) $folderId;
 		}
 
 		$res = dbquery($sql);
@@ -679,7 +679,7 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 	 {
 		global $res, $pgv_lang, $folderId;
 		global $TBLPREFIX;
-		$sql = "Select * From " .$TBLPREFIX. "tasks where t_username ='".$userName."'";
+		$sql = "SELECT * FROM {$TBLPREFIX}tasks WHERE t_username ='".$userName."'";
 		$res = dbquery($sql);
 		while ($task = $res->fetchRow(DB_FETCHMODE_ASSOC)) {
 			$task = db_cleanup($task);
@@ -699,7 +699,7 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 	 {
 		global $res, $pgv_lang, $folderId;
 		global $TBLPREFIX;
-		$sql = "Select * From " .$TBLPREFIX. "tasks where t_username ='".$userName."' AND t_enddate IS NULL";
+		$sql = "SELECT * FROM {$TBLPREFIX}tasks WHERE t_username ='".$userName."' AND t_enddate IS NULL";
 		$res = dbquery($sql);
 		$tasks = array();
 		while ($task = $res->fetchRow(DB_FETCHMODE_ASSOC)) {
@@ -745,19 +745,19 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 		global $TBLPREFIX, $pgv_lang;
 		if($filter == "All")
 		{
-			$sql = "Select * From ".$TBLPREFIX."tasks where t_username ='".$userName."'";
+			$sql = "SELECT * FROM {$TBLPREFIX}tasks WHERE t_username ='".$userName."'";
 			$res = dbquery($sql);
 			$out = "";
 		}
 		if($filter == "Incomplete")
 		{
-			$sql = "Select * From ".$TBLPREFIX."tasks where t_username ='".$userName."' AND t_enddate IS NULL";
+			$sql = "SELECT * FROM {$TBLPREFIX}tasks WHERE t_username ='".$userName."' AND t_enddate IS NULL";
 			$res = dbquery($sql);
 			$out = "";
 		}
 		if($filter == "Completed")
 		{
-			$sql = "Select * From ".$TBLPREFIX."tasks where t_username ='".$userName."' AND t_enddate IS NOT NULL";
+			$sql = "SELECT * FROM {$TBLPREFIX}tasks WHERE t_username ='".$userName."' AND t_enddate IS NOT NULL";
 			$res = dbquery($sql);
 			$out = "";
 		}
@@ -782,9 +782,9 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 		$out .= "value=\"Incomplete\">".$pgv_lang["incomplete"]."</option>";
 
 		$out .= "</select></form></th></tr>";
-		$out .= "<tr><th class=\"descriptionbox\"><a href=\"module.php?mod=research_assistant&amp;action=viewtasks&amp;folderid=&amp;orderby=t_title&amp;type=\">".$pgv_lang["Task_Name"]."</a></th><th class=\"descriptionbox\">
-				<a href=\"module.php?mod=research_assistant&amp;action=viewtasks&amp;folderid=&amp;orderby=t_startdate&amp;type=\">".$pgv_lang["Start_Date"]."</a></th>"."<th class=\"descriptionbox\">
-				<a href=\"module.php?mod=research_assistant&amp;action=viewtasks&amp;folderid=&amp;orderby=t_enddate&amp;type=\">".$pgv_lang["completed"]."</a></th><th class=\"descriptionbox\">".$pgv_lang["edit"]."</th><th class=\"descriptionbox\">".$pgv_lang["delete"]."</th>\n
+		$out .= "<tr><th class=\"descriptionbox\"><a href=\"module.php?mod=research_assistant&amp;action=mytasks&amp;Filter={$filter}&amp;folderid=&amp;orderby=t_title&amp;type=\">".$pgv_lang["Task_Name"]."</a></th><th class=\"descriptionbox\">
+				<a href=\"module.php?mod=research_assistant&amp;action=mytasks&amp;Filter={$filter}&amp;folderid=&amp;orderby=t_startdate&amp;type=\">".$pgv_lang["Start_Date"]."</a></th>"."<th class=\"descriptionbox\">
+				<a href=\"module.php?mod=research_assistant&amp;action=mytasks&amp;Filter={$filter}&amp;folderid=&amp;orderby=t_enddate&amp;type=\">".$pgv_lang["completed"]."</a></th><th class=\"descriptionbox\">".$pgv_lang["edit"]."</th><th class=\"descriptionbox\">".$pgv_lang["delete"]."</th>\n
 				<th class=\"descriptionbox\">".$pgv_lang["complete"]."</tr>";
 
 		while ($task = $res->fetchRow(DB_FETCHMODE_ASSOC)) {
@@ -822,9 +822,9 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 		if (!empty ($orderby)) {
 			$this->switch_order();
 
-			$sql = "Select * From ".$TBLPREFIX."folders Where fr_parentid is null order by ".$orderby." ".$_REQUEST['type'];
+			$sql = "SELECT * FROM {$TBLPREFIX}folders WHERE fr_parentid IS NULL ORDER BY ".$orderby." ".$_REQUEST['type'];
 		} else {
-			$sql = "Select * From ".$TBLPREFIX."folders Where fr_parentid is null";
+			$sql = "SELECT * FROM {$TBLPREFIX}folders WHERE fr_parentid IS NULL";
 		}
 
 		$res = dbquery($sql);
@@ -844,7 +844,7 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 	  return false;
 	  }
 	  else{
-		  $sql = "SELECT * FROM ".$TBLPREFIX."tasks where t_fr_id =".$folderid;
+		  $sql = "SELECT * FROM {$TBLPREFIX}tasks WHERE t_fr_id =".$folderid;
 		  $res = dbquery($sql);
 
 		  //need to process the results...
@@ -870,7 +870,7 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 	  return false;
 	  }
 	  else{
-		  $sql = "SELECT * FROM ".$TBLPREFIX."folders where fr_parentid =".$folderid;
+		  $sql = "SELECT * FROM {$TBLPREFIX}folders WHERE fr_parentid =".$folderid;
 		  $res = dbquery($sql);
 
 		  //need to process the results...
@@ -911,9 +911,9 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 			// Switch the orderby clause
 			$this->switch_order();
 
-			$sql = "Select * From ".$TBLPREFIX."folders Where fr_parentid = ".(int) $parentId." order by ".$orderby." ".$_REQUEST['type'];
+			$sql = "SELECT * FROM {$TBLPREFIX}folders WHERE fr_parentid = ".(int) $parentId." ORDER BY ".$orderby." ".$_REQUEST['type'];
 		} else {
-			$sql = "Select * From ".$TBLPREFIX."folders Where fr_parentid = '$parentId'";
+			$sql = "SELECT * FROM {$TBLPREFIX}folders WHERE fr_parentid = '$parentId'";
 		}
 
 		$res = dbquery($sql);
@@ -930,7 +930,7 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 	function get_top_folder($folderId) {
 		// Pull the table prefix from the site
 		global $TBLPREFIX;
-		return dbquery("SELECT * FROM ".$TBLPREFIX."folders WHERE fr_id = ".(int) $folderId);
+		return dbquery("SELECT * FROM {$TBLPREFIX}folders WHERE fr_id = ".(int) $folderId);
 	}
 
 	/**
@@ -995,7 +995,7 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 	 */
 	function deleteFolder($folderid) {
 		global $TBLPREFIX;
-		$sql = "DELETE from ".$TBLPREFIX."folders WHERE fr_id='".$folderid."'";
+		$sql = "DELETE FROM {$TBLPREFIX}folders WHERE fr_id='".$folderid."'";
 		dbquery($sql);
 	}
 	/**
@@ -1039,15 +1039,15 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 	 */
 	function deleteTask($taskid) {
 		global $TBLPREFIX;
-		$sql = "DELETE from ".$TBLPREFIX."tasks  WHERE t_id='".$taskid."'";
+		$sql = "DELETE FROM {$TBLPREFIX}tasks  WHERE t_id='".$taskid."'";
 		dbquery($sql);
-		$sql = "DELETE from ".$TBLPREFIX."comments  WHERE c_t_id='".$taskid."'";
+		$sql = "DELETE FROM {$TBLPREFIX}comments  WHERE c_t_id='".$taskid."'";
 		dbquery($sql);
-		$sql = "DELETE from ".$TBLPREFIX."tasksource  WHERE ts_t_id='".$taskid."'";
+		$sql = "DELETE FROM {$TBLPREFIX}tasksource  WHERE ts_t_id='".$taskid."'";
 		dbquery($sql);
-		$sql = "DELETE from ".$TBLPREFIX."taskfacts WHERE tf_t_id='".$taskid."'";
+		$sql = "DELETE FROM {$TBLPREFIX}taskfacts WHERE tf_t_id='".$taskid."'";
 		dbquery($sql);
-		$sql = "DELETE from ".$TBLPREFIX."individualtask WHERE it_t_id='".$taskid."'";
+		$sql = "DELETE FROM {$TBLPREFIX}individualtask WHERE it_t_id='".$taskid."'";
 		dbquery($sql);
 	}
 	/**
@@ -1138,7 +1138,7 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 	*/
 	function completeTask($taskid, $form='') {
 		global $TBLPREFIX, $DBCONN, $pgv_lang;
-		$sql = "UPDATE ".$TBLPREFIX."tasks SET t_enddate='".time()."', t_form='".$DBCONN->escapeSimple($form)."' WHERE t_id='".$DBCONN->escapeSimple($taskid)."'";
+		$sql = "UPDATE {$TBLPREFIX}tasks SET t_enddate='".time()."', t_form='".$DBCONN->escapeSimple($form)."' WHERE t_id='".$DBCONN->escapeSimple($taskid)."'";
 		dbquery($sql);
 	}
 	/**
@@ -1236,7 +1236,7 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 	 */
 	function add_indi_task($tid, $itid, $ids) {
 		global $TBLPREFIX, $DBCONN;
-		$sql = 'INSERT INTO '.$TBLPREFIX.'individualtask(it_t_id,it_i_id, it_i_file) '."VALUES ('".$DBCONN->escapeSimple($tid)."', '".$DBCONN->escapeSimple($itid)."', '".$DBCONN->escapeSimple($ids)."')";
+		$sql = "INSERT INTO {$TBLPREFIX}individualtask(it_t_id,it_i_id, it_i_file) VALUES ('".$DBCONN->escapeSimple($tid)."', '".$DBCONN->escapeSimple($itid)."', '".$DBCONN->escapeSimple($ids)."')";
 		$res = dbquery($sql);
 	}
 
@@ -1250,7 +1250,7 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 		}
 		foreach($sources as $s=>$source_id) {
 			if (!empty($source_id)) {
-				$sql = 'INSERT INTO '.$TBLPREFIX.'tasksource (ts_t_id, ts_s_id) '."VALUES ('".$DBCONN->escapeSimple($task_id)."', '".$DBCONN->escapeSimple($source_id)."')";
+				$sql = "INSERT INTO {$TBLPREFIX}tasksource (ts_t_id, ts_s_id) VALUES ('".$DBCONN->escapeSimple($task_id)."', '".$DBCONN->escapeSimple($source_id)."')";
 				$res = dbquery($sql);
 				//-- only allow one source
 				break;
@@ -1260,13 +1260,12 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 	//Add a task into the database with all of the required information
 	function add_task($taskid, $folder, $title, $description, $pid, $userName="") {
 		global $pgv_lang, $TBLPREFIX, $DBCONN, $GEDCOM, $GEDCOMS;
-		//$sql = "SELECT * FROM ".$TBLPREFIX."tasks, ".$TBLPREFIX."individualtask WHERE(t_fr_id= ".$DBCONN->escapeSimple($folder)." and t_title = '".$DBCONN->escapeSimple($title)." AND it_i_file='".$GEDCOMS[$GEDCOM]['id'].")";
-		$sql = "SELECT * FROM ".$TBLPREFIX."tasks, ".$TBLPREFIX."individualtask WHERE t_title = '".$DBCONN->escapeSimple($title)."' AND it_t_id=t_id AND it_i_id='".$DBCONN->escapeSimple($pid)."' AND it_i_file='".$GEDCOMS[$GEDCOM]['id']."'";
+		$sql = "SELECT * FROM {$TBLPREFIX}tasks, {$TBLPREFIX}individualtask WHERE t_title = '".$DBCONN->escapeSimple($title)."' AND it_t_id=t_id AND it_i_id='".$DBCONN->escapeSimple($pid)."' AND it_i_file='".$GEDCOMS[$GEDCOM]['id']."'";
 
 		$res = dbquery($sql);
 		//make sure the same task does not exist already so we can add an individual task
 		if ($res->numRows() == 0) {
-			$sql = "INSERT INTO ".$TBLPREFIX."tasks (t_id, t_fr_id, t_title, t_description, t_startdate";
+			$sql = "INSERT INTO {$TBLPREFIX}tasks (t_id, t_fr_id, t_title, t_description, t_startdate";
 			if($userName != "")
 				$sql .= ", t_username";
 			$sql .= ") "."VALUES ('".$DBCONN->escapeSimple($taskid)."', '".$DBCONN->escapeSimple($folder)."', '".$DBCONN->escapeSimple($title)."', '".$DBCONN->escapeSimple($description)."', '".time()."";
@@ -1401,7 +1400,7 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 		/*
 		 *The following section is used to store the calculated percentages in the database
 		 */
-		$sql = "DELETE FROM ".$TBLPREFIX."probabilities WHERE pr_file=".$GEDCOMS[$GEDCOM]['id'];
+		$sql = "DELETE FROM {$TBLPREFIX}probabilities WHERE pr_file=".$GEDCOMS[$GEDCOM]['id'];
 		$res = dbquery($sql);
 
 		/**
@@ -1414,7 +1413,7 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 		 * pr_file INT
 		 */
 		 foreach($inferences as $pr_id=>$value) {
-			$sql = "INSERT INTO ".$TBLPREFIX."probabilities VALUES ('".$DBCONN->escapeSimple(get_next_id("probabilities", "pr_id"))."'," .
+			$sql = "INSERT INTO {$TBLPREFIX}probabilities VALUES ('".$DBCONN->escapeSimple(get_next_id("probabilities", "pr_id"))."'," .
 					"'".$DBCONN->escapeSimple($value['local'])."'," .
 					"'".$DBCONN->escapeSimple($value['record'])."'," .
 					"'".$DBCONN->escapeSimple($value['comp'])."'," .
@@ -1439,7 +1438,7 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 	//check to see which of the suggested research tasks have already been added into the database
 	function task_check($title, $pid) {
 		global $TBLPREFIX, $DBCONN, $GEDCOM, $GEDCOMS;
-		$sql = "SELECT t_id FROM ".$TBLPREFIX."tasks, ".$TBLPREFIX."individualtask WHERE t_title = '".$DBCONN->escapeSimple($title)."' AND it_t_id=t_id AND it_i_id='".$DBCONN->escapeSimple($pid)."' AND it_i_file='".$GEDCOMS[$GEDCOM]['id']."'";
+		$sql = "SELECT t_id FROM {$TBLPREFIX}tasks, {$TBLPREFIX}individualtask WHERE t_title = '".$DBCONN->escapeSimple($title)."' AND it_t_id=t_id AND it_i_id='".$DBCONN->escapeSimple($pid)."' AND it_i_file='".$GEDCOMS[$GEDCOM]['id']."'";
 		$res = dbquery($sql);
 		if ($res->numRows() == 0)
 			return false;
@@ -1455,7 +1454,7 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 		$res = $this->get_folder("");
 		$out = "";
 		while ($row = $res->fetchRow(DB_FETCHMODE_ASSOC)) {
-			$out .= "<option value=".$row['fr_id']." selected=Selected>".$row['fr_name']."</option>";
+			$out .= "<option value=".$row['fr_id']." selected=selected>".$row['fr_name']."</option>";
 		}
 		return $out;
 	}
@@ -1466,7 +1465,7 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 	function getSourceTasks($sId) {
 		global $pgv_lang, $TBLPREFIX, $GEDCOMS, $GEDCOM, $DBCONN;
 
-		$sql = "SELECT * FROM ".$TBLPREFIX."tasks, ".$TBLPREFIX."tasksource, ".$TBLPREFIX."sources WHERE t_id=ts_t_id AND s_id=ts_s_id AND s_id='".$DBCONN->escapeSimple($sId)."' AND s_file=".$GEDCOMS[$GEDCOM]['id'];
+		$sql = "SELECT * FROM {$TBLPREFIX}tasks, {$TBLPREFIX}tasksource, {$TBLPREFIX}sources WHERE t_id=ts_t_id AND s_id=ts_s_id AND s_id='".$DBCONN->escapeSimple($sId)."' AND s_file=".$GEDCOMS[$GEDCOM]['id'];
 		$res = dbquery($sql);
 
 		$out = "\n\t<table class=\"list_table\">";
@@ -1560,7 +1559,7 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 			$this->auto_add_task($person, $_POST['folder']);
 
 		// gets task id from the database
-		$sql = "SELECT * FROM ".$TBLPREFIX."individualtask WHERE it_i_id = '".$DBCONN->escapeSimple($person->getXref())."' AND it_i_file='".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]['id'])."'";
+		$sql = "SELECT * FROM {$TBLPREFIX}individualtask WHERE it_i_id = '".$DBCONN->escapeSimple($person->getXref())."' AND it_i_file='".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]['id'])."'";
 		$res = dbquery($sql);
 
 		if (PEAR::isError($res)) {
@@ -1575,7 +1574,7 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 			// Loop through all the task ID's and pull the info we need on them,
 			// then format them nicely to show the user.
 			while ($taskid = $res->fetchrow(DB_FETCHMODE_ASSOC)) {
-				$sql = "SELECT * FROM ".$TBLPREFIX."tasks WHERE t_id = '".$taskid['it_t_id']."'";
+				$sql = "SELECT * FROM {$TBLPREFIX}tasks WHERE t_id = '".$taskid['it_t_id']."'";
 				$result = dbquery($sql);
 				if ($result->numRows()>0) {
 					$task = $result->fetchrow(DB_FETCHMODE_ASSOC);
@@ -1941,14 +1940,14 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 
 		//Beginning of the comments feature
 		if (!empty($_REQUEST['action']) && $_REQUEST['action']=='delete_comment' && !empty($_REQUEST['uc_id'])) {
-			$sql = "DELETE FROM ".$TBLPREFIX."user_comments WHERE uc_id=".$_REQUEST['uc_id'];
+			$sql = "DELETE FROM {$TBLPREFIX}user_comments WHERE uc_id=".$_REQUEST['uc_id'];
 			$res = dbquery($sql);
 		}
 		$out .= '<br /><br />
 		<table width="50%" align="center"><tr><td class="topbottombar">'.$pgv_lang['comments'].'</td></tr>';
 		$out .= '<tr><td class="optionbox">';
 		// Display comments
-		$sql = "select uc_id, uc_username, uc_datetime, uc_comment from ".$TBLPREFIX . "user_comments WHERE uc_f_id='".$GEDCOMS[$GEDCOM]['id']."' AND uc_p_id='" . $person->getXref() . "' ORDER BY uc_datetime DESC";
+		$sql = "SELECT uc_id, uc_username, uc_datetime, uc_comment FROM {$TBLPREFIX}user_comments WHERE uc_f_id='".$GEDCOMS[$GEDCOM]['id']."' AND uc_p_id='" . $person->getXref() . "' ORDER BY uc_datetime DESC";
 		$res = dbquery($sql);
 		$out .= "";
 
