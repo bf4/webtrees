@@ -48,73 +48,71 @@ if ($SHOW_RESEARCH_ASSISTANT>=PGV_USER_ACCESS_LEVEL) {
 
 	//-- print user messages
 	function print_mytasks($block=true, $config="", $side, $index) {
-			global $pgv_lang, $PGV_IMAGE_DIR, $TEXT_DIRECTION, $TIME_FORMAT, $PGV_STORE_MESSAGES, $PGV_IMAGES;
-			global $TBLPREFIX, $PGV_BLOCKS, $ctype, $GEDCOM;
+		global $pgv_lang, $PGV_IMAGE_DIR, $TEXT_DIRECTION, $TIME_FORMAT, $PGV_STORE_MESSAGES, $PGV_IMAGES;
+		global $TBLPREFIX, $PGV_BLOCKS, $ctype, $GEDCOM;
 
-			if (empty($config)) $config = $PGV_BLOCKS["print_mytasks"]["config"];
-	   if (isset($config["unassigned"])) $unassigned = $config["unassigned"];  // "yes" or "no"
-	   else $filter = "no";
-	   if (isset($config["completed"])) $completed = $config["completed"];  // "yes" or "no"
-	   else $completed = "no";
+		if (empty($config)) $config = $PGV_BLOCKS["print_mytasks"]["config"];
+		if (isset($config["unassigned"])) $unassigned = $config["unassigned"];  // "yes" or "no"
+		else $filter = "no";
+		if (isset($config["completed"])) $completed = $config["completed"];  // "yes" or "no"
+		else $completed = "no";
 
-		    $mod = new ra_functions();
-		    $mod->init();
-			$userName = getUserName();
+		$mod = new ra_functions();
+		$mod->init();
 
-			//USERS CURRENT TASKS
-			$sql = "Select * From " .$TBLPREFIX. "tasks where t_username ='".$userName."' AND t_enddate IS NULL";
-			$res = dbquery($sql);
-			$out = "<table class='list_table'><tr><th class='descriptionbox'>".$pgv_lang["Task_Name"]."</th><th class='descriptionbox'>".$pgv_lang["Start_Date"]."</th><th class='descriptionbox'>".$pgv_lang["edit"]."</th></tr>";
-			while ($task = $res->fetchRow(DB_FETCHMODE_ASSOC)) {
-				$task = db_cleanup($task);
+		$out = "<table class='list_table'><tr><th class='descriptionbox'>".$pgv_lang["Task_Name"]."</th><th class='descriptionbox'>".$pgv_lang["Start_Date"]."</th><th class='descriptionbox'>".$pgv_lang["edit"]."</th></tr>";
+		//USERS CURRENT TASKS
+		$rows=
+			PGV_DB::prepare("SELECT * FROM {$TBLPREFIX}tasks WHERE t_username=? AND t_enddate IS NULL")
+			->execute(array(PGV_USER_NAME))
+			->fetchAll();
 
-				$tasktitle = '<a href="module.php?mod=research_assistant&amp;action=viewtask&amp;taskid='.$task['t_id'].'">'.$task['t_title'].'</a>';
-				$date=timestamp_to_gedcom_date($task["t_startdate"]);
-				$out .= '<tr><td>'.PrintReady($tasktitle).'</td><td>'.$date->Display(false);
-				$out .= '</td><td class="optionbox"><a href="module.php?mod=research_assistant&amp;action=edittask&amp;taskid='.$task["t_id"].'">'.$pgv_lang["edit"].'</a>';
-				$out .= '</td></tr>';
-				}
-			$out .= '</table>';
-			$res->numRows();
+		foreach ($rows as $row) {
+			$tasktitle = '<a href="module.php?mod=research_assistant&amp;action=viewtask&amp;taskid='.$row->t_id.'">'.$row->t_title.'</a>';
+			$date=timestamp_to_gedcom_date($row->t_startdate);
+			$out .= '<tr><td>'.PrintReady($tasktitle).'</td><td>'.$date->Display(false);
+			$out .= '</td><td class="optionbox"><a href="module.php?mod=research_assistant&amp;action=edittask&amp;taskid='.$row->t_id.'">'.$pgv_lang["edit"].'</a>';
+			$out .= '</td></tr>';
+		}
+		$out .= '</table>';
 
-			//USERS COMPLETED TASKS
-			if($completed =="yes"){
-			$sql = "Select * From " .$TBLPREFIX. "tasks where t_username ='".$userName."' and t_enddate is NOT NULL";
-			$res = dbquery($sql);
+		//USERS COMPLETED TASKS
+		if($completed =="yes"){
+			$rows=
+				PGV_DB::prepare("SELECT * FROM {$TBLPREFIX}tasks WHERE t_username=? AND t_enddate IS NOT NULL")
+				->execute(array(PGV_USER_NAME))
+				->fetchAll();
+
 			$out .= "<b><p style='text-align: center;'>".$pgv_lang["completed"]."</p></b><br/><table class='list_table'><tr><th class='descriptionbox'>".$pgv_lang["Task_Name"]."</th><th class='descriptionbox'>".$pgv_lang["Start_Date"]."</th><th class='descriptionbox'>".$pgv_lang["edit"]."</th></tr>";
-			while ($task = $res->fetchRow(DB_FETCHMODE_ASSOC)) {
-				$task = db_cleanup($task);
-				$tasktitle = '<a href="module.php?mod=research_assistant&amp;action=viewtask&amp;taskid='.$task['t_id'].'">'.$task['t_title'].'</a>';
-				$date=timestamp_to_gedcom_date($task["t_startdate"]);
+			foreach ($rows as $row) {
+				$tasktitle = '<a href="module.php?mod=research_assistant&amp;action=viewtask&amp;taskid='.$row->t_id.'">'.$row->t_title.'</a>';
+				$date=timestamp_to_gedcom_date($row->t_startdate);
 				$out .= '<tr><td>'.PrintReady($tasktitle).'</td><td>'.$date->Display(false);
-				$out .= '</td><td class="optionbox"><a href="module.php?mod=research_assistant&amp;action=edittask&amp;taskid='.$task["t_id"].'">'.$pgv_lang["edit"].'</a>';
+				$out .= '</td><td class="optionbox"><a href="module.php?mod=research_assistant&amp;action=edittask&amp;taskid='.$row->t_id.'">'.$pgv_lang["edit"].'</a>';
 				$out .= '</td></tr>';
-				}
+			}
 			$out .= '</table>';
-			$res->numRows();
-			}
+		}
 
-			//UNASSIGNED TASKS
-			if($unassigned =="yes")
-			{
-				$sql = "Select * From " .$TBLPREFIX. "tasks where t_username =''";
-				$res = dbquery($sql);
-				$out .= "<b><p style='text-align: center;'>".$pgv_lang["mytasks_unassigned"]."</p></b><br/><table class='list_table'><tr><th class='descriptionbox'>".$pgv_lang["Task_Name"]."</th><th class='descriptionbox'>".$pgv_lang["Start_Date"]."</th><th class='descriptionbox'>".$pgv_lang["mytasks_edit"]."</th><th class='descriptionbox'>".$pgv_lang["mytasks_takeOn"]."</th></tr>";
-				while ($task = $res->fetchRow(DB_FETCHMODE_ASSOC)) {
-					$task = db_cleanup($task);
-					$tasktitle = '<a href="module.php?mod=research_assistant&amp;action=viewtask&amp;taskid='.$task['t_id'].'">'.$task['t_title'].'</a>';
-					$date=timestamp_to_gedcom_date($task["t_startdate"]);
-					$out .= '<tr><td>'.PrintReady($tasktitle).'</td><td>'.$date->Display(false);
-					$out .= '</td><td class="optionbox"><a href="module.php?mod=research_assistant&amp;action=edittask&amp;taskid='.$task["t_id"].'">'.$pgv_lang["edit"].'</a>';
-					$out .= '</td><td class="optionbox"><a href="module.php?mod=research_assistant&amp;action=assignUser&amp;t_id='.$task["t_id"].'&amp;t_username='.$userName.'">'.$pgv_lang["mytasks_takeOn"].'</a></td></tr>';
-					}
-				$out .= '</table>';
-				$res->numRows();
-			}
+		//UNASSIGNED TASKS
+		if($unassigned =="yes") {
+			$rows=
+				PGV_DB::prepare("SELECT * FROM {$TBLPREFIX}tasks WHERE t_username=''")
+				->fetchAll();
 
-	// Print heading
-			if(getUserName())
-			{
+			$out .= "<b><p style='text-align: center;'>".$pgv_lang["mytasks_unassigned"]."</p></b><br/><table class='list_table'><tr><th class='descriptionbox'>".$pgv_lang["Task_Name"]."</th><th class='descriptionbox'>".$pgv_lang["Start_Date"]."</th><th class='descriptionbox'>".$pgv_lang["mytasks_edit"]."</th><th class='descriptionbox'>".$pgv_lang["mytasks_takeOn"]."</th></tr>";
+			foreach ($rows as $row) {
+				$tasktitle = '<a href="module.php?mod=research_assistant&amp;action=viewtask&amp;taskid='.$row->t_id.'">'.$row->t_title.'</a>';
+				$date=timestamp_to_gedcom_date($row->t_startdate);
+				$out .= '<tr><td>'.PrintReady($tasktitle).'</td><td>'.$date->Display(false);
+				$out .= '</td><td class="optionbox"><a href="module.php?mod=research_assistant&amp;action=edittask&amp;taskid='.$row->t_id.'">'.$pgv_lang["edit"].'</a>';
+				$out .= '</td><td class="optionbox"><a href="module.php?mod=research_assistant&amp;action=assignUser&amp;t_id='.$row->t_id.'&amp;t_username='.PGV_USER_NAME.'">'.$pgv_lang["mytasks_takeOn"].'</a></td></tr>';
+			}
+			$out .= '</table>';
+		}
+
+		// Print heading
+		if (getUserName()) {
 			print "<div id=\"mytasks_block\" class=\"block\">\n";
 			print "<table class=\"blockheader\" cellspacing=\"0\" cellpadding=\"0\" style=\"direction:ltr;\"><tr>";
 			print "<td class=\"blockh1\" >&nbsp;</td>";
@@ -122,27 +120,27 @@ if ($SHOW_RESEARCH_ASSISTANT>=PGV_USER_ACCESS_LEVEL) {
 			print_help_link("mytasks_help", "qm");
 
 			if ($PGV_BLOCKS["print_mytasks"]["canconfig"]) {
-	     if ($ctype=="gedcom" && PGV_USER_GEDCOM_ADMIN || $ctype=="user" && PGV_USER_ID) {
+				if ($ctype=="gedcom" && PGV_USER_GEDCOM_ADMIN || $ctype=="user" && PGV_USER_ID) {
 					if ($ctype=="gedcom") {
 						$name = preg_replace("/'/", "\'", $GEDCOM);
 					} else {
 						$name = PGV_USER_NAME;
 					}
-	      print "<a href=\"javascript: configure block\" onclick=\"window.open('index_edit.php?name=$name&amp;ctype=$ctype&amp;action=configure&amp;side=$side&amp;index=$index', '_blank', 'top=50,left=50,width=600,height=350,scrollbars=1,resizable=1'); return false;\">";
-	       print "<img class=\"adminicon\" src=\"$PGV_IMAGE_DIR/".$PGV_IMAGES["admin"]["small"]."\" width=\"15\" height=\"15\" border=\"0\" alt=\"".$pgv_lang["config_block"]."\" /></a>\n";
-	    }
+					print "<a href=\"javascript: configure block\" onclick=\"window.open('index_edit.php?name=$name&amp;ctype=$ctype&amp;action=configure&amp;side=$side&amp;index=$index', '_blank', 'top=50,left=50,width=600,height=350,scrollbars=1,resizable=1'); return false;\">";
+					print "<img class=\"adminicon\" src=\"$PGV_IMAGE_DIR/".$PGV_IMAGES["admin"]["small"]."\" width=\"15\" height=\"15\" border=\"0\" alt=\"".$pgv_lang["config_block"]."\" /></a>\n";
+				}
 			}
 
 			print "<b>".$pgv_lang["my_tasks"]."&nbsp;&nbsp;</b>";
 			if ($TEXT_DIRECTION=="rtl") print getRLM();
-	//Print Tasks
+			//Print Tasks
 			print "<td class=\"blockh3\"></td></tr></table>\n";
 
 			print "<div class=\"blockcontent\">";
 			print $out;
 			print "</div></div>";
 
-			}
+		}
 	}
 
 	function print_mytasks_config($config) {
