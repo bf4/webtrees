@@ -809,8 +809,13 @@ function privatize_gedcom($gedrec) {
 					}
 				}
 			}
-			if ($type=="INDI") $newrec .= trim(get_sub_record(1, "1 SEX", $gedrec))."\n"; // do not privatize gender
-			$newrec .= "1 NOTE ".trim($pgv_lang["person_private"])."\n";
+			if ($type=="INDI") {
+				$newrec .= trim(get_sub_record(1, "1 SEX", $gedrec))."\n"; // do not privatize gender
+				$newrec .= "1 NOTE ".trim($pgv_lang["person_private"])."\n";
+			}
+			else if ($type=="FAM") $newrec .= "1 NOTE ".trim($pgv_lang["family_private"])."\n";
+			else if ($type=="OBJE") $newrec .= "1 NOTE ".trim($pgv_lang["media_private"])."\n";
+			else $newrec .= "1 NOTE ".trim($pgv_lang["private"])."\n";
 			//print $newrec;
 			$pgv_private_records[$gid] = $gedrec;
 			return $newrec;
