@@ -100,9 +100,9 @@ class ra_editfolder extends ra_form {
 
 				// Grab name and id for the options
 
-		$rows=
-			PGV_DB::prepare("select fr_name, fr_id from {$TBLPREFIX}folders")
-			->fetchAll();
+				$rows=
+					PGV_DB::prepare("select fr_name, fr_id from {$TBLPREFIX}folders")
+					->fetchAll();
 
 				foreach ($rows as $row) {
 					if($fr_parentFolder==$row->fr_id) {
