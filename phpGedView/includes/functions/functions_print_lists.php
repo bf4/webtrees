@@ -1100,7 +1100,7 @@ function print_repo_table($repos, $legend='') {
  */
 function print_media_table($datalist, $legend="") {
 	global $pgv_lang, $factarray, $SHOW_ID_NUMBERS, $SHOW_LAST_CHANGE, $TEXT_DIRECTION;
-	global $PGV_IMAGE_DIR, $PGV_IMAGES;
+	global $PGV_IMAGE_DIR, $PGV_IMAGES, $SHOW_MEDIA_FILENAME;
 
 	if (count($datalist)<1) return;
 	require_once 'js/sorttable.js.htm';
@@ -1138,10 +1138,11 @@ function print_media_table($datalist, $legend="") {
 		if ($SHOW_ID_NUMBERS)
 			echo '<td class="list_value_wrap rela">'.$media->getXrefLink().'</td>';
 		//-- Object name(s)
-		$name = $media->getListName();
+		$name = $media->getFullName();
 		echo "<td class=\"list_value_wrap\" align=\"".get_align($name)."\">";
 		echo "<a href=\"".encode_url($media->getLinkUrl())."\" class=\"list_item name2\">".PrintReady($name)."</a>";
-		echo "<br /><a href=\"".encode_url($media->getLinkUrl())."\">".basename($media->file)."</a>";
+		if ($SHOW_MEDIA_FILENAME || PGV_USER_IS_ADMIN)
+			echo "<br /><a href=\"".encode_url($media->getLinkUrl())."\">".basename($media->file)."</a>";
 		//echo "<br />".$media->getFiletype();
 		//echo "&nbsp;&nbsp;".$media->width."x".$media->height;
 		//echo "&nbsp;&nbsp;".$media->getFilesize()."kB";
