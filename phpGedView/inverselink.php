@@ -101,27 +101,26 @@ if ($action == "choose" && $paramok) {
 	print_help_link("add_media_linkid","qm", "link_media");
 	print $pgv_lang["link_media"]." ".$toitems."</td></tr>";
 	print "<tr><td class=\"descriptionbox width20 wrap\">".$pgv_lang["media_id"]."</td>";
+	echo '<td class="optionbox wrap">';
 	if (!empty($mediaid)) {
 		//-- Get the title of this existing Media item
-		$sql = "SELECT m_titl FROM {$TBLPREFIX}media where m_media='{$mediaid}' AND m_gedfile='{$GEDCOMS[$GEDCOM]['id']}'";
-		$tempsql = dbquery($sql);
-		$res =& $tempsql;
-		$row =& $res->fetchRow(DB_FETCHMODE_ASSOC);
-		if (trim($row["m_titl"])=="") {
-			print "<td class=\"optionbox wrap\"><b>".$mediaid."</b></td></tr>";
+		$title=
+			PGV_DB::prepare("SELECT m_titl FROM {$TBLPREFIX}media where m_media=? AND m_gedfile=?")
+			->execute(array($mediaid, PGV_GED_ID))
+			->fetchOne();
+		if ($title) {
+			echo '<b>', PrintReady($title), '</b>&nbsp;&nbsp;&nbsp;';
+			if ($TEXT_DIRECTION=="rtl") print getRLM();
+			echo "({$mediaid})";
+			if ($TEXT_DIRECTION=="rtl") print getRLM();
 		} else {
-			print "<td class=\"optionbox wrap\"><b>".PrintReady($row["m_titl"])."</b>&nbsp;&nbsp;&nbsp;";
-			if ($TEXT_DIRECTION=="rtl") print getRLM();
-			print "(".$mediaid.")";
-			if ($TEXT_DIRECTION=="rtl") print getRLM();
-			print "</td></tr>";
+			echo "<b>{$mediaid}</b>";
 		}
-		$res->free();
  	} else {
-		print "<td class=\"optionbox wrap\"><input type=\"text\" name=\"mediaid\" id=\"mediaid\" size=\"5\" />";
+		echo '<input type="text" name="mediaid" id="mediaid" size="5" />';
 		print_findmedia_link("mediaid","1media");
-		print "</td></tr>";
 	}
+	echo '</td></tr>';
 
 	if (!isset($linktoid)) $linktoid = "";
 	print "<tr><td class=\"descriptionbox\">";
