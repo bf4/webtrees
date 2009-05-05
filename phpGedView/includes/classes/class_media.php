@@ -325,22 +325,15 @@ class Media extends GedcomRecord {
 	/**
 	 * check if the given Media object is in the objectlist
 	 * @param Media $obje
-	 * @return mixed  returns the ID for the for the matching media or false if not found
+	 * @return mixed  returns the ID for the for the matching media or null if not found
 	 */
-	static function in_obje_list(&$obje) {
-		global $TBLPREFIX, $GEDCOMS, $GEDCOM, $FILE, $DBCONN;
+	static function in_obje_list($obje) {
+		global $TBLPREFIX;
 
-		if (is_null($obje)) return false;
-		if (empty($FILE)) $FILE = $GEDCOM;
-		$sql = "SELECT m_media FROM ".$TBLPREFIX."media WHERE m_file='".$DBCONN->escapeSimple($obje->file)."' AND m_titl ".PGV_DB_LIKE." '".$DBCONN->escapeSimple($obje->title)."' AND m_gedfile=".$GEDCOMS[$FILE]['id'];
-		$res = dbquery($sql);
-
-		if ($res->numRows()>0) {
-			$row = $res->fetchRow();
-			return $row[0];
-		}
-
-		return false;
+		return
+			PGV_DB::prepare("SELECT m_media FROM {$TBLPREFIX}media WHERE m_file=? AND m_titl ".PGV_DB_LIKE." ? AND m_gedfile=?")
+			->execute(array($obje->file, $obje->title, PGV_GED_ID))
+			->fetchOne();
 	}
 
 	/**
