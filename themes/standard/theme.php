@@ -127,6 +127,7 @@ $PGV_IMAGES["media"]["ged"] = "media/ged.gif";
 $PGV_IMAGES["media"]["pdf"] = "media/pdf.gif";
 
 //- other images
+$PGV_IMAGES["add"]["other"]	= "add.gif";
 $PGV_IMAGES["darrow"]["other"] = "darrow.gif";
 $PGV_IMAGES["darrow2"]["other"] = "darrow2.gif";
 $PGV_IMAGES["ddarrow"]["other"] = "ddarrow.gif";
@@ -153,6 +154,7 @@ $PGV_IMAGES["vline"]["other"] = "vline.gif";
 $PGV_IMAGES["zoomin"]["other"] = "zoomin.gif";
 $PGV_IMAGES["zoomout"]["other"] = "zoomout.gif";
 $PGV_IMAGES["stop"]["other"] = "stop.gif";
+
 // - lifespan chart arrows
 $PGV_IMAGES["lsltarrow"]["other"] = "lsltarrow.gif";
 $PGV_IMAGES["lsrtarrow"]["other"] = "lsrtarrow.gif";

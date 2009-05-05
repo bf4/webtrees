@@ -113,32 +113,34 @@ $PGV_IMAGES["media"]["ged"] = "../../../images/media/ged.gif";
 $PGV_IMAGES["media"]["pdf"] = "../../../images/media/pdf.gif";
 
 //- other images
-$PGV_IMAGES["dline2"]["other"] = "dline2.gif";
+$PGV_IMAGES["add"]["other"]	= "add.gif";
+$PGV_IMAGES["darrow"]["other"] = "darrow.gif";
+$PGV_IMAGES["darrow2"]["other"] = "darrow2.gif";
+$PGV_IMAGES["ddarrow"]["other"] = "ddarrow.gif";
 $PGV_IMAGES["dline"]["other"] = "dline.gif";
-$PGV_IMAGES["hline"]["other"] = "hline.gif";
-$PGV_IMAGES["spacer"]["other"] = "spacer.gif";
+$PGV_IMAGES["dline2"]["other"] = "dline2.gif";
 $PGV_IMAGES["gedview"]["other"] = "gedview.gif";
-$PGV_IMAGES["larrow2"]["other"] = "larrow2.gif";
+$PGV_IMAGES["hline"]["other"] = "hline.gif";
 $PGV_IMAGES["larrow"]["other"] = "larrow.gif";
+$PGV_IMAGES["larrow2"]["other"] = "larrow2.gif";
+$PGV_IMAGES["ldarrow"]["other"] = "ldarrow.gif";
 $PGV_IMAGES["minus"]["other"] = "minus.gif";
 $PGV_IMAGES["note"]["other"] = "notes.gif";
 $PGV_IMAGES["plus"]["other"] = "plus.gif";
-$PGV_IMAGES["rarrow2"]["other"] = "rarrow2.gif";
 $PGV_IMAGES["rarrow"]["other"] = "rarrow.gif";
+$PGV_IMAGES["rarrow2"]["other"] = "rarrow2.gif";
+$PGV_IMAGES["rdarrow"]["other"] = "rdarrow.gif";
+$PGV_IMAGES["remove"]["other"]	= "remove.gif";
+$PGV_IMAGES["spacer"]["other"] = "spacer.gif";
 $PGV_IMAGES["uarrow"]["other"] = "uarrow.gif";
 $PGV_IMAGES["uarrow2"]["other"] = "uarrow2.gif";
-$PGV_IMAGES["darrow"]["other"] = "darrow.gif";
-$PGV_IMAGES["darrow2"]["other"] = "darrow2.gif";
-$PGV_IMAGES["vline"]["other"] = "vline.gif";
 $PGV_IMAGES["uarrow3"]["other"] = "uarrow3.gif";
+$PGV_IMAGES["udarrow"]["other"] = "udarrow.gif";
+$PGV_IMAGES["vline"]["other"] = "vline.gif";
 $PGV_IMAGES["zoomin"]["other"] = "zoomin.gif";
 $PGV_IMAGES["zoomout"]["other"] = "zoomout.gif";
-$PGV_IMAGES["rdarrow"]["other"] = "rdarrow.gif";
-$PGV_IMAGES["udarrow"]["other"] = "udarrow.gif";
-$PGV_IMAGES["ldarrow"]["other"] = "ldarrow.gif";
-$PGV_IMAGES["ddarrow"]["other"] = "ddarrow.gif";
-$PGV_IMAGES["remove"]["other"]	= "remove.gif";
 $PGV_IMAGES["stop"]["other"] = "stop.gif";
+
 // - lifespan chart arrows
 $PGV_IMAGES["lsltarrow"]["other"] = "lsltarrow.gif";
 $PGV_IMAGES["lsrtarrow"]["other"] = "lsrtarrow.gif";

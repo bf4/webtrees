@@ -30,6 +30,8 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
+
+$pgv_lang["enter_comment"]	= "Sie können hier eine Gedächtnishilfe eingeben.";
 $pgv_lang["upload_a_gedcom"] 		= "GEDCOM-Datei hochladen";
 $pgv_lang["start_entering"] 		= "Neue Daten eingeben";
 $pgv_lang["add_gedcom_from_path"] 	= "Bereits auf dem Server vorhandene GEDCOM-Datei einfügen";
