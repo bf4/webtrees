@@ -102,10 +102,6 @@ class ra_functions {
 	}
 
 	function createFactLookup() {
-		// Make sure we can use our database functions
-		//require_once("includes/functions/functions_db.php");//Need to fix this the file is not found
-
-		// Grab our database connections and table prefix from the site
 		global $DBCONN, $TBLPREFIX, $DBTYPE;
 
 		$data = $DBCONN->getListOf('tables');
@@ -130,7 +126,7 @@ class ra_functions {
 				" PRIMARY KEY (id)".
 				") ".PGV_DB_UTF8_TABLE
 			);
-			$this->insertInitialFacts();
+			self::insertInitialFacts();
 		}
 	}
 
@@ -198,72 +194,38 @@ class ra_functions {
 
 	function insertInitialFacts()
 	{
-		/*
-		 * Yes I know the below code constructs a query and then hits the database over and over again.
-		 * But it has to be done this way in the interests of compatibility
-		 */
-		global $DBCONN, $TBLPREFIX;
-		$data = $DBCONN->getListOf('tables');
+		global $TBLPREFIX;
 
-		if(in_array($TBLPREFIX.'factlookup', $data))
-		{
-			//Do the insertion of Census facts
-			$sql = 'insert into '.$TBLPREFIX.'factlookup VALUES(null,\'US Census 1800\',18000000,18001231,\'CENS\',\'USA\',null,null,null,null,null,null);';
-			$res = dbquery($sql);
-			$sql = 'insert into '.$TBLPREFIX.'factlookup VALUES(null,\'US Census 1810\',18100000,18101231,\'CENS\',\'USA\',null,null,null,null,null,null);';
-			$res = dbquery($sql);
-			$sql = 'insert into '.$TBLPREFIX.'factlookup VALUES(null,\'US Census 1820\',18200000,18201231,\'CENS\',\'USA\',null,null,null,null,null,null);';
-			$res = dbquery($sql);
-			$sql = 'insert into '.$TBLPREFIX.'factlookup VALUES(null,\'US Census 1830\',18300000,18301231,\'CENS\',\'USA\',null,null,null,null,null,null);';
-			$res = dbquery($sql);
-			$sql = 'insert into '.$TBLPREFIX.'factlookup VALUES(null,\'US Census 1840\',18100000,18401231,\'CENS\',\'USA\',null,null,null,null,null,null);';
-			$res = dbquery($sql);
-			$sql = 'insert into '.$TBLPREFIX.'factlookup VALUES(null,\'US Census 1850\',18500000,18501231,\'CENS\',\'USA\',null,null,null,null,null,null);';
-			$res = dbquery($sql);
-			$sql = 'insert into '.$TBLPREFIX.'factlookup VALUES(null,\'US Census 1860\',18600000,18601231,\'CENS\',\'USA\',null,null,null,null,null,null);';
-			$res = dbquery($sql);
-			$sql = 'insert into '.$TBLPREFIX.'factlookup VALUES(null,\'US Census 1870\',18700000,18701231,\'CENS\',\'USA\',null,null,null,null,null,null);';
-			$res = dbquery($sql);
-			$sql = 'insert into '.$TBLPREFIX.'factlookup VALUES(null,\'US Census 1880\',18800000,18801231,\'CENS\',\'USA\',null,null,null,null,null,null);';
-			$res = dbquery($sql);
-			$sql = 'insert into '.$TBLPREFIX.'factlookup VALUES(null,\'US Census 1890\',18900000,18901231,\'CENS\',\'USA\',null,null,null,null,null,null);';
-			$res = dbquery($sql);
-			$sql = 'insert into '.$TBLPREFIX.'factlookup VALUES(null,\'US Census 1900\',19000000,19001231,\'CENS\',\'USA\',null,null,null,null,null,null);';
-			$res = dbquery($sql);
-			$sql = 'insert into '.$TBLPREFIX.'factlookup VALUES(null,\'US Census 1910\',19100000,19101231,\'CENS\',\'USA\',null,null,null,null,null,null);';
-			$res = dbquery($sql);
-			$sql = 'insert into '.$TBLPREFIX.'factlookup VALUES(null,\'US Census 1920\',19200000,19201231,\'CENS\',\'USA\',null,null,null,null,null,null);';
-			$res = dbquery($sql);
-			$sql = 'insert into '.$TBLPREFIX.'factlookup VALUES(null,\'US Census 1930\',19300000,19301231,\'CENS\',\'USA\',null,null,null,null,null,null);';
-			$res = dbquery($sql);
-			$sql = 'insert into '.$TBLPREFIX.'factlookup VALUES(null,\'UK Census 1841\',18410000,18411231,\'CENS\',\'UK\',null,null,null,null,null,null);';
-			$res = dbquery($sql);
-			$sql = 'insert into '.$TBLPREFIX.'factlookup VALUES(null,\'UK Census 1851\',18510000,18511231,\'CENS\',\'UK\',null,null,null,null,null,null);';
-			$res = dbquery($sql);
-			$sql = 'insert into '.$TBLPREFIX.'factlookup VALUES(null,\'UK Census 1861\',18610000,18611231,\'CENS\',\'UK\',null,null,null,null,null,null);';
-			$res = dbquery($sql);
-			$sql = 'insert into '.$TBLPREFIX.'factlookup VALUES(null,\'UK Census 1871\',18710000,18711231,\'CENS\',\'UK\',null,null,null,null,null,null);';
-			$res = dbquery($sql);
-			$sql = 'insert into '.$TBLPREFIX.'factlookup VALUES(null,\'UK Census 1881\',18810000,18811231,\'CENS\',\'UK\',null,null,null,null,null,null);';
-			$res = dbquery($sql);
-			$sql = 'insert into '.$TBLPREFIX.'factlookup VALUES(null,\'UK Census 1891\',18910000,18911231,\'CENS\',\'UK\',null,null,null,null,null,null);';
-			$res = dbquery($sql);
-			$sql = 'insert into '.$TBLPREFIX.'factlookup VALUES(null,\'UK Census 1901\',19010000,19011231,\'CENS\',\'UK\',null,null,null,null,null,null);';
-			$res = dbquery($sql);
-			//end census stuff
+		$statement=PGV_DB::prepare("INSERT INTO {$TBLPREFIX}factlookup (description, startdate, enddate, gedcom_fact, pl_lv1) VALUES (?, ?, ?, ?, ?)");
+			
+		// Do the insertion of Census facts
+		$statement->execute(array('US Census 1800', 18000000, 18001231, 'CENS', 'USA'));
+		$statement->execute(array('US Census 1810', 18100000, 18101231, 'CENS', 'USA'));
+		$statement->execute(array('US Census 1820', 18200000, 18201231, 'CENS', 'USA'));
+		$statement->execute(array('US Census 1830', 18300000, 18301231, 'CENS', 'USA'));
+		$statement->execute(array('US Census 1840', 18100000, 18401231, 'CENS', 'USA'));
+		$statement->execute(array('US Census 1850', 18500000, 18501231, 'CENS', 'USA'));
+		$statement->execute(array('US Census 1860', 18600000, 18601231, 'CENS', 'USA'));
+		$statement->execute(array('US Census 1870', 18700000, 18701231, 'CENS', 'USA'));
+		$statement->execute(array('US Census 1880', 18800000, 18801231, 'CENS', 'USA'));
+		$statement->execute(array('US Census 1890', 18900000, 18901231, 'CENS', 'USA'));
+		$statement->execute(array('US Census 1900', 19000000, 19001231, 'CENS', 'USA'));
+		$statement->execute(array('US Census 1910', 19100000, 19101231, 'CENS', 'USA'));
+		$statement->execute(array('US Census 1920', 19200000, 19201231, 'CENS', 'USA'));
+		$statement->execute(array('US Census 1930', 19300000, 19301231, 'CENS', 'USA'));
+		$statement->execute(array('UK Census 1841', 18410000, 18411231, 'CENS', 'UK' ));
+		$statement->execute(array('UK Census 1851', 18510000, 18511231, 'CENS', 'UK' ));
+		$statement->execute(array('UK Census 1861', 18610000, 18611231, 'CENS', 'UK' ));
+		$statement->execute(array('UK Census 1871', 18710000, 18711231, 'CENS', 'UK' ));
+		$statement->execute(array('UK Census 1881', 18810000, 18811231, 'CENS', 'UK' ));
+		$statement->execute(array('UK Census 1891', 18910000, 18911231, 'CENS', 'UK' ));
+		$statement->execute(array('UK Census 1901', 19010000, 19011231, 'CENS', 'UK' ));
 
-			//Insert War facts here
-			$sql = 'insert into '.$TBLPREFIX.'factlookup VALUES(null,\'Civil War\',18610412,18651231,\'_MILI\',\'USA\',null,null,null,null,null,null);';
-			$res = dbquery($sql);
-			$sql = 'insert into '.$TBLPREFIX.'factlookup VALUES(null,\'WWI\',19140412,19181231,\'_MILI\',null,null,null,null,null,null,null);';
-			$res = dbquery($sql);
-			$sql = 'insert into '.$TBLPREFIX.'factlookup VALUES(null,\'WWII\',19390412,19451231,\'_MILI\',null,null,null,null,null,null,null);';
-			$res = dbquery($sql);
-			$sql = 'insert into '.$TBLPREFIX.'factlookup VALUES(null,\'Korean War\',19500625,19531231,\'_MILI\',null,null,null,null,null,null,null);';
-			$res = dbquery($sql);
-
-			//End War Facts
-		}
+		// Insert War facts here
+		$statement->execute(array('Civil War',  18610412, 18651231, '_MILI', 'USA'));
+		$statement->execute(array('WWI',        19140412, 19181231, '_MILI', null ));
+		$statement->execute(array('WWII',       19390412, 19451231, '_MILI', null ));
+		$statement->execute(array('Korean War', 19500625, 19531231, '_MILI', null ));
 	}
 
 
@@ -273,10 +235,6 @@ class ra_functions {
 	 * @return void
 	 */
 	function createDatabase() {
-		// Make sure we can use our database functions
-		//require_once("includes/functions/functions_db.php");//Need to fix this the file is not found
-
-		// Grab our database connections and table prefix from the site
 		global $DBCONN, $TBLPREFIX;
 
 		$data = $DBCONN->getListOf('tables');
