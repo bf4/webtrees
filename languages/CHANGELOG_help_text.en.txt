@@ -43,6 +43,7 @@ VERSION 4.2.2
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change	codes and comments
 ----------------------------------------------------------------------------------------
+*$pgv_lang["sort_style_help"]						05 May 2009				wf
 +$pgv_lang["sort_style_help"]						04 May 2009				A
 
 
