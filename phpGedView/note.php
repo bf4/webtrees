@@ -90,7 +90,7 @@ if (!$controller->isPrintPreview()) {
 	}
 }
 echo '</td></tr><tr><td colspan="2"><table border="0" class="facts_table width80 center">';
-
+echo '<tr class="'.$TEXT_DIRECTION.'"><td><table>';
 	// Shared Note details ---------------------
 	$noterec = find_gedcom_record($controller->nid);
 	$nt = preg_match("/0 @$controller->nid@ NOTE(.*)/", $noterec, $n1match);
@@ -139,7 +139,7 @@ echo '</td></tr><tr><td colspan="2"><table border="0" class="facts_table width80
 		echo '<a href="javascript:;" onclick="window.open(\'inverselink.php?linktoid='.$controller->nid.'&linkto=note\', \'_blank\', \'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1\'); return false;">'.$pgv_lang['link_to_existing_media'].'</a>';
 		echo '</td></tr>';
 	}
-
+echo '</table></td></tr>';
 echo '</table><br /><br /></td></tr><tr class="center"><td colspan="2">';
 
 

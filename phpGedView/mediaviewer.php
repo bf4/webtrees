@@ -149,7 +149,7 @@ if ((!$controller->isPrintPreview())&&(empty($SEARCH_SPIDER))&&!empty($controlle
 							<?php
 								$facts = $controller->getFacts($SHOW_MEDIA_FILENAME);
 								foreach($facts as $f=>$factrec) {
-									print_fact($factrec, $controller->pid, 1, false, true);
+									print_fact($factrec);
 								}
 							?>
 						</table>
