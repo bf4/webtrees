@@ -152,19 +152,22 @@ function lightbox_print_media($pid, $level=1, $related=false, $kind=1, $noedit=f
 	$media_found = false;
 
 	// Get the related media items
-		// Adding DISTINCT is the fix for: [ 1488550 ] Family/Individual Media Duplications
-		// but it may not work for all RDBMS.
-		// $sqlmm  = "SELECT ";
 	$sqlmm = "SELECT DISTINCT ";
 	$sqlmm .= "m_media, m_ext, m_file, m_titl, m_gedfile, m_gedrec, mm_gid, mm_gedrec FROM ".$TBLPREFIX."media, ".$TBLPREFIX."media_mapping where ";
 	$sqlmm .= "mm_gid IN (";
+	$vars=array();
 	foreach ($ids as $id) {
-		$sqlmm .= "'".$DBCONN->escapeSimple($id)."', ";
+		$sqlmm .= "?, ";
+		$vars[]=$id;
 	}
 	$sqlmm = rtrim($sqlmm, ', ');
-	$sqlmm .= ") AND mm_gedfile = '".$GEDCOMS[$GEDCOM]["id"]."' AND mm_media=m_media AND mm_gedfile=m_gedfile ";
+	$sqlmm .= ") AND mm_gedfile=? AND mm_media=m_media AND mm_gedfile=m_gedfile ";
+	$vars[]=PGV_GED_ID;
 	//-- for family and source page only show level 1 obje references
-	if ($level>0) $sqlmm .= "AND mm_gedrec ".PGV_DB_LIKE." '$level OBJE%'";
+	if ($level>0) {
+		$sqlmm .= "AND mm_gedrec ".PGV_DB_LIKE." ?";
+		$vars[]="$level OBJE%";
+	}
 
 	$sqlmm .= " AND $typ2b ";
 	// $sqlmm .= " ORDER BY m_titl ";
@@ -174,9 +177,9 @@ function lightbox_print_media($pid, $level=1, $related=false, $kind=1, $noedit=f
 		$sqlmm .= " ORDER BY mm_gid DESC ";
 	}
 
-	$resmm = dbquery($sqlmm);
+	$rows=PGV_DB::prepare($sqlmm)->execute($vars)->fetchAll(PDO::FETCH_ASSOC);
 	$foundObjs = array();
-	$numm = $resmm->numRows();
+	$numm = count($rows);
 
 	// Begin to Layout the Album Media Rows
 	if ($numm>0 || $kind==5) {
@@ -207,7 +210,7 @@ function lightbox_print_media($pid, $level=1, $related=false, $kind=1, $noedit=f
 		// ==================================================
 
 		// Start pulling media items into thumbcontainer div ==============================
-		while ($rowm = $resmm->fetchRow(DB_FETCHMODE_ASSOC)) {
+		foreach ($rows as $rowm) {
 			if (isset($foundObjs[$rowm['m_media']])) {
 				if (isset($current_objes[$rowm['m_media']])) {
 					$current_objes[$rowm['m_media']]--;
