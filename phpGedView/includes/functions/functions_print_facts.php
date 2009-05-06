@@ -648,7 +648,7 @@ function print_fact_sources($factrec, $level, $return=false) {
 
 //-- Print the links to multi-media objects
 function print_media_links($factrec, $level,$pid='') {
-	global $MULTI_MEDIA, $TEXT_DIRECTION, $TBLPREFIX, $GEDCOMS;
+	global $MULTI_MEDIA, $TEXT_DIRECTION, $TBLPREFIX;
 	global $pgv_lang, $factarray, $SEARCH_SPIDER, $view;
 	global $THUMBNAIL_WIDTH, $USE_MEDIA_VIEWER;
 	global $GEDCOM, $SHOW_ID_NUMBERS;
@@ -661,13 +661,13 @@ function print_media_links($factrec, $level,$pid='') {
 	while ($objectNum < count($omatch)) {
 		$media_id = preg_replace("/@/", "", trim($omatch[$objectNum][1]));
 		if (displayDetailsById($media_id, "OBJE")) {
-			$sql = "SELECT m_titl, m_file, m_gedrec FROM {$TBLPREFIX}media where m_media='{$media_id}' AND m_gedfile={$GEDCOMS[$GEDCOM]['id']}";
-			$tempsql = dbquery($sql);
-			$res =& $tempsql;
-			if ($res->numRows()>0) {
-			$row =& $res->fetchRow(DB_FETCHMODE_ASSOC);
-			}
-			else if (PGV_USER_CAN_EDIT) {
+			$row=
+				PGV_DB::prepare("SELECT m_titl, m_file, m_gedrec FROM {$TBLPREFIX}media where m_media=? AND m_gedfile=?")
+				->execute(array($media_id, PGV_GED_ID))
+				->fetchOneRow(PDO::FETCH_ASSOC);
+
+			// A new record, pending acceptance?
+			if (!$row && PGV_USER_CAN_EDIT) {
 				$mediarec = find_updated_record($media_id);
 				$row["m_file"] = get_gedcom_value("FILE", 1, $mediarec);
 				$row["m_titl"] = get_gedcom_value("TITL", 1, $mediarec);
@@ -1292,9 +1292,7 @@ function print_main_notes($factrec, $level, $pid, $linenum, $noedit=false) {
  * @param boolean $related	Whether or not to grab media from related records
  */
 function print_main_media($pid, $level=1, $related=false, $noedit=false) {
-	global $TBLPREFIX;
-	global $pgv_changes;
-	global $GEDCOMS, $GEDCOM, $MEDIATYPE, $pgv_changes, $DBCONN;
+	global $TBLPREFIX, $GEDCOM, $MEDIATYPE, $pgv_changes;
 
 	if (!showFact("OBJE", $pid)) return false;
 	if (!isset($pgv_changes[$pid."_".$GEDCOM])) $gedrec = find_gedcom_record($pid);
@@ -1341,21 +1339,24 @@ function print_main_media($pid, $level=1, $related=false, $noedit=false) {
 	}
 
 	$media_found = false;
-	// $sqlmm = "SELECT DISTINCT ";
-	// Adding DISTINCT is the fix for: [ 1488550 ] Family/Individual Media Duplications
-	// but it may not work for all RDBMS.
 	$sqlmm = "SELECT ";
-	$sqlmm .= "m_media, m_ext, m_file, m_titl, m_gedfile, m_gedrec, mm_gid, mm_gedrec FROM ".$TBLPREFIX."media, ".$TBLPREFIX."media_mapping where ";
+	$sqlmm .= "m_media, m_ext, m_file, m_titl, m_gedfile, m_gedrec, mm_gid, mm_gedrec FROM {$TBLPREFIX}media, {$TBLPREFIX}media_mapping where ";
 	$sqlmm .= "mm_gid IN (";
+	$vars=array();
 	$i=0;
 	foreach($ids as $key=>$id) {
 		if ($i>0) $sqlmm .= ",";
-		$sqlmm .= "'".$DBCONN->escapeSimple($id)."'";
+		$sqlmm .= "?";
+		$vars[]=$id;
 		$i++;
 	}
-	$sqlmm .= ") AND mm_gedfile = '".$GEDCOMS[$GEDCOM]["id"]."' AND mm_media=m_media AND mm_gedfile=m_gedfile ";
+	$sqlmm .= ") AND mm_gedfile=? AND mm_media=m_media AND mm_gedfile=m_gedfile ";
+	$vars[]=PGV_GED_ID;
 	//-- for family and source page only show level 1 obje references
-	if ($level>0) $sqlmm .= "AND mm_gedrec ".PGV_DB_LIKE." '$level OBJE%'";
+	if ($level>0) {
+		$sqlmm .= "AND mm_gedrec ".PGV_DB_LIKE." ?";
+		$vars[]="{$level} OBJE%";
+	}
 
 	// LBox --- media sort -------------------------------------
 	if ($sort_ct>0) {
@@ -1365,9 +1366,10 @@ function print_main_media($pid, $level=1, $related=false, $noedit=false) {
 	}
 	// ---------------------------------------------------------------
 
-	$resmm = dbquery($sqlmm);
+	$rows=PGV_DB::prepare($sqlmm)->execute($vars)->fetchAll(PDO::FETCH_ASSOC);
+
 	$foundObjs = array();
-	while($rowm = $resmm->fetchRow(DB_FETCHMODE_ASSOC)) {
+	foreach ($rows as $rowm) {
 		if (isset($foundObjs[$rowm['m_media']])) {
 			if (isset($current_objes[$rowm['m_media']])) $current_objes[$rowm['m_media']]--;
 			continue;
