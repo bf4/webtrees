@@ -110,55 +110,46 @@ class ra_functions {
 	 *
 	 * @return A multi-dimensional array of the valid dates
 	 */
-	function getEventsForDates($startDate,$endDate,$factLookingFor = "",$place = "")
-	{
-		global $DBCONN, $TBLPREFIX;
-		if(empty($endDate))
-		{
+	function getEventsForDates($startDate,$endDate,$factLookingFor = "",$place = "") {
+		global $TBLPREFIX;
+
+		if (empty($endDate)) {
 			//Add a ten year difference if no end date was sent in
 			$endDate = $startDate + 00100000;
 		}
 
-		if(empty($factLookingFor))
-		{
-			$sql = "SELECT * FROM {$TBLPREFIX}factlookup WHERE StartDate <= ".$endDate.' AND EndDate >= '.$startDate;
-		}
-		else
-		{
-			$sql = "SELECT * FROM {$TBLPREFIX}factlookup WHERE StartDate <= ".$endDate.' AND EndDate >= '.$startDate.' AND Gedcom_fact like \'%'.$factLookingFor.'%\'';
+		if (empty($factLookingFor)) {
+			$sql = "SELECT * FROM {$TBLPREFIX}factlookup WHERE startdate<=? AND enddate>=?";
+			$vars=array($endDate, $startDate);
+		} else {
+			$sql = "SELECT * FROM {$TBLPREFIX}factlookup WHERE startdate<=? AND enddate>=? AND gedcom_fact ".PGV_DB_LIKE." ?";
+			$vars=array($endDate, $startDate, "%{$factLookingFor}%");
 		}
 
 		if (!empty($place)) {
-			$parts = explode(',',$place);
-			for($i = 0; $i < count($parts); $i++)
-			{
-				$parts[$i] = trim($parts[$i]);
+			$parts = explode(',', $place);
+			for ($i=0; $i<count($parts); $i++) {
+				$parts[$i]=trim($parts[$i]);
 			}
 
-			if(count($parts) > 0)
-			{
-				$numOfParts = count($parts) -1;
-				for($i = 0; ($i < count($parts) && $i<5); $i++)
-				{
+			if (count($parts) > 0) {
+				$numOfParts=count($parts) -1;
+				for ($i=0; ($i<count($parts) && $i<5); $i++) {
 					if (!empty($parts[$numOfParts])) {
-						$sql .= ' AND PL_LV'.($i+1)." ".PGV_DB_LIKE." '%".$DBCONN->escapeSimple($parts[$numOfParts]).'%\'';
+						$sql.=" AND pl_lv".($i+1)." ".PGV_DB_LIKE." ?";
+						$vars[]='%'.$parts[$numOfParts].'%';
 					}
 					$numOfParts--;
 				}
 
 			}
+		} else {
+			$sql.=" AND PL_LV1 IS NULL";
 		}
-		else {
-			$sql .= ' AND PL_LV1 IS NULL ';
-		}
-		$res = dbquery($sql);
-		$rows = array();
-		while($row = $res->fetchRow(DB_FETCHMODE_ASSOC)){
-			$rows[] = $row;
-		}
-		$res->free();
-
-		return $rows;
+		return
+			PGV_DB::prepare($sql)
+			->execute($vars)
+			->fetchAll(PDO::FETCH_ASSOC);
 	}
 
 	/**
@@ -377,8 +368,8 @@ class ra_functions {
 	 * @return mixed
 	 */
 	function print_menu($folderid = "", $taskid = "") {
-			// Grab the global language array for internationalization
-	global $pgv_lang, $TBLPREFIX;
+		// Grab the global language array for internationalization
+		global $pgv_lang, $TBLPREFIX;
 
 		$width = 150;
 
@@ -392,10 +383,11 @@ class ra_functions {
 		}
 
 		// Restrict the column if we are not at the top of the module
-		if ($folderid == "")
+		if ($folderid == "") {
 			$percent = "";
-		else
+		} else {
 			$percent = " width=\"22%\" ";
+		}
 
 		// Display for the menu
 global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, $SHOW_ADD_FOLDER, $SHOW_ADD_UNLINKED_SOURCE, $SHOW_VIEW_PROBABILITIES;//show
@@ -605,8 +597,8 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 	 *
 	 *
 	 */
-	 function print_user_tasks($userName)
-	 {
+	function print_user_tasks($userName)
+	{
 		global $res, $pgv_lang, $folderId;
 		global $TBLPREFIX;
 		$sql = "SELECT * FROM {$TBLPREFIX}tasks WHERE t_username ='".$userName."'";
@@ -618,15 +610,15 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 		}
 		$out .= '</table>';
 
-	 }
+	}
 
 	/**
 	 * Gets a list of assigned users tasks
 	 *
 	 *
 	 */
-	 function get_user_tasks($userName)
-	 {
+	function get_user_tasks($userName)
+	{
 		global $res, $pgv_lang, $folderId;
 		global $TBLPREFIX;
 		$sql = "SELECT * FROM {$TBLPREFIX}tasks WHERE t_username ='".$userName."' AND t_enddate IS NULL";
@@ -637,7 +629,7 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 			$tasks[] = $task;
 		}
 		return $tasks;
-	 }
+	}
 
 	/**
 	 * Displays a list of folders and their tasks
@@ -769,23 +761,21 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 	 * @returns true or false
 	 */
 	function folder_hastasks($folderid){
-	   global $TBLPREFIX;
-	  if(empty($folderid)){
-	  return false;
-	  }
-	  else{
-		  $sql = "SELECT * FROM {$TBLPREFIX}tasks WHERE t_fr_id =".$folderid;
-		  $res = dbquery($sql);
-
-		  //need to process the results...
-
-		  if($res->numRows()==0) {
-			return true;
-		  }
-		  else{
+		global $TBLPREFIX;
+		if(empty($folderid)){
 			return false;
-		  }
-	  }
+		} else {
+			$sql = "SELECT * FROM {$TBLPREFIX}tasks WHERE t_fr_id =".$folderid;
+			$res = dbquery($sql);
+
+			//need to process the results...
+
+			if($res->numRows()==0) {
+				return true;
+			} else {
+				return false;
+			}
+		}
 	}
 
 	/*
@@ -795,23 +785,21 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 	 * @returns true or false
 	 */
 	function folder_hasfolders($folderid){
-	   global $TBLPREFIX;
-	  if(empty($folderid)){
-	  return false;
-	  }
-	  else{
-		  $sql = "SELECT * FROM {$TBLPREFIX}folders WHERE fr_parentid =".$folderid;
-		  $res = dbquery($sql);
-
-		  //need to process the results...
-
-		  if($res->numRows()==0) {
-			return true;
-		  }
-		  else{
+		global $TBLPREFIX;
+		if (empty($folderid)){
 			return false;
-		  }
-	  }
+		} else {
+			$sql = "SELECT * FROM {$TBLPREFIX}folders WHERE fr_parentid =".$folderid;
+			$res = dbquery($sql);
+
+			//need to process the results...
+
+			if ($res->numRows()==0) {
+				return true;
+			} else {
+				return false;
+			}
+		}
 	}
 	/**
 	 * Switch the orderby clause
@@ -888,7 +876,7 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 	 * print_folder_view
 	 *
 	 * @param int $folderId If passed, Gets the subfolders
-		 * @param string $orderby If passed, Query the database with an order by clause
+	 * @param string $orderby If passed, Query the database with an order by clause
 	 * @return string HTML to print out the folder view
 	 */
 	function print_folder_view($folderId = "", $orderby = "") {
@@ -932,7 +920,7 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 	 * Display the tasks to the users
 	 *
 	 * @param int $folderId
-		 * @param string $res Result from the database
+	 * @param string $res Result from the database
 	 * @return string HTML to print out the folder view
 	 */
 	function print_tasks($folderId, $res) {
@@ -1067,9 +1055,10 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 	* @param taskid for the task to be completed
 	*/
 	function completeTask($taskid, $form='') {
-		global $TBLPREFIX, $DBCONN, $pgv_lang;
-		$sql = "UPDATE {$TBLPREFIX}tasks SET t_enddate='".time()."', t_form='".$DBCONN->escapeSimple($form)."' WHERE t_id='".$DBCONN->escapeSimple($taskid)."'";
-		dbquery($sql);
+		global $TBLPREFIX;
+
+		PGV_DB::prepare("UPDATE {$TBLPREFIX}tasks SET t_enddate=?, t_form=? WHERE t_id=?")
+			->execute(array(time(), $form, $taskid));
 	}
 	/**
 	 * Function to find missing information
@@ -1342,7 +1331,7 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 		 * pr_count int
 		 * pr_file INT
 		 */
-		 foreach($inferences as $pr_id=>$value) {
+		foreach($inferences as $pr_id=>$value) {
 			$sql = "INSERT INTO {$TBLPREFIX}probabilities VALUES ('".$DBCONN->escapeSimple(get_next_id("probabilities", "pr_id"))."'," .
 					"'".$DBCONN->escapeSimple($value['local'])."'," .
 					"'".$DBCONN->escapeSimple($value['record'])."'," .
@@ -1351,7 +1340,7 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 					"'".$DBCONN->escapeSimple($value['count'])."'," .
 					"'".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]['id'])."')";
 			$res = dbquery($sql);
-		 }
+		}
 		//print_r($inferences);
 		return $inferences;
 	}
@@ -1429,12 +1418,11 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 		$this->sites["gensearchhelp.php"] = "Genealogy-Search-Help.com";
 		$opts = "";
 		$optCount = 1;
-			//load up the options into the html
-			foreach($this->sites as $key=>$value)
-			{
-			    $opts .= "<option value=\"".$key."\" class=\"".$optCount."\">".$value."</option>\n";
-			    $optCount+=1;
-			}
+		//load up the options into the html
+		foreach($this->sites as $key=>$value) {
+			$opts .= "<option value=\"".$key."\" class=\"".$optCount."\">".$value."</option>\n";
+			$optCount+=1;
+		}
 		return $opts;
 	}
 

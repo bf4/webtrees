@@ -368,7 +368,7 @@ class PGV_DBStatement {
 		$row=$this->pdostatement->fetch($fetch_style);
 		$this->pdostatement->closeCursor();
 		$this->executed=false;
-		return $row;
+		return $row ? $row : null;
 	}
 
 	// Fetch one value and close the cursor.  e.g. SELECT MAX(foo) FROM bar
@@ -379,11 +379,7 @@ class PGV_DBStatement {
 		$row=$this->pdostatement->fetch(PDO::FETCH_NUM);
 		$this->pdostatement->closeCursor();
 		$this->executed=false;
-		if (is_array($row)) {
-			return $row[0];
-		} else {
-			return null;
-		}
+		return is_array($row) ? $row[0] : null;
 	}
 
 	// Fetch two columns, and return an associative array of col1=>col2
