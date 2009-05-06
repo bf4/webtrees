@@ -917,13 +917,32 @@ case 'editsource':
 
 	echo "<table class=\"facts_table\">";
 	$gedlines = split("\n", $gedrec); // -- find the number of lines in the record
-	for ($i=$linenum; $i<count($gedlines); $i++) {
+	$uniquefacts = preg_split("/[, ;:]+/", $SOUR_FACTS_UNIQUE, -1, PREG_SPLIT_NO_EMPTY);
+	$usedfacts = array();
+	$lines = count($gedlines);
+	if ($lines==1) {
+		foreach ($uniquefacts as $fact) {
+			$gedrec.="\n1 ".$fact;
+		}
+		$gedlines = split("\n", $gedrec);
+	}
+	for ($i=$linenum; $i<$lines; $i++) {
 		$fields = explode(' ', $gedlines[$i]);
 		if ((substr($gedlines[$i], 0, 1)<2) && $fields[1]!="CHAN") {
 			$level1type = create_edit_form($gedrec, $i, $level0type);
 			echo "<input type=\"hidden\" name=\"linenum[]\" value=\"$i\" />\n";
+			$usedfacts[]=$fields[1];
+			foreach ($uniquefacts as $key=>$fact) {
+				if ($fact==$fields[1]) unset($uniquefacts[$key]);
+			}
 		}
 	}
+	foreach ($uniquefacts as $key=>$fact) {
+		$gedrec.="\n1 ".$fact;
+		$level1type = create_edit_form($gedrec, $lines++, $level0type);
+		echo "<input type=\"hidden\" name=\"linenum[]\" value=\"$i\" />\n";
+	}
+	
 	if (PGV_USER_IS_ADMIN) {
 		echo "<tr><td class=\"descriptionbox ".$TEXT_DIRECTION." wrap width25\">";
 		print_help_link("no_update_CHAN_help", "qm");
@@ -939,7 +958,7 @@ case 'editsource':
 	print_add_layer("SHARED_NOTE");
 	print_add_layer("OBJE");
 	//-- RESN missing in new structure, RESN can be added to all level 1 tags
-	if (!in_array("RESN", $tags)) print_add_layer("RESN");
+	if ($tag && !in_array("RESN", $tags)) print_add_layer("RESN");
 	echo "<br /><input type=\"submit\" value=\"".$pgv_lang["save"]."\" /><br />\n";
 	echo "</form>\n";
 	break;
