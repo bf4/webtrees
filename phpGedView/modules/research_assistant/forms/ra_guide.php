@@ -153,10 +153,10 @@ class ra_guide extends ra_form {
 				<fieldset>
 					<legend> <?php print $pgv_lang["complete_title"]; ?></legend>
 					<?php print $pgv_lang["complete_task_inst"]; ?><br /><br />
-					<?php $tasks = ra_functions::get_user_tasks(getUserName());
-					foreach($tasks as $k=>$task) {
+					<?php $tasks=ra_functions::get_user_tasks(getUserName());
+					foreach ($tasks as $task) {
 						?>
-						<a href="module.php?mod=research_assistant&amp;action=completeTask&amp;taskid=<?php print $task["t_id"];?>"><?php print $task["t_title"]; ?></a><br />
+						<a href="module.php?mod=research_assistant&amp;action=completeTask&amp;taskid=<?php print $task->t_id;?>"><?php print $task->t_title; ?></a><br />
 					<?php }
 					?>
 				</fieldset>

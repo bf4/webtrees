@@ -828,7 +828,7 @@ END_OUT;
 				if (!isset($_REQUEST['multiple'.$i])) $_REQUEST['multiple'.$i]='Y';
 				if (!isset($_REQUEST['type'.$i])) $_REQUEST['type'.$i]='';
 				//-- store the fact associations in the database
-				PGV_DB::prepare("INSERT INTO {$TBLPREFIX}taskfacts (tf_id, tf_t_idm tf_factrec, tf_people, tf_multiple, tf_type) VALUES (?, ?, ?, ?, ?, ?)")
+				PGV_DB::prepare("INSERT INTO {$TBLPREFIX}taskfacts (tf_id, tf_t_id, tf_factrec, tf_people, tf_multiple, tf_type) VALUES (?, ?, ?, ?, ?, ?)")
 					->execute(array(get_next_id("taskfacts", "tf_id"), $_REQUEST['taskid'], $factrec, $peopleTxt, $_REQUEST['multiple'.$i], $_REQUEST['type'.$i]));
 
 
