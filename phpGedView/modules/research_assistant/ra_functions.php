@@ -98,36 +98,6 @@ class ra_functions {
 	var $sites = array();
 	function Init() {
 		$this->createDatabase();
-		$this->createFactLookup();
-	}
-
-	function createFactLookup() {
-		global $DBCONN, $TBLPREFIX, $DBTYPE;
-
-		$data = $DBCONN->getListOf('tables');
-		$res = 0;
-
-		// If the Table is not in the array
-		if (!in_array($TBLPREFIX.'factlookup', $data)) {
-			dbquery(
-				"CREATE TABLE {$TBLPREFIX}factlookup (".
-				" id        ".PGV_DB_AUTO_ID_TYPE." NOT NULL,".
-				" description VARCHAR(255)      NOT NULL,".
-				" startdate   INT               NOT NULL,".
-				" enddate     INT               NOT NULL,".
-				" gedcom_fact VARCHAR(10)           NULL,".
-				" pl_lv1      VARCHAR(255)          NULL,".
-				" pl_lv2      VARCHAR(255)          NULL,".
-				" pl_lv3      VARCHAR(255)          NULL,".
-				" pl_lv4      VARCHAR(255)          NULL,".
-				" pl_lv5      VARCHAR(255)          NULL,".
-				" sour_id     VARCHAR(255)          NULL,".
-				" comment     VARCHAR(255)          NULL,".
-				" PRIMARY KEY (id)".
-				") ".PGV_DB_UTF8_TABLE
-			);
-			self::insertInitialFacts();
-		}
 	}
 
 	/*
@@ -191,58 +161,17 @@ class ra_functions {
 		return $rows;
 	}
 
-
-	function insertInitialFacts()
-	{
-		global $TBLPREFIX;
-
-		$statement=PGV_DB::prepare("INSERT INTO {$TBLPREFIX}factlookup (description, startdate, enddate, gedcom_fact, pl_lv1) VALUES (?, ?, ?, ?, ?)");
-			
-		// Do the insertion of Census facts
-		$statement->execute(array('US Census 1800', 18000000, 18001231, 'CENS', 'USA'));
-		$statement->execute(array('US Census 1810', 18100000, 18101231, 'CENS', 'USA'));
-		$statement->execute(array('US Census 1820', 18200000, 18201231, 'CENS', 'USA'));
-		$statement->execute(array('US Census 1830', 18300000, 18301231, 'CENS', 'USA'));
-		$statement->execute(array('US Census 1840', 18100000, 18401231, 'CENS', 'USA'));
-		$statement->execute(array('US Census 1850', 18500000, 18501231, 'CENS', 'USA'));
-		$statement->execute(array('US Census 1860', 18600000, 18601231, 'CENS', 'USA'));
-		$statement->execute(array('US Census 1870', 18700000, 18701231, 'CENS', 'USA'));
-		$statement->execute(array('US Census 1880', 18800000, 18801231, 'CENS', 'USA'));
-		$statement->execute(array('US Census 1890', 18900000, 18901231, 'CENS', 'USA'));
-		$statement->execute(array('US Census 1900', 19000000, 19001231, 'CENS', 'USA'));
-		$statement->execute(array('US Census 1910', 19100000, 19101231, 'CENS', 'USA'));
-		$statement->execute(array('US Census 1920', 19200000, 19201231, 'CENS', 'USA'));
-		$statement->execute(array('US Census 1930', 19300000, 19301231, 'CENS', 'USA'));
-		$statement->execute(array('UK Census 1841', 18410000, 18411231, 'CENS', 'UK' ));
-		$statement->execute(array('UK Census 1851', 18510000, 18511231, 'CENS', 'UK' ));
-		$statement->execute(array('UK Census 1861', 18610000, 18611231, 'CENS', 'UK' ));
-		$statement->execute(array('UK Census 1871', 18710000, 18711231, 'CENS', 'UK' ));
-		$statement->execute(array('UK Census 1881', 18810000, 18811231, 'CENS', 'UK' ));
-		$statement->execute(array('UK Census 1891', 18910000, 18911231, 'CENS', 'UK' ));
-		$statement->execute(array('UK Census 1901', 19010000, 19011231, 'CENS', 'UK' ));
-
-		// Insert War facts here
-		$statement->execute(array('Civil War',  18610412, 18651231, '_MILI', 'USA'));
-		$statement->execute(array('WWI',        19140412, 19181231, '_MILI', null ));
-		$statement->execute(array('WWII',       19390412, 19451231, '_MILI', null ));
-		$statement->execute(array('Korean War', 19500625, 19531231, '_MILI', null ));
-	}
-
-
 	/**
 	 * This function will make the database for the research assistant on first access.
 	 *
 	 * @return void
 	 */
 	function createDatabase() {
-		global $DBCONN, $TBLPREFIX;
-
-		$data = $DBCONN->getListOf('tables');
-		$res = 0;
+		global $TBLPREFIX;
 
 		// Create all of the tables needed for this module
-		if (!in_array($TBLPREFIX.'tasks', $data)) {
-			dbquery(
+		if (!PGV_DB::table_exists("{$TBLPREFIX}tasks")) {
+			PGV_DB::exec(
 				"CREATE TABLE {$TBLPREFIX}tasks (".
 				" t_id          INTEGER      NOT NULL,".
 				" t_fr_id       INTEGER      NOT NULL,".
@@ -257,17 +186,13 @@ class ra_functions {
 				") ".PGV_DB_UTF8_TABLE
 			);
 		} else {
-			$has_form = false;
-			$info = $DBCONN->tableInfo($TBLPREFIX."tasks");
-			foreach($info as $indexval => $field) {
-				if ($field["name"]=="t_form") $has_form = true;
-			}
-			if (!$has_form) {
-				dbquery("ALTER TABLE {$TBLPREFIX}tasks ADD t_form VARCHAR(255) NULL");
+			if (!PGV_DB::column_exists("{$TBLPREFIX}tasks", 't_form')) {
+				PGV_DB::exec("ALTER TABLE {$TBLPREFIX}tasks ADD t_form VARCHAR(255) NULL");
 			}
 		}
-		if (!in_array($TBLPREFIX.'comments', $data)) {
-			dbquery(
+
+		if (!PGV_DB::table_exists("{$TBLPREFIX}comments")) {
+			PGV_DB::exec(
 				"CREATE TABLE {$TBLPREFIX}comments (".
 				" c_id         INTEGER     NOT NULL,".
 				" c_t_id       INTEGER     NOT NULL,".
@@ -278,8 +203,9 @@ class ra_functions {
 				") ".PGV_DB_UTF8_TABLE
 			);
 		}
-		if (!in_array($TBLPREFIX.'tasksource', $data)) {
-			dbquery(
+
+		if (!PGV_DB::table_exists("{$TBLPREFIX}tasksource")) {
+			PGV_DB::exec(
 				"CREATE TABLE {$TBLPREFIX}tasksource (".
 				" ts_t_id  INTEGER      NOT NULL,".
 				" ts_s_id  VARCHAR(255) NOT NULL,".
@@ -293,8 +219,9 @@ class ra_functions {
 				") ".PGV_DB_UTF8_TABLE
 			);
 		}
-		if (!in_array($TBLPREFIX.'folders', $data)) {
-			dbquery(
+
+		if (!PGV_DB::table_exists("{$TBLPREFIX}folders")) {
+			PGV_DB::exec(
 				"CREATE TABLE {$TBLPREFIX}folders (".
 				" fr_id          INTEGER      NOT NULL,".
 				" fr_name        VARCHAR(255)     NULL,".
@@ -304,8 +231,9 @@ class ra_functions {
 				") ".PGV_DB_UTF8_TABLE
 			);
 		}
-		if (!in_array($TBLPREFIX.'individualtask', $data)) {
-			dbquery(
+
+		if (!PGV_DB::table_exists("{$TBLPREFIX}individualtask")) {
+			PGV_DB::exec(
 				"CREATE TABLE {$TBLPREFIX}individualtask (".
 				" it_t_id   INTEGER      NOT NULL,".
 				" it_i_id   VARCHAR(255) NOT NULL,".
@@ -314,8 +242,9 @@ class ra_functions {
 				") ".PGV_DB_UTF8_TABLE
 			);
 		}
-		if (!in_array($TBLPREFIX.'taskfacts', $data)) {
-			dbquery(
+
+		if (!PGV_DB::table_exists("{$TBLPREFIX}taskfacts")) {
+			PGV_DB::exec(
 				"CREATE TABLE {$TBLPREFIX}taskfacts (".
 				" tf_id       INTEGER      NOT NULL,".
 				" tf_t_id     INTEGER          NULL,".
@@ -327,22 +256,16 @@ class ra_functions {
 				") ".PGV_DB_UTF8_TABLE
 			);
 		} else {
-			$has_multiple = false;
-			$has_type = false;
-			$info = $DBCONN->tableInfo($TBLPREFIX."taskfacts");
-			foreach($info as $indexval => $field) {
-				if ($field["name"]=="tf_multiple") $has_multiple = true;
-				if ($field["name"]=="tf_type") $has_type = true;
+			if (!PGV_DB::column_exists("{$TBLPREFIX}taskfacts", 'tf_multiple')) {
+				PGV_DB::exec("ALTER TABLE {$TBLPREFIX}taskfacts ADD tf_multiple VARCHAR(3) NULL");
 			}
-			if (!$has_multiple) {
-				dbquery("ALTER TABLE {$TBLPREFIX}taskfacts ADD tf_multiple VARCHAR(3) NULL");
-			}
-			if (!$has_type) {
-				dbquery("ALTER TABLE {$TBLPREFIX}taskfacts ADD tf_type     VARCHAR(4) NULL");
+			if (!PGV_DB::column_exists("{$TBLPREFIX}taskfacts", 'tf_type')) {
+				PGV_DB::exec("ALTER TABLE {$TBLPREFIX}taskfacts ADD tf_type VARCHAR(4) NULL");
 			}
 		}
-		if(!in_array($TBLPREFIX.'user_comments', $data)){
-			dbquery(
+
+		if (!PGV_DB::table_exists("{$TBLPREFIX}user_comments")) {
+			PGV_DB::exec(
 				"CREATE TABLE {$TBLPREFIX}user_comments (".
 				" uc_id       INTEGER      NOT NULL,".
 				" uc_username VARCHAR(45)  NOT NULL,".
@@ -363,8 +286,8 @@ class ra_functions {
 		 *
 		 * The break down is the first level element, second level element, relationship, percentage
 		 */
-		if (!in_array($TBLPREFIX.'probabilities', $data)) {
-			dbquery(
+		if (!PGV_DB::table_exists("{$TBLPREFIX}probabilities")) {
+			PGV_DB::exec(
 				"CREATE TABLE {$TBLPREFIX}probabilities (".
 				" pr_id      INTEGER      NOT NULL,".
 				" pr_f_lvl   VARCHAR(200) NOT NULL,".
@@ -377,6 +300,55 @@ class ra_functions {
 				") ".PGV_DB_UTF8_TABLE
 			);
 		}
+
+		if (!PGV_DB::table_exists("{$TBLPREFIX}factlookup")) {
+			PGV_DB::exec(
+				"CREATE TABLE {$TBLPREFIX}factlookup (".
+				" id        ".PGV_DB_AUTO_ID_TYPE." NOT NULL,".
+				" description VARCHAR(255)      NOT NULL,".
+				" startdate   INT               NOT NULL,".
+				" enddate     INT               NOT NULL,".
+				" gedcom_fact VARCHAR(10)           NULL,".
+				" pl_lv1      VARCHAR(255)          NULL,".
+				" pl_lv2      VARCHAR(255)          NULL,".
+				" pl_lv3      VARCHAR(255)          NULL,".
+				" pl_lv4      VARCHAR(255)          NULL,".
+				" pl_lv5      VARCHAR(255)          NULL,".
+				" sour_id     VARCHAR(255)          NULL,".
+				" comment     VARCHAR(255)          NULL,".
+				" PRIMARY KEY (id)".
+				") ".PGV_DB_UTF8_TABLE
+			);
+			$statement=PGV_DB::prepare("INSERT INTO {$TBLPREFIX}factlookup (description, startdate, enddate, gedcom_fact, pl_lv1) VALUES (?, ?, ?, ?, ?)");
+			// Do the insertion of Census facts
+			$statement->execute(array('US Census 1800', 18000000, 18001231, 'CENS', 'USA'));
+			$statement->execute(array('US Census 1810', 18100000, 18101231, 'CENS', 'USA'));
+			$statement->execute(array('US Census 1820', 18200000, 18201231, 'CENS', 'USA'));
+			$statement->execute(array('US Census 1830', 18300000, 18301231, 'CENS', 'USA'));
+			$statement->execute(array('US Census 1840', 18100000, 18401231, 'CENS', 'USA'));
+			$statement->execute(array('US Census 1850', 18500000, 18501231, 'CENS', 'USA'));
+			$statement->execute(array('US Census 1860', 18600000, 18601231, 'CENS', 'USA'));
+			$statement->execute(array('US Census 1870', 18700000, 18701231, 'CENS', 'USA'));
+			$statement->execute(array('US Census 1880', 18800000, 18801231, 'CENS', 'USA'));
+			$statement->execute(array('US Census 1890', 18900000, 18901231, 'CENS', 'USA'));
+			$statement->execute(array('US Census 1900', 19000000, 19001231, 'CENS', 'USA'));
+			$statement->execute(array('US Census 1910', 19100000, 19101231, 'CENS', 'USA'));
+			$statement->execute(array('US Census 1920', 19200000, 19201231, 'CENS', 'USA'));
+			$statement->execute(array('US Census 1930', 19300000, 19301231, 'CENS', 'USA'));
+			$statement->execute(array('UK Census 1841', 18410000, 18411231, 'CENS', 'UK' ));
+			$statement->execute(array('UK Census 1851', 18510000, 18511231, 'CENS', 'UK' ));
+			$statement->execute(array('UK Census 1861', 18610000, 18611231, 'CENS', 'UK' ));
+			$statement->execute(array('UK Census 1871', 18710000, 18711231, 'CENS', 'UK' ));
+			$statement->execute(array('UK Census 1881', 18810000, 18811231, 'CENS', 'UK' ));
+			$statement->execute(array('UK Census 1891', 18910000, 18911231, 'CENS', 'UK' ));
+			$statement->execute(array('UK Census 1901', 19010000, 19011231, 'CENS', 'UK' ));
+
+			// Insert War facts here
+			$statement->execute(array('Civil War',  18610412, 18651231, '_MILI', 'USA'));
+			$statement->execute(array('WWI',        19140412, 19181231, '_MILI', null ));
+			$statement->execute(array('WWII',       19390412, 19451231, '_MILI', null ));
+			$statement->execute(array('Korean War', 19500625, 19531231, '_MILI', null ));
+		}
 	}
 
 	/**
@@ -385,12 +357,12 @@ class ra_functions {
 	 * @return array
 	 */
 	function getTask($taskid) {
-		global $TBLPREFIX, $DBCONN;
-		$sql = "SELECT * FROM {$TBLPREFIX}tasks WHERE t_id='".$DBCONN->escapeSimple($taskid)."'";
-		$res = dbquery($sql);
-		$row = $res->fetchRow(DB_FETCHMODE_ASSOC);
-		$res->free();
-		return $row;
+		global $TBLPREFIX;
+
+		return
+			PGV_DB::prepare("SELECT * FROM {$TBLPREFIX}tasks WHERE t_id=?")
+			->execute(array($taskid))
+			->fetchOneRow(PDO::FETCH_ASSOC);
 	}
 
 	/**
