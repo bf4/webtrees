@@ -109,15 +109,15 @@ function showchanges() {
 // e.g. array(0=>"Top Level", 16=>"England", 19=>"London", 217=>"Westminster");
 // NB This function exists in both places.php and places_edit.php
 function place_id_to_hierarchy($id) {
-	global $DBCONN, $TBLPREFIX, $pgv_lang;
+	global $TBLPREFIX;
+
+	$statement=
+		PGV_DB::prepare("SELECT pl_parent_id, pl_place FROM {$TBLPREFIX}placelocation WHERE pl_id=?");
 	$arr=array();
 	while ($id!=0) {
-		$sql="SELECT pl_parent_id, pl_place FROM {$TBLPREFIX}placelocation WHERE pl_id=".$DBCONN->escapeSimple($id);
-		$res=dbquery($sql);
-		$row=&$res->fetchRow();
-		$res->free();
-		$arr=array($id=>$row[1])+$arr;
-		$id=$row[0];
+		$row=$statement->execute(array($id))->fetchOneRow();
+		$arr=array($id=>$row->pl_place)+$arr;
+		$id=$row->pl_parent_id;
 	}
 	return $arr;
 }
@@ -125,14 +125,8 @@ function place_id_to_hierarchy($id) {
 // NB This function exists in both places.php and places_edit.php
 function getHighestIndex() {
 	global $TBLPREFIX;
-	$sql="SELECT MAX(pl_id) FROM {$TBLPREFIX}placelocation WHERE 1=1";
-	$res=dbquery($sql);
-	$row = $res->fetchRow();
-	$res->free();
-	if (empty($row[0]))
-		return 0;
-	else
-		return $row[0];
+
+	return (int)PGV_DB::prepare("SELECT MAX(pl_id) FROM {$TBLPREFIX}placelocation")->fetchOne();
 }
 
 $where_am_i=place_id_to_hierarchy($placeid);

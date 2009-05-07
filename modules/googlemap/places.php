@@ -48,28 +48,27 @@ if (!isset($parent)) $parent=0;
 if (!isset($display)) $display="";
 
 // Create GM tables, if not already present
-$tables = $DBCONN->getListOf('tables');
-if (!in_array($TBLPREFIX."placelocation", $tables)) {
-	dbquery(
-		"CREATE TABLE {$TBLPREFIX}placelocation (".
-		" pl_id        INT          NOT NULL,".
-		" pl_parent_id INT              NULL,".
-		" pl_level     INT              NULL,".
-		" pl_place     VARCHAR(255)     NULL,".
-		" pl_long      VARCHAR(30)      NULL,".
-		" pl_lati      VARCHAR(30)      NULL,".
-		" pl_zoom      INT              NULL,".
-		" pl_icon      VARCHAR(255)     NULL,".
-		" PRIMARY KEY (pl_id)".
-		") ".PGV_DB_UTF8_TABLE
-	);
-	dbquery("CREATE INDEX {$TBLPREFIX}pl_level     ON {$TBLPREFIX}placelocation (pl_level    )");
-	dbquery("CREATE INDEX {$TBLPREFIX}p            ON {$TBLPREFIX}placelocation (pl_long     )");
-	dbquery("CREATE INDEX {$TBLPREFIX}pl_lati      ON {$TBLPREFIX}placelocation (pl_lati     )");
-	dbquery("CREATE INDEX {$TBLPREFIX}pl_name      ON {$TBLPREFIX}placelocation (pl_place    )");
-	dbquery("CREATE INDEX {$TBLPREFIX}pl_parent_id ON {$TBLPREFIX}placelocation (pl_parent_id)");
-	$tables = $DBCONN->getListOf('tables');
-	if (!in_array($TBLPREFIX."placelocation", $tables)) {
+if (!PGV_DB::table_exists("{$TBLPREFIX}placelocation")) {
+	try {
+		PGV_DB::exec(
+			"CREATE TABLE {$TBLPREFIX}placelocation (".
+			" pl_id        INT          NOT NULL,".
+			" pl_parent_id INT              NULL,".
+			" pl_level     INT              NULL,".
+			" pl_place     VARCHAR(255)     NULL,".
+			" pl_long      VARCHAR(30)      NULL,".
+			" pl_lati      VARCHAR(30)      NULL,".
+			" pl_zoom      INT              NULL,".
+			" pl_icon      VARCHAR(255)     NULL,".
+				" PRIMARY KEY (pl_id)".
+			") ".PGV_DB_UTF8_TABLE
+		);
+		PGV_DB::exec("CREATE INDEX {$TBLPREFIX}pl_level     ON {$TBLPREFIX}placelocation (pl_level    )");
+		PGV_DB::exec("CREATE INDEX {$TBLPREFIX}p            ON {$TBLPREFIX}placelocation (pl_long     )");
+		PGV_DB::exec("CREATE INDEX {$TBLPREFIX}pl_lati      ON {$TBLPREFIX}placelocation (pl_lati     )");
+		PGV_DB::exec("CREATE INDEX {$TBLPREFIX}pl_name      ON {$TBLPREFIX}placelocation (pl_place    )");
+		PGV_DB::exec("CREATE INDEX {$TBLPREFIX}pl_parent_id ON {$TBLPREFIX}placelocation (pl_parent_id)");
+	} catch (PDOException $ex) {
 		echo "<table class=\"facts_table\">\n";
 		echo "<tr><td colspan=\"2\" class=\"facts_value\">".$pgv_lang["gm_db_error"];
 		echo "</td></tr></table>\n";
@@ -85,15 +84,15 @@ if (!in_array($TBLPREFIX."placelocation", $tables)) {
 // e.g. array(0=>"Top Level", 16=>"England", 19=>"London", 217=>"Westminster");
 // NB This function exists in both places.php and places_edit.php
 function place_id_to_hierarchy($id) {
-	global $DBCONN, $TBLPREFIX, $pgv_lang;
+	global $TBLPREFIX;
+
+	$statement=
+		PGV_DB::prepare("SELECT pl_parent_id, pl_place FROM {$TBLPREFIX}placelocation WHERE pl_id=?");
 	$arr=array();
 	while ($id!=0) {
-		$sql="SELECT pl_parent_id, pl_place FROM {$TBLPREFIX}placelocation WHERE pl_id=".$DBCONN->escapeSimple($id);
-		$res=dbquery($sql);
-		$row=&$res->fetchRow();
-		$res->free();
-		$arr=array($id=>$row[1])+$arr;
-		$id=$row[0];
+		$row=$statement->execute(array($id))->fetchOneRow();
+		$arr=array($id=>$row->pl_place)+$arr;
+		$id=$row->pl_parent_id;
 	}
 	return $arr;
 }
@@ -101,26 +100,14 @@ function place_id_to_hierarchy($id) {
 // NB This function exists in both places.php and places_edit.php
 function getHighestIndex() {
 	global $TBLPREFIX;
-	$sql="SELECT MAX(pl_id) FROM {$TBLPREFIX}placelocation WHERE 1=1";
-	$res=dbquery($sql);
-	$row=&$res->fetchRow();
-	$res->free();
-	if (empty($row[0]))
-		return 0;
-	else
-		return $row[0];
+
+	return (int)PGV_DB::prepare("SELECT MAX(pl_id) FROM {$TBLPREFIX}placelocation")->fetchOne();
 }
 
 function getHighestLevel() {
 	global $TBLPREFIX;
-	$sql="SELECT MAX(pl_level) FROM {$TBLPREFIX}placelocation WHERE 1=1";
-	$res=dbquery($sql);
-	$row=&$res->fetchRow();
-	$res->free();
-	if (empty($row[0]))
-		return 0;
-	else
-		return $row[0];
+
+	return (int)PGV_DB::prepare("SELECT MAX(pl_level) FROM {$TBLPREFIX}placelocation")->fetchOne();
 }
 
 /**
@@ -128,13 +115,14 @@ function getHighestLevel() {
  */
 function get_place_list_loc($parent_id) {
 	global $display, $TBLPREFIX, $DBCONN;
-	if ($display=="inactive")
+	if ($display=="inactive") {
 		$sql="SELECT pl_id,pl_place,pl_lati,pl_long,pl_zoom,pl_icon FROM {$TBLPREFIX}placelocation WHERE pl_parent_id=".$DBCONN->escapeSimple($parent_id)." ORDER BY pl_place";
-	else
+	} else {
 		// :TODO:
 		// This method of filtering fails to distinguish "Newport, Hampshire, England" from "Newport, Gwent, Wales".
 		// Fortunately it provides too many results, rather than too few.
 		$sql="SELECT DISTINCT pl_id,pl_place,pl_lati,pl_long,pl_zoom,pl_icon FROM {$TBLPREFIX}placelocation INNER JOIN {$TBLPREFIX}places ON {$TBLPREFIX}placelocation.pl_place={$TBLPREFIX}places.p_place AND {$TBLPREFIX}placelocation.pl_level=".$TBLPREFIX."places.p_level WHERE pl_parent_id=".$DBCONN->escapeSimple($parent_id)." ORDER BY pl_place";
+	}
 	$res=dbquery($sql);
 
 	$placelist=array();
