@@ -32,6 +32,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
+$pgv_lang["enter_comment"]	= "Aquí puede introducir un comentario.";
 $pgv_lang["upload_a_gedcom"] 		= "Subir un archivo GEDCOM";
 $pgv_lang["start_entering"] 		= "Comenzar la introducción de datos";
 $pgv_lang["add_gedcom_from_path"] 	= "Añadir un GEDCOM a partir de un archivo ya subido";
