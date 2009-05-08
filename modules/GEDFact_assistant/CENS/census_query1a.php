@@ -67,7 +67,6 @@
 		$row_style = ($row_count % 2) ? "row1" : "row2";
 		$output .= "<tr class=\'".$row_style."\'><td>".($row_count+1)."<td>".$srno."</td><td>".$u_name."</td><td align='center'><input type='radio' name='rad_".$srno."' checked /></td><td align='center'><input type='radio' name='rad_".$srno."' /></td></tr>";
 		$row_count = $row_count + 1;
-
 	}
 
 

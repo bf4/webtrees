@@ -2338,28 +2338,18 @@ function create_edit_form($gedrec, $linenum, $level0type) {
 	$level1type = $type;
 	
 	// GEDFact_assistant ================================================
-	if ($type=="CENS" && file_exists('modules/GEDFact_assistant/mysql_query1.html') ) {
+	if ($type=="CENS" && file_exists('modules/GEDFact_assistant/CENS/census_query1.php') ) {
 		echo "<tr><td class=\"descriptionbox ".$TEXT_DIRECTION." wrap width25\">";
 			print_help_link("edit_add_SHARED_NOTE_help", "qm");
 			echo "Currently Linked to: <br />";
-		//	echo "If using Shared Notes,<br />";
-		//	echo "before you Save:<br /><br />";
-		//	echo "1. Click \"Refresh\" then, ";
-		//	echo "<br /><br />";
-		//	echo "To add this CENS event<br />";
-		//	echo "to all listed individuals: <br ><br />";
-		//	echo "2. Click &nbsp;";
-		//	$save_copy  = "<input type=\"button\" name=\"Button2\" value=\"Save & Copy\" ";
-		//	$save_copy .= "onClick=\"javascript:#\" />";
-		//	echo $save_copy."<br /><br />";
 		echo "</td><td class=\"optionbox wrap\">\n";
-			include ('modules/GEDFact_assistant/mysql_query1.php');
+			include ('modules/GEDFact_assistant/CENS/census_query1.php');
 		echo "</td></tr>\n";
 		echo "<tr><td class=\"descriptionbox ".$TEXT_DIRECTION." wrap width25\">";
 			print_help_link("edit_add_SHARED_NOTE_help", "qm");
 			echo "Add Other Links: <br />";
 		echo "</td><td class=\"optionbox wrap\">\n";
-			include ('modules/GEDFact_assistant/mysql_query1a.php');
+			// include ('modules/GEDFact_assistant/CENS/census_query1.php');
 		echo "</td></tr>\n";
 	}
 	// ==================================================================

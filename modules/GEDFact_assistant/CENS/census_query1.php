@@ -50,6 +50,7 @@ function attach_file(p_script_url) {
 function show_status(status_text) {
 	document.getElementById('status').innerHTML = status_text;
 }
+
 //-->
 </script>
 
@@ -76,28 +77,19 @@ background-color: #FFFFFF;
 -->
 </style>
 </head>
-<body onLoad="javascript:attach_file('modules/GEDFact_assistant/mysql_query2.php?noteid=N1'); show_status('OK'); ">
-
-<?php
-// Test of PDO TABLE ========================================================
-/*
-	$statement=PGV_DB::prepare("SELECT 'INDI' AS type, l_from, l_to FROM {$TBLPREFIX}link, {$TBLPREFIX}individuals WHERE l_from LIKE 'I%' AND i_file=l_file AND i_id=l_from AND l_file='1' AND l_type='NOTE' AND l_to='N1'")->execute();
-	echo '<table width="220" border="0" cellpadding="1" cellspacing="3" class="table1">';
-	while ($rows = $statement->fetch(PDO::FETCH_NUM)) {
-		echo "<tr><td> $rows[0]</td><td> $rows[1]</td><td> $rows[2]</td></tr>";
-	}
-	echo "</table>";
-	$statement->closeCursor();
-*/
-// ==========================================================================
-?>
+<body>
 
 <table width="220" border="0" cellpadding="1" cellspacing="3" class="table1">
 <tr>
 <td>
+
+<script language="JavaScript">
+	attach_file('modules/GEDFact_assistant/CENS/census_query2.php?noteid=N1');
+</script>
+
 <?php
 $refresh  = "<input class=\"button\" type=\"button\" name=\"Button\" value=\"Refresh\" ";
-$refresh .= "onClick=\"javascript:attach_file('modules/GEDFact_assistant/mysql_query2.php";
+$refresh .= "onClick=\"javascript:attach_file('modules/GEDFact_assistant/CENS/census_query1a.php";
 $refresh .= "?noteid='+INDI_NOTE.value+'";			// 
 $refresh .= "&tblprefix=$TBLPREFIX";				//
 $refresh .= "&dbtype=$DBTYPE";						//  

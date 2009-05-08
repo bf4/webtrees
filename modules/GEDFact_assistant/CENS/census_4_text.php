@@ -51,7 +51,7 @@ function openInNewWindow(frm)
 function help_window2(frm)
 {
 	// open a blank window
-	var aWindow = window.open('modules/GEDFact_assistant/tableaddrow_nw.html', 'TableAddRow2NewWindow',
+	var aWindow = window.open('modules/GEDFact_assistant/CENS/census_asst_help.php', 'TableAddRow2NewWindow',
 	'scrollbars=yes,menubar=yes,resizable=yes,location=no,toolbar=no,width=400,height=700');
 	aWindow.focus();
 	
