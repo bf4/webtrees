@@ -10,6 +10,7 @@
 
 
 Version 4.2.2
+ - Fixed Errors on Album page and Reorder Media page highlighted by introduction of PDO parameters (windmillway)
  - Added Comment field to "Banned by IP" and "Search engine by IP" lists on Manage Servers page (canajun2eh)
  - Fixed [ 2779222 ] Adding a wrong date destroys all individual lists (fisharebest)
  - Fixed [ 2780483 ] nick name ordering error/mess (fisharebest)

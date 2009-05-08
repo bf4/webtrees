@@ -98,7 +98,7 @@ function lightbox_print_media($pid, $level=1, $related=false, $kind=1, $noedit=f
 		break;
 	case 5:
 	default:
-		$tt      = $pgv_lang["ROW_TYPE__footnotes"];
+		$tt      = $pgv_lang["ROW_TYPE__notinDB"];
 		$typ2b   = "(m_gedrec ".PGV_DB_LIKE."     '%%')";
 		break;
 	}
@@ -273,14 +273,42 @@ function lightbox_print_media($pid, $level=1, $related=false, $kind=1, $noedit=f
 				$foundObjs[$rowm['m_media']]=true;
 			}
 		}
-
+		
 		// =====================================================================================
-		if ($kind==4) {
-			//-- objects are removed from the $current_objes list as they are printed
-			//-- any objects left in the list are new objects recently added to the gedcom
-			//-- but not yet accepted into the database.  We will print them too.
-
-			// NOTE this is not working just yet for new waiting to be accepted items - TODO
+		//-- Objects are removed from the $current_objes list as they are printed.
+		//-- Any "Extra" objects left in the list are new objects recently added to the gedcom
+		//-- but not yet accepted into the database.  
+		//-- We will print them too, and put any "Extra Items not in DB" into a new Row.
+		
+		// Firstly, get count of Items in Database for Individual only (excludes family ID's)
+		$indiobjs = "SELECT DISTINCT ";
+		$indiobjs .= "m_media, m_ext, m_file, m_titl, m_gedfile, m_gedrec, mm_gid, mm_gedrec FROM ".$TBLPREFIX."media, ".$TBLPREFIX."media_mapping where ";
+		$indiobjs .= "mm_gid IN (";
+		$vars2=array();
+		foreach ($ids as $id2) {
+			if (strstr($id2, "I")) {
+				$indiobjs .= "?, ";
+				$vars2[]=$id2;
+			}
+		}
+		$indiobjs = rtrim($indiobjs, ', ');
+		$indiobjs .= ") AND mm_gedfile=? AND mm_media=m_media AND mm_gedfile=m_gedfile ";
+		$vars2[]=PGV_GED_ID;
+		$rows=PGV_DB::prepare($indiobjs)->execute($vars2)->fetchAll(PDO::FETCH_ASSOC);
+		$foundObjs = array();
+		$numindiobjs = count($rows);
+		
+		// If any items are left in $current_objes list put them into $kind 5 ("Not in DB") row
+		if ($kind==5 && $ct!=$numindiobjs) {
+			echo "\n\n";
+			echo "<table cellpadding=\"0\" border=\"0\" width=\"100%\" class=\"facts_table\"><tr>", "\n";
+			echo '<td width="100" align="center" class="descriptionbox" style="vertical-align:middle;">';
+			echo "<b>{$tt}</b>";
+			echo '</td>';
+			echo '<td class="facts_value" >';
+			echo '<table class="facts_table" width="100%" cellpadding="0"><tr><td >' . "\n";
+			echo "<div id=\"thumbcontainer".$kind."\">" . "\n";
+			echo "<ul class=\"section\" id=\"thumblist_".$kind."\">" . "\n\n";
 			foreach ($current_objes as $media_id=>$value) {
 				while ($value>0) {
 					$objSubrec = array_pop($obje_links[$media_id]);
@@ -291,47 +319,51 @@ function lightbox_print_media($pid, $level=1, $related=false, $kind=1, $noedit=f
 						$client = ServiceClient::getInstance($match[1]);
 						if (!is_null($client)) {
 							$newrec = $client->getRemoteRecord($match[2]);
-							$row['m_media'] = $media_id;
-							$row['m_file'] = get_gedcom_value("FILE", 1, $newrec);
-							$row['m_titl'] = get_gedcom_value("TITL", 1, $newrec);
-							if (empty($row['m_titl'])) {
-								$row['m_titl'] = get_gedcom_value("FILE:TITL", 1, $newrec);
+							$row3['m_media'] = $media_id;
+							$row3['m_file'] = get_gedcom_value("FILE", 1, $newrec);
+							$row3['m_titl'] = get_gedcom_value("TITL", 1, $newrec);
+							if (empty($row3['m_titl'])) {
+								$row3['m_titl'] = get_gedcom_value("FILE:TITL", 1, $newrec);
 							}
-							$row['m_gedrec'] = $newrec;
-							$et = preg_match("/(\.\w+)$/", $row['m_file'], $ematch);
+							$row3['m_gedrec'] = $newrec;
+							$et = preg_match("/(\.\w+)$/", $row3['m_file'], $ematch);
 							$ext = "";
 							if ($et>0) $ext = substr(trim($ematch[1]),1);
-							$row['m_ext'] = $ext;
-							$row['mm_gid'] = $pid;
-							$row['mm_gedrec'] = get_sub_record($objSubrec{0}, $objSubrec, $gedrec);
+							$row3['m_ext'] = $ext;
+							$row3['mm_gid'] = $pid;
+							$row3['mm_gedrec'] = get_sub_record($objSubrec{0}, $objSubrec, $gedrec);
 						}
 					} else {
-						$row = array();
+						$row3 = array();
 						$newrec = find_updated_record($media_id);
-						if (empty($newrec)) $newrec = find_media_record($media_id);
-						$row['m_media'] = $media_id;
-						$row['m_file'] = get_gedcom_value("FILE", 1, $newrec);
-						$row['m_titl'] = get_gedcom_value("TITL", 1, $newrec);
-						if (empty($row['m_titl'])) {
-							$row['m_titl'] = get_gedcom_value("FILE:TITL", 1, $newrec);
+						if (empty($newrec)) {
+							$newrec = find_media_record($media_id);
 						}
-						$row['m_gedrec'] = $newrec;
-						$et = preg_match("/(\.\w+)$/", $row['m_file'], $ematch);
+						$row3['m_media'] = $media_id;
+						$row3['m_file'] = get_gedcom_value("FILE", 1, $newrec);
+						$row3['m_titl'] = get_gedcom_value("TITL", 1, $newrec);
+						if (empty($row3['m_titl'])) {
+							$row3['m_titl'] = get_gedcom_value("FILE:TITL", 1, $newrec);
+						}
+						$row3['m_gedrec'] = $newrec;
+						$et = preg_match("/(\.\w+)$/", $row3['m_file'], $ematch);
 						$ext = "";
-						if ($et>0) $ext = substr(trim($ematch[1]),1);
-						$row['m_ext'] = $ext;
-						$row['mm_gid'] = $pid;
-						$row['mm_gedrec'] = get_sub_record($objSubrec{0}, $objSubrec, $gedrec);
+						if ($et>0) { 
+							$ext = substr(trim($ematch[1]),1);
+						}
+						$row3['m_ext'] = $ext;
+						$row3['mm_gid'] = $pid;
+						$row3['mm_gedrec'] = get_sub_record($objSubrec{0}, $objSubrec, $gedrec);
 						if ($newrec && !isset($rowm['m_file'])) {
 							// -----
 						} else {
-							 echo "<li class=\"li_new\" >";
-							 echo "<table class=\"pic\" width=\"100%\" border=\"0\" >";
-							 echo "<tr><td align=\"center\" colspan=\"4\">";
-							 echo $row['m_media'];
-							 echo "</td></tr>";
-
-							$res =  lightbox_print_media_row('new', $row, $pid);
+							echo "<li class=\"li_new\" >";
+							echo "<center><table class=\"pic\" border=\"0\" ></center>";
+							echo "<tr><td align=\"center\" colspan=\"4\">";
+							echo $row3['m_media'];
+							echo "</td></tr>";
+							
+							$res =  lightbox_print_media_row('new', $row3, $pid);
 							$media_found = $media_found || $res;
 						}
 					}
@@ -339,8 +371,20 @@ function lightbox_print_media($pid, $level=1, $related=false, $kind=1, $noedit=f
 				}
 			}
 		}
-
-		if ($kind==5) {
+		
+		// No "Extra" Media Items ============================
+		if ($kind==5 && $ct==$numindiobjs) {
+		// "Extra" Media Item in GEDCOM but NOT in DB ========
+		} else if ($kind==5 && $ct!=$numindiobjs) {
+			echo "</ul>";
+			echo "</div>";
+			echo "<div class=\"clearlist\">";
+			echo "</div>";
+			echo '</td></tr></table>' . "\n";
+			echo '</td>'. "\n";
+			echo '</tr>';
+			echo '</table>' . "\n\n";
+		// Media Item in GEDCOM & in DB ======================
 		} else {
 			echo "</ul>";
 			echo "</div>";
@@ -356,7 +400,7 @@ function lightbox_print_media($pid, $level=1, $related=false, $kind=1, $noedit=f
 			echo '</tr>';
 			echo '</table>' . "\n\n";
 		}
-
+		
 	}
 
 	if ($media_found) return $is_media="YES" ;
