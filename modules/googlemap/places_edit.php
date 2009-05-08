@@ -109,15 +109,15 @@ function showchanges() {
 // e.g. array(0=>"Top Level", 16=>"England", 19=>"London", 217=>"Westminster");
 // NB This function exists in both places.php and places_edit.php
 function place_id_to_hierarchy($id) {
-	global $DBCONN, $TBLPREFIX, $pgv_lang;
+	global $TBLPREFIX;
+
+	$statement=
+		PGV_DB::prepare("SELECT pl_parent_id, pl_place FROM {$TBLPREFIX}placelocation WHERE pl_id=?");
 	$arr=array();
 	while ($id!=0) {
-		$sql="SELECT pl_parent_id, pl_place FROM {$TBLPREFIX}placelocation WHERE pl_id=".$DBCONN->escapeSimple($id);
-		$res=dbquery($sql);
-		$row=&$res->fetchRow();
-		$res->free();
-		$arr=array($id=>$row[1])+$arr;
-		$id=$row[0];
+		$row=$statement->execute(array($id))->fetchOneRow();
+		$arr=array($id=>$row->pl_place)+$arr;
+		$id=$row->pl_parent_id;
 	}
 	return $arr;
 }
@@ -125,44 +125,44 @@ function place_id_to_hierarchy($id) {
 // NB This function exists in both places.php and places_edit.php
 function getHighestIndex() {
 	global $TBLPREFIX;
-	$sql="SELECT MAX(pl_id) FROM {$TBLPREFIX}placelocation WHERE 1=1";
-	$res=dbquery($sql);
-	$row = $res->fetchRow();
-	$res->free();
-	if (empty($row[0]))
-		return 0;
-	else
-		return $row[0];
+
+	return (int)PGV_DB::prepare("SELECT MAX(pl_id) FROM {$TBLPREFIX}placelocation")->fetchOne();
 }
 
 $where_am_i=place_id_to_hierarchy($placeid);
 $level=count($where_am_i);
 
-if ($action=='addrecord') {
+if ($action=='addrecord' && PGV_USER_IS_ADMIN) {
+	$statement=
+		PGV_DB::prepare("INSERT INTO {$TBLPREFIX}placelocation (pl_id, pl_parent_id, pl_level, pl_place, pl_long, pl_lati, pl_zoom, pl_icon) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+
 	if (($_POST['LONG_CONTROL'] == '') || ($_POST['NEW_PLACE_LONG'] == '') || ($_POST['NEW_PLACE_LATI'] == '')) {
-		$sql = "INSERT INTO {$TBLPREFIX}placelocation (pl_id, pl_parent_id, pl_level, pl_place, pl_long, pl_lati, pl_zoom, pl_icon) VALUES (".(getHighestIndex()+1).", {$placeid}, {$level}, '".$DBCONN->escapeSimple(stripLRMRLM($_POST['NEW_PLACE_NAME']))."', '' , '', {$_POST['NEW_ZOOM_FACTOR']}, '{$_POST['icon']}');";
+		$statement->execute(array(getHighestIndex()+1, $placeid, $level, stripLRMRLM($_POST['NEW_PLACE_NAME']), null, null, $_POST['NEW_ZOOM_FACTOR'], $_POST['icon']));
 	} else {
-		$sql = "INSERT INTO {$TBLPREFIX}placelocation (pl_id, pl_parent_id, pl_level, pl_place, pl_long, pl_lati, pl_zoom, pl_icon) VALUES (".(getHighestIndex()+1).", {$placeid}, {$level}, '".$DBCONN->escapeSimple(stripLRMRLM($_POST['NEW_PLACE_NAME']))."', '{$_POST['LONG_CONTROL'][3]}{$_POST['NEW_PLACE_LONG']}', '{$_POST['LATI_CONTROL'][3]}{$_POST['NEW_PLACE_LATI']}', {$_POST['NEW_ZOOM_FACTOR']}, '{$_POST['icon']}');";
+		$statement->execute(array(getHighestIndex()+1, $placeid, $level, stripLRMRLM($_POST['NEW_PLACE_NAME']), $_POST['LONG_CONTROL'][3].$_POST['NEW_PLACE_LONG'], $_POST['LATI_CONTROL'][3].$_POST['NEW_PLACE_LATI'], $_POST['NEW_ZOOM_FACTOR'], $_POST['icon']));
 	}
-	if (PGV_USER_IS_ADMIN) {
-		$res = dbquery($sql);
+
+	if ($EDIT_AUTOCLOSE && !PGV_DEBUG) {
+		echo "\n<script type=\"text/javascript\">\n<!--\nedit_close();\n//-->\n</script>";
 	}
-	if ($EDIT_AUTOCLOSE && !PGV_DEBUG) echo "\n<script type=\"text/javascript\">\n<!--\nedit_close();\n//-->\n</script>";
 	echo "<div class=\"center\"><a href=\"javascript:;\" onclick=\"edit_close();return false;\">".$pgv_lang["close_window"]."</a></div><br />\n";
 	print_simple_footer();
 	exit;
 }
 
-if ($action=='updaterecord') {
+if ($action=='updaterecord' && PGV_USER_IS_ADMIN) {
+	$statement=
+		PGV_DB::prepare("UPDATE {$TBLPREFIX}placelocation SET pl_place=?, pl_lati=?, pl_long=?, pl_zoom=?, pl_icon=? WHERE pl_id=?");
+
 	if (($_POST['LONG_CONTROL'] == '') || ($_POST['NEW_PLACE_LONG'] == '') || ($_POST['NEW_PLACE_LATI'] == '')) {
-		$sql = "UPDATE {$TBLPREFIX}placelocation SET pl_place='".$DBCONN->escapeSimple(stripLRMRLM($_POST['NEW_PLACE_NAME']))."', pl_lati='', pl_long='', pl_zoom={$_POST['NEW_ZOOM_FACTOR']}, pl_icon='{$_POST['icon']}' WHERE pl_id={$placeid}";
+		$statement->execute(array(stripLRMRLM($_POST['NEW_PLACE_NAME']), null, null, $_POST['NEW_ZOOM_FACTOR'], $_POST['icon'], $placeid));
 	} else {
-		$sql = "UPDATE {$TBLPREFIX}placelocation SET pl_place='".$DBCONN->escapeSimple(stripLRMRLM($_POST['NEW_PLACE_NAME']))."',pl_lati='{$_POST['LATI_CONTROL'][3]}{$_POST['NEW_PLACE_LATI']}', pl_long='{$_POST['LONG_CONTROL'][3]}{$_POST['NEW_PLACE_LONG']}',pl_zoom={$_POST['NEW_ZOOM_FACTOR']}, pl_icon='{$_POST['icon']}' WHERE pl_id={$placeid}";
+		$statement->execute(array(stripLRMRLM($_POST['NEW_PLACE_NAME']), $_POST['LATI_CONTROL'][3].$_POST['NEW_PLACE_LATI'], $_POST['LONG_CONTROL'][3].$_POST['NEW_PLACE_LONG'], $_POST['NEW_ZOOM_FACTOR'], $_POST['icon'], $placeid));
 	}
-	if (PGV_USER_IS_ADMIN) {
-		$res = dbquery($sql);
+
+	if ($EDIT_AUTOCLOSE && !PGV_DEBUG) {
+		echo "\n<script type=\"text/javascript\">\n<!--\nedit_close();\n//-->\n</script>";
 	}
-	if ($EDIT_AUTOCLOSE && !PGV_DEBUG) echo "\n<script type=\"text/javascript\">\n<!--\nedit_close();\n//-->\n</script>";
 	echo "<div class=\"center\"><a href=\"javascript:;\" onclick=\"edit_close();return false;\">".$pgv_lang["close_window"]."</a></div><br />\n";
 	print_simple_footer();
 	exit;

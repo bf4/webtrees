@@ -10,9 +10,10 @@
 
 
 Version 4.2.x CA
+ - Merged: Merge changes r5423 - r5467 from the trunk. (windmillway)
  - Changed: Tidied up naming conventions for GED_Fact module (windmillway)
  - Added: MEDIA Add/Remove Links GUI functions (Not finished yet) (windmillway)
- - Merged: Merge changes r5367 - r5442 from the trunk. (windmillway)
+ - Merged: Merge changes r5367 - r5422 from the trunk. (windmillway)
  - Merged: Merge changes r5331 - r5366 from the trunk. (windmillway)
  - Merged: Merge changes r5324 - r5330 from the trunk. (4.2.1 Release level) (windmillway)
  - Fixed: Undefined Variable ERROR in logfiles (windmillway)
@@ -81,7 +82,9 @@ Version 4.2.x CA
 
 
 Version 4.2.2
- = Fixed [ 2779222 ] Adding a wrong date destroys all individual lists (fisharebest)
+ - Fixed Errors on Album page and Reorder Media page highlighted by introduction of PDO parameters (windmillway)
+ - Added Comment field to "Banned by IP" and "Search engine by IP" lists on Manage Servers page (canajun2eh)
+ - Fixed [ 2779222 ] Adding a wrong date destroys all individual lists (fisharebest)
  - Fixed [ 2780483 ] nick name ordering error/mess (fisharebest)
  - Fixed [ 2780414 ] Clippings Cart MySQL Error (fisharebest)
  - Fixed [ 2774786 ] [G Map Module] GOverviewMapControl Defaults to Empty Display (wooc)

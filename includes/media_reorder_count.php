@@ -58,19 +58,22 @@ if ($ct>0) {
 	$sqlmm = "SELECT DISTINCT ";
 	$sqlmm .= "m_media, m_ext, m_file, m_titl, m_gedfile, m_gedrec, mm_gid, mm_gedrec FROM ".$TBLPREFIX."media, ".$TBLPREFIX."media_mapping where ";
 	$sqlmm .= "mm_gid IN (";
+	$vars=array();
 	$i=0;
 	foreach($ids as $key=>$id) {
 		if ($i>0) $sqlmm .= ",";
-		$sqlmm .= "'".$DBCONN->escapeSimple($id)."'";
+		$sqlmm .= "?";
+		$vars[]=$id;
 		$i++;
 	}
-	$sqlmm .= ") AND mm_gedfile = '".$GEDCOMS[$GEDCOM]["id"]."' AND mm_media=m_media AND mm_gedfile=m_gedfile ";
+	$sqlmm .= ") AND mm_gedfile=? AND mm_media=m_media AND mm_gedfile=m_gedfile ";
+	$vars[]=PGV_GED_ID;
 	// Order by -------------------------------------------------------
 	$sqlmm .= " ORDER BY mm_gid DESC ";
 	// Perform DB Query -----------------------
-	$resmm = dbquery($sqlmm);
+	$rows=PGV_DB::prepare($sqlmm)->execute($vars)->fetchAll();
 	// Get related media item count
-	$ct_db = $resmm->numRows();
+	$ct_db = count($rows);
 	//else if indi not related
 }else{
 	// Get related media item count

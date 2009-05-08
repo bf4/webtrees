@@ -57,17 +57,18 @@ class ra_editfolder extends ra_form {
 		$fr_id="";
 		$fr_parentFolder="";
 		if (!empty($folder_id)) {
-	        // Find the correct form
-			$sql='select * from ' . $TBLPREFIX . 'folders where fr_id=\''.$folder_id.'\'';
-			$res=dbquery($sql);
-	
-	        // Setup the form variables from the DB
-			$res=$res->fetchRow(DB_FETCHMODE_ASSOC);
-			$fr_name=$res['fr_name'];
-			$fr_description=$res['fr_description'];
-			stripslashes($fr_description);
-			$fr_id=$res['fr_id'];
-			$fr_parentFolder=$res['fr_parentid'];
+      // Find the correct form
+			$row=
+				PGV_DB::prepare("SELECT * FROM {$TBLPREFIX}folders WHERE fr_id=?")
+				->execute(array($folder_id))
+				->fetchOneRow();
+
+			if ($row) {
+				$fr_name        =$row->fr_name;
+				$fr_description =$row->fr_description;
+				$fr_id          =$row->fr_id;
+				$fr_parentFolder=$row->fr_parentid;
+			}
 		}
 
 		$out='<script language="javascript" type="text/javascript"><!--';
@@ -96,23 +97,22 @@ class ra_editfolder extends ra_form {
 			$pgv_lang['folder_name'].'</td><td class="descriptionbox"><input type="text" name="folderName" value="'.PrintReady($fr_name).'"/></td></tr>'.
 				'<tr><td class="optionbox">'.$pgv_lang['Parent_Folder:'].'</td><td class="descriptionbox"><select name="parentFolder">' .
 				'<option value="null">'.$pgv_lang['No_Parent'].'</option>';
-                
-                // Grab name and id for the options
-                $sql='select fr_name, fr_id from '.$TBLPREFIX.'folders';
-                $res=dbquery($sql);
-				while($folder=& $res->fetchRow(DB_FETCHMODE_ASSOC))
-				{
-					if($fr_parentFolder==$folder['fr_id'])
-					{
-						$out.='<option value="'.$folder['fr_id'].'" selected="selected">'.PrintReady($folder['fr_name']) . '</option>';
-					}
-					else
-					{
-					$out.='<option value="'.$folder['fr_id'].'">'.PrintReady($folder['fr_name']) . '</option>';
+
+				// Grab name and id for the options
+
+				$rows=
+					PGV_DB::prepare("select fr_name, fr_id from {$TBLPREFIX}folders")
+					->fetchAll();
+
+				foreach ($rows as $row) {
+					if($fr_parentFolder==$row->fr_id) {
+						$out.='<option value="'.$row->fr_id.'" selected="selected">'.PrintReady($row->fr_name) . '</option>';
+					} else {
+						$out.='<option value="'.$row->fr_id.'">'.PrintReady($row->fr_name) . '</option>';
 					}
 				}
 
-                // Finish up
+				// Finish up
 				$out.='</select></td></tr>';
 				$out.='<tr><td class="optionbox">'.$pgv_lang['Folder_Description:'].'</td><td class="descriptionbox"><textarea name="folderDescription" cols="50" rows="10">'.PrintReady(stripslashes($fr_description)).'</textarea></td></tr>';
 				$out.='<tr><td colspan="2"><input type="submit" value="'.$pgv_lang['add'].'" />';

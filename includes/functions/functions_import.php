@@ -983,7 +983,7 @@ function insert_media($objrec, $objlevel, $update, $gid, $count) {
 		//-- check if another picture with the same file and title was previously imported
 		$media = new Media($objrec);
 		$new_media = Media::in_obje_list($media);
-		if ($new_media === false) {
+		if (!$new_media) {
 			//-- add it to the media database table
 			$sql_insert_media->execute(array(get_next_id('media', 'm_id'), $m_media, $media->ext, $media->title, $media->file, $GEDCOMS[$FILE]["id"], $objrec));
 			$media_count++;
@@ -1071,7 +1071,7 @@ function update_media($gid, $gedrec, $update = false) {
 		$media = new Media($gedrec);
 		//--check if we already have a similar object
 		$new_media = Media::in_obje_list($media);
-		if ($new_media === false) {
+		if (!$new_media) {
 			$sql_insert_media->execute(array($m_id, $new_m_media, $media->ext, $media->title, $media->file, $GEDCOMS[$FILE]["id"], $gedrec));
 			$media_count++;
 		} else {

@@ -35,7 +35,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 }
 
 // Require our base class and db functions
-require_once ("modules/research_assistant/ra_functions.php");
+require_once 'modules/research_assistant/ra_functions.php';
 require_once 'modules/research_assistant/forms/ra_GeneratedTask.php';
 
 // If the user doesnt have access then take them to the index.
@@ -66,7 +66,7 @@ class research_assistant extends ra_functions {
 	*/
 	function main() {
 		// Specify our lang variable and the table prefix.
-		global $pgv_lang, $TBLPREFIX, $DBCONN;
+		global $pgv_lang, $TBLPREFIX;
 		
 		// PGV modules use the mod_print_header function to print out the default PGV full header
 		// above their main content. There is also a pgv_print_simple_header which prints out an empty header.
@@ -120,23 +120,21 @@ class research_assistant extends ra_functions {
 					return $out;
 				}
 
-                //die("Task id: " . $taskid);
-				$sql = "INSERT INTO ".$TBLPREFIX."tasks (t_id, t_fr_id, t_title, t_description, t_startdate, t_username) "."VALUES ('".$DBCONN->escapeSimple($taskid)."', '".$DBCONN->escapeSimple($_POST["folder"])."', '".$DBCONN->escapeSimple($_POST["title"])."', '".$DBCONN->escapeSimple($_POST["desc"])."', '".time()."','".$DBCONN->escapeSimple($_POST['Users'])."')";
-				$res = dbquery($sql);
+				//die("Task id: " . $taskid);
+				PGV_DB::prepare("INSERT INTO {$TBLPREFIX}tasks (t_id, t_fr_id, t_title, t_description, t_startdate, t_username) VALUES (?, ?, ?, ?, ?, ?)")
+					->execute(array($taskid, $_POST["folder"], $_POST["title"], $_POST["desc"], time(), $_POST['Users']));
 				
 				// ADD COMMENT
 				if (!empty($_POST['comment'])) {
-					$commentid = get_next_id("comments", "c_id");
-					$username = getUserName();
-					$sql = "INSERT INTO ".$TBLPREFIX."comments (c_id, c_t_id, c_u_username, c_body, c_datetime) "."VALUES ('".$DBCONN->escapeSimple($commentid)."', '".$DBCONN->escapeSimple($taskid)."', '".$DBCONN->escapeSimple($username)."', '".$DBCONN->escapeSimple($_POST["comment"])."', '".time()."')";
-					$res = dbquery($sql);
+					PGV_DB::prepare("INSERT INTO {$TBLPREFIX}comments (c_id, c_t_id, c_u_username, c_body, c_datetime) VALUES (?, ?, ?, ?, ?)")
+						->execute(array(get_next_id("comments", "c_id"), $taskid, PGV_USER_NAME, $_POST["comment"], time()));
 				}
 
-                // Catch for the taskid not being set
-                if (!isset($_POST['taskid'])) {
-                    $_POST['taskid'] = $taskid;
-                    $_REQUEST['taskid'] = $taskid;
-                }
+				// Catch for the taskid not being set
+				if (!isset($_POST['taskid'])) {
+					$_POST['taskid'] = $taskid;
+					$_REQUEST['taskid'] = $taskid;
+				}
 
 				// ADD PEOPLE
 				if (isset ($_POST['personid'])) {
@@ -180,13 +178,13 @@ class research_assistant extends ra_functions {
 		// Update task
 		else
 			if ($_REQUEST['action'] == "updatetask") {
-				$sql = "UPDATE ".$TBLPREFIX."tasks SET t_fr_id='".$DBCONN->escapeSimple($_POST["folder"])."', t_title='".$DBCONN->escapeSimple($_POST["title"])."', t_description='".$DBCONN->escapeSimple($_POST["desc"])."', t_username='".$DBCONN->escapeSimple($_POST["Users"])."' WHERE t_id='".$DBCONN->escapeSimple($_REQUEST["taskid"])."'";
-				$res = dbquery($sql);
+				PGV_DB::prepare("UPDATE {$TBLPREFIX}tasks SET t_fr_id=?, t_title=?, t_description=?, t_username=? WHERE t_id=?")
+					->execute(array($_POST["folder"], $_POST["title"], $_POST["desc"], $_POST["Users"], $_REQUEST["taskid"]));
 
 				// UPDATE PEOPLE
 				//  -Delete old people
-				$sql = "DELETE FROM ".$TBLPREFIX."individualtask WHERE it_t_id='".$DBCONN->escapeSimple($_REQUEST["taskid"])."'";
-				$res = dbquery($sql);
+				PGV_DB::prepare("DELETE FROM {$TBLPREFIX}individualtask WHERE it_t_id=?")
+					->execute(array($_REQUEST["taskid"]));
 
 				if (isset ($_POST['personid'])) {
 					$this->add_people();
@@ -194,8 +192,8 @@ class research_assistant extends ra_functions {
 
 				// UPDATE SOURCES
 				//  -Delete old sources
-				$sql = "DELETE FROM ".$TBLPREFIX."tasksource WHERE ts_t_id='".$DBCONN->escapeSimple($_REQUEST["taskid"])."'";
-				$res = dbquery($sql);
+				PGV_DB::prepare("DELETE FROM {$TBLPREFIX}tasksource WHERE ts_t_id=?")
+					->execute(array($_REQUEST["taskid"]));
 
 				if (isset ($_POST['sourceid'])) {
 					$this->add_sources($_REQUEST["taskid"],$_POST['sourceid']);
@@ -268,12 +266,13 @@ class research_assistant extends ra_functions {
 					$update = false;
 				} else {
 					//-- check if the folder name alread exists in the database
-					$sql = 'Select fr_name, fr_id from '.$TBLPREFIX.'folders;';
-					$res = dbquery($sql);
+					$rows=
+						PGV_DB::prepare("SELECT fr_name, fr_id FROM {$TBLPREFIX}folders")
+						->fetchAll();
 
 					// Insure that our folder names are unique
-					while ($folder = & $res->fetchRow(DB_FETCHMODE_ASSOC)) {
-						if ($_POST['folderName'] == $folder['fr_name'] && $_POST['folderID'] != $folder['fr_id']) {
+					foreach ($rows as $row) {
+						if ($_POST['folderName'] == $row->fr_name && $_POST['folderID'] != $row->fr_id) {
 							$out .= $this->print_menu();
 							$out .= $pgv_lang["Folder_names_must_be_unique"];
 							$update = false;
@@ -284,21 +283,16 @@ class research_assistant extends ra_functions {
 					// Perform the updates
 					if ($update) {
 						//-- if no folder ID do an insert to add a new folder
-						if (empty($_POST['folderID'])) {
-							$folderid = get_next_id("folders", "fr_id");
-						
-							$sql = "Insert INTO ".$TBLPREFIX."folders values ('".$DBCONN->escapeSimple($folderid)."', '".$DBCONN->escapeSimple($_POST['folderName'])."', '".$DBCONN->escapeSimple($_POST['folderDescription'])."', ". $DBCONN->escapeSimple($_POST['parentFolder'])  . ");";
-							$res = dbquery($sql);
+						if ($_POST['parentFolder']=='null') {
+							$_POST['parentFolder']=null;
 						}
-						else {
+						if (empty($_POST['folderID'])) {
+							PGV_DB::prepare("INSERT INTO {$TBLPREFIX}folders VALUES (?, ?, ?, ?)")
+								->execute(array(get_next_id("folders", "fr_id"), $_POST['folderName'], $_POST['folderDescription'], $_POST['parentFolder']));
+						} else {
 							//-- update the old folder with the new data
-							$sql = 'update '.$TBLPREFIX.'folders set fr_name=\''.$DBCONN->escapeSimple($_POST['folderName']).'\', fr_description=\''.$DBCONN->escapeSimple($_POST['folderDescription']).'\',fr_parentid=\''.$DBCONN->escapeSimple($_POST['parentFolder']).'\' where fr_id=\''.$DBCONN->escapeSimple($_POST['folderID']).'\'';
-	
-							//-- if no parent folder set parent folder field to null in database
-							if ($_POST['parentFolder'] == 'null') {
-								$sql = 'update '.$TBLPREFIX.'folders set fr_name=\''.$DBCONN->escapeSimple($_POST['folderName']).'\', fr_description=\''.$DBCONN->escapeSimple($_POST['folderDescription']).'\',fr_parentid=null where fr_id=\''.$DBCONN->escapeSimple($_POST['folderID']).'\'';
-							}
-							$res = dbquery($sql);
+							PGV_DB::prepare("UPDATE {$TBLPREFIX}folders SET fr_name=?, fr_description=?, fr_parentid=? WHERE fr_id=?")
+								->execute(array($_POST['folderName'], $_POST['folderDescription'], $_POST['parentFolder'], $_POST['folderID']));
 						}
 
 						// Tell user it worked
@@ -393,10 +387,10 @@ class research_assistant extends ra_functions {
 		// Complete a task
 		else 
 			if ($_REQUEST['action'] == "completeTask" && !empty($_REQUEST['taskid'])) {
-                $out .= $this->print_menu();
-                $task = $this->getTask($_REQUEST['taskid']);
+				$out .= $this->print_menu();
+				$task = $this->getTask($_REQUEST['taskid']);
 				if (!empty($task['t_form'])&&!isset($_POST['commonFrm'])) $_POST['commonFrm'] = $task['t_form'];
-                $out .= $this->print_form('ra_CompleteTask');
+				$out .= $this->print_form('ra_CompleteTask');
 			}
 		else
 			if ($_REQUEST['action'] == "viewProbabilities")
@@ -422,8 +416,8 @@ class research_assistant extends ra_functions {
 		else
 			if($_REQUEST['action'] == "assignUser" && !empty($_REQUEST['t_id']) && !empty($_REQUEST['t_username']))
 			{
-				$sql = "UPDATE ".$TBLPREFIX."tasks SET t_username='".$_REQUEST['t_username']."', t_enddate= NULL where t_id= '".$_REQUEST['t_id']."'";
-				$res = dbquery($sql);
+				PGV_DB::prepare("UPDATE {$TBLPREFIX}tasks SET t_username=?, t_enddate=NULL WHERE t_id=?")
+					->execute(array($_REQUEST['t_username'], $_REQUEST['t_id']));
 				$out .= $this->print_menu("", "");
 				$out .= $this->print_user_list(GetUserName());
 			}
@@ -473,8 +467,8 @@ class research_assistant extends ra_functions {
 	 */
 	function add_people($task='')
 	{
-        global $TBLPREFIX, $DBCONN, $GEDCOMS, $GEDCOM;
-        
+		global $TBLPREFIX;
+
 		if(!is_object($task)) {
 			$task_id = $_POST["taskid"];
 			$people = explode(';', $_POST['personid']);
@@ -485,8 +479,8 @@ class research_assistant extends ra_functions {
 		}
 		foreach($people as $i=>$person_id) {
 			if (!empty($person_id)) {
-				$sql = 'INSERT INTO '.$TBLPREFIX.'individualtask (it_t_id, it_i_id, it_i_file) '."VALUES ('" . $DBCONN->escapeSimple($task_id) . "', '".$DBCONN->escapeSimple($person_id)."', '".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]['id'])."')";
-				$res = dbquery($sql);
+				PGV_DB::prepare("INSERT INTO {$TBLPREFIX}individualtask (it_t_id, it_i_id, it_i_file) VALUES (?, ?, ?)")
+					->execute(array($task_id, $person_id, PGV_GED_ID));
 			}
 		}
 	}
@@ -499,7 +493,7 @@ class research_assistant extends ra_functions {
 
 	function addGenTask($task, $folderId)
 	{
-		global $TBLPREFIX, $DBCONN, $GEDCOMS, $GEDCOM;
+		global $TBLPREFIX;
 		$taskid = get_next_id("tasks", "t_id");
 		$task->setID($taskid);
 		if (empty($folderId))
@@ -509,8 +503,8 @@ class research_assistant extends ra_functions {
 			return $out;
 		}
 
-		$sql = "INSERT INTO ".$TBLPREFIX."tasks (t_id, t_fr_id, t_title, t_description, t_startdate) "."VALUES ('".$DBCONN->escapeSimple($taskid)."', '".$DBCONN->escapeSimple($folderId)."', '".$DBCONN->escapeSimple($task->getName())."', '".$DBCONN->escapeSimple($task->getDescription())."', '".time()."')";
-		$res = dbquery($sql);
+		PGV_DB::prepare("INSERT INTO {$TBLPREFIX}tasks (t_id, t_fr_id, t_title, t_description, t_startdate) VALUES (?, ?, ?, ?, ?)")
+			->execute(array($taskid, $folderId, $task->getName(), $task->getDescription(), time()));
 
 		if ($task->getPersonId() != '') 
 		{

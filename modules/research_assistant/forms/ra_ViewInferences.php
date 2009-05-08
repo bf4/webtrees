@@ -88,7 +88,7 @@ class ra_ViewInferences extends ra_form {
      * The percentage of matches for this fact
      */
 	function contents() {
-		global $TBLPREFIX,$DBCONN, $GEDCOMS, $GEDCOM;
+		global $TBLPREFIX, $GEDCOMS, $GEDCOM;
 		global $LANGUAGE, $factarray, $pgv_lang;
 
 		$out = "<table class=\"width80\" align=\"center\"><tr><td><p>".$pgv_lang["ViewProbExplanation"]."</p></td></tr></table>";
@@ -105,28 +105,26 @@ class ra_ViewInferences extends ra_form {
 		}
 		if(empty($_REQUEST["pid"]))
 		{
-			$sql = "select * from ".$TBLPREFIX."probabilities where pr_file=".$GEDCOMS[$GEDCOM]['id']." ORDER BY (pr_matches / pr_count) DESC";
-			$result = dbquery($sql);
-			if($result->numRows()==0 || !empty($_REQUEST['recount'])) {
+			$rows=
+				PGV_DB::prepare("SELECT * FROM {$TBLPREFIX}probabilities where pr_file=? ORDER BY (pr_matches/pr_count) DESC")
+				->execute(array(PGV_GED_ID))
+				->fetchAll();
+
+			if(!$rows || !empty($_REQUEST['recount'])) {
 				$inferences = ra_functions::inferences();
-				$result = dbquery($sql);
 			}
 			
 			//This takes the info from that database and displays it to the user
 			//The formatting is accomplished by using a HTML table
-			if($result->numRows()>0)
-			{
-				while($row = $result->fetchRow(DB_FETCHMODE_ASSOC))
-					{
-						$out .= "<tr><td class='optionbox'>";
-						$out .= $this->getPartsTranslation($row['pr_f_lvl']);
-						$out .= "</td>"; 
-						$out .= "<td class='optionbox'>".$this->getPartsTranslation($row['pr_s_lvl'],$row['pr_rel'])."</td>"; 
-						$out .= "<td class='optionbox'>".$this->getPartsTranslation($row['pr_rel'])."</td>";
-						if ($row['pr_count']==0) $row['pr_per'] = 0;
-						else $row['pr_per'] = 100*($row['pr_matches']/$row['pr_count']); 
-						$out .= "<td class='optionbox'>". sprintf("%.2f%%",$row['pr_per'])."</td></tr>"; 
-					}
+			foreach ($rows as $row) {
+				$out .= "<tr><td class='optionbox'>";
+				$out .= $this->getPartsTranslation($row->pr_f_lvl);
+				$out .= "</td>"; 
+				$out .= "<td class='optionbox'>".$this->getPartsTranslation($row->pr_s_lvl,$row->pr_rel)."</td>"; 
+				$out .= "<td class='optionbox'>".$this->getPartsTranslation($row->pr_rel)."</td>";
+				if ($row->pr_count==0) $row->pr_per = 0;
+				else $row->pr_per = 100*($row->pr_matches/$row->pr_count); 
+				$out .= "<td class='optionbox'>". sprintf("%.2f%%",$row->pr_per)."</td></tr>"; 
 			}
 			$out .= "<tr><td class='topbottombar' colspan='4'><form method=\"get\" action=\"\"><input type=\"button\" value=\"".$pgv_lang["Recalculate"]."\" onclick=\"window.location='module.php?mod=research_assistant&action=viewProbabilities&recount=1';\" /></form></td></tr>";
 			//Returns the table to display

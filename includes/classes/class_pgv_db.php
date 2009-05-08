@@ -215,6 +215,43 @@ class PGV_DB {
 	}
 
 	//////////////////////////////////////////////////////////////////////////////
+	// INTERROGATE DATA DICTIONARY
+	//////////////////////////////////////////////////////////////////////////////
+	public static function table_exists($table) {
+		switch (self::$dbtype) {
+		case 'mysql':
+		case 'sqlite':
+		case 'pgsql':
+		case 'mssql':
+			// TODO: read the data dictionary tables for each $DBTYPE
+		default:
+			try {
+				PGV_DB::prepare("SELECT 1 FROM {$table}")->fetchOne();
+				return true;
+			} catch (PDOException $ex) {
+				return false;
+			}
+		}
+	}
+
+	public static function column_exists($table, $column) {
+		switch (self::$dbtype) {
+		case 'mysql':
+		case 'sqlite':
+		case 'pgsql':
+		case 'mssql':
+			// TODO: read the data dictionary tables for each $DBTYPE
+		default:
+			try {
+				PGV_DB::prepare("SELECT {$column} FROM {$table}")->fetchOne();
+				return true;
+			} catch (PDOException $ex) {
+				return false;
+			}
+		}
+	}
+
+	//////////////////////////////////////////////////////////////////////////////
 	// FUNCTIONALITY ENHANCEMENTS
 	//////////////////////////////////////////////////////////////////////////////
 
@@ -331,7 +368,7 @@ class PGV_DBStatement {
 		$row=$this->pdostatement->fetch($fetch_style);
 		$this->pdostatement->closeCursor();
 		$this->executed=false;
-		return $row;
+		return $row ? $row : null;
 	}
 
 	// Fetch one value and close the cursor.  e.g. SELECT MAX(foo) FROM bar
@@ -342,11 +379,7 @@ class PGV_DBStatement {
 		$row=$this->pdostatement->fetch(PDO::FETCH_NUM);
 		$this->pdostatement->closeCursor();
 		$this->executed=false;
-		if (is_array($row)) {
-			return $row[0];
-		} else {
-			return null;
-		}
+		return is_array($row) ? $row[0] : null;
 	}
 
 	// Fetch two columns, and return an associative array of col1=>col2

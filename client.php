@@ -359,30 +359,37 @@ case 'getxref':
 	case 'all':
 		switch($type) {
 			case "INDI":
-				$sql="SELECT i_id FROM {$TBLPREFIX}individuals WHERE i_file={$GED_ID} ORDER BY i_id";
+				$statement=
+					PGV_DB::prepare("SELECT i_id FROM {$TBLPREFIX}individuals WHERE i_file=? ORDER BY i_id")
+					->execute(array($GED_ID));
 				break;
 			case "FAM":
-				$sql="SELECT f_id FROM {$TBLPREFIX}families WHERE f_file={$GED_ID} ORDER BY f_id";
+				$statement=
+					PGV_DB::prepare("SELECT f_id FROM {$TBLPREFIX}families WHERE f_file=? ORDER BY f_id")
+					->execute(array($GED_ID));
 				break;
 			case "SOUR":
-				$sql="SELECT s_id FROM {$TBLPREFIX}sources WHERE s_file={$GED_ID} ORDER BY s_id";
-				break;
+				$statement=
+					PGV_DB::prepare("SELECT s_id FROM {$TBLPREFIX}sources WHERE s_file=? ORDER BY s_id")
+					->execute(array($GED_ID));
 			case "OBJE":
-				$sql="SELECT m_media FROM {$TBLPREFIX}media WHERE m_gedfile={$GED_ID} ORDER BY m_media";
-				break;
+				$statement=
+					PGV_DB::prepare("SELECT m_media FROM {$TBLPREFIX}media WHERE m_gedfile=? ORDER BY m_media")
+					->execute(array($GED_ID));
 			case "OTHER":
-				$sql="SELECT o_id FROM {$TBLPREFIX}other WHERE o_file={$GED_ID} AND o_type NOT IN ('REPO', 'NOTE') ORDER BY o_id";
+				$statement=
+					PGV_DB::prepare("SELECT o_id FROM {$TBLPREFIX}other WHERE o_file=? AND o_type NOT IN ('REPO', 'NOTE') ORDER BY o_id")
+					->execute(array($GED_ID));
 				break;
 			default:
-				$sql="SELECT o_id FROM {$TBLPREFIX}other WHERE o_file={$GED_ID} AND o_type='{$type}' ORDER BY o_id";
-				break;
+				$statement=
+					PGV_DB::prepare("SELECT o_id FROM {$TBLPREFIX}other WHERE o_file=? AND o_type=? ORDER BY o_id")
+					->execute(array($GED_ID, $type));
 		}
-		$res = dbquery($sql);
 		print "SUCCESS\n";
-		while ($row = $res->fetchRow()) {
-			print "$row[0]\n";
+		foreach ($statement->fetchOneColumn() as $id) {
+			print "{$id}\n";
 		}
-		$res->free();
 		addDebugLog($action." type=$type position=$position ");
 		break;
 	case 'new':

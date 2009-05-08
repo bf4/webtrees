@@ -238,30 +238,30 @@ class ra_GenerateTasks extends ra_form
 	 * 
 	 * @return all available folders
 	 */
-    function getFolders() {
-        global $TBLPREFIX;
+	function getFolders() {
+		global $TBLPREFIX;
 
-        $out = "";
-		$sql = "select fr_name, fr_id from " . $TBLPREFIX . "folders";
-        $res = dbquery($sql);
+		$rows=
+			PGV_DB::prepare("SELECT fr_name, fr_id FROM {$TBLPREFIX}folders")
+			->fetchAll();
 
-		while($foldername =& $res->fetchRow(DB_FETCHMODE_ASSOC)){
-		    $out .= '<option value="'.$foldername['fr_id'].'"';
-		    if(!empty($_REQUEST['folder']))
-		    {
-				if ($_REQUEST['folder']==$foldername['fr_id']) 
-				{
+		$out = "";
+		foreach ($rows as $row) {
+			$out .= '<option value="'.$row->fr_id.'"';
+			if(!empty($_REQUEST['folder'])) {
+				if ($_REQUEST['folder']==$row->fr_id) {
 					$out .= '" selected="selected"';
 				}
-		    }
-		    $out .= '>';
-		    if(strlen($foldername['fr_name']) < 30)
-				$out .= PrintReady($foldername['fr_name']);
-			else
-				$out .= PrintReady($this->truncate($foldername['fr_name']));
+			}
+			$out .= '>';
+			if(strlen($row->fr_name) < 30) {
+				$out .= PrintReady($row->fr_name);
+			} else {
+				$out .= PrintReady($this->truncate($row->fr_name));
+			}
 			$out .= '</option>';
-        }
-        
+		}
+
 		return $out;
 	}
 	

@@ -32,6 +32,11 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
+// Added in VERSION 4.2.2
+$pgv_lang["TYPE__notinDB"]			= "Not in DB";
+$pgv_lang["ROW_TYPE__notinDB"]		= $pgv_lang["TYPE__notinDB"];
+
+
 // Added in VERSION 4.1.6
 $pgv_lang["lb_toAdminConfigPage"]	= "Return to Admin Page";
 $pgv_lang["lb_manage"]				= "Manage Lightbox configuration";
@@ -63,8 +68,7 @@ $pgv_lang["lb_close_win"]		= "Close Lightbox window";
 
 
 // VERSION 4.1.3 
-
-//Config Parameters -------------------------------------
+// Config Parameters -------------------------------------
 $pgv_lang["configure_lightbox"]			= "Lightbox-Album Configuration";
 $pgv_lang["mediatab"]       			= "Individual Page - Media Tab";
 $pgv_lang["lb_appearance"]				= "Appearance";
@@ -95,10 +99,9 @@ $pgv_lang["lb_url_dimensionsAdvice"]	= "Width and height of URL window in pixels
 $pgv_lang["lb_width"]					= "Width";
 $pgv_lang["lb_height"]					= "Height";
 									
-
+									
+									
 // ---------------------------------------------------------------------
-
-
 $pgv_lang["lb_help"] 		 = "Album Help";
 $pgv_lang["lightbox"]		 = "Album";
 $pgv_lang["showmenu"] 		 = "Show Menu:";
@@ -112,10 +115,10 @@ $pgv_lang["ROW_TYPE__census"] 		= $factarray["CENS"];
 $pgv_lang["ROW_TYPE__other"] 		= $pgv_lang["TYPE__other"];
 $pgv_lang["ROW_TYPE__footnotes"]	= $pgv_lang["TYPE__footnotes"];
 
- $pgv_lang["census_text"]  	 = "\"UK census images have been obtained from \"The National Archives\", the custodian of the original records, ";
- $pgv_lang["census_text"] 	.= "and appear here with their approval on the condition that no commercial use is made of them without permission." . "\n" ;
- $pgv_lang["census_text"] 	.= "Requests for commercial publication of these or other UK census images appearing on this website should be directed to: ";
- $pgv_lang["census_text"] 	.= "Image Library, The National Archives, Kew, Surrey, TW9 4DU, United Kingdom.\"" . "\n" ;
+$pgv_lang["census_text"]  	 = "\"UK census images have been obtained from \"The National Archives\", the custodian of the original records, ";
+$pgv_lang["census_text"] 	.= "and appear here with their approval on the condition that no commercial use is made of them without permission." . "\n" ;
+$pgv_lang["census_text"] 	.= "Requests for commercial publication of these or other UK census images appearing on this website should be directed to: ";
+$pgv_lang["census_text"] 	.= "Image Library, The National Archives, Kew, Surrey, TW9 4DU, United Kingdom.\"" . "\n" ;
 // $pgv_lang["census_text"]  	 = "";
 
 $pgv_lang["lb_edit_details"] 	= "Edit Details";

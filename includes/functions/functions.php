@@ -1863,6 +1863,14 @@ function event_sort($a, $b) {
 	}
 }
 
+function event_sort_name($a, $b) {
+	if ($a['jd']==$b['jd']) {
+		return compareStrings($a['name'], $b['name']);
+	} else {
+		return $a['jd']-$b['jd'];
+	}
+}
+
 /**
  * sort an array of media items
  *

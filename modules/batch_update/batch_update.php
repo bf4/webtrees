@@ -235,30 +235,40 @@ class batch_update {
 	}
 
 	function getAllXrefs() {
-		global $DBCONN, $TBLPREFIX;
+		global $TBLPREFIX;
 
 		$sql=array();
+		$vars=array();
 		foreach ($this->PLUGIN->getRecordTypesToUpdate() as $type) {
 			switch ($type) {
 			case 'INDI':
-				$sql[]="SELECT i_id, 'INDI' FROM ".$TBLPREFIX."individuals WHERE i_file=".PGV_GED_ID;
+				$sql[]="SELECT i_id, 'INDI' FROM {$TBLPREFIX}individuals WHERE i_file=?";
+				$vars[]=PGV_GED_ID;
 				break;
 			case 'FAM':
-				$sql[]="SELECT f_id, 'FAM' FROM ".$TBLPREFIX."families WHERE f_file=".PGV_GED_ID;
+				$sql[]="SELECT f_id, 'FAM' FROM {$TBLPREFIX}families WHERE f_file=?";
+				$vars[]=PGV_GED_ID;
 				break;
 			case 'SOUR':
-				$sql[]="SELECT s_id, 'SOUR' FROM ".$TBLPREFIX."sources WHERE s_file=".PGV_GED_ID;
+				$sql[]="SELECT s_id, 'SOUR' FROM {$TBLPREFIX}sources WHERE s_file=?";
+				$vars[]=PGV_GED_ID;
 				break;
 			case 'OBJE':
-				$sql[]="SELECT m_media, 'OBJE' FROM ".$TBLPREFIX."media WHERE m_gedfile=".PGV_GED_ID;
+				$sql[]="SELECT m_media, 'OBJE' FROM {$TBLPREFIX}media WHERE m_gedfile=?";
+				$vars[]=PGV_GED_ID;
 				break;
 			default:
-				$sql[]="SELECT o_id, '".$type."' FROM ".$TBLPREFIX."other WHERE o_type='".$type."' AND o_file=".PGV_GED_ID;
+				$sql[]="SELECT o_id, ? FROM {$TBLPREFIX}other WHERE o_type=? AND o_file=?";
+				$vars[]=$type;
+				$vars[]=$type;
+				$vars[]=PGV_GED_ID;
 				break;
 			}
 		}
-		$sql=implode(' UNION ', $sql).' ORDER BY 1 ASC';
-		$this->all_xrefs=$DBCONN->getAssoc($sql);
+		$this->all_xrefs=
+			PGV_DB::prepare(implode(' UNION ', $sql).' ORDER BY 1 ASC')
+			->execute($vars)
+			->fetchAssoc();
 	}
 
 	// Scan the plugin directory for a list of plugins

@@ -45,20 +45,19 @@ class ra_form {
 	* @return array people associated with the task
 	*/
 	function getPeople(){
-		global $TBLPREFIX, $DBCONN;
+		global $TBLPREFIX;
 
-		if (!is_null($this->people)) return $this->people;
+		if (is_null($this->people)) {
+			$ids=PGV_DB::prepare("SELECT it_i_id FROM {$TBLPREFIX}individualtask WHERE it_t_id=?")
+				->execute(array($_REQUEST["taskid"]))
+				->fetchOneColumn();
 
-		$sql = "SELECT it_i_id FROM " . $TBLPREFIX . "individualtask WHERE it_t_id='" . $DBCONN->escapeSimple($_REQUEST["taskid"]) . "'";
-		$res = dbquery($sql);
-
-		$people = array();
-		while($row = $res->fetchRow()){
-			$people[$row[0]] = Person::getInstance($row[0]);
+			$this->people = array();
+			foreach ($ids as $id) {
+				$this->people[$id] = Person::getInstance($id);
+			}
 		}
-		$res->free();
-		$this->people = $people;
-		return $people;
+		return $this->people;
 	}
 
 
@@ -68,47 +67,48 @@ class ra_form {
 	* @return sources associated with the task
 	*/
 	function getSources(){
-        global $TBLPREFIX, $DBCONN, $GEDCOMS, $GEDCOM;
+		global $TBLPREFIX;
 
-		$sql = "SELECT s_name, s_id FROM " . $TBLPREFIX . "sources, " . $TBLPREFIX . "tasksource WHERE s_id = ts_s_id AND s_file=".$GEDCOMS[$GEDCOM]['id']." AND ts_t_id='" . $DBCONN->escapeSimple($_REQUEST["taskid"]) . "'";
-		$res = dbquery($sql);
-		$sources = array();
-		while($source =& $res->fetchRow(DB_FETCHMODE_ASSOC)){
-			$sources[$source["s_id"]] = $source["s_name"];
+		$rows=
+			PGV_DB::prepare("SELECT s_name, s_id FROM {$TBLPREFIX}sources, {$TBLPREFIX}tasksource WHERE s_id = ts_s_id AND s_file=? AND ts_t_id=?")
+			->execute(array(PGV_GED_ID, $_REQUEST["taskid"]))
+			->fetchAll();
+
+		$sources=array();
+		foreach ($rows as $row) {
+			$sources[$row->s_id]=$row->s_name;
 		}
-		$res->free();
 		return $sources;
 	}
 
 	function getSourceCitationData() {
-		global $TBLPREFIX, $DBCONN;
+		global $TBLPREFIX;
 
-		$sql = "SELECT * FROM " . $TBLPREFIX . "tasksource WHERE ts_t_id='" . $DBCONN->escapeSimple($_REQUEST["taskid"]) . "'";
-		$res = dbquery($sql);
+		$row=
+			PGV_DB::prepare("SELECT * FROM {$TBLPREFIX}tasksource WHERE ts_t_id=?")
+			->execute(array($_REQUEST["taskid"]))
+			->fetchOneRow(PDO::FETCH_ASSOC);
 
-		if ($res->numRows()>0) {
-			$row = $res->fetchRow(DB_FETCHMODE_ASSOC);
-			$row = db_cleanup($row);
+		if ($row) {
 			$row['ts_array'] = unserialize($row['ts_array']);
+		} else {
+			$row = array('ts_page'=>'','ts_quay'=>'','ts_text'=>'','ts_date'=>'','ts_obje'=>'','ts_array'=>array());
 		}
-		else $row = array('ts_page'=>'','ts_quay'=>'','ts_text'=>'','ts_date'=>'','ts_obje'=>'','ts_array'=>array());
-		$res->free();
 		return $row;
 	}
 
 	function getFactData() {
-		global $TBLPREFIX, $DBCONN;
+		global $TBLPREFIX;
 
-		$sql = "SELECT * FROM " . $TBLPREFIX . "taskfacts WHERE tf_t_id='" . $DBCONN->escapeSimple($_REQUEST["taskid"]) . "'";
-		$res = dbquery($sql);
-
-		$tasks = array();
-		if ($res->numRows()>0) {
-			while($row = $res->fetchRow(DB_FETCHMODE_ASSOC)) {
-				$tasks[] = db_cleanup($row);
-			}
+		$rows=
+			PGV_DB::prepare("SELECT * FROM {$TBLPREFIX}taskfacts WHERE tf_t_id=?")
+			->execute(array($_REQUEST["taskid"]))
+			->fetchAll(PDO::FETCH_ASSOC);
+		
+		$tasks=array();
+		foreach ($rows as $row) {
+			$tasks[]=$row;
 		}
-		$res->free();
 		return $tasks;
 	}
 
@@ -324,7 +324,7 @@ class ra_form {
      * process the data from the source citation form
      */
     function processSourceCitation() {
-		global $GEDCOMS, $GEDCOM, $TBLPREFIX, $DBCONN;
+		global $GEDCOMS, $GEDCOM, $TBLPREFIX;
 		if (empty($_REQUEST['sourceid'])) {
 			return "You must select a source.";
 		}
@@ -334,8 +334,8 @@ class ra_form {
 		$oldpeople = $this->getPeople();
 
 		//  -Delete old people
-		$sql = "DELETE FROM ".$TBLPREFIX."individualtask WHERE it_t_id='".$_REQUEST["taskid"]."'";
-		$res = dbquery($sql);
+		PGV_DB::prepare("DELETE FROM {$TBLPREFIX}individualtask WHERE it_t_id=?")
+			->execute(array($_REQUEST['taskid']));
 
 		if (isset ($_REQUEST['personid'])) {
 			$people = explode(';', $_REQUEST['personid']);
@@ -352,8 +352,8 @@ class ra_form {
 			//-- add the new people to the database
 			foreach($people as $i=>$pid) {
 				if (!empty($pid)) {
-					$sql = 'INSERT INTO '.$TBLPREFIX.'individualtask (it_t_id, it_i_id, it_i_file) '."VALUES ('" . $DBCONN->escapeSimple($_REQUEST["taskid"]) . "', '".$DBCONN->escapeSimple($pid)."', '".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]['id'])."')";
-					$res = dbquery($sql);
+					PGV_DB::prepare("INSERT INTO {$TBLPREFIX}individualtask (it_t_id, it_i_id, it_i_file) VALUES (?, ?, ?)")
+						->execute(array($_REQUEST['taskid'], $pid, PGV_GED_ID));
 				}
 			}
 		}
@@ -366,23 +366,19 @@ class ra_form {
 		}
 
 		// UPDATE SOURCES
-				//  -Delete old sources
-		$sql = "DELETE FROM ".$TBLPREFIX."tasksource WHERE ts_t_id='".$_REQUEST["taskid"]."'";
-		$res = dbquery($sql);
+		//  -Delete old sources
+		PGV_DB::prepare("DELETE FROM {$TBLPREFIX}tasksource WHERE ts_t_id=?")
+			->execute(array($_REQUEST['taskid']));
+
+
 		$this->people = null;
 		$citation = $this->processSimpleCitation();
 		if (isset ($_REQUEST['sourceid'])) {
 			$sources = explode(';', $_REQUEST['sourceid']);
 			foreach($sources as $i=>$sid) {
 				if (!empty($sid)) {
-					$sql = 'INSERT INTO '.$TBLPREFIX.'tasksource (ts_t_id, ts_s_id, ts_page, ts_quay, ts_date, ts_text, ts_obje, ts_array) '."VALUES ('" . $DBCONN->escapeSimple($_REQUEST["taskid"]) . "', '".$DBCONN->escapeSimple($sid)."'" .
-							",'".$DBCONN->escapeSimple($citation['PAGE'])."'" .
-							",'".$DBCONN->escapeSimple($citation['QUAY'])."'" .
-							",'".$DBCONN->escapeSimple($citation['DATE'])."'" .
-							",'".$DBCONN->escapeSimple($citation['TEXT'])."'" .
-							",'".$DBCONN->escapeSimple($citation['OBJE'])."'" .
-							",'".$DBCONN->escapeSimple(serialize($citation['array']))."')";
-					$res = dbquery($sql);
+					PGV_DB::prepare("INSERT INTO {$TBLPREFIX}tasksource (ts_t_id, ts_s_id, ts_page, ts_quay, ts_date, ts_text, ts_obje, ts_array) VALUES (?, ?, ?, ?, ?, ?, ?, ?)")
+						->execute(array($_REQUEST["taskid"], $sid, $citation['PAGE'], $citation['QUAY'], $citation['DATE'], $citation['TEXT'], $citation['OBJE'], serialize($citation['array'])));
 				}
 			}
 		}
@@ -767,7 +763,7 @@ END_OUT;
      * process the added/edited facts
      */
     function processFactsForm() {
-		global $pgv_lang, $TBLPREFIX, $factarray, $GEDCOMS, $GEDCOM, $DBCONN;
+		global $pgv_lang, $TBLPREFIX, $factarray, $GEDCOMS, $GEDCOM;
 		//-- generate the text for the citation
 		$citation = $this->getSourceCitationData();
 		$citationTxt = "";
@@ -785,8 +781,8 @@ END_OUT;
 		// Set our output to nothing, this supresses a warning that we would otherwise get.
 		$out = "";
 
-		$sql = "DELETE FROM ".$TBLPREFIX."taskfacts WHERE tf_t_id='".$DBCONN->escapeSimple($_REQUEST['taskid'])."'";
-		$res = dbquery($sql);
+		PGV_DB::prepare("DELETE FROM {$TBLPREFIX}taskfacts WHERE tf_t_id=?")
+			->execute(array($_REQUEST['taskid']));
 
 		//-- delete all records from old people
 		$oldpeople = $this->getPeople();
@@ -832,11 +828,10 @@ END_OUT;
 				if (!isset($_REQUEST['multiple'.$i])) $_REQUEST['multiple'.$i]='Y';
 				if (!isset($_REQUEST['type'.$i])) $_REQUEST['type'.$i]='';
 				//-- store the fact associations in the database
-				$sql = "INSERT INTO ".$TBLPREFIX."taskfacts VALUES('".get_next_id("taskfacts", "tf_id")."'," .
-					"'".$DBCONN->escapeSimple($_REQUEST['taskid'])."'," .
-					"'".$DBCONN->escapeSimple($factrec)."'," .
-					"'".$DBCONN->escapeSimple($peopleTxt)."', '".$_REQUEST['multiple'.$i]."', '".$_REQUEST['type'.$i]."')";
-				$res = dbquery($sql);
+				PGV_DB::prepare("INSERT INTO {$TBLPREFIX}taskfacts (tf_id, tf_t_idm tf_factrec, tf_people, tf_multiple, tf_type) VALUES (?, ?, ?, ?, ?, ?)")
+					->execute(array(get_next_id("taskfacts", "tf_id"), $_REQUEST['taskid'], $factrec, $peopleTxt, $_REQUEST['multiple'.$i], $_REQUEST['type'.$i]));
+
+
 				foreach($people as $in=>$pid) {
 					if (!empty($pid) && isset($newpeoplerecs[$pid])) {
 						$indirec = $newpeoplerecs[$pid];
