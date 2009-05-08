@@ -55,7 +55,7 @@ global $SEARCH_SPIDER, $GOOGLEMAP_PH_CONTROLS;
 		}
 		$summary.=$controller->indi->format_first_major_fact(PGV_EVENTS_DEAT, 2);
 
-		$controller->GEDFact_assistant();
+		$controller->census_assistant();
 
 // include ('modules/research_assistant/forms/CensusUK1841.php');
 // print_footer();

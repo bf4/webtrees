@@ -829,7 +829,7 @@ case 'addnewnote_assisted':
 		<input type="hidden" name="noteid" value="newnote" />
 		<!-- <input type="hidden" name="pid" value="$pid" /> -->
 		<?php
-			include ('modules/GEDFact_assistant/GEDFact_ctrl.php');
+			include ('modules/GEDFact_assistant/CENS_ctrl.php');
 		?>
 	</form>
 	<?php

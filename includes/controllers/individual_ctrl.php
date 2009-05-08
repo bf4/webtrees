@@ -2172,7 +2172,7 @@ class IndividualControllerRoot extends BaseController {
 	/**
 	* include GedFact controller
 	*/
-	function GEDFact_assistant() {
+	function census_assistant() {
 		require 'modules/GEDFact_assistant/CENS/census_1_ctrl.php';
 	}
 	function medialink_assistant() {
