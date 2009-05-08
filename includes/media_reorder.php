@@ -119,7 +119,7 @@ include_once("includes/functions/functions_print_facts.php");
 	$sqlmm .= "m_media, m_ext, m_file, m_titl, m_gedfile, m_gedrec, mm_gid, mm_gedrec FROM {$TBLPREFIX}media, {$TBLPREFIX}media_mapping where ";
 	$sqlmm .= "mm_gid IN (";
 	$i=0;
-	$vars=array()
+	$vars=array();
 	foreach ($ids as $key=>$media_id) {
 		if ($i>0) $sqlmm .= ",";
 		$sqlmm .= "?";
@@ -127,7 +127,7 @@ include_once("includes/functions/functions_print_facts.php");
 		$i++;
 	}
 	$sqlmm .= ") AND mm_gedfile=? AND mm_media=m_media AND mm_gedfile=m_gedfile ";
-	$vars[]=PGV_GED_ID
+	$vars[]=PGV_GED_ID;
 	//-- for family and source page only show level 1 obje references
 	if ($level>0) {
 		$sqlmm .= "AND mm_gedrec ".PGV_DB_LIKE." ?";
@@ -141,7 +141,7 @@ include_once("includes/functions/functions_print_facts.php");
 		$sqlmm .= " ORDER BY mm_gid DESC ";
 	}
 
-	$rows=PGV_DB::prepare($sql)->execute($vars)->fetchAll(PDO::FETCH_ASSOC);
+	$rows=PGV_DB::prepare($sqlmm)->execute($vars)->fetchAll(PDO::FETCH_ASSOC);
 
 	$foundObjs = array();
 
