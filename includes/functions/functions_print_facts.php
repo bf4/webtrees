@@ -692,12 +692,22 @@ function print_media_links($factrec, $level,$pid='') {
 					//LBox --------  change for Lightbox Album --------------------------------------------
 					if (file_exists("modules/lightbox/album.php") && eregi("\.(jpe?g|gif|png)$",$mainMedia)) {
 						$name = trim($row["m_titl"]);
-							print "<a href=\"" . $mainMedia . "\" rel=\"clearbox[general_1]\" rev=\"" . $media_id . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name, ENT_COMPAT, 'UTF-8')) . "\">" . "\n";
-					// ---------------------------------------------------------------------------------------------
+						print "<a href=\"" . $mainMedia . "\" rel=\"clearbox[general_1]\" rev=\"" . $media_id . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name, ENT_COMPAT, 'UTF-8')) . "\">" . "\n";
+					} else if (file_exists("modules/lightbox/album.php") && eregi("\.(pdf|avi|txt)$",$mainMedia)) {
+						if (file_exists("modules/lightbox/lb_config.php")) {
+							include ('modules/lightbox/lb_config.php');
+						} else {
+							include ('modules/lightbox/lb_defaultconfig.php');
+						}
+						$name = trim($row["m_titl"]);
+						print "<a href=\"" . $mainMedia . "\" rel='clearbox({$LB_URL_WIDTH},{$LB_URL_HEIGHT},click)' rev=\"" . $media_id . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name,ENT_COMPAT,'UTF-8')) . "\">" . "\n";
+					// --------------------------------------------------------------------------------------
 					} else if ($USE_MEDIA_VIEWER) {
 						print "<a href=\"".encode_url("mediaviewer.php?mid={$media_id}")."\">";
-					} else {
+					} else if (eregi("\.(jpe?g|gif|png)$",$mainMedia)) {
 						print "<a href=\"javascript:;\" onclick=\"return openImage('".rawurlencode($mainMedia)."',$imgwidth, $imgheight);\">";
+					} else {
+						print "<a href=\"".encode_url("mediaviewer.php?mid={$media_id}")."\">";
 					}
 
 					print "<img src=\"".$thumbnail."\" border=\"0\" align=\"" . ($TEXT_DIRECTION== "rtl"?"right": "left") . "\" class=\"thumbnail\"";

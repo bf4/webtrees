@@ -3872,7 +3872,7 @@ function mediaFileInfo($fileName, $thumbName, $mid, $name='', $notes='', $obeyVi
 		$type .= "picasa";
 	} else if (eregi("\.(jpg|jpeg|gif|png)$", $fileName)) {
 		$type .= "image";
-	} else if (eregi("\.(pdf|avi)$", $fileName)) {
+	} else if (eregi("\.(pdf|avi|txt)$", $fileName)) {
 		$type .= "page";
 	} else if (eregi("\.mp3$", $fileName)) {
 		$type .= "audio";
@@ -3982,8 +3982,10 @@ function mediaFileInfo($fileName, $thumbName, $mid, $name='', $notes='', $obeyVi
 			break;
 		case 'url_page':
 		case 'url_other':
-		case 'local_page':
 			$thumb = "images/globe.png";
+			break;
+		case 'local_page':
+			$thumb = "images/media/doc.gif";
 			break;
 		case 'url_audio':
 		case 'local_audio':
@@ -3991,7 +3993,9 @@ function mediaFileInfo($fileName, $thumbName, $mid, $name='', $notes='', $obeyVi
 			break;
 		default:
 			$thumb = $thumbName;
-			if (substr($type,0,4)=='url_') $width = ' width="'.$THUMBNAIL_WIDTH.'"';
+			if (substr($type,0,4)=='url_') {
+				$width = ' width="'.$THUMBNAIL_WIDTH.'"';
+			}
 	}
 
 	// -- Use an overriding thumbnail if one has been provided

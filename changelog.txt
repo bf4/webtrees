@@ -10,7 +10,8 @@
 
 
 Version 4.2.2
- - FIxed [ 2789308 ] ERROR 8: Constant PGV_GOOGLE_ANALYTICS already defined (fisharebest)
+ - Fixed Text media items not being displayed properly with Lightbox. (windmillway) 
+ - Fixed [ 2789308 ] ERROR 8: Constant PGV_GOOGLE_ANALYTICS already defined (fisharebest)
  - Fixed Errors on Album page and Reorder Media page highlighted by introduction of PDO parameters (windmillway)
  - Added Comment field to "Banned by IP" and "Search engine by IP" lists on Manage Servers page (canajun2eh)
  - Fixed [ 2779222 ] Adding a wrong date destroys all individual lists (fisharebest)
