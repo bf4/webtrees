@@ -10,6 +10,7 @@
 
 
 Version 4.2.2
+ - Changed Move various media "thumbnails" to the "index/media" subdirectory (canajun2eh)
  - Fixed Text media items not being displayed properly with Lightbox. (windmillway) 
  - Fixed [ 2789308 ] ERROR 8: Constant PGV_GOOGLE_ANALYTICS already defined (fisharebest)
  - Fixed Errors on Album page and Reorder Media page highlighted by introduction of PDO parameters (windmillway)

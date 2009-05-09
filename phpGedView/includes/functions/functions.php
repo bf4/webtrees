@@ -3966,30 +3966,30 @@ function mediaFileInfo($fileName, $thumbName, $mid, $name='', $notes='', $obeyVi
 	$width = '';
 	switch ($type) {
 		case 'url_flv':
-			$thumb = 'images/flashrem.png';
+			$thumb = 'images/media/flashrem.png';
 			break;
 		case 'local_flv':
-			$thumb = 'images/flash.png';
+			$thumb = 'images/media/flash.png';
 			break;
 		case 'url_wmv':
-			$thumb = 'images/wmvrem.png';
+			$thumb = 'images/media/wmvrem.png';
 			break;
 		case 'local_wmv':
-			$thumb = 'images/wmv.png';
+			$thumb = 'images/media/wmv.png';
 			break;
 		case 'url_picasa':
-			$thumb = 'images/picasa.png';
+			$thumb = 'images/media/picasa.png';
 			break;
 		case 'url_page':
 		case 'url_other':
-			$thumb = "images/globe.png";
+			$thumb = "images/media/globe.png";
 			break;
 		case 'local_page':
 			$thumb = "images/media/doc.gif";
 			break;
 		case 'url_audio':
 		case 'local_audio':
-			$thumb = "images/audio.png";
+			$thumb = "images/media/audio.png";
 			break;
 		default:
 			$thumb = $thumbName;
