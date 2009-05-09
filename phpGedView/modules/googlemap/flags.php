@@ -29,7 +29,6 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
-require_once "config.php";
 require "modules/googlemap/defaultconfig.php";
 if (file_exists('modules/googlemap/config.php')) require('modules/googlemap/config.php');
 require "includes/functions/functions_edit.php";
