@@ -31,7 +31,6 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	exit;
 }
 
-require_once ("config.php");
 require_once ("includes/controllers/search_ctrl.php");
 
 /**
