@@ -100,7 +100,10 @@ echo '<tr class="'.$TEXT_DIRECTION.'"><td><table>';
 		$note = "No Text";
 	}
 	echo '<tr><td align="left" class="descriptionbox '.$TEXT_DIRECTION.'">';
-		echo "<center>".$pgv_lang["shared_note"]."</center>";
+		echo '<center>';
+		if (!empty($PGV_IMAGES["notes"]["small"]) && $SHOW_FACT_ICONS)
+			echo '<img src="'.$PGV_IMAGE_DIR."/".$PGV_IMAGES["notes"]["small"].'" alt="'.$pgv_lang["shared_note"].'" title="'.$pgv_lang["shared_note"].'" align="middle" /> ';
+		echo $pgv_lang["shared_note"]."</center>";
 		echo '<br /><br />';
 		if (PGV_USER_CAN_EDIT) {
 			echo "<a href=\"javascript: edit_note()\"> ";
