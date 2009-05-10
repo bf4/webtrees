@@ -216,7 +216,7 @@ if (isset($_REQUEST['delete']) && !empty($_REQUEST['delete'])){
 		window.location = 'module.php?mod=research_assistant&action=edittask&taskid=<?php print $_REQUEST['taskid']; ?>';
 	}
 	function editcomment(commentid) {
-	window.open('editcomment.php?taskid=<?php print $_REQUEST['taskid']; ?>&commentid='+commentid, '', 'top=50,left=50,width=800,height=500,resizable=1,scrollbars=1');
+	window.open('module.php?mod=research_assistant&action=editcomment&taskid=<?php print $_REQUEST['taskid']; ?>&commentid='+commentid, '', 'top=50,left=50,width=800,height=500,resizable=1,scrollbars=1');
 	}
 	function confirm_prompt(text, commentid) {
 		if (confirm(text)) {
@@ -347,7 +347,7 @@ if (isset($_REQUEST['delete']) && !empty($_REQUEST['delete'])){
 </tr>
 <tr class="topbottombar">
 	<td colspan="4">
-<input type="button" value="<?php print $pgv_lang["add_new_comment"]; ?>" name="Add New Comment" onclick="window.open('editcomment.php?taskid='+<?php print $_REQUEST['taskid']; ?>, '',
+<input type="button" value="<?php print $pgv_lang["add_new_comment"]; ?>" name="Add New Comment" onclick="window.open('module.php?mod=research_assistant&action=editcomment&taskid='+<?php print $_REQUEST['taskid']; ?>, '',
 	'top=50,left=50,width=800,height=500,resizable=1,scrollbars=1');">
 	</td>
 	</tr>

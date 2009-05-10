@@ -1442,7 +1442,6 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 					$date=timestamp_to_gedcom_date($task->t_startdate);
 					$out .= '<tr><td class="list_label"><a href="module.php?mod=research_assistant&amp;action=viewtask&amp;taskid='.$task->t_id.'">'.$pgv_lang['details'].'</a></td><td class="list_label">'.PrintReady($task->t_title).'</td><td class="list_label">'.$this->checkComplete($row).'</td><td class="list_label">'.$date->Display(false).'</td></tr>';
 				}
-				$result->free();
 			}
 		}
 
@@ -1452,7 +1451,7 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 				//beginning of the missing information table, which gets populated with missing information for that individual and allows the user to "autoadd" tasks
 				//a checkbox to view link conversion is included if a piece of missing information is already auto tasked
 		$out .='<table align="center"><tr><td valign="top">
-						<form name="autotask" action="individual.php" method="post">
+						<form name="autotask" action="individual.php?pid='.$person->getXref().'&amp;action=ra_addtask" method="post">
 							<table border="0">
 									<input type="hidden" name="pid" value="'.$person->getXref().'" />
 									<input type="hidden" name="action" value="ra_addtask" />
@@ -1833,7 +1832,7 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 		}
 		$out .= '</td></tr><tr><td class="topbottombar">';
 		$out .= '<form action="" onsubmit="return false;">
-				<input type="button" value="'.$pgv_lang["add_new_comment"].'" onclick="window.open(\'editcomment.php?pid='.$person->getXref().'\', \'\',\'top=50,left=50,width=600,height=400,resizable=1,scrollbars=1\');"></form>';
+				<input type="button" value="'.$pgv_lang["add_new_comment"].'" onclick="window.open(\'module.php?mod=research_assistant&action=editcomment&pid='.$person->getXref().'\', \'\',\'top=50,left=50,width=600,height=400,resizable=1,scrollbars=1\');"></form>';
 		$out .= '</td></tr></table>';
 		$out .= "\n\t<br /><br />";
 		// Return the goods.
