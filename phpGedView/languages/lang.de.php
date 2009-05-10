@@ -1630,6 +1630,7 @@ $pgv_lang["slave"]						= "Sklave";
 $pgv_lang["twin"]						= "Zwilling";
 $pgv_lang["twin_brother"]				= "Zwillingsbruder";
 $pgv_lang["twin_sister"]				= "Zwillingsschwester";
+$pgv_lang["ward"]						= "Mündel";
 $pgv_lang["witness"]					= "Zeuge";
 
 //-- statistics utility

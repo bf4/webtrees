@@ -93,6 +93,7 @@ $assokeys = array(
 	'twin',
 	'twin_brother',
 	'twin_sister',
+	'ward',
 	'witness',
 	'' // DO NOT DELETE
 );
