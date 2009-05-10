@@ -38,7 +38,7 @@
 	
 
 	function editcomment(commentid, pid) {
-  		window.open('editcomment.php?pid='+pid+'&ucommentid='+commentid, '', 'top=50,left=50,width=600,height=400,resizable=1,scrollbars=1');
+  		window.open('module.php?mod=research_assistant&action=editcomment&pid='+pid+'&ucommentid='+commentid, '', 'top=50,left=50,width=600,height=400,resizable=1,scrollbars=1');
   	}
 	function confirm_prompt(text, commentid, pid) {
     	if (confirm(text)) {

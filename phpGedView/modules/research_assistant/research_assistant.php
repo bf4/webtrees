@@ -68,15 +68,20 @@ class research_assistant extends ra_functions {
 		// Specify our lang variable and the table prefix.
 		global $pgv_lang, $TBLPREFIX;
 		
-		// PGV modules use the mod_print_header function to print out the default PGV full header
-		// above their main content. There is also a pgv_print_simple_header which prints out an empty header.
-		$out = mod_print_header($pgv_lang["research_assistant"]);
 		// We need to intialize our module to make sure we dont need to install some DB scripts.
-		$out .= $this->Init();
-		$out .= "<script type=\"text/javascript\" src=\"modules/research_assistant/research_assistant.js\"></script>\n";
-		
+		$this->Init();
+
 		if (empty ($_REQUEST['action']))
 			$_REQUEST['action'] = "none";
+		
+		// PGV modules use the mod_print_header function to print out the default PGV full header
+		// above their main content. There is also a pgv_print_simple_header which prints out an empty header.
+		if ($_REQUEST['action']=='editcomment') {
+			$out = mod_print_simple_header($pgv_lang["research_assistant"]);
+		} else {
+			$out = mod_print_header($pgv_lang["research_assistant"]);
+		}
+		$out .= "<script type=\"text/javascript\" src=\"modules/research_assistant/research_assistant.js\"></script>\n";
 		
 		// View tasks 
 		if ($_REQUEST['action'] == "viewtasks") {
@@ -440,6 +445,13 @@ class research_assistant extends ra_functions {
 					return $autosearch->process();
 				}
 			}
+		}
+		else if ($_REQUEST['action']=='editcomment') {
+			ob_start();
+			// TODO this script should be properly integrated into ra_functions
+			global $SHOW_RESEARCH_ASSISTANT, $pgv_lang, $DBCONN, $TBLPREFIX;
+			require_once 'modules/research_assistant/editcomment.php';
+			$out.=ob_get_clean();
 		}
 		// Default
 		else if ($_REQUEST['action']=='view_folders') {

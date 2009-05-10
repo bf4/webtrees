@@ -26,8 +26,6 @@
  * @version $Id$
  */
 
-require './config.php';
-
 loadLangFile("research_assistant:lang");
 
 /***********************************************************************************************************
@@ -44,12 +42,11 @@ loadLangFile("research_assistant:lang");
 /***********************************************************************************************************
  *                                           REQUESTS                                                      *
  ***********************************************************************************************************/
-
 	//**********************************************************************************************
 	//TODO: on new comment, change 'admin' to whoever is logged in.
 	// Check if anything is being SUBMITted to the form.
- 	if(isset($_REQUEST['submit']) && $_REQUEST['submit'] != ""){
-		print_simple_header($pgv_lang["edit_comment"]);
+	if(isset($_REQUEST['submit']) && $_REQUEST['submit'] != "") {
+
 		// If we are adding a NEW comment, do an INSERT statement.
 		if($_REQUEST['submit'] == "new"){
 			if ($_REQUEST['type']=='task') {
@@ -64,7 +61,7 @@ loadLangFile("research_assistant:lang");
 				$sql .= "','".$DBCONN->escapeSimple($_POST['body']).
 					"','".time().
 					"','".$DBCONN->escapeSimple($_REQUEST['id']).
-					"','".$GEDCOMS[$GEDCOM]['id']."')";
+					"','".PGV_GED_ID."')";
 			}
 			$res = dbquery($sql);
 			print $pgv_lang["comment_success"];
@@ -91,11 +88,11 @@ loadLangFile("research_assistant:lang");
 		$sql = "SELECT c_body FROM ".$TBLPREFIX."comments WHERE c_id='$_REQUEST[commentid]'";
 		$res = dbquery($sql);
 		while($comment =& $res->fetchRow(DB_FETCHMODE_ASSOC)){
-			$out = db_cleanup($comment['c_body']);
+			$html=$comment['c_body'];
 		}
 		print_simple_header($pgv_lang["edit_comment"]);
 		print '<span class="subheaders">'.$pgv_lang["edit_comment"].'</span>';
-		print print_comment_body($out, 'task', $_REQUEST['commentid'], $_REQUEST['taskid']);
+		print print_comment_body($html, 'task', $_REQUEST['commentid'], $_REQUEST['taskid']);
 	}
 	//**********************************************************************************************
 	// If nothing is being submitted then check if the user is EDITing an existing COMMENT.
@@ -104,11 +101,11 @@ loadLangFile("research_assistant:lang");
 		$sql = "SELECT uc_comment FROM ".$TBLPREFIX."user_comments WHERE uc_id='$_REQUEST[ucommentid]'";
 		$res = dbquery($sql);
 		while($comment =& $res->fetchRow(DB_FETCHMODE_ASSOC)){
-			$out = db_cleanup($comment['uc_comment']);
+			$html=$comment['uc_comment'];
 		}
 		print_simple_header($pgv_lang["edit_comment"]);
 		print '<span class="subheaders">'.$pgv_lang["edit_comment"].'</span>';
-		print print_comment_body($out, 'person', $_REQUEST['ucommentid'], $_REQUEST['pid']);
+		print print_comment_body($html, 'person', $_REQUEST['ucommentid'], $_REQUEST['pid']);
 	}
 	//**********************************************************************************************
 	// If the user is not editing an existing comment, check if the user is adding a NEW comment.
@@ -128,7 +125,9 @@ loadLangFile("research_assistant:lang");
 	//**********************************************************************************************
 	// If none of the above occur, then give an error message.
 	else{
-		print_error();
+		print_simple_header("Error");
+		print "An error has occured.";
+
 	}
 
 /***********************************************************************************************************
@@ -147,7 +146,7 @@ loadLangFile("research_assistant:lang");
 	*/
 	function print_comment_body($body = '', $type='task', $commentid='new', $id=''){
 	global $pgv_lang;
-		$out = '<form action="editcomment.php" method="post">';
+		$out = '<form action="module.php?mod=research_assistant&action=editcomment" method="post">';
 		$out .= '<input type="hidden" name="id" value="'.$id.'" />';
 		$out .= '<input type="hidden" name="type" value="'.$type.'" />';
 		$out .= '<input type="hidden" name="commentid" value="'.$commentid.'" />';
@@ -161,17 +160,6 @@ loadLangFile("research_assistant:lang");
 				'"/></td></tr></table></form>';
 
 		return $out;
-	}
-
-
-	/****************************************************************************************
-	* Prints an error message.
-	*
-	* @return an error message
-	*/
-	function print_error(){
-		print_simple_header("Error");
-		print "An error has occured.";
 	}
 
 
@@ -207,7 +195,5 @@ loadLangFile("research_assistant:lang");
 
  	// Refreshes the opener window, which then displays any edited changes or new comments.
  	print "<center><br /><br /><a href=\"#\" onclick=\"if (window.opener.showchanges) window.opener.showchanges(); window.close();\">".$pgv_lang["close_window"]."</a><br /></center>";
-
-	print_simple_footer();
 
 ?>

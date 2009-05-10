@@ -176,7 +176,7 @@ global $pgv_lang, $TBLPREFIX, $SOURCE_ID_PREFIX;
 <!--JAVASCRIPT-->
 <script language="JavaScript" type="text/javascript"><!--
 function editcomment(commentid) {
-window.open('editcomment.php?taskid=<?php print $_REQUEST['taskid']; ?>&commentid='+commentid, '', 'top=50,left=50,width=600,height=400,resizable=1,scrollbars=1');
+window.open('module.php?mod=research_assistant&action=editcomment&taskid=<?php print $_REQUEST['taskid']; ?>&commentid='+commentid, '', 'top=50,left=50,width=600,height=400,resizable=1,scrollbars=1');
 }
 function confirm_prompt(text, commentid) {
 	if (confirm(text)) {
@@ -396,7 +396,7 @@ function confirm_prompt(text, commentid) {
 </tr>
 <tr class="topbottombar">
 		<td colspan="4">
-<input type="button" value="<?php print $pgv_lang["add_new_comment"]; ?>" name="Add New Comment" onclick="window.open('editcomment.php?taskid='+<?php print $_REQUEST['taskid']; ?>, '',
+<input type="button" value="<?php print $pgv_lang["add_new_comment"]; ?>" name="Add New Comment" onclick="window.open('module.php?mod=research_assistant&action=editcomment&taskid='+<?php print $_REQUEST['taskid']; ?>, '',
 		'top=50,left=50,width=600,height=400,resizable=1,scrollbars=1');">
 		</td>
 	</tr>
