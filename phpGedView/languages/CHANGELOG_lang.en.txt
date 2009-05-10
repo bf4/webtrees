@@ -43,6 +43,11 @@ VERSION 4.2.2
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change	codes and comments
 ----------------------------------------------------------------------------------------
+$pgv_lang["foster_child"]							10 May 2009				A
+$pgv_lang["foster_father"]							10 May 2009				A
+$pgv_lang["foster_mother"]							10 May 2009				A
++$pgv_lang["guardian"]								10 May 2009				A
++$pgv_lang["nanny"]									10 May 2009				A
 +$pgv_lang["sort_style"]							04 May 2009				A
 +$pgv_lang["by_anniv"]								04 May 2009				A
 +$pgv_lang["by_alpha"]								04 May 2009				A
