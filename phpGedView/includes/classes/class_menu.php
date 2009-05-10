@@ -202,12 +202,12 @@ class Menu {
 		$id = $menucount.rand();
 		if ($this->separator)
 		{
-			$output = "<div id=\"menu{$id}\" class=\"menu_separator\" style=\"clear: both;\">"
+			$output = "<div id=\"menu{$id}\" class=\"menu_separator\">"
 			."<img src=\"{$PGV_IMAGE_DIR}/{$PGV_IMAGES['hline']['other']}\" style=\"width:8em;height:3px\" alt=\"\" /></div>";
 			return $output;
 		}
 		$c = count($this->submenus);
-		$output = "<div id=\"menu{$id}\" style=\"clear: both;\" class=\"{$this->class}\">\n";
+		$output = "<div id=\"menu{$id}\" class=\"{$this->class}\">\n";
 		if ($this->link=="#") $this->link = "javascript:;";
 		$link = "<a href=\"{$this->link}\" onmouseover=\"";
 		if ($c >= 0)
@@ -253,38 +253,20 @@ class Menu {
 			$MenuIcon = "<img id=\"menu{$id}_icon\" src=\"{$this->icon}\" class=\"icon\" alt=\"{$tempTitle}\" title=\"{$tempTitle}\" />";
 			switch ($this->labelpos) {
 			case "right":
-				$output .= "<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\">";
-				$output .= "<tr>";
-				$output .= "<td valign=\"middle\">";
 				$output .= $link;
 				$output .= $MenuIcon;
 				$output .= "</a>";
-				$output .= "</td>";
-				$output .= "<td align=\"";
-				if ($TEXT_DIRECTION=="rtl") $output .= "right";
-				else $output .= "left";
-				$output .= "\" valign=\"middle\" style=\"white-space: nowrap;\">";
 				$output .= $link;
 				$output .= $this->label;
-				$output .= "</a></td>";
-				$output .= "</tr></table>";
+				$output .= "</a>";
 				break;
 			case "left":
-				$output .= "<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\">";
-				$output .= "<tr>";
-				$output .= "<td align=\"";
-				if ($TEXT_DIRECTION=="rtl") $output .= "left";
-				else $output .= "right";
-				$output .= "\" valign=\"middle\" style=\"white-space: nowrap;\">";
 				$output .= $link;
 				$output .= $this->label;
-				$output .= "</a></td>";
-				$output .= "<td valign=\"middle\">";
+				$output .= "</a>";
 				$output .= $link;
 				$output .= $MenuIcon;
 				$output .= "</a>";
-				$output .= "</td>";
-				$output .= "</tr></table>";
 				break;
 			case "down":
 				$output .= $link;
