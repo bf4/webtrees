@@ -170,56 +170,21 @@ if ($action!="choose") {
 						$success = delete_gedrec($gid2);
 						if ($success) print "<br />".$pgv_lang["gedrec_deleted"]."<br />\n";
 
-						//-- replace all the records that link to gid2
-						$sql = "SELECT i_id, i_gedcom FROM ".$TBLPREFIX."individuals WHERE i_file=".PGV_GED_ID." AND i_gedcom ".PGV_DB_LIKE." '%@$gid2@%'";
-						$res = dbquery($sql);
-						while($row = $res->fetchRow()) {
-							$record = $row[1];
-							$gid = $row[0];
-							if ($gid!=$gid2) {
-								if (isset($pgv_changes[$gid."_".$GEDCOM])) $record = find_updated_record($gid);
-								print $pgv_lang["updating_linked"]." $gid<br />\n";
-								$newrec = preg_replace("/@$gid2@/", "@$gid1@", $record);
-								replace_gedrec($gid, $newrec);
+						//-- replace all the records that linked to gid2
+						$ids=PGV_DB::prepare("SELECT l_from FROM {$TBLPREFIX}link WHERE l_to=? AND l_file=?")
+							->execute(array($gid2, PGV_GED_ID))
+							->fetchOneColumn();
+
+						foreach ($ids as $id) {
+							if (isset($pgv_changes[$id."_".$GEDCOM])) {
+								$record=find_updated_record($id);
+							} else {
+								$record=fetch_gedcom_record($id, PGV_GED_ID);
+								$record=$record['gedrec'];
+								echo $pgv_lang["updating_linked"]." {$id}<br />\n";
+								$newrec=str_replace("/@$gid2@/", "@$gid1@", $record);
+								replace_gedrec($id, $newrec);
 							}
-						}
-						$sql = "SELECT f_id, f_gedcom FROM ".$TBLPREFIX."families WHERE f_file=".PGV_GED_ID." AND f_gedcom ".PGV_DB_LIKE." '%@$gid2@%'";
-						$res = dbquery($sql);
-						while($row = $res->fetchRow()) {
-							$record = $row[1];
-							$gid = $row[0];
-							if (isset($pgv_changes[$gid."_".$GEDCOM])) $record = find_updated_record($gid);
-							print $pgv_lang["updating_linked"]." $gid<br />\n";
-							$newrec = preg_replace("/@$gid2@/", "@$gid1@", $record);
-							//-- prevent the merge from adding duplicate children to the family
-							$ct = preg_match_all("/1 CHIL @$gid1@/", $newrec, $matches);
-							if ($ct>1) {
-								$pos1 = strpos($newrec, "1 CHIL @$gid1@");
-								$pos2 = strpos($newrec, "\n1", $pos1+1);
-								if ($pos2===false) $pos2 = strlen($newrec);
-								$newrec = substr($newrec, 0, $pos1).substr($newrec, $pos2);
-							}
-							replace_gedrec($gid, $newrec);
-						}
-						$sql = "SELECT s_id, s_gedcom FROM ".$TBLPREFIX."sources WHERE s_file=".PGV_GED_ID." AND s_gedcom ".PGV_DB_LIKE." '%@$gid2@%'";
-						$res = dbquery($sql);
-						while($row = $res->fetchRow()) {
-							$record = $row[1];
-							$gid = $row[0];
-							if (isset($pgv_changes[$gid."_".$GEDCOM])) $record = find_updated_record($gid);
-							print $pgv_lang["updating_linked"]." $gid<br />\n";
-							$newrec = preg_replace("/@$gid2@/", "@$gid1@", $record);
-							replace_gedrec($gid, $newrec);
-						}
-						$sql = "SELECT o_id, o_gedcom FROM ".$TBLPREFIX."other WHERE o_file=".PGV_GED_ID." AND o_gedcom ".PGV_DB_LIKE." '%@$gid2@%'";
-						$res = dbquery($sql);
-						while($row = $res->fetchRow()) {
-							$record = $row[1];
-							$gid = $row[0];
-							if (isset($pgv_changes[$gid."_".$GEDCOM])) $record = find_updated_record($gid);
-							print $pgv_lang["updating_linked"]." $gid<br />\n";
-							$newrec = preg_replace("/@$gid2@/", "@$gid1@", $record);
-							replace_gedrec($gid, $newrec);
 						}
 					}
 					$newgedrec = "0 @$gid1@ $type1\n";
