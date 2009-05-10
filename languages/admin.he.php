@@ -31,6 +31,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 //=>
+$pgv_lang["enter_comment"]			= "כאן ניתן להכניס הערות.";
 $pgv_lang["upload_a_gedcom"] 		= "העלה קובץ GEDCOM";
 $pgv_lang["start_entering"] 			= "התחל להכניס נתונים";
 $pgv_lang["add_gedcom_from_path"] 	= "הוסף GEDCOM מתיק";
