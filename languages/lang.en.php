@@ -1629,6 +1629,7 @@ $pgv_lang["slave"] = "Slave";
 $pgv_lang["twin"] = "Twin";
 $pgv_lang["twin_brother"] = "Twin brother";
 $pgv_lang["twin_sister"] = "Twin sister";
+$pgv_lang["ward"] = "Ward";
 $pgv_lang["witness"] = "Witness";
 
 //-- statistics utility
