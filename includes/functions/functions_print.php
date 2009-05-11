@@ -1883,7 +1883,7 @@ function print_asso_rela_record($pid, $factrec, $linebr=false, $type='INDI') {
 				$func="rela_localisation_{$lang_short_cut[$LANGUAGE]}";
 				if (function_exists($func))
 					// Localise the relationship
-					$func($rela);
+					echo $func($rela, $pid2);
 				else
 					echo " {$rela}: ";
 			}
