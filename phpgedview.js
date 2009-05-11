@@ -468,6 +468,11 @@ function addnewnote_assisted(field, iid) {
 	window.open('edit_interface.php?action=addnewnote_assisted&noteid=newnote&pid='+iid, '_blank', 'top=70,left=70,width=1000,height=800,resizable=1,scrollbars=1');
 	return false;
 }
+function addmedia_links(field, iid) {
+	pastefield = field;
+	window.open('edit_interface.php?action=addmedia_links&noteid=newnote&pid='+iid, '_blank', 'top=70,left=370,width=620,height=550,resizable=1,scrollbars=1');
+	return false;
+}
 
 function valid_date(datefield) {
 	var months = new Array("JAN","FEB","MAR","APR","MAY","JUN","JUL","AUG","SEP","OCT","NOV","DEC");

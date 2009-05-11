@@ -252,7 +252,7 @@ else if (!empty($famid)) {
 		checkChangeTime($famid, $gedrec, safe_GET('accesstime', PGV_REGEX_INTEGER));
 	}
 }
-else if (($action!="addchild")&&($action!="addchildaction")&&($action!="addnewsource")&&($action!="mod_edit_fact")&&($action!="addnewnote")&&($action!="addnoteaction")) {
+else if (($action!="addchild")&&($action!="addchildaction")&&($action!="addnewsource")&&($action!="mod_edit_fact")&&($action!="addnewnote")&&($action!="addmedia_links")&&($action!="addnoteaction")) {
 	echo "<span class=\"error\">The \$pid variable was empty. Unable to perform $action xxx.</span>";
 	print_simple_footer();
 	$disp = true;
@@ -835,7 +835,7 @@ case 'addnewnote_assisted':
 		<input type="hidden" name="noteid" value="newnote" />
 		<!-- <input type="hidden" name="pid" value="$pid" /> -->
 		<?php
-			include ('modules/GEDFact_assistant/GEDFact_ctrl.php');
+			include ('modules/GEDFact_assistant/CENS_ctrl.php');
 		?>
 	</form>
 	<?php
@@ -911,6 +911,34 @@ case 'addnoteaction':
 		echo "<br /><br />\n".$pgv_lang["new_shared_note_created"]."<br /><br />";
 		echo "<a href=\"javascript:// NOTE $xref\" onclick=\"openerpasteid('$xref'); return false;\">".$pgv_lang["paste_id_into_field"]." <b>$xref</b></a>\n";
 	}
+	break;
+	
+//------------------------------------------------------------------------------
+//-- add new Media Links
+case 'addmedia_links':
+	?>
+	<script type="text/javascript">
+	<!--
+		function check_form(frm) {
+			if (frm.TITL.value=="") {
+				alert('<?php echo $pgv_lang["must_provide"].$factarray["TITL"]; ?>');
+				frm.TITL.focus();
+				return false;
+			}
+			return true;
+		}
+	//-->
+	</script>
+	<b><?php echo "Add Media Links using Assistant."; $tabkey = 1; ?></b>
+	<form method="post" action="edit_interface.php" onsubmit="return check_form(this);">
+		<input type="hidden" name="action" value="addnoteaction" />
+		<input type="hidden" name="noteid" value="newnote" />
+		<!-- <input type="hidden" name="pid" value="$pid" /> -->
+		<?php
+		include ('modules/GEDFact_assistant/MEDIA_ctrl.php');
+		?>
+	</form>
+	<?php
 	break;
 
 //-- edit source
@@ -1142,40 +1170,54 @@ case 'updateraw':
 //------------------------------------------------------------------------------
 //-- reconstruct the gedcom from the incoming fields and store it in the file
 case 'update':
+	global $cens_pids;
 
-	if (PGV_DEBUG) {
-		phpinfo(INFO_VARIABLES);
-		echo "<pre>$gedrec</pre>";
-		echo "<br /><br />";
+	// $cens_pids is an array from the CENS GEDFact Assistant -----------
+	// $cens_pids = array($pid, 'I1', 'I2');  // ** This line is a Test only **
+	if (!isset($cens_pids)){
+		$cens_pids = array($pid);
+	}else{
+		$cens_pids = $cens_pids;
 	}
+	
+	// When $cens_pids is present, cycle through each individual concerned.
+	foreach ($cens_pids as $pid) {
+		$gedrec = find_gedcom_record($pid);
 
-	// add or remove Y
-	if ($text[0]=="Y" or $text[0]=="y") $text[0]="";
-	if (in_array($tag[0], $emptyfacts) && array_unique($text)==array("") && !$islink[0]) $text[0]="Y";
-	//-- check for photo update
-	if (count($_FILES)>0) {
-		if (isset($_REQUEST['folder'])) $folder = $_REQUEST['folder'];
-		$uploaded_files = array();
-		if (substr($folder,0,1) == "/") $folder = substr($folder,1);
-		if (substr($folder,-1,1) != "/") $folder .= "/";
-		foreach($_FILES as $upload) {
-			if (!empty($upload['tmp_name'])) {
-				if (!move_uploaded_file($upload['tmp_name'], $MEDIA_DIRECTORY.$folder.basename($upload['name']))) {
-					$error .= "<br />".$pgv_lang["upload_error"]."<br />".file_upload_error_text($upload['error']);
-					$uploaded_files[] = "";
-				}
-				else {
-					$filename = $MEDIA_DIRECTORY.$folder.basename($upload['name']);
-					$uploaded_files[] = $MEDIA_DIRECTORY.$folder.basename($upload['name']);
-					if (!is_dir($MEDIA_DIRECTORY."thumbs/".$folder)) mkdir($MEDIA_DIRECTORY."thumbs/".$folder);
-					$thumbnail = $MEDIA_DIRECTORY."thumbs/".$folder.basename($upload['name']);
-					generate_thumbnail($filename, $thumbnail);
-					if (!empty($error)) {
-						echo "<span class=\"error\">".$error."</span>";
+		if (PGV_DEBUG) {
+			phpinfo(INFO_VARIABLES);
+			echo "<pre>$gedrec</pre>";
+			echo "<br /><br />";
+		}
+
+		// add or remove Y
+		if ($text[0]=="Y" or $text[0]=="y") $text[0]="";
+		if (in_array($tag[0], $emptyfacts) && array_unique($text)==array("") && !$islink[0]) $text[0]="Y";
+		//-- check for photo update
+		if (count($_FILES)>0) {
+			if (isset($_REQUEST['folder'])) $folder = $_REQUEST['folder'];
+			$uploaded_files = array();
+			if (substr($folder,0,1) == "/") $folder = substr($folder,1);
+			if (substr($folder,-1,1) != "/") $folder .= "/";
+			foreach($_FILES as $upload) {
+				if (!empty($upload['tmp_name'])) {
+					if (!move_uploaded_file($upload['tmp_name'], $MEDIA_DIRECTORY.$folder.basename($upload['name']))) {
+						$error .= "<br />".$pgv_lang["upload_error"]."<br />".file_upload_error_text($upload['error']);
+						$uploaded_files[] = "";
+					}
+					else {
+						$filename = $MEDIA_DIRECTORY.$folder.basename($upload['name']);
+						$uploaded_files[] = $MEDIA_DIRECTORY.$folder.basename($upload['name']);
+						if (!is_dir($MEDIA_DIRECTORY."thumbs/".$folder)) mkdir($MEDIA_DIRECTORY."thumbs/".$folder);
+						$thumbnail = $MEDIA_DIRECTORY."thumbs/".$folder.basename($upload['name']);
+						generate_thumbnail($filename, $thumbnail);
+						if (!empty($error)) {
+							echo "<span class=\"error\">".$error."</span>";
+						}
 					}
 				}
+				else $uploaded_files[] = "";
 			}
-			else $uploaded_files[] = "";
 		}
 	}
 	$gedlines = explode("\n", trim($gedrec));
@@ -1317,7 +1359,9 @@ case 'update':
 	}
 
 	$success = (replace_gedrec($pid, $newged, $update_CHAN));
-	if ($success) echo "<br /><br />".$pgv_lang["update_successful"];
+	if ($success) {
+		echo "<br /><br />".$pgv_lang["update_successful"];
+	}
 	break;
 //------------------------------------------------------------------------------
 case 'addchildaction':
@@ -2517,7 +2561,14 @@ if ($success && $EDIT_AUTOCLOSE && !PGV_DEBUG) {
 	else echo "\n<script type=\"text/javascript\">\n<!--\nedit_close('{$link}');\n//-->\n</script>";
 }
 
+// Decide whether to print footer or not ===========================================
+if ($action == 'addmedia_links') {
+	// Do not print footer.
+	echo "<br />";
+	echo "<div class=\"center\"><a href=\"javascript:;\" onclick=\"edit_close('{$link}');\">".$pgv_lang["close_window"]."</a></div><br />\n";
+}else{
+	echo "<div class=\"center\"><a href=\"javascript:;\" onclick=\"edit_close('{$link}');\">".$pgv_lang["close_window"]."</a></div><br />\n";
+	print_simple_footer();
+}
 
-echo "<div class=\"center\"><a href=\"javascript:;\" onclick=\"edit_close('{$link}');\">".$pgv_lang["close_window"]."</a></div><br />\n";
-print_simple_footer();
 ?>

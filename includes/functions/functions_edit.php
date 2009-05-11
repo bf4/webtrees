@@ -1033,11 +1033,10 @@ function print_addnewnote_link($element_id) {
 }
 
 /**
-* @todo add comments
+* // Used in GEDFact CENS assistant =====================
 */
 function print_addnewnote_assisted_link($element_id) {
 	global $pgv_lang, $PGV_IMAGE_DIR, $PGV_IMAGES, $pid;
-	
 	$text = $pgv_lang["create_shared_note_assisted"];
 	if (isset($PGV_IMAGES["addnote"]["button"])) $Link = "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["addnote"]["button"]."\" alt=\"".$text."\" title=\"".$text."\" border=\"0\" align=\"middle\" />";
 	else $Link = $text;
@@ -1631,6 +1630,7 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 			}
 			echo "&nbsp;&nbsp;&nbsp;";
 			$record=GedcomRecord::getInstance($value);
+			
 		}
 		if ($fact=="NOTE" && $islink && $value!="") {
 			print_editnote_link($value);
@@ -1643,7 +1643,7 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 			$value = "new";
 		}
 	}
-
+	
 	// current value
 	if ($TEXT_DIRECTION=="ltr") {
 		if ($fact=="DATE") {
@@ -1674,7 +1674,18 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 			}
 		}
 	}
-
+/*
+	if ($fact=="NOTE" && $islink && $value!="") {
+		include('includes/functions/functions_print_lists.php'); 
+		echo "<tr><td class=\"descriptionbox ".$TEXT_DIRECTION." wrap width25\">";
+				print_help_link("edit_add_SHARED_NOTE_help", "qm");
+			//	echo $pgv_lang["admin_override"];
+			echo "Shared Note Links<br /><br />";
+		echo "</td><td class=\"optionbox wrap\">\n";
+			print_indi_list(fetch_linked_indi($value, "NOTE", "1"));
+		echo "</td></tr>\n";
+	}
+*/
 	// pastable values
 	if ($readOnly=="") {
 		if ($fact=="SPFX") print_autopaste_link($element_id, $SPFX_accept);
@@ -2303,7 +2314,8 @@ function create_add_form($fact) {
 function create_edit_form($gedrec, $linenum, $level0type) {
 	global $WORD_WRAPPED_NOTES, $pgv_lang, $factarray;
 	global $pid, $tags, $ADVANCED_PLAC_FACTS, $date_and_time, $templefacts;
-	global $lang_short_cut, $LANGUAGE, $FULL_SOURCES;
+	global $lang_short_cut, $LANGUAGE, $FULL_SOURCES, $TEXT_DIRECTION;
+	// global $TEXT_DIRECTION, $TBLPREFIX, $DBHOST, $DBUSER, $DBPASS, $DBNAME, $SERVER_URL;
 
 	$tags=array();
 	$gedlines = split("\n", $gedrec); // -- find the number of lines in the record
@@ -2324,6 +2336,24 @@ function create_edit_form($gedrec, $linenum, $level0type) {
 
 	$type = trim($fields[1]);
 	$level1type = $type;
+	
+	// GEDFact_assistant ================================================
+	if ($type=="CENS" && file_exists('modules/GEDFact_assistant/CENS/census_query1.php') ) {
+		echo "<tr><td class=\"descriptionbox ".$TEXT_DIRECTION." wrap width25\">";
+			print_help_link("edit_add_SHARED_NOTE_help", "qm");
+			echo "Currently Linked to: <br />";
+		echo "</td><td class=\"optionbox wrap\">\n";
+			include ('modules/GEDFact_assistant/CENS/census_query1.php');
+		echo "</td></tr>\n";
+		echo "<tr><td class=\"descriptionbox ".$TEXT_DIRECTION." wrap width25\">";
+			print_help_link("edit_add_SHARED_NOTE_help", "qm");
+			echo "Add Other Links: <br />";
+		echo "</td><td class=\"optionbox wrap\">\n";
+			// include ('modules/GEDFact_assistant/CENS/census_query1.php');
+		echo "</td></tr>\n";
+	}
+	// ==================================================================
+	
 	if (count($fields)>2) {
 		$ct = preg_match("/@.*@/",$fields[2]);
 		$levellink = $ct > 0;
@@ -2351,7 +2381,7 @@ function create_edit_form($gedrec, $linenum, $level0type) {
 	if (preg_match_all('/('.PGV_REGEX_TAG.')/', $ADVANCED_PLAC_FACTS, $match)) {
 		$expected_subtags['PLAC']=array_merge($match[1], $expected_subtags['PLAC']);
 	}
-
+	
 	$stack=array(0=>$level0type);
 	// Loop on existing tags :
 	while (true) {
