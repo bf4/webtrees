@@ -65,10 +65,10 @@ height: 0px;
 
 <script language="javascript">
 	function addlinks() {
-		if (document.getElementById('linktoid').value == "") {
+		if (document.getElementById('linktopid').value == "") {
 			alert('You MUST enter a Base individual ID to add Individual links');
 		}else{
-			addmedia_links(document.getElementById('INDI_NOTE'), document.getElementById('linktoid').value );
+			addmedia_links(document.getElementById('INDI_NOTE'), document.getElementById('linktopid').value );
 			return false;
 		}
 	}

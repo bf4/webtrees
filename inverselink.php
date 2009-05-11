@@ -145,7 +145,7 @@ if ($action == "choose" && $paramok) {
 		echo "First, enter a Base individual ID<br />";
 		if ($linktoid=="") {
 			print "<input class=\"pedigree_form\" type=\"text\" name=\"linktoid\" id=\"linktopid\" size=\"3\" value=\"$linktoid\" />";
-			print_findindi_link("linktoid","");
+			print_findindi_link("linktopid","");
 		} else {
 			$record=Person::getInstance($linktoid);
 			echo '<b>', PrintReady($record->getFullName()), '</b>&nbsp;&nbsp;&nbsp;';
@@ -175,7 +175,7 @@ if ($action == "choose" && $paramok) {
 		print "<td class=\"optionbox wrap\">";
 		if ($linktoid=="") {
 			print "<input class=\"pedigree_form\" type=\"text\" name=\"linktoid\" id=\"linktofamid\" size=\"3\" value=\"$linktoid\" />";
-			print_findfamily_link("linktoid");
+			print_findfamily_link("linktofamid");
 		} else {
 			$record=Family::getInstance($linktoid);
 			echo '<b>', PrintReady($record->getFullName()), '</b>&nbsp;&nbsp;&nbsp;';
@@ -192,7 +192,7 @@ if ($action == "choose" && $paramok) {
 		print "<td  class=\"optionbox wrap\">";
 		if ($linktoid=="") {
 			print "<input class=\"pedigree_form\" type=\"text\" name=\"linktoid\" id=\"linktosid\" size=\"3\" value=\"$linktoid\" />";
-			print_findsource_link("linktoid");
+			print_findsource_link("linktosid");
 		} else {
 			$record=Source::getInstance($linktoid);
 			echo '<b>', PrintReady($record->getFullName()), '</b>&nbsp;&nbsp;&nbsp;';
