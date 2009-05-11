@@ -743,8 +743,14 @@ if (check_media_structure()) {
 
 		// main link displayed on page
 		$menu = array();
-		//$menu["label"] = $pgv_lang["set_link"];
-		$menu["label"] = "Add or Remove Links";
+		
+		// GEDFact assistant Add Media Links =======================
+		if (file_exists('modules/GEDFact_assistant/MEDIA/media_1_ctrl.php')) {
+			$menu["label"] = "Add or Remove Links";
+		} else {
+			$menu["label"] = $pgv_lang["set_link"];
+		}
+		
 		$menu["link"] = "#";
 		$menu["onclick"] = "return ilinkitem('$mediaid','person')";
 //		$menu["class"] = "thememenuitem";
