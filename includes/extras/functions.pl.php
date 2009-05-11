@@ -347,9 +347,71 @@ function cr_facts_localisation_pl(&$factrec, &$fact, &$explode_fact, &$pid) {
 ////////////////////////////////////////////////////////////////////////////////
 // Localise the relationships. Lokalizacja pokrewieństwa.
 ////////////////////////////////////////////////////////////////////////////////
-function rela_localisation_pl(&$rela) {
+function rela_localisation_pl(&$rela, &$pid2) {
+	global $pgv_lang;
 
-	print " ".ucfirst($rela).": ";
+	if (isset($pid2)) {
+		$record = Person::getInstance($pid2);
+		if (!empty($record)) {
+			$sex = $record->getSex();
+			switch ($rela) {
+				case $pgv_lang["informant"]:
+					if ($sex == "M")		$rela = "Informator";
+					else if ($sex == "F")   $rela = "Informatorka";
+					break;
+				case $pgv_lang["lodger"]:
+					if ($sex == "M")		$rela = "Lokator";
+					else if ($sex == "F")   $rela = "Lokatorka";
+					break;
+				case $pgv_lang["slave"]:
+					if ($sex == "M")		$rela = "Niewolnik";
+					else if ($sex == "F")   $rela = "Niewolnica";
+					break;
+				case $pgv_lang["attending"]:
+					if ($sex == "M")		$rela = "Obsługujący";
+					else if ($sex == "F")   $rela = "Obsługująca";
+					break;
+				case $pgv_lang["guardian"]:
+					if ($sex == "M")		$rela = "Opiekun";
+					else if ($sex == "F")   $rela = "Opiekunka";
+					break;
+				case $pgv_lang["nurse"]:
+					if ($sex == "M")		$rela = "Pielęgniarz";
+					else if ($sex == "F")   $rela = "Pielęgniarka";
+					break;
+				case $pgv_lang["attendant"]:
+					if ($sex == "M")		$rela = "Pomocnik";
+					else if ($sex == "F")   $rela = "Pomocnica";
+					break;
+				case $pgv_lang["employee"]:
+					if ($sex == "M")		$rela = "Pracownik";
+					else if ($sex == "F")   $rela = "Pracownica";
+					break;
+				case $pgv_lang["friend"]:
+					if ($sex == "M")		$rela = "Przyjaciel";
+					else if ($sex == "F")   $rela = "Przyjaciółka";
+					break;
+				case $pgv_lang["servant"]:
+					if ($sex == "M")		$rela = "Służący";
+					else if ($sex == "F")   $rela = "Służąca";
+					break;
+				case $pgv_lang["seller"]:
+					if ($sex == "M")		$rela = "Sprzedawca";
+					else if ($sex == "F")   $rela = "Sprzedawczyni";
+					break;
+				case $pgv_lang["owner"]:
+					if ($sex == "M")		$rela = "Właściciel";
+					else if ($sex == "F")   $rela = "Właścicielka";
+					break;
+				case $pgv_lang["ward"]:
+					if ($sex == "M")		$rela = "Wychowanek";
+					else if ($sex == "F")   $rela = "Wychowanka";
+					break;
+			}
+		}
+	}
+	
+	return " ".ucfirst($rela).": ";
 }
 
 function getRelationshipText_pl($relationshipDescription, $node, $pid1, $pid2) {
@@ -358,6 +420,7 @@ function getRelationshipText_pl($relationshipDescription, $node, $pid1, $pid2) {
 	}
 	return false;
 }
+
 //-- functions to calculate polish specific genitive names
 function getFirstRelationsName_pl($pid) {
 	// In Polish we want the genitive form of the name
