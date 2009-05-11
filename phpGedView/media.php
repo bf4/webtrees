@@ -261,7 +261,7 @@ function pasteid(id) {
 }
 
 function ilinkitem(mediaid, type) {
-	window.open('inverselink.php?mediaid='+mediaid+'&linkto='+type+'&'+sessionname+'='+sessionid, '_blank', 'top=50,left=50,width=400,height=300,resizable=1,scrollbars=1');
+	window.open('inverselink.php?mediaid='+mediaid+'&linkto='+type+'&'+sessionname+'='+sessionid, '_blank', 'top=50,left=50,width=550,height=600,resizable=1,scrollbars=1');
 	return false;
 }
 
@@ -743,7 +743,8 @@ if (check_media_structure()) {
 
 		// main link displayed on page
 		$menu = array();
-		$menu["label"] = $pgv_lang["set_link"];
+		//$menu["label"] = $pgv_lang["set_link"];
+		$menu["label"] = "Add or Remove Links";
 		$menu["link"] = "#";
 		$menu["onclick"] = "return ilinkitem('$mediaid','person')";
 //		$menu["class"] = "thememenuitem";
@@ -1057,11 +1058,11 @@ if (check_media_structure()) {
 								$tempURL = "media.php?";
 								if (!empty($filter)) $tempURL .= "filter={$filter}&";
 								$tempURL .= "action=removelinks&showthumb={$showthumb}&sortby={$sortby}&filter={$filter}&subclick={$subclick}&filename=".encrypt($media['FILE'])."&directory={$directory}&level={$level}&xref={$media['XREF']}&gedfile={$media['GEDFILE']}";
-								print "<a href=\"".encode_url($tempURL)."\" onclick=\"return confirm('".$pgv_lang["confirm_remove_links"]."');\">".$pgv_lang["remove_links"]."</a><br />";
+							//	print "<a href=\"".encode_url($tempURL)."\" onclick=\"return confirm('".$pgv_lang["confirm_remove_links"]."');\">".$pgv_lang["remove_links"]."</a><br />";
 							}
 
-							// Set Link
-							// Only set link on media that is in the DB
+							// Add or Remove Links
+							// Only add or remove links to media that is in the DB
 							if ($media["XREF"] != "") {
 								print_link_menu($media["XREF"]);
 							}
