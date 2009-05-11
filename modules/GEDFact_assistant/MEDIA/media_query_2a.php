@@ -88,7 +88,7 @@ height: 0px;
 	$text = $pgv_lang["create_shared_note_assisted"];
 	echo "<input type=\"button\" name=\"Button\" value=\"Add\" onClick=\"javascript:addlinks(); return false;\">";
 	echo "<br /><br >";
-	echo "<center><textarea name=\"newindis\" id=\"newindies\" rows=\"8\" cols=\"68\"></textarea></center>"
+	echo "<center><textarea name=\"newindis\" id=\"newindis\" rows=\"8\" cols=\"68\"></textarea></center>"
 	?>
 
 </td>
