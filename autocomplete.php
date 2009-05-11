@@ -25,32 +25,75 @@
 */
 
 require './config.php';
-header("Content-Type: text/html; charset=$CHARACTER_SET");
+header("Content-Type: text/plain; charset=$CHARACTER_SET");
 
 // We have finished writing to $_SESSION, so release the lock
 session_write_close();
 
 //-- args
-$FILTER = @$_GET["q"];
-if (has_utf8($FILTER)) {
-	$FILTER = UTF8_strtoupper($FILTER);
-}
-$FILTER = $DBCONN->escapeSimple($FILTER);
-
-$OPTION = @$_GET["option"];
-
-$FORMAT = @$_GET["fmt"];
-
-$field = @$_GET["field"];
-if (!function_exists("autocomplete_{$field}")) {
-	die("Bad arg: field={$field}");
-}
+$FILTER=safe_GET('q', PGV_REGEX_UNSAFE); // we can search on '"><& etc.
+$FILTER=UTF8_strtoupper($FILTER);
+$OPTION=safe_GET('option');
+$FORMAT=safe_GET('fmt');
+$FIELD =safe_GET('field');
 
 //-- database query
 define('PGV_AUTOCOMPLETE_LIMIT', 500);
-eval("\$data = autocomplete_".$field."();");
-if (empty($data)) {
-	die();
+
+switch ($FIELD) {
+case 'INDI':
+	$data=autocomplete_INDI($FILTER, $OPTION);
+	break;
+case 'FAM':
+	$data=autocomplete_FAM($FILTER, $OPTION);
+	break;
+case 'NOTE':
+	$data=autocomplete_NOTE($FILTER);
+	break;
+case 'SOUR':
+	$data=autocomplete_SOUR($FILTER);
+	break;
+case 'SOUR_TITL':
+	$data=autocomplete_SOUR($FILTER);
+	break;
+case 'INDI_BURI_CEME':
+	$data=autocomplete_INDI_BURI_CEME($FILTER);
+	break;
+case 'INDI_SOUR_PAGE':
+	$data=autocomplete_INDI_SOUR_PAGE($FILTER, $OPTION);
+	break;
+case 'FAM_SOUR_PAGE':
+	$data=autocomplete_FAM_SOUR_PAGE($FILTER, $OPTION);
+	break;
+case 'SOUR_PAGE':
+	$data=autocomplete_SOUR_PAGE($FILTER, $OPTION);
+	break;
+case 'REPO':
+	$data=autocomplete_REPO($FILTER);
+	break;
+case 'REPO_NAME':
+	$data=autocomplete_REPO_NAME($FILTER);
+	break;
+case 'OBJE':
+	$data=autocomplete_OBJE($FILTER);
+	break;
+case 'IFSRO':
+	$data=autocomplete_IFSRO($FILTER);
+	break;
+case 'SURN':
+	$data=autocomplete_SURN($FILTER);
+	break;
+case 'GIVN':
+	$data=autocomplete_GIVN($FILTER);
+	break;
+case 'NAME':
+	$data=autocomplete_NAME($FILTER);
+	break;
+case 'PLAC':
+	$data=autocomplete_PLAC($FILTER, $OPTION);
+	break;
+default:
+	die("Bad arg: field={$FIELD}");
 }
 
 //-- sort
@@ -70,14 +113,13 @@ if ($FORMAT=="json") {
 		echo "$v|$k\n";
 	}
 }
-exit;
 
 /**
 * returns INDIviduals matching filter
 * @return Array of string
 */
-function autocomplete_INDI() {
-	global $TBLPREFIX, $FILTER, $OPTION, $pgv_lang, $MAX_ALIVE_AGE;
+function autocomplete_INDI($FILTER, $OPTION) {
+	global $TBLPREFIX, $pgv_lang, $MAX_ALIVE_AGE;
 
 	// when adding ASSOciate $OPTION may contain :
 	// current INDI/FAM [, current event date]
@@ -109,14 +151,14 @@ function autocomplete_INDI() {
 	$sql=
 		"SELECT 'INDI' AS type, i_id AS xref, i_file AS ged_id, i_gedcom AS gedrec, i_isdead, i_sex".
 		" FROM {$TBLPREFIX}individuals, {$TBLPREFIX}name".
-		" WHERE n_sort ".PGV_DB_LIKE." '%".UTF8_strtoupper($FILTER)."%'".
-		" AND i_id=n_id AND i_file=n_file AND i_file=".PGV_GED_ID.
+		" WHERE n_sort ".PGV_DB_LIKE." ?".
+		" AND i_id=n_id AND i_file=n_file AND i_file=?".
 		" ORDER BY n_sort";
 	$sql=PGV_DB::limit_query($sql, PGV_AUTOCOMPLETE_LIMIT);
-	$res=dbquery($sql);
+	$rows=PGV_DB::prepare($sql)->execute(array("%{$FILTER}%", PGV_GED_ID))->fetchAll(PDO::FETCH_ASSOC);
 
 	$data=array();
-	while ($row=$res->fetchRow(DB_FETCHMODE_ASSOC)) {
+	foreach ($rows as $row) {
 		$person=Person::getInstance($row);
 		if ($person->canDisplayName()) {
 			// filter ASSOciate
@@ -167,7 +209,6 @@ function autocomplete_INDI() {
 			}
 		}
 	}
-	$res->free();
 	return $data;
 }
 
@@ -175,29 +216,30 @@ function autocomplete_INDI() {
 * returns FAMilies matching filter
 * @return Array of string
 */
-function autocomplete_FAM() {
-	global $TBLPREFIX, $DBCONN, $FILTER;
+function autocomplete_FAM($FILTER, $OPTION) {
+	global $TBLPREFIX;
 
 	//-- search for INDI names
-	$ids = array();
-	foreach (autocomplete_INDI() as $k=>$v) {
-		$ids[] = "'".$DBCONN->escapeSimple($k)."'";
-	}
+	$ids=array_keys(autocomplete_INDI($FILTER, $OPTION));
 
 	if (empty($ids)) {
 		//-- no match : search for FAM id
-		$where = "f_id ".PGV_DB_LIKE." '%{$FILTER}%'";
+		$where = "f_id ".PGV_DB_LIKE." ?";
+		$vars[]="%{$FILTER}%";
 	} else {
 		//-- search for spouses
-		$where = "(f_husb IN (".implode(',', $ids).") OR f_wife IN (".implode(',', $ids).") )";
+		$qs=implode(',', array_fill(0, count($ids), '?'));
+		$where = "(f_husb IN ($qs) OR f_wife IN ($qs))";
+		$vars=array_merge($ids, $ids);
 	}
 
-	$sql="SELECT 'FAM' AS type, f_id AS xref, f_file AS ged_id, f_gedcom AS gedrec, f_husb, f_wife, f_chil, f_numchil FROM {$TBLPREFIX}families WHERE {$where} AND f_file=".PGV_GED_ID;
+	$sql="SELECT 'FAM' AS type, f_id AS xref, f_file AS ged_id, f_gedcom AS gedrec, f_husb, f_wife, f_chil, f_numchil FROM {$TBLPREFIX}families WHERE {$where} AND f_file=?";
+	$vars[]=PGV_GED_ID;
 	$sql=PGV_DB::limit_query($sql, PGV_AUTOCOMPLETE_LIMIT);
-	$res=dbquery($sql);
+	$rows=PGV_DB::prepare($sql)->execute($vars)->fetchAll(PDO::FETCH_ASSOC);
 
-	$data = array();
-	while ($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)) {
+	$data=array();
+	foreach ($rows as $row) {
 		$family = Family::getInstance($row);
 		if ($family->canDisplayName()) {
 			$data[$row["xref"]] =
@@ -207,7 +249,6 @@ function autocomplete_FAM() {
 				"</u>";
 		}
 	}
-	$res->free();
 	return $data;
 }
 
@@ -215,21 +256,20 @@ function autocomplete_FAM() {
 * returns NOTEs (Shared) matching filter
 * @return Array of string
 */
-function autocomplete_NOTE() {
-	global $TBLPREFIX, $FILTER;
+function autocomplete_NOTE($FILTER) {
+	global $TBLPREFIX;
 
 	$sql="SELECT o_type AS type, o_id AS xref, o_file AS ged_id, o_gedcom AS gedrec FROM {$TBLPREFIX}other WHERE o_gedcom ".PGV_DB_LIKE." '%{$FILTER}%' AND o_type='NOTE' AND o_file=".PGV_GED_ID;
 	$sql=PGV_DB::limit_query($sql, PGV_AUTOCOMPLETE_LIMIT);
-	$res=dbquery($sql);
+$rows=PGV_DB::prepare($sql)->execute(array("%{$FILTER}%", PGV_GED_ID))->fetchAll(PDO::FETCH_ASSOC);
 
-	$data = array();
-	while ($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)) {
+	$data=array();
+	foreach ($rows as $row) {
 		$note = Note::getInstance($row);
 		if ($note->canDisplayName()) {
 			$data[$row["xref"]] = $note->getFullName();
 		}
 	}
-	$res->free();
 	return $data;
 }
 
@@ -237,21 +277,20 @@ function autocomplete_NOTE() {
 * returns SOURces matching filter
 * @return Array of string
 */
-function autocomplete_SOUR() {
-	global $TBLPREFIX, $FILTER;
+function autocomplete_SOUR($FILTER) {
+	global $TBLPREFIX;
 
-	$sql="SELECT 'SOUR' AS type, s_id AS xref, s_file AS ged_id, s_gedcom AS gedrec FROM {$TBLPREFIX}sources WHERE (s_name ".PGV_DB_LIKE." '%{$FILTER}%' OR s_id ".PGV_DB_LIKE." '%{$FILTER}%') AND s_file=".PGV_GED_ID." ORDER BY s_name";
+	$sql="SELECT 'SOUR' AS type, s_id AS xref, s_file AS ged_id, s_gedcom AS gedrec FROM {$TBLPREFIX}sources WHERE (s_name ".PGV_DB_LIKE." ? OR s_id ".PGV_DB_LIKE." ?) AND s_file=? ORDER BY s_name";
 	$sql=PGV_DB::limit_query($sql, PGV_AUTOCOMPLETE_LIMIT);
-	$res=dbquery($sql);
+$rows=PGV_DB::prepare($sql)->execute(array("%{$FILTER}%", "%{$FILTER}%", PGV_GED_ID))->fetchAll(PDO::FETCH_ASSOC);
 
-	$data = array();
-	while ($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)) {
+	$data=array();
+	foreach ($rows as $row) {
 		$source = Source::getInstance($row);
 		if ($source->canDisplayName()) {
 			$data[$row["xref"]] = $source->getFullName();
 		}
 	}
-	$res->free();
 	return $data;
 }
 
@@ -259,21 +298,20 @@ function autocomplete_SOUR() {
 * returns SOUR:TITL matching filter
 * @return Array of string
 */
-function autocomplete_SOUR_TITL() {
-	global $TBLPREFIX, $FILTER;
+function autocomplete_SOUR_TITL($FILTER) {
+	global $TBLPREFIX;
 
-	$sql="SELECT 'SOUR' AS type, s_id AS xref, s_file AS ged_id, s_gedcom AS gedrec FROM {$TBLPREFIX}sources WHERE s_name ".PGV_DB_LIKE." '%{$FILTER}%' AND s_file=".PGV_GED_ID." ORDER BY s_name";
+	$sql="SELECT 'SOUR' AS type, s_id AS xref, s_file AS ged_id, s_gedcom AS gedrec FROM {$TBLPREFIX}sources WHERE s_name ".PGV_DB_LIKE." ? AND s_file? ORDER BY s_name";
 	$sql=PGV_DB::limit_query($sql, PGV_AUTOCOMPLETE_LIMIT);
-	$res=dbquery($sql);
+$rows=PGV_DB::prepare($sql)->execute(array("%{$FILTER}%", PGV_GED_ID))->fetchAll(PDO::FETCH_ASSOC);
 
-	$data = array();
-	while ($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)) {
+	$data=array();
+	foreach ($rows as $row) {
 		$source = Source::getInstance($row);
 		if ($source->canDisplayName()) {
 			$data[] = $source->getFullName();
 		}
 	}
-	$res->free();
 	return $data;
 }
 
@@ -281,18 +319,18 @@ function autocomplete_SOUR_TITL() {
 * returns INDI_BURI_CEME matching filter
 * @return Array of string
 */
-function autocomplete_INDI_BURI_CEME() {
-	global $TBLPREFIX, $FILTER, $OPTION;
+function autocomplete_INDI_BURI_CEME($FILTER) {
+	global $TBLPREFIX;
 
-	$sql = "SELECT 'INDI' AS type, i_id AS xref, i_file AS ged_id, i_gedcom AS gedrec, i_isdead, i_sex".
-				" FROM {$TBLPREFIX}individuals".
-				" WHERE (i_gedcom ".PGV_DB_LIKE." '%1 BURI%2 CEME %{$FILTER}%')".
-				" AND i_file=".PGV_GED_ID;
+	$sql=
+		"SELECT 'INDI' AS type, i_id AS xref, i_file AS ged_id, i_gedcom AS gedrec, i_isdead, i_sex".
+		" FROM {$TBLPREFIX}individuals".
+		" WHERE i_gedcom ".PGV_DB_LIKE." ? AND i_file=?";
 	$sql=PGV_DB::limit_query($sql, PGV_AUTOCOMPLETE_LIMIT);
-	$res=dbquery($sql);
+	$rows=PGV_DB::prepare($sql)->execute(array("%1 BURI%2 CEME %{$FILTER}%", PGV_GED_ID))->fetchAll(PDO::FETCH_ASSOC);
 
-	$data = array();
-	while ($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)) {
+	$data=array();
+	foreach ($rows as $row) {
 		$person = Person::getInstance($row);
 		if ($person->canDisplayDetails()) {
 			$i = 1;
@@ -305,7 +343,6 @@ function autocomplete_INDI_BURI_CEME() {
 			} while ($srec);
 		}
 	}
-	$res->free();
 	return $data;
 }
 
@@ -313,19 +350,15 @@ function autocomplete_INDI_BURI_CEME() {
 * returns INDI:SOUR:PAGE matching filter
 * @return Array of string
 */
-function autocomplete_INDI_SOUR_PAGE() {
-	global $TBLPREFIX, $FILTER, $OPTION;
+function autocomplete_INDI_SOUR_PAGE($FILTER, $OPTION) {
+	global $TBLPREFIX;
 
-	$sql=
-		"SELECT 'INDI' AS type, i_id AS xref, i_file AS ged_id, i_gedcom AS gedrec, i_isdead, i_sex FROM {$TBLPREFIX}individuals".
-		" WHERE (i_gedcom ".PGV_DB_LIKE." '%1 SOUR @{$OPTION}@%2 PAGE %{$FILTER}%'".
-		" OR     i_gedcom ".PGV_DB_LIKE." '%2 SOUR @{$OPTION}@%3 PAGE %{$FILTER}%')".
-		" AND i_file=".PGV_GED_ID;
+	$sql="SELECT 'INDI' AS type, i_id AS xref, i_file AS ged_id, i_gedcom AS gedrec, i_isdead, i_sex FROM {$TBLPREFIX}individuals WHERE i_gedcom ".PGV_DB_LIKE." ? AND i_file=?";
 	$sql=PGV_DB::limit_query($sql, PGV_AUTOCOMPLETE_LIMIT);
-	$res=dbquery($sql);
+	$rows=PGV_DB::prepare($sql)->execute(array("% SOUR @{$OPTION}@% PAGE %{$FILTER}%", PGV_GED_ID))->fetchAll(PDO::FETCH_ASSOC);
 
-	$data = array();
-	while ($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)) {
+	$data=array();
+	foreach ($rows as $row) {
 		$person = Person::getInstance($row);
 		if ($person->canDisplayDetails()) {
 			// a single INDI may have multiple level 1 and level 2 sources
@@ -341,7 +374,6 @@ function autocomplete_INDI_SOUR_PAGE() {
 			}
 		}
 	}
-	$res->free();
 	return $data;
 }
 
@@ -349,19 +381,16 @@ function autocomplete_INDI_SOUR_PAGE() {
 * returns FAM:SOUR:PAGE matching filter
 * @return Array of string
 */
-function autocomplete_FAM_SOUR_PAGE() {
-	global $TBLPREFIX, $FILTER, $OPTION;
+function autocomplete_FAM_SOUR_PAGE($FILTER, $OPTION) {
+	global $TBLPREFIX;
 
 	$sql=
-		"SELECT 'FAM' AS type, f_id AS xref, f_file AS ged_id, f_gedcom AS gedrec, f_husb, f_wife, f_chil, f_numchil FROM {$TBLPREFIX}families".
-		" WHERE (f_gedcom ".PGV_DB_LIKE." '%1 SOUR @{$OPTION}@%2 PAGE %{$FILTER}%'".
-		" OR     f_gedcom ".PGV_DB_LIKE." '%2 SOUR @{$OPTION}@%3 PAGE %{$FILTER}%')".
-		" AND f_file=".PGV_GED_ID;
+		"SELECT 'FAM' AS type, f_id AS xref, f_file AS ged_id, f_gedcom AS gedrec, f_husb, f_wife, f_chil, f_numchil FROM {$TBLPREFIX}families WHERE f_gedcom ".PGV_DB_LIKE." ? AND f_file=?";
 	$sql=PGV_DB::limit_query($sql, PGV_AUTOCOMPLETE_LIMIT);
-	$res=dbquery($sql);
+	$rows=PGV_DB::prepare($sql)->execute(array("% SOUR @{$OPTION}@% PAGE %{$FILTER}%", PGV_GED_ID))->fetchAll(PDO::FETCH_ASSOC);
 
-	$data = array();
-	while ($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)) {
+	$data=array();
+	foreach ($rows as $row) {
 		$family = Family::getInstance($row);
 		if ($family->canDisplayDetails()) {
 			// a single FAM may have multiple level 1 and level 2 sources
@@ -377,7 +406,6 @@ function autocomplete_FAM_SOUR_PAGE() {
 			}
 		}
 	}
-	$res->free();
 	return $data;
 }
 
@@ -385,36 +413,33 @@ function autocomplete_FAM_SOUR_PAGE() {
 * returns SOUR:PAGE matching filter
 * @return Array of string
 */
-function autocomplete_SOUR_PAGE() {
+function autocomplete_SOUR_PAGE($FILTER, $OPTION) {
 	return array_merge(
-		autocomplete_INDI_SOUR_PAGE(),
-		autocomplete_FAM_SOUR_PAGE());
+		autocomplete_INDI_SOUR_PAGE($FILTER, $OPTION),
+		autocomplete_FAM_SOUR_PAGE($FILTER, $OPTION));
 }
 
 /**
 * returns REPOsitories matching filter
 * @return Array of string
 */
-function autocomplete_REPO() {
-	global $TBLPREFIX, $FILTER;
+function autocomplete_REPO($FILTER) {
+	global $TBLPREFIX;
 
-	$sql = "SELECT o_type AS type, o_id AS xref, o_file AS ged_id, o_gedcom AS gedrec".
-				" FROM {$TBLPREFIX}other".
-				" WHERE (o_gedcom ".PGV_DB_LIKE." '%1 NAME %".$FILTER."%\n%'".
-				" OR o_id ".PGV_DB_LIKE." '%".$FILTER."%')".
-				" AND o_file=".PGV_GED_ID.
-				" AND o_type='REPO'";
+	$sql=
+		"SELECT o_type AS type, o_id AS xref, o_file AS ged_id, o_gedcom AS gedrec".
+		" FROM {$TBLPREFIX}other".
+		" WHERE (o_gedcom ".PGV_DB_LIKE." ? OR o_id ".PGV_DB_LIKE." ?) AND o_file=? AND o_type='REPO'";
 	$sql=PGV_DB::limit_query($sql, PGV_AUTOCOMPLETE_LIMIT);
-	$res=dbquery($sql);
+	$rows=PGV_DB::prepare($sql)->execute(array("%1 NAME %{$FILTER}%", "%{$FILTER}%", PGV_GED_ID))->fetchAll(PDO::FETCH_ASSOC);
 
-	$data = array();
-	while ($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)) {
+	$data=array();
+	foreach ($rows as $row) {
 		$repository = Repository::getInstance($row);
 		if ($repository->canDisplayName()) {
 			$data[$row["xref"]] = $repository->getFullName();
 		}
 	}
-	$res->free();
 	return $data;
 }
 
@@ -422,26 +447,23 @@ function autocomplete_REPO() {
 * returns REPO:NAME matching filter
 * @return Array of string
 */
-function autocomplete_REPO_NAME() {
-	global $TBLPREFIX, $FILTER;
+function autocomplete_REPO_NAME($FILTER) {
+	global $TBLPREFIX;
 
-	$sql = "SELECT o_type AS type, o_id AS xref, o_file AS ged_id, o_gedcom AS gedrec".
-				" FROM {$TBLPREFIX}other".
-				" WHERE o_gedcom ".PGV_DB_LIKE." '%1 NAME %".$FILTER."%\n%'".
-				" AND o_file=".PGV_GED_ID.
-				" AND o_type='REPO'".
-				" LIMIT ".PGV_AUTOCOMPLETE_LIMIT;
+	$sql=
+		"SELECT o_type AS type, o_id AS xref, o_file AS ged_id, o_gedcom AS gedrec".
+		" FROM {$TBLPREFIX}other".
+		" WHERE o_gedcom ".PGV_DB_LIKE." ? AND o_file=? AND o_type='REPO'";
 	$sql=PGV_DB::limit_query($sql, PGV_AUTOCOMPLETE_LIMIT);
-	$res=dbquery($sql);
+	$rows=PGV_DB::prepare($sql)->execute(array("%1 NAME %{$FILTER}%", PGV_GED_ID))->fetchAll(PDO::FETCH_ASSOC);
 
-	$data = array();
-	while ($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)) {
+	$data=array();
+	foreach ($rows as $row) {
 		$repository = Repository::getInstance($row);
 		if ($repository->canDisplayName()) {
 			$data[] = $repository->getFullName();
 		}
 	}
-	$res->free();
 	return $data;
 }
 
@@ -449,15 +471,15 @@ function autocomplete_REPO_NAME() {
 * returns OBJEcts matching filter
 * @return Array of string
 */
-function autocomplete_OBJE() {
-	global $TBLPREFIX, $FILTER;
+function autocomplete_OBJE($FILTER) {
+	global $TBLPREFIX;
 
-	$sql="SELECT m_media FROM {$TBLPREFIX}media WHERE (m_titl ".PGV_DB_LIKE." '%{$FILTER}%' OR m_media ".PGV_DB_LIKE." '%{$FILTER}%') AND m_gedfile=".PGV_GED_ID;
+	$sql="SELECT m_media FROM {$TBLPREFIX}media WHERE (m_titl ".PGV_DB_LIKE." ? OR m_media ".PGV_DB_LIKE." ?) AND m_gedfile=?";
 	$sql=PGV_DB::limit_query($sql, PGV_AUTOCOMPLETE_LIMIT);
-	$res=dbquery($sql);
+	$rows=PGV_DB::prepare($sql)->execute(array("%{$FILTER}%", "%{$FILTER}%", PGV_GED_ID))->fetchAll(PDO::FETCH_ASSOC);
 
-	$data = array();
-	while ($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)) {
+	$data=array();
+	foreach ($rows as $row) {
 		$media = Media::getInstance($row["m_media"]);
 		if ($media && $media->canDisplayDetails()) {
 			$data[$row["m_media"]] =
@@ -469,7 +491,6 @@ function autocomplete_OBJE() {
 				$media->getFullName();
 		}
 	}
-	$res->free();
 	return $data;
 }
 
@@ -483,66 +504,62 @@ function autocomplete_IFSRO() {
 	// is input text a gedcom xref ?
 	$prefix = strtoupper(substr($FILTER, 0, 1));
 	if (ctype_digit(substr($FILTER, 1))) {
-		if ($prefix == $GEDCOM_ID_PREFIX)
-			return autocomplete_INDI();
-		if ($prefix == $FAM_ID_PREFIX)
-			return autocomplete_FAM();
-		if ($prefix == $SOURCE_ID_PREFIX)
-			return autocomplete_SOUR();
-		if ($prefix == $NOTE_ID_PREFIX)
-			return autocomplete_NOTE();
-		if ($prefix == $REPO_ID_PREFIX)
-			return autocomplete_REPO();
-		if ($prefix == $MEDIA_ID_PREFIX)
-			return autocomplete_OBJE();
+		if ($prefix == $GEDCOM_ID_PREFIX) {
+			return autocomplete_INDI($FILTER, '');
+		} elseif ($prefix == $FAM_ID_PREFIX) {
+			return autocomplete_FAM($FILTER, '');
+		} elseif ($prefix == $SOURCE_ID_PREFIX) {
+			return autocomplete_SOUR($FILTER);
+		} elseif ($prefix == $NOTE_ID_PREFIX) {
+			return autocomplete_NOTE($FILTER);
+		} elseif ($prefix == $REPO_ID_PREFIX) {
+			return autocomplete_REPO($FILTER);
+		} elseif ($prefix == $MEDIA_ID_PREFIX) {
+			return autocomplete_OBJE($FILTER);
+		}
 	}
 	return array_merge(
-		autocomplete_INDI(),
-		autocomplete_FAM(),
-		autocomplete_SOUR(),
-		autocomplete_NOTE(),
-		autocomplete_REPO(),
-		autocomplete_OBJE());
+		autocomplete_INDI($FILTER, ''),
+		autocomplete_FAM($FILTER, ''),
+		autocomplete_SOUR($FILTER),
+		autocomplete_NOTE($FILTER),
+		autocomplete_REPO($FILTER),
+		autocomplete_OBJE($FILTER)
+	);
 }
 
 /**
 * returns SURNames matching filter
 * @return Array of string
 */
-function autocomplete_SURN() {
-	global $TBLPREFIX, $FILTER;
+function autocomplete_SURN($FILTER) {
+	global $TBLPREFIX;
 
-	$sql="SELECT DISTINCT n_surname FROM {$TBLPREFIX}name WHERE n_surname ".PGV_DB_LIKE." '%{$FILTER}%' AND n_file=".PGV_GED_ID;
+	$sql="SELECT DISTINCT n_surname FROM {$TBLPREFIX}name WHERE n_surname ".PGV_DB_LIKE." ? AND n_file=? ORDER BY n_surname";
 	$sql=PGV_DB::limit_query($sql, PGV_AUTOCOMPLETE_LIMIT);
-	$res=dbquery($sql);
-
-	$data=array();
-	while ($row=$res->fetchRow(DB_FETCHMODE_ASSOC)) {
-		$data[]=$row['n_surname'];
-	}
-	return $data;
+	return PGV_DB::prepare($sql)->execute(array("%{$FILTER}%", PGV_GED_ID))->fetchOneColumn();
 }
 
 /**
 * returns GIVenNames matching filter
 * @return Array of string
 */
-function autocomplete_GIVN() {
-	global $TBLPREFIX, $FILTER;
+function autocomplete_GIVN($FILTER) {
+	global $TBLPREFIX;
 
-	$sql="SELECT DISTINCT n_givn FROM {$TBLPREFIX}name WHERE n_givn ".PGV_DB_LIKE." '%{$FILTER}%' AND n_file=".PGV_GED_ID;
+	$sql="SELECT DISTINCT n_givn FROM {$TBLPREFIX}name WHERE n_givn ".PGV_DB_LIKE." ? AND n_file=? ORDER BY n_givn";
 	$sql=PGV_DB::limit_query($sql, PGV_AUTOCOMPLETE_LIMIT);
-	$res=dbquery($sql);
+	$rows=PGV_DB::prepare($sql)->execute(array("%{$FILTER}%", PGV_GED_ID))->fetchAll();
 
 	$data=array();
-	while ($row=$res->fetchRow(DB_FETCHMODE_ASSOC)) {
-		$givn=$row['n_givn'];
+	foreach ($rows as $row) {
+		$givn=$row->n_givn;
 		list($givn) = explode("/", $givn);
 		list($givn) = explode(",", $givn);
 		list($givn) = explode("*", $givn);
 		list($givn) = explode(" ", $givn);
 		if ($givn) {
-			$data[]=$row['n_givn'];
+			$data[]=$row->n_givn;
 		}
 	}
 	return $data;
@@ -552,53 +569,28 @@ function autocomplete_GIVN() {
 * returns NAMEs matching filter
 * @return Array of string
 */
-function autocomplete_NAME() {
-	global $TBLPREFIX, $FILTER;
-
-	$sql="SELECT DISTINCT n_givn FROM {$TBLPREFIX}name WHERE n_givn ".PGV_DB_LIKE." '%{$FILTER}%' AND n_file=".PGV_GED_ID;
-	$sql=PGV_DB::limit_query($sql, PGV_AUTOCOMPLETE_LIMIT);
-	$res=dbquery($sql);
-
-	$data=array();
-	while ($row=$res->fetchRow(DB_FETCHMODE_ASSOC)) {
-		$givn=$row['n_givn'];
-		list($givn) = explode("/", $givn);
-		list($givn) = explode(",", $givn);
-		list($givn) = explode("*", $givn);
-		list($givn) = explode(" ", $givn);
-		if ($givn) {
-			$data[]=$row['n_givn'];
-		}
-	}
-	$sql="SELECT DISTINCT n_surname FROM {$TBLPREFIX}name WHERE n_surname ".PGV_DB_LIKE." '%{$FILTER}%' AND n_file=".PGV_GED_ID;
-	$sql=PGV_DB::limit_query($sql, PGV_AUTOCOMPLETE_LIMIT);
-	$res=dbquery($sql);
-
-	while ($row=$res->fetchRow(DB_FETCHMODE_ASSOC)) {
-		$data[]=$row['n_surname'];
-	}
-	return $data;
+function autocomplete_NAME($FILTER) {
+	return array_merge(autocomplete_GIVN($FILTER), autocomplete_SURN($FILTER));
 }
 
 /**
 * returns PLACes matching filter
 * @return Array of string City, County, State/Province, Country
 */
-function autocomplete_PLAC() {
-	global $TBLPREFIX, $USE_GEONAMES, $lang_short_cut, $LANGUAGE, $FILTER, $OPTION;
+function autocomplete_PLAC($FILTER, $OPTION) {
+	global $TBLPREFIX, $USE_GEONAMES, $lang_short_cut, $LANGUAGE;
 
-	$sql="SELECT p_id, p_place, p_parent_id FROM {$TBLPREFIX}places WHERE p_place ".PGV_DB_LIKE." '%{$FILTER}%' AND p_file=".PGV_GED_ID;
+	$sql="SELECT p_id, p_place, p_parent_id FROM {$TBLPREFIX}places WHERE p_place ".PGV_DB_LIKE." ? AND p_file=? ORDER BY p_place";
 	$sql=PGV_DB::limit_query($sql, PGV_AUTOCOMPLETE_LIMIT);
-	$res=dbquery($sql);
+	$rows=PGV_DB::prepare($sql)->execute(array("%{$FILTER}%", PGV_GED_ID))->fetchAll();
 
-	$place = array();
-	$parent = array();
+	$place=array();
+	$parent=array();
 	do {
-		while ($row =& $res->fetchRow()) {
-			$place[$row[0]] = $row[1];
-			$parent[$row[0]] = $row[2];
+		foreach ($rows as $row) {
+			$place[$row->p_id] = $row->p_place;
+			$parent[$row->p_id] = $row->p_parent_id;
 		}
-		$res->free();
 		//-- search for missing parents
 		$missing = array();
 		foreach($parent as $k=>$v) {
@@ -609,9 +601,13 @@ function autocomplete_PLAC() {
 		if (count($missing)==0) {
 			break;
 		}
-		$sql="SELECT p_id, p_place, p_parent_id FROM {$TBLPREFIX}places WHERE p_id IN (".implode(',', $missing).") AND p_file=".PGV_GED_ID;
-		$sql=PGV_DB::limit_query($sql, PGV_AUTOCOMPLETE_LIMIT);
-		$res=dbquery($sql);
+		$qs=implode(',', array_fill(0, count($missing), '?'));
+		$sql="SELECT p_id, p_place, p_parent_id FROM {$TBLPREFIX}places WHERE p_id IN ({$qs}) AND p_file=?";
+		$vars=$missing;
+		$vars[]=PGV_GED_ID;
+		$rows=PGV_DB::prepare($sql)->execute($vars)->fetchAll();
+
+
 	} while (true);
 
 	//-- build place list

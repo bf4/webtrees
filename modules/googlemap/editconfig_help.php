@@ -30,8 +30,6 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
-require "config.php";
-
 loadLangFile("pgv_confighelp, pgv_help, googlemap:help_text");
 
 if (isset($_REQUEST['help'])) $help=$_REQUEST['help'];

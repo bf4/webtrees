@@ -31,6 +31,9 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
+// Added in VERSION 4.2.2
+$pgv_lang["TYPE__notinDB"]			= "לא במאגר הנתונים";
+$pgv_lang["ROW_TYPE__notinDB"]		= $pgv_lang["TYPE__notinDB"];
 
 // Added in VERSION 4.1.6
 $pgv_lang["lb_toAdminConfigPage"]	= "חזור לדף ניהול";

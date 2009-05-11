@@ -3872,7 +3872,7 @@ function mediaFileInfo($fileName, $thumbName, $mid, $name='', $notes='', $obeyVi
 		$type .= "picasa";
 	} else if (eregi("\.(jpg|jpeg|gif|png)$", $fileName)) {
 		$type .= "image";
-	} else if (eregi("\.(pdf|avi)$", $fileName)) {
+	} else if (eregi("\.(pdf|avi|txt)$", $fileName)) {
 		$type .= "page";
 	} else if (eregi("\.mp3$", $fileName)) {
 		$type .= "audio";
@@ -3966,32 +3966,36 @@ function mediaFileInfo($fileName, $thumbName, $mid, $name='', $notes='', $obeyVi
 	$width = '';
 	switch ($type) {
 		case 'url_flv':
-			$thumb = 'images/flashrem.png';
+			$thumb = 'images/media/flashrem.png';
 			break;
 		case 'local_flv':
-			$thumb = 'images/flash.png';
+			$thumb = 'images/media/flash.png';
 			break;
 		case 'url_wmv':
-			$thumb = 'images/wmvrem.png';
+			$thumb = 'images/media/wmvrem.png';
 			break;
 		case 'local_wmv':
-			$thumb = 'images/wmv.png';
+			$thumb = 'images/media/wmv.png';
 			break;
 		case 'url_picasa':
-			$thumb = 'images/picasa.png';
+			$thumb = 'images/media/picasa.png';
 			break;
 		case 'url_page':
 		case 'url_other':
+			$thumb = "images/media/globe.png";
+			break;
 		case 'local_page':
-			$thumb = "images/globe.png";
+			$thumb = "images/media/doc.gif";
 			break;
 		case 'url_audio':
 		case 'local_audio':
-			$thumb = "images/audio.png";
+			$thumb = "images/media/audio.png";
 			break;
 		default:
 			$thumb = $thumbName;
-			if (substr($type,0,4)=='url_') $width = ' width="'.$THUMBNAIL_WIDTH.'"';
+			if (substr($type,0,4)=='url_') {
+				$width = ' width="'.$THUMBNAIL_WIDTH.'"';
+			}
 	}
 
 	// -- Use an overriding thumbnail if one has been provided

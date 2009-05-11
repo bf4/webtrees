@@ -1026,10 +1026,14 @@ th {
 
 .submenuitem a {
 	color: #003399;
+	display: inline-table;
+	vertical-align: middle;
 }
 
 .submenuitem_rtl a {
 	color: #003399;
+	display: inline-table;
+	vertical-align: middle;
 }
 
 .submenuitem, .submenuitem_rtl {
@@ -1074,6 +1078,11 @@ th {
 
 .submenuitem_hover_rtl {
 	text-align: right;
+}
+
+.submenuitem_hover a, .submenuitem_hover_rtl a {
+	display: inline-table;
+	vertical-align: middle;
 }
 
 .menuitem a {

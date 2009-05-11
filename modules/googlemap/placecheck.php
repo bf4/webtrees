@@ -30,8 +30,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
-require_once ("config.php");
-require("googlemap.php"); // gives access to googlemap functions
+require 'googlemap.php'; // gives access to googlemap functions
 
 loadLangFile("googlemap:lang, googlemap:help_text");
 
