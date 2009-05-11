@@ -139,10 +139,17 @@ if ($action == "choose" && $paramok) {
 	print "<tr><td class=\"descriptionbox\">";
 	
 	if ($linkto == "person") {
-		// print $pgv_lang["enter_pid"]."</td>";
-		echo "Add more links:";
+		if (file_exists('modules/GEDFact_assistant/MEDIA/media_1_ctrl.php')) {
+			echo "Add more links:";
+		} else{
+			print $pgv_lang["enter_pid"]."</td>";
+		}
 		print "<td class=\"optionbox wrap\">";
-		echo "First, enter a Base individual ID<br />";
+		
+		// GEDFact assistant Add Media Links =======================
+		if (file_exists('modules/GEDFact_assistant/MEDIA/media_1_ctrl.php')) {
+			echo "First, enter a Base individual ID<br />";
+		}
 		if ($linktoid=="") {
 			print "<input class=\"pedigree_form\" type=\"text\" name=\"linktoid\" id=\"linktopid\" size=\"3\" value=\"$linktoid\" />";
 			print_findindi_link("linktopid","");
@@ -153,9 +160,13 @@ if ($action == "choose" && $paramok) {
 			print "(".$linktoid.")";
 			if ($TEXT_DIRECTION=="rtl") print getRLM();
 		}
-		echo "<br /><br />";
-		echo "Then, click Add to add more Individual Links";
-		echo "<br />";
+		
+		// GEDFact assistant Add Media Links =======================
+		if (file_exists('modules/GEDFact_assistant/MEDIA/media_1_ctrl.php')) {
+			echo "<br /><br />";
+			echo "Then, click Add to add more Individual Links";
+			echo "<br />";
+		}
 		
 		// GEDFact assistant Add Media Links =======================
 		if (file_exists('modules/GEDFact_assistant/MEDIA/media_1_ctrl.php')) {
@@ -164,8 +175,8 @@ if ($action == "choose" && $paramok) {
 			echo "<tr><td class=\"topbottombar\" colspan=\"2\">";
 			echo "<input type=\"button\" value=\"".$pgv_lang["set_link"]."s\" onclick=\"javascript:alert('Clicking \'Set Links\' will eventually parse and save the Current and Added Links');\" />";
 			echo "</td></tr>";
-		}else{
-		print "<tr><td class=\"topbottombar\" colspan=\"2\"><input type=\"submit\" value=\"".$pgv_lang["set_link"]."\" /></td></tr>";
+		} else {
+			print "<tr><td class=\"topbottombar\" colspan=\"2\"><input type=\"submit\" value=\"".$pgv_lang["set_link"]."\" /></td></tr>";
 		}
 
 	}
