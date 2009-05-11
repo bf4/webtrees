@@ -199,6 +199,6 @@ function fact_NMR_localisation_sl($fact, &$fid) {
 ////////////////////////////////////////////////////////////////////////////////
 function rela_localisation_sl(&$rela) {
 
-	print " ".ucfirst($rela).": ";
+	return " ".ucfirst($rela).": ";
 }
 ?>

@@ -1593,14 +1593,17 @@ $pgv_lang["authenticated_feed"]		= "Kanał autoryzowany";
 //-- ASSOciates RELAtionship
 // After any change in the following list, please check $assokeys in edit_interface.php
 $pgv_lang["attendant"]			= "Pomocnik";
-$pgv_lang["attending"]			= "Obsługujący(a)";
+$pgv_lang["attending"]			= "Obsługujący";
 $pgv_lang["best_man"]			= "Drużba";
 $pgv_lang["bridesmaid"]			= "Druhna";
 $pgv_lang["buyer"]				= "Kupiec";
 $pgv_lang["circumciser"]		= "Obrzezujący";
-$pgv_lang["civil_registrar"]	= "Urzędnik stanu cywilnego";
+$pgv_lang["civil_registrar"]	= "Urzędnik cywilny";
 $pgv_lang["employee"]			= "Pracownik";
 $pgv_lang["employer"]			= "Pracodawca";
+$pgv_lang["foster_child"]		= "Przybrane dziecko";
+$pgv_lang["foster_father"]		= "Przybrany ojciec";
+$pgv_lang["foster_mother"]		= "Przybrana matka";
 $pgv_lang["friend"]				= "Przyjaciel";
 $pgv_lang["godfather"]			= "Ojciec chrzestny";
 $pgv_lang["godmother"]			= "Matka chrzestna";
@@ -1608,8 +1611,10 @@ $pgv_lang["godparent"]			= "Rodzic chrzestny";
 $pgv_lang["godson"]				= "Chrześniak";
 $pgv_lang["goddaughter"]		= "Chrześniaczka";
 $pgv_lang["godchild"]			= "Chrześniak/Chrześniaczka";
+$pgv_lang["guardian"]			= "Opiekun";
 $pgv_lang["informant"]			= "Informator";
 $pgv_lang["lodger"]				= "Lokator";
+$pgv_lang["nanny"]				= "Niania";
 $pgv_lang["nurse"]				= "Pielęgniarka";
 $pgv_lang["owner"]				= "Właściciel";
 $pgv_lang["priest"]				= "Ksiądz";
@@ -1621,6 +1626,7 @@ $pgv_lang["slave"]				= "Niewolnik";
 $pgv_lang["twin"]				= "Bliźniak";
 $pgv_lang["twin_brother"]		= "Brat-bliźniak";
 $pgv_lang["twin_sister"]		= "Siostra-bliźniaczka";
+$pgv_lang["ward"]				= "Wychowanek";
 $pgv_lang["witness"]			= "Świadek";
 
 //-- statistics utility
