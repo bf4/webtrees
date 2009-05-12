@@ -93,9 +93,18 @@ $PGV_IMAGES["keyboard"]["button"] = "buttons/keyboard.gif";
 // $PGV_IMAGES["source"]["button"] = "buttons/source.gif";
 
 // Media images
+$PGV_IMAGES["media"]["audio"] = "../../../images/media/audio.png";
 $PGV_IMAGES["media"]["doc"] = "../../../images/media/doc.gif";
+$PGV_IMAGES["media"]["flash"] = "../../../images/media/flash.png";
+$PGV_IMAGES["media"]["flashrem"] = "../../../images/media/flashrem.png";
 $PGV_IMAGES["media"]["ged"] = "../../../images/media/ged.gif";
+$PGV_IMAGES["media"]["globe"] = "../../../images/media/globe.png";
+$PGV_IMAGES["media"]["html"] = "../../../images/media/html.gif";
+$PGV_IMAGES["media"]["picasa"] = "../../../images/media/picasa.png";
 $PGV_IMAGES["media"]["pdf"] = "../../../images/media/pdf.gif";
+$PGV_IMAGES["media"]["tex"] = "../../../images/media/tex.gif";
+$PGV_IMAGES["media"]["wmv"] = "../../../images/media/wmv.png";
+$PGV_IMAGES["media"]["wmvrem"] = "../../../images/media/wmvrem.png";
 
 //- other images
 $PGV_IMAGES["add"]["other"] = "add.gif";

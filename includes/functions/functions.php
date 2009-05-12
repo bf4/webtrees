@@ -3966,30 +3966,38 @@ function mediaFileInfo($fileName, $thumbName, $mid, $name='', $notes='', $obeyVi
 	$width = '';
 	switch ($type) {
 		case 'url_flv':
-			$thumb = 'images/media/flashrem.png';
+			if (isset($PGV_IMAGES["media"]["flashrem"])) $thumb = $PGV_IMAGE_DIR . '/' . $PGV_IMAGES["media"]["flashrem"];
+			else $thumb = 'images/media/flashrem.png';
 			break;
 		case 'local_flv':
-			$thumb = 'images/media/flash.png';
+			if (isset($PGV_IMAGES["media"]["flash"])) $thumb = $PGV_IMAGE_DIR . '/' . $PGV_IMAGES["media"]["flash"];
+			else $thumb = 'images/media/flash.png';
 			break;
 		case 'url_wmv':
-			$thumb = 'images/media/wmvrem.png';
+			if (isset($PGV_IMAGES["media"]["wmvrem"])) $thumb = $PGV_IMAGE_DIR . '/' . $PGV_IMAGES["media"]["wmvrem"];
+			else $thumb = 'images/media/wmvrem.png';
 			break;
 		case 'local_wmv':
-			$thumb = 'images/media/wmv.png';
+			if (isset($PGV_IMAGES["media"]["wmv"])) $thumb = $PGV_IMAGE_DIR . '/' . $PGV_IMAGES["media"]["wmv"];
+			else $thumb = 'images/media/wmv.png';
 			break;
 		case 'url_picasa':
-			$thumb = 'images/media/picasa.png';
+			if (isset($PGV_IMAGES["media"]["picasa"])) $thumb = $PGV_IMAGE_DIR . '/' . $PGV_IMAGES["media"]["picasa"];
+			else $thumb = 'images/media/picasa.png';
 			break;
 		case 'url_page':
 		case 'url_other':
-			$thumb = "images/media/globe.png";
+			if (isset($PGV_IMAGES["media"]["globe"])) $thumb = $PGV_IMAGE_DIR . '/' . $PGV_IMAGES["media"]["globe"];
+			else $thumb = 'images/media/globe.png';
 			break;
 		case 'local_page':
-			$thumb = "images/media/doc.gif";
+			if (isset($PGV_IMAGES["media"]["doc"])) $thumb = $PGV_IMAGE_DIR . '/' . $PGV_IMAGES["media"]["doc"];
+			else $thumb = 'images/media/doc.gif';
 			break;
 		case 'url_audio':
 		case 'local_audio':
-			$thumb = "images/media/audio.png";
+			if (isset($PGV_IMAGES["media"]["audio"])) $thumb = $PGV_IMAGE_DIR . '/' . $PGV_IMAGES["media"]["audio"];
+			else $thumb = 'images/media/audio.png';
 			break;
 		default:
 			$thumb = $thumbName;
