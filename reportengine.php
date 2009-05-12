@@ -277,10 +277,10 @@ function paste_id(value) {
 		<tr><td class="descriptionbox width30 wrap"></td>
 		<td class="optionbox">
 		<table><tr>
-		<td><img src="<?php if (isset($PGV_IMAGES["media"]["pdf"])) echo $PGV_IMAGE_DIR, '/', $PGV_IMAGES["media"]["pdf"];else echo 'images/media/pdf.gif';?>" alt="PDF" title="PDF" /></td>
-		<td><img src="<?php if (isset($PGV_IMAGES["media"]["html"])) echo $PGV_IMAGE_DIR, '/', $PGV_IMAGES["media"]["html"];else echo 'images/media/html.gif';?>" alt="HTML" title="HTML" /></td>
+		<td><img src="<?php echo isset($PGV_IMAGES["media"]["pdf"]) ? $PGV_IMAGE_DIR.'/'.$PGV_IMAGES["media"]["pdf"] : 'images/media/pdf.gif';?>" alt="PDF" title="PDF" /></td>
+		<td><img src="<?php echo isset($PGV_IMAGES["media"]["html"]) ? $PGV_IMAGE_DIR.'/'.$PGV_IMAGES["media"]["html"] : 'images/media/html.gif';?>" alt="HTML" title="HTML" /></td>
 		<?php if (file_exists("includes/reportlatex.php")) { ?>
-		<td><img src="<?php if (isset($PGV_IMAGES["media"]["tex"])) echo $PGV_IMAGE_DIR, '/', $PGV_IMAGES["media"]["tex"];else echo 'images/media/tex.gif';?>" alt="LaTEX" title="LaTEX" /></td>
+		<td><img src="<?php echo isset($PGV_IMAGES["media"]["tex"]) ? $PGV_IMAGE_DIR.'/'.$PGV_IMAGES["media"]["tex"] : 'images/media/tex.gif';?>" alt="LaTEX" title="LaTEX" /></td>
 		<?php } ?>
 		</tr><tr>
 		<td><center><input type="radio" name="output" value="PDF" checked="checked" /></center></td>
