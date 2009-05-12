@@ -10,6 +10,7 @@
 
 
 Version 4.2.2
+ - Fixed: [ 2790245 ] link error in standard theme (fisharebest)
  - Changed - Various core files in preparation for GEDFact_assistant module (windmillway)
  - Changed Move various media "thumbnails" to the "index/media" subdirectory (canajun2eh)
  - Fixed Text media items not being displayed properly with Lightbox. (windmillway) 
