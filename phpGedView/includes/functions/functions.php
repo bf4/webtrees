@@ -3966,38 +3966,30 @@ function mediaFileInfo($fileName, $thumbName, $mid, $name='', $notes='', $obeyVi
 	$width = '';
 	switch ($type) {
 		case 'url_flv':
-			if (isset($PGV_IMAGES["media"]["flashrem"])) $thumb = $PGV_IMAGE_DIR . '/' . $PGV_IMAGES["media"]["flashrem"];
-			else $thumb = 'images/media/flashrem.png';
+			$thumb = isset($PGV_IMAGES["media"]["flashrem"]) ? $PGV_IMAGE_DIR.'/'.$PGV_IMAGES["media"]["flashrem"] : 'images/media/flashrem.png';
 			break;
 		case 'local_flv':
-			if (isset($PGV_IMAGES["media"]["flash"])) $thumb = $PGV_IMAGE_DIR . '/' . $PGV_IMAGES["media"]["flash"];
-			else $thumb = 'images/media/flash.png';
+			$thumb = isset($PGV_IMAGES["media"]["flash"]) ? $PGV_IMAGE_DIR.'/'.$PGV_IMAGES["media"]["flash"] : 'images/media/flash.png';
 			break;
 		case 'url_wmv':
-			if (isset($PGV_IMAGES["media"]["wmvrem"])) $thumb = $PGV_IMAGE_DIR . '/' . $PGV_IMAGES["media"]["wmvrem"];
-			else $thumb = 'images/media/wmvrem.png';
+			$thumb = isset($PGV_IMAGES["media"]["wmvrem"]) ? $PGV_IMAGE_DIR.'/'.$PGV_IMAGES["media"]["wmvrem"] : 'images/media/wmvrem.png';
 			break;
 		case 'local_wmv':
-			if (isset($PGV_IMAGES["media"]["wmv"])) $thumb = $PGV_IMAGE_DIR . '/' . $PGV_IMAGES["media"]["wmv"];
-			else $thumb = 'images/media/wmv.png';
+			$thumb = isset($PGV_IMAGES["media"]["wmv"]) ? $PGV_IMAGE_DIR.'/'.$PGV_IMAGES["media"]["wmv"] : 'images/media/wmv.png';
 			break;
 		case 'url_picasa':
-			if (isset($PGV_IMAGES["media"]["picasa"])) $thumb = $PGV_IMAGE_DIR . '/' . $PGV_IMAGES["media"]["picasa"];
-			else $thumb = 'images/media/picasa.png';
+			$thumb = isset($PGV_IMAGES["media"]["picasa"]) ? $PGV_IMAGE_DIR.'/'.$PGV_IMAGES["media"]["picasa"] : 'images/media/picasa.png';
 			break;
 		case 'url_page':
 		case 'url_other':
-			if (isset($PGV_IMAGES["media"]["globe"])) $thumb = $PGV_IMAGE_DIR . '/' . $PGV_IMAGES["media"]["globe"];
-			else $thumb = 'images/media/globe.png';
+			$thumb = isset($PGV_IMAGES["media"]["globe"]) ? $PGV_IMAGE_DIR.'/'.$PGV_IMAGES["media"]["globe"] : 'images/media/globe.png';
 			break;
 		case 'local_page':
-			if (isset($PGV_IMAGES["media"]["doc"])) $thumb = $PGV_IMAGE_DIR . '/' . $PGV_IMAGES["media"]["doc"];
-			else $thumb = 'images/media/doc.gif';
+			$thumb = ($PGV_IMAGES["media"]["doc"]) ? $PGV_IMAGE_DIR.'/'.$PGV_IMAGES["media"]["doc"] : 'images/media/doc.gif';
 			break;
 		case 'url_audio':
 		case 'local_audio':
-			if (isset($PGV_IMAGES["media"]["audio"])) $thumb = $PGV_IMAGE_DIR . '/' . $PGV_IMAGES["media"]["audio"];
-			else $thumb = 'images/media/audio.png';
+			$thumb = isset($PGV_IMAGES["media"]["audio"]) ? $PGV_IMAGE_DIR.'/'.$PGV_IMAGES["media"]["audio"] : 'images/media/audio.png';
 			break;
 		default:
 			$thumb = $thumbName;
