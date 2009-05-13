@@ -182,7 +182,7 @@ if ($action!="choose") {
 								$record=fetch_gedcom_record($id, PGV_GED_ID);
 								$record=$record['gedrec'];
 								echo $pgv_lang["updating_linked"]." {$id}<br />\n";
-								$newrec=str_replace("/@$gid2@/", "@$gid1@", $record);
+								$newrec=str_replace("@$gid2@", "@$gid1@", $record);
 								replace_gedrec($id, $newrec);
 							}
 						}
