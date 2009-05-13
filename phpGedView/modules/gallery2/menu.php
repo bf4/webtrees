@@ -53,12 +53,12 @@ class gallery2_ModuleMenu
 		// Gallery
 		$menu = new Menu($pgv_lang['mod_gallery2'], 'module.php?mod=gallery2', 'down');
 		if(!empty($PGV_IMAGES['menu_gallery']['large'])){$menu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['menu_gallery']['large']}");}
-		$menu->addClass("menuitem{$ff}", "menuitem_hover{$ff}", "submenu{$ff}");
+		$menu->addClass("menuitem{$ff}", "menuitem_hover{$ff}", "submenu{$ff}", "icon_large_menu_gallery");
 
 		// Advanced Search
 		$submenu = new Menu($pgv_lang['mod_gallery2_advsearch'], 'module.php?mod=gallery2&amp;g2_view=search.SearchScan');
 		$submenu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['search']['small']}");
-		$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}");
+		$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}", "", "icon_small_search");
 		$menu->addSubmenu($submenu);
 
 		// User Album
@@ -107,7 +107,7 @@ class gallery2_ModuleMenu
 		{
 			$submenu = new Menu($pgv_lang['mod_gallery2_siteadmin'], 'module.php?mod=gallery2&amp;g2_view=core.SiteAdmin');
 			$submenu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['admin']['small']}");
-			$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}");
+			$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}", "", "icon_small_admin");
 			$menu->addSubmenu($submenu);
 		}
 
