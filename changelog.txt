@@ -10,6 +10,7 @@
 
 
 Version 4.2.x CA
+ - Merged: Merge changes r5487 - r5508 from the trunk. (windmillway)
  - Changed: progressed further with GEDFact_assistant/MEDIA/ submodule
  - Merged: Merge changes r5468 - r5486 from the trunk. (windmillway)
  - Changed: Correct Paste-back links for Media add links (after svn 5424 autocomplete change)
@@ -86,6 +87,9 @@ Version 4.2.x CA
 
 
 Version 4.2.2
+ - Fixed: [ 2786280 ] 4.2.1 search results in families have duplication (fisharebest)
+ - Fixed: [ 2790245 ] link error in standard theme (fisharebest)
+ - Changed - Various core files in preparation for GEDFact_assistant module (windmillway)
  - Changed Move various media "thumbnails" to the "index/media" subdirectory (canajun2eh)
  - Fixed Text media items not being displayed properly with Lightbox. (windmillway) 
  - Fixed [ 2789308 ] ERROR 8: Constant PGV_GOOGLE_ANALYTICS already defined (fisharebest)

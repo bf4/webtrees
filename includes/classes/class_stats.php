@@ -536,26 +536,32 @@ class stats {
 	function totalSurnames($params = null)
 	{
 		global $DBTYPE, $TBLPREFIX;
-		if ($params !== null) {
-			$dis = '';
-			$surnames = array();
-			foreach ($params as $surname) {$surnames[] = "n_surn='{$surname}'";}
-			$surnames = join(' OR ', $surnames);
-			$opt = " AND ({$surnames}) ";
+		if ($params) {
+			$qs=implode(',', array_fill(0, count($params), '?'));
+			$opt="IN ({$qs})";
+			$vars=$params;
+			$distinct='';
+			$group_by='';
 		} else {
-			$dis = ' DISTINCT ';
-			$opt = '';
+			$opt ="IS NOT NULL";
+			$vars='';
+			$distinct='DISTINCT';
+			$group_by='GROUP BY n_surn';
 		}
+		$vars[]=$this->_ged_id;
 		if ($DBTYPE=="sqlite") {
-			$sql = "SELECT n_surn FROM {$TBLPREFIX}name WHERE n_file={$this->_ged_id} GROUP BY n_surn";
-			$tempsql = dbquery($sql);
-			$res =& $tempsql;
-			$rows[0]['tot'] = $res->numRows();
-			$res->free();
-		} else {
-			$rows = self::_runSQL("SELECT COUNT({$dis}n_surn) AS tot FROM {$TBLPREFIX}name WHERE n_file={$this->_ged_id}{$opt}");
+			// SQLITE2 does not support COUNT(DISTINCT ).
+			// Remove this when we move to SQLITE3
+			return count(
+				PGV_DB::prepare("SELECT n_surn FROM {$TBLPREFIX}name WHERE n_surn {$opt} AND n_file=? {$group_by}")
+				->execute($vars)
+				->fetchOneColumn()
+			);
 		}
-		return $rows[0]['tot'];
+		return (int)
+			PGV_DB::prepare("SELECT COUNT({$distinct} n_surn) FROM {$TBLPREFIX}name WHERE n_surn {$opt} AND n_file=?")
+			->execute($vars)
+			->fetchOne();
 	}
 
 	function totalEvents($params = null)

@@ -45,7 +45,7 @@ class MenuBar
 		$menu = new Menu($HOME_SITE_TEXT, $HOME_SITE_URL, "down");
 		if (!empty($PGV_IMAGES["home"]["large"]))
 			$menu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["home"]["large"]);
-		$menu->addClass("menuitem$ff", "menuitem_hover$ff", "submenu$ff");
+		$menu->addClass("menuitem$ff", "menuitem_hover$ff", "submenu$ff", "icon_large_home");
 		return $menu;
 	}
 
@@ -61,7 +61,7 @@ class MenuBar
 		$menu = new Menu($pgv_lang["welcome_page"], "index.php?ctype=gedcom", "down");
 		if (!empty($PGV_IMAGES["gedcom"]["large"]))
 			$menu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["gedcom"]["large"]);
-		$menu->addClass("menuitem$ff", "menuitem_hover$ff", "submenu$ff");
+		$menu->addClass("menuitem$ff", "menuitem_hover$ff", "submenu$ff", "icon_large_gedcom");
 		$menu->addAccesskey($pgv_lang["accesskey_home_page"]);
 		//-- gedcom list
 		if ($ALLOW_CHANGE_GEDCOM && count($GEDCOMS)>1) {
@@ -69,7 +69,7 @@ class MenuBar
 				$submenu = new Menu(PrintReady($gedarray["title"], true), encode_url('index.php?ctype=gedcom&ged='.$ged));
 				if (!empty($PGV_IMAGES["gedcom"]["small"]))
 					$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["gedcom"]["small"]);
-				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
+				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff", "", "icon_small_gedcom");
 				$menu->addSubmenu($submenu);
 			}
 		}
@@ -109,21 +109,21 @@ class MenuBar
 			$menu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["mygedview"]["large"]);
 		else if (!empty($PGV_IMAGES["gedcom"]["large"]))
 			$menu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["gedcom"]["large"]);
-		$menu->addClass("menuitem$ff", "menuitem_hover$ff", "submenu$ff");
+		$menu->addClass("menuitem$ff", "menuitem_hover$ff", "submenu$ff", "icon_large_mygedview");
 		$menu->addAccesskey($pgv_lang["accesskey_home_page"]);
 
 		//-- mygedview submenu
 		$submenu = new Menu($pgv_lang["mgv"], "index.php?ctype=user");
 		if (!empty($PGV_IMAGES["mygedview"]["small"]))
 			$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["mygedview"]["small"]);
-		$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
+		$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff", "", "icon_small_mygedview");
 		$menu->addSubmenu($submenu);
 		//-- editaccount submenu
 		if (get_user_setting($username, 'editaccount')) {
 			$submenu = new Menu($pgv_lang["editowndata"], "edituser.php");
 			if (!empty($PGV_IMAGES["mygedview"]["small"]))
 				$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["mygedview"]["small"]);
-			$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
+			$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff", "", "icon_small_mygedview");
 			$menu->addSubmenu($submenu);
 		}
 		if (PGV_USER_GEDCOM_ID) {
@@ -140,7 +140,7 @@ class MenuBar
 				$submenu->addOnclick("return quickEdit('".PGV_USER_GEDCOM_ID."', '', '".PGV_GEDCOM."');");
 				if (!empty($PGV_IMAGES["indis"]["small"]))
 					$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["indis"]["small"]);
-				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
+				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff", "", "icon_small_indis");
 				$menu->addSubmenu($submenu);
 			}
 			//-- my_pedigree submenu
@@ -148,13 +148,13 @@ class MenuBar
 			if (!empty($PGV_IMAGES["pedigree"]["small"]))
 				$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["pedigree"]["small"]);
 			//$submenu->addIcon($PGV_IMAGE_DIR."/small/pedigree.gif");
-			$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
+			$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff", "", "icon_small_pedigree");
 			$menu->addSubmenu($submenu);
 			//-- my_indi submenu
 			$submenu = new Menu($pgv_lang["my_indi"], "individual.php?pid=".PGV_USER_GEDCOM_ID);
 			if (!empty($PGV_IMAGES["indis"]["small"]))
 				$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["indis"]["small"]);
-			$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
+			$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff", "", "icon_small_indis");
 			$menu->addSubmenu($submenu);
 		}
 		if (PGV_USER_GEDCOM_ADMIN){
@@ -163,27 +163,27 @@ class MenuBar
 			$submenu = new Menu($pgv_lang["admin"], "admin.php");
 			if (!empty($PGV_IMAGES["admin"]["small"]))
 				$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["admin"]["small"]);
-			$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
+			$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff", "", "icon_small_admin");
 			$menu->addSubmenu($submenu);
 			//-- manage_gedcoms submenu
 			$submenu = new Menu($pgv_lang["manage_gedcoms"], "editgedcoms.php");
 			if (!empty($PGV_IMAGES["admin"]["small"]))
 				$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["admin"]["small"]);
-			$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
+			$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff", "", "icon_small_admin");
 			$menu->addSubmenu($submenu);
 			//-- user_admin submenu
 			if (PGV_USER_IS_ADMIN) {
 				$submenu = new Menu($pgv_lang["user_admin"], "useradmin.php");
 				if (!empty($PGV_IMAGES["admin"]["small"]))
 					$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["admin"]["small"]);
-				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
+				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff", "", "icon_small_admin");
 				$menu->addSubmenu($submenu);
 				//-- manage_media submenu
 				if (is_writable($MEDIA_DIRECTORY) && $MULTI_MEDIA) {
 					$submenu = new Menu($pgv_lang["manage_media"], "media.php");
 					if (!empty($PGV_IMAGES["menu_media"]["small"]))
 						$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["menu_media"]["small"]);
-					$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
+					$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff", "", "icon_small_menu_media");
 					$menu->addSubmenu($submenu);
 				}
 			}
@@ -195,7 +195,7 @@ class MenuBar
 				$submenu = new Menu($pgv_lang["upload_media"], "uploadmedia.php");
 				if (!empty($PGV_IMAGES["menu_media"]["small"]))
 					$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["menu_media"]["small"]);
-				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
+				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff", "", "icon_small_menu_media");
 				$menu->addSubmenu($submenu);
 			}
 		}
@@ -229,14 +229,14 @@ class MenuBar
 			$menu = new Menu($pgv_lang["charts"], encode_url($link));
 			if (!empty($PGV_IMAGES["pedigree"]["small"]))
 				$menu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["pedigree"]["small"]);
-			$menu->addClass("submenuitem$ff", "submenuitem_hover$ff", "submenu$ff");
+			$menu->addClass("submenuitem$ff", "submenuitem_hover$ff", "submenu$ff", "", "icon_small_pedigree");
 		}
 		else {
 			// top menubar
 			$menu = new Menu($pgv_lang["charts"], encode_url($link), "down");
 			if (!empty($PGV_IMAGES["pedigree"]["large"]))
 				$menu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["pedigree"]["large"]);
-			$menu->addClass("menuitem$ff", "menuitem_hover$ff", "submenu$ff");
+			$menu->addClass("menuitem$ff", "menuitem_hover$ff", "submenu$ff", "icon_large_pedigree");
 		}
 
 		// Build a sortable list of submenu items and then sort it in localized name order
@@ -265,7 +265,7 @@ class MenuBar
 				$submenu = new Menu($pgv_lang["pedigree_chart"], encode_url($link));
 				if (!empty($PGV_IMAGES["pedigree"]["small"]))
 					$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["pedigree"]["small"]);
-				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
+				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff", "", "icon_small_pedigree");
 				$menu->addSubmenu($submenu);
 				break;
 
@@ -276,7 +276,7 @@ class MenuBar
 				$submenu = new Menu($pgv_lang["descend_chart"], encode_url($link));
 				if (!empty($PGV_IMAGES["descendant"]["small"]))
 					$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["descendant"]["small"]);
-				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
+				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff", "", "icon_small_descendant");
 				$menu->addSubmenu($submenu);
 				break;
 
@@ -287,7 +287,7 @@ class MenuBar
 				$submenu = new Menu($pgv_lang["ancestry_chart"], encode_url($link));
 				if (!empty($PGV_IMAGES["ancestry"]["small"]))
 					$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["ancestry"]["small"]);
-				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
+				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff", "", "icon_small_ancestry");
 				$menu->addSubmenu($submenu);
 				break;
 
@@ -298,7 +298,7 @@ class MenuBar
 				$submenu = new Menu($pgv_lang["compact_chart"], encode_url($link));
 				if (!empty($PGV_IMAGES["ancestry"]["small"]))
 					$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["ancestry"]["small"]);
-				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
+				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff", "", "icon_small_ancestry");
 				$menu->addSubmenu($submenu);
 				break;
 
@@ -309,7 +309,7 @@ class MenuBar
 				$submenu = new Menu($pgv_lang["fan_chart"], encode_url($link));
 				if (!empty($PGV_IMAGES["fanchart"]["small"]))
 					$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["fanchart"]["small"]);
-				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
+				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff", "", "icon_small_fanchart");
 				$menu->addSubmenu($submenu);
 				break;
 
@@ -320,7 +320,7 @@ class MenuBar
 				$submenu = new Menu($pgv_lang["hourglass_chart"], encode_url($link));
 				if (!empty($PGV_IMAGES["hourglass"]["small"]))
 					$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["hourglass"]["small"]);
-				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
+				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff", "", "icon_small_hourglass");
 				$menu->addSubmenu($submenu);
 				break;
 
@@ -331,7 +331,7 @@ class MenuBar
 				$submenu = new Menu($pgv_lang["familybook_chart"], encode_url($link));
 				if (!empty($PGV_IMAGES["fambook"]["small"]))
 					$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["fambook"]["small"]);
-				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
+				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff", "", "icon_small_fambook");
 				$menu->addSubmenu($submenu);
 				break;
 
@@ -342,7 +342,7 @@ class MenuBar
 				$submenu = new Menu($pgv_lang["timeline_chart"], $link);
 				if (!empty($PGV_IMAGES["timeline"]["small"]))
 					$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["timeline"]["small"]);
-				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
+				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff", "", "icon_small_timeline");
 				$menu->addSubmenu($submenu);
 				break;
 
@@ -353,7 +353,7 @@ class MenuBar
 				$submenu = new Menu($pgv_lang["lifespan_chart"], encode_url($link));
 				if (!empty($PGV_IMAGES["timeline"]["small"]))
 					$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["timeline"]["small"]);
-				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
+				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff", "", "icon_small_timeline");
 				$menu->addSubmenu($submenu);
 				break;
 
@@ -388,7 +388,7 @@ class MenuBar
 						}
 						if (!empty($PGV_IMAGES["relationship"]["small"]))
 							$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["relationship"]["small"]);
-						$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
+						$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff", "", "icon_small_relationship");
 						$menu->addSubmenu($submenu);
 					}
 				}
@@ -399,7 +399,7 @@ class MenuBar
 				$submenu = new Menu($pgv_lang["statistics"], "statistics.php");
 				if (!empty($PGV_IMAGES["statistic"]["small"]))
 					$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["statistic"]["small"]);
-				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
+				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff", "", "icon_small_statistic");
 				$menu->addSubmenu($submenu);
 				break;
 
@@ -409,7 +409,7 @@ class MenuBar
 				$submenu = new Menu($pgv_lang["interactive_tree"], encode_url($link));
 				if (!empty($PGV_IMAGES["gedcom"]["small"]))
 					$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["gedcom"]["small"]);
-				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
+				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff", "", "icon_small_gedcom");
 				$menu->addSubmenu($submenu);
 				break;
 			}
@@ -435,13 +435,13 @@ class MenuBar
 				$menu = new Menu($pgv_lang["lists"], encode_url($link));
 				if (!empty($PGV_IMAGES["indis"]["small"]))
 					$menu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["indis"]["small"]);
-				$menu->addClass("menuitem$ff", "menuitem_hover$ff", "submenu$ff");
+				$menu->addClass("menuitem$ff", "menuitem_hover$ff", "submenu$ff", "icon_small_indis");
 			}
 			else {
 				$menu = new Menu($pgv_lang["lists"], encode_url($link), "down");
 				if (!empty($PGV_IMAGES["indis"]["large"]))
 					$menu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["indis"]["large"]);
-				$menu->addClass("menuitem$ff", "menuitem_hover$ff", "submenu$ff");
+				$menu->addClass("menuitem$ff", "menuitem_hover$ff", "submenu$ff", "icon_large_indis");
 			}
 
 			//-- gedcom list
@@ -450,7 +450,7 @@ class MenuBar
 					$submenu = new Menu(($pgv_lang["individual_list"]." - ".PrintReady($gedarray["title"])), encode_url('indilist.php?ged='.$ged));
 					if (!empty($PGV_IMAGES["gedcom"]["small"]))
 						$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["gedcom"]["small"]);
-					$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
+					$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff", "", "icon_small_gedcom");
 					$menu->addSubmenu($submenu);
 				}
 			}
@@ -463,13 +463,13 @@ class MenuBar
 			$menu = new Menu($pgv_lang["lists"], encode_url($link));
 			if (!empty($PGV_IMAGES["indis"]["small"]))
 				$menu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["indis"]["small"]);
-			$menu->addClass("submenuitem$ff", "submenuitem_hover$ff", "submenu$ff");
+			$menu->addClass("submenuitem$ff", "submenuitem_hover$ff", "submenu$ff", "icon_small_indis");
 		}
 		else {
 			$menu = new Menu($pgv_lang["lists"], $link, "down");
 			if (!empty($PGV_IMAGES["indis"]["large"]))
 				$menu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["indis"]["large"]);
-			$menu->addClass("menuitem$ff", "menuitem_hover$ff", "submenu$ff");
+			$menu->addClass("menuitem$ff", "menuitem_hover$ff", "submenu$ff", "icon_large_indis");
 		}
 
 		// Build a sortable list of submenu items and then sort it in localized name order
@@ -494,7 +494,7 @@ class MenuBar
 				$submenu = new Menu($pgv_lang["individual_list"], encode_url($link));
 				if (!empty($PGV_IMAGES["indis"]["small"]))
 					$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["indis"]["small"]);
-				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
+				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff", "", "icon_small_indis");
 				$menu->addSubmenu($submenu);
 				break;
 
@@ -505,7 +505,7 @@ class MenuBar
 				$submenu = new Menu($pgv_lang["family_list"], $link);
 				if (!empty($PGV_IMAGES["cfamily"]["small"]))
 					$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["cfamily"]["small"]);
-				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
+				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff", "", "icon_small_cfamily");
 				$menu->addSubmenu($submenu);
 				break;
 
@@ -514,7 +514,7 @@ class MenuBar
 				$submenu = new Menu($pgv_lang["source_list"], encode_url('sourcelist.php?ged='.$GEDCOM));
 				if (!empty($PGV_IMAGES["menu_source"]["small"]))
 					$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["menu_source"]["small"]);
-				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
+				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff", "", "icon_small_menu_source");
 				$menu->addSubmenu($submenu);
 				break;
 
@@ -523,7 +523,7 @@ class MenuBar
 				$submenu = new Menu($pgv_lang["shared_note_list"], encode_url('notelist.php?ged='.$GEDCOM));
 				if (!empty($PGV_IMAGES["notes"]["small"]))
 					$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["notes"]["small"]);
-				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
+				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff", "", "icon_small_notes");
 				$menu->addSubmenu($submenu);
 				break;
 
@@ -532,7 +532,7 @@ class MenuBar
 				$submenu = new Menu($pgv_lang["repo_list"], "repolist.php");
 				if (!empty($PGV_IMAGES["menu_repository"]["small"]))
 					$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["menu_repository"]["small"]);
-				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
+				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff", "", "icon_small_menu_repository");
 				$menu->addSubmenu($submenu);
 				break;
 
@@ -541,7 +541,7 @@ class MenuBar
 				$submenu = new Menu($pgv_lang["place_list"], encode_url('placelist.php?ged='.$GEDCOM));
 				if (!empty($PGV_IMAGES["place"]["small"]))
 					$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["place"]["small"]);
-				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
+				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff", "", "icon_small_place");
 				$menu->addSubmenu($submenu);
 				break;
 
@@ -550,7 +550,7 @@ class MenuBar
 				$submenu = new Menu($pgv_lang["media_list"], encode_url('medialist.php?ged='.$GEDCOM));
 				if (!empty($PGV_IMAGES["menu_media"]["small"]))
 					$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["menu_media"]["small"]);
-				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
+				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff", "", "icon_small_menu_media");
 				$menu->addSubmenu($submenu);
 				break;
 			}
@@ -575,24 +575,24 @@ class MenuBar
 		$menu = new Menu($pgv_lang["anniversary_calendar"], encode_url('calendar.php?ged='.$GEDCOM), "down");
 		if (!empty($PGV_IMAGES["calendar"]["large"]))
 			$menu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["calendar"]["large"]);
-		$menu->addClass("menuitem$ff", "menuitem_hover$ff", "submenu$ff");
+		$menu->addClass("menuitem$ff", "menuitem_hover$ff", "submenu$ff", "icon_large_calendar");
 		//-- viewday sub menu
 		$submenu = new Menu($pgv_lang["viewday"], encode_url('calendar.php?ged='.$GEDCOM));
 		if (!empty($PGV_IMAGES["calendar"]["small"]))
 			$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["calendar"]["small"]);
-		$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
+		$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff", "", "icon_small_calendar");
 		$menu->addSubmenu($submenu);
 		//-- viewmonth sub menu
 		$submenu = new Menu($pgv_lang["viewmonth"], encode_url("calendar.php?ged={$GEDCOM}&action=calendar"));
 		if (!empty($PGV_IMAGES["calendar"]["small"]))
 			$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["calendar"]["small"]);
-		$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
+		$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff", "", "icon_small_calendar");
 		$menu->addSubmenu($submenu);
 		//-- viewyear sub menu
 		$submenu = new Menu($pgv_lang["viewyear"], encode_url("calendar.php?ged={$GEDCOM}&action=year"));
 		if (!empty($PGV_IMAGES["calendar"]["small"]))
 			$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["calendar"]["small"]);
-		$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
+		$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff", "", "icon_small_calendar");
 		$menu->addSubmenu($submenu);
 		return $menu;
 	}
@@ -616,14 +616,14 @@ class MenuBar
 			$menu = new Menu($pgv_lang["reports"], "#");
 			if (!empty($PGV_IMAGES["reports"]["small"]))
 				$menu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["reports"]["small"]);
-			$menu->addClass("submenuitem$ff", "submenuitem_hover$ff", "submenu$ff");
+			$menu->addClass("submenuitem$ff", "submenuitem_hover$ff", "submenu$ff", "icon_small_reports");
 		}
 		else {
 			// top menubar
 			$menu = new Menu($pgv_lang["reports"], encode_url('reportengine.php?ged='.$GEDCOM), "down");
 			if (!empty($PGV_IMAGES["reports"]["large"]))
 				$menu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["reports"]["large"]);
-			$menu->addClass("menuitem$ff", "menuitem_hover$ff", "submenu$ff");
+			$menu->addClass("menuitem$ff", "menuitem_hover$ff", "submenu$ff", "icon_large_reports");
 		}
 
 		// Build a list of reports and sort that list into localized title order
@@ -654,7 +654,7 @@ class MenuBar
 				else $submenu = new Menu($label, encode_url("reportengine.php?ged={$GEDCOM}&action=setup&report={$report['file']}"));
 				if (isset($PGV_IMAGES["reports"]["small"]) && isset($PGV_IMAGES[$report["icon"]]["small"])) $iconfile=$PGV_IMAGE_DIR."/".$PGV_IMAGES[$report["icon"]]["small"];
 				if (isset($iconfile) && file_exists($iconfile)) $submenu->addIcon($iconfile);
-				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
+				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff", "", "icon_small_".$report["icon"]);
 				// indi report
 				if ($pid && $report["icon"]!="sfamily" && $report["icon"]!="place") $menu->addSubmenu($submenu);
 				// family report
@@ -684,7 +684,7 @@ class MenuBar
 		$menu = new Menu($pgv_lang["clippings_cart"], encode_url('clippings.php?ged='.$GEDCOM), "down");
 		if (!empty($PGV_IMAGES["clippings"]["large"]))
 			$menu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["clippings"]["large"]);
-		$menu->addClass("menuitem$ff", "menuitem_hover$ff", "submenu$ff");
+		$menu->addClass("menuitem$ff", "menuitem_hover$ff", "submenu$ff", "icon_large_clippings");
 		return $menu;
 	}
 
@@ -720,7 +720,7 @@ class MenuBar
 		$menu = new Menu($pgv_lang["print_preview"], $SCRIPT_NAME.normalize_query_string($QUERY_STRING."&amp;view=preview"), "down");
 		if (!empty($PGV_IMAGES["printer"]["large"]))
 			$menu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["printer"]["large"]);
-		$menu->addClass("menuitem$ff", "menuitem_hover$ff", "submenu$ff");
+		$menu->addClass("menuitem$ff", "menuitem_hover$ff", "submenu$ff", "icon_large_printer");
 		return $menu;
 	}
 
@@ -741,31 +741,31 @@ class MenuBar
 		$menu = new Menu($pgv_lang["search"], encode_url('search.php?ged='.$GEDCOM), "down");
 		if (!empty($PGV_IMAGES["search"]["large"]))
 			$menu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["search"]["large"]);
-		$menu->addClass("menuitem$ff", "menuitem_hover$ff", "submenu$ff");
+		$menu->addClass("menuitem$ff", "menuitem_hover$ff", "submenu$ff", "icon_large_search");
 		//-- search_general sub menu
 		$submenu = new Menu($pgv_lang["search_general"], encode_url("search.php?ged={$GEDCOM}&action=general"));
 		if (!empty($PGV_IMAGES["search"]["small"]))
 			$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["search"]["small"]);
-		$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
+		$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff", "", "icon_small_search");
 		$menu->addSubmenu($submenu);
 		//-- search_soundex sub menu
 		$submenu = new Menu($pgv_lang["search_soundex"], encode_url("search.php?ged={$GEDCOM}&action=soundex"));
 		if (!empty($PGV_IMAGES["search"]["small"]))
 			$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["search"]["small"]);
-		$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
+		$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff", "", "icon_small_search");
 		$menu->addSubmenu($submenu);
 		//-- advanced search
 		$submenu = new Menu($pgv_lang["advanced_search"], encode_url("search_advanced.php?ged={$GEDCOM}"));
 		if (!empty($PGV_IMAGES["search"]["small"]))
 			$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["search"]["small"]);
-		$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
+		$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff", "", "icon_small_search");
 		$menu->addSubmenu($submenu);
 		//-- search_replace sub menu
 		if (PGV_USER_CAN_EDIT) {
 			$submenu = new Menu($pgv_lang["search_replace"], encode_url("search.php?ged={$GEDCOM}&action=replace"));
 			if (!empty($PGV_IMAGES["search"]["small"]))
 				$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["search"]["small"]);
-			$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
+			$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff", "", "icon_small_search");
 			$menu->addSubmenu($submenu);
 		}
 
@@ -776,7 +776,7 @@ class MenuBar
 				$submenu = new Menu($pgv_lang["multi_site_search"], encode_url("search.php?ged={$GEDCOM}&action=multisite"));
 				if (!empty($PGV_IMAGES["search"]["small"]))
 					$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["search"]["small"]);
-				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
+				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff", "", "icon_small_search");
 				$menu->addSubmenu($submenu);
 			}
 		}
@@ -831,13 +831,13 @@ class MenuBar
 			$menu->addOnclick("return helpPopup('help_".basename($SCRIPT_NAME)."&amp;action=".$action."');");
 		else
 			$menu->addOnclick("return helpPopup('".$helpindex."');");
-		$menu->addClass("menuitem$ff", "menuitem_hover$ff", "submenu$ff");
+		$menu->addClass("menuitem$ff", "menuitem_hover$ff", "submenu$ff", "icon_large_help");
 
 		//-- help_for_this_page sub menu
 		$submenu = new Menu($pgv_lang["help_for_this_page"], "#");
 		if (!empty($PGV_IMAGES["menu_help"]["small"]))
 			$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["menu_help"]["small"]);
-		$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
+		$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff", "", "icon_small_menu_help");
 		if (empty($helpindex))
 			$submenu->addOnclick("return helpPopup('help_".basename($SCRIPT_NAME)."&amp;action=".$action."');");
 		else
@@ -847,7 +847,7 @@ class MenuBar
 		$submenu = new Menu($pgv_lang["help_contents"], "#");
 		if (!empty($PGV_IMAGES["menu_help"]["small"]))
 			$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["menu_help"]["small"]);
-		$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
+		$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff", "", "icon_small_menu_help");
 		$submenu->addOnclick("return helpPopup('help_contents_help');");
 		$menu->addSubmenu($submenu);
 		//-- faq sub menu
@@ -855,7 +855,7 @@ class MenuBar
 			$submenu = new Menu($pgv_lang["faq_list"], "faq.php");
 			if (!empty($PGV_IMAGES["menu_help"]["small"]))
 				$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["menu_help"]["small"]);
-			$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
+			$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff", "", "icon_small_menu_help");
 			$menu->addSubmenu($submenu);
 		}
 		//-- searchhelp sub menu
@@ -863,7 +863,7 @@ class MenuBar
 			$submenu = new Menu($pgv_lang["hs_title"], "#");
 			if (!empty($PGV_IMAGES["search"]["small"]))
 				$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["search"]["small"]);
-			$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
+			$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff", "", "icon_small_search");
 			$submenu->addOnclick("window.open('searchhelp.php', '_blank', 'top=50,left=10,width=600,height=500,scrollbars=1,resizable=1');");
 			$menu->addSubmenu($submenu);
 		}
@@ -871,16 +871,16 @@ class MenuBar
 		//-- add wiki links
 		$menu->addSeparator();
 		$submenu = new Menu($pgv_lang["wiki_main_page"], PGV_PHPGEDVIEW_WIKI.'/en/index.php?title=Main_Page" target="_blank');
-		$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
+		$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff", "", "icon_small_wiki");
 		$menu->addSubmenu($submenu);
 
 		$submenu = new Menu($pgv_lang["wiki_users_guide"], PGV_PHPGEDVIEW_WIKI.'/en/index.php?title=Users_Guide" target="_blank');
-		$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
+		$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff", "", "icon_small_wiki");
 		$menu->addSubmenu($submenu);
 
 		if (PGV_USER_GEDCOM_ADMIN) {
 			$submenu = new Menu($pgv_lang["wiki_admin_guide"], PGV_PHPGEDVIEW_WIKI.'/en/index.php?title=Administrators_Guide" target="_blank');
-			$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
+			$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff", "", "icon_small_wiki");
 			$menu->addSubmenu($submenu);
 		}
 
@@ -889,7 +889,7 @@ class MenuBar
 		$menuitems = contact_menus();
 		foreach($menuitems as $menuitem) {
 			$submenu = new Menu($menuitem["label"], $menuitem["link"]);
-			$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
+			$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff", "", "icon_small_contact");
 			if (!empty($menuitem["onclick"])) $submenu->addOnclick($menuitem["onclick"]);
 			$menu->addSubmenu($submenu);
 		}
@@ -899,7 +899,7 @@ class MenuBar
 			$submenu = new Menu($pgv_lang["hide_context_help"], "$SCRIPT_NAME".normalize_query_string($QUERY_STRING."&amp;show_context_help=no"));
 		else
 			$submenu = new Menu($pgv_lang["show_context_help"], "$SCRIPT_NAME".normalize_query_string($QUERY_STRING."&amp;show_context_help=yes"));
-		$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
+		$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff", "", "icon_small_menu_help");
 		$menu->addSubmenu($submenu);
 		return $menu;
 	}
@@ -931,7 +931,7 @@ class MenuBar
 			if (substr($frompage,-1) == "?") $frompage = substr($frompage,0,-1);
 			if (substr($frompage,-1) == "&") $frompage = substr($frompage,0,-1);
 			$menu=new Menu($pgv_lang['change_theme']);
-			$menu->addClass('thememenuitem', 'thememenuitem_hover', 'themesubmenu');
+			$menu->addClass('thememenuitem', 'thememenuitem_hover', 'themesubmenu', "icon_small_theme");
 			$menu->print_menu = null;
 			foreach (get_theme_names() as $themename=>$themedir) {
 				$submenu=new Menu($themename, encode_url("themechange.php?frompage={$frompage}&mytheme={$themedir}"));
@@ -1011,7 +1011,7 @@ class MenuBar
 			if (!empty($PGV_IMAGES['gedcom']['large'])) {
 				$menu->addIcon($PGV_IMAGE_DIR.'/'.$PGV_IMAGES['gedcom']['large']);
 			}
-			$menu->addClass("menuitem$ff", "menuitem_hover$ff", "submenu$ff");
+			$menu->addClass("menuitem$ff", "menuitem_hover$ff", "submenu$ff", "icon_large_gedcom");
 			$menu->print_menu = NULL;
 
 			$userfavs=getUserFavorites(PGV_USER_ID);

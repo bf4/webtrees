@@ -96,11 +96,12 @@ class Menu {
 		$this->flyout = $flyout;
 	}
 
-	function addClass($class, $hoverclass='', $submenuclass='')
+	function addClass($class, $hoverclass='', $submenuclass='', $iconclass='icon_general')
 	{
 		$this->class = $class;
 		$this->hoverclass = $hoverclass;
 		$this->submenuclass = $submenuclass;
+		$this->iconclass = $iconclass;
 	}
 
 	function addAccesskey($accesskey)
@@ -126,14 +127,25 @@ class Menu {
 
 	// Get the menu as a simple list - for accessible interfaces, search engines and CSS menus
 	function getMenuAsList() {
+		$link = '';
 		if ($this->separator) {
-			return '<div class="hr"></div>'; // The <hr/> tag is difficult to style
+			return '<li class="separator"><span></span></li>'; // The <hr/> tag is difficult to style
 		}
 		if ($this->link) {
+			if ($this->accesskey !== null) {
+				$link = ' accesskey="'.$this->accesskey.'"';
+			}
+			if ($this->target !== null)	{
+				$link .= ' target="'.$this->target.'"';
+			}
 			if ($this->link=='#') {
-				$html=$this->label;
+				$this->link = "javascript:;";
+				if ($this->onclick !== null) {
+					$link .= ' onclick="'.$this->onclick.'"';
+				}
+				$html='<a class="'.$this->iconclass.'" href="'.$this->link.'"'.$link.'>'.$this->label.'</a>';
 			} else {
-				$html='<a href="'.$this->link.'">'.$this->label.'</a>';
+				$html='<a class="'.$this->iconclass.'" href="'.$this->link.'">'.$this->label.'</a>';
 			}
 		} else {
 			return '';

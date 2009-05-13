@@ -18,7 +18,7 @@
  *		TLS		Timor-Leste
  *		UMI		US Minor Outlying Islands
  *		VIR		US Virgin Islands		Chapman lists this as a state of the USA
- *
+ *		
  * These Chapman country codes do not appear in the list following:
  *		UEL		United Empire Loyalist		This is NOT a country or region, it's
  *											a group of people
@@ -34,7 +34,7 @@
  *		TMP		East Timor					Official name is TLS "Timor-Leste"
  *		HOL		Holland						Official name is NLD "Netherlands"
  *		ESM		Western Samoa				Official name is WSM "Samoa"
- *
+ *											
  * @package PhpGedView
  * @subpackage Languages
  * @version $Id$

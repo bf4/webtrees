@@ -398,6 +398,7 @@ class SearchControllerRoot extends BaseController {
 					search_fams($query_terms, $ged_ids, 'AND', $this->tagfilter=='on'),
 					search_fams_names($query_terms, $ged_ids, 'AND')
 				);
+				$this->myfamlist=array_unique($this->myfamlist);
 			} else {
 				$this->myfamlist=array();
 			}

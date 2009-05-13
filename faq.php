@@ -36,18 +36,18 @@ global $PGV_IMAGES, $faqs;
 print_header($pgv_lang["faq_list"]);
 
 // -- Get all of the _POST variables we're interested in
-$action			= safe_REQUEST($_REQUEST,	'action',		PGV_REGEX_UNSAFE,	'show');
-$adminedit		= safe_REQUEST($_REQUEST,	'adminedit',	PGV_REGEX_UNSAFE,	PGV_USER_GEDCOM_ADMIN);
-$type			= safe_REQUEST($_REQUEST,	'type',			PGV_REGEX_UNSAFE);
-$oldGEDCOM		= safe_REQUEST($_REQUEST,	'oldGEDCOM',	PGV_REGEX_UNSAFE);
-$whichGEDCOM	= safe_REQUEST($_REQUEST,	'whichGEDCOM',	PGV_REGEX_UNSAFE);
-$oldOrder		= safe_REQUEST($_REQUEST,	'oldOrder',		PGV_REGEX_UNSAFE);
-$order			= safe_REQUEST($_REQUEST,	'order',		PGV_REGEX_UNSAFE);
-$header			= safe_REQUEST($_POST,		'header',		PGV_REGEX_UNSAFE);
-$body			= safe_REQUEST($_POST,		'body',			PGV_REGEX_UNSAFE);
-$pidh			= safe_REQUEST($_REQUEST,	'pidh',			PGV_REGEX_UNSAFE);
-$pidb			= safe_REQUEST($_REQUEST,	'pidb',			PGV_REGEX_UNSAFE);
-$id				= safe_REQUEST($_REQUEST,	'id',			PGV_REGEX_UNSAFE);
+$action     = safe_REQUEST($_REQUEST, 'action',      PGV_REGEX_UNSAFE, 'show');
+$adminedit  = safe_REQUEST($_REQUEST, 'adminedit',   PGV_REGEX_UNSAFE, PGV_USER_GEDCOM_ADMIN);
+$type       = safe_REQUEST($_REQUEST, 'type',        PGV_REGEX_UNSAFE);
+$oldGEDCOM  = safe_REQUEST($_REQUEST, 'oldGEDCOM',   PGV_REGEX_UNSAFE);
+$whichGEDCOM= safe_REQUEST($_REQUEST, 'whichGEDCOM', PGV_REGEX_UNSAFE);
+$oldOrder   = safe_REQUEST($_REQUEST, 'oldOrder',    PGV_REGEX_UNSAFE);
+$order      = safe_REQUEST($_REQUEST, 'order',       PGV_REGEX_UNSAFE);
+$header     = safe_REQUEST($_POST,    'header',      PGV_REGEX_UNSAFE);
+$body       = safe_REQUEST($_POST,    'body',        PGV_REGEX_UNSAFE);
+$pidh       = safe_REQUEST($_REQUEST, 'pidh',        PGV_REGEX_UNSAFE);
+$pidb       = safe_REQUEST($_REQUEST, 'pidb',        PGV_REGEX_UNSAFE);
+$id         = safe_REQUEST($_REQUEST, 'id',          PGV_REGEX_UNSAFE);
 
 // NOTE: Commit the faq data to the DB
 if ($action=="commit") {
@@ -67,20 +67,20 @@ if ($action=="commit") {
 			}
 		}
 		$header = str_replace(array('&lt;', '&gt;'), array('<', '>'), $header);
-		$sql = "UPDATE ".$TBLPREFIX."blocks SET b_order='".$order."', b_username='".$whichGEDCOM."', b_config='".$DBCONN->escapeSimple(serialize($header))."' WHERE b_id='".$pidh."' and b_username='".$oldGEDCOM."' and b_location='header'";
-		$tempsql = dbquery($sql);
-		$res =& $tempsql;
+		PGV_DB::prepare("UPDATE {$TBLPREFIX}blocks SET b_order=?, b_username=?, b_config=? WHERE b_id=? and b_username=? and b_location=?")
+			->execute(array($order, $whichGEDCOM, serialize($header), $pidh, $oldGEDCOM, 'header'));
+
 		$body = str_replace(array('&lt;', '&gt;'), array('<', '>'), $body);
-		$sql = "UPDATE ".$TBLPREFIX."blocks SET b_order='".$order."', b_username='".$whichGEDCOM."', b_config='".$DBCONN->escapeSimple(serialize($body))."' WHERE b_id='".$pidb."' and b_username='".$oldGEDCOM."' and b_location='body'";
-		$tempsql = dbquery($sql);
-		$res =& $tempsql;
+		PGV_DB::prepare("UPDATE {$TBLPREFIX}blocks SET b_order=?, b_username=?, b_config=? WHERE b_id=? and b_username=? and b_location=?")
+			->execute(array($order, $whichGEDCOM, serialize($body), $pidb, $oldGEDCOM, 'body'));
+
 		AddToChangeLog("FAQ item has been edited.<br />Header ID: ".$pidh.".<br />Body ID: ".$pidb, $GEDCOM);
 		break;
 
 	case 'delete':
-		$sql = "DELETE FROM ".$TBLPREFIX."blocks WHERE b_order='".$id."' AND b_name='faq' AND b_username='".$oldGEDCOM."'";
-		$tempsql = dbquery($sql);
-		$res =& $tempsql;
+		PGV_DB::prepare("DELETE FROM {$TBLPREFIX}blocks WHERE b_order=? AND b_name=? AND b_username=?")
+			->execute(array($id, 'faq', $oldGEDCOM));
+
 		AddToChangeLog("FAQ item has been deleted.<br />Header ID: ".$pidh.".<br />Body ID: ".$pidb, $oldGEDCOM);
 		break;
 
@@ -95,52 +95,49 @@ if ($action=="commit") {
 		}
 		$newid = get_next_id("blocks", "b_id");
 		$header = str_replace(array('&lt;', '&gt;'), array('<', '>'), $header);
-		$sql = "INSERT INTO ".$TBLPREFIX."blocks VALUES ($newid, '".$whichGEDCOM."', 'header', '$order', 'faq', '".$DBCONN->escapeSimple(serialize($header))."')";
-		$tempsql = dbquery($sql);
-		$res =& $tempsql;
+		PGV_DB::prepare("INSERT INTO {$TBLPREFIX}blocks (b_id, b_username, b_location, b_order, b_name, b_config) VALUES (?, ?, ?, ?, ?, ?)")
+			->execute(array($newid, $whichGEDCOM, 'header', $order, 'faq', serialize($header)));
+
 		$body = str_replace(array('&lt;', '&gt;'), array('<', '>'), $body);
-		$sql = "INSERT INTO ".$TBLPREFIX."blocks VALUES (".($newid+1).", '".$whichGEDCOM."', 'body', '".$order."', 'faq', '".$DBCONN->escapeSimple(serialize($body))."')";
-		$tempsql = dbquery($sql);
-		$res =& $tempsql;
+		PGV_DB::prepare("INSERT INTO {$TBLPREFIX}blocks (b_id, b_username, b_location, b_order, b_name, b_config) VALUES (?, ?, ?, ?, ?, ?)")
+			->execute(array($newid+1, $whichGEDCOM, 'body', $order, 'faq', serialize($body)));
+
 		AddToChangeLog("FAQ item has been added.<br />Header ID: ".$newid.".<br />Body ID: ".($newid+1), $whichGEDCOM);
 		break;
 
 	case 'moveup':
 		$faqs = get_faq_data();
 		if (isset($faqs[$id-1])) {
-			$sql = "UPDATE ".$TBLPREFIX."blocks SET b_order='".($id)."' WHERE b_id='".$faqs[$id-1]["header"]["pid"]."' and b_location='header'";;
-			$tempsql = dbquery($sql);
-			$res =& $tempsql;
-			$sql = "UPDATE ".$TBLPREFIX."blocks SET b_order='".($id)."' WHERE b_id='".$faqs[$id-1]["body"]["pid"]."' and b_location='body'";
-			$tempsql = dbquery($sql);
-			$res =& $tempsql;
+			PGV_DB::prepare("UPDATE {$TBLPREFIX}blocks SET b_order=? WHERE b_id=? and b_location=?")
+				->execute(array($id, $faqs[$id-1]["header"]["pid"], 'header'));
+
+			PGV_DB::prepare("UPDATE {$TBLPREFIX}blocks SET b_order=? WHERE b_id=? and b_location=?")
+				->execute(array($id, $faqs[$id-1]["body"]["pid"], 'body'));
 		}
-		$sql = "UPDATE ".$TBLPREFIX."blocks SET b_order='".($id-1)."' WHERE b_id='".$pidh."' and b_location='header'";;
-		$tempsql = dbquery($sql);
-		$res =& $tempsql;
-		$sql = "UPDATE ".$TBLPREFIX."blocks SET b_order='".($id-1)."' WHERE b_id='".$pidb."' and b_location='body'";
-		$tempsql = dbquery($sql);
-		$res =& $tempsql;
+		PGV_DB::prepare("UPDATE {$TBLPREFIX}blocks SET b_order=? WHERE b_id=? and b_location=?")
+			->execute(array($id-1, $pidh, 'header'));
+
+		PGV_DB::prepare("UPDATE {$TBLPREFIX}blocks SET b_order=? WHERE b_id=? and b_location=?")
+			->execute(array($id-1, $pidb, 'body'));
+
 		AddToChangeLog("FAQ item has been moved up.<br />Header ID: ".$pidh.".<br />Body ID: ".$pidb, $oldGEDCOM);
 		break;
 
 	case 'movedown':
 		$faqs = get_faq_data();
 		if (isset($faqs[$id+1])) {
-			$sql = "UPDATE ".$TBLPREFIX."blocks SET b_order='".($id)."' WHERE b_id='".$faqs[$id+1]["header"]["pid"]."' and b_location='header'";;
-			$tempsql = dbquery($sql);
-			$res =& $tempsql;
-			$sql = "UPDATE ".$TBLPREFIX."blocks SET b_order='".($id)."' WHERE b_id='".$faqs[$id+1]["body"]["pid"]."' and b_location='body'";
-			$tempsql = dbquery($sql);
-			$res =& $tempsql;
-		}
+			PGV_DB::prepare("UPDATE {$TBLPREFIX}blocks SET b_order=? WHERE b_id=? and b_location=?")
+				->execute(array($id, $faqs[$id+1]["header"]["pid"], 'header'));
 
-		$sql = "UPDATE ".$TBLPREFIX."blocks SET b_order='".($id+1)."' WHERE b_id='".$pidh."' and b_location='header'";;
-		$tempsql = dbquery($sql);
-		$res =& $tempsql;
-		$sql = "UPDATE ".$TBLPREFIX."blocks SET b_order='".($id+1)."' WHERE b_id='".$pidb."' and b_location='body'";
-		$tempsql = dbquery($sql);
-		$res =& $tempsql;
+			PGV_DB::prepare("UPDATE {$TBLPREFIX}blocks SET b_order=? WHERE b_id=? and b_location=?")
+				->execute(array($id, $faqs[$id+1]["body"]["pid"], 'body'));
+		}
+		PGV_DB::prepare("UPDATE {$TBLPREFIX}blocks SET b_order=? WHERE b_id=? and b_location=?")
+			->execute(array($id+1, $pidh, 'header'));
+
+		PGV_DB::prepare("UPDATE {$TBLPREFIX}blocks SET b_order=? WHERE b_id=? and b_location=?")
+			->execute(array($id+1, $pidb, 'body'));
+
 		AddToChangeLog("FAQ item has been moved down.<br />Header ID: ".$pidh.".<br />Body ID: ".$pidb, $GEDCOM);
 		break;
 	}

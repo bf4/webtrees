@@ -1682,7 +1682,7 @@ function PGVRLineSHandler($attrs) {
 
 function PGVRListSHandler($attrs) {
 	global $pgvreport, $gedrec, $repeats, $repeatBytes, $list, $repeatsStack, $processRepeats, $parser, $vars, $sortby;
-	global $pgv_changes, $GEDCOM, $DBCONN, $TBLPREFIX;
+	global $pgv_changes, $GEDCOM, $TBLPREFIX;
 
 	$processRepeats++;
 	if ($processRepeats>1) return;
@@ -1745,7 +1745,7 @@ function PGVRListSHandler($attrs) {
 					}
 				} elseif ($listname=='individual' && preg_match('/^NAME CONTAINS (.+)$/', $value, $match)) {
 					$sql_join[]="JOIN {$TBLPREFIX}name AS {$attr} ON (n_file={$sql_col_prefix}file AND n_id={$sql_col_prefix}id)";
-					$sql_where[]="{$attr}.n_sort ".PGV_DB_LIKE." '%". UTF8_strtoupper($DBCONN->escapeSimple($match[1]))."%'";
+					$sql_where[]="{$attr}.n_sort ".PGV_DB_LIKE." ".PGV_DB::quote(UTF8_strtoupper("%{$match[1]}%"));
 					if ($sortby=='NAME') {
 						$sortby='';
 						$sql_order_by[]="{$attr}.n_sort";
@@ -1756,7 +1756,7 @@ function PGVRListSHandler($attrs) {
 					$sql_join[]="JOIN {$TBLPREFIX}link AS {$attr}a ON ({$attr}a.l_file={$sql_col_prefix}file AND {$attr}a.l_from={$sql_col_prefix}id)";
 					$sql_join[]="JOIN {$TBLPREFIX}name AS {$attr}b ON ({$attr}b.n_file={$sql_col_prefix}file AND n_id={$sql_col_prefix}id)";
 					$sql_where[]="{$attr}a.l_type=IN ('HUSB, 'WIFE')";
-					$sql_where[]="{$attr}.n_sort ".PGV_DB_LIKE." '%". UTF8_strtoupper($DBCONN->escapeSimple($match[1]))."%'";
+					$sql_where[]="{$attr}.n_sort ".PGV_DB_LIKE." ".PGV_DB::quote(UTF8_strtoupper("%{$match[1]}%"));
 					if ($sortby=='NAME') {
 						$sortby='';
 						$sql_order_by[]="{$attr}.n_sort";
@@ -1765,7 +1765,7 @@ function PGVRListSHandler($attrs) {
 				} elseif (preg_match('/^(?:\w+):PLAC CONTAINS (.+)$/', $value, $match)) {
 					$sql_join[]="JOIN {$TBLPREFIX}places AS {$attr}a ON ({$attr}a.p_file={$sql_col_prefix}file)";
 					$sql_join[]="JOIN {$TBLPREFIX}placelinks AS {$attr}b ON ({$attr}a.p_file={$attr}b.pl_file AND {$attr}b.pl_p_id={$attr}a.p_id AND {$attr}b.pl_gid={$sql_col_prefix}id)";
-					$sql_where[]="{$attr}a.p_place ".PGV_DB_LIKE." '". $DBCONN->escapeSimple($match[1])."'";
+					$sql_where[]="{$attr}a.p_place ".PGV_DB_LIKE." ".PGV_DB::quote(UTF8_strtoupper("%{$match[1]}%"));
 					if (substr($value, 0, 1)==':') {
 						unset($attrs[$attr]); // This filter has been fully processed
 					}

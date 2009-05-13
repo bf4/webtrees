@@ -449,7 +449,7 @@ class research_assistant extends ra_functions {
 		else if ($_REQUEST['action']=='editcomment') {
 			ob_start();
 			// TODO this script should be properly integrated into ra_functions
-			global $SHOW_RESEARCH_ASSISTANT, $pgv_lang, $DBCONN, $TBLPREFIX;
+			global $SHOW_RESEARCH_ASSISTANT, $pgv_lang, $TBLPREFIX;
 			require_once 'modules/research_assistant/editcomment.php';
 			$out.=ob_get_clean();
 		}
