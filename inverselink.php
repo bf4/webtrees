@@ -142,10 +142,11 @@ if ($action == "choose" && $paramok) {
 		// print $pgv_lang["enter_pid"]."</td>";
 		echo "Add more links:";
 		print "<td class=\"optionbox wrap\">";
-		echo "First, enter a Base individual ID<br />";
+		echo "A)&nbsp;&nbsp;";
 		if ($linktoid=="") {
 			print "<input class=\"pedigree_form\" type=\"text\" name=\"linktoid\" id=\"linktopid\" size=\"3\" value=\"$linktoid\" />";
 			print_findindi_link("linktopid","");
+		echo "&nbsp;&nbsp;".$pgv_lang["enter_pid"];
 		} else {
 			$record=Person::getInstance($linktoid);
 			echo '<b>', PrintReady($record->getFullName()), '</b>&nbsp;&nbsp;&nbsp;';
@@ -154,9 +155,6 @@ if ($action == "choose" && $paramok) {
 			if ($TEXT_DIRECTION=="rtl") print getRLM();
 		}
 		echo "<br /><br />";
-		echo "Then, click Add to add more Individual Links";
-		echo "<br />";
-		
 		// GEDFact assistant Add Media Links =======================
 		if (file_exists('modules/GEDFact_assistant/MEDIA/media_1_ctrl.php')) {
 			include ('modules/GEDFact_assistant/MEDIA/media_query_2a.php');

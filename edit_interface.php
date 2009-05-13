@@ -1167,6 +1167,7 @@ case 'updateraw':
 	$success = (!empty($newgedrec)&&(replace_gedrec($pid, $newgedrec, $update_CHAN)));
 	if ($success) echo "<br /><br />".$pgv_lang["update_successful"];
 	break;
+	
 //------------------------------------------------------------------------------
 //-- reconstruct the gedcom from the incoming fields and store it in the file
 case 'update':

@@ -73,24 +73,75 @@ height: 0px;
 		}
 	}
 
-	function passback(Values) {
-		var memo = document.getElementById('newindis');
-		memo.value = Values;
+	function passback(values) {
+		// create an array of passback values
+		values = values.split("|");
+		for (var i = 0; i < values.length; i++) {
+			var tmp = values[i].split(",");
+			values[i] = new Array();
+			for (var j = 0; j < tmp.length; j++) {
+				values[i][j] = tmp[j];
+			}
+			alert(values[i][0]+" - "+values[i][1] );
+		}
+		
+		var td0_0 = document.getElementById('td0_0'); // Row 0, Cell 0
+		var td0_1 = document.getElementById('td0_1'); // Row 0, Cell 1
+		var td1_0 = document.getElementById('td1_0'); // Row 1, Cell 0
+		var td1_1 = document.getElementById('td1_1'); // Row 1, Cell 1
+		var td2_0 = document.getElementById('td2_0'); // Row 2, Cell 0
+		var td2_1 = document.getElementById('td2_1'); // Row 2, Cell 1
+
+		td0_0.value = values[0][0]; // Row 0, Cell 0 - Value (contents)
+		td0_1.value = values[0][1]; // Row 0, Cell 1 - Value (contents)
+		td1_0.value = values[1][0]; // Row 1, Cell 0 - Value (contents)
+		td1_1.value = values[1][1]; // Row 1, Cell 1 - Value (contents)
+		td2_0.value = values[2][0]; // Row 2, Cell 0 - Value (contents)
+		td2_1.value = values[2][1]; // Row 2, Cell 1 - Value (contents)
 	}
 </script>
 
 </head>
 
-<table width="220" border="0" cellpadding="1" cellspacing="2" class="table1">
+<table border="0" cellpadding="1" cellspacing="2" ">
 <tr>
-<td width="90" >
+<td width="350" class="row2">
 <?php
-	$text = $pgv_lang["create_shared_note_assisted"];
+	echo "B)&nbsp;&nbsp";
 	echo "<input type=\"button\" name=\"Button\" value=\"Add\" onClick=\"javascript:addlinks(); return false;\">";
+	echo "&nbsp;&nbsp;Then, click Add to add more Individual Links";
 	echo "<br /><br >";
-	echo "<center><textarea name=\"newindis\" id=\"newindis\" rows=\"8\" cols=\"68\"></textarea></center>"
+//	echo "<center><textarea name=\"newindis\" id=\"newindis\" rows=\"8\" cols=\"68\"></textarea></center>"
 	?>
+</td>
+</tr>
+<tr>
+<td>
+<?php
+	echo "<table cellpadding=\"0\" cellspacing=\"1\" class=\"table1\" border=0>";
+	echo "<tr>";
+	echo "<td width=\"10\" align=\"left\" bgcolor=\"#AAAAAA\"><span class=\"style1\">#&nbsp;&nbsp;&nbsp;</span></td>";
+	echo "<td width=\"5\" align=\"left\" bgcolor=\"#AAAAAA\"><span class=\"style1\">Id</span></td>";
+	echo "<td wrap=\"nowrap\" width=\"100\" align=\"left\" bgcolor=\"#AAAAAA\"><span class=\"style1\">Name</span></td>";
+	echo "<td width=\"25\" align=\"center\" bgcolor=\"#AAAAAA\" nowrap='nowrap'><span class=\"style1\">&nbsp;Link&nbsp;</span></td>";
+	echo "<td width=\"25\" align=\"center\" bgcolor=\"#AAAAAA\" nowrap='nowrap'><span class=\"style1\">&nbsp;No&nbsp;Link</span></td>";
+	echo "</tr>";
 
+	for ($i=0; $i<=2; $i++) {
+		echo "<tr><td>";
+		echo $i+1;
+		echo "</td><td>";
+		echo "<input style=\" font-family: Verdana, Arial, Helvetica, sans-serif; background:transparent; border:0px; font-size:10px;\" size=\"2\" name=\"td".$i."_0\" id=\"td".$i."a\" />";
+		echo "</td><td>";
+		echo "<input style=\" font-family: Verdana, Arial, Helvetica, sans-serif; background:transparent; border:0px; font-size:10px;\" size=\"40\" name=\"td".$i."_1\" id=\"td".$i."\" />";
+		echo "</td>";
+		echo "<td class=\"row2\"><input type='radio' name='rad2_".$i."' checked /></td>";
+		echo "<td class=\"row2\" align='center'><input type='radio' name='rad2_".$i."' /></td>";
+		echo "</tr>";
+	}
+
+	echo "</table>";
+?>
 </td>
 </tr>
 </table>

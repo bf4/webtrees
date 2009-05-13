@@ -83,10 +83,10 @@ function parseInput() {
 				//	miss out col	3	relationship
 				continue;
 			}else{
-				strRow += (strRow==''?'':', ') + tr.cells[j].childNodes[0].value;
+				strRow += (strRow==''?'':',') + tr.cells[j].childNodes[0].value;
 			}
 		}
-		str += (str==''?'':'\n') + strRow;
+		str += (str==''?'':'|') + strRow;
 	}
 }
 
