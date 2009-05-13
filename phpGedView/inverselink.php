@@ -164,7 +164,7 @@ if ($action == "choose" && $paramok) {
 			include ('modules/GEDFact_assistant/MEDIA/media_query_2a.php');
 			echo "</td></tr>";
 			echo "<tr><td class=\"topbottombar\" colspan=\"2\">";
-			echo "<input type=\"button\" value=\"".$pgv_lang["set_link"]."s\" onclick=\"javascript:alert('Clicking \'Set Links\' will eventually parse and save the Current and Added Links');\" />";
+			echo "<input type=\"submit\" value=\"".$pgv_lang["set_link"]."s\" onclick=\"javascript:alert('Clicking \'Set Links\' will eventually parse and save the Current and Added Links. For now it will just save the Entered Individual ID');\" />";
 			echo "</td></tr>";
 		}else{
 		print "<tr><td class=\"topbottombar\" colspan=\"2\"><input type=\"submit\" value=\"".$pgv_lang["set_link"]."\" /></td></tr>";
