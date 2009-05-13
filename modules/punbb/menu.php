@@ -53,12 +53,12 @@ class punbb_ModuleMenu
 		// punBB
 		$menu = new Menu($pgv_lang['mod_punbb'], 'module.php?mod=punbb', 'down');
 		if(!empty($PGV_IMAGES['menu_punbb']['large'])){$menu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['menu_punbb']['large']}");}
-		$menu->addClass("menuitem{$ff}", "menuitem_hover{$ff}", "submenu{$ff}");
+		$menu->addClass("menuitem{$ff}", "menuitem_hover{$ff}", "submenu{$ff}", "icon_large_menu_punbb");
 
 		// Search
 		$submenu = new Menu($pgv_lang['mod_punbb_search'], 'module.php?mod=punbb&amp;pgvaction=search');
 		$submenu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['search']['small']}");
-		$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}");
+		$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}", "", "icon_small_search");
 		$menu->addSubmenu($submenu);
 
 		// Site Admin
@@ -68,7 +68,7 @@ class punbb_ModuleMenu
 
 			$submenu = new Menu($pgv_lang['mod_punbb_admin'], 'module.php?mod=punbb&amp;pgvaction=admin_index');
 			$submenu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['admin']['small']}");
-			$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}");
+			$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}", "", "icon_small_admin");
 			$menu->addSubmenu($submenu);
 		}
 

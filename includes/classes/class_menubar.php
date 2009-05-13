@@ -654,7 +654,7 @@ class MenuBar
 				else $submenu = new Menu($label, encode_url("reportengine.php?ged={$GEDCOM}&action=setup&report={$report['file']}"));
 				if (isset($PGV_IMAGES["reports"]["small"]) && isset($PGV_IMAGES[$report["icon"]]["small"])) $iconfile=$PGV_IMAGE_DIR."/".$PGV_IMAGES[$report["icon"]]["small"];
 				if (isset($iconfile) && file_exists($iconfile)) $submenu->addIcon($iconfile);
-				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
+				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff", "", "icon_small_".$report["icon"]);
 				// indi report
 				if ($pid && $report["icon"]!="sfamily" && $report["icon"]!="place") $menu->addSubmenu($submenu);
 				// family report
