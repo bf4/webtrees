@@ -46,7 +46,7 @@ font-style: normal;
 text-transform: none;
 }
 .style1 {
-color: #000000;
+color: #000000; 
 font-weight: bold;
 }
 .row1 {
@@ -66,7 +66,7 @@ height: 0px;
 <script language="javascript">
 	function addlinks() {
 		if (document.getElementById('linktopid').value == "") {
-			alert('You MUST enter a Base individual ID to add Individual links');
+			alert('You MUST Enter an Individual ID first to add more Individual links');
 		}else{
 			addmedia_links(document.getElementById('INDI_NOTE'), document.getElementById('linktopid').value );
 			return false;
@@ -82,7 +82,7 @@ height: 0px;
 			for (var j = 0; j < tmp.length; j++) {
 				values[i][j] = tmp[j];
 			}
-			alert(values[i][0]+" - "+values[i][1] );
+			// alert(values[i][0]+" - "+values[i][1] );
 		}
 		
 		var td0_0 = document.getElementById('td0_0'); // Row 0, Cell 0
@@ -128,12 +128,17 @@ height: 0px;
 	echo "</tr>";
 
 	for ($i=0; $i<=2; $i++) {
+		if ($THEME_DIR=="themes/simplygreen/" || $THEME_DIR=="themes/simplyred/" || $THEME_DIR=="themes/simplyblue/") {
+			$color='#FFFFFF';
+		} else {
+			$color='#000000';
+		}
 		echo "<tr><td>";
 		echo $i+1;
 		echo "</td><td>";
-		echo "<input style=\" font-family: Verdana, Arial, Helvetica, sans-serif; background:transparent; border:0px; font-size:10px;\" size=\"2\" name=\"td".$i."_0\" id=\"td".$i."a\" />";
+		echo "<input style=\" color: $color; font-family: Verdana, Arial, Helvetica, sans-serif; background:transparent; border:0px; font-size:10px;\" size=\"2\" name=\"td".$i."_0\" id=\"td".$i."_0\" />";
 		echo "</td><td>";
-		echo "<input style=\" font-family: Verdana, Arial, Helvetica, sans-serif; background:transparent; border:0px; font-size:10px;\" size=\"40\" name=\"td".$i."_1\" id=\"td".$i."\" />";
+		echo "<input style=\" color: $color; font-family: Verdana, Arial, Helvetica, sans-serif; background:transparent; border:0px; font-size:10px;\" size=\"40\" name=\"td".$i."_1\" id=\"td".$i."_1\" />";
 		echo "</td>";
 		echo "<td class=\"row2\"><input type='radio' name='rad2_".$i."' checked /></td>";
 		echo "<td class=\"row2\" align='center'><input type='radio' name='rad2_".$i."' /></td>";
