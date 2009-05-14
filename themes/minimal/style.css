@@ -605,6 +605,11 @@ table.center{
 	padding: 1px;
 }
 
+.submenuitem a, .submenuitem_rtl a, .submenuitem_hover a, .submenuitem_hover_rtl a {
+	display: inline-table;
+	vertical-align: middle;
+}
+
 .news_box {
 	background-color: white;
 	border: solid black 1px;
