@@ -613,6 +613,11 @@ a:hover .nameZoom {
 	padding: 1px;
 }
 
+.submenuitem a, .submenuitem_rtl a, .submenuitem_hover a, .submenuitem_hover_rtl a {
+	display: inline-table;
+	vertical-align: middle;
+}
+
 .menuitem a {
 	color: #eeeeee;
 }
