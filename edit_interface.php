@@ -925,13 +925,15 @@ case 'addmedia_links':
 				frm.TITL.focus();
 				return false;
 			}
-			return true;
+			// return true;
+			alert('Please click Find');
+			return false;
 		}
 	//-->
 	</script>
 	<b><?php echo "Add Media Links using Assistant."; $tabkey = 1; ?></b>
-	<form method="post" action="edit_interface.php" onsubmit="return check_form(this);">
-		<input type="hidden" name="action" value="addnoteaction" />
+	<form method="post" action="edit_interface.php" onsubmit="alert('please press find'); return false">
+		<!-- <input type="hidden" name="action" value="addnoteaction" /> -->
 		<input type="hidden" name="noteid" value="newnote" />
 		<!-- <input type="hidden" name="pid" value="$pid" /> -->
 		<?php

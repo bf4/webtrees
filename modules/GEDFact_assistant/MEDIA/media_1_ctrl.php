@@ -34,13 +34,16 @@
 global $summary, $theme_name, $pgv_lang, $factarray;
  
 $pid = safe_get('pid');
+
 // echo $pid;
+
 $year = "1901";
 $censevent  = new Event("1 CENS\n2 DATE 03 MAR".$year."");
 $censdate   = $censevent->getDate();
 $censyear   = $censdate->date1->y;
 $ctry       = "UK";
 $married    = GedcomDate::Compare($censdate, $marrdate);
+
 
 // Test to see if Base pid is filled in ============================
 if ($pid=="") {
@@ -59,7 +62,6 @@ if ($pid=="") {
 	} else {
 		$wholename = rtrim($nam[0]['fullNN']);
 	}
-	
 	$currpid=$pid;
 	
 	// Various Debugs =========================================
@@ -79,10 +81,12 @@ if ($pid=="") {
 
 ?>
 
-	<table class="facts_table" width=600 border=0 >
+	<table class="facts_table" width=300 border=0 >
 
-		<tr>
-			<td colspan=1 valign="top" align="center" width="80%" >
+		<tr colspan="2">
+
+			<td valign="top" align="center" width="50%" >
+<!--
 				<?php
 				//-- Text Input Area ===========================================================
 				?>
@@ -90,28 +94,31 @@ if ($pid=="") {
 								<tr>
 									<td colspan="12" id="5678" class="option_box" style="border: 0px solid transparent;">
 										<?php
-										include('modules/GEDFact_assistant/MEDIA/media_5_input.php');
+										//include('modules/GEDFact_assistant/MEDIA/media_5_input.php');
 										?> 
 									</td>
 								</tr>
 							</table>
+-->
 			</td>
-			<td rowspan="3" align="right" valign="top" width ="220">
+
+			<td rowspan="1" align="right" valign="top" width=400>
 				<?php 
 				//-- Search  and Add Family Members Area ========================================= 
 				include('modules/GEDFact_assistant/MEDIA/media_3_search_add.php'); ?>
 			</td>
 		</tr>
-
+<!--
 		<tr > 
 			<td colspan=1 valign="top" >
 				<?php 
 				//-- Census & Source Information Area ============================================= 
-				include('modules/GEDFact_assistant/MEDIA/media_2_source_input.php');
+				//include('modules/GEDFact_assistant/MEDIA/media_2_source_input.php');
 				?>
 			</td>
 		</tr>
-		
+-->
+<!--
 		<tr>
 			<td align="left" valign="bottom" >
 				<?php
@@ -119,9 +126,8 @@ if ($pid=="") {
 				//include('modules/GEDFact_assistant/MEDIA/media_4_text.php');
 				?>
 			</td>
-
 		</tr>
-		
+-->
 		<tr>
 			<td colspan=2 align="left" valign="top" width="100%">
 				<?php
@@ -129,10 +135,8 @@ if ($pid=="") {
 				include('modules/GEDFact_assistant/MEDIA/media_6_help_save.php');
 				?>
 			</td>
-
 		</tr>
 		
-
 	</table>
 
 <?php

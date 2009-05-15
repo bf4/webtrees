@@ -85,7 +85,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 								<td align="center" colspan=3 class="descriptionbox">
 									<font size=1>
 									Click "H" to choose Head of family. <br />
-									Click Name to add person to Census.
+									Click Name to add person to Link List.
 								</td>
 							</tr>
 
@@ -151,7 +151,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 									<?php
 									if ( ($people["husb"]->canDisplayDetails()) ) {
 									?>
-									<a href='javaScript:insertRowToTable("<?php
+									<a href='javaScript:opener.insertRowToTable("<?php
 											print PrintReady($people["husb"]->getXref()) ;					 // pid = PID
 										?>", "<?php 
 											print PrintReady($fulln);										 // nam = Name
@@ -238,7 +238,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 									<?php
 									if ( ($people["wife"]->canDisplayDetails()) ) {
 										?>
-									<a href='javaScript:insertRowToTable("<?php
+									<a href='javaScript:opener.insertRowToTable("<?php
 											print $people["wife"]->getXref() ; // pid = PID
 										?>", "<?php 
 											if ($married>=0 && isset($nam[1])){
@@ -345,7 +345,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 											<?php
 											if ( ($child->canDisplayDetails()) ) {
 												?>
-												<a href='javaScript:insertRowToTable("<?php 
+												<a href='javaScript:opener.insertRowToTable("<?php 
 														print $child->getXref() ;							 // pid = PID
 													?>", "<?php 
 													if ($married>=0 && isset($nam[1])){
@@ -462,7 +462,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 									<?php
 									if ( ($people["husb"]->canDisplayDetails()) ) {
 									?>
-									<a href='javaScript:insertRowToTable("<?php
+									<a href='javaScript:opener.insertRowToTable("<?php
 											print PrintReady($people["husb"]->getXref()) ;					 // pid = PID
 										?>", "<?php 
 											print PrintReady($fulln);										 // nam = Name
@@ -559,7 +559,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 									<?php
 									if ( ($people["wife"]->canDisplayDetails()) ) {
 									?>
-									<a href='javaScript:insertRowToTable("<?php
+									<a href='javaScript:opener.insertRowToTable("<?php
 											print PrintReady($people["wife"]->getXref()) ;					 // pid = PID
 										?>", "<?php 
 											if ($married>=0 && isset($nam[1])){
@@ -658,7 +658,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 										<?php
 										if ( ($child->canDisplayDetails()) ) {
 										?>
-										<a href='javaScript:insertRowToTable("<?php
+										<a href='javaScript:opener.insertRowToTable("<?php
 												print PrintReady($child->getXref()) ;				 // pid = PID
 											?>", "<?php 
 												print PrintReady($fulln);							 // nam = Name
@@ -777,7 +777,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 									<?php
 									if ( ($people["husb"]->canDisplayDetails()) ) {
 									?>
-									<a href='javaScript:insertRowToTable("<?php
+									<a href='javaScript:opener.insertRowToTable("<?php
 											print $people["husb"]->getXref() ;								 // pid = PID
 										?>", "<?php 
 											print PrintReady($fulln);										 // nam = Name
@@ -875,7 +875,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 									<?php
 									if ( ($people["wife"]->canDisplayDetails()) ) {
 									?>
-										<a href='javaScript:insertRowToTable("<?php 
+										<a href='javaScript:opener.insertRowToTable("<?php 
 												print $people["wife"]->getXref() ;							 // pid = PID
 										?>", "<?php 
 											if ($married>=0 && isset($nam[1])){
@@ -979,7 +979,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 									<?php
 									if ( ($child->canDisplayDetails()) ) {
 									?>
-									<a href='javaScript:insertRowToTable("<?php 
+									<a href='javaScript:opener.insertRowToTable("<?php 
 											print $child->getXref() ;							 // pid = PID
 										?>", "<?php 
 											if ($married>0 && isset($nam[1])){
@@ -1145,7 +1145,7 @@ function print_pedigree_person_nav2($pid, $style=1, $show_famlink=true, $count=0
 										$marn  = $nam[1]['surn'];
 									}
 									
-									$parentlinks .= "<a href=\"javascript:insertRowToTable(";
+									$parentlinks .= "<a href=\"javascript:opener.insertRowToTable(";
 									$parentlinks .= "'".PrintReady($husb->getXref())."',";					// pid		=	PID
 									$parentlinks .= "'".PrintReady($fulln)."',";							// nam	=	Name
 									if ($currpid=="Wife" || $currpid=="Husband") {
@@ -1201,7 +1201,7 @@ function print_pedigree_person_nav2($pid, $style=1, $show_famlink=true, $count=0
 										$fulmn = $nam[1]['fullNN'];
 										$marn  = $nam[1]['surname'];
 									}
-									$parentlinks .= "<a href=\"javascript:insertRowToTable(";
+									$parentlinks .= "<a href=\"javascript:opener.insertRowToTable(";
 									$parentlinks .=	"'".PrintReady($wife->getXref())."',";						// pid		=	PID
 									// $parentlinks .=	"'".PrintReady($fulln)."',";							// nam	=	Name
 									
@@ -1367,7 +1367,7 @@ function print_pedigree_person_nav2($pid, $style=1, $show_famlink=true, $count=0
 										$marn  = $nam[1]['surname'];
 									}
 									
-									$spouselinks .= "<a href=\"javascript:insertRowToTable(";
+									$spouselinks .= "<a href=\"javascript:opener.insertRowToTable(";
 									$spouselinks .=	"'".PrintReady($spouse->getXref())."',";					// pid		=	PID
 									//$spouselinks .=	"'".PrintReady($fulln)."',";							// nam	=	Name
 									if ($married>=0 && isset($nam[1])){
@@ -1435,7 +1435,7 @@ function print_pedigree_person_nav2($pid, $style=1, $show_famlink=true, $count=0
 											$marn  = $nam[1]['surname'];
 										}
 									
-										$spouselinks .= "<a href=\"javascript:insertRowToTable(";
+										$spouselinks .= "<a href=\"javascript:opener.insertRowToTable(";
 										$spouselinks .=	"'".PrintReady($child->getXref())."',";					// pid		=	PID
 										$spouselinks .=	"'".PrintReady($fulln)."',";							// nam		=	Name
 									if ($currpid=="Son" || $currpid=="Daughter") {
@@ -1472,7 +1472,7 @@ function print_pedigree_person_nav2($pid, $style=1, $show_famlink=true, $count=0
 								}else{
 									$title = $cpid." :".$pgv_lang["indi_info"];
 									if ($child->canDisplayName()) {
-										$spouselinks .= "<a href=\"javascript:insertRowToTable(";
+										$spouselinks .= "<a href=\"javascript:opener.insertRowToTable(";
 										$spouselinks .=	"'".PrintReady($child->getXref())."',";						// pid		=	PID
 										$spouselinks .=	"'".PrintReady($fulln)."',";								// nam	=	Name
 										if ($currpid=="Son" || $currpid=="Daughter") {

@@ -27,7 +27,15 @@
  */
 
 ?>
-
+<?php if ($THEME_DIR=="themes/simplygreen/" || $THEME_DIR=="themes/simplyred/" || $THEME_DIR=="themes/simplyblue/") { ?>
+	<script>
+	var txtcolor="#ffffff";
+	</script>
+<?php }else{ ?>
+	<script>
+	var txtcolor="#000000";
+	</script>
+<?php } ?>
 <!--
 #tblSample td, th { padding: 0.5; }
 .classy0 { background-color: #234567; color: #89abcd; }
@@ -41,13 +49,24 @@
 .classy2 { background-color: #dddddd; color: #000000; }
 -->
 
-<style type="text/css">
-<!--
-#tblSample td, th { padding: 0.2em; }
-.classy0 { background-color: #cccccc; color: #000000; }
-.classy1 { background-color: #cccccc; color: #000000; }
--->
-</style>
+<?php if ($THEME_DIR=="themes/simplygreen/" || $THEME_DIR=="themes/simplyred/" || $THEME_DIR=="themes/simplyblue/") { ?>
+	<style type="text/css">
+	<!--
+	#tblSample td, th { padding: 0.2em; }
+	.classy0 { font-family: Verdana, Arial, Helvetica, sans-serif; background-color: transparent; color: #ffffff; font-size: 10px; }
+	.classy1 { font-family: Verdana, Arial, Helvetica, sans-serif; background-color: transparent; color: #ffffff; font-size: 10px; }
+	-->
+	</style>
+<?php }else{ ?>
+	<style type="text/css">
+	<!--
+	#tblSample td, th { padding: 0.2em; }
+	.classy0 { font-family: Verdana, Arial, Helvetica, sans-serif; background-color: transparent; color: #000000; font-size: 10px; }
+	.classy1 { font-family: Verdana, Arial, Helvetica, sans-serif; background-color: transparent; color: #000000; font-size: 10px; }
+	-->
+	</style>
+<?php } ?>
+
 
 <?php
 echo '<script src="modules/GEDFact_assistant/MEDIA/media_5_input.js" type="text/javascript"></script>';
@@ -77,8 +96,8 @@ echo '<script src="modules/GEDFact_assistant/MEDIA/media_5_input.js" type="text/
 			<th class="descriptionbox" style="border: 0px solid transparent;" align="left"><font size=1>Item</font></th>
 			<th class="descriptionbox" style="border: 0px solid transparent;" align="left"><font size=1>Indi ID:</font></th>
 			<th width="17%" class="descriptionbox" style="border: 0px solid transparent;" align="left"><font size=1>Name:</font></th>
-			<th class="descriptionbox" style="border: 0px solid transparent;" align="left"><font size=1>Relation:</font></th>
 <!--
+			<th class="descriptionbox" style="border: 0px solid transparent;" align="left"><font size=1>Relation:</font></th>
 			<th class="descriptionbox" style="border: 0px solid transparent;" align="left"><font size=1>Status:</font></th>
 			<th class="descriptionbox" style="border: 0px solid transparent;" align="left"><font size=1>YOB:</font></th>
 			<th class="descriptionbox" style="border: 0px solid transparent;" align="left"><font size=1>Age:</font></th>

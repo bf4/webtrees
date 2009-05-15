@@ -105,20 +105,23 @@ function save(){
 </script>
 
 			<!--   ---- Save Preview Area -------- -->
-			<table class="facts_table" width="60%" border=3>
+			<table class="facts_table" width="60%" border=0>
 				<tr>
 					<td align="center" class="descriptionbox" colspan="1">
 						<input type="button" value="<?php echo $pgv_lang["page_help"]; ?>" onclick="javascript: help_window(this.form);" />
 					</td>
+<!-- 
 					<td align="center" class="descriptionbox" colspan="2">
 						<font size="1">
-						<input type="button" value="<?php echo $pgv_lang["preview"]; ?>" onclick="preview();" />
+						<input type="button" value="<?php // echo $pgv_lang["preview"]; ?>" onclick="preview();" />
 						</font>
 						<b> The Proposed Media Links </b>&nbsp;&nbsp;
 					</td>
+
 					<td align="center" class="descriptionbox" colspan="1">
 						<input type="button" value="<?php echo $pgv_lang['save']; ?>" onclick="save();" />
 					</td>
+-->
 				</tr>
 			</table>
 			

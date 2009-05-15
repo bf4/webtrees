@@ -62,7 +62,6 @@ background-color: #FF0000;
 
 </head>
 <body>
-
 <?php
 	$links = get_media_relations($mediaid);
 	// var_dump($links);

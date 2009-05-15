@@ -72,7 +72,7 @@ height: 0px;
 			return false;
 		}
 	}
-
+/*
 	function passback(values) {
 		// create an array of passback values
 		values = values.split("|");
@@ -99,6 +99,7 @@ height: 0px;
 		td2_0.value = values[2][0]; // Row 2, Cell 0 - Value (contents)
 		td2_1.value = values[2][1]; // Row 2, Cell 1 - Value (contents)
 	}
+*/
 </script>
 
 </head>
@@ -112,12 +113,14 @@ height: 0px;
 	echo "&nbsp;&nbsp;Then, click Add to add more Individual Links";
 	echo "<br /><br >";
 //	echo "<center><textarea name=\"newindis\" id=\"newindis\" rows=\"8\" cols=\"68\"></textarea></center>"
+include('modules/GEDFact_assistant/MEDIA/media_5_input.php');
 	?>
 </td>
 </tr>
 <tr>
 <td>
 <?php
+/*
 	echo "<table cellpadding=\"0\" cellspacing=\"1\" class=\"table1\" border=0>";
 	echo "<tr>";
 	echo "<td width=\"10\" align=\"left\" bgcolor=\"#AAAAAA\"><span class=\"style1\">#&nbsp;&nbsp;&nbsp;</span></td>";
@@ -144,8 +147,8 @@ height: 0px;
 		echo "<td class=\"row2\" align='center'><input type='radio' name='rad2_".$i."' /></td>";
 		echo "</tr>";
 	}
-
 	echo "</table>";
+*/
 ?>
 </td>
 </tr>

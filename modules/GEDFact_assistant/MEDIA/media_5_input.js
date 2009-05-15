@@ -49,12 +49,12 @@ function fillInRows()
 // CONFIG:
 // myRowObject is an object for storing information about the table rows
 //function myRowObject(zero, one, two, three, four, five, six, seven, eight, nine, ten, cb, ra)
-function myRowObject(zero, one, two, three, cb, ra)
+function myRowObject(zero, one, two, cb, ra)
 {
 	this.zero	 = zero;	 // text object
 	this.one	 = one;		 // input text object
 	this.two	 = two;		 // input text object
-	this.three	 = three;	 // input text object
+//	this.three	 = three;	 // input text object
 //	this.four	 = four;	 // input text object
 //	this.five	 = five;	 // input text object
 //	this.six	 = six;		 // input text object
@@ -97,6 +97,8 @@ function addRowToTable(num, pid, nam, label, gend, cond, yob, age, YMD, occu, bi
 		var tbl = document.getElementById(TABLE_NAME);
 		var nextRow = tbl.tBodies[0].rows.length;
 		var iteration = nextRow + ROW_BASE;
+		// var txtcolor = "#888888";
+		
 		if (num == null) { 
 			num = nextRow;
 		} else {
@@ -121,7 +123,6 @@ function addRowToTable(num, pid, nam, label, gend, cond, yob, age, YMD, occu, bi
 		var cell1 = row.insertCell(1);
 			cell1.setAttribute('align', 'left');
 		if ( pid == ''){
-			var txtcolor = "#000000";
 			var txtInp1 = document.createElement('input');
 			txtInp1.setAttribute('type', 'checkbox');
 			//txtInp1.checked='';
@@ -131,15 +132,16 @@ function addRowToTable(num, pid, nam, label, gend, cond, yob, age, YMD, occu, bi
 				txtInp1.setAttribute('value', 'add');
 			}
 		}else{
-			var txtcolor = "#0000FF";
 			var txtInp1 = document.createElement('input');
 			txtInp1.setAttribute('type', 'text');
-				txtInp1.setAttribute('value', pid);
+			txtInp1.setAttribute('value', pid);
 		}
 			txtInp1.setAttribute('id', INPUT_NAME_PREFIX + iteration + '_1');
 			txtInp1.setAttribute('size', '4');
 			txtInp1.style.color=txtcolor;
-			txtInp1.style.fontSize="10px";
+			txtInp1.style.background='transparent';
+			txtInp1.style.border='0px';
+			txtInp1.style.fontSize="11px";
 		cell1.appendChild(txtInp1);
 		
 		
@@ -149,12 +151,14 @@ function addRowToTable(num, pid, nam, label, gend, cond, yob, age, YMD, occu, bi
 		var txtInp2 = document.createElement('input');
 			txtInp2.setAttribute('type', 'text');
 			txtInp2.setAttribute('id', INPUT_NAME_PREFIX + iteration + '_2');
-			txtInp2.setAttribute('size', '30');
+			txtInp2.setAttribute('size', '40');
 			txtInp2.setAttribute('value', nam); // iteration included for debug purposes
 			txtInp2.style.color=txtcolor;
-			txtInp2.style.fontSize="10px";
+			txtInp2.style.background='transparent';
+			txtInp2.style.border='0px';
+			txtInp2.style.fontSize="11px";
 		cell2.appendChild(txtInp2);
-		
+/*		
 		// cell 3 - input text
 		var cell3 = row.insertCell(3);
 			cell3.setAttribute('align', 'left');
@@ -164,9 +168,11 @@ function addRowToTable(num, pid, nam, label, gend, cond, yob, age, YMD, occu, bi
 			txtInp3.setAttribute('size', '15');
 			txtInp3.setAttribute('value', label); // iteration included for debug purposes
 			txtInp3.style.color=txtcolor;
-			txtInp3.style.fontSize="10px";
+			txtInp3.style.background='transparent';
+			txtInp3.style.border='0px';
+			txtInp3.style.fontSize="11px";
 		cell3.appendChild(txtInp3);
-/*
+
 		// cell 4 - input text
 		var cell4 = row.insertCell(4);
 			cell4.setAttribute('align', 'left');
@@ -253,7 +259,7 @@ function addRowToTable(num, pid, nam, label, gend, cond, yob, age, YMD, occu, bi
 */
 
 		// cell btn - input button
-		var cellbtn = row.insertCell(4);
+		var cellbtn = row.insertCell(3);
 		var btnEl = document.createElement('input');
 			btnEl.setAttribute('type', 'button');
 			btnEl.setAttribute('value', 'x');
@@ -285,7 +291,7 @@ function addRowToTable(num, pid, nam, label, gend, cond, yob, age, YMD, occu, bi
 */
 		// Pass in the elements you want to reference later
 		// Store the myRow object in each row
-		row.myRow = new myRowObject(textNode, txtInp1, txtInp2, txtInp3, cbEl, cellra);
+		row.myRow = new myRowObject(textNode, txtInp1, txtInp2, cbEl, cellra);
 	}
 }
 
@@ -337,7 +343,7 @@ function reorderRows(tbl, startingIndex)
 				
 				tbl.tBodies[0].rows[i].myRow.one.id		 = INPUT_NAME_PREFIX + count + '_1'; // input text
 				tbl.tBodies[0].rows[i].myRow.two.id 	 = INPUT_NAME_PREFIX + count + '_2'; // input text
-				tbl.tBodies[0].rows[i].myRow.three.id	 = INPUT_NAME_PREFIX + count + '_3';  // input text
+//				tbl.tBodies[0].rows[i].myRow.three.id	 = INPUT_NAME_PREFIX + count + '_3';  // input text
 //				tbl.tBodies[0].rows[i].myRow.four.id	 = INPUT_NAME_PREFIX + count + '_4';  // input text
 //				tbl.tBodies[0].rows[i].myRow.five.id	 = INPUT_NAME_PREFIX + count + '_5';  // input text
 //				tbl.tBodies[0].rows[i].myRow.six.id		 = INPUT_NAME_PREFIX + count + '_6';  // input text
@@ -348,7 +354,7 @@ function reorderRows(tbl, startingIndex)
 				
 				tbl.tBodies[0].rows[i].myRow.one.name	 = INPUT_NAME_PREFIX + count + '_1'; // input text
 				tbl.tBodies[0].rows[i].myRow.two.name 	 = INPUT_NAME_PREFIX + count + '_2'; // input text
-				tbl.tBodies[0].rows[i].myRow.three.name	 = INPUT_NAME_PREFIX + count + '_3';  // input text
+//				tbl.tBodies[0].rows[i].myRow.three.name	 = INPUT_NAME_PREFIX + count + '_3';  // input text
 //				tbl.tBodies[0].rows[i].myRow.four.name	 = INPUT_NAME_PREFIX + count + '_4';  // input text
 //				tbl.tBodies[0].rows[i].myRow.five.name	 = INPUT_NAME_PREFIX + count + '_5';  // input text
 //				tbl.tBodies[0].rows[i].myRow.six.name	 = INPUT_NAME_PREFIX + count + '_6';  // input text
