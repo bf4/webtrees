@@ -32,10 +32,13 @@ require './includes/functions/functions_edit.php';
 
 //-- page parameters and checking
 
-$linktoid=safe_GET_xref('linktoid');
-$mediaid =safe_GET_xref('mediaid');
-$linkto  =safe_GET     ('linkto', array('person', 'source', 'family'));
-$action  =safe_GET     ('action', PGV_REGEX_ALPHA, 'choose');
+$linktoid	= safe_GET_xref('linktoid');
+$mediaid	= safe_GET_xref('mediaid');
+$linkto		= safe_GET     ('linkto', array('person', 'source', 'family'));
+$action		= safe_GET     ('action', PGV_REGEX_ALPHA, 'choose');
+
+$more_links	= safe_REQUEST($_REQUEST, 'more_links', PGV_REGEX_UNSAFE);
+
 
 if (empty($linktoid) || empty($linkto)) {
 	$paramok = false;
@@ -90,17 +93,21 @@ if ($action == "choose" && $paramok) {
 	<script src="phpgedview.js" language="JavaScript" type="text/javascript"></script>
 
 	<?php
-	print "<form name=\"link\" method=\"get\" action=\"inverselink.php\">\n";
-	print "<input type=\"hidden\" name=\"action\" value=\"update\" />\n";
-	if (!empty($mediaid)) print "<input type=\"hidden\" name=\"mediaid\" value=\"".$mediaid."\" />\n";
-	if (!empty($linktoid)) print "<input type=\"hidden\" name=\"linktoid\" value=\"".$linktoid."\" />\n";
-	print "<input type=\"hidden\" name=\"linkto\" value=\"".$linkto."\" />\n";
-	print "<input type=\"hidden\" name=\"ged\" value=\"".$GEDCOM."\" />\n";
-	print "<table class=\"facts_table center ".$TEXT_DIRECTION."\">";
-	print "\n\t<tr><td class=\"topbottombar\" colspan=\"2\">";
+	echo "<form name=\"link\" method=\"get\" action=\"inverselink.php\">\n";
+	echo "<input type=\"hidden\" name=\"action\" value=\"update\" />\n";
+	if (!empty($mediaid)) {
+		echo "<input type=\"hidden\" name=\"mediaid\" value=\"".$mediaid."\" />\n";
+	}
+	if (!empty($linktoid)) {
+		echo "<input type=\"hidden\" name=\"linktoid\" value=\"".$linktoid."\" />\n";
+	}
+	echo "<input type=\"hidden\" name=\"linkto\" value=\"".$linkto."\" />\n";
+	echo "<input type=\"hidden\" name=\"ged\" value=\"".$GEDCOM."\" />\n";
+	echo "<table class=\"facts_table center ".$TEXT_DIRECTION."\">";
+	echo "\n\t<tr><td class=\"topbottombar\" colspan=\"2\">";
 	print_help_link("add_media_linkid","qm", "link_media");
-	print $pgv_lang["link_media"]." ".$toitems."</td></tr>";
-	print "<tr><td class=\"descriptionbox width20 wrap\">".$pgv_lang["media_id"]."</td>";
+	echo $pgv_lang["link_media"]." ".$toitems."</td></tr>";
+	echo "<tr><td class=\"descriptionbox width20 wrap\">".$pgv_lang["media_id"]."</td>";
 	echo '<td class="optionbox wrap">';
 	if (!empty($mediaid)) {
 		//-- Get the title of this existing Media item
@@ -110,121 +117,158 @@ if ($action == "choose" && $paramok) {
 			->fetchOne();
 		if ($title) {
 			echo '<b>', PrintReady($title), '</b>&nbsp;&nbsp;&nbsp;';
-			if ($TEXT_DIRECTION=="rtl") print getRLM();
+			if ($TEXT_DIRECTION=="rtl") echo getRLM();
 			echo "({$mediaid})";
-			if ($TEXT_DIRECTION=="rtl") print getRLM();
+			if ($TEXT_DIRECTION=="rtl") echo getRLM();
 		} else {
 			echo "<b>{$mediaid}</b>";
 		}
- 	} else {
+		
+		// GEDFact assistant Current Media Links ===================
+		if (file_exists('modules/GEDFact_assistant/MEDIA/media_1_ctrl.php')) {
+			echo "<table><tr><td>";
+			//-- Get the filename of this existing Media item
+			$filename=
+				PGV_DB::prepare("SELECT m_file FROM {$TBLPREFIX}media where m_media=? AND m_gedfile=?")
+				->execute(array($mediaid, PGV_GED_ID))
+				->fetchOne();
+			echo "<img src = $filename height=\"70\" ></img>";
+			echo "&nbsp;&nbsp;&nbsp;&nbsp;";
+			echo "</td></tr></table>";
+			echo "</td></tr>";
+			echo "<tr>";
+			echo "<td class=\"descriptionbox width20 wrap\">";
+			echo "Current Links:";
+			echo"</td>";
+			echo "<td class=\"optionbox wrap\">";
+			include ('modules/GEDFact_assistant/MEDIA/media_query_1a.php');
+			echo "</td></tr>";
+		}
+		// =========================================================
+	} else {
 		echo '<input type="text" name="mediaid" id="mediaid" size="5" />';
 		print_findmedia_link("mediaid","1media");
 		echo "</td></tr>";
 	}
 	
-	// GEDFact assistant Current Media Links ===================
-	if (file_exists('modules/GEDFact_assistant/MEDIA/media_1_ctrl.php')) {
-		echo "<tr>";
-		echo "<td class=\"descriptionbox width20 wrap\">";
-		echo "Current links:";
-		echo"</td>";
-		echo "<td class=\"optionbox wrap\">";
-			include ('modules/GEDFact_assistant/MEDIA/media_query_1a.php');
-		echo "</td></tr>";
-	}
-	// =========================================================
-	
-
 	if (!isset($linktoid)) $linktoid = "";
-	print "<tr><td class=\"descriptionbox\">";
+	echo "<tr><td class=\"descriptionbox\">";
+	
 	if ($linkto == "person") {
 		// GEDFact assistant Add Media Links =======================
-		if (file_exists('modules/GEDFact_assistant/MEDIA/media_1_ctrl.php')) {
-			echo "Add more links:";
-			print "<td class=\"optionbox wrap\">";
-			echo "A)&nbsp;&nbsp;";
+		if (file_exists('modules/GEDFact_assistant/MEDIA/media_1_ctrl.php') && !empty($mediaid)) {
+			echo "Add more Links:";
+			echo "<td class=\"optionbox wrap\">";
+			echo "a) &nbsp;".$pgv_lang["enter_pid"]." or Name &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+		// =========================================================
 		} else {
-			print $pgv_lang["enter_pid"]."</td>";
-			print "<td class=\"optionbox wrap\">";
+			echo $pgv_lang["enter_pid"]."</td>";
+			echo "<td class=\"optionbox wrap\">";
 		}
 		if ($linktoid=="") {
-			print "<input class=\"pedigree_form\" type=\"text\" name=\"linktoid\" id=\"linktopid\" size=\"3\" value=\"$linktoid\" />";
+			echo "<input class=\"pedigree_form\" type=\"text\" name=\"linktoid\" id=\"linktopid\" size=\"3\" value=\"$linktoid\" />";
 			print_findindi_link("linktopid","");
-		echo "&nbsp;&nbsp;".$pgv_lang["enter_pid"];
+			
 		} else {
 			$record=Person::getInstance($linktoid);
 			echo '<b>', PrintReady($record->getFullName()), '</b>&nbsp;&nbsp;&nbsp;';
 			if ($TEXT_DIRECTION=="rtl") print getRLM();
-			print "(".$linktoid.")";
+			echo "(".$linktoid.")";
 			if ($TEXT_DIRECTION=="rtl") print getRLM();
 		}
 		echo "<br /><br />";
 		// GEDFact assistant Add Media Links =======================
-		if (file_exists('modules/GEDFact_assistant/MEDIA/media_1_ctrl.php')) {
+		if (file_exists('modules/GEDFact_assistant/MEDIA/media_1_ctrl.php') && !empty($mediaid)) {
 			include ('modules/GEDFact_assistant/MEDIA/media_query_2a.php');
 			echo "</td></tr>";
-			echo "<tr><td class=\"topbottombar\" colspan=\"2\">";
-			echo "<input type=\"submit\" value=\"".$pgv_lang["set_link"]."s\" onclick=\"javascript:alert('Clicking \'Set Links\' will eventually parse and save the Current and Added Links. For now it will just save the Entered Individual ID');\" />";
+			
+			echo "<tr><td colspan=\"2\">";
 			echo "</td></tr>";
+			
+			echo "<input type=\"hidden\" name=\"more_links\" value=\"No_Values\" />\n";
+			
+			echo "<tr><td class=\"topbottombar\" colspan=\"2\">";
+			echo "<center><input type=\"submit\" value=\"".$pgv_lang["set_link"]."s\" onclick=\"javascript:shiftlinks();\" />";
+			echo "</center></td></tr>";
+			
+			include('modules/GEDFact_assistant/MEDIA/media_7_parse_addLinksTbl.php');
+			
+			// Debug - Preview Button ---------------------
+			//	echo "<tr><td class=\"topbottombar\" colspan=\"2\">";
+			//	echo "<center><input type=\"button\" value=\"Preview\" onclick=\"javascript:preview();\" />";
+			//	echo "</center></td></tr>";
+			// --------------------------------------------
+			
+		// =========================================================
 		}else{
-		print "<tr><td class=\"topbottombar\" colspan=\"2\"><input type=\"submit\" value=\"".$pgv_lang["set_link"]."\" /></td></tr>";
+			echo "<tr><td class=\"topbottombar\" colspan=\"2\"><input type=\"submit\" value=\"".$pgv_lang["set_link"]."\" /></td></tr>";
 		}
-
 	}
-
+	
 	if ($linkto == "family") {
-		print $pgv_lang["family"]."</td>";
-		print "<td class=\"optionbox wrap\">";
+		echo $pgv_lang["family"]."</td>";
+		echo "<td class=\"optionbox wrap\">";
 		if ($linktoid=="") {
-			print "<input class=\"pedigree_form\" type=\"text\" name=\"linktoid\" id=\"linktofamid\" size=\"3\" value=\"$linktoid\" />";
+			echo "<input class=\"pedigree_form\" type=\"text\" name=\"linktoid\" id=\"linktofamid\" size=\"3\" value=\"$linktoid\" />";
 			print_findfamily_link("linktofamid");
 		} else {
 			$record=Family::getInstance($linktoid);
 			echo '<b>', PrintReady($record->getFullName()), '</b>&nbsp;&nbsp;&nbsp;';
 			if ($TEXT_DIRECTION=="rtl") print getRLM();
-			print "(".$linktoid.")";
+			echo "(".$linktoid.")";
 			if ($TEXT_DIRECTION=="rtl") print getRLM();
 		}
-		print "</td></tr>";
-		print "<tr><td class=\"topbottombar\" colspan=\"2\"><input type=\"submit\" value=\"".$pgv_lang["set_link"]."\" /></td></tr>";
+		echo "</td></tr>";
+		echo "<tr><td class=\"topbottombar\" colspan=\"2\"><input type=\"submit\" value=\"".$pgv_lang["set_link"]."\" /></td></tr>";
 	}
-
+	
 	if ($linkto == "source") {
-		print $pgv_lang["source"]."</td>";
-		print "<td  class=\"optionbox wrap\">";
+		echo $pgv_lang["source"]."</td>";
+		echo "<td  class=\"optionbox wrap\">";
 		if ($linktoid=="") {
-			print "<input class=\"pedigree_form\" type=\"text\" name=\"linktoid\" id=\"linktosid\" size=\"3\" value=\"$linktoid\" />";
+			echo "<input class=\"pedigree_form\" type=\"text\" name=\"linktoid\" id=\"linktosid\" size=\"3\" value=\"$linktoid\" />";
 			print_findsource_link("linktosid");
 		} else {
 			$record=Source::getInstance($linktoid);
 			echo '<b>', PrintReady($record->getFullName()), '</b>&nbsp;&nbsp;&nbsp;';
 			if ($TEXT_DIRECTION=="rtl") print getRLM();
-			print "(".$linktoid.")";
+			echo "(".$linktoid.")";
 			if ($TEXT_DIRECTION=="rtl") print getRLM();
 		}
-		print "</td></tr>";
-		print "<tr><td class=\"topbottombar\" colspan=\"2\"><input type=\"submit\" value=\"".$pgv_lang["set_link"]."\" /></td></tr>";
+		echo "</td></tr>";
+		echo "<tr><td class=\"topbottombar\" colspan=\"2\"><input type=\"submit\" value=\"".$pgv_lang["set_link"]."\" /></td></tr>";
 	}
-
 	
+	echo "</table>";
+	echo "</form>\n";
+	echo "<br/><br/><center><a href=\"javascript:;\" onclick=\"if (window.opener.showchanges) window.opener.showchanges(); window.close();\">".$pgv_lang["close_window"]."</a><br /></center>\n";
+	print_simple_footer();
 	
+} elseif ($action == "update" && $paramok) {
 
-	print "</table>";
-	print "</form>\n";
-	print "<br/><br/><center><a href=\"javascript:;\" onclick=\"if (window.opener.showchanges) window.opener.showchanges(); window.close();\">".$pgv_lang["close_window"]."</a><br /></center>\n";
+	// GEDFact assistant Add Media Links =======================
+	if (file_exists('modules/GEDFact_assistant/MEDIA/media_1_ctrl.php') && !empty($mediaid)) {
+		if ($more_links != "No_Values") {
+			$more_links = stripslashes($more_links);
+			$add_more_links = explode(", ", $more_links);
+			foreach ($add_more_links as $link2id) {
+				echo $mediaid." Now linked to - ".($link2id)."<br />";
+				linkMedia($mediaid, $link2id);
+			}
+		}else{
+			linkMedia($mediaid, $linktoid);
+		}
+	// =========================================================
+	}else{
+		linkMedia($mediaid, $linktoid);
+	}
+	
+	echo "<br/><br/><center><a href=\"javascript:;\" onclick=\"if (window.opener.showchanges) window.opener.showchanges(); window.close();\">".$pgv_lang["close_window"]."</a><br /></center>\n";
 	print_simple_footer();
-
-}
-elseif ($action == "update" && $paramok) {
-	linkMedia($mediaid, $linktoid);
-	print "<br/><br/><center><a href=\"javascript:;\" onclick=\"if (window.opener.showchanges) window.opener.showchanges(); window.close();\">".$pgv_lang["close_window"]."</a><br /></center>\n";
-	print_simple_footer();
-}
-else {
-	print "<center>nothing to do<center>";
-
-	print "<br/><br/><center><a href=\"javascript:;\" onclick=\"if (window.opener.showchanges) window.opener.showchanges(); window.close();\">".$pgv_lang["close_window"]."</a><br /></center>\n";
-
+	
+} else {
+	echo "<center>nothing to do<center>";
+	echo "<br/><br/><center><a href=\"javascript:;\" onclick=\"if (window.opener.showchanges) window.opener.showchanges(); window.close();\">".$pgv_lang["close_window"]."</a><br /></center>\n";
 	print_simple_footer();
 }
 
