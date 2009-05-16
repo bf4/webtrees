@@ -470,7 +470,7 @@ function addnewnote_assisted(field, iid) {
 }
 function addmedia_links(field, iid) {
 	pastefield = field;
-	window.open('edit_interface.php?action=addmedia_links&noteid=newnote&pid='+iid, '_blank', 'top=70,left=370,width=620,height=550,resizable=1,scrollbars=1');
+	window.open('edit_interface.php?action=addmedia_links&noteid=newnote&pid='+iid, '_blank', 'top=50,left=600,width=420,height=550,resizable=1,scrollbars=1');
 	return false;
 }
 
