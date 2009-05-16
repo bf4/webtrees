@@ -296,7 +296,6 @@ $pgv_lang["monthly"]				= "Monatlich";
 $pgv_lang["msql"]					= "Mini SQL";
 $pgv_lang["mssql"]					= "Microsoft SQL server";
 $pgv_lang["mysql"]					= "MySQL";
-$pgv_lang["mysqli"]					= "MySQL 4.1+ oder PHP 5";
 $pgv_lang["never"]					= "Nie";
 $pgv_lang["no_logs"]				= "Logging deaktivieren";
 $pgv_lang["no_messaging"]			= "keine Nachrichten-Funktion";
