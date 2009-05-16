@@ -48,34 +48,182 @@ class PGV_DB {
 	}
 
 	// Prevent instantiation via clone()
-  public final function __clone() {
-    trigger_error('PGV_DB::clone() is not allowed.', E_USER_ERROR);
-  }
+	public final function __clone() {
+		trigger_error('PGV_DB::clone() is not allowed.', E_USER_ERROR);
+	}
  	
 	// Prevent instantiation via serialize()
-  public final function __wakeup() {
-    trigger_error('PGV_DB::unserialize() is not allowed.', E_USER_ERROR);
-  }
+	public final function __wakeup() {
+		trigger_error('PGV_DB::unserialize() is not allowed.', E_USER_ERROR);
+	}
  	
 	// Implement the singleton pattern
 	public static function createInstance($DBTYPE, $DBHOST, $DBPORT, $DBNAME, $DBUSER, $DBPASS, $DBPERSIST, $DB_UTF8_COLLATION) {
 		if (self::$pdo instanceof PDO) {
-    	trigger_error('PGV_DB::createInstance() can only be called once.', E_USER_ERROR);
+			trigger_error('PGV_DB::createInstance() can only be called once.', E_USER_ERROR);
 		}
 		// mysqli is legacy, from PEAR::DB
 		if ($DBTYPE=='mysqli') {
 			$DBTYPE='mysql';
 		}
-		// Remember the DB type, so we can implement database abstraction
-		self::$dbtype=$DBTYPE;
+		// Check that the driver is loaded
+		if (!extension_loaded('pdo') || !in_array($DBTYPE, PDO::getAvailableDrivers())) {
+	 		trigger_error("PDO/{$DBTYPE} is not installed.", E_USER_ERROR);
+		}
 		// Create the underlying PDO object
-		self::$pdo=new PDO(
-			self::createDSN($DBTYPE, $DBHOST, $DBPORT, $DBNAME),
-			$DBUSER, $DBPASS,
-			self::createOptions($DBTYPE, $DBPERSIST)
-		);
-		// Perform DB-specific initialisation
-		self::initialiseConnection($DBTYPE, $DB_UTF8_COLLATION);
+		switch ($DBTYPE) {
+		case 'mysql':
+			self::$pdo=new PDO(
+				"mysql:host={$DBHOST};dbname={$DBNAME};port={$DBPORT}", $DBUSER, $DBPASS,
+				array(
+					PDO::ATTR_PERSISTENT=>(bool)$DBPERSIST,
+					PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION,
+					PDO::ATTR_DEFAULT_FETCH_MODE=>PDO::FETCH_OBJ,
+					PDO::ATTR_CASE=>PDO::CASE_LOWER,
+					PDO::ATTR_AUTOCOMMIT=>true
+				)
+			);
+			if ($DB_UTF8_COLLATION) {
+				self::$pdo->exec("SET NAMES UTF8");
+			}
+			break;
+		case 'pgsql':
+			self::$pdo=new PDO(
+				"pgsql:host={$DBHOST};dbname={$DBNAME};port={$DBPORT}", $DBUSER, $DBPASS,
+				array(
+					PDO::ATTR_PERSISTENT=>(bool)$DBPERSIST,
+					PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION,
+					PDO::ATTR_DEFAULT_FETCH_MODE=>PDO::FETCH_OBJ,
+					PDO::ATTR_CASE=>PDO::CASE_LOWER,
+					PDO::ATTR_AUTOCOMMIT=>true
+				)
+			);
+			if ($DB_UTF8_COLLATION) {
+				self::$pdo->exec("SET NAMES 'UTF8'");
+			}
+			break;
+		case 'mssql':
+			self::$pdo=new PDO(
+				"mssql:host={$DBHOST};dbname={$DBNAME}".($DBPORT ? ",{$DBPORT}" : ''), $DBUSER, $DBPASS,
+				array(
+					PDO::ATTR_PERSISTENT=>(bool)$DBPERSIST,
+					PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION,
+					PDO::ATTR_DEFAULT_FETCH_MODE=>PDO::FETCH_OBJ,
+					PDO::ATTR_CASE=>PDO::CASE_LOWER,
+					PDO::ATTR_AUTOCOMMIT=>true
+				)
+			);
+			break;
+		case 'sqlite':
+//			self::$pdo=new PDO(
+//				"sqlite:{$DBNAME}", $DBUSER, $DBPASS,
+//				array(
+//					PDO::ATTR_PERSISTENT=>(bool)$DBPERSIST,
+//					PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION,
+//					PDO::ATTR_DEFAULT_FETCH_MODE=>PDO::FETCH_OBJ,
+//					PDO::ATTR_CASE=>PDO::CASE_LOWER
+//				)
+//			);
+//			try {
+//				// Check if we can connect to the database
+//				PGV_DB::prepare("SELECT 1 FROM information_schema")->fetchOne();
+//			} catch (PDOException $ex) {
+//				// Couldn't connect using sqlite3 - try sqlite2
+				self::$pdo=new PDO(
+					"sqlite2:{$DBNAME}", $DBUSER, $DBPASS,
+					array(
+						PDO::ATTR_PERSISTENT=>(bool)$DBPERSIST,
+						PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION,
+						PDO::ATTR_DEFAULT_FETCH_MODE=>PDO::FETCH_OBJ,
+						PDO::ATTR_CASE=>PDO::CASE_LOWER
+					)
+				);
+//			}
+			if ($DB_UTF8_COLLATION) {
+				self::$pdo->exec('PRAGMA encoding="UTF-8"');
+			}
+			break;
+		case 'firebird':
+			// This DSN has not been tested!
+			self::$pdo=new PDO(
+				"firebird:host={$DBHOST};dbname={$DBNAME};charset=UTF-8", $DBUSER, $DBPASS,
+				array(
+					PDO::ATTR_PERSISTENT=>(bool)$DBPERSIST,
+					PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION,
+					PDO::ATTR_DEFAULT_FETCH_MODE=>PDO::FETCH_OBJ,
+					PDO::ATTR_CASE=>PDO::CASE_LOWER,
+					PDO::ATTR_AUTOCOMMIT=>true
+				)
+			);
+			break;
+		case 'ibm':
+			// This DSN has not been tested!
+			self::$pdo=new PDO(
+				"ibm:DRIVER={IBM DB2 ODBC DRIVER};DATABASE={$DBNAME};HOSTNAME={$DBHOST};PORT={$DBPORT};PROTOCOL=TCPIP", $DBUSER, $DBPASS,
+				array(
+					PDO::ATTR_PERSISTENT=>(bool)$DBPERSIST,
+					PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION,
+					PDO::ATTR_DEFAULT_FETCH_MODE=>PDO::FETCH_OBJ,
+					PDO::ATTR_CASE=>PDO::CASE_LOWER,
+					PDO::ATTR_AUTOCOMMIT=>true
+				)
+			);
+			break;
+		case 'informix':
+			// This DSN has not been tested!
+			self::$pdo=new PDO(
+				"informix:host={$DBHOST};service={$DBPORT};database={$DBNAME}", $DBUSER, $DBPASS,
+				array(
+					PDO::ATTR_PERSISTENT=>(bool)$DBPERSIST,
+					PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION,
+					PDO::ATTR_DEFAULT_FETCH_MODE=>PDO::FETCH_OBJ,
+					PDO::ATTR_CASE=>PDO::CASE_LOWER,
+					PDO::ATTR_AUTOCOMMIT=>true
+				)
+			);
+			break;
+		case 'oci':
+			// This DSN has not been tested!
+			self::$pdo=new PDO(
+				"oci:dbname=//{$DBHOST}}:{$DBPORT}/{$DBNAME}", $DBUSER, $DBPASS,
+				array(
+					PDO::ATTR_PERSISTENT=>(bool)$DBPERSIST,
+					PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION,
+					PDO::ATTR_DEFAULT_FETCH_MODE=>PDO::FETCH_OBJ,
+					PDO::ATTR_CASE=>PDO::CASE_LOWER,
+					PDO::ATTR_AUTOCOMMIT=>true
+				)
+			);
+			break;
+		case 'odbc':
+			// This DSN has not been tested!
+			self::$pdo=new PDO(
+				"odbc:$DBNAME", $DBUSER, $DBPASS,
+				array(
+					PDO::ATTR_PERSISTENT=>(bool)$DBPERSIST,
+					PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION,
+					PDO::ATTR_DEFAULT_FETCH_MODE=>PDO::FETCH_OBJ,
+					PDO::ATTR_CASE=>PDO::CASE_LOWER,
+					PDO::ATTR_AUTOCOMMIT=>true
+				)
+			);
+			break;
+		case '4D':
+			// This DSN has not been tested!
+			self::$pdo=new PDO(
+				"4D:host={$DBHOST};port={$DBPORT};dbname={$DBNAME};charset=UTF-8", $DBUSER, $DBPASS,
+				array(
+					PDO::ATTR_PERSISTENT=>(bool)$DBPERSIST,
+					PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION,
+					PDO::ATTR_DEFAULT_FETCH_MODE=>PDO::FETCH_OBJ,
+					PDO::ATTR_CASE=>PDO::CASE_LOWER,
+					PDO::ATTR_AUTOCOMMIT=>true
+				)
+			);
+			break;
+		}
+
+		// Assign the singleton
 		self::$instance=new self;
 	}
 
@@ -84,70 +232,7 @@ class PGV_DB {
 		if (self::$pdo instanceof PDO) {
 			return self::$instance;
 		} else {
-    	trigger_error('PGV_DB::createInstance() must be called before PGV_DB::getInstance().', E_USER_ERROR);
-		}
-	}
-
-	// Create a PDO-style DSN from PGV's database connection parameters
-	private static function createDSN($DBTYPE, $DBHOST, $DBPORT, $DBNAME) {
-		if ($DBTYPE=='sqlite') {
-			return 'sqlite2:'.$DBNAME;
-		}
-		// localhost can be problematic with non-default ports, so use IP address
-		if ($DBHOST=='localhost' && $DBPORT) {
-			$DBHOST='host=127.0.0.1;';
-		} elseif ($DBHOST) {
-			$DBHOST="host={$DBHOST};";
-		}
-		// Port number is optional
-		if ($DBPORT) {
-			$DBHOST.=';port='.(int)$DBPORT;
-		}
-		return "{$DBTYPE}:{$DBHOST}dbname={$DBNAME}";
-	}
-
-	// Create an array of connection options
-	private static function createOptions($DBTYPE, $DBPERSIST) {
-		switch ($DBTYPE) {
-		case 'sqlite':
-			return array(
-				PDO::ATTR_PERSISTENT=>(bool)$DBPERSIST,
-				PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION,
-				PDO::ATTR_DEFAULT_FETCH_MODE=>PDO::FETCH_OBJ,
-				PDO::ATTR_CASE=>PDO::CASE_LOWER
-			);
-		default:
-			return array(
-				PDO::ATTR_PERSISTENT=>(bool)$DBPERSIST,
-				PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION,
-				PDO::ATTR_DEFAULT_FETCH_MODE=>PDO::FETCH_OBJ,
-				PDO::ATTR_AUTOCOMMIT=>true,
-				PDO::ATTR_CASE=>PDO::CASE_LOWER
-			);
-		}
-	}
-
-	// One-off initialisation of a new PDO connection
-	private static function initialiseConnection($DBTYPE, $DB_UTF8_COLLATION) {
-		switch ($DBTYPE) {
-		case 'mysql':
-			if ($DB_UTF8_COLLATION) {
-				self::$pdo->exec("SET NAMES UTF8");
-			}
-			break;
-		case 'pgsql':
-			if ($DB_UTF8_COLLATION) {
-				self::$pdo->exec("SET NAMES 'UTF8'");
-			}
-			break;
-		case 'sqlite':
-			if ($DB_UTF8_COLLATION) {
-				self::$pdo->exec('PRAGMA encoding="UTF-8"');
-			}
-			break;
-		case 'mssql':
-		break;
-		default:
+			trigger_error('PGV_DB::createInstance() must be called before PGV_DB::getInstance().', E_USER_ERROR);
 		}
 	}
 
@@ -182,51 +267,153 @@ class PGV_DB {
 	// SQL Compatibility
 	//////////////////////////////////////////////////////////////////////////////
 	public static function mod_function($x, $y) {
-		switch (self::$dbtype) {
+		// TODO: When we get a d_leap_year column in the pgv_dates table, we will
+		// no longer need this function.
+		switch (self::$pdo->getAttribute(PDO::ATTR_DRIVER_NAME)) {
 		case 'sqlite':
+		case 'sqlite2':
 			return "(($x)%($y))";
 		case 'mysql':
 		case 'pgsql':
 		case 'mssql':
+		case 'oci':
+		case 'ibm':
+		case 'firebird':
+		case 'informix':
 			return "MOD($x,$y)";
+		case 'odbc':
+			// We don't know the underlying database, so this is only a guess
+			return "MOD($x,$y)";
+		case '4D':
+			// No MOD or TRUNC function - only ROUND
+			return "(({$x})-({$y})*ROUNDING(({$x})/({$y})-0.5))";
 		}
 	}
 
 	public static function random_function() {
-		switch (self::$dbtype) {
+		switch (self::$pdo->getAttribute(PDO::ATTR_DRIVER_NAME)) {
 		case 'mysql':
+		case 'firebird':
+		case 'ibm':
 			return 'RAND()';
 		case 'sqlite':
+		case 'sqlite2':
 		case 'pgsql':
+		case '4D':
 			return 'RANDOM()';
 		case 'mssql':
 			return 'NEWID()';
+		case 'oci':
+			return 'DBMS_RANDOM.RANDOM';
+		case 'odbc':
+			// We don't know the underlying database, so there is little we can do.
+			return '1';
+		case 'informix':
+			// Informix does not have a random number function??
+			return '1';
 		}
 	}
 
+	// We only need to limit SELECT queries, not UPDATE or DELETE
 	public static function limit_query($sql, $n) {
 		$n=(int)$n;
-		switch (self::$dbtype) {
+		switch (self::$pdo->getAttribute(PDO::ATTR_DRIVER_NAME)) {
 		case 'mysql':
 		case 'sqlite':
+		case 'sqlite2':
 		case 'pgsql':
+		case '4D':
 			return "{$sql} LIMIT {$n}";
 		case 'mssql':
 			return preg_replace('/^\s*SELECT /i', "SELECT TOP {$n} ", $sql);
+		case 'firebird':
+		case 'informix':
+			return preg_replace('/^\s*SELECT /i', "SELECT FIRST {$n} ", $sql);
+		case 'ibm':
+			return "{$sql} FETCH FIRST {$n} ROWS ONLY";
+		case 'oci':
+			return "SELECT * FROM ($sql) WHERE ROWNUM<={$n}";
+		case 'odbc':
+			// We don't know the underlying database, so just return all rows :-(
+			return $sql;
 		}
 	}
 
 	//////////////////////////////////////////////////////////////////////////////
 	// INTERROGATE DATA DICTIONARY
 	//////////////////////////////////////////////////////////////////////////////
-	public static function table_exists($table) {
-		switch (self::$dbtype) {
+	public static function all_tables() {
+		global $DBNAME;
+
+		switch (self::$pdo->getAttribute(PDO::ATTR_DRIVER_NAME)) {
 		case 'mysql':
-		case 'sqlite':
 		case 'pgsql':
 		case 'mssql':
-			// TODO: read the data dictionary tables for each $DBTYPE
 		default:
+			// information_schema.tables is an ANSI standard.
+			return
+				PGV_DB::prepare("SELECT table_name FROM information_schema.tables WHERE table_schema=? ORDER BY table_name")
+				->execute(array($DBNAME))
+				->fetchOneColumn();
+		case 'sqlite':
+		case 'sqlite2':
+			// SQLITE doesn't support the ANSI standard information_schema
+			return
+				PGV_DB::prepare("SELECT name FROM sqlite_master WHERE type=? ORDER BY name")
+				->execute(array('table'))
+				->fetchOneColumn();
+		}
+	}
+
+	public static function all_columns($table) {
+		global $DBNAME;
+
+		switch (self::$pdo->getAttribute(PDO::ATTR_DRIVER_NAME)) {
+		case 'mysql':
+		case 'pgsql':
+		case 'mssql':
+		default:
+			// information_schema.tables is an ANSI standard.
+			return
+				PGV_DB::prepare("SELECT column_name FROM information_schema.columns WHERE table_schema=? AND table_name=?")
+				->execute(array($DBNAME, $table))
+				->fetchOneColumn();
+		case 'sqlite':
+		case 'sqlite2':
+			// SQLITE doesn't support the ANSI standard information_schema
+			$rows=
+				PGV_DB::prepare("pragma table_info(?)")
+				->execute(array($table))
+				->fetchAll();
+			$columns=array();
+			foreach ($rows as $row) {
+				$columns[]=$row->name;
+			}
+			return $columns;
+		}
+	}
+
+	public static function table_exists($table) {
+		global $DBNAME;
+
+		switch (self::$pdo->getAttribute(PDO::ATTR_DRIVER_NAME)) {
+		case 'mysql':
+		case 'pgsql':
+		case 'mssql':
+			// information_schema.tables is an ANSI standard.
+			return (bool)
+				PGV_DB::prepare("SELECT 1 FROM information_schema.tables WHERE table_schema=? AND table_name=?")
+				->execute(array($DBNAME, $table))
+				->fetchOne();
+		case 'sqlite':
+		case 'sqlite2':
+			// SQLITE doesn't support the ANSI standard information_schema
+			return (bool)
+				PGV_DB::prepare("SELECT 1 FROM sqlite_master WHERE type=? AND name=?")
+				->execute(array('table', $table))
+				->fetchOne();
+		default:
+			// Catch-all for other databases
 			try {
 				PGV_DB::prepare("SELECT 1 FROM {$table}")->fetchOne();
 				return true;
@@ -237,13 +424,32 @@ class PGV_DB {
 	}
 
 	public static function column_exists($table, $column) {
-		switch (self::$dbtype) {
+		global $DBNAME;
+
+		switch (self::$pdo->getAttribute(PDO::ATTR_DRIVER_NAME)) {
 		case 'mysql':
-		case 'sqlite':
 		case 'pgsql':
 		case 'mssql':
-			// TODO: read the data dictionary tables for each $DBTYPE
+			// information_schema.columns is an ANSI standard.
+			return (bool)
+				PGV_DB::prepare("SELECT 1 FROM information_schema.columns WHERE table_schema=? AND table_name=? AND column_name=?")
+				->execute(array($DBNAME, $table, $column))
+				->fetchOne();
+		case 'sqlite':
+		case 'sqlite2':
+			// SQLITE doesn't support the ANSI standard information_schema
+			$rows=
+				PGV_DB::prepare("pragma table_info(?)")
+				->execute(array($table))
+				->fetchAll();
+			foreach ($rows as $row) {
+				if ($row->name==$column) {
+					return true;
+				}
+			}
+			return false;
 		default:
+			// Catch-all for other databases
 			try {
 				PGV_DB::prepare("SELECT {$column} FROM {$table}")->fetchOne();
 				return true;
@@ -334,7 +540,7 @@ class PGV_DBStatement {
 			return $this;
 		case 'execute':
 			if ($this->executed) {
-    		trigger_error('PGV_DBStatement::execute() called twice.', E_USER_ERROR);
+				trigger_error('PGV_DBStatement::execute() called twice.', E_USER_ERROR);
 			} else {
 				$start=microtime(true);
 				$result=call_user_func_array(array($this->pdostatement, $function), $params);
