@@ -1638,15 +1638,14 @@ function print_theme_dropdown($style=0) {
 */
 function PrintReady($text, $InHeaders=false, $trim=true) {
 	global $query, $action, $firstname, $lastname, $place, $year;
-	global $TEXT_DIRECTION_array, $TEXT_DIRECTION;
+	global $TEXT_DIRECTION_array, $TEXT_DIRECTION, $controller;
 	// Check whether Search page highlighting should be done or not
-	$HighlightOK = false;
-	if (strstr($_SERVER["SCRIPT_NAME"], "search.php")) {  // If we're on the Search page
-		if (!$InHeaders) {        //   and also in page body
-			if ((isset($query) and ($query != "")) ) {  //   and the query isn't blank
-				$HighlightOK = true;     // It's OK to mark search result
-			}
-		}
+	if (isset($controller) && $controller instanceof SearchController && $controller->query) {
+		$query=$controller->query;
+		$HighlightOK=true;
+	} else {
+		$query='';
+		$HighlightOK=false;
 	}
 	//-- convert all & to &amp;
 	$text = preg_replace("/&/", "&amp;", $text);
@@ -1664,25 +1663,23 @@ function PrintReady($text, $InHeaders=false, $trim=true) {
 		//  argument search, in which the second or later arguments can be found in the
 		//  <span> or </span> strings.
 		if ($HighlightOK) {
-			if (isset($query)) {
-				$queries = explode(" ", $query);
-				$newtext = $text;
-				$hasallhits = true;
-				foreach($queries as $index=>$query1) {
-					$query1esc=preg_quote($query1, '/');
-					if (@preg_match("/(".$query1esc.")/i", $text)) { // Use @ as user-supplied query might be invalid.
-						$newtext = preg_replace("/(".$query1esc.")/i", "\x01$1\x02", $newtext);
-					}
-					else if (@preg_match("/(".UTF8_strtoupper($query1esc).")/", UTF8_strtoupper($text))) {
-						$nlen = strlen($query1);
-						$npos = strpos(UTF8_strtoupper($text), UTF8_strtoupper($query1));
-						$newtext = substr_replace($newtext, "\x02", $npos+$nlen, 0);
-						$newtext = substr_replace($newtext, "\x01", $npos, 0);
-					}
-					else $hasallhits = false;
+			$queries = explode(" ", $query);
+			$newtext = $text;
+			$hasallhits = true;
+			foreach($queries as $index=>$query1) {
+				$query1esc=preg_quote($query1, '/');
+				if (@preg_match("/(".$query1esc.")/i", $text)) { // Use @ as user-supplied query might be invalid.
+					$newtext = preg_replace("/(".$query1esc.")/i", "\x01$1\x02", $newtext);
 				}
-				if ($hasallhits) $text = $newtext;
+				else if (@preg_match("/(".UTF8_strtoupper($query1esc).")/", UTF8_strtoupper($text))) {
+					$nlen = strlen($query1);
+					$npos = strpos(UTF8_strtoupper($text), UTF8_strtoupper($query1));
+					$newtext = substr_replace($newtext, "\x02", $npos+$nlen, 0);
+					$newtext = substr_replace($newtext, "\x01", $npos, 0);
+				}
+				else $hasallhits = false;
 			}
+			if ($hasallhits) $text = $newtext;
 			if (isset($action) && ($action === "soundex")) {
 				if (isset($firstname)) {
 					$queries = explode(" ", $firstname);
