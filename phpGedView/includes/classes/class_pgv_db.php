@@ -115,22 +115,9 @@ class PGV_DB {
 			);
 			break;
 		case 'sqlite':
-//			self::$pdo=new PDO(
-//				"sqlite:{$DBNAME}", $DBUSER, $DBPASS,
-//				array(
-//					PDO::ATTR_PERSISTENT=>(bool)$DBPERSIST,
-//					PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION,
-//					PDO::ATTR_DEFAULT_FETCH_MODE=>PDO::FETCH_OBJ,
-//					PDO::ATTR_CASE=>PDO::CASE_LOWER
-//				)
-//			);
-//			try {
-//				// Check if we can connect to the database
-//				PGV_DB::prepare("SELECT 1 FROM information_schema")->fetchOne();
-//			} catch (PDOException $ex) {
-//				// Couldn't connect using sqlite3 - try sqlite2
+			try {
 				self::$pdo=new PDO(
-					"sqlite2:{$DBNAME}", $DBUSER, $DBPASS,
+					"sqlite:{$DBNAME}", null, null,
 					array(
 						PDO::ATTR_PERSISTENT=>(bool)$DBPERSIST,
 						PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION,
@@ -138,9 +125,20 @@ class PGV_DB {
 						PDO::ATTR_CASE=>PDO::CASE_LOWER
 					)
 				);
-//			}
-			if ($DB_UTF8_COLLATION) {
-				self::$pdo->exec('PRAGMA encoding="UTF-8"');
+				// Check if we can connect to the database
+				// If not, we may have a sqlite2 database from PhpGedView 4.2.1 or earlier
+				PGV_DB::exec('PRAGMA encoding="UTF-8"');
+			} catch (PDOException $ex) {
+				// Couldn't connect using sqlite3 - try sqlite2
+				self::$pdo=new PDO(
+					"sqlite2:{$DBNAME}", null, null,
+					array(
+						PDO::ATTR_PERSISTENT=>(bool)$DBPERSIST,
+						PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION,
+						PDO::ATTR_DEFAULT_FETCH_MODE=>PDO::FETCH_OBJ,
+						PDO::ATTR_CASE=>PDO::CASE_LOWER
+					)
+				);
 			}
 			break;
 		case 'firebird':
@@ -462,6 +460,17 @@ class PGV_DB {
 	//////////////////////////////////////////////////////////////////////////////
 	// FUNCTIONALITY ENHANCEMENTS
 	//////////////////////////////////////////////////////////////////////////////
+
+	// Don't list sqlite2 as an available driver.  It is no good for PhpGedView
+	public static function getAvailableDrivers() {
+		$array=PDO::getAvailableDrivers();
+		foreach ($array as $key=>$value) {
+			if ($value=='sqlite2') {
+				unset($array[$key]);
+			}
+		}
+		return $array;
+	}
 
 	// The native quote() function does not convert PHP nulls to DB nulls
 	public static function quote($string, $parameter_type=PDO::PARAM_STR) {

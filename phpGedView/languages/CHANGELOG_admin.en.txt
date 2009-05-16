@@ -44,6 +44,7 @@ VERSION 4.2.2
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 -----------------------------------------------------------------------------------------
+-$pgv_lang["mysqli"]                  16 May 2009           D
 +$pgv_lang["enter_comment"]							4 May 2009				A
 
 
