@@ -245,15 +245,8 @@ if ($action == "choose" && $paramok) {
 	print_simple_footer();
 	
 } elseif ($action == "update" && $paramok) {
+
 	// GEDFact assistant Add Media Links =======================
-		
-		// DEBUG --------------------------------
-		//echo "LINKTOID =".$linktoid. "<br />";
-		//echo "MEDIAID =".$mediaid. "<br />";
-		//echo "MORELINKS =".$more_links. "<br />";
-		//echo "<br />";
-		// --------------------------------------
-	
 	if (file_exists('modules/GEDFact_assistant/MEDIA/media_1_ctrl.php') && !empty($mediaid)) {
 		if ($more_links != "No_Values") {
 			$more_links = stripslashes($more_links);

@@ -582,6 +582,11 @@ a:hover .nameZoom {
 	padding: 1px;
 }
 
+.submenuitem a, .submenuitem_rtl a, .submenuitem_hover a, .submenuitem_hover_rtl a {
+	display: inline-table;
+	vertical-align: middle;
+}
+
 .news_box {
 	background-color: #b1cff0;
 	border: solid #a1bfe0 1px;

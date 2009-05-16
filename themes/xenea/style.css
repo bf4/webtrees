@@ -664,6 +664,18 @@ a:hover .nameZoom {
 	text-align: right;
 }
 
+ .submenuitem a {
+ 	color: black;
+	display: inline-table;
+	vertical-align: middle;
+ }
+ 
+ .submenuitem_rtl a {
+ 	color: black;
+	display: inline-table;
+	vertical-align: middle;
+ }
+
 .submenuitem_hover, .submenuitem_hover_rtl {
 	color: black;
 	font: normal 11px tahoma, arial, helvetica, sans-serif;
@@ -679,6 +691,11 @@ a:hover .nameZoom {
 
 .submenuitem_hover_rtl {
 	text-align: right;
+}
+
+.submenuitem_hover a, .submenuitem_hover_rtl a {
+	display: inline-table;
+	vertical-align: middle;
 }
 
 .news_box {

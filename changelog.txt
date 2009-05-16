@@ -10,6 +10,7 @@
 
 
 Version 4.2.x CA
+ - Merged: Merge changes r5509 - r5519 from the trunk. (windmillway)
  - Changed: Finalised "Add GEDFact_assistant/MEDIA/ sub module and core files. -  Still Link removals to do. -  (windmillway)
  - Changed: More changes to GEDFact_assistant/MEDIA/ sub module and core files (windmillway)
  - Changed: More minor changes to GEDFact_assistant/MEDIA/ submodule (windmillway)
