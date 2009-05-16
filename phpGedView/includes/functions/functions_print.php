@@ -1637,7 +1637,7 @@ function print_theme_dropdown($style=0) {
 * @param string $text to be printed
 */
 function PrintReady($text, $InHeaders=false, $trim=true) {
-	global $query, $action, $firstname, $lastname, $place, $year;
+	global $action, $firstname, $lastname, $place, $year;
 	global $TEXT_DIRECTION_array, $TEXT_DIRECTION, $controller;
 	// Check whether Search page highlighting should be done or not
 	if (isset($controller) && $controller instanceof SearchController && $controller->query) {
