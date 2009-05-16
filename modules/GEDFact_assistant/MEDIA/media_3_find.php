@@ -113,7 +113,7 @@ switch ($type) {
 <!--
 	function pasterow(id, name, gend, yob, age, bpl) {
 		window.opener.opener.insertRowToTable(id, name, '', gend, '', yob, age, 'Y', '', bpl);
-		<?php if (!$multiple) print "window.close();"; ?>
+		<?php // if (!$multiple) print "window.close();"; ?>
 	}
 	
 	function pasteid(id, name,thumb) {
@@ -381,11 +381,10 @@ if ($action=="filter") {
 			print "\n\t\t<td class=\"list_value_wrap $TEXT_DIRECTION\"><ul>";
 			usort($myindilist, array('GedcomRecord', 'Compare'));
 			foreach($myindilist as $indi ) {
-				$nam = $indi->getFullName();
+				$nam = htmlspecialchars($indi->getFullName());
 //				$wholename = rtrim($nam[0]['givn'],'*')."&nbsp;".$nam[0]['surn'];
 				echo "<li><a href=\"javascript:;\" onclick=\"pasterow(
 					'".$indi->getXref()."' , 
-
 					'".$nam."' ,
 					'".$indi->getSex()."' ,
 					'".$indi->getbirthyear()."' ,

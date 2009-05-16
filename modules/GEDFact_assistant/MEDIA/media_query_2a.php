@@ -108,12 +108,11 @@ height: 0px;
 <tr>
 <td width="350" class="row2">
 <?php
-	echo "B)&nbsp;&nbsp";
+	echo "b) To add more Individual Links click &nbsp;&nbsp;";
 	echo "<input type=\"button\" name=\"Button\" value=\"Add\" onClick=\"javascript:addlinks(); return false;\">";
-	echo "&nbsp;&nbsp;Then, click Add to add more Individual Links";
 	echo "<br /><br >";
 //	echo "<center><textarea name=\"newindis\" id=\"newindis\" rows=\"8\" cols=\"68\"></textarea></center>"
-include('modules/GEDFact_assistant/MEDIA/media_5_input.php');
+	include('modules/GEDFact_assistant/MEDIA/media_5_input.php');
 	?>
 </td>
 </tr>

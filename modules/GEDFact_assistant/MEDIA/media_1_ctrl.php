@@ -133,6 +133,7 @@ if ($pid=="") {
 				<?php
 				//-- Help/Save Area ==================================================
 				include('modules/GEDFact_assistant/MEDIA/media_6_help_save.php');
+				include('modules/GEDFact_assistant/MEDIA/media_7_parse_addLinksTbl.php');
 				?>
 			</td>
 		</tr>

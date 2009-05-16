@@ -40,7 +40,7 @@ require './config.php';
 <!--
 .table1 {
 border: 0px solid #CC6600;
-font-family: Verdana, Arial, Helvetica, sans-serif;
+font-family: Verdana, Arial, Helvetica, sans-serif; 
 font-size: 10px;
 font-style: normal;
 text-transform: none;
@@ -48,6 +48,7 @@ text-transform: none;
 .style1 {
 color: #0000FF;
 font-weight: bold;
+font-size: 10px;
 }
 .row1 {
 background-color: #D8D8D8;
@@ -65,24 +66,25 @@ background-color: #FF0000;
 <?php
 	$links = get_media_relations($mediaid);
 	// var_dump($links);
-	echo "<table width=\"350\" cellpadding=\"0\" cellspacing=\"1\" class=\"table1\">";
+	echo "<table><tr><td>";
+	echo "<table width=\"380\" cellspacing=\"1\" >";
 	echo "<tr>";
-	echo "<td width=\"20\" align=\"left\" bgcolor=\"#AAAAAA\"><span class=\"style1\">#</span></td>";
-	echo "<td width=\"30\" align=\"left\" bgcolor=\"#AAAAAA\"><span class=\"style1\">Id</span></td>";
-	echo "<td wrap=\"nowrap\" width=\"150\" align=\"left\" bgcolor=\"#AAAAAA\"><span class=\"style1\">Name</span></td>";
-	echo "<td width=\"25\" align=\"center\" bgcolor=\"#AAAAAA\" nowrap='nowrap'><span class=\"style1\">&nbsp;Link&nbsp;</span></td>";
-	echo "<td width=\"25\" align=\"center\" bgcolor=\"#AAAAAA\" nowrap='nowrap'><span class=\"style1\">&nbsp;&nbsp;Unlink&nbsp;</span></td>";
+	echo "<td class=\"descriptionbox\" width=\"20\" align=\"left\" ><span class=\"style1\">#</span></td>";
+	echo "<td class=\"descriptionbox\" width=\"40\" align=\"left\" bgcolor=\"#AAAAAA\"><span class=\"style1\">ID:</span></td>";
+	echo "<td class=\"descriptionbox\" wrap=\"nowrap\" width=\"250\" align=\"left\" bgcolor=\"#AAAAAA\"><span class=\"style1\">Name</span></td>";
+	echo "<td class=\"descriptionbox\" width=\"20\" align=\"center\" bgcolor=\"#AAAAAA\" nowrap='nowrap'><span class=\"style1\">&nbsp;Keep&nbsp;</span></td>";
+	echo "<td class=\"descriptionbox\" width=\"20\" align=\"center\" bgcolor=\"#AAAAAA\" nowrap='nowrap'><span class=\"style1\">&nbsp;&nbsp;Unlink&nbsp;</span></td>";
 	echo "</tr>";
 
 	$keys = array_keys($links);
 	$values = array_values($links);
 	$i=1;
 	foreach ($keys as $link) {
-		echo "<tr ><td >";
+		echo "<tr ><td class=\"row2\"><font size='2'>";
 		echo $i;
-		echo "</td><td class=\"row2\">";
+		echo "</td><td class=\"row2\"><font size='2'>";
 			echo $link;
-		echo "</td><td class=\"row2\" >";
+		echo "</td><td class=\"row2\" ><font size='2'>";
 		if ($link[0]=="I") {
 			$person=Person::getInstance($link);
 		} elseif ($link[0]=="F") {
@@ -93,13 +95,14 @@ background-color: #FF0000;
 		$nam = $person->getFullName();
 		echo $nam;
 		echo "</td>";
-		echo "<td class=\"row2\"><input type='radio' name='rad_".$link."' checked /></td>";
+		echo "<td class=\"row2\" align='center'><input type='radio' name='rad_".$link."' checked /></td>";
 		echo "<td class=\"row2\" align='center'><input type='radio' name='rad_".$link."' /></td>";
 		echo "</tr>";
 		$i= $i+1;
 	}
 	
 	echo "</table>";
+	echo "</td></tr></table>";
 	echo "<br />";
 ?>
 
