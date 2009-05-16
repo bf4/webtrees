@@ -189,6 +189,7 @@ $pgv_lang["server_url_note"]			= "Geben Sie das URL zu Ihrem PhpGedView-Ordner a
 
 $pgv_lang["DBTYPE"]						= "Datenbank-Typ";
 $pgv_lang["DBTYPE_help"]				= "~#pgv_lang[DBTYPE]#~<br /><br />Der Typ der Datenbank (PEAR-Unterstützung) die genutzt werden soll. Möglich sind: MySQL, PostgreSQL, Oracle und SQLite.<br />";
+$pgv_lang["DBTYPE_help"]		= "~#pgv_lang[DBTYPE]#~<br /><br />Der Typ der Datenbank die benutzt werden soll.<br /><br />PhpGedView kann jede beliebige Datenbank benutzen, sofern sie durch einem PDO-Treiber unterstützt ist.  Sie müssen sicher sein, dass die php.ini Datei passende Zeilen enthält, die das Laden der PDO-Bibliothek und des Treibers des zu benutzenden Datenbanktyps (z.B. <b>php_pdo_mysql</b>) befehlen.<br /><br />Die meisten Datenbanken benötigen einen Nutzernamen und das dazu passende Kennwort.  Sie müssen auch die Datenbank erstellen, bevor Sie das PhpGedView Programm zum ersten Mal benutzen können. Im Gegenteil zu anderen Datenbanken, erfordert SQLite nicht die Eingaben #pgv_lang[DBHOST]#, #pgv_lang[DBUSER]#, und #pgv_lang[DBPASS]#, aber Sie müssen den Pfad zu Ihrer Datenbank im pgv_lang[DBNAME]# Feld eingeben.  PhpGedView kann die SQLite Datenbank für Sie erstellen.<br />";
 $pgv_lang["DBHOST"]						= "Datenbank-Host";
 $pgv_lang["DBHOST_help"]				= "~#pgv_lang[DBHOST]#~<br /><br />Die DNS- oder IP-Adresse Ihres Datenbank-Servers.<br />";
 $pgv_lang["DBPORT"]						= "TCP Port (Datenbank)";
