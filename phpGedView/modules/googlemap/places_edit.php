@@ -169,25 +169,25 @@ if ($action=='updaterecord' && PGV_USER_IS_ADMIN) {
 
 if ($action=="update") {
 	// --- find the place in the file
-	$sql="SELECT pl_place,pl_lati,pl_long,pl_icon,pl_parent_id,pl_level,pl_zoom FROM {$TBLPREFIX}placelocation WHERE pl_id={$placeid}";
-	$res =dbquery($sql);
-	$row=&$res->fetchRow();
-	$res->free();
-	$place_name = $row[0];
-	$place_icon = $row[3];
+	$row=
+		PGV_DB::prepare("SELECT pl_place,pl_lati,pl_long,pl_icon,pl_parent_id,pl_level,pl_zoom FROM {$TBLPREFIX}placelocation WHERE pl_id=?")
+		->execute(array($placeid))
+		->fetchOneRow();
+	$place_name = $row->pl_place;
+	$place_icon = $row->pl_icon;
 	$selected_country = explode("/", $place_icon);
 	if (isset($selected_country[1]) && $selected_country[1]!="flags")
 		$selected_country = $selected_country[1];
 	else
 		$selected_country = "Countries";
-	$parent_id	= $row[4];
-	$level		= $row[5];
-	$zoomfactor	= $row[6];
+	$parent_id	= $row->pl_parent_id;
+	$level		= $row->pl_level;
+	$zoomfactor	= $row->pl_zoom;
 	$parent_lati = "0.0";
 	$parent_long = "0.0";
-	if(($row[1] != NULL) && ($row[2] != NULL)) {
-		$place_lati = (float)(str_replace(array('N', 'S', ','), array('', '-', '.') , $row[1]));
-		$place_long = (float)(str_replace(array('E', 'W', ','), array('', '-', '.') , $row[2]));
+	if ($row->pl_lati!==null && $row->pl_long!==null) {
+		$place_lati = (float)(str_replace(array('N', 'S', ','), array('', '-', '.') , $row->pl_lati));
+		$place_long = (float)(str_replace(array('E', 'W', ','), array('', '-', '.') , $row->pl_long));
 		$show_marker = true;
 	} else {
 		$place_lati = null;
@@ -197,19 +197,19 @@ if ($action=="update") {
 	}
 
 	do {
-		$sql="SELECT pl_lati,pl_long,pl_parent_id,pl_zoom FROM {$TBLPREFIX}placelocation WHERE pl_id={$parent_id}";
-		$res=dbquery($sql);
-		$row=&$res->fetchRow();
-		$res->free();
-		if(($row[0] != NULL) && ($row[1] != NULL)) {
-			$parent_lati = (float)(str_replace(array('N', 'S', ','), array('', '-', '.') , $row[0]));
-			$parent_long = (float)(str_replace(array('E', 'W', ','), array('', '-', '.') , $row[1]));
+		$row=
+			PGV_DB::prepare("SELECT pl_lati,pl_long,pl_parent_id,pl_zoom FROM {$TBLPREFIX}placelocation WHERE pl_id=?")
+			->execute(array($parent_id))
+			->fetchOneRow();
+		if ($row->pl_lati!==null && $row->pl_long!==null) {
+			$parent_lati = (float)(str_replace(array('N', 'S', ','), array('', '-', '.') , $row->pl_lati));
+			$parent_long = (float)(str_replace(array('E', 'W', ','), array('', '-', '.') , $row->pl_long));
 			if ($zoomfactor == 1) {
-				$zoomfactor = $row[3];
+				$zoomfactor = $row->pl_zoom;
 			}
 		}
-		$parent_id = $row[2];
-	} while ($row[2]!=0 && $row[0]==NULL && $row[1]==NULL);
+		$parent_id = $row->pl_parent_id;
+	} while ($row->pl_parent_id!=0 && $row->pl_lati===null && $row->pl_long===null);
 
 	$success = false;
 
@@ -228,19 +228,21 @@ if ($action=="add") {
 		$place_icon = "";
 		$parent_id=$placeid;
 		do {
-			$sql = "SELECT pl_lati,pl_long,pl_parent_id,pl_zoom,pl_level FROM {$TBLPREFIX}placelocation WHERE pl_id={$parent_id}";
-			$res = dbquery($sql);
-			$row =& $res->fetchRow();
-			if(($row[0] != NULL) && ($row[1] != NULL)) {
-				$parent_lati = str_replace(array('N', 'S', ','), array('', '-', '.') , $row[0]);
-				$parent_long = str_replace(array('E', 'W', ','), array('', '-', '.') , $row[1]);
-				$zoomfactor = $row[3]+2;
-				if ($zoomfactor > $GOOGLEMAP_MAX_ZOOM) $zoomfactor = $GOOGLEMAP_MAX_ZOOM;
-				$level	   = $row[4]+1;
+			$row=
+				PGV_DB::prepare("SELECT pl_lati,pl_long,pl_parent_id,pl_zoom,pl_level FROM {$TBLPREFIX}placelocation WHERE pl_id=?")
+				->execute(array($parent_id))
+				->fetchOneRow();
+			if ($row->pl_lati!==null && $row->pl_long!==null) {
+				$parent_lati=str_replace(array('N', 'S', ','), array('', '-', '.') , $row->pl_lati);
+				$parent_long=str_replace(array('E', 'W', ','), array('', '-', '.') , $row->pl_long);
+				$zoomfactor=$row->pl_zoom+2;
+				if ($zoomfactor>$GOOGLEMAP_MAX_ZOOM) {
+					$zoomfactor=$GOOGLEMAP_MAX_ZOOM;
+				}
+				$level=$row->pl_level+1;
 			}
-			$parent_id = $row[2];
-			$res->free();
-		} while (($row[2] != 0) && ($row[0] == NULL) && ($row[1] == NULL));
+			$parent_id = $row->pl_parent_id;
+		} while ($row->pl_parent_id!=0 && $row->pl_lati===null && $row->pl_long===null);
 	}
 	else {
 		if (!isset($place_name)) $place_name  = "";
@@ -526,29 +528,30 @@ if ($action=="add") {
 			childicon.iconAnchor = new GPoint(6, 20);
 			childicon.infoWindowAnchor = new GPoint(5, 1);
 <?php
-			$sql = "SELECT pl_place,pl_lati,pl_long,pl_icon FROM {$TBLPREFIX}placelocation WHERE pl_parent_id={$placeid}";
-			$res = dbquery($sql);
+			$rows=
+				PGV_DB::prepare("SELECT pl_place,pl_lati,pl_long,pl_icon FROM {$TBLPREFIX}placelocation WHERE pl_parent_id=?")
+				->execute(array($placeid))
+				->fetchAll();
 			$i = 0;
-			while ($row =& $res->fetchRow()) {
-				if (($row[1] != null) && ($row[2] != null)) {
+			foreach ($rows as $row) {
+				if ($row->pl_lati!==null && $row->pl_long!==null) {
 					//delete leading zero
-					$pl_lati = str_replace(array('N', 'S', ','), array('', '-', '.') , $row[1]);
-					$pl_long = str_replace(array('E', 'W', ','), array('', '-', '.') , $row[2]);
-					if ($pl_lati >= 0) 		$row[1] = abs($pl_lati);
-					else if ($pl_lati < 0) 	$row[1] = "-".abs($pl_lati);
-					if ($pl_long >= 0) 		$row[2] = abs($pl_long);
-					else if ($pl_long < 0) 	$row[2] = "-".abs($pl_long);
+					$pl_lati = str_replace(array('N', 'S', ','), array('', '-', '.') , $row->pl_lati);
+					$pl_long = str_replace(array('E', 'W', ','), array('', '-', '.') , $row->pl_long);
+					if ($pl_lati >= 0) 		$row->pl_lati = abs($pl_lati);
+					else if ($pl_lati < 0) 	$row->pl_lati = "-".abs($pl_lati);
+					if ($pl_long >= 0) 		$row->pl_long = abs($pl_long);
+					else if ($pl_long < 0) 	$row->pl_long = "-".abs($pl_long);
 
-					echo "	 	 	 childplaces.push(new GMarker(new GLatLng(".$row[1].", ".$row[2]."), childicon));\n";
+					echo "	 	 	 childplaces.push(new GMarker(new GLatLng(".$row->pl_lati.", ".$row->pl_long."), childicon));\n";
 					echo "			 GEvent.addListener(childplaces[".$i."], \"click\", function() {\n";
-					echo "             childplaces[".$i."].openInfoWindowHtml(\"<td width='100%'><div class='iwstyle' style='width: 250px;'><br />".addslashes($row[0])."<br /><br /></div>\")});\n";
+					echo "             childplaces[".$i."].openInfoWindowHtml(\"<td width='100%'><div class='iwstyle' style='width: 250px;'><br />".addslashes($row->pl_place)."<br /><br /></div>\")});\n";
 					echo "	 	 	 map.addOverlay(childplaces[".$i."]);\n";
-					echo "	 	 	 bounds.extend(new GLatLng(".$row[1].", ".$row[2]."));\n";
+					echo "	 	 	 bounds.extend(new GLatLng(".$row->pl_lati.", ".$row->pl_long."));\n";
 					$i++;
 					echo "	 	 	 map.setCenter(bounds.getCenter());\n";
 				}
 			}
-			$res->free();
 		}
 		if ($show_marker == true) {
 			if (($place_icon == NULL) || ($place_icon == "")) {
