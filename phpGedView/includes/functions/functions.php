@@ -46,7 +46,7 @@ require_once 'includes/functions/functions_UTF8.php';
  * @return boolean true if database successfully connected, false if there was an error
  */
 function check_db($ignore_previous=false) {
-	global $DBTYPE, $DBHOST, $DBPORT, $DBUSER, $DBPASS, $DBNAME, $DBCONN, $TOTAL_QUERIES, $PHP_SELF, $DBPERSIST, $CONFIGURED;
+	global $DBTYPE, $DBHOST, $DBPORT, $DBUSER, $DBPASS, $DBNAME, $DBCONN, $PHP_SELF, $DBPERSIST, $CONFIGURED;
 	global $INDEX_DIRECTORY, $DB_UTF8_COLLATION;
 
 	if (!$ignore_previous) {
@@ -69,8 +69,6 @@ function check_db($ignore_previous=false) {
 			if (isset($_POST['NEW_DB_UTF8_COLLATION'])) $DBPERSIST = $_POST['NEW_DB_UTF8_COLLATION'];
 		}
 	}
-	//-- initialize query counter
-	$TOTAL_QUERIES = 0;
 	if (!isset($DBPORT)) {
 		$DBPORT="";
 	}

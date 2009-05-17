@@ -130,7 +130,7 @@ define('PGV_DB_COL_TAG',  PGV_DB_VARCHAR_TYPE.'(15)');           // Gedcom tags/
 * @return DB_result the connection result
 */
 function &dbquery($sql, $show_error=true) {
-	global $DBCONN, $TOTAL_QUERIES, $INDEX_DIRECTORY, $LAST_QUERY, $CONFIGURED;
+	global $DBCONN, $INDEX_DIRECTORY, $LAST_QUERY, $CONFIGURED;
 
 	if (!$CONFIGURED) {
 		return false;
@@ -164,7 +164,6 @@ function &dbquery($sql, $show_error=true) {
 	$res =& $DBCONN->query($sql);
 
 	$LAST_QUERY = $sql;
-	$TOTAL_QUERIES++;
 	if (PGV_DEBUG_SQL) {
 		global $start_time;
 		$end_time = microtime(true);
@@ -187,7 +186,7 @@ function &dbquery($sql, $show_error=true) {
 		fwrite($fp,	sprintf(
 			"%s\t%s\t%.3f ms\t%s\t%s\t%s".PGV_EOL,
 			date("Y-m-d H:i:s"),
-			basename($_SERVER["SCRIPT_NAME"]).'-'.$TOTAL_QUERIES,
+			basename($_SERVER["SCRIPT_NAME"]),
 			$exectime * 1000,
 			$rows,
 			$sql,
@@ -1337,12 +1336,11 @@ function find_gedcom_record($pid, $gedfile='') {
 // Find the type of a gedcom record. Check the cache before querying the database.
 // Returns 'INDI', 'FAM', etc., or null if the record does not exist.
 function gedcom_record_type($xref, $ged_id) {
-	global $TBLPREFIX, $DBCONN, $TOTAL_QUERIES, $gedcom_record_cache;
+	global $TBLPREFIX, $DBCONN, $gedcom_record_cache;
 
 	if (isset($gedcom_record_cache[$xref][$ged_id])) {
 		return $gedcom_record_cache[$xref][$ged_id]->getType();
 	} else {
-		++$TOTAL_QUERIES;
 		$xref=$DBCONN->escapeSimple($xref);
 		return $DBCONN->getOne(
 			"SELECT 'INDI' FROM {$TBLPREFIX}individuals WHERE i_id   ='{$xref}' AND i_file   ={$ged_id} UNION ALL ".
