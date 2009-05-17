@@ -121,9 +121,6 @@ function get_place_list_loc($parent_id) {
 			->execute(array($parent_id))
 			->fetchAll();
 	} else {
-		// :TODO:
-		// This method of filtering fails to distinguish "Newport, Hampshire, England" from "Newport, Gwent, Wales".
-		// Fortunately it provides too many results, rather than too few.
 		$rows=
 			PGV_DB::prepare(
 				"SELECT DISTINCT pl_id,pl_place,pl_lati,pl_long,pl_zoom,pl_icon".
