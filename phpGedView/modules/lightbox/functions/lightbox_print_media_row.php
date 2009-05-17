@@ -192,7 +192,7 @@ function lightbox_print_media_row($rtype, $rowm, $pid) {
 			$submenu_class			=	"submenuitem";
 			$submenu_hoverclass		=	"submenuitem_hover";
 		}
-		$menu = array();
+		$menu = new Menu();
 		// Truncate media title to 13 chars and add ellipsis
 		$mtitle = $rawTitle;
 		if (UTF8_strlen($rawTitle)>16) $mtitle = UTF8_substr($rawTitle, 0, 13).$pgv_lang["ellipsis"];
@@ -201,92 +201,58 @@ function lightbox_print_media_row($rtype, $rowm, $pid) {
 		// Continue menu construction
 		// If media file is missing from "media" directory, but is referenced in Gedcom
 		if (!media_exists($rowm['m_file']) && !media_exists($mainMedia)) {
-			$menu["label"] = "\n<img src=\"{$thumbnail}\" style=\"display:none;\" alt=\"\" title=\"\" />" . $pgv_lang['edit_media'] . "\n";
+			$menu->addLabel("\n<img src=\"{$thumbnail}\" style=\"display:none;\" alt=\"\" title=\"\" />" . $pgv_lang['edit_media'] . "\n", "right");
 		} else {
-			$menu["label"] = "\n<img src=\"{$thumbnail}\" style=\"display:none;\" alt=\"\" title=\"\" />" . PrintReady($mtitle) . "\n";
+			$menu->addLabel("\n<img src=\"{$thumbnail}\" style=\"display:none;\" alt=\"\" title=\"\" />" . PrintReady($mtitle) . "\n", "right");
 		}
-		$menu["labelpos"] = "right";
-		$menu["icon"] = "";
-		$menu["onclick"] = "";
 		// Next line removed to avoid gallery thumbnail duplication
 		// $menu["link"] = mediaInfo['url'];
-		$menu["class"] = "";
-		$menu["hoverclass"] = "";
-		$menu["flyout"] = "down";
 
 		if ($rtype=='old') {
 			// Do not print menu if item has changed and this is the old item
 		} else {
 			// Continue printing menu
-			$menu["submenuclass"] = "submenu";
-			$menu["items"] = array();
+			$menu->addClass("", "", "submenu");
+
 			// View Notes
 			if (eregi("1 NOTE",$rowm['m_gedrec'])) {
-				$submenu = array();
-				$submenu["label"] = "&nbsp;&nbsp;" . $pgv_lang["lb_viewnotes"] . "&nbsp;&nbsp;";
-				$submenu["labelpos"] = "right";
-				$submenu["icon"] = "";
+				$submenu = new Menu("&nbsp;&nbsp;" . $pgv_lang["lb_viewnotes"] . "&nbsp;&nbsp;", "#", "right");
 				// Notes Tooltip ----------------------------------------------------
-				$submenu["onclick"]  = "TipTog(";
+				$sonclick  = "TipTog(";
 				// Contents of Notes
-				$submenu["onclick"] .= "'";
-				$submenu["onclick"] .= "&lt;font color=#008800>&lt;b>" . $pgv_lang["notes"] . ":&lt;/b>&lt;/font>&lt;br />";
-				// echo "<br />";
-				$submenu["onclick"] .= $notes;
-				$submenu["onclick"] .= "'";
+				$sonclick .= "'";
+				$sonclick .= "&lt;font color=#008800>&lt;b>" . $pgv_lang["notes"] . ":&lt;/b>&lt;/font>&lt;br />";
+				$sonclick .= $notes;
+				$sonclick .= "'";
 				// Notes Tooltip Parameters
-				$submenu["onclick"] .= $tt_opts;
-				$submenu["onclick"] .= ");";
-				$submenu["onclick"] .= "return false;";
-				$submenu["link"] = "#";
-				$submenu["class"] = $submenu_class;
-				$submenu["hoverclass"] = $submenu_hoverclass;
-				$menu["items"][] = $submenu;
-				echo "\n";
+				$sonclick .= $tt_opts;
+				$sonclick .= ");";
+				$sonclick .= "return false;";
+				$submenu->addOnclick($sonclick);
+				$submenu->addClass($submenu_class, $submenu_hoverclass);
+				$menu->addSubMenu($submenu);
 			}
 			//View Details
-			$submenu = array();
-			$submenu["label"] = "&nbsp;&nbsp;" . $pgv_lang["lb_viewdetails"] . "&nbsp;&nbsp;";
-			$submenu["labelpos"] = "right";
-			$submenu["icon"] = "";
-			$submenu["onclick"] = "";
-			$submenu["link"] = $SERVER_URL . "mediaviewer.php?mid=" . $rowm["m_media"] ;
-			$submenu["class"] = $submenu_class;
-			$submenu["hoverclass"] = $submenu_hoverclass;
-			$menu["items"][] = $submenu;
+			$submenu = new Menu("&nbsp;&nbsp;" . $pgv_lang["lb_viewdetails"] . "&nbsp;&nbsp;", $SERVER_URL . "mediaviewer.php?mid=" . $rowm["m_media"], "right");
+			$submenu->addClass($submenu_class, $submenu_hoverclass);
+			$menu->addSubMenu($submenu);
 			//View Source
 			if (eregi("1 SOUR",$rowm['m_gedrec']) && displayDetailsById($sour, "SOUR")) {
-				$submenu = array();
-				$submenu["label"] = "&nbsp;&nbsp;" . $pgv_lang["lb_viewsource"] . "&nbsp;&nbsp;";
-				$submenu["labelpos"] = "right";
-				$submenu["icon"] = "";
-				$submenu["onclick"] = "";
-				$submenu["link"] = $SERVER_URL . "source.php?sid=" . $sour ;
-				$submenu["class"] = $submenu_class;
-				$submenu["hoverclass"] = $submenu_hoverclass;
-				$menu["items"][] = $submenu;
+				$submenu = new Menu("&nbsp;&nbsp;" . $pgv_lang["lb_viewsource"] . "&nbsp;&nbsp;", $SERVER_URL . "source.php?sid=" . $sour, "right");
+				$submenu->addClass($submenu_class, $submenu_hoverclass);
+				$menu->addSubMenu($submenu);
 			}
 			if (PGV_USER_CAN_EDIT) {
 				// Edit Media
-				$submenu = array();
-				$submenu["label"] = "&nbsp;&nbsp;" . $pgv_lang["lb_editmedia"] . "&nbsp;&nbsp;";
-				$submenu["labelpos"] = "right";
-				$submenu["icon"] = "";
-				$submenu["onclick"] = "return window.open('addmedia.php?action=editmedia&amp;pid={$rowm['m_media']}&amp;linktoid={$rowm['mm_gid']}', '_blank', 'top=50,left=50,width=600,height=700,resizable=1,scrollbars=1');";
-				$submenu["link"] = "#";
-				$submenu["class"] = $submenu_class;
-				$submenu["hoverclass"] = $submenu_hoverclass;
-				$menu["items"][] = $submenu;
+				$submenu = new Menu("&nbsp;&nbsp;" . $pgv_lang["lb_editmedia"] . "&nbsp;&nbsp;", "#", "right");
+				$submenu->addOnclick("return window.open('addmedia.php?action=editmedia&amp;pid={$rowm['m_media']}&amp;linktoid={$rowm['mm_gid']}', '_blank', 'top=50,left=50,width=600,height=700,resizable=1,scrollbars=1');");
+				$submenu->addClass($submenu_class, $submenu_hoverclass);
+				$menu->addSubMenu($submenu);
 				// Unlink Media
-				$submenu = array();
-				$submenu["label"] = "&nbsp;&nbsp;" . $pgv_lang["lb_unlinkmedia"] . "&nbsp;&nbsp;";
-				$submenu["labelpos"] = "right";
-				$submenu["icon"] = "";
-				$submenu["onclick"] = "return delete_record('$pid', 'OBJE', '".$rowm['m_media']."');";
-				$submenu["link"] = "#";
-				$submenu["class"] = $submenu_class;
-				$submenu["hoverclass"] = $submenu_hoverclass;
-				$menu["items"][] = $submenu;
+				$submenu = new Menu("&nbsp;&nbsp;" . $pgv_lang["lb_unlinkmedia"] . "&nbsp;&nbsp;", "#", "right");
+				$submenu->addOnclick("return delete_record('$pid', 'OBJE', '".$rowm['m_media']."');");
+				$submenu->addClass($submenu_class, $submenu_hoverclass);
+				$menu->addSubMenu($submenu);
 			}
 		}
 
@@ -343,7 +309,7 @@ function lightbox_print_media_row($rtype, $rowm, $pid) {
 				print "<tr>";
 				print "<td width=\"5px\"></td>";
 				print "<td valign=\"bottom\" align=\"center\" nowrap=\"nowrap\">";
-					print_menu($menu);
+					$menu->printMenu();
 				print "</td>";
 				print "<td width=\"5px\"></td>";
 				print "</tr>" . "\n";
