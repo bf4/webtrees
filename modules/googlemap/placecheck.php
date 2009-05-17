@@ -112,8 +112,10 @@ echo "<tr><td class='descriptionbox'>".$pgv_lang['placecheck_top']."</td>";
 echo "<td class='optionbox'><select name='country'>";
 echo "<option value='XYZ'selected='selected'>".$pgv_lang['placecheck_select1']."</option>";
 echo "<option value='XYZ'>".$pgv_lang["all"]."</option>";
-$query="SELECT pl_id, pl_place FROM {$TBLPREFIX}placelocation WHERE pl_level=0 ORDER BY pl_place";
-foreach ($DBCONN->getAssoc($query) as $id=>$place) {
+$rows=
+	PGV_DB::prepare("SELECT pl_id, pl_place FROM {$TBLPREFIX}placelocation WHERE pl_level=0 ORDER BY pl_place")
+	->fetchAssoc();
+foreach ($rows as $id=>$place) {
 	echo "<option value='{$place}'";
 	if ($place==$country) {
 		echo " selected='selected'";
@@ -129,8 +131,11 @@ if ($country!='XYZ') {
 	echo "<td class='optionbox'><select name='state'>";
 	echo "<option value='XYZ' selected='selected'>".$pgv_lang['placecheck_select2']."</option>";
 	echo "<option value='XYZ'>".$pgv_lang["all"]."</option>";
-	$query="SELECT pl_place FROM {$TBLPREFIX}placelocation WHERE pl_parent_id={$par_id} ORDER BY pl_place";
-	foreach ($DBCONN->getCol($query) as $place) {
+	$places=
+		PGV_DB::prepare("SELECT pl_place FROM {$TBLPREFIX}placelocation WHERE pl_parent_id=? ORDER BY pl_place")
+		->execute(array($par_id))
+		->fetchOneColumn();
+	foreach ($places as $place) {
 		echo "<option value='{$place}'".($place==$state?" selected='selected'":"").">{$place}</option>";
 	}
 	echo "</select></td></tr>";
@@ -310,11 +315,11 @@ while ($x<$i) {
 
 		$placelist=create_possible_place_names($levels[$z], $z+1); // add the necessary prefix/postfix values to the place name
 		foreach ($placelist as $key=>$placename) {
-			$escparent=preg_replace("/\?/","\\\\\\?", $DBCONN->escapeSimple($placename));
-			$psql="SELECT pl_id, pl_place, pl_long, pl_lati, pl_zoom FROM {$TBLPREFIX}placelocation WHERE pl_level={$z} AND pl_parent_id={$id} AND pl_place ".PGV_DB_LIKE." '{$escparent}' ORDER BY pl_place";
-			$res=dbquery($psql);
-			$row=& $res->fetchRow(DB_FETCHMODE_ASSOC);
-			$res->free();
+			$escparent=preg_replace("/\?/","\\\\\\?", $placename);
+			$row=
+				PGV_DB::prepare("SELECT pl_id, pl_place, pl_long, pl_lati, pl_zoom FROM {$TBLPREFIX}placelocation WHERE pl_level=? AND pl_parent_id=? AND pl_place ".PGV_DB_LIKE." ? ORDER BY pl_place")
+				->execute(array($z, $id, $escparent))
+				->fetchOneRow(PDO::FETCH_ASSOC);
 			if (!empty($row['pl_id'])) {
 				$row['pl_placerequested']=$levels[$z]; // keep the actual place name that was requested so we can display that instead of what is in the db
 				break;
