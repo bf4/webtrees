@@ -10,8 +10,8 @@
 
 <body>
 
-<b>Media Add - Remove Limks Assistant </b>
-<br />
+<b>Media Add - Remove Links Assistant </b>
+<br /><br />
 Below will be the Help Text:
 
 </body>

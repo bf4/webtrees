@@ -1,8 +1,6 @@
 <?php
 /**
- * Census Assistant Control module for phpGedView
- *
- * Census information about an individual
+ * Media Assistant Control module for phpGedView
  *
  * phpGedView: Genealogy Viewer
  * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
@@ -63,71 +61,17 @@ if ($pid=="") {
 		$wholename = rtrim($nam[0]['fullNN']);
 	}
 	$currpid=$pid;
-	
-	// Various Debugs =========================================
-	// var_dump($person->getFullName()); 
-	
-	/*
-	$fred = ($person->getAllBirthPlaces());
-	$fredrev = explode(", ", $fred[0]);
-	$fredrev = array_reverse($fredrev);
-	$fredrev = implode(", ", $fredrev);
-	echo $fred[0];
-	echo "<br />";
-	echo $fredrev;
-	*/
-	
-	//=========================================================
-
 ?>
 
 	<table class="facts_table" width=300 border=0 >
 
 		<tr colspan="2">
-
-			<td valign="top" align="center" width="50%" >
-<!--
-				<?php
-				//-- Text Input Area ===========================================================
-				?>
-							<table width="100%" border='3' cellspacing="1" >
-								<tr>
-									<td colspan="12" id="5678" class="option_box" style="border: 0px solid transparent;">
-										<?php
-										//include('modules/GEDFact_assistant/MEDIA/media_5_input.php');
-										?> 
-									</td>
-								</tr>
-							</table>
--->
-			</td>
-
 			<td rowspan="1" align="right" valign="top" width=400>
 				<?php 
 				//-- Search  and Add Family Members Area ========================================= 
 				include('modules/GEDFact_assistant/MEDIA/media_3_search_add.php'); ?>
 			</td>
 		</tr>
-<!--
-		<tr > 
-			<td colspan=1 valign="top" >
-				<?php 
-				//-- Census & Source Information Area ============================================= 
-				//include('modules/GEDFact_assistant/MEDIA/media_2_source_input.php');
-				?>
-			</td>
-		</tr>
--->
-<!--
-		<tr>
-			<td align="left" valign="bottom" >
-				<?php
-				//-- Proposed Text Area ==================================================
-				//include('modules/GEDFact_assistant/MEDIA/media_4_text.php');
-				?>
-			</td>
-		</tr>
--->
 		<tr>
 			<td colspan=2 align="left" valign="top" width="100%">
 				<?php

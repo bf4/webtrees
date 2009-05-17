@@ -1,6 +1,6 @@
 <?php
 /**
-* Code for Extracting Shared Note Indi Links for GEDFact_assistant
+* Code for Media Indi Links for GEDFact_assistant
 *
 * phpGedView: Genealogy Viewer
 * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.

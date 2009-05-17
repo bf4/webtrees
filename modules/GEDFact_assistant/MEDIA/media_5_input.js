@@ -1,7 +1,5 @@
 /**
- * Census Assistant Control module for phpGedView
- *
- * Census information about an individual
+ * Media Assistant Control module for phpGedView
  *
  * phpGedView: Genealogy Viewer
  * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
@@ -21,8 +19,8 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  * @package PhpGedView
- * @subpackage Census Assistant
- * @version $Id: census_5_input.js 5247 2009-03-21 01:11:11Z windmillway $
+ * @subpackage GEDFact Assistant
+ * @version $Id: media_5_input.js 5247 2009-03-21 01:11:11Z windmillway $
  */
 
 // tabledeleterow.js version 1.2 2006-02-21

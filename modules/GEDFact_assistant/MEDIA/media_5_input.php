@@ -1,8 +1,6 @@
 <?php
 /**
- * Census Assistant Control module for phpGedView
- *
- * Census input table area
+ * Media Assistant Control module for phpGedView
  *
  * phpGedView: Genealogy Viewer
  * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
@@ -25,8 +23,8 @@
  * @subpackage Census Assistant
  * @version $Id$
  */
-
 ?>
+
 <?php if ($THEME_DIR=="themes/simplygreen/" || $THEME_DIR=="themes/simplyred/" || $THEME_DIR=="themes/simplyblue/") { ?>
 	<script>
 	var txtcolor="#ffffff";
@@ -36,7 +34,6 @@
 	var txtcolor="#000000";
 	</script>
 <?php } ?>
-
 
 <?php if ($THEME_DIR=="themes/simplygreen/" || $THEME_DIR=="themes/simplyred/" || $THEME_DIR=="themes/simplyblue/") { ?>
 	<style type="text/css">
@@ -56,9 +53,7 @@
 	</style>
 <?php } ?>
 
-<?php
-echo '<script src="modules/GEDFact_assistant/MEDIA/media_5_input.js" type="text/javascript"></script>';
-?>
+<script src="modules/GEDFact_assistant/MEDIA/media_5_input.js" type="text/javascript"></script>
 
 <center>
 	<table width="380" border="0" cellspacing="1" id="tblSample">
@@ -73,5 +68,4 @@ echo '<script src="modules/GEDFact_assistant/MEDIA/media_5_input.js" type="text/
 		</thead>
 		<tbody></tbody>
 	</table>
-	
 </center>
