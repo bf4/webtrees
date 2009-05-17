@@ -247,8 +247,8 @@ if ($action == "choose" && $paramok) {
 } elseif ($action == "update" && $paramok) {
 
 	// GEDFact assistant Add Media Links =======================
-	if (file_exists('modules/GEDFact_assistant/MEDIA/media_1_ctrl.php') && !empty($mediaid) && $linkto=="person") {
-		if ($more_links != "No_Values") {
+	if (file_exists('modules/GEDFact_assistant/MEDIA/media_1_ctrl.php') && !empty($mediaid)) {
+		if (isset($more_links) && $more_links!="No_Values") {
 			$more_links = stripslashes($more_links);
 			$add_more_links = explode(", ", $more_links);
 			foreach ($add_more_links as $link2id) {
