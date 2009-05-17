@@ -281,8 +281,16 @@ class PGV_DB {
 	private static $log=array();
 
 	// Add an entry to the log
-	public static function logQuery($query, $rows, $microtime) {
-		self::$log[]='<tr><td>'.htmlspecialchars($query).'</td><td>'.(int)$rows.'</td><td>'.round($microtime*1000, 3).'</td></tr>';
+	public static function logQuery($query, $rows, $microtime, $bind_variables) {
+		$query2='';
+		foreach (str_split(htmlspecialchars($query)) as $char) {
+			if ($char=='?') {
+				$query2.='<abbr title="'.htmlspecialchars(array_shift($bind_variables)).'">'.$char.'</abbr>';
+			} else {
+				$query2.=$char;
+			}
+		}
+		self::$log[]='<tr><td>'.$query2.'</td><td>'.(int)$rows.'</td><td>'.round($microtime*1000, 3).'</td></tr>';
 	}
 
 	// Total number of queries executed, for the page statistics
@@ -568,6 +576,9 @@ class PGV_DBStatement {
 	// Keep track of calls to execute(), so we can do it automatically
 	private $executed=false;
 
+	// Keep a copy of the bind variables, for logging
+	private $bind_variables=array();
+
 	// Our constructor just takes a copy of the object to be decorated
 	public function __construct(PDOStatement $statement) {
 		$this->pdostatement=$statement;
@@ -586,6 +597,7 @@ class PGV_DBStatement {
 		case 'bindColumn':
 		case 'bindParam':
 		case 'bindValue':
+			// TODO: bind variables need to be stored in $this->bind_variables so we can log them
 		case 'setAttribute':
 		case 'setFetchMode':
 			// Functions that return no values become fluent
@@ -599,7 +611,10 @@ class PGV_DBStatement {
 				$result=call_user_func_array(array($this->pdostatement, $function), $params);
 				$end=microtime(true);
 				$this->executed=!preg_match('/^(insert into|delete from|update|create|alter) /i', $this->pdostatement->queryString);
-				PGV_DB::logQuery($this->pdostatement->queryString, $this->pdostatement->rowCount(), $end-$start);
+				if ($params) {
+					$this->bind_variables=$params[0];
+				}
+				PGV_DB::logQuery($this->pdostatement->queryString, $this->pdostatement->rowCount(), $end-$start, $this->bind_variables);
 				return $this;
 			}
 		case 'fetch':
