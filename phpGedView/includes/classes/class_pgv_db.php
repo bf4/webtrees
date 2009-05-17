@@ -157,21 +157,21 @@ class PGV_DB {
 			);
 			break;
 		case 'sqlite':
-			try {
-				self::$pdo=new PDO(
-					"sqlite:{$DBNAME}", null, null,
-					array(
-						PDO::ATTR_PERSISTENT=>(bool)$DBPERSIST,
-						PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION,
-						PDO::ATTR_DEFAULT_FETCH_MODE=>PDO::FETCH_OBJ,
-						PDO::ATTR_CASE=>PDO::CASE_LOWER
-					)
-				);
-				// Check if we can connect to the database
-				// If not, we may have a sqlite2 database from PhpGedView 4.2.1 or earlier
-				PGV_DB::exec('PRAGMA encoding="UTF-8"');
-			} catch (PDOException $ex) {
-				// Couldn't connect using sqlite3 - try sqlite2
+//			try {
+//				self::$pdo=new PDO(
+//					"sqlite:{$DBNAME}", null, null,
+//					array(
+//						PDO::ATTR_PERSISTENT=>(bool)$DBPERSIST,
+//						PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION,
+//						PDO::ATTR_DEFAULT_FETCH_MODE=>PDO::FETCH_OBJ,
+//						PDO::ATTR_CASE=>PDO::CASE_LOWER
+//					)
+//				);
+//				// Check if we can connect to the database
+//				// If not, we may have a sqlite2 database from PhpGedView 4.2.1 or earlier
+//				PGV_DB::exec('PRAGMA encoding="UTF-8"');
+//			} catch (PDOException $ex) {
+//				// Couldn't connect using sqlite3 - try sqlite2
 				self::$pdo=new PDO(
 					"sqlite2:{$DBNAME}", null, null,
 					array(
@@ -181,7 +181,7 @@ class PGV_DB {
 						PDO::ATTR_CASE=>PDO::CASE_LOWER
 					)
 				);
-			}
+//			}
 			break;
 		case 'firebird': // This DSN has not been tested!
 			self::$pdo=new PDO(
