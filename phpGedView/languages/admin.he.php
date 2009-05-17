@@ -298,7 +298,6 @@ $pgv_lang["monthly"]			= "חדשי";
 $pgv_lang["msql"]			= "Mini SQL";
 $pgv_lang["mssql"]			= "Microsoft SQL server";
 $pgv_lang["mysql"]			= "MySQL";
-$pgv_lang["mysqli"]			= "MySQL 4.1+ and PHP 5";
 $pgv_lang["never"]			= "אף פעם לא";
 $pgv_lang["no_logs"]			= "נטרל בנית יומנים";
 $pgv_lang["no_messaging"]		= "אין שיטת קשר";
