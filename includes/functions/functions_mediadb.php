@@ -37,29 +37,6 @@ $MEDIATYPE = array("a11","acb","adc","adf","afm","ai","aiff","aif","amg","anm","
 $BADMEDIA = array(".","..","CVS","thumbs","index.php","MediaInfo.txt", ".cvsignore", ".svn", "watermark");
 
 /*
-*******************************
-* Database Interface functions
-*******************************/
-
-/**
-* Queries the existence of a link in the db.
-*
-* @param string $media The gid of the record to be removed in the form Mxxxx.
-* @param string $gedrec The gedcom record as a string without the gid.
-* @param string $indi The gid that this media is linked to Ixxx Fxxx ect.
-* @return boolean
-*/
-function exists_db_link($media, $indi, $ged) {
-	global $DBCONN, $GEDCOMS, $TBLPREFIX;
-
-	$sql = "SELECT 1 FROM {$TBLPREFIX}media_mapping WHERE mm_gedfile='".$DBCONN->EscapeSimple($GEDCOMS[$ged]['id'])."' AND mm_gid='".$DBCONN->EscapeSimple($indi)."' AND mm_media='".$DBCONN->EscapeSimple($media)."'";
-	$res=dbquery($sql);
-	$exists=($res->numRows())>0;
-	$res->free();
-	return $exists;
-}
-
-/*
 ****************************
 * general functions
 ****************************/
