@@ -699,11 +699,11 @@ function google_analytics() {
 * prints out the execution time and the databse queries
 */
 function print_execution_stats() {
-	global $start_time, $pgv_lang, $TOTAL_QUERIES, $PRIVACY_CHECKS;
+	global $start_time, $pgv_lang, $PRIVACY_CHECKS;
 
 	printf("<div><br />{$pgv_lang['exec_time']} %.3f {$pgv_lang['sec']} {$pgv_lang['total_queries']} %d. {$pgv_lang['total_privacy_checks']} %d. {$pgv_lang['total_memory_usage']} %.0f KB.</div>",
 		microtime(true)-$start_time,
-		$TOTAL_QUERIES,
+		PGV_DB::getQueryCount(),
 		$PRIVACY_CHECKS,
 		version_compare(PHP_VERSION, '5.2.1', '>=') ? (memory_get_peak_usage(true)/1024) : (memory_get_usage()/1024)
 	);
