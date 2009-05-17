@@ -173,7 +173,7 @@ function check_media_structure() {
 */
 
 function get_medialist($currentdir = false, $directory = "", $linkonly = false, $random = false, $includeExternal = true) {
-	global $MEDIA_DIRECTORY_LEVELS, $BADMEDIA, $thumbdir, $TBLPREFIX, $MEDIATYPE, $DBCONN;
+	global $MEDIA_DIRECTORY_LEVELS, $BADMEDIA, $thumbdir, $TBLPREFIX, $MEDIATYPE;
 	global $level, $dirs, $ALLOW_CHANGE_GEDCOM, $GEDCOM, $GEDCOMS, $MEDIA_DIRECTORY;
 	global $MEDIA_EXTERNAL, $medialist, $pgv_changes, $DBTYPE, $USE_MEDIA_FIREWALL;
 
@@ -202,69 +202,63 @@ function get_medialist($currentdir = false, $directory = "", $linkonly = false, 
 	if (empty($directory))
 		$directory = $MEDIA_DIRECTORY;
 	$myDir = str_replace($MEDIA_DIRECTORY, "", $directory);
-	$sql = "SELECT m_id, m_file, m_media, m_gedrec, m_titl FROM {$TBLPREFIX}media WHERE m_gedfile={$GEDCOMS[$GEDCOM]['id']}";
-	if ($random == true) {
-		$sql=PGV_DB::limit_query("{$sql} ORDER BY ".PGV_DB_RANDOM, 5);
-		$res = & dbquery($sql, true);
+	if ($random) {
+		$rows=
+			PGV_DB::prepareLimit("SELECT m_id, m_file, m_media, m_gedrec, m_titl FROM {$TBLPREFIX}media WHERE m_gedfile=? ORDER BY ".PGV_DB_RANDOM, 5)
+			->execute(array(PGV_GED_ID))
+			->fetchAll();
 	} else {
-		$sql .= " AND (m_file ".PGV_DB_LIKE." '%" . $DBCONN->escapeSimple($myDir) . "%' OR m_file ".PGV_DB_LIKE." '%://%') ORDER BY m_id desc";
-		$res = & dbquery($sql);
+		$rows=
+			PGV_DB::prepare("SELECT m_id, m_file, m_media, m_gedrec, m_titl FROM {$TBLPREFIX}media WHERE m_gedfile=? AND (m_file ".PGV_DB_LIKE." ? OR m_file ".PGV_DB_LIKE." ?) ORDER BY m_id desc")
+			->execute(array(PGV_GED_ID, "%{$myDir}%", "%://%"))
+			->fetchAll();
 	}
 	$mediaObjects = array ();
 
-	if (!DB::isError($res)) {
-		$ct = $res->numRows();
 	// Build the raw medialist array,
 	// but weed out any folders we're not interested in
-	while ($row = & $res->fetchRow(DB_FETCHMODE_ASSOC)) {
-		if ($row) {
-			if (!empty($row["m_file"])) {
-				$fileName = check_media_depth(stripslashes($row["m_file"]), "NOTRUNC", "QUIET");
-				$isExternal = isFileExternal($fileName);
-				if ( $isExternal && (!$MEDIA_EXTERNAL || !$includeExternal) ) {
-					continue;
-				}
-				if ($isExternal || !$currentdir || $directory == dirname($fileName) . "/") {
-					$media = array ();
-					$media["ID"] = $row["m_id"];
-					$media["XREF"] = stripslashes($row["m_media"]);
-					$media["GEDFILE"] = $GEDCOMS[$GEDCOM]['id'];
-					$media["FILE"] = $fileName;
-					if ($isExternal) {
-						$media["THUMB"] = $fileName;
-						$media["THUMBEXISTS"] = 1; // 1 means external
-						$media["EXISTS"] = 1; // 1 means external
-					} else {
-						$media["THUMB"] = thumbnail_file($fileName);
-						$media["THUMBEXISTS"] = media_exists($media["THUMB"]);
-						$media["EXISTS"] = media_exists($fileName);
-					}
-					$media["TITL"] = stripslashes($row["m_titl"]);
-					$media["GEDCOM"] = stripslashes($row["m_gedrec"]);
-					$gedrec = & trim($row["m_gedrec"]);
-					$media["LEVEL"] = $gedrec{0};
-					$media["LINKED"] = false;
-					$media["LINKS"] = array ();
-					$media["CHANGE"] = "";
-					// Extract Format and Type from GEDCOM record
-					$media["FORM"] = strtolower(get_gedcom_value("FORM", 2, $gedrec));
-					$media["TYPE"] = strtolower(get_gedcom_value("FORM:TYPE", 2, $gedrec));
-
-					// Build a sortable key for the medialist
-					$firstChar = substr($media["XREF"], 0, 1);
-					$restChar = substr($media["XREF"], 1);
-					if (is_numeric($firstChar)) {
-						$firstChar = "";
-						$restChar = $media["XREF"];
-					}
-					$keyMediaList = $firstChar . substr("000000" . $restChar, -6) . "_" . $media["GEDFILE"];
-					$medialist[$keyMediaList] = $media;
-					$mediaObjects[] = $media["XREF"];
-				}
-			}
+	foreach ($rows as $row) {
+		$fileName = check_media_depth($row->m_file, "NOTRUNC", "QUIET");
+		$isExternal = isFileExternal($fileName);
+		if ( $isExternal && (!$MEDIA_EXTERNAL || !$includeExternal) ) {
+			continue;
 		}
-	}
-	$res->free();
+		if ($isExternal || !$currentdir || $directory == dirname($fileName) . "/") {
+			$media = array ();
+			$media["ID"] = $row->m_id;
+			$media["XREF"] = $row->m_media;
+			$media["GEDFILE"] = $row->m_file;
+			$media["FILE"] = $fileName;
+			if ($isExternal) {
+				$media["THUMB"] = $fileName;
+				$media["THUMBEXISTS"] = 1; // 1 means external
+				$media["EXISTS"] = 1; // 1 means external
+			} else {
+				$media["THUMB"] = thumbnail_file($fileName);
+				$media["THUMBEXISTS"] = media_exists($media["THUMB"]);
+				$media["EXISTS"] = media_exists($fileName);
+			}
+			$media["TITL"] = $row->m_titl;
+			$media["GEDCOM"] = $row->m_gedrec;
+			$media["LEVEL"] = '0';
+			$media["LINKED"] = false;
+			$media["LINKS"] = array ();
+			$media["CHANGE"] = "";
+			// Extract Format and Type from GEDCOM record
+			$media["FORM"] = strtolower(get_gedcom_value("FORM", 2, $row->m_gedrec));
+			$media["TYPE"] = strtolower(get_gedcom_value("FORM:TYPE", 2, $row->m_gedrec));
+
+			// Build a sortable key for the medialist
+			$firstChar = substr($media["XREF"], 0, 1);
+			$restChar = substr($media["XREF"], 1);
+			if (is_numeric($firstChar)) {
+				$firstChar = "";
+				$restChar = $media["XREF"];
+			}
+			$keyMediaList = $firstChar . substr("000000" . $restChar, -6) . "_" . $media["GEDFILE"];
+			$medialist[$keyMediaList] = $media;
+			$mediaObjects[] = $media["XREF"];
+		}
 	}
 
 	// Look for new Media objects in the list of changes pending approval
@@ -304,7 +298,7 @@ function get_medialist($currentdir = false, $directory = "", $linkonly = false, 
 				$media = array ();
 				$media["ID"] = $change["gid"];
 				$media["XREF"] = $change["gid"];
-				$media["GEDFILE"] = $GEDCOMS[$GEDCOM]["id"];
+				$media["GEDFILE"] = PGV_GED_ID;
 				$media["FILE"] = "";
 				$media["THUMB"] = "";
 				$media["THUMBEXISTS"] = false;
@@ -370,46 +364,19 @@ function get_medialist($currentdir = false, $directory = "", $linkonly = false, 
 		}
 	}
 
-	$ct = count($medialist);
-
-	// Search the database for the applicable cross-references
-	// and fill in the Links part of the medialist
-	if ($ct > 0) {
-		$sql = "SELECT mm_gid, mm_media FROM {$TBLPREFIX}media_mapping WHERE mm_gedfile='{$GEDCOMS[$GEDCOM]['id']}' AND mm_media IN (";
-		$i = 0;
-		foreach ($medialist as $key => $media) {
-			$i++;
-			$sql .= "'" . $media["XREF"] . "'";
-			if ($i < $ct)
-				$sql .= ", ";
-			else
-				$sql .= ")";
+	foreach ($medialist as $key=>$media) {
+		foreach (fetch_linked_indi($media["XREF"], 'OBJE', PGV_GED_ID) as $indi) {
+			$medialist[$key]["LINKS"][$indi->getXref()]='INDI';
+			$medialist[$key]["LINKED"]=true;
 		}
-		$sql .= " ORDER BY mm_gid";
-		$res = dbquery($sql);
-		$peopleIds = array();
-		while ($row = & $res->fetchRow(DB_FETCHMODE_ASSOC)) {
-			// Build the key for the medialist
-			$temp = stripslashes($row["mm_media"]);
-			$firstChar = substr($temp, 0, 1);
-			$restChar = substr($temp, 1);
-			if (is_numeric($firstChar)) {
-				$firstChar = "";
-				$restChar = $temp;
-			}
-			$keyMediaList = $firstChar . substr("000000" . $restChar, -6) . "_" . $GEDCOMS[$GEDCOM]['id'];
-
-			// Update the medialist with this cross-reference,
-			// but only if the Media item actually exists (could be a phantom reference)
-			if (isset ($medialist[$keyMediaList])) {
-				$medialist[$keyMediaList]["LINKS"][stripslashes($row["mm_gid"])] = gedcom_record_type(stripslashes($row["mm_gid"]), get_id_from_gedcom($GEDCOM));
-				$medialist[$keyMediaList]["LINKED"] = true;
-			}
-
-			//-- store all of the ids in an array so that we can load up all of the people at once
-			$peopleIds[] = stripslashes($row["mm_gid"]);
+		foreach (fetch_linked_fam($media["XREF"], 'OBJE', PGV_GED_ID) as $fam) {
+			$medialist[$key]["LINKS"][$fam->getXref()]='FAM';
+			$medialist[$key]["LINKED"]=true;
 		}
-		$res->free();
+		foreach (fetch_linked_sour($media["XREF"], 'OBJE', PGV_GED_ID) as $sour) {
+			$medialist[$key]["LINKS"][$sour->getXref()]='SOUR';
+			$medialist[$key]["LINKED"]=true;
+		}
 	}
 
 	// Search the list of GEDCOM changes pending approval.  There may be some new
@@ -1672,15 +1639,15 @@ function PrintMediaLinks($links, $size = "small") {
 }
 
 function get_media_id_from_file($filename){
-	global $TBLPREFIX, $DBCONN, $GEDCOMS, $DBCONN;
-	$dbq = "select m_media from ".$TBLPREFIX."media where m_file ".PGV_DB_LIKE." '%".$DBCONN->escapeSimple($filename)."'";
-	$dbr = dbquery($dbq);
-	$mid = $dbr->fetchRow();
-	return $mid[0];
+	global $TBLPREFIX;
+	return
+		PGV_DB::prepare("SELECT m_media FROM {$TBLPREFIX}media WHERE m_file ".PGV_DB_LIKE." ?")
+		->execute(array("%{$filename}"))
+		->fetchOne();
 }
 //returns an array of rows from the database containing the Person ID's for the people associated with this picture
 function get_media_relations($mid){
-	global $TBLPREFIX, $DBCONN, $GEDCOMS, $GEDCOM, $medialist;
+	global $GEDCOMS, $GEDCOM, $medialist;
 
 	//-- check in the medialist cache first
 	$firstChar = substr($mid, 0, 1);
@@ -1695,14 +1662,21 @@ function get_media_relations($mid){
 	}
 
 	$media = array();
-
-	$dbq = "SELECT mm_gid FROM ".$TBLPREFIX."media_mapping WHERE mm_media='".$mid."' AND mm_gedfile='".$GEDCOMS[$GEDCOM]['id']."'";
-	$dbr = dbquery($dbq);
-	while($row = $dbr->fetchRow()) {
-		if ($row[0] != $mid){
-			$media[$row[0]] = gedcom_record_type($row[0], get_id_from_gedcom($GEDCOM));
+		foreach (fetch_linked_indi($mid, 'OBJE', PGV_GED_ID) as $indi) {
+			if ($mid!=$indi->getXref()) {
+				$media[$indi->getXref()]='INDI';
+			}
 		}
-	}
+		foreach (fetch_linked_fam($mid, 'OBJE', PGV_GED_ID) as $fam) {
+			if ($mid!=$fam->getXref()) {
+				$media[$fam->getXref()]='FAM';
+			}
+		}
+		foreach (fetch_linked_sour($mid, 'OBJE', PGV_GED_ID) as $sour) {
+			if ($mid!=$sour->getXref()) {
+				$media[$sour->getXref()]='SOUR';
+			}
+		}
 	$medialist[$keyMediaList]['LINKS'] = $media;
 	return $media;
 }
@@ -1710,18 +1684,20 @@ function get_media_relations($mid){
 // clips a media item based on data from the gedcom
 function picture_clip($person_id, $image_id, $filename, $thumbDir)
 {
-	global $GEDCOMS,$GEDCOM,$TBLPREFIX,$MEDIA_DIRECTORY;
+	global $TBLPREFIX;
 	// This gets the gedrec
-	$query = "select m_gedrec from ".$TBLPREFIX."media where m_media='".$image_id."' AND m_gedfile=".$GEDCOMS[$GEDCOM]['id'];
-	$res = dbquery($query);
-	$result = $res->fetchRow();
+	$gedrec=
+		PGV_DB::prepare("SELECT m_gedrec FROM {$TBLPREFIX}media WHERE m_media=? AND m_gedfile=?")
+		->execute(array($image_id, PGV_GED_ID))
+		->fetchOne();
+
 	//Get the location of the file, and then make a location for the clipped image
 
 	//store values to the variables
-	$top = get_gedcom_value("_TOP", 2, $result[0]);
-	$bottom = get_gedcom_value("_BOTTOM", 2, $result[0]);
-	$left = get_gedcom_value("_LEFT", 2, $result[0]);
-	$right = get_gedcom_value("_RIGHT", 2, $result[0]);
+	$top = get_gedcom_value("_TOP", 2, $gedrec);
+	$bottom = get_gedcom_value("_BOTTOM", 2, $gedrec);
+	$left = get_gedcom_value("_LEFT", 2, $gedrec);
+	$right = get_gedcom_value("_RIGHT", 2, $gedrec);
 	//check to see if all values were retrived
 	if ($top != null || $bottom != null || $left != null || $right != null)
 	{
@@ -1733,6 +1709,7 @@ function picture_clip($person_id, $image_id, $filename, $thumbDir)
 	}
 	return "";
 }
+
 function cropImage($image, $dest_image, $left, $top, $right, $bottom){ //$image is the string location of the original image, $dest_image is the string file location of the new image, $fx is the..., $fy is the...
 	global $THUMBNAIL_WIDTH;
 	$ims = @getimagesize($image);

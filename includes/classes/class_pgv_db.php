@@ -543,6 +543,14 @@ class PGV_DB {
 		return new PGV_DBStatement(self::$pdo->prepare($statement));
 	}
 	
+	public static function prepareLimit($statement, $n) {
+		if (!self::$pdo instanceof PDO) {
+			throw new PDOException("No Connection Established");
+		}
+		$statement=PGV_DB::limit_query($statement, $n);
+		return new PGV_DBStatement(self::$pdo->prepare($statement));
+	}
+	
 	// Map all other functions onto the base PDO object
 	public function __call($function, $params) {
 		return call_user_func_array(array(self::$pdo, $function), $params);
