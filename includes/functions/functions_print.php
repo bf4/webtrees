@@ -923,106 +923,81 @@ function print_favorite_selector($option=0) {
 	echo "<div class=\"favorites_form\">";
 	switch($option) {
 	case 1:
-		$menu = array();
-		$menu["label"] = $pgv_lang["favorites"];
-		$menu["labelpos"] = "right";
-		$menu["link"] = "#";
-		$menu["class"] = "favmenuitem";
-		$menu["hoverclass"] = "favmenuitem_hover";
-		$menu["flyout"] = "down";
-		$menu["submenuclass"] = "favsubmenu";
-		$menu["items"] = array();
+		$menu = new Menu($pgv_lang["favorites"], "#", "right", "down");
+		$menu->addClass("favmenuitem", "favmenuitem_hover", "favsubmenu");
 		if (count($userfavs)>0 || $gid!='') {
-			$submenu = array();
-			$submenu["label"] = "<strong>".$pgv_lang["my_favorites"]."</strong>";
-			$submenu["labelpos"] = "right";
-			$submenu["link"] = "#";
-			$submenu["class"] = "favsubmenuitem";
-			$submenu["hoverclass"] = "favsubmenuitem_hover";
-			$menu["items"][] = $submenu;
+			$submenu = new Menu("<strong>".$pgv_lang["my_favorites"]."</strong>", "#", "right");
+			$submenu->addClass("favsubmenuitem", "favsubmenuitem_hover");
+			$menu->addSubMenu($submenu);
 
 			if ($gid!='') {
-				$submenu = array();
-				$submenu["label"] = '<em>'.$pgv_lang['add_to_my_favorites'].'</em>';
-				$submenu["labelpos"] = "right";
-				$submenu["link"] = encode_url($SCRIPT_NAME.normalize_query_string($QUERY_STRING.'&amp;action=addfav&amp;gid='.$gid));
-				$submenu["class"] = "favsubmenuitem";
-				$submenu["hoverclass"] = "favsubmenuitem_hover";
-				$menu["items"][] = $submenu;
+				$submenu = new Menu('<em>'.$pgv_lang['add_to_my_favorites'].'</em>', encode_url($SCRIPT_NAME.normalize_query_string($QUERY_STRING.'&amp;action=addfav&amp;gid='.$gid)), "right");
+				$submenu->addClass("favsubmenuitem", "favsubmenuitem_hover");
+				$menu->addSubMenu($submenu);
 			}
 
 			foreach($userfavs as $key=>$favorite) {
 				$GEDCOM = $favorite["file"];
-				$submenu = array();
+				$submenu = new Menu();
 				if ($favorite["type"]=="URL" && !empty($favorite["url"])) {
-					$submenu["link"] = encode_url($favorite["url"]);
-					$submenu["label"] = PrintReady($favorite["title"]);
-					$submenu["labelpos"] = "right";
-					$submenu["class"] = "favsubmenuitem";
-					$submenu["hoverclass"] = "favsubmenuitem_hover";
-					$menu["items"][] = $submenu;
+					$submenu->addLink(encode_url($favorite["url"]));
+					$submenu->addLabel(PrintReady($favorite["title"]), "right");
+					$submenu->addClass("favsubmenuitem", "favsubmenuitem_hover");
+					$menu->addSubMenu($submenu);
 				} else {
 					$record=GedcomRecord::getInstance($favorite["gid"]);
 					if ($record && $record->canDisplayName()) {
-						$submenu["link"] = encode_url($record->getLinkUrl());
-						$submenu["label"] = PrintReady($record->getFullName());
+						$submenu->addLink(encode_url($record->getLinkUrl()));
+						$slabel = PrintReady($record->getFullName());
 						if ($SHOW_ID_NUMBERS) {
 							if ($TEXT_DIRECTION=="ltr") {
-								$submenu["label"] .= " (".$record->getXref().")";
+								$slabel .= " (".$record->getXref().")";
 							} else {
-								$submenu["label"] .= " " . getRLM() . "(".$record->getXref().")" . getRLM();
+								$slabel .= " " . getRLM() . "(".$record->getXref().")" . getRLM();
 							}
 						}
-						$submenu["labelpos"] = "right";
-						$submenu["class"] = "favsubmenuitem";
-						$submenu["hoverclass"] = "favsubmenuitem_hover";
-						$menu["items"][] = $submenu;
+						$submenu->addLabel($slabel,  "right");
+						$submenu->addClass("favsubmenuitem", "favsubmenuitem_hover");
+						$menu->addSubMenu($submenu);
 					}
 				}
 			}
 			if (count($gedcomfavs)>0) {
-				$menu["items"][]="separator";
+				$menu->addSeparator();
 			}
 		}
 		if (count($gedcomfavs)>0) {
-			$submenu = array();
-			$submenu["label"] = "<strong>".$pgv_lang["gedcom_favorites"]."</strong>";
-			$submenu["labelpos"] = "right";
-			$submenu["link"] = "#";
-			$submenu["class"] = "favsubmenuitem";
-			$submenu["hoverclass"] = "favsubmenuitem_hover";
-			$menu["items"][] = $submenu;
+			$submenu = new Menu("<strong>".$pgv_lang["gedcom_favorites"]."</strong>", "#", "right");
+			$submenu->addClass("favsubmenuitem", "favsubmenuitem_hover");
+			$menu->addSubMenu($submenu);
 			foreach($gedcomfavs as $key=>$favorite) {
 				$GEDCOM = $favorite["file"];
-				$submenu = array();
+				$submenu = new Menu();
 				if ($favorite["type"]=="URL" && !empty($favorite["url"])) {
-					$submenu["link"] = encode_url($favorite["url"]);
-					$submenu["label"] = PrintReady($favorite["title"]);
-					$submenu["labelpos"] = "right";
-					$submenu["class"] = "favsubmenuitem";
-					$submenu["hoverclass"] = "favsubmenuitem_hover";
-					$menu["items"][] = $submenu;
+					$submenu->addLink(encode_url($favorite["url"]));
+					$submenu->addLabel(PrintReady($favorite["title"]), "right");
+					$submenu->addClass("favsubmenuitem", "favsubmenuitem_hover");
+					$menu->addSubMenu($submenu);
 				} else {
 					$record=GedcomRecord::getInstance($favorite["gid"]);
 					if ($record && $record->canDisplayName()) {
-						$submenu["link"] = encode_url($record->getLinkUrl());
-						$submenu["label"] = PrintReady($record->getFullName());
+						$submenu->addLink(encode_url($record->getLinkUrl()));
+						$slabel = PrintReady($record->getFullName());
 						if ($SHOW_ID_NUMBERS) {
 							if ($TEXT_DIRECTION=="ltr") {
-								$submenu["label"] .= " (".$record->getXref().")";
+								$slabel .= " (".$record->getXref().")";
 							} else {
-								$submenu["label"] .= " " . getRLM() . "(".$record->getXref().")" . getRLM();
+								$slabel .= " " . getRLM() . "(".$record->getXref().")" . getRLM();
 							}
 						}
-						$submenu["labelpos"] = "right";
-						$submenu["class"] = "favsubmenuitem";
-						$submenu["hoverclass"] = "favsubmenuitem_hover";
-						$menu["items"][] = $submenu;
+						$submenu->addLabel($slabel,  "right");
+						$submenu->addClass("favsubmenuitem", "favsubmenuitem_hover");
+						$menu->addSubMenu($submenu);
 					}
 				}
 			}
 		}
-		print_menu($menu);
+		$menu->printMenu();
 		break;
 	default:
 		echo "<form name=\"favoriteform\" action=\"$SCRIPT_NAME";
