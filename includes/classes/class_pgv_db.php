@@ -56,7 +56,49 @@ class PGV_DB {
 	public final function __wakeup() {
 		trigger_error('PGV_DB::unserialize() is not allowed.', E_USER_ERROR);
 	}
- 	
+
+	// Test a set of connection parameters - used during installation
+	public static function testParameters($DBTYPE, $DBHOST, $DBPORT, $DBNAME, $DBUSER, $DBPASS) {
+		try {
+			switch ($DBTYPE) {
+			case 'mysql':
+				$dbh=new PDO("mysql:host={$DBHOST};dbname={$DBNAME};port={$DBPORT}", $DBUSER, $DBPASS);
+				break;
+			case 'pgsql':
+				$dbh=new PDO("pgsql:host={$DBHOST};dbname={$DBNAME};port={$DBPORT}", $DBUSER, $DBPASS);
+				break;
+			case 'mssql':
+				$dbh=new PDO("mssql:host={$DBHOST};dbname={$DBNAME}".($DBPORT ? ",{$DBPORT}" : ''), $DBUSER, $DBPASS);
+				break;
+			case 'sqlite':
+				$dbh=new PDO("sqlite:{$DBNAME}", null, null);
+				break;
+			case 'firebird': // This DSN has not been tested!
+				$dbh=new PDO("firebird:host={$DBHOST};dbname={$DBNAME};charset=UTF-8", $DBUSER, $DBPASS);
+				break;
+			case 'ibm': // This DSN has not been tested!
+				$dbh=new PDO("ibm:DRIVER={IBM DB2 ODBC DRIVER};DATABASE={$DBNAME};HOSTNAME={$DBHOST};PORT={$DBPORT};PROTOCOL=TCPIP", $DBUSER, $DBPASS);
+				break;
+			case 'informix': // This DSN has not been tested!
+				$dbh=new PDO("informix:host={$DBHOST};service={$DBPORT};database={$DBNAME}", $DBUSER, $DBPASS);
+				break;
+			case 'oci': // This DSN has not been tested!
+				$dbh=new PDO("oci:dbname=//{$DBHOST}}:{$DBPORT}/{$DBNAME}", $DBUSER, $DBPASS);
+				break;
+			case 'odbc': // This DSN has not been tested!
+				$dbh=new PDO("odbc:$DBNAME", $DBUSER, $DBPASS);
+				break;
+			case '4D': // This DSN has not been tested!
+				$dbh=new PDO("4D:host={$DBHOST};port={$DBPORT};dbname={$DBNAME};charset=UTF-8", $DBUSER, $DBPASS);
+				break;
+			}
+			unset($dbh); // Close the connection
+			return true;
+		} catch (PDOException $ex) {
+			return false;
+		}
+	}
+
 	// Implement the singleton pattern
 	public static function createInstance($DBTYPE, $DBHOST, $DBPORT, $DBNAME, $DBUSER, $DBPASS, $DBPERSIST, $DB_UTF8_COLLATION) {
 		if (self::$pdo instanceof PDO) {
@@ -141,8 +183,7 @@ class PGV_DB {
 				);
 			}
 			break;
-		case 'firebird':
-			// This DSN has not been tested!
+		case 'firebird': // This DSN has not been tested!
 			self::$pdo=new PDO(
 				"firebird:host={$DBHOST};dbname={$DBNAME};charset=UTF-8", $DBUSER, $DBPASS,
 				array(
@@ -154,8 +195,7 @@ class PGV_DB {
 				)
 			);
 			break;
-		case 'ibm':
-			// This DSN has not been tested!
+		case 'ibm': // This DSN has not been tested!
 			self::$pdo=new PDO(
 				"ibm:DRIVER={IBM DB2 ODBC DRIVER};DATABASE={$DBNAME};HOSTNAME={$DBHOST};PORT={$DBPORT};PROTOCOL=TCPIP", $DBUSER, $DBPASS,
 				array(
@@ -167,8 +207,7 @@ class PGV_DB {
 				)
 			);
 			break;
-		case 'informix':
-			// This DSN has not been tested!
+		case 'informix': // This DSN has not been tested!
 			self::$pdo=new PDO(
 				"informix:host={$DBHOST};service={$DBPORT};database={$DBNAME}", $DBUSER, $DBPASS,
 				array(
@@ -180,8 +219,7 @@ class PGV_DB {
 				)
 			);
 			break;
-		case 'oci':
-			// This DSN has not been tested!
+		case 'oci': // This DSN has not been tested!
 			self::$pdo=new PDO(
 				"oci:dbname=//{$DBHOST}}:{$DBPORT}/{$DBNAME}", $DBUSER, $DBPASS,
 				array(
@@ -193,8 +231,7 @@ class PGV_DB {
 				)
 			);
 			break;
-		case 'odbc':
-			// This DSN has not been tested!
+		case 'odbc': // This DSN has not been tested!
 			self::$pdo=new PDO(
 				"odbc:$DBNAME", $DBUSER, $DBPASS,
 				array(
@@ -206,8 +243,7 @@ class PGV_DB {
 				)
 			);
 			break;
-		case '4D':
-			// This DSN has not been tested!
+		case '4D': // This DSN has not been tested!
 			self::$pdo=new PDO(
 				"4D:host={$DBHOST};port={$DBPORT};dbname={$DBNAME};charset=UTF-8", $DBUSER, $DBPASS,
 				array(
