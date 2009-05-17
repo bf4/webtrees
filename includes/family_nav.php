@@ -88,14 +88,12 @@ if (isset($_COOKIE['lastclick'])) {
 			</tr>
 			<?php
 			if (isset($people["husb"])) {
-				$menu = array();
-				$menu["label"] = "&nbsp;" . $people["husb"]->getLabel() . "&nbsp;". "\n";
-				$menu["submenuclass"] = "submenu";
-				$menu["items"] =  array();
-				$submenu = array();
-				$submenu["label"]  = print_pedigree_person_nav($people["husb"]->getXref(), 2, !$this->isPrintPreview(), 0, $personcount++);
-				$submenu["label"] .= PrintReady($parentlinks);
-				$menu["items"][] = $submenu;
+				$menu = new Menu("&nbsp;" . $people["husb"]->getLabel() . "&nbsp;". "\n");
+				$menu->addClass("", "", "submenu");
+				$slabel  = print_pedigree_person_nav($people["husb"]->getXref(), 2, !$this->isPrintPreview(), 0, $personcount++);
+				$slabel .= PrintReady($parentlinks);
+				$submenu = new Menu($slabel);
+				$menu->addSubMenu($submenu);
 
 				if (PrintReady($people["husb"]->getDeathYear()) == 0) { $DeathYr = ""; }else{ $DeathYr = PrintReady($people["husb"]->getDeathYear()); }
 				if (PrintReady($people["husb"]->getBirthYear()) == 0) { $BirthYr = ""; }else{ $BirthYr = PrintReady($people["husb"]->getBirthYear()); }
@@ -104,7 +102,7 @@ if (isset($_COOKIE['lastclick'])) {
 					<td class="facts_label<?php print $styleadd; ?>" nowrap="nowrap">
 						<?php // print $people["husb"]->getLabel(); ?>
 						<?php
-							print_menu($menu);
+							$menu->printMenu();
 						?>
 					</td>
 					<td align="center" class="<?php print $this->getPersonStyle($people["husb"]); ?>">
@@ -120,14 +118,12 @@ if (isset($_COOKIE['lastclick'])) {
 			}
 
 			if (isset($people["wife"])) {
-				$menu = array();
-				$menu["label"] = "&nbsp;" . $people["wife"]->getLabel() . "&nbsp;". "\n";
-				$menu["submenuclass"] = "submenu";
-				$menu["items"] =  array();
-				$submenu = array();
-				$submenu["label"]  = print_pedigree_person_nav($people["wife"]->getXref(), 2, !$this->isPrintPreview(), 0, $personcount++);
-				$submenu["label"] .= PrintReady($parentlinks);
-				$menu["items"][] = $submenu;
+				$menu = new Menu("&nbsp;" . $people["wife"]->getLabel() . "&nbsp;". "\n");
+				$menu->addClass("", "", "submenu");
+				$slabel  = print_pedigree_person_nav($people["wife"]->getXref(), 2, !$this->isPrintPreview(), 0, $personcount++);
+				$slabel .= PrintReady($parentlinks);
+				$submenu = new Menu($slabel);
+				$menu->addSubMenu($submenu);
 
 				if (PrintReady($people["wife"]->getDeathYear()) == 0) { $DeathYr = ""; }else{ $DeathYr = PrintReady($people["wife"]->getDeathYear()); }
 				if (PrintReady($people["wife"]->getBirthYear()) == 0) { $BirthYr = ""; }else{ $BirthYr = PrintReady($people["wife"]->getBirthYear()); }
@@ -136,7 +132,7 @@ if (isset($_COOKIE['lastclick'])) {
 					<td class="facts_label<?php print $styleadd; ?>">
 						<?php //print $people["wife"]->getLabel(); ?>
 						<?php
-							print_menu($menu);
+							$menu->printMenu();
 						?>
 					</td>
 					<td align="center" class="<?php print $this->getPersonStyle($people["wife"]); ?>">
@@ -156,14 +152,12 @@ if (isset($_COOKIE['lastclick'])) {
 				foreach($people["children"] as $key=>$child) {
 				if ($pid == $child->getXref() ){
 				}else{
-					$menu = array();
-					$menu["label"] = $child->getLabel() . "\n";
-					$menu["submenuclass"] = "submenu";
-					$menu["items"] =  array();
-					$submenu = array();
-					$submenu["label"]  = print_pedigree_person_nav($child->getXref(), 2, !$this->isPrintPreview(), 0, $personcount++);
-					$submenu["label"] .= PrintReady($spouselinks);
-					$menu["items"][] = $submenu;
+					$menu = new Menu($child->getLabel() . "\n");
+					$menu->addClass("", "", "submenu");
+					$slabel  = print_pedigree_person_nav($child->getXref(), 2, !$this->isPrintPreview(), 0, $personcount++);
+					$slabel .= PrintReady($spouselinks);
+					$submenu = new Menu($slabel);
+					$menu->addSubMenu($submenu);
 				}
 				if (PrintReady($child->getDeathYear()) == 0) { $DeathYr = ""; }else{ $DeathYr = PrintReady($child->getDeathYear()); }
 				if (PrintReady($child->getBirthYear()) == 0) { $BirthYr = ""; }else{ $BirthYr = PrintReady($child->getBirthYear()); }
@@ -175,7 +169,7 @@ if (isset($_COOKIE['lastclick'])) {
 						if ($pid == $child->getXref() ) {
 							print $child->getLabel();
 						}else{
-							print_menu($menu);
+							$menu->printMenu();
 						}
 						?>
 						</td>
@@ -222,18 +216,17 @@ if (isset($_COOKIE['lastclick'])) {
 			
 			//if (isset($people["husb"]) && $people["husb"]->getLabel() == ".") {
 			if (isset($people["husb"]) ) {
-				$menu = array();
+				$menu = new Menu();
 				if ($people["husb"]->getLabel() == ".") {
-					$menu["label"] = "&nbsp;" . $pgv_lang["stepdad"] . "&nbsp;". "\n";
+					$menu->addLabel("&nbsp;" . $pgv_lang["stepdad"] . "&nbsp;". "\n");
 				}else{
-					$menu["label"] = "&nbsp;" . $people["husb"]->getLabel() . "&nbsp;". "\n";
+					$menu->addLabel("&nbsp;" . $people["husb"]->getLabel() . "&nbsp;". "\n");
 				}
-				$menu["submenuclass"] = "submenu";
-				$menu["items"] =  array();
-				$submenu = array();
-				$submenu["label"]  = print_pedigree_person_nav($people["husb"]->getXref(), 2, !$this->isPrintPreview(), 0, $personcount++);
-				$submenu["label"] .= PrintReady($parentlinks);
-				$menu["items"][] = $submenu;
+				$menu->addClass("", "", "submenu");
+				$slabel  = print_pedigree_person_nav($people["husb"]->getXref(), 2, !$this->isPrintPreview(), 0, $personcount++);
+				$slabel .= PrintReady($parentlinks);
+				$submenu = new Menu($slabel);
+				$menu->addSubMenu($submenu);
 
 				if (PrintReady($people["husb"]->getDeathYear()) == 0) { $DeathYr = ""; }else{ $DeathYr = PrintReady($people["husb"]->getDeathYear()); }
 				if (PrintReady($people["husb"]->getBirthYear()) == 0) { $BirthYr = ""; }else{ $BirthYr = PrintReady($people["husb"]->getBirthYear()); }
@@ -242,7 +235,7 @@ if (isset($_COOKIE['lastclick'])) {
 				<tr>
 					<td class="facts_label<?php print $styleadd; ?>" nowrap="nowrap">
 						<?php
-							print_menu($menu);
+							$menu->printMenu();
 						?>
 					</td>
 					<td align="center" class="<?php print $this->getPersonStyle($people["husb"]); ?>" >
@@ -261,18 +254,17 @@ if (isset($_COOKIE['lastclick'])) {
 			$styleadd = "";
 			//if (isset($people["wife"]) && $people["wife"]->getLabel() == ".") {
 			if (isset($people["wife"]) ) {
-				$menu = array();
+				$menu = new Menu();
 				if ($people["wife"]->getLabel() == ".") {
-					$menu["label"] = "&nbsp;" . $pgv_lang["stepmom"] . "&nbsp;". "\n";
+					$menu->addLabel("&nbsp;" . $pgv_lang["stepmom"] . "&nbsp;". "\n");
 				}else{
-					$menu["label"] = "&nbsp;" . $people["wife"]->getLabel() . "&nbsp;". "\n";
+					$menu->addLabel("&nbsp;" . $people["wife"]->getLabel() . "&nbsp;". "\n");
 				}
-				$menu["submenuclass"] = "submenu";
-				$menu["items"] =  array();
-				$submenu = array();
-				$submenu["label"]  = print_pedigree_person_nav($people["wife"]->getXref(), 2, !$this->isPrintPreview(), 0, $personcount++);
-				$submenu["label"] .= PrintReady($parentlinks);
-				$menu["items"][] = $submenu;
+				$menu->addClass("", "", "submenu");
+				$slabel  = print_pedigree_person_nav($people["wife"]->getXref(), 2, !$this->isPrintPreview(), 0, $personcount++);
+				$slabel .= PrintReady($parentlinks);
+				$submenu = new Menu($slabel);
+				$menu->addSubMenu($submenu);
 
 				if (PrintReady($people["wife"]->getDeathYear()) == 0) { $DeathYr = ""; }else{ $DeathYr = PrintReady($people["wife"]->getDeathYear()); }
 				if (PrintReady($people["wife"]->getBirthYear()) == 0) { $BirthYr = ""; }else{ $BirthYr = PrintReady($people["wife"]->getBirthYear()); }
@@ -280,7 +272,7 @@ if (isset($_COOKIE['lastclick'])) {
 				<tr>
 					<td class="facts_label<?php print $styleadd; ?>" nowrap="nowrap">
 						<?php
-							print_menu($menu);
+							$menu->printMenu();
 						?>
 					</td>
 					<td align="center" class="<?php print $this->getPersonStyle($people["wife"]); ?>">
@@ -299,14 +291,12 @@ if (isset($_COOKIE['lastclick'])) {
 			if (isset($people["children"])) {
 				$elderdate = $family->getMarriageDate();
 				foreach($people["children"] as $key=>$child) {
-					$menu = array();
-					$menu["label"] = $child->getLabel() . "\n";
-					$menu["submenuclass"] = "submenu";
-					$menu["items"] =  array();
-					$submenu = array();
-					$submenu["label"]  = print_pedigree_person_nav($child->getXref(), 2, !$this->isPrintPreview(), 0, $personcount++);
-					$submenu["label"] .= PrintReady($spouselinks);
-					$menu["items"][] = $submenu;
+					$menu = new Menu($child->getLabel() . "\n");
+					$menu->addClass("", "", "submenu");
+					$slabel  = print_pedigree_person_nav($child->getXref(), 2, !$this->isPrintPreview(), 0, $personcount++);
+					$slabel .= PrintReady($spouselinks);
+					$submenu = new Menu($slabel);
+					$menu->addSubMenu($submenu);
 
 					if (PrintReady($child->getDeathYear()) == 0) { $DeathYr = ""; }else{ $DeathYr = PrintReady($child->getDeathYear()); }
 					if (PrintReady($child->getBirthYear()) == 0) { $BirthYr = ""; }else{ $BirthYr = PrintReady($child->getBirthYear()); }
@@ -315,7 +305,7 @@ if (isset($_COOKIE['lastclick'])) {
 						<td class="facts_label<?php print $styleadd; ?>" nowrap="nowrap">
 							<?php //print $child->getLabel(); ?>
 							<?php
-								print_menu($menu);
+								$menu->printMenu();
 							?>
 						</td>
 						<td align="center" class="<?php print $this->getPersonStyle($child); ?>">
@@ -358,14 +348,12 @@ if (isset($_COOKIE['lastclick'])) {
 			}
 			$styleadd = "";
 			if ( isset($people["husb"]) && $spousetag == 'HUSB' ) {
-				$menu = array();
-				$menu["label"] = "&nbsp;" . $people["husb"]->getLabel() . "&nbsp;". "\n";
-				$menu["submenuclass"] = "submenu";
-				$menu["items"] =  array();
-				$submenu = array();
-				$submenu["label"]  = print_pedigree_person_nav($people["husb"]->getXref(), 2, !$this->isPrintPreview(), 0, $personcount++);
-				$submenu["label"] .= PrintReady($parentlinks);
-				$menu["items"][] = $submenu;
+				$menu = new Menu("&nbsp;" . $people["husb"]->getLabel() . "&nbsp;". "\n");
+				$menu->addClass("", "", "submenu");
+				$slabel  = print_pedigree_person_nav($people["husb"]->getXref(), 2, !$this->isPrintPreview(), 0, $personcount++);
+				$slabel .= PrintReady($parentlinks);
+				$submenu = new Menu($slabel);
+				$menu->addSubMenu($submenu);
 
 				if (PrintReady($people["husb"]->getDeathYear()) == 0) { $DeathYr = ""; }else{ $DeathYr = PrintReady($people["husb"]->getDeathYear()); }
 				if (PrintReady($people["husb"]->getBirthYear()) == 0) { $BirthYr = ""; }else{ $BirthYr = PrintReady($people["husb"]->getBirthYear()); }
@@ -374,7 +362,7 @@ if (isset($_COOKIE['lastclick'])) {
 					<td class="facts_label<?php print $styleadd; ?>" nowrap="nowrap">
 						<?php // print $people["husb"]->getLabel(); ?>
 						<?php
-							print_menu($menu);
+							$menu->printMenu();
 						?>
 					</td>
 					<td align="center" class="<?php print $this->getPersonStyle($people["husb"]); ?>">
@@ -395,14 +383,12 @@ if (isset($_COOKIE['lastclick'])) {
 			}
 
 			if ( isset($people["wife"]) && $spousetag == 'WIFE') {
-				$menu = array();
-				$menu["label"] = "&nbsp;" . $people["wife"]->getLabel() . "&nbsp;". "\n";
-				$menu["submenuclass"] = "submenu";
-				$menu["items"] =  array();
-				$submenu = array();
-				$submenu["label"]  = print_pedigree_person_nav($people["wife"]->getXref(), 2, !$this->isPrintPreview(), 0, $personcount++);
-				$submenu["label"] .= PrintReady($parentlinks);
-				$menu["items"][] = $submenu;
+				$menu = new Menu("&nbsp;" . $people["wife"]->getLabel() . "&nbsp;". "\n");
+				$menu->addClass("", "", "submenu");
+				$slabel  = print_pedigree_person_nav($people["wife"]->getXref(), 2, !$this->isPrintPreview(), 0, $personcount++);
+				$slabel .= PrintReady($parentlinks);
+				$submenu = new Menu($slabel);
+				$menu->addSubMenu($submenu);
 
 				if (PrintReady($people["wife"]->getDeathYear()) == 0) { $DeathYr = ""; }else{ $DeathYr = PrintReady($people["wife"]->getDeathYear()); }
 				if (PrintReady($people["wife"]->getBirthYear()) == 0) { $BirthYr = ""; }else{ $BirthYr = PrintReady($people["wife"]->getBirthYear()); }
@@ -411,7 +397,7 @@ if (isset($_COOKIE['lastclick'])) {
 					<td class="facts_label<?php print $styleadd; ?>" nowrap="nowrap">
 						<?php // print $people["wife"]->getLabel(); ?>
 						<?php
-							print_menu($menu);
+							$menu->printMenu();
 						?>
 					</td>
 					<td align="center" class="<?php print $this->getPersonStyle($people["wife"]); ?>">
@@ -434,14 +420,12 @@ if (isset($_COOKIE['lastclick'])) {
 			$styleadd = "";
 			if (isset($people["children"])) {
 				foreach($people["children"] as $key=>$child) {
-					$menu = array();
-					$menu["label"] = "&nbsp;" . $child->getLabel() . "&nbsp;". "\n";
-					$menu["submenuclass"] = "submenu";
-					$menu["items"] =  array();
-					$submenu = array();
-					$submenu["label"]  = print_pedigree_person_nav($child->getXref(), 2, !$this->isPrintPreview(), 0, $personcount++);
-					$submenu["label"] .= PrintReady($spouselinks);
-					$menu["items"][] = $submenu;
+					$menu = new Menu("&nbsp;" . $child->getLabel() . "&nbsp;". "\n");
+					$menu->addClass("", "", "submenu");
+					$slabel = print_pedigree_person_nav($child->getXref(), 2, !$this->isPrintPreview(), 0, $personcount++);
+					$slabel .= PrintReady($spouselinks);
+					$submenu = new Menu($slabel);
+					$menu->addSubmenu($submenu);
 
 					if (PrintReady($child->getDeathYear()) == 0) { $DeathYr = ""; }else{ $DeathYr = PrintReady($child->getDeathYear()); }
 					if (PrintReady($child->getBirthYear()) == 0) { $BirthYr = ""; }else{ $BirthYr = PrintReady($child->getBirthYear()); }
@@ -450,7 +434,7 @@ if (isset($_COOKIE['lastclick'])) {
 						<td class="facts_label<?php print $styleadd; ?>" nowrap="nowrap">
 							<?php //print $child->getLabel(); ?>
 							<?php
-								print_menu($menu);
+								$menu->printMenu();
 							?>
 						</td>
 						<td align="center" class="<?php print $this->getPersonStyle($child); ?>">
