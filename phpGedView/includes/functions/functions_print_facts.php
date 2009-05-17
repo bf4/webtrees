@@ -164,58 +164,36 @@ function print_fact(&$eventObj, $noedit=false) {
 			if ($fact=="_BIRT_GCHI" and isset($n_gchi)) print "<br />".$pgv_lang["number_sign"].$n_gchi++;
 			if ($fact=="_BIRT_GGCH" and isset($n_ggch)) print "<br />".$pgv_lang["number_sign"].$n_ggch++;
 			if (!$noedit && PGV_USER_CAN_EDIT && $styleadd!="change_old" && $linenum>0 && $view!="preview" && !FactEditRestricted($pid, $factrec)) {
-				$menu = array();
-				$menu["label"] = $pgv_lang["edit"];
-				$menu["labelpos"] = "right";
-				$menu["icon"] = "";
+				$menu = new Menu($pgv_lang["edit"], "#", "right", "down");
 				if (empty($taskid)) {
-					$menu["onclick"] = "return edit_record('$pid', $linenum);";
-					$menu["link"] = "#";
+					$menu->addOnclick("return edit_record('$pid', $linenum);");
 				}
 				else {
-					$menu['onclick'] = "";
-					$menu["link"] = encode_url("module.php?mod=research_assistant&action=editfact&taskid={$taskid}");
+					$menu->addLink(encode_url("module.php?mod=research_assistant&action=editfact&taskid={$taskid}"));
 				}
-				$menu["class"] = "";
-				$menu["hoverclass"] = "";
-				$menu["flyout"] = "down";
-				$menu["submenuclass"] = "submenu";
-				$menu["items"] = array();
-				$submenu = array();
-				$submenu["label"] = $pgv_lang["edit"];
-				$submenu["labelpos"] = "right";
-				$submenu["icon"] = "";
+				$menu->addClass("", "", "submenu");
+				$submenu = new Menu($pgv_lang["edit"], "#", "right");
 				if (empty($taskid)) {
-					$submenu["onclick"] = "return edit_record('$pid', $linenum);";
-					$submenu["link"] = "#";
+					$submenu->addOnclick("return edit_record('$pid', $linenum);");
 				}
 				else {
-					$submenu['onclick'] = "";
-					$submenu["link"] = encode_url("module.php?mod=research_assistant&action=editfact&taskid={$taskid}");
+					$submenu>addLink(encode_url("module.php?mod=research_assistant&action=editfact&taskid={$taskid}"));
 				}
-				$submenu["class"] = "submenuitem";
-				$submenu["hoverclass"] = "submenuitem_hover";
-				$menu["items"][] = $submenu;
-				$submenu = array();
-				$submenu["label"] = $pgv_lang["copy"];
-				$submenu["labelpos"] = "right";
-				$submenu["icon"] = "";
-				$submenu["onclick"] = "return copy_record('$pid', $linenum);";
-				$submenu["link"] = "#";
-				$submenu["class"] = "submenuitem";
-				$submenu["hoverclass"] = "submenuitem_hover";
-				$menu["items"][] = $submenu;
-				$submenu = array();
-				$submenu["label"] = $pgv_lang["delete"];
-				$submenu["labelpos"] = "right";
-				$submenu["icon"] = "";
-				$submenu["onclick"] = "return delete_record('$pid', $linenum);";
-				$submenu["link"] = "#";
-				$submenu["class"] = "submenuitem";
-				$submenu["hoverclass"] = "submenuitem_hover";
-				$menu["items"][] = $submenu;
+				$submenu->addClass("submenuitem", "submenuitem_hover");
+				$menu->addSubMenu($submenu);
+
+				$submenu = new Menu($pgv_lang["copy"], "#", "right");
+				$submenu->addOnclick("return copy_record('$pid', $linenum);");
+				$submenu->addClass("submenuitem", "submenuitem_hover");
+				$menu->addSubMenu($submenu);
+
+				$submenu = new Menu($pgv_lang["delete"], "#", "right");
+				$submenu->addOnclick("return delete_record('$pid', $linenum);");
+				$submenu->addClass("submenuitem", "submenuitem_hover");
+				$menu->addSubMenu($submenu);
+
 				print " <div style=\"width:25px;\">";
-				print_menu($menu);
+				$menu->printMenu();
 				print "</div>";
 			}
 			print "</td>";
@@ -238,60 +216,37 @@ function print_fact(&$eventObj, $noedit=false) {
 				print $eventObj->Icon().' ';
 			print $label;
 			if (!$noedit && PGV_USER_CAN_EDIT && $styleadd!="change_old" && $linenum>0 && $view!="preview" && !FactEditRestricted($pid, $factrec)) {
-				$menu = array();
-				$menu["label"] = $pgv_lang["edit"];
-				$menu["labelpos"] = "right";
-				$menu["icon"] = "";
-				$menu["link"] = "#";
+				$menu = new Menu($pgv_lang["edit"], "#", "right", "down");
 				if (empty($taskid)) {
-					$menu["onclick"] = "return edit_record('$pid', $linenum);";
-					$menu["link"] = "#";
+					$menu->addOnclick("return edit_record('$pid', $linenum);");
 				}
 				else {
-					$menu['onclick'] = "";
-					$menu["link"] = encode_url("module.php?mod=research_assistant&action=editfact&taskid={$taskid}");
+					$menu->addLink(encode_url("module.php?mod=research_assistant&action=editfact&taskid={$taskid}"));
 				}
-				$menu["class"] = "";
-				$menu["hoverclass"] = "";
-				$menu["flyout"] = "down";
-				$menu["submenuclass"] = "submenu";
-				$menu["items"] = array();
-				$submenu = array();
-				$submenu["label"] = $pgv_lang["edit"];
-				$submenu["labelpos"] = "right";
-				$submenu["icon"] = "";
+				$menu->addClass("", "", "submenu");
+
+				$submenu = new Menu($pgv_lang["edit"], "#", "right");
 				if (empty($taskid)) {
-					$submenu["onclick"] = "return edit_record('$pid', $linenum);";
-					$submenu["link"] = "#";
+					$submenu->addOnclick("return edit_record('$pid', $linenum);");
 				}
 				else {
-					$submenu['onclick'] = "";
-					$submenu["link"] = encode_url("module.php?mod=research_assistant&action=editfact&taskid={$taskid}");
+					$submenu->addLink(encode_url("module.php?mod=research_assistant&action=editfact&taskid={$taskid}"));
 				}
-				$submenu["link"] = "#";
-				$submenu["class"] = "submenuitem";
-				$submenu["hoverclass"] = "submenuitem_hover";
-				$menu["items"][] = $submenu;
-				$submenu = array();
-				$submenu["label"] = $pgv_lang["delete"];
-				$submenu["labelpos"] = "right";
-				$submenu["icon"] = "";
-				$submenu["onclick"] = "return delete_record('$pid', $linenum);";
-				$submenu["link"] = "#";
-				$submenu["class"] = "submenuitem";
-				$submenu["hoverclass"] = "submenuitem_hover";
-				$menu["items"][] = $submenu;
-				$submenu = array();
-				$submenu["label"] = $pgv_lang["copy"];
-				$submenu["labelpos"] = "right";
-				$submenu["icon"] = "";
-				$submenu["onclick"] = "return copy_record('$pid', $linenum);";
-				$submenu["link"] = "#";
-				$submenu["class"] = "submenuitem";
-				$submenu["hoverclass"] = "submenuitem_hover";
-				$menu["items"][] = $submenu;
+				$submenu->addClass("submenuitem", "submenuitem_hover");
+				$menu->addSubMenu($submenu);
+
+				$submenu = new Menu($pgv_lang["delete"], "#", "right");
+				$submenu->addOnclick("return delete_record('$pid', $linenum);");
+				$submenu->addClass("submenuitem", "submenuitem_hover");
+				$menu->addSubMenu($submenu);
+
+				$submenu = new Menu($pgv_lang["copy"], "#", "right");
+				$submenu->addOnclick("return copy_record('$pid', $linenum);");
+				$submenu->addClass("submenuitem", "submenuitem_hover");
+				$menu->addSubMenu($submenu);
+
 				print " <div style=\"width:25px;\">";
-				print_menu($menu);
+				$menu->printMenu();
 				print "</div>";
 			}
 			print "</td>";
@@ -951,46 +906,27 @@ function print_main_sources($factrec, $level, $pid, $linenum, $noedit=false) {
 			$temp = preg_match("/^\d (\w*)/", $factrec, $factname);
 			echo $factarray[$factname[1]];
 			if (!$noedit && PGV_USER_CAN_EDIT && !FactEditRestricted($pid, $factrec) && $styleadd!="red" && $view!="preview") {
-				$menu = array();
-				$menu["label"] = $pgv_lang["edit"];
-				$menu["labelpos"] = "right";
-				$menu["icon"] = "";
-				$menu["link"] = "#";
-				$menu["onclick"] = "return edit_record('$pid', $linenum);";
-				$menu["class"] = "";
-				$menu["hoverclass"] = "";
-				$menu["flyout"] = "down";
-				$menu["submenuclass"] = "submenu";
-				$menu["items"] = array();
-				$submenu = array();
-				$submenu["label"] = $pgv_lang["edit"];
-				$submenu["labelpos"] = "right";
-				$submenu["icon"] = "";
-				$submenu["onclick"] = "return edit_record('$pid', $linenum);";
-				$submenu["link"] = "#";
-				$submenu["class"] = "submenuitem";
-				$submenu["hoverclass"] = "submenuitem_hover";
-				$menu["items"][] = $submenu;
-				$submenu = array();
-				$submenu["label"] = $pgv_lang["delete"];
-				$submenu["labelpos"] = "right";
-				$submenu["icon"] = "";
-				$submenu["onclick"] = "return delete_record('$pid', $linenum);";
-				$submenu["link"] = "#";
-				$submenu["class"] = "submenuitem";
-				$submenu["hoverclass"] = "submenuitem_hover";
-				$menu["items"][] = $submenu;
-				$submenu = array();
-				$submenu["label"] = $pgv_lang["copy"];
-				$submenu["labelpos"] = "right";
-				$submenu["icon"] = "";
-				$submenu["onclick"] = "return copy_record('$pid', $linenum);";
-				$submenu["link"] = "#";
-				$submenu["class"] = "submenuitem";
-				$submenu["hoverclass"] = "submenuitem_hover";
-				$menu["items"][] = $submenu;
+				$menu = new Menu($pgv_lang["edit"], "#", "right", "down");
+				$menu->addOnclick("return edit_record('$pid', $linenum);");
+				$menu->addClass("", "", "submenu");
+
+				$submenu = new Menu($pgv_lang["edit"], "#", "right");
+				$submenu->addOnclick("return edit_record('$pid', $linenum);");
+				$submenu->addClass("submenuitem", "submenuitem_hover");
+				$menu->addSubMenu($submenu);
+
+				$submenu = new Menu($pgv_lang["delete"], "#", "right");
+				$submenu->addOnclick("return delete_record('$pid', $linenum);");
+				$submenu->addClass("submenuitem", "submenuitem_hover");
+				$menu->addSubMenu($submenu);
+
+				$submenu = new Menu($pgv_lang["copy"], "#", "right");
+				$submenu->addOnclick("return copy_record('$pid', $linenum);");
+				$submenu->addClass("submenuitem", "submenuitem_hover");
+				$menu->addSubMenu($submenu);
+
 				print " <div style=\"width:25px;\">";
-				print_menu($menu);
+				$menu->printMenu();
 				print "</div>";
 			}
 			print "</td>";
@@ -1210,46 +1146,27 @@ function print_main_notes($factrec, $level, $pid, $linenum, $noedit=false) {
 			}
 		}
 		if (!$noedit && PGV_USER_CAN_EDIT && !FactEditRestricted($pid, $factrec) && $styleadd!="change_old" && $view!="preview") {
-			$menu = array();
-			$menu["label"] = $pgv_lang["edit"];
-			$menu["labelpos"] = "right";
-			$menu["icon"] = "";
-			$menu["link"] = "#";
-			$menu["onclick"] = "return edit_record('$pid', $linenum);";
-			$menu["class"] = "";
-			$menu["hoverclass"] = "";
-			$menu["flyout"] = "down";
-			$menu["submenuclass"] = "submenu";
-			$menu["items"] = array();
-			$submenu = array();
-			$submenu["label"] = $pgv_lang["edit"];
-			$submenu["labelpos"] = "right";
-			$submenu["icon"] = "";
-			$submenu["onclick"] = "return edit_record('$pid', $linenum);";
-			$submenu["link"] = "#";
-			$submenu["class"] = "submenuitem";
-			$submenu["hoverclass"] = "submenuitem_hover";
-			$menu["items"][] = $submenu;
-			$submenu = array();
-			$submenu["label"] = $pgv_lang["delete"];
-			$submenu["labelpos"] = "right";
-			$submenu["icon"] = "";
-			$submenu["onclick"] = "return delete_record('$pid', $linenum);";
-			$submenu["link"] = "#";
-			$submenu["class"] = "submenuitem";
-			$submenu["hoverclass"] = "submenuitem_hover";
-			$menu["items"][] = $submenu;
-			$submenu = array();
-			$submenu["label"] = $pgv_lang["copy"];
-			$submenu["labelpos"] = "right";
-			$submenu["icon"] = "";
-			$submenu["onclick"] = "return copy_record('$pid', $linenum);";
-			$submenu["link"] = "#";
-			$submenu["class"] = "submenuitem";
-			$submenu["hoverclass"] = "submenuitem_hover";
-			$menu["items"][] = $submenu;
+			$menu = new Menu($pgv_lang["edit"], "#", "right", "down");
+			$menu->addOnclick("return edit_record('$pid', $linenum);");
+			$menu->addClass("", "", "submenu");
+
+			$submenu = new Menu($pgv_lang["edit"], "#", "right");
+			$submenu->addOnclick("return edit_record('$pid', $linenum);");
+			$submenu->addClass("submenuitem", "submenuitem_hover");
+			$menu->addSubMenu($submenu);
+
+			$submenu = new Menu($pgv_lang["delete"], "#", "right");
+			$submenu->addOnclick("return delete_record('$pid', $linenum);");
+			$submenu->addClass("submenuitem", "submenuitem_hover");
+			$menu->addSubMenu($submenu);
+
+			$submenu = new Menu($pgv_lang["copy"], "#", "right");
+			$submenu->addOnclick("return copy_record('$pid', $linenum);");
+			$submenu->addClass("submenuitem", "submenuitem_hover");
+			$menu->addSubMenu($submenu);
+
 			print " <div style=\"width:25px;\">";
-			print_menu($menu);
+			$menu->printMenu();
 			print "</div>";
 		}
 		if ($nt==0) {
@@ -1521,50 +1438,27 @@ function print_main_media_row($rtype, $rowm, $pid) {
 	$linenum = 0;
 	print "\n\t\t<tr><td class=\"descriptionbox $styleadd center width20\"><img class=\"icon\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["media"]["small"]."\" alt=\"\" /><br />".$factarray["OBJE"];
 	if ($rowm['mm_gid']==$pid && PGV_USER_CAN_EDIT && (!FactEditRestricted($rowm['m_media'], $rowm['m_gedrec'])) && ($styleadd!="change_old") && ($view!="preview")) {
-		$menu = array();
-		$menu["label"] = $pgv_lang["edit"];
-		$menu["labelpos"] = "right";
-		$menu["icon"] = "";
-		$menu["link"] = "#";
-		// $menu["onclick"] = "return edit_record('$pid', $linenum);";
-		// $menu["onclick"] = "return window.open('addmedia.php?action=editmedia&pid={$rowm['m_media']}&filename={$rowm['m_file']}&linktoid={$rowm['mm_gid']}', '_blank', 'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1');";
-		$menu["onclick"] = "return window.open('addmedia.php?action=editmedia&pid={$rowm['m_media']}&linktoid={$rowm['mm_gid']}', '_blank', 'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1');";
-		$menu["class"] = "";
-		$menu["hoverclass"] = "";
-		$menu["flyout"] = "down";
-		$menu["submenuclass"] = "submenu";
-		$menu["items"] = array();
-		$submenu = array();
-		$submenu["label"] = $pgv_lang["edit"];
-		$submenu["labelpos"] = "right";
-		$submenu["icon"] = "";
-		// $submenu["onclick"] = "return window.open('addmedia.php?action=editmedia&pid={$rowm['m_media']}&filename={$rowm['m_file']}&linktoid={$rowm['mm_gid']}', '_blank', 'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1');";
-		$submenu["onclick"] = "return window.open('addmedia.php?action=editmedia&pid={$rowm['m_media']}&linktoid={$rowm['mm_gid']}', '_blank', 'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1');";
-		$submenu["link"] = "#";
-		$submenu["class"] = "submenuitem";
-		$submenu["hoverclass"] = "submenuitem_hover";
-		$menu["items"][] = $submenu;
-		$submenu = array();
-		$submenu["label"] = $pgv_lang["delete"];
-		$submenu["labelpos"] = "right";
-		$submenu["icon"] = "";
-		$submenu["onclick"] = "return delete_record('$pid', 'OBJE', '".$rowm['m_media']."');";
-		//$submenu["onclick"] = "return window.open('addmedia.php?action=delete&pid={$rowm['m_media']}', '_blank', 'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1');";
-		$submenu["link"] = "#";
-		$submenu["class"] = "submenuitem";
-		$submenu["hoverclass"] = "submenuitem_hover";
-		$menu["items"][] = $submenu;
-		$submenu = array();
-		$submenu["label"] = $pgv_lang["copy"];
-		$submenu["labelpos"] = "right";
-		$submenu["icon"] = "";
-		$submenu["onclick"] = "return copy_record('".$rowm['m_media']."', 'media');";
-		$submenu["link"] = "#";
-		$submenu["class"] = "submenuitem";
-		$submenu["hoverclass"] = "submenuitem_hover";
-		$menu["items"][] = $submenu;
+		$menu = new Menu($pgv_lang["edit"], "#", "right", "down");
+		$menu->addOnclick("return window.open('addmedia.php?action=editmedia&pid={$rowm['m_media']}&linktoid={$rowm['mm_gid']}', '_blank', 'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1');");
+		$menu->addClass("", "", "submenu");
+
+		$submenu = new Menu($pgv_lang["edit"], "#", "right");
+		$submenu->addOnclick("return window.open('addmedia.php?action=editmedia&pid={$rowm['m_media']}&linktoid={$rowm['mm_gid']}', '_blank', 'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1');");
+		$submenu->addClass("submenuitem", "submenuitem_hover");
+		$menu->addSubMenu($submenu);
+
+		$submenu = new Menu($pgv_lang["delete"], "#", "right");
+		$submenu->addOnclick("return delete_record('$pid', 'OBJE', '".$rowm['m_media']."');");
+		$submenu->addClass("submenuitem", "submenuitem_hover");
+		$menu->addSubMenu($submenu);
+
+		$submenu = new Menu($pgv_lang["copy"], "#", "right");
+		$submenu->addOnclick("return copy_record('".$rowm['m_media']."', 'media');");
+		$submenu->addClass("submenuitem", "submenuitem_hover");
+		$menu->addSubMenu($submenu);
+
 		print " <div style=\"width:25px;\">";
-		print_menu($menu);
+		$menu->printMenu();
 		print "</div>";
 	}
 
