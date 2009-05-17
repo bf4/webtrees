@@ -129,7 +129,7 @@ $worms = array(
 	'LWP::Simple',
 	'lwp-trivial',
 	'MJ.*bot',
-	'ru.*rv',
+//	'ru.*rv',
 	'DotBot',
 	'HTTrack',
 	'AISearchBot',
