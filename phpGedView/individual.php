@@ -158,19 +158,23 @@ $linkToID=$controller->pid; // -- Tell addmedia.php what to link to
 			}
 		?>
 		</div>
+		<?php if (!$PGV_MENUS_AS_LISTS) {?>
 		<table class="sublinks_table" cellspacing="4" cellpadding="0">
 			<tr>
 				<td class="list_label <?php echo $TEXT_DIRECTION; ?>" colspan="5"><?php echo $pgv_lang["indis_charts"]; ?></td>
 			</tr>
 			<tr>
 				<td class="sublinks_cell <?php echo $TEXT_DIRECTION; ?>">
-				<?php
+		<?php } else { ?>
+		<div class="sublinks_table">
+			<div class="list_label <?php echo $TEXT_DIRECTION; ?>"><?php echo $pgv_lang["indis_charts"]; ?></div>
+				<ul class="sublinks_cell <?php echo $TEXT_DIRECTION; ?>">
+		<?php } 
 				//-- get charts menu from menubar
 				$menubar = new MenuBar();
 				$menu = $menubar->getChartsMenu($controller->pid); $menu->printMenu();
 				?>
-				</td>
-				<td class="sublinks_cell <?php echo $TEXT_DIRECTION; ?>">
+				</<?php if (!$PGV_MENUS_AS_LISTS) {?>td><td<?php } else { ?>ul><ul<?php }?> class="sublinks_cell <?php echo $TEXT_DIRECTION; ?>">
 				<?php
 				list($surname)=explode(',', $controller->indi->getSortName());
 				if (!$surname) {
@@ -178,28 +182,31 @@ $linkToID=$controller->pid; // -- Tell addmedia.php what to link to
 				}
 				$menu = $menubar->getListsMenu($surname); $menu->printMenu();
 				if (file_exists("reports/individual.xml")) {?>
-					</td><td class="sublinks_cell <?php echo $TEXT_DIRECTION; ?>">
+				</<?php if (!$PGV_MENUS_AS_LISTS) {?>td><td<?php } else { ?>ul><ul<?php }?> class="sublinks_cell <?php echo $TEXT_DIRECTION; ?>">
 					<?php
 					//-- get reports menu from menubar
 					$menu = $menubar->getReportsMenu($controller->pid); $menu->printMenu();
 				}
 				if ($controller->userCanEdit()) {
 				?>
-				</td>
-				<td class="sublinks_cell <?php echo $TEXT_DIRECTION;?>">
+				</<?php if (!$PGV_MENUS_AS_LISTS) {?>td><td<?php } else { ?>ul><ul<?php }?> class="sublinks_cell <?php echo $TEXT_DIRECTION; ?>">
 				<?php $menu = $controller->getEditMenu(); $menu->printMenu();
 				}
 				if ($controller->canShowOtherMenu()) {
 				?>
-				</td>
-				<td class="sublinks_cell <?php echo $TEXT_DIRECTION; ?>">
+				</<?php if (!$PGV_MENUS_AS_LISTS) {?>td><td<?php } else { ?>ul><ul<?php }?> class="sublinks_cell <?php echo $TEXT_DIRECTION; ?>">
 				<?php $menu = $controller->getOtherMenu(); $menu->printMenu();
 				}
 				?>
+		<?php if (!$PGV_MENUS_AS_LISTS) {?>
 				</td>
 			</tr>
 		</table><br />
-	<?php } ?>
+		<?php } else { ?>
+				</ul>
+		</div>
+		<?php } 
+			 } ?>
 	</td>
 	<td width="10"><br /></td>
 	</tr>
