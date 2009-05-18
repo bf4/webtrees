@@ -175,7 +175,7 @@ function check_media_structure() {
 function get_medialist($currentdir = false, $directory = "", $linkonly = false, $random = false, $includeExternal = true) {
 	global $MEDIA_DIRECTORY_LEVELS, $BADMEDIA, $thumbdir, $TBLPREFIX, $MEDIATYPE;
 	global $level, $dirs, $ALLOW_CHANGE_GEDCOM, $GEDCOM, $GEDCOMS, $MEDIA_DIRECTORY;
-	global $MEDIA_EXTERNAL, $medialist, $pgv_changes, $DBTYPE, $USE_MEDIA_FIREWALL;
+	global $MEDIA_EXTERNAL, $pgv_changes, $DBTYPE, $USE_MEDIA_FIREWALL;
 
 	// Retrieve the gedcoms to search in
 	$sgeds = array ();
@@ -204,12 +204,12 @@ function get_medialist($currentdir = false, $directory = "", $linkonly = false, 
 	$myDir = str_replace($MEDIA_DIRECTORY, "", $directory);
 	if ($random) {
 		$rows=
-			PGV_DB::prepareLimit("SELECT m_id, m_file, m_media, m_gedrec, m_titl FROM {$TBLPREFIX}media WHERE m_gedfile=? ORDER BY ".PGV_DB_RANDOM, 5)
+			PGV_DB::prepareLimit("SELECT m_id, m_file, m_media, m_gedrec, m_titl, m_gedfile FROM {$TBLPREFIX}media WHERE m_gedfile=? ORDER BY ".PGV_DB_RANDOM, 5)
 			->execute(array(PGV_GED_ID))
 			->fetchAll();
 	} else {
 		$rows=
-			PGV_DB::prepare("SELECT m_id, m_file, m_media, m_gedrec, m_titl FROM {$TBLPREFIX}media WHERE m_gedfile=? AND (m_file ".PGV_DB_LIKE." ? OR m_file ".PGV_DB_LIKE." ?) ORDER BY m_id desc")
+			PGV_DB::prepare("SELECT m_id, m_file, m_media, m_gedrec, m_titl, m_gedfile FROM {$TBLPREFIX}media WHERE m_gedfile=? AND (m_file ".PGV_DB_LIKE." ? OR m_file ".PGV_DB_LIKE." ?) ORDER BY m_id desc")
 			->execute(array(PGV_GED_ID, "%{$myDir}%", "%://%"))
 			->fetchAll();
 	}
@@ -227,7 +227,7 @@ function get_medialist($currentdir = false, $directory = "", $linkonly = false, 
 			$media = array ();
 			$media["ID"] = $row->m_id;
 			$media["XREF"] = $row->m_media;
-			$media["GEDFILE"] = $row->m_file;
+			$media["GEDFILE"] = $row->m_gedfile;
 			$media["FILE"] = $fileName;
 			if ($isExternal) {
 				$media["THUMB"] = $fileName;

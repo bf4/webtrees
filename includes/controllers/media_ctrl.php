@@ -149,13 +149,11 @@ class MediaControllerRoot extends IndividualController{
 	* Also update the mediarec we will use to generate the page
 	*/
 	function acceptChanges() {
-		global $GEDCOM, $medialist;
+		global $GEDCOM;
 		if (!PGV_USER_CAN_ACCEPT) return;
 		if (accept_changes($this->pid."_".$GEDCOM)) {
 			$this->show_changes=false;
 			$this->accept_success=true;
-			//-- delete the record from the cache and refresh it
-			if (isset($medialist[$this->pid])) unset($medialist[$this->pid]);
 			$mediarec = find_media_record($this->pid);
 			//-- check if we just deleted the record and redirect to index
 			if (empty($mediarec)) {
