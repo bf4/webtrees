@@ -1,8 +1,8 @@
 <?php
 /**
- * Media Assistant Control module for phpGedView
- *
- * phpGedView: Genealogy Viewer
+* Code for Extracting Shared Note Indi Links for GEDFact_assistant
+*
+* phpGedView: Genealogy Viewer
 * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
 *
 * This program is free software; you can redistribute it and/or modify
@@ -28,52 +28,23 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	print "You cannot access an include file directly.";
 	exit;
 }
-
-require './config.php';
-
 ?>
+
 <html>
 <head>
-
-<!-- CSS Details -->
-<style type="text/css">
-<!--
-.table1 {
-border: 0px solid #CC6600;
-font-family: Verdana, Arial, Helvetica, sans-serif; 
-font-size: 10px;
-font-style: normal;
-text-transform: none;
-}
-.style1 {
-color: #0000FF;
-font-weight: bold;
-font-size: 10px;
-}
-.row1 {
-background-color: #D8D8D8;
-}
-/*
-.row2 {
-background-color: #FF0000;
-}
-*/
--->
-</style>
-
 </head>
 <body>
 <?php
 	$links = get_media_relations($mediaid);
 	// var_dump($links);
 	echo "<table><tr><td>";
-	echo "<table width=\"380\" cellspacing=\"1\" >";
+	echo "<table width=\"390\" cellspacing=\"1\" >";
 	echo "<tr>";
-	echo "<td class=\"descriptionbox\" width=\"20\" align=\"left\" ><span class=\"style1\">#</span></td>";
-	echo "<td class=\"descriptionbox\" width=\"40\" align=\"left\" bgcolor=\"#AAAAAA\"><span class=\"style1\">ID:</span></td>";
-	echo "<td class=\"descriptionbox\" wrap=\"nowrap\" width=\"250\" align=\"left\" bgcolor=\"#AAAAAA\"><span class=\"style1\">Name</span></td>";
-	echo "<td class=\"descriptionbox\" width=\"20\" align=\"center\" bgcolor=\"#AAAAAA\" nowrap='nowrap'><span class=\"style1\">&nbsp;Keep&nbsp;</span></td>";
-	echo "<td class=\"descriptionbox\" width=\"20\" align=\"center\" bgcolor=\"#AAAAAA\" nowrap='nowrap'><span class=\"style1\">&nbsp;&nbsp;Unlink&nbsp;</span></td>";
+	echo '<td class="topbottombar" width="20"  style="text-align:left;font-weight:100;" >#</td>';
+	echo '<td class="topbottombar" width="40"  style="text-align:left;font-weight:100;" >ID:</td>';
+	echo '<td class="topbottombar" width="280" style="text-align:left;font-weight:100;" >Name</td>';
+	echo '<td class="topbottombar" width="20"  style="text-align:left;font-weight:100;" >&nbspKeep&nbsp;</td>';
+	echo '<td class="topbottombar" width="20"  style="text-align:left;font-weight:100;" >&nbsp;Unlink&nbsp;</td>';
 	echo "</tr>";
 
 	$keys = array_keys($links);
@@ -108,4 +79,6 @@ background-color: #FF0000;
 
 </body>
 </html>
+
+
 

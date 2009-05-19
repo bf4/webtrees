@@ -1,6 +1,8 @@
 <?php
 /**
- * Media Assistant Control module for phpGedView
+ * Census Assistant Control module for phpGedView
+ *
+ * Census input table area
  *
  * phpGedView: Genealogy Viewer
  * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
@@ -23,8 +25,8 @@
  * @subpackage Census Assistant
  * @version $Id$
  */
-?>
 
+?>
 <?php if ($THEME_DIR=="themes/simplygreen/" || $THEME_DIR=="themes/simplyred/" || $THEME_DIR=="themes/simplyblue/") { ?>
 	<script>
 	var txtcolor="#ffffff";
@@ -34,6 +36,7 @@
 	var txtcolor="#000000";
 	</script>
 <?php } ?>
+
 
 <?php if ($THEME_DIR=="themes/simplygreen/" || $THEME_DIR=="themes/simplyred/" || $THEME_DIR=="themes/simplyblue/") { ?>
 	<style type="text/css">
@@ -53,19 +56,22 @@
 	</style>
 <?php } ?>
 
-<script src="modules/GEDFact_assistant/MEDIA/media_5_input.js" type="text/javascript"></script>
+<?php
+echo '<script src="modules/GEDFact_assistant/MEDIA/media_5_input.js" type="text/javascript"></script>';
+?>
 
-<center>
+
 	<table width="380" border="0" cellspacing="1" id="tblSample">
 		<thead>
 		<tr>
-			<th class="descriptionbox" width="20" style="border: 0px solid transparent;" align="left"><font size=1><b>#</b></font></th>
-			<th class="descriptionbox" width="38" style="border: 0px solid transparent;" align="left"><font size=1><b>ID:</b></font></th>
-			<th class="descriptionbox" width="200" style="border: 0px solid transparent;" align="left"><font size=1><b>Name</b></font></th>
-			<th class="descriptionbox" width="25" style="border: 0px solid transparent;" align="left"><font size=1><b>Remove</b></font></th>
+			<th class="topbottombar" width="15"  style="text-align:left;font-weight:100;" align="left">#</th>
+			<th class="topbottombar" width="40"  style="text-align:left;font-weight:100;" align="left">ID:</th>
+			<th class="topbottombar" width="280" style="text-align:left;font-weight:100;" align="left">Name</th>
+			<th class="topbottombar" width="25"  style="text-align:left;font-weight:100;" align="left">Remove</th>
 			<th width="25" style="border: 0px solid transparent;" align="left"><font size=1><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></font></th>
 		</tr>
 		</thead>
 		<tbody></tbody>
 	</table>
-</center>
+	
+
