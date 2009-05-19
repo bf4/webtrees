@@ -1324,7 +1324,7 @@ class IndividualControllerRoot extends BaseController {
 		}
 
 		?>
-		<table class="facts_table" STYLE="margin-top:-2px; "cellpadding=\"0\">
+		<table class="facts_table" style="margin-top:-2px; "cellpadding=\"0\">
 		<?php if (!$this->indi->canDisplayDetails()) {
 			print "<tr><td class=\"facts_value\" colspan=\"2\">";
 			print_privacy_error($CONTACT_EMAIL);

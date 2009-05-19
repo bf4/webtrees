@@ -638,7 +638,7 @@ class XPathBase {
       static $colIndex = -1;
       $colIndex++;
       echo '<div style="clear:both" align="left"> ';
-      echo '<pre STYLE="border:solid thin '. $color[$colIndex % 6] . '; padding:5">';
+      echo '<pre style="border:solid thin '. $color[$colIndex % 6] . '; padding:5">';
       echo '<a style="float:right;margin:5px" name="'.$this->iDebugNextLinkNumber.'Open" href="#'.$this->iDebugNextLinkNumber.'Close">Function Close '.$this->iDebugNextLinkNumber.'</a>';
       echo "<STRONG>{$fileName} : {$functionName}</STRONG>";
       echo '<hr style="clear:both">';
