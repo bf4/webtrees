@@ -60,27 +60,34 @@ loadLangFile("lightbox:lang");
 //The following lines of code are used to print the menu box on the top right hand corner
 if ((!$controller->isPrintPreview())&&(empty($SEARCH_SPIDER))&&!empty($controller->pid)&&!empty($filename)) {
 	if ($controller->userCanEdit() || $controller->canShowOtherMenu()) { ?>
+		<?php if (!$PGV_MENUS_AS_LISTS) {?>
 		<table class="sublinks_table rtl noprint" style="margin: 10px;" cellspacing="4" cellpadding="0" align="<?php print $TEXT_DIRECTION=='ltr'?'right':'left';?>">
 			<tr>
 				<td class="list_label <?php echo $TEXT_DIRECTION; ?>" colspan="5"><?php print $pgv_lang["media_options"]; ?></td>
 			</tr>
 			<tr>
-				<?php
+		<?php } else { ?>
+		<div class="sublinks_table">
+			<div class="list_label <?php echo $TEXT_DIRECTION; ?>"><?php echo $pgv_lang["media_options"]; ?></div>
+		<?php } 
 				if ($controller->userCanEdit()) {
 				?>
-				<td class="sublinks_cell <?php echo $TEXT_DIRECTION;?>">
+				<<?php if (!$PGV_MENUS_AS_LISTS) {?>td<?php } else { ?>ul<?php }?> class="sublinks_cell <?php echo $TEXT_DIRECTION; ?>">
 					<?php $menu = $controller->getEditMenu(); $menu->printMenu(); ?>
-				</td>
+				</<?php if (!$PGV_MENUS_AS_LISTS) {?>td<?php } else { ?>ul<?php }?>>
 				<?php }
 				if ($controller->canShowOtherMenu()) {
 				?>
-				<td class="sublinks_cell <?php echo $TEXT_DIRECTION; ?>">
+				<<?php if (!$PGV_MENUS_AS_LISTS) {?>td<?php } else { ?>ul<?php }?> class="sublinks_cell <?php echo $TEXT_DIRECTION; ?>">
 				<?php $menu = $controller->getOtherMenu(); $menu->printMenu(); ?>
-				</td>
+				</<?php if (!$PGV_MENUS_AS_LISTS) {?>td<?php } else { ?>ul<?php }?>>
 				<?php }	?>
+		<?php if (!$PGV_MENUS_AS_LISTS) {?>
 			</tr>
-		</table>
-		<?php
+		</table><br />
+		<?php } else { ?>
+		</div>
+		<?php } 
 	}
 }
 

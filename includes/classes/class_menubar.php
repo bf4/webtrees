@@ -99,7 +99,7 @@ class MenuBar
 		$username = PGV_USER_NAME;
 		if (!$username) {
 			$menu = new Menu("", "", "");
-			$menu->print_menu = null;
+//			$menu->print_menu = null;
 			return $menu;
 		}
 
@@ -213,7 +213,7 @@ class MenuBar
 		if ($TEXT_DIRECTION=="rtl") $ff="_rtl"; else $ff="";
 		if (!empty($SEARCH_SPIDER)) {
 			$menu = new Menu("", "", "");
-			$menu->print_menu = null;
+//			$menu->print_menu = null;
 			return $menu;
 		}
 
@@ -568,7 +568,7 @@ class MenuBar
 		if ($TEXT_DIRECTION=="rtl") $ff="_rtl"; else $ff="";
 		if ((!file_exists("calendar.php")) || (!empty($SEARCH_SPIDER))) {
 			$menu = new Menu("", "", "");
-			$menu->print_menu = null;
+//			$menu->print_menu = null;
 			return $menu;
 			}
 		//-- main calendar menu item
@@ -607,7 +607,7 @@ class MenuBar
 		if ($TEXT_DIRECTION=="rtl") $ff="_rtl"; else $ff="";
 		if ((!file_exists("reportengine.php")) || (!empty($SEARCH_SPIDER))) {
 			$menu = new Menu("", "", "");
-			$menu->print_menu = null;
+//			$menu->print_menu = null;
 			return $menu;
 			}
 
@@ -676,7 +676,7 @@ class MenuBar
 		if ($TEXT_DIRECTION=="rtl") $ff="_rtl"; else $ff="";
 		if ((!file_exists("clippings.php")) || (!empty($SEARCH_SPIDER))) {
 			$menu = new Menu("", "", "");
-			$menu->print_menu = null;
+//			$menu->print_menu = null;
 			return $menu;
 		}
 		if ($ENABLE_CLIPPINGS_CART <PGV_USER_ACCESS_LEVEL) return null;
@@ -697,7 +697,7 @@ class MenuBar
 		if ($TEXT_DIRECTION=="rtl") $ff="_rtl"; else $ff="";
 		if (!file_exists("includes/extras/optional_menu.php") || !empty($SEARCH_SPIDER)) {
 			$menu = new Menu("", "", "");
-			$menu->print_menu = null;
+//			$menu->print_menu = null;
 			return $menu;
 		}
 		require "includes/extras/optional_menu.php";
@@ -713,7 +713,7 @@ class MenuBar
 		if ($TEXT_DIRECTION=="rtl") $ff="_rtl"; else $ff="";
 		if (!empty($SEARCH_SPIDER)) {
 			$menu = new Menu("", "", "");
-			$menu->print_menu = null;
+//			$menu->print_menu = null;
 			return $menu;
 			}
 		//-- main print_preview menu item
@@ -734,7 +734,7 @@ class MenuBar
 		if ($TEXT_DIRECTION=="rtl") $ff="_rtl"; else $ff="";
 		if ((!file_exists("search.php")) || (!empty($SEARCH_SPIDER))) {
 			$menu = new Menu("", "", "");
-			$menu->print_menu = null;
+//			$menu->print_menu = null;
 			return $menu;
 			}
 		//-- main search menu item
@@ -820,7 +820,7 @@ class MenuBar
 		if ($TEXT_DIRECTION=="rtl") $ff="_rtl"; else $ff="";
 		if (!empty($SEARCH_SPIDER)) {
 			$menu = new Menu("", "", "");
-			$menu->print_menu = null;
+//			$menu->print_menu = null;
 			return $menu;
 			}
 		//-- main help menu item
@@ -932,7 +932,7 @@ class MenuBar
 			if (substr($frompage,-1) == "&") $frompage = substr($frompage,0,-1);
 			$menu=new Menu($pgv_lang['change_theme']);
 			$menu->addClass('thememenuitem', 'thememenuitem_hover', 'themesubmenu', "icon_small_theme");
-			$menu->print_menu = null;
+//			$menu->print_menu = null;
 			foreach (get_theme_names() as $themename=>$themedir) {
 				$submenu=new Menu($themename, encode_url("themechange.php?frompage={$frompage}&mytheme={$themedir}"));
 				if ($themedir==$current) {
@@ -966,7 +966,7 @@ class MenuBar
 			$menu=new Menu($pgv_lang['change_lang'], '#', 'down');
 			$menu->addClass("menuitem$ff", "menuitem_hover$ff", "submenu$ff");
 
-			$menu->print_menu = null;
+//			$menu->print_menu = null;
 			foreach ($language_settings as $lang=>$language) {
 				if ($language['pgv_lang_use'] && isset($language['pgv_lang_self']) && isset($language['pgv_language']) && file_exists($language['pgv_language'])) {
 					$submenu=new Menu($language['pgv_lang_self'], $SCRIPT_NAME.normalize_query_string($QUERY_STRING.'&amp;changelanguage=yes&amp;NEWLANGUAGE='.$lang));
@@ -1012,7 +1012,7 @@ class MenuBar
 				$menu->addIcon($PGV_IMAGE_DIR.'/'.$PGV_IMAGES['gedcom']['large']);
 			}
 			$menu->addClass("menuitem$ff", "menuitem_hover$ff", "submenu$ff", "icon_large_gedcom");
-			$menu->print_menu = NULL;
+//			$menu->print_menu = NULL;
 
 			$userfavs=getUserFavorites(PGV_USER_ID);
 			$gedfavs=getUserFavorites($GEDCOM);

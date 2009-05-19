@@ -129,23 +129,19 @@ function gedcom_header($gedfile) {
 			$COPR=$match[0];
 		}
 		// Link to SUBM/SUBN records, if they exist
-		$sql="SELECT o_id FROM ${TBLPREFIX}other WHERE o_type='SUBN' AND o_file=".$GEDCOMS[$gedfile]["id"];
-		$res=dbquery($sql);
-		if (!DB::isError($res)) {
-			if ($res->numRows()>0) {
-				$row=$res->fetchRow();
-				$SUBN="\n1 SUBN @".$row[0]."@";
-			}
-			$res->free();
+		$subn=
+			PGV_DB::prepare("SELECT o_id FROM ${TBLPREFIX}other WHERE o_type=? AND o_file=?")
+			->execute(array('SUBN', $GEDCOMS[$gedfile]["id"]))
+			->fetchOne();
+		if ($subn) {
+			$SUBN="\n1 SUBN @{$subn}@";
 		}
-		$sql="SELECT o_id FROM ${TBLPREFIX}other WHERE o_type='SUBM' AND o_file=".$GEDCOMS[$gedfile]["id"];
-		$res=dbquery($sql);
-		if (!DB::isError($res)) {
-			if ($res->numRows()>0) {
-				$row=$res->fetchRow();
-				$SUBM="\n1 SUBM @".$row[0]."@";
-			}
-			$res->free();
+		$subm=
+			PGV_DB::prepare("SELECT o_id FROM ${TBLPREFIX}other WHERE o_type=? AND o_file=?")
+			->execute(array('SUBM', $GEDCOMS[$gedfile]["id"]))
+			->fetchOne();
+		if ($subn) {
+			$SUBN="\n1 SUBM @{$subm}@";
 		}
 	}
 
@@ -201,10 +197,11 @@ function print_gedcom($privatize_export, $privatize_export_level, $convert, $rem
 	// Buffer the output.  Lots of small fwrite() calls can be very slow when writing large gedcoms.
 	$buffer=reformat_record_export($head);
 
-	$sql="SELECT i_id, i_gedcom FROM {$TBLPREFIX}individuals WHERE i_file={$GEDCOMS[$GEDCOM]['id']} AND i_id NOT LIKE '%:%' ORDER BY i_id";
-	$res=dbquery($sql);
-	while ($row=$res->fetchRow()) {
-		$rec=$row[1];
+	$recs=
+		PGV_DB::prepare("SELECT i_gedcom FROM {$TBLPREFIX}individuals WHERE i_file=? AND i_id NOT LIKE ? ORDER BY i_id")
+		->execute(array($GEDCOMS[$GEDCOM]['id'], '%:%'))
+		->fetchOneColumn();
+	foreach ($recs as $rec) {
 		$rec=remove_custom_tags($rec, $remove);
 		if ($privatize_export=="yes") {
 			$rec=privatize_gedcom($rec);
@@ -218,12 +215,12 @@ function print_gedcom($privatize_export, $privatize_export_level, $convert, $rem
 			$buffer='';
 		}
 	}
-	$res->free();
 
-	$sql="SELECT f_id, f_gedcom FROM {$TBLPREFIX}families WHERE f_file={$GEDCOMS[$GEDCOM]['id']} AND f_id NOT LIKE '%:%' ORDER BY f_id";
-	$res=dbquery($sql);
-	while ($row=$res->fetchRow()) {
-		$rec=$row[1];
+	$recs=
+		PGV_DB::prepare("SELECT f_gedcom FROM {$TBLPREFIX}families WHERE f_file=? AND f_id NOT LIKE ? ORDER BY f_id")
+		->execute(array($GEDCOMS[$GEDCOM]['id'], '%:%'))
+		->fetchOneColumn();
+	foreach ($recs as $rec) {
 		$rec=remove_custom_tags($rec, $remove);
 		if ($privatize_export=="yes") {
 			$rec=privatize_gedcom($rec);
@@ -237,12 +234,12 @@ function print_gedcom($privatize_export, $privatize_export_level, $convert, $rem
 			$buffer='';
 		}
 	}
-	$res->free();
 
-	$sql="SELECT s_id, s_gedcom FROM {$TBLPREFIX}sources WHERE s_file={$GEDCOMS[$GEDCOM]['id']} AND s_id NOT LIKE '%:%' ORDER BY s_id";
-	$res=dbquery($sql);
-	while ($row=$res->fetchRow()) {
-		$rec=$row[1];
+	$recs=
+		PGV_DB::prepare("SELECT s_gedcom FROM {$TBLPREFIX}sources WHERE s_file=? AND s_id NOT LIKE ? ORDER BY s_id")
+		->execute(array($GEDCOMS[$GEDCOM]['id'], '%:%'))
+		->fetchOneColumn();
+	foreach ($recs as $rec) {
 		$rec=remove_custom_tags($rec, $remove);
 		if ($privatize_export=="yes") {
 			$rec=privatize_gedcom($rec);
@@ -256,12 +253,12 @@ function print_gedcom($privatize_export, $privatize_export_level, $convert, $rem
 			$buffer='';
 		}
 	}
-	$res->free();
 
-	$sql="SELECT o_id, o_gedcom FROM {$TBLPREFIX}other WHERE o_file={$GEDCOMS[$GEDCOM]['id']} AND o_id NOT LIKE '%:%' AND o_type!='HEAD' AND o_type!='TRLR' ORDER BY o_id";
-	$res=dbquery($sql);
-	while ($row=$res->fetchRow()) {
-		$rec=$row[1];
+	$recs=
+		PGV_DB::prepare("SELECT o_gedcom FROM {$TBLPREFIX}other WHERE o_file=? AND o_id NOT LIKE ? AND o_type!=? AND o_type!=? ORDER BY o_id")
+		->execute(array($GEDCOMS[$GEDCOM]['id'], '%:%', 'HEAD', 'TRLR'))
+		->fetchOneColumn();
+	foreach ($recs as $rec) {
 		$rec=remove_custom_tags($rec, $remove);
 		if ($privatize_export=="yes") {
 			$rec=privatize_gedcom($rec);
@@ -275,12 +272,12 @@ function print_gedcom($privatize_export, $privatize_export_level, $convert, $rem
 			$buffer='';
 		}
 	}
-	$res->free();
 
-	$sql="SELECT m_media, m_gedrec FROM {$TBLPREFIX}media WHERE m_gedfile={$GEDCOMS[$GEDCOM]['id']} AND m_media NOT LIKE '%:%' ORDER BY m_media";
-	$res=dbquery($sql);
-	while ($row=$res->fetchRow()) {
-		$rec=$row[1];
+	$recs=
+		PGV_DB::prepare("SELECT m_gedrec FROM {$TBLPREFIX}media WHERE m_gedfile=? AND m_media NOT LIKE ? ORDER BY m_media")
+		->execute(array($GEDCOMS[$GEDCOM]['id'], '%:%'))
+		->fetchOneColumn();
+	foreach ($recs as $rec) {
 		$rec=remove_custom_tags($rec, $remove);
 		if ($privatize_export=="yes") {
 			$rec=privatize_gedcom($rec);
@@ -294,7 +291,6 @@ function print_gedcom($privatize_export, $privatize_export_level, $convert, $rem
 			$buffer='';
 		}
 	}
-	$res->free();
 
 	fwrite($gedout, $buffer."0 TRLR".PGV_EOL);
 
@@ -314,43 +310,37 @@ function print_gramps($privatize_export, $privatize_export_level, $convert, $rem
 	$geDownloadGedcom=new GEDownloadGedcom();
 	$geDownloadGedcom->begin_xml();
 
-	$sql="SELECT i_gedcom, i_id FROM " . $TBLPREFIX . "individuals WHERE i_file=" . $GEDCOMS[$GEDCOM]['id'] . " ORDER BY i_id";
-	$res=dbquery($sql);
-	while ($row=$res->fetchRow()) {
-		$rec=$row[0];
-		$rec=remove_custom_tags($rec, $remove);
-		$geDownloadGedcom->create_person($rec, $row[1]);
+	$recs=
+		PGV_DB::prepare("SELECT i_id, i_gedcom FROM {$TBLPREFIX}individuals WHERE i_file=? AND i_id NOT LIKE ? ORDER BY i_id")
+		->execute(array($GEDCOMS[$GEDCOM]['id'], '%:%'))
+		->fetchAssoc();
+	foreach ($recs as $id=>$rec) {
+		$geDownloadGedcom->create_person(remove_custom_tags($rec, $remove), $id);
 	}
-	$res->free();
 
-	$sql="SELECT f_gedcom, f_id FROM " . $TBLPREFIX . "families WHERE f_file=" . $GEDCOMS[$GEDCOM]['id'] . " ORDER BY f_id";
-	$res=dbquery($sql);
-	while ($row=$res->fetchRow()) {
-		$rec=$row[0];
-		$rec=remove_custom_tags($rec, $remove);
-		$geDownloadGedcom->create_family($rec, $row[1]);
+	$recs=
+		PGV_DB::prepare("SELECT f_id, f_gedcom FROM {$TBLPREFIX}families WHERE f_file=? AND f_id NOT LIKE ? ORDER BY f_id")
+		->execute(array($GEDCOMS[$GEDCOM]['id'], '%:%'))
+		->fetchAssoc();
+	foreach ($recs as $id=>$rec) {
+		$geDownloadGedcom->create_family(remove_custom_tags($rec, $remove), $id);
 	}
-	$res->free();
 
-	$sql="SELECT s_gedcom, s_id FROM " . $TBLPREFIX . "sources WHERE s_file=" . $GEDCOMS[$GEDCOM]['id'] . " ORDER BY s_id";
-	$res=dbquery($sql);
-	while ($row=$res->fetchRow()) {
-		$rec=$row[0];
-		$rec=remove_custom_tags($rec, $remove);
-		$geDownloadGedcom->create_source($row[1], $rec);
+	$recs=
+		PGV_DB::prepare("SELECT s_id, s_gedcom FROM {$TBLPREFIX}sources WHERE s_file=? AND s_id NOT LIKE ? ORDER BY s_id")
+		->execute(array($GEDCOMS[$GEDCOM]['id'], '%:%'))
+		->fetchAssoc();
+	foreach ($recs as $id=>$rec) {
+		$geDownloadGedcom->create_source(remove_custom_tags($rec, $remove), $id);
 	}
-	$res->free();
 
-	$sql="SELECT m_gedrec, m_media FROM " . $TBLPREFIX . "media WHERE m_gedfile=" . $GEDCOMS[$GEDCOM]['id'] . " ORDER BY m_media";
-	$res=dbquery($sql);
-
-	while ($row=$res->fetchRow()) {
-		$rec=$row[0];
-		$rec=remove_custom_tags($rec, $remove);
-		preg_match('/0 @(.*)@/',$rec, $varMatch);
-		$geDownloadGedcom->create_media($varMatch[1],$rec, $row[1]);
+	$recs=
+		PGV_DB::prepare("SELECT m_media, m_gedrec FROM {$TBLPREFIX}media WHERE m_gedfile=? AND m_media NOT LIKE ? ORDER BY m_media")
+		->execute(array($GEDCOMS[$GEDCOM]['id'], '%:%'))
+		->fetchAssoc();
+	foreach ($recs as $id=>$rec) {
+		$geDownloadGedcom->create_media($id, remove_custom_tags($rec, $remove));
 	}
-	$res->free();
 	fwrite($gedout,$geDownloadGedcom->dom->saveXML());
 }
 
@@ -409,17 +399,17 @@ function um_export($proceed) {
 	}
 	$messages=array();
 	$mesid=1;
-	$sql="SELECT * FROM ".$TBLPREFIX."messages ORDER BY m_id DESC";
-	$res=dbquery($sql);
-	while ($row=& $res->fetchRow(DB_FETCHMODE_ASSOC)){
-		$row=db_cleanup($row);
+	$rows=
+		PGV_DB::prepare("SELECT * FROM {$TBLPREFIX}messages ORDER BY m_id DESC")
+		->fetchAll(PDO::FETCH_ASSOC);
+	foreach ($rows as $row){
 		$message=array();
 		$message["id"]=$mesid;
 		$mesid=$mesid + 1;
 		$message["to"]=$row["m_to"];
 		$message["from"]=$row["m_from"];
-		$message["subject"]=stripslashes($row["m_subject"]);
-		$message["body"]=stripslashes($row["m_body"]);
+		$message["subject"]=$row["m_subject"];
+		$message["body"]=$row["m_body"];
 		$message["created"]=$row["m_created"];
 		$messages[]=$message;
 	}
@@ -451,11 +441,11 @@ function um_export($proceed) {
 		print $pgv_lang["um_creating"]." \"favorites.dat\"<br /><br />";
 	}
 	$favorites=array();
-	$sql="SELECT * FROM ".$TBLPREFIX."favorites";
-	$res=dbquery($sql);
+	$rows=
+		PGV_DB::prepare("SELECT * FROM {$TBLPREFIX}favorites")
+		->fetchAll(PDO::FETCH_ASSOC);
 	$favid=1;
-	while ($row=& $res->fetchRow(DB_FETCHMODE_ASSOC)){
-		$row=db_cleanup($row);
+	foreach ($rows as $row){
 		$favorite=array();
 		$favorite["id"]=$favid;
 		$favid=$favid + 1;
@@ -496,16 +486,16 @@ function um_export($proceed) {
 		print $pgv_lang["um_creating"]." \"news.dat\"<br /><br />";
 	}
 	$allnews=array();
-	$sql="SELECT * FROM ".$TBLPREFIX."news ORDER BY n_date DESC";
-	$res=dbquery($sql);
-	while ($row=& $res->fetchRow(DB_FETCHMODE_ASSOC)){
-		$row=db_cleanup($row);
+	$rows=
+		PGV_DB::prepare("SELECT * FROM {$TBLPREFIX}news ORDER BY n_date DESC")
+		->fetchAll(PDO::FETCH_ASSOC);
+	foreach ($rows as $row){
 		$news=array();
 		$news["id"]=$row["n_id"];
 		$news["username"]=$row["n_username"];
 		$news["date"]=$row["n_date"];
-		$news["title"]=stripslashes($row["n_title"]);
-		$news["text"]=stripslashes($row["n_text"]);
+		$news["title"]=$row["n_title"];
+		$news["text"]=$row["n_text"];
 		$allnews[$row["n_id"]]=$news;
 	}
 	if (count($allnews) > 0) {
@@ -538,9 +528,10 @@ function um_export($proceed) {
 	$allblocks=array();
 	$blocks["main"]=array();
 	$blocks["right"]=array();
-	$sql="SELECT * FROM ".$TBLPREFIX."blocks ORDER BY b_location, b_order";
-	$res=dbquery($sql);
-	while ($row=& $res->fetchRow(DB_FETCHMODE_ASSOC)){
+	$rows=
+		PGV_DB::prepare("SELECT * FROM {$TBLPREFIX}blocks ORDER BY b_location, b_order")
+		->fetchAll(PDO::FETCH_ASSOC);
+	foreach ($rows as $row){
 		$blocks=array();
 		$blocks["username"]=$row["b_username"];
 		$blocks["location"]=$row["b_location"];

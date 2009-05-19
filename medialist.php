@@ -76,8 +76,7 @@ if ($search == "yes") {
 	}
 	// show external links only if looking at top level directory
 	$showExternal = ($folder == $MEDIA_DIRECTORY) ? true : false;
-	$medialist = array();
-	get_medialist($currentdironly, $folder, true, false, $showExternal);
+	$medialist=get_medialist($currentdironly, $folder, true, false, $showExternal);
 
 	//-- remove all private media objects
 	foreach($medialist as $key => $media) {

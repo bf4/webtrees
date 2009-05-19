@@ -2238,8 +2238,6 @@ function linkMedia($mediaid, $linktoid, $level=1) {
 	global $GEDCOM, $pgv_lang, $pgv_changes;
 
 	if (empty($level)) $level = 1;
-	//-- Make sure we only add new links to the media object
-	if (exists_db_link($mediaid, $linktoid, $GEDCOM)) return false;
 	if ($level!=1) return false; // Level 2 items get linked elsewhere
 	// find Indi, Family, or Source record to link to
 	if (isset($pgv_changes[$linktoid."_".$GEDCOM])) {
@@ -2253,9 +2251,6 @@ function linkMedia($mediaid, $linktoid, $level=1) {
 	if ($ct>0) return false;
 
 	if ($gedrec) {
-		// Changed to match format of all other data adds.
-		//$mediarec = "1 OBJE @".$mediaid."@\n";
-		//$newrec = trim($gedrec."\n".$mediarec);
 		$newrec = $gedrec."\n1 OBJE @".$mediaid."@";
 
 		replace_gedrec($linktoid, $newrec);

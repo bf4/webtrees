@@ -656,11 +656,11 @@ a:hover .nameZoom {
 	padding: 1px;
 }
 
-.submenuitem {
+.submenuitem, .submenuitem_hover {
 	text-align: left;
 }
 
-.submenuitem_rtl {
+.submenuitem_rtl, .submenuitem_hover_rtl {
 	text-align: right;
 }
 
@@ -683,14 +683,6 @@ a:hover .nameZoom {
 	background-color: white;
 	white-space: nowrap;
 	padding: 1px;
-}
-
-.submenuitem_hover {
-	text-align: left;
-}
-
-.submenuitem_hover_rtl {
-	text-align: right;
 }
 
 .submenuitem_hover a, .submenuitem_hover_rtl a {

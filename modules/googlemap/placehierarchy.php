@@ -38,44 +38,53 @@ require_once 'includes/classes/class_stats.php';
 $stats = new stats($GEDCOM);
 
 function check_exist_table() {
-	global $DBCONN, $TBLPREFIX;
-	$placelocation = false;
-	$tables = $DBCONN->getListOf('tables');
-	$placelocation=in_array($TBLPREFIX."placelocation", $tables);
-	return $placelocation;
+	global $TBLPREFIX;
+	return PGV_DB::table_exists("{$TBLPREFIX}placelocation");
 }
 
-function get_place_list_loc($parent_id, $inactive=false) {
-	global $TBLPREFIX, $DBCONN;
-	if ($inactive)
-		$sql="SELECT pl_id,pl_place,pl_lati,pl_long,pl_icon FROM {$TBLPREFIX}placelocation WHERE pl_parent_id=".$DBCONN->escapeSimple($parent_id)." ORDER BY pl_place";
-	else
-		$sql="SELECT DISTINCT pl_id,pl_place,pl_lati,pl_long,pl_icon FROM {$TBLPREFIX}placelocation INNER JOIN {$TBLPREFIX}places ON {$TBLPREFIX}placelocation.pl_place={$TBLPREFIX}places.p_place AND {$TBLPREFIX}placelocation.pl_level=".$TBLPREFIX."places.p_level WHERE pl_parent_id=".$DBCONN->escapeSimple($parent_id)." ORDER BY pl_place";
 
-	$res=dbquery($sql);
-	$placelist2=array();
-	while ($row=&$res->fetchRow())
-		$placelist2[]=array("place_id"=>$row[0], "place"=>$row[1], "lati"=>$row[2], "long"=>$row[3], "icon"=>$row[4]);
-	$res->free();
-	return $placelist2;
+function get_place_list_loc($parent_id, $inactive=false) {
+	global $display, $TBLPREFIX;
+	if ($inactive) {
+		$rows=
+			PGV_DB::prepare("SELECT pl_id,pl_place,pl_lati,pl_long,pl_zoom,pl_icon FROM {$TBLPREFIX}placelocation WHERE pl_parent_id=? ORDER BY pl_place")
+			->execute(array($parent_id))
+			->fetchAll();
+	} else {
+		$rows=
+			PGV_DB::prepare(
+				"SELECT DISTINCT pl_id,pl_place,pl_lati,pl_long,pl_zoom,pl_icon".
+				" FROM {$TBLPREFIX}placelocation".
+				" INNER JOIN {$TBLPREFIX}places ON {$TBLPREFIX}placelocation.pl_place={$TBLPREFIX}places.p_place AND {$TBLPREFIX}placelocation.pl_level={$TBLPREFIX}places.p_level".
+				" WHERE pl_parent_id=? ORDER BY pl_place"
+			)
+			->execute(array($parent_id))
+			->fetchAll();
+	}
+
+	$placelist=array();
+	foreach ($rows as $row) {
+		$placelist[]=array("place_id"=>$row->pl_id, "place"=>$row->pl_place, "lati"=>$row->pl_lati, "long"=>$row->pl_long, "zoom"=>$row->pl_zoom, "icon"=>$row->pl_icon);
+	}
+	return $placelist;
 }
 
 function place_id_to_hierarchy($id) {
-	global $DBCONN, $TBLPREFIX, $pgv_lang;
+	global $TBLPREFIX;
+
+	$statement=
+		PGV_DB::prepare("SELECT pl_parent_id, pl_place FROM {$TBLPREFIX}placelocation WHERE pl_id=?");
 	$arr=array();
 	while ($id!=0) {
-		$sql="SELECT pl_parent_id, pl_place FROM {$TBLPREFIX}placelocation WHERE pl_id=".$DBCONN->escapeSimple($id);
-		$res=dbquery($sql);
-		$row=&$res->fetchRow();
-		$res->free();
-		$arr=array($id=>$row[1])+$arr;
-		$id=$row[0];
+		$row=$statement->execute(array($id))->fetchOneRow();
+		$arr=array($id=>$row->pl_place)+$arr;
+		$id=$row->pl_parent_id;
 	}
 	return $arr;
 }
 
 function get_placeid($place) {
-	global $DBCONN, $TBLPREFIX;
+	global $TBLPREFIX;
 	$par = explode (",", $place);
 	$par = array_reverse($par);
 	$place_id = 0;
@@ -85,15 +94,15 @@ function get_placeid($place) {
 			if (empty($par[$i])) $par[$i]="unknown";
 			$placelist = create_possible_place_names($par[$i], $i+1);
 			foreach ($placelist as $key => $placename) {
-				$escparent=preg_replace("/\?/","\\\\\\?", $DBCONN->escapeSimple($placename));
-				$psql = "SELECT pl_id FROM {$TBLPREFIX}placelocation WHERE pl_level={$i} AND pl_parent_id={$place_id} AND pl_place ".PGV_DB_LIKE." '{$escparent}' ORDER BY pl_place";
-				$res = dbquery($psql);
-				$row =& $res->fetchRow();
-				$res->free();
-				if (!empty($row[0])) break;
+				$escparent=preg_replace("/\?/","\\\\\\?", $placename);
+				$pl_id=
+					PGV_DB::prepare("SELECT pl_id FROM {$TBLPREFIX}placelocation WHERE pl_level={$i} AND pl_parent_id={$place_id} AND pl_place ".PGV_DB_LIKE." '{$escparent}' ORDER BY pl_place")
+					->execute(array())
+					->fetchOne();
+				if (!empty($pl_id)) break;
 			}
-			if (empty($row[0])) break;
-			$place_id = $row[0];
+			if (empty($pl_id)) break;
+			$place_id = $pl_id;
 		}
 	}
 	return $place_id;

@@ -42,6 +42,7 @@ class Menu {
 	var $class = '';
 	var $hoverclass = '';
 	var $submenuclass = '';
+	var $iconclass = '';
 	var $accesskey = null;
 	var $target = null;
 	var $parentmenu = null;
@@ -129,7 +130,7 @@ class Menu {
 	function getMenuAsList() {
 		$link = '';
 		if ($this->separator) {
-			return '<li class="separator"><span></span></li>'; // The <hr/> tag is difficult to style
+			return "\t".'<li class="separator"><span></span></li>'."\n";
 		}
 		if ($this->link) {
 			if ($this->accesskey !== null) {
@@ -143,22 +144,23 @@ class Menu {
 				if ($this->onclick !== null) {
 					$link .= ' onclick="'.$this->onclick.'"';
 				}
-				$html='<a class="'.$this->iconclass.'" href="'.$this->link.'"'.$link.'>'.$this->label.'</a>';
+					$html='<a class="'.$this->iconclass.'" href="'.$this->link.'"'.$link.'>'.$this->label.'</a>';
 			} else {
-				$html='<a class="'.$this->iconclass.'" href="'.$this->link.'">'.$this->label.'</a>';
+					$html='<a class="'.$this->iconclass.'" href="'.$this->link.'">'.$this->label.'</a>';
 			}
 		} else {
 			return '';
 		}
 		if ($this->submenus) {
-			$html.='<ul>';
+			$html.="\n\t".'<ul>'."\n";
 			foreach ($this->submenus as $submenu) {
 				$html.=$submenu->getMenuAsList();
 			}
-			$html.='</ul>';
+			$html.="\t".'</ul>';
+			return '<li class="node">'.$html.'</li>'."\n";
 		}
 
-		return '<li>'.$html.'</li>';
+		return "\t".'<li>'.$html.'</li>'."\n";
 	}
 
 	// Get the menu as a dropdown form element
@@ -342,9 +344,14 @@ class Menu {
 		return $output;
 	}
 
-	function printMenu()
-	{
-		print $this->getMenu();
+	function printMenu() {
+		global $PGV_MENUS_AS_LISTS;
+
+		if ($PGV_MENUS_AS_LISTS) {
+			echo $this->getMenuAsList();
+		} else {
+			echo $this->getMenu();
+		}
 	}
 
 	/**

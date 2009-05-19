@@ -528,13 +528,8 @@ function checkEnvironment() {
 		print "</td></tr>";
 	}
 
-	//database extension mssql,mysql,mysqli,pgsql,sqlite
-	$has_mysql = extension_loaded("mysql");
-	$has_pgsql = extension_loaded("pgsql");
-	$has_mysqli = extension_loaded("mysqli");
-	$has_mssql = extension_loaded("mssql");
-	$has_sqlite = extension_loaded("sqlite");
-	if (!$has_mysql&&!$has_pgsql&&!$has_mysqli&&!$has_mssql&&!$has_sqlite) {
+	// Check we have one or more PDO drivers available
+	if (!extension_loaded('pdo') || !PGV_DB::getAvailableDrivers()) {
 		print "<tr><td valign=\"top\">";
 		print $pgv_lang["checking_db_support"]."<br />";
 		print "<span class=\"error\">".$pgv_lang["no_db_extensions"]."</span><br />";
@@ -656,11 +651,6 @@ function printDBForm() {
 	global $DBHOST, $DBNAME, $DBPASS, $DBPERSIST, $DBPORT, $DBTYPE, $DBUSER, $DB_UTF8_COLLATION, $TBLPREFIX;
 	global $pgv_lang;
 	$i=1;
-	$has_mysql = extension_loaded("mysql");
-	$has_pgsql = extension_loaded("pgsql");
-	$has_mysqli = extension_loaded("mysqli");
-	$has_mssql = extension_loaded("mssql");
-	$has_sqlite = extension_loaded("sqlite");
 	if (isset($_SESSION['install_config']['DBHOST'])) $DBHOST = $_SESSION['install_config']['DBHOST'];
 	if (isset($_SESSION['install_config']['DBNAME'])) $DBNAME =$_SESSION['install_config']['DBNAME'];
 	if (isset($_SESSION['install_config']['DBPASS'])) $DBPASS =	$_SESSION['install_config']['DBPASS'];
@@ -676,11 +666,21 @@ function printDBForm() {
 		<td class="descriptionbox wrap width30"><?php print_help_link("DBTYPE_help", "qm", "DBTYPE"); print $pgv_lang["DBTYPE"];?></td>
 		<td class="optionbox">
 			<select name="NEW_DBTYPE" dir="ltr" tabindex="<?php $i++; print $i?>" onfocus="getHelp('DBTYPE_help');" onchange="changeDBtype(this);">
-				<?php if ($has_mssql) {?><option value="mssql" <?php if ($DBTYPE=='mssql') print "selected=\"selected\""; ?>><?php print $pgv_lang["mssql"];?></option><?php } ?>
-				<?php if ($has_mysql) {?><option value="mysql" <?php if ($DBTYPE=='mysql') print "selected=\"selected\""; ?>><?php print $pgv_lang["mysql"];?></option><?php } ?>
-				<?php if ($has_mysqli) {?><option value="mysqli" <?php if ($DBTYPE=='mysqli') print "selected=\"selected\""; ?>><?php print $pgv_lang["mysqli"];?></option><?php } ?>
-				<?php if ($has_pgsql) {?><option value="pgsql" <?php if ($DBTYPE=='pgsql') print "selected=\"selected\""; ?>><?php print $pgv_lang["pgsql"];?></option><?php } ?>
-				<?php if ($has_sqlite) {?><option value="sqlite" <?php if ($DBTYPE=='sqlite') print "selected=\"selected\""; ?>><?php print $pgv_lang["sqlite"];?></option><?php } ?>
+			<?php
+				foreach (PGV_DB::getAvailableDrivers() as $driver) {
+					echo '<option value="', $driver, '"';
+					if ($DBTYPE==$driver) {
+						echo 'selected="selected"';
+					}
+					echo '>';
+					if (array_key_exists($driver, $pgv_lang)) {
+						echo $pgv_lang[$driver];
+					} else {
+						echo $driver;
+					}
+					echo '</option>';
+				}
+			?>
 			</select>
 		</td>
 	</tr>

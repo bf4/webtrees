@@ -56,7 +56,49 @@ class PGV_DB {
 	public final function __wakeup() {
 		trigger_error('PGV_DB::unserialize() is not allowed.', E_USER_ERROR);
 	}
- 	
+
+	// Test a set of connection parameters - used during installation
+	public static function testParameters($DBTYPE, $DBHOST, $DBPORT, $DBNAME, $DBUSER, $DBPASS) {
+		try {
+			switch ($DBTYPE) {
+			case 'mysql':
+				$dbh=new PDO("mysql:host={$DBHOST};dbname={$DBNAME};port={$DBPORT}", $DBUSER, $DBPASS);
+				break;
+			case 'pgsql':
+				$dbh=new PDO("pgsql:host={$DBHOST};dbname={$DBNAME};port={$DBPORT}", $DBUSER, $DBPASS);
+				break;
+			case 'mssql':
+				$dbh=new PDO("mssql:host={$DBHOST};dbname={$DBNAME}".($DBPORT ? ",{$DBPORT}" : ''), $DBUSER, $DBPASS);
+				break;
+			case 'sqlite':
+				$dbh=new PDO("sqlite:{$DBNAME}", null, null);
+				break;
+			case 'firebird': // This DSN has not been tested!
+				$dbh=new PDO("firebird:host={$DBHOST};dbname={$DBNAME};charset=UTF-8", $DBUSER, $DBPASS);
+				break;
+			case 'ibm': // This DSN has not been tested!
+				$dbh=new PDO("ibm:DRIVER={IBM DB2 ODBC DRIVER};DATABASE={$DBNAME};HOSTNAME={$DBHOST};PORT={$DBPORT};PROTOCOL=TCPIP", $DBUSER, $DBPASS);
+				break;
+			case 'informix': // This DSN has not been tested!
+				$dbh=new PDO("informix:host={$DBHOST};service={$DBPORT};database={$DBNAME}", $DBUSER, $DBPASS);
+				break;
+			case 'oci': // This DSN has not been tested!
+				$dbh=new PDO("oci:dbname=//{$DBHOST}}:{$DBPORT}/{$DBNAME}", $DBUSER, $DBPASS);
+				break;
+			case 'odbc': // This DSN has not been tested!
+				$dbh=new PDO("odbc:$DBNAME", $DBUSER, $DBPASS);
+				break;
+			case '4D': // This DSN has not been tested!
+				$dbh=new PDO("4D:host={$DBHOST};port={$DBPORT};dbname={$DBNAME};charset=UTF-8", $DBUSER, $DBPASS);
+				break;
+			}
+			unset($dbh); // Close the connection
+			return true;
+		} catch (PDOException $ex) {
+			return false;
+		}
+	}
+
 	// Implement the singleton pattern
 	public static function createInstance($DBTYPE, $DBHOST, $DBPORT, $DBNAME, $DBUSER, $DBPASS, $DBPERSIST, $DB_UTF8_COLLATION) {
 		if (self::$pdo instanceof PDO) {
@@ -68,7 +110,14 @@ class PGV_DB {
 		}
 		// Check that the driver is loaded
 		if (!extension_loaded('pdo') || !in_array($DBTYPE, PDO::getAvailableDrivers())) {
-	 		trigger_error("PDO/{$DBTYPE} is not installed.", E_USER_ERROR);
+			// Try to load it dynamically.  This function is deprecated (should use php.ini),
+			// but for some users this may be the only option.
+			@dl('pdo.so');
+			@dl("pdo_{$DBTYPE}.so");
+			// ...and try again
+			if (!extension_loaded('pdo') || !in_array($DBTYPE, PDO::getAvailableDrivers())) {
+		 		trigger_error("PDO/{$DBTYPE} is not installed.", E_USER_ERROR);
+			}
 		}
 		// Create the underlying PDO object
 		switch ($DBTYPE) {
@@ -115,22 +164,23 @@ class PGV_DB {
 			);
 			break;
 		case 'sqlite':
-//			self::$pdo=new PDO(
-//				"sqlite:{$DBNAME}", $DBUSER, $DBPASS,
-//				array(
-//					PDO::ATTR_PERSISTENT=>(bool)$DBPERSIST,
-//					PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION,
-//					PDO::ATTR_DEFAULT_FETCH_MODE=>PDO::FETCH_OBJ,
-//					PDO::ATTR_CASE=>PDO::CASE_LOWER
-//				)
-//			);
 //			try {
+//				self::$pdo=new PDO(
+//					"sqlite:{$DBNAME}", null, null,
+//					array(
+//						PDO::ATTR_PERSISTENT=>(bool)$DBPERSIST,
+//						PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION,
+//						PDO::ATTR_DEFAULT_FETCH_MODE=>PDO::FETCH_OBJ,
+//						PDO::ATTR_CASE=>PDO::CASE_LOWER
+//					)
+//				);
 //				// Check if we can connect to the database
-//				PGV_DB::prepare("SELECT 1 FROM information_schema")->fetchOne();
+//				// If not, we may have a sqlite2 database from PhpGedView 4.2.1 or earlier
+//				PGV_DB::exec('PRAGMA encoding="UTF-8"');
 //			} catch (PDOException $ex) {
 //				// Couldn't connect using sqlite3 - try sqlite2
 				self::$pdo=new PDO(
-					"sqlite2:{$DBNAME}", $DBUSER, $DBPASS,
+					"sqlite2:{$DBNAME}", null, null,
 					array(
 						PDO::ATTR_PERSISTENT=>(bool)$DBPERSIST,
 						PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION,
@@ -139,12 +189,8 @@ class PGV_DB {
 					)
 				);
 //			}
-			if ($DB_UTF8_COLLATION) {
-				self::$pdo->exec('PRAGMA encoding="UTF-8"');
-			}
 			break;
-		case 'firebird':
-			// This DSN has not been tested!
+		case 'firebird': // This DSN has not been tested!
 			self::$pdo=new PDO(
 				"firebird:host={$DBHOST};dbname={$DBNAME};charset=UTF-8", $DBUSER, $DBPASS,
 				array(
@@ -156,8 +202,7 @@ class PGV_DB {
 				)
 			);
 			break;
-		case 'ibm':
-			// This DSN has not been tested!
+		case 'ibm': // This DSN has not been tested!
 			self::$pdo=new PDO(
 				"ibm:DRIVER={IBM DB2 ODBC DRIVER};DATABASE={$DBNAME};HOSTNAME={$DBHOST};PORT={$DBPORT};PROTOCOL=TCPIP", $DBUSER, $DBPASS,
 				array(
@@ -169,8 +214,7 @@ class PGV_DB {
 				)
 			);
 			break;
-		case 'informix':
-			// This DSN has not been tested!
+		case 'informix': // This DSN has not been tested!
 			self::$pdo=new PDO(
 				"informix:host={$DBHOST};service={$DBPORT};database={$DBNAME}", $DBUSER, $DBPASS,
 				array(
@@ -182,8 +226,7 @@ class PGV_DB {
 				)
 			);
 			break;
-		case 'oci':
-			// This DSN has not been tested!
+		case 'oci': // This DSN has not been tested!
 			self::$pdo=new PDO(
 				"oci:dbname=//{$DBHOST}}:{$DBPORT}/{$DBNAME}", $DBUSER, $DBPASS,
 				array(
@@ -195,8 +238,7 @@ class PGV_DB {
 				)
 			);
 			break;
-		case 'odbc':
-			// This DSN has not been tested!
+		case 'odbc': // This DSN has not been tested!
 			self::$pdo=new PDO(
 				"odbc:$DBNAME", $DBUSER, $DBPASS,
 				array(
@@ -208,8 +250,7 @@ class PGV_DB {
 				)
 			);
 			break;
-		case '4D':
-			// This DSN has not been tested!
+		case '4D': // This DSN has not been tested!
 			self::$pdo=new PDO(
 				"4D:host={$DBHOST};port={$DBPORT};dbname={$DBNAME};charset=UTF-8", $DBUSER, $DBPASS,
 				array(
@@ -247,8 +288,16 @@ class PGV_DB {
 	private static $log=array();
 
 	// Add an entry to the log
-	public static function logQuery($query, $rows, $microtime) {
-		self::$log[]='<tr><td>'.htmlspecialchars($query).'</td><td>'.(int)$rows.'</td><td>'.round($microtime*1000, 3).'</td></tr>';
+	public static function logQuery($query, $rows, $microtime, $bind_variables) {
+		$query2='';
+		foreach (str_split(htmlspecialchars($query)) as $char) {
+			if ($char=='?') {
+				$query2.='<abbr title="'.htmlspecialchars(array_shift($bind_variables)).'">'.$char.'</abbr>';
+			} else {
+				$query2.=$char;
+			}
+		}
+		self::$log[]='<tr><td>'.$query2.'</td><td>'.(int)$rows.'</td><td>'.round($microtime*1000, 3).'</td></tr>';
 	}
 
 	// Total number of queries executed, for the page statistics
@@ -463,6 +512,17 @@ class PGV_DB {
 	// FUNCTIONALITY ENHANCEMENTS
 	//////////////////////////////////////////////////////////////////////////////
 
+	// Don't list sqlite2 as an available driver.  It is no good for PhpGedView
+	public static function getAvailableDrivers() {
+		$array=PDO::getAvailableDrivers();
+		foreach ($array as $key=>$value) {
+			if ($value=='sqlite2') {
+				unset($array[$key]);
+			}
+		}
+		return $array;
+	}
+
 	// The native quote() function does not convert PHP nulls to DB nulls
 	public static function quote($string, $parameter_type=PDO::PARAM_STR) {
 		if (is_null($string)) {
@@ -498,6 +558,14 @@ class PGV_DB {
 		return new PGV_DBStatement(self::$pdo->prepare($statement));
 	}
 	
+	public static function prepareLimit($statement, $n) {
+		if (!self::$pdo instanceof PDO) {
+			throw new PDOException("No Connection Established");
+		}
+		$statement=PGV_DB::limit_query($statement, $n);
+		return new PGV_DBStatement(self::$pdo->prepare($statement));
+	}
+	
 	// Map all other functions onto the base PDO object
 	public function __call($function, $params) {
 		return call_user_func_array(array(self::$pdo, $function), $params);
@@ -514,6 +582,9 @@ class PGV_DBStatement {
 
 	// Keep track of calls to execute(), so we can do it automatically
 	private $executed=false;
+
+	// Keep a copy of the bind variables, for logging
+	private $bind_variables=array();
 
 	// Our constructor just takes a copy of the object to be decorated
 	public function __construct(PDOStatement $statement) {
@@ -533,6 +604,7 @@ class PGV_DBStatement {
 		case 'bindColumn':
 		case 'bindParam':
 		case 'bindValue':
+			// TODO: bind variables need to be stored in $this->bind_variables so we can log them
 		case 'setAttribute':
 		case 'setFetchMode':
 			// Functions that return no values become fluent
@@ -546,7 +618,10 @@ class PGV_DBStatement {
 				$result=call_user_func_array(array($this->pdostatement, $function), $params);
 				$end=microtime(true);
 				$this->executed=!preg_match('/^(insert into|delete from|update|create|alter) /i', $this->pdostatement->queryString);
-				PGV_DB::logQuery($this->pdostatement->queryString, $this->pdostatement->rowCount(), $end-$start);
+				if ($params) {
+					$this->bind_variables=$params[0];
+				}
+				PGV_DB::logQuery($this->pdostatement->queryString, $this->pdostatement->rowCount(), $end-$start, $this->bind_variables);
 				return $this;
 			}
 		case 'fetch':

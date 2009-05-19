@@ -46,52 +46,36 @@ if (!defined('PGV_PHPGEDVIEW')) {
 		if ($TEXT_DIRECTION=="rtl") $classSuffix = "_rtl";
 
 		// main link displayed on page
-		$menu = array();
+		$menu = new Menu();
 		if ($LB_ML_THUMB_LINKS == "icon" || $LB_ML_THUMB_LINKS == "both") {
-			$menu["icon"] = "modules/lightbox/images/image_link.gif";
+			$menu->addIcon("modules/lightbox/images/image_link.gif");
 		}
 		if ($LB_ML_THUMB_LINKS == "both") {
-			$menu["label"] = $pgv_lang["set_link"];
-			$menu["labelpos"] = "down";
+			$menu->addLabel($pgv_lang["set_link"], "down");
 		}
 		if ($LB_ML_THUMB_LINKS == "text") {
-			$menu["label"] = $pgv_lang["set_link"];
+			$menu->addLabel($pgv_lang["set_link"]);
 		}
+		$menu->addOnclick("return ilinkitem('$mediaid','person')");
+		$menu->addClass("", "", "submenu");
+		$menu->addFlyout("left");
 
-		$menu["link"] = "#";
-		$menu["onclick"] = "return ilinkitem('$mediaid','person')";
-//		$menu["class"] = "thememenuitem";
-		$menu["class"] = "";
-		$menu["hoverclass"] = "";
-		$menu["submenuclass"] = "submenu";
-		$menu["flyout"] = "left";
-		$menu["items"] = array();
+		$submenu = new Menu($pgv_lang["to_person"], "#");
+		$submenu->addOnclick("return ilinkitem('$mediaid','person')");
+		$submenu->addClass("submenuitem".$classSuffix, "submenuitem".$classSuffix);
+		$menu->addSubMenu($submenu);
 
-		$submenu = array();
-		$submenu["label"] = $pgv_lang["to_person"];
-		$submenu["link"] = "#";
-		$submenu["class"] = "submenuitem".$classSuffix;
-		$submenu["hoverclass"] = "submenuitem".$classSuffix;
-		$submenu["onclick"] = "return ilinkitem('$mediaid','person')";
-		$menu["items"][] = $submenu;
+		$submenu = new Menu($pgv_lang["to_family"], "#");
+		$submenu->addOnclick("return ilinkitem('$mediaid','family')");
+		$submenu->addClass("submenuitem".$classSuffix, "submenuitem".$classSuffix);
+		$menu->addSubMenu($submenu);
 
-		$submenu = array();
-		$submenu["label"] = $pgv_lang["to_family"];
-		$submenu["link"] = "#";
-		$submenu["class"] = "submenuitem".$classSuffix;
-		$submenu["hoverclass"] = "submenuitem".$classSuffix;
-		$submenu["onclick"] = "return ilinkitem('$mediaid','family')";
-		$menu["items"][] = $submenu;
+		$submenu = new Menu($pgv_lang["to_source"], "#");
+		$submenu->addOnclick("return ilinkitem('$mediaid','source')");
+		$submenu->addClass("submenuitem".$classSuffix, "submenuitem".$classSuffix);
+		$menu->addSubMenu($submenu);
 
-		$submenu = array();
-		$submenu["label"] = $pgv_lang["to_source"];
-		$submenu["link"] = "#";
-		$submenu["class"] = "submenuitem".$classSuffix;
-		$submenu["hoverclass"] = "submenuitem".$classSuffix;
-		$submenu["onclick"] = "return ilinkitem('$mediaid','source')";
-		$menu["items"][] = $submenu;
-
-		print_menu($menu);
+		$menu->printMenu();
 ?>
 <script language="JavaScript" type="text/javascript">
   function ilinkitem(mediaid, type) {

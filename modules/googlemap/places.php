@@ -114,28 +114,34 @@ function getHighestLevel() {
  * Find all of the places in the hierarchy
  */
 function get_place_list_loc($parent_id) {
-	global $display, $TBLPREFIX, $DBCONN;
+	global $display, $TBLPREFIX;
 	if ($display=="inactive") {
-		$sql="SELECT pl_id,pl_place,pl_lati,pl_long,pl_zoom,pl_icon FROM {$TBLPREFIX}placelocation WHERE pl_parent_id=".$DBCONN->escapeSimple($parent_id)." ORDER BY pl_place";
+		$rows=
+			PGV_DB::prepare("SELECT pl_id,pl_place,pl_lati,pl_long,pl_zoom,pl_icon FROM {$TBLPREFIX}placelocation WHERE pl_parent_id=? ORDER BY pl_place")
+			->execute(array($parent_id))
+			->fetchAll();
 	} else {
-		// :TODO:
-		// This method of filtering fails to distinguish "Newport, Hampshire, England" from "Newport, Gwent, Wales".
-		// Fortunately it provides too many results, rather than too few.
-		$sql="SELECT DISTINCT pl_id,pl_place,pl_lati,pl_long,pl_zoom,pl_icon FROM {$TBLPREFIX}placelocation INNER JOIN {$TBLPREFIX}places ON {$TBLPREFIX}placelocation.pl_place={$TBLPREFIX}places.p_place AND {$TBLPREFIX}placelocation.pl_level=".$TBLPREFIX."places.p_level WHERE pl_parent_id=".$DBCONN->escapeSimple($parent_id)." ORDER BY pl_place";
+		$rows=
+			PGV_DB::prepare(
+				"SELECT DISTINCT pl_id,pl_place,pl_lati,pl_long,pl_zoom,pl_icon".
+				" FROM {$TBLPREFIX}placelocation".
+				" INNER JOIN {$TBLPREFIX}places ON {$TBLPREFIX}placelocation.pl_place={$TBLPREFIX}places.p_place AND {$TBLPREFIX}placelocation.pl_level={$TBLPREFIX}places.p_level".
+				" WHERE pl_parent_id=? ORDER BY pl_place"
+			)
+			->execute(array($parent_id))
+			->fetchAll();
 	}
-	$res=dbquery($sql);
 
 	$placelist=array();
-	while ($row=&$res->fetchRow()) {
-		$placelist[]=array("place_id"=>$row[0], "place"=>$row[1], "lati"=>$row[2], "long"=>$row[3], "zoom"=>$row[4], "icon"=>$row[5]);
+	foreach ($rows as $row) {
+		$placelist[]=array("place_id"=>$row->pl_id, "place"=>$row->pl_place, "lati"=>$row->pl_lati, "long"=>$row->pl_long, "zoom"=>$row->pl_zoom, "icon"=>$row->pl_icon);
 	}
-	$res->free();
 	uasort($placelist, "placesort");
 	return $placelist;
 }
 
 function outputLevel($parent_id) {
-	global $TBLPREFIX, $DBCONN;
+	global $TBLPREFIX;
 	$tmp = place_id_to_hierarchy($parent_id);
 	$maxLevel = getHighestLevel();
 	if ($maxLevel>8) $maxLevel = 8;
@@ -145,14 +151,16 @@ function outputLevel($parent_id) {
 	$suffix=str_repeat(';', $maxLevel-count($tmp));
 	$level=count($tmp);
 
-	$sql="SELECT pl_id, pl_place,pl_long,pl_lati,pl_zoom,pl_icon FROM {$TBLPREFIX}placelocation WHERE pl_parent_id=".$DBCONN->escapeSimple($parent_id)." ORDER BY pl_place";
-	$res=dbquery($sql);
-	while ($row=&$res->fetchRow()) {
-		echo "{$level};{$prefix}{$row[1]}{$suffix};{$row[2]};{$row[3]};{$row[4]};{$row[5]}\r\n";
+	$rows=
+		PGV_DB::prepare("SELECT pl_id, pl_place,pl_long,pl_lati,pl_zoom,pl_icon FROM {$TBLPREFIX}placelocation WHERE pl_parent_id=? ORDER BY pl_place")
+		->execute(array($parent_id))
+		->fetchAll();
+
+	foreach ($rows as $row) {
+		echo "{$level};{$prefix}{$row->pl_place}{$suffix};{$row->pl_long};{$row->pl_lati};{$row->pl_zoom};{$row->pl_icon}\r\n";
 		if ($level < $maxLevel)
-			outputLevel($row[0]);
+			outputLevel($row->pl_id);
 	}
-	$res->free();
 }
 
 /**
@@ -212,24 +220,20 @@ if ($action=="ExportFile" && PGV_USER_IS_ADMIN) {
 print_header($pgv_lang["edit_place_locations"]);
 
 if ($action=="ImportGedcom") {
-	$placelist = array();
-	$j = 0;
-	if ($mode == "all") {
-		$sql = "SELECT i_gedcom FROM ${TBLPREFIX}individuals UNION ALL SELECT f_gedcom FROM ${TBLPREFIX}families";
+	$placelist=array();
+	$j=0;
+	if ($mode=="all") {
+		$statement=
+			PGV_DB::prepare("SELECT i_gedcom FROM ${TBLPREFIX}individuals UNION ALL SELECT f_gedcom FROM ${TBLPREFIX}families")
+			->execute();
+	} else {
+		$statement=
+			PGV_DB::prepare("SELECT i_gedcom FROM ${TBLPREFIX}individuals WHERE i_file=? UNION ALL SELECT f_gedcom FROM ${TBLPREFIX}families WHERE f_file=?")
+			->execute(array(PGV_GED_ID, PGV_GED_ID));
 	}
-	else {
-		if (isset($GEDCOMS[$GEDCOM]["id"])) {
-			// Needed for PGV 4.0
-			$sql = "SELECT i_gedcom FROM ${TBLPREFIX}individuals WHERE i_file=".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"])." UNION ALL SELECT f_gedcom FROM ${TBLPREFIX}families WHERE f_file=".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"]);
-		} else {
-			// Needed for PGV 3.3.8
-			$sql = "SELECT i_gedcom FROM ${TBLPREFIX}individuals WHERE i_file='".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["gedcom"])."' UNION ALL SELECT f_gedcom FROM ${TBLPREFIX}families WHERE f_file='".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["gedcom"])."'";
-		}
-	}
-	$res = dbquery($sql);
-	while ($row =& $res->fetchRow()) {
+	while ($gedrec=$statement->fetchColumn()) {
 		$i = 1;
-		$placerec = get_sub_record(2, "2 PLAC", $row[0], $i);
+		$placerec = get_sub_record(2, "2 PLAC", $gedrec, $i);
 		while (!empty($placerec)) {
 			if (preg_match("/2 PLAC (.+)/", $placerec, $match)) {
 				$placelist[$j] = array();
@@ -259,10 +263,9 @@ if ($action=="ImportGedcom") {
 				$j = $j + 1;
 			}
 			$i = $i + 1;
-			$placerec = get_sub_record(2, "2 PLAC", $row[0], $i);
+			$placerec = get_sub_record(2, "2 PLAC", $gedrec, $i);
 		}
 	}
-	$res->free();
 	asort($placelist);
 
 	$prevPlace = "";
@@ -300,38 +303,39 @@ if ($action=="ImportGedcom") {
 		for($i=0; $i<count($parent); $i++) {
 			if (!isset($default_zoom_level[$i]))
 				$default_zoom_level[$i]=$default_zoom_level[$i-1];
-			$escparent=trim($DBCONN->escapeSimple($parent[$i]));
+			$escparent=$parent[$i];
 			if ($escparent == "") {
 				$escparent = "Unknown";
 			}
-			$psql = "SELECT pl_id,pl_long,pl_lati,pl_zoom FROM ".$TBLPREFIX."placelocation WHERE pl_level=".$i." AND pl_parent_id=$parent_id AND pl_place ".PGV_DB_LIKE." '".$DBCONN->escapeSimple($escparent)."'";
-			$res = dbquery($psql);
-			$row =& $res->fetchRow();
-			$res->free();
-			$sql="";
+			$row=
+				PGV_DB::prepare("SELECT pl_id,pl_long,pl_lati,pl_zoom FROM {$TBLPREFIX}placelocation WHERE pl_level=? AND pl_parent_id=? AND pl_place ".PGV_DB_LIKE." ?")
+				->execute(array($i, $parent_id, $escparent))
+				->fetchOneRow();
 			if ($i < count($parent)-1) {
 				// Create higher-level places, if necessary
-				if (empty($row[0])) {
+				if (empty($row)) {
 					$highestIndex++;
-					$sql="INSERT INTO ".$TBLPREFIX."placelocation (pl_id, pl_parent_id, pl_level, pl_place, pl_long, pl_lati, pl_zoom, pl_icon) VALUES (".$highestIndex.", $parent_id, ".$i.", '".$escparent."', NULL, NULL, ".$default_zoom_level[$i].", NULL);";
+					PGV_DB::prepare("INSERT INTO {$TBLPREFIX}placelocation (pl_id, pl_parent_id, pl_level, pl_place, pl_zoom) VALUES (?, ?, ?, ?, ?)")
+						->execute(array($highestIndex, $parent_id, $i, $escparent, $default_zoom_level[$i]));
+					echo htmlspecialchars($escparent), '<br />';
 					$parent_id=$highestIndex;
 				} else {
-					$parent_id=$row[0];
+					$parent_id=$row->pl_id;
 				}
 			} else {
 				// Create lowest-level place, if necessary
-				if (empty($row[0])) {
+				if (empty($row->pl_id)) {
 					$highestIndex++;
-					$sql="INSERT INTO ".$TBLPREFIX."placelocation (pl_id, pl_parent_id, pl_level, pl_place, pl_long, pl_lati, pl_zoom, pl_icon) VALUES (".$highestIndex.", $parent_id, ".$i.", '".$escparent."', '".$place["long"]."', '".$place["lati"]."', ".$default_zoom_level[$i].", NULL);";
+					PGV_DB::prepare("INSERT INTO {$TBLPREFIX}placelocation (pl_id, pl_parent_id, pl_level, pl_place, pl_long, pl_lati, pl_zoom) VALUES (?, ?, ?, ?, ?, ?, ?)")
+						->execute(array($highestIndex, $parent_id, $i, $escparent, $place["long"], $place["lati"], $default_zoom_level[$i]));
+					echo htmlspecialchars($escparent), '<br />';
 				} else {
-					if (empty($row[1]) && empty($row[2]) && $place['lati']!="0" && $place['long']!="0") {
-						$sql="UPDATE ".$TBLPREFIX."placelocation SET pl_lati='".$place["lati"]."',pl_long='".$place["long"]."' where pl_id=".$row[0];
+					if (empty($row->pl_long) && empty($row->pl_lati) && $place['lati']!="0" && $place['long']!="0") {
+						PGV_DB::prepare("UPDATE {$TBLPREFIX}placelocation SET pl_lati=?, pl_long=? WHERE pl_id=?")
+							->execute(array($place["lati"], $place["long"], $row->pl_id));
+						echo htmlspecialchars($escparent), '<br />';
 					}
 				}
-			}
-			if (!empty($sql)) {
-				echo "$sql<br />";
-				$res=dbquery($sql);
 			}
 		}
 	}
@@ -388,12 +392,12 @@ if ($action=="ImportFile") {
 if ($action=="ImportFile2") {
 	loadLangFile('pgv_country');
 	if (isset($_POST["cleardatabase"])) {
-		dbquery("DELETE FROM {$TBLPREFIX}placelocation WHERE 1=1");
+		PGV_DB::exec("DELETE FROM {$TBLPREFIX}placelocation WHERE 1=1");
 	}
 	if (!empty($_FILES["placesfile"]["tmp_name"])) $lines = file($_FILES["placesfile"]["tmp_name"]);
 	else if (!empty($_REQUEST['localfile'])) $lines = file("modules/googlemap/extra".$_REQUEST['localfile']);
 	// Strip BYTE-ORDER-MARK, if present
-	if (!empty($lines[0]) && substr($lines[0],0,3)==chr(239).chr(187).chr(191)) $lines[0]=substr($lines[0],3);
+	if (!empty($lines[0]) && substr($lines[0],0,3)==PGV_UTF8_BOM) $lines[0]=substr($lines[0],3);
 	asort($lines);
 	$highestIndex = getHighestIndex();
 	$placelist = array();
@@ -466,15 +470,15 @@ if ($action=="ImportFile2") {
 		$parent = array_reverse($parent);
 		$parent_id=0;
 		for($i=0; $i<count($parent); $i++) {
-			$escparent=trim(preg_replace("/\?/","\\\\\\?", $DBCONN->escapeSimple($parent[$i])));
+			$escparent=trim(preg_replace("/\?/","\\\\\\?", $parent[$i]));
 			if ($escparent == "") {
 				$escparent = "Unknown";
 			}
-			$psql = "SELECT pl_id,pl_long,pl_lati,pl_zoom,pl_icon FROM ".$TBLPREFIX."placelocation WHERE pl_level=".$i." AND pl_parent_id=$parent_id AND pl_place ".PGV_DB_LIKE." '".$escparent."' ORDER BY pl_place";
-			$res = dbquery($psql);
-			$row =& $res->fetchRow();
-			$res->free();
-			if (empty($row[0])) {       // this name does not yet exist: create entry
+			$row=
+				PGV_DB::prepare("SELECT pl_id,pl_long,pl_lati,pl_zoom,pl_icon FROM {$TBLPREFIX}placelocation WHERE pl_level=? AND pl_parent_id=? AND pl_place ".PGV_DB_LIKE." ? ORDER BY pl_place")
+				->execute(array($i, $parent_id, $escparent))
+				->fetchOneRow();
+			if (empty($row)) {       // this name does not yet exist: create entry
 				if (!isset($_POST["updateonly"])) {
 					$highestIndex = $highestIndex + 1;
 					if (($i+1) == count($parent)) {
@@ -487,9 +491,9 @@ if ($action=="ImportFile2") {
 						$zoomlevel = $GOOGLEMAP_MAX_ZOOM;
 					}
 					if (($place["lati"] == "0") || ($place["long"] == "0") || (($i+1) < count($parent))) {
-						$sql = "INSERT INTO ".$TBLPREFIX."placelocation (pl_id, pl_parent_id, pl_level, pl_place, pl_long, pl_lati, pl_zoom, pl_icon) VALUES (".$highestIndex.", $parent_id, ".$i.", '".$escparent."', NULL, NULL, ".$zoomlevel.",'".$place["icon"]."');";
-					}
-					else {
+						PGV_DB::prepare("INSERT INTO {$TBLPREFIX}placelocation (pl_id, pl_parent_id, pl_level, pl_place, pl_zoom, pl_icon) VALUES (?, ?, ?, ?, ?, ?)")
+							->execute(array($highestIndex, $parent_id, $i, $escparent, $zoomlevel, $place["icon"]));
+					} else {
 						//delete leading zero
 						$pl_lati = str_replace(array('N', 'S', ','), array('', '-', '.') , $place["lati"]);
 						$pl_long = str_replace(array('E', 'W', ','), array('', '-', '.') , $place["long"]);
@@ -497,27 +501,24 @@ if ($action=="ImportFile2") {
 						else if ($pl_lati < 0) 	$place["lati"] = "S".abs($pl_lati);
 						if ($pl_long >= 0) 		$place["long"] = "E".abs($pl_long);
 						else if ($pl_long < 0) 	$place["long"] = "W".abs($pl_long);
-						$sql = "INSERT INTO ".$TBLPREFIX."placelocation (pl_id, pl_parent_id, pl_level, pl_place, pl_long, pl_lati, pl_zoom, pl_icon) VALUES (".$highestIndex.", $parent_id, ".$i.", '".$escparent."', '".$place["long"]."' , '".$place["lati"]."', ".$zoomlevel.",'".$place["icon"]."');";
+						PGV_DB::prepare("INSERT INTO {$TBLPREFIX}placelocation (pl_id, pl_parent_id, pl_level, pl_place, pl_long, pl_lati, pl_zoom, pl_icon) VALUES (?, ?, ?, ?, ?, ?, ?, ?)")
+							->execute(array($highestIndex, $parent_id, $i, $escparent, $place["long"], $place["lati"], $zoomlevel, $place["icon"]));
 					}
 					$parent_id = $highestIndex;
-					$res = dbquery($sql);
-					if (DB::isError($res)) echo __FILE__." ".__LINE__;
 				}
-			}
-			else {
-				$parent_id = $row[0];
+			} else {
+				$parent_id = $row->pl_id;
 				if ((isset($_POST["overwritedata"])) && ($i+1 == count($parent))) {
-					$sql = "UPDATE ".$TBLPREFIX."placelocation SET pl_lati='".$place["lati"]."',pl_long='".$place["long"]."',pl_zoom='".$place["zoom"]."',pl_icon='".$place["icon"]."' where pl_id=$parent_id";
-					$res = dbquery($sql);
-				}
-				else {
-					if ((($row[1] == "0") || ($row[1] == null)) && (($row[2] == "0") || ($row[2] == null))) {
-						$sql = "UPDATE ".$TBLPREFIX."placelocation SET pl_lati='".$place["lati"]."',pl_long='".$place["long"]."' where pl_id=$parent_id";
-						$res = dbquery($sql);
+					PGV_DB::prepare("UPDATE {$TBLPREFIX}placelocation SET pl_lati=?, pl_long=?, pl_zoom=?, pl_icon=? WHERE pl_id=?")
+						->execute(array($place["lati"], $place["long"], $place["zoom"], $place["icon"], $parent_id));
+				} else {
+					if ((($row->pl_long == "0") || ($row->pl_long == null)) && (($row->pl_lati == "0") || ($row->pl_lati == null))) {
+						PGV_DB::prepare("UPDATE {$TBLPREFIX}placelocation SET pl_lati=?, pl_long=? WHERE pl_id=?")
+							->execute(array($place["lati"], $place["long"], $parent_id));
 					}
-					if (empty($row[4]) && !empty($place['icon'])) {
-						$sql = "UPDATE ".$TBLPREFIX."placelocation SET pl_icon='".$place["icon"]."' where pl_id=$parent_id";
-						$res = dbquery($sql);
+					if (empty($row->pl_icon) && !empty($place['icon'])) {
+						PGV_DB::prepare("UPDATE {$TBLPREFIX}placelocation SET pl_icon=? WHERE pl_id=?")
+							->execute(array($place["icon"], $parent_id));
 					}
 				}
 			}
@@ -527,12 +528,14 @@ if ($action=="ImportFile2") {
 }
 
 if ($action=="DeleteRecord") {
-	$sql="SELECT 1 FROM {$TBLPREFIX}placelocation WHERE pl_parent_id=".$DBCONN->escapeSimple($deleteRecord);
-	$res=dbquery($sql);
-	if ($res->numRows()==0) {
-		$res->free();
-		$sql="DELETE FROM {$TBLPREFIX}placelocation WHERE pl_id=".$DBCONN->escapeSimple($deleteRecord);
-		$res=dbquery($sql);
+	$exists=
+		PGV_DB::prepare("SELECT 1 FROM {$TBLPREFIX}placelocation WHERE pl_parent_id=?")
+		->execute(array($deleteRecord))
+		->fetchOne();
+	
+	if ($exists) {
+		PGV_DB::prepare("DELETE FROM {$TBLPREFIX}placelocation WHERE pl_id=?")
+			->execute(array($deleteRecord));
 	} else {
 		echo "<table class=\"facts_table\"><tr><td class=\"optionbox\">{$pgv_lang['pl_delete_error']}</td></tr></table>";
 	}
@@ -640,11 +643,11 @@ foreach ($placelist as $place) {
 	}
 	echo "</td>";
 	echo "<td class=\"optionbox\"><a href=\"javascript:;\" onclick=\"edit_place_location({$place['place_id']});return false;\">{$pgv_lang["edit"]}</a></td>";
-	$psql = "SELECT pl_id FROM ".$TBLPREFIX."placelocation WHERE pl_parent_id=".$place["place_id"];
-	$res = dbquery($psql);
-	$noRows =& $res->numRows();
-	$res->free();
-	if ($noRows == 0) { ?>
+	$noRows=
+		PGV_DB::prepare("SELECT COUNT(pl_id) FROM {$TBLPREFIX}placelocation WHERE pl_parent_id=?")
+		->execute(array($place["place_id"]))
+		->fetchOne();
+	if ($noRows==0) { ?>
 	<td class="optionbox"><a href="javascript:;" onclick="delete_place(<?php echo $place["place_id"].");return false;\">";?><img src="images/remove.gif" border="0" alt="<?php echo $pgv_lang["remove"];?>" /></a></td>
 <?php       } else { ?>
 		<td class="optionbox"><img src="images/remove-dis.png" border="0" alt="" /> </td>

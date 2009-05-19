@@ -742,49 +742,34 @@ if (check_media_structure()) {
 		if ($TEXT_DIRECTION=="rtl") $classSuffix = "_rtl";
 
 		// main link displayed on page
-		$menu = array();
+		$menu = new Menu();
 		
 		// GEDFact assistant Add Media Links =======================
 		if (file_exists('modules/GEDFact_assistant/MEDIA/media_1_ctrl.php')) {
-			$menu["label"] = "Add or Remove Links";
+			$menu->addLabel("Add or Remove Links");
 		} else {
-			$menu["label"] = $pgv_lang["set_link"];
+			$menu->addLabel($pgv_lang["set_link"]);
 		}
-		
-		$menu["link"] = "#";
-		$menu["onclick"] = "return ilinkitem('$mediaid','person')";
-//		$menu["class"] = "thememenuitem";
-		$menu["class"] = "";
-		$menu["hoverclass"] = "";
-		$menu["submenuclass"] = "submenu";
-		$menu["flyout"] = "left";
-		$menu["items"] = array();
+		$menu->addOnclick("return ilinkitem('$mediaid','person')");
+		$menu->addClass("", "", "submenu");
+		$menu->addFlyout("left");
 
-		$submenu = array();
-		$submenu["label"] = $pgv_lang["to_person"];
-		$submenu["link"] = "#";
-		$submenu["class"] = "submenuitem".$classSuffix;
-		$submenu["hoverclass"] = "submenuitem".$classSuffix;
-		$submenu["onclick"] = "return ilinkitem('$mediaid','person')";
-		$menu["items"][] = $submenu;
+		$submenu = new Menu($pgv_lang["to_person"]);
+		$submenu->addClass("submenuitem".$classSuffix, "submenuitem".$classSuffix);
+		$submenu->addOnclick("return ilinkitem('$mediaid','person')");
+		$menu->addSubMenu($submenu);
 
-		$submenu = array();
-		$submenu["label"] = $pgv_lang["to_family"];
-		$submenu["link"] = "#";
-		$submenu["class"] = "submenuitem".$classSuffix;
-		$submenu["hoverclass"] = "submenuitem".$classSuffix;
-		$submenu["onclick"] = "return ilinkitem('$mediaid','family')";
-		$menu["items"][] = $submenu;
+		$submenu = new Menu($pgv_lang["to_family"]);
+		$submenu->addClass("submenuitem".$classSuffix, "submenuitem".$classSuffix);
+		$submenu->addOnclick("return ilinkitem('$mediaid','family')");
+		$menu->addSubMenu($submenu);
 
-		$submenu = array();
-		$submenu["label"] = $pgv_lang["to_source"];
-		$submenu["link"] = "#";
-		$submenu["class"] = "submenuitem".$classSuffix;
-		$submenu["hoverclass"] = "submenuitem".$classSuffix;
-		$submenu["onclick"] = "return ilinkitem('$mediaid','source')";
-		$menu["items"][] = $submenu;
+		$submenu = new Menu($pgv_lang["to_source"]);
+		$submenu->addClass("submenuitem".$classSuffix, "submenuitem".$classSuffix);
+		$submenu->addOnclick("return ilinkitem('$mediaid','source')");
+		$menu->addSubMenu($submenu);
 
-		print_menu($menu);
+		$menu->printMenu();
 	}
 
 	$savedOutput = ob_get_clean();
