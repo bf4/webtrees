@@ -63,7 +63,7 @@ if (isset($_COOKIE['lastclick'])) {
 
 //     Start Family Nav Table ----------------------------
 	echo "<table class=\"facts_table\" width='230' cellpadding=\"0\">";
-		global $pgv_lang, $SHOW_ID_NUMBERS, $PGV_IMAGE_DIR, $PGV_IMAGES;
+		global $pgv_lang, $SHOW_ID_NUMBERS, $PGV_IMAGE_DIR, $PGV_IMAGES, $PGV_MENUS_AS_LISTS;
 		global $spouselinks, $parentlinks, $DeathYr, $BirthYr;
 		global $TEXT_DIRECTION;
 
@@ -100,9 +100,9 @@ if (isset($_COOKIE['lastclick'])) {
 				?>
 				<tr>
 					<td class="facts_label<?php print $styleadd; ?>" nowrap="nowrap">
-						<?php // print $people["husb"]->getLabel(); ?>
-						<?php
-							$menu->printMenu();
+						<?php if ($PGV_MENUS_AS_LISTS) echo "<ul>\n";
+						$menu->printMenu();
+						if ($PGV_MENUS_AS_LISTS) echo "</ul>\n";
 						?>
 					</td>
 					<td align="center" class="<?php print $this->getPersonStyle($people["husb"]); ?>">
