@@ -1,8 +1,6 @@
 <?php
 /**
- * Census Assistant Control module for phpGedView
- *
- * Census Search and Add Area File
+ * Media Link Assistant Control module for phpGedView
  *
  * phpGedView: Genealogy Viewer
  * Copyright (C) 2007 to 2008  PGV Development Team.  All rights reserved.

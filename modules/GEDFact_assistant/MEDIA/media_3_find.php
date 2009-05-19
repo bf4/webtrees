@@ -1,5 +1,6 @@
 <?php
 /**
+ * Media Link Assistant Control module for phpGedView
  * Popup window that will allow a user to search for a family id, person id
  *
  * phpGedView: Genealogy Viewer

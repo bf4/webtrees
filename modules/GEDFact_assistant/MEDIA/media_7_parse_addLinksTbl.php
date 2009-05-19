@@ -1,6 +1,6 @@
 <?php
 /**
- * Media Assistant Control module for phpGedView
+ * Media Link Assistant Control module for phpGedView
  *
  * phpGedView: Genealogy Viewer
  * Copyright (C) 2007 to 2008  PGV Development Team.  All rights reserved.
