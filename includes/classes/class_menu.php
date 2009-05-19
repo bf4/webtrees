@@ -130,7 +130,7 @@ class Menu {
 	function getMenuAsList() {
 		$link = '';
 		if ($this->separator) {
-			return '<li class="separator"><span></span></li>'; // The <hr/> tag is difficult to style
+			return "\t".'<li class="separator"><span></span></li>'."\n";
 		}
 		if ($this->link) {
 			if ($this->accesskey !== null) {
@@ -152,15 +152,15 @@ class Menu {
 			return '';
 		}
 		if ($this->submenus) {
-			$html.='<ul>';
+			$html.="\n\t".'<ul>'."\n";
 			foreach ($this->submenus as $submenu) {
 				$html.=$submenu->getMenuAsList();
 			}
-			$html.='</ul>';
+			$html.="\t".'</ul>';
 			return '<li class="node">'.$html.'</li>'."\n";
 		}
 
-		return '<li>'.$html.'</li>'."\n";
+		return "\t".'<li>'.$html.'</li>'."\n";
 	}
 
 	// Get the menu as a dropdown form element
