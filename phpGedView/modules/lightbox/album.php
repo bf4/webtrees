@@ -142,7 +142,7 @@ $sort_i=0; // Used in sorting on lightbox_print_media_row.php page
 //------------------------------------------------------------------------------
 /*
 	echo '<td valign="top" align="center" width="220px">', "\n" ;
-		echo "<table cellpadding=\"0\" STYLE=\"margin-top:2px; margin-left:0px;\" ><tr><td width=\"220px\" class=\"optionbox\" align=\"center\">";
+		echo "<table cellpadding=\"0\" style=\"margin-top:2px; margin-left:0px;\" ><tr><td width=\"220px\" class=\"optionbox\" align=\"center\">";
 		echo "<b>{$pgv_lang['view_lightbox']}</b><br /><br />" . "\n" ;
 			$controller->fam_nav();
 		echo "<br />";

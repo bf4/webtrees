@@ -154,13 +154,13 @@ class Menu {
 		if ($this->submenus) {
 			$html.="\n\t".'<ul>'."\n";
 			foreach ($this->submenus as $submenu) {
-				$html.=$submenu->getMenuAsList();
+				$html.="\t".$submenu->getMenuAsList();
 			}
 			$html.="\t".'</ul>';
 			return '<li class="node">'.$html.'</li>'."\n";
 		}
 
-		return "\t".'<li>'.$html.'</li>'."\n";
+		return '<li>'.$html.'</li>'."\n";
 	}
 
 	// Get the menu as a dropdown form element
