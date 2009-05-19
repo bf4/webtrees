@@ -1324,7 +1324,7 @@ class IndividualControllerRoot extends BaseController {
 		}
 
 		?>
-		<table class="facts_table" style="margin-top:-2px; "cellpadding=\"0\">
+		<table class="facts_table" style="margin-top:-2px; "cellpadding="0">
 		<?php if (!$this->indi->canDisplayDetails()) {
 			print "<tr><td class=\"facts_value\" colspan=\"2\">";
 			print_privacy_error($CONTACT_EMAIL);
@@ -1381,7 +1381,7 @@ class IndividualControllerRoot extends BaseController {
 			?>
 			</td>
 			<td valign="top">
-				<table class="optionbox" width="220px" cellpadding=\"0\"><tr><td align="center">
+				<table class="optionbox" width="220px" cellpadding="0"><tr><td align="center">
 				<b><?php print $pgv_lang["view_fam_nav_details"]; ?></b><br /><br />
 				<?php include_once('includes/family_nav.php'); ?>
 				<br />
@@ -1497,7 +1497,7 @@ class IndividualControllerRoot extends BaseController {
 			?>
 			</td>
 			<td valign="top">
-				<table class="optionbox" width="220px" cellpadding=\"0\"><tr><td align="center">
+				<table class="optionbox" width="220px" cellpadding="0"><tr><td align="center">
 				<b><?php print $pgv_lang["view_fam_nav_notes"]; ?></b><br /><br />
 				<?php include_once('includes/family_nav.php'); ?>
 				<br />
@@ -1604,7 +1604,7 @@ class IndividualControllerRoot extends BaseController {
 			?>
 			</td>
 			<td valign="top">
-				<table class="optionbox" width="220px" cellpadding=\"0\"><tr><td align="center">
+				<table class="optionbox" width="220px" cellpadding="0"><tr><td align="center">
 				<b><?php print $pgv_lang["view_fam_nav_sources"]; ?></b><br /><br />
 				<?php include_once('includes/family_nav.php'); ?>
 				<br />
@@ -1697,7 +1697,7 @@ class IndividualControllerRoot extends BaseController {
 			?>
 			</td>
 			<td valign="top">
-				<table class="optionbox" width="220px" cellpadding=\"0\"><tr><td align="center">
+				<table class="optionbox" width="220px" cellpadding="0"><tr><td align="center">
 				<b><?php print $pgv_lang["view_fam_nav_media"]; ?></b><br /><br />
 				<?php include_once('includes/family_nav.php'); ?>
 				<br />
@@ -1805,7 +1805,7 @@ class IndividualControllerRoot extends BaseController {
 			?>
 			</td>
 			<td valign="top">
-				<table class="optionbox" width="220px" cellpadding=\"0\"><tr><td align="center">
+				<table class="optionbox" width="220px" cellpadding="0"><tr><td align="center">
 					<b><?php print $pgv_lang["view_fam_nav_relatives"]; ?></b><br /><br />
 					<?php include_once('includes/family_nav.php'); ?>
 					<br />
@@ -1994,7 +1994,7 @@ class IndividualControllerRoot extends BaseController {
 		// ==================== Start Map Tab Navigator ========================================
 		if ($Fam_Navigator=="YES") {
 			?>
-			<table id="map_nav" class="optionbox" width="220px" cellpadding=\"0\"><tr><td align="center">
+			<table id="map_nav" class="optionbox" width="220px" cellpadding="0"><tr><td align="center">
 				<b><?php print $pgv_lang["view_fam_nav_map"]; ?></b><br /><br />
 				<?php include_once('includes/family_nav.php'); ?>
 				<br />
@@ -2083,7 +2083,7 @@ class IndividualControllerRoot extends BaseController {
 			?>
 			</td>
 			<td valign="top">
-				<table class="optionbox" width="220px" cellpadding=\"0\"><tr><td align="center">
+				<table class="optionbox" width="220px" cellpadding="0"><tr><td align="center">
 				<b><?php print $pgv_lang["view_fam_nav_album"]; ?></b><br /><br />
 				<?php include_once('includes/family_nav.php'); ?>
 				<br />
