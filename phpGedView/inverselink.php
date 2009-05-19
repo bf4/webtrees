@@ -181,7 +181,7 @@ if ($action == "choose" && $paramok) {
 			echo '</td></tr>';
 			echo '<input type="hidden" name="more_links" value="No_Values" />';
 			echo '<tr><td class="topbottombar" colspan="2">';
-			echo '<center><input type="submit" value="', $pgv_lang["set_links"], '" onclick=\"javascript:shiftlinks();\" />';
+			echo '<center><input type="submit" value="', $pgv_lang["set_links"], '" onclick="javascript:shiftlinks();" />';
 			echo '</center></td></tr>';
 			include ('modules/GEDFact_assistant/MEDIA/media_7_parse_addLinksTbl.php');
 		// =========================================================
