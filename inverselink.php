@@ -125,7 +125,7 @@ if ($action == "choose" && $paramok) {
 		}
 		
 		// GEDFact assistant Current Media Links ===================
-		if (file_exists('modules/GEDFact_assistant/MEDIA/media_1_ctrl.php')) {
+		if (PGV_USER_GEDCOM_ADMIN && file_exists('modules/GEDFact_assistant/MEDIA/media_1_ctrl.php')) {
 			echo '<table><tr><td>';
 			//-- Get the filename of this existing Media item
 			$filename=
@@ -152,7 +152,7 @@ if ($action == "choose" && $paramok) {
 	
 	if ($linkto == "person") {
 		// GEDFact assistant Add Media Links =======================
-		if (file_exists('modules/GEDFact_assistant/MEDIA/media_1_ctrl.php') && !empty($mediaid)) {
+		if (PGV_USER_GEDCOM_ADMIN && file_exists('modules/GEDFact_assistant/MEDIA/media_1_ctrl.php') && !empty($mediaid)) {
 			echo $pgv_lang["add_more_links"];
 			echo '<td class="optionbox wrap">';
 			echo 'a) &nbsp;', $pgv_lang["enter_pid_or_name"], '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
@@ -174,7 +174,7 @@ if ($action == "choose" && $paramok) {
 		}
 		echo "<br /><br />";
 		// GEDFact assistant Add Media Links =======================
-		if (file_exists('modules/GEDFact_assistant/MEDIA/media_1_ctrl.php') && !empty($mediaid)) {
+		if (PGV_USER_GEDCOM_ADMIN && file_exists('modules/GEDFact_assistant/MEDIA/media_1_ctrl.php') && !empty($mediaid)) {
 			include ('modules/GEDFact_assistant/MEDIA/media_query_2a.php');
 			echo '</td></tr>';
 			echo '<tr><td colspan="2">';
@@ -232,7 +232,7 @@ if ($action == "choose" && $paramok) {
 } elseif ($action == "update" && $paramok) {
 
 	// GEDFact assistant Add Media Links =======================
-	if (file_exists('modules/GEDFact_assistant/MEDIA/media_1_ctrl.php') && !empty($mediaid)) {
+	if (PGV_USER_GEDCOM_ADMIN && file_exists('modules/GEDFact_assistant/MEDIA/media_1_ctrl.php') && !empty($mediaid)) {
 		if (isset($more_links) && $more_links!="No_Values") {
 			$more_links = stripslashes($more_links);
 			$add_more_links = explode(", ", $more_links);
