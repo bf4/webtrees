@@ -44,6 +44,11 @@ VERSION 4.2.2
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 -----------------------------------------------------------------------------------------
+*$pgv_lang["current_links"]							20 May 2009				C
+*$pgv_lang["add_more_links"]						20 May 2009				C
+*$pgv_lang["enter_pid_or_name"]						20 May 2009				C
+*$pgv_lang["set_links"]								20 May 2009				C
+*$pgv_lang["add_or_remove_links"]					20 May 2009				w
 +$pgv_lang["add_or_remove_links"]					20 May 2009				A
 +$pgv_lang["media_now_linked to"]					19 May 2009				A
 +$pgv_lang["current_links"]							19 May 2009				A
