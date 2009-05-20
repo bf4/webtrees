@@ -148,6 +148,7 @@ $pgv_lang["current_links"]			= "Current Links:";
 $pgv_lang["add_more_links"]			= "Add more Links:";
 $pgv_lang["enter_pid_or_name"]		= "Enter Individual ID or Name";
 $pgv_lang["set_links"]				= "Set Links";
+$pgv_lang["add_or_remove_links"]	= "Add or Remove Links";
 $pgv_lang["files_in_backup"]		= "Files included in this backup";
 $pgv_lang["created_remotelinks"]	= "Successfully created <i>Remotelinks</i> table.";
 $pgv_lang["created_remotelinks_fail"] 	= "Unable to create <i>Remotelinks</i> table.";
