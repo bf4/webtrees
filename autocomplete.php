@@ -151,11 +151,11 @@ function autocomplete_INDI($FILTER, $OPTION) {
 	$sql=
 		"SELECT 'INDI' AS type, i_id AS xref, i_file AS ged_id, i_gedcom AS gedrec, i_isdead, i_sex".
 		" FROM {$TBLPREFIX}individuals, {$TBLPREFIX}name".
-		" WHERE n_sort ".PGV_DB_LIKE." ?".
+		" WHERE (i_id ".PGV_DB_LIKE." ? OR n_sort ".PGV_DB_LIKE." ?)".
 		" AND i_id=n_id AND i_file=n_file AND i_file=?".
 		" ORDER BY n_sort";
 	$sql=PGV_DB::limit_query($sql, PGV_AUTOCOMPLETE_LIMIT);
-	$rows=PGV_DB::prepare($sql)->execute(array("%{$FILTER}%", PGV_GED_ID))->fetchAll(PDO::FETCH_ASSOC);
+	$rows=PGV_DB::prepare($sql)->execute(array("%{$FILTER}%", "%{$FILTER}%", PGV_GED_ID))->fetchAll(PDO::FETCH_ASSOC);
 
 	$data=array();
 	foreach ($rows as $row) {
@@ -261,7 +261,7 @@ function autocomplete_NOTE($FILTER) {
 
 	$sql="SELECT o_type AS type, o_id AS xref, o_file AS ged_id, o_gedcom AS gedrec FROM {$TBLPREFIX}other WHERE o_gedcom ".PGV_DB_LIKE." '%{$FILTER}%' AND o_type='NOTE' AND o_file=".PGV_GED_ID;
 	$sql=PGV_DB::limit_query($sql, PGV_AUTOCOMPLETE_LIMIT);
-$rows=PGV_DB::prepare($sql)->execute(array("%{$FILTER}%", PGV_GED_ID))->fetchAll(PDO::FETCH_ASSOC);
+	$rows=PGV_DB::prepare($sql)->execute(array("%{$FILTER}%", PGV_GED_ID))->fetchAll(PDO::FETCH_ASSOC);
 
 	$data=array();
 	foreach ($rows as $row) {
@@ -282,7 +282,7 @@ function autocomplete_SOUR($FILTER) {
 
 	$sql="SELECT 'SOUR' AS type, s_id AS xref, s_file AS ged_id, s_gedcom AS gedrec FROM {$TBLPREFIX}sources WHERE (s_name ".PGV_DB_LIKE." ? OR s_id ".PGV_DB_LIKE." ?) AND s_file=? ORDER BY s_name";
 	$sql=PGV_DB::limit_query($sql, PGV_AUTOCOMPLETE_LIMIT);
-$rows=PGV_DB::prepare($sql)->execute(array("%{$FILTER}%", "%{$FILTER}%", PGV_GED_ID))->fetchAll(PDO::FETCH_ASSOC);
+	$rows=PGV_DB::prepare($sql)->execute(array("%{$FILTER}%", "%{$FILTER}%", PGV_GED_ID))->fetchAll(PDO::FETCH_ASSOC);
 
 	$data=array();
 	foreach ($rows as $row) {
@@ -303,7 +303,7 @@ function autocomplete_SOUR_TITL($FILTER) {
 
 	$sql="SELECT 'SOUR' AS type, s_id AS xref, s_file AS ged_id, s_gedcom AS gedrec FROM {$TBLPREFIX}sources WHERE s_name ".PGV_DB_LIKE." ? AND s_file? ORDER BY s_name";
 	$sql=PGV_DB::limit_query($sql, PGV_AUTOCOMPLETE_LIMIT);
-$rows=PGV_DB::prepare($sql)->execute(array("%{$FILTER}%", PGV_GED_ID))->fetchAll(PDO::FETCH_ASSOC);
+	$rows=PGV_DB::prepare($sql)->execute(array("%{$FILTER}%", PGV_GED_ID))->fetchAll(PDO::FETCH_ASSOC);
 
 	$data=array();
 	foreach ($rows as $row) {
