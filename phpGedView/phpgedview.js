@@ -468,9 +468,17 @@ function addnewnote_assisted(field, iid) {
 	window.open('edit_interface.php?action=addnewnote_assisted&noteid=newnote&pid='+iid, '_blank', 'top=70,left=70,width=1000,height=800,resizable=1,scrollbars=1');
 	return false;
 }
-function addmedia_links(field, iid) {
+function addmedia_links(field, iid, iname) {
 	pastefield = field;
-	window.open('edit_interface.php?action=addmedia_links&noteid=newnote&pid='+iid, '_blank', 'top=50,left=600,width=420,height=550,resizable=1,scrollbars=1');
+	insertRowToTable(iid, iname);
+	// -- check for type of id (Family or Indi ------
+	if (iid.match("I")=="I") {
+		win01 = window.open('edit_interface.php?action=addmedia_links&noteid=newnote&pid='+iid, 'win01', 'top=50,left=600,width=420,height=650,resizable=1,scrollbars=1');
+		if (window.focus) {win01.focus();}
+	}else if (iid.match("F")=="F") {
+		// TO DO (something different when family id is entered)
+		// alert('Opening Navigator with family id entered will come later');
+	}
 	return false;
 }
 

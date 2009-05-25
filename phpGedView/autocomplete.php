@@ -518,14 +518,22 @@ function autocomplete_IFSRO() {
 			return autocomplete_OBJE($FILTER);
 		}
 	}
-	return array_merge(
-		autocomplete_INDI($FILTER, ''),
-		autocomplete_FAM($FILTER, ''),
-		autocomplete_SOUR($FILTER),
-		autocomplete_NOTE($FILTER),
-		autocomplete_REPO($FILTER),
-		autocomplete_OBJE($FILTER)
-	);
+	if ('modules/GEDFact_assistant/MEDIA/media_1_ctrl.php') {
+		return array_merge(
+			autocomplete_INDI($FILTER, ''),
+			autocomplete_FAM($FILTER, ''),
+			autocomplete_SOUR($FILTER)
+			);
+	}else{
+		return array_merge(
+			autocomplete_INDI($FILTER, ''),
+			autocomplete_FAM($FILTER, ''),
+			autocomplete_SOUR($FILTER),
+			autocomplete_NOTE($FILTER),
+			autocomplete_REPO($FILTER),
+			autocomplete_OBJE($FILTER)
+			);
+	}
 }
 
 /**
