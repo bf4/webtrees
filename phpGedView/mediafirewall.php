@@ -5,7 +5,7 @@
  * Serves images from the index directory
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2005	John Finlay and Others
+ * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -56,14 +56,14 @@ function sendErrorAndExit($type, $line1, $line2 = false) {
 	if(!PGV_USER_CAN_EDIT) {
 		$line2 = false;
 	}
-	
+
 	// arbitrary maxlen to keep images from getting too wide
 	$maxlen = 100;
 	$numchars = UTF8_strlen($line1);
 	if ($numchars > $maxlen) {
 		$line1 = UTF8_substr($line1, $maxlen);
 		$numchars = $maxlen;
-	}	
+	}
 	$line1 = reverseText($line1);
 	if ($line2) {
 		$numchars2 = UTF8_strlen($line2);
@@ -342,7 +342,7 @@ if (empty($controller->pid)) {
 		// only show these files to admin users
 		// bail since current user is not admin
 		// Note: the 404 error status is still in effect.
-		if (!$debug_mediafirewall) sendErrorAndExit($controller->mediaobject->getFiletype(), $pgv_lang["media_privacy"], $serverFilename);
+//		if (!$debug_mediafirewall) sendErrorAndExit($controller->mediaobject->getFiletype(), $pgv_lang["media_privacy"], $serverFilename);
 	}
 }
 
