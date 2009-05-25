@@ -137,4 +137,18 @@ $pgv_lang["PLACECHECK_FILTER_help"]  	= "~#pgv_lang[PLACECHECK_FILTER]#~<br /><b
 $pgv_lang["PLACECHECK_MATCH"]       	= "Incloure llocs amb correspondència";
 $pgv_lang["PLACECHECK_MATCH_help"]  	= "~#pgv_lang[PLACECHECK_MATCH]#~<br /><br />Per defecte, la llista NO INCOU llocs que es correspoguin completament entre l'arxiu GEDCOM y les taules de GoogleMap.<br/>Las correspondències complertes son aquelles en les que tots els nivells existeixen tant a l'arxiu GEDCOM como a les taules de GoogleMap i els llocs de GoogleMap tenen coordenades per cada nivell.<br/><br/>Marqueu aquesta casella per incloure també aquests llocs";
 
+$pgv_lang["GOOGLEMAP_PH"]             	= "Empra Googlemap per a la jerarquia de llocs";
+$pgv_lang["GOOGLEMAP_PH_help"]        	= "~#pgv_lang[GOOGLEMAP_PH]#~<br /><br />Empreu aquesta opció per activar (Si) o desactivar (No) la possibilitat d'emprar Googlemap per comptes del sistema normal de PhpGedView per a la jerarquia de llocs. Per a poder activar aquesta opció, el mòdul Googlemap cal que també estigui actiu. Abans de fer.la servir recomanem afegir tots els llocs ja existents als vostres GEDCOMs a la teules de Googlemap";
+$pgv_lang["GOOGLEMAP_PH_MAP_SIZE"]		= "Mida del mapa de jerarquia de llocs (en píxels)";
+$pgv_lang["GOOGLEMAP_PH_MAP_SIZE_help"]	= "~#pgv_lang[GOOGLEMAP_MAP_SIZE]#~<br /><br />La mida del mapa (en píxels) tal com surt a les pàgines de jerarquia de llocs.";
+$pgv_lang["GOOGLEMAP_PH_MARKER"]		= "Tipus de marcadors de llocs en la jerarquia de llocs";
+$pgv_lang["GOOGLEMAP_PH_MARKER_help"]	= "~#pgv_lang[GOOGLEMAP_PH_MARKER]#~<br /><br />Aquí podeu especificar quin tipus de marcadors voleu emprar  (estàndar o bandera). Si el lloc no té bandera, es farà servir l'estàndar.";
+$pgv_lang["GM_DISP_SHORT_PLACE"]		= "Mostra noms de lloc abreujats";
+$pgv_lang["GM_DISP_SHORT_PLACE_help"]	= "~#pgv_lang[GM_DISP_SHORT_PLACE]#~<br /><br />Aquí podeu escollir entre dues formes de mostrar rls noms de lloc jeràrquicament. Si es posa a SI el lloc farà servir un nom abreujat o el nom del nivell. Si és a NO, el nom complet.<br /><b>Exemples:<br />Nom complet: </b>Chicago, Illinois, USA<br /><b>Abreujat: </b>Chicago<br /><b>Complet: </b>Illinois, USA<br /><b>Abreujat: </b>Illinois";
+$pgv_lang["GM_DISP_COUNT"]				= "Mostra el comptador de persones i famílies";
+$pgv_lang["GM_DISP_COUNT_help"]			= "~#pgv_lang[GM_DISP_COUNT]#~<br /><br />Aquí podeu especificar si es mostren o no els comptadors de les persones o famílies vinculades als llocs. Tanmateix si el fitxer GEDCOM file conté molta gent és recomanable desactivar-ho.";
+$pgv_lang["GOOGLEMAP_PH_WHEEL"]			= "Roda del ratolí per acostar i allunyar";
+$pgv_lang["GOOGLEMAP_PH_WHEEL_help"]	= "~#pgv_lang[GOOGLEMAP_PH_WHEEL]#~<br /><br />Aquí podeu determinar si la roda del ratolí manipula o no l'ampliació del mapa.";
+$pgv_lang["GOOGLEMAP_PH_CONTROLS"]		= "Amaga els controls del mapa";
+$pgv_lang["GOOGLEMAP_PH_CONTROLS_help"]	= "~#pgv_lang[GOOGLEMAP_PH_CONTROLS]#~<br /><br />Aquesta opció permet amagar els controls del mapa (p.e. l'elecció de tipus de mapa) quan el ratolí és fora del mapa.";
 ?>

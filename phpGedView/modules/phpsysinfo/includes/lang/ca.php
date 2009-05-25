@@ -22,48 +22,48 @@
 // Traductor: Miquel Guillamet Montalat
 // E-mail: mikelet15@netscape.com Web: http://gitx.dhs.org
 //
-$text['title']       = 'Informació del Sistema';
+$text['title']       = 'Informaci&oacute; del Sistema';
 
 $text['vitals']      = 'Vital';
 $text['hostname']    = 'Nom del Sistema';
-$text['ip']          = 'Direcció IP';
-$text['kversion']    = 'Versió del Kernel';
-$text['dversion']       = 'Distro Name';
+$text['ip']          = 'Direcci&ocaute; IP';
+$text['kversion']    = 'Versi&oacute; del Kernel';
+$text['dversion']       = 'Nom de la Distribuci&oacute;';
 $text['uptime']      = 'Uptime';
 $text['users']       = 'Usuaris actuals';
-$text['loadavg']     = 'Carrega del Servidor';
+$text['loadavg']     = 'C&agrave;rrega del Servidor';
 
-$text['hardware']    = 'Informació del Hardware';
+$text['hardware']    = 'Informaci&oacute; del Maquinari';
 $text['numcpu']      = 'Processadors';
 $text['cpumodel']    = 'Model';
-$text['cpuspeed']    = 'Frequència en MHz';
-$text['busspeed']    = 'BUS Speed';
+$text['cpuspeed']    = 'Frequ&egrave;ncia en MHz';
+$text['busspeed']    = 'Velocitat del BUS';
 $text['cache']       = 'RAM';
-$text['bogomips']    = 'Bogomips';
+$text['bogomips']    = 'BogoMips';
 
 $text['pci']         = 'Dispositius PCI';
 $text['ide']         = 'Dispositius IDE';
 $text['scsi']        = 'Dispositius SCSI';
 $text['usb']         = 'Dispisitius USB';
 
-$text['netusage']    = 'Utilització de la XARXA';
+$text['netusage']    = 'Utilitzaci&oacute; de la XARXA';
 $text['device']      = 'Dispositiu';
 $text['received']    = 'Rebut';
 $text['sent']        = 'Enviat';
 $text['errors']      = 'Errors/Perduts';
 
-$text['memusage']    = 'Utilització de la RAM';
-$text['phymem']      = 'Memoria Fisica';
-$text['swap']        = 'Swap';
+$text['memusage']    = 'Utilitzaci&oacute; de la RAM';
+$text['phymem']      = 'Mem&ograve;ria FÃ­sica';
+$text['swap']        = 'Intercanvi';
 
-$text['fs']          = 'Particions Montades';
+$text['fs']          = 'Sistema dÂ´arxius';
 $text['mount']       = 'Montat a';
-$text['partition']   = 'Partició';
+$text['partition']   = 'Partici&oacute;';
 
-$text['percent']     = 'Capacitat';
+$text['percent']     = 'Percentatge dÂ´&uacute;s';
 $text['type']        = 'Tipus';
 $text['free']        = 'Lliure';
-$text['used']        = 'Usat';
+$text['used']        = 'Ocupada';
 $text['size']        = 'Tamany';
 $text['totals']      = 'Totals';
 
@@ -71,11 +71,11 @@ $text['kb']          = 'KB';
 $text['mg']          = 'MB';
 $text['gb']          = 'GB';
 
-$text['none']        = 'ningun';
+$text['none']        = 'cap';
 
 $text['capacity']    = 'Capacitat';
 
-$text['template']    = 'Themes';
+$text['template']    = 'Plantilla';
 $text['language']    = 'Llenguatge';
 $text['submit']      = 'Enviar';
 $text['created']     = 'Creat per';
@@ -85,23 +85,23 @@ $text['gen_time']       = 'on %b %d, %Y at %I:%M %p';
 $text['days']        = 'dies';
 $text['hours']       = 'hores';
 $text['minutes']     = 'minuts';
-  
-$text['temperature']    = 'Temperature';
-$text['voltage']        = 'Voltage';
+
+$text['temperature']    = 'Temperatura';
+$text['voltage']        = 'Voltatge';
 $text['fans']           = 'Fans';
-$text['s_value']        = 'Value';
+$text['s_value']        = 'Valor';
 $text['s_min']          = 'Min';
-$text['s_max']          = 'Max';
+$text['s_max']          = 'M&agrave;x';
 $text['s_div']          = 'Div';
 $text['hysteresis']     = 'Hysteresis';
-$text['s_limit']        = 'Limit';
-$text['s_label']        = 'Label';
+$text['s_limit']        = 'L&iacute;mit';
+$text['s_label']        = 'Etiqueta';
 $text['degree_mark']    = '&ordm;C';
 $text['voltage_mark']   = 'V';
 $text['rpm_mark']       = 'RPM';
 
-$text['app']		= 'Kernel + applications';
-$text['buffers']	= 'Buffers';
-$text['cached']		= 'Cached';
+$text['app']		= 'Kernel + aplicacions';
+$text['buffers']	= 'Mem&ograve;ria interm&egrave;dia';
+$text['cached']		= 'Mem&ograve;ria cau';
 
 ?>

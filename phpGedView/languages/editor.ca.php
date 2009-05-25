@@ -3,7 +3,7 @@
  * Catalan texts
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2008 to 2009  PGV Development Team.  All rights reserved.
+ * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -53,8 +53,8 @@ $pgv_lang["sort_by_birth"]			= "Ordena per dates de naixement";
 $pgv_lang["reorder_children"]		= "Reordena la mainada";
 $pgv_lang["add_from_clipboard"]		= "Enganxa: ";
 $pgv_lang["record_copied"]			= "Registre enganxat";
-$pgv_lang["add_unlinked_person"]	= "Afegeix una persona sense vincles";
-$pgv_lang["add_unlinked_source"]	= "Afegeix una font sense vincles";
+$pgv_lang["add_unlinked_person"]	= "Addició d'una persona desvinculada";
+$pgv_lang["add_unlinked_source"]	= "Addició d'una font desvinculada";
 $pgv_lang["server_file"]			= "Nom del fitxer al servidor";
 $pgv_lang["server_file_advice"]		= "No ho canvieu per conservar el nom de fitxer original.";
 $pgv_lang["server_file_advice2"]	= "També podeu entrar-hi un URL, començant amb &laquo;http://&raquo;.";
@@ -183,14 +183,13 @@ $pgv_lang["multiple_gedcoms"]		= "Aquest fitxer és vinculat a una altra base de
 $pgv_lang["must_provide"]			= "Heu de donar un ";
 $pgv_lang["name_search"]			= "Nom: ";
 $pgv_lang["new_repo_created"]		= "S'ha creat un nou Arxiu";
-$pgv_lang["new_source_created"] 	= "Creada correctament una nova Font.";
+$pgv_lang["new_source_created"] 	= "S'ha creat correctament la nova font.";
 $pgv_lang["no_changes"] 			= "Actualment no hi ha canvis per revisar.";
 $pgv_lang["no_known_servers"]		= "Servidors desconeguts<br />No s'han trobat resultats";
 $pgv_lang["no_temple"]				= "Sense Temple -' Living Ordinance'";
 $pgv_lang["no_upload"]				= "La càrrega de fitxers multimèdia no és permesa degut a que les entrades multimèdia estan desactivades o el directori multimèdia és de només lectura.";
 $pgv_lang["paste_id_into_field"]	= "Pels camps d'edició, vinculeu aquest ID acabat de crear ";
 $pgv_lang["paste_rid_into_field"]	= "Pels camps d'edició, vinculeu aquest ID acabat de crear ";
-$pgv_lang["photo_replace"] 			= "Voleu substituir una fotografia antiga per aquesta?";
 $pgv_lang["privacy_not_granted"]	= "No teniu accés a";
 $pgv_lang["privacy_prevented_editing"]	= "Els paràmetres de privadesa no us permeten editar aquest registre.";
 $pgv_lang["record_marked_deleted"]	= "Aquest registre ha estat senyalat per a eliminar, pendent de l'autorització de l'administrador.";
@@ -224,7 +223,7 @@ $pgv_lang["edit_repo"]				= "Edita Repositori";
 $pgv_lang["reorder_media"]					= "Reodeneu els ítems multimèdia";
 $pgv_lang["reorder_media_title"]			= "Per a redordenar els ítems multimèdia, arrossegueu i allibereu les imatges al nou lloc.";
 $pgv_lang["reorder_media_window"]			= "Reordenació multimèdia (finestra)";
-$pgv_lang["reorder_media_window_title"]		= "Per a reordenar els ítems multimèdia, cliqueu una fila i arrossegue-la fins al nou lloc.";
+$pgv_lang["reorder_media_window_title"]		= "Per a reordenar els ítems multimèdia, polseu sobre una fila i arrossegue-la fins al nou lloc.";
 $pgv_lang["reorder_media_save"]				= "Desa els multimèdia ordenats a la base de dades";
 $pgv_lang["reorder_media_reset"]			= "Restableix l'ordre original";
 $pgv_lang["reorder_media_cancel"]			= "Surt i torna";
@@ -235,5 +234,13 @@ $pgv_lang["file_unkown_err"]		= "Error desconegut en la càrrega d'arxius. Codi 
 $pgv_lang["gen_missing_thumbs"]		= "Crea les miniatures faltants";
 $pgv_lang["gen_missing_thumbs_lbl"]	= "Manquen miniatures";
 $pgv_lang["copy_error"]				= "No es pot copiar l'arxiu #Globals [whichFile2]# des de #Globals [whichFile1]#";
-
+$pgv_lang["add_unlinked_note"]		= "Addició d'una nota desvinculada";
+$pgv_lang["add_unlinked"]			= "Registres desvinculats";
+$pgv_lang["add_opf_child"]				= "Afegiu un fill/a per crear una família monoparental";
+$pgv_lang["add_shared_note"]		= "Afegiu una nova nota compartida";
+$pgv_lang["add_shared_note_lbl"]	= "Afegiu una nota compartida";
+$pgv_lang["create_shared_note"]		= "Creeu una nova nota compartida";
+$pgv_lang["create_shared_note_assisted"]	= "Creeu una nota compartida nova emprant l'assitent";
+$pgv_lang["new_shared_note_created"] 	= "S'ha creat correctament la nova nota compartida.";
+$pgv_lang["shared_note_updated"] 	= "S'ha modificat correctament la nota compartida.";
 ?>

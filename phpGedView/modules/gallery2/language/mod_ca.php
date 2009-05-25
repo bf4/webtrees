@@ -36,7 +36,7 @@ $pgv_lang['mod_gallery2'] = 'Galeria';
 $pgv_lang['mod_gallery2_siteadmin'] = 'Administració del lloc';
 $pgv_lang['mod_gallery2_useralbum'] = 'El vostre àlbum';
 $pgv_lang['mod_gallery2_advsearch'] = 'Recerca avançada';
-$pgv_lang['mod_gallery2_error_user_create'] = "S'ha produit un error durant la creació al vol de l'usuari.";
+$pgv_lang['mod_gallery2_error_user_create'] = "S'ha produït un error durant la creació al vol de l'usuari.";
 $pgv_lang['mod_gallery2_error_user_check'] = "S'ha produit un error tot comprovant si l'usuari ja existeix.";
-$pgv_lang['mod_gallery2_error_init'] = "S'ha produit un error a l'intentar iniciar la Galeria.";
+$pgv_lang['mod_gallery2_error_init'] = "S'ha produit un error en intentar iniciar la Galeria.";
 ?>

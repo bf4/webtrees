@@ -3,7 +3,7 @@
  * Catalan language file for PhpGedView
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2008 to 2009  PGV Development Team.  All rights reserved.
+ * Copyright (C) 2002 to 2009  PGV Development Team. All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,8 +19,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- *
- * @author PGV Developers
  * @translator: Antoni Planas i Vilà
  * @package PhpGedView
  * @subpackage SiteMap
@@ -33,7 +31,8 @@ if (!defined('PGV_PHPGEDVIEW')) {
 }
 
 // Admin menu
-$pgv_lang["generate_sitemap"]       = "Generació d'arxius del mapa del lloc";
+$pgv_lang["sitemap"]       			= "Mapa del lloc";
+$pgv_lang["generate_sitemap"]       = "Generació d'arxius de mapa del lloc";
 
 // Sitemap pages
 $pgv_lang["selected_item"]          = "Elements seleccionats per incloure al mapa del lloc:";
