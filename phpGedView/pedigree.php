@@ -65,7 +65,7 @@ if (!$controller->isPrintPreview()) {
 	</script>
 	<form name="people" method="get" action="pedigree.php">
 	<input type="hidden" name="show_full" value="<?php print $controller->show_full; ?>" />
-		<table class="pedigree_table <?php print $TEXT_DIRECTION; ?>" width="225">
+		<table class="pedigree_table <?php print $TEXT_DIRECTION; ?>" width="240">
 			<tr>
 				<td colspan="2" class="topbottombar" style="text-align:center; ">
 					<?php print $pgv_lang["options"]; ?>
@@ -103,8 +103,18 @@ if (!$controller->isPrintPreview()) {
 					<?php print $pgv_lang["orientation"]; ?>
 				</td>
 				<td class="optionbox">
-					<input type="radio" name="talloffset" value="0" <?php if (!$controller->talloffset) echo ' checked="checked"'; echo ' />',  $pgv_lang["portrait"]; ?>
-					<br /><input type="radio" name="talloffset" value="1" <?php if ($controller->talloffset) echo ' checked="checked"'; echo ' />', $pgv_lang["landscape"]; ?>
+					<input type="radio" name="talloffset" id="talloffset0" value="0"
+					<?php if ($talloffset==0) echo ' checked="checked"';
+					echo ' /><label for="talloffset0">',  $pgv_lang["portrait"], '</label>'; ?>
+					<br /><input type="radio" name="talloffset" id="talloffset1" value="1"
+					<?php if ($talloffset==1) echo ' checked="checked"';
+					echo ' /><label for="talloffset1">', $pgv_lang["landscape"], '</label>'; ?>
+					<br /><input type="radio" name="talloffset" id="talloffset2" value="2"
+					<?php if ($talloffset==2) echo ' checked="checked"';
+					echo ' /><label for="talloffset2">', $pgv_lang["landscape_top"], '</label>'; ?>
+					<br /><input type="radio" name="talloffset" id="talloffset3" value="3"
+					<?php if ($talloffset==3) echo ' checked="checked"';
+					echo ' /><label for="talloffset3">', $pgv_lang["landscape_down"], '</label>'; ?>
 					<br />
 				</td>
 			</tr>
@@ -138,9 +148,10 @@ if (!$controller->isPrintPreview()) {
 <?php
 //-- print the boxes
 $curgen = 1;
-$yoffset=0;				// -- used to offset the position of each box as it is generated
-$xoffset=0;
-$prevyoffset=0;		// -- used to track the y position of the previous box
+$xoffset = 0;
+$yoffset = 0;			// -- used to offset the position of each box as it is generated
+$prevxoffset = 0;		// -- used to track the x position of the previous box
+$prevyoffset = 0;		// -- used to track the y position of the previous box
 $maxyoffset = 0;
 if (!isset($brborder)) $brborder = 1;	// Avoid errors from old custom themes
 for($i=($controller->treesize-1); $i>=0; $i--) {
@@ -148,25 +159,59 @@ for($i=($controller->treesize-1); $i>=0; $i--) {
 	if ($i < floor($controller->treesize / (pow(2, $curgen)))) {
 		$curgen++;
 	}
+	$prevxoffset = $xoffset;
 	$prevyoffset = $yoffset;
-	$xoffset = $controller->offsetarray[$i]["x"];
-	$yoffset = $controller->offsetarray[$i]["y"];
+	if ($talloffset < 2) {
+		$xoffset = $controller->offsetarray[$i]["x"];
+		$yoffset = $controller->offsetarray[$i]["y"];
+	}
+	else {
+		$xoffset = $controller->offsetarray[$i]["y"];
+		$yoffset = $controller->offsetarray[$i]["x"];
+	}
 	// -- if we are in the middle generations then we need to draw the connecting lines
-	if (($curgen > $controller->talloffset) && ($curgen < $controller->PEDIGREE_GENERATIONS)) {
+	if (($curgen > 0 &&$talloffset > 1) || (($curgen > $talloffset) && ($curgen < $controller->PEDIGREE_GENERATIONS))) {
 		if ($i%2==1) {
 			if ($SHOW_EMPTY_BOXES || ($controller->treeid[$i]) || ($controller->treeid[$i+1])) {
-				$vlength = ($prevyoffset-$yoffset);
+				if ($talloffset < 2) {
+					$vlength = $prevyoffset-$yoffset;
+				}
+				else {
+					$vlength = $prevxoffset-$xoffset;
+				}
 				if (!$SHOW_EMPTY_BOXES && (empty($controller->treeid[$i+1]))) {
 					$parent = ceil(($i-1)/2);
 					$vlength = $controller->offsetarray[$parent]["y"]-$yoffset;
 				}
 				$linexoffset = $xoffset;
-				print "<div id=\"line$i\" dir=\"";
-				if ($TEXT_DIRECTION=="rtl") print "rtl\" style=\"position:absolute; right:";
-				else print "ltr\" style=\"position:absolute; left:";
-				print $linexoffset."px; top:".($yoffset+1+$controller->pbheight/2)."px; z-index: 0;\">";
-				print "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["vline"]["other"]."\" width=\"3\" height=\"".($vlength-1)."\" alt=\"\" />";
-				print "</div>";
+				if ($talloffset < 2) {
+					print "<div id=\"line$i\" dir=\"";
+					if ($TEXT_DIRECTION=="rtl") print "rtl\" style=\"position:absolute; right:";
+					else print "ltr\" style=\"position:absolute; left:";
+					print $linexoffset."px; top:".($yoffset+1+$controller->pbheight/2)."px; z-index: 0;\">";
+					print "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["vline"]["other"]."\" width=\"3\" height=\"".($vlength-1)."\" alt=\"\" />";
+					print "</div>";
+				}
+				else {
+					print "<div id=\"vline$i\" dir=\"";
+					if ($TEXT_DIRECTION=="rtl") print "rtl\" style=\"position:absolute; right:";
+					else print "ltr\" style=\"position:absolute; left:";
+					if ($talloffset > 2) {
+						print ($linexoffset-2+$controller->pbwidth/2+$vlength/2)."px; top:".($yoffset+1-$controller->pbheight/2)."px; z-index: 0;\">";
+						print "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["vline"]["other"]."\" width=\"3\" height=\"".($controller->pbheight)."\" alt=\"\" />";
+					}
+					else {
+						print ($linexoffset-2+$controller->pbwidth/2+$vlength/2)."px; top:".($yoffset+1+$controller->pbheight/2)."px; z-index: 0;\">";
+						print "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["vline"]["other"]."\" width=\"3\" height=\"".($controller->pbheight)."\" alt=\"\" />";
+					}
+					print "</div>";
+					print "<div id=\"line$i\" dir=\"";
+					if ($TEXT_DIRECTION=="rtl") print "rtl\" style=\"position:absolute; right:";
+					else print "ltr\" style=\"position:absolute; left:";
+					print ($linexoffset+$controller->pbwidth)."px; top:".($yoffset+1+$controller->pbheight/2)."px; z-index: 0;\">";
+					print "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["hline"]["other"]."\" width=\"".($vlength-$controller->pbwidth)."\" height=\"3\" alt=\"\" />";
+					print "</div>";
+				}
 			}
 		}
 	}
@@ -184,6 +229,21 @@ for($i=($controller->treesize-1); $i>=0; $i--) {
 
 		if (($curgen==1)&&(!empty($controller->treeid[$i]))&&(count(find_family_ids($controller->treeid[$i]))>0)) $widthadd = 20;
 		if (($curgen >2) && ($curgen < $controller->PEDIGREE_GENERATIONS)) $widthadd = 10;
+		if ($talloffset == 2 && $view!="preview") {
+			print "<div id=\"uparrow\" dir=\"";
+			if ($TEXT_DIRECTION=="rtl") print "rtl\" style=\"position:absolute; right:";
+			else print "ltr\" style=\"position:absolute; left:";
+			print ($xoffset+$controller->pbwidth/2-5)."px; top:".($yoffset-20)."px; width:10px; height:10px; \">";
+			if (($curgen==1)&&(count(find_family_ids($controller->treeid[$i]))>0)) {
+				$did = 1;
+				if ($i > ($controller->treesize/2) + ($controller->treesize/4)-1) $did++;
+				print "<a href=\"".encode_url("pedigree.php?PEDIGREE_GENERATIONS={$controller->PEDIGREE_GENERATIONS}&rootid={$controller->treeid[$did]}&show_full={$controller->show_full}&talloffset={$controller->talloffset}")."\" ";
+				print "onmouseover=\"swap_image('arrow$i',2);\" onmouseout=\"swap_image('arrow$i',2);\">";
+				print "<img id=\"arrow$i\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["uarrow"]["other"]."\" border=\"0\" alt=\"\" />";
+				print "</a>";
+			}
+			print "\n\t\t</div>";
+		}
 		print "\n\t\t<div id=\"box";
 		if (empty($controller->treeid[$i])) print "$iref";
 		else print $controller->treeid[$i];
@@ -191,7 +251,7 @@ for($i=($controller->treesize-1); $i>=0; $i--) {
 		else print ".1.$iref\" style=\"position:absolute; left:";
 		print $xoffset."px; top:".$yoffset."px; width:".($controller->pbwidth+$widthadd)."px; height:".$controller->pbheight."px; z-index: 0;\">";
 		print "\n\t\t\t<table border=\"0\" cellspacing=\"0\" cellpadding=\"0\" width=\"100%\" dir=\"$TEXT_DIRECTION\">";
-		if (($curgen > $controller->talloffset) && ($curgen < $controller->PEDIGREE_GENERATIONS)) {
+		if (($talloffset < 2) && ($curgen > $talloffset) && ($curgen < $controller->PEDIGREE_GENERATIONS)) {
 			print "<tr><td>";
 			print "\n\t\t\t<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["hline"]["other"]."\" align=\"left\" hspace=\"0\" vspace=\"0\" alt=\"\" />";
 			print "\n\t\t\t</td><td width=\"100%\">";
@@ -207,12 +267,18 @@ for($i=($controller->treesize-1); $i>=0; $i--) {
 		if (!isset($controller->treeid[$i])) $controller->treeid[$i] = false;
 		print_pedigree_person($controller->treeid[$i], 1, $controller->show_famlink, $iref, 1);
 
-		if (($curgen==1)&&(count(find_family_ids($controller->treeid[$i]))>0)) {
+		if (($curgen==1) && (count(find_family_ids($controller->treeid[$i]))>0) && $view!="preview") {
 			$did = 1;
 			if ($i > ($controller->treesize/2) + ($controller->treesize/4)-1) $did++;
-			print "\n\t\t\t\t</td><td valign=\"middle\">";
-			if ($view!="preview") {
+			if ($talloffset==3) {
+				print "\n\t\t\t\t</td></tr><tr><td align=\"center\">";
 				print "<a href=\"".encode_url("pedigree.php?PEDIGREE_GENERATIONS={$controller->PEDIGREE_GENERATIONS}&rootid={$controller->treeid[$did]}&show_full={$controller->show_full}&talloffset={$controller->talloffset}")."\" ";
+				print "onmouseover=\"swap_image('arrow$i',3);\" onmouseout=\"swap_image('arrow$i',3);\">";
+				print "<img id=\"arrow$i\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["darrow"]["other"]."\" border=\"0\" alt=\"\" />";
+			}
+			else if ($talloffset < 2) {
+				print "\n\t\t\t\t</td><td valign=\"middle\">";
+				print "<a href=\"".encode_url("pedigree.php?PEDIGREE_GENERATIONS={$controller->PEDIGREE_GENERATIONS}&rootid={$controller->treeid[$did]}&show_full={$controller->show_full}&talloffset={$talloffset}")."\" ";
 				if ($TEXT_DIRECTION=="rtl") {
 					print "onmouseover=\"swap_image('arrow$i',0);\" onmouseout=\"swap_image('arrow$i',0);\">";
 					print "<img id=\"arrow$i\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["larrow"]["other"]."\" border=\"0\" alt=\"\" />";
@@ -246,12 +312,30 @@ if ($controller->rootPerson->canDisplayDetails()) {
 		print "<div id=\"childarrow\" dir=\"";
 		if ($TEXT_DIRECTION=="rtl") print "rtl\" style=\"position:absolute; right:";
 		else print "ltr\" style=\"position:absolute; left:";
-		print $basexoffset."px; top:".$yoffset."px; width:10px; height:10px; \">";
+		if ($talloffset < 2) {
+			print $basexoffset."px; top:".$yoffset."px; width:10px; height:10px; \">";
+		}
+		else if ($talloffset==3) {
+			print ($linexoffset-10+$controller->pbwidth/2+$vlength/2)."px; top:".($yoffset-$controller->pbheight/2-10)."px; width:10px; height:10px; \">";
+		}
+		else {
+			print ($linexoffset-10+$controller->pbwidth/2+$vlength/2)."px; top:".($yoffset+$controller->pbheight/2+10)."px; width:10px; height:10px; \">";
+		}
 		if ($view!="preview") {
-			if ($TEXT_DIRECTION=="rtl") print "<a href=\"javascript: ".$pgv_lang["show"]."\" onclick=\"togglechildrenbox(); return false;\" onmouseover=\"swap_image('larrow',1);\" onmouseout=\"swap_image('larrow',1);\">";
-			else print "<a href=\"javascript: ".$pgv_lang["show"]."\" onclick=\"togglechildrenbox(); return false;\" onmouseover=\"swap_image('larrow',0);\" onmouseout=\"swap_image('larrow',0);\">";
-			if ($TEXT_DIRECTION=="rtl") print "<img id=\"larrow\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["rarrow"]["other"]."\" border=\"0\" alt=\"\" />";
-			else print "<img id=\"larrow\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["larrow"]["other"]."\" border=\"0\" alt=\"\" />";
+			if ($talloffset < 2) {
+				if ($TEXT_DIRECTION=="rtl") print "<a href=\"javascript: ".$pgv_lang["show"]."\" onclick=\"togglechildrenbox(); return false;\" onmouseover=\"swap_image('larrow',1);\" onmouseout=\"swap_image('larrow',1);\">";
+				else print "<a href=\"javascript: ".$pgv_lang["show"]."\" onclick=\"togglechildrenbox(); return false;\" onmouseover=\"swap_image('larrow',0);\" onmouseout=\"swap_image('larrow',0);\">";
+				if ($TEXT_DIRECTION=="rtl") print "<img id=\"larrow\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["rarrow"]["other"]."\" border=\"0\" alt=\"\" />";
+				else print "<img id=\"larrow\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["larrow"]["other"]."\" border=\"0\" alt=\"\" />";
+			}
+			else if ($talloffset==3) {
+				print "<a href=\"javascript: ".$pgv_lang["show"]."\" onclick=\"togglechildrenbox(); return false;\" onmouseover=\"swap_image('uarrow',2);\" onmouseout=\"swap_image('uarrow',2);\">";
+				print "<img id=\"uarrow\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["uarrow"]["other"]."\" border=\"0\" alt=\"\" />";
+			}
+			else {
+				print "<a href=\"javascript: ".$pgv_lang["show"]."\" onclick=\"togglechildrenbox(); return false;\" onmouseover=\"swap_image('darrow',3);\" onmouseout=\"swap_image('darrow',3);\">";
+				print "<img id=\"darrow\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["darrow"]["other"]."\" border=\"0\" alt=\"\" />";
+			}
 			print "</a>";
 		}
 		print "\n\t\t</div>";
@@ -268,7 +352,7 @@ if ($controller->rootPerson->canDisplayDetails()) {
 				if($controller->rootid!=$husb) $spid=$family->getHusband();
 				else $spid=$family->getWife();
 				if (!empty($spid)) {
-					print "\n\t\t\t\t<a href=\"".encode_url("pedigree.php?PEDIGREE_GENERATIONS={$controller->PEDIGREE_GENERATIONS}&rootid=".$spid->getXref()."&show_full={$controller->show_full}&talloffset={$controller->talloffset}")."\"><span ";
+					print "\n\t\t\t\t<a href=\"".encode_url("pedigree.php?PEDIGREE_GENERATIONS={$controller->PEDIGREE_GENERATIONS}&rootid=".$spid->getXref()."&show_full={$controller->show_full}&talloffset={$talloffset}")."\"><span ";
 					if ($spid->canDisplayName()) {
 						$name = $spid->getFullName();
 						$name = rtrim($name);
@@ -281,7 +365,7 @@ if ($controller->rootPerson->canDisplayDetails()) {
 
 				$children = $family->getChildren();
 				foreach($children as $ind2=>$child) {
-					print "\n\t\t\t\t&nbsp;&nbsp;<a href=\"".encode_url("pedigree.php?PEDIGREE_GENERATIONS={$controller->PEDIGREE_GENERATIONS}&rootid=".$child->getXref()."&show_full={$controller->show_full}&talloffset={$controller->talloffset}")."\"><span ";
+					print "\n\t\t\t\t&nbsp;&nbsp;<a href=\"".encode_url("pedigree.php?PEDIGREE_GENERATIONS={$controller->PEDIGREE_GENERATIONS}&rootid=".$child->getXref()."&show_full={$controller->show_full}&talloffset={$talloffset}")."\"><span ";
 					if ($child->canDisplayName()) {
 						$name = $child->getFullName();
 						$name = rtrim($name);
@@ -301,7 +385,7 @@ if ($controller->rootPerson->canDisplayDetails()) {
 				if (count($children)==2) print "<span class=\"name1\"><br />".$pgv_lang["sibling"]."<br /></span>";
 				foreach($children as $ind2=>$child) {
 					if (!$controller->rootPerson->equals($child) && !is_null($child)) {
-						print "\n\t\t\t\t&nbsp;&nbsp;<a href=\"".encode_url("pedigree.php?PEDIGREE_GENERATIONS={$controller->PEDIGREE_GENERATIONS}&rootid=".$child->getXref()."&show_full={$controller->show_full}&talloffset={$controller->talloffset}")."\"><span ";
+						print "\n\t\t\t\t&nbsp;&nbsp;<a href=\"".encode_url("pedigree.php?PEDIGREE_GENERATIONS={$controller->PEDIGREE_GENERATIONS}&rootid=".$child->getXref()."&show_full={$controller->show_full}&talloffset={$talloffset}")."\"><span ";
 						if ($child->canDisplayName()) {
 							$name = $child->getFullName();
 							$name = rtrim($name);
@@ -319,7 +403,12 @@ if ($controller->rootPerson->canDisplayDetails()) {
 	}
 }
 // -- print html footer
-$maxyoffset+=120;
+if ($talloffset < 2) {
+	$maxyoffset+=150;
+}
+else {
+	$maxyoffset+=180;
+}
 ?>
 </div>
 <script language="JavaScript" type="text/javascript">

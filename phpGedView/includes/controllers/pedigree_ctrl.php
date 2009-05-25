@@ -2,7 +2,7 @@
 /**
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
+ * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -72,8 +72,9 @@ class PedigreeControllerRoot extends BaseController {
 
 		$this->rootid    =safe_GET_xref('rootid');
 		$this->show_full =safe_GET('show_full', array('0', '1'), $PEDIGREE_FULL_DETAILS);
-		$this->talloffset=safe_GET('talloffset', array('0', '1'), $PEDIGREE_LAYOUT);
+		$this->talloffset=safe_GET('talloffset', array('0', '1', '2', '3'), $PEDIGREE_LAYOUT);
 		$this->PEDIGREE_GENERATIONS=safe_GET_integer('PEDIGREE_GENERATIONS', 2, $MAX_PEDIGREE_GENERATIONS, $DEFAULT_PEDIGREE_GENERATIONS);
+		if ($this->talloffset>1 && $this->PEDIGREE_GENERATIONS>8) $this->PEDIGREE_GENERATIONS=8;
 
 		// TODO: some library functions expect this as a global.
 		// Passing a function parameter would be much better.
@@ -82,7 +83,9 @@ class PedigreeControllerRoot extends BaseController {
 
 		// This is passed as a global.  A parameter would be better...
 		$this->show_full = ($this->show_full) ? 1 : 0;		// Make SURE this is an integer
-		$this->talloffset = ($this->talloffset) ? 1 : 0;
+		//$this->talloffset = ($this->talloffset) ? 1 : 0;
+		if ($this->talloffset>3) $this->talloffset=3;
+		else if ($this->talloffset<0) $this->talloffset=0;
 		$show_full = $this->show_full;
 		$talloffset = $this->talloffset;
 
@@ -95,7 +98,12 @@ class PedigreeControllerRoot extends BaseController {
 		//-- adjustments for hide details
 		if ($this->show_full==false) {
 			$bheight=30;
-			$bwidth-=30;
+			if ($this->talloffset < 2) {
+				$bwidth-=30;
+			}
+			else {
+				$bwidth-=50;
+			}
 			$baseyoffset+=30;
 		}
 		//-- adjustments for portrait mode
@@ -119,12 +127,22 @@ class PedigreeControllerRoot extends BaseController {
 		for($i=0; $i<$this->treesize; $i++) $this->treeid[$i] = $this->treeid[$i+1];
 
 		if (($this->PEDIGREE_GENERATIONS < 5)&&($this->show_full==false)) {
-			$baseyoffset+=($this->PEDIGREE_GENERATIONS*$this->pbheight/2)+50;
+			if ($this->talloffset < 2) {
+				$baseyoffset+=($this->PEDIGREE_GENERATIONS*$this->pbheight/2)+50;
+			}
+			else {
+				$baseyoffset+=($this->PEDIGREE_GENERATIONS*$this->pbwidth/2)-280;
+			}
 			if ($this->isPrintPreview()) $baseyoffset-=120;
 		}
 
 		if ($this->PEDIGREE_GENERATIONS==3) {
-			$baseyoffset+=$this->pbheight*1.6;
+			if ($this->talloffset < 2) {
+				$baseyoffset+=$this->pbheight*1.6;
+			}
+			else {
+				$baseyoffset+=$this->pbwidth*1.6;
+			}
 		}
 
 		// -- this next section will create and position the DIV layers for the pedigree tree
@@ -145,10 +163,20 @@ class PedigreeControllerRoot extends BaseController {
 			//-- box position in current generation
 			$boxpos = $i-pow(2, $this->PEDIGREE_GENERATIONS-$this->curgen);
 			//-- offset multiple for current generation
-			$genoffset = pow(2, $this->curgen-$this->talloffset);
-			$boxspacing = $this->pbheight+$byspacing;
+			if ($this->talloffset < 2) {
+				$genoffset = pow(2, $this->curgen-$this->talloffset);
+				$boxspacing = $this->pbheight+$byspacing;
+			}
+			else {
+				$genoffset = pow(2, $this->curgen-1);
+				$boxspacing = $this->pbwidth+$byspacing;
+			}
 			// -- calculate the yoffset		Position in the generation		Spacing between boxes		put child between parents
 			$this->yoffset = $baseyoffset+($boxpos * ($boxspacing * $genoffset))+(($boxspacing/2)*$genoffset)+($boxspacing * $genoffset);
+			if ($this->talloffset > 1) {
+				if ($this->PEDIGREE_GENERATIONS>3) $this->yoffset+=20*($this->PEDIGREE_GENERATIONS-1)+100;
+				else $this->yoffset-=253.6;
+			}
 			if ($this->talloffset==0) {
 				//-- compact the tree
 				if ($this->curgen<$this->PEDIGREE_GENERATIONS) {
@@ -176,17 +204,42 @@ class PedigreeControllerRoot extends BaseController {
 						else $this->yoffset=$this->yoffset + (($boxspacing/2) * $temp);
 					}
 				}
-			}
-			// -- calculate the xoffset
-			if ($this->talloffset) {
-				// -- Landscape
-				$this->xoffset = 10 + $basexoffset + (($this->PEDIGREE_GENERATIONS - $this->curgen) * ($this->pbwidth+$bxspacing));
-				if ($this->curgen == $this->PEDIGREE_GENERATIONS) $this->xoffset += 10;
-			} else {
-				// -- Portrait
 				$this->xoffset = 20 + $basexoffset + (($this->PEDIGREE_GENERATIONS - $this->curgen) * (($this->pbwidth+$bxspacing) / 2));
 			}
-			if ($this->curgen == 1 && $this->talloffset) $this->xoffset += 10;
+			// -- calculate the xoffset
+			else if ($this->talloffset==1) {
+				$this->xoffset = 10 + $basexoffset + (($this->PEDIGREE_GENERATIONS - $this->curgen) * ($this->pbwidth+$bxspacing));
+				if ($this->curgen == $this->PEDIGREE_GENERATIONS) $this->xoffset += 10;
+			} 
+			else if ($this->talloffset==2) {
+				if ($this->show_full) {
+					$this->xoffset = ($this->curgen) * (($this->pbwidth+$bxspacing) / 2)-($this->curgen)*10-103.5;
+					if ($this->PEDIGREE_GENERATIONS<4) $this->yoffset+=18;
+				}
+				else {
+					if ($this->PEDIGREE_GENERATIONS>1) {
+						$this->xoffset = ($this->curgen) * (($this->pbwidth+$bxspacing+40) / 4)-($this->curgen)*10-44.25;
+						if ($this->PEDIGREE_GENERATIONS<4) $this->yoffset+=158;
+					}
+				}
+			}
+			else {
+				if ($this->show_full) {
+					$this->xoffset = ($this->PEDIGREE_GENERATIONS - $this->curgen) * (($this->pbwidth+$bxspacing) / 2);
+					if ($this->PEDIGREE_GENERATIONS>3) $this->yoffset-=20*($this->PEDIGREE_GENERATIONS-1)+100;
+					else $this->yoffset+=18;
+				}
+				else {
+					if ($this->PEDIGREE_GENERATIONS>1) {
+						$this->xoffset = ($this->PEDIGREE_GENERATIONS - $this->curgen) * (($this->pbwidth+$bxspacing) / 4);
+						if ($this->PEDIGREE_GENERATIONS>3) $this->yoffset-=20*($this->PEDIGREE_GENERATIONS-1)+10;
+						else $this->yoffset+=150;
+					}
+				}
+			}
+			if ($this->curgen == 1 && $this->talloffset==1) $this->xoffset += 10;
+			if ($this->talloffset==2 && !$this->isPrintPreview()) $this->xoffset -= 50;
+			else if ($this->talloffset==2 && $this->isPrintPreview()) $this->xoffset += 80;
 			$this->offsetarray[$i]["x"]=$this->xoffset;
 			$this->offsetarray[$i]["y"]=$this->yoffset;
 		}
