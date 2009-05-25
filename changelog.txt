@@ -10,6 +10,7 @@
 
 
 Version 4.2.2
+ - Changed: Various core files in preparation for GEDFact_assistant/MEDIA/ module (windmillway
  - Changed: Placed restriction on GEDFact_assistant/MEDIA/ to be PGV_USER_GEDCOM_ADMIN only (windmillway)
  - Fixed: [ 2786280 ] 4.2.1 search results in families have duplication (fisharebest)
  - Fixed: [ 2790245 ] link error in standard theme (fisharebest)

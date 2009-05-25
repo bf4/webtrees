@@ -753,22 +753,26 @@ if (check_media_structure()) {
 		$menu->addOnclick("return ilinkitem('$mediaid','person')");
 		$menu->addClass("", "", "submenu");
 		$menu->addFlyout("left");
+		
+		// GEDFact assistant Add Media Links =======================
+		if (file_exists('modules/GEDFact_assistant/MEDIA/media_1_ctrl.php')) {
+			// Do not print submunu
+		} else {
+			$submenu = new Menu($pgv_lang["to_person"]);
+			$submenu->addClass("submenuitem".$classSuffix, "submenuitem".$classSuffix);
+			$submenu->addOnclick("return ilinkitem('$mediaid','person')");
+			$menu->addSubMenu($submenu);
 
-		$submenu = new Menu($pgv_lang["to_person"]);
-		$submenu->addClass("submenuitem".$classSuffix, "submenuitem".$classSuffix);
-		$submenu->addOnclick("return ilinkitem('$mediaid','person')");
-		$menu->addSubMenu($submenu);
+			$submenu = new Menu($pgv_lang["to_family"]);
+			$submenu->addClass("submenuitem".$classSuffix, "submenuitem".$classSuffix);
+			$submenu->addOnclick("return ilinkitem('$mediaid','family')");
+			$menu->addSubMenu($submenu);
 
-		$submenu = new Menu($pgv_lang["to_family"]);
-		$submenu->addClass("submenuitem".$classSuffix, "submenuitem".$classSuffix);
-		$submenu->addOnclick("return ilinkitem('$mediaid','family')");
-		$menu->addSubMenu($submenu);
-
-		$submenu = new Menu($pgv_lang["to_source"]);
-		$submenu->addClass("submenuitem".$classSuffix, "submenuitem".$classSuffix);
-		$submenu->addOnclick("return ilinkitem('$mediaid','source')");
-		$menu->addSubMenu($submenu);
-
+			$submenu = new Menu($pgv_lang["to_source"]);
+			$submenu->addClass("submenuitem".$classSuffix, "submenuitem".$classSuffix);
+			$submenu->addOnclick("return ilinkitem('$mediaid','source')");
+			$menu->addSubMenu($submenu);
+		}
 		$menu->printMenu();
 	}
 

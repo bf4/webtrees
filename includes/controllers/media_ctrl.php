@@ -237,23 +237,31 @@ class MediaControllerRoot extends IndividualController{
 			} else {	
 				$submenu = new Menu($pgv_lang["set_link"]." >");
 			}
-			$submenu->addOnclick("return ilinkitem('".$this->pid."','person');");
-			$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff", "submenu$ff");
+			
+			// GEDFact assistant Add Media Links =======================
+			if (PGV_USER_GEDCOM_ADMIN && file_exists('modules/GEDFact_assistant/MEDIA/media_1_ctrl.php')) {
+				$submenu->addOnclick("return ilinkitem('".$this->pid."','person');");
+				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff", "submenu$ff");
+				// Do not print ssubmunu
+			} else {
+				$submenu->addOnclick("return ilinkitem('".$this->pid."','person');");
+				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff", "submenu$ff");
 
-			$ssubmenu = new Menu($pgv_lang["to_person"]);
-			$ssubmenu->addOnclick("return ilinkitem('".$this->pid."','person');");
-			$ssubmenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
-			$submenu->addSubMenu($ssubmenu);
+				$ssubmenu = new Menu($pgv_lang["to_person"]);
+				$ssubmenu->addOnclick("return ilinkitem('".$this->pid."','person');");
+				$ssubmenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
+				$submenu->addSubMenu($ssubmenu);
 
-			$ssubmenu = new Menu($pgv_lang["to_family"]);
-			$ssubmenu->addOnclick("return ilinkitem('".$this->pid."','family');");
-			$ssubmenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
-			$submenu->addSubMenu($ssubmenu);
+				$ssubmenu = new Menu($pgv_lang["to_family"]);
+				$ssubmenu->addOnclick("return ilinkitem('".$this->pid."','family');");
+				$ssubmenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
+				$submenu->addSubMenu($ssubmenu);
 
-			$ssubmenu = new Menu($pgv_lang["to_source"]);
-			$ssubmenu->addOnclick("return ilinkitem('".$this->pid."','source');");
-			$ssubmenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
-			$submenu->addSubMenu($ssubmenu);
+				$ssubmenu = new Menu($pgv_lang["to_source"]);
+				$ssubmenu->addOnclick("return ilinkitem('".$this->pid."','source');");
+				$ssubmenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
+				$submenu->addSubMenu($ssubmenu);
+			}
 			$menu->addSubmenu($submenu);
 		}
 		if (isset($pgv_changes[$this->pid."_".$GEDCOM])) {
