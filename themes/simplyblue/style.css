@@ -1057,6 +1057,7 @@ h4 {
 
 .rtl {
 	text-align: right;
+	direction: rtl;
 }
 
 /* Width settings */
@@ -1383,4 +1384,9 @@ a.showit:hover span {
 
 .wrap {
 	white-space: normal;
+}
+
+ul.clist {
+	list-style-image: none;
+	margin: 0px;
 }

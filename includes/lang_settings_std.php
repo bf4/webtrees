@@ -94,7 +94,7 @@ $language_settings['catalan']=array(
 'MULTI_LETTER_ALPHABET'=>'l·l',
 'MULTI_LETTER_EQUIV'=>'',
 'DICTIONARY_SORT'=>true,
-'COLLATION'=>'utf8_spanish_ci'
+'COLLATION'=>'utf8_unicode_ci'
 );
 
 //-- settings for czech

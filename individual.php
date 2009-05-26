@@ -604,10 +604,9 @@ if (empty($SEARCH_SPIDER)) {
 <?php
 if(empty($SEARCH_SPIDER) && file_exists("modules/lightbox/album.php")) {
 
-	echo "<div id=\"lightbox2\" class=\"tab_page\" style=\"display:none;\" >";
-		
 		// Header Info ---------------------------------------------------------------------
 		if ($MULTI_MEDIA && file_exists("modules/lightbox/album.php")) {
+			echo "<div id=\"lightbox2\" class=\"tab_page\" style=\"display:none;\" >";
 			echo "<span class=\"subheaders\">" . $pgv_lang["lightbox"] . "</span>";
 			echo "&nbsp;&nbsp;";
 			// ---------- Help link --------------------
@@ -647,7 +646,7 @@ if(empty($SEARCH_SPIDER) && file_exists("modules/lightbox/album.php")) {
 			}
 		echo "</div>";
 		
-	echo "</div>";
+		echo "</div>";
 }
 ?>
 

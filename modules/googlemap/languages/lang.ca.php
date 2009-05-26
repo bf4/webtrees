@@ -43,7 +43,7 @@ $pgv_lang["gm_hybrid"]              = "Híbrid";
 $pgv_lang["gm_physical"]            = "Relleu";
 
 // Configuration texts
-$pgv_lang["gm_manage"]              = "Gestió de la configuració de GoogleMap";
+$pgv_lang["gm_manage"]              = "Configuració de GoogleMap";
 $pgv_lang["configure_googlemap"]    = "Configuració de GoogleMap";
 $pgv_lang["gm_admin_error"]         = "Pàgina únicament per a administradors";
 $pgv_lang["gm_db_error"]            = "No s'ha trobat la taula 'placelocation' a la base de dades";
@@ -135,4 +135,21 @@ $pgv_lang["placecheck_zoom"]        = "Zoom=";
 $pgv_lang["placecheck_options"]     = "Llista les opcions per a la comprovació de llocs";
 $pgv_lang["placecheck_filter_text"] = "Opcions de filtratge de llistes";
 $pgv_lang["placecheck_match"] 		= "Inclou-hi llocs que coincideixin completament -";
+$pgv_lang["gm_place_hierarchy"] = "Empra Googlemap per a la jerarquia de llocs";
+$pgv_lang["gm_ph_map_size"]		= "Mida del mapa en la jerarquia de llocs (en píxels)";
+$pgv_lang["gm_ph_marker_type"]	= "Tipus de marcadors de llocs en la jerarquia de llocs";
+$pgv_lang["gm_standard_marker"]	= "Estàndar";
+$pgv_lang["gm_no_coord"]		= "Aquest llocs no té coordenades";
+$pgv_lang["gm_ph_placenames"]	= "Mostra noms de lloc abreujats";
+$pgv_lang["gm_ph_count"]		= "Mostra el comptador de persones i famílies";
+$pgv_lang["gm_ph_wheel"]		= "Roda del ratolí per acostar i allunyar";
+$pgv_lang["gm_ph_controls"]		= "Amaga els controls del mapa";
+$pgv_lang["pl_countries"]		= "Països";
+$pgv_lang["pl_county"]			= "Comtat";
+$pgv_lang["pl_place"]			= "Lloc";
+$pgv_lang["pl_search_level"]	= "Cercar en aquest nivell";
+$pgv_lang["pl_search_all"]		= "Cerca-ho per tot";
+$pgv_lang["pl_unknown"]			= "Desconegut";
+$pgv_lang["placecheck_lati"] 	= "Latitud";
+$pgv_lang["placecheck_long"] 	= "Longitud";
 ?>

@@ -63,7 +63,7 @@ if (isset($_COOKIE['lastclick'])) {
 
 //     Start Family Nav Table ----------------------------
 	echo "<table class=\"facts_table\" width='230' cellpadding=\"0\">";
-		global $pgv_lang, $SHOW_ID_NUMBERS, $PGV_IMAGE_DIR, $PGV_IMAGES;
+		global $pgv_lang, $SHOW_ID_NUMBERS, $PGV_IMAGE_DIR, $PGV_IMAGES, $PGV_MENUS_AS_LISTS;
 		global $spouselinks, $parentlinks, $DeathYr, $BirthYr;
 		global $TEXT_DIRECTION;
 
@@ -79,7 +79,7 @@ if (isset($_COOKIE['lastclick'])) {
 			<tr>
 				<td style="padding-bottom: 4px;" align="center" colspan="2">
 				<?php 
-				echo "<a href=family.php?famid=".$famid.">";
+				echo "<a href=\"family.php?famid=".$famid."\">";
 				//echo "<b>". $pgv_lang["parent_family"] ."&nbsp;&nbsp;(".$famid.")</b>";
 				echo "<b>".$pgv_lang["parent_family"]."&nbsp;&nbsp;</b><span class=\"age\">(".$famid.")</span>";
 				echo "</a>"; 
@@ -100,9 +100,9 @@ if (isset($_COOKIE['lastclick'])) {
 				?>
 				<tr>
 					<td class="facts_label<?php print $styleadd; ?>" nowrap="nowrap">
-						<?php // print $people["husb"]->getLabel(); ?>
-						<?php
-							$menu->printMenu();
+						<?php if ($PGV_MENUS_AS_LISTS) echo "<ul>\n";
+						$menu->printMenu();
+						if ($PGV_MENUS_AS_LISTS) echo "</ul>\n";
 						?>
 					</td>
 					<td align="center" class="<?php print $this->getPersonStyle($people["husb"]); ?>">
@@ -130,11 +130,10 @@ if (isset($_COOKIE['lastclick'])) {
 				?>
 				<tr>
 					<td class="facts_label<?php print $styleadd; ?>">
-						<?php //print $people["wife"]->getLabel(); ?>
-						<?php
-							$menu->printMenu();
+						<?php if ($PGV_MENUS_AS_LISTS) echo "<ul>\n";
+						$menu->printMenu();
+						if ($PGV_MENUS_AS_LISTS) echo "</ul>\n";
 						?>
-					</td>
 					<td align="center" class="<?php print $this->getPersonStyle($people["wife"]); ?>">
 						<?php
 						print "<a href=\"".encode_url($people["wife"]->getLinkUrl()."&tab={$tabno}")."\">";
@@ -169,7 +168,9 @@ if (isset($_COOKIE['lastclick'])) {
 						if ($pid == $child->getXref() ) {
 							print $child->getLabel();
 						}else{
-							$menu->printMenu();
+							if ($PGV_MENUS_AS_LISTS) echo "<ul>\n";
+								$menu->printMenu();
+							if ($PGV_MENUS_AS_LISTS) echo "</ul>\n";
 						}
 						?>
 						</td>
@@ -206,7 +207,7 @@ if (isset($_COOKIE['lastclick'])) {
 			<tr>
 				<td style="padding-bottom: 4px;" align="center" colspan="2">
 				<?php 
-				echo "<a href=family.php?famid=".$famid.">"; 
+				echo "<a href=\"family.php?famid=".$famid."\">"; 
 				echo "<b>".$pgv_lang["step_parent_family"]."&nbsp;&nbsp;</b><span class=\"age\">(".$famid.")</span>";
 				echo "</a>"; 
 				?>
@@ -234,8 +235,9 @@ if (isset($_COOKIE['lastclick'])) {
 
 				<tr>
 					<td class="facts_label<?php print $styleadd; ?>" nowrap="nowrap">
-						<?php
-							$menu->printMenu();
+						<?php if ($PGV_MENUS_AS_LISTS) echo "<ul>\n";
+						$menu->printMenu();
+						if ($PGV_MENUS_AS_LISTS) echo "</ul>\n";
 						?>
 					</td>
 					<td align="center" class="<?php print $this->getPersonStyle($people["husb"]); ?>" >
@@ -271,8 +273,9 @@ if (isset($_COOKIE['lastclick'])) {
 				?>
 				<tr>
 					<td class="facts_label<?php print $styleadd; ?>" nowrap="nowrap">
-						<?php
-							$menu->printMenu();
+						<?php if ($PGV_MENUS_AS_LISTS) echo "<ul>\n";
+						$menu->printMenu();
+						if ($PGV_MENUS_AS_LISTS) echo "</ul>\n";
 						?>
 					</td>
 					<td align="center" class="<?php print $this->getPersonStyle($people["wife"]); ?>">
@@ -303,10 +306,10 @@ if (isset($_COOKIE['lastclick'])) {
 					?>
 					<tr>
 						<td class="facts_label<?php print $styleadd; ?>" nowrap="nowrap">
-							<?php //print $child->getLabel(); ?>
-							<?php
-								$menu->printMenu();
-							?>
+						<?php if ($PGV_MENUS_AS_LISTS) echo "<ul>\n";
+						$menu->printMenu();
+						if ($PGV_MENUS_AS_LISTS) echo "</ul>\n";
+						?>
 						</td>
 						<td align="center" class="<?php print $this->getPersonStyle($child); ?>">
 							<?php
@@ -331,7 +334,7 @@ if (isset($_COOKIE['lastclick'])) {
 			<tr>
 				<td style="padding-bottom: 4px;" align="center" colspan="2">
 				<?php 
-				echo "<a href=family.php?famid=".$famid.">"; 
+				echo "<a href=\"family.php?famid=".$famid."\">"; 
 				echo "<b>".$pgv_lang["immediate_family"]."&nbsp;&nbsp;</b><span class=\"age\">(".$famid.")</span>";
 				echo "</a>"; 
 				?>
@@ -360,9 +363,9 @@ if (isset($_COOKIE['lastclick'])) {
 				?>
 				<tr>
 					<td class="facts_label<?php print $styleadd; ?>" nowrap="nowrap">
-						<?php // print $people["husb"]->getLabel(); ?>
-						<?php
-							$menu->printMenu();
+						<?php if ($PGV_MENUS_AS_LISTS) echo "<ul>\n";
+						$menu->printMenu();
+						if ($PGV_MENUS_AS_LISTS) echo "</ul>\n";
 						?>
 					</td>
 					<td align="center" class="<?php print $this->getPersonStyle($people["husb"]); ?>">
@@ -395,9 +398,9 @@ if (isset($_COOKIE['lastclick'])) {
 				?>
 				<tr>
 					<td class="facts_label<?php print $styleadd; ?>" nowrap="nowrap">
-						<?php // print $people["wife"]->getLabel(); ?>
-						<?php
-							$menu->printMenu();
+						<?php if ($PGV_MENUS_AS_LISTS) echo "<ul>\n";
+						$menu->printMenu();
+						if ($PGV_MENUS_AS_LISTS) echo "</ul>\n";
 						?>
 					</td>
 					<td align="center" class="<?php print $this->getPersonStyle($people["wife"]); ?>">
@@ -432,10 +435,10 @@ if (isset($_COOKIE['lastclick'])) {
 					?>
 					<tr>
 						<td class="facts_label<?php print $styleadd; ?>" nowrap="nowrap">
-							<?php //print $child->getLabel(); ?>
-							<?php
-								$menu->printMenu();
-							?>
+						<?php if ($PGV_MENUS_AS_LISTS) echo "<ul>\n";
+						$menu->printMenu();
+						if ($PGV_MENUS_AS_LISTS) echo "</ul>\n";
+						?>
 						</td>
 						<td align="center" class="<?php print $this->getPersonStyle($child); ?>">
 							<?php
@@ -669,34 +672,26 @@ function print_pedigree_person_nav($pid, $style=1, $show_famlink=true, $count=0,
 								}
 								$spouselinks .= "<a href=\"".encode_url($spouse->getLinkUrl()."&amp;tab={$tabno}")."\">";
 								$spouselinks .= PrintReady($spouse->getFullName());
-								$spouselinks .= "</a><br />";
+								$spouselinks .= "</a>";
 								if ($spouse->getFullName() != "") {
 									$persons = "Yes";
 								}
 							}
 						}
-
+						$spouselinks .= "<ul class=\"clist ".$TEXT_DIRECTION."\">\n";
 						// Children ------------------------------   @var $child Person
 						foreach($children as $c=>$child) {
 							if ($child) {
 								$persons="Yes";
-								if ($TEXT_DIRECTION=="ltr") {
 									$title = $pgv_lang["indi_info"].": ".$child->getXref();
-									$spouselinks .= "o&nbsp;&nbsp;";
+									$spouselinks .= "<li>";
 									$spouselinks .= "<a href=\"".encode_url($child->getLinkUrl()."&amp;tab={$tabno}")."\">";
 									$spouselinks .= PrintReady($child->getFullName());
 									$spouselinks .= "</a>";
-									$spouselinks .= "<br />";
-								}else{
-									$title = $child->getXref()." :".$pgv_lang["indi_info"];
-									$spouselinks .= "<a href=\"".encode_url($child->getLinkUrl()."&amp;tab={$tabno}")."\">";
-									$spouselinks .= PrintReady($child->getFullName() );
-									$spouselinks .= "</a>";
-									$spouselinks .= "&nbsp;&nbsp;o";
-									$spouselinks .= "<br />";
-								}
+									$spouselinks .= "</li>\n";
 							}
 						}
+						$spouselinks .= "</ul>";
 					}
 				}
 				?>

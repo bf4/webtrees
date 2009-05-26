@@ -1016,27 +1016,13 @@ th {
 	direction: rtl;
 }
 
-.submenuitem .icon {
-	padding: 0px 5px 0px 5px;
-}
-
-.submenuitem_rtl .icon {
-	padding: 0px 5px 0px 5px;
-}
-
-.submenuitem a {
+.submenuitem a, .submenuitem_rtl a {
 	color: #003399;
-	display: inline-table;
-	vertical-align: middle;
-}
-
-.submenuitem_rtl a {
-	color: #003399;
-	display: inline-table;
-	vertical-align: middle;
 }
 
 .submenuitem, .submenuitem_rtl {
+	vertical-align: middle;
+	height: 22px;
 	color: black;
 	font: normal 11px tahoma, arial, helvetica, sans-serif;
 	text-decoration: none;
@@ -1045,21 +1031,17 @@ th {
 	white-space: nowrap;
 }
 
-.submenuitem {
+.submenuitem, .submenuitem_hover {
 	direction: ltr;
 	text-align: left;
 }
 
-.submenuitem_rtl {
+.submenuitem_rtl, .submenuitem_hover_rtl {
 	direction: rtl;
 	text-align: right;
 }
 
-.submenuitem_hover .icon {
-	padding: 0px 5px 0px 5px;
-}
-
-.submenuitem_hover_rtl .icon {
+.submenuitem .icon, .submenuitem_rtl .icon, .submenuitem_hover .icon, .submenuitem_hover_rtl .icon {
 	padding: 0px 5px 0px 5px;
 }
 
@@ -1072,17 +1054,10 @@ th {
 	color: #003399;
 }
 
-.submenuitem_hover {
-	text-align: left;
-}
-
-.submenuitem_hover_rtl {
-	text-align: right;
-}
-
-.submenuitem_hover a, .submenuitem_hover_rtl a {
-	display: inline-table;
+.submenuitem a, .submenuitem_rtl a, .submenuitem_hover a, .submenuitem_hover_rtl a {
+	display: inline-block;
 	vertical-align: middle;
+	padding: 0px;
 }
 
 .menuitem a {
@@ -1372,6 +1347,7 @@ h4 {
 
 .rtl {
 	text-align: right;
+	direction: rtl;
 }
 
 /* Width settings */
@@ -1693,4 +1669,9 @@ a.showit:hover span {
 
 .wrap {
 	white-space: normal;
+}
+
+ul.clist {
+	list-style-image: none;
+	margin: 0px;
 }

@@ -3,7 +3,7 @@
  * Catalan texts
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2008 to 2009  PGV Development Team.  All rights reserved.
+ * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -220,7 +220,6 @@ $pgv_lang["monthly"]				= "Mensualment";
 $pgv_lang["msql"]					= "Mini SQL";
 $pgv_lang["mssql"]					= "Servidor SQL Microsoft";
 $pgv_lang["mysql"]					= "MySQL";
-$pgv_lang["mysqli"]					= "MySQL 4.1+ i PHP 5";
 $pgv_lang["never"]					= "Mai";
 $pgv_lang["no_logs"]				= "Desactiva el registre";
 $pgv_lang["no_messaging"]			= "Sense forma de contacte";
@@ -250,7 +249,6 @@ $pgv_lang["select_an_option"]		= "Seleccioneu una de les opcions següents:";
 $pgv_lang["SERVER_URL"]				= "URL PhpGedView";
 $pgv_lang["show_phpinfo"]			= "Mostra la pàgina d'informació PHP";
 $pgv_lang["siteadmin"]				= "Administradors del lloc";
-$pgv_lang["skip_cleanup"]			= "Salta't la neteja";
 $pgv_lang["sqlite"]					= "SQLite";
 $pgv_lang["sybase"]					= "Sybase";
 $pgv_lang["sync_gedcom"]			= "Sincronitza les dades d'usuari amb les del GEDCOM";
@@ -403,10 +401,48 @@ $pgv_lang["warning_instr"]		= "Si no heu superat algun dels advertiments, encara
 $pgv_lang["error_remove_site"]					= "No pot eliminar-se el servidor remot.";
 $pgv_lang["error_remove_site_linked"]			= "El servidor remot no pot ser eliminat perquè la seva llista de connexions no és buida.";
 $pgv_lang["error_remote_duplicate"]				= "Aquesta base de dades remota ja és a la llista com a <i>#GLOBALS[whichFile]#</i>";
-$pgv_lang["batch_update"]="Prepareu un lot de actualitzacions/modificacions del vostre GEDCOM";
+$pgv_lang["batch_update"]="Actualitzacions/modificacions massives del GEDCOM";
 $pgv_lang["tradition_spanish"]		= "Espanyola";
 $pgv_lang["tradition_portuguese"]	= "Portuguesa";
 $pgv_lang["tradition_icelandic"]	= "Islandesa";
 $pgv_lang["tradition_paternal"]		= "Paternal";
 $pgv_lang["tradition_none"]			= "Cap";
+$pgv_lang["editors"]				= "Editors";
+$pgv_lang["gedcom_admins"]			= "Administradors GEDCOM";
+$pgv_lang["site_admins"]			= "Administradors del lloc";
+$pgv_lang["nobody"]					= "Ningú";
+$pgv_lang["ged_export"] 						= "Exporta";
+$pgv_lang["PGV_SMTP_ACTIVE"] 					= "Utiltiza SMTP par a l'enviamentr del correu extern";
+$pgv_lang["PGV_SMTP_HOST"] 						= "Nom del servidor de correu electrònic sortint (SMTP)";
+$pgv_lang["PGV_SMTP_HELO"] 						= "Nom del domini per a l'enviament";
+$pgv_lang["PGV_SMTP_PORT"] 						= "Port SMTP";
+$pgv_lang["PGV_SMTP_AUTH"] 						= "Empreu identificador i contrasenya";
+$pgv_lang["PGV_SMTP_AUTH_USER"] 				= "Nom d'usuari";
+$pgv_lang["PGV_SMTP_AUTH_PASS"] 				= "Contrasenya";
+$pgv_lang["PGV_SMTP_FROM_NAME"] 				= "Nom del remitent";
+$pgv_lang["tradition_polish"]		= "Polonès";
+$pgv_lang["elapsedYear1"]	=	"1 any";
+$pgv_lang["elapsedYear2"]	=	"#pgv_lang[global_num1]# anys";	// used in Polish for 2,3,4 or 22,23,24 or 32,33,34 etc.
+$pgv_lang["elapsedYears"]	=	"#pgv_lang[global_num1]# anys";
+$pgv_lang["elapsedMonth1"]	=	"1 mes";
+$pgv_lang["elapsedMonth2"]	=	"#pgv_lang[global_num1]# mesos";	// used in Polish for 2,3,4 or 22,23,24 or 32,33,34 etc.
+$pgv_lang["elapsedMonths"]	=	"#pgv_lang[global_num1]# mesos";
+$pgv_lang["elapsedDay1"]	=	"1 dia";
+$pgv_lang["elapsedDay2"]	=	"#pgv_lang[global_num1]# dies";		// used in Polish for 2,3,4 or 22,23,24 or 32,33,34 etc.
+$pgv_lang["elapsedDays"]	=	"#pgv_lang[global_num1]# dies";
+$pgv_lang["elapsedHour1"]	=	"1 hora";
+$pgv_lang["elapsedHour2"]	=	"#pgv_lang[global_num1]# hores";	// used in Polish for 2,3,4 or 22,23,24 or 32,33,34 etc.
+$pgv_lang["elapsedHours"]	=	"#pgv_lang[global_num1]# hores";
+$pgv_lang["elapsedMinute1"]	=	"1 minut";
+$pgv_lang["elapsedMinute2"]	=	"#pgv_lang[global_num1]# minuts";	// used in Polish for 2,3,4 or 22,23,24 or 32,33,34 etc.
+$pgv_lang["elapsedMinutes"]	=	"#pgv_lang[global_num1]# minuts";
+$pgv_lang["elapsedAgo"]		=	"fa #pgv_lang[global_string1]#";
+$pgv_lang["PGV_SMTP_SSL"] 						= "Accés SSL";
+$pgv_lang["enter_comment"]	= "Podeu introduir un comentari aquí.";
+$pgv_lang["media_now_linked to"]	= "Ítem multimèdia vinculat ara a -";
+$pgv_lang["current_links"]			= "Vincles actuals:";
+$pgv_lang["add_more_links"]			= "Afegeix més enllaços:";
+$pgv_lang["enter_pid_or_name"]		= "Entreu l'ID personal o be el nom";
+$pgv_lang["set_links"]				= "Estableix vincles";
+$pgv_lang["add_or_remove_links"]	= "Administra enllaços";
 ?>

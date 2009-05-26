@@ -48,12 +48,13 @@ function expand_urls($text) {
 	// This matches far too much while a "precise" regex is several pages long.
 	// This is a compromise.
 	$URL_REGEX='((https?|ftp]):)(//([^\s/?#<>]*))?([^\s?#<>]*)(\?([^\s#<>]*))?(#[^\s?#<>]+)?';
-
+	
 	return preg_replace_callback(
 		'/'.addcslashes("(?!>)$URL_REGEX(?!</a>)", '/').'/i',
 		create_function( // Insert <wbr/> codes into the replaced string
 			'$m',
-			'return "<a href=\"".$m[0]."\" target=\"blank\">".preg_replace("/\b/", "<wbr/>", $m[0])."</a>";'
+//			'return "<a href=\"".$m[0]."\" target=\"blank\">".preg_replace("/\b/", "<wbr/>", $m[0])."</a>";'
+			'return "<a href=\"".$m[0]."\" target=\"blank\">".preg_replace("/\b/", "&shy;", $m[0])."</a>";'
 		),
 		preg_replace("/<(?!br)/i", "&lt;", $text) // no html except br
 	);
@@ -69,7 +70,7 @@ function expand_urls($text) {
 function print_fact(&$eventObj, $noedit=false) {
 	global $factarray;
 	global $nonfacts;
-	global $PGV_IMAGE_DIR;
+	global $PGV_IMAGE_DIR, $PGV_MENUS_AS_LISTS;
 	global $pgv_lang, $GEDCOM;
 	global $lang_short_cut, $LANGUAGE;
 	global $WORD_WRAPPED_NOTES;
@@ -192,9 +193,15 @@ function print_fact(&$eventObj, $noedit=false) {
 				$submenu->addClass("submenuitem", "submenuitem_hover");
 				$menu->addSubMenu($submenu);
 
-				print " <div style=\"width:25px;\">";
-				$menu->printMenu();
-				print "</div>";
+				if (!$PGV_MENUS_AS_LISTS) {
+					echo " <div style=\"width:25px;\">";
+					$menu->printMenu();
+					echo "</div>";
+				} else { 
+					echo " <ul>";
+					$menu->printMenu();
+					echo "</ul>";					
+				}
 			}
 			print "</td>";
 		} else {

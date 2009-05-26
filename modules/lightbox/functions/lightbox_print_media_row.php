@@ -328,7 +328,7 @@ function lightbox_print_media_row($rtype, $rowm, $pid) {
 			print "<tr>";
 			print "<td ></td>";
 			print "<td valign=\"bottom\" align=\"center\" nowrap=\"nowrap\">";
-			print_menu($menu);
+				$menu->printMenu();
 			print "</td>";
 			print "<td ></td>";
 			print "</tr>" . "\n";
@@ -343,7 +343,7 @@ function lightbox_print_media_row($rtype, $rowm, $pid) {
 	$sort_i++;
 
     print "</li>";
-    print "\n\n";;
+    print "\n\n";
     return true;
 
 }

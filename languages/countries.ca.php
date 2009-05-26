@@ -89,6 +89,7 @@ $countries["BWI"]="Antilles britàniques";
 $countries["CAF"]="República Centreafricana";
 $countries["CAN"]="Canadà";
 $countries["CAP"]="Colònia del Cap";
+$countries["CAT"]="Catalunya";
 $countries["CCK"]="Illes Cocos (Keeling)";
 $countries["CHE"]="Suïssa";
 $countries["CHI"]="Illes Anglonormandes";
@@ -310,4 +311,5 @@ $countries["ZMB"]="Zàmbia";
 $countries["ZWE"]="Zimbabwe";
 $countries["???"]="Desconegut";
 
+$countries["IOM"]="Illa de Man";
 ?>

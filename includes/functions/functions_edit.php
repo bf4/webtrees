@@ -217,7 +217,7 @@ function append_gedrec($gedrec, $chan=true, $linkpid='') {
 	global $fcontents, $GEDCOM, $pgv_changes, $manual_save;
 
 	if (($gedrec = check_gedcom($gedrec, $chan))!==false) {
-		$ct = preg_match("/0 @(.*)@ (.*)/", $gedrec, $match);
+		$ct = preg_match("/0 @(".PGV_REGEX_XREF.")@ (".PGV_REGEX_TAG.")/", $gedrec, $match);
 		$gid = $match[1];
 		$type = trim($match[2]);
 
