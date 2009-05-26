@@ -10,6 +10,7 @@
 
 
 Version 4.2.x CA
+ - Changed: Tidy up of files in GEDFact_assistant/MEDIA/ subdirectory (windmillway)
  - Merged: Merge changes r5520 - r5564 from the trunk. (windmillway)
  - Changed: Changes due to core file class re-arrangement. (windmillway)
  - Changed: Cleanup GEDFact_assistant/MEDIA/ sub module code -  Still Link removals to do. -  (windmillway)

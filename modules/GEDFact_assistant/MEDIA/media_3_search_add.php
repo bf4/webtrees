@@ -2,6 +2,8 @@
 /**
  * Media Link Assistant Control module for phpGedView
  *
+ * Media Link information about an individual
+ *
  * phpGedView: Genealogy Viewer
  * Copyright (C) 2007 to 2008  PGV Development Team.  All rights reserved.
  *
@@ -23,7 +25,8 @@
  * @subpackage Module
  * @version $Id$
  * @author Brian Holland
- */
+*/
+
 if (!defined('PGV_PHPGEDVIEW')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
@@ -111,7 +114,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 							$givn  = rtrim($nam[0]['givn'],'*');
 							$surn  = $nam[0]['surname'];
 							if (isset($nam[1])) {
-								$fulmn = rtrim($nam[1]['givn'],'*')."&nbsp;".$nam[1]['surnname'];
+								$fulmn = rtrim($nam[1]['givn'],'*')."&nbsp;".$nam[1]['surname'];
 								$marn  = $nam[1]['surname'];
 							}
 							$menu = new Menu("&nbsp;" . $people["husb"]->getLabel() . "&nbsp;". "\n");
@@ -297,7 +300,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 								$menu = new Menu("&nbsp;" . $child->getLabel() . "&nbsp;". "\n");
 								$menu->addClass("", "", "submenu");
 								$slabel  = print_pedigree_person_nav2($child->getXref(), 2, !$this->isPrintPreview(), 0, $personcount++, $currpid, $censyear);
-								$slabel .= $parentlinks;
+								$slabel .= $spouselinks;
 								$submenu = new Menu($slabel);
 								$menu->addSubMenu($submenu);
 								

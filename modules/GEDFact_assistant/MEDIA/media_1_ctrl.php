@@ -2,6 +2,8 @@
 /**
  * Media Link Assistant Control module for phpGedView
  *
+ * Media Link information about an individual
+ *
  * phpGedView: Genealogy Viewer
  * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
@@ -64,28 +66,27 @@ if ($pid=="") {
 ?>
 
 	<table class="facts_table" width=300 border=0 >
-
 		<tr colspan="2">
+			<td valign="top" align="left" width="50%" >
+			</br /><br />
+			Enter the name of a person to find, then when found, click name to add person to <b>"queue"</b> 
+			<br /><br /><br />
+			Click on "H" to change Navigator "Head of Family" 
+			<br /><br /><br />
+			Click on Navigator names to add person to <b>"queue"</b>
+			<br />
+			</td>
 			<td rowspan="1" align="right" valign="top" width=400>
 				<?php 
 				//-- Search  and Add Family Members Area ========================================= 
 				include('modules/GEDFact_assistant/MEDIA/media_3_search_add.php'); ?>
 			</td>
 		</tr>
-		<tr>
-			<td colspan=2 align="left" valign="top" width="100%">
-				<?php
-				//-- Help/Save Area ==================================================
-				include('modules/GEDFact_assistant/MEDIA/media_6_help_save.php');
-				include('modules/GEDFact_assistant/MEDIA/media_7_parse_addLinksTbl.php');
-				?>
-			</td>
-		</tr>
-		
 	</table>
 
 <?php
 } // End Test for Base pid 
+
 ?>
 
 

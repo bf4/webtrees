@@ -2,6 +2,8 @@
 /**
  * Media Link Assistant Control module for phpGedView
  *
+ * Media Link information about an individual
+ *
  * phpGedView: Genealogy Viewer
  * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
@@ -22,7 +24,7 @@
  * @package PhpGedView
  * @subpackage Census Assistant
  * @version $Id$
- */
+*/
 
 ?>
 <?php if ($THEME_DIR=="themes/simplygreen/" || $THEME_DIR=="themes/simplyred/" || $THEME_DIR=="themes/simplyblue/") { ?>
@@ -39,7 +41,7 @@
 <?php if ($THEME_DIR=="themes/simplygreen/" || $THEME_DIR=="themes/simplyred/" || $THEME_DIR=="themes/simplyblue/") { ?>
 	<style type="text/css">
 	<!--
-	#tblSample td, th { padding: 0.2em; }
+	#addlinkQueue td, th { padding: 0.2em; }
 	.classy0 { font-family: Verdana, Arial, Helvetica, sans-serif; background-color: transparent; color: #ffffff; font-size: 10px; }
 	.classy1 { font-family: Verdana, Arial, Helvetica, sans-serif; background-color: transparent; color: #ffffff; font-size: 10px; }
 	-->
@@ -47,7 +49,7 @@
 <?php }else{ ?>
 	<style type="text/css">
 	<!--
-	#tblSample td, th { padding: 0.2em; }
+	#addlinkQueue td, th { padding: 0.2em; }
 	.classy0 { font-family: Verdana, Arial, Helvetica, sans-serif; background-color: transparent; color: #000000; font-size: 10px; }
 	.classy1 { font-family: Verdana, Arial, Helvetica, sans-serif; background-color: transparent; color: #000000; font-size: 10px; }
 	-->
@@ -59,17 +61,18 @@ echo '<script src="modules/GEDFact_assistant/MEDIA/media_5_input.js" type="text/
 ?>
 
 
-	<table width="380" border="0" cellspacing="1" id="tblSample">
+	<table width="400" border="0" cellspacing="1" id="addlinkQueue">
 		<thead>
 		<tr>
 			<th class="topbottombar" width="15"  style="text-align:left;font-weight:100;" align="left">#</th>
 			<th class="topbottombar" width="40"  style="text-align:left;font-weight:100;" align="left">ID:</th>
-			<th class="topbottombar" width="280" style="text-align:left;font-weight:100;" align="left">Name</th>
-			<th class="topbottombar" width="25"  style="text-align:left;font-weight:100;" align="left">Remove</th>
+			<th class="topbottombar" width="360" style="text-align:left;font-weight:100;" align="left">Name</th>
+			<th class="topbottombar" width="20"  style="text-align:left;font-weight:100;" align="left">Remove</th>
 			<th width="25" style="border: 0px solid transparent;" align="left"><font size=1><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></font></th>
 		</tr>
 		</thead>
 		<tbody></tbody>
+		<tr><td></td></tr>
 	</table>
 	
 

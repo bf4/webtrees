@@ -2,8 +2,10 @@
 /**
  * Media Link Assistant Control module for phpGedView
  *
+ * Media Link information about an individual
+ *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2007 to 2008  PGV Development Team.  All rights reserved.
+ * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,17 +22,15 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  * @package PhpGedView
- * @subpackage Module
+ * @subpackage Census Assistant
  * @version $Id$
- * @author Brian Holland
- */
-
+*/
 ?>
 
 <script>
 function parseAddLinks() {
 	str = "";
-	var tbl = document.getElementById('tblSample');
+	var tbl = document.getElementById('addlinkQueue');
 	for(var i=1; i<tbl.rows.length; i++){ // start at i=1 because we need to avoid header
 		var tr = tbl.rows[i];
 		var strRow = ''; 
@@ -47,7 +47,7 @@ function parseAddLinks() {
 		}
 		str += (str==''?'':', ') + strRow;
 	}
-	// str += (str==''?'':'" '); // Adds just final single quote at end of string (\')
+	// str += (str==''?'':'' '); // Adds just final single quote at end of string (\')
 }
 
 function preview() {
@@ -56,13 +56,16 @@ function preview() {
 }
 
 function shiftlinks() {
-//	alert('Clicking \'Set Links\' will eventually parse and save the Current and Added Links. But for now will just use Base Indi Id');
 	parseAddLinks();
-//	alert('string = '+ str);
+	//	alert('string = '+ str);
 	if (str) {
 		document.link.more_links.value = str;
 	}else{
 		// leave hidden input morelinks as "No Values"
+		document.link.more_links.value = document.getElementById('gid');
+	}
+	if (win01) {
+		win01.close();
 	}
 }
 
