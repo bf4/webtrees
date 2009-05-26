@@ -343,7 +343,7 @@ function lightbox_print_media_row($rtype, $rowm, $pid) {
 	$sort_i++;
 
     print "</li>";
-    print "\n\n";;
+    print "\n\n";
     return true;
 
 }
