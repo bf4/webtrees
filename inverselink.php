@@ -27,7 +27,7 @@
  */
 
 // If GedFAct_assistant/MEDIA/ installed ======================
-if (PGV_USER_GEDCOM_ADMIN && file_exists('modules/GEDFact_assistant/MEDIA/media_1_ctrl.php')) {
+if (PGV_USER_IS_ADMIN && file_exists('modules/GEDFact_assistant/MEDIA/media_1_ctrl.php')) {
 	include 'modules/GEDFact_assistant/MEDIA/media_0_inverselink.php';
 } else {
 
