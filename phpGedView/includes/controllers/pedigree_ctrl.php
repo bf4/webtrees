@@ -74,6 +74,8 @@ class PedigreeControllerRoot extends BaseController {
 		$this->show_full =safe_GET('show_full', array('0', '1'), $PEDIGREE_FULL_DETAILS);
 		$this->talloffset=safe_GET('talloffset', array('0', '1', '2', '3'), $PEDIGREE_LAYOUT);
 		$this->PEDIGREE_GENERATIONS=safe_GET_integer('PEDIGREE_GENERATIONS', 2, $MAX_PEDIGREE_GENERATIONS, $DEFAULT_PEDIGREE_GENERATIONS);
+
+		if ($this->talloffset==1) $this->talloffset=1;		// Make SURE this is an integer
 		if ($this->talloffset>1 && $this->PEDIGREE_GENERATIONS>8) $this->PEDIGREE_GENERATIONS=8;
 
 		// TODO: some library functions expect this as a global.
@@ -83,7 +85,6 @@ class PedigreeControllerRoot extends BaseController {
 
 		// This is passed as a global.  A parameter would be better...
 		$this->show_full = ($this->show_full) ? 1 : 0;		// Make SURE this is an integer
-		//$this->talloffset = ($this->talloffset) ? 1 : 0;
 		if ($this->talloffset>3) $this->talloffset=3;
 		else if ($this->talloffset<0) $this->talloffset=0;
 		$show_full = $this->show_full;
