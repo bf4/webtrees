@@ -128,13 +128,13 @@ echo PGV_JS_START;
 			window.opener.<?php echo $callback; ?>(id,name,thumb);
 			<?php if (!$multiple) echo "window.close();"; ?>
 		} else {
-			if ('modules/GEDFact_assistant/MEDIA/media_1_ctrl.php') {
+			if (window.opener.document.getElementById('addlinkQueue')) {
 				window.opener.insertRowToTable(id,name);
 				if (id.match("I")=="I") {
-					win01 = window.opener.window.open('edit_interface.php?action=addmedia_links&noteid=newnote&pid='+id, 'win01', 'top=50,left=600,width=420,height=650,resizable=1,scrollbars=1');
+					var win01 = window.opener.window.open('edit_interface.php?action=addmedia_links&noteid=newnote&pid='+id, 'win01', 'top=50,left=600,width=420,height=650,resizable=1,scrollbars=1');
 					if (window.focus) {win01.focus();}
 				}else if (id.match("F")=="F") {
-					// alert('Opening Navigator with family id entered will come later');
+					// TODO --- alert('Opening Navigator with family id entered will come later');
 				}
 			}
 			window.opener.<?php echo $callback; ?>(id);
