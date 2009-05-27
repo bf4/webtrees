@@ -307,7 +307,7 @@ class PGV_DB {
 
 	// Display the query log as a table, for debugging
 	public static function getQueryLog() {
-		$html='<table border="1"><tr><th>Query</th><th>Rows</th><th>Time (ms)</th></tr>'.implode('', self::$log).'</table>';
+		$html='<table border="1"><col span="2"/><col align="char"/><thead><tr><th>Query</th><th>Rows</th><th>Time (ms)</th></tr><tbody/>'.implode('', self::$log).'</table>';
 		self::$log=array();
 		return $html;
 	}
@@ -537,7 +537,7 @@ class PGV_DB {
 		$start=microtime(true);
 		$result=self::$pdo->query($string, $parameter_type);
 		$end=microtime(true);
-		self::logQuery($string, count($result), $end-$start);
+		self::logQuery($string, count($result), $end-$start, array());
 		return $result;
 	}
 
@@ -546,7 +546,7 @@ class PGV_DB {
 		$start=microtime(true);
 		$result=self::$pdo->exec($statement);
 		$end=microtime(true);
-		self::logQuery($statement, $result, $end-$start);
+		self::logQuery($statement, $result, $end-$start, array());
 		return $result;
 	}
 
