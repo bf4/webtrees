@@ -26,21 +26,19 @@
  * @version $Id$
  */
 
+require './config.php';
+require './includes/functions/functions_edit.php';
+	
 // If GedFAct_assistant/MEDIA/ installed ======================
 if (PGV_USER_IS_ADMIN && file_exists('modules/GEDFact_assistant/MEDIA/media_1_ctrl.php')) {
 	include 'modules/GEDFact_assistant/MEDIA/media_0_inverselink.php';
 } else {
-
-	require './config.php';
-	require './includes/functions/functions_edit.php';
 
 	//-- page parameters and checking
 	$linktoid	= safe_GET_xref('linktoid');
 	$mediaid	= safe_GET_xref('mediaid');
 	$linkto		= safe_GET     ('linkto', array('person', 'source', 'family'));
 	$action		= safe_GET     ('action', PGV_REGEX_ALPHA, 'choose');
-	
-	$more_links	= safe_REQUEST($_REQUEST, 'more_links', PGV_REGEX_UNSAFE);
 
 	if (empty($linktoid) || empty($linkto)) {
 		$paramok = false;
