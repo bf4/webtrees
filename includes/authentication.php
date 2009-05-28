@@ -319,124 +319,14 @@ function adminUserExists() {
  * to the latest version of the database schema.
  */
 function checkTableExists() {
-	global $TBLPREFIX, $DBCONN, $DBTYPE;
+	global $TBLPREFIX;
 
-	$has_users = false;
-	$has_gedcomid = false;
-	$has_email = false;
-	$has_messages = false;
-	$has_favorites = false;
-	$has_sessiontime = false;
-	$has_blocks = false;
-	$has_contactmethod = false;
-	$has_news = false;
-	$has_visible = false;
-	$has_account = false;
-	$has_defaulttab = false;
-	$has_blockconfig = false;
-	$has_comment = false;
-	$has_comment_exp = false;
-	$has_sync_gedcom = false;
-	$has_first_name = false;
-	$has_relation_privacy = false;
-	$has_fav_note = false;
-	$has_auto_accept = false;
-	$has_mutex = false;
+	$sqlite=(PGV_DB::getInstance()->getAttribute(PDO::ATTR_DRIVER_NAME)=="sqlite" || PGV_DB::getInstance()->getAttribute(PDO::ATTR_DRIVER_NAME)=="sqlite2");
 
-	$sqlite = ($DBTYPE == 'sqlite');
-
-	if (DB::isError($DBCONN))
-		return false;
-	$data = $DBCONN->getListOf('tables');
-	foreach($data as $indexval => $table) {
-		if (empty($TBLPREFIX) || strpos($table, $TBLPREFIX) === 0) {
-			switch(substr($table, strlen($TBLPREFIX))) {
-				case "users":
-					$has_users = true;
-					$info = $DBCONN->tableInfo($TBLPREFIX."users");
-					foreach($info as $indexval => $field) {
-						switch ($field["name"]) {
-							case "u_gedcomid":
-								$has_gedcomid = true;
-								break;
-							case "u_email":
-								$has_email = true;
-								break;
-							case "u_sessiontime":
-								$has_sessiontime = true;
-								break;
-							case "u_contactmethod":
-								$has_contactmethod = true;
-								break;
-							case "u_visibleonline":
-								$has_visible = true;
-								break;
-							case "u_editaccount":
-								$has_account = true;
-								break;
-							case "u_defaulttab":
-								$has_defaulttab = true;
-								break;
-							case "u_comment":
-								$has_comment = true;
-								break;
-							case "u_comment_exp":
-								$has_comment_exp = true;
-								break;
-							case "u_sync_gedcom":
-								$has_sync_gedcom = true;
-								break;
-							case "u_firstname":
-								$has_first_name = true;
-								break;
-							case "u_relationship_privacy":
-								$has_relation_privacy = true;
-								break;
-							case "u_auto_accept":
-								$has_auto_accept = true;
-								break;
-						}
-					}
-					break;
-				case "messages":
-					$has_messages = true;
-					break;
-				case "favorites":
-					$has_favorites = true;
-					$info = $DBCONN->tableInfo($TBLPREFIX."favorites");
-					foreach($info as $indexval => $field) {
-						switch ($field["name"]) {
-							case "fv_note":
-								$has_fav_note = true;
-								break;
-						}
-					}
-					break;
-				case "blocks":
-					$has_blocks = true;
-					$info = $DBCONN->tableInfo($TBLPREFIX."blocks");
-					foreach($info as $indexval => $field) {
-						switch ($field["name"]) {
-							case "b_config":
-								$has_blockconfig = true;
-								break;
-						}
-					}
-					break;
-				case "news":
-					$has_news = true;
-					break;
-				case "mutex":
-					$has_mutex = true;
-					break;
-			}
-		}
-	}
-	if (!$has_users || !$has_gedcomid ||$DBTYPE == "mssql" && !$has_first_name ||
-			$sqlite && (!$has_email || !$has_sessiontime || !$has_contactmethod || !$has_visible || !$has_account || !$has_defaulttab || !$has_comment || !$has_sync_gedcom || !$has_first_name || !$has_relation_privacy || !$has_auto_accept)) {
-
-		dbquery("DROP TABLE {$TBLPREFIX}users", false);
-		dbquery(
+	if (!PGV_DB::table_exists("{$TBLPREFIX}users") || $sqlite && (!PGV_DB::column_exists("{$TBLPREFIX}users", 'u_email') || !PGV_DB::column_exists("{$TBLPREFIX}users", 'u_sessiontime') || !PGV_DB::column_exists("{$TBLPREFIX}users", 'u_contactmethod') || !PGV_DB::column_exists("{$TBLPREFIX}users", 'u_visibleonline') || !PGV_DB::column_exists("{$TBLPREFIX}users", 'u_editaccount') || !PGV_DB::column_exists("{$TBLPREFIX}users", 'u_defaulttab') || !PGV_DB::column_exists("{$TBLPREFIX}users", 'u_comment') || !PGV_DB::column_exists("{$TBLPREFIX}users", 'u_sync_gedcom') || !PGV_DB::column_exists("{$TBLPREFIX}users", 'u_firstname') || !PGV_DB::column_exists("{$TBLPREFIX}users", 'u_relationship_privacy') || !PGV_DB::column_exists("{$TBLPREFIX}users", 'u_auto_accept'))
+	) {
+		if ($sqlite && PGV_DB::table_exists("{$TBLPREFIX}users")) PGV_DB::exec("DROP TABLE {$TBLPREFIX}users");
+		PGV_DB::exec(
 			"CREATE TABLE {$TBLPREFIX}users (".
 			" u_username             VARCHAR(30) NOT NULL,".
 			" u_password             VARCHAR(255)    NULL,".
@@ -470,61 +360,60 @@ function checkTableExists() {
 			") ".PGV_DB_UTF8_TABLE
 		);
 	} else {
-		if (!$has_email) {
-			dbquery("ALTER TABLE {$TBLPREFIX}users ADD u_email             TEXT         NULL");
-			dbquery("ALTER TABLE {$TBLPREFIX}users ADD u_verified          VARCHAR(20)  NULL");
-			dbquery("ALTER TABLE {$TBLPREFIX}users ADD u_verified_by_admin VARCHAR(20)  NULL");
-			dbquery("ALTER TABLE {$TBLPREFIX}users ADD u_language          VARCHAR(50)  NULL");
-			dbquery("ALTER TABLE {$TBLPREFIX}users ADD u_pwrequested       VARCHAR(20)  NULL");
-			dbquery("ALTER TABLE {$TBLPREFIX}users ADD u_reg_timestamp     VARCHAR(50)  NULL");
-			dbquery("ALTER TABLE {$TBLPREFIX}users ADD u_reg_hashcode      VARCHAR(255) NULL");
-			dbquery("ALTER TABLE {$TBLPREFIX}users ADD u_theme             VARCHAR(50)  NULL");
-			dbquery("ALTER TABLE {$TBLPREFIX}users ADD u_loggedin          VARCHAR(1)   NULL");
+		if (!PGV_DB::column_exists("{$TBLPREFIX}users", 'u_email')) {
+			PGV_DB::exec("ALTER TABLE {$TBLPREFIX}users ADD u_email             TEXT         NULL");
+			PGV_DB::exec("ALTER TABLE {$TBLPREFIX}users ADD u_verified          VARCHAR(20)  NULL");
+			PGV_DB::exec("ALTER TABLE {$TBLPREFIX}users ADD u_verified_by_admin VARCHAR(20)  NULL");
+			PGV_DB::exec("ALTER TABLE {$TBLPREFIX}users ADD u_language          VARCHAR(50)  NULL");
+			PGV_DB::exec("ALTER TABLE {$TBLPREFIX}users ADD u_pwrequested       VARCHAR(20)  NULL");
+			PGV_DB::exec("ALTER TABLE {$TBLPREFIX}users ADD u_reg_timestamp     VARCHAR(50)  NULL");
+			PGV_DB::exec("ALTER TABLE {$TBLPREFIX}users ADD u_reg_hashcode      VARCHAR(255) NULL");
+			PGV_DB::exec("ALTER TABLE {$TBLPREFIX}users ADD u_theme             VARCHAR(50)  NULL");
+			PGV_DB::exec("ALTER TABLE {$TBLPREFIX}users ADD u_loggedin          VARCHAR(1)   NULL");
 		}
-		if (!$has_sessiontime) {
-			dbquery("ALTER TABLE {$TBLPREFIX}users ADD u_sessiontime INT NULL");
+		if (!PGV_DB::column_exists("{$TBLPREFIX}users", 'u_sessiontime')) {
+			PGV_DB::exec("ALTER TABLE {$TBLPREFIX}users ADD u_sessiontime INT NULL");
 		}
-		if (!$has_contactmethod) {
-			dbquery("ALTER TABLE {$TBLPREFIX}users ADD u_contactmethod VARCHAR(20) NULL");
+		if (!PGV_DB::column_exists("{$TBLPREFIX}users", 'u_contactmethod')) {
+			PGV_DB::exec("ALTER TABLE {$TBLPREFIX}users ADD u_contactmethod VARCHAR(20) NULL");
 		}
-		if (!$has_visible) {
-			dbquery("ALTER TABLE {$TBLPREFIX}users ADD u_visibleonline VARCHAR(2) NULL");
+		if (!PGV_DB::column_exists("{$TBLPREFIX}users", 'u_visibleonline')) {
+			PGV_DB::exec("ALTER TABLE {$TBLPREFIX}users ADD u_visibleonline VARCHAR(2) NULL");
 		}
-		if (!$has_account) {
-			dbquery("ALTER TABLE {$TBLPREFIX}users ADD u_editaccount VARCHAR(2) NULL");
+		if (!PGV_DB::column_exists("{$TBLPREFIX}users", 'u_editaccount')) {
+			PGV_DB::exec("ALTER TABLE {$TBLPREFIX}users ADD u_editaccount VARCHAR(2) NULL");
 		}
-		if (!$has_defaulttab) {
-			dbquery("ALTER TABLE {$TBLPREFIX}users ADD u_defaulttab INT NULL");
+		if (!PGV_DB::column_exists("{$TBLPREFIX}users", 'u_defaulttab')) {
+			PGV_DB::exec("ALTER TABLE {$TBLPREFIX}users ADD u_defaulttab INT NULL");
 		}
-		if (!$has_comment) {
-			dbquery("ALTER TABLE {$TBLPREFIX}users ADD u_comment     VARCHAR(255) NULL");
-			dbquery("ALTER TABLE {$TBLPREFIX}users ADD u_comment_exp VARCHAR(20)  NULL");
+		if (!PGV_DB::column_exists("{$TBLPREFIX}users", 'u_comment')) {
+			PGV_DB::exec("ALTER TABLE {$TBLPREFIX}users ADD u_comment     VARCHAR(255) NULL");
+			PGV_DB::exec("ALTER TABLE {$TBLPREFIX}users ADD u_comment_exp VARCHAR(20)  NULL");
 		}
-		if (!$has_sync_gedcom) {
-			dbquery("ALTER TABLE {$TBLPREFIX}users ADD u_sync_gedcom VARCHAR(2) NULL");
+		if (!PGV_DB::column_exists("{$TBLPREFIX}users", 'u_sync_gedcom')) {
+			PGV_DB::exec("ALTER TABLE {$TBLPREFIX}users ADD u_sync_gedcom VARCHAR(2) NULL");
 		}
-		if (!$has_first_name) {
-			dbquery("ALTER TABLE {$TBLPREFIX}users ADD u_firstname VARCHAR(255) NULL");
-			dbquery("ALTER TABLE {$TBLPREFIX}users ADD u_lastname  VARCHAR(255) NULL");
-			dbquery(
+		if (!PGV_DB::column_exists("{$TBLPREFIX}users", 'u_firstname')) {
+			PGV_DB::exec("ALTER TABLE {$TBLPREFIX}users ADD u_firstname VARCHAR(255) NULL");
+			PGV_DB::exec("ALTER TABLE {$TBLPREFIX}users ADD u_lastname  VARCHAR(255) NULL");
+			PGV_DB::exec(
 				"UPDATE {$TBLPREFIX}users SET".
 				" u_lastname =SUBSTRING_INDEX(u_fullname, ' ', -1), ".
 				" u_firstname=SUBSTRING_INDEX(u_fullname, ' ', 1)"
 			);
-			dbquery("ALTER TABLE {$TBLPREFIX}users DROP COLUMN u_fullname");
+			PGV_DB::exec("ALTER TABLE {$TBLPREFIX}users DROP COLUMN u_fullname");
 		}
-		if (!$has_relation_privacy) {
-			dbquery("ALTER TABLE {$TBLPREFIX}users ADD u_relationship_privacy VARCHAR(2) NULL");
-			dbquery("ALTER TABLE {$TBLPREFIX}users ADD u_max_relation_path    INT        NULL");
+		if (!PGV_DB::column_exists("{$TBLPREFIX}users", 'u_relationship_privacy')) {
+			PGV_DB::exec("ALTER TABLE {$TBLPREFIX}users ADD u_relationship_privacy VARCHAR(2) NULL");
+			PGV_DB::exec("ALTER TABLE {$TBLPREFIX}users ADD u_max_relation_path    INT        NULL");
 		}
-		if (!$has_auto_accept) {
-			dbquery("ALTER TABLE {$TBLPREFIX}users ADD u_auto_accept VARCHAR(2) NULL");
-			dbquery("UPDATE {$TBLPREFIX}users SET u_auto_accept='N'");
+		if (!PGV_DB::column_exists("{$TBLPREFIX}users", 'u_auto_accept')) {
+			PGV_DB::exec("ALTER TABLE {$TBLPREFIX}users ADD u_auto_accept VARCHAR(2) NULL");
+			PGV_DB::exec("UPDATE {$TBLPREFIX}users SET u_auto_accept='N'");
 		}
 	}
-	if (!$has_messages) {
-		$res = dbquery("DROP TABLE {$TBLPREFIX}messages", false);
-		dbquery(
+	if (!PGV_DB::table_exists("{$TBLPREFIX}messages")) {
+		PGV_DB::exec(
 			"CREATE TABLE {$TBLPREFIX}messages (".
 			" m_id      INT          NOT NULL,".
 			" m_from    VARCHAR(255)     NULL,".
@@ -535,11 +424,11 @@ function checkTableExists() {
 			" PRIMARY KEY (m_id)".
 			") ".PGV_DB_UTF8_TABLE
 		);
-		dbquery("CREATE INDEX {$TBLPREFIX}messages_to ON {$TBLPREFIX}messages (m_to)");
+		PGV_DB::exec("CREATE INDEX {$TBLPREFIX}messages_to ON {$TBLPREFIX}messages (m_to)");
 	}
-	if (!$has_favorites || $sqlite && (!$has_fav_note)) {
-		dbquery("DROP TABLE {$TBLPREFIX}favorites", false);
-		dbquery(
+	if (!PGV_DB::table_exists("{$TBLPREFIX}favorites") || $sqlite && !PGV_DB::column_exists("{$TBLPREFIX}favorites", 'fv_note')) {
+		if ($sqlite && PGV_DB::table_exists("{$TBLPREFIX}favorites")) PGV_DB::exec("DROP TABLE {$TBLPREFIX}favorites");
+		PGV_DB::exec(
 			"CREATE TABLE {$TBLPREFIX}favorites (".
 			" fv_id       INT               NOT NULL,".
 		 	" fv_username VARCHAR(30)       NULL,".
@@ -552,17 +441,17 @@ function checkTableExists() {
 			" PRIMARY KEY (fv_id)".
 			") ".PGV_DB_UTF8_TABLE
 		);
-		dbquery("CREATE INDEX {$TBLPREFIX}favorites_username ON {$TBLPREFIX}favorites (fv_username)");
+		PGV_DB::exec("CREATE INDEX {$TBLPREFIX}favorites_username ON {$TBLPREFIX}favorites (fv_username)");
 	} else {
-		if (!$has_fav_note) {
-			dbquery("ALTER TABLE {$TBLPREFIX}favorites ADD fv_url   VARCHAR(255) NULL");
-			dbquery("ALTER TABLE {$TBLPREFIX}favorites ADD fv_title VARCHAR(255) NULL");
-			dbquery("ALTER TABLE {$TBLPREFIX}favorites ADD fv_note  TEXT         NULL");
+		if (!PGV_DB::column_exists("{$TBLPREFIX}favorites", 'fv_note')) {
+			PGV_DB::exec("ALTER TABLE {$TBLPREFIX}favorites ADD fv_url   VARCHAR(255) NULL");
+			PGV_DB::exec("ALTER TABLE {$TBLPREFIX}favorites ADD fv_title VARCHAR(255) NULL");
+			PGV_DB::exec("ALTER TABLE {$TBLPREFIX}favorites ADD fv_note  TEXT         NULL");
 		}
 	}
-	if (!$has_blocks || $sqlite && (!$has_blockconfig)) {
-		dbquery("DROP TABLE {$TBLPREFIX}blocks", false);
-		dbquery(
+	if (!PGV_DB::table_exists("{$TBLPREFIX}blocks") || $sqlite && !PGV_DB::column_exists("{$TBLPREFIX}blocks", 'b_config')) {
+		if ($sqlite && PGV_DB::table_exists("{$TBLPREFIX}blocks")) PGV_DB::exec("DROP TABLE {$TBLPREFIX}blocks");
+		PGV_DB::exec(
 			"CREATE TABLE {$TBLPREFIX}blocks (".
 			" b_id       INT          NOT NULL,".
 			" b_username VARCHAR(100)     NULL,".
@@ -573,15 +462,14 @@ function checkTableExists() {
 			" PRIMARY KEY (b_id)".
 			") ".PGV_DB_UTF8_TABLE
 		);
-		dbquery("CREATE INDEX {$TBLPREFIX}blocks_username ON {$TBLPREFIX}blocks (b_username)");
+		PGV_DB::exec("CREATE INDEX {$TBLPREFIX}blocks_username ON {$TBLPREFIX}blocks (b_username)");
 	} else {
-		if (!$has_blockconfig) {
-			dbquery("ALTER TABLE {$TBLPREFIX}blocks ADD b_config TEXT NOT NULL");
+		if (!PGV_DB::column_exists("{$TBLPREFIX}blocks", 'b_config')) {
+			PGV_DB::exec("ALTER TABLE {$TBLPREFIX}blocks ADD b_config TEXT NOT NULL");
 		}
 	}
-	if (!$has_news) {
-		dbquery("DROP TABLE {$TBLPREFIX}news", false);
-		dbquery(
+	if (!PGV_DB::table_exists("{$TBLPREFIX}news")) {
+		PGV_DB::exec(
 			"CREATE TABLE {$TBLPREFIX}news (".
 			" n_id       INT          NOT NULL,".
 			" n_username VARCHAR(100)     NULL,".
@@ -591,11 +479,10 @@ function checkTableExists() {
 			" PRIMARY KEY (n_id)".
 			") ".PGV_DB_UTF8_TABLE
 		);
-		dbquery("CREATE INDEX {$TBLPREFIX}news_username ON {$TBLPREFIX}news (n_username)");
+		PGV_DB::exec("CREATE INDEX {$TBLPREFIX}news_username ON {$TBLPREFIX}news (n_username)");
 	}
-	if (!$has_mutex) {
-		dbquery("DROP TABLE {$TBLPREFIX}mutex", false);
-		dbquery(
+	if (!PGV_DB::table_exists("{$TBLPREFIX}mutex")) {
+		PGV_DB::exec(
 			"CREATE TABLE {$TBLPREFIX}mutex (".
 			" mx_id     INT          NOT NULL,".
 			" mx_name   VARCHAR(255)     NULL,".
@@ -604,7 +491,7 @@ function checkTableExists() {
 			" PRIMARY KEY (mx_id)".
 			") ".PGV_DB_UTF8_TABLE
 		);
-		dbquery("CREATE INDEX {$TBLPREFIX}mutex_name ON {$TBLPREFIX}mutex (mx_name)");
+		PGV_DB::exec("CREATE INDEX {$TBLPREFIX}mutex_name ON {$TBLPREFIX}mutex (mx_name)");
 	}
 	return true;
 }

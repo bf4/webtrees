@@ -359,7 +359,12 @@ $DBPASS = str_replace(array("\\\\", "\\\"", "\\\$"), array("\\", "\"", "\$"), $D
 // New PDO-based connection
 require_once 'includes/classes/class_pgv_db.php';
 try {
-	PGV_DB::createInstance($DBTYPE, $DBHOST, $DBPORT, $DBNAME, $DBUSER, $DBPASS, $DBPERSIST, $DB_UTF8_COLLATION);
+	// During the install, we want to connect to the chosen DB, even if the details have not been saved to config.php
+	if (basename($SCRIPT_NAME)=='install.php' && isset($_POST['NEW_DBTYPE'])) {
+		PGV_DB::createInstance($_POST['NEW_DBTYPE'], $_POST['NEW_DBHOST'], $_POST['NEW_DBPORT'], $_POST['NEW_DBNAME'], $_POST['NEW_DBUSER'], $_POST['NEW_DBPASS'], $_POST['NEW_DBPERSIST'], $_POST['NEW_DB_UTF8_COLLATION']);
+	} else {
+		PGV_DB::createInstance($DBTYPE, $DBHOST, $DBPORT, $DBNAME, $DBUSER, $DBPASS, $DBPERSIST, $DB_UTF8_COLLATION);
+	}
 	//unset($DBUSER, $DBPASS);
 	$PGV_DB_CONNECTED=true;
 } catch (PDOException $ex) {
