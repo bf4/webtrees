@@ -117,10 +117,6 @@ $head .= "	}\n";
 $head .= "	//-->\n";
 $head .= "</script>\n";
 
-$newSite = $CONFIGURED ? 'no':'yes';
-if (isset($_REQUEST['newSite'])) $newSite = safe_REQUEST($_REQUEST, 'newSite', 'yes', 'no');
-if ($newSite=='no' && !DB::isError($DBCONN) && PGV_DB::isConnected()) print_header($pgv_lang["install_wizard"], $head);
-else {
 header("Content-Type: text/html; charset=$CHARACTER_SET");
 
 ?>
@@ -134,7 +130,6 @@ header("Content-Type: text/html; charset=$CHARACTER_SET");
 <?php print $head;?>
 
 </head>
-<?php } ?>
 <body id="body" dir="<?php print $TEXT_DIRECTION; ?>">
 <br />
 <table class="list_table person_boxNN width70" style="background-color: none;" cellspacing="0" cellpadding="5">
@@ -414,7 +409,7 @@ $errormsg = "";
 			?>
 			<tr>
 				<td class="<?php print $class; ?> imenu">
-				<a href="install.php?step=<?php print $i; ?>&newSite=<?php print $newSite; ?>"><?php print $i.". ".$pgv_lang["install_step_".$i]; ?></a>
+				<a href="install.php?step=<?php print $i; ?>"><?php print $i.". ".$pgv_lang["install_step_".$i]; ?></a>
 				</td>
 			</tr>
 			<?php } ?>
@@ -431,7 +426,6 @@ $errormsg = "";
 		<h3 class="center"><?php print $title; ?></h3>
 		<form name="configform" action="install.php" method="post" onsubmit="return checkForm(this);">
 		<input type="hidden" name="step" value="<?php print $step ?>" />
-		<input type="hidden" name="newSite" value="<?php print $newSite ?>" />
 		<?php
 			if (count($errors)>0) {
 				foreach($errors as $error)
@@ -503,8 +497,7 @@ $errormsg = "";
 </table>
 <br />
 <?php
-if ($newSite=='no') print_footer();
-else print "</body></html>";
+print "</body></html>";
 
 //-- Start of business functions
 
