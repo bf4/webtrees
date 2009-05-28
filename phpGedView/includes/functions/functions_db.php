@@ -474,7 +474,7 @@ function db_collation_digraphs() {
 // $ged_id - only consider individuals from this gedcom
 ////////////////////////////////////////////////////////////////////////////////
 function get_indilist_salpha($marnm, $fams, $ged_id) {
-	global $DBTYPE, $DBCONN, $TBLPREFIX, $DB_UTF8_COLLATION, $DBCOLLATE;
+	global $DBCONN, $TBLPREFIX, $DB_UTF8_COLLATION, $DBCOLLATE;
 
 	$ged_id=(int)$ged_id;
 
@@ -542,7 +542,7 @@ function get_indilist_salpha($marnm, $fams, $ged_id) {
 // $ged_id - only consider individuals from this gedcom
 ////////////////////////////////////////////////////////////////////////////////
 function get_indilist_galpha($surn, $salpha, $marnm, $fams, $ged_id) {
-	global $DBTYPE, $DBCONN, $TBLPREFIX, $DB_UTF8_COLLATION, $DBCOLLATE;
+	global $DBCONN, $TBLPREFIX, $DB_UTF8_COLLATION, $DBCOLLATE;
 
 	$ged_id=(int)$ged_id;
 	$surn  =$DBCONN->escapeSimple($surn);
@@ -1282,7 +1282,7 @@ function find_media_record($xref) {
 * @return string the raw gedcom record is returned
 */
 function find_gedcom_record($pid, $gedfile='') {
-	global $TBLPREFIX, $GEDCOM, $DBTYPE, $DBCONN;
+	global $TBLPREFIX, $GEDCOM, $DBCONN;
 
 	if (!$pid) {
 		return null;

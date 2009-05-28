@@ -48,7 +48,7 @@ function lightbox_print_media($pid, $level=1, $related=false, $kind=1, $noedit=f
 
 	global $MULTI_MEDIA, $TBLPREFIX, $SHOW_ID_NUMBERS, $MEDIA_EXTERNAL;
 	global $pgv_lang, $pgv_changes, $factarray, $view;
-	global $GEDCOM, $MEDIATYPE, $DBTYPE;
+	global $GEDCOM, $MEDIATYPE;
 	global $WORD_WRAPPED_NOTES, $MEDIA_DIRECTORY, $PGV_IMAGE_DIR, $PGV_IMAGES, $TEXT_DIRECTION;
 
 	global $is_media, $cntm1, $cntm2, $cntm3, $cntm4, $t, $mgedrec;

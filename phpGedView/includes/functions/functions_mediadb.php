@@ -175,7 +175,7 @@ function check_media_structure() {
 function get_medialist($currentdir = false, $directory = "", $linkonly = false, $random = false, $includeExternal = true) {
 	global $MEDIA_DIRECTORY_LEVELS, $BADMEDIA, $thumbdir, $TBLPREFIX, $MEDIATYPE;
 	global $level, $dirs, $ALLOW_CHANGE_GEDCOM, $GEDCOM, $GEDCOMS, $MEDIA_DIRECTORY;
-	global $MEDIA_EXTERNAL, $pgv_changes, $DBTYPE, $USE_MEDIA_FIREWALL;
+	global $MEDIA_EXTERNAL, $pgv_changes, $USE_MEDIA_FIREWALL;
 
 	// Retrieve the gedcoms to search in
 	$sgeds = array ();
