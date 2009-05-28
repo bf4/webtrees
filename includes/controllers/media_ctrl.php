@@ -233,9 +233,9 @@ class MediaControllerRoot extends IndividualController{
 
 			// main link displayed on page
 			if (PGV_USER_GEDCOM_ADMIN && file_exists('modules/GEDFact_assistant/MEDIA/media_1_ctrl.php')) {
-				$submenu = new Menu($pgv_lang["add_or_remove_links"]." >");
+				$submenu = new Menu($pgv_lang["add_or_remove_links"]);
 			} else {	
-				$submenu = new Menu($pgv_lang["set_link"]." >");
+				$submenu = new Menu($pgv_lang["set_link"]);
 			}
 			
 			// GEDFact assistant Add Media Links =======================
