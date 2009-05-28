@@ -2534,7 +2534,6 @@ class stats {
 
 	static function _runSQL($sql, $count=0)
 	{
-		global $DBTYPE;
 		static $cache = array();
 		$id = md5($sql)."_{$count}";
 		if (isset($cache[$id])) {

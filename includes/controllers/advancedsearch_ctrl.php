@@ -180,7 +180,7 @@ class AdvancedSearchController extends SearchController {
 	}
 
 	function advancedSearch($justSql=false, $table="individuals", $prefix="i") {
-		global $TBLPREFIX, $DBCONN, $DBTYPE;
+		global $TBLPREFIX, $DBCONN;
 		global $gedcom_record_cache;
 
 		DMsoundex("", "opencache");
