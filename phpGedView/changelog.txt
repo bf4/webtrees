@@ -10,6 +10,7 @@
 
 
 Version 4.2.2
+ - Changed: Fixed error occurring in inverselink.php, Changed "add" simplyxxx theme icons for clarity, small language change (windmillway)
  - Added [ 1209782 ] Top Down pedigree tree (wooc)
  - Changed: Various core files in preparation for GEDFact_assistant/MEDIA/ module (windmillway)
  - Changed: Placed restriction on GEDFact_assistant/MEDIA/ to be PGV_USER_GEDCOM_ADMIN only (windmillway)
