@@ -1193,264 +1193,113 @@ function update_media($gid, $gedrec, $update = false) {
 * way is to surround it by single quotes.
 */
 function setup_database() {
-	global $TBLPREFIX, $pgv_lang, $DBCONN, $DBTYPE;
+	global $TBLPREFIX;
 
-	//---------- Check if tables exist
-	$has_individuals = false;
-	$has_individuals_rin = false;
-	$has_individuals_letter = false;
-	$has_individuals_name = false;
-	$has_individuals_surname = false;
-	$has_individuals_sex = false;
-	$has_families = false;
-	$has_families_name = false;
-	$has_families_numchil = false;
-	$has_places = false;
-	$has_places_gid = false;
-	$has_places_std_soundex = false;
-	$has_places_dm_soundex = false;
-	$has_link = false;
-	$has_name = false;
-	$has_names = false;
-	$has_names_surname = false;
-	$has_names_type = false;
-	$has_placelinks = false;
-	$has_dates = false;
-	$has_dates_mon = false;
-	$has_dates_datestamp = false;
-	$has_dates_juliandays = false;
-	$has_media = false;
-	$has_media_mapping = false;
-	$has_nextid = false;
-	$has_remotelinks = false;
-	$has_other = false;
-	$has_sources = false;
-	$has_sources_dbid = false;
-	$has_soundex = false;
+	$sqlite=(PGV_DB::getInstance()->getAttribute(PDO::ATTR_DRIVER_NAME)=="sqlite" || PGV_DB::getInstance()->getAttribute(PDO::ATTR_DRIVER_NAME)=="sqlite2");
 
-	$sqlite = ($DBTYPE == "sqlite");
-
-	$data = $DBCONN->getListOf('tables');
-	foreach ($data as $indexval => $table) {
-		if (empty($TBLPREFIX) || strpos($table, $TBLPREFIX) === 0) {
-			switch (substr($table, strlen($TBLPREFIX))) {
-				case "individuals" :
-					$has_individuals = true;
-					$info = $DBCONN->tableInfo($TBLPREFIX . "individuals");
-					foreach ($info as $indexval => $field) {
-						switch ($field["name"]) {
-							case "i_rin" :
-								$has_individuals_rin = true;
-								break;
-							case "i_letter" :
-								$has_individuals_letter = true;
-								break;
-							case "i_surname" :
-								$has_individuals_surname = true;
-								break;
-							case "i_name" :
-								$has_individuals_name = true;
-								break;
-							case "i_sex" :
-								$has_individuals_sex = true;
-								break;
-						}
-					}
-					break;
-				case "places" :
-					$has_places = true;
-					$info = $DBCONN->tableInfo($TBLPREFIX . "places");
-					foreach ($info as $indexval => $field) {
-						switch ($field["name"]) {
-							case "p_gid" :
-								$has_places_gid = true;
-								$has_places = !$sqlite;
-								break;
-							case "p_std_soundex":
-								$has_places_std_soundex = true;
-								break;
-							case "p_dm_soundex":
-								$has_places_dm_soundex = true;
-								break;
-						}
-					}
-					break;
-				case "families" :
-					$has_families = true;
-					$info = $DBCONN->tableInfo($TBLPREFIX . "families");
-					foreach ($info as $indexval => $field) {
-						switch ($field["name"]) {
-							case "f_name" :
-								$has_families_name = true;
-								break;
-							case "f_numchil" :
-								$has_families_numchil = true;
-								break;
-						}
-					}
-					break;
-				case "link" :
-					$has_link = true;
-					break;
-				case "name" :
-					$has_name = true;
-					break;
-				case "names" :
-					$has_names = true;
-					break;
-				case "placelinks" :
-					$has_placelinks = true;
-					break;
-				case "dates" :
-					$has_dates = true;
-					$info = $DBCONN->tableInfo($TBLPREFIX . "dates");
-					foreach ($info as $indexval => $field) {
-						switch ($field["name"]) {
-							case "d_mon" :
-								$has_dates_mon = true;
-								break;
-							case "d_datestamp" :
-								$has_dates_datestamp = true;
-								break;
-							case "d_julianday1" : // d_julianday1 and d_julianday2 added together
-								$has_dates_juliandays = true;
-								break;
-						}
-					}
-					break;
-				case "media" :
-					$has_media = true;
-					break;
-				case "media_mapping" :
-					$has_media_mapping = true;
-					break;
-				case "nextid" :
-					$has_nextid = true;
-					break;
-				case "remotelinks" :
-					$has_remotelinks = true;
-					break;
-				case "other" :
-					$has_other = true;
-					break;
-				case "sources" :
-					$has_sources = true;
-					$info = $DBCONN->tableInfo($TBLPREFIX . "sources");
-					foreach ($info as $indexval => $field) {
-						switch ($field["name"]) {
-							case "s_dbid" :
-								$has_sources_dbid = true;
-								break;
-						}
-					}
-					break;
-				case "soundex":
-					$has_soundex = true;
-					break;
-			}
-		}
-	}
-
-	//---------- Upgrade the database
-	if (!$has_individuals || $sqlite && (!$has_individuals_rin || $has_individuals_letter || $has_individuals_surname || $has_individuals_name || !$has_individuals_sex)) {
+	if (!PGV_DB::table_exists("{$TBLPREFIX}individuals") || $sqlite && (!PGV_DB::column_exists("{$TBLPREFIX}individuals", 'i_rin') || PGV_DB::column_exists("{$TBLPREFIX}individuals", 'i_letter') || PGV_DB::column_exists("{$TBLPREFIX}individuals", 'i_surname') || PGV_DB::column_exists("{$TBLPREFIX}individuals", 'i_name') || !PGV_DB::column_exists("{$TBLPREFIX}individuals", 'i_sex'))) {
+		if ($sqlite && PGV_DB::table_exists("{$TBLPREFIX}individuals")) PGV_DB::exec("DROP TABLE {$TBLPREFIX}individuals");
 		create_individuals_table();
 	} else { // check columns in the table
-		if (!$has_individuals_rin) {
+		if (!PGV_DB::column_exists("{$TBLPREFIX}individuals", 'i_rin')) {
 			PGV_DB::exec("ALTER TABLE {$TBLPREFIX}individuals ADD i_rin VARCHAR(255) NULL");
 		}
-		if ($has_individuals_letter) {
+		if (PGV_DB::column_exists("{$TBLPREFIX}individuals", 'i_letter')) {
 			PGV_DB::exec("ALTER TABLE {$TBLPREFIX}individuals DROP COLUMN i_letter");
 		}
-		if ($has_individuals_surname) {
+		if (PGV_DB::column_exists("{$TBLPREFIX}individuals", 'i_surname')) {
 			PGV_DB::exec("ALTER TABLE {$TBLPREFIX}individuals DROP COLUMN i_surname");
 		}
-		if ($has_individuals_name) {
+		if (PGV_DB::column_exists("{$TBLPREFIX}individuals", 'i_name')) {
 			PGV_DB::exec("ALTER TABLE {$TBLPREFIX}individuals DROP COLUMN i_name");
 		}
-		if (!$has_individuals_sex) {
+		if (!PGV_DB::column_exists("{$TBLPREFIX}individuals", 'i_sex')) {
 			PGV_DB::exec("ALTER TABLE {$TBLPREFIX}individuals ADD i_sex CHAR(1) NOT NULL DEFAULT 'U'");
 		}
 	}
-	if (!$has_families || $sqlite && ($has_families_name || !$has_families_numchil)) {
+	if (!PGV_DB::table_exists("{$TBLPREFIX}families") || $sqlite && (PGV_DB::column_exists("{$TBLPREFIX}families", 'f_name') || !PGV_DB::column_exists("{$TBLPREFIX}families", 'f_numchil'))) {
+		if ($sqlite && PGV_DB::table_exists("{$TBLPREFIX}families")) PGV_DB::exec("DROP TABLE {$TBLPREFIX}families");
 		create_families_table();
 	} else { // check columns in the table
-		if ($has_families_name) {
+		if (PGV_DB::column_exists("{$TBLPREFIX}families", 'f_name')) {
 			PGV_DB::exec("ALTER TABLE {$TBLPREFIX}families DROP COLUMN f_name");
 		}
-		if (!$has_families_numchil) {
+		if (!PGV_DB::column_exists("{$TBLPREFIX}families", 'f_numchil')) {
 			PGV_DB::exec("ALTER TABLE {$TBLPREFIX}families ADD f_numchil INT NULL");
 		}
 	}
-	if (!$has_places || $sqlite && ($has_places_gid || !$has_places_std_soundex || !$has_places_dm_soundex)) {
+	if (!PGV_DB::table_exists("{$TBLPREFIX}places") || $sqlite && (PGV_DB::column_exists("{$TBLPREFIX}places", 'p_gid') || !PGV_DB::column_exists("{$TBLPREFIX}places", 'p_std_soundex') || !PGV_DB::column_exists("{$TBLPREFIX}places", 'p_dm_soundex'))) {
+		if ($sqlite && PGV_DB::table_exists("{$TBLPREFIX}places")) PGV_DB::exec("DROP TABLE {$TBLPREFIX}places");
 		create_places_table();
 	} else {
-		if ($has_places_gid) {
+		if (PGV_DB::column_exists("{$TBLPREFIX}places", 'p_gid')) {
 			PGV_DB::exec("ALTER TABLE {$TBLPREFIX}places DROP COLUMN p_gid");
 		}
-		if (!$has_places_std_soundex) {
+		if (!PGV_DB::column_exists("{$TBLPREFIX}places", 'p_std_soundex')) {
 			PGV_DB::exec("ALTER TABLE {$TBLPREFIX}places ADD p_std_soundex TEXT NULL");
 		}
-		if (!$has_places_dm_soundex) {
+		if (!PGV_DB::column_exists("{$TBLPREFIX}places", 'p_dm_soundex')) {
 			PGV_DB::exec("ALTER TABLE {$TBLPREFIX}places ADD p_dm_soundex TEXT NULL");
 		}
 	}
-	if (!$has_placelinks) {
+	if (!PGV_DB::table_exists("{$TBLPREFIX}placelinks")) {
 		create_placelinks_table();
 	}
-	if ($has_names) {
-		// The old pgv_names table is now merged with the new pgv_name table
-		dbquery("DROP TABLE {$TBLPREFIX}names", false);
+	// The old pgv_names table is now merged with the new pgv_name table
+	if (PGV_DB::table_exists("{$TBLPREFIX}names")) {
+		PGV_DB::exec("DROP TABLE {$TBLPREFIX}names", false);
 	}
-	if (!$has_dates || $sqlite && (!$has_dates_mon || !$has_dates_datestamp || !$has_dates_juliandays)) {
+	if (!PGV_DB::table_exists("{$TBLPREFIX}dates") || $sqlite && (!PGV_DB::column_exists("{$TBLPREFIX}dates", 'd_mon') || !PGV_DB::column_exists("{$TBLPREFIX}dates", 'd_datestamp') || !PGV_DB::column_exists("{$TBLPREFIX}dates", 'd_julianday1'))) {
+		if ($sqlite && PGV_DB::table_exists("{$TBLPREFIX}dates")) PGV_DB::exec("DROP TABLE {$TBLPREFIX}dates");
 		create_dates_table();
 	} else {
-		if (!$has_dates_mon) {
+		if (!PGV_DB::column_exists("{$TBLPREFIX}dates", 'd_mon')) {
 			PGV_DB::exec("ALTER TABLE {$TBLPREFIX}dates ADD d_mon INT NULL");
 			PGV_DB::exec("CREATE INDEX date_mon ON {$TBLPREFIX}dates (d_mon)");
 		}
-		if (!$has_dates_datestamp) {
+		if (!PGV_DB::column_exists("{$TBLPREFIX}dates", 'd_datestamp')) {
 			PGV_DB::exec("ALTER TABLE {$TBLPREFIX}dates ADD d_datestamp INT NULL");
 			PGV_DB::exec("CREATE INDEX date_datestamp ON {$TBLPREFIX}dates (d_datestamp)");
 		}
-		if (!$has_dates_juliandays) {
+		if (!PGV_DB::column_exists("{$TBLPREFIX}dates", 'd_julianday1')) {
 			PGV_DB::exec("ALTER TABLE {$TBLPREFIX}dates ADD d_julianday1 INT NULL");
 			PGV_DB::exec("ALTER TABLE {$TBLPREFIX}dates ADD d_julianday2 INT NULL");
 			PGV_DB::exec("CREATE INDEX date_julianday1 ON {$TBLPREFIX}dates (d_julianday1)");
 			PGV_DB::exec("CREATE INDEX date_julianday2 ON {$TBLPREFIX}dates (d_julianday2)");
 		}
 	}
-	if (!$has_media) {
+	if (!PGV_DB::table_exists("{$TBLPREFIX}media")) {
 		create_media_table();
 	}
-	if (!$has_remotelinks) {
+	if (!PGV_DB::table_exists("{$TBLPREFIX}remotelinks")) {
 		create_remotelinks_table();
 	}
-	if (!$has_media_mapping) {
+	if (!PGV_DB::table_exists("{$TBLPREFIX}media_mapping")) {
 		create_media_mapping_table();
 	}
-	//-- table for keeping the next ID to store
-	if (!$has_nextid) {
+	if (!PGV_DB::table_exists("{$TBLPREFIX}nextid")) {
 		create_nextid_table();
 	}
-	if (!$has_other) {
+	if (!PGV_DB::table_exists("{$TBLPREFIX}other")) {
 		create_other_table();
 	}
-	if (!$has_sources || $sqlite && (!$has_sources_dbid)) {
+	if (!PGV_DB::table_exists("{$TBLPREFIX}sources") || $sqlite && (!PGV_DB::column_exists("{$TBLPREFIX}sources", 's_dbid'))) {
+		if ($sqlite && PGV_DB::table_exists("{$TBLPREFIX}sources")) PGV_DB::exec("DROP TABLE {$TBLPREFIX}sources");
 		create_sources_table();
 	} else {
-		if (!$has_sources_dbid) {
+		if (!PGV_DB::column_exists("{$TBLPREFIX}sources", 's_dbid')) {
 			PGV_DB::exec("ALTER TABLE {$TBLPREFIX}sources ADD s_dbid CHAR(1) NULL");
 			PGV_DB::exec("CREATE INDEX {$TBLPREFIX}sour_dbid ON {$TBLPREFIX}sources (s_dbid)");
 		}
 	}
-	if ($has_soundex) {
-		// The old pgv_soundex table is now merged with the new pgv_name table
-		dbquery("DROP TABLE {$TBLPREFIX}soundex", false);
+	// The old pgv_soundex table is now merged with the new pgv_name table
+	if (PGV_DB::table_exists("{$TBLPREFIX}soundex")) {
+		PGV_DB::exec("DROP TABLE {$TBLPREFIX}soundex");
 	}
-	if (!$has_link) {
+	if (!PGV_DB::table_exists("{$TBLPREFIX}link")) {
 		create_link_table();
 	}
-	if (!$has_name) {
+	if (!PGV_DB::table_exists("{$TBLPREFIX}name")) {
 		create_name_table();
 	}
 }
@@ -1460,7 +1309,6 @@ function setup_database() {
 function create_individuals_table() {
 	global $TBLPREFIX;
 
-	dbquery("DROP TABLE {$TBLPREFIX}individuals", false);
 	PGV_DB::exec(
 		"CREATE TABLE {$TBLPREFIX}individuals (".
 		" i_id     ".PGV_DB_COL_XREF."      NOT NULL,".
@@ -1481,7 +1329,6 @@ function create_individuals_table() {
 function create_families_table() {
 	global $TBLPREFIX;
 
-	dbquery("DROP TABLE {$TBLPREFIX}families", false);
 	PGV_DB::exec(
 		"CREATE TABLE {$TBLPREFIX}families (".
 		" f_id     ".PGV_DB_COL_XREF."      NOT NULL,".
@@ -1505,7 +1352,6 @@ function create_families_table() {
 function create_sources_table() {
 	global $TBLPREFIX;
 
-	dbquery("DROP TABLE {$TBLPREFIX}sources", false);
 	PGV_DB::exec(
 		"CREATE TABLE {$TBLPREFIX}sources (".
 		" s_id     ".PGV_DB_COL_XREF."      NOT NULL,".
@@ -1527,7 +1373,6 @@ function create_sources_table() {
 function create_other_table() {
 	global $TBLPREFIX;
 
-	dbquery("DROP TABLE {$TBLPREFIX}other", false);
 	PGV_DB::exec(
 		"CREATE TABLE {$TBLPREFIX}other (".
 		" o_id     ".PGV_DB_COL_XREF."      NOT NULL,".
@@ -1546,7 +1391,6 @@ function create_other_table() {
 function create_placelinks_table() {
 	global $TBLPREFIX;
 
-	dbquery("DROP TABLE {$TBLPREFIX}placelinks", false);
 	PGV_DB::exec(
 		"CREATE TABLE {$TBLPREFIX}placelinks (".
 		" pl_p_id   INT               NOT NULL,".
@@ -1565,7 +1409,6 @@ function create_placelinks_table() {
 function create_places_table() {
 	global $TBLPREFIX;
 
-	dbquery("DROP TABLE {$TBLPREFIX}places", false);
 	PGV_DB::exec(
 		"CREATE TABLE {$TBLPREFIX}places (".
 		" p_id          INT          NOT NULL,".
@@ -1589,7 +1432,6 @@ function create_places_table() {
 function create_name_table() {
 	global $TBLPREFIX;
 
-	dbquery("DROP TABLE {$TBLPREFIX}name", false);
 	PGV_DB::exec(
 		"CREATE TABLE {$TBLPREFIX}name (".
 		" n_file           ".PGV_DB_COL_FILE." NOT NULL,".
@@ -1618,7 +1460,6 @@ function create_name_table() {
 function create_link_table() {
 	global $TBLPREFIX;
 
-	dbquery("DROP TABLE {$TBLPREFIX}link", false);
 	PGV_DB::exec(
 		"CREATE TABLE {$TBLPREFIX}link (".
 		" l_file    ".PGV_DB_COL_FILE." NOT NULL,".
@@ -1636,7 +1477,6 @@ function create_link_table() {
 function create_remotelinks_table() {
 	global $TBLPREFIX;
 
-	dbquery("DROP TABLE {$TBLPREFIX}remotelinks", false);
 	PGV_DB::exec(
 		"CREATE TABLE {$TBLPREFIX}remotelinks (".
 		" r_gid  ".PGV_DB_COL_XREF." NOT NULL,".
@@ -1654,7 +1494,6 @@ function create_remotelinks_table() {
 function create_media_table() {
 	global $TBLPREFIX;
 
-	dbquery("DROP TABLE {$TBLPREFIX}media", false);
 	PGV_DB::exec(
 		"CREATE TABLE {$TBLPREFIX}media (".
 		" m_id        INT                    NOT NULL,".
@@ -1676,7 +1515,6 @@ function create_media_table() {
 function create_dates_table() {
 	global $TBLPREFIX;
 
-	dbquery("DROP TABLE {$TBLPREFIX}dates", false);
 	PGV_DB::exec(
 		"CREATE TABLE {$TBLPREFIX}dates (".
 		" d_day        INT          NULL,".
@@ -1711,7 +1549,6 @@ function create_dates_table() {
 function create_media_mapping_table() {
 	global $TBLPREFIX;
 
-	dbquery("DROP TABLE {$TBLPREFIX}media_mapping", false);
 	PGV_DB::exec(
 		"CREATE TABLE {$TBLPREFIX}media_mapping (".
 		" mm_id        INT                    NOT NULL,".
@@ -1733,7 +1570,6 @@ function create_media_mapping_table() {
 function create_nextid_table() {
 	global $TBLPREFIX;
 
-	dbquery("DROP TABLE {$TBLPREFIX}nextid ", false);
 	PGV_DB::exec(
 		"CREATE TABLE {$TBLPREFIX}nextid (".
 		" ni_id        INT               NOT NULL,".
