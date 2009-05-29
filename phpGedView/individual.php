@@ -400,9 +400,6 @@ if ((!$controller->isPrintPreview())&&(empty($SEARCH_SPIDER))) {
 ?>
 <div class="door">
 <dl>
-<dd id="door1"><a href="javascript:;" onclick="tabswitch(1); return false;" ><?php echo $pgv_lang["personal_facts"]?></a></dd>
-<dd id="door2"><a href="javascript:;" onclick="tabswitch(2); return false;" ><?php echo $pgv_lang["notes"]?></a></dd>
-<dd id="door3"><a href="javascript:;" onclick="tabswitch(3); return false;" ><?php echo $pgv_lang["ssourcess"]?></a></dd>
 
 <!-- ====================== Added for Lightbox Module ===================== -->
 <?php
@@ -412,6 +409,9 @@ if (file_exists('./modules/lightbox/album.php')) {
 ?>
 <!-- ================== End Additions for Lightbox Module ================== -->
 
+	<dd id="door1"><a href="javascript:;" onclick="tabswitch(1); return false;" ><?php echo $pgv_lang["personal_facts"]?></a></dd>
+	<dd id="door2"><a href="javascript:;" onclick="tabswitch(2); return false;" ><?php echo $pgv_lang["notes"]?></a></dd>
+	<dd id="door3"><a href="javascript:;" onclick="tabswitch(3); return false;" ><?php echo $pgv_lang["ssourcess"]?></a></dd>
 	<dd id="door4"><a href="javascript:;" onclick="tabswitch(4); return false;" ><?php echo $pgv_lang["media"]?></a></dd>
 	<dd id="door5"><a href="javascript:;" onclick="tabswitch(5); return false;" ><?php echo $pgv_lang["relatives"]?></a></dd>
 	<dd id="door6"><a href="javascript:;" onclick="tabswitch(6); return false;" ><?php echo $pgv_lang["tree"]?></a></dd>
@@ -423,6 +423,7 @@ if (file_exists('./modules/lightbox/album.php')) {
 <!-- <dd id="door8"><a href="javascript:;" onclick="tabswitch(8); return false;" ><?php echo "Spare" ?></a></dd> -->
 	<?php }?>
 	<dd id="door0"><a href="javascript:;" onclick="tabswitch(0); if (loadedTabs[8]) {ResizeMap(); ResizeMap();} return false;" ><?php echo $pgv_lang["all"]?></a></dd>
+
 <!-- ====================== Added for Lightbox Module ===================== -->
 <?php } ?>
 <!-- ================== End Additions for Lightbox Module ================== -->
@@ -656,8 +657,8 @@ if(empty($SEARCH_SPIDER) && file_exists("modules/lightbox/album.php")) {
 if(empty($SEARCH_SPIDER)) {
 	echo "<div id=\"spare\" class=\"tab_page\" style=\"display:none; border: solid transparent 0px;\" >";
 
-/*
-		echo "<span class=\"subheaders\">Spare</span>";
+
+		echo "<span class=\"subheaders\">Spare Tab</span>";
 		echo "&nbsp;&nbsp;";
 		
 		// ---------- Help link --------------------
@@ -680,7 +681,7 @@ if(empty($SEARCH_SPIDER)) {
 			}
 			// Fix if no googlemaps ========================================================
 		echo "</div>";
-*/
+
 
 	echo "</div>";
 }
