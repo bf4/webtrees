@@ -1533,16 +1533,12 @@ function print_changes_table($datalist, $showChange=true, $total='') {
 	$NMAX = 1000;
 	foreach($datalist as $key => $value) {
 		if ($n>=$NMAX) break;
-		if (is_object($value)) { // Array of objects
-			$record=$value;
-		} else {
-			$record = null;
-			if (!is_array($value)) $record = GedcomRecord::getInstance($key);
-			else {
-				if (isset($value['d_gid'])) $record = GedcomRecord::getInstance($value['d_gid']);
-				if (is_null($record) && isset($value[0])) $record = GedcomRecord::getInstance($value[0]);
+		$record=GedcomRecord::getInstance($value);
+		if (!$record) {
+			$record=GedcomRecord::getInstance($key);
+			if (!$record) {
+				continue;
 			}
-			if (is_null($record)) continue;
 		}
 		// Privacy
 		if (!$record->canDisplayDetails()) {
