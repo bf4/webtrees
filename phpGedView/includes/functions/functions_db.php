@@ -246,16 +246,16 @@ function check_for_import($ged) {
 
 	if (!isset($GEDCOMS[$ged]["imported"])) {
 		$GEDCOMS[$ged]["imported"] = false;
-			$sql = "SELECT count(i_id) FROM ".$TBLPREFIX."individuals WHERE i_file=".$DBCONN->escapeSimple($GEDCOMS[$ged]["id"]);
-			$res = dbquery($sql, false);
+		$sql = "SELECT count(i_id) FROM ".$TBLPREFIX."individuals WHERE i_file=".$DBCONN->escapeSimple($GEDCOMS[$ged]["id"]);
+		$res = dbquery($sql, false);
 
-			if (!empty($res) && !DB::isError($res) && is_object($res)) {
-				$row =& $res->fetchRow();
-				$res->free();
-				if ($row[0]>0) {
-					$GEDCOMS[$ged]["imported"] = true;
-				}
+		if (!empty($res) && !DB::isError($res) && is_object($res)) {
+			$row =& $res->fetchRow();
+			$res->free();
+			if ($row[0]>0) {
+				$GEDCOMS[$ged]["imported"] = true;
 			}
+		}
 		store_gedcoms();
 	}
 
@@ -503,19 +503,19 @@ function get_indilist_salpha($marnm, $fams, $ged_id) {
 	foreach ($digraphs as $to=>$from) { // Single-character digraphs
 		$include.=" UNION SELECT UPPER('{$to}' {$DBCOLLATE}) AS alpha FROM {$tables} WHERE {$join} AND n_sort ".PGV_DB_LIKE." '{$from}%' {$DBCOLLATE} GROUP BY 1";
 	}
-	$sql="SELECT {$column} AS alpha FROM {$tables} WHERE {$join} {$exclude} GROUP BY 1 {$include} ORDER BY 1";
-	$res=dbquery($sql);
+	$alphas=
+		PGV_DB::prepare("SELECT {$column} AS alpha FROM {$tables} WHERE {$join} {$exclude} GROUP BY 1 {$include} ORDER BY 1")
+		->fetchOneColumn();
 
 	$list=array();
-	while ($row=$res->fetchRow(DB_FETCHMODE_ASSOC)) {
+	foreach ($alphas as $alpha) {
 		if ($DB_UTF8_COLLATION) {
-			$letter=$row['alpha'];
+			$letter=$alpha;
 		} else {
-			$letter=UTF8_strtoupper(UTF8_substr($row['alpha'],0,1));
+			$letter=UTF8_strtoupper(UTF8_substr($alpha,0,1));
 		}
 		$list[$letter]=$letter;
 	}
-	$res->free();
 
 	// If we didn't sort in the DB, sort ourselves
 	if (!$DB_UTF8_COLLATION) {
@@ -579,19 +579,19 @@ function get_indilist_galpha($surn, $salpha, $marnm, $fams, $ged_id) {
 	foreach ($digraphs as $to=>$from) { // Single-character digraphs
 		$include.=" UNION SELECT UPPER('{$to}' {$DBCOLLATE}) AS alpha FROM {$tables} WHERE {$join} AND n_sort ".PGV_DB_LIKE." '{$from}%' {$DBCOLLATE} GROUP BY 1";
 	}
-	$sql="SELECT {$column} AS alpha FROM {$tables} WHERE {$join} {$exclude} GROUP BY 1 {$include} ORDER BY 1";
-	$res=dbquery($sql);
+	$alphas=
+		PGV_DB::prepare("SELECT {$column} AS alpha FROM {$tables} WHERE {$join} {$exclude} GROUP BY 1 {$include} ORDER BY 1")
+		->fetchOneColumn();
 
 	$list=array();
-	while ($row=$res->fetchRow(DB_FETCHMODE_ASSOC)) {
+	foreach ($alphas as $alpha) {
 		if ($DB_UTF8_COLLATION) {
-			$letter=$row['alpha'];
+			$letter=$alpha;
 		} else {
-			$letter=UTF8_strtoupper(UTF8_substr($row['alpha'],0,1));
+			$letter=UTF8_strtoupper(UTF8_substr($alpha,0,1));
 		}
 		$list[$letter]=$letter;
 	}
-	$res->free();
 
 	// If we didn't sort in the DB, sort ourselves
 	if (!$DB_UTF8_COLLATION) {
@@ -663,11 +663,10 @@ function get_indilist_surns($surn, $salpha, $marnm, $fams, $ged_id) {
 	$sql.=" WHERE ".implode(' AND ', $where)." ORDER BY n_surn";
 
 	$list=array();
-	$res=dbquery($sql);
-	while ($row=$res->fetchRow(DB_FETCHMODE_ASSOC)) {
-		$list[$row['n_surn']][$row['n_surname']][$row['n_id']]=true;
+	$rows=PGV_DB::prepare($sql)->fetchAll();
+	foreach ($rows as $row) {
+		$list[$row->n_surn][$row->n_surname][$row->n_id]=true;
 	}
-	$res->free();
 	if (!$DB_UTF8_COLLATION) {
 		uksort($list, 'stringsort');
 	}
@@ -724,11 +723,10 @@ function get_famlist_surns($surn, $salpha, $marnm, $ged_id) {
 	$sql.=" WHERE ".implode(' AND ', $where)." ORDER BY n_surn";
 
 	$list=array();
-	$res=dbquery($sql);
-	while ($row=$res->fetchRow(DB_FETCHMODE_ASSOC)) {
-		$list[$row['n_surn']][$row['n_surname']][$row['l_to']]=true;
+	$rows=PGV_DB::prepare($sql)->fetchAll();
+	foreach ($rows as $row) {
+		$list[$row->n_surn][$row->n_surname][$row->l_to]=true;
 	}
-	$res->free();
 	if (!$DB_UTF8_COLLATION) {
 		uksort($list, 'stringsort');
 	}
@@ -837,8 +835,8 @@ function get_indilist_indis($surn='', $salpha='', $galpha='', $marnm=false, $fam
 	$sql.=" WHERE ".implode(' AND ', $where)." ORDER BY n_sort";
 
 	$list=array();
-	$res=dbquery($sql);
-	while ($row=$res->fetchRow(DB_FETCHMODE_ASSOC)) {
+	$rows=PGV_DB::prepare($sql)->fetchAll(PDO::FETCH_ASSOC);
+	foreach ($rows as $row) {
 		$person=Person::getInstance($row);
 		$person->setPrimaryName($row['n_num']);
 		// We need to clone $person, as we may have multiple references to the
@@ -848,7 +846,6 @@ function get_indilist_indis($surn='', $salpha='', $galpha='', $marnm=false, $fam
 		// is clean, easy and works.
 		$list[]=clone $person;
 	}
-	$res->free();
 	if (!$DB_UTF8_COLLATION) {
 		usort($list, array('GedcomRecord', 'Compare'));
 	}
@@ -882,9 +879,12 @@ function get_famlist_fams($surn='', $salpha='', $galpha='', $marnm, $ged_id=null
 	// If we're searching for "Unknown surname", we also need to include families
 	// with missing spouses
 	if ($surn=='@N.N.' || $salpha=='@') {
-		$res=dbquery("SELECT 'FAM' AS type, f_id AS xref, {$ged_id} AS ged_id, f_gedcom AS gedrec, f_husb, f_wife, f_chil, f_numchil FROM {$TBLPREFIX}families f WHERE f_file={$ged_id} AND (f_husb='' OR f_wife='')");
+		$rows=
+			PGV_DB::prepare("SELECT 'FAM' AS type, f_id AS xref, f_file AS ged_id, f_gedcom AS gedrec, f_husb, f_wife, f_chil, f_numchil FROM {$TBLPREFIX}families f WHERE f_file={$ged_id} AND (f_husb='' OR f_wife='')")
+			->execute(array($ged_id))
+			->fetchAll(PDO::FETCH_ASSOC);
 
-		while ($row=$res->fetchRow(DB_FETCHMODE_ASSOC)) {
+		foreach ($rows as $row) {
 			$list[]=Family::getInstance($row);
 		}
 		$res->free();
