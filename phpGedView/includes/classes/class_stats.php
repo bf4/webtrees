@@ -1027,11 +1027,13 @@ class stats {
 	{
 		global $TBLPREFIX;
 		if ($fact) {
-			$sql = "SELECT i_gedcom FROM ${TBLPREFIX}individuals WHERE i_file={$this->_ged_id}";
-			$res = dbquery($sql);
+			$rows=
+				PGV_DB::prepare("SELECT i_gedcom FROM ${TBLPREFIX}individuals WHERE i_file=?")
+				->execute(array($this->_ged_id))
+				->fetchAll();
 			$placelist = array();
-			while ($row =& $res->fetchRow()) {
-				$factrec = trim(get_sub_record(1, "1 {$fact}", $row[0], 1));
+			foreach ($rows as $row) {
+				$factrec = trim(get_sub_record(1, "1 {$fact}", $row->i_gedcom, 1));
 				if (!empty($factrec) && preg_match("/2 PLAC (.+)/", $factrec, $match)) {
 					if ($country) {
 						$place = getPlaceCountry(trim($match[1]));
@@ -1047,7 +1049,6 @@ class stats {
 					}
 				}
 			}
-			$res->free();
 			return $placelist;
 		}
 		else if ($parent>0) {
@@ -2177,18 +2178,18 @@ class stats {
 		}
 		$ged_id=get_id_from_gedcom($GEDCOM);
 
-		$sql="SELECT n_givn, COUNT(*) AS num FROM {$TBLPREFIX}name JOIN {$TBLPREFIX}individuals ON (n_id=i_id AND n_file=i_file) WHERE n_file={$ged_id} AND n_type!='_MARNM' AND n_givn NOT IN ('@P.N.', '') AND LENGTH(n_givn)>1 AND {$sex_sql} GROUP BY n_id, n_givn";
-		$res=dbquery($sql);
+		$rows=PGV_DB::prepare("SELECT n_givn, COUNT(*) AS num FROM {$TBLPREFIX}name JOIN {$TBLPREFIX}individuals ON (n_id=i_id AND n_file=i_file) WHERE n_file={$ged_id} AND n_type!='_MARNM' AND n_givn NOT IN ('@P.N.', '') AND LENGTH(n_givn)>1 AND {$sex_sql} GROUP BY n_id, n_givn")
+			->fetchAll();
 		$nameList=array();
-		while ($row=$res->fetchRow(DB_FETCHMODE_ASSOC)) {
+		foreach ($rows as $row) {
 			// Split "John Thomas" into "John" and "Thomas" and count against both totals
-			foreach (explode(' ', $row['n_givn']) as $given) {
+			foreach (explode(' ', $row->n_givn) as $given) {
 				$given=str_replace(array('*', '"'), '', $given);
 				if (strlen($given)>1) {
 					if (array_key_exists($given, $nameList)) {
-						$nameList[$given]+=$row['num'];
+						$nameList[$given]+=$row->num;
 					} else {
-						$nameList[$given]=$row['num'];
+						$nameList[$given]=$row->num;
 					}
 				}
 			}
@@ -2540,22 +2541,10 @@ class stats {
 			return $cache[$id];
 		}
 
-		if ($count) {
-			$sql=PGV_DB::limit_query($sql, $count);
-		}
+		$rows=PGV_DB::prepareLimit($sql, $count)->fetchAll(PDO::FETCH_ASSOC);
 
-		$rows = array();
-		$tempsql = dbquery($sql, true);
-		if (!DB::isError($tempsql)) {
-			$res=& $tempsql;
-			while ($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)) {
-				$rows[] = $row;
-			}
-			$res->free();
-			$cache[$id] = $rows;
-			return $rows;
-		}
-		return false;
+		$cache[$id]=$rows;
+		return $rows;
 	}
 }
 
