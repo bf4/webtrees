@@ -123,7 +123,7 @@ function print_charts_block($block = true, $config="", $side, $index) {
 				break;
 		}
 		$content = "";
-		$content .= "<script src=\"phpgedview.js\" language=\"JavaScript\" type=\"text/javascript\"></script>";
+		$content .= "<script src=\"js/phpgedview.js\" language=\"JavaScript\" type=\"text/javascript\"></script>";
 		if ($show_full==0) {
 			$content .= '<center><span class="details2">'.$pgv_lang['charts_click_box'].'</span></center><br />';
 		}

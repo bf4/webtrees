@@ -388,7 +388,7 @@ function resize_content_div(i) {
 }
 //]]>
 </script>
-<script src="phpgedview.js" language="JavaScript" type="text/javascript"></script>
+<script src="js/phpgedview.js" language="JavaScript" type="text/javascript"></script>
 <?php
 function loading_message() {
 	global $pgv_lang;

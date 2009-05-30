@@ -90,7 +90,7 @@ if (PGV_USER_IS_ADMIN && file_exists('modules/GEDFact_assistant/MEDIA/media_1_ct
 		}
 		//-->
 		</script>
-		<script src="phpgedview.js" language="JavaScript" type="text/javascript"></script>
+	<script src="js/phpgedview.js" language="JavaScript" type="text/javascript"></script>
 
 		<?php
 		echo '<form name="link" method="get" action="inverselink.php">';

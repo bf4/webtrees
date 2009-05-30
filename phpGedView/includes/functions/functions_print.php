@@ -584,7 +584,7 @@ function print_header($title, $head="", $use_alternate_styles=true) {
 	var whichhelp = \'help_'.basename($SCRIPT_NAME).'&action='.$action.'\';
 	//-->
 	</script>
-	<script src="phpgedview.js" language="JavaScript" type="text/javascript"></script>
+	<script src="js/phpgedview.js" language="JavaScript" type="text/javascript"></script>
 	';
 	$bodyOnLoad = '';
 	if ($view=="preview") $bodyOnLoad .= " onbeforeprint=\"hidePrint();\" onafterprint=\"showBack();\"";
@@ -1301,9 +1301,12 @@ function print_privacy_error($username) {
 function print_help_link($help, $helpText, $show_desc="", $use_print_text=false, $return=false) {
 	global $pgv_lang, $view, $PGV_USE_HELPIMG, $PGV_IMAGES, $PGV_IMAGE_DIR, $SEARCH_SPIDER;
 
+loadLangFile('pgv_help');
+
 	$output='';
 	if (!$SEARCH_SPIDER && $view!='preview' && $_SESSION['show_context_help']) {
-		$output.=' <a class="help" tabindex="0" href="javascript:// ';
+		$output.=' <a class="help" tabindex="0" title="';
+		$output.=$pgv_lang['help_header'].'" href="help_text.php?help=';
 		if ($show_desc) {
 			if ($use_print_text) {
 				$output.=print_text($show_desc, 0, 1);
@@ -2288,15 +2291,15 @@ function print_add_new_fact($id, $usedfacts, $type) {
 	usort($addfacts, "factsort");
 	echo "<tr><td class=\"descriptionbox ".$TEXT_DIRECTION."\">";
 	print_help_link("add_new_facts_help", "qm");
-	echo $pgv_lang["add_fact"]."</td>";
+	echo $pgv_lang["add_fact"]."</td>\n";
 	echo "<td class=\"optionbox wrap ".$TEXT_DIRECTION."\">";
 	echo "<form method=\"get\" name=\"newfactform\" action=\"\" onsubmit=\"return false;\">";
-	echo "<select id=\"newfact\" name=\"newfact\">";
+	echo "<select id=\"newfact\" name=\"newfact\">\n";
 	foreach($addfacts as $indexval => $fact) {
-		echo PrintReady(stripLRMRLM("<option value=\"$fact\">".$factarray[$fact]. " [".$fact."]</option>"));
+		echo PrintReady(stripLRMRLM("\t<option value=\"$fact\">".$factarray[$fact]. " [".$fact."]</option>\n"));
 	}
 	if (($type == "INDI") || ($type == "FAM")) echo "<option value=\"EVEN\">".$pgv_lang["custom_event"]." [EVEN]</option>";
-	echo "</select>";
+	echo "\n</select>\n";
 	echo "&nbsp;&nbsp;<input type=\"button\" value=\"".$pgv_lang["add"]."\" onclick=\"add_record('$id', 'newfact');\" /> ";
 	foreach($quickfacts as $k=>$v) echo "&nbsp;<small><a href='javascript://$v' onclick=\"add_new_record('$id', '$v');return false;\">".$factarray["$v"]."</a></small>&nbsp;";
 	echo "</form>";
