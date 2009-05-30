@@ -1543,7 +1543,7 @@ function search_indis($query, $geds, $match, $skip) {
 // $geds - array of gedcoms to search
 // $match - AND or OR
 function search_indis_names($query, $geds, $match) {
-	global $TBLPREFIX, $GEDCOM, $DBCONN, $DB_UTF8_COLLATION;
+	global $TBLPREFIX, $GEDCOM, $DB_UTF8_COLLATION;
 
 	// No query => no results
 	if (!$query) {
@@ -1565,9 +1565,9 @@ function search_indis_names($query, $geds, $match) {
 	$sql.=' ORDER BY ged_id';
 
 	$list=array();
-	$res=dbquery($sql);
+	$rows=PGV_DB::prepare($sql)->fetchAll(PDO::FETCH_ASSOC);
 	$GED_ID=PGV_GED_ID;
-	while ($row=$res->fetchRow(DB_FETCHMODE_ASSOC)) {
+	foreach ($rows as $row) {
 		// Switch privacy file if necessary
 		if ($row['ged_id']!=$GED_ID) {
 			$GEDCOM=get_gedcom_from_id($row['ged_id']);
@@ -1585,7 +1585,6 @@ function search_indis_names($query, $geds, $match) {
 			$list[]=clone $indi;
 		}
 	}
-	$res->free();
 	// Switch privacy file if necessary
 	if ($GED_ID!=PGV_GED_ID) {
 		$GEDCOM=get_gedcom_from_id(PGV_GED_ID);
@@ -1627,19 +1626,19 @@ function search_indis_soundex($soundex, $lastname, $firstname, $place, $geds) {
 	}
 	if ($firstname && $givn_sdx) {
 		foreach ($givn_sdx as $k=>$v) {
-			$givn_sdx[$k]="n_soundex_givn_{$field} ".PGV_DB_LIKE." '%{$v}%'";
+			$givn_sdx[$k]="n_soundex_givn_{$field} ".PGV_DB_LIKE." ".PGV_DB::quote("%{$v}%");
 	}
 		$sql.=' AND ('.implode(' OR ', $givn_sdx).')';
 		}
 	if ($lastname && $surn_sdx) {
 		foreach ($surn_sdx as $k=>$v) {
-			$surn_sdx[$k]="n_soundex_surn_{$field} ".PGV_DB_LIKE." '%{$v}%'";
+			$surn_sdx[$k]="n_soundex_surn_{$field} ".PGV_DB_LIKE." ".PGV_DB::quote("%{$v}%");
 		}
 		$sql.=' AND ('.implode(' OR ', $surn_sdx).')';
 			}
 	if ($place && $plac_sdx) {
 		foreach ($plac_sdx as $k=>$v) {
-			$plac_sdx[$k]="p_{$field}_soundex ".PGV_DB_LIKE." '%{$v}%'";
+			$plac_sdx[$k]="p_{$field}_soundex ".PGV_DB_LIKE." ".PGV_DB::quote("%{$v}%");
 		}
 		$sql.=' AND ('.implode(' OR ', $plac_sdx).')';
 	}
@@ -1648,9 +1647,9 @@ function search_indis_soundex($soundex, $lastname, $firstname, $place, $geds) {
 	$sql.=' ORDER BY ged_id';
 
 	$list=array();
-	$res=dbquery($sql);
+	$rows=PGV_DB::prepare($sql)->fetchAll(PDO::FETCH_ASSOC);
 	$GED_ID=PGV_GED_ID;
-	while ($row=$res->fetchRow(DB_FETCHMODE_ASSOC)) {
+	foreach ($rows as $row) {
 		// Switch privacy file if necessary
 		if ($row['ged_id']!=$GED_ID) {
 			$GEDCOM=get_gedcom_from_id($row['ged_id']);
@@ -1662,7 +1661,6 @@ function search_indis_soundex($soundex, $lastname, $firstname, $place, $geds) {
 			$list[]=$indi;
 		}
 	}
-	$res->free();
 	// Switch privacy file if necessary
 	if ($GED_ID!=PGV_GED_ID) {
 		$GEDCOM=get_gedcom_from_id(PGV_GED_ID);
@@ -1679,81 +1677,78 @@ function search_indis_soundex($soundex, $lastname, $firstname, $place, $geds) {
 function get_recent_changes($jd=0, $allgeds=false) {
 	global $TBLPREFIX;
 
-	$sql="SELECT d_gid FROM {$TBLPREFIX}dates WHERE d_fact='CHAN' AND d_julianday1>={$jd}";
+	$sql="SELECT d_gid FROM {$TBLPREFIX}dates WHERE d_fact='CHAN' AND d_julianday1>=? AND d_gid NOT LIKE ?";
+	$vars=array($jd, '%:%');
 	if (!$allgeds) {
-		$sql.=" AND d_file=".PGV_GED_ID." ";
+		$sql.=" AND d_file=?";
+		$vars[]=PGV_GED_ID;
 	}
 	$sql.=" ORDER BY d_julianday1 DESC";
 
-	$changes=array();
-	$res=dbquery($sql);
-	if (!DB::isError($res)) {
-		while ($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)) {
-			if (preg_match("/\w+:\w+/", $row['d_gid'])==0) {
-				$changes[] = $row;
-			}
-		}
-	}
-	return $changes;
+	return PGV_DB::prepare($sql)->execute($vars)->fetchOneColumn();
 }
 
 // Seach for individuals with events on a given day
 function search_indis_dates($day, $month, $year, $facts) {
-	global $TBLPREFIX, $DBCONN;
+	global $TBLPREFIX;
 
-	$sql="SELECT 'INDI' AS type, i_id AS xref, i_file AS ged_id, i_gedcom AS gedrec, i_isdead, i_sex FROM {$TBLPREFIX}individuals JOIN {$TBLPREFIX}dates ON i_id=d_gid AND i_file=d_file WHERE i_file=".PGV_GED_ID;
+	$sql="SELECT DISTINCT 'INDI' AS type, i_id AS xref, i_file AS ged_id, i_gedcom AS gedrec, i_isdead, i_sex FROM {$TBLPREFIX}individuals JOIN {$TBLPREFIX}dates ON i_id=d_gid AND i_file=d_file WHERE i_file=?";
+	$vars=array(PGV_GED_ID);
 	if ($day) {
-		$sql.=" AND d_day=".(int)$day;
+		$sql.=" AND d_day=?";
+		$vars[]=$day;
 	}
 	if ($month) {
-		$sql.=" AND d_month='".$DBCONN->escapeSimple(UTF8_strtoupper($month))."' ";
+		$sql.=" AND d_month=?";
+		$vars[]=$month;
 	}
 	if ($year) {
-		$sql.=" AND d_year=".(int)$year;
+		$sql.=" AND d_year=?";
+		$vars[]=$year;
 	}
 	if ($facts) {
 		$facts=preg_split('/[, ;]+/', $facts);
 		foreach ($facts as $key=>$value) {
 			if ($value[0]=='!') {
-				$facts[$key]="d_fact!='".$DBCONN->escapeSimple(substr($value,1))."'";
+				$facts[$key]="d_fact!=?";
+				$vars[]=substr($value,1);
 			} else {
-				$facts[$key]="d_fact='".$DBCONN->escapeSimple($value)."'";
+				$facts[$key]="d_fact=?";
+				$vars[]=$value;
 			}
 		}
 		$sql.=' AND '.implode(' AND ', $facts);
 	}
 
 	$list=array();
-	$res=dbquery($sql);
-	while ($row=$res->fetchRow(DB_FETCHMODE_ASSOC)) {
-		$indi=Person::getInstance($row);
+	$rows=PGV_DB::prepare($sql)->execute($vars)->fetchAll(PDO::FETCH_ASSOC);
+	foreach ($rows as $row) {
+		$list[]=Person::getInstance($row);
 	}
-	$res->free();
 	return $list;
 }
 
 // Seach for individuals with events in a given date range
 function search_indis_daterange($start, $end, $facts) {
-	global $TBLPREFIX, $DBCONN;
+	global $TBLPREFIX;
 
-	$start=(int)$start;
-	$end  =(int)$end;
-
-	$sql="SELECT 'INDI' AS type, i_id AS xref, i_file AS ged_id, i_gedcom AS gedrec, i_isdead, i_sex FROM {$TBLPREFIX}individuals JOIN {$TBLPREFIX}dates ON i_id=d_gid AND i_file=d_file WHERE i_file=".PGV_GED_ID." AND d_julianday1 BETWEEN {$start} AND {$end}";
+	$sql="SELECT 'INDI' AS type, i_id AS xref, i_file AS ged_id, i_gedcom AS gedrec, i_isdead, i_sex FROM {$TBLPREFIX}individuals JOIN {$TBLPREFIX}dates ON i_id=d_gid AND i_file=d_file WHERE i_file=? AND d_julianday1 BETWEEN ? AND ?";
+	$vars=array(PGV_GED_ID, $start, $end);
+	
 	if ($facts) {
 		$facts=explode(',', $facts);
 		foreach ($facts as $key=>$value) {
-			$facts[$key]="'".$DBCONN->escapeSimple($value)."'";
+			$facts[$key]="?";
+			$vars[]=$value;
 		}
 		$sql.=' AND d_fact IN ('.implode(',', $facts).')';
 	}
 
 	$list=array();
-	$res=dbquery($sql);
-	while ($row=$res->fetchRow(DB_FETCHMODE_ASSOC)) {
+	$rows=PGV_DB::prepare($sql)->execute($vars)->fetchAll(PDO::FETCH_ASSOC);
+	foreach ($rows as $row) {
 		$list[]=Person::getInstance($row);
 	}
-	$res->free();
 	return $list;
 }
 
@@ -1845,7 +1840,7 @@ function search_fams($query, $geds, $match, $skip) {
 // $geds - array of gedcoms to search
 // $match - AND or OR
 function search_fams_names($query, $geds, $match) {
-	global $TBLPREFIX, $GEDCOM, $DBCONN, $DB_UTF8_COLLATION;
+	global $TBLPREFIX, $GEDCOM, $DB_UTF8_COLLATION;
 
 	// No query => no results
 	if (!$query) {
@@ -1855,11 +1850,10 @@ function search_fams_names($query, $geds, $match) {
 	// Convert the query into a SQL expression
 	$querysql=array();
 	foreach ($query as $q) {
-		$q=$DBCONN->escapeSimple($q);
 		if ($DB_UTF8_COLLATION || !has_utf8($q)) {
-			$querysql[]="(husb.n_full ".PGV_DB_LIKE." '%{$q}%' OR wife.n_full ".PGV_DB_LIKE." '%{$q}%')";
+			$querysql[]="(husb.n_full ".PGV_DB_LIKE." ".PGV_DB::quote("%{$q}%")." OR wife.n_full ".PGV_DB_LIKE." ".PGV_DB::quote("%{$q}%").")";
 		} else {
-			$querysql[]="(husb.n_full ".PGV_DB_LIKE." '%{$q}%' OR wife.n_full ".PGV_DB_LIKE." '%{$q}%' OR husb.n_full ".PGV_DB_LIKE." '%".UTF8_strtoupper($q)."%' OR husb.n_full ".PGV_DB_LIKE." '%".UTF8_strtolower($q)."%' OR wife.n_full ".PGV_DB_LIKE." '%".UTF8_strtoupper($q)."%' OR wife.n_full ".PGV_DB_LIKE." '%".UTF8_strtolower($q)."%')";
+			$querysql[]="(husb.n_full ".PGV_DB_LIKE." ".PGV_DB::quote("%{$q}%")." OR wife.n_full ".PGV_DB_LIKE." '%{$q}%' OR husb.n_full ".PGV_DB_LIKE." ".PGV_DB::quote(UTF8_strtoupper("%{$q}%"))." OR husb.n_full ".PGV_DB_LIKE." ".PGV_DB::quote(UTF8_strtolower("%{$q}%"))." OR wife.n_full ".PGV_DB_LIKE." ".PGV_DB::quote(UTF8_strtoupper("%{$q}%"))." OR wife.n_full ".PGV_DB_LIKE." ".PGV_DB::quote(UTF8_strtolower("%{$q}%")).")";
 		}
 	}
 
@@ -1869,9 +1863,9 @@ function search_fams_names($query, $geds, $match) {
 	$sql.=' ORDER BY ged_id';
 
 	$list=array();
-	$res=dbquery($sql);
+	$rows=PGV_DB::prepare($sql)->fetchAll(PDO::FETCH_ASSOC);
 	$GED_ID=PGV_GED_ID;
-	while ($row=$res->fetchRow(DB_FETCHMODE_ASSOC)) {
+	foreach ($rows as $row) {
 		// Switch privacy file if necessary
 		if ($row['ged_id']!=$GED_ID) {
 			$GEDCOM=get_gedcom_from_id($row['ged_id']);
@@ -1883,59 +1877,6 @@ function search_fams_names($query, $geds, $match) {
 			$list[]=$indi;
 		}
 	}
-	$res->free();
-	// Switch privacy file if necessary
-	if ($GED_ID!=PGV_GED_ID) {
-		$GEDCOM=get_gedcom_from_id(PGV_GED_ID);
-		load_privacy_file(PGV_GED_ID);
-	}
-	return $list;
-}
-
-// Search the names of all family members
-// $query - array of search terms
-// $geds - array of gedcoms to search
-// $match - AND or OR
-function search_fams_members($query, $geds, $match) {
-	global $TBLPREFIX, $GEDCOM, $DBCONN, $DB_UTF8_COLLATION;
-
-	// No query => no results
-	if (!$query) {
-		return array();
-	}
-
-	// Convert the query into a SQL expression
-	$querysql=array();
-	foreach ($query as $q) {
-		$q=$DBCONN->escapeSimple($q);
-		if ($DB_UTF8_COLLATION || !has_utf8($q)) {
-			$querysql[]="n_full ".PGV_DB_LIKE." '%{$q}%'";
-		} else {
-			$querysql[]="(n_full ".PGV_DB_LIKE." '%{$q}%' OR n_full ".PGV_DB_LIKE." '%".UTF8_strtoupper($q)."%' OR n_full ".PGV_DB_LIKE." '%".UTF8_strtoupper($q)."%')";
-		}
-	}
-
-	$sql="SELECT DISTINCT 'FAM' AS type, f_id AS xref, f_file AS ged_id, f_gedcom AS gedrec, f_husb, f_wife, f_chil, f_numchil FROM {$TBLPREFIX}families JOIN {$TBLPREFIX}link ON f_file=l_file AND f_id=l_to AND l_type IN ('FAMS', 'FAMC') JOIN {$TBLPREFIX}name ON n_file=l_file AND n_from=n_id WHERE (".implode(" {$match} ", $querysql).') AND f_file IN ('.implode(',', $geds).')';
-
-	// Group results by gedcom, to minimise switching between privacy files
-	$sql.=' ORDER BY ged_id';
-
-	$list=array();
-	$res=dbquery($sql);
-	$GED_ID=PGV_GED_ID;
-	while ($row=$res->fetchRow(DB_FETCHMODE_ASSOC)) {
-		// Switch privacy file if necessary
-		if ($row['ged_id']!=$GED_ID) {
-			$GEDCOM=get_gedcom_from_id($row['ged_id']);
-			load_privacy_file($row['ged_id']);
-			$GED_ID=$row['ged_id'];
-		}
-		$indi=Family::getInstance($row);
-		if ($indi->canDisplayName()) {
-			$list[]=$indi;
-		}
-	}
-	$res->free();
 	// Switch privacy file if necessary
 	if ($GED_ID!=PGV_GED_ID) {
 		$GEDCOM=get_gedcom_from_id(PGV_GED_ID);
