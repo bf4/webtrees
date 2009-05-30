@@ -915,6 +915,7 @@ case 'addnoteaction':
 	
 //------------------------------------------------------------------------------
 //-- add new Media Links
+
 case 'addmedia_links':
 	?>
 	<script type="text/javascript">
@@ -929,7 +930,6 @@ case 'addmedia_links':
 		}
 	//-->
 	</script>
-	<b><?php echo "Add Media Links using Assistant."; $tabkey = 1; ?></b>
 	<form method="post" action="edit_interface.php" onsubmit="return check_form(this);">
 		<input type="hidden" name="action" value="addnoteaction" />
 		<input type="hidden" name="noteid" value="newnote" />
@@ -941,6 +941,7 @@ case 'addmedia_links':
 	<?php
 	break;
 
+//------------------------------------------------------------------------------
 //-- edit source
 case 'editsource':
 	init_calendar_popup();
@@ -1170,8 +1171,9 @@ case 'updateraw':
 //------------------------------------------------------------------------------
 //-- reconstruct the gedcom from the incoming fields and store it in the file
 case 'update':
-	global $cens_pids;
 
+/*
+	global $cens_pids;
 	// $cens_pids is an array from the CENS GEDFact Assistant -----------
 	// $cens_pids = array($pid, 'I1', 'I2');  // ** This line is a Test only **
 	if (!isset($cens_pids)){
@@ -1179,10 +1181,10 @@ case 'update':
 	}else{
 		$cens_pids = $cens_pids;
 	}
-	
-	// When $cens_pids is present, cycle through each individual concerned.
-	foreach ($cens_pids as $pid) {
-		$gedrec = find_gedcom_record($pid);
+*/
+//	// When $cens_pids is present, cycle through each individual concerned.
+//	foreach ($cens_pids as $pid) {
+//		$gedrec = find_gedcom_record($pid);
 
 		if (PGV_DEBUG) {
 			phpinfo(INFO_VARIABLES);
@@ -1219,7 +1221,8 @@ case 'update':
 				else $uploaded_files[] = "";
 			}
 		}
-	}
+//	} // end foreach
+	
 	$gedlines = explode("\n", trim($gedrec));
 	//-- for new facts set linenum to number of lines
 	if (!is_array($linenum)) {
