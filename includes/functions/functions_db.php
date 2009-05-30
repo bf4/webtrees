@@ -474,7 +474,7 @@ function db_collation_digraphs() {
 // $ged_id - only consider individuals from this gedcom
 ////////////////////////////////////////////////////////////////////////////////
 function get_indilist_salpha($marnm, $fams, $ged_id) {
-	global $DBCONN, $TBLPREFIX, $DB_UTF8_COLLATION, $DBCOLLATE;
+	global $TBLPREFIX, $DB_UTF8_COLLATION, $DBCOLLATE;
 
 	$ged_id=(int)$ged_id;
 
@@ -897,12 +897,12 @@ function get_famlist_fams($surn='', $salpha='', $galpha='', $marnm, $ged_id=null
 // Fetch a list of children for an individual, from all their partners.
 ////////////////////////////////////////////////////////////////////////////////
 function fetch_child_ids($parent_id, $ged_id) {
-	global $TBLPREFIX, $DBCONN;
-	$parent_id=$DBCONN->escapeSimple($parent_id);
-	$ged_id=(int)$ged_id;
+	global $TBLPREFIX;
 
-	return $DBCONN->getCol("SELECT DISTINCT child.l_from AS xref FROM {$TBLPREFIX}link child, {$TBLPREFIX}link spouse WHERE child.l_type='FAMC' AND spouse.l_type='FAMS' AND child.l_file=spouse.l_file AND child.l_to=spouse.l_to AND spouse.l_from='{$parent_id}' AND child.l_file={$ged_id}");
-
+	return
+		PGV_DB::prepare("SELECT DISTINCT child.l_from AS xref FROM {$TBLPREFIX}link child, {$TBLPREFIX}link spouse WHERE child.l_type='FAMC' AND spouse.l_type='FAMS' AND child.l_file=spouse.l_file AND child.l_to=spouse.l_to AND spouse.l_from=? AND child.l_file=?")
+		->execute(array($parent_id, $ged_id))
+		->fetchOneColumn();
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -910,159 +910,141 @@ function fetch_child_ids($parent_id, $ged_id) {
 // of 'type'=>count for each type where records exist.
 ////////////////////////////////////////////////////////////////////////////////
 function count_all_records($ged_id) {
-	global $TBLPREFIX, $DBCONN;
-	$ged_id=(int)$ged_id;
-	$res=dbquery(
-		"SELECT 'INDI' AS type, COUNT(*) AS num FROM {$TBLPREFIX}individuals WHERE i_file={$ged_id}".
-		" UNION ALL ".
-		"SELECT 'FAM'  AS type, COUNT(*) AS num FROM {$TBLPREFIX}families    WHERE f_file={$ged_id}".
-		" UNION ALL ".
-		"SELECT 'NOTE' AS type, COUNT(*) AS num FROM {$TBLPREFIX}other       WHERE o_file={$ged_id}".
-		" UNION ALL ".
-		"SELECT 'SOUR' AS type, COUNT(*) AS num FROM {$TBLPREFIX}sources     WHERE s_file={$ged_id}".
-		" UNION ALL ".
-		"SELECT 'OBJE' AS type, COUNT(*) AS num FROM {$TBLPREFIX}media       WHERE m_gedfile={$ged_id}".
-		" UNION ALL ".
-		"SELECT o_type AS type, COUNT(*) as num FROM {$TBLPREFIX}other       WHERE o_file={$ged_id} GROUP BY type"
-	);
-	$list=array();
-	while ($row=$res->fetchRow(DB_FETCHMODE_ASSOC)) {
-		$list[$row['type']]=$row['num'];
-	}
-	$res->free();
-	return $list;
+	global $TBLPREFIX;
+
+	return
+		PGV_DB::prepare(
+			"SELECT ?      AS type, COUNT(*) AS num FROM {$TBLPREFIX}individuals WHERE i_file=?".
+			" UNION ALL ".
+			"SELECT ?      AS type, COUNT(*) AS num FROM {$TBLPREFIX}families    WHERE f_file=?".
+			" UNION ALL ".
+			"SELECT ?      AS type, COUNT(*) AS num FROM {$TBLPREFIX}other       WHERE o_file=?".
+			" UNION ALL ".
+			"SELECT ?      AS type, COUNT(*) AS num FROM {$TBLPREFIX}sources     WHERE s_file=?".
+			" UNION ALL ".
+			"SELECT ?      AS type, COUNT(*) AS num FROM {$TBLPREFIX}media       WHERE m_gedfile=?".
+			" UNION ALL ".
+			"SELECT o_type AS type, COUNT(*) as num FROM {$TBLPREFIX}other       WHERE o_file=? GROUP BY type"
+		)
+		->execute(array('INDI', $ged_id, 'FAM', $ged_id, 'NOTE', $ged_id, 'SOUR', $ged_id, 'OBJE', $ged_id, $ged_id))
+		->fetchAssoc();
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 // Count the number of records linked to a given record
 ////////////////////////////////////////////////////////////////////////////////
 function count_linked_indi($xref, $link, $ged_id) {
-	global $TBLPREFIX, $DBCONN;
-	$xref=$DBCONN->escapeSimple($xref);
-	$link=$DBCONN->escapeSimple($link);
-	$ged_id=(int)$ged_id;
-	$res=dbquery("SELECT COUNT(*) FROM {$TBLPREFIX}link, {$TBLPREFIX}individuals WHERE i_file=l_file AND i_id=l_from AND l_file={$ged_id} AND l_type='{$link}' AND l_to='{$xref}'");
+	global $TBLPREFIX;
 
-	$row=$res->fetchRow();
-	$res->free();
-	return $row[0];
+	return
+		PGV_DB::prepare("SELECT COUNT(*) FROM {$TBLPREFIX}link, {$TBLPREFIX}individuals WHERE i_file=l_file AND i_id=l_from AND l_file=? AND l_type=? AND l_to=?")
+		->execute(array($ged_id, $link, $xref))
+		->fetchOne();
 }
 function count_linked_fam($xref, $link, $ged_id) {
-	global $TBLPREFIX, $DBCONN;
-	$xref=$DBCONN->escapeSimple($xref);
-	$link=$DBCONN->escapeSimple($link);
-	$ged_id=(int)$ged_id;
-	$res=dbquery("SELECT COUNT(*) FROM {$TBLPREFIX}link, {$TBLPREFIX}families WHERE f_file=l_file AND f_id=l_from AND l_file={$ged_id} AND l_type='{$link}' AND l_to='{$xref}'");
+	global $TBLPREFIX;
 
-	$row=$res->fetchRow();
-	$res->free();
-	return $row[0];
+	return
+		PGV_DB::prepare("SELECT COUNT(*) FROM {$TBLPREFIX}link, {$TBLPREFIX}families WHERE f_file=l_file AND f_id=l_from AND l_file=? AND l_type=? AND l_to=?")
+		->execute(array($ged_id, $link, $xref))
+		->fetchOne();
 }
 function count_linked_note($xref, $link, $ged_id) {
-	global $TBLPREFIX, $DBCONN;
-	$xref=$DBCONN->escapeSimple($xref);
-	$link=$DBCONN->escapeSimple($link);
-	$ged_id=(int)$ged_id;
-	$res=dbquery("SELECT COUNT(*) FROM {$TBLPREFIX}link, {$TBLPREFIX}other WHERE o_file=l_file AND o_id=l_from AND l_file={$ged_id} AND l_type='{$link}' AND l_to='{$xref}'");
+	global $TBLPREFIX;
 
-	$row=$res->fetchRow();
-	$res->free();
-	return $row[0];
+	return
+		PGV_DB::prepare("SELECT COUNT(*) FROM {$TBLPREFIX}link, {$TBLPREFIX}other WHERE o_file=l_file AND o_id=l_from AND o_type=? AND l_file=? AND l_type=? AND l_to=?")
+		->execute(array('NOTE', $ged_id, $link, $xref))
+		->fetchOne();
 }
 function count_linked_sour($xref, $link, $ged_id) {
-	global $TBLPREFIX, $DBCONN;
-	$xref=$DBCONN->escapeSimple($xref);
-	$link=$DBCONN->escapeSimple($link);
-	$ged_id=(int)$ged_id;
-	$res=dbquery("SELECT COUNT(*) FROM {$TBLPREFIX}link, {$TBLPREFIX}sources WHERE s_file=l_file AND s_id=l_from AND l_file={$ged_id} AND l_type='{$link}' AND l_to='{$xref}'");
+	global $TBLPREFIX;
 
-	$row=$res->fetchRow();
-	$res->free();
-	return $row[0];
+	return
+		PGV_DB::prepare("SELECT COUNT(*) FROM {$TBLPREFIX}link, {$TBLPREFIX}sources WHERE s_file=l_file AND s_id=l_from AND l_file=? AND l_type=? AND l_to=?")
+		->execute(array($ged_id, $link, $xref))
+		->fetchOne();
 }
 function count_linked_obje($xref, $link, $ged_id) {
-	global $TBLPREFIX, $DBCONN;
-	$xref=$DBCONN->escapeSimple($xref);
-	$link=$DBCONN->escapeSimple($link);
-	$ged_id=(int)$ged_id;
-	$res=dbquery("SELECT COUNT(*) FROM {$TBLPREFIX}link, {$TBLPREFIX}media WHERE m_gedfile=l_file AND m_media=l_from AND l_file={$ged_id} AND l_type='{$link}' AND l_to='{$xref}'");
+	global $TBLPREFIX;
 
-	$row=$res->fetchRow();
-	$res->free();
-	return $row[0];
+	return
+		PGV_DB::prepare("SELECT COUNT(*) FROM {$TBLPREFIX}link, {$TBLPREFIX}media WHERE m_gedfile=l_file AND m_media=l_from AND l_file=? AND l_type=? AND l_to=?")
+		->execute(array($ged_id, $link, $xref))
+		->fetchOne();
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 // Fetch records linked to a given record
 ////////////////////////////////////////////////////////////////////////////////
 function fetch_linked_indi($xref, $link, $ged_id) {
-	global $TBLPREFIX, $DBCONN;
-	$xref=$DBCONN->escapeSimple($xref);
-	$link=$DBCONN->escapeSimple($link);
-	$ged_id=(int)$ged_id;
-	$res=dbquery("SELECT 'INDI' AS type, i_id AS xref, {$ged_id} AS ged_id, i_gedcom AS gedrec, i_isdead, i_sex FROM {$TBLPREFIX}link, {$TBLPREFIX}individuals WHERE i_file=l_file AND i_id=l_from AND l_file={$ged_id} AND l_type='{$link}' AND l_to='{$xref}'");
+	global $TBLPREFIX;
+
+	$rows=
+		PGV_DB::prepare("SELECT 'INDI' AS type, i_id AS xref, i_file AS ged_id, i_gedcom AS gedrec, i_isdead, i_sex FROM {$TBLPREFIX}link, {$TBLPREFIX}individuals WHERE i_file=l_file AND i_id=l_from AND l_file=? AND l_type=? AND l_to=?")
+		->execute(array($ged_id, $link, $xref))
+		->fetchAll(PDO::FETCH_ASSOC);
 
 	$list=array();
-	while ($row=$res->fetchRow(DB_FETCHMODE_ASSOC)) {
+	foreach ($rows as $row) {
 		$list[]=Person::getInstance($row);
 	}
-	$res->free();
 	return $list;
 }
 function fetch_linked_fam($xref, $link, $ged_id) {
-	global $TBLPREFIX, $DBCONN;
-	$xref=$DBCONN->escapeSimple($xref);
-	$link=$DBCONN->escapeSimple($link);
-	$ged_id=(int)$ged_id;
-	$res=dbquery("SELECT 'FAM' AS type, f_id AS xref, {$ged_id} AS ged_id, f_gedcom AS gedrec, f_husb, f_wife, f_chil, f_numchil FROM {$TBLPREFIX}link, {$TBLPREFIX}families f WHERE f_file=l_file AND f_id=l_from AND l_file={$ged_id} AND l_type='{$link}' AND l_to='{$xref}'");
+	global $TBLPREFIX;
+
+	$rows=
+		PGV_DB::prepare("SELECT 'FAM' AS type, f_id AS xref, f_file AS ged_id, f_gedcom AS gedrec, f_husb, f_wife, f_chil, f_numchil FROM {$TBLPREFIX}link, {$TBLPREFIX}families f WHERE f_file=l_file AND f_id=l_from AND l_file=? AND l_type=? AND l_to=?")
+		->execute(array($ged_id, $link, $xref))
+		->fetchAll(PDO::FETCH_ASSOC);
 
 	$list=array();
-	while ($row=$res->fetchRow(DB_FETCHMODE_ASSOC)) {
+	foreach ($rows as $row) {
 		$list[]=Family::getInstance($row);
 	}
-	$res->free();
 	return $list;
 }
 function fetch_linked_note($xref, $link, $ged_id) {
-	global $TBLPREFIX, $DBCONN;
-	$xref=$DBCONN->escapeSimple($xref);
-	$link=$DBCONN->escapeSimple($link);
-	$ged_id=(int)$ged_id;
-	$res=dbquery("SELECT 'NOTE' AS type, o_id AS xref, {$ged_id} AS ged_id, o_gedcom AS gedrec FROM {$TBLPREFIX}link, {$TBLPREFIX}other o WHERE o_file=l_file AND o_id=l_from AND l_file={$ged_id} AND l_type='{$link}' AND l_to='{$xref}'");
+	global $TBLPREFIX;
+
+	$rows=
+		PGV_DB::prepare("SELECT 'NOTE' AS type, o_id AS xref, o_file AS ged_id, o_gedcom AS gedrec FROM {$TBLPREFIX}link, {$TBLPREFIX}other o WHERE o_file=l_file AND o_id=l_from AND o_type=? AND l_file=? AND l_type=? AND l_to=?")
+		->execute(array('NOTE', $ged_id, $link, $xref))
+		->fetchAll(PDO::FETCH_ASSOC);
 
 	$list=array();
-	while ($row=$res->fetchRow(DB_FETCHMODE_ASSOC)) {
+	foreach ($rows as $row) {
 		$list[]=Note::getInstance($row);
 	}
-	$res->free();
 	return $list;
 }
 function fetch_linked_sour($xref, $link, $ged_id) {
-	global $TBLPREFIX, $DBCONN;
-	$xref=$DBCONN->escapeSimple($xref);
-	$link=$DBCONN->escapeSimple($link);
-	$ged_id=(int)$ged_id;
-	$res=dbquery("SELECT 'SOUR' AS type, s_id AS xref, {$ged_id} AS ged_id, s_gedcom AS gedrec FROM {$TBLPREFIX}link, {$TBLPREFIX}sources s WHERE s_file=l_file AND s_id=l_from AND l_file={$ged_id} AND l_type='{$link}' AND l_to='{$xref}'");
+	global $TBLPREFIX;
+
+	$rows=
+		PGV_DB::prepare("SELECT 'SOUR' AS type, s_id AS xref, s_file AS ged_id, s_gedcom AS gedrec FROM {$TBLPREFIX}link, {$TBLPREFIX}sources s WHERE s_file=l_file AND s_id=l_from AND l_file=? AND l_type=? AND l_to=?")
+		->execute(array($ged_id, $link, $xref))
+		->fetchAll(PDO::FETCH_ASSOC);
 
 	$list=array();
-	while ($row=$res->fetchRow(DB_FETCHMODE_ASSOC)) {
+	foreach ($rows as $row) {
 		$list[]=Source::getInstance($row);
 	}
-	$res->free();
 	return $list;
 }
 function fetch_linked_obje($xref, $link, $ged_id) {
-	global $TBLPREFIX, $DBCONN;
-	$xref=$DBCONN->escapeSimple($xref);
-	$link=$DBCONN->escapeSimple($link);
-	$ged_id=(int)$ged_id;
-	$res=dbquery("SELECT 'OBJE' AS type, m_media AS xref, {$ged_id} AS ged_id, m_gedrec AS gedrec, m_titl, m_file FROM {$TBLPREFIX}link, {$TBLPREFIX}media m WHERE m_gedfile=l_file AND m_media=l_from AND l_file={$ged_id} AND l_type='{$link}' AND l_to='{$xref}'");
+	global $TBLPREFIX;
+
+	$rows=
+		PGV_DB::prepare("SELECT 'OBJE' AS type, m_media AS xref, m_gedfile AS ged_id, m_gedrec AS gedrec, m_titl, m_file FROM {$TBLPREFIX}link, {$TBLPREFIX}media m WHERE m_gedfile=l_file AND m_media=l_from AND l_file=? AND l_type=? AND l_to=?")
+		->execute(array($ged_id, $link, $xref))
+		->fetchAll(PDO::FETCH_ASSOC);
 
 	$list=array();
-	while ($row=$res->fetchRow(DB_FETCHMODE_ASSOC)) {
+	foreach ($rows as $row) {
 		$list[]=Media::getInstance($row);
 	}
-	$res->free();
 	return $list;
 }
 
@@ -1071,17 +1053,12 @@ function fetch_linked_obje($xref, $link, $ged_id) {
 // also delete all links to it.
 ////////////////////////////////////////////////////////////////////////////////
 function fetch_all_links($xref, $ged_id) {
-	global $TBLPREFIX, $DBCONN;
-	$xref=$DBCONN->escapeSimple($xref);
-	$ged_id=(int)$ged_id;
-	$res=dbquery("SELECT l_from FROM {$TBLPREFIX}link WHERE l_file={$ged_id} AND l_to='{$xref}'");
+	global $TBLPREFIX;
 
-	$list=array();
-	while ($row=$res->fetchRow(DB_FETCHMODE_ASSOC)) {
-		$list[]=$row['l_from'];
-	}
-	$res->free();
-	return $list;
+	return
+		PGV_DB::prepare("SELECT l_from FROM {$TBLPREFIX}link WHERE l_file=? AND l_to=?")
+		->execute(array($ged_id, $xref))
+		->fetchOneColumn();
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -1095,8 +1072,7 @@ function fetch_person_record($xref, $ged_id) {
 	static $statement=null;
 
 	if (is_null($statement)) {
-		$statement=
-			PGV_DB::prepare(
+		$statement=PGV_DB::prepare(
 			"SELECT 'INDI' AS type, i_id AS xref, i_file AS ged_id, i_gedcom AS gedrec, i_isdead, i_sex ".
 			"FROM {$TBLPREFIX}individuals WHERE i_id=? AND i_file=?"
 		);
@@ -1108,8 +1084,7 @@ function fetch_family_record($xref, $ged_id) {
 	static $statement=null;
 
 	if (is_null($statement)) {
-		$statement=
-			PGV_DB::prepare(
+		$statement=PGV_DB::prepare(
 			"SELECT 'FAM' AS type, f_id AS xref, f_file AS ged_id, f_gedcom AS gedrec, f_husb, f_wife, f_chil, f_numchil ".
 			"FROM {$TBLPREFIX}families WHERE f_id=? AND f_file=?"
 		);
@@ -1121,8 +1096,7 @@ function fetch_source_record($xref, $ged_id) {
 	static $statement=null;
 
 	if (is_null($statement)) {
-		$statement=
-			PGV_DB::prepare(
+		$statement=PGV_DB::prepare(
 			"SELECT 'SOUR' AS type, s_id AS xref, s_file AS ged_id, s_gedcom AS gedrec ".
 			"FROM {$TBLPREFIX}sources WHERE s_id=? AND s_file=?"
 		);
@@ -1138,8 +1112,7 @@ function fetch_media_record($xref, $ged_id) {
 	static $statement=null;
 
 	if (is_null($statement)) {
-		$statement=
-			PGV_DB::prepare(
+		$statement=PGV_DB::prepare(
 			"SELECT 'OBJE' AS type, m_media AS xref, m_gedfile AS ged_id, m_gedrec AS gedrec, m_titl, m_file ".
 			"FROM {$TBLPREFIX}media WHERE m_media=? AND m_gedfile=?"
 		);
@@ -1151,8 +1124,7 @@ function fetch_other_record($xref, $ged_id) {
 	static $statement=null;
 
 	if (is_null($statement)) {
-		$statement=
-			PGV_DB::prepare(
+		$statement=PGV_DB::prepare(
 			"SELECT o_type AS type, o_id AS xref, o_file AS ged_id, o_gedcom AS gedrec ".
 			"FROM {$TBLPREFIX}other WHERE o_id=? AND o_file=?"
 		);
