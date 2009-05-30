@@ -68,7 +68,7 @@ class TreeNav {
 				global $stylesheet;
 				?>
 				document.writeln('<link rel="stylesheet" href="<?php print $SERVER_URL.$stylesheet; ?>" type="text/css" media="all" />');
-				document.writeln('<script type="text/javascript" src="<?php print $SERVER_URL; ?>/phpgedview.js"></script>');
+				document.writeln('<script type="text/javascript" src="<?php print $SERVER_URL; ?>/js/phpgedview.js"></script>');
 				<?php
 				ob_start();
 				$w = safe_GET('width', PGV_REGEX_INTEGER, '');
