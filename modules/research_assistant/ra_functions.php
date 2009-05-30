@@ -1178,7 +1178,7 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 		global $TBLPREFIX;
 
 		require_once("modules/research_assistant/ra_ViewInferencesArray.php");
-		$indilist = get_indi_list();
+		$indilist = get_indilist_indis();
 
 		//various counts
 		$total = count($indilist);

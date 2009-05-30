@@ -1253,74 +1253,74 @@ function find_media_record($xref) {
 * @param string $gedfile [optional] the gedcomfile to search in
 * @return string the raw gedcom record is returned
 */
-function find_gedcom_record($pid, $gedfile='') {
-	global $TBLPREFIX, $GEDCOM, $DBCONN;
+function find_gedcom_record($xref, $gedfile='') {
+	global $TBLPREFIX, $GEDCOM, $DBTYPE;
+	static $statement1=null, $statement2=null;
 
-	if (!$pid) {
-		return null;
+	if (is_null($statement1)) {
+		$statement1=PGV_DB::prepare(
+			"SELECT i_gedcom FROM {$TBLPREFIX}individuals WHERE i_id   =? AND i_file   =? UNION ALL ".
+			"SELECT f_gedcom FROM {$TBLPREFIX}families    WHERE f_id   =? AND f_file   =? UNION ALL ".
+			"SELECT s_gedcom FROM {$TBLPREFIX}sources     WHERE s_id   =? AND s_file   =? UNION ALL ".
+			"SELECT m_gedrec FROM {$TBLPREFIX}media       WHERE m_media=? AND m_gedfile=? UNION ALL ".
+			"SELECT o_gedcom FROM {$TBLPREFIX}other       WHERE o_id   =? AND o_file   =?"
+		);
+		if ($DBTYPE=='sqlite') {
+			// TODO: Temporary - until the final migration to sqlite3
+			$statement2=PGV_DB::prepare(
+				"SELECT i_gedcom FROM {$TBLPREFIX}individuals WHERE UPPER(i_id)   =UPPER(?) AND i_file   =? UNION ALL ".
+				"SELECT f_gedcom FROM {$TBLPREFIX}families    WHERE UPPER(f_id)   =UPPER(?) AND f_file   =? UNION ALL ".
+				"SELECT s_gedcom FROM {$TBLPREFIX}sources     WHERE UPPER(s_id)   =UPPER(?) AND s_file   =? UNION ALL ".
+				"SELECT m_gedrec FROM {$TBLPREFIX}media       WHERE UPPER(m_media)=UPPER(?) AND m_gedfile=? UNION ALL ".
+				"SELECT o_gedcom FROM {$TBLPREFIX}other       WHERE UPPER(o_id)   =UPPER(?) AND o_file   =?"
+			);
+		} else {
+			$statement2=PGV_DB::prepare(
+				"SELECT i_gedcom FROM {$TBLPREFIX}individuals WHERE i_id    ".PGV_DB_LIKE." ? ESCAPE '@' AND i_file   =? UNION ALL ".
+				"SELECT f_gedcom FROM {$TBLPREFIX}families    WHERE f_id    ".PGV_DB_LIKE." ? ESCAPE '@' AND f_file   =? UNION ALL ".
+				"SELECT s_gedcom FROM {$TBLPREFIX}sources     WHERE s_id    ".PGV_DB_LIKE." ? ESCAPE '@' AND s_file   =? UNION ALL ".
+				"SELECT m_gedrec FROM {$TBLPREFIX}media       WHERE m_media ".PGV_DB_LIKE." ? ESCAPE '@' AND m_gedfile=? UNION ALL ".
+				"SELECT o_gedcom FROM {$TBLPREFIX}other       WHERE o_id    ".PGV_DB_LIKE." ? ESCAPE '@' AND o_file   =?"
+			);
+		}
 	}
-
+	
 	if ($gedfile) {
 		$ged_id=get_id_from_gedcom($gedfile);
 	} else {
 		$ged_id=get_id_from_gedcom($GEDCOM);
 	}
 
-	// Look in the tables.
-	$pid=$DBCONN->escapeSimple($pid);
-	$res=dbquery(
-		"SELECT i_gedcom FROM {$TBLPREFIX}individuals WHERE i_id='{$pid}' AND i_file={$ged_id} UNION ALL ".
-		"SELECT f_gedcom FROM {$TBLPREFIX}families    WHERE f_id='{$pid}' AND f_file={$ged_id} UNION ALL ".
-		"SELECT s_gedcom FROM {$TBLPREFIX}sources     WHERE s_id='{$pid}' AND s_file={$ged_id} UNION ALL ".
-		"SELECT m_gedrec FROM {$TBLPREFIX}media       WHERE m_media='{$pid}' AND m_gedfile={$ged_id} UNION ALL ".
-		"SELECT o_gedcom FROM {$TBLPREFIX}other       WHERE o_id='{$pid}' AND o_file={$ged_id}"
-	);
-	if (DB::isError($res)) {
-		debug_print_backtrace();
-		return "";
-	}
-	$row=$res->fetchRow();
-	$res->free();
-	if ($row) {
-		return $row[0];
+	// Exact match on xref?
+	$gedcom=$statement1->execute(array($xref, $ged_id, $xref, $ged_id, $xref, $ged_id, $xref, $ged_id, $xref, $ged_id))->fetchOne();
+	if (!$gedcom) {
+		// Not found.  Maybe i123 instead of I123 on a DB with a case-sensitive collation?
+		$gedcom=$statement2->execute(array($xref, $ged_id, $xref, $ged_id, $xref, $ged_id, $xref, $ged_id, $xref, $ged_id))->fetchOne();
 	}
 
-	// Should only get here if the user is searching using the wrong upper/lower case.
-	// Use LIKE to match case-insensitively, as this can still use the database indexes.
-	$pid=str_replace(array('_', '%','@'), array('@_','@%', '@@'), $pid);
-	$res=dbquery(
-		"SELECT i_gedcom FROM {$TBLPREFIX}individuals WHERE i_id ".PGV_DB_LIKE." '{$pid}' ESCAPE '@' AND i_file={$ged_id} UNION ALL ".
-		"SELECT f_gedcom FROM {$TBLPREFIX}families    WHERE f_id ".PGV_DB_LIKE." '{$pid}' ESCAPE '@' AND f_file={$ged_id} UNION ALL ".
-		"SELECT s_gedcom FROM {$TBLPREFIX}sources     WHERE s_id ".PGV_DB_LIKE." '{$pid}' ESCAPE '@' AND s_file={$ged_id} UNION ALL ".
-		"SELECT m_gedrec FROM {$TBLPREFIX}media       WHERE m_media ".PGV_DB_LIKE." '{$pid}' ESCAPE '@' AND m_gedfile={$ged_id} UNION ALL ".
-		"SELECT o_gedcom FROM {$TBLPREFIX}other       WHERE o_id ".PGV_DB_LIKE." '{$pid}' ESCAPE '@' AND o_file={$ged_id}"
-	);
-	$row=$res->fetchRow();
-	$res->free();
-	if ($row) {
-		return $row[0];
-	}
-
-	// Record doesn't exist
-	return null;
+	return $gedcom;
 }
 
 // Find the type of a gedcom record. Check the cache before querying the database.
 // Returns 'INDI', 'FAM', etc., or null if the record does not exist.
 function gedcom_record_type($xref, $ged_id) {
-	global $TBLPREFIX, $DBCONN, $gedcom_record_cache;
+	global $TBLPREFIX, $gedcom_record_cache;
+	static $statement=null;
+
+	if (is_null($statement)) {
+		$statement=PGV_DB::prepare(
+			"SELECT ?      FROM {$TBLPREFIX}individuals WHERE i_id   =? AND i_file   =? UNION ALL ".
+			"SELECT ?      FROM {$TBLPREFIX}families    WHERE f_id   =? AND f_file   =? UNION ALL ".
+			"SELECT ?      FROM {$TBLPREFIX}sources     WHERE s_id   =? AND s_file   =? UNION ALL ".
+			"SELECT ?      FROM {$TBLPREFIX}media       WHERE m_media=? AND m_gedfile=? UNION ALL ".
+			"SELECT o_type FROM {$TBLPREFIX}other       WHERE o_id   =? AND o_file   =?"
+		);
+	}
 
 	if (isset($gedcom_record_cache[$xref][$ged_id])) {
 		return $gedcom_record_cache[$xref][$ged_id]->getType();
 	} else {
-		$xref=$DBCONN->escapeSimple($xref);
-		return $DBCONN->getOne(
-			"SELECT 'INDI' FROM {$TBLPREFIX}individuals WHERE i_id   ='{$xref}' AND i_file   ={$ged_id} UNION ALL ".
-			"SELECT 'FAM'  FROM {$TBLPREFIX}families    WHERE f_id   ='{$xref}' AND f_file   ={$ged_id} UNION ALL ".
-			"SELECT 'SOUR' FROM {$TBLPREFIX}sources     WHERE s_id   ='{$xref}' AND s_file   ={$ged_id} UNION ALL ".
-			"SELECT 'OBJE' FROM {$TBLPREFIX}media       WHERE m_media='{$xref}' AND m_gedfile={$ged_id} UNION ALL ".
-			"SELECT o_type FROM {$TBLPREFIX}other       WHERE o_id   ='{$xref}' AND o_file   ={$ged_id}"
-		);
+		return $statement->execute(array('INDI', $xref, $ged_id, 'FAM', $xref, $ged_id, 'SOUR', $xref, $ged_id, 'OBJE', $xref, $ged_id, $xref, $ged_id))->fetchOne();
 	}
 }
 
@@ -1331,16 +1331,15 @@ function gedcom_record_type($xref, $ged_id) {
 * calculated by the is_dead() function.  To improve import performance, the is_dead status is first
 * set to -1 during import.  The first time the is_dead status is retrieved this function is called to update
 * the database.  This makes the first request for a person slower, but will speed up all future requests.
-* @param string $pid id of individual to update
+* @param string $xref id of individual to update
 * @param string $ged_id gedcom to update
 * @param bool $isdead true=dead
 */
-function update_isdead($gid, $ged_id, $isdead) {
-	global $TBLPREFIX, $DBCONN;
-	$gid   =$DBCONN->escapeSimple($gid);
-	$ged_id=(int)$ged_id;
+function update_isdead($xref, $ged_id, $isdead) {
+	global $TBLPREFIX;
+
 	$isdead=$isdead ? 1 : 0; // DB uses int, not bool
-	dbquery("UPDATE {$TBLPREFIX}individuals SET i_isdead={$isdead} WHERE i_id='{$gid}' AND i_file={$ged_id}");
+	PGV_DB::prepare("UPDATE {$TBLPREFIX}individuals SET i_isdead=? WHERE i_id=? AND i_file=?")->execute(array($isdead, $xref, $ged_id));
 	return $isdead;
 }
 
@@ -1348,9 +1347,8 @@ function update_isdead($gid, $ged_id, $isdead) {
 // This is necessary when we change the MAX_ALIVE_YEARS value
 function reset_isdead($ged_id=PGV_GED_ID) {
 	global $TBLPREFIX;
-	$ged_id=(int)$ged_id;
 
-	dbquery("UPDATE {$TBLPREFIX}individuals SET i_isdead=-1 WHERE i_file=".$ged_id);
+	PGV_DB::prepare("UPDATE {$TBLPREFIX}individuals SET i_isdead=-1 WHERE i_file=?")->execute(array($ged_id));
 }
 
 /**
@@ -1361,16 +1359,17 @@ function reset_isdead($ged_id=PGV_GED_ID) {
 * @return array the array of sources
 */
 function get_source_list($ged_id) {
-	global $TBLPREFIX, $DBCONN;
+	global $TBLPREFIX;
 
-	$ged_id=(int)$ged_id;
+	$rows=
+		PGV_DB::prepare("SELECT 'SOUR' AS type, s_id AS xref, s_file AS ged_id, s_gedcom AS gedrec FROM {$TBLPREFIX}sources s WHERE s_file=?")
+		->execute(array($ged_id))
+		->fetchAll(PDO::FETCH_ASSOC);
 
-	$res=dbquery("SELECT 'SOUR' AS type, s_id AS xref, {$ged_id} AS ged_id, s_gedcom AS gedrec FROM {$TBLPREFIX}sources s WHERE s_file={$ged_id}");
 	$list=array();
-	while ($row=$res->fetchRow(DB_FETCHMODE_ASSOC)) {
+	foreach ($rows as $row) {
 		$list[]=Source::getInstance($row);
 	}
-	$res->free();
 	usort($list, array('GedcomRecord', 'Compare'));
 	return $list;
 }
@@ -1380,66 +1379,32 @@ function get_source_list($ged_id) {
 function get_repo_list($ged_id) {
 	global $TBLPREFIX;
 
-	$ged_id=(int)$ged_id;
-	$res=dbquery(
-		"SELECT 'REPO' AS type, o_id AS xref, {$ged_id} AS ged_id, o_gedcom AS gedrec ".
-		"FROM {$TBLPREFIX}other WHERE o_type='REPO' AND o_file={$ged_id}"
-	);
+	$rows=
+		PGV_DB::prepare("SELECT 'REPO' AS type, o_id AS xref, o_file AS ged_id, o_gedcom AS gedrec FROM {$TBLPREFIX}other WHERE o_type='REPO' AND o_file=?")
+		->execute(array($ged_id))
+		->fetchAll(PDO::FETCH_ASSOC);
+
 	$list=array();
-	while ($row=$res->fetchRow(DB_FETCHMODE_ASSOC)) {
+	foreach ($rows as $row) {
 		$list[]=Repository::getInstance($row);
 	}
-	$res->free();
-
 	usort($list, array('GedcomRecord', 'Compare'));
 	return $list;
-}
-
-//-- get the indilist from the datastore
-function get_indi_list() {
-	global $TBLPREFIX, $DBCOLLATE;
-
-	$sql="SELECT 'INDI' AS type, i_id AS xref, i_file AS ged_id, i_gedcom AS gedrec, i_isdead, i_sex FROM {$TBLPREFIX}name, {$TBLPREFIX}individuals WHERE n_file=".PGV_GED_ID." AND i_file=n_file AND i_id=n_id AND n_num=0 ORDER BY n_sort {$DBCOLLATE}";
-	$res=dbquery($sql);
-	$indis=array();
-	while ($row=$res->fetchRow(DB_FETCHMODE_ASSOC)) {
-		$indis[]=Person::getInstance($row);
-	}
-	$res->free();
-	usort($indis, array('GedcomRecord', 'Compare'));
-	return $indis;
-}
-
-//-- get the famlist from the datastore
-function get_fam_list() {
-	global $TBLPREFIX, $DBCOLLATE;
-
-	$sql="SELECT 'FAM' AS type, f_id AS xref, f_file AS ged_id, f_gedcom AS gedrec, f_husb, f_wife, f_chil, f_numchil FROM {$TBLPREFIX}name, {$TBLPREFIX}families WHERE n_file=".PGV_GED_ID." AND f_file=n_file AND f_id=n_id AND n_num=0 ORDER BY n_sort {$DBCOLLATE}";
-	$res=dbquery($sql);
-	$fams=array();
-	while ($row=$res->fetchRow(DB_FETCHMODE_ASSOC)) {
-		$fams[]=Family::getInstance($row);
-	}
-	$res->free();
-	usort($fams, array('GedcomRecord', 'Compare'));
-	return $fams;
 }
 
 //-- get the shared note list from the datastore
 function get_note_list($ged_id) {
 	global $TBLPREFIX;
 
-	$ged_id=(int)$ged_id;
-	$res=dbquery(
-		"SELECT 'NOTE' AS type, o_id AS xref, {$ged_id} AS ged_id, o_gedcom AS gedrec ".
-		"FROM {$TBLPREFIX}other WHERE o_type='NOTE' AND o_file={$ged_id}"
-	);
+	$rows=
+		PGV_DB::prepare("SELECT 'NOTE' AS type, o_id AS xref, {$ged_id} AS ged_id, o_gedcom AS gedrec FROM {$TBLPREFIX}other WHERE o_type=? AND o_file=?")
+		->execute(array('NOTE', $ged_id))
+		->fetchAll(PDO::FETCH_ASSOC);
+
 	$list=array();
-	while ($row=$res->fetchRow(DB_FETCHMODE_ASSOC)) {
+	foreach ($rows as $row) {
 		$list[]=Note::getInstance($row);
 	}
-	$res->free();
-
 	usort($list, array('GedcomRecord', 'Compare'));
 	return $list;
 }
