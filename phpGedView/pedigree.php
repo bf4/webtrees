@@ -65,7 +65,7 @@ if (!$controller->isPrintPreview()) {
 	}
 	//-->
 	</script>
-	<div align="center" style="position: relative; top: -60px;">
+	<div align="center" style="position: relative; top: -10px;">
 	<form name="people" method="get" action="pedigree.php">
 	<input type="hidden" name="show_full" value="<?php echo $controller->show_full; ?>" />
 		<table class="pedigree_table <?php echo $TEXT_DIRECTION; ?>" width="500" align="center">
