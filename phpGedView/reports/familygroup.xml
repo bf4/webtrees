@@ -203,6 +203,66 @@
 							<PGVRText style="text"><PGVRGedcomValue tag="BURI:PLAC" /></PGVRText>
 						</PGVRTextBox>
 					</PGVRif>
+
+					<PGVRGedcom id="$famid">
+					<!-- put the death and burial info if blanks are on -->
+					<PGVRif condition="$blanks==1">
+						<PGVRTextBox border="1" width="15" height="16"/>
+						<PGVRTextBox border="1" width="$dwidth" height="16">
+							<PGVRText style="pagenum"><PGVRvar var="factarray[MARR]" />  </PGVRText>
+							<PGVRText style="text"><PGVRGedcomValue tag="MARR:DATE" /></PGVRText>
+							<PGVRif condition="$sources==1">
+								<PGVRRepeatTag tag="MARR:SOUR">
+									<PGVRFootnote>
+										<PGVRGedcom id="@SOUR">
+											<PGVRGedcomValue tag="TITL" />
+										</PGVRGedcom>
+										<PGVRif condition="@PAGE!=''">: </PGVRif>
+										<PGVRGedcomValue tag="SOUR:PAGE"/> <PGVRGedcomValue tag="SOUR:DATA:TEXT"/>
+									</PGVRFootnote>
+								</PGVRRepeatTag>
+							</PGVRif>
+						</PGVRTextBox>
+						<PGVRTextBox border="1" width="$width2" height="16" newline="1">
+							<PGVRText style="pagenum"><PGVRvar var="factarray[PLAC]" />   </PGVRText>
+							<PGVRText style="text"><PGVRGedcomValue tag="MARR:PLAC" /></PGVRText>
+						</PGVRTextBox>
+					</PGVRif>
+
+					<!-- print all of the other facts -->
+					<PGVRFacts ignore="$ignore">
+						<PGVRTextBox border="1" width="15" height="16"/>
+						<PGVRTextBox border="1" width="$dwidth" height="16">
+							<PGVRText style="pagenum"><PGVRvar var="factarray[@fact]" />  </PGVRText>
+							<PGVRText style="text"><PGVRGedcomValue tag="@fact:DATE" /></PGVRText>
+							<PGVRif condition="$sources==1">
+								<PGVRRepeatTag tag="@fact:SOUR">
+									<PGVRFootnote>
+										<PGVRGedcom id="@SOUR">
+											<PGVRGedcomValue tag="TITL" />
+										</PGVRGedcom>
+										<PGVRif condition="@PAGE!=''">: </PGVRif>
+										<PGVRGedcomValue tag="SOUR:PAGE"/> <PGVRGedcomValue tag="SOUR:DATA:TEXT"/>
+									</PGVRFootnote>
+								</PGVRRepeatTag>
+							</PGVRif>
+						</PGVRTextBox>
+						<PGVRif condition="@desc!=''">
+							<PGVRTextBox border="1" width="$width2" height="16" newline="1">
+								<PGVRText style="text"><PGVRGedcomValue tag="@desc" /></PGVRText>
+								<PGVRText style="text"> <PGVRGedcomValue tag="@fact:PLAC" />
+								</PGVRText><PGVRText style="text"><PGVRGedcomValue tag="@fact:TEMP" /></PGVRText>
+							</PGVRTextBox>
+						</PGVRif>
+						<PGVRif condition="@desc==''">
+							<PGVRTextBox border="1" width="$width2" height="16" newline="1">
+								<PGVRText style="pagenum"><PGVRvar var="factarray[PLAC]" />   </PGVRText>
+								<PGVRText style="text"><PGVRGedcomValue tag="@fact:PLAC" /></PGVRText>
+								<PGVRText style="text"><PGVRGedcomValue tag="@fact:TEMP" /></PGVRText>
+							</PGVRTextBox>
+						</PGVRif>
+					</PGVRFacts>
+				</PGVRGedcom>
 				
 					<!-- print the father and mother of the main husband -->
 					<PGVRGedcom id="@FAMC">
@@ -210,11 +270,17 @@
 						<PGVRTextBox border="1" width="$width1" height="16" newline="1">
 							<PGVRText style="pagenum"><PGVRvar var="pgv_lang[father]" />   </PGVRText>
 							<PGVRText style="text"><PGVRGetPersonName id="@HUSB" /></PGVRText>
+							<PGVRGedcom id="@HUSB">
+							<PGVRText style="text"> (<PGVRGedcomValue tag="BIRT:DATE" /> - <PGVRGedcomValue tag="DEAT:DATE" />)</PGVRText>
+							</PGVRGedcom>
 						</PGVRTextBox>
 						<PGVRTextBox border="1" width="15" height="16"/>
 						<PGVRTextBox border="1" width="$width1" height="16" newline="1">
 							<PGVRText style="pagenum"><PGVRvar var="pgv_lang[mother]" />   </PGVRText>
 							<PGVRText style="text"><PGVRGetPersonName id="@WIFE" /></PGVRText>
+							<PGVRGedcom id="@WIFE">
+							<PGVRText style="text"> (<PGVRGedcomValue tag="BIRT:DATE" /> - <PGVRGedcomValue tag="DEAT:DATE" />)</PGVRText>
+							</PGVRGedcom>
 						</PGVRTextBox>
 					</PGVRGedcom>
 					<!-- print any notes for the husband -->
@@ -389,11 +455,17 @@
 						<PGVRTextBox border="1" width="$width1" height="16" newline="1">
 							<PGVRText style="pagenum"><PGVRvar var="pgv_lang[father]" />   </PGVRText>
 							<PGVRText style="text"><PGVRGetPersonName id="@HUSB" /></PGVRText>
+							<PGVRGedcom id="@HUSB">
+							<PGVRText style="text"> (<PGVRGedcomValue tag="BIRT:DATE" /> - <PGVRGedcomValue tag="DEAT:DATE" />)</PGVRText>
+							</PGVRGedcom>
 						</PGVRTextBox>
 						<PGVRTextBox border="1" width="15" height="16"/>
 						<PGVRTextBox border="1" width="$width1" height="16" newline="1">
 							<PGVRText style="pagenum"><PGVRvar var="pgv_lang[mother]" />   </PGVRText>
 							<PGVRText style="text"><PGVRGetPersonName id="@WIFE" /></PGVRText>
+							<PGVRGedcom id="@WIFE">
+							<PGVRText style="text"> (<PGVRGedcomValue tag="BIRT:DATE" /> - <PGVRGedcomValue tag="DEAT:DATE" />)</PGVRText>
+							</PGVRGedcom>
 						</PGVRTextBox>
 					</PGVRGedcom>
 					
