@@ -562,7 +562,9 @@ class PGV_DB {
 		if (!self::$pdo instanceof PDO) {
 			throw new PDOException("No Connection Established");
 		}
-		$statement=PGV_DB::limit_query($statement, $n);
+		if ($n) {
+			$statement=PGV_DB::limit_query($statement, (int)$n);
+		}
 		return new PGV_DBStatement(self::$pdo->prepare($statement));
 	}
 	
