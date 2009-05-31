@@ -38,9 +38,9 @@ class Mutex {
 	var $waitCount;	//-- the number of cycles it we waited while trying to acquire the mutex
 
 	function checkDBCONN() {
-		global $DBCONN, $CONFIGURED;
+		global $CONFIGURED;
 
-		if (!isset($DBCONN) || DB::isError($DBCONN)) {
+		if (!PGV_DB::isConnected()) {
 			if ($CONFIGURED) {
 				//-- fix bad configuration prevents edit config page from loading
 				//die("Cannot use mutex without database");
@@ -58,20 +58,23 @@ class Mutex {
 	 * @return Mutex
 	 */
 	function Mutex($name, $acquire=false) {
-		global $DBCONN, $TBLPREFIX;
+		global $TBLPREFIX;
 
 		if (!Mutex::checkDBCONN()) return false;
 		$this->name = $name;
 		//-- check if this mutex already exists
-		$sql="SELECT 1 FROM {$TBLPREFIX}mutex WHERE mx_name='".$DBCONN->escapeSimple($name)."'";
-		$res=dbquery($sql);
-		if (DB::isError($res)) return false;
-		$num_rows=$res->numRows();
-		$res->free();
+		try {
+			$one=
+				PGV_DB::prepare("SELECT 1 FROM {$TBLPREFIX}mutex WHERE mx_name=?")
+				->execute(array($name))
+				->fetchOne();
+		} catch (PDOException $ex) {
+			return false;
+		}
 		//-- mutex doesn't exist so create it
-		if ($num_rows==0) {
-			$sql = "INSERT INTO {$TBLPREFIX}mutex (mx_id, mx_name, mx_thread) VALUES (".get_next_id("mutex", "mx_id").", '".$DBCONN->escapeSimple($this->name)."', '0')";
-			$res = dbquery($sql);
+		if ($one!=1) {
+			PGV_DB::prepare("INSERT INTO {$TBLPREFIX}mutex (mx_id, mx_name, mx_thread) VALUES (?, ?, ?)")
+				->execute(array(get_next_id("mutex", "mx_id"), $this->name, 0));
 		}
 		$this->waitCount = 0;
 		if ($acquire) $this->Wait();
@@ -84,7 +87,7 @@ class Mutex {
 	 * @return boolean		true if successful, false if failed
 	 */
 	function Wait($time=-1) {
-		global $DBCONN, $TBLPREFIX;
+		global $TBLPREFIX;
 
 		if (!Mutex::checkDBCONN()) return false;
 		//-- check if mutex is available
@@ -93,10 +96,11 @@ class Mutex {
 			//-- do not allow a thread to hold the mutex for more than 5 minutes (300 secs), should not be a problem with PHP
 			//--- this will allow another thread to access the mutex if another thread that held it crashed
 			//-- allow the same session to get the mutex more than once
-			$sql = "SELECT 1 FROM {$TBLPREFIX}mutex WHERE mx_name='".$DBCONN->escapeSimple($this->name)."' AND (mx_thread='0' OR mx_thread='".session_id()."' OR mx_time < ".(time()-300).")";
-			$res = dbquery($sql);
-			if (DB::isError($res)) return false;
-			if ($res->numRows() > 0) {
+			$one=
+				PGV_DB::prepare("SELECT 1 FROM {$TBLPREFIX}mutex WHERE mx_name=? AND (mx_thread=? OR mx_thread=? OR mx_time < ?)")
+				->execute(array($this->name, '0', session_id(), time()-300))
+				->fetchOne();
+			if ($one==1) {
 				$available = true;
 			}
 			//-- sleep for 1 second between checks
@@ -106,11 +110,10 @@ class Mutex {
 				$this->waitCount++;
 				sleep(1);
 			}
-			$res->free();
 		}
 
-		$sql = "UPDATE {$TBLPREFIX}mutex SET mx_time=".time().", mx_thread='".session_id()."' WHERE mx_name='".$DBCONN->escapeSimple($this->name)."'";
-		$res = dbquery($sql);
+		PGV_DB::prepare("UPDATE {$TBLPREFIX}mutex SET mx_time=?, mx_thread=? WHERE mx_name=?")
+			->execute(array(time(), session_id(), $this->name));
 		return true;
 	}
 
@@ -119,14 +122,13 @@ class Mutex {
 	 *
 	 */
 	function Release() {
-		global $DBCONN, $TBLPREFIX;
+		global $TBLPREFIX;
 
 		if (!Mutex::checkDBCONN()) return false;
 
-		$sql = "UPDATE {$TBLPREFIX}mutex SET mx_time=0, mx_thread='0' WHERE mx_name='".$DBCONN->escapeSimple($this->name)."' AND mx_thread='".session_id()."'";
-		$res = dbquery($sql);
+		PGV_DB::prepare("UPDATE {$TBLPREFIX}mutex SET mx_time=?, mx_thread=? WHERE mx_name=? AND mx_thread=?")
+			->execute(array(0, '0', $this->name, session_id()));
 		$this->waitCount = 0;
-//		print "releasing mutex ".$this->name;
 	}
 
 	/**
