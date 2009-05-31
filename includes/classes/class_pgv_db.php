@@ -290,6 +290,11 @@ class PGV_DB {
 	// Add an entry to the log
 	public static function logQuery($query, $rows, $microtime, $bind_variables) {
 		$query2='';
+		foreach ($bind_variables as $key=>$value) {
+			if (is_null($value)) {
+				$bind_variables[$key]='[NULL]';
+			}
+		}
 		foreach (str_split(htmlspecialchars($query)) as $char) {
 			if ($char=='?') {
 				$query2.='<abbr title="'.htmlspecialchars(array_shift($bind_variables)).'">'.$char.'</abbr>';
