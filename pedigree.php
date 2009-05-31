@@ -255,7 +255,12 @@ for($i=($controller->treesize-1); $i>=0; $i--) {
 		else echo $controller->treeid[$i];
 		if ($TEXT_DIRECTION=="rtl") echo ".1.$iref\" style=\"position:absolute; right:";
 		else echo ".1.$iref\" style=\"position:absolute; left:";
-		echo $xoffset."px; top:".$yoffset."px; width:".($controller->pbwidth+$widthadd)."px; height:".$controller->pbheight."px; z-index: 0;\">";
+
+		if ($talloffset == 2) $zindex = $PEDIGREE_GENERATIONS-$curgen;
+		else $zindex = 0;
+
+		echo $xoffset."px; top:".$yoffset."px; width:".($controller->pbwidth+$widthadd)."px; height:".$controller->pbheight."px; ";
+		echo "z-index: ".$zindex.";\">";
 		echo "\n\t\t\t<table border=\"0\" cellspacing=\"0\" cellpadding=\"0\" width=\"100%\" dir=\"$TEXT_DIRECTION\">";
 		if (($talloffset < 2) && ($curgen > $talloffset) && ($curgen < $controller->PEDIGREE_GENERATIONS)) {
 			echo "<tr><td>";
@@ -309,7 +314,17 @@ if ($controller->rootPerson->canDisplayDetails()) {
 		echo "<div id=\"childarrow\" dir=\"";
 		if ($TEXT_DIRECTION=="rtl") echo "rtl\" style=\"position:absolute; right:";
 		else echo "ltr\" style=\"position:absolute; left:";
-		if ($talloffset < 2) {
+		if ($talloffset == 0) {
+			if ($PEDIGREE_GENERATIONS<6) {
+				$addxoffset = 60*(5-$PEDIGREE_GENERATIONS);
+			}
+			else {
+				$addxoffset = 0;
+			}
+			echo $addxoffset."px; top:".$yoffset."px; width:10px; height:10px; \">";
+		}
+		else if ($talloffset == 1) {
+			if ($PEDIGREE_GENERATIONS<4)	$basexoffset += 60;
 			echo $basexoffset."px; top:".$yoffset."px; width:10px; height:10px; \">";
 		}
 		else if ($talloffset==3) {
