@@ -263,9 +263,8 @@ function format_timestamp($time) {
 	global $DATE_FORMAT, $TIME_FORMAT;
 
 	return
-		strip_tags(timestamp_to_gedcom_date($time)->Display(false, $DATE_FORMAT)).
-		' - '.
-		date($TIME_FORMAT, $time);
+		PrintReady(timestamp_to_gedcom_date($time)->Display(false, $DATE_FORMAT).
+		'<span class="date"> - '.date($TIME_FORMAT, $time).'</span>');
 }
 
 ////////////////////////////////////////////////////////////////////////////////

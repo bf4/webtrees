@@ -548,7 +548,7 @@ class Person extends GedcomRecord {
 				$label .= "</div>";
 			}
 		}
-		if ($counter) $label .= "<div class=\"".strrev($TEXT_DIRECTION)."\">".$pgv_lang["number_sign"].$counter."</div>";
+		if ($counter) $label .= "<div>".$pgv_lang["number_sign"].$counter."</div>";
 		$label .= $this->label;
 		if ($gap!=0 && $counter<1) $label .= "<br />&nbsp;";
 		return $label;
