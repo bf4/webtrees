@@ -1226,7 +1226,8 @@ class stats {
 			$surn_countries=array();
 			$countries=$this->statsPlaces('FAM');
 			// PGV uses 3 letter country codes and localised country names, but google uses 2 letter codes.
-			foreach ($countries as $place) {
+			if (!empty($countries))
+			  foreach ($countries as $place) {
 				$country=UTF8_strtolower(trim($place['country']));
 				if (array_key_exists($country, $country_to_iso3166)) {
 					$surn_countries[$country_to_iso3166[$country]]=$place['count(*)'];
@@ -1240,7 +1241,8 @@ class stats {
 			$surn_countries=array();
 			$countries=$this->statsPlaces('INDI');
 			// PGV uses 3 letter country codes and localised country names, but google uses 2 letter codes.
-			foreach ($countries as $place) {
+			if (!empty($countries))
+			  foreach ($countries as $place) {				
 				$country=UTF8_strtolower(trim($place['country']));
 				if (array_key_exists($country, $country_to_iso3166)) {
 					$surn_countries[$country_to_iso3166[$country]]=$place['count(*)'];
@@ -1986,6 +1988,8 @@ class stats {
 			$chl[] = strip_tags(unhtmlentities($family->getFullName())).' - '.$rows[$i]['tot'];
 		}
 		$chl = join('|', $chl);
+
+// the following does not print Arabic letters in names - encode_url shows still the letters
 		return "<img src=\"".encode_url("http://chart.apis.google.com/chart?cht=p3&chd=e:{$chd}&chs={$size}&chco={$color_from},{$color_to}&chf=bg,s,ffffff00&chl={$chl}")."\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" alt=\"".$pgv_lang["stat_21_nok"]."\" title=\"".$pgv_lang["stat_21_nok"]."\" />";
 	}
 
