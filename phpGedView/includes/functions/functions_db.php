@@ -201,30 +201,6 @@ function &dbquery($sql, $show_error=true) {
 }
 
 /**
-* Clean up an item retrieved from the database
-*
-* clean the slashes and convert special
-* html characters to their entities for
-* display and entry into form elements
-* @param mixed $item the item to cleanup
-* @return mixed the cleaned up item
-*/
-function db_cleanup($item) {
-	if (is_array($item)) {
-		foreach ($item as $key=>$value) {
-			if ($key!="gedcom") {
-				$item[$key]=stripslashes($value);
-			} else {
-				$key=$value;
-			}
-		}
-		return $item;
-	} else {
-		return stripslashes($item);
-	}
-}
-
-/**
 * check if a gedcom has been imported into the database
 *
 * this function checks the database to see if the given gedcom has been imported yet.
@@ -232,29 +208,20 @@ function db_cleanup($item) {
 * @return bool return true if the gedcom has been imported otherwise returns false
 */
 function check_for_import($ged) {
-	global $TBLPREFIX, $DBCONN, $GEDCOMS;
+	global $TBLPREFIX, $GEDCOMS;
 
-	if (DB::isError($DBCONN)) {
-		return false;
-	}
-	if (count($GEDCOMS)==0) {
-		return false;
-	}
-	if (!isset($GEDCOMS[$ged])) {
+	if (!PGV_DB::isConnected() || count($GEDCOMS)==0 || !isset($GEDCOMS[$ged])) {
 		return false;
 	}
 
 	if (!isset($GEDCOMS[$ged]["imported"])) {
-		$GEDCOMS[$ged]["imported"] = false;
-		$sql = "SELECT count(i_id) FROM ".$TBLPREFIX."individuals WHERE i_file=".$DBCONN->escapeSimple($GEDCOMS[$ged]["id"]);
-		$res = dbquery($sql, false);
-
-		if (!empty($res) && !DB::isError($res) && is_object($res)) {
-			$row =& $res->fetchRow();
-			$res->free();
-			if ($row[0]>0) {
-				$GEDCOMS[$ged]["imported"] = true;
-			}
+		try {
+			$GEDCOMS[$ged]["imported"]=(bool)
+				PGV_DB::prepare("SELECT count(i_id) FROM {$TBLPREFIX}individuals WHERE i_file=?")
+				->execute(array($GEDCOMS[$ged]["id"]))
+				->fetchOne();
+		} catch (PDOException $ex) {
+			$GEDCOMS[$ged]["imported"]=false;
 		}
 		store_gedcoms();
 	}
@@ -542,11 +509,7 @@ function get_indilist_salpha($marnm, $fams, $ged_id) {
 // $ged_id - only consider individuals from this gedcom
 ////////////////////////////////////////////////////////////////////////////////
 function get_indilist_galpha($surn, $salpha, $marnm, $fams, $ged_id) {
-	global $DBCONN, $TBLPREFIX, $DB_UTF8_COLLATION, $DBCOLLATE;
-
-	$ged_id=(int)$ged_id;
-	$surn  =$DBCONN->escapeSimple($surn);
-	$salpha=$DBCONN->escapeSimple($salpha);
+	global $TBLPREFIX, $DB_UTF8_COLLATION, $DBCOLLATE;
 
 	if ($fams) {
 		$tables="{$TBLPREFIX}name, {$TBLPREFIX}individuals, {$TBLPREFIX}link";
@@ -559,9 +522,9 @@ function get_indilist_galpha($surn, $salpha, $marnm, $fams, $ged_id) {
 		$join.=" AND n_type!='_MARNM'";
 	}
 	if ($surn) {
-		$join.=" AND n_sort ".PGV_DB_LIKE." '{$surn},%'";
+		$join.=" AND n_sort ".PGV_DB_LIKE." ".PGV_DB::quote("{$surn},%");
 	} elseif ($salpha) {
-		$join.=" AND n_sort ".PGV_DB_LIKE." '{$salpha}%,%'";
+		$join.=" AND n_sort ".PGV_DB_LIKE." ".PGV_DB::quote("{$salpha}%,%");
 	}
 
 	if ($DB_UTF8_COLLATION) {
@@ -618,11 +581,7 @@ function get_indilist_galpha($surn, $salpha, $marnm, $fams, $ged_id) {
 // $ged_id - only consider individuals from this gedcom
 ////////////////////////////////////////////////////////////////////////////////
 function get_indilist_surns($surn, $salpha, $marnm, $fams, $ged_id) {
-	global $DBCONN, $TBLPREFIX, $DB_UTF8_COLLATION, $DBCOLLATE;
-
-	$surn=$DBCONN->escapeSimple($surn);
-	$salpha=$DBCONN->escapeSimple($salpha);
-	$ged_id=(int)$ged_id;
+	global $TBLPREFIX, $DB_UTF8_COLLATION, $DBCOLLATE;
 
 	$sql="SELECT DISTINCT n_surn, n_surname, n_id FROM {$TBLPREFIX}individuals JOIN {$TBLPREFIX}name ON (i_id=n_id AND i_file=n_file)";
 	if ($fams) {
@@ -638,17 +597,17 @@ function get_indilist_surns($surn, $salpha, $marnm, $fams, $ged_id) {
 	$includes=array();
 	if ($surn) {
 		// Match a surname
-		$includes[]="n_surn {$DBCOLLATE} ".PGV_DB_LIKE." '{$surn}'";
+		$includes[]="n_surn {$DBCOLLATE} ".PGV_DB_LIKE." ".PGV_DB::quote("{$surn}");
 	} elseif ($salpha==',') {
 		// Match a surname-less name
 		$includes[]="n_surn {$DBCOLLATE} = ''";
 	} elseif ($salpha) {
 		// Match a surname initial
 		foreach ($s_incl as $s) {
-			$includes[]="n_surn {$DBCOLLATE} ".PGV_DB_LIKE." '{$s}%'";
+			$includes[]="n_surn {$DBCOLLATE} ".PGV_DB_LIKE." ".PGV_DB::quote("{$s}%");
 		}
 		foreach ($s_excl as $s) {
-			$where[]="n_surn {$DBCOLLATE} NOT ".PGV_DB_LIKE." '{$s}%'";
+			$where[]="n_surn {$DBCOLLATE} NOT ".PGV_DB_LIKE." ".PGV_DB::quote("{$s}%");
 		}
 	} else {
 		// Match all individuals
@@ -681,11 +640,7 @@ function get_indilist_surns($surn, $salpha, $marnm, $fams, $ged_id) {
 // $ged_id - only consider individuals from this gedcom
 ////////////////////////////////////////////////////////////////////////////////
 function get_famlist_surns($surn, $salpha, $marnm, $ged_id) {
-	global $DBCONN, $TBLPREFIX, $DB_UTF8_COLLATION, $DBCOLLATE;
-
-	$surn=$DBCONN->escapeSimple($surn);
-	$salpha=$DBCONN->escapeSimple($salpha);
-	$ged_id=(int)$ged_id;
+	global $TBLPREFIX, $DB_UTF8_COLLATION, $DBCOLLATE;
 
 	$sql="SELECT DISTINCT n_surn, n_surname, l_to FROM {$TBLPREFIX}individuals JOIN {$TBLPREFIX}name ON (i_id=n_id AND i_file=n_file) JOIN {$TBLPREFIX}link ON (i_id=l_from AND i_file=l_file AND l_type='FAMS')";
 	$where=array("n_file={$ged_id}");
@@ -698,17 +653,17 @@ function get_famlist_surns($surn, $salpha, $marnm, $ged_id) {
 	$includes=array();
 	if ($surn) {
 		// Match a surname
-		$includes[]="n_surn {$DBCOLLATE} ".PGV_DB_LIKE." '{$surn}'";
+		$includes[]="n_surn {$DBCOLLATE} ".PGV_DB_LIKE." ".PGV_DB::quote("{$surn}");
 	} elseif ($salpha==',') {
 		// Match a surname-less name
 		$includes[]="n_surn {$DBCOLLATE} = ''";
 	} elseif ($salpha) {
 		// Match a surname initial
 		foreach ($s_incl as $s) {
-			$includes[]="n_surn {$DBCOLLATE} ".PGV_DB_LIKE." '{$s}%'";
+			$includes[]="n_surn {$DBCOLLATE} ".PGV_DB_LIKE." ".PGV_DB::quote("{$s}%");
 		}
 		foreach ($s_excl as $s) {
-			$where[]="n_surn {$DBCOLLATE} NOT ".PGV_DB_LIKE." '{$s}%'";
+			$where[]="n_surn {$DBCOLLATE} NOT ".PGV_DB_LIKE." ".PGV_DB::quote("{$s}%");
 		}
 	} else {
 		// Match all individuals
@@ -750,12 +705,7 @@ function get_famlist_surns($surn, $salpha, $marnm, $ged_id) {
 // To search for names with no surnames, use $salpha=","
 ////////////////////////////////////////////////////////////////////////////////
 function get_indilist_indis($surn='', $salpha='', $galpha='', $marnm=false, $fams=false, $ged_id=null) {
-	global $DBCONN, $TBLPREFIX, $DB_UTF8_COLLATION, $DBCOLLATE;
-
-	$surn  =$DBCONN->escapeSimple($surn);
-	$salpha=$DBCONN->escapeSimple($salpha);
-	$galpha=$DBCONN->escapeSimple($galpha);
-	$ged_id=(int)$ged_id;
+	global $TBLPREFIX, $DB_UTF8_COLLATION, $DBCOLLATE;
 
 	$sql="SELECT 'INDI' AS type, i_id AS xref, i_file AS ged_id, i_gedcom AS gedrec, i_isdead, i_sex, n_surn, n_surname, n_num FROM {$TBLPREFIX}individuals JOIN {$TBLPREFIX}name ON (i_id=n_id AND i_file=n_file)";
 	if ($fams) {
@@ -777,52 +727,52 @@ function get_indilist_indis($surn='', $salpha='', $galpha='', $marnm=false, $fam
 		// Match a surname, with or without a given initial
 		if ($galpha) {
 			foreach ($g_incl as $g) {
-				$includes[]="n_sort {$DBCOLLATE} ".PGV_DB_LIKE." '{$surn},{$g}%'";
+				$includes[]="n_sort {$DBCOLLATE} ".PGV_DB_LIKE." ".PGV_DB::quote("{$surn},{$g}%");
 			}
 			foreach ($g_excl as $g) {
-				$where[]="n_sort {$DBCOLLATE} NOT ".PGV_DB_LIKE." '{$surn},{$g}%'";
+				$where[]="n_sort {$DBCOLLATE} NOT ".PGV_DB_LIKE." ".PGV_DB::quote("{$surn},{$g}%");
 			}
 		} else {
-			$includes[]="n_sort {$DBCOLLATE} ".PGV_DB_LIKE." '{$surn},%'";
+			$includes[]="n_sort {$DBCOLLATE} ".PGV_DB_LIKE." ".PGV_DB::quote("{$surn},%");
 		}
 	} elseif ($salpha==',') {
 		// Match a surname-less name, with or without a given initial
 		if ($galpha) {
 			foreach ($g_incl as $g) {
-				$includes[]="n_sort {$DBCOLLATE} ".PGV_DB_LIKE." ',{$g}%'";
+				$includes[]="n_sort {$DBCOLLATE} ".PGV_DB_LIKE." ".PGV_DB::quote(",{$g}%");
 			}
 			foreach ($g_excl as $g) {
-				$where[]="n_sort {$DBCOLLATE} NOT ".PGV_DB_LIKE." ',{$g}%'";
+				$where[]="n_sort {$DBCOLLATE} NOT ".PGV_DB_LIKE." ".PGV_DB::quote(",{$g}%");
 			}
 		} else {
-			$includes[]="n_sort {$DBCOLLATE} ".PGV_DB_LIKE." ',%'";
+			$includes[]="n_sort {$DBCOLLATE} ".PGV_DB_LIKE." ".PGV_DB::quote(",%");
 		}
 	} elseif ($salpha) {
 		// Match a surname initial, with or without a given initial
 		if ($galpha) {
 			foreach ($g_excl as $g) {
 				foreach ($s_excl as $s) {
-					$includes[]="n_sort {$DBCOLLATE} ".PGV_DB_LIKE." '{$s}%,{$g}%'";
+					$includes[]="n_sort {$DBCOLLATE} ".PGV_DB_LIKE." ".PGV_DB::quote("{$s}%,{$g}%");
 				}
 			}
 			foreach ($g_excl as $g) {
 				foreach ($s_excl as $s) {
-					$where[]="n_sort {$DBCOLLATE} NOT ".PGV_DB_LIKE." '{$s}%,{$g}%'";
+					$where[]="n_sort {$DBCOLLATE} NOT ".PGV_DB_LIKE." ".PGV_DB::quote("{$s}%,{$g}%");
 				}
 			}
 		} else {
 			foreach ($s_incl as $s) {
-				$includes[]="n_sort {$DBCOLLATE} ".PGV_DB_LIKE." '{$s}%'";
+				$includes[]="n_sort {$DBCOLLATE} ".PGV_DB_LIKE." ".PGV_DB::quote("{$s}%");
 			}
 			foreach ($s_excl as $s) {
-				$where[]="n_sort {$DBCOLLATE} NOT ".PGV_DB_LIKE." '{$s}%'";
+				$where[]="n_sort {$DBCOLLATE} NOT ".PGV_DB_LIKE." ".PGV_DB::quote("{$s}%");
 			}
 		}
 	} elseif ($galpha) {
 		// Match all surnames with a given initial
-		$includes[]="n_sort {$DBCOLLATE} ".PGV_DB_LIKE." '%,{$galpha}%'";
+		$includes[]="n_sort {$DBCOLLATE} ".PGV_DB_LIKE." ".PGV_DB::quote("%,{$galpha}%");
 		foreach ($g_excl as $g) {
-			$where[]="n_sort {$DBCOLLATE} NOT ".PGV_DB_LIKE." '{$g}%'";
+			$where[]="n_sort {$DBCOLLATE} NOT ".PGV_DB_LIKE." ".PGV_DB::quote("{$g}%");
 		}
 	} else {
 		// Match all individuals
