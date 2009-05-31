@@ -2080,44 +2080,39 @@ function get_place_list($parent, $level) {
 * @return array
 */
 function get_place_positions($parent, $level='') {
-	global $TBLPREFIX, $DBCONN;
+	global $TBLPREFIX;
 
-	$positions=array();
+	// TODO: this function needs splitting into two
 
-	if ($level!='') {
-		$p_id = get_place_parent_id($parent, $level);
+	if ($level!=='') {
+		return
+			PGV_DB::prepare("SELECT DISTINCT pl_gid FROM {$TBLPREFIX}placelinks WHERE pl_p_id=? AND pl_file=?")
+			->execute(array(get_place_parent_id($parent, $level), PGV_GED_ID))
+			->fetchOneColumn();
 	} else {
 		//-- we don't know the level so get the any matching place
-		$sql = "SELECT DISTINCT pl_gid FROM ".$TBLPREFIX."placelinks, ".$TBLPREFIX."places WHERE p_place ".PGV_DB_LIKE." '".$DBCONN->escapeSimple($parent)."' AND p_file=pl_file AND p_id=pl_p_id AND p_file=".PGV_GED_ID;
-		$res = dbquery($sql);
-		while ($row =& $res->fetchRow()) {
-			$positions[] = $row[0];
-		}
-		$res->free();
-		return $positions;
+		return
+			PGV_DB::prepare("SELECT DISTINCT pl_gid FROM {$TBLPREFIX}placelinks, {$TBLPREFIX}places WHERE p_place ".PGV_DB_LIKE." ? AND p_file=pl_file AND p_id=pl_p_id AND p_file=?")
+			->execute(array($parent, PGV_GED_ID))
+			->fetchOneColumn();
 	}
-	$sql = "SELECT DISTINCT pl_gid FROM ".$TBLPREFIX."placelinks WHERE pl_p_id=$p_id AND pl_file=".PGV_GED_ID;
-	$res = dbquery($sql);
-
-	while ($row =& $res->fetchRow()) {
-		$positions[] = $row[0];
-	}
-	$res->free();
-	return $positions;
 }
 
 //-- find all of the places
 function find_place_list($place) {
-	global $TBLPREFIX, $placelist;
+	global $TBLPREFIX;
 
-	$sql = "SELECT p_id, p_place, p_parent_id  FROM ".$TBLPREFIX."places WHERE p_file=".PGV_GED_ID." ORDER BY p_parent_id, p_id";
-	$res = dbquery($sql);
+	$rows=
+		PGV_DB::prepare("SELECT p_id, p_place, p_parent_id  FROM {$TBLPREFIX}places WHERE p_file=? ORDER BY p_parent_id, p_id")
+		->execute(array(PGV_GED_ID))
+		->fetchAll();
 
-	while ($row =& $res->fetchRow()) {
-		if ($row[2]==0) {
-			$placelist[$row[0]] = $row[1];
+	$placelist=array();
+	foreach ($rows as $row) {
+		if ($row->p_parent_id==0) {
+			$placelist[$row->p_id] = $row->p_place;
 		} else {
-			$placelist[$row[0]] = $placelist[$row[2]].", ".$row[1];
+			$placelist[$row->p_id] = $placelist[$row->p_parent_id].", ".$row->p_place;
 		}
 	}
 	if (!empty($place)) {
@@ -2132,19 +2127,19 @@ function find_place_list($place) {
 		}
 		$placelist = array_values($found);
 	}
+	return $placelist;
 }
 
 //-- function to find the gedcom id for the given rin
 function find_rin_id($rin) {
 	global $TBLPREFIX;
 
-	$sql = "SELECT i_id FROM ".$TBLPREFIX."individuals WHERE i_rin='$rin' AND i_file=".PGV_GED_ID;
-	$res = dbquery($sql);
+	$xref=
+		PGV_DB::prepare("SELECT i_id FROM {$TBLPREFIX}individuals WHERE i_rin=? AND i_file=?")
+		->execute(array($rin, PGV_GED_ID))
+		->fetchOne();
 
-	while ($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)) {
-		return $row["i_id"];
-	}
-	return $rin;
+	return $xref ? $xref : $rin;
 }
 
 /**
@@ -2153,30 +2148,29 @@ function find_rin_id($rin) {
 * @param string $ged  the filename of the gedcom to delete
 */
 function delete_gedcom($ged) {
-	global $TBLPREFIX, $pgv_changes, $DBCONN, $GEDCOMS;
+	global $TBLPREFIX, $pgv_changes, $GEDCOMS;
 
 	if (!isset($GEDCOMS[$ged])) {
 		return;
 	}
 
-	$ged=$DBCONN->escapeSimple($ged);
-	$dbged=(int)$GEDCOMS[$ged]["id"];
+	$ged_id=get_id_from_gedcom($ged);
 
-	$res = dbquery("DELETE FROM {$TBLPREFIX}blocks        WHERE b_username='{$ged}'");
-	$res = dbquery("DELETE FROM {$TBLPREFIX}dates         WHERE d_file    =$dbged");
-	$res = dbquery("DELETE FROM {$TBLPREFIX}families      WHERE f_file    =$dbged");
-	$res = dbquery("DELETE FROM {$TBLPREFIX}favorites     WHERE fv_file   =$dbged");
-	$res = dbquery("DELETE FROM {$TBLPREFIX}individuals   WHERE i_file    =$dbged");
-	$res = dbquery("DELETE FROM {$TBLPREFIX}link          WHERE l_file    =$dbged");
-	$res = dbquery("DELETE FROM {$TBLPREFIX}media         WHERE m_gedfile =$dbged");
-	$res = dbquery("DELETE FROM {$TBLPREFIX}media_mapping WHERE mm_gedfile=$dbged");
-	$res = dbquery("DELETE FROM {$TBLPREFIX}name          WHERE n_file    =$dbged");
-	$res = dbquery("DELETE FROM {$TBLPREFIX}news          WHERE n_username='{$ged}'");
-	$res = dbquery("DELETE FROM {$TBLPREFIX}nextid        WHERE ni_gedfile=$dbged");
-	$res = dbquery("DELETE FROM {$TBLPREFIX}other         WHERE o_file    =$dbged");
-	$res = dbquery("DELETE FROM {$TBLPREFIX}placelinks    WHERE pl_file   =$dbged");
-	$res = dbquery("DELETE FROM {$TBLPREFIX}places        WHERE p_file    =$dbged");
-	$res = dbquery("DELETE FROM {$TBLPREFIX}sources       WHERE s_file    =$dbged");
+	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}blocks        WHERE b_username=?")->execute(array($ged));
+	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}dates         WHERE d_file    =?")->execute(array($ged_id));
+	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}families      WHERE f_file    =?")->execute(array($ged_id));
+	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}favorites     WHERE fv_file   =?")->execute(array($ged_id));
+	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}individuals   WHERE i_file    =?")->execute(array($ged_id));
+	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}link          WHERE l_file    =?")->execute(array($ged_id));
+	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}media         WHERE m_gedfile =?")->execute(array($ged_id));
+	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}media_mapping WHERE mm_gedfile=?")->execute(array($ged_id));
+	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}name          WHERE n_file    =?")->execute(array($ged_id));
+	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}news          WHERE n_username=?")->execute(array($ged));
+	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}nextid        WHERE ni_gedfile=?")->execute(array($ged_id));
+	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}other         WHERE o_file    =?")->execute(array($ged_id));
+	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}placelinks    WHERE pl_file   =?")->execute(array($ged_id));
+	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}places        WHERE p_file    =?")->execute(array($ged_id));
+	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}sources       WHERE s_file    =?")->execute(array($ged_id));
 
 	if (isset($pgv_changes)) {
 		//-- erase any of the changes
@@ -2197,21 +2191,19 @@ function delete_gedcom($ged) {
 function get_top_surnames($num) {
 	global $TBLPREFIX;
 
-	$surnames = array();
-	$sql = "SELECT COUNT(n_surname) AS count, n_surn FROM {$TBLPREFIX}name WHERE n_file=".PGV_GED_ID." AND n_type!='_MARNM' AND n_surn NOT IN ('@N.N.', '', '?', 'UNKNOWN')GROUP BY n_surn ORDER BY count DESC";
-	$sql = PGV_DB::limit_query($sql, $num+1);
-	$res = dbquery($sql, true);
+	$rows=
+		PGV_DB::prepareLimit("SELECT COUNT(n_surname) AS count, n_surn FROM {$TBLPREFIX}name WHERE n_file=? AND n_type!=? AND n_surn NOT IN (?, ?, ?, ?) GROUP BY n_surn ORDER BY count DESC", $num+1)
+		->execute(array(PGV_GED_ID, '_MARNM', '@N.N.', '', '?', 'UNKNOWN'))
+		->fetchAll();
 
-	if (!DB::isError($res)) {
-		while ($row =& $res->fetchRow()) {
-			if (isset($surnames[$row[1]]['match'])) {
-				$surnames[$row[1]]['match'] += $row[0];
-			} else {
-				$surnames[$row[1]]['name'] = $row[1];
-				$surnames[$row[1]]['match'] = $row[0];
-				}
-			}
-		$res->free();
+	$surnames = array();
+	foreach ($rows as $row) {
+		if (isset($surnames[$row->n_surn]['match'])) {
+			$surnames[$row->n_surn]['match'] += $row->count;
+		} else {
+			$surnames[$row->n_surn]['name'] = $row->n_surn;
+			$surnames[$row->n_surn]['match'] = $row->count;
+		}
 	}
 	return $surnames;
 }
@@ -2232,15 +2224,7 @@ function get_next_id($table, $field) {
 		$TABLE_IDS[$table][$field]++;
 		return $TABLE_IDS[$table][$field];
 	}
-	$newid = 0;
-	$sql = "SELECT MAX($field) FROM ".$TBLPREFIX.$table;
-	$res = dbquery($sql);
-
-	if ($res!==false && !DB::isError($res)) {
-		$row = $res->fetchRow();
-		$res->free();
-		$newid = $row[0];
-	}
+	$newid=PGV_DB::prepare("SELECT MAX({$field}) FROM {$TBLPREFIX}{$table}")->fetchOne();
 	$newid++;
 	$TABLE_IDS[$table][$field] = $newid;
 	return $newid;
