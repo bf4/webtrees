@@ -1418,7 +1418,7 @@ function exists_pending_change($user_id=PGV_USER_ID, $ged_id=PGV_GED_ID) {
  */
 function find_highlighted_object($pid, $indirec) {
 	global $MEDIA_DIRECTORY, $MEDIA_DIRECTORY_LEVELS, $PGV_IMAGE_DIR, $PGV_IMAGES, $MEDIA_EXTERNAL;
-	global $GEDCOMS, $GEDCOM, $TBLPREFIX, $DBCONN;
+	global $GEDCOMS, $GEDCOM, $TBLPREFIX;
 
 	if (!showFactDetails("OBJE", $pid)) {
 		return false;
@@ -1446,14 +1446,10 @@ function find_highlighted_object($pid, $indirec) {
 	}
 
 	//-- find all of the media items for a person
-	$sql = "SELECT m_media, m_file, m_gedrec, mm_gedrec FROM ".$TBLPREFIX."media, ".$TBLPREFIX."media_mapping WHERE m_media=mm_media AND m_gedfile=mm_gedfile AND m_gedfile='".$GEDCOMS[$GEDCOM]["id"]."' AND mm_gid='".$DBCONN->escapeSimple($pid)."' ORDER BY mm_order";
-	$res = dbquery($sql);
-	if (!DB::isError($res)) {
-		while ($row = $res->fetchRow()) {
-			$media[] = $row;
-		}
-		$res->free();
-	}
+	$media=
+		PGV_DB::prepare("SELECT m_media, m_file, m_gedrec, mm_gedrec FROM {$TBLPREFIX}media, {$TBLPREFIX}media_mapping WHERE m_media=mm_media AND m_gedfile=mm_gedfile AND m_gedfile=? AND mm_gid=? ORDER BY mm_order")
+		->execute(array($GEDCOMS[$GEDCOM]["id"], $pid))
+		->fetchAll(PDO::FETCH_NUM);
 
 	foreach ($media as $i=>$row) {
 		if (displayDetailsById($row[0], 'OBJE') && !FactViewRestricted($row[0], $row[2])) {
@@ -2552,7 +2548,14 @@ function get_relationship1($pid1, $pid2, $followspouse=true, $maxlength=0) {
 	// Read all the relationships into a memory cache
 	if (is_null($RELA)) {
 		$RELA=array();
-		$families=&$DBCONN->getAssoc("SELECT f_id, f_husb, f_wife, TRIM(TRAILING ';' FROM f_chil) as f_chil FROM {$TBLPREFIX}families WHERE f_file=".PGV_GED_ID);
+		$rows=
+			PGV_DB::prepare("SELECT f_id, f_husb, f_wife, TRIM(TRAILING ? FROM f_chil) AS f_chil FROM {$TBLPREFIX}families WHERE f_file=?")
+			->execute(array(';', PGV_GED_ID))
+			->fetchAll();
+		$families=array();
+		foreach ($rows as $row) {
+			$families[$row->f_id]=array($row->f_husb, $row->f_wife, $row->f_chil);
+		}
 		foreach ($families as $f_id=>$family) {
 			// Include pending changes
 			if (PGV_USER_CAN_EDIT && isset($pgv_changes[$f_id."_".$GEDCOM])) {
@@ -2648,14 +2651,21 @@ function get_relationship1($pid1, $pid2, $followspouse=true, $maxlength=0) {
 }
 
 function get_relationship2($pid1, $pid2, $followspouse=true, $maxlength=0, $ignore_cache=false, $path_to_find=0) {
-	global $pgv_changes, $GEDCOM, $TBLPREFIX, $DBCONN;
+	global $pgv_changes, $GEDCOM, $TBLPREFIX;
 	static $RELA=null;
 	static $PATHS=null;
 
 	// Read all the relationships into a memory cache
 	if (is_null($RELA)) {
 		$RELA=array();
-		$families=&$DBCONN->getAssoc("SELECT f_id, f_husb, f_wife, TRIM(TRAILING ';' FROM f_chil) as f_chil FROM {$TBLPREFIX}families WHERE f_file=".PGV_GED_ID);
+		$rows=
+			PGV_DB::prepare("SELECT f_id, f_husb, f_wife, TRIM(TRAILING ? FROM f_chil) AS f_chil FROM {$TBLPREFIX}families WHERE f_file=?")
+			->execute(array(';', PGV_GED_ID))
+			->fetchAll();
+		$families=array();
+		foreach ($rows as $row) {
+			$families[$row->f_id]=array($row->f_husb, $row->f_wife, $row->f_chil);
+		}
 		foreach ($families as $f_id=>$family) {
 			// Include pending changes
 			if (PGV_USER_CAN_EDIT && isset($pgv_changes[$f_id."_".$GEDCOM])) {
@@ -3296,7 +3306,7 @@ function CheckPageViews() {
  */
 function get_new_xref($type='INDI', $use_cache=false) {
 	global $fcontents, $SOURCE_ID_PREFIX, $REPO_ID_PREFIX, $pgv_changes, $GEDCOM, $TBLPREFIX, $GEDCOMS;
-	global $MEDIA_ID_PREFIX, $FAM_ID_PREFIX, $GEDCOM_ID_PREFIX, $FILE, $DBCONN, $MAX_IDS;
+	global $MEDIA_ID_PREFIX, $FAM_ID_PREFIX, $GEDCOM_ID_PREFIX, $FILE, $MAX_IDS;
 
 	//-- during online updates $FILE comes through as an array for some odd reason
 	if (!empty($FILE) && !is_array($FILE)) {
@@ -3313,12 +3323,11 @@ function get_new_xref($type='INDI', $use_cache=false) {
 		$MAX_IDS[$type] = $num+1;
 	} else {
 		//-- check for the id in the nextid table
-		$sql = "SELECT ni_id FROM ".$TBLPREFIX."nextid WHERE ni_type='".$DBCONN->escapeSimple($type)."' AND ni_gedfile='".$DBCONN->escapeSimple($gedid)."'";
-		$res =& dbquery($sql);
-		if ($res->numRows() > 0) {
-			$row = $res->fetchRow();
-			$num = $row[0];
-		}
+		$num=
+			PGV_DB::prepare("SELECT ni_id FROM {$TBLPREFIX}nextid WHERE ni_type=? AND ni_gedfile=?")
+			->execute(array($type, $gedid))
+			->fetchOne();
+
 		//-- the id was not found in the table so try and find it in the file
 		if (is_null($num) && !empty($fcontents)) {
 			$ct = preg_match_all("/0 @(.*)@ $type/", $fcontents, $match, PREG_SET_ORDER);
@@ -3337,8 +3346,8 @@ function get_new_xref($type='INDI', $use_cache=false) {
 		//-- type wasn't found in database or in file so make a new one
 		if (is_null($num)) {
 			$num = 1;
-			$sql = "INSERT INTO ".$TBLPREFIX."nextid VALUES('".$DBCONN->escapeSimple($num+1)."', '".$DBCONN->escapeSimple($type)."', '".$gedid."')";
-			$res = dbquery($sql);
+			PGV_DB::prepare("INSERT INTO {$TBLPREFIX}nextid VALUES(?, ?, ?)")
+				->execute(array($num+1, $type, $gedid));
 		}
 	}
 
@@ -3381,10 +3390,9 @@ function get_new_xref($type='INDI', $use_cache=false) {
 	if ($use_cache && isset($MAX_IDS[$type])) {
 		return $key;
 	}
-	$num++;
 	//-- update the next id number in the DB table
-	$sql = "UPDATE ".$TBLPREFIX."nextid SET ni_id='".$DBCONN->escapeSimple($num)."' WHERE ni_type='".$DBCONN->escapeSimple($type)."' AND ni_gedfile='".$DBCONN->escapeSimple($gedid)."'";
-	$res = dbquery($sql);
+	PGV_DB::prepare("UPDATE {$TBLPREFIX}nextid SET ni_id=? WHERE ni_type=? AND ni_gedfile=?")
+		->execute(array($num+1, $type, $gedid));
 	return $key;
 }
 
@@ -3568,7 +3576,6 @@ function loadLanguage($desiredLanguage="english", $forceLoad=false) {
 	global $DICTIONARY_SORT, $UCDiacritWhole, $UCDiacritStrip, $UCDiacritOrder, $LCDiacritWhole, $LCDiacritStrip, $LCDiacritOrder;
 	global $unknownNN, $unknownPN;
 	global $JEWISH_ASHKENAZ_PRONUNCIATION, $CALENDAR_FORMAT;
-	global $DBCONN;
 	global $DBTYPE, $DB_UTF8_COLLATION, $COLLATION, $DBCOLLATE;
 
 	// Need to change the collation sequence each time we change language
@@ -3615,14 +3622,14 @@ function loadLanguage($desiredLanguage="english", $forceLoad=false) {
 		// load admin lang keys
 		$file = $adminfile[$LANGUAGE];
 		if (file_exists($file)) {
-			if (!$CONFIGURED || DB::isError($DBCONN) || !adminUserExists() || PGV_USER_GEDCOM_ADMIN) {
+			if (!$CONFIGURED || !PGV_DB::isConnected() || !adminUserExists() || PGV_USER_GEDCOM_ADMIN) {
 				include($file);
 			}
 		}
 		// load the edit lang keys
 		$file = $editorfile[$LANGUAGE];
 		if (file_exists($file)) {
-			if (DB::isError($DBCONN) || !adminUserExists() || PGV_USER_GEDCOM_ADMIN || PGV_USER_CAN_EDIT) {
+			if (!PGV_DB::isConnected() || !adminUserExists() || PGV_USER_GEDCOM_ADMIN || PGV_USER_CAN_EDIT) {
 				include($file);
 			}
 		}
@@ -3654,14 +3661,14 @@ function loadLanguage($desiredLanguage="english", $forceLoad=false) {
 		// load admin lang keys
 		$file = $adminfile[$LANGUAGE];
 		if (file_exists($file)) {
-			if (!$CONFIGURED || DB::isError($DBCONN) || !adminUserExists() || PGV_USER_GEDCOM_ADMIN) {
+			if (!$CONFIGURED || !PGV_DB::isConnected() || !adminUserExists() || PGV_USER_GEDCOM_ADMIN) {
 				include($file);
 			}
 		}
 		// load the edit lang keys
 		$file = $editorfile[$LANGUAGE];
 		if (file_exists($file)) {
-			if (DB::isError($DBCONN) || !adminUserExists() || PGV_USER_CAN_EDIT) {
+			if (!PGV_DB::isConnected() || !adminUserExists() || PGV_USER_CAN_EDIT) {
 				include($file);
 			}
 		}
