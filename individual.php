@@ -172,7 +172,8 @@ $linkToID=$controller->pid; // -- Tell addmedia.php what to link to
 		<?php } 
 				//-- get charts menu from menubar
 				$menubar = new MenuBar();
-				$menu = $menubar->getChartsMenu($controller->pid); $menu->printMenu();
+				$menu = $menubar->getChartsMenu($controller->pid); 
+				$menu->printMenu();
 				?>
 				</<?php if (!$PGV_MENUS_AS_LISTS) {?>td><td<?php } else { ?>ul><ul<?php }?> class="sublinks_cell <?php echo $TEXT_DIRECTION; ?>">
 				<?php
@@ -180,22 +181,26 @@ $linkToID=$controller->pid; // -- Tell addmedia.php what to link to
 				if (!$surname) {
 					$surname='@N.N.'; // TODO empty surname is not the same as @N.N.
 				}
-				$menu = $menubar->getListsMenu($surname); $menu->printMenu();
+				$menu = $menubar->getListsMenu($surname); 
+				$menu->printMenu();
 				if (file_exists("reports/individual.xml")) {?>
 				</<?php if (!$PGV_MENUS_AS_LISTS) {?>td><td<?php } else { ?>ul><ul<?php }?> class="sublinks_cell <?php echo $TEXT_DIRECTION; ?>">
 					<?php
 					//-- get reports menu from menubar
-					$menu = $menubar->getReportsMenu($controller->pid); $menu->printMenu();
+					$menu = $menubar->getReportsMenu($controller->pid); 
+					$menu->printMenu();
 				}
 				if ($controller->userCanEdit()) {
 				?>
 				</<?php if (!$PGV_MENUS_AS_LISTS) {?>td><td<?php } else { ?>ul><ul<?php }?> class="sublinks_cell <?php echo $TEXT_DIRECTION; ?>">
-				<?php $menu = $controller->getEditMenu(); $menu->printMenu();
+				<?php $menu = $controller->getEditMenu(); 
+				$menu->printMenu();
 				}
 				if ($controller->canShowOtherMenu()) {
 				?>
 				</<?php if (!$PGV_MENUS_AS_LISTS) {?>td><td<?php } else { ?>ul><ul<?php }?> class="sublinks_cell <?php echo $TEXT_DIRECTION; ?>">
-				<?php $menu = $controller->getOtherMenu(); $menu->printMenu();
+				<?php $menu = $controller->getOtherMenu(); 
+				$menu->printMenu();
 				}
 				?>
 		<?php if (!$PGV_MENUS_AS_LISTS) {?>
