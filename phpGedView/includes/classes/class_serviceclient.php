@@ -721,7 +721,7 @@ class ServiceClient extends GedcomRecord {
 	* @param boolean $firstLink is this the first time this record is being linked
 	*/
 	function mergeGedcomRecord($xref, $localrec, $isStub=false, $firstLink=false) {
-		global $FILE, $GEDCOM, $sourcelist, $otherlist;
+		global $FILE, $GEDCOM;
 		global $TBLPREFIX, $pgv_changes;
 		$FILE = $GEDCOM;
 		if (!$isStub) {
