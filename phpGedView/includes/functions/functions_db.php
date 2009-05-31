@@ -1891,7 +1891,7 @@ function search_fams_names($query, $geds, $match) {
 // $match - AND or OR
 // $skip - ignore data in certain tags
 function search_sources($query, $geds, $match, $skip) {
-	global $TBLPREFIX, $GEDCOM, $DBCONN, $DB_UTF8_COLLATION;
+	global $TBLPREFIX, $GEDCOM, $DB_UTF8_COLLATION;
 
 	// No query => no results
 	if (!$query) {
@@ -1905,11 +1905,10 @@ function search_sources($query, $geds, $match, $skip) {
 
 	foreach ($query as $q) {
 		$queryregex[]=preg_quote(UTF8_strtoupper($q), '/');
-		$q=$DBCONN->escapeSimple($q);
 		if ($DB_UTF8_COLLATION || !has_utf8($q)) {
-			$querysql[]='s_gedcom '.PGV_DB_LIKE." '%{$q}%'";
+			$querysql[]='s_gedcom '.PGV_DB_LIKE." ".PGV_DB::quote("%{$q}%");
 		} else {
-			$querysql[]='(s_gedcom '.PGV_DB_LIKE." '%{$q}%' OR s_gedcom ".PGV_DB_LIKE." '%".UTF8_strtoupper($q)."%' OR s_gedcom ".PGV_DB_LIKE." '%".UTF8_strtolower($q)."%')";
+			$querysql[]='(s_gedcom '.PGV_DB_LIKE." ".PGV_DB::quote("%{$q}%")." OR s_gedcom ".PGV_DB_LIKE." ".PGV_DB::quote(UTF8_strtoupper("%{$q}%"))." OR s_gedcom ".PGV_DB_LIKE." ".PGV_DB_LIKE." ".PGV_DB::quote(UTF8_strtolower("%{$q}%")).")";
 		}
 	}
 
@@ -1926,9 +1925,9 @@ function search_sources($query, $geds, $match, $skip) {
 	}
 
 	$list=array();
-	$res=dbquery($sql);
+	$rows=PGV_DB::prepare($sql)->fetchAll(PDO::FETCH_ASSOC);
 	$GED_ID=PGV_GED_ID;
-	while ($row=$res->fetchRow(DB_FETCHMODE_ASSOC)) {
+	foreach ($rows as $row) {
 		// Switch privacy file if necessary
 		if ($row['ged_id']!=$GED_ID) {
 			$GEDCOM=get_gedcom_from_id($row['ged_id']);
@@ -1948,7 +1947,6 @@ function search_sources($query, $geds, $match, $skip) {
 		}
 		$list[]=$source;
 	}
-	$res->free();
 	// Switch privacy file if necessary
 	if ($GED_ID!=PGV_GED_ID) {
 		$GEDCOM=get_gedcom_from_id(PGV_GED_ID);
@@ -1963,7 +1961,7 @@ function search_sources($query, $geds, $match, $skip) {
 // $match - AND or OR
 // $skip - ignore data in certain tags
 function search_notes($query, $geds, $match, $skip) {
-	global $TBLPREFIX, $GEDCOM, $DBCONN, $DB_UTF8_COLLATION;
+	global $TBLPREFIX, $GEDCOM, $DB_UTF8_COLLATION;
 
 	// No query => no results
 	if (!$query) {
@@ -1977,11 +1975,10 @@ function search_notes($query, $geds, $match, $skip) {
 	
 	foreach ($query as $q) {
 		$queryregex[]=preg_quote(UTF8_strtoupper($q), '/');
-		$q=$DBCONN->escapeSimple($q);
 		if ($DB_UTF8_COLLATION || !has_utf8($q)) {
-			$querysql[]='o_gedcom '.PGV_DB_LIKE." '%{$q}%'";
+			$querysql[]='o_gedcom '.PGV_DB_LIKE." ".PGV_DB::quote("%{$q}%");
 		} else {
-			$querysql[]='(o_gedcom '.PGV_DB_LIKE." '%{$q}%' OR o_gedcom ".PGV_DB_LIKE." '%".UTF8_strtoupper($q)."%' OR o_gedcom ".PGV_DB_LIKE." '%".UTF8_strtolower($q)."%')";
+			$querysql[]='(o_gedcom '.PGV_DB_LIKE." ".PGV_DB::quote("%{$q}%")." OR o_gedcom ".PGV_DB_LIKE." ".PGV_DB::quote(UTF8_strtoupper("%{$q}%"))." OR o_gedcom ".PGV_DB_LIKE." ".PGV_DB_LIKE." ".PGV_DB::quote(UTF8_strtolower("%{$q}%")).")";
 		}
 	}
 
@@ -1998,9 +1995,9 @@ function search_notes($query, $geds, $match, $skip) {
 	}
 
 	$list=array();
-	$res=dbquery($sql);
+	$rows=PGV_DB::prepare($sql)->fetchAll(PDO::FETCH_ASSOC);
 	$GED_ID=PGV_GED_ID;
-	while ($row=$res->fetchRow(DB_FETCHMODE_ASSOC)) {
+	foreach ($rows as $row) {
 		// Switch privacy file if necessary
 		if ($row['ged_id']!=$GED_ID) {
 			$GEDCOM=get_gedcom_from_id($row['ged_id']);
@@ -2020,7 +2017,6 @@ function search_notes($query, $geds, $match, $skip) {
 		}
 		$list[]=$note;
 	}
-	$res->free();
 	// Switch privacy file if necessary
 	if ($GED_ID!=PGV_GED_ID) {
 		$GEDCOM=get_gedcom_from_id(PGV_GED_ID);
@@ -2036,19 +2032,20 @@ function search_notes($query, $geds, $match, $skip) {
 * @return int
 */
 function get_place_parent_id($parent, $level) {
-	global $DBCONN, $TBLPREFIX;
+	global $TBLPREFIX;
+	static $statement=null;
+
+	if (is_null($statement)) {
+		$statement=PGV_DB::prepare("SELECT p_id FROM {$TBLPREFIX}places WHERE p_level=? AND p_parent_id=? AND p_place ".PGV_DB_LIKE." ? AND p_file=?");
+	}
 
 	$parent_id=0;
 	for ($i=0; $i<$level; $i++) {
-		$escparent=preg_replace("/\?/","\\\\\\?", $DBCONN->escapeSimple($parent[$i]));
-		$psql = "SELECT p_id FROM ".$TBLPREFIX."places WHERE p_level=".$i." AND p_parent_id=$parent_id AND p_place ".PGV_DB_LIKE." '".$escparent."' AND p_file=".PGV_GED_ID." ORDER BY p_place";
-		$res = dbquery($psql);
-		$row =& $res->fetchRow();
-		$res->free();
-		if (empty($row[0])) {
+		$p_id=$statement->execute(array($i, $parent_id, $parent[$i], PGV_GED_ID))->fetchOne();
+		if (is_null($p_id)) {
 			break;
 		}
-		$parent_id = $row[0];
+		$parent_id = $p_id;
 	}
 	return $parent_id;
 }
@@ -2062,23 +2059,18 @@ function get_place_parent_id($parent, $level) {
 function get_place_list($parent, $level) {
 	global $TBLPREFIX;
 
-	$placelist=array();
-
 	// --- find all of the place in the file
 	if ($level==0) {
-		$sql = "SELECT p_place FROM ".$TBLPREFIX."places WHERE p_level=0 AND p_file=".PGV_GED_ID." ORDER BY p_place";
+		return
+			PGV_DB::prepare("SELECT p_place FROM {$TBLPREFIX}places WHERE p_level=? AND p_file=? ORDER BY p_place")
+			->execute(array(0, PGV_GED_ID))
+			->fetchOneColumn();
 	} else {
-		$parent_id = get_place_parent_id($parent, $level);
-		$sql = "SELECT p_place FROM ".$TBLPREFIX."places WHERE p_level=$level AND p_parent_id=$parent_id AND p_file=".PGV_GED_ID." ORDER BY p_place";
+		return
+			PGV_DB::prepare("SELECT p_place FROM {$TBLPREFIX}places WHERE p_level=? AND p_parent_id=? AND p_file=? ORDER BY p_place")
+			->execute(array($level, get_place_parent_id($parent, $level), PGV_GED_ID))
+			->fetchOneColumn();
 	}
-	$res = dbquery($sql);
-
-	while ($row =& $res->fetchRow()) {
-		$placelist[] = $row[0];
-	}
-	$res->free();
-
-	return $placelist;
 }
 
 /**
