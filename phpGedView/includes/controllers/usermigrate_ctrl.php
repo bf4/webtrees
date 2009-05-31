@@ -268,8 +268,7 @@ class UserMigrateControllerRoot extends BaseController {
 	 *
 	 */
 	function import() {
-		global $INDEX_DIRECTORY, $TBLPREFIX, $pgv_lang, $DBCONN;
-		global $GEDCOMS, $GEDCOM;
+		global $INDEX_DIRECTORY, $TBLPREFIX, $pgv_lang, $GEDCOMS, $GEDCOM;
 
 		if ((file_exists($INDEX_DIRECTORY."authenticate.php")) == false) {
 			$this->impSuccess = false;
@@ -277,13 +276,7 @@ class UserMigrateControllerRoot extends BaseController {
 		} else {
 			require $INDEX_DIRECTORY."authenticate.php";
 			$countold = count($users);
-			$sql = "DELETE FROM ".$TBLPREFIX."users";
-			$res = dbquery($sql);
-			if (!$res || DB::isERROR($res)) {
-				$this->errorMsg = "<span class=\"error\">Unable to update <i>Users</i> table.</span><br />\n";
-				$this->impSuccess = false;
-				return;
-			}
+			PGV_DB::exec("DELETE FROM {$TBLPREFIX}users");
 			foreach($users as $username=>$user) {
 				if ($user["editaccount"] == "1") $user["editaccount"] = "Y";
 				else $user["editaccount"] = "N";
@@ -352,26 +345,15 @@ class UserMigrateControllerRoot extends BaseController {
 			$this->msgSuccess = false;
 		}
 		else {
-			$sql = "DELETE FROM ".$TBLPREFIX."messages";
-			$res = dbquery($sql);
-			if (!$res || DB::isError($res)) {
-				$this->errorMsg = "<span class=\"error\">Unable to update <i>Messages</i> table.</span><br />\n";
-				$this->msgSuccess = false;
-				return;
-			}
+			PGV_DB::exec("DELETE FROM {$TBLPREFIX}messages");
 			$messages = array();
 			$fp = fopen($INDEX_DIRECTORY."messages.dat", "rb");
 			$mstring = fread($fp, filesize($INDEX_DIRECTORY."messages.dat"));
 			fclose($fp);
 			$messages = unserialize($mstring);
 			foreach($messages as $newid => $message) {
-				$sql = "INSERT INTO ".$TBLPREFIX."messages VALUES ($newid, '".$DBCONN->escapeSimple($message["from"])."','".$DBCONN->escapeSimple($message["to"])."','".$DBCONN->escapeSimple($message["subject"])."','".$DBCONN->escapeSimple($message["body"])."','".$DBCONN->escapeSimple($message["created"])."')";
-				$res = dbquery($sql);
-				if (!$res || DB::isError($res)) {
-					$this->errorMsg = "<span class=\"error\">Unable to update <i>Messages</i> table.</span><br />\n";
-					$this->msgSuccess = false;
-					return;
-				}
+				PGV_DB::prepare("INSERT INTO {$TBLPREFIX}messages (m_id, m_from, m_to, m_subject, m_body, m_created) VALUES (?, ? ,? ,? ,? ,?)")
+					->execute(array($newid, $message["from"], $message["to"], $message["subject"], $message["body"], $message["created"]));
 			}
 			$this->msgSuccess = true;
 		}
@@ -381,12 +363,7 @@ class UserMigrateControllerRoot extends BaseController {
 			print $pgv_lang["um_nofav"]."<br /><br />";
 		}
 		else {
-			$sql = "DELETE FROM ".$TBLPREFIX."favorites";
-			$res = dbquery($sql);
-			if (!$res || DB::isError($res)) {
-				$this->errorMsg = "<span class=\"error\">Unable to update <i>Favorites</i> table.</span><br />\n";
-				return;
-			}
+			PGV_DB::exec("DELETE FROM {$TBLPREFIX}favorites");
 			$favorites = array();
 			$fp = fopen($INDEX_DIRECTORY."favorites.dat", "rb");
 			$mstring = fread($fp, filesize($INDEX_DIRECTORY."favorites.dat"));
@@ -407,13 +384,7 @@ class UserMigrateControllerRoot extends BaseController {
 			$this->newsSuccess = false;
 		}
 		else {
-			$sql = "DELETE FROM ".$TBLPREFIX."news";
-			$res = dbquery($sql);
-			if (!$res) {
-				$this->errorMsg = "<span class=\"error\">Unable to update <i>News</i> table.</span><br />\n";
-				$this->newsSuccess = false;
-				return;
-			}
+			PGV_DB::exec("DELETE FROM {$TBLPREFIX}news");
 			$allnews = array();
 			$fp = fopen($INDEX_DIRECTORY."news.dat", "rb");
 			$mstring = fread($fp, filesize($INDEX_DIRECTORY."news.dat"));
@@ -433,12 +404,7 @@ class UserMigrateControllerRoot extends BaseController {
 			$this->blockSuccess = false;
 		}
 		else {
-			$sql = "DELETE FROM ".$TBLPREFIX."blocks";
-			$res = dbquery($sql);
-			if (!$res) {
-				$this->errorMsg = "<span class=\"error\">Unable to update <i>Blocks</i> table.</span><br />\n";
-				exit;
-			}
+			PGV_DB::exec("DELETE FROM {$TBLPREFIX}blocks");
 			$allblocks = array();
 			$fp = fopen($INDEX_DIRECTORY."blocks.dat", "rb");
 			$mstring = fread($fp, filesize($INDEX_DIRECTORY."blocks.dat"));
@@ -446,12 +412,8 @@ class UserMigrateControllerRoot extends BaseController {
 			$allblocks = unserialize($mstring);
 			foreach($allblocks as $bid => $blocks) {
 				$username = $blocks["username"];
-				$sql = "INSERT INTO ".$TBLPREFIX."blocks VALUES ($bid, '".$DBCONN->escapeSimple($blocks["username"])."', '".$blocks["location"]."', '".$blocks["order"]."', '".$DBCONN->escapeSimple($blocks["name"])."', '".$DBCONN->escapeSimple(serialize($blocks["config"]))."')";
-				$res = dbquery($sql);
-				if (!$res || DB::isError($res)) {
-					$this->errorMsg = "<span class=\"error\">Unable to update <i>Blocks</i> table.</span><br />\n";
-					return;
-				}
+				PGV_DB::prepare("INSERT INTO {$TBLPREFIX}blocks (b_id, b_username, b_location, b_order, b_name, b_config) VALUES (?, ? ,? , ?, ?, ?)")
+					->execute(array($bid, $blocks["username"], $blocks["location"], $blocks["order"], $blocks["name"], serialize($blocks["config"])));
 			}
 			$this->blockSuccess = true;
 		}
