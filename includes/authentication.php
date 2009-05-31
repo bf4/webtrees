@@ -159,7 +159,7 @@ function getUserName() {
 }
 
 function getUserId() {
-	global $ALLOW_REMEMBER_ME, $DBCONN, $logout, $SERVER_URL;
+	global $ALLOW_REMEMBER_ME, $logout, $SERVER_URL;
 	//-- this section checks if the session exists and uses it to get the username
 	if (isset($_SESSION) && !empty($_SESSION['pgv_user'])) {
 		return $_SESSION['pgv_user'];
@@ -170,7 +170,7 @@ function getUserId() {
 		if ((isset($_SERVER['HTTP_REFERER'])) && !empty($tSERVER_URL) && (stristr($_SERVER['HTTP_REFERER'],$tSERVER_URL)!==false))
 			$referrer_found=true;
 		if (!empty($_COOKIE["pgv_rem"])&& (empty($referrer_found)) && empty($logout)) {
-			if (!is_object($DBCONN)) {
+			if (!PGV_DB::isConnected()) {
 				return $_COOKIE["pgv_rem"];
 			} else {
 				$session_time=get_user_setting($_COOKIE['pgv_rem'], 'sessiontime');
@@ -971,33 +971,30 @@ function getBlocks($username) {
  * @param boolean $setdefault	if true tells the program to also set these blocks as the blocks for the defaultuser
  */
 function setBlocks($username, $ublocks, $setdefault=false) {
-	global $TBLPREFIX, $DBCONN;
+	global $TBLPREFIX;
 
-	$sql = "DELETE FROM {$TBLPREFIX}blocks WHERE b_username='".$DBCONN->escapeSimple($username)."' AND b_name!='faq'";
-	$res = dbquery($sql);
+	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}blocks WHERE b_username=? AND b_name!=?")
+		->execute(array($username, 'faq'));
+
+	if ($setdefault) {
+		PGV_DB::prepare("DELETE FROM {$TBLPREFIX}blocks WHERE b_username=?")
+			->execute(array('defaultuser'));
+	}
+
+	$statement=PGV_DB::prepare("INSERT INTO {$TBLPREFIX}blocks (b_id, b_username, b_location, b_order, b_name, b_config) VALUES (?, ?, ?, ?, ?, ?)");
 
 	foreach($ublocks["main"] as $order=>$block) {
-		$newid = get_next_id("blocks", "b_id");
-		$sql = "INSERT INTO {$TBLPREFIX}blocks VALUES ($newid, '".$DBCONN->escapeSimple($username)."', 'main', '$order', '".$DBCONN->escapeSimple($block[0])."', '".$DBCONN->escapeSimple(serialize($block[1]))."')";
-		$res = dbquery($sql);
+		$statement->execute(array(get_next_id("blocks", "b_id"), $username, 'main', $order, $block[0], serialize($block[1])));
 
 		if ($setdefault) {
-			$newid = get_next_id("blocks", "b_id");
-			$sql = "INSERT INTO {$TBLPREFIX}blocks VALUES ($newid, 'defaultuser', 'main', '$order', '".$DBCONN->escapeSimple($block[0])."', '".$DBCONN->escapeSimple(serialize($block[1]))."')";
-			$res = dbquery($sql);
-
+			$statement->execute(array(get_next_id("blocks", "b_id"), 'defaultuser', 'main', $order, $block[0], serialize($block[1])));
 		}
 	}
 	foreach($ublocks["right"] as $order=>$block) {
-		$newid = get_next_id("blocks", "b_id");
-		$sql = "INSERT INTO {$TBLPREFIX}blocks VALUES ($newid, '".$DBCONN->escapeSimple($username)."', 'right', '$order', '".$DBCONN->escapeSimple($block[0])."', '".$DBCONN->escapeSimple(serialize($block[1]))."')";
-		$res = dbquery($sql);
+		$statement->execute(array(get_next_id("blocks", "b_id"), $username, 'right', $order, $block[0], serialize($block[1])));
 
 		if ($setdefault) {
-			$newid = get_next_id("blocks", "b_id");
-			$sql = "INSERT INTO {$TBLPREFIX}blocks VALUES ($newid, 'defaultuser', 'right', '$order', '".$DBCONN->escapeSimple($block[0])."', '".$DBCONN->escapeSimple(serialize($block[1]))."')";
-			$res = dbquery($sql);
-
+			$statement->execute(array(get_next_id("blocks", "b_id"), 'defaultuser', 'right', $order, $block[0], serialize($block[1])));
 		}
 	}
 }
