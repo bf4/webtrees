@@ -2257,7 +2257,7 @@ function get_server_list(){
 
 /**
 * Retrieve the array of faqs from the DB table blocks
-* @param int $id The FAQ ID to retrieven
+* @param int $id The FAQ ID to retrieve
 * @return array $faqs The array containing the FAQ items
 */
 function get_faq_data($id='') {
@@ -2265,18 +2265,21 @@ function get_faq_data($id='') {
 
 	$faqs = array();
 	// Read the faq data from the DB
-	$sql = "SELECT b_id, b_location, b_order, b_config, b_username FROM ".$TBLPREFIX."blocks WHERE (b_username='$GEDCOM' OR b_username='*all*') AND b_name='faq'";
+	$sql="SELECT b_id, b_location, b_order, b_config, b_username FROM {$TBLPREFIX}blocks WHERE b_username IN (?, ?) AND b_name=?";
+	$vars=array($GEDCOM, '*all*', 'faq');
 	if ($id!='') {
-		$sql.=" AND b_order='".$id."'";
+		$sql.=" AND b_order=?";
+		$vars[]=$id;
+	} else {
+		$sql.=' ORDER BY b_order';
 	}
-	$res = dbquery($sql);
+	$rows=PGV_DB::prepare($sql)->execute($vars)->fetchAll();
 
-	while ($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)) {
-		$faqs[$row["b_order"]][$row["b_location"]]["text"] = unserialize($row["b_config"]);
-		$faqs[$row["b_order"]][$row["b_location"]]["pid"] = $row["b_id"];
-		$faqs[$row["b_order"]][$row["b_location"]]["gedcom"] = $row["b_username"];
+	foreach ($rows as $row) {
+		$faqs[$row->b_order][$row->b_location]["text"  ]=unserialize($row->b_config);
+		$faqs[$row->b_order][$row->b_location]["pid"   ]=$row->b_id;
+		$faqs[$row->b_order][$row->b_location]["gedcom"]=$row->b_username;
 	}
-	ksort($faqs);
 	return $faqs;
 }
 
@@ -2333,18 +2336,12 @@ function delete_fact($linenum, $pid, $gedrec) {
 * @return gid Stub ID that contains the RFN number. Returns false if it didn't find anything
 */
 function get_remote_id($rfn) {
-	global $TBLPREFIX, $DBCONN;
+	global $TBLPREFIX;
 
-	$sql = "SELECT r_gid FROM ".$TBLPREFIX."remotelinks WHERE r_linkid='".$DBCONN->escapeSimple($rfn)."' AND r_file=".PGV_GED_ID;
-	$res = dbquery($sql);
-
-	if ($res->numRows()>0) {
-		$row = $res->fetchRow();
-		$res->free();
-		return $row[0];
-	} else {
-		return false;
-	}
+	return
+		PGV_DB::prepare("SELECT r_gid FROM {$TBLPREFIX}remotelinks WHERE r_linkid=? AND r_file=?")
+		->execute(array($rfn, PGV_GED_ID))
+		->fetchOne();
 }
 
 ////////////////////////////////////////////////////////////////////////////////
