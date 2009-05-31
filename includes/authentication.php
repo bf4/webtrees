@@ -802,7 +802,6 @@ function getUserMessages($username) {
 	$res = dbquery($sql);
 
 	while ($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)){
-		$row = db_cleanup($row);
 		$message = array();
 		$message["id"] = $row["m_id"];
 		$message["to"] = $row["m_to"];
@@ -891,7 +890,6 @@ function getUserFavorites($username) {
 	if (DB::isError($res))
 		return $favorites;
 	while ($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)){
-		$row = db_cleanup($row);
 		if (get_id_from_gedcom($row["fv_file"])) { // If gedcom exists
 			$favorite = array();
 			$favorite["id"] = $row["fv_id"];
@@ -930,7 +928,6 @@ function getBlocks($username) {
 		return $blocks;
 	if ($res->numRows() > 0) {
 		while ($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)){
-			$row = db_cleanup($row);
 			if (!isset($row["b_config"]))
 				$row["b_config"]="";
 			if ($row["b_location"]=="main")
@@ -950,7 +947,6 @@ function getBlocks($username) {
 			if (DB::isError($res2))
 				return $blocks;
 			while ($row =& $res2->fetchRow(DB_FETCHMODE_ASSOC)){
-				$row = db_cleanup($row);
 				if (!isset($row["b_config"]))
 					$row["b_config"]="";
 				if ($row["b_location"]=="main")
@@ -1076,7 +1072,6 @@ function getUserNews($username) {
 	$res = dbquery($sql);
 
 	while ($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)){
-		$row = db_cleanup($row);
 		$n = array();
 		$n["id"] = $row["n_id"];
 		$n["username"] = $row["n_username"];
@@ -1103,7 +1098,6 @@ function getNewsItem($news_id) {
 	$res = dbquery($sql);
 
 	while ($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)){
-		$row = db_cleanup($row);
 		$n = array();
 		$n["id"] = $row["n_id"];
 		$n["username"] = $row["n_username"];
