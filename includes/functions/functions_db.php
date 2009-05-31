@@ -2483,10 +2483,10 @@ function get_anniversary_events($jd, $facts='', $ged_id=PGV_GED_ID) {
 
 		// Now fetch these anniversaries
 		$ind_sql="SELECT DISTINCT 'INDI' AS type, i_id AS xref, i_file AS ged_id, i_gedcom AS gedrec, i_isdead, i_sex, d_type, d_day, d_month, d_year, d_fact, d_type FROM {$TBLPREFIX}dates, {$TBLPREFIX}individuals {$where} AND d_gid=i_id AND d_file=i_file ORDER BY d_day ASC, d_year DESC";
-		$fam_sql="SELECT DISTINCT 'FAM' AS type, f_id AS xref, {$ged_id} AS ged_id, f_gedcom AS gedrec, f_husb, f_wife, f_chil, f_numchil, d_type, d_day, d_month, d_year, d_fact, d_type FROM {$TBLPREFIX}dates, {$TBLPREFIX}families {$where} AND d_gid=f_id AND d_file=f_file ORDER BY d_day ASC, d_year DESC";
+		$fam_sql="SELECT DISTINCT 'FAM' AS type, f_id AS xref, f_file AS ged_id, f_gedcom AS gedrec, f_husb, f_wife, f_chil, f_numchil, d_type, d_day, d_month, d_year, d_fact, d_type FROM {$TBLPREFIX}dates, {$TBLPREFIX}families {$where} AND d_gid=f_id AND d_file=f_file ORDER BY d_day ASC, d_year DESC";
 		foreach (array($ind_sql, $fam_sql) as $sql) {
-			$res=dbquery($sql);
-			while ($row=&$res->fetchRow(DB_FETCHMODE_ASSOC)) {
+			$rows=PGV_DB::prepare($sql)->fetchAll(PDO::FETCH_ASSOC);
+			foreach ($rows as $row) {
 				if ($row['type']=='INDI') {
 					$record=Person::getInstance($row);
 				} else {
@@ -2528,7 +2528,6 @@ function get_anniversary_events($jd, $facts='', $ged_id=PGV_GED_ID) {
 					}
 				}
 			}
-			$res->free();
 		}
 	}
 	return $found_facts;
@@ -2574,8 +2573,8 @@ function get_calendar_events($jd1, $jd2, $facts='', $ged_id=PGV_GED_ID) {
 	$ind_sql="SELECT d_gid, i_gedcom, 'INDI', d_type, d_day, d_month, d_year, d_fact, d_type FROM {$TBLPREFIX}dates, {$TBLPREFIX}individuals {$where} AND d_gid=i_id AND d_file=i_file ORDER BY d_julianday1";
 	$fam_sql="SELECT d_gid, f_gedcom, 'FAM',  d_type, d_day, d_month, d_year, d_fact, d_type FROM {$TBLPREFIX}dates, {$TBLPREFIX}families    {$where} AND d_gid=f_id AND d_file=f_file ORDER BY d_julianday1";
 	foreach (array($ind_sql, $fam_sql) as $sql) {
-		$res=dbquery($sql);
-		while ($row=&$res->fetchRow()) {
+		$rows=PGV_DB::prepare($sql)->fetchAll(PDO::FETCH_NUM);
+		foreach ($rows as $row) {
 			// Generate a regex to match the retrieved date - so we can find it in the original gedcom record.
 			// TODO having to go back to the original gedcom is lame.  This is why it is so slow, and needs
 			// to be cached.  We should store the level1 fact here (or somewhere)
@@ -2612,7 +2611,6 @@ function get_calendar_events($jd1, $jd2, $facts='', $ged_id=PGV_GED_ID) {
 				}
 			}
 		}
-		$res->free();
 	}
 	return $found_facts;
 }
@@ -2725,45 +2723,36 @@ function get_gedcom_setting($ged_id, $parameter) {
 $PGV_USERS_cache=array();
 
 function create_user($username, $password) {
-	global $DBCONN, $TBLPREFIX;
+	global $TBLPREFIX;
 
-	$username=$DBCONN->escapeSimple($username);
-	$password=$DBCONN->escapeSimple($password);
-	dbquery("INSERT INTO {$TBLPREFIX}users (u_username, u_password) VALUES ('{$username}', '{$password}')");
-
-	if ($DBCONN->affectedRows()==0) {
-		return '';
-	} else {
+	try {
+		PGV_DB::prepare("INSERT INTO {$TBLPREFIX}users (u_username, u_password) VALUES ('{$username}', '{$password}')")
+			->execute(array());
 		return $username;
+	} catch (PDOException $ex) {
+		return null;
 	}
 }
 
 function rename_user($old_username, $new_username) {
-	global $DBCONN, $TBLPREFIX;
+	global $TBLPREFIX;
 
-	$olduser=$DBCONN->escapeSimple($old_username);
-	$newuser=$DBCONN->escapeSimple($new_username);
-	dbquery("UPDATE {$TBLPREFIX}users SET u_username='{$new_username}' WHERE u_username='{$old_username}'");
-
-	// For databases without foreign key constraints, manually update dependent tables
-	dbquery("UPDATE {$TBLPREFIX}blocks    SET b_username ='{$new_username}' WHERE b_username ='{$old_username}'");
-	dbquery("UPDATE {$TBLPREFIX}favorites SET fv_username='{$new_username}' WHERE fv_username='{$old_username}'");
-	dbquery("UPDATE {$TBLPREFIX}messages  SET m_from     ='{$new_username}' WHERE m_from     ='{$old_username}'");
-	dbquery("UPDATE {$TBLPREFIX}messages  SET m_to       ='{$new_username}' WHERE m_to       ='{$old_username}'");
-	dbquery("UPDATE {$TBLPREFIX}news      SET n_username ='{$new_username}' WHERE n_username ='{$old_username}'");
+	PGV_DB::prepare("UPDATE {$TBLPREFIX}users     SET u_username=? WHERE u_username  =?")->execute(array($new_username, $old_username));
+	PGV_DB::prepare("UPDATE {$TBLPREFIX}blocks    SET b_username =? WHERE b_username =?")->execute(array($new_username, $old_username));
+	PGV_DB::prepare("UPDATE {$TBLPREFIX}favorites SET fv_username=? WHERE fv_username=?")->execute(array($new_username, $old_username));
+	PGV_DB::prepare("UPDATE {$TBLPREFIX}messages  SET m_from     =? WHERE m_from     =?")->execute(array($new_username, $old_username));
+	PGV_DB::prepare("UPDATE {$TBLPREFIX}messages  SET m_to       =? WHERE m_to       =?")->execute(array($new_username, $old_username));
+	PGV_DB::prepare("UPDATE {$TBLPREFIX}news      SET n_username =? WHERE n_username =?")->execute(array($new_username, $old_username));
 }
 
 function delete_user($user_id) {
-	global $DBCONN, $TBLPREFIX;
+	global $TBLPREFIX;
 
-	$user_id=$DBCONN->escapeSimple($user_id);
-	dbquery("DELETE FROM {$TBLPREFIX}users WHERE u_username='{$user_id}'");
-
-	// For databases without foreign key constraints, manually update dependent tables
-	dbquery("DELETE FROM {$TBLPREFIX}blocks    WHERE b_username ='{$user_id}'");
-	dbquery("DELETE FROM {$TBLPREFIX}favorites WHERE fv_username='{$user_id}'");
-	dbquery("DELETE FROM {$TBLPREFIX}messages  WHERE m_from     ='{$user_id}' OR m_to='{$user_id}'");
-	dbquery("DELETE FROM {$TBLPREFIX}news      WHERE n_username ='{$user_id}'");
+	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}users     WHERE u_username =?")->execute(array($user_id));
+	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}blocks    WHERE b_username =?")->execute(array($user_id));
+	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}favorites WHERE fv_username=?")->execute(array($user_id));
+	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}messages  WHERE m_from=? OR m_to=?")->execute(array($user_id, $user_id));
+	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}news      WHERE n_username =?")->execute(array($user_id));
 }
 
 function get_all_users($order='ASC', $key1='lastname', $key2='firstname') {
@@ -2905,61 +2894,36 @@ function get_user_password($user_id) {
 ////////////////////////////////////////////////////////////////////////////////
 
 function get_user_setting($user_id, $parameter) {
-	global $DBCONN, $TBLPREFIX;
+	global $TBLPREFIX;
 
-	global $PGV_USERS_cache;
-	if (isset($PGV_USERS_cache[$user_id])) {
-		return $PGV_USERS_cache[$user_id]['u_'.$parameter];
-	}
-
-	if (!is_object($DBCONN) || DB::isError($DBCONN)) {
-		return false;
-	}
-
-	$user_id=$DBCONN->escapeSimple($user_id);
-	$sql="SELECT * FROM {$TBLPREFIX}users WHERE u_username='{$user_id}'";
-	$res=dbquery($sql, false);
-	if ($res==false || DB::isError($res)) {
-		return null;
-	}
-	$row=$res->fetchRow(DB_FETCHMODE_ASSOC);
-	$res->free();
-	if ($row) {
-		$PGV_USERS_cache[$user_id]=$row;
-		return $row['u_'.$parameter];
-	} else {
+	try {
+		return
+			PGV_DB::prepare("SELECT u_{$parameter} FROM {$TBLPREFIX}users WHERE u_username=?")
+			->execute(array($user_id))
+			->fetchOne();
+	} catch (PDOException $ex) {
 		return null;
 	}
 }
 
 function set_user_setting($user_id, $parameter, $value) {
-	global $DBCONN, $TBLPREFIX;
+	global $TBLPREFIX;
 
-	if (!is_object($DBCONN) || DB::isError($DBCONN)) {
-		return;
-	}
-
-	$user_id=$DBCONN->escapeSimple($user_id);
-	$value  =$DBCONN->escapeSimple($value);
-	dbquery("UPDATE {$TBLPREFIX}users SET u_{$parameter}='{$value}' WHERE u_username='{$user_id}'");
-
-	global $PGV_USERS_cache;
-	if (isset($PGV_USERS_cache[$user_id])) {
-		unset($PGV_USERS_cache[$user_id]);
-	}
+	PGV_DB::prepare("UPDATE {$TBLPREFIX}users SET u_{$parameter}=? WHERE u_username=?")
+		->execute(array($value, $user_id));
 }
 
 function admin_user_exists() {
-	global $DBCONN, $TBLPREFIX;
+	global $TBLPREFIX;
 
-	$res=dbquery("SELECT COUNT(u_username) FROM {$TBLPREFIX}users WHERE u_canadmin='Y'", false);
-	// We may call this function before creating the table, so must check for errors.
-	if ($res!=false && !DB::isError($res)) {
-		$row=$res->fetchRow();
-		$res->free();
-		return $row[0]>0;
+	try {
+		return
+			(bool)PGV_DB::prepare("SELECT COUNT(*) FROM {$TBLPREFIX}users WHERE u_canadmin=?")
+			->execute(array('Y'))
+			->fetchOne();
+	} catch (PDOException $ex) {
+		return false;
 	}
-	return false;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -3033,19 +2997,17 @@ function get_user_from_gedcom_xref($ged_id, $xref) {
 
 	$ged_name=get_gedcom_from_id($ged_id);
 
-	$res=dbquery("SELECT u_username, u_gedcomid FROM {$TBLPREFIX}users");
+	$rows=PGV_DB::prepare("SELECT u_username, u_gedcomid FROM {$TBLPREFIX}users")->fetchAll();
 	$username=false;
-	while ($row=$res->fetchRow()) {
-		if ($row[1]) {
-			$tmp_array=unserialize($row[1]);
+	foreach ($rows as $row) {
+		if ($row->u_gedcomid) {
+			$tmp_array=unserialize($row->u_gedcomid);
 			if (array_key_exists($ged_name, $tmp_array) && $tmp_array[$ged_name]==$xref) {
-				$username=$row[0];
-				break;
+				return $row->u_username;
 			}
 		}
 	}
-	$res->free();
-	return $username;
+	return null;
 }
 
 ?>
