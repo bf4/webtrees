@@ -383,7 +383,7 @@ if ($level > 0) {
 if ($display=="list") {
 	$placelist = array();
 
-	find_place_list("");
+	$placelist=find_place_list("");
 	$placelist = array_unique($placelist);
 	uasort($placelist, "stringsort");
 	if (count($placelist)==0) {

@@ -611,7 +611,7 @@ if ($action=="filter") {
 		echo "<table class=\"tabs_table $TEXT_DIRECTION width90\"><tr>";
 		$placelist = array();
 		if ($all || $filter) {
-			find_place_list($filter);
+			$placelist=find_place_list($filter);
 			$ctplace = count($placelist);
 			if ($ctplace>0) {
 				$revplacelist = array();
