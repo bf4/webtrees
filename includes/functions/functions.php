@@ -2541,7 +2541,7 @@ function get_relationship($pid1, $pid2, $followspouse=true, $maxlength=0, $ignor
 // This is a new/experimental version of get_relationship().  It is not used by any live
 // code.  It is here to allow certain users to test it.
 function get_relationship1($pid1, $pid2, $followspouse=true, $maxlength=0) {
-	global $pgv_changes, $GEDCOM, $TBLPREFIX, $DBCONN;
+	global $pgv_changes, $GEDCOM, $TBLPREFIX;
 	static $RELA=null;
 	static $PATHS=null;
 
