@@ -138,10 +138,10 @@ class PedigreeControllerRoot extends BaseController {
 				else $baseyoffset = -50;
 			}
 		}
-		$baseyoffset -= 60;
+		$baseyoffset -= 10;
 		//-- adjustments for preview
 		if ($this->isPrintPreview() && $this->talloffset<2) {
-			$baseyoffset -= 200;
+			$baseyoffset -= 250;
 		}
 		// -- this next section will create and position the DIV layers for the pedigree tree
 		$this->curgen = 1;			// -- variable to track which generation the algorithm is currently working on
@@ -174,9 +174,13 @@ class PedigreeControllerRoot extends BaseController {
 			// -- calculate the xoffset
 			if ($this->talloffset==0) {
 				if ($this->PEDIGREE_GENERATIONS<6) {
-					$this->xoffset = ($this->PEDIGREE_GENERATIONS - $this->curgen) * (($this->pbwidth+$bxspacing) / 2)+10+60*(5-$this->PEDIGREE_GENERATIONS);
+					$addxoffset = $basexoffset+(10+60*(5-$this->PEDIGREE_GENERATIONS));
+					$this->xoffset = ($this->PEDIGREE_GENERATIONS - $this->curgen) * (($this->pbwidth+$bxspacing) / 2)+$addxoffset;
 				}
-				else $this->xoffset = ($this->PEDIGREE_GENERATIONS - $this->curgen) * (($this->pbwidth+$bxspacing) / 2)+10;
+				else {
+					$addxoffset = $basexoffset+10;
+					$this->xoffset = ($this->PEDIGREE_GENERATIONS - $this->curgen) * (($this->pbwidth+$bxspacing) / 2)+$addxoffset;
+				}
 				//-- compact the tree
 				if ($this->curgen<$this->PEDIGREE_GENERATIONS) {
 					$parent = floor(($i-1)/2);
