@@ -47,7 +47,7 @@ if ($MULTI_MEDIA && file_exists('./modules/lightbox.php')) {
 	include './modules/lightbox/functions/lb_call_js.php';
 }
 
-echo '<table><tr><td valign="top">';
+echo '<table><tr><td valign="middle">';
 if ($view=="preview") {
 	echo '<h2>', str_replace('#PEDIGREE_GENERATIONS#', $PEDIGREE_GENERATIONS, $pgv_lang['gen_ancestry_chart']) . ':';
 } else {

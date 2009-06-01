@@ -41,19 +41,26 @@ print_header($controller->getPageTitle());
 
 if ($ENABLE_AUTOCOMPLETE) require './js/autocomplete.js.htm';
 
-echo '<div id="pedigree_chart_options';
-echo ($TEXT_DIRECTION=="ltr")?"":"_rtl";
-echo '" style="position: relative; z-index: 1; width:98%;">';
-if ($controller->isPrintPreview()) echo "<h2>".str_replace("#PEDIGREE_GENERATIONS#", $PEDIGREE_GENERATIONS, $pgv_lang["gen_ped_chart"]).":";
-else echo "<h2>".$pgv_lang["index_header"].":";
-echo "<br />".PrintReady($controller->getPersonName())."</h2>";
-
-if ($MULTI_MEDIA && file_exists("modules/lightbox/album.php")) {
-	include('modules/lightbox/lb_defaultconfig.php');
-	if (file_exists('modules/lightbox/lb_config.php')) include('modules/lightbox/lb_config.php');
-	include_once('modules/lightbox/functions/lb_call_js.php');
+// LightBox
+if ($MULTI_MEDIA && file_exists('./modules/lightbox.php')) {
+	include './modules/lightbox/lb_defaultconfig.php';
+	if (file_exists('modules/lightbox/lb_config.php')) {
+		include './modules/lightbox/lb_config.php';
+	}
+	include './modules/lightbox/functions/lb_call_js.php';
 }
 
+echo '<table><tr><td valign="middle">';
+if ($controller->isPrintPreview()) {
+	echo "<h2>".str_replace("#PEDIGREE_GENERATIONS#", $PEDIGREE_GENERATIONS, $pgv_lang["gen_ped_chart"]).":";
+} else {
+	echo "<h2>".$pgv_lang["index_header"].":";
+}
+echo '<br />',PrintReady($controller->name);
+if ($controller->addname!="") {
+	echo '<br />', PrintReady($controller->addname);
+}
+echo '</h2>';
 // -- echo the form to change the number of displayed generations
 if (!$controller->isPrintPreview()) {
 	?>
@@ -65,10 +72,9 @@ if (!$controller->isPrintPreview()) {
 	}
 	//-->
 	</script>
-	<div align="center" style="position: relative; top: -10px;">
-	<form name="people" method="get" action="pedigree.php">
+	</td><td width="50px">&nbsp;</td><td><form name="people" id="people" method="get" action="?">
 	<input type="hidden" name="show_full" value="<?php echo $controller->show_full; ?>" />
-		<table class="pedigree_table <?php echo $TEXT_DIRECTION; ?>" width="500" align="center">
+		<table class="list_table <?php echo $TEXT_DIRECTION; ?>" width="500" align="center">
 			<tr>
 				<td colspan="4" class="topbottombar" style="text-align:center; ">
 					<?php echo $pgv_lang["options"]; ?>
@@ -145,8 +151,8 @@ if (!$controller->isPrintPreview()) {
 		echo '<span class="details2">', $pgv_lang['charts_click_box'], '</span><br />';
 	}
 } ?>
-	</div>
-</div>
+	</td></tr>
+</table>
 <div id="pedigree_chart<?php if ($TEXT_DIRECTION=="rtl") echo '_rtl'; ?>" <?php
 	if ($controller->isPrintPreview()) echo ' style="top: 1px;"';
 	else echo 'style="z-index: 1;"'; ?> >
