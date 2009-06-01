@@ -41,6 +41,8 @@ class PedigreeControllerRoot extends BaseController {
 	var $log2;
 	var $show_famlink = true;
 	var $rootid;
+	var $name;
+	var $addname;
 	var $rootPerson;
 	var $show_full;
 	var $talloffset;
@@ -95,6 +97,8 @@ class PedigreeControllerRoot extends BaseController {
 
 		$this->rootPerson = Person::getInstance($this->rootid);
 		if (is_null($this->rootPerson)) $this->rootPerson = new Person('');
+		$this->name     = $this->rootPerson->getFullName();
+		$this->addname  = $this->rootPerson->getAddName();
 
 		//-- adjustments for hide details
 		if ($this->show_full==false) {
@@ -138,7 +142,8 @@ class PedigreeControllerRoot extends BaseController {
 				else $baseyoffset = -50;
 			}
 		}
-		$baseyoffset -= 10;
+//		$baseyoffset -= 10;
+		$baseyoffset -= 40;
 		//-- adjustments for preview
 		if ($this->isPrintPreview() && $this->talloffset<2) {
 			$baseyoffset -= 250;
