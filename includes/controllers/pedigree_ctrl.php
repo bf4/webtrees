@@ -131,19 +131,17 @@ class PedigreeControllerRoot extends BaseController {
 			else if ($this->talloffset==1) $baseyoffset = 180+$bheight*2;
 			else if ($this->talloffset>1) {
 				if ($this->PEDIGREE_GENERATIONS==3) $baseyoffset = 30;
-				else $baseyoffset = -50;
+				else $baseyoffset = -85;
 			}
 		}
 		else {
-			if ($this->talloffset==0) $baseyoffset = 130+$bheight/2;
-			else if ($this->talloffset==1) $baseyoffset = 175+$bheight/2;
+			if ($this->talloffset==0) $baseyoffset = 100+$bheight/2;
+			else if ($this->talloffset==1) $baseyoffset = 160+$bheight/2;
 			else if ($this->talloffset>1) {
 				if ($this->PEDIGREE_GENERATIONS==3) $baseyoffset = 30;
-				else $baseyoffset = -50;
+				else $baseyoffset = -85;
 			}
 		}
-//		$baseyoffset -= 10;
-		$baseyoffset -= 40;
 		//-- adjustments for preview
 		if ($this->isPrintPreview() && $this->talloffset<2) {
 			$baseyoffset -= 250;

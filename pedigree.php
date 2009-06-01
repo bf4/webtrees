@@ -421,7 +421,7 @@ if ($controller->rootPerson->canDisplayDetails()) {
 	}
 }
 // -- print html footer
-$maxyoffset+=80;
+$maxyoffset+=30;
 ?>
 </div>
 <script language="JavaScript" type="text/javascript">
