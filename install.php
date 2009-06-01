@@ -136,7 +136,7 @@ header("Content-Type: text/html; charset=$CHARACTER_SET");
 <?php
 
 //-- don't allow configuration if the DB is down but the site is configured
-if ($CONFIGURED && DB::isError($DBCONN)) {
+if ($CONFIGURED && !PGV_DB::isConnected()) {
 	?>
 	<tr>
 		<td class="center">
@@ -152,8 +152,6 @@ if ($CONFIGURED && DB::isError($DBCONN)) {
 			<br /><br />
 			<h2><?php print $pgv_lang["site_unavailable"] ?></h2>
 			<br /><br /><br />
-
-			<!-- <?php print $DBCONN->getMessage() . " " . $DBCONN->getUserInfo(); ?> -->
 		</td>
 	</tr>
 	</table>
