@@ -814,39 +814,36 @@ function getUserMessages($username) {
  * @param array $favorite	the favorite array of the favorite to add
  */
 function addFavorite($favorite) {
-	global $TBLPREFIX, $DBCONN;
+	global $TBLPREFIX;
 
 	// -- make sure a favorite is added
 	if (empty($favorite["gid"]) && empty($favorite["url"]))
 		return false;
 
 	//-- make sure this is not a duplicate entry
-	$sql = "SELECT * FROM {$TBLPREFIX}favorites WHERE ";
-	if (!empty($favorite["gid"]))
-		$sql .= "fv_gid='".$DBCONN->escapeSimple($favorite["gid"])."' ";
-	if (!empty($favorite["url"]))
-		$sql .= "fv_url='".$DBCONN->escapeSimple($favorite["url"])."' ";
-	$sql .= "AND fv_file='".$DBCONN->escapeSimple($favorite["file"])."' AND fv_username='".$DBCONN->escapeSimple($favorite["username"])."'";
-	$res =& dbquery($sql);
-	if ($res->numRows()>0)
+	$sql = "SELECT 1 FROM {$TBLPREFIX}favorites WHERE";
+	if (!empty($favorite["gid"])) {
+		$sql.=" fv_gid=?";
+		$vars=array($favorite["gid"]);
+	} else {
+		$sql.=" fv_url=?";
+		$vars=array($favorite["url"]);
+	}
+	$sql.="AND fv_file=? AND fv_username=?";
+	$vars[]=$favorite["file"];
+	$vars[]=$favorite["username"];
+
+	if (PGV_DB::prepare($sql)->execute($vars)->fetchOne()) {
 		return false;
+	}
 
 	//-- get the next favorite id number for the primary key
 	$newid = get_next_id("favorites", "fv_id");
 
 	//-- add the favorite to the database
-	$sql = "INSERT INTO {$TBLPREFIX}favorites VALUES ($newid, '".$DBCONN->escapeSimple($favorite["username"])."'," .
-			"'".$DBCONN->escapeSimple($favorite["gid"])."','".$DBCONN->escapeSimple($favorite["type"])."'," .
-			"'".$DBCONN->escapeSimple($favorite["file"])."'," .
-			"'".$DBCONN->escapeSimple($favorite["url"])."'," .
-			"'".$DBCONN->escapeSimple($favorite["title"])."'," .
-			"'".$DBCONN->escapeSimple($favorite["note"])."')";
-	$res = dbquery($sql);
-
-	if ($res)
-		return true;
-	else
-		return false;
+	return (bool)
+		PGV_DB::prepare("INSERT INTO {$TBLPREFIX}favorites (fv_id, fv_username, fv_gid, fv_type, fv_file, fv_url, fv_title, fv_note) VALUES (?, ? ,? ,? ,? ,? ,? ,?)")
+			->execute(array(get_next_id("favorites", "fv_id"), $favorite["username"], $favorite["gid"], $favorite["type"], $favorite["file"], $favorite["url"], $favorite["title"], $favorite["note"]));
 }
 
 /**
@@ -857,13 +854,9 @@ function addFavorite($favorite) {
 function deleteFavorite($fv_id) {
 	global $TBLPREFIX;
 
-	$sql = "DELETE FROM {$TBLPREFIX}favorites WHERE fv_id=".$fv_id;
-	$res = dbquery($sql);
-
-	if ($res)
-		return true;
-	else
-		return false;
+	return (bool)
+		PGV_DB::prepare("DELETE FROM {$TBLPREFIX}favorites WHERE fv_id=?")
+		->execute(array($fv_id));
 }
 
 /**
@@ -872,33 +865,28 @@ function deleteFavorite($fv_id) {
  * @param string $username		the username to get the favorites for
  */
 function getUserFavorites($username) {
-	global $TBLPREFIX, $DBCONN, $CONFIGURED;
+	global $TBLPREFIX;
+
+	$rows=
+		PGV_DB::prepare("SELECT * FROM {$TBLPREFIX}favorites WHERE fv_username=?")
+		->execute(array($username))
+		->fetchAll();
 
 	$favorites = array();
-	//-- make sure we don't try to look up favorites for unconfigured sites
-	if (!$CONFIGURED || DB::isError($DBCONN))
-		return $favorites;
-
-	$sql = "SELECT * FROM {$TBLPREFIX}favorites WHERE fv_username='".$DBCONN->escapeSimple($username)."'";
-	$res = dbquery($sql);
-
-	if (DB::isError($res))
-		return $favorites;
-	while ($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)){
-		if (get_id_from_gedcom($row["fv_file"])) { // If gedcom exists
-			$favorite = array();
-			$favorite["id"] = $row["fv_id"];
-			$favorite["username"] = $row["fv_username"];
-			$favorite["gid"] = $row["fv_gid"];
-			$favorite["type"] = $row["fv_type"];
-			$favorite["file"] = $row["fv_file"];
-			$favorite["title"] = $row["fv_title"];
-			$favorite["note"] = $row["fv_note"];
-			$favorite["url"] = $row["fv_url"];
-			$favorites[] = $favorite;
+	foreach ($rows as $row) {
+		if (get_id_from_gedcom($row->fv_file)) { // If gedcom exists
+			$favorites[]=array(
+				"id"=>$row->fv_id,
+				"username"=>$row->fv_username,
+				"gid"=>$row->fv_gid,
+				"type"=>$row->fv_type,
+				"file"=>$row->fv_file,
+				"title"=>$row->fv_title,
+				"note"=>$row->fv_note,
+				"url"=>$row->fv_url
+			);
 		}
 	}
-	$res->free();
 	return $favorites;
 }
 
