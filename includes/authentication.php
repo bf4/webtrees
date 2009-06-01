@@ -652,7 +652,7 @@ function AddToChangeLog($LogString, $ged="") {
 //----------------------------------- addMessage
 //-- stores a new message in the database
 function addMessage($message) {
-	global $TBLPREFIX, $CONTACT_METHOD, $pgv_lang,$CHARACTER_SET, $LANGUAGE, $PGV_STORE_MESSAGES, $SERVER_URL, $PGV_SIMPLE_MAIL, $WEBMASTER_EMAIL, $DBCONN;
+	global $TBLPREFIX, $CONTACT_METHOD, $pgv_lang,$CHARACTER_SET, $LANGUAGE, $PGV_STORE_MESSAGES, $SERVER_URL, $PGV_SIMPLE_MAIL, $WEBMASTER_EMAIL;
 	global $TEXT_DIRECTION, $TEXT_DIRECTION_array, $DATE_FORMAT, $DATE_FORMAT_array, $TIME_FORMAT, $TIME_FORMAT_array, $WEEK_START, $WEEK_START_array;
 	global $PHPGEDVIEW_EMAIL;
 
@@ -742,9 +742,8 @@ function addMessage($message) {
 		$message["created"] = gmdate ("M d Y H:i:s");
 	if ($PGV_STORE_MESSAGES && ($message["method"]!="messaging3" && $message["method"]!="mailto" && $message["method"]!="none")) {
 		$newid = get_next_id("messages", "m_id");
-		$sql = "INSERT INTO {$TBLPREFIX}messages VALUES ($newid, '".$DBCONN->escapeSimple($message["from"])."','".$DBCONN->escapeSimple($message["to"])."','".$DBCONN->escapeSimple($message["subject"])."','".$DBCONN->escapeSimple($message["body"])."','".$DBCONN->escapeSimple($message["created"])."')";
-		$res = dbquery($sql);
-
+		PGV_DB::prepare("INSERT INTO {$TBLPREFIX}messages (m_id, m_from, m_to, m_subject, m_body, m_created) VALUES (?, ? ,? ,? ,? ,?)")
+			->execute(array(get_next_id("messages", "m_id"), $message["from"], $message["to"], $message["subject"], $message["body"], $message["created"]));
 	}
 	if ($message["method"]!="messaging") {
 		$subject1 = "[".$pgv_lang["phpgedview_message"].($TEXT_DIRECTION=="ltr"?"] ":" [").stripslashes($message["subject"]);
@@ -783,13 +782,7 @@ function addMessage($message) {
 function deleteMessage($message_id) {
 	global $TBLPREFIX;
 
-	$sql = "DELETE FROM {$TBLPREFIX}messages WHERE m_id=".$message_id;
-	$res = dbquery($sql);
-
-	if ($res)
-		return true;
-	else
-		return false;
+	return (bool)PGV_DB::prepare("DELETE FROM {$TBLPREFIX}messages WHERE m_id=?")->execute(array($message_id));
 }
 
 //----------------------------------- getUserMessages
@@ -797,19 +790,21 @@ function deleteMessage($message_id) {
 function getUserMessages($username) {
 	global $TBLPREFIX;
 
-	$messages = array();
-	$sql = "SELECT * FROM {$TBLPREFIX}messages WHERE m_to='$username' ORDER BY m_id DESC";
-	$res = dbquery($sql);
+	$rows=
+		PGV_DB::prepare("SELECT * FROM {$TBLPREFIX}messages WHERE m_to=? ORDER BY m_id DESC")
+		->execute(array($username))
+		->fetchAll();
 
-	while ($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)){
-		$message = array();
-		$message["id"] = $row["m_id"];
-		$message["to"] = $row["m_to"];
-		$message["from"] = $row["m_from"];
-		$message["subject"] = stripslashes($row["m_subject"]);
-		$message["body"] = stripslashes($row["m_body"]);
-		$message["created"] = $row["m_created"];
-		$messages[] = $message;
+	$messages=array();
+	foreach ($rows as $row) {
+		$messages[]=array(
+			"id"=>$row->m_id,
+			"to"=>$row->m_to,
+			"from"=>$row->m_from,
+			"subject"=>$row->m_subject,
+			"body"=>$row->m_body,
+			"created"=>$row->m_created
+		);
 	}
 	return $messages;
 }
