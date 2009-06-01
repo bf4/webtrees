@@ -900,47 +900,44 @@ function getUserFavorites($username) {
  * @return array	an array of the blocks.  The two main indexes in the array are "main" and "right"
  */
 function getBlocks($username) {
-	global $TBLPREFIX, $DBCONN;
+	global $TBLPREFIX;
 
 	$blocks = array();
 	$blocks["main"] = array();
 	$blocks["right"] = array();
-	$sql = "SELECT * FROM {$TBLPREFIX}blocks WHERE b_username='".$DBCONN->escapeSimple($username)."' ORDER BY b_location, b_order";
-	$res = dbquery($sql);
-	if (DB::isError($res))
-		return $blocks;
-	if ($res->numRows() > 0) {
-		while ($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)){
-			if (!isset($row["b_config"]))
-				$row["b_config"]="";
-			if ($row["b_location"]=="main")
-				// Were earlier versions of wrongly adding slashes to quotes in serialized data?
-				// Unfortunately, we can't use stripslashes() as this breaks valid data.
-				// Instead, use @unserialize to skip any errors.
-				// TODO: try both with and without stripslashes and see which works ???
-				$blocks["main"][$row["b_order"]] = array($row["b_name"], @unserialize($row["b_config"]));
-			if ($row["b_location"]=="right")
-				$blocks["right"][$row["b_order"]] = array($row["b_name"], @unserialize($row["b_config"]));
+
+	$rows=
+		PGV_DB::prepare("SELECT * FROM {$TBLPREFIX}blocks WHERE b_username=? ORDER BY b_location, b_order")
+		->execute(array($username))
+		->fetchAll();
+
+	if ($rows) {
+		foreach ($rows as $row) {
+			if (!isset($row->b_config))
+				$row->b_config="";
+			if ($row->b_location=="main")
+				$blocks["main"][$row->b_order] = array($row->b_name, @unserialize($row->b_config));
+			if ($row->b_location=="right")
+				$blocks["right"][$row->b_order] = array($row->b_name, @unserialize($row->b_config));
 		}
 	} else {
 		if (get_user_id($username)) {
 			//-- if no blocks found, check for a default block setting
-			$sql = "SELECT * FROM {$TBLPREFIX}blocks WHERE b_username='defaultuser' ORDER BY b_location, b_order";
-			$res2 = dbquery($sql);
-			if (DB::isError($res2))
-				return $blocks;
-			while ($row =& $res2->fetchRow(DB_FETCHMODE_ASSOC)){
-				if (!isset($row["b_config"]))
-					$row["b_config"]="";
-				if ($row["b_location"]=="main")
-					$blocks["main"][$row["b_order"]] = array($row["b_name"], @unserialize($row["b_config"]));
-				if ($row["b_location"]=="right")
-					$blocks["right"][$row["b_order"]] = array($row["b_name"], @unserialize($row["b_config"]));
+			//$rows=
+				PGV_DB::prepare("SELECT * FROM {$TBLPREFIX}blocks WHERE b_username=? ORDER BY b_location, b_order")
+				->execute(array('defaultuser'))
+				->fetchAll();
+
+			foreach ($rows as $row) {
+				if (!isset($row->b_config))
+					$row->b_config="";
+				if ($row->b_location=="main")
+					$blocks["main"][$row->b_order] = array($row->b_name, @unserialize($row->b_config));
+				if ($row->b_location=="right")
+					$blocks["right"][$row->b_order] = array($row->b_name, @unserialize($row->b_config));
 			}
-			$res2->free();
 		}
 	}
-	$res->free();
 	return $blocks;
 }
 
@@ -993,32 +990,32 @@ function setBlocks($username, $ublocks, $setdefault=false) {
  * @param array $news a news item array
  */
 function addNews($news) {
-	global $TBLPREFIX, $DBCONN;
+	global $TBLPREFIX;
 
 	if (!isset($news["date"]))
 		$news["date"] = client_time();
 	if (!empty($news["id"])) {
 		// In case news items are added from usermigrate, it will also contain an ID.
 		// So we check first if the ID exists in the database. If not, insert instead of update.
-		$sql = "SELECT * FROM {$TBLPREFIX}news where n_id=".$news["id"];
-		$res = dbquery($sql);
+		$exists=
+			PGV_DB::prepare("SELECT 1 FROM {$TBLPREFIX}news where n_id=?")
+			->execute(array($news["id"]))
+			->fetchOne();
 
-		if ($res->numRows() == 0) {
-			$sql = "INSERT INTO {$TBLPREFIX}news VALUES (".$news["id"].", '".$DBCONN->escapeSimple($news["username"])."','".$DBCONN->escapeSimple($news["date"])."','".$DBCONN->escapeSimple($news["title"])."','".$DBCONN->escapeSimple($news["text"])."')";
+		if (!$exists) {
+			return (bool)
+				PGV_DB::prepare("INSERT INTO {$TBLPREFIX}news (n_id, n_username, n_date, n_title, n_text) VALUES (?, ? ,? ,? ,?)")
+				->execute(array($news["id"], $news["username"], $news["date"], $news["title"], $news["text"]));
 		} else {
-			$sql = "UPDATE {$TBLPREFIX}news SET n_date='".$DBCONN->escapeSimple($news["date"])."', n_title='".$DBCONN->escapeSimple($news["title"])."', n_text='".$DBCONN->escapeSimple($news["text"])."' WHERE n_id=".$news["id"];
+			return (bool)
+				PGV_DB::prepare("UPDATE {$TBLPREFIX}news SET n_date=?, n_title=? , n_text=? WHERE n_id=?")
+				->execute(array($news["date"], $news["title"], $news["text"], $news["id"]));
 		}
-		$res->free();
 	} else {
-		$newid = get_next_id("news", "n_id");
-		$sql = "INSERT INTO {$TBLPREFIX}news VALUES ($newid, '".$DBCONN->escapeSimple($news["username"])."','".$DBCONN->escapeSimple($news["date"])."','".$DBCONN->escapeSimple($news["title"])."','".$DBCONN->escapeSimple($news["text"])."')";
+		return (bool)
+			PGV_DB::prepare("INSERT INTO {$TBLPREFIX}news (n_id, n_username, n_date, n_title, n_text) VALUES (?, ? ,? ,? ,?)")
+			->execute(array(get_next_id("news", "n_id"), $news["username"], $news["date"], $news["title"], $news["text"]));
 	}
-	$res = dbquery($sql);
-
-	if ($res)
-		return true;
-	else
-		return false;
 }
 
 /**
@@ -1030,13 +1027,7 @@ function addNews($news) {
 function deleteNews($news_id) {
 	global $TBLPREFIX;
 
-	$sql = "DELETE FROM {$TBLPREFIX}news WHERE n_id=".$news_id;
-	$res = dbquery($sql);
-
-	if ($res)
-		return true;
-	else
-		return false;
+	return (bool)PGV_DB::prepare("DELETE FROM {$TBLPREFIX}news WHERE n_id=?")->execute(array($news_id));
 }
 
 /**
@@ -1045,23 +1036,24 @@ function deleteNews($news_id) {
  * @param String $username the username or gedcom file name to get news items for
  */
 function getUserNews($username) {
-	global $TBLPREFIX, $DBCONN;
+	global $TBLPREFIX;
 
-	$news = array();
-	$sql = "SELECT * FROM {$TBLPREFIX}news WHERE n_username='".$DBCONN->escapeSimple($username)."' ORDER BY n_date DESC";
-	$res = dbquery($sql);
+	$rows=
+		PGV_DB::prepare("SELECT * FROM {$TBLPREFIX}news WHERE n_username=? ORDER BY n_date DESC")
+		->execute(array($username))
+		->fetchAll();
 
-	while ($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)){
-		$n = array();
-		$n["id"] = $row["n_id"];
-		$n["username"] = $row["n_username"];
-		$n["date"] = $row["n_date"];
-		$n["title"] = stripslashes($row["n_title"]);
-		$n["text"] = stripslashes($row["n_text"]);
-		$n["anchor"] = "article".$row["n_id"];
-		$news[$row["n_id"]] = $n;
+	$news=array();
+	foreach ($rows as $row) {
+		$news[$row->n_id]=array(
+			"id"=>$row->n_id,
+			"username"=>$row->n_username,
+			"date"=>$row->n_date,
+			"title"=>$row->n_title,
+			"text"=>$row->n_text,
+			"anchor"=>"article".$row->n_id
+		);
 	}
-	$res->free();
 	return $news;
 }
 
@@ -1073,20 +1065,22 @@ function getUserNews($username) {
 function getNewsItem($news_id) {
 	global $TBLPREFIX;
 
-	$news = array();
-	$sql = "SELECT * FROM {$TBLPREFIX}news WHERE n_id='$news_id'";
-	$res = dbquery($sql);
+	$row=
+		PGV_DB::prepare("SELECT * FROM {$TBLPREFIX}news WHERE n_id=?")
+		->execute(array($news_id))
+		->fetchOneRow();
 
-	while ($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)){
-		$n = array();
-		$n["id"] = $row["n_id"];
-		$n["username"] = $row["n_username"];
-		$n["date"] = $row["n_date"];
-		$n["title"] = stripslashes($row["n_title"]);
-		$n["text"] = stripslashes($row["n_text"]);
-		$n["anchor"] = "article".$row["n_id"];
-		$res->free();
-		return $n;
+	if ($row) {
+		return array(
+			"id"=>$row->n_id,
+			"username"=>$row->n_username,
+			"date"=>$row->n_date,
+			"title"=>$row->n_title,
+			"text"=>$row->n_text,
+			"anchor"=>"article".$row->n_id
+		);
+	} else {
+		return null;
 	}
 }
 
