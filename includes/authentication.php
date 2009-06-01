@@ -739,7 +739,7 @@ function addMessage($message) {
 		$message["body"] .= "LANGUAGE: $LANGUAGE\r\n";
 	}
 	if (empty($message["created"]))
-		$message["created"] = gmdate ("M d Y H:i:s");
+		$message["created"] = gmdate ("D, d M Y H:i:s T");
 	if ($PGV_STORE_MESSAGES && ($message["method"]!="messaging3" && $message["method"]!="mailto" && $message["method"]!="none")) {
 		$newid = get_next_id("messages", "m_id");
 		PGV_DB::prepare("INSERT INTO {$TBLPREFIX}messages (m_id, m_from, m_to, m_subject, m_body, m_created) VALUES (?, ? ,? ,? ,? ,?)")
