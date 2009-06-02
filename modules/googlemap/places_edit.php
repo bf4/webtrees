@@ -201,6 +201,9 @@ if ($action=="update") {
 			PGV_DB::prepare("SELECT pl_lati,pl_long,pl_parent_id,pl_zoom FROM {$TBLPREFIX}placelocation WHERE pl_id=?")
 			->execute(array($parent_id))
 			->fetchOneRow();
+		if (!$row) {
+			break;
+		}
 		if ($row->pl_lati!==null && $row->pl_long!==null) {
 			$parent_lati = (float)(str_replace(array('N', 'S', ','), array('', '-', '.') , $row->pl_lati));
 			$parent_long = (float)(str_replace(array('E', 'W', ','), array('', '-', '.') , $row->pl_long));
