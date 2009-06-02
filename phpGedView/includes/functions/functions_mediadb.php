@@ -204,12 +204,12 @@ function get_medialist($currentdir = false, $directory = "", $linkonly = false, 
 	$myDir = str_replace($MEDIA_DIRECTORY, "", $directory);
 	if ($random) {
 		$rows=
-			PGV_DB::prepareLimit("SELECT m_id, m_file, m_media, m_gedrec, m_titl, m_gedfile FROM {$TBLPREFIX}media WHERE m_gedfile=? ORDER BY ".PGV_DB_RANDOM, 5)
+			PGV_DB::prepareLimit("SELECT m_id, m_file, m_media, m_gedrec, m_titl, m_gedfile FROM {$TBLPREFIX}media WHERE m_gedfile=? ORDER BY ".PGV_DB::$RANDOM, 5)
 			->execute(array(PGV_GED_ID))
 			->fetchAll();
 	} else {
 		$rows=
-			PGV_DB::prepare("SELECT m_id, m_file, m_media, m_gedrec, m_titl, m_gedfile FROM {$TBLPREFIX}media WHERE m_gedfile=? AND (m_file ".PGV_DB_LIKE." ? OR m_file ".PGV_DB_LIKE." ?) ORDER BY m_id desc")
+			PGV_DB::prepare("SELECT m_id, m_file, m_media, m_gedrec, m_titl, m_gedfile FROM {$TBLPREFIX}media WHERE m_gedfile=? AND (m_file ".PGV_DB::$LIKE." ? OR m_file ".PGV_DB::$LIKE." ?) ORDER BY m_id desc")
 			->execute(array(PGV_GED_ID, "%{$myDir}%", "%://%"))
 			->fetchAll();
 	}
@@ -1641,7 +1641,7 @@ function PrintMediaLinks($links, $size = "small") {
 function get_media_id_from_file($filename){
 	global $TBLPREFIX;
 	return
-		PGV_DB::prepare("SELECT m_media FROM {$TBLPREFIX}media WHERE m_file ".PGV_DB_LIKE." ?")
+		PGV_DB::prepare("SELECT m_media FROM {$TBLPREFIX}media WHERE m_file ".PGV_DB::$LIKE." ?")
 		->execute(array("%{$filename}"))
 		->fetchOne();
 }

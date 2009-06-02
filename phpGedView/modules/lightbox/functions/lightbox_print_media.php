@@ -60,46 +60,46 @@ function lightbox_print_media($pid, $level=1, $related=false, $kind=1, $noedit=f
 	case 1:
 		$tt      = $pgv_lang["ROW_TYPE__photo"];
 		$typ2b   = "(";
-		$typ2b  .= " (m_gedrec ".PGV_DB_LIKE." '%TYPE photo%')       OR ";
-		$typ2b  .= " (m_gedrec ".PGV_DB_LIKE." '%TYPE map%')         OR ";
-		$typ2b  .= " (m_gedrec ".PGV_DB_LIKE." '%TYPE painting%')    OR ";
-		$typ2b  .= " (m_gedrec ".PGV_DB_LIKE." '%TYPE tombstone%')      ";
+		$typ2b  .= " (m_gedrec ".PGV_DB::$LIKE." '%TYPE photo%')       OR ";
+		$typ2b  .= " (m_gedrec ".PGV_DB::$LIKE." '%TYPE map%')         OR ";
+		$typ2b  .= " (m_gedrec ".PGV_DB::$LIKE." '%TYPE painting%')    OR ";
+		$typ2b  .= " (m_gedrec ".PGV_DB::$LIKE." '%TYPE tombstone%')      ";
 		$typ2b  .= ")";
 		break;
 	case 2:
 		$tt      = $pgv_lang["ROW_TYPE__document"];
 		$typ2b   = "(";
-		$typ2b  .= " (m_gedrec ".PGV_DB_LIKE." '%TYPE card%')        OR ";
-		$typ2b  .= " (m_gedrec ".PGV_DB_LIKE." '%TYPE certificate%') OR ";
-		$typ2b  .= " (m_gedrec ".PGV_DB_LIKE." '%TYPE document%')    OR ";
-		$typ2b  .= " (m_gedrec ".PGV_DB_LIKE." '%TYPE magazine%')    OR ";
-		$typ2b  .= " (m_gedrec ".PGV_DB_LIKE." '%TYPE manuscript%')  OR ";
-		$typ2b  .= " (m_gedrec ".PGV_DB_LIKE." '%TYPE newspaper%')      ";
+		$typ2b  .= " (m_gedrec ".PGV_DB::$LIKE." '%TYPE card%')        OR ";
+		$typ2b  .= " (m_gedrec ".PGV_DB::$LIKE." '%TYPE certificate%') OR ";
+		$typ2b  .= " (m_gedrec ".PGV_DB::$LIKE." '%TYPE document%')    OR ";
+		$typ2b  .= " (m_gedrec ".PGV_DB::$LIKE." '%TYPE magazine%')    OR ";
+		$typ2b  .= " (m_gedrec ".PGV_DB::$LIKE." '%TYPE manuscript%')  OR ";
+		$typ2b  .= " (m_gedrec ".PGV_DB::$LIKE." '%TYPE newspaper%')      ";
 		$typ2b  .= ")";
 		break;
 	case 3:
 		$tt      = $pgv_lang["ROW_TYPE__census"];
 		$typ2b   = "(";
-		$typ2b  .= " (m_gedrec ".PGV_DB_LIKE." '%TYPE electronic%')  OR ";
-		$typ2b  .= " (m_gedrec ".PGV_DB_LIKE." '%TYPE fiche%')       OR ";
-		$typ2b  .= " (m_gedrec ".PGV_DB_LIKE." '%TYPE film%')           ";
+		$typ2b  .= " (m_gedrec ".PGV_DB::$LIKE." '%TYPE electronic%')  OR ";
+		$typ2b  .= " (m_gedrec ".PGV_DB::$LIKE." '%TYPE fiche%')       OR ";
+		$typ2b  .= " (m_gedrec ".PGV_DB::$LIKE." '%TYPE film%')           ";
 		$typ2b  .= ")";
 		break;
 	case 4:
 		$tt      = $pgv_lang["ROW_TYPE__other"];
 		$typ2b   = "(";
-		$typ2b  .= " (m_gedrec NOT ".PGV_DB_LIKE." '%TYPE %')        OR ";
-		$typ2b  .= " (m_gedrec ".PGV_DB_LIKE."	   '%TYPE coat%')	 OR ";
-		$typ2b  .= " (m_gedrec ".PGV_DB_LIKE."     '%TYPE book%')    OR ";
-		$typ2b  .= " (m_gedrec ".PGV_DB_LIKE."     '%TYPE audio%')   OR ";
-		$typ2b  .= " (m_gedrec ".PGV_DB_LIKE."     '%TYPE video%')   OR ";
-		$typ2b  .= " (m_gedrec ".PGV_DB_LIKE."     '%TYPE other%')      ";
+		$typ2b  .= " (m_gedrec NOT ".PGV_DB::$LIKE." '%TYPE %')        OR ";
+		$typ2b  .= " (m_gedrec ".PGV_DB::$LIKE."	   '%TYPE coat%')	 OR ";
+		$typ2b  .= " (m_gedrec ".PGV_DB::$LIKE."     '%TYPE book%')    OR ";
+		$typ2b  .= " (m_gedrec ".PGV_DB::$LIKE."     '%TYPE audio%')   OR ";
+		$typ2b  .= " (m_gedrec ".PGV_DB::$LIKE."     '%TYPE video%')   OR ";
+		$typ2b  .= " (m_gedrec ".PGV_DB::$LIKE."     '%TYPE other%')      ";
 		$typ2b  .= ")";
 		break;
 	case 5:
 	default:
 		$tt      = $pgv_lang["ROW_TYPE__notinDB"];
-		$typ2b   = "(m_gedrec ".PGV_DB_LIKE."     '%%')";
+		$typ2b   = "(m_gedrec ".PGV_DB::$LIKE."     '%%')";
 		break;
 	}
 
@@ -165,7 +165,7 @@ function lightbox_print_media($pid, $level=1, $related=false, $kind=1, $noedit=f
 	$vars[]=PGV_GED_ID;
 	//-- for family and source page only show level 1 obje references
 	if ($level>0) {
-		$sqlmm .= "AND mm_gedrec ".PGV_DB_LIKE." ?";
+		$sqlmm .= "AND mm_gedrec ".PGV_DB::$LIKE." ?";
 		$vars[]="$level OBJE%";
 	}
 

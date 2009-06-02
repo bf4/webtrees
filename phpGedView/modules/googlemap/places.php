@@ -61,7 +61,7 @@ if (!PGV_DB::table_exists("{$TBLPREFIX}placelocation")) {
 			" pl_zoom      INT              NULL,".
 			" pl_icon      VARCHAR(255)     NULL,".
 				" PRIMARY KEY (pl_id)".
-			") ".PGV_DB_UTF8_TABLE
+			") ".PGV_DB::$UTF8_TABLE
 		);
 		PGV_DB::exec("CREATE INDEX {$TBLPREFIX}pl_level     ON {$TBLPREFIX}placelocation (pl_level    )");
 		PGV_DB::exec("CREATE INDEX {$TBLPREFIX}p            ON {$TBLPREFIX}placelocation (pl_long     )");
@@ -308,7 +308,7 @@ if ($action=="ImportGedcom") {
 				$escparent = "Unknown";
 			}
 			$row=
-				PGV_DB::prepare("SELECT pl_id,pl_long,pl_lati,pl_zoom FROM {$TBLPREFIX}placelocation WHERE pl_level=? AND pl_parent_id=? AND pl_place ".PGV_DB_LIKE." ?")
+				PGV_DB::prepare("SELECT pl_id,pl_long,pl_lati,pl_zoom FROM {$TBLPREFIX}placelocation WHERE pl_level=? AND pl_parent_id=? AND pl_place ".PGV_DB::$LIKE." ?")
 				->execute(array($i, $parent_id, $escparent))
 				->fetchOneRow();
 			if ($i < count($parent)-1) {
@@ -475,7 +475,7 @@ if ($action=="ImportFile2") {
 				$escparent = "Unknown";
 			}
 			$row=
-				PGV_DB::prepare("SELECT pl_id,pl_long,pl_lati,pl_zoom,pl_icon FROM {$TBLPREFIX}placelocation WHERE pl_level=? AND pl_parent_id=? AND pl_place ".PGV_DB_LIKE." ? ORDER BY pl_place")
+				PGV_DB::prepare("SELECT pl_id,pl_long,pl_lati,pl_zoom,pl_icon FROM {$TBLPREFIX}placelocation WHERE pl_level=? AND pl_parent_id=? AND pl_place ".PGV_DB::$LIKE." ? ORDER BY pl_place")
 				->execute(array($i, $parent_id, $escparent))
 				->fetchOneRow();
 			if (empty($row)) {       // this name does not yet exist: create entry

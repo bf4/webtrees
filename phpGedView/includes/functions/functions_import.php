@@ -764,7 +764,7 @@ function update_places($gid, $ged_id, $gedrec) {
 			"INSERT INTO {$TBLPREFIX}places (p_id, p_place, p_level, p_parent_id, p_file, p_std_soundex, p_dm_soundex) VALUES (?,?,?,?,?,?,?)"
 		);
 		$sql_select_places=PGV_DB::prepare(
-			"SELECT p_id FROM {$TBLPREFIX}places WHERE p_level=? AND p_file=? AND p_parent_id=? AND p_place ".PGV_DB_LIKE." ?"
+			"SELECT p_id FROM {$TBLPREFIX}places WHERE p_level=? AND p_file=? AND p_parent_id=? AND p_place ".PGV_DB::$LIKE." ?"
 		);
 	}
 
@@ -1311,14 +1311,14 @@ function create_individuals_table() {
 
 	PGV_DB::exec(
 		"CREATE TABLE {$TBLPREFIX}individuals (".
-		" i_id     ".PGV_DB_COL_XREF."      NOT NULL,".
-		" i_file   ".PGV_DB_COL_FILE."      NOT NULL,".
+		" i_id     ".PGV_DB::$COL_XREF."      NOT NULL,".
+		" i_file   ".PGV_DB::$COL_FILE."      NOT NULL,".
 		" i_rin      VARCHAR(255)           NULL,".
 		" i_isdead   INT DEFAULT 1          NULL,".
 		" i_sex      CHAR(1)                NOT NULL,".
-		" i_gedcom ".PGV_DB_LONGTEXT_TYPE." NULL,".
+		" i_gedcom ".PGV_DB::$LONGTEXT_TYPE." NULL,".
 		" PRIMARY KEY (i_id, i_file)".
-		") ".PGV_DB_UTF8_TABLE
+		") ".PGV_DB::$UTF8_TABLE
 	);
 	PGV_DB::exec("CREATE INDEX {$TBLPREFIX}indi_id   ON {$TBLPREFIX}individuals (i_id     )");
 	PGV_DB::exec("CREATE INDEX {$TBLPREFIX}indi_file ON {$TBLPREFIX}individuals (i_file   )");
@@ -1331,15 +1331,15 @@ function create_families_table() {
 
 	PGV_DB::exec(
 		"CREATE TABLE {$TBLPREFIX}families (".
-		" f_id     ".PGV_DB_COL_XREF."      NOT NULL,".
-		" f_file   ".PGV_DB_COL_FILE."      NOT NULL,".
-		" f_husb   ".PGV_DB_COL_XREF."      NULL,".
-		" f_wife   ".PGV_DB_COL_XREF."      NULL,".
+		" f_id     ".PGV_DB::$COL_XREF."      NOT NULL,".
+		" f_file   ".PGV_DB::$COL_FILE."      NOT NULL,".
+		" f_husb   ".PGV_DB::$COL_XREF."      NULL,".
+		" f_wife   ".PGV_DB::$COL_XREF."      NULL,".
 		" f_chil     TEXT                   NULL,".
-		" f_gedcom ".PGV_DB_LONGTEXT_TYPE." NULL,".
+		" f_gedcom ".PGV_DB::$LONGTEXT_TYPE." NULL,".
 		" f_numchil  INT                    NULL,".
 		" PRIMARY KEY (f_id, f_file)".
-		") ".PGV_DB_UTF8_TABLE
+		") ".PGV_DB::$UTF8_TABLE
 	);
 	PGV_DB::exec("CREATE INDEX {$TBLPREFIX}fam_id   ON {$TBLPREFIX}families (f_id  )");
 	PGV_DB::exec("CREATE INDEX {$TBLPREFIX}fam_file ON {$TBLPREFIX}families (f_file)");
@@ -1354,13 +1354,13 @@ function create_sources_table() {
 
 	PGV_DB::exec(
 		"CREATE TABLE {$TBLPREFIX}sources (".
-		" s_id     ".PGV_DB_COL_XREF."      NOT NULL,".
-		" s_file   ".PGV_DB_COL_FILE."      NULL,".
+		" s_id     ".PGV_DB::$COL_XREF."      NOT NULL,".
+		" s_file   ".PGV_DB::$COL_FILE."      NULL,".
 		" s_name     VARCHAR(255)           NULL,".
-		" s_gedcom ".PGV_DB_LONGTEXT_TYPE." NULL,".
-		" s_dbid   ".PGV_DB_CHAR_TYPE."(1)  NULL,".
+		" s_gedcom ".PGV_DB::$LONGTEXT_TYPE." NULL,".
+		" s_dbid   ".PGV_DB::$CHAR_TYPE."(1)  NULL,".
 		" PRIMARY KEY (s_id, s_file)".
-		") ".PGV_DB_UTF8_TABLE
+		") ".PGV_DB::$UTF8_TABLE
 	);
 	PGV_DB::exec("CREATE INDEX {$TBLPREFIX}sour_id   ON {$TBLPREFIX}sources (s_id  )");
 	PGV_DB::exec("CREATE INDEX {$TBLPREFIX}sour_name ON {$TBLPREFIX}sources (s_name)");
@@ -1375,12 +1375,12 @@ function create_other_table() {
 
 	PGV_DB::exec(
 		"CREATE TABLE {$TBLPREFIX}other (".
-		" o_id     ".PGV_DB_COL_XREF."      NOT NULL,".
-		" o_file   ".PGV_DB_COL_FILE."      NOT NULL,".
-		" o_type   ".PGV_DB_COL_TAG."       NULL,".
-		" o_gedcom ".PGV_DB_LONGTEXT_TYPE." NULL,".
+		" o_id     ".PGV_DB::$COL_XREF."      NOT NULL,".
+		" o_file   ".PGV_DB::$COL_FILE."      NOT NULL,".
+		" o_type   ".PGV_DB::$COL_TAG."       NULL,".
+		" o_gedcom ".PGV_DB::$LONGTEXT_TYPE." NULL,".
 		" PRIMARY KEY (o_id, o_file)".
-		") ".PGV_DB_UTF8_TABLE
+		") ".PGV_DB::$UTF8_TABLE
 	);
 	PGV_DB::exec("CREATE INDEX {$TBLPREFIX}other_id   ON {$TBLPREFIX}other (o_id  )");
 	PGV_DB::exec("CREATE INDEX {$TBLPREFIX}other_file ON {$TBLPREFIX}other (o_file)");
@@ -1394,10 +1394,10 @@ function create_placelinks_table() {
 	PGV_DB::exec(
 		"CREATE TABLE {$TBLPREFIX}placelinks (".
 		" pl_p_id   INT               NOT NULL,".
-		" pl_gid  ".PGV_DB_COL_XREF." NOT NULL,".
-		" pl_file ".PGV_DB_COL_FILE." NOT NULL,".
+		" pl_gid  ".PGV_DB::$COL_XREF." NOT NULL,".
+		" pl_file ".PGV_DB::$COL_FILE." NOT NULL,".
 		" PRIMARY KEY (pl_p_id, pl_gid, pl_file)".
-		") ".PGV_DB_UTF8_TABLE
+		") ".PGV_DB::$UTF8_TABLE
 	);
 	PGV_DB::exec("CREATE INDEX {$TBLPREFIX}plindex_place ON {$TBLPREFIX}placelinks (pl_p_id)");
 	PGV_DB::exec("CREATE INDEX {$TBLPREFIX}plindex_gid   ON {$TBLPREFIX}placelinks (pl_gid )");
@@ -1419,7 +1419,7 @@ function create_places_table() {
 		" p_std_soundex TEXT             NULL,".
 		" p_dm_soundex  TEXT             NULL,".
 		" PRIMARY KEY (p_id)".
-		") ".PGV_DB_UTF8_TABLE
+		") ".PGV_DB::$UTF8_TABLE
 	);
 	PGV_DB::exec("CREATE INDEX {$TBLPREFIX}place_place  ON {$TBLPREFIX}places (p_place    )");
 	PGV_DB::exec("CREATE INDEX {$TBLPREFIX}place_level  ON {$TBLPREFIX}places (p_level    )");
@@ -1434,8 +1434,8 @@ function create_name_table() {
 
 	PGV_DB::exec(
 		"CREATE TABLE {$TBLPREFIX}name (".
-		" n_file           ".PGV_DB_COL_FILE." NOT NULL,".
-		" n_id             ".PGV_DB_COL_XREF." NOT NULL,".
+		" n_file           ".PGV_DB::$COL_FILE." NOT NULL,".
+		" n_id             ".PGV_DB::$COL_XREF." NOT NULL,".
 		" n_num              INT               NOT NULL,".
 		" n_type             VARCHAR(15)       NOT NULL,".
 		" n_sort             VARCHAR(255)      NOT NULL,". // e.g. "GOGH,VINCENT WILLEM"
@@ -1450,7 +1450,7 @@ function create_name_table() {
 		" n_soundex_givn_dm  VARCHAR(255)          NULL,".
 		" n_soundex_surn_dm  VARCHAR(255)          NULL,".
 		" PRIMARY KEY (n_id, n_file, n_num)".
-		") ".PGV_DB_UTF8_TABLE
+		") ".PGV_DB::$UTF8_TABLE
 	);
 	PGV_DB::exec("CREATE INDEX {$TBLPREFIX}name_file   ON {$TBLPREFIX}name (n_file   )");
 }
@@ -1462,12 +1462,12 @@ function create_link_table() {
 
 	PGV_DB::exec(
 		"CREATE TABLE {$TBLPREFIX}link (".
-		" l_file    ".PGV_DB_COL_FILE." NOT NULL,".
-		" l_from    ".PGV_DB_COL_XREF." NOT NULL,".
-		" l_type    ".PGV_DB_COL_TAG."  NOT NULL,".
-		" l_to      ".PGV_DB_COL_XREF." NOT NULL,".
+		" l_file    ".PGV_DB::$COL_FILE." NOT NULL,".
+		" l_from    ".PGV_DB::$COL_XREF." NOT NULL,".
+		" l_type    ".PGV_DB::$COL_TAG."  NOT NULL,".
+		" l_to      ".PGV_DB::$COL_XREF." NOT NULL,".
 		" PRIMARY KEY (l_from, l_file, l_type, l_to)".
-		") ".PGV_DB_UTF8_TABLE
+		") ".PGV_DB::$UTF8_TABLE
 	);
 	PGV_DB::exec("CREATE UNIQUE INDEX {$TBLPREFIX}ux1 ON {$TBLPREFIX}link (l_to, l_file, l_type, l_from)");
 }
@@ -1479,10 +1479,10 @@ function create_remotelinks_table() {
 
 	PGV_DB::exec(
 		"CREATE TABLE {$TBLPREFIX}remotelinks (".
-		" r_gid  ".PGV_DB_COL_XREF." NOT NULL,".
+		" r_gid  ".PGV_DB::$COL_XREF." NOT NULL,".
 		" r_linkid VARCHAR(255)      NULL,".
-		" r_file ".PGV_DB_COL_FILE." NOT NULL".
-		") ".PGV_DB_UTF8_TABLE
+		" r_file ".PGV_DB::$COL_FILE." NOT NULL".
+		") ".PGV_DB::$UTF8_TABLE
 	);
 	PGV_DB::exec("CREATE INDEX {$TBLPREFIX}r_gid     ON {$TBLPREFIX}remotelinks (r_gid   )");
 	PGV_DB::exec("CREATE INDEX {$TBLPREFIX}r_link_id ON {$TBLPREFIX}remotelinks (r_linkid)");
@@ -1497,14 +1497,14 @@ function create_media_table() {
 	PGV_DB::exec(
 		"CREATE TABLE {$TBLPREFIX}media (".
 		" m_id        INT                    NOT NULL,".
-		" m_media   ".PGV_DB_COL_XREF."      NULL,".
+		" m_media   ".PGV_DB::$COL_XREF."      NULL,".
 		" m_ext       VARCHAR(6)             NULL,".
 		" m_titl      VARCHAR(255)           NULL,".
 		" m_file      VARCHAR(255)           NULL,".
-		" m_gedfile ".PGV_DB_COL_FILE."      NULL,".
-		" m_gedrec  ".PGV_DB_LONGTEXT_TYPE." NULL,".
+		" m_gedfile ".PGV_DB::$COL_FILE."      NULL,".
+		" m_gedrec  ".PGV_DB::$LONGTEXT_TYPE." NULL,".
 		" PRIMARY KEY (m_id)".
-		") ".PGV_DB_UTF8_TABLE
+		") ".PGV_DB::$UTF8_TABLE
 	);
 	PGV_DB::exec("CREATE INDEX {$TBLPREFIX}m_media      ON {$TBLPREFIX}media (m_media           )");
 	PGV_DB::exec("CREATE INDEX {$TBLPREFIX}m_media_file ON {$TBLPREFIX}media (m_media, m_gedfile)");
@@ -1524,11 +1524,11 @@ function create_dates_table() {
 		" d_datestamp  INT               NULL,".
 		" d_julianday1 INT          NULL,".
 		" d_julianday2 INT          NULL,".
-		" d_fact     ".PGV_DB_COL_TAG."  NULL,".
-		" d_gid      ".PGV_DB_COL_XREF." NULL,".
-		" d_file     ".PGV_DB_COL_FILE." NULL,".
+		" d_fact     ".PGV_DB::$COL_TAG."  NULL,".
+		" d_gid      ".PGV_DB::$COL_XREF." NULL,".
+		" d_file     ".PGV_DB::$COL_FILE." NULL,".
 		" d_type       VARCHAR(13)  NULL".
-		") ".PGV_DB_UTF8_TABLE
+		") ".PGV_DB::$UTF8_TABLE
 	);
 	PGV_DB::exec("CREATE INDEX {$TBLPREFIX}date_day        ON {$TBLPREFIX}dates (d_day        )") ;
 	PGV_DB::exec("CREATE INDEX {$TBLPREFIX}date_month      ON {$TBLPREFIX}dates (d_month      )");
@@ -1552,13 +1552,13 @@ function create_media_mapping_table() {
 	PGV_DB::exec(
 		"CREATE TABLE {$TBLPREFIX}media_mapping (".
 		" mm_id        INT                    NOT NULL,".
-		" mm_media   ".PGV_DB_COL_XREF."      NOT NULL DEFAULT '',".
-		" mm_gid     ".PGV_DB_COL_XREF."      NOT NULL DEFAULT '',".
+		" mm_media   ".PGV_DB::$COL_XREF."      NOT NULL DEFAULT '',".
+		" mm_gid     ".PGV_DB::$COL_XREF."      NOT NULL DEFAULT '',".
 		" mm_order     INT                    NOT NULL DEFAULT '0',".
-		" mm_gedfile ".PGV_DB_COL_FILE."      NULL,".
-		" mm_gedrec  ".PGV_DB_LONGTEXT_TYPE." NULL,".
+		" mm_gedfile ".PGV_DB::$COL_FILE."      NULL,".
+		" mm_gedrec  ".PGV_DB::$LONGTEXT_TYPE." NULL,".
 		" PRIMARY KEY (mm_id)".
-		") ".PGV_DB_UTF8_TABLE
+		") ".PGV_DB::$UTF8_TABLE
 	);
 	PGV_DB::exec("CREATE INDEX {$TBLPREFIX}mm_media_id      ON {$TBLPREFIX}media_mapping (mm_media, mm_gedfile)");
 	PGV_DB::exec("CREATE INDEX {$TBLPREFIX}mm_media_gid     ON {$TBLPREFIX}media_mapping (mm_gid, mm_gedfile  )");
@@ -1573,10 +1573,10 @@ function create_nextid_table() {
 	PGV_DB::exec(
 		"CREATE TABLE {$TBLPREFIX}nextid (".
 		" ni_id        INT               NOT NULL,".
-		" ni_type    ".PGV_DB_COL_TAG."  NOT NULL,".
-		" ni_gedfile ".PGV_DB_COL_FILE." NOT NULL,".
+		" ni_type    ".PGV_DB::$COL_TAG."  NOT NULL,".
+		" ni_gedfile ".PGV_DB::$COL_FILE." NOT NULL,".
 		" PRIMARY KEY (ni_type, ni_gedfile)".
-		") ".PGV_DB_UTF8_TABLE
+		") ".PGV_DB::$UTF8_TABLE
 	);
 }
 /**

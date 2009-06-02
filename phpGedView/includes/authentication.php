@@ -299,16 +299,7 @@ function userAutoAccept($user_id=PGV_USER_ID) {
  * @return boolean true if an admin user has been defined
  */
 function adminUserExists() {
-	static $PGV_ADMIN_EXISTS=null;
-
-	if (!is_null($PGV_ADMIN_EXISTS))
-		return $PGV_ADMIN_EXISTS;
-
-//	if (checkTableExists()) {
-		$PGV_ADMIN_EXISTS=admin_user_exists();
-		return $PGV_ADMIN_EXISTS;
-//	}
-	return false;
+	return admin_user_exists();
 }
 
 /**
@@ -357,7 +348,7 @@ function checkTableExists() {
 			" u_max_relation_path    INT             NULL,".
 			" u_auto_accept          VARCHAR(2)      NULL,".
 			" PRIMARY KEY (u_username)".
-			") ".PGV_DB_UTF8_TABLE
+			") ".PGV_DB::$UTF8_TABLE
 		);
 	} else {
 		if (!PGV_DB::column_exists("{$TBLPREFIX}users", 'u_email')) {
@@ -422,7 +413,7 @@ function checkTableExists() {
 			" m_body    TEXT             NULL,".
 			" m_created VARCHAR(255)     NULL,".
 			" PRIMARY KEY (m_id)".
-			") ".PGV_DB_UTF8_TABLE
+			") ".PGV_DB::$UTF8_TABLE
 		);
 		PGV_DB::exec("CREATE INDEX {$TBLPREFIX}messages_to ON {$TBLPREFIX}messages (m_to)");
 	}
@@ -432,14 +423,14 @@ function checkTableExists() {
 			"CREATE TABLE {$TBLPREFIX}favorites (".
 			" fv_id       INT               NOT NULL,".
 		 	" fv_username VARCHAR(30)       NULL,".
-			" fv_gid    ".PGV_DB_COL_XREF." NULL,".
-			" fv_type   ".PGV_DB_COL_TAG."  NULL,".
+			" fv_gid    ".PGV_DB::$COL_XREF." NULL,".
+			" fv_type   ".PGV_DB::$COL_TAG."  NULL,".
 			" fv_file     VARCHAR(100)      NULL,".
 			" fv_url      VARCHAR(255)      NULL,".
 		 	" fv_title    VARCHAR(255)      NULL,".
 			" fv_note     TEXT,".
 			" PRIMARY KEY (fv_id)".
-			") ".PGV_DB_UTF8_TABLE
+			") ".PGV_DB::$UTF8_TABLE
 		);
 		PGV_DB::exec("CREATE INDEX {$TBLPREFIX}favorites_username ON {$TBLPREFIX}favorites (fv_username)");
 	} else {
@@ -460,7 +451,7 @@ function checkTableExists() {
 			" b_name     VARCHAR(255)     NULL,".
 			" b_config   TEXT             NULL,".
 			" PRIMARY KEY (b_id)".
-			") ".PGV_DB_UTF8_TABLE
+			") ".PGV_DB::$UTF8_TABLE
 		);
 		PGV_DB::exec("CREATE INDEX {$TBLPREFIX}blocks_username ON {$TBLPREFIX}blocks (b_username)");
 	} else {
@@ -477,7 +468,7 @@ function checkTableExists() {
 			" n_title    VARCHAR(255)     NULL,".
 			" n_text     TEXT             NULL,".
 			" PRIMARY KEY (n_id)".
-			") ".PGV_DB_UTF8_TABLE
+			") ".PGV_DB::$UTF8_TABLE
 		);
 		PGV_DB::exec("CREATE INDEX {$TBLPREFIX}news_username ON {$TBLPREFIX}news (n_username)");
 	}
@@ -489,7 +480,7 @@ function checkTableExists() {
 		 	" mx_thread VARCHAR(255)     NULL,".
 			" mx_time   INT              NULL,".
 			" PRIMARY KEY (mx_id)".
-			") ".PGV_DB_UTF8_TABLE
+			") ".PGV_DB::$UTF8_TABLE
 		);
 		PGV_DB::exec("CREATE INDEX {$TBLPREFIX}mutex_name ON {$TBLPREFIX}mutex (mx_name)");
 	}

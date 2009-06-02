@@ -809,13 +809,13 @@ class stats {
 		$like = '';
 		if ($type != 'all') {
 			if ($type != 'unknown') {
-				$like = " AND m_gedrec ".PGV_DB_LIKE." '%3 TYPE {$type}%'";
+				$like = " AND m_gedrec ".PGV_DB::$LIKE." '%3 TYPE {$type}%'";
 			} else {
 				// There has to be a better way then this :(
 				$nolike = array();
 				foreach (self::$_media_types as $t)
 				{
-					$nolike[] = "m_gedrec NOT ".PGV_DB_LIKE." '%3 TYPE {$t}%'";
+					$nolike[] = "m_gedrec NOT ".PGV_DB::$LIKE." '%3 TYPE {$t}%'";
 				}
 				$nolike = join(' AND ', $nolike);
 				$like = " AND ({$nolike})";

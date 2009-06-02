@@ -353,25 +353,15 @@ if (file_exists($INDEX_DIRECTORY."gedcoms.php")) {
 	$GEDCOMS=array();
 }
 
-//-- connect to the database
-$DBPASS = str_replace(array("\\\\", "\\\"", "\\\$"), array("\\", "\"", "\$"), $DBPASS); // remove escape codes before using PW
-
-// New PDO-based connection
+// Connect to the database
 require_once 'includes/classes/class_pgv_db.php';
 try {
-	// During the install, we want to connect to the chosen DB, even if the details have not been saved to config.php
-	if (basename($SCRIPT_NAME)=='install.php' && isset($_POST['NEW_DBTYPE'])) {
-		PGV_DB::createInstance($_POST['NEW_DBTYPE'], $_POST['NEW_DBHOST'], $_POST['NEW_DBPORT'], $_POST['NEW_DBNAME'], $_POST['NEW_DBUSER'], $_POST['NEW_DBPASS'], $_POST['NEW_DBPERSIST'], $_POST['NEW_DB_UTF8_COLLATION']);
-	} else {
-		PGV_DB::createInstance($DBTYPE, $DBHOST, $DBPORT, $DBNAME, $DBUSER, $DBPASS, $DBPERSIST, $DB_UTF8_COLLATION);
-	}
-	//unset($DBUSER, $DBPASS);
-	$PGV_DB_CONNECTED=true;
+	$DBPASS=str_replace(array("\\\\", "\\\"", "\\\$"), array("\\", "\"", "\$"), $DBPASS); // remove escape codes before using PW
+	PGV_DB::createInstance($DBTYPE, $DBHOST, $DBPORT, $DBNAME, $DBUSER, $DBPASS, $DBPERSIST, $DB_UTF8_COLLATION);
+	unset($DBUSER, $DBPASS);
 } catch (PDOException $ex) {
-	$PGV_DB_CONNECTED=false;
+	// Can't connect to the DB?  We'll get redirected to install.php later.....
 }
-
-$PGV_DB_CONNECTED = check_db();
 
 $logout=safe_GET_bool('logout');
 //-- try to set the active GEDCOM
@@ -593,7 +583,7 @@ if (isset($SHOW_CONTEXT_HELP) && $show_context_help==='no') $_SESSION["show_cont
 if (!isset($USE_THUMBS_MAIN)) $USE_THUMBS_MAIN = false;
 if ((strstr($SCRIPT_NAME, "install.php")===false)
 	&&(strstr($SCRIPT_NAME, "editconfig_help.php")===false)) {
-	if (!$PGV_DB_CONNECTED || !adminUserExists()) {
+	if (!PGV_DB::isConnected() || !adminUserExists()) {
 		header("Location: install.php");
 		exit;
 	}
@@ -667,7 +657,7 @@ if ((strstr($SCRIPT_NAME, "install.php")===false)
 }
 
 //-- load the user specific theme
-if ($PGV_DB_CONNECTED && PGV_USER_ID && !isset($_REQUEST['logout'])) {
+if (PGV_DB::isConnected() && PGV_USER_ID && !isset($_REQUEST['logout'])) {
 	//-- update the login time every 5 minutes
 	if (!isset($_SESSION['activity_time']) || (time()-$_SESSION['activity_time'])>300) {
 		userUpdateLogin(PGV_USER_ID);

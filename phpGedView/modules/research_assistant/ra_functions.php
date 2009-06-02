@@ -122,7 +122,7 @@ class ra_functions {
 			$sql = "SELECT * FROM {$TBLPREFIX}factlookup WHERE startdate<=? AND enddate>=?";
 			$vars=array($endDate, $startDate);
 		} else {
-			$sql = "SELECT * FROM {$TBLPREFIX}factlookup WHERE startdate<=? AND enddate>=? AND gedcom_fact ".PGV_DB_LIKE." ?";
+			$sql = "SELECT * FROM {$TBLPREFIX}factlookup WHERE startdate<=? AND enddate>=? AND gedcom_fact ".PGV_DB::$LIKE." ?";
 			$vars=array($endDate, $startDate, "%{$factLookingFor}%");
 		}
 
@@ -136,7 +136,7 @@ class ra_functions {
 				$numOfParts=count($parts) -1;
 				for ($i=0; ($i<count($parts) && $i<5); $i++) {
 					if (!empty($parts[$numOfParts])) {
-						$sql.=" AND pl_lv".($i+1)." ".PGV_DB_LIKE." ?";
+						$sql.=" AND pl_lv".($i+1)." ".PGV_DB::$LIKE." ?";
 						$vars[]='%'.$parts[$numOfParts].'%';
 					}
 					$numOfParts--;
@@ -174,7 +174,7 @@ class ra_functions {
 				" t_form        VARCHAR(255)     NULL,".
 				" t_username    VARCHAR(45)      NULL,".
 				" PRIMARY KEY (t_id)".
-				") ".PGV_DB_UTF8_TABLE
+				") ".PGV_DB::$UTF8_TABLE
 			);
 		} else {
 			if (!PGV_DB::column_exists("{$TBLPREFIX}tasks", 't_form')) {
@@ -191,7 +191,7 @@ class ra_functions {
 				" c_body       TEXT        NOT NULL,".
 				" c_datetime   INTEGER     NOT NULL,".
 				" PRIMARY KEY (c_id)".
-				") ".PGV_DB_UTF8_TABLE
+				") ".PGV_DB::$UTF8_TABLE
 			);
 		}
 
@@ -207,7 +207,7 @@ class ra_functions {
 				" ts_obje  VARCHAR(20)      NULL,".
 				" ts_array TEXT             NULL,".
 				" PRIMARY KEY (ts_s_id, ts_t_id)".
-				") ".PGV_DB_UTF8_TABLE
+				") ".PGV_DB::$UTF8_TABLE
 			);
 		}
 
@@ -219,7 +219,7 @@ class ra_functions {
 				" fr_description TEXT             NULL,".
 				" fr_parentid    INTEGER          NULL,".
 				" PRIMARY KEY (fr_id)".
-				") ".PGV_DB_UTF8_TABLE
+				") ".PGV_DB::$UTF8_TABLE
 			);
 		}
 
@@ -230,7 +230,7 @@ class ra_functions {
 				" it_i_id   VARCHAR(255) NOT NULL,".
 				" it_i_file INTEGER      NOT NULL,".
 				" PRIMARY KEY (it_t_id, it_i_id,it_i_file)".
-				") ".PGV_DB_UTF8_TABLE
+				") ".PGV_DB::$UTF8_TABLE
 			);
 		}
 
@@ -244,7 +244,7 @@ class ra_functions {
 				" tf_multiple VARCHAR(3)       NULL,".
 				" tf_type     VARCHAR(4)       NULL,".
 				" PRIMARY KEY (tf_id)".
-				") ".PGV_DB_UTF8_TABLE
+				") ".PGV_DB::$UTF8_TABLE
 			);
 		} else {
 			if (!PGV_DB::column_exists("{$TBLPREFIX}taskfacts", 'tf_multiple')) {
@@ -265,7 +265,7 @@ class ra_functions {
 				" uc_p_id     VARCHAR(255) NOT NULL,".
 				" uc_f_id     INTEGER      NOT NULL,".
 				" PRIMARY KEY (uc_id)".
-				") ".PGV_DB_UTF8_TABLE
+				") ".PGV_DB::$UTF8_TABLE
 			);
 		}
 
@@ -288,14 +288,14 @@ class ra_functions {
 				" pr_count   INTEGER      NOT NULL,".
 				" pr_file    INTEGER          NULL,".
 				" PRIMARY KEY (pr_id)".
-				") ".PGV_DB_UTF8_TABLE
+				") ".PGV_DB::$UTF8_TABLE
 			);
 		}
 
 		if (!PGV_DB::table_exists("{$TBLPREFIX}factlookup")) {
 			PGV_DB::exec(
 				"CREATE TABLE {$TBLPREFIX}factlookup (".
-				" id        ".PGV_DB_AUTO_ID_TYPE." NOT NULL,".
+				" id        ".PGV_DB::$AUTO_ID_TYPE." NOT NULL,".
 				" description VARCHAR(255)      NOT NULL,".
 				" startdate   INT               NOT NULL,".
 				" enddate     INT               NOT NULL,".
@@ -308,7 +308,7 @@ class ra_functions {
 				" sour_id     VARCHAR(255)          NULL,".
 				" comment     VARCHAR(255)          NULL,".
 				" PRIMARY KEY (id)".
-				") ".PGV_DB_UTF8_TABLE
+				") ".PGV_DB::$UTF8_TABLE
 			);
 			$statement=PGV_DB::prepare("INSERT INTO {$TBLPREFIX}factlookup (description, startdate, enddate, gedcom_fact, pl_lv1) VALUES (?, ?, ?, ?, ?)");
 			// Do the insertion of Census facts
