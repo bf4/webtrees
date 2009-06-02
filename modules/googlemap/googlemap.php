@@ -283,7 +283,7 @@ function get_lati_long_placelocation ($place) {
 		foreach ($placelist as $key => $placename) {
 			$escparent=preg_replace("/\?/","\\\\\\?", $placename);
 			$pl_id=
-				PGV_DB::prepare("SELECT pl_id FROM {$TBLPREFIX}placelocation WHERE pl_level=? AND pl_parent_id=? AND pl_place ".PGV_DB_LIKE." ? ORDER BY pl_place")
+				PGV_DB::prepare("SELECT pl_id FROM {$TBLPREFIX}placelocation WHERE pl_level=? AND pl_parent_id=? AND pl_place ".PGV_DB::$LIKE." ? ORDER BY pl_place")
 				->execute(array($i, $place_id, $escparent))
 				->fetchOne();
 			if (!empty($pl_id)) break;

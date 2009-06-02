@@ -130,7 +130,7 @@ include_once("includes/functions/functions_print_facts.php");
 	$vars[]=PGV_GED_ID;
 	//-- for family and source page only show level 1 obje references
 	if ($level>0) {
-		$sqlmm .= "AND mm_gedrec ".PGV_DB_LIKE." ?";
+		$sqlmm .= "AND mm_gedrec ".PGV_DB::$LIKE." ?";
 		$vars[]="{$level} OBJE%";
 	}
 

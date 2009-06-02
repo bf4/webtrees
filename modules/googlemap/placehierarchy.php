@@ -96,7 +96,7 @@ function get_placeid($place) {
 			foreach ($placelist as $key => $placename) {
 				$escparent=preg_replace("/\?/","\\\\\\?", $placename);
 				$pl_id=
-					PGV_DB::prepare("SELECT pl_id FROM {$TBLPREFIX}placelocation WHERE pl_level={$i} AND pl_parent_id={$place_id} AND pl_place ".PGV_DB_LIKE." '{$escparent}' ORDER BY pl_place")
+					PGV_DB::prepare("SELECT pl_id FROM {$TBLPREFIX}placelocation WHERE pl_level={$i} AND pl_parent_id={$place_id} AND pl_place ".PGV_DB::$LIKE." '{$escparent}' ORDER BY pl_place")
 					->execute(array())
 					->fetchOne();
 				if (!empty($pl_id)) break;

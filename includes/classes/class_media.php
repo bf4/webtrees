@@ -331,7 +331,7 @@ class Media extends GedcomRecord {
 		global $TBLPREFIX;
 
 		return
-			PGV_DB::prepare("SELECT m_media FROM {$TBLPREFIX}media WHERE m_file=? AND m_titl ".PGV_DB_LIKE." ? AND m_gedfile=?")
+			PGV_DB::prepare("SELECT m_media FROM {$TBLPREFIX}media WHERE m_file=? AND m_titl ".PGV_DB::$LIKE." ? AND m_gedfile=?")
 			->execute(array($obje->file, $obje->title, PGV_GED_ID))
 			->fetchOne();
 	}

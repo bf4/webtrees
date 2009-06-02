@@ -303,7 +303,7 @@ require_once("includes/classes/class_person.php");
 			}
 		}
 		$rows=
-			PGV_DB::prepare("SELECT * FROM {$TBLPREFIX}probabilities WHERE pr_file=? AND pr_f_lvl ".PGV_DB_LIKE." ? ORDER BY (pr_matches/pr_count) DESC")
+			PGV_DB::prepare("SELECT * FROM {$TBLPREFIX}probabilities WHERE pr_file=? AND pr_f_lvl ".PGV_DB::$LIKE." ? ORDER BY (pr_matches/pr_count) DESC")
 			->execute(array(PGV_GED_ID, "{$factType}%"))
 			->fetchAll();
 

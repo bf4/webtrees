@@ -317,7 +317,7 @@ while ($x<$i) {
 		foreach ($placelist as $key=>$placename) {
 			$escparent=preg_replace("/\?/","\\\\\\?", $placename);
 			$row=
-				PGV_DB::prepare("SELECT pl_id, pl_place, pl_long, pl_lati, pl_zoom FROM {$TBLPREFIX}placelocation WHERE pl_level=? AND pl_parent_id=? AND pl_place ".PGV_DB_LIKE." ? ORDER BY pl_place")
+				PGV_DB::prepare("SELECT pl_id, pl_place, pl_long, pl_lati, pl_zoom FROM {$TBLPREFIX}placelocation WHERE pl_level=? AND pl_parent_id=? AND pl_place ".PGV_DB::$LIKE." ? ORDER BY pl_place")
 				->execute(array($z, $id, $escparent))
 				->fetchOneRow(PDO::FETCH_ASSOC);
 			if (!empty($row['pl_id'])) {

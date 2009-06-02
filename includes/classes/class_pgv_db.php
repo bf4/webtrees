@@ -41,7 +41,27 @@ class PGV_DB {
 	//////////////////////////////////////////////////////////////////////////////
 	private static $instance=null;
 	private static $pdo=null;
-	private static $dbtype=null;
+
+	// Dialects of SQL
+	public static $AUTO_ID_TYPE =null;
+	public static $INT1_TYPE    =null;
+	public static $INT2_TYPE    =null;
+	public static $INT3_TYPE    =null;
+	public static $INT4_TYPE    =null;
+	public static $INT8_TYPE    =null;
+	public static $CHAR_TYPE    =null;
+	public static $VARCHAR_TYPE =null;
+	public static $UNSIGNED     =null;
+	public static $LIKE         =null;
+	public static $RANDOM       =null;
+	public static $TEXT_TYPE    =null;
+	public static $LONGTEXT_TYPE=null;
+	public static $UTF8_TABLE   =null;
+
+	// Standard column types for gedcom data
+	public static $COL_FILE=null;
+	public static $COL_XREF=null;
+	public static $COL_TAG =null;
 
 	// Prevent instantiation via new PGV_DB
 	private final function __construct() {
@@ -57,46 +77,9 @@ class PGV_DB {
 		trigger_error('PGV_DB::unserialize() is not allowed.', E_USER_ERROR);
 	}
 
-	// Test a set of connection parameters - used during installation
-	public static function testParameters($DBTYPE, $DBHOST, $DBPORT, $DBNAME, $DBUSER, $DBPASS) {
-		try {
-			switch ($DBTYPE) {
-			case 'mysql':
-				$dbh=new PDO("mysql:host={$DBHOST};dbname={$DBNAME};port={$DBPORT}", $DBUSER, $DBPASS);
-				break;
-			case 'pgsql':
-				$dbh=new PDO("pgsql:host={$DBHOST};dbname={$DBNAME};port={$DBPORT}", $DBUSER, $DBPASS);
-				break;
-			case 'mssql':
-				$dbh=new PDO("mssql:host={$DBHOST};dbname={$DBNAME}".($DBPORT ? ",{$DBPORT}" : ''), $DBUSER, $DBPASS);
-				break;
-			case 'sqlite':
-				$dbh=new PDO("sqlite:{$DBNAME}", null, null);
-				break;
-			case 'firebird': // This DSN has not been tested!
-				$dbh=new PDO("firebird:host={$DBHOST};dbname={$DBNAME};charset=UTF-8", $DBUSER, $DBPASS);
-				break;
-			case 'ibm': // This DSN has not been tested!
-				$dbh=new PDO("ibm:DRIVER={IBM DB2 ODBC DRIVER};DATABASE={$DBNAME};HOSTNAME={$DBHOST};PORT={$DBPORT};PROTOCOL=TCPIP", $DBUSER, $DBPASS);
-				break;
-			case 'informix': // This DSN has not been tested!
-				$dbh=new PDO("informix:host={$DBHOST};service={$DBPORT};database={$DBNAME}", $DBUSER, $DBPASS);
-				break;
-			case 'oci': // This DSN has not been tested!
-				$dbh=new PDO("oci:dbname=//{$DBHOST}}:{$DBPORT}/{$DBNAME}", $DBUSER, $DBPASS);
-				break;
-			case 'odbc': // This DSN has not been tested!
-				$dbh=new PDO("odbc:$DBNAME", $DBUSER, $DBPASS);
-				break;
-			case '4D': // This DSN has not been tested!
-				$dbh=new PDO("4D:host={$DBHOST};port={$DBPORT};dbname={$DBNAME};charset=UTF-8", $DBUSER, $DBPASS);
-				break;
-			}
-			unset($dbh); // Close the connection
-			return true;
-		} catch (PDOException $ex) {
-			return false;
-		}
+	// Disconnect from the server, so we can connect to another one during install.php
+	public static function disconnect() {
+		self::$pdo=null;
 	}
 
 	// Implement the singleton pattern
@@ -132,8 +115,24 @@ class PGV_DB {
 					PDO::ATTR_AUTOCOMMIT=>true
 				)
 			);
+			self::$AUTO_ID_TYPE ='INTEGER UNSIGNED AUTO_INCREMENT';
+			self::$INT1_TYPE    ='TINYINT';
+			self::$INT2_TYPE    ='SMALLINT';
+			self::$INT3_TYPE    ='MEDIUMINT';
+			self::$INT4_TYPE    ='INT';
+			self::$INT8_TYPE    ='BIGINT';
+			self::$CHAR_TYPE    ='CHAR';
+			self::$VARCHAR_TYPE ='VARCHAR';
+			self::$UNSIGNED     ='UNSIGNED';
+			self::$LIKE         ='LIKE';
+			self::$RANDOM       ='RAND()';
+			self::$TEXT_TYPE    ='TEXT';
+			self::$LONGTEXT_TYPE='LONGTEXT';
 			if ($DB_UTF8_COLLATION) {
 				self::$pdo->exec("SET NAMES UTF8");
+				self::$UTF8_TABLE   ='CHARACTER SET utf8 COLLATE utf8_unicode_ci';
+			} else {
+				self::$UTF8_TABLE   ='';
 			}
 			break;
 		case 'pgsql':
@@ -147,6 +146,20 @@ class PGV_DB {
 					PDO::ATTR_AUTOCOMMIT=>true
 				)
 			);
+			self::$AUTO_ID_TYPE ='SERIAL';
+			self::$INT1_TYPE    ='SMALLINT';
+			self::$INT2_TYPE    ='SMALLINT';
+			self::$INT3_TYPE    ='INTEGER';
+			self::$INT4_TYPE    ='INTEGER';
+			self::$INT8_TYPE    ='BIGINT';
+			self::$CHAR_TYPE    ='CHAR';
+			self::$VARCHAR_TYPE ='VARCHAR';
+			self::$UNSIGNED     ='';
+			self::$LIKE         ='ILIKE';
+			self::$RANDOM       ='RANDOM()';
+			self::$TEXT_TYPE    ='TEXT';
+			self::$LONGTEXT_TYPE='TEXT';
+			self::$UTF8_TABLE   ='';
 			if ($DB_UTF8_COLLATION) {
 				self::$pdo->exec("SET NAMES 'UTF8'");
 			}
@@ -162,6 +175,20 @@ class PGV_DB {
 					PDO::ATTR_AUTOCOMMIT=>true
 				)
 			);
+			self::$AUTO_ID_TYPE ='INTEGER IDENTITY';
+			self::$INT1_TYPE    ='INTEGER';
+			self::$INT2_TYPE    ='INTEGER';
+			self::$INT3_TYPE    ='INTEGER';
+			self::$INT4_TYPE    ='INTEGER';
+			self::$INT8_TYPE    ='INTEGER';
+			self::$CHAR_TYPE    ='VARCHAR';
+			self::$VARCHAR_TYPE ='VARCHAR';
+			self::$UNSIGNED     ='';
+			self::$LIKE         ='LIKE';
+			self::$RANDOM       ='NEWID';
+			self::$TEXT_TYPE    ='TEXT';
+			self::$LONGTEXT_TYPE='TEXT';
+			self::$UTF8_TABLE   ='';
 			break;
 		case 'sqlite':
 //			try {
@@ -189,6 +216,20 @@ class PGV_DB {
 					)
 				);
 //			}
+			self::$AUTO_ID_TYPE ='INTEGER AUTOINCREMENT';
+			self::$INT1_TYPE    ='INTEGER';
+			self::$INT2_TYPE    ='INTEGER';
+			self::$INT3_TYPE    ='INTEGER';
+			self::$INT4_TYPE    ='INTEGER';
+			self::$INT8_TYPE    ='INTEGER';
+			self::$CHAR_TYPE    ='VARCHAR';
+			self::$VARCHAR_TYPE ='VARCHAR';
+			self::$UNSIGNED     ='';
+			self::$LIKE         ='LIKE';
+			self::$RANDOM       ='RANDOM()';
+			self::$TEXT_TYPE    ='TEXT';
+			self::$LONGTEXT_TYPE='TEXT';
+			self::$UTF8_TABLE   ='';
 			break;
 		case 'firebird': // This DSN has not been tested!
 			self::$pdo=new PDO(
@@ -201,6 +242,20 @@ class PGV_DB {
 					PDO::ATTR_AUTOCOMMIT=>true
 				)
 			);
+			self::$AUTO_ID_TYPE ='INTEGER AUTOINCREMENT'; // These values are guesses
+			self::$INT1_TYPE    ='INTEGER';
+			self::$INT2_TYPE    ='INTEGER';
+			self::$INT3_TYPE    ='INTEGER';
+			self::$INT4_TYPE    ='INTEGER';
+			self::$INT8_TYPE    ='INTEGER';
+			self::$CHAR_TYPE    ='VARCHAR';
+			self::$VARCHAR_TYPE ='VARCHAR';
+			self::$UNSIGNED     ='';
+			self::$LIKE         ='LIKE';
+			self::$RANDOM       ='RANDOM()';
+			self::$TEXT_TYPE    ='TEXT';
+			self::$LONGTEXT_TYPE='TEXT';
+			self::$UTF8_TABLE   ='';
 			break;
 		case 'ibm': // This DSN has not been tested!
 			self::$pdo=new PDO(
@@ -213,6 +268,20 @@ class PGV_DB {
 					PDO::ATTR_AUTOCOMMIT=>true
 				)
 			);
+			self::$AUTO_ID_TYPE ='INTEGER AUTOINCREMENT'; // These values are guesses
+			self::$INT1_TYPE    ='INTEGER';
+			self::$INT2_TYPE    ='INTEGER';
+			self::$INT3_TYPE    ='INTEGER';
+			self::$INT4_TYPE    ='INTEGER';
+			self::$INT8_TYPE    ='INTEGER';
+			self::$CHAR_TYPE    ='VARCHAR';
+			self::$VARCHAR_TYPE ='VARCHAR';
+			self::$UNSIGNED     ='';
+			self::$LIKE         ='LIKE';
+			self::$RANDOM       ='RANDOM()';
+			self::$TEXT_TYPE    ='TEXT';
+			self::$LONGTEXT_TYPE='TEXT';
+			self::$UTF8_TABLE   ='';
 			break;
 		case 'informix': // This DSN has not been tested!
 			self::$pdo=new PDO(
@@ -225,6 +294,20 @@ class PGV_DB {
 					PDO::ATTR_AUTOCOMMIT=>true
 				)
 			);
+			self::$AUTO_ID_TYPE ='INTEGER AUTOINCREMENT'; // These values are guesses
+			self::$INT1_TYPE    ='INTEGER';
+			self::$INT2_TYPE    ='INTEGER';
+			self::$INT3_TYPE    ='INTEGER';
+			self::$INT4_TYPE    ='INTEGER';
+			self::$INT8_TYPE    ='INTEGER';
+			self::$CHAR_TYPE    ='VARCHAR';
+			self::$VARCHAR_TYPE ='VARCHAR';
+			self::$UNSIGNED     ='';
+			self::$LIKE         ='LIKE';
+			self::$RANDOM       ='RANDOM()';
+			self::$TEXT_TYPE    ='TEXT';
+			self::$LONGTEXT_TYPE='TEXT';
+			self::$UTF8_TABLE   ='';
 			break;
 		case 'oci': // This DSN has not been tested!
 			self::$pdo=new PDO(
@@ -237,6 +320,20 @@ class PGV_DB {
 					PDO::ATTR_AUTOCOMMIT=>true
 				)
 			);
+			self::$AUTO_ID_TYPE ='INTEGER AUTOINCREMENT'; // These values are guesses
+			self::$INT1_TYPE    ='INTEGER';
+			self::$INT2_TYPE    ='INTEGER';
+			self::$INT3_TYPE    ='INTEGER';
+			self::$INT4_TYPE    ='INTEGER';
+			self::$INT8_TYPE    ='INTEGER';
+			self::$CHAR_TYPE    ='VARCHAR';
+			self::$VARCHAR_TYPE ='VARCHAR';
+			self::$UNSIGNED     ='';
+			self::$LIKE         ='LIKE';
+			self::$RANDOM       ='RANDOM()';
+			self::$TEXT_TYPE    ='TEXT';
+			self::$LONGTEXT_TYPE='TEXT';
+			self::$UTF8_TABLE   ='';
 			break;
 		case 'odbc': // This DSN has not been tested!
 			self::$pdo=new PDO(
@@ -249,6 +346,20 @@ class PGV_DB {
 					PDO::ATTR_AUTOCOMMIT=>true
 				)
 			);
+			self::$AUTO_ID_TYPE ='INTEGER AUTOINCREMENT'; // These values are guesses
+			self::$INT1_TYPE    ='INTEGER';
+			self::$INT2_TYPE    ='INTEGER';
+			self::$INT3_TYPE    ='INTEGER';
+			self::$INT4_TYPE    ='INTEGER';
+			self::$INT8_TYPE    ='INTEGER';
+			self::$CHAR_TYPE    ='VARCHAR';
+			self::$VARCHAR_TYPE ='VARCHAR';
+			self::$UNSIGNED     ='';
+			self::$LIKE         ='LIKE';
+			self::$RANDOM       ='RANDOM()';
+			self::$TEXT_TYPE    ='TEXT';
+			self::$LONGTEXT_TYPE='TEXT';
+			self::$UTF8_TABLE   ='';
 			break;
 		case '4D': // This DSN has not been tested!
 			self::$pdo=new PDO(
@@ -261,6 +372,20 @@ class PGV_DB {
 					PDO::ATTR_AUTOCOMMIT=>true
 				)
 			);
+			self::$AUTO_ID_TYPE ='INTEGER AUTOINCREMENT'; // These values are guesses
+			self::$INT1_TYPE    ='INTEGER';
+			self::$INT2_TYPE    ='INTEGER';
+			self::$INT3_TYPE    ='INTEGER';
+			self::$INT4_TYPE    ='INTEGER';
+			self::$INT8_TYPE    ='INTEGER';
+			self::$CHAR_TYPE    ='VARCHAR';
+			self::$VARCHAR_TYPE ='VARCHAR';
+			self::$UNSIGNED     ='';
+			self::$LIKE         ='LIKE';
+			self::$RANDOM       ='RANDOM()';
+			self::$TEXT_TYPE    ='TEXT';
+			self::$LONGTEXT_TYPE='TEXT';
+			self::$UTF8_TABLE   ='';
 			break;
 		}
 
@@ -576,6 +701,19 @@ class PGV_DB {
 	// Map all other functions onto the base PDO object
 	public function __call($function, $params) {
 		return call_user_func_array(array(self::$pdo, $function), $params);
+	}
+
+	//////////////////////////////////////////////////////////////////////////////
+	// Create/update tables, indexes, etc.
+	//////////////////////////////////////////////////////////////////////////////
+	public static function updateSchema() {
+		// Define some "standard" columns, so we create our tables consistently
+		self::$COL_FILE=self::$INT2_TYPE.' '.self::$UNSIGNED; // Allow 32768/65536 Gedcoms
+		self::$COL_XREF=self::$VARCHAR_TYPE.'(20)';           // Gedcom identifiers are max 20 chars
+		self::$COL_TAG =self::$VARCHAR_TYPE.'(15)';           // Gedcom tags/record types are max 15 chars
+
+		checkTableExists();
+		setup_database();
 	}
 }
 

@@ -867,7 +867,7 @@ if (isset ($GEDCOM_FILE)) {
 	}
 }
 
-setup_database($stage);
+PGV_DB::updateSchema();
 if ($stage == 0) {
 	$_SESSION["resumed"] = 0;
 	if (file_exists($INDEX_DIRECTORY.basename($GEDCOM_FILE).".new"))
