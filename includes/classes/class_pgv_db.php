@@ -841,6 +841,7 @@ class PGV_DBStatement {
 			$rows[$row[0]]=$row[1];
 		}
 		$this->pdostatement->closeCursor();
+		$this->executed=false;
 		return $rows;
 	}
 
@@ -854,6 +855,7 @@ class PGV_DBStatement {
 			$list[]=$row[0];
 		}
 		$this->pdostatement->closeCursor();
+		$this->executed=false;
 		return $list;
 	}
 }
