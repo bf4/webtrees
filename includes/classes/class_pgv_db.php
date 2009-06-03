@@ -414,20 +414,41 @@ class PGV_DB {
 
 	// Add an entry to the log
 	public static function logQuery($query, $rows, $microtime, $bind_variables) {
-		$query2='';
-		foreach ($bind_variables as $key=>$value) {
-			if (is_null($value)) {
-				$bind_variables[$key]='[NULL]';
+		if (PGV_DEBUG_SQL) {
+			// Full logging
+			$query2='';
+			foreach ($bind_variables as $key=>$value) {
+				if (is_null($value)) {
+					$bind_variables[$key]='[NULL]';
+				}
 			}
+			foreach (str_split(htmlspecialchars($query)) as $char) {
+				if ($char=='?') {
+					$query2.='<abbr title="'.htmlspecialchars(array_shift($bind_variables)).'">'.$char.'</abbr>';
+				} else {
+					$query2.=$char;
+				}
+			}
+			// Highlight embedded literal strings and numbers.
+			if (preg_match('/([\'"]|[^a-zA-Z_][0-9])/', $query)) {
+				$query2='<span style="background-color:yellow;">'.$query2.'</span>';
 		}
-		foreach (str_split(htmlspecialchars($query)) as $char) {
-			if ($char=='?') {
-				$query2.='<abbr title="'.htmlspecialchars(array_shift($bind_variables)).'">'.$char.'</abbr>';
+			// Highlight slow queries
+			$microtime*=1000; // convert to milliseconds
+			if ($microtime>1000) {
+				$microtime=sprintf('<span style="background-color:red">%.3f</span>', $microtime);
+			} elseif ($microtime>100) {
+				$microtime=sprintf('<span style="background-color:orange">%.3f</span>', $microtime);
+			} elseif ($microtime>1) {
+				$microtime=sprintf('<span style="background-color:yellow">%.3f</span>', $microtime);
 			} else {
-				$query2.=$char;
+			$microtime=sprintf('%.3f', $microtime);
 			}
+			self::$log[]='<tr><td>'.$query2.'</td><td>'.(int)$rows.'</td><td>'.$microtime.'</td></tr>';
+		} else {
+			// Just log query count for statistics
+			self::$log[]=true;
 		}
-		self::$log[]='<tr><td>'.$query2.'</td><td>'.(int)$rows.'</td><td>'.round($microtime*1000, 3).'</td></tr>';
 	}
 
 	// Total number of queries executed, for the page statistics
