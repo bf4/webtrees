@@ -682,11 +682,13 @@ function get_famlist_fams($surn='', $salpha='', $galpha='', $marnm, $ged_id=null
 ////////////////////////////////////////////////////////////////////////////////
 function fetch_child_ids($parent_id, $ged_id) {
 	global $TBLPREFIX;
+	static $statement=null;
 
-	return
-		PGV_DB::prepare("SELECT DISTINCT child.l_from AS xref FROM {$TBLPREFIX}link child, {$TBLPREFIX}link spouse WHERE child.l_type='FAMC' AND spouse.l_type='FAMS' AND child.l_file=spouse.l_file AND child.l_to=spouse.l_to AND spouse.l_from=? AND child.l_file=?")
-		->execute(array($parent_id, $ged_id))
-		->fetchOneColumn();
+	if (is_null($statement)) {
+		$statement=PGV_DB::prepare("SELECT DISTINCT child.l_from AS xref FROM {$TBLPREFIX}link child, {$TBLPREFIX}link spouse WHERE child.l_type=? AND spouse.l_type=? AND child.l_file=spouse.l_file AND child.l_to=spouse.l_to AND spouse.l_from=? AND child.l_file=?");
+	}
+
+	return $statement->execute(array('FAMC', 'FAMS', $parent_id, $ged_id))->fetchOneColumn();
 }
 
 ////////////////////////////////////////////////////////////////////////////////
