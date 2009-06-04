@@ -83,7 +83,7 @@ class PGV_DB {
 	}
 
 	// Implement the singleton pattern
-	public static function createInstance($DBTYPE, $DBHOST, $DBPORT, $DBNAME, $DBUSER, $DBPASS, $DBPERSIST, $DB_UTF8_COLLATION) {
+	public static function createInstance($DBTYPE, $DBHOST, $DBPORT, $DBNAME, $DBUSER, $DBPASS, $DB_UTF8_COLLATION) {
 		if (self::$pdo instanceof PDO) {
 			trigger_error('PGV_DB::createInstance() can only be called once.', E_USER_ERROR);
 		}
@@ -108,7 +108,6 @@ class PGV_DB {
 			self::$pdo=new PDO(
 				"mysql:host={$DBHOST};dbname={$DBNAME};port={$DBPORT}", $DBUSER, $DBPASS,
 				array(
-					PDO::ATTR_PERSISTENT=>(bool)$DBPERSIST,
 					PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION,
 					PDO::ATTR_DEFAULT_FETCH_MODE=>PDO::FETCH_OBJ,
 					PDO::ATTR_CASE=>PDO::CASE_LOWER,
@@ -139,7 +138,6 @@ class PGV_DB {
 			self::$pdo=new PDO(
 				"pgsql:host={$DBHOST};dbname={$DBNAME};port={$DBPORT}", $DBUSER, $DBPASS,
 				array(
-					PDO::ATTR_PERSISTENT=>(bool)$DBPERSIST,
 					PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION,
 					PDO::ATTR_DEFAULT_FETCH_MODE=>PDO::FETCH_OBJ,
 					PDO::ATTR_CASE=>PDO::CASE_LOWER,
@@ -168,7 +166,6 @@ class PGV_DB {
 			self::$pdo=new PDO(
 				"mssql:host={$DBHOST};dbname={$DBNAME}".($DBPORT ? ",{$DBPORT}" : ''), $DBUSER, $DBPASS,
 				array(
-					PDO::ATTR_PERSISTENT=>(bool)$DBPERSIST,
 					PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION,
 					PDO::ATTR_DEFAULT_FETCH_MODE=>PDO::FETCH_OBJ,
 					PDO::ATTR_CASE=>PDO::CASE_LOWER,
@@ -195,7 +192,6 @@ class PGV_DB {
 //				self::$pdo=new PDO(
 //					"sqlite:{$DBNAME}", null, null,
 //					array(
-//						PDO::ATTR_PERSISTENT=>(bool)$DBPERSIST,
 //						PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION,
 //						PDO::ATTR_DEFAULT_FETCH_MODE=>PDO::FETCH_OBJ,
 //						PDO::ATTR_CASE=>PDO::CASE_LOWER
@@ -209,7 +205,6 @@ class PGV_DB {
 				self::$pdo=new PDO(
 					"sqlite2:{$DBNAME}", null, null,
 					array(
-						PDO::ATTR_PERSISTENT=>(bool)$DBPERSIST,
 						PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION,
 						PDO::ATTR_DEFAULT_FETCH_MODE=>PDO::FETCH_OBJ,
 						PDO::ATTR_CASE=>PDO::CASE_LOWER
@@ -235,7 +230,6 @@ class PGV_DB {
 			self::$pdo=new PDO(
 				"firebird:host={$DBHOST};dbname={$DBNAME};charset=UTF-8", $DBUSER, $DBPASS,
 				array(
-					PDO::ATTR_PERSISTENT=>(bool)$DBPERSIST,
 					PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION,
 					PDO::ATTR_DEFAULT_FETCH_MODE=>PDO::FETCH_OBJ,
 					PDO::ATTR_CASE=>PDO::CASE_LOWER,
@@ -261,7 +255,6 @@ class PGV_DB {
 			self::$pdo=new PDO(
 				"ibm:DRIVER={IBM DB2 ODBC DRIVER};DATABASE={$DBNAME};HOSTNAME={$DBHOST};PORT={$DBPORT};PROTOCOL=TCPIP", $DBUSER, $DBPASS,
 				array(
-					PDO::ATTR_PERSISTENT=>(bool)$DBPERSIST,
 					PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION,
 					PDO::ATTR_DEFAULT_FETCH_MODE=>PDO::FETCH_OBJ,
 					PDO::ATTR_CASE=>PDO::CASE_LOWER,
@@ -287,7 +280,6 @@ class PGV_DB {
 			self::$pdo=new PDO(
 				"informix:host={$DBHOST};service={$DBPORT};database={$DBNAME}", $DBUSER, $DBPASS,
 				array(
-					PDO::ATTR_PERSISTENT=>(bool)$DBPERSIST,
 					PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION,
 					PDO::ATTR_DEFAULT_FETCH_MODE=>PDO::FETCH_OBJ,
 					PDO::ATTR_CASE=>PDO::CASE_LOWER,
@@ -313,7 +305,6 @@ class PGV_DB {
 			self::$pdo=new PDO(
 				"oci:dbname=//{$DBHOST}}:{$DBPORT}/{$DBNAME}", $DBUSER, $DBPASS,
 				array(
-					PDO::ATTR_PERSISTENT=>(bool)$DBPERSIST,
 					PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION,
 					PDO::ATTR_DEFAULT_FETCH_MODE=>PDO::FETCH_OBJ,
 					PDO::ATTR_CASE=>PDO::CASE_LOWER,
@@ -339,7 +330,6 @@ class PGV_DB {
 			self::$pdo=new PDO(
 				"odbc:$DBNAME", $DBUSER, $DBPASS,
 				array(
-					PDO::ATTR_PERSISTENT=>(bool)$DBPERSIST,
 					PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION,
 					PDO::ATTR_DEFAULT_FETCH_MODE=>PDO::FETCH_OBJ,
 					PDO::ATTR_CASE=>PDO::CASE_LOWER,
@@ -365,7 +355,6 @@ class PGV_DB {
 			self::$pdo=new PDO(
 				"4D:host={$DBHOST};port={$DBPORT};dbname={$DBNAME};charset=UTF-8", $DBUSER, $DBPASS,
 				array(
-					PDO::ATTR_PERSISTENT=>(bool)$DBPERSIST,
 					PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION,
 					PDO::ATTR_DEFAULT_FETCH_MODE=>PDO::FETCH_OBJ,
 					PDO::ATTR_CASE=>PDO::CASE_LOWER,
