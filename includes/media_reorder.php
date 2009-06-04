@@ -43,7 +43,7 @@ include_once("includes/functions/functions_print_facts.php");
 	global $GEDCOM, $MEDIATYPE, $pgv_changes;
 	global $WORD_WRAPPED_NOTES, $MEDIA_DIRECTORY, $PGV_IMAGE_DIR, $PGV_IMAGES, $TEXT_DIRECTION;
 	global $is_media, $cntm1, $cntm2, $cntm3, $cntm4, $t, $mgedrec;
-	global $typ2b, $edit, $tabno ;
+	global $edit, $tabno ;
 	global $ids, $pid, $related, $level, $gedrec, $media_data, $order, $order1, $order2, $j ;
 
 	print "\n";
