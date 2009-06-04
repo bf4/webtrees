@@ -537,7 +537,7 @@ class stats {
 		global $TBLPREFIX;
 
 		return
-			PGV_DB::prepare("SELECT COUNT(*) FROM {$TBLPREFIX}other WHERE o_type!=? AND o_file=?")
+			PGV_DB::prepare("SELECT COUNT(*) FROM {$TBLPREFIX}other WHERE o_type<>? AND o_file=?")
 			->execute(array('NOTE', $this->_ged_id))
 			->fetchOne();
 	}
