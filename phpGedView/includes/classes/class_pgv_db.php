@@ -410,7 +410,11 @@ class PGV_DB {
 			array_shift($trace);
 			array_shift($trace);
 			foreach ($trace as $n=>$frame) {
-				$trace[$n]=basename($frame['file']).':'.$frame['line'].' '.$frame['function'].'('./*implode(',', $frame['args']).*/')';
+				if (isset($frame['file']) && isset($frame['line'])) {
+					$trace[$n]=basename($frame['file']).':'.$frame['line'].' '.$frame['function'].'('./*implode(',', $frame['args']).*/')';
+				} else {
+					unset($trace[$n]);
+				}
 			}
 			$stack='<abbr title="'.htmlspecialchars(implode(" / ", $trace)).'">'.(count(self::$log)+1).'</abbr>';
 			// Bind variables
