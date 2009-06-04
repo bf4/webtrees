@@ -1122,14 +1122,14 @@ if ($stage == 1) {
 	$show_table1 .= "<td class=\"descriptionbox\">&nbsp;".$pgv_lang["found_record"]."&nbsp;</td>";
 	$show_table1 .= "<td class=\"descriptionbox\">&nbsp;".$pgv_lang["type"]."&nbsp;</td></tr>\n";
 	foreach ($listtype as $indexval => $type) {
-		$show_table1 .= "<tr><td class=\"optionbox indent_rtl rtl \">".$type["exectime"]." ".$pgv_lang["sec"]."</td>";
-		$show_table1 .= "<td class=\"optionbox indent_rtl rtl \">". ($type["bytes"] == "0" ? "++" : $type["bytes"])."</td>\n";
-		$show_table1 .= "<td class=\"optionbox indent_rtl rtl \">".$type["i"]."</td>";
+		$show_table1 .= "<tr><td class=\"optionbox indent\">".$type["exectime"]." ".$pgv_lang["sec"]."</td>";
+		$show_table1 .= "<td class=\"optionbox indent\">". ($type["bytes"] == "0" ? "++" : $type["bytes"])."</td>\n";
+		$show_table1 .= "<td class=\"optionbox indent\">".$type["i"]."</td>";
 		$show_table1 .= "<td class=\"optionbox\">&nbsp;".$type["type"]."&nbsp;</td></tr>\n";
 	}
-	$show_table1 .= "<tr><td class=\"optionbox indent_rtl rtl \">$importtime ".$pgv_lang["sec"]."</td>";
-	$show_table1 .= "<td class=\"optionbox indent_rtl rtl \">$TOTAL_BYTES<script type=\"text/javascript\">update_progress($TOTAL_BYTES, $exectime);</script></td>\n";
-	$show_table1 .= "<td class=\"optionbox indent_rtl rtl \">". ($i -1)."</td>";
+	$show_table1 .= "<tr><td class=\"optionbox indent\">$importtime ".$pgv_lang["sec"]."</td>";
+	$show_table1 .= "<td class=\"optionbox indent\">$TOTAL_BYTES<script type=\"text/javascript\">update_progress($TOTAL_BYTES, $exectime);</script></td>\n";
+	$show_table1 .= "<td class=\"optionbox indent\">". ($i -1)."</td>";
 	$show_table1 .= "<td class=\"optionbox\">&nbsp;</td></tr>\n";
 	$show_table1 .= "</table>\n";
 	print "<tr><td class=\"topbottombar $TEXT_DIRECTION\">";
