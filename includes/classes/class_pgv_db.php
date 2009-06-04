@@ -405,6 +405,15 @@ class PGV_DB {
 	public static function logQuery($query, $rows, $microtime, $bind_variables) {
 		if (PGV_DEBUG_SQL) {
 			// Full logging
+			// Trace
+			$trace=debug_backtrace();
+			array_shift($trace);
+			array_shift($trace);
+			foreach ($trace as $n=>$frame) {
+				$trace[$n]=basename($frame['file']).':'.$frame['line'].' '.$frame['function'].'('./*implode(',', $frame['args']).*/')';
+			}
+			$stack='<abbr title="'.htmlspecialchars(implode(" / ", $trace)).'">'.(count(self::$log)+1).'</abbr>';
+			// Bind variables
 			$query2='';
 			foreach ($bind_variables as $key=>$value) {
 				if (is_null($value)) {
@@ -433,7 +442,7 @@ class PGV_DB {
 			} else {
 			$microtime=sprintf('%.3f', $microtime);
 			}
-			self::$log[]='<tr><td>'.$query2.'</td><td>'.(int)$rows.'</td><td>'.$microtime.'</td></tr>';
+			self::$log[]="<tr><td>{$stack}</td><td>{$query2}</td><td>{$rows}</td><td>{$microtime}</td></tr>";
 		} else {
 			// Just log query count for statistics
 			self::$log[]=true;
@@ -447,7 +456,7 @@ class PGV_DB {
 
 	// Display the query log as a table, for debugging
 	public static function getQueryLog() {
-		$html='<table border="1"><col span="2"/><col align="char"/><thead><tr><th>Query</th><th>Rows</th><th>Time (ms)</th></tr><tbody/>'.implode('', self::$log).'</table>';
+		$html='<table border="1"><col span="3"/><col align="char"/><thead><tr><th>#</th><th>Query</th><th>Rows</th><th>Time (ms)</th></tr><tbody/>'.implode('', self::$log).'</table>';
 		self::$log=array();
 		return $html;
 	}
