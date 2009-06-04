@@ -859,11 +859,11 @@ function fetch_person_record($xref, $ged_id) {
 
 	if (is_null($statement)) {
 		$statement=PGV_DB::prepare(
-			"SELECT 'INDI' AS type, i_id AS xref, i_file AS ged_id, i_gedcom AS gedrec, i_isdead, i_sex ".
+			"SELECT ? AS type, i_id AS xref, i_file AS ged_id, i_gedcom AS gedrec, i_isdead, i_sex ".
 			"FROM {$TBLPREFIX}individuals WHERE i_id=? AND i_file=?"
 		);
 	}
-	return $statement->execute(array($xref, $ged_id))->fetchOneRow(PDO::FETCH_ASSOC);
+	return $statement->execute(array('INDI', $xref, $ged_id))->fetchOneRow(PDO::FETCH_ASSOC);
 }
 function fetch_family_record($xref, $ged_id) {
 	global $TBLPREFIX;
@@ -871,11 +871,11 @@ function fetch_family_record($xref, $ged_id) {
 
 	if (is_null($statement)) {
 		$statement=PGV_DB::prepare(
-			"SELECT 'FAM' AS type, f_id AS xref, f_file AS ged_id, f_gedcom AS gedrec, f_husb, f_wife, f_chil, f_numchil ".
+			"SELECT ? AS type, f_id AS xref, f_file AS ged_id, f_gedcom AS gedrec, f_husb, f_wife, f_chil, f_numchil ".
 			"FROM {$TBLPREFIX}families WHERE f_id=? AND f_file=?"
 		);
 	}
-	return $statement->execute(array($xref, $ged_id))->fetchOneRow(PDO::FETCH_ASSOC);
+	return $statement->execute(array('FAM', $xref, $ged_id))->fetchOneRow(PDO::FETCH_ASSOC);
 }
 function fetch_source_record($xref, $ged_id) {
 	global $TBLPREFIX;
@@ -883,11 +883,11 @@ function fetch_source_record($xref, $ged_id) {
 
 	if (is_null($statement)) {
 		$statement=PGV_DB::prepare(
-			"SELECT 'SOUR' AS type, s_id AS xref, s_file AS ged_id, s_gedcom AS gedrec ".
+			"SELECT ? AS type, s_id AS xref, s_file AS ged_id, s_gedcom AS gedrec ".
 			"FROM {$TBLPREFIX}sources WHERE s_id=? AND s_file=?"
 		);
 	}
-	return $statement->execute(array($xref, $ged_id))->fetchOneRow(PDO::FETCH_ASSOC);
+	return $statement->execute(array('SOUR', $xref, $ged_id))->fetchOneRow(PDO::FETCH_ASSOC);
 }
 function fetch_note_record($xref, $ged_id) {
 	// Notes are (currently) stored in the other table
@@ -899,11 +899,11 @@ function fetch_media_record($xref, $ged_id) {
 
 	if (is_null($statement)) {
 		$statement=PGV_DB::prepare(
-			"SELECT 'OBJE' AS type, m_media AS xref, m_gedfile AS ged_id, m_gedrec AS gedrec, m_titl, m_file ".
+			"SELECT ? AS type, m_media AS xref, m_gedfile AS ged_id, m_gedrec AS gedrec, m_titl, m_file ".
 			"FROM {$TBLPREFIX}media WHERE m_media=? AND m_gedfile=?"
 		);
 	}
-	return $statement->execute(array($xref, $ged_id))->fetchOneRow(PDO::FETCH_ASSOC);
+	return $statement->execute(array('OBJE', $xref, $ged_id))->fetchOneRow(PDO::FETCH_ASSOC);
 }
 function fetch_other_record($xref, $ged_id) {
 	global $TBLPREFIX;
