@@ -171,9 +171,7 @@ if ($action!="choose") {
 						if ($success) print "<br />".$pgv_lang["gedrec_deleted"]."<br />\n";
 
 						//-- replace all the records that linked to gid2
-						$ids=PGV_DB::prepare("SELECT l_from FROM {$TBLPREFIX}link WHERE l_to=? AND l_file=?")
-							->execute(array($gid2, PGV_GED_ID))
-							->fetchOneColumn();
+						$ids=fetch_all_links($gid2, PGV_GED_ID);
 
 						foreach ($ids as $id) {
 							if (isset($pgv_changes[$id."_".$GEDCOM])) {
