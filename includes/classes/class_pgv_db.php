@@ -503,31 +503,6 @@ class PGV_DB {
 		}
 	}
 
-	// We only need to limit SELECT queries, not UPDATE or DELETE
-	public static function limit_query($sql, $n) {
-		$n=(int)$n;
-		switch (self::$pdo->getAttribute(PDO::ATTR_DRIVER_NAME)) {
-		case 'mysql':
-		case 'sqlite':
-		case 'sqlite2':
-		case 'pgsql':
-		case '4D':
-			return "{$sql} LIMIT {$n}";
-		case 'mssql':
-			return preg_replace('/^\s*SELECT /i', "SELECT TOP {$n} ", $sql);
-		case 'firebird':
-		case 'informix':
-			return preg_replace('/^\s*SELECT /i', "SELECT FIRST {$n} ", $sql);
-		case 'ibm':
-			return "{$sql} FETCH FIRST {$n} ROWS ONLY";
-		case 'oci':
-			return "SELECT * FROM ($sql) WHERE ROWNUM<={$n}";
-		case 'odbc':
-			// We don't know the underlying database, so just return all rows :-(
-			return $sql;
-		}
-	}
-
 	//////////////////////////////////////////////////////////////////////////////
 	// INTERROGATE DATA DICTIONARY
 	//////////////////////////////////////////////////////////////////////////////
@@ -697,13 +672,38 @@ class PGV_DB {
 		}
 		return new PGV_DBStatement(self::$pdo->prepare($statement));
 	}
-	
+
+	// Limit a query to the first $n rows
 	public static function prepareLimit($statement, $n) {
 		if (!self::$pdo instanceof PDO) {
 			throw new PDOException("No Connection Established");
 		}
 		if ($n) {
-			$statement=PGV_DB::limit_query($statement, (int)$n);
+			switch (self::$pdo->getAttribute(PDO::ATTR_DRIVER_NAME)) {
+			case 'mysql':
+			case 'sqlite':
+			case 'sqlite2':
+			case 'pgsql':
+			case '4D':
+				$statement="{$statement} LIMIT {$n}";
+				break;
+			case 'mssql':
+				$statement=preg_replace('/^\s*SELECT /i', "SELECT TOP {$n} ", $statement);
+				break;
+			case 'firebird':
+			case 'informix':
+				$statement=preg_replace('/^\s*SELECT /i', "SELECT FIRST {$n} ", $statement);
+				break;
+			case 'ibm':
+				$statement="{$statement} FETCH FIRST {$n} ROWS ONLY";
+				break;
+			case 'oci':
+				$statement="SELECT * FROM ($statement) WHERE ROWNUM<={$n}";
+				break;
+			case 'odbc':
+				// We don't know the underlying database, so just return all rows :-(
+				break;
+			}
 		}
 		return new PGV_DBStatement(self::$pdo->prepare($statement));
 	}
