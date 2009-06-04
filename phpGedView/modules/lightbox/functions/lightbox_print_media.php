@@ -55,54 +55,6 @@ function lightbox_print_media($pid, $level=1, $related=false, $kind=1, $noedit=f
 	global $res, $typ2b, $edit, $tabno, $n, $item, $items, $p, $note, $rowm, $note_text, $reorder;
 	global $action, $order, $order2, $rownum, $rownum1, $rownum2, $rownum3, $rownum4, $media_data, $sort_i;
 
-	// Set type of media from call in album
-	switch ($kind) {
-	case 1:
-		$tt      = $pgv_lang["ROW_TYPE__photo"];
-		$typ2b   = "(";
-		$typ2b  .= " (m_gedrec ".PGV_DB::$LIKE." '%TYPE photo%')       OR ";
-		$typ2b  .= " (m_gedrec ".PGV_DB::$LIKE." '%TYPE map%')         OR ";
-		$typ2b  .= " (m_gedrec ".PGV_DB::$LIKE." '%TYPE painting%')    OR ";
-		$typ2b  .= " (m_gedrec ".PGV_DB::$LIKE." '%TYPE tombstone%')      ";
-		$typ2b  .= ")";
-		break;
-	case 2:
-		$tt      = $pgv_lang["ROW_TYPE__document"];
-		$typ2b   = "(";
-		$typ2b  .= " (m_gedrec ".PGV_DB::$LIKE." '%TYPE card%')        OR ";
-		$typ2b  .= " (m_gedrec ".PGV_DB::$LIKE." '%TYPE certificate%') OR ";
-		$typ2b  .= " (m_gedrec ".PGV_DB::$LIKE." '%TYPE document%')    OR ";
-		$typ2b  .= " (m_gedrec ".PGV_DB::$LIKE." '%TYPE magazine%')    OR ";
-		$typ2b  .= " (m_gedrec ".PGV_DB::$LIKE." '%TYPE manuscript%')  OR ";
-		$typ2b  .= " (m_gedrec ".PGV_DB::$LIKE." '%TYPE newspaper%')      ";
-		$typ2b  .= ")";
-		break;
-	case 3:
-		$tt      = $pgv_lang["ROW_TYPE__census"];
-		$typ2b   = "(";
-		$typ2b  .= " (m_gedrec ".PGV_DB::$LIKE." '%TYPE electronic%')  OR ";
-		$typ2b  .= " (m_gedrec ".PGV_DB::$LIKE." '%TYPE fiche%')       OR ";
-		$typ2b  .= " (m_gedrec ".PGV_DB::$LIKE." '%TYPE film%')           ";
-		$typ2b  .= ")";
-		break;
-	case 4:
-		$tt      = $pgv_lang["ROW_TYPE__other"];
-		$typ2b   = "(";
-		$typ2b  .= " (m_gedrec NOT ".PGV_DB::$LIKE." '%TYPE %')        OR ";
-		$typ2b  .= " (m_gedrec ".PGV_DB::$LIKE."	   '%TYPE coat%')	 OR ";
-		$typ2b  .= " (m_gedrec ".PGV_DB::$LIKE."     '%TYPE book%')    OR ";
-		$typ2b  .= " (m_gedrec ".PGV_DB::$LIKE."     '%TYPE audio%')   OR ";
-		$typ2b  .= " (m_gedrec ".PGV_DB::$LIKE."     '%TYPE video%')   OR ";
-		$typ2b  .= " (m_gedrec ".PGV_DB::$LIKE."     '%TYPE other%')      ";
-		$typ2b  .= ")";
-		break;
-	case 5:
-	default:
-		$tt      = $pgv_lang["ROW_TYPE__notinDB"];
-		$typ2b   = "(m_gedrec ".PGV_DB::$LIKE."     '%%')";
-		break;
-	}
-
 	if (!showFact("OBJE", $pid)) return false;
 	if (!isset($pgv_changes[$pid."_".$GEDCOM])) $gedrec = find_gedcom_record($pid);
 	else $gedrec = find_updated_record($pid);
@@ -169,8 +121,49 @@ function lightbox_print_media($pid, $level=1, $related=false, $kind=1, $noedit=f
 		$vars[]="$level OBJE%";
 	}
 
-	$sqlmm .= " AND $typ2b ";
-	// $sqlmm .= " ORDER BY m_titl ";
+	// Set type of media from call in album
+	switch ($kind) {
+	case 1:
+		$tt=$pgv_lang["ROW_TYPE__photo"];
+		$sqlmm.="AND (m_gedrec ".PGV_DB::$LIKE." ? OR m_gedrec ".PGV_DB::$LIKE." ? OR m_gedrec ".PGV_DB::$LIKE." ? OR m_gedrec ".PGV_DB::$LIKE." ?)";
+		$vars[]='%TYPE photo%';
+		$vars[]='%TYPE map%';
+		$vars[]='%TYPE painting%';
+		$vars[]='%TYPE tombstone%';
+		break;
+	case 2:
+		$tt=$pgv_lang["ROW_TYPE__document"];
+		$sqlmm.="AND (m_gedrec ".PGV_DB::$LIKE." ? OR m_gedrec ".PGV_DB::$LIKE." ? OR m_gedrec ".PGV_DB::$LIKE." ? OR m_gedrec ".PGV_DB::$LIKE." ? OR m_gedrec ".PGV_DB::$LIKE." ? OR m_gedrec ".PGV_DB::$LIKE." ?)";
+		$vars[]='%TYPE card%';
+		$vars[]='%TYPE certificate%';
+		$vars[]='%TYPE document%';
+		$vars[]='%TYPE magazine%';
+		$vars[]='%TYPE manuscript%';
+		$vars[]='%TYPE newspaper%';
+		break;
+	case 3:
+		$tt=$pgv_lang["ROW_TYPE__census"];
+		$sqlmm.="AND (m_gedrec ".PGV_DB::$LIKE." ? OR m_gedrec ".PGV_DB::$LIKE." ? OR m_gedrec ".PGV_DB::$LIKE." ?)";
+		$vars[]='%TYPE electronic%';
+		$vars[]='%TYPE fiche%';
+		$vars[]='%TYPE film%';
+		break;
+	case 4:
+		$tt=$pgv_lang["ROW_TYPE__other"];
+		$sqlmm.="AND (m_gedrec NOT ".PGV_DB::$LIKE." ? OR m_gedrec ".PGV_DB::$LIKE." ? OR m_gedrec ".PGV_DB::$LIKE." ? OR m_gedrec ".PGV_DB::$LIKE." ? OR m_gedrec ".PGV_DB::$LIKE." ? OR m_gedrec ".PGV_DB::$LIKE." ?)";
+		$vars[]='%TYPE %';
+		$vars[]='%TYPE coat%';
+		$vars[]='%TYPE book%';
+		$vars[]='%TYPE audio%';
+		$vars[]='%TYPE video%';
+		$vars[]='%TYPE other%';
+		break;
+	case 5:
+	default:
+		$tt      = $pgv_lang["ROW_TYPE__notinDB"];
+		break;
+	}
+
 	if ($sort_ct>0) {
 		$sqlmm .= $orderbylist;
 	} else {
