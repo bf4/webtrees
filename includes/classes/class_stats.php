@@ -316,15 +316,19 @@ class stats {
 		return '';
 	}
 
-	function gedcomUpdated()
-	{
+	function gedcomUpdated() {
 		global $TBLPREFIX;
-		$rows=self::_runSQL("SELECT d_year, d_month, d_day FROM {$TBLPREFIX}dates WHERE d_file={$this->_ged_id} AND d_fact='CHAN' ORDER BY d_julianday2 DESC, d_type", 1);
-		if (isset($rows[0])) {
-			$date=new GedcomDate("{$rows[0]['d_day']} {$rows[0]['d_month']} {$rows[0]['d_year']}");
+
+		$row=
+			PGV_DB::prepareLimit("SELECT d_year, d_month, d_day FROM {$TBLPREFIX}dates WHERE d_file=? AND d_fact=? ORDER BY d_julianday1 DESC, d_type", 1)
+			->execute(array($this->_ged_id, 'CHAN'))
+			->fetchOneRow();
+		if ($row) {
+			$date=new GedcomDate("{$row->d_day} {$row->d_month} {$row->d_year}");
 			return $date->Display(false);
+		} else {
+			return self::gedcomDate();
 		}
-		return self::gedcomDate();
 	}
 
 	function gedcomHighlight()
@@ -409,11 +413,13 @@ class stats {
 		return $per;
 	}
 
-	function totalIndividuals()
-	{
+	function totalIndividuals() {
 		global $TBLPREFIX;
-		$rows=self::_runSQL("SELECT COUNT(i_file) AS tot FROM {$TBLPREFIX}individuals WHERE i_file=".$this->_ged_id);
-		return $rows[0]['tot'];
+
+		return
+			PGV_DB::prepare("SELECT COUNT(*) FROM {$TBLPREFIX}individuals WHERE i_file=?")
+			->execute(array($this->_ged_id))
+			->fetchOne();
 	}
 
 	function totalIndisWithSources()
@@ -453,11 +459,13 @@ class stats {
 		return $this->_getPercentage($this->totalIndividuals(), 'all', 2);
 	}
 
-	function totalFamilies()
-	{
+	function totalFamilies() {
 		global $TBLPREFIX;
-		$rows=self::_runSQL("SELECT COUNT(f_file) AS tot FROM {$TBLPREFIX}families WHERE f_file=".$this->_ged_id);
-		return $rows[0]['tot'];
+
+		return
+			PGV_DB::prepare("SELECT COUNT(*) FROM {$TBLPREFIX}families WHERE f_file=?")
+			->execute(array($this->_ged_id))
+			->fetchOne();
 	}
 
 	function totalFamsWithSources()
@@ -497,11 +505,13 @@ class stats {
 		return $this->_getPercentage($this->totalFamilies(), 'all', 2);
 	}
 
-	function totalSources()
-	{
+	function totalSources() {
 		global $TBLPREFIX;
-		$rows=self::_runSQL("SELECT COUNT(s_file) AS tot FROM {$TBLPREFIX}sources WHERE s_file=".$this->_ged_id);
-		return $rows[0]['tot'];
+
+		return
+			PGV_DB::prepare("SELECT COUNT(*) FROM {$TBLPREFIX}sources WHERE s_file=?")
+			->execute(array($this->_ged_id))
+			->fetchOne();
 	}
 
 	function totalSourcesPercentage()
@@ -509,11 +519,13 @@ class stats {
 		return $this->_getPercentage($this->totalSources(), 'all', 2);
 	}
 
-	function totalNotes()
-	{
+	function totalNotes() {
 		global $TBLPREFIX;
-		$rows=self::_runSQL("SELECT COUNT(o_file) AS tot FROM {$TBLPREFIX}other WHERE o_type='NOTE' AND o_file=".$this->_ged_id);
-		return $rows[0]['tot'];
+
+		return
+			PGV_DB::prepare("SELECT COUNT(*) FROM {$TBLPREFIX}other WHERE o_type=? AND o_file=?")
+			->execute(array('NOTE', $this->_ged_id))
+			->fetchOne();
 	}
 
 	function totalNotesPercentage()
@@ -521,11 +533,13 @@ class stats {
 		return $this->_getPercentage($this->totalNotes(), 'all', 2);
 	}
 
-	function totalOtherRecords()
-	{
+	function totalOtherRecords() {
 		global $TBLPREFIX;
-		$rows=self::_runSQL("SELECT COUNT(o_file) AS tot FROM {$TBLPREFIX}other WHERE o_type!='NOTE' AND o_file=".$this->_ged_id);
-		return $rows[0]['tot'];
+
+		return
+			PGV_DB::prepare("SELECT COUNT(*) FROM {$TBLPREFIX}other WHERE o_type!=? AND o_file=?")
+			->execute(array('NOTE', $this->_ged_id))
+			->fetchOne();
 	}
 
 	function totalOtherPercentage()
@@ -564,34 +578,30 @@ class stats {
 			->fetchOne();
 	}
 
-	function totalEvents($params = null)
-	{
+	function totalEvents($params = null) {
 		global $TBLPREFIX;
-		if ($params !== null) {
-			$types = array();
-			$no_types = array();
+		
+		$sql="SELECT COUNT(*) AS tot FROM {$TBLPREFIX}dates WHERE d_file=?";
+		$vars=array($this->_ged_id);
+
+		$no_types=array('HEAD', 'CHAN');
+		if ($params) {
+			$types=array();
 			foreach ($params as $type) {
-				if ($type{0} == '!') {
-					$type = substr($type, 1);
-					$no_types[] = "'{$type}'";
+				if (substr($type, 0, 1)=='!') {
+					$no_types[]=substr($type, 1);
 				} else {
-					$types[] = "'{$type}'";
+					$types[]=$type;
 				}
 			}
-			$opt = array();
-			if (count($types)) {
-				$opt[] = ' AND d_fact IN ('.join(',', $types).') ';
+			if ($types) {
+				$sql.=' AND d_fact IN ('.implode(', ', array_fill(0, count($types), '?')).')';
+				$vars=array_merge($vars, $types);
 			}
-			if (count($no_types)) {
-				$opt[] = ' AND d_fact NOT IN ('.join(',', $no_types).') ';
-			}
-			$opt = join('', $opt);
-		} else {
-			$opt = '';
 		}
-		$rows = self::_runSQL("SELECT COUNT(d_gid) AS tot FROM {$TBLPREFIX}dates WHERE d_file={$this->_ged_id} AND d_fact!='CHAN' AND d_gid!='HEAD'{$opt}");
-		if (!isset($rows[0])) {return '';}
-		return $rows[0]['tot'];
+		$sql.=' AND d_fact NOT IN ('.implode(', ', array_fill(0, count($no_types), '?')).')';
+		$vars=array_merge($vars, $no_types);
+		return PGV_DB::prepare($sql)->execute($vars)->fetchOne();
 	}
 
 	function totalEventsBirth()
@@ -621,44 +631,42 @@ class stats {
 		return $this->totalEvents($no_facts);
 	}
 
-	function totalSexMales()
-	{
+	function totalSexMales() {
 		global $TBLPREFIX;
-		$rows=self::_runSQL("SELECT COUNT(i_id) AS tot FROM {$TBLPREFIX}individuals WHERE i_file={$this->_ged_id} AND i_sex='M'");
-		if (!isset($rows[0])) {return '';}
-		return $rows[0]['tot'];
+
+		return
+			PGV_DB::prepare("SELECT COUNT(*) FROM {$TBLPREFIX}individuals WHERE i_file=? AND i_sex=?")
+			->execute(array($this->_ged_id, 'M'))
+			->fetchOne();
 	}
-	function totalSexMalesPercentage()
-	{
-		global $TBLPREFIX;
+
+	function totalSexMalesPercentage() {
 		return $this->_getPercentage($this->totalSexMales(), 'individual');
 	}
 
-	function totalSexFemales()
-	{
+	function totalSexFemales() {
 		global $TBLPREFIX;
-		$rows=self::_runSQL("SELECT COUNT(i_id) AS tot FROM {$TBLPREFIX}individuals WHERE i_file={$this->_ged_id} AND i_sex='F'");
-		if (!isset($rows[0])) {return '';}
-		return $rows[0]['tot'];
+
+		return
+			PGV_DB::prepare("SELECT COUNT(*) FROM {$TBLPREFIX}individuals WHERE i_file=? AND i_sex=?")
+			->execute(array($this->_ged_id, 'F'))
+			->fetchOne();
 	}
 
-	function totalSexFemalesPercentage()
-	{
-		global $TBLPREFIX;
+	function totalSexFemalesPercentage() {
 		return $this->_getPercentage($this->totalSexFemales(), 'individual');
 	}
 
-	function totalSexUnknown()
-	{
+	function totalSexUnknown() {
 		global $TBLPREFIX;
-		$rows=self::_runSQL("SELECT COUNT(i_id) AS tot FROM {$TBLPREFIX}individuals WHERE i_file={$this->_ged_id} AND i_sex='U'");
-		if (!isset($rows[0])) {return '';}
-		return $rows[0]['tot'];
+
+		return
+			PGV_DB::prepare("SELECT COUNT(*) FROM {$TBLPREFIX}individuals WHERE i_file=? AND i_sex=?")
+			->execute(array($this->_ged_id, 'U'))
+			->fetchOne();
 	}
 
-	function totalSexUnknownPercentage()
-	{
-		global $TBLPREFIX;
+	function totalSexUnknownPercentage() {
 		return $this->_getPercentage($this->totalSexUnknown(), 'individual');
 	}
 
@@ -697,45 +705,42 @@ class stats {
 		}
 	}
 
-	function totalLiving()
-	{
+	function totalLiving() {
 		global $TBLPREFIX;
-		$rows=self::_runSQL("SELECT COUNT(i_id) AS tot FROM {$TBLPREFIX}individuals WHERE i_file={$this->_ged_id} AND i_isdead=0");
-		if (!isset($rows[0])) {return '';}
-		return $rows[0]['tot'];
+
+		return
+			PGV_DB::prepare("SELECT COUNT(*) FROM {$TBLPREFIX}individuals WHERE i_file=? AND i_isdead=?")
+			->execute(array($this->_ged_id, 0))
+			->fetchOne();
 	}
 
-	function totalLivingPercentage()
-	{
-		global $TBLPREFIX;
+	function totalLivingPercentage() {
 		return $this->_getPercentage($this->totalLiving(), 'individual');
 	}
 
-	function totalDeceased()
-	{
+	function totalDeceased() {
 		global $TBLPREFIX;
-		$rows=self::_runSQL("SELECT COUNT(i_id) AS tot FROM {$TBLPREFIX}individuals WHERE i_file={$this->_ged_id} AND i_isdead=1");
-		if (!isset($rows[0])) {return '';}
-		return $rows[0]['tot'];
+
+		return
+			PGV_DB::prepare("SELECT COUNT(*) FROM {$TBLPREFIX}individuals WHERE i_file=? AND i_isdead=?")
+			->execute(array($this->_ged_id, 1))
+			->fetchOne();
 	}
 
-	function totalDeceasedPercentage()
-	{
-		global $TBLPREFIX;
+	function totalDeceasedPercentage() {
 		return $this->_getPercentage($this->totalDeceased(), 'individual');
 	}
 
-	function totalMortalityUnknown()
-	{
+	function totalMortalityUnknown() {
 		global $TBLPREFIX;
-		$rows=self::_runSQL("SELECT COUNT(i_id) AS tot FROM {$TBLPREFIX}individuals WHERE i_file={$this->_ged_id} AND i_isdead=-1");
-		if (!isset($rows[0])) {return '';}
-		return $rows[0]['tot'];
+
+		return
+			PGV_DB::prepare("SELECT COUNT(*) FROM {$TBLPREFIX}individuals WHERE i_file=? AND i_isdead=?")
+			->execute(array($this->_ged_id, -1))
+			->fetchOne();
 	}
 
-	function totalMortalityUnknownPercentage()
-	{
-		global $TBLPREFIX;
+	function totalMortalityUnknownPercentage() {
 		return $this->_getPercentage($this->totalMortalityUnknown(), 'individual');
 	}
 
@@ -801,29 +806,28 @@ class stats {
 		return get_non_admin_user_count();
 	}
 
-	function _totalMediaType($type='all')
-	{
+	function _totalMediaType($type='all') {
 		global $TBLPREFIX, $MULTI_MEDIA;
-		if (!$MULTI_MEDIA) {return 0;}
-		if (!in_array($type, self::$_media_types) && $type != 'all' && $type != 'unknown') {return 0;}
-		$like = '';
+
+		if (!$MULTI_MEDIA || !in_array($type, self::$_media_types) && $type != 'all' && $type != 'unknown') {
+			return 0;
+		}
+		$sql="SELECT COUNT(*) AS tot FROM {$TBLPREFIX}media WHERE m_gedfile=?";
+		$vars=array($this->_ged_id);
+
 		if ($type != 'all') {
-			if ($type != 'unknown') {
-				$like = " AND m_gedrec ".PGV_DB::$LIKE." '%3 TYPE {$type}%'";
-			} else {
+			if ($type=='unknown') {
 				// There has to be a better way then this :(
-				$nolike = array();
-				foreach (self::$_media_types as $t)
-				{
-					$nolike[] = "m_gedrec NOT ".PGV_DB::$LIKE." '%3 TYPE {$t}%'";
+				foreach (self::$_media_types as $t) {
+					$sql.=" AND m_gedrec NOT ".PGV_DB::$LIKE." ?";
+					$vars[]="%3 TYPE {$t}%";
 				}
-				$nolike = join(' AND ', $nolike);
-				$like = " AND ({$nolike})";
+			} else {
+				$sql.=" AND m_gedrec ".PGV_DB::$LIKE." ?";
+				$vars[]="%3 TYPE {$type}%";
 			}
 		}
-		$rows = self::_runSQL("SELECT COUNT(m_id) AS tot FROM {$TBLPREFIX}media WHERE m_gedfile='{$this->_ged_id}'{$like}");
-		if (!isset($rows[0])) {return 0;}
-		return $rows[0]['tot'];
+		return PGV_DB::prepare($sql)->execute($vars)->fetchOne();
 	}
 
 	function totalMedia() {return $this->_totalMediaType('all');}
