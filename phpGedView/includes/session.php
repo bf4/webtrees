@@ -357,7 +357,7 @@ if (file_exists($INDEX_DIRECTORY."gedcoms.php")) {
 require_once 'includes/classes/class_pgv_db.php';
 try {
 	$DBPASS=str_replace(array("\\\\", "\\\"", "\\\$"), array("\\", "\"", "\$"), $DBPASS); // remove escape codes before using PW
-	PGV_DB::createInstance($DBTYPE, $DBHOST, $DBPORT, $DBNAME, $DBUSER, $DBPASS, $DBPERSIST, $DB_UTF8_COLLATION);
+	PGV_DB::createInstance($DBTYPE, $DBHOST, $DBPORT, $DBNAME, $DBUSER, $DBPASS, $DB_UTF8_COLLATION);
 	unset($DBUSER, $DBPASS);
 } catch (PDOException $ex) {
 	// Can't connect to the DB?  We'll get redirected to install.php later.....

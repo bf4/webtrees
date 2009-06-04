@@ -43,6 +43,8 @@ VERSION 4.2.2
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change	codes and comments
 ----------------------------------------------------------------------------------------
+-$pgv_lang["DBPERSIST"]                 04 Jun 2009       D
+-$pgv_lang["DBPERSIST_help"]            04 Jun 2009       D
 *$pgv_lang["talloffset_help"]						25 May 2009				W
 *$pgv_lang["talloffset_help"]						25 May 2009				W
 *$pgv_lang["sort_style_help"]						05 May 2009				wf

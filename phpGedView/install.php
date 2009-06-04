@@ -155,7 +155,6 @@ switch($step) {
 			$_SESSION['install_config']['DBHOST'] = $_POST["NEW_DBHOST"];
 			$_SESSION['install_config']['DBNAME'] = $_POST["NEW_DBNAME"];
 			$_SESSION['install_config']['DBPASS'] = $_POST["NEW_DBPASS"];
-			$_SESSION['install_config']['DBPERSIST'] = $_POST["NEW_DBPERSIST"]=="yes";
 			$_SESSION['install_config']['DB_UTF8_COLLATION'] = $_POST["NEW_DB_UTF8_COLLATION"]=="yes";
 			$_SESSION['install_config']['DBPORT'] = $_POST["NEW_DBPORT"];
 			$_SESSION['install_config']['DBTYPE'] = $_POST["NEW_DBTYPE"];
@@ -175,7 +174,6 @@ switch($step) {
 					$_SESSION['install_config']['DBNAME'], 
 					$_SESSION['install_config']['DBUSER'], 
 					$_SESSION['install_config']['DBPASS'], 
-					$_SESSION['install_config']['DBPERSIST'], 
 					$_SESSION['install_config']['DB_UTF8_COLLATION']
 				);
 			} catch (PDOException $ex) {
@@ -615,13 +613,12 @@ function checkEnvironment() {
 }
 
 function printDBForm() {
-	global $DBHOST, $DBNAME, $DBPASS, $DBPERSIST, $DBPORT, $DBTYPE, $DBUSER, $DB_UTF8_COLLATION, $TBLPREFIX;
+	global $DBHOST, $DBNAME, $DBPASS, $DBPORT, $DBTYPE, $DBUSER, $DB_UTF8_COLLATION, $TBLPREFIX;
 	global $pgv_lang;
 	$i=1;
 	if (isset($_SESSION['install_config']['DBHOST'])) $DBHOST = $_SESSION['install_config']['DBHOST'];
 	if (isset($_SESSION['install_config']['DBNAME'])) $DBNAME =$_SESSION['install_config']['DBNAME'];
 	if (isset($_SESSION['install_config']['DBPASS'])) $DBPASS =	$_SESSION['install_config']['DBPASS'];
-	if (isset($_SESSION['install_config']['DBPERSIST'])) $DBPERSIST = $_SESSION['install_config']['DBPERSIST'];
 	if (isset($_SESSION['install_config']['DB_UTF8_COLLATION'])) $DB_UTF8_COLLATION = $_SESSION['install_config']['DB_UTF8_COLLATION'];
 	if (isset($_SESSION['install_config']['DBPORT'])) $DBPORT = $_SESSION['install_config']['DBPORT'];
 	if (isset($_SESSION['install_config']['DBTYPE'])) $DBTYPE = $_SESSION['install_config']['DBTYPE'];
@@ -670,15 +667,6 @@ function printDBForm() {
 	<tr>
 		<td class="descriptionbox wrap width30"><?php print_help_link("DBNAME_help", "qm", "DBNAME"); print $pgv_lang["DBNAME"];?></td>
 		<td class="optionbox"><input type="text" name="NEW_DBNAME" value="<?php print $DBNAME?>" size="40" tabindex="<?php $i++; print $i?>" onfocus="getHelp('DBNAME_help');" /></td>
-	</tr>
-	<tr>
-		<td class="descriptionbox wrap width30"><?php print_help_link("DBPERSIST_help", "qm", "DBPERSIST"); print $pgv_lang["DBPERSIST"];?></td>
-		<td class="optionbox">
-			<select name="NEW_DBPERSIST" tabindex="<?php $i++; print $i?>" onfocus="getHelp('DBPERSIST_help');">
-				<option value="yes" <?php if ($DBPERSIST) print "selected=\"selected\""; ?>><?php print $pgv_lang["yes"];?></option>
-				<option value="no" <?php if (!$DBPERSIST) print "selected=\"selected\""; ?>><?php print $pgv_lang["no"];?></option>
-			</select>
-		</td>
 	</tr>
 	<tr>
 		<td class="descriptionbox wrap width30"><?php print_help_link("DB_UTF8_COLLATION_help", "qm", "DB_UTF8_COLLATION"); print $pgv_lang["DB_UTF8_COLLATION"];?></td>
