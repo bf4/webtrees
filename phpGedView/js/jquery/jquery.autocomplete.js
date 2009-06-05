@@ -218,12 +218,6 @@ $.Autocompleter = function(input, options) {
 		$input.val(v);
 		hideResultsNow();
 		$input.trigger("result", [selected.data, selected.value]);
-		// GEDFact_assistant --------------------
-		if ('modules/GEDFact_assistant/MEDIA/media_1_ctrl.php') {
-			var selname=(removeHTMLTags(selected.value));
-			//alert(selname);
-			addlinks(selname);
-		}
 		return true;
 	}
 	
