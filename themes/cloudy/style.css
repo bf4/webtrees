@@ -1049,6 +1049,7 @@ th {
 	background-color: white;
 	font: normal 11px tahoma, arial, helvetica, sans-serif;
 	text-decoration: none;
+	height: 22px;
 	border: 1pt solid #aaccff;
 	white-space: nowrap;
 	color: #003399;
