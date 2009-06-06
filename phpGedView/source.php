@@ -80,7 +80,7 @@ if (!$controller->isPrintPreview()) {
 			echo '<tr><td class="list_label ', $TEXT_DIRECTION, '" colspan="2">', $pgv_lang['source_menu'], '</td></tr>';
 			echo '<tr>';
 		} else { 
-			echo '<div class="sublinks_table">';
+			echo '<div id="optionsmenu" class="sublinks_table">';
 			echo '<div class="list_label ', $TEXT_DIRECTION, '">', $pgv_lang["source_menu"], '</div>';
 		} 
 		if ($editmenu) {
