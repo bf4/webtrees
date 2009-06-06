@@ -39,7 +39,9 @@ if (!defined('PGV_PHPGEDVIEW')) {
 ?>
 	<script language="JavaScript">
 	function getGroupOrder() {
-		var sections = document.getElementsByClassName('section');
+		// var sections = document.getElementsByClassName('section');
+		var sections = $$('.section');
+		
 		var alerttext = '';
 		var order = '';
 

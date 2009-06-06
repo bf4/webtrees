@@ -80,12 +80,14 @@ $sort_i=0; // Used in sorting on lightbox_print_media_row.php page
 	<!--
 	// This script saves the dranNdrop reordered info into a hidden form input element (name=order2)
 	function saveOrder() {
-		var sections = document.getElementsByClassName('section');
+		// var sections = document.getElementsByClassName('section');
+		var sections = $$('.section');
 		var order = '';
 		sections.each(function(section) {
 			order += Sortable.sequence(section) + ',';
+			document.getElementById("ord2").value = order;
 		});
-		document.getElementById("ord2").value = order;
+		//document.getElementById("ord2").value = order;
 	};
 	//-->
 	</script>
