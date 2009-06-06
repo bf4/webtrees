@@ -108,7 +108,7 @@ $show_full = "1";
 				<tr>
 					<td class="sublinks_cell <?php print $TEXT_DIRECTION?>">
 		<?php } else { ?>
-		<div class="sublinks_table">
+		<div id="optionsmenu" class="sublinks_table">
 			<div class="list_label <?php echo $TEXT_DIRECTION; ?>"><?php echo $pgv_lang["fams_charts"]; ?></div>
 				<ul class="sublinks_cell <?php echo $TEXT_DIRECTION; ?>">
 		<?php } 

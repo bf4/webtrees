@@ -82,7 +82,7 @@ if (!$controller->isPrintPreview()) {
 			echo '<tr><td class="list_label ', $TEXT_DIRECTION, '" colspan="2">', $pgv_lang['shared_note_menu'], '</td></tr>';
 			echo '<tr>';
 		} else { 
-			echo '<div class="sublinks_table">';
+			echo '<div id="optionsmenu" class="sublinks_table">';
 			echo '<div class="list_label ', $TEXT_DIRECTION, '">', $pgv_lang["fams_charts"], '</div>';
 		} 
 		if ($editmenu) {

@@ -166,7 +166,7 @@ $linkToID=$controller->pid; // -- Tell addmedia.php what to link to
 			<tr>
 				<td class="sublinks_cell <?php echo $TEXT_DIRECTION; ?>">
 		<?php } else { ?>
-		<div class="sublinks_table">
+		<div id="optionsmenu" class="sublinks_table">
 			<div class="list_label <?php echo $TEXT_DIRECTION; ?>"><?php echo $pgv_lang["indis_charts"]; ?></div>
 				<ul class="sublinks_cell <?php echo $TEXT_DIRECTION; ?>">
 		<?php } 
