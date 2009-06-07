@@ -3,7 +3,7 @@
  * phpGedView Research Assistant Tool - Form Loader Engine.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  John Finlay and Others. All rights reserved.
+ * Copyright (C) 2002 to 2009  PGV Development Team. All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -45,8 +45,8 @@ $pgv_lang["gen_tasks"]							= "Automatycznie generuj zadania";
 
 // -- RA GENERAL MESSAGES
 $pgv_lang["edit_task"]							= "Edytuj zadanie";
-$pgv_lang["completed"]							= "Zakończono";
-$pgv_lang["complete"]							= "Ukończone";
+$pgv_lang["completed"]							= "Ukończone";
+$pgv_lang["complete"]							= "Zakończ";
 $pgv_lang["incomplete"]							= "Niedokończone";
 $pgv_lang["created"]							= "Utworzono";
 $pgv_lang["details"]							= "Szczegóły";
@@ -67,8 +67,8 @@ $pgv_lang["FormBuilder"]						= "Formularz konstrukcji";
 $pgv_lang["FormName"]							= "Wprowadź nazwę formularza";
 $pgv_lang["MultiplePeople"]						= "Czy formularz jest stosowany do kilku osób?";
 $pgv_lang["EnterGEDCOMExtension"]				= "Wprowadź symbol GEDCOM dla faktu";
-$pgv_lang["FormDesciption"]						= "Wprowadź opsi formularza";
-$pgv_lang["FormGeneration"]						= "Wygenerowano formularz!";
+$pgv_lang["FormDesciption"]						= "Wprowadź opis formularza";
+$pgv_lang["FormGeneration"]						= "Wygenerowano formularz";
 $pgv_lang["CustomField"]						= "Domyślna nazwa pola";
 $pgv_lang["txt"]								= "Tekst";
 $pgv_lang["checkbox"]							= "Przycisk wyboru";
@@ -221,11 +221,14 @@ $pgv_lang["autosearch_gender"]          = "Dołącz płeć:";
 $pgv_lang["autosearch_plugin_name"]     = "";
 $pgv_lang["autosearch_fsurname"]		= "Dołącz nazwisko ojca:";
 $pgv_lang["autosearch_fgivennames"]		= "Dołącz imię ojca:";
+$pgv_lang["autosearch_ffullname"]		= "Dołącz imię i nazwisko ojca:";
 $pgv_lang["autosearch_msurname"]		= "Dołącz nazwisko matki:";
-$pgv_lang["autosearch_mgivennames"]	    = "Dołącz imię matki:";
-$pgv_lang["autosearch_country"]  	    = "Dołącz kraj:";
-$pgv_lang["autosearch_ssurname"] 		= "Dołącz nazwisko współmałżonka";
-$pgv_lang["autosearch_sgivennames"] 	= "Dołącz imię współmałżonka";
+$pgv_lang["autosearch_mgivennames"]	    = "Dołącz imię matki:"; 
+$pgv_lang["autosearch_mfullname"]		= "Dołącz imię i nazwisko matki:";
+$pgv_lang["autosearch_country"] 	    = "Dołącz kraj:";
+$pgv_lang["autosearch_ssurname"]		= "Dołącz nazwisko współmałżonka:";
+$pgv_lang["autosearch_sgivennames"] 	= "Dołącz imię współmałżonka:";
+$pgv_lang["autosearch_sfullname"]		= "Dołącz imię i nazwisko współmałżonka:";
 $pgv_lang["autosearch_plugin_name_ancestry"]	= "Plugin Ancestry.com";
 $pgv_lang["autosearch_plugin_name_ancestrycouk"]= "Plugin Ancestry.co.uk";
 $pgv_lang["autosearch_plugin_name_ellisisland"] = "Plugin EllisIslandRecords.org";
