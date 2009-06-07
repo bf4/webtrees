@@ -112,7 +112,7 @@ function getPeople(){
 		if ($person) {
 			$bdate=$person->getEstimatedBirthDate();
 			$byear=$bdate->gregorianYear();
-			$out.='<a href="individual.php?pid='.$person->getLinkUrl().'">'.PrintReady($person->getFullName()." - ".$byear).'</a><br />';
+			$out.='<a href="'.$person->getLinkUrl().'">'.PrintReady($person->getFullName()." - ".$byear).'</a><br />';
 		}
 	}
 
