@@ -205,7 +205,7 @@
 					</PGVRif>
 
 					<PGVRGedcom id="$famid">
-					<!-- put the death and burial info if blanks are on -->
+					<!-- put the marriage info if blanks are on -->
 					<PGVRif condition="$blanks==1">
 						<PGVRTextBox border="1" width="15" height="16"/>
 						<PGVRTextBox border="1" width="$dwidth" height="16">
@@ -229,7 +229,7 @@
 						</PGVRTextBox>
 					</PGVRif>
 
-					<!-- print all of the other facts -->
+					<!-- print all of the other family facts -->
 					<PGVRFacts ignore="$ignore">
 						<PGVRTextBox border="1" width="15" height="16"/>
 						<PGVRTextBox border="1" width="$dwidth" height="16">
