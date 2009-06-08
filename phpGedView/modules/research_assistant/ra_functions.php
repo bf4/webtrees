@@ -1320,7 +1320,7 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 		global $pgv_lang, $TBLPREFIX;
 
 		$rows=
-			PGV_DB::prepare("SELECT * FROM {$TBLPREFIX}tasks, {$TBLPREFIX}tasksource, {$TBLPREFIX}sources WHERE t_id=ts_t_id AND s_id=ts_s_id AND s_id=? AND s_file=?")
+			PGV_DB::prepare("SELECT t_id, t_title, t_startdate, t_enddate FROM {$TBLPREFIX}tasks, {$TBLPREFIX}tasksource, {$TBLPREFIX}sources WHERE t_id=ts_t_id AND s_id=ts_s_id AND s_id=? AND s_file=?")
 			->execute(array($sId, PGV_GED_ID))
 			->fetchAll();
 
