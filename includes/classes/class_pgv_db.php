@@ -188,20 +188,22 @@ class PGV_DB {
 			self::$UTF8_TABLE   ='';
 			break;
 		case 'sqlite':
-//			try {
-//				self::$pdo=new PDO(
-//					"sqlite:{$DBNAME}", null, null,
-//					array(
-//						PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION,
-//						PDO::ATTR_DEFAULT_FETCH_MODE=>PDO::FETCH_OBJ,
-//						PDO::ATTR_CASE=>PDO::CASE_LOWER
-//					)
-//				);
-//				// Check if we can connect to the database
-//				// If not, we may have a sqlite2 database from PhpGedView 4.2.1 or earlier
-//				PGV_DB::exec('PRAGMA encoding="UTF-8"');
-//			} catch (PDOException $ex) {
-//				// Couldn't connect using sqlite3 - try sqlite2
+			try {
+				self::$pdo=new PDO(
+					"sqlite:{$DBNAME}", null, null,
+					array(
+						PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION,
+						PDO::ATTR_DEFAULT_FETCH_MODE=>PDO::FETCH_OBJ,
+						PDO::ATTR_CASE=>PDO::CASE_LOWER
+					)
+				);
+				// Check if we can connect to the database
+				// If not, we may have a sqlite2 database from PhpGedView 4.2.1 or earlier
+				PGV_DB::exec("pragma table_info(sqlite_master)");
+
+				PGV_DB::exec('PRAGMA encoding="UTF-8"');
+			} catch (PDOException $ex) {
+				// Couldn't connect using sqlite3 - try sqlite2
 				self::$pdo=new PDO(
 					"sqlite2:{$DBNAME}", null, null,
 					array(
@@ -210,7 +212,7 @@ class PGV_DB {
 						PDO::ATTR_CASE=>PDO::CASE_LOWER
 					)
 				);
-//			}
+			}
 			self::$AUTO_ID_TYPE ='INTEGER AUTOINCREMENT';
 			self::$INT1_TYPE    ='INTEGER';
 			self::$INT2_TYPE    ='INTEGER';
@@ -616,8 +618,7 @@ class PGV_DB {
 		case 'sqlite2':
 			// SQLITE doesn't support the ANSI standard information_schema
 			$rows=
-				PGV_DB::prepare("pragma table_info(?)")
-				->execute(array($table))
+				PGV_DB::prepare("pragma table_info({$table})")
 				->fetchAll();
 			foreach ($rows as $row) {
 				if ($row->name==$column) {
