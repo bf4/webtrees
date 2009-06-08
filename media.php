@@ -759,17 +759,17 @@ if (check_media_structure()) {
 			// Do not print submunu
 		} else {
 			$submenu = new Menu($pgv_lang["to_person"]);
-			$submenu->addClass("submenuitem".$classSuffix, "submenuitem".$classSuffix);
+			$submenu->addClass("submenuitem".$classSuffix, "submenuitem_hover".$classSuffix);
 			$submenu->addOnclick("return ilinkitem('$mediaid','person')");
 			$menu->addSubMenu($submenu);
 
 			$submenu = new Menu($pgv_lang["to_family"]);
-			$submenu->addClass("submenuitem".$classSuffix, "submenuitem".$classSuffix);
+			$submenu->addClass("submenuitem".$classSuffix, "submenuitem_hover".$classSuffix);
 			$submenu->addOnclick("return ilinkitem('$mediaid','family')");
 			$menu->addSubMenu($submenu);
 
 			$submenu = new Menu($pgv_lang["to_source"]);
-			$submenu->addClass("submenuitem".$classSuffix, "submenuitem".$classSuffix);
+			$submenu->addClass("submenuitem".$classSuffix, "submenuitem_hover".$classSuffix);
 			$submenu->addOnclick("return ilinkitem('$mediaid','source')");
 			$menu->addSubMenu($submenu);
 		}
