@@ -732,7 +732,6 @@ function addMessage($message) {
 	if (empty($message["created"]))
 		$message["created"] = gmdate ("D, d M Y H:i:s T");
 	if ($PGV_STORE_MESSAGES && ($message["method"]!="messaging3" && $message["method"]!="mailto" && $message["method"]!="none")) {
-		$newid = get_next_id("messages", "m_id");
 		PGV_DB::prepare("INSERT INTO {$TBLPREFIX}messages (m_id, m_from, m_to, m_subject, m_body, m_created) VALUES (?, ? ,? ,? ,? ,?)")
 			->execute(array(get_next_id("messages", "m_id"), $message["from"], $message["to"], $message["subject"], $message["body"], $message["created"]));
 	}
@@ -827,9 +826,6 @@ function addFavorite($favorite) {
 	if (PGV_DB::prepare($sql)->execute($vars)->fetchOne()) {
 		return false;
 	}
-
-	//-- get the next favorite id number for the primary key
-	$newid = get_next_id("favorites", "fv_id");
 
 	//-- add the favorite to the database
 	return (bool)
