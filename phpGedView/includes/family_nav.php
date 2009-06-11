@@ -602,7 +602,7 @@ function print_pedigree_person_nav($pid, $style=1, $show_famlink=true, $count=0,
 						if ($natdad == "yes") {
 						}else{
 							// Husband -----------------------
-							if ( ($husb || $num>0) && $husb->getLabel() != "." ) {
+							if ($husb || $num>0) {
 								if ($TEXT_DIRECTION=="ltr") {
 									$title = $pgv_lang["familybook_chart"].": ".$famid;
 								}else{
