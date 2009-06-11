@@ -1308,10 +1308,10 @@ function PGVRFactsSHandler($attrs) {
 	} else {
 		global $nonfacts;
 		$nonfacts = preg_split("/[\s,;:]/", $tag);
-		$person = new Person($gedrec);
-		$oldPerson = Person::getInstance($person->getXref());
-		$oldPerson->diffMerge($person);
-		$facts = $oldPerson->getIndiFacts();
+		$record = new GedcomRecord($gedrec);
+		$oldrecord = GedcomRecord::getInstance($record->getXref());
+		$oldrecord->diffMerge($record);
+		$facts = $oldrecord->getFacts();
 		foreach ($facts as $f=>$fact) {
 			if (strstr($fact->getGedcomRecord(), "PGV_NEW")!==false) {
 				$repeats[]=$fact->getGedcomRecord();
