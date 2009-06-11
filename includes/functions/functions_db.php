@@ -1694,7 +1694,7 @@ function search_sources($query, $geds, $match, $skip) {
 		if ($DB_UTF8_COLLATION || !has_utf8($q)) {
 			$querysql[]='s_gedcom '.PGV_DB::$LIKE." ".PGV_DB::quote("%{$q}%");
 		} else {
-			$querysql[]='(s_gedcom '.PGV_DB::$LIKE." ".PGV_DB::quote("%{$q}%")." OR s_gedcom ".PGV_DB::$LIKE." ".PGV_DB::quote(UTF8_strtoupper("%{$q}%"))." OR s_gedcom ".PGV_DB::$LIKE." ".PGV_DB::$LIKE." ".PGV_DB::quote(UTF8_strtolower("%{$q}%")).")";
+			$querysql[]='(s_gedcom '.PGV_DB::$LIKE." ".PGV_DB::quote("%{$q}%")." OR s_gedcom ".PGV_DB::$LIKE." ".PGV_DB::quote(UTF8_strtoupper("%{$q}%"))." OR s_gedcom ".PGV_DB::$LIKE." ".PGV_DB::quote(UTF8_strtolower("%{$q}%")).")";
 		}
 	}
 
@@ -1764,7 +1764,7 @@ function search_notes($query, $geds, $match, $skip) {
 		if ($DB_UTF8_COLLATION || !has_utf8($q)) {
 			$querysql[]='o_gedcom '.PGV_DB::$LIKE." ".PGV_DB::quote("%{$q}%");
 		} else {
-			$querysql[]='(o_gedcom '.PGV_DB::$LIKE." ".PGV_DB::quote("%{$q}%")." OR o_gedcom ".PGV_DB::$LIKE." ".PGV_DB::quote(UTF8_strtoupper("%{$q}%"))." OR o_gedcom ".PGV_DB::$LIKE." ".PGV_DB::$LIKE." ".PGV_DB::quote(UTF8_strtolower("%{$q}%")).")";
+			$querysql[]='(o_gedcom '.PGV_DB::$LIKE." ".PGV_DB::quote("%{$q}%")." OR o_gedcom ".PGV_DB::$LIKE." ".PGV_DB::quote(UTF8_strtoupper("%{$q}%"))." OR o_gedcom ".PGV_DB::$LIKE." ".PGV_DB::quote(UTF8_strtolower("%{$q}%")).")";
 		}
 	}
 
