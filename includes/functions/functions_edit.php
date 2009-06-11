@@ -2223,7 +2223,6 @@ function print_quick_resn($name) {
 	}
 }
 
-
 /**
 * Link Media ID to Indi, Family, or Source ID
 *
@@ -2261,6 +2260,46 @@ function linkMedia($mediaid, $linktoid, $level=1) {
 		return false;
 	}
 }
+
+/**
+* unLink Media ID to Indi, Family, or Source ID
+*
+* @param  string  $mediaid Media ID to be unlinked.
+* @param string $linktoid Indi, Family, or Source ID that the Media ID should be unlinked from.
+* @param $linenum should be ALWAYS set to 'OBJE'.
+* @param int $level Level where the Media Object reference should be removed from (not used)
+* @return  bool success or failure
+*/
+function unlinkMedia($linktoid, $linenum, $mediaid, $level=1) {
+	global $GEDCOM, $pgv_lang, $pgv_changes;
+
+	if (empty($level)) $level = 1;
+	if ($level!=1) return false; // Level 2 items get unlinked elsewhere (maybe ??)
+	// find Indi, Family, or Source record to unlink from
+	if (isset($pgv_changes[$linktoid."_".$GEDCOM])) {
+		$gedrec = find_updated_record($linktoid);
+	} else {
+		$gedrec = find_gedcom_record($linktoid);
+	}
+	
+	//-- when deleting/umlinking a media link
+	//-- $linenum comes is an OBJE and the $mediaid to delete should be set
+	if (!is_numeric($linenum)) {
+		$newged = remove_subrecord($gedrec, $linenum, $mediaid);
+	}else{
+		$newged = remove_subline($gedrec, $linenum);
+	}
+	// $success = (replace_gedrec($pid, $newged));
+	$success = (replace_gedrec($linktoid, $newged));
+	if ($success) {
+		//echo "<br />".$pgv_lang["gedrec_deleted"];
+		//echo '<br>';
+	}
+	
+}
+
+
+
 
 /**
 * builds the form for adding new facts
