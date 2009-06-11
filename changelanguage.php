@@ -53,7 +53,7 @@ switch ($action) {
 print PGV_JS_START;
 print "var helpWin;";
 print "function showchanges() {";
-print "window.location = '$PHP_SELF';";
+print "window.location = '{$_SERVER['PHP_SELF']}';";
 print "}";
 print "function helpPopup03(which) {";
 print "location.href = 'editlang_edit_settings.php?' + which + '&new_shortcut=' + document.new_lang_form.new_shortcut.value;";
@@ -152,7 +152,7 @@ switch ($action) {
 
 	case "editold" :
 	default :
-		print "<form name=\"lang_config_form\" method=\"get\" action=\"$PHP_SELF\">";
+		print "<form name=\"lang_config_form\" method=\"get\" action=\"{$_SERVER['PHP_SELF']}\">";
 		print "<input type=\"hidden\" name=\"" . session_name() . "\" value=\"" . session_id() . "\" />";
 		print "<input type=\"hidden\" name=\"action\" value=\"config_lang\" />";
 		print "<table class=\"facts_table center $TEXT_DIRECTION\" style=\"width:70%; \">";
