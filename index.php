@@ -317,9 +317,8 @@ if ($MULTI_MEDIA && file_exists("modules/lightbox/album.php")) {
 	include('modules/lightbox/functions/lb_call_js.php');
 }
 
+echo PGV_JS_START;
 ?>
-<script language="JavaScript" type="text/javascript">
-<!--
 	function refreshpage() {
 		window.location = 'index.php?ctype=<?php print $ctype; ?>';
 	}
@@ -363,9 +362,8 @@ if ($MULTI_MEDIA && file_exists("modules/lightbox/album.php")) {
  		oXmlHttp.send(null);
  		return false;
 	}
-//-->
-</script>
 <?php
+echo PGV_JS_END;
 //-- start of main content section
 print "<table width=\"100%\"><tr><td>";		// This is needed so that page footers print in the right place
 if ($ctype=="user") {
