@@ -770,7 +770,7 @@ case 'addsourceaction':
 	$link = "source.php?sid=$xref&show_changes=yes";
 	if ($xref) {
 		echo "<br /><br />\n".$pgv_lang["new_source_created"]."<br /><br />";
-		echo "<a href=\"javascript:// SOUR $xref\" onclick=\"openerpasteid('$xref'); return false;\">".$pgv_lang["paste_id_into_field"]." <b>$xref</b></a>\n";
+		echo "<a href=\"javascript://SOUR $xref\" onclick=\"openerpasteid('$xref'); return false;\">".$pgv_lang["paste_id_into_field"]." <b>$xref</b></a>\n";
 	}
 	break;
 
@@ -911,7 +911,7 @@ case 'addnoteaction':
 	$link = "note.php?nid=$xref&show_changes=yes";
 	if ($xref) {
 		echo "<br /><br />\n".$pgv_lang["new_shared_note_created"]."<br /><br />";
-		echo "<a href=\"javascript:// NOTE $xref\" onclick=\"openerpasteid('$xref'); return false;\">".$pgv_lang["paste_id_into_field"]." <b>$xref</b></a>\n";
+		echo "<a href=\"javascript://NOTE $xref\" onclick=\"openerpasteid('$xref'); return false;\">".$pgv_lang["paste_id_into_field"]." <b>$xref</b></a>\n";
 	}
 	break;
 	
@@ -1155,7 +1155,7 @@ case 'addrepoaction':
 	$link = "repo.php?rid=$xref&show_changes=yes";
 	if ($xref) {
 		echo "<br /><br />\n".$pgv_lang["new_repo_created"]."<br /><br />";
-		echo "<a href=\"javascript:// REPO $xref\" onclick=\"openerpasteid('$xref'); return false;\">".$pgv_lang["paste_rid_into_field"]." <b>$xref</b></a>\n";
+		echo "<a href=\"javascript://REPO $xref\" onclick=\"openerpasteid('$xref'); return false;\">".$pgv_lang["paste_rid_into_field"]." <b>$xref</b></a>\n";
 	}
 	break;
 //------------------------------------------------------------------------------

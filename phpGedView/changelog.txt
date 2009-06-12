@@ -10,6 +10,7 @@
 
 
 Version 4.2.2
+ - Fixed: [ 1479083 ] 4b07 - malformed links generated (fisharebest)
  - Fixed: [ 1767948 ] FAQ header doesn't like quotes upon edit (fisharebest)
  - Fixed: [ 2231897 ] [416pre] - Add GEDCOM ... Default person (fisharebest)
  - Fixed: [ 1783041 ] (4.1)  Unable to find record with ID (fisharebest)

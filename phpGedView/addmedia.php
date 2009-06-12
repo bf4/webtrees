@@ -411,7 +411,7 @@ if ($action=="newentry") {
 			if ($link) {
 				AddToChangeLog("Media ID ".$media_id." successfully added to $linktoid.");
 			} else {
-				echo "<a href=\"javascript:// OBJE $mediaid\" onclick=\"openerpasteid('$mediaid'); return false;\">".$pgv_lang["paste_id_into_field"]." <b>$mediaid</b></a><br /><br />\n";
+				echo "<a href=\"javascript://OBJE $mediaid\" onclick=\"openerpasteid('$mediaid'); return false;\">".$pgv_lang["paste_id_into_field"]." <b>$mediaid</b></a><br /><br />\n";
 				echo PGV_JS_START;
 				echo "openerpasteid('", $mediaid, "');";
 				echo PGV_JS_END;
