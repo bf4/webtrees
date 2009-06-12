@@ -4,7 +4,7 @@
  * phpGedView Research Assistant Tool - Functions File.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
+ * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -388,7 +388,7 @@ class ra_functions {
 		}
 
 		// Display for the menu
-global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, $SHOW_ADD_FOLDER, $SHOW_ADD_UNLINKED_SOURCE, $SHOW_VIEW_PROBABILITIES;//show
+		global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, $SHOW_ADD_FOLDER, $SHOW_ADD_UNLINKED_SOURCE, $SHOW_VIEW_PROBABILITIES;//show
 		$out = '<table class="list_table" width="100%" cellpadding="2">';
 		$out .= '<tr>';
 		$out .= '<td align="left"'.$percent.'class="optionbox wrap">'.ra_functions :: print_top_folder($folderid).'</td>';
@@ -673,6 +673,7 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 
 		$out .= "</select></form></th></tr>";
 		$out .= "<tr><th class=\"descriptionbox\"><a href=\"module.php?mod=research_assistant&amp;action=mytasks&amp;Filter={$filter}&amp;folderid=&amp;orderby=t_title&amp;type=\">".$pgv_lang["Task_Name"]."</a></th><th class=\"descriptionbox\">
+				<a href=\"module.php?mod=research_assistant&amp;action=mytasks&amp;Filter={$filter}&amp;folderid=&amp;orderby=t_description&amp;type=\">".$pgv_lang["description"]."</a></th>"."<th class=\"descriptionbox\">
 				<a href=\"module.php?mod=research_assistant&amp;action=mytasks&amp;Filter={$filter}&amp;folderid=&amp;orderby=t_startdate&amp;type=\">".$pgv_lang["Start_Date"]."</a></th>"."<th class=\"descriptionbox\">
 				<a href=\"module.php?mod=research_assistant&amp;action=mytasks&amp;Filter={$filter}&amp;folderid=&amp;orderby=t_enddate&amp;type=\">".$pgv_lang["completed"]."</a></th><th class=\"descriptionbox\">".$pgv_lang["edit"]."</th><th class=\"descriptionbox\">".$pgv_lang["delete"]."</th>\n
 				<th class=\"descriptionbox\">".$pgv_lang["complete"]."</tr>";
@@ -681,16 +682,25 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 			if (empty ($row->t_enddate)) {
 				$completeLink = "<a href=\"module.php?mod=research_assistant&amp;action=completeTask&amp;taskid=".$row->t_id."\">".$pgv_lang["complete"]."</a>";
 				$date=timestamp_to_gedcom_date($row->t_startdate);
-				$out .= '<tr><td class="optionbox"><a href="module.php?mod=research_assistant&amp;action=viewtask&amp;taskid='.$row->t_id.'">'.PrintReady($row->t_title).'</a></td><td class="optionbox">'.$date->Display(false).'</td><td class="optionbox" align="center">'.$this->checkComplete($row).'</td>
-						<td class="optionbox" align="center"><a href="module.php?mod=research_assistant&amp;action=edittask&amp;taskid='.$row->t_id.'">'.$pgv_lang["edit"].'</a></td>
-						<td class="optionbox" align="center"><a href="module.php?mod=research_assistant&amp;action=deletetask&amp;taskid='.$row->t_id.'">'.$pgv_lang["delete"].'</a></td>
-						<td class="optionbox" align="center">'.$completeLink.'</td></tr>';
+				$out .= '<tr><td class="list_value"><a href="module.php?mod=research_assistant&amp;action=viewtask&amp;taskid='.$row->t_id.'" class="list_item name2">'.PrintReady($row->t_title).'</a></td>
+						<td class="list_value wrap">'.$row->t_description.'</td>
+						<td class="list_value" align="center">'.$date->Display(false).'</td>
+						<td class="list_value" align="center">'.$this->checkComplete($row).'</td>
+						<td class="list_value" align="center"><a href="module.php?mod=research_assistant&amp;action=edittask&amp;taskid='.$row->t_id.'">'.$pgv_lang["edit"].'</a></td>
+						<td class="list_value" align="center"><a href="module.php?mod=research_assistant&amp;action=deletetask&amp;taskid='.$row->t_id.'">'.$pgv_lang["delete"].'</a></td>
+						<td class="list_value" align="center">'.$completeLink.'</td></tr>';
 			}
 			else
 			{
 				$completeLink = '<a href="module.php?mod=research_assistant&amp;action=completeTask&amp;taskid='.$row->t_id.'">'.$pgv_lang["editform"].'</a>';
 				$date=timestamp_to_gedcom_date($row->t_startdate);
-				$out .= '<tr><td class="optionbox"><a href="module.php?mod=research_assistant&amp;action=viewtask&amp;taskid='.$row->t_id.'">'.PrintReady($row->t_title).'</a></td><td class="optionbox">'.$date->Display(false).'</td><td class="optionbox" align="center">'.$this->checkComplete($row).'</td><td class="optionbox" align="center"><a href="module.php?mod=research_assistant&amp;action=edittask&amp;taskid='.$row->t_id.'">'.$pgv_lang["edit"].'</a></td><td class="optionbox" align="center"><a href="module.php?mod=research_assistant&amp;action=deletetask&amp;taskid='.$row->t_id.'">'.$pgv_lang["delete"].'</a></td><td class="optionbox" align="center">'.$completeLink.'</td></tr>';
+				$out .= '<tr><td class="list_value"><a href="module.php?mod=research_assistant&amp;action=viewtask&amp;taskid='.$row->t_id.'" class="list_item name2">'.PrintReady($row->t_title).'</a></td>
+						<td class="list_value wrap">'.$row->t_description.'</td>
+						<td class="list_value" align="center">'.$date->Display(false).'</td>
+						<td class="list_value" align="center">'.$this->checkComplete($row).'</td>
+						<td class="list_value" align="center"><a href="module.php?mod=research_assistant&amp;action=edittask&amp;taskid='.$row->t_id.'">'.$pgv_lang["edit"].'</a></td>
+						<td class="list_value" align="center"><a href="module.php?mod=research_assistant&amp;action=deletetask&amp;taskid='.$row->t_id.'">'.$pgv_lang["delete"].'</a></td>
+						<td class="list_value" align="center">'.$completeLink.'</td></tr>';
 			}
 		}
 		$out .= '</table>';
@@ -816,8 +826,8 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 		if (!empty ($folderId)) {
 			$row=$this->get_top_folder($folderId);
 
-			$out = '<img src="modules/research_assistant/images/folder_blue_icon.gif" alt="Current Folder"></img>';
-			$out .= "<strong>".PrintReady(stripslashes($row->fr_name))."</strong>";
+			$out = '<img src="modules/research_assistant/images/folder_blue_icon.gif" alt="Folder"></img>';
+			$out .= "<strong> ".PrintReady(stripslashes($row->fr_name))."</strong>";
 		}
 
 		return $out;
@@ -854,7 +864,9 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 		}
 
 		foreach ($rows as $row) {
-			$out .= '<tr><td class="optionbox"><a href="module.php?mod=research_assistant&amp;action=viewtasks&amp;folderid='.$row->fr_id.'"><img src="modules/research_assistant/images/folder_blue_icon.gif" border="0" alt="Folder"></img>'.PrintReady($row->fr_name).'</a></td><td class="optionbox wrap"><br />'.nl2br(PrintReady(stripslashes($row->fr_description))).'</td><td class="optionbox"  align="center"><a href="module.php?mod=research_assistant&amp;action=editfolder&amp;folderid='.$row->fr_id.'">'.$pgv_lang["edit"].'</a></td></tr>';
+			$out .= '<tr><td class="optionbox"><a href="module.php?mod=research_assistant&amp;action=viewtasks&amp;folderid='.$row->fr_id.'"><img src="modules/research_assistant/images/folder_blue_icon.gif" border="0" alt="Folder" style="vertical-align: middle;"></img> '.PrintReady($row->fr_name).'</a></td>
+					<td class="optionbox wrap"><br />'.nl2br(PrintReady(stripslashes($row->fr_description))).'</td>
+					<td class="optionbox" align="center"><a href="module.php?mod=research_assistant&amp;action=editfolder&amp;folderid='.$row->fr_id.'">'.$pgv_lang["edit"].'</a></td></tr>';
 		}
 		$out .= '</table>';
 		return $out;
@@ -884,6 +896,7 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 			$out .= "<table id=\"Tasks\" class=\"list_table\" align=\"center\" width=\"700\" border=\"0\">";
 			$out .= "<tr><th colspan=\"7\" class=\"topbottombar\"><h2>".$pgv_lang["Task_View"].print_help_link("ra_view_task_help", "qm", '', false, true)."</h2></th></tr>";
 			$out .= "<tr><th class=\"descriptionbox\"><a href=\"module.php?mod=research_assistant&amp;action=viewtasks&amp;folderid=".$folderId."&amp;orderby=t_title&amp;type=".$_REQUEST["type"]."\">".$pgv_lang["Task_Name"]."</a></th>
+					<th class=\"descriptionbox\"><a href=\"module.php?mod=research_assistant&amp;action=viewtasks&amp;folderid=".$folderId."&amp;orderby=t_description&amp;type=".$_REQUEST["type"]."\">".$pgv_lang["description"]."</a></th>\n
 					<th class=\"descriptionbox\"><a href=\"module.php?mod=research_assistant&amp;action=viewtasks&amp;folderid=".$folderId."&amp;orderby=t_startdate&amp;type=".$_REQUEST["type"]."\">".$pgv_lang["Start_Date"]."</a></th>\n
 					<th class=\"descriptionbox\"><a href=\"module.php?mod=research_assistant&amp;action=viewtasks&amp;folderid=".$folderId."&amp;orderby=t_enddate&amp;type=".$_REQUEST["type"]."\">".$pgv_lang["completed"]."</a></th>\n
 					<th class=\"descriptionbox\">".$pgv_lang["edit"]."</th><th class=\"descriptionbox\">".$pgv_lang["delete"]."</th></tr>\n";
@@ -892,12 +905,13 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 
 		// Loop through the database results and print each task
 		foreach ($rows as $row) {
-			$out .= '<tr><td class="optionbox"><a href="module.php?mod=research_assistant&amp;action=viewtask&amp;taskid='.$row->t_id.'">'.PrintReady($row->t_title).'</a></td>';
+			$out .= '<tr><td class="list_value"><a href="module.php?mod=research_assistant&amp;action=viewtask&amp;taskid='.$row->t_id.'"class="list_item name2">'.PrintReady($row->t_title).'</a></td>';
 			$date=timestamp_to_gedcom_date($row->t_startdate);
-			$out .= '<td class="optionbox">'.$date->Display(false).'</td>';
-			$out .= '<td class="optionbox" align="center">'.$this->checkComplete($row).'</td>';
-			$out .= '<td class="optionbox" align="center"><a href="module.php?mod=research_assistant&amp;action=edittask&amp;taskid='.$row->t_id.'">'.$pgv_lang["edit"].'</a></td>';
-			$out .= '<td class="optionbox" align="center"><a href="module.php?mod=research_assistant&amp;action=deletetask&amp;taskid='.$row->t_id.'&amp;folder='.$folderId.'">'.$pgv_lang["delete"].'</a></td></tr>';
+			$out .= '<td class="list_value wrap">'.PrintReady($row->t_description).'</td>';
+			$out .= '<td class="list_value" align="center">'.$date->Display(false).'</td>';
+			$out .= '<td class="list_value" align="center">'.$this->checkComplete($row).'</td>';
+			$out .= '<td class="list_value" align="center"><a href="module.php?mod=research_assistant&amp;action=edittask&amp;taskid='.$row->t_id.'">'.$pgv_lang["edit"].'</a></td>';
+			$out .= '<td class="list_value" align="center"><a href="module.php?mod=research_assistant&amp;action=deletetask&amp;taskid='.$row->t_id.'&amp;folder='.$folderId.'">'.$pgv_lang["delete"].'</a></td></tr>';
 		}
 		$out .= '</table>';
 
@@ -1316,27 +1330,46 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 	/**
 	 * Get Tasks for Source
 	 */
-	function getSourceTasks($sId) {
-		global $pgv_lang, $TBLPREFIX;
+	function getSourceTasks($sId, $legend="") {
+		global $pgv_lang, $TBLPREFIX, $TEXT_DIRECTION;
 
+		$legend = "<img src=\"modules/research_assistant/images/view_inferences.gif\" alt=\"\" align=\"middle\" /> ".$pgv_lang["task_list"]." @ ".$legend;
+		$out = '<fieldset><legend>'.$legend.'</legend>';
+		$out .= '<div id=ra-table" class="'.$TEXT_DIRECTION.'">';
 		$rows=
-			PGV_DB::prepare("SELECT t_id, t_title, t_startdate, t_enddate FROM {$TBLPREFIX}tasks, {$TBLPREFIX}tasksource, {$TBLPREFIX}sources WHERE t_id=ts_t_id AND s_id=ts_s_id AND s_id=? AND s_file=?")
+			PGV_DB::prepare("SELECT t_id, t_title, t_description, t_startdate, t_enddate FROM {$TBLPREFIX}tasks, {$TBLPREFIX}tasksource, {$TBLPREFIX}sources WHERE t_id=ts_t_id AND s_id=ts_s_id AND s_id=? AND s_file=?")
 			->execute(array($sId, PGV_GED_ID))
 			->fetchAll();
 
-		$out = "\n\t<table class=\"list_table\">";
-		$out .= "<tr><td class=\"topbottombar\" colspan=\"4\" align=\"center\">".print_help_link("task_list_text", "qm", '', false, true)."<b>".$pgv_lang['task_list']."</b></td></tr>\n";
 		if (!$rows) {
-			$out .= "<tr><td class=\"topbottombar\" colspan=\"4\" align=\"center\">".$pgv_lang['no_sour_tasks']."</td></tr>\n";
+			$out .= "<table width=\"100%\"><tr>";
+			$out .= "<thead><th class=\"topbottombar\">".print_help_link("task_list_text", "qm", '', false, true).$pgv_lang["task_list"]."</th></tr>\n";
+			$out .= "<tr><td class=\"topbottombar\">".$pgv_lang["no_sour_tasks"]."</td></tr>\n";
 		} else {
-			$out .= "\n\t\t<tr><td class=\"list_label\"><strong>".$pgv_lang["details"]."</strong></td><td class=\"list_label\"><strong>".$pgv_lang["title"]."</strong></td><td class=\"list_label\"><strong>".$pgv_lang["completed"]."</strong></td><td class=\"list_label\"><strong>".$pgv_lang["created"]."</strong></td></tr>";
+			$n = 0;
+			$out .= "<table class=\"list_table\">";
+			$out .= "<thead><tr><td></td><th class=\"topbottombar\" colspan=\"4\">".print_help_link("task_list_text", "qm", '', false, true).$pgv_lang["task_list"]."</th></tr>\n";
+			$out .= '<tr><td></td><th class="list_label">'.$pgv_lang["Task_Name"].'</th>';
+			$out .= '<th class="list_label">'.$pgv_lang["description"].'</th>';
+			$out .= '<th class="list_label">'.$pgv_lang["completed"].'</th>';
+			$out .= '<th class="list_label">'.$pgv_lang["created"]."</th></tr></thead>\n<tbody>";
 			// Loop through all the task ID's and pull the info we need on them,
 			// then format them nicely to show the user.
 			foreach ($rows as $row) {
 				$date=timestamp_to_gedcom_date($row->t_startdate);
-				$out .= '<tr><td class="list_label"><a href="module.php?mod=research_assistant&amp;action=viewtask&amp;taskid='.$row->t_id.'">'.PrintReady($pgv_lang['details']).'</a></td><td class="list_label">'.PrintReady($row->t_title).'</td><td class="list_label">'.$this->checkComplete($row).'</td><td class="list_label">'.$date->Display(false).'</td></tr>';
+				$out .= '<tr><td class="list_value_wrap rela list_item">'.++$n.'</td>';
+				$out .= '<td class="list_value_wrap"><a href="module.php?mod=research_assistant&amp;action=viewtask&amp;taskid='.$row->t_id.'" class="list_item name2">'.PrintReady($row->t_title).'</a></td>';
+				if (UTF8_strlen($row->t_description)<=40) {
+					$out .= '<td class="list_value_wrap">'.PrintReady($row->t_description).'</td>';
+				}
+				else {
+					$out .= '<td class="list_value_wrap">'.UTF8_substr(PrintReady($row->t_description), 0, 40).$pgv_lang["ellipsis"].'</td>';
+				}
+				$out .= '<td class="list_value_wrap center">'.$this->checkComplete($row).'</td>';
+				$out .= '<td class="list_value_wrap center">'.$date->Display(false).'</td></tr>';
 			}
 		}
+		$out .= '</tbody></table></div></fieldset>';
 		return $out;
 
 	}
