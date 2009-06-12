@@ -604,7 +604,7 @@ else if ($action=="replace") {
 //-- output starts here
 print_header($pgv_lang["gedconf_head"]);
 
-if ($ENABLE_AUTOCOMPLETE) require './js/autocomplete.js.htm';
+if ($ENABLE_AUTOCOMPLETE && $source=='') require './js/autocomplete.js.htm';
 
 if (!isset($GENERATE_UIDS)) $GENERATE_UIDS = false;
 $temp2 = $THEME_DIR;
@@ -947,57 +947,20 @@ print "&nbsp;<a href=\"javascript: ".$pgv_lang["gedcom_conf"]."\" onclick=\"expa
 	<tr>
 		<td class="descriptionbox wrap width20">
 		<?php print_help_link("PEDIGREE_ROOT_ID_help", "qm", "PEDIGREE_ROOT_ID"); print $pgv_lang["PEDIGREE_ROOT_ID"]; ?></td>
-
-		<?php
-		if ((!empty($GEDCOMPATH))&&(file_exists($path.$GEDFILENAME))&&(!empty($PEDIGREE_ROOT_ID))) {
-			$fpged = fopen($path.$GEDFILENAME, "r");
-			if ($fpged) {
-				$gid = $PEDIGREE_ROOT_ID;
-				$prefix = "";
-				$suffix = $gid;
-				$ct = preg_match("/^([a-zA-Z]+)/", $gid, $match);
-				if ($ct>0) $prefix = $match[1];
-				$ct = preg_match("/([\d\.]+)$/", $gid, $match);
-				if ($ct>0) $suffix = $match[1];
-				//print "prefix:$prefix suffix:$suffix";
-				$BLOCK_SIZE = 1024*4;	//-- 4k bytes per read
-				$fcontents = "";
-				while (!feof($fpged)) {
-					$fcontents = fread($fpged, $BLOCK_SIZE);
-					//-- convert mac line endings
-					$fcontents = preg_replace("/\r(\d)/", "\n$1", $fcontents);
-					$ct = preg_match("/0 @(".$prefix."0*".$suffix.")@ INDI/", $fcontents, $match);
-					if ($ct>0) {
-						$gid = $match[1];
-						$pos1 = strpos($fcontents, "0 @$gid@", 0);
-						if ($pos1===false) $fcontents = "";
-						else {
-							$PEDIGREE_ROOT_ID = $gid;
-							$pos2 = strpos($fcontents, "\n0", $pos1+1);
-							while ((!$pos2)&&(!feof($fpged))) {
-								$fcontents .= fread($fpged, $BLOCK_SIZE);
-								$pos2 = strpos($fcontents, "\n0", $pos1+1);
-							}
-							if ($pos2) $indirec = substr($fcontents, $pos1, $pos2-$pos1);
-							else $indirec = substr($fcontents, $pos1);
-							break;
-						}
-					}
-					else $fcontents = "";
-				}
-				fclose($fpged);
-			}
-		}
-	?>
 	<td class="optionbox"><input type="text" name="NEW_PEDIGREE_ROOT_ID" id="NEW_PEDIGREE_ROOT_ID" value="<?php print $PEDIGREE_ROOT_ID; ?>" size="5" tabindex="<?php $i++; print $i; ?>" onfocus="getHelp('PEDIGREE_ROOT_ID_help');" />
 			<?php
-			if ($source == "") {
+			// We can only show the person's details if we're editing an existing
+			// gedcom.  Otherwise there could be a mismatch between DB and FILE,
+			// or we could be uploading a new file, which we haven't seen yet.
+			if ($source=='') {
 				print_findindi_link("NEW_PEDIGREE_ROOT_ID","");
-				if (!empty($indirec)) {
-					$person=new Person($indirec);
-					echo ' <span class="list_item">', $person->getFullName(), ' ', $person->format_first_major_fact(PGV_EVENTS_BIRT, 1), '</span>';
-				} else {
-					echo ' <span class="error">'. $pgv_lang['unable_to_find_record']. '</span>';
+				if ($PEDIGREE_ROOT_ID) {
+					$person=Person::getInstance($PEDIGREE_ROOT_ID);
+					if ($person) {
+						echo ' <span class="list_item">', $person->getFullName(), ' ', $person->format_first_major_fact(PGV_EVENTS_BIRT, 1), '</span>';
+					} else {
+						echo ' <span class="error">'. $pgv_lang['unable_to_find_record']. '</span>';
+					}
 				}
 			}
 		?>
