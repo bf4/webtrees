@@ -152,7 +152,7 @@ function print_gedcom_favorites($block = true, $config="", $side, $index) {
 		';
 		$uniqueID = floor(microtime() * 1000000);
 		$content .= print_help_link("index_add_favorites_help", "qm", "", false, true);
-		$content .= "<b><a href=\"javascript:// ".$pgv_lang["add_favorite"]." \" onclick=\"expand_layer('add_ged_fav'); return false;\"><img id=\"add_ged_fav_img\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["plus"]["other"]."\" border=\"0\" alt=\"\" />&nbsp;".$pgv_lang["add_favorite"]."</a></b>";
+		$content .= "<b><a href=\"javascript://".$pgv_lang["add_favorite"]." \" onclick=\"expand_layer('add_ged_fav'); return false;\"><img id=\"add_ged_fav_img\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["plus"]["other"]."\" border=\"0\" alt=\"\" />&nbsp;".$pgv_lang["add_favorite"]."</a></b>";
 		$content .= "<br /><div id=\"add_ged_fav\" style=\"display: none;\">\n";
 		$content .= "<form name=\"addgfavform\" method=\"post\" action=\"index.php\">\n";
 		$content .= "<input type=\"hidden\" name=\"action\" value=\"addfav\" />\n";
