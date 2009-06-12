@@ -2453,7 +2453,7 @@ function get_all_gedcoms() {
 	foreach ($GEDCOMS as $key=>$value) {
 		$gedcoms[$value['id']]=$key;
 	}
-	asort($gedcoms);
+	uasort($gedcoms, 'stringsort');
 	return $gedcoms;
 }
 
