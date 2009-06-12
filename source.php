@@ -140,7 +140,7 @@ if (file_exists('./modules/research_assistant/research_assistant.php') && $SHOW_
 	include_once './modules/research_assistant/research_assistant.php';
 	$mod=new ra_functions();
 	$mod->Init();
-	echo $mod->getSourceTasks($controller->sid), '</td></tr><tr class="center"><td colspan="2">';
+	echo $mod->getSourceTasks($controller->sid, $controller->source->getFullName());
 }
 
 // Individuals linked to this source
