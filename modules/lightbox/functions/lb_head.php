@@ -32,7 +32,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
-global $lang_short_cut, $LANGUAGE, $PHP_SELF, $reorder, $GEDCOM;
+global $lang_short_cut, $LANGUAGE, $reorder, $GEDCOM;
 
 $reorder=safe_get('reorder', '1', '0');
 
@@ -185,50 +185,11 @@ include_once ('includes/media_reorder_count.php');
 			}
         }
 
-		//Turn Edit Mode On or Off
-		/*
-		if (!isset($edit)) $edit=1;
-		if ($edit==1) {
-			$lbEditMsg = $pgv_lang["turn_edit_OFF"];
-			$lbEditMode = 0;
-		} else {
-			$lbEditMsg = $pgv_lang["turn_edit_ON"];
-			$lbEditMode = 1;
-		}
-		if (PGV_USER_CAN_EDIT && $mediacnt!=0) {
-			if ($LB_AL_HEAD_LINKS == "both") {
- 				print "<td class=\"width15 center wrap\" valign=\"top\">";
-				print "<a href=\"".encode_url("{$PHP_SELF}?tab={$tabno}&pid={$pid}&edit={$lbEditMode}")."\">";
-				print "<img src=\"modules/lightbox/images/image_edit.gif\" class=\"icon\" title=\"{$lbEditMsg}\" alt=\"{$lbEditMsg}\" /><br />" ;
-				print "" . $lbEditMsg . "&nbsp;";
-				print "</a>";
-				print "</td>";
-				//    print "<td width=\"5%\">&nbsp;</td>";
-				print "\n";
-			}else if ($LB_AL_HEAD_LINKS == "text") {
-				print "<td class=\"width15 center wrap\" valign=\"top\">";
-				print "<a href=\"".encode_url("{$PHP_SELF}?tab={$tabno}&pid={$pid}&edit={$lbEditMode}")."\">";
-				print "" . $lbEditMsg . "&nbsp;";
-				print "</a>";
-				print "</td>";
-				//    print "<td width=\"5%\">&nbsp;</td>";
-				print "\n";
-			}else if ($LB_AL_HEAD_LINKS == "icon") {
-				print "&nbsp;&nbsp;&nbsp;";
-				print "<a href=\"".encode+url("{$PHP_SELF}?tab={$tabno}&pid={$pid}&edit={$lbEditMode}")."\">";
-				print "<img src=\"modules/lightbox/images/image_edit.gif\" class=\"icon\" title=\"{$lbEditMsg}\" alt=\"{$lbEditMsg}\" />" ;
-				print "</a>";
-				print "\n";
-			}
-		}
-		*/
-
-
 		//Album Reorder Media  ( If media exists and is greater than 1 item ) -----
 		if (PGV_USER_CAN_EDIT && $tot_med_ct>1) {
 			if ($LB_AL_HEAD_LINKS == "both") {
 				print "<td class=\"width15 center wrap\" valign=\"top\">";
-				print "<a href=\"".encode_url("{$PHP_SELF}?pid={$pid}&tab={$tabno}&reorder=1")."\">" ;
+				print "<a href=\"".encode_url("{$_SERVER['PHP_SELF']}?pid={$pid}&tab={$tabno}&reorder=1")."\">" ;
 				print "<img src=\"modules/lightbox/images/images.gif\" class=\"icon\" title=\"{$pgv_lang['reorder_media']}\" alt=\"{$pgv_lang['reorder_media']}\" /><br />" ;
 				print "" . $pgv_lang["reorder_media"] . "&nbsp;";
 				print '</a>';
@@ -238,7 +199,7 @@ include_once ('includes/media_reorder_count.php');
 				print "\n";
 			}else if ($LB_AL_HEAD_LINKS == "text") {
 				print "<td class=\"width15 center wrap\" valign=\"top\">";
-				print "<a href=\"".encode_url("{$PHP_SELF}?pid={$pid}&tab={$tabno}&reorder=1")."\">" ;
+				print "<a href=\"".encode_url("{$_SERVER['PHP_SELF']}?pid={$pid}&tab={$tabno}&reorder=1")."\">" ;
 				print "" . $pgv_lang["reorder_media"] . "&nbsp;";
 				print '</a>';
 				print "</td>";
@@ -246,7 +207,7 @@ include_once ('includes/media_reorder_count.php');
 				print "\n";
 			}else if ($LB_AL_HEAD_LINKS == "icon") {
 				print "&nbsp;&nbsp;&nbsp;";
-				print "<a href=\"".encode_url("{$PHP_SELF}?pid={$pid}&tab={$tabno}&reorder=1")."\">" ;
+				print "<a href=\"".encode_url("{$_SERVER['PHP_SELF']}?pid={$pid}&tab={$tabno}&reorder=1")."\">" ;
 				print "<img src=\"modules/lightbox/images/images.gif\" class=\"icon\" title=\"{$pgv_lang['reorder_media']}\" alt=\"{$pgv_lang['reorder_media']}\" />" ;
 				print '</a>';
 				//print "<td width=\"5%\">&nbsp;</td>";
