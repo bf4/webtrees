@@ -29,16 +29,16 @@
 require './config.php';
 require './includes/functions/functions_edit.php';
 	
-// If GedFAct_assistant/MEDIA/ installed ======================
-if (PGV_USER_IS_ADMIN && file_exists('modules/GEDFact_assistant/MEDIA/media_1_ctrl.php')) {
-	include 'modules/GEDFact_assistant/MEDIA/media_0_inverselink.php';
-} else {
+//-- page parameters and checking
+$linktoid	= safe_GET_xref('linktoid');
+$mediaid	= safe_GET_xref('mediaid');
+$linkto		= safe_GET     ('linkto', array('person', 'source', 'family', 'manage'));
+$action		= safe_GET     ('action', PGV_REGEX_ALPHA, 'choose');
 
-	//-- page parameters and checking
-	$linktoid	= safe_GET_xref('linktoid');
-	$mediaid	= safe_GET_xref('mediaid');
-	$linkto		= safe_GET     ('linkto', array('person', 'source', 'family'));
-	$action		= safe_GET     ('action', PGV_REGEX_ALPHA, 'choose');
+// If GedFAct_assistant/_MEDIA/ installed ======================
+if (PGV_USER_IS_ADMIN && $linkto=='manage' && file_exists('modules/GEDFact_assistant/_MEDIA/media_1_ctrl.php')) {
+	include 'modules/GEDFact_assistant/_MEDIA/media_0_inverselink.php';
+} else {
 
 	if (empty($linktoid) || empty($linkto)) {
 		$paramok = false;

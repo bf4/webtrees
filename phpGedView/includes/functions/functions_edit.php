@@ -1625,7 +1625,7 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 		if ($fact=="NOTE" && $islink) {
 			print_findnote_link($element_id);
 			print_addnewnote_link($element_id);
-			if (file_exists('modules/GEDFact_assistant/CENS/census_1_ctrl.php')) {
+			if (file_exists('modules/GEDFact_assistant/_CENS/census_1_ctrl.php')) {
 				print_addnewnote_assisted_link($element_id);
 			}
 			echo "&nbsp;&nbsp;&nbsp;";
@@ -2372,18 +2372,18 @@ function create_edit_form($gedrec, $linenum, $level0type) {
 	$level1type = $type;
 	
 	// GEDFact_assistant ================================================
-	if ($type=="CENS" && file_exists('modules/GEDFact_assistant/CENS/census_query1.php') ) {
+	if ($type=="CENS" && file_exists('modules/GEDFact_assistant/_CENS/census_query1.php') ) {
 		echo "<tr><td class=\"descriptionbox ".$TEXT_DIRECTION." wrap width25\">";
 			print_help_link("edit_add_SHARED_NOTE_help", "qm");
 			echo "Currently Linked to: <br />";
 		echo "</td><td class=\"optionbox wrap\">\n";
-			include ('modules/GEDFact_assistant/CENS/census_query1.php');
+			include ('modules/GEDFact_assistant/_CENS/census_query1.php');
 		echo "</td></tr>\n";
 		echo "<tr><td class=\"descriptionbox ".$TEXT_DIRECTION." wrap width25\">";
 			print_help_link("edit_add_SHARED_NOTE_help", "qm");
 			echo "Add Other Links: <br />";
 		echo "</td><td class=\"optionbox wrap\">\n";
-			// include ('modules/GEDFact_assistant/CENS/census_query1.php');
+			// include ('modules/GEDFact_assistant/_CENS/census_query1.php');
 		echo "</td></tr>\n";
 	}
 	// ==================================================================

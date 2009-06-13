@@ -149,6 +149,24 @@ $pgv_lang["add_more_links"]			= "Add links";
 $pgv_lang["enter_pid_or_name"]		= "Enter individual ID or name";
 $pgv_lang["set_links"]				= "Set links";
 $pgv_lang["add_or_remove_links"]	= "Manage links";
+
+$pgv_lang["keep"]					= "Keep";
+$pgv_lang["unlink"]					= "Unlink";
+$pgv_lang["nav"]					= "Navigator";
+$pgv_lang["fam_nav"]				= "Family Navigator";
+$pgv_lang["remove"]					= "Remove";
+$pgv_lang["keep_link"]				= "Keep Link in list";
+$pgv_lang["remove_link"]			= "Remove Link from list";
+$pgv_lang["open_nav"]				= "Open Family Navigator";
+$pgv_lang["link_exists"]			= "This link already exists";
+$pgv_lang["id_not_valid"]			= "Not a valid Individual, Family or Source ID";
+$pgv_lang["add_fam_other_links"]	= "Add Family, and Search links";
+$pgv_lang["search_add_links"]		= "Search for People to add to media links.";
+$pgv_lang['enter_name']				= "Enter a name";
+$pgv_lang["click"]					= "Click ";
+$pgv_lang["choose_head"]			= " to choose Head of family."; 
+$pgv_lang["add_indi_to_link_list"]	= "Click Name to add person to Link List.";
+
 $pgv_lang["files_in_backup"]		= "Files included in this backup";
 $pgv_lang["created_remotelinks"]	= "Successfully created <i>Remotelinks</i> table.";
 $pgv_lang["created_remotelinks_fail"] 	= "Unable to create <i>Remotelinks</i> table.";
