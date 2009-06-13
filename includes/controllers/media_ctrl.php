@@ -232,15 +232,15 @@ class MediaControllerRoot extends IndividualController{
 			}
 
 			// main link displayed on page
-			if (PGV_USER_GEDCOM_ADMIN && file_exists('modules/GEDFact_assistant/MEDIA/media_1_ctrl.php')) {
+			if (PGV_USER_GEDCOM_ADMIN && file_exists('modules/GEDFact_assistant/_MEDIA/media_1_ctrl.php')) {
 				$submenu = new Menu($pgv_lang["add_or_remove_links"]);
 			} else {	
 				$submenu = new Menu($pgv_lang["set_link"]);
 			}
 			
 			// GEDFact assistant Add Media Links =======================
-			if (PGV_USER_GEDCOM_ADMIN && file_exists('modules/GEDFact_assistant/MEDIA/media_1_ctrl.php')) {
-				$submenu->addOnclick("return ilinkitem('".$this->pid."','person');");
+			if (PGV_USER_GEDCOM_ADMIN && file_exists('modules/GEDFact_assistant/_MEDIA/media_1_ctrl.php')) {
+				$submenu->addOnclick("return ilinkitem('".$this->pid."','manage');");
 				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff", "submenu$ff");
 				// Do not print ssubmunu
 			} else {

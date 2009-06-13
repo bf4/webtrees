@@ -541,7 +541,7 @@ function autocomplete_IFSRO() {
 			return autocomplete_OBJE($FILTER);
 		}
 	}
-	if ('modules/GEDFact_assistant/MEDIA/media_1_ctrl.php') {
+	if ('modules/GEDFact_assistant/_MEDIA/media_1_ctrl.php') {
 		return array_merge(
 			autocomplete_INDI($FILTER, ''),
 			autocomplete_FAM($FILTER, ''),

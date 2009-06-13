@@ -745,19 +745,16 @@ if (check_media_structure()) {
 		$menu = new Menu();
 		
 		// GEDFact assistant Add Media Links =======================
-		if (file_exists('modules/GEDFact_assistant/MEDIA/media_1_ctrl.php')) {
+		if (file_exists('modules/GEDFact_assistant/_MEDIA/media_1_ctrl.php')) {
 			$menu->addLabel($pgv_lang["add_or_remove_links"]);
+			$menu->addOnclick("return ilinkitem('$mediaid','manage')");
+			$menu->addClass("", "", "submenu");
+			$menu->addFlyout("left");
+			// Do not print submunu
+			
 		} else {
 			$menu->addLabel($pgv_lang["set_link"]);
-		}
-		$menu->addOnclick("return ilinkitem('$mediaid','person')");
-		$menu->addClass("", "", "submenu");
-		$menu->addFlyout("left");
-		
-		// GEDFact assistant Add Media Links =======================
-		if (file_exists('modules/GEDFact_assistant/MEDIA/media_1_ctrl.php')) {
-			// Do not print submunu
-		} else {
+			$menu->addOnclick("return ilinkitem('$mediaid','person')");
 			$submenu = new Menu($pgv_lang["to_person"]);
 			$submenu->addClass("submenuitem".$classSuffix, "submenuitem_hover".$classSuffix);
 			$submenu->addOnclick("return ilinkitem('$mediaid','person')");
