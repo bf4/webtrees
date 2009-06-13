@@ -30,7 +30,6 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
-//=>
 $pgv_lang["enter_comment"]			= "כאן ניתן להכניס הערות.";
 $pgv_lang["upload_a_gedcom"] 		= "העלה קובץ GEDCOM";
 $pgv_lang["start_entering"] 			= "התחל להכניס נתונים";
@@ -150,7 +149,24 @@ $pgv_lang["current_links"]		= "קישורים";
 $pgv_lang["add_more_links"]		= "הוסף קישורים";
 $pgv_lang["enter_pid_or_name"]	= "הכנס קוד זיהוי של אדם או שם";
 $pgv_lang["set_links"]			= "קשר";
-$pgv_lang["add_or_remove_links"]	= "נהל קשרים";
+$pgv_lang["add_or_remove_links"]	= "נהל קישורים";
+$pgv_lang["keep"]			= "שמור";
+$pgv_lang["unlink"]			= "מחק קישור";
+$pgv_lang["nav"]			= "נווט";
+$pgv_lang["fam_nav"]			= "נווט משפחה";
+$pgv_lang["remove"]			= "הסר";
+$pgv_lang["keep_link"]		= "שמור קישור ברשימה";
+$pgv_lang["remove_link"]		= "הסר קישור מרשימה";
+$pgv_lang["open_nav"]		= "פתח נווט משפחה";
+$pgv_lang["link_exists"]		= "הקישור כבר קיים";
+$pgv_lang["id_not_valid"]		= "קוד הזיהוי של האדם, המשפחה או המקור אינו תקין";
+$pgv_lang["add_fam_other_links"]	= "הוסף קישורי משפחה וחיפוש";
+$pgv_lang["search_add_links"]	= "חפש אנשים כדי להוסיפם לקישורי מדיה.";
+$pgv_lang["enter_name"]		= "הכנס שם";
+$pgv_lang["click"]			= "הקש ";
+$pgv_lang["choose_head"]		= " כדי לבחור ראש משפחה.";
+$pgv_lang["add_indi_to_link_list"]	= "הקש על שם כדי להוסיף אדם לרשימת קישורים.";
+
 $pgv_lang["files_in_backup"]		= "קבצים הנכללים בגיבוי זה";
 $pgv_lang["created_remotelinks"]	= "טבלת <i>קשרים מרוחקים</i> נוצרה בהצלחה.";
 $pgv_lang["created_remotelinks_fail"]	= "לא ניתן ליצור טבלת <i>קשרים מרוחקים</i>.";
@@ -204,7 +220,7 @@ $pgv_lang["change_id"]		= "שנה קוד זיהוי אישי ל:";
 $pgv_lang["choose_priv"]		= "בחר רמת פרטיות:";
 $pgv_lang["cleanup_places"]		= "נקה מקומות";
 $pgv_lang["cleanup_users"]		= "ניקוי משתמשים";
-$pgv_lang["click_here_to_continue"]	= "לחץ כאן כדי להמשיך.";
+$pgv_lang["click_here_to_continue"]	= "הקש כאן כדי להמשיך.";
 $pgv_lang["click_here_to_go_to_pedigree_tree"]	= "הקשה כאן מביאה לאילן יוחסין";
 $pgv_lang["comment"]			= "הערות מנהלן על משתמש";
 $pgv_lang["comment_exp"]		= "התראה למנהלן בתאריך";

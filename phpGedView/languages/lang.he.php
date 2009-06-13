@@ -31,6 +31,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
+$pgv_lang["gedcomid"]			= "קוד זיהוי של אדם ב-GEDCOM";
 $pgv_lang["sortby"]				= "סדר";
 $pgv_lang["exact"]				= "בדיוק";
 $pgv_lang["begins_with"]			= "מתחיל ב-";
@@ -1152,7 +1153,7 @@ $pgv_lang["user_cannot_edit"]	= "המשתמש לא יכול לערוך את הק
 $pgv_lang["ged_noshow"]		= "הדף הזה נחסם ע\"י מנהלן האתר.";
 
 //-- calendar.php messages
-$pgv_lang["bdm"]			= "לידות, פטירות חתונות";
+$pgv_lang["bdm"]			= "לידות, פטירות, נישואין";
 $pgv_lang["on_this_day"]		= "ביום הזה ...";
 $pgv_lang["in_this_month"]		= "בחודש הזה ...";
 $pgv_lang["in_this_year"]		= "בשנה הזו ...";
