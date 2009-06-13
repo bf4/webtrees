@@ -43,7 +43,8 @@ class PGV_DB {
 	private static $pdo=null;
 
 	// Dialects of SQL
-	public static $AUTO_ID_TYPE =null;
+	public static $AUTO_ID_TYPE =null; /* for primary keys */
+	public static $ID_TYPE      =null; /* for foreign keys */
 	public static $INT1_TYPE    =null;
 	public static $INT2_TYPE    =null;
 	public static $INT3_TYPE    =null;
@@ -62,6 +63,11 @@ class PGV_DB {
 	public static $COL_FILE=null;
 	public static $COL_XREF=null;
 	public static $COL_TAG =null;
+	public static $COL_JD  =null;
+	public static $COL_DAY =null;
+	public static $COL_MON =null;
+	public static $COL_YEAR=null;
+	public static $COL_CAL =null;
 
 	// Prevent instantiation via new PGV_DB
 	private final function __construct() {
@@ -115,6 +121,7 @@ class PGV_DB {
 				)
 			);
 			self::$AUTO_ID_TYPE ='INTEGER UNSIGNED AUTO_INCREMENT';
+			self::$ID_TYPE      ='INTEGER UNSIGNED';
 			self::$INT1_TYPE    ='TINYINT';
 			self::$INT2_TYPE    ='SMALLINT';
 			self::$INT3_TYPE    ='MEDIUMINT';
@@ -145,6 +152,7 @@ class PGV_DB {
 				)
 			);
 			self::$AUTO_ID_TYPE ='SERIAL';
+			self::$ID_TYPE      ='INTEGER';
 			self::$INT1_TYPE    ='SMALLINT';
 			self::$INT2_TYPE    ='SMALLINT';
 			self::$INT3_TYPE    ='INTEGER';
@@ -173,6 +181,7 @@ class PGV_DB {
 				)
 			);
 			self::$AUTO_ID_TYPE ='INTEGER IDENTITY';
+			self::$ID_TYPE      ='INTEGER';
 			self::$INT1_TYPE    ='INTEGER';
 			self::$INT2_TYPE    ='INTEGER';
 			self::$INT3_TYPE    ='INTEGER';
@@ -214,6 +223,7 @@ class PGV_DB {
 				);
 			}
 			self::$AUTO_ID_TYPE ='INTEGER AUTOINCREMENT';
+			self::$ID_TYPE      ='INTEGER';
 			self::$INT1_TYPE    ='INTEGER';
 			self::$INT2_TYPE    ='INTEGER';
 			self::$INT3_TYPE    ='INTEGER';
@@ -239,6 +249,7 @@ class PGV_DB {
 				)
 			);
 			self::$AUTO_ID_TYPE ='INTEGER AUTOINCREMENT'; // These values are guesses
+			self::$ID_TYPE      ='INTEGER';
 			self::$INT1_TYPE    ='INTEGER';
 			self::$INT2_TYPE    ='INTEGER';
 			self::$INT3_TYPE    ='INTEGER';
@@ -264,6 +275,7 @@ class PGV_DB {
 				)
 			);
 			self::$AUTO_ID_TYPE ='INTEGER AUTOINCREMENT'; // These values are guesses
+			self::$ID_TYPE      ='INTEGER';
 			self::$INT1_TYPE    ='INTEGER';
 			self::$INT2_TYPE    ='INTEGER';
 			self::$INT3_TYPE    ='INTEGER';
@@ -289,6 +301,7 @@ class PGV_DB {
 				)
 			);
 			self::$AUTO_ID_TYPE ='INTEGER AUTOINCREMENT'; // These values are guesses
+			self::$ID_TYPE      ='INTEGER';
 			self::$INT1_TYPE    ='INTEGER';
 			self::$INT2_TYPE    ='INTEGER';
 			self::$INT3_TYPE    ='INTEGER';
@@ -314,6 +327,7 @@ class PGV_DB {
 				)
 			);
 			self::$AUTO_ID_TYPE ='INTEGER AUTOINCREMENT'; // These values are guesses
+			self::$ID_TYPE      ='INTEGER';
 			self::$INT1_TYPE    ='INTEGER';
 			self::$INT2_TYPE    ='INTEGER';
 			self::$INT3_TYPE    ='INTEGER';
@@ -339,6 +353,7 @@ class PGV_DB {
 				)
 			);
 			self::$AUTO_ID_TYPE ='INTEGER AUTOINCREMENT'; // These values are guesses
+			self::$ID_TYPE      ='INTEGER';
 			self::$INT1_TYPE    ='INTEGER';
 			self::$INT2_TYPE    ='INTEGER';
 			self::$INT3_TYPE    ='INTEGER';
@@ -364,6 +379,7 @@ class PGV_DB {
 				)
 			);
 			self::$AUTO_ID_TYPE ='INTEGER AUTOINCREMENT'; // These values are guesses
+			self::$ID_TYPE      ='INTEGER';
 			self::$INT1_TYPE    ='INTEGER';
 			self::$INT2_TYPE    ='INTEGER';
 			self::$INT3_TYPE    ='INTEGER';
@@ -433,8 +449,8 @@ class PGV_DB {
 					$query2.=$char;
 				}
 			}
-			// Highlight embedded literal strings and numbers.
-			if (preg_match('/([\'"]|[^a-zA-Z_][0-9])/', $query)) {
+			// Highlight embedded literal strings.
+			if (preg_match('/[\'"]/', $query)) {
 				$query2='<span style="background-color:yellow;">'.$query2.'</span>';
 		}
 			// Highlight slow queries
@@ -730,14 +746,43 @@ class PGV_DB {
 	//////////////////////////////////////////////////////////////////////////////
 	// Create/update tables, indexes, etc.
 	//////////////////////////////////////////////////////////////////////////////
-	public static function updateSchema() {
+	public static function updateSchema($schema_dir, $schema_name, $target_version) {
+		global $TBLPREFIX;
+
+		// Allow the schema scripts to do different things for different databases		
+		$DRIVER_NAME=self::getInstance()->getAttribute(PDO::ATTR_DRIVER_NAME);
+
 		// Define some "standard" columns, so we create our tables consistently
 		self::$COL_FILE=self::$INT2_TYPE.' '.self::$UNSIGNED; // Allow 32768/65536 Gedcoms
 		self::$COL_XREF=self::$VARCHAR_TYPE.'(20)';           // Gedcom identifiers are max 20 chars
 		self::$COL_TAG =self::$VARCHAR_TYPE.'(15)';           // Gedcom tags/record types are max 15 chars
+		self::$COL_JD  =self::$INT3_TYPE.' '.self::$UNSIGNED; // Julian Day numbers only need 3 bytes
+		self::$COL_DAY =self::$INT1_TYPE.' '.self::$UNSIGNED; // Day numbers only need 1 byte
+		self::$COL_MON =self::$INT1_TYPE.' '.self::$UNSIGNED; // Month Day numbers only need 1 byte
+		self::$COL_YEAR=self::$INT2_TYPE;                     // Year Day numbers only need 2 bytes
 
-		checkTableExists();
-		setup_database();
+		if ($DRIVER_NAME=='mysql') {
+			self::$COL_CAL="ENUM ('@#DGREGORIAN@', '@#DJULIAN@', '@#DHEBREW@', '@#DFRENCH R@', '@#DHIJRI@', '@#DROMAN@')"; // Fixed list of calendar names
+		} else {
+			self::$COL_CAL=self::$VARCHAR_TYPE.'(13)'; // Calendar names have max 13 characters
+		}
+
+		try {
+			$current_version=(int)get_site_setting($schema_name);
+		} catch (PDOException $e) {
+			// During initial installation, this table won't exist.
+			// It will only be a problem if we can't subsequently create it.
+			$current_version=0;
+		}
+		while ($current_version<$target_version) {
+			$next_version=$current_version+1;
+			require_once "{$schema_dir}db_schema_{$current_version}_{$next_version}.php";
+			// The updatescript should update the version or throw an exception
+			$current_version=(int)get_site_setting($schema_name);
+			if ($current_version!=$next_version) {
+				die("Internal error while updating {$schema_name} to {$next_version}");
+			}
+		}
 	}
 }
 

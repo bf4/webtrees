@@ -2438,6 +2438,36 @@ function is_media_used_in_other_gedcom($file_name, $ged_id) {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
+// Functions to access the PGV_SITE_SETTING table
+////////////////////////////////////////////////////////////////////////////////
+function get_site_setting($site_setting_name) {
+	global $TBLPREFIX;
+	static $statement=null;
+
+	if (is_null($statement)) {
+		$statement=PGV_DB::prepare("SELECT site_setting_value FROM {$TBLPREFIX}site_setting WHERE site_setting_name=?");
+	}
+
+	return $statement->execute(array($site_setting_name))->fetchOne();
+}
+function set_site_setting($site_setting_name, $site_setting_value) {
+	global $TBLPREFIX;
+	// We can't cache/reuse prepared statements here, as we need to call this
+	// function after performing DDL statements, and these invalidate and
+	// existing prepared statement handles in some databases.
+
+	// Try to update first.  If no rows are updated, insert.
+	$statement=
+		PGV_DB::prepare("UPDATE {$TBLPREFIX}site_setting SET site_setting_value=? WHERE site_setting_name=?")
+		->execute(array($site_setting_value, $site_setting_name));
+
+	if (!$statement->rowCount()) {
+		PGV_DB::prepare("INSERT INTO {$TBLPREFIX}site_setting (site_setting_name, site_setting_value) VALUES (?, ?)")
+		->execute(array($site_setting_name, $site_setting_value));
+	}
+}
+
+////////////////////////////////////////////////////////////////////////////////
 // Functions to access the PGV_GEDCOM table
 // A future version of PGV will have a table PGV_GEDCOM, which will
 // contain the values currently stored the array $GEDCOMS[].

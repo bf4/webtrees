@@ -413,7 +413,7 @@ $errormsg = "";
 					break;
 				case 3:
 					try {
-						PGV_DB::updateSchema();
+						PGV_DB::updateSchema('includes/db_schema/', 'PGV_SCHEMA_VERSION', PGV_SCHEMA_VERSION);
 						echo '<span class="pass">', $pgv_lang['db_tables_created'], '</span><br /><br /><br />';
 						$success=true;
 					} catch (PDOException $ex) {
