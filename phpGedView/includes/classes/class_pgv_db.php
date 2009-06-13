@@ -542,6 +542,8 @@ class PGV_DB {
 
 		switch (self::$pdo->getAttribute(PDO::ATTR_DRIVER_NAME)) {
 		case 'mysql':
+			// Mysql 4.x does not support the information schema
+			return PGV_DB::prepare("SHOW TABLES")->fetchOneColumn();
 		case 'pgsql':
 		case 'mssql':
 		default:
@@ -565,6 +567,8 @@ class PGV_DB {
 
 		switch (self::$pdo->getAttribute(PDO::ATTR_DRIVER_NAME)) {
 		case 'mysql':
+			// Mysql 4.x does not support the information schema
+			return PGV_DB::prepare("DESC {$table}")->fetchOneColumn();
 		case 'pgsql':
 		case 'mssql':
 		default:
@@ -592,7 +596,6 @@ class PGV_DB {
 		global $DBNAME;
 
 		switch (self::$pdo->getAttribute(PDO::ATTR_DRIVER_NAME)) {
-		case 'mysql':
 		case 'pgsql':
 		case 'mssql':
 			// information_schema.tables is an ANSI standard.
@@ -607,6 +610,8 @@ class PGV_DB {
 				PGV_DB::prepare("SELECT 1 FROM sqlite_master WHERE type=? AND name=?")
 				->execute(array('table', $table))
 				->fetchOne();
+		case 'mysql':
+			// Mysql 4.x does not support the information schema
 		default:
 			// Catch-all for other databases
 			try {
@@ -622,7 +627,6 @@ class PGV_DB {
 		global $DBNAME;
 
 		switch (self::$pdo->getAttribute(PDO::ATTR_DRIVER_NAME)) {
-		case 'mysql':
 		case 'pgsql':
 		case 'mssql':
 			// information_schema.columns is an ANSI standard.
@@ -642,6 +646,8 @@ class PGV_DB {
 				}
 			}
 			return false;
+		case 'mysql':
+			// Mysql 4.x does not support the information schema
 		default:
 			// Catch-all for other databases
 			try {
