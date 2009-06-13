@@ -56,11 +56,10 @@ VERSION 4.2.2
 +$pgv_lang["id_not_valid"]							12 Jun 2009				A
 +$pgv_lang["add_fam_other_links"]					12 Jun 2009				A
 +$pgv_lang["search_add_links"]						12 Jun 2009				A
-+$pgv_lang['enter_name']							12 Jun 2009				A
++$pgv_lang["enter_name"]							12 Jun 2009				A
 +$pgv_lang["click"]									12 Jun 2009				A
 +$pgv_lang["choose_head"]							12 Jun 2009				A
 +$pgv_lang["add_indi_to_link_list"]					12 Jun 2009				A
-
 *$pgv_lang["current_links"]							27 May 2009				w
 *$pgv_lang["add_more_links"]						27 May 2009				w
 *$pgv_lang["add_or_remove_links"]					20 May 2009				w
