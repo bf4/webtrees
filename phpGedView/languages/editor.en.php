@@ -171,7 +171,6 @@ $pgv_lang["file_bad_extension"]		= "PHP blocked file by extension";
 $pgv_lang["file_unkown_err"]		= "Unknown file upload error code #pgv_lang[global_num1]#. Please report this as a bug.";
 $pgv_lang["folder"]		 			= "Folder on server";
 $pgv_lang["gedcom_editing_disabled"]	= "Editing this GEDCOM has been disabled by the administrator.";
-$pgv_lang["gedcomid"]				= "GEDCOM INDI record ID";
 $pgv_lang["gedrec_deleted"] 		= "GEDCOM record successfully deleted.";
 $pgv_lang["gen_thumb"]				= "Create thumbnail";
 $pgv_lang["gen_missing_thumbs"]		= "Create missing thumbnails";
