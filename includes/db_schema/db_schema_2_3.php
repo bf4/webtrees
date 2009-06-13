@@ -139,9 +139,9 @@ if (!self::table_exists("{$TBLPREFIX}places") || $sqlite && (self::column_exists
 if (!self::table_exists("{$TBLPREFIX}placelinks")) {
 	self::exec(
 		"CREATE TABLE {$TBLPREFIX}placelinks (".
-		" pl_p_id   ".self::$INT4_TYPE."               NOT NULL,".
-		" pl_gid  ".self::$COL_XREF." NOT NULL,".
-		" pl_file ".self::$COL_FILE." NOT NULL,".
+		" pl_p_id ".self::$INT4_TYPE." NOT NULL,".
+		" pl_gid  ".self::$COL_XREF."  NOT NULL,".
+		" pl_file ".self::$COL_FILE."  NOT NULL,".
 		" PRIMARY KEY (pl_p_id, pl_gid, pl_file)".
 		") ".self::$UTF8_TABLE
 	);
