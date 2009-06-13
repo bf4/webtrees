@@ -61,7 +61,7 @@ loadLangFile("lightbox:lang");
 if ((!$controller->isPrintPreview())&&(empty($SEARCH_SPIDER))&&!empty($controller->pid)&&!empty($filename)) {
 	if ($controller->userCanEdit() || $controller->canShowOtherMenu()) { ?>
 		<?php if (!$PGV_MENUS_AS_LISTS) {?>
-		<table class="sublinks_table rtl noprint" style="margin: 10px;" cellspacing="4" cellpadding="0" align="<?php print $TEXT_DIRECTION=='ltr'?'right':'left';?>">
+		<table class="sublinks_table <?php echo $TEXT_DIRECTION; ?> noprint" style="margin: 10px;" cellspacing="4" cellpadding="0" align="<?php print $TEXT_DIRECTION=='ltr'?'right':'left';?>">
 			<tr>
 				<td class="list_label <?php echo $TEXT_DIRECTION; ?>" colspan="5"><?php print $pgv_lang["media_options"]; ?></td>
 			</tr>
