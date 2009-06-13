@@ -1309,6 +1309,23 @@ function PGVRFactsSHandler($attrs) {
 		global $nonfacts;
 		$nonfacts = preg_split("/[\s,;:]/", $tag);
 		$record = new GedcomRecord($gedrec);
+		switch ($record->getType()) {
+		case 'INDI':
+			$record=new Person($gedrec);
+			break;
+		case 'FAM':
+			$record=new Family($gedrec);
+			break;
+		case 'SOUR':
+			$record=new Source($gedrec);
+			break;
+		case 'REPO':
+			$record=new Repository($gedrec);
+			break;
+		case 'NOTE':
+			$record=new Note($gedrec);
+			break;
+		}
 		$oldrecord = GedcomRecord::getInstance($record->getXref());
 		$oldrecord->diffMerge($record);
 		$facts = $oldrecord->getFacts();
