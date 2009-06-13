@@ -43,8 +43,12 @@ define('PGV_TRANSLATORS_URL', 'http://sourceforge.net/forum/forum.php?forum_id=2
 define('PGV_DEBUG',       false);
 define('PGV_DEBUG_SQL',   false);
 define('PGV_DEBUG_PRIV',  false);
+
 // Error reporting
 define('PGV_ERROR_LEVEL', 2); // 0=none, 1=minimal, 2=full
+
+// Required version of database tables/columns/indexes/etc.
+define('PGV_SCHEMA_VERSION', 9);
 
 // Environmental requirements
 define('PGV_REQUIRED_PHP_VERSION',     '5.2.0'); // 5.2.3 is recommended
@@ -359,6 +363,12 @@ try {
 	$DBPASS=str_replace(array("\\\\", "\\\"", "\\\$"), array("\\", "\"", "\$"), $DBPASS); // remove escape codes before using PW
 	PGV_DB::createInstance($DBTYPE, $DBHOST, $DBPORT, $DBNAME, $DBUSER, $DBPASS, $DB_UTF8_COLLATION);
 	unset($DBUSER, $DBPASS);
+	try {
+		PGV_DB::updateSchema('includes/db_schema/', 'PGV_SCHEMA_VERSION', PGV_SCHEMA_VERSION);
+	} catch (PDOException $ex) {
+		// The schema update scripts should never fail.  If they do, there is no clean recovery.
+		die($ex);
+	}
 } catch (PDOException $ex) {
 	// Can't connect to the DB?  We'll get redirected to install.php later.....
 }
