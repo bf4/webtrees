@@ -919,6 +919,7 @@ case 'addnoteaction':
 //-- add new Media Links
 
 case 'addmedia_links':
+	global $pid;
 	echo PGV_JS_START;
 	?>
 		function check_form(frm) {
@@ -932,10 +933,11 @@ case 'addmedia_links':
 	<?php
 	echo PGV_JS_END;
 	?>
-	<form method="post" action="edit_interface.php" onsubmit="return check_form(this);">
-		<input type="hidden" name="action" value="addnoteaction" />
-		<input type="hidden" name="noteid" value="newnote" />
-		<!-- <input type="hidden" name="pid" value="$pid" /> -->
+	<!-- <form method="post" action="edit_interface.php" onsubmit="return check_form(this);"> -->
+	<form method="post" action="edit_interface.php?pid=<?php echo $pid; ?>" onsubmit="findindi()">
+		<input type="hidden" name="action" value="addmedia_links" /> 	
+		<input type="hidden" name="noteid" value="newnote" />			
+	<!--	<input type="hidden" name="pid" value="<?php // echo $pid; ?>" />		--> 
 		<?php
 		include ('modules/GEDFact_assistant/MEDIA_ctrl.php');
 		?>
