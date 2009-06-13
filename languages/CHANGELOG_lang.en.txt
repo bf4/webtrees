@@ -43,6 +43,7 @@ VERSION 4.2.2
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change	codes and comments
 ----------------------------------------------------------------------------------------
++$pgv_lang["gedcomid"]				          13 Jun 2009         A Moved from editor.en.php
 *$pgv_lang["landscape_top"]							25 May 2009				w
 *$pgv_lang["landscape_down"]						25 May 2009				w
 +$pgv_lang["landscape_top"]							25 May 2009				A
