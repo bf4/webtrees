@@ -48,34 +48,11 @@ if (!isset($parent)) $parent=0;
 if (!isset($display)) $display="";
 
 // Create GM tables, if not already present
-if (!PGV_DB::table_exists("{$TBLPREFIX}placelocation")) {
-	try {
-		PGV_DB::exec(
-			"CREATE TABLE {$TBLPREFIX}placelocation (".
-			" pl_id        INT          NOT NULL,".
-			" pl_parent_id INT              NULL,".
-			" pl_level     INT              NULL,".
-			" pl_place     VARCHAR(255)     NULL,".
-			" pl_long      VARCHAR(30)      NULL,".
-			" pl_lati      VARCHAR(30)      NULL,".
-			" pl_zoom      INT              NULL,".
-			" pl_icon      VARCHAR(255)     NULL,".
-				" PRIMARY KEY (pl_id)".
-			") ".PGV_DB::$UTF8_TABLE
-		);
-		PGV_DB::exec("CREATE INDEX {$TBLPREFIX}pl_level     ON {$TBLPREFIX}placelocation (pl_level    )");
-		PGV_DB::exec("CREATE INDEX {$TBLPREFIX}p            ON {$TBLPREFIX}placelocation (pl_long     )");
-		PGV_DB::exec("CREATE INDEX {$TBLPREFIX}pl_lati      ON {$TBLPREFIX}placelocation (pl_lati     )");
-		PGV_DB::exec("CREATE INDEX {$TBLPREFIX}pl_name      ON {$TBLPREFIX}placelocation (pl_place    )");
-		PGV_DB::exec("CREATE INDEX {$TBLPREFIX}pl_parent_id ON {$TBLPREFIX}placelocation (pl_parent_id)");
-	} catch (PDOException $ex) {
-		echo "<table class=\"facts_table\">\n";
-		echo "<tr><td colspan=\"2\" class=\"facts_value\">".$pgv_lang["gm_db_error"];
-		echo "</td></tr></table>\n";
-		echo "<br /><br /><br />\n";
-		print_footer();
-		exit;
-	}
+try {
+	PGV_DB::updateSchema('modules/googlemap/db_schema/', 'GM_SCHEMA_VERSION', 1);
+} catch (PDOException $ex) {
+	// The schema update scripts should never fail.  If they do, there is no clean recovery.
+	die($ex);
 }
 
 // Take a place id and find its place in the hierarchy
