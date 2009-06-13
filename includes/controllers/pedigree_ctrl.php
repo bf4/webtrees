@@ -144,7 +144,7 @@ class PedigreeControllerRoot extends BaseController {
 		}
 		//-- adjustments for preview
 		if ($this->isPrintPreview() && $this->talloffset<2) {
-			$baseyoffset -= 250;
+			$baseyoffset -= 230;
 		}
 		// -- this next section will create and position the DIV layers for the pedigree tree
 		$this->curgen = 1;			// -- variable to track which generation the algorithm is currently working on
