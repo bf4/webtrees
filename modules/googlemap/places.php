@@ -48,6 +48,7 @@ if (!isset($parent)) $parent=0;
 if (!isset($display)) $display="";
 
 // Create GM tables, if not already present
+// TODO: is there a better place to put this code?
 try {
 	PGV_DB::updateSchema('modules/googlemap/db_schema/', 'GM_SCHEMA_VERSION', 1);
 } catch (PDOException $ex) {
