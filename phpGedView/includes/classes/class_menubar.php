@@ -424,7 +424,7 @@ class MenuBar
 		global $ALLOW_CHANGE_GEDCOM, $DEFAULT_GEDCOM;
 		if ($TEXT_DIRECTION=="rtl") $ff="_rtl"; else $ff="";
 
-		if (true || !empty($SEARCH_SPIDER)) { // Only want the indi list for search engines.
+		if (!empty($SEARCH_SPIDER)) { // Only want the indi list for search engines.
 			//-- main lists menu item
 			$link = "indilist.php?ged={$GEDCOM}";
 			if ($surname) {
