@@ -31,7 +31,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
-
+$pgv_lang["enter_comment"]		= "Tukaj lahko vstavite vaše komentarje.";
 $pgv_lang["upload_a_gedcom"] 		= "Naloži datoteko GEDCOM";
 $pgv_lang["start_entering"] 		= "Začni vnašati podatke";
 $pgv_lang["add_gedcom_from_path"] 	= "Dodaj GEDCOM z imenika";
@@ -143,6 +143,12 @@ $pgv_lang["PRIV_NONE"]				= "Pokaži samo uporabnikom z možnostjo upravljanja."
 $pgv_lang["PRIV_HIDE"]				= "Skrij celo pred uporabniki z možnostjo upravljanja.";
 $pgv_lang["manage_gedcoms"] 		= "Upravljaj GEDCOM-e in nastavi zasebnost";
 $pgv_lang["keep_media"]				= "Ohrani povezave s fotografijami.";
+$pgv_lang["media_now_linked to"]	= " Fotografije je sedaj povezana na - ";
+$pgv_lang["current_links"]			= "Povezave";
+$pgv_lang["add_more_links"]			= "Didaj povezave";
+$pgv_lang["enter_pid_or_name"]		= "Vstavi ID osebe ali ime";
+$pgv_lang["set_links"]				= "Nastavi povezave";
+$pgv_lang["add_or_remove_links"]	= "Upravljaj povezave";
 $pgv_lang["files_in_backup"]		= "Datoteke, vključene v ta backup.";
 $pgv_lang["created_remotelinks"]	= "Tabela <i>Remotelinks</i> uspešno ustvarjena.";
 $pgv_lang["created_remotelinks_fail"] 	= "Tabele <i>Remotelinks</i> ni mogoče ustvariti.";
