@@ -121,6 +121,24 @@ $pgv_lang["add_more_links"]			= "Dodaj powiązania";
 $pgv_lang["enter_pid_or_name"]		= "Wprowadź identyfikator lub nazwisko i imię osoby";
 $pgv_lang["set_links"]				= "Ustaw powiązania";
 $pgv_lang["add_or_remove_links"]	= "Zarządzaj powiązaniami";
+
+$pgv_lang["keep"]					= "Zachowaj";
+$pgv_lang["unlink"]					= "Usuń";
+$pgv_lang["nav"]					= "Nawigator";
+$pgv_lang["fam_nav"]				= "Nawigator rodziny";
+$pgv_lang["remove"]					= "Usuń";
+$pgv_lang["keep_link"]				= "Zachowaj powiązanie na liście";
+$pgv_lang["remove_link"]			= "Usuń powiązanie z listy";
+$pgv_lang["open_nav"]				= "Otwórz nawigator rodziny";
+$pgv_lang["link_exists"]			= "Te powiązanie już istnieje";
+$pgv_lang["id_not_valid"]			= "Nieprawidłowy identyfikator Osoby, Rodziny lub Źródła";
+$pgv_lang["add_fam_other_links"]	= "Dodaj rodzinę i wyszukane osoby";
+$pgv_lang["search_add_links"]		= "Szukaj osób, z którymi powiązać aktualne multimedia.";
+$pgv_lang["enter_name"]				= "Wprowadź imię lub nazwisko ";
+$pgv_lang["click"]					= "Kliknij ";
+$pgv_lang["choose_head"]			= " aby wybrać Głowę rodziny."; 
+$pgv_lang["add_indi_to_link_list"]	= "Kliknij imię i nazwisko osoby aby dodać ją do listy powiązań.";
+
 $pgv_lang["files_in_backup"]		= "Pliki objęte tą kopią zapasową";
 $pgv_lang["created_remotelinks"]	= "Tworzenie tabeli <i>Zewnętrzne odnośniki</i> zostało zakończone.";
 $pgv_lang["created_remotelinks_fail"]	= "Tworzenie tabeli <i>Zewnętrzne odnośniki</i> nie powiodło się.";

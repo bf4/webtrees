@@ -30,6 +30,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
+$pgv_lang["gedcomid"]			= "ID wpisu osoby w pliku GEDCOM";
 $pgv_lang["sortby"]				= "Sortuj według";
 $pgv_lang["exact"]				= "Dokładna data";
 $pgv_lang["begins_with"]		= "Zaczyna się od";
