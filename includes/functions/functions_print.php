@@ -1420,16 +1420,7 @@ function print_text($help, $level=0, $noprint=0){
 		else if ($noprint==0 && $level==0) $sentence = str_replace($match[$i][0], $match[$i][1].": ".$pgv_lang["var_not_exist"], $sentence);
 	}
 	// ------ Replace paired ~  by tag_start and tag_end (those vars contain CSS classes)
-	while (stristr($sentence, "~") == TRUE){
-		$pos1 = strpos($sentence, "~");
-		$mod_sentence = substr_replace($sentence, " ", $pos1, 1);
-		if (stristr($mod_sentence, "~")){  // If there's a second one:
-			$pos2 = strpos($mod_sentence, "~");
-			$replace = substr($sentence, ($pos1+1), ($pos2-$pos1-1));
-			$replace_text = "<span class=\"helpstart\">".UTF8_strtoupper($replace)."</span>";
-			$sentence = str_replace("~".$replace."~", $replace_text, $sentence);
-		} else break;
-	}
+	$sentence=preg_replace('/~([^<>]{1,})~/e', "'<span class=\"helpstart\">'.UTF8_strtoupper('\\1').'</span>'", $sentence);
 	if ($noprint>0) return $sentence;
 	if ($level>0) return $sentence;
 	echo $sentence;
