@@ -88,8 +88,7 @@ class ra_ViewInferences extends ra_form {
      * The percentage of matches for this fact
      */
 	function contents() {
-		global $TBLPREFIX, $GEDCOMS, $GEDCOM;
-		global $LANGUAGE, $factarray, $pgv_lang;
+		global $TBLPREFIX, $LANGUAGE, $factarray, $pgv_lang;
 
 		$out = "<table class=\"width80\" align=\"center\"><tr><td><p>".$pgv_lang["ViewProbExplanation"]."</p></td></tr></table>";
 		if(isset($_REQUEST['pid']))
