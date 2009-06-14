@@ -421,7 +421,7 @@ class MenuBar
 	static function &getListsMenu($surname="") {
 		global $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $pgv_lang;
 		global $SHOW_SOURCES, $MULTI_MEDIA, $SEARCH_SPIDER;
-		global $ALLOW_CHANGE_GEDCOM, $DEFAULT_GEDCOM;
+		global $ALLOW_CHANGE_GEDCOM;
 		if ($TEXT_DIRECTION=="rtl") $ff="_rtl"; else $ff="";
 
 		if (!empty($SEARCH_SPIDER)) { // Only want the indi list for search engines.
