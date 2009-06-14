@@ -10,6 +10,7 @@
 
 
 Version 4.2.2
+ - Fixed: [ 2578740 ] Indilist Mother's name wrong (fisharebest)
  - Fixed: [ 2801382 ] Fatal error: Uncaught exception 'PDOException'  (windmillway)
  - Added: [ 2741685 ] SQL Version Update (fisharebest)
  - Fixed: [ 1479083 ] 4b07 - malformed links generated (fisharebest)
