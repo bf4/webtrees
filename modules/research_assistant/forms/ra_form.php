@@ -324,7 +324,7 @@ class ra_form {
      * process the data from the source citation form
      */
     function processSourceCitation() {
-		global $GEDCOMS, $GEDCOM, $TBLPREFIX;
+		global $TBLPREFIX;
 		if (empty($_REQUEST['sourceid'])) {
 			return "You must select a source.";
 		}
@@ -763,7 +763,7 @@ END_OUT;
      * process the added/edited facts
      */
     function processFactsForm() {
-		global $pgv_lang, $TBLPREFIX, $factarray, $GEDCOMS, $GEDCOM;
+		global $pgv_lang, $TBLPREFIX, $factarray;
 		//-- generate the text for the citation
 		$citation = $this->getSourceCitationData();
 		$citationTxt = "";
