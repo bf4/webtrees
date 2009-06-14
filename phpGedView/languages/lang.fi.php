@@ -29,6 +29,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
+$pgv_lang["gedcomid"]		= "GEDCOM INDI-tietueen ID";
 $pgv_lang["exact"]			= "Tarkka";
 $pgv_lang["more_fields"]		= "Lisää uusia kenttiä";
 $pgv_lang["install_step_8"] 		= "Aloita";
@@ -132,6 +133,8 @@ $pgv_lang["stat_users"]		= "Käyttäjiä yhteensä";
 $pgv_lang["no_family_facts"]		= "Ei tietoja tästä perheestä";
 $pgv_lang["stat_males"]		= "Miehiä";
 $pgv_lang["stat_females"]		= "Naisia";
+$pgv_lang["stat_link"]			= "Näytä tilastotiedot graaffeina";
+$pgv_lang["print_stat_link"]		= "Näytä linkki tilastotietokaavioihin?";
 
 $pgv_lang["sunday_1st"]		= "su";
 $pgv_lang["monday_1st"]		= "ma";
@@ -1779,4 +1782,14 @@ $pgv_lang["delete_shared_note"]		= "Poista tämä jaettu lisätieto";
 $pgv_lang["confirm_delete_shared_note"]		= "Haluatko varmasti poistaa tämän jaetun lisätiedon?";
 $pgv_lang["shared_note_contains"]	= "Jaettu lisätieto sisältää:";
 $pgv_lang["cemetery_report"]		= "Hautausmaaraportti";
+$pgv_lang["landscape_top"]			= "Vanhin ylhäällä";
+$pgv_lang["landscape_down"]			= "Vanhin alhaalla";
+$pgv_lang["media_private"] 			= "Tiedot tästä mediasta ovat yksityisiä. Tietoja ei sisällytetä.";
+$pgv_lang["by_alpha"]				= "Aakkosjärjestyksessä";
+$pgv_lang["by_anniv"]				= "Vuosipäiväjärjestyksessä";
+$pgv_lang["nanny"] = "Lastenhoitaja";
+$pgv_lang["foster_mother"] = "Ottoäiti";
+$pgv_lang["foster_father"] = "Ottoisä";
+$pgv_lang["foster_child"] = "Ottolapsi";
+$pgv_lang["guardian"]	= "Edunvalvoja";
 ?>
