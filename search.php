@@ -513,8 +513,9 @@ if ($controller->action == "multisite") {
 }
 // If the search is a general or soundex search then possibly display checkboxes for the gedcoms
 if ($controller->action == "general" || $controller->action == "soundex") {
+	$all_gedcoms=get_all_gedcoms();
 	// If more than one GEDCOM, switching is allowed AND DB mode is set, let the user select
-	if ((count($GEDCOMS) > 1) && ($ALLOW_CHANGE_GEDCOM)) {
+	if ((count($all_gedcoms) > 1) && ($ALLOW_CHANGE_GEDCOM)) {
 ?>
 	<tr>
 		<td class="list_label" style="padding: 5px;">
@@ -524,13 +525,13 @@ if ($controller->action == "general" || $controller->action == "soundex") {
 			<?php
 
 		$i = 0;
-		foreach ($GEDCOMS as $key => $gedarray) {
-			$str = preg_replace(array ("/\./", "/-/", "/ /"), array ("_", "_", "_"), $key);
+		foreach ($all_gedcoms as $ged_id=>$gedcom) {
+			$str = preg_replace(array ("/\./", "/-/", "/ /"), array ("_", "_", "_"), $gedcom);
 			$controller->inputFieldNames[] = "$str";
 			print "<input type=\"checkbox\" ";
 			if (isset ($_REQUEST["$str"]))
 				print "checked=\"checked\" ";
-			print "value=\"yes\" name=\"".$str."\""." />".PrintReady($gedarray["title"], true)."<br />";
+			print "value=\"yes\" name=\"".$str."\""." />".PrintReady(get_gedcom_setting($ged_id, 'title'), true)."<br />";
 			$i ++;
 		}
 ?>
@@ -636,7 +637,6 @@ if (($controller->action != "multisite") && !$somethingPrinted ) {
 	</script>
 <?php
 }
-//-- somewhere the session gedcom gets changed, so we will change it back
-$_SESSION['GEDCOM'] = $GEDCOM;
+
 print_footer();
 ?>
