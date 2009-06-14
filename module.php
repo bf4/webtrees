@@ -173,7 +173,7 @@ switch($modinfo['Module']['type'])
 				if(!isset($results['title']))
 				{
 					if(isset($modinfo['Config']['title'])){$results['title'] = $modinfo['Config']['title'];}
-					else{$results['title'] = $GEDCOMS[$GEDCOM]['title'];}
+					else{$results['title'] = get_gedcom_setting(PGV_GED_ID, 'title');}
 				}
 				if(!isset($results['head'])){$results['head'] = '';}
 				print_header($results['title'], $results['head']);
@@ -215,7 +215,7 @@ switch($modinfo['Module']['type'])
 	}
 	default:
 	{
-		print_header($GEDCOMS[$GEDCOM]['title']);
+		print_header(get_gedcom_setting(PGV_GED_ID, 'title'));
 		print $pgv_lang['module_error_unknown_type'];
 		print_footer();
 		break;
