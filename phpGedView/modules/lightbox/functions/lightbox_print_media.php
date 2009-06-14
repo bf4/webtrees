@@ -275,28 +275,19 @@ function lightbox_print_media($pid, $level=1, $related=false, $kind=1, $noedit=f
 		//-- but not yet accepted into the database.  
 		//-- We will print them too, and put any "Extra Items not in DB" into a new Row.
 		
-		// Firstly, get count of Items in Database for Individual only (excludes family ID's)
+		// Firstly, get count of Items in Database for this Individual
 		$indiobjs = "SELECT DISTINCT ";
 		$indiobjs .= "m_media, m_ext, m_file, m_titl, m_gedfile, m_gedrec, mm_gid, mm_gedrec FROM ".$TBLPREFIX."media, ".$TBLPREFIX."media_mapping where ";
-		$indiobjs .= "mm_gid IN (";
-		$vars2=array();
-		foreach ($ids as $id2) {
-			// if (strstr($id2, "I")) {
-			if (strstr($id2, $GEDCOM_ID_PREFIX)) {
-			
-				$indiobjs .= "?, ";
-				$vars2[]=$id2;
-			}
-		}
-		$indiobjs = rtrim($indiobjs, ', ');
-		$indiobjs .= ") AND mm_gedfile=? AND mm_media=m_media AND mm_gedfile=m_gedfile ";
+		$indiobjs .= "mm_gid='".$pid."'";
+		$indiobjs .= "AND mm_gedfile=? AND mm_media=m_media AND mm_gedfile=m_gedfile ";
 		$vars2[]=PGV_GED_ID;
 		$rows=PGV_DB::prepare($indiobjs)->execute($vars2)->fetchAll(PDO::FETCH_ASSOC);
 		$foundObjs = array();
 		$numindiobjs = count($rows);
 		
-		// If any items are left in $current_objes list put them into $kind 5 ("Not in DB") row
+		// Compare Items count in Database versus Item count in GEDCOM
 		if ($kind==5 && $ct!=$numindiobjs) {
+			// If any items are left in $current_objes list for this individual, put them into $kind 5 ("Not in DB") row
 			echo "\n\n";
 			echo "<table cellpadding=\"0\" border=\"0\" width=\"100%\" class=\"facts_table\"><tr>", "\n";
 			echo '<td width="100" align="center" class="descriptionbox" style="vertical-align:middle;">';
