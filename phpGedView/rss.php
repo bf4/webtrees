@@ -95,7 +95,7 @@ if(!loadCachedBlock($cacheControl, $rssStyle)){
 
 	$feed = new UniversalFeedCreator();
 	$feed->generator = PGV_PHPGEDVIEW_URL;
-	$feed->title = $GEDCOMS[$GEDCOM]["title"];
+	$feed->title = get_gedcom_setting(PGV_GED_ID, 'title');
 	$feed->language = $lang_short_cut[$LANGUAGE]; //$lang_langcode[$LANGUAGE];
 	$feed->descriptionHtmlSyndicated = true;
 	//$feed->descriptionTruncSize = 500; // does not make sense to truncate HTML since it will result in unpredictable output
@@ -104,7 +104,7 @@ if(!loadCachedBlock($cacheControl, $rssStyle)){
 	$syndURL = preg_replace("/&/", "&amp;", $syndURL);
 	$feed->syndicationURL = $syndURL;
 
-	$feedDesc = str_replace("#GEDCOM_TITLE#", $GEDCOMS[$GEDCOM]["title"], $pgv_lang["rss_descr"]);
+	$feedDesc = str_replace("#GEDCOM_TITLE#", $feed->title, $pgv_lang["rss_descr"]);
 	$feed->description = $feedDesc;
 	$feed->copyright = $author . " (c) " . date("Y");
 	$feed->category="genealogy";
@@ -142,7 +142,7 @@ if(!loadCachedBlock($cacheControl, $rssStyle)){
 		}*/
 
 		// determine if to show parts of feed based on their exsistance in the blocks on index.php
-		$blocks=  getBlocks($GEDCOM);
+		$blocks=  getBlocks(PGV_GEDCOM);
 		$main = $blocks["main"];
 
 		if(empty($module)) {
