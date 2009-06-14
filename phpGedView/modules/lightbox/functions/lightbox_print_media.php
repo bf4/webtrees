@@ -54,6 +54,8 @@ function lightbox_print_media($pid, $level=1, $related=false, $kind=1, $noedit=f
 	global $is_media, $cntm1, $cntm2, $cntm3, $cntm4, $t, $mgedrec;
 	global $res, $typ2b, $edit, $tabno, $n, $item, $items, $p, $note, $rowm, $note_text, $reorder;
 	global $action, $order, $order2, $rownum, $rownum1, $rownum2, $rownum3, $rownum4, $media_data, $sort_i;
+	
+	global $GEDCOM_ID_PREFIX;
 
 	if (!showFact("OBJE", $pid)) return false;
 	if (!isset($pgv_changes[$pid."_".$GEDCOM])) $gedrec = find_gedcom_record($pid);
@@ -279,7 +281,9 @@ function lightbox_print_media($pid, $level=1, $related=false, $kind=1, $noedit=f
 		$indiobjs .= "mm_gid IN (";
 		$vars2=array();
 		foreach ($ids as $id2) {
-			if (strstr($id2, "I")) {
+			// if (strstr($id2, "I")) {
+			if (strstr($id2, $GEDCOM_ID_PREFIX)) {
+			
 				$indiobjs .= "?, ";
 				$vars2[]=$id2;
 			}
