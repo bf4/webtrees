@@ -1970,6 +1970,10 @@ function delete_gedcom($ged) {
 
 	unset($GEDCOMS[$ged]);
 	store_gedcoms();
+
+	if (get_site_setting('DEFAULT_GEDCOM')==$ged) {
+		set_site_setting('DEFAULT_GEDCOM', '');
+	}
 }
 
 /**
@@ -2459,14 +2463,19 @@ function set_site_setting($site_setting_name, $site_setting_value) {
 	// function after performing DDL statements, and these invalidate and
 	// existing prepared statement handles in some databases.
 
-	// Try to update first.  If no rows are updated, insert.
-	$statement=
-		PGV_DB::prepare("UPDATE {$TBLPREFIX}site_setting SET site_setting_value=? WHERE site_setting_name=?")
-		->execute(array($site_setting_value, $site_setting_name));
+	$old_site_setting_value=
+		PGV_DB::prepare("SELECT site_setting_value FROM {$TBLPREFIX}site_setting WHERE site_setting_name=?")
+		->execute(array($site_setting_name))
+		->fetchOne();
 
-	if (!$statement->rowCount()) {
+	if (is_null($old_site_setting_value)) {
+		// Value doesn't exist - insert
 		PGV_DB::prepare("INSERT INTO {$TBLPREFIX}site_setting (site_setting_name, site_setting_value) VALUES (?, ?)")
 		->execute(array($site_setting_name, $site_setting_value));
+	} elseif ($old_site_setting_value!=$site_setting_value) {
+		// Value exists, and is different
+		PGV_DB::prepare("UPDATE {$TBLPREFIX}site_setting SET site_setting_value=? WHERE site_setting_name=?")
+		->execute(array($site_setting_value, $site_setting_name));	
 	}
 }
 

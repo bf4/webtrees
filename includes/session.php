@@ -48,7 +48,7 @@ define('PGV_DEBUG_PRIV',  false);
 define('PGV_ERROR_LEVEL', 2); // 0=none, 1=minimal, 2=full
 
 // Required version of database tables/columns/indexes/etc.
-define('PGV_SCHEMA_VERSION', 9);
+define('PGV_SCHEMA_VERSION', 10);
 
 // Environmental requirements
 define('PGV_REQUIRED_PHP_VERSION',     '5.2.0'); // 5.2.3 is recommended
@@ -147,7 +147,6 @@ $CONFIG_VARS = array(
 	'USE_REGISTRATION_MODULE',
 	'ALLOW_USER_THEMES',
 	'ALLOW_REMEMBER_ME',
-	'DEFAULT_GEDCOM',
 	'ALLOW_CHANGE_GEDCOM',
 	'LOGFILE_CREATE',
 	'PGV_SESSION_SAVE_PATH',
@@ -375,12 +374,15 @@ try {
 
 $logout=safe_GET_bool('logout');
 //-- try to set the active GEDCOM
-if (!isset($DEFAULT_GEDCOM)) $DEFAULT_GEDCOM = "";
 if (isset($_SESSION["GEDCOM"])) $GEDCOM = $_SESSION["GEDCOM"];
 if (isset($_REQUEST["GEDCOM"])) $GEDCOM = trim($_REQUEST["GEDCOM"]);
 if (isset($_REQUEST["ged"])) $GEDCOM = trim($_REQUEST["ged"]);
-if (!empty($GEDCOM) && is_int($GEDCOM)) $GEDCOM = get_gedcom_from_id($GEDCOM);
-if ($logout || empty($GEDCOM) || empty($GEDCOMS[$GEDCOM])) $GEDCOM=$DEFAULT_GEDCOM;
+if (!empty($GEDCOM) && is_int($GEDCOM)) {
+	$GEDCOM=get_gedcom_from_id($GEDCOM);
+}
+if ($logout || empty($GEDCOM) || empty($GEDCOMS[$GEDCOM])) {
+	$GEDCOM=get_site_setting('DEFAULT_GEDCOM');
+}
 if ((empty($GEDCOM))&&(count($GEDCOMS)>0)) {
 	foreach($GEDCOMS as $ged_file=>$ged_array) {
 		$GEDCOM = $ged_file;
