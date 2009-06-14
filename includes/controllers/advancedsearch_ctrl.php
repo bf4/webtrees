@@ -451,20 +451,21 @@ class AdvancedSearchController extends SearchController {
 	}
 
 	function PrintResults() {
-		global $pgv_lang, $GEDCOMS;
+		global $pgv_lang;
 
-		include_once ("includes/functions/functions_print_lists.php");
+		require_once 'includes/functions/functions_print_lists.php';
 		$ret = true;
 		if (count($this->myindilist)>0) {
-			print "<br />";
-			print "\n\t<div class=\"center\">\n";
-			uasort($this->myindilist, array("GedcomRecord","Compare"));
-			print_indi_table($this->myindilist, $pgv_lang["individuals"]." @ ".PrintReady($GEDCOMS[PGV_GEDCOM]["title"], true));
+			echo '<br /><div class="center">';
+			uasort($this->myindilist, array('GedcomRecord', 'Compare'));
+			print_indi_table($this->myindilist, $pgv_lang["individuals"]." @ ".PrintReady(get_gedcom_setting(PGV_GEDCOM, 'title'), true));
 			print "</div>";
 		}
 		else {
 			$ret = false;
-			if ($this->isPostBack) print "<br /><div class=\"warning\" style=\" text-align: center;\"><i>".$pgv_lang["no_results"]."</i><br /></div>\n\t\t";
+			if ($this->isPostBack) {
+				echo '<br /><div class="warning" style=" text-align: center;"><i>', $pgv_lang['no_results'], '</i><br /></div>';
+			}
 		}
 		return $ret;
 	}
