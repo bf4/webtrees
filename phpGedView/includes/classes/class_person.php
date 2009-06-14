@@ -1546,9 +1546,23 @@ class Person extends GedcomRecord {
 		if ($display) $txt .= " style=\"display:$display\"";
 		$txt .= ">";
 		$husb = $fam->getHusband();
-		if ($husb) $txt .= $pgv_lang["father"].": ".PrintReady($husb->getListName())."<br />";
+		if ($husb) {
+			// Temporarily reset the "prefered" display name, as we always
+			// want the default name, not the one selected for display on the indilist.
+			$primary=$husb->getPrimaryName();
+			$husb->setPrimaryName(null);
+			$txt .= $pgv_lang["father"].": ".PrintReady($husb->getListName())."<br />";
+			$husb->setPrimaryName($primary);
+		}
 		$wife = $fam->getWife();
-		if ($wife) $txt .= $pgv_lang["mother"].": ".PrintReady($wife->getListName());
+		if ($wife) {
+			// Temporarily reset the "prefered" display name, as we always
+			// want the default name, not the one selected for display on the indilist.
+			$primary=$wife->getPrimaryName();
+			$wife->setPrimaryName(null);
+			$txt .= $pgv_lang["mother"].": ".PrintReady($wife->getListName());
+			$wife->setPrimaryName($primary);
+		}
 		$txt .= "</div>";
 		return $txt;
 	}
