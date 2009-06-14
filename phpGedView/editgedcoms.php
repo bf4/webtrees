@@ -71,8 +71,6 @@ print_header($pgv_lang["gedcom_adm_head"]);
 print "<center>\n";
 if ($action=="delete") {
 	delete_gedcom($ged);
-	unset($GEDCOMS[$ged]);
-	store_gedcoms();
 	print "<br />".str_replace("#GED#", $ged, $pgv_lang["gedcom_deleted"])."<br />\n";
 }
 

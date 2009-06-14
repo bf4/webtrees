@@ -1967,6 +1967,9 @@ function delete_gedcom($ged) {
 		}
 		write_changes();
 	}
+
+	unset($GEDCOMS[$ged]);
+	store_gedcoms();
 }
 
 /**
