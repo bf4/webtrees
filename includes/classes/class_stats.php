@@ -1361,7 +1361,7 @@ class stats {
 				." birth.d_fact IN ('BIRT', 'CHR', 'BAPM', '_BRTM') AND"
 				." death.d_fact IN ('DEAT', 'BURI', 'CREM') AND"
 				.' birth.d_julianday1!=0 AND'
-				.' death.d_julianday2>birth.d_julianday1 AND'
+				.' death.d_julianday1>birth.d_julianday2 AND'
 				.$sex_search
 			.' ORDER BY'
 				.' age DESC'
@@ -1425,7 +1425,7 @@ class stats {
 				." birth.d_fact IN ('BIRT', 'CHR', 'BAPM', '_BRTM') AND"
 				." death.d_fact IN ('DEAT', 'BURI', 'CREM') AND"
 				.' birth.d_julianday1!=0 AND'
-				.' death.d_julianday2>birth.d_julianday1'
+				.' death.d_julianday1>birth.d_julianday2'
 				.$sex_search
 			.' GROUP BY'
 				.' d_gid'
@@ -1485,7 +1485,7 @@ class stats {
 				." birth.d_fact IN ('BIRT', 'CHR', 'BAPM', '_BRTM') AND"
 				." death.d_fact IN ('DEAT', 'BURI', 'CREM') AND"
 				.' birth.d_julianday1!=0 AND'
-				.' death.d_julianday2>birth.d_julianday1'
+				.' death.d_julianday1>birth.d_julianday2'
 				.$sex_search
 		, 1);
 		if (!isset($rows[0])) {return '';}
@@ -1530,7 +1530,7 @@ class stats {
 				." birth.d_fact='BIRT' AND"
 				." death.d_fact='DEAT' AND"
 				.' birth.d_julianday1!=0 AND'
-				.' death.d_julianday2>birth.d_julianday1'
+				.' death.d_julianday1>birth.d_julianday2'
 				.$years
 				.$sex_search
 			.' ORDER BY age DESC');
