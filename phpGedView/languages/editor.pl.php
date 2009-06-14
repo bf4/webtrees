@@ -159,7 +159,6 @@ $pgv_lang["file_bad_extension"]			= "PHP zablokowało plik przez rozszerzenie";
 $pgv_lang["file_unkown_err"]			= "Nieznany błąd podczas wgrywania pliku #pgv_lang[global_num1]#. Zgłoś raport o tym błędzie.";
 $pgv_lang["folder"]						= "Katalog na serwerze";
 $pgv_lang["gedcom_editing_disabled"]	= "Edycja tego pliku GEDCOM została zablokowana przez administratora";
-$pgv_lang["gedcomid"]					= "ID wpisu osoby w pliku GEDCOM";
 $pgv_lang["gedrec_deleted"]				= "Wpis w pliku GEDCOM został usunięty.";
 $pgv_lang["gen_missing_thumbs"]			= "Utwórz brakujące miniaturki";
 $pgv_lang["gen_missing_thumbs_lbl"]		= "Brakujące miniaturki";
