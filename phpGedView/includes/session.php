@@ -381,7 +381,11 @@ if (!empty($GEDCOM) && is_int($GEDCOM)) {
 	$GEDCOM=get_gedcom_from_id($GEDCOM);
 }
 if ($logout || empty($GEDCOM) || empty($GEDCOMS[$GEDCOM])) {
-	$GEDCOM=get_site_setting('DEFAULT_GEDCOM');
+	try {
+		$GEDCOM=get_site_setting('DEFAULT_GEDCOM');
+	} catch (PDOException $ex) {
+		$GEDCOM='';
+	}
 }
 if ((empty($GEDCOM))&&(count($GEDCOMS)>0)) {
 	foreach($GEDCOMS as $ged_file=>$ged_array) {
