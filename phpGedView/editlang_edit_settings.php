@@ -56,9 +56,9 @@ if (!PGV_USER_IS_ADMIN) {
 $configuredlanguages = array();
 
 // Read GEDCOMS configuration and collect language data
-foreach ($GEDCOMS as $key => $value) {
-	require($value["config"]);
-	$configuredlanguages["gedcom"][$LANGUAGE][$key] = true;
+foreach (get_all_gedcoms() as $ged_id=>$gedcom) {
+	require get_gedcom_setting($ged_id, 'config');
+	$configuredlanguages["gedcom"][$LANGUAGE][$gedcom] = true;
 }
 // Read user configuration and collect language data
 foreach(get_all_users() as $user_id=>$user_name) {
