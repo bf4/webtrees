@@ -127,9 +127,9 @@ function sendErrorAndExit($type, $line1, $line2 = false) {
 // this returns the complete serverpath to be used by the saved watermarked image
 // note that each gedcom gets a unique path to store images, this allows each gedcom to have their own watermarking config
 function getWatermarkPath ($path) {
-	global $GEDCOMS, $GEDCOM, $MEDIA_DIRECTORY;
+	global $MEDIA_DIRECTORY;
 	$serverroot = get_media_firewall_path($MEDIA_DIRECTORY);
-	$path = str_replace($serverroot, $serverroot . 'watermark/'.$GEDCOMS[$GEDCOM]['gedcom'].'/', $path);
+	$path = str_replace($serverroot, $serverroot . 'watermark/'.PGV_GEDCOM.'/', $path);
 	return $path;
 }
 
@@ -139,12 +139,10 @@ function getWatermarkPath ($path) {
 // this function can manipulate the image however it wants
 // before returning it back to the media firewall
 function applyWatermark($im) {
-	global $GEDCOMS, $GEDCOM;
-
 	// in the future these options will be set in the gedcom configuration area
 
 	// text to watermark with
-	$word1_text   = $GEDCOMS[$GEDCOM]["title"];
+	$word1_text   = get_gedcom_setting(PGV_GED_ID, 'title');
 	// maximum font size for "word1" ; will be automaticaly reduced to fit in the image
 	$word1_maxsize = 100;
 	// rgb color codes for text
@@ -424,7 +422,7 @@ if ($debug_mediafirewall) {
 	header('ETag: "'.$etag.'"');
 
 	echo  '<table border="1">';
-	echo  '<tr><td>GEDCOM</td><td>'.$GEDCOM.'</td><td>&nbsp;</td></tr>';
+	echo  '<tr><td>GEDCOM</td><td>'.PGV_GEDCOM.'</td><td>&nbsp;</td></tr>';
 	echo  '<tr><td>MEDIA_DIRECTORY_LEVELS</td><td>'.$MEDIA_DIRECTORY_LEVELS.'</td><td>&nbsp;</td></tr>';
 	echo  '<tr><td>$controller->pid</td><td>'.$controller->pid.'</td><td>&nbsp;</td></tr>';
 	echo  '<tr><td>Requested URL</td><td>'.urldecode($_SERVER['REQUEST_URI']).'</td><td>&nbsp;</td></tr>';
@@ -462,7 +460,7 @@ if ($debug_mediafirewall) {
 	echo '<pre>';
 	print_r (@getimagesize($serverFilename));
 	print_r ($controller->mediaobject);
-	print_r ($GEDCOMS[$GEDCOM]);
+	print_r (PGV_GEDCOM);
 	echo '</pre>';
 
 	phpinfo();
