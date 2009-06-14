@@ -57,7 +57,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 		} ?>
 
 	<link rel="stylesheet" href="<?php echo $print_stylesheet; ?>" type="text/css" media="print" />
-	<!--link rel="search" type="application/opensearchdescription+xml" title="<?php echo $GEDCOMS[$GEDCOM]["title"]; ?>" href="<?php echo $SERVER_URL . "opensearch.php"; ?>" /-->
+	<!--link rel="search" type="application/opensearchdescription+xml" title="<?php echo get_gedcom_setting(PGV_GED_ID, 'title'); ?>" href="<?php echo $SERVER_URL . "opensearch.php"; ?>" /-->
 	<?php if ($BROWSERTYPE == "msie") { ?>
 	<style type="text/css">
 		FORM { margin-top: 0px; margin-bottom: 0px; }
