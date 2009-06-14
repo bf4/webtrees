@@ -74,22 +74,11 @@ if ($action=="delete") {
 	print "<br />".str_replace("#GED#", $ged, $pgv_lang["gedcom_deleted"])."<br />\n";
 }
 
-if (($action=="setdefault") && $default_ged) {
-	$DEFAULT_GEDCOM = $default_ged;
-	$configtext = implode('', file($INDEX_DIRECTORY."gedcoms.php"));
-	$configtext = preg_replace('/\$DEFAULT_GEDCOM\s*=\s*".*";/', "\$DEFAULT_GEDCOM = \"".$default_ged."\";", $configtext);
-	$fp = @fopen($INDEX_DIRECTORY."gedcoms.php", "wb");
-	if (!$fp) {
-		global $whichFile;
-		$whichFile = $INDEX_DIRECTORY."gedcoms.php";
-		print "<span class=\"error\">".print_text("gedcom_config_write_error",0,1)."<br /></span>\n";
-	}
-	else {
-		fwrite($fp, $configtext);
-		fclose($fp);
-		$logline = AddToLog("gedcoms.php updated");
- 		check_in($logline, "gedcoms.php", $INDEX_DIRECTORY);
-	}
+if (($action=="setdefault") && in_array($default_ged, get_all_gedcoms())) {
+	set_site_setting('DEFAULT_GEDCOM', $default_ged);
+	$DEFAULT_GEDCOM=$default_ged;
+} else {
+	$DEFAULT_GEDCOM=get_site_setting('DEFAULT_GEDCOM');
 }
 
 print "<br /><br />";
@@ -100,20 +89,20 @@ print "<br /><br />";
 <?php
 // Default gedcom choice
 print "<br />";
-if (count(get_all_gedcoms())>0) {
-	if (PGV_USER_IS_ADMIN) {
-		print_help_link("default_gedcom_help", "qm");
-		print $pgv_lang["DEFAULT_GEDCOM"]."&nbsp;";
-		print "<select name=\"default_ged\" class=\"header_select\" onchange=\"document.defaultform.submit();\">";
-		foreach (get_all_gedcoms() as $ged_id=>$ged_name) {
-			if (empty($DEFAULT_GEDCOM)) $DEFAULT_GEDCOM = $ged_name;
-			print "<option value=\"".urlencode($ged_name)."\"";
-			if ($DEFAULT_GEDCOM==$ged_name) print " selected=\"selected\"";
-			print " onclick=\"document.defaultform.submit();\">";
-			print PrintReady(get_gedcom_setting($ged_id, 'title'))."</option>";
-		}
-		print "</select><br /><br />";
+if (PGV_USER_IS_ADMIN && count(get_all_gedcoms())>1) {
+	print_help_link("default_gedcom_help", "qm");
+	print $pgv_lang["DEFAULT_GEDCOM"]."&nbsp;";
+	print "<select name=\"default_ged\" class=\"header_select\" onchange=\"document.defaultform.submit();\">";
+	if (!in_array($DEFAULT_GEDCOM, get_all_gedcoms())) {
+		echo '<option value="" selected="selected" onclick="document.defaultform.submit();">', htmlspecialchars($DEFAULT_GEDCOM), '</option>';
 	}
+	foreach (get_all_gedcoms() as $ged_id=>$ged_name) {
+		print "<option value=\"".urlencode($ged_name)."\"";
+		if ($DEFAULT_GEDCOM==$ged_name) print " selected=\"selected\"";
+		print " onclick=\"document.defaultform.submit();\">";
+		print PrintReady(get_gedcom_setting($ged_id, 'title'))."</option>";
+	}
+	print "</select><br /><br />";
 }
 
 print_help_link('SECURITY_CHECK_GEDCOM_DOWNLOADABLE_help', 'qm');
@@ -144,8 +133,6 @@ $GedCount = 0;
 // Print the table of available GEDCOMs
 foreach (get_all_gedcoms() as $ged_id=>$ged_name) {
 	if (userGedcomAdmin(PGV_USER_ID, $ged_id)) {
-		if (empty($DEFAULT_GEDCOM)) $DEFAULT_GEDCOM = $ged_name;
-
 		// Row 0: Separator line
 		if ($GedCount!=0) {
 			print "<tr>";

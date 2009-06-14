@@ -49,22 +49,8 @@ $PGV_BLOCKS['print_htmlplus_block']['config']		= array(
 	'ui'=>0
 );
 
-function print_htmlplus_block($block=true, $config='', $side, $index)
-{
-	global
-	$ctype,
-	$factarray,
-	$GEDCOM,
-	$HTML_BLOCK_COUNT,
-	$PGV_BLOCKS,
-	$PGV_IMAGE_DIR,
-	$PGV_IMAGES,
-	$pgv_lang,
-	$TEXT_DIRECTION,
-	$DEFAULT_GEDCOM,
-	$MULTI_MEDIA,
-	$SHOW_ID_NUMBERS
-	;
+function print_htmlplus_block($block=true, $config='', $side, $index) {
+	global $ctype, $factarray, $GEDCOM, $HTML_BLOCK_COUNT, $PGV_BLOCKS, $PGV_IMAGE_DIR, $PGV_IMAGES, $pgv_lang, $TEXT_DIRECTION, $MULTI_MEDIA, $SHOW_ID_NUMBERS;
 	// config sanity check
 	if (empty($config)){$config = $PGV_BLOCKS['print_htmlplus_block']['config'];}else{foreach($PGV_BLOCKS['print_htmlplus_block']['config'] as $k=>$v){if (!isset($config[$k])){$config[$k] = $v;}}}
 
@@ -80,13 +66,12 @@ function print_htmlplus_block($block=true, $config='', $side, $index)
 	case '':
 		break;
 	case '__default__':
-		if ($DEFAULT_GEDCOM == '') {
-			foreach (get_all_gedcoms() as $ged_id=>$ged_name) {
-				$GEDCOM = $ged_name;
+		$GEDCOM=get_site_setting('DEFAULT_GEDCOM');
+		if (!$GEDCOM) {
+			foreach (get_all_gedcoms() as $gedcom) {
+				$GEDCOM=$gedcom;
 				break;
 			}
-		} else {
-			$GEDCOM = $DEFAULT_GEDCOM;
 		}
 		break;
 	default:
@@ -197,17 +182,7 @@ function print_htmlplus_block($block=true, $config='', $side, $index)
 
 function print_htmlplus_block_config($config)
 {
-	global
-		$pgv_lang,
-		$factarray,
-		$ctype,
-		$PGV_BLOCKS,
-		$TEXT_DIRECTION,
-		$LANGUAGE,
-		$language_settings,
-		$GEDCOM,
-		$DEFAULT_GEDCOM
-	;
+	global $pgv_lang, $factarray, $ctype, $PGV_BLOCKS, $TEXT_DIRECTION, $LANGUAGE, $language_settings, $GEDCOM;
 	$useFCK = file_exists('./modules/FCKeditor/fckeditor.php');
 	$templates = array();
 	$d = dir('blocks/');

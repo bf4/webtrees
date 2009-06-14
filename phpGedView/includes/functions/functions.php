@@ -350,7 +350,7 @@ function load_privacy_file($ged_id=PGV_GED_ID) {
  * @see session.php
  */
 function store_gedcoms() {
-	global $GEDCOMS, $pgv_lang, $INDEX_DIRECTORY, $DEFAULT_GEDCOM, $COMMON_NAMES_THRESHOLD, $GEDCOM, $CONFIGURED;
+	global $GEDCOMS, $pgv_lang, $INDEX_DIRECTORY, $COMMON_NAMES_THRESHOLD, $GEDCOM, $CONFIGURED;
 	global $IN_STORE_GEDCOMS;
 
 	if (!$CONFIGURED) {
@@ -426,7 +426,6 @@ function store_gedcoms() {
 		$gedcomtext .= "\$GEDCOMS[\"".$GED["gedcom"]."\"] = \$gedarray;\n";
 	}
 	$GEDCOMS = $geds;
-	$gedcomtext .= "\n\$DEFAULT_GEDCOM = \"$DEFAULT_GEDCOM\";\n";
 	$gedcomtext .= "\n?".">";
 	$fp = @fopen($INDEX_DIRECTORY."gedcoms.php", "wb");
 	if (!$fp) {
