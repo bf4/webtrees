@@ -277,10 +277,10 @@ function lightbox_print_media($pid, $level=1, $related=false, $kind=1, $noedit=f
 		
 		// Firstly, get count of Items in Database for this Individual
 		$indiobjs = "SELECT DISTINCT ";
-		$indiobjs .= "m_media, m_ext, m_file, m_titl, m_gedfile, m_gedrec, mm_gid, mm_gedrec FROM ".$TBLPREFIX."media, ".$TBLPREFIX."media_mapping where ";
-		$indiobjs .= "mm_gid='".$pid."'";
+		$indiobjs .= "m_media, m_ext, m_file, m_titl, m_gedfile, m_gedrec, mm_gid, mm_gedrec FROM {$TBLPREFIX}media, {$TBLPREFIX}media_mapping where ";
+		$indiobjs .= "mm_gid=? ";
 		$indiobjs .= "AND mm_gedfile=? AND mm_media=m_media AND mm_gedfile=m_gedfile ";
-		$vars2[]=PGV_GED_ID;
+		$vars2=array($pid, PGV_GED_ID);
 		$rows=PGV_DB::prepare($indiobjs)->execute($vars2)->fetchAll(PDO::FETCH_ASSOC);
 		$foundObjs = array();
 		$numindiobjs = count($rows);
