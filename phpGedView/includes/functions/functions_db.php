@@ -671,7 +671,6 @@ function get_famlist_fams($surn='', $salpha='', $galpha='', $marnm, $ged_id=null
 		foreach ($rows as $row) {
 			$list[]=Family::getInstance($row);
 		}
-		$res->free();
 	}
 	usort($list, array('GedcomRecord', 'Compare'));
 	return $list;
