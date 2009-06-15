@@ -149,6 +149,24 @@ $pgv_lang["add_more_links"]			= "Neue Verbindungen";
 $pgv_lang["enter_pid_or_name"]		= "Personen-ID oder Name";
 $pgv_lang["set_links"]				= "Neue Verbindungen speichern";
 $pgv_lang["add_or_remove_links"]	= "Verbindungen bearbeiten";
+
+$pgv_lang["keep"]					= "Behalten";
+$pgv_lang["unlink"]					= "Löschen";
+$pgv_lang["nav"]					= "Lotse";
+$pgv_lang["fam_nav"]				= "Familienlotse";
+$pgv_lang["remove"]					= "Entfernen";
+$pgv_lang["keep_link"]				= "Verbindung behalten";
+$pgv_lang["remove_link"]			= "Verbindung löschen";
+$pgv_lang["open_nav"]				= "Familienlotse starten";
+$pgv_lang["link_exists"]			= "Diese Verbindung besteht bereits";
+$pgv_lang["id_not_valid"]			= "Diese Personen-, Familien- oder Qellennummer ist ungültig";
+$pgv_lang["add_fam_other_links"]	= "Familienverbindung suchen oder hinzufügen";
+$pgv_lang["search_add_links"]		= "Personenverbindung suchen oder hinzufügen";
+$pgv_lang["enter_name"]				= "Bitte den Namen eingeben";
+$pgv_lang["click"]					= "&nbsp;";
+$pgv_lang["choose_head"]			= " klicken um eine neue Familie mit dieser Hauptperson zu wählen"; 
+$pgv_lang["add_indi_to_link_list"]	= "Namen klicken, um diese Person der Liste neuer Verbindungen hinzuzufügen";
+
 $pgv_lang["files_in_backup"]		= "Inhalt dieser Sicherheitskopie";
 $pgv_lang["created_remotelinks"]	= "Die Tabelle <i>Remotelinks</i> wurde erstellt.";
 $pgv_lang["created_remotelinks_fail"]	= "Die Tabelle <i>Remotelinks</i> konnte nicht erstellt werden.";

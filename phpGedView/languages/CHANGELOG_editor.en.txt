@@ -42,11 +42,12 @@ For massive changes, the variable names should be listed in the order in which t
 occur in the respective language files.
 
 
-VERSION 4.2.1
+VERSION 4.2.2
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change	codes and comments
 -----------------------------------------------------------------------------------------
--$pgv_lang["gedcomid"]				          13 Jun 2009         M Moved to lang.en.php
+-$pgv_lang["gedcomid"]								13 Jun 2009				M Moved to lang.en.php
+
 
 VERSION 4.2.1
 
