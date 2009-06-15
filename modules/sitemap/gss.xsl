@@ -46,7 +46,7 @@
 	<xsl:template match="/">
 	<html>     
 	<head>
-		<title>Google Sitemap File for </title>
+		<title>Sitemap File for </title>
 		<style type="text/css">
 		<![CDATA[
 			<!--
@@ -107,14 +107,14 @@
 			}
 			.sortup {
 				background-position: right center;
-				background-image: url(http://www.google.com/webmasters/sitemaps/images/sortup.gif);
+				background-image: url(sortup.gif);
 				background-repeat: no-repeat;
 				font-style:italic;
 				white-space:pre;
 			}
 			.sortdown {
 				background-position: right center;
-				background-image: url(http://www.google.com/webmasters/sitemaps/images/sortdown.gif);
+				background-image: url(sortdown.gif);
 				background-repeat: no-repeat;
 				font-style:italic;
 				white-space:pre;
@@ -294,7 +294,7 @@
 	<body onLoad="initXsl('table0','{$fileType}');">  
 
 	<!-- Text and table -->
-		<h1 id="head1">Google Sitemap</h1>        
+		<h1 id="head1">Sitemap</h1>        
 		<xsl:choose>
 			<xsl:when test="$fileType='sitemap'"><xsl:call-template name="sitemapTable"/></xsl:when>
 			<xsl:otherwise><xsl:call-template name="siteindexTable"/></xsl:otherwise>
@@ -305,9 +305,8 @@
 		<table class="copyright" id="table_copyright">
 		<tr>
 			<td>
-				<p>Google Sitemaps: (c) 2005-2007 <a href="http://www.google.com">Google</a> - <a href="https://www.google.com/webmasters/sitemaps/stats">My Sitemaps</a> - <a href="http://www.google.com/webmasters/sitemaps/docs/en/about.html">About</a> - <a href="http://www.google.com/webmasters/sitemaps/docs/en/faq.html">FAQ</a> - <a href="http://groups-beta.google.com/group/google-sitemaps">Discussion</a> - <a href="http://sitemaps.blogspot.com/">Blog</a><br/>
-				Google Sitemaps Stylesheets v1.6: (c) 2005-2007 <a href="http://www.baccoubonneville.com">Baccou Bonneville</a> - <a href="http://sourceforge.net/projects/gstoolbox">Project</a> - <a href="http://www.baccoubonneville.com/blogs/index.php/webdesign/2005/08/20/google-sitemaps-stylesheets">Blog</a><br/>
-				Johannes Mueller, SOFTplus <a href="http://gsitecrawler.com">GSiteCrawler</a> - Tobias Kluge, enarion.net <a href="http://enarion.net/google/phpsitemapng">phpSitemapNG</a></p>
+				<p>Sitemap 0.90: <a href="http://www.sitemaps.org">Sitemaps.org</a> - <a href="https://www.google.com/webmasters/sitemaps/stats">My Google Sitemaps</a> - <a href="http://sitemaps.blogspot.com/">Blog</a><br/>
+				Sitemaps Stylesheets v1.6: (c) 2005-2007 <a href="http://sourceforge.net/projects/gstoolbox">Project</a></p>
 			</td>
 		</tr>
 		</table>
@@ -317,7 +316,7 @@
 
 	<!-- siteindexTable template -->
 	<xsl:template name="siteindexTable">
-		<h2>Number of sitemaps in this Google Sitemap Index: <xsl:value-of select="count(sitemap:sitemapindex/sitemap:sitemap)"></xsl:value-of></h2>          
+		<h2>Number of sitemaps in this Sitemap Index: <xsl:value-of select="count(sitemap:sitemapindex/sitemap:sitemap)"></xsl:value-of></h2>          
 		<p class="sml">Click on the table headers to change sorting.</p>
 		<table border="1" width="100%" class="data" id="table1">
 		<tr class="header">
@@ -332,7 +331,7 @@
   
 	<!-- sitemapTable template -->  
 	<xsl:template name="sitemapTable">
-		<h2>Number of URLs in this Google Sitemap: <xsl:value-of select="count(sitemap:urlset/sitemap:url)"></xsl:value-of></h2>
+		<h2>Number of URLs in this Sitemap: <xsl:value-of select="count(sitemap:urlset/sitemap:url)"></xsl:value-of></h2>
 		<p class="sml">Click on the table headers to change sorting.</p>
 		<table border="1" width="100%" class="data" id="table0">
 		<tr class="header">
