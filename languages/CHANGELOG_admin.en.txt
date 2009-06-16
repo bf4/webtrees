@@ -44,6 +44,13 @@ VERSION 4.2.2
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 -----------------------------------------------------------------------------------------
++$pgv_lang["add_indi_to_link_list"]					16 Jun 2009				A
++$pgv_lang["click_choose_head"]						16 Jun 2009				A
++$pgv_lang["head"]									16 Jun 2009				A
++$pgv_lang["media_now_unlinked_from"]				16 Jun 2009				A
++$pgv_lang["id_empty"]								16 Jun 2009				A
+-$pgv_lang["click"]									16 Jun 2009				D
+-$pgv_lang["choose_head"]							16 Jun 2009				D
 +$pgv_lang["keep"]									12 Jun 2009				A
 +$pgv_lang["unlink"]								12 Jun 2009				A
 +$pgv_lang["nav"]									12 Jun 2009				A
@@ -57,8 +64,6 @@ VERSION 4.2.2
 +$pgv_lang["add_fam_other_links"]					12 Jun 2009				A
 +$pgv_lang["search_add_links"]						12 Jun 2009				A
 +$pgv_lang["enter_name"]							12 Jun 2009				A
-+$pgv_lang["click"]									12 Jun 2009				A
-+$pgv_lang["choose_head"]							12 Jun 2009				A
 +$pgv_lang["add_indi_to_link_list"]					12 Jun 2009				A
 *$pgv_lang["current_links"]							27 May 2009				w
 *$pgv_lang["add_more_links"]						27 May 2009				w

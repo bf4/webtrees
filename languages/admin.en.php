@@ -163,9 +163,11 @@ $pgv_lang["id_not_valid"]			= "Not a valid Individual, Family or Source ID";
 $pgv_lang["add_fam_other_links"]	= "Add Family, and Search links";
 $pgv_lang["search_add_links"]		= "Search for People to add to media links.";
 $pgv_lang["enter_name"]				= "Enter a name";
-$pgv_lang["click"]					= "Click ";
-$pgv_lang["choose_head"]			= " to choose Head of family."; 
 $pgv_lang["add_indi_to_link_list"]	= "Click Name to add person to Link List.";
+$pgv_lang["click_choose_head"]		= "Click to choose as Head of family. ";
+$pgv_lang["head"]					= "Head";
+$pgv_lang["media_now_unlinked_from"]= " Media item now unlinked from - ";
+$pgv_lang["id_empty"]				= "You MUST enter an ID first before adding a Link";
 
 $pgv_lang["files_in_backup"]		= "Files included in this backup";
 $pgv_lang["created_remotelinks"]	= "Successfully created <i>Remotelinks</i> table.";
