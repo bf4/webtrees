@@ -1315,7 +1315,7 @@ function show_media_form($pid, $action = "newentry", $filename = "", $linktoid =
 		else echo $folder;
 		echo '<input name="oldFolder" type="hidden" value="', addslashes($folder), '" />';
 		if (PGV_USER_IS_ADMIN) {
-			echo '<br /><span dir="ltr"><input type="text" name="folder" size="40" value="', $folder, ' "onblur="checkpath(this)" /></span>';
+			echo '<br /><span dir="ltr"><input type="text" name="folder" size="40" value="', $folder, '" onblur="checkpath(this)" /></span>';
 			if ($MEDIA_DIRECTORY_LEVELS>0) {
 				echo '<br /><sub>', print_text("server_folder_advice",0,1), '</sub>';
 			}

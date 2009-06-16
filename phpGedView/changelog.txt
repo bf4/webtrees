@@ -10,6 +10,7 @@
 
 
 Version 4.2.2
+ - Fixed: [ 2806364 ] Typo in functions_mediadb.php (wgroleau)
  - Fixed: [ 2806055 ] Incorrect calc - "Person who lived longest" (fisharebest)
  - Fixed: [ 2578740 ] Indilist Mother's name wrong (fisharebest)
  - Fixed: [ 2801382 ] Fatal error: Uncaught exception 'PDOException'  (windmillway)
