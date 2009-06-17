@@ -135,9 +135,11 @@ $pgv_lang["id_not_valid"]			= "Nieprawidłowy identyfikator Osoby, Rodziny lub �
 $pgv_lang["add_fam_other_links"]	= "Dodaj rodzinę i wyszukane osoby";
 $pgv_lang["search_add_links"]		= "Szukaj osób, z którymi powiązać aktualne multimedia.";
 $pgv_lang["enter_name"]				= "Wprowadź imię lub nazwisko ";
-$pgv_lang["click"]					= "Kliknij ";
-$pgv_lang["choose_head"]			= " aby wybrać Głowę rodziny."; 
 $pgv_lang["add_indi_to_link_list"]	= "Kliknij imię i nazwisko osoby aby dodać ją do listy powiązań.";
+$pgv_lang["click_choose_head"]		= "Kliknij aby wybrać jako Głowę rodziny. ";
+$pgv_lang["head"]					= "Głowa";
+$pgv_lang["media_now_unlinked_from"]= " Usunięto powiązanie multimediów z ";
+$pgv_lang["id_empty"]				= "Podczas dodawania powiązania pole z identyfikatorem nie może być puste.";
 
 $pgv_lang["files_in_backup"]		= "Pliki objęte tą kopią zapasową";
 $pgv_lang["created_remotelinks"]	= "Tworzenie tabeli <i>Zewnętrzne odnośniki</i> zostało zakończone.";
