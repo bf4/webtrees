@@ -163,9 +163,11 @@ $pgv_lang["id_not_valid"]			= "Diese Personen-, Familien- oder Qellennummer ist 
 $pgv_lang["add_fam_other_links"]	= "Familienverbindung suchen oder hinzufügen";
 $pgv_lang["search_add_links"]		= "Personenverbindung suchen oder hinzufügen";
 $pgv_lang["enter_name"]				= "Bitte den Namen eingeben";
-$pgv_lang["click"]					= "&nbsp;";
-$pgv_lang["choose_head"]			= " klicken um eine neue Familie mit dieser Hauptperson zu wählen"; 
 $pgv_lang["add_indi_to_link_list"]	= "Namen klicken, um diese Person der Liste neuer Verbindungen hinzuzufügen";
+$pgv_lang["click_choose_head"]		= "klicken um diese Person als Familienhaupt zu wählen. ";
+$pgv_lang["head"]					= "Familienhaupt";
+$pgv_lang["media_now_unlinked_from"]= " Verbindung gelöscht - ";
+$pgv_lang["id_empty"]				= "ID-Nummer fehlt.  Befehl kann nicht ausgeführt werden.";
 
 $pgv_lang["files_in_backup"]		= "Inhalt dieser Sicherheitskopie";
 $pgv_lang["created_remotelinks"]	= "Die Tabelle <i>Remotelinks</i> wurde erstellt.";
