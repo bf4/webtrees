@@ -167,7 +167,7 @@ $pgv_lang["add_indi_to_link_list"]	= "Click Name to add person to Link List.";
 $pgv_lang["click_choose_head"]		= "Click to choose as Head of family. ";
 $pgv_lang["head"]					= "Head";
 $pgv_lang["media_now_unlinked_from"]= " Media item now unlinked from - ";
-$pgv_lang["id_empty"]				= "You MUST enter an ID first before adding a Link";
+$pgv_lang["id_empty"]				= "When adding a Link, the ID field cannot be empty.";
 
 $pgv_lang["files_in_backup"]		= "Files included in this backup";
 $pgv_lang["created_remotelinks"]	= "Successfully created <i>Remotelinks</i> table.";
