@@ -91,6 +91,8 @@ $PGV_IMAGES["keyboard"]["button"] = "buttons/keyboard.gif";
 // $PGV_IMAGES["place"]["button"] = "buttons/place.gif";
 // $PGV_IMAGES["repository"]["button"] = "buttons/repository.gif";
 // $PGV_IMAGES["source"]["button"] = "buttons/source.gif";
+$PGV_IMAGES["note"]["button"] = "buttons/note.gif";
+$PGV_IMAGES["head"]["button"] = "buttons/head.gif";
 
 // Media images
 $PGV_IMAGES["media"]["audio"] = "../../../images/media/audio.png";
