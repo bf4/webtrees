@@ -10,6 +10,7 @@
 
 
 Version 4.2.2
+ - Fixed: [ 2807477 ] Minor tweaks to gedcheck.php (fisharebest/kiwi_pgv)
  - Fixed: [ 2806749 ] Cache needs to be cleared when changing theme (canajun2eh)
  - Fixed: [ 2806364 ] Typo in functions_mediadb.php (wgroleau)
  - Fixed: [ 2806055 ] Incorrect calc - "Person who lived longest" (fisharebest)

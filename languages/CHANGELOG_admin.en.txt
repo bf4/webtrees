@@ -44,6 +44,8 @@ VERSION 4.2.2
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 -----------------------------------------------------------------------------------------
++$pgv_lang['gedcheck_sync']                 18 Jun 2009  A
++$pgv_lang['gedcheck_nothing']              18 Jun 2009  A
 -$pgv_lang["media_now_linked to"]					17 Jun 2009				D
 -$pgv_lang["media_now_unlinked_from"]				17 Jun 2009				D
 +$pgv_lang["click_choose_head_text"]				17 Jun 2009				A
