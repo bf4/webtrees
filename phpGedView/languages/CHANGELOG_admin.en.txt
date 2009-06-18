@@ -44,7 +44,14 @@ VERSION 4.2.2
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 -----------------------------------------------------------------------------------------
+-$pgv_lang["media_now_linked to"]					17 Jun 2009				D
+-$pgv_lang["media_now_unlinked_from"]				17 Jun 2009				D
++$pgv_lang["click_choose_head_text"]				17 Jun 2009				A
++$pgv_lang["link_deleted"]							17 Jun 2009				A
++$pgv_lang["link_added"]							17 Jun 2009				A
+*$pgv_lang["click_choose_head"]						17 Jun 2009				W
 *$pgv_lang["id_empty"]								17 Jun 2009				W
++$pgv_lang["add_indi_to_link_list"]					16 Jun 2009				A
 +$pgv_lang["click_choose_head"]						16 Jun 2009				A
 +$pgv_lang["head"]									16 Jun 2009				A
 +$pgv_lang["media_now_unlinked_from"]				16 Jun 2009				A
