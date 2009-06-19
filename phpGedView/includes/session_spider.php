@@ -141,6 +141,7 @@ $worms = array(
 	'Mozilla\/[^456]',	// legitimate Mozilla-based browsers have something like "Mozilla/5.0"
 	'^Mozilla\/[456]\.0$',	// legitimate Mozilla-based browsers have something following "Mozilla/5.0"
 	'Speedy.*Spider',
+	'KaloogaBot',		// Image search engines have no business searching a Genealogy site
 	'(Microsoft)|(Internet)|(Explorer)'		// Internet Explorer self-identifies with "MSIE"
 	);
 
