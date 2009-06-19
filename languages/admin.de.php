@@ -418,6 +418,8 @@ $pgv_lang["batch_update"]			= "Ihre Datenbank mittels Stapelverarbeitung aktuali
 // Text for the Gedcom Checker
 $pgv_lang["gedcheck"]				= "GEDCOM Verifizierungs-Modul";
 $pgv_lang["gedcheck_text"]			= "Dieses Modul verifiziert GEDCOM Dateien gegen den <a href='http://phpgedview.sourceforge.net/ged551-5.pdf'>GEDCOM 5.5.1 Standard</a>.  Es sucht auch nach oft vorkommenden Fehlern.<br /><br />Bitte beachten Sie, dass viele Programme den GEDCOM 5.5.1 Standard erweitert haben.  Deshalb sollten Sie sich zuerst nur mit «kritischen» Fehlern befassen.  Den Grund der meisten Fehlermeldungen können Sie durch gündliches Lesen des Standards ermitteln.  Wenn absolut notwending, können Sie auch Ihre Fragen im <a href='https://sourceforge.net/forum/forum.php?forum_id=185166'>Help-Forum</a> stellen.";
+$pgv_lang["gedcheck_sync"]			= "Die GEDCOM-Datei #GLOBALS[ged]# ist nicht mit der Datenbank synchronisiert;  die Datei ist womöglich nicht aktuell.  Sie können die Datei aktualisieren indem Sie die Datenbank jetzt <b><a \"#GLOBALS[ged_link]#\">exportieren</a></b>.";
+$pgv_lang["gedcheck_nothing"]		= "Keine Fehler gefunden.";
 $pgv_lang["level"]					= "Level";
 $pgv_lang["critical"]				= "Kritisch";
 $pgv_lang["error"]					= "Fehler";
