@@ -116,8 +116,10 @@ function saveCachedBlock($block, $index, $content) {
  * Re-worked copy of a similar function in dir_editor.php
  *
  * This function, called recursively, deletes all subdirectories and files in those subdirectories
+ *
+ * Note:  This function should really be in one of the other "includes/functions/..." scripts.
  */
-function full_rmdir($dir) {
+function removeDir($dir) {
 	if (!is_writable($dir)) {
 		if (!@chmod($dir, 0777)) return FALSE;
 	}
@@ -127,7 +129,7 @@ function full_rmdir($dir) {
 		if ($entry == '.' || $entry == '..') continue;
 		$entry = $dir . '/' . $entry;
 		if (is_dir($entry)) {
-			if (!full_rmdir($entry)) return FALSE;
+			if (!removeDir($entry)) return FALSE;
 			continue;
 		}
 		if (!@unlink($entry)) {
@@ -147,6 +149,6 @@ function full_rmdir($dir) {
 function clearCache() {
 	global $PGV_BLOCKS, $INDEX_DIRECTORY, $lang_short_cut, $LANGUAGE, $GEDCOM;
 
-	full_rmdir("{$INDEX_DIRECTORY}/cache");
+	removeDir("{$INDEX_DIRECTORY}/cache");
 }
 ?>
