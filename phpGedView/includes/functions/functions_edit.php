@@ -2231,9 +2231,10 @@ function print_quick_resn($name) {
 * @param  string  $mediaid Media ID to be linked
 * @param string $linktoid Indi, Family, or Source ID that the Media ID should link to
 * @param int $level Level where the Media Object reference should be created
+* @param boolean $chan Whether or not to update/add the CHAN record
 * @return  bool success or failure
 */
-function linkMedia($mediaid, $linktoid, $level=1) {
+function linkMedia($mediaid, $linktoid, $level=1, $chan=true) {
 	global $GEDCOM, $pgv_lang, $pgv_changes;
 
 	if (empty($level)) $level = 1;
@@ -2251,9 +2252,7 @@ function linkMedia($mediaid, $linktoid, $level=1) {
 
 	if ($gedrec) {
 		$newrec = $gedrec."\n1 OBJE @".$mediaid."@";
-
-		replace_gedrec($linktoid, $newrec);
-
+		replace_gedrec($linktoid, $newrec, $chan);
 		return true;
 	} else {
 		echo "<br /><center>".$pgv_lang["invalid_id"]."</center>";
@@ -2268,9 +2267,11 @@ function linkMedia($mediaid, $linktoid, $level=1) {
 * @param string $linktoid Indi, Family, or Source ID that the Media ID should be unlinked from.
 * @param $linenum should be ALWAYS set to 'OBJE'.
 * @param int $level Level where the Media Object reference should be removed from (not used)
+* @param boolean $chan Whether or not to update/add the CHAN record
+* 
 * @return  bool success or failure
 */
-function unlinkMedia($linktoid, $linenum, $mediaid, $level=1) {
+function unlinkMedia($linktoid, $linenum, $mediaid, $level=1, $chan=true) {
 	global $GEDCOM, $pgv_lang, $pgv_changes;
 
 	if (empty($level)) $level = 1;
@@ -2290,7 +2291,7 @@ function unlinkMedia($linktoid, $linenum, $mediaid, $level=1) {
 		$newged = remove_subline($gedrec, $linenum);
 	}
 	// $success = (replace_gedrec($pid, $newged));
-	$success = (replace_gedrec($linktoid, $newged));
+	$success = (replace_gedrec($linktoid, $newged, $chan));
 	if ($success) {
 		//echo "<br />".$pgv_lang["gedrec_deleted"];
 		//echo '<br>';
