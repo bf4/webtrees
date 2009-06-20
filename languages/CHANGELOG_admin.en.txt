@@ -44,6 +44,12 @@ VERSION 4.2.2
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 -----------------------------------------------------------------------------------------
+#$pgv_lang["click_choose_head"]						20 Jun 2009				W
+#$pgv_lang["id_empty"]								20 Jun 2009				W
+#$pgv_lang["search_add_links"]						20 Jun 2009				w
+#$pgv_lang["add_indi_to_link_list"]					20 Jun 2009				w
++$pgv_lang["no_CHANs_update"]						20 Jun 2009				A
++$pgv_lang["no_update_CHANs"]						20 Jun 2009				A
 #$pgv_lang["gedcheck_sync"]							18 Jun 2009				S (American spelling, please)
 #$pgv_lang["gedcheck_nothing"]						18 Jun 2009				Use only quotation marks when declaring language variables
 +$pgv_lang['gedcheck_sync']							18 Jun 2009				A
