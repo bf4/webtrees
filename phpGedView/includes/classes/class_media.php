@@ -125,14 +125,6 @@ class Media extends GedcomRecord {
 	}
 
 	/**
-	 *
-	 * get the title of the media item
-	 */
-	function getFullName() {
-		return $this->title;
-	}
-
-	/**
 	 * get the media note
 	 * @return string
 	 */
@@ -359,7 +351,13 @@ class Media extends GedcomRecord {
 
 	// Get an array of structures containing all the names in the record
 	function getAllNames() {
-		return parent::getAllNames('TITL', 2);
+		if (strpos($this->gedrec, "\n1 TITL ")) {
+			// Earlier gedcom versions had level 1 titles
+			return parent::getAllNames('TITL', 1);
+		} else {
+			// Later gedcom versions had level 2 titles
+			return parent::getAllNames('TITL', 2);
+		}
 	}
 
 	// Extra info to display when displaying this record in a list of
