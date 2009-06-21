@@ -40,24 +40,26 @@ exit;
 define('PGV_GM_DB_SCHEMA_0_1', '');
 
 // Create all of the tables needed for this module
-PGV_DB::exec(
-	"CREATE TABLE {$TBLPREFIX}placelocation (".
-	" pl_id        ".self::$INT4_TYPE."         NOT NULL,".
-	" pl_parent_id ".self::$INT4_TYPE."             NULL,".
-	" pl_level     ".self::$INT4_TYPE."             NULL,".
-	" pl_place     ".self::$VARCHAR_TYPE."(255)     NULL,".
-	" pl_long      ".self::$VARCHAR_TYPE."(30)      NULL,".
-	" pl_lati      ".self::$VARCHAR_TYPE."(30)      NULL,".
-	" pl_zoom      ".self::$INT4_TYPE."             NULL,".
-	" pl_icon      ".self::$VARCHAR_TYPE."(255)     NULL,".
-	" PRIMARY KEY                    (pl_id       ),".
-	" INDEX {$TBLPREFIX}pl_level     (pl_level    ),".
-	" INDEX {$TBLPREFIX}p            (pl_long     ),".
-	" INDEX {$TBLPREFIX}pl_lati      (pl_lati     ),".
-	" INDEX {$TBLPREFIX}pl_name      (pl_place    ),".
-	" INDEX {$TBLPREFIX}pl_parent_id (pl_parent_id)".
-	") ".self::$UTF8_TABLE
-);
+if (!PGV_DB::table_exists("{$TBLPREFIX}placelocation")) {
+	PGV_DB::exec(
+		"CREATE TABLE {$TBLPREFIX}placelocation (".
+		" pl_id        ".self::$INT4_TYPE."         NOT NULL,".
+		" pl_parent_id ".self::$INT4_TYPE."             NULL,".
+		" pl_level     ".self::$INT4_TYPE."             NULL,".
+		" pl_place     ".self::$VARCHAR_TYPE."(255)     NULL,".
+		" pl_long      ".self::$VARCHAR_TYPE."(30)      NULL,".
+		" pl_lati      ".self::$VARCHAR_TYPE."(30)      NULL,".
+		" pl_zoom      ".self::$INT4_TYPE."             NULL,".
+		" pl_icon      ".self::$VARCHAR_TYPE."(255)     NULL,".
+		" PRIMARY KEY                    (pl_id       ),".
+		" INDEX {$TBLPREFIX}pl_level     (pl_level    ),".
+		" INDEX {$TBLPREFIX}p            (pl_long     ),".
+		" INDEX {$TBLPREFIX}pl_lati      (pl_lati     ),".
+		" INDEX {$TBLPREFIX}pl_name      (pl_place    ),".
+		" INDEX {$TBLPREFIX}pl_parent_id (pl_parent_id)".
+		") ".self::$UTF8_TABLE
+	);
+}
 
 // Update the version to indicate sucess
 set_site_setting($schema_name, $next_version);
