@@ -1507,7 +1507,7 @@ function format_surname_list($surnames, $style, $totals) {
  *
  * @param array $datalist contain records that were extracted from the database.
  */
-function print_changes_table($datalist, $showChange=true, $total='') {
+function print_changes_table($datalist, $showChange=true, $total='', $show_pgvu=true) {
 	global $pgv_lang, $factarray, $SHOW_ID_NUMBERS, $SHOW_MARRIED_NAMES, $TEXT_DIRECTION;
 	if (count($datalist)<1) return;
 	require_once 'js/sorttable.js.htm';
@@ -1524,7 +1524,9 @@ function print_changes_table($datalist, $showChange=true, $total='') {
 	echo "<th style=\"display:none\">GIVN</th>";
 	if ($showChange) {
 		echo "<th class=\"list_label\">".$factarray["CHAN"]."</th>";
-		echo "<th class=\"list_label\">".$factarray["_PGVU"]."</th>";
+		if ($show_pgvu) {
+			echo "<th class=\"list_label\">".$factarray["_PGVU"]."</th>";
+		}
 	}
 	echo "</tr>\n";
 	//-- table body
@@ -1583,8 +1585,10 @@ function print_changes_table($datalist, $showChange=true, $total='') {
 		if ($showChange) {
 			//-- Last change date/time
 			print "<td class=\"list_value_wrap rela\">".$record->LastChangeTimestamp(empty($SEARCH_SPIDER))."</td>";
-			//-- Last change user
-			print "<td class=\"list_value_wrap rela\">".$record->LastChangeUser(empty($SEARCH_SPIDER))."</td>";
+			if ($show_pgvu) {
+				//-- Last change user
+				print "<td class=\"list_value_wrap rela\">".$record->LastChangeUser(empty($SEARCH_SPIDER))."</td>";
+			}
 		}
 		echo "</tr>\n";
 	}
