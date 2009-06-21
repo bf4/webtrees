@@ -511,7 +511,7 @@ if ($action=="DeleteRecord") {
 		->execute(array($deleteRecord))
 		->fetchOne();
 	
-	if ($exists) {
+	if (!$exists) {
 		PGV_DB::prepare("DELETE FROM {$TBLPREFIX}placelocation WHERE pl_id=?")
 			->execute(array($deleteRecord));
 	} else {
