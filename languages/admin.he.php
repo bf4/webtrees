@@ -30,6 +30,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
+
 $pgv_lang["enter_comment"]			= "כאן ניתן להכניס הערות.";
 $pgv_lang["upload_a_gedcom"] 		= "העלה קובץ GEDCOM";
 $pgv_lang["start_entering"] 			= "התחל להכניס נתונים";
@@ -144,7 +145,6 @@ $pgv_lang["PRIV_NONE"]		= "הראה רק למנהלנים";
 $pgv_lang["PRIV_HIDE"]		= "הסתר אפילו ממנהלנים";
 $pgv_lang["manage_gedcoms"]	= "נהל קבצי GEDCOM וערוך פרטיות";
 $pgv_lang["keep_media"]		= "שמור קישורי מדיה";
-$pgv_lang["media_now_linked to"]	= " ישות המדיה מקושרת עכשיו אל - ";
 $pgv_lang["current_links"]		= "קישורים";
 $pgv_lang["add_more_links"]		= "הוסף קישורים";
 $pgv_lang["enter_pid_or_name"]	= "הכנס קוד זיהוי של אדם או שם";
@@ -161,11 +161,18 @@ $pgv_lang["open_nav"]		= "פתח נווט משפחה";
 $pgv_lang["link_exists"]		= "הקישור כבר קיים";
 $pgv_lang["id_not_valid"]		= "קוד הזיהוי של האדם, המשפחה או המקור אינו תקין";
 $pgv_lang["add_fam_other_links"]	= "הוסף קישורי משפחה וחיפוש";
-$pgv_lang["search_add_links"]	= "חפש אנשים כדי להוסיפם לקישורי מדיה.";
+$pgv_lang["search_add_links"]	= "חפש אנשים כדי להוסיפם לרשימת הוסף קישורים.";
 $pgv_lang["enter_name"]		= "הכנס שם";
-$pgv_lang["click"]			= "הקש ";
-$pgv_lang["choose_head"]		= " כדי לבחור ראש משפחה.";
-$pgv_lang["add_indi_to_link_list"]	= "הקש על שם כדי להוסיף אדם לרשימת קישורים.";
+
+$pgv_lang["add_indi_to_link_list"]	= "הקש על שם כדי להוסיף אדם לרשימת הוסף קישורים.";
+$pgv_lang["click_choose_head"]	= "הקש על #GLOBALS[tempStringHead]# כדי לבחור אדם כראש משפחה.";
+$pgv_lang["click_choose_head_text"]	= "הקש כדי לבחור אדם כראש משפחה.";
+$pgv_lang["head"]			= "ראש";
+$pgv_lang["id_empty"]			= "כאשר מוסיפים קישור, שדה קוד הזיהוי לא יכול להיות ריק.";
+$pgv_lang["link_deleted"]		= "הקישור ל#GLOBALS[remLinkId]# נמחק";
+$pgv_lang["link_added"]		= "הקישור ל#GLOBALS[addLinkId]# נוסף";
+$pgv_lang["no_update_CHANs"]	= "אל תעדכן רשומות CHAN (שינוי האחרון)";
+$pgv_lang["no_CHANs_update"]	= "שום רשומות CHAN (שינוי אחרון) עודכנו";
 
 $pgv_lang["files_in_backup"]		= "קבצים הנכללים בגיבוי זה";
 $pgv_lang["created_remotelinks"]	= "טבלת <i>קשרים מרוחקים</i> נוצרה בהצלחה.";
@@ -414,7 +421,9 @@ $pgv_lang["batch_update"]		= "בצע עדכונים/עריכה באצוה (batch
 
 // Text for the Gedcom Checker
 $pgv_lang["gedcheck"]    	= "בדיקת Gedcom"; 	     // Module title
-$pgv_lang["gedcheck_text"]	= "המודול הזה בודק את המבנה של קובץ GEDCOM מול המפרט <a href=\"http://phpgedview.sourceforge.net/ged551-5.pdf\">5.5.1 GEDCOM</a>. הוא בודק גם מספר שגיאות כלליות בנתוניך.  שים לב שקיימות ורסיות, הערכות ווריאציות רבות למפרטים כך שיש צורך לחשוש רק בסוגיות המסומנות כ\"קריטיות\"  את ההסבר לכל השגיאות שורה אחרי שורה תמצא במפרט, כך שבבקשה לבדוק שם לפני בקשת עזרה.";
+$pgv_lang["gedcheck_text"]	= "המודול הזה בודק את המבנה של קובץ GEDCOM מול המפרט <a href=\"http://phpgedview.sourceforge.net/ged551-5.pdf\">5.5.1 GEDCOM</a>. הוא בודק גם מספר שגיאות כלליות בנתוניך.  שים לב שקיימות ורסיות, הארכות ווריאציות רבות למפרטים כך שיש צורך לחשוש רק בסוגיות המסומנות כ\"קריטיות\"  את ההסבר לכל השגיאות שורה אחרי שורה תמצא במפרט, כך שבבקשה לעיין שם לפני בקשת עזרה.";
+$pgv_lang["gedcheck_sync"]	= "עדכונים שנעשו למאגר הנתונים אינם מסונכרנים לקובץ #GLOBALS[ged]#.  יתכן שתוכן הקובץ אינו עדכני.  תוכל לסנכרן אותו עכשיו עם מאגר הנתונים ע\"י ביצוע יצוא  <b><a \"#GLOBALS[ged_link]#\"></a></b>.";
+$pgv_lang["gedcheck_nothing"] = "לא נימצאו שגיאות ברמה זו.";
 $pgv_lang["level"]        		= "רמה";
 $pgv_lang["critical"]     		= "קריטי";
 $pgv_lang["error"]        	= "שגיאה";
