@@ -116,7 +116,8 @@ echo '<td class="optionbox"><select name="showall">';
 echo '<option value="0"', $showall==0?' selected="selected"':'', '>', $pgv_lang['err_rec'], '</option>';
 echo '<option value="1"', $showall==1?' selected="selected"':'', '>', $pgv_lang['all_rec'], '</option>';
 echo '</select></td></tr>';
-echo '</table><input type="submit" value="', $pgv_lang['show'], '"><input type="hidden" name="action" value="go"></form><hr />';
+echo '<tr><td colspan="2" class="list_label"><input type="submit" value="', $pgv_lang['show'], '"><input type="hidden" name="action" value="go"></td></tr>';
+echo '</table></form><hr />';
 // Do not run until user clicks "show", as default page may take a while to load.
 // Instead, show some useful help info.
 if (!isset($_POST['action'])) {
@@ -168,12 +169,12 @@ $EOL='[\n\r]+';
 ////////////////////////////////////////////////////////////////////////////////
 // Create error messages
 ////////////////////////////////////////////////////////////////////////////////
-function missing ($text) { global $pgv_lang; return $pgv_lang['missing'] .' '.$text; }
-function multiple($text) { global $pgv_lang; return $pgv_lang['multiple'].' '.$text; }
-function invalid ($text) { global $pgv_lang; return $pgv_lang['invalid'] .' '.$text; }
-function too_many($text) { global $pgv_lang; return $pgv_lang['too_many'].' '.$text; }
-function too_few ($text) { global $pgv_lang; return $pgv_lang['too_few'] .' '.$text; }
-function no_link ($text) { global $pgv_lang; return $text .' '. $pgv_lang['no_link'];}
+function missing ($text) { global $pgv_lang; return $pgv_lang['missing'] .' &lrm;'.$text.' &lrm;'; }
+function multiple($text) { global $pgv_lang; return $pgv_lang['multiple'].' &lrm;'.$text.' &lrm;'; }
+function invalid ($text) { global $pgv_lang; return $pgv_lang['invalid'] .' &lrm;'.$text.' &lrm;'; }
+function too_many($text) { global $pgv_lang; return $pgv_lang['too_many'].' &lrm;'.$text.' &lrm;'; }
+function too_few ($text) { global $pgv_lang; return $pgv_lang['too_few'] .' &lrm;'.$text.' &lrm;'; }
+function no_link ($text) { global $pgv_lang; return '&lrm;'.$text.'&lrm; '.$pgv_lang['no_link'];}
 
 ////////////////////////////////////////////////////////////////////////////////
 // Create a link to a PGV object
@@ -191,9 +192,9 @@ function pgv_href($tag, $xref, $name='')
 	global $PGV_LINK, $target, $ged;
 	$text=($name=='' ? "$tag $xref" : "$name ($xref)");
 	if (isset($PGV_LINK[$tag]) && get_id_from_gedcom($ged)) {
-		return '<a href="'.$PGV_LINK[$tag].str_replace('@','',$xref).'"&amp;ged='.$ged.$target.'>'.$text.'</a>';
+		return '&lrm;<a href="'.$PGV_LINK[$tag].str_replace('@','',$xref).'"&amp;ged='.$ged.$target.'>'.$text.'</a>&lrm;';
 	} else {
-		return "$tag $xref";
+		return "&lrm;$tag $xref&lrm;";
 	}
 }
 ////////////////////////////////////////////////////////////////////////////////
@@ -803,6 +804,9 @@ fclose($handle);
 ////////////////////////////////////////////////////////////////////////////////
 // Check the file at a syntactic level, line-by-line
 ////////////////////////////////////////////////////////////////////////////////
+
+// Gedcom files are english, left-to-right, whatever the page language
+echo '<div lang="en" xml:lang="en" dir="ltr" align="left">';
 $num_lines=count($gedfile);
 // Ignore the Byte-Order-Mark on UTF files
 if ($num_lines>0) $gedfile[0]=preg_replace('/^'.PGV_UTF8_BOM.'/', '', $gedfile[0]);
@@ -916,11 +920,11 @@ foreach ($gedfile as $num=>$value) {
 	if ($err!='') {
 		if (isset($last_err_num)) {
 			if ($num-$last_err_num>2*$context_lines && $context_lines>0)
-				echo '</pre><pre>';
+				echo '</pre><pre lang="en" xml:lang="en" dir="ltr" align="left">';
 			for ($i=max($num-$context_lines, $last_err_num+$context_lines+1); $i<$num; ++$i)
 				printf("%07d  %s\n", $i+1, $gedfile[$i]);
 		} else {
-			echo '<pre>';
+			echo '<pre lang="en" xml:lang="en" dir="ltr" halign="left">';
 			for ($i=max(0,$num-$context_lines); $i<$num; ++$i)
 				printf("%07d  %s\n", $i+1, $gedfile[$i]);
 		}
@@ -938,6 +942,7 @@ if (isset($last_err_num)) {
 } else {
 	echo $pgv_lang['gedcheck_nothing'];
 }
+echo '</div>'; // language/direction/alignment
 
 print_footer();
 ?>
