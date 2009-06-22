@@ -564,7 +564,7 @@ if ($action=="add") {
 					icon_type.shadow = "modules/googlemap/shadow50.png";
 					icon_type.iconSize = new GSize(20, 34);
 					icon_type.shadowSize = new GSize(37, 34);
-					icon_type.iconAnchor = new GPoint(6, 20);
+					icon_type.iconAnchor = new GPoint(10, 34);
 					icon_type.infoWindowAnchor = new GPoint(5, 1);
 					map.addOverlay(new GMarker(new GLatLng(<?php echo $parent_lati.", ".$parent_long;?>), icon_type));
 <?php			} else { ?>
@@ -628,7 +628,7 @@ if ($action=="add") {
 		icon.shadow = "modules/googlemap/shadow50.png";
 		icon.iconSize = new GSize(20, 34);
 		icon.shadowSize = new GSize(37, 34);
-		icon.iconAnchor = new GPoint(6, 20);
+		icon.iconAnchor = new GPoint(10, 34);
 		icon.infoWindowAnchor = new GPoint(5, 1);
 
 		var marker = new GMarker(point, icon);
