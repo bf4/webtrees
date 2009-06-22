@@ -448,7 +448,7 @@ if ($action=="ImportFile2") {
 		$parent = array_reverse($parent);
 		$parent_id=0;
 		for($i=0; $i<count($parent); $i++) {
-			$escparent=trim(preg_replace("/\?/","\\\\\\?", $parent[$i]));
+			$escparent=$parent[$i];
 			if ($escparent == "") {
 				$escparent = "Unknown";
 			}

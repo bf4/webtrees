@@ -94,10 +94,9 @@ function get_placeid($place) {
 			if (empty($par[$i])) $par[$i]="unknown";
 			$placelist = create_possible_place_names($par[$i], $i+1);
 			foreach ($placelist as $key => $placename) {
-				$escparent=preg_replace("/\?/","\\\\\\?", $placename);
 				$pl_id=
-					PGV_DB::prepare("SELECT pl_id FROM {$TBLPREFIX}placelocation WHERE pl_level={$i} AND pl_parent_id={$place_id} AND pl_place ".PGV_DB::$LIKE." '{$escparent}' ORDER BY pl_place")
-					->execute(array())
+					PGV_DB::prepare("SELECT pl_id FROM {$TBLPREFIX}placelocation WHERE pl_level=? AND pl_parent_id=? AND pl_place ".PGV_DB::$LIKE." ? ORDER BY pl_place")
+					->execute(array($i, $place_id, $placename))
 					->fetchOne();
 				if (!empty($pl_id)) break;
 			}
