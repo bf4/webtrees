@@ -281,10 +281,9 @@ function get_lati_long_placelocation ($place) {
 		if (empty($parent[$i])) $parent[$i]="unknown";// GoogleMap module uses "unknown" while GEDCOM uses , ,
 		$placelist = create_possible_place_names($parent[$i], $i+1);
 		foreach ($placelist as $key => $placename) {
-			$escparent=preg_replace("/\?/","\\\\\\?", $placename);
 			$pl_id=
 				PGV_DB::prepare("SELECT pl_id FROM {$TBLPREFIX}placelocation WHERE pl_level=? AND pl_parent_id=? AND pl_place ".PGV_DB::$LIKE." ? ORDER BY pl_place")
-				->execute(array($i, $place_id, $escparent))
+				->execute(array($i, $place_id, $placename))
 				->fetchOne();
 			if (!empty($pl_id)) break;
 		}
