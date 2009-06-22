@@ -273,6 +273,9 @@ function reformat_record_import($rec) {
 		case 'FIRST_COMMUNION':
 			$tag='FCOM';
 			break;
+		case '_FILE':
+			$tag='FILE';
+			break;
 		case 'FORMAT':
 			$tag='FORM';
 		case 'FORM':
