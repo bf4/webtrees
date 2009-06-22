@@ -928,7 +928,7 @@ foreach ($gedfile as $num=>$value) {
 			for ($i=max(0,$num-$context_lines); $i<$num; ++$i)
 				printf("%07d  %s\n", $i+1, $gedfile[$i]);
 		}
-		printf("<b><font color='red'>%07d[[</font><b>%s</b><font color='red'>]]  %s; {$pgv_lang['see']} %s</font></b>\n", $num+1, htmlspecialchars($gedfile[$num]), $err, pgv_href($curr_l0tag, $curr_xref));
+		printf("<b><font color='red'>&lrm;%07d[[</font><b>%s</b><font color='red'>]]&lrm;  %s; {$pgv_lang['see']} %s</font></b>\n", $num+1, htmlspecialchars($gedfile[$num]), $err, pgv_href($curr_l0tag, $curr_xref));
 		flush();
 		$last_err_num=$num;
 	} else
