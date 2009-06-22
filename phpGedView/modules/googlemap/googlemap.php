@@ -706,7 +706,7 @@ function build_indiv_map($indifacts, $famids) {
 		echo "var icon = new GIcon();";
 		echo "icon.image = \"http://maps.google.com/intl/pl_ALL/mapfiles/marker.png\";";
 		echo "icon.shadow = \"modules/googlemap/shadow50.png\";";
-		echo "icon.iconAnchor = new GPoint(6, 20);";
+		echo "icon.iconAnchor = new GPoint(10, 34);";
 		echo "icon.infoWindowAnchor = new GPoint(5, 1);";
 
 		$indexcounter = 0;
@@ -728,7 +728,7 @@ function build_indiv_map($indifacts, $famids) {
 						echo "	Marker{$j}_flag.shadow = \"modules/googlemap/shadow50.png\";\n";
 						echo "	Marker{$j}_flag.iconSize = new GSize(20, 34);\n";
 						echo "	Marker{$j}_flag.shadowSize = new GSize(37, 34);\n";
-						echo "	Marker{$j}_flag.iconAnchor = new GPoint(6, 20);\n";
+						echo "	Marker{$j}_flag.iconAnchor = new GPoint(10, 34);\n";
 						echo "	Marker{$j}_flag.infoWindowAnchor = new GPoint(5, 1);\n";
 						echo "var Marker{$j} = new GMarker(new GLatLng(0, 0), {icon:Marker{$j}_flag, title:\"".addslashes($tooltip)."\"});\n";
 					} else if (empty($markers[$j]["icon"])) {
