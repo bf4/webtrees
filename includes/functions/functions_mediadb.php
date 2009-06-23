@@ -1505,7 +1505,7 @@ function show_media_form($pid, $action = "newentry", $filename = "", $linktoid =
 				var extsearch=/\.([a-zA-Z]{3,4})$/;
 				ext='';
 				if (extsearch.exec(filename)) {
-					ext = RegExp.$1;
+					ext = RegExp.$1.toLowerCase();
 					if (ext=='jpg') ext='jpeg';
 					if (ext=='tif') ext='tiff';
 				}
