@@ -10,6 +10,7 @@
 
 
 Version 4.2.2
+ - Fixed: [ 2806853 ] Minor error in faq.php css classes (fisharebest)
  - Fixed: [ 2579268 ] Nonexistent != Private != blank (wooc)
  - Fixed: [ 2807477 ] Minor tweaks to gedcheck.php (fisharebest/kiwi_pgv)
  - Fixed: [ 2806749 ] Cache needs to be cleared when changing theme (canajun2eh)
