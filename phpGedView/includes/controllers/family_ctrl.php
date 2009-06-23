@@ -99,11 +99,8 @@ class FamilyRoot extends BaseController {
 			}
 		}
 
-		//-- if no record was found create a default empty one
-		if (empty($this->family)) {
-			$this->famrec = "0 @".$this->famid."@ FAM\n";
-			$this->family = new Family($this->famrec);
-		}
+		if (empty($this->family)) return false;
+
 		$this->famrec = $this->family->getGedcomRecord();
 		$this->display = displayDetailsById($this->famid, 'FAM');
 
@@ -219,7 +216,13 @@ class FamilyRoot extends BaseController {
 	}
 
 	function getPageTitle() {
-		return PrintReady($this->title);
+		global $pgv_lang;
+		if ($this->family) {
+			return PrintReady($this->title);
+		}
+		else {
+			return $pgv_lang["unable_to_find_record"];
+		}
 	}
 
 	/**

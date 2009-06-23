@@ -44,6 +44,11 @@ $filename = $controller->getLocalFilename();
 
 print_header($controller->getPageTitle());
 
+if (!$controller->mediaobject){
+	echo "<b>".$pgv_lang["unable_to_find_record"]."</b><br /><br />";
+	print_footer();
+	exit;
+}
 global $tmb;
 
 // LBox =============================================================================
@@ -213,7 +218,7 @@ function showchanges() {
 }
 
 function ilinkitem(mediaid, type) {
-	window.open('inverselink.php?mediaid='+mediaid+'&linkto='+type+'&'+sessionname+'='+sessionid, '_blank', 'top=50,left=50,width=570,height=650,resizable=1,scrollbars=1');
+	window.open('inverselink.php?mediaid='+mediaid+'&linkto='+type+'&'+sessionname+'='+sessionid, '_blank', 'top=50,left=50,width=570,height=630,resizable=1,scrollbars=1');
 	return false;
 }
 //-->

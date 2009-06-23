@@ -90,15 +90,11 @@ class MediaControllerRoot extends IndividualController{
 			//This sets the controller ID to be the Media ID
 			$this->pid = $this->mid;
 
-			if (is_null($this->mediaobject)) $this->mediaobject = new Media("0 @".$this->mid."@ OBJE");
+			if (is_null($this->mediaobject)) return false;
 		}
 
-		// one final test to be sure we have a media object defined
-		// ways this can happen:
-		// if user failed to pass in a filename or mid to mediaviewer.php
-		// if the server did not set the environmental variables correctly for the media firewall
-		// if media firewall is being called from outside the media directory
-		if (is_null($this->mediaobject)) $this->mediaobject = new Media("0 @"."0"."@ OBJE");
+		if (is_null($this->mediaobject)) return false;
+
 		$this->mediaobject->ged_id=PGV_GED_ID; // This record is from a file
 
 		//-- perform the desired action
@@ -178,7 +174,7 @@ class MediaControllerRoot extends IndividualController{
 			$name = $this->mediaobject->getFullName();
 			return $name." - ".$this->mediaobject->getXref();
 		}
-		else return $pgv_lang["unknown"];
+		else return $pgv_lang["unable_to_find_record"];
 	}
 
 	function canDisplayDetails() {
@@ -437,7 +433,13 @@ class MediaControllerRoot extends IndividualController{
 	* @return string
 	*/
 	function getLocalFilename() {
-		return $this->mediaobject->getLocalFilename();
+		global $pgv_lang;
+		if ($this->mediaobject) {
+			return $this->mediaobject->getLocalFilename();
+		}
+		else {
+			return false;
+		}
 	}
 
 	/**
