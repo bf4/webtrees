@@ -498,7 +498,7 @@ class ra_functions {
 				$completeLink = "<a href=\"module.php?mod=research_assistant&amp;action=completeTask&amp;taskid=".$row->t_id."\">".$pgv_lang["complete"]."</a>";
 				$date=timestamp_to_gedcom_date($row->t_startdate);
 				$out .= '<tr><td class="list_value"><a href="module.php?mod=research_assistant&amp;action=viewtask&amp;taskid='.$row->t_id.'" class="list_item name2">'.PrintReady($row->t_title).'</a></td>
-						<td class="list_value wrap">'.$row->t_description.'</td>
+						<td class="list_value_wrap">'.$row->t_description.'</td>
 						<td class="list_value" align="center">'.$date->Display(false).'</td>
 						<td class="list_value" align="center">'.$this->checkComplete($row).'</td>
 						<td class="list_value" align="center"><a href="module.php?mod=research_assistant&amp;action=edittask&amp;taskid='.$row->t_id.'">'.$pgv_lang["edit"].'</a></td>
@@ -510,7 +510,7 @@ class ra_functions {
 				$completeLink = '<a href="module.php?mod=research_assistant&amp;action=completeTask&amp;taskid='.$row->t_id.'">'.$pgv_lang["editform"].'</a>';
 				$date=timestamp_to_gedcom_date($row->t_startdate);
 				$out .= '<tr><td class="list_value"><a href="module.php?mod=research_assistant&amp;action=viewtask&amp;taskid='.$row->t_id.'" class="list_item name2">'.PrintReady($row->t_title).'</a></td>
-						<td class="list_value wrap">'.$row->t_description.'</td>
+						<td class="list_value_wrap">'.$row->t_description.'</td>
 						<td class="list_value" align="center">'.$date->Display(false).'</td>
 						<td class="list_value" align="center">'.$this->checkComplete($row).'</td>
 						<td class="list_value" align="center"><a href="module.php?mod=research_assistant&amp;action=edittask&amp;taskid='.$row->t_id.'">'.$pgv_lang["edit"].'</a></td>
@@ -722,7 +722,7 @@ class ra_functions {
 		foreach ($rows as $row) {
 			$out .= '<tr><td class="list_value"><a href="module.php?mod=research_assistant&amp;action=viewtask&amp;taskid='.$row->t_id.'"class="list_item name2">'.PrintReady($row->t_title).'</a></td>';
 			$date=timestamp_to_gedcom_date($row->t_startdate);
-			$out .= '<td class="list_value wrap">'.PrintReady($row->t_description).'</td>';
+			$out .= '<td class="list_value_wrap">'.PrintReady($row->t_description).'</td>';
 			$out .= '<td class="list_value" align="center">'.$date->Display(false).'</td>';
 			$out .= '<td class="list_value" align="center">'.$this->checkComplete($row).'</td>';
 			$out .= '<td class="list_value" align="center"><a href="module.php?mod=research_assistant&amp;action=edittask&amp;taskid='.$row->t_id.'">'.$pgv_lang["edit"].'</a></td>';

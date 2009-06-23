@@ -308,7 +308,7 @@ if ($action == "show") {
 					echo '</td>';
 				}
 				// NOTE: Print the body text of the current item
-				echo '<td class="list_value wrap">', nl2br($body), '</td></tr>';
+				echo '<td class="list_value_wrap">', nl2br($body), '</td></tr>';
 			}
 		}
 	}
