@@ -114,6 +114,8 @@ class IndividualControllerRoot extends BaseController {
 		$this->default_tab = $GEDCOM_DEFAULT_TAB;
 		$indirec = find_person_record($this->pid);
 
+		if (empty($indirec)) return false;
+
 		if ($USE_RIN && $indirec==false) {
 			$this->pid = find_rin_id($this->pid);
 			$indirec = find_person_record($this->pid);
@@ -314,9 +316,14 @@ class IndividualControllerRoot extends BaseController {
 	* @return string the title of the page to go in the <title> tags
 	*/
 	function getPageTitle() {
-		global $pgv_lang, $GEDCOM;
-		$name = $this->indi->getFullName();
-		return $name." - ".$this->indi->getXref()." - ".$pgv_lang["indi_info"];
+		global $pgv_lang;
+		if ($this->indi) {
+			$name = $this->indi->getFullName();
+			return $name." - ".$this->indi->getXref()." - ".$pgv_lang["indi_info"];
+		}
+		else {
+			return $pgv_lang["unable_to_find_record"];
+		}
 	}
 
 	/**
@@ -1362,6 +1369,8 @@ class IndividualControllerRoot extends BaseController {
 
 				if (!is_null($value->getFamilyId())) {
 					if (!$yetdied) {
+						// luk
+						if ($value->getTag()!="RESI") 
 						print_fact($value);
 					}
 				}

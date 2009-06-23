@@ -41,7 +41,12 @@ global $USE_THUMBS_MAIN, $mediacnt, $tabno, $hitCount, $GOOGLEMAP_PH_CONTROLS;
 
 print_header($controller->getPageTitle());
 
-if (!$controller->indi->canDisplayName()) {
+if (!$controller->indi){
+	echo "<b>".$pgv_lang["unable_to_find_record"]."</b><br /><br />";
+	print_footer();
+	exit;
+}
+else if (!$controller->indi->canDisplayName()) {
 	print_privacy_error($CONTACT_EMAIL);
 	print_footer();
 	exit;

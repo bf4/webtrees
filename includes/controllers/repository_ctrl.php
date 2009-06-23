@@ -3,7 +3,7 @@
 * Controller for the repository page view
 *
 * phpGedView: Genealogy Viewer
-* Copyright (C) 2002 to 2008 PGV Development Team.  All rights reserved.
+* Copyright (C) 2002 to 2009 PGV Development Team.  All rights reserved.
 *
 * This program is free software; you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -65,7 +65,7 @@ class RepositoryControllerRoot extends BaseController {
 		$this->rid         =safe_GET_xref('rid');
 
 		$repositoryrec = find_other_record($this->rid);
-		if (!$repositoryrec) $repositoryrec = "0 @".$this->rid."@ REPO\n";
+		if (!$repositoryrec) return false;
 
 		$this->repository = new Repository($repositoryrec);
 		$this->repository->ged_id=PGV_GED_ID; // This record is from a file
@@ -159,7 +159,12 @@ class RepositoryControllerRoot extends BaseController {
 	*/
 	function getPageTitle() {
 		global $pgv_lang;
-		return $this->repository->getFullName()." - ".$this->rid." - ".$pgv_lang["repo_info"];
+		if ($this->repository) {
+			return $this->repository->getFullName()." - ".$this->rid." - ".$pgv_lang["repo_info"];
+		}
+		else {
+			return $pgv_lang["unable_to_find_record"];
+		}
 	}
 	/**
 	* check if use can edit this person

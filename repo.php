@@ -49,7 +49,12 @@ if ($MULTI_MEDIA && file_exists('./modules/lightbox.php')) {
 	loadLangFile('lightbox:lang');
 }
 
-if ($controller->repository->isMarkedDeleted()) {
+if (!$controller->repository){
+	echo "<b>".$pgv_lang["unable_to_find_record"]."</b><br /><br />";
+	print_footer();
+	exit;
+}
+else if ($controller->repository->isMarkedDeleted()) {
 	echo '<span class="error">', $pgv_lang['record_marked_deleted'], '</span>';
 }
 

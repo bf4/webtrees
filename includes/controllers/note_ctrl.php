@@ -66,7 +66,7 @@ class NoteControllerRoot extends BaseController {
 		$this->nid = safe_GET_xref('nid');
 
 		$noterec = find_other_record($this->nid);
-		if (!$noterec) $noterec = "0 @".$this->nid."@ NOTE\n";
+		if (!$noterec) return false;
 
 		$this->note = new Note($noterec);
 		$this->note->ged_id=PGV_GED_ID; // This record is from a file
@@ -160,7 +160,12 @@ class NoteControllerRoot extends BaseController {
 	*/
 	function getPageTitle() {
 		global $pgv_lang;
-		return $this->note->getFullName()." - ".$this->nid." - ".$pgv_lang["shared_note_info"];
+		if ($this->note) {
+			return $this->note->getFullName()." - ".$this->nid." - ".$pgv_lang["shared_note_info"];
+		}
+		else {
+			return $pgv_lang["unable_to_find_record"];
+		}
 	}
 	/**
 	* check if use can edit this person
