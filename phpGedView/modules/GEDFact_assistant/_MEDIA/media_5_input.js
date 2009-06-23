@@ -160,7 +160,7 @@ function addRowToTable(num, pid, nam, head)
 			
 			// cell 1 - ID:
 			var cell1 = row.insertCell(1);
-				cell1.setAttribute('align', 'left');
+			//	cell1.setAttribute('align', 'left');
 			if ( pid == ''){
 				var txtInp1 = document.createElement('div');
 				txtInp1.setAttribute('type', 'checkbox');
@@ -184,7 +184,7 @@ function addRowToTable(num, pid, nam, head)
 			
 			// cell 2 - Name
 			var cell2 = row.insertCell(2);
-				cell2.setAttribute('align', 'left');
+			//	cell2.setAttribute('align', 'left');
 			var txtInp2 = document.createElement('div');
 				txtInp2.setAttribute('type', 'text');
 				txtInp2.setAttribute('id', INPUT_NAME_PREFIX + iteration + '_2');

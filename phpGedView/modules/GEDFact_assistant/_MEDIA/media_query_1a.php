@@ -43,12 +43,12 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	echo "<table><tr><td>";
 	echo "<table id=\"existLinkTbl\" width=\"430\" cellspacing=\"1\" >";
 	echo "<tr>";
-	echo '<td class="topbottombar" width="15"  style="text-align:left;font-weight:100;" >#</td>';
-	echo '<td class="topbottombar" width="50"  style="text-align:left;font-weight:100;" >ID:</td>';
-	echo '<td class="topbottombar" width="340" style="text-align:left;font-weight:100;" >', $pgv_lang["name"], '</td>';
-	echo '<td class="topbottombar" width="20"  style="text-align:left;font-weight:100;" >', $pgv_lang["keep"], '</td>';
-	echo '<td class="topbottombar" width="20"  style="text-align:left;font-weight:100;" >', $pgv_lang["remove"], '</td>';
-	echo '<td class="topbottombar" width="20"  style="text-align:left;font-weight:100;" >', $pgv_lang["nav"], '</td>';
+	echo '<td class="topbottombar" width="15"  style="font-weight:100;" >#</td>';
+	echo '<td class="topbottombar" width="50"  style="font-weight:100;" >ID:</td>';
+	echo '<td class="topbottombar" width="340" style="font-weight:100;" >', $pgv_lang["name"], '</td>';
+	echo '<td class="topbottombar" width="20"  style="font-weight:100;" >', $pgv_lang["keep"], '</td>';
+	echo '<td class="topbottombar" width="20"  style="font-weight:100;" >', $pgv_lang["remove"], '</td>';
+	echo '<td class="topbottombar" width="20"  style="font-weight:100;" >', $pgv_lang["nav"], '</td>';
 	echo "</tr>";
 
 	$keys = array_keys($links);

@@ -79,16 +79,15 @@ td #srch a {
 #flyoutFamRTL, #flyoutParRTL, #flyoutStepRTL {
 	position: absolute; 
 	top: -15px; 
-	right: 35px; 
+	right: 35px;
 }
 #flyoutFam td, #flyoutPar td, #flyoutStep td, #flyoutFamRTL td, #flyoutParRTL td, #flyoutStepRTL td {
+	white-space: nowrap; 
 	font-size:10px;
 	font-weight:normal;
+	text-decoration: none;
 }
-div #wifePar {
-	margin-left:0px;
-	margin-top:-12px;
-}
+
 div #spouseFam {
 	margin-left:13px;
 	margin-top:0px;
