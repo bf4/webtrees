@@ -1369,8 +1369,6 @@ class IndividualControllerRoot extends BaseController {
 
 				if (!is_null($value->getFamilyId())) {
 					if (!$yetdied) {
-						// luk
-						if ($value->getTag()!="RESI") 
 						print_fact($value);
 					}
 				}
