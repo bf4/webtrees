@@ -1148,7 +1148,7 @@ function print_pedigree_person_nav2($pid, $style=1, $show_famlink=true, $count=0
 								}else{
 									$parentlinks .= $pgv_lang["private"];
 								}
-								$parentlinks .= "<br />\n";
+								$parentlinks .= "\n";
 								$natdad = "yes";
 							}
 						}
@@ -1205,13 +1205,15 @@ function print_pedigree_person_nav2($pid, $style=1, $show_famlink=true, $count=0
 									$parentlinks .=	"'Y'".",";													// Y/M/D	=	Age in Years/Months/Days
 									$parentlinks .=	"''".",";													// occu 	=	Occupation
 									$parentlinks .=	"'".PrintReady($wife->getcensbirthplace())."'";				// birthpl	=	Birthplace
-									$parentlinks .=	");\"><div id='wifePar'>";
+									//$parentlinks .=	");\"><div id='wifePar'>";
+									$parentlinks .=	");\">";
 									//if ($married>=0 && isset($nam[1])){
 									//	$parentlinks .= $fulmn;			 										// Full Married Name
 									//} else {
 										$parentlinks .= PrintReady($wife->getFullName());							 						// Full Name
 									//}
-									$parentlinks .= "</div></a>";
+									// $parentlinks .= "</div></a>";
+									$parentlinks .= "</a>";
 								}else{
 									$parentlinks .= $pgv_lang["private"];
 								}

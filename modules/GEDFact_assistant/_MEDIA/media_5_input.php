@@ -70,11 +70,11 @@ echo '<script src="modules/GEDFact_assistant/_MEDIA/media_5_input.js" type="text
 	<table width="430" border="0" cellspacing="1" id="addlinkQueue">
 		<thead>
 		<tr>
-			<th class="topbottombar" width="10"  style="text-align:left;font-weight:100;" align="left">#</th>
-			<th class="topbottombar" width="55"  style="text-align:left;font-weight:100;" align="left">ID:</th>
-			<th class="topbottombar" width="370" style="text-align:left;font-weight:100;" align="left"><?php echo $pgv_lang["name"];?></th>
-			<th class="topbottombar" width="20"  style="text-align:left;font-weight:100;" align="left"><?php echo $pgv_lang["remove"];?></th>
-			<th class="topbottombar" width="20"  style="text-align:left;font-weight:100;" align="left"><?php echo $pgv_lang["nav"];?></th>
+			<th class="topbottombar" width="10"  style="font-weight:100;" align="left">#</th>
+			<th class="topbottombar" width="55"  style="font-weight:100;" align="left">ID:</th>
+			<th class="topbottombar" width="370" style="font-weight:100;" align="left"><?php echo $pgv_lang["name"];?></th>
+			<th class="topbottombar" width="20"  style="font-weight:100;" align="left"><?php echo $pgv_lang["remove"];?></th>
+			<th class="topbottombar" width="20"  style="font-weight:100;" align="left"><?php echo $pgv_lang["nav"];?></th>
 		</tr>
 		</thead>
 		<tbody></tbody>
