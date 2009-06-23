@@ -581,8 +581,8 @@ class PGV_DB {
 		case 'sqlite2':
 			// SQLITE doesn't support the ANSI standard information_schema
 			$rows=
-				PGV_DB::prepare("pragma table_info(?)")
-				->execute(array($table))
+				PGV_DB::prepare("pragma table_info('{$table}')")
+				->execute(array())
 				->fetchAll();
 			$columns=array();
 			foreach ($rows as $row) {
