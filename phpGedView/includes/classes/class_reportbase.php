@@ -1025,8 +1025,8 @@ function PGVRGetPersonNameSHandler($attrs) {
 		if (is_null($record)) return;
 		if (!$record->canDisplayDetails()) $currentElement->addText($pgv_lang["private"]);
 		else {
-			$name = $record->getFullName();
-			$addname = $record->getAddName();
+			$name = strip_tags($record->getFullName());
+			$addname = strip_tags($record->getAddName());
 			if (hasRTLText($addname)) {
 				$addname .= " ".$name;
 				$name = $addname;
