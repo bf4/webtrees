@@ -1306,8 +1306,8 @@ loadLangFile('pgv_help');
 	$output='';
 	if (!$SEARCH_SPIDER && $view!='preview' && $_SESSION['show_context_help']) {
 		$output.=' <a class="help" tabindex="0" title="';
-		$output.=$pgv_lang['help_header'].'" href="help_text.php?help=';
 		if ($show_desc) {
+			$output.=$pgv_lang["help_header"].' '.$pgv_lang[$show_desc].'" href="javascript:// ';
 			if ($use_print_text) {
 				$output.=print_text($show_desc, 0, 1);
 			} else {
@@ -1318,6 +1318,7 @@ loadLangFile('pgv_help');
 				}
 			}
 		} else {
+			$output.=$pgv_lang["help_header"].'" href="javascript:// ';
 			$output.=$help;
 		}
 		$output.="\" onclick=\"helpPopup('$help'); return false;\">";
