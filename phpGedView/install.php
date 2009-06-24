@@ -165,6 +165,7 @@ switch($step) {
 	case 3:
 		if (isset($_SESSION['install_config']['DBHOST'])) {
 			//-- create db connection
+			$TBLPREFIX = $_SESSION['install_config']['TBLPREFIX'];
 			try {
 				PGV_DB::disconnect(); // from the connect defined in config.php
 				PGV_DB::createInstance(
