@@ -3,7 +3,7 @@
  * Interface to edit place locations
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008 PGV Development Team. All rights reserved.
+ * Copyright (C) 2002 to 2009 PGV Development Team. All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -161,12 +161,13 @@ function getHelp(which) {
 				$rep = opendir('./places/'.$country[$i].'/');
 				while ($file = readdir($rep)) {
 					if (stristr($file, "flags")) {
-						$countryList[] = $country[$i];
+						$countryList[$country[$i]] = $countries[$country[$i]];
 					}
 				}
 				closedir($rep);
 			}
 		}
+		asort($countryList);
 		$_SESSION['flags_countrylist'] = serialize($countryList);
 	} else {
 		$countryList = unserialize($_SESSION['flags_countrylist']);
@@ -183,10 +184,10 @@ function getHelp(which) {
 				<?php print_help_link("PLE_FLAGS_help", "qm", "PLE_FLAGS");?>
 				<select name="COUNTRYSELECT" dir="ltr" tabindex="0" onchange="selectCountry()">
 					<option value="Countries"><?php echo $pgv_lang["pl_countries"]; ?></option>
-					<?php for ($i = 0; $i < count($countryList); $i++) {
-						echo "	<option value=\"".$countryList[$i]."\"";
-						if ($countrySelected == $countryList[$i]) echo " selected=\"selected\" ";
-						echo ">".$countries[$countryList[$i]]."</option>\n";
+					<?php foreach ($countryList as $country_key=>$country_name) {
+						echo "	<option value=\"".$country_key."\"";
+						if ($countrySelected == $country_key) echo " selected=\"selected\" ";
+						echo ">".$country_name."</option>\n";
 					} ?>
 				</select>
 			</td>
