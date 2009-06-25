@@ -5,7 +5,7 @@
 * This block will print a users tasks
 *
 * phpGedView: Genealogy Viewer
-* Copyright (C) 2002 to 2009  John Finlay and Others
+* Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
 *
 * This program is free software; you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -60,19 +60,22 @@ if ($SHOW_RESEARCH_ASSISTANT>=PGV_USER_ACCESS_LEVEL) {
 		$mod = new ra_functions();
 		$mod->init();
 
-		$out = "<table class='list_table'><tr><th class='descriptionbox'>".$pgv_lang["Task_Name"]."</th><th class='descriptionbox'>".$pgv_lang["Start_Date"]."</th><th class='descriptionbox'>".$pgv_lang["edit"]."</th></tr>";
+		$out = "<table class='list_table center'><tr><th></th><th class='descriptionbox'>".$pgv_lang["Task_Name"]."</th><th class='descriptionbox'>".$pgv_lang["Start_Date"]."</th><th class='descriptionbox'>".$pgv_lang["edit"]."</th></tr>";
 		//USERS CURRENT TASKS
 		$rows=
 			PGV_DB::prepare("SELECT * FROM {$TBLPREFIX}tasks WHERE t_username=? AND t_enddate IS NULL")
 			->execute(array(PGV_USER_NAME))
 			->fetchAll();
-
+		
+		$i = 1;
 		foreach ($rows as $row) {
 			$tasktitle = '<a href="module.php?mod=research_assistant&amp;action=viewtask&amp;taskid='.$row->t_id.'">'.$row->t_title.'</a>';
 			$date=timestamp_to_gedcom_date($row->t_startdate);
-			$out .= '<tr><td>'.PrintReady($tasktitle).'</td><td>'.$date->Display(false);
+			$out .= '<tr><td class="list_value_wrap rela list_item">'.$i.'</td>';
+			$out .= '<td class="optionbox '.$TEXT_DIRECTION.'">'.PrintReady($tasktitle).'</td><td class="optionbox">'.$date->Display(false);
 			$out .= '</td><td class="optionbox"><a href="module.php?mod=research_assistant&amp;action=edittask&amp;taskid='.$row->t_id.'">'.$pgv_lang["edit"].'</a>';
 			$out .= '</td></tr>';
+			$i++;
 		}
 		$out .= '</table>';
 
@@ -82,16 +85,21 @@ if ($SHOW_RESEARCH_ASSISTANT>=PGV_USER_ACCESS_LEVEL) {
 				PGV_DB::prepare("SELECT * FROM {$TBLPREFIX}tasks WHERE t_username=? AND t_enddate IS NOT NULL")
 				->execute(array(PGV_USER_NAME))
 				->fetchAll();
-
-			$out .= "<b><p style='text-align: center;'>".$pgv_lang["completed"]."</p></b><br/><table class='list_table'><tr><th class='descriptionbox'>".$pgv_lang["Task_Name"]."</th><th class='descriptionbox'>".$pgv_lang["Start_Date"]."</th><th class='descriptionbox'>".$pgv_lang["edit"]."</th></tr>";
-			foreach ($rows as $row) {
-				$tasktitle = '<a href="module.php?mod=research_assistant&amp;action=viewtask&amp;taskid='.$row->t_id.'">'.$row->t_title.'</a>';
-				$date=timestamp_to_gedcom_date($row->t_startdate);
-				$out .= '<tr><td>'.PrintReady($tasktitle).'</td><td>'.$date->Display(false);
-				$out .= '</td><td class="optionbox"><a href="module.php?mod=research_assistant&amp;action=edittask&amp;taskid='.$row->t_id.'">'.$pgv_lang["edit"].'</a>';
-				$out .= '</td></tr>';
+			
+			if (count($rows)>0) {
+				$i = 1;
+				$out .= "<b><p style='text-align: center;'>".$pgv_lang["completed"]."</p></b><br/><table class='list_table center'><tr><th></th><th class='descriptionbox'>".$pgv_lang["Task_Name"]."</th><th class='descriptionbox'>".$pgv_lang["Start_Date"]."</th><th class='descriptionbox'>".$pgv_lang["edit"]."</th></tr>";
+				foreach ($rows as $row) {
+					$tasktitle = '<a href="module.php?mod=research_assistant&amp;action=viewtask&amp;taskid='.$row->t_id.'">'.$row->t_title.'</a>';
+					$date=timestamp_to_gedcom_date($row->t_startdate);
+					$out .= '<tr><td class="list_value_wrap rela list_item">'.$i.'</td>';
+					$out .= '<td class="optionbox '.$TEXT_DIRECTION.'">'.PrintReady($tasktitle).'</td><td class="optionbox">'.$date->Display(false);
+					$out .= '</td><td class="optionbox"><a href="module.php?mod=research_assistant&amp;action=edittask&amp;taskid='.$row->t_id.'">'.$pgv_lang["edit"].'</a>';
+					$out .= '</td></tr>';
+					$i++;
+				}
+				$out .= '</table>';
 			}
-			$out .= '</table>';
 		}
 
 		//UNASSIGNED TASKS
@@ -100,15 +108,20 @@ if ($SHOW_RESEARCH_ASSISTANT>=PGV_USER_ACCESS_LEVEL) {
 				PGV_DB::prepare("SELECT * FROM {$TBLPREFIX}tasks WHERE t_username=''")
 				->fetchAll();
 
-			$out .= "<b><p style='text-align: center;'>".$pgv_lang["mytasks_unassigned"]."</p></b><br/><table class='list_table'><tr><th class='descriptionbox'>".$pgv_lang["Task_Name"]."</th><th class='descriptionbox'>".$pgv_lang["Start_Date"]."</th><th class='descriptionbox'>".$pgv_lang["mytasks_edit"]."</th><th class='descriptionbox'>".$pgv_lang["mytasks_takeOn"]."</th></tr>";
-			foreach ($rows as $row) {
-				$tasktitle = '<a href="module.php?mod=research_assistant&amp;action=viewtask&amp;taskid='.$row->t_id.'">'.$row->t_title.'</a>';
-				$date=timestamp_to_gedcom_date($row->t_startdate);
-				$out .= '<tr><td>'.PrintReady($tasktitle).'</td><td>'.$date->Display(false);
-				$out .= '</td><td class="optionbox"><a href="module.php?mod=research_assistant&amp;action=edittask&amp;taskid='.$row->t_id.'">'.$pgv_lang["edit"].'</a>';
-				$out .= '</td><td class="optionbox"><a href="module.php?mod=research_assistant&amp;action=assignUser&amp;t_id='.$row->t_id.'&amp;t_username='.PGV_USER_NAME.'">'.$pgv_lang["mytasks_takeOn"].'</a></td></tr>';
+			if (count($rows)>0) {
+				$i = 1;
+				$out .= "<b><p style='text-align: center;'>".$pgv_lang["mytasks_unassigned"]."</p></b><br/><table class='list_table center'><tr><th></th><th class='descriptionbox'>".$pgv_lang["Task_Name"]."</th><th class='descriptionbox'>".$pgv_lang["Start_Date"]."</th><th class='descriptionbox'>".$pgv_lang["mytasks_edit"]."</th><th class='descriptionbox'>".$pgv_lang["mytasks_takeOn"]."</th></tr>";
+				foreach ($rows as $row) {
+					$tasktitle = '<a href="module.php?mod=research_assistant&amp;action=viewtask&amp;taskid='.$row->t_id.'">'.$row->t_title.'</a>';
+					$date=timestamp_to_gedcom_date($row->t_startdate);
+					$out .= '<tr><td class="list_value_wrap rela list_item">'.$i.'</td>';
+					$out .= '<td class="optionbox '.$TEXT_DIRECTION.'">'.PrintReady($tasktitle).'</td><td class="optionbox">'.$date->Display(false);
+					$out .= '</td><td class="optionbox"><a href="module.php?mod=research_assistant&amp;action=edittask&amp;taskid='.$row->t_id.'">'.$pgv_lang["edit"].'</a>';
+					$out .= '</td></tr>';
+					$i++;
+				}
+				$out .= '</table>';
 			}
-			$out .= '</table>';
 		}
 
 		// Print heading
@@ -117,7 +130,7 @@ if ($SHOW_RESEARCH_ASSISTANT>=PGV_USER_ACCESS_LEVEL) {
 			print "<table class=\"blockheader\" cellspacing=\"0\" cellpadding=\"0\" style=\"direction:ltr;\"><tr>";
 			print "<td class=\"blockh1\" >&nbsp;</td>";
 			print "<td class=\"blockh2\" ><div class=\"blockhc\">";
-			print_help_link("mytasks_help", "qm");
+			print_help_link("mytasks_help", "qm", "my_tasks");
 
 			if ($PGV_BLOCKS["print_mytasks"]["canconfig"]) {
 				if ($ctype=="gedcom" && PGV_USER_GEDCOM_ADMIN || $ctype=="user" && PGV_USER_ID) {
