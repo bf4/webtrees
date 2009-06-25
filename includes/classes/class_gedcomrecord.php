@@ -583,6 +583,12 @@ class GedcomRecord {
 			return $pgv_lang['private'];
 		}
 	}
+	function getFindName() {
+		return strtr(utf8_decode(strip_tags($this->getListName())),
+								"ÀÁÂÃÄÅàáâãäåÒÓÔÕÖØòóôõöøÈÉÊËèéêëÇçÌÍÎÏìíîïÙÚÛÜùúûüÿÑñ",
+								"aaaaaaaaaaaaooooooooooooeeeeeeeecciiiiiiiiuuuuuuuuynn");
+	}
+
 	// Get the fullname in an alternative character set
 	function getAddName() {
 		if ($this->canDisplayName() && $this->getPrimaryName()!=$this->getSecondaryName()) {
