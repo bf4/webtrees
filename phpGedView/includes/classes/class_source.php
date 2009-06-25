@@ -3,7 +3,7 @@
  * Class file for a Source (SOUR) object
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
+ * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -92,6 +92,14 @@ class Source extends GedcomRecord {
 		//-- also store it using its reference id (sid:pid and local gedcom for remote links)
 		$gedcom_record_cache[$pid][$ged_id]=&$object;
 		return $object;
+	}
+
+	/**
+	 * get the repository of this source record
+	 * @return string
+	 */
+	function getRepo() {
+		return get_gedcom_value('REPO', 1, $this->gedrec, '', false);
 	}
 
 	/**
