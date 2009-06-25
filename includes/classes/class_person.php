@@ -315,6 +315,31 @@ class Person extends GedcomRecord {
 		return $this->getDeathDate()->MinDate()->Format('Y');
 	}
 
+	/**
+	* get the birth and death years
+	* @return string
+	*/
+	function getBirthDeathYears($age_at_death=true, $classname="details1") {
+		global $pgv_lang;
+		if (!$this->getBirthYear()) {
+			return "";
+		}
+		$tmp = "<span title=\"".strip_tags($this->getBirthDate()->Display())."\">".$this->getBirthYear()."</span>";
+		$tmp .= "-";
+		$tmp .= "<span title=\"".strip_tags($this->getDeathDate()->Display())."\">".$this->getDeathYear()."</span>";
+		if ($this->getDeathYear() && $age_at_death) {
+			$age = get_age_at_event(GedcomDate::GetAgeGedcom($this->getBirthDate(), $this->getDeathDate()), false);
+			if (!empty($age)) {
+				$age = "({$pgv_lang['age']} {$age})";
+				$tmp .= "<span class='age'> ".PrintReady($age)."</span>";
+			}
+		}
+		if ($classname) {
+			return "<span class='{$classname}'>{$tmp}</span>";
+		}
+		return $tmp;
+	}
+
 	// Get all the dates/places for births/deaths - for the INDI lists
 	function getAllBirthDates() {
 		if (is_null($this->_getAllBirthDates)) {
@@ -548,7 +573,7 @@ class Person extends GedcomRecord {
 				$label .= "</div>";
 			}
 		}
-		if ($counter) $label .= "<div>".$pgv_lang["number_sign"].$counter."</div>";
+		if ($counter) $label .= "<div class=\"".strrev($TEXT_DIRECTION)."\">".$pgv_lang["number_sign"].$counter."</div>";
 		$label .= $this->label;
 		if ($gap!=0 && $counter<1) $label .= "<br />&nbsp;";
 		return $label;
@@ -1802,6 +1827,7 @@ class Person extends GedcomRecord {
 		$this->format_first_major_fact(PGV_EVENTS_BIRT, 1).
 		$this->format_first_major_fact(PGV_EVENTS_DEAT, 1);
 	}
+
 }
 
 // Localise a date differences.  This is a default function, and may be overridden in includes/extras/functions.xx.php
