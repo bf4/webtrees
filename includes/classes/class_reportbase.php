@@ -187,6 +187,14 @@ class PGVReportBase {
 	function createHTML($tag, $attrs) {
 		return new PGVRHtml($tag, $attrs);
 	}
+
+	// static callback functions to sort data
+	static function CompareBirthDate($x, $y) {
+		return GedcomDate::Compare($x->getBirthDate(), $y->getBirthDate());
+	}
+	static function CompareDeathDate($x, $y) {
+		return GedcomDate::Compare($x->getDeathDate(), $y->getDeathDate());
+	}
 }
 
 /**
@@ -2154,6 +2162,12 @@ function PGVRRelativesSHandler($attrs) {
 		break;
 	case 'ID':
 		uasort($list, array('GedcomRecord', 'CompareId'));
+		break;
+	case 'BIRT:DATE':
+		uasort($list, array('PGVReportBase', 'CompareBirthDate'));
+		break;
+	case 'DEAT:DATE':
+		uasort($list, array('PGVReportBase', 'CompareDeathDate'));
 		break;
 	case 'generation':
 		$newarray = array();
