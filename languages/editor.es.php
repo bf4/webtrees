@@ -172,7 +172,6 @@ $pgv_lang["file_bad_extension"]		= "PHP bloqueó el archivo por su extensión";
 $pgv_lang["file_unkown_err"]		= "Al subir el archivo se produjo en error desconocido con código #pgv_lang[global_num1]#. Por favor, repórtelo como error de programación.";
 $pgv_lang["folder"]		 			= "Carpeta en el servidor";
 $pgv_lang["gedcom_editing_disabled"]	= "El administrador ha deshabilitado las modificaciones a este GEDCOM.";
-$pgv_lang["gedcomid"]				= "ID GEDCOM del registro de persona";
 $pgv_lang["gedrec_deleted"] 		= "Registro GEDCOM correctamente eliminado.";
 $pgv_lang["gen_thumb"]				= "Generar miniatura";
 $pgv_lang["gen_missing_thumbs"]		= "Generar miniaturas ausentes";
