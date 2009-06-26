@@ -871,11 +871,11 @@ case 'addnoteaction':
 	if (isset($_REQUEST['CALN'])) $CALN = $_REQUEST['CALN'];
 
 	if (!empty($NOTE)) {
-		$newlines = preg_split("/\r?\n/",$NOTE,-1,PREG_SPLIT_NO_EMPTY);
+		$newlines = preg_split("/\r?\n/",$NOTE,-1);
 		for($k=0; $k<count($newlines); $k++) {
 			if ( $k==0 && count($newlines)>1) {
 				$newgedrec = "0 @XREF@ NOTE $newlines[$k]\n";
-			}elseif ( $k==0 ) {
+			}else if ( $k==0 ) {
 				$newgedrec = "0 @XREF@ NOTE $newlines[$k]\n1 CONT\n";
 			}else if (strstr($newlines[$k], "|Head|")) {
 				$newgedrec .= "1 CONT\n1 CONT $newlines[$k]\n";
