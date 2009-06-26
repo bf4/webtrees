@@ -1056,7 +1056,7 @@ function print_editnote_link($note_id) {
 	else $Link = $text;
 	echo "<a href=\"javascript: var win02=window.open('edit_interface.php?action=editnote&pid=$note_id', 'win02', 'top=70, left=70, width=620, height=500, resizable=1, scrollbars=1 ' )\">";
 	echo $Link;
-	echo "</a><br />";
+	echo "</a>";
 }
 
 /**
@@ -1622,19 +1622,22 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 		}
 
 		// Shared Notes Icons ========================================
+		// $record=GedcomRecord::getInstance($value);
 		if ($fact=="NOTE" && $islink) {
 			print_findnote_link($element_id);
 			print_addnewnote_link($element_id);
+			 if ($value!="") {
+				echo "&nbsp;&nbsp;&nbsp;";
+				print_editnote_link($value);
+			}
+			// If GEDFAct_assistant/_CENS/ module exists --------------------------
 			if (file_exists('modules/GEDFact_assistant/_CENS/census_1_ctrl.php')) {
+				echo "&nbsp;&nbsp;&nbsp;";
 				print_addnewnote_assisted_link($element_id);
 			}
-			echo "&nbsp;&nbsp;&nbsp;";
-			$record=GedcomRecord::getInstance($value);
-			
+		echo "<br />";
 		}
-		if ($fact=="NOTE" && $islink && $value!="") {
-			print_editnote_link($value);
-		}
+
 		// ===========================================================
 
 		if ($fact=="OBJE") print_findmedia_link($element_id, "1media");
