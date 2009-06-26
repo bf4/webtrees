@@ -144,12 +144,35 @@ $pgv_lang["PRIV_NONE"]				= "Mostrar sólo a administradores";
 $pgv_lang["PRIV_HIDE"]				= "Ocultar incluso a los administradores";
 $pgv_lang["manage_gedcoms"] 		= "Administrar GEDCOMs";
 $pgv_lang["keep_media"]				= "Conservar los vínculos a objetos audiovisuales";
-$pgv_lang["media_now_linked to"]	= " El objeto audiovisual está vinculado ahora a - ";
 $pgv_lang["current_links"]			= "Vínculos";
 $pgv_lang["add_more_links"]			= "Agregar más vínculos";
 $pgv_lang["enter_pid_or_name"]		= "Introduzca el ID o el nombre de una persona";
 $pgv_lang["set_links"]				= "Fijar vínculos";
 $pgv_lang["add_or_remove_links"]	= "Administrar vinculos";
+
+$pgv_lang["keep"]					= "Mantener";
+$pgv_lang["unlink"]					= "Desvincular";
+$pgv_lang["nav"]					= "Navegador";
+$pgv_lang["fam_nav"]				= "Navegador de familias";
+$pgv_lang["remove"]					= "Borrar";
+$pgv_lang["keep_link"]				= "Mantener el vínculo en la lista";
+$pgv_lang["remove_link"]			= "Borrar el vínculo de la lista";
+$pgv_lang["open_nav"]				= "Abrir el navegador de familias";
+$pgv_lang["link_exists"]			= "Este vínculo ya existe";
+$pgv_lang["id_not_valid"]			= "No es un ID válido de persona, familia o fuente";
+$pgv_lang["add_fam_other_links"]	= "Agregar vínculos de agregar familia y de buscar";
+$pgv_lang["search_add_links"]		= "Buscar personas a agregar a la lista de Agregar Vínculos.";
+$pgv_lang["enter_name"]				= "Introduzca un nombre";
+$pgv_lang["add_indi_to_link_list"]	= "Haga clic en el nombre para agregar la persona a la lista de Agregar Vínculos.";
+$pgv_lang["click_choose_head"]		= "Haga clic en #GLOBALS[tempStringHead]# para escoger la persona como cabeza de familia.";
+$pgv_lang["click_choose_head_text"]	= "Haga clic para escoger la persona como cabeza de familia.";
+$pgv_lang["head"]					= "Cabeza";
+$pgv_lang["id_empty"]				= "No se puede dejar el campo ID en blanco al agregar un vínculo.";
+$pgv_lang["link_deleted"]			= "Vínculo a #GLOBALS[remLinkId]# borrado";
+$pgv_lang["link_added"]				= "Vínculo a #GLOBALS[addLinkId]# agregado";
+$pgv_lang["no_update_CHANs"]		= "No actualizar los registros CHAN (último cambio)";
+$pgv_lang["no_CHANs_update"]		= "No se actualizó ningún registro CHAN (último cambio)";
+
 $pgv_lang["files_in_backup"]		= "Archivos incluidos en esta copia de seguridad";
 $pgv_lang["created_remotelinks"]	= "Creada la tabla <i>Vínculos remotos</i> con éxito.";
 $pgv_lang["created_remotelinks_fail"] 	= "No se pudo crear la tabla de <i>Vínculos remotos</i>.";
@@ -398,6 +421,8 @@ $pgv_lang["batch_update"]="Realizar cambios en bloque a su GEDCOM";
 // Text for the Gedcom Checker
 $pgv_lang["gedcheck"]     = "Comprobador de Gedcom";          // Module title
 $pgv_lang["gedcheck_text"]= "Este módulo comprueba el formato de un archivo GEDCOM contra la <a href=\"http://phpgedview.sourceforge.net/ged551-5.pdf\">Especificación GEDCOM 5.5.1</a>.  También comprueba la existencia de una serie de errores corrientes en sus datos.  Nótese que hay muchas versiones, extensiones y variaciones de la especificación, así que no debería preocuparse por problemas salvo los señalados como \"Críticos\".  La explicación para cada uno de los errores se encuentra en la especificación. Consúltela, por favor, antes de solicitar ayuda.";
+$pgv_lang["gedcheck_sync"] = "Las modificaciones a la base de datos no se reflejan en el archivo #GLOBALS[ged]#.  El contenido del archivo puede estar desactualizado.  Puede sincronizarlo con la base de datos ahora realizando una <b><a \"#GLOBALS[ged_link]#\">exportación</a></b>.";
+$pgv_lang["gedcheck_nothing"] = "No se encontraron errores a este nivel.";
 $pgv_lang["level"]        = "Nivel";                   // Levels of checking
 $pgv_lang["critical"]     = "Crítico";
 $pgv_lang["error"]        = "Error";

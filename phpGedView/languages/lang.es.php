@@ -32,6 +32,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
+$pgv_lang["gedcomid"]				= "ID GEDCOM del registro de persona";
 $pgv_lang["sortby"]				= "Ordenar por";
 $pgv_lang["exact"]				= "Exacto";
 $pgv_lang["begins_with"]		= "Comienza por";
@@ -537,7 +538,7 @@ $pgv_lang["download"]				= "Haga clic con el botón derecho (control-clic en un 
 $pgv_lang["cart_is_empty"]			= "Su carrito está vacío.";
 $pgv_lang["id"] 					= "ID";
 $pgv_lang["name_description"]		= "Nombre / Descripción";
-$pgv_lang["remove"] 				= "Vaciar";
+$pgv_lang["remove"] 				= "Borrar";
 $pgv_lang["empty_cart"] 			= "Vaciar carrito";
 $pgv_lang["download_now"]			= "Descargar ahora";
 $pgv_lang["download_file"]			= "Descargar archivo #GLOBALS[whichFile]#";
