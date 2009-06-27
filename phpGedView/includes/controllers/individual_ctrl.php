@@ -114,8 +114,6 @@ class IndividualControllerRoot extends BaseController {
 		$this->default_tab = $GEDCOM_DEFAULT_TAB;
 		$indirec = find_person_record($this->pid);
 
-		if (empty($indirec)) return false;
-
 		if ($USE_RIN && $indirec==false) {
 			$this->pid = find_rin_id($this->pid);
 			$indirec = find_person_record($this->pid);
@@ -131,8 +129,10 @@ class IndividualControllerRoot extends BaseController {
 					$newrec= $service->mergeGedcomRecord($remoteid, "0 @".$this->pid."@ INDI\n1 RFN ".$this->pid, false);
 					$indirec = $newrec;
 				}
-			} else {
+			} else if (isset($pgv_changes[$this->pid."_".$GEDCOM])){
 				$indirec = "0 @".$this->pid."@ INDI\n";
+			} else {
+				return false;
 			}
 		}
 		//-- check for the user
