@@ -74,7 +74,7 @@ if ($action == "phpinfo") {
 	$offset          = strpos($php_info, "<table");
 	$php_info	= substr($php_info, $offset);
 
-	print $php_info;
+	echo $php_info;
 
 	?>
 	</div>
@@ -93,7 +93,7 @@ if ($action=="confighelp") {
 	$new_language_array = array();
 	$new_language_array_counter = 0;
 
-	for ($z = 0; $z < sizeof($language_array); $z++) {
+	for ($z = 0, $zmax = sizeof($language_array); $z < $zmax; $z++) {
 		if (isset($language_array[$z][0])) {
 			if (strpos($language_array[$z][0], "_help\"") > 0) {
 				$language_array[$z][0] = substr($language_array[$z][0], strpos($language_array[$z][0], "\"") + 1);
@@ -106,8 +106,8 @@ if ($action=="confighelp") {
 
 	print "<ol>";
 
-	for ($z = 0; $z < sizeof($new_language_array); $z++) {
-		for ($x = 0; $x < sizeof($language_array); $x++) {
+	for ($z = 0, $zmax = sizeof($new_language_array); $z < $zmax; $z++) {
+		for ($x = 0, $xmax = sizeof($language_array); $x < $xmax; $x++) {
 			$dDummy = $new_language_array[$z][0];
 			$dDummy = substr($dDummy, 0, strpos($dDummy, "_help"));
 
@@ -124,13 +124,13 @@ if ($action=="confighelp") {
 		}
 	}
 
-	for ($z = 0; $z < sizeof($new_language_array); $z++) {
+	for ($z = 0, $zmax = sizeof($new_language_array); $z < $zmax; $z++) {
 		if ($new_language_array[$z][0] != "config_help" and $new_language_array[$z][0] != "welcome_help") {
-			print "<li>";
-			print stripslashes(print_text($new_language_array[$z][1],0,2)) . "<br /><br /></li>\r\n";
+			echo '<li>';
+			echo stripslashes(print_text($new_language_array[$z][1],0,2)) . "<br /><br /></li>\r\n";
 		}
 	}
-	print "</ol>";
+	echo '</ol>';
 }
 
 print_footer();
