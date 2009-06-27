@@ -66,7 +66,12 @@ class SourceControllerRoot extends BaseController {
 		$this->sid = safe_GET_xref('sid');
 
 		$sourcerec = find_source_record($this->sid);
-		if (!$sourcerec) return false;
+
+		if (isset($pgv_changes[$this->sid."_".$GEDCOM])){
+			$sourcerec = "0 @".$this->sid."@ SOUR\n";
+		} else if (!$sourcerec) {
+			return false;
+		}
 
 		$this->source = new Source($sourcerec);
 		$this->source->ged_id=PGV_GED_ID; // This record is from a file

@@ -66,7 +66,12 @@ class NoteControllerRoot extends BaseController {
 		$this->nid = safe_GET_xref('nid');
 
 		$noterec = find_other_record($this->nid);
-		if (!$noterec) return false;
+
+		if (isset($pgv_changes[$this->nid."_".$GEDCOM])){
+			$noterec = "0 @".$this->nid."@ NOTE\n";
+		} else if (!$noterec) {
+			return false;
+		}
 
 		$this->note = new Note($noterec);
 		$this->note->ged_id=PGV_GED_ID; // This record is from a file

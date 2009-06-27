@@ -62,10 +62,15 @@ class RepositoryControllerRoot extends BaseController {
 	function init() {
 		global $pgv_lang, $CONTACT_EMAIL, $GEDCOM, $pgv_changes;
 
-		$this->rid         =safe_GET_xref('rid');
+		$this->rid = safe_GET_xref('rid');
 
 		$repositoryrec = find_other_record($this->rid);
-		if (!$repositoryrec) return false;
+
+		if (isset($pgv_changes[$this->rid."_".$GEDCOM])){
+			$repositoryrec = "0 @".$this->rid."@ REPO\n";
+		} else if (!$repositoryrec) {
+			return false;
+		}
 
 		$this->repository = new Repository($repositoryrec);
 		$this->repository->ged_id=PGV_GED_ID; // This record is from a file

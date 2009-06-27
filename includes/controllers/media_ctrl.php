@@ -45,10 +45,10 @@ class MediaControllerRoot extends IndividualController{
 	var $show_changes=true;
 
 	function init() {
-		global $MEDIA_DIRECTORY, $USE_MEDIA_FIREWALL;
+		global $MEDIA_DIRECTORY, $USE_MEDIA_FIREWALL, $GEDCOM;
 
-		$filename=decrypt(safe_GET('filename'));
-		$this->mid     =safe_GET_xref('mid');
+		$filename = decrypt(safe_GET('filename'));
+		$this->mid = safe_GET_xref('mid');
 
 		if ($USE_MEDIA_FIREWALL && empty($filename) && empty($this->mid)) {
 			// this section used by mediafirewall.php to determine what media file was requested
@@ -90,7 +90,12 @@ class MediaControllerRoot extends IndividualController{
 			//This sets the controller ID to be the Media ID
 			$this->pid = $this->mid;
 
-			if (is_null($this->mediaobject)) return false;
+			if (isset($pgv_changes[$this->mid."_".$GEDCOM])){
+				$this->mediaobject = new Media("0 @".$this->mid."@ OBJE");
+				$this->show_changes = true;
+			} else {
+				return false;
+			}
 		}
 
 		if (is_null($this->mediaobject)) return false;

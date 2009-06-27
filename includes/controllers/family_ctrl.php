@@ -81,9 +81,9 @@ class FamilyRoot extends BaseController {
 
 		$show_famlink = $this->view!='preview';
 
-		$this->famid       =safe_GET_xref('famid');
+		$this->famid = safe_GET_xref('famid');
 
-		$this->family      =Family::getInstance($this->famid);
+		$this->family = Family::getInstance($this->famid);
 
 		if (empty($this->famrec)) {
 			$ct = preg_match("/(\w+):(.+)/", $this->famid, $match);
@@ -99,7 +99,13 @@ class FamilyRoot extends BaseController {
 			}
 		}
 
-		if (empty($this->family)) return false;
+		//-- if no record was found create a default empty one
+		if (isset($pgv_changes[$this->famid."_".$GEDCOM])){
+			$this->famrec = "0 @".$this->famid."@ FAM\n";
+			$this->family = new Family($this->famrec);
+		} else {
+			return false;
+		}
 
 		$this->famrec = $this->family->getGedcomRecord();
 		$this->display = displayDetailsById($this->famid, 'FAM');
