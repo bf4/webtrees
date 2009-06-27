@@ -289,7 +289,7 @@ case "edit" :
 		$lang2 = $language_settings[strtolower($language2)]['lang_short_cut'];
 
 		$lastfound = (-1);
-		for ($ls01 = 0; $ls01 < sizeof($english_language_array); $ls01++) {
+		for ($ls01 = 0, $lsmax = sizeof($english_language_array); $ls01 < $lsmax; $ls01++) {
 			if (isset($english_language_array[$ls01][1])) {
 				$dummy_output = "";
 				$dummy_output .= "<tr>";
@@ -315,7 +315,7 @@ case "edit" :
 				$englishTarget1 = $english_language_array[$ls01][0];
 				$englishTarget2 = str_replace('"', "'", $englishTarget1);		// Var name could be enclosed in apostrophes
 				$englishTarget3 = str_replace("'", '"', $englishTarget1);		// Var name could be enclosed in apostrophes
-				for ($y = 0; $y < sizeof($new_language_array); $y++) {
+				for ($y = 0, $ymax = sizeof($new_language_array); $y < $ymax; $y++) {
 					if (isset($new_language_array[$y][1])) {
 						if ($new_language_array[$y][0] == $englishTarget1 || $new_language_array[$y][0] == $englishTarget2 || $new_language_array[$y][0] == $englishTarget3) {
 							$dDummy =  $new_language_array[$y][1];
@@ -477,7 +477,7 @@ case "export" :
 		$new_language_array = array();
 		$new_language_array_counter = 0;;
 
-		for ($z = 0; $z < sizeof($language_array); $z++) {
+		for ($z = 0, $zmax = sizeof($language_array); $z < $zmax; $z++) {
 			if (isset($language_array[$z][0])) {
 				$language_array[$z][0] = substr($language_array[$z][0], strpos($language_array[$z][0], "\"") + 1);
 				$language_array[$z][0] = substr($language_array[$z][0], 0, strpos($language_array[$z][0], "\""));
@@ -488,8 +488,8 @@ case "export" :
 
 		fwrite($fp, "<ol>");
 
-		for ($z = 0; $z < sizeof($new_language_array); $z++) {
-			for ($x = 0; $x < sizeof($language_array); $x++) {
+		for ($z = 0, $zmax = sizeof($new_language_array); $z < $zmax; $z++) {
+			for ($x = 0, $xmax = sizeof($language_array); $x < $xmax; $x++) {
 				$dDummy = $new_language_array[$z][0];
 				$dDummy = substr($dDummy, 0, strpos($dDummy, "_help"));
 
@@ -511,7 +511,7 @@ case "export" :
 		loadLangFile("pgv_lang, pgv_admin, pgv_editor, pgv_facts, pgv_help, pgv_confighelp");
 		$LANGUAGE = $savedLanguage;
 
-		for ($z = 0; $z < sizeof($new_language_array); $z++) {
+		for ($z = 0, $zmax = sizeof($new_language_array); $z < $zmax; $z++) {
 			if ($new_language_array[$z][0] != "config_help" and $new_language_array[$z][0] != "welcome_help") {
 				fwrite($fp, "<li>");
 				fwrite($fp, stripslashes(print_text($new_language_array[$z][1],0,2))."<br /><br /></li>");

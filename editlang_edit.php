@@ -371,7 +371,7 @@ if ($action == "save") {
 		$englishTarget1 = $english_language_array[$ls01][0];
 		$englishTarget2 = str_replace('"', "'", $englishTarget1);		// Var name could be inside apostrophes
 		$englishTarget3 = str_replace("'", '"', $englishTarget1);		// Var name could be inside apostrophes
-		for ($y = 0; $y < sizeof($new_language_array); $y++) {
+		for ($y = 0, $ymax = sizeof($new_language_array); $y < $ymax; $y++) {
 			if (isset($new_language_array[$y][1])) {
 				if ($new_language_array[$y][0] == $englishTarget1 || $new_language_array[$y][0] == $englishTarget2 || $new_language_array[$y][0] == $englishTarget3) {
 					$ls02 = $y;
