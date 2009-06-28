@@ -21,7 +21,7 @@
 *
 * @package PhpGedView
 * @subpackage Lists
-* @version $Id: autocomplete.php 5693 2009-06-13 00:43:07Z windmillway $
+* @version $Id$
 */
 
 require './config.php';
