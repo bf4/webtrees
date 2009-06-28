@@ -395,6 +395,7 @@ $pgv_lang["start_at_parents"]			= "Bei den Eltern beginnen";
 $pgv_lang["charts"]						= "Diagramme";
 $pgv_lang["lists"]						= "Listen";
 $pgv_lang["box_width"]					= "Box Breite";
+$pgv_lang["random_surn"]				= "Zufällig gewählter Nachname";
 
 //-- FUNCTIONS FILE MESSAGES
 $pgv_lang["unable_to_find_family"]		= "Kann die Familie mit folgendem ID nicht finden:";
