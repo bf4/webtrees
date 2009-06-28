@@ -47,7 +47,7 @@ if ($ENABLE_AUTOCOMPLETE) {
 			<td class="optionbox <?php print $TEXT_DIRECTION; ?>">
 				<input type="text" name="surn" id="SURN" value="<?php echo $surn?>" />
 				<input type="submit" value="<?php echo $pgv_lang['view']; ?>" />
-				<input type="submit" value="Random" onclick="document.surnlist.surn.value='*';" />
+				<input type="submit" value="<?php echo $pgv_lang['random_surn']; ?>" onclick="document.surnlist.surn.value='*';" />
 				</td>
 		</tr>
 	</table>
@@ -80,17 +80,23 @@ function print_fams($person, $famid=null) {
 	// filter children (some may have a different surname)
 	if ($famid) {
 		list($surn1) = explode(", ", $person->getListName());
-		if (stripos($surn1, $surn)===false && stripos($surn, $surn1)===false) {
+		if (stripos($surn1, $surn)===false
+			&& stripos($surn, $surn1)===false
+			&& soundex_std($surn1)!==soundex_std($surn)
+			&& soundex_dm($surn1)!==soundex_dm($surn)) {
 			echo "<span title=\"".strip_tags($person->getFullName())."\">".$person->getSexImage()."...</span>";
 			return;
 		}
 	}
 	// current indi
 	echo "<li>";
-	$current = $person->getSexImage()."<a target=\"_blank\" title=\"{$person->xref}\" href=\"{$person->getLinkUrl()}\">{$person->getFullName()}</a> ".$person->getBirthDeathYears();
+	$class = "";
+	$sosa = "";
+	$current = $person->getSexImage()."<a target=\"_blank\" class=\"{$class}\" title=\"{$person->xref}\" href=\"{$person->getLinkUrl()}\">{$person->getFullName()}</a> {$sosa}".$person->getBirthDeathYears();
 	if ($famid && $person->getChildFamilyPedigree($famid)) {
 		$current = "<span class='red'>".$pgv_lang[$person->getChildFamilyPedigree($famid)]."</span> ".$current;
 	}
+	$indi_lang = whatLanguage($person->getListName());
 	// spouses and children
 	if (count($person->getSpouseFamilies())<1) {
 		echo $current;
@@ -102,9 +108,18 @@ function print_fams($person, $famid=null) {
 			if ($family->getMarriageYear()) {
 				echo "&nbsp;&nbsp;<span class='details1' title=\"".strip_tags($family->getMarriageDate()->Display())."\">&times;".$family->getMarriageYear()."</span>&nbsp;";
 			}
-			list($surn2, $givn2) = explode(", ", $spouse->getListName());
-			echo $spouse->getSexImage()."<a target=\"_blank\" title=\"{$family->xref}\" href=\"{$family->getLinkUrl()}\">{$givn2}</a> ",
-				"<a title=\"{$surn2}\" href=\"?surn={$surn2}\">{$surn2}</a> ",
+			$spouse_name = $spouse->getListName();
+			foreach ($spouse->getAllNames() as $n=>$name) {
+				if (whatLanguage($name['list']) == $indi_lang) {
+					$spouse_name = $name['list'];
+					break;
+				}
+			}
+			list($surn2, $givn2) = explode(", ", $spouse_name);
+			$class = "";
+			$sosa2 = "";
+			echo $spouse->getSexImage()."<a target=\"_blank\" class=\"{$class}\" title=\"{$family->xref}\" href=\"{$family->getLinkUrl()}\">{$givn2}</a> ",
+				"<a class=\"{$class}\" title=\"{$surn2}\" href=\"?surn={$surn2}\">{$surn2}</a> {$sosa2}",
 				$spouse->getBirthDeathYears();
 		}
 		echo "<ol>";
