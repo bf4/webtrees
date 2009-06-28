@@ -394,6 +394,7 @@ $pgv_lang["start_at_parents"]		= "Start at parents";
 $pgv_lang["charts"] 				= "Charts";
 $pgv_lang["lists"]					= "Lists";
 $pgv_lang["box_width"] 				= "Box width";
+$pgv_lang["random_surn"]					= "Random surname";
 
 //-- FUNCTIONS FILE MESSAGES
 $pgv_lang["unable_to_find_family"]	= "Unable to find family with ID";
