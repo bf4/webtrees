@@ -115,7 +115,7 @@ function print_fams($person, $famid=null) {
 					break;
 				}
 			}
-			list($surn2, $givn2) = explode(", ", $spouse_name);
+			list($surn2, $givn2) = explode(", ", $spouse_name.", x");
 			$class = "";
 			$sosa2 = "";
 			echo $spouse->getSexImage()."<a target=\"_blank\" class=\"{$class}\" title=\"{$family->xref}\" href=\"{$family->getLinkUrl()}\">{$givn2}</a> ",
