@@ -97,14 +97,13 @@ class FamilyRoot extends BaseController {
 					$this->famrec = $newrec;
 				}
 			}
-		}
-
-		//-- if no record was found create a default empty one
-		if (isset($pgv_changes[$this->famid."_".$GEDCOM])){
-			$this->famrec = "0 @".$this->famid."@ FAM\n";
-			$this->family = new Family($this->famrec);
-		} else {
-			return false;
+			//-- if no record was found create a default empty one
+			if (isset($pgv_changes[$this->famid."_".$GEDCOM])){
+				$this->famrec = "0 @".$this->famid."@ FAM\n";
+				$this->family = new Family($this->famrec);
+			} else if (empty($this->family)){
+				return false;
+			}
 		}
 
 		$this->famrec = $this->family->getGedcomRecord();
