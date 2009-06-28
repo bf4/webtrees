@@ -395,6 +395,7 @@ $pgv_lang["start_at_parents"]		= "Comenzar en los padres";
 $pgv_lang["charts"] 				= "Diagramas";
 $pgv_lang["lists"]					= "Listas";
 $pgv_lang["box_width"] 				= "Ancho de la caja";
+$pgv_lang["random_surn"]					= "Apellido al azar";
 
 //-- FUNCTIONS FILE MESSAGES
 $pgv_lang["unable_to_find_family"]	= "Imposible encontrar una familia con el ID";
@@ -462,7 +463,7 @@ $pgv_lang["as_spouse"]				= "Familia con el cónyuge";
 $pgv_lang["privacy_error"]			= "Esta información es privada y no puede mostrarse.";
 $pgv_lang["more_information"]		= "Para más información contacte con";
 $pgv_lang["given_name"] 			= "Nombre de pila:";
-$pgv_lang["surname"]				= "Apellidos:";
+$pgv_lang["surname"]				= "Apellido:";
 $pgv_lang["suffix"] 				= "Sufijo:";
 $pgv_lang["sex"]					= "Sexo";
 $pgv_lang["personal_facts"] 		= "Detalles Personales";
