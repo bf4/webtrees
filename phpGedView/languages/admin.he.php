@@ -422,7 +422,7 @@ $pgv_lang["batch_update"]		= "בצע עדכונים/עריכה באצוה (batch
 // Text for the Gedcom Checker
 $pgv_lang["gedcheck"]    	= "בדיקת Gedcom"; 	     // Module title
 $pgv_lang["gedcheck_text"]	= "המודול הזה בודק את המבנה של קובץ GEDCOM מול המפרט <a href=\"http://phpgedview.sourceforge.net/ged551-5.pdf\">5.5.1 GEDCOM</a>. הוא בודק גם מספר שגיאות כלליות בנתוניך.  שים לב שקיימות ורסיות, הארכות ווריאציות רבות למפרטים כך שיש צורך לחשוש רק בסוגיות המסומנות כ\"קריטיות\"  את ההסבר לכל השגיאות שורה אחרי שורה תמצא במפרט, כך שבבקשה לעיין שם לפני בקשת עזרה.";
-$pgv_lang["gedcheck_sync"]	= "עדכונים שנעשו למאגר הנתונים אינם מסונכרנים לקובץ #GLOBALS[ged]#.  יתכן שתוכן הקובץ אינו עדכני.  תוכל לסנכרן אותו עכשיו עם מאגר הנתונים ע\"י ביצוע יצוא  <b><a \"#GLOBALS[ged_link]#\"></a></b>.";
+$pgv_lang["gedcheck_sync"]	= "עדכונים שנעשו למאגר הנתונים אינם מסונכרנים לקובץ #GLOBALS[ged]#.  יתכן שתוכן הקובץ אינו עדכני.  תוכל לסנכרן אותו עכשיו עם מאגר הנתונים ע\"י ביצוע  <b><a \"#GLOBALS[ged_link]#\">יצוא</a></b>.";
 $pgv_lang["gedcheck_nothing"] = "לא נימצאו שגיאות ברמה זו.";
 $pgv_lang["level"]        		= "רמה";
 $pgv_lang["critical"]     		= "קריטי";
@@ -437,7 +437,7 @@ $pgv_lang["all_rec"]      	= "כל הרשומות";    // What to show
 $pgv_lang["err_rec"]      	= "רשומות עם שגיאות";
 $pgv_lang["missing"]      	= "חסר";
 $pgv_lang["multiple"]     	= "כפול";
-$pgv_lang["invalid"]      	= "אינו תקין";
+$pgv_lang["invalid"]      	= "לא תקין -";
 $pgv_lang["too_many"]     	= "יותר מדי";
 $pgv_lang["too_few"]      	= "פחות מדי";
 $pgv_lang["no_link"]      	= "אינו מקשר בחזרה";
