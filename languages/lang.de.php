@@ -614,6 +614,7 @@ $pgv_lang["titles_found"]				= "Titel";
 $pgv_lang["find_source"]				= "Quelle suchen";
 
 //-- REPOLIST FILE MESSAGES
+$pgv_lang["repository"] 				= "Archiv";
 $pgv_lang["repos_found"]				= "gefundene Archive";
 $pgv_lang["find_repository"]			= "Archiv suchen";
 $pgv_lang["total_repositories"]			= "Anzahl Archive";
