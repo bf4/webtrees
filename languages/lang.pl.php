@@ -32,7 +32,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 
 $pgv_lang["gedcomid"]			= "ID wpisu osoby w pliku GEDCOM";
 $pgv_lang["sortby"]				= "Sortuj według";
-$pgv_lang["exact"]				= "Dokładna data";
+$pgv_lang["exact"]				= "Dokładnie";
 $pgv_lang["begins_with"]		= "Zaczyna się od";
 $pgv_lang["contains"]			= "Zawiera";
 $pgv_lang["sounds_like"]		= "Brzmi jak";
@@ -392,6 +392,7 @@ $pgv_lang["start_at_parents"]	= "Zacznij od rodziców";
 $pgv_lang["charts"]				= "Diagramy";
 $pgv_lang["lists"]				= "Listy";
 $pgv_lang["box_width"]			= "Szerokość ramki";
+$pgv_lang["random_surn"]		= "Losowe nazwisko";
 
 //-- FUNCTIONS FILE MESSAGES
 $pgv_lang["unable_to_find_family"]	= "Nie znaleziono rodziny o tym identyfikatorze";
@@ -610,6 +611,7 @@ $pgv_lang["titles_found"]			= "Tytuły";
 $pgv_lang["find_source"]			= "Znajdź źrodło";
 
 //-- REPOLIST FILE MESSAGES
+$pgv_lang["repository"]				= "Repozytoria";
 $pgv_lang["repos_found"]			= "Znaleziono repozytoria";
 $pgv_lang["find_repository"]		= "Znajdź repozytorium";
 $pgv_lang["total_repositories"]		= "Wszystkich repozytoriów";
