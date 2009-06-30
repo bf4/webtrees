@@ -613,6 +613,7 @@ $pgv_lang["titles_found"]			= "Titles";
 $pgv_lang["find_source"]			= "Find Source";
 
 //-- REPOLIST FILE MESSAGES
+$pgv_lang["repository"] 			= "Repository";
 $pgv_lang["repos_found"]			= "Repositories found";
 $pgv_lang["find_repository"]		= "Find Repository";
 $pgv_lang["total_repositories"]		= "Total Repositories";

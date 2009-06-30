@@ -141,7 +141,7 @@ echo '<tr class="'.$TEXT_DIRECTION.'"><td><table>';
 	foreach ($notefacts as $fact) {
 		if ($fact && $fact->getTag()!='CONT') {
 			if ($fact->getTag()=='NOTE' ) {
-
+				print_fact($fact);
 			} else {
 				print_fact($fact);
 			}
