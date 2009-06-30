@@ -1765,9 +1765,7 @@ function PGVRListSHandler($attrs) {
 						$sortby='';
 						$sql_order_by[]="{$attr}.d_julianday1";
 					}
-					if (substr($value, 0, 1)==':') {
-						unset($attrs[$attr]); // This filter has been fully processed
-					}
+					unset($attrs[$attr]); // This filter has been fully processed
 				} elseif ($listname=='individual' && preg_match('/^NAME CONTAINS (.+)$/', $value, $match)) {
 					$sql_join[]="JOIN {$TBLPREFIX}name AS {$attr} ON (n_file={$sql_col_prefix}file AND n_id={$sql_col_prefix}id)";
 					$sql_where[]="{$attr}.n_sort ".PGV_DB::$LIKE." ".PGV_DB::quote(UTF8_strtoupper("%{$match[1]}%"));
@@ -1791,9 +1789,7 @@ function PGVRListSHandler($attrs) {
 					$sql_join[]="JOIN {$TBLPREFIX}places AS {$attr}a ON ({$attr}a.p_file={$sql_col_prefix}file)";
 					$sql_join[]="JOIN {$TBLPREFIX}placelinks AS {$attr}b ON ({$attr}a.p_file={$attr}b.pl_file AND {$attr}b.pl_p_id={$attr}a.p_id AND {$attr}b.pl_gid={$sql_col_prefix}id)";
 					$sql_where[]="{$attr}a.p_place ".PGV_DB::$LIKE." ".PGV_DB::quote(UTF8_strtoupper("%{$match[1]}%"));
-					if (substr($value, 0, 1)==':') {
-						unset($attrs[$attr]); // This filter has been fully processed
-					}
+					unset($attrs[$attr]); // This filter has been fully processed
 				} else {
 					// TODO: what other filters can we apply in SQL?
 					//var_dump($value);
