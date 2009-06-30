@@ -1129,7 +1129,11 @@ if (check_media_structure()) {
 						else {
 							if (substr($mediaInfo['type'],0,4) == 'url_') $tempText = 'URL';
 							else $tempText = PrintReady($media["FILE"]);
-							echo '<a href="', 'mediaviewer.php?mid=', $media["XREF"], '"><span dir="ltr">', $tempText, '</span></a><br />';
+							if (!empty($media["XREF"])) {
+								echo '<a href="', 'mediaviewer.php?mid=', $media["XREF"], '"><span dir="ltr">', $tempText, '</span></a><br />';
+							} else {
+								echo '<span dir="ltr">', $tempText, '</span><br />';
+							}
 						}
 						if (substr($mediaInfo['type'],0,4) != 'url_' && !empty($imgsize[0])) {
 							print "<sub>&nbsp;&nbsp;".$pgv_lang["image_size"]." -- ".$imgsize[0]."x".$imgsize[1]."</sub><br />";
