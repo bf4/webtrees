@@ -538,8 +538,15 @@ if ($action == "update") {
 		$islink = array_merge(array(0), $islink);
 		$text = array_merge(array($folder.$filename), $text);
 
+		if (!empty($pid)) {
+			if (!isset($pgv_changes[$pid."_".$GEDCOM])) $gedrec = find_gedcom_record($pid);
+			else $gedrec = find_updated_record($pid);
+		}
 		$newrec = "0 @$pid@ OBJE\n";
 		$newrec = handle_updates($newrec);
+		if (!$update_CHAN) {
+			$newrec .= get_sub_record(1, "1 CHAN", $gedrec);
+		}
 		//print("[".$newrec."]");
 		//-- look for the old record media in the file
 		//-- if the old media record does not exist that means it was
