@@ -672,7 +672,7 @@ if(empty($SEARCH_SPIDER)) {
 		echo "&nbsp;&nbsp;";
 		
 		// ---------- Help link --------------------
-		print_help_link("lb_general_help", "qm", "lb_help", true);
+//		print_help_link("lb_general_help", "qm", "lb_help", true); // (Temp removed to stop Error log reporting when Lightbox not installed)
 		
 		echo "<div id='spare_content'>";
 			// Fix if no googlemaps ========================================================
@@ -689,7 +689,7 @@ if(empty($SEARCH_SPIDER)) {
 					loading_message();
 				}
 			}
-			// Fix if no googlemaps ========================================================
+			// end Fix if no googlemaps ========================================================
 		echo "</div>";
 
 
