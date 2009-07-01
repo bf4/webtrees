@@ -392,7 +392,7 @@ if ($action=="ImportFile2") {
 			$placelist[$j] = array();
 			$placelist[$j]["place"] = "";
 			for ($ii=$fields-4; $ii>1; $ii--) {
-				if ($fieldrec[0] > $ii-2) $placelist[$j]["place"] .= $fieldrec[$ii].", ";
+				if ($fieldrec[0] > $ii-2) $placelist[$j]["place"] .= $fieldrec[$ii].",";
 			}
 			foreach ($countries as $countrycode => $countryname) {
 				if (UTF8_strtoupper($countrycode) == UTF8_strtoupper($fieldrec[1])) {
