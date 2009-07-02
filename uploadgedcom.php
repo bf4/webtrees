@@ -963,8 +963,18 @@ if ($stage == 1) {
 			print "\n";
 
 			//-- import anything that is not a blob
-			if (!preg_match("/\n1 BLOB/", $indirec))
-				import_record(trim($indirec), false);
+			if (!preg_match("/\n1 BLOB/", $indirec)) {
+				try {
+					import_record(trim($indirec), false);
+				} catch (PDOException $ex) {
+					// Import errors are likely to be caused by duplicate records.
+					// There is no safe way of handling these.  Just display them
+					// and let the user decide.
+					echo '<pre class="error">', $ex->getMessage(), '</pre>';
+					// Don't let the error message disappear off the screen.
+					$autoContinue=false;
+				}
+			}
 
 			//-- move the cursor to the start of the next record
 			$pos1 = $pos2;
