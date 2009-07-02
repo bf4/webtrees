@@ -10,7 +10,8 @@
 
 
 Version 4.2.2
- - Added [ 2812244 ] List branches by surname (opus27)
+ - Fixed: [ 2815546 ] Timeline Chart display issue (wooc)
+ - Added: [ 2812244 ] List branches by surname (opus27)
  - Fixed: [ 2811443 ] [5774] Double helping of tables (fisharebest)
  - Fixed: [ 2806853 ] Minor error in faq.php css classes (fisharebest)
  - Fixed: [ 2579268 ] Nonexistent != Private != blank (wooc)
