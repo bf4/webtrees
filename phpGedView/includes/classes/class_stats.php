@@ -1001,30 +1001,36 @@ class stats {
 		return str_replace('<a href="', '<a href="'.$this->_server_url, $result);
 	}
 
-	function statsBirth($sex=false, $year1=-1, $year2=-1, $simple=false)
-	{
-		global $TBLPREFIX;
-		//$simple=true;
-		if ($sex) {
+	function statsBirth($simple=true, $sex=false, $year1=-1, $year2=-1, $params=null) {
+		global $TBLPREFIX, $pgv_lang, $lang_short_cut, $LANGUAGE;
+		
+		if ($simple) {
+			$sql = "SELECT ROUND((d_year+49.1)/100) AS century, COUNT(*) FROM {$TBLPREFIX}dates "
+					."WHERE "
+						."d_file={$this->_ged_id} AND "
+						."d_fact='BIRT'";
+		} else if ($sex) {
 			$sql = "SELECT d_month, i_sex, COUNT(*) FROM {$TBLPREFIX}dates "
 					."JOIN {$TBLPREFIX}individuals ON d_file = i_file AND d_gid = i_id "
 					."WHERE "
 						."d_file={$this->_ged_id} AND "
 						."d_fact='BIRT'";
-		}
-		else {
-			if ($simple) $sql = "SELECT ROUND((d_year+49.1)/100) AS century, COUNT(*) FROM {$TBLPREFIX}dates ";
-			else $sql = "SELECT d_month, COUNT(*) FROM {$TBLPREFIX}dates ";
-					$sql .="WHERE "
-					."d_file={$this->_ged_id} AND "
-					."d_fact='BIRT'";
+		} else {
+			$sql = "SELECT d_month, COUNT(*) FROM {$TBLPREFIX}dates "
+					."WHERE "
+						."d_file={$this->_ged_id} AND "
+						."d_fact='BIRT'";
 		}
 		if ($year1>=0 && $year2>=0) {
 			$sql .= " AND d_year BETWEEN '{$year1}' AND '{$year2}'";
 		}
-		if ($simple) $sql .= " GROUP BY century ORDER BY century";
-		else $sql .= " GROUP BY d_month";
-		if ($sex) $sql .= ", i_sex";
+		if ($simple) {
+			$sql .= " GROUP BY century ORDER BY century";
+		}
+		else {
+			$sql .= " GROUP BY d_month";
+			if ($sex) $sql .= ", i_sex";
+		}
 		$rows=self::_runSQL($sql);
 		if ($simple) {
 			if (isset($params[0]) && $params[0] != '') {$size = strtolower($params[0]);}else{$size = '440x125';}
@@ -1032,33 +1038,28 @@ class stats {
 			if (isset($params[2]) && $params[2] != '') {$color_to = strtolower($params[2]);}else{$color_to = '000000';}
 			$sizes = explode('x', $size);
 			$tot = 0;
-			$arab = array(1, 4, 5, 9, 10);
-			$roman = array("I", "IV", "V", "IX", "X");
-			$centuries = "";
-			$chart_title = "Liczba urodzen wedlug wieku";
 			foreach ($rows as $values) {
 				$tot += $values['count(*)'];
 			}
 			// Beware divide by zero
-			if ($tot==0) {
-				$tot=1;
-			}
+			if ($tot==0) $tot=1;
+			$centuries = "";
+			$func="century_localisation_{$lang_short_cut[$LANGUAGE]}";
 			foreach ($rows as $values) {
-				$roman_century = "";
-				for ($i=4; $i>=0; $i--) {
-					while ($values['century']>=$arab[$i]) {
-						$values['century']-=$arab[$i];
-						$roman_century .= $roman[$i];
-					}
+				if (function_exists($func)) {
+					$century = $func($values['century']);
+				}
+				else {
+					$century = $values['century'];
 				}
 				$counts[] = round(100 * $values['count(*)'] / $tot, 0);;
-				$centuries .= $roman_century.' w. - '.$values['count(*)'].'|';
+				$centuries .= $century.' - '.$values['count(*)'].'|';
 			}
 			$chd = self::_array_to_extended_encoding($counts);
 			$chl = substr($centuries,0,-1);
-			return "<img src=\"".encode_url("http://chart.apis.google.com/chart?cht=p3&chd=e:{$chd}&chs={$size}&chco={$color_from},{$color_to}&chf=bg,s,ffffff00&chl={$chl}")."\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" alt=\"".$chart_title."\" title=\"".$chart_title."\" />";
+			return "<img src=\"".encode_url("http://chart.apis.google.com/chart?cht=p3&chd=e:{$chd}&chs={$size}&chco={$color_from},{$color_to}&chf=bg,s,ffffff00&chl={$chl}")."\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" alt=\"".$pgv_lang["stat_5_birth"]."\" title=\"".$pgv_lang["stat_5_birth"]."\" />";
 		}
-		if (!isset($rows)) {return 0;}
+		if (!isset($rows)) return 0;
 		return $rows;
 	}
 	

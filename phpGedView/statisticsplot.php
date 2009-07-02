@@ -39,7 +39,7 @@ function bimo() {
 	global $z_as, $months, $zgrenzen, $stats, $n1;
 
 	if ($z_as == 300){
-		$num = $stats->statsBirth();
+		$num = $stats->statsBirth(false);
 		foreach ($num as $values) {
 			foreach ($months as $key=>$month) {
 				if($month==$values['d_month']) {
@@ -50,7 +50,7 @@ function bimo() {
 		}
 	}
 	else if ($z_as == 301) {
-		$num = $stats->statsBirth(true);
+		$num = $stats->statsBirth(false, true);
 		foreach ($num as $values) {
 			foreach ($months as $key=>$month) {
 				if($month==$values['d_month']) {
@@ -69,7 +69,7 @@ function bimo() {
 	else {
 		$zstart = 0;
 		foreach ($zgrenzen as $boundary) {
-			$num = $stats->statsBirth(false, $zstart, $boundary);
+			$num = $stats->statsBirth(false, false, $zstart, $boundary);
 			foreach ($num as $values) {
 				foreach ($months as $key=>$month) {
 					if($month==$values['d_month']) {
