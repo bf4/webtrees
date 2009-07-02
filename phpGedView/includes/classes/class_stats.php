@@ -1001,9 +1001,10 @@ class stats {
 		return str_replace('<a href="', '<a href="'.$this->_server_url, $result);
 	}
 
-	function statsBirth($sex=false, $year1=-1, $year2=-1)
+	function statsBirth($sex=false, $year1=-1, $year2=-1, $simple=false)
 	{
 		global $TBLPREFIX;
+		//$simple=true;
 		if ($sex) {
 			$sql = "SELECT d_month, i_sex, COUNT(*) FROM {$TBLPREFIX}dates "
 					."JOIN {$TBLPREFIX}individuals ON d_file = i_file AND d_gid = i_id "
@@ -1012,22 +1013,56 @@ class stats {
 						."d_fact='BIRT'";
 		}
 		else {
-			$sql = "SELECT d_month, COUNT(*) FROM {$TBLPREFIX}dates "
-					."WHERE "
+			if ($simple) $sql = "SELECT ROUND((d_year+49.1)/100) AS century, COUNT(*) FROM {$TBLPREFIX}dates ";
+			else $sql = "SELECT d_month, COUNT(*) FROM {$TBLPREFIX}dates ";
+					$sql .="WHERE "
 					."d_file={$this->_ged_id} AND "
 					."d_fact='BIRT'";
 		}
 		if ($year1>=0 && $year2>=0) {
 			$sql .= " AND d_year BETWEEN '{$year1}' AND '{$year2}'";
 		}
-		$sql .= " GROUP BY d_month";
+		if ($simple) $sql .= " GROUP BY century ORDER BY century";
+		else $sql .= " GROUP BY d_month";
 		if ($sex) $sql .= ", i_sex";
 		$rows=self::_runSQL($sql);
+		if ($simple) {
+			if (isset($params[0]) && $params[0] != '') {$size = strtolower($params[0]);}else{$size = '440x125';}
+			if (isset($params[1]) && $params[1] != '') {$color_from = strtolower($params[1]);}else{$color_from = 'ffffff';}
+			if (isset($params[2]) && $params[2] != '') {$color_to = strtolower($params[2]);}else{$color_to = '000000';}
+			$sizes = explode('x', $size);
+			$tot = 0;
+			$arab = array(1, 4, 5, 9, 10);
+			$roman = array("I", "IV", "V", "IX", "X");
+			$centuries = "";
+			$chart_title = "Liczba urodzen wedlug wieku";
+			foreach ($rows as $values) {
+				$tot += $values['count(*)'];
+			}
+			// Beware divide by zero
+			if ($tot==0) {
+				$tot=1;
+			}
+			foreach ($rows as $values) {
+				$roman_century = "";
+				for ($i=4; $i>=0; $i--) {
+					while ($values['century']>=$arab[$i]) {
+						$values['century']-=$arab[$i];
+						$roman_century .= $roman[$i];
+					}
+				}
+				$counts[] = round(100 * $values['count(*)'] / $tot, 0);;
+				$centuries .= $roman_century.' w. - '.$values['count(*)'].'|';
+			}
+			$chd = self::_array_to_extended_encoding($counts);
+			$chl = substr($centuries,0,-1);
+			return "<img src=\"".encode_url("http://chart.apis.google.com/chart?cht=p3&chd=e:{$chd}&chs={$size}&chco={$color_from},{$color_to}&chf=bg,s,ffffff00&chl={$chl}")."\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" alt=\"".$chart_title."\" title=\"".$chart_title."\" />";
+		}
 		if (!isset($rows)) {return 0;}
 		return $rows;
 	}
 	
-	function statsPlaces($what='INDI', $fact=false, $parent=0, $country=false)
+	function _statsPlaces($what='INDI', $fact=false, $parent=0, $country=false)
 	{
 		global $TBLPREFIX;
 		if ($fact) {
@@ -1194,7 +1229,7 @@ class stats {
 			$chart_title=$pgv_lang["stat_2_map"];
 			// Count how many people were born in each country
 			$surn_countries=array();
-			$countries=$this->statsPlaces('INDI', 'BIRT', 0, true);
+			$countries=$this->_statsPlaces('INDI', 'BIRT', 0, true);
 			foreach ($countries as $place=>$count) {
 				$country=UTF8_strtolower($place);
 				if (array_key_exists($country, $country_to_iso3166)) {
@@ -1211,7 +1246,7 @@ class stats {
 			$chart_title=$pgv_lang["stat_3_map"];
 			// Count how many people were death in each country
 			$surn_countries=array();
-			$countries=$this->statsPlaces('INDI', 'DEAT', 0, true);
+			$countries=$this->_statsPlaces('INDI', 'DEAT', 0, true);
 			foreach ($countries as $place=>$count) {
 				$country=UTF8_strtolower($place);
 				if (array_key_exists($country, $country_to_iso3166)) {
@@ -1228,7 +1263,7 @@ class stats {
 			$chart_title=$pgv_lang["stat_4_map"];
 			// Count how many families got marriage in each country
 			$surn_countries=array();
-			$countries=$this->statsPlaces('FAM');
+			$countries=$this->_statsPlaces('FAM');
 			// PGV uses 3 letter country codes and localised country names, but google uses 2 letter codes.
 			if (!empty($countries))
 			  foreach ($countries as $place) {
@@ -1243,7 +1278,7 @@ class stats {
 			$chart_title=$pgv_lang["indi_distribution_chart"];
 			// Count how many people are events in each country
 			$surn_countries=array();
-			$countries=$this->statsPlaces('INDI');
+			$countries=$this->_statsPlaces('INDI');
 			// PGV uses 3 letter country codes and localised country names, but google uses 2 letter codes.
 			if (!empty($countries))
 			  foreach ($countries as $place) {				
@@ -1411,7 +1446,7 @@ class stats {
 		$rows=self::_runSQL(''
 			.' SELECT '
 				.' MAX(death.d_julianday2-birth.d_julianday1) AS age,'
-				.' death.d_gid'
+				.' death.d_gid AS deathdate'
 			.' FROM'
 				." {$TBLPREFIX}dates AS death,"
 				." {$TBLPREFIX}dates AS birth,"
@@ -1428,7 +1463,7 @@ class stats {
 				.' death.d_julianday1>birth.d_julianday2'
 				.$sex_search
 			.' GROUP BY'
-				.' d_gid'
+				.' deathdate'
 			.' ORDER BY'
 				.' age DESC'
 		, $total);
@@ -1436,7 +1471,7 @@ class stats {
 		if(count($rows) < $total){$total = count($rows);}
 		$top10=array();
 		for($c = 0; $c < $total; $c++) {
-			$person=Person::getInstance($rows[$c]['d_gid']);
+			$person=Person::getInstance($rows[$c]['deathdate']);
 			if ($type == 'list') {
 				$top10[]="\t<li><a href=\"".$person->getLinkUrl()."\">".PrintReady($person->getFullName())."</a> ".PrintReady("[".floor($rows[$c]['age']/365.25)." {$pgv_lang['years']}]")."</li>\n";
 			} else {
@@ -1723,8 +1758,8 @@ class stats {
 		, 1);
 		if (!isset($rows[0])) {return '';}
 		$row=$rows[0];
-		if (isset($row['f_id'])) $family=Family::getInstance($row['f_id']);
-		if (isset($row[$sex_field])) $person=Person::getInstance($row[$sex_field]);
+		if (isset($row['fam.f_id'])) $family=Family::getInstance($row['fam.f_id']);
+		if (isset($row['i_id'])) $person=Person::getInstance($row['i_id']);
 		switch($type)
 		{
 			default:

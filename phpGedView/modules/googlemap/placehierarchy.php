@@ -178,8 +178,8 @@ function print_how_many_people($level, $parent) {
 	$place_count_fam = 0;
 	if (!isset($parent[$level-1])) $parent[$level-1]="";
 	$p_id = set_levelm($level, $parent);
-	$indi = $stats->statsPlaces('INDI', false, $p_id);
-	$fam = $stats->statsPlaces('FAM', false, $p_id);
+	$indi = $stats->_statsPlaces('INDI', false, $p_id);
+	$fam = $stats->_statsPlaces('FAM', false, $p_id);
 	if (!empty($indi)) {
 		foreach ($indi as $place) {
 			$place_count_indi=$place['count(*)'];
