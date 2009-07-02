@@ -1654,6 +1654,7 @@ $pgv_lang["stat_1_map"]			= "Individual distribution";
 $pgv_lang["stat_2_map"]			= "Birth by country";
 $pgv_lang["stat_3_map"]			= "Death by country";
 $pgv_lang["stat_4_map"]			= "Marriage by country";
+$pgv_lang["stat_5_birth"]		= "Births by century";
 $pgv_lang["stat_8_fam"]			= "Families with sources";
 $pgv_lang["stat_9_indi"]		= "Individuals with sources";
 $pgv_lang["stat_10_none"]		= "none";

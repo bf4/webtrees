@@ -1651,6 +1651,7 @@ $pgv_lang["stat_1_map"]		= "Rozmieszczenie osób";
 $pgv_lang["stat_2_map"]		= "Kraj urodzin";
 $pgv_lang["stat_3_map"]		= "Kraj śmierci";
 $pgv_lang["stat_4_map"]		= "Kraj ślubu";
+$pgv_lang["stat_5_birth"]	= "Liczba urodzeń według wieku";
 $pgv_lang["stat_8_fam"]		= "Liczba rodzin powiązanych ze źródłami";
 $pgv_lang["stat_9_indi"]	= "Liczba osób powiązanych ze źródłami";
 $pgv_lang["stat_10_none"]	= "brak";
