@@ -327,11 +327,13 @@ class Person extends GedcomRecord {
 		$tmp = "<span title=\"".strip_tags($this->getBirthDate()->Display())."\">".$this->getBirthYear()."</span>";
 		$tmp .= "-";
 		$tmp .= "<span title=\"".strip_tags($this->getDeathDate()->Display())."\">".$this->getDeathYear()."</span>";
-		if ($this->getDeathYear() && $age_at_death) {
+		// display age only for exact dates (empty date qualifier)
+		if ($age_at_death
+			&& $this->getBirthYear() && empty($this->getBirthDate()->qual1)
+			&& $this->getDeathYear() && empty($this->getDeathDate()->qual1)) {
 			$age = get_age_at_event(GedcomDate::GetAgeGedcom($this->getBirthDate(), $this->getDeathDate()), false);
 			if (!empty($age)) {
-				$age = "({$pgv_lang['age']} {$age})";
-				$tmp .= "<span class='age'> ".PrintReady($age)."</span>";
+				$tmp .= "<span class='age'> &lrm;({$pgv_lang['age']} {$age})&lrm;</span>";
 			}
 		}
 		if ($classname) {
@@ -521,6 +523,11 @@ class Person extends GedcomRecord {
 				return '<span style="size:'.$size.'">?</span>';
 			}
 		}
+	}
+
+	function getBoxStyle() {
+		$tmp=array('M'=>'','F'=>'F', 'U'=>'NN');
+		return "person_box".$tmp[$this->getSex()];
 	}
 
 	/**
