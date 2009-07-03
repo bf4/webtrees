@@ -76,7 +76,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	//-- Add Family Members to Census  -------------------------------------------
 	global $pgv_lang, $SHOW_ID_NUMBERS, $PGV_IMAGE_DIR, $PGV_IMAGES, $PGV_MENUS_AS_LISTS;
 	global $spouselinks, $parentlinks, $DeathYr, $BirthYr;
-	global $TEXT_DIRECTION, $GEDCOM; 
+	global $TEXT_DIRECTION, $GEDCOM, $censyear, $censdate; 
 	// echo "CENS = " . $censyear;
 	?>
 	<tr>
@@ -1040,7 +1040,7 @@ function print_pedigree_person_nav2($pid, $style=1, $show_famlink=true, $count=0
 	global $SEARCH_SPIDER;
 	
 	global $spouselinks, $parentlinks, $step_parentlinks, $persons, $person_step, $person_parent, $tabno, $theme_name, $spousetag;
-	global $natdad, $natmom;
+	global $natdad, $natmom, $censyear, $censdate;
 
 	if ($style != 2) $style=1;
 	if (empty($show_full)) $show_full = 0;
@@ -1096,6 +1096,7 @@ function print_pedigree_person_nav2($pid, $style=1, $show_famlink=true, $count=0
 						// $spouse = $family->getSpouse($person);
 						$children = $family->getChildren();
 						$num = count($children);
+						$marrdate = $family->getMarriageDate();
 						
 						// Husband ------------------------------
 						if ($husb || $num>0) {
@@ -1233,6 +1234,7 @@ function print_pedigree_person_nav2($pid, $style=1, $show_famlink=true, $count=0
 						// $spouse = $family->getSpouse($person);
 						$children = $family->getChildren();
 						$num = count($children);
+						$marrdate = $family->getMarriageDate();
 						
 						if ($natdad == "yes") {
 						}else{
@@ -1320,6 +1322,7 @@ function print_pedigree_person_nav2($pid, $style=1, $show_famlink=true, $count=0
 						$spouse = $family->getSpouse($person);
 						$children = $family->getChildren();
 						$num = count($children);
+						$marrdate = $family->getMarriageDate();
 						
 						// Spouse ------------------------------
 						if ($spouse || $num>0) {

@@ -31,7 +31,7 @@
 	exit;
 }
 
-global $summary, $theme_name, $pgv_lang, $factarray, $TEXT_DIRECTION;
+global $summary, $theme_name, $pgv_lang, $factarray, $TEXT_DIRECTION, $censyear, $censdate;
  
 $pid = safe_get('pid');
 
@@ -42,7 +42,8 @@ $censevent  = new Event("1 CENS\n2 DATE 03 MAR".$year."");
 $censdate   = $censevent->getDate();
 $censyear   = $censdate->date1->y;
 $ctry       = "UK";
-$married    = GedcomDate::Compare($censdate, $marrdate);
+// $married    = GedcomDate::Compare($censdate, $marrdate);
+$married=-1;
 
 
 // Test to see if Base pid is filled in ============================
