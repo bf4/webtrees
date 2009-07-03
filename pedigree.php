@@ -119,31 +119,30 @@ if (!$controller->isPrintPreview()) {
 					<?php
 						echo '<option value="0"';
 							if ($talloffset==0) echo ' selected="selected"';
-							echo ' />'.$pgv_lang["portrait"];
+							echo '>'.$pgv_lang["portrait"].'</option>';
 						echo '<option value="1"';
 							if ($talloffset==1) echo ' selected="selected"';
-							echo ' />'.$pgv_lang["landscape"];
+							echo '>'.$pgv_lang["landscape"].'</option>';
 						echo '<option value="2"';
 							if ($talloffset==2) echo ' selected="selected"';
-							echo ' />'.$pgv_lang["landscape_top"].'</option>';
+							echo '>'.$pgv_lang["landscape_top"].'</option>';
 						echo '<option value="3"';
 							if ($talloffset==3) echo ' selected="selected"';
-							echo ' />'.$pgv_lang["landscape_down"].'</option>';
+							echo '>'.$pgv_lang["landscape_down"].'</option>';
 					?>
 					</select>
 				</td>
 				<td class="optionbox">
-					<input type="checkbox" value="
-					<?php
+					<input type="checkbox" value="<?php
 					if ($controller->show_full) echo "1\" checked=\"checked\" onclick=\"document.people.show_full.value='0';";
-					else echo "0\" onclick=\"document.people.show_full.value='1';";?>"
-					/>
+					else echo "0\" onclick=\"document.people.show_full.value='1';";?>"/>
 				</td>
 			</tr>
 			<tr>
 				<td class="topbottombar" colspan="4">
 					<input type="submit" value="<?php echo $pgv_lang["view"]; ?>" />
 				</td>
+			</tr>
 		</table>
 	</form>
 <?php
@@ -197,11 +196,11 @@ for($i=($controller->treesize-1); $i>=0; $i--) {
 				}
 				$linexoffset = $xoffset;
 				if ($talloffset < 2) {
-					echo '<div id="line$i" dir="';
+					echo '<div id="line' .$i . '" dir="';
 					if ($TEXT_DIRECTION=="rtl") echo 'rtl" style="position:absolute; right:';
 					else echo 'ltr" style="position:absolute; left:';
 					echo $linexoffset.'px; top:'.($yoffset+1+$controller->pbheight/2).'px; z-index: 0;">';
-					echo '<img src="'.$PGV_IMAGE_DIR.'/'.$PGV_IMAGES["vline"]["other"].'" width="'.$linesize.'" height="'.($vlength-1).'\' alt="" />';
+					echo '<img src="'.$PGV_IMAGE_DIR.'/'.$PGV_IMAGES["vline"]["other"].'" width="'.$linesize.'" height="'.($vlength-1).'\" alt="" />';
 					echo '</div>';
 				}
 				else {
