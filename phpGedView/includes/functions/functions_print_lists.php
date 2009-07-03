@@ -1148,7 +1148,7 @@ function print_media_table($datalist, $legend="") {
 		//echo "&nbsp;&nbsp;".$media->getFilesize()."kB";
 		print_fact_notes("1 NOTE ".$media->getNote(),1);
 		echo "</td>";
-		
+
 		//-- Linked INDIs
 		$tmp=$media->countLinkedIndividuals();
 		echo '<td class="list_value_wrap"><a href="', encode_url($media->getLinkUrl()), '" class="list_item" name="', $tmp, '">', $tmp, '</a></td>';
@@ -1936,15 +1936,15 @@ function print_chart_by_age($data, $title) {
 	if ($count<1) return;
 	$avg = round($avg/$count);
 	$chart_url = "http://chart.apis.google.com/chart?cht=bvs"; // chart type
-	$chart_url .= "&chs=725x150"; // size
-	$chart_url .= "&chbh=3,2,2"; // bvg : 4,1,2
-	$chart_url .= "&chf=bg,s,".$color; //background color
-	$chart_url .= "&chco=0000FF,FFA0CB,FF0000"; // bar color
-	$chart_url .= "&chdl=".$pgv_lang["males"]."|".$pgv_lang["females"]."|".$pgv_lang["avg_age"].": ".$avg; // legend & average age
-	$chart_url .= "&chtt=".urlencode($title); // title
-	$chart_url .= "&chxt=x,y,r"; // axis labels specification
-	$chart_url .= "&chm=V,FF0000,0,".($avg-0.3).",1"; // average age line marker
-	$chart_url .= "&chxl=0:|"; // label
+	$chart_url .= "&amp;chs=725x150"; // size
+	$chart_url .= "&amp;chbh=3,2,2"; // bvg : 4,1,2
+	$chart_url .= "&amp;chf=bg,s,".$color; //background color
+	$chart_url .= "&amp;chco=0000FF,FFA0CB,FF0000"; // bar color
+	$chart_url .= "&amp;chdl=".$pgv_lang["males"]."|".$pgv_lang["females"]."|".$pgv_lang["avg_age"].": ".$avg; // legend & average age
+	$chart_url .= "&amp;chtt=".urlencode($title); // title
+	$chart_url .= "&amp;chxt=x,y,r"; // axis labels specification
+	$chart_url .= "&amp;chm=V,FF0000,0,".($avg-0.3).",1"; // average age line marker
+	$chart_url .= "&amp;chxl=0:|"; // label
 	for ($age=0; $age<=$agemax; $age+=5) $chart_url .= $age."|||||"; // x axis
 	$chart_url .= "|1:||".sprintf("%1.0f", $vmax/$count*100)." %"; // y axis
 	$chart_url .= "|2:||";
@@ -1953,8 +1953,8 @@ function print_chart_by_age($data, $title) {
 	if ($step==floor($vmax)) for ($d=floor($vmax-1); $d>0; $d--) if (($vmax-1)<($d*10+1) && fmod(($vmax-1),$d)==0) $step = $d;
 	for ($n=$step; $n<$vmax; $n+=$step) $chart_url .= $n."|";
 	$chart_url .= $vmax." / ".$count; // r axis
-	$chart_url .= "&chg=100,".round(100*$step/$vmax,1).",1,5"; // grid
-	$chart_url .= "&chd=s:"; // data : simple encoding from A=0 to 9=61
+	$chart_url .= "&amp;chg=100,".round(100*$step/$vmax,1).",1,5"; // grid
+	$chart_url .= "&amp;chd=s:"; // data : simple encoding from A=0 to 9=61
 	$CHART_ENCODING61 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 	for ($age=0; $age<=$agemax; $age++) $chart_url .= $CHART_ENCODING61[floor(substr_count($data[$age], "M")*61/$vmax)];
 	$chart_url .= ",";
@@ -1992,13 +1992,13 @@ function print_chart_by_decade($data, $title) {
 	}
 	if ($count<1) return;
 	$chart_url = "http://chart.apis.google.com/chart?cht=bvs"; // chart type
-	$chart_url .= "&chs=360x150"; // size
-	$chart_url .= "&chbh=3,3"; // bvg : 4,1,2
-	$chart_url .= "&chf=bg,s,".$color; //background color
-	$chart_url .= "&chco=0000FF,FFA0CB"; // bar color
-	$chart_url .= "&chtt=".urlencode($title); // title
-	$chart_url .= "&chxt=x,y,r"; // axis labels specification
-	$chart_url .= "&chxl=0:|<|||"; // <1570
+	$chart_url .= "&amp;chs=360x150"; // size
+	$chart_url .= "&amp;chbh=3,3"; // bvg : 4,1,2
+	$chart_url .= "&amp;chf=bg,s,".$color; //background color
+	$chart_url .= "&amp;chco=0000FF,FFA0CB"; // bar color
+	$chart_url .= "&amp;chtt=".urlencode($title); // title
+	$chart_url .= "&amp;chxt=x,y,r"; // axis labels specification
+	$chart_url .= "&amp;chxl=0:|<|||"; // <1570
 	for ($y=1600; $y<2030; $y+=50) $chart_url .= $y."|||||"; // x axis
 	$chart_url .= "|1:||".sprintf("%1.0f", $vmax/$count*100)." %"; // y axis
 	$chart_url .= "|2:||";
@@ -2007,8 +2007,8 @@ function print_chart_by_decade($data, $title) {
 	if ($step==floor($vmax)) for ($d=floor($vmax-1); $d>0; $d--) if (($vmax-1)<($d*10+1) && fmod(($vmax-1),$d)==0) $step = $d;
 	for ($n=$step; $n<$vmax; $n+=$step) $chart_url .= $n."|";
 	$chart_url .= $vmax." / ".$count; // r axis
-	$chart_url .= "&chg=100,".round(100*$step/$vmax,1).",1,5"; // grid
-	$chart_url .= "&chd=s:"; // data : simple encoding from A=0 to 9=61
+	$chart_url .= "&amp;chg=100,".round(100*$step/$vmax,1).",1,5"; // grid
+	$chart_url .= "&amp;chd=s:"; // data : simple encoding from A=0 to 9=61
 	$CHART_ENCODING61 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 	for ($y=1570; $y<2030; $y+=10) $chart_url .= $CHART_ENCODING61[floor(substr_count($data[$y], "M")*61/$vmax)];
 	$chart_url .= ",";

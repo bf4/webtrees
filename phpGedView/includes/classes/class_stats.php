@@ -451,7 +451,7 @@ class stats {
 				$pgv_lang['others'].' - '.round($tot_indi_per,1).'%';
 		$chart_title =  $pgv_lang['stat_sindi'].' ['.round($tot_sindi_per,1).'%], '.
 						$pgv_lang['others'].' ['.round($tot_indi_per,1).'%]';
-		return "<img src=\"".encode_url("http://chart.apis.google.com/chart?cht=p3&chd=e:{$chd}&chs={$size}&chco={$color_from},{$color_to}&chf=bg,s,ffffff00&chl={$chl}")."\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" alt=\"".$chart_title."\" title=\"".$chart_title."\" />";
+		return "<img src=\"".encode_url("http://chart.apis.google.com/chart?cht=p3&amp;chd=e:{$chd}&amp;chs={$size}&amp;chco={$color_from},{$color_to}&amp;chf=bg,s,ffffff00&amp;chl={$chl}")."\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" alt=\"".$chart_title."\" title=\"".$chart_title."\" />";
 	}
 
 	function totalIndividualsPercentage()
@@ -497,7 +497,7 @@ class stats {
 				$pgv_lang['others'].' - '.round($tot_fam_per,1).'%';
 		$chart_title =  $pgv_lang['stat_sfam'].' ['.round($tot_sfam_per,1).'%], '.
 						$pgv_lang['others'].' ['.round($tot_fam_per,1).'%]';
-		return "<img src=\"".encode_url("http://chart.apis.google.com/chart?cht=p3&chd=e:{$chd}&chs={$size}&chco={$color_from},{$color_to}&chf=bg,s,ffffff00&chl={$chl}")."\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" alt=\"".$chart_title."\" title=\"".$chart_title."\" />";
+		return "<img src=\"".encode_url("http://chart.apis.google.com/chart?cht=p3&amp;chd=e:{$chd}&chs={$size}&amp;chco={$color_from},{$color_to}&amp;chf=bg,s,ffffff00&amp;chl={$chl}")."\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" alt=\"".$chart_title."\" title=\"".$chart_title."\" />";
 	}
 
 	function totalFamiliesPercentage()
@@ -580,7 +580,7 @@ class stats {
 
 	function totalEvents($params = null) {
 		global $TBLPREFIX;
-		
+
 		$sql="SELECT COUNT(*) AS tot FROM {$TBLPREFIX}dates WHERE d_file=?";
 		$vars=array($this->_ged_id);
 
@@ -692,7 +692,7 @@ class stats {
 				$pgv_lang['stat_males'].' ['.round($tot_m,1).'%], '.
 				$pgv_lang['stat_females'].' ['.round($tot_f,1).'%], '.
 				$pgv_lang['stat_unknown'].' ['.round($tot_u,1).'%]';
-			return "<img src=\"".encode_url("http://chart.apis.google.com/chart?cht=p3&chd=e:{$chd}&chs={$size}&chco={$color_unknown},{$color_female},{$color_male}&chf=bg,s,ffffff00&chl={$chl}")."\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" alt=\"".$chart_title."\" title=\"".$chart_title."\" />";
+			return "<img src=\"".encode_url("http://chart.apis.google.com/chart?cht=p3&amp;chd=e:{$chd}&amp;chs={$size}&amp;chco={$color_unknown},{$color_female},{$color_male}&amp;chf=bg,s,ffffff00&amp;chl={$chl}")."\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" alt=\"".$chart_title."\" title=\"".$chart_title."\" />";
 		}
 		else {
 			$chd = self::_array_to_extended_encoding(array($tot_f, $tot_m));
@@ -701,7 +701,7 @@ class stats {
 				$pgv_lang['stat_males'].' - '.round($tot_m,1).'%';
 			$chart_title =  $pgv_lang['stat_males'].' ['.round($tot_m,1).'%], '.
 							$pgv_lang['stat_females'].' ['.round($tot_f,1).'%]';
-			return "<img src=\"".encode_url("http://chart.apis.google.com/chart?cht=p3&chd=e:{$chd}&chs={$size}&chco={$color_female},{$color_male}&chf=bg,s,ffffff00&chl={$chl}")."\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" alt=\"".$chart_title."\" title=\"".$chart_title."\" />";
+			return "<img src=\"".encode_url("http://chart.apis.google.com/chart?cht=p3&amp;chd=e:{$chd}&amp;chs={$size}&amp;chco={$color_female},{$color_male}&amp;chf=bg,s,ffffff00&amp;chl={$chl}")."\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" alt=\"".$chart_title."\" title=\"".$chart_title."\" />";
 		}
 	}
 
@@ -774,7 +774,7 @@ class stats {
 				$pgv_lang['total_living'].' ['.round($tot_l,1).'%], '.
 				$pgv_lang['total_dead'].' ['.round($tot_d,1).'%], '.
 				$pgv_lang['total_unknown'].' ['.round($tot_u,1).'%]';
-			return "<img src=\"".encode_url("http://chart.apis.google.com/chart?cht=p3&chd=e:{$chd}&chs={$size}&chco={$color_unknown},{$color_living},{$color_dead}&chf=bg,s,ffffff00&chl={$chl}")."\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" alt=\"".$chart_title."\" title=\"".$chart_title."\" />";
+			return "<img src=\"".encode_url("http://chart.apis.google.com/chart?cht=p3&amp;chd=e:{$chd}&amp;chs={$size}&amp;chco={$color_unknown},{$color_living},{$color_dead}&amp;chf=bg,s,ffffff00&amp;chl={$chl}")."\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" alt=\"".$chart_title."\" title=\"".$chart_title."\" />";
 		}
 		else {
 			$chd = self::_array_to_extended_encoding(array($tot_l, $tot_d));
@@ -783,7 +783,7 @@ class stats {
 				$pgv_lang['total_dead'].' - '.round($tot_d,1).'%|';
 			$chart_title =  $pgv_lang['total_living'].' ['.round($tot_l,1).'%], '.
 							$pgv_lang['total_dead'].' ['.round($tot_d,1).'%]';
-			return "<img src=\"".encode_url("http://chart.apis.google.com/chart?cht=p3&chd=e:{$chd}&chs={$size}&chco={$color_living},{$color_dead}&chf=bg,s,ffffff00&chl={$chl}")."\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" alt=\"".$chart_title."\" title=\"".$chart_title."\" />";
+			return "<img src=\"".encode_url("http://chart.apis.google.com/chart?cht=p3&amp;chd=e:{$chd}&amp;chs={$size}&amp;chco={$color_living},{$color_dead}&amp;chf=bg,s,ffffff00&amp;chl={$chl}")."\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" alt=\"".$chart_title."\" title=\"".$chart_title."\" />";
 		}
 	}
 
@@ -891,7 +891,7 @@ class stats {
 		}
 		$chd = self::_array_to_extended_encoding($mediaCounts);
 		$chl = substr($mediaTypes,0,-1);
-		return "<img src=\"".encode_url("http://chart.apis.google.com/chart?cht=p3&chd=e:{$chd}&chs={$size}&chco={$color_from},{$color_to}&chf=bg,s,ffffff00&chl={$chl}")."\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" alt=\"".$chart_title."\" title=\"".$chart_title."\" />";
+		return "<img src=\"".encode_url("http://chart.apis.google.com/chart?cht=p3&amp;chd=e:{$chd}&amp;chs={$size}&amp;chco={$color_from},{$color_to}&amp;chf=bg,s,ffffff00&amp;chl={$chl}")."\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" alt=\"".$chart_title."\" title=\"".$chart_title."\" />";
 	}
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -1003,7 +1003,7 @@ class stats {
 
 	function statsBirth($simple=true, $sex=false, $year1=-1, $year2=-1, $params=null) {
 		global $TBLPREFIX, $pgv_lang, $lang_short_cut, $LANGUAGE;
-		
+
 		if ($simple) {
 			$sql = "SELECT ROUND((d_year+49.1)/100) AS century, COUNT(*) FROM {$TBLPREFIX}dates "
 					."WHERE "
@@ -1057,12 +1057,12 @@ class stats {
 			}
 			$chd = self::_array_to_extended_encoding($counts);
 			$chl = substr($centuries,0,-1);
-			return "<img src=\"".encode_url("http://chart.apis.google.com/chart?cht=p3&chd=e:{$chd}&chs={$size}&chco={$color_from},{$color_to}&chf=bg,s,ffffff00&chl={$chl}")."\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" alt=\"".$pgv_lang["stat_5_birth"]."\" title=\"".$pgv_lang["stat_5_birth"]."\" />";
+			return "<img src=\"".encode_url("http://chart.apis.google.com/chart?cht=p3&amp;chd=e:{$chd}&amp;chs={$size}&amp;chco={$color_from},{$color_to}&amp;chf=bg,s,ffffff00&amp;chl={$chl}")."\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" alt=\"".$pgv_lang["stat_5_birth"]."\" title=\"".$pgv_lang["stat_5_birth"]."\" />";
 		}
 		if (!isset($rows)) return 0;
 		return $rows;
 	}
-	
+
 	function _statsPlaces($what='INDI', $fact=false, $parent=0, $country=false)
 	{
 		global $TBLPREFIX;
@@ -1282,7 +1282,7 @@ class stats {
 			$countries=$this->_statsPlaces('INDI');
 			// PGV uses 3 letter country codes and localised country names, but google uses 2 letter codes.
 			if (!empty($countries))
-			  foreach ($countries as $place) {				
+			  foreach ($countries as $place) {
 				$country=UTF8_strtolower(trim($place['country']));
 				if (array_key_exists($country, $country_to_iso3166)) {
 					$surn_countries[$country_to_iso3166[$country]]=$place['count(*)'];
@@ -1826,7 +1826,7 @@ class stats {
 		return $rows;
 	}
 
-	
+
 	function statsMarrAge($sex='M', $year1=-1, $year2=-1)
 	{
 		global $TBLPREFIX;
@@ -2030,7 +2030,7 @@ class stats {
 		$chl = join('|', $chl);
 
 // the following does not print Arabic letters in names - encode_url shows still the letters
-		return "<img src=\"".encode_url("http://chart.apis.google.com/chart?cht=p3&chd=e:{$chd}&chs={$size}&chco={$color_from},{$color_to}&chf=bg,s,ffffff00&chl={$chl}")."\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" alt=\"".$pgv_lang["stat_21_nok"]."\" title=\"".$pgv_lang["stat_21_nok"]."\" />";
+		return "<img src=\"".encode_url("http://chart.apis.google.com/chart?cht=p3&amp;chd=e:{$chd}&amp;chs={$size}&amp;chco={$color_from},{$color_to}&amp;chf=bg,s,ffffff00&amp;chl={$chl}")."\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" alt=\"".$pgv_lang["stat_21_nok"]."\" title=\"".$pgv_lang["stat_21_nok"]."\" />";
 	}
 
 	function averageChildren()
@@ -2044,7 +2044,7 @@ class stats {
 	function statsChildren($sex='BOTH', $year1=-1, $year2=-1)
 	{
 		global $TBLPREFIX;
-		
+
 		if ($sex=='M') {
 			$sql = "SELECT num, COUNT(*) FROM "
 						."(SELECT count(i_sex) AS num FROM {$TBLPREFIX}link "
@@ -2184,7 +2184,7 @@ class stats {
 		$chl[] = $pgv_lang["other"].' - '.($tot_indi-$tot);
 		$chart_title .= $pgv_lang["other"].' ['.($tot_indi-$tot).']';
 		$chl = join('|', $chl);
-		return "<img src=\"".encode_url("http://chart.apis.google.com/chart?cht=p3&chd=e:{$chd}&chs={$size}&chco={$color_from},{$color_to}&chf=bg,s,ffffff00&chl={$chl}")."\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" alt=\"".$chart_title."\" title=\"".$chart_title."\" />";
+		return "<img src=\"".encode_url("http://chart.apis.google.com/chart?cht=p3&amp;chd=e:{$chd}&amp;chs={$size}&amp;chco={$color_from},{$color_to}&amp;chf=bg,s,ffffff00&amp;chl={$chl}")."\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" alt=\"".$chart_title."\" title=\"".$chart_title."\" />";
 	}
 
 
