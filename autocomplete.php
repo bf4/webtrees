@@ -310,7 +310,7 @@ function autocomplete_SOUR($FILTER) {
 function autocomplete_SOUR_TITL($FILTER) {
 	global $TBLPREFIX;
 
-	$sql="SELECT 'SOUR' AS type, s_id AS xref, s_file AS ged_id, s_gedcom AS gedrec FROM {$TBLPREFIX}sources WHERE s_name ".PGV_DB::$LIKE." ? AND s_file? ORDER BY s_name";
+	$sql="SELECT 'SOUR' AS type, s_id AS xref, s_file AS ged_id, s_gedcom AS gedrec FROM {$TBLPREFIX}sources WHERE s_name ".PGV_DB::$LIKE." ? AND s_file=? ORDER BY s_name";
 	$rows=
 		PGV_DB::prepareLimit($sql, PGV_AUTOCOMPLETE_LIMIT)
 		->execute(array("%{$FILTER}%", PGV_GED_ID))
@@ -541,22 +541,14 @@ function autocomplete_IFSRO() {
 			return autocomplete_OBJE($FILTER);
 		}
 	}
-	if ('modules/GEDFact_assistant/_MEDIA/media_1_ctrl.php') {
-		return array_merge(
-			autocomplete_INDI($FILTER, ''),
-			autocomplete_FAM($FILTER, ''),
-			autocomplete_SOUR($FILTER)
-			);
-	}else{
-		return array_merge(
-			autocomplete_INDI($FILTER, ''),
-			autocomplete_FAM($FILTER, ''),
-			autocomplete_SOUR($FILTER),
-			autocomplete_NOTE($FILTER),
-			autocomplete_REPO($FILTER),
-			autocomplete_OBJE($FILTER)
-			);
-	}
+	return array_merge(
+		autocomplete_INDI($FILTER, ''),
+		autocomplete_FAM($FILTER, ''),
+		autocomplete_SOUR($FILTER),
+		autocomplete_NOTE($FILTER),
+		autocomplete_REPO($FILTER),
+		autocomplete_OBJE($FILTER)
+		);
 }
 
 /**
