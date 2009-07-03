@@ -1998,7 +1998,7 @@ function print_chart_by_decade($data, $title) {
 	$chart_url .= "&amp;chco=0000FF,FFA0CB"; // bar color
 	$chart_url .= "&amp;chtt=".urlencode($title); // title
 	$chart_url .= "&amp;chxt=x,y,r"; // axis labels specification
-	$chart_url .= "&amp;chxl=0:|<|||"; // <1570
+	$chart_url .= "&amp;chxl=0:|&lt;|||"; // <1570
 	for ($y=1600; $y<2030; $y+=50) $chart_url .= $y."|||||"; // x axis
 	$chart_url .= "|1:||".sprintf("%1.0f", $vmax/$count*100)." %"; // y axis
 	$chart_url .= "|2:||";
