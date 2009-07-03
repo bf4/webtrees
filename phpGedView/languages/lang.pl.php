@@ -1635,6 +1635,7 @@ $pgv_lang["ward"]				= "Wychowanek";
 $pgv_lang["witness"]			= "Świadek";
 
 //-- statistics utility
+$pgv_lang["stat_create"]	= "Pokaż własne wykresy statystyk";
 $pgv_lang["statutci"]		= "Nie można utworzyć indeksu";
 $pgv_lang["statnnames"]		= "Liczba osób";
 $pgv_lang["statnfam"]		= "Liczba rodzin";

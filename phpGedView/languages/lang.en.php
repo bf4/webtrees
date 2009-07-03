@@ -1638,11 +1638,12 @@ $pgv_lang["ward"] = "Ward";
 $pgv_lang["witness"] = "Witness";
 
 //-- statistics utility
+$pgv_lang["stat_create"]		= "Create your own chart";
 $pgv_lang["statutci"]			= "unable to create index";
-$pgv_lang["statnnames"]         = "Total individuals";
-$pgv_lang["statnfam"]           = "Total families";
-$pgv_lang["statnmale"]          = "Total males";
-$pgv_lang["statnfemale"]        = "Total females";
+$pgv_lang["statnnames"]			= "Total individuals";
+$pgv_lang["statnfam"]			= "Total families";
+$pgv_lang["statnmale"]			= "Total males";
+$pgv_lang["statnfemale"]		= "Total females";
 $pgv_lang["stat_sindi"]			= "Individuals with sources";
 $pgv_lang["stat_sfam"]			= "Families with sources";
 $pgv_lang["statvars"]			= "Fill in the following parameters for the plot";
