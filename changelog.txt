@@ -10,6 +10,7 @@
 
 
 Version 4.2.x CA
+ - Merged: Merge changes r5824 - r5830 from the trunk. (windmillway)
  - Merged: Merge changes r5591 - r5823 from the trunk. (windmillway)
  - Merged: Merge changes r5565 - r5590 from the trunk. (windmillway)
  - Changed: Tidy up of files in GEDFact_assistant/MEDIA/ subdirectory (windmillway)
