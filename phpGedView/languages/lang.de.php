@@ -1655,6 +1655,7 @@ $pgv_lang["stat_1_map"]					= "Personenverteilung";
 $pgv_lang["stat_2_map"]					= "Geburten pro Land";
 $pgv_lang["stat_3_map"]					= "Tode pro Land";
 $pgv_lang["stat_4_map"]					= "Ehen pro Land";
+$pgv_lang["stat_5_birth"]				= "Geburten pro Jahrhundert";
 $pgv_lang["stat_8_fam"]					= "Familien mit Quellen";
 $pgv_lang["stat_9_indi"]				= "Personen mit Quellen";
 $pgv_lang["stat_10_none"]				= "keiner";
