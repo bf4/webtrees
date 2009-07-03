@@ -1056,7 +1056,7 @@ function print_editnote_link($note_id) {
 	else $Link = $text;
 	echo "<a href=\"javascript: var win02=window.open('edit_interface.php?action=editnote&pid=$note_id', 'win02', 'top=70, left=70, width=620, height=500, resizable=1, scrollbars=1 ' )\">";
 	echo $Link;
-	echo "</a><br />";
+	echo "</a>";
 }
 
 /**
@@ -1622,19 +1622,22 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 		}
 
 		// Shared Notes Icons ========================================
+		// $record=GedcomRecord::getInstance($value);
 		if ($fact=="NOTE" && $islink) {
 			print_findnote_link($element_id);
 			print_addnewnote_link($element_id);
-			if (file_exists('modules/GEDFact_assistant/CENS/census_1_ctrl.php')) {
+			 if ($value!="") {
+				echo "&nbsp;&nbsp;&nbsp;";
+				print_editnote_link($value);
+			}
+			// If GEDFAct_assistant/_CENS/ module exists --------------------------
+			if (file_exists('modules/GEDFact_assistant/_CENS/census_1_ctrl.php')) {
+				echo "&nbsp;&nbsp;&nbsp;";
 				print_addnewnote_assisted_link($element_id);
 			}
-			echo "&nbsp;&nbsp;&nbsp;";
-			$record=GedcomRecord::getInstance($value);
-			
+		echo "<br />";
 		}
-		if ($fact=="NOTE" && $islink && $value!="") {
-			print_editnote_link($value);
-		}
+
 		// ===========================================================
 
 		if ($fact=="OBJE") print_findmedia_link($element_id, "1media");
@@ -2223,7 +2226,6 @@ function print_quick_resn($name) {
 	}
 }
 
-
 /**
 * Link Media ID to Indi, Family, or Source ID
 *
@@ -2232,9 +2234,10 @@ function print_quick_resn($name) {
 * @param  string  $mediaid Media ID to be linked
 * @param string $linktoid Indi, Family, or Source ID that the Media ID should link to
 * @param int $level Level where the Media Object reference should be created
+* @param boolean $chan Whether or not to update/add the CHAN record
 * @return  bool success or failure
 */
-function linkMedia($mediaid, $linktoid, $level=1) {
+function linkMedia($mediaid, $linktoid, $level=1, $chan=true) {
 	global $GEDCOM, $pgv_lang, $pgv_changes;
 
 	if (empty($level)) $level = 1;
@@ -2252,15 +2255,55 @@ function linkMedia($mediaid, $linktoid, $level=1) {
 
 	if ($gedrec) {
 		$newrec = $gedrec."\n1 OBJE @".$mediaid."@";
-
-		replace_gedrec($linktoid, $newrec);
-
+		replace_gedrec($linktoid, $newrec, $chan);
 		return true;
 	} else {
 		echo "<br /><center>".$pgv_lang["invalid_id"]."</center>";
 		return false;
 	}
 }
+
+/**
+* unLink Media ID to Indi, Family, or Source ID
+*
+* @param  string  $mediaid Media ID to be unlinked.
+* @param string $linktoid Indi, Family, or Source ID that the Media ID should be unlinked from.
+* @param $linenum should be ALWAYS set to 'OBJE'.
+* @param int $level Level where the Media Object reference should be removed from (not used)
+* @param boolean $chan Whether or not to update/add the CHAN record
+* 
+* @return  bool success or failure
+*/
+function unlinkMedia($linktoid, $linenum, $mediaid, $level=1, $chan=true) {
+	global $GEDCOM, $pgv_lang, $pgv_changes;
+
+	if (empty($level)) $level = 1;
+	if ($level!=1) return false; // Level 2 items get unlinked elsewhere (maybe ??)
+	// find Indi, Family, or Source record to unlink from
+	if (isset($pgv_changes[$linktoid."_".$GEDCOM])) {
+		$gedrec = find_updated_record($linktoid);
+	} else {
+		$gedrec = find_gedcom_record($linktoid);
+	}
+	
+	//-- when deleting/umlinking a media link
+	//-- $linenum comes is an OBJE and the $mediaid to delete should be set
+	if (!is_numeric($linenum)) {
+		$newged = remove_subrecord($gedrec, $linenum, $mediaid);
+	}else{
+		$newged = remove_subline($gedrec, $linenum);
+	}
+	// $success = (replace_gedrec($pid, $newged));
+	$success = (replace_gedrec($linktoid, $newged, $chan));
+	if ($success) {
+		//echo "<br />".$pgv_lang["gedrec_deleted"];
+		//echo '<br>';
+	}
+	
+}
+
+
+
 
 /**
 * builds the form for adding new facts
@@ -2333,19 +2376,8 @@ function create_edit_form($gedrec, $linenum, $level0type) {
 	$level1type = $type;
 	
 	// GEDFact_assistant ================================================
-	if ($type=="CENS" && file_exists('modules/GEDFact_assistant/CENS/census_query1.php') ) {
-		echo "<tr><td class=\"descriptionbox ".$TEXT_DIRECTION." wrap width25\">";
-			print_help_link("edit_add_SHARED_NOTE_help", "qm");
-			echo "Currently Linked to: <br />";
-		echo "</td><td class=\"optionbox wrap\">\n";
-			include ('modules/GEDFact_assistant/CENS/census_query1.php');
-		echo "</td></tr>\n";
-		echo "<tr><td class=\"descriptionbox ".$TEXT_DIRECTION." wrap width25\">";
-			print_help_link("edit_add_SHARED_NOTE_help", "qm");
-			echo "Add Other Links: <br />";
-		echo "</td><td class=\"optionbox wrap\">\n";
-			// include ('modules/GEDFact_assistant/CENS/census_query1.php');
-		echo "</td></tr>\n";
+	if ($type=="CENS" && file_exists('modules/GEDFact_assistant/_CENS/census_query_2a.php') ) {
+			include ('modules/GEDFact_assistant/_CENS/census_query_2a.php');
 	}
 	// ==================================================================
 	

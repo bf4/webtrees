@@ -44,36 +44,12 @@ else require_once('config.dist');
 require_once 'includes/functions/functions_import.php';
 
 //-- if we are configured, then make sure that only admins access this page
-if (!empty($PGV_DB_CONNECTED) && adminUserExists()) {
-	if (!userIsAdmin()) {
-		header("Location: login.php?url=install.php");
-		exit;
-	}
+if (PGV_DB::isConnected() && adminUserExists() && !userIsAdmin()) {
+	header("Location: login.php?url=install.php");
+	exit;
 }
 
 loadLangFile('pgv_admin, pgv_confighelp, pgv_help');
-
-function install_checkdb() {
-	global $DBCONN,$DBHOST,$DBNAME,$DBPASS,$DBPERSIST,$DBPORT,$DBTYPE,$DBUSER,$DB_UTF8_COLLATION,$TBLPREFIX;
-	global $pgv_lang;
-	if (isset($_SESSION['install_config']['DBHOST'])) {
-		$DBHOST = $_SESSION['install_config']['DBHOST'];
-		$DBNAME =$_SESSION['install_config']['DBNAME'];
-		$DBPASS =	$_SESSION['install_config']['DBPASS'];
-		$DBPERSIST = $_SESSION['install_config']['DBPERSIST'];
-		$DB_UTF8_COLLATION = $_SESSION['install_config']['DB_UTF8_COLLATION'];
-		$DBPORT = $_SESSION['install_config']['DBPORT'];
-		$DBTYPE = $_SESSION['install_config']['DBTYPE'];
-		$DBUSER = $_SESSION['install_config']['DBUSER'];
-		$TBLPREFIX = $_SESSION['install_config']['TBLPREFIX'];
-	}
-	if (!check_db(true)) {
-		$error['msg'] = $pgv_lang["db_setup_bad"];
-		$error['help'] = $DBCONN->getMessage() . " " . $DBCONN->getUserInfo();
-		return $error;
-	}
-	return true;
-}
 
 ob_start();  // in order for the download function to work, we have to buffer and discard the regular output
 
@@ -117,10 +93,6 @@ $head .= "	}\n";
 $head .= "	//-->\n";
 $head .= "</script>\n";
 
-$newSite = $CONFIGURED ? 'no':'yes';
-if (isset($_REQUEST['newSite'])) $newSite = safe_REQUEST($_REQUEST, 'newSite', 'yes', 'no');
-if ($newSite=='no' && !DB::isError($DBCONN) && PGV_DB::isConnected()) print_header($pgv_lang["install_wizard"], $head);
-else {
 header("Content-Type: text/html; charset=$CHARACTER_SET");
 
 ?>
@@ -134,14 +106,13 @@ header("Content-Type: text/html; charset=$CHARACTER_SET");
 <?php print $head;?>
 
 </head>
-<?php } ?>
 <body id="body" dir="<?php print $TEXT_DIRECTION; ?>">
 <br />
 <table class="list_table person_boxNN width70" style="background-color: none;" cellspacing="0" cellpadding="5">
 <?php
 
 //-- don't allow configuration if the DB is down but the site is configured
-if ($CONFIGURED && DB::isError($DBCONN)) {
+if ($CONFIGURED && !PGV_DB::isConnected()) {
 	?>
 	<tr>
 		<td class="center">
@@ -157,8 +128,6 @@ if ($CONFIGURED && DB::isError($DBCONN)) {
 			<br /><br />
 			<h2><?php print $pgv_lang["site_unavailable"] ?></h2>
 			<br /><br /><br />
-
-			<!-- <?php print $DBCONN->getMessage() . " " . $DBCONN->getUserInfo(); ?> -->
 		</td>
 	</tr>
 	</table>
@@ -173,51 +142,55 @@ $total_steps = 8;
 $step = 1;
 if (isset($_REQUEST['step'])) $step = $_REQUEST['step'];
 else {
-	if ($PGV_DB_CONNECTED) $step = 3;
+	if (PGV_DB::isConnected()) $step = 3;
 	if (adminUserExists()) $step = 8;
 }
 if (isset($_REQUEST['prev'])) $step--;
-
 $errors = array();
 switch($step) {
 	case 1:
 		break;
 	case 2:
-		if (isset($_POST["NEW_DBHOST"]))
+		if (isset($_POST["NEW_DBHOST"])) {
 			$_SESSION['install_config']['DBHOST'] = $_POST["NEW_DBHOST"];
-		if (isset($_POST["NEW_DBNAME"]))
 			$_SESSION['install_config']['DBNAME'] = $_POST["NEW_DBNAME"];
-		if (isset($_POST["NEW_DBPASS"]))
 			$_SESSION['install_config']['DBPASS'] = $_POST["NEW_DBPASS"];
-		if (isset($_POST["NEW_DBPERSIST"]))
-			$_SESSION['install_config']['DBPERSIST'] = $_POST["NEW_DBPERSIST"]=="yes";
-		if (isset($_POST["NEW_DB_UTF8_COLLATION"]))
 			$_SESSION['install_config']['DB_UTF8_COLLATION'] = $_POST["NEW_DB_UTF8_COLLATION"]=="yes";
-		if (isset($_POST["NEW_DBPORT"]))
 			$_SESSION['install_config']['DBPORT'] = $_POST["NEW_DBPORT"];
-		if (isset($_POST["NEW_DBTYPE"]))
 			$_SESSION['install_config']['DBTYPE'] = $_POST["NEW_DBTYPE"];
-		if (isset($_POST["NEW_DBUSER"]))
 			$_SESSION['install_config']['DBUSER'] = $_POST["NEW_DBUSER"];
-		if (isset($_POST["NEW_TBLPREFIX"]))
 			$_SESSION['install_config']['TBLPREFIX'] = $_POST["NEW_TBLPREFIX"];
+		}
+		// no break - need to connect to the DB on both steps 2 and 3
+	case 3:
+		if (isset($_SESSION['install_config']['DBHOST'])) {
+			//-- create db connection
+			$TBLPREFIX = $_SESSION['install_config']['TBLPREFIX'];
+			try {
+				PGV_DB::disconnect(); // from the connect defined in config.php
+				PGV_DB::createInstance(
+					$_SESSION['install_config']['DBTYPE'], 
+					$_SESSION['install_config']['DBHOST'], 
+					$_SESSION['install_config']['DBPORT'], 
+					$_SESSION['install_config']['DBNAME'], 
+					$_SESSION['install_config']['DBUSER'], 
+					$_SESSION['install_config']['DBPASS'], 
+					$_SESSION['install_config']['DB_UTF8_COLLATION']
+				);
+			} catch (PDOException $ex) {
+				$step=2;	// For any DB error, re-do Step 2
+				$errors[]=array(
+					'msg'=>$pgv_lang['db_setup_bad'],
+					'help'=>$ex->getMessage()
+				);
+			}
+		}
 
 		if (!empty($_SESSION['install_config']['INDEX_DIRECTORY'])
 			&& !is_writable($_SESSION['install_config']['INDEX_DIRECTORY'])) {
 				$error['msg'] = print_text("sanity_err6",0,1);
 				$error['help'] = '';
 				$errors[] = $error;
-		}
-		//-- create db connection
-		$error = install_checkdb();
-		if ($error!==true) $errors[] = $error;
-		break;
-	case 3:
-		//-- create db connection
-		$error = install_checkdb();
-		if ($error!==true) {
-			$errors[] = $error;
-			$step = 2;		// For any DB error, re-do Step 2
 		}
 		break;
 	case 4:
@@ -388,9 +361,6 @@ if (count($errors)==0) {
 if ($step<1) $step = 1;
 if ($step>$total_steps) $step = $total_steps;
 
-//if ($step>2 && !$PGV_DB_CONNECTED) $step = 2;
-//if ($step>5 && !adminUserExists()) $step = 5;
-
 $title = $pgv_lang["install_step_".$step];
 $errormsg = "";
 
@@ -414,7 +384,7 @@ $errormsg = "";
 			?>
 			<tr>
 				<td class="<?php print $class; ?> imenu">
-				<a href="install.php?step=<?php print $i; ?>&newSite=<?php print $newSite; ?>"><?php print $i.". ".$pgv_lang["install_step_".$i]; ?></a>
+				<a href="install.php?step=<?php print $i; ?>"><?php print $i.". ".$pgv_lang["install_step_".$i]; ?></a>
 				</td>
 			</tr>
 			<?php } ?>
@@ -431,7 +401,6 @@ $errormsg = "";
 		<h3 class="center"><?php print $title; ?></h3>
 		<form name="configform" action="install.php" method="post" onsubmit="return checkForm(this);">
 		<input type="hidden" name="step" value="<?php print $step ?>" />
-		<input type="hidden" name="newSite" value="<?php print $newSite ?>" />
 		<?php
 			if (count($errors)>0) {
 				foreach($errors as $error)
@@ -444,16 +413,14 @@ $errormsg = "";
 					$success = printDBForm();
 					break;
 				case 3:
-					//-- temporarily set configured so that tables will be created
-					$saveConfigured = $CONFIGURED;
-					$CONFIGURED = true;
-					//-- setup user tables
-					checkTableExists();
-					//-- setup genealogy tables
-					setup_database();
-					$CONFIGURED = $saveConfigured;
-					print "<span class=\"pass\">".$pgv_lang["db_tables_created"]."</span><br /><br /><br />";
-					$success = true;
+					try {
+						PGV_DB::updateSchema('includes/db_schema/', 'PGV_SCHEMA_VERSION', PGV_SCHEMA_VERSION);
+						echo '<span class="pass">', $pgv_lang['db_tables_created'], '</span><br /><br /><br />';
+						$success=true;
+					} catch (PDOException $ex) {
+						echo '<span class="error">', $ex->getMessage(), '</span><br /><br /><br />';
+						$success=false;
+					}
 					break;
 				case 4:
 					$success = printConfigForm();
@@ -503,8 +470,7 @@ $errormsg = "";
 </table>
 <br />
 <?php
-if ($newSite=='no') print_footer();
-else print "</body></html>";
+print "</body></html>";
 
 //-- Start of business functions
 
@@ -648,13 +614,12 @@ function checkEnvironment() {
 }
 
 function printDBForm() {
-	global $DBHOST, $DBNAME, $DBPASS, $DBPERSIST, $DBPORT, $DBTYPE, $DBUSER, $DB_UTF8_COLLATION, $TBLPREFIX;
+	global $DBHOST, $DBNAME, $DBPASS, $DBPORT, $DBTYPE, $DBUSER, $DB_UTF8_COLLATION, $TBLPREFIX;
 	global $pgv_lang;
 	$i=1;
 	if (isset($_SESSION['install_config']['DBHOST'])) $DBHOST = $_SESSION['install_config']['DBHOST'];
 	if (isset($_SESSION['install_config']['DBNAME'])) $DBNAME =$_SESSION['install_config']['DBNAME'];
 	if (isset($_SESSION['install_config']['DBPASS'])) $DBPASS =	$_SESSION['install_config']['DBPASS'];
-	if (isset($_SESSION['install_config']['DBPERSIST'])) $DBPERSIST = $_SESSION['install_config']['DBPERSIST'];
 	if (isset($_SESSION['install_config']['DB_UTF8_COLLATION'])) $DB_UTF8_COLLATION = $_SESSION['install_config']['DB_UTF8_COLLATION'];
 	if (isset($_SESSION['install_config']['DBPORT'])) $DBPORT = $_SESSION['install_config']['DBPORT'];
 	if (isset($_SESSION['install_config']['DBTYPE'])) $DBTYPE = $_SESSION['install_config']['DBTYPE'];
@@ -703,15 +668,6 @@ function printDBForm() {
 	<tr>
 		<td class="descriptionbox wrap width30"><?php print_help_link("DBNAME_help", "qm", "DBNAME"); print $pgv_lang["DBNAME"];?></td>
 		<td class="optionbox"><input type="text" name="NEW_DBNAME" value="<?php print $DBNAME?>" size="40" tabindex="<?php $i++; print $i?>" onfocus="getHelp('DBNAME_help');" /></td>
-	</tr>
-	<tr>
-		<td class="descriptionbox wrap width30"><?php print_help_link("DBPERSIST_help", "qm", "DBPERSIST"); print $pgv_lang["DBPERSIST"];?></td>
-		<td class="optionbox">
-			<select name="NEW_DBPERSIST" tabindex="<?php $i++; print $i?>" onfocus="getHelp('DBPERSIST_help');">
-				<option value="yes" <?php if ($DBPERSIST) print "selected=\"selected\""; ?>><?php print $pgv_lang["yes"];?></option>
-				<option value="no" <?php if (!$DBPERSIST) print "selected=\"selected\""; ?>><?php print $pgv_lang["no"];?></option>
-			</select>
-		</td>
 	</tr>
 	<tr>
 		<td class="descriptionbox wrap width30"><?php print_help_link("DB_UTF8_COLLATION_help", "qm", "DB_UTF8_COLLATION"); print $pgv_lang["DB_UTF8_COLLATION"];?></td>

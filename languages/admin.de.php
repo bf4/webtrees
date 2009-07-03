@@ -143,12 +143,35 @@ $pgv_lang["PRIV_NONE"]				= "Nur Verwaltern zeigen";
 $pgv_lang["PRIV_HIDE"]				= "Auch Verwaltern nicht zeigen";
 $pgv_lang["manage_gedcoms"]			= "GEDCOM-Dateien und Datenschutzeinstellungen verwalten";
 $pgv_lang["keep_media"]				= "Verbindungen zu Medienobjekten bewahren";
-$pgv_lang["media_now_linked to"]	= " Bereits bestehende Verbindungen - ";
 $pgv_lang["current_links"]			= "Verbindungen";
 $pgv_lang["add_more_links"]			= "Neue Verbindungen";
 $pgv_lang["enter_pid_or_name"]		= "Personen-ID oder Name";
 $pgv_lang["set_links"]				= "Neue Verbindungen speichern";
 $pgv_lang["add_or_remove_links"]	= "Verbindungen bearbeiten";
+
+$pgv_lang["keep"]					= "Behalten";
+$pgv_lang["unlink"]					= "Löschen";
+$pgv_lang["nav"]					= "Lotse";
+$pgv_lang["fam_nav"]				= "Familienlotse";
+$pgv_lang["remove"]					= "Entfernen";
+$pgv_lang["keep_link"]				= "Verbindung behalten";
+$pgv_lang["remove_link"]			= "Verbindung löschen";
+$pgv_lang["open_nav"]				= "Familienlotse starten";
+$pgv_lang["link_exists"]			= "Diese Verbindung besteht bereits";
+$pgv_lang["id_not_valid"]			= "Diese Personen-, Familien- oder Qellennummer ist ungültig";
+$pgv_lang["add_fam_other_links"]	= "Weitere zu verbindende Familien suchen";
+$pgv_lang["search_add_links"]		= "Weitere zu verbindende Personen suchen";
+$pgv_lang["enter_name"]				= "Bitte den Namen eingeben";
+$pgv_lang["add_indi_to_link_list"]	= "Namen klicken, um diese Person der Liste neuer Verbindungen hinzuzufügen";
+$pgv_lang["click_choose_head"]		= "#GLOBALS[tempStringHead]# klicken um diese Person als Familienhaupt zu wählen.";
+$pgv_lang["click_choose_head_text"]	= "Klicken um diese Person als Familienhaupt zu wählen.";
+$pgv_lang["head"]					= "Familienhaupt";
+$pgv_lang["id_empty"]				= "ID-Nummer fehlt.  Befehl kann nicht ausgeführt werden.";
+$pgv_lang["link_deleted"]			= "Verbindung mit #GLOBALS[remLinkId]# gelöscht";
+$pgv_lang["link_added"]				= "Verbindung mit #GLOBALS[addLinkId]# erstellt";
+$pgv_lang["no_update_CHANs"]		= "CHAN (Letzte Änderung) Datensätze nicht aktualisieren";
+$pgv_lang["no_CHANs_update"]		= "CHAN (Letzte Änderung) Datensätze wurden nicht aktualisiert";
+
 $pgv_lang["files_in_backup"]		= "Inhalt dieser Sicherheitskopie";
 $pgv_lang["created_remotelinks"]	= "Die Tabelle <i>Remotelinks</i> wurde erstellt.";
 $pgv_lang["created_remotelinks_fail"]	= "Die Tabelle <i>Remotelinks</i> konnte nicht erstellt werden.";
@@ -397,6 +420,8 @@ $pgv_lang["batch_update"]			= "Ihre Datenbank mittels Stapelverarbeitung aktuali
 // Text for the Gedcom Checker
 $pgv_lang["gedcheck"]				= "GEDCOM Verifizierungs-Modul";
 $pgv_lang["gedcheck_text"]			= "Dieses Modul verifiziert GEDCOM Dateien gegen den <a href='http://phpgedview.sourceforge.net/ged551-5.pdf'>GEDCOM 5.5.1 Standard</a>.  Es sucht auch nach oft vorkommenden Fehlern.<br /><br />Bitte beachten Sie, dass viele Programme den GEDCOM 5.5.1 Standard erweitert haben.  Deshalb sollten Sie sich zuerst nur mit «kritischen» Fehlern befassen.  Den Grund der meisten Fehlermeldungen können Sie durch gündliches Lesen des Standards ermitteln.  Wenn absolut notwending, können Sie auch Ihre Fragen im <a href='https://sourceforge.net/forum/forum.php?forum_id=185166'>Help-Forum</a> stellen.";
+$pgv_lang["gedcheck_sync"]			= "Die GEDCOM-Datei #GLOBALS[ged]# ist nicht mit der Datenbank synchronisiert;  die Datei ist womöglich nicht aktuell.  Sie können die Datei aktualisieren indem Sie die Datenbank jetzt <b><a \"#GLOBALS[ged_link]#\">exportieren</a></b>.";
+$pgv_lang["gedcheck_nothing"]		= "Keine Fehler gefunden.";
 $pgv_lang["level"]					= "Level";
 $pgv_lang["critical"]				= "Kritisch";
 $pgv_lang["error"]					= "Fehler";

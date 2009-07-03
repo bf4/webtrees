@@ -45,10 +45,10 @@ class MediaControllerRoot extends IndividualController{
 	var $show_changes=true;
 
 	function init() {
-		global $MEDIA_DIRECTORY, $USE_MEDIA_FIREWALL;
+		global $MEDIA_DIRECTORY, $USE_MEDIA_FIREWALL, $GEDCOM;
 
-		$filename=decrypt(safe_GET('filename'));
-		$this->mid     =safe_GET_xref('mid');
+		$filename = decrypt(safe_GET('filename'));
+		$this->mid = safe_GET_xref('mid');
 
 		if ($USE_MEDIA_FIREWALL && empty($filename) && empty($this->mid)) {
 			// this section used by mediafirewall.php to determine what media file was requested
@@ -90,15 +90,16 @@ class MediaControllerRoot extends IndividualController{
 			//This sets the controller ID to be the Media ID
 			$this->pid = $this->mid;
 
-			if (is_null($this->mediaobject)) $this->mediaobject = new Media("0 @".$this->mid."@ OBJE");
+			if (isset($pgv_changes[$this->mid."_".$GEDCOM])){
+				$this->mediaobject = new Media("0 @".$this->mid."@ OBJE");
+				$this->show_changes = true;
+			} else {
+				return false;
+			}
 		}
 
-		// one final test to be sure we have a media object defined
-		// ways this can happen:
-		// if user failed to pass in a filename or mid to mediaviewer.php
-		// if the server did not set the environmental variables correctly for the media firewall
-		// if media firewall is being called from outside the media directory
-		if (is_null($this->mediaobject)) $this->mediaobject = new Media("0 @"."0"."@ OBJE");
+		if (is_null($this->mediaobject)) return false;
+
 		$this->mediaobject->ged_id=PGV_GED_ID; // This record is from a file
 
 		//-- perform the desired action
@@ -178,7 +179,7 @@ class MediaControllerRoot extends IndividualController{
 			$name = $this->mediaobject->getFullName();
 			return $name." - ".$this->mediaobject->getXref();
 		}
-		else return $pgv_lang["unknown"];
+		else return $pgv_lang["unable_to_find_record"];
 	}
 
 	function canDisplayDetails() {
@@ -232,15 +233,15 @@ class MediaControllerRoot extends IndividualController{
 			}
 
 			// main link displayed on page
-			if (PGV_USER_GEDCOM_ADMIN && file_exists('modules/GEDFact_assistant/MEDIA/media_1_ctrl.php')) {
-				$submenu = new Menu($pgv_lang["add_or_remove_links"]." >");
+			if (PGV_USER_GEDCOM_ADMIN && file_exists('modules/GEDFact_assistant/_MEDIA/media_1_ctrl.php')) {
+				$submenu = new Menu($pgv_lang["add_or_remove_links"]);
 			} else {	
-				$submenu = new Menu($pgv_lang["set_link"]." >");
+				$submenu = new Menu($pgv_lang["set_link"]);
 			}
 			
 			// GEDFact assistant Add Media Links =======================
-			if (PGV_USER_GEDCOM_ADMIN && file_exists('modules/GEDFact_assistant/MEDIA/media_1_ctrl.php')) {
-				$submenu->addOnclick("return ilinkitem('".$this->pid."','person');");
+			if (PGV_USER_GEDCOM_ADMIN && file_exists('modules/GEDFact_assistant/_MEDIA/media_1_ctrl.php')) {
+				$submenu->addOnclick("return ilinkitem('".$this->pid."','manage');");
 				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff", "submenu$ff");
 				// Do not print ssubmunu
 			} else {
@@ -437,7 +438,13 @@ class MediaControllerRoot extends IndividualController{
 	* @return string
 	*/
 	function getLocalFilename() {
-		return $this->mediaobject->getLocalFilename();
+		global $pgv_lang;
+		if ($this->mediaobject) {
+			return $this->mediaobject->getLocalFilename();
+		}
+		else {
+			return false;
+		}
 	}
 
 	/**

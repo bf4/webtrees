@@ -26,25 +26,23 @@
  * @version $Id$
  */
 
-// If GedFAct_assistant/MEDIA/ installed ======================
-if (PGV_USER_IS_ADMIN && file_exists('modules/GEDFact_assistant/MEDIA/media_1_ctrl.php')) {
-	include 'modules/GEDFact_assistant/MEDIA/media_0_inverselink.php';
-} else {
-
-	require './config.php';
-	require './includes/functions/functions_edit.php';
-
-	//-- page parameters and checking
-	$linktoid	= safe_GET_xref('linktoid');
-	$mediaid	= safe_GET_xref('mediaid');
-	$linkto		= safe_GET     ('linkto', array('person', 'source', 'family'));
-	$action		= safe_GET     ('action', PGV_REGEX_ALPHA, 'choose');
+require './config.php';
+require './includes/functions/functions_edit.php';
 	
-	$more_links	= safe_REQUEST($_REQUEST, 'more_links', PGV_REGEX_UNSAFE);
+//-- page parameters and checking
+$linktoid	= safe_GET_xref('linktoid');
+$mediaid	= safe_GET_xref('mediaid');
+$linkto		= safe_GET     ('linkto', array('person', 'source', 'family', 'manage', 'repository', 'note'));
+$action		= safe_GET     ('action', PGV_REGEX_ALPHA, 'choose');
+
+// If GedFAct_assistant/_MEDIA/ installed ======================
+if (PGV_USER_IS_ADMIN && $linkto=='manage' && file_exists('modules/GEDFact_assistant/_MEDIA/media_1_ctrl.php')) {
+	include 'modules/GEDFact_assistant/_MEDIA/media_0_inverselink.php';
+} else {
 
 	if (empty($linktoid) || empty($linkto)) {
 		$paramok = false;
-		$toitems = "???";
+		$toitems = "";
 	} else {
 		switch ($linkto) {
 		case 'person':
@@ -55,6 +53,12 @@ if (PGV_USER_IS_ADMIN && file_exists('modules/GEDFact_assistant/MEDIA/media_1_ct
 			break;
 		case 'source':
 			$toitems = $pgv_lang['to_source'];
+			break;
+		case 'repository':
+			$toitems = $pgv_lang['to_repository'];
+			break;
+		case 'note':
+			$toitems = $pgv_lang['to_note'];
 			break;
 		}
 	}
@@ -92,7 +96,7 @@ if (PGV_USER_IS_ADMIN && file_exists('modules/GEDFact_assistant/MEDIA/media_1_ct
 		}
 		//-->
 		</script>
-		<script src="phpgedview.js" language="JavaScript" type="text/javascript"></script>
+	<script src="js/phpgedview.js" language="JavaScript" type="text/javascript"></script>
 
 		<?php
 		echo '<form name="link" method="get" action="inverselink.php">';
@@ -148,7 +152,6 @@ if (PGV_USER_IS_ADMIN && file_exists('modules/GEDFact_assistant/MEDIA/media_1_ct
 				echo '(', $linktoid, ')';
 				if ($TEXT_DIRECTION=="rtl") print getRLM();
 			}
-			echo '<tr><td class="topbottombar" colspan="2"><input type="submit" value="', $pgv_lang["set_link"], '" /></td></tr>';
 		}
 
 		if ($linkto == "family") {
@@ -164,8 +167,6 @@ if (PGV_USER_IS_ADMIN && file_exists('modules/GEDFact_assistant/MEDIA/media_1_ct
 				echo '(', $linktoid, ')';
 				if ($TEXT_DIRECTION=="rtl") print getRLM();
 			}
-			echo '</td></tr>';
-			echo '<tr><td class="topbottombar" colspan="2"><input type="submit" value="', $pgv_lang["set_link"], '" /></td></tr>';
 		}
 		
 		if ($linkto == "source") {
@@ -181,10 +182,39 @@ if (PGV_USER_IS_ADMIN && file_exists('modules/GEDFact_assistant/MEDIA/media_1_ct
 				echo '(', $linktoid, ')';
 				if ($TEXT_DIRECTION=="rtl") print getRLM();
 			}
-			echo '</td></tr>';
-			echo '<tr><td class="topbottombar" colspan="2"><input type="submit" value="', $pgv_lang["set_link"], '" /></td></tr>';
+		}
+		if ($linkto == "repository") {
+			echo $pgv_lang["repository"]."</td>";
+			echo '<td  class="optionbox wrap">';
+			if ($linktoid=="") {
+				echo '<input class="pedigree_form" type="text" name="linktoid" id="linktorid" size="3" value="', $linktoid, '" />';
+			//	print_findsource_link("linktosid");
+			} else {
+				$record=Repository::getInstance($linktoid);
+				echo '<b>', PrintReady($record->getFullName()), '</b>&nbsp;&nbsp;&nbsp;';
+				if ($TEXT_DIRECTION=="rtl") print getRLM();
+				echo '(', $linktoid, ')';
+				if ($TEXT_DIRECTION=="rtl") print getRLM();
+			}
 		}
 		
+		if ($linkto == "note") {
+			echo $pgv_lang["shared_note"]."</td>";
+			echo '<td  class="optionbox wrap">';
+			if ($linktoid=="") {
+				echo '<input class="pedigree_form" type="text" name="linktoid" id="linktonid" size="3" value="', $linktoid, '" />';
+			//	print_findsource_link("linktosid");
+			} else {
+				$record=Note::getInstance($linktoid);
+				echo '<b>', PrintReady($record->getFullName()), '</b>&nbsp;&nbsp;&nbsp;';
+				if ($TEXT_DIRECTION=="rtl") print getRLM();
+				echo '(', $linktoid, ')';
+				if ($TEXT_DIRECTION=="rtl") print getRLM();
+			}
+		}
+		
+		echo '</td></tr>';
+		echo '<tr><td class="topbottombar" colspan="2"><input type="submit" value="', $pgv_lang["set_link"], '" /></td></tr>';
 		echo '</table>';
 		echo '</form>';
 		echo '<br/><br/><center><a href="javascript:;" onclick="if (window.opener.showchanges) window.opener.showchanges(); window.close();">', $pgv_lang["close_window"], '</a><br /></center>';

@@ -164,7 +164,7 @@ class stats_ui extends stats
 			if($isged)
 			{
 				$content .= print_help_link('index_add_favorites_help', 'qm', '', false, true)
-					."<b><a href=\"javascript:// {$pgv_lang['add_favorite']} \" onclick=\"expand_layer('add_ged_fav'); return false;\"><img id=\"add_ged_fav_img\" src=\"{$PGV_IMAGE_DIR}/{$PGV_IMAGES['plus']['other']}\" border=\"0\" alt=\"\" />&nbsp;{$pgv_lang['add_favorite']}</a></b>"
+					."<b><a href=\"javascript://{$pgv_lang['add_favorite']} \" onclick=\"expand_layer('add_ged_fav'); return false;\"><img id=\"add_ged_fav_img\" src=\"{$PGV_IMAGE_DIR}/{$PGV_IMAGES['plus']['other']}\" border=\"0\" alt=\"\" />&nbsp;{$pgv_lang['add_favorite']}</a></b>"
 					."<br />\n<div id=\"add_ged_fav\" style=\"display: none;\">\n"
 					."<form name=\"addgfavform\" method=\"post\" action=\"index.php\">\n"
 					."<input type=\"hidden\" name=\"favtype\" value=\"gedcom\" />\n"
@@ -174,7 +174,7 @@ class stats_ui extends stats
 			else
 			{
 				$content .= print_help_link('index_add_favorites_help', 'qm', '', false, true)
-					."<b><a href=\"javascript:// {$pgv_lang['add_favorite']} \" onclick=\"expand_layer('add_user_fav'); return false;\"><img id=\"add_user_fav_img\" src=\"{$PGV_IMAGE_DIR}/{$PGV_IMAGES['plus']['other']}\" border=\"0\" alt=\"\" />&nbsp;{$pgv_lang['add_favorite']}</a></b>"
+					."<b><a href=\"javascript://{$pgv_lang['add_favorite']} \" onclick=\"expand_layer('add_user_fav'); return false;\"><img id=\"add_user_fav_img\" src=\"{$PGV_IMAGE_DIR}/{$PGV_IMAGES['plus']['other']}\" border=\"0\" alt=\"\" />&nbsp;{$pgv_lang['add_favorite']}</a></b>"
 					."<br />\n<div id=\"add_user_fav\" style=\"display: none;\">\n"
 					."<form name=\"addufavform\" method=\"post\" action=\"index.php\">\n"
 					."<input type=\"hidden\" name=\"favtype\" value=\"user\" />\n"

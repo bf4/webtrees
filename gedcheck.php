@@ -4,7 +4,7 @@
 // and other common errors.
 //
 // phpGedView: Genealogy Viewer
-// Copyright (C) 2006-2008 Greg Roach, all rights reserved
+// Copyright (C) 2006-2009 Greg Roach, all rights reserved
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -30,17 +30,17 @@ require './config.php';
 
 // Must be an admin user to use this module
 if (!PGV_USER_GEDCOM_ADMIN) {
-	header("Location: login.php?url=gedcheck.php");
+	header('Location: login.php?url=gedcheck.php');
 	exit;
 }
-print_header($pgv_lang["gedcheck"].' - '.$GEDCOM);
+print_header($pgv_lang['gedcheck'].' - '.$GEDCOM);
 
 ////////////////////////////////////////////////////////////////////////////////
 // Scan all the gedcom directories for gedcom files
 ////////////////////////////////////////////////////////////////////////////////
-$all_dirs=array($INDEX_DIRECTORY=>"");
+$all_dirs=array($INDEX_DIRECTORY=>'');
 foreach (get_all_gedcoms() as $ged_id=>$ged_name) {
-	$all_dirs[dirname(get_gedcom_setting($ged_id, 'path'))."/"]="";
+	$all_dirs[dirname(get_gedcom_setting($ged_id, 'path')).'/']='';
 }
 
 $all_geds=array();
@@ -81,46 +81,60 @@ else {
 }
 
 $ged          =safe_POST('ged', array_keys($all_geds), $default_ged);
-$err_level    =safe_POST('err_level',    '[0-3]', $error); // Higher numbers are more picky.
+$err_level    =safe_POST('err_level',    '[0-3]', $critical); // Higher numbers are more picky.
 $openinnew    =safe_POST('openinnew',    '[01]',  '0');    // Open links in same/new tab/window
 $context_lines=safe_POST('context_lines','[0-5]', '2');    // Lines of context to display
 $showall      =safe_POST('showall',      '[01]',  '0');    // Show details of records with no problems
 
-print "<form method='post' name='gedcheck' action='gedcheck.php'>\n";
-print "<table class='list_table, $TEXT_DIRECTION'>\n";
-print "<tr><td class='list_label'>{$pgv_lang["gedcom_file"]}</td>\n";
-print "<td class='optionbox'><select name='ged'>\n";
-foreach ($all_geds as $key=>$value)
-	print "<option value='$key'".($key==$ged?" selected='selected'":"").">$key</option>\n";
-print "</select></td></tr>";
-print "<tr><td class='list_label'>&nbsp; {$pgv_lang["level"]} &nbsp;</td>\n";
-print "<td class='optionbox'><select name='err_level'>\n";
-for ($i=0; $i<count($levels); $i++)
-	print "<option value='$i'".($i==$err_level?" selected='selected'":"").">{$levels[$i]}</option>\n";
-print "</select></td></tr>";
-print "<tr><td class='list_label'>&nbsp; {$pgv_lang["open_link"]} &nbsp;</td>\n";
-print "<td class='optionbox'><select name='openinnew'>\n";
-print "<option value='0' ".($openinnew==0?" selected='selected'":"")."/>{$pgv_lang["same_win"]}</option>\n";
-print "<option value='1' ".($openinnew==1?" selected='selected'":"")."/>{$pgv_lang["new_win"]}</option>\n";
-print "</select></td></tr>";
-print "<tr><td class='list_label'>&nbsp; {$pgv_lang["context_lines"]} &nbsp;</td>\n";
-print "<td class='optionbox'><select name='context_lines'>\n";
-for ($i=0; $i<6; $i++)
-	print "<option value='$i'".($i==$context_lines?" selected='selected'":"").">$i</option>\n";
-print "</select></td></tr>";
-print "<tr><td class='list_label'>&nbsp; {$pgv_lang["show"]} &nbsp;</td>\n";
-print "<td class='optionbox'><select name='showall'>\n";
-print "<option value='0' ".($showall==0?"selected='selected'":"").">{$pgv_lang["err_rec"]}</option>\n";
-print "<option value='1' ".($showall==1?"selected='selected'":"").">{$pgv_lang["all_rec"]}</option>\n";
-print "</select></td></tr>";
-print "</table><input type='submit' value='{$pgv_lang["show"]}'><input type='hidden' name='action' value='go'></form><hr />\n";
-
+echo '<form method="post" name="gedcheck" action="gedcheck.php">';
+echo '<table class="list_table ', $TEXT_DIRECTION, '">';
+echo '<tr><td class="list_label">', $pgv_lang['gedcom_file'], '</td>';
+echo '<td class="optionbox"><select name="ged">';
+foreach ($all_geds as $key=>$value) {
+	echo '<option value="', htmlspecialchars($key), '"', $key==$ged?' selected="selected"':'', '>', htmlspecialchars($key), '</option>';
+}
+echo '</select></td></tr>';
+echo '<tr><td class="list_label">', $pgv_lang['level'], '</td>';
+echo '<td class="optionbox"><select name="err_level">';
+for ($i=0; $i<count($levels); $i++) {
+	echo '<option value="', $i, '"', $i==$err_level?' selected="selected"':'', '>', $levels[$i], '</option>';
+}
+echo '</select></td></tr>';
+echo '<tr><td class="list_label">', $pgv_lang['open_link'], '</td>';
+echo '<td class="optionbox"><select name="openinnew">';
+echo '<option value="0"', $openinnew==0?' selected="selected"':'', '/>', $pgv_lang['same_win'], '</option>';
+echo '<option value="1"', $openinnew==1?' selected="selected"':'', '/>', $pgv_lang['new_win'], '</option>';
+echo '</select></td></tr>';
+echo '<tr><td class="list_label">', $pgv_lang['context_lines'], '</td>';
+echo '<td class="optionbox"><select name="context_lines">';
+for ($i=0; $i<6; $i++) {
+	echo '<option value="', $i, '"', $i==$context_lines?' selected="selected"':'', '>', $i, '</option>';
+}
+echo '</select></td></tr>';
+echo '<tr><td class="list_label">', $pgv_lang['show'], '</td>';
+echo '<td class="optionbox"><select name="showall">';
+echo '<option value="0"', $showall==0?' selected="selected"':'', '>', $pgv_lang['err_rec'], '</option>';
+echo '<option value="1"', $showall==1?' selected="selected"':'', '>', $pgv_lang['all_rec'], '</option>';
+echo '</select></td></tr>';
+echo '<tr><td colspan="2" class="list_label"><input type="submit" value="', $pgv_lang['show'], '"><input type="hidden" name="action" value="go"></td></tr>';
+echo '</table></form><hr />';
 // Do not run until user clicks "show", as default page may take a while to load.
 // Instead, show some useful help info.
-if (!isset($_POST["action"])) {
-	print "<P>".$pgv_lang['gedcheck_text']."</P><HR />";
+if (!isset($_POST['action'])) {
+	echo '<p>', $pgv_lang['gedcheck_text'], '</p><hr />';
 	print_footer();
 	exit();
+}
+
+// If we're checking a gedcom that is imported into the database, check that the file is synchronised
+if (in_array($ged, get_all_gedcoms())) {
+	require get_config_file($ged);
+	if (!$SYNC_GEDCOM_FILE && $ged=$GEDCOM) {
+		$ged_link='href="javascript:" onclick="window.open(\''.encode_url("export_gedcom.php?export={$ged}").'\', \'_blank\',\'left=50,top=50,width=500,height=500,resizable=1,scrollbars=1\');"';
+		echo '<div class="error">', print_text('gedcheck_sync',0,1);
+		echo '</div><hr/>';
+	}
+	require get_config_file(PGV_GEDCOM);
 }
 
 // Special cases.  Other facts link to themselves; SUBN, SUBN, OBJE, NOTE, REPO, SOUR
@@ -155,12 +169,12 @@ $EOL='[\n\r]+';
 ////////////////////////////////////////////////////////////////////////////////
 // Create error messages
 ////////////////////////////////////////////////////////////////////////////////
-function missing ($text) { global $pgv_lang; return $pgv_lang['missing'] .' '.$text; }
-function multiple($text) { global $pgv_lang; return $pgv_lang['multiple'].' '.$text; }
-function invalid ($text) { global $pgv_lang; return $pgv_lang['invalid'] .' '.$text; }
-function too_many($text) { global $pgv_lang; return $pgv_lang['too_many'].' '.$text; }
-function too_few ($text) { global $pgv_lang; return $pgv_lang['too_few'] .' '.$text; }
-function no_link ($text) { global $pgv_lang; return $text .' '. $pgv_lang['no_link'];}
+function missing ($text) { global $pgv_lang; return $pgv_lang['missing'] .' &lrm;'.$text.' &lrm;'; }
+function multiple($text) { global $pgv_lang; return $pgv_lang['multiple'].' &lrm;'.$text.' &lrm;'; }
+function invalid ($text) { global $pgv_lang; return $pgv_lang['invalid'] .' &lrm;'.$text.' &lrm;'; }
+function too_many($text) { global $pgv_lang; return $pgv_lang['too_many'].' &lrm;'.$text.' &lrm;'; }
+function too_few ($text) { global $pgv_lang; return $pgv_lang['too_few'] .' &lrm;'.$text.' &lrm;'; }
+function no_link ($text) { global $pgv_lang; return '&lrm;'.$text.'&lrm; '.$pgv_lang['no_link'];}
 
 ////////////////////////////////////////////////////////////////////////////////
 // Create a link to a PGV object
@@ -172,17 +186,17 @@ $PGV_LINK=array(
 	'REPO'=>'repo.php?rid=',
 	'OBJE'=>'mediaviewer.php?mid='
 );
-$target=($openinnew==1 ? " target='_new'" : '');
-function pgv_href($tag, $xref, $name="")
+$target=($openinnew==1 ? ' target="_new"' : '');
+function pgv_href($tag, $xref, $name='')
 {
 	global $PGV_LINK, $target, $ged;
-	$text=($name=="" ? "$tag $xref" : "$name ($xref)");
-	if (isset($PGV_LINK[$tag]) && get_id_from_gedcom($ged))
-		return '<a href='.$PGV_LINK[$tag].str_replace('@','',$xref)."&ged=$ged"."$target>$text</a>";
-	else
-		return "$tag $xref";
+	$text=($name=='' ? "$tag $xref" : "$name ($xref)");
+	if (isset($PGV_LINK[$tag]) && get_id_from_gedcom($ged)) {
+		return '&lrm;<a href="'.$PGV_LINK[$tag].str_replace('@','',$xref).'"&amp;ged='.$ged.$target.'>'.$text.'</a>&lrm;';
+	} else {
+		return "&lrm;$tag $xref&lrm;";
+	}
 }
-
 ////////////////////////////////////////////////////////////////////////////////
 // Valid tags and their context - see Gedcom 5.5.1, pages 23-65
 ////////////////////////////////////////////////////////////////////////////////
@@ -783,17 +797,20 @@ while (($value=fgets($handle))!==false) {
 				$used_xrefs[$match[4].$match[3]]=true;
 		}
 	} else
-		print "<P>Internal error REGEXP failed on '$value'<P>";
+		echo '<p>Internal error: REGEXP failed on "', htmlspecialchars($value), '"<p>';
 }
 fclose($handle);
 
 ////////////////////////////////////////////////////////////////////////////////
 // Check the file at a syntactic level, line-by-line
 ////////////////////////////////////////////////////////////////////////////////
+
+// Gedcom files are english, left-to-right, whatever the page language
+echo '<div lang="en" xml:lang="en" dir="ltr" align="left">';
 $num_lines=count($gedfile);
 // Ignore the Byte-Order-Mark on UTF files
 if ($num_lines>0) $gedfile[0]=preg_replace('/^'.PGV_UTF8_BOM.'/', '', $gedfile[0]);
-$context=array('GEDCOM'); $curr_xref="";
+$context=array('GEDCOM'); $curr_xref='';
 foreach ($gedfile as $num=>$value) {
 	preg_match('/^(\s*)(\d*)(\s*)(@[^@#]+@)?(\s*)(\S*)(\s*)(.*)/', $value, $match);
 	$whitespace1=$match[1];
@@ -830,7 +847,7 @@ foreach ($gedfile as $num=>$value) {
 			        (($tag=='FAMS'                ) && !isset($xref_links[$tag_data.'HUSB'.$curr_xref]) &&
 			                                           !isset($xref_links[$tag_data.'WIFE'.$curr_xref]) ||
 			         ($tag=='FAMC'                ) && !isset($xref_links[$tag_data.'CHIL'.$curr_xref]) ||
-			         ($tag=='HUSB' || $tag=="WIFE") && !isset($xref_links[$tag_data.'FAMS'.$curr_xref]) ||
+			         ($tag=='HUSB' || $tag=='WIFE') && !isset($xref_links[$tag_data.'FAMS'.$curr_xref]) ||
 			         ($tag=='CHIL'                ) && !isset($xref_links[$tag_data.'FAMC'.$curr_xref])
 			        ))
 				$err=no_link(pgv_href($XREF_LINK[$tag], $tag_data));
@@ -862,11 +879,11 @@ foreach ($gedfile as $num=>$value) {
 			// Check min/max number of sub-tags at level N+1
 			if ($err=='')
 				foreach ($count_plus_one as $tag_plus_one=>$count_plus1)
-					if (isset($CONTEXT[$tmp.":".$tag_plus_one]))
-						if ($count_plus1 > $CONTEXT_MAX[$tmp.":".$tag_plus_one])
-							$err=too_many($tmp.":".$tag_plus_one);
-						elseif ($count_plus1 < $CONTEXT_MIN[$tmp.":".$tag_plus_one])
-							$err=too_few($tmp.":".$tag_plus_one);
+					if (isset($CONTEXT[$tmp.':'.$tag_plus_one]))
+						if ($count_plus1 > $CONTEXT_MAX[$tmp.':'.$tag_plus_one])
+							$err=too_many($tmp.':'.$tag_plus_one);
+						elseif ($count_plus1 < $CONTEXT_MIN[$tmp.':'.$tag_plus_one])
+							$err=too_few($tmp.':'.$tag_plus_one);
 
 			// Check for missing subordinate tag (ignore custom tags)
 			if ($err=='' && isset($CONTEXT[$tmp]))
@@ -877,7 +894,7 @@ foreach ($gedfile as $num=>$value) {
 			if ($err_level>=$warning && $err=='') { // WARNING CHECKS - data
 				if (!preg_match('/_/', $tmp) && !preg_match('/^'.$CONTEXT[$tmp].'$/i', $tag_data))
 					$err=invalid($pgv_lang['data']);
-				elseif ($tag_level=='0' && $xref!='' && !isset($used_xrefs[$xref.$tag])) $err=$pgv_lang["noref"];
+				elseif ($tag_level=='0' && $xref!='' && !isset($used_xrefs[$xref.$tag])) $err=$pgv_lang['noref'];
 					if ($err_level>=$info && $err=='') { // INFOMATIONAL CHECKS - spacing
 						if ($whitespace1!=''  ||
 								$whitespace2!=' ' ||
@@ -892,7 +909,7 @@ foreach ($gedfile as $num=>$value) {
 	//////////////////////////////////////////////////////////////////////////////
 	// Record our current context for error logging and future checks.
 	//////////////////////////////////////////////////////////////////////////////
-	if ($tag_level=="0" && $tag!="") {
+	if ($tag_level=='0' && $tag!='') {
 		$curr_xref=$xref;
 		$curr_l0tag=$tag;
 	}
@@ -900,18 +917,18 @@ foreach ($gedfile as $num=>$value) {
 	//////////////////////////////////////////////////////////////////////////////
 	// If an error was found, print it in its context
 	//////////////////////////////////////////////////////////////////////////////
-	if ($err!="") {
+	if ($err!='') {
 		if (isset($last_err_num)) {
 			if ($num-$last_err_num>2*$context_lines && $context_lines>0)
-				print "</pre><pre>";
+				echo '</pre><pre lang="en" xml:lang="en" dir="ltr" align="left">';
 			for ($i=max($num-$context_lines, $last_err_num+$context_lines+1); $i<$num; ++$i)
 				printf("%07d  %s\n", $i+1, $gedfile[$i]);
 		} else {
-			print "<pre>";
+			echo '<pre lang="en" xml:lang="en" dir="ltr" halign="left">';
 			for ($i=max(0,$num-$context_lines); $i<$num; ++$i)
 				printf("%07d  %s\n", $i+1, $gedfile[$i]);
 		}
-		printf("<b><font color='red'>%07d[[</font><b>%s</b><font color='red'>]]  %s; {$pgv_lang["see"]} %s</font></b>\n", $num+1, htmlspecialchars($gedfile[$num]), $err, pgv_href($curr_l0tag, $curr_xref));
+		printf("<b><font color='red'>&lrm;%07d[[</font><b>%s</b><font color='red'>]]&lrm;  %s; {$pgv_lang['see']} %s</font></b>\n", $num+1, htmlspecialchars($gedfile[$num]), $err, pgv_href($curr_l0tag, $curr_xref));
 		flush();
 		$last_err_num=$num;
 	} else
@@ -921,9 +938,11 @@ foreach ($gedfile as $num=>$value) {
 }
 
 if (isset($last_err_num)) {
-	print "</pre>";
-	flush();
+	echo '</pre>';
+} else {
+	echo $pgv_lang['gedcheck_nothing'];
 }
+echo '</div>'; // language/direction/alignment
 
 print_footer();
 ?>

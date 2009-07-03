@@ -88,7 +88,7 @@
 					<PGVRif condition="@desc!=''">
 						<PGVRTextBox border="1" width="$width2" height="16" newline="1">
 							<PGVRText style="text"><PGVRGedcomValue tag="@desc" /></PGVRText>
-							<PGVRText style="text"> <PGVRGedcomValue tag="@fact:PLAC" /></PGVRText>
+							<PGVRText style="text">; <PGVRGedcomValue tag="@fact:PLAC" /></PGVRText>
 							<PGVRGedcom id="@_PGVS">
 								<PGVRif condition="@SEX=='M'">
 									<PGVRText style="pagenum">  <PGVRvar var="pgv_lang[husband]" /></PGVRText>

@@ -201,6 +201,9 @@ if ($action=="update") {
 			PGV_DB::prepare("SELECT pl_lati,pl_long,pl_parent_id,pl_zoom FROM {$TBLPREFIX}placelocation WHERE pl_id=?")
 			->execute(array($parent_id))
 			->fetchOneRow();
+		if (!$row) {
+			break;
+		}
 		if ($row->pl_lati!==null && $row->pl_long!==null) {
 			$parent_lati = (float)(str_replace(array('N', 'S', ','), array('', '-', '.') , $row->pl_lati));
 			$parent_long = (float)(str_replace(array('E', 'W', ','), array('', '-', '.') , $row->pl_long));
@@ -561,7 +564,7 @@ if ($action=="add") {
 					icon_type.shadow = "modules/googlemap/shadow50.png";
 					icon_type.iconSize = new GSize(20, 34);
 					icon_type.shadowSize = new GSize(37, 34);
-					icon_type.iconAnchor = new GPoint(6, 20);
+					icon_type.iconAnchor = new GPoint(10, 34);
 					icon_type.infoWindowAnchor = new GPoint(5, 1);
 					map.addOverlay(new GMarker(new GLatLng(<?php echo $parent_lati.", ".$parent_long;?>), icon_type));
 <?php			} else { ?>
@@ -625,7 +628,7 @@ if ($action=="add") {
 		icon.shadow = "modules/googlemap/shadow50.png";
 		icon.iconSize = new GSize(20, 34);
 		icon.shadowSize = new GSize(37, 34);
-		icon.iconAnchor = new GPoint(6, 20);
+		icon.iconAnchor = new GPoint(10, 34);
 		icon.infoWindowAnchor = new GPoint(5, 1);
 
 		var marker = new GMarker(point, icon);
@@ -728,7 +731,7 @@ if ($action=="add") {
 	</tr>
 	<tr>
 		<td class="descriptionbox"><?php print_help_link("PLE_PLACES_help", "qm", "PLE_PLACES");?><?php echo $factarray["PLAC"];?></td>
-		 <td class="optionbox"><input type="text" id="new_pl_name" name="NEW_PLACE_NAME" value="<?php echo PrintReady($place_name) ?>" size="25" class="address_input" tabindex="<?php echo ++$i;?>" />
+		 <td class="optionbox"><input type="text" id="new_pl_name" name="NEW_PLACE_NAME" value="<?php echo htmlspecialchars($place_name) ?>" size="25" class="address_input" tabindex="<?php echo ++$i;?>" />
 		<div id="INDI_PLAC_pop" style="display: inline;">
 		<?php print_specialchar_link("NEW_PLACE_NAME", false);?></div>
 		<label for="new_pl_name"><a href="javascript:;" onclick="showLocation_level(document.getElementById('new_pl_name').value); return false">&nbsp;<?php echo $pgv_lang["pl_search_level"]?></a></label>&nbsp;&nbsp;|

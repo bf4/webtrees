@@ -29,6 +29,7 @@ require_once './config.php';
 require_once 'includes/controllers/individual_ctrl.php'; 
 $controller = new IndividualController(); 
 $controller->init(); 
+echo "<link href =\"modules/GEDFact_assistant/css/gf_styles.css\" 	rel=\"stylesheet\" type=\"text/css\" media=\"screen\" />";
 
 // loadLangFile("lb_lang, gm_lang");	// Load Lightbox & GoogleMap language files
 // loadLangFile("lightbox:lang");
@@ -40,7 +41,7 @@ global $SEARCH_SPIDER, $GOOGLEMAP_PH_CONTROLS;
 		global $pgv_lang, $factarray, $SHOW_ID_NUMBERS, $PGV_IMAGE_DIR, $PGV_IMAGES, $SHOW_AGE_DIFF;
 		global $pgv_changes, $GEDCOM, $ABBREVIATE_CHART_LABELS;
 		global $show_full; 
-		global $famid;
+		global $famid, $censyear, $censdate;
 		
 // print_simple_header("Census");
 
@@ -49,8 +50,9 @@ global $SEARCH_SPIDER, $GOOGLEMAP_PH_CONTROLS;
 			// If alive display age
 			$bdate=$controller->indi->getBirthDate();
 			$age = GedcomDate::GetAgeGedcom($bdate);
-			if ($age!="")
-				$summary.= "<span class=\"label\">".$pgv_lang["age"].":</span><span class=\"field\"> ".get_age_at_event($age, true)."</span>";
+		//	if ($age!="") {
+		//		$summary.= "<span class=\"label\">".$pgv_lang["age"].":</span><span class=\"field\"> ".get_age_at_event($age, true)."</span>";
+		//	}
 		}
 		$summary.=$controller->indi->format_first_major_fact(PGV_EVENTS_DEAT, 2);
 

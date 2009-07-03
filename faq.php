@@ -200,20 +200,18 @@ if ($action == "edit") {
 		print_help_link("edit_faq_item_help","qm","edit_faq_item");
 		echo $pgv_lang["edit_faq_item"], '</td></tr>';
 		foreach ($faqs as $id => $data) {
-			echo '<input type="hidden" name="pidh" value="', $data["header"]["pid"], '" />';
-			echo '<input type="hidden" name="pidb" value="', $data["body"]["pid"], '" />';
-			echo '<input type="hidden" name="oldGEDCOM" value="', $data["header"]["gedcom"], '" />';
-			echo '<input type="hidden" name="oldOrder" value="', $id, '" />';
-			$header = str_replace(array('&', '<', '>',), array('&amp;', '&lt;', '&gt;'), stripslashes($data["header"]["text"]));
+			echo '<input type="hidden" name="pidh" value="', htmlspecialchars($data["header"]["pid"]), '" />';
+			echo '<input type="hidden" name="pidb" value="', htmlspecialchars($data["body"]["pid"]), '" />';
+			echo '<input type="hidden" name="oldGEDCOM" value="', htmlspecialchars($data["header"]["gedcom"]), '" />';
+			echo '<input type="hidden" name="oldOrder" value="', htmlspecialchars($id), '" />';
 			echo '<tr><td class="descriptionbox" colspan="2">';
 			print_help_link("add_faq_header_help","qm","add_faq_header");
 			echo $pgv_lang["add_faq_header"], '</td></tr>';
-			echo '<tr><td class="optionbox" colspan="2"><input type="text" name="header" size="90" tabindex="', $i++, '" value="', $header, '" /></td></tr>';
+			echo '<tr><td class="optionbox" colspan="2"><input type="text" name="header" size="90" tabindex="', $i++, '" value="', htmlspecialchars($data["header"]["text"]), '" /></td></tr>';
 			echo '<tr><td class="descriptionbox" colspan="2">';
 			print_help_link("add_faq_body_help","qm","add_faq_body");
 			echo $pgv_lang["add_faq_body"], '</td></tr>';
-			$body = str_replace(array('&', '<', '>',), array('&amp;', '&lt;', '&gt;'), stripslashes($data["body"]["text"]));
-			echo '<tr><td class="optionbox" colspan="2"><textarea name="body" rows="10" cols="90" tabindex="', $i++, '">', $body, '</textarea></td></tr>';
+			echo '<tr><td class="optionbox" colspan="2"><textarea name="body" rows="10" cols="90" tabindex="', $i++, '">', htmlspecialchars($data["body"]["text"]), '</textarea></td></tr>';
 			echo '<tr><td class="descriptionbox">';
 			print_help_link("add_faq_order_help","qm","add_faq_order");
 			echo $pgv_lang["add_faq_order"], '</td><td class="descriptionbox">';
@@ -310,7 +308,7 @@ if ($action == "show") {
 					echo '</td>';
 				}
 				// NOTE: Print the body text of the current item
-				echo '<td class="list_value wrap">', nl2br($body), '</td></tr>';
+				echo '<td class="list_value_wrap">', nl2br($body), '</td></tr>';
 			}
 		}
 	}

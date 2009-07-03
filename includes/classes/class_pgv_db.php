@@ -41,7 +41,33 @@ class PGV_DB {
 	//////////////////////////////////////////////////////////////////////////////
 	private static $instance=null;
 	private static $pdo=null;
-	private static $dbtype=null;
+
+	// Dialects of SQL
+	public static $AUTO_ID_TYPE =null; /* for primary keys */
+	public static $ID_TYPE      =null; /* for foreign keys */
+	public static $INT1_TYPE    =null;
+	public static $INT2_TYPE    =null;
+	public static $INT3_TYPE    =null;
+	public static $INT4_TYPE    =null;
+	public static $INT8_TYPE    =null;
+	public static $CHAR_TYPE    =null;
+	public static $VARCHAR_TYPE =null;
+	public static $UNSIGNED     =null;
+	public static $LIKE         =null;
+	public static $RANDOM       =null;
+	public static $TEXT_TYPE    =null;
+	public static $LONGTEXT_TYPE=null;
+	public static $UTF8_TABLE   =null;
+
+	// Standard column types for gedcom data
+	public static $COL_FILE=null;
+	public static $COL_XREF=null;
+	public static $COL_TAG =null;
+	public static $COL_JD  =null;
+	public static $COL_DAY =null;
+	public static $COL_MON =null;
+	public static $COL_YEAR=null;
+	public static $COL_CAL =null;
 
 	// Prevent instantiation via new PGV_DB
 	private final function __construct() {
@@ -57,50 +83,13 @@ class PGV_DB {
 		trigger_error('PGV_DB::unserialize() is not allowed.', E_USER_ERROR);
 	}
 
-	// Test a set of connection parameters - used during installation
-	public static function testParameters($DBTYPE, $DBHOST, $DBPORT, $DBNAME, $DBUSER, $DBPASS) {
-		try {
-			switch ($DBTYPE) {
-			case 'mysql':
-				$dbh=new PDO("mysql:host={$DBHOST};dbname={$DBNAME};port={$DBPORT}", $DBUSER, $DBPASS);
-				break;
-			case 'pgsql':
-				$dbh=new PDO("pgsql:host={$DBHOST};dbname={$DBNAME};port={$DBPORT}", $DBUSER, $DBPASS);
-				break;
-			case 'mssql':
-				$dbh=new PDO("mssql:host={$DBHOST};dbname={$DBNAME}".($DBPORT ? ",{$DBPORT}" : ''), $DBUSER, $DBPASS);
-				break;
-			case 'sqlite':
-				$dbh=new PDO("sqlite:{$DBNAME}", null, null);
-				break;
-			case 'firebird': // This DSN has not been tested!
-				$dbh=new PDO("firebird:host={$DBHOST};dbname={$DBNAME};charset=UTF-8", $DBUSER, $DBPASS);
-				break;
-			case 'ibm': // This DSN has not been tested!
-				$dbh=new PDO("ibm:DRIVER={IBM DB2 ODBC DRIVER};DATABASE={$DBNAME};HOSTNAME={$DBHOST};PORT={$DBPORT};PROTOCOL=TCPIP", $DBUSER, $DBPASS);
-				break;
-			case 'informix': // This DSN has not been tested!
-				$dbh=new PDO("informix:host={$DBHOST};service={$DBPORT};database={$DBNAME}", $DBUSER, $DBPASS);
-				break;
-			case 'oci': // This DSN has not been tested!
-				$dbh=new PDO("oci:dbname=//{$DBHOST}}:{$DBPORT}/{$DBNAME}", $DBUSER, $DBPASS);
-				break;
-			case 'odbc': // This DSN has not been tested!
-				$dbh=new PDO("odbc:$DBNAME", $DBUSER, $DBPASS);
-				break;
-			case '4D': // This DSN has not been tested!
-				$dbh=new PDO("4D:host={$DBHOST};port={$DBPORT};dbname={$DBNAME};charset=UTF-8", $DBUSER, $DBPASS);
-				break;
-			}
-			unset($dbh); // Close the connection
-			return true;
-		} catch (PDOException $ex) {
-			return false;
-		}
+	// Disconnect from the server, so we can connect to another one during install.php
+	public static function disconnect() {
+		self::$pdo=null;
 	}
 
 	// Implement the singleton pattern
-	public static function createInstance($DBTYPE, $DBHOST, $DBPORT, $DBNAME, $DBUSER, $DBPASS, $DBPERSIST, $DB_UTF8_COLLATION) {
+	public static function createInstance($DBTYPE, $DBHOST, $DBPORT, $DBNAME, $DBUSER, $DBPASS, $DB_UTF8_COLLATION) {
 		if (self::$pdo instanceof PDO) {
 			trigger_error('PGV_DB::createInstance() can only be called once.', E_USER_ERROR);
 		}
@@ -125,28 +114,58 @@ class PGV_DB {
 			self::$pdo=new PDO(
 				"mysql:host={$DBHOST};dbname={$DBNAME};port={$DBPORT}", $DBUSER, $DBPASS,
 				array(
-					PDO::ATTR_PERSISTENT=>(bool)$DBPERSIST,
 					PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION,
 					PDO::ATTR_DEFAULT_FETCH_MODE=>PDO::FETCH_OBJ,
 					PDO::ATTR_CASE=>PDO::CASE_LOWER,
 					PDO::ATTR_AUTOCOMMIT=>true
 				)
 			);
+			self::$AUTO_ID_TYPE ='INTEGER UNSIGNED AUTO_INCREMENT';
+			self::$ID_TYPE      ='INTEGER UNSIGNED';
+			self::$INT1_TYPE    ='TINYINT';
+			self::$INT2_TYPE    ='SMALLINT';
+			self::$INT3_TYPE    ='MEDIUMINT';
+			self::$INT4_TYPE    ='INT';
+			self::$INT8_TYPE    ='BIGINT';
+			self::$CHAR_TYPE    ='CHAR';
+			self::$VARCHAR_TYPE ='VARCHAR';
+			self::$UNSIGNED     ='UNSIGNED';
+			self::$LIKE         ='LIKE';
+			self::$RANDOM       ='RAND()';
+			self::$TEXT_TYPE    ='TEXT';
+			self::$LONGTEXT_TYPE='LONGTEXT';
 			if ($DB_UTF8_COLLATION) {
 				self::$pdo->exec("SET NAMES UTF8");
+				self::$UTF8_TABLE   ='CHARACTER SET utf8 COLLATE utf8_unicode_ci';
+			} else {
+				self::$UTF8_TABLE   ='';
 			}
 			break;
 		case 'pgsql':
 			self::$pdo=new PDO(
 				"pgsql:host={$DBHOST};dbname={$DBNAME};port={$DBPORT}", $DBUSER, $DBPASS,
 				array(
-					PDO::ATTR_PERSISTENT=>(bool)$DBPERSIST,
 					PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION,
 					PDO::ATTR_DEFAULT_FETCH_MODE=>PDO::FETCH_OBJ,
 					PDO::ATTR_CASE=>PDO::CASE_LOWER,
 					PDO::ATTR_AUTOCOMMIT=>true
 				)
 			);
+			self::$AUTO_ID_TYPE ='SERIAL';
+			self::$ID_TYPE      ='INTEGER';
+			self::$INT1_TYPE    ='SMALLINT';
+			self::$INT2_TYPE    ='SMALLINT';
+			self::$INT3_TYPE    ='INTEGER';
+			self::$INT4_TYPE    ='INTEGER';
+			self::$INT8_TYPE    ='BIGINT';
+			self::$CHAR_TYPE    ='CHAR';
+			self::$VARCHAR_TYPE ='VARCHAR';
+			self::$UNSIGNED     ='';
+			self::$LIKE         ='ILIKE';
+			self::$RANDOM       ='RANDOM()';
+			self::$TEXT_TYPE    ='TEXT';
+			self::$LONGTEXT_TYPE='TEXT';
+			self::$UTF8_TABLE   ='';
 			if ($DB_UTF8_COLLATION) {
 				self::$pdo->exec("SET NAMES 'UTF8'");
 			}
@@ -155,112 +174,225 @@ class PGV_DB {
 			self::$pdo=new PDO(
 				"mssql:host={$DBHOST};dbname={$DBNAME}".($DBPORT ? ",{$DBPORT}" : ''), $DBUSER, $DBPASS,
 				array(
-					PDO::ATTR_PERSISTENT=>(bool)$DBPERSIST,
 					PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION,
 					PDO::ATTR_DEFAULT_FETCH_MODE=>PDO::FETCH_OBJ,
 					PDO::ATTR_CASE=>PDO::CASE_LOWER,
 					PDO::ATTR_AUTOCOMMIT=>true
 				)
 			);
+			self::$AUTO_ID_TYPE ='INTEGER IDENTITY';
+			self::$ID_TYPE      ='INTEGER';
+			self::$INT1_TYPE    ='INTEGER';
+			self::$INT2_TYPE    ='INTEGER';
+			self::$INT3_TYPE    ='INTEGER';
+			self::$INT4_TYPE    ='INTEGER';
+			self::$INT8_TYPE    ='INTEGER';
+			self::$CHAR_TYPE    ='VARCHAR';
+			self::$VARCHAR_TYPE ='VARCHAR';
+			self::$UNSIGNED     ='';
+			self::$LIKE         ='LIKE';
+			self::$RANDOM       ='NEWID';
+			self::$TEXT_TYPE    ='TEXT';
+			self::$LONGTEXT_TYPE='TEXT';
+			self::$UTF8_TABLE   ='';
 			break;
 		case 'sqlite':
-//			try {
-//				self::$pdo=new PDO(
-//					"sqlite:{$DBNAME}", null, null,
-//					array(
-//						PDO::ATTR_PERSISTENT=>(bool)$DBPERSIST,
-//						PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION,
-//						PDO::ATTR_DEFAULT_FETCH_MODE=>PDO::FETCH_OBJ,
-//						PDO::ATTR_CASE=>PDO::CASE_LOWER
-//					)
-//				);
-//				// Check if we can connect to the database
-//				// If not, we may have a sqlite2 database from PhpGedView 4.2.1 or earlier
-//				PGV_DB::exec('PRAGMA encoding="UTF-8"');
-//			} catch (PDOException $ex) {
-//				// Couldn't connect using sqlite3 - try sqlite2
+			try {
 				self::$pdo=new PDO(
-					"sqlite2:{$DBNAME}", null, null,
+					"sqlite:{$DBNAME}", null, null,
 					array(
-						PDO::ATTR_PERSISTENT=>(bool)$DBPERSIST,
 						PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION,
 						PDO::ATTR_DEFAULT_FETCH_MODE=>PDO::FETCH_OBJ,
 						PDO::ATTR_CASE=>PDO::CASE_LOWER
 					)
 				);
-//			}
+				// Check if we can connect to the database
+				// If not, we may have a sqlite2 database from PhpGedView 4.2.1 or earlier
+				PGV_DB::exec("pragma table_info(sqlite_master)");
+
+				PGV_DB::exec('PRAGMA encoding="UTF-8"');
+			} catch (PDOException $ex) {
+				// Couldn't connect using sqlite3 - try sqlite2
+				self::$pdo=new PDO(
+					"sqlite2:{$DBNAME}", null, null,
+					array(
+						PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION,
+						PDO::ATTR_DEFAULT_FETCH_MODE=>PDO::FETCH_OBJ,
+						PDO::ATTR_CASE=>PDO::CASE_LOWER
+					)
+				);
+			}
+			self::$AUTO_ID_TYPE ='INTEGER AUTOINCREMENT';
+			self::$ID_TYPE      ='INTEGER';
+			self::$INT1_TYPE    ='INTEGER';
+			self::$INT2_TYPE    ='INTEGER';
+			self::$INT3_TYPE    ='INTEGER';
+			self::$INT4_TYPE    ='INTEGER';
+			self::$INT8_TYPE    ='INTEGER';
+			self::$CHAR_TYPE    ='VARCHAR';
+			self::$VARCHAR_TYPE ='VARCHAR';
+			self::$UNSIGNED     ='';
+			self::$LIKE         ='LIKE';
+			self::$RANDOM       ='RANDOM()';
+			self::$TEXT_TYPE    ='TEXT';
+			self::$LONGTEXT_TYPE='TEXT';
+			self::$UTF8_TABLE   ='';
 			break;
 		case 'firebird': // This DSN has not been tested!
 			self::$pdo=new PDO(
 				"firebird:host={$DBHOST};dbname={$DBNAME};charset=UTF-8", $DBUSER, $DBPASS,
 				array(
-					PDO::ATTR_PERSISTENT=>(bool)$DBPERSIST,
 					PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION,
 					PDO::ATTR_DEFAULT_FETCH_MODE=>PDO::FETCH_OBJ,
 					PDO::ATTR_CASE=>PDO::CASE_LOWER,
 					PDO::ATTR_AUTOCOMMIT=>true
 				)
 			);
+			self::$AUTO_ID_TYPE ='INTEGER AUTOINCREMENT'; // These values are guesses
+			self::$ID_TYPE      ='INTEGER';
+			self::$INT1_TYPE    ='INTEGER';
+			self::$INT2_TYPE    ='INTEGER';
+			self::$INT3_TYPE    ='INTEGER';
+			self::$INT4_TYPE    ='INTEGER';
+			self::$INT8_TYPE    ='INTEGER';
+			self::$CHAR_TYPE    ='VARCHAR';
+			self::$VARCHAR_TYPE ='VARCHAR';
+			self::$UNSIGNED     ='';
+			self::$LIKE         ='LIKE';
+			self::$RANDOM       ='RANDOM()';
+			self::$TEXT_TYPE    ='TEXT';
+			self::$LONGTEXT_TYPE='TEXT';
+			self::$UTF8_TABLE   ='';
 			break;
 		case 'ibm': // This DSN has not been tested!
 			self::$pdo=new PDO(
 				"ibm:DRIVER={IBM DB2 ODBC DRIVER};DATABASE={$DBNAME};HOSTNAME={$DBHOST};PORT={$DBPORT};PROTOCOL=TCPIP", $DBUSER, $DBPASS,
 				array(
-					PDO::ATTR_PERSISTENT=>(bool)$DBPERSIST,
 					PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION,
 					PDO::ATTR_DEFAULT_FETCH_MODE=>PDO::FETCH_OBJ,
 					PDO::ATTR_CASE=>PDO::CASE_LOWER,
 					PDO::ATTR_AUTOCOMMIT=>true
 				)
 			);
+			self::$AUTO_ID_TYPE ='INTEGER AUTOINCREMENT'; // These values are guesses
+			self::$ID_TYPE      ='INTEGER';
+			self::$INT1_TYPE    ='INTEGER';
+			self::$INT2_TYPE    ='INTEGER';
+			self::$INT3_TYPE    ='INTEGER';
+			self::$INT4_TYPE    ='INTEGER';
+			self::$INT8_TYPE    ='INTEGER';
+			self::$CHAR_TYPE    ='VARCHAR';
+			self::$VARCHAR_TYPE ='VARCHAR';
+			self::$UNSIGNED     ='';
+			self::$LIKE         ='LIKE';
+			self::$RANDOM       ='RANDOM()';
+			self::$TEXT_TYPE    ='TEXT';
+			self::$LONGTEXT_TYPE='TEXT';
+			self::$UTF8_TABLE   ='';
 			break;
 		case 'informix': // This DSN has not been tested!
 			self::$pdo=new PDO(
 				"informix:host={$DBHOST};service={$DBPORT};database={$DBNAME}", $DBUSER, $DBPASS,
 				array(
-					PDO::ATTR_PERSISTENT=>(bool)$DBPERSIST,
 					PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION,
 					PDO::ATTR_DEFAULT_FETCH_MODE=>PDO::FETCH_OBJ,
 					PDO::ATTR_CASE=>PDO::CASE_LOWER,
 					PDO::ATTR_AUTOCOMMIT=>true
 				)
 			);
+			self::$AUTO_ID_TYPE ='INTEGER AUTOINCREMENT'; // These values are guesses
+			self::$ID_TYPE      ='INTEGER';
+			self::$INT1_TYPE    ='INTEGER';
+			self::$INT2_TYPE    ='INTEGER';
+			self::$INT3_TYPE    ='INTEGER';
+			self::$INT4_TYPE    ='INTEGER';
+			self::$INT8_TYPE    ='INTEGER';
+			self::$CHAR_TYPE    ='VARCHAR';
+			self::$VARCHAR_TYPE ='VARCHAR';
+			self::$UNSIGNED     ='';
+			self::$LIKE         ='LIKE';
+			self::$RANDOM       ='RANDOM()';
+			self::$TEXT_TYPE    ='TEXT';
+			self::$LONGTEXT_TYPE='TEXT';
+			self::$UTF8_TABLE   ='';
 			break;
 		case 'oci': // This DSN has not been tested!
 			self::$pdo=new PDO(
 				"oci:dbname=//{$DBHOST}}:{$DBPORT}/{$DBNAME}", $DBUSER, $DBPASS,
 				array(
-					PDO::ATTR_PERSISTENT=>(bool)$DBPERSIST,
 					PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION,
 					PDO::ATTR_DEFAULT_FETCH_MODE=>PDO::FETCH_OBJ,
 					PDO::ATTR_CASE=>PDO::CASE_LOWER,
 					PDO::ATTR_AUTOCOMMIT=>true
 				)
 			);
+			self::$AUTO_ID_TYPE ='INTEGER AUTOINCREMENT'; // These values are guesses
+			self::$ID_TYPE      ='INTEGER';
+			self::$INT1_TYPE    ='INTEGER';
+			self::$INT2_TYPE    ='INTEGER';
+			self::$INT3_TYPE    ='INTEGER';
+			self::$INT4_TYPE    ='INTEGER';
+			self::$INT8_TYPE    ='INTEGER';
+			self::$CHAR_TYPE    ='VARCHAR';
+			self::$VARCHAR_TYPE ='VARCHAR';
+			self::$UNSIGNED     ='';
+			self::$LIKE         ='LIKE';
+			self::$RANDOM       ='RANDOM()';
+			self::$TEXT_TYPE    ='TEXT';
+			self::$LONGTEXT_TYPE='TEXT';
+			self::$UTF8_TABLE   ='';
 			break;
 		case 'odbc': // This DSN has not been tested!
 			self::$pdo=new PDO(
 				"odbc:$DBNAME", $DBUSER, $DBPASS,
 				array(
-					PDO::ATTR_PERSISTENT=>(bool)$DBPERSIST,
 					PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION,
 					PDO::ATTR_DEFAULT_FETCH_MODE=>PDO::FETCH_OBJ,
 					PDO::ATTR_CASE=>PDO::CASE_LOWER,
 					PDO::ATTR_AUTOCOMMIT=>true
 				)
 			);
+			self::$AUTO_ID_TYPE ='INTEGER AUTOINCREMENT'; // These values are guesses
+			self::$ID_TYPE      ='INTEGER';
+			self::$INT1_TYPE    ='INTEGER';
+			self::$INT2_TYPE    ='INTEGER';
+			self::$INT3_TYPE    ='INTEGER';
+			self::$INT4_TYPE    ='INTEGER';
+			self::$INT8_TYPE    ='INTEGER';
+			self::$CHAR_TYPE    ='VARCHAR';
+			self::$VARCHAR_TYPE ='VARCHAR';
+			self::$UNSIGNED     ='';
+			self::$LIKE         ='LIKE';
+			self::$RANDOM       ='RANDOM()';
+			self::$TEXT_TYPE    ='TEXT';
+			self::$LONGTEXT_TYPE='TEXT';
+			self::$UTF8_TABLE   ='';
 			break;
 		case '4D': // This DSN has not been tested!
 			self::$pdo=new PDO(
 				"4D:host={$DBHOST};port={$DBPORT};dbname={$DBNAME};charset=UTF-8", $DBUSER, $DBPASS,
 				array(
-					PDO::ATTR_PERSISTENT=>(bool)$DBPERSIST,
 					PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION,
 					PDO::ATTR_DEFAULT_FETCH_MODE=>PDO::FETCH_OBJ,
 					PDO::ATTR_CASE=>PDO::CASE_LOWER,
 					PDO::ATTR_AUTOCOMMIT=>true
 				)
 			);
+			self::$AUTO_ID_TYPE ='INTEGER AUTOINCREMENT'; // These values are guesses
+			self::$ID_TYPE      ='INTEGER';
+			self::$INT1_TYPE    ='INTEGER';
+			self::$INT2_TYPE    ='INTEGER';
+			self::$INT3_TYPE    ='INTEGER';
+			self::$INT4_TYPE    ='INTEGER';
+			self::$INT8_TYPE    ='INTEGER';
+			self::$CHAR_TYPE    ='VARCHAR';
+			self::$VARCHAR_TYPE ='VARCHAR';
+			self::$UNSIGNED     ='';
+			self::$LIKE         ='LIKE';
+			self::$RANDOM       ='RANDOM()';
+			self::$TEXT_TYPE    ='TEXT';
+			self::$LONGTEXT_TYPE='TEXT';
+			self::$UTF8_TABLE   ='';
 			break;
 		}
 
@@ -289,15 +421,54 @@ class PGV_DB {
 
 	// Add an entry to the log
 	public static function logQuery($query, $rows, $microtime, $bind_variables) {
-		$query2='';
-		foreach (str_split(htmlspecialchars($query)) as $char) {
-			if ($char=='?') {
-				$query2.='<abbr title="'.htmlspecialchars(array_shift($bind_variables)).'">'.$char.'</abbr>';
-			} else {
-				$query2.=$char;
+		if (PGV_DEBUG_SQL) {
+			// Full logging
+			// Trace
+			$trace=debug_backtrace();
+			array_shift($trace);
+			array_shift($trace);
+			foreach ($trace as $n=>$frame) {
+				if (isset($frame['file']) && isset($frame['line'])) {
+					$trace[$n]=basename($frame['file']).':'.$frame['line'].' '.$frame['function'].'('./*implode(',', $frame['args']).*/')';
+				} else {
+					unset($trace[$n]);
+				}
 			}
+			$stack='<abbr title="'.htmlspecialchars(implode(" / ", $trace)).'">'.(count(self::$log)+1).'</abbr>';
+			// Bind variables
+			$query2='';
+			foreach ($bind_variables as $key=>$value) {
+				if (is_null($value)) {
+					$bind_variables[$key]='[NULL]';
+				}
+			}
+			foreach (str_split(htmlspecialchars($query)) as $char) {
+				if ($char=='?') {
+					$query2.='<abbr title="'.htmlspecialchars(array_shift($bind_variables)).'">'.$char.'</abbr>';
+				} else {
+					$query2.=$char;
+				}
+			}
+			// Highlight embedded literal strings.
+			if (preg_match('/[\'"]/', $query)) {
+				$query2='<span style="background-color:yellow;">'.$query2.'</span>';
 		}
-		self::$log[]='<tr><td>'.$query2.'</td><td>'.(int)$rows.'</td><td>'.round($microtime*1000, 3).'</td></tr>';
+			// Highlight slow queries
+			$microtime*=1000; // convert to milliseconds
+			if ($microtime>1000) {
+				$microtime=sprintf('<span style="background-color:red">%.3f</span>', $microtime);
+			} elseif ($microtime>100) {
+				$microtime=sprintf('<span style="background-color:orange">%.3f</span>', $microtime);
+			} elseif ($microtime>1) {
+				$microtime=sprintf('<span style="background-color:yellow">%.3f</span>', $microtime);
+			} else {
+			$microtime=sprintf('%.3f', $microtime);
+			}
+			self::$log[]="<tr><td>{$stack}</td><td>{$query2}</td><td>{$rows}</td><td>{$microtime}</td></tr>";
+		} else {
+			// Just log query count for statistics
+			self::$log[]=true;
+		}
 	}
 
 	// Total number of queries executed, for the page statistics
@@ -307,7 +478,7 @@ class PGV_DB {
 
 	// Display the query log as a table, for debugging
 	public static function getQueryLog() {
-		$html='<table border="1"><tr><th>Query</th><th>Rows</th><th>Time (ms)</th></tr>'.implode('', self::$log).'</table>';
+		$html='<table border="1"><col span="3"/><col align="char"/><thead><tr><th>#</th><th>Query</th><th>Rows</th><th>Time (ms)</th></tr><tbody/>'.implode('', self::$log).'</table>';
 		self::$log=array();
 		return $html;
 	}
@@ -363,31 +534,6 @@ class PGV_DB {
 		}
 	}
 
-	// We only need to limit SELECT queries, not UPDATE or DELETE
-	public static function limit_query($sql, $n) {
-		$n=(int)$n;
-		switch (self::$pdo->getAttribute(PDO::ATTR_DRIVER_NAME)) {
-		case 'mysql':
-		case 'sqlite':
-		case 'sqlite2':
-		case 'pgsql':
-		case '4D':
-			return "{$sql} LIMIT {$n}";
-		case 'mssql':
-			return preg_replace('/^\s*SELECT /i', "SELECT TOP {$n} ", $sql);
-		case 'firebird':
-		case 'informix':
-			return preg_replace('/^\s*SELECT /i', "SELECT FIRST {$n} ", $sql);
-		case 'ibm':
-			return "{$sql} FETCH FIRST {$n} ROWS ONLY";
-		case 'oci':
-			return "SELECT * FROM ($sql) WHERE ROWNUM<={$n}";
-		case 'odbc':
-			// We don't know the underlying database, so just return all rows :-(
-			return $sql;
-		}
-	}
-
 	//////////////////////////////////////////////////////////////////////////////
 	// INTERROGATE DATA DICTIONARY
 	//////////////////////////////////////////////////////////////////////////////
@@ -396,6 +542,8 @@ class PGV_DB {
 
 		switch (self::$pdo->getAttribute(PDO::ATTR_DRIVER_NAME)) {
 		case 'mysql':
+			// Mysql 4.x does not support the information schema
+			return PGV_DB::prepare("SHOW TABLES")->fetchOneColumn();
 		case 'pgsql':
 		case 'mssql':
 		default:
@@ -419,6 +567,8 @@ class PGV_DB {
 
 		switch (self::$pdo->getAttribute(PDO::ATTR_DRIVER_NAME)) {
 		case 'mysql':
+			// Mysql 4.x does not support the information schema
+			return PGV_DB::prepare("DESC {$table}")->fetchOneColumn();
 		case 'pgsql':
 		case 'mssql':
 		default:
@@ -431,8 +581,8 @@ class PGV_DB {
 		case 'sqlite2':
 			// SQLITE doesn't support the ANSI standard information_schema
 			$rows=
-				PGV_DB::prepare("pragma table_info(?)")
-				->execute(array($table))
+				PGV_DB::prepare("pragma table_info('{$table}')")
+				->execute(array())
 				->fetchAll();
 			$columns=array();
 			foreach ($rows as $row) {
@@ -446,7 +596,6 @@ class PGV_DB {
 		global $DBNAME;
 
 		switch (self::$pdo->getAttribute(PDO::ATTR_DRIVER_NAME)) {
-		case 'mysql':
 		case 'pgsql':
 		case 'mssql':
 			// information_schema.tables is an ANSI standard.
@@ -461,6 +610,8 @@ class PGV_DB {
 				PGV_DB::prepare("SELECT 1 FROM sqlite_master WHERE type=? AND name=?")
 				->execute(array('table', $table))
 				->fetchOne();
+		case 'mysql':
+			// Mysql 4.x does not support the information schema
 		default:
 			// Catch-all for other databases
 			try {
@@ -476,7 +627,6 @@ class PGV_DB {
 		global $DBNAME;
 
 		switch (self::$pdo->getAttribute(PDO::ATTR_DRIVER_NAME)) {
-		case 'mysql':
 		case 'pgsql':
 		case 'mssql':
 			// information_schema.columns is an ANSI standard.
@@ -488,8 +638,7 @@ class PGV_DB {
 		case 'sqlite2':
 			// SQLITE doesn't support the ANSI standard information_schema
 			$rows=
-				PGV_DB::prepare("pragma table_info(?)")
-				->execute(array($table))
+				PGV_DB::prepare("pragma table_info({$table})")
 				->fetchAll();
 			foreach ($rows as $row) {
 				if ($row->name==$column) {
@@ -497,6 +646,8 @@ class PGV_DB {
 				}
 			}
 			return false;
+		case 'mysql':
+			// Mysql 4.x does not support the information schema
 		default:
 			// Catch-all for other databases
 			try {
@@ -537,7 +688,7 @@ class PGV_DB {
 		$start=microtime(true);
 		$result=self::$pdo->query($string, $parameter_type);
 		$end=microtime(true);
-		self::logQuery($string, count($result), $end-$start);
+		self::logQuery($string, count($result), $end-$start, array());
 		return $result;
 	}
 
@@ -546,7 +697,7 @@ class PGV_DB {
 		$start=microtime(true);
 		$result=self::$pdo->exec($statement);
 		$end=microtime(true);
-		self::logQuery($statement, $result, $end-$start);
+		self::logQuery($statement, $result, $end-$start, array());
 		return $result;
 	}
 
@@ -557,18 +708,87 @@ class PGV_DB {
 		}
 		return new PGV_DBStatement(self::$pdo->prepare($statement));
 	}
-	
+
+	// Limit a query to the first $n rows
 	public static function prepareLimit($statement, $n) {
 		if (!self::$pdo instanceof PDO) {
 			throw new PDOException("No Connection Established");
 		}
-		$statement=PGV_DB::limit_query($statement, $n);
+		if ($n) {
+			switch (self::$pdo->getAttribute(PDO::ATTR_DRIVER_NAME)) {
+			case 'mysql':
+			case 'sqlite':
+			case 'sqlite2':
+			case 'pgsql':
+			case '4D':
+				$statement="{$statement} LIMIT {$n}";
+				break;
+			case 'mssql':
+				$statement=preg_replace('/^\s*SELECT /i', "SELECT TOP {$n} ", $statement);
+				break;
+			case 'firebird':
+			case 'informix':
+				$statement=preg_replace('/^\s*SELECT /i', "SELECT FIRST {$n} ", $statement);
+				break;
+			case 'ibm':
+				$statement="{$statement} FETCH FIRST {$n} ROWS ONLY";
+				break;
+			case 'oci':
+				$statement="SELECT * FROM ($statement) WHERE ROWNUM<={$n}";
+				break;
+			case 'odbc':
+				// We don't know the underlying database, so just return all rows :-(
+				break;
+			}
+		}
 		return new PGV_DBStatement(self::$pdo->prepare($statement));
 	}
 	
 	// Map all other functions onto the base PDO object
 	public function __call($function, $params) {
 		return call_user_func_array(array(self::$pdo, $function), $params);
+	}
+
+	//////////////////////////////////////////////////////////////////////////////
+	// Create/update tables, indexes, etc.
+	//////////////////////////////////////////////////////////////////////////////
+	public static function updateSchema($schema_dir, $schema_name, $target_version) {
+		global $TBLPREFIX;
+
+		// Allow the schema scripts to do different things for different databases		
+		$DRIVER_NAME=self::getInstance()->getAttribute(PDO::ATTR_DRIVER_NAME);
+
+		// Define some "standard" columns, so we create our tables consistently
+		self::$COL_FILE=self::$INT2_TYPE.' '.self::$UNSIGNED; // Allow 32768/65536 Gedcoms
+		self::$COL_XREF=self::$VARCHAR_TYPE.'(20)';           // Gedcom identifiers are max 20 chars
+		self::$COL_TAG =self::$VARCHAR_TYPE.'(15)';           // Gedcom tags/record types are max 15 chars
+		self::$COL_JD  =self::$INT3_TYPE.' '.self::$UNSIGNED; // Julian Day numbers only need 3 bytes
+		self::$COL_DAY =self::$INT1_TYPE.' '.self::$UNSIGNED; // Day numbers only need 1 byte
+		self::$COL_MON =self::$INT1_TYPE.' '.self::$UNSIGNED; // Month Day numbers only need 1 byte
+		self::$COL_YEAR=self::$INT2_TYPE;                     // Year Day numbers only need 2 bytes
+
+		if ($DRIVER_NAME=='mysql') {
+			self::$COL_CAL="ENUM ('@#DGREGORIAN@', '@#DJULIAN@', '@#DHEBREW@', '@#DFRENCH R@', '@#DHIJRI@', '@#DROMAN@')"; // Fixed list of calendar names
+		} else {
+			self::$COL_CAL=self::$VARCHAR_TYPE.'(13)'; // Calendar names have max 13 characters
+		}
+
+		try {
+			$current_version=(int)get_site_setting($schema_name);
+		} catch (PDOException $e) {
+			// During initial installation, this table won't exist.
+			// It will only be a problem if we can't subsequently create it.
+			$current_version=0;
+		}
+		while ($current_version<$target_version) {
+			$next_version=$current_version+1;
+			require_once "{$schema_dir}db_schema_{$current_version}_{$next_version}.php";
+			// The updatescript should update the version or throw an exception
+			$current_version=(int)get_site_setting($schema_name);
+			if ($current_version!=$next_version) {
+				die("Internal error while updating {$schema_name} to {$next_version}");
+			}
+		}
 	}
 }
 
@@ -675,6 +895,7 @@ class PGV_DBStatement {
 			$rows[$row[0]]=$row[1];
 		}
 		$this->pdostatement->closeCursor();
+		$this->executed=false;
 		return $rows;
 	}
 
@@ -688,6 +909,7 @@ class PGV_DBStatement {
 			$list[]=$row[0];
 		}
 		$this->pdostatement->closeCursor();
+		$this->executed=false;
 		return $list;
 	}
 }

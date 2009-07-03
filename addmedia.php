@@ -411,7 +411,7 @@ if ($action=="newentry") {
 			if ($link) {
 				AddToChangeLog("Media ID ".$media_id." successfully added to $linktoid.");
 			} else {
-				echo "<a href=\"javascript:// OBJE $mediaid\" onclick=\"openerpasteid('$mediaid'); return false;\">".$pgv_lang["paste_id_into_field"]." <b>$mediaid</b></a><br /><br />\n";
+				echo "<a href=\"javascript://OBJE $mediaid\" onclick=\"openerpasteid('$mediaid'); return false;\">".$pgv_lang["paste_id_into_field"]." <b>$mediaid</b></a><br /><br />\n";
 				echo PGV_JS_START;
 				echo "openerpasteid('", $mediaid, "');";
 				echo PGV_JS_END;
@@ -538,8 +538,15 @@ if ($action == "update") {
 		$islink = array_merge(array(0), $islink);
 		$text = array_merge(array($folder.$filename), $text);
 
+		if (!empty($pid)) {
+			if (!isset($pgv_changes[$pid."_".$GEDCOM])) $gedrec = find_gedcom_record($pid);
+			else $gedrec = find_updated_record($pid);
+		}
 		$newrec = "0 @$pid@ OBJE\n";
 		$newrec = handle_updates($newrec);
+		if (!$update_CHAN) {
+			$newrec .= get_sub_record(1, "1 CHAN", $gedrec);
+		}
 		//print("[".$newrec."]");
 		//-- look for the old record media in the file
 		//-- if the old media record does not exist that means it was

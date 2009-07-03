@@ -4,7 +4,7 @@
  * phpGedView Research Assistant Tool - Functions File.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
+ * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -61,7 +61,7 @@ if (!function_exists("find_updated_record")) {
 	 * @param string $gedfile the gedcom file to get the record from.. defaults to currently active gedcom
 	 */
 	function find_updated_record($gid, $gedfile="") {
-		global $GEDCOMS, $GEDCOM, $pgv_changes;
+		global $GEDCOM, $pgv_changes;
 
 		if (empty($gedfile)) $gedfile = $GEDCOM;
 
@@ -97,40 +97,11 @@ class ra_functions {
 
 	var $sites = array();
 	function Init() {
-		$this->createDatabase();
-		$this->createFactLookup();
-	}
-
-	function createFactLookup() {
-		// Make sure we can use our database functions
-		//require_once("includes/functions/functions_db.php");//Need to fix this the file is not found
-
-		// Grab our database connections and table prefix from the site
-		global $DBCONN, $TBLPREFIX, $DBTYPE;
-
-		$data = $DBCONN->getListOf('tables');
-		$res = 0;
-
-		// If the Table is not in the array
-		if (!in_array($TBLPREFIX.'factlookup', $data)) {
-			dbquery(
-				"CREATE TABLE {$TBLPREFIX}factlookup (".
-				" id        ".PGV_DB_AUTO_ID_TYPE." NOT NULL,".
-				" description VARCHAR(255)      NOT NULL,".
-				" startdate   INT               NOT NULL,".
-				" enddate     INT               NOT NULL,".
-				" gedcom_fact VARCHAR(10)           NULL,".
-				" pl_lv1      VARCHAR(255)          NULL,".
-				" pl_lv2      VARCHAR(255)          NULL,".
-				" pl_lv3      VARCHAR(255)          NULL,".
-				" pl_lv4      VARCHAR(255)          NULL,".
-				" pl_lv5      VARCHAR(255)          NULL,".
-				" sour_id     VARCHAR(255)          NULL,".
-				" comment     VARCHAR(255)          NULL,".
-				" PRIMARY KEY (id)".
-				") ".PGV_DB_UTF8_TABLE
-			);
-			$this->insertInitialFacts();
+		try {
+			PGV_DB::updateSchema('modules/research_assistant/db_schema/', 'RA_SCHEMA_VERSION', 1);
+		} catch (PDOException $ex) {
+			// The schema update scripts should never fail.  If they do, there is no clean recovery.
+			die($ex);
 		}
 	}
 
@@ -144,281 +115,46 @@ class ra_functions {
 	 *
 	 * @return A multi-dimensional array of the valid dates
 	 */
-	function getEventsForDates($startDate,$endDate,$factLookingFor = "",$place = "")
-	{
-		global $DBCONN, $TBLPREFIX;
-		if(empty($endDate))
-		{
+	function getEventsForDates($startDate,$endDate,$factLookingFor = "",$place = "") {
+		global $TBLPREFIX;
+
+		if (empty($endDate)) {
 			//Add a ten year difference if no end date was sent in
 			$endDate = $startDate + 00100000;
 		}
 
-		if(empty($factLookingFor))
-		{
-			$sql = "SELECT * FROM {$TBLPREFIX}factlookup WHERE StartDate <= ".$endDate.' AND EndDate >= '.$startDate;
-		}
-		else
-		{
-			$sql = "SELECT * FROM {$TBLPREFIX}factlookup WHERE StartDate <= ".$endDate.' AND EndDate >= '.$startDate.' AND Gedcom_fact like \'%'.$factLookingFor.'%\'';
+		if (empty($factLookingFor)) {
+			$sql = "SELECT * FROM {$TBLPREFIX}factlookup WHERE startdate<=? AND enddate>=?";
+			$vars=array($endDate, $startDate);
+		} else {
+			$sql = "SELECT * FROM {$TBLPREFIX}factlookup WHERE startdate<=? AND enddate>=? AND gedcom_fact ".PGV_DB::$LIKE." ?";
+			$vars=array($endDate, $startDate, "%{$factLookingFor}%");
 		}
 
 		if (!empty($place)) {
-			$parts = explode(',',$place);
-			for($i = 0; $i < count($parts); $i++)
-			{
-				$parts[$i] = trim($parts[$i]);
+			$parts = explode(',', $place);
+			for ($i=0; $i<count($parts); $i++) {
+				$parts[$i]=trim($parts[$i]);
 			}
 
-			if(count($parts) > 0)
-			{
-				$numOfParts = count($parts) -1;
-				for($i = 0; ($i < count($parts) && $i<5); $i++)
-				{
+			if (count($parts) > 0) {
+				$numOfParts=count($parts) -1;
+				for ($i=0; ($i<count($parts) && $i<5); $i++) {
 					if (!empty($parts[$numOfParts])) {
-						$sql .= ' AND PL_LV'.($i+1)." ".PGV_DB_LIKE." '%".$DBCONN->escapeSimple($parts[$numOfParts]).'%\'';
+						$sql.=" AND pl_lv".($i+1)." ".PGV_DB::$LIKE." ?";
+						$vars[]='%'.$parts[$numOfParts].'%';
 					}
 					$numOfParts--;
 				}
 
 			}
-		}
-		else {
-			$sql .= ' AND PL_LV1 IS NULL ';
-		}
-		$res = dbquery($sql);
-		$rows = array();
-		while($row = $res->fetchRow(DB_FETCHMODE_ASSOC)){
-			$rows[] = $row;
-		}
-		$res->free();
-
-		return $rows;
-	}
-
-
-	function insertInitialFacts()
-	{
-		/*
-		 * Yes I know the below code constructs a query and then hits the database over and over again.
-		 * But it has to be done this way in the interests of compatibility
-		 */
-		global $DBCONN, $TBLPREFIX;
-		$data = $DBCONN->getListOf('tables');
-
-		if(in_array($TBLPREFIX.'factlookup', $data))
-		{
-			//Do the insertion of Census facts
-			$sql = 'insert into '.$TBLPREFIX.'factlookup VALUES(null,\'US Census 1800\',18000000,18001231,\'CENS\',\'USA\',null,null,null,null,null,null);';
-			$res = dbquery($sql);
-			$sql = 'insert into '.$TBLPREFIX.'factlookup VALUES(null,\'US Census 1810\',18100000,18101231,\'CENS\',\'USA\',null,null,null,null,null,null);';
-			$res = dbquery($sql);
-			$sql = 'insert into '.$TBLPREFIX.'factlookup VALUES(null,\'US Census 1820\',18200000,18201231,\'CENS\',\'USA\',null,null,null,null,null,null);';
-			$res = dbquery($sql);
-			$sql = 'insert into '.$TBLPREFIX.'factlookup VALUES(null,\'US Census 1830\',18300000,18301231,\'CENS\',\'USA\',null,null,null,null,null,null);';
-			$res = dbquery($sql);
-			$sql = 'insert into '.$TBLPREFIX.'factlookup VALUES(null,\'US Census 1840\',18100000,18401231,\'CENS\',\'USA\',null,null,null,null,null,null);';
-			$res = dbquery($sql);
-			$sql = 'insert into '.$TBLPREFIX.'factlookup VALUES(null,\'US Census 1850\',18500000,18501231,\'CENS\',\'USA\',null,null,null,null,null,null);';
-			$res = dbquery($sql);
-			$sql = 'insert into '.$TBLPREFIX.'factlookup VALUES(null,\'US Census 1860\',18600000,18601231,\'CENS\',\'USA\',null,null,null,null,null,null);';
-			$res = dbquery($sql);
-			$sql = 'insert into '.$TBLPREFIX.'factlookup VALUES(null,\'US Census 1870\',18700000,18701231,\'CENS\',\'USA\',null,null,null,null,null,null);';
-			$res = dbquery($sql);
-			$sql = 'insert into '.$TBLPREFIX.'factlookup VALUES(null,\'US Census 1880\',18800000,18801231,\'CENS\',\'USA\',null,null,null,null,null,null);';
-			$res = dbquery($sql);
-			$sql = 'insert into '.$TBLPREFIX.'factlookup VALUES(null,\'US Census 1890\',18900000,18901231,\'CENS\',\'USA\',null,null,null,null,null,null);';
-			$res = dbquery($sql);
-			$sql = 'insert into '.$TBLPREFIX.'factlookup VALUES(null,\'US Census 1900\',19000000,19001231,\'CENS\',\'USA\',null,null,null,null,null,null);';
-			$res = dbquery($sql);
-			$sql = 'insert into '.$TBLPREFIX.'factlookup VALUES(null,\'US Census 1910\',19100000,19101231,\'CENS\',\'USA\',null,null,null,null,null,null);';
-			$res = dbquery($sql);
-			$sql = 'insert into '.$TBLPREFIX.'factlookup VALUES(null,\'US Census 1920\',19200000,19201231,\'CENS\',\'USA\',null,null,null,null,null,null);';
-			$res = dbquery($sql);
-			$sql = 'insert into '.$TBLPREFIX.'factlookup VALUES(null,\'US Census 1930\',19300000,19301231,\'CENS\',\'USA\',null,null,null,null,null,null);';
-			$res = dbquery($sql);
-			$sql = 'insert into '.$TBLPREFIX.'factlookup VALUES(null,\'UK Census 1841\',18410000,18411231,\'CENS\',\'UK\',null,null,null,null,null,null);';
-			$res = dbquery($sql);
-			$sql = 'insert into '.$TBLPREFIX.'factlookup VALUES(null,\'UK Census 1851\',18510000,18511231,\'CENS\',\'UK\',null,null,null,null,null,null);';
-			$res = dbquery($sql);
-			$sql = 'insert into '.$TBLPREFIX.'factlookup VALUES(null,\'UK Census 1861\',18610000,18611231,\'CENS\',\'UK\',null,null,null,null,null,null);';
-			$res = dbquery($sql);
-			$sql = 'insert into '.$TBLPREFIX.'factlookup VALUES(null,\'UK Census 1871\',18710000,18711231,\'CENS\',\'UK\',null,null,null,null,null,null);';
-			$res = dbquery($sql);
-			$sql = 'insert into '.$TBLPREFIX.'factlookup VALUES(null,\'UK Census 1881\',18810000,18811231,\'CENS\',\'UK\',null,null,null,null,null,null);';
-			$res = dbquery($sql);
-			$sql = 'insert into '.$TBLPREFIX.'factlookup VALUES(null,\'UK Census 1891\',18910000,18911231,\'CENS\',\'UK\',null,null,null,null,null,null);';
-			$res = dbquery($sql);
-			$sql = 'insert into '.$TBLPREFIX.'factlookup VALUES(null,\'UK Census 1901\',19010000,19011231,\'CENS\',\'UK\',null,null,null,null,null,null);';
-			$res = dbquery($sql);
-			//end census stuff
-
-			//Insert War facts here
-			$sql = 'insert into '.$TBLPREFIX.'factlookup VALUES(null,\'Civil War\',18610412,18651231,\'_MILI\',\'USA\',null,null,null,null,null,null);';
-			$res = dbquery($sql);
-			$sql = 'insert into '.$TBLPREFIX.'factlookup VALUES(null,\'WWI\',19140412,19181231,\'_MILI\',null,null,null,null,null,null,null);';
-			$res = dbquery($sql);
-			$sql = 'insert into '.$TBLPREFIX.'factlookup VALUES(null,\'WWII\',19390412,19451231,\'_MILI\',null,null,null,null,null,null,null);';
-			$res = dbquery($sql);
-			$sql = 'insert into '.$TBLPREFIX.'factlookup VALUES(null,\'Korean War\',19500625,19531231,\'_MILI\',null,null,null,null,null,null,null);';
-			$res = dbquery($sql);
-
-			//End War Facts
-		}
-	}
-
-
-	/**
-	 * This function will make the database for the research assistant on first access.
-	 *
-	 * @return void
-	 */
-	function createDatabase() {
-		// Make sure we can use our database functions
-		//require_once("includes/functions/functions_db.php");//Need to fix this the file is not found
-
-		// Grab our database connections and table prefix from the site
-		global $DBCONN, $TBLPREFIX;
-
-		$data = $DBCONN->getListOf('tables');
-		$res = 0;
-
-		// Create all of the tables needed for this module
-		if (!in_array($TBLPREFIX.'tasks', $data)) {
-			dbquery(
-				"CREATE TABLE {$TBLPREFIX}tasks (".
-				" t_id          INTEGER      NOT NULL,".
-				" t_fr_id       INTEGER      NOT NULL,".
-				" t_title       VARCHAR(255) NOT NULL,".
-				" t_description TEXT         NOT NULL,".
-				" t_startdate   INTEGER      NOT NULL,".
-				" t_enddate     INTEGER          NULL,".
-				" t_results     TEXT             NULL,".
-				" t_form        VARCHAR(255)     NULL,".
-				" t_username    VARCHAR(45)      NULL,".
-				" PRIMARY KEY (t_id)".
-				") ".PGV_DB_UTF8_TABLE
-			);
 		} else {
-			$has_form = false;
-			$info = $DBCONN->tableInfo($TBLPREFIX."tasks");
-			foreach($info as $indexval => $field) {
-				if ($field["name"]=="t_form") $has_form = true;
-			}
-			if (!$has_form) {
-				dbquery("ALTER TABLE {$TBLPREFIX}tasks ADD t_form VARCHAR(255) NULL");
-			}
+			$sql.=" AND PL_LV1 IS NULL";
 		}
-		if (!in_array($TBLPREFIX.'comments', $data)) {
-			dbquery(
-				"CREATE TABLE {$TBLPREFIX}comments (".
-				" c_id         INTEGER     NOT NULL,".
-				" c_t_id       INTEGER     NOT NULL,".
-				" c_u_username VARCHAR(30) NOT NULL,".
-				" c_body       TEXT        NOT NULL,".
-				" c_datetime   INTEGER     NOT NULL,".
-				" PRIMARY KEY (c_id)".
-				") ".PGV_DB_UTF8_TABLE
-			);
-		}
-		if (!in_array($TBLPREFIX.'tasksource', $data)) {
-			dbquery(
-				"CREATE TABLE {$TBLPREFIX}tasksource (".
-				" ts_t_id  INTEGER      NOT NULL,".
-				" ts_s_id  VARCHAR(255) NOT NULL,".
-				" ts_page  VARCHAR(255)     NULL,".
-				" ts_date  VARCHAR(50)      NULL,".
-				" ts_text  TEXT             NULL,".
-				" ts_quay  VARCHAR(50)      NULL,".
-				" ts_obje  VARCHAR(20)      NULL,".
-				" ts_array TEXT             NULL,".
-				" PRIMARY KEY (ts_s_id, ts_t_id)".
-				") ".PGV_DB_UTF8_TABLE
-			);
-		}
-		if (!in_array($TBLPREFIX.'folders', $data)) {
-			dbquery(
-				"CREATE TABLE {$TBLPREFIX}folders (".
-				" fr_id          INTEGER      NOT NULL,".
-				" fr_name        VARCHAR(255)     NULL,".
-				" fr_description TEXT             NULL,".
-				" fr_parentid    INTEGER          NULL,".
-				" PRIMARY KEY (fr_id)".
-				") ".PGV_DB_UTF8_TABLE
-			);
-		}
-		if (!in_array($TBLPREFIX.'individualtask', $data)) {
-			dbquery(
-				"CREATE TABLE {$TBLPREFIX}individualtask (".
-				" it_t_id   INTEGER      NOT NULL,".
-				" it_i_id   VARCHAR(255) NOT NULL,".
-				" it_i_file INTEGER      NOT NULL,".
-				" PRIMARY KEY (it_t_id, it_i_id,it_i_file)".
-				") ".PGV_DB_UTF8_TABLE
-			);
-		}
-		if (!in_array($TBLPREFIX.'taskfacts', $data)) {
-			dbquery(
-				"CREATE TABLE {$TBLPREFIX}taskfacts (".
-				" tf_id       INTEGER      NOT NULL,".
-				" tf_t_id     INTEGER          NULL,".
-				" tf_factrec  TEXT             NULL,".
-				" tf_people   VARCHAR(255)     NULL,".
-				" tf_multiple VARCHAR(3)       NULL,".
-				" tf_type     VARCHAR(4)       NULL,".
-				" PRIMARY KEY (tf_id)".
-				") ".PGV_DB_UTF8_TABLE
-			);
-		} else {
-			$has_multiple = false;
-			$has_type = false;
-			$info = $DBCONN->tableInfo($TBLPREFIX."taskfacts");
-			foreach($info as $indexval => $field) {
-				if ($field["name"]=="tf_multiple") $has_multiple = true;
-				if ($field["name"]=="tf_type") $has_type = true;
-			}
-			if (!$has_multiple) {
-				dbquery("ALTER TABLE {$TBLPREFIX}taskfacts ADD tf_multiple VARCHAR(3) NULL");
-			}
-			if (!$has_type) {
-				dbquery("ALTER TABLE {$TBLPREFIX}taskfacts ADD tf_type     VARCHAR(4) NULL");
-			}
-		}
-		if(!in_array($TBLPREFIX.'user_comments', $data)){
-			dbquery(
-				"CREATE TABLE {$TBLPREFIX}user_comments (".
-				" uc_id       INTEGER      NOT NULL,".
-				" uc_username VARCHAR(45)  NOT NULL,".
-				" uc_datetime INTEGER      NOT NULL,".
-				" uc_comment  TEXT         NOT NULL,".
-				" uc_p_id     VARCHAR(255) NOT NULL,".
-				" uc_f_id     INTEGER      NOT NULL,".
-				" PRIMARY KEY (uc_id)".
-				") ".PGV_DB_UTF8_TABLE
-			);
-		}
-
-		/**
-		 * Note on the probabbilities table.
-		 * It is used to store the calculated percentages of specific facts.
-		 * An example of these facts follow.
-		 * The individuals surname matches their fathers 98% of the time
-		 *
-		 * The break down is the first level element, second level element, relationship, percentage
-		 */
-		if (!in_array($TBLPREFIX.'probabilities', $data)) {
-			dbquery(
-				"CREATE TABLE {$TBLPREFIX}probabilities (".
-				" pr_id      INTEGER      NOT NULL,".
-				" pr_f_lvl   VARCHAR(200) NOT NULL,".
-				" pr_s_lvl   VARCHAR(200) NOT NULL,".
-				" pr_rel     VARCHAR(200) NOT NULL,".
-				" pr_matches INTEGER      NOT NULL,".
-				" pr_count   INTEGER      NOT NULL,".
-				" pr_file    INTEGER          NULL,".
-				" PRIMARY KEY (pr_id)".
-				") ".PGV_DB_UTF8_TABLE
-			);
-		}
+		return
+			PGV_DB::prepare($sql)
+			->execute($vars)
+			->fetchAll(PDO::FETCH_ASSOC);
 	}
 
 	/**
@@ -427,12 +163,12 @@ class ra_functions {
 	 * @return array
 	 */
 	function getTask($taskid) {
-		global $TBLPREFIX, $DBCONN;
-		$sql = "SELECT * FROM {$TBLPREFIX}tasks WHERE t_id='".$DBCONN->escapeSimple($taskid)."'";
-		$res = dbquery($sql);
-		$row = $res->fetchRow(DB_FETCHMODE_ASSOC);
-		$res->free();
-		return $row;
+		global $TBLPREFIX;
+
+		return
+			PGV_DB::prepare("SELECT * FROM {$TBLPREFIX}tasks WHERE t_id=?")
+			->execute(array($taskid))
+			->fetchOneRow(PDO::FETCH_ASSOC);
 	}
 
 	/**
@@ -447,28 +183,27 @@ class ra_functions {
 	 * @return mixed
 	 */
 	function print_menu($folderid = "", $taskid = "") {
-			// Grab the global language array for internationalization
-	global $pgv_lang, $TBLPREFIX;
+		// Grab the global language array for internationalization
+		global $pgv_lang, $TBLPREFIX;
 
 		$width = 150;
 
 		if (empty ($folderid) && !empty ($taskid)) {
-			$sql = "SELECT t_fr_id FROM {$TBLPREFIX}tasks WHERE t_id = $taskid";
-			$result = dbquery($sql);
-			if ($result->numRows() > 0) {
-				$row = $result->fetchRow();
-				$folderid = $row[0];
-			}
+			$folderid=
+				PGV_DB::prepare("SELECT t_fr_id FROM {$TBLPREFIX}tasks WHERE t_id=?")
+				->execute(array($taskid))
+				->fetchOne();
 		}
 
 		// Restrict the column if we are not at the top of the module
-		if ($folderid == "")
+		if ($folderid == "") {
 			$percent = "";
-		else
+		} else {
 			$percent = " width=\"22%\" ";
+		}
 
 		// Display for the menu
-global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, $SHOW_ADD_FOLDER, $SHOW_ADD_UNLINKED_SOURCE, $SHOW_VIEW_PROBABILITIES;//show
+		global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, $SHOW_ADD_FOLDER, $SHOW_ADD_UNLINKED_SOURCE, $SHOW_VIEW_PROBABILITIES;//show
 		$out = '<table class="list_table" width="100%" cellpadding="2">';
 		$out .= '<tr>';
 		$out .= '<td align="left"'.$percent.'class="optionbox wrap">'.ra_functions :: print_top_folder($folderid).'</td>';
@@ -487,14 +222,14 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 			$out .= '<td align="center" class="optionbox" width="'.$width.'"><a href="module.php?mod=research_assistant&amp;action=addfolder"><img src="modules/research_assistant/images/folder_blue_icon.gif" alt="'.$pgv_lang["add_folder"].'" border="0"></img><br />'.$pgv_lang["add_folder"].'</a></td>';
 		// Below here is "in folder" relevant information. These are only shown when the user is inside a folder.
 		if (!empty ($folderid)) {
-			// Lets check to see if we can go up a folder.
-			$sql = "SELECT * FROM {$TBLPREFIX}folders WHERE fr_id = ".(int) $folderid;
-			$result = dbquery($sql);
-			$folderinfo = $result->fetchRow(DB_FETCHMODE_ASSOC);
+			$folderparent=
+				PGV_DB::prepare("SELECT fr_parentid FROM {$TBLPREFIX}folders WHERE fr_id=?")
+				->execute(array($folderid))
+				->fetchOne();
 
 			// Print folder parent link
-			if (!empty ($folderinfo['fr_parentid']))
-				$url = '<a href="module.php?mod=research_assistant&amp;action=viewtasks&amp;folderid='.$folderinfo['fr_parentid'].'">';
+			if (!empty ($folderparent))
+				$url = '<a href="module.php?mod=research_assistant&amp;action=viewtasks&amp;folderid='.$folderparent.'">';
 			else
 				$url = '<a href="module.php?mod=research_assistant&amp;action=view_folders">';
 
@@ -652,62 +387,37 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 	 * @return mixed Results from the database
 	 */
 	function get_folder_list($folderId, $orderby = "") {
-			// Obtain the table prefix from the site
-	global $TBLPREFIX;
-		$sql = "";
+		// Obtain the table prefix from the site
+		global $TBLPREFIX;
 
 		if (!empty ($orderby)) {
 			// Switch order by
 			$this->switch_order();
 
-			$sql = "SELECT * FROM {$TBLPREFIX}tasks WHERE t_fr_id =".(int) $folderId." ORDER BY ".$orderby." ".$_REQUEST["type"];
+			$sql="SELECT * FROM {$TBLPREFIX}tasks WHERE t_fr_id=? ORDER BY ".$orderby." ".$_REQUEST["type"];
 		} else {
-			$sql = "SELECT * FROM {$TBLPREFIX}tasks WHERE t_fr_id =".(int) $folderId;
+			$sql="SELECT * FROM {$TBLPREFIX}tasks WHERE t_fr_id=?";
 		}
 
-		$res = dbquery($sql);
-
-		return $res;
+		return
+			PGV_DB::prepare($sql)
+			->execute(array($folderId))
+			->fetchAll();
 	}
 
-	/**
-	 * Displays a list of assigned users tasks
-	 *
-	 *
-	 */
-	 function print_user_tasks($userName)
-	 {
-		global $res, $pgv_lang, $folderId;
-		global $TBLPREFIX;
-		$sql = "SELECT * FROM {$TBLPREFIX}tasks WHERE t_username ='".$userName."'";
-		$res = dbquery($sql);
-		while ($task = $res->fetchRow(DB_FETCHMODE_ASSOC)) {
-			$task = db_cleanup($task);
-			$date=timestamp_to_gedcom_date($task["t_startdate"]);
-			$out .= '<tr><td class="optionbox"><a href="module.php?mod=research_assistant&amp;action=viewtask&amp;taskid='.$task["t_id"].'">'.PrintReady($task["t_title"]).'</a></td><td class="optionbox">'.$date->Display(false).'</td><td class="optionbox" align="center">'.$this->checkComplete($task).'</td><td class="optionbox" align="center"><a href="module.php?mod=research_assistant&amp;action=edittask&amp;taskid='.$task["t_id"].'">'.$pgv_lang["edit"].'</a></td><td class="optionbox" align="center"><a href="module.php?mod=research_assistant&amp;action=deletetask&amp;taskid='.$task["t_id"].'&amp;folder='.$folderId.'">'.$pgv_lang["delete"].'</a></td></tr>';
-		}
-		$out .= '</table>';
-
-	 }
 
 	/**
 	 * Gets a list of assigned users tasks
 	 *
 	 *
 	 */
-	 function get_user_tasks($userName)
-	 {
-		global $res, $pgv_lang, $folderId;
+	function get_user_tasks($userName) {
 		global $TBLPREFIX;
-		$sql = "SELECT * FROM {$TBLPREFIX}tasks WHERE t_username ='".$userName."' AND t_enddate IS NULL";
-		$res = dbquery($sql);
-		$tasks = array();
-		while ($task = $res->fetchRow(DB_FETCHMODE_ASSOC)) {
-			$task = db_cleanup($task);
-			$tasks[] = $task;
-		}
-		return $tasks;
-	 }
+		return
+			PGV_DB::prepare("SELECT * FROM {$TBLPREFIX}tasks WHERE t_username=? AND t_enddate IS NULL")
+			->execute(array($userName))
+			->fetchAll();
+	}
 
 	/**
 	 * Displays a list of folders and their tasks
@@ -721,9 +431,9 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 			$_REQUEST["type"] = "asc";
 		}
 
-		$res = $this->get_folder_list($folderId, $orderId);
+		$rows = $this->get_folder_list($folderId, $orderId);
 
-		$out = $this->print_tasks($folderId, $res);
+		$out = $this->print_tasks($folderId, $rows);
 
 		if (empty ($out)) {
 			$out = "<div class=\"error\">ERROR: Nothing was found in your database.</div>";
@@ -743,26 +453,21 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 		else $filter = "Incomplete";
 
 		global $TBLPREFIX, $pgv_lang;
-		if($filter == "All")
-		{
-			$sql = "SELECT * FROM {$TBLPREFIX}tasks WHERE t_username ='".$userName."'";
-			$res = dbquery($sql);
-			$out = "";
+		switch ($filter) {
+		case 'Completed':
+			$statement=PGV_DB::prepare("SELECT * FROM {$TBLPREFIX}tasks WHERE t_username=? AND t_enddate IS NOT NULL");
+			break;
+		case 'Incomplete':
+			$statement=PGV_DB::prepare("SELECT * FROM {$TBLPREFIX}tasks WHERE t_username=? AND t_enddate IS NULL");
+			break;
+		case 'All':
+		default:
+			$statement=PGV_DB::prepare("SELECT * FROM {$TBLPREFIX}tasks WHERE t_username=?");
+			break;
 		}
-		if($filter == "Incomplete")
-		{
-			$sql = "SELECT * FROM {$TBLPREFIX}tasks WHERE t_username ='".$userName."' AND t_enddate IS NULL";
-			$res = dbquery($sql);
-			$out = "";
-		}
-		if($filter == "Completed")
-		{
-			$sql = "SELECT * FROM {$TBLPREFIX}tasks WHERE t_username ='".$userName."' AND t_enddate IS NOT NULL";
-			$res = dbquery($sql);
-			$out = "";
-		}
+		$rows=$statement->execute(array($userName))->fetchAll();
 
-		$out .= "<table id=\"Tasks\" class=\"list_table\" align=\"center\" width=\"700\" border=\"0\">";
+		$out  = "<table id=\"Tasks\" class=\"list_table\" align=\"center\" width=\"700\" border=\"0\">";
 		$out .= "<tr><th colspan=\"7\" class=\"topbottombar\"><h2>".$pgv_lang["Task_View"].print_help_link("ra_view_task_help", "qm", '', false, true)."</h2>";
 		$out .= "<form name=\"mytasks\" method=\"GET\" action=\"module.php\">\n";
 		$out .= "<input type=\"hidden\" name=\"mod\" value=\"research_assistant\" />\n";
@@ -783,25 +488,34 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 
 		$out .= "</select></form></th></tr>";
 		$out .= "<tr><th class=\"descriptionbox\"><a href=\"module.php?mod=research_assistant&amp;action=mytasks&amp;Filter={$filter}&amp;folderid=&amp;orderby=t_title&amp;type=\">".$pgv_lang["Task_Name"]."</a></th><th class=\"descriptionbox\">
+				<a href=\"module.php?mod=research_assistant&amp;action=mytasks&amp;Filter={$filter}&amp;folderid=&amp;orderby=t_description&amp;type=\">".$pgv_lang["description"]."</a></th>"."<th class=\"descriptionbox\">
 				<a href=\"module.php?mod=research_assistant&amp;action=mytasks&amp;Filter={$filter}&amp;folderid=&amp;orderby=t_startdate&amp;type=\">".$pgv_lang["Start_Date"]."</a></th>"."<th class=\"descriptionbox\">
 				<a href=\"module.php?mod=research_assistant&amp;action=mytasks&amp;Filter={$filter}&amp;folderid=&amp;orderby=t_enddate&amp;type=\">".$pgv_lang["completed"]."</a></th><th class=\"descriptionbox\">".$pgv_lang["edit"]."</th><th class=\"descriptionbox\">".$pgv_lang["delete"]."</th>\n
 				<th class=\"descriptionbox\">".$pgv_lang["complete"]."</tr>";
 
-		while ($task = $res->fetchRow(DB_FETCHMODE_ASSOC)) {
-			$task = db_cleanup($task);
-			if (empty ($task['t_enddate'])) {
-				$completeLink = "<a href=\"module.php?mod=research_assistant&amp;action=completeTask&amp;taskid=".$task["t_id"]."\">".$pgv_lang["complete"]."</a>";
-				$date=timestamp_to_gedcom_date($task["t_startdate"]);
-				$out .= '<tr><td class="optionbox"><a href="module.php?mod=research_assistant&amp;action=viewtask&amp;taskid='.$task["t_id"].'">'.PrintReady($task["t_title"]).'</a></td><td class="optionbox">'.$date->Display(false).'</td><td class="optionbox" align="center">'.$this->checkComplete($task).'</td>
-						<td class="optionbox" align="center"><a href="module.php?mod=research_assistant&amp;action=edittask&amp;taskid='.$task["t_id"].'">'.$pgv_lang["edit"].'</a></td>
-						<td class="optionbox" align="center"><a href="module.php?mod=research_assistant&amp;action=deletetask&amp;taskid='.$task["t_id"].'">'.$pgv_lang["delete"].'</a></td>
-						<td class="optionbox" align="center">'.$completeLink.'</td></tr>';
+		foreach ($rows as $row) {
+			if (empty ($row->t_enddate)) {
+				$completeLink = "<a href=\"module.php?mod=research_assistant&amp;action=completeTask&amp;taskid=".$row->t_id."\">".$pgv_lang["complete"]."</a>";
+				$date=timestamp_to_gedcom_date($row->t_startdate);
+				$out .= '<tr><td class="list_value"><a href="module.php?mod=research_assistant&amp;action=viewtask&amp;taskid='.$row->t_id.'" class="list_item name2">'.PrintReady($row->t_title).'</a></td>
+						<td class="list_value_wrap">'.$row->t_description.'</td>
+						<td class="list_value" align="center">'.$date->Display(false).'</td>
+						<td class="list_value" align="center">'.$this->checkComplete($row).'</td>
+						<td class="list_value" align="center"><a href="module.php?mod=research_assistant&amp;action=edittask&amp;taskid='.$row->t_id.'">'.$pgv_lang["edit"].'</a></td>
+						<td class="list_value" align="center"><a href="module.php?mod=research_assistant&amp;action=deletetask&amp;taskid='.$row->t_id.'">'.$pgv_lang["delete"].'</a></td>
+						<td class="list_value" align="center">'.$completeLink.'</td></tr>';
 			}
 			else
 			{
-				$completeLink = '<a href="module.php?mod=research_assistant&amp;action=completeTask&amp;taskid='.$task["t_id"].'">'.$pgv_lang["editform"].'</a>';
-				$date=timestamp_to_gedcom_date($task["t_startdate"]);
-				$out .= '<tr><td class="optionbox"><a href="module.php?mod=research_assistant&amp;action=viewtask&amp;taskid='.$task["t_id"].'">'.PrintReady($task["t_title"]).'</a></td><td class="optionbox">'.$date->Display(false).'</td><td class="optionbox" align="center">'.$this->checkComplete($task).'</td><td class="optionbox" align="center"><a href="module.php?mod=research_assistant&amp;action=edittask&amp;taskid='.$task["t_id"].'">'.$pgv_lang["edit"].'</a></td><td class="optionbox" align="center"><a href="module.php?mod=research_assistant&amp;action=deletetask&amp;taskid='.$task["t_id"].'">'.$pgv_lang["delete"].'</a></td><td class="optionbox" align="center">'.$completeLink.'</td></tr>';
+				$completeLink = '<a href="module.php?mod=research_assistant&amp;action=completeTask&amp;taskid='.$row->t_id.'">'.$pgv_lang["editform"].'</a>';
+				$date=timestamp_to_gedcom_date($row->t_startdate);
+				$out .= '<tr><td class="list_value"><a href="module.php?mod=research_assistant&amp;action=viewtask&amp;taskid='.$row->t_id.'" class="list_item name2">'.PrintReady($row->t_title).'</a></td>
+						<td class="list_value_wrap">'.$row->t_description.'</td>
+						<td class="list_value" align="center">'.$date->Display(false).'</td>
+						<td class="list_value" align="center">'.$this->checkComplete($row).'</td>
+						<td class="list_value" align="center"><a href="module.php?mod=research_assistant&amp;action=edittask&amp;taskid='.$row->t_id.'">'.$pgv_lang["edit"].'</a></td>
+						<td class="list_value" align="center"><a href="module.php?mod=research_assistant&amp;action=deletetask&amp;taskid='.$row->t_id.'">'.$pgv_lang["delete"].'</a></td>
+						<td class="list_value" align="center">'.$completeLink.'</td></tr>';
 			}
 		}
 		$out .= '</table>';
@@ -827,9 +541,9 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 			$sql = "SELECT * FROM {$TBLPREFIX}folders WHERE fr_parentid IS NULL";
 		}
 
-		$res = dbquery($sql);
-
-		return $res;
+		return
+			PGV_DB::prepare($sql)
+			->fetchAll();
 	}
 
 	/*
@@ -839,23 +553,12 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 	 * @returns true or false
 	 */
 	function folder_hastasks($folderid){
-	   global $TBLPREFIX;
-	  if(empty($folderid)){
-	  return false;
-	  }
-	  else{
-		  $sql = "SELECT * FROM {$TBLPREFIX}tasks WHERE t_fr_id =".$folderid;
-		  $res = dbquery($sql);
+		global $TBLPREFIX;
 
-		  //need to process the results...
-
-		  if($res->numRows()==0) {
-			return true;
-		  }
-		  else{
-			return false;
-		  }
-	  }
+		return $folderid &&
+			PGV_DB::prepare("SELECT * FROM {$TBLPREFIX}tasks WHERE t_fr_id=?")
+			->execute(array($folderid))
+			->fetchOne();
 	}
 
 	/*
@@ -865,23 +568,12 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 	 * @returns true or false
 	 */
 	function folder_hasfolders($folderid){
-	   global $TBLPREFIX;
-	  if(empty($folderid)){
-	  return false;
-	  }
-	  else{
-		  $sql = "SELECT * FROM {$TBLPREFIX}folders WHERE fr_parentid =".$folderid;
-		  $res = dbquery($sql);
+		global $TBLPREFIX;
 
-		  //need to process the results...
-
-		  if($res->numRows()==0) {
-			return true;
-		  }
-		  else{
-			return false;
-		  }
-	  }
+		return $folderid &&
+			PGV_DB::prepare("SELECT 1 FROM {$TBLPREFIX}folders WHERE fr_parentid=?")
+			->execute(array($folderid))
+			->fetchOne();
 	}
 	/**
 	 * Switch the orderby clause
@@ -905,7 +597,7 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 	 */
 	function get_subfolders($parentId, $orderby = "") {
 			// Obtain the table prefix from the site
-	global $TBLPREFIX;
+		global $TBLPREFIX;
 
 		if (!empty ($orderby)) {
 			// Switch the orderby clause
@@ -916,9 +608,10 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 			$sql = "SELECT * FROM {$TBLPREFIX}folders WHERE fr_parentid = '$parentId'";
 		}
 
-		$res = dbquery($sql);
-
-		return $res;
+		return
+			PGV_DB::prepare($sql)
+			->execute(array($parentId))
+			->fetchAll();
 	}
 
 	/**
@@ -928,9 +621,12 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 	 * @return mixed Results from the database
 	 */
 	function get_top_folder($folderId) {
-		// Pull the table prefix from the site
 		global $TBLPREFIX;
-		return dbquery("SELECT * FROM {$TBLPREFIX}folders WHERE fr_id = ".(int) $folderId);
+
+		return
+			PGV_DB::prepare("SELECT * FROM {$TBLPREFIX}folders WHERE fr_id=?")
+			->execute(array($folderId))
+			->fetchOneRow();
 	}
 
 	/**
@@ -943,12 +639,10 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 		$out = "";
 
 		if (!empty ($folderId)) {
-			$res = $this->get_top_folder($folderId);
+			$row=$this->get_top_folder($folderId);
 
-			$out = '<img src="modules/research_assistant/images/folder_blue_icon.gif" alt="Current Folder"></img>';
-
-			$folder = & $res->fetchRow(DB_FETCHMODE_ASSOC);
-			$out .= "<strong>".PrintReady(stripslashes($folder["fr_name"]))."</strong>"; //"<br /><strong>Comments: </strong>" . stripslashes($folder["fr_description"]);
+			$out = '<img src="modules/research_assistant/images/folder_blue_icon.gif" alt="Folder"></img>';
+			$out .= "<strong> ".PrintReady(stripslashes($row->fr_name))."</strong>";
 		}
 
 		return $out;
@@ -958,7 +652,7 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 	 * print_folder_view
 	 *
 	 * @param int $folderId If passed, Gets the subfolders
-		 * @param string $orderby If passed, Query the database with an order by clause
+	 * @param string $orderby If passed, Query the database with an order by clause
 	 * @return string HTML to print out the folder view
 	 */
 	function print_folder_view($folderId = "", $orderby = "") {
@@ -971,12 +665,12 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 
 		// Find the folder or sub folders
 		if (empty ($folderId)) {
-			$res = $this->get_folder($orderby);
+			$rows = $this->get_folder($orderby);
 		} else {
-			$res = $this->get_subfolders($folderId, $orderby);
+			$rows = $this->get_subfolders($folderId, $orderby);
 		}
 
-		if ($res->numRows() > 0) {
+		if ($rows) {
 			$out .= '<table class="list_table" align="center" border="0" width="700">';
 			$out .= '<tr><th colspan="3" class="topbottombar"><h2>'.$pgv_lang["Folder_View"].print_help_link("ra_fold_name_help", "qm", '', false, true).'</h2></th></tr>';
 			$out .= '<tr><th class="descriptionbox"><a href="module.php?mod=research_assistant&amp;action=viewtasks&amp;folderid='.$folderId.'&amp;orderbyfolder=fr_name&amp;type='.$_REQUEST["type"].'">'.$pgv_lang["Folder_Name"].'</a></th>';
@@ -984,8 +678,10 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 			$out .= '<th class="descriptionbox">'.$pgv_lang["edit"].'</th></tr>';
 		}
 
-		while ($folders = & $res->fetchRow(DB_FETCHMODE_ASSOC)) {
-			$out .= '<tr><td class="optionbox"><a href="module.php?mod=research_assistant&amp;action=viewtasks&amp;folderid='.$folders["fr_id"].'"><img src="modules/research_assistant/images/folder_blue_icon.gif" border="0" alt="Folder"></img>'.PrintReady($folders["fr_name"]).'</a></td><td class="optionbox wrap"><br />'.nl2br(PrintReady(stripslashes($folders["fr_description"]))).'</td><td class="optionbox"  align="center"><a href="module.php?mod=research_assistant&amp;action=editfolder&amp;folderid='.$folders["fr_id"].'">'.$pgv_lang["edit"].'</a></td></tr>';
+		foreach ($rows as $row) {
+			$out .= '<tr><td class="optionbox"><a href="module.php?mod=research_assistant&amp;action=viewtasks&amp;folderid='.$row->fr_id.'"><img src="modules/research_assistant/images/folder_blue_icon.gif" border="0" alt="Folder" style="vertical-align: middle;"></img> '.PrintReady($row->fr_name).'</a></td>
+					<td class="optionbox wrap"><br />'.nl2br(PrintReady(stripslashes($row->fr_description))).'</td>
+					<td class="optionbox" align="center"><a href="module.php?mod=research_assistant&amp;action=editfolder&amp;folderid='.$row->fr_id.'">'.$pgv_lang["edit"].'</a></td></tr>';
 		}
 		$out .= '</table>';
 		return $out;
@@ -995,17 +691,18 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 	 */
 	function deleteFolder($folderid) {
 		global $TBLPREFIX;
-		$sql = "DELETE FROM {$TBLPREFIX}folders WHERE fr_id='".$folderid."'";
-		dbquery($sql);
+
+		PGV_DB::prepare("DELETE FROM {$TBLPREFIX}folders WHERE fr_id=?")
+			->execute(array($folderid));
 	}
 	/**
 	 * Display the tasks to the users
 	 *
 	 * @param int $folderId
-		 * @param string $res Result from the database
+	 * @param string $res Result from the database
 	 * @return string HTML to print out the folder view
 	 */
-	function print_tasks($folderId, $res) {
+	function print_tasks($folderId, $rows) {
 		global $pgv_lang;
 		$out = "";
 
@@ -1014,6 +711,7 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 			$out .= "<table id=\"Tasks\" class=\"list_table\" align=\"center\" width=\"700\" border=\"0\">";
 			$out .= "<tr><th colspan=\"7\" class=\"topbottombar\"><h2>".$pgv_lang["Task_View"].print_help_link("ra_view_task_help", "qm", '', false, true)."</h2></th></tr>";
 			$out .= "<tr><th class=\"descriptionbox\"><a href=\"module.php?mod=research_assistant&amp;action=viewtasks&amp;folderid=".$folderId."&amp;orderby=t_title&amp;type=".$_REQUEST["type"]."\">".$pgv_lang["Task_Name"]."</a></th>
+					<th class=\"descriptionbox\"><a href=\"module.php?mod=research_assistant&amp;action=viewtasks&amp;folderid=".$folderId."&amp;orderby=t_description&amp;type=".$_REQUEST["type"]."\">".$pgv_lang["description"]."</a></th>\n
 					<th class=\"descriptionbox\"><a href=\"module.php?mod=research_assistant&amp;action=viewtasks&amp;folderid=".$folderId."&amp;orderby=t_startdate&amp;type=".$_REQUEST["type"]."\">".$pgv_lang["Start_Date"]."</a></th>\n
 					<th class=\"descriptionbox\"><a href=\"module.php?mod=research_assistant&amp;action=viewtasks&amp;folderid=".$folderId."&amp;orderby=t_enddate&amp;type=".$_REQUEST["type"]."\">".$pgv_lang["completed"]."</a></th>\n
 					<th class=\"descriptionbox\">".$pgv_lang["edit"]."</th><th class=\"descriptionbox\">".$pgv_lang["delete"]."</th></tr>\n";
@@ -1021,14 +719,14 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 		}
 
 		// Loop through the database results and print each task
-		while ($task = & $res->fetchRow(DB_FETCHMODE_ASSOC)) {
-			$task = db_cleanup($task);
-			$out .= '<tr><td class="optionbox"><a href="module.php?mod=research_assistant&amp;action=viewtask&amp;taskid='.$task["t_id"].'">'.PrintReady($task["t_title"]).'</a></td>';
-			$date=timestamp_to_gedcom_date($task["t_startdate"]);
-			$out .= '<td class="optionbox">'.$date->Display(false).'</td>';
-			$out .= '<td class="optionbox" align="center">'.$this->checkComplete($task).'</td>';
-			$out .= '<td class="optionbox" align="center"><a href="module.php?mod=research_assistant&amp;action=edittask&amp;taskid='.$task["t_id"].'">'.$pgv_lang["edit"].'</a></td>';
-			$out .= '<td class="optionbox" align="center"><a href="module.php?mod=research_assistant&amp;action=deletetask&amp;taskid='.$task["t_id"].'&amp;folder='.$folderId.'">'.$pgv_lang["delete"].'</a></td></tr>';
+		foreach ($rows as $row) {
+			$out .= '<tr><td class="list_value"><a href="module.php?mod=research_assistant&amp;action=viewtask&amp;taskid='.$row->t_id.'"class="list_item name2">'.PrintReady($row->t_title).'</a></td>';
+			$date=timestamp_to_gedcom_date($row->t_startdate);
+			$out .= '<td class="list_value_wrap">'.PrintReady($row->t_description).'</td>';
+			$out .= '<td class="list_value" align="center">'.$date->Display(false).'</td>';
+			$out .= '<td class="list_value" align="center">'.$this->checkComplete($row).'</td>';
+			$out .= '<td class="list_value" align="center"><a href="module.php?mod=research_assistant&amp;action=edittask&amp;taskid='.$row->t_id.'">'.$pgv_lang["edit"].'</a></td>';
+			$out .= '<td class="list_value" align="center"><a href="module.php?mod=research_assistant&amp;action=deletetask&amp;taskid='.$row->t_id.'&amp;folder='.$folderId.'">'.$pgv_lang["delete"].'</a></td></tr>';
 		}
 		$out .= '</table>';
 
@@ -1039,16 +737,17 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 	 */
 	function deleteTask($taskid) {
 		global $TBLPREFIX;
-		$sql = "DELETE FROM {$TBLPREFIX}tasks  WHERE t_id='".$taskid."'";
-		dbquery($sql);
-		$sql = "DELETE FROM {$TBLPREFIX}comments  WHERE c_t_id='".$taskid."'";
-		dbquery($sql);
-		$sql = "DELETE FROM {$TBLPREFIX}tasksource  WHERE ts_t_id='".$taskid."'";
-		dbquery($sql);
-		$sql = "DELETE FROM {$TBLPREFIX}taskfacts WHERE tf_t_id='".$taskid."'";
-		dbquery($sql);
-		$sql = "DELETE FROM {$TBLPREFIX}individualtask WHERE it_t_id='".$taskid."'";
-		dbquery($sql);
+
+		PGV_DB::prepare("DELETE FROM {$TBLPREFIX}tasks WHERE t_id=?")
+			->execute(array($taskid));
+		PGV_DB::prepare("DELETE FROM {$TBLPREFIX}comments WHERE t_id=?")
+			->execute(array($taskid));
+		PGV_DB::prepare("DELETE FROM {$TBLPREFIX}tasksource WHERE t_id=?")
+			->execute(array($taskid));
+		PGV_DB::prepare("DELETE FROM {$TBLPREFIX}taskfacts WHERE t_id=?")
+			->execute(array($taskid));
+		PGV_DB::prepare("DELETE FROM {$TBLPREFIX}individualtask WHERE t_id=?")
+			->execute(array($taskid));
 	}
 	/**
 	 * Scans the form dir and prints out all of the forms that we have to add information with
@@ -1117,14 +816,14 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 	/**
 	* Function that checks to see if a task is complete.
 	*
-	* @param task Supply this with a DB array of a task, it will auto check to see if it's completed.
+	* @param task Supply this with a DB row of a task, it will auto check to see if it's completed.
 	* @return mixed
 	*/
 	function checkComplete($task) {
 		// Globals
 		global $pgv_lang;
 		// If there is no end date the task is not complete.
-		if (empty ($task['t_enddate']))
+		if (empty ($task->t_enddate))
 			return $pgv_lang['no'];
 		// If there is an end date, it is complete.
 		else
@@ -1137,9 +836,10 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 	* @param taskid for the task to be completed
 	*/
 	function completeTask($taskid, $form='') {
-		global $TBLPREFIX, $DBCONN, $pgv_lang;
-		$sql = "UPDATE {$TBLPREFIX}tasks SET t_enddate='".time()."', t_form='".$DBCONN->escapeSimple($form)."' WHERE t_id='".$DBCONN->escapeSimple($taskid)."'";
-		dbquery($sql);
+		global $TBLPREFIX;
+
+		PGV_DB::prepare("UPDATE {$TBLPREFIX}tasks SET t_enddate=?, t_form=? WHERE t_id=?")
+			->execute(array(time(), $form, $taskid));
 	}
 	/**
 	 * Function to find missing information
@@ -1235,44 +935,44 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 	 * Creates a new individual in the database
 	 */
 	function add_indi_task($tid, $itid, $ids) {
-		global $TBLPREFIX, $DBCONN;
-		$sql = "INSERT INTO {$TBLPREFIX}individualtask(it_t_id,it_i_id, it_i_file) VALUES ('".$DBCONN->escapeSimple($tid)."', '".$DBCONN->escapeSimple($itid)."', '".$DBCONN->escapeSimple($ids)."')";
-		$res = dbquery($sql);
+		global $TBLPREFIX;
+
+		PGV_DB::prepare("INSERT INTO {$TBLPREFIX}individualtask (it_t_id, it_i_id, it_i_file) VALUES (?, ?, ?)")
+			->execute(array($tid, $itid, $ids));
 	}
 
 	/**
 	 * Adds a souce to an fact
 	 */
 	function add_sources($task_id, $sources = -1) {
-		global $TBLPREFIX, $DBCONN;
+		global $TBLPREFIX;
+
 		if (!is_array($sources)) {
 			$sources = explode(';', $sources);
 		}
-		foreach($sources as $s=>$source_id) {
+
+		foreach ($sources as $source_id) {
 			if (!empty($source_id)) {
-				$sql = "INSERT INTO {$TBLPREFIX}tasksource (ts_t_id, ts_s_id) VALUES ('".$DBCONN->escapeSimple($task_id)."', '".$DBCONN->escapeSimple($source_id)."')";
-				$res = dbquery($sql);
+				PGV_DB::prepare("INSERT INTO {$TBLPREFIX}tasksource (ts_t_id, ts_s_id) VALUES (?, ?)")
+					->execute(array($task_id, $source_id));
 				//-- only allow one source
 				break;
 			}
 		}
 	}
 	//Add a task into the database with all of the required information
-	function add_task($taskid, $folder, $title, $description, $pid, $userName="") {
-		global $pgv_lang, $TBLPREFIX, $DBCONN, $GEDCOM, $GEDCOMS;
-		$sql = "SELECT * FROM {$TBLPREFIX}tasks, {$TBLPREFIX}individualtask WHERE t_title = '".$DBCONN->escapeSimple($title)."' AND it_t_id=t_id AND it_i_id='".$DBCONN->escapeSimple($pid)."' AND it_i_file='".$GEDCOMS[$GEDCOM]['id']."'";
+	function add_task($taskid, $folder, $title, $description, $pid, $userName=null) {
+		global $TBLPREFIX;
 
-		$res = dbquery($sql);
+		$exists=
+			PGV_DB::prepare("SELECT 1 FROM {$TBLPREFIX}tasks, {$TBLPREFIX}individualtask WHERE t_title=? AND it_t_id=t_id AND it_i_id=? AND it_i_file=?")
+			->execute(array($title, $pid, PGV_GED_ID))
+			->fetchOne();
+
 		//make sure the same task does not exist already so we can add an individual task
-		if ($res->numRows() == 0) {
-			$sql = "INSERT INTO {$TBLPREFIX}tasks (t_id, t_fr_id, t_title, t_description, t_startdate";
-			if($userName != "")
-				$sql .= ", t_username";
-			$sql .= ") "."VALUES ('".$DBCONN->escapeSimple($taskid)."', '".$DBCONN->escapeSimple($folder)."', '".$DBCONN->escapeSimple($title)."', '".$DBCONN->escapeSimple($description)."', '".time()."";
-			if($userName != "")
-				$sql .= $DBCONN->escapeSimple($userName);
-			$sql .= "')";
-			$res = dbquery($sql);
+		if (!$exists) {
+			PGV_DB::prepare("INSERT INTO {$TBLPREFIX}tasks (t_id, t_fr_id, t_title, t_description, t_startdate, t_username) VALUES (?, ?, ?, ?, ?, ?)")
+				->execute(array($taskid, $folder, $title, $description, time(), $userName));
 			return true;
 		} else {
 			return false;
@@ -1282,7 +982,7 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 	//make sure that they are not trying to add no tasks, then loop through and all selected tasks and add them into the task
 	// and individual task tables
 	function auto_add_task(&$person,$folderID) {
-		global $TBLPREFIX, $GEDCOMS, $GEDCOM;
+		global $TBLPREFIX;
 		if(!empty($_REQUEST['missingName'])){
 			$missingName = $_REQUEST['missingName'];
 			for($i=0; $i<count($missingName); $i++) {
@@ -1290,7 +990,7 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 				$nextItaskId=get_next_id("individualtask","it_t_id");
 				$personName = $person->getFullName();
 				if($this->add_task($nextTaskID,$folderID,$missingName[$i],$personName." (auto generated)",$person->getXref()))
-				$this->add_indi_task($nextItaskId,$person->getXref(),$GEDCOMS[$GEDCOM]["id"]);
+				$this->add_indi_task($nextItaskId,$person->getXref(), PGV_GED_ID);
 			}
 		}
 	}
@@ -1304,10 +1004,10 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 	//an individual will have the same birth, marriage and death place
 	//at each index of the array will be a description as well as a percentage liklihood of the given correlation
 	function inferences() {
-		global $DBCONN, $TBLPREFIX, $GEDCOMS, $GEDCOM;
+		global $TBLPREFIX;
 
 		require_once("modules/research_assistant/ra_ViewInferencesArray.php");
-		$indilist = get_indi_list();
+		$indilist = get_indilist_indis();
 
 		//various counts
 		$total = count($indilist);
@@ -1400,8 +1100,8 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 		/*
 		 *The following section is used to store the calculated percentages in the database
 		 */
-		$sql = "DELETE FROM {$TBLPREFIX}probabilities WHERE pr_file=".$GEDCOMS[$GEDCOM]['id'];
-		$res = dbquery($sql);
+		PGV_DB::prepare("DELETE FROM {$TBLPREFIX}probabilities WHERE pr_file=?")
+			->execute(array(PGV_GED_ID));
 
 		/**
 		 * pr_id int unsigned NOT NULL auto_increment,
@@ -1412,49 +1112,32 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 		 * pr_count int
 		 * pr_file INT
 		 */
-		 foreach($inferences as $pr_id=>$value) {
-			$sql = "INSERT INTO {$TBLPREFIX}probabilities VALUES ('".$DBCONN->escapeSimple(get_next_id("probabilities", "pr_id"))."'," .
-					"'".$DBCONN->escapeSimple($value['local'])."'," .
-					"'".$DBCONN->escapeSimple($value['record'])."'," .
-					"'".$DBCONN->escapeSimple($value['comp'])."'," .
-					"'".$DBCONN->escapeSimple($value['value'])."'," .
-					"'".$DBCONN->escapeSimple($value['count'])."'," .
-					"'".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]['id'])."')";
-			$res = dbquery($sql);
-		 }
-		//print_r($inferences);
+		foreach ($inferences as $pr_id=>$value) {
+			PGV_DB::prepare("INSERT INTO {$TBLPREFIX}probabilities (pr_id, pr_f_lvl, pr_s_lvl, pr_rel, pr_matches, pr_count, pr_file) VALUES (?, ?, ?, ?, ?, ?, ?)")
+				->execute(array(get_next_id("probabilities", "pr_id"), $value['local'], $value['record'], $value['comp'], $value['value'], $value['count'], PGV_GED_ID));
+		}
 		return $inferences;
-	}
-
-
-	/**
-	 * codeToLang converts the GedCom code to its associated text
-	 */
-	function codeToLang($array) {
-		global $factarray;
-
 	}
 
 	//check to see which of the suggested research tasks have already been added into the database
 	function task_check($title, $pid) {
-		global $TBLPREFIX, $DBCONN, $GEDCOM, $GEDCOMS;
-		$sql = "SELECT t_id FROM {$TBLPREFIX}tasks, {$TBLPREFIX}individualtask WHERE t_title = '".$DBCONN->escapeSimple($title)."' AND it_t_id=t_id AND it_i_id='".$DBCONN->escapeSimple($pid)."' AND it_i_file='".$GEDCOMS[$GEDCOM]['id']."'";
-		$res = dbquery($sql);
-		if ($res->numRows() == 0)
-			return false;
-		$row = $res->fetchRow();
-		return $row[0];
+		global $TBLPREFIX;
+
+		return
+			PGV_DB::prepare("SELECT t_id FROM {$TBLPREFIX}tasks, {$TBLPREFIX}individualtask WHERE t_title=? AND it_t_id=t_id AND it_i_id=? AND it_i_file=?")
+			->execute(array($title, $pid, PGV_GED_ID))
+			->fetchOne();
 	}
 
 	// call the already created get_folder() function and for each one found create a new option tag to insert into the
 	// select tag
 	function folder_search() {
-		global $DBCONN, $TBLPREFIX, $pgv_lang;
+		global $TBLPREFIX, $pgv_lang;
 		//TODO: Figure out how to display folder Heiarchies correctly
-		$res = $this->get_folder("");
+		$rows = $this->get_folder("");
 		$out = "";
-		while ($row = $res->fetchRow(DB_FETCHMODE_ASSOC)) {
-			$out .= "<option value=".$row['fr_id']." selected=selected>".$row['fr_name']."</option>";
+		foreach ($rows as $row) {
+			$out .= "<option value=".$row->fr_id." selected=selected>".$row->fr_name."</option>";
 		}
 		return $out;
 	}
@@ -1462,24 +1145,46 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 	/**
 	 * Get Tasks for Source
 	 */
-	function getSourceTasks($sId) {
-		global $pgv_lang, $TBLPREFIX, $GEDCOMS, $GEDCOM, $DBCONN;
+	function getSourceTasks($sId, $legend="") {
+		global $pgv_lang, $TBLPREFIX, $TEXT_DIRECTION;
 
-		$sql = "SELECT * FROM {$TBLPREFIX}tasks, {$TBLPREFIX}tasksource, {$TBLPREFIX}sources WHERE t_id=ts_t_id AND s_id=ts_s_id AND s_id='".$DBCONN->escapeSimple($sId)."' AND s_file=".$GEDCOMS[$GEDCOM]['id'];
-		$res = dbquery($sql);
+		$legend = "<img src=\"modules/research_assistant/images/view_inferences.gif\" alt=\"\" align=\"middle\" /> ".$pgv_lang["task_list"]." @ ".$legend;
+		$out = '<fieldset><legend>'.$legend.'</legend>';
+		$out .= '<div id=ra-table" class="'.$TEXT_DIRECTION.'">';
+		$rows=
+			PGV_DB::prepare("SELECT t_id, t_title, t_description, t_startdate, t_enddate FROM {$TBLPREFIX}tasks, {$TBLPREFIX}tasksource, {$TBLPREFIX}sources WHERE t_id=ts_t_id AND s_id=ts_s_id AND s_id=? AND s_file=?")
+			->execute(array($sId, PGV_GED_ID))
+			->fetchAll();
 
-		$out = "\n\t<table class=\"list_table\">";
-		$out .= "<tr><td class=\"topbottombar\" colspan=\"4\" align=\"center\">".print_help_link("task_list_text", "qm", '', false, true)."<b>".$pgv_lang['task_list']."</b></td></tr>\n";
-		if ($res->numRows()==0) $out .= "<tr><td class=\"topbottombar\" colspan=\"4\" align=\"center\">".$pgv_lang['no_sour_tasks']."</td></tr>\n";
-		else {
-			$out .= "\n\t\t<tr><td class=\"list_label\"><strong>".$pgv_lang["details"]."</strong></td><td class=\"list_label\"><strong>".$pgv_lang["title"]."</strong></td><td class=\"list_label\"><strong>".$pgv_lang["completed"]."</strong></td><td class=\"list_label\"><strong>".$pgv_lang["created"]."</strong></td></tr>";
+		if (!$rows) {
+			$out .= "<table width=\"100%\"><tr>";
+			$out .= "<thead><th class=\"topbottombar\">".print_help_link("task_list_text", "qm", '', false, true).$pgv_lang["task_list"]."</th></tr>\n";
+			$out .= "<tr><td class=\"topbottombar\">".$pgv_lang["no_sour_tasks"]."</td></tr>\n";
+		} else {
+			$n = 0;
+			$out .= "<table class=\"list_table\">";
+			$out .= "<thead><tr><td></td><th class=\"topbottombar\" colspan=\"4\">".print_help_link("task_list_text", "qm", '', false, true).$pgv_lang["task_list"]."</th></tr>\n";
+			$out .= '<tr><td></td><th class="list_label">'.$pgv_lang["Task_Name"].'</th>';
+			$out .= '<th class="list_label">'.$pgv_lang["description"].'</th>';
+			$out .= '<th class="list_label">'.$pgv_lang["completed"].'</th>';
+			$out .= '<th class="list_label">'.$pgv_lang["created"]."</th></tr></thead>\n<tbody>";
 			// Loop through all the task ID's and pull the info we need on them,
 			// then format them nicely to show the user.
-			while ($taskid = $res->fetchrow(DB_FETCHMODE_ASSOC)) {
-				$date=timestamp_to_gedcom_date($taskid["t_startdate"]);
-				$out .= '<tr><td class="list_label"><a href="module.php?mod=research_assistant&amp;action=viewtask&amp;taskid='.$taskid['t_id'].'">'.PrintReady($pgv_lang['details']).'</a></td><td class="list_label">'.PrintReady($taskid['t_title']).'</td><td class="list_label">'.$this->checkComplete($taskid).'</td><td class="list_label">'.$date->Display(false).'</td></tr>';
+			foreach ($rows as $row) {
+				$date=timestamp_to_gedcom_date($row->t_startdate);
+				$out .= '<tr><td class="list_value_wrap rela list_item">'.++$n.'</td>';
+				$out .= '<td class="list_value_wrap"><a href="module.php?mod=research_assistant&amp;action=viewtask&amp;taskid='.$row->t_id.'" class="list_item name2">'.PrintReady($row->t_title).'</a></td>';
+				if (UTF8_strlen($row->t_description)<=40) {
+					$out .= '<td class="list_value_wrap">'.PrintReady($row->t_description).'</td>';
+				}
+				else {
+					$out .= '<td class="list_value_wrap">'.UTF8_substr(PrintReady($row->t_description), 0, 40).$pgv_lang["ellipsis"].'</td>';
+				}
+				$out .= '<td class="list_value_wrap center">'.$this->checkComplete($row).'</td>';
+				$out .= '<td class="list_value_wrap center">'.$date->Display(false).'</td></tr>';
 			}
 		}
+		$out .= '</tbody></table></div></fieldset>';
 		return $out;
 
 	}
@@ -1499,12 +1204,11 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 		$this->sites["gensearchhelp.php"] = "Genealogy-Search-Help.com";
 		$opts = "";
 		$optCount = 1;
-			//load up the options into the html
-			foreach($this->sites as $key=>$value)
-			{
-			    $opts .= "<option value=\"".$key."\" class=\"".$optCount."\">".$value."</option>\n";
-			    $optCount+=1;
-			}
+		//load up the options into the html
+		foreach($this->sites as $key=>$value) {
+			$opts .= "<option value=\"".$key."\" class=\"".$optCount."\">".$value."</option>\n";
+			$optCount+=1;
+		}
 		return $opts;
 	}
 
@@ -1546,7 +1250,7 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 	 */
 	function tab(&$person) {
 		// Start our engines.
-		global $pgv_lang, $TBLPREFIX, $DBCONN, $GEDCOMS, $GEDCOM;
+		global $pgv_lang, $TBLPREFIX;
 		global $factarray;
 
 		if (!is_object($person)) return "";
@@ -1559,28 +1263,32 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 			$this->auto_add_task($person, $_POST['folder']);
 
 		// gets task id from the database
-		$sql = "SELECT * FROM {$TBLPREFIX}individualtask WHERE it_i_id = '".$DBCONN->escapeSimple($person->getXref())."' AND it_i_file='".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]['id'])."'";
-		$res = dbquery($sql);
-
-		if (PEAR::isError($res)) {
+		try {
+			$rows=
+				PGV_DB::prepare("SELECT it_t_id FROM {$TBLPREFIX}individualtask WHERE it_i_id=? AND it_i_file=?")
+				->execute(array($person->getXref(), PGV_GED_ID))
+				->fetchAll();
+		} catch (PDOException $ex) {
 			return "<span class=\"error\">There was an error with the Research Assistant database.  Click on the <a href=\"module.php?mod=research_assistant\">Research Assistant</a> icon to create the database.<br />&nbsp;</span>";
 		}
 		// Start of HTML output
 		$out = "\n\t<table class=\"list_table\">";
 		$out .= "<tr><td class=\"topbottombar\" colspan=\"4\" align=\"center\">".print_help_link("task_list_text", "qm", '', false, true)."<b>".$pgv_lang['task_list']."</b></td></tr>";
-		if ($res->numRows()==0) $out .= "<tr><td class=\"topbottombar\" colspan=\"4\" align=\"center\">".$pgv_lang['no_indi_tasks']."</td></tr>";
-		else {
+		if (!$rows) {
+			$out .= "<tr><td class=\"topbottombar\" colspan=\"4\" align=\"center\">".$pgv_lang['no_indi_tasks']."</td></tr>";
+		} else {
 			$out .= "\n\t\t<tr><td class=\"list_label\"><strong>".$pgv_lang["details"]."</strong></td><td class=\"list_label\"><strong>".$pgv_lang["title"]."</strong></td><td class=\"list_label\"><strong>".$pgv_lang["completed"]."</strong></td><td class=\"list_label\"><strong>".$pgv_lang["created"]."</strong></td></tr>";
 			// Loop through all the task ID's and pull the info we need on them,
 			// then format them nicely to show the user.
-			while ($taskid = $res->fetchrow(DB_FETCHMODE_ASSOC)) {
-				$sql = "SELECT * FROM {$TBLPREFIX}tasks WHERE t_id = '".$taskid['it_t_id']."'";
-				$result = dbquery($sql);
-				if ($result->numRows()>0) {
-					$task = $result->fetchrow(DB_FETCHMODE_ASSOC);
-					$task = db_cleanup($task);
-					$date=timestamp_to_gedcom_date($task["t_startdate"]);
-					$out .= '<tr><td class="list_label"><a href="module.php?mod=research_assistant&amp;action=viewtask&amp;taskid='.$task['t_id'].'">'.$pgv_lang['details'].'</a></td><td class="list_label">'.PrintReady($task['t_title']).'</td><td class="list_label">'.$this->checkComplete($task).'</td><td class="list_label">'.$date->Display(false).'</td></tr>';
+			foreach ($rows as $row) {
+				$task=
+					PGV_DB::prepare("SELECT * FROM {$TBLPREFIX}tasks WHERE t_id=?")
+					->execute(array($row->it_t_id))
+					->fetchOneRow();
+				
+				if ($task) {
+					$date=timestamp_to_gedcom_date($task->t_startdate);
+					$out .= '<tr><td class="list_label"><a href="module.php?mod=research_assistant&amp;action=viewtask&amp;taskid='.$task->t_id.'">'.$pgv_lang['details'].'</a></td><td class="list_label">'.PrintReady($task->t_title).'</td><td class="list_label">'.$this->checkComplete($row).'</td><td class="list_label">'.$date->Display(false).'</td></tr>';
 				}
 			}
 		}
@@ -1939,33 +1647,33 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 
 		//Beginning of the comments feature
 		if (!empty($_REQUEST['action']) && $_REQUEST['action']=='delete_comment' && !empty($_REQUEST['uc_id'])) {
-			$sql = "DELETE FROM {$TBLPREFIX}user_comments WHERE uc_id=".$_REQUEST['uc_id'];
-			$res = dbquery($sql);
+			PGV_DB::prepare("DELETE FROM {$TBLPREFIX}user_comments WHERE uc_id=?")
+				->execute(array($_REQUEST['uc_id']));
 		}
 		$out .= '<br /><br />
 		<table width="50%" align="center"><tr><td class="topbottombar">'.$pgv_lang['comments'].'</td></tr>';
 		$out .= '<tr><td class="optionbox">';
 		// Display comments
-		$sql = "SELECT uc_id, uc_username, uc_datetime, uc_comment FROM {$TBLPREFIX}user_comments WHERE uc_f_id='".$GEDCOMS[$GEDCOM]['id']."' AND uc_p_id='" . $person->getXref() . "' ORDER BY uc_datetime DESC";
-		$res = dbquery($sql);
-		$out .= "";
+		$rows=
+			PGV_DB::prepare("SELECT uc_id, uc_username, uc_datetime, uc_comment FROM {$TBLPREFIX}user_comments WHERE uc_f_id=? AND uc_p_id=? ORDER BY uc_datetime DESC")
+			->execute(array(PGV_GED_ID, $person->getXref()))
+			->fetchAll();
 
-		while($comment = $res->fetchRow(DB_FETCHMODE_ASSOC)){
-			$comment = db_cleanup($comment);
-			$date=timestamp_to_gedcom_date($comment["uc_datetime"]);
+		foreach ($rows as $row) {
+			$date=timestamp_to_gedcom_date($row->uc_datetime);
 			$out .= '<div class="blockcontent"><div class="person_box" id="comment1"><span class="news_title">' .
-					$comment["uc_username"].'' . // INSERT username
+					$row->uc_username.'' . // INSERT username
 					'</span><br /><span class="news_date">' .
-					$date->Display(false).' - '. date("g:i:s A",(int)$comment["uc_datetime"]). // INSERT datetime
+					$date->Display(false).' - '. date("g:i:s A",(int)$row->uc_datetime). // INSERT datetime
 					'</span><br /><br />' .
-					nl2br($comment["uc_comment"]).
+					nl2br($row->uc_comment).
 					'<hr size="1" />';
 
-			if(PGV_USER_IS_ADMIN || PGV_USER_NAME==$comment["uc_username"]){
+			if(PGV_USER_IS_ADMIN || PGV_USER_NAME==$row->uc_username){
 				$out .= '<a href="javascript:;" onclick="editcomment('.
-							$comment["uc_id"].', \''.$person->getXref().'\'' . // INSERT commentid
+							$row->uc_id.', \''.$person->getXref().'\'' . // INSERT commentid
 							')">'.$pgv_lang["edit"].'</a> | <a href="" onclick="confirm_prompt(\''.$pgv_lang["comment_delete_check"].'\', ' .
-							$comment["uc_id"]. // INSERT commentid
+							$row->uc_id. // INSERT commentid
 							', \''.$person->getXref().'\'); return false;">'.$pgv_lang["delete"].'</a>';
 			}
 			$out .= '<br /></div></div><br />';

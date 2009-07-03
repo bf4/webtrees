@@ -48,60 +48,14 @@ function lightbox_print_media($pid, $level=1, $related=false, $kind=1, $noedit=f
 
 	global $MULTI_MEDIA, $TBLPREFIX, $SHOW_ID_NUMBERS, $MEDIA_EXTERNAL;
 	global $pgv_lang, $pgv_changes, $factarray, $view;
-	global $GEDCOM, $MEDIATYPE, $DBTYPE;
+	global $GEDCOM, $MEDIATYPE;
 	global $WORD_WRAPPED_NOTES, $MEDIA_DIRECTORY, $PGV_IMAGE_DIR, $PGV_IMAGES, $TEXT_DIRECTION;
 
 	global $is_media, $cntm1, $cntm2, $cntm3, $cntm4, $t, $mgedrec;
 	global $res, $typ2b, $edit, $tabno, $n, $item, $items, $p, $note, $rowm, $note_text, $reorder;
 	global $action, $order, $order2, $rownum, $rownum1, $rownum2, $rownum3, $rownum4, $media_data, $sort_i;
-
-	// Set type of media from call in album
-	switch ($kind) {
-	case 1:
-		$tt      = $pgv_lang["ROW_TYPE__photo"];
-		$typ2b   = "(";
-		$typ2b  .= " (m_gedrec ".PGV_DB_LIKE." '%TYPE photo%')       OR ";
-		$typ2b  .= " (m_gedrec ".PGV_DB_LIKE." '%TYPE map%')         OR ";
-		$typ2b  .= " (m_gedrec ".PGV_DB_LIKE." '%TYPE painting%')    OR ";
-		$typ2b  .= " (m_gedrec ".PGV_DB_LIKE." '%TYPE tombstone%')      ";
-		$typ2b  .= ")";
-		break;
-	case 2:
-		$tt      = $pgv_lang["ROW_TYPE__document"];
-		$typ2b   = "(";
-		$typ2b  .= " (m_gedrec ".PGV_DB_LIKE." '%TYPE card%')        OR ";
-		$typ2b  .= " (m_gedrec ".PGV_DB_LIKE." '%TYPE certificate%') OR ";
-		$typ2b  .= " (m_gedrec ".PGV_DB_LIKE." '%TYPE document%')    OR ";
-		$typ2b  .= " (m_gedrec ".PGV_DB_LIKE." '%TYPE magazine%')    OR ";
-		$typ2b  .= " (m_gedrec ".PGV_DB_LIKE." '%TYPE manuscript%')  OR ";
-		$typ2b  .= " (m_gedrec ".PGV_DB_LIKE." '%TYPE newspaper%')      ";
-		$typ2b  .= ")";
-		break;
-	case 3:
-		$tt      = $pgv_lang["ROW_TYPE__census"];
-		$typ2b   = "(";
-		$typ2b  .= " (m_gedrec ".PGV_DB_LIKE." '%TYPE electronic%')  OR ";
-		$typ2b  .= " (m_gedrec ".PGV_DB_LIKE." '%TYPE fiche%')       OR ";
-		$typ2b  .= " (m_gedrec ".PGV_DB_LIKE." '%TYPE film%')           ";
-		$typ2b  .= ")";
-		break;
-	case 4:
-		$tt      = $pgv_lang["ROW_TYPE__other"];
-		$typ2b   = "(";
-		$typ2b  .= " (m_gedrec NOT ".PGV_DB_LIKE." '%TYPE %')        OR ";
-		$typ2b  .= " (m_gedrec ".PGV_DB_LIKE."	   '%TYPE coat%')	 OR ";
-		$typ2b  .= " (m_gedrec ".PGV_DB_LIKE."     '%TYPE book%')    OR ";
-		$typ2b  .= " (m_gedrec ".PGV_DB_LIKE."     '%TYPE audio%')   OR ";
-		$typ2b  .= " (m_gedrec ".PGV_DB_LIKE."     '%TYPE video%')   OR ";
-		$typ2b  .= " (m_gedrec ".PGV_DB_LIKE."     '%TYPE other%')      ";
-		$typ2b  .= ")";
-		break;
-	case 5:
-	default:
-		$tt      = $pgv_lang["ROW_TYPE__notinDB"];
-		$typ2b   = "(m_gedrec ".PGV_DB_LIKE."     '%%')";
-		break;
-	}
+	
+	global $GEDCOM_ID_PREFIX;
 
 	if (!showFact("OBJE", $pid)) return false;
 	if (!isset($pgv_changes[$pid."_".$GEDCOM])) $gedrec = find_gedcom_record($pid);
@@ -165,12 +119,53 @@ function lightbox_print_media($pid, $level=1, $related=false, $kind=1, $noedit=f
 	$vars[]=PGV_GED_ID;
 	//-- for family and source page only show level 1 obje references
 	if ($level>0) {
-		$sqlmm .= "AND mm_gedrec ".PGV_DB_LIKE." ?";
+		$sqlmm .= "AND mm_gedrec ".PGV_DB::$LIKE." ?";
 		$vars[]="$level OBJE%";
 	}
 
-	$sqlmm .= " AND $typ2b ";
-	// $sqlmm .= " ORDER BY m_titl ";
+	// Set type of media from call in album
+	switch ($kind) {
+	case 1:
+		$tt=$pgv_lang["ROW_TYPE__photo"];
+		$sqlmm.="AND (m_gedrec ".PGV_DB::$LIKE." ? OR m_gedrec ".PGV_DB::$LIKE." ? OR m_gedrec ".PGV_DB::$LIKE." ? OR m_gedrec ".PGV_DB::$LIKE." ?)";
+		$vars[]='%TYPE photo%';
+		$vars[]='%TYPE map%';
+		$vars[]='%TYPE painting%';
+		$vars[]='%TYPE tombstone%';
+		break;
+	case 2:
+		$tt=$pgv_lang["ROW_TYPE__document"];
+		$sqlmm.="AND (m_gedrec ".PGV_DB::$LIKE." ? OR m_gedrec ".PGV_DB::$LIKE." ? OR m_gedrec ".PGV_DB::$LIKE." ? OR m_gedrec ".PGV_DB::$LIKE." ? OR m_gedrec ".PGV_DB::$LIKE." ? OR m_gedrec ".PGV_DB::$LIKE." ?)";
+		$vars[]='%TYPE card%';
+		$vars[]='%TYPE certificate%';
+		$vars[]='%TYPE document%';
+		$vars[]='%TYPE magazine%';
+		$vars[]='%TYPE manuscript%';
+		$vars[]='%TYPE newspaper%';
+		break;
+	case 3:
+		$tt=$pgv_lang["ROW_TYPE__census"];
+		$sqlmm.="AND (m_gedrec ".PGV_DB::$LIKE." ? OR m_gedrec ".PGV_DB::$LIKE." ? OR m_gedrec ".PGV_DB::$LIKE." ?)";
+		$vars[]='%TYPE electronic%';
+		$vars[]='%TYPE fiche%';
+		$vars[]='%TYPE film%';
+		break;
+	case 4:
+		$tt=$pgv_lang["ROW_TYPE__other"];
+		$sqlmm.="AND (m_gedrec NOT ".PGV_DB::$LIKE." ? OR m_gedrec ".PGV_DB::$LIKE." ? OR m_gedrec ".PGV_DB::$LIKE." ? OR m_gedrec ".PGV_DB::$LIKE." ? OR m_gedrec ".PGV_DB::$LIKE." ? OR m_gedrec ".PGV_DB::$LIKE." ?)";
+		$vars[]='%TYPE %';
+		$vars[]='%TYPE coat%';
+		$vars[]='%TYPE book%';
+		$vars[]='%TYPE audio%';
+		$vars[]='%TYPE video%';
+		$vars[]='%TYPE other%';
+		break;
+	case 5:
+	default:
+		$tt      = $pgv_lang["ROW_TYPE__notinDB"];
+		break;
+	}
+
 	if ($sort_ct>0) {
 		$sqlmm .= $orderbylist;
 	} else {
@@ -280,26 +275,19 @@ function lightbox_print_media($pid, $level=1, $related=false, $kind=1, $noedit=f
 		//-- but not yet accepted into the database.  
 		//-- We will print them too, and put any "Extra Items not in DB" into a new Row.
 		
-		// Firstly, get count of Items in Database for Individual only (excludes family ID's)
+		// Firstly, get count of Items in Database for this Individual
 		$indiobjs = "SELECT DISTINCT ";
-		$indiobjs .= "m_media, m_ext, m_file, m_titl, m_gedfile, m_gedrec, mm_gid, mm_gedrec FROM ".$TBLPREFIX."media, ".$TBLPREFIX."media_mapping where ";
-		$indiobjs .= "mm_gid IN (";
-		$vars2=array();
-		foreach ($ids as $id2) {
-			if (strstr($id2, "I")) {
-				$indiobjs .= "?, ";
-				$vars2[]=$id2;
-			}
-		}
-		$indiobjs = rtrim($indiobjs, ', ');
-		$indiobjs .= ") AND mm_gedfile=? AND mm_media=m_media AND mm_gedfile=m_gedfile ";
-		$vars2[]=PGV_GED_ID;
+		$indiobjs .= "m_media, m_ext, m_file, m_titl, m_gedfile, m_gedrec, mm_gid, mm_gedrec FROM {$TBLPREFIX}media, {$TBLPREFIX}media_mapping where ";
+		$indiobjs .= "mm_gid=? ";
+		$indiobjs .= "AND mm_gedfile=? AND mm_media=m_media AND mm_gedfile=m_gedfile ";
+		$vars2=array($pid, PGV_GED_ID);
 		$rows=PGV_DB::prepare($indiobjs)->execute($vars2)->fetchAll(PDO::FETCH_ASSOC);
 		$foundObjs = array();
 		$numindiobjs = count($rows);
 		
-		// If any items are left in $current_objes list put them into $kind 5 ("Not in DB") row
+		// Compare Items count in Database versus Item count in GEDCOM
 		if ($kind==5 && $ct!=$numindiobjs) {
+			// If any items are left in $current_objes list for this individual, put them into $kind 5 ("Not in DB") row
 			echo "\n\n";
 			echo "<table cellpadding=\"0\" border=\"0\" width=\"100%\" class=\"facts_table\"><tr>", "\n";
 			echo '<td width="100" align="center" class="descriptionbox" style="vertical-align:middle;">';

@@ -1,11 +1,9 @@
 <?php
 /**
-* PEAR:DB specific functions file
+* Functions to query the database.
 *
-* This file implements the datastore functions necessary for PhpGedView to use an SQL database as its
-* datastore. This file also implements array caches for the database tables.  Whenever data is
-* retrieved from the database it is stored in a cache.  When a database access is requested the
-* cache arrays are checked first before querying the database.
+* This file implements the datastore functions necessary for PhpGedView
+* to use an SQL database as its datastore.
 *
 * phpGedView: Genealogy Viewer
 * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
@@ -36,194 +34,6 @@ if (!defined('PGV_PHPGEDVIEW')) {
 
 define('PGV_FUNCTIONS_DB_PHP', '');
 
-//-- load the PEAR:DB files
-require_once 'DB.php';
-
-
-// Definitions and functions to hide differences between sql databases
-switch ($DBTYPE) {
-case 'mssql':
-	define('PGV_DB_AUTO_ID_TYPE',  'INTEGER IDENTITY');
-	define('PGV_DB_INT1_TYPE',     'INTEGER');
-	define('PGV_DB_INT2_TYPE',     'INTEGER');
-	define('PGV_DB_INT3_TYPE',     'INTEGER');
-	define('PGV_DB_INT4_TYPE',     'INTEGER');
-	define('PGV_DB_INT8_TYPE',     'INTEGER');
-	define('PGV_DB_CHAR_TYPE',     'VARCHAR');
-	define('PGV_DB_VARCHAR_TYPE',  'VARCHAR');
-	define('PGV_DB_UNSIGNED',      '');
-	define('PGV_DB_LIKE',          'LIKE');
-	define('PGV_DB_RANDOM',        'NEWID');
-	define('PGV_DB_TEXT_TYPE',     'TEXT');
-	define('PGV_DB_LONGTEXT_TYPE', 'TEXT');
-	define('PGV_DB_UTF8_TABLE',    '');
-	break;
-case 'sqlite':
-	define('PGV_DB_AUTO_ID_TYPE',  'INTEGER AUTOINCREMENT');
-	define('PGV_DB_INT1_TYPE',     'INTEGER');
-	define('PGV_DB_INT2_TYPE',     'INTEGER');
-	define('PGV_DB_INT3_TYPE',     'INTEGER');
-	define('PGV_DB_INT4_TYPE',     'INTEGER');
-	define('PGV_DB_INT8_TYPE',     'INTEGER');
-	define('PGV_DB_CHAR_TYPE',     'VARCHAR');
-	define('PGV_DB_VARCHAR_TYPE',  'VARCHAR');
-	define('PGV_DB_UNSIGNED',      '');
-	define('PGV_DB_LIKE',          'LIKE');
-	define('PGV_DB_RANDOM',        'RANDOM()');
-	define('PGV_DB_TEXT_TYPE',     'TEXT');
-	define('PGV_DB_LONGTEXT_TYPE', 'TEXT');
-	define('PGV_DB_UTF8_TABLE',    '');
-	break;
-case 'pgsql':
-	define('PGV_DB_AUTO_ID_TYPE',  'SERIAL');
-	define('PGV_DB_INT1_TYPE',     'SMALLINT');
-	define('PGV_DB_INT2_TYPE',     'SMALLINT');
-	define('PGV_DB_INT3_TYPE',     'INTEGER');
-	define('PGV_DB_INT4_TYPE',     'INTEGER');
-	define('PGV_DB_INT8_TYPE',     'BIGINT');
-	define('PGV_DB_CHAR_TYPE',     'CHAR');
-	define('PGV_DB_VARCHAR_TYPE',  'VARCHAR');
-	define('PGV_DB_UNSIGNED',      '');
-	define('PGV_DB_LIKE',          'ILIKE');
-	define('PGV_DB_RANDOM',        'RANDOM()');
-	define('PGV_DB_TEXT_TYPE',     'TEXT');
-	define('PGV_DB_LONGTEXT_TYPE', 'TEXT');
-	define('PGV_DB_UTF8_TABLE',    '');
-	break;
-case 'mysql':
-case 'mysqli':
-default:
-	define('PGV_DB_AUTO_ID_TYPE',  'INTEGER UNSIGNED AUTO_INCREMENT');
-	define('PGV_DB_INT1_TYPE',     'TINYINT');
-	define('PGV_DB_INT2_TYPE',     'SMALLINT');
-	define('PGV_DB_INT3_TYPE',     'MEDIUMINT');
-	define('PGV_DB_INT4_TYPE',     'INT');
-	define('PGV_DB_INT8_TYPE',     'BIGINT');
-	define('PGV_DB_CHAR_TYPE',     'CHAR');
-	define('PGV_DB_VARCHAR_TYPE',  'VARCHAR');
-	define('PGV_DB_UNSIGNED',      'UNSIGNED');
-	define('PGV_DB_LIKE',          'LIKE');
-	define('PGV_DB_RANDOM',        'RAND()');
-	define('PGV_DB_TEXT_TYPE',     'TEXT');
-	define('PGV_DB_LONGTEXT_TYPE', 'LONGTEXT');
-	// Since install.php creates the tables before saving the configuration settings to config.php,
-	// we must check its temporary configuration settings as well.
-	if (isset($_SESSION['install_config']['DB_UTF8_COLLATION']) && $_SESSION['install_config']['DB_UTF8_COLLATION'] || $DB_UTF8_COLLATION) {
-		define('PGV_DB_UTF8_TABLE',  'CHARACTER SET utf8 COLLATE utf8_unicode_ci');
-	} else {
-		define('PGV_DB_UTF8_TABLE',  '');
-	}
-	break;
-}
-
-// Define some "standard" columns, so we create our tables consistently
-define('PGV_DB_COL_FILE', PGV_DB_INT2_TYPE.' '.PGV_DB_UNSIGNED); // Allow 32768/65536 Gedcoms
-define('PGV_DB_COL_XREF', PGV_DB_VARCHAR_TYPE.'(20)');           // Gedcom identifiers are max 20 chars
-define('PGV_DB_COL_TAG',  PGV_DB_VARCHAR_TYPE.'(15)');           // Gedcom tags/record types are max 15 chars
-
-/**
-* query the database
-*
-* this function will perform the given SQL query on the database
-* @param string $sql the sql query to execture
-* @param boolean $show_error whether or not to show any error messages
-* @return DB_result the connection result
-*/
-function &dbquery($sql, $show_error=true) {
-	global $DBCONN, $INDEX_DIRECTORY, $LAST_QUERY, $CONFIGURED;
-
-	if (!$CONFIGURED) {
-		return false;
-	}
-	if (!isset($DBCONN)) {
-		return false;
-	}
-	//-- make sure a database connection has been established
-	if (DB::isError($DBCONN)) {
-		if ($DBCONN->getCode()!=-24) {
-			print $DBCONN->getCode()." ".$DBCONN->getMessage();
-		}
-		return $DBCONN;
-	}
-
-	/**
-	* Debugging code for multi-database support
-	*/
-/* -- commenting out for final release
-	if (preg_match('/[^\\\]"/', $sql)>0) {
-		pgv_error_handler(2, "<span class=\"error\">Incompatible SQL syntax. Double quote query: $sql</span><br />","","");
-	}
-	if (preg_match('/(&&)|(\|\|)/', $sql)>0) {
-		pgv_error_handler(2,"<span class=\"error\">Incompatible SQL syntax.  Use 'AND' instead of '&&'.  Use 'OR' instead of '||'.: $sql</span><br />","","");
-	}
-	*/
-
-	if (PGV_DEBUG_SQL) {
-		$start_time2 = microtime(true);
-	}
-	$res =& $DBCONN->query($sql);
-
-	$LAST_QUERY = $sql;
-	if (PGV_DEBUG_SQL) {
-		global $start_time;
-		$end_time = microtime(true);
-		$exectime = $end_time - $start_time2;
-
-		$fp = fopen($INDEX_DIRECTORY."/sql_log.txt", "a");
-		$backtrace = debug_backtrace();
-		$rows = "- rows";
-		if (!DB::isError($res) && is_object($res)) {
-			$rows=$res->numRows();
-			$rows.=$rows==1?' row':' rows';
-		}
-		$stack=array();
-		foreach (debug_backtrace() as $trace) {
-			// The backtrace can include lambda functions, etc.
-			if (isset($trace['file'])) {
-				$stack[]=basename($trace['file']).':'.$trace['line'];
-			}
-		}
-		fwrite($fp,	sprintf(
-			"%s\t%s\t%.3f ms\t%s\t%s\t%s".PGV_EOL,
-			date("Y-m-d H:i:s"),
-			basename($_SERVER["SCRIPT_NAME"]),
-			$exectime * 1000,
-			$rows,
-			$sql,
-			implode(', ', array_reverse($stack))
-		));
-		fclose($fp);
-	}
-	if (DB::isError($res) && $show_error) {
-		print "<span class=\"error\"><b>ERROR:".$res->getCode()." ".$res->getMessage()." <br />SQL:</b>".$res->getUserInfo()."</span><br /><br />\n";
-	}
-	return $res;
-}
-
-/**
-* Clean up an item retrieved from the database
-*
-* clean the slashes and convert special
-* html characters to their entities for
-* display and entry into form elements
-* @param mixed $item the item to cleanup
-* @return mixed the cleaned up item
-*/
-function db_cleanup($item) {
-	if (is_array($item)) {
-		foreach ($item as $key=>$value) {
-			if ($key!="gedcom") {
-				$item[$key]=stripslashes($value);
-			} else {
-				$key=$value;
-			}
-		}
-		return $item;
-	} else {
-		return stripslashes($item);
-	}
-}
-
 /**
 * check if a gedcom has been imported into the database
 *
@@ -232,30 +42,21 @@ function db_cleanup($item) {
 * @return bool return true if the gedcom has been imported otherwise returns false
 */
 function check_for_import($ged) {
-	global $TBLPREFIX, $DBCONN, $GEDCOMS;
+	global $TBLPREFIX, $GEDCOMS;
 
-	if (DB::isError($DBCONN)) {
-		return false;
-	}
-	if (count($GEDCOMS)==0) {
-		return false;
-	}
-	if (!isset($GEDCOMS[$ged])) {
+	if (!PGV_DB::isConnected() || count($GEDCOMS)==0 || !isset($GEDCOMS[$ged])) {
 		return false;
 	}
 
 	if (!isset($GEDCOMS[$ged]["imported"])) {
-		$GEDCOMS[$ged]["imported"] = false;
-			$sql = "SELECT count(i_id) FROM ".$TBLPREFIX."individuals WHERE i_file=".$DBCONN->escapeSimple($GEDCOMS[$ged]["id"]);
-			$res = dbquery($sql, false);
-
-			if (!empty($res) && !DB::isError($res) && is_object($res)) {
-				$row =& $res->fetchRow();
-				$res->free();
-				if ($row[0]>0) {
-					$GEDCOMS[$ged]["imported"] = true;
-				}
-			}
+		try {
+			$GEDCOMS[$ged]["imported"]=(bool)
+				PGV_DB::prepare("SELECT count(i_id) FROM {$TBLPREFIX}individuals WHERE i_file=?")
+				->execute(array($GEDCOMS[$ged]["id"]))
+				->fetchOne();
+		} catch (PDOException $ex) {
+			$GEDCOMS[$ged]["imported"]=false;
+		}
 		store_gedcoms();
 	}
 
@@ -474,7 +275,7 @@ function db_collation_digraphs() {
 // $ged_id - only consider individuals from this gedcom
 ////////////////////////////////////////////////////////////////////////////////
 function get_indilist_salpha($marnm, $fams, $ged_id) {
-	global $DBTYPE, $DBCONN, $TBLPREFIX, $DB_UTF8_COLLATION, $DBCOLLATE;
+	global $TBLPREFIX, $DB_UTF8_COLLATION, $DBCOLLATE;
 
 	$ged_id=(int)$ged_id;
 
@@ -498,24 +299,24 @@ function get_indilist_salpha($marnm, $fams, $ged_id) {
 	$include='';
 	$digraphs=db_collation_digraphs();
 	foreach (array_unique($digraphs) as $digraph) { // Multi-character digraphs
-		$exclude.=" AND n_sort NOT ".PGV_DB_LIKE." '{$digraph}%' {$DBCOLLATE}";
+		$exclude.=" AND n_sort NOT ".PGV_DB::$LIKE." '{$digraph}%' {$DBCOLLATE}";
 	}
 	foreach ($digraphs as $to=>$from) { // Single-character digraphs
-		$include.=" UNION SELECT UPPER('{$to}' {$DBCOLLATE}) AS alpha FROM {$tables} WHERE {$join} AND n_sort ".PGV_DB_LIKE." '{$from}%' {$DBCOLLATE} GROUP BY 1";
+		$include.=" UNION SELECT UPPER('{$to}' {$DBCOLLATE}) AS alpha FROM {$tables} WHERE {$join} AND n_sort ".PGV_DB::$LIKE." '{$from}%' {$DBCOLLATE} GROUP BY 1";
 	}
-	$sql="SELECT {$column} AS alpha FROM {$tables} WHERE {$join} {$exclude} GROUP BY 1 {$include} ORDER BY 1";
-	$res=dbquery($sql);
+	$alphas=
+		PGV_DB::prepare("SELECT {$column} AS alpha FROM {$tables} WHERE {$join} {$exclude} GROUP BY 1 {$include} ORDER BY 1")
+		->fetchOneColumn();
 
 	$list=array();
-	while ($row=$res->fetchRow(DB_FETCHMODE_ASSOC)) {
+	foreach ($alphas as $alpha) {
 		if ($DB_UTF8_COLLATION) {
-			$letter=$row['alpha'];
+			$letter=$alpha;
 		} else {
-			$letter=UTF8_strtoupper(UTF8_substr($row['alpha'],0,1));
+			$letter=UTF8_strtoupper(UTF8_substr($alpha,0,1));
 		}
 		$list[$letter]=$letter;
 	}
-	$res->free();
 
 	// If we didn't sort in the DB, sort ourselves
 	if (!$DB_UTF8_COLLATION) {
@@ -542,11 +343,7 @@ function get_indilist_salpha($marnm, $fams, $ged_id) {
 // $ged_id - only consider individuals from this gedcom
 ////////////////////////////////////////////////////////////////////////////////
 function get_indilist_galpha($surn, $salpha, $marnm, $fams, $ged_id) {
-	global $DBTYPE, $DBCONN, $TBLPREFIX, $DB_UTF8_COLLATION, $DBCOLLATE;
-
-	$ged_id=(int)$ged_id;
-	$surn  =$DBCONN->escapeSimple($surn);
-	$salpha=$DBCONN->escapeSimple($salpha);
+	global $TBLPREFIX, $DB_UTF8_COLLATION, $DBCOLLATE;
 
 	if ($fams) {
 		$tables="{$TBLPREFIX}name, {$TBLPREFIX}individuals, {$TBLPREFIX}link";
@@ -559,9 +356,9 @@ function get_indilist_galpha($surn, $salpha, $marnm, $fams, $ged_id) {
 		$join.=" AND n_type!='_MARNM'";
 	}
 	if ($surn) {
-		$join.=" AND n_sort ".PGV_DB_LIKE." '{$surn},%'";
+		$join.=" AND n_sort ".PGV_DB::$LIKE." ".PGV_DB::quote("{$surn},%");
 	} elseif ($salpha) {
-		$join.=" AND n_sort ".PGV_DB_LIKE." '{$salpha}%,%'";
+		$join.=" AND n_sort ".PGV_DB::$LIKE." ".PGV_DB::quote("{$salpha}%,%");
 	}
 
 	if ($DB_UTF8_COLLATION) {
@@ -574,24 +371,24 @@ function get_indilist_galpha($surn, $salpha, $marnm, $fams, $ged_id) {
 	$include='';
 	$digraphs=db_collation_digraphs();
 	foreach (array_unique($digraphs) as $digraph) { // Multi-character digraphs
-		$exclude.=" AND n_sort NOT ".PGV_DB_LIKE." '{$digraph}%' {$DBCOLLATE}";
+		$exclude.=" AND n_sort NOT ".PGV_DB::$LIKE." '{$digraph}%' {$DBCOLLATE}";
 	}
 	foreach ($digraphs as $to=>$from) { // Single-character digraphs
-		$include.=" UNION SELECT UPPER('{$to}' {$DBCOLLATE}) AS alpha FROM {$tables} WHERE {$join} AND n_sort ".PGV_DB_LIKE." '{$from}%' {$DBCOLLATE} GROUP BY 1";
+		$include.=" UNION SELECT UPPER('{$to}' {$DBCOLLATE}) AS alpha FROM {$tables} WHERE {$join} AND n_sort ".PGV_DB::$LIKE." '{$from}%' {$DBCOLLATE} GROUP BY 1";
 	}
-	$sql="SELECT {$column} AS alpha FROM {$tables} WHERE {$join} {$exclude} GROUP BY 1 {$include} ORDER BY 1";
-	$res=dbquery($sql);
+	$alphas=
+		PGV_DB::prepare("SELECT {$column} AS alpha FROM {$tables} WHERE {$join} {$exclude} GROUP BY 1 {$include} ORDER BY 1")
+		->fetchOneColumn();
 
 	$list=array();
-	while ($row=$res->fetchRow(DB_FETCHMODE_ASSOC)) {
+	foreach ($alphas as $alpha) {
 		if ($DB_UTF8_COLLATION) {
-			$letter=$row['alpha'];
+			$letter=$alpha;
 		} else {
-			$letter=UTF8_strtoupper(UTF8_substr($row['alpha'],0,1));
+			$letter=UTF8_strtoupper(UTF8_substr($alpha,0,1));
 		}
 		$list[$letter]=$letter;
 	}
-	$res->free();
 
 	// If we didn't sort in the DB, sort ourselves
 	if (!$DB_UTF8_COLLATION) {
@@ -618,11 +415,7 @@ function get_indilist_galpha($surn, $salpha, $marnm, $fams, $ged_id) {
 // $ged_id - only consider individuals from this gedcom
 ////////////////////////////////////////////////////////////////////////////////
 function get_indilist_surns($surn, $salpha, $marnm, $fams, $ged_id) {
-	global $DBCONN, $TBLPREFIX, $DB_UTF8_COLLATION, $DBCOLLATE;
-
-	$surn=$DBCONN->escapeSimple($surn);
-	$salpha=$DBCONN->escapeSimple($salpha);
-	$ged_id=(int)$ged_id;
+	global $TBLPREFIX, $DB_UTF8_COLLATION, $DBCOLLATE;
 
 	$sql="SELECT DISTINCT n_surn, n_surname, n_id FROM {$TBLPREFIX}individuals JOIN {$TBLPREFIX}name ON (i_id=n_id AND i_file=n_file)";
 	if ($fams) {
@@ -638,17 +431,17 @@ function get_indilist_surns($surn, $salpha, $marnm, $fams, $ged_id) {
 	$includes=array();
 	if ($surn) {
 		// Match a surname
-		$includes[]="n_surn {$DBCOLLATE} ".PGV_DB_LIKE." '{$surn}'";
+		$includes[]="n_surn {$DBCOLLATE} ".PGV_DB::$LIKE." ".PGV_DB::quote("{$surn}");
 	} elseif ($salpha==',') {
 		// Match a surname-less name
 		$includes[]="n_surn {$DBCOLLATE} = ''";
 	} elseif ($salpha) {
 		// Match a surname initial
 		foreach ($s_incl as $s) {
-			$includes[]="n_surn {$DBCOLLATE} ".PGV_DB_LIKE." '{$s}%'";
+			$includes[]="n_surn {$DBCOLLATE} ".PGV_DB::$LIKE." ".PGV_DB::quote("{$s}%");
 		}
 		foreach ($s_excl as $s) {
-			$where[]="n_surn {$DBCOLLATE} NOT ".PGV_DB_LIKE." '{$s}%'";
+			$where[]="n_surn {$DBCOLLATE} NOT ".PGV_DB::$LIKE." ".PGV_DB::quote("{$s}%");
 		}
 	} else {
 		// Match all individuals
@@ -663,11 +456,10 @@ function get_indilist_surns($surn, $salpha, $marnm, $fams, $ged_id) {
 	$sql.=" WHERE ".implode(' AND ', $where)." ORDER BY n_surn";
 
 	$list=array();
-	$res=dbquery($sql);
-	while ($row=$res->fetchRow(DB_FETCHMODE_ASSOC)) {
-		$list[$row['n_surn']][$row['n_surname']][$row['n_id']]=true;
+	$rows=PGV_DB::prepare($sql)->fetchAll();
+	foreach ($rows as $row) {
+		$list[$row->n_surn][$row->n_surname][$row->n_id]=true;
 	}
-	$res->free();
 	if (!$DB_UTF8_COLLATION) {
 		uksort($list, 'stringsort');
 	}
@@ -682,11 +474,7 @@ function get_indilist_surns($surn, $salpha, $marnm, $fams, $ged_id) {
 // $ged_id - only consider individuals from this gedcom
 ////////////////////////////////////////////////////////////////////////////////
 function get_famlist_surns($surn, $salpha, $marnm, $ged_id) {
-	global $DBCONN, $TBLPREFIX, $DB_UTF8_COLLATION, $DBCOLLATE;
-
-	$surn=$DBCONN->escapeSimple($surn);
-	$salpha=$DBCONN->escapeSimple($salpha);
-	$ged_id=(int)$ged_id;
+	global $TBLPREFIX, $DB_UTF8_COLLATION, $DBCOLLATE;
 
 	$sql="SELECT DISTINCT n_surn, n_surname, l_to FROM {$TBLPREFIX}individuals JOIN {$TBLPREFIX}name ON (i_id=n_id AND i_file=n_file) JOIN {$TBLPREFIX}link ON (i_id=l_from AND i_file=l_file AND l_type='FAMS')";
 	$where=array("n_file={$ged_id}");
@@ -699,17 +487,17 @@ function get_famlist_surns($surn, $salpha, $marnm, $ged_id) {
 	$includes=array();
 	if ($surn) {
 		// Match a surname
-		$includes[]="n_surn {$DBCOLLATE} ".PGV_DB_LIKE." '{$surn}'";
+		$includes[]="n_surn {$DBCOLLATE} ".PGV_DB::$LIKE." ".PGV_DB::quote("{$surn}");
 	} elseif ($salpha==',') {
 		// Match a surname-less name
 		$includes[]="n_surn {$DBCOLLATE} = ''";
 	} elseif ($salpha) {
 		// Match a surname initial
 		foreach ($s_incl as $s) {
-			$includes[]="n_surn {$DBCOLLATE} ".PGV_DB_LIKE." '{$s}%'";
+			$includes[]="n_surn {$DBCOLLATE} ".PGV_DB::$LIKE." ".PGV_DB::quote("{$s}%");
 		}
 		foreach ($s_excl as $s) {
-			$where[]="n_surn {$DBCOLLATE} NOT ".PGV_DB_LIKE." '{$s}%'";
+			$where[]="n_surn {$DBCOLLATE} NOT ".PGV_DB::$LIKE." ".PGV_DB::quote("{$s}%");
 		}
 	} else {
 		// Match all individuals
@@ -724,11 +512,10 @@ function get_famlist_surns($surn, $salpha, $marnm, $ged_id) {
 	$sql.=" WHERE ".implode(' AND ', $where)." ORDER BY n_surn";
 
 	$list=array();
-	$res=dbquery($sql);
-	while ($row=$res->fetchRow(DB_FETCHMODE_ASSOC)) {
-		$list[$row['n_surn']][$row['n_surname']][$row['l_to']]=true;
+	$rows=PGV_DB::prepare($sql)->fetchAll();
+	foreach ($rows as $row) {
+		$list[$row->n_surn][$row->n_surname][$row->l_to]=true;
 	}
-	$res->free();
 	if (!$DB_UTF8_COLLATION) {
 		uksort($list, 'stringsort');
 	}
@@ -752,12 +539,7 @@ function get_famlist_surns($surn, $salpha, $marnm, $ged_id) {
 // To search for names with no surnames, use $salpha=","
 ////////////////////////////////////////////////////////////////////////////////
 function get_indilist_indis($surn='', $salpha='', $galpha='', $marnm=false, $fams=false, $ged_id=null) {
-	global $DBCONN, $TBLPREFIX, $DB_UTF8_COLLATION, $DBCOLLATE;
-
-	$surn  =$DBCONN->escapeSimple($surn);
-	$salpha=$DBCONN->escapeSimple($salpha);
-	$galpha=$DBCONN->escapeSimple($galpha);
-	$ged_id=(int)$ged_id;
+	global $TBLPREFIX, $DB_UTF8_COLLATION, $DBCOLLATE;
 
 	$sql="SELECT 'INDI' AS type, i_id AS xref, i_file AS ged_id, i_gedcom AS gedrec, i_isdead, i_sex, n_surn, n_surname, n_num FROM {$TBLPREFIX}individuals JOIN {$TBLPREFIX}name ON (i_id=n_id AND i_file=n_file)";
 	if ($fams) {
@@ -779,52 +561,52 @@ function get_indilist_indis($surn='', $salpha='', $galpha='', $marnm=false, $fam
 		// Match a surname, with or without a given initial
 		if ($galpha) {
 			foreach ($g_incl as $g) {
-				$includes[]="n_sort {$DBCOLLATE} ".PGV_DB_LIKE." '{$surn},{$g}%'";
+				$includes[]="n_sort {$DBCOLLATE} ".PGV_DB::$LIKE." ".PGV_DB::quote("{$surn},{$g}%");
 			}
 			foreach ($g_excl as $g) {
-				$where[]="n_sort {$DBCOLLATE} NOT ".PGV_DB_LIKE." '{$surn},{$g}%'";
+				$where[]="n_sort {$DBCOLLATE} NOT ".PGV_DB::$LIKE." ".PGV_DB::quote("{$surn},{$g}%");
 			}
 		} else {
-			$includes[]="n_sort {$DBCOLLATE} ".PGV_DB_LIKE." '{$surn},%'";
+			$includes[]="n_sort {$DBCOLLATE} ".PGV_DB::$LIKE." ".PGV_DB::quote("{$surn},%");
 		}
 	} elseif ($salpha==',') {
 		// Match a surname-less name, with or without a given initial
 		if ($galpha) {
 			foreach ($g_incl as $g) {
-				$includes[]="n_sort {$DBCOLLATE} ".PGV_DB_LIKE." ',{$g}%'";
+				$includes[]="n_sort {$DBCOLLATE} ".PGV_DB::$LIKE." ".PGV_DB::quote(",{$g}%");
 			}
 			foreach ($g_excl as $g) {
-				$where[]="n_sort {$DBCOLLATE} NOT ".PGV_DB_LIKE." ',{$g}%'";
+				$where[]="n_sort {$DBCOLLATE} NOT ".PGV_DB::$LIKE." ".PGV_DB::quote(",{$g}%");
 			}
 		} else {
-			$includes[]="n_sort {$DBCOLLATE} ".PGV_DB_LIKE." ',%'";
+			$includes[]="n_sort {$DBCOLLATE} ".PGV_DB::$LIKE." ".PGV_DB::quote(",%");
 		}
 	} elseif ($salpha) {
 		// Match a surname initial, with or without a given initial
 		if ($galpha) {
 			foreach ($g_excl as $g) {
 				foreach ($s_excl as $s) {
-					$includes[]="n_sort {$DBCOLLATE} ".PGV_DB_LIKE." '{$s}%,{$g}%'";
+					$includes[]="n_sort {$DBCOLLATE} ".PGV_DB::$LIKE." ".PGV_DB::quote("{$s}%,{$g}%");
 				}
 			}
 			foreach ($g_excl as $g) {
 				foreach ($s_excl as $s) {
-					$where[]="n_sort {$DBCOLLATE} NOT ".PGV_DB_LIKE." '{$s}%,{$g}%'";
+					$where[]="n_sort {$DBCOLLATE} NOT ".PGV_DB::$LIKE." ".PGV_DB::quote("{$s}%,{$g}%");
 				}
 			}
 		} else {
 			foreach ($s_incl as $s) {
-				$includes[]="n_sort {$DBCOLLATE} ".PGV_DB_LIKE." '{$s}%'";
+				$includes[]="n_sort {$DBCOLLATE} ".PGV_DB::$LIKE." ".PGV_DB::quote("{$s}%");
 			}
 			foreach ($s_excl as $s) {
-				$where[]="n_sort {$DBCOLLATE} NOT ".PGV_DB_LIKE." '{$s}%'";
+				$where[]="n_sort {$DBCOLLATE} NOT ".PGV_DB::$LIKE." ".PGV_DB::quote("{$s}%");
 			}
 		}
 	} elseif ($galpha) {
 		// Match all surnames with a given initial
-		$includes[]="n_sort {$DBCOLLATE} ".PGV_DB_LIKE." '%,{$galpha}%'";
+		$includes[]="n_sort {$DBCOLLATE} ".PGV_DB::$LIKE." ".PGV_DB::quote("%,{$galpha}%");
 		foreach ($g_excl as $g) {
-			$where[]="n_sort {$DBCOLLATE} NOT ".PGV_DB_LIKE." '{$g}%'";
+			$where[]="n_sort {$DBCOLLATE} NOT ".PGV_DB::$LIKE." ".PGV_DB::quote("{$g}%");
 		}
 	} else {
 		// Match all individuals
@@ -837,8 +619,8 @@ function get_indilist_indis($surn='', $salpha='', $galpha='', $marnm=false, $fam
 	$sql.=" WHERE ".implode(' AND ', $where)." ORDER BY n_sort";
 
 	$list=array();
-	$res=dbquery($sql);
-	while ($row=$res->fetchRow(DB_FETCHMODE_ASSOC)) {
+	$rows=PGV_DB::prepare($sql)->fetchAll(PDO::FETCH_ASSOC);
+	foreach ($rows as $row) {
 		$person=Person::getInstance($row);
 		$person->setPrimaryName($row['n_num']);
 		// We need to clone $person, as we may have multiple references to the
@@ -848,7 +630,6 @@ function get_indilist_indis($surn='', $salpha='', $galpha='', $marnm=false, $fam
 		// is clean, easy and works.
 		$list[]=clone $person;
 	}
-	$res->free();
 	if (!$DB_UTF8_COLLATION) {
 		usort($list, array('GedcomRecord', 'Compare'));
 	}
@@ -882,12 +663,14 @@ function get_famlist_fams($surn='', $salpha='', $galpha='', $marnm, $ged_id=null
 	// If we're searching for "Unknown surname", we also need to include families
 	// with missing spouses
 	if ($surn=='@N.N.' || $salpha=='@') {
-		$res=dbquery("SELECT 'FAM' AS type, f_id AS xref, {$ged_id} AS ged_id, f_gedcom AS gedrec, f_husb, f_wife, f_chil, f_numchil FROM {$TBLPREFIX}families f WHERE f_file={$ged_id} AND (f_husb='' OR f_wife='')");
+		$rows=
+			PGV_DB::prepare("SELECT 'FAM' AS type, f_id AS xref, f_file AS ged_id, f_gedcom AS gedrec, f_husb, f_wife, f_chil, f_numchil FROM {$TBLPREFIX}families f WHERE f_file={$ged_id} AND (f_husb='' OR f_wife='')")
+			->execute(array($ged_id))
+			->fetchAll(PDO::FETCH_ASSOC);
 
-		while ($row=$res->fetchRow(DB_FETCHMODE_ASSOC)) {
+		foreach ($rows as $row) {
 			$list[]=Family::getInstance($row);
 		}
-		$res->free();
 	}
 	usort($list, array('GedcomRecord', 'Compare'));
 	return $list;
@@ -897,12 +680,14 @@ function get_famlist_fams($surn='', $salpha='', $galpha='', $marnm, $ged_id=null
 // Fetch a list of children for an individual, from all their partners.
 ////////////////////////////////////////////////////////////////////////////////
 function fetch_child_ids($parent_id, $ged_id) {
-	global $TBLPREFIX, $DBCONN;
-	$parent_id=$DBCONN->escapeSimple($parent_id);
-	$ged_id=(int)$ged_id;
+	global $TBLPREFIX;
+	static $statement=null;
 
-	return $DBCONN->getCol("SELECT DISTINCT child.l_from AS xref FROM {$TBLPREFIX}link child, {$TBLPREFIX}link spouse WHERE child.l_type='FAMC' AND spouse.l_type='FAMS' AND child.l_file=spouse.l_file AND child.l_to=spouse.l_to AND spouse.l_from='{$parent_id}' AND child.l_file={$ged_id}");
+	if (is_null($statement)) {
+		$statement=PGV_DB::prepare("SELECT DISTINCT child.l_from AS xref FROM {$TBLPREFIX}link child, {$TBLPREFIX}link spouse WHERE child.l_type=? AND spouse.l_type=? AND child.l_file=spouse.l_file AND child.l_to=spouse.l_to AND spouse.l_from=? AND child.l_file=?");
+	}
 
+	return $statement->execute(array('FAMC', 'FAMS', $parent_id, $ged_id))->fetchOneColumn();
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -910,159 +695,141 @@ function fetch_child_ids($parent_id, $ged_id) {
 // of 'type'=>count for each type where records exist.
 ////////////////////////////////////////////////////////////////////////////////
 function count_all_records($ged_id) {
-	global $TBLPREFIX, $DBCONN;
-	$ged_id=(int)$ged_id;
-	$res=dbquery(
-		"SELECT 'INDI' AS type, COUNT(*) AS num FROM {$TBLPREFIX}individuals WHERE i_file={$ged_id}".
-		" UNION ALL ".
-		"SELECT 'FAM'  AS type, COUNT(*) AS num FROM {$TBLPREFIX}families    WHERE f_file={$ged_id}".
-		" UNION ALL ".
-		"SELECT 'NOTE' AS type, COUNT(*) AS num FROM {$TBLPREFIX}other       WHERE o_file={$ged_id}".
-		" UNION ALL ".
-		"SELECT 'SOUR' AS type, COUNT(*) AS num FROM {$TBLPREFIX}sources     WHERE s_file={$ged_id}".
-		" UNION ALL ".
-		"SELECT 'OBJE' AS type, COUNT(*) AS num FROM {$TBLPREFIX}media       WHERE m_gedfile={$ged_id}".
-		" UNION ALL ".
-		"SELECT o_type AS type, COUNT(*) as num FROM {$TBLPREFIX}other       WHERE o_file={$ged_id} GROUP BY type"
-	);
-	$list=array();
-	while ($row=$res->fetchRow(DB_FETCHMODE_ASSOC)) {
-		$list[$row['type']]=$row['num'];
-	}
-	$res->free();
-	return $list;
+	global $TBLPREFIX;
+
+	return
+		PGV_DB::prepare(
+			"SELECT ?      AS type, COUNT(*) AS num FROM {$TBLPREFIX}individuals WHERE i_file=?".
+			" UNION ALL ".
+			"SELECT ?      AS type, COUNT(*) AS num FROM {$TBLPREFIX}families    WHERE f_file=?".
+			" UNION ALL ".
+			"SELECT ?      AS type, COUNT(*) AS num FROM {$TBLPREFIX}other       WHERE o_file=?".
+			" UNION ALL ".
+			"SELECT ?      AS type, COUNT(*) AS num FROM {$TBLPREFIX}sources     WHERE s_file=?".
+			" UNION ALL ".
+			"SELECT ?      AS type, COUNT(*) AS num FROM {$TBLPREFIX}media       WHERE m_gedfile=?".
+			" UNION ALL ".
+			"SELECT o_type AS type, COUNT(*) as num FROM {$TBLPREFIX}other       WHERE o_file=? GROUP BY type"
+		)
+		->execute(array('INDI', $ged_id, 'FAM', $ged_id, 'NOTE', $ged_id, 'SOUR', $ged_id, 'OBJE', $ged_id, $ged_id))
+		->fetchAssoc();
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 // Count the number of records linked to a given record
 ////////////////////////////////////////////////////////////////////////////////
 function count_linked_indi($xref, $link, $ged_id) {
-	global $TBLPREFIX, $DBCONN;
-	$xref=$DBCONN->escapeSimple($xref);
-	$link=$DBCONN->escapeSimple($link);
-	$ged_id=(int)$ged_id;
-	$res=dbquery("SELECT COUNT(*) FROM {$TBLPREFIX}link, {$TBLPREFIX}individuals WHERE i_file=l_file AND i_id=l_from AND l_file={$ged_id} AND l_type='{$link}' AND l_to='{$xref}'");
+	global $TBLPREFIX;
 
-	$row=$res->fetchRow();
-	$res->free();
-	return $row[0];
+	return
+		PGV_DB::prepare("SELECT COUNT(*) FROM {$TBLPREFIX}link, {$TBLPREFIX}individuals WHERE i_file=l_file AND i_id=l_from AND l_file=? AND l_type=? AND l_to=?")
+		->execute(array($ged_id, $link, $xref))
+		->fetchOne();
 }
 function count_linked_fam($xref, $link, $ged_id) {
-	global $TBLPREFIX, $DBCONN;
-	$xref=$DBCONN->escapeSimple($xref);
-	$link=$DBCONN->escapeSimple($link);
-	$ged_id=(int)$ged_id;
-	$res=dbquery("SELECT COUNT(*) FROM {$TBLPREFIX}link, {$TBLPREFIX}families WHERE f_file=l_file AND f_id=l_from AND l_file={$ged_id} AND l_type='{$link}' AND l_to='{$xref}'");
+	global $TBLPREFIX;
 
-	$row=$res->fetchRow();
-	$res->free();
-	return $row[0];
+	return
+		PGV_DB::prepare("SELECT COUNT(*) FROM {$TBLPREFIX}link, {$TBLPREFIX}families WHERE f_file=l_file AND f_id=l_from AND l_file=? AND l_type=? AND l_to=?")
+		->execute(array($ged_id, $link, $xref))
+		->fetchOne();
 }
 function count_linked_note($xref, $link, $ged_id) {
-	global $TBLPREFIX, $DBCONN;
-	$xref=$DBCONN->escapeSimple($xref);
-	$link=$DBCONN->escapeSimple($link);
-	$ged_id=(int)$ged_id;
-	$res=dbquery("SELECT COUNT(*) FROM {$TBLPREFIX}link, {$TBLPREFIX}other WHERE o_file=l_file AND o_id=l_from AND l_file={$ged_id} AND l_type='{$link}' AND l_to='{$xref}'");
+	global $TBLPREFIX;
 
-	$row=$res->fetchRow();
-	$res->free();
-	return $row[0];
+	return
+		PGV_DB::prepare("SELECT COUNT(*) FROM {$TBLPREFIX}link, {$TBLPREFIX}other WHERE o_file=l_file AND o_id=l_from AND o_type=? AND l_file=? AND l_type=? AND l_to=?")
+		->execute(array('NOTE', $ged_id, $link, $xref))
+		->fetchOne();
 }
 function count_linked_sour($xref, $link, $ged_id) {
-	global $TBLPREFIX, $DBCONN;
-	$xref=$DBCONN->escapeSimple($xref);
-	$link=$DBCONN->escapeSimple($link);
-	$ged_id=(int)$ged_id;
-	$res=dbquery("SELECT COUNT(*) FROM {$TBLPREFIX}link, {$TBLPREFIX}sources WHERE s_file=l_file AND s_id=l_from AND l_file={$ged_id} AND l_type='{$link}' AND l_to='{$xref}'");
+	global $TBLPREFIX;
 
-	$row=$res->fetchRow();
-	$res->free();
-	return $row[0];
+	return
+		PGV_DB::prepare("SELECT COUNT(*) FROM {$TBLPREFIX}link, {$TBLPREFIX}sources WHERE s_file=l_file AND s_id=l_from AND l_file=? AND l_type=? AND l_to=?")
+		->execute(array($ged_id, $link, $xref))
+		->fetchOne();
 }
 function count_linked_obje($xref, $link, $ged_id) {
-	global $TBLPREFIX, $DBCONN;
-	$xref=$DBCONN->escapeSimple($xref);
-	$link=$DBCONN->escapeSimple($link);
-	$ged_id=(int)$ged_id;
-	$res=dbquery("SELECT COUNT(*) FROM {$TBLPREFIX}link, {$TBLPREFIX}media WHERE m_gedfile=l_file AND m_media=l_from AND l_file={$ged_id} AND l_type='{$link}' AND l_to='{$xref}'");
+	global $TBLPREFIX;
 
-	$row=$res->fetchRow();
-	$res->free();
-	return $row[0];
+	return
+		PGV_DB::prepare("SELECT COUNT(*) FROM {$TBLPREFIX}link, {$TBLPREFIX}media WHERE m_gedfile=l_file AND m_media=l_from AND l_file=? AND l_type=? AND l_to=?")
+		->execute(array($ged_id, $link, $xref))
+		->fetchOne();
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 // Fetch records linked to a given record
 ////////////////////////////////////////////////////////////////////////////////
 function fetch_linked_indi($xref, $link, $ged_id) {
-	global $TBLPREFIX, $DBCONN;
-	$xref=$DBCONN->escapeSimple($xref);
-	$link=$DBCONN->escapeSimple($link);
-	$ged_id=(int)$ged_id;
-	$res=dbquery("SELECT 'INDI' AS type, i_id AS xref, {$ged_id} AS ged_id, i_gedcom AS gedrec, i_isdead, i_sex FROM {$TBLPREFIX}link, {$TBLPREFIX}individuals WHERE i_file=l_file AND i_id=l_from AND l_file={$ged_id} AND l_type='{$link}' AND l_to='{$xref}'");
+	global $TBLPREFIX;
+
+	$rows=
+		PGV_DB::prepare("SELECT ? AS type, i_id AS xref, i_file AS ged_id, i_gedcom AS gedrec, i_isdead, i_sex FROM {$TBLPREFIX}link, {$TBLPREFIX}individuals WHERE i_file=l_file AND i_id=l_from AND l_file=? AND l_type=? AND l_to=?")
+		->execute(array('INDI', $ged_id, $link, $xref))
+		->fetchAll(PDO::FETCH_ASSOC);
 
 	$list=array();
-	while ($row=$res->fetchRow(DB_FETCHMODE_ASSOC)) {
+	foreach ($rows as $row) {
 		$list[]=Person::getInstance($row);
 	}
-	$res->free();
 	return $list;
 }
 function fetch_linked_fam($xref, $link, $ged_id) {
-	global $TBLPREFIX, $DBCONN;
-	$xref=$DBCONN->escapeSimple($xref);
-	$link=$DBCONN->escapeSimple($link);
-	$ged_id=(int)$ged_id;
-	$res=dbquery("SELECT 'FAM' AS type, f_id AS xref, {$ged_id} AS ged_id, f_gedcom AS gedrec, f_husb, f_wife, f_chil, f_numchil FROM {$TBLPREFIX}link, {$TBLPREFIX}families f WHERE f_file=l_file AND f_id=l_from AND l_file={$ged_id} AND l_type='{$link}' AND l_to='{$xref}'");
+	global $TBLPREFIX;
+
+	$rows=
+		PGV_DB::prepare("SELECT ? AS type, f_id AS xref, f_file AS ged_id, f_gedcom AS gedrec, f_husb, f_wife, f_chil, f_numchil FROM {$TBLPREFIX}link, {$TBLPREFIX}families f WHERE f_file=l_file AND f_id=l_from AND l_file=? AND l_type=? AND l_to=?")
+		->execute(array('FAM', $ged_id, $link, $xref))
+		->fetchAll(PDO::FETCH_ASSOC);
 
 	$list=array();
-	while ($row=$res->fetchRow(DB_FETCHMODE_ASSOC)) {
+	foreach ($rows as $row) {
 		$list[]=Family::getInstance($row);
 	}
-	$res->free();
 	return $list;
 }
 function fetch_linked_note($xref, $link, $ged_id) {
-	global $TBLPREFIX, $DBCONN;
-	$xref=$DBCONN->escapeSimple($xref);
-	$link=$DBCONN->escapeSimple($link);
-	$ged_id=(int)$ged_id;
-	$res=dbquery("SELECT 'NOTE' AS type, o_id AS xref, {$ged_id} AS ged_id, o_gedcom AS gedrec FROM {$TBLPREFIX}link, {$TBLPREFIX}other o WHERE o_file=l_file AND o_id=l_from AND l_file={$ged_id} AND l_type='{$link}' AND l_to='{$xref}'");
+	global $TBLPREFIX;
+
+	$rows=
+		PGV_DB::prepare("SELECT ? AS type, o_id AS xref, o_file AS ged_id, o_gedcom AS gedrec FROM {$TBLPREFIX}link, {$TBLPREFIX}other o WHERE o_file=l_file AND o_id=l_from AND l_file=? AND l_type=? AND l_to=?")
+		->execute(array('NOTE', $ged_id, $link, $xref))
+		->fetchAll(PDO::FETCH_ASSOC);
 
 	$list=array();
-	while ($row=$res->fetchRow(DB_FETCHMODE_ASSOC)) {
+	foreach ($rows as $row) {
 		$list[]=Note::getInstance($row);
 	}
-	$res->free();
 	return $list;
 }
 function fetch_linked_sour($xref, $link, $ged_id) {
-	global $TBLPREFIX, $DBCONN;
-	$xref=$DBCONN->escapeSimple($xref);
-	$link=$DBCONN->escapeSimple($link);
-	$ged_id=(int)$ged_id;
-	$res=dbquery("SELECT 'SOUR' AS type, s_id AS xref, {$ged_id} AS ged_id, s_gedcom AS gedrec FROM {$TBLPREFIX}link, {$TBLPREFIX}sources s WHERE s_file=l_file AND s_id=l_from AND l_file={$ged_id} AND l_type='{$link}' AND l_to='{$xref}'");
+	global $TBLPREFIX;
+
+	$rows=
+		PGV_DB::prepare("SELECT ? AS type, s_id AS xref, s_file AS ged_id, s_gedcom AS gedrec FROM {$TBLPREFIX}link, {$TBLPREFIX}sources s WHERE s_file=l_file AND s_id=l_from AND l_file=? AND l_type=? AND l_to=?")
+		->execute(array('SOUR', $ged_id, $link, $xref))
+		->fetchAll(PDO::FETCH_ASSOC);
 
 	$list=array();
-	while ($row=$res->fetchRow(DB_FETCHMODE_ASSOC)) {
+	foreach ($rows as $row) {
 		$list[]=Source::getInstance($row);
 	}
-	$res->free();
 	return $list;
 }
 function fetch_linked_obje($xref, $link, $ged_id) {
-	global $TBLPREFIX, $DBCONN;
-	$xref=$DBCONN->escapeSimple($xref);
-	$link=$DBCONN->escapeSimple($link);
-	$ged_id=(int)$ged_id;
-	$res=dbquery("SELECT 'OBJE' AS type, m_media AS xref, {$ged_id} AS ged_id, m_gedrec AS gedrec, m_titl, m_file FROM {$TBLPREFIX}link, {$TBLPREFIX}media m WHERE m_gedfile=l_file AND m_media=l_from AND l_file={$ged_id} AND l_type='{$link}' AND l_to='{$xref}'");
+	global $TBLPREFIX;
+
+	$rows=
+		PGV_DB::prepare("SELECT ? AS type, m_media AS xref, m_gedfile AS ged_id, m_gedrec AS gedrec, m_titl, m_file FROM {$TBLPREFIX}link, {$TBLPREFIX}media m WHERE m_gedfile=l_file AND m_media=l_from AND l_file=? AND l_type=? AND l_to=?")
+		->execute(array('OBJE', $ged_id, $link, $xref))
+		->fetchAll(PDO::FETCH_ASSOC);
 
 	$list=array();
-	while ($row=$res->fetchRow(DB_FETCHMODE_ASSOC)) {
+	foreach ($rows as $row) {
 		$list[]=Media::getInstance($row);
 	}
-	$res->free();
 	return $list;
 }
 
@@ -1071,17 +838,12 @@ function fetch_linked_obje($xref, $link, $ged_id) {
 // also delete all links to it.
 ////////////////////////////////////////////////////////////////////////////////
 function fetch_all_links($xref, $ged_id) {
-	global $TBLPREFIX, $DBCONN;
-	$xref=$DBCONN->escapeSimple($xref);
-	$ged_id=(int)$ged_id;
-	$res=dbquery("SELECT l_from FROM {$TBLPREFIX}link WHERE l_file={$ged_id} AND l_to='{$xref}'");
+	global $TBLPREFIX;
 
-	$list=array();
-	while ($row=$res->fetchRow(DB_FETCHMODE_ASSOC)) {
-		$list[]=$row['l_from'];
-	}
-	$res->free();
-	return $list;
+	return
+		PGV_DB::prepare("SELECT l_from FROM {$TBLPREFIX}link WHERE l_file=? AND l_to=?")
+		->execute(array($ged_id, $xref))
+		->fetchOneColumn();
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -1095,39 +857,36 @@ function fetch_person_record($xref, $ged_id) {
 	static $statement=null;
 
 	if (is_null($statement)) {
-		$statement=
-			PGV_DB::prepare(
-			"SELECT 'INDI' AS type, i_id AS xref, i_file AS ged_id, i_gedcom AS gedrec, i_isdead, i_sex ".
+		$statement=PGV_DB::prepare(
+			"SELECT ? AS type, i_id AS xref, i_file AS ged_id, i_gedcom AS gedrec, i_isdead, i_sex ".
 			"FROM {$TBLPREFIX}individuals WHERE i_id=? AND i_file=?"
 		);
 	}
-	return $statement->execute(array($xref, $ged_id))->fetchOneRow(PDO::FETCH_ASSOC);
+	return $statement->execute(array('INDI', $xref, $ged_id))->fetchOneRow(PDO::FETCH_ASSOC);
 }
 function fetch_family_record($xref, $ged_id) {
 	global $TBLPREFIX;
 	static $statement=null;
 
 	if (is_null($statement)) {
-		$statement=
-			PGV_DB::prepare(
-			"SELECT 'FAM' AS type, f_id AS xref, f_file AS ged_id, f_gedcom AS gedrec, f_husb, f_wife, f_chil, f_numchil ".
+		$statement=PGV_DB::prepare(
+			"SELECT ? AS type, f_id AS xref, f_file AS ged_id, f_gedcom AS gedrec, f_husb, f_wife, f_chil, f_numchil ".
 			"FROM {$TBLPREFIX}families WHERE f_id=? AND f_file=?"
 		);
 	}
-	return $statement->execute(array($xref, $ged_id))->fetchOneRow(PDO::FETCH_ASSOC);
+	return $statement->execute(array('FAM', $xref, $ged_id))->fetchOneRow(PDO::FETCH_ASSOC);
 }
 function fetch_source_record($xref, $ged_id) {
 	global $TBLPREFIX;
 	static $statement=null;
 
 	if (is_null($statement)) {
-		$statement=
-			PGV_DB::prepare(
-			"SELECT 'SOUR' AS type, s_id AS xref, s_file AS ged_id, s_gedcom AS gedrec ".
+		$statement=PGV_DB::prepare(
+			"SELECT ? AS type, s_id AS xref, s_file AS ged_id, s_gedcom AS gedrec ".
 			"FROM {$TBLPREFIX}sources WHERE s_id=? AND s_file=?"
 		);
 	}
-	return $statement->execute(array($xref, $ged_id))->fetchOneRow(PDO::FETCH_ASSOC);
+	return $statement->execute(array('SOUR', $xref, $ged_id))->fetchOneRow(PDO::FETCH_ASSOC);
 }
 function fetch_note_record($xref, $ged_id) {
 	// Notes are (currently) stored in the other table
@@ -1138,21 +897,19 @@ function fetch_media_record($xref, $ged_id) {
 	static $statement=null;
 
 	if (is_null($statement)) {
-		$statement=
-			PGV_DB::prepare(
-			"SELECT 'OBJE' AS type, m_media AS xref, m_gedfile AS ged_id, m_gedrec AS gedrec, m_titl, m_file ".
+		$statement=PGV_DB::prepare(
+			"SELECT ? AS type, m_media AS xref, m_gedfile AS ged_id, m_gedrec AS gedrec, m_titl, m_file ".
 			"FROM {$TBLPREFIX}media WHERE m_media=? AND m_gedfile=?"
 		);
 	}
-	return $statement->execute(array($xref, $ged_id))->fetchOneRow(PDO::FETCH_ASSOC);
+	return $statement->execute(array('OBJE', $xref, $ged_id))->fetchOneRow(PDO::FETCH_ASSOC);
 }
 function fetch_other_record($xref, $ged_id) {
 	global $TBLPREFIX;
 	static $statement=null;
 
 	if (is_null($statement)) {
-		$statement=
-			PGV_DB::prepare(
+		$statement=PGV_DB::prepare(
 			"SELECT o_type AS type, o_id AS xref, o_file AS ged_id, o_gedcom AS gedrec ".
 			"FROM {$TBLPREFIX}other WHERE o_id=? AND o_file=?"
 		);
@@ -1281,74 +1038,74 @@ function find_media_record($xref) {
 * @param string $gedfile [optional] the gedcomfile to search in
 * @return string the raw gedcom record is returned
 */
-function find_gedcom_record($pid, $gedfile='') {
-	global $TBLPREFIX, $GEDCOM, $DBTYPE, $DBCONN;
+function find_gedcom_record($xref, $gedfile='') {
+	global $TBLPREFIX, $GEDCOM, $DBTYPE;
+	static $statement1=null, $statement2=null;
 
-	if (!$pid) {
-		return null;
+	if (is_null($statement1)) {
+		$statement1=PGV_DB::prepare(
+			"SELECT i_gedcom FROM {$TBLPREFIX}individuals WHERE i_id   =? AND i_file   =? UNION ALL ".
+			"SELECT f_gedcom FROM {$TBLPREFIX}families    WHERE f_id   =? AND f_file   =? UNION ALL ".
+			"SELECT s_gedcom FROM {$TBLPREFIX}sources     WHERE s_id   =? AND s_file   =? UNION ALL ".
+			"SELECT m_gedrec FROM {$TBLPREFIX}media       WHERE m_media=? AND m_gedfile=? UNION ALL ".
+			"SELECT o_gedcom FROM {$TBLPREFIX}other       WHERE o_id   =? AND o_file   =?"
+		);
+		if ($DBTYPE=='sqlite') {
+			// TODO: Temporary - until the final migration to sqlite3
+			$statement2=PGV_DB::prepare(
+				"SELECT i_gedcom FROM {$TBLPREFIX}individuals WHERE UPPER(i_id)   =UPPER(?) AND i_file   =? UNION ALL ".
+				"SELECT f_gedcom FROM {$TBLPREFIX}families    WHERE UPPER(f_id)   =UPPER(?) AND f_file   =? UNION ALL ".
+				"SELECT s_gedcom FROM {$TBLPREFIX}sources     WHERE UPPER(s_id)   =UPPER(?) AND s_file   =? UNION ALL ".
+				"SELECT m_gedrec FROM {$TBLPREFIX}media       WHERE UPPER(m_media)=UPPER(?) AND m_gedfile=? UNION ALL ".
+				"SELECT o_gedcom FROM {$TBLPREFIX}other       WHERE UPPER(o_id)   =UPPER(?) AND o_file   =?"
+			);
+		} else {
+			$statement2=PGV_DB::prepare(
+				"SELECT i_gedcom FROM {$TBLPREFIX}individuals WHERE i_id    ".PGV_DB::$LIKE." ? ESCAPE '@' AND i_file   =? UNION ALL ".
+				"SELECT f_gedcom FROM {$TBLPREFIX}families    WHERE f_id    ".PGV_DB::$LIKE." ? ESCAPE '@' AND f_file   =? UNION ALL ".
+				"SELECT s_gedcom FROM {$TBLPREFIX}sources     WHERE s_id    ".PGV_DB::$LIKE." ? ESCAPE '@' AND s_file   =? UNION ALL ".
+				"SELECT m_gedrec FROM {$TBLPREFIX}media       WHERE m_media ".PGV_DB::$LIKE." ? ESCAPE '@' AND m_gedfile=? UNION ALL ".
+				"SELECT o_gedcom FROM {$TBLPREFIX}other       WHERE o_id    ".PGV_DB::$LIKE." ? ESCAPE '@' AND o_file   =?"
+			);
+		}
 	}
-
+	
 	if ($gedfile) {
 		$ged_id=get_id_from_gedcom($gedfile);
 	} else {
 		$ged_id=get_id_from_gedcom($GEDCOM);
 	}
 
-	// Look in the tables.
-	$pid=$DBCONN->escapeSimple($pid);
-	$res=dbquery(
-		"SELECT i_gedcom FROM {$TBLPREFIX}individuals WHERE i_id='{$pid}' AND i_file={$ged_id} UNION ALL ".
-		"SELECT f_gedcom FROM {$TBLPREFIX}families    WHERE f_id='{$pid}' AND f_file={$ged_id} UNION ALL ".
-		"SELECT s_gedcom FROM {$TBLPREFIX}sources     WHERE s_id='{$pid}' AND s_file={$ged_id} UNION ALL ".
-		"SELECT m_gedrec FROM {$TBLPREFIX}media       WHERE m_media='{$pid}' AND m_gedfile={$ged_id} UNION ALL ".
-		"SELECT o_gedcom FROM {$TBLPREFIX}other       WHERE o_id='{$pid}' AND o_file={$ged_id}"
-	);
-	if (DB::isError($res)) {
-		debug_print_backtrace();
-		return "";
-	}
-	$row=$res->fetchRow();
-	$res->free();
-	if ($row) {
-		return $row[0];
+	// Exact match on xref?
+	$gedcom=$statement1->execute(array($xref, $ged_id, $xref, $ged_id, $xref, $ged_id, $xref, $ged_id, $xref, $ged_id))->fetchOne();
+	if (!$gedcom) {
+		// Not found.  Maybe i123 instead of I123 on a DB with a case-sensitive collation?
+		$gedcom=$statement2->execute(array($xref, $ged_id, $xref, $ged_id, $xref, $ged_id, $xref, $ged_id, $xref, $ged_id))->fetchOne();
 	}
 
-	// Should only get here if the user is searching using the wrong upper/lower case.
-	// Use LIKE to match case-insensitively, as this can still use the database indexes.
-	$pid=str_replace(array('_', '%','@'), array('@_','@%', '@@'), $pid);
-	$res=dbquery(
-		"SELECT i_gedcom FROM {$TBLPREFIX}individuals WHERE i_id ".PGV_DB_LIKE." '{$pid}' ESCAPE '@' AND i_file={$ged_id} UNION ALL ".
-		"SELECT f_gedcom FROM {$TBLPREFIX}families    WHERE f_id ".PGV_DB_LIKE." '{$pid}' ESCAPE '@' AND f_file={$ged_id} UNION ALL ".
-		"SELECT s_gedcom FROM {$TBLPREFIX}sources     WHERE s_id ".PGV_DB_LIKE." '{$pid}' ESCAPE '@' AND s_file={$ged_id} UNION ALL ".
-		"SELECT m_gedrec FROM {$TBLPREFIX}media       WHERE m_media ".PGV_DB_LIKE." '{$pid}' ESCAPE '@' AND m_gedfile={$ged_id} UNION ALL ".
-		"SELECT o_gedcom FROM {$TBLPREFIX}other       WHERE o_id ".PGV_DB_LIKE." '{$pid}' ESCAPE '@' AND o_file={$ged_id}"
-	);
-	$row=$res->fetchRow();
-	$res->free();
-	if ($row) {
-		return $row[0];
-	}
-
-	// Record doesn't exist
-	return null;
+	return $gedcom;
 }
 
 // Find the type of a gedcom record. Check the cache before querying the database.
 // Returns 'INDI', 'FAM', etc., or null if the record does not exist.
 function gedcom_record_type($xref, $ged_id) {
-	global $TBLPREFIX, $DBCONN, $gedcom_record_cache;
+	global $TBLPREFIX, $gedcom_record_cache;
+	static $statement=null;
+
+	if (is_null($statement)) {
+		$statement=PGV_DB::prepare(
+			"SELECT ?      FROM {$TBLPREFIX}individuals WHERE i_id   =? AND i_file   =? UNION ALL ".
+			"SELECT ?      FROM {$TBLPREFIX}families    WHERE f_id   =? AND f_file   =? UNION ALL ".
+			"SELECT ?      FROM {$TBLPREFIX}sources     WHERE s_id   =? AND s_file   =? UNION ALL ".
+			"SELECT ?      FROM {$TBLPREFIX}media       WHERE m_media=? AND m_gedfile=? UNION ALL ".
+			"SELECT o_type FROM {$TBLPREFIX}other       WHERE o_id   =? AND o_file   =?"
+		);
+	}
 
 	if (isset($gedcom_record_cache[$xref][$ged_id])) {
 		return $gedcom_record_cache[$xref][$ged_id]->getType();
 	} else {
-		$xref=$DBCONN->escapeSimple($xref);
-		return $DBCONN->getOne(
-			"SELECT 'INDI' FROM {$TBLPREFIX}individuals WHERE i_id   ='{$xref}' AND i_file   ={$ged_id} UNION ALL ".
-			"SELECT 'FAM'  FROM {$TBLPREFIX}families    WHERE f_id   ='{$xref}' AND f_file   ={$ged_id} UNION ALL ".
-			"SELECT 'SOUR' FROM {$TBLPREFIX}sources     WHERE s_id   ='{$xref}' AND s_file   ={$ged_id} UNION ALL ".
-			"SELECT 'OBJE' FROM {$TBLPREFIX}media       WHERE m_media='{$xref}' AND m_gedfile={$ged_id} UNION ALL ".
-			"SELECT o_type FROM {$TBLPREFIX}other       WHERE o_id   ='{$xref}' AND o_file   ={$ged_id}"
-		);
+		return $statement->execute(array('INDI', $xref, $ged_id, 'FAM', $xref, $ged_id, 'SOUR', $xref, $ged_id, 'OBJE', $xref, $ged_id, $xref, $ged_id))->fetchOne();
 	}
 }
 
@@ -1359,16 +1116,15 @@ function gedcom_record_type($xref, $ged_id) {
 * calculated by the is_dead() function.  To improve import performance, the is_dead status is first
 * set to -1 during import.  The first time the is_dead status is retrieved this function is called to update
 * the database.  This makes the first request for a person slower, but will speed up all future requests.
-* @param string $pid id of individual to update
+* @param string $xref id of individual to update
 * @param string $ged_id gedcom to update
 * @param bool $isdead true=dead
 */
-function update_isdead($gid, $ged_id, $isdead) {
-	global $TBLPREFIX, $DBCONN;
-	$gid   =$DBCONN->escapeSimple($gid);
-	$ged_id=(int)$ged_id;
+function update_isdead($xref, $ged_id, $isdead) {
+	global $TBLPREFIX;
+
 	$isdead=$isdead ? 1 : 0; // DB uses int, not bool
-	dbquery("UPDATE {$TBLPREFIX}individuals SET i_isdead={$isdead} WHERE i_id='{$gid}' AND i_file={$ged_id}");
+	PGV_DB::prepare("UPDATE {$TBLPREFIX}individuals SET i_isdead=? WHERE i_id=? AND i_file=?")->execute(array($isdead, $xref, $ged_id));
 	return $isdead;
 }
 
@@ -1376,9 +1132,8 @@ function update_isdead($gid, $ged_id, $isdead) {
 // This is necessary when we change the MAX_ALIVE_YEARS value
 function reset_isdead($ged_id=PGV_GED_ID) {
 	global $TBLPREFIX;
-	$ged_id=(int)$ged_id;
 
-	dbquery("UPDATE {$TBLPREFIX}individuals SET i_isdead=-1 WHERE i_file=".$ged_id);
+	PGV_DB::prepare("UPDATE {$TBLPREFIX}individuals SET i_isdead=-1 WHERE i_file=?")->execute(array($ged_id));
 }
 
 /**
@@ -1389,16 +1144,17 @@ function reset_isdead($ged_id=PGV_GED_ID) {
 * @return array the array of sources
 */
 function get_source_list($ged_id) {
-	global $TBLPREFIX, $DBCONN;
+	global $TBLPREFIX;
 
-	$ged_id=(int)$ged_id;
+	$rows=
+		PGV_DB::prepare("SELECT 'SOUR' AS type, s_id AS xref, s_file AS ged_id, s_gedcom AS gedrec FROM {$TBLPREFIX}sources s WHERE s_file=?")
+		->execute(array($ged_id))
+		->fetchAll(PDO::FETCH_ASSOC);
 
-	$res=dbquery("SELECT 'SOUR' AS type, s_id AS xref, {$ged_id} AS ged_id, s_gedcom AS gedrec FROM {$TBLPREFIX}sources s WHERE s_file={$ged_id}");
 	$list=array();
-	while ($row=$res->fetchRow(DB_FETCHMODE_ASSOC)) {
+	foreach ($rows as $row) {
 		$list[]=Source::getInstance($row);
 	}
-	$res->free();
 	usort($list, array('GedcomRecord', 'Compare'));
 	return $list;
 }
@@ -1408,66 +1164,32 @@ function get_source_list($ged_id) {
 function get_repo_list($ged_id) {
 	global $TBLPREFIX;
 
-	$ged_id=(int)$ged_id;
-	$res=dbquery(
-		"SELECT 'REPO' AS type, o_id AS xref, {$ged_id} AS ged_id, o_gedcom AS gedrec ".
-		"FROM {$TBLPREFIX}other WHERE o_type='REPO' AND o_file={$ged_id}"
-	);
+	$rows=
+		PGV_DB::prepare("SELECT 'REPO' AS type, o_id AS xref, o_file AS ged_id, o_gedcom AS gedrec FROM {$TBLPREFIX}other WHERE o_type='REPO' AND o_file=?")
+		->execute(array($ged_id))
+		->fetchAll(PDO::FETCH_ASSOC);
+
 	$list=array();
-	while ($row=$res->fetchRow(DB_FETCHMODE_ASSOC)) {
+	foreach ($rows as $row) {
 		$list[]=Repository::getInstance($row);
 	}
-	$res->free();
-
 	usort($list, array('GedcomRecord', 'Compare'));
 	return $list;
-}
-
-//-- get the indilist from the datastore
-function get_indi_list() {
-	global $TBLPREFIX, $DBCOLLATE;
-
-	$sql="SELECT 'INDI' AS type, i_id AS xref, i_file AS ged_id, i_gedcom AS gedrec, i_isdead, i_sex FROM {$TBLPREFIX}name, {$TBLPREFIX}individuals WHERE n_file=".PGV_GED_ID." AND i_file=n_file AND i_id=n_id AND n_num=0 ORDER BY n_sort {$DBCOLLATE}";
-	$res=dbquery($sql);
-	$indis=array();
-	while ($row=$res->fetchRow(DB_FETCHMODE_ASSOC)) {
-		$indis[]=Person::getInstance($row);
-	}
-	$res->free();
-	usort($indis, array('GedcomRecord', 'Compare'));
-	return $indis;
-}
-
-//-- get the famlist from the datastore
-function get_fam_list() {
-	global $TBLPREFIX, $DBCOLLATE;
-
-	$sql="SELECT 'FAM' AS type, f_id AS xref, f_file AS ged_id, f_gedcom AS gedrec, f_husb, f_wife, f_chil, f_numchil FROM {$TBLPREFIX}name, {$TBLPREFIX}families WHERE n_file=".PGV_GED_ID." AND f_file=n_file AND f_id=n_id AND n_num=0 ORDER BY n_sort {$DBCOLLATE}";
-	$res=dbquery($sql);
-	$fams=array();
-	while ($row=$res->fetchRow(DB_FETCHMODE_ASSOC)) {
-		$fams[]=Family::getInstance($row);
-	}
-	$res->free();
-	usort($fams, array('GedcomRecord', 'Compare'));
-	return $fams;
 }
 
 //-- get the shared note list from the datastore
 function get_note_list($ged_id) {
 	global $TBLPREFIX;
 
-	$ged_id=(int)$ged_id;
-	$res=dbquery(
-		"SELECT 'NOTE' AS type, o_id AS xref, {$ged_id} AS ged_id, o_gedcom AS gedrec ".
-		"FROM {$TBLPREFIX}other WHERE o_type='NOTE' AND o_file={$ged_id}"
-	);
+	$rows=
+		PGV_DB::prepare("SELECT 'NOTE' AS type, o_id AS xref, {$ged_id} AS ged_id, o_gedcom AS gedrec FROM {$TBLPREFIX}other WHERE o_type=? AND o_file=?")
+		->execute(array('NOTE', $ged_id))
+		->fetchAll(PDO::FETCH_ASSOC);
+
 	$list=array();
-	while ($row=$res->fetchRow(DB_FETCHMODE_ASSOC)) {
+	foreach ($rows as $row) {
 		$list[]=Note::getInstance($row);
 	}
-	$res->free();
-
 	usort($list, array('GedcomRecord', 'Compare'));
 	return $list;
 }
@@ -1475,7 +1197,7 @@ function get_note_list($ged_id) {
 
 // Search for INDIs using custom SQL generated by the report engine
 function search_indis_custom($join, $where, $order) {
-	global $TBLPREFIX, $DBCONN;
+	global $TBLPREFIX;
 
 	$sql="SELECT DISTINCT 'INDI' AS type, i_id AS xref, i_file AS ged_id, i_gedcom AS gedrec, i_isdead, i_sex FROM {$TBLPREFIX}individuals ".implode(' ', $join).' WHERE '.implode(' AND ', $where);
 	if ($order) {
@@ -1483,9 +1205,9 @@ function search_indis_custom($join, $where, $order) {
 	}
 
 	$list=array();
-	$res=dbquery($sql);
+	$rows=PGV_DB::prepare($sql)->fetchAll(PDO::FETCH_ASSOC);
 	$GED_ID=PGV_GED_ID;
-	while ($row=$res->fetchRow(DB_FETCHMODE_ASSOC)) {
+	foreach ($rows as $row) {
 		// Switch privacy file if necessary
 		if ($row['ged_id']!=$GED_ID) {
 			$GEDCOM=get_gedcom_from_id($row['ged_id']);
@@ -1494,7 +1216,6 @@ function search_indis_custom($join, $where, $order) {
 		}
 		$list[]=Person::getInstance($row);
 	}
-	$res->free();
 	// Switch privacy file if necessary
 	if ($GED_ID!=PGV_GED_ID) {
 		$GEDCOM=get_gedcom_from_id(PGV_GED_ID);
@@ -1503,9 +1224,9 @@ function search_indis_custom($join, $where, $order) {
 	return $list;
 }
 
-// Search for INDIs using custom SQL generated by the report engine
+// Search for FAMs using custom SQL generated by the report engine
 function search_fams_custom($join, $where, $order) {
-	global $TBLPREFIX, $DBCONN;
+	global $TBLPREFIX;
 
 	$sql="SELECT DISTINCT 'FAM' AS type, f_id AS xref, f_file AS ged_id, f_gedcom AS gedrec, f_husb, f_wife, f_chil, f_numchil FROM {$TBLPREFIX}families ".implode(' ', $join).' WHERE '.implode(' AND ', $where);
 	if ($order) {
@@ -1513,9 +1234,9 @@ function search_fams_custom($join, $where, $order) {
 	}
 
 	$list=array();
-	$res=dbquery($sql);
+	$rows=PGV_DB::prepare($sql)->fetchAll(PDO::FETCH_ASSOC);
 	$GED_ID=PGV_GED_ID;
-	while ($row=$res->fetchRow(DB_FETCHMODE_ASSOC)) {
+	foreach ($rows as $row) {
 		// Switch privacy file if necessary
 		if ($row['ged_id']!=$GED_ID) {
 			$GEDCOM=get_gedcom_from_id($row['ged_id']);
@@ -1524,7 +1245,6 @@ function search_fams_custom($join, $where, $order) {
 		}
 		$list[]=Family::getInstance($row);
 	}
-	$res->free();
 	// Switch privacy file if necessary
 	if ($GED_ID!=PGV_GED_ID) {
 		$GEDCOM=get_gedcom_from_id(PGV_GED_ID);
@@ -1539,7 +1259,7 @@ function search_fams_custom($join, $where, $order) {
 // $match - AND or OR
 // $skip - ignore data in certain tags
 function search_indis($query, $geds, $match, $skip) {
-	global $TBLPREFIX, $GEDCOM, $DBCONN, $DB_UTF8_COLLATION;
+	global $TBLPREFIX, $GEDCOM, $DB_UTF8_COLLATION;
 
 	// No query => no results
 	if (!$query) {
@@ -1553,11 +1273,10 @@ function search_indis($query, $geds, $match, $skip) {
 
 	foreach ($query as $q) {
 		$queryregex[]=preg_quote(UTF8_strtoupper($q), '/');
-		$q=$DBCONN->escapeSimple($q);
 		if ($DB_UTF8_COLLATION || !has_utf8($q)) {
-			$querysql[]="i_gedcom ".PGV_DB_LIKE." '%{$q}%'";
+			$querysql[]="i_gedcom ".PGV_DB::$LIKE." ".PGV_DB::quote("%{$q}%");
 		} else {
-			$querysql[]="(i_gedcom ".PGV_DB_LIKE." '%{$q}%' OR i_gedcom ".PGV_DB_LIKE." '%".UTF8_strtoupper($q)."%' OR i_gedcom ".PGV_DB_LIKE." '%".UTF8_strtolower($q)."%')";
+			$querysql[]="(i_gedcom ".PGV_DB::$LIKE." ".PGV_DB::quote("%{$q}%")." OR i_gedcom ".PGV_DB::$LIKE." ".PGV_DB::quote("%".UTF8_strtoupper($q)."%")." OR i_gedcom ".PGV_DB::$LIKE." ".PGV_DB::quote("%".UTF8_strtolower($q)."%").")";
 		}
 	}
 
@@ -1574,9 +1293,9 @@ function search_indis($query, $geds, $match, $skip) {
 	}
 
 	$list=array();
-	$res=dbquery($sql);
+	$rows=PGV_DB::prepare($sql)->fetchAll(PDO::FETCH_ASSOC);
 	$GED_ID=PGV_GED_ID;
-	while ($row=$res->fetchRow(DB_FETCHMODE_ASSOC)) {
+	foreach ($rows as $row) {
 		// Switch privacy file if necessary
 		if ($row['ged_id']!=$GED_ID) {
 			$GEDCOM=get_gedcom_from_id($row['ged_id']);
@@ -1596,7 +1315,6 @@ function search_indis($query, $geds, $match, $skip) {
 		}
 		$list[]=$indi;
 	}
-	$res->free();
 	// Switch privacy file if necessary
 	if ($GED_ID!=PGV_GED_ID) {
 		$GEDCOM=get_gedcom_from_id(PGV_GED_ID);
@@ -1610,7 +1328,7 @@ function search_indis($query, $geds, $match, $skip) {
 // $geds - array of gedcoms to search
 // $match - AND or OR
 function search_indis_names($query, $geds, $match) {
-	global $TBLPREFIX, $GEDCOM, $DBCONN, $DB_UTF8_COLLATION;
+	global $TBLPREFIX, $GEDCOM, $DB_UTF8_COLLATION;
 
 	// No query => no results
 	if (!$query) {
@@ -1620,23 +1338,21 @@ function search_indis_names($query, $geds, $match) {
 	// Convert the query into a SQL expression
 	$querysql=array();
 	foreach ($query as $q) {
-		$q=$DBCONN->escapeSimple($q);
 		if ($DB_UTF8_COLLATION || !has_utf8($q)) {
-			$querysql[]='n_full '.PGV_DB_LIKE." '%{$q}%'";
+			$querysql[]="n_full ".PGV_DB::$LIKE." ".PGV_DB::quote("%{$q}%");
 		} else {
-			$querysql[]='(n_full '.PGV_DB_LIKE." '%{$q}%' OR n_full ".PGV_DB_LIKE." '%".UTF8_strtoupper($q)."%' OR n_full ".PGV_DB_LIKE." '%".UTF8_strtolower($q)."%')";
+			$querysql[]="(n_full ".PGV_DB::$LIKE." ".PGV_DB::quote("%{$q}%")." OR n_full ".PGV_DB::$LIKE." ".PGV_DB::quote("%".UTF8_strtoupper($q)."%")." OR n_full ".PGV_DB::$LIKE." ".PGV_DB::quote("%".UTF8_strtolower($q)."%").")";
 		}
 	}
-
 	$sql="SELECT DISTINCT 'INDI' AS type, i_id AS xref, i_file AS ged_id, i_gedcom AS gedrec, i_isdead, i_sex, n_num FROM {$TBLPREFIX}individuals JOIN {$TBLPREFIX}name ON i_id=n_id AND i_file=n_file WHERE (".implode(" {$match} ", $querysql).') AND i_file IN ('.implode(',', $geds).')';
 
 	// Group results by gedcom, to minimise switching between privacy files
 	$sql.=' ORDER BY ged_id';
 
 	$list=array();
-	$res=dbquery($sql);
+	$rows=PGV_DB::prepare($sql)->fetchAll(PDO::FETCH_ASSOC);
 	$GED_ID=PGV_GED_ID;
-	while ($row=$res->fetchRow(DB_FETCHMODE_ASSOC)) {
+	foreach ($rows as $row) {
 		// Switch privacy file if necessary
 		if ($row['ged_id']!=$GED_ID) {
 			$GEDCOM=get_gedcom_from_id($row['ged_id']);
@@ -1654,7 +1370,6 @@ function search_indis_names($query, $geds, $match) {
 			$list[]=clone $indi;
 		}
 	}
-	$res->free();
 	// Switch privacy file if necessary
 	if ($GED_ID!=PGV_GED_ID) {
 		$GEDCOM=get_gedcom_from_id(PGV_GED_ID);
@@ -1696,19 +1411,19 @@ function search_indis_soundex($soundex, $lastname, $firstname, $place, $geds) {
 	}
 	if ($firstname && $givn_sdx) {
 		foreach ($givn_sdx as $k=>$v) {
-			$givn_sdx[$k]="n_soundex_givn_{$field} ".PGV_DB_LIKE." '%{$v}%'";
+			$givn_sdx[$k]="n_soundex_givn_{$field} ".PGV_DB::$LIKE." ".PGV_DB::quote("%{$v}%");
 	}
 		$sql.=' AND ('.implode(' OR ', $givn_sdx).')';
 		}
 	if ($lastname && $surn_sdx) {
 		foreach ($surn_sdx as $k=>$v) {
-			$surn_sdx[$k]="n_soundex_surn_{$field} ".PGV_DB_LIKE." '%{$v}%'";
+			$surn_sdx[$k]="n_soundex_surn_{$field} ".PGV_DB::$LIKE." ".PGV_DB::quote("%{$v}%");
 		}
 		$sql.=' AND ('.implode(' OR ', $surn_sdx).')';
 			}
 	if ($place && $plac_sdx) {
 		foreach ($plac_sdx as $k=>$v) {
-			$plac_sdx[$k]="p_{$field}_soundex ".PGV_DB_LIKE." '%{$v}%'";
+			$plac_sdx[$k]="p_{$field}_soundex ".PGV_DB::$LIKE." ".PGV_DB::quote("%{$v}%");
 		}
 		$sql.=' AND ('.implode(' OR ', $plac_sdx).')';
 	}
@@ -1717,9 +1432,9 @@ function search_indis_soundex($soundex, $lastname, $firstname, $place, $geds) {
 	$sql.=' ORDER BY ged_id';
 
 	$list=array();
-	$res=dbquery($sql);
+	$rows=PGV_DB::prepare($sql)->fetchAll(PDO::FETCH_ASSOC);
 	$GED_ID=PGV_GED_ID;
-	while ($row=$res->fetchRow(DB_FETCHMODE_ASSOC)) {
+	foreach ($rows as $row) {
 		// Switch privacy file if necessary
 		if ($row['ged_id']!=$GED_ID) {
 			$GEDCOM=get_gedcom_from_id($row['ged_id']);
@@ -1731,7 +1446,6 @@ function search_indis_soundex($soundex, $lastname, $firstname, $place, $geds) {
 			$list[]=$indi;
 		}
 	}
-	$res->free();
 	// Switch privacy file if necessary
 	if ($GED_ID!=PGV_GED_ID) {
 		$GEDCOM=get_gedcom_from_id(PGV_GED_ID);
@@ -1748,81 +1462,78 @@ function search_indis_soundex($soundex, $lastname, $firstname, $place, $geds) {
 function get_recent_changes($jd=0, $allgeds=false) {
 	global $TBLPREFIX;
 
-	$sql="SELECT d_gid FROM {$TBLPREFIX}dates WHERE d_fact='CHAN' AND d_julianday1>={$jd}";
+	$sql="SELECT d_gid FROM {$TBLPREFIX}dates WHERE d_fact='CHAN' AND d_julianday1>=? AND d_gid NOT LIKE ?";
+	$vars=array($jd, '%:%');
 	if (!$allgeds) {
-		$sql.=" AND d_file=".PGV_GED_ID." ";
+		$sql.=" AND d_file=?";
+		$vars[]=PGV_GED_ID;
 	}
 	$sql.=" ORDER BY d_julianday1 DESC";
 
-	$changes=array();
-	$res=dbquery($sql);
-	if (!DB::isError($res)) {
-		while ($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)) {
-			if (preg_match("/\w+:\w+/", $row['d_gid'])==0) {
-				$changes[] = $row;
-			}
-		}
-	}
-	return $changes;
+	return PGV_DB::prepare($sql)->execute($vars)->fetchOneColumn();
 }
 
 // Seach for individuals with events on a given day
 function search_indis_dates($day, $month, $year, $facts) {
-	global $TBLPREFIX, $DBCONN;
+	global $TBLPREFIX;
 
-	$sql="SELECT 'INDI' AS type, i_id AS xref, i_file AS ged_id, i_gedcom AS gedrec, i_isdead, i_sex FROM {$TBLPREFIX}individuals JOIN {$TBLPREFIX}dates ON i_id=d_gid AND i_file=d_file WHERE i_file=".PGV_GED_ID;
+	$sql="SELECT DISTINCT 'INDI' AS type, i_id AS xref, i_file AS ged_id, i_gedcom AS gedrec, i_isdead, i_sex FROM {$TBLPREFIX}individuals JOIN {$TBLPREFIX}dates ON i_id=d_gid AND i_file=d_file WHERE i_file=?";
+	$vars=array(PGV_GED_ID);
 	if ($day) {
-		$sql.=" AND d_day=".(int)$day;
+		$sql.=" AND d_day=?";
+		$vars[]=$day;
 	}
 	if ($month) {
-		$sql.=" AND d_month='".$DBCONN->escapeSimple(UTF8_strtoupper($month))."' ";
+		$sql.=" AND d_month=?";
+		$vars[]=$month;
 	}
 	if ($year) {
-		$sql.=" AND d_year=".(int)$year;
+		$sql.=" AND d_year=?";
+		$vars[]=$year;
 	}
 	if ($facts) {
 		$facts=preg_split('/[, ;]+/', $facts);
 		foreach ($facts as $key=>$value) {
 			if ($value[0]=='!') {
-				$facts[$key]="d_fact!='".$DBCONN->escapeSimple(substr($value,1))."'";
+				$facts[$key]="d_fact!=?";
+				$vars[]=substr($value,1);
 			} else {
-				$facts[$key]="d_fact='".$DBCONN->escapeSimple($value)."'";
+				$facts[$key]="d_fact=?";
+				$vars[]=$value;
 			}
 		}
 		$sql.=' AND '.implode(' AND ', $facts);
 	}
 
 	$list=array();
-	$res=dbquery($sql);
-	while ($row=$res->fetchRow(DB_FETCHMODE_ASSOC)) {
-		$indi=Person::getInstance($row);
+	$rows=PGV_DB::prepare($sql)->execute($vars)->fetchAll(PDO::FETCH_ASSOC);
+	foreach ($rows as $row) {
+		$list[]=Person::getInstance($row);
 	}
-	$res->free();
 	return $list;
 }
 
 // Seach for individuals with events in a given date range
 function search_indis_daterange($start, $end, $facts) {
-	global $TBLPREFIX, $DBCONN;
+	global $TBLPREFIX;
 
-	$start=(int)$start;
-	$end  =(int)$end;
-
-	$sql="SELECT 'INDI' AS type, i_id AS xref, i_file AS ged_id, i_gedcom AS gedrec, i_isdead, i_sex FROM {$TBLPREFIX}individuals JOIN {$TBLPREFIX}dates ON i_id=d_gid AND i_file=d_file WHERE i_file=".PGV_GED_ID." AND d_julianday1 BETWEEN {$start} AND {$end}";
+	$sql="SELECT 'INDI' AS type, i_id AS xref, i_file AS ged_id, i_gedcom AS gedrec, i_isdead, i_sex FROM {$TBLPREFIX}individuals JOIN {$TBLPREFIX}dates ON i_id=d_gid AND i_file=d_file WHERE i_file=? AND d_julianday1 BETWEEN ? AND ?";
+	$vars=array(PGV_GED_ID, $start, $end);
+	
 	if ($facts) {
 		$facts=explode(',', $facts);
 		foreach ($facts as $key=>$value) {
-			$facts[$key]="'".$DBCONN->escapeSimple($value)."'";
+			$facts[$key]="?";
+			$vars[]=$value;
 		}
 		$sql.=' AND d_fact IN ('.implode(',', $facts).')';
 	}
 
 	$list=array();
-	$res=dbquery($sql);
-	while ($row=$res->fetchRow(DB_FETCHMODE_ASSOC)) {
+	$rows=PGV_DB::prepare($sql)->execute($vars)->fetchAll(PDO::FETCH_ASSOC);
+	foreach ($rows as $row) {
 		$list[]=Person::getInstance($row);
 	}
-	$res->free();
 	return $list;
 }
 
@@ -1843,7 +1554,7 @@ function search_indis_year_range($startyear, $endyear) {
 // $match - AND or OR
 // $skip - ignore data in certain tags
 function search_fams($query, $geds, $match, $skip) {
-	global $TBLPREFIX, $GEDCOM, $DBCONN, $DB_UTF8_COLLATION;
+	global $TBLPREFIX, $GEDCOM, $DB_UTF8_COLLATION;
 
 	// No query => no results
 	if (!$query) {
@@ -1857,11 +1568,11 @@ function search_fams($query, $geds, $match, $skip) {
 
 	foreach ($query as $q) {
 		$queryregex[]=preg_quote(UTF8_strtoupper($q), '/');
-		$q=$DBCONN->escapeSimple($q);
+
 		if ($DB_UTF8_COLLATION || !has_utf8($q)) {
-			$querysql[]='f_gedcom '.PGV_DB_LIKE." '%{$q}%'";
+			$querysql[]="f_gedcom ".PGV_DB::$LIKE." ".PGV_DB::quote("%{$q}%");
 		} else {
-			$querysql[]='(f_gedcom '.PGV_DB_LIKE." '%{$q}%' OR f_gedcom ".PGV_DB_LIKE." '%".UTF8_strtoupper($q)."%' OR f_gedcom ".PGV_DB_LIKE." '%".UTF8_strtolower($q)."%')";
+			$querysql[]="(f_gedcom ".PGV_DB::$LIKE." ".PGV_DB::quote("%{$q}%")." OR f_gedcom ".PGV_DB::$LIKE." ".PGV_DB::quote("%".UTF8_strtoupper($q)."%")." OR f_gedcom ".PGV_DB::$LIKE." ".PGV_DB::quote("%".UTF8_strtolower($q)."%").")";
 		}
 	}
 
@@ -1878,9 +1589,9 @@ function search_fams($query, $geds, $match, $skip) {
 	}
 
 	$list=array();
-	$res=dbquery($sql);
+	$rows=PGV_DB::prepare($sql)->fetchAll(PDO::FETCH_ASSOC);
 	$GED_ID=PGV_GED_ID;
-	while ($row=$res->fetchRow(DB_FETCHMODE_ASSOC)) {
+	foreach ($rows as $row) {
 		// Switch privacy file if necessary
 		if ($row['ged_id']!=$GED_ID) {
 			$GEDCOM=get_gedcom_from_id($row['ged_id']);
@@ -1901,7 +1612,6 @@ function search_fams($query, $geds, $match, $skip) {
 
 		$list[]=$family;
 	}
-	$res->free();
 	// Switch privacy file if necessary
 	if ($GED_ID!=PGV_GED_ID) {
 		$GEDCOM=get_gedcom_from_id(PGV_GED_ID);
@@ -1915,7 +1625,7 @@ function search_fams($query, $geds, $match, $skip) {
 // $geds - array of gedcoms to search
 // $match - AND or OR
 function search_fams_names($query, $geds, $match) {
-	global $TBLPREFIX, $GEDCOM, $DBCONN, $DB_UTF8_COLLATION;
+	global $TBLPREFIX, $GEDCOM, $DB_UTF8_COLLATION;
 
 	// No query => no results
 	if (!$query) {
@@ -1925,11 +1635,10 @@ function search_fams_names($query, $geds, $match) {
 	// Convert the query into a SQL expression
 	$querysql=array();
 	foreach ($query as $q) {
-		$q=$DBCONN->escapeSimple($q);
 		if ($DB_UTF8_COLLATION || !has_utf8($q)) {
-			$querysql[]="(husb.n_full ".PGV_DB_LIKE." '%{$q}%' OR wife.n_full ".PGV_DB_LIKE." '%{$q}%')";
+			$querysql[]="(husb.n_full ".PGV_DB::$LIKE." ".PGV_DB::quote("%{$q}%")." OR wife.n_full ".PGV_DB::$LIKE." ".PGV_DB::quote("%{$q}%").")";
 		} else {
-			$querysql[]="(husb.n_full ".PGV_DB_LIKE." '%{$q}%' OR wife.n_full ".PGV_DB_LIKE." '%{$q}%' OR husb.n_full ".PGV_DB_LIKE." '%".UTF8_strtoupper($q)."%' OR husb.n_full ".PGV_DB_LIKE." '%".UTF8_strtolower($q)."%' OR wife.n_full ".PGV_DB_LIKE." '%".UTF8_strtoupper($q)."%' OR wife.n_full ".PGV_DB_LIKE." '%".UTF8_strtolower($q)."%')";
+			$querysql[]="(husb.n_full ".PGV_DB::$LIKE." ".PGV_DB::quote("%{$q}%")." OR wife.n_full ".PGV_DB::$LIKE." '%{$q}%' OR husb.n_full ".PGV_DB::$LIKE." ".PGV_DB::quote(UTF8_strtoupper("%{$q}%"))." OR husb.n_full ".PGV_DB::$LIKE." ".PGV_DB::quote(UTF8_strtolower("%{$q}%"))." OR wife.n_full ".PGV_DB::$LIKE." ".PGV_DB::quote(UTF8_strtoupper("%{$q}%"))." OR wife.n_full ".PGV_DB::$LIKE." ".PGV_DB::quote(UTF8_strtolower("%{$q}%")).")";
 		}
 	}
 
@@ -1939,9 +1648,9 @@ function search_fams_names($query, $geds, $match) {
 	$sql.=' ORDER BY ged_id';
 
 	$list=array();
-	$res=dbquery($sql);
+	$rows=PGV_DB::prepare($sql)->fetchAll(PDO::FETCH_ASSOC);
 	$GED_ID=PGV_GED_ID;
-	while ($row=$res->fetchRow(DB_FETCHMODE_ASSOC)) {
+	foreach ($rows as $row) {
 		// Switch privacy file if necessary
 		if ($row['ged_id']!=$GED_ID) {
 			$GEDCOM=get_gedcom_from_id($row['ged_id']);
@@ -1953,59 +1662,6 @@ function search_fams_names($query, $geds, $match) {
 			$list[]=$indi;
 		}
 	}
-	$res->free();
-	// Switch privacy file if necessary
-	if ($GED_ID!=PGV_GED_ID) {
-		$GEDCOM=get_gedcom_from_id(PGV_GED_ID);
-		load_privacy_file(PGV_GED_ID);
-	}
-	return $list;
-}
-
-// Search the names of all family members
-// $query - array of search terms
-// $geds - array of gedcoms to search
-// $match - AND or OR
-function search_fams_members($query, $geds, $match) {
-	global $TBLPREFIX, $GEDCOM, $DBCONN, $DB_UTF8_COLLATION;
-
-	// No query => no results
-	if (!$query) {
-		return array();
-	}
-
-	// Convert the query into a SQL expression
-	$querysql=array();
-	foreach ($query as $q) {
-		$q=$DBCONN->escapeSimple($q);
-		if ($DB_UTF8_COLLATION || !has_utf8($q)) {
-			$querysql[]="n_full ".PGV_DB_LIKE." '%{$q}%'";
-		} else {
-			$querysql[]="(n_full ".PGV_DB_LIKE." '%{$q}%' OR n_full ".PGV_DB_LIKE." '%".UTF8_strtoupper($q)."%' OR n_full ".PGV_DB_LIKE." '%".UTF8_strtoupper($q)."%')";
-		}
-	}
-
-	$sql="SELECT DISTINCT 'FAM' AS type, f_id AS xref, f_file AS ged_id, f_gedcom AS gedrec, f_husb, f_wife, f_chil, f_numchil FROM {$TBLPREFIX}families JOIN {$TBLPREFIX}link ON f_file=l_file AND f_id=l_to AND l_type IN ('FAMS', 'FAMC') JOIN {$TBLPREFIX}name ON n_file=l_file AND n_from=n_id WHERE (".implode(" {$match} ", $querysql).') AND f_file IN ('.implode(',', $geds).')';
-
-	// Group results by gedcom, to minimise switching between privacy files
-	$sql.=' ORDER BY ged_id';
-
-	$list=array();
-	$res=dbquery($sql);
-	$GED_ID=PGV_GED_ID;
-	while ($row=$res->fetchRow(DB_FETCHMODE_ASSOC)) {
-		// Switch privacy file if necessary
-		if ($row['ged_id']!=$GED_ID) {
-			$GEDCOM=get_gedcom_from_id($row['ged_id']);
-			load_privacy_file($row['ged_id']);
-			$GED_ID=$row['ged_id'];
-		}
-		$indi=Family::getInstance($row);
-		if ($indi->canDisplayName()) {
-			$list[]=$indi;
-		}
-	}
-	$res->free();
 	// Switch privacy file if necessary
 	if ($GED_ID!=PGV_GED_ID) {
 		$GEDCOM=get_gedcom_from_id(PGV_GED_ID);
@@ -2020,7 +1676,7 @@ function search_fams_members($query, $geds, $match) {
 // $match - AND or OR
 // $skip - ignore data in certain tags
 function search_sources($query, $geds, $match, $skip) {
-	global $TBLPREFIX, $GEDCOM, $DBCONN, $DB_UTF8_COLLATION;
+	global $TBLPREFIX, $GEDCOM, $DB_UTF8_COLLATION;
 
 	// No query => no results
 	if (!$query) {
@@ -2034,11 +1690,10 @@ function search_sources($query, $geds, $match, $skip) {
 
 	foreach ($query as $q) {
 		$queryregex[]=preg_quote(UTF8_strtoupper($q), '/');
-		$q=$DBCONN->escapeSimple($q);
 		if ($DB_UTF8_COLLATION || !has_utf8($q)) {
-			$querysql[]='s_gedcom '.PGV_DB_LIKE." '%{$q}%'";
+			$querysql[]='s_gedcom '.PGV_DB::$LIKE." ".PGV_DB::quote("%{$q}%");
 		} else {
-			$querysql[]='(s_gedcom '.PGV_DB_LIKE." '%{$q}%' OR s_gedcom ".PGV_DB_LIKE." '%".UTF8_strtoupper($q)."%' OR s_gedcom ".PGV_DB_LIKE." '%".UTF8_strtolower($q)."%')";
+			$querysql[]='(s_gedcom '.PGV_DB::$LIKE." ".PGV_DB::quote("%{$q}%")." OR s_gedcom ".PGV_DB::$LIKE." ".PGV_DB::quote(UTF8_strtoupper("%{$q}%"))." OR s_gedcom ".PGV_DB::$LIKE." ".PGV_DB::quote(UTF8_strtolower("%{$q}%")).")";
 		}
 	}
 
@@ -2055,9 +1710,9 @@ function search_sources($query, $geds, $match, $skip) {
 	}
 
 	$list=array();
-	$res=dbquery($sql);
+	$rows=PGV_DB::prepare($sql)->fetchAll(PDO::FETCH_ASSOC);
 	$GED_ID=PGV_GED_ID;
-	while ($row=$res->fetchRow(DB_FETCHMODE_ASSOC)) {
+	foreach ($rows as $row) {
 		// Switch privacy file if necessary
 		if ($row['ged_id']!=$GED_ID) {
 			$GEDCOM=get_gedcom_from_id($row['ged_id']);
@@ -2077,7 +1732,6 @@ function search_sources($query, $geds, $match, $skip) {
 		}
 		$list[]=$source;
 	}
-	$res->free();
 	// Switch privacy file if necessary
 	if ($GED_ID!=PGV_GED_ID) {
 		$GEDCOM=get_gedcom_from_id(PGV_GED_ID);
@@ -2092,7 +1746,7 @@ function search_sources($query, $geds, $match, $skip) {
 // $match - AND or OR
 // $skip - ignore data in certain tags
 function search_notes($query, $geds, $match, $skip) {
-	global $TBLPREFIX, $GEDCOM, $DBCONN, $DB_UTF8_COLLATION;
+	global $TBLPREFIX, $GEDCOM, $DB_UTF8_COLLATION;
 
 	// No query => no results
 	if (!$query) {
@@ -2106,11 +1760,10 @@ function search_notes($query, $geds, $match, $skip) {
 	
 	foreach ($query as $q) {
 		$queryregex[]=preg_quote(UTF8_strtoupper($q), '/');
-		$q=$DBCONN->escapeSimple($q);
 		if ($DB_UTF8_COLLATION || !has_utf8($q)) {
-			$querysql[]='o_gedcom '.PGV_DB_LIKE." '%{$q}%'";
+			$querysql[]='o_gedcom '.PGV_DB::$LIKE." ".PGV_DB::quote("%{$q}%");
 		} else {
-			$querysql[]='(o_gedcom '.PGV_DB_LIKE." '%{$q}%' OR o_gedcom ".PGV_DB_LIKE." '%".UTF8_strtoupper($q)."%' OR o_gedcom ".PGV_DB_LIKE." '%".UTF8_strtolower($q)."%')";
+			$querysql[]='(o_gedcom '.PGV_DB::$LIKE." ".PGV_DB::quote("%{$q}%")." OR o_gedcom ".PGV_DB::$LIKE." ".PGV_DB::quote(UTF8_strtoupper("%{$q}%"))." OR o_gedcom ".PGV_DB::$LIKE." ".PGV_DB::quote(UTF8_strtolower("%{$q}%")).")";
 		}
 	}
 
@@ -2127,9 +1780,9 @@ function search_notes($query, $geds, $match, $skip) {
 	}
 
 	$list=array();
-	$res=dbquery($sql);
+	$rows=PGV_DB::prepare($sql)->fetchAll(PDO::FETCH_ASSOC);
 	$GED_ID=PGV_GED_ID;
-	while ($row=$res->fetchRow(DB_FETCHMODE_ASSOC)) {
+	foreach ($rows as $row) {
 		// Switch privacy file if necessary
 		if ($row['ged_id']!=$GED_ID) {
 			$GEDCOM=get_gedcom_from_id($row['ged_id']);
@@ -2149,7 +1802,6 @@ function search_notes($query, $geds, $match, $skip) {
 		}
 		$list[]=$note;
 	}
-	$res->free();
 	// Switch privacy file if necessary
 	if ($GED_ID!=PGV_GED_ID) {
 		$GEDCOM=get_gedcom_from_id(PGV_GED_ID);
@@ -2165,19 +1817,20 @@ function search_notes($query, $geds, $match, $skip) {
 * @return int
 */
 function get_place_parent_id($parent, $level) {
-	global $DBCONN, $TBLPREFIX;
+	global $TBLPREFIX;
+	static $statement=null;
+
+	if (is_null($statement)) {
+		$statement=PGV_DB::prepare("SELECT p_id FROM {$TBLPREFIX}places WHERE p_level=? AND p_parent_id=? AND p_place ".PGV_DB::$LIKE." ? AND p_file=?");
+	}
 
 	$parent_id=0;
 	for ($i=0; $i<$level; $i++) {
-		$escparent=preg_replace("/\?/","\\\\\\?", $DBCONN->escapeSimple($parent[$i]));
-		$psql = "SELECT p_id FROM ".$TBLPREFIX."places WHERE p_level=".$i." AND p_parent_id=$parent_id AND p_place ".PGV_DB_LIKE." '".$escparent."' AND p_file=".PGV_GED_ID." ORDER BY p_place";
-		$res = dbquery($psql);
-		$row =& $res->fetchRow();
-		$res->free();
-		if (empty($row[0])) {
+		$p_id=$statement->execute(array($i, $parent_id, $parent[$i], PGV_GED_ID))->fetchOne();
+		if (is_null($p_id)) {
 			break;
 		}
-		$parent_id = $row[0];
+		$parent_id = $p_id;
 	}
 	return $parent_id;
 }
@@ -2191,23 +1844,18 @@ function get_place_parent_id($parent, $level) {
 function get_place_list($parent, $level) {
 	global $TBLPREFIX;
 
-	$placelist=array();
-
 	// --- find all of the place in the file
 	if ($level==0) {
-		$sql = "SELECT p_place FROM ".$TBLPREFIX."places WHERE p_level=0 AND p_file=".PGV_GED_ID." ORDER BY p_place";
+		return
+			PGV_DB::prepare("SELECT p_place FROM {$TBLPREFIX}places WHERE p_level=? AND p_file=? ORDER BY p_place")
+			->execute(array(0, PGV_GED_ID))
+			->fetchOneColumn();
 	} else {
-		$parent_id = get_place_parent_id($parent, $level);
-		$sql = "SELECT p_place FROM ".$TBLPREFIX."places WHERE p_level=$level AND p_parent_id=$parent_id AND p_file=".PGV_GED_ID." ORDER BY p_place";
+		return
+			PGV_DB::prepare("SELECT p_place FROM {$TBLPREFIX}places WHERE p_level=? AND p_parent_id=? AND p_file=? ORDER BY p_place")
+			->execute(array($level, get_place_parent_id($parent, $level), PGV_GED_ID))
+			->fetchOneColumn();
 	}
-	$res = dbquery($sql);
-
-	while ($row =& $res->fetchRow()) {
-		$placelist[] = $row[0];
-	}
-	$res->free();
-
-	return $placelist;
 }
 
 /**
@@ -2217,44 +1865,39 @@ function get_place_list($parent, $level) {
 * @return array
 */
 function get_place_positions($parent, $level='') {
-	global $TBLPREFIX, $DBCONN;
+	global $TBLPREFIX;
 
-	$positions=array();
+	// TODO: this function needs splitting into two
 
-	if ($level!='') {
-		$p_id = get_place_parent_id($parent, $level);
+	if ($level!=='') {
+		return
+			PGV_DB::prepare("SELECT DISTINCT pl_gid FROM {$TBLPREFIX}placelinks WHERE pl_p_id=? AND pl_file=?")
+			->execute(array(get_place_parent_id($parent, $level), PGV_GED_ID))
+			->fetchOneColumn();
 	} else {
 		//-- we don't know the level so get the any matching place
-		$sql = "SELECT DISTINCT pl_gid FROM ".$TBLPREFIX."placelinks, ".$TBLPREFIX."places WHERE p_place ".PGV_DB_LIKE." '".$DBCONN->escapeSimple($parent)."' AND p_file=pl_file AND p_id=pl_p_id AND p_file=".PGV_GED_ID;
-		$res = dbquery($sql);
-		while ($row =& $res->fetchRow()) {
-			$positions[] = $row[0];
-		}
-		$res->free();
-		return $positions;
+		return
+			PGV_DB::prepare("SELECT DISTINCT pl_gid FROM {$TBLPREFIX}placelinks, {$TBLPREFIX}places WHERE p_place ".PGV_DB::$LIKE." ? AND p_file=pl_file AND p_id=pl_p_id AND p_file=?")
+			->execute(array($parent, PGV_GED_ID))
+			->fetchOneColumn();
 	}
-	$sql = "SELECT DISTINCT pl_gid FROM ".$TBLPREFIX."placelinks WHERE pl_p_id=$p_id AND pl_file=".PGV_GED_ID;
-	$res = dbquery($sql);
-
-	while ($row =& $res->fetchRow()) {
-		$positions[] = $row[0];
-	}
-	$res->free();
-	return $positions;
 }
 
 //-- find all of the places
 function find_place_list($place) {
-	global $TBLPREFIX, $placelist;
+	global $TBLPREFIX;
 
-	$sql = "SELECT p_id, p_place, p_parent_id  FROM ".$TBLPREFIX."places WHERE p_file=".PGV_GED_ID." ORDER BY p_parent_id, p_id";
-	$res = dbquery($sql);
+	$rows=
+		PGV_DB::prepare("SELECT p_id, p_place, p_parent_id  FROM {$TBLPREFIX}places WHERE p_file=? ORDER BY p_parent_id, p_id")
+		->execute(array(PGV_GED_ID))
+		->fetchAll();
 
-	while ($row =& $res->fetchRow()) {
-		if ($row[2]==0) {
-			$placelist[$row[0]] = $row[1];
+	$placelist=array();
+	foreach ($rows as $row) {
+		if ($row->p_parent_id==0) {
+			$placelist[$row->p_id] = $row->p_place;
 		} else {
-			$placelist[$row[0]] = $placelist[$row[2]].", ".$row[1];
+			$placelist[$row->p_id] = $placelist[$row->p_parent_id].", ".$row->p_place;
 		}
 	}
 	if (!empty($place)) {
@@ -2269,19 +1912,19 @@ function find_place_list($place) {
 		}
 		$placelist = array_values($found);
 	}
+	return $placelist;
 }
 
 //-- function to find the gedcom id for the given rin
 function find_rin_id($rin) {
 	global $TBLPREFIX;
 
-	$sql = "SELECT i_id FROM ".$TBLPREFIX."individuals WHERE i_rin='$rin' AND i_file=".PGV_GED_ID;
-	$res = dbquery($sql);
+	$xref=
+		PGV_DB::prepare("SELECT i_id FROM {$TBLPREFIX}individuals WHERE i_rin=? AND i_file=?")
+		->execute(array($rin, PGV_GED_ID))
+		->fetchOne();
 
-	while ($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)) {
-		return $row["i_id"];
-	}
-	return $rin;
+	return $xref ? $xref : $rin;
 }
 
 /**
@@ -2290,30 +1933,29 @@ function find_rin_id($rin) {
 * @param string $ged  the filename of the gedcom to delete
 */
 function delete_gedcom($ged) {
-	global $TBLPREFIX, $pgv_changes, $DBCONN, $GEDCOMS;
+	global $TBLPREFIX, $pgv_changes, $GEDCOMS;
 
 	if (!isset($GEDCOMS[$ged])) {
 		return;
 	}
 
-	$ged=$DBCONN->escapeSimple($ged);
-	$dbged=(int)$GEDCOMS[$ged]["id"];
+	$ged_id=get_id_from_gedcom($ged);
 
-	$res = dbquery("DELETE FROM {$TBLPREFIX}blocks        WHERE b_username='{$ged}'");
-	$res = dbquery("DELETE FROM {$TBLPREFIX}dates         WHERE d_file    =$dbged");
-	$res = dbquery("DELETE FROM {$TBLPREFIX}families      WHERE f_file    =$dbged");
-	$res = dbquery("DELETE FROM {$TBLPREFIX}favorites     WHERE fv_file   =$dbged");
-	$res = dbquery("DELETE FROM {$TBLPREFIX}individuals   WHERE i_file    =$dbged");
-	$res = dbquery("DELETE FROM {$TBLPREFIX}link          WHERE l_file    =$dbged");
-	$res = dbquery("DELETE FROM {$TBLPREFIX}media         WHERE m_gedfile =$dbged");
-	$res = dbquery("DELETE FROM {$TBLPREFIX}media_mapping WHERE mm_gedfile=$dbged");
-	$res = dbquery("DELETE FROM {$TBLPREFIX}name          WHERE n_file    =$dbged");
-	$res = dbquery("DELETE FROM {$TBLPREFIX}news          WHERE n_username='{$ged}'");
-	$res = dbquery("DELETE FROM {$TBLPREFIX}nextid        WHERE ni_gedfile=$dbged");
-	$res = dbquery("DELETE FROM {$TBLPREFIX}other         WHERE o_file    =$dbged");
-	$res = dbquery("DELETE FROM {$TBLPREFIX}placelinks    WHERE pl_file   =$dbged");
-	$res = dbquery("DELETE FROM {$TBLPREFIX}places        WHERE p_file    =$dbged");
-	$res = dbquery("DELETE FROM {$TBLPREFIX}sources       WHERE s_file    =$dbged");
+	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}blocks        WHERE b_username=?")->execute(array($ged));
+	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}dates         WHERE d_file    =?")->execute(array($ged_id));
+	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}families      WHERE f_file    =?")->execute(array($ged_id));
+	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}favorites     WHERE fv_file   =?")->execute(array($ged_id));
+	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}individuals   WHERE i_file    =?")->execute(array($ged_id));
+	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}link          WHERE l_file    =?")->execute(array($ged_id));
+	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}media         WHERE m_gedfile =?")->execute(array($ged_id));
+	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}media_mapping WHERE mm_gedfile=?")->execute(array($ged_id));
+	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}name          WHERE n_file    =?")->execute(array($ged_id));
+	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}news          WHERE n_username=?")->execute(array($ged));
+	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}nextid        WHERE ni_gedfile=?")->execute(array($ged_id));
+	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}other         WHERE o_file    =?")->execute(array($ged_id));
+	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}placelinks    WHERE pl_file   =?")->execute(array($ged_id));
+	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}places        WHERE p_file    =?")->execute(array($ged_id));
+	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}sources       WHERE s_file    =?")->execute(array($ged_id));
 
 	if (isset($pgv_changes)) {
 		//-- erase any of the changes
@@ -2323,6 +1965,13 @@ function delete_gedcom($ged) {
 			}
 		}
 		write_changes();
+	}
+
+	unset($GEDCOMS[$ged]);
+	store_gedcoms();
+
+	if (get_site_setting('DEFAULT_GEDCOM')==$ged) {
+		set_site_setting('DEFAULT_GEDCOM', '');
 	}
 }
 
@@ -2334,21 +1983,19 @@ function delete_gedcom($ged) {
 function get_top_surnames($num) {
 	global $TBLPREFIX;
 
-	$surnames = array();
-	$sql = "SELECT COUNT(n_surname) AS count, n_surn FROM {$TBLPREFIX}name WHERE n_file=".PGV_GED_ID." AND n_type!='_MARNM' AND n_surn NOT IN ('@N.N.', '', '?', 'UNKNOWN')GROUP BY n_surn ORDER BY count DESC";
-	$sql = PGV_DB::limit_query($sql, $num+1);
-	$res = dbquery($sql, true);
+	$rows=
+		PGV_DB::prepareLimit("SELECT COUNT(n_surname) AS count, n_surn FROM {$TBLPREFIX}name WHERE n_file=? AND n_type!=? AND n_surn NOT IN (?, ?, ?, ?) GROUP BY n_surn ORDER BY count DESC", $num+1)
+		->execute(array(PGV_GED_ID, '_MARNM', '@N.N.', '', '?', 'UNKNOWN'))
+		->fetchAll();
 
-	if (!DB::isError($res)) {
-		while ($row =& $res->fetchRow()) {
-			if (isset($surnames[$row[1]]['match'])) {
-				$surnames[$row[1]]['match'] += $row[0];
-			} else {
-				$surnames[$row[1]]['name'] = $row[1];
-				$surnames[$row[1]]['match'] = $row[0];
-				}
-			}
-		$res->free();
+	$surnames = array();
+	foreach ($rows as $row) {
+		if (isset($surnames[$row->n_surn]['match'])) {
+			$surnames[$row->n_surn]['match'] += $row->count;
+		} else {
+			$surnames[$row->n_surn]['name'] = $row->n_surn;
+			$surnames[$row->n_surn]['match'] = $row->count;
+		}
 	}
 	return $surnames;
 }
@@ -2369,15 +2016,7 @@ function get_next_id($table, $field) {
 		$TABLE_IDS[$table][$field]++;
 		return $TABLE_IDS[$table][$field];
 	}
-	$newid = 0;
-	$sql = "SELECT MAX($field) FROM ".$TBLPREFIX.$table;
-	$res = dbquery($sql);
-
-	if ($res!==false && !DB::isError($res)) {
-		$row = $res->fetchRow();
-		$res->free();
-		$newid = $row[0];
-	}
+	$newid=PGV_DB::prepare("SELECT MAX({$field}) FROM {$TBLPREFIX}{$table}")->fetchOne();
 	$newid++;
 	$TABLE_IDS[$table][$field] = $newid;
 	return $newid;
@@ -2387,29 +2026,22 @@ function get_next_id($table, $field) {
 * get a list of remote servers
 */
 function get_server_list(){
-	global $GEDCOM, $GEDCOMS, $TBLPREFIX, $sitelist, $sourcelist;
+	global $GEDCOM, $GEDCOMS, $TBLPREFIX, $sitelist;
 
 	$sitelist = array();
 
 	if (isset($GEDCOMS[$GEDCOM]) && check_for_import($GEDCOM)) {
-		$sql = "SELECT s_id ,s_name, s_gedcom FROM {$TBLPREFIX}sources WHERE s_file=".PGV_GED_ID." AND s_dbid='Y' ORDER BY s_name";
-		$res = dbquery($sql, false);
-		if (DB::isError($res)) {
-			return $sitelist;
-		}
-
-		$ct = $res->numRows();
-		while ($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)) {
+		$rows=PGV_DB::prepare("SELECT s_id, s_name, s_gedcom, s_file FROM {$TBLPREFIX}sources WHERE s_file=? AND s_dbid=? ORDER BY s_name")
+			->execute(array(PGV_GED_ID, 'Y'))
+			->fetchAll();
+		foreach ($rows as $row) {
 			$source = array();
-			$source["name"] = $row["s_name"];
-			$source["gedcom"] = $row["s_gedcom"];
-			$row = db_cleanup($row);
-			$source["gedfile"] = PGV_GED_ID;
-			$source["url"] = get_gedcom_value("URL", 1, $row["s_gedcom"]);
-			$sitelist[$row["s_id"]] = $source;
-			$sourcelist[$row["s_id"]] = $source;
+			$source["name"] = $row->s_name;
+			$source["gedcom"] = $row->s_gedcom;
+			$source["gedfile"] = $row->s_file;
+			$source["url"] = get_gedcom_value("URL", 1, $row->s_gedcom);
+			$sitelist[$row->s_id] = $source;
 		}
-		$res->free();
 	}
 
 	return $sitelist;
@@ -2417,7 +2049,7 @@ function get_server_list(){
 
 /**
 * Retrieve the array of faqs from the DB table blocks
-* @param int $id The FAQ ID to retrieven
+* @param int $id The FAQ ID to retrieve
 * @return array $faqs The array containing the FAQ items
 */
 function get_faq_data($id='') {
@@ -2425,18 +2057,21 @@ function get_faq_data($id='') {
 
 	$faqs = array();
 	// Read the faq data from the DB
-	$sql = "SELECT b_id, b_location, b_order, b_config, b_username FROM ".$TBLPREFIX."blocks WHERE (b_username='$GEDCOM' OR b_username='*all*') AND b_name='faq'";
+	$sql="SELECT b_id, b_location, b_order, b_config, b_username FROM {$TBLPREFIX}blocks WHERE b_username IN (?, ?) AND b_name=?";
+	$vars=array($GEDCOM, '*all*', 'faq');
 	if ($id!='') {
-		$sql.=" AND b_order='".$id."'";
+		$sql.=" AND b_order=?";
+		$vars[]=$id;
+	} else {
+		$sql.=' ORDER BY b_order';
 	}
-	$res = dbquery($sql);
+	$rows=PGV_DB::prepare($sql)->execute($vars)->fetchAll();
 
-	while ($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)) {
-		$faqs[$row["b_order"]][$row["b_location"]]["text"] = unserialize($row["b_config"]);
-		$faqs[$row["b_order"]][$row["b_location"]]["pid"] = $row["b_id"];
-		$faqs[$row["b_order"]][$row["b_location"]]["gedcom"] = $row["b_username"];
+	foreach ($rows as $row) {
+		$faqs[$row->b_order][$row->b_location]["text"  ]=unserialize($row->b_config);
+		$faqs[$row->b_order][$row->b_location]["pid"   ]=$row->b_id;
+		$faqs[$row->b_order][$row->b_location]["gedcom"]=$row->b_username;
 	}
-	ksort($faqs);
 	return $faqs;
 }
 
@@ -2493,18 +2128,12 @@ function delete_fact($linenum, $pid, $gedrec) {
 * @return gid Stub ID that contains the RFN number. Returns false if it didn't find anything
 */
 function get_remote_id($rfn) {
-	global $TBLPREFIX, $DBCONN;
+	global $TBLPREFIX;
 
-	$sql = "SELECT r_gid FROM ".$TBLPREFIX."remotelinks WHERE r_linkid='".$DBCONN->escapeSimple($rfn)."' AND r_file=".PGV_GED_ID;
-	$res = dbquery($sql);
-
-	if ($res->numRows()>0) {
-		$row = $res->fetchRow();
-		$res->free();
-		return $row[0];
-	} else {
-		return false;
-	}
+	return
+		PGV_DB::prepare("SELECT r_gid FROM {$TBLPREFIX}remotelinks WHERE r_linkid=? AND r_file=?")
+		->execute(array($rfn, PGV_GED_ID))
+		->fetchOne();
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -2646,10 +2275,10 @@ function get_anniversary_events($jd, $facts='', $ged_id=PGV_GED_ID) {
 
 		// Now fetch these anniversaries
 		$ind_sql="SELECT DISTINCT 'INDI' AS type, i_id AS xref, i_file AS ged_id, i_gedcom AS gedrec, i_isdead, i_sex, d_type, d_day, d_month, d_year, d_fact, d_type FROM {$TBLPREFIX}dates, {$TBLPREFIX}individuals {$where} AND d_gid=i_id AND d_file=i_file ORDER BY d_day ASC, d_year DESC";
-		$fam_sql="SELECT DISTINCT 'FAM' AS type, f_id AS xref, {$ged_id} AS ged_id, f_gedcom AS gedrec, f_husb, f_wife, f_chil, f_numchil, d_type, d_day, d_month, d_year, d_fact, d_type FROM {$TBLPREFIX}dates, {$TBLPREFIX}families {$where} AND d_gid=f_id AND d_file=f_file ORDER BY d_day ASC, d_year DESC";
+		$fam_sql="SELECT DISTINCT 'FAM' AS type, f_id AS xref, f_file AS ged_id, f_gedcom AS gedrec, f_husb, f_wife, f_chil, f_numchil, d_type, d_day, d_month, d_year, d_fact, d_type FROM {$TBLPREFIX}dates, {$TBLPREFIX}families {$where} AND d_gid=f_id AND d_file=f_file ORDER BY d_day ASC, d_year DESC";
 		foreach (array($ind_sql, $fam_sql) as $sql) {
-			$res=dbquery($sql);
-			while ($row=&$res->fetchRow(DB_FETCHMODE_ASSOC)) {
+			$rows=PGV_DB::prepare($sql)->fetchAll(PDO::FETCH_ASSOC);
+			foreach ($rows as $row) {
 				if ($row['type']=='INDI') {
 					$record=Person::getInstance($row);
 				} else {
@@ -2691,7 +2320,6 @@ function get_anniversary_events($jd, $facts='', $ged_id=PGV_GED_ID) {
 					}
 				}
 			}
-			$res->free();
 		}
 	}
 	return $found_facts;
@@ -2737,8 +2365,8 @@ function get_calendar_events($jd1, $jd2, $facts='', $ged_id=PGV_GED_ID) {
 	$ind_sql="SELECT d_gid, i_gedcom, 'INDI', d_type, d_day, d_month, d_year, d_fact, d_type FROM {$TBLPREFIX}dates, {$TBLPREFIX}individuals {$where} AND d_gid=i_id AND d_file=i_file ORDER BY d_julianday1";
 	$fam_sql="SELECT d_gid, f_gedcom, 'FAM',  d_type, d_day, d_month, d_year, d_fact, d_type FROM {$TBLPREFIX}dates, {$TBLPREFIX}families    {$where} AND d_gid=f_id AND d_file=f_file ORDER BY d_julianday1";
 	foreach (array($ind_sql, $fam_sql) as $sql) {
-		$res=dbquery($sql);
-		while ($row=&$res->fetchRow()) {
+		$rows=PGV_DB::prepare($sql)->fetchAll(PDO::FETCH_NUM);
+		foreach ($rows as $row) {
 			// Generate a regex to match the retrieved date - so we can find it in the original gedcom record.
 			// TODO having to go back to the original gedcom is lame.  This is why it is so slow, and needs
 			// to be cached.  We should store the level1 fact here (or somewhere)
@@ -2775,7 +2403,6 @@ function get_calendar_events($jd1, $jd2, $facts='', $ged_id=PGV_GED_ID) {
 				}
 			}
 		}
-		$res->free();
 	}
 	return $found_facts;
 }
@@ -2811,9 +2438,44 @@ function is_media_used_in_other_gedcom($file_name, $ged_id) {
 	global $TBLPREFIX;
 
 	return
-		(bool)PGV_DB::prepare("SELECT COUNT(*) FROM {$TBLPREFIX}media WHERE m_file ".PGV_DB_LIKE." ? AND m_gedfile<>?")
+		(bool)PGV_DB::prepare("SELECT COUNT(*) FROM {$TBLPREFIX}media WHERE m_file ".PGV_DB::$LIKE." ? AND m_gedfile<>?")
 		->execute(array("%{$file_name}", $ged_id))
 		->fetchOne();
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// Functions to access the PGV_SITE_SETTING table
+////////////////////////////////////////////////////////////////////////////////
+function get_site_setting($site_setting_name) {
+	global $TBLPREFIX;
+	static $statement=null;
+
+	if (is_null($statement)) {
+		$statement=PGV_DB::prepare("SELECT site_setting_value FROM {$TBLPREFIX}site_setting WHERE site_setting_name=?");
+	}
+
+	return $statement->execute(array($site_setting_name))->fetchOne();
+}
+function set_site_setting($site_setting_name, $site_setting_value) {
+	global $TBLPREFIX;
+	// We can't cache/reuse prepared statements here, as we need to call this
+	// function after performing DDL statements, and these invalidate and
+	// existing prepared statement handles in some databases.
+
+	$old_site_setting_value=
+		PGV_DB::prepare("SELECT site_setting_value FROM {$TBLPREFIX}site_setting WHERE site_setting_name=?")
+		->execute(array($site_setting_name))
+		->fetchOne();
+
+	if (is_null($old_site_setting_value)) {
+		// Value doesn't exist - insert
+		PGV_DB::prepare("INSERT INTO {$TBLPREFIX}site_setting (site_setting_name, site_setting_value) VALUES (?, ?)")
+		->execute(array($site_setting_name, $site_setting_value));
+	} elseif ($old_site_setting_value!=$site_setting_value) {
+		// Value exists, and is different
+		PGV_DB::prepare("UPDATE {$TBLPREFIX}site_setting SET site_setting_value=? WHERE site_setting_name=?")
+		->execute(array($site_setting_value, $site_setting_name));	
+	}
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -2832,7 +2494,7 @@ function get_all_gedcoms() {
 	foreach ($GEDCOMS as $key=>$value) {
 		$gedcoms[$value['id']]=$key;
 	}
-	asort($gedcoms);
+	uasort($gedcoms, 'stringsort');
 	return $gedcoms;
 }
 
@@ -2888,45 +2550,36 @@ function get_gedcom_setting($ged_id, $parameter) {
 $PGV_USERS_cache=array();
 
 function create_user($username, $password) {
-	global $DBCONN, $TBLPREFIX;
+	global $TBLPREFIX;
 
-	$username=$DBCONN->escapeSimple($username);
-	$password=$DBCONN->escapeSimple($password);
-	dbquery("INSERT INTO {$TBLPREFIX}users (u_username, u_password) VALUES ('{$username}', '{$password}')");
-
-	if ($DBCONN->affectedRows()==0) {
-		return '';
-	} else {
+	try {
+		PGV_DB::prepare("INSERT INTO {$TBLPREFIX}users (u_username, u_password) VALUES ('{$username}', '{$password}')")
+			->execute(array());
 		return $username;
+	} catch (PDOException $ex) {
+		return null;
 	}
 }
 
 function rename_user($old_username, $new_username) {
-	global $DBCONN, $TBLPREFIX;
+	global $TBLPREFIX;
 
-	$olduser=$DBCONN->escapeSimple($old_username);
-	$newuser=$DBCONN->escapeSimple($new_username);
-	dbquery("UPDATE {$TBLPREFIX}users SET u_username='{$new_username}' WHERE u_username='{$old_username}'");
-
-	// For databases without foreign key constraints, manually update dependent tables
-	dbquery("UPDATE {$TBLPREFIX}blocks    SET b_username ='{$new_username}' WHERE b_username ='{$old_username}'");
-	dbquery("UPDATE {$TBLPREFIX}favorites SET fv_username='{$new_username}' WHERE fv_username='{$old_username}'");
-	dbquery("UPDATE {$TBLPREFIX}messages  SET m_from     ='{$new_username}' WHERE m_from     ='{$old_username}'");
-	dbquery("UPDATE {$TBLPREFIX}messages  SET m_to       ='{$new_username}' WHERE m_to       ='{$old_username}'");
-	dbquery("UPDATE {$TBLPREFIX}news      SET n_username ='{$new_username}' WHERE n_username ='{$old_username}'");
+	PGV_DB::prepare("UPDATE {$TBLPREFIX}users     SET u_username=? WHERE u_username  =?")->execute(array($new_username, $old_username));
+	PGV_DB::prepare("UPDATE {$TBLPREFIX}blocks    SET b_username =? WHERE b_username =?")->execute(array($new_username, $old_username));
+	PGV_DB::prepare("UPDATE {$TBLPREFIX}favorites SET fv_username=? WHERE fv_username=?")->execute(array($new_username, $old_username));
+	PGV_DB::prepare("UPDATE {$TBLPREFIX}messages  SET m_from     =? WHERE m_from     =?")->execute(array($new_username, $old_username));
+	PGV_DB::prepare("UPDATE {$TBLPREFIX}messages  SET m_to       =? WHERE m_to       =?")->execute(array($new_username, $old_username));
+	PGV_DB::prepare("UPDATE {$TBLPREFIX}news      SET n_username =? WHERE n_username =?")->execute(array($new_username, $old_username));
 }
 
 function delete_user($user_id) {
-	global $DBCONN, $TBLPREFIX;
+	global $TBLPREFIX;
 
-	$user_id=$DBCONN->escapeSimple($user_id);
-	dbquery("DELETE FROM {$TBLPREFIX}users WHERE u_username='{$user_id}'");
-
-	// For databases without foreign key constraints, manually update dependent tables
-	dbquery("DELETE FROM {$TBLPREFIX}blocks    WHERE b_username ='{$user_id}'");
-	dbquery("DELETE FROM {$TBLPREFIX}favorites WHERE fv_username='{$user_id}'");
-	dbquery("DELETE FROM {$TBLPREFIX}messages  WHERE m_from     ='{$user_id}' OR m_to='{$user_id}'");
-	dbquery("DELETE FROM {$TBLPREFIX}news      WHERE n_username ='{$user_id}'");
+	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}users     WHERE u_username =?")->execute(array($user_id));
+	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}blocks    WHERE b_username =?")->execute(array($user_id));
+	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}favorites WHERE fv_username=?")->execute(array($user_id));
+	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}messages  WHERE m_from=? OR m_to=?")->execute(array($user_id, $user_id));
+	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}news      WHERE n_username =?")->execute(array($user_id));
 }
 
 function get_all_users($order='ASC', $key1='lastname', $key2='firstname') {
@@ -3068,61 +2721,36 @@ function get_user_password($user_id) {
 ////////////////////////////////////////////////////////////////////////////////
 
 function get_user_setting($user_id, $parameter) {
-	global $DBCONN, $TBLPREFIX;
+	global $TBLPREFIX;
 
-	global $PGV_USERS_cache;
-	if (isset($PGV_USERS_cache[$user_id])) {
-		return $PGV_USERS_cache[$user_id]['u_'.$parameter];
-	}
-
-	if (!is_object($DBCONN) || DB::isError($DBCONN)) {
-		return false;
-	}
-
-	$user_id=$DBCONN->escapeSimple($user_id);
-	$sql="SELECT * FROM {$TBLPREFIX}users WHERE u_username='{$user_id}'";
-	$res=dbquery($sql, false);
-	if ($res==false || DB::isError($res)) {
-		return null;
-	}
-	$row=$res->fetchRow(DB_FETCHMODE_ASSOC);
-	$res->free();
-	if ($row) {
-		$PGV_USERS_cache[$user_id]=$row;
-		return $row['u_'.$parameter];
-	} else {
+	try {
+		return
+			PGV_DB::prepare("SELECT u_{$parameter} FROM {$TBLPREFIX}users WHERE u_username=?")
+			->execute(array($user_id))
+			->fetchOne();
+	} catch (PDOException $ex) {
 		return null;
 	}
 }
 
 function set_user_setting($user_id, $parameter, $value) {
-	global $DBCONN, $TBLPREFIX;
+	global $TBLPREFIX;
 
-	if (!is_object($DBCONN) || DB::isError($DBCONN)) {
-		return;
-	}
-
-	$user_id=$DBCONN->escapeSimple($user_id);
-	$value  =$DBCONN->escapeSimple($value);
-	dbquery("UPDATE {$TBLPREFIX}users SET u_{$parameter}='{$value}' WHERE u_username='{$user_id}'");
-
-	global $PGV_USERS_cache;
-	if (isset($PGV_USERS_cache[$user_id])) {
-		unset($PGV_USERS_cache[$user_id]);
-	}
+	PGV_DB::prepare("UPDATE {$TBLPREFIX}users SET u_{$parameter}=? WHERE u_username=?")
+		->execute(array($value, $user_id));
 }
 
 function admin_user_exists() {
-	global $DBCONN, $TBLPREFIX;
+	global $TBLPREFIX;
 
-	$res=dbquery("SELECT COUNT(u_username) FROM {$TBLPREFIX}users WHERE u_canadmin='Y'", false);
-	// We may call this function before creating the table, so must check for errors.
-	if ($res!=false && !DB::isError($res)) {
-		$row=$res->fetchRow();
-		$res->free();
-		return $row[0]>0;
+	try {
+		return
+			(bool)PGV_DB::prepare("SELECT COUNT(*) FROM {$TBLPREFIX}users WHERE u_canadmin=?")
+			->execute(array('Y'))
+			->fetchOne();
+	} catch (PDOException $ex) {
+		return false;
 	}
-	return false;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -3196,19 +2824,17 @@ function get_user_from_gedcom_xref($ged_id, $xref) {
 
 	$ged_name=get_gedcom_from_id($ged_id);
 
-	$res=dbquery("SELECT u_username, u_gedcomid FROM {$TBLPREFIX}users");
+	$rows=PGV_DB::prepare("SELECT u_username, u_gedcomid FROM {$TBLPREFIX}users")->fetchAll();
 	$username=false;
-	while ($row=$res->fetchRow()) {
-		if ($row[1]) {
-			$tmp_array=unserialize($row[1]);
+	foreach ($rows as $row) {
+		if ($row->u_gedcomid) {
+			$tmp_array=unserialize($row->u_gedcomid);
 			if (array_key_exists($ged_name, $tmp_array) && $tmp_array[$ged_name]==$xref) {
-				$username=$row[0];
-				break;
+				return $row->u_username;
 			}
 		}
 	}
-	$res->free();
-	return $username;
+	return null;
 }
 
 ?>

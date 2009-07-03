@@ -183,7 +183,7 @@ function print_yahrzeit($block=true, $config='', $side, $index) {
 				$td=new GedcomDate($today->Format('@ A O E'));
 
 				// death/yahrzeit event date
-				$content .= "<td class=\"".strrev($TEXT_DIRECTION)." list_value_wrap\">";
+				$content .= "<td class=\"list_value_wrap\">";
 				$content .= "<a name='{$yahrzeit['jd']}'>".$yahrzeit['date']->Display(true, NULL, array())."</a>";
 				$content .= "</td>";
 

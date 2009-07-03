@@ -2,7 +2,7 @@
 	function processSimpleCitation() {
 		global $TBLPREFIX;
 		//-- delete any old census records
-		PGV_DB::prepare("DELETE FROM {$TBLPREFIX}taskfacts WHERE tf_t_id=? AND tf_factrec ".PGV_DB_LIKE." ?")->execute(array($_REQUEST['taskid'], '1 %FACTTYPE%%'));
+		PGV_DB::prepare("DELETE FROM {$TBLPREFIX}taskfacts WHERE tf_t_id=? AND tf_factrec ".PGV_DB::$LIKE." ?")->execute(array($_REQUEST['taskid'], '1 %FACTTYPE%%'));
 
 		// Set our output to nothing, this supresses a warning that we would otherwise get.
 		$out = "";

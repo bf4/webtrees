@@ -66,7 +66,12 @@ class SourceControllerRoot extends BaseController {
 		$this->sid = safe_GET_xref('sid');
 
 		$sourcerec = find_source_record($this->sid);
-		if (!$sourcerec) $sourcerec = "0 @".$this->sid."@ SOUR\n";
+
+		if (isset($pgv_changes[$this->sid."_".$GEDCOM])){
+			$sourcerec = "0 @".$this->sid."@ SOUR\n";
+		} else if (!$sourcerec) {
+			return false;
+		}
 
 		$this->source = new Source($sourcerec);
 		$this->source->ged_id=PGV_GED_ID; // This record is from a file
@@ -160,7 +165,12 @@ class SourceControllerRoot extends BaseController {
 	*/
 	function getPageTitle() {
 		global $pgv_lang;
-		return $this->source->getFullName()." - ".$this->sid." - ".$pgv_lang["source_info"];
+		if ($this->source) {
+			return $this->source->getFullName()." - ".$this->sid." - ".$pgv_lang["source_info"];
+		}
+		else {
+			return $pgv_lang["unable_to_find_record"];
+		}
 	}
 	/**
 	* check if use can edit this person

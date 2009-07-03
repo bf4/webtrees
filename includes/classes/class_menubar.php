@@ -54,8 +54,8 @@ class MenuBar
 	* @return Menu the menu item
 	*/
 	static function &getGedcomMenu() {
-		global $GEDCOMS, $ALLOW_CHANGE_GEDCOM;
-		global $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $pgv_lang;
+		global $ALLOW_CHANGE_GEDCOM, $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES, $pgv_lang;
+
 		if ($TEXT_DIRECTION=="rtl") $ff="_rtl"; else $ff="";
 		//-- main menu
 		$menu = new Menu($pgv_lang["welcome_page"], "index.php?ctype=gedcom", "down");
@@ -64,9 +64,9 @@ class MenuBar
 		$menu->addClass("menuitem$ff", "menuitem_hover$ff", "submenu$ff", "icon_large_gedcom");
 		$menu->addAccesskey($pgv_lang["accesskey_home_page"]);
 		//-- gedcom list
-		if ($ALLOW_CHANGE_GEDCOM && count($GEDCOMS)>1) {
-			foreach($GEDCOMS as $ged=>$gedarray) {
-				$submenu = new Menu(PrintReady($gedarray["title"], true), encode_url('index.php?ctype=gedcom&ged='.$ged));
+		if ($ALLOW_CHANGE_GEDCOM && count(get_all_gedcoms())>1) {
+			foreach (get_all_gedcoms() as $ged_id=>$gedcom) {
+				$submenu = new Menu(PrintReady(get_gedcom_setting($ged_id, 'title'), true), encode_url('index.php?ctype=gedcom&ged='.$gedcom));
 				if (!empty($PGV_IMAGES["gedcom"]["small"]))
 					$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["gedcom"]["small"]);
 				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff", "", "icon_small_gedcom");
@@ -88,8 +88,8 @@ class MenuBar
 	* @return Menu the menu item
 	*/
 	static function &getMygedviewMenu() {
-		global $GEDCOMS, $MEDIA_DIRECTORY, $MULTI_MEDIA;
-		global $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $pgv_lang;
+		global $MEDIA_DIRECTORY, $MULTI_MEDIA;
+		global $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES, $pgv_lang;
 		global $PEDIGREE_FULL_DETAILS, $PEDIGREE_LAYOUT, $USE_QUICK_UPDATE;
 		if ($TEXT_DIRECTION=="rtl") $ff="_rtl"; else $ff="";
 
@@ -213,17 +213,14 @@ class MenuBar
 		if ($TEXT_DIRECTION=="rtl") $ff="_rtl"; else $ff="";
 		if (!empty($SEARCH_SPIDER)) {
 			$menu = new Menu("", "", "");
-//			$menu->print_menu = null;
 			return $menu;
 		}
-
-		$ged = $GEDCOM;
 
 		$showFull = ($PEDIGREE_FULL_DETAILS) ? 1 : 0;
 		$showLayout = ($PEDIGREE_LAYOUT) ? 1 : 0;
 
 		//-- main charts menu item
-		$link = "pedigree.php?ged={$ged}&show_full={$showFull}&talloffset={$showLayout}";
+		$link = "pedigree.php?ged={$GEDCOM}&show_full={$showFull}&talloffset={$showLayout}";
 		if ($rootid) {
 			$link .= "&rootid={$rootid}";
 			$menu = new Menu($pgv_lang["charts"], encode_url($link));
@@ -260,7 +257,7 @@ class MenuBar
 			switch ($menuType) {
 			case "pedigree":
 				//-- pedigree
-				$link = "pedigree.php?ged={$ged}&show_full={$showFull}&talloffset={$showLayout}";
+				$link = "pedigree.php?ged={$GEDCOM}&show_full={$showFull}&talloffset={$showLayout}";
 				if ($rootid) $link .= "&rootid={$rootid}";
 				$submenu = new Menu($pgv_lang["pedigree_chart"], encode_url($link));
 				if (!empty($PGV_IMAGES["pedigree"]["small"]))
@@ -271,7 +268,7 @@ class MenuBar
 
 			case "descendancy":
 				//-- descendancy
-				$link = "descendancy.php?ged=${ged}";
+				$link = "descendancy.php?ged={$GEDCOM}";
 				if ($rootid) $link .= "&pid={$rootid}&show_full={$showFull}";
 				$submenu = new Menu($pgv_lang["descend_chart"], encode_url($link));
 				if (!empty($PGV_IMAGES["descendant"]["small"]))
@@ -282,7 +279,7 @@ class MenuBar
 
 			case "ancestry":
 				//-- ancestry
-				$link = "ancestry.php?ged=".$ged;
+				$link = "ancestry.php?ged=".$GEDCOM;
 				if ($rootid) $link .= "&rootid={$rootid}&show_full={$showFull}";
 				$submenu = new Menu($pgv_lang["ancestry_chart"], encode_url($link));
 				if (!empty($PGV_IMAGES["ancestry"]["small"]))
@@ -293,7 +290,7 @@ class MenuBar
 
 			case "compact":
 				//-- compact
-				$link = "compact.php?ged=".$ged;
+				$link = "compact.php?ged=".$GEDCOM;
 				if ($rootid) $link .= "&rootid=".$rootid;
 				$submenu = new Menu($pgv_lang["compact_chart"], encode_url($link));
 				if (!empty($PGV_IMAGES["ancestry"]["small"]))
@@ -304,7 +301,7 @@ class MenuBar
 
 			case "fanchart":
 				//-- fan chart
-				$link = "fanchart.php?ged=".$ged;
+				$link = "fanchart.php?ged=".$GEDCOM;
 				if ($rootid) $link .= "&rootid=".$rootid;
 				$submenu = new Menu($pgv_lang["fan_chart"], encode_url($link));
 				if (!empty($PGV_IMAGES["fanchart"]["small"]))
@@ -315,7 +312,7 @@ class MenuBar
 
 			case "hourglass":
 				//-- hourglass
-				$link = "hourglass.php?ged=".$ged;
+				$link = "hourglass.php?ged=".$GEDCOM;
 				if ($rootid) $link .= "&pid={$rootid}&show_full={$showFull}";
 				$submenu = new Menu($pgv_lang["hourglass_chart"], encode_url($link));
 				if (!empty($PGV_IMAGES["hourglass"]["small"]))
@@ -326,7 +323,7 @@ class MenuBar
 
 			case "familybook":
 				//-- familybook
-				$link = "familybook.php?ged=".$ged;
+				$link = "familybook.php?ged=".$GEDCOM;
 				if ($rootid) $link .= "&pid={$rootid}&show_full={$showFull}";
 				$submenu = new Menu($pgv_lang["familybook_chart"], encode_url($link));
 				if (!empty($PGV_IMAGES["fambook"]["small"]))
@@ -337,7 +334,7 @@ class MenuBar
 
 			case "timeline":
 				//-- timeline
-				$link = "timeline.php?ged=".$ged;
+				$link = "timeline.php?ged=".$GEDCOM;
 				if ($rootid) $link .= "&amp;pids[]=".$rootid;
 				$submenu = new Menu($pgv_lang["timeline_chart"], $link);
 				if (!empty($PGV_IMAGES["timeline"]["small"]))
@@ -348,7 +345,7 @@ class MenuBar
 
 			case "lifespan":
 				//-- lifespan
-				$link = "lifespan.php?ged=".$ged;
+				$link = "lifespan.php?ged=".$GEDCOM;
 				if ($rootid) $link .= "&pids[]={$rootid}&addFamily=1";
 				$submenu = new Menu($pgv_lang["lifespan_chart"], encode_url($link));
 				if (!empty($PGV_IMAGES["timeline"]["small"]))
@@ -378,7 +375,7 @@ class MenuBar
 				foreach ($pids as $key=>$pid) {
 					$person=Person::getInstance($pid);
 					if (($person && $pid!=$rootid) || empty($rootid)) {
-						$link = "relationship.php?ged=".$ged;
+						$link = "relationship.php?ged=".$GEDCOM;
 						if ($rootid) {
 							$link .= "&pid1={$pid}&pid2={$rootid}&pretty=2&followspouse=1";
 							$label = $pgv_lang["relationship_chart"].": ".PrintReady(strip_tags($person->getFullName()));
@@ -405,7 +402,7 @@ class MenuBar
 
 			case "treenav":
 				//-- interactive tree
-				$link = "treenav.php?ged={$ged}&rootid={$rootid}";
+				$link = "treenav.php?ged={$GEDCOM}&rootid={$rootid}";
 				$submenu = new Menu($pgv_lang["interactive_tree"], encode_url($link));
 				if (!empty($PGV_IMAGES["gedcom"]["small"]))
 					$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["gedcom"]["small"]);
@@ -424,7 +421,7 @@ class MenuBar
 	static function &getListsMenu($surname="") {
 		global $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $pgv_lang;
 		global $SHOW_SOURCES, $MULTI_MEDIA, $SEARCH_SPIDER;
-		global $GEDCOMS, $ALLOW_CHANGE_GEDCOM, $DEFAULT_GEDCOM;
+		global $ALLOW_CHANGE_GEDCOM;
 		if ($TEXT_DIRECTION=="rtl") $ff="_rtl"; else $ff="";
 
 		if (!empty($SEARCH_SPIDER)) { // Only want the indi list for search engines.
@@ -445,9 +442,9 @@ class MenuBar
 			}
 
 			//-- gedcom list
-			if ($ALLOW_CHANGE_GEDCOM && count($GEDCOMS)>1) {
-				foreach($GEDCOMS as $ged=>$gedarray) {
-					$submenu = new Menu(($pgv_lang["individual_list"]." - ".PrintReady($gedarray["title"])), encode_url('indilist.php?ged='.$ged));
+			if ($ALLOW_CHANGE_GEDCOM) {
+				foreach (get_all_gedcoms() as $ged_id=>$gedcom) {
+					$submenu = new Menu($pgv_lang["individual_list"]." - ".PrintReady(get_gedcom_setting($ged_id, 'title')), encode_url('indilist.php?ged='.$gedcom));
 					if (!empty($PGV_IMAGES["gedcom"]["small"]))
 						$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["gedcom"]["small"]);
 					$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff", "", "icon_small_gedcom");
@@ -602,7 +599,7 @@ class MenuBar
 	* @return Menu the menu item
 	*/
 	static function &getReportsMenu($pid="", $famid="") {
-		global $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOMS, $GEDCOM, $pgv_lang;
+		global $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $pgv_lang;
 		global $LANGUAGE, $PRIV_PUBLIC, $PRIV_USER, $PRIV_NONE, $PRIV_HIDE, $SEARCH_SPIDER;
 		if ($TEXT_DIRECTION=="rtl") $ff="_rtl"; else $ff="";
 		if ((!file_exists("reportengine.php")) || (!empty($SEARCH_SPIDER))) {

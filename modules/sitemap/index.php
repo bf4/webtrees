@@ -195,17 +195,17 @@ if ($action=="generate") {
 //  if (isset($_POST["GEDCOM_Privacy"])) echo "<tr><td class=\"optionbox\">".$pgv_lang["gedcoms_privacy"]."</td></tr>\n";
 
 	echo "<tr><td class=\"topbottombar\">".$pgv_lang["gedcoms_selected"]."</td></tr>\n";
-	foreach($GEDCOMS as $ged_index=>$ged_rec) {
-		if (isset($_POST["GEDCOM_".$ged_rec["id"]])) echo "<tr><td class=\"optionbox\">".$ged_rec["title"]."</td></tr>\n";
+	foreach (get_all_gedcoms() as $ged_id=>$gedcom) {
+		if (isset($_POST["GEDCOM_{$ged_id}"])) echo "<tr><td class=\"optionbox\">".get_gedcom_setting($ged_id, 'title')."</td></tr>\n";
 	}
 
 	echo "<tr><td class=\"topbottombar\">".$pgv_lang["sitemaps_generated"]."</td></tr>\n";
 	$filecounter = 0;
-	foreach($GEDCOMS as $ged_index=>$ged_rec) {
-		if (isset($_POST["GEDCOM_".$ged_rec["id"]])) {
+	foreach (get_all_gedcoms() as $ged_id=>$gedcom) {
+		if (isset($_POST["GEDCOM_{$ged_id}"])) {
 			$filecounter += 1;
-			$sitemapFilename = "SM_".preg_replace("/\.ged/i",".xml",$ged_rec["gedcom"]);
-			echo "<tr><td class=\"optionbox\"><a href=\"module.php?mod=sitemap&action=sendFiles&index=".$ged_rec["id"]."&gedcom_name=".$ged_rec["gedcom"]."&filename=".$sitemapFilename;
+			$sitemapFilename = "SM_".preg_replace("/\.ged/i",".xml",$gedcom);
+			echo "<tr><td class=\"optionbox\"><a href=\"module.php?mod=sitemap&action=sendFiles&index=".$ged_id."&gedcom_name=".$gedcom."&filename=".$sitemapFilename;
 			if (isset($_POST["welcome_page"])) echo "&welcome=true&welcome_priority=".$welcome_priority."&welcome_update=".$welcome_update;
 			if (isset($_POST["indi_recs"])) echo "&indi_rec=true&indirec_priority=".$indirec_priority."&indirec_update=".$indirec_update;
 			if (isset($_POST["indi_list"])) echo "&indi_lists=true&indilist_priority=".$indilist_priority."&indilist_update=".$indilist_update;
@@ -217,9 +217,9 @@ if ($action=="generate") {
 	}
 	if ($filecounter > 1) {
 		echo "<tr><td class=\"optionbox\"><a href=\"module.php?mod=sitemap&action=sendIndex";
-		foreach($GEDCOMS as $ged_index=>$ged_rec) {
-			if (isset($_POST["GEDCOM_".$ged_rec["id"]])) {
-				echo "&filenames[".$ged_rec["id"]."]=".$ged_rec["gedcom"];
+		foreach(get_all_gedcoms() as $ged_id=>$gedcom) {
+			if (isset($_POST["GEDCOM_{$ged_id}"])) {
+				echo "&filenames[".$ged_id."]=".$gedcom;
 			}
 		}
 		echo "\">SitemapIndex.xml</a></td></tr>\n";
@@ -242,8 +242,8 @@ if ($action=="") {
 			<td class="descriptionbox wrap width50"><?php print_help_link("SM_GEDCOM_SELECT_help", "qm", "SM_GEDCOM_SELECT"); echo $pgv_lang["gedcoms_selected"];?></td>
 			<td class="optionbox" colspan="3">
 <?php
-	foreach($GEDCOMS as $ged_index=>$ged_rec) {
-		echo "				<input type=\"checkbox\" name=\"GEDCOM_".$ged_rec["id"]."\" value=\"".$ged_rec["id"]."\" tabindex=\"".$i++."\" checked>".$ged_rec["title"]."<br />\n";
+	foreach (get_all_gedcoms() as $ged_id=>$gedcom) {
+		echo "				<input type=\"checkbox\" name=\"GEDCOM_".$ged_id."\" value=\"".$ged_id."\" tabindex=\"".$i++."\" checked>".get_gedcom_setting($ged_id, 'title')."<br />\n";
 	}
 ?>
 			</td>

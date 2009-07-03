@@ -129,8 +129,10 @@ class IndividualControllerRoot extends BaseController {
 					$newrec= $service->mergeGedcomRecord($remoteid, "0 @".$this->pid."@ INDI\n1 RFN ".$this->pid, false);
 					$indirec = $newrec;
 				}
-			} else {
+			} else if (isset($pgv_changes[$this->pid."_".$GEDCOM])){
 				$indirec = "0 @".$this->pid."@ INDI\n";
+			} else {
+				return false;
 			}
 		}
 		//-- check for the user
@@ -314,9 +316,14 @@ class IndividualControllerRoot extends BaseController {
 	* @return string the title of the page to go in the <title> tags
 	*/
 	function getPageTitle() {
-		global $pgv_lang, $GEDCOM;
-		$name = $this->indi->getFullName();
-		return $name." - ".$this->indi->getXref()." - ".$pgv_lang["indi_info"];
+		global $pgv_lang;
+		if ($this->indi) {
+			$name = $this->indi->getFullName();
+			return $name." - ".$this->indi->getXref()." - ".$pgv_lang["indi_info"];
+		}
+		else {
+			return $pgv_lang["unable_to_find_record"];
+		}
 	}
 
 	/**
@@ -2040,10 +2047,10 @@ class IndividualControllerRoot extends BaseController {
 	function print_lightbox_tab() {
 		global $MULTI_MEDIA, $SHOW_ID_NUMBERS, $MEDIA_EXTERNAL;
 		global $pgv_lang, $pgv_changes, $factarray, $view;
-		global $GEDCOM, $MEDIATYPE, $pgv_changes, $DBTYPE;
+		global $GEDCOM, $MEDIATYPE, $pgv_changes;
 		global $WORD_WRAPPED_NOTES, $MEDIA_DIRECTORY, $PGV_IMAGE_DIR, $PGV_IMAGES, $TEXT_DIRECTION, $is_media;
 		global $cntm1, $cntm2, $cntm3, $cntm4, $t, $mgedrec ;
-		global $typ2b, $edit ;
+		global $edit ;
 		global $CONTACT_EMAIL, $pid, $tabno;
 		global $Fam_Navigator, $NAV_ALBUM;
 
@@ -2101,7 +2108,7 @@ class IndividualControllerRoot extends BaseController {
 	/*
 		global $MULTI_MEDIA, $SHOW_ID_NUMBERS, $MEDIA_EXTERNAL;
 		global $pgv_lang, $pgv_changes, $factarray, $view;
-		global $GEDCOM, $MEDIATYPE, $DBTYPE;
+		global $GEDCOM, $MEDIATYPE;
 		global $WORD_WRAPPED_NOTES, $MEDIA_DIRECTORY, $PGV_IMAGE_DIR, $PGV_IMAGES, $TEXT_DIRECTION, $is_media;
 		global $mgedrec ;
 		global $CONTACT_EMAIL, $pid, $tabno;
@@ -2173,10 +2180,10 @@ class IndividualControllerRoot extends BaseController {
 	* include GedFact controller
 	*/
 	function census_assistant() {
-		require 'modules/GEDFact_assistant/CENS/census_1_ctrl.php';
+		require 'modules/GEDFact_assistant/_CENS/census_1_ctrl.php';
 	}
 	function medialink_assistant() {
-		require 'modules/GEDFact_assistant/MEDIA/media_1_ctrl.php';
+		require 'modules/GEDFact_assistant/_MEDIA/media_1_ctrl.php';
 	}
 // -----------------------------------------------------------------------------
 // End GedFact Assistant Functions

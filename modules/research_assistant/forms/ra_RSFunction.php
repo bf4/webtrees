@@ -44,7 +44,7 @@ require_once("includes/classes/class_person.php");
 	//an individual will have the same birth, marriage and death place
 	//at each index of the array will be a description as well as a percentage liklihood of the given correlation
 	function personalinferences($pid) {
-		global $TBLPREFIX, $GEDCOMS, $GEDCOM, $indilist, $famlist;
+		global $TBLPREFIX, $indilist, $famlist;
 
 		$inferences[] = array('local'=>'SURN', 'record'=>'FAMC:HUSB', 'comp'=>'SURN', 'value'=>0, 'count'=>0);
 		$inferences[] = array('local'=>'SURN', 'record'=>'FAMC:WIFE', 'comp'=>'SURN', 'value'=>0, 'count'=>0);
@@ -245,10 +245,9 @@ require_once("includes/classes/class_person.php");
 	 * Both the global and local contain first the probability, and second the value of what you are looking for
 
 	 */
-	function singleInference($pid,$factType)
-	{
+	function singleInference($pid,$factType) {
+		global $TBLPREFIX;
 
-		global $TBLPREFIX,$GEDCOMS, $GEDCOM;
 		//Run the fact check
 		$tempArray = personalinferences($pid);
 		//create an array to hold our data to put it in the actual array
@@ -303,7 +302,7 @@ require_once("includes/classes/class_person.php");
 			}
 		}
 		$rows=
-			PGV_DB::prepare("SELECT * FROM {$TBLPREFIX}probabilities WHERE pr_file=? AND pr_f_lvl ".PGV_DB_LIKE." ? ORDER BY (pr_matches/pr_count) DESC")
+			PGV_DB::prepare("SELECT * FROM {$TBLPREFIX}probabilities WHERE pr_file=? AND pr_f_lvl ".PGV_DB::$LIKE." ? ORDER BY (pr_matches/pr_count) DESC")
 			->execute(array(PGV_GED_ID, "{$factType}%"))
 			->fetchAll();
 
@@ -385,8 +384,7 @@ require_once("includes/classes/class_person.php");
 
 	function getGlobalinferences()
 	{
-		global $TBLPREFIX,$GEDCOMS, $GEDCOM;
-		global $LANGUAGE, $factarray, $pgv_lang;
+		global $TBLPREFIX, $LANGUAGE, $factarray, $pgv_lang;
 
 		$rows=
 			PGV_DB::prepare("SELECT * FROM {$TBLPREFIX}probabilities WHERE pr_file=? ORDER BY (pr_matches/pr_count) DESC")

@@ -30,8 +30,9 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
+$pgv_lang["gedcomid"]			= "ID wpisu osoby w pliku GEDCOM";
 $pgv_lang["sortby"]				= "Sortuj według";
-$pgv_lang["exact"]				= "Dokładna data";
+$pgv_lang["exact"]				= "Dokładnie";
 $pgv_lang["begins_with"]		= "Zaczyna się od";
 $pgv_lang["contains"]			= "Zawiera";
 $pgv_lang["sounds_like"]		= "Brzmi jak";
@@ -391,6 +392,7 @@ $pgv_lang["start_at_parents"]	= "Zacznij od rodziców";
 $pgv_lang["charts"]				= "Diagramy";
 $pgv_lang["lists"]				= "Listy";
 $pgv_lang["box_width"]			= "Szerokość ramki";
+$pgv_lang["random_surn"]		= "Losowe nazwisko";
 
 //-- FUNCTIONS FILE MESSAGES
 $pgv_lang["unable_to_find_family"]	= "Nie znaleziono rodziny o tym identyfikatorze";
@@ -609,6 +611,7 @@ $pgv_lang["titles_found"]			= "Tytuły";
 $pgv_lang["find_source"]			= "Znajdź źrodło";
 
 //-- REPOLIST FILE MESSAGES
+$pgv_lang["repository"]				= "Repozytoria";
 $pgv_lang["repos_found"]			= "Znaleziono repozytoria";
 $pgv_lang["find_repository"]		= "Znajdź repozytorium";
 $pgv_lang["total_repositories"]		= "Wszystkich repozytoriów";
@@ -1330,11 +1333,11 @@ $pgv_lang["upcoming_events_block"]	= "Nadchodzące wydarzenia";
 $pgv_lang["upcoming_events_descr"]	= "Sekcja nadchodzących wydarzeń wyświetla rocznice wydarzeń, które będą miały miejsce w najbliższej przyszłości. Możesz zmienić poziom szczegółowości informacji, zaś administrator może decydować, jak daleko w przyszłość będą wybiegać.";
 $pgv_lang["todays_events_block"]	= "Tego dnia";
 $pgv_lang["todays_events_descr"]	= "Sekcja tego dnia wyświetla rocznice wydarzeń na dzisiaj. Możesz zmienić poziom szczegółowości wyświetlanych informacji.";
-$pgv_lang["todo_block"]			= "Zadania Do Zrobienia";
-$pgv_lang["todo_descr"]			= "Blok Do Zrobienia prezentuje wszystkie fakty _TODO będące w bazie.";
+$pgv_lang["todo_block"]				= "Zadania do zrobienia";
+$pgv_lang["todo_descr"]				= "Blok 'Zadania do zrobienia' prezentuje wszystkie fakty _TODO będące w bazie.";
 $pgv_lang["todo_show_other"]		= "Pokaż inne zadania użytkownika";
-$pgv_lang["todo_show_unassigned"]	= "Pokaż nie przypisane zadania";
-$pgv_lang["todo_show_future"]		= "Pokaż zadania";
+$pgv_lang["todo_show_unassigned"]	= "Pokaż nieprzypisane zadania";
+$pgv_lang["todo_show_future"]		= "Pokaż przyszłe zadania";
 $pgv_lang["todo_nothing"]			= "Brak zadań do zrobinia.";
 $pgv_lang["yahrzeit_block"]			= "Yahrzeit (rocznice śmierci)";
 $pgv_lang["yahrzeit_descr"]			= "Blok Yahrzeit (rocznice śmierci) pokazuje rocznice śmierci, które wydarzą się w niedalekiej przyszłości. Możesz skonfigurować okres do pokazania, a Administrator może skonfigurować jak daleko w przyszłość ten blok będzie sięgał.";
@@ -1648,6 +1651,7 @@ $pgv_lang["stat_1_map"]		= "Rozmieszczenie osób";
 $pgv_lang["stat_2_map"]		= "Kraj urodzin";
 $pgv_lang["stat_3_map"]		= "Kraj śmierci";
 $pgv_lang["stat_4_map"]		= "Kraj ślubu";
+$pgv_lang["stat_5_birth"]	= "Liczba urodzeń według wieku";
 $pgv_lang["stat_8_fam"]		= "Liczba rodzin powiązanych ze źródłami";
 $pgv_lang["stat_9_indi"]	= "Liczba osób powiązanych ze źródłami";
 $pgv_lang["stat_10_none"]	= "brak";

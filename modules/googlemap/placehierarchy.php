@@ -94,10 +94,9 @@ function get_placeid($place) {
 			if (empty($par[$i])) $par[$i]="unknown";
 			$placelist = create_possible_place_names($par[$i], $i+1);
 			foreach ($placelist as $key => $placename) {
-				$escparent=preg_replace("/\?/","\\\\\\?", $placename);
 				$pl_id=
-					PGV_DB::prepare("SELECT pl_id FROM {$TBLPREFIX}placelocation WHERE pl_level={$i} AND pl_parent_id={$place_id} AND pl_place ".PGV_DB_LIKE." '{$escparent}' ORDER BY pl_place")
-					->execute(array())
+					PGV_DB::prepare("SELECT pl_id FROM {$TBLPREFIX}placelocation WHERE pl_level=? AND pl_parent_id=? AND pl_place ".PGV_DB::$LIKE." ? ORDER BY pl_place")
+					->execute(array($i, $place_id, $placename))
 					->fetchOne();
 				if (!empty($pl_id)) break;
 			}
@@ -179,8 +178,8 @@ function print_how_many_people($level, $parent) {
 	$place_count_fam = 0;
 	if (!isset($parent[$level-1])) $parent[$level-1]="";
 	$p_id = set_levelm($level, $parent);
-	$indi = $stats->statsPlaces('INDI', false, $p_id);
-	$fam = $stats->statsPlaces('FAM', false, $p_id);
+	$indi = $stats->_statsPlaces('INDI', false, $p_id);
+	$fam = $stats->_statsPlaces('FAM', false, $p_id);
 	if (!empty($indi)) {
 		foreach ($indi as $place) {
 			$place_count_indi=$place['count(*)'];

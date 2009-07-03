@@ -5,7 +5,7 @@
  * You must supply a $famid value with the identifier for the family.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
+ * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -35,7 +35,12 @@ $controller->init();
 
 print_header($controller->getPageTitle());
 // completely prevent display if privacy dictates so
-if (!$controller->family->canDisplayDetails()) {
+if (!$controller->family){
+	echo "<b>".$pgv_lang["unable_to_find_record"]."</b><br /><br />";
+	print_footer();
+	exit;
+}
+else if (!$controller->family->canDisplayDetails()) {
 	print_privacy_error($CONTACT_EMAIL);
 	print_footer();
 	exit;
@@ -108,7 +113,7 @@ $show_full = "1";
 				<tr>
 					<td class="sublinks_cell <?php print $TEXT_DIRECTION?>">
 		<?php } else { ?>
-		<div class="sublinks_table">
+		<div id="optionsmenu" class="sublinks_table">
 			<div class="list_label <?php echo $TEXT_DIRECTION; ?>"><?php echo $pgv_lang["fams_charts"]; ?></div>
 				<ul class="sublinks_cell <?php echo $TEXT_DIRECTION; ?>">
 		<?php } 

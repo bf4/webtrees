@@ -175,7 +175,7 @@ function check_media_structure() {
 function get_medialist($currentdir = false, $directory = "", $linkonly = false, $random = false, $includeExternal = true) {
 	global $MEDIA_DIRECTORY_LEVELS, $BADMEDIA, $thumbdir, $TBLPREFIX, $MEDIATYPE;
 	global $level, $dirs, $ALLOW_CHANGE_GEDCOM, $GEDCOM, $GEDCOMS, $MEDIA_DIRECTORY;
-	global $MEDIA_EXTERNAL, $pgv_changes, $DBTYPE, $USE_MEDIA_FIREWALL;
+	global $MEDIA_EXTERNAL, $pgv_changes, $USE_MEDIA_FIREWALL;
 
 	// Retrieve the gedcoms to search in
 	$sgeds = array ();
@@ -204,12 +204,12 @@ function get_medialist($currentdir = false, $directory = "", $linkonly = false, 
 	$myDir = str_replace($MEDIA_DIRECTORY, "", $directory);
 	if ($random) {
 		$rows=
-			PGV_DB::prepareLimit("SELECT m_id, m_file, m_media, m_gedrec, m_titl, m_gedfile FROM {$TBLPREFIX}media WHERE m_gedfile=? ORDER BY ".PGV_DB_RANDOM, 5)
+			PGV_DB::prepareLimit("SELECT m_id, m_file, m_media, m_gedrec, m_titl, m_gedfile FROM {$TBLPREFIX}media WHERE m_gedfile=? ORDER BY ".PGV_DB::$RANDOM, 5)
 			->execute(array(PGV_GED_ID))
 			->fetchAll();
 	} else {
 		$rows=
-			PGV_DB::prepare("SELECT m_id, m_file, m_media, m_gedrec, m_titl, m_gedfile FROM {$TBLPREFIX}media WHERE m_gedfile=? AND (m_file ".PGV_DB_LIKE." ? OR m_file ".PGV_DB_LIKE." ?) ORDER BY m_id desc")
+			PGV_DB::prepare("SELECT m_id, m_file, m_media, m_gedrec, m_titl, m_gedfile FROM {$TBLPREFIX}media WHERE m_gedfile=? AND (m_file ".PGV_DB::$LIKE." ? OR m_file ".PGV_DB::$LIKE." ?) ORDER BY m_id desc")
 			->execute(array(PGV_GED_ID, "%{$myDir}%", "%://%"))
 			->fetchAll();
 	}
@@ -1315,7 +1315,7 @@ function show_media_form($pid, $action = "newentry", $filename = "", $linktoid =
 		else echo $folder;
 		echo '<input name="oldFolder" type="hidden" value="', addslashes($folder), '" />';
 		if (PGV_USER_IS_ADMIN) {
-			echo '<br /><span dir="ltr"><input type="text" name="folder" size="40" value="', $folder, ' "onblur="checkpath(this)" /></span>';
+			echo '<br /><span dir="ltr"><input type="text" name="folder" size="40" value="', $folder, '" onblur="checkpath(this)" /></span>';
 			if ($MEDIA_DIRECTORY_LEVELS>0) {
 				echo '<br /><sub>', print_text("server_folder_advice",0,1), '</sub>';
 			}
@@ -1505,7 +1505,7 @@ function show_media_form($pid, $action = "newentry", $filename = "", $linktoid =
 				var extsearch=/\.([a-zA-Z]{3,4})$/;
 				ext='';
 				if (extsearch.exec(filename)) {
-					ext = RegExp.$1;
+					ext = RegExp.$1.toLowerCase();
 					if (ext=='jpg') ext='jpeg';
 					if (ext=='tif') ext='tiff';
 				}
@@ -1641,7 +1641,7 @@ function PrintMediaLinks($links, $size = "small") {
 function get_media_id_from_file($filename){
 	global $TBLPREFIX;
 	return
-		PGV_DB::prepare("SELECT m_media FROM {$TBLPREFIX}media WHERE m_file ".PGV_DB_LIKE." ?")
+		PGV_DB::prepare("SELECT m_media FROM {$TBLPREFIX}media WHERE m_file ".PGV_DB::$LIKE." ?")
 		->execute(array("%{$filename}"))
 		->fetchOne();
 }

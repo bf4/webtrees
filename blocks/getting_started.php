@@ -53,7 +53,7 @@ $PGV_BLOCKS["getting_started_block"]["config"]		= array("cache"=>5);
 
 //-- function to print the gedcom block
 function getting_started_block($block = true, $config="", $side, $index) {
-	global $pgv_lang, $GEDCOM, $GEDCOMS, $SHOW_COUNTER;
+	global $pgv_lang, $GEDCOM, $SHOW_COUNTER;
 
 	$id = "getting_started";
 	$title = $pgv_lang["install_step_8"];

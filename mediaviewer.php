@@ -44,6 +44,11 @@ $filename = $controller->getLocalFilename();
 
 print_header($controller->getPageTitle());
 
+if (!$controller->mediaobject){
+	echo "<b>".$pgv_lang["unable_to_find_record"]."</b><br /><br />";
+	print_footer();
+	exit;
+}
 global $tmb;
 
 // LBox =============================================================================
@@ -59,18 +64,18 @@ loadLangFile("lightbox:lang");
 
 //The following lines of code are used to print the menu box on the top right hand corner
 if ((!$controller->isPrintPreview())&&(empty($SEARCH_SPIDER))&&!empty($controller->pid)&&!empty($filename)) {
-	if ($controller->userCanEdit() || $controller->canShowOtherMenu()) { ?>
+	if (PGV_USER_CAN_EDIT || $controller->canShowOtherMenu()) { ?>
 		<?php if (!$PGV_MENUS_AS_LISTS) {?>
-		<table class="sublinks_table rtl noprint" style="margin: 10px;" cellspacing="4" cellpadding="0" align="<?php print $TEXT_DIRECTION=='ltr'?'right':'left';?>">
+		<table class="sublinks_table <?php echo $TEXT_DIRECTION; ?> noprint" style="margin: 10px;" cellspacing="4" cellpadding="0" align="<?php print $TEXT_DIRECTION=='ltr'?'right':'left';?>">
 			<tr>
 				<td class="list_label <?php echo $TEXT_DIRECTION; ?>" colspan="5"><?php print $pgv_lang["media_options"]; ?></td>
 			</tr>
 			<tr>
 		<?php } else { ?>
-		<div class="sublinks_table">
+		<div id="optionsmenu" class="sublinks_table">
 			<div class="list_label <?php echo $TEXT_DIRECTION; ?>"><?php echo $pgv_lang["media_options"]; ?></div>
 		<?php } 
-				if ($controller->userCanEdit()) {
+				if (PGV_USER_CAN_EDIT) {
 				?>
 				<<?php if (!$PGV_MENUS_AS_LISTS) {?>td<?php } else { ?>ul<?php }?> class="sublinks_cell <?php echo $TEXT_DIRECTION; ?>">
 					<?php $menu = $controller->getEditMenu(); $menu->printMenu(); ?>
@@ -213,7 +218,7 @@ function showchanges() {
 }
 
 function ilinkitem(mediaid, type) {
-	window.open('inverselink.php?mediaid='+mediaid+'&linkto='+type+'&'+sessionname+'='+sessionid, '_blank', 'top=50,left=50,width=530,height=650,resizable=1,scrollbars=1');
+	window.open('inverselink.php?mediaid='+mediaid+'&linkto='+type+'&'+sessionname+'='+sessionid, '_blank', 'top=50,left=50,width=570,height=630,resizable=1,scrollbars=1');
 	return false;
 }
 //-->

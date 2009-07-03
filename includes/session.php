@@ -43,8 +43,12 @@ define('PGV_TRANSLATORS_URL', 'http://sourceforge.net/forum/forum.php?forum_id=2
 define('PGV_DEBUG',       false);
 define('PGV_DEBUG_SQL',   false);
 define('PGV_DEBUG_PRIV',  false);
+
 // Error reporting
 define('PGV_ERROR_LEVEL', 2); // 0=none, 1=minimal, 2=full
+
+// Required version of database tables/columns/indexes/etc.
+define('PGV_SCHEMA_VERSION', 10);
 
 // Environmental requirements
 define('PGV_REQUIRED_PHP_VERSION',     '5.2.0'); // 5.2.3 is recommended
@@ -97,7 +101,7 @@ if (!isset($DB_UTF8_COLLATION)) {
 	$DB_UTF8_COLLATION=false;
 }
 
-// New setting, added to config.php in 4.?.? (TODO - when the svn server stops sucking, fill this version in).
+// New setting, added to config.php in 4.1.4
 if (!isset($DBPORT)) {
 	$DBPORT='';
 }
@@ -143,7 +147,6 @@ $CONFIG_VARS = array(
 	'USE_REGISTRATION_MODULE',
 	'ALLOW_USER_THEMES',
 	'ALLOW_REMEMBER_ME',
-	'DEFAULT_GEDCOM',
 	'ALLOW_CHANGE_GEDCOM',
 	'LOGFILE_CREATE',
 	'PGV_SESSION_SAVE_PATH',
@@ -173,7 +176,7 @@ set_magic_quotes_runtime(0);
 // magic_quotes_gpc can't be disabled at run-time, so clean them up as necessary.
 if (function_exists('get_magic_quotes_gpc') && get_magic_quotes_gpc() ||
 	ini_get('magic_quotes_sybase') && strtolower(ini_get('magic_quotes_sybase'))!='off') {
-	$in = array(&$_GET, &$_POST, &$_COOKIE);
+	$in = array(&$_GET, &$_POST, &$_REQUEST, &$_COOKIE);
 	while (list($k,$v) = each($in)) {
 		foreach ($v as $key => $val) {
 			if (!is_array($val)) {
@@ -353,29 +356,37 @@ if (file_exists($INDEX_DIRECTORY."gedcoms.php")) {
 	$GEDCOMS=array();
 }
 
-//-- connect to the database
-$DBPASS = str_replace(array("\\\\", "\\\"", "\\\$"), array("\\", "\"", "\$"), $DBPASS); // remove escape codes before using PW
-
-// New PDO-based connection
+// Connect to the database
 require_once 'includes/classes/class_pgv_db.php';
 try {
-	PGV_DB::createInstance($DBTYPE, $DBHOST, $DBPORT, $DBNAME, $DBUSER, $DBPASS, $DBPERSIST, $DB_UTF8_COLLATION);
-	//unset($DBUSER, $DBPASS);
-	$PGV_DB_CONNECTED=true;
+	$DBPASS=str_replace(array("\\\\", "\\\"", "\\\$"), array("\\", "\"", "\$"), $DBPASS); // remove escape codes before using PW
+	PGV_DB::createInstance($DBTYPE, $DBHOST, $DBPORT, $DBNAME, $DBUSER, $DBPASS, $DB_UTF8_COLLATION);
+	unset($DBUSER, $DBPASS);
+	try {
+		PGV_DB::updateSchema('includes/db_schema/', 'PGV_SCHEMA_VERSION', PGV_SCHEMA_VERSION);
+	} catch (PDOException $ex) {
+		// The schema update scripts should never fail.  If they do, there is no clean recovery.
+		die($ex);
+	}
 } catch (PDOException $ex) {
-	$PGV_DB_CONNECTED=false;
+	// Can't connect to the DB?  We'll get redirected to install.php later.....
 }
-
-$PGV_DB_CONNECTED = check_db();
 
 $logout=safe_GET_bool('logout');
 //-- try to set the active GEDCOM
-if (!isset($DEFAULT_GEDCOM)) $DEFAULT_GEDCOM = "";
 if (isset($_SESSION["GEDCOM"])) $GEDCOM = $_SESSION["GEDCOM"];
 if (isset($_REQUEST["GEDCOM"])) $GEDCOM = trim($_REQUEST["GEDCOM"]);
 if (isset($_REQUEST["ged"])) $GEDCOM = trim($_REQUEST["ged"]);
-if (!empty($GEDCOM) && is_int($GEDCOM)) $GEDCOM = get_gedcom_from_id($GEDCOM);
-if ($logout || empty($GEDCOM) || empty($GEDCOMS[$GEDCOM])) $GEDCOM=$DEFAULT_GEDCOM;
+if (!empty($GEDCOM) && is_int($GEDCOM)) {
+	$GEDCOM=get_gedcom_from_id($GEDCOM);
+}
+if ($logout || empty($GEDCOM) || empty($GEDCOMS[$GEDCOM])) {
+	try {
+		$GEDCOM=get_site_setting('DEFAULT_GEDCOM');
+	} catch (PDOException $ex) {
+		$GEDCOM='';
+	}
+}
 if ((empty($GEDCOM))&&(count($GEDCOMS)>0)) {
 	foreach($GEDCOMS as $ged_file=>$ged_array) {
 		$GEDCOM = $ged_file;
@@ -588,7 +599,7 @@ if (isset($SHOW_CONTEXT_HELP) && $show_context_help==='no') $_SESSION["show_cont
 if (!isset($USE_THUMBS_MAIN)) $USE_THUMBS_MAIN = false;
 if ((strstr($SCRIPT_NAME, "install.php")===false)
 	&&(strstr($SCRIPT_NAME, "editconfig_help.php")===false)) {
-	if (!$PGV_DB_CONNECTED || !adminUserExists()) {
+	if (!PGV_DB::isConnected() || !adminUserExists()) {
 		header("Location: install.php");
 		exit;
 	}
@@ -662,7 +673,7 @@ if ((strstr($SCRIPT_NAME, "install.php")===false)
 }
 
 //-- load the user specific theme
-if ($PGV_DB_CONNECTED && PGV_USER_ID && !isset($_REQUEST['logout'])) {
+if (PGV_DB::isConnected() && PGV_USER_ID && !isset($_REQUEST['logout'])) {
 	//-- update the login time every 5 minutes
 	if (!isset($_SESSION['activity_time']) || (time()-$_SESSION['activity_time'])>300) {
 		userUpdateLogin(PGV_USER_ID);

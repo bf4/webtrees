@@ -32,6 +32,12 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
+?>
+	<dd id="door1"><a href="javascript:;" onclick="tabswitch(1); return false;" ><?php echo $pgv_lang["personal_facts"]?></a></dd>
+	<dd id="door2"><a href="javascript:;" onclick="tabswitch(2); return false;" ><?php echo $pgv_lang["notes"]?></a></dd>
+	<dd id="door3"><a href="javascript:;" onclick="tabswitch(3); return false;" ><?php echo $pgv_lang["ssourcess"]?></a></dd>
+
+<?php
 	if ($MULTI_MEDIA){
 		if (!file_exists("modules/googlemap/defaultconfig.php")) {  ?>
 			<?php if (file_exists("modules/lightbox/album.php") ) {?>
@@ -53,8 +59,10 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	<?php if (file_exists("modules/googlemap/defaultconfig.php")) { ?>
 		<dd id="door8"><a href="javascript:;" onclick="tabswitch(8); if (loadedTabs[8]) {ResizeMap(); ResizeMap();} return false;" ><?php print $pgv_lang["googlemap"]?></a></dd>
 	<?php } ?>
+<!--	<dd id="door10"><a href="javascript:;" onclick="tabswitch(10); return false;" ><?php print "Spare Tab" ?></a></dd> -->
+	
 	<dd id="door0"><a href="javascript:;" onclick="tabswitch(0); if (loadedTabs[8]) {ResizeMap(); ResizeMap();} return false;" ><?php print $pgv_lang["all"]?></a></dd> 
-<!--	<dd id="door10"><a href="javascript:;" onclick="tabswitch(10); return false;" ><?php print "Spare" ?></a></dd>  -->
+  
 
 
 

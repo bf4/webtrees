@@ -584,7 +584,7 @@ function print_header($title, $head="", $use_alternate_styles=true) {
 	var whichhelp = \'help_'.basename($SCRIPT_NAME).'&action='.$action.'\';
 	//-->
 	</script>
-	<script src="phpgedview.js" language="JavaScript" type="text/javascript"></script>
+	<script src="js/phpgedview.js" language="JavaScript" type="text/javascript"></script>
 	';
 	$bodyOnLoad = '';
 	if ($view=="preview") $bodyOnLoad .= " onbeforeprint=\"hidePrint();\" onafterprint=\"showBack();\"";
@@ -627,7 +627,7 @@ function print_simple_header($title) {
 
 // -- print the html to close the page
 function print_footer() {
-	global $pgv_lang, $view, $DBTYPE;
+	global $pgv_lang, $view;
 	global $SHOW_STATS, $SCRIPT_NAME, $QUERY_STRING, $footerfile, $print_footerfile, $GEDCOMS, $ALLOW_CHANGE_GEDCOM, $printlink;
 	global $PGV_IMAGE_DIR, $theme_name, $PGV_IMAGES, $TEXT_DIRECTION, $footer_count;
 
@@ -1301,10 +1301,13 @@ function print_privacy_error($username) {
 function print_help_link($help, $helpText, $show_desc="", $use_print_text=false, $return=false) {
 	global $pgv_lang, $view, $PGV_USE_HELPIMG, $PGV_IMAGES, $PGV_IMAGE_DIR, $SEARCH_SPIDER;
 
+loadLangFile('pgv_help');
+
 	$output='';
 	if (!$SEARCH_SPIDER && $view!='preview' && $_SESSION['show_context_help']) {
-		$output.=' <a class="help" tabindex="0" href="javascript:// ';
+		$output.=' <a class="help" tabindex="0" title="';
 		if ($show_desc) {
+			$output.=$pgv_lang["help_header"].' '.$pgv_lang[$show_desc].'" href="javascript:// ';
 			if ($use_print_text) {
 				$output.=print_text($show_desc, 0, 1);
 			} else {
@@ -1315,6 +1318,7 @@ function print_help_link($help, $helpText, $show_desc="", $use_print_text=false,
 				}
 			}
 		} else {
+			$output.=$pgv_lang["help_header"].'" href="javascript:// ';
 			$output.=$help;
 		}
 		$output.="\" onclick=\"helpPopup('$help'); return false;\">";
@@ -1417,16 +1421,7 @@ function print_text($help, $level=0, $noprint=0){
 		else if ($noprint==0 && $level==0) $sentence = str_replace($match[$i][0], $match[$i][1].": ".$pgv_lang["var_not_exist"], $sentence);
 	}
 	// ------ Replace paired ~  by tag_start and tag_end (those vars contain CSS classes)
-	while (stristr($sentence, "~") == TRUE){
-		$pos1 = strpos($sentence, "~");
-		$mod_sentence = substr_replace($sentence, " ", $pos1, 1);
-		if (stristr($mod_sentence, "~")){  // If there's a second one:
-			$pos2 = strpos($mod_sentence, "~");
-			$replace = substr($sentence, ($pos1+1), ($pos2-$pos1-1));
-			$replace_text = "<span class=\"helpstart\">".UTF8_strtoupper($replace)."</span>";
-			$sentence = str_replace("~".$replace."~", $replace_text, $sentence);
-		} else break;
-	}
+	$sentence=preg_replace('/~([^<>]{1,})~/e', "'<span class=\"helpstart\">'.UTF8_strtoupper('\\1').'</span>'", $sentence);
 	if ($noprint>0) return $sentence;
 	if ($level>0) return $sentence;
 	echo $sentence;
@@ -2288,15 +2283,15 @@ function print_add_new_fact($id, $usedfacts, $type) {
 	usort($addfacts, "factsort");
 	echo "<tr><td class=\"descriptionbox ".$TEXT_DIRECTION."\">";
 	print_help_link("add_new_facts_help", "qm");
-	echo $pgv_lang["add_fact"]."</td>";
+	echo $pgv_lang["add_fact"]."</td>\n";
 	echo "<td class=\"optionbox wrap ".$TEXT_DIRECTION."\">";
 	echo "<form method=\"get\" name=\"newfactform\" action=\"\" onsubmit=\"return false;\">";
-	echo "<select id=\"newfact\" name=\"newfact\">";
+	echo "<select id=\"newfact\" name=\"newfact\">\n";
 	foreach($addfacts as $indexval => $fact) {
-		echo PrintReady(stripLRMRLM("<option value=\"$fact\">".$factarray[$fact]. " [".$fact."]</option>"));
+		echo PrintReady(stripLRMRLM("\t<option value=\"$fact\">".$factarray[$fact]. " [".$fact."]</option>\n"));
 	}
 	if (($type == "INDI") || ($type == "FAM")) echo "<option value=\"EVEN\">".$pgv_lang["custom_event"]." [EVEN]</option>";
-	echo "</select>";
+	echo "\n</select>\n";
 	echo "&nbsp;&nbsp;<input type=\"button\" value=\"".$pgv_lang["add"]."\" onclick=\"add_record('$id', 'newfact');\" /> ";
 	foreach($quickfacts as $k=>$v) echo "&nbsp;<small><a href='javascript://$v' onclick=\"add_new_record('$id', '$v');return false;\">".$factarray["$v"]."</a></small>&nbsp;";
 	echo "</form>";

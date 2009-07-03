@@ -1248,12 +1248,9 @@ class GedcomDate {
 	// Static function to compare two dates.
 	// return <0 if $a<$b
 	// return >0 if $b>$a
-	// return  0 if dates same/overlap/invalid
+	// return  0 if dates same/overlap
 	// BEF/AFT sort as the day before/after.
 	static function Compare(&$a, &$b) {
-		// Incomplete dates can't be sorted
-		if (!is_object($a) || !is_object($b) || !$a->isOK() || !$b->isOK())
-			return 0;
 		// Get min/max JD for each date.
 		switch ($a->qual1) {
 		case 'bef':

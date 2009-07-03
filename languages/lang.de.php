@@ -32,6 +32,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
+$pgv_lang["gedcomid"]					= "ID Nummer dieser Person";
 $pgv_lang["sortby"]						= "Reihenfolge";
 $pgv_lang["exact"]						= "Genau";
 $pgv_lang["begins_with"]				= "Beginnt mit";
@@ -394,6 +395,7 @@ $pgv_lang["start_at_parents"]			= "Bei den Eltern beginnen";
 $pgv_lang["charts"]						= "Diagramme";
 $pgv_lang["lists"]						= "Listen";
 $pgv_lang["box_width"]					= "Box Breite";
+$pgv_lang["random_surn"]				= "Zufällig gewählter Nachname";
 
 //-- FUNCTIONS FILE MESSAGES
 $pgv_lang["unable_to_find_family"]		= "Kann die Familie mit folgendem ID nicht finden:";
@@ -535,7 +537,7 @@ $pgv_lang["family_private"]				= "Details dieser Familie sind vertraulich.  Deta
 $pgv_lang["media_private"]				= "Details dieses Medienobjektes sind vertraulich. Details werden nicht gesammelt.";
 $pgv_lang["download"]					= "Klicken Sie mit der rechten Maustaste (beim Mac Control-Klick) auf den untenstehenden Link und wählen &quot;Ziel speichern unter&quot;, um den Sammelbehälter als GEDCOM Datei auf Ihren eigenen Computer zu übertragen (Download).";
 $pgv_lang["cart_is_empty"]				= "Ihr Sammelbehälter ist leer.";
-$pgv_lang["id"]							= "Identifikationsnummer (ID)";
+$pgv_lang["id"]							= "ID-Nummer";
 $pgv_lang["name_description"]			= "Name / Beschreibung";
 $pgv_lang["remove"]						= "löschen";
 $pgv_lang["empty_cart"]					= "Sammelbehälter leeren";
@@ -612,6 +614,7 @@ $pgv_lang["titles_found"]				= "Titel";
 $pgv_lang["find_source"]				= "Quelle suchen";
 
 //-- REPOLIST FILE MESSAGES
+$pgv_lang["repository"] 				= "Archiv";
 $pgv_lang["repos_found"]				= "gefundene Archive";
 $pgv_lang["find_repository"]			= "Archiv suchen";
 $pgv_lang["total_repositories"]			= "Anzahl Archive";
@@ -1652,6 +1655,7 @@ $pgv_lang["stat_1_map"]					= "Personenverteilung";
 $pgv_lang["stat_2_map"]					= "Geburten pro Land";
 $pgv_lang["stat_3_map"]					= "Tode pro Land";
 $pgv_lang["stat_4_map"]					= "Ehen pro Land";
+$pgv_lang["stat_5_birth"]				= "Geburten pro Jahrhundert";
 $pgv_lang["stat_8_fam"]					= "Familien mit Quellen";
 $pgv_lang["stat_9_indi"]				= "Personen mit Quellen";
 $pgv_lang["stat_10_none"]				= "keiner";

@@ -49,7 +49,12 @@ if ($MULTI_MEDIA && file_exists('./modules/lightbox.php')) {
 	loadLangFile('lightbox:lang');
 }
 
-if ($controller->repository->isMarkedDeleted()) {
+if (!$controller->repository){
+	echo "<b>".$pgv_lang["unable_to_find_record"]."</b><br /><br />";
+	print_footer();
+	exit;
+}
+else if ($controller->repository->isMarkedDeleted()) {
 	echo '<span class="error">', $pgv_lang['record_marked_deleted'], '</span>';
 }
 
@@ -80,7 +85,7 @@ if (!$controller->isPrintPreview()) {
 			echo '<tr><td class="list_label ', $TEXT_DIRECTION, '" colspan="2">', $pgv_lang['repo_menu'], '</td></tr>';
 			echo '<tr>';
 		} else { 
-			echo '<div class="sublinks_table">';
+			echo '<div id="optionsmenu" class="sublinks_table">';
 			echo '<div class="list_label ', $TEXT_DIRECTION, '">', $pgv_lang["repo_menu"], '</div>';
 		} 
 		if ($editmenu) {

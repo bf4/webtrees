@@ -41,7 +41,12 @@ global $USE_THUMBS_MAIN, $mediacnt, $tabno, $hitCount, $GOOGLEMAP_PH_CONTROLS;
 
 print_header($controller->getPageTitle());
 
-if (!$controller->indi->canDisplayName()) {
+if (!$controller->indi){
+	echo "<b>".$pgv_lang["unable_to_find_record"]."</b><br /><br />";
+	print_footer();
+	exit;
+}
+else if (!$controller->indi->canDisplayName()) {
 	print_privacy_error($CONTACT_EMAIL);
 	print_footer();
 	exit;
@@ -166,13 +171,14 @@ $linkToID=$controller->pid; // -- Tell addmedia.php what to link to
 			<tr>
 				<td class="sublinks_cell <?php echo $TEXT_DIRECTION; ?>">
 		<?php } else { ?>
-		<div class="sublinks_table">
+		<div id="optionsmenu" class="sublinks_table">
 			<div class="list_label <?php echo $TEXT_DIRECTION; ?>"><?php echo $pgv_lang["indis_charts"]; ?></div>
 				<ul class="sublinks_cell <?php echo $TEXT_DIRECTION; ?>">
 		<?php } 
 				//-- get charts menu from menubar
 				$menubar = new MenuBar();
-				$menu = $menubar->getChartsMenu($controller->pid); $menu->printMenu();
+				$menu = $menubar->getChartsMenu($controller->pid); 
+				$menu->printMenu();
 				?>
 				</<?php if (!$PGV_MENUS_AS_LISTS) {?>td><td<?php } else { ?>ul><ul<?php }?> class="sublinks_cell <?php echo $TEXT_DIRECTION; ?>">
 				<?php
@@ -180,22 +186,26 @@ $linkToID=$controller->pid; // -- Tell addmedia.php what to link to
 				if (!$surname) {
 					$surname='@N.N.'; // TODO empty surname is not the same as @N.N.
 				}
-				$menu = $menubar->getListsMenu($surname); $menu->printMenu();
+				$menu = $menubar->getListsMenu($surname); 
+				$menu->printMenu();
 				if (file_exists("reports/individual.xml")) {?>
 				</<?php if (!$PGV_MENUS_AS_LISTS) {?>td><td<?php } else { ?>ul><ul<?php }?> class="sublinks_cell <?php echo $TEXT_DIRECTION; ?>">
 					<?php
 					//-- get reports menu from menubar
-					$menu = $menubar->getReportsMenu($controller->pid); $menu->printMenu();
+					$menu = $menubar->getReportsMenu($controller->pid); 
+					$menu->printMenu();
 				}
 				if ($controller->userCanEdit()) {
 				?>
 				</<?php if (!$PGV_MENUS_AS_LISTS) {?>td><td<?php } else { ?>ul><ul<?php }?> class="sublinks_cell <?php echo $TEXT_DIRECTION; ?>">
-				<?php $menu = $controller->getEditMenu(); $menu->printMenu();
+				<?php $menu = $controller->getEditMenu(); 
+				$menu->printMenu();
 				}
 				if ($controller->canShowOtherMenu()) {
 				?>
 				</<?php if (!$PGV_MENUS_AS_LISTS) {?>td><td<?php } else { ?>ul><ul<?php }?> class="sublinks_cell <?php echo $TEXT_DIRECTION; ?>">
-				<?php $menu = $controller->getOtherMenu(); $menu->printMenu();
+				<?php $menu = $controller->getOtherMenu(); 
+				$menu->printMenu();
 				}
 				?>
 		<?php if (!$PGV_MENUS_AS_LISTS) {?>
@@ -388,7 +398,7 @@ function resize_content_div(i) {
 }
 //]]>
 </script>
-<script src="phpgedview.js" language="JavaScript" type="text/javascript"></script>
+<script src="js/phpgedview.js" language="JavaScript" type="text/javascript"></script>
 <?php
 function loading_message() {
 	global $pgv_lang;
@@ -400,9 +410,6 @@ if ((!$controller->isPrintPreview())&&(empty($SEARCH_SPIDER))) {
 ?>
 <div class="door">
 <dl>
-<dd id="door1"><a href="javascript:;" onclick="tabswitch(1); return false;" ><?php echo $pgv_lang["personal_facts"]?></a></dd>
-<dd id="door2"><a href="javascript:;" onclick="tabswitch(2); return false;" ><?php echo $pgv_lang["notes"]?></a></dd>
-<dd id="door3"><a href="javascript:;" onclick="tabswitch(3); return false;" ><?php echo $pgv_lang["ssourcess"]?></a></dd>
 
 <!-- ====================== Added for Lightbox Module ===================== -->
 <?php
@@ -412,6 +419,9 @@ if (file_exists('./modules/lightbox/album.php')) {
 ?>
 <!-- ================== End Additions for Lightbox Module ================== -->
 
+	<dd id="door1"><a href="javascript:;" onclick="tabswitch(1); return false;" ><?php echo $pgv_lang["personal_facts"]?></a></dd>
+	<dd id="door2"><a href="javascript:;" onclick="tabswitch(2); return false;" ><?php echo $pgv_lang["notes"]?></a></dd>
+	<dd id="door3"><a href="javascript:;" onclick="tabswitch(3); return false;" ><?php echo $pgv_lang["ssourcess"]?></a></dd>
 	<dd id="door4"><a href="javascript:;" onclick="tabswitch(4); return false;" ><?php echo $pgv_lang["media"]?></a></dd>
 	<dd id="door5"><a href="javascript:;" onclick="tabswitch(5); return false;" ><?php echo $pgv_lang["relatives"]?></a></dd>
 	<dd id="door6"><a href="javascript:;" onclick="tabswitch(6); return false;" ><?php echo $pgv_lang["tree"]?></a></dd>
@@ -423,6 +433,7 @@ if (file_exists('./modules/lightbox/album.php')) {
 <!-- <dd id="door8"><a href="javascript:;" onclick="tabswitch(8); return false;" ><?php echo "Spare" ?></a></dd> -->
 	<?php }?>
 	<dd id="door0"><a href="javascript:;" onclick="tabswitch(0); if (loadedTabs[8]) {ResizeMap(); ResizeMap();} return false;" ><?php echo $pgv_lang["all"]?></a></dd>
+
 <!-- ====================== Added for Lightbox Module ===================== -->
 <?php } ?>
 <!-- ================== End Additions for Lightbox Module ================== -->
@@ -656,12 +667,12 @@ if(empty($SEARCH_SPIDER) && file_exists("modules/lightbox/album.php")) {
 if(empty($SEARCH_SPIDER)) {
 	echo "<div id=\"spare\" class=\"tab_page\" style=\"display:none; border: solid transparent 0px;\" >";
 
-/*
-		echo "<span class=\"subheaders\">Spare</span>";
+
+		echo "<span class=\"subheaders\">Spare Tab</span>";
 		echo "&nbsp;&nbsp;";
 		
 		// ---------- Help link --------------------
-		print_help_link("lb_general_help", "qm", "lb_help", true);
+//		print_help_link("lb_general_help", "qm", "lb_help", true); // (Temp removed to stop Error log reporting when Lightbox not installed)
 		
 		echo "<div id='spare_content'>";
 			// Fix if no googlemaps ========================================================
@@ -678,9 +689,9 @@ if(empty($SEARCH_SPIDER)) {
 					loading_message();
 				}
 			}
-			// Fix if no googlemaps ========================================================
+			// end Fix if no googlemaps ========================================================
 		echo "</div>";
-*/
+
 
 	echo "</div>";
 }

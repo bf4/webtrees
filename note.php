@@ -47,7 +47,12 @@ if ($MULTI_MEDIA && is_dir('./modules/lightbox')) {
 	loadLangFile('lightbox:lang');
 }
 
-if ($controller->note->isMarkedDeleted()) {
+if (!$controller->note){
+	echo "<b>".$pgv_lang["unable_to_find_record"]."</b><br /><br />";
+	print_footer();
+	exit;
+}
+else if ($controller->note->isMarkedDeleted()) {
 	echo '<span class="error">', $pgv_lang['record_marked_deleted'], '</span>';
 }
 
@@ -82,7 +87,7 @@ if (!$controller->isPrintPreview()) {
 			echo '<tr><td class="list_label ', $TEXT_DIRECTION, '" colspan="2">', $pgv_lang['shared_note_menu'], '</td></tr>';
 			echo '<tr>';
 		} else { 
-			echo '<div class="sublinks_table">';
+			echo '<div id="optionsmenu" class="sublinks_table">';
 			echo '<div class="list_label ', $TEXT_DIRECTION, '">', $pgv_lang["fams_charts"], '</div>';
 		} 
 		if ($editmenu) {
@@ -136,7 +141,7 @@ echo '<tr class="'.$TEXT_DIRECTION.'"><td><table>';
 	foreach ($notefacts as $fact) {
 		if ($fact && $fact->getTag()!='CONT') {
 			if ($fact->getTag()=='NOTE' ) {
-
+				print_fact($fact);
 			} else {
 				print_fact($fact);
 			}

@@ -48,34 +48,12 @@ if (!isset($parent)) $parent=0;
 if (!isset($display)) $display="";
 
 // Create GM tables, if not already present
-if (!PGV_DB::table_exists("{$TBLPREFIX}placelocation")) {
-	try {
-		PGV_DB::exec(
-			"CREATE TABLE {$TBLPREFIX}placelocation (".
-			" pl_id        INT          NOT NULL,".
-			" pl_parent_id INT              NULL,".
-			" pl_level     INT              NULL,".
-			" pl_place     VARCHAR(255)     NULL,".
-			" pl_long      VARCHAR(30)      NULL,".
-			" pl_lati      VARCHAR(30)      NULL,".
-			" pl_zoom      INT              NULL,".
-			" pl_icon      VARCHAR(255)     NULL,".
-				" PRIMARY KEY (pl_id)".
-			") ".PGV_DB_UTF8_TABLE
-		);
-		PGV_DB::exec("CREATE INDEX {$TBLPREFIX}pl_level     ON {$TBLPREFIX}placelocation (pl_level    )");
-		PGV_DB::exec("CREATE INDEX {$TBLPREFIX}p            ON {$TBLPREFIX}placelocation (pl_long     )");
-		PGV_DB::exec("CREATE INDEX {$TBLPREFIX}pl_lati      ON {$TBLPREFIX}placelocation (pl_lati     )");
-		PGV_DB::exec("CREATE INDEX {$TBLPREFIX}pl_name      ON {$TBLPREFIX}placelocation (pl_place    )");
-		PGV_DB::exec("CREATE INDEX {$TBLPREFIX}pl_parent_id ON {$TBLPREFIX}placelocation (pl_parent_id)");
-	} catch (PDOException $ex) {
-		echo "<table class=\"facts_table\">\n";
-		echo "<tr><td colspan=\"2\" class=\"facts_value\">".$pgv_lang["gm_db_error"];
-		echo "</td></tr></table>\n";
-		echo "<br /><br /><br />\n";
-		print_footer();
-		exit;
-	}
+// TODO: is there a better place to put this code?
+try {
+	PGV_DB::updateSchema('modules/googlemap/db_schema/', 'GM_SCHEMA_VERSION', 1);
+} catch (PDOException $ex) {
+	// The schema update scripts should never fail.  If they do, there is no clean recovery.
+	die($ex);
 }
 
 // Take a place id and find its place in the hierarchy
@@ -297,7 +275,7 @@ if ($action=="ImportGedcom") {
 
 	$default_zoom_level=array(4,7,10,12);
 	foreach ($placelistUniq as $k=>$place) {
-		$parent=explode(',', $place["place"]);
+        $parent=preg_split('/ *, */', $place["place"]);
 		$parent=array_reverse($parent);
 		$parent_id=0;
 		for($i=0; $i<count($parent); $i++) {
@@ -308,7 +286,7 @@ if ($action=="ImportGedcom") {
 				$escparent = "Unknown";
 			}
 			$row=
-				PGV_DB::prepare("SELECT pl_id,pl_long,pl_lati,pl_zoom FROM {$TBLPREFIX}placelocation WHERE pl_level=? AND pl_parent_id=? AND pl_place ".PGV_DB_LIKE." ?")
+				PGV_DB::prepare("SELECT pl_id,pl_long,pl_lati,pl_zoom FROM {$TBLPREFIX}placelocation WHERE pl_level=? AND pl_parent_id=? AND pl_place ".PGV_DB::$LIKE." ?")
 				->execute(array($i, $parent_id, $escparent))
 				->fetchOneRow();
 			if ($i < count($parent)-1) {
@@ -414,7 +392,7 @@ if ($action=="ImportFile2") {
 			$placelist[$j] = array();
 			$placelist[$j]["place"] = "";
 			for ($ii=$fields-4; $ii>1; $ii--) {
-				if ($fieldrec[0] > $ii-2) $placelist[$j]["place"] .= $fieldrec[$ii].", ";
+				if ($fieldrec[0] > $ii-2) $placelist[$j]["place"] .= $fieldrec[$ii].",";
 			}
 			foreach ($countries as $countrycode => $countryname) {
 				if (UTF8_strtoupper($countrycode) == UTF8_strtoupper($fieldrec[1])) {
@@ -470,12 +448,12 @@ if ($action=="ImportFile2") {
 		$parent = array_reverse($parent);
 		$parent_id=0;
 		for($i=0; $i<count($parent); $i++) {
-			$escparent=trim(preg_replace("/\?/","\\\\\\?", $parent[$i]));
+			$escparent=$parent[$i];
 			if ($escparent == "") {
 				$escparent = "Unknown";
 			}
 			$row=
-				PGV_DB::prepare("SELECT pl_id,pl_long,pl_lati,pl_zoom,pl_icon FROM {$TBLPREFIX}placelocation WHERE pl_level=? AND pl_parent_id=? AND pl_place ".PGV_DB_LIKE." ? ORDER BY pl_place")
+				PGV_DB::prepare("SELECT pl_id,pl_long,pl_lati,pl_zoom,pl_icon FROM {$TBLPREFIX}placelocation WHERE pl_level=? AND pl_parent_id=? AND pl_place ".PGV_DB::$LIKE." ? ORDER BY pl_place")
 				->execute(array($i, $parent_id, $escparent))
 				->fetchOneRow();
 			if (empty($row)) {       // this name does not yet exist: create entry
@@ -533,7 +511,7 @@ if ($action=="DeleteRecord") {
 		->execute(array($deleteRecord))
 		->fetchOne();
 	
-	if ($exists) {
+	if (!$exists) {
 		PGV_DB::prepare("DELETE FROM {$TBLPREFIX}placelocation WHERE pl_id=?")
 			->execute(array($deleteRecord));
 	} else {

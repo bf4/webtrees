@@ -32,6 +32,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
+$pgv_lang["gedcomid"]				= "ID GEDCOM del registro de persona";
 $pgv_lang["sortby"]				= "Ordenar por";
 $pgv_lang["exact"]				= "Exacto";
 $pgv_lang["begins_with"]		= "Comienza por";
@@ -388,10 +389,13 @@ $pgv_lang["zoom_box"]				= "Aumentar/Disminuir registro.";
 $pgv_lang["orientation"]			= "Orientación";
 $pgv_lang["portrait"]				= "Natural";
 $pgv_lang["landscape"]				= "Apaisado";
+$pgv_lang["landscape_top"]			= "Más antiguo arriba";
+$pgv_lang["landscape_down"]			= "Más antiguo abajo";
 $pgv_lang["start_at_parents"]		= "Comenzar en los padres";
 $pgv_lang["charts"] 				= "Diagramas";
 $pgv_lang["lists"]					= "Listas";
 $pgv_lang["box_width"] 				= "Ancho de la caja";
+$pgv_lang["random_surn"]					= "Apellido al azar";
 
 //-- FUNCTIONS FILE MESSAGES
 $pgv_lang["unable_to_find_family"]	= "Imposible encontrar una familia con el ID";
@@ -459,7 +463,7 @@ $pgv_lang["as_spouse"]				= "Familia con el cónyuge";
 $pgv_lang["privacy_error"]			= "Esta información es privada y no puede mostrarse.";
 $pgv_lang["more_information"]		= "Para más información contacte con";
 $pgv_lang["given_name"] 			= "Nombre de pila:";
-$pgv_lang["surname"]				= "Apellidos:";
+$pgv_lang["surname"]				= "Apellido:";
 $pgv_lang["suffix"] 				= "Sufijo:";
 $pgv_lang["sex"]					= "Sexo";
 $pgv_lang["personal_facts"] 		= "Detalles Personales";
@@ -535,7 +539,7 @@ $pgv_lang["download"]				= "Haga clic con el botón derecho (control-clic en un 
 $pgv_lang["cart_is_empty"]			= "Su carrito está vacío.";
 $pgv_lang["id"] 					= "ID";
 $pgv_lang["name_description"]		= "Nombre / Descripción";
-$pgv_lang["remove"] 				= "Vaciar";
+$pgv_lang["remove"] 				= "Borrar";
 $pgv_lang["empty_cart"] 			= "Vaciar carrito";
 $pgv_lang["download_now"]			= "Descargar ahora";
 $pgv_lang["download_file"]			= "Descargar archivo #GLOBALS[whichFile]#";
@@ -610,6 +614,7 @@ $pgv_lang["titles_found"]			= "Títulos";
 $pgv_lang["find_source"]			= "Buscar fuente";
 
 //-- REPOLIST FILE MESSAGES
+$pgv_lang["repository"] 			= "Repositorio";
 $pgv_lang["repos_found"]			= "Repositorios encontrados";
 $pgv_lang["find_repository"]		= "Encontrar repositorio";
 $pgv_lang["total_repositories"]		= "Total de repositorios";

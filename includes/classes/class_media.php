@@ -3,7 +3,7 @@
  * Class that defines a media object
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
+ * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -31,7 +31,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 
 define('PGV_class_MEDIA_PHP', '');
 
-require_once('includes/classes/class_gedcomrecord.php');
+require_once 'includes/classes/class_gedcomrecord.php';
 
 class Media extends GedcomRecord {
 	var $title         =null;
@@ -122,14 +122,6 @@ class Media extends GedcomRecord {
 		//-- also store it using its reference id (sid:pid and local gedcom for remote links)
 		$gedcom_record_cache[$pid][$ged_id]=&$object;
 		return $object;
-	}
-
-	/**
-	 *
-	 * get the title of the media item
-	 */
-	function getFullName() {
-		return $this->title;
 	}
 
 	/**
@@ -331,7 +323,7 @@ class Media extends GedcomRecord {
 		global $TBLPREFIX;
 
 		return
-			PGV_DB::prepare("SELECT m_media FROM {$TBLPREFIX}media WHERE m_file=? AND m_titl ".PGV_DB_LIKE." ? AND m_gedfile=?")
+			PGV_DB::prepare("SELECT m_media FROM {$TBLPREFIX}media WHERE m_file=? AND m_titl ".PGV_DB::$LIKE." ? AND m_gedfile=?")
 			->execute(array($obje->file, $obje->title, PGV_GED_ID))
 			->fetchOne();
 	}
@@ -359,7 +351,13 @@ class Media extends GedcomRecord {
 
 	// Get an array of structures containing all the names in the record
 	function getAllNames() {
-		return parent::getAllNames('TITL', 2);
+		if (strpos($this->gedrec, "\n1 TITL ")) {
+			// Earlier gedcom versions had level 1 titles
+			return parent::getAllNames('TITL', 1);
+		} else {
+			// Later gedcom versions had level 2 titles
+			return parent::getAllNames('TITL', 2);
+		}
 	}
 
 	// Extra info to display when displaying this record in a list of

@@ -106,10 +106,11 @@ uasort($assorela, "stringsort");
 
 print_simple_header('Edit Interface');
 
-if ($ENABLE_AUTOCOMPLETE) require './js/autocomplete.js.htm';
+if ($ENABLE_AUTOCOMPLETE) {
+	require './js/autocomplete.js.htm';
+}
+echo PGV_JS_START;
 ?>
-<script type="text/javascript">
-<!--
 	var locale_date_format='<?php echo preg_replace('/[^DMY]/', '', $DATE_FORMAT); ?>';
 
 	function findIndi(field, indiname) {
@@ -180,9 +181,8 @@ if ($ENABLE_AUTOCOMPLETE) require './js/autocomplete.js.htm';
 				window.opener.showchanges();
 		window.close();
 	}
-//-->
-</script>
 <?php
+echo PGV_JS_END;
 //-- check if user has access to the gedcom record
 $disp = false;
 $success = false;
@@ -387,13 +387,15 @@ case 'editraw':
 			echo "</table>";
 		}
 
-		echo "<input id=\"savebutton\" type=\"submit\" value=\"".$pgv_lang["save"]."\" /><br />\n";
-		echo "</form>\n";
-		echo "<script language=\"JavaScript\" type=\"text/javascript\">\n<!--\ntextbox = document.getElementById('newgedrec');\n";
-		echo "savebutton = document.getElementById('savebutton');\n";
-		echo "if (textbox && savebutton) {\nx = textbox.offsetLeft+textbox.offsetWidth+40;\ny = savebutton.offsetTop+80;\n";
-		echo "window.resizeTo(x,y);\n}\n";
-		echo "\n//-->\n</script>\n";
+		echo "<input id=\"savebutton\" type=\"submit\" value=\"".$pgv_lang["save"]."\" /><br />";
+		echo "</form>";
+		echo PGV_JS_START;
+		echo "textbox = document.getElementById('newgedrec');";
+		echo "savebutton = document.getElementById('savebutton');";
+		echo "if (textbox && savebutton) {";
+		echo "x=textbox.offsetLeft+textbox.offsetWidth+40;y=savebutton.offsetTop+80;window.resizeTo(x,y);";
+		echo "}";
+		echo PGV_JS_END;
 	}
 	break;
 //------------------------------------------------------------------------------
@@ -640,9 +642,8 @@ case 'linkfamaction':
 //------------------------------------------------------------------------------
 //-- add new source
 case 'addnewsource':
+	echo PGV_JS_START;
 	?>
-	<script type="text/javascript">
-	<!--
 		function check_form(frm) {
 			if (frm.TITL.value=="") {
 				alert('<?php echo $pgv_lang["must_provide"].$factarray["TITL"]; ?>');
@@ -651,8 +652,9 @@ case 'addnewsource':
 			}
 			return true;
 		}
-	//-->
-	</script>
+	<?php
+	echo PGV_JS_END;
+	?>
 	<b><?php echo $pgv_lang['create_source']; $tabkey = 1; ?></b>
 	<form method="post" action="edit_interface.php" onsubmit="return check_form(this);">
 		<input type="hidden" name="action" value="addsourceaction" />
@@ -768,16 +770,15 @@ case 'addsourceaction':
 	$link = "source.php?sid=$xref&show_changes=yes";
 	if ($xref) {
 		echo "<br /><br />\n".$pgv_lang["new_source_created"]."<br /><br />";
-		echo "<a href=\"javascript:// SOUR $xref\" onclick=\"openerpasteid('$xref'); return false;\">".$pgv_lang["paste_id_into_field"]." <b>$xref</b></a>\n";
+		echo "<a href=\"javascript://SOUR $xref\" onclick=\"openerpasteid('$xref'); return false;\">".$pgv_lang["paste_id_into_field"]." <b>$xref</b></a>\n";
 	}
 	break;
 
 //------------------------------------------------------------------------------
 //-- add new Shared Note
 case 'addnewnote':
+	echo PGV_JS_START;
 	?>
-	<script type="text/javascript">
-	<!--
 		function check_form(frm) {
 			if (frm.TITL.value=="") {
 				alert('<?php echo $pgv_lang["must_provide"].$factarray["TITL"]; ?>');
@@ -786,8 +787,9 @@ case 'addnewnote':
 			}
 			return true;
 		}
-	//-->
-	</script>
+	<?php
+	echo PGV_JS_END;
+	?>
 	<b><?php echo $pgv_lang['create_shared_note']; $tabkey = 1; ?></b>
 	<form method="post" action="edit_interface.php" onsubmit="return check_form(this);">
 		<input type="hidden" name="action" value="addnoteaction" />
@@ -816,9 +818,8 @@ case 'addnewnote':
 //------------------------------------------------------------------------------
 //-- add new Shared Note
 case 'addnewnote_assisted':
+	echo PGV_JS_START;
 	?>
-	<script type="text/javascript">
-	<!--
 		function check_form(frm) {
 			if (frm.TITL.value=="") {
 				alert('<?php echo $pgv_lang["must_provide"].$factarray["TITL"]; ?>');
@@ -827,8 +828,9 @@ case 'addnewnote_assisted':
 			}
 			return true;
 		}
-	//-->
-	</script>
+	<?php
+	echo PGV_JS_END;
+	?>
 	<b><?php echo $pgv_lang['create_shared_note']." using Assistant."; $tabkey = 1; ?></b>
 	<form method="post" action="edit_interface.php" onsubmit="return check_form(this);">
 		<input type="hidden" name="action" value="addnoteaction" />
@@ -869,11 +871,11 @@ case 'addnoteaction':
 	if (isset($_REQUEST['CALN'])) $CALN = $_REQUEST['CALN'];
 
 	if (!empty($NOTE)) {
-		$newlines = preg_split("/\r?\n/",$NOTE,-1,PREG_SPLIT_NO_EMPTY);
+		$newlines = preg_split("/\r?\n/",$NOTE,-1);
 		for($k=0; $k<count($newlines); $k++) {
 			if ( $k==0 && count($newlines)>1) {
 				$newgedrec = "0 @XREF@ NOTE $newlines[$k]\n";
-			}elseif ( $k==0 ) {
+			}else if ( $k==0 ) {
 				$newgedrec = "0 @XREF@ NOTE $newlines[$k]\n1 CONT\n";
 			}else if (strstr($newlines[$k], "|Head|")) {
 				$newgedrec .= "1 CONT\n1 CONT $newlines[$k]\n";
@@ -909,33 +911,33 @@ case 'addnoteaction':
 	$link = "note.php?nid=$xref&show_changes=yes";
 	if ($xref) {
 		echo "<br /><br />\n".$pgv_lang["new_shared_note_created"]."<br /><br />";
-		echo "<a href=\"javascript:// NOTE $xref\" onclick=\"openerpasteid('$xref'); return false;\">".$pgv_lang["paste_id_into_field"]." <b>$xref</b></a>\n";
+		echo "<a href=\"javascript://NOTE $xref\" onclick=\"openerpasteid('$xref'); return false;\">".$pgv_lang["paste_id_into_field"]." <b>$xref</b></a>\n";
 	}
 	break;
 	
 //------------------------------------------------------------------------------
 //-- add new Media Links
+
 case 'addmedia_links':
+	global $pid;
+	echo PGV_JS_START;
 	?>
-	<script type="text/javascript">
-	<!--
 		function check_form(frm) {
 			if (frm.TITL.value=="") {
 				alert('<?php echo $pgv_lang["must_provide"].$factarray["TITL"]; ?>');
 				frm.TITL.focus();
 				return false;
 			}
-			// return true;
-			alert('Please click Find');
-			return false;
+			return true;
 		}
-	//-->
-	</script>
-	<b><?php echo "Add Media Links using Assistant."; $tabkey = 1; ?></b>
-	<form method="post" action="edit_interface.php" onsubmit="alert('please press find'); return false">
-		<!-- <input type="hidden" name="action" value="addnoteaction" /> -->
-		<input type="hidden" name="noteid" value="newnote" />
-		<!-- <input type="hidden" name="pid" value="$pid" /> -->
+	<?php
+	echo PGV_JS_END;
+	?>
+	<!-- <form method="post" action="edit_interface.php" onsubmit="return check_form(this);"> -->
+	<form method="post" action="edit_interface.php?pid=<?php echo $pid; ?>" onsubmit="findindi()">
+		<input type="hidden" name="action" value="addmedia_links" /> 	
+		<input type="hidden" name="noteid" value="newnote" />			
+	<!--	<input type="hidden" name="pid" value="<?php // echo $pid; ?>" />		--> 
 		<?php
 		include ('modules/GEDFact_assistant/MEDIA_ctrl.php');
 		?>
@@ -943,6 +945,7 @@ case 'addmedia_links':
 	<?php
 	break;
 
+//------------------------------------------------------------------------------
 //-- edit source
 case 'editsource':
 	init_calendar_popup();
@@ -1002,9 +1005,8 @@ case 'editsource':
 //------------------------------------------------------------------------------
 //-- edit a Shared Note
 case 'editnote':
+	echo PGV_JS_START;
 	?>
-	<script type="text/javascript">
-	<!--
 		function check_form(frm) {
 			if (frm.TITL.value=="") {
 				alert('<?php echo $pgv_lang["must_provide"].$factarray["TITL"]; ?>');
@@ -1013,8 +1015,9 @@ case 'editnote':
 			}
 			return true;
 		}
-	//-->
-	</script>
+	<?php
+	echo PGV_JS_END;
+	?>
 	<b><?php echo $pgv_lang['edit_shared_note']; $tabkey = 1; echo "&nbsp;&nbsp;(" . $pid . ")";?></b><br /><br />
 	<form method="post" action="edit_interface.php" onsubmit="return check_form(this);">
 		<input type="hidden" name="action" value="update" />
@@ -1062,9 +1065,8 @@ case 'editnote':
 //------------------------------------------------------------------------------
 //-- add new repository
 case 'addnewrepository':
+	echo PGV_JS_START;
 	?>
-	<script type="text/javascript">
-	<!--
 		function check_form(frm) {
 			if (frm.NAME.value=="") {
 				alert('<?php echo $pgv_lang["must_provide"]." ".$factarray["NAME"]; ?>');
@@ -1073,8 +1075,9 @@ case 'addnewrepository':
 			}
 			return true;
 		}
-	//-->
-	</script>
+	<?php
+	echo PGV_JS_END;
+	?>
 	<b><?php echo $pgv_lang["create_repository"];
 	$tabkey = 1;
 	?></b>
@@ -1154,7 +1157,7 @@ case 'addrepoaction':
 	$link = "repo.php?rid=$xref&show_changes=yes";
 	if ($xref) {
 		echo "<br /><br />\n".$pgv_lang["new_repo_created"]."<br /><br />";
-		echo "<a href=\"javascript:// REPO $xref\" onclick=\"openerpasteid('$xref'); return false;\">".$pgv_lang["paste_rid_into_field"]." <b>$xref</b></a>\n";
+		echo "<a href=\"javascript://REPO $xref\" onclick=\"openerpasteid('$xref'); return false;\">".$pgv_lang["paste_rid_into_field"]." <b>$xref</b></a>\n";
 	}
 	break;
 //------------------------------------------------------------------------------
@@ -1169,12 +1172,12 @@ case 'updateraw':
 	$success = (!empty($newgedrec)&&(replace_gedrec($pid, $newgedrec, $update_CHAN)));
 	if ($success) echo "<br /><br />".$pgv_lang["update_successful"];
 	break;
-	
 //------------------------------------------------------------------------------
 //-- reconstruct the gedcom from the incoming fields and store it in the file
 case 'update':
-	global $cens_pids;
 
+/*
+	global $cens_pids;
 	// $cens_pids is an array from the CENS GEDFact Assistant -----------
 	// $cens_pids = array($pid, 'I1', 'I2');  // ** This line is a Test only **
 	if (!isset($cens_pids)){
@@ -1182,10 +1185,10 @@ case 'update':
 	}else{
 		$cens_pids = $cens_pids;
 	}
-	
-	// When $cens_pids is present, cycle through each individual concerned.
-	foreach ($cens_pids as $pid) {
-		$gedrec = find_gedcom_record($pid);
+*/
+//	// When $cens_pids is present, cycle through each individual concerned.
+//	foreach ($cens_pids as $pid) {
+//		$gedrec = find_gedcom_record($pid);
 
 		if (PGV_DEBUG) {
 			phpinfo(INFO_VARIABLES);
@@ -1222,7 +1225,8 @@ case 'update':
 				else $uploaded_files[] = "";
 			}
 		}
-	}
+//	} // end foreach
+	
 	$gedlines = explode("\n", trim($gedrec));
 	//-- for new facts set linenum to number of lines
 	if (!is_array($linenum)) {
@@ -1987,7 +1991,7 @@ case 'reorder_media_update': // Update sort using popup
 		}else{
 			$link = "individual.php?pid=$pid&tab=3&show_changes=yes";
 		}
-		echo "\n<script type=\"text/javascript\">\n<!--\nedit_close('{$link}');\n//-->\n</script>";
+		echo PGV_JS_START, "edit_close('{$link}');", PGV_JS_END;
 	break;
 
 //------------------------------------------------------------------------------
@@ -2004,13 +2008,9 @@ case 'al_reset_media_update': // Reset sort using Album Page
 		}else{
 			$tabno = "8";
 		}
-		?>
-		<script language="JavaScript" type="text/javascript" >
-		<!--
-			location.href='<?php echo "individual.php?pid=" . $pid . "&tab=" . $tabno ;?>';
-		//-->
-		</script>
-		<?php
+		echo PGV_JS_START;
+		echo "location.href='individual.php?pid={$pid}&tab={$tabno}'";
+		echo PGV_JS_END;
 	break;
 
 //------------------------------------------------------------------------------
@@ -2047,14 +2047,9 @@ case 'al_reorder_media_update': // Update sort using Album Page
 		}else{
 			$tabno = "8";
 		}
-		if ($success) echo "<br />".$pgv_lang["update_successful"]. "<br /><br />";
-		?>
-		<script language="JavaScript" type="text/javascript" >
-		<!--
-			location.href='<?php echo "individual.php?pid=" . $pid . "&tab=" . $tabno ;?>';
-		//-->
-		</script>
-		<?php
+		echo PGV_JS_START;
+		echo "location.href='individual.php?pid={$pid}&tab={$tabno}'";
+		echo PGV_JS_END;
 	}
 	break;
 
@@ -2104,20 +2099,18 @@ case 'reorder_children':
 			}
 		?>
 		</ul>
-<script type="text/javascript" language="javascript">
-// <![CDATA[
-	new Effect.BlindDown('reorder_list', {duration: 1});
-	Sortable.create('reorder_list',
-		{
-			scroll:window,
-			onUpdate : function() {
-				inputs = $('reorder_list').getElementsByTagName("input");
-				for (var i = 0; i < inputs.length; i++) inputs[i].value = i;
-			}
-		}
-	);
-// ]]>
-</script>
+		<?php echo PGV_JS_START; ?>
+			new Effect.BlindDown('reorder_list', {duration: 1});
+			Sortable.create('reorder_list',
+				{
+					scroll:window,
+					onUpdate : function() {
+						inputs = $('reorder_list').getElementsByTagName("input");
+						for (var i = 0; i < inputs.length; i++) inputs[i].value = i;
+					}
+				}
+			);
+		<?php echo PGV_JS_END; ?>
 		<button type="submit"><?php echo $pgv_lang["save"]; ?></button>
 		<button type="submit" onclick="document.reorder_form.action.value='reorder_children'; document.reorder_form.submit();"><?php echo $pgv_lang["sort_by_birth"]; ?></button>
 		<button type="submit" onclick="window.close();"><?php echo $pgv_lang["cancel"]; ?></button>
@@ -2160,21 +2153,19 @@ case 'changefamily':
 			else $father->setLabel($pgv_lang["spouse"]);
 		}
 	}
+	echo PGV_JS_START;
 	?>
-	<script type="text/javascript">
-	<!--
-	var nameElement = null;
-	var remElement = null;
-	function pastename(name) {
-		if (nameElement) {
-			nameElement.innerHTML = name;
+		var nameElement = null;
+		var remElement = null;
+		function pastename(name) {
+			if (nameElement) {
+				nameElement.innerHTML = name;
+			}
+			if (remElement) {
+				remElement.style.display = 'block';
+			}
 		}
-		if (remElement) {
-			remElement.style.display = 'block';
-		}
-	}
-	//-->
-	</script>
+	<?php echo PGV_JS_END; ?>
 	<br /><br />
 	<?php echo $pgv_lang["change_family_instr"]; ?>
 	<form name="changefamform" method="post" action="edit_interface.php">
@@ -2494,20 +2485,18 @@ case 'reorder_fams':
 			}
 		?>
 		</ul>
-<script type="text/javascript" language="javascript">
-// <![CDATA[
-	new Effect.BlindDown('reorder_list', {duration: 1});
-	Sortable.create('reorder_list',
-		{
-			scroll:window,
-			onUpdate : function() {
-				inputs = $('reorder_list').getElementsByTagName("input");
-				for (var i = 0; i < inputs.length; i++) inputs[i].value = i;
-			}
-		}
-	);
-// ]]>
-</script>
+		<?php echo PGV_JS_START; ?>
+			new Effect.BlindDown('reorder_list', {duration: 1});
+			Sortable.create('reorder_list',
+				{
+					scroll:window,
+					onUpdate : function() {
+						inputs = $('reorder_list').getElementsByTagName("input");
+						for (var i = 0; i < inputs.length; i++) inputs[i].value = i;
+					}
+				}
+			);
+		<?php echo PGV_JS_END; ?>
 		<button type="submit"><?php echo $pgv_lang["save"]; ?></button>
 		<button type="submit" onclick="document.reorder_form.action.value='reorder_fams'; document.reorder_form.submit();"><?php echo $pgv_lang["sort_by_marriage"]; ?></button>
 		<button type="submit" onclick="window.close();"><?php echo $pgv_lang["cancel"]; ?></button>
@@ -2560,8 +2549,13 @@ if (empty($goto) || empty($link))
 //------------------------------------------------------------------------------
 // autoclose window when update successful
 if ($success && $EDIT_AUTOCLOSE && !PGV_DEBUG) {
-	if ($action=="copy") echo "\n<script type=\"text/javascript\">\n<!--\nwindow.close();\n//-->\n</script>";
-	else echo "\n<script type=\"text/javascript\">\n<!--\nedit_close('{$link}');\n//-->\n</script>";
+	echo PGV_JS_START;
+	if ($action=="copy") {
+		echo "window.close();";
+	} else {
+		echo "edit_close('{$link}');";
+	}
+	echo PGV_JS_END;
 }
 
 // Decide whether to print footer or not ===========================================

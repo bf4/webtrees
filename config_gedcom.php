@@ -58,7 +58,7 @@ $DEFAULT_PEDIGREE_GENERATIONS = "4";	// -- set the default number of generations
 $MAX_PEDIGREE_GENERATIONS = "10";		// -- set the max number of generations to display on the pedigree charts
 $MAX_DESCENDANCY_GENERATIONS = "15";	// -- set the max number of generations to display on the descendancy charts
 $USE_RIN = false;						// -- Use the RIN # instead of the regular GEDCOM ID for places where you are asked to enter an ID
-$PEDIGREE_ROOT_ID = "I1";				// -- use this line to change the default person who appears on
+$PEDIGREE_ROOT_ID = "";				// -- use this line to change the default person who appears on
 										// -- the Pedigree tree
 $GEDCOM_ID_PREFIX = "I";					// -- This is the prefix prepend to newly generated individual records
 $SOURCE_ID_PREFIX = "S";					// -- This is the prefix prepend to newly generated source records
@@ -185,7 +185,7 @@ $SHOW_LEVEL2_NOTES = true;			// -- Show level 2 Notes & Sources on Notes & Sourc
 $SHOW_AGE_DIFF = false;				// -- show age diff between spouses and between children on close relatives tab
 $EDIT_AUTOCLOSE = false;		//-- autoclose edit window when update successful
 $NOTE_FACTS_UNIQUE = "";
-$NOTE_FACTS_ADD = "ASSO,SOUR,NOTE,OBJE,REPO";
+$NOTE_FACTS_ADD = "ASSO,SOUR,NOTE,REPO";
 $NOTE_FACTS_QUICK = "";
 $SOUR_FACTS_UNIQUE = "AUTH,ABBR,TITL,PUBL,TEXT";
 $SOUR_FACTS_ADD = "NOTE,OBJE,REPO,SHARED_NOTE";

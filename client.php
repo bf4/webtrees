@@ -440,8 +440,8 @@ case 'getchanges':
 			print "ERROR 24: You cannot retrieve updates for more than 180 days.\n";
 		} else {
 			print "SUCCESS\n";
-			foreach(get_recent_changes($lastdate->MinJD()) as $change) {
-				print $change['d_gid']."\n";
+			foreach(get_recent_changes($lastdate->MinJD()) as $xref) {
+				echo "{$xref}\n";
 			}
 		}
 	} else {

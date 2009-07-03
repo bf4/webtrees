@@ -10,6 +10,7 @@
 
 
 Version 4.2.x CA
+ - Merged: Merge changes r5591 - r5823 from the trunk. (windmillway)
  - Merged: Merge changes r5565 - r5590 from the trunk. (windmillway)
  - Changed: Tidy up of files in GEDFact_assistant/MEDIA/ subdirectory (windmillway)
  - Merged: Merge changes r5520 - r5564 from the trunk. (windmillway)
@@ -96,6 +97,23 @@ Version 4.2.x CA
 
 
 Version 4.2.2
+ - Fixed: [ 2815546 ] Timeline Chart display issue (wooc)
+ - Added: [ 2812244 ] List branches by surname (opus27)
+ - Fixed: [ 2811443 ] [5774] Double helping of tables (fisharebest)
+ - Fixed: [ 2806853 ] Minor error in faq.php css classes (fisharebest)
+ - Fixed: [ 2579268 ] Nonexistent != Private != blank (wooc)
+ - Fixed: [ 2807477 ] Minor tweaks to gedcheck.php (fisharebest/kiwi_pgv)
+ - Fixed: [ 2806749 ] Cache needs to be cleared when changing theme (canajun2eh)
+ - Fixed: [ 2806364 ] Typo in functions_mediadb.php (wgroleau)
+ - Fixed: [ 2806055 ] Incorrect calc - "Person who lived longest" (fisharebest)
+ - Fixed: [ 2578740 ] Indilist Mother's name wrong (fisharebest)
+ - Fixed: [ 2801382 ] Fatal error: Uncaught exception 'PDOException'  (windmillway)
+ - Added: [ 2741685 ] SQL Version Update (fisharebest)
+ - Fixed: [ 1479083 ] 4b07 - malformed links generated (fisharebest)
+ - Fixed: [ 1767948 ] FAQ header doesn't like quotes upon edit (fisharebest)
+ - Fixed: [ 2231897 ] [416pre] - Add GEDCOM ... Default person (fisharebest)
+ - Fixed: [ 1783041 ] (4.1)  Unable to find record with ID (fisharebest)
+ - Changed: Fixed error occurring in inverselink.php, Changed "add" simplyxxx theme icons for clarity, small language change (windmillway)
  - Added [ 1209782 ] Top Down pedigree tree (wooc)
  - Changed: Various core files in preparation for GEDFact_assistant/MEDIA/ module (windmillway)
  - Changed: Placed restriction on GEDFact_assistant/MEDIA/ to be PGV_USER_GEDCOM_ADMIN only (windmillway)

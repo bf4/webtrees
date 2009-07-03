@@ -43,7 +43,7 @@ include_once("includes/functions/functions_print_facts.php");
 	global $GEDCOM, $MEDIATYPE, $pgv_changes;
 	global $WORD_WRAPPED_NOTES, $MEDIA_DIRECTORY, $PGV_IMAGE_DIR, $PGV_IMAGES, $TEXT_DIRECTION;
 	global $is_media, $cntm1, $cntm2, $cntm3, $cntm4, $t, $mgedrec;
-	global $typ2b, $edit, $tabno ;
+	global $edit, $tabno ;
 	global $ids, $pid, $related, $level, $gedrec, $media_data, $order, $order1, $order2, $j ;
 
 	print "\n";
@@ -130,7 +130,7 @@ include_once("includes/functions/functions_print_facts.php");
 	$vars[]=PGV_GED_ID;
 	//-- for family and source page only show level 1 obje references
 	if ($level>0) {
-		$sqlmm .= "AND mm_gedrec ".PGV_DB_LIKE." ?";
+		$sqlmm .= "AND mm_gedrec ".PGV_DB::$LIKE." ?";
 		$vars[]="{$level} OBJE%";
 	}
 

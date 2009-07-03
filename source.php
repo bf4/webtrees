@@ -48,8 +48,12 @@ if ($MULTI_MEDIA && file_exists('./modules/lightbox.php')) {
 	include './modules/lightbox/functions/lb_call_js.php';
 	loadLangFile('lightbox:lang');
 }
-
-if ($controller->source->isMarkedDeleted()) {
+if (!$controller->source){
+	echo "<b>".$pgv_lang["unable_to_find_record"]."</b><br /><br />";
+	print_footer();
+	exit;
+}
+else if ($controller->source->isMarkedDeleted()) {
 	echo '<span class="error">', $pgv_lang['record_marked_deleted'], '</span>';
 }
 
@@ -80,7 +84,7 @@ if (!$controller->isPrintPreview()) {
 			echo '<tr><td class="list_label ', $TEXT_DIRECTION, '" colspan="2">', $pgv_lang['source_menu'], '</td></tr>';
 			echo '<tr>';
 		} else { 
-			echo '<div class="sublinks_table">';
+			echo '<div id="optionsmenu" class="sublinks_table">';
 			echo '<div class="list_label ', $TEXT_DIRECTION, '">', $pgv_lang["source_menu"], '</div>';
 		} 
 		if ($editmenu) {
@@ -140,7 +144,7 @@ if (file_exists('./modules/research_assistant/research_assistant.php') && $SHOW_
 	include_once './modules/research_assistant/research_assistant.php';
 	$mod=new ra_functions();
 	$mod->Init();
-	echo $mod->getSourceTasks($controller->sid), '</td></tr><tr class="center"><td colspan="2">';
+	echo $mod->getSourceTasks($controller->sid, $controller->source->getFullName());
 }
 
 // Individuals linked to this source

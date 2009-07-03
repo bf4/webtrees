@@ -315,6 +315,33 @@ class Person extends GedcomRecord {
 		return $this->getDeathDate()->MinDate()->Format('Y');
 	}
 
+	/**
+	* get the birth and death years
+	* @return string
+	*/
+	function getBirthDeathYears($age_at_death=true, $classname="details1") {
+		global $pgv_lang;
+		if (!$this->getBirthYear()) {
+			return "";
+		}
+		$tmp = "<span title=\"".strip_tags($this->getBirthDate()->Display())."\">".$this->getBirthYear()."</span>";
+		$tmp .= "-";
+		$tmp .= "<span title=\"".strip_tags($this->getDeathDate()->Display())."\">".$this->getDeathYear()."</span>";
+		// display age only for exact dates (empty date qualifier)
+		if ($age_at_death
+			&& $this->getBirthYear() && empty($this->getBirthDate()->qual1)
+			&& $this->getDeathYear() && empty($this->getDeathDate()->qual1)) {
+			$age = get_age_at_event(GedcomDate::GetAgeGedcom($this->getBirthDate(), $this->getDeathDate()), false);
+			if (!empty($age)) {
+				$tmp .= "<span class='age'> &lrm;({$pgv_lang['age']} {$age})&lrm;</span>";
+			}
+		}
+		if ($classname) {
+			return "<span class='{$classname}'>{$tmp}</span>";
+		}
+		return $tmp;
+	}
+
 	// Get all the dates/places for births/deaths - for the INDI lists
 	function getAllBirthDates() {
 		if (is_null($this->_getAllBirthDates)) {
@@ -496,6 +523,11 @@ class Person extends GedcomRecord {
 				return '<span style="size:'.$size.'">?</span>';
 			}
 		}
+	}
+
+	function getBoxStyle() {
+		$tmp=array('M'=>'','F'=>'F', 'U'=>'NN');
+		return "person_box".$tmp[$this->getSex()];
 	}
 
 	/**
@@ -1546,9 +1578,23 @@ class Person extends GedcomRecord {
 		if ($display) $txt .= " style=\"display:$display\"";
 		$txt .= ">";
 		$husb = $fam->getHusband();
-		if ($husb) $txt .= $pgv_lang["father"].": ".PrintReady($husb->getListName())."<br />";
+		if ($husb) {
+			// Temporarily reset the "prefered" display name, as we always
+			// want the default name, not the one selected for display on the indilist.
+			$primary=$husb->getPrimaryName();
+			$husb->setPrimaryName(null);
+			$txt .= $pgv_lang["father"].": ".PrintReady($husb->getListName())."<br />";
+			$husb->setPrimaryName($primary);
+		}
 		$wife = $fam->getWife();
-		if ($wife) $txt .= $pgv_lang["mother"].": ".PrintReady($wife->getListName());
+		if ($wife) {
+			// Temporarily reset the "prefered" display name, as we always
+			// want the default name, not the one selected for display on the indilist.
+			$primary=$wife->getPrimaryName();
+			$wife->setPrimaryName(null);
+			$txt .= $pgv_lang["mother"].": ".PrintReady($wife->getListName());
+			$wife->setPrimaryName($primary);
+		}
 		$txt .= "</div>";
 		return $txt;
 	}
@@ -1788,6 +1834,7 @@ class Person extends GedcomRecord {
 		$this->format_first_major_fact(PGV_EVENTS_BIRT, 1).
 		$this->format_first_major_fact(PGV_EVENTS_DEAT, 1);
 	}
+
 }
 
 // Localise a date differences.  This is a default function, and may be overridden in includes/extras/functions.xx.php

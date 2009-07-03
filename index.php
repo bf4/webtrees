@@ -317,9 +317,8 @@ if ($MULTI_MEDIA && file_exists("modules/lightbox/album.php")) {
 	include('modules/lightbox/functions/lb_call_js.php');
 }
 
+echo PGV_JS_START;
 ?>
-<script language="JavaScript" type="text/javascript">
-<!--
 	function refreshpage() {
 		window.location = 'index.php?ctype=<?php print $ctype; ?>';
 	}
@@ -363,9 +362,8 @@ if ($MULTI_MEDIA && file_exists("modules/lightbox/album.php")) {
  		oXmlHttp.send(null);
  		return false;
 	}
-//-->
-</script>
 <?php
+echo PGV_JS_END;
 //-- start of main content section
 print "<table width=\"100%\"><tr><td>";		// This is needed so that page footers print in the right place
 if ($ctype=="user") {
@@ -381,6 +379,7 @@ if (count($ublocks["main"])!=0) {
 		print "<div id=\"index_full_blocks\">";
 	}
 	echo '<script src="js/jquery/jquery.min.js" type="text/javascript"></script>';
+	echo '<script type="text/javascript">jQuery.noConflict();</script>';
 	foreach($ublocks["main"] as $bindex=>$block) {
 		if (PGV_DEBUG) {
 			print_execution_stats();
@@ -400,7 +399,7 @@ if (count($ublocks["main"])!=0) {
 			} else {
 				// Interactive users get the blocks via ajax
 				echo '<div id="block_main_', $bindex, '"><img src="images/loading.gif" alt="', htmlspecialchars($pgv_lang["loading"]),  '"/></div>';
-				echo PGV_JS_START, "$('#block_main_{$bindex}').load('{$url}');", PGV_JS_END;
+				echo PGV_JS_START, "jQuery('#block_main_{$bindex}').load('{$url}');", PGV_JS_END;
 			}
 		}
 	}
@@ -431,7 +430,7 @@ if (count($ublocks["right"])!=0) {
 			} else {
 				// Interactive users get the blocks via ajax
 				echo '<div id="block_right_', $bindex, '"><img src="images/loading.gif" alt="', htmlspecialchars($pgv_lang["loading"]),  '"/></div>';
-				echo PGV_JS_START, "$('#block_right_{$bindex}').load('{$url}');", PGV_JS_END;
+				echo PGV_JS_START, "jQuery('#block_right_{$bindex}').load('{$url}');", PGV_JS_END;
 			}
 		}
 	}

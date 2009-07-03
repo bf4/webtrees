@@ -197,7 +197,7 @@ if ($display=="hierarchy") {
 				include ($mapfile);
 				echo "<img src='".$imgfile."' usemap='#".$mapname."' border='0' alt='".$areaname."' title='".$areaname."' />";
 				?>
-				<script type="text/javascript" src="strings.js"></script>
+				<script type="text/javascript" src="js/strings.js"></script>
 				<script type="text/javascript">
 				<!--
 				//copy php array into js array
@@ -383,7 +383,7 @@ if ($level > 0) {
 if ($display=="list") {
 	$placelist = array();
 
-	find_place_list("");
+	$placelist=find_place_list("");
 	$placelist = array_unique($placelist);
 	uasort($placelist, "stringsort");
 	if (count($placelist)==0) {

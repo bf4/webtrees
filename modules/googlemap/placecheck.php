@@ -47,10 +47,20 @@ if (!PGV_USER_GEDCOM_ADMIN) {
 }
 print_header($pgv_lang["placecheck"].' - '.$GEDCOM);
 
+// Create GM tables, if not already present
+// TODO: is there a better place to put this code?
+try {
+	PGV_DB::updateSchema('modules/googlemap/db_schema/', 'GM_SCHEMA_VERSION', 1);
+} catch (PDOException $ex) {
+	// The schema update scripts should never fail.  If they do, there is no clean recovery.
+	die($ex);
+}
+
 // Scan all the gedcom directories for gedcom files
 $all_dirs=array($INDEX_DIRECTORY=>"");
-foreach ($GEDCOMS as $value)
-	$all_dirs[dirname($value["path"])."/"]="";
+foreach (get_all_gedcoms() as $ged_id=>$gedcom) {
+	$all_dirs[dirname(get_gedcom_setting($ged_id, 'path'))."/"]="";
+}
 
 $all_geds=array();
 foreach ($all_dirs as $key=>$value) {
@@ -315,10 +325,9 @@ while ($x<$i) {
 
 		$placelist=create_possible_place_names($levels[$z], $z+1); // add the necessary prefix/postfix values to the place name
 		foreach ($placelist as $key=>$placename) {
-			$escparent=preg_replace("/\?/","\\\\\\?", $placename);
 			$row=
-				PGV_DB::prepare("SELECT pl_id, pl_place, pl_long, pl_lati, pl_zoom FROM {$TBLPREFIX}placelocation WHERE pl_level=? AND pl_parent_id=? AND pl_place ".PGV_DB_LIKE." ? ORDER BY pl_place")
-				->execute(array($z, $id, $escparent))
+				PGV_DB::prepare("SELECT pl_id, pl_place, pl_long, pl_lati, pl_zoom FROM {$TBLPREFIX}placelocation WHERE pl_level=? AND pl_parent_id=? AND pl_place ".PGV_DB::$LIKE." ? ORDER BY pl_place")
+				->execute(array($z, $id, $placename))
 				->fetchOneRow(PDO::FETCH_ASSOC);
 			if (!empty($row['pl_id'])) {
 				$row['pl_placerequested']=$levels[$z]; // keep the actual place name that was requested so we can display that instead of what is in the db

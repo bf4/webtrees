@@ -48,7 +48,7 @@ $anchor				= safe_REQUEST($_REQUEST, 'anchor',				PGV_REGEX_NOSCRIPT, '');
 
 print_simple_header($pgv_lang["editlang"]);
 
-print "<script language=\"JavaScript\" type=\"text/javascript\">self.focus();</script>\n";
+echo PGV_JS_START, "self.focus();", PGV_JS_END;
 
 switch ($file_type) {
 case "facts":
@@ -91,70 +91,70 @@ case "lang":
 }
 
 if ($action != "save") {
-	print "<div align=\"center\"><center>\n";
-	print "<table class=\"facts_table\">\n";
-	print "  <tr>\n";
-	print "    <td class=\"facts_label03\">\n";
+	print "<div align=\"center\"><center>";
+	print "<table class=\"facts_table\">";
+	print "  <tr>";
+	print "    <td class=\"facts_label03\">";
 	print_text("editlang_help");
-	print "    </td>\n";
-	print "  </tr>\n";
-	print "  <tr>\n";
-	print "    <td class=\"facts_value\" style=\"text-align:center; \">" . "(" . substr($lang_filename, strpos($lang_filename, "/") + 1) . ")" . "</td>\n";
-	print "  </tr>\n";
-	print "</table>\n";
+	print "    </td>";
+	print "  </tr>";
+	print "  <tr>";
+	print "    <td class=\"facts_value\" style=\"text-align:center; \">" . "(" . substr($lang_filename, strpos($lang_filename, "/") + 1) . ")" . "</td>";
+	print "  </tr>";
+	print "</table>";
 
-	print "\r\n<form name=\"Form1\" method=\"post\" action=\"" .$PHP_SELF. "\">\n";
-	print "<input type=\"hidden\" name=\"".session_name()."\" value=\"".session_id()."\" />\n";
-	print "<input type=\"hidden\" name=\"action\" value=\"save\" />\n";
-	print "<input type=\"hidden\" name=\"anchor\" value=\"".$anchor."\" />\n";
-	print "<input type=\"hidden\" name=\"language2\" value=\"" . $language2 . "\" />\n";
-	print "<input type=\"hidden\" name=\"ls01\" value=\"" . $ls01 . "\" />\n";
-	print "<input type=\"hidden\" name=\"ls02\" value=\"" . $ls02 . "\" />\n";
-	print "<input type=\"hidden\" name=\"file_type\" value=\"" . $file_type . "\" />\n";
+	print "<form name=\"Form1\" method=\"post\" action=\"{$_SERVER['PHP_SELF']}\">";
+	print "<input type=\"hidden\" name=\"".session_name()."\" value=\"".session_id()."\" />";
+	print "<input type=\"hidden\" name=\"action\" value=\"save\" />";
+	print "<input type=\"hidden\" name=\"anchor\" value=\"".$anchor."\" />";
+	print "<input type=\"hidden\" name=\"language2\" value=\"" . $language2 . "\" />";
+	print "<input type=\"hidden\" name=\"ls01\" value=\"" . $ls01 . "\" />";
+	print "<input type=\"hidden\" name=\"ls02\" value=\"" . $ls02 . "\" />";
+	print "<input type=\"hidden\" name=\"file_type\" value=\"" . $file_type . "\" />";
 
-	print "\r\n<table class=\"facts_table\">\n";
-	print "<tr>\n";
+	print "<table class=\"facts_table\">";
+	print "<tr>";
 	print "<td class=\"facts_label03\" style=\"color: blue; font-weight: bold; \">";
 	print_text("original_message");
-	print "</td>\n";
-	print "</tr>\n";
-	print "<tr>\n";
+	print "</td>";
+	print "</tr>";
+	print "<tr>";
 	print "<td class=\"facts_value\" style=\"text-align:center; color: blue\" >";
-	print "<strong style=\"color: red\">|</strong>" . mask_all(find_in_file($ls01, $lang_filename_orig)) . "<strong style=\"color: red\">|</strong>\n";
-	print "</td>\n";
-	print "</tr>\n";
-	print "</table>\n";
-	print "<br />\n";
-	print "\r\n<table class=\"facts_table\">";
+	print "<strong style=\"color: red\">|</strong>" . mask_all(find_in_file($ls01, $lang_filename_orig)) . "<strong style=\"color: red\">|</strong>";
+	print "</td>";
+	print "</tr>";
+	print "</table>";
+	print "<br />";
+	print "<table class=\"facts_table\">";
 	print "<tr>";
 	print "<td class=\"facts_label03\" style=\"color: red; font-weight: bold; \" >";
 	print_text("message_to_edit");
-	print "</td>\n";
-	print "</tr>\n";
-	print "<tr>\n";
-	print "<td class=\"facts_value\" style=\"text-align:center; \" >\n";
+	print "</td>";
+	print "</tr>";
+	print "<tr>";
+	print "<td class=\"facts_value\" style=\"text-align:center; \" >";
 	print "<textarea rows=\"10\" name=\"new_message\" cols=\"75\" style=\"color: red\" >";
 	if ($ls02>0) print mask_all(find_in_file($ls02, $lang_filename));
-	print "</textarea>\n";
-	print "</td>\n";
-	print "</tr>\n";
-	print "</table>\n";
-	print "<br />\n";
-	print "\r\n<table class=\"facts_table\">";
-	print "<tr>\n";
-	print "<td class=\"facts_value\" style=\"text-align:center; \" >\n";
+	print "</textarea>";
+	print "</td>";
+	print "</tr>";
+	print "</table>";
+	print "<br />";
+	print "<table class=\"facts_table\">";
+	print "<tr>";
+	print "<td class=\"facts_value\" style=\"text-align:center; \" >";
 	print "<input type=\"submit\" value=\"";
 	print_text("lang_save");
-	print "\" />\n";
+	print "\" />";
 	print "&nbsp;&nbsp;";
 	print "<input type=\"submit\" value=\"";
 	print_text("cancel");
-	print "\"" . " onclick=\"self.close()\" />\n";
-	print "</td>\n";
-	print "</tr>\n";
-	print "</table>\n";
-	print "</form>\n";
-	print "</center></div>\n";
+	print "\"" . " onclick=\"self.close()\" />";
+	print "</td>";
+	print "</tr>";
+	print "</table>";
+	print "</form>";
+	print "</center></div>";
 }
 
 if ($action == "save") {
@@ -290,80 +290,80 @@ if ($action == "save") {
 	@copy($new_language_file, $new_language_file . ".old");
 	$Write_Ok = write_array_into_file($new_language_file, $new_language_array, $new_message_line, $dummyArray[3]);
 
-	print "<div align=\"center\"><center>\n";
+	print "<div align=\"center\"><center>";
 
-	print "<table class=\"facts_table\">\n";
-	print "<tr>\n";
-	print "<td class=\"facts_label03\">\n";
+	print "<table class=\"facts_table\">";
+	print "<tr>";
+	print "<td class=\"facts_label03\">";
 	print_text("savelang_help");
-	print "</td>\n";
-	print "</tr>\n";
-	print "<tr>\n";
-	print "<td class=\"facts_value\" style=\"text-align:center; \">" . "(" . substr($lang_filename, strpos($lang_filename, "/") + 1) . ")" . "</td>\n";
-	print "</tr>\n";
-	print "</table>\n";
+	print "</td>";
+	print "</tr>";
+	print "<tr>";
+	print "<td class=\"facts_value\" style=\"text-align:center; \">" . "(" . substr($lang_filename, strpos($lang_filename, "/") + 1) . ")" . "</td>";
+	print "</tr>";
+	print "</table>";
 
-	print "<form name=\"Form2\" method=\"post\" action=\"" .$PHP_SELF. "\">\n";
-	print "<table class=\"facts_table\">\n";
-	print "<tr>\n";
+	print "<form name=\"Form2\" method=\"post\" action=\"{$_SERVER['PHP_SELF']}\">";
+	print "<table class=\"facts_table\">";
+	print "<tr>";
 	if ($Write_Ok) print "<td class=\"facts_label03\" style=\"color: blue; font-weight: bold; \">".print_text("original_message",0,1);
 	else {
-		print "<td class=\"warning\" >\n";
-		print str_replace("#lang_filename#", $lang_filename, $pgv_lang["lang_file_write_error"]) . "<br /><br />\n";
+		print "<td class=\"warning\" >";
+		print str_replace("#lang_filename#", $lang_filename, $pgv_lang["lang_file_write_error"]) . "<br /><br />";
 	}
-	print "</td>\n";
-	print "</tr>\n";
+	print "</td>";
+	print "</tr>";
 	if ($Write_Ok) {
-		print "<tr>\n";
+		print "<tr>";
 		print "<td class=\"facts_value\" style=\"text-align:center; color: blue\" >";
-		print "<strong style=\"color: red\">|</strong>".mask_all(find_in_file($ls01, $lang_filename_orig))."<strong style=\"color: red\">|</strong>\n";
-		print "</td>\n";
-		print "</tr>\n";
+		print "<strong style=\"color: red\">|</strong>".mask_all(find_in_file($ls01, $lang_filename_orig))."<strong style=\"color: red\">|</strong>";
+		print "</td>";
+		print "</tr>";
 	}
-	print "</table>\n";
+	print "</table>";
 
 	if ($Write_Ok) {
-		print "<br />\n";
+		print "<br />";
 
-		print "<table class=\"facts_table\">\n";
-		print "<tr>\n";
+		print "<table class=\"facts_table\">";
+		print "<tr>";
 		print "<td class=\"facts_label03\" style=\"color: blue; font-weight: bold; \">";
 		print_text("changed_message");
-		print "</td>\n";
-		print "</tr>\n";
+		print "</td>";
+		print "</tr>";
 
-		print "<tr>\n";
+		print "<tr>";
 		print "<td class=\"facts_value\" style=\"text-align:center; color: blue\" >";
-		print "<strong style=\"color: red; \">|</strong>" . mask_all($new_message) . "<strong style=\"color: red\">|</strong>\n";
-		print "</td>\n";
-		print "</tr>\n";
-		print "</table>\n";
+		print "<strong style=\"color: red; \">|</strong>" . mask_all($new_message) . "<strong style=\"color: red\">|</strong>";
+		print "</td>";
+		print "</tr>";
+		print "</table>";
 
-		print "<br />\n";
+		print "<br />";
 	}
 
-	print "<table class=\"facts_table\">\n";
-	print "<tr>\n";
-	print "<td class=\"facts_value\" style=\"text-align:center; \" >\n";
+	print "<table class=\"facts_table\">";
+	print "<tr>";
+	print "<td class=\"facts_value\" style=\"text-align:center; \" >";
 	srand((double)microtime()*1000000);
-	print "<input type=\"submit\" value=\"" . $pgv_lang["close_window"] . "\"" . " onclick=\"window.opener.showchanges('&dv=".rand()."#".$anchor."'); self.close();\" />\n";
-	print "</td>\n";
-	print "</tr>\n";
+	print "<input type=\"submit\" value=\"" . $pgv_lang["close_window"] . "\"" . " onclick=\"window.opener.showchanges('&dv=".rand()."#".$anchor."'); self.close();\" />";
+	print "</td>";
+	print "</tr>";
 	if ($Write_Ok) {
-		print "<tr>\n";
-		print "<td class=\"facts_value\" style=\"text-align:center; \" >\n";
+		print "<tr>";
+		print "<td class=\"facts_value\" style=\"text-align:center; \" >";
 		print "<br /><br /><input type=\"submit\" value=\"";
 		print_text("close_window_without_refresh");
-		print "\"" . " onclick=\"self.close();\" /><br /><br />\n";
-		print "<div class=\"error\">\n";
+		print "\"" . " onclick=\"self.close();\" /><br /><br />";
+		print "<div class=\"error\">";
 		print_text("edit_lang_utility_warning");
-		print "</div></td>\n";
-		print "</tr>\n";
+		print "</div></td>";
+		print "</tr>";
 	}
-	print "</table>\n";
+	print "</table>";
 
-	print "</form>\n";
-	print "</center></div>\n";
+	print "</form>";
+	print "</center></div>";
 
 	// if ls02 (the line of the translated sentence) variable has not been set, try to find the row in the translated file
 	if ($ls02 == "") {
@@ -371,7 +371,7 @@ if ($action == "save") {
 		$englishTarget1 = $english_language_array[$ls01][0];
 		$englishTarget2 = str_replace('"', "'", $englishTarget1);		// Var name could be inside apostrophes
 		$englishTarget3 = str_replace("'", '"', $englishTarget1);		// Var name could be inside apostrophes
-		for ($y = 0; $y < sizeof($new_language_array); $y++) {
+		for ($y = 0, $ymax = sizeof($new_language_array); $y < $ymax; $y++) {
 			if (isset($new_language_array[$y][1])) {
 				if ($new_language_array[$y][0] == $englishTarget1 || $new_language_array[$y][0] == $englishTarget2 || $new_language_array[$y][0] == $englishTarget3) {
 					$ls02 = $y;

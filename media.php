@@ -261,7 +261,7 @@ function pasteid(id) {
 }
 
 function ilinkitem(mediaid, type) {
-	window.open('inverselink.php?mediaid='+mediaid+'&linkto='+type+'&'+sessionname+'='+sessionid, '_blank', 'top=50,left=50,width=530,height=650,resizable=1,scrollbars=1');
+	window.open('inverselink.php?mediaid='+mediaid+'&linkto='+type+'&'+sessionname+'='+sessionid, '_blank', 'top=50,left=50,width=570,height=650,resizable=1,scrollbars=1');
 	return false;
 }
 
@@ -297,7 +297,7 @@ function showchanges() {
 
 //-->
 </script>
-<script src="phpgedview.js" language="JavaScript" type="text/javascript"></script>
+<script src="js/phpgedview.js" language="JavaScript" type="text/javascript"></script>
 <?php
 if (check_media_structure()) {
 	print "<div id=\"uploadmedia\" style=\"display:none\">";
@@ -599,7 +599,7 @@ if (check_media_structure()) {
 		//-- figure out how many levels are in this file
 		$mlevels = preg_split("~[/\\\]~", $filename);
 
-		$statement=PGV_DB::prepare("SELECT * FROM {$TBLPREFIX}media WHERE m_file ".PGV_DB_LIKE." ?")->execute(array("%{$myFile}"));
+		$statement=PGV_DB::prepare("SELECT * FROM {$TBLPREFIX}media WHERE m_file ".PGV_DB::$LIKE." ?")->execute(array("%{$myFile}"));
 		while ($row=$statement->fetch(PDO::FETCH_ASSOC)) {
 			$rlevels = preg_split("~[/\\\]~", $row["m_file"]);
 			//-- make sure we only delete a file at the same level of directories
@@ -745,31 +745,28 @@ if (check_media_structure()) {
 		$menu = new Menu();
 		
 		// GEDFact assistant Add Media Links =======================
-		if (file_exists('modules/GEDFact_assistant/MEDIA/media_1_ctrl.php')) {
+		if (file_exists('modules/GEDFact_assistant/_MEDIA/media_1_ctrl.php')) {
 			$menu->addLabel($pgv_lang["add_or_remove_links"]);
+			$menu->addOnclick("return ilinkitem('$mediaid','manage')");
+			$menu->addClass("", "", "submenu");
+			$menu->addFlyout("left");
+			// Do not print submunu
+			
 		} else {
 			$menu->addLabel($pgv_lang["set_link"]);
-		}
-		$menu->addOnclick("return ilinkitem('$mediaid','person')");
-		$menu->addClass("", "", "submenu");
-		$menu->addFlyout("left");
-		
-		// GEDFact assistant Add Media Links =======================
-		if (file_exists('modules/GEDFact_assistant/MEDIA/media_1_ctrl.php')) {
-			// Do not print submunu
-		} else {
+			$menu->addOnclick("return ilinkitem('$mediaid','person')");
 			$submenu = new Menu($pgv_lang["to_person"]);
-			$submenu->addClass("submenuitem".$classSuffix, "submenuitem".$classSuffix);
+			$submenu->addClass("submenuitem".$classSuffix, "submenuitem_hover".$classSuffix);
 			$submenu->addOnclick("return ilinkitem('$mediaid','person')");
 			$menu->addSubMenu($submenu);
 
 			$submenu = new Menu($pgv_lang["to_family"]);
-			$submenu->addClass("submenuitem".$classSuffix, "submenuitem".$classSuffix);
+			$submenu->addClass("submenuitem".$classSuffix, "submenuitem_hover".$classSuffix);
 			$submenu->addOnclick("return ilinkitem('$mediaid','family')");
 			$menu->addSubMenu($submenu);
 
 			$submenu = new Menu($pgv_lang["to_source"]);
-			$submenu->addClass("submenuitem".$classSuffix, "submenuitem".$classSuffix);
+			$submenu->addClass("submenuitem".$classSuffix, "submenuitem_hover".$classSuffix);
 			$submenu->addOnclick("return ilinkitem('$mediaid','source')");
 			$menu->addSubMenu($submenu);
 		}
@@ -1132,7 +1129,11 @@ if (check_media_structure()) {
 						else {
 							if (substr($mediaInfo['type'],0,4) == 'url_') $tempText = 'URL';
 							else $tempText = PrintReady($media["FILE"]);
-							echo '<a href="', 'mediaviewer.php?mid=', $media["XREF"], '"><span dir="ltr">', $tempText, '</span></a><br />';
+							if (!empty($media["XREF"])) {
+								echo '<a href="', 'mediaviewer.php?mid=', $media["XREF"], '"><span dir="ltr">', $tempText, '</span></a><br />';
+							} else {
+								echo '<span dir="ltr">', $tempText, '</span><br />';
+							}
 						}
 						if (substr($mediaInfo['type'],0,4) != 'url_' && !empty($imgsize[0])) {
 							print "<sub>&nbsp;&nbsp;".$pgv_lang["image_size"]." -- ".$imgsize[0]."x".$imgsize[1]."</sub><br />";

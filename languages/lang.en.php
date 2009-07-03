@@ -31,6 +31,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
+$pgv_lang["gedcomid"]				= "GEDCOM INDI record ID";
 $pgv_lang["sortby"]				= "Sequence";
 $pgv_lang["exact"]				= "Exact";
 $pgv_lang["begins_with"]		= "Begins with";
@@ -393,6 +394,7 @@ $pgv_lang["start_at_parents"]		= "Start at parents";
 $pgv_lang["charts"] 				= "Charts";
 $pgv_lang["lists"]					= "Lists";
 $pgv_lang["box_width"] 				= "Box width";
+$pgv_lang["random_surn"]					= "Random surname";
 
 //-- FUNCTIONS FILE MESSAGES
 $pgv_lang["unable_to_find_family"]	= "Unable to find family with ID";
@@ -611,6 +613,7 @@ $pgv_lang["titles_found"]			= "Titles";
 $pgv_lang["find_source"]			= "Find Source";
 
 //-- REPOLIST FILE MESSAGES
+$pgv_lang["repository"] 			= "Repository";
 $pgv_lang["repos_found"]			= "Repositories found";
 $pgv_lang["find_repository"]		= "Find Repository";
 $pgv_lang["total_repositories"]		= "Total Repositories";
@@ -1651,6 +1654,7 @@ $pgv_lang["stat_1_map"]			= "Individual distribution";
 $pgv_lang["stat_2_map"]			= "Birth by country";
 $pgv_lang["stat_3_map"]			= "Death by country";
 $pgv_lang["stat_4_map"]			= "Marriage by country";
+$pgv_lang["stat_5_birth"]		= "Births by century";
 $pgv_lang["stat_8_fam"]			= "Families with sources";
 $pgv_lang["stat_9_indi"]		= "Individuals with sources";
 $pgv_lang["stat_10_none"]		= "none";
