@@ -1630,10 +1630,14 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 				echo "&nbsp;&nbsp;&nbsp;";
 				print_editnote_link($value);
 			}
-			// If GEDFAct_assistant/_CENS/ module exists --------------------------
-			if (file_exists('modules/GEDFact_assistant/_CENS/census_1_ctrl.php')) {
-				echo "&nbsp;&nbsp;&nbsp;";
-				print_addnewnote_assisted_link($element_id);
+			// If GEDFAct_assistant/_CENS/ module exists && we are on the INDI page 
+			// Then show the add Shared note assisted icon, if not  ... do not show 
+			if ($pid) {
+				$type_pid=GedcomRecord::getInstance($pid);
+				if (file_exists('modules/GEDFact_assistant/_CENS/census_1_ctrl.php') && $type_pid->getType()=="INDI" ) { 
+					echo "&nbsp;&nbsp;&nbsp;";
+					print_addnewnote_assisted_link($element_id);
+				}
 			}
 		echo "<br />";
 		}

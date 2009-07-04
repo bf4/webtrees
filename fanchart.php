@@ -409,7 +409,7 @@ function print_fan_chart($treeid, $fanw=640, $fandeg=270) {
 	unset($_SESSION[$image_name]);		// statisticsplot.php uses this to hold a file name to send to browser
 	$image_title=preg_replace("~<.*>~", "", $name) . " " . $pgv_lang["fan_chart"];
 	echo "<p align=\"center\" >";
-	echo "<img src=\"imageflush.php?image_type=png&image_name=$image_name&height=$fanh&width=$fanw\" width=\"$fanw\" height=\"$fanh\" border=\"0\" alt=\"$image_title\" title=\"$image_title\" usemap=\"#fanmap\" />";
+	echo "<img src=\"imageflush.php?image_type=png&amp;image_name=$image_name&amp;height=$fanh&amp;width=$fanw\" width=\"$fanw\" height=\"$fanh\" border=\"0\" alt=\"$image_title\" title=\"$image_title\" usemap=\"#fanmap\" />";
 	echo "</p>";
 	ImageDestroy($image);
 }
