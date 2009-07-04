@@ -26,7 +26,7 @@
  * @version $Id$
  */
  
- 	include('includes/functions/functions_print_lists.php');  //  *** NOTE THIS is necessary for the function below ***
+ 	include_once('includes/functions/functions_print_lists.php');  //  *** NOTE THIS is necessary for the function below ***
  
 	echo "<tr><td class=\"descriptionbox ".$TEXT_DIRECTION." wrap width25\">";
 		print_help_link("edit_add_SHARED_NOTE_help", "qm");
@@ -76,6 +76,8 @@
  * @param array $datalist contain individuals that were extracted from the database.
  * @param string $legend optional legend of the fieldset
  */
+
+/*
 function print_indi_list($datalist, $legend="", $option="") {
 	global $pgv_lang, $factarray, $GEDCOM, $SHOW_ID_NUMBERS, $SHOW_LAST_CHANGE, $SHOW_MARRIED_NAMES, $TEXT_DIRECTION;
 	global $PGV_IMAGE_DIR, $PGV_IMAGES, $SEARCH_SPIDER, $SHOW_EST_LIST_DATES;
@@ -202,6 +204,7 @@ function print_indi_list($datalist, $legend="", $option="") {
 	echo "</div>";
 	
 }
+*/
 // ==========================================================
 
 

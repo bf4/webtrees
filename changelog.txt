@@ -10,6 +10,7 @@
 
 
 Version 4.2.x CA
+ - Removed an unnecessary function, that was also being called multiple times, causing duplicate declaration errors. (windmillway)
  - Merged: Merge changes r5831 - r5838 from the trunk. (windmillway)
  - Merged: Merge changes r5824 - r5830 from the trunk. (windmillway)
  - Merged: Merge changes r5591 - r5823 from the trunk. (windmillway)
