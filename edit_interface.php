@@ -1188,8 +1188,8 @@ case 'update':
 */
 //	// When $cens_pids is present, cycle through each individual concerned.
 //	foreach ($cens_pids as $pid) {
-//		$gedrec = find_gedcom_record($pid);
 
+		$gedrec = find_gedcom_record($pid);
 		if (PGV_DEBUG) {
 			phpinfo(INFO_VARIABLES);
 			echo "<pre>$gedrec</pre>";
@@ -1225,7 +1225,7 @@ case 'update':
 				else $uploaded_files[] = "";
 			}
 		}
-//	} // end foreach
+//	} // end foreach $cens_pids  -------------
 	
 	$gedlines = explode("\n", trim($gedrec));
 	//-- for new facts set linenum to number of lines
