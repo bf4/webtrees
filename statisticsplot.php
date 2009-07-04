@@ -96,7 +96,7 @@ function demo() {
 	global $z_as, $months, $zgrenzen, $stats, $n1;
 
 	if ($z_as == 300){
-		$num = $stats->statsDeath();
+		$num = $stats->statsDeath(false);
 		foreach ($num as $values) {
 			foreach ($months as $key=>$month) {
 				if($month==$values['d_month']) {
@@ -107,7 +107,7 @@ function demo() {
 		}
 	}
 	else if ($z_as == 301) {
-		$num = $stats->statsDeath(true);
+		$num = $stats->statsDeath(false, true);
 		foreach ($num as $values) {
 			foreach ($months as $key=>$month) {
 				if($month==$values['d_month']) {
@@ -126,7 +126,7 @@ function demo() {
 	else {
 		$zstart = 0;
 		foreach ($zgrenzen as $boundary) {
-			$num = $stats->statsDeath(false, $zstart, $boundary);
+			$num = $stats->statsDeath(false, false, $zstart, $boundary);
 			foreach ($num as $values) {
 				foreach ($months as $key=>$month) {
 					if($month==$values['d_month']) {
@@ -145,7 +145,7 @@ function mamo() {
 	global $z_as, $months, $zgrenzen, $stats, $n1;
 
 	if ($z_as == 300) {
-		$num = $stats->statsMarr(false);
+		$num = $stats->statsMarr(false, false);
 		foreach ($num as $values) {
 			foreach ($months as $key=>$month) {
 				if($month==$values['d_month']) {
@@ -158,7 +158,7 @@ function mamo() {
 	else {
 		$zstart = 0;
 		foreach ($zgrenzen as $boundary) {
-			$num = $stats->statsMarr(false, $zstart, $boundary);
+			$num = $stats->statsMarr(false, false, $zstart, $boundary);
 			foreach ($num as $values) {
 				foreach ($months as $key=>$month) {
 					if($month==$values['d_month']) {
@@ -177,7 +177,7 @@ function mamo1() {
 	global $z_as, $months, $zgrenzen, $stats, $n1;
 
 	if ($z_as == 300) {
-		$num = $stats->statsMarr(true);
+		$num = $stats->statsMarr(false, true);
 		$indi=array();
 		$fam=array();
 		foreach ($num as $values) {
@@ -198,7 +198,7 @@ function mamo1() {
 		$indi=array();
 		$fam=array();
 		foreach ($zgrenzen as $boundary) {
-			$num = $stats->statsMarr(true, $zstart, $boundary);
+			$num = $stats->statsMarr(false, true, $zstart, $boundary);
 			foreach ($num as $values) {
 				if (!in_array($values['indi'], $indi) && !in_array($values['fams'], $fam)) {
 					foreach ($months as $key=>$month) {
