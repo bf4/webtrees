@@ -38,6 +38,7 @@ require_once 'includes/classes/class_person.php';
 require_once 'includes/functions/functions_places.php';
 require_once 'includes/cssparser.inc.php';
 
+
 /**
  * print a sortable table of individuals
  *
