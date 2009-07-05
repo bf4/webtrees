@@ -1639,6 +1639,7 @@ $pgv_lang["ward"]						= "Mündel";
 $pgv_lang["witness"]					= "Zeuge";
 
 //-- statistics utility
+$pgv_lang["stat_create"]				= "Eigenes Diagramm bauen";
 $pgv_lang["statutci"]					= "Index kann nicht erstellt werden";
 $pgv_lang["statnnames"]					= "Personen";
 $pgv_lang["statnfam"]					= "Anzahl der Familien";
@@ -1656,6 +1657,8 @@ $pgv_lang["stat_2_map"]					= "Geburten pro Land";
 $pgv_lang["stat_3_map"]					= "Tode pro Land";
 $pgv_lang["stat_4_map"]					= "Ehen pro Land";
 $pgv_lang["stat_5_birth"]				= "Geburten pro Jahrhundert";
+$pgv_lang["stat_6_death"]				= "Tode pro Jahrhundert";
+$pgv_lang["stat_7_marr"]				= "Ehen pro Jahrhundert";
 $pgv_lang["stat_8_fam"]					= "Familien mit Quellen";
 $pgv_lang["stat_9_indi"]				= "Personen mit Quellen";
 $pgv_lang["stat_10_none"]				= "keiner";
