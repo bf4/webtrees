@@ -178,7 +178,7 @@ function print_fact(&$eventObj, $noedit=false) {
 					$submenu->addOnclick("return edit_record('$pid', $linenum);");
 				}
 				else {
-					$submenu>addLink(encode_url("module.php?mod=research_assistant&action=editfact&taskid={$taskid}"));
+					$submenu->addLink(encode_url("module.php?mod=research_assistant&action=editfact&taskid={$taskid}"));
 				}
 				$submenu->addClass("submenuitem", "submenuitem_hover");
 				$menu->addSubMenu($submenu);
