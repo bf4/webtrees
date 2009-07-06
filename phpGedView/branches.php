@@ -166,8 +166,8 @@ function print_fams($person, $famid=null) {
 				"<a target=\"_blank\" class=\"{$class}\" title=\"{$family->xref}\" href=\"{$family->getLinkUrl()}\">{$givn2}</a> ".
 				"<a class=\"{$class}\" title=\"{$surn2}\" href=\"?surn={$surn2}\">{$surn2}</a> ".
 				$spouse->getBirthDeathYears()." {$sosa2}";
-			echo PrintReady($txt);
 		}
+		echo PrintReady($txt);
 		echo "<ol>";
 		foreach ($family->getChildren() as $c=>$child) {
 			print_fams($child, $family->xref);
