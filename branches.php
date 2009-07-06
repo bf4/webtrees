@@ -81,6 +81,7 @@ if ($ENABLE_AUTOCOMPLETE) {
 
 //-- results
 if ($surn) {
+	$surn_lang = whatLanguage($surn);
 	echo "<fieldset><legend>".PGV_ICON_SFAMILY." {$surn}</legend>";
 	$indis = indis_array($surn, $soundex_std, $soundex_dm);
 	echo "<ol>";
@@ -101,7 +102,7 @@ if ($surn) {
 print_footer();
 
 function print_fams($person, $famid=null) {
-	global $pgv_lang, $surn;
+	global $pgv_lang, $surn, $surn_lang;
 	// select person name according to searched surname
 	$person_name = "";
 	foreach ($person->getAllNames() as $n=>$name) {
@@ -111,6 +112,9 @@ function print_fams($person, $famid=null) {
 			&& soundex_std($surn1)!==soundex_std($surn)
 			&& soundex_dm($surn1)!==soundex_dm($surn)
 			) {
+			continue;
+		}
+		if (whatLanguage($surn1)!==$surn_lang) {
 			continue;
 		}
 		$person_name = $name['full'];
@@ -135,10 +139,10 @@ function print_fams($person, $famid=null) {
 	}
 	// spouses and children
 	if (count($person->getSpouseFamilies())<1) {
-		echo $current;
+		echo PrintReady($current);
 	}
 	foreach ($person->getSpouseFamilies() as $f=>$family) {
-		echo $current;
+		$txt = $current;
 		$spouse = $family->getSpouse($person);
 		if ($spouse) {
 			$class = "";
@@ -148,7 +152,7 @@ function print_fams($person, $famid=null) {
 				$sosa2 = "<a target=\"_blank\" class=\"details1 {$spouse->getBoxStyle()}\" title=\"Sosa\" href=\"relationship.php?pid2=".PGV_USER_ROOT_ID."&pid1={$spouse->xref}\">&nbsp;{$sosa2}&nbsp;</a>".sosa_gen($sosa2);
 			}
 			if ($family->getMarriageYear()) {
-				echo "&nbsp;<span class='details1' title=\"".strip_tags($family->getMarriageDate()->Display())."\">".PGV_ICON_RINGS.$family->getMarriageYear()."</span>&nbsp;";
+				$txt .= "&nbsp;<span class='details1' title=\"".strip_tags($family->getMarriageDate()->Display())."\">".PGV_ICON_RINGS.$family->getMarriageYear()."</span>&nbsp;";
 			}
 			$spouse_name = $spouse->getListName();
 			foreach ($spouse->getAllNames() as $n=>$name) {
@@ -158,9 +162,11 @@ function print_fams($person, $famid=null) {
 				}
 			}
 			list($surn2, $givn2) = explode(", ", $spouse_name.", x");
-			echo $spouse->getSexImage()."<a target=\"_blank\" class=\"{$class}\" title=\"{$family->xref}\" href=\"{$family->getLinkUrl()}\">{$givn2}</a> ",
-				"<a class=\"{$class}\" title=\"{$surn2}\" href=\"?surn={$surn2}\">{$surn2}</a> ",
+			$txt .= $spouse->getSexImage().
+				"<a target=\"_blank\" class=\"{$class}\" title=\"{$family->xref}\" href=\"{$family->getLinkUrl()}\">{$givn2}</a> ".
+				"<a class=\"{$class}\" title=\"{$surn2}\" href=\"?surn={$surn2}\">{$surn2}</a> ".
 				$spouse->getBirthDeathYears()." {$sosa2}";
+			echo PrintReady($txt);
 		}
 		echo "<ol>";
 		foreach ($family->getChildren() as $c=>$child) {
@@ -189,7 +195,8 @@ function indis_array($surn, $soundex_std, $soundex_dm) {
 		"SELECT DISTINCT n_id".
 		" FROM {$TBLPREFIX}name".
 		" WHERE n_file=".PGV_GED_ID.
-		" AND (n_surn='{$surn}' OR n_surname='{$surn}'";
+		" AND n_type!='_MARNM'".
+		" AND (n_surn=".PGV_DB::quote("{$surn}")." OR n_surname=".PGV_DB::quote("{$surn}");
 	if ($soundex_std) {
 		$sql .= " OR n_soundex_surn_std=\"'".soundex_std($surn)."'\"";
 	}
