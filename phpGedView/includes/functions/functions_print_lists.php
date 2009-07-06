@@ -241,7 +241,7 @@ function print_indi_table($datalist, $legend="", $option="") {
 			if ($SHOW_EST_LIST_DATES) {
 				echo '<div>', str_replace('<a', '<a name="'.$birth_jd.'"', $birth_date->Display(!$SEARCH_SPIDER)), '</div>';
 			} else {
-				echo '<span class="date"><a name="'.$birth_jd.'">&nbsp;</span>'; // span needed for alive-in-year filter
+				echo '<span class="date"><a name="'.$birth_jd.'"/>&nbsp;</span>'; // span needed for alive-in-year filter
 			}
 			$birth_dates[0]=new GedcomDate('');
 		}
