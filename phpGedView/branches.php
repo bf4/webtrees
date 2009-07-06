@@ -35,6 +35,10 @@ $surn = safe_GET('surn', '[^<>&%{};]*');
 $surn = UTF8_strtoupper($surn);
 $soundex_std = safe_GET_bool('soundex_std');
 $soundex_dm = safe_GET_bool('soundex_dm');
+$ged = safe_GET('ged');
+if (empty($ged)) {
+	$ged = $GEDCOM;
+}
 
 //-- rootid
 $rootid = "";
@@ -64,6 +68,7 @@ if ($ENABLE_AUTOCOMPLETE) {
 				<?php print_help_link("surname_help", "qm", "surname"); print $pgv_lang["surname"]; ?></td>
 			<td class="optionbox <?php print $TEXT_DIRECTION; ?>">
 				<input type="text" name="surn" id="SURN" value="<?php echo $surn?>" />
+				<input type="hidden" name="ged" id="ged" value="<?php echo $ged?>" />
 				<input type="submit" value="<?php echo $pgv_lang['view']; ?>" />
 				<input type="submit" value="<?php echo $pgv_lang['random_surn']; ?>" onclick="document.surnlist.surn.value='*';" />
 				<p class="details1">
@@ -82,7 +87,7 @@ if ($ENABLE_AUTOCOMPLETE) {
 //-- results
 if ($surn) {
 	$surn_lang = whatLanguage($surn);
-	echo "<fieldset><legend>".PGV_ICON_SFAMILY." {$surn}</legend>";
+	echo "<fieldset><legend>".PGV_ICON_SFAMILY." ".PrintReady($surn)."</legend>";
 	$indis = indis_array($surn, $soundex_std, $soundex_dm);
 	echo "<ol>";
 	foreach ($indis as $k=>$person) {
@@ -121,7 +126,7 @@ function print_fams($person, $famid=null) {
 		break;
 	}
 	if (empty($person_name)) {
-		echo "<span title=\"".strip_tags($person->getFullName())."\">".$person->getSexImage()."...</span>";
+		echo "<span title=\"".PrintReady(strip_tags($person->getFullName()))."\">".$person->getSexImage()."...</span>";
 		return;
 	}
 	$person_lang = whatLanguage($person_name);
@@ -133,13 +138,15 @@ function print_fams($person, $famid=null) {
 		$class = "search_hit";
 		$sosa = "<a target=\"_blank\" class=\"details1 {$person->getBoxStyle()}\" title=\"Sosa\" href=\"relationship.php?pid2=".PGV_USER_ROOT_ID."&pid1={$person->xref}\">&nbsp;{$sosa}&nbsp;</a>".sosa_gen($sosa);
 	}
-	$current = $person->getSexImage()."<a target=\"_blank\" class=\"{$class}\" title=\"{$person->xref}\" href=\"{$person->getLinkUrl()}\">{$person_name}</a> ".$person->getBirthDeathYears()." {$sosa}";
+	$current = $person->getSexImage().
+		"<a target=\"_blank\" class=\"{$class}\" title=\"{$person->xref}\" href=\"{$person->getLinkUrl()}\">".PrintReady($person_name)."</a> ".
+		PrintReady($person->getBirthDeathYears())." {$sosa}";
 	if ($famid && $person->getChildFamilyPedigree($famid)) {
 		$current = "<span class='red'>".$pgv_lang[$person->getChildFamilyPedigree($famid)]."</span> ".$current;
 	}
 	// spouses and children
 	if (count($person->getSpouseFamilies())<1) {
-		echo PrintReady($current);
+		echo $current;
 	}
 	foreach ($person->getSpouseFamilies() as $f=>$family) {
 		$txt = $current;
@@ -163,11 +170,11 @@ function print_fams($person, $famid=null) {
 			}
 			list($surn2, $givn2) = explode(", ", $spouse_name.", x");
 			$txt .= $spouse->getSexImage().
-				"<a target=\"_blank\" class=\"{$class}\" title=\"{$family->xref}\" href=\"{$family->getLinkUrl()}\">{$givn2}</a> ".
-				"<a class=\"{$class}\" title=\"{$surn2}\" href=\"?surn={$surn2}\">{$surn2}</a> ".
-				$spouse->getBirthDeathYears()." {$sosa2}";
+				"<a target=\"_blank\" class=\"{$class}\" title=\"{$family->xref}\" href=\"{$family->getLinkUrl()}\">".PrintReady($givn2)."</a> ".
+				"<a class=\"{$class}\" title=\"{$surn2}\" href=\"javascript:document.surnlist.surn.value='{$surn2}';document.surnlist.submit();\">".PrintReady($surn2)."</a> ".
+				PrintReady($spouse->getBirthDeathYears())." {$sosa2}";
 		}
-		echo PrintReady($txt);
+		echo $txt;
 		echo "<ol>";
 		foreach ($family->getChildren() as $c=>$child) {
 			print_fams($child, $family->xref);
