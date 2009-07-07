@@ -824,7 +824,7 @@ function print_sour_table($datalist, $legend=null) {
 	require_once 'js/sorttable.js.htm';
 	require_once 'includes/classes/class_source.php';
 
-	echo '<fieldset><legend><img src="', $PGV_IMAGE_DIR, '/', $PGV_IMAGES['source']['small'], '" align="middle" /> ';
+	echo '<fieldset><legend><img src="', $PGV_IMAGE_DIR, '/', $PGV_IMAGES['source']['small'], '" align="middle" alt="" /> ';
 	if ($legend) {
 		echo $legend;
 	} else {
@@ -961,7 +961,7 @@ function print_note_table($datalist, $legend=null) {
 	require_once 'js/sorttable.js.htm';
 	require_once 'includes/classes/class_note.php';
 
-	echo '<fieldset><legend><img src="', $PGV_IMAGE_DIR, '/', $PGV_IMAGES['notes']['small'], '" align="middle" /> ';
+	echo '<fieldset><legend><img src="', $PGV_IMAGE_DIR, '/', $PGV_IMAGES['notes']['small'], '" align="middle" alt="" /> ';
 	if ($legend) {
 		echo $legend;
 	} else {
@@ -1045,7 +1045,7 @@ function print_repo_table($repos, $legend='') {
 	require_once 'js/sorttable.js.htm';
 	require_once 'includes/classes/class_repository.php';
 
-	echo '<fieldset><legend><img src="', $PGV_IMAGE_DIR, '/', $PGV_IMAGES['repository']['small'], '" align="middle" />';
+	echo '<fieldset><legend><img src="', $PGV_IMAGE_DIR, '/', $PGV_IMAGES['repository']['small'], '" align="middle" alt="" />';
 	if ($legend) {
 		echo $legend;
 	} else {

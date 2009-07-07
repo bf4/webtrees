@@ -129,14 +129,14 @@ if ($view!="preview") {
 	if ($controller->chart_style=="2") {
 		echo ' checked="checked" ';
 	}
-	echo ' onclick="statusDisable(\'cousins\');';
-	echo '" />', $pgv_lang['individual_list'];
+	echo ' onclick="statusDisable(\'cousins\');"';
+	echo ' />', $pgv_lang['individual_list'];
 	echo '<br /><input type="radio" name="chart_style" value="3"';
-	echo ' onclick="statusDisable(\'cousins\');';
+	echo ' onclick="statusDisable(\'cousins\');"';
 	if ($controller->chart_style=="3") {
 		echo ' checked="checked" ';
 	}
-	echo '" />', $pgv_lang['family_list'];
+	echo ' />', $pgv_lang['family_list'];
 	?>
 	</td>
 
