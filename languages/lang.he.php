@@ -395,6 +395,7 @@ $pgv_lang["start_at_parents"]		= "התחל מההורים";
 $pgv_lang["charts"] 			= "תרשימים";
 $pgv_lang["lists"] 			= "רשימות";
 $pgv_lang["box_width"] 		= "רוחב התיבה";
+$pgv_lang["random_surn"]		= "שם משפחה אקראי";
 
 //-- FUNCTIONS FILE MESSAGES
 $pgv_lang["unable_to_find_family"]	= "לא נמצאת משפחה עם קוד זיהוי";
@@ -613,6 +614,7 @@ $pgv_lang["titles_found"]		= "כותרות";
 $pgv_lang["find_source"]		= "מצא מקור";
 
 //-- REPOLIST FILE MESSAGES
+$pgv_lang["repository"] 			= "מאגר";
 $pgv_lang["repos_found"]		= "נמצאו מאגרים";
 $pgv_lang["find_repository"]		= "מצא מאגר";
 $pgv_lang["total_repositories"]	= "סה\"כ מאגרים";
@@ -1637,6 +1639,7 @@ $pgv_lang["ward"] 			= "חניך";
 $pgv_lang["witness"] 			= "עד";
 
 //-- statistics utility
+$pgv_lang["stat_create"]		= "צור תרשים אישי";
 $pgv_lang["statutci"]			= "לא ניתן ליצור אינדקס";
 $pgv_lang["statnnames"]                	= "סה\"כ אנשים";
 $pgv_lang["statnfam"]                  	= "סה\"כ משפחות";
@@ -1653,6 +1656,9 @@ $pgv_lang["stat_1_map"]		= "התפלגות אישית";
 $pgv_lang["stat_2_map"]		= "לידה לפי ארץ";
 $pgv_lang["stat_3_map"]		= "פטירה לפי ארץ";
 $pgv_lang["stat_4_map"]		= "נישואין לפי ארץ";
+$pgv_lang["stat_5_birth"]		= "לידות לפי מאה";
+$pgv_lang["stat_6_death"]		= "פטירות לפי מאה";
+$pgv_lang["stat_7_marr"]		= "נישואין לפי מאה";
 $pgv_lang["stat_8_fam"]		= "משפחות עם מקורות";
 $pgv_lang["stat_9_indi"]		= "אנשים עם מקורות";
 $pgv_lang["stat_10_none"]		= "כלום";
