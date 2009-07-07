@@ -514,18 +514,18 @@ function print_pedigree_person_nav($pid, $style=1, $show_famlink=true, $count=0,
 				//-- draw a box for the family popup
 				if ($TEXT_DIRECTION=="rtl") {
 				$spouselinks .= "\n\t\t\t<div class=\"flyout\"><table class=\"person_box$isF flyoutrtl\"><tr><td class=\"nowrap rtl\" >";
-				$spouselinks .= "<b>" . $pgv_lang['family'] . "</b><br /></div>";
+				$spouselinks .= "<b>" . $pgv_lang['family'] . "</b><br />";
 				$parentlinks .= "\n\t\t\t<div class=\"flyout\"><table class=\"person_box$isF flyoutrtl\"><tr><td class=\"nowrap rtl\" >";
-				$parentlinks .= "<b>" . $pgv_lang['parents'] . "</b><br /></div>";
+				$parentlinks .= "<b>" . $pgv_lang['parents'] . "</b><br />";
 				$step_parentlinks .= "\n\t\t\t<div class=\"flyout\"><table class=\"person_box$isF flyoutrtl\"><tr><td class=\"nowrap rtl\" >";
-				$step_parentlinks .= "<b>" . $pgv_lang['parents'] . "</b><br /></div>";
+				$step_parentlinks .= "<b>" . $pgv_lang['parents'] . "</b><br />";
 				}else{
 				$spouselinks .= "\n\t\t\t<div class=\"flyout\"><table class=\"person_box$isF flyout\"><tr><td class=\"nowrap ltr\" >";
-				$spouselinks .= "<b>" . $pgv_lang['family'] . "</b><br /></div>";
+				$spouselinks .= "<b>" . $pgv_lang['family'] . "</b><br />";
 				$parentlinks .= "\n\t\t\t<div class=\"flyout\"><table class=\"person_box$isF flyout\" ><tr><td class=\"nowrap ltr\" >";
-				$parentlinks .= "<b>" . $pgv_lang['parents'] . "</b><br /></div>";
+				$parentlinks .= "<b>" . $pgv_lang['parents'] . "</b><br />";
 				$step_parentlinks .= "\n\t\t\t<div class=\"flyout\"><table class=\"person_box$isF flyout\" ><tr><td class=\"nowrap ltr\" >";
-				$step_parentlinks .= "<b>" . $pgv_lang['parents'] . "</b><br /></div>";
+				$step_parentlinks .= "<b>" . $pgv_lang['parents'] . "</b><br />";
 				}
 				$persons       = "";
 				$person_parent = "";
@@ -699,19 +699,19 @@ function print_pedigree_person_nav($pid, $style=1, $show_famlink=true, $count=0,
 				if ($persons != "Yes") {
 					$spouselinks  .= "(" . $pgv_lang['none'] . ")</td></tr></table>\n\t\t";
 				}else{
-					$spouselinks  .= "</td></tr></table>\n\t\t";
+					$spouselinks  .= "</td></tr></table></div>\n\t\t";
 				}
 
 				if ($person_parent != "Yes") {
 					$parentlinks .= "(" . $pgv_lang['unknown'] . ")</td></tr></table>\n\t\t";
 				}else{
-					$parentlinks .= "</td></tr></table>\n\t\t";
+					$parentlinks .= "</td></tr></table></div>\n\t\t";
 				}
 
 				if ($person_step != "Yes") {
 					$step_parentlinks .= "(" . $pgv_lang['unknown'] . ")</td></tr></table>\n\t\t";
 				}else{
-					$step_parentlinks .= "</td></tr></table>\n\t\t";
+					$step_parentlinks .= "</td></tr></table></div>\n\t\t";
 				}
 			}
 		}
