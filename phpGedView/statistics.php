@@ -99,6 +99,11 @@ $_SESSION[$GEDCOM."nrfemale"] = $stats->totalSexFemales();
 $params[1] = "ffffff";
 $params[2] = "84beff";
 echo '<h2 class="center">', $pgv_lang['statistics'], '</h2>';
+echo "\n";
+echo '<form method="post" name="form" action="statisticsplot.php?action=newform">';
+echo "\n";
+echo '<input type="hidden" name="action" value="update" />';
+echo "\n";
 echo "<table width=\"100%\"><tr><td class=\"facts_label\">".$pgv_lang["statnmale"]."</td>";
 echo "<td class=\"facts_label\">".$pgv_lang["statnfemale"]."</td>";
 echo "<td class=\"facts_label\">".$pgv_lang["statnfam"]."</td>";
@@ -147,8 +152,7 @@ else {
 }
 
 ?>
-	<form method="post" name="form" action="statisticsplot.php?action=newform">
-	<input type="hidden" name="action" value="update" />
+
 	<tr>
 		<td class="facts_label"><?php echo $pgv_lang["stat_create"] ?></td>
 		<td class="facts_value" colspan="3"><?php print_help_link("stat_help","qm","statistiek_list"); ?> <?php echo $pgv_lang["statvars"]; ?></td>
@@ -284,7 +288,7 @@ else {
 	print_help_link('chart_type_help','qm',"statistiek_list");
 	echo $pgv_lang["map_type"]
 	?>
-	<br /><select name="chart_type" onchange="statusShowSurname(this)";>
+	<br /><select name="chart_type" onchange="statusShowSurname(this);">
 		<option value="indi_distribution_chart" selected="selected">
 			<?php echo $pgv_lang["indi_distribution_chart"]; ?></option>
 		<option value="surname_distribution_chart">
@@ -368,10 +372,10 @@ else {
 	<input type="radio" id="y_num" name="y-as" value="201"
 	<?php
 	if ($plotnp == "201") echo " checked=\"checked\"";
-	echo "\" /><label for=\"y_num\">".$pgv_lang["stat_201_num"]."</label><br />";
+	echo " /><label for=\"y_num\">".$pgv_lang["stat_201_num"]."</label><br />";
 	echo "<input type=\"radio\" id=\"y_perc\" name=\"y-as\" value=\"202\"";
 	if ($plotnp == "202") echo " checked=\"checked\"";
-	echo "\" /><label for=\"y_perc\">".$pgv_lang["stat_202_perc"]."</label><br />";
+	echo " /><label for=\"y_perc\">".$pgv_lang["stat_202_perc"]."</label><br />";
 	?>
 	</td>
 	</tr>
@@ -383,9 +387,8 @@ else {
 		<input type="reset"  value=" <?php echo $pgv_lang["statreset"]; ?> " onclick="{statusEnable('z_sex'); statusHide('x_years'); statusHide('x_months'); statusHide('x_numbers'); statusHide('map_opt');}" /><br/>
 	</td>
 	</tr>
-	</form>
 </table>
-
+</form>
 <?php
 $_SESSION["plottype"]=$plottype;
 $_SESSION["plotshow"]=$plotshow;

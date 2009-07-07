@@ -161,7 +161,7 @@ if ($search == "yes") {
 		// Text field for filter and "submit" button
 		?>
 		<input id="filter" name="filter" value="<?php print PrintReady($filter); ?>"/><br />
-		<input type="submit" value="<?php echo $pgv_lang["apply_filter"];?>"
+		<input type="submit" value="<?php echo $pgv_lang["apply_filter"];?>" />
 	</td>
 
 	<!-- // NOTE: Row 2 right: Recursive directory list -->
