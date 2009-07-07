@@ -107,7 +107,7 @@ if ($surn) {
 print_footer();
 
 function print_fams($person, $famid=null) {
-	global $pgv_lang, $surn, $surn_lang;
+	global $pgv_lang, $surn, $surn_lang, $TEXT_DIRECTION;
 	// select person name according to searched surname
 	$person_name = "";
 	foreach ($person->getAllNames() as $n=>$name) {
@@ -136,11 +136,11 @@ function print_fams($person, $famid=null) {
 	$sosa = @array_search($person->xref, $_SESSION['user_ancestors']);
 	if ($sosa) {
 		$class = "search_hit";
-		$sosa = "<a target=\"_blank\" class=\"details1 {$person->getBoxStyle()}\" title=\"Sosa\" href=\"relationship.php?pid2=".PGV_USER_ROOT_ID."&pid1={$person->xref}\">&nbsp;{$sosa}&nbsp;</a>".sosa_gen($sosa);
+		$sosa = "<a dir=$TEXT_DIRECTION target=\"_blank\" class=\"details1 {$person->getBoxStyle()}\" title=\"Sosa\" href=\"relationship.php?pid2=".PGV_USER_ROOT_ID."&pid1={$person->xref}\">&nbsp;{$sosa}&nbsp;</a>".sosa_gen($sosa);
 	}
 	$current = $person->getSexImage().
 		"<a target=\"_blank\" class=\"{$class}\" title=\"{$person->xref}\" href=\"{$person->getLinkUrl()}\">".PrintReady($person_name)."</a> ".
-		PrintReady($person->getBirthDeathYears())." {$sosa}";
+		$person->getBirthDeathYears()." {$sosa}"; 
 	if ($famid && $person->getChildFamilyPedigree($famid)) {
 		$current = "<span class='red'>".$pgv_lang[$person->getChildFamilyPedigree($famid)]."</span> ".$current;
 	}
@@ -156,10 +156,10 @@ function print_fams($person, $famid=null) {
 			$sosa2 = @array_search($spouse->xref, $_SESSION['user_ancestors']);
 			if ($sosa2) {
 				$class = "search_hit";
-				$sosa2 = "<a target=\"_blank\" class=\"details1 {$spouse->getBoxStyle()}\" title=\"Sosa\" href=\"relationship.php?pid2=".PGV_USER_ROOT_ID."&pid1={$spouse->xref}\">&nbsp;{$sosa2}&nbsp;</a>".sosa_gen($sosa2);
+				$sosa2 = "<a dir=$TEXT_DIRECTION target=\"_blank\" class=\"details1 {$spouse->getBoxStyle()}\" title=\"Sosa\" href=\"relationship.php?pid2=".PGV_USER_ROOT_ID."&pid1={$spouse->xref}\">&nbsp;{$sosa2}&nbsp;</a>".sosa_gen($sosa2);
 			}
 			if ($family->getMarriageYear()) {
-				$txt .= "&nbsp;<span class='details1' title=\"".strip_tags($family->getMarriageDate()->Display())."\">".PGV_ICON_RINGS.$family->getMarriageYear()."</span>&nbsp;";
+				$txt .= "&nbsp;<span dir=$TEXT_DIRECTION class='details1' title=\"".strip_tags($family->getMarriageDate()->Display())."\">".PGV_ICON_RINGS.$family->getMarriageYear()."</span>&nbsp;";
 			}
 			$spouse_name = $spouse->getListName();
 			foreach ($spouse->getAllNames() as $n=>$name) {
@@ -167,12 +167,17 @@ function print_fams($person, $famid=null) {
 					$spouse_name = $name['list'];
 					break;
 				}
+				//How can we use check_NN($names) or something else to replace the unknown unknown name from the page language to the language of the spouse's name?
+				else if ($name['fullNN']=="@P.N. @N.N.") {
+					$spouse_name = $pgv_lang["NN".$person_lang].", ".$pgv_lang["NN".$person_lang];
+					break;
+				}
 			}
 			list($surn2, $givn2) = explode(", ", $spouse_name.", x");
 			$txt .= $spouse->getSexImage().
 				"<a target=\"_blank\" class=\"{$class}\" title=\"{$family->xref}\" href=\"{$family->getLinkUrl()}\">".PrintReady($givn2)."</a> ".
 				"<a class=\"{$class}\" title=\"{$surn2}\" href=\"javascript:document.surnlist.surn.value='{$surn2}';document.surnlist.submit();\">".PrintReady($surn2)."</a> ".
-				PrintReady($spouse->getBirthDeathYears())." {$sosa2}";
+				$spouse->getBirthDeathYears()." {$sosa2}";
 		}
 		echo $txt;
 		echo "<ol>";
