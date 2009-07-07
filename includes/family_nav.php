@@ -78,11 +78,11 @@ if (isset($_COOKIE['lastclick'])) {
 			?>
 			<tr>
 				<td style="padding-bottom: 4px;" align="center" colspan="2">
-				<?php 
+				<?php
 				echo "<a href=\"family.php?famid=".$famid."\">";
 				//echo "<b>". $pgv_lang["parent_family"] ."&nbsp;&nbsp;(".$famid.")</b>";
 				echo "<b>".$pgv_lang["parent_family"]."&nbsp;&nbsp;</b><span class=\"age\">(".$famid.")</span>";
-				echo "</a>"; 
+				echo "</a>";
 				?>
 				</td>
 			</tr>
@@ -134,6 +134,7 @@ if (isset($_COOKIE['lastclick'])) {
 						$menu->printMenu();
 						if ($PGV_MENUS_AS_LISTS) echo "</ul>\n";
 						?>
+					</td>
 					<td align="center" class="<?php print $this->getPersonStyle($people["wife"]); ?>">
 						<?php
 						print "<a href=\"".encode_url($people["wife"]->getLinkUrl()."&tab={$tabno}")."\">";
@@ -206,15 +207,15 @@ if (isset($_COOKIE['lastclick'])) {
 			?>
 			<tr>
 				<td style="padding-bottom: 4px;" align="center" colspan="2">
-				<?php 
-				echo "<a href=\"family.php?famid=".$famid."\">"; 
+				<?php
+				echo "<a href=\"family.php?famid=".$famid."\">";
 				echo "<b>".$pgv_lang["step_parent_family"]."&nbsp;&nbsp;</b><span class=\"age\">(".$famid.")</span>";
-				echo "</a>"; 
+				echo "</a>";
 				?>
 				</td>
 			</tr>
 			<?php
-			
+
 			//if (isset($people["husb"]) && $people["husb"]->getLabel() == ".") {
 			if (isset($people["husb"]) ) {
 				$menu = new Menu();
@@ -333,10 +334,10 @@ if (isset($_COOKIE['lastclick'])) {
 		?>
 			<tr>
 				<td style="padding-bottom: 4px;" align="center" colspan="2">
-				<?php 
-				echo "<a href=\"family.php?famid=".$famid."\">"; 
+				<?php
+				echo "<a href=\"family.php?famid=".$famid."\">";
 				echo "<b>".$pgv_lang["immediate_family"]."&nbsp;&nbsp;</b><span class=\"age\">(".$famid.")</span>";
-				echo "</a>"; 
+				echo "</a>";
 				?>
 				</td>
 			</tr>
@@ -694,7 +695,7 @@ function print_pedigree_person_nav($pid, $style=1, $show_famlink=true, $count=0,
 						$spouselinks .= "</ul>";
 					}
 				}
-				
+
 				if ($persons != "Yes") {
 					$spouselinks  .= "(" . $pgv_lang['none'] . ")</td></tr></table>\n\t\t";
 				}else{
