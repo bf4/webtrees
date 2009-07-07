@@ -43,6 +43,8 @@ VERSION 4.2.2
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change	codes and comments
 ----------------------------------------------------------------------------------------
++$pgv_lang["century"]								07 Jul 2009				A
++$pgv_lang["stat_age"]								07 Jul 2009				A
 +$pgv_lang["stat_7_marr"]							04 Jul 2009				A
 +$pgv_lang["stat_6_death"]							04 Jul 2009				A
 +$pgv_lang["stat_create"]							03 Jul 2009				A

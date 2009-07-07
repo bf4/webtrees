@@ -230,7 +230,7 @@ function agbi() {
 	global $z_as, $zgrenzen, $stats, $n1;
 
 	if ($z_as == 300){
-		$num = $stats->statsAge('BIRT');
+		$num = $stats->statsAge(false, 'BIRT');
 		foreach ($num as $values) {
 			foreach ($values as $age_value) {
 				fill_ydata(0, floor($age_value/365.25), 1);
@@ -239,14 +239,14 @@ function agbi() {
 		}
 	}
 	else if ($z_as == 301) {
-		$num = $stats->statsAge('BIRT', 'M');
+		$num = $stats->statsAge(false, 'BIRT', 'M');
 		foreach ($num as $values) {
 			foreach ($values as $age_value) {
 				fill_ydata(0, floor($age_value/365.25), 1);
 				$n1++;
 			}
 		}
-		$num = $stats->statsAge('BIRT', 'F');
+		$num = $stats->statsAge(false, 'BIRT', 'F');
 		foreach ($num as $values) {
 			foreach ($values as $age_value) {
 				fill_ydata(1, floor($age_value/365.25), 1);
@@ -257,7 +257,7 @@ function agbi() {
 	else {
 		$zstart = 0;
 		foreach ($zgrenzen as $boundary) {
-			$num = $stats->statsAge('BIRT', 'BOTH', $zstart, $boundary);
+			$num = $stats->statsAge(false, 'BIRT', 'BOTH', $zstart, $boundary);
 			foreach ($num as $values) {
 				foreach ($values as $age_value) {
 					fill_ydata($boundary, floor($age_value/365.25), 1);
@@ -274,7 +274,7 @@ function agde() {
 	global $z_as, $zgrenzen, $stats, $n1;
 
 	if ($z_as == 300){
-		$num = $stats->statsAge('DEAT');
+		$num = $stats->statsAge(false, 'DEAT');
 		foreach ($num as $values) {
 			foreach ($values as $age_value) {
 				fill_ydata(0, floor($age_value/365.25), 1);
@@ -283,14 +283,14 @@ function agde() {
 		}
 	}
 	else if ($z_as == 301) {
-		$num = $stats->statsAge('DEAT', 'M');
+		$num = $stats->statsAge(false, 'DEAT', 'M');
 		foreach ($num as $values) {
 			foreach ($values as $age_value) {
 				fill_ydata(0, floor($age_value/365.25), 1);
 				$n1++;
 			}
 		}
-		$num = $stats->statsAge('DEAT', 'F');
+		$num = $stats->statsAge(false, 'DEAT', 'F');
 		foreach ($num as $values) {
 			foreach ($values as $age_value) {
 				fill_ydata(1, floor($age_value/365.25), 1);
@@ -301,7 +301,7 @@ function agde() {
 	else {
 		$zstart = 0;
 		foreach ($zgrenzen as $boundary) {
-			$num = $stats->statsAge('DEAT', 'BOTH', $zstart, $boundary);
+			$num = $stats->statsAge(false, 'DEAT', 'BOTH', $zstart, $boundary);
 			foreach ($num as $values) {
 				foreach ($values as $age_value) {
 					fill_ydata($boundary, floor($age_value/365.25), 1);
