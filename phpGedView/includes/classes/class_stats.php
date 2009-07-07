@@ -434,8 +434,7 @@ class stats {
 		return $rows[0]['tot'];
 	}
 
-	function chartIndisWithSources($params=null)
-	{
+	function chartIndisWithSources($params=null) {
 		global $pgv_lang;
 		if ($params === null) {$params = array();}
 		if (isset($params[0]) && $params[0] != '') {$size = strtolower($params[0]);}else{$size = '440x125';}
@@ -454,22 +453,19 @@ class stats {
 		return "<img src=\"".encode_url("http://chart.apis.google.com/chart?cht=p3&amp;chd=e:{$chd}&amp;chs={$size}&amp;chco={$color_from},{$color_to}&amp;chf=bg,s,ffffff00&amp;chl={$chl}")."\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" alt=\"".$chart_title."\" title=\"".$chart_title."\" />";
 	}
 
-	function totalIndividualsPercentage()
-	{
+	function totalIndividualsPercentage() {
 		return $this->_getPercentage($this->totalIndividuals(), 'all', 2);
 	}
 
 	function totalFamilies() {
 		global $TBLPREFIX;
-
 		return
 			PGV_DB::prepare("SELECT COUNT(*) FROM {$TBLPREFIX}families WHERE f_file=?")
 			->execute(array($this->_ged_id))
 			->fetchOne();
 	}
 
-	function totalFamsWithSources()
-	{
+	function totalFamsWithSources() {
 		global $TBLPREFIX, $DBTYPE;
 		if ($DBTYPE=='sqlite') {
 			// sqlite2 can't do subqueries or count distinct
@@ -480,8 +476,7 @@ class stats {
 		return $rows[0]['tot'];
 	}
 
-	function chartFamsWithSources($params=null)
-	{
+	function chartFamsWithSources($params=null) {
 		global $pgv_lang;
 		if ($params === null) {$params = array();}
 		if (isset($params[0]) && $params[0] != '') {$size = strtolower($params[0]);}else{$size = '440x125';}
@@ -500,55 +495,47 @@ class stats {
 		return "<img src=\"".encode_url("http://chart.apis.google.com/chart?cht=p3&amp;chd=e:{$chd}&chs={$size}&amp;chco={$color_from},{$color_to}&amp;chf=bg,s,ffffff00&amp;chl={$chl}")."\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" alt=\"".$chart_title."\" title=\"".$chart_title."\" />";
 	}
 
-	function totalFamiliesPercentage()
-	{
+	function totalFamiliesPercentage() {
 		return $this->_getPercentage($this->totalFamilies(), 'all', 2);
 	}
 
 	function totalSources() {
 		global $TBLPREFIX;
-
 		return
 			PGV_DB::prepare("SELECT COUNT(*) FROM {$TBLPREFIX}sources WHERE s_file=?")
 			->execute(array($this->_ged_id))
 			->fetchOne();
 	}
 
-	function totalSourcesPercentage()
-	{
+	function totalSourcesPercentage() {
 		return $this->_getPercentage($this->totalSources(), 'all', 2);
 	}
 
 	function totalNotes() {
 		global $TBLPREFIX;
-
 		return
 			PGV_DB::prepare("SELECT COUNT(*) FROM {$TBLPREFIX}other WHERE o_type=? AND o_file=?")
 			->execute(array('NOTE', $this->_ged_id))
 			->fetchOne();
 	}
 
-	function totalNotesPercentage()
-	{
+	function totalNotesPercentage() {
 		return $this->_getPercentage($this->totalNotes(), 'all', 2);
 	}
 
 	function totalOtherRecords() {
 		global $TBLPREFIX;
-
 		return
 			PGV_DB::prepare("SELECT COUNT(*) FROM {$TBLPREFIX}other WHERE o_type<>? AND o_file=?")
 			->execute(array('NOTE', $this->_ged_id))
 			->fetchOne();
 	}
 
-	function totalOtherPercentage()
-	{
+	function totalOtherPercentage() {
 		return $this->_getPercentage($this->totalOtherRecords(), 'all', 2);
 	}
 
-	function totalSurnames($params = null)
-	{
+	function totalSurnames($params = null) {
 		global $DBTYPE, $TBLPREFIX;
 		if ($params) {
 			$qs=implode(',', array_fill(0, count($params), '?'));
@@ -604,27 +591,22 @@ class stats {
 		return PGV_DB::prepare($sql)->execute($vars)->fetchOne();
 	}
 
-	function totalEventsBirth()
-	{
+	function totalEventsBirth() {
 		return $this->totalEvents(explode('|',PGV_EVENTS_BIRT));
 	}
 
-	function totalEventsDeath()
-	{
+	function totalEventsDeath() {
 		return $this->totalEvents(explode('|',PGV_EVENTS_DEAT));
 	}
 
-	function totalEventsMarriage()
-	{
+	function totalEventsMarriage() {
 		return $this->totalEvents(explode('|',PGV_EVENTS_MARR));
 	}
 
-	function totalEventsOther()
-	{
+	function totalEventsOther() {
 		$facts = array_merge(explode('|', PGV_EVENTS_BIRT.'|'.PGV_EVENTS_MARR.'|'.PGV_EVENTS_DEAT));
 		$no_facts = array();
-		foreach ($facts as $fact)
-		{
+		foreach ($facts as $fact) {
 			$fact = '!'.str_replace('\'', '', $fact);
 			$no_facts[] = $fact;
 		}
@@ -633,7 +615,6 @@ class stats {
 
 	function totalSexMales() {
 		global $TBLPREFIX;
-
 		return
 			PGV_DB::prepare("SELECT COUNT(*) FROM {$TBLPREFIX}individuals WHERE i_file=? AND i_sex=?")
 			->execute(array($this->_ged_id, 'M'))
@@ -646,7 +627,6 @@ class stats {
 
 	function totalSexFemales() {
 		global $TBLPREFIX;
-
 		return
 			PGV_DB::prepare("SELECT COUNT(*) FROM {$TBLPREFIX}individuals WHERE i_file=? AND i_sex=?")
 			->execute(array($this->_ged_id, 'F'))
@@ -659,7 +639,6 @@ class stats {
 
 	function totalSexUnknown() {
 		global $TBLPREFIX;
-
 		return
 			PGV_DB::prepare("SELECT COUNT(*) FROM {$TBLPREFIX}individuals WHERE i_file=? AND i_sex=?")
 			->execute(array($this->_ged_id, 'U'))
@@ -670,8 +649,7 @@ class stats {
 		return $this->_getPercentage($this->totalSexUnknown(), 'individual');
 	}
 
-	function chartSex($params=null)
-	{
+	function chartSex($params=null) {
 		global $pgv_lang, $TEXT_DIRECTION;
 		if ($params === null) {$params = array();}
 		if (isset($params[0]) && $params[0] != '') {$size = strtolower($params[0]);}else{$size = '440x125';}
@@ -707,7 +685,6 @@ class stats {
 
 	function totalLiving() {
 		global $TBLPREFIX;
-
 		return
 			PGV_DB::prepare("SELECT COUNT(*) FROM {$TBLPREFIX}individuals WHERE i_file=? AND i_isdead=?")
 			->execute(array($this->_ged_id, 0))
@@ -720,7 +697,6 @@ class stats {
 
 	function totalDeceased() {
 		global $TBLPREFIX;
-
 		return
 			PGV_DB::prepare("SELECT COUNT(*) FROM {$TBLPREFIX}individuals WHERE i_file=? AND i_isdead=?")
 			->execute(array($this->_ged_id, 1))
@@ -733,7 +709,6 @@ class stats {
 
 	function totalMortalityUnknown() {
 		global $TBLPREFIX;
-
 		return
 			PGV_DB::prepare("SELECT COUNT(*) FROM {$TBLPREFIX}individuals WHERE i_file=? AND i_isdead=?")
 			->execute(array($this->_ged_id, -1))
@@ -744,16 +719,14 @@ class stats {
 		return $this->_getPercentage($this->totalMortalityUnknown(), 'individual');
 	}
 
-	function mortalityUnknown()
-	{
+	function mortalityUnknown() {
 		global $TBLPREFIX;
 		$rows=self::_runSQL("SELECT i_id AS id FROM {$TBLPREFIX}individuals WHERE i_file={$this->_ged_id} AND i_isdead=-1");
 		if (!isset($rows[0])) {return '';}
 		return $rows;
 	}
 
-	function chartMortality($params=null)
-	{
+	function chartMortality($params=null) {
 		global $pgv_lang, $TEXT_DIRECTION;
 		if ($params === null) {$params = array();}
 		if (isset($params[0]) && $params[0] != '') {$size = strtolower($params[0]);}else{$size = '440x125';}
@@ -787,8 +760,7 @@ class stats {
 		}
 	}
 
-	static function totalUsers($params=null)
-	{
+	static function totalUsers($params=null) {
 		if (!empty($params[0])) {
 			return get_user_count() + (int)$params[0];
 		} else {
@@ -796,13 +768,11 @@ class stats {
 		}
 	}
 
-	static function totalAdmins()
-	{
+	static function totalAdmins() {
 		return get_admin_user_count();
 	}
 
-	static function totalNonAdmins()
-	{
+	static function totalNonAdmins() {
 		return get_non_admin_user_count();
 	}
 
@@ -897,8 +867,7 @@ class stats {
 // Birth & Death                                                             //
 ///////////////////////////////////////////////////////////////////////////////
 
-	function _mortalityQuery($type='full', $life_dir='ASC', $birth_death='BIRT')
-	{
+	function _mortalityQuery($type='full', $life_dir='ASC', $birth_death='BIRT') {
 		global $TBLPREFIX, $pgv_lang, $SHOW_ID_NUMBERS, $listDir, $DBTYPE;
 		if ($birth_death == 'BIRT') {
 			$query_field = "'".str_replace('|', "','", PGV_EVENTS_BIRT)."'";
@@ -968,8 +937,7 @@ class stats {
 		if (!isset($rows[0])) {return '';}
 		$row=$rows[0];
 		$person=Person::getInstance($row['d_gid']);
-		switch($type)
-		{
+		switch($type) {
 			default:
 			case 'full':
 				if (displayDetailsById($row['d_gid'])) {
@@ -1556,46 +1524,122 @@ class stats {
 		return PrintReady(floor($row['age']/365.25));
 	}
 
-	function statsAge($related='BIRT', $sex='BOTH', $year1=-1, $year2=-1) {
-		global $TBLPREFIX;
+	function statsAge($simple=true, $related='BIRT', $sex='BOTH', $year1=-1, $year2=-1, $params=null) {
+		global $TBLPREFIX, $pgv_lang, $lang_short_cut, $LANGUAGE;
 
-		$sex_search = '';
-		$years = '';
-		if ($sex == 'F') {
-			$sex_search = " AND i_sex='F'";
-		} elseif ($sex == 'M') {
-			$sex_search = " AND i_sex='M'";
-		}
-		if ($year1>=0 && $year2>=0) {
-			if ($related=='BIRT') {
-				$years = " AND birth.d_year BETWEEN '{$year1}' AND '{$year2}'";
+		if ($simple) {
+			if (isset($params[0]) && $params[0] != '') {$size = strtolower($params[0]);}else{$size = '230x250';}
+			$sizes = explode('x', $size);
+			$rows=self::_runSQL(''
+				.' SELECT'
+					.' ROUND(AVG(death.d_julianday2-birth.d_julianday1)/365.25,1) AS age,'
+					.' ROUND((death.d_year+49.1)/100) AS century, '
+					.' i_sex AS sex'
+				.' FROM'
+					." {$TBLPREFIX}dates AS death,"
+					." {$TBLPREFIX}dates AS birth,"
+					." {$TBLPREFIX}individuals AS indi"
+				.' WHERE'
+					.' indi.i_id=birth.d_gid AND'
+					.' birth.d_gid=death.d_gid AND'
+					." death.d_file={$this->_ged_id} AND"
+					.' birth.d_file=death.d_file AND'
+					.' birth.d_file=indi.i_file AND'
+					." birth.d_fact='BIRT' AND"
+					." death.d_fact='DEAT' AND"
+					.' birth.d_julianday1!=0 AND'
+					.' death.d_julianday1>birth.d_julianday2'
+				.' GROUP BY century, sex ORDER BY century, sex');
+
+			$func="century_localisation_{$lang_short_cut[$LANGUAGE]}";
+			$chxl = "0:|";
+			$male = true;
+			$temp = "";
+			$countsm = "";
+			$countsf = "";
+			$countsa = "";
+			print_r($rows);
+			print "<br />";
+			foreach ($rows as $values) {
+				if ($temp!=$values['century']) {
+					$temp = $values['century'];
+					if ($sizes[0]<980) $sizes[0] += 50;
+					if (function_exists($func)) {
+						$century = $func($values['century'], false);
+					} else {
+						$century = $values['century'];
+					}
+					$chxl .= $century."|";
+					if ($values['sex'] == "F") {
+						if (!$male) {
+							$countsm .= "0,";
+							$countsa .= $fage.",";
+						}
+						$countsf .= $values['age'].",";
+						$fage = $values['age'];
+						$male = false;
+					} else if ($values['sex'] == "M") {
+						$countsf .= "0,";
+						$countsm .= $values['age'].",";
+						$countsa .= $values['age'].",";
+					} else if ($values['sex'] == "U") {
+						$countsf .= "0,";
+						$countsm .= "0,";
+						$countsa .= "0,";
+					}
+				}
+				else if ($values['sex'] == "M") {
+					$countsm .= $values['age'].",";
+					$countsa .= round(($fage+$values['age'])/2,1).",";
+					$male = true;
+				}
 			}
-			else if ($related=='DEAT') {
-				$years = " AND death.d_year BETWEEN '{$year1}' AND '{$year2}'";
+			$countsm = substr($countsm,0,-1);
+			$countsf = substr($countsf,0,-1);
+			$countsa = substr($countsa,0,-1);
+			$chd = "t2:{$countsm}|{$countsf}|{$countsa}";
+			$chxl .= "1:||".$pgv_lang["century"]."|2:|0|10|20|30|40|50|60|70|80|90|100|3:||".$pgv_lang["stat_age"]."|";
+			$chtt = $pgv_lang["stat_18_ard"];
+			return "<img src=\"".encode_url("http://chart.apis.google.com/chart?cht=bvg&amp;chs={$sizes[0]}x{$sizes[1]}&amp;chm=D,FF0000,2,0,3,1|N*f1*,000000,0,-1,11|N*f1*,000000,1,-1,11&amp;chf=bg,s,ffffff99|c,s,ffffff00&amp;chtt={$chtt}&amp;chd={$chd}&amp;chco=0000FF,FFA0CB,FF0000&amp;chbh=20,3&amp;chxt=x,x,y,y&amp;chxl={$chxl}&amp;chdl={$pgv_lang["male"]}|{$pgv_lang["female"]}|{$pgv_lang["stat_avg_age_at_death"]}")."\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" alt=\"".$pgv_lang["stat_18_ard"]."\" title=\"".$pgv_lang["stat_18_ard"]."\" />";
+		} else {
+			$sex_search = '';
+			$years = '';
+			if ($sex == 'F') {
+				$sex_search = " AND i_sex='F'";
+			} elseif ($sex == 'M') {
+				$sex_search = " AND i_sex='M'";
 			}
+			if ($year1>=0 && $year2>=0) {
+				if ($related=='BIRT') {
+					$years = " AND birth.d_year BETWEEN '{$year1}' AND '{$year2}'";
+				}
+				else if ($related=='DEAT') {
+					$years = " AND death.d_year BETWEEN '{$year1}' AND '{$year2}'";
+				}
+			}
+			$rows=self::_runSQL(''
+				.' SELECT'
+					.' death.d_julianday2-birth.d_julianday1 AS age'
+				.' FROM'
+					." {$TBLPREFIX}dates AS death,"
+					." {$TBLPREFIX}dates AS birth,"
+					." {$TBLPREFIX}individuals AS indi"
+				.' WHERE'
+					.' indi.i_id=birth.d_gid AND'
+					.' birth.d_gid=death.d_gid AND'
+					." death.d_file={$this->_ged_id} AND"
+					.' birth.d_file=death.d_file AND'
+					.' birth.d_file=indi.i_file AND'
+					." birth.d_fact='BIRT' AND"
+					." death.d_fact='DEAT' AND"
+					.' birth.d_julianday1!=0 AND'
+					.' death.d_julianday1>birth.d_julianday2'
+					.$years
+					.$sex_search
+				.' ORDER BY age DESC');
+			if (!isset($rows)) {return 0;}
+			return $rows;
 		}
-		$rows=self::_runSQL(''
-			.' SELECT'
-				.' death.d_julianday2-birth.d_julianday1 AS age'
-			.' FROM'
-				." {$TBLPREFIX}dates AS death,"
-				." {$TBLPREFIX}dates AS birth,"
-				." {$TBLPREFIX}individuals AS indi"
-			.' WHERE'
-				.' indi.i_id=birth.d_gid AND'
-				.' birth.d_gid=death.d_gid AND'
-				." death.d_file={$this->_ged_id} AND"
-				.' birth.d_file=death.d_file AND'
-				.' birth.d_file=indi.i_file AND'
-				." birth.d_fact='BIRT' AND"
-				." death.d_fact='DEAT' AND"
-				.' birth.d_julianday1!=0 AND'
-				.' death.d_julianday1>birth.d_julianday2'
-				.$years
-				.$sex_search
-			.' ORDER BY age DESC');
-		if (!isset($rows)) {return 0;}
-		return $rows;
 	}
 
 	// Both Sexes
@@ -1668,8 +1712,7 @@ class stats {
 		if (!isset($rows[0])) {return '';}
 		$row=$rows[0];
 		$record=GedcomRecord::getInstance($row['id']);
-		switch($type)
-		{
+		switch($type) {
 			default:
 			case 'full':
 				if ($record->canDisplayDetails()) {
@@ -1679,11 +1722,9 @@ class stats {
 				}
 				break;
 			case 'year':
-			{
 				$date=new GedcomDate($row['type'].' '.$row['year']);
 				$result=$date->Display(true);
 				break;
-			}
 			case 'type':
 				if (isset($eventTypes[$row['fact']])) {
 					$result=$eventTypes[$row['fact']];
@@ -1693,8 +1734,7 @@ class stats {
 				break;
 			case 'name':
 				$id = '';
-				if ($SHOW_ID_NUMBERS)
-				{
+				if ($SHOW_ID_NUMBERS) {
 					if ($listDir == 'rtl') {
 						$id="&nbsp;&nbsp;" . getRLM() . "({$row['id']})" . getRLM();
 					} else {
@@ -1959,8 +1999,7 @@ class stats {
 // Family Size                                                               //
 ///////////////////////////////////////////////////////////////////////////////
 
-	function _familyQuery($type='full')
-	{
+	function _familyQuery($type='full') {
 		global $TBLPREFIX, $pgv_lang;
 		$rows=self::_runSQL(''
 			.' SELECT'
@@ -1976,12 +2015,10 @@ class stats {
 		if (!isset($rows[0])) {return '';}
 		$row = $rows[0];
 		$family=Family::getInstance($row['id']);
-		switch($type)
-		{
+		switch($type) {
 			default:
 			case 'full':
-				if ($family->canDisplayDetails())
-				{
+				if ($family->canDisplayDetails()) {
 					$result=$family->format_list('span', false, $family->getListName());
 				} else {
 					$result = $pgv_lang['privacy_error'];
@@ -1998,8 +2035,7 @@ class stats {
 		return str_replace('<a href="', '<a href="'.$this->_server_url, $result);
 	}
 
-	function _topTenFamilyQuery($type='list', $params=null)
-	{
+	function _topTenFamilyQuery($type='list', $params=null) {
 		global $TBLPREFIX, $TEXT_DIRECTION, $pgv_lang;
 		if ($params !== null && isset($params[0])) {$total = $params[0];}else{$total = 10;}
 		$rows=self::_runSQL(''
@@ -2047,8 +2083,7 @@ class stats {
 	function topTenLargestFamily($params=null) {return $this->_topTenFamilyQuery('nolist', $params);}
 	function topTenLargestFamilyList($params=null) {return $this->_topTenFamilyQuery('list', $params);}
 
-	function chartLargestFamilies($params=null)
-	{
+	function chartLargestFamilies($params=null) {
 		global $TBLPREFIX, $pgv_lang;
 		if ($params === null) {$params = array();}
 		if (isset($params[0]) && $params[0] != '') {$size = strtolower($params[0]);}else{$size = '1000x150';}
@@ -2090,16 +2125,14 @@ class stats {
 		return "<img src=\"".encode_url("http://chart.apis.google.com/chart?cht=p3&amp;chd=e:{$chd}&amp;chs={$size}&amp;chco={$color_from},{$color_to}&amp;chf=bg,s,ffffff00&amp;chl={$chl}")."\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" alt=\"".$pgv_lang["stat_21_nok"]."\" title=\"".$pgv_lang["stat_21_nok"]."\" />";
 	}
 
-	function averageChildren()
-	{
+	function averageChildren() {
 		global $TBLPREFIX;
 		$rows=self::_runSQL("SELECT AVG(f_numchil) AS tot FROM {$TBLPREFIX}families WHERE f_file={$this->_ged_id}");
 		$row=$rows[0];
 		return sprintf('%.2f', $row['tot']);
 	}
 
-	function statsChildren($sex='BOTH', $year1=-1, $year2=-1)
-	{
+	function statsChildren($sex='BOTH', $year1=-1, $year2=-1) {
 		global $TBLPREFIX;
 
 		if ($sex=='M') {
@@ -2197,8 +2230,7 @@ class stats {
 	static function commonSurnamesList($params=array('','','alpha')) {return self::_commonSurnamesQuery('list', false, $params);}
 	static function commonSurnamesListTotals($params=array('','','rcount')) {return self::_commonSurnamesQuery('list', true, $params);}
 
-	function chartCommonSurnames($params=null)
-	{
+	function chartCommonSurnames($params=null) {
 		global $pgv_lang, $COMMON_NAMES_THRESHOLD;
 		if ($params === null) {$params = array();}
 		if (isset($params[0]) && $params[0] != '') {$size = strtolower($params[0]);}else{$size = '440x125';}
@@ -2253,8 +2285,7 @@ class stats {
 	* [ 1977282 ] Most Common Given Names Block
 	* Original block created by kiwi_pgv
 	*/
-	static function _commonGivenQuery($sex='B', $type='list', $show_tot=false, $params=null)
-	{
+	static function _commonGivenQuery($sex='B', $type='list', $show_tot=false, $params=null) {
 		global $TEXT_DIRECTION, $GEDCOM, $TBLPREFIX, $pgv_lang;
 		static $sort_types = array('count'=>'asort', 'rcount'=>'arsort', 'alpha'=>'ksort', 'ralpha'=>'krsort');
 		static $sort_flags = array('count'=>SORT_NUMERIC, 'rcount'=>SORT_NUMERIC, 'alpha'=>SORT_STRING, 'ralpha'=>SORT_STRING);
@@ -2372,20 +2403,16 @@ class stats {
 // Users                                                                     //
 ///////////////////////////////////////////////////////////////////////////////
 
-	static function _usersLoggedIn($type='nolist')
-	{
+	static function _usersLoggedIn($type='nolist') {
 		global $PGV_SESSION_TIME, $pgv_lang;
 		// Log out inactive users
-		foreach (get_idle_users(time() - $PGV_SESSION_TIME) as $user_id=>$user_name)
-		{
-			if ($user_id != PGV_USER_ID)
-			{
+		foreach (get_idle_users(time() - $PGV_SESSION_TIME) as $user_id=>$user_name) {
+			if ($user_id != PGV_USER_ID) {
 				userLogout($user_id);
 			}
 		}
 
 		$content = '';
-
 		// List active users
 		$NumAnonymous = 0;
 		$loggedusers = array ();
@@ -2398,14 +2425,12 @@ class stats {
 			}
 		}
 		$LoginUsers = count($loggedusers);
-		if (($LoginUsers == 0) and ($NumAnonymous == 0))
-		{
+		if (($LoginUsers == 0) and ($NumAnonymous == 0)) {
 			return $pgv_lang['no_login_users'];
 		}
 		$Advisory = 'anon_user';
 		if ($NumAnonymous > 1) {$Advisory .= 's';}
-		if ($NumAnonymous > 0)
-		{
+		if ($NumAnonymous > 0) {
 			$pgv_lang['global_num1'] = $NumAnonymous; // Make it visible
 			$content .= '<b>'.print_text($Advisory, 0, 1).'</b>';
 		}
@@ -2453,8 +2478,7 @@ class stats {
 		return $content;
 	}
 
-	static function _usersLoggedInTotal($type='all')
-	{
+	static function _usersLoggedInTotal($type='all') {
 		global $PGV_SESSION_TIME;
 
 		foreach (get_idle_users(time() - $PGV_SESSION_TIME) as $user_id=>$user_name) {
@@ -2462,7 +2486,6 @@ class stats {
 				userLogout($user_id);
 			}
 		}
-
 		$anon = 0;
 		$visible = 0;
 		$x = get_logged_in_users();
@@ -2487,57 +2510,38 @@ class stats {
 	static function userFirstName() {return get_user_setting(getUserId(), 'firstname');}
 	static function userLastName() {return get_user_setting(getUserId(), 'lastname');}
 
-	static function _getLatestUserData($type='userid', $params=null)
-	{
+	static function _getLatestUserData($type='userid', $params=null) {
 		global $DATE_FORMAT, $TIME_FORMAT, $pgv_lang;
 		static $user = null;
 
-		if($user === null)
-		{
+		if($user === null) {
 			$users = get_all_users('DESC', 'reg_timestamp', 'username');
 			$user = array_shift($users);
 			unset($users);
 		}
 
-		switch($type)
-		{
+		switch($type) {
 			default:
 			case 'userid':
-			{
 				return $user;
-			}
 			case 'username':
-			{
 				return get_user_name($user);
-			}
 			case 'fullname':
-			{
 				return getUserFullName($user);
-			}
 			case 'firstname':
-			{
 				return get_user_setting($user, 'firstname');
-			}
 			case 'lastname':
-			{
 				return get_user_setting($user, 'lastname');
-			}
 			case 'regdate':
-			{
 				if(is_array($params) && isset($params[0]) && $params[0] != ''){$datestamp = $params[0];}else{$datestamp = $DATE_FORMAT;}
 				return date($datestamp, get_user_setting($user, 'reg_timestamp'));
-			}
 			case 'regtime':
-			{
 				if(is_array($params) && isset($params[0]) && $params[0] != ''){$datestamp = $params[0];}else{$datestamp = $TIME_FORMAT;}
 				return date($datestamp, get_user_setting($user, 'reg_timestamp'));
-			}
 			case 'loggedin':
-			{
 				if(is_array($params) && isset($params[0]) && $params[0] != ''){$yes = $params[0];}else{$yes = $pgv_lang['yes'];}
 				if(is_array($params) && isset($params[1]) && $params[1] != ''){$no = $params[1];}else{$no = $pgv_lang['no'];}
 				return (get_user_setting($user, 'loggedin') == 'Y')?$yes:$no;
-			}
 		}
 	}
 
@@ -2584,8 +2588,7 @@ class stats {
 	/*
 	* Leave for backwards compatability? Anybody using this?
 	*/
-	static function _getEventType($type)
-	{
+	static function _getEventType($type) {
 		global $pgv_lang;
 		$eventTypes=array(
 			'BIRT'=>$pgv_lang['htmlplus_block_birth'],
@@ -2602,8 +2605,7 @@ class stats {
 	}
 
 	// http://bendodson.com/news/google-extended-encoding-made-easy/
-	static function _array_to_extended_encoding($a)
-	{
+	static function _array_to_extended_encoding($a) {
 		if (!is_array($a)) {$a = array($a);}
 		$encoding = '';
 		foreach ($a as $value)
@@ -2624,26 +2626,21 @@ class stats {
 		return compareStrings(strip_prefix($b['name']), strip_prefix($a['name']), true);  // Case-insensitive compare
 	}
 
-	static function _name_total_sort($a, $b)
-	{
+	static function _name_total_sort($a, $b) {
 		return $a['match']-$b['match'];
 	}
 
-	static function _name_total_rsort($a, $b)
-	{
+	static function _name_total_rsort($a, $b) {
 		return $b['match']-$a['match'];
 	}
 
-	static function _runSQL($sql, $count=0)
-	{
+	static function _runSQL($sql, $count=0) {
 		static $cache = array();
 		$id = md5($sql)."_{$count}";
 		if (isset($cache[$id])) {
 			return $cache[$id];
 		}
-
 		$rows=PGV_DB::prepareLimit($sql, $count)->fetchAll(PDO::FETCH_ASSOC);
-
 		$cache[$id]=$rows;
 		return $rows;
 	}
