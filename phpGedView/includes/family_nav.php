@@ -512,19 +512,19 @@ function print_pedigree_person_nav($pid, $style=1, $show_famlink=true, $count=0,
 			if ($LINK_ICONS!="disabled") {
 				//-- draw a box for the family popup
 				if ($TEXT_DIRECTION=="rtl") {
-				$spouselinks .= "\n\t\t\t<table class=\"person_box$isF\" style=\" position: absolute; top: -19px; left: -1px; \"><tr><td align=\"right\" style=\"font-size:10px;font-weight:normal;\" class=\"name2\" nowrap=\"nowrap\">";
-				$spouselinks .= "<font size=\"1\"><b>" . $pgv_lang['family'] . "</b><br /></font>";
-				$parentlinks .= "\n\t\t\t<table class=\"person_box$isF\" style=\" position: absolute; top: -19px; left: -1px; \"><tr><td align=\"right\" style=\"font-size:10px;font-weight:normal;\" class=\"name2\" nowrap=\"nowrap\">";
-				$parentlinks .= "<font size=\"1\"><b>" . $pgv_lang['parents'] . "</b><br /></font>";
-				$step_parentlinks .= "\n\t\t\t<table class=\"person_box$isF\" style=\" position: absolute; top: -19px; left: -1px; \"><tr><td align=\"right\" style=\"font-size:10px;font-weight:normal;\" class=\"name2\" nowrap=\"nowrap\">";
-				$step_parentlinks .= "<font size=\"1\"><b>" . $pgv_lang['parents'] . "</b><br /></font>";
+				$spouselinks .= "\n\t\t\t<div class=\"flyout\"><table class=\"person_box$isF flyoutrtl\"><tr><td class=\"nowrap rtl\" >";
+				$spouselinks .= "<b>" . $pgv_lang['family'] . "</b><br /></div>";
+				$parentlinks .= "\n\t\t\t<div class=\"flyout\"><table class=\"person_box$isF flyoutrtl\"><tr><td class=\"nowrap rtl\" >";
+				$parentlinks .= "<b>" . $pgv_lang['parents'] . "</b><br /></div>";
+				$step_parentlinks .= "\n\t\t\t<div class=\"flyout\"><table class=\"person_box$isF flyoutrtl\"><tr><td class=\"nowrap rtl\" >";
+				$step_parentlinks .= "<b>" . $pgv_lang['parents'] . "</b><br /></div>";
 				}else{
-				$spouselinks .= "\n\t\t\t<table class=\"person_box$isF\" style=\" position: absolute; top: -19px; right: -1px; \"><tr><td align=\"left\" style=\"font-size:10px;font-weight:normal;\" class=\"name2\" nowrap=\"nowrap\">";
-				$spouselinks .= "<font size=\"1\"><b>" . $pgv_lang['family'] . "</b><br /></font>";
-				$parentlinks .= "\n\t\t\t<table class=\"person_box$isF\" style=\" position: absolute; top: -19px; right: -1px; \"><tr><td align=\"left\" style=\"font-size:10px;font-weight:normal;\" class=\"name2\" nowrap=\"nowrap\">";
-				$parentlinks .= "<font size=\"1\"><b>" . $pgv_lang['parents'] . "</b><br /></font>";
-				$step_parentlinks .= "\n\t\t\t<table class=\"person_box$isF\" style=\" position: absolute; top: -19px; right: -1px; \"><tr><td align=\"left\" style=\"font-size:10px;font-weight:normal;\" class=\"name2\" nowrap=\"nowrap\">";
-				$step_parentlinks .= "<font size=\"1\"><b>" . $pgv_lang['parents'] . "</b><br /></font>";
+				$spouselinks .= "\n\t\t\t<div class=\"flyout\"><table class=\"person_box$isF flyout\"><tr><td class=\"nowrap ltr\" >";
+				$spouselinks .= "<b>" . $pgv_lang['family'] . "</b><br /></div>";
+				$parentlinks .= "\n\t\t\t<div class=\"flyout\"><table class=\"person_box$isF flyout\" ><tr><td class=\"nowrap ltr\" >";
+				$parentlinks .= "<b>" . $pgv_lang['parents'] . "</b><br /></div>";
+				$step_parentlinks .= "\n\t\t\t<div class=\"flyout\"><table class=\"person_box$isF flyout\" ><tr><td class=\"nowrap ltr\" >";
+				$step_parentlinks .= "<b>" . $pgv_lang['parents'] . "</b><br /></div>";
 				}
 				$persons       = "";
 				$person_parent = "";
@@ -694,15 +694,7 @@ function print_pedigree_person_nav($pid, $style=1, $show_famlink=true, $count=0,
 						$spouselinks .= "</ul>";
 					}
 				}
-				?>
-
-				<?php if ($theme_name=="Xenea" || $theme_name=="Standard" || $theme_name=="Wood" || $theme_name=="Ocean") { ?>
-				<style type="text/css" rel="stylesheet">
-					a:hover .name2 { color: #222222; }
-				</style>
-				<?php } ?>
-
-				<?php
+				
 				if ($persons != "Yes") {
 					$spouselinks  .= "(" . $pgv_lang['none'] . ")</td></tr></table>\n\t\t";
 				}else{

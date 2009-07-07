@@ -10,6 +10,7 @@
 
 
 Version 4.2.2
+ - Fixed: [ 2816347 ] XHTML - family_nav.php (windmillway)
  - Fixed: [ 2815546 ] Timeline Chart display issue (wooc)
  - Added: [ 2812244 ] List branches by surname (opus27)
  - Fixed: [ 2811443 ] [5774] Double helping of tables (fisharebest)
