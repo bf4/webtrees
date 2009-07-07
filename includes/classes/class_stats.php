@@ -1558,8 +1558,6 @@ class stats {
 			$countsm = "";
 			$countsf = "";
 			$countsa = "";
-			print_r($rows);
-			print "<br />";
 			foreach ($rows as $values) {
 				if ($temp!=$values['century']) {
 					$temp = $values['century'];
