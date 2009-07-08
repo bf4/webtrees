@@ -153,6 +153,15 @@ function age_localisation_pl(&$agestring, &$show_years) {
 		$agestring
 	);
 }
+function age2_localisation_pl($years) {
+	global $pgv_lang;
+
+	if ($years==1) $years .= " ".$pgv_lang["year1"];
+	else if ($years > 1 && $years < 5) $years .= " ".$pgv_lang["years2"];
+	else if (substr($years, -1, 1) > 1 && substr($years, -1, 1) < 5 && substr($years, -2, 1) != 1) $years .= " ".$pgv_lang["years2"];
+	else $years .= " ".$pgv_lang["years"];
+	return $years;
+}
 ////////////////////////////////////////////////////////////////////////////////
 // Localise a date differences. Lokalizacja różnic dat.
 ////////////////////////////////////////////////////////////////////////////////
