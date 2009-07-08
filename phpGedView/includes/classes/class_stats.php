@@ -1533,7 +1533,7 @@ class stats {
 			$rows=self::_runSQL(''
 				.' SELECT'
 					.' ROUND(AVG(death.d_julianday2-birth.d_julianday1)/365.25,1) AS age,'
-					.' ROUND((death.d_year+49.1)/100) AS century, '
+					.' ROUND((death.d_year+49.1)/100) AS century,'
 					.' i_sex AS sex'
 				.' FROM'
 					." {$TBLPREFIX}dates AS death,"
@@ -1792,7 +1792,7 @@ class stats {
 		if ($age_dir != 'ASC') {$age_dir = 'DESC';}
 		$rows=self::_runSQL(''
 			.' SELECT'
-				.' fam.f_id,'
+				.' fam.f_id AS famid,'
 				." fam.{$sex_field},"
 				.' married.d_julianday2-birth.d_julianday1 AS age,'
 				.' indi.i_id AS i_id'
@@ -1819,10 +1819,9 @@ class stats {
 		, 1);
 		if (!isset($rows[0])) {return '';}
 		$row=$rows[0];
-		if (isset($row['fam.f_id'])) $family=Family::getInstance($row['fam.f_id']);
+		if (isset($row['famid'])) $family=Family::getInstance($row['famid']);
 		if (isset($row['i_id'])) $person=Person::getInstance($row['i_id']);
-		switch($type)
-		{
+		switch($type) {
 			default:
 			case 'full':
 				if ($family->canDisplayDetails()) {
@@ -1922,51 +1921,128 @@ class stats {
 	}
 
 
-	function statsMarrAge($sex='M', $year1=-1, $year2=-1) {
-		global $TBLPREFIX;
+	function statsMarrAge($simple=true, $sex='M', $year1=-1, $year2=-1, $params=null) {
+		global $TBLPREFIX, $pgv_lang, $lang_short_cut, $LANGUAGE;
 
-		$years = '';
-		if ($year1>=0 && $year2>=0) {
-			$years = " AND married.d_year BETWEEN '{$year1}' AND '{$year2}'";
+		if ($simple) {
+			if (isset($params[0]) && $params[0] != '') {$size = strtolower($params[0]);}else{$size = '200x250';}
+			$sizes = explode('x', $size);
+			$rows=self::_runSQL(''
+				.' SELECT'
+					.' ROUND(AVG(married.d_julianday2-birth.d_julianday1-182.5)/365.25) AS age,'
+					.' ROUND((married.d_year+49.1)/100) AS century,'
+					.' indi.i_sex AS sex'
+				.' FROM'
+					." {$TBLPREFIX}families AS fam"
+				.' LEFT JOIN'
+					." {$TBLPREFIX}dates AS birth ON birth.d_file = {$this->_ged_id}"
+				.' LEFT JOIN'
+					." {$TBLPREFIX}dates AS married ON married.d_file = {$this->_ged_id}"
+				.' LEFT JOIN'
+					." {$TBLPREFIX}individuals AS indi ON indi.i_file = {$this->_ged_id}"
+				.' WHERE'
+					.' birth.d_gid = indi.i_id AND'
+					.' married.d_gid = fam.f_id AND'
+					." (indi.i_id = fam.f_wife OR"
+					." indi.i_id = fam.f_husb) AND"
+					." fam.f_file = {$this->_ged_id} AND"
+					." birth.d_fact = 'BIRT' AND"
+					." married.d_fact = 'MARR' AND"
+					.' birth.d_julianday1 != 0 AND'
+					.' married.d_julianday2 > birth.d_julianday1'
+				.' GROUP BY century, sex ORDER BY century, sex');
+			$func="century_localisation_{$lang_short_cut[$LANGUAGE]}";
+			$chxl = "0:|";
+			$male = true;
+			$temp = "";
+			$countsm = "";
+			$countsf = "";
+			$countsa = "";
+			foreach ($rows as $values) {
+				if ($temp!=$values['century']) {
+					$temp = $values['century'];
+					if ($sizes[0]<1000) $sizes[0] += 50;
+					if (function_exists($func)) {
+						$century = $func($values['century'], false);
+					} else {
+						$century = $values['century'];
+					}
+					$chxl .= $century."|";
+					if ($values['sex'] == "F") {
+						if (!$male) {
+							$countsm .= "0,";
+							$countsa .= $fage.",";
+						}
+						$countsf .= $values['age'].",";
+						$fage = $values['age'];
+						$male = false;
+					} else if ($values['sex'] == "M") {
+						$countsf .= "0,";
+						$countsm .= $values['age'].",";
+						$countsa .= $values['age'].",";
+					} else if ($values['sex'] == "U") {
+						$countsf .= "0,";
+						$countsm .= "0,";
+						$countsa .= "0,";
+					}
+				}
+				else if ($values['sex'] == "M") {
+					$countsm .= $values['age'].",";
+					$countsa .= round(($fage+$values['age'])/2,1).",";
+					$male = true;
+				}
+			}
+			$countsm = substr($countsm,0,-1);
+			$countsf = substr($countsf,0,-1);
+			$countsa = substr($countsa,0,-1);
+			$chd = "t2:{$countsm}|{$countsf}|{$countsa}";
+			$chxl .= "1:||".$pgv_lang["century"]."|2:|0|10|20|30|40|50|60|70|80|90|100|3:||".$pgv_lang["stat_age"]."|";
+			$chtt = $pgv_lang["stat_19_aarm"];
+			return "<img src=\"".encode_url("http://chart.apis.google.com/chart?cht=bvg&amp;chs={$sizes[0]}x{$sizes[1]}&amp;chm=D,FF0000,2,0,3,1|N*f1*,000000,0,-1,11|N*f1*,000000,1,-1,11&amp;chf=bg,s,ffffff99|c,s,ffffff00&amp;chtt={$chtt}&amp;chd={$chd}&amp;chco=0000FF,FFA0CB,FF0000&amp;chbh=20,3&amp;chxt=x,x,y,y&amp;chxl={$chxl}&amp;chdl={$pgv_lang["male"]}|{$pgv_lang["female"]}|{$pgv_lang["avg_age"]}")."\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" alt=\"".$pgv_lang["stat_19_aarm"]."\" title=\"".$pgv_lang["stat_19_aarm"]."\" />";
+		} else {
+			$years = '';
+			if ($year1>=0 && $year2>=0) {
+				$years = " AND married.d_year BETWEEN '{$year1}' AND '{$year2}'";
+			}
+			if ($sex == 'F') {
+				$sex_field = 'fam.f_wife,';
+				$sex_field2 = " indi.i_id = fam.f_wife AND";
+				$sex_search = " AND i_sex='F'";
+			}
+			else if ($sex == 'M') {
+				$sex_field = 'fam.f_husb,';
+				$sex_field2 = " indi.i_id = fam.f_husb AND";
+				$sex_search = " AND i_sex='M'";
+			}
+			$rows=self::_runSQL(''
+				.' SELECT'
+					.' fam.f_id,'
+					.$sex_field
+					.' married.d_julianday2-birth.d_julianday1 AS age,'
+					.' indi.i_id AS indi'
+				.' FROM'
+					." {$TBLPREFIX}families AS fam"
+				.' LEFT JOIN'
+					." {$TBLPREFIX}dates AS birth ON birth.d_file = {$this->_ged_id}"
+				.' LEFT JOIN'
+					." {$TBLPREFIX}dates AS married ON married.d_file = {$this->_ged_id}"
+				.' LEFT JOIN'
+					." {$TBLPREFIX}individuals AS indi ON indi.i_file = {$this->_ged_id}"
+				.' WHERE'
+					.' birth.d_gid = indi.i_id AND'
+					.' married.d_gid = fam.f_id AND'
+					.$sex_field2
+					." fam.f_file = {$this->_ged_id} AND"
+					." birth.d_fact = 'BIRT' AND"
+					." married.d_fact = 'MARR' AND"
+					.' birth.d_julianday1 != 0 AND'
+					.' married.d_julianday2 > birth.d_julianday1'
+					.$sex_search
+					.$years
+				.' ORDER BY indi, age ASC');
+			if (!isset($rows)) {return 0;}
+			return $rows;
 		}
-		if ($sex == 'F') {
-			$sex_field = 'fam.f_wife,';
-			$sex_field2 = " indi.i_id = fam.f_wife AND";
-			$sex_search = " AND i_sex='F'";
-		}
-		else if ($sex == 'M') {
-			$sex_field = 'fam.f_husb,';
-			$sex_field2 = " indi.i_id = fam.f_husb AND";
-			$sex_search = " AND i_sex='M'";
-		}
-		$rows=self::_runSQL(''
-			.' SELECT'
-				.' fam.f_id,'
-				.$sex_field
-				.' married.d_julianday2-birth.d_julianday1 AS age,'
-				.' indi.i_id AS indi'
-			.' FROM'
-				." {$TBLPREFIX}families AS fam"
-			.' LEFT JOIN'
-				." {$TBLPREFIX}dates AS birth ON birth.d_file = {$this->_ged_id}"
-			.' LEFT JOIN'
-				." {$TBLPREFIX}dates AS married ON married.d_file = {$this->_ged_id}"
-			.' LEFT JOIN'
-				." {$TBLPREFIX}individuals AS indi ON indi.i_file = {$this->_ged_id}"
-			.' WHERE'
-				.' birth.d_gid = indi.i_id AND'
-				.' married.d_gid = fam.f_id AND'
-				.$sex_field2
-				." fam.f_file = {$this->_ged_id} AND"
-				." birth.d_fact = 'BIRT' AND"
-				." married.d_fact = 'MARR' AND"
-				.' birth.d_julianday1 != 0 AND'
-				.' married.d_julianday2 > birth.d_julianday1'
-				.$sex_search
-				.$years
-			.' ORDER BY indi, age ASC');
-		if (!isset($rows)) {return 0;}
-		return $rows;
 	}
 
 	//

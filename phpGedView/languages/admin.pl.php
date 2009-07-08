@@ -326,7 +326,6 @@ $pgv_lang["readme_documentation"]	= "Dokumentacja README";
 $pgv_lang["remove_ip"]				= "Usuń IP";
 $pgv_lang["REQUIRE_ADMIN_AUTH_REGISTRATION"] = "Wymagaj zatwierdzenia przez administratora rejestracji nowych użytkowników";
 $pgv_lang["review_readme"]			= "Przejrzyj plik <a href=\"readme.txt\" target=\"_blank\">readme.txt</a> przed dalszą konfiguracją PhpGedView.<br /><br />";
-$pgv_lang["rootid"]					= "Główna osoba wykresu rodowego";
 $pgv_lang["seconds"]				= "&nbsp;&nbsp;sekund";
 $pgv_lang["select_an_option"]		= "Wybierz opcję poniżej:";
 $pgv_lang["SERVER_URL"]				= "PhpGedView URL";

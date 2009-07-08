@@ -1672,6 +1672,7 @@ $pgv_lang["stat_17_arb"]		= "Age related to birth year";
 $pgv_lang["stat_18_ard"]		= "Age related to death year";
 $pgv_lang["stat_18_aard"]		= "Average age related to death century";
 $pgv_lang["stat_19_arm"]		= "Age in year of marriage";
+$pgv_lang["stat_19_aarm"]		= "Average age in century of marriage";
 $pgv_lang["stat_20_arm1"]		= "Age in year of first marriage";
 $pgv_lang["stat_21_nok"]		= "Number of children";
 $pgv_lang["stat_200_none"]		= "all (or blank)";
