@@ -1430,7 +1430,7 @@ class stats {
 	}
 
 	function _topTenOldest($type='list', $sex='BOTH', $params=null) {
-		global $TBLPREFIX, $TEXT_DIRECTION, $pgv_lang;
+		global $TBLPREFIX, $TEXT_DIRECTION, $pgv_lang, $lang_short_cut, $LANGUAGE;
 
 		if ($sex == 'F') {
 			$sex_search = " AND i_sex='F'";
@@ -1467,12 +1467,21 @@ class stats {
 		if (!isset($rows[0])) {return '';}
 		if(count($rows) < $total){$total = count($rows);}
 		$top10=array();
+		$func="age2_localisation_{$lang_short_cut[$LANGUAGE]}";
 		for($c = 0; $c < $total; $c++) {
 			$person=Person::getInstance($rows[$c]['deathdate']);
-			if ($type == 'list') {
-				$top10[]="\t<li><a href=\"".$person->getLinkUrl()."\">".PrintReady($person->getFullName())."</a> ".PrintReady("[".floor($rows[$c]['age']/365.25)." {$pgv_lang['years']}]")."</li>\n";
+			if (function_exists($func)) {
+				$years = $func(floor($rows[$c]['age']/365.25));
 			} else {
-				$top10[]="<a href=\"".$person->getLinkUrl()."\">".PrintReady($person->getFullName())."</a> [".PrintReady(floor($rows[$c]['age']/365.25))." {$pgv_lang['years']}]";
+				$years = floor($rows[$c]['age']/365.25);
+				if ($years==1) $years .= " ".$pgv_lang["year"];
+				else $years .= " ".$pgv_lang["years"];
+			}
+			if ($type == 'list') {
+				
+				$top10[]="\t<li><a href=\"".$person->getLinkUrl()."\">".PrintReady($person->getFullName())."</a> ".PrintReady("[".$years."]")."</li>\n";
+			} else {
+				$top10[]="<a href=\"".$person->getLinkUrl()."\">".PrintReady($person->getFullName())."</a> ".PrintReady("[".$years."]");
 			}
 		}
 		if ($type == 'list') {
@@ -2130,9 +2139,9 @@ class stats {
 			$family=Family::getInstance($rows[$c]['id']);
 			if ($family->canDisplayDetails()) {
 				if ($type == 'list') {
-					$top10[] = "\t<li><a href=\"".encode_url($family->getLinkUrl())."\">".PrintReady($family->getFullName())."</a> [{$rows[$c]['tot']} {$pgv_lang['children']}]</li>\n";
+					$top10[] = "\t<li><a href=\"".encode_url($family->getLinkUrl())."\">".PrintReady($family->getFullName())."</a> [{$rows[$c]['tot']} {$pgv_lang['lchildren']}]</li>\n";
 				} else {
-					$top10[] = "<a href=\"".encode_url($family->getLinkUrl())."\">".PrintReady($family->getFullName())."</a> [{$rows[$c]['tot']} {$pgv_lang['children']}]";
+					$top10[] = "<a href=\"".encode_url($family->getLinkUrl())."\">".PrintReady($family->getFullName())."</a> [{$rows[$c]['tot']} {$pgv_lang['lchildren']}]";
 				}
 			}
 		}
@@ -2190,7 +2199,6 @@ class stats {
 			}
 			$chd .= self::_array_to_extended_encoding(array($per));
 			$family=Family::getInstance($rows[$i]['id']);
-//			$chl[] = $family->getFullName().' - '.$rows[$i]['tot'];
 			$chl[] = strip_tags(unhtmlentities($family->getFullName())).' - '.$rows[$i]['tot'];
 		}
 		$chl = join('|', $chl);

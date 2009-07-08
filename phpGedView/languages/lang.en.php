@@ -88,6 +88,7 @@ $pgv_lang["enter_fullname"] 		= "You must enter a first and last name.";
 $pgv_lang["name"]					= "Name";
 $pgv_lang["names"]					= "Names";
 $pgv_lang["children"]				= "Children";
+$pgv_lang["lchildren"]				= "children";
 $pgv_lang["child"]					= "Child";
 $pgv_lang["family"] 				= "Family";
 $pgv_lang["as_child"]				= "Family with Parents";
