@@ -141,6 +141,7 @@ $pgv_lang["page_x_of_y"]			= "Page #GLOBALS[currentPage]# of #GLOBALS[lastPage]#
 $pgv_lang["options"]				= "Options:";
 $pgv_lang["config_update_ok"]		= "Configuration file updated successfully.";
 $pgv_lang["page_size"]				= "Page size";
+$pgv_lang["font"]					= "Font";
 $pgv_lang["record_not_found"]		= "The requested GEDCOM record could not be found.  This could be caused by a link to an invalid person or by a corrupt GEDCOM file.";
 $pgv_lang["result_page"]			= "Result Page";
 $pgv_lang["edit_media"]				= "Edit Media Item";
