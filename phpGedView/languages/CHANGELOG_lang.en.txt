@@ -43,6 +43,7 @@ VERSION 4.2.2
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change	codes and comments
 ----------------------------------------------------------------------------------------
++$pgv_lang["rootid"]								08 Jul 2009				A Moved from admin.en.php
 +$pgv_lang["stat_18_aard"]							07 Jul 2009				A
 +$pgv_lang["century"]								07 Jul 2009				A
 +$pgv_lang["stat_age"]								07 Jul 2009				A

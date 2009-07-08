@@ -44,6 +44,7 @@ VERSION 4.2.2
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 -----------------------------------------------------------------------------------------
+-$pgv_lang["rootid"]								08 Jul 2009				A Moved to lang.en.php
 *$pgv_lang["search_add_links"]						20 Jun 2009				w
 *$pgv_lang["add_indi_to_link_list"]					20 Jun 2009				w
 +$pgv_lang["no_CHANs_update"]						20 Jun 2009				A
