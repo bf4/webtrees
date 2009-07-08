@@ -381,6 +381,7 @@ $pgv_lang["gen_ped_chart"]				= "Stammbaum für #PEDIGREE_GENERATIONS# Generatio
 $pgv_lang["generations"]				= "Generationen";
 $pgv_lang["view"]						= "Zeige";
 $pgv_lang["fam_spouse"]					= "Familie mit Ehepartner";
+$pgv_lang["rootid"]						= "Startperson der Stammbaumdarstellung";
 $pgv_lang["root_person"]				= "ID der Startperson";
 $pgv_lang["hide_details"]				= "Einzelheiten verbergen";
 $pgv_lang["show_details"]				= "Einzelheiten zeigen";
