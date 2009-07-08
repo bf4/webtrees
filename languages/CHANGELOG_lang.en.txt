@@ -43,6 +43,7 @@ VERSION 4.2.2
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change	codes and comments
 ----------------------------------------------------------------------------------------
++$pgv_lang["font"]									08 Jul 2009				A
 +$pgv_lang["lchildren"]								08 Jul 2009				A
 +$pgv_lang["individual_with_rela_report"]			08 Jul 2009				A
 +$pgv_lang["stat_19_aarm"]							08 Jul 2009				A
