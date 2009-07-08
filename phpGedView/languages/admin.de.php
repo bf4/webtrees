@@ -357,7 +357,6 @@ $pgv_lang["readme_documentation"]	= "README Datei / Dokumentation";
 $pgv_lang["remove_ip"]				= "IP entfernen";
 $pgv_lang["REQUIRE_ADMIN_AUTH_REGISTRATION"]	= "Verwalterzustimmung zu neuen Benutzeranträgen erforderlich";
 $pgv_lang["review_readme"]			= "Sie sollten zunächst die Datei <a href='readme.txt' target='_blank'>readme.txt</a> durchlesen, bevor Sie die Konfiguration von PhpGedView fortsetzen.<br /><br />";
-$pgv_lang["rootid"]					= "Startperson für die Stammbaumdarstellung";
 $pgv_lang["seconds"]				= "&nbsp;&nbsp;Sekunden";
 $pgv_lang["select_an_option"]		= "Wählen Sie bitte eine der unten aufgeführten Optionen:";
 $pgv_lang["SERVER_URL"]				= "PhpGedView URL";
