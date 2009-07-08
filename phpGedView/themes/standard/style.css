@@ -1320,20 +1320,19 @@ a.showit:hover span {
 /* End of Autocomplete styles*/
 
 /* Flyout menu Styles */
-div.flyout {
-color:black;
+.flyout {
+color:#000000; 
+text-align: left;
+margin-top: -20px;
+right: 210px;
+padding: 3px;
 }
-
-table.flyout {
-position: absolute; 
-top: -21px; 
-right: -1px;
-}
-
-table.flyoutrtl {
-position: absolute; 
-top: -19px; 
-left: -1px;
+.flyoutrtl {
+color:#000000; 
+text-align: right;
+margin-top: -20px;
+left: 210px;
+padding: 3px;
 }
 /* End of Flyout Menu styles*/
 
