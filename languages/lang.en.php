@@ -380,6 +380,7 @@ $pgv_lang["gen_ped_chart"]			= "#PEDIGREE_GENERATIONS# Generation Pedigree Chart
 $pgv_lang["generations"]			= "Generations";
 $pgv_lang["view"]					= "View";
 $pgv_lang["fam_spouse"] 			= "Family with spouse";
+$pgv_lang["rootid"] 				= "Pedigree Chart Root Person";
 $pgv_lang["root_person"]			= "Root Person ID";
 $pgv_lang["hide_details"]			= "Hide Details";
 $pgv_lang["show_details"]			= "Show Details";
