@@ -43,6 +43,11 @@ VERSION 4.2.2
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change	codes and comments
 ----------------------------------------------------------------------------------------
+*$pgv_lang["choose_file_type"]						09 Jul 2009				W
++$pgv_lang["convertPath"]							09 Jul 2009				A
++$pgv_lang["convertSlashes"]						09 Jul 2009				A
++$pgv_lang["forwardSlashes"]						09 Jul 2009				A
++$pgv_lang["backSlashes"]							09 Jul 2009				A
 +$pgv_lang["branch_list"]							09 Jul 2009				A
 +$pgv_lang["font"]									08 Jul 2009				A
 +$pgv_lang["lchildren"]								08 Jul 2009				A
