@@ -358,7 +358,6 @@ $pgv_lang["readme_documentation"]				= "Documentación LÉAME";
 $pgv_lang["remove_ip"] 							= "Eliminar IP";
 $pgv_lang["REQUIRE_ADMIN_AUTH_REGISTRATION"] 	= "Requerir que un administrador apruebe el registro de nuevos usuarios";
 $pgv_lang["review_readme"]						= "Debería revisar primero el archivo <a href=\"readme.txt\" target=\"_blank\">readme.txt</a> antes de continuar configurando PhpGedView.<br /><br />";
-$pgv_lang["rootid"] 							= "Persona Inicial para el Árbol de Ascendientes";
 $pgv_lang["seconds"]							= "&nbsp;&nbsp;segundos";
 $pgv_lang["select_an_option"]					= "Seleccione una opción:";
 $pgv_lang["SERVER_URL"]							= "URL de PhpGedView";

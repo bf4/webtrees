@@ -33,7 +33,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
-// Added in VERSION 4.2.2
+// Added in VERSION 4.1.6
 $pgv_lang["TYPE__notinDB"]			= "No consta en la BD";
 $pgv_lang["ROW_TYPE__notinDB"]		= $pgv_lang["TYPE__notinDB"];
 
