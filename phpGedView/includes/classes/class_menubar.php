@@ -473,6 +473,7 @@ class MenuBar
 		$menuList = array();
 		$menuList["individual"] = $pgv_lang["individual_list"];
 		if (file_exists("famlist.php")) $menuList["family"] = $pgv_lang["family_list"];
+		if (file_exists("branches.php")) $menuList["branches"] = $pgv_lang["branch_list"];
 		if (!$surname && file_exists("sourcelist.php") && $SHOW_SOURCES>=PGV_USER_ACCESS_LEVEL) $menuList["source"] = $pgv_lang["source_list"];
 		if (!$surname && file_exists("notelist.php") && $SHOW_SOURCES>=PGV_USER_ACCESS_LEVEL) $menuList["note"] = $pgv_lang["shared_note_list"];
 		if (!$surname && file_exists("repolist.php")) $menuList["repository"] = $pgv_lang["repo_list"];
@@ -503,6 +504,17 @@ class MenuBar
 				if (!empty($PGV_IMAGES["cfamily"]["small"]))
 					$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["cfamily"]["small"]);
 				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff", "", "icon_small_cfamily");
+				$menu->addSubmenu($submenu);
+				break;
+
+			case "branches":
+				//-- branches sub menu
+				$link = "branches.php?ged=$GEDCOM";
+				if ($surname) $link .= "&amp;surn=".$surname;
+				$submenu = new Menu($pgv_lang["branch_list"], $link);
+				if (!empty($PGV_IMAGES["patriarch"]["small"]))
+					$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["patriarch"]["small"]);
+				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff", "", "icon_small_patriarch");
 				$menu->addSubmenu($submenu);
 				break;
 

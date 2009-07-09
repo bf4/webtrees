@@ -28,7 +28,7 @@ require './config.php';
 
 //-- const
 define('PGV_ICON_RINGS', "<img src=\"images/small/rings.gif\" alt=\"{$pgv_lang["marriage"]}\" title=\"{$pgv_lang["marriage"]}\" />");
-define('PGV_ICON_SFAMILY', "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["sfamily"]["small"]."\" alt=\"\" align=\"middle\" />");
+define('PGV_ICON_BRANCHES', "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["patriarch"]["small"]."\" alt=\"\" align=\"middle\" />");
 
 //-- args
 $surn = safe_GET('surn', '[^<>&%{};]*');
@@ -83,11 +83,10 @@ if ($ENABLE_AUTOCOMPLETE) {
 	</table>
 </form>
 <?php
-
 //-- results
 if ($surn) {
 	$surn_lang = whatLanguage($surn);
-	echo "<fieldset><legend>".PGV_ICON_SFAMILY." ".PrintReady($surn)."</legend>";
+	echo "<fieldset><legend>".PGV_ICON_BRANCHES." ".PrintReady($surn)."</legend>";
 	$indis = indis_array($surn, $soundex_std, $soundex_dm);
 	echo "<ol>";
 	foreach ($indis as $k=>$person) {
