@@ -142,6 +142,7 @@ $pgv_lang["page_x_of_y"]				= "Seite #GLOBALS[currentPage]# von #GLOBALS[lastPag
 $pgv_lang["options"]					= "Optionen:";
 $pgv_lang["config_update_ok"]			= "Die Konfigurations-Datei wurde aktualisiert.";
 $pgv_lang["page_size"]					= "Format";
+$pgv_lang["font"]						= "Schrift";
 $pgv_lang["record_not_found"]			= "Der gewünschte GEDCOM Datensatz wurde nicht gefunden.  Der Grund dafür könnte eine ungültige Personen-Verbindung oder eine beschädigte GEDCOM-Datei sein.";
 $pgv_lang["result_page"]				= "Seite";
 $pgv_lang["edit_media"]					= "Multimedia bearbeiten";
