@@ -410,6 +410,7 @@ $pgv_lang["death"]					= "Death:";
 $pgv_lang["descend_chart"]			= "Descendancy Chart";
 $pgv_lang["individual_list"]		= "Individuals";
 $pgv_lang["family_list"]			= "Families";
+$pgv_lang["branch_list"]			= "Branches";
 $pgv_lang["source_list"]			= "Sources";
 $pgv_lang["shared_note_list"]		= "Shared Notes";
 $pgv_lang["place_list"] 			= "Place Hierarchy";
