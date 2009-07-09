@@ -129,7 +129,7 @@ $pgv_lang["chart_new"]				= "Family Tree Chart";
 $pgv_lang["loading"]				= "Loading...";
 $pgv_lang["clear_chart"]			= "Clear Chart";
 $pgv_lang["file_information"]		= "File Information";
-$pgv_lang["choose_file_type"]		= "Choose File Type";
+$pgv_lang["choose_file_type"]		= "File Type";
 $pgv_lang["add_individual_by_id"]	= "Add Individual By ID";
 $pgv_lang["advanced_options"]		= "Advanced Options";
 $pgv_lang["zip_files"]				= "Zip File(s)";
@@ -550,6 +550,10 @@ $pgv_lang["indi_downloaded_from"]	= "This Individual was downloaded from:";
 $pgv_lang["family_downloaded_from"] = "This Family was downloaded from:";
 $pgv_lang["source_downloaded_from"] = "This Source was downloaded from:";
 $pgv_lang["enter_person_generations"] = "Number of generations:";
+$pgv_lang["convertPath"]			= "Convert media path to";
+$pgv_lang["convertSlashes"]			= "Convert media folder separators to";
+$pgv_lang["forwardSlashes"]			= "Forward slashes : /";
+$pgv_lang["backSlashes"]			= "Backslashes : \\";
 
 //-- PLACELIST FILE MESSAGES
 $pgv_lang["connections"]			= "Place connections found";
@@ -1645,10 +1649,10 @@ $pgv_lang["witness"] = "Witness";
 //-- statistics utility
 $pgv_lang["stat_create"]		= "Create your own chart";
 $pgv_lang["statutci"]			= "unable to create index";
-$pgv_lang["statnnames"]			= "Total individuals";
-$pgv_lang["statnfam"]			= "Total families";
-$pgv_lang["statnmale"]			= "Total males";
-$pgv_lang["statnfemale"]		= "Total females";
+$pgv_lang["statnnames"]         = "Total individuals";
+$pgv_lang["statnfam"]           = "Total families";
+$pgv_lang["statnmale"]          = "Total males";
+$pgv_lang["statnfemale"]        = "Total females";
 $pgv_lang["stat_sindi"]			= "Individuals with sources";
 $pgv_lang["stat_sfam"]			= "Families with sources";
 $pgv_lang["statvars"]			= "Fill in the following parameters for the plot";
