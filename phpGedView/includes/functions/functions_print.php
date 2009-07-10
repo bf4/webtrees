@@ -658,6 +658,7 @@ function print_footer() {
 	if (PGV_DEBUG_SQL) {
 		echo PGV_DB::getQueryLog();
 	}
+        echo clustrmaps();
 	echo google_analytics();
 	echo '</body></html>';
 }
@@ -688,6 +689,28 @@ function print_simple_footer() {
 function google_analytics() {
 	if (defined('PGV_GOOGLE_ANALYTICS')) {
 		return '<script type="text/javascript">var gaJsHost=(("https:"==document.location.protocol)?"https://ssl.":"http://www.");document.write(unescape("%3Cscript src=\'"+gaJsHost+"google-analytics.com/ga.js\' type=\'text/javascript\'%3E%3C/script%3E"));</script><script type="text/javascript">var pageTracker=_gat._getTracker("'.PGV_GOOGLE_ANALYTICS.'");pageTracker._initData();pageTracker._trackPageview();</script>';
+	} else {
+		return '';
+	}
+}
+
+// Generate code for clustrmaps
+// Enable by adding
+// define('PGV_CLUSTRMAPS', 'your website address'); 
+// e.g. define('PGV_CLUSTRMAPS', 'http://vidyasridhar.no-ip.org/'); 
+// to the end of your config.php
+
+function clustrmaps() {
+	if (defined('PGV_CLUSTRMAPS')) {
+		return '<a
+ href="http://www2.clustrmaps.com/counter/maps.php?url='.PGV_CLUSTRMAPS.'"
+ id="clustrMapsLink"><img
+ src="http://www2.clustrmaps.com/counter/index2.php?url='.PGV_CLUSTRMAPS.'"
+ style="border: 0px none ;"
+ alt="Locations of visitors to this page"
+ title="Locations of visitors to this page" id="clustrMapsImg"
+ onerror="this.onerror=null; this.src=\'http://clustrmaps.com/images/clustrmaps-back-soon.jpg\'; document.getElementById(\'clustrMapsLink\').href=\'http://clustrmaps.com\';">
+</a>';
 	} else {
 		return '';
 	}
