@@ -10,8 +10,8 @@
 
 
 Version 4.2.2
- - Added clustrmaps support similar to googlemaps. Enable by adding
-   define('PGV_CLUSTRMAPS', 'your website address'); to your
+ - Added: [ 2798575 ] clustrmaps support similar to googlemaps. Enable
+   by adding define('PGV_CLUSTRMAPS', 'your website address'); to your
    config.php (sridharb)
  - Fixed: [ 2816347 ] XHTML - family_nav.php (windmillway)
  - Fixed: [ 2815546 ] Timeline Chart display issue (wooc)
