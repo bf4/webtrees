@@ -1918,7 +1918,7 @@ class stats {
 				else {
 					$century = $values['century'];
 				}
-				$counts[] = round(100 * $values['count(*)'] / $tot, 0);;
+				$counts[] = round(100 * $values['count(*)'] / $tot, 0);
 				$centuries .= $century.' - '.$values['count(*)'].'|';
 			}
 			$chd = self::_array_to_extended_encoding($counts);
@@ -1960,14 +1960,23 @@ class stats {
 					.' birth.d_julianday1 != 0 AND'
 					.' married.d_julianday2 > birth.d_julianday1'
 				.' GROUP BY century, sex ORDER BY century, sex');
+			$max = 0;
+			foreach ($rows as $values) {
+				if ($max<$values['age']) $max = $values['age'];
+			}
 			$func="century_localisation_{$lang_short_cut[$LANGUAGE]}";
 			$chxl = "0:|";
+			$chmm = "";
+			$chmf = "";
+			$i = 0;
 			$male = true;
 			$temp = "";
 			$countsm = "";
 			$countsf = "";
 			$countsa = "";
 			foreach ($rows as $values) {
+				if ($max<=50) $chage = $values['age']*2;
+				else $chage = $values['age'];
 				if ($temp!=$values['century']) {
 					$temp = $values['century'];
 					if ($sizes[0]<1000) $sizes[0] += 50;
@@ -1980,34 +1989,44 @@ class stats {
 					if ($values['sex'] == "F") {
 						if (!$male) {
 							$countsm .= "0,";
+							$chmm .= 't0,000000,0,'.($i-1).',11|';
 							$countsa .= $fage.",";
 						}
-						$countsf .= $values['age'].",";
-						$fage = $values['age'];
+						$countsf .= $chage.",";
+						$chmf .= 't'.$values['age'].',000000,1,'.$i.',11|';
+						$fage = $chage;
 						$male = false;
 					} else if ($values['sex'] == "M") {
 						$countsf .= "0,";
-						$countsm .= $values['age'].",";
-						$countsa .= $values['age'].",";
+						$chmf .= 't0,000000,1,'.$i.',11|';
+						$countsm .= $chage.",";
+						$chmm .= 't'.$values['age'].',000000,0,'.$i.',11|';
+						$countsa .= $chage.",";
 					} else if ($values['sex'] == "U") {
 						$countsf .= "0,";
+						$chmf .= 't0,000000,1,'.$i.',11|';
 						$countsm .= "0,";
+						$chmm .= 't0,000000,0,'.$i.',11|';
 						$countsa .= "0,";
 					}
+					$i++;
 				}
 				else if ($values['sex'] == "M") {
-					$countsm .= $values['age'].",";
-					$countsa .= round(($fage+$values['age'])/2,1).",";
+					$countsm .= $chage.",";
+					$chmm .= 't'.$values['age'].',000000,0,'.($i-1).',11|';
+					$countsa .= round(($fage+$chage)/2,1).",";
 					$male = true;
 				}
 			}
 			$countsm = substr($countsm,0,-1);
 			$countsf = substr($countsf,0,-1);
 			$countsa = substr($countsa,0,-1);
+			$chmf = substr($chmf,0,-1);
 			$chd = "t2:{$countsm}|{$countsf}|{$countsa}";
-			$chxl .= "1:||".$pgv_lang["century"]."|2:|0|10|20|30|40|50|60|70|80|90|100|3:||".$pgv_lang["stat_age"]."|";
+			if ($max<=50) $chxl .= "1:||".$pgv_lang["century"]."|2:|0|10|20|30|40|50|3:||".$pgv_lang["stat_age"]."|";
+			else 	$chxl .= "1:||".$pgv_lang["century"]."|2:|0|10|20|30|40|50|60|70|80|90|100|3:||".$pgv_lang["stat_age"]."|";
 			$chtt = $pgv_lang["stat_19_aarm"];
-			return "<img src=\"".encode_url("http://chart.apis.google.com/chart?cht=bvg&amp;chs={$sizes[0]}x{$sizes[1]}&amp;chm=D,FF0000,2,0,3,1|N*f1*,000000,0,-1,11|N*f1*,000000,1,-1,11&amp;chf=bg,s,ffffff99|c,s,ffffff00&amp;chtt={$chtt}&amp;chd={$chd}&amp;chco=0000FF,FFA0CB,FF0000&amp;chbh=20,3&amp;chxt=x,x,y,y&amp;chxl={$chxl}&amp;chdl={$pgv_lang["male"]}|{$pgv_lang["female"]}|{$pgv_lang["avg_age"]}")."\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" alt=\"".$pgv_lang["stat_19_aarm"]."\" title=\"".$pgv_lang["stat_19_aarm"]."\" />";
+			return "<img src=\"".encode_url("http://chart.apis.google.com/chart?cht=bvg&amp;chs={$sizes[0]}x{$sizes[1]}&amp;chm=D,FF0000,2,0,3,1|{$chmm}{$chmf}&amp;chf=bg,s,ffffff99|c,s,ffffff00&amp;chtt={$chtt}&amp;chd={$chd}&amp;chco=0000FF,FFA0CB,FF0000&amp;chbh=20,3&amp;chxt=x,x,y,y&amp;chxl={$chxl}&amp;chdl={$pgv_lang["male"]}|{$pgv_lang["female"]}|{$pgv_lang["avg_age"]}")."\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" alt=\"".$pgv_lang["stat_19_aarm"]."\" title=\"".$pgv_lang["stat_19_aarm"]."\" />";
 		} else {
 			$years = '';
 			if ($year1>=0 && $year2>=0) {
@@ -2214,46 +2233,167 @@ class stats {
 		return sprintf('%.2f', $row['tot']);
 	}
 
-	function statsChildren($sex='BOTH', $year1=-1, $year2=-1) {
-		global $TBLPREFIX;
+	function statsChildren($simple=true, $sex='BOTH', $year1=-1, $year2=-1, $params=null) {
+		global $TBLPREFIX, $pgv_lang, $lang_short_cut, $LANGUAGE;
 
-		if ($sex=='M') {
-			$sql = "SELECT num, COUNT(*) FROM "
+		if ($simple) {
+			if (isset($params[0]) && $params[0] != '') {$size = strtolower($params[0]);}else{$size = '220x250';}
+			$sizes = explode('x', $size);
+			$max = 0;
+			$rows=self::_runSQL(''
+				.' SELECT'
+					.' ROUND(AVG(f_numchil),2) AS num,'
+					.' ROUND((married.d_year+49.1)/100) AS century'
+				.' FROM'
+					." {$TBLPREFIX}families AS fam"
+				.' LEFT JOIN'
+					." {$TBLPREFIX}dates AS married ON married.d_file = {$this->_ged_id}"
+				.' WHERE'
+					.' married.d_gid = fam.f_id AND'
+					." fam.f_file = {$this->_ged_id} AND"
+					." married.d_fact = 'MARR'"
+				.' GROUP BY century ORDER BY century');
+			foreach ($rows as $values) {
+				if ($max<$values['num']) $max = $values['num'];
+			}
+			$chm = "";
+			$chxl = "0:|";
+			$i = 0;
+			$func="century_localisation_{$lang_short_cut[$LANGUAGE]}";
+			foreach ($rows as $values) {
+				if ($sizes[0]<980) $sizes[0] += 38;
+				if (function_exists($func)) {
+					$chxl .= $func($values['century'], false)."|";
+				}
+				else {
+					$chxl .= $values['century']."|";
+				}
+				if ($max<=5) $counts[] = round($values['num']*819.2-1, 1);
+				else $counts[] = round($values['num']*409.6, 1);
+				$chm .= 't'.$values['num'].',000000,0,'.$i.',11|';
+				$i++;
+			}
+			$chd = self::_array_to_extended_encoding($counts);
+			$chm = substr($chm,0,-1);
+			if ($max<=5) $chxl .= "1:||".$pgv_lang["century"]."|2:|0|1|2|3|4|5|3:||".$pgv_lang["stat_21_nok"]."|";
+			else $chxl .= "1:||".$pgv_lang["century"]."|2:|0|1|2|3|4|5|6|7|8|9|10|3:||".$pgv_lang["stat_21_nok"]."|";
+			$chtt = $pgv_lang["stat_average_children"];
+			return "<img src=\"".encode_url("http://chart.apis.google.com/chart?cht=bvg&amp;chs={$sizes[0]}x{$sizes[1]}&amp;chf=bg,s,ffffff99|c,s,ffffff00&amp;chm=D,FF0000,0,0,3,1|{$chm}&amp;chtt={$chtt}&amp;chd=e:{$chd}&amp;chco=0000FF&amp;chbh=30,3&amp;chxt=x,x,y,y&amp;chxl={$chxl}")."\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" alt=\"".$pgv_lang["stat_average_children"]."\" title=\"".$pgv_lang["stat_average_children"]."\" />";
+		} else {
+			if ($sex=='M') {
+				$sql = "SELECT num, COUNT(*) FROM "
 						."(SELECT count(i_sex) AS num FROM {$TBLPREFIX}link "
 							."LEFT OUTER JOIN {$TBLPREFIX}individuals "
 							."ON l_from=i_id AND l_file=i_file AND i_sex='M' AND l_type='FAMC' "
 							."JOIN {$TBLPREFIX}families ON f_file=l_file AND f_id=l_to WHERE f_file={$this->_ged_id} GROUP BY l_to"
 						.") boys"
 						." GROUP BY num ORDER BY num ASC";
-		}
-		else if ($sex=='F') {
-			$sql = "SELECT num, COUNT(*) FROM "
+			}
+			else if ($sex=='F') {
+				$sql = "SELECT num, COUNT(*) FROM "
 						."(SELECT count(i_sex) AS num FROM {$TBLPREFIX}link "
 							."LEFT OUTER JOIN {$TBLPREFIX}individuals "
 							."ON l_from=i_id AND l_file=i_file AND i_sex='F' AND l_type='FAMC' "
 							."JOIN {$TBLPREFIX}families ON f_file=l_file AND f_id=l_to WHERE f_file={$this->_ged_id} GROUP BY l_to"
 						.") girls"
 						." GROUP BY num ORDER BY num ASC";
-		}
-		else {
-			$sql = "SELECT f_numchil, COUNT(*) FROM {$TBLPREFIX}families ";
-			if ($year1>=0 && $year2>=0) {
-				$sql .= "AS fam LEFT JOIN {$TBLPREFIX}dates AS married ON married.d_file = {$this->_ged_id}"
-					.' WHERE'
-					.' married.d_gid = fam.f_id AND'
-					." fam.f_file = {$this->_ged_id} AND"
-					." married.d_fact = 'MARR' AND"
-					." married.d_year BETWEEN '{$year1}' AND '{$year2}'";
 			}
 			else {
-				$sql .='WHERE '
-					."f_file={$this->_ged_id}";
+				$sql = "SELECT f_numchil, COUNT(*) FROM {$TBLPREFIX}families ";
+				if ($year1>=0 && $year2>=0) {
+					$sql .= "AS fam LEFT JOIN {$TBLPREFIX}dates AS married ON married.d_file = {$this->_ged_id}"
+						.' WHERE'
+						.' married.d_gid = fam.f_id AND'
+						." fam.f_file = {$this->_ged_id} AND"
+						." married.d_fact = 'MARR' AND"
+						." married.d_year BETWEEN '{$year1}' AND '{$year2}'";
+				}
+				else {
+					$sql .='WHERE '
+						."f_file={$this->_ged_id}";
+				}
+				$sql .= ' GROUP BY f_numchil';
 			}
-			$sql .= ' GROUP BY f_numchil';
+			$rows=self::_runSQL($sql);
+			if (!isset($rows)) {return 0;}
+			return $rows;
 		}
-		$rows=self::_runSQL($sql);
-		if (!isset($rows)) {return 0;}
-		return $rows;
+	}
+
+	function noChildrenFamilies() {
+		global $TBLPREFIX;
+		$rows=self::_runSQL(''
+			.' SELECT'
+				.' COUNT(*) AS tot'
+			.' FROM'
+				." {$TBLPREFIX}families AS fam"
+			.' WHERE'
+				.' f_numchil = 0 AND'
+				." fam.f_file = {$this->_ged_id}");
+		$row=$rows[0];
+		return $row['tot'];
+	}
+
+	function chartNoChildrenFamilies($year1=-1, $year2=-1, $params=null) {
+		global $TBLPREFIX, $pgv_lang, $lang_short_cut, $LANGUAGE;
+
+		if (isset($params[0]) && $params[0] != '') {$size = strtolower($params[0]);}else{$size = '220x250';}
+		$sizes = explode('x', $size);
+		if ($year1>=0 && $year2>=0) {
+			$years = " married.d_year BETWEEN '{$year1}' AND '{$year2}' AND";
+		} else {
+			$years = "";
+		}
+		$max = 0;
+		$tot = 0;
+		$rows=self::_runSQL(''
+			.' SELECT'
+				.' COUNT(*) AS count,'
+				.' ROUND((married.d_year+49.1)/100) AS century'
+			.' FROM'
+				." {$TBLPREFIX}families AS fam"
+			.' LEFT JOIN'
+				." {$TBLPREFIX}dates AS married ON married.d_file = {$this->_ged_id}"
+			.' WHERE'
+				.' f_numchil = 0 AND'
+				.' married.d_gid = fam.f_id AND'
+				." fam.f_file = {$this->_ged_id} AND"
+				.$years
+				." married.d_fact = 'MARR'"
+			.' GROUP BY century ORDER BY century');
+		foreach ($rows as $values) {
+			if ($max<$values['count']) $max = $values['count'];
+			$tot += $values['count'];
+		}
+		$unknown = $this->noChildrenFamilies()-$tot;
+		if ($unknown>$max) $max=$unknown;
+		$chm = "";
+		$chxl = "0:|";
+		$i = 0;
+		$func="century_localisation_{$lang_short_cut[$LANGUAGE]}";
+		foreach ($rows as $values) {
+			if ($sizes[0]<980) $sizes[0] += 38;
+			if (function_exists($func)) {
+				$chxl .= $func($values['century'], false)."|";
+			}
+			else {
+				$chxl .= $values['century']."|";
+			}
+			$counts[] = round(4095*$values['count']/($max+1));
+			$chm .= 't'.$values['count'].',000000,0,'.$i.',11|';
+			$i++;
+		}
+		$counts[] = round(4095*$unknown/($max+1));
+		$chd = self::_array_to_extended_encoding($counts);
+		$chm .= 't'.$unknown.',000000,0,'.$i.',11';
+		$chxl .= $pgv_lang["no_date_fam"]."|1:||".$pgv_lang["century"]."|2:|0|";
+		$step = $max+1;
+		for ($d=floor($max+1); $d>0; $d--) if (($max+1)<($d*10+1) && fmod(($max+1),$d)==0) $step = $d;
+		if ($step==floor($max+1)) for ($d=floor($max); $d>0; $d--) if ($max<($d*10+1) && fmod($max,$d)==0) $step = $d;
+		for ($n=$step; $n<=($max+1); $n+=$step) $chxl .= $n."|";
+		$chxl .= "3:||".$pgv_lang["statnfam"]."|";
+		$chtt = $pgv_lang["stat_22_fwok"];
+		return "<img src=\"".encode_url("http://chart.apis.google.com/chart?cht=bvg&amp;chs={$sizes[0]}x{$sizes[1]}&amp;chf=bg,s,ffffff99|c,s,ffffff00&amp;chm=D,FF0000,0,0:".($i-1).",3,1|{$chm}&amp;chtt={$chtt}&amp;chd=e:{$chd}&amp;chco=0000FF,ffffff00&amp;chbh=30,3&amp;chxt=x,x,y,y&amp;chxl={$chxl}")."\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" alt=\"".$pgv_lang["stat_22_fwok"]."\" title=\"".$pgv_lang["stat_22_fwok"]."\" />";
 	}
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -2690,8 +2830,7 @@ class stats {
 	static function _array_to_extended_encoding($a) {
 		if (!is_array($a)) {$a = array($a);}
 		$encoding = '';
-		foreach ($a as $value)
-		{
+		foreach ($a as $value) {
 			if ($value<0) $value = 0;
 			$first = floor($value / 64);
 			$second = $value % 64;
