@@ -434,19 +434,19 @@ function nuch() {
 	global $z_as, $zgrenzen, $stats, $n1;
 
 	if ($z_as == 300) {
-		$num = $stats->statsChildren();
+		$num = $stats->statsChildren(false);
 		foreach ($num as $values) {
 			fill_ydata(0, $values['f_numchil'], $values['count(*)']);
 			$n1+=$values['f_numchil']*$values['count(*)'];
 		}
 	}
 	else if ($z_as == 301) {
-		$num = $stats->statsChildren('M');
+		$num = $stats->statsChildren(false, 'M');
 		foreach ($num as $values) {
 			fill_ydata(0, $values['num'], $values['count(*)']);
 			$n1+=$values['num']*$values['count(*)'];
 		}
-		$num = $stats->statsChildren('F');
+		$num = $stats->statsChildren(false, 'F');
 		foreach ($num as $values) {
 			fill_ydata(1, $values['num'], $values['count(*)']);
 			$n1+=$values['num']*$values['count(*)'];
@@ -455,7 +455,7 @@ function nuch() {
 	else {
 		$zstart = 0;
 		foreach ($zgrenzen as $boundary) {
-			$num = $stats->statsChildren('BOTH', $zstart, $boundary);
+			$num = $stats->statsChildren(false, 'BOTH', $zstart, $boundary);
 			foreach ($num as $values) {
 				fill_ydata($boundary, $values['f_numchil'], $values['count(*)']);
 				$n1+=$values['f_numchil']*$values['count(*)'];
