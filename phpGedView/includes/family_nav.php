@@ -111,7 +111,7 @@ if (isset($_COOKIE['lastclick'])) {
 					</td>
 					<td align="center" class="<?php print $this->getPersonStyle($people["husb"]); ?>">
 						<?php
-						print "<a href=\"".encode_url($people["husb"]->getLinkUrl()."&tab={$tabno}")."\">";
+						print "<a href=\"".encode_url($people["husb"]->getLinkUrl()."&amp;tab={$tabno}")."\">";
 						print PrintReady($people["husb"]->getFullName());
 						print "<font size=\"1\"><br />" . $BirthYr . " - " . $DeathYr . "</font>";
 						print "</a>";
@@ -145,7 +145,7 @@ if (isset($_COOKIE['lastclick'])) {
 					</td>
 					<td align="center" class="<?php print $this->getPersonStyle($people["wife"]); ?>">
 						<?php
-						print "<a href=\"".encode_url($people["wife"]->getLinkUrl()."&tab={$tabno}")."\">";
+						print "<a href=\"".encode_url($people["wife"]->getLinkUrl()."&amp;tab={$tabno}")."\">";
 						print PrintReady($people["wife"]->getFullName());
 						print "<font size=\"1\"><br />" . $BirthYr . " - " . $DeathYr . "</font>";
 						print "</a>";
@@ -193,7 +193,7 @@ if (isset($_COOKIE['lastclick'])) {
 								print PrintReady($child->getFullName());
 								print "<font size=\"1\"><br />" . $BirthYr . " - " . $DeathYr . "</font>";
 							}else{
-								print "<a href=\"".encode_url($child->getLinkUrl()."&tab={$tabno}")."\">";
+								print "<a href=\"".encode_url($child->getLinkUrl()."&amp;tab={$tabno}")."\">";
 								print PrintReady($child->getFullName());
 								print "<font size=\"1\"><br />" . $BirthYr . " - " . $DeathYr . "</font>";
 								print "</a>";
@@ -259,7 +259,7 @@ if (isset($_COOKIE['lastclick'])) {
 					</td>
 					<td align="center" class="<?php print $this->getPersonStyle($people["husb"]); ?>" >
 						<?php
-						print "<a href=\"".encode_url($people["husb"]->getLinkUrl()."&tab={$tabno}")."\">";
+						print "<a href=\"".encode_url($people["husb"]->getLinkUrl()."&amp;tab={$tabno}")."\">";
 						print PrintReady($people["husb"]->getFullName());
 						print "<font size=\"1\"><br />" . $BirthYr . " - " . $DeathYr . "</font>";
 						print "</a>";
@@ -301,7 +301,7 @@ if (isset($_COOKIE['lastclick'])) {
 					</td>
 					<td align="center" class="<?php print $this->getPersonStyle($people["wife"]); ?>">
 						<?php
-						print "<a href=\"".encode_url($people["wife"]->getLinkUrl()."&tab={$tabno}")."\">";
+						print "<a href=\"".encode_url($people["wife"]->getLinkUrl()."&amp;tab={$tabno}")."\">";
 						print PrintReady($people["wife"]->getFullName());
 						print "<font size=\"1\"><br />" . $BirthYr . " - " . $DeathYr . "</font>";
 						print "</a>";
@@ -338,7 +338,7 @@ if (isset($_COOKIE['lastclick'])) {
 						</td>
 						<td align="center" class="<?php print $this->getPersonStyle($child); ?>">
 							<?php
-							print "<a href=\"".encode_url($child->getLinkUrl()."&tab={$tabno}")."\">";
+							print "<a href=\"".encode_url($child->getLinkUrl()."&amp;tab={$tabno}")."\">";
 							print PrintReady($child->getFullName());
 							print "<font size=\"1\"><br />" . $BirthYr . " - " . $DeathYr . "</font>";
 							print "</a>";
@@ -403,7 +403,7 @@ if (isset($_COOKIE['lastclick'])) {
 							print PrintReady($people["husb"]->getFullName());
 							print "<font size=\"1\"><br />" . $BirthYr . " - " . $DeathYr . "</font>";
 						}else{
-							print "<a href=\"".encode_url($people["husb"]->getLinkUrl()."&tab={$tabno}")."\">";
+							print "<a href=\"".encode_url($people["husb"]->getLinkUrl()."&amp;tab={$tabno}")."\">";
 							print PrintReady($people["husb"]->getFullName());
 							print "<font size=\"1\"><br />" . $BirthYr . " - " . $DeathYr . "</font>";
 							print "</a>";
@@ -442,7 +442,7 @@ if (isset($_COOKIE['lastclick'])) {
 							print PrintReady($people["wife"]->getFullName());
 							print "<font size=\"1\"><br />" . $BirthYr . " - " . $DeathYr . "</font>";
 						}else{
-							print "<a href=\"".encode_url($people["wife"]->getLinkUrl()."&tab={$tabno}")."\">";
+							print "<a href=\"".encode_url($people["wife"]->getLinkUrl()."&amp;tab={$tabno}")."\">";
 							print PrintReady($people["wife"]->getFullName());
 							print "<font size=\"1\"><br />" . $BirthYr . " - " . $DeathYr . "</font>";
 							print "</a>";
@@ -479,7 +479,7 @@ if (isset($_COOKIE['lastclick'])) {
 						</td>
 						<td align="center" class="<?php print $this->getPersonStyle($child); ?>">
 							<?php
-							print "<a href=\"".encode_url($child->getLinkUrl()."&tab={$tabno}")."\">";
+							print "<a href=\"".encode_url($child->getLinkUrl()."&amp;tab={$tabno}")."\">";
 							print PrintReady($child->getFullName());
 							print "<font size=\"1\"><br />" . $BirthYr . " - " . $DeathYr . "</font>";
 							print "</a>";
