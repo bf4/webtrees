@@ -94,8 +94,8 @@ if (isset($_COOKIE['lastclick'])) {
 				}else{
 					$menu->addClass("", "", "submenu flyoutrtl");
 				}
-				$slabel  = print_pedigree_person_nav($people["husb"]->getXref(), 2, !$this->isPrintPreview(), 0, $personcount++);
-				$slabel .= PrintReady($parentlinks);
+				$slabel  = "</a>".print_pedigree_person_nav($people["husb"]->getXref(), 2, !$this->isPrintPreview(), 0, $personcount++);
+				$slabel .= PrintReady($parentlinks)."<a>";
 				$submenu = new Menu($slabel);
 				$menu->addSubMenu($submenu);
 
@@ -128,8 +128,8 @@ if (isset($_COOKIE['lastclick'])) {
 				}else{
 					$menu->addClass("", "", "submenu flyoutrtl");
 				}
-				$slabel  = print_pedigree_person_nav($people["wife"]->getXref(), 2, !$this->isPrintPreview(), 0, $personcount++);
-				$slabel .= PrintReady($parentlinks);
+				$slabel  = "</a>".print_pedigree_person_nav($people["wife"]->getXref(), 2, !$this->isPrintPreview(), 0, $personcount++);
+				$slabel .= PrintReady($parentlinks)."<a>";
 				$submenu = new Menu($slabel);
 				$menu->addSubMenu($submenu);
 
@@ -166,8 +166,8 @@ if (isset($_COOKIE['lastclick'])) {
 					}else{
 						$menu->addClass("", "", "submenu flyoutrtl");
 					}
-					$slabel  = print_pedigree_person_nav($child->getXref(), 2, !$this->isPrintPreview(), 0, $personcount++);
-					$slabel .= PrintReady($spouselinks);
+					$slabel  = "</a>".print_pedigree_person_nav($child->getXref(), 2, !$this->isPrintPreview(), 0, $personcount++);
+					$slabel .= PrintReady($spouselinks)."<a>";
 					$submenu = new Menu($slabel);
 					$menu->addSubMenu($submenu);
 				}
@@ -241,8 +241,8 @@ if (isset($_COOKIE['lastclick'])) {
 				}else{
 					$menu->addClass("", "", "submenu flyoutrtl");
 				}
-				$slabel  = print_pedigree_person_nav($people["husb"]->getXref(), 2, !$this->isPrintPreview(), 0, $personcount++);
-				$slabel .= PrintReady($parentlinks);
+				$slabel  = "</a>".print_pedigree_person_nav($people["husb"]->getXref(), 2, !$this->isPrintPreview(), 0, $personcount++);
+				$slabel .= PrintReady($parentlinks)."<a>";
 				$submenu = new Menu($slabel);
 				$menu->addSubMenu($submenu);
 
@@ -284,8 +284,8 @@ if (isset($_COOKIE['lastclick'])) {
 				}else{
 					$menu->addClass("", "", "submenu flyoutrtl");
 				}
-				$slabel  = print_pedigree_person_nav($people["wife"]->getXref(), 2, !$this->isPrintPreview(), 0, $personcount++);
-				$slabel .= PrintReady($parentlinks);
+				$slabel  = "</a>".print_pedigree_person_nav($people["wife"]->getXref(), 2, !$this->isPrintPreview(), 0, $personcount++);
+				$slabel .= PrintReady($parentlinks)."<a>";
 				$submenu = new Menu($slabel);
 				$menu->addSubMenu($submenu);
 
@@ -321,8 +321,8 @@ if (isset($_COOKIE['lastclick'])) {
 					}else{
 						$menu->addClass("", "", "submenu flyoutrtl");
 					}
-					$slabel  = print_pedigree_person_nav($child->getXref(), 2, !$this->isPrintPreview(), 0, $personcount++);
-					$slabel .= PrintReady($spouselinks);
+					$slabel  = "</a>".print_pedigree_person_nav($child->getXref(), 2, !$this->isPrintPreview(), 0, $personcount++);
+					$slabel .= PrintReady($spouselinks)."<a>";
 					$submenu = new Menu($slabel);
 					$menu->addSubMenu($submenu);
 
@@ -382,8 +382,8 @@ if (isset($_COOKIE['lastclick'])) {
 				}else{
 					$menu->addClass("", "", "submenu flyoutrtl");
 				}
-				$slabel  = print_pedigree_person_nav($people["husb"]->getXref(), 2, !$this->isPrintPreview(), 0, $personcount++);
-				$slabel .= PrintReady($parentlinks);
+				$slabel  = "</a>".print_pedigree_person_nav($people["husb"]->getXref(), 2, !$this->isPrintPreview(), 0, $personcount++);
+				$slabel .= PrintReady($parentlinks)."<a>";
 				$submenu = new Menu($slabel);
 				$menu->addSubMenu($submenu);
 
@@ -421,8 +421,8 @@ if (isset($_COOKIE['lastclick'])) {
 				}else{
 					$menu->addClass("", "", "submenu flyoutrtl");
 				}
-				$slabel  = print_pedigree_person_nav($people["wife"]->getXref(), 2, !$this->isPrintPreview(), 0, $personcount++);
-				$slabel .= PrintReady($parentlinks);
+				$slabel  = "</a>".print_pedigree_person_nav($people["wife"]->getXref(), 2, !$this->isPrintPreview(), 0, $personcount++);
+				$slabel .= PrintReady($parentlinks)."<a>";
 				$submenu = new Menu($slabel);
 				$menu->addSubMenu($submenu);
 
@@ -462,8 +462,8 @@ if (isset($_COOKIE['lastclick'])) {
 					}else{
 						$menu->addClass("", "", "submenu flyoutrtl");
 					}
-					$slabel = print_pedigree_person_nav($child->getXref(), 2, !$this->isPrintPreview(), 0, $personcount++);
-					$slabel .= PrintReady($spouselinks);
+					$slabel = "</a>".print_pedigree_person_nav($child->getXref(), 2, !$this->isPrintPreview(), 0, $personcount++);
+					$slabel .= PrintReady($spouselinks)."<a>";
 					$submenu = new Menu($slabel);
 					$menu->addSubmenu($submenu);
 
