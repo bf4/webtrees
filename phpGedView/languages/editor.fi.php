@@ -32,7 +32,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
-$pgv_lang["add_marriage"]		= "Lisää avioliitto tiedot";
+$pgv_lang["add_marriage"]		= "Lisää avioliiton yksityiskohdat";
 $pgv_lang["edit_concurrency_change"] = "Tämän tietueen muutti viimeksi <i>#CHANGEUSER#</i> #CHANGEDATE#";
 $pgv_lang["edit_concurrency_msg2"]	= "Tietuetta, jonka tunnus on #PID#, on muuttanut toinen käyttäjä sen jälkeen kun viimeksi käsittelit sitä.";
 $pgv_lang["edit_concurrency_msg1"]= "Muokkauslomakkeen luonnissa tapahtui virhe. Joku toinen käyttäjä on ehkä muuttanut tätä tietuetta sen jälkeen kun viimeksi katsoit sitä.";
@@ -222,7 +222,7 @@ $pgv_lang["undo"]			= "Peru";
 $pgv_lang["undo_all"]			= "Peruuta kaikki muutokset";
 $pgv_lang["undo_all_confirm"]	= "Oletko varma, että haluat peruuttaa kaikki tähän GEDCOM-tiedostoon tekemäsi muutokset?";
 $pgv_lang["undo_successful"]	= "Peruminen onnistui";
-$pgv_lang["update_successful"]	= "Päivitys onnistui.";
+$pgv_lang["update_successful"]	= "Päivitys onnistui";
 $pgv_lang["upload"]			= "Lähetä palvelimelle";
 $pgv_lang["upload_error"]		= "Tiedoston lähetyksessä tapahtui virhe.";
 $pgv_lang["upload_media"]		= "Lähetä mediatiedostot palvelimelle";
@@ -244,4 +244,6 @@ $pgv_lang["create_shared_note"]		= "Luo uusi jaettu lisätieto";
 $pgv_lang["create_shared_note_assisted"]	= "Lisää uusi jaettu lisätieto käyttäen avustajaa";
 $pgv_lang["new_shared_note_created"] 	= "Uuden jaetun lisätiedon luonti onnistui.";
 $pgv_lang["shared_note_updated"] 	= "Uuden jaetun lisätiedon päivitys onnistui.";
+$pgv_lang["to_note"]				= "jaettuun lisätietoon";
+$pgv_lang["to_repository"]			= "tietovarastoon";
 ?>
