@@ -43,6 +43,7 @@ VERSION 4.2.2
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change	codes and comments
 ----------------------------------------------------------------------------------------
++$pgv_lang["use_colors"]							12 Jul 2009				A
 +$pgv_lang["stat_22_fwok"]							10 Jul 2009				A
 +$pgv_lang["no_date_fam"]							10 Jul 2009				A
 *$pgv_lang["choose_file_type"]						09 Jul 2009				W
