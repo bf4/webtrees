@@ -1579,6 +1579,7 @@ class stats {
 	function _topTenOldestAlive($type='list', $sex='BOTH', $params=null) {
 		global $TBLPREFIX, $TEXT_DIRECTION, $pgv_lang, $lang_short_cut, $LANGUAGE;
 
+		if (!PGV_USER_CAN_ACCESS) return $pgv_lang["privacy_error"];
 		if ($sex == 'F') {
 			$sex_search = " AND i_sex='F'";
 		} elseif ($sex == 'M') {
