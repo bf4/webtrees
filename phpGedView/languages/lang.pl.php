@@ -141,6 +141,7 @@ $pgv_lang["options"]			= "Opcje";
 $pgv_lang["config_update_ok"]	= "Plik konfiguracyjny został pomyślnie zaktualizowany.";
 $pgv_lang["page_size"]			= "Format strony";
 $pgv_lang["font"]				= "Czcionka";
+$pgv_lang["use_colors"]			= "Użyj kolorów";
 $pgv_lang["record_not_found"]	= "Nie znaleziono szukanego wpisu GEDCOM. Błąd mógł nastąpić w przypadku, kiedy odnośnik prowadzi do nieistniejącej osoby, lub plik GEDCOM jest uszkodzony.";
 $pgv_lang["result_page"]		= "Wyniki";
 $pgv_lang["edit_media"]			= "Edytuj multimedia";
