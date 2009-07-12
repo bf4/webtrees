@@ -968,16 +968,24 @@ class stats {
 		return str_replace('<a href="', '<a href="'.$this->_server_url, $result);
 	}
 
-	function _statsPlaces($what='INDI', $fact=false, $parent=0, $country=false) {
+	function _statsPlaces($what='ALL', $fact=false, $parent=0, $country=false) {
 		global $TBLPREFIX;
 		if ($fact) {
-			$rows=
-				PGV_DB::prepare("SELECT i_gedcom FROM ${TBLPREFIX}individuals WHERE i_file=?")
-				->execute(array($this->_ged_id))
-				->fetchAll();
+			if ($what=='INDI') {
+				$rows=
+					PGV_DB::prepare("SELECT i_gedcom AS ged FROM ${TBLPREFIX}individuals WHERE i_file=?")
+					->execute(array($this->_ged_id))
+					->fetchAll();
+			}
+			else if ($what=='FAM') {
+				$rows=
+					PGV_DB::prepare("SELECT f_gedcom AS ged FROM ${TBLPREFIX}families WHERE f_file=?")
+					->execute(array($this->_ged_id))
+					->fetchAll();
+			}
 			$placelist = array();
 			foreach ($rows as $row) {
-				$factrec = trim(get_sub_record(1, "1 {$fact}", $row->i_gedcom, 1));
+				$factrec = trim(get_sub_record(1, "1 {$fact}", $row->ged, 1));
 				if (!empty($factrec) && preg_match("/2 PLAC (.+)/", $factrec, $match)) {
 					if ($country) {
 						$place = getPlaceCountry(trim($match[1]));
@@ -997,10 +1005,10 @@ class stats {
 		}
 		else if ($parent>0) {
 			if ($what=='INDI') {
-				$join = " JOIN {$TBLPREFIX}individuals ON pl_file = i_file AND pl_gid = i_id ";
+				$join = " JOIN {$TBLPREFIX}individuals ON pl_file = i_file AND pl_gid = i_id";
 			}
 			else if ($what=='FAM') {
-				$join = " JOIN {$TBLPREFIX}families ON pl_file = f_file AND pl_gid = f_id ";
+				$join = " JOIN {$TBLPREFIX}families ON pl_file = f_file AND pl_gid = f_id";
 			}
 			else {
 				$join = "";
@@ -1023,10 +1031,10 @@ class stats {
 		}
 		else {
 			if ($what=='INDI') {
-				$join = " JOIN {$TBLPREFIX}individuals ON pl_file = i_file AND pl_gid = i_id ";
+				$join = " JOIN {$TBLPREFIX}individuals ON pl_file = i_file AND pl_gid = i_id";
 			}
 			else if ($what=='FAM') {
-				$join = " JOIN {$TBLPREFIX}families ON pl_file = f_file AND pl_gid = f_id ";
+				$join = " JOIN {$TBLPREFIX}families ON pl_file = f_file AND pl_gid = f_id";
 			}
 			else {
 				$join = "";
@@ -1034,7 +1042,7 @@ class stats {
 			$rows=self::_runSQL(''
 					.' SELECT'
 						.' p_place AS country,'
-						.' COUNT(*)'
+						.' COUNT(*) AS tot'
 					.' FROM'
 						." {$TBLPREFIX}places"
 					." JOIN {$TBLPREFIX}placelinks ON pl_file=p_file AND p_id=pl_p_id"
@@ -1042,7 +1050,7 @@ class stats {
 					.' WHERE'
 						." p_file={$this->_ged_id}"
 						." AND p_parent_id='0'"
-					.' GROUP BY country'
+					.' GROUP BY country ORDER BY tot DESC, country ASC'
 					);
 			if (!isset($rows[0])) {return '';}
 			return $rows;
@@ -1173,7 +1181,7 @@ class stats {
 			  foreach ($countries as $place) {
 				$country=UTF8_strtolower(trim($place['country']));
 				if (array_key_exists($country, $country_to_iso3166)) {
-					$surn_countries[$country_to_iso3166[$country]]=$place['count(*)'];
+					$surn_countries[$country_to_iso3166[$country]]=$place['tot'];
 				}
 			}
 			break;
@@ -1188,7 +1196,7 @@ class stats {
 			  foreach ($countries as $place) {
 				$country=UTF8_strtolower(trim($place['country']));
 				if (array_key_exists($country, $country_to_iso3166)) {
-					$surn_countries[$country_to_iso3166[$country]]=$place['count(*)'];
+					$surn_countries[$country_to_iso3166[$country]]=$place['tot'];
 				}
 			}
 			break;
@@ -1210,6 +1218,77 @@ class stats {
 		$chart .= '<td bgcolor="#FFFFFF" width="12"></td><td>'.$pgv_lang["g_chart_nobody"].'&nbsp;&nbsp;</td>';
 		$chart .= '</tr></table></div></div>';
 		return $chart;
+	}
+
+	function commonCountriesList() {
+		global $TEXT_DIRECTION;
+		$countries = $this->_statsPlaces();
+		$top10 = array();
+		$i = 1;
+		foreach ($countries as $country) {
+			$place = '<a href="'.encode_url(get_place_url($country['country'])).'" class="list_item" title="'.$country['country'].'">'.PrintReady($country['country']).'</a>';
+			$top10[]="\t<li>".$place." ".PrintReady("[".$country['tot']."]")."</li>\n";
+			if ($i++==10) break;
+		}
+		$top10=join("\n", $top10);
+		if ($TEXT_DIRECTION=='rtl') {
+			$top10=str_replace(array("[", "]", "(", ")", "+"), array("&rlm;[", "&rlm;]", "&rlm;(", "&rlm;)", "&rlm;+"), $top10);
+		}
+		return "<ul>\n{$top10}</ul>\n";
+	}
+
+	function commonBirthPlacesList() {
+		global $TEXT_DIRECTION;
+		$places = $this->_statsPlaces('INDI', 'BIRT');
+		$top10 = array();
+		$i = 1;
+		arsort($places);
+		foreach ($places as $place=>$count) {
+			$place = '<a href="'.encode_url(get_place_url($place)).'" class="list_item" title="'.$place.'">'.PrintReady($place).'</a>';
+			$top10[]="\t<li>".$place." ".PrintReady("[".$count."]")."</li>\n";
+			if ($i++==10) break;
+		}
+		$top10=join("\n", $top10);
+		if ($TEXT_DIRECTION=='rtl') {
+			$top10=str_replace(array("[", "]", "(", ")", "+"), array("&rlm;[", "&rlm;]", "&rlm;(", "&rlm;)", "&rlm;+"), $top10);
+		}
+		return "<ul>\n{$top10}</ul>\n";
+	}
+
+	function commonDeathPlacesList() {
+		global $TEXT_DIRECTION;
+		$places = $this->_statsPlaces('INDI', 'DEAT');
+		$top10 = array();
+		$i = 1;
+		arsort($places);
+		foreach ($places as $place=>$count) {
+			$place = '<a href="'.encode_url(get_place_url($place)).'" class="list_item" title="'.$place.'">'.PrintReady($place).'</a>';
+			$top10[]="\t<li>".$place." ".PrintReady("[".$count."]")."</li>\n";
+			if ($i++==10) break;
+		}
+		$top10=join("\n", $top10);
+		if ($TEXT_DIRECTION=='rtl') {
+			$top10=str_replace(array("[", "]", "(", ")", "+"), array("&rlm;[", "&rlm;]", "&rlm;(", "&rlm;)", "&rlm;+"), $top10);
+		}
+		return "<ul>\n{$top10}</ul>\n";
+	}
+
+	function commonMarriagePlacesList() {
+		global $TEXT_DIRECTION;
+		$places = $this->_statsPlaces('FAM', 'MARR');
+		$top10 = array();
+		$i = 1;
+		arsort($places);
+		foreach ($places as $place=>$count) {
+			$place = '<a href="'.encode_url(get_place_url($place)).'" class="list_item" title="'.$place.'">'.PrintReady($place).'</a>';
+			$top10[]="\t<li>".$place." ".PrintReady("[".$count."]")."</li>\n";
+			if ($i++==10) break;
+		}
+		$top10=join("\n", $top10);
+		if ($TEXT_DIRECTION=='rtl') {
+			$top10=str_replace(array("[", "]", "(", ")", "+"), array("&rlm;[", "&rlm;]", "&rlm;(", "&rlm;)", "&rlm;+"), $top10);
+		}
+		return "<ul>\n{$top10}</ul>\n";
 	}
 
 	function statsBirth($simple=true, $sex=false, $year1=-1, $year2=-1, $params=null) {
@@ -1401,8 +1480,7 @@ class stats {
 		if (!isset($rows[0])) {return '';}
 		$row = $rows[0];
 		$person=Person::getInstance($row['id']);
-		switch($type)
-		{
+		switch($type) {
 			default:
 			case 'full':
 				if (displayDetailsById($row['id'])) {
@@ -1478,7 +1556,6 @@ class stats {
 				else $years .= " ".$pgv_lang["years"];
 			}
 			if ($type == 'list') {
-				
 				$top10[]="\t<li><a href=\"".$person->getLinkUrl()."\">".PrintReady($person->getFullName())."</a> ".PrintReady("[".$years."]")."</li>\n";
 			} else {
 				$top10[]="<a href=\"".$person->getLinkUrl()."\">".PrintReady($person->getFullName())."</a> ".PrintReady("[".$years."]");
@@ -1492,11 +1569,73 @@ class stats {
 		if ($TEXT_DIRECTION=='rtl') {
 			$top10=str_replace(array("[", "]", "(", ")", "+"), array("&rlm;[", "&rlm;]", "&rlm;(", "&rlm;)", "&rlm;+"), $top10);
 		}
-		if ($type == 'list')
-		{
+		if ($type == 'list') {
 			return "<ul>\n{$top10}</ul>\n";
 		}
 		// Statstics are used by RSS feeds, etc., so need absolute URLs.
+		return $top10;
+	}
+
+	function _topTenOldestAlive($type='list', $sex='BOTH', $params=null) {
+		global $TBLPREFIX, $TEXT_DIRECTION, $pgv_lang, $lang_short_cut, $LANGUAGE;
+
+		if ($sex == 'F') {
+			$sex_search = " AND i_sex='F'";
+		} elseif ($sex == 'M') {
+			$sex_search = " AND i_sex='M'";
+		} else {
+			$sex_search = '';
+		}
+		if ($params !== null && isset($params[0])) {$total = $params[0];}else{$total = 10;}
+		$rows=self::_runSQL(''
+			.' SELECT'
+				.' birth.d_gid AS id,'
+				.' birth.d_julianday1 AS age'
+			.' FROM'
+				." {$TBLPREFIX}dates AS birth,"
+				." {$TBLPREFIX}individuals AS indi"
+			.' WHERE'
+				.' indi.i_id=birth.d_gid AND'
+				.' indi.i_isdead=0 AND'
+				." birth.d_file={$this->_ged_id} AND"
+				.' birth.d_file=indi.i_file AND'
+				." birth.d_fact IN ('BIRT', 'CHR', 'BAPM', '_BRTM') AND"
+				.' birth.d_julianday1!=0'
+				.$sex_search
+			.' GROUP BY'
+				.' id'
+			.' ORDER BY'
+				.' age ASC'
+		, $total);
+		if (!isset($rows)) {return 0;}
+		$top10=array();
+		$func="age2_localisation_{$lang_short_cut[$LANGUAGE]}";
+		for($c = 0; $c < $total; $c++) {
+			$person=Person::getInstance($rows[$c]['id']);
+			$years = floor((client_jd()-$rows[$c]['age'])/365.25);
+			if (function_exists($func)) {
+				$years = $func($years);
+			} else {
+				if ($years==1) $years .= " ".$pgv_lang["year"];
+				else $years .= " ".$pgv_lang["years"];
+			}
+			if ($type == 'list') {
+				$top10[]="\t<li><a href=\"".$person->getLinkUrl()."\">".PrintReady($person->getFullName())."</a> ".PrintReady("[".$years."]")."</li>\n";
+			} else {
+				$top10[]="<a href=\"".$person->getLinkUrl()."\">".PrintReady($person->getFullName())."</a> ".PrintReady("[".$years."]");
+			}
+		}
+		if ($type == 'list') {
+			$top10=join("\n", $top10);
+		} else {
+			$top10=join(';&nbsp; ', $top10);
+		}
+		if ($TEXT_DIRECTION=='rtl') {
+			$top10=str_replace(array("[", "]", "(", ")", "+"), array("&rlm;[", "&rlm;]", "&rlm;(", "&rlm;)", "&rlm;+"), $top10);
+		}
+		if ($type == 'list') {
+			return "<ul>\n{$top10}</ul>\n";
+		}
 		return $top10;
 	}
 
@@ -1657,6 +1796,8 @@ class stats {
 
 	function topTenOldest($params=null) {return $this->_topTenOldest('nolist', 'BOTH', $params);}
 	function topTenOldestList($params=null) {return $this->_topTenOldest('list', 'BOTH', $params);}
+	function topTenOldestAlive($params=null) {return $this->_topTenOldestAlive('nolist', 'BOTH', $params);}
+	function topTenOldestListAlive($params=null) {return $this->_topTenOldestAlive('list', 'BOTH', $params);}
 
 	function averageLifespan() {return $this->_averageLifespanQuery('BOTH');}
 
@@ -1668,6 +1809,8 @@ class stats {
 
 	function topTenOldestFemale($params=null) {return $this->_topTenOldest('nolist', 'F', $params);}
 	function topTenOldestFemaleList($params=null) {return $this->_topTenOldest('list', 'F', $params);}
+	function topTenOldestFemaleAlive($params=null) {return $this->_topTenOldestAlive('nolist', 'F', $params);}
+	function topTenOldestFemaleListAlive($params=null) {return $this->_topTenOldestAlive('list', 'F', $params);}
 
 	function averageLifespanFemale() {return $this->_averageLifespanQuery('F');}
 
@@ -1679,6 +1822,8 @@ class stats {
 
 	function topTenOldestMale($params=null) {return $this->_topTenOldest('nolist', 'M', $params);}
 	function topTenOldestMaleList($params=null) {return $this->_topTenOldest('list', 'M', $params);}
+	function topTenOldestMaleAlive($params=null) {return $this->_topTenOldestAlive('nolist', 'M', $params);}
+	function topTenOldestMaleListAlive($params=null) {return $this->_topTenOldestAlive('list', 'M', $params);}
 
 	function averageLifespanMale() {return $this->_averageLifespanQuery('M');}
 
