@@ -1190,6 +1190,7 @@ case 'update':
 //	foreach ($cens_pids as $pid) {
 
 		$gedrec = find_gedcom_record($pid);
+		if (empty($gedrec)) $gedrec = find_updated_record($pid);
 		if (PGV_DEBUG) {
 			phpinfo(INFO_VARIABLES);
 			echo "<pre>$gedrec</pre>";
