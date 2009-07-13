@@ -10,6 +10,7 @@
 
 
 Version 4.2.2
+ - Fixed: [ 2815875 ] Theme-related problems in Opera (volschin)
  - Added: [ 2798575 ] clustrmaps support similar to googlemaps. Enable
    by adding define('PGV_CLUSTRMAPS', 'your website address'); to your
    config.php (sridharb)
