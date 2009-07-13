@@ -635,7 +635,7 @@ a:hover .nameZoom {
 }
 
 .submenuitem a, .submenuitem_rtl a, .submenuitem_hover a, .submenuitem_hover_rtl a {
-	display: inline-table;
+	display: inline-block;
 	vertical-align: middle;
 }
 
