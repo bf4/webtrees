@@ -34,6 +34,9 @@ session_write_close();
 //-- try to increase the time limit because reports can take a long time
 @set_time_limit($TIME_LIMIT*2);
 
+$famid=safe_GET('famid');
+$pid  =safe_GET('pid');
+
 /**
  * function to get the values for the given tag
  */
