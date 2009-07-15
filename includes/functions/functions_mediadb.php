@@ -1153,10 +1153,11 @@ function show_media_form($pid, $action = "newentry", $filename = "", $linktoid =
 	print "<input type=\"hidden\" name=\"level\" value=\"$level\" />\n";
 	print "<table class=\"facts_table center $TEXT_DIRECTION\">\n";
 	print "<tr><td class=\"topbottombar\" colspan=\"2\">";
-	if ($action == "newentry")
-		print $pgv_lang["add_media"];
-	else
-		print $pgv_lang["edit_media"];
+	if ($action == "newentry") {
+		echo $pgv_lang["add_media"];
+	} else {
+		echo print_text('edit_media',0 , 1);
+	}
 	print "</td></tr>";
 	print "<tr><td colspan=\"2\" class=\"descriptionbox\"><input type=\"submit\" value=\"" . $pgv_lang["save"] . "\" /></td></tr>";
 	if ($linktoid == "new" || ($linktoid == "" && $action != "update")) {
