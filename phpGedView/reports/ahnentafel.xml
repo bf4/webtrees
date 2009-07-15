@@ -99,7 +99,7 @@
 								</PGVRRepeatTag>
 							</PGVRif>
 							<PGVRif condition="@DATE!=''">
-								<PGVRText style="text"> <PGVRGedcomValue tag="DATE" level="2" /></PGVRText>
+								<PGVRText style="text"> <PGVRvar var="pgv_lang[ahnentafel_on]" /> <PGVRGedcomValue tag="DATE" level="2" /></PGVRText>
 							</PGVRif>
 							<PGVRif condition="@PLAC!=''">
 								<PGVRText style="text"><PGVRvar var="pgv_lang[ahnentafel_place]" /> <PGVRGedcomValue tag="PLAC" level="2" /></PGVRText>
@@ -131,7 +131,7 @@
 								</PGVRRepeatTag>
 							</PGVRif>
 							<PGVRif condition="@DATE!=''">
-								<PGVRText style="text"> <PGVRGedcomValue tag="DATE" level="2" /></PGVRText>
+								<PGVRText style="text"> <PGVRvar var="pgv_lang[ahnentafel_on]" /> <PGVRGedcomValue tag="DATE" level="2" /></PGVRText>
 							</PGVRif>
 							<PGVRif condition="@PLAC!=''">
 								<PGVRText style="text"><PGVRvar var="pgv_lang[ahnentafel_place]" /> <PGVRGedcomValue tag="PLAC" level="2" /></PGVRText>
@@ -175,8 +175,9 @@
 										<PGVRif condition="$spid!=''">
 											<PGVRText style="text"> <PGVRGetPersonName id="$spid" /></PGVRText>
 										</PGVRif>
+										<PGVRText style="text"> <PGVRvar var="pgv_lang[ahnentafel_married_post]" /></PGVRText>								
 										<PGVRif condition="@DATE!=''">
-											<PGVRText style="text"> <PGVRGedcomValue tag="DATE" level="2" /><PGVRif condition="@PLAC==''"> </PGVRif></PGVRText>
+											<PGVRText style="text"> <PGVRvar var="pgv_lang[ahnentafel_on]" /> <PGVRGedcomValue tag="DATE" level="2" /><PGVRif condition="@PLAC==''"> </PGVRif></PGVRText>
 										</PGVRif>
 										<PGVRif condition="@PLAC!=''">
 											<PGVRText style="text"><PGVRvar var="pgv_lang[ahnentafel_place]" /> <PGVRGedcomValue tag="PLAC" level="2" /></PGVRText>
@@ -211,7 +212,7 @@
 								</PGVRRepeatTag>
 							</PGVRif>
 							<PGVRif condition="@DATE!=''">
-								<PGVRText style="text"> <PGVRGedcomValue tag="DATE" level="2" /></PGVRText>
+								<PGVRText style="text"> <PGVRvar var="pgv_lang[ahnentafel_on]" /> <PGVRGedcomValue tag="DATE" level="2" /></PGVRText>
 							</PGVRif>
 							<PGVRif condition="@PLAC!=''">
 								<PGVRText style="text"><PGVRvar var="pgv_lang[ahnentafel_place]" /> <PGVRGedcomValue tag="PLAC" level="2" /></PGVRText>
@@ -243,7 +244,7 @@
 								</PGVRRepeatTag>
 							</PGVRif>
 							<PGVRif condition="@DATE!=''">
-								<PGVRText style="text"> <PGVRGedcomValue tag="DATE" level="2" /></PGVRText>
+								<PGVRText style="text"> <PGVRvar var="pgv_lang[ahnentafel_on]" /> <PGVRGedcomValue tag="DATE" level="2" /></PGVRText>
 							</PGVRif>
 							<PGVRif condition="@PLAC!=''">
 								<PGVRText style="text"><PGVRvar var="pgv_lang[ahnentafel_place]" /> <PGVRGedcomValue tag="PLAC" level="2" /></PGVRText>

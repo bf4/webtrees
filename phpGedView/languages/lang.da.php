@@ -1292,12 +1292,21 @@ $pgv_lang["ahnentafel_christened_m"] = "blev døbt";
 $pgv_lang["ahnentafel_christened_f"] = "blev døbt";
 $pgv_lang["ahnentafel_married_m"]	= "blev gift med";
 $pgv_lang["ahnentafel_married_f"]	= "blev gift med";
+$pgv_lang["ahnentafel_married_post"]= "&nbsp;";
 $pgv_lang["ahnentafel_died_m"]		= "døde";
 $pgv_lang["ahnentafel_died_f"]		= "døde";
 $pgv_lang["ahnentafel_buried_m"]	= "blev begravet";
 $pgv_lang["ahnentafel_buried_f"]	= "blev begravet";
 $pgv_lang["ahnentafel_place"]		= " i ";
 $pgv_lang["ahnentafel_no_details"]	= " men detaljerne er ukendte";
+$pgv_lang["ahnentafel_on"]			= " den ";
+
+//-- Descendency report
+$pgv_lang["son_of"]					= "søn af";
+$pgv_lang["daughter_of"]			= "datter af";
+$pgv_lang["child_of"]				= "Barn af ";
+$pgv_lang["children_of"]			= "Børn af ";
+
 $pgv_lang["descendancy_header"]		= "Efterkommerudskrift for";
 $pgv_lang["descend_report"]		= "Efterkommerudskrift";
 $pgv_lang["family_group_report"]	= "Familiegruppeudskrift";
