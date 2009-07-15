@@ -377,10 +377,10 @@ $pgv_lang["text"]			= "Teksti:";
 $pgv_lang["note"]			= "Lisätieto";
 $pgv_lang["NN"]			= "(Tuntematon)";
 $pgv_lang["PN"]			= "(Tuntematon)";
-$pgv_lang["NNhebrew"] 		= "(לא ידוע)";
-$pgv_lang["PNhebrew"] 		= "(לא ידוע)";
-$pgv_lang["NNarabic"] 		= "(غير معروف)";
-$pgv_lang["PNarabic"] 		= "(غير معروف)";
+$pgv_lang["NNhebrew"] 		= "(לא-ידוע)";
+$pgv_lang["PNhebrew"] 		= "(לא-ידוע)";
+$pgv_lang["NNarabic"] 		= "(غير-معروف)";
+$pgv_lang["PNarabic"] 		= "(غير-معروف)";
 $pgv_lang["NNgreek"] 			= "(άγνωστος/η)";
 $pgv_lang["PNgreek"] 			= "(άγνωστος/η)";
 $pgv_lang["NNrussian"] 		= "(неопределено)";
@@ -1323,14 +1323,22 @@ $pgv_lang["ahnentafel_born_m"]	= "syntyi";
 $pgv_lang["ahnentafel_born_f"]	= "syntyi";
 $pgv_lang["ahnentafel_christened_m"]= "kastettiin";
 $pgv_lang["ahnentafel_christened_f"] = "kastettiin";
-$pgv_lang["ahnentafel_married_m"]	= "avioitui";
-$pgv_lang["ahnentafel_married_f"]	= "avioitui";
+$pgv_lang["ahnentafel_married_m"]	= "ja";
+$pgv_lang["ahnentafel_married_f"]	= "ja";
+$pgv_lang["ahnentafel_married_post"]	= "avioituivat";
 $pgv_lang["ahnentafel_died_m"]	= "kuoli";
 $pgv_lang["ahnentafel_died_f"]	= "kuoli";
 $pgv_lang["ahnentafel_buried_m"]	= "haudattiin";
 $pgv_lang["ahnentafel_buried_f"]	= "haudattiin";
-$pgv_lang["ahnentafel_place"]	= "&nbsp;";
+$pgv_lang["ahnentafel_place"]	= " paikassa ";
 $pgv_lang["ahnentafel_no_details"]	= "mutta yksityiskohdat puuttuvat";
+$pgv_lang["ahnentafel_on"]			= "&nbsp;";
+
+//-- Descendency report
+$pgv_lang["son_of"]					= " jonka vanhemmat olivat";
+$pgv_lang["daughter_of"]			= " jonka vanhemmat olivat";
+$pgv_lang["child_of"]				= "Lapsi perheessä ";
+$pgv_lang["children_of"]			= "Lapset perheessä ";
 
 //-- Changes report
 $pgv_lang["changes_report"]		= "Muutosraportti";

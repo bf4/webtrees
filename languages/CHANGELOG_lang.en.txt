@@ -43,6 +43,12 @@ VERSION 4.2.2
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change	codes and comments
 ----------------------------------------------------------------------------------------
++$pgv_lang["ahnentafel_married_post"]				15 Jul 2009				A
++$pgv_lang["ahnentafel_on"]							15 Jul 2009				A
++$pgv_lang["son_of"]								15 Jul 2009				A
++$pgv_lang["daughter_of"]							15 Jul 2009				A
++$pgv_lang["child_of"]								15 Jul 2009				A
++$pgv_lang["children_of"]							15 Jul 2009				A
 +$pgv_lang["use_colors"]							12 Jul 2009				A
 +$pgv_lang["stat_22_fwok"]							10 Jul 2009				A
 +$pgv_lang["no_date_fam"]							10 Jul 2009				A

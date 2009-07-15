@@ -42,7 +42,7 @@
 					</PGVRTextBox>
 
 					<PGVRTextBox border="" height="40" newline="1">
-						<PGVRText style="name"><PGVRGetPersonName id="" truncate="50" /></PGVRText>
+						<PGVRText style="name"><PGVRGetPersonName id="" /></PGVRText>
 						<PGVRSetVar name="printPeriod" value="false" />
 						<PGVRif condition="@SEX=='M'">
 							<PGVRSetVar name="gender" value="male" />
@@ -72,7 +72,7 @@
 								</PGVRRepeatTag>
 							</PGVRif>
 							<PGVRif condition="@DATE!=''">
-								<PGVRText style="label1"> <PGVRvar var="pgv_lang[on]" /> <PGVRGedcomValue tag="DATE" level="2" /></PGVRText>
+								<PGVRText style="label1"> <PGVRvar var="pgv_lang[ahnentafel_on]" /> <PGVRGedcomValue tag="DATE" level="2" /></PGVRText>
 							</PGVRif>
 							<PGVRif condition="@PLAC!=''">
 								<PGVRText style="label1"> <PGVRvar var="pgv_lang[ahnentafel_place]" /> <PGVRGedcomValue tag="PLAC" level="2" /></PGVRText>
@@ -101,7 +101,7 @@
 								</PGVRRepeatTag>
 							</PGVRif>
 							<PGVRif condition="@DATE!=''">
-								<PGVRText style="label1"> <PGVRvar var="pgv_lang[on]" /> <PGVRGedcomValue tag="DATE" level="2" /></PGVRText>
+								<PGVRText style="label1"> <PGVRvar var="pgv_lang[ahnentafel_on]" /> <PGVRGedcomValue tag="DATE" level="2" /></PGVRText>
 							</PGVRif>
 							<PGVRif condition="@PLAC!=''">
 								<PGVRText style="label1"> <PGVRvar var="pgv_lang[ahnentafel_place]" /> <PGVRGedcomValue tag="PLAC" level="2" /></PGVRText>
@@ -139,7 +139,7 @@
 										<PGVRGedcom id="@WIFE">
 											<PGVRText style="name"> <PGVRGetPersonName id="" /></PGVRText>
 											<PGVRGedcom id="@FAMC">
-												<PGVRText style="label1"> <PGVRvar var="pgv_lang[daughter]" /> <PGVRvar var="pgv_lang[of]" /></PGVRText>
+												<PGVRText style="label1"> <PGVRvar var="pgv_lang[daughter_of]" /></PGVRText>
 												<PGVRText style="name"> <PGVRGetPersonName id="@HUSB" /></PGVRText>
 												<PGVRGedcom id="@HUSB">
 													<PGVRGedcom id="@FAMS:@WIFE">
@@ -175,7 +175,7 @@
 										<PGVRGedcom id="@HUSB">
 											<PGVRText style="name"> <PGVRGetPersonName id="" /></PGVRText>
 											<PGVRGedcom id="@FAMC">
-												<PGVRText style="label1"> <PGVRvar var="pgv_lang[son]" /> <PGVRvar var="pgv_lang[of]" /></PGVRText>
+												<PGVRText style="label1"> <PGVRvar var="pgv_lang[son_of]" /></PGVRText>
 												<PGVRText style="name"> <PGVRGetPersonName id="@HUSB" /></PGVRText>
 												<PGVRGedcom id="@HUSB">
 													<PGVRGedcom id="@FAMS:@WIFE">
@@ -188,9 +188,10 @@
 									</PGVRif>
 								</PGVRif>
 								<PGVRGedcom id="MARR">
+									<PGVRText style="label1"> <PGVRvar var="pgv_lang[ahnentafel_married_post]" /></PGVRText>
 									<PGVRif condition="@DATE!=''">
 										<PGVRSetVar name="printPeriod" value="true" />
-										<PGVRText style="label1"> <PGVRvar var="pgv_lang[on]" /> <PGVRGedcomValue tag="DATE" level="2"/></PGVRText>
+										<PGVRText style="label1"> <PGVRvar var="pgv_lang[ahnentafel_on]" /> <PGVRGedcomValue tag="DATE" level="2"/></PGVRText>
 									</PGVRif>
 									<PGVRif condition="@PLAC!=''">
 										<PGVRSetVar name="printPeriod" value="true" />
@@ -226,7 +227,7 @@
 													</PGVRRepeatTag>
 												</PGVRif>
 												<PGVRif condition="@DATE!=''">
-													<PGVRText style="label1"> <PGVRvar var="pgv_lang[on]" /> <PGVRGedcomValue tag="DATE" level="2" /></PGVRText>
+													<PGVRText style="label1"> <PGVRvar var="pgv_lang[ahnentafel_on]" /> <PGVRGedcomValue tag="DATE" level="2" /></PGVRText>
 												</PGVRif>
 												<PGVRif condition="@PLAC!=''">
 													<PGVRText style="label1"> <PGVRvar var="pgv_lang[ahnentafel_place]" /> <PGVRGedcomValue tag="PLAC" level="2" /></PGVRText>
@@ -254,7 +255,7 @@
 													</PGVRRepeatTag>
 												</PGVRif>
 												<PGVRif condition="@DATE!=''">
-													<PGVRText style="label1"> <PGVRvar var="pgv_lang[on]" /> <PGVRGedcomValue tag="DATE" level="2" /></PGVRText>
+													<PGVRText style="label1"> <PGVRvar var="pgv_lang[ahnentafel_on]" /> <PGVRGedcomValue tag="DATE" level="2" /></PGVRText>
 												</PGVRif>
 												<PGVRif condition="@PLAC!=''">
 													<PGVRText style="label1"> <PGVRvar var="pgv_lang[ahnentafel_place]" /> <PGVRGedcomValue tag="PLAC" level="2" /></PGVRText>
@@ -290,7 +291,7 @@
 													</PGVRRepeatTag>
 												</PGVRif>
 												<PGVRif condition="@DATE!=''">
-													<PGVRText style="label1"> <PGVRvar var="pgv_lang[on]" /> <PGVRGedcomValue tag="DATE" level="2" /></PGVRText>
+													<PGVRText style="label1"> <PGVRvar var="pgv_lang[ahnentafel_on]" /> <PGVRGedcomValue tag="DATE" level="2" /></PGVRText>
 												</PGVRif>
 												<PGVRif condition="@PLAC!=''">
 													<PGVRText style="label1"> <PGVRvar var="pgv_lang[ahnentafel_place]" /> <PGVRGedcomValue tag="PLAC" level="2" /></PGVRText>
@@ -318,7 +319,7 @@
 													</PGVRRepeatTag>
 												</PGVRif>
 												<PGVRif condition="@DATE!=''">
-													<PGVRText style="label1"> <PGVRvar var="pgv_lang[on]" /> <PGVRGedcomValue tag="DATE" level="2" /></PGVRText>
+													<PGVRText style="label1"> <PGVRvar var="pgv_lang[ahnentafel_on]" /> <PGVRGedcomValue tag="DATE" level="2" /></PGVRText>
 												</PGVRif>
 												<PGVRif condition="@PLAC!=''">
 													<PGVRText style="label1"> <PGVRvar var="pgv_lang[ahnentafel_place]" /> <PGVRGedcomValue tag="PLAC" level="2" /></PGVRText>
@@ -345,12 +346,11 @@
 
 								<PGVRTextBox height="20" left="25" newline="1">
 									<PGVRif condition="$numberOfChildren==1">
-										<PGVRText style="label1"><PGVRvar var="pgv_lang[child]" /></PGVRText>
+										<PGVRText style="label1"><PGVRvar var="pgv_lang[child_of]" /></PGVRText>
 									</PGVRif>
 									<PGVRif condition="$numberOfChildren>1">
-										<PGVRText style="label1"><PGVRvar var="pgv_lang[children]" /></PGVRText>
+										<PGVRText style="label1"><PGVRvar var="pgv_lang[children_of]" /></PGVRText>
 									</PGVRif>
-									<PGVRText style="label1"> <PGVRvar var="pgv_lang[of]" /> </PGVRText>
 									<PGVRText style="name"><PGVRGetPersonName id="@HUSB" /></PGVRText>
 									<PGVRText style="label1"> <PGVRvar var="pgv_lang[and]" /> </PGVRText>
 									<PGVRText style="name"><PGVRGetPersonName id="@WIFE" /></PGVRText>
