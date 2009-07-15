@@ -2446,7 +2446,7 @@ function is_media_used_in_other_gedcom($file_name, $ged_id) {
 ////////////////////////////////////////////////////////////////////////////////
 // Functions to access the PGV_SITE_SETTING table
 ////////////////////////////////////////////////////////////////////////////////
-function get_site_setting($site_setting_name) {
+function get_site_setting($site_setting_name, $default=null) {
 	global $TBLPREFIX;
 	static $statement=null;
 
@@ -2454,12 +2454,12 @@ function get_site_setting($site_setting_name) {
 		$statement=PGV_DB::prepare("SELECT site_setting_value FROM {$TBLPREFIX}site_setting WHERE site_setting_name=?");
 	}
 
-	return $statement->execute(array($site_setting_name))->fetchOne();
+	return $statement->execute(array($site_setting_name))->fetchOne($default);
 }
 function set_site_setting($site_setting_name, $site_setting_value) {
 	global $TBLPREFIX;
 	// We can't cache/reuse prepared statements here, as we need to call this
-	// function after performing DDL statements, and these invalidate and
+	// function after performing DDL statements, and these invalidate any
 	// existing prepared statement handles in some databases.
 
 	$old_site_setting_value=
@@ -2476,6 +2476,11 @@ function set_site_setting($site_setting_name, $site_setting_value) {
 		PGV_DB::prepare("UPDATE {$TBLPREFIX}site_setting SET site_setting_value=? WHERE site_setting_name=?")
 		->execute(array($site_setting_value, $site_setting_name));	
 	}
+}
+function delete_site_setting($site_setting_name) {
+	global $TBLPREFIX;
+	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}site_setting WHERE site_setting_name=?")
+		->execute(array($site_setting_name));
 }
 
 ////////////////////////////////////////////////////////////////////////////////
