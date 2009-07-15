@@ -1956,7 +1956,7 @@ function format_fact_date(&$eventObj, $anchor=false, $time=false) {
 	$html='';
 	// Recorded age
 	$fact_age=get_gedcom_value('AGE', 2, $factrec);
-	if (empty($fact_age))
+	if ($fact_age=='')
 		$fact_age=get_gedcom_value('DATE:AGE', 2, $factrec);
 	$husb_age=get_gedcom_value('HUSB:AGE', 2, $factrec);
 	$wife_age=get_gedcom_value('WIFE:AGE', 2, $factrec);
@@ -1968,7 +1968,7 @@ function format_fact_date(&$eventObj, $anchor=false, $time=false) {
 		// time
 		if ($time) {
 			$timerec=get_sub_record(2, '2 TIME', $factrec);
-			if (empty($timerec)) {
+			if ($timerec=='') {
 				$timerec=get_sub_record(2, '2 DATE', $factrec);
 			}
 			if (preg_match('/[2-3] TIME (.*)/', $timerec, $tmatch)) {
@@ -1991,12 +1991,12 @@ function format_fact_date(&$eventObj, $anchor=false, $time=false) {
 					// Before death, print age
 					$age=GedcomDate::GetAgeGedcom($birth_date, $date);
 					// Only show calculated age if it differs from recorded age
-					if (!empty($age)) {
+					if ($age!='') {
 						if (
-							!empty($fact_age) && $fact_age!=$age ||
-							empty($fact_age) && empty($husb_age) && empty($wife_age) ||
-							!empty($husb_age) && $person->getSex()=='M' && $husb_age!=$age ||
-							!empty($wife_age) && $person->getSex()=='F' && $wife_age!=$age
+							$fact_age!='' && $fact_age!=$age ||
+							$fact_age=='' && $husb_age=='' && $wife_age=='' ||
+							$husb_age!='' && $person->getSex()=='M' && $husb_age!=$age ||
+							$wife_age!='' && $person->getSex()=='F' && $wife_age!=$age
 						) {
 							if ($age!="0d") {
 								$ageText = '('.$pgv_lang['age'].' '.get_age_at_event($age, false).')';
@@ -2007,11 +2007,11 @@ function format_fact_date(&$eventObj, $anchor=false, $time=false) {
 				if ($fact!='DEAT' && GedcomDate::Compare($date, $death_date)>=0) {
 					// After death, print time since death
 					$age=get_age_at_event(GedcomDate::GetAgeGedcom($death_date, $date), true);
-					if (!empty($age))
+					if ($age!='')
 						if (GedcomDate::GetAgeGedcom($death_date, $date)=="0d") $ageText = '('.$pgv_lang['at_death_day'].')';
 						else $ageText = '('.$age.' '.$pgv_lang['after_death'].')';
 				}
-				if (!empty($ageText)) $html .= '<span class="age"> '.PrintReady($ageText).'</span>';
+				if ($ageText!='') $html .= '<span class="age"> '.PrintReady($ageText).'</span>';
 			}
 		}
 		else if (!is_null($person) && $person->getType()=='FAM') {
@@ -2023,18 +2023,18 @@ function format_fact_date(&$eventObj, $anchor=false, $time=false) {
 			if (GedcomDate::Compare($date, $death_date)<=0) {
 				$age=GedcomDate::GetAgeGedcom($birth_date, $date);
 				// Only show calculated age if it differs from recorded age
-				if (!empty($age) && $age>0) {
+				if ($age!='' && $age>0) {
 					if (
-						!empty($fact_age) && $fact_age!=$age ||
-						empty($fact_age) && empty($husb_age) && empty($wife_age) ||
-						!empty($husb_age) && $indi->getSex()=='M' && $husb_age!= $age ||
-						!empty($wife_age) && $indi->getSex()=='F' && $wife_age!=$age
+						$fact_age!='' && $fact_age!=$age ||
+						$fact_age=='' && $husb_age=='' && $wife_age=='' ||
+						$husb_age!='' && $indi->getSex()=='M' && $husb_age!= $age ||
+						$wife_age!='' && $indi->getSex()=='F' && $wife_age!=$age
 					) {
 						$ageText = '('.$pgv_lang['age'].' '.get_age_at_event($age, false).')';
 					}
 				}
 			}
-			if (!empty($ageText)) $html .= '<span class="age"> '.PrintReady($ageText).'</span>';
+			if ($ageText!='') $html .= '<span class="age"> '.PrintReady($ageText).'</span>';
 		}
 	} else {
 		// 1 DEAT Y with no DATE => print YES
@@ -2049,7 +2049,7 @@ function format_fact_date(&$eventObj, $anchor=false, $time=false) {
 	}
 	// print gedcom ages
 	foreach (array($factarray['AGE']=>$fact_age, $pgv_lang['husband']=>$husb_age, $pgv_lang['wife']=>$wife_age) as $label=>$age) {
-		if (!empty($age)) {
+		if ($age!='') {
 			$html.=' <span class="label">'.$label.'</span>: <span class="age">'.PrintReady(get_age_at_event($age, false)).'</span>';
 		}
 	}
