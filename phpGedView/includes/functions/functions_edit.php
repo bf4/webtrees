@@ -2149,7 +2149,7 @@ function handle_updates($newged, $levelOverride="no") {
 			$k=$j+1;
 			$pass=false;
 			while(($k<count($glevels))&&($glevels[$k]>$glevels[$j])) {
-				if (!empty($text[$k])) {
+				if ($text[$k]!='') {
 					if (($tag[$j]!="OBJE")||($tag[$k]=="FILE")) {
 						$pass=true;
 						break;
@@ -2174,7 +2174,7 @@ function handle_updates($newged, $levelOverride="no") {
 		if ($pass==true) {
 			$newline = $glevels[$j]+$levelAdjust." ".$tag[$j];
 			//-- check and translate the incoming dates
-			if ($tag[$j]=="DATE" && !empty($text[$j])) {
+			if ($tag[$j]=="DATE" && $text[$j]!='') {
 				$text[$j] = check_input_date($text[$j]);
 			}
 			// echo $newline;
