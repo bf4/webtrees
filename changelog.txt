@@ -10,6 +10,7 @@
 
 
 Version 4.2.2
+ - Fixed: [ 2814930 ] New user with space in username is not editable
  - Fixed: [ 2820278 ] Changes vanish (wooc)
  - Fixed: [ 2820508 ] [SVN:5891] famid not propogating to report (fisharebest)
  - Fixed: [ 2815875 ] Theme-related problems in Opera (volschin)

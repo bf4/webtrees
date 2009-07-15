@@ -30,32 +30,29 @@ require './config.php';
 
 loadLangFile("pgv_confighelp");
 
-if (isset($_REQUEST['action'])) $action = $_REQUEST['action'];
-if (isset($_REQUEST['user_firstname'])) $user_firstname = $_REQUEST['user_firstname'];
-if (isset($_REQUEST['user_lastname'])) $user_lastname = $_REQUEST['user_lastname'];
-if (isset($_REQUEST['url'])) $url = $_REQUEST['url'];
-if (isset($_REQUEST['time'])) $time = $_REQUEST['time'];
-if (isset($_REQUEST['user_name'])) $user_name = $_REQUEST['user_name'];
-if (isset($_REQUEST['user_email'])) $user_email = $_REQUEST['user_email'];
-if (isset($_REQUEST['user_password01'])) $user_password01 = $_REQUEST['user_password01'];
-if (isset($_REQUEST['user_password02'])) $user_password02 = $_REQUEST['user_password02'];
-if (isset($_REQUEST['user_language'])) $user_language = $_REQUEST['user_language'];
-if (isset($_REQUEST['user_gedcomid'])) $user_gedcomid = $_REQUEST['user_gedcomid'];
-if (isset($_REQUEST['user_comments'])) $user_comments = $_REQUEST['user_comments'];
-if (isset($_REQUEST['user_password'])) $user_password = $_REQUEST['user_password'];
-if (isset($_REQUEST['user_hashcode'])) $user_hashcode = $_REQUEST['user_hashcode'];
-
-// Remove slashes
-if (isset($user_firstname)) $user_firstname = stripslashes($user_firstname);
-if (isset($user_lastname)) $user_lastname = stripslashes($user_lastname);
+$action=safe_GET('action');
+if (!$action) {
+	$action=safe_POST('action');
+}
+$user_firstname =safe_POST('user_firstname');
+$user_lastname  =safe_POST('user_lastname');
+$url            =safe_POST('url',             PGV_REGEX_URL, 'index.php');
+$time           =safe_POST('time');
+$user_name      =safe_POST('user_name',       PGV_REGEX_USERNAME);
+$user_email     =safe_POST('user_email',      PGV_REGEX_EMAIL);
+$user_password01=safe_POST('user_password01', PGV_REGEX_PASSWORD);
+$user_password02=safe_POST('user_password02', PGV_REGEX_PASSWORD);
+$user_language  =safe_POST('user_language');
+$user_gedcomid  =safe_POST('user_gedcomid');
+$user_comments  =safe_POST('user_comments');
+$user_password  =safe_POST('user_password');
+$user_hashcode  =safe_POST('user_hashcode');
 
 // Remove trailing slash from server URL
 if (substr($SERVER_URL, -1) == "/") $serverURL = substr($SERVER_URL,0, -1);
 else $serverURL = $SERVER_URL;
 
 $message="";
-if (!isset($action)) $action = "";
-if (!isset($url)) $url = "index.php";
 
 switch ($action) {
 	case "pwlost" :
@@ -95,8 +92,6 @@ switch ($action) {
 
 	case "requestpw" :
 		$QUERY_STRING = "";
-		$user_name="";
-		if (!empty($_POST['user_name'])) $user_name = $_POST['user_name'];
 		print_header($pgv_lang['lost_pw_reset']);
 		print "<div class=\"center\">";
 		if (!get_user_id($user_name)) {
@@ -163,63 +158,46 @@ switch ($action) {
 		exit;
 	}
 	$message = "";
-		if (isset($user_name)&& strlen($user_name)==0) {
+		if (!$user_name) {
 			$message .= $pgv_lang["enter_username"]."<br />";
 			$user_name_false = true;
 		}
-		else if (!isset($user_name)) $user_name_false = true;
 		else $user_name_false = false;
 
-		if (isset($user_password01)&& strlen($user_password01)==0) {
+		if (!$user_password01) {
 			$message .= $pgv_lang["enter_password"]."<br />";
 			$user_password01_false = true;
 		}
-		else if (!isset($user_password01)) $user_password01_false = true;
 		else $user_password01_false = false;
 
-		if (isset($user_password02)&& strlen($user_password02)==0) {
+		if (!$user_password02) {
 			$message .= $pgv_lang["confirm_password"]."<br />";
 			$user_password02_false = true;
 		}
-		else if (!isset($user_password02)) $user_password02_false = true;
 		else $user_password02_false = false;
 
-		if (isset($user_password02) && isset($user_password02)) {
-			if ($user_password01 != $user_password02) {
-				$message .= $pgv_lang["password_mismatch"]."<br />";
-				$password_mismatch = true;
-			}
-			else $password_mismatch = false;
+		if ($user_password01 != $user_password02) {
+			$message .= $pgv_lang["password_mismatch"]."<br />";
+			$password_mismatch = true;
 		}
+		else $password_mismatch = false;
 
-		if (isset($user_password01)&& strlen($user_password01)<6) {
-			$message .= $pgv_lang["passwordlength"]."<br />";
-			$user_password_length = true;
-		}
-		else if (!isset($user_password_length)) $user_password_length = false;
-		else $user_password_length = true;
-
-		if (isset($user_firstname)&& strlen($user_firstname)==0) $user_firstname_false = true;
-		else if (!isset($user_firstname)) $user_firstname_false = true;
+		if (!$user_firstname) $user_firstname_false = true;
 		else $user_firstname_false = false;
 
-		if (isset($user_lastname)&& strlen($user_lastname)==0) $user_lastname_false = true;
-		else if (!isset($user_lastname)) $user_lastname_false = true;
+		if (!$user_lastname) $user_lastname_false = true;
 		else $user_lastname_false = false;
 
-		if (isset($user_email)&& strlen($user_email)==0) $user_email_false = true;
-		else if (!isset($user_email)) $user_email_false = true;
+		if (!$user_email) $user_email_false = true;
 		else $user_email_false = false;
 
-		if (isset($user_language)&& strlen($user_language)==0) $user_language_false = true;
-		else if (!isset($user_language)) $user_language_false = true;
+		if (!$user_language) $user_language_false = true;
 		else $user_language_false = false;
 
-		if (isset($user_comments)&& strlen($user_comments)==0) $user_comments_false = true;
-		else if (!isset($user_comments)) $user_comments_false = true;
+		if (!$user_comments) $user_comments_false = true;
 		else $user_comments_false = false;
 
-		if ($user_name_false == false && $user_password01_false == false && $user_password02_false == false && $user_firstname_false == false && $user_lastname_false == false && $user_email_false == false && $user_language_false == false && $user_comments_false == false && $password_mismatch == false && $user_password_length == false) $action = "registernew";
+		if ($user_name_false == false && $user_password01_false == false && $user_password02_false == false && $user_firstname_false == false && $user_lastname_false == false && $user_email_false == false && $user_language_false == false && $user_comments_false == false && $password_mismatch == false) $action = "registernew";
 		else {
 			print_header($pgv_lang['requestaccount']);
 			// Empty user array in case any details might be left
@@ -514,8 +492,6 @@ switch ($action) {
 			header("Location: index.php");
 			exit;
 		}
-		if (!isset($user_name)) $user_name = "";
-		if (!isset($user_hashcode)) $user_hashcode = "";
 
 		// Change to the new user's language
 		$oldLanguage = $LANGUAGE;
