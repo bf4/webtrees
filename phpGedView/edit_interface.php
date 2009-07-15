@@ -373,7 +373,7 @@ case 'editraw':
 		echo "<input id=\"savebutton2\" type=\"submit\" value=\"".$pgv_lang["save"]."\" /><br />\n";
 		print_specialchar_link("newgedrec",true);
 		echo "<br />\n";
-		echo "<textarea name=\"newgedrec\" id=\"newgedrec\" rows=\"20\" cols=\"60\" dir=\"ltr\">".$gedrec."</textarea>\n<br />";
+		echo "<textarea name=\"newgedrec\" id=\"newgedrec\" rows=\"20\" cols=\"80\" dir=\"ltr\">".$gedrec."</textarea>\n<br />";
 		if (PGV_USER_IS_ADMIN) {
 			echo "<table class=\"facts_table\">\n";
 			echo "<tr><td class=\"descriptionbox ".$TEXT_DIRECTION." wrap width25\">";
@@ -393,7 +393,7 @@ case 'editraw':
 		echo "textbox = document.getElementById('newgedrec');";
 		echo "savebutton = document.getElementById('savebutton');";
 		echo "if (textbox && savebutton) {";
-		echo "x=textbox.offsetLeft+textbox.offsetWidth+40;y=savebutton.offsetTop+80;window.resizeTo(x,y);";
+		echo " window.resizeTo(textbox.offsetLeft+textbox.offsetWidth+100,savebutton.offsetTop+savebutton.offsetHeight+150);";
 		echo "}";
 		echo PGV_JS_END;
 	}
