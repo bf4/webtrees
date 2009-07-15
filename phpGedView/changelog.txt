@@ -10,6 +10,7 @@
 
 
 Version 4.2.2
+ - Added: [ 2806347 ] Show xref ID on edit screen (fisharebest)
  - Fixed: [ 2794158 ] DEAT age 0 leaves orphaned AGE event (fisharebest)
  - Fixed: [ 2814930 ] New user with space in username is not editable (fisharebest)
  - Fixed: [ 2820278 ] Changes vanish (wooc)
