@@ -427,9 +427,9 @@ function print_header($title, $head="", $use_alternate_styles=true) {
 
 	if (empty($META_TITLE)) $metaTitle = ' - '.PGV_PHPGEDVIEW;
 	else $metaTitle = " - ".$META_TITLE.' - '.PGV_PHPGEDVIEW;
-	
+
 	$title = PrintReady(stripLRMRLM(strip_tags($title.$metaTitle), TRUE));
-	
+
 	$GEDCOM_TITLE = get_gedcom_setting(PGV_GED_ID, 'title');
 	if ($ENABLE_RSS){
 		$applicationType = "application/rss+xml";
@@ -675,7 +675,7 @@ function print_simple_footer() {
 	}
 	echo "<br /><br /><div align=\"center\" style=\"width: 99%;\">";
 	echo contact_links();
-	echo '<br /><a href="'.PGV_PHPGEDVIEW_URL.'" target="_blank"><img src="'.$PGV_IMAGE_DIR.'/'.$PGV_IMAGES['gedview']['other'].'" border="0" alt="'.PGV_PHPGEDVIEW." ".PGV_VERSION_TEXT.'" title="'.PGV_PHPGEDVIEW." ".PGV_VERSION_TEXT.'" /></a><br />';
+	echo '<br /><a href="'.PGV_PHPGEDVIEW_URL.'" target="_blank"><img src="'.$PGV_IMAGE_DIR.'/'.$PGV_IMAGES['gedview']['other'].'" border="0" alt="'.PGV_PHPGEDVIEW . (PGV_USER_IS_ADMIN? (" - " .PGV_VERSION_TEXT): "") . '" title="'.PGV_PHPGEDVIEW . (PGV_USER_IS_ADMIN? (" - " .PGV_VERSION_TEXT): "") . '" /></a><br />';
 	if ($SHOW_STATS || PGV_DEBUG) {
 		print_execution_stats();
 	}
@@ -696,8 +696,8 @@ function google_analytics() {
 
 // Generate code for clustrmaps
 // Enable by adding
-// define('PGV_CLUSTRMAPS', 'your website address'); 
-// e.g. define('PGV_CLUSTRMAPS', 'http://vidyasridhar.no-ip.org/'); 
+// define('PGV_CLUSTRMAPS', 'your website address');
+// e.g. define('PGV_CLUSTRMAPS', 'http://vidyasridhar.no-ip.org/');
 // to the end of your config.php
 
 function clustrmaps() {
@@ -1704,7 +1704,7 @@ function PrintReady($text, $InHeaders=false, $trim=true) {
 				$tempText .= $tempChar;
 			}
 			$thisLang = whatLanguage($tempText);
-			if (isset($TEXT_DIRECTION_array[$thisLang]) && ($TEXT_DIRECTION_array[$thisLang]=="ltr" || ($TEXT_DIRECTION=="ltr" && $TEXT_DIRECTION_array[$thisLang]=="rtl"))) { 
+			if (isset($TEXT_DIRECTION_array[$thisLang]) && ($TEXT_DIRECTION_array[$thisLang]=="ltr" || ($TEXT_DIRECTION=="ltr" && $TEXT_DIRECTION_array[$thisLang]=="rtl"))) {
 				$newText .= getRLM() . $thisChar . $tempText . $tempChar . getRLM();
 			} else {
 				$newText .= getLRM() . $thisChar . $tempText . $tempChar . getLRM();
