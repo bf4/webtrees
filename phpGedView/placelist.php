@@ -453,6 +453,6 @@ else {
 	print_help_link("ppp_default_form_help", "qm");
 }
 echo "<br /><br /></div>";
-if ($use_googlemap && $display=="hierarchy") map_scripts($numfound, $level, $parent, $linklevels, $placelevels, $place_names);
 print_footer();
+if ($use_googlemap && $display=="hierarchy") map_scripts($numfound, $level, $parent, $linklevels, $placelevels, $place_names);
 ?>
