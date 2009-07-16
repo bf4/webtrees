@@ -143,9 +143,10 @@ $pgv_lang["options"]				= "Opciones:";
 $pgv_lang["config_update_ok"]		= "Archivo de configuración actualizado correctamente.";
 $pgv_lang["page_size"]				= "Tamaño de página";
 $pgv_lang["font"]					= "Tipo de letra";
+$pgv_lang["use_colors"]				= "Usar colores";
 $pgv_lang["record_not_found"]		= "No se pudo hallar el registro GEDCOM solicitado.  Puede deberse a haber un vínculo a una persona inexistente o a un archivo GEDCOM corrupto.";
 $pgv_lang["result_page"]			= "Página de resultado";
-$pgv_lang["edit_media"]				= "Editar objeto audiovisual";
+$pgv_lang["edit_media"]				= "Editar objeto audiovisual (#GLOBALS[pid]#)";
 $pgv_lang["wiki_main_page"]			= "Página principal de la Wiki";
 $pgv_lang["wiki_users_guide"]		= "Guía de Usuario de la Wiki";
 $pgv_lang["wiki_admin_guide"]		= "Guía del Administrador de la Wiki";
@@ -1462,12 +1463,20 @@ $pgv_lang["ahnentafel_christened_m"] = "fue bautizado";	// male
 $pgv_lang["ahnentafel_christened_f"] = "fue bautizada";	// female
 $pgv_lang["ahnentafel_married_m"]	= "se casó con";			// male
 $pgv_lang["ahnentafel_married_f"]	= "se casó con";			// female
+$pgv_lang["ahnentafel_married_post"]= "&nbsp;";
 $pgv_lang["ahnentafel_died_m"]		= "falleció";				// male
 $pgv_lang["ahnentafel_died_f"]		= "falleció";				// female
 $pgv_lang["ahnentafel_buried_m"]	= "recibió sepultura";			// male
 $pgv_lang["ahnentafel_buried_f"]	= "recibió sepultura";			// female
 $pgv_lang["ahnentafel_place"]		= " en ";				// place name follows this
 $pgv_lang["ahnentafel_no_details"]	= " pero los detalles son desconocidos";
+$pgv_lang["ahnentafel_on"]			= "en";
+
+//-- Descendency report
+$pgv_lang["son_of"]					= "hijo de";
+$pgv_lang["daughter_of"]			= "hija de";
+$pgv_lang["child_of"]				= "Hijo/a de ";
+$pgv_lang["children_of"]			= "Hijos/as de ";
 
 //-- Changes report
 $pgv_lang["changes_report"]			= "Informe de cambios";
@@ -1475,7 +1484,7 @@ $pgv_lang["changes_pending_tot"]	= "Cambios pedientes en total: ";
 $pgv_lang["changes_accepted_tot"]	= "Cambios aceptados en total: ";
 
 //-- Descendancy report
-$pgv_lang["descend_report"]		= "Informe de descendientes";
+$pgv_lang["descend_report"]			= "Informe de descendientes";
 $pgv_lang["descendancy_header"]		= "Informe de descendientes para ";
 
 $pgv_lang["family_group_report"]	= "Informe de grupo familiar";
@@ -1684,6 +1693,7 @@ $pgv_lang["stat_19_arm"]		= "Edad el año de matrimonio";
 $pgv_lang["stat_19_aarm"]		= "Edad promedio en el siglo de matrimonio";
 $pgv_lang["stat_20_arm1"]		= "Edad el año del primer matrimonio";
 $pgv_lang["stat_21_nok"]		= "Número de hijos";
+$pgv_lang["stat_22_fwok"]		= "Número de familias sin hijos";
 $pgv_lang["stat_200_none"]		= "todos (o en blanco)";
 $pgv_lang["stat_201_num"]		= "números";
 $pgv_lang["stat_202_perc"]		= "porcentaje";
@@ -1692,6 +1702,7 @@ $pgv_lang["stat_301_mf"]		= "sexo";
 $pgv_lang["stat_302_cgp"]		= "periodos de fechas";
 $pgv_lang["century"]			= "Siglo";
 $pgv_lang["stat_age"]			= "Edad";
+$pgv_lang["no_date_fam"]		= "desconocido";
 $pgv_lang["statar_xgp"]			= "límites para los períodos:";
 $pgv_lang["statar_xgl"]			= "límites para las edades:";
 $pgv_lang["statar_xgm"]			= "límites para mes:";
