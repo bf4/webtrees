@@ -30,6 +30,7 @@
 require './config.php';
 
 require_once './includes/controllers/clippings_ctrl.php';
+loadlangfile('pgv_admin');		// we need some definitions from this file, even when not logged in as admin
 
 $controller = new ClippingsController();
 $controller->init();
@@ -44,9 +45,9 @@ echo PGV_JS_START;
 echo 'function radAncestors(elementid) {var radFamilies=document.getElementById(elementid);radFamilies.checked=true;}';
 echo PGV_JS_END;
 
-?>
-<h2><?php print $pgv_lang["clippings_cart"] ?></h2>
-<?php
+if (count($cart)==0) {?>
+<h2><?php print $pgv_lang["clippings_cart"];?></h2>
+<?php }
 
 if ($controller->action=='add') {
 	$person = GedcomRecord::getInstance($controller->id);
@@ -106,7 +107,7 @@ if ($controller->privCount>0) {
 	print "<span class=\"error\">".$pgv_lang["clipping_privacy"]."</span><br /><br />\n";
 }
 
-if($ct==0) {
+if ($ct==0) {
 
 	// -- new lines, added by Jans, to display helptext when cart is empty
 	if ($controller->action!='add') {
@@ -147,40 +148,84 @@ if($ct==0) {
 
 	// -- end new lines
 	print "\r\n\t\t<br /><br />".$pgv_lang["cart_is_empty"]."<br /><br />";
-}
-else {
+} else {
 	if ($controller->action != 'download' && $controller->action != 'add') { ?>
 		<form method="get" action="clippings.php">
 		<input type="hidden" name="action" value="download" />
-		<table><tr><td valign="top">
+		<table><tr><td class="width33" valign="top" rowspan="3">
 		<table>
 		<tr><td colspan="2" class="topbottombar"><h2><?php print $pgv_lang["file_information"] ?></h2></td></tr>
 		<tr>
-		<td class="descriptionbox wrap"><?php print $pgv_lang["choose_file_type"] ?></td>
+		<td class="descriptionbox width50 wrap"><?php print_help_link("file_type_help", "qm"); print $pgv_lang["choose_file_type"] ?></td>
 		<td class="optionbox">
-		<?php print getLRM();?><input type="radio" name="filetype" checked="checked"  value="gedcom" /> GEDCOM <?php print_help_link("def_gedcom_help", "qm"); ?><?php print getLRM();?>
-		<br />
-		<?php print getLRM();?><input type="radio" name="filetype" value="gramps" /> Gramps XML <?php print_help_link("def_gramps_help", "qm"); ?><?php print getLRM();?>
+		<?php if ($TEXT_DIRECTION=='ltr') { ?>
+			<input type="radio" name="filetype" checked="checked" value="gedcom" />&nbsp;GEDCOM<br/><input type="radio" name="filetype" value="gramps" DISABLED />&nbsp;Gramps XML <!-- GRAMPS doesn't work right now -->
+		<?php } else { ?>
+			GEDCOM&nbsp;<?php print getLRM();?><input type="radio" name="filetype" checked="checked" value="gedcom" /><?php print getLRM();?><br />Gramps XML&nbsp;<?php print getLRM();?><input type="radio" name="filetype" value="gramps" /><?php print getLRM();?>
+		<?php } ?>
 		</td></tr>
 
-		<tr><td class="descriptionbox wrap"><?php print $pgv_lang["zip_files"]; ?> </td>
-		<td class="optionbox"><input type="checkbox" name="Zip" value="yes" checked="checked" /><?php print_help_link("zip_help", "qm"); ?></td></tr>
-		<tr><td class="descriptionbox wrap"><?php print $pgv_lang["include_media"]; ?></td>
-		<td class="optionbox"> <input type="checkbox" name="IncludeMedia" value="yes" checked="checked" /><?php print_help_link("include_media_help", "qm"); ?></td></tr>
+		<tr><td class="descriptionbox width50 wrap"><?php print_help_link("zip_help", "qm"); print $pgv_lang["zip_files"]; ?></td>
+		<td class="optionbox"><input type="checkbox" name="Zip" value="yes" checked="checked" /></td></tr>
 
-		<tr><td class="optionbox" colspan="2">
-		<br />
-		<a href="javascript:;" onclick="return expand_layer('advanced');"><img id="advanced_img" src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES["plus"]["other"]; ?>" border="0" width="11" height="11" alt="" title="" /> <?php print $pgv_lang["advanced_options"]; ?></a>
-		<div id="advanced" style="display: none;">
-		<table>
-		<tr><td><input type="checkbox" name="convert" value="yes" /></td><td><?php print $pgv_lang["utf8_to_ansi"]; print_help_link("utf8_ansi_help", "qm"); ?></td></tr>
-		<tr><td><input type="checkbox" name="remove" value="yes" checked="checked" /></td><td><?php print $pgv_lang["remove_custom_tags"]; print_help_link("remove_tags_help", "qm"); ?></td></tr>
-		</table>
-		</div>
-		<br />
+		<tr><td class="descriptionbox width50 wrap"><?php print_help_link("include_media_help", "qm"); print $pgv_lang["include_media"]; ?></td>
+		<td class="optionbox"><input type="checkbox" name="IncludeMedia" value="yes" checked="checked" /></td></tr>
+
+		<?php
+		// Determine the Privatize options available to this user
+		if (PGV_USER_IS_ADMIN) {
+			$radioPrivatizeNone = 'checked="checked" ';
+			$radioPrivatizeVisitor = '';
+			$radioPrivatizeUser = '';
+			$radioPrivatizeGedadmin = '';
+			$radioPrivatizeAdmin = '';
+		} else if (PGV_USER_GEDCOM_ADMIN) {
+			$radioPrivatizeNone = 'DISABLED ';
+			$radioPrivatizeVisitor = 'checked="checked" ';
+			$radioPrivatizeUser = '';
+			$radioPrivatizeGedadmin = '';
+			$radioPrivatizeAdmin = 'DISABLED ';
+		} else if (PGV_USER_ID) {
+			$radioPrivatizeNone = 'DISABLED ';
+			$radioPrivatizeVisitor = 'checked="checked" ';
+			$radioPrivatizeUser = '';
+			$radioPrivatizeGedadmin = 'DISABLED ';
+			$radioPrivatizeAdmin = 'DISABLED ';
+		} else {
+			$radioPrivatizeNone = 'DISABLED ';
+			$radioPrivatizeVisitor = 'checked="checked" DISABLED ';
+			$radioPrivatizeUser = 'DISABLED ';
+			$radioPrivatizeGedadmin = 'DISABLED ';
+			$radioPrivatizeAdmin = 'DISABLED ';
+		}
+		?>
+
+		<tr><td class="descriptionbox width50 wrap"><?php print_help_link("apply_privacy_help", "qm"); print $pgv_lang["apply_privacy"]; ?></td>
+		<td class="list_value">
+		<input type="radio" name="privatize_export" value="none" <?php print $radioPrivatizeNone; ?>/>&nbsp;<?php print $pgv_lang["none"]; ?><br />
+		<input type="radio" name="privatize_export" value="visitor" <?php print $radioPrivatizeVisitor; ?>/>&nbsp;<?php print $pgv_lang["visitor"]; ?><br />
+		<input type="radio" name="privatize_export" value="user" <?php print $radioPrivatizeUser; ?>/>&nbsp;<?php print $pgv_lang["user"]; ?><br />
+		<input type="radio" name="privatize_export" value="gedadmin" <?php print $radioPrivatizeGedadmin; ?>/>&nbsp;<?php print $pgv_lang["gedadmin"]; ?><br />
+		<input type="radio" name="privatize_export" value="admin" <?php print $radioPrivatizeAdmin; ?>/>&nbsp;<?php print $pgv_lang["siteadmin"]; ?>
+		</td></tr>
+
+		<tr><td class="descriptionbox width50 wrap"><?php print_help_link("utf8_ansi_help", "qm"); print $pgv_lang["utf8_to_ansi"]; ?></td>
+		<td class="optionbox"><input type="checkbox" name="convert" value="yes" /></td></tr>
+
+		<tr><td class="descriptionbox width50 wrap"><?php print_help_link("remove_tags_help", "qm"); print $pgv_lang["remove_custom_tags"]; ?></td>
+		<td class="optionbox"><input type="checkbox" name="remove" value="yes" checked="checked" /></td></tr>
+
+		<tr><td class="descriptionbox width50 wrap"><?php print_help_link("convertPath_help", "qm"); print $pgv_lang["convertPath"];?></td>
+		<td class="list_value"><input type="text" name="conv_path" size="30" value="<?php echo getLRM(), $controller->conv_path, getLRM();?>" /></td></tr>
+
+		<tr><td class="descriptionbox width50 wrap"><?php print_help_link("convertSlashes_help", "qm"); print $pgv_lang["convertSlashes"];?></td>
+		<td class="list_value">
+		<input type="radio" name="conv_slashes" value="forward" <?php if ($controller->conv_slashes=='forward') print "checked=\"checked\" "; ?>/>&nbsp;<?php print $pgv_lang["forwardSlashes"];?><br />
+		<input type="radio" name="conv_slashes" value="backward" <?php if ($controller->conv_slashes=='backward') print "checked=\"checked\" "; ?>/>&nbsp;<?php print $pgv_lang["backSlashes"];?>
+		</td></tr>
+
 		<tr><td class="topbottombar" colspan="2">
 		<input type="submit" value="<?php print $pgv_lang["download_now"]; ?>" />
-		<?php print_help_link("clip_download_help", "qm"); ?>
 		</td></tr>
 		</form>
 
@@ -201,8 +246,7 @@ else {
 		<table>
 		<tr>
 			<td colspan="2" class="topbottombar" style="text-align:center; ">
-				<?php print $pgv_lang["add_individual_by_id"];
-				print_help_link("add_by_id_help", "qm");?>
+				<?php print_help_link("add_by_id_help", "qm"); print $pgv_lang["add_individual_by_id"]; ?>
 			</td>
 		</tr>
 		<tr>
@@ -223,16 +267,18 @@ else {
 
 
 	<?php } ?>
-	<br /><a href="clippings.php?action=empty"><?php print $pgv_lang["empty_cart"]."  "; ?></a>
-	<?php print_help_link("empty_cart_help", "qm"); ?>
-	</td><td valign="top">
-	<table id="mycart" class="sortable list_table">
+	<br /><a href="clippings.php?action=empty"><?php print_help_link("empty_cart_help", "qm"); print $pgv_lang["empty_cart"]."  "; ?></a>
+	</td></tr>
+
+	<tr><td class="topbottombar"><h2><?php print_help_link("clip_cart_help", "qm"); print $pgv_lang["clippings_cart"];?></h2></td></tr>
+
+	<tr><td valign="top">
+	<table id="mycart" class="sortable list_table width100">
 		<tr>
 			<th class="list_label"><?php echo $pgv_lang["type"]?></th>
 			<th class="list_label"><?php echo $pgv_lang["id"]?></th>
 			<th class="list_label"><?php echo $pgv_lang["name_description"]?></th>
 			<th class="list_label"><?php echo $pgv_lang["remove"]?></th>
-			<th class="list_label"><?php print_help_link("clip_cart_help", "qm"); ?></th>
 		</tr>
 <?php
 	for ($i=0; $i<$ct; $i++) {

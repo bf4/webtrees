@@ -10,6 +10,11 @@
 
 
 Version 4.2.2
+ - Fixed: database download doesn't respect Privacy (canajun2eh)
+ - Added: selectable Privacy for database or clipboard download (canajun2eh)
+ - Added: allow constant prefix to file names in database or clipboard download (canajun2eh)
+ - Added: selectable directory separator for file names in database or clipboard download (canajun2eh)
+ - Changed: temporarily disable GRAMPS download for clipboard -- ZIP file has errors (canajun2eh)
  - Added: [ 2806347 ] Show xref ID on edit screen (fisharebest)
  - Fixed: [ 2794158 ] DEAT age 0 leaves orphaned AGE event (fisharebest)
  - Fixed: [ 2814930 ] New user with space in username is not editable (fisharebest)
