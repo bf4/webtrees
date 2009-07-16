@@ -536,9 +536,9 @@ rtl {
 		$width = floor($width / ($this->getCurrentStyleHeight() / $this->wrapWidthRatio));
 		$result = array();
 		$current = $str;
-		while (mb_strlen($current, $this->charset) > $width) {
-			$result[] = mb_substr($current, 0, $width, $this->charset);
-			$current = mb_substr($current, $width, 2048, $this->charset);
+		while (UTF8_strlen($current, $this->charset) > $width) {
+			$result[] = UTF8_substr($current, 0, $width, $this->charset);
+			$current = UTF8_substr($current, $width, 2048, $this->charset);
 		}
 		$result[] = $current;
 		return implode("\n", $result);
