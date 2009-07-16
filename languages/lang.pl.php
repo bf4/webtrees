@@ -1468,7 +1468,7 @@ $pgv_lang["ahnentafel_no_details"]	= ", ale szczegóły są nieznane";
 $pgv_lang["ahnentafel_on"]			= " ";
 
  //-- Descendency report
-$pgv_lang["son_of"]					= "synem";
+$pgv_lang["son_of"]					= "syna";
 $pgv_lang["daughter_of"]			= "córką";
 $pgv_lang["child_of"]				= "Dziecko rodziny ";
 $pgv_lang["children_of"]			= "Dzieci rodziny ";
