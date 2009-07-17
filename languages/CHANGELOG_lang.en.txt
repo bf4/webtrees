@@ -63,6 +63,30 @@ VERSION 4.2.2
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change	codes and comments
 ----------------------------------------------------------------------------------------
+*$pgv_lang["edit_media"]							15 Jul 2009				W
++$pgv_lang["ahnentafel_married_post"]				15 Jul 2009				A
++$pgv_lang["ahnentafel_on"]							15 Jul 2009				A
++$pgv_lang["son_of"]								15 Jul 2009				A
++$pgv_lang["daughter_of"]							15 Jul 2009				A
++$pgv_lang["child_of"]								15 Jul 2009				A
++$pgv_lang["children_of"]							15 Jul 2009				A
++$pgv_lang["use_colors"]							12 Jul 2009				A
++$pgv_lang["stat_22_fwok"]							10 Jul 2009				A
++$pgv_lang["no_date_fam"]							10 Jul 2009				A
+*$pgv_lang["choose_file_type"]						09 Jul 2009				W
++$pgv_lang["convertPath"]							09 Jul 2009				A
++$pgv_lang["convertSlashes"]						09 Jul 2009				A
++$pgv_lang["forwardSlashes"]						09 Jul 2009				A
++$pgv_lang["backSlashes"]							09 Jul 2009				A
++$pgv_lang["branch_list"]							09 Jul 2009				A
++$pgv_lang["font"]									08 Jul 2009				A
++$pgv_lang["lchildren"]								08 Jul 2009				A
++$pgv_lang["individual_with_rela_report"]			08 Jul 2009				A
++$pgv_lang["stat_19_aarm"]							08 Jul 2009				A
++$pgv_lang["rootid"]								08 Jul 2009				A Moved from admin.en.php
++$pgv_lang["stat_18_aard"]							07 Jul 2009				A
++$pgv_lang["century"]								07 Jul 2009				A
++$pgv_lang["stat_age"]								07 Jul 2009				A
 +$pgv_lang["stat_7_marr"]							04 Jul 2009				A
 +$pgv_lang["stat_6_death"]							04 Jul 2009				A
 +$pgv_lang["stat_create"]							03 Jul 2009				A

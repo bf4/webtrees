@@ -324,8 +324,7 @@ class Person extends GedcomRecord {
 		if (!$this->getBirthYear()) {
 			return "";
 		}
-		$tmp = "<span title=\"".strip_tags($this->getBirthDate()->Display())."\">".$this->getBirthYear()."</span>";
-		$tmp .= "-";
+		$tmp = "<span dir=\"ltr\" title=\"".strip_tags($this->getBirthDate()->Display())."\">".$this->getBirthYear()."-</span>";
 		$tmp .= "<span title=\"".strip_tags($this->getDeathDate()->Display())."\">".$this->getDeathYear()."</span>";
 		// display age only for exact dates (empty date qualifier)
 		if ($age_at_death
@@ -333,7 +332,7 @@ class Person extends GedcomRecord {
 			&& $this->getDeathYear() && empty($this->getDeathDate()->qual1)) {
 			$age = get_age_at_event(GedcomDate::GetAgeGedcom($this->getBirthDate(), $this->getDeathDate()), false);
 			if (!empty($age)) {
-				$tmp .= "<span class='age'> &lrm;({$pgv_lang['age']} {$age})&lrm;</span>";
+				$tmp .= "<span class='age'> ({$pgv_lang['age']} {$age})</span>";
 			}
 		}
 		if ($classname) {

@@ -10,11 +10,11 @@
 	<PGVRInput name="address" type="text"><PGVRvar var="pgv_lang[filter_address]" /> </PGVRInput>
 	<PGVRInput name="sortby" type="select" options="NAME,ID"><PGVRvar var="pgv_lang[sort_by]" /></PGVRInput>
 	<PGVRInput name="email_in" type="select" options="all,noemail,onlyemail"><PGVRvar var="pgv_lang[include]"/> </PGVRInput>
-	<PGVRInput name="pageSize" type="select" options="letter,A4,A3,A5,legal"><PGVRvar var="pgv_lang[page_size]" /></PGVRInput>
+	<PGVRInput name="pageSize" type="select" default="A4" options="letter,A3,A4,legal"><PGVRvar var="pgv_lang[page_size]" /></PGVRInput>
 	<!--
 	<PGVRInput name="showid" type="checkbox" default="1"><PGVRvar var="pgv_lang[show_ids]" /></PGVRInput>
 	-->
-	<PGVRDoc pageSize="$pageSize" orientation="P" margin="1" showGeneratedBy="0">
+	<PGVRDoc pageSize="$pageSize" leftmargin="1" rightmargin="1" showGeneratedBy="0">
 		<PGVRHeader>
 		</PGVRHeader>
 		<PGVRBody>
@@ -53,7 +53,7 @@
 			<PGVRSetVar name="X" value="$Xstart" />
 			<PGVRSetVar name="Y" value="$Ystart" />
 			<PGVRList list="individual" filter1="$addrfilter" filter2="$addrfilter2" filter3="$email" sortby="$sortby">
-				<PGVRTextBox top="$Y" left="$X" width="$width" height="$height" border="0" newline="$newline" pagecheck="false">
+				<PGVRTextBox top="$Y" left="$X" width="$width" height="$height" newline="$newline" pagecheck="false">
 					<PGVRText style="label"><PGVRGetPersonName id="" /></PGVRText>
 					<PGVRText style="text"><br /><PGVRGedcomValue tag="ADDR" /><PGVRGedcomValue tag="RESI:ADDR" /></PGVRText>
 					<PGVRif condition="@ADDR:ADR1 != ''">

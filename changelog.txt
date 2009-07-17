@@ -10,6 +10,7 @@
 
 
 Version 4.2.x CA
+ - Merged: Merge changes r5843 - r5914 from the trunk. (windmillway)
  - Merged: Merge changes r5839 - r5842 from the trunk. (windmillway)
  - Removed an unnecessary function, that was also being called multiple times, causing duplicate declaration errors. (windmillway)
  - Merged: Merge changes r5831 - r5838 from the trunk. (windmillway)
@@ -101,6 +102,21 @@ Version 4.2.x CA
 
 
 Version 4.2.2
+ - Fixed: database download doesn't respect Privacy (canajun2eh)
+ - Added: selectable Privacy for database or clipboard download (canajun2eh)
+ - Added: allow constant prefix to file names in database or clipboard download (canajun2eh)
+ - Added: selectable directory separator for file names in database or clipboard download (canajun2eh)
+ - Changed: temporarily disable GRAMPS download for clipboard -- ZIP file has errors (canajun2eh)
+ - Added: [ 2806347 ] Show xref ID on edit screen (fisharebest)
+ - Fixed: [ 2794158 ] DEAT age 0 leaves orphaned AGE event (fisharebest)
+ - Fixed: [ 2814930 ] New user with space in username is not editable (fisharebest)
+ - Fixed: [ 2820278 ] Changes vanish (wooc)
+ - Fixed: [ 2820508 ] [SVN:5891] famid not propogating to report (fisharebest)
+ - Fixed: [ 2815875 ] Theme-related problems in Opera (volschin)
+ - Added: [ 2798575 ] clustrmaps support similar to googlemaps. Enable
+   by adding define('PGV_CLUSTRMAPS', 'your website address'); to your
+   config.php (sridharb)
+ - Fixed: [ 2816347 ] XHTML - family_nav.php (windmillway)
  - Fixed: [ 2815546 ] Timeline Chart display issue (wooc)
  - Added: [ 2812244 ] List branches by surname (opus27)
  - Fixed: [ 2811443 ] [5774] Double helping of tables (fisharebest)

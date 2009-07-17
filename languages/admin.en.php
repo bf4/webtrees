@@ -357,7 +357,6 @@ $pgv_lang["readme_documentation"]				= "README documentation";
 $pgv_lang["remove_ip"] 							= "Remove IP";
 $pgv_lang["REQUIRE_ADMIN_AUTH_REGISTRATION"] 	= "Require an administrator to approve new user registrations";
 $pgv_lang["review_readme"]						= "You should review the <a href=\"readme.txt\" target=\"_blank\">readme.txt</a> file before continuing to configure PhpGedView.<br /><br />";
-$pgv_lang["rootid"] 							= "Pedigree Chart Root Person";
 $pgv_lang["seconds"]							= "&nbsp;&nbsp;seconds";
 $pgv_lang["select_an_option"]					= "Select an option below:";
 $pgv_lang["SERVER_URL"]							= "PhpGedView URL";

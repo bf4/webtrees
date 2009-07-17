@@ -330,32 +330,6 @@ require_once("includes/authentication.php");
 //-- load up the code to check for spiders
 require_once('includes/session_spider.php');
 
-//-- import the gedcoms array
-if (file_exists($INDEX_DIRECTORY."gedcoms.php")) {
-	require_once($INDEX_DIRECTORY."gedcoms.php");
-	if (!is_array($GEDCOMS)) $GEDCOMS = array();
-	$i=0;
-	foreach ($GEDCOMS as $key => $gedcom) {
-		$i++;
-		$GEDCOMS[$key]["commonsurnames"] = stripslashes($gedcom["commonsurnames"]);
-		if (empty($GEDCOMS[$key]["id"])) {
-			$GEDCOMS[$key]["id"] = $i;
-		}
-		if (empty($GEDCOMS[$key]["pgv_ver"])) {
-			$GEDCOMS[$key]["pgv_ver"] = PGV_VERSION;
-		}
-
-		// Force the gedcom to be re-imported if the code has been significantly upgraded
-		list($major1, $minor1)=explode('.', $GEDCOMS[$key]['pgv_ver']);
-		list($major2, $minor2)=explode('.', PGV_VERSION);
-		if ($major1!=$major2 || $minor1!=$minor2) {
-			$GEDCOMS[$key]["imported"] = false;
-		}
-	}
-} else {
-	$GEDCOMS=array();
-}
-
 // Connect to the database
 require_once 'includes/classes/class_pgv_db.php';
 try {
@@ -370,6 +344,32 @@ try {
 	}
 } catch (PDOException $ex) {
 	// Can't connect to the DB?  We'll get redirected to install.php later.....
+}
+
+//-- import the gedcoms array
+if (file_exists($INDEX_DIRECTORY."gedcoms.php")) {
+	require_once($INDEX_DIRECTORY."gedcoms.php");
+	if (!is_array($GEDCOMS)) $GEDCOMS = array();
+	$i=0;
+	foreach ($GEDCOMS as $key=>$gedcom) {
+		$i++;
+		$GEDCOMS[$key]["commonsurnames"] = stripslashes($gedcom["commonsurnames"]);
+		if (empty($GEDCOMS[$key]["id"])) {
+			$GEDCOMS[$key]["id"]=$i;
+		}
+		if (empty($GEDCOMS[$key]["pgv_ver"])) {
+			$GEDCOMS[$key]["pgv_ver"]=PGV_VERSION;
+		}
+
+		// Force the gedcom to be re-imported if the code has been significantly upgraded
+		list($major1, $minor1)=explode('.', $GEDCOMS[$key]['pgv_ver']);
+		list($major2, $minor2)=explode('.', PGV_VERSION);
+		if ($major1!=$major2 || $minor1!=$minor2) {
+			$GEDCOMS[$key]["imported"]=false;
+		}
+	}
+} else {
+	$GEDCOMS=array();
 }
 
 $logout=safe_GET_bool('logout');

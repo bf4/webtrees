@@ -434,8 +434,7 @@ class stats {
 		return $rows[0]['tot'];
 	}
 
-	function chartIndisWithSources($params=null)
-	{
+	function chartIndisWithSources($params=null) {
 		global $pgv_lang;
 		if ($params === null) {$params = array();}
 		if (isset($params[0]) && $params[0] != '') {$size = strtolower($params[0]);}else{$size = '440x125';}
@@ -454,22 +453,19 @@ class stats {
 		return "<img src=\"".encode_url("http://chart.apis.google.com/chart?cht=p3&amp;chd=e:{$chd}&amp;chs={$size}&amp;chco={$color_from},{$color_to}&amp;chf=bg,s,ffffff00&amp;chl={$chl}")."\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" alt=\"".$chart_title."\" title=\"".$chart_title."\" />";
 	}
 
-	function totalIndividualsPercentage()
-	{
+	function totalIndividualsPercentage() {
 		return $this->_getPercentage($this->totalIndividuals(), 'all', 2);
 	}
 
 	function totalFamilies() {
 		global $TBLPREFIX;
-
 		return
 			PGV_DB::prepare("SELECT COUNT(*) FROM {$TBLPREFIX}families WHERE f_file=?")
 			->execute(array($this->_ged_id))
 			->fetchOne();
 	}
 
-	function totalFamsWithSources()
-	{
+	function totalFamsWithSources() {
 		global $TBLPREFIX, $DBTYPE;
 		if ($DBTYPE=='sqlite') {
 			// sqlite2 can't do subqueries or count distinct
@@ -480,8 +476,7 @@ class stats {
 		return $rows[0]['tot'];
 	}
 
-	function chartFamsWithSources($params=null)
-	{
+	function chartFamsWithSources($params=null) {
 		global $pgv_lang;
 		if ($params === null) {$params = array();}
 		if (isset($params[0]) && $params[0] != '') {$size = strtolower($params[0]);}else{$size = '440x125';}
@@ -500,55 +495,47 @@ class stats {
 		return "<img src=\"".encode_url("http://chart.apis.google.com/chart?cht=p3&amp;chd=e:{$chd}&chs={$size}&amp;chco={$color_from},{$color_to}&amp;chf=bg,s,ffffff00&amp;chl={$chl}")."\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" alt=\"".$chart_title."\" title=\"".$chart_title."\" />";
 	}
 
-	function totalFamiliesPercentage()
-	{
+	function totalFamiliesPercentage() {
 		return $this->_getPercentage($this->totalFamilies(), 'all', 2);
 	}
 
 	function totalSources() {
 		global $TBLPREFIX;
-
 		return
 			PGV_DB::prepare("SELECT COUNT(*) FROM {$TBLPREFIX}sources WHERE s_file=?")
 			->execute(array($this->_ged_id))
 			->fetchOne();
 	}
 
-	function totalSourcesPercentage()
-	{
+	function totalSourcesPercentage() {
 		return $this->_getPercentage($this->totalSources(), 'all', 2);
 	}
 
 	function totalNotes() {
 		global $TBLPREFIX;
-
 		return
 			PGV_DB::prepare("SELECT COUNT(*) FROM {$TBLPREFIX}other WHERE o_type=? AND o_file=?")
 			->execute(array('NOTE', $this->_ged_id))
 			->fetchOne();
 	}
 
-	function totalNotesPercentage()
-	{
+	function totalNotesPercentage() {
 		return $this->_getPercentage($this->totalNotes(), 'all', 2);
 	}
 
 	function totalOtherRecords() {
 		global $TBLPREFIX;
-
 		return
 			PGV_DB::prepare("SELECT COUNT(*) FROM {$TBLPREFIX}other WHERE o_type<>? AND o_file=?")
 			->execute(array('NOTE', $this->_ged_id))
 			->fetchOne();
 	}
 
-	function totalOtherPercentage()
-	{
+	function totalOtherPercentage() {
 		return $this->_getPercentage($this->totalOtherRecords(), 'all', 2);
 	}
 
-	function totalSurnames($params = null)
-	{
+	function totalSurnames($params = null) {
 		global $DBTYPE, $TBLPREFIX;
 		if ($params) {
 			$qs=implode(',', array_fill(0, count($params), '?'));
@@ -604,27 +591,22 @@ class stats {
 		return PGV_DB::prepare($sql)->execute($vars)->fetchOne();
 	}
 
-	function totalEventsBirth()
-	{
+	function totalEventsBirth() {
 		return $this->totalEvents(explode('|',PGV_EVENTS_BIRT));
 	}
 
-	function totalEventsDeath()
-	{
+	function totalEventsDeath() {
 		return $this->totalEvents(explode('|',PGV_EVENTS_DEAT));
 	}
 
-	function totalEventsMarriage()
-	{
+	function totalEventsMarriage() {
 		return $this->totalEvents(explode('|',PGV_EVENTS_MARR));
 	}
 
-	function totalEventsOther()
-	{
+	function totalEventsOther() {
 		$facts = array_merge(explode('|', PGV_EVENTS_BIRT.'|'.PGV_EVENTS_MARR.'|'.PGV_EVENTS_DEAT));
 		$no_facts = array();
-		foreach ($facts as $fact)
-		{
+		foreach ($facts as $fact) {
 			$fact = '!'.str_replace('\'', '', $fact);
 			$no_facts[] = $fact;
 		}
@@ -633,7 +615,6 @@ class stats {
 
 	function totalSexMales() {
 		global $TBLPREFIX;
-
 		return
 			PGV_DB::prepare("SELECT COUNT(*) FROM {$TBLPREFIX}individuals WHERE i_file=? AND i_sex=?")
 			->execute(array($this->_ged_id, 'M'))
@@ -646,7 +627,6 @@ class stats {
 
 	function totalSexFemales() {
 		global $TBLPREFIX;
-
 		return
 			PGV_DB::prepare("SELECT COUNT(*) FROM {$TBLPREFIX}individuals WHERE i_file=? AND i_sex=?")
 			->execute(array($this->_ged_id, 'F'))
@@ -659,7 +639,6 @@ class stats {
 
 	function totalSexUnknown() {
 		global $TBLPREFIX;
-
 		return
 			PGV_DB::prepare("SELECT COUNT(*) FROM {$TBLPREFIX}individuals WHERE i_file=? AND i_sex=?")
 			->execute(array($this->_ged_id, 'U'))
@@ -670,8 +649,7 @@ class stats {
 		return $this->_getPercentage($this->totalSexUnknown(), 'individual');
 	}
 
-	function chartSex($params=null)
-	{
+	function chartSex($params=null) {
 		global $pgv_lang, $TEXT_DIRECTION;
 		if ($params === null) {$params = array();}
 		if (isset($params[0]) && $params[0] != '') {$size = strtolower($params[0]);}else{$size = '440x125';}
@@ -707,7 +685,6 @@ class stats {
 
 	function totalLiving() {
 		global $TBLPREFIX;
-
 		return
 			PGV_DB::prepare("SELECT COUNT(*) FROM {$TBLPREFIX}individuals WHERE i_file=? AND i_isdead=?")
 			->execute(array($this->_ged_id, 0))
@@ -720,7 +697,6 @@ class stats {
 
 	function totalDeceased() {
 		global $TBLPREFIX;
-
 		return
 			PGV_DB::prepare("SELECT COUNT(*) FROM {$TBLPREFIX}individuals WHERE i_file=? AND i_isdead=?")
 			->execute(array($this->_ged_id, 1))
@@ -733,7 +709,6 @@ class stats {
 
 	function totalMortalityUnknown() {
 		global $TBLPREFIX;
-
 		return
 			PGV_DB::prepare("SELECT COUNT(*) FROM {$TBLPREFIX}individuals WHERE i_file=? AND i_isdead=?")
 			->execute(array($this->_ged_id, -1))
@@ -744,16 +719,14 @@ class stats {
 		return $this->_getPercentage($this->totalMortalityUnknown(), 'individual');
 	}
 
-	function mortalityUnknown()
-	{
+	function mortalityUnknown() {
 		global $TBLPREFIX;
 		$rows=self::_runSQL("SELECT i_id AS id FROM {$TBLPREFIX}individuals WHERE i_file={$this->_ged_id} AND i_isdead=-1");
 		if (!isset($rows[0])) {return '';}
 		return $rows;
 	}
 
-	function chartMortality($params=null)
-	{
+	function chartMortality($params=null) {
 		global $pgv_lang, $TEXT_DIRECTION;
 		if ($params === null) {$params = array();}
 		if (isset($params[0]) && $params[0] != '') {$size = strtolower($params[0]);}else{$size = '440x125';}
@@ -787,8 +760,7 @@ class stats {
 		}
 	}
 
-	static function totalUsers($params=null)
-	{
+	static function totalUsers($params=null) {
 		if (!empty($params[0])) {
 			return get_user_count() + (int)$params[0];
 		} else {
@@ -796,13 +768,11 @@ class stats {
 		}
 	}
 
-	static function totalAdmins()
-	{
+	static function totalAdmins() {
 		return get_admin_user_count();
 	}
 
-	static function totalNonAdmins()
-	{
+	static function totalNonAdmins() {
 		return get_non_admin_user_count();
 	}
 
@@ -897,8 +867,7 @@ class stats {
 // Birth & Death                                                             //
 ///////////////////////////////////////////////////////////////////////////////
 
-	function _mortalityQuery($type='full', $life_dir='ASC', $birth_death='BIRT')
-	{
+	function _mortalityQuery($type='full', $life_dir='ASC', $birth_death='BIRT') {
 		global $TBLPREFIX, $pgv_lang, $SHOW_ID_NUMBERS, $listDir, $DBTYPE;
 		if ($birth_death == 'BIRT') {
 			$query_field = "'".str_replace('|', "','", PGV_EVENTS_BIRT)."'";
@@ -968,8 +937,7 @@ class stats {
 		if (!isset($rows[0])) {return '';}
 		$row=$rows[0];
 		$person=Person::getInstance($row['d_gid']);
-		switch($type)
-		{
+		switch($type) {
 			default:
 			case 'full':
 				if (displayDetailsById($row['d_gid'])) {
@@ -1000,16 +968,24 @@ class stats {
 		return str_replace('<a href="', '<a href="'.$this->_server_url, $result);
 	}
 
-	function _statsPlaces($what='INDI', $fact=false, $parent=0, $country=false) {
+	function _statsPlaces($what='ALL', $fact=false, $parent=0, $country=false) {
 		global $TBLPREFIX;
 		if ($fact) {
-			$rows=
-				PGV_DB::prepare("SELECT i_gedcom FROM ${TBLPREFIX}individuals WHERE i_file=?")
-				->execute(array($this->_ged_id))
-				->fetchAll();
+			if ($what=='INDI') {
+				$rows=
+					PGV_DB::prepare("SELECT i_gedcom AS ged FROM ${TBLPREFIX}individuals WHERE i_file=?")
+					->execute(array($this->_ged_id))
+					->fetchAll();
+			}
+			else if ($what=='FAM') {
+				$rows=
+					PGV_DB::prepare("SELECT f_gedcom AS ged FROM ${TBLPREFIX}families WHERE f_file=?")
+					->execute(array($this->_ged_id))
+					->fetchAll();
+			}
 			$placelist = array();
 			foreach ($rows as $row) {
-				$factrec = trim(get_sub_record(1, "1 {$fact}", $row->i_gedcom, 1));
+				$factrec = trim(get_sub_record(1, "1 {$fact}", $row->ged, 1));
 				if (!empty($factrec) && preg_match("/2 PLAC (.+)/", $factrec, $match)) {
 					if ($country) {
 						$place = getPlaceCountry(trim($match[1]));
@@ -1029,10 +1005,10 @@ class stats {
 		}
 		else if ($parent>0) {
 			if ($what=='INDI') {
-				$join = " JOIN {$TBLPREFIX}individuals ON pl_file = i_file AND pl_gid = i_id ";
+				$join = " JOIN {$TBLPREFIX}individuals ON pl_file = i_file AND pl_gid = i_id";
 			}
 			else if ($what=='FAM') {
-				$join = " JOIN {$TBLPREFIX}families ON pl_file = f_file AND pl_gid = f_id ";
+				$join = " JOIN {$TBLPREFIX}families ON pl_file = f_file AND pl_gid = f_id";
 			}
 			else {
 				$join = "";
@@ -1055,10 +1031,10 @@ class stats {
 		}
 		else {
 			if ($what=='INDI') {
-				$join = " JOIN {$TBLPREFIX}individuals ON pl_file = i_file AND pl_gid = i_id ";
+				$join = " JOIN {$TBLPREFIX}individuals ON pl_file = i_file AND pl_gid = i_id";
 			}
 			else if ($what=='FAM') {
-				$join = " JOIN {$TBLPREFIX}families ON pl_file = f_file AND pl_gid = f_id ";
+				$join = " JOIN {$TBLPREFIX}families ON pl_file = f_file AND pl_gid = f_id";
 			}
 			else {
 				$join = "";
@@ -1066,7 +1042,7 @@ class stats {
 			$rows=self::_runSQL(''
 					.' SELECT'
 						.' p_place AS country,'
-						.' COUNT(*)'
+						.' COUNT(*) AS tot'
 					.' FROM'
 						." {$TBLPREFIX}places"
 					." JOIN {$TBLPREFIX}placelinks ON pl_file=p_file AND p_id=pl_p_id"
@@ -1074,7 +1050,7 @@ class stats {
 					.' WHERE'
 						." p_file={$this->_ged_id}"
 						." AND p_parent_id='0'"
-					.' GROUP BY country'
+					.' GROUP BY country ORDER BY tot DESC, country ASC'
 					);
 			if (!isset($rows[0])) {return '';}
 			return $rows;
@@ -1205,7 +1181,7 @@ class stats {
 			  foreach ($countries as $place) {
 				$country=UTF8_strtolower(trim($place['country']));
 				if (array_key_exists($country, $country_to_iso3166)) {
-					$surn_countries[$country_to_iso3166[$country]]=$place['count(*)'];
+					$surn_countries[$country_to_iso3166[$country]]=$place['tot'];
 				}
 			}
 			break;
@@ -1220,7 +1196,7 @@ class stats {
 			  foreach ($countries as $place) {
 				$country=UTF8_strtolower(trim($place['country']));
 				if (array_key_exists($country, $country_to_iso3166)) {
-					$surn_countries[$country_to_iso3166[$country]]=$place['count(*)'];
+					$surn_countries[$country_to_iso3166[$country]]=$place['tot'];
 				}
 			}
 			break;
@@ -1242,6 +1218,77 @@ class stats {
 		$chart .= '<td bgcolor="#FFFFFF" width="12"></td><td>'.$pgv_lang["g_chart_nobody"].'&nbsp;&nbsp;</td>';
 		$chart .= '</tr></table></div></div>';
 		return $chart;
+	}
+
+	function commonCountriesList() {
+		global $TEXT_DIRECTION;
+		$countries = $this->_statsPlaces();
+		$top10 = array();
+		$i = 1;
+		foreach ($countries as $country) {
+			$place = '<a href="'.encode_url(get_place_url($country['country'])).'" class="list_item" title="'.$country['country'].'">'.PrintReady($country['country']).'</a>';
+			$top10[]="\t<li>".$place." ".PrintReady("[".$country['tot']."]")."</li>\n";
+			if ($i++==10) break;
+		}
+		$top10=join("\n", $top10);
+		if ($TEXT_DIRECTION=='rtl') {
+			$top10=str_replace(array("[", "]", "(", ")", "+"), array("&rlm;[", "&rlm;]", "&rlm;(", "&rlm;)", "&rlm;+"), $top10);
+		}
+		return "<ul>\n{$top10}</ul>\n";
+	}
+
+	function commonBirthPlacesList() {
+		global $TEXT_DIRECTION;
+		$places = $this->_statsPlaces('INDI', 'BIRT');
+		$top10 = array();
+		$i = 1;
+		arsort($places);
+		foreach ($places as $place=>$count) {
+			$place = '<a href="'.encode_url(get_place_url($place)).'" class="list_item" title="'.$place.'">'.PrintReady($place).'</a>';
+			$top10[]="\t<li>".$place." ".PrintReady("[".$count."]")."</li>\n";
+			if ($i++==10) break;
+		}
+		$top10=join("\n", $top10);
+		if ($TEXT_DIRECTION=='rtl') {
+			$top10=str_replace(array("[", "]", "(", ")", "+"), array("&rlm;[", "&rlm;]", "&rlm;(", "&rlm;)", "&rlm;+"), $top10);
+		}
+		return "<ul>\n{$top10}</ul>\n";
+	}
+
+	function commonDeathPlacesList() {
+		global $TEXT_DIRECTION;
+		$places = $this->_statsPlaces('INDI', 'DEAT');
+		$top10 = array();
+		$i = 1;
+		arsort($places);
+		foreach ($places as $place=>$count) {
+			$place = '<a href="'.encode_url(get_place_url($place)).'" class="list_item" title="'.$place.'">'.PrintReady($place).'</a>';
+			$top10[]="\t<li>".$place." ".PrintReady("[".$count."]")."</li>\n";
+			if ($i++==10) break;
+		}
+		$top10=join("\n", $top10);
+		if ($TEXT_DIRECTION=='rtl') {
+			$top10=str_replace(array("[", "]", "(", ")", "+"), array("&rlm;[", "&rlm;]", "&rlm;(", "&rlm;)", "&rlm;+"), $top10);
+		}
+		return "<ul>\n{$top10}</ul>\n";
+	}
+
+	function commonMarriagePlacesList() {
+		global $TEXT_DIRECTION;
+		$places = $this->_statsPlaces('FAM', 'MARR');
+		$top10 = array();
+		$i = 1;
+		arsort($places);
+		foreach ($places as $place=>$count) {
+			$place = '<a href="'.encode_url(get_place_url($place)).'" class="list_item" title="'.$place.'">'.PrintReady($place).'</a>';
+			$top10[]="\t<li>".$place." ".PrintReady("[".$count."]")."</li>\n";
+			if ($i++==10) break;
+		}
+		$top10=join("\n", $top10);
+		if ($TEXT_DIRECTION=='rtl') {
+			$top10=str_replace(array("[", "]", "(", ")", "+"), array("&rlm;[", "&rlm;]", "&rlm;(", "&rlm;)", "&rlm;+"), $top10);
+		}
+		return "<ul>\n{$top10}</ul>\n";
 	}
 
 	function statsBirth($simple=true, $sex=false, $year1=-1, $year2=-1, $params=null) {
@@ -1433,8 +1480,7 @@ class stats {
 		if (!isset($rows[0])) {return '';}
 		$row = $rows[0];
 		$person=Person::getInstance($row['id']);
-		switch($type)
-		{
+		switch($type) {
 			default:
 			case 'full':
 				if (displayDetailsById($row['id'])) {
@@ -1462,7 +1508,7 @@ class stats {
 	}
 
 	function _topTenOldest($type='list', $sex='BOTH', $params=null) {
-		global $TBLPREFIX, $TEXT_DIRECTION, $pgv_lang;
+		global $TBLPREFIX, $TEXT_DIRECTION, $pgv_lang, $lang_short_cut, $LANGUAGE;
 
 		if ($sex == 'F') {
 			$sex_search = " AND i_sex='F'";
@@ -1499,12 +1545,20 @@ class stats {
 		if (!isset($rows[0])) {return '';}
 		if(count($rows) < $total){$total = count($rows);}
 		$top10=array();
+		$func="age2_localisation_{$lang_short_cut[$LANGUAGE]}";
 		for($c = 0; $c < $total; $c++) {
 			$person=Person::getInstance($rows[$c]['deathdate']);
-			if ($type == 'list') {
-				$top10[]="\t<li><a href=\"".$person->getLinkUrl()."\">".PrintReady($person->getFullName())."</a> ".PrintReady("[".floor($rows[$c]['age']/365.25)." {$pgv_lang['years']}]")."</li>\n";
+			if (function_exists($func)) {
+				$years = $func(floor($rows[$c]['age']/365.25));
 			} else {
-				$top10[]="<a href=\"".$person->getLinkUrl()."\">".PrintReady($person->getFullName())."</a> [".PrintReady(floor($rows[$c]['age']/365.25))." {$pgv_lang['years']}]";
+				$years = floor($rows[$c]['age']/365.25);
+				if ($years==1) $years .= " ".$pgv_lang["year"];
+				else $years .= " ".$pgv_lang["years"];
+			}
+			if ($type == 'list') {
+				$top10[]="\t<li><a href=\"".$person->getLinkUrl()."\">".PrintReady($person->getFullName())."</a> ".PrintReady("[".$years."]")."</li>\n";
+			} else {
+				$top10[]="<a href=\"".$person->getLinkUrl()."\">".PrintReady($person->getFullName())."</a> ".PrintReady("[".$years."]");
 			}
 		}
 		if ($type == 'list') {
@@ -1515,11 +1569,74 @@ class stats {
 		if ($TEXT_DIRECTION=='rtl') {
 			$top10=str_replace(array("[", "]", "(", ")", "+"), array("&rlm;[", "&rlm;]", "&rlm;(", "&rlm;)", "&rlm;+"), $top10);
 		}
-		if ($type == 'list')
-		{
+		if ($type == 'list') {
 			return "<ul>\n{$top10}</ul>\n";
 		}
 		// Statstics are used by RSS feeds, etc., so need absolute URLs.
+		return $top10;
+	}
+
+	function _topTenOldestAlive($type='list', $sex='BOTH', $params=null) {
+		global $TBLPREFIX, $TEXT_DIRECTION, $pgv_lang, $lang_short_cut, $LANGUAGE;
+
+		if (!PGV_USER_CAN_ACCESS) return $pgv_lang["privacy_error"];
+		if ($sex == 'F') {
+			$sex_search = " AND i_sex='F'";
+		} elseif ($sex == 'M') {
+			$sex_search = " AND i_sex='M'";
+		} else {
+			$sex_search = '';
+		}
+		if ($params !== null && isset($params[0])) {$total = $params[0];}else{$total = 10;}
+		$rows=self::_runSQL(''
+			.' SELECT'
+				.' birth.d_gid AS id,'
+				.' birth.d_julianday1 AS age'
+			.' FROM'
+				." {$TBLPREFIX}dates AS birth,"
+				." {$TBLPREFIX}individuals AS indi"
+			.' WHERE'
+				.' indi.i_id=birth.d_gid AND'
+				.' indi.i_isdead=0 AND'
+				." birth.d_file={$this->_ged_id} AND"
+				.' birth.d_file=indi.i_file AND'
+				." birth.d_fact IN ('BIRT', 'CHR', 'BAPM', '_BRTM') AND"
+				.' birth.d_julianday1!=0'
+				.$sex_search
+			.' GROUP BY'
+				.' id'
+			.' ORDER BY'
+				.' age ASC'
+		, $total);
+		if (!isset($rows)) {return 0;}
+		$top10=array();
+		$func="age2_localisation_{$lang_short_cut[$LANGUAGE]}";
+		for($c = 0; $c < $total; $c++) {
+			$person=Person::getInstance($rows[$c]['id']);
+			$years = floor((client_jd()-$rows[$c]['age'])/365.25);
+			if (function_exists($func)) {
+				$years = $func($years);
+			} else {
+				if ($years==1) $years .= " ".$pgv_lang["year"];
+				else $years .= " ".$pgv_lang["years"];
+			}
+			if ($type == 'list') {
+				$top10[]="\t<li><a href=\"".$person->getLinkUrl()."\">".PrintReady($person->getFullName())."</a> ".PrintReady("[".$years."]")."</li>\n";
+			} else {
+				$top10[]="<a href=\"".$person->getLinkUrl()."\">".PrintReady($person->getFullName())."</a> ".PrintReady("[".$years."]");
+			}
+		}
+		if ($type == 'list') {
+			$top10=join("\n", $top10);
+		} else {
+			$top10=join(';&nbsp; ', $top10);
+		}
+		if ($TEXT_DIRECTION=='rtl') {
+			$top10=str_replace(array("[", "]", "(", ")", "+"), array("&rlm;[", "&rlm;]", "&rlm;(", "&rlm;)", "&rlm;+"), $top10);
+		}
+		if ($type == 'list') {
+			return "<ul>\n{$top10}</ul>\n";
+		}
 		return $top10;
 	}
 
@@ -1556,46 +1673,120 @@ class stats {
 		return PrintReady(floor($row['age']/365.25));
 	}
 
-	function statsAge($related='BIRT', $sex='BOTH', $year1=-1, $year2=-1) {
-		global $TBLPREFIX;
+	function statsAge($simple=true, $related='BIRT', $sex='BOTH', $year1=-1, $year2=-1, $params=null) {
+		global $TBLPREFIX, $pgv_lang, $lang_short_cut, $LANGUAGE;
 
-		$sex_search = '';
-		$years = '';
-		if ($sex == 'F') {
-			$sex_search = " AND i_sex='F'";
-		} elseif ($sex == 'M') {
-			$sex_search = " AND i_sex='M'";
-		}
-		if ($year1>=0 && $year2>=0) {
-			if ($related=='BIRT') {
-				$years = " AND birth.d_year BETWEEN '{$year1}' AND '{$year2}'";
+		if ($simple) {
+			if (isset($params[0]) && $params[0] != '') {$size = strtolower($params[0]);}else{$size = '230x250';}
+			$sizes = explode('x', $size);
+			$rows=self::_runSQL(''
+				.' SELECT'
+					.' ROUND(AVG(death.d_julianday2-birth.d_julianday1)/365.25,1) AS age,'
+					.' ROUND((death.d_year+49.1)/100) AS century,'
+					.' i_sex AS sex'
+				.' FROM'
+					." {$TBLPREFIX}dates AS death,"
+					." {$TBLPREFIX}dates AS birth,"
+					." {$TBLPREFIX}individuals AS indi"
+				.' WHERE'
+					.' indi.i_id=birth.d_gid AND'
+					.' birth.d_gid=death.d_gid AND'
+					." death.d_file={$this->_ged_id} AND"
+					.' birth.d_file=death.d_file AND'
+					.' birth.d_file=indi.i_file AND'
+					." birth.d_fact='BIRT' AND"
+					." death.d_fact='DEAT' AND"
+					.' birth.d_julianday1!=0 AND'
+					.' death.d_julianday1>birth.d_julianday2'
+				.' GROUP BY century, sex ORDER BY century, sex');
+
+			$func="century_localisation_{$lang_short_cut[$LANGUAGE]}";
+			$chxl = "0:|";
+			$male = true;
+			$temp = "";
+			$countsm = "";
+			$countsf = "";
+			$countsa = "";
+			foreach ($rows as $values) {
+				if ($temp!=$values['century']) {
+					$temp = $values['century'];
+					if ($sizes[0]<980) $sizes[0] += 50;
+					if (function_exists($func)) {
+						$century = $func($values['century'], false);
+					} else {
+						$century = $values['century'];
+					}
+					$chxl .= $century."|";
+					if ($values['sex'] == "F") {
+						if (!$male) {
+							$countsm .= "0,";
+							$countsa .= $fage.",";
+						}
+						$countsf .= $values['age'].",";
+						$fage = $values['age'];
+						$male = false;
+					} else if ($values['sex'] == "M") {
+						$countsf .= "0,";
+						$countsm .= $values['age'].",";
+						$countsa .= $values['age'].",";
+					} else if ($values['sex'] == "U") {
+						$countsf .= "0,";
+						$countsm .= "0,";
+						$countsa .= "0,";
+					}
+				}
+				else if ($values['sex'] == "M") {
+					$countsm .= $values['age'].",";
+					$countsa .= round(($fage+$values['age'])/2,1).",";
+					$male = true;
+				}
 			}
-			else if ($related=='DEAT') {
-				$years = " AND death.d_year BETWEEN '{$year1}' AND '{$year2}'";
+			$countsm = substr($countsm,0,-1);
+			$countsf = substr($countsf,0,-1);
+			$countsa = substr($countsa,0,-1);
+			$chd = "t2:{$countsm}|{$countsf}|{$countsa}";
+			$chxl .= "1:||".$pgv_lang["century"]."|2:|0|10|20|30|40|50|60|70|80|90|100|3:||".$pgv_lang["stat_age"]."|";
+			$chtt = $pgv_lang["stat_18_aard"];
+			return "<img src=\"".encode_url("http://chart.apis.google.com/chart?cht=bvg&amp;chs={$sizes[0]}x{$sizes[1]}&amp;chm=D,FF0000,2,0,3,1|N*f1*,000000,0,-1,11|N*f1*,000000,1,-1,11&amp;chf=bg,s,ffffff99|c,s,ffffff00&amp;chtt={$chtt}&amp;chd={$chd}&amp;chco=0000FF,FFA0CB,FF0000&amp;chbh=20,3&amp;chxt=x,x,y,y&amp;chxl={$chxl}&amp;chdl={$pgv_lang["male"]}|{$pgv_lang["female"]}|{$pgv_lang["stat_avg_age_at_death"]}")."\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" alt=\"".$pgv_lang["stat_18_aard"]."\" title=\"".$pgv_lang["stat_18_aard"]."\" />";
+		} else {
+			$sex_search = '';
+			$years = '';
+			if ($sex == 'F') {
+				$sex_search = " AND i_sex='F'";
+			} elseif ($sex == 'M') {
+				$sex_search = " AND i_sex='M'";
 			}
+			if ($year1>=0 && $year2>=0) {
+				if ($related=='BIRT') {
+					$years = " AND birth.d_year BETWEEN '{$year1}' AND '{$year2}'";
+				}
+				else if ($related=='DEAT') {
+					$years = " AND death.d_year BETWEEN '{$year1}' AND '{$year2}'";
+				}
+			}
+			$rows=self::_runSQL(''
+				.' SELECT'
+					.' death.d_julianday2-birth.d_julianday1 AS age'
+				.' FROM'
+					." {$TBLPREFIX}dates AS death,"
+					." {$TBLPREFIX}dates AS birth,"
+					." {$TBLPREFIX}individuals AS indi"
+				.' WHERE'
+					.' indi.i_id=birth.d_gid AND'
+					.' birth.d_gid=death.d_gid AND'
+					." death.d_file={$this->_ged_id} AND"
+					.' birth.d_file=death.d_file AND'
+					.' birth.d_file=indi.i_file AND'
+					." birth.d_fact='BIRT' AND"
+					." death.d_fact='DEAT' AND"
+					.' birth.d_julianday1!=0 AND'
+					.' death.d_julianday1>birth.d_julianday2'
+					.$years
+					.$sex_search
+				.' ORDER BY age DESC');
+			if (!isset($rows)) {return 0;}
+			return $rows;
 		}
-		$rows=self::_runSQL(''
-			.' SELECT'
-				.' death.d_julianday2-birth.d_julianday1 AS age'
-			.' FROM'
-				." {$TBLPREFIX}dates AS death,"
-				." {$TBLPREFIX}dates AS birth,"
-				." {$TBLPREFIX}individuals AS indi"
-			.' WHERE'
-				.' indi.i_id=birth.d_gid AND'
-				.' birth.d_gid=death.d_gid AND'
-				." death.d_file={$this->_ged_id} AND"
-				.' birth.d_file=death.d_file AND'
-				.' birth.d_file=indi.i_file AND'
-				." birth.d_fact='BIRT' AND"
-				." death.d_fact='DEAT' AND"
-				.' birth.d_julianday1!=0 AND'
-				.' death.d_julianday1>birth.d_julianday2'
-				.$years
-				.$sex_search
-			.' ORDER BY age DESC');
-		if (!isset($rows)) {return 0;}
-		return $rows;
 	}
 
 	// Both Sexes
@@ -1606,6 +1797,8 @@ class stats {
 
 	function topTenOldest($params=null) {return $this->_topTenOldest('nolist', 'BOTH', $params);}
 	function topTenOldestList($params=null) {return $this->_topTenOldest('list', 'BOTH', $params);}
+	function topTenOldestAlive($params=null) {return $this->_topTenOldestAlive('nolist', 'BOTH', $params);}
+	function topTenOldestListAlive($params=null) {return $this->_topTenOldestAlive('list', 'BOTH', $params);}
 
 	function averageLifespan() {return $this->_averageLifespanQuery('BOTH');}
 
@@ -1617,6 +1810,8 @@ class stats {
 
 	function topTenOldestFemale($params=null) {return $this->_topTenOldest('nolist', 'F', $params);}
 	function topTenOldestFemaleList($params=null) {return $this->_topTenOldest('list', 'F', $params);}
+	function topTenOldestFemaleAlive($params=null) {return $this->_topTenOldestAlive('nolist', 'F', $params);}
+	function topTenOldestFemaleListAlive($params=null) {return $this->_topTenOldestAlive('list', 'F', $params);}
 
 	function averageLifespanFemale() {return $this->_averageLifespanQuery('F');}
 
@@ -1628,6 +1823,8 @@ class stats {
 
 	function topTenOldestMale($params=null) {return $this->_topTenOldest('nolist', 'M', $params);}
 	function topTenOldestMaleList($params=null) {return $this->_topTenOldest('list', 'M', $params);}
+	function topTenOldestMaleAlive($params=null) {return $this->_topTenOldestAlive('nolist', 'M', $params);}
+	function topTenOldestMaleListAlive($params=null) {return $this->_topTenOldestAlive('list', 'M', $params);}
 
 	function averageLifespanMale() {return $this->_averageLifespanQuery('M');}
 
@@ -1668,8 +1865,7 @@ class stats {
 		if (!isset($rows[0])) {return '';}
 		$row=$rows[0];
 		$record=GedcomRecord::getInstance($row['id']);
-		switch($type)
-		{
+		switch($type) {
 			default:
 			case 'full':
 				if ($record->canDisplayDetails()) {
@@ -1679,11 +1875,9 @@ class stats {
 				}
 				break;
 			case 'year':
-			{
 				$date=new GedcomDate($row['type'].' '.$row['year']);
 				$result=$date->Display(true);
 				break;
-			}
 			case 'type':
 				if (isset($eventTypes[$row['fact']])) {
 					$result=$eventTypes[$row['fact']];
@@ -1693,8 +1887,7 @@ class stats {
 				break;
 			case 'name':
 				$id = '';
-				if ($SHOW_ID_NUMBERS)
-				{
+				if ($SHOW_ID_NUMBERS) {
 					if ($listDir == 'rtl') {
 						$id="&nbsp;&nbsp;" . getRLM() . "({$row['id']})" . getRLM();
 					} else {
@@ -1754,7 +1947,7 @@ class stats {
 		if ($age_dir != 'ASC') {$age_dir = 'DESC';}
 		$rows=self::_runSQL(''
 			.' SELECT'
-				.' fam.f_id,'
+				.' fam.f_id AS famid,'
 				." fam.{$sex_field},"
 				.' married.d_julianday2-birth.d_julianday1 AS age,'
 				.' indi.i_id AS i_id'
@@ -1781,10 +1974,9 @@ class stats {
 		, 1);
 		if (!isset($rows[0])) {return '';}
 		$row=$rows[0];
-		if (isset($row['fam.f_id'])) $family=Family::getInstance($row['fam.f_id']);
+		if (isset($row['famid'])) $family=Family::getInstance($row['famid']);
 		if (isset($row['i_id'])) $person=Person::getInstance($row['i_id']);
-		switch($type)
-		{
+		switch($type) {
 			default:
 			case 'full':
 				if ($family->canDisplayDetails()) {
@@ -1872,7 +2064,7 @@ class stats {
 				else {
 					$century = $values['century'];
 				}
-				$counts[] = round(100 * $values['count(*)'] / $tot, 0);;
+				$counts[] = round(100 * $values['count(*)'] / $tot, 0);
 				$centuries .= $century.' - '.$values['count(*)'].'|';
 			}
 			$chd = self::_array_to_extended_encoding($counts);
@@ -1884,51 +2076,147 @@ class stats {
 	}
 
 
-	function statsMarrAge($sex='M', $year1=-1, $year2=-1) {
-		global $TBLPREFIX;
+	function statsMarrAge($simple=true, $sex='M', $year1=-1, $year2=-1, $params=null) {
+		global $TBLPREFIX, $pgv_lang, $lang_short_cut, $LANGUAGE;
 
-		$years = '';
-		if ($year1>=0 && $year2>=0) {
-			$years = " AND married.d_year BETWEEN '{$year1}' AND '{$year2}'";
+		if ($simple) {
+			if (isset($params[0]) && $params[0] != '') {$size = strtolower($params[0]);}else{$size = '200x250';}
+			$sizes = explode('x', $size);
+			$rows=self::_runSQL(''
+				.' SELECT'
+					.' ROUND(AVG(married.d_julianday2-birth.d_julianday1-182.5)/365.25) AS age,'
+					.' ROUND((married.d_year+49.1)/100) AS century,'
+					.' indi.i_sex AS sex'
+				.' FROM'
+					." {$TBLPREFIX}families AS fam"
+				.' LEFT JOIN'
+					." {$TBLPREFIX}dates AS birth ON birth.d_file = {$this->_ged_id}"
+				.' LEFT JOIN'
+					." {$TBLPREFIX}dates AS married ON married.d_file = {$this->_ged_id}"
+				.' LEFT JOIN'
+					." {$TBLPREFIX}individuals AS indi ON indi.i_file = {$this->_ged_id}"
+				.' WHERE'
+					.' birth.d_gid = indi.i_id AND'
+					.' married.d_gid = fam.f_id AND'
+					." (indi.i_id = fam.f_wife OR"
+					." indi.i_id = fam.f_husb) AND"
+					." fam.f_file = {$this->_ged_id} AND"
+					." birth.d_fact = 'BIRT' AND"
+					." married.d_fact = 'MARR' AND"
+					.' birth.d_julianday1 != 0 AND'
+					.' married.d_julianday2 > birth.d_julianday1'
+				.' GROUP BY century, sex ORDER BY century, sex');
+			$max = 0;
+			foreach ($rows as $values) {
+				if ($max<$values['age']) $max = $values['age'];
+			}
+			$func="century_localisation_{$lang_short_cut[$LANGUAGE]}";
+			$chxl = "0:|";
+			$chmm = "";
+			$chmf = "";
+			$i = 0;
+			$male = true;
+			$temp = "";
+			$countsm = "";
+			$countsf = "";
+			$countsa = "";
+			foreach ($rows as $values) {
+				if ($max<=50) $chage = $values['age']*2;
+				else $chage = $values['age'];
+				if ($temp!=$values['century']) {
+					$temp = $values['century'];
+					if ($sizes[0]<1000) $sizes[0] += 50;
+					if (function_exists($func)) {
+						$century = $func($values['century'], false);
+					} else {
+						$century = $values['century'];
+					}
+					$chxl .= $century."|";
+					if ($values['sex'] == "F") {
+						if (!$male) {
+							$countsm .= "0,";
+							$chmm .= 't0,000000,0,'.($i-1).',11|';
+							$countsa .= $fage.",";
+						}
+						$countsf .= $chage.",";
+						$chmf .= 't'.$values['age'].',000000,1,'.$i.',11|';
+						$fage = $chage;
+						$male = false;
+					} else if ($values['sex'] == "M") {
+						$countsf .= "0,";
+						$chmf .= 't0,000000,1,'.$i.',11|';
+						$countsm .= $chage.",";
+						$chmm .= 't'.$values['age'].',000000,0,'.$i.',11|';
+						$countsa .= $chage.",";
+					} else if ($values['sex'] == "U") {
+						$countsf .= "0,";
+						$chmf .= 't0,000000,1,'.$i.',11|';
+						$countsm .= "0,";
+						$chmm .= 't0,000000,0,'.$i.',11|';
+						$countsa .= "0,";
+					}
+					$i++;
+				}
+				else if ($values['sex'] == "M") {
+					$countsm .= $chage.",";
+					$chmm .= 't'.$values['age'].',000000,0,'.($i-1).',11|';
+					$countsa .= round(($fage+$chage)/2,1).",";
+					$male = true;
+				}
+			}
+			$countsm = substr($countsm,0,-1);
+			$countsf = substr($countsf,0,-1);
+			$countsa = substr($countsa,0,-1);
+			$chmf = substr($chmf,0,-1);
+			$chd = "t2:{$countsm}|{$countsf}|{$countsa}";
+			if ($max<=50) $chxl .= "1:||".$pgv_lang["century"]."|2:|0|10|20|30|40|50|3:||".$pgv_lang["stat_age"]."|";
+			else 	$chxl .= "1:||".$pgv_lang["century"]."|2:|0|10|20|30|40|50|60|70|80|90|100|3:||".$pgv_lang["stat_age"]."|";
+			$chtt = $pgv_lang["stat_19_aarm"];
+			return "<img src=\"".encode_url("http://chart.apis.google.com/chart?cht=bvg&amp;chs={$sizes[0]}x{$sizes[1]}&amp;chm=D,FF0000,2,0,3,1|{$chmm}{$chmf}&amp;chf=bg,s,ffffff99|c,s,ffffff00&amp;chtt={$chtt}&amp;chd={$chd}&amp;chco=0000FF,FFA0CB,FF0000&amp;chbh=20,3&amp;chxt=x,x,y,y&amp;chxl={$chxl}&amp;chdl={$pgv_lang["male"]}|{$pgv_lang["female"]}|{$pgv_lang["avg_age"]}")."\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" alt=\"".$pgv_lang["stat_19_aarm"]."\" title=\"".$pgv_lang["stat_19_aarm"]."\" />";
+		} else {
+			$years = '';
+			if ($year1>=0 && $year2>=0) {
+				$years = " AND married.d_year BETWEEN '{$year1}' AND '{$year2}'";
+			}
+			if ($sex == 'F') {
+				$sex_field = 'fam.f_wife,';
+				$sex_field2 = " indi.i_id = fam.f_wife AND";
+				$sex_search = " AND i_sex='F'";
+			}
+			else if ($sex == 'M') {
+				$sex_field = 'fam.f_husb,';
+				$sex_field2 = " indi.i_id = fam.f_husb AND";
+				$sex_search = " AND i_sex='M'";
+			}
+			$rows=self::_runSQL(''
+				.' SELECT'
+					.' fam.f_id,'
+					.$sex_field
+					.' married.d_julianday2-birth.d_julianday1 AS age,'
+					.' indi.i_id AS indi'
+				.' FROM'
+					." {$TBLPREFIX}families AS fam"
+				.' LEFT JOIN'
+					." {$TBLPREFIX}dates AS birth ON birth.d_file = {$this->_ged_id}"
+				.' LEFT JOIN'
+					." {$TBLPREFIX}dates AS married ON married.d_file = {$this->_ged_id}"
+				.' LEFT JOIN'
+					." {$TBLPREFIX}individuals AS indi ON indi.i_file = {$this->_ged_id}"
+				.' WHERE'
+					.' birth.d_gid = indi.i_id AND'
+					.' married.d_gid = fam.f_id AND'
+					.$sex_field2
+					." fam.f_file = {$this->_ged_id} AND"
+					." birth.d_fact = 'BIRT' AND"
+					." married.d_fact = 'MARR' AND"
+					.' birth.d_julianday1 != 0 AND'
+					.' married.d_julianday2 > birth.d_julianday1'
+					.$sex_search
+					.$years
+				.' ORDER BY indi, age ASC');
+			if (!isset($rows)) {return 0;}
+			return $rows;
 		}
-		if ($sex == 'F') {
-			$sex_field = 'fam.f_wife,';
-			$sex_field2 = " indi.i_id = fam.f_wife AND";
-			$sex_search = " AND i_sex='F'";
-		}
-		else if ($sex == 'M') {
-			$sex_field = 'fam.f_husb,';
-			$sex_field2 = " indi.i_id = fam.f_husb AND";
-			$sex_search = " AND i_sex='M'";
-		}
-		$rows=self::_runSQL(''
-			.' SELECT'
-				.' fam.f_id,'
-				.$sex_field
-				.' married.d_julianday2-birth.d_julianday1 AS age,'
-				.' indi.i_id AS indi'
-			.' FROM'
-				." {$TBLPREFIX}families AS fam"
-			.' LEFT JOIN'
-				." {$TBLPREFIX}dates AS birth ON birth.d_file = {$this->_ged_id}"
-			.' LEFT JOIN'
-				." {$TBLPREFIX}dates AS married ON married.d_file = {$this->_ged_id}"
-			.' LEFT JOIN'
-				." {$TBLPREFIX}individuals AS indi ON indi.i_file = {$this->_ged_id}"
-			.' WHERE'
-				.' birth.d_gid = indi.i_id AND'
-				.' married.d_gid = fam.f_id AND'
-				.$sex_field2
-				." fam.f_file = {$this->_ged_id} AND"
-				." birth.d_fact = 'BIRT' AND"
-				." married.d_fact = 'MARR' AND"
-				.' birth.d_julianday1 != 0 AND'
-				.' married.d_julianday2 > birth.d_julianday1'
-				.$sex_search
-				.$years
-			.' ORDER BY indi, age ASC');
-		if (!isset($rows)) {return 0;}
-		return $rows;
 	}
 
 	//
@@ -1959,8 +2247,7 @@ class stats {
 // Family Size                                                               //
 ///////////////////////////////////////////////////////////////////////////////
 
-	function _familyQuery($type='full')
-	{
+	function _familyQuery($type='full') {
 		global $TBLPREFIX, $pgv_lang;
 		$rows=self::_runSQL(''
 			.' SELECT'
@@ -1976,12 +2263,10 @@ class stats {
 		if (!isset($rows[0])) {return '';}
 		$row = $rows[0];
 		$family=Family::getInstance($row['id']);
-		switch($type)
-		{
+		switch($type) {
 			default:
 			case 'full':
-				if ($family->canDisplayDetails())
-				{
+				if ($family->canDisplayDetails()) {
 					$result=$family->format_list('span', false, $family->getListName());
 				} else {
 					$result = $pgv_lang['privacy_error'];
@@ -1998,8 +2283,7 @@ class stats {
 		return str_replace('<a href="', '<a href="'.$this->_server_url, $result);
 	}
 
-	function _topTenFamilyQuery($type='list', $params=null)
-	{
+	function _topTenFamilyQuery($type='list', $params=null) {
 		global $TBLPREFIX, $TEXT_DIRECTION, $pgv_lang;
 		if ($params !== null && isset($params[0])) {$total = $params[0];}else{$total = 10;}
 		$rows=self::_runSQL(''
@@ -2020,9 +2304,9 @@ class stats {
 			$family=Family::getInstance($rows[$c]['id']);
 			if ($family->canDisplayDetails()) {
 				if ($type == 'list') {
-					$top10[] = "\t<li><a href=\"".encode_url($family->getLinkUrl())."\">".PrintReady($family->getFullName())."</a> [{$rows[$c]['tot']} {$pgv_lang['children']}]</li>\n";
+					$top10[] = "\t<li><a href=\"".encode_url($family->getLinkUrl())."\">".PrintReady($family->getFullName())."</a> [{$rows[$c]['tot']} {$pgv_lang['lchildren']}]</li>\n";
 				} else {
-					$top10[] = "<a href=\"".encode_url($family->getLinkUrl())."\">".PrintReady($family->getFullName())."</a> [{$rows[$c]['tot']} {$pgv_lang['children']}]";
+					$top10[] = "<a href=\"".encode_url($family->getLinkUrl())."\">".PrintReady($family->getFullName())."</a> [{$rows[$c]['tot']} {$pgv_lang['lchildren']}]";
 				}
 			}
 		}
@@ -2047,8 +2331,7 @@ class stats {
 	function topTenLargestFamily($params=null) {return $this->_topTenFamilyQuery('nolist', $params);}
 	function topTenLargestFamilyList($params=null) {return $this->_topTenFamilyQuery('list', $params);}
 
-	function chartLargestFamilies($params=null)
-	{
+	function chartLargestFamilies($params=null) {
 		global $TBLPREFIX, $pgv_lang;
 		if ($params === null) {$params = array();}
 		if (isset($params[0]) && $params[0] != '') {$size = strtolower($params[0]);}else{$size = '1000x150';}
@@ -2081,7 +2364,6 @@ class stats {
 			}
 			$chd .= self::_array_to_extended_encoding(array($per));
 			$family=Family::getInstance($rows[$i]['id']);
-//			$chl[] = $family->getFullName().' - '.$rows[$i]['tot'];
 			$chl[] = strip_tags(unhtmlentities($family->getFullName())).' - '.$rows[$i]['tot'];
 		}
 		$chl = join('|', $chl);
@@ -2090,55 +2372,174 @@ class stats {
 		return "<img src=\"".encode_url("http://chart.apis.google.com/chart?cht=p3&amp;chd=e:{$chd}&amp;chs={$size}&amp;chco={$color_from},{$color_to}&amp;chf=bg,s,ffffff00&amp;chl={$chl}")."\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" alt=\"".$pgv_lang["stat_21_nok"]."\" title=\"".$pgv_lang["stat_21_nok"]."\" />";
 	}
 
-	function averageChildren()
-	{
+	function averageChildren() {
 		global $TBLPREFIX;
 		$rows=self::_runSQL("SELECT AVG(f_numchil) AS tot FROM {$TBLPREFIX}families WHERE f_file={$this->_ged_id}");
 		$row=$rows[0];
 		return sprintf('%.2f', $row['tot']);
 	}
 
-	function statsChildren($sex='BOTH', $year1=-1, $year2=-1)
-	{
-		global $TBLPREFIX;
+	function statsChildren($simple=true, $sex='BOTH', $year1=-1, $year2=-1, $params=null) {
+		global $TBLPREFIX, $pgv_lang, $lang_short_cut, $LANGUAGE;
 
-		if ($sex=='M') {
-			$sql = "SELECT num, COUNT(*) FROM "
+		if ($simple) {
+			if (isset($params[0]) && $params[0] != '') {$size = strtolower($params[0]);}else{$size = '220x250';}
+			$sizes = explode('x', $size);
+			$max = 0;
+			$rows=self::_runSQL(''
+				.' SELECT'
+					.' ROUND(AVG(f_numchil),2) AS num,'
+					.' ROUND((married.d_year+49.1)/100) AS century'
+				.' FROM'
+					." {$TBLPREFIX}families AS fam"
+				.' LEFT JOIN'
+					." {$TBLPREFIX}dates AS married ON married.d_file = {$this->_ged_id}"
+				.' WHERE'
+					.' married.d_gid = fam.f_id AND'
+					." fam.f_file = {$this->_ged_id} AND"
+					." married.d_fact = 'MARR'"
+				.' GROUP BY century ORDER BY century');
+			foreach ($rows as $values) {
+				if ($max<$values['num']) $max = $values['num'];
+			}
+			$chm = "";
+			$chxl = "0:|";
+			$i = 0;
+			$func="century_localisation_{$lang_short_cut[$LANGUAGE]}";
+			foreach ($rows as $values) {
+				if ($sizes[0]<980) $sizes[0] += 38;
+				if (function_exists($func)) {
+					$chxl .= $func($values['century'], false)."|";
+				}
+				else {
+					$chxl .= $values['century']."|";
+				}
+				if ($max<=5) $counts[] = round($values['num']*819.2-1, 1);
+				else $counts[] = round($values['num']*409.6, 1);
+				$chm .= 't'.$values['num'].',000000,0,'.$i.',11|';
+				$i++;
+			}
+			$chd = self::_array_to_extended_encoding($counts);
+			$chm = substr($chm,0,-1);
+			if ($max<=5) $chxl .= "1:||".$pgv_lang["century"]."|2:|0|1|2|3|4|5|3:||".$pgv_lang["stat_21_nok"]."|";
+			else $chxl .= "1:||".$pgv_lang["century"]."|2:|0|1|2|3|4|5|6|7|8|9|10|3:||".$pgv_lang["stat_21_nok"]."|";
+			$chtt = $pgv_lang["stat_average_children"];
+			return "<img src=\"".encode_url("http://chart.apis.google.com/chart?cht=bvg&amp;chs={$sizes[0]}x{$sizes[1]}&amp;chf=bg,s,ffffff99|c,s,ffffff00&amp;chm=D,FF0000,0,0,3,1|{$chm}&amp;chtt={$chtt}&amp;chd=e:{$chd}&amp;chco=0000FF&amp;chbh=30,3&amp;chxt=x,x,y,y&amp;chxl={$chxl}")."\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" alt=\"".$pgv_lang["stat_average_children"]."\" title=\"".$pgv_lang["stat_average_children"]."\" />";
+		} else {
+			if ($sex=='M') {
+				$sql = "SELECT num, COUNT(*) FROM "
 						."(SELECT count(i_sex) AS num FROM {$TBLPREFIX}link "
 							."LEFT OUTER JOIN {$TBLPREFIX}individuals "
 							."ON l_from=i_id AND l_file=i_file AND i_sex='M' AND l_type='FAMC' "
 							."JOIN {$TBLPREFIX}families ON f_file=l_file AND f_id=l_to WHERE f_file={$this->_ged_id} GROUP BY l_to"
 						.") boys"
 						." GROUP BY num ORDER BY num ASC";
-		}
-		else if ($sex=='F') {
-			$sql = "SELECT num, COUNT(*) FROM "
+			}
+			else if ($sex=='F') {
+				$sql = "SELECT num, COUNT(*) FROM "
 						."(SELECT count(i_sex) AS num FROM {$TBLPREFIX}link "
 							."LEFT OUTER JOIN {$TBLPREFIX}individuals "
 							."ON l_from=i_id AND l_file=i_file AND i_sex='F' AND l_type='FAMC' "
 							."JOIN {$TBLPREFIX}families ON f_file=l_file AND f_id=l_to WHERE f_file={$this->_ged_id} GROUP BY l_to"
 						.") girls"
 						." GROUP BY num ORDER BY num ASC";
-		}
-		else {
-			$sql = "SELECT f_numchil, COUNT(*) FROM {$TBLPREFIX}families ";
-			if ($year1>=0 && $year2>=0) {
-				$sql .= "AS fam LEFT JOIN {$TBLPREFIX}dates AS married ON married.d_file = {$this->_ged_id}"
-					.' WHERE'
-					.' married.d_gid = fam.f_id AND'
-					." fam.f_file = {$this->_ged_id} AND"
-					." married.d_fact = 'MARR' AND"
-					." married.d_year BETWEEN '{$year1}' AND '{$year2}'";
 			}
 			else {
-				$sql .='WHERE '
-					."f_file={$this->_ged_id}";
+				$sql = "SELECT f_numchil, COUNT(*) FROM {$TBLPREFIX}families ";
+				if ($year1>=0 && $year2>=0) {
+					$sql .= "AS fam LEFT JOIN {$TBLPREFIX}dates AS married ON married.d_file = {$this->_ged_id}"
+						.' WHERE'
+						.' married.d_gid = fam.f_id AND'
+						." fam.f_file = {$this->_ged_id} AND"
+						." married.d_fact = 'MARR' AND"
+						." married.d_year BETWEEN '{$year1}' AND '{$year2}'";
+				}
+				else {
+					$sql .='WHERE '
+						."f_file={$this->_ged_id}";
+				}
+				$sql .= ' GROUP BY f_numchil';
 			}
-			$sql .= ' GROUP BY f_numchil';
+			$rows=self::_runSQL($sql);
+			if (!isset($rows)) {return 0;}
+			return $rows;
 		}
-		$rows=self::_runSQL($sql);
-		if (!isset($rows)) {return 0;}
-		return $rows;
+	}
+
+	function noChildrenFamilies() {
+		global $TBLPREFIX;
+		$rows=self::_runSQL(''
+			.' SELECT'
+				.' COUNT(*) AS tot'
+			.' FROM'
+				." {$TBLPREFIX}families AS fam"
+			.' WHERE'
+				.' f_numchil = 0 AND'
+				." fam.f_file = {$this->_ged_id}");
+		$row=$rows[0];
+		return $row['tot'];
+	}
+
+	function chartNoChildrenFamilies($year1=-1, $year2=-1, $params=null) {
+		global $TBLPREFIX, $pgv_lang, $lang_short_cut, $LANGUAGE;
+
+		if (isset($params[0]) && $params[0] != '') {$size = strtolower($params[0]);}else{$size = '220x250';}
+		$sizes = explode('x', $size);
+		if ($year1>=0 && $year2>=0) {
+			$years = " married.d_year BETWEEN '{$year1}' AND '{$year2}' AND";
+		} else {
+			$years = "";
+		}
+		$max = 0;
+		$tot = 0;
+		$rows=self::_runSQL(''
+			.' SELECT'
+				.' COUNT(*) AS count,'
+				.' ROUND((married.d_year+49.1)/100) AS century'
+			.' FROM'
+				." {$TBLPREFIX}families AS fam"
+			.' LEFT JOIN'
+				." {$TBLPREFIX}dates AS married ON married.d_file = {$this->_ged_id}"
+			.' WHERE'
+				.' f_numchil = 0 AND'
+				.' married.d_gid = fam.f_id AND'
+				." fam.f_file = {$this->_ged_id} AND"
+				.$years
+				." married.d_fact = 'MARR'"
+			.' GROUP BY century ORDER BY century');
+		foreach ($rows as $values) {
+			if ($max<$values['count']) $max = $values['count'];
+			$tot += $values['count'];
+		}
+		$unknown = $this->noChildrenFamilies()-$tot;
+		if ($unknown>$max) $max=$unknown;
+		$chm = "";
+		$chxl = "0:|";
+		$i = 0;
+		$func="century_localisation_{$lang_short_cut[$LANGUAGE]}";
+		foreach ($rows as $values) {
+			if ($sizes[0]<980) $sizes[0] += 38;
+			if (function_exists($func)) {
+				$chxl .= $func($values['century'], false)."|";
+			}
+			else {
+				$chxl .= $values['century']."|";
+			}
+			$counts[] = round(4095*$values['count']/($max+1));
+			$chm .= 't'.$values['count'].',000000,0,'.$i.',11|';
+			$i++;
+		}
+		$counts[] = round(4095*$unknown/($max+1));
+		$chd = self::_array_to_extended_encoding($counts);
+		$chm .= 't'.$unknown.',000000,0,'.$i.',11';
+		$chxl .= $pgv_lang["no_date_fam"]."|1:||".$pgv_lang["century"]."|2:|0|";
+		$step = $max+1;
+		for ($d=floor($max+1); $d>0; $d--) if (($max+1)<($d*10+1) && fmod(($max+1),$d)==0) $step = $d;
+		if ($step==floor($max+1)) for ($d=floor($max); $d>0; $d--) if ($max<($d*10+1) && fmod($max,$d)==0) $step = $d;
+		for ($n=$step; $n<=($max+1); $n+=$step) $chxl .= $n."|";
+		$chxl .= "3:||".$pgv_lang["statnfam"]."|";
+		$chtt = $pgv_lang["stat_22_fwok"];
+		return "<img src=\"".encode_url("http://chart.apis.google.com/chart?cht=bvg&amp;chs={$sizes[0]}x{$sizes[1]}&amp;chf=bg,s,ffffff99|c,s,ffffff00&amp;chm=D,FF0000,0,0:".($i-1).",3,1|{$chm}&amp;chtt={$chtt}&amp;chd=e:{$chd}&amp;chco=0000FF,ffffff00&amp;chbh=30,3&amp;chxt=x,x,y,y&amp;chxl={$chxl}")."\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" alt=\"".$pgv_lang["stat_22_fwok"]."\" title=\"".$pgv_lang["stat_22_fwok"]."\" />";
 	}
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -2197,8 +2598,7 @@ class stats {
 	static function commonSurnamesList($params=array('','','alpha')) {return self::_commonSurnamesQuery('list', false, $params);}
 	static function commonSurnamesListTotals($params=array('','','rcount')) {return self::_commonSurnamesQuery('list', true, $params);}
 
-	function chartCommonSurnames($params=null)
-	{
+	function chartCommonSurnames($params=null) {
 		global $pgv_lang, $COMMON_NAMES_THRESHOLD;
 		if ($params === null) {$params = array();}
 		if (isset($params[0]) && $params[0] != '') {$size = strtolower($params[0]);}else{$size = '440x125';}
@@ -2253,8 +2653,7 @@ class stats {
 	* [ 1977282 ] Most Common Given Names Block
 	* Original block created by kiwi_pgv
 	*/
-	static function _commonGivenQuery($sex='B', $type='list', $show_tot=false, $params=null)
-	{
+	static function _commonGivenQuery($sex='B', $type='list', $show_tot=false, $params=null) {
 		global $TEXT_DIRECTION, $GEDCOM, $TBLPREFIX, $pgv_lang;
 		static $sort_types = array('count'=>'asort', 'rcount'=>'arsort', 'alpha'=>'ksort', 'ralpha'=>'krsort');
 		static $sort_flags = array('count'=>SORT_NUMERIC, 'rcount'=>SORT_NUMERIC, 'alpha'=>SORT_STRING, 'ralpha'=>SORT_STRING);
@@ -2372,20 +2771,16 @@ class stats {
 // Users                                                                     //
 ///////////////////////////////////////////////////////////////////////////////
 
-	static function _usersLoggedIn($type='nolist')
-	{
+	static function _usersLoggedIn($type='nolist') {
 		global $PGV_SESSION_TIME, $pgv_lang;
 		// Log out inactive users
-		foreach (get_idle_users(time() - $PGV_SESSION_TIME) as $user_id=>$user_name)
-		{
-			if ($user_id != PGV_USER_ID)
-			{
+		foreach (get_idle_users(time() - $PGV_SESSION_TIME) as $user_id=>$user_name) {
+			if ($user_id != PGV_USER_ID) {
 				userLogout($user_id);
 			}
 		}
 
 		$content = '';
-
 		// List active users
 		$NumAnonymous = 0;
 		$loggedusers = array ();
@@ -2398,14 +2793,12 @@ class stats {
 			}
 		}
 		$LoginUsers = count($loggedusers);
-		if (($LoginUsers == 0) and ($NumAnonymous == 0))
-		{
+		if (($LoginUsers == 0) and ($NumAnonymous == 0)) {
 			return $pgv_lang['no_login_users'];
 		}
 		$Advisory = 'anon_user';
 		if ($NumAnonymous > 1) {$Advisory .= 's';}
-		if ($NumAnonymous > 0)
-		{
+		if ($NumAnonymous > 0) {
 			$pgv_lang['global_num1'] = $NumAnonymous; // Make it visible
 			$content .= '<b>'.print_text($Advisory, 0, 1).'</b>';
 		}
@@ -2453,8 +2846,7 @@ class stats {
 		return $content;
 	}
 
-	static function _usersLoggedInTotal($type='all')
-	{
+	static function _usersLoggedInTotal($type='all') {
 		global $PGV_SESSION_TIME;
 
 		foreach (get_idle_users(time() - $PGV_SESSION_TIME) as $user_id=>$user_name) {
@@ -2462,7 +2854,6 @@ class stats {
 				userLogout($user_id);
 			}
 		}
-
 		$anon = 0;
 		$visible = 0;
 		$x = get_logged_in_users();
@@ -2487,57 +2878,38 @@ class stats {
 	static function userFirstName() {return get_user_setting(getUserId(), 'firstname');}
 	static function userLastName() {return get_user_setting(getUserId(), 'lastname');}
 
-	static function _getLatestUserData($type='userid', $params=null)
-	{
+	static function _getLatestUserData($type='userid', $params=null) {
 		global $DATE_FORMAT, $TIME_FORMAT, $pgv_lang;
 		static $user = null;
 
-		if($user === null)
-		{
+		if($user === null) {
 			$users = get_all_users('DESC', 'reg_timestamp', 'username');
 			$user = array_shift($users);
 			unset($users);
 		}
 
-		switch($type)
-		{
+		switch($type) {
 			default:
 			case 'userid':
-			{
 				return $user;
-			}
 			case 'username':
-			{
 				return get_user_name($user);
-			}
 			case 'fullname':
-			{
 				return getUserFullName($user);
-			}
 			case 'firstname':
-			{
 				return get_user_setting($user, 'firstname');
-			}
 			case 'lastname':
-			{
 				return get_user_setting($user, 'lastname');
-			}
 			case 'regdate':
-			{
 				if(is_array($params) && isset($params[0]) && $params[0] != ''){$datestamp = $params[0];}else{$datestamp = $DATE_FORMAT;}
 				return date($datestamp, get_user_setting($user, 'reg_timestamp'));
-			}
 			case 'regtime':
-			{
 				if(is_array($params) && isset($params[0]) && $params[0] != ''){$datestamp = $params[0];}else{$datestamp = $TIME_FORMAT;}
 				return date($datestamp, get_user_setting($user, 'reg_timestamp'));
-			}
 			case 'loggedin':
-			{
 				if(is_array($params) && isset($params[0]) && $params[0] != ''){$yes = $params[0];}else{$yes = $pgv_lang['yes'];}
 				if(is_array($params) && isset($params[1]) && $params[1] != ''){$no = $params[1];}else{$no = $pgv_lang['no'];}
 				return (get_user_setting($user, 'loggedin') == 'Y')?$yes:$no;
-			}
 		}
 	}
 
@@ -2584,8 +2956,7 @@ class stats {
 	/*
 	* Leave for backwards compatability? Anybody using this?
 	*/
-	static function _getEventType($type)
-	{
+	static function _getEventType($type) {
 		global $pgv_lang;
 		$eventTypes=array(
 			'BIRT'=>$pgv_lang['htmlplus_block_birth'],
@@ -2602,12 +2973,10 @@ class stats {
 	}
 
 	// http://bendodson.com/news/google-extended-encoding-made-easy/
-	static function _array_to_extended_encoding($a)
-	{
+	static function _array_to_extended_encoding($a) {
 		if (!is_array($a)) {$a = array($a);}
 		$encoding = '';
-		foreach ($a as $value)
-		{
+		foreach ($a as $value) {
 			if ($value<0) $value = 0;
 			$first = floor($value / 64);
 			$second = $value % 64;
@@ -2624,26 +2993,21 @@ class stats {
 		return compareStrings(strip_prefix($b['name']), strip_prefix($a['name']), true);  // Case-insensitive compare
 	}
 
-	static function _name_total_sort($a, $b)
-	{
+	static function _name_total_sort($a, $b) {
 		return $a['match']-$b['match'];
 	}
 
-	static function _name_total_rsort($a, $b)
-	{
+	static function _name_total_rsort($a, $b) {
 		return $b['match']-$a['match'];
 	}
 
-	static function _runSQL($sql, $count=0)
-	{
+	static function _runSQL($sql, $count=0) {
 		static $cache = array();
 		$id = md5($sql)."_{$count}";
 		if (isset($cache[$id])) {
 			return $cache[$id];
 		}
-
 		$rows=PGV_DB::prepareLimit($sql, $count)->fetchAll(PDO::FETCH_ASSOC);
-
 		$cache[$id]=$rows;
 		return $rows;
 	}

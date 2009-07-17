@@ -3,7 +3,7 @@
  * French Language file for PhpGedView.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team
+ * Copyright (C) 2002 to 2009  PGV Development Team
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -138,7 +138,7 @@ $countries["HTI"]                       ="Haïti";
 $countries["HUN"]                       ="Hongrie";
 $countries["IDN"]                       ="Indonésie";
 $countries["IND"]                       ="Inde";
-$countries["IOM"]						="Île de Man";
+$countries["IOM"]                       ="Île de Man";
 $countries["IOT"]                       ="Territoire britannique de l'océan Indien";
 $countries["IRL"]                       ="Irlande";
 $countries["IRN"]                       ="Iran (République islamique d')";

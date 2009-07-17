@@ -1206,18 +1206,27 @@ $pgv_lang["ahnentafel_header"]		= "Antavlerapport för ";
 $pgv_lang["ahnentafel_generation"]	= "Generationer ";
 $pgv_lang["ahnentafel_pronoun_m"]	= "Han ";
 $pgv_lang["ahnentafel_pronoun_f"]	= "Hon ";
-$pgv_lang["ahnentafel_born_m"]		= "Föddes";
+$pgv_lang["ahnentafel_born_m"]		= "föddes";
 $pgv_lang["ahnentafel_born_f"]		= "föddes";
 $pgv_lang["ahnentafel_christened_m"] = "döptes";
 $pgv_lang["ahnentafel_christened_f"] = "döptes";
-$pgv_lang["ahnentafel_married_m"]	= "vigdes";
-$pgv_lang["ahnentafel_married_f"]	= "vigdes";
+$pgv_lang["ahnentafel_married_m"]	= "vigdes med";
+$pgv_lang["ahnentafel_married_f"]	= "vigdes med";
+$pgv_lang["ahnentafel_married_post"]= "&nbsp;";
 $pgv_lang["ahnentafel_died_m"]		= "dog";
 $pgv_lang["ahnentafel_died_f"]		= "dog";
 $pgv_lang["ahnentafel_buried_m"]	= "begravdes";
 $pgv_lang["ahnentafel_buried_f"]	= "begravdes";
 $pgv_lang["ahnentafel_place"]		= " i ";
 $pgv_lang["ahnentafel_no_details"]	= " men detaljerna är okända";
+$pgv_lang["ahnentafel_on"]			= " den ";
+
+//-- Descendency report
+$pgv_lang["son_of"]					= "son av";
+$pgv_lang["daughter_of"]			= "dotter av";
+$pgv_lang["child_of"]				= "Barn av ";
+$pgv_lang["children_of"]			= "Barn av ";
+
 $pgv_lang["changes_report"]			= "Ändringsrapport";
 $pgv_lang["changes_pending_tot"]	= "Totalt antal väntande ändringar: ";
 $pgv_lang["changes_accepted_tot"]	= "Totalt antal accepterade ändringar: ";

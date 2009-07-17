@@ -152,7 +152,7 @@ $pgv_lang["unrecognized_code_msg"]				= "Ez egy programhiba, és szeretnénk kij
 $pgv_lang["indi_info"]						= "Személyes adatok";
 $pgv_lang["pedigree_chart"]					= "Ősfa";
 $pgv_lang["individual"]						= "Személy";
-$pgv_lang["family_with"]					= "Család (valakivel)";
+$pgv_lang["family_with"]					= "Család házastárssal -";
 $pgv_lang["as_spouse"]						= "Család a házastárssal";
 $pgv_lang["as_child"]						= "Család a szülőkkel";
 $pgv_lang["view_gedcom"]					= "A GEDCOM-rekord megtekintése";
@@ -160,7 +160,7 @@ $pgv_lang["add_to_cart"]					= "Hozzáadás a Metszési Kosárhoz";
 $pgv_lang["still_living_error"]					= "A személy jelenleg is életben van, illetve nincs hozzárendelt születési vagy halálozási adat.  Az élő személyek adatai nem nyilvánosak.<br />További információt a következő címen kérhet:";
 $pgv_lang["privacy_error"]	    				= "A személy adatai bizalmas jellegűek.<br />";
 $pgv_lang["more_information"]					= "További információt itt kérhet:";
-$pgv_lang["name"]						= "Név:";
+$pgv_lang["name"]						= "Név";
 $pgv_lang["given_name"]						= "Keresztnév:";
 $pgv_lang["surname"]						= "Vezetéknév:";
 $pgv_lang["suffix"]						= "Utótag:";
@@ -300,7 +300,7 @@ $pgv_lang["search_year"]					= "Év";
 $pgv_lang["no_results"]						= "Nincs találat";
 $pgv_lang["search_soundex"]					= "Hangzási keresés";
 $pgv_lang["page_x_of_y"]					= "#GLOBALS[currentPage]# oldal a #GLOBALS[lastPage]#-ból/ből";
-$pgv_lang["include"]						= "Tartalmazza:";
+$pgv_lang["include"]						= "Tartalmazza";
 $pgv_lang["roman_givn"]						= "Keresztnév egyszerű karakterekkel";
 $pgv_lang["roman_surn"]						= "Vezetéknév egyszerű karakterekkel";
 $pgv_lang["include_media"]					= "Média befoglalása (fájlok automatikus tömörítése)";
@@ -504,7 +504,7 @@ $pgv_lang["ramad"]        					= "Ramadán";
 $pgv_lang["shaww"]        					= "Sevvál";
 $pgv_lang["dhuaq"]        					= "Dsül kade";
 $pgv_lang["dhuah"]        					= "Dsül hedse";
-$pgv_lang["abt"]						= "körül";
+$pgv_lang["abt"]						= "körülbelül";
 $pgv_lang["aft"]						= "után";
 $pgv_lang["and"]						= "és";
 $pgv_lang["bef"]						= "előtt";
@@ -717,7 +717,7 @@ $pgv_lang["step1"]						= "1. lépés a 4-ből:";
 $pgv_lang["step3"]						= "3. lépés a 4-ből:";
 $pgv_lang["step4"]						= "4. lépés a 4-ből:";
 $pgv_lang["cancel_upload"]					= "Feltöltés megszakítása";
-	 
+
 //-- Relationship chart messages
 $pgv_lang["relationship_chart"]					= "Rokonsági fok";
 $pgv_lang["person1"]						= "1. személy";
@@ -771,7 +771,7 @@ $pgv_lang["select_date"]                			= "Dátumválasztás";
 $pgv_lang["user_cannot_edit"]           			= "Ez a felhasználó nem szerkesztheti ezt a GEDCOM-állományt.";
 $pgv_lang["bdm"]						= "Születések, Halálozások, Házasságok";
 $pgv_lang["ged_noshow"]						= "Ezt az oldalt az internetcím adminisztrátora lekapcsolta.";
-	 
+
 //-- calendar.php messages
 $pgv_lang["on_this_day"]					= "Ezen a napon az Ön múltjában...";
 $pgv_lang["in_this_month"]					= "Ebben a hónapban az Ön múltjában ...";
@@ -873,7 +873,7 @@ $pgv_lang["welcome_text_auth_mode_3"]   			= "<center><b>Üdvözöljük ezen a C
 $pgv_lang["acceptable_use"]					= "<div class=\"largeError\">Megjegyzés:</div><div class=\"error\">A következő form kitöltésével és elküldésével, Ön elfogadja a következőket:<ul><li>az oldalakon lévő élő személyek személyes adatai védelmezi</li><li>a lenti dobozban írja meg ki a felmenője, vagy adjon meg információt olyan személyről aki szerepelhet az oldalon.</li></ul></div>";
 $pgv_lang["welcome_text_cust_head"]				= "<center><b>Üdvözöljük ezen a Családfakutató-Honlapon</b></center><br />A honlapot érvényes felhasználói névvel és jelszóval rendelkező felhasználók látogathatják.<br />";
 $pgv_lang["acceptable_use"]					= "<div class=\"largeError\">Megjegyzés:</div><div class=\"error\">Jelen kérdőív kitöltésével Ön elfogadja az alábbiakat:<ul><li>az oldalunkon szereplő élő emberek adatainak bizalmasságát megőrzi,</li><li>illetve az alábbi 'Megjegyzés' szövegdobozban elmagyarázza, hogy ki(k)hez kapcsolódik, vagy információt ad olyan személyről akiről feltételezi, hogy szerepel az oldalunkon.</li></ul></div>";
-	 
+
 //-- mygedview page
 $pgv_lang["welcome"]						= "Üdvözöljük";
 $pgv_lang["upcoming_events"]					= "Következő események";
@@ -1162,7 +1162,7 @@ $pgv_lang["mar_1st"]						= "Márc";
 $pgv_lang["feb_1st"]						= "Feb";
 $pgv_lang["jan_1st"]						= "Jan";
 $pgv_lang["stat_males"]						= "Férfiak száma";
-$pgv_lang["after"]						= "utána";
+$pgv_lang["after"]						= "késöbb mint";
 $pgv_lang["before"]						= "előtte";
 $pgv_lang["before_or_after"]					= "Helyezze a számlálót a név elé vagy mögé?";
 $pgv_lang["days_to_show"]					= "Napok száma feltüntetése";
@@ -1174,7 +1174,7 @@ $pgv_lang["changelog"]						= "Verzió #VERSION# változások";
 $pgv_lang["importing_dates"]					= "Dátum adatok importálása";
 $pgv_lang["index_edit_advice"]					= "Jelöljön ki egy Blokkot és kattintson az egyik nyílra hogy, áthelyezze a kijelölt Blokkot a megadott irányba.";
 $pgv_lang["address_list"]					= "Cím Lista";
-$pgv_lang["filter_address"]					= "Címek mutatása ami ezt tartalmaz:";
+$pgv_lang["filter_address"]					= "Címek mutatása ami ezt tartalmaz";
 $pgv_lang["stat_media"]						= "Média objektumok";
 $pgv_lang["address_labels"]					= "Cím Etikettek";
 $pgv_lang["link_new_wife"]					= "Hozzáadni egy feleséget egy bejegyzett személyből választva";
@@ -1262,8 +1262,8 @@ $pgv_lang["adds_completed"]					= "A médiát sikeresen hozzáadtuk a GEDCOM-ál
 $pgv_lang["descendancy_header"]					= "Leszármazási jelentés a következőhöz";
 $pgv_lang["descend_report"]					= "Leszármazási jelentés";
 $pgv_lang["ahnentafel_no_details"]				= "de a részletek ismeretlenek";
-$pgv_lang["ahnentafel_place"]					= "ban/ben";
-	 
+$pgv_lang["ahnentafel_place"]					= " ";
+
 //-- hourglass chart
 $pgv_lang["hourglass_chart"]					= "Homokóra diagram";
 //-- report engine
@@ -1284,8 +1284,8 @@ $pgv_lang["on"]							= "a következőn";
 $pgv_lang["with"]						= "val/vel";
 $pgv_lang["relatives_report_ext"]				= "Kiterjesztett rokonsági jelentés";
 $pgv_lang["ahnentafel_generation"]				= "Generáció ";
-$pgv_lang["ahnentafel_buried_f"]				= "eltemetve";
-$pgv_lang["ahnentafel_buried_m"]				= "eltemetve";
+$pgv_lang["ahnentafel_buried_f"]				= "el lett temetve";
+$pgv_lang["ahnentafel_buried_m"]				= "el lett temetve";
 $pgv_lang["of"] 						= "/";
 $pgv_lang["marrdate2"]						= "Házassági dátum tartomány vége";
 $pgv_lang["marrdate1"]						= "Házassági dátum tartomány kezdete";
@@ -1297,10 +1297,10 @@ $pgv_lang["deathplace"]						= "Halálozási hely tartalmazza";
 $pgv_lang["death_report"]					= "Halálozási év és hely jelentés";
 $pgv_lang["ahnentafel_died_f"]					= "elhunyt";
 $pgv_lang["ahnentafel_died_m"]					= "elhunyt";
-$pgv_lang["ahnentafel_married_f"]				= "házasodott";
-$pgv_lang["ahnentafel_married_m"]				= "házasodott";
-$pgv_lang["ahnentafel_christened_f"]				= "keresztelkedett";
-$pgv_lang["ahnentafel_christened_m"]				= "keresztelkedett";
+$pgv_lang["ahnentafel_married_f"]				= "meg házasodott";
+$pgv_lang["ahnentafel_married_m"]				= "meg házasodott";
+$pgv_lang["ahnentafel_christened_f"]				= "meg lett keresztelve";
+$pgv_lang["ahnentafel_christened_m"]				= "meg lett keresztelve";
 $pgv_lang["ahnentafel_born_f"]					= "született";
 $pgv_lang["ahnentafel_born_m"]					= "született";
 $pgv_lang["ahnentafel_pronoun_f"]				= "Ő ";
@@ -1315,13 +1315,13 @@ $pgv_lang["show_photos"]					= "Megmutassuk a fényképeket?";
 $pgv_lang["individual_report"]					= "Személyes jelentés";
 $pgv_lang["enter_pid"]						= "A személy azonosítója";
 $pgv_lang["individual_list_report"]				= "Személyes lista";
-$pgv_lang["generated_by"]               			= "Létrehozta:";
+$pgv_lang["generated_by"]               			= "Létrehozta";
 $pgv_lang["list_children"]              			= "Gyermekek listázása születésük szerint.";
 $pgv_lang["birth_report"]               			= "Születési dátum és hely jelentés";
 $pgv_lang["birthplace"]                 			= "Születési hely tartalmazza";
 $pgv_lang["birthdate1"]                 			= "Születési idő-intervallum kezdete";
 $pgv_lang["birthdate2"]                 			= "Születési idő-intervallum vége";
-$pgv_lang["sort_by"]                    			= "rendezési elv:";
+$pgv_lang["sort_by"]                    			= "Sorrend";
 $pgv_lang["cleanup"]						= "Tisztítás";
  //-- CONFIGURE (extra) messages for programs patriarch, slklist and statistics
 $pgv_lang["dynasty_list"]               			= "Családok áttekintése";
@@ -1331,7 +1331,7 @@ $pgv_lang["excel_tab"]                  			= "tabblad:";
 $pgv_lang["excel_create"]               			= " átmásolásra kerül ebben az állományba:";
 $pgv_lang["patriarch_list"]             			= "Patriarch lista";
 $pgv_lang["slk_list"]                   			= "Excel .slk lista";
-$pgv_lang["statistics"]                 			= "Statisztika:";
+$pgv_lang["statistics"]                 			= "Statisztika";
 //-- Merge Records
 $pgv_lang["merge_same"]                 			= "A kiválasztott rekordok típusa nem egyezik meg, így azok nem fűzhetők össze.";
 $pgv_lang["merge_step1"]                			= "Összefűzés -  1. lépés a 3-ból";
@@ -1516,7 +1516,7 @@ $pgv_lang["statnfemale"]               				= "nők száma      =";
 $pgv_lang["statlxa"]                    			= "az x-tengely mentén:";
 $pgv_lang["statlya"]                    			= "az y-tengely mentén:";
 $pgv_lang["statlza"]                    			= "a z-tengely mentén:";
-  	 
+
 //-- statisticsplot utility
 $pgv_lang["stpl"]                        			= "...";
 $pgv_lang["stplGDno"]			 			= "Graphics Display Library nincsen a PHP 4 -ben. Kérem, lépjen kapcsolatba az ön rendszeradminisztátorával.";
@@ -1666,4 +1666,6 @@ $pgv_lang["charts_block_descr"]					= "A Grafikonok blokk segítségével, grafi
 $pgv_lang["charts_block"]					= "Grafikon blokk";
 $pgv_lang["switch_lifespan"]					= "Élettartam grafikon";
 $pgv_lang["switch_timeline"]					= "Idővonal grafikon";
+$pgv_lang["cemetery_report"]		= "Temetés jelentés";
+$pgv_lang["spouse"] 				= "Házastárs";
 ?>

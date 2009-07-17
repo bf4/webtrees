@@ -2914,26 +2914,6 @@ function get_report_list($force=false) {
 	return $files;
 }
 
-/**
- * remove any custom PGV tags from the given gedcom record
- * custom tags include _PGVU and _THUM
- * @param string $gedrec	the raw gedcom record
- * @return string		the updated gedcom record
- */
-function remove_custom_tags($gedrec, $remove="no") {
-	if ($remove=="yes") {
-		//-- remove _PGVU
-		$gedrec = preg_replace("/\d _PGVU .*/", "", $gedrec);
-		//-- remove _THUM
-		$gedrec = preg_replace("/\d _THUM .*/", "", $gedrec);
-	}
-	//-- cleanup so there are not any empty lines
-	$gedrec = preg_replace(array("/(\r\n)+/", "/\r+/", "/\n+/"), array("\r\n", "\r", "\n"), $gedrec);
-	//-- make downloaded file DOS formatted
-	$gedrec = preg_replace("/([^\r])\n/", "$1\n", $gedrec);
-	return $gedrec;
-}
-
 function getfilesize($bytes) {
 	if ($bytes>=1099511627776) {
 		return round($bytes/1099511627776, 2)." TB";
@@ -3968,7 +3948,7 @@ function pathinfo_utf($path) {
 	}
 
 	return array('dirname'=>$dirname, 'basename'=>$basename, 'extension'=>$extension, 'filename'=>$filename);
-} 
+}
 
 // optional extra file
 if (file_exists('includes/functions.extra.php')) {

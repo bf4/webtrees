@@ -153,6 +153,15 @@ function age_localisation_pl(&$agestring, &$show_years) {
 		$agestring
 	);
 }
+function age2_localisation_pl($years) {
+	global $pgv_lang;
+
+	if ($years==1) $years .= " ".$pgv_lang["year1"];
+	else if ($years > 1 && $years < 5) $years .= " ".$pgv_lang["years2"];
+	else if (substr($years, -1, 1) > 1 && substr($years, -1, 1) < 5 && substr($years, -2, 1) != 1) $years .= " ".$pgv_lang["years2"];
+	else $years .= " ".$pgv_lang["years"];
+	return $years;
+}
 ////////////////////////////////////////////////////////////////////////////////
 // Localise a date differences. Lokalizacja różnic dat.
 ////////////////////////////////////////////////////////////////////////////////
@@ -584,7 +593,7 @@ function getFirstRelationsName_pl($pid) {
 	else return $fname;
 }
 
-function century_localisation_pl($n) {
+function century_localisation_pl($n, $show=true) {
 	$arab = array(1, 4, 5, 9, 10);
 	$roman = array("I", "IV", "V", "IX", "X");
 	$roman_century = "";
@@ -594,6 +603,7 @@ function century_localisation_pl($n) {
 			$roman_century .= $roman[$i];
 		}
 	}
-	return $roman_century." w.";
+	if ($show) return $roman_century." w.";
+	else return $roman_century;
 }
 ?>

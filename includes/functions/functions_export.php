@@ -148,67 +148,133 @@ function gedcom_header($gedfile) {
 	return $HEAD.$SOUR.$DEST.$DATE.$GEDC.$CHAR.$FILE.$COPR.$LANG.$PLAC.$SUBN.$SUBM."\n";
 }
 
-function print_gedcom($privatize_export, $privatize_export_level, $convert, $remove, $gedout) {
+/**
+ * Create a temporary user, and assign rights as specified
+ */
+function createTempUser($userID, $rights, $gedcom) {
+	if ($tempUserID=get_user_id($userID)) {
+		delete_user($tempUserID);
+		AddToLog("deleted dummy user -> {$userID} <-, which was not deleted in a previous session");
+	}
+
+	$tempUserID=create_user($userID, md5(rand()));
+	if (!$tempUserID) return false;
+
+	set_user_setting($tempUserID, 'relationship_privacy', 'N');
+	set_user_setting($tempUserID, 'max_relation_path', '0');
+	set_user_setting($tempUserID, 'visibleonline', 'N');
+	set_user_setting($tempUserID, 'contactmethod', 'none');
+	switch ($rights) {
+	case 'admin':
+		set_user_setting($tempUserID, 'canadmin', 'Y');
+		set_user_gedcom_setting($tempUserID, $gedcom, 'canedit', 'admin');
+	case 'gedadmin':
+		set_user_setting($tempUserID, 'canadmin', 'N');
+		set_user_gedcom_setting($tempUserID, $gedcom, 'canedit', 'admin');
+		break;
+	case 'user':
+		set_user_setting($tempUserID, 'canadmin', 'N');
+		set_user_gedcom_setting($tempUserID, $gedcom, 'canedit', 'access');
+		break;
+	case 'visitor':
+	default:
+		set_user_setting($tempUserID, 'canadmin', 'N');
+		set_user_gedcom_setting($tempUserID, $gedcom, 'canedit', 'none');
+		break;
+	}
+	AddToLog("created dummy user -> {$userID} <- with level {$rights} to GEDCOM {$gedcom}");
+
+	return $tempUserID;
+}
+
+/**
+ * remove any custom PGV tags from the given gedcom record
+ * custom tags include _PGVU and _THUM
+ * @param string $gedrec	the raw gedcom record
+ * @return string		the updated gedcom record
+ */
+function remove_custom_tags($gedrec, $remove="no") {
+	if ($remove=="yes") {
+		//-- remove _PGVU
+		$gedrec = preg_replace("/\d _PGVU .*/", "", $gedrec);
+		//-- remove _THUM
+		$gedrec = preg_replace("/\d _THUM .*/", "", $gedrec);
+	}
+	//-- cleanup so there are not any empty lines
+	$gedrec = preg_replace(array("/(\r\n)+/", "/\r+/", "/\n+/"), array("\r\n", "\r", "\n"), $gedrec);
+	//-- make downloaded file DOS formatted
+	$gedrec = preg_replace("/([^\r])\n/", "$1\n", $gedrec);
+	return $gedrec;
+}
+
+/**
+ * Convert media path by:
+ *	- removing current media directory
+ *	- adding a new prefix
+ *	- making directory name separators consistent
+ */
+function convert_media_path($rec, $path, $slashes) {
+	global $MEDIA_DIRECTORY;
+
+	$file = get_gedcom_value("FILE", 1, $rec);
+	if (preg_match("~^https?://~i", $file)) return $rec;	// don't modify URLs
+
+	$rec = str_replace('FILE '.$MEDIA_DIRECTORY, 'FILE '.trim($path).'/', $rec);
+	$rec = str_replace('\\', '/', $rec);
+	$rec = str_replace('//', '/', $rec);
+	if ($slashes=='backward') $rec = str_replace('/', '\\', $rec);
+	return $rec;
+}
+
+/*
+ *	Export the database in GEDCOM format
+ *
+ *  input parameters:
+ *		$gedcom:	GEDCOM to be exported
+ *		$gedout:	Handle of output file
+ *		$exportOptions:	array of options for this Export operation as follows:
+ *			'privatize':	which Privacy rules apply?  (none, visitor, user, GEDCOM admin, site admin)
+ *			'toANSI':		should the output be produced in ANSI instead of UTF-8?  (yes, no)
+ *			'noCustomTags':	should custom tags be removed?  (yes, no)
+ *			'path':			what constant should prefix all media file paths?  (eg: media/  or c:\my pictures\my family
+ *			'slashes':		what folder separators apply to media file paths?  (forward, backward)
+ */
+function export_gedcom($gedcom, $gedout, $exportOptions) {
 	global $GEDCOMS, $GEDCOM, $pgv_lang, $CHARACTER_SET;
 	global $TBLPREFIX;
 
-	if ($privatize_export=="yes") {
-		if ($export_user_id=get_user_id('export')) {
-			delete_user($export_user_id);
-		}
-		$export_user_id=create_user('export', md5(rand()));
-		set_user_setting($export_user_id, 'relationship_privacy', 'N');
-		set_user_setting($export_user_id, 'max_relation_path', '0');
-		set_user_setting($export_user_id, 'visibleonline', 'N');
-		set_user_setting($export_user_id, 'contactmethod', 'none');
-		switch ($privatize_export_level) {
-		case 'admin':
-			set_user_setting($export_user_id, 'canadmin', 'Y');
-			set_user_gedcom_setting($export_user_id, $GEDCOM, 'canedit', 'admin');
-		case 'gedadmin':
-			set_user_setting($export_user_id, 'canadmin', 'N');
-			set_user_gedcom_setting($export_user_id, $GEDCOM, 'canedit', 'admin');
-			break;
-		case 'user':
-			set_user_setting($export_user_id, 'canadmin', 'N');
-			set_user_gedcom_setting($export_user_id, $GEDCOM, 'canedit', 'access');
-			break;
-		case 'visitor':
-		default:
-			set_user_setting($export_user_id, 'canadmin', 'N');
-			set_user_gedcom_setting($export_user_id, $GEDCOM, 'canedit', 'none');
-			break;
-		}
-		AddToLog("created dummy user -> export <- with level ".$privatize_export_level);
+	// Temporarily switch to the specified GEDCOM
+	$oldGEDCOM = $GEDCOM;
+	$GEDCOM = $gedcom;
+
+	$tempUserID = '#ExPoRt#';
+	if ($exportOptions['privatize']!='none') {
+		// Create a temporary userid
+		$export_user_id = createTempUser($tempUserID, $exportOptions['privatize'], $gedcom);	// Create a temporary userid
+
 		// Temporarily become this user
-		if (isset ($_SESSION)) {
-			$_SESSION["org_user"]=$_SESSION["pgv_user"];
-			$_SESSION["pgv_user"]="export";
-		}
+		$_SESSION["org_user"]=$_SESSION["pgv_user"];
+		$_SESSION["pgv_user"]=$tempUserID;
 	}
 
-	$head=gedcom_header($GEDCOM);
-	if ($convert=="yes") {
+	$head=gedcom_header($gedcom);
+	if ($exportOptions['toANSI']=="yes") {
 		$head=preg_replace("/UTF-8/", "ANSI", $head);
 		$head=utf8_decode($head);
 	}
-	$head=remove_custom_tags($head, $remove);
+	$head=remove_custom_tags($head, $exportOptions['noCustomTags']);
 
 	// Buffer the output.  Lots of small fwrite() calls can be very slow when writing large gedcoms.
 	$buffer=reformat_record_export($head);
 
 	$recs=
 		PGV_DB::prepare("SELECT i_gedcom FROM {$TBLPREFIX}individuals WHERE i_file=? AND i_id NOT LIKE ? ORDER BY i_id")
-		->execute(array($GEDCOMS[$GEDCOM]['id'], '%:%'))
+		->execute(array($GEDCOMS[$gedcom]['id'], '%:%'))
 		->fetchOneColumn();
 	foreach ($recs as $rec) {
-		$rec=remove_custom_tags($rec, $remove);
-		if ($privatize_export=="yes") {
-			$rec=privatize_gedcom($rec);
-		}
-		if ($convert=="yes") {
-			$rec=utf8_decode($rec);
-		}
+		$rec=remove_custom_tags($rec, $exportOptions['noCustomTags']);
+		if ($exportOptions['privatize']!='none') $rec=privatize_gedcom($rec);
+		if ($exportOptions['toANSI']=="yes") $rec=utf8_decode($rec);
 		$buffer.=reformat_record_export($rec);
 		if (strlen($buffer)>65536) {
 			fwrite($gedout, $buffer);
@@ -218,16 +284,12 @@ function print_gedcom($privatize_export, $privatize_export_level, $convert, $rem
 
 	$recs=
 		PGV_DB::prepare("SELECT f_gedcom FROM {$TBLPREFIX}families WHERE f_file=? AND f_id NOT LIKE ? ORDER BY f_id")
-		->execute(array($GEDCOMS[$GEDCOM]['id'], '%:%'))
+		->execute(array($GEDCOMS[$gedcom]['id'], '%:%'))
 		->fetchOneColumn();
 	foreach ($recs as $rec) {
-		$rec=remove_custom_tags($rec, $remove);
-		if ($privatize_export=="yes") {
-			$rec=privatize_gedcom($rec);
-		}
-		if ($convert=="yes") {
-			$rec=utf8_decode($rec);
-		}
+		$rec=remove_custom_tags($rec, $exportOptions['noCustomTags']);
+		if ($exportOptions['privatize']!='none') $rec=privatize_gedcom($rec);
+		if ($exportOptions['toANSI']=="yes") $rec=utf8_decode($rec);
 		$buffer.=reformat_record_export($rec);
 		if (strlen($buffer)>65536) {
 			fwrite($gedout, $buffer);
@@ -237,16 +299,12 @@ function print_gedcom($privatize_export, $privatize_export_level, $convert, $rem
 
 	$recs=
 		PGV_DB::prepare("SELECT s_gedcom FROM {$TBLPREFIX}sources WHERE s_file=? AND s_id NOT LIKE ? ORDER BY s_id")
-		->execute(array($GEDCOMS[$GEDCOM]['id'], '%:%'))
+		->execute(array($GEDCOMS[$gedcom]['id'], '%:%'))
 		->fetchOneColumn();
 	foreach ($recs as $rec) {
-		$rec=remove_custom_tags($rec, $remove);
-		if ($privatize_export=="yes") {
-			$rec=privatize_gedcom($rec);
-		}
-		if ($convert=="yes") {
-			$rec=utf8_decode($rec);
-		}
+		$rec=remove_custom_tags($rec, $exportOptions['noCustomTags']);
+		if ($exportOptions['privatize']!='none') $rec=privatize_gedcom($rec);
+		if ($exportOptions['toANSI']=="yes") $rec=utf8_decode($rec);
 		$buffer.=reformat_record_export($rec);
 		if (strlen($buffer)>65536) {
 			fwrite($gedout, $buffer);
@@ -256,16 +314,12 @@ function print_gedcom($privatize_export, $privatize_export_level, $convert, $rem
 
 	$recs=
 		PGV_DB::prepare("SELECT o_gedcom FROM {$TBLPREFIX}other WHERE o_file=? AND o_id NOT LIKE ? AND o_type!=? AND o_type!=? ORDER BY o_id")
-		->execute(array($GEDCOMS[$GEDCOM]['id'], '%:%', 'HEAD', 'TRLR'))
+		->execute(array($GEDCOMS[$gedcom]['id'], '%:%', 'HEAD', 'TRLR'))
 		->fetchOneColumn();
 	foreach ($recs as $rec) {
-		$rec=remove_custom_tags($rec, $remove);
-		if ($privatize_export=="yes") {
-			$rec=privatize_gedcom($rec);
-		}
-		if ($convert=="yes") {
-			$rec=utf8_decode($rec);
-		}
+		$rec=remove_custom_tags($rec, $exportOptions['noCustomTags']);
+		if ($exportOptions['privatize']!='none') $rec=privatize_gedcom($rec);
+		if ($exportOptions['toANSI']=="yes") $rec=utf8_decode($rec);
 		$buffer.=reformat_record_export($rec);
 		if (strlen($buffer)>65536) {
 			fwrite($gedout, $buffer);
@@ -275,16 +329,13 @@ function print_gedcom($privatize_export, $privatize_export_level, $convert, $rem
 
 	$recs=
 		PGV_DB::prepare("SELECT m_gedrec FROM {$TBLPREFIX}media WHERE m_gedfile=? AND m_media NOT LIKE ? ORDER BY m_media")
-		->execute(array($GEDCOMS[$GEDCOM]['id'], '%:%'))
+		->execute(array($GEDCOMS[$gedcom]['id'], '%:%'))
 		->fetchOneColumn();
 	foreach ($recs as $rec) {
-		$rec=remove_custom_tags($rec, $remove);
-		if ($privatize_export=="yes") {
-			$rec=privatize_gedcom($rec);
-		}
-		if ($convert=="yes") {
-			$rec=utf8_decode($rec);
-		}
+		$rec = convert_media_path($rec, $exportOptions['path'], $exportOptions['slashes']);
+		$rec=remove_custom_tags($rec, $exportOptions['noCustomTags']);
+		if ($exportOptions['privatize']!='none') $rec=privatize_gedcom($rec);
+		if ($exportOptions['toANSI']=="yes") $rec=utf8_decode($rec);
 		$buffer.=reformat_record_export($rec);
 		if (strlen($buffer)>65536) {
 			fwrite($gedout, $buffer);
@@ -294,54 +345,98 @@ function print_gedcom($privatize_export, $privatize_export_level, $convert, $rem
 
 	fwrite($gedout, $buffer."0 TRLR".PGV_EOL);
 
-	if ($privatize_export=="yes") {
-		if (isset ($_SESSION)) {
-			$_SESSION["pgv_user"]=$_SESSION["org_user"];
-		}
+	if ($exportOptions['privatize']!='none') {
+		$_SESSION["pgv_user"]=$_SESSION["org_user"];
 		delete_user($export_user_id);
-		AddToLog("deleted dummy user -> export <-");
+		AddToLog("deleted dummy user -> {$tempUserID} <-");
 	}
+
+	$GEDCOM = $oldGEDCOM;
 }
 
-function print_gramps($privatize_export, $privatize_export_level, $convert, $remove, $gedout) {
+/*
+ *	Export the database in GRAMPS XML format
+ *
+ *  input parameters:
+ *		$gedcom:	GEDCOM to be exported
+ *		$gedout:	Handle of output file
+ *		$exportOptions:	array of options for this Export operation as follows:
+ *			'privatize':	which Privacy rules apply?  (none, visitor, user, GEDCOM admin, site admin)
+ *			'toANSI':		should the output be produced in ANSI instead of UTF-8?  (yes, no)
+ *			'noCustomTags':	should custom tags be removed?  (yes, no)
+ *			'path':			what constant should prefix all media file paths?  (eg: media/  or c:\my pictures\my family
+ *			'slashes':		what folder separators apply to media file paths?  (forward, backward)
+ */
+function export_gramps($gedcom, $gedout, $exportOptions) {
 	global $GEDCOMS, $GEDCOM, $pgv_lang;
 	global $TBLPREFIX;
+
+	// Temporarily switch to the specified GEDCOM
+	$oldGEDCOM = $GEDCOM;
+	$GEDCOM = $gedcom;
+
+	$tempUserID = '#ExPoRt#';
+	if ($exportOptions['privatize']!='none') {
+
+		$export_user_id = createTempUser($tempUserID, $exportOptions['privatize'], $gedcom);	// Create a temporary userid
+
+		// Temporarily become this user
+		$_SESSION["org_user"]=$_SESSION["pgv_user"];
+		$_SESSION["pgv_user"]=$tempUserID;
+	}
 
 	$geDownloadGedcom=new GEDownloadGedcom();
 	$geDownloadGedcom->begin_xml();
 
 	$recs=
 		PGV_DB::prepare("SELECT i_id, i_gedcom FROM {$TBLPREFIX}individuals WHERE i_file=? AND i_id NOT LIKE ? ORDER BY i_id")
-		->execute(array($GEDCOMS[$GEDCOM]['id'], '%:%'))
+		->execute(array($GEDCOMS[$gedcom]['id'], '%:%'))
 		->fetchAssoc();
 	foreach ($recs as $id=>$rec) {
-		$geDownloadGedcom->create_person(remove_custom_tags($rec, $remove), $id);
+		$rec = remove_custom_tags($rec, $exportOptions['noCustomTags']);
+		if ($exportOptions['privatize']!='none') $rec=privatize_gedcom($rec);
+		$geDownloadGedcom->create_person($rec, $id);
 	}
 
 	$recs=
 		PGV_DB::prepare("SELECT f_id, f_gedcom FROM {$TBLPREFIX}families WHERE f_file=? AND f_id NOT LIKE ? ORDER BY f_id")
-		->execute(array($GEDCOMS[$GEDCOM]['id'], '%:%'))
+		->execute(array($GEDCOMS[$gedcom]['id'], '%:%'))
 		->fetchAssoc();
 	foreach ($recs as $id=>$rec) {
-		$geDownloadGedcom->create_family(remove_custom_tags($rec, $remove), $id);
+		$rec = remove_custom_tags($rec, $exportOptions['noCustomTags']);
+		if ($exportOptions['privatize']!='none') $rec=privatize_gedcom($rec);
+		$geDownloadGedcom->create_family($rec, $id);
 	}
 
 	$recs=
 		PGV_DB::prepare("SELECT s_id, s_gedcom FROM {$TBLPREFIX}sources WHERE s_file=? AND s_id NOT LIKE ? ORDER BY s_id")
-		->execute(array($GEDCOMS[$GEDCOM]['id'], '%:%'))
+		->execute(array($GEDCOMS[$gedcom]['id'], '%:%'))
 		->fetchAssoc();
 	foreach ($recs as $id=>$rec) {
-		$geDownloadGedcom->create_source(remove_custom_tags($rec, $remove), $id);
+		$rec = remove_custom_tags($rec, $exportOptions['noCustomTags']);
+		if ($exportOptions['privatize']!='none') $rec=privatize_gedcom($rec);
+		$geDownloadGedcom->create_source($rec, $id);
 	}
 
 	$recs=
 		PGV_DB::prepare("SELECT m_media, m_gedrec FROM {$TBLPREFIX}media WHERE m_gedfile=? AND m_media NOT LIKE ? ORDER BY m_media")
-		->execute(array($GEDCOMS[$GEDCOM]['id'], '%:%'))
+		->execute(array($GEDCOMS[$gedcom]['id'], '%:%'))
 		->fetchAssoc();
 	foreach ($recs as $id=>$rec) {
-		$geDownloadGedcom->create_media($id, remove_custom_tags($rec, $remove));
+		$rec = convert_media_path($rec, $exportOptions['path'], $exportOptions['slashes']);
+		$rec = remove_custom_tags($rec, $exportOptions['noCustomTags']);
+		if ($exportOptions['privatize']!='none') $rec=privatize_gedcom($rec);
+		$geDownloadGedcom->create_media($rec, $id);
 	}
 	fwrite($gedout,$geDownloadGedcom->dom->saveXML());
+
+	if ($exportOptions['privatize']!='none') {
+		$_SESSION["pgv_user"]=$_SESSION["org_user"];
+		delete_user($export_user_id);
+		AddToLog("deleted dummy user -> {$tempUserID} <-");
+	}
+
+	$GEDCOM = $oldGEDCOM;
 }
 
 function um_export($proceed) {

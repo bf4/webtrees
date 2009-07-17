@@ -3,7 +3,7 @@
  * Exports data from the database to a gedcom file
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2008 Greg Roach.
+ * Copyright (C) 2008 to 2009  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -42,27 +42,34 @@ if (empty($gedcoms)) {
 }
 
 // Which gedcom have we requested to export
-$export=safe_GET('export', $gedcoms);
+$export = safe_GET('export', $gedcoms);
 
 print_simple_header($pgv_lang['ged_export']);
 
 if ($export) {
-	$ged_id=get_id_from_gedcom($export);
-	$filename=get_gedcom_setting($ged_id, 'path');
+	$ged_id = get_id_from_gedcom($export);
+	$filename = get_gedcom_setting($ged_id, 'path');
 	echo '<h1>', $pgv_lang['ged_export'], '</h1>';
 	echo '<p>', htmlspecialchars(filename_decode($export)), ' => ', $filename, '</p>';
 	flush();
-	$fp=fopen($filename.'.tmp', 'w');
-	if ($fp) {
-		$start=microtime(true);
-		// Yuck - this function requres a global rather than a parameter
-		$GEDCOM=$export;
-		print_gedcom('no', null, 'no', 'no', $fp);
-		$end=microtime(true);
-		fclose($fp);
+	$gedout = fopen($filename.'.tmp', 'w');
+	if ($gedout) {
+		$start = microtime(true);
+
+		$exportOptions = array();
+		$exportOptions['privatize'] = 'none';
+		$exportOptions['toANSI'] = 'no';
+		$exportOptions['noCustomTags'] = 'no';
+		$exportOptions['path'] = $MEDIA_DIRECTORY;
+		$exportOptions['slashes'] = 'forward';
+
+		export_gedcom($export, $gedout, $exportOptions);
+
+		$end = microtime(true);
+		fclose($gedout);
 		unlink($filename);
 		rename($filename.'.tmp', $filename);
-		$stat=stat($filename);
+		$stat = stat($filename);
 		echo sprintf('<p>%d bytes, %0.3f seconds</p>', $stat['size'], $end-$start);
 	} else {
 		echo '<p>Error: could not open file for writing</p>';

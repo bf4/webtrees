@@ -1319,6 +1319,23 @@ a.showit:hover span {
 }
 /* End of Autocomplete styles*/
 
+/* Flyout menu Styles */
+.flyout {
+color:#000000; 
+text-align: left;
+margin-top: -20px;
+right: 210px;
+padding: 3px;
+}
+.flyoutrtl {
+color:#000000; 
+text-align: right;
+margin-top: -20px;
+left: 210px;
+padding: 3px;
+}
+/* End of Flyout Menu styles*/
+
 /* The following two overriding classes MUST appear at the end of the entire CSS file. */
 .nowrap {
 	white-space: nowrap;

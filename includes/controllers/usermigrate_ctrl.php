@@ -5,7 +5,7 @@
  * authenticate.php and xxxxxx.dat files (MySQL mode).
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
+ * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -127,8 +127,9 @@ class UserMigrateControllerRoot extends BaseController {
 	 *
 	 */
 	function backup() {
-		global $INDEX_DIRECTORY, $GEDCOMS, $GEDCOM, $MEDIA_DIRECTORY, $SYNC_GEDCOM_FILE;
-		global $USE_MEDIA_FIREWALL, $MEDIA_FIREWALL_ROOTDIR;
+		global $INDEX_DIRECTORY, $GEDCOMS, $GEDCOM;
+		global $MEDIA_DIRECTORY, $USE_MEDIA_FIREWALL, $MEDIA_FIREWALL_ROOTDIR;
+
 		$this->flist = array();
 
 		// Backup user information
@@ -157,27 +158,55 @@ class UserMigrateControllerRoot extends BaseController {
 			$this->flist[] = "config.php";
 		}
 
-		// Backup gedcoms
-		if (isset($_POST["um_gedcoms"])) {
+		// Backup gedcoms and media
+		if (isset($_POST["um_gedcoms"]) || isset($_POST["um_media"])) {
+
+			$exportOptions = array();
+			$exportOptions['privatize'] = 'none';
+			$exportOptions['toANSI'] = 'no';
+			$exportOptions['noCustomTags'] = 'no';
+			$exportOptions['slashes'] = 'forward';
+
 			foreach($GEDCOMS as $key=>$gedcom) {
 				//-- load the gedcom configuration settings
 				require(get_config_file($key));
-				//-- backup the original gedcom file
-				if (file_exists($gedcom["path"])) $this->flist[] = $gedcom["path"];
-				//else {
+
+				if (isset($_POST["um_gedcoms"])) {
+					//-- backup the original gedcom file
+					if (file_exists($gedcom["path"])) $this->flist[] = $gedcom["path"];
+
 					//-- recreate the GEDCOM file from the DB
 					//-- backup the DB in case of GEDCOM corruption
-					$oldged = $GEDCOM;
-					$GEDCOM = $key;
 					$gedname = $INDEX_DIRECTORY.$key.".bak";
 					$gedout = fopen(filename_decode($gedname), "wb");
-					print_gedcom('no', 'no', 'no', 'no', $gedout);
+
+					$exportOptions['path'] = $MEDIA_DIRECTORY;
+
+					export_gedcom($key, $gedout, $exportOptions);
 					fclose($gedout);
-					$GEDCOM = $oldged;
 					$this->flist[] = $gedname;
-				//}
+				}
+
+				if (isset($_POST["um_media"])) {
+					// backup media files
+					$dir = dir($MEDIA_DIRECTORY);
+					while(false !== ($entry = $dir->read())) {
+						if ($entry{0} != ".") {
+							if ($entry != "thumbs") $this->flist[] = $MEDIA_DIRECTORY.$entry;
+						}
+					}
+					if ($USE_MEDIA_FIREWALL) {
+						$dir = dir($MEDIA_FIREWALL_ROOTDIR.$MEDIA_DIRECTORY);
+						while(false !== ($entry = $dir->read())) {
+							if ($entry{0} != ".") {
+								if ($entry != "thumbs" && $entry != "watermark") $this->flist[] = $MEDIA_FIREWALL_ROOTDIR.$MEDIA_DIRECTORY.$entry;
+							}
+						}
+					}
+				}
 			}
-			//-- load up the old configuration file
+
+			//-- restore the old configuration file
 			require(get_config_file($GEDCOM));
 			$this->flist[] = $INDEX_DIRECTORY."pgv_changes.php";
 		}
@@ -208,7 +237,7 @@ class UserMigrateControllerRoot extends BaseController {
 				// Gedcom searchlogs and changelogs
 				$dir_var = opendir ($INDEX_DIRECTORY);
 				while ($file = readdir ($dir_var)) {
-					if ((strpos($file, ".log") > 0) && ((strstr($file, "srch-".$gedcom["gedcom"]) !== false ) || (strstr($file, "ged-".$gedcom["gedcom"]) !== false ))) $this->flist[] = $INDEX_DIRECTORY.$file;
+					if (strpos($file, ".log") > 0 && (strstr($file, "srch-".$gedcom["gedcom"]) !== false || strstr($file, "ged-".$gedcom["gedcom"]) !== false)) $this->flist[] = $INDEX_DIRECTORY.$file;
 				}
 				closedir($dir_var);
 			}
@@ -216,27 +245,9 @@ class UserMigrateControllerRoot extends BaseController {
 			// PhpGedView logfiles
 			$dir_var = opendir ($INDEX_DIRECTORY);
 			while ($file = readdir ($dir_var)) {
-				if ((strpos($file, ".log") > 0) && (strstr($file, "pgv-") !== false )) $this->flist[] = $INDEX_DIRECTORY.$file;
+				if (strpos($file, ".log") > 0 && strstr($file, "pgv-") !== false) $this->flist[] = $INDEX_DIRECTORY.$file;
 			}
 			closedir($dir_var);
-		}
-
-		// backup media files
-		if (isset($_POST["um_media"])) {
-			$dir = dir($MEDIA_DIRECTORY);
-			while(false !== ($entry = $dir->read())) {
-				if ($entry{0} != ".") {
-					if ($entry != "thumbs") $this->flist[] = $MEDIA_DIRECTORY.$entry;
-				}
-			}
-			if ($USE_MEDIA_FIREWALL) {
-				$dir = dir($MEDIA_FIREWALL_ROOTDIR.$MEDIA_DIRECTORY);
-				while(false !== ($entry = $dir->read())) {
-					if ($entry{0} != ".") {
-						if ( ($entry != "thumbs") && ($entry != "watermark") ) $this->flist[] = $MEDIA_FIREWALL_ROOTDIR.$MEDIA_DIRECTORY.$entry;
-					}
-				}
-			}
 		}
 
 		// Make the zip

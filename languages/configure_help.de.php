@@ -721,6 +721,6 @@ $pgv_lang["time_limit_help"]			= "~#pgv_lang[time_limit]#~<br /><br />Maximale I
 $pgv_lang["ged_filter_results"]			= "Resultate";
 $pgv_lang["ged_filter_reset"]			= "Neue Suche";
 $pgv_lang["ged_filter_description"]		= "Optionen-Text durchsuchen";
-$pgv_lang["ged_filter_description_help"]	= "~#pgv_lang[ged_filter_description]#~<br />Diese Option ermöglicht das Durchsuchen der Optione-Texte.<br /><br />Je mehr Buchstaben Sie eingeben, desto präziser ist die Suche.<br />";
+$pgv_lang["ged_filter_description_help"]	= "~#pgv_lang[ged_filter_description]#~<br /><br />Diese Option ermöglicht das Durchsuchen der Optione-Texte.<br /><br />Je mehr Buchstaben Sie eingeben, desto präziser ist die Suche.<br />";
 
 ?>

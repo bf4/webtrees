@@ -242,7 +242,7 @@ function print_indi_table($datalist, $legend="", $option="") {
 			if ($SHOW_EST_LIST_DATES) {
 				echo '<div>', str_replace('<a', '<a name="'.$birth_jd.'"', $birth_date->Display(!$SEARCH_SPIDER)), '</div>';
 			} else {
-				echo '<span class="date"><a name="'.$birth_jd.'">&nbsp;</span>'; // span needed for alive-in-year filter
+				echo '<span class="date"><a name="'.$birth_jd.'"/>&nbsp;</span>'; // span needed for alive-in-year filter
 			}
 			$birth_dates[0]=new GedcomDate('');
 		}
@@ -825,7 +825,7 @@ function print_sour_table($datalist, $legend=null) {
 	require_once 'js/sorttable.js.htm';
 	require_once 'includes/classes/class_source.php';
 
-	echo '<fieldset><legend><img src="', $PGV_IMAGE_DIR, '/', $PGV_IMAGES['source']['small'], '" align="middle" /> ';
+	echo '<fieldset><legend><img src="', $PGV_IMAGE_DIR, '/', $PGV_IMAGES['source']['small'], '" align="middle" alt="" /> ';
 	if ($legend) {
 		echo $legend;
 	} else {
@@ -962,7 +962,7 @@ function print_note_table($datalist, $legend=null) {
 	require_once 'js/sorttable.js.htm';
 	require_once 'includes/classes/class_note.php';
 
-	echo '<fieldset><legend><img src="', $PGV_IMAGE_DIR, '/', $PGV_IMAGES['notes']['small'], '" align="middle" /> ';
+	echo '<fieldset><legend><img src="', $PGV_IMAGE_DIR, '/', $PGV_IMAGES['notes']['small'], '" align="middle" alt="" /> ';
 	if ($legend) {
 		echo $legend;
 	} else {
@@ -1046,7 +1046,7 @@ function print_repo_table($repos, $legend='') {
 	require_once 'js/sorttable.js.htm';
 	require_once 'includes/classes/class_repository.php';
 
-	echo '<fieldset><legend><img src="', $PGV_IMAGE_DIR, '/', $PGV_IMAGES['repository']['small'], '" align="middle" />';
+	echo '<fieldset><legend><img src="', $PGV_IMAGE_DIR, '/', $PGV_IMAGES['repository']['small'], '" align="middle" alt="" />';
 	if ($legend) {
 		echo $legend;
 	} else {

@@ -359,7 +359,7 @@ $pgv_lang["readme_documentation"]	= "תיעוד (Readme)";
 $pgv_lang["remove_ip"] 		= "הסר IP";
 $pgv_lang["REQUIRE_ADMIN_AUTH_REGISTRATION"]	= "דרוש מהמנהלן לאשר רישום של משתמשים חדשים";
 $pgv_lang["review_readme"]		= "עיין תחילה בקובץ <a href=\"readme.txt\" target=\"_blank\">readme.txt</a> לפני שאתה ממשיך להגדיר את PhpGedView.<br /><br />";
-$pgv_lang["rootid"]			= "אדם ההתחלה באילן היוחסין";
+//$pgv_lang["rootid"]			= "אדם ההתחלה באילן היוחסין";
 $pgv_lang["seconds"]			= "&nbsp;&nbsp;שניות";
 $pgv_lang["select_an_option"]	= "בחר באפשרות:";
 $pgv_lang["SERVER_URL"]		= "URL של PhpGedView";

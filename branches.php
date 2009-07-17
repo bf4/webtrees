@@ -26,17 +26,26 @@
 
 require './config.php';
 
+//-- const
+define('PGV_ICON_RINGS', "<img src=\"images/small/rings.gif\" alt=\"{$pgv_lang["marriage"]}\" title=\"{$pgv_lang["marriage"]}\" />");
+define('PGV_ICON_BRANCHES', "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["patriarch"]["small"]."\" alt=\"\" align=\"middle\" />");
+
 //-- args
 $surn = safe_GET('surn', '[^<>&%{};]*');
 $surn = UTF8_strtoupper($surn);
 $soundex_std = safe_GET_bool('soundex_std');
 $soundex_dm = safe_GET_bool('soundex_dm');
+$ged = safe_GET('ged');
+if (empty($ged)) {
+	$ged = $GEDCOM;
+}
 
 //-- rootid
 $rootid = "";
 if (PGV_USER_ID) {
 	$rootid = PGV_USER_ROOT_ID;
 	if (empty($_SESSION['user_ancestors'])	|| $_SESSION['user_ancestors'][1]!==$rootid) {
+		unset($_SESSION['user_ancestors']);
 		load_ancestors_array($rootid);
 	}
 }
@@ -59,6 +68,7 @@ if ($ENABLE_AUTOCOMPLETE) {
 				<?php print_help_link("surname_help", "qm", "surname"); print $pgv_lang["surname"]; ?></td>
 			<td class="optionbox <?php print $TEXT_DIRECTION; ?>">
 				<input type="text" name="surn" id="SURN" value="<?php echo $surn?>" />
+				<input type="hidden" name="ged" id="ged" value="<?php echo $ged?>" />
 				<input type="submit" value="<?php echo $pgv_lang['view']; ?>" />
 				<input type="submit" value="<?php echo $pgv_lang['random_surn']; ?>" onclick="document.surnlist.surn.value='*';" />
 				<p class="details1">
@@ -73,11 +83,10 @@ if ($ENABLE_AUTOCOMPLETE) {
 	</table>
 </form>
 <?php
-
 //-- results
 if ($surn) {
-	$icon = "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["sfamily"]["small"]."\" alt=\"\" align=\"middle\" />";
-	echo "<fieldset><legend>{$icon} {$surn}</legend>";
+	$surn_lang = whatLanguage($surn);
+	echo "<fieldset><legend>".PGV_ICON_BRANCHES." ".PrintReady($surn)."</legend>";
 	$indis = indis_array($surn, $soundex_std, $soundex_dm);
 	echo "<ol>";
 	foreach ($indis as $k=>$person) {
@@ -97,7 +106,7 @@ if ($surn) {
 print_footer();
 
 function print_fams($person, $famid=null) {
-	global $pgv_lang, $surn;
+	global $pgv_lang, $surn, $surn_lang, $TEXT_DIRECTION;
 	// select person name according to searched surname
 	$person_name = "";
 	foreach ($person->getAllNames() as $n=>$name) {
@@ -105,24 +114,32 @@ function print_fams($person, $famid=null) {
 		if (stripos($surn1, $surn)===false
 			&& stripos($surn, $surn1)===false
 			&& soundex_std($surn1)!==soundex_std($surn)
-			&& soundex_dm($surn1)!==soundex_dm($surn)) {
+			&& soundex_dm($surn1)!==soundex_dm($surn)
+			) {
+			continue;
+		}
+		if (whatLanguage($surn1)!==$surn_lang) {
 			continue;
 		}
 		$person_name = $name['full'];
 		break;
 	}
 	if (empty($person_name)) {
-		echo "<span title=\"".strip_tags($person->getFullName())."\">".$person->getSexImage()."...</span>";
+		echo "<span title=\"".PrintReady(strip_tags($person->getFullName()))."\">".$person->getSexImage()."...</span>";
 		return;
 	}
 	$person_lang = whatLanguage($person_name);
 	// current indi
 	echo "<li>";
-	$sosa = array_search($person->xref, $_SESSION['user_ancestors']);
+	$class = "";
+	$sosa = @array_search($person->xref, $_SESSION['user_ancestors']);
 	if ($sosa) {
-		$sosa = "<a target=\"_blank\" class=\"details1 {$person->getBoxStyle()}\" title=\"Sosa\" href=\"relationship.php?pid2=".PGV_USER_ROOT_ID."&pid1={$person->xref}\">&nbsp;{$sosa}&nbsp;</a>";
+		$class = "search_hit";
+		$sosa = "<a dir=$TEXT_DIRECTION target=\"_blank\" class=\"details1 {$person->getBoxStyle()}\" title=\"Sosa\" href=\"relationship.php?pid2=".PGV_USER_ROOT_ID."&pid1={$person->xref}\">&nbsp;{$sosa}&nbsp;</a>".sosa_gen($sosa);
 	}
-	$current = $person->getSexImage()."<a target=\"_blank\" title=\"{$person->xref}\" href=\"{$person->getLinkUrl()}\">{$person_name}</a> ".$person->getBirthDeathYears()." {$sosa}";
+	$current = $person->getSexImage().
+		"<a target=\"_blank\" class=\"{$class}\" title=\"{$person->xref}\" href=\"{$person->getLinkUrl()}\">".PrintReady($person_name)."</a> ".
+		$person->getBirthDeathYears()." {$sosa}"; 
 	if ($famid && $person->getChildFamilyPedigree($famid)) {
 		$current = "<span class='red'>".$pgv_lang[$person->getChildFamilyPedigree($famid)]."</span> ".$current;
 	}
@@ -131,16 +148,17 @@ function print_fams($person, $famid=null) {
 		echo $current;
 	}
 	foreach ($person->getSpouseFamilies() as $f=>$family) {
-		echo $current;
+		$txt = $current;
 		$spouse = $family->getSpouse($person);
 		if ($spouse) {
-			$sosa2 = array_search($spouse->xref, $_SESSION['user_ancestors']);
+			$class = "";
+			$sosa2 = @array_search($spouse->xref, $_SESSION['user_ancestors']);
 			if ($sosa2) {
-				$sosa2 = "<a target=\"_blank\" class=\"details1 {$spouse->getBoxStyle()}\" title=\"Sosa\" href=\"relationship.php?pid2=".PGV_USER_ROOT_ID."&pid1={$spouse->xref}\">&nbsp;{$sosa2}&nbsp;</a>";
+				$class = "search_hit";
+				$sosa2 = "<a dir=$TEXT_DIRECTION target=\"_blank\" class=\"details1 {$spouse->getBoxStyle()}\" title=\"Sosa\" href=\"relationship.php?pid2=".PGV_USER_ROOT_ID."&pid1={$spouse->xref}\">&nbsp;{$sosa2}&nbsp;</a>".sosa_gen($sosa2);
 			}
 			if ($family->getMarriageYear()) {
-				$icon = "<img src=\"images/small/rings.gif\" alt=\"{$pgv_lang["marriage"]}\" title=\"{$pgv_lang["marriage"]}\" />";
-				echo "&nbsp;<span class='details1' title=\"".strip_tags($family->getMarriageDate()->Display())."\">{$icon}".$family->getMarriageYear()."</span>&nbsp;";
+				$txt .= "&nbsp;<span dir=$TEXT_DIRECTION class='details1' title=\"".strip_tags($family->getMarriageDate()->Display())."\">".PGV_ICON_RINGS.$family->getMarriageYear()."</span>&nbsp;";
 			}
 			$spouse_name = $spouse->getListName();
 			foreach ($spouse->getAllNames() as $n=>$name) {
@@ -148,12 +166,19 @@ function print_fams($person, $famid=null) {
 					$spouse_name = $name['list'];
 					break;
 				}
+				//How can we use check_NN($names) or something else to replace the unknown unknown name from the page language to the language of the spouse's name?
+				else if ($name['fullNN']=="@P.N. @N.N.") {
+					$spouse_name = $pgv_lang["NN".$person_lang].", ".$pgv_lang["NN".$person_lang];
+					break;
+				}
 			}
 			list($surn2, $givn2) = explode(", ", $spouse_name.", x");
-			echo $spouse->getSexImage()."<a target=\"_blank\" title=\"{$family->xref}\" href=\"{$family->getLinkUrl()}\">{$givn2}</a> ",
-				"<a title=\"{$surn2}\" href=\"?surn={$surn2}\">{$surn2}</a> ",
+			$txt .= $spouse->getSexImage().
+				"<a target=\"_blank\" class=\"{$class}\" title=\"{$family->xref}\" href=\"{$family->getLinkUrl()}\">".PrintReady($givn2)."</a> ".
+				"<a class=\"{$class}\" title=\"{$surn2}\" href=\"javascript:document.surnlist.surn.value='{$surn2}';document.surnlist.submit();\">".PrintReady($surn2)."</a> ".
 				$spouse->getBirthDeathYears()." {$sosa2}";
 		}
+		echo $txt;
 		echo "<ol>";
 		foreach ($family->getChildren() as $c=>$child) {
 			print_fams($child, $family->xref);
@@ -180,8 +205,9 @@ function indis_array($surn, $soundex_std, $soundex_dm) {
 	$sql=
 		"SELECT DISTINCT n_id".
 		" FROM {$TBLPREFIX}name".
-		" WHERE n_type='NAME' AND n_file=".PGV_GED_ID.
-		" AND (n_surname='{$surn}'";
+		" WHERE n_file=".PGV_GED_ID.
+		" AND n_type!='_MARNM'".
+		" AND (n_surn=".PGV_DB::quote("{$surn}")." OR n_surname=".PGV_DB::quote("{$surn}");
 	if ($soundex_std) {
 		$sql .= " OR n_soundex_surn_std=\"'".soundex_std($surn)."'\"";
 	}
@@ -199,5 +225,11 @@ function indis_array($surn, $soundex_std, $soundex_dm) {
 		$data[$row["n_id"]]=Person::getInstance($row["n_id"]);
 	}
 	return $data;
+}
+
+function sosa_gen($sosa) {
+	global $pgv_lang;
+	$gen = (int)log($sosa, 2)+1;
+	return "<sup title=\"".$pgv_lang["generations"]."\">{$gen}</sup>";
 }
 ?>
