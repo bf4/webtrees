@@ -438,7 +438,7 @@ rtl {
 
 	function getStringWidth($text) {
 		$style = $this->getStyle($this->currentStyle);
-		return strlen($text) * ($style['size']/2);
+		return UTF8_strlen($text) * ($style['size']/2);
 	}
 
 	function getStyle($s) {
