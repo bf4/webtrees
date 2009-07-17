@@ -46,6 +46,7 @@ include_once("modules/research_assistant/forms/ra_privacy.php");
 include_once("modules/research_assistant/forms/ra_RSFunction.php");
 require_once("modules/research_assistant/forms/ra_RSSingleFactClass.php");
 
+global $GEDCOM, $INDEX_DIRECTORY, $SHOW_RESEARCH_ASSISTANT;
 
 if (file_exists($INDEX_DIRECTORY.$GEDCOM."_ra_priv.php")) include_once($INDEX_DIRECTORY.$GEDCOM."_ra_priv.php");
 define("BASEPATH", 'modules/research_assistant/');
@@ -848,6 +849,10 @@ class ra_functions {
 	 */
 	function getMissinginfo(& $person) {
 		global $factarray, $templefacts, $nondatefacts, $nonplacfacts, $pgv_lang;
+		if (!isset($nonplacfacts)) $nonplacfacts = array("ENDL","NCHI","SLGC","SLGS");
+		if (!isset($nondatefacts)) $nondatefacts = array("ABBR","ADDR","AFN","AUTH","CHIL","EMAIL","FAX","HUSB","NAME","NCHI","NOTE","OBJE",
+		"PHON","PUBL","REFN","REPO","SEX","SOUR","SSN","TEXT","TITL","WIFE","WWW","_EMAIL"); 
+		if (!isset($templefacts)) $templefacts = array("SLGC","SLGS","BAPL","ENDL","CONL");
 
 		$perId = $person->getXref();
 
@@ -1636,14 +1641,6 @@ class ra_functions {
 							</td></tr>\n
 							</table>\n
 					</td></tr></table>";
-
-		//beginning of FamilySearch results functionality
-		if (file_exists("modules/FamilySearch/RA_AutoMatch.php")) {
-			include_once("modules/FamilySearch/RA_AutoMatch.php");
-			$matcher = new RA_AutoMatch();
-			$out .= $matcher->generateResultsTable($person);
-			unset($matcher);
-		}
 
 		//Beginning of the comments feature
 		if (!empty($_REQUEST['action']) && $_REQUEST['action']=='delete_comment' && !empty($_REQUEST['uc_id'])) {

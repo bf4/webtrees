@@ -55,7 +55,6 @@ function print_gedcom_block($block = true, $config="", $side, $index) {
 	}
 	$content .=  "</div>";
 
-	global $THEME_DIR;
-	include($THEME_DIR."templates/block_main_temp.php");
+	include(PGV_THEME_DIR."templates/block_main_temp.php");
 }
 ?>

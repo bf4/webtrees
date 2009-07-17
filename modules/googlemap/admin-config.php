@@ -33,9 +33,18 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
-loadLangFile("googlemap:lang, googlemap:help_text");
+require 'modules/googlemap/defaultconfig.php';
+
+if (file_exists('modules/googlemap/config.php')) {
+	require 'modules/googlemap/config.php';
+}
+
+loadLangFile('pgv_lang, pgv_confighelp, pgv_help, googlemap:lang, googlemap:help_text');
+
+print_header($pgv_lang["configure_googlemap"]);
 
 if (PGV_USER_IS_ADMIN) { ?>
+<table class="center <?php print $TEXT_DIRECTION ?>">
    <tr>
 	  <td colspan="2" class="topbottombar" style="text-align:center; "><?php echo $pgv_lang["configure_googlemap"]; ?></td>
    </tr>
@@ -51,5 +60,11 @@ if (PGV_USER_IS_ADMIN) { ?>
       <td class="optionbox">&nbsp;
 	  </td>
    </tr>
-<?php }
+</table>
+<?php 
+print_footer();
+} else {
+	header("Location: login.php?url=module.php?mod=googlemap&pgvaction=admin-config");
+	exit;
+}
 ?>

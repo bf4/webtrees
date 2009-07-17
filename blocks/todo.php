@@ -126,11 +126,10 @@ function print_todo($block=true, $config='', $side, $index) {
 		$content.='<p>'.$pgv_lang['todo_nothing'].'</p>';
 	}
 
-	global $THEME_DIR;
 	if ($block) {
-		include($THEME_DIR."templates/block_small_temp.php");
+		include(PGV_THEME_DIR."templates/block_small_temp.php");
 	} else {
-		include($THEME_DIR."templates/block_main_temp.php");
+		include(PGV_THEME_DIR."templates/block_main_temp.php");
 	}
 }
 

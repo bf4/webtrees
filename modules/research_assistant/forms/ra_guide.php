@@ -47,23 +47,35 @@ class ra_guide extends ra_form {
 	{
 		global $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES;
 		// Obtain the global vars needed
-		global $pgv_lang, $factarray, $PGV_DXHTMLTAB_COLORS;
+		global $pgv_lang, $factarray;
 		$out = '';
 		ob_start();
-		require_once("js/dhtmlXTabbar.js.htm");
 		?>
-		<script language="JavaScript" type="text/javascript">
-		<!--
+		<link type="text/css" href="<?php echo PGV_THEME_DIR?>jquery/jquery-ui-1.7.1.custom.css" rel="Stylesheet" />
+		<script type="text/javascript" src="js/jquery/jquery.min.js"></script>
+		<script type="text/javascript" src="js/jquery/jquery-ui-1.7.1.custom.min.js"></script>
+		<script type="text/javascript">
+		//<![CDATA[
+		  $(document).ready(function(){
+		    $("#guide_tabbar").tabs();
+		  });
+
 		var pastefield;
 		function paste_id(value) {
 			pastefield.value=value;
 		}
-		//-->
+		//]]>
 		</script>
 		<div align="center">
 		<h2><?php print $pgv_lang['research_assistant']; ?></h2>
-		<div id="guide_tabbar" class="dhtmlxTabBar" <?php if($TEXT_DIRECTION=="rtl") echo ' align="right"'; else echo ' align="left"';?> skinColors="<?php print $PGV_DXHTMLTAB_COLORS; ?>" style="width: 65%; margin-left: 25px;">
-			<div id="guide_analyze" name="<?php print $pgv_lang['analyze_data'];?>" class="indent" >
+		<div id="guide_tabbar">
+			<ul>
+				<li><a href="#guide_analyze"><span><?php echo $pgv_lang['analyze_data']?></span></a></li>
+				<li><a href="#guide_sources"><span><?php echo $pgv_lang['determine_sources']?></span></a></li>
+				<li><a href="#guide_research"><span><?php echo $pgv_lang['manage_research']?></span></a></li>
+				<li><a href="#guide_results"><span><?php echo $pgv_lang['enter_results']?></span></a></li>
+			</ul>
+			<div id="guide_analyze" class="indent" >
 				<fieldset>
 					<legend> <?php print $pgv_lang["analyze_people"]; ?></legend>
 					<form method="get" action="individual.php">
@@ -80,7 +92,7 @@ class ra_guide extends ra_form {
 					<?php print $pgv_lang["view_probabilities"]; ?></a>
 				</fieldset>
 			</div>
-			<div id="guide_sources" name="<?php print $pgv_lang["determine_sources"];?>" class="indent" >
+			<div id="guide_sources" class="indent" >
 				<fieldset>
 					<legend> <?php print $pgv_lang["search_fhl"];?></legend>
 					<form name="f1" target="_blank" action="http://www.familysearch.org/Eng/Library/fhlcatalog/supermainframeset.asp" method="get" accept-charset="utf-8">
@@ -100,7 +112,7 @@ class ra_guide extends ra_form {
 					<a href="javascript: <?php print $pgv_lang["add_unlinked_source"];?>" onclick="addnewsource(''); return false;"><img src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES["addsource"]["button"];?>" alt="<?php print $pgv_lang["add_unlinked_source"];?>" border="0" width="25"></img><?php print $pgv_lang["add_unlinked_source"];?></a><br />
 				</fieldset>
 			</div>
-			<div id="guide_research" name="<?php print $pgv_lang["manage_research"];?>" class="indent" >
+			<div id="guide_research" class="indent" >
 				<fieldset>
 					<legend> <?php print $pgv_lang["manage_research"]; ?></legend>
 						<?php print $pgv_lang["manage_research_inst"];?><br />
@@ -149,7 +161,7 @@ class ra_guide extends ra_form {
 					<?php print $pgv_lang["gen_tasks"]; ?></a><br />
 				</fieldset>
 			</div>
-			<div id="guide_results" name="<?php print $pgv_lang["enter_results"]; ?>" class="indent" >
+			<div id="guide_results" class="indent" >
 				<fieldset>
 					<legend> <?php print $pgv_lang["complete_title"]; ?></legend>
 					<?php print $pgv_lang["complete_task_inst"]; ?><br /><br />

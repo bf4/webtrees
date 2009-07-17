@@ -68,8 +68,7 @@ function getting_started_block($block = true, $config="", $side, $index) {
 	$content .= '<li style="padding: 5px;"><a class="imenu" href="admin.php">'.$pgv_lang["admin"].'</a></li>';
 	$content .= '</ul>';
 
-	global $THEME_DIR;
-	if ($block) include($THEME_DIR."/templates/block_small_temp.php");
-	else include($THEME_DIR."/templates/block_main_temp.php");
+	if ($block) include(PGV_THEME_DIR."/templates/block_small_temp.php");
+	else include(PGV_THEME_DIR."/templates/block_main_temp.php");
 }
 ?>

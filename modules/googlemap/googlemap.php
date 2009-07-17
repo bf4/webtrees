@@ -32,6 +32,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 
 require('modules/googlemap/defaultconfig.php');
 if (file_exists('modules/googlemap/config.php')) require('modules/googlemap/config.php');
+require_once('includes/classes/class_tab.php');
 
 global $SESSION_HIDE_GOOGLEMAP;
 $SESSION_HIDE_GOOGLEMAP = "empty";
@@ -55,6 +56,62 @@ if($SESSION_HIDE_GOOGLEMAP == "empty") {
 }
 
 loadLangFile("googlemap:lang");
+
+
+class googlemap_Tab extends Tab {
+	
+	public function getContent() {
+		global $SEARCH_SPIDER, $SESSION_HIDE_GOOGLEMAP, $pgv_lang, $CONTACT_EMAIL, $PGV_IMAGE_DIR, $PGV_IMAGES;
+		global $LANGUAGE;
+		global $GOOGLEMAP_API_KEY, $GOOGLEMAP_MAP_TYPE, $GOOGLEMAP_MIN_ZOOM, $GOOGLEMAP_MAX_ZOOM, $GEDCOM;
+		global $GOOGLEMAP_XSIZE, $GOOGLEMAP_YSIZE, $pgv_lang, $factarray, $SHOW_LIVING_NAMES, $PRIV_PUBLIC;
+		global $GOOGLEMAP_ENABLED, $TEXT_DIRECTION, $GM_DEFAULT_TOP_VALUE, $GOOGLEMAP_COORD;
+		global $GM_MARKER_COLOR, $GM_MARKER_SIZE, $GM_PREFIX, $GM_POSTFIX, $GM_PRE_POST_MODE;
+		
+		$out = "<div id=\"googlemap\">";
+		ob_start();
+
+		if ($GOOGLEMAP_ENABLED == "false") {
+			print "<table class=\"facts_table\">\n";
+			print "<tr><td colspan=\"2\" class=\"facts_value\">".$pgv_lang["gm_disabled"]."</td></tr>\n";
+			if (PGV_USER_IS_ADMIN) {
+				print "<tr><td align=\"center\" colspan=\"2\">\n";
+				print "<a href=\"".encode_url("module.php?mod=googlemap&pgvaction=editconfig")."\">".$pgv_lang["gm_manage"]."</a>";
+				print "</td></tr>\n";
+			}
+			print "\n\t</table>\n<br />";
+				?>
+					<script language="JavaScript" type="text/javascript">
+					<!--
+						//tabstyles[5]='tab_cell_inactive_empty';
+						//document.getElementById('pagetab5').className='tab_cell_inactive_empty';
+						document.getElementById("googlemap_left").innerHTML = document.getElementById("googlemap_content").innerHTML;
+						document.getElementById("googlemap_content").innerHTML = "";
+						function ResizeMap () {}
+						function SetMarkersAndBounds () {}
+					//-->
+					</script>
+				<?php
+		} else {
+			$famids = array();
+			$families = $this->controller->indi->getSpouseFamilies();
+			foreach($families as $famid=>$family) {
+				$famids[] = $family->getXref();
+			}
+				$this->controller->indi->add_family_facts(false);
+					create_indiv_buttons();
+					build_indiv_map($this->controller->getIndiFacts(), $famids);
+		}
+		$out .= ob_get_contents();
+		ob_end_clean();
+		$out .= "</div>";
+		return $out;
+	}
+	
+	public function hasContent() {
+		return true;
+	}
+}
 
 // functions copied from print_fact_place
 function print_fact_place_map($factrec) {

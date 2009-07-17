@@ -62,11 +62,10 @@ function print_welcome_block($block=true, $config="", $side, $index) {
 	$content .= "</td>";
 	$content .= "</tr></table>";
 
-	global $THEME_DIR;
 	if ($block) {
-		include($THEME_DIR."templates/block_small_temp.php");
+		include(PGV_THEME_DIR."templates/block_small_temp.php");
 	} else {
-		include($THEME_DIR."templates/block_main_temp.php");
+		include(PGV_THEME_DIR."templates/block_main_temp.php");
 	}
 }
 ?>

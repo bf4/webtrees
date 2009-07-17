@@ -116,8 +116,8 @@ if ($CONFIGURED && !PGV_DB::isConnected()) {
 	?>
 	<tr>
 		<td class="center">
-			<?php if (file_exists($THEME_DIR."/header.jpg")) { ?>
-			<img src="<?php print $THEME_DIR;?>header.jpg" width="281" height="50" alt="PhpGedView" />
+			<?php if (file_exists(PGV_THEME_DIR."/header.jpg")) { ?>
+			<img src="<?php print PGV_THEME_DIR;?>header.jpg" width="281" height="50" alt="PhpGedView" />
 			<?php } else { ?>
 			<h2>PhpGedView</h2>
 			<?php } ?>
@@ -367,8 +367,8 @@ $errormsg = "";
 ?>
 	<tr>
 		<td colspan="2" class="center">
-			<?php if (file_exists($THEME_DIR."/header.jpg")) { ?>
-			<img src="<?php print $THEME_DIR;?>header.jpg" width="281" height="50" alt="PhpGedView" />
+			<?php if (file_exists(PGV_THEME_DIR."/header.jpg")) { ?>
+			<img src="<?php print PGV_THEME_DIR;?>header.jpg" width="281" height="50" alt="PhpGedView" />
 			<?php } else { ?>
 			<h1>PhpGedView</h1>
 			<?php } ?>
@@ -689,12 +689,11 @@ function printDBForm() {
 }
 
 function printConfigForm(){
-	global $TEXT_DIRECTION, $PGV_DXHTMLTAB_COLORS, $PGV_STORE_MESSAGES, $USE_REGISTRATION_MODULE, $REQUIRE_ADMIN_AUTH_REGISTRATION;
+	global $TEXT_DIRECTION, $PGV_STORE_MESSAGES, $USE_REGISTRATION_MODULE, $REQUIRE_ADMIN_AUTH_REGISTRATION;
 	global $ALLOW_CHANGE_GEDCOM, $PGV_SIMPLE_MAIL, $ALLOW_USER_THEMES, $ALLOW_REMEMBER_ME, $LOGFILE_CREATE, $SERVER_URL;
 	global $PGV_SMTP_ACTIVE, $PGV_SMTP_HOST, $PGV_SMTP_HELO, $PGV_SMTP_PORT, $PGV_SMTP_AUTH, $PGV_SMTP_AUTH_USER, $PGV_SMTP_AUTH_PASS, $PGV_SMTP_SSL, $PGV_SMTP_FROM_NAME;
 	global $LOGIN_URL, $SCRIPT_NAME, $PGV_SESSION_SAVE_PATH, $PGV_SESSION_TIME, $COMMIT_COMMAND, $PGV_MEMORY_LIMIT, $MAX_VIEWS;
 	global $MAX_VIEW_TIME, $INDEX_DIRECTORY;
-	global $BROWSERTYPE;		// MSIE and dhtmlXTabbar don't play friendly at the moment
 	global $pgv_lang;
 
 	$i=1;
@@ -728,16 +727,26 @@ function printConfigForm(){
 	$oldmemorylimit = @ini_get('memory_limit');
 	if ($oldmemorylimit > $PGV_MEMORY_LIMIT) $PGV_MEMORY_LIMIT = $oldmemorylimit;
 
-	require_once("js/dhtmlXTabbar.js.htm");
 	?>
-	<?php if ($BROWSERTYPE!='msie') { ?>
-	<div id="conf_tabbar" class="dhtmlxTabBar" <?php if($TEXT_DIRECTION=="rtl") echo ' align="right"'; else echo ' align="left"';?> skinColors="<?php print $PGV_DXHTMLTAB_COLORS; ?>" style="min-width: 450px; height: 380px">
-	<?php } ?>
-		<div id="conf_basic" name="<?php print $pgv_lang['basic_site_config'];?>" class="indent" >
+	<link type="text/css" href="<?php echo PGV_THEME_DIR?>jquery/jquery-ui-1.7.1.custom.css" rel="Stylesheet" />
+	<script type="text/javascript" src="js/jquery/jquery.min.js"></script>
+	<script type="text/javascript" src="js/jquery/jquery-ui-1.7.1.custom.min.js"></script>
+	<script type="text/javascript">
+	//<![CDATA[
+	  $(document).ready(function(){
+	    $("#conf_tabbar").tabs();
+	  });
+	//]]>
+	  </script>
+	<div id="conf_tabbar">
+		<ul>
+			<li><a href="#conf_basic"><span><?php echo $pgv_lang['basic_site_config']?></span></a></li>
+			<li><a href="#conf_advanced"><span><?php echo $pgv_lang['adv_site_config']?></span></a></li>
+			<li><a href="#conf_smtp"><span>SMTP</span></a></li>
+		</ul>
+		<div id="conf_basic" class="indent" >
 		<table>
-		<?php if ($BROWSERTYPE=='msie') { ?>
 			<tr><td colspan="2" class="center"><b><?php print $pgv_lang['basic_site_config'];?></b></td></tr>
-		<?php } ?>
 			<tr>
 				<td class="descriptionbox wrap width30"><?php print_help_link("INDEX_DIRECTORY_help", "qm", "INDEX_DIRECTORY"); print $pgv_lang["INDEX_DIRECTORY"];?></td>
 				<td class="optionbox"><input type="text" size="50" name="NEW_INDEX_DIRECTORY" value="<?php print $INDEX_DIRECTORY?>" dir="ltr" tabindex="<?php $i++; print $i?>" onfocus="getHelp('INDEX_DIRECTORY_help');" /></td>
@@ -801,11 +810,9 @@ function printConfigForm(){
 		</div>
 
 		<!--  advanced settings -->
-		<div id="conf_advanced" name="<?php print $pgv_lang['adv_site_config'];?>" class="indent">
+		<div id="conf_advanced" class="indent">
 			<table>
-		<?php if ($BROWSERTYPE=='msie') { ?>
 			<tr><td colspan="2" class="center"><br /><b><?php print $pgv_lang['adv_site_config'];?></b></td></tr>
-		<?php } ?>
 			<tr>
 				<td class="descriptionbox wrap width30"><?php print_help_link("LOGIN_URL_help", "qm", "LOGIN_URL"); print $pgv_lang["LOGIN_URL"];?></td>
 				<td class="optionbox"><input type="text" name="NEW_LOGIN_URL" value="<?php print $LOGIN_URL?>" dir="ltr" tabindex="<?php $i++; print $i?>" onfocus="getHelp('LOGIN_URL_help');" size="50" />
@@ -882,11 +889,9 @@ function printConfigForm(){
 		</div>
 	
 	<!--  smtp settings -->
-	<div id="conf_smtp" name="SMTP" class="indent">
+	<div id="conf_smtp" class="indent">
 		<table>
-	<?php if ($BROWSERTYPE=='msie') { ?>
 		<tr><td colspan="2" class="center"><br /><b>SMTP</b></td></tr>
-	<?php } ?>
 	<tr>
 		<td class="descriptionbox wrap width30"><?php print_help_link("PGV_SMTP_ACTIVE_help", "qm", "PGV_SMTP_ACTIVE"); print $pgv_lang["PGV_SMTP_ACTIVE"];?></td>
 		<td class="optionbox">
@@ -940,7 +945,7 @@ function printConfigForm(){
 	</tr>
 	</table>
 		</div>
-	<?php if ($BROWSERTYPE!='msie') print '</div>'; ?>
+		</div>
 	<?php
 	return true;
 }

@@ -171,11 +171,10 @@ function print_gedcom_news($block = true, $config='', $side, $index)
 		$content .= "<a href=\"".encode_url("index.php?gedcom_news_archive=yes&ctype={$ctype}")."\">".$pgv_lang['gedcom_news_archive']."</a><br />";
 	}
 
-	global $THEME_DIR;
 	if ($block) {
-		include($THEME_DIR."templates/block_small_temp.php");
+		include(PGV_THEME_DIR."templates/block_small_temp.php");
 	} else {
-		include($THEME_DIR."templates/block_main_temp.php");
+		include(PGV_THEME_DIR."templates/block_main_temp.php");
 	}
 }
 

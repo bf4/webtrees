@@ -89,11 +89,10 @@ function print_recent_changes($block=true, $config="", $side, $index) {
 		$content .= ob_get_clean();
 	}
 
-	global $THEME_DIR;
 	if ($block) {
-		include($THEME_DIR."templates/block_small_temp.php");
+		include(PGV_THEME_DIR."templates/block_small_temp.php");
 	} else {
-		include($THEME_DIR."templates/block_main_temp.php");
+		include(PGV_THEME_DIR."templates/block_main_temp.php");
 	}
 }
 

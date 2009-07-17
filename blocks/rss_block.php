@@ -76,11 +76,10 @@ function print_RSS_block($block = true, $config="", $side, $index) {
 	$content .= "<div class=\"center\">";
 	$content .= "</div>";
 
-	global $THEME_DIR;
 	if ($block) {
-		include($THEME_DIR."templates/block_small_temp.php");
+		include(PGV_THEME_DIR."templates/block_small_temp.php");
 	} else {
-		include($THEME_DIR."templates/block_main_temp.php");
+		include(PGV_THEME_DIR."templates/block_main_temp.php");
 	}
 }
 ?>

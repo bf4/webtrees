@@ -31,6 +31,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 define('PGV_CLASS_MENUBAR_PHP', '');
 
 require_once 'includes/classes/class_menu.php';
+require_once 'includes/classes/class_module.php';
 
 class MenuBar
 {
@@ -799,22 +800,10 @@ class MenuBar
 	function getModuleMenus() {
 		if (!empty($this->modules)) return $this->modules;
 		$this->modules = array();
-		if (!file_exists("modules")) return $this->modules;
-		$d = dir("modules");
-		while (false !== ($entry = $d->read())) {
-			if ($entry{0}!="." && $entry!="CVS" && is_dir("modules/$entry")) {
-				if (file_exists("modules/$entry/menu.php")) {
-					include_once("modules/$entry/menu.php");
-					$menu_class = $entry."_ModuleMenu";
-					$obj = new $menu_class();
-					if (method_exists($obj, "getMenu")) {
-						$menu = $obj->getMenu();
-						if (is_object($menu)) $this->modules[] = $menu;
-					}
-				}
-			}
+		foreach (PGVModule::getActiveList(PGV_USER_ACCESS_LEVEL) as $mod) {
+			$menu = $mod->getMenu();
+			if ($menu) $this->modules[] = $mod->getMenu();
 		}
-		$d->close();
 
 		return $this->modules;
 	}
@@ -918,9 +907,9 @@ class MenuBar
 	* @return Menu the menu item
 	*/
 	static function &getThemeMenu() {
-		global $SEARCH_SPIDER, $ALLOW_THEME_DROPDOWN, $ALLOW_USER_THEMES, $THEME_DIR, $pgv_lang;
+		global $SEARCH_SPIDER, $ALLOW_THEME_DROPDOWN, $ALLOW_USER_THEMES, $pgv_lang;
 
-		$current=$THEME_DIR;
+		$current=PGV_THEME_DIR;
 		foreach (get_theme_names() as $themedir) {
 			if ($themedir==get_user_setting(PGV_USER_ID, 'theme')) {
 				$current=$themedir;

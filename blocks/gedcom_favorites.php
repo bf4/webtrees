@@ -182,11 +182,10 @@ function print_gedcom_favorites($block = true, $config="", $side, $index) {
 		$content .= "\n</form></div>\n";
 	}
 
-	global $THEME_DIR;
 	if ($block) {
-		include($THEME_DIR."templates/block_small_temp.php");
+		include(PGV_THEME_DIR."templates/block_small_temp.php");
 	} else {
-		include($THEME_DIR."templates/block_main_temp.php");
+		include(PGV_THEME_DIR."templates/block_main_temp.php");
 	}
 	// Restore GEDCOM configuration
 	unset($show_full);

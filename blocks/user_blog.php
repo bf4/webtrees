@@ -94,11 +94,10 @@ function print_user_news($block=true, $config="", $side, $index) {
 		$content .= "<br /><a href=\"javascript:;\" onclick=\"addnews('".PGV_USER_ID."'); return false;\">".$pgv_lang["add_journal"]."</a>";
 	}
 
-	global $THEME_DIR;
 	if ($block) {
-		include($THEME_DIR."templates/block_small_temp.php");
+		include(PGV_THEME_DIR."templates/block_small_temp.php");
 	} else {
-		include($THEME_DIR."templates/block_main_temp.php");
+		include(PGV_THEME_DIR."templates/block_main_temp.php");
 	}
 }
 ?>

@@ -315,8 +315,7 @@ function openPic(filename, width, height) {
 			$content .= "</td></tr></table>";
 			$content .= "</div>"; // random_picture_content
 			$content .= "</div>"; // random_picture_container
-			global $THEME_DIR;
-			include($THEME_DIR."templates/block_main_temp.php");
+			include(PGV_THEME_DIR."templates/block_main_temp.php");
 		}
 	}
 

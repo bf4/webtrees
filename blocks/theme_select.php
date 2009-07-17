@@ -41,7 +41,7 @@ $PGV_BLOCKS["print_block_theme_select"]["config"]		= array("cache"=>-1);
 
 function print_block_theme_select($style=0, $config="", $side, $index) {
 	global $pgv_lang;
-	global $ALLOW_THEME_DROPDOWN, $ALLOW_USER_THEMES, $THEME_DIR, $pgv_lang, $themeformcount;
+	global $ALLOW_THEME_DROPDOWN, $ALLOW_USER_THEMES, $pgv_lang, $themeformcount;
 
 	$id="theme_select";
 	$title = $pgv_lang["change_theme"];
@@ -50,11 +50,10 @@ function print_block_theme_select($style=0, $config="", $side, $index) {
 	$theme_menu=MenuBar::getThemeMenu();
 	$content='<div class="center theme_form"><br />'.$theme_menu->getMenuAsDropdown().'<br /<br /></div>';
 
-	global $THEME_DIR;
 	if ($style) {
-		include($THEME_DIR."templates/block_small_temp.php");
+		include(PGV_THEME_DIR."templates/block_small_temp.php");
 	} else {
-		include($THEME_DIR."templates/block_main_temp.php");
+		include(PGV_THEME_DIR."templates/block_main_temp.php");
 	}
 }
 ?>

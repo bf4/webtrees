@@ -172,6 +172,9 @@ class TreeNav {
 			</table>
 			</div>
 		</div>
+		<div id="zoomover" style="position: absolute; z-index: 10;">
+		<!-- div for mouseover when zoomed way out -->
+		</div>
 		<script type="text/javascript">
 		<!--
 		var <?php print $this->name; ?> = new NavTree("out_<?php print $this->name; ?>","in_<?php print $this->name; ?>", '<?php print $this->name; ?>', '<?php print $id; ?>');
@@ -187,55 +190,9 @@ class TreeNav {
 	*/
 	function setupJS() {
 		global $SERVER_URL;
-		require_once("js/prototype.js.htm");
-		require_once("js/behaviour.js.htm");
-		require_once("js/overlib.js.htm");
-		require_once("js/scriptaculous.js.htm");
 		?>
+	<script type="text/javascript" src="js/jquery/jquery.min.js"></script>
 	<script type="text/javascript" src="<?php print $SERVER_URL; ?>js/treenav.js"></script>
-	<script type="text/javascript">
-	<!--
-		var myrules = {
-		'#out_<?php print $this->name; ?> .person_box' : function(element) {
-			element.onmouseout = function() {
-				if (<?php print $this->name; ?>.zoom>=-2) return false;
-				return nd(); // hide helptext
-			}
-			element.onmouseover = function() { // show helptext
-				if (<?php print $this->name; ?>.zoom>=-2) return false;
-				bid = element.id.split("_");
-				if (<?php print $this->name; ?>.opennedBox[bid[1]]) return false;
-				helptext = this.title;
-				if (helptext=='') helptext = this.value;
-				if (helptext=='' || helptext==undefined) helptext = element.innerHTML;
-				this.title = helptext; if (document.all) return; // IE = title
-				this.value = helptext; this.title = ''; // Firefox = value
-				// show images
-				helptext=helptext.replace(/display: none;/gi, "display: inline;");
-				return overlib(helptext, BGCOLOR, "#000000", FGCOLOR, "#FFFFE0");
-			}
-		},
-		'.draggable' : function(element) {
-			new Draggable(element.id, {revert:true});
-		}
-		}
-		Behaviour.register(myrules);
-		/* not used yet
-		function dragObserver() {
-			this.parent = null;
-			this.onEnd = function(eventName, draggable, event) {
-				this.parent.appendChild(draggable.element);
-				<?php print $this->name; ?>.collapseBox = false;
-			}
-			this.onStart = function(eventName, draggable, event) {
-				this.parent = draggable.element.parentNode;
-				document.body.appendChild(draggable.element);
-			}
-		}
-		Draggables.addObserver(new dragObserver());
-		*/
-	//-->
-	</script>
 		<?php
 	}
 
@@ -482,8 +439,8 @@ class TreeNav {
 						?>
 					</td>
 					<?php
-					if ($hasChildren && $person->getNumberOfChildren()>1) { ?><td valign="top"><img style="position: absolute;" id="cline_<?php print $person->getXref();?>" name="vertline" src="<?php print $SERVER_URL.$PGV_IMAGE_DIR."/".$PGV_IMAGES['vline']['other']; ?>" width="3" alt="" /></td><?php }
-					else if ($hasChildren) { ?><td valign="top"><img style="position: absolute;" id="cline_<?php print $person->getXref();?>" name="vertline" src="<?php print $SERVER_URL.$PGV_IMAGE_DIR."/".$PGV_IMAGES['hline']['other']; ?>" width="3"  alt=""/></td><?php }
+					if ($hasChildren && $person->getNumberOfChildren()>1) { ?><td valign="top"><img style="position: absolute;" id="cline_<?php print $person->getXref();?>" class="vertline" src="<?php print $SERVER_URL.$PGV_IMAGE_DIR."/".$PGV_IMAGES['vline']['other']; ?>" width="3" alt="" /></td><?php }
+					else if ($hasChildren) { ?><td valign="top"><img style="position: absolute;" id="cline_<?php print $person->getXref();?>" class="vertline" src="<?php print $SERVER_URL.$PGV_IMAGE_DIR."/".$PGV_IMAGES['hline']['other']; ?>" width="3"  alt=""/></td><?php }
 					}
 					if ($state>0) {
 						?><td><img src="<?php print $SERVER_URL.$PGV_IMAGE_DIR."/".$PGV_IMAGES['hline']['other']; ?>" width="8" height="3" alt="" /></td><?php
@@ -520,7 +477,7 @@ class TreeNav {
 						$lineid.="_";
 						if (!empty($mother)) $lineid.=$mother->getXref();
 						?>
-					<?php if (!empty($father) && (!empty($mother))) { ?><td><img style="position: absolute;" id="<?php print $lineid;?>" name="pvertline" src="<?php print $SERVER_URL.$PGV_IMAGE_DIR."/".$PGV_IMAGES['vline']['other']; ?>" width="3" alt="" /></td><?php } ?>
+					<?php if (!empty($father) && (!empty($mother))) { ?><td><img style="position: absolute;" id="<?php print $lineid;?>" class="pvertline" src="<?php print $SERVER_URL.$PGV_IMAGE_DIR."/".$PGV_IMAGES['vline']['other']; ?>" width="3" alt="" /></td><?php } ?>
 					<td align="left">
 						<table cellpadding="0" cellspacing="0" border="0">
 							<tbody>
@@ -615,7 +572,7 @@ class TreeNav {
 						?>
 					</td>
 					<?php
-					if ($hasChildren && $family->getNumberOfChildren()>1) { ?><td valign="top"><img style="position: absolute;" id="cline_<?php print $person->getXref();?>" name="vertline" src="<?php print $SERVER_URL.$PGV_IMAGE_DIR."/".$PGV_IMAGES['vline']['other']; ?>" width="3" alt="" /></td><?php }
+					if ($hasChildren && $family->getNumberOfChildren()>1) { ?><td valign="top"><img style="position: absolute;" id="cline_<?php print $person->getXref();?>" class="vertline" src="<?php print $SERVER_URL.$PGV_IMAGE_DIR."/".$PGV_IMAGES['vline']['other']; ?>" width="3" alt="" /></td><?php }
 					}
 					if ($state>0) {
 						?><td><img src="<?php print $SERVER_URL.$PGV_IMAGE_DIR."/".$PGV_IMAGES['hline']['other']; ?>" width="8" height="3" alt="" /></td><?php
@@ -644,7 +601,7 @@ class TreeNav {
 						$lineid.="_";
 						if (!empty($mother)) $lineid.=$mother->getXref();
 						?>
-					<?php if (!empty($father) && (!empty($mother))) { ?><td><img style="position: absolute;" id="<?php print $lineid;?>" name="pvertline" src="<?php print $SERVER_URL.$PGV_IMAGE_DIR."/".$PGV_IMAGES['vline']['other']; ?>" width="3" alt="" /></td><?php } ?>
+					<?php if (!empty($father) && (!empty($mother))) { ?><td><img style="position: absolute;" id="<?php print $lineid;?>" class="pvertline" src="<?php print $SERVER_URL.$PGV_IMAGE_DIR."/".$PGV_IMAGES['vline']['other']; ?>" width="3" alt="" /></td><?php } ?>
 					<td align="left">
 						<table cellpadding="0" cellspacing="0" border="0">
 							<tbody>

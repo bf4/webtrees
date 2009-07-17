@@ -12,20 +12,6 @@ function tempNavObj(target, oXmlHttp, callback) {
  		};
 }
 
-/* silly IE bug */
-function getElementsByNameIE(tag, name) {
-	var els = new Array();
-	var temps = document.getElementsByTagName(tag);
-	j = 0;
-	for(i=0; i<temps.length; i++) {
-		if (temps[i].name==name) {
-			els[j] = temps[i];
-			j++;
-		}
-	}
-	return els;
-}
-
 function NavTree(outerId, innerId, name, xref) {
 
 	this.innerPort = document.getElementById(innerId);
@@ -64,7 +50,6 @@ function NavTree(outerId, innerId, name, xref) {
 		this.outerPort.style.cursor = "";
 		this.ajaxCounter = 0;
 		this.loading.style.display = "none";
-		Behaviour.apply();
 	}
 
 	this.sizeLines = function() {
@@ -73,9 +58,7 @@ function NavTree(outerId, innerId, name, xref) {
 			this.innerPort.style.width = this.rootTable.offsetWidth + 'px';
 			this.innerPort.style.height = this.rootTable.offsetHeight + 'px';
 		}
-		var vlines;
-		if (browser.isIE) vlines = getElementsByNameIE("img", "vertline");
-		else vlines = document.getElementsByName("vertline");
+		var vlines = $('.vertline');
 		for(i=0; i<vlines.length; i++) {
 			id = vlines[i].id.substr(vlines[i].id.indexOf("_")+1);
 			outerParent = document.getElementById("ch_"+id);
@@ -102,8 +85,7 @@ function NavTree(outerId, innerId, name, xref) {
 			}
 		}
 		//-- parent lines
-		if (browser.isIE) vlines = getElementsByNameIE("img", "pvertline");
-		else vlines = document.getElementsByName("pvertline");
+		vlines = $('.pvertline');
 		for(i=0; i<vlines.length; i++) {
 			ids = vlines[i].id.split("_");
 			var y1 = 0;
@@ -126,10 +108,30 @@ function NavTree(outerId, innerId, name, xref) {
 					}
 				}
 				vlines[i].style.top = y1+'px';
-				vlines[i].style.height = (y2-y1)+'px';
+				var ty = y2-y1;
+				vlines[i].style.height = ty+'px';
 				
 			}
 		}
+		temp = this;
+		$(".person_box").hover(
+				function(event) {
+					if (temp.zoom>=-2) return false;
+					left=(event.clientX + document.documentElement.scrollLeft + 7)+"px";
+	  				top=(event.clientY + document.documentElement.scrollTop + 7)+"px";
+					innertext = $(this).html();
+					innertext=innertext.replace(/display: none;/gi, "display: inline;");
+					$("#zoomover").html(innertext);
+					$("#zoomover").addClass('person_boxNN');
+					$("#zoomover").css({left:left,top:top}).show();
+					event.preventDefault();
+				},
+				function(event) {
+					if (temp.zoom>=-2) return false;
+					$("#zoomover").hide();
+					event.preventDefault();
+				}
+		);
 	}
 
 	this.loadChild = function(target, xref) {
@@ -198,7 +200,6 @@ function NavTree(outerId, innerId, name, xref) {
 	
 	this.expandCallback = function() {
 		this.sizeLines();
-		Behaviour.apply();
 	}
 
 	this.newRoot = function(xref, element, gedcom) {
@@ -241,8 +242,6 @@ function NavTree(outerId, innerId, name, xref) {
 	
 	this.center = function() {
 		this.reInit();
-		this.sizeLines();
-		Behaviour.apply();
 		//-- load up any other people to fill in the page
 		this.loadChildren(this.innerPort);
  		this.loadParents(this.innerPort);
@@ -259,6 +258,7 @@ function NavTree(outerId, innerId, name, xref) {
 			this.innerPort.style.top = y+'px';
 			this.innerPort.style.left = x+'px';
 		}
+ 		this.sizeLines();
 	}
 
 	this.drawViewport = function(element) {
@@ -538,5 +538,4 @@ function dragStop(event) {
     document.removeEventListener("mousemove", dragGo,   true);
     document.removeEventListener("mouseup",   dragStop, true);
   }
-  Behaviour.apply();
 }

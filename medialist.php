@@ -480,12 +480,7 @@ if ($ct>0) {
 	print "</table><br />";
 }
 print "\n</div>\n";
-// -- load up the slideshow code
-if (!file_exists("modules/lightbox/album.php")) {
-	if (file_exists("modules/slideshow/slideshow.php")) {
-		include_once("modules/slideshow/slideshow.php");
-	}
-}
+
 print_footer();
 
 ?>

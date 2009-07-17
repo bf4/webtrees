@@ -38,10 +38,40 @@ if (!defined('PGV_PHPGEDVIEW')) {
 require_once 'modules/research_assistant/ra_functions.php';
 require_once 'modules/research_assistant/forms/ra_GeneratedTask.php';
 
-// If the user doesnt have access then take them to the index.
-if ($SHOW_RESEARCH_ASSISTANT < PGV_USER_ACCESS_LEVEL && preg_match("/index.php/", $SCRIPT_NAME)==0) {
-	header("Location: index.php");
-	exit;
+require_once 'includes/classes/class_tab.php';
+
+class research_assistant_Tab extends Tab {
+	
+	public function getContent() {
+		global $pgv_lang, $SHOW_RESEARCH_ASSISTANT, $CONTACT_EMAIL, $GEDCOM, $INDEX_DIRECTORY, $factarray, $templefacts, $nondatefacts, $nonplacfacts;
+		global $LANGUAGE, $lang_short_cut;
+		
+		$out = "<span class=\"subheaders\">".$pgv_lang["research_assistant"]."</span><div id=\"researchlog_content\">";
+		$out .= "<script type=\"text/javascript\" src=\"modules/research_assistant/research_assistant.js\"></script>";
+		if (!$this->controller->indi->canDisplayDetails()) {
+			ob_start();
+			?>
+			<table class="facts_table">
+				<tr><td class="facts_value">
+				<?php print_privacy_error($CONTACT_EMAIL); ?>
+				</td></tr>
+			</table>
+			<br />
+			<?php
+			$out .= ob_get_contents();
+			ob_end_clean();
+		} else {
+			$mod = new research_assistant();
+			$mod->init();
+			$out .= $mod->tab($this->controller->indi);
+		}
+		$out .= "</div>";
+		return $out;
+	}
+	
+	public function hasContent() {
+		return true;
+	}
 }
 
 /**

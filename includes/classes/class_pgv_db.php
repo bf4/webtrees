@@ -420,7 +420,7 @@ class PGV_DB {
 	private static $log=array();
 
 	// Add an entry to the log
-	public static function logQuery($query, $rows, $microtime, $bind_variables) {
+	public static function logQuery($query, $rows, $microtime, $bind_variables='') {
 		if (PGV_DEBUG_SQL) {
 			// Full logging
 			// Trace

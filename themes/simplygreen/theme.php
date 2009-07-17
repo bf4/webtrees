@@ -177,7 +177,6 @@ $Dindent = 15;		// -- width to indent descendancy boxes
 $Darrowwidth = 15;	// -- additional width to include for the up arrows
 
 $CHARTS_CLOSE_HTML = true;		//-- should the charts, pedigree, descendacy, etc close the HTML on the page
-$PGV_DXHTMLTAB_COLORS = "#004025,#246339";
 
 // Arrow symbol or icon for up-page links on Help pages
 // This icon is referred to in Help text by: #GLOBALS[UpArrow]#

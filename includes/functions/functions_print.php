@@ -376,8 +376,7 @@ function print_pedigree_person($pid, $style=1, $show_famlink=true, $count=0, $pe
 				}
 			}
 		}
-	global $THEME_DIR;
-	include($THEME_DIR."templates/personbox_template.php");
+	include(PGV_THEME_DIR."templates/personbox_template.php");
 }
 
 /**
@@ -400,7 +399,7 @@ function print_header($title, $head="", $use_alternate_styles=true) {
 	global $view, $cart;
 	global $CHARACTER_SET, $PGV_IMAGE_DIR, $GEDCOMS, $GEDCOM, $GEDCOM_TITLE, $CONTACT_EMAIL, $COMMON_NAMES_THRESHOLD, $INDEX_DIRECTORY;
 	global $SCRIPT_NAME, $QUERY_STRING, $action, $query, $changelanguage,$theme_name;
-	global $FAVICON, $stylesheet, $print_stylesheet, $rtl_stylesheet, $headerfile, $toplinks, $THEME_DIR, $print_headerfile;
+	global $FAVICON, $stylesheet, $print_stylesheet, $rtl_stylesheet, $headerfile, $toplinks, $print_headerfile;
 	global $PGV_IMAGES, $TEXT_DIRECTION, $ONLOADFUNCTION,$REQUIRE_AUTHENTICATION, $SHOW_SOURCES, $ENABLE_RSS, $RSS_FORMAT;
 	global $META_AUTHOR, $META_PUBLISHER, $META_COPYRIGHT, $META_DESCRIPTION, $META_PAGE_TOPIC, $META_AUDIENCE, $META_PAGE_TYPE, $META_ROBOTS, $META_REVISIT, $META_KEYWORDS, $META_TITLE, $META_SURNAME_KEYWORDS;
 
@@ -1283,7 +1282,7 @@ function print_gedcom_title_link($InHeader=FALSE) {
 }
 
 //-- function to print a privacy error with contact method
-function print_privacy_error($username) {
+function print_privacy_error($username, $print=true) {
 	global $pgv_lang, $CONTACT_METHOD, $SUPPORT_METHOD, $WEBMASTER_EMAIL;
 
 	$method = $CONTACT_METHOD;
@@ -1293,12 +1292,15 @@ function print_privacy_error($username) {
 	if (!get_user_id($username)) {
 		$method = "mailto";
 	}
-	echo "<br /><span class=\"error\">".$pgv_lang["privacy_error"]." ";
+	
+	$out = '';
+	$out .= "<br /><span class=\"error\">".$pgv_lang["privacy_error"]." ";
 	if ($method=="none") {
-		echo "</span><br />";
-		return;
+		$out .= "</span><br />";
+		if ($print) echo $out;
+		return $out;
 	}
-	echo $pgv_lang["more_information"];
+	$out .= $pgv_lang["more_information"];
 	if ($method=="mailto") {
 		if (!get_user_id($username)) {
 			$email = $username;
@@ -1307,11 +1309,13 @@ function print_privacy_error($username) {
 			$email = get_user_setting($username, 'email');
 			$fullname=getUserFullName($username);
 		}
-		echo " <a href=\"mailto:$email\">".$fullname."</a></span><br />";
+		$out .= " <a href=\"mailto:$email\">".$fullname."</a></span><br />";
 	} else {
 		$userName=getUserFullName($username);
-		echo " <a href=\"javascript:;\" onclick=\"message('$username','$method'); return false;\">".$userName."</a></span><br />";
+		$out .= " <a href=\"javascript:;\" onclick=\"message('$username','$method'); return false;\">".$userName."</a></span><br />";
 	}
+	if ($print) echo $out;
+	return $out;
 }
 
 /* Function to print popup help boxes
