@@ -594,7 +594,7 @@ $pgv_lang["record_added"]			= "Wpis #xref# został dodany do pliku GEDCOM.";
 $pgv_lang["record_not_added"]		= "Dodawanie wpisu #xref# do pliku GEDCOM nie powiodło się.";
 
 //-- SEARCH FILE MESSAGES
-$pgv_lang["soundex_search"]			= "Wyszukiwanie Soundex (fonetyczne)";
+$pgv_lang["soundex_search"]			= "Wyszukiwanie fonetyczne (Soundex)";
 $pgv_lang["sources"]				= "Źródła";
 $pgv_lang["shared_notes"]			= "Wspólne notatki";
 $pgv_lang["lastname_search"]		= "Nazwisko";

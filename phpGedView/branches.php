@@ -56,7 +56,7 @@ if ($surn=='*') {
 }
 
 //-- form
-print_header($surn);
+print_header($pgv_lang["branch_list"]." - ".$surn);
 if ($ENABLE_AUTOCOMPLETE) {
 	require './js/autocomplete.js.htm';
 }
@@ -64,19 +64,19 @@ if ($ENABLE_AUTOCOMPLETE) {
 <form name="surnlist" id="surnlist" action="?">
 	<table class="center facts_table width50">
 		<tr>
-			<td class="descriptionbox <?php print $TEXT_DIRECTION; ?>">
-				<?php print_help_link("surname_help", "qm", "surname"); print $pgv_lang["surname"]; ?></td>
-			<td class="optionbox <?php print $TEXT_DIRECTION; ?>">
+			<td class="descriptionbox <?php echo $TEXT_DIRECTION; ?>">
+				<?php print_help_link("surname_help", "qm", "surname"); echo $factarray["SURN"]; ?></td>
+			<td class="optionbox <?php echo $TEXT_DIRECTION; ?>">
 				<input type="text" name="surn" id="SURN" value="<?php echo $surn?>" />
 				<input type="hidden" name="ged" id="ged" value="<?php echo $ged?>" />
 				<input type="submit" value="<?php echo $pgv_lang['view']; ?>" />
 				<input type="submit" value="<?php echo $pgv_lang['random_surn']; ?>" onclick="document.surnlist.surn.value='*';" />
 				<p class="details1">
-					<? echo $pgv_lang["soundex_search"]?><br />
+					<?php print_help_link("soundex_search_help", "qm", "soundex_search"); echo $pgv_lang["soundex_search"]?><br />
 					<input type="checkbox" name="soundex_std" id="soundex_std" value="1" <?php if ($soundex_std) echo " checked=\"checked\"" ?> />
-					<?php echo $pgv_lang["search_russell"]?>
+					<label for="soundex_std"><?php echo $pgv_lang["search_russell"]?></label>
 					<input type="checkbox" name="soundex_dm" id="soundex_dm" value="1" <?php if ($soundex_dm) echo " checked=\"checked\"" ?> />
-					<?php echo $pgv_lang["search_DM"]?>
+					<label for="soundex_dm"><?php echo $pgv_lang["search_DM"]?></label>
 				</p>
 			</td>
 		</tr>
