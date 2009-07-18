@@ -1395,6 +1395,7 @@ class stats {
 			if ($tot==0) $tot=1;
 			$centuries = "";
 			$func="century_localisation_{$lang_short_cut[$LANGUAGE]}";
+			$counts=array();
 			foreach ($rows as $values) {
 				if (function_exists($func)) {
 					$century = $func($values['century']);
