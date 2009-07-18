@@ -45,7 +45,7 @@ class MediaControllerRoot extends IndividualController{
 	var $show_changes=true;
 
 	function init() {
-		global $MEDIA_DIRECTORY, $USE_MEDIA_FIREWALL, $GEDCOM;
+		global $MEDIA_DIRECTORY, $USE_MEDIA_FIREWALL, $GEDCOM, $pgv_changes;
 
 		$filename = decrypt(safe_GET('filename'));
 		$this->mid = safe_GET_xref('mid');
