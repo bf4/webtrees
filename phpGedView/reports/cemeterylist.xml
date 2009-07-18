@@ -5,54 +5,55 @@
 	<PGVRInput name="deathplace" lookup="PLAC" type="text"><PGVRvar var="pgv_lang[deathplace]" /> </PGVRInput>
 	<PGVRInput name="sortby" type="select" default="NAME" options="none,NAME,DEAT:DATE"><PGVRvar var="pgv_lang[sort_by]" /></PGVRInput>
 	<PGVRInput name="pageSize" type="select" default="A4" options="letter,A3,A4,legal"><PGVRvar var="pgv_lang[page_size]" /></PGVRInput>
-	<PGVRStyle name="header" font="dejavusans" size="16" style="b" />
-	<PGVRStyle name="pagenum" font="dejavusans" size="8"/>
-	<PGVRStyle name="text" font="dejavusans" size="9"/>
-	<PGVRStyle name="label" font="dejavusans" size="10" style="b" />
-	<PGVRStyle name="genby" font="dejavusans" size="9" />
-	<PGVRStyle name="footnote" font="dejavusans" size="8" />
-	<PGVRDoc pageSize="$pageSize" orientation="landscape">
-		<!-- landscape orientation -->
-		<PGVRSetVar name="idwidth" value="40"/>
-		<PGVRSetVar name="namewidth" value="155"/>
-		<PGVRSetVar name="datewidth" value="95"/>
-		<PGVRSetVar name="cemewidth" value="150"/>
-		<PGVRSetVar name="placewidth" value="175"/>
+	<PGVRInput name="fonts" type="select" default="dejavusans" options="arialunicid0,dejavusans,helvetica"><PGVRvar var="pgv_lang[font]"/></PGVRInput>
+	<PGVRStyle name="header" font="$fonts" size="16" style="b" />
+	<PGVRStyle name="pagenum" font="$fonts" size="8"/>
+	<PGVRStyle name="text" font="$fonts" size="9"/>
+	<PGVRStyle name="label" font="$fonts" size="10" style="b" />
+	<PGVRStyle name="genby" font="$fonts" size="9" />
+	<PGVRStyle name="footnote" font="$fonts" size="8" />
+	<!-- landscape orientation -->
+	<PGVRSetVar name="idwidth" value="40"/>
+	<PGVRSetVar name="namewidth" value="155"/>
+	<PGVRSetVar name="datewidth" value="95"/>
+	<PGVRSetVar name="cemewidth" value="150"/>
+	<PGVRSetVar name="placewidth" value="175"/>
 
+	<PGVRDoc pageSize="$pageSize" orientation="landscape">
 		<PGVRHeader>
 			<PGVRCell align="center" height="20" newline="1" style="header"><PGVRvar var="pgv_lang[cemetery_report]" /></PGVRCell>
 			<PGVRCell align="right" newline="1" style="pagenum"><PGVRvar var="pgv_lang[page]" /> <PGVRPageNum /> <PGVRvar var="pgv_lang[of]" /> <PGVRTotalPages /></PGVRCell>
 
-			<PGVRTextBox border="1" height="12" width="$idwidth">
+			<PGVRTextBox border="1" width="$idwidth">
 				<PGVRText style="label"> </PGVRText>
 			</PGVRTextBox>
 
 			<PGVRSetVar name="fill" value="" />
 			<PGVRif condition="$sortby=='NAME'"><PGVRSetVar name="fill" value="#DDDDDD" /></PGVRif>
-			<PGVRTextBox bgcolor="$fill" border="1" height="12" width="$namewidth">
-				<PGVRText style="label"> <PGVRvar var="pgv_lang[name]" /></PGVRText>
+			<PGVRTextBox bgcolor="$fill" border="1" width="$namewidth">
+				<PGVRText style="label"><PGVRvar var="pgv_lang[name]" /></PGVRText>
 			</PGVRTextBox>
 
 			<PGVRSetVar name="fill" value="" />
 			<PGVRif condition="$sortby=='DEAT:DATE'"><PGVRSetVar name="fill" value="#DDDDDD" /></PGVRif>
-			<PGVRTextBox bgcolor="$fill" border="1" height="12" width="$datewidth">
-				<PGVRText style="label"> <PGVRvar var="factarray[DATE]" /></PGVRText>
+			<PGVRTextBox bgcolor="$fill" border="1" width="$datewidth">
+				<PGVRText style="label"><PGVRvar var="factarray[DATE]" /></PGVRText>
 			</PGVRTextBox>
 
 			<PGVRSetVar name="fill" value="" />
 			<PGVRif condition="$sortby=='BURI'"><PGVRSetVar name="fill" value="#DDDDDD" /></PGVRif>
-			<PGVRTextBox bgcolor="$fill" border="1" height="12" width="$cemewidth">
-				<PGVRText style="label"> <PGVRvar var="factarray[CEME]" /></PGVRText>
+			<PGVRTextBox bgcolor="$fill" border="1" width="$cemewidth">
+				<PGVRText style="label"><PGVRvar var="factarray[CEME]" /></PGVRText>
 			</PGVRTextBox>
 
 			<PGVRSetVar name="fill" value="" />
 			<PGVRif condition="$sortby=='PLAC'"><PGVRSetVar name="fill" value="#DDDDDD" /></PGVRif>
-			<PGVRTextBox bgcolor="$fill" border="1" height="12" width="$placewidth">
-				<PGVRText style="label"> <PGVRvar var="factarray[PLAC]" /></PGVRText>
+			<PGVRTextBox bgcolor="$fill" border="1" width="$placewidth">
+				<PGVRText style="label"><PGVRvar var="factarray[PLAC]" /></PGVRText>
 			</PGVRTextBox>
 
-			<PGVRTextBox border="1" height="12" newline="1">
-				<PGVRText style="label"> <PGVRvar var="factarray[NOTE]" /></PGVRText>
+			<PGVRTextBox border="1" newline="1">
+				<PGVRText style="label"><PGVRvar var="factarray[NOTE]" /></PGVRText>
 			</PGVRTextBox>
 		</PGVRHeader>
 		<PGVRBody>
@@ -62,7 +63,7 @@
 				<PGVRCell style="text" width="$datewidth"><PGVRGedcomValue tag="BURI:DATE" /></PGVRCell>
 				<PGVRCell style="text" width="$cemewidth"><PGVRGedcomValue tag="BURI:CEME" /></PGVRCell>
 				<PGVRCell style="text" width="$placewidth"><PGVRGedcomValue tag="BURI:PLAC" /></PGVRCell>
-				<PGVRCell newline="1" style="text" width=""><PGVRGedcomValue tag="BURI:NOTE" /></PGVRCell>
+				<PGVRCell newline="1" style="text"><PGVRGedcomValue tag="BURI:NOTE" /></PGVRCell>
 			</PGVRList>
 			<PGVRCell align="right" newline="1" style="label"><br /><PGVRvar var="pgv_lang[total_indis]" />: <PGVRListTotal /></PGVRCell>
 		</PGVRBody>

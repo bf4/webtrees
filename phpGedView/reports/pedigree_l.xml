@@ -1,15 +1,16 @@
 <PGVReport access="PRIV_PUBLIC" icon="pedigree">
 <!-- $Id$ -->
-	<PGVRTitle><PGVRvar var="pgv_lang[pedigree_chart]" /> (<PGVRvar var="pgv_lang[landscape]" />)</PGVRTitle>
 	<PGVRDescription>Prints a pedigree chart in landscape mode</PGVRDescription>
-	<PGVRStyle name="header" font="dejavusans" size="18"/>
-	<PGVRStyle name="pagenum" font="dejavusans" size="8"/>
-	<PGVRStyle name="label1" font="dejavusans" size="9" />
-	<PGVRStyle name="name" font="dejavusans" size="9" />
-	<PGVRStyle name="text" font="dejavusans" size="7" />
-	<PGVRStyle name="genby" font="dejavusans" size="9" />
+	<PGVRTitle><PGVRvar var="pgv_lang[pedigree_chart]" /> (<PGVRvar var="pgv_lang[landscape]" />)</PGVRTitle>
 	<PGVRInput name="pid" lookup="INDI" type="text" default=""><PGVRvar var="pgv_lang[enter_pid]" />:</PGVRInput>
 	<PGVRInput name="pageSize" type="select" default="A4" options="letter,A3,A4,legal"><PGVRvar var="pgv_lang[page_size]" /></PGVRInput>
+	<PGVRInput name="fonts" type="select" default="dejavusans" options="arialunicid0,dejavusans,helvetica"><PGVRvar var="pgv_lang[font]"/></PGVRInput>
+	<PGVRStyle name="header" font="$fonts" size="18"/>
+	<PGVRStyle name="pagenum" font="$fonts" size="8"/>
+	<PGVRStyle name="label1" font="$fonts" size="9" />
+	<PGVRStyle name="name" font="$fonts" size="9" />
+	<PGVRStyle name="text" font="$fonts" size="7" />
+	<PGVRStyle name="genby" font="$fonts" size="9" />
 	<PGVRSetVar name="truncatename" value="32" />
 	<PGVRDoc pageSize="$pageSize" orientation="landscape" leftmargin="1" rightmargin="1">
 		<PGVRHeader>
