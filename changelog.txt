@@ -9,7 +9,8 @@
 =====================================================================
 
 
-Version 4.2.2
+Version 4.2.
+ - Fixed: [ 2820729 ] Approve media changes on MediaViewer does not work (fisharebest)
  - Fixed: database download doesn't respect Privacy (canajun2eh)
  - Added: selectable Privacy for database or clipboard download (canajun2eh)
  - Added: allow constant prefix to file names in database or clipboard download (canajun2eh)
