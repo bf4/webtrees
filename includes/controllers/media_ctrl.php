@@ -89,13 +89,6 @@ class MediaControllerRoot extends IndividualController{
 			$this->mediaobject = Media::getInstance($this->mid);
 			//This sets the controller ID to be the Media ID
 			$this->pid = $this->mid;
-
-			if (isset($pgv_changes[$this->mid."_".$GEDCOM])){
-				$this->mediaobject = new Media("0 @".$this->mid."@ OBJE");
-				$this->show_changes = true;
-			} else {
-				return false;
-			}
 		}
 
 		if (is_null($this->mediaobject)) return false;
