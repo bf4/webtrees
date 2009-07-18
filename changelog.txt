@@ -10,6 +10,17 @@
 
 
 Version 4.2.
+ - Fixed: [ 1625495 ] 4.1 Chinese not shown in Report (imsza)
+ - Fixed: [ 1410725 ] 4.0b5: Footnote numbers in reports cause line breaks (imsza)
+ - Fixed: [ 1568536 ] Ahnentafel report formatting issues (imsza)
+ - Fixed: [ 1539988 ] Family Group Report - PDF Error (imsza)
+ - Fixed: [ 1779795 ] SVN1489 Multiple Minor Issues with HTML Ahnen Reports (imsza)
+ - Fixed: [ 2820985 ] [New Reports] PGV Version Number Leak (imsza)
+ - Added: All "List" reports that was originally made for portrait also support 'landscape' for a wider view (imsza)
+ - Added: All Report has user Font selection drop-down box (imsza)
+ - Added: "Themes" is enabled. I have no idea how the Themes is working with the reports! But, its cute... (imsza)
+ - Fixed: "Unknown gender" is also handled correctly in the xml files (imsza)
+ - Fixed: Multiple image support even on multiple pages (imsza)
  - Fixed: [ 2820729 ] Approve media changes on MediaViewer does not work (fisharebest)
  - Fixed: database download doesn't respect Privacy (canajun2eh)
  - Added: selectable Privacy for database or clipboard download (canajun2eh)

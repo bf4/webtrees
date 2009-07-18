@@ -5,17 +5,18 @@
 	<PGVRInput name="maxgen" type="select" options="3,4,5,6,7,8,9,*"><PGVRvar var="pgv_lang[generations]" /></PGVRInput>
 	<PGVRInput name="sources" type="checkbox" default="1"><PGVRvar var="pgv_lang[show_sources]" /></PGVRInput>
 	<PGVRInput name="pageSize" type="select" default="A4" options="letter,A3,A4,legal"><PGVRvar var="pgv_lang[page_size]" /></PGVRInput>
-	<PGVRStyle name="header" font="dejavusans" size="18"/>
-	<PGVRStyle name="subheader" font="dejavusans" size="12" style="b" />
-	<PGVRStyle name="pagenum" font="dejavusans" size="8"/>
-	<PGVRStyle name="label1" font="dejavusans" size="8"/>
-	<PGVRStyle name="label2" font="dejavusans" size="10"/>
-	<PGVRStyle name="name" font="dejavusans" size="9"/>
-	<PGVRStyle name="name1" font="dejavusans" size="14"/>
-	<PGVRStyle name="text" font="dejavusans" size="9"/>
-	<PGVRStyle name="footnote" font="dejavusans" size="8"/>
-	<PGVRStyle name="footnotenum" font="dejavusans" size="7"/>
-	<PGVRStyle name="genby" font="dejavusans" size="9" />
+	<PGVRInput name="fonts" type="select" default="dejavusans" options="arialunicid0,dejavusans,helvetica"><PGVRvar var="pgv_lang[font]"/></PGVRInput>
+	<PGVRStyle name="header" font="$fonts" size="18"/>
+	<PGVRStyle name="subheader" font="$fonts" size="12" style="b" />
+	<PGVRStyle name="pagenum" font="$fonts" size="8"/>
+	<PGVRStyle name="label1" font="$fonts" size="8"/>
+	<PGVRStyle name="label2" font="$fonts" size="10"/>
+	<PGVRStyle name="name" font="$fonts" size="9"/>
+	<PGVRStyle name="name1" font="$fonts" size="14"/>
+	<PGVRStyle name="text" font="$fonts" size="9"/>
+	<PGVRStyle name="footnote" font="$fonts" size="8"/>
+	<PGVRStyle name="footnotenum" font="$fonts" size="7"/>
+	<PGVRStyle name="genby" font="$fonts" size="9" />
 	<PGVRDoc pageSize="$pageSize">
 		<PGVRHeader>
 			<PGVRCell align="center" height="30" newline="1" style="header"><PGVRvar var="pgv_lang[descendancy_header]" /><PGVRGetPersonName id="$pid" /></PGVRCell>

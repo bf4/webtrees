@@ -33,17 +33,20 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
+/**
+* @todo add info
+*/
 define('PGV_CLASS_REPORTPDF_PHP', '');
 
 require_once 'includes/classes/class_reportbase.php';
 require_once 'tcpdf/tcpdf.php';
 
 /**
- * Main PGV Report Class for PDF
- *
- * @package PhpGedView
- * @subpackage Reports
- */
+* Main PGV Report Class for PDF
+*
+* @package PhpGedView
+* @subpackage Reports
+*/
 class PGVReportBasePDF extends PGVReportBase {
 	/**
 	* PDF compression - Zlib extension is required
@@ -185,10 +188,12 @@ class PGVReportBasePDF extends PGVReportBase {
 	* @param boolean $pagecheck
 	* @param string $style
 	* @param boolean $fill
+	* @param boolean $padding
+	* @param boolaen $reseth
 	* @return PGVRTextBoxPDF
 	*/
-	function createTextBox($width, $height, $border, $bgcolor, $newline, $left, $top, $pagecheck, $style, $fill, $padding) {
-		return new PGVRTextBoxPDF($width, $height, $border, $bgcolor, $newline, $left, $top, $pagecheck, $style, $fill, $padding);
+	function createTextBox($width, $height, $border, $bgcolor, $newline, $left, $top, $pagecheck, $style, $fill, $padding, $reseth) {
+		return new PGVRTextBoxPDF($width, $height, $border, $bgcolor, $newline, $left, $top, $pagecheck, $style, $fill, $padding, $reseth);
 	}
 
 	/**
@@ -255,39 +260,38 @@ class PGVReportBasePDF extends PGVReportBase {
 } //-- end PGVReport
 
 /**
- * PGV Report PDF Class
- *
- * This class inherits from the TCPDF class and is used to generate the PDF document
- * @package PhpGedView
- * @subpackage Reports
- */
+* PGV Report PDF Class
+*
+* This class inherits from the TCPDF class and is used to generate the PDF document
+* @package PhpGedView
+* @subpackage Reports
+*/
 class PGVRPDF extends TCPDF {
 	/**
-	 * Array of elements in the header
-	 * @var array
-	 */
+	* Array of elements in the header
+	* @var array
+	*/
 	public $headerElements = array();
 	/**
-	 * Array of elements in the page header
+	* Array of elements in the page header
 	* @var array
-	 */
+	*/
 	public $pageHeaderElements = array();
 	/**
-	 * Array of elements in the footer
-	 * @var array
-	 */
+	* Array of elements in the footer
+	* @var array
+	*/
 	public $footerElements = array();
 	/**
-	 * Array of elements in the body
-	 * @var array
-	 */
+	* Array of elements in the body
+	* @var array
+	*/
 	public $bodyElements = array();
 	/**
 	* Array of elements in the footer notes
 	* @var array
 	*/
 	public $printedfootnotes = array();
-
 	/**
 	* Currently used style name
 	* @var string
@@ -295,15 +299,21 @@ class PGVRPDF extends TCPDF {
 	public $currentStyle;
 	/**
 	* The last cell height
-	 * @var int
+	* @var int
 	*/
 	public $lastCellHeight = 0;
 	/**
-	 * The largest font size within a PGVRTextBox
-	 * to calculate the height
-	 * @var int
-	 */
+	* The largest font size within a PGVRTextBox
+	* to calculate the height
+	* @var int
+	*/
 	public $largestFontHeight = 0;
+	/**
+	* The last pictures page number
+	*
+	* @var array
+	*/
+	public $lastpicpage = 0;
 	
 	public $pgvreport;
 
@@ -316,7 +326,7 @@ class PGVRPDF extends TCPDF {
 				$this->Footnotes();
 			}
 			else if (is_string($element) && $element=="addpage") {
-				$this->AddPage();
+				$this->newPage();
 			}
 			else $element->render($this);
 		}
@@ -325,7 +335,7 @@ class PGVRPDF extends TCPDF {
 				$this->Footnotes();
 			}
 			else if (is_string($element) && $element=="addpage") {
-				$this->AddPage();
+				$this->newPage();
 			}
 			else if (is_object($element)) $element->render($this);
 		}
@@ -341,7 +351,7 @@ class PGVRPDF extends TCPDF {
 				$this->Footnotes();
 			}
 			else if (is_string($element) && $element=="addpage") {
-				$this->AddPage();
+				$this->newPage();
 			}
 			else if (is_object($element)) {
 				$element->render($this);
@@ -373,7 +383,7 @@ class PGVRPDF extends TCPDF {
 				$this->Footnotes();
 			}
 			else if (is_string($element) && $element=="addpage") {
-				$this->AddPage();
+				$this->newPage();
 			}
 			else if (is_object($element)) {
 				$element->render($this);
@@ -542,11 +552,11 @@ class PGVRPDF extends TCPDF {
 	}
 
 	/**
-	 * Checks the Footnote and numbers them
-	 *
-	 * @param object &$footnote
-	 * @return boolen false if not numbered befor | object if already numbered
-	 */
+	* Checks the Footnote and numbers them
+	*
+	* @param object &$footnote
+	* @return boolen false if not numbered befor | object if already numbered
+	*/
 	function checkFootnote(&$footnote) {
 		$ct = count($this->printedfootnotes);
 		$val = $footnote->getValue();
@@ -566,13 +576,23 @@ class PGVRPDF extends TCPDF {
 		return false;
 	}
 	
+	/**
+	* Used this function instead of AddPage()
+	* This function will make sure that images will not be overwritten
+	*/
+	function newPage() {
+		if ($this->lastpicpage > $this->getPage()){
+			$this->setPage($this->lastpicpage);
+		}
+		$this->AddPage();
+	}
 
 	
 	/*******************************************
 	* TCPDF protected functions
 	*******************************************/
 	
-	/*
+	/**
 	* Add a page if needed -PGVRPDF
 	* @param $height Cell height. Default value: 0
 	* @return boolean true in case of page break, false otherwise
@@ -600,8 +620,8 @@ $pgvreport = new PGVReportBasePDF();
 $PGVReportRoot = $pgvreport;
 
 /**
- * Cell element - PDF
- *
+* Cell element - PDF
+*
 * @package PhpGedView
 * @subpackage Reports
 */
@@ -732,8 +752,8 @@ class PGVRCellPDF extends PGVRCell {
 }
 
 /**
- * HTML element - PDF Report
- *
+* HTML element - PDF Report
+*
 * @package PhpGedView
 * @subpackage Reports
 * @todo add info
@@ -758,7 +778,7 @@ class PGVRHtmlPDF extends PGVRHtml {
 				$pdf->Footnotes();
 			}
 			else if (is_string($element) && $element=="addpage") {
-				$pdf->AddPage();
+				$pdf->newPage();
 			}
 			else if ($element->get_type()=='PGVRHtml') {
 				$this->text .= $element->render($pdf, true);
@@ -775,8 +795,8 @@ class PGVRHtmlPDF extends PGVRHtml {
 }
 
 /**
- * TextBox element
- *
+* TextBox element
+*
 * @package PhpGedView
 * @subpackage Reports
 * @todo add info
@@ -796,9 +816,10 @@ class PGVRTextBoxPDF extends PGVRTextBox {
 	* @param string $style
 	* @param boolean $fill
 	* @param boolean $padding
+	* @param boolean $reseth Reset the last height after this bos is done
 	*/
-	function PGVRTextBoxPDF($width, $height, $border, $bgcolor, $newline, $left, $top, $pagecheck, $style, $fill, $padding) {
-		parent::PGVRTextBox($width, $height, $border, $bgcolor, $newline, $left, $top, $pagecheck, $style, $fill, $padding);
+	function PGVRTextBoxPDF($width, $height, $border, $bgcolor, $newline, $left, $top, $pagecheck, $style, $fill, $padding, $reseth) {
+		parent::PGVRTextBox($width, $height, $border, $bgcolor, $newline, $left, $top, $pagecheck, $style, $fill, $padding, $reseth);
 	}
 
 	/**
@@ -889,9 +910,8 @@ class PGVRTextBoxPDF extends PGVRTextBox {
 
 		// Save the original margins
 		$cM = $pdf->getMargins();
-
-//		$h = 0;
-
+		// Element height (exept text)
+		$eH = 0;
 		// Use cell padding to wrap the width
 		// Temp Width with cell padding
 		$cWT = $cW - ($cM['cell'] * 2);
@@ -913,12 +933,13 @@ class PGVRTextBoxPDF extends PGVRTextBox {
 					$w = 0;
 				}
 				$lw = $this->elements[$i]->getWidth($pdf);
+				// Text is already gets the # LF
 				$cHT += $lw[2];
-				if ($lw[1]==1) {
+				if ($lw[1] == 1) {
 					$w = $lw[0];
 				}
-				else if ($lw[1]==2) {
-					$w=0;
+				else if ($lw[1] == 2) {
+					$w = 0;
 				}
 				else $w += $lw[0];
 				if ($w > $cWT) {
@@ -926,8 +947,8 @@ class PGVRTextBoxPDF extends PGVRTextBox {
 				}
 //	Footnote is at the bottom of the page. No need to calculate it's height or wrap the text!
 //	We are changing the margins anyway!
-//				$eh = $this->elements[$i]->getHeight($pdf);
-//				$h+=$eh;
+				// For anything else but text (images), get the height
+				$eH += $this->elements[$i]->getHeight($pdf);
 			}
 //			else {
 //				$h += $pdf->getFootnotesHeight();
@@ -936,18 +957,27 @@ class PGVRTextBoxPDF extends PGVRTextBox {
 
 		// Add up what's the final height
 		$cH = $this->height;
-		// Convert number of LF to points if any element exist
+		// If any element exist
 		if ($cE > 0) {
-			// Number of LF but at least one line
-			$cHT = ($cHT + 1) * $pdf->getCellHeightRatio();
-			// Calculate the cell hight with the largest font size used within this Box
-			$cHT = $cHT * $pdf->largestFontHeight;
-			// Add cell padding
-			if ($this->padding) {
-				$cHT += ($cM['cell'] * 2);
+			// Check if this is text or some other element, like images
+			if ($eH == 0) {
+				// This is text elements. Number of LF but at least one line
+				$cHT = ($cHT + 1) * $pdf->getCellHeightRatio();
+				// Calculate the cell hight with the largest font size used within this Box
+				$cHT = $cHT * $pdf->largestFontHeight;
+				// Add cell padding
+				if ($this->padding) {
+					$cHT += ($cM['cell'] * 2);
+				}
+				if ($cH < $cHT) {
+					$cH = $cHT;
+				}
 			}
-			if ($cH < $cHT) {
-				$cH = $cHT;
+			// This is any other element
+			else {
+				if ($cH < $eH) {
+					$cH = $eH;
+				}
 			}
 		}
 		// Finaly, check the last cells height
@@ -998,13 +1028,16 @@ class PGVRTextBoxPDF extends PGVRTextBox {
 			$pdf->SetRightMargin($pdf->getRemainingWidthPDF() - $cW + $cM['right']);
 		}
 
-		// Render the elements (write text)
+		// Save the current page number
+		$cPN = $pdf->getPage();
+		
+		// Render the elements (write text, print picture...)
 		foreach($this->elements as $element) {
 			if (is_string($element) and $element == "footnotetexts") {
 				$pdf->Footnotes();
 			}
 			else if (is_string($element) and $element == "addpage") {
-				$pdf->AddPage();
+				$pdf->newPage();
 			}
 			else $element->render($pdf);
 		}
@@ -1013,6 +1046,15 @@ class PGVRTextBoxPDF extends PGVRTextBox {
 		$pdf->SetLeftMargin($cM['left']);
 		$pdf->SetRightMargin($cM['right']);
 
+		// This will be mostly used to trick the multiple images last height
+		if ($this->reseth) {
+			$cH = 0;
+		}
+		// This can only happen with multiple images and with pagebreak
+		if (($this->reseth) and ($cPN != $pdf->getPage())) {
+			$pdf->setPage($cPN);
+		}
+		
 		// New line and some clean up
 		if ($this->newline) {
 			// addMarginX() also updates X
@@ -1029,8 +1071,8 @@ class PGVRTextBoxPDF extends PGVRTextBox {
 }
 
 /**
- * Text element
- *
+* Text element
+*
 * @package PhpGedView
 * @subpackage Reports
 * @todo add info
@@ -1047,9 +1089,9 @@ class PGVRTextPDF extends PGVRText {
 	}
 
 	/**
-	 * PDF Text renderer
-	 * @param PGVRPDF &$pdf
-	 */
+	* PDF Text renderer
+	* @param PGVRPDF &$pdf
+	*/
 	function render(&$pdf) {
 		// Set up the style
 		if ($pdf->getCurrentStyle() != $this->styleName) {
@@ -1075,19 +1117,22 @@ class PGVRTextPDF extends PGVRText {
 	}
 
 	/**
-	 * Returns the height in points of the text element
-	 *
-	 * @param PGVRPDF &$pdf
-	 * @return float $h
-	 */
+	* Returns the height in points of the text element
+	*
+	* @param PGVRPDF &$pdf
+	* @return float $h
+	*/
 	function getHeight(&$pdf) {
-		$style = $pdf->getStyle($this->styleName);
+		// The height is already calculated in getWidth()
+/*		$style = $pdf->getStyle($this->styleName);
 		$ct = substr_count($this->text, "\n");
 		if ($ct > 0) {
 			$ct += 1;
 		}
 		$h = ($style['size'] * $ct);
 		return $h;
+*/
+		return 0;
 	}
 
 	/**
@@ -1167,8 +1212,8 @@ class PGVRTextPDF extends PGVRText {
 }
 
 /**
- * Footnote element
- *
+* Footnote element
+*
 * @package PhpGedView
 * @subpackage Reports
 * @todo add info
@@ -1189,11 +1234,11 @@ class PGVRFootnotePDF extends PGVRFootnote {
 	}
 
 	/**
-	 * Write the Footnote text
-	 * Uses style name "footnote" by default
-	 *
-	 * @param PGVRPDF &$pdf
-	 */
+	* Write the Footnote text
+	* Uses style name "footnote" by default
+	*
+	* @param PGVRPDF &$pdf
+	*/
 	function renderFootnote(&$pdf) {
 		if ($pdf->getCurrentStyle() != $this->styleName) {
 			$pdf->setCurrentStyle($this->styleName);
@@ -1204,11 +1249,11 @@ class PGVRFootnotePDF extends PGVRFootnote {
 	}
 
 	/**
-	 * Returns the height in points of the Footnote element
-	 *
-	 * @param PGVRPDF &$pdf
-	 * @return float $h
-	 */
+	* Returns the height in points of the Footnote element
+	*
+	* @param PGVRPDF &$pdf
+	* @return float $h
+	*/
 	function getFootnoteHeight(&$pdf) {
 		$style = $pdf->getStyle($this->styleName);
 		$ct = substr_count($this->numText, "\n");
@@ -1299,8 +1344,8 @@ class PGVRFootnotePDF extends PGVRFootnote {
 }
 
 /**
- * PageHeader element
- *
+* PageHeader element
+*
 * @package PhpGedView
 * @subpackage Reports
 */
@@ -1311,8 +1356,8 @@ class PGVRPageHeaderPDF extends PGVRPageHeader {
 	}
 
 	/**
-	 * PageHeader element renderer
-	 * @param PGVRPDF &$pdf
+	* PageHeader element renderer
+	* @param PGVRPDF &$pdf
 	*/
 	function render(&$pdf) {
 		$pdf->clearPageHeader();
@@ -1323,8 +1368,8 @@ class PGVRPageHeaderPDF extends PGVRPageHeader {
 }
 
 /**
- * PGVRImagePDF class element
- *
+* PGVRImagePDF class element
+*
 * @package PhpGedView
 * @subpackage Reports
 */
@@ -1341,18 +1386,15 @@ class PGVRImagePDF extends PGVRImage {
 	function render(&$pdf) {
 		global $lastpicbottom, $lastpicpage, $lastpicleft, $lastpicright;
 
-		if ($this->y==0) {
-			//-- first check for a collision with the last picture
-			if (isset($lastpicbottom)) {
-				if (($pdf->PageNo()==$lastpicpage) && ($lastpicbottom >= $pdf->GetY()) && ($this->x >= $lastpicleft) && ($this->x <= $lastpicright))
-					$pdf->SetY($lastpicbottom+5);
-			}
-			$this->y=$pdf->GetY();
+		// Check for a pagebreak first
+		if ($pdf->checkPageBreakPDF($this->height + 5)) {
+			$this->y = $pdf->GetY();
 		}
+
 		$curx = $pdf->GetX();
 		// If current position (left)set '.'
 		if ($this->x == ".") {
-			$this->x = $curx;
+			$this->x = $pdf->GetX();
 		}
 		// For static position add margin
 		else  {
@@ -1360,13 +1402,22 @@ class PGVRImagePDF extends PGVRImage {
 			$pdf->SetX($curx);
 		}
 		if ($this->y == ".") {
+			//-- first check for a collision with the last picture
+			if (isset($lastpicbottom)) {
+				if (($pdf->PageNo()==$lastpicpage) && ($lastpicbottom >= $pdf->GetY()) && ($this->x >= $lastpicleft) && ($this->x <= $lastpicright))
+					$pdf->SetY($lastpicbottom + 5);
+			}
 			$this->y = $pdf->GetY();
 		}
-
+		else {
+			$pdf->SetY($this->y);
+		}
+		
 		$pdf->Image($this->file, $this->x, $this->y, $this->width, $this->height, '', '', $this->line, false, 72, $this->align);
 		$lastpicpage = $pdf->PageNo();
-		$lastpicleft=$this->x;
-		$lastpicright=$this->x + $this->width;
+		$pdf->lastpicpage = $pdf->getPage();
+		$lastpicleft = $this->x;
+		$lastpicright = $this->x + $this->width;
 		$lastpicbottom = $this->y + $this->height;
 		// Setup for the next line
 		if ($this->line == 'N') {
@@ -1374,6 +1425,11 @@ class PGVRImagePDF extends PGVRImage {
 		}
 	}
 
+	/**
+	* Get the image height
+	* @param PGVRPDF &$pdf
+	* @return float
+	*/
 	function getHeight(&$pdf) {
 		return $this->height;
 	}
@@ -1384,8 +1440,8 @@ class PGVRImagePDF extends PGVRImage {
 }
 
 /**
- * Line element
- *
+* Line element
+*
 * @package PhpGedView
 * @subpackage Reports
 * @todo add info
