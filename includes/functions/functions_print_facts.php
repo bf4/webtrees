@@ -1143,7 +1143,8 @@ function print_main_notes($factrec, $level, $pid, $linenum, $noedit=false) {
 			$factwords = explode(" ", $factlines[0]); // 1 BIRT Y
 			$factname = $factwords[1]; // BIRT
 			if ($factname == "EVEN") {
-				$factwords = explode(" ", $factlines[1]); // 1 EVEN\n2 TYPE MDCL\n2 NOTE
+				// Add ' EVEN' to provide sensible output for an event with an empty TYPE record
+				$factwords = explode(" ", $factlines[1].' EVEN'); // 1 EVEN\n2 TYPE MDCL\n2 NOTE
 				$factname = $factwords[2]; // MDCL
 			}
 			if (isset($factarray[$factname])) {
