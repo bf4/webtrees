@@ -1612,7 +1612,7 @@ class stats {
 		if (!isset($rows)) {return 0;}
 		$top10=array();
 		$func="age2_localisation_{$lang_short_cut[$LANGUAGE]}";
-		for($c = 0; $c < $total; $c++) {
+		foreach ($rows as $c=>$row) {
 			$person=Person::getInstance($rows[$c]['id']);
 			$years = floor((client_jd()-$rows[$c]['age'])/365.25);
 			if (function_exists($func)) {
@@ -2058,6 +2058,7 @@ class stats {
 			if ($tot==0) $tot=1;
 			$centuries = "";
 			$func="century_localisation_{$lang_short_cut[$LANGUAGE]}";
+			$counts=array();
 			foreach ($rows as $values) {
 				if (function_exists($func)) {
 					$century = $func($values['century']);
@@ -2407,6 +2408,7 @@ class stats {
 			$chxl = "0:|";
 			$i = 0;
 			$func="century_localisation_{$lang_short_cut[$LANGUAGE]}";
+			$counts=array();
 			foreach ($rows as $values) {
 				if ($sizes[0]<980) $sizes[0] += 38;
 				if (function_exists($func)) {
