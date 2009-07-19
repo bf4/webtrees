@@ -1471,12 +1471,6 @@ $pgv_lang["ahnentafel_place"]		= " in ";				// place name follows this
 $pgv_lang["ahnentafel_no_details"]	= " but the details are unknown";
 $pgv_lang["ahnentafel_on"]			= " on";
 
-//-- Descendency report
-$pgv_lang["son_of"]					= "son of";
-$pgv_lang["daughter_of"]			= "daughter of";
-$pgv_lang["child_of"]				= "Child of ";
-$pgv_lang["children_of"]			= "Children of ";
-
 //-- Changes report
 $pgv_lang["changes_report"]			= "Changes Report";
 $pgv_lang["changes_pending_tot"]	= "Total pending changes: ";
@@ -1485,6 +1479,10 @@ $pgv_lang["changes_accepted_tot"]	= "Total accepted changes: ";
 //-- Descendancy report
 $pgv_lang["descend_report"]			= "Descendancy Report";
 $pgv_lang["descendancy_header"]		= "Descendancy Report for ";
+$pgv_lang["son_of"]					= "son of";
+$pgv_lang["daughter_of"]			= "daughter of";
+$pgv_lang["child_of"]				= "Child of ";
+$pgv_lang["children_of"]			= "Children of ";
 
 $pgv_lang["family_group_report"]	= "Family Group Report";
 $pgv_lang["page"]					= "Page";
