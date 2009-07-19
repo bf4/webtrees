@@ -145,7 +145,7 @@ $pgv_lang["font"]				= "גופן";
 $pgv_lang["use_colors"]			= "השתמש בצבעים";
 $pgv_lang["record_not_found"]		= "רשומת ה-GEDCOM המבוקשת לא נמצאה. הסיבה יכולה להיות קישור לאדם לא תקין או קובץ GEDCOM פגום.";
 $pgv_lang["result_page"]			= "דף תוצאה";
-$pgv_lang["edit_media"]			= "ערוך פריט מדיה";
+$pgv_lang["edit_media"]			= "ערוך פריט מדיה (#GLOBALS[pid]#)";//@@
 $pgv_lang["wiki_main_page"]			= "דף ראשי של ויקי";
 $pgv_lang["wiki_users_guide"]		= "מדריך למשתמש של ויקי";
 $pgv_lang["wiki_admin_guide"]		= "מדריך למנהלן של ויקי";
@@ -1347,7 +1347,7 @@ $pgv_lang["upcoming_events_block"]	= "אירועים קרובים";
 $pgv_lang["upcoming_events_descr"]= "אזור אירועים קרובים מראה רשימה של אירועים שיתרחשו בקרוב. תוכל לקבוע את כמות הנתונים שתראה, והמנהלן יכול לקבוע את תחום הזמן הקובע לאזור.";
 $pgv_lang["todays_events_block"]	= "ביום הזה";
 $pgv_lang["todays_events_descr"]	= "אזור ביום הזה - בהיסטוריה שלך ... מראה רשימה של אירועים שהתרחשו היום. אם אין אירועים, תוכל לקבוע את כמות הנתונים שתראה.";
-$pgv_lang["todo_block"] 		= "&quot;משימות - To Do &quot; לביצוע";
+$pgv_lang["todo_block"] 		= "&quot;משימות - To Do&quot; לביצוע";
 $pgv_lang["todo_descr"] 		= "אזור &quot;משימות - To Do&quot; מציג את כל עובדות <span dir=\"ltr\">_TODO</span> שעדיין לא טופלו בקובץ ה-GEDCOM שלך.";
 $pgv_lang["todo_show_other"]     	= "הראה מטלות של משתמשים אחרים";
 $pgv_lang["todo_show_unassigned"]	= "הראה מטלות לא משוייכות";
@@ -1452,8 +1452,8 @@ $pgv_lang["pdf_reports"]            	= "דו\"חות PDF";
 $pgv_lang["html_reports"]          	= "דו\"חות HTML";
 
 //-- Ahnentafel report
-$pgv_lang["ahnentafel_report"]	= "דו\"ח Ahnentafel";
-$pgv_lang["ahnentafel_header"]	= "דו\"ח Ahnentafel עבור ";
+$pgv_lang["ahnentafel_report"]	= "דו\"ח טבלת אבות";
+$pgv_lang["ahnentafel_header"]	= "דו\"ח טבלת אבות עבור ";
 $pgv_lang["ahnentafel_generation"]	= "דור ";
 $pgv_lang["ahnentafel_pronoun_m"]	= "הוא ";
 $pgv_lang["ahnentafel_pronoun_f"]	= "היא ";
