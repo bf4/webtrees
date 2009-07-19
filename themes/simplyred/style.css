@@ -1408,3 +1408,8 @@ ul.clist {
 	list-style-image: none;
 	margin: 0px;
 }
+
+.menu_separator img {
+	height: 3px;
+	width: 8em;
+}

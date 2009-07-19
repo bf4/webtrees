@@ -1301,3 +1301,16 @@ ul.clist {
 	list-style-image: none;
 	margin: 0px;
 }
+
+.menu_separator img {
+	height: 3px;
+	width: 8em;
+}
+/*
+.menu_separator {
+	height: 3px;
+	display: block;
+	background-image: url(images/hline.gif);
+	background-repeat: repeat-x; 
+	background-position: center middle; */
+}*/
