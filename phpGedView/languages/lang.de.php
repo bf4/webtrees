@@ -1463,12 +1463,14 @@ $pgv_lang["ahnentafel_christened_m"]	= "wurde getauft";
 $pgv_lang["ahnentafel_christened_f"]	= "wurde getauft";
 $pgv_lang["ahnentafel_married_m"]		= "heiratete";
 $pgv_lang["ahnentafel_married_f"]		= "heiratete";
+$pgv_lang["ahnentafel_married_post"]	= "&nbsp;";
 $pgv_lang["ahnentafel_died_m"]			= "starb";
 $pgv_lang["ahnentafel_died_f"]			= "starb";
 $pgv_lang["ahnentafel_buried_m"]		= "wurde beerdigt";
 $pgv_lang["ahnentafel_buried_f"]		= "wurde beerdigt";
 $pgv_lang["ahnentafel_place"]			= " in ";
 $pgv_lang["ahnentafel_no_details"]		= " aber die Einzelheiten sind nicht bekannt";
+$pgv_lang["ahnentafel_on"]				= " am";
 
 //-- Changes report
 $pgv_lang["changes_report"]				= "Änderungenbericht";
@@ -1478,6 +1480,10 @@ $pgv_lang["changes_accepted_tot"]		= "Schon akzeptierte Änderungen insgesamt: "
 //-- Descendancy report
 $pgv_lang["descend_report"]				= "Nachfahrenbericht";
 $pgv_lang["descendancy_header"]			= "Nachfahrenbericht von ";
+$pgv_lang["son_of"]						= "Sohn von";
+$pgv_lang["daughter_of"]				= "Tochter von";
+$pgv_lang["child_of"]					= "Kind von ";
+$pgv_lang["children_of"]				= "Kinder von ";
 
 $pgv_lang["family_group_report"]		= "Familienbericht";
 $pgv_lang["page"]						= "Seite";
