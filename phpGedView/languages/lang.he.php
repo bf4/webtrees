@@ -1472,12 +1472,6 @@ $pgv_lang["ahnentafel_place"]	= " ב-";			// place name follows this
 $pgv_lang["ahnentafel_no_details"]	= " אבל הפרטים אינם ידועים";
 $pgv_lang["ahnentafel_on"]		= " ב-";
 
-//-- Descendency report
-$pgv_lang["son_of"]			= "בן של";
-$pgv_lang["daughter_of"]		= "בת של";
-$pgv_lang["child_of"]			= "ילד/ה של ";
-$pgv_lang["children_of"]		= "ילדים של ";
-
 //-- Changes report
 $pgv_lang["changes_report"]		= "דו\"ח שינויים";
 $pgv_lang["changes_pending_tot"]	= "סה\"כ שינויים ממתינים: ";
@@ -1486,6 +1480,10 @@ $pgv_lang["changes_accepted_tot"]	= "סה\"כ שינויים שהתקבלו: ";
 //-- Descendancy report
 $pgv_lang["descend_report"]		= "דו\"ח צאצאים";
 $pgv_lang["descendancy_header"]	= "דו\"ח צאצאים עבור ";
+$pgv_lang["son_of"]			= "בן של";
+$pgv_lang["daughter_of"]		= "בת של";
+$pgv_lang["child_of"]			= "ילד/ה של ";
+$pgv_lang["children_of"]		= "ילדים של ";
 
 $pgv_lang["family_group_report"]    	= "דו\"ח קבוצת המשפחה";
 $pgv_lang["page"]                   		= "דף";

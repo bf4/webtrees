@@ -1221,7 +1221,9 @@ $pgv_lang["ahnentafel_place"]		= " i ";
 $pgv_lang["ahnentafel_no_details"]	= " men detaljerna är okända";
 $pgv_lang["ahnentafel_on"]			= " den ";
 
-//-- Descendency report
+//-- Descendancy report
+$pgv_lang["descend_report"]				= "Ättlingsrapport";
+$pgv_lang["descendancy_header"]		= "Ättlingsrapport för ";
 $pgv_lang["son_of"]					= "son av";
 $pgv_lang["daughter_of"]			= "dotter av";
 $pgv_lang["child_of"]				= "Barn av ";
@@ -1401,8 +1403,6 @@ $pgv_lang["button_TREE_L"] = "Visa &laquo;löv&raquo; för par eller personer. D
 $pgv_lang["button_TREE_R"] = "Visa &laquo;rötter&raquo; för par eller personer. Dessa personer kan också kallas &laquo;patriarker&raquo;. Dessa är personer som inte har föräldrar registrerade i databasen.";
 $pgv_lang["sort_column"] = "Sortera på denna kolumn.";
 $pgv_lang["page_size"]					= "Sidstorlek";
-$pgv_lang["descend_report"]				= "Ättlingsrapport";
-$pgv_lang["descendancy_header"]		= "Ättlingsrapport för ";
 $pgv_lang["server_folder"]				= "Mappnamn på servern";
 $pgv_lang["medialist_recursive"]	= "Lista filer i undermapper";
 $pgv_lang["media_options"]			= "Mediaval";

@@ -102,7 +102,7 @@ $pgv_lang["page_size"]		= "Sivun koko";
 
 $pgv_lang["record_not_found"]	= "Pyydettyä GEDCOM-tietuetta ei löytynyt. Se voi johtua joko linkistä virheelliseen henkilöön tai vikaantuneesta GEDCOM-tiedostosta.";
 $pgv_lang["result_page"]		= "Tulossivu";
-$pgv_lang["edit_media"]		= "Muokkaa mediaa";
+$pgv_lang["edit_media"]		= "Muokkaa mediaa (#GLOBALS[pid]#)";
 $pgv_lang["wiki_main_page"]		= "Wiki pääsivu";
 $pgv_lang["wiki_users_guide"]	= "Wiki käyttäjän opas";
 $pgv_lang["wiki_admin_guide"]	= "Wiki ylläpitäjän opas";
@@ -1334,12 +1334,6 @@ $pgv_lang["ahnentafel_place"]	= " paikassa ";
 $pgv_lang["ahnentafel_no_details"]	= "mutta yksityiskohdat puuttuvat";
 $pgv_lang["ahnentafel_on"]			= "&nbsp;";
 
-//-- Descendency report
-$pgv_lang["son_of"]					= " jonka vanhemmat olivat";
-$pgv_lang["daughter_of"]			= " jonka vanhemmat olivat";
-$pgv_lang["child_of"]				= "Lapsi perheessä ";
-$pgv_lang["children_of"]			= "Lapset perheessä ";
-
 //-- Changes report
 $pgv_lang["changes_report"]		= "Muutosraportti";
 $pgv_lang["changes_pending_tot"]	= "Vireillä olevia muutoksia yhteensä: ";
@@ -1348,6 +1342,10 @@ $pgv_lang["changes_accepted_tot"]	= "Hyväksyttyjä muutoksia yhteensä: ";
 //-- Descendancy report
 $pgv_lang["descend_report"]		= "Jälkipolviraportti";
 $pgv_lang["descendancy_header"]	= "Jälkipolviraportti henkilölle ";
+$pgv_lang["son_of"]					= " jonka vanhemmat olivat";
+$pgv_lang["daughter_of"]			= " jonka vanhemmat olivat";
+$pgv_lang["child_of"]				= "Lapsi perheessä ";
+$pgv_lang["children_of"]			= "Lapset perheessä ";
 
 $pgv_lang["family_group_report"]    	= "Perheryhmäraportti";
 $pgv_lang["page"]                   		= "Sivu";
