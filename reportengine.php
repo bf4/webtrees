@@ -102,7 +102,18 @@ if (!empty($report)) {
 
 //-- choose a report to run
 if ($action=="choose") {
-	$reports = get_report_list(true);
+	// Get the list of available reports in sorted localized title order
+	$reportList = get_report_list(true);
+	$reportTitles = array();
+	foreach ($reportList as $file=>$report) {
+		$reportTitles[$file] = $report["title"][$LANGUAGE];
+	}
+	asort($reportTitles);
+	$reports = array();
+	foreach ($reportTitles as $file=>$title) {
+		$reports[$file] = $reportList[$file];
+	}
+	
 	print_header($pgv_lang["choose_report"]);
 
 	print "<br /><br />\n";

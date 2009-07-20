@@ -1463,12 +1463,14 @@ $pgv_lang["ahnentafel_christened_m"]	= "wurde getauft";
 $pgv_lang["ahnentafel_christened_f"]	= "wurde getauft";
 $pgv_lang["ahnentafel_married_m"]		= "heiratete";
 $pgv_lang["ahnentafel_married_f"]		= "heiratete";
+$pgv_lang["ahnentafel_married_post"]	= "&nbsp;";
 $pgv_lang["ahnentafel_died_m"]			= "starb";
 $pgv_lang["ahnentafel_died_f"]			= "starb";
 $pgv_lang["ahnentafel_buried_m"]		= "wurde beerdigt";
 $pgv_lang["ahnentafel_buried_f"]		= "wurde beerdigt";
 $pgv_lang["ahnentafel_place"]			= " in ";
 $pgv_lang["ahnentafel_no_details"]		= " aber die Einzelheiten sind nicht bekannt";
+$pgv_lang["ahnentafel_on"]				= " am";
 
 //-- Changes report
 $pgv_lang["changes_report"]				= "Änderungenbericht";
@@ -1478,11 +1480,15 @@ $pgv_lang["changes_accepted_tot"]		= "Schon akzeptierte Änderungen insgesamt: "
 //-- Descendancy report
 $pgv_lang["descend_report"]				= "Nachfahrenbericht";
 $pgv_lang["descendancy_header"]			= "Nachfahrenbericht von ";
+$pgv_lang["son_of"]						= "Sohn von";
+$pgv_lang["daughter_of"]				= "Tochter von";
+$pgv_lang["child_of"]					= "Kind von ";
+$pgv_lang["children_of"]				= "Kinder von ";
 
 $pgv_lang["family_group_report"]		= "Familienbericht";
 $pgv_lang["page"]						= "Seite";
 $pgv_lang["of"]							= "von";
-$pgv_lang["enter_famid"]				= "Familien ID eingeben";
+$pgv_lang["enter_famid"]				= "Familien-ID eingeben";
 $pgv_lang["show_sources"]				= "Quellen zeigen?";
 $pgv_lang["show_notes"]					= "Bemerke zeigen?";
 $pgv_lang["show_basic"]					= "Grunddaten auch ausdrucken falls leer?";
@@ -1509,7 +1515,7 @@ $pgv_lang["marrplace"]					= "Eheort enthält";
 $pgv_lang["marrdate1"]					= "Ehedatenbereich Anfang";
 $pgv_lang["marrdate2"]					= "Ehedatenbereich Ende";
 $pgv_lang["sort_by"]					= "Sortieren nach";
-$pgv_lang["cemetery_report"]			= "Friedhofenbericht";
+$pgv_lang["cemetery_report"]			= "Friedhofsbericht";
 
 $pgv_lang["cleanup"]					= "Korrigieren";
 
@@ -1527,7 +1533,7 @@ $pgv_lang["merge_step1"]				= "Zusammenfügen: Schritt 1 von 3";
 $pgv_lang["merge_step2"]				= "Zusammenfügen: Schritt 2 von 3";
 $pgv_lang["merge_step3"]				= "Zusammenfügen: Schritt 3 von 3";
 $pgv_lang["select_gedcom_records"]		= "Wählen Sie zwei GEDCOM Datensätze zum Zusammenfügen. Die Datensätze müssen vom gleichen Typ sein.";
-$pgv_lang["merge_to"]					= "Ausgang ID:";
+$pgv_lang["merge_to"]					= "Ausgangs-ID:";
 $pgv_lang["merge_from"]					= "Zusammenfügen mit ID:";
 $pgv_lang["merge_facts_same"]			= "Die folgenden Fakten waren identisch in beiden Datensätzen und werden automatisch zusammengefügt.";
 $pgv_lang["no_matches_found"]			= "Keine übereinstimmende Fakten gefunden";

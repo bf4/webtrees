@@ -145,7 +145,7 @@ $pgv_lang["font"]				= "גופן";
 $pgv_lang["use_colors"]			= "השתמש בצבעים";
 $pgv_lang["record_not_found"]		= "רשומת ה-GEDCOM המבוקשת לא נמצאה. הסיבה יכולה להיות קישור לאדם לא תקין או קובץ GEDCOM פגום.";
 $pgv_lang["result_page"]			= "דף תוצאה";
-$pgv_lang["edit_media"]			= "ערוך פריט מדיה";
+$pgv_lang["edit_media"]			= "ערוך פריט מדיה (#GLOBALS[pid]#)";
 $pgv_lang["wiki_main_page"]			= "דף ראשי של ויקי";
 $pgv_lang["wiki_users_guide"]		= "מדריך למשתמש של ויקי";
 $pgv_lang["wiki_admin_guide"]		= "מדריך למנהלן של ויקי";
@@ -1347,7 +1347,7 @@ $pgv_lang["upcoming_events_block"]	= "אירועים קרובים";
 $pgv_lang["upcoming_events_descr"]= "אזור אירועים קרובים מראה רשימה של אירועים שיתרחשו בקרוב. תוכל לקבוע את כמות הנתונים שתראה, והמנהלן יכול לקבוע את תחום הזמן הקובע לאזור.";
 $pgv_lang["todays_events_block"]	= "ביום הזה";
 $pgv_lang["todays_events_descr"]	= "אזור ביום הזה - בהיסטוריה שלך ... מראה רשימה של אירועים שהתרחשו היום. אם אין אירועים, תוכל לקבוע את כמות הנתונים שתראה.";
-$pgv_lang["todo_block"] 		= "&quot;משימות - To Do &quot; לביצוע";
+$pgv_lang["todo_block"] 		= "&quot;משימות - To Do&quot; לביצוע";
 $pgv_lang["todo_descr"] 		= "אזור &quot;משימות - To Do&quot; מציג את כל עובדות <span dir=\"ltr\">_TODO</span> שעדיין לא טופלו בקובץ ה-GEDCOM שלך.";
 $pgv_lang["todo_show_other"]     	= "הראה מטלות של משתמשים אחרים";
 $pgv_lang["todo_show_unassigned"]	= "הראה מטלות לא משוייכות";
@@ -1452,8 +1452,8 @@ $pgv_lang["pdf_reports"]            	= "דו\"חות PDF";
 $pgv_lang["html_reports"]          	= "דו\"חות HTML";
 
 //-- Ahnentafel report
-$pgv_lang["ahnentafel_report"]	= "דו\"ח Ahnentafel";
-$pgv_lang["ahnentafel_header"]	= "דו\"ח Ahnentafel עבור ";
+$pgv_lang["ahnentafel_report"]	= "דו\"ח טבלת אבות";
+$pgv_lang["ahnentafel_header"]	= "דו\"ח טבלת אבות עבור ";
 $pgv_lang["ahnentafel_generation"]	= "דור ";
 $pgv_lang["ahnentafel_pronoun_m"]	= "הוא ";
 $pgv_lang["ahnentafel_pronoun_f"]	= "היא ";
@@ -1470,13 +1470,7 @@ $pgv_lang["ahnentafel_buried_m"]	= "נקבר";		// male
 $pgv_lang["ahnentafel_buried_f"]	= "נקברה";		// female
 $pgv_lang["ahnentafel_place"]	= " ב-";			// place name follows this
 $pgv_lang["ahnentafel_no_details"]	= " אבל הפרטים אינם ידועים";
-$pgv_lang["ahnentafel_on"]		= "ב-";
-
-//-- Descendency report
-$pgv_lang["son_of"]			= "בן של";
-$pgv_lang["daughter_of"]		= "בת של";
-$pgv_lang["child_of"]			= "ילד/ה של ";
-$pgv_lang["children_of"]		= "ילדים של ";
+$pgv_lang["ahnentafel_on"]		= " ב-";
 
 //-- Changes report
 $pgv_lang["changes_report"]		= "דו\"ח שינויים";
@@ -1486,6 +1480,10 @@ $pgv_lang["changes_accepted_tot"]	= "סה\"כ שינויים שהתקבלו: ";
 //-- Descendancy report
 $pgv_lang["descend_report"]		= "דו\"ח צאצאים";
 $pgv_lang["descendancy_header"]	= "דו\"ח צאצאים עבור ";
+$pgv_lang["son_of"]			= "בן של";
+$pgv_lang["daughter_of"]		= "בת של";
+$pgv_lang["child_of"]			= "ילד/ה של ";
+$pgv_lang["children_of"]		= "ילדים של ";
 
 $pgv_lang["family_group_report"]    	= "דו\"ח קבוצת המשפחה";
 $pgv_lang["page"]                   		= "דף";
@@ -1518,6 +1516,7 @@ $pgv_lang["marrdate1"]		= "התחלת תחום תאריכי נישואין";
 $pgv_lang["marrdate2"]		= "סיום תחום תאריכי נישואין";
 $pgv_lang["sort_by"]			= "מיין לפי";
 $pgv_lang["cemetery_report"]		= "דו\"ח בתי קברות";
+$pgv_lang["burialplace"]		= "מקום קבורה מכיל";
 
 $pgv_lang["cleanup"]			= "ניקיון";
 

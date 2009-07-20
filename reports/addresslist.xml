@@ -1,17 +1,18 @@
 <PGVReport access="PRIV_USER" icon="place">
 	<!-- $Id$ -->
-	<PGVRTitle><PGVRvar var="pgv_lang[address_list]" /></PGVRTitle>
 	<PGVRDescription>Prints a list of addresses</PGVRDescription>
-	<PGVRStyle name="header" font="dejavusans" size="16" style="b" />
-	<PGVRStyle name="pagenum" font="dejavusans" size="8" style="" />
-	<PGVRStyle name="text" font="dejavusans" size="9" style="" />
-	<PGVRStyle name="label" font="dejavusans" size="10" style="b" />
-	<PGVRStyle name="genby" font="dejavusans" size="9" />
-	<PGVRStyle name="footnote" font="dejavusans" size="8" />
+	<PGVRTitle><PGVRvar var="pgv_lang[address_list]" /></PGVRTitle>
 	<PGVRInput name="address" type="text"><PGVRvar var="pgv_lang[filter_address]" /> </PGVRInput>
 	<PGVRInput name="sortby" type="select" options="NAME,ID"><PGVRvar var="pgv_lang[sort_by]" /></PGVRInput>
 	<PGVRInput name="email_in" type="select" options="all,noemail,onlyemail"><PGVRvar var="pgv_lang[include]"/> </PGVRInput>
 	<PGVRInput name="pageSize" type="select" default="A4" options="letter,A3,A4,legal"><PGVRvar var="pgv_lang[page_size]" /></PGVRInput>
+	<PGVRInput name="fonts" type="select" default="dejavusans" options="arialunicid0,dejavusans,helvetica"><PGVRvar var="pgv_lang[font]"/></PGVRInput>
+	<PGVRStyle name="header" font="$fonts" size="16" style="b" />
+	<PGVRStyle name="pagenum" font="$fonts" size="8" style="" />
+	<PGVRStyle name="text" font="$fonts" size="9" style="" />
+	<PGVRStyle name="label" font="$fonts" size="10" style="b" />
+	<PGVRStyle name="genby" font="$fonts" size="9" />
+	<PGVRStyle name="footnote" font="$fonts" size="8" />
 	<PGVRDoc pageSize="$pageSize" >
 		<PGVRHeader>
 			<PGVRCell align="center" height="20" newline="1" style="header"><PGVRvar var="pgv_lang[address_list]" /></PGVRCell>

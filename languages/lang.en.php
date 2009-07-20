@@ -1469,13 +1469,7 @@ $pgv_lang["ahnentafel_buried_m"]	= "was buried";			// male
 $pgv_lang["ahnentafel_buried_f"]	= "was buried";			// female
 $pgv_lang["ahnentafel_place"]		= " in ";				// place name follows this
 $pgv_lang["ahnentafel_no_details"]	= " but the details are unknown";
-$pgv_lang["ahnentafel_on"]			= "on";
-
-//-- Descendency report
-$pgv_lang["son_of"]					= "son of";
-$pgv_lang["daughter_of"]			= "daughter of";
-$pgv_lang["child_of"]				= "Child of ";
-$pgv_lang["children_of"]			= "Children of ";
+$pgv_lang["ahnentafel_on"]			= " on";
 
 //-- Changes report
 $pgv_lang["changes_report"]			= "Changes Report";
@@ -1485,6 +1479,10 @@ $pgv_lang["changes_accepted_tot"]	= "Total accepted changes: ";
 //-- Descendancy report
 $pgv_lang["descend_report"]			= "Descendancy Report";
 $pgv_lang["descendancy_header"]		= "Descendancy Report for ";
+$pgv_lang["son_of"]					= "son of";
+$pgv_lang["daughter_of"]			= "daughter of";
+$pgv_lang["child_of"]				= "Child of ";
+$pgv_lang["children_of"]			= "Children of ";
 
 $pgv_lang["family_group_report"]	= "Family Group Report";
 $pgv_lang["page"]					= "Page";
@@ -1517,6 +1515,7 @@ $pgv_lang["marrdate1"]				= "Marriage Date range start";
 $pgv_lang["marrdate2"]				= "Marriage Date range end";
 $pgv_lang["sort_by"]				= "Sort by";
 $pgv_lang["cemetery_report"]		= "Cemetery Report";
+$pgv_lang["burialplace"]			= "Burial Place contains";
 
 $pgv_lang["cleanup"]				= "Cleanup";
 

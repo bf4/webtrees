@@ -69,7 +69,7 @@ echo ' if (window.focus) {win04.focus();}';
 echo '}';
 echo PGV_JS_END;
 
-echo '<table class="list_table"><tr><td>';
+echo '<table class="list_table width80"><tr><td>';
 if ($controller->accept_success) {
 	echo '<b>', $pgv_lang['accept_successful'], '</b><br />';
 }
@@ -111,8 +111,8 @@ if (!$controller->isPrintPreview()) {
 		}
 	}
 }
-echo '</td></tr><tr><td colspan="2"><table border="0" class="facts_table width80 center">';
-echo '<tr class="'.$TEXT_DIRECTION.'"><td><table>';
+echo '</td></tr><tr><td colspan="2"><table border="0" class="facts_table width100 center">';
+echo '<tr class="'.$TEXT_DIRECTION.'"><td><table class="width100">';
 	// Shared Note details ---------------------
 	$noterec = find_gedcom_record($controller->nid);
 	$nt = preg_match("/0 @$controller->nid@ NOTE(.*)/", $noterec, $n1match);

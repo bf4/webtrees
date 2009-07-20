@@ -1302,13 +1302,13 @@ $pgv_lang["ahnentafel_no_details"]	= " men detaljerne er ukendte";
 $pgv_lang["ahnentafel_on"]			= " den ";
 
 //-- Descendency report
+$pgv_lang["descendancy_header"]		= "Efterkommerudskrift for";
+$pgv_lang["descend_report"]		= "Efterkommerudskrift";
 $pgv_lang["son_of"]					= "søn af";
 $pgv_lang["daughter_of"]			= "datter af";
 $pgv_lang["child_of"]				= "Barn af ";
 $pgv_lang["children_of"]			= "Børn af ";
 
-$pgv_lang["descendancy_header"]		= "Efterkommerudskrift for";
-$pgv_lang["descend_report"]		= "Efterkommerudskrift";
 $pgv_lang["family_group_report"]	= "Familiegruppeudskrift";
 $pgv_lang["page"]				= "Side";
 $pgv_lang["of"]					= "af";
