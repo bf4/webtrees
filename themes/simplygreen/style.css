@@ -167,7 +167,7 @@ table.center {
 .facts_label {
 	color: white;
 	border: solid #094215 1px;
-	background-image: url("images/greengradiant.gif");
+	background-image: url("images/greenwhitegradiant.gif");
 	background-repeat: repeat;
 	font: 12px tahoma, arial, helvetica, sans-serif;
 	padding: 4px 4px 4px 4px;
@@ -1413,7 +1413,7 @@ ul.clist {
 	width: 8em;
 }
 
-/* overrides bgcolor on stats charts in simply_xxx themes */
-.simply_bg_color{
+
+.statistics_chart{
 	background-color: #eeeeee;
 }

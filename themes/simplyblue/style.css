@@ -1414,7 +1414,7 @@ ul.clist {
 	width: 8em;
 }
 
-/* overrides bgcolor on stats charts in simply_xxx themes */
-.simply_bg_color{
+
+.statistics_chart{
 	background-color: #eeeeee;
 }

@@ -26,7 +26,6 @@
  * @package PhpGedView
  * @subpackage Lists
  */
- 
 
 require './config.php';
 
@@ -115,14 +114,14 @@ echo "<td class=\"facts_value\" align=\"center\">".$stats->totalFamilies()."</td
 echo "<td class=\"facts_value\" align=\"center\">".$stats->totalIndividuals()."</td></tr>";
 echo "<tr><td class=\"facts_label\" colspan=\"2\">".$pgv_lang["statnnames"]."</td>";
 echo "<td class=\"facts_label\" colspan=\"2\">".$pgv_lang["statnnames"]."</td></tr>";
-echo "<tr><td class=\"facts_value simply_bg_color\" colspan=\"2\" align=\"center\">".$stats->chartSex()."</td>";
-echo "<td class=\"facts_value simply_bg_color\" colspan=\"2\" align=\"center\">".$stats->chartMortality()."</td></tr>";
+ echo "<tr><td class=\"facts_value statistics_chart\" colspan=\"2\" align=\"center\">".$stats->chartSex()."</td>";
+ echo "<td class=\"facts_value statistics_chart\" colspan=\"2\" align=\"center\">".$stats->chartMortality()."</td></tr>";
 echo "<tr><td class=\"facts_label\" colspan=\"2\" >".$pgv_lang["stat_surnames"]."</td>";
 echo "<td class=\"facts_label\"colspan=\"2\">".$pgv_lang["stat_media"]."</td></tr>";
-echo "<tr><td class=\"facts_value simply_bg_color\" colspan=\"2\" align=\"center\">".$stats->chartCommonSurnames($params)."</td>";
-echo "<td class=\"facts_value simply_bg_color\" colspan=\"2\" align=\"center\">".$stats->chartMedia($params)."</td></tr>";
+ echo "<tr><td class=\"facts_value statistics_chart\" colspan=\"2\" align=\"center\">".$stats->chartCommonSurnames($params)."</td>";
+ echo "<td class=\"facts_value statistics_chart\" colspan=\"2\" align=\"center\">".$stats->chartMedia($params)."</td></tr>";
 echo "<tr><td class=\"facts_label\" colspan=\"4\">".$pgv_lang["stat_21_nok"]."</td></tr>";
-echo "<tr><td class=\"facts_value simply_bg_color\" colspan=\"4\" align=\"center\">".$stats->chartLargestFamilies($params)."</td></tr>";
+ echo "<tr><td class=\"facts_value statistics_chart\" colspan=\"4\" align=\"center\">".$stats->chartLargestFamilies($params)."</td></tr>";
 
 if (!isset($plottype)) $plottype = 11;
 if (!isset($charttype)) $charttype = 1;

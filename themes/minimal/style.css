@@ -1307,11 +1307,18 @@ ul.clist {
 	height: 3px;
 	width: 8em;
 }
+
 /*
 .menu_separator {
 	height: 3px;
 	display: block;
 	background-image: url(images/hline.gif);
 	background-repeat: repeat-x; 
-	background-position: center middle; */
-}*/
+	background-position: center middle; 
+}
+*/
+
+
+.statistics_chart{
+}
+
