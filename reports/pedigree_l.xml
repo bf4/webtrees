@@ -1,7 +1,7 @@
 <PGVReport access="PRIV_PUBLIC" icon="pedigree">
 <!-- $Id$ -->
 	<PGVRDescription>Prints a pedigree chart in landscape mode</PGVRDescription>
-	<PGVRTitle><PGVRvar var="pgv_lang[pedigree_chart]" /> (<PGVRvar var="pgv_lang[landscape]" />)</PGVRTitle>
+	<PGVRTitle><PGVRvar var="pgv_lang[pedigree_chart]" /> - <PGVRvar var="pgv_lang[landscape]" /></PGVRTitle>	
 	<PGVRInput name="pid" lookup="INDI" type="text" default=""><PGVRvar var="pgv_lang[enter_pid]" />:</PGVRInput>
 	<PGVRInput name="pageSize" type="select" default="A4" options="letter,A3,A4,legal"><PGVRvar var="pgv_lang[page_size]" /></PGVRInput>
 	<PGVRInput name="fonts" type="select" default="dejavusans" options="arialunicid0,dejavusans,helvetica"><PGVRvar var="pgv_lang[font]"/></PGVRInput>
