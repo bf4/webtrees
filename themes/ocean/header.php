@@ -43,7 +43,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 		<link rel="stylesheet" href="<?php echo $stylesheet; ?>" type="text/css" media="all" />
 		<?php if ((!empty($rtl_stylesheet))&&($TEXT_DIRECTION=="rtl")) {?> <link rel="stylesheet" href="<?php echo $rtl_stylesheet; ?>" type="text/css" media="all" /> <?php } ?>
 		<?php if ($use_alternate_styles && $BROWSERTYPE != "other") { ?>
-			<link rel="stylesheet" href="<?php echo $THEME_DIR.$BROWSERTYPE; ?>.css" type="text/css" media="all" />
+			<link rel="stylesheet" href="<?php echo PGV_THEME_DIR.$BROWSERTYPE; ?>.css" type="text/css" media="all" />
 		<?php }
 		// Additional css files required (Only if Lightbox installed)
 		if (is_dir('modules/lightbox/css')) {
@@ -91,7 +91,7 @@ else {?>
     <td>
       <table width="100%">
         <tr>
-          <td><img src="<?php echo $THEME_DIR; ?>header.jpg" width="281" height="50" alt="" /></td>
+          <td><img src="<?php echo PGV_THEME_DIR; ?>header.jpg" width="281" height="50" alt="" /></td>
           <td>
             <table width="100%">
               <tr>

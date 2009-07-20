@@ -13,7 +13,7 @@ class lightbox_Tab extends media_Tab {
 	public function getPreLoadContent() {
 		$out = '';
 		ob_start();
-		include('modules/lightbox/functions/lb_call_js.php');
+		include_once('modules/lightbox/functions/lb_call_js.php');
 		$out .= ob_get_contents();
 		ob_end_clean();
 		return $out; 

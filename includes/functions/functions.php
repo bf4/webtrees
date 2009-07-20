@@ -3402,7 +3402,7 @@ function loadLangFile($fileListNames="", $lang="") {
 		default:
 			if (preg_match('/(.+):(.+)/', $fileListName, $match)) {
 				$fileName1 = 'modules/'.$match[1].'/languages/'.$match[2].'.'.$lang_short_cut['english'].'.php';
-				$fileName2 = 'modules/'.$match[1].'/languages/'.$match[2].'.'.$lang_short_cut[$lang].'.php';
+				if (isset($lang_short_cut[$lang])) $fileName2 = 'modules/'.$match[1].'/languages/'.$match[2].'.'.$lang_short_cut[$lang].'.php';
 				break;
 			} else {
 				continue 2;

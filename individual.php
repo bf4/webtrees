@@ -625,6 +625,7 @@ if(empty($SEARCH_SPIDER) && file_exists("modules/lightbox/album.php")) {
 			// --------- Header include -------------
 			$mediacnt = $controller->get_media_count();
 			if ($mediacnt!=0) {
+				include_once('modules/lightbox/functions/lb_call_js.php');
 				require_once 'modules/lightbox/functions/lb_head.php';
 			} else {
 				require_once 'modules/lightbox/functions/lb_head.php';

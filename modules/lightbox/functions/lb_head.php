@@ -38,6 +38,12 @@ $reorder=safe_get('reorder', '1', '0');
 
 loadLangFile("lightbox:lang");
 
+if (!file_exists("modules/googlemap/defaultconfig.php")) {
+	$tabno = "7";
+}else{
+	$tabno = "8";
+}
+
 // The following is temporary, until the handling of the Lightbox Help system
 // is adjusted to match the usual PhpGedView practice
 $lbHelpFile = "modules/lightbox/languages/help.".$lang_short_cut[$LANGUAGE].".php";
@@ -75,7 +81,7 @@ if (!file_exists($lbHelpFile)) $lbHelpFile = "modules/lightbox/languages/help_te
 <?php
 
 // Load Lightbox javascript and css files
-//include('modules/lightbox/functions/lb_call_js.php');
+//include_once('modules/lightbox/functions/lb_call_js.php');
 
 // Find if indi and family associated media exists and then count them ( $tot_med_ct)
 include_once ('includes/media_reorder_count.php');

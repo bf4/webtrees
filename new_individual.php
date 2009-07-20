@@ -104,7 +104,13 @@ function resize_content_div(i) {
 			active: "h3:last",
 			autoHeight: false
 		});
+  jQuery('#tabs').bind('tabsshow', function(event, ui) {
+    if (ui.panel.id == "ui-tabs-20") {
+        resizeMap();
+    }
   });
+  });
+
 //]]>
   </script>
 <style>
@@ -222,7 +228,7 @@ foreach($controller->modules as $mod) {
 		if ($tabcount==$controller->default_tab) {?>
 			<li><a href="#<?php echo $mod->getName()?>"><span><?php echo $pgv_lang[$mod->getName()]?></span></a></li>
 		<?php } else if ($mod->hasTab() && $mod->getTab() && ($mod->getTab()->hasContent() || PGV_USER_CAN_EDIT)) { ?>
-			<li><a href="new_individual.php?action=ajax&amp;module=<?php echo $mod->getName()?>&amp;pid=<?php echo $controller->pid?>">
+			<li><a id="<?php echo $mod->getName(); ?>" href="new_individual.php?action=ajax&amp;module=<?php echo $mod->getName()?>&amp;pid=<?php echo $controller->pid?>">
 				<span><?php echo $pgv_lang[$mod->getName()]?></span>
 				</a></li>
 		<?php } 
@@ -243,8 +249,6 @@ foreach($controller->modules as $mod) {
 	}
  } ?>
 </div>
-
-
 </div> <!--  end column 1 -->
 
 <div id="indi_small_blocks">

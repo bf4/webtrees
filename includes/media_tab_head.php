@@ -32,7 +32,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 
 define('PGV_MEDIA_TAB_HEAD_PHP', '');
 
-global $LB_AL_HEAD_LINKS, $gedrec;
+global $LB_AL_HEAD_LINKS, $gedrec, $pid;
 
 require_once("js/prototype.js.htm");
 require_once("js/scriptaculous.js.htm");
