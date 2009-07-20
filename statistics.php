@@ -26,6 +26,7 @@
  * @package PhpGedView
  * @subpackage Lists
  */
+ 
 
 require './config.php';
 
