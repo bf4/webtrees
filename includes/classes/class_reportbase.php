@@ -2145,20 +2145,13 @@ function PGVRGetPersonNameSHandler($attrs) {
 		if (!$record->canDisplayDetails()) $currentElement->addText($pgv_lang["private"]);
 		else {
 			$name = strip_tags($record->getFullName());
-			$addname = strip_tags($record->getAddName());
-			if (!empty($addname)) {
-				$trunkname = $addname." ".$name;
-				$name .= " ".$addname;
-			}
-			else $trunkname = $name;
 			if (!empty($attrs["truncate"])) {
 				//short-circuit with the faster strlen
-				if (strlen($trunkname)>$attrs["truncate"] && UTF8_strlen($trunkname)>$attrs["truncate"]) {
-					$trunkname = preg_replace("/\(.*\) ?/", "", $trunkname);
-					$name = preg_replace("/\(.*\) ?/", "", $name);
+				if (strlen($name)>$attrs["truncate"] && UTF8_strlen($name)>$attrs["truncate"]) {
+				$name = preg_replace("/\(.*\) ?/", "", $name); //removes () and text inbetween - what about ", [ and { etc?
 				}
 				if (strlen($name)>$attrs["truncate"] && UTF8_strlen($name)>$attrs["truncate"]) {
-					$words = explode(' ', $trunkname);
+					$words = explode(' ', $name);
 					$name = $words[count($words)-1];
 					for($i=count($words)-2; $i>=0; $i--) {
 						$len = UTF8_strlen($name);
@@ -2172,6 +2165,12 @@ function PGVRGetPersonNameSHandler($attrs) {
 						}	
 						else $name = $words[$i]." ".$name;
 					}
+				}
+			}
+			else {
+				$addname = strip_tags($record->getAddName());
+				if (!empty($addname)) {
+					$name .= " ".$addname;
 				}
 			}
 			$currentElement->addText(trim($name));
@@ -3109,11 +3108,13 @@ function PGVRListSHandler($attrs) {
 						$sql_order_by[]="{$attr}.n_sort";
 					}
 					unset($attrs[$attr]); // This filter has been fully processed
-				} elseif (preg_match('/^(?:\w+):PLAC CONTAINS (.+)$/', $value, $match)) {
+//returns all the record with the filter place - does not verify that we speak of a BIRT record for the birth report value=BIRT:PLAC etc. 
+/* 				} elseif (preg_match('/^(?:\w+):PLAC CONTAINS (.+)$/', $value, $match)) {
 					$sql_join[]="JOIN {$TBLPREFIX}places AS {$attr}a ON ({$attr}a.p_file={$sql_col_prefix}file)";
 					$sql_join[]="JOIN {$TBLPREFIX}placelinks AS {$attr}b ON ({$attr}a.p_file={$attr}b.pl_file AND {$attr}b.pl_p_id={$attr}a.p_id AND {$attr}b.pl_gid={$sql_col_prefix}id)";
 					$sql_where[]="{$attr}a.p_place ".PGV_DB::$LIKE." ".PGV_DB::quote(UTF8_strtoupper("%{$match[1]}%"));
 					unset($attrs[$attr]); // This filter has been fully processed
+*/
 				} else {
 					// TODO: what other filters can we apply in SQL?
 					//var_dump($value);
