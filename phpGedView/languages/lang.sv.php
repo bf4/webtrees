@@ -1423,6 +1423,7 @@ $pgv_lang["view_img_details"]		= "Visa bilddetaljer";
 $pgv_lang["invalid_search_input"] 	= "Var vänlig och skriv in ett förnamn, efternamn eller ort tillsammans med ett årtal";
 $pgv_lang["search_place_word"]		= "Endast hela ord";
 $pgv_lang["cemetery_report"]		= "Begravningsplatsrapport";
+$pgv_lang["burialplace"]			= "Begravningsplats innehåller";
 $pgv_lang["age_differences"]		= "Visa åldersskillnad";
 $pgv_lang["owner"] = "Ägare";
 $pgv_lang["nanny"] = "Barnsköterska";

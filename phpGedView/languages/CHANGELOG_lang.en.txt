@@ -43,6 +43,7 @@ VERSION 4.2.2
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change	codes and comments
 ----------------------------------------------------------------------------------------
++$pgv_lang["cemetery_report"]						20 Jul 2009				A
 *$pgv_lang["ahnentafel_on"]							19 Jul 2009				f
 *$pgv_lang["edit_media"]							15 Jul 2009				W
 +$pgv_lang["ahnentafel_married_post"]				15 Jul 2009				A
