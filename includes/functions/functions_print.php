@@ -1121,6 +1121,7 @@ function print_note_record($text, $nlevel, $nrec, $textOnly=false, $return=false
 	if (!isset($EXPAND_NOTES)) $EXPAND_NOTES = $EXPAND_SOURCES; // FIXME
 	$elementID = "N-".floor(microtime()*1000000);
 	$text = trim($text);
+	
 	// Check if Shared Note and if so enable url link on title -------------------
 	if (eregi("0 @N([0-9])+@ NOTE", $nrec)) {
 		$centitl  = str_replace("~~", "", $text);
@@ -1145,20 +1146,12 @@ function print_note_record($text, $nlevel, $nrec, $textOnly=false, $return=false
 
 	if (!empty($text) || !empty($centitl)) {
 		$text = PrintReady($text);
-		// Check if Formatted Shared Note -----------------------------------------
+		// Check if Formatted Shared Note (Note using pipe "|" as delimeter ) ------
 		if (eregi("0 @N([0-9])+@ NOTE", $nrec) && strstr($text, "|")) {
 			$text = "xCxAx<table cellpadding=\"0\"><tr><td>" . $text;
-			// Check if Census Formatted Shared Note --------------------
-			if (strstr($text, "|")) {
-				$text = str_replace("<br /><br />", "</td></tr></table><p><table cellpadding=\"0\"><tr><td>&nbsp;<b>Name</b>&nbsp;&nbsp;</td><td><b>Relation</b>&nbsp;&nbsp;</td><td><b>Status</b>&nbsp;&nbsp;</td><td><b>Age</b>&nbsp;&nbsp;</td><td><b>Sex</b>&nbsp;&nbsp;</td><td><b>Occupation</b>&nbsp;&nbsp;</td><td><b>Birth place</b>&nbsp;&nbsp;</td></tr><tr><td>&nbsp;", $text);
-			}
-			// Check for Highlighting -----------------------------------
-			if (eregi("<br />.b.", $text)) {
-				$text = str_replace(".b.", "<b>", $text);
-				$text = str_replace("|", "&nbsp;&nbsp;</b></td><td>", $text);
-			}else{
-				$text = str_replace("|", "&nbsp;&nbsp;</td><td>", $text);
-			}
+			$text = str_replace("<br /><br />", "</td></tr><tr><td>&nbsp;</td></tr><tr><td>&nbsp;", $text);
+			$text = str_replace(".b.", "<b />", $text); // -- Check for Highlighting (Use embolden)
+			$text = str_replace("|", "&nbsp;&nbsp;</td><td>", $text);
 			$text = str_replace("<br />", "</td></tr><tr><td>&nbsp;", $text);
 			$text = $text . "</td></tr></table>";
 			$text = str_replace("xCxAx", $centitl."<br />", $text);
@@ -1182,28 +1175,32 @@ function print_note_record($text, $nlevel, $nrec, $textOnly=false, $return=false
 			if ($EXPAND_NOTES) $plusminus="minus"; else $plusminus="plus";
 			$data .= "<a href=\"javascript:;\" onclick=\"expand_layer('$elementID'); return false;\"><img id=\"{$elementID}_img\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES[$plusminus]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"".$pgv_lang["show_details"]."\" title=\"".$pgv_lang["show_details"]."\" /></a> ";
 		}
-		// Check if Shared Note ------------------------------------------
+
+		// Check if Shared Note -----------------------------
 		if (eregi("0 @N.*@ NOTE", $nrec)) {
-			$data .= $pgv_lang["shared_note"].": </span><span class=\"field\">";
+			$data .= $pgv_lang["shared_note"].": </span> - ";
 		}else{
-			$data .= $pgv_lang["note"].": </span><span class=\"field\">";
+			$data .= $pgv_lang["note"].": </span>";
 		}
 
 		if ($brpos !== false) {
 			$data .= substr($text, 0, $brpos);
-			$data .= "<span id=\"$elementID\"";
+			$data .= "<div id=\"$elementID\"";
 			if ($EXPAND_NOTES) $data .= " style=\"display:block\"";
-			$data .= " class=\"note_details\">";
+			$data .= " class=\"note_details font11\">";
 			$data .= substr($text, $brpos + 6);
-			$data .= "</span>";
+			$data .= "</div>";
 		} else {
 			$data .= $text;
 		}
+
 		if (!$return) {
 			echo $data;
 			return true;
+		}else{
+			return $data;
 		}
-		else return $data;
+
 	}
 	return false;
 }
@@ -1256,6 +1253,7 @@ function print_fact_notes($factrec, $level, $textOnly=false, $return=false) {
 				$data .= "</div>";
 			}
 		}
+		/*
 		if($closeSpan){
 		    if ($j==$ct-1 || $textOnly==false) {
 				$data .= "</span>";
@@ -1263,6 +1261,7 @@ function print_fact_notes($factrec, $level, $textOnly=false, $return=false) {
 				$data .= "</span><br /><br />";
 			}
 		}
+		*/
 		$printDone = true;
 	}
 	if ($printDone) $data .= "<br />";
