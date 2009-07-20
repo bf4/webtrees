@@ -82,13 +82,13 @@
 				<PGVRGedcom id="@FAMC">
 					<PGVRTextBox height="$height1" width="$width5">
 						<PGVRGedcom id="@HUSB">
-						<PGVRText style="text"><PGVRGetPersonName id="" truncate="40" /></PGVRText>
+						<PGVRText style="text"><PGVRGetPersonName id="" /></PGVRText>
 						<PGVRText style="mini"> (<PGVRGedcomValue tag="@id" />)</PGVRText>
 						</PGVRGedcom>
 					</PGVRTextBox>
 					<PGVRTextBox height="$height1" newline="1">
 						<PGVRGedcom id="@WIFE">
-						<PGVRText style="text"><PGVRGetPersonName id="" truncate="40" /></PGVRText>
+						<PGVRText style="text"><PGVRGetPersonName id="" /></PGVRText>
 						<PGVRText style="mini"> (<PGVRGedcomValue tag="@id" />)</PGVRText>
 						</PGVRGedcom>
 					</PGVRTextBox>
@@ -129,7 +129,7 @@
 							<PGVRRepeatTag tag="CHIL">
 								<PGVRGedcom id="@CHIL">
 									<PGVRText style="mini">
-										<PGVRGetPersonName id="" truncate="40" /> (<PGVRGedcomValue tag="@id" />), 
+										<PGVRGetPersonName id="" /> (<PGVRGedcomValue tag="@id" />), 
 									</PGVRText>
 								</PGVRGedcom>
 							</PGVRRepeatTag>
