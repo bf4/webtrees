@@ -1413,3 +1413,8 @@ ul.clist {
 	height: 3px;
 	width: 8em;
 }
+
+/* overrides bgcolor on stats charts in simply_xxx themes */
+.simply_bg_color{
+	background-color: #eeeeee;
+}
