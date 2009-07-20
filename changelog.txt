@@ -10,6 +10,7 @@
 
 
 Version 4.2.x CA
+ - Changes arrived during last update, not sure why, but will commit anyway to clean svn. (windmillway)
  - Merged: Merge changes r5915 - r5943 from the trunk. (yalnifj)
  - Added module administration page (yalnifj)
  - Added new module tab and menu system (yalnifj)
