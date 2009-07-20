@@ -1788,6 +1788,7 @@ $pgv_lang["delete_shared_note"]		= "Poista tämä jaettu lisätieto";
 $pgv_lang["confirm_delete_shared_note"]		= "Haluatko varmasti poistaa tämän jaetun lisätiedon?";
 $pgv_lang["shared_note_contains"]	= "Jaettu lisätieto sisältää:";
 $pgv_lang["cemetery_report"]		= "Hautausmaaraportti";
+$pgv_lang["burialplace"]			= "Hautauspaikka sisältää";
 $pgv_lang["landscape_top"]			= "Vanhin ylhäällä";
 $pgv_lang["landscape_down"]			= "Vanhin alhaalla";
 $pgv_lang["media_private"] 			= "Tiedot tästä mediasta ovat yksityisiä. Tietoja ei sisällytetä.";

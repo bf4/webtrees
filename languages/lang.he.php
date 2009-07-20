@@ -145,7 +145,7 @@ $pgv_lang["font"]				= "גופן";
 $pgv_lang["use_colors"]			= "השתמש בצבעים";
 $pgv_lang["record_not_found"]		= "רשומת ה-GEDCOM המבוקשת לא נמצאה. הסיבה יכולה להיות קישור לאדם לא תקין או קובץ GEDCOM פגום.";
 $pgv_lang["result_page"]			= "דף תוצאה";
-$pgv_lang["edit_media"]			= "ערוך פריט מדיה (#GLOBALS[pid]#)";//@@
+$pgv_lang["edit_media"]			= "ערוך פריט מדיה (#GLOBALS[pid]#)";
 $pgv_lang["wiki_main_page"]			= "דף ראשי של ויקי";
 $pgv_lang["wiki_users_guide"]		= "מדריך למשתמש של ויקי";
 $pgv_lang["wiki_admin_guide"]		= "מדריך למנהלן של ויקי";
@@ -1516,6 +1516,7 @@ $pgv_lang["marrdate1"]		= "התחלת תחום תאריכי נישואין";
 $pgv_lang["marrdate2"]		= "סיום תחום תאריכי נישואין";
 $pgv_lang["sort_by"]			= "מיין לפי";
 $pgv_lang["cemetery_report"]		= "דו\"ח בתי קברות";
+$pgv_lang["burialplace"]		= "מקום קבורה מכיל";
 
 $pgv_lang["cleanup"]			= "ניקיון";
 
