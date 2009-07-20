@@ -113,14 +113,14 @@ class PGVReportBaseHTML extends PGVReportBase {
 	* @var float
 	*/
 	public $maxY = 0;
-	
+
 	public $headerElements = array();
 	public $pageHeaderElements = array();
 	public $footerElements = array();
 	public $bodyElements = array();
 	public $printedfootnotes = array();
 
-	
+
 	/**
 	* HTML Setup - PGVReportBaseHTML
 	*/
@@ -231,7 +231,7 @@ class PGVReportBaseHTML extends PGVReportBase {
 
 		print "</style>\n</head>\n\n<body>";
 		unset($htmlcode);
-		
+
 		if (!isset($this->currentStyle)) $this->currentStyle = "";
 		$temp = $this->currentStyle;
 		//-- header divider
@@ -360,7 +360,7 @@ class PGVReportBaseHTML extends PGVReportBase {
 	* Local HTML Report functions
 	****************************/
 
-	
+
 	/**
 	* Update the Page Number and set a new Y if max Y is larger - PGVReportBaseHTML
 	* @todo add page break - <p style='page-break-before:always' />
@@ -446,7 +446,7 @@ class PGVReportBaseHTML extends PGVReportBase {
 		$style = $this->getStyle($this->currentStyle);
 		return $style["size"];
 	}
-	
+
 	function getFootnotesHeight() {
 		$h=0;
 		foreach($this->printedfootnotes as $element) {
@@ -454,7 +454,7 @@ class PGVReportBaseHTML extends PGVReportBase {
 		}
 		return $h;
 	}
-	
+
 	/**
 	* Get the maximum width from current position to the margin - PGVReportBaseHTML
 	* @return float
@@ -571,11 +571,7 @@ class PGVReportBaseHTML extends PGVReportBase {
 	$wraptext = '';
 	foreach($lines as $line) {
 		$wtext = '';
-		// If text contains space then use regular wordwrap
-		if (substr_count($line, " ") > 0) {
-			$wtext = wordwrap($line, $lw, "\n", true);
-		}
-		else $wtext = $this->textWrapMB($line, $width);
+		$wtext = UTF8_wordwrap($line, $lw, "\n", true);
 		$wraptext .= $wtext;
 		// Add a new line as long as it's not the last line
 		if ($lfct > 1) $wraptext.= "\n";
@@ -611,7 +607,7 @@ class PGVReportBaseHTML extends PGVReportBase {
 	*/
 	function write($text, $color='') {
 //		global $waitTitle;
-		
+
 		$style = $this->getStyle($this->getCurrentStyle());
 
 		// Look for first occurrence of a page header,
@@ -703,16 +699,16 @@ class PGVRCellHTML extends PGVRCell {
 		*/
 		$cW = 0;		// Class Width
 		$cP = 0;		// Class Padding
-		
+
 		// If (Future-feature-enable/disable cell padding)
 		$cP = $html->cPadding;
-		
+
 		// Adjust the positions
 		if ($this->left == ".") {
 			$this->left = $html->GetX();
 		}
 		else $html->SetX($this->left);
-		
+
 		if ($this->top == ".") {
 			$this->top = $html->GetY();
 		}
@@ -774,7 +770,7 @@ class PGVRCellHTML extends PGVRCell {
 		}
 		// Check the width if set to page wide OR set by xml to larger then page wide
 		if (($this->width == 0) or $this->width > $html->getRemainingWidth()) {
-			$this->width = $html->getRemainingWidth();			
+			$this->width = $html->getRemainingWidth();
 		}
 		// We have to calculate a different width for the padding, counting on both side
 		$cW = $this->width - ($cP * 2);
@@ -825,7 +821,7 @@ class PGVRCellHTML extends PGVRCell {
 		if (!empty($this->url)) {
 			print "</a>";
 		}
-		
+
 		// Finish the cell printing and start to clean up
 		print "</div>\n";
 
@@ -867,9 +863,9 @@ class PGVRHtmlHTML extends PGVRHtml {
 	*  @todo temporary fix
 	*/
 	function render(&$html, $sub = false, $inat=true) {
-		
+
 		if (!empty($this->attrs['pgvrstyle'])) $html->setCurrentStyle($this->attrs['pgvrstyle']);
-		
+
 		$this->text = $this->getStart().$this->text;
 		foreach($this->elements as $element) {
 			if (is_string($element) && $element=="footnotetexts") $html->Footnotes();
@@ -995,7 +991,7 @@ class PGVRTextBoxHTML extends PGVRTextBox {
 		if ($this->padding) {
 			$cP = $html->cPadding;
 		}
-		
+
 		// For padding, we have to use less wrap width
 		$cW = $this->width - ($cP * 2);
 
@@ -1058,7 +1054,7 @@ class PGVRTextBoxHTML extends PGVRTextBox {
 				}
 			}
 		}
-		
+
 		// Just in case, check it anyway
 		if ($h > $cH) {
 			$cH = $h;
@@ -1096,7 +1092,7 @@ class PGVRTextBoxHTML extends PGVRTextBox {
 		else {
 			$htmlcode .= "width: ".($this->width - ($cP * 2))."pt; height: ".$cH."pt; ";
 		}
-		
+
 		print $htmlcode."\">\n";
 
 		// Do a little "margin" trick before print
@@ -1153,7 +1149,7 @@ class PGVRTextHTML extends PGVRText {
 	* @param boolean $attrib Is is called from a different element?
 	*/
 	function render(&$html, $curx=0, $attrib=true) {
-		
+
 		// Setup the style name
 		if ($html->getCurrentStyle() != $this->styleName) {
 			$html->setCurrentStyle($this->styleName);
@@ -1214,7 +1210,7 @@ class PGVRTextHTML extends PGVRText {
 		if ($html->getCurrentStyle() != $this->styleName) {
 			$html->setCurrentStyle($this->styleName);
 		}
-		
+
 		// Check for the largest font size in the box
 		$fsize = $html->getCurrentStyleHeight();
 		if ($fsize > $html->largestFontHeight) {
@@ -1310,10 +1306,10 @@ class PGVRFootnoteHTML extends PGVRFootnote {
 	* @param PGVReportBaseHTML &$html
 	*/
 	function renderFootnote(&$html) {
-		
+
 		if ($html->getCurrentStyle()!=$this->styleName)
 			$html->setCurrentStyle($this->styleName);
-		
+
 		$temptext = preg_replace("/#PAGENUM#/", $html->PageNo(), $this->text);
 
 		print "<a name=\"footnote".$this->num."\"><span class=\"footnote\">".$this->num.". ";
@@ -1331,7 +1327,7 @@ class PGVRFootnoteHTML extends PGVRFootnote {
 //		return ($style["size"] * $ct) * $html->cellHeightRatio;
 		return ($html->largestFontHeight * $ct) * $html->cellHeightRatio;
 	}
-	
+
 	/**
 	* Get the width of text
 	* @param PGVReportBaseHTML &$html
@@ -1446,7 +1442,7 @@ class PGVRImageHTML extends PGVRImage {
 	*/
 	function render(&$html) {
 		global $lastpicbottom, $lastpicpage, $lastpicleft, $lastpicright;
-		
+
 		// Get the current positions
 		if ($this->x == ".") {
 			$this->x=$html->GetX();
@@ -1489,7 +1485,7 @@ class PGVRImageHTML extends PGVRImage {
 		// Keep max Y updated
 		$html->addMaxY($lastpicbottom);
 	}
-	
+
 	/**
 	* Get the image height
 	* This would be called from the PGVRTextBox only for multiple images
