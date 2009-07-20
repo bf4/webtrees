@@ -104,6 +104,22 @@
 				</PGVRif>
 				<!-- Print the individuals facts -->
 				<PGVRCell bgcolor="$stbgcolor" border="1" newline="1" style="title" width="$width"><PGVRvar var="pgv_lang[personal_facts]"/></PGVRCell>
+				
+				<!-- print level 1 sources - see name, but not the sources !!! -->
+				<PGVRTextBox bgcolor="$fbbgcolor" border="1" width="$width" newline="1">
+					<PGVRText style="name"><PGVRGetPersonName id=""/></PGVRText>
+					<PGVRif condition="$sources==1">
+						<PGVRRepeatTag tag="SOUR">
+							<PGVRFootnote>
+								<PGVRGedcom id="@SOUR">
+									<PGVRGedcomValue tag="TITL" />
+								</PGVRGedcom>
+								<PGVRif condition="@PAGE!=''">: </PGVRif>
+								<PGVRGedcomValue tag="SOUR:PAGE"/> <PGVRGedcomValue tag="SOUR:DATA:TEXT"/>
+							</PGVRFootnote>
+						</PGVRRepeatTag>
+					</PGVRif>
+				</PGVRTextBox>
 				<PGVRFacts ignore="$ignore" families="1">
 					<PGVRTextBox bgcolor="$fbbgcolor" border="1" width="$dwidth">
 						<PGVRText style="fact"><PGVRvar var="factarray[@fact]"/>  </PGVRText>

@@ -69,6 +69,22 @@
 				<PGVRTextBox border="1" width="$width" height="" newline="1" bgcolor="#DDDDDD">
 					<PGVRText style="label1"><PGVRvar var="pgv_lang[personal_facts]" />   </PGVRText>
 				</PGVRTextBox>
+				
+				<!-- print level 1 sources -->
+				<PGVRTextBox border="1" width="$width" height="16" newline="1">
+					<PGVRText style="name"><PGVRGetPersonName id=""/></PGVRText>
+					<PGVRif condition="$sources==1">
+						<PGVRRepeatTag tag="SOUR">
+							<PGVRFootnote>
+								<PGVRGedcom id="@SOUR">
+									<PGVRGedcomValue tag="TITL" />
+								</PGVRGedcom>
+								<PGVRif condition="@PAGE!=''">: </PGVRif>
+								<PGVRGedcomValue tag="SOUR:PAGE"/> <PGVRGedcomValue tag="SOUR:DATA:TEXT"/>
+							</PGVRFootnote>
+						</PGVRRepeatTag>
+					</PGVRif>
+				</PGVRTextBox>
 				<PGVRFacts ignore="$ignore" families="1">
 					<PGVRTextBox border="1" width="$dwidth" height="16">
 						<PGVRText style="pagenum"><PGVRvar var="factarray[@fact]" />  </PGVRText>
