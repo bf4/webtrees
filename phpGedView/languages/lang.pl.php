@@ -1467,12 +1467,6 @@ $pgv_lang["ahnentafel_place"]		= " w miejscowości ";
 $pgv_lang["ahnentafel_no_details"]	= ", ale szczegóły są nieznane";
 $pgv_lang["ahnentafel_on"]			= " ";
 
- //-- Descendency report
-$pgv_lang["son_of"]					= "syna";
-$pgv_lang["daughter_of"]			= "córką";
-$pgv_lang["child_of"]				= "Dziecko rodziny ";
-$pgv_lang["children_of"]			= "Dzieci rodziny ";
-
 //-- Changes report
 $pgv_lang["changes_report"]			= "Raport o zmianach";
 $pgv_lang["changes_pending_tot"]	= "Wszystkie oczekujące zmiany:";
@@ -1481,6 +1475,10 @@ $pgv_lang["changes_accepted_tot"]	= "Wszystkich zaakceptowanych zmian:";
 //-- Descendancy report
 $pgv_lang["descend_report"]			= "Raport o potomkach";
 $pgv_lang["descendancy_header"]		= "Raport o potomkach dla: ";
+$pgv_lang["son_of"]					= "syna";
+$pgv_lang["daughter_of"]			= "córką";
+$pgv_lang["child_of"]				= "Dziecko rodziny ";
+$pgv_lang["children_of"]			= "Dzieci rodziny ";
 
 $pgv_lang["family_group_report"]	= "Raport o grupie rodzinnej";
 $pgv_lang["page"]					= "Strona";
@@ -1513,6 +1511,7 @@ $pgv_lang["marrdate1"]				= "Początek zakresu dat ślubów";
 $pgv_lang["marrdate2"]				= "Koniec zakresu dat ślubów";
 $pgv_lang["sort_by"]				= "Kryterium sortowania";
 $pgv_lang["cemetery_report"]		= "Raport o cmentarzach";
+$pgv_lang["burialplace"]			= "Nazwa miejscowości pochówku";
 
 $pgv_lang["cleanup"]				= "Porządkowanie";
 
