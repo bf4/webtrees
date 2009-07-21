@@ -747,7 +747,7 @@ function build_indiv_map($indifacts, $famids) {
 					echo "Marker{$j}.openInfoWindowHtml(\"<div class='iwstyle'>";
 					echo PrintReady($markers[$j]["fact"]);
 					if (!empty($markers[$j]['info']))
-						echo ": {$markers[$j]['info']}";
+						echo ': ', addslashes($markers[$j]['info']);
 					if (!empty($markers[$j]["name"])) {
 						$person=Person::getInstance($markers[$j]['name']);
 						if ($person) {
@@ -807,7 +807,7 @@ function build_indiv_map($indifacts, $famids) {
 					$tabcounter = $tabcounter + 1;
 					echo "new GInfoWindowTab(\"".abbreviate($markers[$j]["fact"])."\", \"<div class='iwstyle'>".PrintReady($markers[$j]["fact"]);
 					if (!empty($markers[$j]['info']))
-						echo ": {$markers[$j]['info']}";
+						echo ': ', addslashes($markers[$j]['info']);
 					if (!empty($markers[$j]["name"])) {
 						$person=Person::getInstance($markers[$j]['name']);
 						if ($person) {
