@@ -1470,7 +1470,7 @@ $pgv_lang["ahnentafel_buried_m"]		= "wurde beerdigt";
 $pgv_lang["ahnentafel_buried_f"]		= "wurde beerdigt";
 $pgv_lang["ahnentafel_place"]			= " in ";
 $pgv_lang["ahnentafel_no_details"]		= " aber die Einzelheiten sind nicht bekannt";
-$pgv_lang["ahnentafel_on"]				= " am";
+$pgv_lang["ahnentafel_on"]				= " ";
 
 //-- Changes report
 $pgv_lang["changes_report"]				= "Änderungenbericht";
