@@ -1469,7 +1469,7 @@ $pgv_lang["ahnentafel_buried_m"]	= "was buried";			// male
 $pgv_lang["ahnentafel_buried_f"]	= "was buried";			// female
 $pgv_lang["ahnentafel_place"]		= " in ";				// place name follows this
 $pgv_lang["ahnentafel_no_details"]	= " but the details are unknown";
-$pgv_lang["ahnentafel_on"]			= " on";
+$pgv_lang["ahnentafel_on"]			= " ";
 
 //-- Changes report
 $pgv_lang["changes_report"]			= "Changes Report";

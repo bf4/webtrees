@@ -1470,7 +1470,7 @@ $pgv_lang["ahnentafel_buried_m"]	= "נקבר";		// male
 $pgv_lang["ahnentafel_buried_f"]	= "נקברה";		// female
 $pgv_lang["ahnentafel_place"]	= " ב-";			// place name follows this
 $pgv_lang["ahnentafel_no_details"]	= " אבל הפרטים אינם ידועים";
-$pgv_lang["ahnentafel_on"]		= " ב-";
+$pgv_lang["ahnentafel_on"]		= " בתאריך";
 
 //-- Changes report
 $pgv_lang["changes_report"]		= "דו\"ח שינויים";
