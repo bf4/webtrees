@@ -268,7 +268,7 @@ function UTF8_strstr($haystack, $needle) {
 	if ($haystackLen==0 || $needleLen==0) return false;
 
 	$stringPos = UTF8_strpos($UTF8_haystack, $UTF8_needle, 0);
-	if ($stringpos===false) return false;
+	if ($stringPos===false) return false;
 
 	$result = array_slice($UTF8_haystack, $stringPos);
 
@@ -312,6 +312,7 @@ function UTF8_strpos($haystack, $needle, $offset=0) {
 
 	$lastPos = $haystackLen - $needleLen;
 
+	$found = false;
 	for ($currPos=$offset; $currPos<=$lastPos; $currPos++) {
 		$found = true;
 		for ($i=0; $i<$needleLen; $i++) {
