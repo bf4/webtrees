@@ -3,7 +3,7 @@
  * Register as a new User or request new password if it is lost
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
+ * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -30,10 +30,7 @@ require './config.php';
 
 loadLangFile("pgv_confighelp");
 
-$action=safe_GET('action');
-if (!$action) {
-	$action=safe_POST('action');
-}
+$action         =safe_POST('action');
 $user_firstname =safe_POST('user_firstname');
 $user_lastname  =safe_POST('user_lastname');
 $url            =safe_POST('url',             PGV_REGEX_URL, 'index.php');
@@ -47,6 +44,9 @@ $user_gedcomid  =safe_POST('user_gedcomid');
 $user_comments  =safe_POST('user_comments');
 $user_password  =safe_POST('user_password');
 $user_hashcode  =safe_POST('user_hashcode');
+if (empty($action)) $action = safe_GET('action');
+if (empty($user_name)) $user_name = safe_GET('user_name', PGV_REGEX_USERNAME);
+if (empty($user_hashcode)) $user_hashcode = safe_GET('user_hashcode');
 
 // Remove trailing slash from server URL
 if (substr($SERVER_URL, -1) == "/") $serverURL = substr($SERVER_URL,0, -1);
