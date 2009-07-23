@@ -187,7 +187,7 @@ function createTempUser($userID, $rights, $gedcom) {
 	// Save things in cache
 	$_SESSION["pgv_GEDCOM"]				= $gedcom;
 	$_SESSION["pgv_GED_ID"]				= get_id_from_gedcom($_SESSION["pgv_GEDCOM"]);
-	$_SESSION["pgv_USER_ID"]			= $_SESSION["pgv_user"];
+	$_SESSION["pgv_USER_ID"]			= $userID;
 	$_SESSION["pgv_USER_NAME"]			= 'Not Relevant';
 	$_SESSION["pgv_USER_GEDCOM_ADMIN"]	= userGedcomAdmin   ($_SESSION["pgv_USER_ID"], $_SESSION["pgv_GED_ID"]);
 	$_SESSION["pgv_USER_CAN_ACCESS"]	= userCanAccess     ($_SESSION["pgv_USER_ID"], $_SESSION["pgv_GED_ID"]);
