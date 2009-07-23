@@ -129,7 +129,7 @@ class TimelineControllerRoot extends BaseController {
 						if ($date->y) {
 							$this->baseyear=min($this->baseyear, $date->y);
 							$this->topyear =max($this->topyear,  $date->y);
-	
+
 							if (!$indi->isDead())
 								$this->topyear=max($this->topyear, date('Y'));
 							$event->temp = $p;
@@ -303,7 +303,7 @@ class TimelineControllerRoot extends BaseController {
 					else {
 						$ct = preg_match("/2 _PGVFS @(.*)@/", $factrec, $match);
 						if ($ct>0) {
-							print " <a href=\"".encode_url("family.php?pid={$match[1]}&ged={$GEDCOM}")."\">";
+							print " <a href=\"".encode_url("family.php?famid={$match[1]}&ged={$GEDCOM}")."\">";
 							if (displayDetailsById($match[1])||showLivingNameById($match[1])) print $event->getParentObject()->getFullName();
 							else print $pgv_lang["private"];
 							print "</a>";
