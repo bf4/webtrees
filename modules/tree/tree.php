@@ -3,6 +3,12 @@ require_once 'includes/classes/class_tab.php';
 require_once './includes/classes/class_treenav.php';
 
 class tree_Tab extends Tab {
+
+	public function getJSCallback() {
+		return 'treetab.sizeLines(); 
+var outdiv = document.getElementById("out_treetab");
+outdiv.style.width = (document.getElementById("tabs").offsetWidth-25) + "px";';
+	}
 	
 	public function getContent() {
 		$out = "<div id=\"tree_content\">";
@@ -14,13 +20,6 @@ class tree_Tab extends Tab {
 		$out .= ob_get_contents();
 		ob_end_clean();
 		$out .= "</div>";
-		$out .= '<script type="text/javascript">
-		<!--
-		/* set the width to a specific value */
-		var outdiv = document.getElementById("out_treetab");
-		outdiv.style.width = document.getElementById("tabs").offsetWidth + "px";
-		//-->
-		</script>';
 		return $out;
 	}
 	

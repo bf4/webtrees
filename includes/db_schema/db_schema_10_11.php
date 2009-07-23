@@ -92,7 +92,7 @@ while($row = $stmt->fetch()) {
 }
 
 //-- set the default tabs
-$default_tabs = array('family_nav', 'personal_facts', 'sources_tab', 'notes', 'media', 'lightbox', 'tree', 'googlemap', 'relatives');
+$default_tabs = array('family_nav', 'personal_facts', 'sources_tab', 'notes', 'media', 'lightbox', 'tree', 'googlemap', 'relatives', 'all_tab');
 $modules = PGVModule::getInstalledList();
 $taborder = 1;
 foreach($default_tabs as $modname) {

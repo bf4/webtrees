@@ -105,9 +105,20 @@ function resize_content_div(i) {
 			autoHeight: false
 		});
   jQuery('#tabs').bind('tabsshow', function(event, ui) {
-    if (ui.panel.id == "ui-tabs-20") {
-        resizeMap();
-    }
+	<?php
+	foreach($controller->modules as $mod) {
+		if ($mod->hasTab() && $mod->getTab()) {
+			echo $mod->getTab()->getJSCallbackAllTabs()."\n";
+			$modjs = $mod->getTab()->getJSCallback();
+			if (!empty($modjs)) {
+				echo 'if (ui.tab.name == "'.$mod->getName().'") {
+	'.$modjs.'
+}
+';
+			}
+		}
+	} 
+	?>
   });
   });
 
@@ -226,9 +237,9 @@ foreach($controller->modules as $mod) {
 	foreach($controller->modules as $mod) {
 		if ($mod!=$controller->static_tab && $mod->hasTab()) {
 		if ($tabcount==$controller->default_tab) {?>
-			<li><a href="#<?php echo $mod->getName()?>"><span><?php echo $pgv_lang[$mod->getName()]?></span></a></li>
+			<li><a name="<?php echo $mod->getName(); ?>" href="#<?php echo $mod->getName()?>"><span><?php echo $pgv_lang[$mod->getName()]?></span></a></li>
 		<?php } else if ($mod->hasTab() && $mod->getTab() && ($mod->getTab()->hasContent() || PGV_USER_CAN_EDIT)) { ?>
-			<li><a id="<?php echo $mod->getName(); ?>" href="new_individual.php?action=ajax&amp;module=<?php echo $mod->getName()?>&amp;pid=<?php echo $controller->pid?>">
+			<li><a name="<?php echo $mod->getName(); ?>" href="new_individual.php?action=ajax&amp;module=<?php echo $mod->getName()?>&amp;pid=<?php echo $controller->pid?>">
 				<span><?php echo $pgv_lang[$mod->getName()]?></span>
 				</a></li>
 		<?php } 

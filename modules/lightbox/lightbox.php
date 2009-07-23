@@ -19,6 +19,10 @@ class lightbox_Tab extends media_Tab {
 		return $out; 
 	}
 	
+	public function getJSCallbackAllTabs() {
+		return 'CB_Init();';
+	}
+	
 	public function getContent() {
 		global $MULTI_MEDIA, $SHOW_ID_NUMBERS, $MEDIA_EXTERNAL;
 		global $pgv_lang, $pgv_changes, $factarray, $view;

@@ -10,6 +10,7 @@
 
 
 Version 4.2.x CA
+ - Added "ALL" tab module (yalnifj)
  - This Branch and the Trunk are now both at svn level 5955 (windmillway) 
  - Merged: Correction to pick up missing svn changes - Merge changes r5944 - r5952 from the trunk. (windmillway)
  - Changes arrived during last update, not sure why, but will commit anyway to clean svn. (windmillway)

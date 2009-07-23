@@ -63,5 +63,18 @@ abstract class Tab {
 	 * @return string
 	 */
 	public function getPreLoadContent() { return ""; }
+	/**
+	 * the javascript that needs to be called after every tab change, in order for this
+	 * tab to function properly
+	 * @return string	a string representation of the javascript
+	 */
+	public function getJSCallbackAllTabs() { return ""; }
+	/**
+	 * the javascript that needs to be called when changing just to this tab, in order for this
+	 * tab to function properly
+	 * @return string	a string representation of the javascript
+	 */
+
+	public function getJSCallback() { return ""; }
 } 
 ?>
