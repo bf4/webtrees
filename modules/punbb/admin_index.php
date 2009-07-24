@@ -1,7 +1,7 @@
 <?php
 /***********************************************************************
 
-  Copyright (C) 2002-2005  Rickard Andersson (rickard@punbb.org)
+  Copyright (C) 2002-2008  PunBB
 
   This file is part of PunBB.
 
@@ -43,7 +43,7 @@ if ($action == 'check_upgrade')
 	if (!ini_get('allow_url_fopen'))
 		message('Unable to check for upgrade since \'allow_url_fopen\' is disabled on this system.');
 
-	$fp = @fopen('http://www.punbb.org/latest_version', 'r');
+	$fp = @fopen('http://punbb.informer.com/latest_version', 'r');
 	$latest_version = trim(@fread($fp, 16));
 	@fclose($fp);
 
@@ -59,7 +59,7 @@ if ($action == 'check_upgrade')
 	if ($cur_version >= $latest_version)
 		message('You are running the latest version of PunBB.');
 	else
-		message('A new version of PunBB has been released. You can download the latest version at <a href="http://www.punbb.org/">PunBB.org</a>.');
+		message('A new version of PunBB has been released. You can download the latest version at <a href="http://punbb.informer.com/">PunBB.Informer.Com</a>.');
 }
 
 
@@ -176,7 +176,7 @@ generate_admin_menu('index');
 					<dt>PunBB version</dt>
 					<dd>
 						PunBB <?php echo $pun_config['o_cur_version'] ?> - <a href="<?php genurl('admin_index.php?action=check_upgrade', false, true)?>">Check for upgrade</a><br />
-						&copy; Copyright 2002, 2003, 2004, 2005 Rickard Andersson
+						&copy; Copyright 2002-2008 PunBB
 					</dd>
 					<dt>Server load</dt>
 					<dd>

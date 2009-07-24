@@ -1,7 +1,9 @@
 <?php
 /***********************************************************************
 
-  Copyright (C) 2002-2005  Rickard Andersson (rickard@punbb.org)
+  Copyright (C) 2002-2008  PunBB
+
+  Partially based on code copyright (C) 2008  FluxBB.org
 
   This file is part of PunBB.
 
@@ -122,6 +124,10 @@ function smtp_mail($to, $subject, $message, $headers = '')
 	global $pun_config;
 
 	$recipients = explode(',', $to);
+
+	// Sanitize the message
+	$message = str_replace("\r\n.", "\r\n..", $message);
+	$message = (substr($message, 0, 1) == '.' ? '.'.$message : $message);
 
 	// Are we using port 25 or a custom port?
 	if (strpos($pun_config['o_smtp_host'], ':') !== false)

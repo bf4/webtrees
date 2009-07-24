@@ -1,7 +1,7 @@
 <?php
 /***********************************************************************
 
-  Copyright (C) 2002-2005  Rickard Andersson (rickard@punbb.org)
+  Copyright (C) 2002-2008  PunBB
 
   This file is part of PunBB.
 
@@ -603,6 +603,14 @@ else if (isset($_POST['delete_user']) || isset($_POST['delete_user_comply']))
 		// Delete the user
 		$db->query('DELETE FROM '.$db->prefix.'users WHERE id='.$id) or error('Unable to delete user', __FILE__, __LINE__, $db->error());
 
+		// Delete user avatar
+		if (file_exists($pun_config['o_avatars_dir'].'/'.$id.'.gif'))
+			@unlink($pun_config['o_avatars_dir'].'/'.$id.'.gif');
+		if (file_exists($pun_config['o_avatars_dir'].'/'.$id.'.jpg'))
+			@unlink($pun_config['o_avatars_dir'].'/'.$id.'.jpg');
+		if (file_exists($pun_config['o_avatars_dir'].'/'.$id.'.png'))
+			@unlink($pun_config['o_avatars_dir'].'/'.$id.'.png');
+
 		redirect(genurl('index.php'), $lang_profile['User delete redirect']);
 	}
 
@@ -1201,8 +1209,8 @@ else
 								<?php echo $posts_field ?>
 <?php if ($pun_user['g_id'] < PUN_GUEST): ?>							<label><?php echo $lang_profile['Admin note'] ?><br />
 							<input id="admin_note" type="text" name="admin_note" value="<?php echo pun_htmlspecialchars($user['admin_note']) ?>" size="30" maxlength="30" /><br /></label>
-						</div>
-<?php endif; ?>					</fieldset>
+<?php endif; ?>						</div>
+					</fieldset>
 				</div>
 				<p><input type="submit" name="update" value="<?php echo $lang_common['Submit'] ?>" /><?php echo $lang_profile['Instructions'] ?></p>
 			</form>

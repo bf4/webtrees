@@ -1,7 +1,7 @@
 <?php
 /***********************************************************************
 
-  Copyright (C) 2002-2005  Rickard Andersson (rickard@punbb.org)
+  Copyright (C) 2002-2008  PunBB
 
   This file is part of PunBB.
 
@@ -22,8 +22,9 @@
 
 ************************************************************************/
 
+
 // The PunBB version this script installs
-$punbb_version = '1.2.17';
+$punbb_version = '1.2.21';
 
 
 define('PUN_MOD_NAME', basename(dirname(__FILE__)));define('PUN_ROOT', 'modules/'.PUN_MOD_NAME.'/');

@@ -1,7 +1,9 @@
 <?php
 /***********************************************************************
 
-  Copyright (C) 2002-2005  Rickard Andersson (rickard@punbb.org)
+  Copyright (C) 2002-2008  PunBB
+
+  Partially based on code copyright (C) 2008  FluxBB.org
 
   This file is part of PunBB.
 
@@ -330,10 +332,10 @@ function do_bbcode($text)
 	$pattern = array('#\[b\](.*?)\[/b\]#s',
 					 '#\[i\](.*?)\[/i\]#s',
 					 '#\[u\](.*?)\[/u\]#s',
-					 '#\[url\]([^\[]*?)\[/url\]#e',
-					 '#\[url=([^\[]*?)\](.*?)\[/url\]#e',
-					 '#\[email\]([^\[]*?)\[/email\]#',
-					 '#\[email=([^\[]*?)\](.*?)\[/email\]#',
+					 '#\[url\]([^\[<]*?)\[/url\]#e',
+					 '#\[url=([^\[<]*?)\](.*?)\[/url\]#e',
+					 '#\[email\]([^\[<]*?)\[/email\]#',
+					 '#\[email=([^\[<]*?)\](.*?)\[/email\]#',
 					 '#\[color=([a-zA-Z]*|\#?[0-9a-fA-F]{6})](.*?)\[/color\]#s');
 
 	$replace = array('<strong>$1</strong>',

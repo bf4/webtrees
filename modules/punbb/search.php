@@ -1,7 +1,7 @@
 <?php
 /***********************************************************************
 
-  Copyright (C) 2002-2005  Rickard Andersson (rickard@punbb.org)
+  Copyright (C) 2002-2008  PunBB
 
   This file is part of PunBB.
 
@@ -466,7 +466,7 @@ if (isset($action) || isset($_GET['search_id']))
 		$per_page = ($show_as == 'posts') ? $pun_user['disp_posts'] : $pun_user['disp_topics'];
 		$num_pages = ceil($num_hits / $per_page);
 
-		$p = (!isset($_GET['p']) || $_GET['p'] <= 1 || $_GET['p'] > $num_pages) ? 1 : $_GET['p'];
+		$p = (!isset($_GET['p']) || !is_numeric($_GET['p']) || $_GET['p'] <= 1 || $_GET['p'] > $num_pages) ? 1 : $_GET['p'];
 		$start_from = $per_page * ($p - 1);
 
 		// Generate paging links
