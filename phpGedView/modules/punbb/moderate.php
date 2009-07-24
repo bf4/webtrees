@@ -1,7 +1,9 @@
 <?php
 /***********************************************************************
 
-  Copyright (C) 2002-2005  Rickard Andersson (rickard@punbb.org)
+  Copyright (C) 2002-2008  PunBB
+
+  Partially based on code copyright (C) 2008  FluxBB.org
 
   This file is part of PunBB.
 
@@ -141,7 +143,7 @@ if (isset($_GET['tid']))
 				<fieldset>
 					<legend><?php echo $lang_misc['Confirm delete legend'] ?></legend>
 					<div class="infldset">
-						<input type="hidden" name="posts" value="<?php echo implode(',', array_keys($posts)) ?>" />
+						<input type="hidden" name="posts" value="<?php echo implode(',', array_map('intval', array_keys($posts))) ?>" />
 						<p><?php echo $lang_misc['Delete posts comply'] ?></p>
 					</div>
 				</fieldset>
@@ -168,7 +170,7 @@ if (isset($_GET['tid']))
 	// Determine the post offset (based on $_GET['p'])
 	$num_pages = ceil(($cur_topic['num_replies'] + 1) / $pun_user['disp_posts']);
 
-	$p = (!isset($_GET['p']) || $_GET['p'] <= 1 || $_GET['p'] > $num_pages) ? 1 : $_GET['p'];
+	$p = (!isset($_GET['p']) || !is_numeric($_GET['p']) || $_GET['p'] <= 1 || $_GET['p'] > $num_pages) ? 1 : $_GET['p'];
 	$start_from = $pun_user['disp_posts'] * ($p - 1);
 
 	// Generate paging links
@@ -334,7 +336,7 @@ if (isset($_REQUEST['move_topics']) || isset($_POST['move_topics_to']))
 		if (empty($topics))
 			message($lang_misc['No topics selected']);
 
-		$topics = implode(',', array_keys($topics));
+		$topics = implode(',', array_map('intval', array_keys($topics)));
 		$action = 'multi';
 	}
 	else
@@ -457,7 +459,7 @@ if (isset($_REQUEST['delete_topics']) || isset($_POST['delete_topics_comply']))
 	<h2><?php echo $lang_misc['Delete topics'] ?></h2>
 	<div class="box">
 		<form method="post" action="<?php genurl("moderate.php?fid={$fid}", true, true)?>">
-			<input type="hidden" name="topics" value="<?php echo implode(',', array_keys($topics)) ?>" />
+			<input type="hidden" name="topics" value="<?php echo implode(',', array_map('intval', array_keys($topics))) ?>" />
 			<div class="inform">
 				<fieldset>
 					<legend><?php echo $lang_misc['Confirm delete legend'] ?></legend>
@@ -564,7 +566,7 @@ require PUN_ROOT.'header.php';
 // Determine the topic offset (based on $_GET['p'])
 $num_pages = ceil($cur_forum['num_topics'] / $pun_user['disp_topics']);
 
-$p = (!isset($_GET['p']) || $_GET['p'] <= 1 || $_GET['p'] > $num_pages) ? 1 : $_GET['p'];
+$p = (!isset($_GET['p']) || !is_numeric($_GET['p']) || $_GET['p'] <= 1 || $_GET['p'] > $num_pages) ? 1 : $_GET['p'];
 $start_from = $pun_user['disp_topics'] * ($p - 1);
 
 // Generate paging links

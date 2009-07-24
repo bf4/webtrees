@@ -1,7 +1,9 @@
 <?php
 /***********************************************************************
 
-  Copyright (C) 2002-2005  Rickard Andersson (rickard@punbb.org)
+  Copyright (C) 2002-2008  PunBB
+
+  Partially based on code copyright (C) 2008  FluxBB.org
 
   This file is part of PunBB.
 
@@ -123,7 +125,7 @@ $num_users = $db->result($result);
 // Determine the user offset (based on $_POST['p'])
 $num_pages = ceil($num_users / 50);
 
-$p = (!isset($_POST['p']) || $_POST['p'] <= 1 || $_POST['p'] > $num_pages) ? 1 : $_POST['p'];
+$p = (!isset($_POST['p']) || !is_numeric($_POST['p']) <= 1 || $_POST['p'] > $num_pages) ? 1 : $_POST['p'];
 $start_from = 50 * ($p - 1);
 
 // Generate paging links
@@ -154,7 +156,7 @@ $paging_links = $lang_common['Pages'].': '.paginate($num_pages, $p, genurl('user
 <?php
 
 // Grab the users
-$result = $db->query('SELECT u.id, u.username, u.title, u.num_posts, u.registered, g.g_id, g.g_user_title FROM '.$db->prefix.'users AS u LEFT JOIN '.$db->prefix.'groups AS g ON g.g_id=u.group_id WHERE u.id>1'.(!empty($where_sql) ? ' AND '.implode(' AND ', $where_sql) : '').' ORDER BY '.$sort_by.' '.$sort_dir.' LIMIT '.$start_from.', 50') or error('Unable to fetch user list', __FILE__, __LINE__, $db->error());
+$result = $db->query('SELECT u.id, u.username, u.title, u.num_posts, u.registered, g.g_id, g.g_user_title FROM '.$db->prefix.'users AS u LEFT JOIN '.$db->prefix.'groups AS g ON g.g_id=u.group_id WHERE u.id>1'.(!empty($where_sql) ? ' AND '.implode(' AND ', $where_sql) : '').' ORDER BY '.$sort_by.' '.$sort_dir.', u.id ASC LIMIT '.$start_from.', 50') or error('Unable to fetch user list', __FILE__, __LINE__, $db->error());
 if ($db->num_rows($result))
 {
 	while ($user_data = $db->fetch_assoc($result))
