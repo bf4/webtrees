@@ -1557,9 +1557,9 @@ class stats {
 				else $years .= " ".$pgv_lang["years"];
 			}
 			if ($type == 'list') {
-				$top10[]="\t<li><a href=\"".$person->getLinkUrl()."\">".PrintReady($person->getFullName())."</a> ".PrintReady("[".$years."]")."</li>\n";
+				$top10[]="\t<li><a href=\"".$person->getLinkUrl()."\">".PrintReady($person->getFullName())."</a> [".$years."]</li>\n";
 			} else {
-				$top10[]="<a href=\"".$person->getLinkUrl()."\">".PrintReady($person->getFullName())."</a> ".PrintReady("[".$years."]");
+				$top10[]="<a href=\"".$person->getLinkUrl()."\">".PrintReady($person->getFullName())."</a> [".$years."]";
 			}
 		}
 		if ($type == 'list') {
@@ -1622,9 +1622,9 @@ class stats {
 				else $years .= " ".$pgv_lang["years"];
 			}
 			if ($type == 'list') {
-				$top10[]="\t<li><a href=\"".$person->getLinkUrl()."\">".PrintReady($person->getFullName())."</a> ".PrintReady("[".$years."]")."</li>\n";
+				$top10[]="\t<li><a href=\"".$person->getLinkUrl()."\">".PrintReady($person->getFullName())."</a> [".$years."]</li>\n";
 			} else {
-				$top10[]="<a href=\"".$person->getLinkUrl()."\">".PrintReady($person->getFullName())."</a> ".PrintReady("[".$years."]");
+				$top10[]="<a href=\"".$person->getLinkUrl()."\">".PrintReady($person->getFullName())."</a> [".$years."]";
 			}
 		}
 		if ($type == 'list') {
@@ -2544,6 +2544,64 @@ class stats {
 		$chtt = $pgv_lang["stat_22_fwok"];
 		return "<img src=\"".encode_url("http://chart.apis.google.com/chart?cht=bvg&amp;chs={$sizes[0]}x{$sizes[1]}&amp;chf=bg,s,ffffff99|c,s,ffffff00&amp;chm=D,FF0000,0,0:".($i-1).",3,1|{$chm}&amp;chtt={$chtt}&amp;chd=e:{$chd}&amp;chco=0000FF,ffffff00&amp;chbh=30,3&amp;chxt=x,x,y,y&amp;chxl={$chxl}")."\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" alt=\"".$pgv_lang["stat_22_fwok"]."\" title=\"".$pgv_lang["stat_22_fwok"]."\" />";
 	}
+
+	function _topTenGrandFamilyQuery($type='list', $params=null) {
+		global $TBLPREFIX, $TEXT_DIRECTION, $pgv_lang;
+		if ($params !== null && isset($params[0])) {$total = $params[0];}else{$total = 10;}
+		$rows=self::_runSQL(''
+			.' SELECT'
+				.' COUNT(*) AS tot,'
+				.' f_id AS id'
+			.' FROM'
+				." {$TBLPREFIX}families"
+			.' JOIN'
+				." {$TBLPREFIX}link AS children ON children.l_file = {$this->_ged_id}"
+			.' JOIN'
+				." {$TBLPREFIX}link AS mchildren ON mchildren.l_file = {$this->_ged_id}"
+			.' JOIN'
+				." {$TBLPREFIX}link AS gchildren ON gchildren.l_file = {$this->_ged_id}"
+			.' WHERE'
+				." f_file={$this->_ged_id} AND"
+				." children.l_from=id AND"
+				." children.l_type='CHIL' AND"
+				." children.l_to=mchildren.l_from AND"
+				." mchildren.l_type='FAMS' AND"
+				." mchildren.l_to=gchildren.l_from AND"
+				." gchildren.l_type='CHIL'"
+			.' GROUP BY'
+				.' id'
+			.' ORDER BY'
+				.' tot DESC'
+		, $total);
+		if (!isset($rows[0])) {return '';}
+		if(count($rows) < $total){$total = count($rows);}
+		$top10 = array();
+		for($c = 0; $c < $total; $c++) {
+			$family=Family::getInstance($rows[$c]['id']);
+			if ($family->canDisplayDetails()) {
+				if ($type == 'list') {
+					$top10[] = "\t<li><a href=\"".encode_url($family->getLinkUrl())."\">".PrintReady($family->getFullName())."</a> [{$rows[$c]['tot']} {$pgv_lang['grandchild']}]</li>\n";
+				} else {
+					$top10[] = "<a href=\"".encode_url($family->getLinkUrl())."\">".PrintReady($family->getFullName())."</a> [{$rows[$c]['tot']} {$pgv_lang['grandchild']}]";
+				}
+			}
+		}
+		if ($type == 'list') {
+			$top10=join("\n", $top10);
+		} else {
+			$top10 = join(';&nbsp; ', $top10);
+		}
+		if ($TEXT_DIRECTION == 'rtl') {
+			$top10 = str_replace(array('[', ']', '(', ')', '+'), array('&rlm;[', '&rlm;]', '&rlm;(', '&rlm;)', '&rlm;+'), $top10);
+		}
+		if ($type == 'list') {
+			return "<ul>\n{$top10}</ul>\n";
+		}
+		return $top10;
+	}
+
+	function topTenLargestGrandFamily($params=null) {return $this->_topTenGrandFamilyQuery('nolist', $params);}
+	function topTenLargestGrandFamilyList($params=null) {return $this->_topTenGrandFamilyQuery('list', $params);}
 
 ///////////////////////////////////////////////////////////////////////////////
 // Surnames                                                                  //

@@ -9,7 +9,8 @@
 =====================================================================
 
 
-Version 4.2.
+Version 4.2.2
+ - Fixed: [ 2826529 ] 4.2.2svn5976 - Advanced HTML square brackets error (wooc)
  - Fixed: [ 1625495 ] 4.1 Chinese not shown in Report (imsza)
  - Fixed: [ 1410725 ] 4.0b5: Footnote numbers in reports cause line breaks (imsza)
  - Fixed: [ 1568536 ] Ahnentafel report formatting issues (imsza)
