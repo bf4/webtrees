@@ -74,24 +74,21 @@ function stripLRMRLM($inputText) {
  * This function encapsulates all RTL texts in the input with <span dir='rtl'> and </span>
  *
  * @param 	string	Raw input
+ * @param	string	Directionality
  * @return	string	The string with all texts encapsulated as required
  */
-function spanRTL($inputText) {
+function spanRTL($inputText, $direction="RTL") {
+	switch ($direction) {
+	case 'LTR':
+		break;
+	case 'BOTH':
+		break;
+	DEFAULT:
+		break;
 	// Specifications haven't been finalized:  do nothing for now
 	return $inputText;
 }
 
-/**
- * This function encapsulates all LTR texts in the input with <span dir='ltr'> and </span>
- *
- * @param 	string	Raw input
- * @return	string	The string with all texts encapsulated as required
- */
-function spanLTR($inputText) {
-	// Specifications haven't been finalized:  do nothing for now
-	// Not sure if this will actually be needed
-	return $inputText;
-}
 
 /**
  * This function:
