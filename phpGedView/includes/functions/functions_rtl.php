@@ -6,7 +6,7 @@
  * routines and sorting functions.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
+ * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -70,6 +70,42 @@ function stripLRMRLM($inputText) {
 	return str_replace(array(PGV_UTF8_LRM, PGV_UTF8_RLM, "&lrm;", "&rlm;", "&LRM;", "&RLM;"), "", $inputText);
 }
 
+/**
+ * This function encapsulates all RTL texts in the input with <span dir='rtl'> and </span>
+ *
+ * @param 	string	Raw input
+ * @return	string	The string with all texts encapsulated as required
+ */
+function spanRTL($inputText) {
+	// Specifications haven't been finalized:  do nothing for now
+	return $inputText;
+}
+
+/**
+ * This function encapsulates all LTR texts in the input with <span dir='ltr'> and </span>
+ *
+ * @param 	string	Raw input
+ * @return	string	The string with all texts encapsulated as required
+ */
+function spanLTR($inputText) {
+	// Specifications haven't been finalized:  do nothing for now
+	// Not sure if this will actually be needed
+	return $inputText;
+}
+
+/**
+ * This function:
+ *		encapsulates all LTR texts in the input with <span dir='ltr'> and </span>
+ *		encapsulates all RTL texts in the input with <span dir='rtl'> and </span>
+ *
+ * @param 	string	Raw input
+ * @return	string	The string with all texts encapsulated as required
+ */
+function spanLTRRTL($inputText) {
+	// Specifications haven't been finalized:  do nothing for now
+	// Not sure if this will actually be needed
+	return $inputText;
+}
 
 /**
  * Determine alphabet of input character
