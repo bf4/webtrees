@@ -1332,7 +1332,7 @@ $pgv_lang["ahnentafel_buried_m"]	= "haudattiin";
 $pgv_lang["ahnentafel_buried_f"]	= "haudattiin";
 $pgv_lang["ahnentafel_place"]	= " paikassa ";
 $pgv_lang["ahnentafel_no_details"]	= "mutta yksityiskohdat puuttuvat";
-$pgv_lang["ahnentafel_on"]			= "&nbsp;";
+$pgv_lang["ahnentafel_on"]			= " ";
 
 //-- Changes report
 $pgv_lang["changes_report"]		= "Muutosraportti";

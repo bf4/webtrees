@@ -349,15 +349,15 @@ function displayDetailsById($pid, $type = "INDI") {
 		$pgv_USER_ACCESS_LEVEL	= PGV_USER_ACCESS_LEVEL;
 		$pgv_USER_GEDCOM_ID		= PGV_USER_GEDCOM_ID;
 	} else {
-		// We're in the middle of a Download
-		$pgv_GEDCOM				= $GEDCOM;
-		$pgv_GED_ID				= get_id_from_gedcom($pgv_GEDCOM);
-		$pgv_USER_ID			= $_SESSION["pgv_user"];
-		$pgv_USER_NAME			= 'Not Relevant';
-		$pgv_USER_GEDCOM_ADMIN	= userGedcomAdmin   ($pgv_USER_ID, $pgv_GED_ID);
-		$pgv_USER_CAN_ACCESS	= userCanAccess     ($pgv_USER_ID, $pgv_GED_ID);
-		$pgv_USER_ACCESS_LEVEL	= getUserAccessLevel($pgv_USER_ID, $pgv_GED_ID);
-		$pgv_USER_GEDCOM_ID		= get_user_gedcom_setting($pgv_USER_ID, $pgv_GED_ID, 'gedcomid');
+		// We're in the middle of a Download -- get overriding information from cache
+		$pgv_GEDCOM				= $_SESSION["pgv_GEDCOM"];
+		$pgv_GED_ID				= $_SESSION["pgv_GED_ID"];
+		$pgv_USER_ID			= $_SESSION["pgv_USER_ID"];
+		$pgv_USER_NAME			= $_SESSION["pgv_USER_NAME"];
+		$pgv_USER_GEDCOM_ADMIN	= $_SESSION["pgv_USER_GEDCOM_ADMIN"];
+		$pgv_USER_CAN_ACCESS	= $_SESSION["pgv_USER_CAN_ACCESS"];
+		$pgv_USER_ACCESS_LEVEL	= $_SESSION["pgv_USER_ACCESS_LEVEL"];
+		$pgv_USER_GEDCOM_ID		= $_SESSION["pgv_USER_GEDCOM_ID"];
 	}
 
 	static $privacy_cache = array();
@@ -654,12 +654,9 @@ function showLivingNameById($pid) {
 		$pgv_USER_NAME			= PGV_USER_NAME;
 		$pgv_USER_ACCESS_LEVEL	= PGV_USER_ACCESS_LEVEL;
 	} else {
-		// We're in the middle of a Download
-		$pgv_GEDCOM				= $GEDCOM;
-		$pgv_GED_ID				= get_id_from_gedcom($pgv_GEDCOM);
-		$pgv_USER_ID			= $_SESSION["pgv_user"];
-		$pgv_USER_NAME			= 'Not Relevant';
-		$pgv_USER_ACCESS_LEVEL	= getUserAccessLevel($pgv_USER_ID, $pgv_GED_ID);
+		// We're in the middle of a Download -- get overriding information from cache
+		$pgv_USER_NAME			= $_SESSION["pgv_USER_NAME"];
+		$pgv_USER_ACCESS_LEVEL	= $_SESSION["pgv_USER_ACCESS_LEVEL"];
 	}
 
 	if (displayDetailsById($pid)) return true;
@@ -706,11 +703,8 @@ function showFact($fact, $pid, $type='INDI') {
 		// Normal operation
 		$pgv_USER_ACCESS_LEVEL	= PGV_USER_ACCESS_LEVEL;
 	} else {
-		// We're in the middle of a Download
-		$pgv_GEDCOM				= $GEDCOM;
-		$pgv_GED_ID				= get_id_from_gedcom($pgv_GEDCOM);
-		$pgv_USER_ID			= $_SESSION["pgv_user"];
-		$pgv_USER_ACCESS_LEVEL	= getUserAccessLevel($pgv_USER_ID, $pgv_GED_ID);
+		// We're in the middle of a Download -- get overriding information from cache
+		$pgv_USER_ACCESS_LEVEL	= $_SESSION["pgv_USER_ACCESS_LEVEL"];
 	}
 
 	//-- first check the global facts array
@@ -760,11 +754,8 @@ function showFactDetails($fact, $pid) {
 		// Normal operation
 		$pgv_USER_ACCESS_LEVEL	= PGV_USER_ACCESS_LEVEL;
 	} else {
-		// We're in the middle of a Download
-		$pgv_GEDCOM				= $GEDCOM;
-		$pgv_GED_ID				= get_id_from_gedcom($pgv_GEDCOM);
-		$pgv_USER_ID			= $_SESSION["pgv_user"];
-		$pgv_USER_ACCESS_LEVEL	= getUserAccessLevel($pgv_USER_ID, $pgv_GED_ID);
+		// We're in the middle of a Download -- get overriding information from cache
+		$pgv_USER_ACCESS_LEVEL	= $_SESSION["pgv_USER_ACCESS_LEVEL"];
 	}
 
 	//-- first check the global facts array
@@ -999,12 +990,10 @@ function FactViewRestricted($pid, $factrec) {
 		$pgv_USER_GEDCOM_ADMIN	= PGV_USER_GEDCOM_ADMIN;
 		$pgv_USER_GEDCOM_ID		= PGV_USER_GEDCOM_ID;
 	} else {
-		// We're in the middle of a Download
-		$pgv_GEDCOM				= $GEDCOM;
-		$pgv_GED_ID				= get_id_from_gedcom($pgv_GEDCOM);
-		$pgv_USER_ID			= $_SESSION["pgv_user"];
-		$pgv_USER_GEDCOM_ADMIN	= userGedcomAdmin   ($pgv_USER_ID, $pgv_GED_ID);
-		$pgv_USER_GEDCOM_ID		= get_user_gedcom_setting($pgv_USER_ID, $pgv_GED_ID, 'gedcomid');
+		// We're in the middle of a Download -- get overriding information from cache
+		$pgv_GED_ID				= $_SESSION["pgv_GED_ID"];
+		$pgv_USER_GEDCOM_ADMIN	= $_SESSION["pgv_USER_GEDCOM_ADMIN"];
+		$pgv_USER_GEDCOM_ID		= $_SESSION["pgv_USER_GEDCOM_ID"];
 	}
 
 	if (PGV_USER_GEDCOM_ADMIN) {

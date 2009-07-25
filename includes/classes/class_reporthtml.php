@@ -582,25 +582,6 @@ class PGVReportBaseHTML extends PGVReportBase {
 	}
 
 	/**
-	* Wrap text when the text contains no spaces - PGVReportBaseHTML
-	* mb_functions  has to be used or the UNICODE text will be unreadable where the text will be splitted
-	* @param string $str
-	* @param int $width The width in points where the text has to fit into
-	* @return string
-	*/
-	function textWrapMB($str, $width = 100) {
-		$width = floor($width / ($this->getCurrentStyleHeight() / $this->wrapWidthRatio));
-		$result = array();
-		$current = $str;
-		while (UTF8_strlen($current, $this->charset) > $width) {
-			$result[] = UTF8_substr($current, 0, $width, $this->charset);
-			$current = UTF8_substr($current, $width, 2048, $this->charset);
-		}
-		$result[] = $current;
-		return implode("\n", $result);
-	}
-
-	/**
 	* Write text - PGVReportBaseHTML
 	* @param string $text Text to print
 	* @param string $color HTML RGB color code (Ex: #001122)

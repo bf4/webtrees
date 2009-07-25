@@ -1299,7 +1299,7 @@ $pgv_lang["ahnentafel_buried_m"]	= "blev begravet";
 $pgv_lang["ahnentafel_buried_f"]	= "blev begravet";
 $pgv_lang["ahnentafel_place"]		= " i ";
 $pgv_lang["ahnentafel_no_details"]	= " men detaljerne er ukendte";
-$pgv_lang["ahnentafel_on"]			= " den ";
+$pgv_lang["ahnentafel_on"]			= " ";
 
 //-- Descendency report
 $pgv_lang["descendancy_header"]		= "Efterkommerudskrift for";

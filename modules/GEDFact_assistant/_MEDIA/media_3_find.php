@@ -28,7 +28,7 @@
  * @version $Id$
  */
 
-require './config.php';
+// require './config.php';
 require './includes/functions/functions_print_lists.php';
 
 $type           =safe_GET('type', PGV_REGEX_ALPHA, 'indi');
