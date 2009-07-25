@@ -243,8 +243,7 @@ class stats {
 
 	function gedcomTitle() {return PrintReady(get_gedcom_setting($this->_ged_id, 'title'));}
 
-	static function _gedcomHead()
-	{
+	static function _gedcomHead() {
 		$title = "";
 		$version = '';
 		$source = '';
@@ -283,14 +282,12 @@ class stats {
 		return $cache;
 	}
 
-	static function gedcomCreatedSoftware()
-	{
+	static function gedcomCreatedSoftware() {
 		$head=self::_gedcomHead();
 		return $head[0];
 	}
 
-	static function gedcomCreatedVersion()
-	{
+	static function gedcomCreatedVersion() {
 		$head=self::_gedcomHead();
 		// fix broken version string in Family Tree Maker
 		if (strstr($head[1], 'Family Tree Maker ')) {
@@ -331,15 +328,12 @@ class stats {
 		}
 	}
 
-	function gedcomHighlight()
-	{
+	function gedcomHighlight() {
 		$highlight=false;
-		if (file_exists("images/gedcoms/{$this->_gedcom}.jpg"))
-		{
+		if (file_exists("images/gedcoms/{$this->_gedcom}.jpg")) {
 			$highlight="images/gedcoms/{$this->_gedcom}.jpg";
 		}
-		elseif (file_exists("images/gedcoms/{$this->_gedcom}.png"))
-		{
+		elseif (file_exists("images/gedcoms/{$this->_gedcom}.png")) {
 			$highlight="images/gedcoms/{$this->_gedcom}.png";
 		}
 		if (!$highlight) {return '';}
@@ -347,8 +341,7 @@ class stats {
 		return "<a href=\"".encode_url("{$this->_server_url}index.php?ctype=gedcom&ged={$this->_gedcom_url}")."\" style=\"border-style:none;\"><img src=\"{$highlight}\" {$imgsize[3]} style=\"border:none; padding:2px 6px 2px 2px;\" class=\"gedcom_highlight\" alt=\"\" /></a>";
 	}
 
-	function gedcomHighlightLeft()
-	{
+	function gedcomHighlightLeft() {
 		$highlight=false;
 		if (file_exists("images/gedcoms/{$this->_gedcom}.jpg")) {
 			$highlight="images/gedcoms/{$this->_gedcom}.jpg";
@@ -364,8 +357,7 @@ class stats {
 		return "<a href=\"".encode_url("{$this->_server_url}index.php?ctype=gedcom&ged={$this->_gedcom_url}")."\" style=\"border-style:none;\"><img src=\"{$highlight}\" {$imgsize[3]} style=\"border:none; padding:2px 6px 2px 2px;\" align=\"left\" class=\"gedcom_highlight\" alt=\"\" /></a>";
 	}
 
-	function gedcomHighlightRight()
-	{
+	function gedcomHighlightRight() {
 		$highlight=false;
 		if (file_exists("images/gedcoms/{$this->_gedcom}.jpg")) {
 			$highlight="images/gedcoms/{$this->_gedcom}.jpg";
@@ -385,11 +377,9 @@ class stats {
 // Totals                                                                    //
 ///////////////////////////////////////////////////////////////////////////////
 
-	function _getPercentage($total, $type)
-	{
+	function _getPercentage($total, $type) {
 		$per=null;
-		switch($type)
-		{
+		switch($type) {
 			default:
 			case 'all':
 				$per=round(100 * $total / ($this->totalIndividuals() + $this->totalFamilies() + $this->totalSources() + $this->totalOtherRecords()), 2);
@@ -422,8 +412,7 @@ class stats {
 			->fetchOne();
 	}
 
-	function totalIndisWithSources()
-	{
+	function totalIndisWithSources() {
 		global $TBLPREFIX, $DBTYPE;
 		if ($DBTYPE=='sqlite') {
 			// sqlite2 can't do subqueries or count distinct
@@ -1996,6 +1985,58 @@ class stats {
 		return str_replace('<a href="', '<a href="'.$this->_server_url, $result);
 	}
 
+	function _parentsQuery($type='full', $age_dir='ASC', $sex='F') {
+		global $TBLPREFIX, $pgv_lang;
+		if ($sex == 'F') {$sex_field = 'WIFE';}else{$sex_field = 'HUSB';}
+		if ($age_dir != 'ASC') {$age_dir = 'DESC';}
+		$rows=self::_runSQL(''
+			.' SELECT DISTINCT'
+				.' parentfamily.l_to AS id,'
+				.' childbirth.d_julianday2-birth.d_julianday1 AS age'
+			.' FROM'
+				." {$TBLPREFIX}link AS parentfamily"
+			.' JOIN'
+				." {$TBLPREFIX}link AS childfamily ON childfamily.l_file = {$this->_ged_id}"
+			.' JOIN'
+				." {$TBLPREFIX}dates AS birth ON birth.d_file = {$this->_ged_id}"
+			.' JOIN'
+				." {$TBLPREFIX}dates AS childbirth ON childbirth.d_file = {$this->_ged_id}"
+			.' WHERE'
+				.' birth.d_gid = parentfamily.l_to AND'
+				.' childfamily.l_to = childbirth.d_gid AND'
+				." childfamily.l_type = 'CHIL' AND"
+				." parentfamily.l_type = '{$sex_field}' AND"
+				.' childfamily.l_from = parentfamily.l_from AND'
+				." parentfamily.l_file = {$this->_ged_id} AND"
+				." birth.d_fact = 'BIRT' AND"
+				." childbirth.d_fact = 'BIRT' AND"
+				.' birth.d_julianday1 != 0 AND'
+				.' childbirth.d_julianday2 > birth.d_julianday1'
+			.' ORDER BY'
+				." age {$age_dir}"
+		, 1);
+		if (!isset($rows[0])) {return '';}
+		$row=$rows[0];
+		if (isset($row['id'])) $person=Person::getInstance($row['id']);
+		switch($type) {
+			default:
+			case 'full':
+				if ($person->canDisplayDetails()) {
+					$result=$person->format_list('span', false, $person->getFullName());
+				} else {
+					$result=$pgv_lang['privacy_error'];
+				}
+				break;
+			case 'name':
+				$result="<a href=\"".$person->getLinkUrl()."\">".$person->getFullName().'</a>';
+				break;
+			case 'age':
+				$result=floor($row['age']/365.25);
+				break;
+		}
+		return str_replace('<a href="', '<a href="'.$this->_server_url, $result);
+	}
+
 	function statsMarr($simple=true, $first=false, $year1=-1, $year2=-1, $params=null) {
 		global $TBLPREFIX, $pgv_lang, $lang_short_cut, $LANGUAGE;
 
@@ -2244,6 +2285,30 @@ class stats {
 	function oldestMarriageMale() {return $this->_marriageQuery('full', 'DESC', 'M');}
 	function oldestMarriageMaleName() {return $this->_marriageQuery('name', 'DESC', 'M');}
 	function oldestMarriageMaleAge() {return $this->_marriageQuery('age', 'DESC', 'M');}
+
+	//
+	// Mother only
+	//
+
+	function youngestMother() {return $this->_parentsQuery('full', 'ASC', 'F');}
+	function youngestMotherName() {return $this->_parentsQuery('name', 'ASC', 'F');}
+	function youngestMotherAge() {return $this->_parentsQuery('age', 'ASC', 'F');}
+
+	function oldestMother() {return $this->_parentsQuery('full', 'DESC', 'F');}
+	function oldestMotherName() {return $this->_parentsQuery('name', 'DESC', 'F');}
+	function oldestMotherAge() {return $this->_parentsQuery('age', 'DESC', 'F');}
+
+	//
+	// Father only
+	//
+
+	function youngestFather() {return $this->_parentsQuery('full', 'ASC', 'M');}
+	function youngestFatherName() {return $this->_parentsQuery('name', 'ASC', 'M');}
+	function youngestFatherAge() {return $this->_parentsQuery('age', 'ASC', 'M');}
+
+	function oldestFather() {return $this->_parentsQuery('full', 'DESC', 'M');}
+	function oldestFatherName() {return $this->_parentsQuery('name', 'DESC', 'M');}
+	function oldestFatherAge() {return $this->_parentsQuery('age', 'DESC', 'M');}
 
 ///////////////////////////////////////////////////////////////////////////////
 // Family Size                                                               //
