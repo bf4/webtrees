@@ -71,6 +71,7 @@ echo '<script src="modules/GEDFact_assistant/_CENS/census_5_input.js" type="text
 	<table width="100%" border="0" cellspacing="2" id="tblSample">
 		<thead>
 			<tr>
+			<?php /*
 			<th class="descriptionbox" style="border: 0px solid transparent;" align="left"><font size=1>Item</font></th>
 			<th class="descriptionbox" style="border: 0px solid transparent;" align="left"><font size=1>Indi ID:</font></th>
 			<th width="17%" class="descriptionbox" style="border: 0px solid transparent;" align="left"><font size=1>Name:</font></th>
@@ -84,10 +85,11 @@ echo '<script src="modules/GEDFact_assistant/_CENS/census_5_input.js" type="text
 			<th width="28%" class="descriptionbox" style="border: 0px solid transparent;" align="left"><font size=1>Birthplace:</font></th>
 			<th class="descriptionbox" style="border: 0px solid transparent;" align="left"><font size=1>Del</font></th>
 			<th class="descriptionbox" style="border: 0px solid transparent;" align="left"><font size=1>Ins</font></th>
+			*/ ?>
 		</tr>
-	</thead>
-	<tbody></tbody>
-</table>
+		</thead>
+		<tbody></tbody>
+	</table>
 </center>
 
 <!-- </form> -->

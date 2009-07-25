@@ -10,6 +10,7 @@
 
 
 Version 4.2.x CA
+ - A few minor updates to /GEDFact_assistant/_CENS/ Census assistant (windmillway)
  - Added "ALL" tab module (yalnifj)
  - This Branch and the Trunk are now both at svn level 5955 (windmillway) 
  - Merged: Correction to pick up missing svn changes - Merge changes r5944 - r5952 from the trunk. (windmillway)

@@ -66,42 +66,6 @@ var win02 = window.open(
 "modules/GEDFact_assistant/tableaddrow_nw.html", "win02", "resizable=1, menubar=0, scrollbars=1, top=20, HEIGHT=840, WIDTH=450 ");
 if (window.focus) {win02.focus();}
 }
-
-function preview(){
-	var NoteCtry = document.getElementById('censCtry');
-	var NoteYear = document.getElementById('censYear');
-	var NoteTitl = document.getElementById('Titl');
-	//if (NoteCtry.value == "USA") {
-	//	str = NoteYear.value + " " + NoteCtry.value + " Federal " + NoteTitl.value;
-	//	str += "\n";
-	//} else {
-		str = NoteYear.value + " " + NoteCtry.value + " " + NoteTitl.value;
-		str += "\n";
-	//}
-	
-	var tbl = document.getElementById('tblSample');
-	for(var i=1; i<tbl.rows.length; i++){ // start at i=1 because we need to avoid header
-		var tr = tbl.rows[i];
-		var strRow = '';
-		for(var j=2; j<tr.cells.length; j++){
-			if (j==5 || j==7 || j>10) {
-				//	dont show col	0	index
-				//	dont show col	1	pid
-				//	miss out col	5	yob
-				//	miss out col	7	YMD
-				//	miss out col	11	delete button
-				//	miss out col	12	radio buttom
-				continue;
-			}else{
-				strRow += (strRow==''?'':'|') + tr.cells[j].childNodes[0].value;
-			}
-		}
-		str += (str==''?'':'\n') + strRow;
-	}
-	var mem = document.getElementById('NOTE');
-	mem.value = str;
-}
-
 </script>
 
 			<!--   ---- The proposed Census Text -------- -->
