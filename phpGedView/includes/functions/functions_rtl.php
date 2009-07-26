@@ -85,6 +85,7 @@ function spanRTL($inputText, $direction="RTL") {
 		break;
 	DEFAULT:
 		break;
+	}
 	// Specifications haven't been finalized:  do nothing for now
 	return $inputText;
 }
