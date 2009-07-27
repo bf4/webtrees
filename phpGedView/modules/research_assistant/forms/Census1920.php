@@ -31,8 +31,8 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
-require_once "ra_form.php";
-require_once "includes/functions/functions_edit.php";
+require_once 'modules/research_assistant/forms/ra_form.php';
+require_once 'includes/functions/functions_edit.php';
 
 class Census1920 extends ra_form {
 

@@ -3,7 +3,7 @@
  * phpGedView Research Assistant Tool - ra_GenerateTasks
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  John Finlay and Others
+ * Copyright (C) 2002 to 2009  John Finlay and Others
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -30,7 +30,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
-require_once'ra_form.php';
+require_once 'modules/research_assistant/forms/ra_form.php';
 require_once 'modules/research_assistant/forms/ra_GeneratedTask.php';
 
 class ra_GenerateTasks extends ra_form 
