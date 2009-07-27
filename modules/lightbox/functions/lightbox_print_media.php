@@ -303,7 +303,7 @@ function lightbox_print_media($pid, $level=1, $related=false, $kind=1, $noedit=f
 					//-- check if we need to get the object from a remote location
 					$ct = preg_match("/(.*):(.*)/", $media_id, $match);
 					if ($ct>0) {
-						require_once 'includes/class_serviceclient.php';
+						require_once 'includes/classes/class_serviceclient.php';
 						$client = ServiceClient::getInstance($match[1]);
 						if (!is_null($client)) {
 							$newrec = $client->getRemoteRecord($match[2]);
