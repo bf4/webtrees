@@ -205,24 +205,27 @@ function indis_array($surn, $soundex_std, $soundex_dm) {
 	$sql=
 		"SELECT DISTINCT n_id".
 		" FROM {$TBLPREFIX}name".
-		" WHERE n_file=".PGV_GED_ID.
-		" AND n_type!='_MARNM'".
-		" AND (n_surn=".PGV_DB::quote("{$surn}")." OR n_surname=".PGV_DB::quote("{$surn}");
+		" WHERE n_file=?".
+		" AND n_type!=?".
+		" AND (n_surn=? OR n_surname=?";
+	$args=array(PGV_GED_ID, '_MARNM', $surn, $surn);
 	if ($soundex_std) {
-		$sql .= " OR n_soundex_surn_std=\"'".soundex_std($surn)."'\"";
+		$sql .= " OR n_soundex_surn_std=?";
+		$args[]=soundex_std($surn);
 	}
 	if ($soundex_dm) {
-		$sql .= " OR n_soundex_surn_dm=\"'".soundex_dm($surn)."'\"";
+		$sql .= " OR n_soundex_surn_dm=?";
+		$args[]=soundex_dm($surn);
 	}
 	$sql .= ") ORDER BY n_sort";
 	$rows=
 		PGV_DB::prepare($sql)
-		->execute()
-		->fetchAll(PDO::FETCH_ASSOC);
+		->execute($args)
+		->fetchAll();
 //	var_dump($sql); var_dump($rows);
 	$data=array();
 	foreach ($rows as $row) {
-		$data[$row["n_id"]]=Person::getInstance($row["n_id"]);
+		$data[$row->n_id]=Person::getInstance($row->n_id);
 	}
 	return $data;
 }
