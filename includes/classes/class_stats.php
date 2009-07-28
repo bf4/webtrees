@@ -1534,8 +1534,8 @@ class stats {
 		, $total);
 		if (!isset($rows[0])) {return '';}
 		if(count($rows) < $total){$total = count($rows);}
-		$top10=array();
-		$func="age2_localisation_{$lang_short_cut[$LANGUAGE]}";
+		$top10 = array();
+		$func = "age2_localisation_{$lang_short_cut[$LANGUAGE]}";
 		for($c = 0; $c < $total; $c++) {
 			$person=Person::getInstance($rows[$c]['deathdate']);
 			if (function_exists($func)) {
@@ -1599,8 +1599,8 @@ class stats {
 				.' age ASC'
 		, $total);
 		if (!isset($rows)) {return 0;}
-		$top10=array();
-		$func="age2_localisation_{$lang_short_cut[$LANGUAGE]}";
+		$top10 = array();
+		$func = "age2_localisation_{$lang_short_cut[$LANGUAGE]}";
 		foreach ($rows as $c=>$row) {
 			$person=Person::getInstance($rows[$c]['id']);
 			$years = floor((client_jd()-$rows[$c]['age'])/365.25);
@@ -2069,7 +2069,7 @@ class stats {
 		arsort($rows);
 		$top10 = array();
 		$i = 0;
-		$func="age2_localisation_{$lang_short_cut[$LANGUAGE]}";
+		$func = "age2_localisation_{$lang_short_cut[$LANGUAGE]}";
 		foreach ($rows as $fam=>$age) {
 			$family = Family::getInstance($fam);
 			if ($type == 'name') {
@@ -2138,7 +2138,7 @@ class stats {
 		,$total);
 		if (!isset($rows[0])) {return '';}
 		$top10 = array();
-		$func="age2_localisation_{$lang_short_cut[$LANGUAGE]}";
+		$func = "age2_localisation_{$lang_short_cut[$LANGUAGE]}";
 		foreach ($rows as $fam) {
 			$family=Family::getInstance($fam['family']);
 			if ($fam['age']<0 && $age_dir=='DESC') break;
@@ -2585,6 +2585,113 @@ class stats {
 		return $top10;
 	}
 
+	function _ageBetweenSiblingsQuery($type='list', $params=null) {
+		global $TBLPREFIX, $TEXT_DIRECTION, $pgv_lang, $lang_short_cut, $LANGUAGE;
+		if ($params !== null && isset($params[0])) {$total = $params[0];}else{$total = 10;}
+		$rows=self::_runSQL(''
+			.' SELECT DISTINCT'
+				.' link1.l_from AS family,'
+				.' link1.l_to AS ch1,'
+				.' link2.l_to AS ch2,'
+				.' child1.d_julianday2-child2.d_julianday2 AS age'
+			.' FROM'
+				." {$TBLPREFIX}link AS link1"
+			.' LEFT JOIN'
+				." {$TBLPREFIX}dates AS child1 ON child1.d_file = {$this->_ged_id}"
+			.' LEFT JOIN'
+				." {$TBLPREFIX}dates AS child2 ON child2.d_file = {$this->_ged_id}"
+			.' LEFT JOIN'
+				." {$TBLPREFIX}link AS link2 ON link2.l_file = {$this->_ged_id}"
+			.' WHERE'
+				." link1.l_file = {$this->_ged_id} AND"
+				.' link1.l_from = link2.l_from AND'
+				." link1.l_type = 'CHIL' AND"
+				.' child1.d_gid = link1.l_to AND'
+				." child1.d_fact = 'BIRT' AND"
+				." link2.l_type = 'CHIL' AND"
+				.' child2.d_gid = link2.l_to AND'
+				." child2.d_fact = 'BIRT'"
+			.' ORDER BY'
+				." age DESC"
+		,$total);
+		if (!isset($rows[0])) {return '';}
+		$top10 = array();
+		$func = "age2_localisation_{$lang_short_cut[$LANGUAGE]}";
+		foreach ($rows as $fam) {
+			$family = Family::getInstance($fam['family']);
+			$child1 = Person::getInstance($fam['ch1']);
+			$child2 = Person::getInstance($fam['ch2']);
+			if ($type == 'name') {
+				if ($child2->canDisplayDetails()) {
+					$return = "<a href=\"".encode_url($child2->getLinkUrl())."\">".PrintReady($child2->getFullName())."</a> ";
+				} else {
+					$return = $pgv_lang["private"]." ";
+				}
+				$return .= $pgv_lang["and"]." ";
+				if ($child1->canDisplayDetails()) {
+					$return .= "<a href=\"".encode_url($child1->getLinkUrl())."\">".PrintReady($child1->getFullName())."</a>";
+				} else {
+					$return .= $pgv_lang["private"];
+				}
+				$return .= " <a href=\"family.php?famid=".$fam['family']."\">[".$pgv_lang["view_family"]."]</a>\n";
+				return $return;
+			}
+			if (function_exists($func)) {
+				$age = $func(floor($fam['age']/365.25));
+			} else {
+				$age = floor($fam['age']/365.25);
+				if ($age==1) $age .= " ".$pgv_lang["year"];
+				else $age .= " ".$pgv_lang["years"];
+			}
+			if ($type == 'age') {
+				return $age;
+			}
+			if ($type == 'list') {
+				$return = "\t<li>";
+				if ($child2->canDisplayDetails()) {
+					$return .= "<a href=\"".encode_url($child2->getLinkUrl())."\">".PrintReady($child2->getFullName())."</a> ";
+				} else {
+					$return .= $pgv_lang["private"];
+				}
+				$return .= $pgv_lang["and"]." ";
+				if ($child1->canDisplayDetails()) {
+					$return .= "<a href=\"".encode_url($child1->getLinkUrl())."\">".PrintReady($child1->getFullName())."</a>";
+				} else {
+					$return .= $pgv_lang["private"];
+				}
+				$return .= " [".$age."]";
+				$return .= " <a href=\"family.php?famid=".$fam['family']."\">[".$pgv_lang["view_family"]."]</a>";
+				$return .= "\t</li>\n";
+				$top10[] = $return;
+			} else {
+				if ($child2->canDisplayDetails()) {
+					$return = $child2->format_list('span', false, $child2->getListName());
+				} else {
+					$return = $pgv_lang["private"];
+				}
+				$return .= "<br />".$pgv_lang["and"]."<br />";
+				if ($child1->canDisplayDetails()) {
+					$return .= $child1->format_list('span', false, $child1->getListName());
+				} else {
+					$return .= $pgv_lang["private"];
+				}
+				//$return .= "<br />[".$age."]";
+				$return .= "<br /><a href=\"family.php?famid=".$fam['family']."\">[".$pgv_lang["view_family"]."]</a>\n";
+				return $return;
+			}
+		}
+		if ($type == 'list') {
+			$top10=join("\n", $top10);
+		}
+		if ($TEXT_DIRECTION == 'rtl') {
+			$top10 = str_replace(array('[', ']', '(', ')', '+'), array('&rlm;[', '&rlm;]', '&rlm;(', '&rlm;)', '&rlm;+'), $top10);
+		}
+		if ($type == 'list') {
+			return "<ul>\n{$top10}</ul>\n";
+		}
+		return $top10;
+	}
+
 	function largestFamily() {return $this->_familyQuery('full');}
 	function largestFamilySize() {return $this->_familyQuery('size');}
 	function largestFamilyName() {return $this->_familyQuery('name');}
@@ -2727,6 +2834,11 @@ class stats {
 			return $rows;
 		}
 	}
+
+	function topAgeBetweenSiblingsName($params=null) {return $this->_ageBetweenSiblingsQuery($type='name', $params=null);}
+	function topAgeBetweenSiblings($params=null) {return $this->_ageBetweenSiblingsQuery($type='age', $params=null);}
+	function topAgeBetweenSiblingsFullName($params=null) {return $this->_ageBetweenSiblingsQuery($type='nolist', $params=null);}
+	function topAgeBetweenSiblingsList($params=null) {return $this->_ageBetweenSiblingsQuery($type='list', $params=null);}
 
 	function noChildrenFamilies() {
 		global $TBLPREFIX;
