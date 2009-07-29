@@ -65,6 +65,15 @@ if($SESSION_HIDE_GOOGLEMAP == "empty") {
 loadLangFile("googlemap:lang");
 
 class googlemap_Tab extends Tab {
+
+	public function getPreLoadContent() {
+		$out = '';
+		ob_start();
+		setup_map();
+		$out .= ob_get_contents();
+		ob_end_clean();
+		return $out;
+	}
 	
 	public function getContent() {
 		global $SEARCH_SPIDER, $SESSION_HIDE_GOOGLEMAP, $pgv_lang, $CONTACT_EMAIL, $PGV_IMAGE_DIR, $PGV_IMAGES;
@@ -77,6 +86,8 @@ class googlemap_Tab extends Tab {
 		$out = "<div id=\"googlemap\">";
 		ob_start();
 
+		$controller = $this->controller;
+		include("modules/googlemap/gg_map_content.php");
 		if ($GOOGLEMAP_ENABLED == "false") {
 			print "<table class=\"facts_table\">\n";
 			print "<tr><td colspan=\"2\" class=\"facts_value\">".$pgv_lang["gm_disabled"]."</td></tr>\n";
