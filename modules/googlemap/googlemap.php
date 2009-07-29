@@ -57,9 +57,9 @@ if($SESSION_HIDE_GOOGLEMAP == "true") $_SESSION['hide_googlemap'] = true;
 if($SESSION_HIDE_GOOGLEMAP == "false") $_SESSION['hide_googlemap'] = false;
 if($SESSION_HIDE_GOOGLEMAP == "empty") {
 	if((isset($_SESSION['hide_googlemap'])) && ($_SESSION['hide_googlemap'] == true))
-		$SESSION_HIDE_GOOGLEMAP = "true";
+	$SESSION_HIDE_GOOGLEMAP = "true";
 	else
-		$SESSION_HIDE_GOOGLEMAP = "false";
+	$SESSION_HIDE_GOOGLEMAP = "false";
 }
 
 loadLangFile("googlemap:lang");
@@ -70,63 +70,167 @@ class googlemap_Tab extends Tab {
 		$out = '';
 		ob_start();
 		setup_map();
-		$out .= ob_get_contents();
+		$out.=ob_get_contents();
 		ob_end_clean();
 		return $out;
 	}
-	
+
+	public function canLoadAjax() { return true; }
+
 	public function getContent() {
 		global $SEARCH_SPIDER, $SESSION_HIDE_GOOGLEMAP, $pgv_lang, $CONTACT_EMAIL, $PGV_IMAGE_DIR, $PGV_IMAGES;
 		global $LANGUAGE;
-		global $GOOGLEMAP_API_KEY, $GOOGLEMAP_MAP_TYPE, $GOOGLEMAP_MIN_ZOOM, $GOOGLEMAP_MAX_ZOOM, $GEDCOM;
+		global $GOOGLEMAP_ENABLED, $GOOGLEMAP_API_KEY, $GOOGLEMAP_MAP_TYPE, $GOOGLEMAP_MIN_ZOOM, $GOOGLEMAP_MAX_ZOOM, $GEDCOM;
 		global $GOOGLEMAP_XSIZE, $GOOGLEMAP_YSIZE, $pgv_lang, $factarray, $SHOW_LIVING_NAMES, $PRIV_PUBLIC;
-		global $GOOGLEMAP_ENABLED, $TEXT_DIRECTION, $GM_DEFAULT_TOP_VALUE, $GOOGLEMAP_COORD;
+		global $GOOGLEMAP_ENABLED, $TEXT_DIRECTION, $GM_DEFAULT_TOP_VALUE, $GOOGLEMAP_COORD, $GOOGLEMAP_PH_CONTROLS;
 		global $GM_MARKER_COLOR, $GM_MARKER_SIZE, $GM_PREFIX, $GM_POSTFIX, $GM_PRE_POST_MODE;
-		
-		$out = "<div id=\"googlemap\">";
+
+		$out = "";
 		ob_start();
 
-		$controller = $this->controller;
-		include("modules/googlemap/gg_map_content.php");
+		// Header Info ------------------------------------------------------------------------------------
+		if (file_exists("modules/googlemap/defaultconfig.php") ) {
+			//Content Info ------------------------------------------------------------
+			?>
+<div id="gg_map_content">
+<table border="0" width="100%">
+	<tr>
+		<td><?php 
+		print "<span class=\"subheaders\">".$pgv_lang["googlemap"]."</span>\n";
+
 		if ($GOOGLEMAP_ENABLED == "false") {
 			print "<table class=\"facts_table\">\n";
-			print "<tr><td colspan=\"2\" class=\"facts_value\">".$pgv_lang["gm_disabled"]."</td></tr>\n";
+			print "<tr><td id=\"no_tab8\" colspan=\"2\" class=\"facts_value\">".$pgv_lang["gm_disabled"]."</td></tr>\n";
 			if (PGV_USER_IS_ADMIN) {
 				print "<tr><td align=\"center\" colspan=\"2\">\n";
-				print "<a href=\"".encode_url("module.php?mod=googlemap&pgvaction=editconfig")."\">".$pgv_lang["gm_manage"]."</a>";
-				print "</td></tr>\n";
+				print "<a href=\"module.php?mod=googlemap&amp;pgvaction=editconfig\">".$pgv_lang["gm_manage"]."</a>";
+				print "</td>";
+				print "</tr>\n";
 			}
 			print "\n\t</table>\n<br />";
-				?>
-					<script language="JavaScript" type="text/javascript">
-					<!--
-						//tabstyles[5]='tab_cell_inactive_empty';
-						//document.getElementById('pagetab5').className='tab_cell_inactive_empty';
-						document.getElementById("googlemap_left").innerHTML = document.getElementById("googlemap_content").innerHTML;
-						document.getElementById("googlemap_content").innerHTML = "";
-						function ResizeMap () {}
-						function SetMarkersAndBounds () {}
-					//-->
-					</script>
-				<?php
-		} else {
-			$famids = array();
-			$families = $this->controller->indi->getSpouseFamilies();
-			foreach($families as $famid=>$family) {
-				$famids[] = $family->getXref();
+			?> <script language="JavaScript" type="text/javascript">
+			<!--
+				function ResizeMap () {}
+				function SetMarkersAndBounds () {}
+			//-->
+			</script> <?php
+		}else{
+			if(empty($SEARCH_SPIDER)) {
+				$tNew = preg_replace("/&HIDE_GOOGLEMAP=true/", "", $_SERVER["REQUEST_URI"]);
+				$tNew = preg_replace("/&HIDE_GOOGLEMAP=false/", "", $tNew);
+				$tNew = preg_replace("/&/", "&amp;", $tNew);
+				if($SESSION_HIDE_GOOGLEMAP == "true") {
+					print "&nbsp;&nbsp;&nbsp;<span class=\"font9\"><a href=\"".$tNew."&amp;HIDE_GOOGLEMAP=false\">";
+					print "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["plus"]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"".$pgv_lang["activate"]."\" title=\"".$pgv_lang["activate"]."\" />";
+					print " ".$pgv_lang["activate"]."</a></span>\n";
+				} else {
+					print "&nbsp;&nbsp;&nbsp;<span class=\"font9\"><a href=\"" .$tNew."&amp;HIDE_GOOGLEMAP=true\">";
+					print "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["minus"]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"".$pgv_lang["deactivate"]."\" title=\"".$pgv_lang["deactivate"]."\" />";
+					print " ".$pgv_lang["deactivate"]."</a></span>\n";
+				}
 			}
-				$this->controller->indi->add_family_facts(false);
-					create_indiv_buttons();
-					build_indiv_map($this->controller->getIndiFacts(), $famids);
+
+			if (!$this->controller->indi->canDisplayName()) {
+				print "\n\t<table class=\"facts_table\">";
+				print "<tr><td class=\"facts_value\">";
+				print_privacy_error($CONTACT_EMAIL);
+				print "</td></tr>";
+				print "\n\t</table>\n<br />";
+				print "<script type=\"text/javascript\">\n";
+				print "function ResizeMap ()\n{\n}\n</script>\n";
+			}else{
+				if(empty($SEARCH_SPIDER)) {
+					if($SESSION_HIDE_GOOGLEMAP == "false") {
+						print "<table width=\"100%\" border=\"0\" class=\"facts_table\">\n";
+						print "<tr><td valign=\"top\">\n";
+						print "<div id=\"googlemap_left\">\n";
+						print "<img src=\"images/hline.gif\" width=\"".$GOOGLEMAP_XSIZE."\" height=\"0\" alt=\"\" /><br/>";
+						print "<div id=\"map_pane\" style=\"border: 1px solid gray; color:black; width: 100%; height: ".$GOOGLEMAP_YSIZE."px\"></div>\n";
+						if (PGV_USER_IS_ADMIN) {
+							print "<table width=\"100%\"><tr>\n";
+							print "<td width=\"33%\" align=\"left\">\n";
+							print "<a href=\"module.php?mod=googlemap&amp;pgvaction=editconfig\">".$pgv_lang["gm_manage"]."</a>";
+							print "</td>\n";
+							print "<td width=\"33%\" align=\"center\">\n";
+							print "<a href=\"module.php?mod=googlemap&amp;pgvaction=places\">".$pgv_lang["edit_place_locations"]."</a>";
+							print "</td>\n";
+							print "<td width=\"33%\" align=\"right\">\n";
+							print "<a href=\"module.php?mod=googlemap&amp;pgvaction=placecheck\">".$pgv_lang["placecheck"]."</a>";
+							print "</td>\n";
+							print "</tr></table>\n";
+						}
+						print "</div>\n";
+						print "</td>\n";
+						print "<td valign=\"top\" width=\"30%\">\n";
+						print "<div id=\"googlemap_content\">\n";
+						//setup_map();
+
+						$famids = array();
+						$families = $this->controller->indi->getSpouseFamilies();
+						foreach($families as $famid=>$family) {
+							$famids[] = $family->getXref();
+						}
+						$this->controller->indi->add_family_facts(false);
+						create_indiv_buttons();
+						build_indiv_map($this->controller->getIndiFacts(), $famids);
+						print "</div>\n";
+						print "</td>";
+
+						print "</tr></table>\n";
+
+					}
+				}
+			}
+		}
+		// start
+		print "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"]."\" id=\"marker6\" width=\"1\" height=\"1\" alt=\"\" />";
+		// end
+		?>
+		</td>
+	</tr>
+</table>
+</div>
+</td></tr></table></div>
+		<?php
+		} else {
+			$out .= "<div id=\"googlemap_content\" class=\"tab_page\" style=\"display:block; \" >";
+			$out .= "MAPS NOT INSTALLED";
+			$out .= "</div>";
 		}
 		$out .= ob_get_contents();
 		ob_end_clean();
-		$out .= "</div>";
 		return $out;
 	}
-	
+
 	public function hasContent() {
+		global $GOOGLEMAP_ENABLED;
+		if ($GOOGLEMAP_ENABLED == "false" && !PGV_USER_IS_ADMIN) return false;
 		return true;
+	}
+
+	public function getJSCallback() {
+		global $GOOGLEMAP_PH_CONTROLS;
+		$out = "loadMap();\n";
+		if ($GOOGLEMAP_PH_CONTROLS != "false") {
+			$out .= '// hide controls
+					GEvent.addListener(map,"mouseout",function()
+					{
+						map.hideControls();
+					});
+					// show controls
+					GEvent.addListener(map,"mouseover",function()
+					{
+						map.showControls();
+					});
+					GEvent.trigger(map,"mouseout");
+					';
+
+		}
+		$out.='map.setMapType(GOOGLEMAP_MAP_TYPE);
+				SetMarkersAndBounds();
+				ResizeMap();
+				';
+		return $out;
 	}
 }
 
@@ -177,7 +281,7 @@ function print_address_structure_map($factrec, $level) {
 		if (!empty($cont)) $resultText .= str_replace(array(" ", "<br&nbsp;"), array("&nbsp;", "<br "), PrintReady($cont));
 		else {
 			if (strlen(trim($omatch[$i][1])) > 0) echo "<br />";
-				$cs = preg_match("/$nlevel ADR1 (.*)/", $arec, $cmatch);
+			$cs = preg_match("/$nlevel ADR1 (.*)/", $arec, $cmatch);
 			if ($cs>0) {
 				if ($cn==0) {
 					$resultText .= "<br />";
@@ -196,22 +300,22 @@ function print_address_structure_map($factrec, $level) {
 
 			if ($POSTAL_CODE) {
 				if (preg_match("/$nlevel CITY (.*)/", $arec, $cmatch))
-					$resultText.=" ".PrintReady($cmatch[1]);
+				$resultText.=" ".PrintReady($cmatch[1]);
 				if (preg_match("/$nlevel STAE (.*)/", $arec, $cmatch))
-					$resultText.=", ".PrintReady($cmatch[1]);
+				$resultText.=", ".PrintReady($cmatch[1]);
 				if (preg_match("/$nlevel POST (.*)/", $arec, $cmatch))
-					$resultText.="<br />".PrintReady($cmatch[1]);
+				$resultText.="<br />".PrintReady($cmatch[1]);
 			} else {
 				if (preg_match("/$nlevel POST (.*)/", $arec, $cmatch))
-					$resultText.="<br />".PrintReady($cmatch[1]);
+				$resultText.="<br />".PrintReady($cmatch[1]);
 				if (preg_match("/$nlevel CITY (.*)/", $arec, $cmatch))
-					$resultText.=" ".PrintReady($cmatch[1]);
+				$resultText.=" ".PrintReady($cmatch[1]);
 				if (preg_match("/$nlevel STAE (.*)/", $arec, $cmatch))
-					$resultText.=", ".PrintReady($cmatch[1]);
+				$resultText.=", ".PrintReady($cmatch[1]);
 			}
 		}
 		if (preg_match("/$nlevel CTRY (.*)/", $arec, $cmatch))
-			$resultText.="<br />".PrintReady($cmatch[1]);
+		$resultText.="<br />".PrintReady($cmatch[1]);
 		$resultText.= "<br />";
 		// Here we can examine the resultant text and remove empty tags
 		echo str_replace(chr(10), ' ' , $resultText);
@@ -292,53 +396,53 @@ function create_possible_place_names ($placename, $level) {
 	$retlist = array();
 
 	switch (@$GM_PRE_POST_MODE[$level]) {
-	case 0:     // 0: no pre/postfix
-		$retlist[] = $placename;
-		break;
-	case 1:     // 1 = Normal name, Prefix, Postfix, Both
-		$retlist[] = $placename;
-		$retlist = rem_prefix_from_placename($GM_PREFIX[$level], $placename, $retlist);
-		$retlist = rem_postfix_from_placename($GM_POSTFIX[$level], $placename, $retlist);
-		$retlist = rem_prefix_postfix_from_placename($GM_PREFIX[$level], $GM_POSTFIX[$level], $placename, $retlist);
-		break;
-	case 2:     // 2 = Normal name, Postfix, Prefxi, Both
-		$retlist[] = $placename;
-		$retlist = rem_postfix_from_placename($GM_POSTFIX[$level], $placename, $retlist);
-		$retlist = rem_prefix_from_placename($GM_PREFIX[$level], $placename, $retlist);
-		$retlist = rem_prefix_postfix_from_placename($GM_PREFIX[$level], $GM_POSTFIX[$level], $placename, $retlist);
-		break;
-	case 3:     // 3 = Prefix, Postfix, Both, Normal name
-		$retlist = rem_prefix_from_placename($GM_PREFIX[$level], $placename, $retlist);
-		$retlist = rem_postfix_from_placename($GM_POSTFIX[$level], $placename, $retlist);
-		$retlist = rem_prefix_postfix_from_placename($GM_PREFIX[$level], $GM_POSTFIX[$level], $placename, $retlist);
-		$retlist[] = $placename;
-		break;
-	case 4:     // 4 = Postfix, Prefix, Both, Normal name
-		$retlist = rem_postfix_from_placename($GM_POSTFIX[$level], $placename, $retlist);
-		$retlist = rem_prefix_from_placename($GM_PREFIX[$level], $placename, $retlist);
-		$retlist = rem_prefix_postfix_from_placename($GM_PREFIX[$level], $GM_POSTFIX[$level], $placename, $retlist);
-		$retlist[] = $placename;
-		break;
-	case 5:     // 5 = Prefix, Postfix, Normal name, Both
-		$retlist = rem_prefix_from_placename($GM_PREFIX[$level], $placename, $retlist);
-		$retlist = rem_postfix_from_placename($GM_POSTFIX[$level], $placename, $retlist);
-		$retlist[] = $placename;
-		$retlist = rem_prefix_postfix_from_placename($GM_PREFIX[$level], $GM_POSTFIX[$level], $placename, $retlist);
-		break;
-	case 6:     // 6 = Postfix, Prefix, Normal name, Both
-		$retlist = rem_postfix_from_placename($GM_POSTFIX[$level], $placename, $retlist);
-		$retlist = rem_prefix_from_placename($GM_PREFIX[$level], $placename, $retlist);
-		$retlist[] = $placename;
-		$retlist = rem_prefix_postfix_from_placename($GM_PREFIX[$level], $GM_POSTFIX[$level], $placename, $retlist);
-		break;
+		case 0:     // 0: no pre/postfix
+			$retlist[] = $placename;
+			break;
+		case 1:     // 1 = Normal name, Prefix, Postfix, Both
+			$retlist[] = $placename;
+			$retlist = rem_prefix_from_placename($GM_PREFIX[$level], $placename, $retlist);
+			$retlist = rem_postfix_from_placename($GM_POSTFIX[$level], $placename, $retlist);
+			$retlist = rem_prefix_postfix_from_placename($GM_PREFIX[$level], $GM_POSTFIX[$level], $placename, $retlist);
+			break;
+		case 2:     // 2 = Normal name, Postfix, Prefxi, Both
+			$retlist[] = $placename;
+			$retlist = rem_postfix_from_placename($GM_POSTFIX[$level], $placename, $retlist);
+			$retlist = rem_prefix_from_placename($GM_PREFIX[$level], $placename, $retlist);
+			$retlist = rem_prefix_postfix_from_placename($GM_PREFIX[$level], $GM_POSTFIX[$level], $placename, $retlist);
+			break;
+		case 3:     // 3 = Prefix, Postfix, Both, Normal name
+			$retlist = rem_prefix_from_placename($GM_PREFIX[$level], $placename, $retlist);
+			$retlist = rem_postfix_from_placename($GM_POSTFIX[$level], $placename, $retlist);
+			$retlist = rem_prefix_postfix_from_placename($GM_PREFIX[$level], $GM_POSTFIX[$level], $placename, $retlist);
+			$retlist[] = $placename;
+			break;
+		case 4:     // 4 = Postfix, Prefix, Both, Normal name
+			$retlist = rem_postfix_from_placename($GM_POSTFIX[$level], $placename, $retlist);
+			$retlist = rem_prefix_from_placename($GM_PREFIX[$level], $placename, $retlist);
+			$retlist = rem_prefix_postfix_from_placename($GM_PREFIX[$level], $GM_POSTFIX[$level], $placename, $retlist);
+			$retlist[] = $placename;
+			break;
+		case 5:     // 5 = Prefix, Postfix, Normal name, Both
+			$retlist = rem_prefix_from_placename($GM_PREFIX[$level], $placename, $retlist);
+			$retlist = rem_postfix_from_placename($GM_POSTFIX[$level], $placename, $retlist);
+			$retlist[] = $placename;
+			$retlist = rem_prefix_postfix_from_placename($GM_PREFIX[$level], $GM_POSTFIX[$level], $placename, $retlist);
+			break;
+		case 6:     // 6 = Postfix, Prefix, Normal name, Both
+			$retlist = rem_postfix_from_placename($GM_POSTFIX[$level], $placename, $retlist);
+			$retlist = rem_prefix_from_placename($GM_PREFIX[$level], $placename, $retlist);
+			$retlist[] = $placename;
+			$retlist = rem_prefix_postfix_from_placename($GM_PREFIX[$level], $GM_POSTFIX[$level], $placename, $retlist);
+			break;
 	}
 	return $retlist;
 }
 
 function abbreviate($text) {
 	if (UTF8_strlen($text)>13) {
-		if (trim(UTF8_substr($text, 10, 1))!="") 
-			$desc = UTF8_substr($text, 0, 11).".";
+		if (trim(UTF8_substr($text, 10, 1))!="")
+		$desc = UTF8_substr($text, 0, 11).".";
 		else $desc = trim(UTF8_substr($text, 0, 11));
 	}
 	else $desc = $text;
@@ -356,9 +460,9 @@ function get_lati_long_placelocation ($place) {
 		$placelist = create_possible_place_names($parent[$i], $i+1);
 		foreach ($placelist as $key => $placename) {
 			$pl_id=
-				PGV_DB::prepare("SELECT pl_id FROM {$TBLPREFIX}placelocation WHERE pl_level=? AND pl_parent_id=? AND pl_place ".PGV_DB::$LIKE." ? ORDER BY pl_place")
-				->execute(array($i, $place_id, $placename))
-				->fetchOne();
+			PGV_DB::prepare("SELECT pl_id FROM {$TBLPREFIX}placelocation WHERE pl_level=? AND pl_parent_id=? AND pl_place ".PGV_DB::$LIKE." ? ORDER BY pl_place")
+			->execute(array($i, $place_id, $placename))
+			->fetchOne();
 			if (!empty($pl_id)) break;
 		}
 		if (empty($pl_id)) break;
@@ -366,9 +470,9 @@ function get_lati_long_placelocation ($place) {
 	}
 
 	$row=
-		PGV_DB::prepare("SELECT pl_lati, pl_long, pl_zoom, pl_icon, pl_level FROM {$TBLPREFIX}placelocation WHERE pl_id=? ORDER BY pl_place")
-		->execute(array($place_id))
-		->fetchOneRow();
+	PGV_DB::prepare("SELECT pl_lati, pl_long, pl_zoom, pl_icon, pl_level FROM {$TBLPREFIX}placelocation WHERE pl_id=? ORDER BY pl_place")
+	->execute(array($place_id))
+	->fetchOneRow();
 	if ($row) {
 		return array('lati'=>$row->pl_lati, 'long'=>$row->pl_long, 'zoom'=>$row->pl_zoom, 'icon'=>$row->pl_icon, 'level'=>$row->pl_level);
 	} else {
@@ -382,9 +486,12 @@ function setup_map() {
 		return;
 	}
 	?>
-	<script src="http://maps.google.com/maps?file=api&amp;v=2&amp;sensor=false&amp;key=<?php echo $GOOGLEMAP_API_KEY; ?>" type="text/javascript"></script>
-	<script src="modules/googlemap/pgvGoogleMap.js" type="text/javascript"></script>
-	<script type="text/javascript">
+<script
+	src="http://maps.google.com/maps?file=api&amp;v=2&amp;sensor=false&amp;key=<?php echo $GOOGLEMAP_API_KEY; ?>"
+	type="text/javascript"></script>
+<script
+	src="modules/googlemap/pgvGoogleMap.js" type="text/javascript"></script>
+<script type="text/javascript">
 	// <![CDATA[
 		if (window.attachEvent) {
 			window.attachEvent("onunload", function() {
@@ -408,7 +515,7 @@ function setup_map() {
 function tool_tip_text($marker) {
 	$tool_tip=$marker['fact'];
 	if (!empty($marker['info']))
-		$tool_tip.=": {$marker['info']}";
+	$tool_tip.=": {$marker['info']}";
 	if (!empty($marker['name'])) {
 		$person=Person::getInstance($marker['name']);
 		if ($person && $person->canDisplayName()) {
@@ -420,57 +527,55 @@ function tool_tip_text($marker) {
 		$tool_tip.=" - ".$date->Display(false);
 	}
 	return $tool_tip;
-// dates & RTL is not OK - adding PrintReady does not solve it
+	// dates & RTL is not OK - adding PrintReady does not solve it
 }
 
 function create_indiv_buttons() {
 	global $pgv_lang;
 	?>
-	<style type="text/css">
-	#map_type
-	{
-		margin: 0;
-		padding: 0;
-		font-family: Arial;
-		font-size: 10px;
-		list-style: none;
-	}
-	#map_type li
-	{
-		display: block;
-		width: 70px;
-		text-align: center;
-		padding: 2px;
-		border: 1px solid black;
-		cursor: pointer;
-		float: left;
-		margin-left: 2px;
-	}
-	#map_type li.non_active
-	{
-		background: white;
-		color: black;
-		font-weight: normal;
-	}
-	#map_type li.active
-	{
-		background: gray;
-		color: white;
-		font-weight: bold;
-	}
-	#map_type li:hover
-	{
-		background: #ddd;
-	}
-	#map_nav
-	{
-		position: relative;
-		top: -484px;
-		left: 101%;
-	}
-	
-	</style>
-	<script type='text/javascript'>
+<style type="text/css">
+#map_type {
+	margin: 0;
+	padding: 0;
+	font-family: Arial;
+	font-size: 10px;
+	list-style: none;
+}
+
+#map_type li {
+	display: block;
+	width: 70px;
+	text-align: center;
+	padding: 2px;
+	border: 1px solid black;
+	cursor: pointer;
+	float: left;
+	margin-left: 2px;
+}
+
+#map_type li.non_active {
+	background: white;
+	color: black;
+	font-weight: normal;
+}
+
+#map_type li.active {
+	background: gray;
+	color: white;
+	font-weight: bold;
+}
+
+#map_type li:hover {
+	background: #ddd;
+}
+
+#map_nav {
+	position: relative;
+	top: -484px;
+	left: 101%;
+}
+</style>
+<script type='text/javascript'>
 	<!--
 	function Map_type() {}
 	Map_type.prototype = new GControl();
@@ -561,7 +666,7 @@ function build_indiv_map($indifacts, $famids) {
 		}
 		echo "\n\t</table>\n<br />";
 		?>
-		<script type="text/javascript">
+<script type="text/javascript">
 			document.getElementById("googlemap_left").innerHTML = document.getElementById("googlemap_content").innerHTML;
 			document.getElementById("googlemap_content").innerHTML = "";
 		</script>
@@ -577,98 +682,98 @@ function build_indiv_map($indifacts, $famids) {
 	//sort_facts($indifacts); facts should already be sorted
 	$i = 0;
 	foreach ($indifacts as $key => $value) {
-			$fact = $value->getTag();
-			$fact_data=$value->getDetail();
-			$factrec = $value->getGedComRecord();
-			$placerec = null;
-			if ($value->getPlace()!=null) {
-				$placerec = get_sub_record(2, "2 PLAC", $factrec);
-				$addrFound = false;
+		$fact = $value->getTag();
+		$fact_data=$value->getDetail();
+		$factrec = $value->getGedComRecord();
+		$placerec = null;
+		if ($value->getPlace()!=null) {
+			$placerec = get_sub_record(2, "2 PLAC", $factrec);
+			$addrFound = false;
+		} else {
+			if (preg_match("/\d ADDR (.*)/", $factrec, $match)) {
+				$placerec = get_sub_record(1, "\d ADDR", $factrec);
+				$addrFound = true;
+			}
+		}
+		if (!empty($placerec)) {
+			$ctla = preg_match("/\d LATI (.*)/", $placerec, $match1);
+			$ctlo = preg_match("/\d LONG (.*)/", $placerec, $match2);
+			$spouserec = get_sub_record(2, "2 _PGVS", $factrec);
+			$ctlp = preg_match("/\d _PGVS @(.*)@/", $spouserec, $spouseid);
+			if ($ctlp>0) {
+				$useThisItem = displayDetailsById($spouseid[1]);
 			} else {
-				if (preg_match("/\d ADDR (.*)/", $factrec, $match)) {
-					$placerec = get_sub_record(1, "\d ADDR", $factrec);
-					$addrFound = true;
-				}
+				$useThisItem = true;
 			}
-			if (!empty($placerec)) {
-				$ctla = preg_match("/\d LATI (.*)/", $placerec, $match1);
-				$ctlo = preg_match("/\d LONG (.*)/", $placerec, $match2);
-				$spouserec = get_sub_record(2, "2 _PGVS", $factrec);
-				$ctlp = preg_match("/\d _PGVS @(.*)@/", $spouserec, $spouseid);
-				if ($ctlp>0) {
-					$useThisItem = displayDetailsById($spouseid[1]);
+			if (($ctla>0) && ($ctlo>0) && ($useThisItem==true)) {
+				$i = $i + 1;
+				$markers[$i]=array('class'=>'optionbox', 'index'=>'', 'tabindex'=>'', 'placed'=>'no');
+				if ($fact == "EVEN" || $fact=="FACT") {
+					$eventrec = get_sub_record(1, "2 TYPE", $factrec);
+					if (preg_match("/\d TYPE (.*)/", $eventrec, $match3))
+					if (isset($factarray[$match3[1]]))
+					$markers[$i]["fact"]=$factarray[$match3[1]];
+					else
+					$markers[$i]["fact"]=$match3[1];
+					else
+					$markers[$i]["fact"]=$factarray[$fact];
 				} else {
-					$useThisItem = true;
+					$markers[$i]["fact"]=$factarray[$fact];
 				}
-				if (($ctla>0) && ($ctlo>0) && ($useThisItem==true)) {
-					$i = $i + 1;
-					$markers[$i]=array('class'=>'optionbox', 'index'=>'', 'tabindex'=>'', 'placed'=>'no');
-					if ($fact == "EVEN" || $fact=="FACT") {
-						$eventrec = get_sub_record(1, "2 TYPE", $factrec);
-						if (preg_match("/\d TYPE (.*)/", $eventrec, $match3))
+				if (!empty($fact_data) && $fact_data!='Y')
+				$markers[$i]["info"] = $fact_data;
+				$markers[$i]["placerec"] = $placerec;
+				$match1[1] = trim($match1[1]);
+				$match2[1] = trim($match2[1]);
+				$markers[$i]["lati"] = str_replace(array('N', 'S', ','), array('', '-', '.') , $match1[1]);
+				$markers[$i]["lng"] = str_replace(array('E', 'W', ','), array('', '-', '.') , $match2[1]);
+				$ctd = preg_match("/2 DATE (.+)/", $factrec, $match);
+				if ($ctd>0)
+				$markers[$i]["date"] = $match[1];
+				if ($ctlp>0)
+				$markers[$i]["name"]=$spouseid[1];
+			} else {
+				if (($placelocation == true) && ($useThisItem==true) && ($addrFound==false)) {
+					$ctpl = preg_match("/\d PLAC (.*)/", $placerec, $match1);
+					$latlongval = get_lati_long_placelocation($match1[1]);
+					if ((count($latlongval) == 0) && (!empty($GM_DEFAULT_TOP_VALUE))) {
+						$latlongval = get_lati_long_placelocation($match1[1].", ".$GM_DEFAULT_TOP_VALUE);
+						if ((count($latlongval) != 0) && ($latlongval["level"] == 0)) {
+							$latlongval["lati"] = NULL;
+							$latlongval["long"] = NULL;
+						}
+					}
+					if ((count($latlongval) != 0) && ($latlongval["lati"] != NULL) && ($latlongval["long"] != NULL)) {
+						$i = $i + 1;
+						$markers[$i]=array('class'=>'optionbox', 'index'=>'', 'tabindex'=>'', 'placed'=>'no');
+						if ($fact == "EVEN" || $fact=="FACT") {
+							$eventrec = get_sub_record(1, "2 TYPE", $factrec);
+							if (preg_match("/\d TYPE (.*)/", $eventrec, $match3))
 							if (isset($factarray[$match3[1]]))
-								$markers[$i]["fact"]=$factarray[$match3[1]];
+							$markers[$i]["fact"]=$factarray[$match3[1]];
 							else
-								$markers[$i]["fact"]=$match3[1];
-						else
+							$markers[$i]["fact"]=$match3[1];
+							else
 							$markers[$i]["fact"]=$factarray[$fact];
-					} else {
-						$markers[$i]["fact"]=$factarray[$fact];
-					}
-					if (!empty($fact_data) && $fact_data!='Y')
+						} else {
+							$markers[$i]["fact"]=$factarray[$fact];
+						}
+						if (!empty($fact_data) && $fact_data!='Y')
 						$markers[$i]["info"] = $fact_data;
-					$markers[$i]["placerec"] = $placerec;
-					$match1[1] = trim($match1[1]);
-					$match2[1] = trim($match2[1]);
-					$markers[$i]["lati"] = str_replace(array('N', 'S', ','), array('', '-', '.') , $match1[1]);
-					$markers[$i]["lng"] = str_replace(array('E', 'W', ','), array('', '-', '.') , $match2[1]);
-					$ctd = preg_match("/2 DATE (.+)/", $factrec, $match);
-					if ($ctd>0)
+						$markers[$i]["icon"] = $latlongval["icon"];
+						$markers[$i]["placerec"] = $placerec;
+						if ($zoomLevel > $latlongval["zoom"]) $zoomLevel = $latlongval["zoom"];
+						$markers[$i]["lati"] = str_replace(array('N', 'S', ','), array('', '-', '.') , $latlongval["lati"]);
+						$markers[$i]["lng"] = str_replace(array('E', 'W', ','), array('', '-', '.') , $latlongval["long"]);
+						$ctd = preg_match("/2 DATE (.+)/", $factrec, $match);
+						if ($ctd>0)
 						$markers[$i]["date"] = $match[1];
-					if ($ctlp>0)
+						if ($ctlp>0)
 						$markers[$i]["name"]=$spouseid[1];
-				} else {
-					if (($placelocation == true) && ($useThisItem==true) && ($addrFound==false)) {
-						$ctpl = preg_match("/\d PLAC (.*)/", $placerec, $match1);
-						$latlongval = get_lati_long_placelocation($match1[1]);
-						if ((count($latlongval) == 0) && (!empty($GM_DEFAULT_TOP_VALUE))) {
-							$latlongval = get_lati_long_placelocation($match1[1].", ".$GM_DEFAULT_TOP_VALUE);
-							if ((count($latlongval) != 0) && ($latlongval["level"] == 0)) {
-								$latlongval["lati"] = NULL;
-								$latlongval["long"] = NULL;
-							}
-						}
-						if ((count($latlongval) != 0) && ($latlongval["lati"] != NULL) && ($latlongval["long"] != NULL)) {
-							$i = $i + 1;
-							$markers[$i]=array('class'=>'optionbox', 'index'=>'', 'tabindex'=>'', 'placed'=>'no');
-							if ($fact == "EVEN" || $fact=="FACT") {
-								$eventrec = get_sub_record(1, "2 TYPE", $factrec);
-								if (preg_match("/\d TYPE (.*)/", $eventrec, $match3))
-									if (isset($factarray[$match3[1]]))
-										$markers[$i]["fact"]=$factarray[$match3[1]];
-									else
-										$markers[$i]["fact"]=$match3[1];
-								else
-									$markers[$i]["fact"]=$factarray[$fact];
-							} else {
-								$markers[$i]["fact"]=$factarray[$fact];
-							}
-							if (!empty($fact_data) && $fact_data!='Y')
-								$markers[$i]["info"] = $fact_data;
-							$markers[$i]["icon"] = $latlongval["icon"];
-							$markers[$i]["placerec"] = $placerec;
-							if ($zoomLevel > $latlongval["zoom"]) $zoomLevel = $latlongval["zoom"];
-							$markers[$i]["lati"] = str_replace(array('N', 'S', ','), array('', '-', '.') , $latlongval["lati"]);
-							$markers[$i]["lng"] = str_replace(array('E', 'W', ','), array('', '-', '.') , $latlongval["long"]);
-							$ctd = preg_match("/2 DATE (.+)/", $factrec, $match);
-							if ($ctd>0)
-								$markers[$i]["date"] = $match[1];
-							if ($ctlp>0)
-								$markers[$i]["name"]=$spouseid[1];
-						}
 					}
 				}
 			}
+		}
 	}
 
 	// Add children to the list
@@ -697,20 +802,20 @@ function build_indiv_map($indifacts, $famids) {
 										$markers[$i]["fact"] = $pgv_lang["daughter"];
 										$markers[$i]["class"]  = "person_boxF";
 									} else
-										if (strpos($srec, "1 SEX M")!==false) {
-											$markers[$i]["fact"] = $pgv_lang["son"];
-											$markers[$i]["class"]  = "person_box";
-										} else {
-											$markers[$i]["fact"]     = $factarray["CHIL"];
-											$markers[$i]["class"]    = "person_boxNN";
-										}
+									if (strpos($srec, "1 SEX M")!==false) {
+										$markers[$i]["fact"] = $pgv_lang["son"];
+										$markers[$i]["class"]  = "person_box";
+									} else {
+										$markers[$i]["fact"]     = $factarray["CHIL"];
+										$markers[$i]["class"]    = "person_boxNN";
+									}
 									$markers[$i]["placerec"] = $placerec;
 									$match1[1] = trim($match1[1]);
 									$match2[1] = trim($match2[1]);
 									$markers[$i]["lati"] = str_replace(array('N', 'S', ','), array('', '-', '.'), $match1[1]);
 									$markers[$i]["lng"]  = str_replace(array('E', 'W', ','), array('', '-', '.'), $match2[1]);
 									if ($ctd > 0)
-										$markers[$i]["date"] = $matchd[1];
+									$markers[$i]["date"] = $matchd[1];
 									$markers[$i]["name"] = $smatch[$j][1];
 								}
 							} else {
@@ -744,7 +849,7 @@ function build_indiv_map($indifacts, $famids) {
 											$markers[$i]["lati"]     = str_replace(array('N', 'S', ','), array('', '-', '.'), $latlongval["lati"]);
 											$markers[$i]["lng"]      = str_replace(array('E', 'W', ','), array('', '-', '.'), $latlongval["long"]);
 											if ($ctd > 0)
-												$markers[$i]["date"] = $matchd[1];
+											$markers[$i]["date"] = $matchd[1];
 											$markers[$i]["name"]   = $smatch[$j][1];
 										}
 									}
@@ -759,7 +864,9 @@ function build_indiv_map($indifacts, $famids) {
 
 	if ($i == 0) {
 		echo "<table class=\"facts_table\">\n";
-		echo "<tr><td colspan=\"2\" class=\"facts_value\">".$pgv_lang["no_gmtab"]."<script language=\"JavaScript\" type=\"text/javascript\">tabstyles[5]='tab_cell_inactive_empty'; document.getElementById('pagetab5').className='tab_cell_inactive_empty';</script></td></tr>\n";
+		echo "<tr><td colspan=\"2\" class=\"facts_value\">".$pgv_lang["no_gmtab"];
+		//echo "<script language=\"JavaScript\" type=\"text/javascript\">tabstyles[5]='tab_cell_inactive_empty'; document.getElementById('pagetab5').className='tab_cell_inactive_empty';</script>";
+		echo "</td></tr>\n";
 		echo "<script type=\"text/javascript\">\n";
 		echo "function ResizeMap ()\n{\n}\n</script>\n";
 		if (PGV_USER_IS_ADMIN) {
@@ -769,7 +876,7 @@ function build_indiv_map($indifacts, $famids) {
 		}
 	} else {
 		?>
-		<script type="text/javascript">
+<script type="text/javascript">
 		function SetMarkersAndBounds () {
 			var bounds = new GLatLngBounds();
 		<?php

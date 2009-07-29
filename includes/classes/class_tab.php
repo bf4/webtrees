@@ -58,6 +58,12 @@ abstract class Tab {
 	 * @return boolean
 	 */
 	public abstract function hasContent();
+	
+	/**
+	 * can this tab be loaded with AJAX
+	 * @return unknown_type
+	 */
+	public function canLoadAjax() { return true; }
 	/**
 	 * any content that needs to be loaded before ajax calls such as javascript
 	 * @return string
