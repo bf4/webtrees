@@ -94,7 +94,7 @@ if (window.focus) {win02.focus();}
 						print_help_link("edit_SHARED_NOTE_help", "qm");
 					echo $pgv_lang["shared_note"];
 					echo "</td>";
-					echo "<td class=\"optionbox wrap\" ><center><textarea name=\"NOTE\" id=\"NOTE\" rows=\"20\" cols=\"88\"></textarea></center>";
+					echo "<td class=\"optionbox wrap\" ><center><textarea name=\"NOTE\" id=\"NOTE\" rows=\"20\" cols=\"112\"></textarea></center>";
 						print_specialchar_link("NOTE",true);
 					echo "</td>";
 					echo "<td class=\"facts_value wrap\" colspan=2></td>";

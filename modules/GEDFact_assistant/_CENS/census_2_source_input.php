@@ -112,14 +112,16 @@ global $pgv_lang, $TEXT_DIRECTION;
 						censyear.forValue("UK").addOptions( "choose", "1841", "1851", "1861", "1871", "1881", "1891", "1901", "1911", "1921" );
 						censyear.forValue("USA").addOptions( "choose", "1790", "1800", "1810", "1820", "1830", "1840", "1850", "1860", "1870", "1880", "1890", "1900", "1910", "1920", "1930");
 						censyear.forValue("UK").setDefaultOptions("choose");
-						censyear.forValue("USA").setDefaultOptions("choose");
+						censyear.forValue("USA").setDefaultOptions("1930");
 					</script>
 					<select id="censCtry" name="ctry" style="font-size: 10px;" >
-						<option value="UK">UK</option>
+						<option value="UK" >UK</option>
 						<option value="USA">USA</option>
 					</select>
 					<select onchange="if( this.options[this.selectedIndex].value!='') {
 								changeYear(this.options[this.selectedIndex].value);
+								// alert('Change Headers');
+								//	change_header();
 							}" 
 							id="censYear" name="censyear" style="font-size: 10px;" >
 						<script type="text/javascript">
@@ -131,13 +133,11 @@ global $pgv_lang, $TEXT_DIRECTION;
 					
 					<td align="left" class="descriptionbox" width="15%"><font size=1>Shared Note Title:</font></td>
 					<td align="left" class="facts_value" width="50%">
-					<?php
-					//		echo "<input id=\"Titl\" name=\"Titl\" type=\"text\" size=\"90\" STYLE=\"font-size: 10px;\" value=\"Census Transcription - ".$censyear." - ".$wholename." - \" />";
-					?>
 					<script type="text/javascript">
 					 document.writeln('<input id="Titl" name="Titl" type="text" size="90" STYLE="font-size: 10px;" value="<?php echo "Census Transcription - ".$wholename." - ";?>" />');
 					</script>
 					</td>
+					
 					</tr>
 			</table>
 			

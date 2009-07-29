@@ -50,47 +50,115 @@
 </style>
 
 <?php
-echo '<script src="modules/GEDFact_assistant/_CENS/census_5_input.js" type="text/javascript"></script>';
+echo '<script src="modules/GEDFact_assistant/_CENS/js/census_5_input.js" type="text/javascript"></script>';
 ?>
 
 <center>
-	<table width="100%" border="0" cellspacing="2">
-		<tr>
-			<td align="center" colspan="8">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-			<td align="center">
-				<input type="button" value="Add/Insert Blank Row" onclick="insertRowToTable('','','','','','','','','','');" />
-				<!-- <input type="button" value="Delete [D]" onclick="deleteChecked();" /> -->
-				<!-- <input type="button" value="Debug Window" onclick="openInNewWindow(this.form);" /> -->
-			<td align="center" colspan="3">&nbsp;</td>
-			<td align="right">
-				<font size="1">Add&nbsp;&nbsp;&nbsp;</font><br>
-				<input align="right" type="radio" name="totallyrad" value="0" checked="checked" /><font size="1">&nbsp;&nbsp;</font>
-			</td>
-		</tr>
-	</table>
-	<table width="100%" border="0" cellspacing="2" id="tblSample">
-		<thead>
-			<tr>
-			<?php /*
-			<th class="descriptionbox" style="border: 0px solid transparent;" align="left"><font size=1>Item</font></th>
-			<th class="descriptionbox" style="border: 0px solid transparent;" align="left"><font size=1>Indi ID:</font></th>
-			<th width="17%" class="descriptionbox" style="border: 0px solid transparent;" align="left"><font size=1>Name:</font></th>
-			<th class="descriptionbox" style="border: 0px solid transparent;" align="left"><font size=1>Relation:</font></th>
-			<th class="descriptionbox" style="border: 0px solid transparent;" align="left"><font size=1>Status:</font></th>
-			<th class="descriptionbox" style="border: 0px solid transparent;" align="left"><font size=1>YOB:</font></th>
-			<th class="descriptionbox" style="border: 0px solid transparent;" align="left"><font size=1>Age:</font></th>
-			<th class="descriptionbox" style="border: 0px solid transparent;" align="left"><font size=1>Y/M/D:</font></th>
-			<th class="descriptionbox" style="border: 0px solid transparent;" align="left"><font size=1>Sex:</font></th>
-			<th width="13%" class="descriptionbox" style="border: 0px solid transparent;" align="left"><font size=1>Occupation:</font></th>
-			<th width="28%" class="descriptionbox" style="border: 0px solid transparent;" align="left"><font size=1>Birthplace:</font></th>
-			<th class="descriptionbox" style="border: 0px solid transparent;" align="left"><font size=1>Del</font></th>
-			<th class="descriptionbox" style="border: 0px solid transparent;" align="left"><font size=1>Ins</font></th>
-			*/ ?>
-		</tr>
-		</thead>
-		<tbody></tbody>
-	</table>
-</center>
 
-<!-- </form> -->
+<script src="modules/GEDFact_assistant/_CENS/js/dw_event.js" type="text/javascript"></script>
+<script src="modules/GEDFact_assistant/_CENS/js/dw_scroll.js" type="text/javascript"></script>
+<script src="modules/GEDFact_assistant/_CENS/js/dw_scrollbar.js" type="text/javascript"></script>
+<script src="modules/GEDFact_assistant/_CENS/js/scroll_controls.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+function init_dw_Scroll() {
+    var wndo = new dw_scrollObj('wn', 'lyr1', 't1');
+    wndo.setUpScrollbar("dragBar", "track", "h", 1, 1);
+	wndo.setUpScrollbar("dragBar2", "track2", "v", 1, 1);
+    wndo.setUpScrollControls('scrollbar');
+    wndo.setUpScrollControls('scrollbar2');
+}
+
+// if code supported, link in the style sheet and call the init function onload
+if ( dw_scrollObj.isSupported() ) {
+	dw_writeStyleSheet('modules/GEDFact_assistant/_CENS/css/CENS_scrolling.css');
+    dw_Event.add( window, 'load', init_dw_Scroll);
+}
+</script>
+
+<div id="scrollbar">
+    <div id="left"><a class="mouseover_left" href="#"><img src="modules/GEDFact_assistant/_CENS/images/btn-lft.gif" width="13" height="13" alt="" border="0" /></a></div>
+    <div id="track">
+         <div id="dragBar"></div>
+    </div>
+    <div id="right"><a class="mouseover_right" href="#"><img src="modules/GEDFact_assistant/_CENS/images/btn-rt.gif" width="13" height="13" alt="" border="0" /></a></div>
+</div>
+<!-- border attribute added to reduce support questions on the subject. If you like valid strict markup, remove and place a img {border:none;} spec in style sheet -->
 	
+<table><tr><td>
+
+<div id="wn">
+    <div id="lyr1">    
+	<table id="t1" border="0" cellpadding="0" cellspacing="2">
+        <tr>
+			<td>
+			
+			<table width="100%" border="0" cellspacing="2">
+				<tr>
+					<td align="center" colspan="8">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+					<td align="center">
+						<input type="button" value="Add/Insert Blank Row" onclick="insertRowToTable('','','','','','','','','','');" />
+					<td align="center" colspan="3">&nbsp;</td>
+					<td align="right">
+						<font size="1">Add&nbsp;</font><br>
+						<input valign="top" align="right" type="radio" name="totallyrad" value="0" checked="checked" /><font size="1"></font>
+					</td>
+					<td></td>
+				</tr>
+			</table>
+			
+			<table width="940px" border="0" cellspacing="1" id="tblSample">
+				<thead>
+				<tr>
+					<th width="2%" class="descriptionbox" style="border: 0px solid transparent;" align="left"><font size=1>#</font></th>
+					<th width="3%" class="descriptionbox" style="border: 0px solid transparent;" align="left"><font size=1>Indi ID</font></th>
+					<th id=".b.Name" width="10%" class="descriptionbox" style="border: 0px solid transparent;" align="left"><font size=1>Name</font></th>
+					<th id=".b.Relation" class="descriptionbox" style="border: 0px solid transparent;" align="left"><font size=1>Relation</font></th>
+					<th id=".b.Cond" width="3%" class="descriptionbox" style="border: 0px solid transparent;" align="left"><font size=1>Cond</font></th>
+					<th id=".b.YOB" class="descriptionbox" style="border: 0px solid transparent;" align="left"><font size=1>YOB</font></th>
+					<th id=".b.Age" class="descriptionbox" style="border: 0px solid transparent;" align="left"><font size=1>Age</font></th>
+					<th id=".b.YMD" class="descriptionbox" style="border: 0px solid transparent;" align="left"><font size=1>Y/M/D</font></th>
+					<th id=".b.Sex" class="descriptionbox" style="border: 0px solid transparent;" align="left"><font size=1>Sex</font></th>
+					<th id=".b.Occupation" width="13%" class="descriptionbox" style="border: 0px solid transparent;" align="left"><font size=1>Occupation</font></th>
+					<th id=".b.Birthplace" width="9%" class="descriptionbox" style="border: 0px solid transparent;" align="left"><font size=1>Birthplace</font></th>
+					<?php  if ($ctry == "USA") { ?>
+						<th id=".b.Father Birthplace" width="9%" class="descriptionbox" style="border: 0px solid transparent;" align="left"><font size=1>Father Birthplace</font></th>
+						<th id=".b.Mother Birthplace" width="9%" class="descriptionbox" style="border: 0px solid transparent;" align="left"><font size=1>Mother Birthplace</font></th>
+					<?php  } ?>
+					<th class="descriptionbox" style="border: 0px solid transparent;" align="center"><font size=1>Del</font></th>
+					<th width="3%" class="descriptionbox" style="border: 0px solid transparent;" align="left"><font size=1>&nbsp;Ins</font></th>
+					<th width="2%" class="descriptionbox" style="border: 0px solid transparent;" align="left"><font size=1>#</font></th>
+				</tr>
+				</thead>
+				<tbody></tbody>
+			</table>
+			
+			</td>
+			
+			<!-- spacing required for optimal view horizontally -->
+			<td width="176">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+			<td width="176">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+			<td width="176">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+		</tr>
+		<!-- spacing required for optimal view vertically -->
+		<tr><td height="176"> <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /></td></tr>
+		<tr><td height="176"> <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /></td></tr>
+		<tr><td height="176"> <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /></td></tr>
+		
+	</table>
+	</div> <!-- end lyr1 div -->
+</div>  <!-- end wn div -->
+</td>
+
+<td>
+<div id="scrollbar2">
+	<div id="up2"><a class="mouseover_up" href="#"><img src="modules/GEDFact_assistant/_CENS/images/btn-up.gif" width="13" height="13" alt="" border="0" /></a></div>
+	<div id="track2">
+		<div id="dragBar2"></div>
+	</div>
+	<div id="down2"><a class="mouseover_down" href="#"><img src="modules/GEDFact_assistant/_CENS/images/btn-dn.gif" width="13" height="13" alt="" border="0" /></a></div>
+</div>
+</td>
+</tr></table>
+
+</center>

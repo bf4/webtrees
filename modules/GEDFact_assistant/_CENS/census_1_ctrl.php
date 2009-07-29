@@ -55,26 +55,11 @@ if ($married>=0 && isset($nam[1])){
 }
 
 $currpid=$pid;
-
-// Various Debugs =========================================
-// var_dump($person->getFullName()); 
-
-/*
-$fred = ($person->getAllBirthPlaces());
-$fredrev = explode(", ", $fred[0]);
-$fredrev = array_reverse($fredrev);
-$fredrev = implode(", ", $fredrev);
-echo $fred[0];
-echo "<br />";
-echo $fredrev;
-*/
-
-//=========================================================
 ?>
-<script src="modules/GEDFact_assistant/_CENS/dynamicoptionlist.js" type="text/javascript"></script>
+
+<script src="modules/GEDFact_assistant/_CENS/js/dynamicoptionlist.js" type="text/javascript"></script>
+
 <?php
-
-
 echo "<table border=0><tr>";
 	echo "<td width=\"10%\" wrap=\"nowrap\">";
 	//	echo "<center><font size=\"2\"><b>".$censyear."&nbsp;".$ctry."&nbsp;".$factarray["CENS"]."</b></font></center>";
@@ -123,10 +108,10 @@ echo "</tr></table>";
 			//-- Census Text Input Area ===========================================================
 			?>
 			<br />
-			<table width="95%" border="0">
+			<table width="100%" border="0" cellspacing="0" cellpadding="0">
 				<tr>
 					<td colspan="2" align="center">
-						<table width="100%" border='3' cellspacing="1" >
+						<table width="100%" border='3' cellspacing="0" cellpadding="0">
 							<tr>
 								<td colspan="12" id="5678" class="option_box" style="border: 0px solid transparent;">
 									<?php
