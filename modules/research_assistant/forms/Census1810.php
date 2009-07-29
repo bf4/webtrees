@@ -3,7 +3,7 @@
  * phpGedView Research Assistant Tool - United States Census 1810 File
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
+ * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -30,8 +30,8 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
-require_once "ra_form.php";
-require_once "includes/functions/functions_edit.php";
+require_once 'modules/research_assistant/forms/ra_form.php';
+require_once 'includes/functions/functions_edit.php';
 
 class Census1810 extends ra_form {
 

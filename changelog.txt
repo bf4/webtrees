@@ -10,6 +10,8 @@
 
 
 Version 4.2.x CA
+ - Merged: Merge changes r5995 - r6006 from the trunk. (windmillway)
+ - Change to googlemaps (yalnifj)
  - Merged: Merge changes r5956 - r5994 from the trunk. (windmillway)
  - A few minor updates to /GEDFact_assistant/_CENS/ Census assistant (windmillway)
  - Added "ALL" tab module (yalnifj)

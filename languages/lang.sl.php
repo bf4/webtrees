@@ -33,6 +33,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
+$pgv_lang["gedcomid"]			= "GEDCOM INDI zapis ID";
 $pgv_lang["sortby"]			= "Razvrsti";
 $pgv_lang["exact"]			= "Natančno";
 $pgv_lang["begins_with"]		= "Se začne z";
@@ -89,6 +90,7 @@ $pgv_lang["enter_fullname"] 		= "Vpiši ime in priimek.";
 $pgv_lang["name"]			= "Ime";
 $pgv_lang["names"]			= "Imena";
 $pgv_lang["children"]			= "Otroci";
+$pgv_lang["lchildren"]			= "otroci";
 $pgv_lang["child"]			= "Otrok";
 $pgv_lang["family"] 			= "Družina";
 $pgv_lang["as_child"]			= "Družina s starši";
@@ -129,7 +131,7 @@ $pgv_lang["chart_new"]			= "Družinsko drevo";
 $pgv_lang["loading"]			= "Nalagam...";
 $pgv_lang["clear_chart"]		= "Izbriši preglednico";
 $pgv_lang["file_information"]		= "Datotečni podatki";
-$pgv_lang["choose_file_type"]		= "Izberi tip datoteke";
+$pgv_lang["choose_file_type"]		= "Tip datoteke";
 $pgv_lang["add_individual_by_id"]	= "Dodaj osebo po ID-številki";
 $pgv_lang["advanced_options"]		= "Napredne možnosti";
 $pgv_lang["zip_files"]			= "Zazipaj dateteko/e";
@@ -141,9 +143,11 @@ $pgv_lang["page_x_of_y"]		= "Stran #GLOBALS[currentPage]# of #GLOBALS[lastPage]#
 $pgv_lang["options"]			= "Možnosti:";
 $pgv_lang["config_update_ok"]		= "Konfiguracijska datoteka uspešno naložena.";
 $pgv_lang["page_size"]			= "Velikost strani";
+$pgv_lang["font"]			= "Pisava";
+$pgv_lang["use_colors"]			= "Uporabi barve";
 $pgv_lang["record_not_found"]		= "Zahtevani GEDCOM-ov zapis ni najden. Vzrok za to je lahko povezava na napačno osebo ali pokvarjena GEDCOM-ova datoteka.";
 $pgv_lang["result_page"]		= "Stran rezultatov";
-$pgv_lang["edit_media"]			= "Uredi fotografijo";
+$pgv_lang["edit_media"]			= "Uredi fotografijo (#GLOBALS[pid]#)";
 $pgv_lang["wiki_main_page"]		= "Glavna Wiki-stran";
 $pgv_lang["wiki_users_guide"]		= "Uporabniška Wiki-navodila";
 $pgv_lang["wiki_admin_guide"]		= "Upraviteljeva Wiki-navodila";
@@ -380,6 +384,7 @@ $pgv_lang["gen_ped_chart"]		= "Število prikazanih rodov: #PEDIGREE_GENERATIONS#
 $pgv_lang["generations"]		= "Število rodov";
 $pgv_lang["view"]			= "Poglej";
 $pgv_lang["fam_spouse"] 		= "Družina z zakoncem";
+$pgv_lang["rootid"] 			= "Izhodiščna oseba rodovnika";
 $pgv_lang["root_person"]		= "ID-številka izhodiščne osebe";
 $pgv_lang["hide_details"]		= "Skrij podrobnosti";
 $pgv_lang["show_details"]		= "Pokaži podrobnosti";
@@ -394,6 +399,8 @@ $pgv_lang["start_at_parents"]		= "Začni pri starših";
 $pgv_lang["charts"] 			= "Preglednice";
 $pgv_lang["lists"]			= "Seznami";
 $pgv_lang["box_width"] 			= "Širina okvirčka";
+$pgv_lang["random_surn"]		= "Naključen priimek";
+
 
 //-- FUNCTIONS FILE MESSAGES
 $pgv_lang["unable_to_find_family"]	= "Nisem našel družine z ID-številko";
@@ -404,13 +411,15 @@ $pgv_lang["private"]			= "Zasebno";
 $pgv_lang["birth"]			= "Rojstvo:";
 $pgv_lang["death"]			= "Smrt:";
 $pgv_lang["descend_chart"]		= "Prikaz potomcev";
-$pgv_lang["individual_list"]		= "Seznam oseb";
-$pgv_lang["family_list"]		= "Seznam družin";
-$pgv_lang["source_list"]		= "Seznam virov";
-$pgv_lang["shared_note_list"]		= "Seznam zapiskov";
-$pgv_lang["place_list"] 		= "Seznam krajev";
+$pgv_lang["individual_list"]		= "Osebe";
+$pgv_lang["family_list"]		= "Družine";
+$pgv_lang["branch_list"]		= "Veje";
+$pgv_lang["source_list"]		= "Viri";
+$pgv_lang["shared_note_list"]		= "Zapiski";
+$pgv_lang["place_list"] 		= "Kraji";
 $pgv_lang["place_list_aft"] 		= "Seznam krajev po";
-$pgv_lang["media_list"] 		= "Seznam fotografij";
+$pgv_lang["media_list"] 		= "Fotografije";
+$pgv_lang["repo_list"]			= "Kraji počitka";
 $pgv_lang["search"] 			= "Iskanje";
 $pgv_lang["clippings_cart"] 		= "Košarica za izreze družinskih vej";
 $pgv_lang["print_preview"]		= "Tiskalniku prijazen iztis";
@@ -544,6 +553,10 @@ $pgv_lang["indi_downloaded_from"]	= "Prenesli ste podatke o tej osebi iz:";
 $pgv_lang["family_downloaded_from"]	= "Prenesli ste podatke o tej družini iz:";
 $pgv_lang["source_downloaded_from"]	= "Prenesli ste podatke o tem viru iz:";
 $pgv_lang["enter_person_generations"]	= "Število rodov:";
+$pgv_lang["convertPath"]		= "Pretvori pot medijev v";
+$pgv_lang["convertSlashes"]		= "Pretvori ločila imenika medija v";
+$pgv_lang["forwardSlashes"]		= "Poševnice : /";
+$pgv_lang["backSlashes"]		= "Leve poševnice : \\";
 
 //-- PLACELIST FILE MESSAGES
 $pgv_lang["connections"]		= "Najdene povezave s kraji";
@@ -611,7 +624,7 @@ $pgv_lang["titles_found"]		= "Naslovi";
 $pgv_lang["find_source"]		= "Poišči vir";
 
 //-- REPOLIST FILE MESSAGES
-$pgv_lang["repo_list"]			= "Seznam krajev počitka";
+$pgv_lang["repository"] 		= "Kraj počitka";
 $pgv_lang["repos_found"]		= "Najdeni kraji počitka";
 $pgv_lang["find_repository"]		= "Poišči kraj počitka";
 $pgv_lang["total_repositories"]		= "Število krajev počitka";
@@ -1450,25 +1463,32 @@ $pgv_lang["ahnentafel_pronoun_m"]	= " ";
 $pgv_lang["ahnentafel_pronoun_f"]	= " ";
 $pgv_lang["ahnentafel_born_m"]		= "Rodil se je";
 $pgv_lang["ahnentafel_born_f"]		= "Rodila se je";
-$pgv_lang["ahnentafel_christened_m"] = "Krščen je bil";
-$pgv_lang["ahnentafel_christened_f"] = "Krščena je bila";
+$pgv_lang["ahnentafel_christened_m"] 	= "Krščen je bil";
+$pgv_lang["ahnentafel_christened_f"]   = "Krščena je bila";
 $pgv_lang["ahnentafel_married_m"]	= "Poročil se je z";
 $pgv_lang["ahnentafel_married_f"]	= "Poročila se je z";
+$pgv_lang["ahnentafel_married_post"]	= "&nbsp;";
 $pgv_lang["ahnentafel_died_m"]		= "Umrl je";
 $pgv_lang["ahnentafel_died_f"]		= "Umrla je";
 $pgv_lang["ahnentafel_buried_m"]	= "Pokopan je bil";
 $pgv_lang["ahnentafel_buried_f"]	= "Pokopana je bila";
 $pgv_lang["ahnentafel_place"]		= " v ";
 $pgv_lang["ahnentafel_no_details"]	= " vendar podrobnosti niso znane";
+$pgv_lang["ahnentafel_on"]		= " ";
 
 //-- Changes report
-$pgv_lang["changes_report"]			= "Poročilo spremeb";
+$pgv_lang["changes_report"]		= "Poročilo spremeb";
 $pgv_lang["changes_pending_tot"]	= "Skupno število nerazrešenih sprememb: ";
 $pgv_lang["changes_accepted_tot"]	= "Skupno število sprejetih sprememb: ";
 
 //-- Descendancy report
 $pgv_lang["descend_report"]		= "Poročilo o potomcih";
 $pgv_lang["descendancy_header"]		= "Poročilo o potomcih za ";
+$pgv_lang["son_of"]				= "sin od";
+$pgv_lang["daughter_of"]			= "hči od";
+$pgv_lang["child_of"]				= "Otrok od ";
+$pgv_lang["children_of"]			= "Otroci od ";
+
 
 $pgv_lang["family_group_report"]	= "Družinsko poročilo";
 $pgv_lang["page"]					= "Stran";
@@ -1483,6 +1503,7 @@ $pgv_lang["with"]					= "z";
 $pgv_lang["on"]						= "na";
 $pgv_lang["in"]						= "v";
 $pgv_lang["individual_report"]		= "Poročilo za osebo";
+$pgv_lang["individual_with_rela_report"]	= "Poročilo bližnjih sorodnikov";
 $pgv_lang["enter_pid"]				= "Vpiši ID-številko osebe";
 $pgv_lang["generated_by"]			= "Pripravil";
 $pgv_lang["list_children"]			= "Razvrsti otroke po datumu rojstva.";
@@ -1500,6 +1521,7 @@ $pgv_lang["marrdate1"]				= "Začetek razpona poročnih datumov";
 $pgv_lang["marrdate2"]				= "Konec razpona poročnih datumov";
 $pgv_lang["sort_by"]				= "Razvrsti po";
 $pgv_lang["cemetery_report"]			= "Pokopališko poročilo";
+$pgv_lang["burialplace"]			= "Mesto pokopa vsebuje";
 
 $pgv_lang["cleanup"]				= "Počisti";
 
@@ -1639,6 +1661,7 @@ $pgv_lang["ward"] = "rejenec";
 $pgv_lang["witness"] = "priča";
 
 //-- statistics utility
+$pgv_lang["stat_create"]		= "Ustvari svojo preglednico";
 $pgv_lang["statutci"]			= "kazala ni mogoče ustvariti";
 $pgv_lang["statnnames"]                = "Skupno število imen";
 $pgv_lang["statnfam"]                  = "Skupno število družin";
@@ -1655,6 +1678,9 @@ $pgv_lang["stat_1_map"]                = "Porazdelitev oseb";
 $pgv_lang["stat_2_map"]                = "Rojstva po državah";
 $pgv_lang["stat_3_map"]                = "Smrti po državah";
 $pgv_lang["stat_4_map"]                = "Poroke po državah";
+$pgv_lang["stat_5_birth"]	       = "Rojstva po stoletjih";
+$pgv_lang["stat_6_death"]	       = "Smrti po stoletjih";
+$pgv_lang["stat_7_marr"]	       = "Poroke po stoletjih";
 $pgv_lang["stat_8_fam"]                = "Družine z viri";
 $pgv_lang["stat_9_indi"]               = "Osebe z viri";
 $pgv_lang["stat_10_none"]		 = "Nič";
@@ -1666,15 +1692,21 @@ $pgv_lang["stat_15_mm1"]		= "Mesec prve poroke";
 $pgv_lang["stat_16_mmb"]		= "Število mesecev med poroko in prvim otrokom";
 $pgv_lang["stat_17_arb"]			 = "Starost glede na leto rojstva";
 $pgv_lang["stat_18_ard"]			 = "Starost glede na leto smrti";
+$pgv_lang["stat_18_aard"]		= "Povprečna starost glede na smrti v stoletju";
 $pgv_lang["stat_19_arm"]			 = "Starost v letu poroke";
+$pgv_lang["stat_19_aarm"]		= "Povprečna starost v stoletju poroke";
 $pgv_lang["stat_20_arm1"]			 = "Starost v letu prve poroke";
 $pgv_lang["stat_21_nok"]			 = "Število vseh otrok";
+$pgv_lang["stat_22_fwok"]		= "Število družin brez otrok";
 $pgv_lang["stat_200_none"]			 = "Vse (ali prazno)";
 $pgv_lang["stat_201_num"]			 = "V številkah";
 $pgv_lang["stat_202_perc"]			 = "V odstotkih";
 $pgv_lang["stat_300_none"]		= "Nič";
 $pgv_lang["stat_301_mf"]			 = "Spol";
 $pgv_lang["stat_302_cgp"]			 = "Obdobja med datumi";
+$pgv_lang["century"]			= "stoletje";
+$pgv_lang["stat_age"]			= "Starost";
+$pgv_lang["no_date_fam"]		= "neznano";
 $pgv_lang["statar_xgp"]			 = "meje za časovna obdobja:";
 $pgv_lang["statar_xgl"]			 = "meje za starosti:";
 $pgv_lang["statar_xgm"]			 = "meje za mesec:";
