@@ -1009,9 +1009,9 @@ class stats {
 				.' FROM'
 					." {$TBLPREFIX}places"
 				." JOIN {$TBLPREFIX}placelinks ON pl_file=p_file AND p_id=pl_p_id"
-				." JOIN {$TBLPREFIX}placelocation ON pl_id={$parent} AND pl_place=p_place"
 				.$join
 				.' WHERE'
+					." p_id={$parent} AND"
 					." p_file={$this->_ged_id}"
 				.' GROUP BY place'
 			);
