@@ -100,17 +100,8 @@ function resize_content_div(i) {
 	jQuery.noConflict();	
 	jQuery(document).ready(function(){
 	jQuery("#tabs").tabs({ cache: true });
-	jQuery("#navigation").accordion({
-			collapsible: true,
-			active: "h3:last",
-			autoHeight: false
-		});
-	
-    jQuery('#tabs').bind('select', function(event, ui) {
-		selectedTab = jQuery('#tabs').tabs('option', 'selected');
-    });
-    
-	jQuery('#tabs').bind('tabsshow', function(event, ui) {
+    jQuery('#tabs').bind('tabsshow', function(event, ui) {
+    	selectedTab = jQuery('#tabs').tabs('option', 'selected');
 	<?php
 	foreach($controller->modules as $mod) {
 		if ($mod->hasTab() && $mod->getTab()) {

@@ -501,11 +501,11 @@ class MenuBar
 		$menuList["individual"] = $pgv_lang["individual_list"];
 		if (file_exists("famlist.php")) $menuList["family"] = $pgv_lang["family_list"];
 		if (file_exists("branches.php")) $menuList["branches"] = $pgv_lang["branch_list"];
-		if (!$surname && file_exists("sourcelist.php") && $SHOW_SOURCES>=PGV_USER_ACCESS_LEVEL) $menuList["source"] = $pgv_lang["source_list"];
-		if (!$surname && file_exists("notelist.php") && $SHOW_SOURCES>=PGV_USER_ACCESS_LEVEL) $menuList["note"] = $pgv_lang["shared_note_list"];
-		if (!$surname && file_exists("repolist.php")) $menuList["repository"] = $pgv_lang["repo_list"];
-		if (!$surname && file_exists("placelist.php")) $menuList["places"] = $pgv_lang["place_list"];
-		if (!$surname && file_exists("medialist.php") && $MULTI_MEDIA) $menuList["media"] = $pgv_lang["media_list"];
+		if ($style=="top" && file_exists("sourcelist.php") && $SHOW_SOURCES>=PGV_USER_ACCESS_LEVEL) $menuList["source"] = $pgv_lang["source_list"];
+		if ($style=="top" && file_exists("notelist.php") && $SHOW_SOURCES>=PGV_USER_ACCESS_LEVEL) $menuList["note"] = $pgv_lang["shared_note_list"];
+		if ($style=="top" && file_exists("repolist.php")) $menuList["repository"] = $pgv_lang["repo_list"];
+		if ($style=="top" && file_exists("placelist.php")) $menuList["places"] = $pgv_lang["place_list"];
+		if ($style=="top" && file_exists("medialist.php") && $MULTI_MEDIA) $menuList["media"] = $pgv_lang["media_list"];
 		asort($menuList);
 
 		// Produce the submenus in localized name order

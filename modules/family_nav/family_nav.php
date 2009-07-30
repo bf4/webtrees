@@ -111,7 +111,7 @@ if (isset($_COOKIE['lastclick'])) {
 				$menu = new Menu("&nbsp;" . $people["husb"]->getLabel() . "&nbsp;". "\n");
 				$menu->addClass("", "", "submenu");
 				$slabel  = $this->print_pedigree_person_nav($people["husb"]->getXref(), 2, !$this->controller->isPrintPreview(), 0, $personcount++);
-				$slabel .= PrintReady($parentlinks);
+				$slabel .= $parentlinks;;
 				$submenu = new Menu($slabel);
 				$menu->addSubMenu($submenu);
 
@@ -127,7 +127,7 @@ if (isset($_COOKIE['lastclick'])) {
 					</td>
 					<td align="center" class="<?php print $this->controller->getPersonStyle($people["husb"]); ?>">
 						<?php
-						print "<a href=\"".encode_url($people["husb"]->getLinkUrl())."\" onclick=\"return familyNavLoad('".encode_url($people['husb']->getLinkUrl())."');\">";
+						print "<a href=\"".encode_url($people["husb"]->getLinkUrl())."\" onclick=\"return familyNavLoad('".$people['husb']->getLinkUrl()."');\">";
 						print PrintReady($people["husb"]->getFullName());
 						print "<font size=\"1\"><br />" . $BirthYr . " - " . $DeathYr . "</font>";
 						print "</a>";
@@ -141,7 +141,7 @@ if (isset($_COOKIE['lastclick'])) {
 				$menu = new Menu("&nbsp;" . $people["wife"]->getLabel() . "&nbsp;". "\n");
 				$menu->addClass("", "", "submenu");
 				$slabel  = $this->print_pedigree_person_nav($people["wife"]->getXref(), 2, !$this->controller->isPrintPreview(), 0, $personcount++);
-				$slabel .= PrintReady($parentlinks);
+				$slabel .= $parentlinks;;
 				$submenu = new Menu($slabel);
 				$menu->addSubMenu($submenu);
 
@@ -157,7 +157,7 @@ if (isset($_COOKIE['lastclick'])) {
 					</td>
 					<td align="center" class="<?php print $this->controller->getPersonStyle($people["wife"]); ?>">
 						<?php
-						print "<a href=\"".encode_url($people["wife"]->getLinkUrl())."\" onclick=\"return familyNavLoad('".encode_url($people['wife']->getLinkUrl())."');\">";
+						print "<a href=\"".encode_url($people["wife"]->getLinkUrl())."\" onclick=\"return familyNavLoad('".$people['wife']->getLinkUrl()."');\">";
 						print PrintReady($people["wife"]->getFullName());
 						print "<font size=\"1\"><br />" . $BirthYr . " - " . $DeathYr . "</font>";
 						print "</a>";
@@ -175,7 +175,7 @@ if (isset($_COOKIE['lastclick'])) {
 					$menu = new Menu($child->getLabel() . "\n");
 					$menu->addClass("", "", "submenu");
 					$slabel  = $this->print_pedigree_person_nav($child->getXref(), 2, !$this->controller->isPrintPreview(), 0, $personcount++);
-					$slabel .= PrintReady($spouselinks);
+					$slabel .= $spouselinks;
 					$submenu = new Menu($slabel);
 					$menu->addSubMenu($submenu);
 				}
@@ -201,7 +201,7 @@ if (isset($_COOKIE['lastclick'])) {
 								print PrintReady($child->getFullName());
 								print "<font size=\"1\"><br />" . $BirthYr . " - " . $DeathYr . "</font>";
 							}else{
-								print "<a href=\"".encode_url($child->getLinkUrl())."\" onclick=\"return familyNavLoad('".encode_url($child->getLinkUrl())."');\">";
+								print "<a href=\"".encode_url($child->getLinkUrl())."\" onclick=\"return familyNavLoad('".$child->getLinkUrl()."');\">";
 								print PrintReady($child->getFullName());
 								print "<font size=\"1\"><br />" . $BirthYr . " - " . $DeathYr . "</font>";
 								print "</a>";
@@ -246,7 +246,7 @@ if (isset($_COOKIE['lastclick'])) {
 				}
 				$menu->addClass("", "", "submenu");
 				$slabel  = $this->print_pedigree_person_nav($people["husb"]->getXref(), 2, !$this->controller->isPrintPreview(), 0, $personcount++);
-				$slabel .= PrintReady($parentlinks);
+				$slabel .= $parentlinks;;
 				$submenu = new Menu($slabel);
 				$menu->addSubMenu($submenu);
 
@@ -263,7 +263,7 @@ if (isset($_COOKIE['lastclick'])) {
 					</td>
 					<td align="center" class="<?php print $this->controller->getPersonStyle($people["husb"]); ?>" >
 						<?php
-						print "<a href=\"".encode_url($people["husb"]->getLinkUrl())."\" onclick=\"return familyNavLoad('".encode_url($people['husb']->getLinkUrl())."');\">";
+						print "<a href=\"".encode_url($people["husb"]->getLinkUrl())."\" onclick=\"return familyNavLoad('".$people['husb']->getLinkUrl()."');\">";
 						print PrintReady($people["husb"]->getFullName());
 						print "<font size=\"1\"><br />" . $BirthYr . " - " . $DeathYr . "</font>";
 						print "</a>";
@@ -285,7 +285,7 @@ if (isset($_COOKIE['lastclick'])) {
 				}
 				$menu->addClass("", "", "submenu");
 				$slabel  = $this->print_pedigree_person_nav($people["wife"]->getXref(), 2, !$this->controller->isPrintPreview(), 0, $personcount++);
-				$slabel .= PrintReady($parentlinks);
+				$slabel .= $parentlinks;;
 				$submenu = new Menu($slabel);
 				$menu->addSubMenu($submenu);
 
@@ -301,7 +301,7 @@ if (isset($_COOKIE['lastclick'])) {
 					</td>
 					<td align="center" class="<?php print $this->controller->getPersonStyle($people["wife"]); ?>">
 						<?php
-						print "<a href=\"".encode_url($people["wife"]->getLinkUrl())."\" onclick=\"return familyNavLoad('".encode_url($people['wife']->getLinkUrl())."');\">";
+						print "<a href=\"".encode_url($people["wife"]->getLinkUrl())."\" onclick=\"return familyNavLoad('".$people['wife']->getLinkUrl()."');\">";
 						print PrintReady($people["wife"]->getFullName());
 						print "<font size=\"1\"><br />" . $BirthYr . " - " . $DeathYr . "</font>";
 						print "</a>";
@@ -318,7 +318,7 @@ if (isset($_COOKIE['lastclick'])) {
 					$menu = new Menu($child->getLabel() . "\n");
 					$menu->addClass("", "", "submenu");
 					$slabel  = $this->print_pedigree_person_nav($child->getXref(), 2, !$this->controller->isPrintPreview(), 0, $personcount++);
-					$slabel .= PrintReady($spouselinks);
+					$slabel .= $spouselinks;
 					$submenu = new Menu($slabel);
 					$menu->addSubMenu($submenu);
 
@@ -334,7 +334,7 @@ if (isset($_COOKIE['lastclick'])) {
 						</td>
 						<td align="center" class="<?php print $this->controller->getPersonStyle($child); ?>">
 							<?php
-							print "<a href=\"".encode_url($child->getLinkUrl())."\" onclick=\"return familyNavLoad('".encode_url($child->getLinkUrl())."');\">";
+							print "<a href=\"".encode_url($child->getLinkUrl())."\" onclick=\"return familyNavLoad('".$child->getLinkUrl()."');\">";
 							print PrintReady($child->getFullName());
 							print "<font size=\"1\"><br />" . $BirthYr . " - " . $DeathYr . "</font>";
 							print "</a>";
@@ -375,7 +375,7 @@ if (isset($_COOKIE['lastclick'])) {
 				$menu = new Menu("&nbsp;" . $people["husb"]->getLabel() . "&nbsp;". "\n");
 				$menu->addClass("", "", "submenu");
 				$slabel  = $this->print_pedigree_person_nav($people["husb"]->getXref(), 2, !$this->controller->isPrintPreview(), 0, $personcount++);
-				$slabel .= PrintReady($parentlinks);
+				$slabel .= $parentlinks;;
 				$submenu = new Menu($slabel);
 				$menu->addSubMenu($submenu);
 
@@ -395,7 +395,7 @@ if (isset($_COOKIE['lastclick'])) {
 							print PrintReady($people["husb"]->getFullName());
 							print "<font size=\"1\"><br />" . $BirthYr . " - " . $DeathYr . "</font>";
 						}else{
-							print "<a href=\"".encode_url($people["husb"]->getLinkUrl())."\" onclick=\"return familyNavLoad('".encode_url($people['husb']->getLinkUrl())."');\">";
+							print "<a href=\"".encode_url($people["husb"]->getLinkUrl())."\" onclick=\"return familyNavLoad('".$people['husb']->getLinkUrl()."');\">";
 							print PrintReady($people["husb"]->getFullName());
 							print "<font size=\"1\"><br />" . $BirthYr . " - " . $DeathYr . "</font>";
 							print "</a>";
@@ -410,7 +410,7 @@ if (isset($_COOKIE['lastclick'])) {
 				$menu = new Menu("&nbsp;" . $people["wife"]->getLabel() . "&nbsp;". "\n");
 				$menu->addClass("", "", "submenu");
 				$slabel  = $this->print_pedigree_person_nav($people["wife"]->getXref(), 2, !$this->controller->isPrintPreview(), 0, $personcount++);
-				$slabel .= PrintReady($parentlinks);
+				$slabel .= $parentlinks;
 				$submenu = new Menu($slabel);
 				$menu->addSubMenu($submenu);
 
@@ -430,7 +430,7 @@ if (isset($_COOKIE['lastclick'])) {
 							print PrintReady($people["wife"]->getFullName());
 							print "<font size=\"1\"><br />" . $BirthYr . " - " . $DeathYr . "</font>";
 						}else{
-							print "<a href=\"".encode_url($people["wife"]->getLinkUrl())."\" onclick=\"return familyNavLoad('".encode_url($people['wife']->getLinkUrl())."');\">";
+							print "<a href=\"".encode_url($people["wife"]->getLinkUrl())."\" onclick=\"return familyNavLoad('".$people['wife']->getLinkUrl()."');\">";
 							print PrintReady($people["wife"]->getFullName());
 							print "<font size=\"1\"><br />" . $BirthYr . " - " . $DeathYr . "</font>";
 							print "</a>";
@@ -447,7 +447,7 @@ if (isset($_COOKIE['lastclick'])) {
 					$menu = new Menu("&nbsp;" . $child->getLabel() . "&nbsp;". "\n");
 					$menu->addClass("", "", "submenu");
 					$slabel = $this->print_pedigree_person_nav($child->getXref(), 2, !$this->controller->isPrintPreview(), 0, $personcount++);
-					$slabel .= PrintReady($spouselinks);
+					$slabel .= $spouselinks;
 					$submenu = new Menu($slabel);
 					$menu->addSubmenu($submenu);
 
@@ -463,7 +463,7 @@ if (isset($_COOKIE['lastclick'])) {
 						</td>
 						<td align="center" class="<?php print $this->controller->getPersonStyle($child); ?>">
 							<?php
-							print "<a href=\"".encode_url($child->getLinkUrl())."\" onclick=\"return familyNavLoad('".encode_url($child->getLinkUrl())."');\">";
+							print "<a href=\"".encode_url($child->getLinkUrl())."\" onclick=\"return familyNavLoad('".$child->getLinkUrl()."');\">";
 							print PrintReady($child->getFullName());
 							print "<font size=\"1\"><br />" . $BirthYr . " - " . $DeathYr . "</font>";
 							print "</a>";
@@ -580,7 +580,7 @@ function print_pedigree_person_nav($pid, $style=1, $show_famlink=true, $count=0,
 								}else{
 									$title = $husb->getXref()." :".$pgv_lang["indi_info"];
 								}
-								$parentlinks .= "<a href=\"".encode_url($husb->getLinkUrl())."\" onclick=\"return familyNavLoad('".encode_url($husb->getLinkUrl())."');\">";
+								$parentlinks .= "<a href=\"".encode_url($husb->getLinkUrl())."\" onclick=\"return familyNavLoad('".$husb->getLinkUrl()."');\">";
 								$parentlinks .= PrintReady($husb->getFullName());
 								$parentlinks .= "</a>";
 								$parentlinks .= "<br />";
@@ -602,7 +602,7 @@ function print_pedigree_person_nav($pid, $style=1, $show_famlink=true, $count=0,
 								}else{
 									$title = $wife->getXref()." :".$pgv_lang["indi_info"];
 								}
-								$parentlinks .= "<a href=\"".encode_url($wife->getLinkUrl())."\" onclick=\"return familyNavLoad('".encode_url($wife->getLinkUrl())."');\">";
+								$parentlinks .= "<a href=\"".encode_url($wife->getLinkUrl())."\" onclick=\"return familyNavLoad('".$wife->getLinkUrl()."');\">";
 								$parentlinks .= PrintReady($wife->getFullName());
 								$parentlinks .= "</a>";
 								$parentlinks .= "<br />";
@@ -638,7 +638,7 @@ function print_pedigree_person_nav($pid, $style=1, $show_famlink=true, $count=0,
 									}else{
 										$title = $husb->getXref()." :".$pgv_lang["indi_info"];
 									}
-									$parentlinks .= "<a href=\"".encode_url($husb->getLinkUrl())."\" onclick=\"return familyNavLoad('".encode_url($husb->getLinkUrl())."');\">";
+									$parentlinks .= "<a href=\"".encode_url($husb->getLinkUrl())."\" onclick=\"return familyNavLoad('".$husb->getLinkUrl()."');\">";
 									$parentlinks .= PrintReady($husb->getFullName());
 									$parentlinks .= "</a>";
 									$parentlinks .= "<br />";
@@ -662,7 +662,7 @@ function print_pedigree_person_nav($pid, $style=1, $show_famlink=true, $count=0,
 									}else{
 										$title = $wife->getXref()." :".$pgv_lang["indi_info"];
 									}
-									$parentlinks .= "<a href=\"".encode_url($wife->getLinkUrl())."\" onclick=\"return familyNavLoad('".encode_url($wife->getLinkUrl())."');\">";
+									$parentlinks .= "<a href=\"".encode_url($wife->getLinkUrl())."\" onclick=\"return familyNavLoad('".$wife->getLinkUrl()."');\">";
 									$parentlinks .= PrintReady($wife->getFullName());
 									$parentlinks .= "</a>";
 									$parentlinks .= "<br />";
@@ -693,7 +693,7 @@ function print_pedigree_person_nav($pid, $style=1, $show_famlink=true, $count=0,
 								}else{
 									$title = $spouse->getXref()." :".$pgv_lang["indi_info"];
 								}
-								$spouselinks .= "<a href=\"".encode_url($spouse->getLinkUrl())."\" onclick=\"return familyNavLoad('".encode_url($spouse->getLinkUrl())."');\">";
+								$spouselinks .= "<a href=\"".encode_url($spouse->getLinkUrl())."\" onclick=\"return familyNavLoad('".$spouse->getLinkUrl()."');\">";
 								$spouselinks .= PrintReady($spouse->getFullName());
 								$spouselinks .= "</a>";
 								if ($spouse->getFullName() != "") {
@@ -708,7 +708,7 @@ function print_pedigree_person_nav($pid, $style=1, $show_famlink=true, $count=0,
 								$persons="Yes";
 									$title = $pgv_lang["indi_info"].": ".$child->getXref();
 									$spouselinks .= "<li>";
-									$spouselinks .= "<a href=\"".encode_url($child->getLinkUrl())."\" onclick=\"return familyNavLoad('".encode_url($child->getLinkUrl())."');\">";
+									$spouselinks .= "<a href=\"".encode_url($child->getLinkUrl())."\" onclick=\"return familyNavLoad('".$child->getLinkUrl()."');\">";
 									$spouselinks .= PrintReady($child->getFullName());
 									$spouselinks .= "</a>";
 									$spouselinks .= "</li>\n";
