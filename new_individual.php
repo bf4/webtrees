@@ -96,6 +96,7 @@ function resize_content_div(i) {
 <script type="text/javascript" src="js/jquery/jquery-ui-1.7.1.custom.min.js"></script>
 <script type="text/javascript">
 //<![CDATA[
+  var selectedTab = 0;
   jQuery.noConflict();
   jQuery(document).ready(function(){
     jQuery("#tabs").tabs({ cache: true });
@@ -105,6 +106,7 @@ function resize_content_div(i) {
 			autoHeight: false
 		});
   jQuery('#tabs').bind('tabsshow', function(event, ui) {
+	  selectedTab = jQuery('#tabs').tabs('option', 'selected');
 	<?php
 	foreach($controller->modules as $mod) {
 		if ($mod->hasTab() && $mod->getTab()) {
@@ -117,7 +119,7 @@ function resize_content_div(i) {
 ';
 			}
 		}
-	} 
+	}
 	?>
   });
   });
@@ -210,7 +212,7 @@ function resize_content_div(i) {
 		if($SHOW_COUNTER && (empty($SEARCH_SPIDER))) {
 			//print indi counter only if displaying a non-private person
 			require './includes/hitcount.php';
-			echo "<br />{$pgv_lang["hit_count"]} {$hitCount}";
+			echo "<br />{$pgv_lang["hit_count"]} {$hitCount}<br />";
 		}
 		// if individual is a remote individual
 		// if information for this information is based on a remote site
