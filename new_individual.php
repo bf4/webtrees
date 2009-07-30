@@ -96,17 +96,21 @@ function resize_content_div(i) {
 <script type="text/javascript" src="js/jquery/jquery-ui-1.7.1.custom.min.js"></script>
 <script type="text/javascript">
 //<![CDATA[
-  var selectedTab = 0;
-  jQuery.noConflict();
-  jQuery(document).ready(function(){
-    jQuery("#tabs").tabs({ cache: true });
-    jQuery("#navigation").accordion({
+	var selectedTab = 0;
+	jQuery.noConflict();	
+	jQuery(document).ready(function(){
+	jQuery("#tabs").tabs({ cache: true });
+	jQuery("#navigation").accordion({
 			collapsible: true,
 			active: "h3:last",
 			autoHeight: false
 		});
-  jQuery('#tabs').bind('tabsshow', function(event, ui) {
-	  selectedTab = jQuery('#tabs').tabs('option', 'selected');
+	
+    jQuery('#tabs').bind('select', function(event, ui) {
+		selectedTab = jQuery('#tabs').tabs('option', 'selected');
+    });
+    
+	jQuery('#tabs').bind('tabsshow', function(event, ui) {
 	<?php
 	foreach($controller->modules as $mod) {
 		if ($mod->hasTab() && $mod->getTab()) {
