@@ -210,6 +210,16 @@ class MenuBar
 	static function &getChartsMenu($rootid='',$myid='') {
 		global $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $pgv_lang, $SEARCH_SPIDER;
 		global $PEDIGREE_FULL_DETAILS, $PEDIGREE_LAYOUT;
+		global $controller;
+		
+		$style = "top";
+		if ($rootid) $style = "sub";
+		if (isset($controller)) {
+			if (!$rootid) {
+				if (isset($controller->pid)) $rootid = $controller->pid;
+				if (isset($controller->rootid)) $rootid = $controller->rootid;
+			}
+		}
 
 		if ($TEXT_DIRECTION=="rtl") $ff="_rtl"; else $ff="";
 		if (!empty($SEARCH_SPIDER)) {
@@ -222,8 +232,8 @@ class MenuBar
 
 		//-- main charts menu item
 		$link = "pedigree.php?ged={$GEDCOM}&show_full={$showFull}&talloffset={$showLayout}";
-		if ($rootid) {
-			$link .= "&rootid={$rootid}";
+		if ($rootid) $link .= "&rootid={$rootid}";
+		if ($style=="sub") {
 			$menu = new Menu($pgv_lang["charts"], encode_url($link));
 			if (!empty($PGV_IMAGES["pedigree"]["small"]))
 				$menu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["pedigree"]["small"]);
@@ -423,12 +433,28 @@ class MenuBar
 		global $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $pgv_lang;
 		global $SHOW_SOURCES, $MULTI_MEDIA, $SEARCH_SPIDER;
 		global $ALLOW_CHANGE_GEDCOM;
+		global $controller;
+		
+		$style = "top";
+		if ($surname) $style = "sub";
+		if (isset($controller)) {
+			if (!$surname) {
+				if (isset($controller->indi)) {
+					list($surname)=explode(',', $controller->indi->getSortName());
+				}
+				if (isset($controller->rootid)) {
+					$person = Person::getInstance($controller->rootid);
+					list($surname)=explode(',', $person->getSortName());
+				}
+			}
+		}
+		
 		if ($TEXT_DIRECTION=="rtl") $ff="_rtl"; else $ff="";
 
 		if (!empty($SEARCH_SPIDER)) { // Only want the indi list for search engines.
 			//-- main lists menu item
 			$link = "indilist.php?ged={$GEDCOM}";
-			if ($surname) {
+			if ($style=="sub") {
 				$link .= "&surname={$surname}";
 				$menu = new Menu($pgv_lang["lists"], encode_url($link));
 				if (!empty($PGV_IMAGES["indis"]["small"]))
@@ -456,7 +482,7 @@ class MenuBar
 		}
 		//-- main lists menu item
 		$link = "indilist.php?ged=".$GEDCOM;
-		if ($surname) {
+		if ($style=="sub") {
 			$link .= "&surname=".$surname;
 			$menu = new Menu($pgv_lang["lists"], encode_url($link));
 			if (!empty($PGV_IMAGES["indis"]["small"]))
@@ -614,6 +640,21 @@ class MenuBar
 	static function &getReportsMenu($pid="", $famid="") {
 		global $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $pgv_lang;
 		global $LANGUAGE, $PRIV_PUBLIC, $PRIV_USER, $PRIV_NONE, $PRIV_HIDE, $SEARCH_SPIDER;
+		global $controller;
+		
+		$style = "top";
+		if ($pid || $famid) $style = "sub";
+		if (isset($controller)) {
+			if (!$pid) {
+				if (isset($controller->pid)) $pid = $controller->pid;
+				if (isset($controller->rootid)) $pid = $controller->rootid;
+			}
+			if (!$famid) {
+				if (isset($controller->famid)) $famid = $controller->famid;
+			}
+		}
+		
+		
 		if ($TEXT_DIRECTION=="rtl") $ff="_rtl"; else $ff="";
 		if ((!file_exists("reportengine.php")) || (!empty($SEARCH_SPIDER))) {
 			$menu = new Menu("", "", "");
@@ -622,7 +663,7 @@ class MenuBar
 			}
 
 		//-- main reports menu item
-		if ($pid || $famid) {
+		if ($style=="sub") {
 			$menu = new Menu($pgv_lang["reports"], "#");
 			if (!empty($PGV_IMAGES["reports"]["small"]))
 				$menu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["reports"]["small"]);
@@ -670,7 +711,7 @@ class MenuBar
 				// family report
 				else if ($famid && $report["icon"]=="sfamily") $menu->addSubmenu($submenu);
 				// default
-				else if (empty($pid) && empty($famid)) $menu->addSubmenu($submenu);
+				else if ($style=="top") $menu->addSubmenu($submenu);
 			}
 		}
 		return $menu;

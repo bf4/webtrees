@@ -128,15 +128,22 @@ function resize_content_div(i) {
 #indi_main_blocks {
 	clear: none;
 	float: left;
-	width: 75%;
+	width: 78%;
 }
 #indi_small_blocks {
 	clear: none;
 	float: right;
-	width: 24%;
+	width: 20%;
+	margin: 5px 5px 5px 5px;
 }
 </style>
 <div id="indi_main_blocks">
+<div id="indi_top">
+		<table class="width100"><tr><td>
+		<?php if ($controller->canShowHighlightedObject()) { ?>
+			<?php echo $controller->getHighlightedObject(); ?>
+		<?php } ?>
+		</td><td valign="bottom">
 		<?php if ((empty($SEARCH_SPIDER))&&($controller->accept_success)) echo "<b>".$pgv_lang["accept_successful"]."</b><br />"; ?>
 		<?php if ($controller->indi->isMarkedDeleted()) echo "<span class=\"error\">".$pgv_lang["record_marked_deleted"]."</span>"; ?>
 		<span class="name_head">
@@ -153,10 +160,11 @@ function resize_content_div(i) {
 				}
 			}
 		?>
-		</span><br />
+		</span><br /><br />
 		<?php if (strlen($controller->indi->getAddName()) > 0) echo "<span class=\"name_head\">".PrintReady($controller->indi->getAddName())."</span><br />"; ?>
-		<?php if ($controller->indi->canDisplayDetails()) { ?>
+		
 		<table><tr>
+		<?php if ($controller->indi->canDisplayDetails()) { ?>
 		<?php
 			$col=0; $maxcols=7; // 4 with data and 3 spacers
 			$globalfacts=$controller->getGlobalFacts();
@@ -219,10 +227,11 @@ function resize_content_div(i) {
 		/*else
 			echo("This is a local individual.");*/
 	}
-	
-		
 	?>
+	<br />
 	
+	</td>
+	</tr></table>
 <?php
 foreach($controller->modules as $mod) {
 	if ($mod->hasTab() && $mod->getTab()) {
@@ -230,6 +239,7 @@ foreach($controller->modules as $mod) {
 	}
 } 
 ?>
+</div>
 <div id="tabs">
 <ul>
 	<?php
@@ -263,6 +273,10 @@ foreach($controller->modules as $mod) {
 </div> <!--  end column 1 -->
 
 <div id="indi_small_blocks">
+<?php 
+	if ((!$controller->isPrintPreview())&&(empty($SEARCH_SPIDER))) {
+		$showFull = ($PEDIGREE_FULL_DETAILS) ? 1 : 0;
+	?>
 		<div class="accesskeys">
 			<a class="accesskeys" href="<?php echo "pedigree.php?rootid=$pid&amp;show_full=$showFull";?>" title="<?php echo $pgv_lang["pedigree_chart"] ?>" tabindex="-1" accesskey="<?php echo $pgv_lang["accesskey_individual_pedigree"]; ?>"><?php echo $pgv_lang["pedigree_chart"] ?></a>
 			<a class="accesskeys" href="<?php echo "descendancy.php?pid=$pid&amp;show_full=$showFull";?>" title="<?php echo $pgv_lang["descend_chart"] ?>" tabindex="-1" accesskey="<?php echo $pgv_lang["accesskey_individual_descendancy"]; ?>"><?php echo $pgv_lang["descend_chart"] ?></a>
@@ -279,81 +293,43 @@ foreach($controller->modules as $mod) {
 			}
 		?>
 		</div>
-		<table align="center">
-		<?php if ($controller->canShowHighlightedObject()) { ?>
-		<tr><td class="center" align="center">
-			<?php echo $controller->getHighlightedObject(); ?>
-		</td></tr>
-		<?php } ?>
-		<tr><td>
-		<div id="navigation" class="<?php echo $TEXT_DIRECTION; ?> noprint">
-			<?php 
-			//-- get charts menu from menubar
-			$menubar = new MenuBar();
-			$menu = $menubar->getChartsMenu($controller->pid); 
-			?>
-		<h3><a href="#"><?php echo $menu->label; ?></a></h3>
-		<div>
-			<ul class="<?php echo $TEXT_DIRECTION; ?>">
-				<?php
-				echo $menu->getMenuAsList();
+		<?php if (!$PGV_MENUS_AS_LISTS) {?>
+		<table class="sublinks_table width100" cellspacing="4" cellpadding="0">
+			<tr>
+				<td class="list_label <?php echo $TEXT_DIRECTION; ?>" colspan="5"><?php echo $pgv_lang["indis_charts"]; ?></td>
+			</tr>
+			<tr>
+				<td class="sublinks_cell <?php echo $TEXT_DIRECTION; ?>">
+		<?php } else { ?>
+		<div id="optionsmenu" class="sublinks_table">
+			<div class="list_label <?php echo $TEXT_DIRECTION; ?>"><?php echo $pgv_lang["indis_charts"]; ?></div>
+				<ul class="sublinks_cell <?php echo $TEXT_DIRECTION; ?>">
+		<?php } 
+				//-- get charts menu from menubar
+				$menubar = new MenuBar();
+				if ($controller->userCanEdit()) {
 				?>
-			</ul>
-		</div>
-		<?php 
-			list($surname)=explode(',', $controller->indi->getSortName());
-			if (!$surname) {
-				$surname='@N.N.'; // TODO empty surname is not the same as @N.N.
-			}
-			$menu = $menubar->getListsMenu($surname); 
-		?>
-		<h3><a href="#"><?php echo $menu->label; ?></a></h3>
-		<div>
-			<ul class="<?php echo $TEXT_DIRECTION; ?>">
-				<?php 
-					echo $menu->getMenuAsList();
-				?>
-			</ul>
-		</div>
-			<?php 
-			if (file_exists("reports/individual.xml")) {
-					//-- get reports menu from menubar
-					$menu = $menubar->getReportsMenu($controller->pid); 
-				?>
-				<h3><a href="#"><?php echo $menu->label; ?></a></h3>
-				<div>
-				<ul class="<?php echo $TEXT_DIRECTION; ?>">
-					<?php
-					echo $menu->getMenuAsList();
-				?>
-				</ul>
-				</div>
-			<?php }
-			if ($controller->userCanEdit()) {
-				$menu = $controller->getEditMenu(); 
-				?>
-				<h3><a href="#"><?php echo $menu->label; ?></a></h3>
-				<div>
-				<ul class="<?php echo $TEXT_DIRECTION; ?>">
-				<?php
-	 				echo $menu->getMenuAsList();
-				?>
-				</ul>
-				</div>
-				<?php }
+				</<?php if (!$PGV_MENUS_AS_LISTS) {?>td><td<?php } else { ?>ul><ul<?php }?> class="sublinks_cell <?php echo $TEXT_DIRECTION; ?>">
+				<?php $menu = $controller->getEditMenu(); 
+				$menu->printMenu();
+				}
 				if ($controller->canShowOtherMenu()) {
-					$menu = $controller->getOtherMenu(); 
 				?>
-				<h3><a href="#"><?php echo $menu->label; ?></a></h3>
-				<div>
-				<ul class="<?php echo $TEXT_DIRECTION; ?>">
-				<?php 
-				echo $menu->getMenuAsList();
+				</<?php if (!$PGV_MENUS_AS_LISTS) {?>td><td<?php } else { ?>ul><ul<?php }?> class="sublinks_cell <?php echo $TEXT_DIRECTION; ?>">
+				<?php $menu = $controller->getOtherMenu(); 
+				$menu->printMenu();
+				}
 				?>
+		<?php if (!$PGV_MENUS_AS_LISTS) {?>
+				</td>
+				<td class="sublinks_cell <?php echo $TEXT_DIRECTION; ?> width30"><br /></td>
+			</tr>
+		</table><br />
+		<?php } else { ?>
 				</ul>
-				</div>
-				<?php }
-				?>
+		</div>
+		<?php } 
+			 } ?>
 <?php
 	// ==================== Start Details Tab Navigator ========================================
 	//if ($Fam_Navigator=="YES") {
@@ -364,9 +340,8 @@ foreach($controller->modules as $mod) {
 		//<b><?php print $pgv_lang["view_fam_nav_map"]; </b><br /><br />
 		//<b><?php print $pgv_lang["view_fam_nav_album"]; </b><br /><br />
 		?>
-		<h3><a href="#"><?php print $pgv_lang["view_fam_nav_details"]; ?></a></h3>
 		<div>
-			<table class="optionbox" cellpadding="0"><tr><td align="center">
+			<table class="optionbox width100" cellpadding="0"><tr><td align="center">
 			<b><?php print $pgv_lang["view_fam_nav_details"]; ?></b><br /><br />
 			<?php if ($controller->static_tab) echo $controller->static_tab->getTab()->getContent(); ?>
 			<br />
@@ -376,8 +351,6 @@ foreach($controller->modules as $mod) {
 	//}
 	// ==================== End Details Tab Navigator ========================================= */
 ?>
-	</div>
-	</td></tr></table>
 </div> <!--  end column 2 -->
 
 <?php 
