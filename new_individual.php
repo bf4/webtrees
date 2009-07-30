@@ -324,7 +324,6 @@ foreach($controller->modules as $mod) {
 				?>
 		<?php if (!$PGV_MENUS_AS_LISTS) {?>
 				</td>
-				<td class="sublinks_cell <?php echo $TEXT_DIRECTION; ?> width30"><br /></td>
 			</tr>
 		</table><br />
 		<?php } else { ?>
