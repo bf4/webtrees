@@ -289,7 +289,7 @@ function UTF8_stristr($haystack, $needle, $offset=0) {
 	if ($haystackLen==0 || $needleLen==0) return false;
 
 	$stringPos = UTF8_strpos(UTF8_strtoupper($UTF8_haystack), UTF8_strtoupper($UTF8_needle, 0));
-	if ($stringpos===false) return false;
+	if ($stringPos===false) return false;
 
 	$result = array_slice($UTF8_haystack, $stringPos);
 
