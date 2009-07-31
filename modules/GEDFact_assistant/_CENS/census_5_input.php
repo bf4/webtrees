@@ -63,9 +63,10 @@ echo '<script src="modules/GEDFact_assistant/_CENS/js/census_5_input.js" type="t
 <script type="text/javascript">
 function init_dw_Scroll() {
     var wndo = new dw_scrollObj('wn', 'lyr1', 't1');
+ //   var wndo2 = new dw_scrollObj('wn2', 'lyr2', 't2');
     wndo.setUpScrollbar("dragBar", "track", "h", 1, 1);
-	wndo.setUpScrollbar("dragBar2", "track2", "v", 1, 1);
     wndo.setUpScrollControls('scrollbar');
+	wndo.setUpScrollbar("dragBar2", "track2", "v", 1, 1);
     wndo.setUpScrollControls('scrollbar2');
 }
 
@@ -97,13 +98,13 @@ if ( dw_scrollObj.isSupported() ) {
 				<tr>
 					<td align="center" colspan="8">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 					<td align="center">
-						<input type="button" value="Add/Insert Blank Row" onclick="insertRowToTable('','','','','','','','','','');" />
+						<input type="button" value="Add/Insert Blank Row" onclick="insertRowToTable('','','','','','','Age','','','');" />
 					<td align="center" colspan="3">&nbsp;</td>
 					<td align="right">
-						<font size="1">Add&nbsp;</font><br>
-						<input valign="top" align="right" type="radio" name="totallyrad" value="0" checked="checked" /><font size="1"></font>
+						<font size="1">Add</font><br>
+						<input  type="radio" name="totallyrad" value="0" checked="checked" />
 					</td>
-					<td></td>
+					<td width="2%"><font size="1"></font></td>
 				</tr>
 			</table>
 			
@@ -126,26 +127,28 @@ if ( dw_scrollObj.isSupported() ) {
 						<th id=".b.Mother Birthplace" width="9%" class="descriptionbox" style="border: 0px solid transparent;" align="left"><font size=1>Mother Birthplace</font></th>
 					<?php  } ?>
 					<th class="descriptionbox" style="border: 0px solid transparent;" align="center"><font size=1>Del</font></th>
-					<th width="3%" class="descriptionbox" style="border: 0px solid transparent;" align="left"><font size=1>&nbsp;Ins</font></th>
-					<th width="2%" class="descriptionbox" style="border: 0px solid transparent;" align="left"><font size=1>#</font></th>
+					<th width="3%" class="descriptionbox" style="border: 0px solid transparent;" align="center"><font size=1>Ins</font></th>
+					<th width="2%" class="descriptionbox" style="border: 0px solid transparent;" align="center"><font size=1>#</font></th>
 				</tr>
 				</thead>
-				<tbody></tbody>
+
+				<tbody>
+				</tbody>
+				
 			</table>
-			
 			</td>
 			
 			<!-- spacing required for optimal view horizontally -->
-			<td width="176">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-			<td width="176">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-			<td width="176">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+			<td >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+			<td >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+			<td >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+			<td >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 		</tr>
 		<!-- spacing required for optimal view vertically -->
-		<tr><td height="176"> <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /></td></tr>
-		<tr><td height="176"> <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /></td></tr>
-		<tr><td height="176"> <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /></td></tr>
-		
+		<tr><td height="276"> <br /><br /> </td></tr>
+		<tr><td height="276"> <br /><br /> </td></tr>
 	</table>
+	
 	</div> <!-- end lyr1 div -->
 </div>  <!-- end wn div -->
 </td>

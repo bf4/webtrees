@@ -71,17 +71,17 @@ if (window.focus) {win02.focus();}
 			<!--   ---- The proposed Census Text -------- -->
 			<table class="facts_table" width="60%" border=3>
 				<tr>
-					<td align="center" class="descriptionbox" colspan="1">
+					<td align="center" class="descriptionbox">
 						<input type="button" value="<?php echo $pgv_lang["page_help"]; ?>" onclick="javascript: help_window2(this.form)" />
 					</td>
-					<td align="center" class="descriptionbox" colspan="2">
+					<td align="left" class="descriptionbox" colspan="2">
 						<b> The Proposed Census Text </b>&nbsp;&nbsp;
 						<font size="1">
 						<input type="button" value="<?php echo $pgv_lang["preview"]; ?>" onclick="preview();" />
 						&nbsp;&nbsp; Click "Preview" to copy Input Fields Information.
 						</font>
 					</td>
-					<td align="center" class="descriptionbox" colspan="1">
+					<td align="center" class="descriptionbox" >
 					<?php
 						echo "<input type=\"submit\" value=\"".$pgv_lang["save"]."\" />";
 					?>
@@ -94,10 +94,10 @@ if (window.focus) {win02.focus();}
 						print_help_link("edit_SHARED_NOTE_help", "qm");
 					echo $pgv_lang["shared_note"];
 					echo "</td>";
-					echo "<td class=\"optionbox wrap\" ><center><textarea name=\"NOTE\" id=\"NOTE\" rows=\"20\" cols=\"112\"></textarea></center>";
+					echo "<td colspan=3 class=\"optionbox wrap\" ><center><textarea name=\"NOTE\" id=\"NOTE\" rows=\"20\" cols=\"112\"></textarea></center>";
 						print_specialchar_link("NOTE",true);
 					echo "</td>";
-					echo "<td class=\"facts_value wrap\" colspan=2></td>";
+					// echo "<td class=\"facts_value wrap\" colspan=2></td>";
 					?>
 				</tr>
 			</table>

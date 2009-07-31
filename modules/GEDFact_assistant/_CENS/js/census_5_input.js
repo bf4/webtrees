@@ -206,7 +206,7 @@ mbirthpl=birthpl;
 			var diffage=(1901-cyear);
 			age=(age2-diffage);
 		}else{
-		// age="Age"
+			age="";
 		}
 
 		// add the row ==================================================
@@ -261,6 +261,7 @@ mbirthpl=birthpl;
 		//	var cell_tra  = row.insertCell(14);			// text Radio
 		}else{
 			var cell_del = row.insertCell(13);			// Onclick = Delete Row
+				cell_del.setAttribute('align', 'center');
 			var cell_ra = row.insertCell(14);			// Radio button used for inserting a row, rather than adding at end of table)
 		}
 		var cell_15 = row.insertCell(15);	
