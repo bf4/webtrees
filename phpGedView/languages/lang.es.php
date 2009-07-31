@@ -1470,13 +1470,7 @@ $pgv_lang["ahnentafel_buried_m"]	= "recibió sepultura";			// male
 $pgv_lang["ahnentafel_buried_f"]	= "recibió sepultura";			// female
 $pgv_lang["ahnentafel_place"]		= " en ";				// place name follows this
 $pgv_lang["ahnentafel_no_details"]	= " pero los detalles son desconocidos";
-$pgv_lang["ahnentafel_on"]			= "en";
-
-//-- Descendency report
-$pgv_lang["son_of"]					= "hijo de";
-$pgv_lang["daughter_of"]			= "hija de";
-$pgv_lang["child_of"]				= "Hijo/a de ";
-$pgv_lang["children_of"]			= "Hijos/as de ";
+$pgv_lang["ahnentafel_on"]			= " ";
 
 //-- Changes report
 $pgv_lang["changes_report"]			= "Informe de cambios";
@@ -1486,6 +1480,10 @@ $pgv_lang["changes_accepted_tot"]	= "Cambios aceptados en total: ";
 //-- Descendancy report
 $pgv_lang["descend_report"]			= "Informe de descendientes";
 $pgv_lang["descendancy_header"]		= "Informe de descendientes para ";
+$pgv_lang["son_of"]					= "hijo de";
+$pgv_lang["daughter_of"]			= "hija de";
+$pgv_lang["child_of"]				= "Hijo/a de ";
+$pgv_lang["children_of"]			= "Hijos/as de ";
 
 $pgv_lang["family_group_report"]	= "Informe de grupo familiar";
 $pgv_lang["page"]					= "Página";
@@ -1518,6 +1516,7 @@ $pgv_lang["marrdate1"]				= "Comienzo del rango de fechas de matrimonio";
 $pgv_lang["marrdate2"]				= "Fin del rango de fechas de matrimonio";
 $pgv_lang["sort_by"]				= "Ordenar por";
 $pgv_lang["cemetery_report"]		= "Informe de cementerios";
+$pgv_lang["burialplace"]			= "El lugar de entierro contiene";
 
 $pgv_lang["cleanup"]				= "Limpieza";
 
