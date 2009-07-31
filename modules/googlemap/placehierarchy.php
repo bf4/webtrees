@@ -107,6 +107,44 @@ function get_placeid($place) {
 	return $place_id;
 }
 
+function get_p_id($place) {
+	global $TBLPREFIX;
+	$par = explode (",", $place);
+	$par = array_reverse($par);
+	$place_id = 0;
+	for($i=0; $i<count($par); $i++) {
+		$par[$i] = trim($par[$i]);
+		$placelist = create_possible_place_names($par[$i], $i+1);
+		foreach ($placelist as $key => $placename) {
+			$pl_id=
+				PGV_DB::prepare("SELECT p_id FROM {$TBLPREFIX}places WHERE p_level=? AND p_parent_id=? AND p_place ".PGV_DB::$LIKE." ? ORDER BY p_place")
+				->execute(array($i, $place_id, $placename))
+				->fetchOne();
+			if (!empty($pl_id)) break;
+		}
+		if (empty($pl_id)) break;
+		$place_id = $pl_id;
+	}
+	return $place_id;
+}
+
+function set_placeid_map($level, $parent) {
+	if (!isset($levelm)) {
+		$levelm=0;
+	}
+	$fullplace = "";
+	if ($level==0)
+		$levelm=0;
+	else {
+		for ($i=1; $i<=$level; $i++) {
+			$fullplace .= $parent[$level-$i].", ";
+		}
+		$fullplace = substr($fullplace,0,-2);
+		$levelm = get_p_id($fullplace);
+	}
+	return $levelm;
+}
+
 function set_levelm($level, $parent) {
 	if (!isset($levelm)) {
 		$levelm=0;
@@ -177,7 +215,7 @@ function print_how_many_people($level, $parent) {
 	$place_count_indi = 0;
 	$place_count_fam = 0;
 	if (!isset($parent[$level-1])) $parent[$level-1]="";
-	$p_id = set_levelm($level, $parent);
+	$p_id = set_placeid_map($level, $parent);
 	$indi = $stats->_statsPlaces('INDI', false, $p_id);
 	$fam = $stats->_statsPlaces('FAM', false, $p_id);
 	if (!empty($indi)) {
@@ -564,14 +602,19 @@ function map_scripts($numfound, $level, $parent, $linklevels, $placelevels, $pla
 			else if ($level>0){ //if unknown place display the upper level place
 				$placelevels = ", ".$pgv_lang["pl_unknown"].$placelevels;
 				$linklevels .= "&amp;parent[".$level."]=";
-				for ($i=1;$i<=$GM_MAX_NOF_LEVELS;$i++)
-				if (($level-$i)>=0 && isset($levelo[($level-$i)])) {
-					$placelist2=get_place_list_loc($levelo[($level-$i)], true);
-					foreach ($placelist2 as $place2) {
-						if ($place2['place']!="Unknown" || (($place2['lati'] != NULL) && ($place2['long'] != NULL))) {
-							if (isset ($levelo[$level-$i+1]) && $place2['place_id']==$levelo[$level-$i+1])
-								print_gm_markers($place2, ($level+1), $parent, $levelm, $linklevels, $placelevels, true);
+				$break = false;
+				for ($i=1;$i<=$GM_MAX_NOF_LEVELS;$i++) {
+					if (($level-$i)>=0 && isset($levelo[($level-$i)])) {
+						$placelist2=get_place_list_loc($levelo[($level-$i)], true);
+						foreach ($placelist2 as $place2) {
+							if ($place2['place']!="Unknown" || (($place2['lati'] != NULL) && ($place2['long'] != NULL))) {
+								if (isset ($levelo[$level-$i+1]) && $place2['place_id']==$levelo[$level-$i+1]) {
+									print_gm_markers($place2, ($level+1), $parent, $levelm, $linklevels, $placelevels, true);
+									$break = true;
+								}
+							}
 						}
+						if ($break) break;
 					}
 				}
 			}

@@ -10,6 +10,8 @@
 
 
 Version 4.2.x CA
+ - Merged: Merge changes r6007 - r6011 from the trunk. (windmillway)
+ - Add missing lists from Main Menu (yalnifj)
  - Changes to try and reduce overall size of pop-up window - It is still too big really. (windmillway)
  - Added: Minor progress with CA - scrolling facility. (windmillway)
  - Merged: Merge changes r5995 - r6006 from the trunk. (windmillway)
