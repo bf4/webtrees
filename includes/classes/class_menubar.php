@@ -841,7 +841,7 @@ class MenuBar
 	function getModuleMenus() {
 		if (!empty($this->modules)) return $this->modules;
 		$this->modules = array();
-		foreach (PGVModule::getActiveList(PGV_USER_ACCESS_LEVEL) as $mod) {
+		foreach (PGVModule::getActiveList('M', PGV_USER_ACCESS_LEVEL) as $mod) {
 			$menu = $mod->getMenu();
 			if ($menu) $this->modules[] = $mod->getMenu();
 		}

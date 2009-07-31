@@ -180,12 +180,12 @@ abstract class PGVModule {
 		return strcmp($a->getName(), $b->getName());
 	}
 
-	static function getActiveList($access = PGV_USER_ACCESS_LEVEL, $ged_id = PGV_GED_ID) {
+	static function getActiveList($type='A', $access = PGV_USER_ACCESS_LEVEL, $ged_id = PGV_GED_ID) {
 		global $TBLPREFIX;
 
 		$modules = array();
 		$statement=PGV_DB::prepare(
-			"SELECT * FROM {$TBLPREFIX}module JOIN {$TBLPREFIX}module_privacy ON mod_id=mp_mod_id WHERE mp_access>=? AND mp_file=?"
+			"SELECT * FROM {$TBLPREFIX}module JOIN {$TBLPREFIX}module_privacy ON mod_id=mp_mod_id WHERE mp_access>=? AND mp_type='{$type}' AND mp_file=?"
 		);
 		$statement->execute(array($access, $ged_id));
 		$entry = "";
