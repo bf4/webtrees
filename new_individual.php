@@ -29,13 +29,13 @@
 require './config.php';
 require './includes/controllers/new_individual_ctrl.php';
 
-// We have finished writing to $_SESSION, so release the lock
-session_write_close();
 $showFull = ($PEDIGREE_FULL_DETAILS) ? 1 : 0;
 
 $controller=new IndividualController();
 $controller->init();
 
+// We have finished writing to $_SESSION, so release the lock
+session_write_close();
 print_header($controller->getPageTitle());
 
 if (!$controller->indi->canDisplayName()) {
@@ -100,8 +100,9 @@ function resize_content_div(i) {
 	jQuery.noConflict();	
 	jQuery(document).ready(function(){
 	jQuery("#tabs").tabs({ cache: true });
+	var $tabs = jQuery('#tabs');
     jQuery('#tabs').bind('tabsshow', function(event, ui) {
-    	selectedTab = jQuery('#tabs').tabs('option', 'selected');
+    	if ($tabs) selectedTab = $tabs.tabs('option', 'selected');
 	<?php
 	foreach($controller->modules as $mod) {
 		if ($mod->hasTab() && $mod->getTab()) {

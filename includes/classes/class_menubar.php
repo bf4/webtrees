@@ -385,9 +385,9 @@ class MenuBar
 				$pids = array_unique($pids);
 				foreach ($pids as $key=>$pid) {
 					$person=Person::getInstance($pid);
-					if (($person && $pid!=$rootid) || empty($rootid)) {
+					if (($person && $pid!=$rootid) || empty($rootid) || !PGV_USER_ID) {
 						$link = "relationship.php?ged=".$GEDCOM;
-						if ($rootid) {
+						if ($rootid  && $person) {
 							$link .= "&pid1={$pid}&pid2={$rootid}&pretty=2&followspouse=1";
 							$label = $pgv_lang["relationship_chart"].": ".PrintReady(strip_tags($person->getFullName()));
 							$submenu = new Menu($label, encode_url($link));
