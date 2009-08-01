@@ -531,7 +531,7 @@ if ($controller->action == "general" || $controller->action == "soundex") {
 			print "<input type=\"checkbox\" ";
 			if (isset ($_REQUEST["$str"]))
 				print "checked=\"checked\" ";
-			print "value=\"yes\" name=\"".$str."\""." />".PrintReady(get_gedcom_setting($ged_id, 'title'), true)."<br />";
+			print "value=\"yes\" name=\"".$str."\""." /><span dir=$TEXT_DIRECTION>".PrintReady(get_gedcom_setting($ged_id, 'title'), true)."</span><br />";
 			$i ++;
 		}
 ?>
