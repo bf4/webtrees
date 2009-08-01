@@ -1189,11 +1189,11 @@ case 'update':
 //	// When $cens_pids is present, cycle through each individual concerned.
 //	foreach ($cens_pids as $pid) {
 		if (isset($pid)) {
-			$gedrec = find_gedcom_record($pid);
-			if (empty($gedrec)) $gedrec = find_updated_record($pid);
+			$gedrec = find_updated_record($pid);
+			if (empty($gedrec)) $gedrec = find_gedcom_record($pid);			
 		} else if (isset($famid)) {
-			$gedrec = find_gedcom_record($famid);
-			if (empty($gedrec)) $gedrec = find_updated_record($famid);
+			$gedrec = find_updated_record($famid);
+			if (empty($gedrec)) $gedrec = find_gedcom_record($famid);			
 		}
 		if (PGV_DEBUG) {
 			phpinfo(INFO_VARIABLES);
