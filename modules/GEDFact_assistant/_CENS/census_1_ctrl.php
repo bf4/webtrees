@@ -60,73 +60,38 @@ $currpid=$pid;
 <script src="modules/GEDFact_assistant/_CENS/js/dynamicoptionlist.js" type="text/javascript"></script>
 
 <?php
-echo "<table border=0><tr>";
-	echo "<td width=\"10%\" wrap=\"nowrap\">";
-	//	echo "<center><font size=\"2\"><b>".$censyear."&nbsp;".$ctry."&nbsp;".$factarray["CENS"]."</b></font></center>";
-	echo "</td>";
-	echo "<td width=\"25%\" wrap=\"nowrap\">";
-		echo "<center><font size=\"2\"><b>&nbsp;&nbsp; </font><font size=\"2\">";
-		echo " Head of Family &nbsp;&nbsp;</font><font size=\"2\">:";
-		echo " &nbsp;&nbsp;" . $wholename . "&nbsp; (" . $pid . ")";
-		echo "&nbsp;&nbsp;&nbsp;&nbsp;</font>";
-	echo "</td>";
-	echo "<td width=\"35%\">";
-		if ($summary) {
-			echo '<table><tr><td width="10"><center><br /></td><td valign="top" ><font size="1">', $summary, '</font></center></td></tr></table>';
-		}
-	echo "</td>";
-echo "</tr></table>";
-?>
-
-<table class="facts_table" width="100%" border=0>
-
-	<tr>
-		<td valign="top" width="60%">
-			<?php 
-			//-- Census & Source Information Area ============================================= 
+	// Header of assistant window
+	echo "<div style=\"text-align:left; margin-top:5px;\">";
+		echo "<div style=\"float:left; margin-left:15px; font-weight:bold;\">";
+			echo "Head of Family &nbsp;&nbsp;:";
+			echo " &nbsp;&nbsp;" . $wholename . "&nbsp; (" . $pid . ")";
+		echo "</div>";
+		echo "<div style=\"float:right;\">";
+			if ($summary) {
+				echo "<div class=\"center\" style=\"text-align:left;\"/>". $summary. "</div>";
+			}
+		echo "</div>";
+	echo "</div>";
+	//-- Census & Source Information Area ============================================= 
+	echo "<div style=\" clear:both; float:left; width:75%; margin: 5px 0 0 5px;\">";
+		echo "<div>";
 			include('modules/GEDFact_assistant/_CENS/census_2_source_input.php');
-			?>
-		</td>
-		
-		<td rowspan="2" valign="top" width ="220">
-			<?php 
-			//-- Search  and Add Family Members Area ========================================= 
-			include('modules/GEDFact_assistant/_CENS/census_3_search_add.php'); ?>
-		</td>
-	</tr>
-	<tr>
-		<td align="left" valign="bottom" width="80%">
-			<?php
-			//-- Proposed Census Text Area ==================================================
+		echo "</div>";
+		//-- Proposed Census Text Area ==================================================
+		echo "<div style=\"float:left; width:100%;\">";
 			include('modules/GEDFact_assistant/_CENS/census_4_text.php');
-			?>
-		</td>
-	</tr>
-	<tr>
-		<td colspan=2 align="center" width="100%">
-			<?php
-			//-- Census Text Input Area ===========================================================
-			?>
-			<br />
-			<table width="100%" border="0" cellspacing="0" cellpadding="0">
-				<tr>
-					<td colspan="2" align="center">
-						<table width="100%" border='3' cellspacing="0" cellpadding="0">
-							<tr>
-								<td colspan="12" id="5678" class="option_box" style="border: 0px solid transparent;">
-									<?php
-									include('modules/GEDFact_assistant/_CENS/census_5_input.php');
-									?> 
-								</td>
-							</tr>
-						</table>
-					</td>
-				</tr>
-			</table>
-		</td>
-	</tr>
+		echo "</div>";
+	echo "</div>";
+	//-- Search  and Add Family Members Area ========================================= 
+	echo "<div style=\"float:right; margin: 5px 5px 0 0;\">";
+		include('modules/GEDFact_assistant/_CENS/census_3_search_add.php'); 
+	echo "</div>";
+	//-- Census Text Input Area ===========================================================
+	echo "<div style=\"clear:both; float:left; margin: 5px 0 0 5px;\">";
+		include('modules/GEDFact_assistant/_CENS/census_5_input.php');
+	echo "</div>";
+?> 
 
-</table>
 
 
 <script language="JavaScript" type="text/javascript">

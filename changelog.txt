@@ -10,6 +10,7 @@
 
 
 Version 4.2.x CA
+ - Move to tableless design -kiwipgv- (windmillway)
  - Merged: Merge changes r6012 - r6033 from the trunk. (windmillway)
  - Merged: Merge changes r6007 - r6011 from the trunk. (windmillway)
  - Add missing lists from Main Menu (yalnifj)

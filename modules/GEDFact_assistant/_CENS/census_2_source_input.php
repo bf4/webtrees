@@ -102,42 +102,29 @@ global $pgv_lang, $TEXT_DIRECTION;
 	
 </script>
 
-			<table class="facts_table" cellpadding="0px" width="100%" border=3>
-				<tr>
-					<td align="left" class="descriptionbox" width="10%"><font size=1>Census:</font></td>
-					<td align="left" class="facts_value" width="20%">
-					<script type="text/javascript">
-						var censyear = new DynamicOptionList();
-						censyear.addDependentFields("ctry","censyear");
-						censyear.forValue("UK").addOptions( "choose", "1841", "1851", "1861", "1871", "1881", "1891", "1901", "1911", "1921" );
-						censyear.forValue("USA").addOptions( "choose", "1790", "1800", "1810", "1820", "1830", "1840", "1850", "1860", "1870", "1880", "1890", "1900", "1910", "1920", "1930");
-						censyear.forValue("UK").setDefaultOptions("choose");
-						censyear.forValue("USA").setDefaultOptions("1930");
-					</script>
-					<select id="censCtry" name="ctry" style="font-size: 10px;" >
-						<option value="UK" >UK</option>
-						<option value="USA">USA</option>
-					</select>
-					<select onchange="if( this.options[this.selectedIndex].value!='') {
-								changeYear(this.options[this.selectedIndex].value);
-								// alert('Change Headers');
-								//	change_header();
-							}" 
-							id="censYear" name="censyear" style="font-size: 10px;" >
-						<script type="text/javascript">
-						// censyear.printOptions("censyear");
-						</script>
-					</select>
-					<input type="hidden" id="curryear" value="" />
-					</td>
-					
-					<td align="left" class="descriptionbox" width="15%"><font size=1>Shared Note Title:</font></td>
-					<td align="left" class="facts_value" width="50%">
-					<script type="text/javascript">
-					 document.writeln('<input id="Titl" name="Titl" type="text" size="90" STYLE="font-size: 10px;" value="<?php echo "Census Transcription - ".$wholename." - ";?>" />');
-					</script>
-					</td>
-					
-					</tr>
-			</table>
+<div class="optionbox" style="text-align:left; padding:3px; border:3px outset; margin-bottom:3px;">
+	<span style="font-weight:bold;">Census:&nbsp;</span>
+	<script type="text/javascript">
+		var censyear = new DynamicOptionList();
+		censyear.addDependentFields("ctry","censyear");
+		censyear.forValue("UK").addOptions( "choose", "1841", "1851", "1861", "1871", "1881", "1891", "1901", "1911", "1921" );
+		censyear.forValue("USA").addOptions( "choose", "1790", "1800", "1810", "1820", "1830", "1840", "1850", "1860", "1870", "1880", "1890", "1900", "1910", "1920", "1930");
+		censyear.forValue("UK").setDefaultOptions("choose");
+		censyear.forValue("USA").setDefaultOptions("1930");
+	</script>
+	<select id="censCtry" name="ctry">
+		<option value="UK" >UK</option>
+		<option value="USA">USA</option>
+	</select>
+	<select onchange="if( this.options[this.selectedIndex].value!='') {
+		changeYear(this.options[this.selectedIndex].value);
+		}" 
+		id="censYear" name="censyear">
+	</select>
+	<input type="hidden" id="curryear" value="" />
+	<span style="font-weight:bold; margin-left:10px;">Shared Note Title:&nbsp;</span>
+	<script type="text/javascript">
+		 document.writeln('<input id="Titl" name="Titl" type="text" size="90" STYLE="font-size:10px;" value="<?php echo "Census Transcription - ".$wholename." - ";?>" />');
+	</script>
+</div>
 			

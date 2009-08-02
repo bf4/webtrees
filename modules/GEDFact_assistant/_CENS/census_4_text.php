@@ -68,37 +68,26 @@ if (window.focus) {win02.focus();}
 }
 </script>
 
-			<!--   ---- The proposed Census Text -------- -->
-			<table class="facts_table" width="60%" border=3>
-				<tr>
-					<td align="center" class="descriptionbox">
-						<input type="button" value="<?php echo $pgv_lang["page_help"]; ?>" onclick="javascript: help_window2(this.form)" />
-					</td>
-					<td align="left" class="descriptionbox" colspan="2">
-						<b> The Proposed Census Text </b>&nbsp;&nbsp;
-						<font size="1">
-						<input type="button" value="<?php echo $pgv_lang["preview"]; ?>" onclick="preview();" />
-						&nbsp;&nbsp; Click "Preview" to copy Input Fields Information.
-						</font>
-					</td>
-					<td align="center" class="descriptionbox" >
-					<?php
-						echo "<input type=\"submit\" value=\"".$pgv_lang["save"]."\" />";
-					?>
-					</td>
-				</tr>
-				
-				<tr>
-					<?php
-					echo "<td class=\"descriptionbox\" ".$TEXT_DIRECTION." wrap=\"nowrap\">";
-						print_help_link("edit_SHARED_NOTE_help", "qm");
-					echo $pgv_lang["shared_note"];
-					echo "</td>";
-					echo "<td colspan=3 class=\"optionbox wrap\" ><center><textarea name=\"NOTE\" id=\"NOTE\" rows=\"20\" cols=\"112\"></textarea></center>";
-						print_specialchar_link("NOTE",true);
-					echo "</td>";
-					// echo "<td class=\"facts_value wrap\" colspan=2></td>";
-					?>
-				</tr>
-			</table>
-			
+<!--   ---- The proposed Census Text -------- -->
+<div class="optionbox" style="text-align:left; padding:3px; border:3px outset; margin-bottom:3px;">
+	<span style="margin:0 5px 0 5px;"><input type="button" value="<?php echo $pgv_lang["page_help"]; ?>" onclick="javascript: help_window2(this.form)" /></span>
+	<span style="font-weight:bold;">The Proposed Census Text&nbsp;&nbsp;</span>
+	<span style="margin:0 5px 0 5px;"><input type="button" value="<?php echo $pgv_lang["preview"]; ?>" onclick="preview();" /></span>
+	<span class="font10">Click "Preview" to copy Input Fields Information.</span>
+	<span style="margin:0 0 5px 25px;"><input type="submit" value="<?php echo $pgv_lang["save"]; ?>" /></span>
+	<br /><br />
+	<span class="descriptionbox width15 nowrap <?php $TEXT_DIRECTION; ?>">
+		<?php
+			print_help_link("edit_SHARED_NOTE_help", "qm");
+			echo $pgv_lang["shared_note"];
+		?>
+	</span>
+	<div class="optionbox wrap center">
+		<textarea name="NOTE" id="NOTE" rows="20" style="width:98%"></textarea><br />
+		<?php print_specialchar_link("NOTE",true); ?>
+	</div>
+</div>
+
+
+
+
