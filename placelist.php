@@ -167,7 +167,6 @@ if ($display=="hierarchy") {
 						break;
 					}
 				}
-				//if (strlen($country)!=3) $country=substr($country,0,3);	//Indiana -> IND (India)
 			}
 			$mapname = $country;
 			$areaname = $parent[0];
@@ -187,7 +186,7 @@ if ($display=="hierarchy") {
 				}
 				// Transform certain two-byte UTF-8 letters with diacritics
 				// to their 1-byte ASCII analogues without diacritics
-				$mapname = str_replace(array("?", "Ó", "?", "?", "?", "?", "?", "?", "?", "?", "ó", "?", "?", "?", "?", "?", "?", "?"), array("E", "O", "A", "S", "L", "Z", "Z", "C", "N", "e", "o", "a", "s", "l", "z", "z", "c", "n"), $mapname);
+				$mapname = str_replace(array("Ę", "Ó", "Ą", "Ś", "Ł", "Ż", "Ź", "Ć", "Ń", "ę", "ó", "ą", "ś", "ł", "ż", "ź", "ć", "ń"), array("E", "O", "A", "S", "L", "Z", "Z", "C", "N", "e", "o", "a", "s", "l", "z", "z", "c", "n"), $mapname);
 				$mapname = str_replace(array("Š", "Œ", "Ž", "š", "œ", "ž", "Ÿ", "¥", "µ", "À", "Á", "Â", "Ã", "Ä", "Å", "Æ", "Ç", "È", "É", "Ê", "Ë", "Ì", "Í", "Î", "Ï", "Ð", "Ñ", "Ò", "Ó", "Ô", "Õ", "Ö", "Ø", "Ù", "Ú", "Û", "Ü", "Ý", "ß", "à", "á", "â", "ã", "ä", "å", "æ", "ç", "è", "é", "ê", "ë", "ì", "í", "î", "ï", "ð", "ñ", "ò", "ó", "ô", "õ", "ö", "ø", "ù", "ú", "û", "ü", "ý", "ÿ"), array("S", "O", "Z", "s", "o", "z", "Y", "Y", "u", "A", "A", "A", "A", "A", "A", "A", "C", "E", "E", "E", "E", "I", "I", "I", "I", "D", "N", "O", "O", "O", "O", "O", "O", "U", "U", "U", "U", "Y", "s", "a", "a", "a", "a", "a", "a", "a", "c", "e", "e", "e", "e", "i", "i", "i", "i", "o", "n", "o", "o", "o", "o", "o", "o", "u", "u", "u", "u", "y", "y"), $mapname);
 				// Transform apostrophes and blanks to dashes
 				$mapname = str_replace(array("'", " "), "-", $mapname);
@@ -295,7 +294,7 @@ if ($display=="hierarchy") {
 			else echo $pgv_lang["place_list"];
 
 			echo "&nbsp;";
-			print_help_link("ppp_placelist_help", "qm");
+			print_help_link("ppp_placelist_help", "qm", "place_list");
 			echo "</td></tr><tr><td class=\"list_value\"><ul>\n\t\t\t";
 		}
 
@@ -324,7 +323,7 @@ if ($display=="hierarchy") {
 			else if ($ct1 > 4) echo "colspan=\"2\"";
 			echo ">\n\t";
 			echo $pgv_lang["view_records_in_place"];
-			print_help_link("ppp_view_records_help", "qm");
+			print_help_link("ppp_view_records_help", "qm", "view_records_in_place");
 			echo "</td></tr><tr><td class=\"list_value\" ";
 			if ($ct1 > 20) echo "colspan=\"3\"";
 			else if ($ct1 > 4) echo "colspan=\"2\"";
@@ -351,8 +350,8 @@ if ($level > 0) {
 		$myindilist = array();
 		$mysourcelist = array();
 		$myfamlist = array();
-		for($i=0; $i<count($positions); $i++) {
-			$record=GedcomRecord::getInstance($positions[$i]);
+		foreach ($positions as $position) {
+			$record=GedcomRecord::getInstance($position);
 			switch ($record->getType()) {
 			case 'INDI':
 				$myindilist[]=$record;

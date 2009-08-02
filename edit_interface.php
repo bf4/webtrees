@@ -831,15 +831,18 @@ case 'addnewnote_assisted':
 	<?php
 	echo PGV_JS_END;
 	?>
-	<b><?php echo $pgv_lang['create_shared_note']." using Assistant."; $tabkey = 1; ?></b>
-	<form method="post" action="edit_interface.php" onsubmit="return check_form(this);">
-		<input type="hidden" name="action" value="addnoteaction" />
-		<input type="hidden" name="noteid" value="newnote" />
-		<!-- <input type="hidden" name="pid" value="$pid" /> -->
-		<?php
-			include ('modules/GEDFact_assistant/CENS_ctrl.php');
-		?>
-	</form>
+	<div class="center font14" style="width:98%;">
+		<b><?php echo $pgv_lang['create_shared_note']." using Assistant."; $tabkey = 1; ?></b>
+		<form method="post" action="edit_interface.php" onsubmit="return check_form(this);">
+			<input type="hidden" name="action" value="addnoteaction" />
+			<input type="hidden" name="noteid" value="newnote" />
+			<!-- <input type="hidden" name="pid" value="$pid" /> -->
+			<?php
+				include ('modules/GEDFact_assistant/CENS_ctrl.php');
+			?>
+		</form>
+	</div>
+	<div style="clear:both;"></div>
 	<?php
 	break;
 
@@ -1189,11 +1192,11 @@ case 'update':
 //	// When $cens_pids is present, cycle through each individual concerned.
 //	foreach ($cens_pids as $pid) {
 		if (isset($pid)) {
-			$gedrec = find_gedcom_record($pid);
-			if (empty($gedrec)) $gedrec = find_updated_record($pid);
+			$gedrec = find_updated_record($pid);
+			if (empty($gedrec)) $gedrec = find_gedcom_record($pid);			
 		} else if (isset($famid)) {
-			$gedrec = find_gedcom_record($famid);
-			if (empty($gedrec)) $gedrec = find_updated_record($famid);
+			$gedrec = find_updated_record($famid);
+			if (empty($gedrec)) $gedrec = find_gedcom_record($famid);			
 		}
 		if (PGV_DEBUG) {
 			phpinfo(INFO_VARIABLES);

@@ -2933,7 +2933,7 @@ class stats {
 				." {$TBLPREFIX}link AS gchildren ON gchildren.l_file = {$this->_ged_id}"
 			.' WHERE'
 				." f_file={$this->_ged_id} AND"
-				." children.l_from=id AND"
+				." children.l_from=f_id AND"
 				." children.l_type='CHIL' AND"
 				." children.l_to=mchildren.l_from AND"
 				." mchildren.l_type='FAMS' AND"

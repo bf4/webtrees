@@ -140,8 +140,8 @@ function gedcom_header($gedfile) {
 			PGV_DB::prepare("SELECT o_id FROM ${TBLPREFIX}other WHERE o_type=? AND o_file=?")
 			->execute(array('SUBM', $GEDCOMS[$gedfile]["id"]))
 			->fetchOne();
-		if ($subn) {
-			$SUBN="\n1 SUBM @{$subm}@";
+		if ($subm) {
+			$SUBM="\n1 SUBM @{$subm}@";
 		}
 	}
 
