@@ -90,6 +90,7 @@ $pgv_lang["names"]					= "Names";
 $pgv_lang["children"]				= "Children";
 $pgv_lang["lchildren"]				= "children";
 $pgv_lang["child"]					= "Child";
+$pgv_lang["grandchildren"]			= "grandchildren";
 $pgv_lang["family"] 				= "Family";
 $pgv_lang["as_child"]				= "Family with Parents";
 $pgv_lang["shared_note_menu"]		= "Options for shared note";
