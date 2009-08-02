@@ -63,12 +63,12 @@ $currpid=$pid;
 	// Header of assistant window
 	echo "<div style=\"text-align:left; margin-top:5px;\">";
 		echo "<div style=\"float:left; margin-left:15px; font-weight:bold;\">";
-			echo "Head of Family &nbsp;&nbsp;:";
-			echo " &nbsp;&nbsp;" . $wholename . "&nbsp; (" . $pid . ")";
+			echo "Head of Family &nbsp;:";
+			echo " &nbsp;" . $wholename . "&nbsp; (" . $pid . ")";
 		echo "</div>";
 		echo "<div style=\"float:right;\">";
 			if ($summary) {
-				echo "<div class=\"center\" style=\"text-align:left;\"/>". $summary. "</div>";
+				echo "<div class=\"center\" style=\"text-align:left; margin: 0 10px 0 0;\"/>". $summary. "</div>";
 			}
 		echo "</div>";
 	echo "</div>";
@@ -87,7 +87,7 @@ $currpid=$pid;
 		include('modules/GEDFact_assistant/_CENS/census_3_search_add.php'); 
 	echo "</div>";
 	//-- Census Text Input Area ===========================================================
-	echo "<div style=\"clear:both; float:left; margin: 5px 0 0 5px;\">";
+	echo "<div class=\"optionbox\" style=\"clear:both;  border:3px outset; float:left; margin: 5px 0 0 5px;\">";
 		include('modules/GEDFact_assistant/_CENS/census_5_input.php');
 	echo "</div>";
 ?> 

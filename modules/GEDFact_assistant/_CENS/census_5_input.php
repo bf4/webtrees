@@ -108,7 +108,7 @@ if ( dw_scrollObj.isSupported() ) {
 				</tr>
 			</table>
 			
-			<table width="940px" border="0" cellspacing="1" id="tblSample">
+			<table width="812px" border="0" cellspacing="1" id="tblSample">
 				<thead>
 				<tr>
 					<th width="2%" class="descriptionbox" style="border: 0px solid transparent;" align="left"><font size=1>#</font></th>
@@ -139,6 +139,7 @@ if ( dw_scrollObj.isSupported() ) {
 			</td>
 			
 			<!-- spacing required for optimal view horizontally -->
+			<td >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 			<td >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 			<td >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 			<td >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>

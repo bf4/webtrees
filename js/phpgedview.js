@@ -465,22 +465,12 @@ function addnewnote(field) {
 }
 function addnewnote_assisted(field, iid) {
 	pastefield = field;
-	window.open('edit_interface.php?action=addnewnote_assisted&noteid=newnote&pid='+iid, '_blank', 'top=70,left=70,width=1000,height=800,resizable=1,scrollbars=1');
+	window.open('edit_interface.php?action=addnewnote_assisted&noteid=newnote&pid='+iid, '_blank', 'top=70,left=70,width=860,height=760,resizable=1,scrollbars=1');
 	return false;
 }
 function addmedia_links(field, iid, iname) {
 	pastefield = field;
 	insertRowToTable(iid, iname);
-	// AUTO OPEN Family Nav - If GEDFact_assistant installed, plus check for type of id (Family or Indi) ==================
-		/*
-		if (iid.match("I")=="I") {
-			winNav = window.open('edit_interface.php?action=addmedia_links&noteid=newnote&pid='+iid, 'winNav', 'top=50,left=600,width=420,height=650,resizable=1,scrollbars=1');
-			if (window.focus) {winNav.focus();}
-		}else if (iid.match("F")=="F") {
-			// TO DO (something different when family id is entered)
-			// alert('Opening Navigator with family id entered will come later');
-		}
-		*/
 	return false;
 }
 

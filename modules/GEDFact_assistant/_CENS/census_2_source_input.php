@@ -124,7 +124,7 @@ global $pgv_lang, $TEXT_DIRECTION;
 	<input type="hidden" id="curryear" value="" />
 	<span style="font-weight:bold; margin-left:10px;">Shared Note Title:&nbsp;</span>
 	<script type="text/javascript">
-		 document.writeln('<input id="Titl" name="Titl" type="text" size="90" STYLE="font-size:10px;" value="<?php echo "Census Transcription - ".$wholename." - ";?>" />');
+		 document.writeln('<input id="Titl" name="Titl" type="text" size="70" STYLE="font-size:10px;" value="<?php echo "Census Transcription - ".$wholename." - ";?>" />');
 	</script>
 </div>
 			
