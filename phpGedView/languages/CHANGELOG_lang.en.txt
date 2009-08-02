@@ -43,6 +43,7 @@ VERSION 4.2.3
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change	codes and comments
 ----------------------------------------------------------------------------------------
++$pgv_lang["generation_number"]						02 Aug 2009				A
 +$pgv_lang["grandchildren"]							02 Aug 2009				A
 
 

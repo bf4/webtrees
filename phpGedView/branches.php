@@ -27,7 +27,7 @@
 require './config.php';
 
 //-- const
-define('PGV_ICON_RINGS', "<img src=\"images/small/rings.gif\" alt=\"{$pgv_lang["marriage"]}\" title=\"{$pgv_lang["marriage"]}\" />");
+define('PGV_ICON_RINGS', "<img src=\"images/small/rings.gif\" alt=\"{$factarray["MARR"]}\" title=\"{$factarray["MARR"]}\" />");
 define('PGV_ICON_BRANCHES', "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["patriarch"]["small"]."\" alt=\"\" align=\"middle\" />");
 
 //-- args
@@ -160,6 +160,9 @@ function print_fams($person, $famid=null) {
 			if ($family->getMarriageYear()) {
 				$txt .= "&nbsp;<span dir=$TEXT_DIRECTION class='details1' title=\"".strip_tags($family->getMarriageDate()->Display())."\">".PGV_ICON_RINGS.$family->getMarriageYear()."</span>&nbsp;";
 			}
+			else if ($family->getMarriage()) {
+				$txt .= "&nbsp;<span dir=$TEXT_DIRECTION class='details1' title=\"".$pgv_lang["yes"]."\">".PGV_ICON_RINGS."</span>&nbsp;";
+			}
 			$spouse_name = $spouse->getListName();
 			foreach ($spouse->getAllNames() as $n=>$name) {
 				if (whatLanguage($name['list']) == $person_lang) {
@@ -233,6 +236,6 @@ function indis_array($surn, $soundex_std, $soundex_dm) {
 function sosa_gen($sosa) {
 	global $pgv_lang;
 	$gen = (int)log($sosa, 2)+1;
-	return "<sup title=\"".$pgv_lang["generations"]."\">{$gen}</sup>";
+	return "<sup title=\"".$pgv_lang["generation_number"]."\">{$gen}</sup>";
 }
 ?>
