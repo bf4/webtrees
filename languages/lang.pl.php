@@ -398,6 +398,7 @@ $pgv_lang["charts"]				= "Diagramy";
 $pgv_lang["lists"]				= "Listy";
 $pgv_lang["box_width"]			= "Szerokość ramki";
 $pgv_lang["random_surn"]		= "Losowe nazwisko";
+$pgv_lang["generation_number"]	= "Numer pokolenia";
 
 //-- FUNCTIONS FILE MESSAGES
 $pgv_lang["unable_to_find_family"]	= "Nie znaleziono rodziny o tym identyfikatorze";
