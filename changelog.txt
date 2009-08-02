@@ -10,6 +10,7 @@
 
 
 Version 4.2.x CA
+ - Merged: Merge changes r6034- r6037 from the trunk. (windmillway)
  - Reduce Census Assistant pop up window dimentions (now 860x760) (windmillway)
  - Move to tableless design -kiwipgv- (windmillway)
  - Merged: Merge changes r6012 - r6033 from the trunk. (windmillway)
