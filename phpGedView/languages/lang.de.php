@@ -91,6 +91,7 @@ $pgv_lang["names"]						= "Namen";
 $pgv_lang["children"]					= "Kinder";
 $pgv_lang["lchildren"]					= "Kinder";
 $pgv_lang["child"]						= "Kind";
+$pgv_lang["grandchildren"]				= "Enkelkinder";
 $pgv_lang["family"]						= "Familie";
 $pgv_lang["as_child"]					= "Familiendaten als Kind";
 $pgv_lang["shared_note_menu"]			= "Optionen für gemeinsame Bemerkungen";
@@ -400,6 +401,7 @@ $pgv_lang["charts"]						= "Diagramme";
 $pgv_lang["lists"]						= "Listen";
 $pgv_lang["box_width"]					= "Box Breite";
 $pgv_lang["random_surn"]				= "Zufällig gewählter Nachname";
+$pgv_lang["generation_number"]			= "Generationen";
 
 //-- FUNCTIONS FILE MESSAGES
 $pgv_lang["unable_to_find_family"]		= "Kann die Familie mit folgendem ID nicht finden:";
