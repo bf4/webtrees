@@ -403,6 +403,10 @@ class stats {
 		return $per;
 	}
 
+	function totalRecords() {
+		return ($this->totalIndividuals() + $this->totalFamilies() + $this->totalSources() + $this->totalOtherRecords());
+	}
+
 	function totalIndividuals() {
 		global $TBLPREFIX;
 
@@ -550,6 +554,36 @@ class stats {
 		}
 		return (int)
 			PGV_DB::prepare("SELECT COUNT({$distinct} n_surn) FROM {$TBLPREFIX}name WHERE n_surn {$opt} AND n_file=?")
+			->execute($vars)
+			->fetchOne();
+	}
+
+	function totalGivennames($params = null) {
+		global $DBTYPE, $TBLPREFIX;
+		if ($params) {
+			$qs=implode(',', array_fill(0, count($params), '?'));
+			$opt="IN ({$qs})";
+			$vars=$params;
+			$distinct='';
+			$group_by='';
+		} else {
+			$opt ="IS NOT NULL";
+			$vars='';
+			$distinct='DISTINCT';
+			$group_by='GROUP BY n_givn';
+		}
+		$vars[]=$this->_ged_id;
+		if ($DBTYPE=="sqlite") {
+			// SQLITE2 does not support COUNT(DISTINCT ).
+			// Remove this when we move to SQLITE3
+			return count(
+				PGV_DB::prepare("SELECT n_givn FROM {$TBLPREFIX}name WHERE n_givn {$opt} AND n_file=? {$group_by}")
+				->execute($vars)
+				->fetchOneColumn()
+			);
+		}
+		return (int)
+			PGV_DB::prepare("SELECT COUNT({$distinct} n_givn) FROM {$TBLPREFIX}name WHERE n_givn {$opt} AND n_file=?")
 			->execute($vars)
 			->fetchOne();
 	}
@@ -858,7 +892,9 @@ class stats {
 
 	function _mortalityQuery($type='full', $life_dir='ASC', $birth_death='BIRT') {
 		global $TBLPREFIX, $pgv_lang, $SHOW_ID_NUMBERS, $listDir, $DBTYPE;
-		if ($birth_death == 'BIRT') {
+		if ($birth_death == 'MARR') {
+			$query_field = "'".str_replace('|', "','", PGV_EVENTS_MARR)."'";
+		} else if ($birth_death == 'BIRT') {
 			$query_field = "'".str_replace('|', "','", PGV_EVENTS_BIRT)."'";
 		} else {
 			$birth_death = 'DEAT';
@@ -925,12 +961,12 @@ class stats {
 		}
 		if (!isset($rows[0])) {return '';}
 		$row=$rows[0];
-		$person=Person::getInstance($row['d_gid']);
+		$record=GedcomRecord::getInstance($row['d_gid']);
 		switch($type) {
 			default:
 			case 'full':
-				if (displayDetailsById($row['d_gid'])) {
-					$result=$person->format_list('span', false, $person->getListName());
+				if ($record->canDisplayDetails()) {
+					$result=$record->format_list('span', false, $record->getListName());
 				} else {
 					$result=$pgv_lang['privacy_error'];
 				}
@@ -948,10 +984,10 @@ class stats {
 						$id="&nbsp;&nbsp;({$row['d_gid']})";
 					}
 				}
-				$result="<a href=\"".$person->getLinkUrl()."\">".$person->getFullName()."{$id}</a>";
+				$result="<a href=\"".$record->getLinkUrl()."\">".$record->getFullName()."{$id}</a>";
 				break;
 			case 'place':
-				$result=format_fact_place(Person::getInstance($row['d_gid'])->getFactByType($row['d_fact']), true, true, true);
+				$result=format_fact_place(GedcomRecord::getInstance($row['d_gid'])->getFactByType($row['d_fact']), true, true, true);
 				break;
 		}
 		return str_replace('<a href="', '<a href="'.$this->_server_url, $result);
@@ -1044,6 +1080,15 @@ class stats {
 			if (!isset($rows[0])) {return '';}
 			return $rows;
 		}
+	}
+
+	function totalPlaces() {
+		global $TBLPREFIX;
+
+		return
+			PGV_DB::prepare("SELECT COUNT(*) FROM {$TBLPREFIX}places WHERE p_file=?")
+			->execute(array($this->_ged_id))
+			->fetchOne();
 	}
 
 	function chartDistribution($chart_shows='world', $chart_type='', $surname='') {
@@ -2305,6 +2350,19 @@ class stats {
 		if (!isset($rows)) {return 0;}
 		return $rows;
 	}
+
+	//
+	// Marriage
+	//
+	function firstMarriage() {return $this->_mortalityQuery('full', 'ASC', 'MARR');}
+	function firstMarriageYear() {return $this->_mortalityQuery('year', 'ASC', 'MARR');}
+	function firstMarriageName() {return $this->_mortalityQuery('name', 'ASC', 'MARR');}
+	function firstMarriagePlace() {return $this->_mortalityQuery('place', 'ASC', 'MARR');}
+
+	function lastMarriage() {return $this->_mortalityQuery('full', 'DESC', 'MARR');}
+	function lastMarriageYear() {return $this->_mortalityQuery('year', 'DESC', 'MARR');}
+	function lastMarriageName() {return $this->_mortalityQuery('name', 'DESC', 'MARR');}
+	function lastMarriagePlace() {return $this->_mortalityQuery('place', 'DESC', 'MARR');}
 
 	function statsMarrAge($simple=true, $sex='M', $year1=-1, $year2=-1, $params=null) {
 		global $TBLPREFIX, $pgv_lang, $lang_short_cut, $LANGUAGE;
