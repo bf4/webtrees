@@ -831,7 +831,7 @@ case 'addnewnote_assisted':
 	<?php
 	echo PGV_JS_END;
 	?>
-	<div class="center font14" style="width:100%;">
+	<div class="center font11" style="width:100%;">
 		<b><?php echo $pgv_lang['create_shared_note']." using Assistant."; $tabkey = 1; ?></b>
 		<form method="post" action="edit_interface.php" onsubmit="return check_form(this);">
 			<input type="hidden" name="action" value="addnoteaction" />
@@ -2569,7 +2569,7 @@ if ($success && $EDIT_AUTOCLOSE && !PGV_DEBUG) {
 // Decide whether to print footer or not ===========================================
 if ($action == 'addmedia_links' || $action == 'addnewnote_assisted' ) {
 	// Do not print footer.
-	echo "<div class=\"center\"><a href=\"javascript:;\" onclick=\"edit_close('{$link}');\">".$pgv_lang["close_window"]."</a></div><br />\n";
+	echo "<br /><div class=\"center\"><a href=\"javascript:;\" onclick=\"edit_close('{$link}');\">".$pgv_lang["close_window"]."</a></div>\n";
 }else{
 	echo "<div class=\"center\"><a href=\"javascript:;\" onclick=\"edit_close('{$link}');\">".$pgv_lang["close_window"]."</a></div><br />\n";
 	print_simple_footer();
