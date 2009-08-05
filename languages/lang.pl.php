@@ -89,6 +89,7 @@ $pgv_lang["names"]				= "Imiona";
 $pgv_lang["children"]			= "Dzieci";
 $pgv_lang["lchildren"]			= "dzieci";
 $pgv_lang["child"]				= "Dziecko";
+$pgv_lang["grandchildren"]		= "wnucząt";
 $pgv_lang["family"] 			= "Rodzina";
 $pgv_lang["as_child"]			= "Rodzice";
 $pgv_lang["shared_note_menu"]	= "Opcje wspólnej notatki";
@@ -397,6 +398,7 @@ $pgv_lang["charts"]				= "Diagramy";
 $pgv_lang["lists"]				= "Listy";
 $pgv_lang["box_width"]			= "Szerokość ramki";
 $pgv_lang["random_surn"]		= "Losowe nazwisko";
+$pgv_lang["generation_number"]	= "Numer pokolenia";
 
 //-- FUNCTIONS FILE MESSAGES
 $pgv_lang["unable_to_find_family"]	= "Nie znaleziono rodziny o tym identyfikatorze";
@@ -870,7 +872,7 @@ $pgv_lang["no_other_link_found"]	= "Nie znaleziono innego powiązania między ty
 $pgv_lang["sibling"]				= "Rodzeństwo";
 $pgv_lang["follow_spouse"]			= "Sprawdź pokrewieństwo przez małżeństwo";
 $pgv_lang["timeout_error"]			= "Przekroczono limit czasu przed zakończeniem poszukiwania.";
-$pgv_lang["grandchild"]				= "Wnuk/Wnuczka";
+$pgv_lang["grandchild"]				= "Wnuczę";
 $pgv_lang["grandson"]				= "Wnuk";
 $pgv_lang["granddaughter"]			= "Wnuczka";
 $pgv_lang["greatgrandchild"]		= "Prawnuk/Prawnuczka";

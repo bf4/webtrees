@@ -3,7 +3,7 @@
  * phpGedView Research Assistant Tool - ra_AddTask
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
+ * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -224,7 +224,7 @@ global $pgv_lang, $TBLPREFIX, $SOURCE_ID_PREFIX;
                 <th colspan="4" align="right" class="topbottombar">
                     <input type="submit" value="<?php print $pgv_lang["submit"]; ?>" />
                     <input type="submit" value="<?php print $pgv_lang["save_and_complete"]; ?>" onclick="document.addtaskfrm.complete.value='1';" />
-                   <!--<input type="button" value="Complete" name="complete" onclick="window.location='module.php?mod=research_assistant&amp;action=completeTask&amp;taskid=<?php print $_REQUEST['taskid'] ?>'" />
+                   <!--<input type="button" value="Complete" name="complete" onclick="window.location='module.php?mod=research_assistant&amp;action=completeTask&amp;taskid=<?php //print $_REQUEST['taskid'] ?>'" />
                 -->
                 </th>
             </tr>

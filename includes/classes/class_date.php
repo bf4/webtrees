@@ -1283,13 +1283,13 @@ class GedcomDate {
 		if ($amax<$bmin)
 			return -1;
 		else
-			if ($amin>$bmax)
+			if ($amin>$bmax && $bmax>0)
 				return 1;
 			else
 				if ($amin<$bmin && $amax<=$bmax)
 					return -1;
 				else
-					if ($amin>$bmin && $amax>=$bmax)
+					if ($amin>$bmin && $amax>=$bmax && $bmax>0)
 						return 1;
 				else return 0;
 	}

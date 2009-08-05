@@ -91,6 +91,7 @@ $pgv_lang["names"]					= "Nombres";
 $pgv_lang["children"]				= "Hijos";
 $pgv_lang["lchildren"]				= "hijos";
 $pgv_lang["child"]					= "Hijo";
+$pgv_lang["grandchildren"]			= "nietos/as";
 $pgv_lang["family"] 				= "Familia";
 $pgv_lang["as_child"]				= "Familia con los padres";
 $pgv_lang["shared_note_menu"]		= "Opciones para la nota compartida";
@@ -399,7 +400,8 @@ $pgv_lang["start_at_parents"]		= "Comenzar en los padres";
 $pgv_lang["charts"] 				= "Diagramas";
 $pgv_lang["lists"]					= "Listas";
 $pgv_lang["box_width"] 				= "Ancho de la caja";
-$pgv_lang["random_surn"]					= "Apellido al azar";
+$pgv_lang["random_surn"]			= "Apellido al azar";
+$pgv_lang["generation_number"]		= "Generaciones";
 
 //-- FUNCTIONS FILE MESSAGES
 $pgv_lang["unable_to_find_family"]	= "Imposible encontrar una familia con el ID";
