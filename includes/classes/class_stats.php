@@ -891,7 +891,7 @@ class stats {
 ///////////////////////////////////////////////////////////////////////////////
 
 	function _mortalityQuery($type='full', $life_dir='ASC', $birth_death='BIRT') {
-		global $TBLPREFIX, $pgv_lang, $SHOW_ID_NUMBERS, $listDir, $DBTYPE;
+		global $TBLPREFIX, $pgv_lang, $SHOW_ID_NUMBERS, $listDir, $DBTYPE, $TEXT_DIRECTION;
 		if ($birth_death == 'MARR') {
 			$query_field = "'".str_replace('|', "','", PGV_EVENTS_MARR)."'";
 		} else if ($birth_death == 'BIRT') {
@@ -978,7 +978,7 @@ class stats {
 			case 'name':
 				$id='';
 				if ($SHOW_ID_NUMBERS) {
-					if ($listDir=='rtl') {
+					if ($listDir=='rtl' || $TEXT_DIRECTION=='rtl') { //do we need $listDir here?
 						$id="&nbsp;&nbsp;" . getRLM() . "({$row['d_gid']})" . getRLM();
 					} else {
 						$id="&nbsp;&nbsp;({$row['d_gid']})";
@@ -2049,7 +2049,8 @@ class stats {
 				." husbdeath.d_fact IN ('DEAT', 'BURI', 'CREM') AND"
 				.' married.d_gid = fam.f_id AND'
 				." married.d_fact = 'MARR' AND"
-				.' married.d_julianday1 < husbdeath.d_julianday2'
+				.' married.d_julianday1 < husbdeath.d_julianday2 AND'
+				.' married.d_julianday1 != 0'
 			.' GROUP BY'
 				.' family'
 			.' ORDER BY'
@@ -2071,7 +2072,8 @@ class stats {
 				." wifedeath.d_fact IN ('DEAT', 'BURI', 'CREM') AND"
 				.' married.d_gid = fam.f_id AND'
 				." married.d_fact = 'MARR' AND"
-				.' married.d_julianday1 < wifedeath.d_julianday2 '
+				.' married.d_julianday1 < wifedeath.d_julianday2 AND'
+				.' married.d_julianday1 != 0'
 			.' GROUP BY'
 				.' family'
 			.' ORDER BY'
@@ -2093,7 +2095,8 @@ class stats {
 				." married.d_fact = 'MARR' AND"
 				.' divorced.d_gid = fam.f_id AND'
 				." divorced.d_fact IN ('DIV', 'ANUL', '_SEPR', '_DETS') AND"
-				.' married.d_julianday1 < divorced.d_julianday2'
+				.' married.d_julianday1 < divorced.d_julianday2 AND'
+				.' married.d_julianday1 != 0'
 			.' GROUP BY'
 				.' family'
 			.' ORDER BY'
@@ -2175,7 +2178,27 @@ class stats {
 				.' husbbirth.d_gid = fam.f_husb AND'
 				." husbbirth.d_fact IN ('BIRT', 'CHR', 'BAPM', '_BRTM') AND"
 				.' wifebirth.d_gid = fam.f_wife AND'
-				." wifebirth.d_fact IN ('BIRT', 'CHR', 'BAPM', '_BRTM')"
+				." wifebirth.d_fact IN ('BIRT', 'CHR', 'BAPM', '_BRTM') AND"
+				.' wifebirth.d_julianday2 >= husbbirth.d_julianday1 AND'
+				.' husbbirth.d_julianday1 != 0'
+			.' UNION'
+			.' SELECT DISTINCT'
+				.' fam.f_id AS family,'
+				.' husbbirth.d_julianday2-wifebirth.d_julianday1 AS age'
+			.' FROM'
+				." {$TBLPREFIX}families AS fam"
+			.' LEFT JOIN'
+				." {$TBLPREFIX}dates AS wifebirth ON wifebirth.d_file = {$this->_ged_id}"
+			.' LEFT JOIN'
+				." {$TBLPREFIX}dates AS husbbirth ON husbbirth.d_file = {$this->_ged_id}"
+			.' WHERE'
+				." fam.f_file = {$this->_ged_id} AND"
+				.' husbbirth.d_gid = fam.f_husb AND'
+				." husbbirth.d_fact IN ('BIRT', 'CHR', 'BAPM', '_BRTM') AND"
+				.' wifebirth.d_gid = fam.f_wife AND'
+				." wifebirth.d_fact IN ('BIRT', 'CHR', 'BAPM', '_BRTM') AND"
+				.' wifebirth.d_julianday1 < husbbirth.d_julianday2 AND'
+				.' wifebirth.d_julianday1 > 0'
 			.' GROUP BY'
 				.' family'
 			.' ORDER BY'
@@ -2646,6 +2669,9 @@ class stats {
 	function _ageBetweenSiblingsQuery($type='list', $params=null) {
 		global $TBLPREFIX, $TEXT_DIRECTION, $pgv_lang, $lang_short_cut, $LANGUAGE;
 		if ($params !== null && isset($params[0])) {$total = $params[0];}else{$total = 10;}
+		
+		//todo: print each family only once?!?
+		 
 		$rows=self::_runSQL(''
 			.' SELECT DISTINCT'
 				.' link1.l_from AS family,'
@@ -2668,7 +2694,10 @@ class stats {
 				." child1.d_fact = 'BIRT' AND"
 				." link2.l_type = 'CHIL' AND"
 				.' child2.d_gid = link2.l_to AND'
-				." child2.d_fact = 'BIRT'"
+				." child2.d_fact = 'BIRT' AND"
+				.' child1.d_julianday2 > child2.d_julianday2 AND'
+				.' child2.d_julianday2 != 0 AND'
+				.' child1.d_gid != child2.d_gid'
 			.' ORDER BY'
 				." age DESC"
 		,$total);
