@@ -32,7 +32,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 }
 ?>
 
-	<table border="3">
+	<table width="100%">
 		<?php
 
 		//-- Search Function ------------------------------------------------------------
@@ -66,7 +66,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 		</tr>
 		<tr>
 			<td style="border: 0px solid transparent;">
-				<br /><br />
+				<br />
 			</td>
 		</tr>
 
@@ -79,7 +79,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 				?>
 				<tr>
 					<td align="center" style="border: 0px solid transparent;">
-						<table class="fact_table" cellspacing="0" border="0">
+						<table width="100%" class="fact_table" cellspacing="0" border="0">
 							<tr>
 								<td align="center" colspan=3 class="descriptionbox">
 									<font size=1>
@@ -344,6 +344,9 @@ if (!defined('PGV_PHPGEDVIEW')) {
 														if ($child->getXref()==$pid) {
 															print "Head";									 // label = Head
 														}else{
+															//if ($child->getSex()=="M") print PrintReady($pgv_lang["son"]);
+															//else if ($child->getSex()=="F") print PrintReady($pgv_lang["daughter"]);
+															//else print PrintReady($pgv_lang["child"]);
 															print PrintReady($child->getLabel());			 // label = Relationship
 														}
 													?>", "<?php
@@ -647,6 +650,9 @@ if (!defined('PGV_PHPGEDVIEW')) {
 											?>", "<?php 
 												print PrintReady($fulln);							 // nam = Name
 											?>", "<?php
+												//if ($child->getSex()=="M") print PrintReady($pgv_lang["son"]);
+												//else if ($child->getSex()=="F") print PrintReady($pgv_lang["daughter"]);
+												//else print PrintReady($pgv_lang["child"]);
 												print PrintReady($child->getLabel());				 // label = Relationship
 											?>", "<?php
 												print PrintReady($child->getSex());					 // gend = Gender
@@ -962,6 +968,9 @@ if (!defined('PGV_PHPGEDVIEW')) {
 												echo PrintReady($fulln);						 // nam = Full Name
 											}
 											?>", "<?php
+											//if ($child->getSex()=="M") print PrintReady($pgv_lang["son"]);
+											//else if ($child->getSex()=="F") print PrintReady($pgv_lang["daughter"]);
+											//else print PrintReady($pgv_lang["child"]);
 											print PrintReady($child->getLabel());				 // label = Relationship
 										?>", "<?php
 											print PrintReady($child->getSex());					 // gend = Gender
@@ -1345,37 +1354,37 @@ function print_pedigree_person_nav2($pid, $style=1, $show_famlink=true, $count=0
 									}
 									
 									$spouselinks .= "<a href=\"javascript:insertRowToTable(";
-									$spouselinks .=	"'".PrintReady($spouse->getXref())."',";					// pid		=	PID
-									//$spouselinks .=	"'".PrintReady($fulln)."',";							// nam	=	Name
+									$spouselinks .=	"'".PrintReady($spouse->getXref())."',";						// pid		=	PID
+									//$spouselinks .=	"'".PrintReady($fulln)."',";								// nam		=	Name
 									if ($married>=0 && isset($nam[1])){
-										$spouselinks .= "'".PrintReady($fulmn)."',";							// Full Married Name
+										$spouselinks .= "'".PrintReady($fulmn)."',";								// Full Married Name
 									} else {
-										$spouselinks .= "'".PrintReady($fulln)."',";	 						// Full Name
+										$spouselinks .= "'".PrintReady($fulln)."',";	 							// Full Name
 									}
 									if ($currpid=="Son" || $currpid=="Daughter") {
 										if ($spouse->getSex()=="M") {
-											$spouselinks .=	"'Son in Law',";									// label	=	Male Relationship
+											$spouselinks .=	"'Son in Law',";										// label	=	Male Relationship
 										}else{
-											$spouselinks .=	"'Daughter in Law',";								// label	=	Female Relationship
+											$spouselinks .=	"'Daughter in Law',";									// label	=	Female Relationship
 										}
 									}else{
 										if ($spouse->getSex()=="M") {
-											$spouselinks .=	"'Brother in Law',";								// label	=	Male Relationship
+											$spouselinks .=	"'Brother in Law',";									// label	=	Male Relationship
 										}else{
-											$spouselinks .=	"'Sister in Law',";									// label	=	Female Relationship
+											$spouselinks .=	"'Sister in Law',";										// label	=	Female Relationship
 										}
 									}
-										$spouselinks .=	"'".PrintReady($spouse->getSex())."',";					// sex	=	Gender
-										$spouselinks .=	"''".",";												// cond	=	Condition (Married etc)
-										$spouselinks .=	"'".PrintReady($spouse->getbirthyear())."',";			// yob	=	Year of Birth
+										$spouselinks .=	"'".PrintReady($spouse->getSex())."',";						// sex		=	Gender
+										$spouselinks .=	"''".",";													// cond		=	Condition (Married etc)
+										$spouselinks .=	"'".PrintReady($spouse->getbirthyear())."',";				// yob		=	Year of Birth
 										if ($spouse->getbirthyear()>=1) {
-											$spouselinks .=	"'".PrintReady($censyear-$spouse->getbirthyear())."',";	// age	= 	Census Year - Year of Birth
+											$spouselinks .=	"'".PrintReady($censyear-$spouse->getbirthyear())."',";	// age		= 	Census Year - Year of Birth
 										}else{
-											$spouselinks .=	"''".",";											// age	= 	Undefined
+											$spouselinks .=	"''".",";												// age		= 	Undefined
 										}
-										$spouselinks .=	"'Y'".",";												// Y/M/D	=	Age in Years/Months/Days
-										$spouselinks .=	"''".",";												// occu 	=	Occupation
-										$spouselinks .=	"'".PrintReady($spouse->getcensbirthplace())."'";		// birthpl	=	Birthplace
+										$spouselinks .=	"'Y'".",";													// Y/M/D	=	Age in Years/Months/Days
+										$spouselinks .=	"''".",";													// occu 	=	Occupation
+										$spouselinks .=	"'".PrintReady($spouse->getcensbirthplace())."'";			// birthpl	=	Birthplace
 										$spouselinks .=	");\">";
 										// $spouselinks .= PrintReady($fulln);
 										if ($married>=0 && isset($nam[1])){
@@ -1451,12 +1460,12 @@ function print_pedigree_person_nav2($pid, $style=1, $show_famlink=true, $count=0
 									if ($child->canDisplayName()) {
 										$spouselinks .= "<a href=\"javascript:insertRowToTable(";
 										$spouselinks .=	"'".PrintReady($child->getXref())."',";						// pid		=	PID
-										$spouselinks .=	"'".PrintReady($fulln)."',";								// nam	=	Name
+										$spouselinks .=	"'".PrintReady($fulln)."',";								// nam		=	Name
 										if ($currpid=="Son" || $currpid=="Daughter") {
 											if ($child->getSex()=="M") {
 												$spouselinks .=	"'Grand-Son',";										// label	=	Male Relationship
 											}else{
-												$spouselinks .=	"'Grand-Daughter',";											// label	=	Female Relationship
+												$spouselinks .=	"'Grand-Daughter',";								// label	=	Female Relationship
 											}
 										}else{
 											if ($child->getSex()=="M") {
@@ -1465,13 +1474,13 @@ function print_pedigree_person_nav2($pid, $style=1, $show_famlink=true, $count=0
 												$spouselinks .=	"'Niece',";											// label	=	Female Relationship
 											}
 										}
-										$spouselinks .=	"'".PrintReady($child->getSex())."',";						// sex	=	Gender
-										$spouselinks .=	"''".",";													// cond	=	Condition (Married etc)
-										$spouselinks .=	"'".PrintReady($child->getbirthyear())."',";				// yob	=	Year of Birth
+										$spouselinks .=	"'".PrintReady($child->getSex())."',";						// sex		=	Gender
+										$spouselinks .=	"''".",";													// cond		=	Condition (Married etc)
+										$spouselinks .=	"'".PrintReady($child->getbirthyear())."',";				// yob		=	Year of Birth
 										if ($child->getbirthyear()>=1) {
-											$spouselinks .=	"'".PrintReady($censyear-$child->getbirthyear())."',";	// age	= 	Census Year - Year of Birth
+											$spouselinks .=	"'".PrintReady($censyear-$child->getbirthyear())."',";	// age		= 	Census Year - Year of Birth
 										}else{
-											$spouselinks .=	"''".",";												// age	= 	Undefined
+											$spouselinks .=	"''".",";												// age		= 	Undefined
 										}
 										$spouselinks .=	"'Y'".",";													// Y/M/D	=	Age in Years/Months/Days
 										$spouselinks .=	"''".",";													// occu 	=	Occupation

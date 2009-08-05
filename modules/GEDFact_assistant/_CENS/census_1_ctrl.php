@@ -61,33 +61,35 @@ $currpid=$pid;
 
 <?php
 	// Header of assistant window
-	echo "<div style=\"text-align:left; margin-top:5px;\">";
-		echo "<div style=\"float:left; margin-left:15px; font-weight:bold;\">";
+
+	echo "<div style=\"text-align:left; margin-top:0.5em;\">";
+		echo "<div style=\"float:left; margin-left:1.5em; font-weight:bold;\">";
 			echo "Head of Family &nbsp;:";
 			echo " &nbsp;" . $wholename . "&nbsp; (" . $pid . ")";
 		echo "</div>";
-		echo "<div style=\"float:right;\">";
+		echo "<div style=\"float:right; margin: 0 2em 0 0;\">";
 			if ($summary) {
-				echo "<div class=\"center\" style=\"text-align:left; margin: 0 10px 0 0;\"/>". $summary. "</div>";
+				echo "<div style=\"text-align:left; margin: 0 2em 0 0;\"/>". $summary. "</div>";
 			}
 		echo "</div>";
 	echo "</div>";
+
 	//-- Census & Source Information Area ============================================= 
-	echo "<div style=\" clear:both; float:left; width:75%; margin: 5px 0 0 5px;\">";
-		echo "<div>";
+	echo "<div style=\" clear:both; float:left; width:48em; height:34em; margin: 0.5em 0 0 0.3em;\">";
+		echo "<span style=\"margin: 0 0.5em;\">";
 			include('modules/GEDFact_assistant/_CENS/census_2_source_input.php');
-		echo "</div>";
+		echo "</span>";
 		//-- Proposed Census Text Area ==================================================
-		echo "<div style=\"float:left; width:100%;\">";
+		echo "<span style=\"margin: 0 0.5em;\">";
 			include('modules/GEDFact_assistant/_CENS/census_4_text.php');
-		echo "</div>";
+		echo "</span>";
 	echo "</div>";
 	//-- Search  and Add Family Members Area ========================================= 
-	echo "<div style=\"float:right; margin: 5px 5px 0 0;\">";
+	echo "<div style=\"float:left; border:0.3em outset; margin: 0.5em 0 0 0.3em; width: 22.4em; height:34em; overflow:auto;\">";
 		include('modules/GEDFact_assistant/_CENS/census_3_search_add.php'); 
 	echo "</div>";
 	//-- Census Text Input Area ===========================================================
-	echo "<div class=\"optionbox\" style=\"clear:both;  border:3px outset; float:left; margin: 5px 0 0 5px;\">";
+	echo "<div class=\"optionbox\" style=\"clear:both; border:0.3em outset; float:left; margin: 0.4em 0 0 0.3em;\">";
 		include('modules/GEDFact_assistant/_CENS/census_5_input.php');
 	echo "</div>";
 ?> 

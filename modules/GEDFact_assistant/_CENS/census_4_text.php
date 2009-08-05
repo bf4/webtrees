@@ -69,12 +69,12 @@ if (window.focus) {win02.focus();}
 </script>
 
 <!--   ---- The proposed Census Text -------- -->
-<div class="optionbox" style="text-align:left; padding:3px; border:3px outset; margin-bottom:3px;">
-	<span style="margin:0 5px 0 5px;"><input type="button" value="<?php echo $pgv_lang["page_help"]; ?>" onclick="javascript: help_window2(this.form)" /></span>
-	<span style="font-weight:bold;">Proposed Census Text&nbsp;&nbsp;</span>
-	<span style="margin:0 5px 0 5px;"><input type="button" value="<?php echo $pgv_lang["preview"]; ?>" onclick="preview();" /></span>
-	<span class="font10">Click "Preview" to copy Input Fields Information.</span>
-	<span style="margin:0 0 5px 32px;"><input type="submit" value="<?php echo $pgv_lang["save"]; ?>" /></span>
+<div class="optionbox" style="font-size:0.9em; text-align:left; padding:0.3em; border:0.3em outset; margin-bottom:0.3em;">
+	<span style="margin: 0 1em 0 0.3em;"><input type="button" value="<?php echo $pgv_lang["page_help"]; ?>" onclick="javascript: help_window2(this.form)" /></span>
+	<span style="margin: 0 1em 0 0.3em;font-size:0.9em">Click "Preview" to copy Input Fields Information.</span>
+	<span style="margin: 0 1em 0 0.3em;"><input type="button" value="<?php echo $pgv_lang["preview"]; ?>" onclick="preview();" /></span>
+	<span style="margin: 0 1em 0 0.3em;font-weight:bold;">Proposed Census Text&nbsp;&nbsp;</span>
+	<span style="margin: 0 1em 0 0.3em;"><input type="submit" value="<?php echo $pgv_lang["save"]; ?>" /></span>
 	<br /><br />
 	<span class="descriptionbox width15 nowrap <?php $TEXT_DIRECTION; ?>">
 		<?php
@@ -82,9 +82,11 @@ if (window.focus) {win02.focus();}
 			echo $pgv_lang["shared_note"];
 		?>
 	</span>
-	<div class="optionbox wrap center" >
+	<div class="optionbox" style="padding: 0.3em;">
 		<textarea name="NOTE" id="NOTE" rows="20" style="width:98%;"></textarea><br />
+		<center>
 		<?php print_specialchar_link("NOTE",true); ?>
+		</center>
 	</div>
 </div>
 

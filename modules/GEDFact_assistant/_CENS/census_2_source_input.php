@@ -102,29 +102,31 @@ global $pgv_lang, $TEXT_DIRECTION;
 	
 </script>
 
-<div class="optionbox" style="text-align:left; padding:3px; border:3px outset; margin-bottom:3px;">
-	<span style="font-weight:bold;">Census:&nbsp;</span>
-	<script type="text/javascript">
-		var censyear = new DynamicOptionList();
-		censyear.addDependentFields("ctry","censyear");
-		censyear.forValue("UK").addOptions( "choose", "1841", "1851", "1861", "1871", "1881", "1891", "1901", "1911", "1921" );
-		censyear.forValue("USA").addOptions( "choose", "1790", "1800", "1810", "1820", "1830", "1840", "1850", "1860", "1870", "1880", "1890", "1900", "1910", "1920", "1930");
-		censyear.forValue("UK").setDefaultOptions("choose");
-		censyear.forValue("USA").setDefaultOptions("1930");
-	</script>
-	<select id="censCtry" name="ctry">
-		<option value="UK" >UK</option>
-		<option value="USA">USA</option>
-	</select>
-	<select onchange="if( this.options[this.selectedIndex].value!='') {
-		changeYear(this.options[this.selectedIndex].value);
-		}" 
-		id="censYear" name="censyear">
-	</select>
-	<input type="hidden" id="curryear" value="" />
-	<span style="font-weight:bold; margin-left:10px;">Shared Note Title:&nbsp;</span>
-	<script type="text/javascript">
-		 document.writeln('<input id="Titl" name="Titl" type="text" size="70" STYLE="font-size:10px;" value="<?php echo "Census Transcription - ".$wholename." - ";?>" />');
-	</script>
+<div class="optionbox" style="font-weight:bold; font-size:0.9em; text-align:left; padding:0.3em; border:0.3em outset; margin-bottom:0.3em;">
+	<div style="width:16em; float:left;">Census:&nbsp;
+		<script type="text/javascript">
+			var censyear = new DynamicOptionList();
+			censyear.addDependentFields("ctry","censyear");
+			censyear.forValue("UK").addOptions( "choose", "1841", "1851", "1861", "1871", "1881", "1891", "1901", "1911", "1921" );
+			censyear.forValue("USA").addOptions( "choose", "1790", "1800", "1810", "1820", "1830", "1840", "1850", "1860", "1870", "1880", "1890", "1900", "1910", "1920", "1930");
+			censyear.forValue("UK").setDefaultOptions("choose");
+			censyear.forValue("USA").setDefaultOptions("choose");
+		</script>
+		<select id="censCtry" name="ctry" style="font:0.9em normal;">
+			<option value="UK" >UK</option>
+			<option value="USA">USA</option>
+		</select>
+		<select onchange="if( this.options[this.selectedIndex].value!='') {
+			changeYear(this.options[this.selectedIndex].value);
+			}" 
+			id="censYear" name="censyear" style="font:0.9em normal;">
+		</select>
+		<input type="hidden" id="curryear" value="" />
+	</div>
+	<div style="font-weight:bold;">&nbsp;&nbsp;&nbsp;Title:&nbsp;
+		<script type="text/javascript">
+			 document.writeln('<input id="Titl" name="Titl" type="text" style="width:34.6em; font:0.9em normal;" value="<?php echo "Census Transcription - ".$wholename." - ";?>" />');
+		</script>
+	</div>
 </div>
 			

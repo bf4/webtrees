@@ -25,22 +25,8 @@
  * @subpackage Census Assistant
  * @version $Id$
  */
-
+/*
 ?>
-
-<!--
-#tblSample td, th { padding: 0.5; }
-.classy0 { background-color: #234567; color: #89abcd; }
-.classy1 { background-color: #89abcd; color: #234567; }
--->
-
-<!--
-#tblSample td, th { padding: 0.2em; }
-.classy0 { background-color: #FFD8D8; color: #000000; }
-.classy1 { background-color: #E0E9FF; color: #000000; }
-.classy2 { background-color: #dddddd; color: #000000; }
--->
-
 <style type="text/css">
 <!--
 #tblSample td, th { padding: 0.2em; }
@@ -48,48 +34,17 @@
 .classy1 { background-color: #cccccc; color: #000000; }
 -->
 </style>
-
 <?php
+*/
 echo '<script src="modules/GEDFact_assistant/_CENS/js/census_5_input.js" type="text/javascript"></script>';
 ?>
 
 <center>
 
-<script src="modules/GEDFact_assistant/_CENS/js/dw_event.js" type="text/javascript"></script>
-<script src="modules/GEDFact_assistant/_CENS/js/dw_scroll.js" type="text/javascript"></script>
-<script src="modules/GEDFact_assistant/_CENS/js/dw_scrollbar.js" type="text/javascript"></script>
-<script src="modules/GEDFact_assistant/_CENS/js/scroll_controls.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-function init_dw_Scroll() {
-    var wndo = new dw_scrollObj('wn', 'lyr1', 't1');
- //   var wndo2 = new dw_scrollObj('wn2', 'lyr2', 't2');
-    wndo.setUpScrollbar("dragBar", "track", "h", 1, 1);
-    wndo.setUpScrollControls('scrollbar');
-	wndo.setUpScrollbar("dragBar2", "track2", "v", 1, 1);
-    wndo.setUpScrollControls('scrollbar2');
-}
-
-// if code supported, link in the style sheet and call the init function onload
-if ( dw_scrollObj.isSupported() ) {
-	dw_writeStyleSheet('modules/GEDFact_assistant/_CENS/css/CENS_scrolling.css');
-    dw_Event.add( window, 'load', init_dw_Scroll);
-}
-</script>
-
-<div id="scrollbar">
-    <div id="left"><a class="mouseover_left" href="#"><img src="modules/GEDFact_assistant/_CENS/images/btn-lft.gif" width="13" height="13" alt="" border="0" /></a></div>
-    <div id="track">
-         <div id="dragBar"></div>
-    </div>
-    <div id="right"><a class="mouseover_right" href="#"><img src="modules/GEDFact_assistant/_CENS/images/btn-rt.gif" width="13" height="13" alt="" border="0" /></a></div>
-</div>
-<!-- border attribute added to reduce support questions on the subject. If you like valid strict markup, remove and place a img {border:none;} spec in style sheet -->
-	
 <table><tr><td>
 
-<div id="wn">
-    <div id="lyr1">    
+<div id="wn" style="width:69.8em; overflow:auto;">
+    <div id="lyr1" style="height:15.46em; overflow:auto;">    
 	<table id="t1" border="0" cellpadding="0" cellspacing="2">
         <tr>
 			<td>
@@ -108,7 +63,7 @@ if ( dw_scrollObj.isSupported() ) {
 				</tr>
 			</table>
 			
-			<table width="812px" border="0" cellspacing="1" id="tblSample">
+			<table style="width:68em;" border="0" cellspacing="1" id="tblSample">
 				<thead>
 				<tr>
 					<th width="2%" class="descriptionbox" style="border: 0px solid transparent;" align="left"><font size=1>#</font></th>
@@ -137,31 +92,11 @@ if ( dw_scrollObj.isSupported() ) {
 				
 			</table>
 			</td>
-			
-			<!-- spacing required for optimal view horizontally -->
-			<td >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-			<td >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-			<td >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-			<td >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-			<td >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 		</tr>
-		<!-- spacing required for optimal view vertically -->
-		<tr><td height="276"> <br /><br /> </td></tr>
-		<tr><td height="276"> <br /><br /> </td></tr>
 	</table>
 	
 	</div> <!-- end lyr1 div -->
 </div>  <!-- end wn div -->
-</td>
-
-<td>
-<div id="scrollbar2">
-	<div id="up2"><a class="mouseover_up" href="#"><img src="modules/GEDFact_assistant/_CENS/images/btn-up.gif" width="13" height="13" alt="" border="0" /></a></div>
-	<div id="track2">
-		<div id="dragBar2"></div>
-	</div>
-	<div id="down2"><a class="mouseover_down" href="#"><img src="modules/GEDFact_assistant/_CENS/images/btn-dn.gif" width="13" height="13" alt="" border="0" /></a></div>
-</div>
 </td>
 </tr></table>
 

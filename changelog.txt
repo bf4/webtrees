@@ -10,8 +10,9 @@
 
 
 Version 4.2.x CA
+ - Changed: More changes for Census Assistant pop up window dimensions (now 870x726) (windmillway)
  - Merged: Merge changes r6034- r6037 from the trunk. (windmillway)
- - Reduce Census Assistant pop up window dimentions (now 860x760) (windmillway)
+ - Reduce Census Assistant pop up window dimensions (now 860x760) (windmillway)
  - Move to tableless design -kiwipgv- (windmillway)
  - Merged: Merge changes r6012 - r6033 from the trunk. (windmillway)
  - Merged: Merge changes r6007 - r6011 from the trunk. (windmillway)
