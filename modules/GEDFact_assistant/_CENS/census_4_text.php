@@ -71,7 +71,7 @@ if (window.focus) {win02.focus();}
 <!--   ---- The proposed Census Text -------- -->
 <div class="optionbox" style="font-size:0.9em; text-align:left; padding:0.3em; border:0.3em outset; margin-bottom:0.3em;">
 	<span style="margin: 0 1em 0 0.3em;"><input type="button" value="<?php echo $pgv_lang["page_help"]; ?>" onclick="javascript: help_window2(this.form)" /></span>
-	<span style="margin: 0 1em 0 0.3em;font-size:0.9em">Click "Preview" to copy Input Fields Information.</span>
+	<span style="margin: 0 1em 0 0.3em;font-size:0.9em">Click "Preview" to copy Edit Input Fields.</span>
 	<span style="margin: 0 1em 0 0.3em;"><input type="button" value="<?php echo $pgv_lang["preview"]; ?>" onclick="preview();" /></span>
 	<span style="margin: 0 1em 0 0.3em;font-weight:bold;">Proposed Census Text&nbsp;&nbsp;</span>
 	<span style="margin: 0 1em 0 0.3em;"><input type="submit" value="<?php echo $pgv_lang["save"]; ?>" /></span>

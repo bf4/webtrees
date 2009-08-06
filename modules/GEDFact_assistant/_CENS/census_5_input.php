@@ -39,17 +39,12 @@
 echo '<script src="modules/GEDFact_assistant/_CENS/js/census_5_input.js" type="text/javascript"></script>';
 ?>
 
-<center>
 
-<table><tr><td>
+
 
 <div id="wn" style="width:69.8em; overflow:auto;">
     <div id="lyr1" style="height:15.46em; overflow:auto;">    
-	<table id="t1" border="0" cellpadding="0" cellspacing="2">
-        <tr>
-			<td>
-			
-			<table width="100%" border="0" cellspacing="2">
+			<table style="width:68em;" border="0" cellspacing="1">
 				<tr>
 					<td align="center" colspan="8">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 					<td align="center">
@@ -65,39 +60,35 @@ echo '<script src="modules/GEDFact_assistant/_CENS/js/census_5_input.js" type="t
 			
 			<table style="width:68em;" border="0" cellspacing="1" id="tblSample">
 				<thead>
+				<?php /*
 				<tr>
-					<th width="2%" class="descriptionbox" style="border: 0px solid transparent;" align="left"><font size=1>#</font></th>
-					<th width="3%" class="descriptionbox" style="border: 0px solid transparent;" align="left"><font size=1>Indi ID</font></th>
-					<th id=".b.Name" width="10%" class="descriptionbox" style="border: 0px solid transparent;" align="left"><font size=1>Name</font></th>
-					<th id=".b.Relation" class="descriptionbox" style="border: 0px solid transparent;" align="left"><font size=1>Relation</font></th>
-					<th id=".b.Cond" width="3%" class="descriptionbox" style="border: 0px solid transparent;" align="left"><font size=1>Cond</font></th>
-					<th id=".b.YOB" class="descriptionbox" style="border: 0px solid transparent;" align="left"><font size=1>YOB</font></th>
-					<th id=".b.Age" class="descriptionbox" style="border: 0px solid transparent;" align="left"><font size=1>Age</font></th>
-					<th id=".b.YMD" class="descriptionbox" style="border: 0px solid transparent;" align="left"><font size=1>Y/M/D</font></th>
-					<th id=".b.Sex" class="descriptionbox" style="border: 0px solid transparent;" align="left"><font size=1>Sex</font></th>
-					<th id=".b.Occupation" width="13%" class="descriptionbox" style="border: 0px solid transparent;" align="left"><font size=1>Occupation</font></th>
-					<th id=".b.Birthplace" width="9%" class="descriptionbox" style="border: 0px solid transparent;" align="left"><font size=1>Birthplace</font></th>
+					<td width="2%" class="descriptionbox" style="border: 0px solid transparent;" align="left"><font size=1>#</font></td>
+					<td width="3%" class="descriptionbox" style="border: 0px solid transparent;" align="left"><font size=1>Indi ID</font></td>
+					<td id=".b.Name" name=".b.Name" width="10%" class="descriptionbox" style="border: 0px solid transparent;" align="left"><font size=1>Name</font></td>
+					<td id="col_3" name="col_3" class="descriptionbox" style="border: 0px solid transparent;" align="left"><font size=1>Relation</font></td>
+					<td id=".b.Cond" width="3%" class="descriptionbox" style="border: 0px solid transparent;" align="left"><font size=1>Cond</font></td>
+					<td id=".b.YOB" class="descriptionbox" style="border: 0px solid transparent;" align="left"><font size=1>YOB</font></td>
+					<td id=".b.Age" class="descriptionbox" style="border: 0px solid transparent;" align="left"><font size=1>Age</font></td>
+					<td id=".b.YMD" class="descriptionbox" style="border: 0px solid transparent;" align="left"><font size=1>Y/M/D</font></td>
+					<td id=".b.Sex" class="descriptionbox" style="border: 0px solid transparent;" align="left"><font size=1>Sex</font></td>
+					<td id=".b.Occupation" width="13%" class="descriptionbox" style="border: 0px solid transparent;" align="left"><font size=1>Occupation</font></td>
+					<td id=".b.Birthplace" width="9%" class="descriptionbox" style="border: 0px solid transparent;" align="left"><font size=1>Birthplace</font></td>
 					<?php  if ($ctry == "USA") { ?>
-						<th id=".b.Father Birthplace" width="9%" class="descriptionbox" style="border: 0px solid transparent;" align="left"><font size=1>Father Birthplace</font></th>
-						<th id=".b.Mother Birthplace" width="9%" class="descriptionbox" style="border: 0px solid transparent;" align="left"><font size=1>Mother Birthplace</font></th>
+						<td id=".b.Father Birthplace" width="9%" class="descriptionbox" style="border: 0px solid transparent;" align="left"><font size=1>Father Birthplace</font></td>
+						<td id=".b.Mother Birthplace" width="9%" class="descriptionbox" style="border: 0px solid transparent;" align="left"><font size=1>Mother Birthplace</font></td>
 					<?php  } ?>
-					<th class="descriptionbox" style="border: 0px solid transparent;" align="center"><font size=1>Del</font></th>
-					<th width="3%" class="descriptionbox" style="border: 0px solid transparent;" align="center"><font size=1>Ins</font></th>
-					<th width="2%" class="descriptionbox" style="border: 0px solid transparent;" align="center"><font size=1>#</font></th>
+					<td class="descriptionbox" style="border: 0px solid transparent;" align="center"><font size=1>Del</font></td>
+					<td width="3%" class="descriptionbox" style="border: 0px solid transparent;" align="center"><font size=1>Ins</font></td>
+					<td width="2%" class="descriptionbox" style="border: 0px solid transparent;" align="center"><font size=1>#</font></td>
 				</tr>
+				*/ ?>
 				</thead>
 
 				<tbody>
 				</tbody>
 				
 			</table>
-			</td>
-		</tr>
-	</table>
-	
 	</div> <!-- end lyr1 div -->
 </div>  <!-- end wn div -->
-</td>
-</tr></table>
 
-</center>
+

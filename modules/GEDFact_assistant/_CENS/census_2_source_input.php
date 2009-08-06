@@ -65,6 +65,13 @@ global $pgv_lang, $TEXT_DIRECTION;
 	}
 	
 	function changeYear(cenyear) {
+		changeAge(cenyear);
+		changeCols(cenyear);
+	}
+	
+	
+	
+	function changeAge(cenyear) {
 		var curryr = document.getElementById('curryear');
 		if (curryr.value !="") {
 			var currcenyear=curryr.value;
@@ -96,8 +103,25 @@ global $pgv_lang, $TEXT_DIRECTION;
 		}else{
 			document.getElementById('Titl').value = "<?php echo "Census Transcription - ".$wholename." - ";?>";
 		}
+		
 		var curr = document.getElementById('curryear');
 		curr.value = cenyear;
+	}
+	
+	function changeCols(cenyear) {
+		// Add or Remove columns
+		var flip = "";
+		if (cenyear=="1881") {
+			flip = "none";
+		}else{
+			flip = "block";
+		}
+			var cells = document.getElementsByName('col_3');
+			for (var i=0; i<cells.length; i++) {
+				cells[i].style.display = flip;
+			}
+			// cells[cells.length-1].style.display = flip;
+			
 	}
 	
 </script>
@@ -121,7 +145,7 @@ global $pgv_lang, $TEXT_DIRECTION;
 			}" 
 			id="censYear" name="censyear" style="font:0.9em normal;">
 		</select>
-		<input type="hidden" id="curryear" value="" />
+		<input type="hidden" id="curryear" name="curryear" value="" />
 	</div>
 	<div style="font-weight:bold;">&nbsp;&nbsp;&nbsp;Title:&nbsp;
 		<script type="text/javascript">

@@ -34,7 +34,7 @@
 var INPUT_NAME_PREFIX = 'InputCell_'; // this is being set via script
 var RADIO_NAME = "totallyrad"; // this is being set via script
 var TABLE_NAME = 'tblSample'; // this should be named in the HTML
-var ROW_BASE = 1; // first number (for display)
+var ROW_BASE = 0; // first number (for display)
 var hasLoaded = false;
 
 
@@ -54,7 +54,7 @@ function preview(){
 	//}
 	
 	var tbl = document.getElementById('tblSample');
-	for(var i=1; i<tbl.rows.length; i++){ // start at i=1 because we need to avoid header
+	for(var i=0; i<tbl.rows.length; i++){ // start at i=1 because we need to avoid header
 		var tr = tbl.rows[i];
 		var strRow = '';
 		for(var j=2; j<tr.cells.length; j++){
@@ -91,7 +91,7 @@ window.onload=fillInRows;
 // fillInRows - can be used to pre-load a table with a row or rows
 function fillInRows() {
 	hasLoaded = true;
-//	create_header();
+	create_header();
 	// insertRowToTable();
 	// addRowToTable();
 }
@@ -223,8 +223,8 @@ mbirthpl=birthpl;
 			cell_2.setAttribute('id', 'cell_'+ iteration + '_2');	// Full Name
 			cell_2.setAttribute('name', 'cell_'+ iteration + '_2');
 		var cell_3 = row.insertCell(3);		
-			cell_3.setAttribute('id', 'cell_'+ iteration + '_3');	// Relationship
-			cell_3.setAttribute('name', 'cell_'+ iteration + '_3');
+			cell_3.setAttribute('id', 'col_3');	// Relation
+			cell_3.setAttribute('name', 'col_3');
 		var cell_4 = row.insertCell(4);		
 			cell_4.setAttribute('id', 'cell_'+ iteration + '_4');	// Marital Conditition
 			cell_4.setAttribute('name', 'cell_'+ iteration + '_4');
@@ -257,8 +257,8 @@ mbirthpl=birthpl;
 			cell_12.style.display = "none";
 		}
 		if (iteration == 0) {
-		//	var cell_tdel = row.insertCell(13);			// text Del
-		//	var cell_tra  = row.insertCell(14);			// text Radio
+			var cell_tdel = row.insertCell(13);			// text Del
+			var cell_tra  = row.insertCell(14);			// text Radio
 		}else{
 			var cell_del = row.insertCell(13);			// Onclick = Delete Row
 				cell_del.setAttribute('align', 'center');
@@ -270,21 +270,21 @@ mbirthpl=birthpl;
 			cell_15.setAttribute('align', 'center');
 
 		// b. Define Header Cell elements =======================================
-//		if (iteration == 0) {
-/*
+		if (iteration == 0) {
+
 		// Item Number ---------------------------------------------------
 			var txt_itemNo = document.createElement('div');
-				txt_itemNo.setAttribute('class', 'optionbox');
+				txt_itemNo.setAttribute('class', 'descriptionbox');
 				txt_itemNo.style.border='0px';
-				txt_itemNo.innerHTML = 'Item'; //Required for IE
-				txt_itemNo.textContent = 'Item';
+				txt_itemNo.innerHTML = '#'; //Required for IE
+				txt_itemNo.textContent = '#';
 				txt_itemNo.setAttribute('id', '.b.Item');
 				txt_itemNo.setAttribute('type', 'text');
 				txt_itemNo.style.fontSize="10px";
 		// Indi ID -------------------------------------------------------
 			var txtInp_pid = document.createElement('div');
 				txtInp_pid.setAttribute('type', 'text');
-				txtInp_pid.setAttribute('class', 'optionbox');
+				txtInp_pid.setAttribute('class', 'descriptionbox');
 				txtInp_pid.style.fontSize="10px";
 				txtInp_pid.style.border='0px';
 				txtInp_pid.innerHTML = 'Indi ID'; //Required for IE
@@ -292,7 +292,7 @@ mbirthpl=birthpl;
 				txtInp_pid.setAttribute('id', '.b.Indi ID');
 		// Full Name -----------------------------------------------------
 			var txtInp_nam = document.createElement('div');
-				txtInp_nam.setAttribute('class', 'optionbox');
+				txtInp_nam.setAttribute('class', 'descriptionbox');
 				txtInp_nam.setAttribute('type', 'text');
 				txtInp_nam.style.fontSize="10px";
 				txtInp_nam.style.border='0px';
@@ -302,7 +302,7 @@ mbirthpl=birthpl;
 		// Relationship --------------------------------------------------
 			var txtInp_label = document.createElement('div');
 				txtInp_label.setAttribute('type', 'text');
-				txtInp_label.setAttribute('class', 'optionbox');
+				txtInp_label.setAttribute('class', 'descriptionbox');
 				txtInp_label.style.fontSize="10px";
 				txtInp_label.style.border='0px';
 				txtInp_label.innerHTML = 'Relation'; //Required for IE
@@ -311,7 +311,7 @@ mbirthpl=birthpl;
 		// Marital Conditition -------------------------------------------
 			var txtInp_cond = document.createElement('div');
 				txtInp_cond.setAttribute('type', 'text');
-				txtInp_cond.setAttribute('class', 'optionbox');
+				txtInp_cond.setAttribute('class', 'descriptionbox');
 				txtInp_cond.style.fontSize="10px";
 				txtInp_cond.style.border='0px';
 				txtInp_cond.innerHTML = 'Cond'; //Required for IE
@@ -320,7 +320,7 @@ mbirthpl=birthpl;
 		// YOB -----------------------------------------------------------
 			var txtInp_yob = document.createElement('div');
 				txtInp_yob.setAttribute('type', 'text');
-				txtInp_yob.setAttribute('class', 'optionbox');
+				txtInp_yob.setAttribute('class', 'descriptionbox');
 				txtInp_yob.style.fontSize="10px";
 				txtInp_yob.style.border='0px';
 				txtInp_yob.innerHTML = 'YOB'; //Required for IE
@@ -329,7 +329,7 @@ mbirthpl=birthpl;
 		// Age -----------------------------------------------------------
 			var txtInp_age = document.createElement('div');
 				txtInp_age.setAttribute('type', 'text');
-				txtInp_age.setAttribute('class', 'optionbox');
+				txtInp_age.setAttribute('class', 'descriptionbox');
 				txtInp_age.style.fontSize="10px";
 				txtInp_age.style.border='0px';
 				txtInp_age.innerHTML = 'Age'; //Required for IE
@@ -338,7 +338,7 @@ mbirthpl=birthpl;
 		// YMD -----------------------------------------------------------
 			var txtInp_YMD = document.createElement('div');
 				txtInp_YMD.setAttribute('type', 'text');
-				txtInp_YMD.setAttribute('class', 'optionbox');
+				txtInp_YMD.setAttribute('class', 'descriptionbox');
 				txtInp_YMD.style.fontSize="10px";
 				txtInp_YMD.style.border='0px';
 				txtInp_YMD.innerHTML = 'YMD'; //Required for IE
@@ -347,7 +347,7 @@ mbirthpl=birthpl;
 		// Sex -----------------------------------------------------------
 			var txtInp_gend = document.createElement('div');
 				txtInp_gend.setAttribute('type', 'text');
-				txtInp_gend.setAttribute('class', 'optionbox');
+				txtInp_gend.setAttribute('class', 'descriptionbox');
 				txtInp_gend.style.fontSize="10px";
 				txtInp_gend.style.border='0px';
 				txtInp_gend.innerHTML = 'Sex'; //Required for IE
@@ -356,7 +356,7 @@ mbirthpl=birthpl;
 		// Occupation ----------------------------------------------------
 			var txtInp_occu = document.createElement('div');
 				txtInp_occu.setAttribute('type', 'text');
-				txtInp_occu.setAttribute('class', 'optionbox');
+				txtInp_occu.setAttribute('class', 'descriptionbox');
 				txtInp_occu.style.fontSize="10px";
 				txtInp_occu.style.border='0px';
 				txtInp_occu.innerHTML = 'Occupation'; //Required for IE
@@ -365,7 +365,7 @@ mbirthpl=birthpl;
 		// Indi Birth Place ----------------------------------------------
 			var txtInp_birthpl = document.createElement('div');
 				txtInp_birthpl.setAttribute('type', 'text');
-				txtInp_birthpl.setAttribute('class', 'optionbox');
+				txtInp_birthpl.setAttribute('class', 'descriptionbox');
 				txtInp_birthpl.style.fontSize="10px";
 				txtInp_birthpl.style.border='0px';
 				txtInp_birthpl.innerHTML = 'Birth Place'; //Required for IE
@@ -374,7 +374,7 @@ mbirthpl=birthpl;
 		// Fathers Birth Place ----------------------------------------------
 			var txtInp_fbirthpl = document.createElement('div');
 				txtInp_fbirthpl.setAttribute('type', 'text');
-				txtInp_fbirthpl.setAttribute('class', 'optionbox');
+				txtInp_fbirthpl.setAttribute('class', 'descriptionbox');
 				txtInp_fbirthpl.style.fontSize="10px";
 				txtInp_fbirthpl.style.border='0px';
 				txtInp_fbirthpl.innerHTML = 'Fathers BP'; //Required for IE
@@ -383,7 +383,7 @@ mbirthpl=birthpl;
 		// Mothers Birth Place ----------------------------------------------
 			var txtInp_mbirthpl = document.createElement('div');
 				txtInp_mbirthpl.setAttribute('type', 'text');
-				txtInp_mbirthpl.setAttribute('class', 'optionbox');
+				txtInp_mbirthpl.setAttribute('class', 'descriptionbox');
 				txtInp_mbirthpl.style.fontSize="10px";
 				txtInp_mbirthpl.style.border='0px';
 				txtInp_mbirthpl.innerHTML = 'Mothers BP'; //Required for IE
@@ -393,7 +393,7 @@ mbirthpl=birthpl;
 		// Text Del Button ----------------------------------------------- 
 			var txtInp_tdel = document.createElement('div');
 				txtInp_tdel.setAttribute('type', 'text');
-				txtInp_tdel.setAttribute('class', 'optionbox');
+				txtInp_tdel.setAttribute('class', 'descriptionbox');
 				txtInp_tdel.style.fontSize="10px";
 				txtInp_tdel.style.border='0px';
 				txtInp_tdel.innerHTML = 'Del'; //Required for IE
@@ -403,15 +403,25 @@ mbirthpl=birthpl;
 		// Text Radio Button --------------------------------------------- 
 			var txtInp_tra = document.createElement('div');
 				txtInp_tra.setAttribute('type', 'text');
-				txtInp_tra.setAttribute('class', 'optionbox');
+				txtInp_tra.setAttribute('class', 'descriptionbox');
 				txtInp_tra.style.fontSize="10px";
 				txtInp_tra.style.border='0px';
 				txtInp_tra.innerHTML = 'Ins'; //Required for IE
 				txtInp_tra.textContent = 'Ins';
-*/
+				
+		// Item Number 2 -------------------------------------------------
+		/*	var txt_itemNo2 = document.createElement('div');
+				txt_itemNo2.setAttribute('class', 'descriptionbox');
+				txt_itemNo2.style.border='0px';
+				txt_itemNo2.innerHTML = '#'; //Required for IE
+				txt_itemNo2.textContent = '#';
+				txt_itemNo2.setAttribute('id', '.b.Item');
+				txt_itemNo2.setAttribute('type', 'text');
+				txt_itemNo2.style.fontSize="10px";
+		*/
 
 		// c. Define Cell Elements ======================================
-//		}else{
+		}else{
 		// Item Number ---------------------------------------------------
 			var txt_itemNo = document.createTextNode(iteration);
 		// Indi ID -------------------------------------------------------
@@ -541,7 +551,7 @@ mbirthpl=birthpl;
 				}
 		// Item Number ---------------------------------------------------
 			var txt_itemNo2 = document.createTextNode(iteration);
-//		}
+		}
 		// Not visible but used for row re-order process -----------------
 			var cbEl = document.createElement('input');
 				cbEl.type = "hidden";
@@ -562,13 +572,15 @@ mbirthpl=birthpl;
 		cell_11.appendChild(txtInp_fbirthpl);	// Fathers Birthplace
 		cell_12.appendChild(txtInp_mbirthpl);	// Mothers Birthplace
 		if (iteration == 0) {
-		//	cell_tdel.appendChild(txtInp_tdel);	// Text Del
-		//	cell_ra.appendChild(txtInp_tra);
+			cell_tdel.appendChild(txtInp_tdel);	// Text Del
+			cell_tra.appendChild(txtInp_tra);	// Text Ins
+			cell_15.appendChild(txt_itemNo2);	// Text Item Number
 		}else{
 			cell_del.appendChild(btnEl);		// Onclick = Delete Row
 			cell_ra.appendChild(raEl);			// Radio button used for inserting a row, rather than adding at end of table)
+			cell_15.appendChild(txt_itemNo2);	// Item Number
 		}
-		cell_15.appendChild(txt_itemNo2);		// Item Number
+		
 		
 		// Pass in the elements to be referenced later ===================
 		// Store the myRow object in each row

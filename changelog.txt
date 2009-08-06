@@ -10,6 +10,10 @@
 
 
 Version 4.2.x CA
+ - a) Small additions to show one or two examples of dynamically hiding columns when changing Census Year (Not finished) 
+      Choose UK and after entering one or two items, change year to 1881, The relation column is hidden.
+      Works OK in IE but displacement problems in FF. Shared note does not change yet. 
+ - b) Re-added the auto headers to the shared note. (windmillway)
  - Merged: Merge changes r6038- r6047 from the trunk. (windmillway)
  - Changed: More changes for Census Assistant pop up window dimensions (now 870x726) (windmillway)
  - Merged: Merge changes r6034- r6037 from the trunk. (windmillway)

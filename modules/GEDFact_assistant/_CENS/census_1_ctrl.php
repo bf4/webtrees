@@ -85,7 +85,7 @@ $currpid=$pid;
 		echo "</span>";
 	echo "</div>";
 	//-- Search  and Add Family Members Area ========================================= 
-	echo "<div style=\"float:left; border:0.3em outset; margin: 0.5em 0 0 0.3em; width: 22.4em; height:34em; overflow:auto;\">";
+	echo "<div style=\"float:left; border:0.3em outset; margin: 0.5em 0 0 0.3em; width: 22em; height:34em; overflow:auto;\">";
 		include('modules/GEDFact_assistant/_CENS/census_3_search_add.php'); 
 	echo "</div>";
 	//-- Census Text Input Area ===========================================================
