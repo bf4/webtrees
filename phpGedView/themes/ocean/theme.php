@@ -194,6 +194,9 @@ $Darrowwidth = 15;	// -- additional width to include for the up arrows
 $CHARTS_CLOSE_HTML = true;		//-- should the charts, pedigree, descendacy, etc close the HTML on the page
 $PGV_DXHTMLTAB_COLORS = "#f1f5ff,#648add";
 
+$PGV_STATS_CHART_COLOR1 = "ffffff";
+$PGV_STATS_CHART_COLOR2 = "a1bfe0";
+
 // Arrow symbol or icon for up-page links on Help pages
 // This icon is referred to in Help text by: #GLOBALS[UpArrow]#
 if (file_exists($PGV_IMAGE_DIR."/uarrow3.gif")) $UpArrow = "<img src=\"{$PGV_IMAGE_DIR}/uarrow3.gif\" class=\"icon\" border=\"0\" alt=\"^\" />";
