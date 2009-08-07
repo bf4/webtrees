@@ -191,6 +191,8 @@ $PEDIGREE_LAYOUT = false;		//-- default this theme to the portrait mode of the p
 $CHARTS_CLOSE_HTML = false;		//-- should the charts, pedigree, descendacy, etc clost the HTML on the page
 $PGV_DXHTMLTAB_COLORS = "#c7974d,#eae0d4";
 
+$PGV_STATS_CHART_COLOR1 = "ffffff";
+$PGV_STATS_CHART_COLOR2 = "98753d";
 
 $ONLOADFUNCTION = "onloadfunction();";		//-- function that should be called in the <body onload="
 

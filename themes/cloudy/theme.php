@@ -205,6 +205,9 @@ $Darrowwidth = 30;	// -- additional width to include for the up arrows
 $CHARTS_CLOSE_HTML = true;                //-- should the charts, pedigree, descendacy, etc close the HTML on the page
 $PGV_DXHTMLTAB_COLORS = "#f0f9ff,#c8e7ff";
 
+$PGV_STATS_CHART_COLOR1 = "ffffff";
+$PGV_STATS_CHART_COLOR2 = "95b8e0";
+
 $ONLOADFUNCTION = "loadHandler();";		//-- function that should be called in the <body onload="
 
 // Arrow symbol or icon for up-page links on Help pages
