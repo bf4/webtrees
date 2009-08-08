@@ -267,7 +267,7 @@ if ($ct==0) {
 
 
 	<?php } ?>
-	<br /><a href="clippings.php?action=empty"><?php print_help_link("empty_cart_help", "qm"); print $pgv_lang["empty_cart"]."  "; ?></a>
+	<br /><?php print_help_link("empty_cart_help", "qm");?><a href="clippings.php?action=empty"><?php print $pgv_lang["empty_cart"];?></a>
 	</td></tr>
 
 	<tr><td class="topbottombar"><h2><?php print_help_link("clip_cart_help", "qm"); print $pgv_lang["clippings_cart"];?></h2></td></tr>
