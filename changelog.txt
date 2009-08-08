@@ -9,6 +9,9 @@
 =====================================================================
 
 
+Version 4.2.3
+ - Fixed: [ 2833809 ] Cannot empty all the clipping cart (canajun2eh)
+
 Version 4.2.2
  - Fixed: [ 2826529 ] 4.2.2svn5976 - Advanced HTML square brackets error (wooc)
  - Fixed: [ 1625495 ] 4.1 Chinese not shown in Report (imsza)
