@@ -1660,6 +1660,8 @@ $pgv_lang["statnnames"]		= "Liczba osób";
 $pgv_lang["statnfam"]		= "Liczba rodzin";
 $pgv_lang["statnmale"]		= "Liczba mężczyzn";
 $pgv_lang["statnfemale"]	= "Liczba kobiet";
+$pgv_lang["with_sources"]	= "Ze źródłami";
+$pgv_lang["without_sources"]= "Bez źródeł";
 $pgv_lang["stat_sindi"]		= "Osób ze źródłami";
 $pgv_lang["stat_sfam"]		= "Rodzin ze źródłami";
 $pgv_lang["statvars"]		= "Podaj następujące parametry wykresu";
@@ -1674,6 +1676,7 @@ $pgv_lang["stat_4_map"]		= "Kraj ślubu";
 $pgv_lang["stat_5_birth"]	= "Liczba urodzeń według wieku";
 $pgv_lang["stat_6_death"]	= "Liczba zgonów według wieku";
 $pgv_lang["stat_7_marr"]	= "Liczba ślubów według wieku";
+$pgv_lang["stat_7_div"]		= "Liczba rozwodów według wieku";
 $pgv_lang["stat_8_fam"]		= "Liczba rodzin powiązanych ze źródłami";
 $pgv_lang["stat_9_indi"]	= "Liczba osób powiązanych ze źródłami";
 $pgv_lang["stat_10_none"]	= "brak";
@@ -1716,6 +1719,7 @@ $pgv_lang["one_child"]		= "pojedynczo";
 $pgv_lang["two_children"]	= "dwuosobowe grupy";
 $pgv_lang["statreset"]		= "Wyczyść";
 $pgv_lang["statsubmit"]		= "Pokaż wykres";
+$pgv_lang["stat_largest_families"] = "Rodziny z największą liczbą dzieci";
 
 //-- statisticsplot utility
 $pgv_lang["statistiek_list"]= "Wykres statystyk";
