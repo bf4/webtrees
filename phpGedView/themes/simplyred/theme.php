@@ -179,8 +179,17 @@ $Darrowwidth = 15;	// -- additional width to include for the up arrows
 $CHARTS_CLOSE_HTML = true;		//-- should the charts, pedigree, descendacy, etc close the HTML on the page
 $PGV_DXHTMLTAB_COLORS = "#400025,#622538";
 
+// --  The largest possible area for charts is 300,000 pixels. As the maximum height or width is 1000 pixels
+$PGV_STATS_S_CHART_X = "440"; 
+$PGV_STATS_S_CHART_Y = "125";
+$PGV_STATS_L_CHART_X = "900";
+// --  For map charts, the maximum size is 440 pixels wide by 220 pixels high
+$PGV_STATS_MAP_X = "440";
+$PGV_STATS_MAP_Y = "220";
+
 $PGV_STATS_CHART_COLOR1 = "ffffff";
-$PGV_STATS_CHART_COLOR2 = "420915";
+$PGV_STATS_CHART_COLOR2 = "8c323a";
+$PGV_STATS_CHART_COLOR3 = "d9bbbe";
 
 // Arrow symbol or icon for up-page links on Help pages
 // This icon is referred to in Help text by: #GLOBALS[UpArrow]#

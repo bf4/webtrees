@@ -1417,3 +1417,7 @@ ul.clist {
 .statistics_chart{
 	background-color: #b5d8e3;
 }
+
+.gchart{
+	border: solid #091542 1px;
+}

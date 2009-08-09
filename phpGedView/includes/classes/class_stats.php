@@ -428,9 +428,9 @@ class stats {
 	}
 
 	function chartIndisWithSources($params=null) {
-		global $pgv_lang, $PGV_STATS_CHART_COLOR1, $PGV_STATS_CHART_COLOR2;
+		global $pgv_lang, $PGV_STATS_CHART_COLOR1, $PGV_STATS_CHART_COLOR2, $PGV_STATS_S_CHART_X, $PGV_STATS_S_CHART_Y;
 		if ($params === null) {$params = array();}
-		if (isset($params[0]) && $params[0] != '') {$size = strtolower($params[0]);}else{$size = '470x125';}
+		if (isset($params[0]) && $params[0] != '') {$size = strtolower($params[0]);}else{$size = $PGV_STATS_S_CHART_X."x".$PGV_STATS_S_CHART_Y;}
 		if (isset($params[1]) && $params[1] != '') {$color_from = strtolower($params[1]);}else{$color_from = $PGV_STATS_CHART_COLOR1;}
 		if (isset($params[2]) && $params[2] != '') {$color_to = strtolower($params[2]);}else{$color_to = $PGV_STATS_CHART_COLOR2;}
 		$sizes = explode('x', $size);
@@ -439,10 +439,10 @@ class stats {
 		$tot_indi_per = round(100 *  ($tot_indi-$tot_sindi) / $tot_indi, 2);
 		$tot_sindi_per = round(100 * $tot_sindi / $tot_indi, 2);
 		$chd = self::_array_to_extended_encoding(array($tot_sindi_per, 100-$tot_sindi_per));
-		$chl =  $pgv_lang['stat_sindi'].' - '.round($tot_sindi_per,1).'%|'.
-				$pgv_lang['others'].' - '.round($tot_indi_per,1).'%';
-		$chart_title =  $pgv_lang['stat_sindi'].' ['.round($tot_sindi_per,1).'%], '.
-						$pgv_lang['others'].' ['.round($tot_indi_per,1).'%]';
+		$chl =  $pgv_lang["with_sources"].' - '.round($tot_sindi_per,1).'%|'.
+				$pgv_lang["without_sources"].' - '.round($tot_indi_per,1).'%';
+		$chart_title =  $pgv_lang["with_sources"].' ['.round($tot_sindi_per,1).'%], '.
+						$pgv_lang["without_sources"].' ['.round($tot_indi_per,1).'%]';
 		return "<img src=\"".encode_url("http://chart.apis.google.com/chart?cht=p3&amp;chd=e:{$chd}&amp;chs={$size}&amp;chco={$color_from},{$color_to}&amp;chf=bg,s,ffffff00&amp;chl={$chl}")."\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" alt=\"".$chart_title."\" title=\"".$chart_title."\" />";
 	}
 
@@ -470,9 +470,9 @@ class stats {
 	}
 
 	function chartFamsWithSources($params=null) {
-		global $pgv_lang, $PGV_STATS_CHART_COLOR1, $PGV_STATS_CHART_COLOR2;
+		global $pgv_lang, $PGV_STATS_CHART_COLOR1, $PGV_STATS_CHART_COLOR2, $PGV_STATS_S_CHART_X, $PGV_STATS_S_CHART_Y;
 		if ($params === null) {$params = array();}
-		if (isset($params[0]) && $params[0] != '') {$size = strtolower($params[0]);}else{$size = '470x125';}
+		if (isset($params[0]) && $params[0] != '') {$size = strtolower($params[0]);}else{$size = $PGV_STATS_S_CHART_X."x".$PGV_STATS_S_CHART_Y;}
 		if (isset($params[1]) && $params[1] != '') {$color_from = strtolower($params[1]);}else{$color_from = $PGV_STATS_CHART_COLOR1;}
 		if (isset($params[2]) && $params[2] != '') {$color_to = strtolower($params[2]);}else{$color_to = $PGV_STATS_CHART_COLOR2;}
 		$sizes = explode('x', $size);
@@ -481,10 +481,10 @@ class stats {
 		$tot_fam_per = round(100 *  ($tot_fam-$tot_sfam) / $tot_fam, 2);
 		$tot_sfam_per = round(100 * $tot_sfam / $tot_fam, 2);
 		$chd = self::_array_to_extended_encoding(array($tot_sfam_per, 100-$tot_sfam_per));
-		$chl =  $pgv_lang['stat_sfam'].' - '.round($tot_sfam_per,1).'%|'.
-				$pgv_lang['others'].' - '.round($tot_fam_per,1).'%';
-		$chart_title =  $pgv_lang['stat_sfam'].' ['.round($tot_sfam_per,1).'%], '.
-						$pgv_lang['others'].' ['.round($tot_fam_per,1).'%]';
+		$chl =  $pgv_lang["with_sources"].' - '.round($tot_sfam_per,1).'%|'.
+				$pgv_lang["without_sources"].' - '.round($tot_fam_per,1).'%';
+		$chart_title =  $pgv_lang["with_sources"].' ['.round($tot_sfam_per,1).'%], '.
+						$pgv_lang["without_sources"].' ['.round($tot_fam_per,1).'%]';
 		return "<img src=\"".encode_url("http://chart.apis.google.com/chart?cht=p3&amp;chd=e:{$chd}&chs={$size}&amp;chco={$color_from},{$color_to}&amp;chf=bg,s,ffffff00&amp;chl={$chl}")."\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" alt=\"".$chart_title."\" title=\"".$chart_title."\" />";
 	}
 
@@ -693,9 +693,9 @@ class stats {
 	}
 
 	function chartSex($params=null) {
-		global $pgv_lang, $TEXT_DIRECTION;
+		global $pgv_lang, $TEXT_DIRECTION, $PGV_STATS_S_CHART_X, $PGV_STATS_S_CHART_Y;
 		if ($params === null) {$params = array();}
-		if (isset($params[0]) && $params[0] != '') {$size = strtolower($params[0]);}else{$size = '440x125';}
+		if (isset($params[0]) && $params[0] != '') {$size = strtolower($params[0]);}else{$size = $PGV_STATS_S_CHART_X."x".$PGV_STATS_S_CHART_Y;}
 		if (isset($params[1]) && $params[1] != '') {$color_female = strtolower($params[1]);}else{$color_female = 'ffd1dc';}
 		if (isset($params[2]) && $params[2] != '') {$color_male = strtolower($params[2]);}else{$color_male = '84beff';}
 		if (isset($params[3]) && $params[3] != '') {$color_unknown = strtolower($params[3]);}else{$color_unknown = '777777';}
@@ -770,9 +770,9 @@ class stats {
 	}
 
 	function chartMortality($params=null) {
-		global $pgv_lang, $TEXT_DIRECTION;
+		global $pgv_lang, $TEXT_DIRECTION, $PGV_STATS_S_CHART_X, $PGV_STATS_S_CHART_Y;
 		if ($params === null) {$params = array();}
-		if (isset($params[0]) && $params[0] != '') {$size = strtolower($params[0]);}else{$size = '440x125';}
+		if (isset($params[0]) && $params[0] != '') {$size = strtolower($params[0]);}else{$size = $PGV_STATS_S_CHART_X."x".$PGV_STATS_S_CHART_Y;}
 		if (isset($params[1]) && $params[1] != '') {$color_living = strtolower($params[1]);}else{$color_living = 'ffffff';}
 		if (isset($params[2]) && $params[2] != '') {$color_dead = strtolower($params[2]);}else{$color_dead = 'cccccc';}
 		if (isset($params[3]) && $params[3] != '') {$color_unknown = strtolower($params[3]);}else{$color_unknown = '777777';}
@@ -865,9 +865,9 @@ class stats {
 	function totalMediaUnknown() {return $this->_totalMediaType('unknown');}
 
 	function chartMedia($params=null) {
-		global $pgv_lang, $TEXT_DIRECTION, $PGV_STATS_CHART_COLOR1, $PGV_STATS_CHART_COLOR2;
+		global $pgv_lang, $TEXT_DIRECTION, $PGV_STATS_CHART_COLOR1, $PGV_STATS_CHART_COLOR2, $PGV_STATS_S_CHART_X, $PGV_STATS_S_CHART_Y;
 		if ($params === null) {$params = array();}
-		if (isset($params[0]) && $params[0] != '') {$size = strtolower($params[0]);}else{$size = '440x125';}
+		if (isset($params[0]) && $params[0] != '') {$size = strtolower($params[0]);}else{$size = $PGV_STATS_S_CHART_X."x".$PGV_STATS_S_CHART_Y;}
 		if (isset($params[1]) && $params[1] != '') {$color_from = strtolower($params[1]);}else{$color_from = $PGV_STATS_CHART_COLOR1;}
 		if (isset($params[2]) && $params[2] != '') {$color_to = strtolower($params[2]);}else{$color_to = $PGV_STATS_CHART_COLOR2;}
 		$sizes = explode('x', $size);
@@ -1115,6 +1115,7 @@ class stats {
 
 	function chartDistribution($chart_shows='world', $chart_type='', $surname='') {
 		global $pgv_lang, $pgv_lang_use, $countries;
+		global $PGV_STATS_CHART_COLOR1, $PGV_STATS_CHART_COLOR2, $PGV_STATS_CHART_COLOR3, $PGV_STATS_MAP_X, $PGV_STATS_MAP_Y;
 		// PGV uses 3-letter ISO/chapman codes, but google uses 2-letter ISO codes.  There is not a 1:1
 		// mapping, so Wales/Scotland/England all become GB, etc.
 		if (!isset($iso3166)) {
@@ -1258,9 +1259,9 @@ class stats {
 			break;
 		}
 		$chart_url ="http://chart.apis.google.com/chart?cht=t&amp;chtm=".$chart_shows;
-		$chart_url.="&amp;chco=ffffff,c3dfff,84beff"; // country colours
-		$chart_url.="&amp;chf=bg,s,EAF7FE"; // sea colour
-		$chart_url.="&amp;chs=440x220"; // max size for maps is 440x220
+		$chart_url.="&amp;chco=".$PGV_STATS_CHART_COLOR1.",".$PGV_STATS_CHART_COLOR3.",".$PGV_STATS_CHART_COLOR2; // country colours
+		$chart_url.="&amp;chf=bg,s,ECF5FF"; // sea colour
+		$chart_url.="&amp;chs=".$PGV_STATS_MAP_X."x".$PGV_STATS_MAP_Y;
 		$chart_url.="&amp;chld=".implode('', array_keys($surn_countries))."&amp;chd=s:";
 		foreach ($surn_countries as $count) {
 			$chart_url.=substr(PGV_GOOGLE_CHART_ENCODING, floor($count/max($surn_countries)*61), 1);
@@ -1269,9 +1270,9 @@ class stats {
 		$chart .= '<b>'.$chart_title.'</b><br /><br />';
 		$chart .= '<div align="center"><img src="'.$chart_url.'" alt="'.$chart_title.'" title="'.$chart_title.'" class="gchart" /><br />';
 		$chart .= '<table align="center" border="0" cellpadding="1" cellspacing="1"><tr>';
-		$chart .= '<td bgcolor="#84BEFF" width="12"></td><td>'.$pgv_lang["g_chart_high"].'&nbsp;&nbsp;</td>';
-		$chart .= '<td bgcolor="#C3DFFF" width="12"></td><td>'.$pgv_lang["g_chart_low"].'&nbsp;&nbsp;</td>';
-		$chart .= '<td bgcolor="#FFFFFF" width="12"></td><td>'.$pgv_lang["g_chart_nobody"].'&nbsp;&nbsp;</td>';
+		$chart .= '<td bgcolor="#'.$PGV_STATS_CHART_COLOR2.'" width="12"></td><td>'.$pgv_lang["g_chart_high"].'&nbsp;&nbsp;</td>';
+		$chart .= '<td bgcolor="#'.$PGV_STATS_CHART_COLOR3.'" width="12"></td><td>'.$pgv_lang["g_chart_low"].'&nbsp;&nbsp;</td>';
+		$chart .= '<td bgcolor="#'.$PGV_STATS_CHART_COLOR1.'" width="12"></td><td>'.$pgv_lang["g_chart_nobody"].'&nbsp;&nbsp;</td>';
 		$chart .= '</tr></table></div></div>';
 		return $chart;
 	}
@@ -1348,7 +1349,7 @@ class stats {
 	}
 
 	function statsBirth($simple=true, $sex=false, $year1=-1, $year2=-1, $params=null) {
-		global $TBLPREFIX, $pgv_lang, $lang_short_cut, $LANGUAGE, $PGV_STATS_CHART_COLOR1, $PGV_STATS_CHART_COLOR2;
+		global $TBLPREFIX, $pgv_lang, $lang_short_cut, $LANGUAGE, $PGV_STATS_CHART_COLOR1, $PGV_STATS_CHART_COLOR2, $PGV_STATS_S_CHART_X, $PGV_STATS_S_CHART_Y;
 
 		if ($simple) {
 			$sql = "SELECT ROUND((d_year+49.1)/100) AS century, COUNT(*) FROM {$TBLPREFIX}dates "
@@ -1378,7 +1379,7 @@ class stats {
 		}
 		$rows=self::_runSQL($sql);
 		if ($simple) {
-			if (isset($params[0]) && $params[0] != '') {$size = strtolower($params[0]);}else{$size = '440x125';}
+			if (isset($params[0]) && $params[0] != '') {$size = strtolower($params[0]);}else{$size = $PGV_STATS_S_CHART_X."x".$PGV_STATS_S_CHART_Y;}
 			if (isset($params[1]) && $params[1] != '') {$color_from = strtolower($params[1]);}else{$color_from = $PGV_STATS_CHART_COLOR1;}
 			if (isset($params[2]) && $params[2] != '') {$color_to = strtolower($params[2]);}else{$color_to = $PGV_STATS_CHART_COLOR2;}
 			$sizes = explode('x', $size);
@@ -1409,7 +1410,7 @@ class stats {
 	}
 
 	function statsDeath($simple=true, $sex=false, $year1=-1, $year2=-1, $params=null) {
-		global $TBLPREFIX, $pgv_lang, $lang_short_cut, $LANGUAGE, $PGV_STATS_CHART_COLOR1, $PGV_STATS_CHART_COLOR2;
+		global $TBLPREFIX, $pgv_lang, $lang_short_cut, $LANGUAGE, $PGV_STATS_CHART_COLOR1, $PGV_STATS_CHART_COLOR2, $PGV_STATS_S_CHART_X, $PGV_STATS_S_CHART_Y;
 
 		if ($simple) {
 			$sql = "SELECT ROUND((d_year+49.1)/100) AS century, COUNT(*) FROM {$TBLPREFIX}dates "
@@ -1439,7 +1440,7 @@ class stats {
 		}
 		$rows=self::_runSQL($sql);
 		if ($simple) {
-			if (isset($params[0]) && $params[0] != '') {$size = strtolower($params[0]);}else{$size = '440x125';}
+			if (isset($params[0]) && $params[0] != '') {$size = strtolower($params[0]);}else{$size = $PGV_STATS_S_CHART_X."x".$PGV_STATS_S_CHART_Y;}
 			if (isset($params[1]) && $params[1] != '') {$color_from = strtolower($params[1]);}else{$color_from = $PGV_STATS_CHART_COLOR1;}
 			if (isset($params[2]) && $params[2] != '') {$color_to = strtolower($params[2]);}else{$color_to = $PGV_STATS_CHART_COLOR2;}
 			$sizes = explode('x', $size);
@@ -2328,7 +2329,7 @@ class stats {
 	}
 
 	function statsMarr($simple=true, $first=false, $year1=-1, $year2=-1, $params=null) {
-		global $TBLPREFIX, $pgv_lang, $lang_short_cut, $LANGUAGE, $PGV_STATS_CHART_COLOR1, $PGV_STATS_CHART_COLOR2;
+		global $TBLPREFIX, $pgv_lang, $lang_short_cut, $LANGUAGE, $PGV_STATS_CHART_COLOR1, $PGV_STATS_CHART_COLOR2, $PGV_STATS_S_CHART_X, $PGV_STATS_S_CHART_Y;
 
 		if ($simple) {
 			$sql = "SELECT ROUND((d_year+49.1)/100) AS century, COUNT(*) FROM {$TBLPREFIX}dates "
@@ -2378,7 +2379,7 @@ class stats {
 		$rows=self::_runSQL($sql);
 		if (!isset($rows)) {return 0;}
 		if ($simple) {
-			if (isset($params[0]) && $params[0] != '') {$size = strtolower($params[0]);}else{$size = '440x125';}
+			if (isset($params[0]) && $params[0] != '') {$size = strtolower($params[0]);}else{$size = $PGV_STATS_S_CHART_X."x".$PGV_STATS_S_CHART_Y;}
 			if (isset($params[1]) && $params[1] != '') {$color_from = strtolower($params[1]);}else{$color_from = $PGV_STATS_CHART_COLOR1;}
 			if (isset($params[2]) && $params[2] != '') {$color_to = strtolower($params[2]);}else{$color_to = $PGV_STATS_CHART_COLOR2;}
 			$sizes = explode('x', $size);
@@ -2409,7 +2410,7 @@ class stats {
 	}
 
 	function statsDiv($simple=true, $first=false, $year1=-1, $year2=-1, $params=null) {
-		global $TBLPREFIX, $pgv_lang, $lang_short_cut, $LANGUAGE, $PGV_STATS_CHART_COLOR1, $PGV_STATS_CHART_COLOR2;
+		global $TBLPREFIX, $pgv_lang, $lang_short_cut, $LANGUAGE, $PGV_STATS_CHART_COLOR1, $PGV_STATS_CHART_COLOR2, $PGV_STATS_S_CHART_X, $PGV_STATS_S_CHART_Y;
 
 		if ($simple) {
 			$sql = "SELECT ROUND((d_year+49.1)/100) AS century, COUNT(*) FROM {$TBLPREFIX}dates "
@@ -2459,7 +2460,7 @@ class stats {
 		$rows=self::_runSQL($sql);
 		if (!isset($rows)) {return 0;}
 		if ($simple) {
-			if (isset($params[0]) && $params[0] != '') {$size = strtolower($params[0]);}else{$size = '440x125';}
+			if (isset($params[0]) && $params[0] != '') {$size = strtolower($params[0]);}else{$size = $PGV_STATS_S_CHART_X."x".$PGV_STATS_S_CHART_Y;}
 			if (isset($params[1]) && $params[1] != '') {$color_from = strtolower($params[1]);}else{$color_from = $PGV_STATS_CHART_COLOR1;}
 			if (isset($params[2]) && $params[2] != '') {$color_to = strtolower($params[2]);}else{$color_to = $PGV_STATS_CHART_COLOR2;}
 			$sizes = explode('x', $size);
@@ -2484,7 +2485,7 @@ class stats {
 			}
 			$chd = self::_array_to_extended_encoding($counts);
 			$chl = substr($centuries,0,-1);
-			return "<img src=\"".encode_url("http://chart.apis.google.com/chart?cht=p3&amp;chd=e:{$chd}&amp;chs={$size}&amp;chco={$color_from},{$color_to}&amp;chf=bg,s,ffffff00&amp;chl={$chl}")."\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" alt=\"".$pgv_lang["stat_7_marr"]."\" title=\"".$pgv_lang["stat_7_marr"]."\" />";
+			return "<img src=\"".encode_url("http://chart.apis.google.com/chart?cht=p3&amp;chd=e:{$chd}&amp;chs={$size}&amp;chco={$color_from},{$color_to}&amp;chf=bg,s,ffffff00&amp;chl={$chl}")."\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" alt=\"".$pgv_lang["stat_7_div"]."\" title=\"".$pgv_lang["stat_7_div"]."\" />";
 		}
 		return $rows;
 	}
@@ -2922,9 +2923,9 @@ class stats {
 	function topTenLargestFamilyList($params=null) {return $this->_topTenFamilyQuery('list', $params);}
 
 	function chartLargestFamilies($params=null) {
-		global $TBLPREFIX, $PGV_STATS_CHART_COLOR1, $PGV_STATS_CHART_COLOR2, $pgv_lang;
+		global $TBLPREFIX, $pgv_lang, $PGV_STATS_CHART_COLOR1, $PGV_STATS_CHART_COLOR2, $PGV_STATS_L_CHART_X, $PGV_STATS_S_CHART_Y;
 		if ($params === null) {$params = array();}
-		if (isset($params[0]) && $params[0] != '') {$size = strtolower($params[0]);}else{$size = '1000x150';}
+		if (isset($params[0]) && $params[0] != '') {$size = strtolower($params[0]);}else{$size = $PGV_STATS_L_CHART_X."x".$PGV_STATS_S_CHART_Y;}
 		if (isset($params[1]) && $params[1] != '') {$color_from = strtolower($params[1]);}else{$color_from = $PGV_STATS_CHART_COLOR1;}
 		if (isset($params[2]) && $params[2] != '') {$color_to = strtolower($params[2]);}else{$color_to = $PGV_STATS_CHART_COLOR2;}
 		if (isset($params[3]) && $params[3] != '') {$total = strtolower($params[3]);}else{$total = 10;}
@@ -2959,8 +2960,8 @@ class stats {
 		}
 		$chl = join('|', $chl);
 
-// the following does not print Arabic letters in names - encode_url shows still the letters
-		return "<img src=\"".encode_url("http://chart.apis.google.com/chart?cht=p3&amp;chd=e:{$chd}&amp;chs={$size}&amp;chco={$color_from},{$color_to}&amp;chf=bg,s,ffffff00&amp;chl={$chl}")."\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" alt=\"".$pgv_lang["stat_21_nok"]."\" title=\"".$pgv_lang["stat_21_nok"]."\" />";
+		// the following does not print Arabic letters in names - encode_url shows still the letters
+		return "<img src=\"".encode_url("http://chart.apis.google.com/chart?cht=p3&amp;chd=e:{$chd}&amp;chs={$size}&amp;chco={$color_from},{$color_to}&amp;chf=bg,s,ffffff00&amp;chl={$chl}")."\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" alt=\"".$pgv_lang["stat_largest_families"]."\" title=\"".$pgv_lang["stat_largest_families"]."\" />";
 	}
 
 	function totalChildren() {
@@ -3261,9 +3262,9 @@ class stats {
 	static function commonSurnamesListTotals($params=array('','','rcount')) {return self::_commonSurnamesQuery('list', true, $params);}
 
 	function chartCommonSurnames($params=null) {
-		global $pgv_lang, $COMMON_NAMES_THRESHOLD, $PGV_STATS_CHART_COLOR1, $PGV_STATS_CHART_COLOR2;
+		global $pgv_lang, $COMMON_NAMES_THRESHOLD, $PGV_STATS_CHART_COLOR1, $PGV_STATS_CHART_COLOR2, $PGV_STATS_S_CHART_X, $PGV_STATS_S_CHART_Y;
 		if ($params === null) {$params = array();}
-		if (isset($params[0]) && $params[0] != '') {$size = strtolower($params[0]);}else{$size = '440x125';}
+		if (isset($params[0]) && $params[0] != '') {$size = strtolower($params[0]);}else{$size = $PGV_STATS_S_CHART_X."x".$PGV_STATS_S_CHART_Y;}
 		if (isset($params[1]) && $params[1] != '') {$color_from = strtolower($params[1]);}else{$color_from = $PGV_STATS_CHART_COLOR1;}
 		if (isset($params[2]) && $params[2] != '') {$color_to = strtolower($params[2]);}else{$color_to = $PGV_STATS_CHART_COLOR2;}
 		if (isset($params[3]) && $params[3] != '') {$threshold = strtolower($params[3]);}else{$threshold = $COMMON_NAMES_THRESHOLD;}
@@ -3430,9 +3431,9 @@ class stats {
 	static function commonGivenUnknownTable($params=array(1,10,'rcount')){return self::_commonGivenQuery('U', 'table', false, $params);}
 
 	function chartCommonGiven($params=null) {
-		global $pgv_lang, $COMMON_NAMES_THRESHOLD, $PGV_STATS_CHART_COLOR1, $PGV_STATS_CHART_COLOR2;
+		global $pgv_lang, $COMMON_NAMES_THRESHOLD, $PGV_STATS_CHART_COLOR1, $PGV_STATS_CHART_COLOR2, $PGV_STATS_S_CHART_X, $PGV_STATS_S_CHART_Y;
 		if ($params === null) {$params = array();}
-		if (isset($params[0]) && $params[0] != '') {$size = strtolower($params[0]);}else{$size = '440x125';}
+		if (isset($params[0]) && $params[0] != '') {$size = strtolower($params[0]);}else{$size = $PGV_STATS_S_CHART_X."x".$PGV_STATS_S_CHART_Y;}
 		if (isset($params[1]) && $params[1] != '') {$color_from = strtolower($params[1]);}else{$color_from = $PGV_STATS_CHART_COLOR1;}
 		if (isset($params[2]) && $params[2] != '') {$color_to = strtolower($params[2]);}else{$color_to = $PGV_STATS_CHART_COLOR2;}
 		if (isset($params[3]) && $params[3] != '') {$threshold = strtolower($params[3]);}else{$threshold = $COMMON_NAMES_THRESHOLD;}

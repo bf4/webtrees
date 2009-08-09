@@ -1318,7 +1318,9 @@ ul.clist {
 }
 */
 
-
 .statistics_chart{
 }
 
+.gchart{
+	border: solid black 1px;
+}

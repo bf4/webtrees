@@ -10,9 +10,10 @@
 
 
 Version 4.2.3
+ - Added: New statistics (wooc)
  - Fixed: [ 2833809 ] Cannot empty all the clipping cart (canajun2eh)
 
-Version 4.2.2
+Version 4.2.2 2009-08-01
  - Fixed: [ 2826529 ] 4.2.2svn5976 - Advanced HTML square brackets error (wooc)
  - Fixed: [ 1625495 ] 4.1 Chinese not shown in Report (imsza)
  - Fixed: [ 1410725 ] 4.0b5: Footnote numbers in reports cause line breaks (imsza)

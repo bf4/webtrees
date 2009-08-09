@@ -1418,3 +1418,6 @@ ul.clist {
 .statistics_chart{
 	background-color: #fef1f1;
 }
+.gchart{
+	border: solid #420915 1px;
+}
