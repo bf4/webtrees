@@ -65,8 +65,13 @@ global $pgv_lang, $TEXT_DIRECTION;
 	}
 	
 	function changeYear(cenyear) {
+		var tbl = document.getElementById('tblSample');
+		if (tbl.rows.length==0) {
+			create_header();
+		}
 		changeAge(cenyear);
 		changeCols(cenyear);
+		preview();
 	}
 	
 	
@@ -89,6 +94,8 @@ global $pgv_lang, $TEXT_DIRECTION;
 				if (j!=6) {
 					//	miss out all cols except age
 					continue;
+				}else if (tr.cells[j].childNodes[0].value=="") {
+					tr.cells[j].childNodes[0].value=null
 				}else{
 					var ageat1901 = (tr.cells[j].childNodes[0].value);
 					var newage=(ageat1901-agecorr);
@@ -97,60 +104,81 @@ global $pgv_lang, $TEXT_DIRECTION;
 				}
 			}
 		}
-		var censtitl_a = document.getElementById('censCtry');
-		if (censtitl_a.value =="USA") {
-			document.getElementById('Titl').value = "<?php echo "Federal Census Transcription - ".$wholename." - ";?>";
+		var cens_ctry_a = document.getElementById('censCtry');
+		var cens_ctry = cens_ctry_a.value;
+		if (cens_ctry =="USA") {
+			document.getElementById('Titl').value = "<?php echo "Federal Census Transcription - ".$wholename." - Household";?>";
 		}else{
-			document.getElementById('Titl').value = "<?php echo "Census Transcription - ".$wholename." - ";?>";
+			document.getElementById('Titl').value = "<?php echo "Census Transcription - ".$wholename." - Household";?>";
 		}
-		
 		var curr = document.getElementById('curryear');
 		curr.value = cenyear;
 	}
 	
 	function changeCols(cenyear) {
-		// Add or Remove columns
-		var flip = "";
-		if (cenyear=="1881") {
-			flip = "none";
-		}else{
-			flip = "block";
+		// Add or Remove columns ===========================
+		var cens_ctry_a = document.getElementById('censCtry');
+		var cens_ctry = cens_ctry_a.value;
+		var cols_0 = document.getElementsByName('col_0');
+		var cols_3 = document.getElementsByName('col_3');
+		var cols_11 = document.getElementsByName('col_11');
+		var cols_12 = document.getElementsByName('col_12');
+		var flip_3 = "";
+		var flip_11 = "";
+		var flip_12 = "";
+		
+		// Country specfic ============
+		//if (cens_ctry=="USA") { flip_11 = "block"; }else{ flip_11 = "none"; }
+		//if (cens_ctry=="USA") { flip_12 = "block"; }else{ flip_12 = "none"; }
+		//}
+		
+		// alert(cens_ctry + " " + cenyear);
+		
+		// Year specific ==============
+		if (cenyear<="1870" && cens_ctry=="USA") { flip_3 = "none"; }else{ flip_3 = "block"; }
+		if (cenyear<="1870" || cens_ctry=="UK") { flip_11 = "none"; }else{ flip_11 = "block"; }
+		if (cenyear<="1870" || cens_ctry=="UK") { flip_12 = "none"; }else{ flip_12 = "block"; }
+		
+		// Hide or show ===============
+		for (var i=0; i<cols_0.length; i++) {
+			cols_3[i].style.display = flip_3;
+			cols_11[i].style.display = flip_11;
+			cols_12[i].style.display = flip_12;
 		}
-			var cells = document.getElementsByName('col_3');
-			for (var i=0; i<cells.length; i++) {
-				cells[i].style.display = flip;
-			}
-			// cells[cells.length-1].style.display = flip;
-			
 	}
+
 	
 </script>
 
 <div class="optionbox" style="font-weight:bold; font-size:0.9em; text-align:left; padding:0.3em; border:0.3em outset; margin-bottom:0.3em;">
-	<div style="width:16em; float:left;">Census:&nbsp;
-		<script type="text/javascript">
-			var censyear = new DynamicOptionList();
-			censyear.addDependentFields("ctry","censyear");
-			censyear.forValue("UK").addOptions( "choose", "1841", "1851", "1861", "1871", "1881", "1891", "1901", "1911", "1921" );
-			censyear.forValue("USA").addOptions( "choose", "1790", "1800", "1810", "1820", "1830", "1840", "1850", "1860", "1870", "1880", "1890", "1900", "1910", "1920", "1930");
-			censyear.forValue("UK").setDefaultOptions("choose");
-			censyear.forValue("USA").setDefaultOptions("choose");
-		</script>
-		<select id="censCtry" name="ctry" style="font:0.9em normal;">
-			<option value="UK" >UK</option>
-			<option value="USA">USA</option>
-		</select>
-		<select onchange="if( this.options[this.selectedIndex].value!='') {
-			changeYear(this.options[this.selectedIndex].value);
-			}" 
-			id="censYear" name="censyear" style="font:0.9em normal;">
-		</select>
-		<input type="hidden" id="curryear" name="curryear" value="" />
-	</div>
-	<div style="font-weight:bold;">&nbsp;&nbsp;&nbsp;Title:&nbsp;
-		<script type="text/javascript">
-			 document.writeln('<input id="Titl" name="Titl" type="text" style="width:34.6em; font:0.9em normal;" value="<?php echo "Census Transcription - ".$wholename." - ";?>" />');
-		</script>
-	</div>
+		Census:&nbsp;&nbsp;
+			<script type="text/javascript">
+				var censyear = new DynamicOptionList();
+				censyear.addDependentFields("censCtry","censYear");
+				censyear.forValue("UK").addOptions( "choose", "1841", "1851", "1861", "1871", "1881", "1891", "1901", "1911", "1921" );
+				censyear.forValue("USA").addOptions( "choose", "1790", "1800", "1810", "1820", "1830", "1840", "1850", "1860", "1870", "1880", "1890", "1900", "1910", "1920", "1930");
+				censyear.forValue("UK").setDefaultOptions("choose");
+				censyear.forValue("USA").setDefaultOptions("choose");
+			</script>
+			<select id="censCtry" name="censCtry" style="font:0.9em normal;">
+				<option value="UK">UK</option>
+				<option value="USA" >USA</option>
+			</select>
+			<select onchange =	"if( this.options[this.selectedIndex].value!='') {
+									changeYear(this.options[this.selectedIndex].value);
+								}" 
+				id="censYear" name="censYear" style="font:0.9em normal;">
+			</select>
+			<input type="hidden" id="curryear" name="curryear" value="" />&nbsp;&nbsp;&nbsp;
+		Title:&nbsp;
+			<script type="text/javascript">
+				document.writeln('<input id="Titl" name="Titl" type="text" style="width:33em; font:0.9em normal;" value="<?php echo "Census Transcription - ".$wholename." - Household";?>" />');
+			</script>
+			<br />
+		Citation:&nbsp;
+			<input id="citation" name="citation" type="text" style="width:50em; font:0.9em normal;" value="<?php echo "Enter Citation";?>" />
+			<br />
+		Locality:&nbsp;
+			<input id="locality" name="locality" type="text" style="width:50em; font:0.9em normal;" value="<?php echo "Enter Locality";?>" />
 </div>
 			

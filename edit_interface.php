@@ -880,8 +880,6 @@ case 'addnoteaction':
 				$newgedrec = "0 @XREF@ NOTE $newlines[$k]\n";
 			}else if ( $k==0 ) {
 				$newgedrec = "0 @XREF@ NOTE $newlines[$k]\n1 CONT\n";
-			}else if (strstr($newlines[$k], "|Head|")) {
-				$newgedrec .= "1 CONT\n1 CONT $newlines[$k]\n";
 			} else {
 				$newgedrec .= "1 CONT $newlines[$k]\n";
 			}

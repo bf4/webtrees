@@ -56,12 +56,12 @@ if ($married>=0 && isset($nam[1])){
 
 $currpid=$pid;
 ?>
-
 <script src="modules/GEDFact_assistant/_CENS/js/dynamicoptionlist.js" type="text/javascript"></script>
-
+<!-- <script type="text/javascript" src="modules/GEDFact_assistant/_CENS/js/ie-console.js"></script>
+<script type="text/javascript">IEConsole.log('Welcome BH to ie-console!'); </script> -->
 <?php
-	// Header of assistant window
 
+	// Header of assistant window
 	echo "<div style=\"text-align:left; margin-top:0.5em;\">";
 		echo "<div style=\"float:left; margin-left:1.5em; font-weight:bold;\">";
 			echo "Head of Family &nbsp;:";
@@ -85,15 +85,33 @@ $currpid=$pid;
 		echo "</span>";
 	echo "</div>";
 	//-- Search  and Add Family Members Area ========================================= 
-	echo "<div style=\"float:left; border:0.3em outset; margin: 0.5em 0 0 0.3em; width: 22em; height:34em; overflow:auto;\">";
+	echo "<div class=\"optionbox\" style=\"float:left; border:0.3em outset; margin: 0.5em 0 0 0.3em; width: 21.5em; height:34.24em; overflow:auto;\">";
 		include('modules/GEDFact_assistant/_CENS/census_3_search_add.php'); 
 	echo "</div>";
 	//-- Census Text Input Area ===========================================================
-	echo "<div class=\"optionbox\" style=\"clear:both; border:0.3em outset; float:left; margin: 0.4em 0 0 0.3em;\">";
-		include('modules/GEDFact_assistant/_CENS/census_5_input.php');
+	?>
+	<div class="optionbox" style="clear:both; border:0.3em outset; float:left; margin:0.4em 0 0 0.3em; width:69.8em; \">
+	<table style="width:69.8em; float:left;" border="0" cellspacing="1">
+		<tr>
+			<td align="center" colspan="8">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+			<td align="center">
+				<input type="button" value="Add/Insert Blank Row" onclick="insertRowToTable('','','','','','','Age','','','');" />
+			<td align="center" colspan="3">&nbsp;</td>
+			<td align="right">
+				<font size="1">Add</font><br>
+				<input  type="radio" name="totallyrad" value="0" checked="checked" />
+			</td>
+			<td width="2%" colspan="1"><font size="1"></font></td>
+			<td width="2%" colspan="1"><font size="1"></font></td>
+		</tr>
+	</table>
+
+	<?php
+	echo "<div style=\"clear:both; border:0em outset; float:left; margin:0 0 0 0; width:69.8em; \">";
+	include('modules/GEDFact_assistant/_CENS/census_5_input.php');
 	echo "</div>";
 ?> 
-
+	</div>
 
 
 <script language="JavaScript" type="text/javascript">

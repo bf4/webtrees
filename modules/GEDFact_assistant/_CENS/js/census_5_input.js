@@ -45,53 +45,56 @@ var NoteTitl = document.getElementById('Titl');
 
 function preview(){
 	NoteCtry = document.getElementById('censCtry');
-	//if (NoteCtry.value == "USA") {
-	//	str = NoteYear.value + " " + NoteCtry.value + " Federal " + NoteTitl.value;
-	//	str += "\n";
-	//} else {
-		str = NoteYear.value + " " + NoteCtry.value + " " + NoteTitl.value;
-		str += "\n";
-	//}
+	NoteYear = document.getElementById('censYear');
+	Citation = document.getElementById('citation');
+	Locality = document.getElementById('locality');
+
+	str = NoteYear.value + " " + NoteCtry.value + " " + NoteTitl.value;
+	str += "\n";
+	
+	str += Citation.value + "\n";
+	str += Locality.value + "\n";
+	str += "\n";
+	
+	str += ".start_formatted_area.";
 	
 	var tbl = document.getElementById('tblSample');
 	for(var i=0; i<tbl.rows.length; i++){ // start at i=1 because we need to avoid header
 		var tr = tbl.rows[i];
 		var strRow = '';
-		for(var j=2; j<tr.cells.length; j++){
-			if (NoteCtry.value=="USA") {
-				var cols=12;
-			}else{
-				var cols=10;
-			}
-				if (j==5 || j==7 || j>cols) {
-
-				//	dont show col	0	index
-				//	dont show col	1	pid
+		for(var j=2; j<tr.cells.length; j++){ // j=2 means miss out cols 0 and 1 (# and pid)
+				
 				//	miss out col	5	yob
 				//	miss out col	7	YMD
 				//	miss out col	11	delete button
 				//	miss out col	12	radio buttom
-				continue;
-			}else{
-				if (i==0) {
-					strRow += (strRow==''?'':'|') + tr.cells[j].childNodes[0].id;
+				
+				if (NoteCtry.value=="USA" && NoteYear.value<="1870" && (j==3 || j==5 || j==7 || j>10)) { // means miss out cols 3,5,7, and >10
+					continue;
+				}else if (NoteCtry.value=="USA" && (j==5 || j==7 || j>12)) { // means miss out cols 5,7, and >12 
+					continue;
+				}else if (NoteCtry.value=="UK" && (j==5 || j==7 || j>10)) { // means miss out cols 5,7, and >10
+					continue;
 				}else{
-					strRow += (strRow==''?'':'|') + tr.cells[j].childNodes[0].value;
+					if (i==0) {
+						strRow += (strRow==''?'':'|') + tr.cells[j].childNodes[0].id;
+					}else{
+						strRow += (strRow==''?'':'|') + tr.cells[j].childNodes[0].value;
+					}
 				}
-			}
 		}
 		str += (str==''?'':'\n') + strRow;
 	}
 	var mem = document.getElementById('NOTE');
-	mem.value = str;
+	mem.value = str + "\n.end_formatted_area.\n\nNotes:\n";
 }
 
 window.onload=fillInRows;
 
-// fillInRows - can be used to pre-load a table with a row or rows
+// fillInRows - can be used to pre-load a table with a header, row, or rows
 function fillInRows() {
 	hasLoaded = true;
-	create_header();
+	// create_header();
 	// insertRowToTable();
 	// addRowToTable();
 }
@@ -116,44 +119,9 @@ function myRowObject(zero, one, two, three, four, five, six, seven, eight, nine,
 	this.fifteen	 = fifteen;	 // input text object
 }
 
-function change_header() {
-	tbl = document.getElementById(TABLE_NAME);
-	NoteCtry = document.getElementById('censCtry');
-	if (tbl.tBodies[0].rows.length>0 ) {
-		for (var i=1; i<tbl.tBodies[0].rows.length; i++) {
-			tbl.tBodies[0].rows[i].myRow.eleven = document.getElementById('cell_'+i+'_11');
-			tbl.tBodies[0].rows[i].myRow.twelve = document.getElementById('cell_'+i+'_12');
-			// var Test12 = document.getElementById('InputCell_'+i+'_12');
-			if (tbl.tBodies[0].rows.length>0 ) {
-				if (NoteCtry.value=="USA") {
-					tbl.tBodies[0].rows[i].myRow.eleven.style.display="block";
-					tbl.tBodies[0].rows[i].myRow.twelve.style.display="block";
-				}else{
-			tbl.tBodies[0].rows[i].myRow.eleven = document.getElementById('cell_'+i+'_11');
-			tbl.tBodies[0].rows[i].myRow.twelve = document.getElementById('cell_'+i+'_12');
-					tbl.tBodies[0].rows[i].myRow.eleven.style.display="none";
-					tbl.tBodies[0].rows[i].myRow.twelve.style.display="none";
-				}
-			}
-		}
-	}
-	
-	//tbl.tBodies[0].rows[1].myRow.eleven.style.display='none';
-	var delrowzero = document.getElementById(this);
-	if (delrowzero!=null) {
-		deleteHeaderRow(delrowzero);
-	}
-	create_header();
-
-}
-
 function create_header() {
-	NoteCtry = document.getElementById('censCtry');
-	if (NoteCtry.value=="USA") {
 		addRowToTable("", "ID", "Name", "Relation", "Sex", "Cond", "YOB", "Age", "YMD", "Occupation", "Birth Place", "Fathers BP", "Mothers BP", "Del");
-	}else{
-		addRowToTable("", "ID", "Name", "Relation", "Sex", "Cond", "YOB", "Age", "YMD", "Occupation", "Birth Place", "Del");
-	}
+	//	addRowToTable("", "ID", "Name", "Relation", "Sex", "Cond", "YOB", "Age", "YMD", "Occupation", "Birth Place", "Del");
 }
 
 // insertRowToTable - inserts a row into the table (and reorders)
@@ -161,7 +129,7 @@ function insertRowToTable(pid, nam, label, gend, cond, yob, age, YMD, occu, birt
 	if (hasLoaded) {
 		var tbl = document.getElementById(TABLE_NAME);
 		var rowToInsertAt = tbl.tBodies[0].rows.length;
-		for (var i=0; i<tbl.tBodies[0].rows.length; i++) {
+		for (var i=1; i<tbl.tBodies[0].rows.length; i++) {  // i set to 1 to avoid header row of number 0
 			if (tbl.tBodies[0].rows[i].myRow && tbl.tBodies[0].rows[i].myRow.ra.getAttribute('type') == 'radio' && tbl.tBodies[0].rows[i].myRow.ra.checked) {
 				rowToInsertAt = i;
 				break;
@@ -169,19 +137,24 @@ function insertRowToTable(pid, nam, label, gend, cond, yob, age, YMD, occu, birt
 		}
 		addRowToTable(rowToInsertAt, pid, nam, label, gend, cond, yob, age, YMD, occu, birthpl, fbirthpl, mbirthpl);
 		reorderRows(tbl, rowToInsertAt);
+		preview();
 	}
 }
 
 // addRowToTable - Inserts at row 'num', or appends to the end if no arguments are passed in. Don't pass in empty strings.
-function addRowToTable(num, pid, nam, label, gend, cond, yob, age2, YMD, occu, birthpl, fbirthpl, mbirthpl, cb, ra, num2) {
+function addRowToTable(num, pid, nam, label, gend, cond, yob, age2, YMD, occu, birthpl, fbirthpl, mbirthpl, cb, ra) {
 
 // -- Temporary until insert variable are corrected
-fbirthpl=birthpl;
-mbirthpl=birthpl;
+var fbirthpl=birthpl;
+var mbirthpl=birthpl;
 // ------------------------------------------------
+	var cyear_a=document.getElementById('censYear'); 
+	var cyear=cyear_a.value;
+	var cctry_a=document.getElementById('censCtry'); 
+	var cctry=cctry_a.value;
 
 	if (hasLoaded) {
-		
+	
 		var tbl = document.getElementById(TABLE_NAME);
 		var nextRow = tbl.tBodies[0].rows.length;
 		var iteration = nextRow + ROW_BASE;
@@ -194,8 +167,6 @@ mbirthpl=birthpl;
 		
 		// Calculate age based on Census Year input ====================
 		if (age2!="Age") {
-			var cyear_a=document.getElementById('censYear'); 
-			var cyear=cyear_a.value;
 			// Check if Census year filled in -------------
 			if (cyear!="choose") {
 				cyear=cyear;
@@ -208,66 +179,68 @@ mbirthpl=birthpl;
 		}else{
 			age="";
 		}
-
+		
 		// add the row ==================================================
 		var row = tbl.tBodies[0].insertRow(num);
 		
 		// a. Define Cells ==============================================
-		var cell_0 = row.insertCell(0);	
-			cell_0.setAttribute('id', 'cell_'+ iteration + '_0');	// Item Number
-			cell_0.setAttribute('name', 'cell_'+ iteration + '_0');
-		var cell_1 = row.insertCell(1);		
-			cell_1.setAttribute('id', 'cell_'+ iteration + '_1');	// Indi ID
-			cell_1.setAttribute('name', 'cell_'+ iteration + '_1');
-		var cell_2 = row.insertCell(2);		
-			cell_2.setAttribute('id', 'cell_'+ iteration + '_2');	// Full Name
-			cell_2.setAttribute('name', 'cell_'+ iteration + '_2');
-		var cell_3 = row.insertCell(3);		
-			cell_3.setAttribute('id', 'col_3');	// Relation
+		var cell_0 = row.insertCell(0);				// Item Number
+			cell_0.setAttribute('id', 'col_0');
+			cell_0.setAttribute('name', 'col_0');
+		var cell_1 = row.insertCell(1);				// Indi ID
+			cell_1.setAttribute('id', 'col_1');
+			cell_1.setAttribute('name', 'col_1');
+		var cell_2 = row.insertCell(2);				// Full Name
+			cell_2.setAttribute('id', 'col_2');	
+			cell_2.setAttribute('name', 'col_2');
+		var cell_3 = row.insertCell(3);				// Relation
+			cell_3.setAttribute('id', 'col_3');
 			cell_3.setAttribute('name', 'col_3');
-		var cell_4 = row.insertCell(4);		
-			cell_4.setAttribute('id', 'cell_'+ iteration + '_4');	// Marital Conditition
-			cell_4.setAttribute('name', 'cell_'+ iteration + '_4');
-		var cell_5 = row.insertCell(5);		
-			cell_5.setAttribute('id', 'cell_'+ iteration + '_5');	// YOB
-			cell_5.setAttribute('name', 'cell_'+ iteration + '_5');
-		var cell_6 = row.insertCell(6);		
-			cell_6.setAttribute('id', 'cell_'+ iteration + '_6');	// Age
-			cell_6.setAttribute('name', 'cell_'+ iteration + '_6');
-		var cell_7 = row.insertCell(7);		
-			cell_7.setAttribute('id', 'cell_'+ iteration + '_7');	// YMD (maybe should be replaced by Age being 10y or 12mo etc)
-			cell_7.setAttribute('name', 'cell_'+ iteration + '_7');
-		var cell_8 = row.insertCell(8);		
-			cell_8.setAttribute('id', 'cell_'+ iteration + '_8');	// Sex
-			cell_8.setAttribute('name', 'cell_'+ iteration + '_8');
-		var cell_9 = row.insertCell(9);		
-			cell_9.setAttribute('id', 'cell_'+ iteration + '_9');	// Occupation
-			cell_9.setAttribute('name', 'cell_'+ iteration + '_9');
-		var cell_10 = row.insertCell(10);	
-			cell_10.setAttribute('id', 'cell_'+ iteration + '_10');	// Indi Birth Place
-			cell_10.setAttribute('name', 'cell_'+ iteration + '_10');
-		var cell_11 = row.insertCell(11);	
-			cell_11.setAttribute('id', 'cell_'+ iteration + '_11');	// Fathers Birth Place
-			cell_11.setAttribute('name', 'cell_'+ iteration + '_11');
-		var cell_12 = row.insertCell(12);	
-			cell_12.setAttribute('id', 'cell_'+ iteration + '_12');	// Mothers Birth Place
-			cell_12.setAttribute('name', 'cell_'+ iteration + '_12');
-		if (NoteCtry.value=="UK") {
-			cell_11.style.display = "none";
-			cell_12.style.display = "none";
-		}
+		var cell_4 = row.insertCell(4);				// Marital Conditition
+			cell_4.setAttribute('id', 'col_4');
+			cell_4.setAttribute('name', 'col_4');
+		var cell_5 = row.insertCell(5);				// YOB
+			cell_5.setAttribute('id', 'col_5');
+			cell_5.setAttribute('name', 'col_5');
+		var cell_6 = row.insertCell(6);				// Age
+			cell_6.setAttribute('id', 'col_6');
+			cell_6.setAttribute('name', 'col_6');
+		var cell_7 = row.insertCell(7);				// YMD (maybe should be replaced by Age being 10y or 12mo etc)
+			cell_7.setAttribute('id', 'col_7');
+			cell_7.setAttribute('name', 'col_7');
+		var cell_8 = row.insertCell(8);				// Sex
+			cell_8.setAttribute('id', 'col_8');
+			cell_8.setAttribute('name', 'col_8');
+		var cell_9 = row.insertCell(9);				// Occupation
+			cell_9.setAttribute('id', 'col_9');
+			cell_9.setAttribute('name', 'col_9');
+		var cell_10 = row.insertCell(10);			// Indi Birth Place
+			cell_10.setAttribute('id', 'col_10');
+			cell_10.setAttribute('name', 'col_10');
+		var cell_11 = row.insertCell(11);			// Fathers Birth Place
+			cell_11.setAttribute('id', 'col_11');
+			cell_11.setAttribute('name', 'col_11');
+		var cell_12 = row.insertCell(12);			// Mothers Birth Place
+			cell_12.setAttribute('id', 'col_12');
+			cell_12.setAttribute('name', 'col_12');
 		if (iteration == 0) {
-			var cell_tdel = row.insertCell(13);			// text Del
-			var cell_tra  = row.insertCell(14);			// text Radio
+			var cell_tdel = row.insertCell(13);		// text Del
+			var cell_tra  = row.insertCell(14);		// text Radio
 		}else{
-			var cell_del = row.insertCell(13);			// Onclick = Delete Row
+			var cell_del = row.insertCell(13);		// Onclick = Delete Row
 				cell_del.setAttribute('align', 'center');
-			var cell_ra = row.insertCell(14);			// Radio button used for inserting a row, rather than adding at end of table)
+			var cell_ra = row.insertCell(14);		// Radio button used for inserting a row, rather than adding at end of table)
 		}
-		var cell_15 = row.insertCell(15);	
-			cell_15.setAttribute('id', 'cell_'+ iteration + '_15');	// Item Number
-			cell_15.setAttribute('name', 'cell_'+ iteration + '_15');
+		var cell_15 = row.insertCell(15);			// Item Number
+			cell_15.setAttribute('id', 'col_15');
+			cell_15.setAttribute('name', 'col_15');
 			cell_15.setAttribute('align', 'center');
+			
+		// Hide Cell Columns ======================================================
+		cell_5.style.display = "none";
+		if (cyear<="1870" && cctry=="USA")	{ cell_3.style.display = "none"; }
+		if (cyear<="1870" || cctry=="UK")	{ cell_11.style.display = "none"; }
+		if (cyear<="1870" || cctry=="UK")	{ cell_12.style.display = "none"; }
 
 		// b. Define Header Cell elements =======================================
 		if (iteration == 0) {
@@ -287,8 +260,8 @@ mbirthpl=birthpl;
 				txtInp_pid.setAttribute('class', 'descriptionbox');
 				txtInp_pid.style.fontSize="10px";
 				txtInp_pid.style.border='0px';
-				txtInp_pid.innerHTML = 'Indi ID'; //Required for IE
-				txtInp_pid.textContent = 'Indi ID';
+				txtInp_pid.innerHTML = ' ID '; //Required for IE
+				txtInp_pid.textContent = ' ID ';
 				txtInp_pid.setAttribute('id', '.b.Indi ID');
 		// Full Name -----------------------------------------------------
 			var txtInp_nam = document.createElement('div');
@@ -410,7 +383,7 @@ mbirthpl=birthpl;
 				txtInp_tra.textContent = 'Ins';
 				
 		// Item Number 2 -------------------------------------------------
-		/*	var txt_itemNo2 = document.createElement('div');
+			var txt_itemNo2 = document.createElement('div');
 				txt_itemNo2.setAttribute('class', 'descriptionbox');
 				txt_itemNo2.style.border='0px';
 				txt_itemNo2.innerHTML = '#'; //Required for IE
@@ -418,15 +391,15 @@ mbirthpl=birthpl;
 				txt_itemNo2.setAttribute('id', '.b.Item');
 				txt_itemNo2.setAttribute('type', 'text');
 				txt_itemNo2.style.fontSize="10px";
-		*/
 
 		// c. Define Cell Elements ======================================
 		}else{
+			var txtcolor = "#0000FF";
 		// Item Number ---------------------------------------------------
 			var txt_itemNo = document.createTextNode(iteration);
 		// Indi ID -------------------------------------------------------
-			var txtInp_pid = document.createElement('input');
 				if ( pid == ''){
+					var txtInp_pid = document.createElement('input');
 					var txtcolor = "#000000";
 					txtInp_pid.setAttribute('type', 'checkbox');
 					//txtInp_pid.checked='';
@@ -435,15 +408,22 @@ mbirthpl=birthpl;
 					}else{
 						txtInp_pid.setAttribute('value', 'add');
 					}
+					txtInp_pid.setAttribute('id', INPUT_NAME_PREFIX + iteration + '_1');
+					txtInp_pid.setAttribute('size', '4');
+					txtInp_pid.style.color=txtcolor;
+					txtInp_pid.style.fontSize="10px";
 				}else{
-					var txtcolor = "#0000FF";
-					txtInp_pid.setAttribute('type', 'text');
-						txtInp_pid.setAttribute('value', pid);
+					var txtInp_pid = document.createElement('div');
+						// txtInp_pid.setAttribute('class', 'descriptionbox');
+						txtInp_pid.style.border='0px';
+						txtInp_pid.innerHTML = pid; //Required for IE
+						txtInp_pid.textContent = pid;
+						// txtInp_pid.setAttribute('id', '.b.Item');
+						txtInp_pid.setAttribute('type', 'text');
+						txtInp_pid.style.fontSize="11px";
+						txtInp_pid.style.color=txtcolor;
 				}
-				txtInp_pid.setAttribute('id', INPUT_NAME_PREFIX + iteration + '_1');
-				txtInp_pid.setAttribute('size', '4');
-				txtInp_pid.style.color=txtcolor;
-				txtInp_pid.style.fontSize="10px";
+		
 		// Full Name -----------------------------------------------------
 			var txtInp_nam = document.createElement('input');
 				txtInp_nam.setAttribute('size', '30');
@@ -574,13 +554,11 @@ mbirthpl=birthpl;
 		if (iteration == 0) {
 			cell_tdel.appendChild(txtInp_tdel);	// Text Del
 			cell_tra.appendChild(txtInp_tra);	// Text Ins
-			cell_15.appendChild(txt_itemNo2);	// Text Item Number
 		}else{
 			cell_del.appendChild(btnEl);		// Onclick = Delete Row
 			cell_ra.appendChild(raEl);			// Radio button used for inserting a row, rather than adding at end of table)
-			cell_15.appendChild(txt_itemNo2);	// Item Number
 		}
-		
+		cell_15.appendChild(txt_itemNo2);		// Text Item Number
 		
 		// Pass in the elements to be referenced later ===================
 		// Store the myRow object in each row
@@ -598,6 +576,7 @@ function deleteCurrentRow(obj) {
 		var rowArray = new Array(delRow);
 		deleteRows(rowArray);
 		reorderRows(tbl, rIndex);
+		preview();
 	}
 }
 
@@ -613,7 +592,7 @@ function deleteHeaderRow(obj) {
 
 function deleteRows(rowObjArray) {
 	if (hasLoaded) {
-		for (var i=0; i<rowObjArray.length; i++) {
+		for (var i=0; i<rowObjArray.length; i++) {  // i set to 1 to avoid table header row of number 0
 			var rIndex = rowObjArray[i].sectionRowIndex;
 			rowObjArray[i].parentNode.deleteRow(rIndex);
 		}
@@ -627,11 +606,13 @@ function reorderRows(tbl, startingIndex) {
 			var count = startingIndex + ROW_BASE;
 			for (var i=startingIndex; i<tbl.tBodies[0].rows.length; i++) {
 			
+// alert(startingIndex + ", " + tbl.tBodies[0].rows.length+ ", " + count);
+
 				// CONFIG: next 2 lines are affected by myRowObject settings
 				tbl.tBodies[0].rows[i].myRow.zero.data		 = count; // text - (left column item number)
 				tbl.tBodies[0].rows[i].myRow.fifteen.data	 = count; // text - (right column item number)
-				
-				tbl.tBodies[0].rows[i].myRow.zero.id	 = INPUT_NAME_PREFIX + count + '_0';  // input text
+
+				// ------------------------------------
 				tbl.tBodies[0].rows[i].myRow.one.id		 = INPUT_NAME_PREFIX + count + '_1';  // input text
 				tbl.tBodies[0].rows[i].myRow.two.id 	 = INPUT_NAME_PREFIX + count + '_2';  // input text
 				tbl.tBodies[0].rows[i].myRow.three.id	 = INPUT_NAME_PREFIX + count + '_3';  // input text
@@ -644,11 +625,10 @@ function reorderRows(tbl, startingIndex) {
 				tbl.tBodies[0].rows[i].myRow.ten.id		 = INPUT_NAME_PREFIX + count + '_10'; // input text
 				tbl.tBodies[0].rows[i].myRow.eleven.id	 = INPUT_NAME_PREFIX + count + '_11'; // input text
 				tbl.tBodies[0].rows[i].myRow.twelve.id	 = INPUT_NAME_PREFIX + count + '_12'; // input text
-				// ------------------------------------
-				// ------------------------------------
-				tbl.tBodies[0].rows[i].myRow.fifteen.id	 = INPUT_NAME_PREFIX + count + '_15'; // input text
 				
-				tbl.tBodies[0].rows[i].myRow.zero.name	 = INPUT_NAME_PREFIX + count + '_0';  // input text
+				// ------------------------------------
+
+				// ------------------------------------
 				tbl.tBodies[0].rows[i].myRow.one.name	 = INPUT_NAME_PREFIX + count + '_1';  // input text
 				tbl.tBodies[0].rows[i].myRow.two.name 	 = INPUT_NAME_PREFIX + count + '_2';  // input text
 				tbl.tBodies[0].rows[i].myRow.three.name	 = INPUT_NAME_PREFIX + count + '_3';  // input text
@@ -661,12 +641,12 @@ function reorderRows(tbl, startingIndex) {
 				tbl.tBodies[0].rows[i].myRow.ten.name	 = INPUT_NAME_PREFIX + count + '_10'; // input text
 				tbl.tBodies[0].rows[i].myRow.eleven.name = INPUT_NAME_PREFIX + count + '_11'; // input text
 				tbl.tBodies[0].rows[i].myRow.twelve.name = INPUT_NAME_PREFIX + count + '_12'; // input text
+				
 				// ------------------------------------
-				// ------------------------------------
-				tbl.tBodies[0].rows[i].myRow.fifteen.name = INPUT_NAME_PREFIX + count + '_15'; // input text
 				
 				tbl.tBodies[0].rows[i].myRow.ra.value = count; // input radio
 				count++;
+
 			}
 		}
 	}

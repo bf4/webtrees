@@ -38,57 +38,31 @@
 */
 echo '<script src="modules/GEDFact_assistant/_CENS/js/census_5_input.js" type="text/javascript"></script>';
 ?>
+<!--
+	<table style="width:100%; float:right;" border="0" cellspacing="1">
+		<tr>
+			<td align="center" colspan="8">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+			<td align="center">
+				<input type="button" value="Add/Insert Blank Row" onclick="insertRowToTable('','','','','','','Age','','','');" />
+			<td align="center" colspan="3">&nbsp;</td>
+			<td align="right">
+				<font size="1">Add</font><br>
+				<input  type="radio" name="totallyrad" value="0" checked="checked" />
+			</td>
+			<td width="2%" colspan="1"><font size="1"></font></td>
+			<td width="2%" colspan="1"><font size="1"></font></td>
+		</tr>
+	</table>
+-->
 
+<div width="100%" style="height:12.46em; overflow:auto;">
+	<table style="width:68em;" border="0" cellspacing="1" id="tblSample">
+		<thead></thead>
+		<tbody></tbody>
+	</table>
+</div>
 
+	
 
-
-<div id="wn" style="width:69.8em; overflow:auto;">
-    <div id="lyr1" style="height:15.46em; overflow:auto;">    
-			<table style="width:68em;" border="0" cellspacing="1">
-				<tr>
-					<td align="center" colspan="8">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-					<td align="center">
-						<input type="button" value="Add/Insert Blank Row" onclick="insertRowToTable('','','','','','','Age','','','');" />
-					<td align="center" colspan="3">&nbsp;</td>
-					<td align="right">
-						<font size="1">Add</font><br>
-						<input  type="radio" name="totallyrad" value="0" checked="checked" />
-					</td>
-					<td width="2%"><font size="1"></font></td>
-				</tr>
-			</table>
-			
-			<table style="width:68em;" border="0" cellspacing="1" id="tblSample">
-				<thead>
-				<?php /*
-				<tr>
-					<td width="2%" class="descriptionbox" style="border: 0px solid transparent;" align="left"><font size=1>#</font></td>
-					<td width="3%" class="descriptionbox" style="border: 0px solid transparent;" align="left"><font size=1>Indi ID</font></td>
-					<td id=".b.Name" name=".b.Name" width="10%" class="descriptionbox" style="border: 0px solid transparent;" align="left"><font size=1>Name</font></td>
-					<td id="col_3" name="col_3" class="descriptionbox" style="border: 0px solid transparent;" align="left"><font size=1>Relation</font></td>
-					<td id=".b.Cond" width="3%" class="descriptionbox" style="border: 0px solid transparent;" align="left"><font size=1>Cond</font></td>
-					<td id=".b.YOB" class="descriptionbox" style="border: 0px solid transparent;" align="left"><font size=1>YOB</font></td>
-					<td id=".b.Age" class="descriptionbox" style="border: 0px solid transparent;" align="left"><font size=1>Age</font></td>
-					<td id=".b.YMD" class="descriptionbox" style="border: 0px solid transparent;" align="left"><font size=1>Y/M/D</font></td>
-					<td id=".b.Sex" class="descriptionbox" style="border: 0px solid transparent;" align="left"><font size=1>Sex</font></td>
-					<td id=".b.Occupation" width="13%" class="descriptionbox" style="border: 0px solid transparent;" align="left"><font size=1>Occupation</font></td>
-					<td id=".b.Birthplace" width="9%" class="descriptionbox" style="border: 0px solid transparent;" align="left"><font size=1>Birthplace</font></td>
-					<?php  if ($ctry == "USA") { ?>
-						<td id=".b.Father Birthplace" width="9%" class="descriptionbox" style="border: 0px solid transparent;" align="left"><font size=1>Father Birthplace</font></td>
-						<td id=".b.Mother Birthplace" width="9%" class="descriptionbox" style="border: 0px solid transparent;" align="left"><font size=1>Mother Birthplace</font></td>
-					<?php  } ?>
-					<td class="descriptionbox" style="border: 0px solid transparent;" align="center"><font size=1>Del</font></td>
-					<td width="3%" class="descriptionbox" style="border: 0px solid transparent;" align="center"><font size=1>Ins</font></td>
-					<td width="2%" class="descriptionbox" style="border: 0px solid transparent;" align="center"><font size=1>#</font></td>
-				</tr>
-				*/ ?>
-				</thead>
-
-				<tbody>
-				</tbody>
-				
-			</table>
-	</div> <!-- end lyr1 div -->
-</div>  <!-- end wn div -->
 
 

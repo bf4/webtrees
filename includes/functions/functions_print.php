@@ -1148,12 +1148,14 @@ function print_note_record($text, $nlevel, $nrec, $textOnly=false, $return=false
 		// Check if Formatted Shared Note (Note using pipe "|" as delimeter ) ------
 		if (eregi("0 @N([0-9])+@ NOTE", $nrec) && strstr($text, "|")) {
 			$text = "xCxAx<table cellpadding=\"0\"><tr><td>" . $text;
-			$text = str_replace("<br /><br />", "</td></tr><tr><td>&nbsp;</td></tr><tr><td>&nbsp;", $text);
+			$text = str_replace("<br />.start_formatted_area.<br />", "</td></tr></table><table cellpadding=\"0\"><tr><td>&nbsp;", $text);
 			$text = str_replace(".b.", "<b />", $text); // -- Check for Highlighting (Use embolden)
 			$text = str_replace("|", "&nbsp;&nbsp;</td><td>", $text);
+			$text = str_replace(".end_formatted_area.<br />", "</td></tr></table><table cellpadding=\"0\"><tr><td>", $text);
 			$text = str_replace("<br />", "</td></tr><tr><td>&nbsp;", $text);
 			$text = $text . "</td></tr></table>";
 			$text = str_replace("xCxAx", $centitl."<br />", $text);
+			$text = str_replace("Notes:", "<b>Notes:</b>", $text);
 		// Unformatted Shared Note --------------------------------------------------
 		}else if (eregi("0 @N([0-9])+@ NOTE", $nrec)) {
 			$text=$centitl.$text;
@@ -2092,6 +2094,8 @@ function format_fact_place(&$eventObj, $anchor=false, $sub=false, $lds=false) {
 			}
 			$tempURL .= 'level='.count($levels);
 			$html .= '<a href="'.encode_url($tempURL).'"> '.PrintReady($place).'</a>';
+			// $html .= '<br /><span class="font11"><b>Place: &nbsp; </b><a href="'.encode_url($tempURL).'"> '.PrintReady($place).'</a> &nbsp; <a href="media/The_Holland_Family/3_1887_John_James_Holland/photos/School_Lane_c1930.jpg" rel="clearbox[general_6]" rev="M640::hollands.ged::School Lane, circa 1930"><b><i>[click to view image]</i></b></a></span>';
+
 		} else {
 			if (!$SEARCH_SPIDER) {
 				$html.=' -- ';
