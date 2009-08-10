@@ -112,8 +112,8 @@ function pgvMail($to, $from, $subject, $message) {
 		$message = $htmlMessage;
 	}
 	// if SMTP mail is set active AND we have SMTP settings available, use the PHPMailer classes
-	if ( $PGV_SMTP_ACTIVE  && ( $PGV_SMTP_HOST && $PGV_SMTP_PORT ) ) {
-		require_once( 'includes/classes/class_phpmailer.php' );
+	if ($PGV_SMTP_ACTIVE  && ( $PGV_SMTP_HOST && $PGV_SMTP_PORT ) ) {
+		require_once('includes/classes/class_phpmailer.php');
 		$mail_object = new PHPMailer();
 		$mail_object->IsSMTP();
 		$mail_object->SetLanguage('en','languages/');
@@ -122,8 +122,10 @@ function pgvMail($to, $from, $subject, $message) {
 			$mail_object->Username = $PGV_SMTP_AUTH_USER;
 			$mail_object->Password = $PGV_SMTP_AUTH_PASS;
 		}
-		if ($PGV_SMTP_SSL) {
-			$mail_object->SMTPSecure = "ssl";
+		if ($PGV_SMTP_SSL=='ssl') {
+			$mail_object->SMTPSecure = 'ssl';
+		} else if ($PGV_SMTP_SSL=='tls') {
+			$mail_object->SMTPSecure = 'tls';
 		}
 		$mail_object->Host = $PGV_SMTP_HOST;
 		$mail_object->Port = $PGV_SMTP_PORT;
