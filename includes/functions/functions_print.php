@@ -1149,12 +1149,14 @@ function print_note_record($text, $nlevel, $nrec, $textOnly=false, $return=false
 		// Check if Formatted Shared Note (Note using pipe "|" as delimeter ) ------
 		if (eregi("0 @N([0-9])+@ NOTE", $nrec) && strstr($text, "|")) {
 			$text = "xCxAx<table cellpadding=\"0\"><tr><td>" . $text;
-			$text = str_replace("<br /><br />", "</td></tr><tr><td>&nbsp;</td></tr><tr><td>&nbsp;", $text);
+			$text = str_replace("<br />.start_formatted_area.<br />", "</td></tr></table><table cellpadding=\"0\"><tr><td>&nbsp;", $text);
 			$text = str_replace(".b.", "<b />", $text); // -- Check for Highlighting (Use embolden)
 			$text = str_replace("|", "&nbsp;&nbsp;</td><td>", $text);
+			$text = str_replace(".end_formatted_area.<br />", "</td></tr></table><table cellpadding=\"0\"><tr><td>", $text);
 			$text = str_replace("<br />", "</td></tr><tr><td>&nbsp;", $text);
 			$text = $text . "</td></tr></table>";
 			$text = str_replace("xCxAx", $centitl."<br />", $text);
+			$text = str_replace("Notes:", "<b>Notes:</b>", $text);
 		// Unformatted Shared Note --------------------------------------------------
 		}else if (eregi("0 @N([0-9])+@ NOTE", $nrec)) {
 			$text=$centitl.$text;
