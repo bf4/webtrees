@@ -89,7 +89,12 @@ class PGVReportBasePDF extends PGVReportBase {
 		// Setup RTL support
 		$this->pdf->setRTL($this->rtl);
 		// Set the document information
-		$this->pdf->SetCreator($this->generatedby.' ('.parent::pgv_url.')');
+		// Only admin should see the version number
+		$appversion = PGV_PHPGEDVIEW;
+		if (PGV_USER_IS_ADMIN) {
+			$appversion .= " ".PGV_VERSION_TEXT;
+		}
+		$this->pdf->SetCreator($appversion.' ('.parent::pgv_url.')');
 		// Not implemented yet - PGVReportBase::setup()
 //		$this->pdf->SetAuthor($this->rauthor);
 		$this->pdf->SetTitle($this->title);

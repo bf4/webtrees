@@ -2144,7 +2144,9 @@ function PGVRGetPersonNameSHandler($attrs) {
 		if (is_null($record)) return;
 		if (!$record->canDisplayDetails()) $currentElement->addText($pgv_lang["private"]);
 		else {
-			$name = strip_tags($record->getFullName());
+			$name = $record->getFullName();
+			$name = preg_replace("/<span class=\"starredname\">(.*)<\/span> ?/", "\\1* ", $name); //restores the * for underlining a given name
+			$name = strip_tags($name);
 			if (!empty($attrs["truncate"])) {
 				//short-circuit with the faster strlen
 				if (strlen($name)>$attrs["truncate"] && UTF8_strlen($name)>$attrs["truncate"]) {
@@ -2168,7 +2170,7 @@ function PGVRGetPersonNameSHandler($attrs) {
 				}
 			}
 			else {
-				$addname = strip_tags($record->getAddName());
+				$addname = $record->getAddName();
 				if (!empty($addname)) {
 					$name .= " ".$addname;
 				}
