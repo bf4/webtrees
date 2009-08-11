@@ -51,7 +51,7 @@ class sources_tab_Tab extends Tab {
 			}
 			if ($this->get_source_count()==0) print "<tr><td id=\"no_tab3\" colspan=\"2\" class=\"facts_value\">".$pgv_lang["no_tab3"]."</td></tr>\n";
 			//-- New Source Link
-			if (!$this->controller->isPrintPreview() && PGV_USER_CAN_EDIT && $this->controller->indi->canDisplayDetails()) {
+			if (!$this->controller->isPrintPreview() && $this->controller->canedit) {
 			?>
 				<tr>
 					<td class="facts_label"><?php print_help_link("add_source_help", "qm"); ?><?php echo $pgv_lang["add_source_lbl"]; ?></td>

@@ -1899,6 +1899,7 @@ function format_parents_age($pid) {
 	$html='';
 	if ($SHOW_PARENTS_AGE) {
 		$person=Person::getInstance($pid);
+		if (!$person) return $html;
 		$families=$person->getChildFamilies();
 		// Multiple sets of parents (e.g. adoption) cause complications, so ignore.
 		$birth_date=$person->getBirthDate();

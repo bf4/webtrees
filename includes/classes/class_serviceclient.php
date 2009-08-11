@@ -894,7 +894,16 @@ class ServiceClient extends GedcomRecord {
 			if (empty($url) && empty($gedfile))
 				return null;
 			if (!empty($url) && (strtolower($url)!=strtolower($SERVER_URL))) {
-				$server = new ServiceClient($gedrec);
+				$type = get_gedcom_value("URL:TYPE", 1, $gedrec);
+				//-- allow for module extensions of remote linking
+				if (file_exists("modules/".$type."/".$type."_ServiceClient.php")) {
+					require_once("modules/".$type."/".$type."_ServiceClient.php");
+					$classname = $type."_ServiceClient";
+					$server = new $classname($gedrec);
+				}
+				else {
+					$server = new ServiceClient($gedrec);
+				}
 			} else {
 				include_once('includes/classes/class_localclient.php');
 				$server = new LocalClient($gedrec);

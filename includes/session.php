@@ -57,7 +57,7 @@ define('PGV_REQUIRED_SQLITE_VERSION',  '3.2.6'); // Not enforced, PHP5.2.0/PDO i
 define('PGV_REQUIRED_PRIVACY_VERSION', '3.1');
 
 // Regular expressions for validating user input, etc.
-define('PGV_REGEX_XREF',     '[A-Za-z0-9:_-]+');
+define('PGV_REGEX_XREF',     '[A-Za-z0-9:_+-]+');
 define('PGV_REGEX_TAG',      '[_A-Z][_A-Z0-9]*');
 define('PGV_REGEX_INTEGER',  '-?\d+');
 define('PGV_REGEX_ALPHA',    '[a-zA-Z]+');

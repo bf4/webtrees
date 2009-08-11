@@ -50,7 +50,7 @@ if (!$this->controller->indi->canDisplayDetails()) {
 	}
 	if ($this->get_note_count()==0) print "<tr><td id=\"no_tab2\" colspan=\"2\" class=\"facts_value\">".$pgv_lang["no_tab2"]."</td></tr>\n";
 	//-- New Note Link
-	if (!$this->controller->isPrintPreview() && PGV_USER_CAN_EDIT && $this->controller->indi->canDisplayDetails()) {
+	if (!$this->controller->isPrintPreview() && $this->controller->canedit) {
 		?>
 	<tr>
 		<td class="facts_label"><?php print_help_link("add_note_help", "qm"); ?><?php echo $pgv_lang["add_note_lbl"]; ?></td>

@@ -110,6 +110,26 @@ foreach($default_tabs as $modname) {
 	}
 }
 
+//-- set the default menus
+$default_tabs = array('page_menu');
+$modules = PGVModule::getInstalledList();
+$taborder = 0;
+foreach($default_tabs as $modname) {
+        if (isset($modules[$modname])) {
+                $mod = $modules[$modname];
+                if ($mod->hasMenu()) {
+                        $mod->setMenuorder($taborder);
+                        foreach($gedids as $ged_id) {
+                                $mod->setAccessLevel(2, $ged_id);
+                                $mod->setMenuEnabled(2, $ged_id);
+                        }
+                        PGVModule::updateModule($mod);
+                        $taborder++;
+                }
+        }
+}
+
+
 // Update the version to indicate sucess
 set_site_setting($schema_name, $next_version);
 

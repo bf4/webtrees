@@ -423,6 +423,7 @@ class Event {
 
 		if (empty($factsort))
 			$factsort=array_flip(array(
+				"NAME","SEX",
 				"BIRT",
 				"_HNM",
 				"ALIA", "_AKA", "_AKAN",
@@ -476,6 +477,7 @@ class Event {
 				"SLGC", "BAPL", "CONL", "ENDL", "SLGS",
 				"AFN", "REFN", "_PRMN", "REF", "RIN",
 				"ADDR", "PHON", "EMAIL", "_EMAIL", "EMAL", "FAX", "WWW", "URL", "_URL",
+				"FAMC","FAMS",
 				"CHAN", "_TODO"
 			));
 

@@ -67,7 +67,7 @@ class relatives_Tab extends Tab {
 		}
 		//-- missing father
 		if ($type=="parents" && !isset($people["husb"]) && !isset($people["newhusb"])) {
-			if (!$this->controller->isPrintPreview() && PGV_USER_CAN_EDIT && $this->controller->indi->canDisplayDetails()) {
+			if (!$this->controller->isPrintPreview() && $this->controller->canedit) {
 				?>
 				<tr>
 					<td class="facts_label"><?php print $pgv_lang["add_father"]; ?></td>
@@ -78,7 +78,7 @@ class relatives_Tab extends Tab {
 		}
 		//-- missing husband
 		if ($type=="spouse" && $this->controller->indi->equals($people["wife"]) && !isset($people["husb"]) && !isset($people["newhusb"])) {
-			if (!$this->controller->isPrintPreview() && PGV_USER_CAN_EDIT && $this->controller->indi->canDisplayDetails()) {
+			if (!$this->controller->isPrintPreview() && $this->controller->canedit) {
 				?>
 				<tr>
 					<td class="facts_label"><?php print $pgv_lang["add_husb"]; ?></td>
@@ -113,7 +113,7 @@ class relatives_Tab extends Tab {
 		}
 		//-- missing mother
 		if ($type=="parents" && !isset($people["wife"]) && !isset($people["newwife"])) {
-			if (!$this->controller->isPrintPreview() && PGV_USER_CAN_EDIT && $this->controller->indi->canDisplayDetails()) {
+			if (!$this->controller->isPrintPreview() && $this->controller->canedit) {
 				?>
 				<tr>
 					<td class="facts_label"><?php print $pgv_lang["add_mother"]; ?></td>
@@ -124,7 +124,7 @@ class relatives_Tab extends Tab {
 		}
 		//-- missing wife
 		if ($type=="spouse" && $this->controller->indi->equals($people["husb"]) && !isset($people["wife"]) && !isset($people["newwife"])) {
-			if (!$this->controller->isPrintPreview() && PGV_USER_CAN_EDIT && $this->controller->indi->canDisplayDetails()) {
+			if (!$this->controller->isPrintPreview() && $this->controller->canedit) {
 				?>
 				<tr>
 					<td class="facts_label"><?php print $pgv_lang["add_wife"]; ?></td>
@@ -182,7 +182,7 @@ class relatives_Tab extends Tab {
 						}
 						echo $factarray["_NMAR"];
 					}
-					else if ($family->getMarriageRecord()=="" && PGV_USER_CAN_EDIT) {
+					else if ($family->getMarriageRecord()=="" && $this->controller->canedit) {
 						print "<a href=\"#\" onclick=\"return add_new_record('".$famid."', 'MARR');\">".$pgv_lang['add_marriage']."</a>";
 					}
 					else {
@@ -239,7 +239,7 @@ class relatives_Tab extends Tab {
 			<?php
 			$elderdate = $child->getBirthDate();
 		}
-		if (isset($family) && !$this->controller->isPrintPreview() && PGV_USER_CAN_EDIT && $this->controller->indi->canDisplayDetails()) {
+		if (isset($family) && !$this->controller->isPrintPreview() && $this->controller->canedit) {
 			if ($type == "spouse") {
 				$action = "add_son_daughter";
 				$child_m = "son";
@@ -295,7 +295,7 @@ class relatives_Tab extends Tab {
 		$families = $this->controller->indi->getChildFamilies();
 		if (count($families)==0) {
 			print "<span class=\"subheaders\">".$pgv_lang["relatives"]."</span>";
-			if (/**!$this->controller->isPrintPreview() &&**/ PGV_USER_CAN_EDIT && $this->controller->indi->canDisplayDetails()) {
+			if (/**!$this->controller->isPrintPreview() &&**/ $this->controller->canedit) {
 				?>
 				<table class="facts_table">
 					<tr>
@@ -359,7 +359,7 @@ class relatives_Tab extends Tab {
 		</script>
 		<br />
 		<?php
-		if (!$this->controller->isPrintPreview() && PGV_USER_CAN_EDIT && $this->controller->indi->canDisplayDetails()) {
+		if (!$this->controller->isPrintPreview() && $this->controller->canedit) {
 		?>
 		<table class="facts_table">
 		<?php if (count($families)>1) { ?>

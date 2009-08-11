@@ -881,7 +881,7 @@ class Person extends GedcomRecord {
 	*/
 	function parseFacts($nfacts=NULL) {
 		global $nonfacts;
-		parent::parseFacts();
+		parent::parseFacts($nfacts);
 		if ($nfacts!=NULL) $nonfacts = $nfacts;
 		//-- only run this function once
 		if ($this->facts_parsed) return;

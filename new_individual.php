@@ -126,7 +126,7 @@ function resize_content_div(i) {
 #indi_main_blocks {
 	clear: none;
 	float: left;
-	width: 78%;
+	width: 99%;
 }
 #indi_small_blocks {
 	clear: none;
@@ -137,7 +137,7 @@ function resize_content_div(i) {
 </style>
 <div id="indi_main_blocks">
 <div id="indi_top">
-		<table class="width100"><tr><td>
+		<table><tr><td>
 		<?php if ($controller->canShowHighlightedObject()) { ?>
 			<?php echo $controller->getHighlightedObject(); ?>
 		<?php } ?>
@@ -237,40 +237,6 @@ foreach($controller->modules as $mod) {
 	}
 } 
 ?>
-</div>
-<div id="tabs">
-<ul>
-	<?php
-	$tabcount = 0; 
-	foreach($controller->modules as $mod) {
-		if ($mod!=$controller->static_tab && $mod->hasTab()) {
-		if ($tabcount==$controller->default_tab || !$mod->getTab()->canLoadAjax()) {?>
-			<li><a name="<?php echo $mod->getName(); ?>" href="#<?php echo $mod->getName()?>"><span><?php echo $pgv_lang[$mod->getName()]?></span></a></li>
-		<?php } else if ($mod->hasTab() && $mod->getTab() && ($mod->getTab()->hasContent() || PGV_USER_CAN_EDIT)) { ?>
-			<li><a name="<?php echo $mod->getName(); ?>" href="new_individual.php?action=ajax&amp;module=<?php echo $mod->getName()?>&amp;pid=<?php echo $controller->pid?>">
-				<span><?php echo $pgv_lang[$mod->getName()]?></span>
-				</a></li>
-		<?php } 
-		$tabcount++; 
-		}
-	 } ?>
-</ul>
-<?php 
-$tabcount = 0; 
-foreach($controller->modules as $mod) {
-	if ($mod!=$controller->static_tab && $mod->hasTab()) {
-	if ($tabcount==$controller->default_tab || !$mod->getTab()->canLoadAjax()) {?>
-	<div id="<?php echo $mod->getName()?>">
-		<?php echo $mod->getTab()->getContent(); ?>
-	</div>	
-	<?php }
-	$tabcount++; 
-	}
- } ?>
-</div>
-</div> <!--  end column 1 -->
-
-<div id="indi_small_blocks">
 <?php 
 	if ((!$controller->isPrintPreview())&&(empty($SEARCH_SPIDER))) {
 		$showFull = ($PEDIGREE_FULL_DETAILS) ? 1 : 0;
@@ -291,65 +257,41 @@ foreach($controller->modules as $mod) {
 			}
 		?>
 		</div>
-		<?php if (!$PGV_MENUS_AS_LISTS) {?>
-		<table class="sublinks_table width100" cellspacing="4" cellpadding="0">
-			<tr>
-				<td class="list_label <?php echo $TEXT_DIRECTION; ?>" colspan="5"><?php echo $pgv_lang["indis_charts"]; ?></td>
-			</tr>
-			<tr>
-				<td class="sublinks_cell <?php echo $TEXT_DIRECTION; ?>">
-		<?php } else { ?>
-		<div id="optionsmenu" class="sublinks_table">
-			<div class="list_label <?php echo $TEXT_DIRECTION; ?>"><?php echo $pgv_lang["indis_charts"]; ?></div>
-				<ul class="sublinks_cell <?php echo $TEXT_DIRECTION; ?>">
+		<?php } ?>
+</div>
+<div id="tabs">
+<ul>
+	<?php
+	$tabcount = 0; 
+	foreach($controller->modules as $mod) {
+		if ($mod!=$controller->static_tab && $mod->hasTab()) {
+		if ($tabcount==$controller->default_tab || !$mod->getTab()->canLoadAjax()) {?>
+			<li><a name="<?php echo $mod->getName(); ?>" href="#<?php echo $mod->getName()?>"><span><?php echo $pgv_lang[$mod->getName()]?></span></a></li>
+		<?php } else if ($mod->hasTab() && $mod->getTab() && ($mod->getTab()->hasContent() || PGV_USER_CAN_EDIT)) { ?>
+			<li><a name="<?php echo $mod->getName(); ?>" href="new_individual.php?action=ajax&amp;module=<?php echo $mod->getName()?>&amp;pid=<?php echo $controller->pid?>">
+				<span><?php echo $pgv_lang[$mod->getName()]?></span>
+				</a></li>
 		<?php } 
-				//-- get charts menu from menubar
-				$menubar = new MenuBar();
-				if ($controller->userCanEdit()) {
-				?>
-				</<?php if (!$PGV_MENUS_AS_LISTS) {?>td><td<?php } else { ?>ul><ul<?php }?> class="sublinks_cell <?php echo $TEXT_DIRECTION; ?>">
-				<?php $menu = $controller->getEditMenu(); 
-				$menu->printMenu();
-				}
-				if ($controller->canShowOtherMenu()) {
-				?>
-				</<?php if (!$PGV_MENUS_AS_LISTS) {?>td><td<?php } else { ?>ul><ul<?php }?> class="sublinks_cell <?php echo $TEXT_DIRECTION; ?>">
-				<?php $menu = $controller->getOtherMenu(); 
-				$menu->printMenu();
-				}
-				?>
-		<?php if (!$PGV_MENUS_AS_LISTS) {?>
-				</td>
-			</tr>
-		</table><br />
-		<?php } else { ?>
-				</ul>
-		</div>
-		<?php } 
-			 } ?>
-<?php
-	// ==================== Start Details Tab Navigator ========================================
-	//if ($Fam_Navigator=="YES") {
-		//<b> print $pgv_lang["view_fam_nav_notes"]; </b><br /><br />
-		//<b><?php print $pgv_lang["view_fam_nav_sources"]; </b><br /><br />
-		//<b><?php print $pgv_lang["view_fam_nav_media"]; </b><br /><br />
-		//<b><?php print $pgv_lang["view_fam_nav_relatives"]; </b><br /><br />
-		//<b><?php print $pgv_lang["view_fam_nav_map"]; </b><br /><br />
-		//<b><?php print $pgv_lang["view_fam_nav_album"]; </b><br /><br />
-		?>
-		<div>
-			<table class="optionbox width100" cellpadding="0"><tr><td align="center">
-			<b><?php print $pgv_lang["view_fam_nav_details"]; ?></b><br /><br />
-			<?php if ($controller->static_tab) echo $controller->static_tab->getTab()->getContent(); ?>
-			<br />
-			</td></tr></table>
-		</div>
-		<?php
-	//}
-	// ==================== End Details Tab Navigator ========================================= */
-?>
-</div> <!--  end column 2 -->
-
+		$tabcount++; 
+		}
+	 } ?>
+</ul>
+<table border="0" class="width100"><tr><td valign="top" id="subtab">
+<?php 
+$tabcount = 0; 
+foreach($controller->modules as $mod) {
+	if ($mod!=$controller->static_tab && $mod->hasTab()) {
+	if ($tabcount==$controller->default_tab || !$mod->getTab()->canLoadAjax()) {?>
+	<div id="<?php echo $mod->getName()?>">
+		<?php echo $mod->getTab()->getContent(); ?>
+	</div>	
+	<?php }
+	$tabcount++; 
+	}
+ } ?>
+</td><td valign="top" class="width20"><?php if ($controller->static_tab) echo $controller->static_tab->getTab()->getContent(); ?></td></tr></table>
+</div>
+</div> <!--  end column 1 -->
 <?php 
 echo PGV_JS_START;
 echo 'var catch_and_ignore; function paste_id(value) {catch_and_ignore = value;}';

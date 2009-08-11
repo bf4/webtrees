@@ -57,15 +57,15 @@ class personal_facts_Tab extends Tab {
 
 				if (!is_null($value->getFamilyId())) {
 					if (!$yetdied) {
-						print_fact($value);
+						print_fact($value, $this->controller->canedit==false);
 					}
 				}
-				else print_fact($value);
+				else print_fact($value, $this->controller->canedit==false);
 				$FACT_COUNT++;
 			}
 		}
 		//-- new fact link
-		if ((!$this->controller->isPrintPreview()) && PGV_USER_CAN_EDIT && ($this->controller->indi->canDisplayDetails())) {
+		if ((!$this->controller->isPrintPreview()) && $this->controller->canedit) {
 			print_add_new_fact($this->controller->pid, $indifacts, "INDI");
 		}
 		?>

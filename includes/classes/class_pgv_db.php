@@ -760,7 +760,7 @@ class PGV_DB {
 
 		// Define some "standard" columns, so we create our tables consistently
 		self::$COL_FILE=self::$INT2_TYPE.' '.self::$UNSIGNED; // Allow 32768/65536 Gedcoms
-		self::$COL_XREF=self::$VARCHAR_TYPE.'(20)';           // Gedcom identifiers are max 20 chars
+		self::$COL_XREF=self::$VARCHAR_TYPE.'(40)';           // Gedcom identifiers are max 40 chars (allow for concatinating via remote links)
 		self::$COL_TAG =self::$VARCHAR_TYPE.'(15)';           // Gedcom tags/record types are max 15 chars
 		self::$COL_JD  =self::$INT3_TYPE.' '.self::$UNSIGNED; // Julian Day numbers only need 3 bytes
 		self::$COL_DAY =self::$INT1_TYPE.' '.self::$UNSIGNED; // Day numbers only need 1 byte

@@ -38,7 +38,6 @@ require_once 'includes/functions/functions_edit.php';
 require_once 'includes/classes/class_serviceclient.php';
 
 class RemoteLinkController extends BaseController {
-	var $has_familysearch=null;
 	var $pid=null;
 	var $person=null;
 	var $server_list=null;
@@ -68,12 +67,6 @@ class RemoteLinkController extends BaseController {
 		if ($_SESSION["cookie_login"]) {
 			header('Location: '.encode_url("login.php?type=simple&url=".urlencode("edit_interface.php?".decode_url($QUERY_STRING)), false));
 			exit;
-		}
-
-		// Coming soon ???
-		$this->has_familysearch=file_exists('modules/FamilySearch/familySearchWrapper.php');
-		if ($this->has_familysearch) {;
-			require_once 'modules/FamilySearch/familySearchWrapper.php';
 		}
 
 		// The PID can come from a URL or a form
@@ -156,44 +149,6 @@ class RemoteLinkController extends BaseController {
 				}
 				$gedcom_string.="\n1 TITL {$title}";
 				$serverID=append_gedrec($gedcom_string);
-			}
-		}
-		return $serverID;
-	}
-
-	// Add a familySearch server
-	//
-	// @param string $title
-	// @param string $url
-	// @param string $gedcom_id
-	// @param string $username
-	// @param string $password
-	// @return mixed the serverID of the server to link to
-	function addFamilySearchServer($title, $url, $gedcom_id, $username, $password) {
-		$serverID = $this->checkExistingServer($url, $gedcom_id);
-		if (!$serverID) {
-			$gedcom_string = "0 @new@ SOUR\n";
-			$gedcom_string.= "1 URL ".$url."\n";
-			$gedcom_string.= "2 TYPE FamilySearch\n";
-			$gedcom_string.= "1 _DBID ".$gedcom_id."\n";
-			$gedcom_string.= "2 _USER ".$username."\n";
-			$gedcom_string.= "2 _PASS ".$password."\n";
-			//-- only allow admin users to see password
-			$gedcom_string.= "3 RESN confidential\n";
-			$service = new FamilySearchWrapper($gedcom_string);
-			$sid = $service->authenticate();
-			if (PEAR::isError($sid)) {
-				$sid = '';
-			}
-			if (empty($sid)) {
-				echo "<span class=\"error\">failed to authenticate to remote site</span>";
-			} else {
-				if (empty($title)) {
-					$title = $service->getServiceTitle();
-				}
-				$title = $service->getServiceTitle();
-				$gedcom_string.= "1 TITL ".$title."\n";
-				$serverID = append_gedrec($gedcom_string);
 			}
 		}
 		return $serverID;

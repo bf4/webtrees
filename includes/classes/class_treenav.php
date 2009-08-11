@@ -53,12 +53,10 @@ class TreeNav {
 		$SHOW_PRIVATE_RELATIONSHIPS = true;		// Interactive Tree doesn't work if this is "false"
 
 		if ($rootid!='none') {
-			$rootid = check_rootid($rootid);
 			$this->zoomLevel = $zoom;
 			$this->rootPerson = Person::getInstance($rootid);
 			if (is_null($this->rootPerson)) $this->rootPerson = new Person('');
 		}
-
 		$this->name = $name;
 		//-- handle AJAX requests
 		if (!empty($_REQUEST['navAjax'])) {
