@@ -90,6 +90,7 @@ $pgv_lang["names"]				= "שמות";
 $pgv_lang["children"]				= "ילדים";
 $pgv_lang["lchildren"]				= "ילדים";
 $pgv_lang["child"]				= "ילד/ה";
+$pgv_lang["grandchildren"]			= "נכדים";
 $pgv_lang["family"]				= "משפחה";
 $pgv_lang["as_child"]				= "משפחה עם הורים";
 $pgv_lang["shared_note_menu"]		= "בחירות עבור הערה משותפת";
@@ -400,6 +401,7 @@ $pgv_lang["charts"] 			= "תרשימים";
 $pgv_lang["lists"] 			= "רשימות";
 $pgv_lang["box_width"] 		= "רוחב התיבה";
 $pgv_lang["random_surn"]		= "שם משפחה אקראי";
+$pgv_lang["generation_number"]	= "דורות";
 
 //-- FUNCTIONS FILE MESSAGES
 $pgv_lang["unable_to_find_family"]	= "לא נמצאת משפחה עם קוד זיהוי";
@@ -1662,6 +1664,8 @@ $pgv_lang["statnnames"]                	= "סה\"כ אנשים";
 $pgv_lang["statnfam"]                  	= "סה\"כ משפחות";
 $pgv_lang["statnmale"]                	= "סה\"כ זכרים";
 $pgv_lang["statnfemale"]              	= "סה\"כ נקבות";
+$pgv_lang["with_sources"]		= "עם מקורות";
+$pgv_lang["without_sources"]		= "ללא מקורות";
 $pgv_lang["stat_sindi"]		= "אנשים עם מקורות";
 $pgv_lang["stat_sfam"]		= "משפחות עם מקורות";
 $pgv_lang["statvars"]			= "מלא את הערכים הבאים עבור התרשים";
@@ -1676,6 +1680,7 @@ $pgv_lang["stat_4_map"]		= "נישואין לפי ארץ";
 $pgv_lang["stat_5_birth"]		= "לידות לפי מאה";
 $pgv_lang["stat_6_death"]		= "פטירות לפי מאה";
 $pgv_lang["stat_7_marr"]		= "נישואין לפי מאה";
+$pgv_lang["stat_7_div"]		= "גרושים לפי מאה";
 $pgv_lang["stat_8_fam"]		= "משפחות עם מקורות";
 $pgv_lang["stat_9_indi"]		= "אנשים עם מקורות";
 $pgv_lang["stat_10_none"]		= "כלום";
@@ -1718,6 +1723,7 @@ $pgv_lang["one_child"]		= "מרווח ילד אחד";
 $pgv_lang["two_children"]		= "מרווח שני ילדים";
 $pgv_lang["statreset"]			= "ברירת מחדל";
 $pgv_lang["statsubmit"]		= "הצג תרשים";
+$pgv_lang["stat_largest_families"] 	= "המשפחות הגדולות";
 
 //-- statisticsplot utility
 $pgv_lang["statistiek_list"]		= "תרשים סטטיסטי";
