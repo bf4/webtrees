@@ -43,6 +43,11 @@ VERSION 4.2.3
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change	codes and comments
 ----------------------------------------------------------------------------------------
+*$pgv_lang["stat_7_marr"]							09 Aug 2009				w
++$pgv_lang["stat_7_div"]							09 Aug 2009				A
++$pgv_lang["with_sources"]							09 Aug 2009				A
++$pgv_lang["without_sources"]						09 Aug 2009				A
++$pgv_lang["stat_largest_families"]					09 Aug 2009				A
 +$pgv_lang["generation_number"]						02 Aug 2009				A
 +$pgv_lang["grandchildren"]							02 Aug 2009				A
 
@@ -51,7 +56,7 @@ VERSION 4.2.2
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change	codes and comments
 ----------------------------------------------------------------------------------------
-*$pgv_lang["ahnentafel_on"]							21 Jul 2009				W  has to work with dates like ABT, BET-AND ...
+*$pgv_lang["ahnentafel_on"]							21 Jul 2009				W has to work with dates like ABT, BET-AND ...
 +$pgv_lang["cemetery_report"]						20 Jul 2009				A
 +$pgv_lang["burialplace"]							20 Jul 2009				A
 *$pgv_lang["ahnentafel_on"]							19 Jul 2009				f

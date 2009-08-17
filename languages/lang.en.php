@@ -31,7 +31,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
-$pgv_lang["gedcomid"]				= "GEDCOM INDI record ID";
+$pgv_lang["gedcomid"]			= "GEDCOM INDI record ID";
 $pgv_lang["sortby"]				= "Sequence";
 $pgv_lang["exact"]				= "Exact";
 $pgv_lang["begins_with"]		= "Begins with";
@@ -1659,10 +1659,12 @@ $pgv_lang["witness"] = "Witness";
 //-- statistics utility
 $pgv_lang["stat_create"]		= "Create your own chart";
 $pgv_lang["statutci"]			= "unable to create index";
-$pgv_lang["statnnames"]         = "Total individuals";
-$pgv_lang["statnfam"]           = "Total families";
-$pgv_lang["statnmale"]          = "Total males";
-$pgv_lang["statnfemale"]        = "Total females";
+$pgv_lang["statnnames"]			= "Total individuals";
+$pgv_lang["statnfam"]			= "Total families";
+$pgv_lang["statnmale"]			= "Total males";
+$pgv_lang["statnfemale"]		= "Total females";
+$pgv_lang["with_sources"]		= "With sources";
+$pgv_lang["without_sources"]	= "Without sources";
 $pgv_lang["stat_sindi"]			= "Individuals with sources";
 $pgv_lang["stat_sfam"]			= "Families with sources";
 $pgv_lang["statvars"]			= "Fill in the following parameters for the plot";
@@ -1676,7 +1678,8 @@ $pgv_lang["stat_3_map"]			= "Death by country";
 $pgv_lang["stat_4_map"]			= "Marriage by country";
 $pgv_lang["stat_5_birth"]		= "Births by century";
 $pgv_lang["stat_6_death"]		= "Deaths by century";
-$pgv_lang["stat_7_marr"]		= "Marriage by century";
+$pgv_lang["stat_7_marr"]		= "Marriages by century";
+$pgv_lang["stat_7_div"]			= "Divorces by century";
 $pgv_lang["stat_8_fam"]			= "Families with sources";
 $pgv_lang["stat_9_indi"]		= "Individuals with sources";
 $pgv_lang["stat_10_none"]		= "none";
@@ -1719,14 +1722,15 @@ $pgv_lang["one_child"]			= "interval one child";
 $pgv_lang["two_children"]		= "interval two children";
 $pgv_lang["statreset"]			= "reset";
 $pgv_lang["statsubmit"]			= "show the plot";
+$pgv_lang["stat_largest_families"] = "Largest families";
 
 //-- statisticsplot utility
 $pgv_lang["statistiek_list"]	= "Statistics Plot";
-$pgv_lang["stpl"]			 	= "...";
+$pgv_lang["stpl"]				= "...";
 $pgv_lang["stplinfo"]			= "plotting information:";
 $pgv_lang["stpltype"]			= "type:";
 $pgv_lang["stplnoim"]			= " not implemented:";
-$pgv_lang["stplmf"]			 	= " per gender";
+$pgv_lang["stplmf"]				= " per gender";
 $pgv_lang["stplipot"]			= " per time period";
 $pgv_lang["stplmonth"]			= "month";
 $pgv_lang["stplnumbers"]		= "numbers";
@@ -1820,11 +1824,11 @@ $pgv_lang["preview"] =  "Preview";
 $pgv_lang["no_id"] = "No FAQ ID has been specified !";
 
 // Help search
-$pgv_lang["hs_title"] 			= "Search Help Text";
-$pgv_lang["hs_search"] 			= "Search";
-$pgv_lang["hs_close"] 			= "Close window";
-$pgv_lang["hs_results"] 		= "Results found:";
-$pgv_lang["hs_keyword"] 		= "Search for";
+$pgv_lang["hs_title"]			= "Search Help Text";
+$pgv_lang["hs_search"]			= "Search";
+$pgv_lang["hs_close"]			= "Close window";
+$pgv_lang["hs_results"]			= "Results found:";
+$pgv_lang["hs_keyword"]			= "Search for";
 $pgv_lang["hs_searchin"]		= "Search in";
 $pgv_lang["hs_searchuser"]		= "User Help";
 $pgv_lang["hs_searchmodules"]	= "Modules Help";
@@ -1861,7 +1865,7 @@ $pgv_lang["TYPE__painting"] = "Painting";
 $pgv_lang["TYPE__other"] = "Other";
 
 //-- Other media suff
-$pgv_lang["view_slideshow"] 		= "View as slideshow";
+$pgv_lang["view_slideshow"]			= "View as slideshow";
 $pgv_lang["download_image"]			= "Download File";
 $pgv_lang["no_media"]				= "No Media Found";
 $pgv_lang["media_privacy"]			= "Privacy restrictions prevent you from viewing this item";

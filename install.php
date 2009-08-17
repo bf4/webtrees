@@ -208,17 +208,17 @@ switch($step) {
 		if (isset($_POST['NEW_PGV_STORE_MESSAGES'])) $_SESSION['install_config']['PGV_STORE_MESSAGES'] = $_POST['NEW_PGV_STORE_MESSAGES']=="yes"?true:false;
 		if (isset($_POST['NEW_USE_REGISTRATION_MODULE'])) $_SESSION['install_config']['USE_REGISTRATION_MODULE'] = $_POST['NEW_USE_REGISTRATION_MODULE']=="yes"?true:false;
 		if (isset($_POST['NEW_REQUIRE_ADMIN_AUTH_REGISTRATION'])) $_SESSION['install_config']['REQUIRE_ADMIN_AUTH_REGISTRATION'] = $_POST['NEW_REQUIRE_ADMIN_AUTH_REGISTRATION']=="yes"?true:false;
-		if (isset($_POST['NEW_PGV_SIMPLE_MAIL'])) $_SESSION['install_config']['PGV_SIMPLE_MAIL'] =$_POST['NEW_PGV_SIMPLE_MAIL']=="yes"?true:false;
-		if (isset($_POST["NEW_PGV_SMTP_ACTIVE"])) $_SESSION['install_config']['PGV_SMTP_ACTIVE'] =$_POST["NEW_PGV_SMTP_ACTIVE"]=="yes"?true:false;
+		if (isset($_POST['NEW_PGV_SIMPLE_MAIL'])) $_SESSION['install_config']['PGV_SIMPLE_MAIL'] = $_POST['NEW_PGV_SIMPLE_MAIL']=="yes"?true:false;
+		if (isset($_POST["NEW_PGV_SMTP_ACTIVE"])) $_SESSION['install_config']['PGV_SMTP_ACTIVE'] = $_POST["NEW_PGV_SMTP_ACTIVE"]=="yes"?true:false;
 		if (isset($_POST["NEW_PGV_SMTP_HOST"])) $_SESSION['install_config']['PGV_SMTP_HOST'] = $_POST['NEW_PGV_SMTP_HOST'];
-		if (isset($_POST["NEW_PGV_SMTP_HELO"])) $_SESSION['install_config']['PGV_SMTP_HELO'] =$_POST["NEW_PGV_SMTP_HELO"];
-		if (isset($_POST["NEW_PGV_SMTP_PORT"])) $_SESSION['install_config']['PGV_SMTP_PORT'] =$_POST["NEW_PGV_SMTP_PORT"];
+		if (isset($_POST["NEW_PGV_SMTP_HELO"])) $_SESSION['install_config']['PGV_SMTP_HELO'] = $_POST["NEW_PGV_SMTP_HELO"];
+		if (isset($_POST["NEW_PGV_SMTP_PORT"])) $_SESSION['install_config']['PGV_SMTP_PORT'] = $_POST["NEW_PGV_SMTP_PORT"];
 		if (empty($_SESSION['install_config']['PGV_SMTP_PORT'])) $_SESSION['install_config']['PGV_SMTP_PORT'] = '25';
-		if (isset($_POST["NEW_PGV_SMTP_AUTH"])) $_SESSION['install_config']['PGV_SMTP_AUTH'] =$_POST["NEW_PGV_SMTP_AUTH"]=="yes"?true:false;
-		if (isset($_POST["NEW_PGV_SMTP_AUTH_USER"])) $_SESSION['install_config']['PGV_SMTP_AUTH_USER'] =$_POST["NEW_PGV_SMTP_AUTH_USER"];
-		if (isset($_POST["NEW_PGV_SMTP_AUTH_PASS"])) $_SESSION['install_config']['PGV_SMTP_AUTH_PASS'] =$_POST["NEW_PGV_SMTP_AUTH_PASS"];
-		if (isset($_POST["NEW_PGV_SMTP_SSL"])) $_SESSION['install_config']['PGV_SMTP_SSL'] =$_POST["NEW_PGV_SMTP_SSL"]=="yes"?true:false;
-		if (isset($_POST["NEW_PGV_SMTP_FROM_NAME"])) $_SESSION['install_config']['PGV_SMTP_FROM_NAME'] =$_POST["NEW_PGV_SMTP_FROM_NAME"];
+		if (isset($_POST["NEW_PGV_SMTP_AUTH"])) $_SESSION['install_config']['PGV_SMTP_AUTH'] = $_POST["NEW_PGV_SMTP_AUTH"]=="yes"?true:false;
+		if (isset($_POST["NEW_PGV_SMTP_AUTH_USER"])) $_SESSION['install_config']['PGV_SMTP_AUTH_USER'] = $_POST["NEW_PGV_SMTP_AUTH_USER"];
+		if (isset($_POST["NEW_PGV_SMTP_AUTH_PASS"])) $_SESSION['install_config']['PGV_SMTP_AUTH_PASS'] = $_POST["NEW_PGV_SMTP_AUTH_PASS"];
+		if (isset($_POST["NEW_PGV_SMTP_SSL"])) $_SESSION['install_config']['PGV_SMTP_SSL'] = $_POST["NEW_PGV_SMTP_SSL"];
+		if (isset($_POST["NEW_PGV_SMTP_FROM_NAME"])) $_SESSION['install_config']['PGV_SMTP_FROM_NAME'] = $_POST["NEW_PGV_SMTP_FROM_NAME"];
 		if (isset($_POST['NEW_ALLOW_USER_THEMES'])) $_SESSION['install_config']['ALLOW_USER_THEMES'] = $_POST['NEW_ALLOW_USER_THEMES']=="yes"?true:false;
 		if (isset($_POST['NEW_ALLOW_REMEMBER_ME'])) $_SESSION['install_config']['ALLOW_REMEMBER_ME'] = $_POST['NEW_ALLOW_REMEMBER_ME']=="yes"?true:false;
 		if (isset($_POST['NEW_LOGFILE_CREATE'])) $_SESSION['install_config']['LOGFILE_CREATE'] = $_POST['NEW_LOGFILE_CREATE'];
@@ -934,8 +934,9 @@ function printConfigForm(){
 		<td class="descriptionbox wrap width30"><?php print_help_link("PGV_SMTP_SSL_help", "qm", "PGV_SMTP_SSL"); print $pgv_lang["PGV_SMTP_SSL"];?></td>
 		<td class="optionbox">
 			<select name="NEW_PGV_SMTP_SSL" tabindex="<?php $i++; print $i?>" onfocus="getHelp('PGV_SMTP_SSL_help');">
-				<option value="yes" <?php if ($PGV_SMTP_SSL) print "selected=\"selected\""; ?>><?php print $pgv_lang["yes"];?></option>
-				<option value="no" <?php if (!$PGV_SMTP_SSL) print "selected=\"selected\""; ?>><?php print $pgv_lang["no"];?></option>
+				<option value="none" <?php if ($PGV_SMTP_SSL=='none') print "selected=\"selected\""; ?>><?php print $pgv_lang["none"];?></option>
+				<option value="ssl" <?php if ($PGV_SMTP_SSL=='ssl') print "selected=\"selected\""; ?>>SSL</option>
+				<option value="tls" <?php if ($PGV_SMTP_SSL=='tls') print "selected=\"selected\""; ?>>TLS</option>
 			</select>
 		</td>
 	</tr>

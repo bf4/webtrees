@@ -576,7 +576,7 @@ function myplot($mytitle, $n, $xdata, $xtitle, $ydata, $ytitle, $legend) {
 	$titleLength = strpos($mytitle."\n", "\n");
 	$title = substr($mytitle, 0, $titleLength);
 
-	$imgurl = "http://chart.apis.google.com/chart?cht=bvg&chs=950x300&chf=bg,s,ffffff99|c,s,ffffff00&chtt=".$title."&".$datastring."&".$colorstring."&chbh=";
+	$imgurl = "http://chart.apis.google.com/chart?cht=bvg&chs=950x300&chf=bg,s,ffffff00|c,s,ffffff00&chtt=".$title."&".$datastring."&".$colorstring."&chbh=";
 	if (count($ydata) > 3) $imgurl .= "5,1";
 	else if (count($ydata) < 2) $imgurl .= "45,1";
 	else $imgurl .= "20,3";
@@ -619,9 +619,9 @@ function myplot($mytitle, $n, $xdata, $xtitle, $ydata, $ytitle, $legend) {
 			}
 		}
 	}
-	echo "<center>";
-	echo "<img src=\"".encode_url($imgurl)."\" width=\"950\" height=\"300\"  border=\"0\" alt=\"".$mytitle."\" title=\"".$mytitle."\"/>";
-	echo "</center><br /><br />";
+	echo "<center><div class=\"statistics_chart width80\">";
+	echo "<img src=\"".encode_url($imgurl)."\" width=\"950\" height=\"300\" border=\"0\" alt=\"".$mytitle."\" title=\"".$mytitle."\"/>";
+	echo "</div></center><br /><br />";
 }
 
 function calc_axis($xas_grenzen) {
@@ -708,7 +708,7 @@ function calc_legend($grenzen_zas) {
 function set_params($current, $indfam, $xg, $zg, $titstr, $xt, $yt, $gx, $gz, $myfunc) {
 	global $x_as, $y_as, $z_as, $nrfam, $nrpers, $n1, $months;
 	global $legend, $xdata, $ydata, $xmax, $zmax, $zgrenzen, $xgiven, $zgiven, $percentage, $male_female;
-	global $pgv_lang;
+	global $pgv_lang, $stats;
 
 	if (!function_exists($myfunc)) {
 		echo $myfunc." ".$pgv_lang["stplnoim"];
@@ -806,8 +806,10 @@ function set_params($current, $indfam, $xg, $zg, $titstr, $xt, $yt, $gx, $gz, $m
 			}
 		}
 		$myfunc();
-		if ($indfam == "IND" || $x_as==21) {
+		if ($indfam == "IND") {
 			$hstr = $title."|" .$pgv_lang["stplnumof"]." ".$n1." ".$pgv_lang["of"]." ".$nrpers;
+		} else if ($x_as==21) {
+			$hstr = $title."|" .$pgv_lang["stplnumof"]." ".$n1." ".$pgv_lang["of"]." ".$stats->totalChildren();
 		}
 		else {
 			$hstr = $title."|" .$pgv_lang["stplnumof"]." ".$n1." ".$pgv_lang["of"]." ".$nrfam;

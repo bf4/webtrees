@@ -1701,6 +1701,9 @@ ul.clist {
 	width: 8em;
 }
 
-
 .statistics_chart{
+}
+
+.gchart{
+	border: 1px solid #84beff;
 }
