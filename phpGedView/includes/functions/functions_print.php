@@ -1146,22 +1146,13 @@ function print_note_record($text, $nlevel, $nrec, $textOnly=false, $return=false
 
 	if (!empty($text) || !empty($centitl)) {
 		$text = PrintReady($text);
-		// Check if Formatted Shared Note (Note using pipe "|" as delimeter ) ------
-		if (eregi("0 @N([0-9])+@ NOTE", $nrec) && strstr($text, "|")) {
-			$text = "xCxAx<table cellpadding=\"0\"><tr><td>" . $text;
-			$text = str_replace("<br />.start_formatted_area.<br />", "</td></tr></table><table cellpadding=\"0\"><tr><td>&nbsp;", $text);
-			$text = str_replace(".b.", "<b />", $text); // -- Check for Highlighting (Use embolden)
-			$text = str_replace("|", "&nbsp;&nbsp;</td><td>", $text);
-			$text = str_replace(".end_formatted_area.<br />", "</td></tr></table><table cellpadding=\"0\"><tr><td>", $text);
-			$text = str_replace("<br />", "</td></tr><tr><td>&nbsp;", $text);
-			$text = $text . "</td></tr></table>";
-			$text = str_replace("xCxAx", $centitl."<br />", $text);
-			$text = str_replace("Notes:", "<b>Notes:</b>", $text);
-		// Unformatted Shared Note --------------------------------------------------
+		// Check if Formatted Shared Note (using pipe "|" as delimiter ) --------------------
+		if ( eregi("0 @N([0-9])+@ NOTE", $nrec) && strstr($text, "|") && file_exists("modules/GEDFact_assistant/_CENS/census_note_decode.php") ) {
+			require 'modules/GEDFact_assistant/_CENS/census_note_decode.php';
+		// Else if unformatted Shared Note --------------------------------------------------
 		}else if (eregi("0 @N([0-9])+@ NOTE", $nrec)) {
 			$text=$centitl.$text;
 		}
-
 		if ($textOnly) {
 			if (!$return) {
 				echo $text;
