@@ -169,9 +169,9 @@ if (!defined('PGV_PHPGEDVIEW')) {
 										?>", "<?php
 											print "";														 // occu = Occupation
 										?>", "<?php
-											print PrintReady($people["husb"]->getcensbirthplace());			 //  birthpl = Census Place of Birth 
+											print PrintReady($people["husb"]->getcensbirthplace());			 // birthpl = Census Place of Birth 
 										?>");'><?php
-											 print PrintReady($people["husb"]->getFullName());				 // Name 
+											print PrintReady($people["husb"]->getFullName());				 // Name 
 										?> 
 									</a> 
 									<?php print "\n" ;

@@ -57,14 +57,13 @@ if ($married>=0 && isset($nam[1])){
 $currpid=$pid;
 ?>
 <script src="modules/GEDFact_assistant/_CENS/js/dynamicoptionlist.js" type="text/javascript"></script>
-<!-- <script type="text/javascript" src="modules/GEDFact_assistant/_CENS/js/ie-console.js"></script>
-<script type="text/javascript">IEConsole.log('Welcome BH to ie-console!'); </script> -->
+
 <?php
 
 	// Header of assistant window
 	echo "<div style=\"text-align:left; margin-top:0.5em;\">";
 		echo "<div style=\"float:left; margin-left:1.5em; font-weight:bold;\">";
-			echo "Head of Family &nbsp;:";
+			echo "Head of Household &nbsp;:";
 			echo " &nbsp;" . $wholename . "&nbsp; (" . $pid . ")";
 		echo "</div>";
 		echo "<div style=\"float:right; margin: 0 2em 0 0;\">";
@@ -101,7 +100,6 @@ $currpid=$pid;
 				<font size="1">Add</font><br>
 				<input  type="radio" name="totallyrad" value="0" checked="checked" />
 			</td>
-			<td width="2%" colspan="1"><font size="1"></font></td>
 			<td width="2%" colspan="1"><font size="1"></font></td>
 		</tr>
 	</table>

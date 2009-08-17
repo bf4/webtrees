@@ -10,6 +10,9 @@
 
 
 Version 4.2.x CA
+ - Changed: 1) Improvements to dynamic switching between Census Country/Years. 
+            2) UK Finished, Still USA 1920 and less to do. 
+			3) Hover tooltip enabled on edit and view Table Headers (windmillway) 
  - Changed: GEDFact_assistant/_CENS/ files to make use of new shared note formatting (windmillway)
  - a) Small additions to show one or two examples of dynamically hiding columns when changing Census Year (Not finished) 
       Choose UK and after entering one or two items, change year to 1881, The relation column is hidden.
