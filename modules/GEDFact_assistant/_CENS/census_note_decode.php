@@ -35,7 +35,7 @@
 				$text = str_replace(".b.Sex", "<a href=\"#\" alt=\"Male (M) or Female (F)\" title=\"Male (M) or Female (F)\"><b />Sex</a>", $text); 
 				$text = str_replace(".b.Rce", "<a href=\"#\" alt=\"Color or Race\" title=\"Color or Race\"><b />Rce</a>", $text); 
 				$text = str_replace(".b.Age", "<a href=\"#\" alt=\"Age at last birthday\" title=\"Age at last birthday\"><b />Age</a>", $text); 
-				$text = str_replace(".b.MC", "<a href=\"#\" alt=\"Marital Condition\" title=\"Marital Condition\"><b />MC</a>", $text); 
+				$text = str_replace(".b.MC", "<a href=\"#\" alt=\"Marital Condition - M,S,W,D - Married, Single, Widowed or Divorced\" title=\"Marital Condition - M,S,W,D - Married, Single, Widowed or Divorced\"><b />MC</a>", $text); 
 				$text = str_replace(".b.AgM", "<a href=\"#\" alt=\"Age at first Marriage\" title=\"Age at first Marriage\"><b />AgM</a>", $text);
 				$text = str_replace(".b.Edu", "<a href=\"#\" alt=\"Education - 'SRW' - At School/Can Read/Can Write\" title=\"Education - 'SRW' - At School/Can Read/Can Write\"><b />Edu</a>", $text);
 				$text = str_replace(".b.Birth Place", "<a href=\"#\" alt=\"Birthplace (Complete format)\" title=\"Birthplace (Complete format)\"><b />Birth Place</a>", $text);
@@ -48,7 +48,9 @@
 				$text = str_replace(".b.Occupation", "<a href=\"#\" alt=\"Occupation\" title=\"Occupation\"><b />Occupation</a>", $text);
 				$text = str_replace(".b.Industry", "<a href=\"#\" alt=\"Industry\" title=\"Industry\"><b />Industry</a>", $text);
 				$text = str_replace(".b.Employ", "<a href=\"#\" alt=\"Employment - Employer, Worker, Self Employed, Unemployed etc\" title=\"Employment - Employer, Worker, Self Employed, Unemployed etc\"><b />Employ</a>", $text);
+				$text = str_replace(".b.EmH", "<a href=\"#\" alt=\"If working at Home - Y/N\" title=\"If working at Home - Y/N?\"><b />EmH</a>", $text);
 				$text = str_replace(".b.Vet", "<a href=\"#\" alt=\"War Veteran?\" title=\"War Veteran?\"><b />Vet</a>", $text);
+				$text = str_replace(".b.Infirm","<a href=\"#\" alt=\"Infirmaties - 1234 - 1.Deaf and Dumb, 2.Blind, 3.Lunatic, 4.Imbecile, feeble-minded\" title=\"Infirmaties - 1234 - 1.Deaf and Dumb, 2.Blind, 3.Lunatic, 4.Imbecile, feeble-minded\" title=\"War Veteran?\"><b />Infirm</a>", $text);
 				$text = str_replace(".b.", "<b />", $text); 
 				// -------------------------------------------------------------------------------------------
 			$text = str_replace("|", "&nbsp;&nbsp;</td><td>", $text);
