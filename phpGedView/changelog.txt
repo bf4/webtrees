@@ -10,6 +10,7 @@
 
 
 Version 4.2.3
+ - Update: Updated readme.txt to highlight the necessity for PDO/mysql (windmillway)
  - Added: New statistics (wooc)
  - Fixed: [ 2833809 ] Cannot empty all the clipping cart (canajun2eh)
 
