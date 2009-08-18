@@ -916,7 +916,7 @@ function addRowToTable(num, pid, nam, label, gend, cond, yob, age2, YMD, occu, b
 				txtInp_na1.className= 'descriptionbox'; //Required for IE
 				txtInp_na1.style.fontSize="10px";
 				txtInp_na1.style.border='0px';
-				txtInp_na1.innerHTML = '<a href="#" alt="Naturalized or Alien - N or A - (If Foreighn Born)" title="Naturalized or Alien - N or A - (If Foreighn Born)">'+'N_A'+'</a>'; 
+				txtInp_na1.innerHTML = '<a href="#" alt="Naturalized or Alien - N or A - (If Foreign Born)" title="Naturalized or Alien - N or A - (If Foreign Born)">'+'N_A'+'</a>'; 
 				txtInp_na1.setAttribute('id', '.b.N_A');
 		// 28. Year of Naturalization YON_1 ----------------------------------------
 			var txtInp_yon = document.createElement('div');
@@ -925,7 +925,7 @@ function addRowToTable(num, pid, nam, label, gend, cond, yob, age2, YMD, occu, b
 				txtInp_yon.className= 'descriptionbox'; //Required for IE
 				txtInp_yon.style.fontSize="10px";
 				txtInp_yon.style.border='0px';
-				txtInp_yon.innerHTML = '<a href="#" alt="Year of Naturalization (If Foreighn Born)" title="Year of Naturalization (If Foreighn Born)">'+'YON'+'</a>'; 
+				txtInp_yon.innerHTML = '<a href="#" alt="Year of Naturalization (If Foreign Born)" title="Year of Naturalization (If Foreign Born)">'+'YON'+'</a>'; 
 				txtInp_yon.setAttribute('id', '.b.YON');
 		// 29. English if spoken, or if not, Language spoken Eng/Lang ------------------------
 			var txtInp_englang = document.createElement('div');
@@ -934,7 +934,7 @@ function addRowToTable(num, pid, nam, label, gend, cond, yob, age2, YMD, occu, b
 				txtInp_englang.className= 'descriptionbox'; //Required for IE
 				txtInp_englang.style.fontSize="10px";
 				txtInp_englang.style.border='0px';
-				txtInp_englang.innerHTML = '<a href="#" alt="English if spoken, or Mother Tongue (If Foreighn Born)" title="English if spoken, or Mother Tongue (If Foreighn Born)">'+'Lng'+'</a>'; 
+				txtInp_englang.innerHTML = '<a href="#" alt="English if spoken, or Mother Tongue (If Foreign Born)" title="English if spoken, or Mother Tongue (If Foreign Born)">'+'Lng'+'</a>'; 
 				txtInp_englang.setAttribute('id', '.b.Lng');
 		// 30. Occupation_2 -----------------------------------------------------
 			var txtInp_occu2 = document.createElement('div');
@@ -1105,7 +1105,7 @@ function addRowToTable(num, pid, nam, label, gend, cond, yob, age2, YMD, occu, b
 				txtInp_na2.className= 'descriptionbox'; //Required for IE
 				txtInp_na2.style.fontSize="10px";
 				txtInp_na2.style.border='0px';
-				txtInp_na2.innerHTML = '<a href="#" alt="Naturalized or Alien - N or A - (If Foreighn Born)" title="Naturalized or Alien - N or A - (If Foreighn Born)">'+'N_A'+'</a>'; 
+				txtInp_na2.innerHTML = '<a href="#" alt="Naturalized or Alien - N or A - (If Foreign Born)" title="Naturalized or Alien - N or A - (If Foreign Born)">'+'N_A'+'</a>'; 
 				txtInp_na2.setAttribute('id', '.b.N_A');
 		// 49. English Spoken y/n eng_2 ----------------------------------------
 			var txtInp_eng2 = document.createElement('div');

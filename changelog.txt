@@ -10,6 +10,7 @@
 
 
 Version 4.2.x CA
+ - Changed: Correct spelling of Tool tip message "Foreign"
  - Merged: Merge changes r6048- r6063 from the trunk. (windmillway)
  - Changed: 1) Improvements to dynamic switching between Census Country/Years. 
             2) UK Finished, Still USA 1920 and less to do. 
