@@ -5,7 +5,7 @@
  * Display media Items using Lightbox
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  John Finlay and Others
+ * Copyright (C) 2007 to 2009  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -33,12 +33,12 @@ if (!defined('PGV_PHPGEDVIEW')) {
 }
 
 // Added in VERSION 4.1.6
-$pgv_lang["lb_generalhelp"]     = "Individside - Lyskasse gennerel hjælp";
-$pgv_lang["lb_viewedit"]                = "Vis/redigér";
+$pgv_lang["lb_generalhelp"]     = "Individside - Lightbox generel hjælp";
+$pgv_lang["lb_viewedit"]                = "Vis/rediger";
 $pgv_lang["lb_viewnotes"]               = "Vis noter";
 $pgv_lang["lb_viewdetails"]             = "Vis detaljer";
 $pgv_lang["lb_viewsource"]              = "Vis kilde";
-$pgv_lang["lb_editmedia"]               = "Redigér medie";
+$pgv_lang["lb_editmedia"]               = "Rediger medie";
 $pgv_lang["lb_unlinkmedia"]             = "Fjern link til medie";
 $pgv_lang["lb_balloon_true"]    = "Ballon";
 $pgv_lang["lb_balloon_false"]   = "Normal";
@@ -57,7 +57,7 @@ $pgv_lang["lb_start_ss"]		= "Start diasshow";
 $pgv_lang["lb_music"]			= "Slå musik til/fra";
 $pgv_lang["lb_zoom_off"]		= "Deaktivér zoom";
 $pgv_lang["lb_zoom_on"]			= "Zoom er aktiveret ... Brug musehjul eller i og o taster for at zoome ind og ud";
-$pgv_lang["lb_close_win"]		= "Luk lyskasse vinduet";
+$pgv_lang["lb_close_win"]		= "Luk Lightbox vinduet";
 
 
 
@@ -65,7 +65,7 @@ $pgv_lang["lb_close_win"]		= "Luk lyskasse vinduet";
 // VERSION 4.1.3 
 
 //Config Parameters -------------------------------------
-$pgv_lang["configure_lightbox"]			= "Lyskasse-album konfiguration";
+$pgv_lang["configure_lightbox"]			= "Lightbox-album konfiguration";
 $pgv_lang["mediatab"]       			= "Individside - Mediefanen";
 $pgv_lang["lb_appearance"]				= "Udseende";
 $pgv_lang["lb_linkAppearance"]			= "Link-udseende";
@@ -84,7 +84,7 @@ $pgv_lang["lb_ml_thumb_links"]			= "Multimedieside - miniaturer";
 $pgv_lang["lb_music_file"]				= "Diasshow lydspor";
 $pgv_lang["lb_musicFileAdvice"]			= "Lydspors placering (blankt for ingen lydspor)";
 $pgv_lang["lb_ss_speed"]				= "Diasshow hastighed";
-$pgv_lang["lb_ss_SpeedAdvice"]			= "Diasshow tid i sekunder";
+$pgv_lang["lb_ss_SpeedAdvice"]			= "Sekunder mellem billedskift";
 
 $pgv_lang["lb_transition"]				= "Billedovergangs-hastighed";
 $pgv_lang["lb_normal"]					= "Normal";
@@ -117,9 +117,9 @@ $pgv_lang["census_text"] 	.= "and appear here with their approval on the conditi
 $pgv_lang["census_text"] 	.= "Requests for commercial publication of these or other census images appearing on this website should be directed to: ";
 $pgv_lang["census_text"] 	.= "Image Library, The National Archives, Kew, Surrey, TW9 4DU, United Kingdom.\"" . "\n" ;
 
-$pgv_lang["lb_edit_details"] 	= "Redigér detaljer";
+$pgv_lang["lb_edit_details"] 	= "Rediger detaljer";
 $pgv_lang["lb_view_details"] 	= "Vis detaljer";
-$pgv_lang["lb_edit_media"] 		= "Redigér dette medieemnes detaljer";
+$pgv_lang["lb_edit_media"] 		= "Rediger dette medieemnes detaljer";
 $pgv_lang["lb_delete_media"] 	= "Fjern dette medieemne - fjerner kun linket til dette individ - Sletter ikke mediefilen eller andre links";
 $pgv_lang["lb_view_media"] 		= "Vis dette medieemnes detaljer \nPlus andre medieindstillinger - Medieviser side";
 $pgv_lang["lb_add_media"] 		= "Tilføj et nyt medieobjekt";
@@ -133,10 +133,7 @@ $pgv_lang["turn_edit_OFF"] 		= "Deaktivér redigeringstilstand";
 
 $pgv_lang["lb_source_avail"] 	= "Kildeoplysninger tilgænglig - klik her.";
 
-$pgv_lang["lb_private"] 		= "Billed linket <br /> til et privat individ";
-$pgv_lang["lb_view_source_tip"] = "Vis kilde : ";
-$pgv_lang["lb_view_details_tip"] = "Vis mediedetaljer : ";
-
-
-
+$pgv_lang["lb_private"] 		= "Billedet er linket <br /> til et privat individ";
+$pgv_lang["lb_view_source_tip"] = "Vis kilde: ";
+$pgv_lang["lb_view_details_tip"] = "Vis mediedetaljer: ";
 ?>
