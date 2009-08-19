@@ -10,6 +10,7 @@
 
 
 Version 4.2.x CA
+ - Changed: Corrected JavaScript problem with "Head of Family" Names containing double quotes (Nickname etc) (windmillway)
  - Changed: added missing Header Tooltip messages. (windmillway)
  - Changed: Correct spelling of Tool tip message "Foreign". (windmillway)
  - Merged: Merge changes r6048- r6063 from the trunk. (windmillway)

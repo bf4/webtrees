@@ -106,9 +106,9 @@ global $pgv_lang, $TEXT_DIRECTION;
 		var cens_ctry_a = document.getElementById('censCtry');
 		var cens_ctry = cens_ctry_a.value;
 		if (cens_ctry =="USA") {
-			document.getElementById('Titl').value = "<?php echo "Federal Census Transcription - ".$wholename." - Household";?>";
+			document.getElementById('Titl').value = '<?php echo 'Federal Census Transcription - '.$wholename.' - Household';?>';
 		}else{
-			document.getElementById('Titl').value = "<?php echo "Census Transcription - ".$wholename." - Household";?>";
+			document.getElementById('Titl').value = '<?php echo 'Census Transcription - '.$wholename.' - Household';?>';
 		}
 		var prev = document.getElementById('prevYear');
 		prev.value = cenyear;
