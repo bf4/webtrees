@@ -1,0 +1,146 @@
+/**
+ * Census Assistant Control module for phpGedView
+ *
+ * Census Transcription information about a household.
+ *
+ * phpGedView: Genealogy Viewer
+ * Copyright (C) 2002 to 2007 John Finlay and Others
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ *
+ * @package PhpGedView
+ * @subpackage Modules
+ * @version $Id$
+ */
+ 
+/* Header of assistant window */
+.cens_header {
+	text-align:left;
+	margin-top:0.5em;
+}
+
+.cens_header_left {
+	float:left;
+	margin-left:1.5em;
+	font-weight:bold;
+}
+
+.cens_header_right {
+	float:right;
+	margin: 0 2em 0 0;
+}
+
+/* Container for Census & Source Information Area */
+.cens_container {
+	clear:both;
+	float:left;
+	width:50em;
+	height:34.24em;
+	margin: 0.5em 0 0 0.3em;
+}
+
+.cens_container span {
+	margin: 0 0.5em;
+}
+
+/* Search  and Add Family Members Area */
+.cens_search {
+	float:left;
+	border:0.3em outset;
+	margin: 0.5em 0 0 0.3em;
+	width: 20.5em;
+	height:34.1em;
+	overflow:auto;
+}
+
+/* Census Text Input Area */
+.cens_textinput {
+	clear:both;
+	border:0.3em outset;
+	float:left;
+	margin:0.4em 0 0 0.3em;
+	width:70.8em;
+}
+
+.cens_textinput_left  {
+	float:left;
+	width:90%;
+	text-align:center;
+}
+
+.cens_textinput_right  {
+	float:right;
+	font-size:1em;
+	margin-right: 3em;
+}
+
+/* Census Add Rows Area */
+.cens_addrows {
+	clear:both;
+	border:0em outset;
+	float:left;
+	margin:0 0 0 0;
+	width:70.8em; 
+}
+
+/* Source Input section */
+.cens_sour {
+	font-weight:bold;
+	font-size:0.9em;
+	text-align:left;
+	padding:0.3em;
+	border:0.3em outset;
+	margin-bottom:0.3em;
+	width: 98%;
+	overflow: hidden;
+}
+
+.cens_sour_date {
+	float:left;
+	width:22%;
+	margin-top: 0.1em;
+}
+
+.cens_sour_date_2 {
+	margin-top: 0.3em;
+}
+
+.cens_sour_scs {
+	float:right;
+	width: 76%;
+	}
+	
+.cens_sour select {
+	font-weight: normal;
+}
+
+.cens_sour input {
+	font-weight: normal;
+	font-size:0.9em;
+	margin-top: 0.15em;
+	width: 76%;
+}
+
+.cens_sour_1 {
+	width:100%;
+	margin:0;
+	padding:0;
+}
+
+.cens_sour_2 {
+	width:22%;
+	float:left;
+	margin-top: 0.2em;
+}
