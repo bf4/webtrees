@@ -61,54 +61,46 @@ $currpid=$pid;
 <?php
 
 	// Header of assistant window
-	echo "<div style=\"text-align:left; margin-top:0.5em;\">";
-		echo "<div style=\"float:left; margin-left:1.5em; font-weight:bold;\">";
+	echo "<div class=\"cens_header\">";
+		echo "<div class=\"cens_header_left\">";
 			echo "Head of Household &nbsp;:";
 			echo " &nbsp;" . $wholename . "&nbsp; (" . $pid . ")";
 		echo "</div>";
-		echo "<div style=\"float:right; margin: 0 2em 0 0;\">";
 			if ($summary) {
-				echo "<div style=\"text-align:left; margin: 0 2em 0 0;\"/>". $summary. "</div>";
+				echo "<div class=\"cens_header_right\"/>". $summary. "</div>";
 			}
-		echo "</div>";
 	echo "</div>";
 
 	//-- Census & Source Information Area ============================================= 
-	echo "<div style=\" clear:both; float:left; width:48em; height:34em; margin: 0.5em 0 0 0.3em;\">";
-		echo "<span style=\"margin: 0 0.5em;\">";
+	echo "<div class=\" cens_container\">";
+		echo "<span >";
 			include('modules/GEDFact_assistant/_CENS/census_2_source_input.php');
 		echo "</span>";
 		//-- Proposed Census Text Area ==================================================
-		echo "<span style=\"margin: 0 0.5em;\">";
+		echo "<span>";
 			include('modules/GEDFact_assistant/_CENS/census_4_text.php');
 		echo "</span>";
 	echo "</div>";
 	//-- Search  and Add Family Members Area ========================================= 
-	echo "<div class=\"optionbox\" style=\"float:left; border:0.3em outset; margin: 0.5em 0 0 0.3em; width: 21.5em; height:34.24em; overflow:auto;\">";
+	echo "<div class=\"optionbox cens_search\">";
 		include('modules/GEDFact_assistant/_CENS/census_3_search_add.php'); 
 	echo "</div>";
 	//-- Census Text Input Area ===========================================================
 	?>
-	<div class="optionbox" style="clear:both; border:0.3em outset; float:left; margin:0.4em 0 0 0.3em; width:69.8em; \">
-	<table style="width:69.8em; float:left;" border="0" cellspacing="1">
-		<tr>
-			<td align="center" colspan="8">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-			<td align="center">
-				<input type="button" value="Add/Insert Blank Row" onclick="insertRowToTable('','','','','','','Age','','','');" />
-			<td align="center" colspan="3">&nbsp;</td>
-			<td align="right">
-				<font size="1">Add</font><br>
-				<input  type="radio" name="totallyrad" value="0" checked="checked" />
-			</td>
-			<td width="2%" colspan="1"><font size="1"></font></td>
-		</tr>
-	</table>
-
-	<?php
-	echo "<div style=\"clear:both; border:0em outset; float:left; margin:0 0 0 0; width:69.8em; \">";
-	include('modules/GEDFact_assistant/_CENS/census_5_input.php');
-	echo "</div>";
-?> 
+	<div class="optionbox cens_textinput">
+		<div class="cens_textinput_left">
+			<input type="button" value="Add/Insert Blank Row" onclick="insertRowToTable('','','','','','','Age','','','');" />
+		</div>
+		<div class="cens_textinput_right">
+			Add<br>
+			<input  type="radio" name="totallyrad" value="0" checked="checked" />
+		</div>	
+	<!-- Census Add Rows Area =========================================================== -->
+		<?php
+			echo "<div class=\"cens_addrows\">";
+				include('modules/GEDFact_assistant/_CENS/census_5_input.php');
+			echo "</div>";
+		?> 
 	</div>
 
 

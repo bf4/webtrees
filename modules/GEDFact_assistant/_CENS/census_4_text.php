@@ -53,7 +53,7 @@ global $theme_name;
 		?>
 	</span>
 	<div class="optionbox" style="padding: 0.3em;">
-		<textarea wrap="off" name="NOTE" id="NOTE" rows="18" style="height:22em; width:98.5%; overflow:auto;"></textarea><br />
+		<textarea wrap="off" name="NOTE" id="NOTE" rows="17" style="height:20.6em; width:98.5%; overflow:auto;"></textarea><br />
 		<center>
 		<?php print_specialchar_link("NOTE",true); ?>
 		</center>

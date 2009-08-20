@@ -420,8 +420,11 @@ global $pgv_lang, $TEXT_DIRECTION;
 	
 </script>
 
-<div class="optionbox" style="font-weight:bold; font-size:0.9em; text-align:left; padding:0.3em; border:0.3em outset; margin-bottom:0.3em;">
-		Census:&nbsp;&nbsp;
+<div class="optionbox cens_sour ">
+	<div class="cens_sour_date">
+<?php //		Census:&nbsp;&nbsp; ?>
+&nbsp;Country &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Year<br />
+		<div class="cens_sour_date_2">
 			<script type="text/javascript">
 				var censyear = new DynamicOptionList();
 				censyear.addDependentFields("censCtry","censYear");
@@ -430,25 +433,37 @@ global $pgv_lang, $TEXT_DIRECTION;
 				censyear.forValue("UK").setDefaultOptions("choose");
 				censyear.forValue("USA").setDefaultOptions("choose");
 			</script>
-			<select id="censCtry" name="censCtry" style="font:0.9em normal;">
+			<select id="censCtry" name="censCtry">
 				<option value="UK">UK</option>
 				<option value="USA" >USA</option>
 			</select>
 			<select onchange =	"if( this.options[this.selectedIndex].value!='') {
 									changeYear(this.options[this.selectedIndex].value);
 								}" 
-				id="censYear" name="censYear" style="font:0.9em normal;">
+				id="censYear" name="censYear">
 			</select>
 			<input type="hidden" id="prevYear" name="prevYear" value="" />&nbsp;&nbsp;&nbsp;
-		Title:&nbsp;
+		</div>
+	</div>
+	<div class="cens_sour_scs" >
+		<div class="cens_sour_1">
+			<div class="cens_sour_2">Title:</div> 
 			<script type="text/javascript">
-				document.writeln('<input id="Titl" name="Titl" type="text" style="width:33em; font:0.9em normal;" value="<?php echo "Census Transcription - ".$wholename." - Household";?>" />');
+				document.writeln('<input id="Titl" name="Titl" type="text" value="<?php echo "Census Transcription - ".$wholename." - Household";?>" />');
 			</script>
-			<br />
-		Enumeration:&nbsp;
-			<input id="citation" name="citation" type="text" style="width:43.1em; font:0.9em normal;" value="<?php echo "Enter Enumeration number";?>" />
-			<br />
-		Locality:&nbsp;
-			<input id="locality" name="locality" type="text" style="width:46em; font:0.9em normal;" value="<?php echo "Enter Locality";?>" />
+		</div>
+		<div class="cens_sour_1">
+			<div class="cens_sour_2">Enumeration:</div>
+			<input id="citation" name="citation" type="text" value="<?php echo "Enter Enumeration number";?>" />
+		</div>
+		<div class="cens_sour_1">
+			<div class="cens_sour_2">Locality:</div>
+			<input id="locality" name="locality" type="text" value="<?php echo "Enter Locality";?>" />
+		</div>
+		<div class="cens_sour_1">
+			<div class="cens_sour_2">Notes:</div>
+			<input id="notes" name="notes" type="text" value="<?php echo "";?>" />
+		</div>
+	</div>				
 </div>
 			

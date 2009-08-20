@@ -78,12 +78,12 @@ $pgv_lang["header_Vet"]		= "Vet";			// Vet		 -	 War Veteran? - Y/N
 $pgv_lang["tt_view_Name"]	= "Full Name or Married name if married";
 $pgv_lang["tt_view_Rela"]	= "Relationship to Head of Household";
 $pgv_lang["tt_view_MCond"]	= "Marital Condition - Married, Single, Widowed or Divorced";
-$pgv_lang["tt_view_Asset"]	= "Assets = O,R - value,rent - Y,N,R - Y,N,F  =  Owned,Rented - Value,Rent - Radio - Farm";
+$pgv_lang["tt_view_Asset"]	= "Assets = Owned,Rented - Value,Rent - Radio - Farm";
 $pgv_lang["tt_view_Age"]	= "Age at last birthday";
 $pgv_lang["tt_view_Race"]	= "Race or Color - Black, White, Mulatto, Asian, Indian, Chinese etc";
 $pgv_lang["tt_view_Sex"]	= "Male or Female";
 $pgv_lang["tt_view_YOB"]	= "Year of Birth";
-$pgv_lang["tt_view_Bmth"]	= "If born within Census year - mmm - Month of birth"; 
+$pgv_lang["tt_view_Bmth"]	= "If born within Census year - Month of birth"; 
 $pgv_lang["tt_view_YrsM"]	= "Years Married";
 $pgv_lang["tt_view_ChilB"]	= "Children born alive";
 $pgv_lang["tt_view_ChilL"]	= "Children still living";
@@ -100,19 +100,19 @@ $pgv_lang["tt_view_YOI"]	= "If Foreign Born - Year of Immigration";
 $pgv_lang["tt_view_NA"]		= "If Foreign Born - Naturalized, Alien";
 $pgv_lang["tt_view_YON"]	= "If Foreign Born - Year of Naturalization";
 $pgv_lang["tt_view_EngL"]	= "English spoken?, if not, Native Language";
-$pgv_lang["tt_view_Health"]	= "Health - 12345 = 1.Blind, 2.Deaf&Dumb, 3.Idiotic, 4.Insane, 5.Disabled etc";
+$pgv_lang["tt_view_Health"]	= "Health - 1.Blind, 2.Deaf&Dumb, 3.Idiotic, 4.Insane, 5.Disabled etc";
 $pgv_lang["tt_view_Ind"]	= "Industry";
 $pgv_lang["tt_view_Emp"]	= "Employment";
 $pgv_lang["tt_view_EmR"]	= "Employer?";
 $pgv_lang["tt_view_EmD"]	= "Employed?";
 $pgv_lang["tt_view_EmH"]	= "Working at Home? - Y/N";
 $pgv_lang["tt_view_EmN"]	= "Unemployed?";
-$pgv_lang["tt_view_Educ"]	= "Education - SRW - At School?, Can Read?, Can Write?";
+$pgv_lang["tt_view_Educ"]	= "Education - SRW - At School, Can Read, Can Write";
 $pgv_lang["tt_view_Eng"]	= "English spoken?";
 $pgv_lang["tt_view_BIC"]	= "Born in County - (UK 1841 only)";
 $pgv_lang["tt_view_BOE"]	= "Born outside England  - (UK 1841 only)";
 $pgv_lang["tt_view_Lang"]	= "If Foreign Born - Native Language";
-$pgv_lang["tt_view_Infirm"]	= "Infirmaties - 1234 - 1.Deaf&Dumb, 2.Blind, 3.Lunatic, 4.Imbecile/feeble-minded";
+$pgv_lang["tt_view_Infirm"]	= "Infirmaties - 1.Deaf&Dumb, 2.Blind, 3.Lunatic, 4.Imbecile/feeble-minded";
 $pgv_lang["tt_view_Vet"]	= "War Veteran?";
 
 

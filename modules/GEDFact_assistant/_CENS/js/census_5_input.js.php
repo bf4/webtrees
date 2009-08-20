@@ -141,11 +141,16 @@ function preview() {
 	NoteYear = document.getElementById('censYear');
 	Citation = document.getElementById('citation');
 	Locality = document.getElementById('locality');
+	Notes    = document.getElementById('notes');
 
 	str = NoteYear.value + " " + NoteCtry.value + " " + NoteTitl.value;
 	str += "\n";
-	str += Citation.value + "\n";
-	str += Locality.value + "\n";
+	if (Citation.value!="" && Citation.value!=null) {
+		str += Citation.value + "\n";
+	}
+	if (Locality.value!="" && Locality.value!=null) {
+		str += Locality.value + "\n";
+	}
 	str += "\n";
 	str += ".start_formatted_area.";
 	
@@ -257,7 +262,11 @@ function preview() {
 		str += (str==''?'':'\n') + strRow;
 	}
 	var mem = document.getElementById('NOTE');
-	mem.value = str + "\n.end_formatted_area.\n\nNotes:\n";
+	if (Notes.value!="" && Notes.value!=null) {
+		mem.value = str + "\n.end_formatted_area.\n\nNotes:\n"+Notes.value;
+	} else {
+		mem.value = str + "\n.end_formatted_area.\n";
+	}
 }
 
 window.onload=fillInRows;

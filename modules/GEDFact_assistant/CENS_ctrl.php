@@ -29,6 +29,7 @@ require_once './config.php';
 require_once 'includes/controllers/individual_ctrl.php'; 
 $controller = new IndividualController(); 
 $controller->init(); 
+echo "<link href =\"modules/GEDFact_assistant/_CENS/css/cens_styles.css\" rel=\"stylesheet\" type=\"text/css\" media=\"screen\" />";
 
 //	To load the file XXX for module YYY, call
 	loadLangFile("GEDFact_assistant:lang");
