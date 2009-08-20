@@ -25,39 +25,64 @@
  * @subpackage Census Assistant
  * @version $Id$
  */
+ 
+ // Load the GEDFact_assistant language files ==============
+	loadLangFile("GEDFact_assistant:lang");
+ 
+	$text = "xCxAx<table cellpadding=\"0\"><tr><td>" . $text;
+	$text = str_replace("<br />.start_formatted_area.<br />", "</td></tr></table><table cellpadding=\"0\"><tr><td>&nbsp;", $text);
+	
+		// -- Create View Header Tooltip explanations (Use embolden) -----------
+		$text = str_replace(".b.".$pgv_lang["header_Name"],   "<a href=\"#\" alt=\"".$pgv_lang["tt_view_Name"]."\"   title=\"".$pgv_lang["tt_view_Name"]."\">  <b />".$pgv_lang["header_Name"]."</a>",   $text);
+		$text = str_replace(".b.".$pgv_lang["header_Rela"],   "<a href=\"#\" alt=\"".$pgv_lang["tt_view_Rela"]."\"   title=\"".$pgv_lang["tt_view_Rela"]."\">  <b />".$pgv_lang["header_Rela"]."</a>",   $text);
+		$text = str_replace(".b.".$pgv_lang["header_Asset"],  "<a href=\"#\" alt=\"".$pgv_lang["tt_view_Asset"]."\"  title=\"".$pgv_lang["tt_view_Asset"]."\"> <b />".$pgv_lang["header_Asset"]."</a>",  $text);
+		$text = str_replace(".b.".$pgv_lang["header_Sex"],    "<a href=\"#\" alt=\"".$pgv_lang["tt_view_Sex"]."\"    title=\"".$pgv_lang["tt_view_Sex"]."\">   <b />".$pgv_lang["header_Sex"]."</a>",    $text);
+		$text = str_replace(".b.".$pgv_lang["header_Race"],   "<a href=\"#\" alt=\"".$pgv_lang["tt_view_Race"]."\"   title=\"".$pgv_lang["tt_view_Race"]."\">  <b />".$pgv_lang["header_Race"]."</a>",   $text);
+		$text = str_replace(".b.".$pgv_lang["header_Age"],    "<a href=\"#\" alt=\"".$pgv_lang["tt_view_Age"]."\"    title=\"".$pgv_lang["tt_view_Age"]."\">   <b />".$pgv_lang["header_Age"]."</a>",    $text);
+		$text = str_replace(".b.".$pgv_lang["header_MCond"],  "<a href=\"#\" alt=\"".$pgv_lang["tt_view_MCond"]."\"  title=\"".$pgv_lang["tt_view_MCond"]."\"> <b />".$pgv_lang["header_MCond"]."</a>",  $text);
+		$text = str_replace(".b.".$pgv_lang["header_YOB"],    "<a href=\"#\" alt=\"".$pgv_lang["tt_view_YOB"]."\"    title=\"".$pgv_lang["tt_view_YOB"]."\">   <b />".$pgv_lang["header_YOB"]."</a>",    $text);
+		$text = str_replace(".b.".$pgv_lang["header_Bmth"],   "<a href=\"#\" alt=\"".$pgv_lang["tt_view_Bmth"]."\"   title=\"".$pgv_lang["tt_view_Bmth"]."\">  <b />".$pgv_lang["header_Bmth"]."</a>",   $text);
+		$text = str_replace(".b.".$pgv_lang["header_YrsM"],   "<a href=\"#\" alt=\"".$pgv_lang["tt_view_YrsM"]."\"   title=\"".$pgv_lang["tt_view_YrsM"]."\">  <b />".$pgv_lang["header_YrsM"]."</a>",   $text);
+		$text = str_replace(".b.".$pgv_lang["header_ChilB"],  "<a href=\"#\" alt=\"".$pgv_lang["tt_view_ChilB"]."\"  title=\"".$pgv_lang["tt_view_ChilB"]."\"> <b />".$pgv_lang["header_ChilB"]."</a>",  $text);
+		$text = str_replace(".b.".$pgv_lang["header_ChilL"],  "<a href=\"#\" alt=\"".$pgv_lang["tt_view_ChilL"]."\"  title=\"".$pgv_lang["tt_view_ChilL"]."\"> <b />".$pgv_lang["header_ChilL"]."</a>",  $text);
+		$text = str_replace(".b.".$pgv_lang["header_ChilD"],  "<a href=\"#\" alt=\"".$pgv_lang["tt_view_ChilD"]."\"  title=\"".$pgv_lang["tt_view_ChilD"]."\"> <b />".$pgv_lang["header_ChilD"]."</a>",  $text);
+		$text = str_replace(".b.".$pgv_lang["header_AgM"],    "<a href=\"#\" alt=\"".$pgv_lang["tt_view_AgM"]."\"    title=\"".$pgv_lang["tt_view_AgM"]."\">   <b />".$pgv_lang["header_AgM"]."</a>",    $text);
+		$text = str_replace(".b.".$pgv_lang["header_Occu"],   "<a href=\"#\" alt=\"".$pgv_lang["tt_view_Occu"]."\"   title=\"".$pgv_lang["tt_view_Occu"]."\">  <b />".$pgv_lang["header_Occu"]."</a>",   $text);
+		$text = str_replace(".b.".$pgv_lang["header_Bplace"], "<a href=\"#\" alt=\"".$pgv_lang["tt_view_Bplace"]."\" title=\"".$pgv_lang["tt_view_Bplace"]."\"><b />".$pgv_lang["header_Bplace"]."</a>", $text);
+		$text = str_replace(".b.".$pgv_lang["header_BP"],     "<a href=\"#\" alt=\"".$pgv_lang["tt_view_BP"]."\"     title=\"".$pgv_lang["tt_view_BP"]."\">    <b />".$pgv_lang["header_BP"]."</a>",     $text);
+		$text = str_replace(".b.".$pgv_lang["header_FBP"],    "<a href=\"#\" alt=\"".$pgv_lang["tt_view_FBP"]."\"    title=\"".$pgv_lang["tt_view_FBP"]."\">   <b />".$pgv_lang["header_FBP"]."</a>",    $text);
+		$text = str_replace(".b.".$pgv_lang["header_MBP"],    "<a href=\"#\" alt=\"".$pgv_lang["tt_view_MBP"]."\"    title=\"".$pgv_lang["tt_view_MBP"]."\">   <b />".$pgv_lang["header_MBP"]."</a>",    $text);
+		$text = str_replace(".b.".$pgv_lang["header_NL"],     "<a href=\"#\" alt=\"".$pgv_lang["tt_view_NL"]."\"     title=\"".$pgv_lang["tt_view_NL"]."\">    <b />".$pgv_lang["header_NL"]."</a>",     $text);
+		$text = str_replace(".b.".$pgv_lang["header_YrsUS"],  "<a href=\"#\" alt=\"".$pgv_lang["tt_view_YrsUS"]."\"  title=\"".$pgv_lang["tt_view_YrsUS"]."\"> <b />".$pgv_lang["header_YrsUS"]."</a>",  $text);
+		$text = str_replace(".b.".$pgv_lang["header_YOI"],    "<a href=\"#\" alt=\"".$pgv_lang["tt_view_YOI"]."\"    title=\"".$pgv_lang["tt_view_YOI"]."\">   <b />".$pgv_lang["header_YOI"]."</a>",    $text);
+		$text = str_replace(".b.".$pgv_lang["header_NA"],     "<a href=\"#\" alt=\"".$pgv_lang["tt_view_NA"]."\"     title=\"".$pgv_lang["tt_view_NA"]."\">    <b />".$pgv_lang["header_NA"]."</a>",     $text);
+		$text = str_replace(".b.".$pgv_lang["header_YON"],    "<a href=\"#\" alt=\"".$pgv_lang["tt_view_YON"]."\"    title=\"".$pgv_lang["tt_view_YON"]."\">   <b />".$pgv_lang["header_YON"]."</a>",    $text);
+		$text = str_replace(".b.".$pgv_lang["header_EngL"],   "<a href=\"#\" alt=\"".$pgv_lang["tt_view_EngL"]."\"   title=\"".$pgv_lang["tt_view_EngL"]."\">  <b />".$pgv_lang["header_EngL"]."</a>",   $text);
+		$text = str_replace(".b.".$pgv_lang["header_Health"], "<a href=\"#\" alt=\"".$pgv_lang["tt_view_Health"]."\" title=\"".$pgv_lang["tt_view_Health"]."\"><b />".$pgv_lang["header_Health"]."</a>", $text);
+		$text = str_replace(".b.".$pgv_lang["header_Ind"],    "<a href=\"#\" alt=\"".$pgv_lang["tt_view_Ind"]."\"    title=\"".$pgv_lang["tt_view_Ind"]."\">   <b />".$pgv_lang["header_Ind"]."</a>",    $text);
+		$text = str_replace(".b.".$pgv_lang["header_Emp"],    "<a href=\"#\" alt=\"".$pgv_lang["tt_view_Emp"]."\"    title=\"".$pgv_lang["tt_view_Emp"]."\">   <b />".$pgv_lang["header_Emp"]."</a>",    $text);
+		$text = str_replace(".b.".$pgv_lang["header_EmR"],    "<a href=\"#\" alt=\"".$pgv_lang["tt_view_EmR"]."\"    title=\"".$pgv_lang["tt_view_EmR"]."\">   <b />".$pgv_lang["header_EmR"]."</a>",    $text);
+		$text = str_replace(".b.".$pgv_lang["header_EmD"],    "<a href=\"#\" alt=\"".$pgv_lang["tt_view_EmD"]."\"    title=\"".$pgv_lang["tt_view_EmD"]."\">   <b />".$pgv_lang["header_EmD"]."</a>",    $text);
+		$text = str_replace(".b.".$pgv_lang["header_EmH"],    "<a href=\"#\" alt=\"".$pgv_lang["tt_view_EmH"]."\"    title=\"".$pgv_lang["tt_view_EmH"]."\">   <b />".$pgv_lang["header_EmH"]."</a>",    $text);
+		$text = str_replace(".b.".$pgv_lang["header_EmN"],    "<a href=\"#\" alt=\"".$pgv_lang["tt_view_EmN"]."\"    title=\"".$pgv_lang["tt_view_EmN"]."\">   <b />".$pgv_lang["header_EmN"]."</a>",    $text);
+		$text = str_replace(".b.".$pgv_lang["header_Educ"],   "<a href=\"#\" alt=\"".$pgv_lang["tt_view_Educ"]."\"   title=\"".$pgv_lang["tt_view_Educ"]."\">  <b />".$pgv_lang["header_Educ"]."</a>",   $text);
+		$text = str_replace(".b.".$pgv_lang["header_Eng"],    "<a href=\"#\" alt=\"".$pgv_lang["tt_view_Eng"]."\"    title=\"".$pgv_lang["tt_view_Eng"]."\">   <b />".$pgv_lang["header_Eng"]."</a>",    $text);
+		$text = str_replace(".b.".$pgv_lang["header_BIC"],    "<a href=\"#\" alt=\"".$pgv_lang["tt_view_BIC"]."\"    title=\"".$pgv_lang["tt_view_BIC"]."\">   <b />".$pgv_lang["header_BIC"]."</a>",    $text);
+		$text = str_replace(".b.".$pgv_lang["header_BOE"],    "<a href=\"#\" alt=\"".$pgv_lang["tt_view_BOE"]."\"    title=\"".$pgv_lang["tt_view_BOE"]."\">   <b />".$pgv_lang["header_BOE"]."</a>",    $text);
+		$text = str_replace(".b.".$pgv_lang["header_Lang"],   "<a href=\"#\" alt=\"".$pgv_lang["tt_view_Lang"]."\"   title=\"".$pgv_lang["tt_view_Lang"]."\">  <b />".$pgv_lang["header_Lang"]."</a>",   $text);
+		$text = str_replace(".b.".$pgv_lang["header_Infirm"], "<a href=\"#\" alt=\"".$pgv_lang["tt_view_Infirm"]."\" title=\"".$pgv_lang["tt_view_Infirm"]."\"><b />".$pgv_lang["header_Infirm"]."</a>", $text);
+		$text = str_replace(".b.".$pgv_lang["header_Vet"],    "<a href=\"#\" alt=\"".$pgv_lang["tt_view_Vet"]."\"    title=\"".$pgv_lang["tt_view_Vet"]."\">   <b />".$pgv_lang["header_Vet"]."</a>",    $text);
 
-			$text = "xCxAx<table cellpadding=\"0\"><tr><td>" . $text;
-			$text = str_replace("<br />.start_formatted_area.<br />", "</td></tr></table><table cellpadding=\"0\"><tr><td>&nbsp;", $text);
-				// -- Check for Highlighting and create Header Tooltip explanations (Use embolden) -----------
-				$text = str_replace(".b.Name", "<a href=\"#\" alt=\"Full Name or Married name if married\" title=\"Full Name or Married name if married\"><b />Name</a>", $text);
-				$text = str_replace(".b.Relation", "<a href=\"#\" alt=\"Relationship to Head of Household\" title=\"Relationship to Head of Household\"><b />Relation</a>", $text);
-				$text = str_replace(".b.Assets", "<a href=\"#\" alt=\"Property Value/Rental Value\" title=\"Property Value/Rental Value\"><b />Assets</a>", $text);
-				$text = str_replace(".b.Sex", "<a href=\"#\" alt=\"Male (M) or Female (F)\" title=\"Male (M) or Female (F)\"><b />Sex</a>", $text); 
-				$text = str_replace(".b.Rce", "<a href=\"#\" alt=\"Color or Race\" title=\"Color or Race\"><b />Rce</a>", $text); 
-				$text = str_replace(".b.Age", "<a href=\"#\" alt=\"Age at last birthday\" title=\"Age at last birthday\"><b />Age</a>", $text); 
-				$text = str_replace(".b.MC", "<a href=\"#\" alt=\"Marital Condition - M,S,W,D - Married, Single, Widowed or Divorced\" title=\"Marital Condition - M,S,W,D - Married, Single, Widowed or Divorced\"><b />MC</a>", $text); 
-				$text = str_replace(".b.AgM", "<a href=\"#\" alt=\"Age at first Marriage\" title=\"Age at first Marriage\"><b />AgM</a>", $text);
-				$text = str_replace(".b.Edu", "<a href=\"#\" alt=\"Education - 'SRW' - At School/Can Read/Can Write\" title=\"Education - 'SRW' - At School/Can Read/Can Write\"><b />Edu</a>", $text);
-				$text = str_replace(".b.Birth Place", "<a href=\"#\" alt=\"Birthplace (Complete format)\" title=\"Birthplace (Complete format)\"><b />Birth Place</a>", $text);
-				$text = str_replace(".b.FBP", "<a href=\"#\" alt=\"Father's Birth Place (Chapman format) - IN, OH, or ENG, FRA etc\" title=\"Father's Birth Place (Chapman format) - IN, OH, or ENG, FRA etc\"><b />FBP</a>", $text); 
-				$text = str_replace(".b.MBP", "<a href=\"#\" alt=\"Mother's Birth Place (Chapman format) - IN, OH, or ENG, FRA etc\" title=\"Mother's Birth Place (Chapman format) - IN, OH, or ENG, FRA etc\"><b />MBP</a>", $text);
-				$text = str_replace(".b.NL", "<a href=\"#\" alt=\"Native Language (If Foreign Born)\" title=\"Native Language (If Foreign Born)\"><b />NL</a>", $text);
-				$text = str_replace(".b.YOI", "<a href=\"#\" alt=\"Year of Immigration (If Foreign Born)\" title=\"Year of Immigration (If Foreign Born)\"><b />YOI</a>", $text);
-				$text = str_replace(".b.N_A", "<a href=\"#\" alt=\"Naturalized or Alien (If Foreign Born)\" title=\"Naturalized or Alien (If Foreign Born)\"><b />N_A</a>", $text);
-				$text = str_replace(".b.Eng", "<a href=\"#\" alt=\"English Spoken?\" title=\"English Spoken?\"><b />Eng</a>", $text);
-				$text = str_replace(".b.Occupation", "<a href=\"#\" alt=\"Occupation\" title=\"Occupation\"><b />Occupation</a>", $text);
-				$text = str_replace(".b.Industry", "<a href=\"#\" alt=\"Industry\" title=\"Industry\"><b />Industry</a>", $text);
-				$text = str_replace(".b.Employ", "<a href=\"#\" alt=\"Employment - Employer, Worker, Self Employed, Unemployed etc\" title=\"Employment - Employer, Worker, Self Employed, Unemployed etc\"><b />Employ</a>", $text);
-				$text = str_replace(".b.EmH", "<a href=\"#\" alt=\"If working at Home - Y/N\" title=\"If working at Home - Y/N?\"><b />EmH</a>", $text);
-				$text = str_replace(".b.Vet", "<a href=\"#\" alt=\"War Veteran?\" title=\"War Veteran?\"><b />Vet</a>", $text);
-				$text = str_replace(".b.Infirm","<a href=\"#\" alt=\"Infirmaties - 1234 - 1.Deaf and Dumb, 2.Blind, 3.Lunatic, 4.Imbecile, feeble-minded\" title=\"Infirmaties - 1234 - 1.Deaf and Dumb, 2.Blind, 3.Lunatic, 4.Imbecile, feeble-minded\" title=\"War Veteran?\"><b />Infirm</a>", $text);
-				$text = str_replace(".b.", "<b />", $text); 
-				// -------------------------------------------------------------------------------------------
-			$text = str_replace("|", "&nbsp;&nbsp;</td><td>", $text);
-			$text = str_replace(".end_formatted_area.<br />", "</td></tr></table><table cellpadding=\"0\"><tr><td>", $text);
-			$text = str_replace("<br />", "</td></tr><tr><td>&nbsp;", $text);
-			$text = $text . "</td></tr></table>";
-			$text = str_replace("xCxAx", $centitl."<br />", $text);
-			$text = str_replace("Notes:", "<b>Notes:</b>", $text);
+		// Regular Field Highlighting (Use embolden) ------------
+		$text = str_replace(".b.", "<b />", $text); 
+		
+		// Replace "pipe" with </td><td> ------------------------
+		$text = str_replace("|", "&nbsp;&nbsp;</td><td>", $text);
+		
+	$text = str_replace(".end_formatted_area.<br />", "</td></tr></table><table cellpadding=\"0\"><tr><td>", $text);
+	$text = str_replace("<br />", "</td></tr><tr><td>&nbsp;", $text);
+	$text = $text . "</td></tr></table>";
+	$text = str_replace("xCxAx", $centitl."<br />", $text);
+	$text = str_replace("Notes:", "<b>Notes:</b>", $text);
 
 ?>

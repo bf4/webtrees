@@ -25,35 +25,8 @@
  * @subpackage Census Assistant
  * @version $Id$
  */
-/*
+include 'modules/GEDFact_assistant/_CENS/js/census_5_input.js.php';
 ?>
-<style type="text/css">
-<!--
-#tblSample td, th { padding: 0.2em; }
-.classy0 { background-color: #cccccc; color: #000000; }
-.classy1 { background-color: #cccccc; color: #000000; }
--->
-</style>
-<?php
-*/
-echo '<script src="modules/GEDFact_assistant/_CENS/js/census_5_input.js" type="text/javascript"></script>';
-?>
-<!--
-	<table style="width:100%; float:right;" border="0" cellspacing="1">
-		<tr>
-			<td align="center" colspan="8">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-			<td align="center">
-				<input type="button" value="Add/Insert Blank Row" onclick="insertRowToTable('','','','','','','Age','','','');" />
-			<td align="center" colspan="3">&nbsp;</td>
-			<td align="right">
-				<font size="1">Add</font><br>
-				<input  type="radio" name="totallyrad" value="0" checked="checked" />
-			</td>
-			<td width="2%" colspan="1"><font size="1"></font></td>
-			<td width="2%" colspan="1"><font size="1"></font></td>
-		</tr>
-	</table>
--->
 
 <div width="100%" style="height:12.46em; overflow:auto;">
 	<table style="width:68em;" border="0" cellspacing="1" id="tblSample">

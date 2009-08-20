@@ -30,8 +30,8 @@ require_once 'includes/controllers/individual_ctrl.php';
 $controller = new IndividualController(); 
 $controller->init(); 
 
-// loadLangFile("lb_lang, gm_lang");	// Load Lightbox & GoogleMap language files
-// loadLangFile("lightbox:lang");
+//	To load the file XXX for module YYY, call
+	loadLangFile("GEDFact_assistant:lang");
 
 global $USE_THUMBS_MAIN, $mediacnt, $tabno;
 global $linkToID;
@@ -40,7 +40,6 @@ global $SEARCH_SPIDER, $GOOGLEMAP_PH_CONTROLS;
 		global $pgv_lang, $factarray, $SHOW_ID_NUMBERS, $PGV_IMAGE_DIR, $PGV_IMAGES, $SHOW_AGE_DIFF;
 		global $pgv_changes, $GEDCOM, $ABBREVIATE_CHART_LABELS;
 		global $show_full; 
-		
 		global $famid;
 		
 // print_simple_header("Census");

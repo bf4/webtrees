@@ -31,8 +31,8 @@ $controller = new IndividualController();
 $controller->init(); 
 echo "<link href =\"modules/GEDFact_assistant/css/gf_styles.css\" 	rel=\"stylesheet\" type=\"text/css\" media=\"screen\" />";
 
-// loadLangFile("lb_lang, gm_lang");	// Load Lightbox & GoogleMap language files
-// loadLangFile("lightbox:lang");
+//	To load the file XXX for module YYY, call
+	loadLangFile("GEDFact_assistant:lang");
 
 global $USE_THUMBS_MAIN, $mediacnt, $tabno;
 global $linkToID;
@@ -44,6 +44,8 @@ global $SEARCH_SPIDER, $GOOGLEMAP_PH_CONTROLS;
 		global $famid, $censyear, $censdate;
 		
 // print_simple_header("Census");
+
+
 
 		$summary=$controller->indi->format_first_major_fact(PGV_EVENTS_BIRT, 2);
 		if (!($controller->indi->isDead())) {

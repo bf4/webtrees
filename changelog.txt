@@ -10,6 +10,8 @@
 
 
 Version 4.2.x CA
+ - Added: Language file lang.en.php to GEDFact_assistant/languages/ (windmillway)
+ - Changed: Moved Main Javascript Functions to PHP file (GEDFact_assistant/_CENS/js/census_5_input.js.php) deleted old file (windmillway)
  - Changed: Corrected JavaScript problem with "Head of Family" Names containing double quotes (Nickname etc) (windmillway)
  - Changed: added missing Header Tooltip messages. (windmillway)
  - Changed: Correct spelling of Tool tip message "Foreign". (windmillway)
