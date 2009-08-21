@@ -31,6 +31,13 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
+// General headings and labels ===============================
+$pgv_lang["head"]			= "Head of Household:";
+$pgv_lang["cens_country"]	= "Country";
+$pgv_lang["cens_year"]		= "Year";
+$pgv_lang["cens_preview"]	= "Click &quot;Preview&quot; to copy Edit Input Fields";
+$pgv_lang["cens_proposed"]	= "Proposed Census Text&nbsp;&nbsp;";
+$pgv_lang["cens_add_insert"]= "Add/Insert Blank Row";
 
 // Header Titles ================================
 $pgv_lang["header_Name"]	= "Name";			// Name		 -	 Name or Married Name
@@ -133,7 +140,7 @@ $pgv_lang["tt_edit_ChilD"]	= "Children who have died - nn";
 $pgv_lang["tt_edit_AgM"]	= "Age at first marriage - yy";
 $pgv_lang["tt_edit_Occu"]	= "Occupation";
 $pgv_lang["tt_edit_Bplace"]	= "Birthplace (Full format)";
-$pgv_lang["tt_edit_BP"]		= "Birthplace - xxx - State/Country (Chapman format)";
+$pgv_lang["tt_edit_BP"]		= "Birthplace - xx or xxx - State/Country (Chapman format)";
 $pgv_lang["tt_edit_FBP"]	= "Father's Birthplace - xx or xxx - State or Country (Chapman format)";
 $pgv_lang["tt_edit_MBP"]	= "Mother's Birthplace - xx or xxx - State or Country (Chapman format)";
 $pgv_lang["tt_edit_NL"]		= "If Foreign Born - Native Language";

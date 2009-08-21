@@ -174,7 +174,8 @@ global $pgv_lang, $TEXT_DIRECTION;
 		var cols_52 = document.getElementsByName('col_52');
 		var cols_53 = document.getElementsByName('col_53');
 		var cols_54 = document.getElementsByName('col_54');
-
+		var cols_55 = document.getElementsByName('col_55');
+		var cols_56 = document.getElementsByName('col_56');
 
 		var flip_3 = "none";
 		var flip_4 = "none";
@@ -228,8 +229,11 @@ global $pgv_lang, $TEXT_DIRECTION;
 		var flip_52 = "none";
 		var flip_53 = "none";
 		var flip_54 = "none";
+		var flip_55 = "none";
+		var flip_56 = "none";
 		
 		if (cens_ctry=="UK") {
+		
 			if (cenyear=="1911" || cenyear=="1921") { 
 				flip_3 = "";
 				flip_4 = "";
@@ -239,51 +243,51 @@ global $pgv_lang, $TEXT_DIRECTION;
 				flip_16 = "";
 				flip_17 = "";
 				flip_18 = "";
-				flip_30 = "";
-				flip_32 = "";
+				flip_31 = "";
 				flip_33 = "";
-				flip_36 = "";
-				flip_41 = "";
-				flip_53 = "";
+				flip_34 = "";
+				flip_37 = "";
+				flip_42 = "";
+				flip_55 = "";
 			}else 
 			if (cenyear=="1901") { 
 				flip_3 = "";
 				flip_4 = "";
 				flip_6 = "";
 				flip_8 = "";
-				flip_30 = "";
-				flip_33 = "";
-				flip_36 = "";
-				flip_41 = "";
-				flip_53 = "";
+				flip_31 = "";
+				flip_34 = "";
+				flip_37 = "";
+				flip_42 = "";
+				flip_55 = "";
 			}else 
 			if (cenyear=="1891") { 
 				flip_3 = "";
 				flip_4 = "";
 				flip_6 = "";
 				flip_8 = "";
-				flip_30 = "";
-				flip_34 = "";
+				flip_31 = "";
 				flip_35 = "";
-				flip_37 = "";
-				flip_41 = "";
-				flip_53 = "";
+				flip_36 = "";
+				flip_38 = "";
+				flip_42 = "";
+				flip_55 = "";
 			}else 
 			if (cenyear=="1881" || cenyear=="1871" || cenyear=="1861" || cenyear=="1851") { 
 				flip_3 = "";
 				flip_4 = "";
 				flip_6 = "";
 				flip_8 = "";
-				flip_30 = "";
-				flip_41 = "";
-				flip_53 = "";
+				flip_31 = "";
+				flip_42 = "";
+				flip_55 = "";
 			}else 
 			if (cenyear=="1841") { 
 				flip_6 = "";
 				flip_8 = "";
-				flip_30 = "";
-				flip_42 = "";
-				flip_43 = "";
+				flip_31 = "";
+				flip_44 = "";
+				flip_45 = "";
 			}
 			
 		} else if (cens_ctry=="USA") {
@@ -295,18 +299,18 @@ global $pgv_lang, $TEXT_DIRECTION;
 				flip_11 = "";
 				flip_14 = "";
 				flip_19 = "";
-				flip_38 = "";
-				flip_41 = "";
-				flip_44 = "";
-				flip_45 = "";
-				flip_46= "";
+				flip_39 = "";
+				flip_43 = "";
+				flip_46 = "";
 				flip_47 = "";
 				flip_48 = "";
 				flip_49 = "";
 				flip_50 = "";
 				flip_51 = "";
 				flip_52 = "";
+				flip_53 = "";
 				flip_54 = "";
+				flip_56 = "";
 			}else
 			if (cenyear=="1920") { 
 				flip_3 = "";
@@ -315,19 +319,112 @@ global $pgv_lang, $TEXT_DIRECTION;
 				flip_9 = "";
 				flip_11 = "";
 				flip_14 = "";
-				flip_26 = "";
 				flip_27 = "";
 				flip_28 = "";
-				flip_38 = "";
-				flip_41 = "";
-				flip_44 = "";
-				flip_45 = "";
-				flip_46= "";
-				flip_49 = "";
-				flip_50 = "";
+				flip_29 = "";
+				flip_39 = "";
+				flip_43 = "";
+				flip_46 = "";
+				flip_47 = "";
+				flip_48 = "";
 				flip_51 = "";
 				flip_52 = "";
+				flip_53 = "";
+				flip_54 = "";
+			}else
+			if (cenyear=="1910") { 
+				flip_3 = "";
+				flip_8 = "";
+				flip_9 = "";
+				flip_11 = "";
+				flip_14 = "";
+				flip_15 = "";
+				flip_16 = "";
+				flip_17 = "";
+			//	flip_22 = "";
+				flip_23 = "";
+				flip_24 = "";
+				flip_25 = "";
+				flip_27 = "";
+				flip_28 = "";
+				flip_30 = "";
+				flip_31 = "";
+				flip_33 = "";
+				flip_34 = "";
+				flip_39 = "";
+				flip_41 = "";
+				flip_55 = "";
+				flip_56 = "";
+			}else
+			if (cenyear=="1900") { 
+				flip_3 = "";
+				flip_8 = "";
+				flip_9 = "";
+				flip_10 = "";
+				flip_11 = "";
+				flip_14 = "";
+				flip_15 = "";
+				flip_16 = "";
+				flip_17 = "";
+			//	flip_22 = "";
+				flip_23 = "";
+				flip_24 = "";
+				flip_25 = "";
+				flip_27 = "";
+				flip_28 = "";
+				flip_31 = "";
+				flip_34 = "";
+				flip_39 = "";
+				flip_40 = "";
+				flip_41 = "";
+			}else
+			if (cenyear=="1890") { 
+				flip_3 = "";
+				flip_8 = "";
+				flip_9 = "";
+				flip_11 = "";
+				flip_14 = "";
+				flip_15 = "";
+				flip_16 = "";
+				flip_17 = "";
+			//	flip_22 = "";
+				flip_23 = "";
+				flip_24 = "";
+				flip_25 = "";
+				flip_26 = "";
+				flip_28 = "";
+				flip_31 = "";
+				flip_34 = "";
+				flip_39 = "";
+				flip_40 = "";
+				flip_55 = "";
+			}else
+			if (cenyear=="1880") { 
+				flip_7 = "";
+				flip_8 = "";
+				flip_11 = "";
+				flip_12 = "";
+				flip_13 = "";
+				flip_14 = "";
+				flip_31 = "";
+				flip_32 = "";
+				flip_39 = "";
+			//	flip_42 = "";
+				flip_43 = "";
+				flip_46= "";
+				flip_47 = "";
+			}else
+			if (cenyear=="1870" || cenyear=="1860" || cenyear=="1850") { 
+				flip_6 = "";
+				flip_8 = "";
+				flip_9 = "";
+				flip_20 = "";
+				flip_21 = "";
+				flip_22 = "";
+				flip_39 = "";
+				flip_55 = "";
 			}
+			
 		}
 
 		// Hide or show ===============
@@ -344,7 +441,7 @@ global $pgv_lang, $TEXT_DIRECTION;
 			cols_12[i].style.display = flip_12;
 			cols_13[i].style.display = flip_13;
 			cols_14[i].style.display = flip_14;
-			cols_15[i].style.display = flip_15
+			cols_15[i].style.display = flip_15;
 			cols_16[i].style.display = flip_16;
 			cols_17[i].style.display = flip_17;
 			cols_18[i].style.display = flip_18;
@@ -354,7 +451,7 @@ global $pgv_lang, $TEXT_DIRECTION;
 			cols_22[i].style.display = flip_22;
 			cols_23[i].style.display = flip_23;
 			cols_24[i].style.display = flip_24;
-			cols_25[i].style.display = flip_25
+			cols_25[i].style.display = flip_25;
 			cols_26[i].style.display = flip_26;
 			cols_27[i].style.display = flip_27;
 			cols_28[i].style.display = flip_28;
@@ -364,7 +461,7 @@ global $pgv_lang, $TEXT_DIRECTION;
 			cols_32[i].style.display = flip_32;
 			cols_33[i].style.display = flip_33;
 			cols_34[i].style.display = flip_34;
-			cols_35[i].style.display = flip_35
+			cols_35[i].style.display = flip_35;
 			cols_36[i].style.display = flip_36;
 			cols_37[i].style.display = flip_37;
 			cols_38[i].style.display = flip_38;
@@ -374,7 +471,7 @@ global $pgv_lang, $TEXT_DIRECTION;
 			cols_42[i].style.display = flip_42;
 			cols_43[i].style.display = flip_43;
 			cols_44[i].style.display = flip_44;
-			cols_45[i].style.display = flip_45
+			cols_45[i].style.display = flip_45;
 			cols_46[i].style.display = flip_46;
 			cols_47[i].style.display = flip_47;
 			cols_48[i].style.display = flip_48;
@@ -384,6 +481,8 @@ global $pgv_lang, $TEXT_DIRECTION;
 			cols_52[i].style.display = flip_52;
 			cols_53[i].style.display = flip_53;
 			cols_54[i].style.display = flip_54;
+			cols_55[i].style.display = flip_55;
+			cols_56[i].style.display = flip_56;
 		}
 
 	}
@@ -420,30 +519,30 @@ global $pgv_lang, $TEXT_DIRECTION;
 	
 </script>
 
-<div class="optionbox cens_sour ">
-	<div class="cens_sour_date">
-<?php //		Census:&nbsp;&nbsp; ?>
-&nbsp;Country &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Year<br />
-		<div class="cens_sour_date_2">
-			<script type="text/javascript">
-				var censyear = new DynamicOptionList();
-				censyear.addDependentFields("censCtry","censYear");
-				censyear.forValue("UK").addOptions( "choose", "1841", "1851", "1861", "1871", "1881", "1891", "1901", "1911", "1921" );
-				censyear.forValue("USA").addOptions( "choose", "1790", "1800", "1810", "1820", "1830", "1840", "1850", "1860", "1870", "1880", "1890", "1900", "1910", "1920", "1930");
-				censyear.forValue("UK").setDefaultOptions("choose");
-				censyear.forValue("USA").setDefaultOptions("choose");
-			</script>
-			<select id="censCtry" name="censCtry">
-				<option value="UK">UK</option>
-				<option value="USA" >USA</option>
-			</select>
-			<select onchange =	"if( this.options[this.selectedIndex].value!='') {
-									changeYear(this.options[this.selectedIndex].value);
-								}" 
-				id="censYear" name="censYear">
-			</select>
-			<input type="hidden" id="prevYear" name="prevYear" value="" />&nbsp;&nbsp;&nbsp;
-		</div>
+<div class="optionbox cens_sour">
+	<div class="cens_sour_country">
+		<span><?php echo $pgv_lang["cens_country"]; ?><br /></span>
+		<script type="text/javascript">
+			var censyear = new DynamicOptionList();
+			censyear.addDependentFields("censCtry","censYear");
+			censyear.forValue("UK").addOptions( "choose", "1841", "1851", "1861", "1871", "1881", "1891", "1901", "1911", "1921" );
+			censyear.forValue("USA").addOptions( "choose", "1790", "1800", "1810", "1820", "1830", "1840", "1850", "1860", "1870", "1880", "1890", "1900", "1910", "1920", "1930");
+			censyear.forValue("UK").setDefaultOptions("choose");
+			censyear.forValue("USA").setDefaultOptions("choose");
+		</script>
+		<select id="censCtry" name="censCtry">
+			<option value="UK">UK</option>
+			<option value="USA" >USA</option>
+		</select>
+	</div>
+	<div class="cens_sour_year">
+	<span><?php echo $pgv_lang["cens_year"]; ?><br /></span>
+		<select onchange =	"if( this.options[this.selectedIndex].value!='') {
+								changeYear(this.options[this.selectedIndex].value);
+							}" 
+			id="censYear" name="censYear">
+		</select>
+		<input type="hidden" id="prevYear" name="prevYear" value="" />&nbsp;&nbsp;&nbsp;
 	</div>
 	<div class="cens_sour_scs" >
 		<div class="cens_sour_1">

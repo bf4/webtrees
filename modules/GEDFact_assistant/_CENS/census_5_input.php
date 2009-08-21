@@ -28,14 +28,10 @@
 include 'modules/GEDFact_assistant/_CENS/js/census_5_input.js.php';
 ?>
 
-<div width="100%" style="height:12.46em; overflow:auto;">
-	<table style="width:68em;" border="0" cellspacing="1" id="tblSample">
+<div class="cens_data">
+	<!--[if IE]><br /><![endif]-->
+	<table id="tblSample">
 		<thead></thead>
 		<tbody></tbody>
 	</table>
 </div>
-
-	
-
-
-

@@ -63,7 +63,7 @@ $currpid=$pid;
 	// Header of assistant window
 	echo "<div class=\"cens_header\">";
 		echo "<div class=\"cens_header_left\">";
-			echo "Head of Household &nbsp;:";
+			echo $pgv_lang["head"];
 			echo " &nbsp;" . $wholename . "&nbsp; (" . $pid . ")";
 		echo "</div>";
 			if ($summary) {
@@ -73,7 +73,7 @@ $currpid=$pid;
 
 	//-- Census & Source Information Area ============================================= 
 	echo "<div class=\" cens_container\">";
-		echo "<span >";
+		echo "<span>";
 			include('modules/GEDFact_assistant/_CENS/census_2_source_input.php');
 		echo "</span>";
 		//-- Proposed Census Text Area ==================================================
@@ -82,17 +82,19 @@ $currpid=$pid;
 		echo "</span>";
 	echo "</div>";
 	//-- Search  and Add Family Members Area ========================================= 
-	echo "<div class=\"optionbox cens_search\">";
+	?><!--[if IE]><br /><![endif]--><?php
+		echo "<div class=\"optionbox cens_search\">";
+	?><!--[if IE]><style>.cens_search{height:35.0em;margin-top:-0.7em;}</style><![EndIf]--><?php
 		include('modules/GEDFact_assistant/_CENS/census_3_search_add.php'); 
 	echo "</div>";
 	//-- Census Text Input Area ===========================================================
 	?>
 	<div class="optionbox cens_textinput">
 		<div class="cens_textinput_left">
-			<input type="button" value="Add/Insert Blank Row" onclick="insertRowToTable('','','','','','','Age','','','');" />
+			<input type="button" value="<?php echo $pgv_lang["cens_add_insert"]; ?>" onclick="insertRowToTable('','','','','','','Age','','','');" />
 		</div>
 		<div class="cens_textinput_right">
-			Add<br>
+			<?php echo $pgv_lang["add"]; ?><br>
 			<input  type="radio" name="totallyrad" value="0" checked="checked" />
 		</div>	
 	<!-- Census Add Rows Area =========================================================== -->
