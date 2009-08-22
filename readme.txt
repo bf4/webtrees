@@ -81,6 +81,13 @@ PhpGedView requires a web server with at least PHP v5.2 and around 20MB of
 web space.  The default installations of PHP on most servers should provide
 you with all of the PHP functionality you should need.
 
+[VERY IMPORTANT] 
+    You also need to install/enable PDO/mysql.
+    This is a standard part of PHP, and allows PHP to connect to databases. 
+    PDO/mysql is a new requirement, effective from this version onwards. 
+    It improves performance, fixes the sqlite compatibility issues, 
+    and will allow a wider range of databases to be used.
+
 Database
     You will need at least 1 database and a username and password to access it. 
     PhpGedView primarily supports MySQL, but has also been tested and shown to 
