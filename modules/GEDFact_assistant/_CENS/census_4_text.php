@@ -30,11 +30,17 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
-
 global $theme_name; 
-
 ?>
 
+<script>
+function help_window2(frm)  {
+	var aWindow = window.open('modules/GEDFact_assistant/_CENS/census_asst_help.php', 'TableAddRow2NewWindow',
+	'scrollbars=yes,menubar=yes,resizable=yes,location=no,toolbar=no,width=400,height=700');
+	aWindow.focus();
+	// set the target to the blank window
+	frm.target = 'TableAddRow2NewWindow';
+}
 </script>
 
 <!--   ---- The proposed Census Text -------- -->

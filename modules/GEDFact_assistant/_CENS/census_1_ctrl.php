@@ -60,7 +60,7 @@ $currpid=$pid;
 
 <?php
 
-	// Header of assistant window
+	// Header of assistant window =====================================================
 	echo "<div class=\"cens_header\">";
 		echo "<div class=\"cens_header_left\">";
 			echo $pgv_lang["head"];
@@ -76,18 +76,21 @@ $currpid=$pid;
 		echo "<span>";
 			include('modules/GEDFact_assistant/_CENS/census_2_source_input.php');
 		echo "</span>";
-		//-- Proposed Census Text Area ==================================================
+		//-- Proposed Census Text Area ================================================
 		echo "<span>";
 			include('modules/GEDFact_assistant/_CENS/census_4_text.php');
 		echo "</span>";
 	echo "</div>";
-	//-- Search  and Add Family Members Area ========================================= 
+	
+	//-- Search  and Add Family Members Area ========================================== 
 	?><!--[if IE]><br /><![endif]--><?php
-		echo "<div class=\"optionbox cens_search\">";
-	?><!--[if IE]><style>.cens_search{height:35.0em;margin-top:-0.7em;}</style><![EndIf]--><?php
+	echo "<div class=\"optionbox cens_search\">";
+		?>	<!--[if IE]><style>.cens_search{height:35.0em;}</style><![EndIf]-->
+			<!--[if lte IE 7]><style>.cens_search{margin-top:-0.7em;}</style><![EndIf]--><?php
 		include('modules/GEDFact_assistant/_CENS/census_3_search_add.php'); 
 	echo "</div>";
-	//-- Census Text Input Area ===========================================================
+	
+	//-- Census Text Input Area =======================================================
 	?>
 	<div class="optionbox cens_textinput">
 		<div class="cens_textinput_left">
@@ -97,11 +100,12 @@ $currpid=$pid;
 			<?php echo $pgv_lang["add"]; ?><br>
 			<input  type="radio" name="totallyrad" value="0" checked="checked" />
 		</div>	
-	<!-- Census Add Rows Area =========================================================== -->
-		<?php
-			echo "<div class=\"cens_addrows\">";
-				include('modules/GEDFact_assistant/_CENS/census_5_input.php');
-			echo "</div>";
+	<?php
+	
+	//-- Census Add Rows Area =========================================================
+		echo "<div class=\"cens_addrows\">";
+			include('modules/GEDFact_assistant/_CENS/census_5_input.php');
+		echo "</div>";
 		?> 
 	</div>
 

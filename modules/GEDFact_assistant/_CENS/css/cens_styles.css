@@ -25,6 +25,18 @@
  * @version $Id$
  */
  
+ /* View Page - Census Shared column headers (census_note_decode.php) =========== */
+.note1 {
+	margin-left: -0.05em;
+}
+.note2 {
+	margin-left: -0.2em;
+}
+
+
+
+/* Edit Page css ================================================================ */
+ 
 /* Header of assistant window */
 .cens_header {
 	text-align: left;

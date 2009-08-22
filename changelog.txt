@@ -10,6 +10,7 @@
 
 
 Version 4.2.x CA
+ - Cleaned up "View" Census Header text and associated tooltip text. (windmillway)
  - Added: CA "Templates" for USA for years (1900, 1890, 1880, 1870, 1860 and 1850), also used Nigels latest css values (modified a bit) (windmillway)
  - Added: Notes Input field, also if the Notes, Enumeration, or Locality fields are empty, the line is completely removed in the Shared note. (windmillway)
  - Added: Language file lang.en.php to GEDFact_assistant/languages/ (windmillway)
