@@ -248,7 +248,7 @@ class PGV_DB {
 					PDO::ATTR_AUTOCOMMIT=>true
 				)
 			);
-			self::$AUTO_ID_TYPE ='INTEGER AUTOINCREMENT'; // These values are guesses
+			self::$AUTO_ID_TYPE ='INTEGER'; // No autoincrement columns available
 			self::$ID_TYPE      ='INTEGER';
 			self::$INT1_TYPE    ='INTEGER';
 			self::$INT2_TYPE    ='INTEGER';
@@ -260,8 +260,8 @@ class PGV_DB {
 			self::$UNSIGNED     ='';
 			self::$LIKE         ='LIKE';
 			self::$RANDOM       ='RANDOM()';
-			self::$TEXT_TYPE    ='TEXT';
-			self::$LONGTEXT_TYPE='TEXT';
+			self::$TEXT_TYPE    ='VARCHAR(32767)';
+			self::$LONGTEXT_TYPE='BLOB SUB_TYPE TEXT';
 			self::$UTF8_TABLE   ='';
 			break;
 		case 'ibm': // This DSN has not been tested!
@@ -326,7 +326,7 @@ class PGV_DB {
 					PDO::ATTR_AUTOCOMMIT=>true
 				)
 			);
-			self::$AUTO_ID_TYPE ='INTEGER AUTOINCREMENT'; // These values are guesses
+			self::$AUTO_ID_TYPE ='INTEGER'; // No autoincrement columns available
 			self::$ID_TYPE      ='INTEGER';
 			self::$INT1_TYPE    ='INTEGER';
 			self::$INT2_TYPE    ='INTEGER';
