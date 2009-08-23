@@ -1092,7 +1092,7 @@ if (check_media_structure()) {
 						$needle   = "1 NOTE";
 						$before   = substr($haystack, 0, strpos($haystack, $needle));
 						$after    = substr(strstr($haystack, $needle), strlen($needle));
-						$worked   = ereg_replace("1 NOTE", "1 NOTE<br />", $after);
+						$worked   = str_replace("1 NOTE", "1 NOTE<br />", $after);
 						$final    = $before.$needle.$worked;
 						$notes    = PrintReady(htmlspecialchars(addslashes(print_fact_notes($final, 1, true, true)),ENT_COMPAT,'UTF-8'));
 
