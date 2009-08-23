@@ -171,6 +171,9 @@ echo PGV_JS_START;
 		pastefield.value += value;
 		language_filter = lang;
 		magnify = mag;
+		if (pastefield.id=='NPFX' || pastefield.id=='GIVN' || pastefield.id=='SPFX' || pastefield.id=='SURN' || pastefield.id=='NSFX') {
+			updatewholename();
+		}
 	}
 
 	function edit_close(newurl) {
