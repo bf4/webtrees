@@ -10,6 +10,7 @@
 
 
 Version 4.2.x CA
+ - Added: More columns for USA Census years. USA 1790-1840 years still left to do (windmillway)
  - Merged: Merge changes r6064- r6076 from the trunk. (windmillway)
  - Cleaned up "View" Census Header text and associated tooltip text. (windmillway)
  - Added: CA "Templates" for USA for years (1900, 1890, 1880, 1870, 1860 and 1850), also used Nigels latest css values (modified a bit) (windmillway)

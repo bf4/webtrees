@@ -32,6 +32,9 @@
 .note2 {
 	margin-left: -0.2em;
 }
+.notecell {
+	white-space: nowrap;
+}
 
 
 

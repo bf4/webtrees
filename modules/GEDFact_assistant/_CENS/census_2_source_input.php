@@ -90,7 +90,7 @@ global $pgv_lang, $TEXT_DIRECTION;
 		for(var i=1; i<tbl.rows.length; i++){ // start at i=1 because we need to avoid header
 			var tr = tbl.rows[i];
 			for(var j=2; j<tr.cells.length; j++){
-				if (j!=6 && j!=11) {
+				if (j!=7 && j!=12) {
 					//	miss out all cols except age cols
 					continue;
 				}else if (tr.cells[j].childNodes[0].value=="") {
@@ -176,6 +176,18 @@ global $pgv_lang, $TEXT_DIRECTION;
 		var cols_54 = document.getElementsByName('col_54');
 		var cols_55 = document.getElementsByName('col_55');
 		var cols_56 = document.getElementsByName('col_56');
+		var cols_57 = document.getElementsByName('col_57');
+		var cols_58 = document.getElementsByName('col_58');
+		var cols_59 = document.getElementsByName('col_59');
+		var cols_60 = document.getElementsByName('col_60');
+		var cols_61 = document.getElementsByName('col_61');
+		var cols_62 = document.getElementsByName('col_62');
+		var cols_63 = document.getElementsByName('col_63');
+		var cols_64 = document.getElementsByName('col_64');
+		var cols_65 = document.getElementsByName('col_65');
+		var cols_66 = document.getElementsByName('col_66');
+		var cols_67 = document.getElementsByName('col_67');
+
 
 		var flip_3 = "none";
 		var flip_4 = "none";
@@ -231,198 +243,231 @@ global $pgv_lang, $TEXT_DIRECTION;
 		var flip_54 = "none";
 		var flip_55 = "none";
 		var flip_56 = "none";
+		var flip_57 = "none";
+		var flip_58 = "none";
+		var flip_59 = "none";
+		var flip_60 = "none";
+		var flip_61 = "none";
+		var flip_62 = "none";
+		var flip_63 = "none";
+		var flip_64 = "none";
+		var flip_65 = "none";
+		var flip_66 = "none";
+		var flip_67 = "none";
 		
 		if (cens_ctry=="UK") {
 		
 			if (cenyear=="1911" || cenyear=="1921") { 
 				flip_3 = "";
 				flip_4 = "";
-				flip_6 = "";
-				flip_8 = "";
-				flip_15 = "";
+				flip_7 = "";
+				flip_9 = "";
 				flip_16 = "";
 				flip_17 = "";
 				flip_18 = "";
-				flip_31 = "";
-				flip_33 = "";
-				flip_34 = "";
+				flip_19 = "";
+				flip_35 = "";
 				flip_37 = "";
+				flip_38 = "";
 				flip_42 = "";
-				flip_55 = "";
+				flip_50 = "";
+				flip_63 = "";
 			}else 
 			if (cenyear=="1901") { 
 				flip_3 = "";
 				flip_4 = "";
-				flip_6 = "";
-				flip_8 = "";
-				flip_31 = "";
-				flip_34 = "";
-				flip_37 = "";
+				flip_7 = "";
+				flip_9 = "";
+				flip_35 = "";
+				flip_38 = "";
 				flip_42 = "";
-				flip_55 = "";
+				flip_50 = "";
+				flip_63 = "";
 			}else 
 			if (cenyear=="1891") { 
 				flip_3 = "";
 				flip_4 = "";
-				flip_6 = "";
-				flip_8 = "";
-				flip_31 = "";
+				flip_7 = "";
+				flip_9 = "";
 				flip_35 = "";
-				flip_36 = "";
-				flip_38 = "";
-				flip_42 = "";
-				flip_55 = "";
+				flip_39 = "";
+				flip_40 = "";
+				flip_43 = "";
+				flip_50 = "";
+				flip_63 = "";
 			}else 
 			if (cenyear=="1881" || cenyear=="1871" || cenyear=="1861" || cenyear=="1851") { 
 				flip_3 = "";
 				flip_4 = "";
-				flip_6 = "";
-				flip_8 = "";
-				flip_31 = "";
-				flip_42 = "";
-				flip_55 = "";
+				flip_7 = "";
+				flip_9 = "";
+				flip_35 = "";
+				flip_50 = "";
+				flip_63 = "";
 			}else 
 			if (cenyear=="1841") { 
-				flip_6 = "";
-				flip_8 = "";
-				flip_31 = "";
-				flip_44 = "";
-				flip_45 = "";
+				flip_7 = "";
+				flip_9 = "";
+				flip_35 = "";
+				flip_52 = "";
+				flip_53 = "";
 			}
 			
 		} else if (cens_ctry=="USA") {
 			if (cenyear=="1930") { 
 				flip_3 = "";
-				flip_5 = "";
-				flip_8 = "";
+				flip_6 = "";
 				flip_9 = "";
-				flip_11 = "";
-				flip_14 = "";
-				flip_19 = "";
-				flip_39 = "";
-				flip_43 = "";
+				flip_10 = "";
+				flip_12 = "";
+				flip_15 = "";
+				flip_20 = "";
 				flip_46 = "";
-				flip_47 = "";
-				flip_48 = "";
-				flip_49 = "";
-				flip_50 = "";
 				flip_51 = "";
-				flip_52 = "";
-				flip_53 = "";
 				flip_54 = "";
+				flip_55 = "";
 				flip_56 = "";
+				flip_57 = "";
+				flip_58 = "";
+				flip_59 = "";
+				flip_60 = "";
+				flip_61 = "";
+				flip_62 = "";
+				flip_65 = "";
+				flip_66 = "";
 			}else
 			if (cenyear=="1920") { 
 				flip_3 = "";
 				flip_5 = "";
-				flip_8 = "";
 				flip_9 = "";
-				flip_11 = "";
-				flip_14 = "";
-				flip_27 = "";
-				flip_28 = "";
-				flip_29 = "";
-				flip_39 = "";
-				flip_43 = "";
+				flip_10 = "";
+				flip_12 = "";
+				flip_15 = "";
+				flip_31 = "";
+				flip_32 = "";
+				flip_33 = "";
 				flip_46 = "";
-				flip_47 = "";
-				flip_48 = "";
 				flip_51 = "";
-				flip_52 = "";
-				flip_53 = "";
 				flip_54 = "";
+				flip_55 = "";
+				flip_56 = "";
+				flip_59 = "";
+				flip_60 = "";
+				flip_61 = "";
+				flip_62 = "";
 			}else
 			if (cenyear=="1910") { 
 				flip_3 = "";
-				flip_8 = "";
 				flip_9 = "";
-				flip_11 = "";
-				flip_14 = "";
+				flip_10 = "";
+				flip_12 = "";
 				flip_15 = "";
 				flip_16 = "";
 				flip_17 = "";
+				flip_18 = "";
 			//	flip_22 = "";
-				flip_23 = "";
-				flip_24 = "";
-				flip_25 = "";
 				flip_27 = "";
 				flip_28 = "";
+				flip_29 = "";
 				flip_30 = "";
 				flip_31 = "";
-				flip_33 = "";
+				flip_32 = "";
 				flip_34 = "";
-				flip_39 = "";
-				flip_41 = "";
-				flip_55 = "";
-				flip_56 = "";
+				flip_35 = "";
+				flip_37 = "";
+				flip_38 = "";
+				flip_43 = "";
+				flip_44 = "";
+				flip_46 = "";
+				flip_49 = "";
+				flip_65 = "";
+				flip_67 = "";
 			}else
 			if (cenyear=="1900") { 
 				flip_3 = "";
 				flip_8 = "";
 				flip_9 = "";
-				flip_10 = "";
 				flip_11 = "";
-				flip_14 = "";
+				flip_12 = "";
 				flip_15 = "";
 				flip_16 = "";
 				flip_17 = "";
+				flip_18 = "";
 			//	flip_22 = "";
-				flip_23 = "";
-				flip_24 = "";
-				flip_25 = "";
 				flip_27 = "";
 				flip_28 = "";
+				flip_29 = "";
 				flip_31 = "";
-				flip_34 = "";
-				flip_39 = "";
-				flip_40 = "";
-				flip_41 = "";
+				flip_32 = "";
+				flip_35 = "";
+				flip_45 = "";
+				flip_46 = "";
+				flip_48 = "";
+				flip_49 = "";
 			}else
 			if (cenyear=="1890") { 
 				flip_3 = "";
 				flip_8 = "";
 				flip_9 = "";
 				flip_11 = "";
-				flip_14 = "";
+				flip_12 = "";
 				flip_15 = "";
 				flip_16 = "";
 				flip_17 = "";
+				flip_18 = "";
 			//	flip_22 = "";
+				flip_27 = "";
+				flip_28 = "";
+				flip_29 = "";
+				flip_30 = "";
+				flip_35 = "";
+				flip_38 = "";
+				flip_41 = "";
+				flip_46 = "";
+				flip_48 = "";
+				flip_64 = "";
+			}else
+			if (cenyear=="1880") { 
+				flip_8 = "";
+				flip_9 = "";
+				flip_12 = "";
+				flip_13 = "";
+				flip_14 = "";
+				flip_15 = "";
+				flip_16 = "";
+				flip_35 = "";
+				flip_36 = "";
+			//	flip_42 = "";
+				flip_45 = "";
+				flip_47= "";
+				flip_48 = "";
+				flip_51 = "";
+				flip_54= "";
+				flip_55 = "";
+			}else
+			if (cenyear=="1870" ) { 
+				flip_7 = "";
+				flip_9 = "";
+				flip_10 = "";
+				flip_21 = "";
+				flip_22 = "";
 				flip_23 = "";
 				flip_24 = "";
 				flip_25 = "";
 				flip_26 = "";
-				flip_28 = "";
-				flip_31 = "";
-				flip_34 = "";
-				flip_39 = "";
-				flip_40 = "";
-				flip_55 = "";
-			}else
-			if (cenyear=="1880") { 
-				flip_7 = "";
-				flip_8 = "";
-				flip_11 = "";
-				flip_12 = "";
-				flip_13 = "";
-				flip_14 = "";
-				flip_31 = "";
-				flip_32 = "";
-				flip_39 = "";
-			//	flip_42 = "";
-				flip_43 = "";
-				flip_46= "";
 				flip_47 = "";
+				flip_63 = "";
 			}else
-			if (cenyear=="1870" || cenyear=="1860" || cenyear=="1850") { 
-				flip_6 = "";
-				flip_8 = "";
+			if (cenyear=="1860" || cenyear=="1850") { 
+				flip_7 = "";
 				flip_9 = "";
-				flip_20 = "";
+				flip_10 = "";
 				flip_21 = "";
 				flip_22 = "";
-				flip_39 = "";
-				flip_55 = "";
+				flip_23 = "";
+				flip_26 = "";
+				flip_47 = "";
+				flip_63 = "";
 			}
 			
 		}
@@ -483,6 +528,17 @@ global $pgv_lang, $TEXT_DIRECTION;
 			cols_54[i].style.display = flip_54;
 			cols_55[i].style.display = flip_55;
 			cols_56[i].style.display = flip_56;
+			cols_57[i].style.display = flip_57;
+			cols_58[i].style.display = flip_58;
+			cols_59[i].style.display = flip_59;
+			cols_60[i].style.display = flip_60;
+			cols_61[i].style.display = flip_61;
+			cols_62[i].style.display = flip_62;
+			cols_63[i].style.display = flip_63;
+			cols_64[i].style.display = flip_64;
+			cols_65[i].style.display = flip_65;
+			cols_66[i].style.display = flip_66;
+			cols_67[i].style.display = flip_67;
 		}
 
 	}

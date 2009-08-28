@@ -31,7 +31,7 @@
 	echo "<link href =\"modules/GEDFact_assistant/_CENS/css/cens_styles.css\" rel=\"stylesheet\" type=\"text/css\" media=\"screen\" />";
  
 	$text = "xCxAx<table cellpadding=\"0\"><tr><td>" . $text;
-	$text = str_replace("<br />.start_formatted_area.<br />", "</td></tr></table><table cellpadding=\"0\"><tr><td>&nbsp;", $text);
+	$text = str_replace("<br />.start_formatted_area.<br />", "</td></tr></table><table cellpadding=\"0\"><tr><td class=\"notecell\">&nbsp;", $text);
 	
 		// -- Create View Header Tooltip explanations (Use embolden) -----------
 		$text = str_replace(".b.".$pgv_lang["header_Name"],   "<span class=\"note2\" alt=\"".$pgv_lang["tt_view_Name"]."\"   title=\"".$pgv_lang["tt_view_Name"]."\">  <b />".$pgv_lang["header_Name"]."</span>",   $text);
@@ -74,14 +74,27 @@
 		$text = str_replace(".b.".$pgv_lang["header_Infirm"], "<span class=\"note1\" alt=\"".$pgv_lang["tt_view_Infirm"]."\" title=\"".$pgv_lang["tt_view_Infirm"]."\"><b />".$pgv_lang["header_Infirm"]."</span>", $text);
 		$text = str_replace(".b.".$pgv_lang["header_Vet"],    "<span class=\"note1\" alt=\"".$pgv_lang["tt_view_Vet"]."\"    title=\"".$pgv_lang["tt_view_Vet"]."\">   <b />".$pgv_lang["header_Vet"]."</span>",    $text);
 
+		$text = str_replace(".b.".$pgv_lang["header_Tenure"],      "<span class=\"note1\" alt=\"".$pgv_lang["tt_view_Tenure"]."\"       title=\"".$pgv_lang["tt_view_Tenure"]."\">     <b />".$pgv_lang["header_Tenure"]."</span>",      $text);
+		$text = str_replace(".b.".$pgv_lang["header_Parent"],      "<span class=\"note1\" alt=\"".$pgv_lang["tt_view_Parent"]."\"       title=\"".$pgv_lang["tt_view_Parent"]."\">     <b />".$pgv_lang["header_Parent"]."</span>",      $text);
+		$text = str_replace(".b.".$pgv_lang["header_Mmth"],        "<span class=\"note1\" alt=\"".$pgv_lang["tt_view_Mmth"]."\"         title=\"".$pgv_lang["tt_view_Mmth"]."\">       <b />".$pgv_lang["header_Mmth"]."</span>",        $text);
+		$text = str_replace(".b.".$pgv_lang["header_Mnse"],        "<span class=\"note1\" alt=\"".$pgv_lang["tt_view_Mnse"]."\"         title=\"".$pgv_lang["tt_view_Mnse"]."\">       <b />".$pgv_lang["header_Mnse"]."</span>",        $text);
+		$text = str_replace(".b.".$pgv_lang["header_Wksu"],        "<span class=\"note1\" alt=\"".$pgv_lang["tt_view_Wksu"]."\"         title=\"".$pgv_lang["tt_view_Wksu"]."\">       <b />".$pgv_lang["header_Wksu"]."</span>",        $text);
+		$text = str_replace(".b.".$pgv_lang["header_Mnsu"],        "<span class=\"note1\" alt=\"".$pgv_lang["tt_view_Mnsu"]."\"         title=\"".$pgv_lang["tt_view_Eng"]."\">        <b />".$pgv_lang["header_Eng"]."</span>",         $text);
+		$text = str_replace(".b.".$pgv_lang["header_Educpre1890"], "<span class=\"note1\" alt=\"".$pgv_lang["tt_view_Educpre1890"]."\"  title=\"".$pgv_lang["tt_view_Educpre1890"]."\"><b />".$pgv_lang["header_Educpre1890"]."</span>", $text);
+		$text = str_replace(".b.".$pgv_lang["header_Home"],        "<span class=\"note1\" alt=\"".$pgv_lang["tt_view_Home"]."\"         title=\"".$pgv_lang["tt_view_Home"]."\">       <b />".$pgv_lang["header_Home"]."</span>",        $text);
+		$text = str_replace(".b.".$pgv_lang["header_Situ"],        "<span class=\"note1\" alt=\"".$pgv_lang["tt_view_Situ"]."\"         title=\"".$pgv_lang["tt_view_Situ"]."\">       <b />".$pgv_lang["header_Situ"]."</span>",        $text);
+		$text = str_replace(".b.".$pgv_lang["header_War"],         "<span class=\"note1\" alt=\"".$pgv_lang["tt_view_War"]."\"          title=\"".$pgv_lang["tt_view_War"]."\">        <b />".$pgv_lang["header_War"]."</span>",         $text);
+		$text = str_replace(".b.".$pgv_lang["header_Infirm1910"],  "<span class=\"note1\" alt=\"".$pgv_lang["tt_view_Infirm1910"]."\"   title=\"".$pgv_lang["tt_view_Infirm1910"]."\"> <b />".$pgv_lang["header_Infirm1910"]."</span>",  $text);
+
+
 		// Regular Field Highlighting (Use embolden) ------------
 		$text = str_replace(".b.", "<b />", $text); 
 		
 		// Replace "pipe" with </td><td> ------------------------
-		$text = str_replace("|", "&nbsp;&nbsp;</td><td>", $text);
+		$text = str_replace("|", "&nbsp;&nbsp;</td><td class=\"notecell\">", $text);
 		
 	$text = str_replace(".end_formatted_area.<br />", "</td></tr></table><table cellpadding=\"0\"><tr><td>", $text);
-	$text = str_replace("<br />", "</td></tr><tr><td>&nbsp;", $text);
+	$text = str_replace("<br />", "</td></tr><tr><td class=\"notecell\">&nbsp;", $text);
 	$text = $text . "</td></tr></table>";
 	$text = str_replace("xCxAx", $centitl."<br />", $text);
 	$text = str_replace("Notes:", "<b>Notes:</b>", $text);

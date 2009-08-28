@@ -40,87 +40,107 @@
 <script>
 
 //Load Language variables for Edit header and tooltip ============================
-var HeaderName   = "<?php echo $pgv_lang["header_Name"];?>";
-var TTEditName   = "<?php echo $pgv_lang["tt_edit_Name"];?>";
-var HeaderRela   = "<?php echo $pgv_lang["header_Rela"];?>";
-var TTEditRela   = "<?php echo $pgv_lang["tt_edit_Rela"];?>";
-var HeaderMCond  = "<?php echo $pgv_lang["header_MCond"];?>";
-var TTEditMCond  = "<?php echo $pgv_lang["tt_edit_MCond"];?>";
-var HeaderAsset  = "<?php echo $pgv_lang["header_Asset"];?>";
-var TTEditAsset  = "<?php echo $pgv_lang["tt_edit_Asset"];?>";
-var HeaderAge    = "<?php echo $pgv_lang["header_Age"];?>";
-var TTEditAge    = "<?php echo $pgv_lang["tt_edit_Age"];?>";
-var HeaderRace   = "<?php echo $pgv_lang["header_Race"];?>";
-var TTEditRace   = "<?php echo $pgv_lang["tt_edit_Race"];?>";
-var HeaderSex    = "<?php echo $pgv_lang["header_Sex"];?>";
-var TTEditSex    = "<?php echo $pgv_lang["tt_edit_Sex"];?>";
-var HeaderYOB    = "<?php echo $pgv_lang["header_YOB"];?>";
-var TTEditYOB    = "<?php echo $pgv_lang["tt_edit_YOB"];?>";
-var HeaderBmth   = "<?php echo $pgv_lang["header_Bmth"];?>";
-var TTEditBmth   = "<?php echo $pgv_lang["tt_edit_Bmth"];?>";
-var HeaderYrsM   = "<?php echo $pgv_lang["header_YrsM"];?>";
-var TTEditYrsM   = "<?php echo $pgv_lang["tt_edit_YrsM"];?>";
-var HeaderChilB  = "<?php echo $pgv_lang["header_ChilB"];?>";
-var TTEditChilB  = "<?php echo $pgv_lang["tt_edit_ChilB"];?>";
-var HeaderChilL  = "<?php echo $pgv_lang["header_ChilL"];?>";
-var TTEditChilL  = "<?php echo $pgv_lang["tt_edit_ChilL"];?>";
-var HeaderChilD  = "<?php echo $pgv_lang["header_ChilD"];?>";
-var TTEditChilD  = "<?php echo $pgv_lang["tt_edit_ChilD"];?>";
-var HeaderAgeM   = "<?php echo $pgv_lang["header_AgM"];?>";
-var TTEditAgeM   = "<?php echo $pgv_lang["tt_edit_AgM"];?>";
-var HeaderOccu   = "<?php echo $pgv_lang["header_Occu"];?>";
-var TTEditOccu   = "<?php echo $pgv_lang["tt_edit_Occu"];?>";
-var HeaderBplace = "<?php echo $pgv_lang["header_Bplace"];?>";    // Full format
-var TTEditBplace = "<?php echo $pgv_lang["tt_edit_Bplace"];?>";   // Full format
-var HeaderBP     = "<?php echo $pgv_lang["header_BP"];?>";        // Chapman format
-var TTEditBP     = "<?php echo $pgv_lang["tt_edit_BP"];?>";       // Chapman format
-var HeaderFBP    = "<?php echo $pgv_lang["header_FBP"];?>";       // Chapman format
-var TTEditFBP    = "<?php echo $pgv_lang["tt_edit_FBP"];?>";      // Chapman format
-var HeaderMBP    = "<?php echo $pgv_lang["header_MBP"];?>";       // Chapman format
-var TTEditMBP    = "<?php echo $pgv_lang["tt_edit_MBP"];?>";      // Chapman format
-var HeaderNL     = "<?php echo $pgv_lang["header_NL"];?>";        
-var TTEditNL     = "<?php echo $pgv_lang["tt_edit_NL"];?>";       
-var HeaderHealth = "<?php echo $pgv_lang["header_Health"];?>";
-var TTEditHealth = "<?php echo $pgv_lang["tt_edit_Health"];?>";
-var HeaderYrsUS  = "<?php echo $pgv_lang["header_YrsUS"];?>";
-var TTEditYrsUS  = "<?php echo $pgv_lang["tt_edit_YrsUS"];?>";
-var HeaderYOI    = "<?php echo $pgv_lang["header_YOI"];?>";
-var TTEditYOI    = "<?php echo $pgv_lang["tt_edit_YOI"];?>";
-var HeaderNA     = "<?php echo $pgv_lang["header_NA"];?>";
-var TTEditNA     = "<?php echo $pgv_lang["tt_edit_NA"];?>";
-var HeaderYON    = "<?php echo $pgv_lang["header_YON"];?>";
-var TTEditYON    = "<?php echo $pgv_lang["tt_edit_YON"];?>";
-var HeaderEngL   = "<?php echo $pgv_lang["header_EngL"];?>";
-var TTEditEngL   = "<?php echo $pgv_lang["tt_edit_EngL"];?>";
-var HeaderEng    = "<?php echo $pgv_lang["header_Eng"];?>";
-var TTEditEng    = "<?php echo $pgv_lang["tt_edit_Eng"];?>";
-var HeaderInd    = "<?php echo $pgv_lang["header_Ind"];?>";
-var TTEditInd    = "<?php echo $pgv_lang["tt_edit_Ind"];?>";
-var HeaderEmp    = "<?php echo $pgv_lang["header_Emp"];?>";
-var TTEditEmp    = "<?php echo $pgv_lang["tt_edit_Emp"];?>";
-var HeaderEmR    = "<?php echo $pgv_lang["header_EmR"];?>";
-var TTEditEmR    = "<?php echo $pgv_lang["tt_edit_EmR"];?>";
-var HeaderEmD    = "<?php echo $pgv_lang["header_EmD"];?>";
-var TTEditEmD    = "<?php echo $pgv_lang["tt_edit_EmD"];?>";
-var HeaderEmH    = "<?php echo $pgv_lang["header_EmH"];?>";
-var TTEditEmH    = "<?php echo $pgv_lang["tt_edit_EmH"];?>";
-var HeaderEmN    = "<?php echo $pgv_lang["header_EmN"];?>";
-var TTEditEmN    = "<?php echo $pgv_lang["tt_edit_EmN"];?>";
-var HeaderEduc    = "<?php echo $pgv_lang["header_Educ"];?>";
-var TTEditEduc    = "<?php echo $pgv_lang["tt_edit_Educ"];?>";
-var HeaderBIC    = "<?php echo $pgv_lang["header_BIC"];?>";
-var TTEditBIC    = "<?php echo $pgv_lang["tt_edit_BIC"];?>";
-var HeaderBOE    = "<?php echo $pgv_lang["header_BOE"];?>";
-var TTEditBOE    = "<?php echo $pgv_lang["tt_edit_BOE"];?>";
-var HeaderInfirm = "<?php echo $pgv_lang["header_Infirm"];?>";
-var TTEditInfirm = "<?php echo $pgv_lang["tt_edit_Infirm"];?>";
-var HeaderVet    = "<?php echo $pgv_lang["header_Vet"];?>";
-var TTEditVet    = "<?php echo $pgv_lang["tt_edit_Vet"];?>";
+var HeaderName        = "<?php echo $pgv_lang["header_Name"];?>";
+var TTEditName        = "<?php echo $pgv_lang["tt_edit_Name"];?>";
+var HeaderRela        = "<?php echo $pgv_lang["header_Rela"];?>";
+var TTEditRela        = "<?php echo $pgv_lang["tt_edit_Rela"];?>";
+var HeaderMCond       = "<?php echo $pgv_lang["header_MCond"];?>";
+var TTEditMCond       = "<?php echo $pgv_lang["tt_edit_MCond"];?>";
+var HeaderAsset       = "<?php echo $pgv_lang["header_Asset"];?>";
+var TTEditAsset       = "<?php echo $pgv_lang["tt_edit_Asset"];?>";
+var HeaderAge         = "<?php echo $pgv_lang["header_Age"];?>";
+var TTEditAge         = "<?php echo $pgv_lang["tt_edit_Age"];?>";
+var HeaderRace        = "<?php echo $pgv_lang["header_Race"];?>";
+var TTEditRace        = "<?php echo $pgv_lang["tt_edit_Race"];?>";
+var HeaderSex         = "<?php echo $pgv_lang["header_Sex"];?>";
+var TTEditSex         = "<?php echo $pgv_lang["tt_edit_Sex"];?>";
+var HeaderYOB         = "<?php echo $pgv_lang["header_YOB"];?>";
+var TTEditYOB         = "<?php echo $pgv_lang["tt_edit_YOB"];?>";
+var HeaderBmth        = "<?php echo $pgv_lang["header_Bmth"];?>";
+var TTEditBmth        = "<?php echo $pgv_lang["tt_edit_Bmth"];?>";
+var HeaderYrsM        = "<?php echo $pgv_lang["header_YrsM"];?>";
+var TTEditYrsM        = "<?php echo $pgv_lang["tt_edit_YrsM"];?>";
+var HeaderChilB       = "<?php echo $pgv_lang["header_ChilB"];?>";
+var TTEditChilB       = "<?php echo $pgv_lang["tt_edit_ChilB"];?>";
+var HeaderChilL       = "<?php echo $pgv_lang["header_ChilL"];?>";
+var TTEditChilL       = "<?php echo $pgv_lang["tt_edit_ChilL"];?>";
+var HeaderChilD       = "<?php echo $pgv_lang["header_ChilD"];?>";
+var TTEditChilD       = "<?php echo $pgv_lang["tt_edit_ChilD"];?>";
+var HeaderAgeM        = "<?php echo $pgv_lang["header_AgM"];?>";
+var TTEditAgeM        = "<?php echo $pgv_lang["tt_edit_AgM"];?>";
+var HeaderOccu        = "<?php echo $pgv_lang["header_Occu"];?>";
+var TTEditOccu        = "<?php echo $pgv_lang["tt_edit_Occu"];?>";
+var HeaderBplace      = "<?php echo $pgv_lang["header_Bplace"];?>";    // Full format
+var TTEditBplace      = "<?php echo $pgv_lang["tt_edit_Bplace"];?>";   // Full format
+var HeaderBP          = "<?php echo $pgv_lang["header_BP"];?>";        // Chapman format
+var TTEditBP          = "<?php echo $pgv_lang["tt_edit_BP"];?>";       // Chapman format
+var HeaderFBP         = "<?php echo $pgv_lang["header_FBP"];?>";       // Chapman format
+var TTEditFBP         = "<?php echo $pgv_lang["tt_edit_FBP"];?>";      // Chapman format
+var HeaderMBP         = "<?php echo $pgv_lang["header_MBP"];?>";       // Chapman format
+var TTEditMBP         = "<?php echo $pgv_lang["tt_edit_MBP"];?>";      // Chapman format
+var HeaderNL          = "<?php echo $pgv_lang["header_NL"];?>";        
+var TTEditNL          = "<?php echo $pgv_lang["tt_edit_NL"];?>";       
+var HeaderHealth      = "<?php echo $pgv_lang["header_Health"];?>";
+var TTEditHealth      = "<?php echo $pgv_lang["tt_edit_Health"];?>";
+var HeaderYrsUS       = "<?php echo $pgv_lang["header_YrsUS"];?>";
+var TTEditYrsUS       = "<?php echo $pgv_lang["tt_edit_YrsUS"];?>";
+var HeaderYOI         = "<?php echo $pgv_lang["header_YOI"];?>";
+var TTEditYOI         = "<?php echo $pgv_lang["tt_edit_YOI"];?>";
+var HeaderNA          = "<?php echo $pgv_lang["header_NA"];?>";
+var TTEditNA          = "<?php echo $pgv_lang["tt_edit_NA"];?>";
+var HeaderYON         = "<?php echo $pgv_lang["header_YON"];?>";
+var TTEditYON         = "<?php echo $pgv_lang["tt_edit_YON"];?>";
+var HeaderEngL        = "<?php echo $pgv_lang["header_EngL"];?>";
+var TTEditEngL        = "<?php echo $pgv_lang["tt_edit_EngL"];?>";
+var HeaderEng         = "<?php echo $pgv_lang["header_Eng"];?>";
+var TTEditEng         = "<?php echo $pgv_lang["tt_edit_Eng"];?>";
+var HeaderInd         = "<?php echo $pgv_lang["header_Ind"];?>";
+var TTEditInd         = "<?php echo $pgv_lang["tt_edit_Ind"];?>";
+var HeaderEmp         = "<?php echo $pgv_lang["header_Emp"];?>";
+var TTEditEmp         = "<?php echo $pgv_lang["tt_edit_Emp"];?>";
+var HeaderEmR         = "<?php echo $pgv_lang["header_EmR"];?>";
+var TTEditEmR         = "<?php echo $pgv_lang["tt_edit_EmR"];?>";
+var HeaderEmD         = "<?php echo $pgv_lang["header_EmD"];?>";
+var TTEditEmD         = "<?php echo $pgv_lang["tt_edit_EmD"];?>";
+var HeaderEmH         = "<?php echo $pgv_lang["header_EmH"];?>";
+var TTEditEmH         = "<?php echo $pgv_lang["tt_edit_EmH"];?>";
+var HeaderEmN         = "<?php echo $pgv_lang["header_EmN"];?>";
+var TTEditEmN         = "<?php echo $pgv_lang["tt_edit_EmN"];?>";
+var HeaderEduc        = "<?php echo $pgv_lang["header_Educ"];?>";
+var TTEditEduc        = "<?php echo $pgv_lang["tt_edit_Educ"];?>";
+var HeaderBIC         = "<?php echo $pgv_lang["header_BIC"];?>";
+var TTEditBIC         = "<?php echo $pgv_lang["tt_edit_BIC"];?>";
+var HeaderBOE         = "<?php echo $pgv_lang["header_BOE"];?>";
+var TTEditBOE         = "<?php echo $pgv_lang["tt_edit_BOE"];?>";
+var HeaderInfirm      = "<?php echo $pgv_lang["header_Infirm"];?>";
+var TTEditInfirm      = "<?php echo $pgv_lang["tt_edit_Infirm"];?>";
+var HeaderVet         = "<?php echo $pgv_lang["header_Vet"];?>";
+var TTEditVet         = "<?php echo $pgv_lang["tt_edit_Vet"];?>";
+var HeaderTenure      = "<?php echo $pgv_lang["header_Tenure"];?>";
+var TTEditTenure      = "<?php echo $pgv_lang["tt_edit_Tenure"];?>";
+var HeaderParent      = "<?php echo $pgv_lang["header_Parent"];?>";
+var TTEditParent      = "<?php echo $pgv_lang["tt_edit_Parent"];?>";
+var HeaderMmth        = "<?php echo $pgv_lang["header_Mmth"];?>";
+var TTEditMmth        = "<?php echo $pgv_lang["tt_edit_Mmth"];?>";
+var HeaderMnse        = "<?php echo $pgv_lang["header_Mnse"];?>";
+var TTEditMnse        = "<?php echo $pgv_lang["tt_edit_Mnse"];?>";
+var HeaderWksu        = "<?php echo $pgv_lang["header_Wksu"];?>";
+var TTEditWksu        = "<?php echo $pgv_lang["tt_edit_Wksu"];?>";
+var HeaderMnsu        = "<?php echo $pgv_lang["header_Mnsu"];?>";
+var TTEditMnsu        = "<?php echo $pgv_lang["tt_edit_Mnsu"];?>";
+var HeaderHome        = "<?php echo $pgv_lang["header_Home"];?>";
+var TTEditHome        = "<?php echo $pgv_lang["tt_edit_Home"];?>";
+var HeaderSitu        = "<?php echo $pgv_lang["header_Situ"];?>";
+var TTEditSitu        = "<?php echo $pgv_lang["tt_edit_Situ"];?>";
+var HeaderWar         = "<?php echo $pgv_lang["header_War"];?>";
+var TTEditWar         = "<?php echo $pgv_lang["tt_edit_War"];?>";
+var HeaderInfirm1910  = "<?php echo $pgv_lang["header_Infirm1910"];?>";
+var TTEditInfirm1910  = "<?php echo $pgv_lang["tt_edit_Infirm1910"];?>";
+var HeaderEducpre1890 = "<?php echo $pgv_lang["header_Educpre1890"];?>";
+var TTEditEducpre1890 = "<?php echo $pgv_lang["tt_edit_Educpre1890"];?>";
 
-var HeaderLang   = "<?php echo $pgv_lang["header_Lang"];?>";
-var TTEditLang   = "<?php echo $pgv_lang["tt_edit_Lang"];?>";
-
-
+var HeaderLang        = "<?php echo $pgv_lang["header_Lang"];?>";
+var TTEditLang        = "<?php echo $pgv_lang["tt_edit_Lang"];?>";
 
 // Load Edit Table variables =====================================================
 var INPUT_NAME_PREFIX = 'InputCell_'; // this is being set via script
@@ -155,15 +175,15 @@ function preview() {
 	str += ".start_formatted_area.";
 	
 	var tbl = document.getElementById('tblSample');
+
 	for(var i=0; i<tbl.rows.length; i++){
 		var tr = tbl.rows[i];
 		var strRow = '';
-		
 		if (NoteCtry.value=="UK") {
 			// UK 1921 or 1911 ===============
 			if (NoteYear.value=="1921" || NoteYear.value=="1911") {
 				for(var j=2; j<tr.cells.length-3; j++) {  
-					if (j==5 || j==7 || (j>=9 && j<=14) || (j>=19 && j<=30) || j==32 || j==35 || j==36 || (j>=38 && j<=41) || (j>=43 && j<=54) || j==56 ) {
+					if (j==5 || j==6 || j==8 || (j>=10 && j<=15) || (j>=20 && j<=34) || j==36 || (j>=39 && j<=41) || (j>=43 && j<=49) || (j>=51 && j<=62) || (j>=64 && j<=67) ) {
 							continue;
 					}else{
 						if (i==0) {
@@ -176,7 +196,7 @@ function preview() {
 			// UK 1901 ===============
 			} else if (NoteYear.value=="1901") {
 				for(var j=2; j<tr.cells.length-3; j++) {	// == j=2 means miss out cols 0 and 1 (# and pid), cells.length-3 means miss out del, ins and item # 
-					if ( j==5 || j==7 || (j>=9 && j<=30) || j==32 || j==33 || j==35 || j==36 || (j>=38 && j<=41) || (j>=43 && j<=54) || j==56 ) { 
+					if ( j==5 || j==6 || j==8 || (j>=10 && j<=34) || j==36 || j==37 || (j>=39 && j<=41) || (j>=43 && j<=49) || (j>=51 && j<=62) || (j>=64 && j<=67) ) { 
 							continue;
 					}else{
 						if (i==0) {
@@ -189,7 +209,7 @@ function preview() {
 			// UK 1891 ===============
 			} else if (NoteYear.value=="1891") {
 				for(var j=2; j<tr.cells.length-3; j++) {	// == j=2 means miss out cols 0 and 1 (# and pid), cells.length-3 means miss out del, ins and item # 
-					if ( j==5 || j==7 || (j>=9 && j<=30) || (j>=32 && j<=34) || j==37 || (j>=39 && j<=41) || (j>=43 && j<=54) || j==56 ) { 
+					if ( j==5 || j==6 || j==8 || (j>=10 && j<=34) || (j>=36 && j<=38) || j==41 || j==42 || (j>=44 && j<=49) || (j>=51 && j<=62) || (j>=64 && j<=67) ) { 
 							continue;
 					}else{
 						if (i==0) {
@@ -202,7 +222,7 @@ function preview() {
 			// UK 1951-1881 ============
 			} else if (NoteYear.value=="1851" || NoteYear.value=="1861" || NoteYear.value=="1871" || NoteYear.value=="1881") {
 				for(var j=2; j<tr.cells.length-3; j++) {	// == j=2 means miss out cols 0 and 1 (# and pid), cells.length-3 means miss out del, ins and item # 
-					if ( j==5 || j==7 || (j>=9 && j<=30) || (j>=32 && j<=41) || (j>=43 && j<=54) || j==56 ) { 
+					if ( j==5 || j==6 || j==8 || (j>=10 && j<=34) || (j>=36 && j<=49) || (j>=51 && j<=62) || (j>=64 && j<=67) ) { 
 							continue;
 					}else{
 						if (i==0) {
@@ -215,7 +235,7 @@ function preview() {
 			// UK 1841 ===============
 			} else if (NoteYear.value=="1841") {
 				for(var j=2; j<tr.cells.length-3; j++) {	// == j=2 means miss out cols 0 and 1 (# and pid), cells.length-3 means miss out del, ins and item # 
-					if ( j==3 || j==4 || j==5 || j==7 || (j>=9 && j<=30) || (j>=32 && j<=43) || (j>=46 && j<=56) ) { 
+					if ( (j>=3 && j<=6) || j==8 || (j>=10 && j<=34) || (j>=36 && j<=51) || (j>=54 && j<=67) ) {  
 							continue;
 					}else{
 						if (i==0) {
@@ -231,7 +251,7 @@ function preview() {
 			// USA 1930 ===============
 			if (NoteYear.value=="1930") {
 				for(var j=2; j<tr.cells.length-3; j++) {	// == j=2 means miss out cols 0 and 1 (# and pid), cells.length-3 means miss out del, ins and item # 
-					if ( j==4 || j==6 || j==7 || j==10 || j==12 || j==13 || (j>=15 && j<=18) || (j>=20 && j<=38) || j==40 || j==41 || j==42 || j==44 || j==45 || j==55 ) { 
+					if ( j==4 || j==5 || j==7 || j==8 || j==11 || j==13 || j==14 || (j>=16 && j<=19) || (j>=21 && j<=45) || (j>=47 && j<=50) || j==52 || j==53 || j==63 || j==64 || j==67 ) { 
 							continue;
 					}else{
 						if (i==0) {
@@ -242,10 +262,11 @@ function preview() {
 					}
 				}
 			} 
+
 			// USA 1920 ===============
 			else if (NoteYear.value=="1920") {
 				for(var j=2; j<tr.cells.length-3; j++) {	// == j=2 means miss out cols 0 and 1 (# and pid), cells.length-3 means miss out del, ins and item # 
-					if ( j==4 || j==6 || j==7 || j==10 || j==12 || j==13 || (j>=15 && j<=26) || (j>=30 && j<=38) || j==40 || j==41 || j==42 || j==44 || j==45 || j==49 || j==50 || j==55 || j==56 ) { 
+					if ( j==4 || (j>=6 && j<=8) || j==11 || j==13 || j==14 || (j>=16 && j<=30) || (j>=34 && j<=45) || (j>=47 && j<=50) || j==52 || j==53 || j==57 || j==58 || (j>=63 && j<=67) ) { 
 							continue;
 					}else{
 						if (i==0) {
@@ -256,10 +277,11 @@ function preview() {
 					}
 				}
 			}
+
 			// USA 1910 ===============
 			else if (NoteYear.value=="1910") {
 				for(var j=2; j<tr.cells.length-3; j++) {	// == j=2 means miss out cols 0 and 1 (# and pid), cells.length-3 means miss out del, ins and item # 
-					if ( (j>=4 && j<=7) || j==10 || j==12 || j==13 || (j>=18 && j<=22) || j==26 || j==29 || j==32 || (j>=35 && j<=38) || j==40 || (j>=42 && j<=54) ) { 
+					if ( (j>=4 && j<=8) || j==11 || j==13 || j==14 || (j>=19 && j<=26) || j==33 || j==36 || (j>=39 && j<=42) || j==45 || j==47 || j==48 || (j>=50 && j<=64) || j==66 ) { 
 							continue;
 					}else{
 						if (i==0) {
@@ -273,7 +295,7 @@ function preview() {
 			// USA 1900 ===============
 			else if (NoteYear.value=="1900") {
 				for(var j=2; j<tr.cells.length-3; j++) {	// == j=2 means miss out cols 0 and 1 (# and pid), cells.length-3 means miss out del, ins and item # 
-					if ( (j>=4 && j<=7) || j==12 || j==13 || (j>=18 && j<=22) || j==26 || j==29 || j==30 || j==32 || j==33 || (j>=35 && j<=38) || (j>=42 && j<=56) ) { 
+					if ( (j>=4 && j<=7) || j==10 || j==13 || j==14 || (j>=19 && j<=26) || j==30 || j==33 || j==34 || (j>=36 && j<=44) || j==47 || (j>=50 && j<=67) ) { 
 							continue;
 					}else{
 						if (i==0) {
@@ -287,7 +309,7 @@ function preview() {
 			// USA 1890 ===============
 			else if (NoteYear.value=="1890") {
 				for(var j=2; j<tr.cells.length-3; j++) {	// == j=2 means miss out cols 0 and 1 (# and pid), cells.length-3 means miss out del, ins and item # 
-					if ( (j>=4 && j<=7) || j==10 || j==12 || j==13 || (j>=18 && j<=22) || j==27 || j==29 || j==30 || j==32 || j==33 || (j>=35 && j<=38) || (j>=41 && j<=54) || j==56 ) { 
+					if ( (j>=4 && j<=7) || j==10 || j==11 || j==13 || j==14 || (j>=19 && j<=26) || j==31 || j==33 || j==34 || j==36 || j==37 || j==39 || j==40 || (j>=42 && j<=45) || j==47 || (j>=49 && j<=63) || (j>=65 && j<=67) ) { 
 							continue;
 					}else{
 						if (i==0) {
@@ -301,7 +323,7 @@ function preview() {
 			// USA 1880 ===============
 			else if (NoteYear.value=="1880") {
 				for(var j=2; j<tr.cells.length-3; j++) {	// == j=2 means miss out cols 0 and 1 (# and pid), cells.length-3 means miss out del, ins and item # 
-					if ( (j>=3 && j<=6) || j==9 || j==10 || (j>=15 && j<=32) || (j>=33 && j<=38) || (j>=40 && j<=42) || (j>=44 && j<=45) || (j>=48 && j<=56) ) { 
+					if ( (j>=3 && j<=7) || j==10 || j==11 || (j>=17 && j<=34) || (j>=37 && j<=44) || (j>=40 && j<=42) || j==46 || j==49 || j==50 || j==52 || j==53 || (j>=56 && j<=67) ) { 
 							continue;
 					}else{
 						if (i==0) {
@@ -312,10 +334,24 @@ function preview() {
 					}
 				}
 			}
-			// USA 1870, 1860 or 1850 ===============
-			else if (NoteYear.value=="1870" || NoteYear.value=="1860" || NoteYear.value=="1850") {
+			// USA 1870 ===============
+			else if (NoteYear.value=="1870") {
 				for(var j=2; j<tr.cells.length-3; j++) {	// == j=2 means miss out cols 0 and 1 (# and pid), cells.length-3 means miss out del, ins and item # 
-					if ( (j>=3 && j<=5) || j==7 || (j>=10 && j<=19) || (j>=23 && j<=38) || (j>=40 && j<=54) || j==56 ) { 
+					if ( (j>=3 && j<=6) || j==8 || (j>=11 && j<=19) || (j>=27 && j<=46) || (j>=48 && j<=62) || (j>=64 && j<=67) ) { 
+							continue;
+					}else{
+						if (i==0) {
+							strRow += (strRow==''?'':'|') + tr.cells[j].childNodes[0].id;
+						}else{
+							strRow += (strRow==''?'':'|') + tr.cells[j].childNodes[0].value;
+						}
+					}
+				}
+			}
+			// USA 1860 or 1850 ===============
+			else if (NoteYear.value=="1860" || NoteYear.value=="1850") {
+				for(var j=2; j<tr.cells.length-3; j++) {	// == j=2 means miss out cols 0 and 1 (# and pid), cells.length-3 means miss out del, ins and item # 
+					if ( (j>=3 && j<=6) || j==8 || (j>=11 && j<=19) || j==24 || j==25 || (j>=27 && j<=46) || (j>=48 && j<=62) || (j>=64 && j<=67) ) {
 							continue;
 					}else{
 						if (i==0) {
@@ -332,6 +368,7 @@ function preview() {
 		}
 		str += (str==''?'':'\n') + strRow;
 	}
+
 	var mem = document.getElementById('NOTE');
 	if (Notes.value!="" && Notes.value!=null) {
 		mem.value = str + "\n.end_formatted_area.\n\nNotes:\n"+Notes.value;
@@ -356,8 +393,9 @@ function myRowObject(	zero, one, two, three, four, five, six, seven, eight, nine
 						twenty, twentyone, twentytwo, twentythree, twentyfour, twentyfive, twentysix, twentyseven, twentyeight, twentynine, 
 						thirty, thirtyone, thirtytwo, thirtythree, thirtyfour, thirtyfive, thirtysix, thirtyseven, thirtyeight, thirtynine, 
 						forty, fortyone, fortytwo, fortythree, fortyfour, fortyfive, fortysix, fortyseven, fortyeight, fortynine, 
-						fifty, fiftyone, fiftytwo, fiftythree, fiftyfour, fiftyfive, fiftysix, 
-						cb, ra, fiftynine 
+						fifty, fiftyone, fiftytwo, fiftythree, fiftyfour, fiftyfive, fiftysix, fiftyseven, fiftyeight, fiftynine, 
+						sixty, sixtyone, sixtytwo, sixtythree, sixtyfour, sixtyfive, sixtysix, sixtyseven, 
+						cb, ra, seventy 
 					) 
 {
 						
@@ -418,9 +456,21 @@ function myRowObject(	zero, one, two, three, four, five, six, seven, eight, nine
 	this.fiftyfour	 = fiftyfour;	 // input text object
 	this.fiftyfive	 = fiftyfive;	 // input text object
 	this.fiftysix	 = fiftysix;	 // input text object
+	this.fiftyseven	 = fiftyseven;	 // input text object
+	this.fiftyeight	 = fiftyeight;	 // input text object
+	this.fiftynine	 = fiftynine;	 // input text object
+	this.sixty		 = sixty;		 // input text object
+	this.sixtyone	 = sixtyone;	 // input text object
+	this.sixtytwo	 = sixtytwo;	 // input text object
+	this.sixtythree	 = sixtythree;	 // input text object
+	this.sixtyfour	 = sixtyfour;	 // input text object
+	this.sixtyfive	 = sixtyfive;	 // input text object
+	this.sixtysix	 = sixtysix;	 // input text object
+	this.sixtyseven	 = sixtyseven;	 // input text object
+	
 	this.cb			 = cb;			 // input checkbox object
 	this.ra			 = ra;			 // input radio object
-	this.fiftynine	 = fiftynine;	 // text object
+	this.seventy	 = seventy;		 // text object
 }
 
 function create_header() {
@@ -492,452 +542,261 @@ function addRowToTable(num, pid, nam, label, gend, cond, yob, age2, YMD, occu, b
 		}else{
 			age="";
 		}
+		
 		// add the row ==================================================
 		var row = tbl.tBodies[0].insertRow(num);
+		
 		// a. Define Cells ==============================================
-		var cell_0 = row.insertCell(0);				// Item Number
-			cell_0.setAttribute('id', 'col_0');
-			cell_0.setAttribute('name', 'col_0');
-		var cell_1 = row.insertCell(1);				// Indi ID
-			cell_1.setAttribute('id', 'col_1');
-			cell_1.setAttribute('name', 'col_1');
-		var cell_2 = row.insertCell(2);				// Name
-			cell_2.setAttribute('id', 'col_2');	
-			cell_2.setAttribute('name', 'col_2');
-		var cell_3 = row.insertCell(3);				// Relation_1
-			cell_3.setAttribute('id', 'col_3');
-			cell_3.setAttribute('name', 'col_3');
-		var cell_4 = row.insertCell(4);				// Conditition_1
-			cell_4.setAttribute('id', 'col_4');
-			cell_4.setAttribute('name', 'col_4');
-		var cell_5 = row.insertCell(5);				// Assets_1
-			cell_5.setAttribute('id', 'col_5');
-			cell_5.setAttribute('name', 'col_5');
-		var cell_6 = row.insertCell(6);				// Age_1
-			cell_6.setAttribute('id', 'col_6');
-			cell_6.setAttribute('name', 'col_6');
-		var cell_7 = row.insertCell(7);				// Race_1
-			cell_7.setAttribute('id', 'col_7');
-			cell_7.setAttribute('name', 'col_7');
-		var cell_8 = row.insertCell(8);				// Sex
-			cell_8.setAttribute('id', 'col_8');
-			cell_8.setAttribute('name', 'col_8');
-		var cell_9 = row.insertCell(9);				// Race_2
-			cell_9.setAttribute('id', 'col_9');
-			cell_9.setAttribute('name', 'col_9');
-		var cell_10 = row.insertCell(10);			// YOB (Month Year for USA)
-			cell_10.setAttribute('id', 'col_10');
-			cell_10.setAttribute('name', 'col_10');
-		var cell_11 = row.insertCell(11);			// Age_2
-			cell_11.setAttribute('id', 'col_11');
-			cell_11.setAttribute('name', 'col_11');
-		var cell_12 = row.insertCell(12);			// Mnth
-			cell_12.setAttribute('id', 'col_12');
-			cell_12.setAttribute('name', 'col_12');
-		var cell_13 = row.insertCell(13);			// Relation_2
-			cell_13.setAttribute('id', 'col_13');
-			cell_13.setAttribute('name', 'col_13');
-		var cell_14 = row.insertCell(14);			// Conditition_2
-			cell_14.setAttribute('id', 'col_14');
-			cell_14.setAttribute('name', 'col_14');
-		var cell_15 = row.insertCell(15);			// YrsM
-			cell_15.setAttribute('id', 'col_15');
-			cell_15.setAttribute('name', 'col_15');
-		var cell_16 = row.insertCell(16);			// ChilB
-			cell_16.setAttribute('id', 'col_16');
-			cell_16.setAttribute('name', 'col_16');
-		var cell_17 = row.insertCell(17);			// ChilL
-			cell_17.setAttribute('id', 'col_17');
-			cell_17.setAttribute('name', 'col_17');
-		var cell_18 = row.insertCell(18);			// ChilD
-			cell_18.setAttribute('id', 'col_18');
-			cell_18.setAttribute('name', 'col_18');
-		var cell_19 = row.insertCell(19);			// AgeM
-			cell_19.setAttribute('id', 'col_19');
-			cell_19.setAttribute('name', 'col_19');
-		var cell_20 = row.insertCell(20);			// Occupation_1
-			cell_20.setAttribute('id', 'col_20');
-			cell_20.setAttribute('name', 'col_20');
-		var cell_21 = row.insertCell(21);			// Assets_2
-			cell_21.setAttribute('id', 'col_21');
-			cell_21.setAttribute('name', 'col_21');
-		var cell_22 = row.insertCell(22);			// Birthpl_1
-			cell_22.setAttribute('id', 'col_22');
-			cell_22.setAttribute('name', 'col_22');
-		var cell_23 = row.insertCell(23);			// POB_1
-			cell_23.setAttribute('id', 'col_23');
-			cell_23.setAttribute('name', 'col_23');
-		var cell_24 = row.insertCell(24);			// FPOB_1
-			cell_24.setAttribute('id', 'col_24');
-			cell_24.setAttribute('name', 'col_24');
-		var cell_25 = row.insertCell(25);			// MPOB_1
-			cell_25.setAttribute('id', 'col_25');
-			cell_25.setAttribute('name', 'col_25');
-		var cell_26 = row.insertCell(26);			// Years in USA YrsUS
-			cell_26.setAttribute('id', 'col_26');
-			cell_26.setAttribute('name', 'col_26');
-		var cell_27 = row.insertCell(27);			// Year of Immigration YOI_1
-			cell_27.setAttribute('id', 'col_27');
-			cell_27.setAttribute('name', 'col_27');
-		var cell_28 = row.insertCell(28);			// Naturalized or Alien Nat/Aln_1
-			cell_28.setAttribute('id', 'col_28');
-			cell_28.setAttribute('name', 'col_28');
-		var cell_29 = row.insertCell(29);			// Year of Naturalization YON
-			cell_29.setAttribute('id', 'col_29');
-			cell_29.setAttribute('name', 'col_29');
-		var cell_30 = row.insertCell(30);			// If English spoken, if Not, language spoken Eng/Lang
-			cell_30.setAttribute('id', 'col_30');
-			cell_30.setAttribute('name', 'col_30');
-		var cell_31 = row.insertCell(31);			// Occupation_2
-			cell_31.setAttribute('id', 'col_31');
-			cell_31.setAttribute('name', 'col_31');
-		var cell_32 = row.insertCell(32);			// Health
-			cell_32.setAttribute('id', 'col_32');
-			cell_32.setAttribute('name', 'col_32');
-		var cell_33 = row.insertCell(33);			// Industry_1
-			cell_33.setAttribute('id', 'col_33');
-			cell_33.setAttribute('name', 'col_33');
-		var cell_34 = row.insertCell(34);			// Employment_1
-			cell_34.setAttribute('id', 'col_34');
-			cell_34.setAttribute('name', 'col_34');
-		var cell_35 = row.insertCell(35);			// Employer EmR
-			cell_35.setAttribute('id', 'col_35');
-			cell_35.setAttribute('name', 'col_35');
-		var cell_36 = row.insertCell(36);			// Employed EmD
-			cell_36.setAttribute('id', 'col_36');
-			cell_36.setAttribute('name', 'col_36');
-		var cell_37 = row.insertCell(37);			// Working at Home  EmH
-			cell_37.setAttribute('id', 'col_37');
-			cell_37.setAttribute('name', 'col_37');
-		var cell_38 = row.insertCell(38);			// Employment Neither EmN
-			cell_38.setAttribute('id', 'col_38');
-			cell_38.setAttribute('name', 'col_38');
-		var cell_39 = row.insertCell(39);			// Education = "---" (School/Read/Write)
-			cell_39.setAttribute('id', 'col_39');
-			cell_39.setAttribute('name', 'col_39');
-		var cell_40 = row.insertCell(40);			// Can speak English_1 (Eng_1)
-			cell_40.setAttribute('id', 'col_40');
-			cell_40.setAttribute('name', 'col_40');
-		var cell_41 = row.insertCell(41);			// Assets_3
-			cell_41.setAttribute('id', 'col_41');
-			cell_41.setAttribute('name', 'col_41');
-		var cell_42 = row.insertCell(42);			// Birtkpl_2
-			cell_42.setAttribute('id', 'col_42');
-			cell_42.setAttribute('name', 'col_42');
-		var cell_43 = row.insertCell(43);			// POB_2
-			cell_43.setAttribute('id', 'col_43');
-			cell_43.setAttribute('name', 'col_43');
-		var cell_44 = row.insertCell(44);			// BICounty (UK only)
-			cell_44.setAttribute('id', 'col_44');
-			cell_44.setAttribute('name', 'col_44');
-		var cell_45 = row.insertCell(45);			// BOEng (UK only)
-			cell_45.setAttribute('id', 'col_45');
-			cell_45.setAttribute('name', 'col_45');
-		var cell_46 = row.insertCell(46);			// FPOB_2
-			cell_46.setAttribute('id', 'col_46');
-			cell_46.setAttribute('name', 'col_46');
-		var cell_47 = row.insertCell(47);			// MPOB_2
-			cell_47.setAttribute('id', 'col_47');
-			cell_47.setAttribute('name', 'col_47');
-		var cell_48 = row.insertCell(48);			// Lang (Mother Tongue)
-			cell_48.setAttribute('id', 'col_48');
-			cell_48.setAttribute('name', 'col_48');
-		var cell_49 = row.insertCell(49);			// YOI_2
-			cell_49.setAttribute('id', 'col_49');
-			cell_49.setAttribute('name', 'col_49');
-		var cell_50 = row.insertCell(50);			// Nat/Aln_2
-			cell_50.setAttribute('id', 'col_50');
-			cell_50.setAttribute('name', 'col_50');
-		var cell_51 = row.insertCell(51);			// Can speak English_2 (Eng_2)
-			cell_51.setAttribute('id', 'col_51');
-			cell_51.setAttribute('name', 'col_51');
-		var cell_52 = row.insertCell(52);			// Occupation_3
-			cell_52.setAttribute('id', 'col_52');
-			cell_52.setAttribute('name', 'col_52');
-		var cell_53 = row.insertCell(53);			// Industry_2
-			cell_53.setAttribute('id', 'col_53');
-			cell_53.setAttribute('name', 'col_53');
-		var cell_54 = row.insertCell(54);			// Employment_2
-			cell_54.setAttribute('id', 'col_54');
-			cell_54.setAttribute('name', 'col_54');
-		var cell_55 = row.insertCell(55);			// Infirmaties
-			cell_55.setAttribute('id', 'col_55');
-			cell_55.setAttribute('name', 'col_55');
-		var cell_56 = row.insertCell(56);			// Veteran
-			cell_56.setAttribute('id', 'col_56');
-			cell_56.setAttribute('name', 'col_56');
+		var cell_ = new Array(67);
+		for(var i=0; i<=67; i++){
+				cell_[i] = row.insertCell(i);
+				cell_[i].setAttribute('id', 'col_'+i);
+				cell_[i].setAttribute('name', 'col_'+i);
+		}
 
 		if (iteration == 0) {
-			var cell_tdel = row.insertCell(57);		// text Del
-			var cell_tra  = row.insertCell(58);		// text Radio
+			var cell_tdel = row.insertCell(68);		// text Del
+			var cell_tra  = row.insertCell(69);		// text Radio
 		}else{
-			var cell_del = row.insertCell(57);		// Onclick = Delete Row
+			var cell_del = row.insertCell(68);		// Onclick = Delete Row
 				cell_del.setAttribute('align', 'center');
-			var cell_ra = row.insertCell(58);		// Radio button used for inserting a row, rather than adding at end of table)
+			var cell_ra = row.insertCell(69);		// Radio button used for inserting a row, rather than adding at end of table)
 		}
 		
-		var cell_59 = row.insertCell(59);			// Item Number
-			cell_59.setAttribute('id', 'col_59');
-			cell_59.setAttribute('name', 'col_59');
-			cell_59.setAttribute('align', 'center');
+		var cell_70 = row.insertCell(70);			// Item Number
+			cell_70.setAttribute('id', 'col_70');
+			cell_70.setAttribute('name', 'col_70');
+			cell_70.setAttribute('align', 'center');
 			
-		//Basic Hidden Columns
-			cell_3.style.display = "none"; 
-			cell_4.style.display = "none"; 
-			cell_5.style.display = "none";
-			cell_6.style.display = "none";
-			cell_7.style.display = "none";
-			cell_8.style.display = "none";
-			cell_9.style.display = "none";
-			cell_10.style.display = "none";
-			cell_11.style.display = "none";
-			cell_12.style.display = "none";
-			cell_13.style.display = "none";
-			cell_14.style.display = "none";
-			cell_15.style.display = "none";
-			cell_16.style.display = "none";
-			cell_17.style.display = "none";
-			cell_18.style.display = "none";
-			cell_19.style.display = "none";
-			cell_20.style.display = "none";
-			cell_21.style.display = "none";
-			cell_22.style.display = "none";
-			cell_23.style.display = "none";
-			cell_24.style.display = "none";
-			cell_25.style.display = "none";
-			cell_26.style.display = "none";
-			cell_27.style.display = "none";
-			cell_28.style.display = "none";
-			cell_29.style.display = "none";
-			cell_30.style.display = "none";
-			cell_31.style.display = "none";
-			cell_32.style.display = "none";
-			cell_33.style.display = "none";
-			cell_34.style.display = "none";
-			cell_35.style.display = "none";
-			cell_36.style.display = "none";
-			cell_37.style.display = "none";
-			cell_38.style.display = "none";
-			cell_39.style.display = "none";
-			cell_40.style.display = "none";
-			cell_41.style.display = "none";
-			cell_42.style.display = "none";
-			cell_43.style.display = "none";
-			cell_44.style.display = "none";
-			cell_45.style.display = "none";
-			cell_46.style.display = "none";
-			cell_47.style.display = "none";
-			cell_48.style.display = "none";
-			cell_49.style.display = "none";
-			cell_50.style.display = "none";
-			cell_51.style.display = "none";
-			cell_52.style.display = "none";
-			cell_53.style.display = "none";
-			cell_54.style.display = "none";
-			cell_55.style.display = "none";
-			cell_56.style.display = "none";
-			
+		//Basic Hidden Columns (miss out 0,1,2 and >67)
+		for(var i=3; i<=67; i++){
+			cell_[i].style.display = "none"; 
+		}
+
+// alert(cell_[5].id.value);
 		// Show Cell Columns ====================================================
 		
 		// UK =================
 		if (cctry=="UK") {
 			// If 1921 or 1911========================
 			if (cyear=="1911" || cyear=="1921" )	{
-				cell_3.style.display = ""; 
-				cell_4.style.display = ""; 
-				cell_6.style.display = ""; 
-				cell_8.style.display = ""; 
-				cell_15.style.display = ""; 
-				cell_16.style.display = ""; 
-				cell_17.style.display = ""; 
-				cell_18.style.display = "";
-				cell_31.style.display = ""; 
-				cell_33.style.display = ""; 
-				cell_34.style.display = ""; 
-				cell_37.style.display = ""; 
-				cell_42.style.display = ""; 
-				cell_55.style.display = "";
+				cell_[3].style.display = ""; 
+				cell_[4].style.display = ""; 
+				cell_[7].style.display = ""; 
+				cell_[9].style.display = ""; 
+				cell_[16].style.display = ""; 
+				cell_[17].style.display = ""; 
+				cell_[18].style.display = ""; 
+				cell_[19].style.display = "";
+				cell_[35].style.display = ""; 
+				cell_[37].style.display = ""; 
+				cell_[38].style.display = ""; 
+				cell_[42].style.display = ""; 
+				cell_[50].style.display = ""; 
+				cell_[63].style.display = "";
 			} else 
 			if (cyear=="1901")	{
-				cell_3.style.display = ""; 
-				cell_4.style.display = ""; 
-				cell_6.style.display = ""; 
-				cell_8.style.display = ""; 
-				cell_31.style.display = ""; 
-				cell_34.style.display = ""; 
-				cell_37.style.display = ""; 
-				cell_42.style.display = ""; 
-				cell_55.style.display = "";
+				cell_[3].style.display = ""; 
+				cell_[4].style.display = ""; 
+				cell_[7].style.display = ""; 
+				cell_[9].style.display = ""; 
+				cell_[35].style.display = ""; 
+				cell_[38].style.display = ""; 
+				cell_[42].style.display = ""; 
+				cell_[50].style.display = ""; 
+				cell_[63].style.display = "";
 			} else
 			if (cyear=="1891")	{
-				cell_3.style.display = ""; 
-				cell_4.style.display = ""; 
-				cell_6.style.display = ""; 
-				cell_8.style.display = ""; 
-				cell_31.style.display = "";
-				cell_35.style.display = ""; 
-				cell_36.style.display = "";
-				cell_38.style.display = "";
-				cell_42.style.display = ""; 
-				cell_55.style.display = "";
+				cell_[3].style.display = ""; 
+				cell_[4].style.display = ""; 
+				cell_[7].style.display = ""; 
+				cell_[9].style.display = ""; 
+				cell_[35].style.display = "";
+				cell_[39].style.display = ""; 
+				cell_[40].style.display = "";
+				cell_[43].style.display = "";
+				cell_[50].style.display = ""; 
+				cell_[63].style.display = "";
 			} else
 			if (cyear=="1881" || cyear=="1871" || cyear=="1861" || cyear=="1851")	{
-				cell_3.style.display = ""; 
-				cell_4.style.display = ""; 
-				cell_6.style.display = ""; 
-				cell_8.style.display = ""; 
-				cell_31.style.display = ""; 
-				cell_42.style.display = ""; 
-				cell_55.style.display = "";
+				cell_[3].style.display = ""; 
+				cell_[4].style.display = ""; 
+				cell_[7].style.display = ""; 
+				cell_[9].style.display = ""; 
+				cell_[35].style.display = ""; 
+				cell_[50].style.display = ""; 
+				cell_[63].style.display = "";
 			} else
 			if (cyear=="1841")	{
-				cell_6.style.display = ""; 
-				cell_8.style.display = ""; 
-				cell_31.style.display = ""; 
-				cell_44.style.display = ""; 
-				cell_45.style.display = ""; 
+				cell_[7].style.display = ""; 
+				cell_[9].style.display = ""; 
+				cell_[35].style.display = ""; 
+				cell_[52].style.display = ""; 
+				cell_[53].style.display = ""; 
 			} 
 			
 		// USA =================
 		}else if (cctry=="USA")	{
 			// If 1930 ========================
 			if (cyear=="1930" )	{
-				cell_3.style.display = ""; 
-				cell_5.style.display = ""; 
-				cell_8.style.display = ""; 
-				cell_9.style.display = ""; 
-				cell_11.style.display = ""; 
-				cell_14.style.display = ""; 
-				cell_19.style.display = ""; 
-				cell_39.style.display = "";
-			//	cell_42.style.display = ""; 
-				cell_43.style.display = ""; 
-				cell_46.style.display = ""; 
-				cell_47.style.display = ""; 
-				cell_48.style.display = ""; 
-				cell_49.style.display = ""; 
-				cell_50.style.display = ""; 
-				cell_51.style.display = ""; 
-				cell_52.style.display = "";
-				cell_53.style.display = "";
-				cell_54.style.display = "";
-				cell_56.style.display = "";
+				cell_[3].style.display = ""; 
+				cell_[6].style.display = ""; 
+				cell_[9].style.display = ""; 
+				cell_[10].style.display = ""; 
+				cell_[12].style.display = ""; 
+				cell_[15].style.display = ""; 
+				cell_[20].style.display = ""; 
+				cell_[46].style.display = "";
+			//	cell_[50].style.display = ""; 
+				cell_[51].style.display = ""; 
+				cell_[54].style.display = ""; 
+				cell_[55].style.display = ""; 
+				cell_[56].style.display = ""; 
+				cell_[57].style.display = ""; 
+				cell_[58].style.display = ""; 
+				cell_[59].style.display = ""; 
+				cell_[60].style.display = "";
+				cell_[61].style.display = "";
+				cell_[62].style.display = "";
+				cell_[65].style.display = "";
+				cell_[66].style.display = "";
 			} else
 			// If 1920 ========================
 			if (cyear=="1920" )	{
-				cell_3.style.display = ""; 
-				cell_5.style.display = ""; 
-				cell_8.style.display = ""; 
-				cell_9.style.display = ""; 
-				cell_11.style.display = ""; 
-				cell_14.style.display = ""; 
-				cell_27.style.display = ""; 
-				cell_28.style.display = ""; 
-				cell_29.style.display = ""; 
-				cell_39.style.display = "";
-			//	cell_42.style.display = ""; 
-				cell_43.style.display = ""; 
-				cell_46.style.display = ""; 
-				cell_47.style.display = ""; 
-				cell_48.style.display = ""; 
-				cell_51.style.display = ""; 
-				cell_52.style.display = ""; 
-				cell_53.style.display = ""; 
-				cell_54.style.display = "";
+				cell_[3].style.display = ""; 
+				cell_[5].style.display = ""; 
+				cell_[9].style.display = ""; 
+				cell_[10].style.display = ""; 
+				cell_[12].style.display = ""; 
+				cell_[15].style.display = ""; 
+				cell_[31].style.display = ""; 
+				cell_[32].style.display = ""; 
+				cell_[33].style.display = ""; 
+				cell_[46].style.display = "";
+			//	cell_[50].style.display = ""; 
+				cell_[51].style.display = ""; 
+				cell_[54].style.display = ""; 
+				cell_[55].style.display = ""; 
+				cell_[56].style.display = ""; 
+				cell_[59].style.display = ""; 
+				cell_[60].style.display = ""; 
+				cell_[61].style.display = ""; 
+				cell_[62].style.display = "";
 			} else
 			if (cyear=="1910" )	{
-				cell_3.style.display = "";
-				cell_8.style.display = "";
-				cell_9.style.display = "";
-				cell_11.style.display = "";
-				cell_14.style.display = "";
-				cell_15.style.display = "";
-				cell_16.style.display = "";
-				cell_17.style.display = "";
-			//	cell_22.style.display = "";
-				cell_23.style.display = "";
-				cell_24.style.display = "";
-				cell_25.style.display = "";
-				cell_27.style.display = "";
-				cell_28.style.display = "";
-				cell_30.style.display = "";
-				cell_31.style.display = "";
-				cell_33.style.display = "";
-				cell_34.style.display = "";
-				cell_39.style.display = "";
-				cell_41.style.display = ""; 
-				cell_55.style.display = ""; 
-				cell_56.style.display = "";
+				cell_[3].style.display = "";
+				cell_[9].style.display = "";
+				cell_[10].style.display = "";
+				cell_[12].style.display = "";
+				cell_[15].style.display = "";
+				cell_[16].style.display = "";
+				cell_[17].style.display = "";
+				cell_[18].style.display = "";
+			//	cell_[23].style.display = "";
+				cell_[27].style.display = "";
+				cell_[28].style.display = "";
+				cell_[29].style.display = "";
+				cell_[30].style.display = "";
+				cell_[31].style.display = "";
+				cell_[32].style.display = "";
+				cell_[34].style.display = "";
+				cell_[35].style.display = "";
+				cell_[37].style.display = "";
+				cell_[38].style.display = "";
+				cell_[43].style.display = ""; 
+				cell_[44].style.display = ""; 
+				cell_[46].style.display = "";
+				cell_[49].style.display = ""; 
+				cell_[65].style.display = ""; 
+				cell_[67].style.display = "";
 			} else
 			if (cyear=="1900" )	{
-				cell_3.style.display = "";
-				cell_8.style.display = "";
-				cell_9.style.display = "";
-				cell_10.style.display = "";
-				cell_11.style.display = "";
-				cell_14.style.display = "";
-				cell_15.style.display = "";
-				cell_16.style.display = "";
-				cell_17.style.display = "";
-			//	cell_22.style.display = "";
-				cell_23.style.display = "";
-				cell_24.style.display = "";
-				cell_25.style.display = "";
-				cell_27.style.display = "";
-				cell_28.style.display = "";
-				cell_31.style.display = "";
-				cell_34.style.display = "";
-				cell_39.style.display = "";
-				cell_40.style.display = "";
-				cell_41.style.display = ""; 
+				cell_[3].style.display = "";
+				cell_[8].style.display = "";
+				cell_[9].style.display = "";
+				cell_[11].style.display = "";
+				cell_[12].style.display = "";
+				cell_[15].style.display = "";
+				cell_[16].style.display = "";
+				cell_[17].style.display = "";
+				cell_[18].style.display = "";
+			//	cell_[23].style.display = "";
+				cell_[27].style.display = "";
+				cell_[28].style.display = "";
+				cell_[29].style.display = "";
+				cell_[31].style.display = "";
+				cell_[32].style.display = "";
+				cell_[35].style.display = "";
+				cell_[45].style.display = "";
+				cell_[46].style.display = "";
+				cell_[48].style.display = "";
+				cell_[49].style.display = ""; 
 			} else
 			if (cyear=="1890" )	{
-				cell_3.style.display = "";
-				cell_8.style.display = "";
-				cell_9.style.display = "";
-				cell_11.style.display = "";
-				cell_14.style.display = "";
-				cell_15.style.display = "";
-				cell_16.style.display = "";
-				cell_17.style.display = "";
-			//	cell_22.style.display = "";
-				cell_23.style.display = "";
-				cell_24.style.display = "";
-				cell_25.style.display = "";
-				cell_26.style.display = "";
-				cell_28.style.display = "";
-				cell_31.style.display = "";
-				cell_34.style.display = "";
-				cell_39.style.display = "";
-				cell_40.style.display = "";
-				cell_55.style.display = ""; 
+				cell_[3].style.display = "";
+				cell_[8].style.display = "";
+				cell_[9].style.display = "";
+				cell_[12].style.display = "";
+				cell_[15].style.display = "";
+				cell_[16].style.display = "";
+				cell_[17].style.display = "";
+				cell_[18].style.display = "";
+			//	cell_[23].style.display = "";
+				cell_[27].style.display = "";
+				cell_[28].style.display = "";
+				cell_[29].style.display = "";
+				cell_[30].style.display = "";
+				cell_[32].style.display = "";
+				cell_[35].style.display = "";
+				cell_[38].style.display = "";
+				cell_[41].style.display = "";
+				cell_[46].style.display = "";
+				cell_[48].style.display = ""; 
+				cell_[64].style.display = ""; 
 			} else
 			if (cyear=="1880" )	{
-				cell_7.style.display = "";
-				cell_8.style.display = "";
-				cell_11.style.display = "";
-				cell_12.style.display = "";
-				cell_13.style.display = "";
-				cell_14.style.display = "";
-				cell_31.style.display = "";
-				cell_32.style.display = "";
-				cell_39.style.display = "";
-			//	cell_42.style.display = "";
-				cell_43.style.display = "";
-				cell_46.style.display = "";
-				cell_47.style.display = "";
+				cell_[8].style.display = "";
+				cell_[9].style.display = "";
+				cell_[12].style.display = "";
+				cell_[13].style.display = "";
+				cell_[14].style.display = "";
+				cell_[15].style.display = "";
+				cell_[16].style.display = "";
+				cell_[35].style.display = "";
+				cell_[36].style.display = "";
+				cell_[45].style.display = "";
+				cell_[47].style.display = "";
+				cell_[48].style.display = "";
+			//	cell_[50].style.display = "";
+				cell_[51].style.display = "";
+				cell_[54].style.display = "";
+				cell_[55].style.display = "";
 			} else
-			if (cyear=="1870" || cyear=="1860" || cyear=="1850" )	{
-				cell_6.style.display = "";
-				cell_8.style.display = "";
-				cell_9.style.display = "";
-			//	cell_12.style.display = "";
-				cell_20.style.display = "";
-				cell_21.style.display = "";
-				cell_22.style.display = "";
-			//	cell_23.style.display = "";
-				cell_39.style.display = "";
-				cell_55.style.display = "";
+			if (cyear=="1870")	{
+				cell_[7].style.display = "";
+				cell_[9].style.display = "";
+				cell_[10].style.display = "";
+				cell_[21].style.display = "";
+				cell_[22].style.display = "";
+				cell_[23].style.display = "";
+				cell_[24].style.display = "";
+				cell_[25].style.display = "";
+				cell_[26].style.display = "";
+			//	cell_[27].style.display = "";
+				cell_[47].style.display = "";
+				cell_[63].style.display = "";
+			} else
+			if (cyear=="1860" || cyear=="1850" )	{
+				cell_[7].style.display = "";
+				cell_[9].style.display = "";
+				cell_[10].style.display = "";
+				cell_[20].style.display = "";
+				cell_[21].style.display = "";
+				cell_[23].style.display = "";
+				cell_[26].style.display = "";
+			//	cell_[27].style.display = "";
+				cell_[47].style.display = "";
+				cell_[63].style.display = "";
 			}
 			
 		}
@@ -991,7 +850,16 @@ function addRowToTable(num, pid, nam, label, gend, cond, yob, age2, YMD, occu, b
 				txtInp_cond.style.border='0px';
 				txtInp_cond.innerHTML = '<a href="#" alt="'+TTEditMCond+'" title="'+TTEditMCond+'">'+HeaderMCond+'</a>'; 
 				txtInp_cond.setAttribute('id', '.b.'+HeaderMCond);
-		// 5. Assets ----------------------------------------------------------
+		// 5. Tenure ----------------------------------------------------------
+			var txtInp_tenure = document.createElement('div');
+				txtInp_tenure.setAttribute('type', 'text');
+				txtInp_tenure.setAttribute('class', 'descriptionbox');
+				txtInp_tenure.className= 'descriptionbox'; //Required for IE
+				txtInp_tenure.style.fontSize="10px";
+				txtInp_tenure.style.border='0px';
+				txtInp_tenure.innerHTML = '<a href="#" alt="'+TTEditTenure+'" title="'+TTEditTenure+'">'+HeaderTenure+'</a>'; 
+				txtInp_tenure.setAttribute('id', '.b.'+HeaderTenure);
+		// 6. Assets ----------------------------------------------------------
 			var txtInp_assets = document.createElement('div');
 				txtInp_assets.setAttribute('type', 'text');
 				txtInp_assets.setAttribute('class', 'descriptionbox');
@@ -1000,7 +868,7 @@ function addRowToTable(num, pid, nam, label, gend, cond, yob, age2, YMD, occu, b
 				txtInp_assets.style.border='0px';
 				txtInp_assets.innerHTML = '<a href="#" alt="'+TTEditAsset+'" title="'+TTEditAsset+'">'+HeaderAsset+'</a>'; 
 				txtInp_assets.setAttribute('id', '.b.'+HeaderAsset);
-		// 6. Age_1 -----------------------------------------------------------
+		// 7. Age_1 -----------------------------------------------------------
 			var txtInp_age = document.createElement('div');
 				txtInp_age.setAttribute('type', 'text');
 				txtInp_age.setAttribute('class', 'descriptionbox');
@@ -1009,7 +877,7 @@ function addRowToTable(num, pid, nam, label, gend, cond, yob, age2, YMD, occu, b
 				txtInp_age.style.border='0px';
 				txtInp_age.innerHTML = '<a href="#" alt="'+TTEditAge+'" title="'+TTEditAge+'">'+HeaderAge+'</a>'; 
 				txtInp_age.setAttribute('id', '.b.'+HeaderAge);
-		// 7. Race_1 ----------------------------------------------------------
+		// 8. Race_1 ----------------------------------------------------------
 			var txtInp_race = document.createElement('div');
 				txtInp_race.setAttribute('type', 'text');
 				txtInp_race.setAttribute('class', 'descriptionbox');
@@ -1018,7 +886,7 @@ function addRowToTable(num, pid, nam, label, gend, cond, yob, age2, YMD, occu, b
 				txtInp_race.style.border='0px';
 				txtInp_race.innerHTML = '<a href="#" alt="'+TTEditRace+'" title="'+TTEditRace+'">'+HeaderRace+'</a>'; 
 				txtInp_race.setAttribute('id', '.b.'+HeaderRace);
-		// 8. Sex -------------------------------------------------------------
+		// 9. Sex -------------------------------------------------------------
 			var txtInp_gend = document.createElement('div');
 				txtInp_gend.setAttribute('type', 'text');
 				txtInp_gend.setAttribute('class', 'descriptionbox');
@@ -1027,7 +895,7 @@ function addRowToTable(num, pid, nam, label, gend, cond, yob, age2, YMD, occu, b
 				txtInp_gend.style.border='0px';
 				txtInp_gend.innerHTML = '<a href="#" alt="'+TTEditSex+'" title="'+TTEditSex+'">'+HeaderSex+'</a>'; 
 				txtInp_gend.setAttribute('id', '.b.'+HeaderSex);
-		// 9. Race_2 ----------------------------------------------------------
+		// 10. Race_2 ----------------------------------------------------------
 			var txtInp_race2 = document.createElement('div');
 				txtInp_race2.setAttribute('type', 'text');
 				txtInp_race2.setAttribute('class', 'descriptionbox');
@@ -1036,7 +904,7 @@ function addRowToTable(num, pid, nam, label, gend, cond, yob, age2, YMD, occu, b
 				txtInp_race2.style.border='0px';
 				txtInp_race2.innerHTML = '<a href="#" alt="'+TTEditRace+'" title="'+TTEditRace+'">'+HeaderRace+'</a>'; 
 				txtInp_race2.setAttribute('id', '.b.'+HeaderRace);
-		// 10. DOB/YOB ---------------------------------------------------------
+		// 11. DOB/YOB ---------------------------------------------------------
 			var txtInp_yob = document.createElement('div');
 				txtInp_yob.setAttribute('type', 'text');
 				txtInp_yob.setAttribute('class', 'descriptionbox');
@@ -1045,7 +913,7 @@ function addRowToTable(num, pid, nam, label, gend, cond, yob, age2, YMD, occu, b
 				txtInp_yob.style.border='0px';
 				txtInp_yob.innerHTML = '<a href="#" alt="'+TTEditYOB+'" title="'+TTEditYOB+'">'+HeaderYOB+'</a>'; 
 				txtInp_yob.setAttribute('id', '.b.'+HeaderYOB);
-		// 11. Age_2 -----------------------------------------------------------
+		// 12. Age_2 -----------------------------------------------------------
 			var txtInp_age2 = document.createElement('div');
 				txtInp_age2.setAttribute('type', 'text');
 				txtInp_age2.setAttribute('class', 'descriptionbox');
@@ -1054,7 +922,7 @@ function addRowToTable(num, pid, nam, label, gend, cond, yob, age2, YMD, occu, b
 				txtInp_age2.style.border='0px';
 				txtInp_age2.innerHTML = '<a href="#" alt="'+TTEditAge+'" title="'+TTEditAge+'">'+HeaderAge+'</a>'; 
 				txtInp_age2.setAttribute('id', '.b.'+HeaderAge);
-		// 12. Bmth (if born within census year) -------------------------------
+		// 13. MthB (if born within census year) -------------------------------
 			var txtInp_bmth = document.createElement('div');
 				txtInp_bmth.setAttribute('type', 'text');
 				txtInp_bmth.setAttribute('class', 'descriptionbox');
@@ -1063,7 +931,7 @@ function addRowToTable(num, pid, nam, label, gend, cond, yob, age2, YMD, occu, b
 				txtInp_bmth.style.border='0px';
 				txtInp_bmth.innerHTML = '<a href="#" alt="'+TTEditBmth+'" title="'+TTEditBmth+'">'+HeaderBmth+'</a>'; 
 				txtInp_bmth.setAttribute('id', '.b.'+HeaderBmth);
-		// 13. Relationship_2 --------------------------------------------------
+		// 14. Relationship_2 --------------------------------------------------
 			var txtInp_label2 = document.createElement('div');
 				txtInp_label2.setAttribute('type', 'text');
 				txtInp_label2.setAttribute('class', 'descriptionbox');
@@ -1072,7 +940,7 @@ function addRowToTable(num, pid, nam, label, gend, cond, yob, age2, YMD, occu, b
 				txtInp_label2.style.border='0px';
 				txtInp_label2.innerHTML = '<a href="#" alt="'+TTEditRela+'" title="'+TTEditRela+'">'+HeaderRela+'</a>'; 
 				txtInp_label2.setAttribute('id', '.b.'+HeaderRela);
-		// 14. Conditition_2 ---------------------------------------------------
+		// 15. Conditition_2 ---------------------------------------------------
 			var txtInp_cond2 = document.createElement('div');
 				txtInp_cond2.setAttribute('type', 'text');
 				txtInp_cond2.setAttribute('class', 'descriptionbox');
@@ -1081,7 +949,7 @@ function addRowToTable(num, pid, nam, label, gend, cond, yob, age2, YMD, occu, b
 				txtInp_cond2.style.border='0px';
 				txtInp_cond2.innerHTML = '<a href="#" alt="'+TTEditMCond+'" title="'+TTEditMCond+'">'+HeaderMCond+'</a>'; 
 				txtInp_cond2.setAttribute('id', '.b.'+HeaderMCond);
-		// 15. Years Married ---------------------------------------------------
+		// 16. Years Married ---------------------------------------------------
 			var txtInp_yrsm = document.createElement('div');
 				txtInp_yrsm.setAttribute('type', 'text');
 				txtInp_yrsm.setAttribute('class', 'descriptionbox');
@@ -1090,7 +958,7 @@ function addRowToTable(num, pid, nam, label, gend, cond, yob, age2, YMD, occu, b
 				txtInp_yrsm.style.border='0px';
 				txtInp_yrsm.innerHTML = '<a href="#" alt="'+TTEditYrsM+'" title="'+TTEditYrsM+'">'+HeaderYrsM+'</a>'; 
 				txtInp_yrsm.setAttribute('id', '.b.'+HeaderYrsM);
-		// 16. Children Born Alive ---------------------------------------------
+		// 17. Children Born Alive ---------------------------------------------
 			var txtInp_chilB = document.createElement('div');
 				txtInp_chilB.setAttribute('type', 'text');
 				txtInp_chilB.setAttribute('class', 'descriptionbox');
@@ -1099,7 +967,7 @@ function addRowToTable(num, pid, nam, label, gend, cond, yob, age2, YMD, occu, b
 				txtInp_chilB.style.border='0px';
 				txtInp_chilB.innerHTML = '<a href="#" alt="'+TTEditChilB+'" title="'+TTEditChilB+'">'+HeaderChilB+'</a>'; 
 				txtInp_chilB.setAttribute('id', '.b.'+HeaderChilB);
-		// 17. Children Still Living -------------------------------------------
+		// 18. Children Still Living -------------------------------------------
 			var txtInp_chilL = document.createElement('div');
 				txtInp_chilL.setAttribute('type', 'text');
 				txtInp_chilL.setAttribute('class', 'descriptionbox');
@@ -1108,7 +976,7 @@ function addRowToTable(num, pid, nam, label, gend, cond, yob, age2, YMD, occu, b
 				txtInp_chilL.style.border='0px';
 				txtInp_chilL.innerHTML = '<a href="#" alt="'+TTEditChilL+'" title="'+TTEditChilL+'">'+HeaderChilL+'</a>'; 
 				txtInp_chilL.setAttribute('id', '.b.'+HeaderChilL);
-		// 18. Children who have Died ------------------------------------------
+		// 19. Children who have Died ------------------------------------------
 			var txtInp_chilD = document.createElement('div');
 				txtInp_chilD.setAttribute('type', 'text');
 				txtInp_chilD.setAttribute('class', 'descriptionbox');
@@ -1117,7 +985,7 @@ function addRowToTable(num, pid, nam, label, gend, cond, yob, age2, YMD, occu, b
 				txtInp_chilD.style.border='0px';
 				txtInp_chilD.innerHTML = '<a href="#" alt="'+TTEditChilD+'" title="'+TTEditChilD+'">'+HeaderChilD+'</a>'; 
 				txtInp_chilD.setAttribute('id', '.b.'+HeaderChilD);
-		// 19. Age at first Marriage -------------------------------------------
+		// 20. Age at first Marriage -------------------------------------------
 			var txtInp_ageM = document.createElement('div');
 				txtInp_ageM.setAttribute('type', 'text');
 				txtInp_ageM.setAttribute('class', 'descriptionbox');
@@ -1126,7 +994,7 @@ function addRowToTable(num, pid, nam, label, gend, cond, yob, age2, YMD, occu, b
 				txtInp_ageM.style.border='0px';
 				txtInp_ageM.innerHTML = '<a href="#" alt="'+TTEditAgeM+'" title="'+TTEditAgeM+'">'+HeaderAgeM+'</a>'; 
 				txtInp_ageM.setAttribute('id', '.b.'+HeaderAgeM);
-		// 20. Occupation_1 ----------------------------------------------------
+		// 21. Occupation_1 ----------------------------------------------------
 			var txtInp_occu = document.createElement('div');
 				txtInp_occu.setAttribute('type', 'text');
 				txtInp_occu.setAttribute('class', 'descriptionbox');
@@ -1135,7 +1003,7 @@ function addRowToTable(num, pid, nam, label, gend, cond, yob, age2, YMD, occu, b
 				txtInp_occu.style.border='0px';
 				txtInp_occu.innerHTML = '<a href="#" alt="'+TTEditOccu+'" title="'+TTEditOccu+'">'+HeaderOccu+'</a>'; 
 				txtInp_occu.setAttribute('id', '.b.'+HeaderOccu);
-		// 21. Assets_2 --------------------------------------------------------
+		// 22. Assets_2 --------------------------------------------------------
 			var txtInp_assets2 = document.createElement('div');
 				txtInp_assets2.setAttribute('type', 'text');
 				txtInp_assets2.setAttribute('class', 'descriptionbox');
@@ -1144,7 +1012,7 @@ function addRowToTable(num, pid, nam, label, gend, cond, yob, age2, YMD, occu, b
 				txtInp_assets2.style.border='0px';
 				txtInp_assets2.innerHTML = '<a href="#" alt="'+TTEditAsset+'" title="'+TTEditAsset+'">'+HeaderAsset+'</a>'; 
 				txtInp_assets2.setAttribute('id', '.b.'+HeaderAsset);
-		// 22. Birth Place_1 -----------------------------------------------
+		// 23. Birth Place_1 -----------------------------------------------
 			var txtInp_birthpl = document.createElement('div');
 				txtInp_birthpl.setAttribute('type', 'text');
 				txtInp_birthpl.setAttribute('class', 'descriptionbox');
@@ -1153,7 +1021,34 @@ function addRowToTable(num, pid, nam, label, gend, cond, yob, age2, YMD, occu, b
 				txtInp_birthpl.style.border='0px';
 				txtInp_birthpl.innerHTML = '<a href="#" alt="'+TTEditBplace+'" title="'+TTEditBplace+'">'+HeaderBplace+'</a>';
 				txtInp_birthpl.setAttribute('id', '.b.'+HeaderBplace);
-		// 23. Indi Birth Place_1 -----------------------------------------------
+		// 24. Parentage -----------------------------------------------
+			var txtInp_parent = document.createElement('div');
+				txtInp_parent.setAttribute('type', 'text');
+				txtInp_parent.setAttribute('class', 'descriptionbox');
+				txtInp_parent.className= 'descriptionbox'; //Required for IE
+				txtInp_parent.style.fontSize="10px";
+				txtInp_parent.style.border='0px';
+				txtInp_parent.innerHTML = '<a href="#" alt="'+TTEditParent+'" title="'+TTEditParent+'">'+HeaderParent+'</a>';
+				txtInp_parent.setAttribute('id', '.b.'+HeaderParent);
+		// 25. MthB_2 (if born within census year) -------------------------------
+			var txtInp_bmth2 = document.createElement('div');
+				txtInp_bmth2.setAttribute('type', 'text');
+				txtInp_bmth2.setAttribute('class', 'descriptionbox');
+				txtInp_bmth2.className= 'descriptionbox'; //Required for IE
+				txtInp_bmth2.style.fontSize="10px";
+				txtInp_bmth2.style.border='0px';
+				txtInp_bmth2.innerHTML = '<a href="#" alt="'+TTEditBmth+'" title="'+TTEditBmth+'">'+HeaderBmth+'</a>'; 
+				txtInp_bmth2.setAttribute('id', '.b.'+HeaderBmth);
+		// 26. MthM (if married within census year) -------------------------------
+			var txtInp_mmth = document.createElement('div');
+				txtInp_mmth.setAttribute('type', 'text');
+				txtInp_mmth.setAttribute('class', 'descriptionbox');
+				txtInp_mmth.className= 'descriptionbox'; //Required for IE
+				txtInp_mmth.style.fontSize="10px";
+				txtInp_mmth.style.border='0px';
+				txtInp_mmth.innerHTML = '<a href="#" alt="'+TTEditMmth+'" title="'+TTEditMmth+'">'+HeaderMmth+'</a>'; 
+				txtInp_mmth.setAttribute('id', '.b.'+HeaderMmth);
+		// 27. Indi Birth Place_1 -----------------------------------------------
 			var txtInp_ibirthpl = document.createElement('div');
 				txtInp_ibirthpl.setAttribute('type', 'text');
 				txtInp_ibirthpl.setAttribute('class', 'descriptionbox');
@@ -1162,7 +1057,7 @@ function addRowToTable(num, pid, nam, label, gend, cond, yob, age2, YMD, occu, b
 				txtInp_ibirthpl.style.border='0px';
 				txtInp_ibirthpl.innerHTML = '<a href="#" alt="'+TTEditBP+'" title="'+TTEditBP+'">'+HeaderBP+'</a>';
 				txtInp_ibirthpl.setAttribute('id', '.b.'+HeaderBP);
-		// 24. Fathers Birth Place_1 ---------------------------------------------
+		// 28. Fathers Birth Place_1 ---------------------------------------------
 			var txtInp_fbirthpl = document.createElement('div');
 				txtInp_fbirthpl.setAttribute('type', 'text');
 				txtInp_fbirthpl.setAttribute('class', 'descriptionbox');
@@ -1171,7 +1066,7 @@ function addRowToTable(num, pid, nam, label, gend, cond, yob, age2, YMD, occu, b
 				txtInp_fbirthpl.style.border='0px';
 				txtInp_fbirthpl.innerHTML = '<a href="#" alt="'+TTEditFBP+'" title="'+TTEditFBP+'">'+HeaderFBP+'</a>';
 				txtInp_fbirthpl.setAttribute('id', '.b.'+HeaderFBP);
-		// 24. Mothers Birth Place_1 ---------------------------------------------
+		// 29. Mothers Birth Place_1 ---------------------------------------------
 			var txtInp_mbirthpl = document.createElement('div');
 				txtInp_mbirthpl.setAttribute('type', 'text');
 				txtInp_mbirthpl.setAttribute('class', 'descriptionbox');
@@ -1180,7 +1075,7 @@ function addRowToTable(num, pid, nam, label, gend, cond, yob, age2, YMD, occu, b
 				txtInp_mbirthpl.style.border='0px';
 				txtInp_mbirthpl.innerHTML = '<a href="#" alt="'+TTEditMBP+'" title="'+TTEditMBP+'">'+HeaderMBP+'</a>';
 				txtInp_mbirthpl.setAttribute('id', '.b.'+HeaderMBP);
-		// 26. Years in USA ----------------------------------------------------
+		// 30. Years in USA ----------------------------------------------------
 			var txtInp_yrsUS = document.createElement('div');
 				txtInp_yrsUS.setAttribute('type', 'text');
 				txtInp_yrsUS.setAttribute('class', 'descriptionbox');
@@ -1189,7 +1084,7 @@ function addRowToTable(num, pid, nam, label, gend, cond, yob, age2, YMD, occu, b
 				txtInp_yrsUS.style.border='0px';
 				txtInp_yrsUS.innerHTML = '<a href="#" alt="'+TTEditYrsUS+'" title="'+TTEditYrsUS+'">'+HeaderYrsUS+'</a>';
 				txtInp_yrsUS.setAttribute('id', '.b.'+HeaderYrsUS);
-		// 27. Year of Immigration YOI_1 ----------------------------------------
+		// 31. Year of Immigration YOI_1 ----------------------------------------
 			var txtInp_yoi1 = document.createElement('div');
 				txtInp_yoi1.setAttribute('type', 'text');
 				txtInp_yoi1.setAttribute('class', 'descriptionbox');
@@ -1198,7 +1093,7 @@ function addRowToTable(num, pid, nam, label, gend, cond, yob, age2, YMD, occu, b
 				txtInp_yoi1.style.border='0px';
 				txtInp_yoi1.innerHTML = '<a href="#" alt="'+TTEditYOI+'" title="'+TTEditYOI+'">'+HeaderYOI+'</a>';
 				txtInp_yoi1.setAttribute('id', '.b.'+HeaderYOI);
-		// 28. Natualized or Alien_1 ----------------------------------------
+		// 32. Natualized or Alien_1 ----------------------------------------
 			var txtInp_na1 = document.createElement('div');
 				txtInp_na1.setAttribute('type', 'text');
 				txtInp_na1.setAttribute('class', 'descriptionbox');
@@ -1207,7 +1102,7 @@ function addRowToTable(num, pid, nam, label, gend, cond, yob, age2, YMD, occu, b
 				txtInp_na1.style.border='0px';
 				txtInp_na1.innerHTML = '<a href="#" alt="'+TTEditNA+'" title="'+TTEditNA+'">'+HeaderNA+'</a>';
 				txtInp_na1.setAttribute('id', '.b.'+HeaderNA);
-		// 29. Year of Naturalization YON_1 ----------------------------------------
+		// 33. Year of Naturalization YON_1 ----------------------------------------
 			var txtInp_yon = document.createElement('div');
 				txtInp_yon.setAttribute('type', 'text');
 				txtInp_yon.setAttribute('class', 'descriptionbox');
@@ -1216,7 +1111,7 @@ function addRowToTable(num, pid, nam, label, gend, cond, yob, age2, YMD, occu, b
 				txtInp_yon.style.border='0px';
 				txtInp_yon.innerHTML = '<a href="#" alt="'+TTEditYON+'" title="'+TTEditYON+'">'+HeaderYON+'</a>';
 				txtInp_yon.setAttribute('id', '.b.'+HeaderYON);
-		// 30. English if spoken, or if not, Language spoken Eng/Lang ------------------------
+		// 34. English if spoken, or if not, Language spoken Eng/Lang ---------------
 			var txtInp_englang = document.createElement('div');
 				txtInp_englang.setAttribute('type', 'text');
 				txtInp_englang.setAttribute('class', 'descriptionbox');
@@ -1225,7 +1120,7 @@ function addRowToTable(num, pid, nam, label, gend, cond, yob, age2, YMD, occu, b
 				txtInp_englang.style.border='0px';
 				txtInp_englang.innerHTML = '<a href="#" alt="'+TTEditEngL+'" title="'+TTEditEngL+'">'+HeaderEngL+'</a>';
 				txtInp_englang.setAttribute('id', '.b.'+HeaderEngL);
-		// 31. Occupation_2 -----------------------------------------------------
+		// 35. Occupation_2 ---------------------------------------------------------
 			var txtInp_occu2 = document.createElement('div');
 				txtInp_occu2.setAttribute('type', 'text');
 				txtInp_occu2.setAttribute('class', 'descriptionbox');
@@ -1234,7 +1129,7 @@ function addRowToTable(num, pid, nam, label, gend, cond, yob, age2, YMD, occu, b
 				txtInp_occu2.style.border='0px';
 				txtInp_occu2.innerHTML = '<a href="#" alt="'+TTEditOccu+'" title="'+TTEditOccu+'">'+HeaderOccu+'</a>'; 
 				txtInp_occu2.setAttribute('id', '.b.'+HeaderOccu);
-		// 32. Health health -------------------------------------------------------
+		// 36. Health --------------------------------------------------------------
 			var txtInp_health = document.createElement('div');
 				txtInp_health.setAttribute('type', 'text');
 				txtInp_health.setAttribute('class', 'descriptionbox');
@@ -1243,7 +1138,7 @@ function addRowToTable(num, pid, nam, label, gend, cond, yob, age2, YMD, occu, b
 				txtInp_health.style.border='0px';
 				txtInp_health.innerHTML = '<a href="#" alt="'+TTEditHealth+'" title="'+TTEditHealth+'">'+HeaderHealth+'</a>'; 
 				txtInp_health.setAttribute('id', '.b.'+HeaderHealth);
-		// 33. Industry ind_1 ------------------------------------------------------
+		// 37. Industry ind_1 ------------------------------------------------------
 			var txtInp_ind1 = document.createElement('div');
 				txtInp_ind1.setAttribute('type', 'text');
 				txtInp_ind1.setAttribute('class', 'descriptionbox');
@@ -1252,7 +1147,7 @@ function addRowToTable(num, pid, nam, label, gend, cond, yob, age2, YMD, occu, b
 				txtInp_ind1.style.border='0px';
 				txtInp_ind1.innerHTML = '<a href="#" alt="'+TTEditInd+'" title="'+TTEditInd+'">'+HeaderInd+'</a>'; 
 				txtInp_ind1.setAttribute('id', '.b.'+HeaderInd);
-		// 34. Employ_1 ------------------------------------------------------------
+		// 38. Employ_1 ------------------------------------------------------------
 			var txtInp_emp1 = document.createElement('div');
 				txtInp_emp1.setAttribute('type', 'text');
 				txtInp_emp1.setAttribute('class', 'descriptionbox');
@@ -1261,7 +1156,7 @@ function addRowToTable(num, pid, nam, label, gend, cond, yob, age2, YMD, occu, b
 				txtInp_emp1.style.border='0px';
 				txtInp_emp1.innerHTML = '<a href="#" alt="'+TTEditEmp+'" title="'+TTEditEmp+'">'+HeaderEmp+'</a>';
 				txtInp_emp1.setAttribute('id', '.b.'+HeaderEmp);
-		// 35. Employer - EmR-----------------------------------------------------------
+		// 39. Employer - EmR-----------------------------------------------------------
 			var txtInp_emR = document.createElement('div');
 				txtInp_emR.setAttribute('type', 'text');
 				txtInp_emR.setAttribute('class', 'descriptionbox');
@@ -1270,7 +1165,7 @@ function addRowToTable(num, pid, nam, label, gend, cond, yob, age2, YMD, occu, b
 				txtInp_emR.style.border='0px';
 				txtInp_emR.innerHTML = '<a href="#" alt="'+TTEditEmR+'" title="'+TTEditEmR+'">'+HeaderEmR+'</a>';
 				txtInp_emR.setAttribute('id', '.b.'+HeaderEmR);
-		// 36. Employed EmD ------------------------------------------------------------
+		// 40. Employed EmD ------------------------------------------------------------
 			var txtInp_emD = document.createElement('div');
 				txtInp_emD.setAttribute('type', 'text');
 				txtInp_emD.setAttribute('class', 'descriptionbox');
@@ -1279,7 +1174,16 @@ function addRowToTable(num, pid, nam, label, gend, cond, yob, age2, YMD, occu, b
 				txtInp_emD.style.border='0px';
 				txtInp_emD.innerHTML = '<a href="#" alt="'+TTEditEmD+'" title="'+TTEditEmD+'">'+HeaderEmD+'</a>';
 				txtInp_emD.setAttribute('id', '.b.'+HeaderEmD);
-		// 37. Employed at Home EmH ----------------------------------------------------
+		// 41. Months employed during Census Year ---------------------------------------
+			var txtInp_mnsE = document.createElement('div');
+				txtInp_mnsE.setAttribute('type', 'text');
+				txtInp_mnsE.setAttribute('class', 'descriptionbox');
+				txtInp_mnsE.className= 'descriptionbox'; //Required for IE
+				txtInp_mnsE.style.fontSize="10px";
+				txtInp_mnsE.style.border='0px';
+				txtInp_mnsE.innerHTML = '<a href="#" alt="'+TTEditMnse+'" title="'+TTEditMnse+'">'+HeaderMnse+'</a>';
+				txtInp_mnsE.setAttribute('id', '.b.'+HeaderMnse);
+		// 42. Working at Home WH ----------------------------------------------------
 			var txtInp_emH = document.createElement('div');
 				txtInp_emH.setAttribute('type', 'text');
 				txtInp_emH.setAttribute('class', 'descriptionbox');
@@ -1288,7 +1192,7 @@ function addRowToTable(num, pid, nam, label, gend, cond, yob, age2, YMD, occu, b
 				txtInp_emH.style.border='0px';
 				txtInp_emH.innerHTML = '<a href="#" alt="'+TTEditEmH+'" title="'+TTEditEmH+'">'+HeaderEmH+'</a>';
 				txtInp_emH.setAttribute('id', '.b.'+HeaderEmH);
-		// 38. Not Employed EmN --------------------------------------------------------
+		// 43. Not Employed EmN --------------------------------------------------------
 			var txtInp_emN = document.createElement('div');
 				txtInp_emN.setAttribute('type', 'text');
 				txtInp_emN.setAttribute('class', 'descriptionbox');
@@ -1297,7 +1201,25 @@ function addRowToTable(num, pid, nam, label, gend, cond, yob, age2, YMD, occu, b
 				txtInp_emN.style.border='0px';
 				txtInp_emN.innerHTML = '<a href="#" alt="'+TTEditEmN+'" title="'+TTEditEmN+'">'+HeaderEmN+'</a>';
 				txtInp_emN.setAttribute('id', '.b.'+HeaderEmN);
-		// 39. Education -----------------------------------------------------------
+		// 44. Weeks unemployed during Census Year ---------------------------------------
+			var txtInp_wksU = document.createElement('div');
+				txtInp_wksU.setAttribute('type', 'text');
+				txtInp_wksU.setAttribute('class', 'descriptionbox');
+				txtInp_wksU.className= 'descriptionbox'; //Required for IE
+				txtInp_wksU.style.fontSize="10px";
+				txtInp_wksU.style.border='0px';
+				txtInp_wksU.innerHTML = '<a href="#" alt="'+TTEditWksu+'" title="'+TTEditWksu+'">'+HeaderWksu+'</a>';
+				txtInp_wksU.setAttribute('id', '.b.'+HeaderWksu);
+		// 45. Months unemployed during Census Year ---------------------------------------
+			var txtInp_mnsU = document.createElement('div');
+				txtInp_mnsU.setAttribute('type', 'text');
+				txtInp_mnsU.setAttribute('class', 'descriptionbox');
+				txtInp_mnsU.className= 'descriptionbox'; //Required for IE
+				txtInp_mnsU.style.fontSize="10px";
+				txtInp_mnsU.style.border='0px';
+				txtInp_mnsU.innerHTML = '<a href="#" alt="'+TTEditMnsu+'" title="'+TTEditMnsu+'">'+HeaderMnsu+'</a>';
+				txtInp_mnsU.setAttribute('id', '.b.'+HeaderMnsu);
+		// 46. Education -----------------------------------------------------------
 			var txtInp_educ = document.createElement('div');
 				txtInp_educ.setAttribute('type', 'text');
 				txtInp_educ.setAttribute('class', 'descriptionbox');
@@ -1306,7 +1228,16 @@ function addRowToTable(num, pid, nam, label, gend, cond, yob, age2, YMD, occu, b
 				txtInp_educ.style.border='0px';
 				txtInp_educ.innerHTML = '<a href="#" alt="'+TTEditEduc+'" title="'+TTEditEduc+'">'+HeaderEduc+'</a>';
 				txtInp_educ.setAttribute('id', '.b.'+HeaderEduc);
-		// 40. English Spoken y/n eng_1 ----------------------------------------
+		// 47. Education pre 1890 Census ---------------------------------------------
+			var txtInp_educpre1890 = document.createElement('div');
+				txtInp_educpre1890.setAttribute('type', 'text');
+				txtInp_educpre1890.setAttribute('class', 'descriptionbox');
+				txtInp_educpre1890.className= 'descriptionbox'; //Required for IE
+				txtInp_educpre1890.style.fontSize="10px";
+				txtInp_educpre1890.style.border='0px';
+				txtInp_educpre1890.innerHTML = '<a href="#" alt="'+TTEditEducpre1890+'" title="'+TTEditEducpre1890+'">'+HeaderEducpre1890+'</a>';
+				txtInp_educpre1890.setAttribute('id', '.b.'+HeaderEducpre1890);
+		// 48. English Spoken y/n eng_1 ----------------------------------------
 			var txtInp_eng1 = document.createElement('div');
 				txtInp_eng1.setAttribute('type', 'text');
 				txtInp_eng1.setAttribute('class', 'descriptionbox');
@@ -1315,16 +1246,16 @@ function addRowToTable(num, pid, nam, label, gend, cond, yob, age2, YMD, occu, b
 				txtInp_eng1.style.border='0px';
 				txtInp_eng1.innerHTML = '<a href="#" alt="'+TTEditEng+'" title="'+TTEditEng+'">'+HeaderEng+'</a>';
 				txtInp_eng1.setAttribute('id', '.b.'+HeaderEng);
-		// 41. Assets_3 --------------------------------------------------------
-			var txtInp_assets3 = document.createElement('div');
-				txtInp_assets3.setAttribute('type', 'text');
-				txtInp_assets3.setAttribute('class', 'descriptionbox');
-				txtInp_assets3.className= 'descriptionbox'; //Required for IE
-				txtInp_assets3.style.fontSize="10px";
-				txtInp_assets3.style.border='0px';
-				txtInp_assets3.innerHTML = '<a href="#" alt="'+TTEditAsset+'" title="'+TTEditAsset+'">'+HeaderAsset+'</a>'; 
-				txtInp_assets3.setAttribute('id', '.b.'+HeaderAsset);
-		// 42. Birth Place_2 -----------------------------------------------
+		// 49. Home Ownership  -------------------------------------------------
+			var txtInp_home = document.createElement('div');
+				txtInp_home.setAttribute('type', 'text');
+				txtInp_home.setAttribute('class', 'descriptionbox');
+				txtInp_home.className= 'descriptionbox'; //Required for IE
+				txtInp_home.style.fontSize="10px";
+				txtInp_home.style.border='0px';
+				txtInp_home.innerHTML = '<a href="#" alt="'+TTEditHome+'" title="'+TTEditHome+'">'+HeaderHome+'</a>';
+				txtInp_home.setAttribute('id', '.b.'+HeaderHome);
+		// 50. Birth Place_2 -----------------------------------------------
 			var txtInp_birthpl2 = document.createElement('div');
 				txtInp_birthpl2.setAttribute('type', 'text');
 				txtInp_birthpl2.setAttribute('class', 'descriptionbox');
@@ -1333,7 +1264,7 @@ function addRowToTable(num, pid, nam, label, gend, cond, yob, age2, YMD, occu, b
 				txtInp_birthpl2.style.border='0px';
 				txtInp_birthpl2.innerHTML = '<a href="#" alt="'+TTEditBplace+'" title="'+TTEditBplace+'">'+HeaderBplace+'</a>';
 				txtInp_birthpl2.setAttribute('id', '.b.'+HeaderBplace);
-		// 43. Indi Birth Place_2 ---------------------------------------------
+		// 51. Indi Birth Place_2 ---------------------------------------------
 			var txtInp_ibirthpl2 = document.createElement('div');
 				txtInp_ibirthpl2.setAttribute('type', 'text');
 				txtInp_ibirthpl2.setAttribute('class', 'descriptionbox');
@@ -1342,7 +1273,7 @@ function addRowToTable(num, pid, nam, label, gend, cond, yob, age2, YMD, occu, b
 				txtInp_ibirthpl2.style.border='0px';
 				txtInp_ibirthpl2.innerHTML = '<a href="#" alt="'+TTEditBP+'" title="'+TTEditBP+'">'+HeaderBP+'</a>';
 				txtInp_ibirthpl2.setAttribute('id', '.b.'+HeaderBP);
-		// 44. Born in Same Country (ENG) -----------------------------------------------
+		// 52. Born in Same Country (ENG) -----------------------------------------------
 			var txtInp_bic = document.createElement('div');
 				txtInp_bic.setAttribute('type', 'text');
 				txtInp_bic.setAttribute('class', 'descriptionbox');
@@ -1351,7 +1282,7 @@ function addRowToTable(num, pid, nam, label, gend, cond, yob, age2, YMD, occu, b
 				txtInp_bic.style.border='0px';
 				txtInp_bic.innerHTML = '<a href="#" alt="'+TTEditBIC+'" title="'+TTEditBIC+'">'+HeaderBIC+'</a>';
 				txtInp_bic.setAttribute('id', '.b.'+HeaderBIC)
-		// 45. Born outside England (SCO, IRE, WAL, FOReign ----------------------------
+		// 53. Born outside England (SCO, IRE, WAL, FOReign ----------------------------
 			var txtInp_boe = document.createElement('div');
 				txtInp_boe.setAttribute('type', 'text');
 				txtInp_boe.setAttribute('class', 'descriptionbox');
@@ -1360,7 +1291,7 @@ function addRowToTable(num, pid, nam, label, gend, cond, yob, age2, YMD, occu, b
 				txtInp_boe.style.border='0px';
 				txtInp_boe.innerHTML = '<a href="#" alt="'+TTEditBOE+'" title="'+TTEditBOE+'">'+HeaderBOE+'</a>';
 				txtInp_boe.setAttribute('id', '.b.'+HeaderBOE)
-		// 46. Fathers Birth Place_2 ---------------------------------------------
+		// 54. Fathers Birth Place_2 ---------------------------------------------
 			var txtInp_fbirthpl2 = document.createElement('div');
 				txtInp_fbirthpl2.setAttribute('type', 'text');
 				txtInp_fbirthpl2.setAttribute('class', 'descriptionbox');
@@ -1369,7 +1300,7 @@ function addRowToTable(num, pid, nam, label, gend, cond, yob, age2, YMD, occu, b
 				txtInp_fbirthpl2.style.border='0px';
 				txtInp_fbirthpl2.innerHTML = '<a href="#" alt="'+TTEditFBP+'" title="'+TTEditFBP+'">'+HeaderFBP+'</a>';
 				txtInp_fbirthpl2.setAttribute('id', '.b.'+HeaderFBP);
-		// 47. Mothers Birth Place_2 ---------------------------------------------
+		// 55. Mothers Birth Place_2 ---------------------------------------------
 			var txtInp_mbirthpl2 = document.createElement('div');
 				txtInp_mbirthpl2.setAttribute('type', 'text');
 				txtInp_mbirthpl2.setAttribute('class', 'descriptionbox');
@@ -1378,7 +1309,7 @@ function addRowToTable(num, pid, nam, label, gend, cond, yob, age2, YMD, occu, b
 				txtInp_mbirthpl2.style.border='0px';
 				txtInp_mbirthpl2.innerHTML = '<a href="#" alt="'+TTEditMBP+'" title="'+TTEditMBP+'">'+HeaderMBP+'</a>';
 				txtInp_mbirthpl2.setAttribute('id', '.b.'+HeaderMBP);
-		// 48. Native Language ----------------------------------------------------
+		// 56. Native Language ----------------------------------------------------
 			var txtInp_lang = document.createElement('div');
 				txtInp_lang.setAttribute('type', 'text');
 				txtInp_lang.setAttribute('class', 'descriptionbox');
@@ -1387,7 +1318,7 @@ function addRowToTable(num, pid, nam, label, gend, cond, yob, age2, YMD, occu, b
 				txtInp_lang.style.border='0px';
 				txtInp_lang.innerHTML = '<a href="#" alt="'+TTEditNL+'" title="'+TTEditNL+'">'+HeaderNL+'</a>';
 				txtInp_lang.setAttribute('id', '.b.'+HeaderNL);
-		// 49. Year of Immigration YOI_1 ----------------------------------------
+		// 57. Year of Immigration YOI_2 ----------------------------------------
 			var txtInp_yoi2 = document.createElement('div');
 				txtInp_yoi2.setAttribute('type', 'text');
 				txtInp_yoi2.setAttribute('class', 'descriptionbox');
@@ -1396,7 +1327,7 @@ function addRowToTable(num, pid, nam, label, gend, cond, yob, age2, YMD, occu, b
 				txtInp_yoi2.style.border='0px';
 				txtInp_yoi2.innerHTML = '<a href="#" alt="'+TTEditYOI+'" title="'+TTEditYOI+'">'+HeaderYOI+'</a>';
 				txtInp_yoi2.setAttribute('id', '.b.'+HeaderYOI);
-		// 50. Natualized or Alien_1 ----------------------------------------
+		// 58. Natualized or Alien_2 ----------------------------------------
 			var txtInp_na2 = document.createElement('div');
 				txtInp_na2.setAttribute('type', 'text');
 				txtInp_na2.setAttribute('class', 'descriptionbox');
@@ -1405,7 +1336,7 @@ function addRowToTable(num, pid, nam, label, gend, cond, yob, age2, YMD, occu, b
 				txtInp_na2.style.border='0px';
 				txtInp_na2.innerHTML = '<a href="#" alt="'+TTEditNA+'" title="'+TTEditNA+'">'+HeaderNA+'</a>';
 				txtInp_na2.setAttribute('id', '.b.'+HeaderNA);
-		// 51. English Spoken y/n eng_2 ----------------------------------------
+		// 59. English Spoken y/n eng_2 ----------------------------------------
 			var txtInp_eng2 = document.createElement('div');
 				txtInp_eng2.setAttribute('type', 'text');
 				txtInp_eng2.setAttribute('class', 'descriptionbox');
@@ -1414,7 +1345,7 @@ function addRowToTable(num, pid, nam, label, gend, cond, yob, age2, YMD, occu, b
 				txtInp_eng2.style.border='0px';
 				txtInp_eng2.innerHTML = '<a href="#" alt="'+TTEditEng+'" title="'+TTEditEng+'">'+HeaderEng+'</a>';
 				txtInp_eng2.setAttribute('id', '.b.'+HeaderEng);
-		// 52. Occupation_3 -----------------------------------------------------
+		// 60. Occupation_3 -----------------------------------------------------
 			var txtInp_occu3 = document.createElement('div');
 				txtInp_occu3.setAttribute('type', 'text');
 				txtInp_occu3.setAttribute('class', 'descriptionbox');
@@ -1423,7 +1354,7 @@ function addRowToTable(num, pid, nam, label, gend, cond, yob, age2, YMD, occu, b
 				txtInp_occu3.style.border='0px';
 				txtInp_occu3.innerHTML = '<a href="#" alt="'+TTEditOccu+'" title="'+TTEditOccu+'">'+HeaderOccu+'</a>'; 
 				txtInp_occu3.setAttribute('id', '.b.'+HeaderOccu);
-		// 53. Industry ind_2 ------------------------------------------------------
+		// 61. Industry ind_2 ------------------------------------------------------
 			var txtInp_ind2 = document.createElement('div');
 				txtInp_ind2.setAttribute('type', 'text');
 				txtInp_ind2.setAttribute('class', 'descriptionbox');
@@ -1432,7 +1363,7 @@ function addRowToTable(num, pid, nam, label, gend, cond, yob, age2, YMD, occu, b
 				txtInp_ind2.style.border='0px';
 				txtInp_ind2.innerHTML = '<a href="#" alt="'+TTEditInd+'" title="'+TTEditInd+'">'+HeaderInd+'</a>'; 
 				txtInp_ind2.setAttribute('id', '.b.'+HeaderInd);
-		// 54. Employ_2 ------------------------------------------------------------
+		// 62. Employ_2 ------------------------------------------------------------
 			var txtInp_emp2 = document.createElement('div');
 				txtInp_emp2.setAttribute('type', 'text');
 				txtInp_emp2.setAttribute('class', 'descriptionbox');
@@ -1441,7 +1372,7 @@ function addRowToTable(num, pid, nam, label, gend, cond, yob, age2, YMD, occu, b
 				txtInp_emp2.style.border='0px';
 				txtInp_emp2.innerHTML = '<a href="#" alt="'+TTEditEmp+'" title="'+TTEditEmp+'">'+HeaderEmp+'</a>';
 				txtInp_emp2.setAttribute('id', '.b.'+HeaderEmp);
-		// 55. Infirmaties Infirm -------------------------------------------------------
+		// 63. Infirmaties Infirm -------------------------------------------------------
 			var txtInp_infirm = document.createElement('div');
 				txtInp_infirm.setAttribute('type', 'text');
 				txtInp_infirm.setAttribute('class', 'descriptionbox');
@@ -1450,7 +1381,16 @@ function addRowToTable(num, pid, nam, label, gend, cond, yob, age2, YMD, occu, b
 				txtInp_infirm.style.border='0px';
 				txtInp_infirm.innerHTML = '<a href="#" alt="'+TTEditInfirm+'" title="'+TTEditInfirm+'">'+HeaderInfirm+'</a>';
 				txtInp_infirm.setAttribute('id', '.b.'+HeaderInfirm);
-		// 56. Veteran ? ------------------------------------------------------
+		// 64. Situation (1890)  ------------------------------------------------------
+			var txtInp_situ = document.createElement('div');
+				txtInp_situ.setAttribute('type', 'text');
+				txtInp_situ.setAttribute('class', 'descriptionbox');
+				txtInp_situ.className= 'descriptionbox'; //Required for IE
+				txtInp_situ.style.fontSize="10px";
+				txtInp_situ.style.border='0px';
+				txtInp_situ.innerHTML = '<a href="#" alt="'+TTEditSitu+'" title="'+TTEditSitu+'">'+HeaderSitu+'</a>';
+				txtInp_situ.setAttribute('id', '.b.'+HeaderSitu);
+		// 65. Veteran  ------------------------------------------------------
 			var txtInp_vet = document.createElement('div');
 				txtInp_vet.setAttribute('type', 'text');
 				txtInp_vet.setAttribute('class', 'descriptionbox');
@@ -1459,8 +1399,26 @@ function addRowToTable(num, pid, nam, label, gend, cond, yob, age2, YMD, occu, b
 				txtInp_vet.style.border='0px';
 				txtInp_vet.innerHTML = '<a href="#" alt="'+TTEditVet+'" title="'+TTEditVet+'">'+HeaderVet+'</a>';
 				txtInp_vet.setAttribute('id', '.b.'+HeaderVet);
+		// 66. War or Expedition ---------------------------------------------
+			var txtInp_war = document.createElement('div');
+				txtInp_war.setAttribute('type', 'text');
+				txtInp_war.setAttribute('class', 'descriptionbox');
+				txtInp_war.className= 'descriptionbox'; //Required for IE
+				txtInp_war.style.fontSize="10px";
+				txtInp_war.style.border='0px';
+				txtInp_war.innerHTML = '<a href="#" alt="'+TTEditWar+'" title="'+TTEditWar+'">'+HeaderWar+'</a>';
+				txtInp_war.setAttribute('id', '.b.'+HeaderWar);
+		// 67. Infirm1910 (1910) -----------------------------------------------
+			var txtInp_infirm1910 = document.createElement('div');
+				txtInp_infirm1910.setAttribute('type', 'text');
+				txtInp_infirm1910.setAttribute('class', 'descriptionbox');
+				txtInp_infirm1910.className= 'descriptionbox'; //Required for IE
+				txtInp_infirm1910.style.fontSize="10px";
+				txtInp_infirm1910.style.border='0px';
+				txtInp_infirm1910.innerHTML = '<a href="#" alt="'+TTEditInfirm1910+'" title="'+TTEditInfirm1910+'">'+HeaderInfirm1910+'</a>';
+				txtInp_infirm1910.setAttribute('id', '.b.'+HeaderInfirm1910);
 				
-		// 57. Text Del Button ------------------------------------------------- 
+		// 68. Text Del Button ------------------------------------------------- 
 			var txtInp_tdel = document.createElement('div');
 				txtInp_tdel.setAttribute('type', 'text');
 				txtInp_tdel.setAttribute('class', 'descriptionbox');
@@ -1469,7 +1427,7 @@ function addRowToTable(num, pid, nam, label, gend, cond, yob, age2, YMD, occu, b
 				txtInp_tdel.style.border='0px';
 				txtInp_tdel.innerHTML = 'Del';
 				txtInp_tdel.setAttribute('id', this);
-		// 58. Text Radio Button ----------------------------------------------- 
+		// 69. Text Radio Button ----------------------------------------------- 
 			var txtInp_tra = document.createElement('div');
 				txtInp_tra.setAttribute('type', 'text');
 				txtInp_tra.setAttribute('class', 'descriptionbox');
@@ -1477,7 +1435,7 @@ function addRowToTable(num, pid, nam, label, gend, cond, yob, age2, YMD, occu, b
 				txtInp_tra.style.fontSize="10px";
 				txtInp_tra.style.border='0px';
 				txtInp_tra.innerHTML = 'Ins';
-		// 59. Item Number 2 -------------------------------------------------
+		// 70. Item Number 2 -------------------------------------------------
 			var txt_itemNo2 = document.createElement('div');
 				txt_itemNo2.setAttribute('class', 'descriptionbox');
 				txt_itemNo2.className= 'descriptionbox'; //Required for IE
@@ -1486,10 +1444,9 @@ function addRowToTable(num, pid, nam, label, gend, cond, yob, age2, YMD, occu, b
 				txt_itemNo2.setAttribute('id', '.b.Item');
 				txt_itemNo2.setAttribute('type', 'text');
 				txt_itemNo2.style.fontSize="10px";
-
 		}else{
 
-		// c. Define Cell Elements ======================================
+		// c. Define Cell Elements ==========================================
 			var txtcolor = "#0000FF";
 			
 		// 0. Item Number ---------------------------------------------------
@@ -1499,7 +1456,6 @@ function addRowToTable(num, pid, nam, label, gend, cond, yob, age2, YMD, occu, b
 					var txtInp_pid = document.createElement('input');
 					var txtcolor = "#000000";
 					txtInp_pid.setAttribute('type', 'checkbox');
-					//txtInp_pid.checked='';
 					if (txtInp_pid.checked!=''){
 						txtInp_pid.setAttribute('value', 'no');
 					}else{
@@ -1513,7 +1469,6 @@ function addRowToTable(num, pid, nam, label, gend, cond, yob, age2, YMD, occu, b
 					var txtInp_pid = document.createElement('div');
 						txtInp_pid.style.border='0px';
 						txtInp_pid.innerHTML = pid;
-						// txtInp_pid.setAttribute('id', '.b.Item');
 						txtInp_pid.setAttribute('type', 'text');
 						txtInp_pid.style.fontSize="11px";
 						txtInp_pid.style.color=txtcolor;
@@ -1534,7 +1489,7 @@ function addRowToTable(num, pid, nam, label, gend, cond, yob, age2, YMD, occu, b
 				txtInp_label.setAttribute('value', label);
 				txtInp_label.style.color=txtcolor;
 				txtInp_label.style.fontSize="10px";
-		// 4. Conditition_1 -------------------------------------------
+		// 4. Conditition_1 ---------------------------------------------------
 			var txtInp_cond = document.createElement('input');
 				txtInp_cond.setAttribute('type', 'text');
 				txtInp_cond.setAttribute('id', INPUT_NAME_PREFIX + iteration + '_4');
@@ -1543,19 +1498,29 @@ function addRowToTable(num, pid, nam, label, gend, cond, yob, age2, YMD, occu, b
 				txtInp_cond.style.color=txtcolor;
 				txtInp_cond.style.fontSize="10px";
 				txtInp_cond.style.width="1em";
-		// 5. Assets_1 -------------------------------------------
+		// 5. Tenure ----------------------------------------------------------
+			var txtInp_tenure = document.createElement('input');
+				txtInp_tenure.setAttribute('type', 'text');
+				txtInp_tenure.setAttribute('id', INPUT_NAME_PREFIX + iteration + '_5');
+				txtInp_tenure.setAttribute('size', '1');
+				txtInp_tenure.setAttribute('maxlength', '2');
+				txtInp_tenure.setAttribute('value', '');
+				txtInp_tenure.style.color=txtcolor;
+				txtInp_tenure.style.fontSize="10px";
+				txtInp_tenure.style.width="1.6em";
+		// 6. Assets_1 --------------------------------------------------------
 			var txtInp_assets = document.createElement('input');
 				txtInp_assets.setAttribute('type', 'text');
-				txtInp_assets.setAttribute('id', INPUT_NAME_PREFIX + iteration + '_5');
+				txtInp_assets.setAttribute('id', INPUT_NAME_PREFIX + iteration + '_6');
 				txtInp_assets.setAttribute('size', '7');
 				txtInp_assets.setAttribute('maxlength', '9');
 				txtInp_assets.setAttribute('value', '');
 				txtInp_assets.style.color=txtcolor;
 				txtInp_assets.style.fontSize="10px";
-		// 6. Age_1 -----------------------------------------------------------
+		// 7. Age_1 -----------------------------------------------------------
 			var txtInp_age = document.createElement('input');
 				txtInp_age.setAttribute('type', 'text');
-				txtInp_age.setAttribute('id', INPUT_NAME_PREFIX + iteration + '_6');
+				txtInp_age.setAttribute('id', INPUT_NAME_PREFIX + iteration + '_7');
 				txtInp_age.setAttribute('size', '2');
 				txtInp_age.setAttribute('maxlength', '4');
 				txtInp_age.setAttribute('value', age);
@@ -1566,49 +1531,50 @@ function addRowToTable(num, pid, nam, label, gend, cond, yob, age2, YMD, occu, b
 				}
 				txtInp_age.style.fontSize="10px";
 				txtInp_age.style.width="1.8em";
-		// 7. Race_1 -----------------------------------------------------------
+		// 8. Race_1 -----------------------------------------------------------
 			var txtInp_race = document.createElement('input');
 				txtInp_race.setAttribute('type', 'text');
-				txtInp_race.setAttribute('id', INPUT_NAME_PREFIX + iteration + '_7');
+				txtInp_race.setAttribute('id', INPUT_NAME_PREFIX + iteration + '_8');
 				txtInp_race.setAttribute('size', '1');
 				txtInp_race.setAttribute('maxlength', '1');
 				txtInp_race.setAttribute('value', ''); 
 				txtInp_race.style.color=txtcolor;
 				txtInp_race.style.fontSize="10px";
 				txtInp_race.style.width="1em";
-		// 8. Sex -----------------------------------------------------------
+		// 9. Sex -----------------------------------------------------------
 			var txtInp_gend = document.createElement('input');
 				txtInp_gend.setAttribute('type', 'text');
-				txtInp_gend.setAttribute('id', INPUT_NAME_PREFIX + iteration + '_8');
+				txtInp_gend.setAttribute('id', INPUT_NAME_PREFIX + iteration + '_9');
 				txtInp_gend.setAttribute('size', '1');
 				txtInp_gend.setAttribute('maxlength', '1');
 				txtInp_gend.setAttribute('value', gend); 
 				txtInp_gend.style.color=txtcolor;
 				txtInp_gend.style.fontSize="10px";
 				txtInp_gend.style.width="1em";
-		// 9. Race_2 -----------------------------------------------------------
+		// 10. Race_2 -----------------------------------------------------------
 			var txtInp_race2 = document.createElement('input');
 				txtInp_race2.setAttribute('type', 'text');
-				txtInp_race2.setAttribute('id', INPUT_NAME_PREFIX + iteration + '_9');
+				txtInp_race2.setAttribute('id', INPUT_NAME_PREFIX + iteration + '_10');
 				txtInp_race2.setAttribute('size', '1');
 				txtInp_race2.setAttribute('maxlength', '1');
 				txtInp_race2.setAttribute('value', ''); 
 				txtInp_race2.style.color=txtcolor;
 				txtInp_race2.style.fontSize="10px";
 				txtInp_race2.style.width="1em";
-		// 10. DOB/YOB ---------------------------------------------------------
+		// 11. DOB/YOB ---------------------------------------------------------
 			var txtInp_yob = document.createElement('input');
 				txtInp_yob.setAttribute('type', 'text');
-				txtInp_yob.setAttribute('id', INPUT_NAME_PREFIX + iteration + '_10');
+				txtInp_yob.setAttribute('id', INPUT_NAME_PREFIX + iteration + '_11');
 				txtInp_yob.setAttribute('size', '4');
 				txtInp_yob.setAttribute('maxlength', '8');
 				txtInp_yob.setAttribute('value', yob);
 				txtInp_yob.style.color=txtcolor;
 				txtInp_yob.style.fontSize="10px";
-		// 11. Age_2 -----------------------------------------------------------
+				txtInp_yob.style.width="4.5em";
+		// 12. Age_2 -----------------------------------------------------------
 			var txtInp_age2 = document.createElement('input');
 				txtInp_age2.setAttribute('type', 'text');
-				txtInp_age2.setAttribute('id', INPUT_NAME_PREFIX + iteration + '_11');
+				txtInp_age2.setAttribute('id', INPUT_NAME_PREFIX + iteration + '_12');
 				txtInp_age2.setAttribute('size', '2');
 				txtInp_age2.setAttribute('maxlength', '4');
 				txtInp_age2.setAttribute('value', age); 
@@ -1619,434 +1585,531 @@ function addRowToTable(num, pid, nam, label, gend, cond, yob, age2, YMD, occu, b
 				}
 				txtInp_age2.style.fontSize="10px";
 				txtInp_age2.style.width="1.8em";
-		// 12. Bmth -----------------------------------------------------------
+		// 13. Birth month if born in Census Year ------------------------------
 			var txtInp_bmth = document.createElement('input');
 				txtInp_bmth.setAttribute('type', 'text');
-				txtInp_bmth.setAttribute('id', INPUT_NAME_PREFIX + iteration + '_12');
+				txtInp_bmth.setAttribute('id', INPUT_NAME_PREFIX + iteration + '_13');
 				txtInp_bmth.setAttribute('size', '1');
 				txtInp_bmth.setAttribute('maxlength', '3');
 				txtInp_bmth.setAttribute('value', ''); 
 				txtInp_bmth.style.color=txtcolor;
 				txtInp_bmth.style.fontSize="10px";
 				txtInp_bmth.style.width="1.8em";
-		// 13. Relationship_2 --------------------------------------------------
+		// 14. Relationship_2 --------------------------------------------------
 			var txtInp_label2 = document.createElement('input');
 				txtInp_label2.setAttribute('type', 'text');
-				txtInp_label2.setAttribute('id', INPUT_NAME_PREFIX + iteration + '_13');
+				txtInp_label2.setAttribute('id', INPUT_NAME_PREFIX + iteration + '_14');
 				txtInp_label2.setAttribute('size', '15');
 				txtInp_label2.setAttribute('value', label);
 				txtInp_label2.style.color=txtcolor;
 				txtInp_label2.style.fontSize="10px";
-		// 14. Conditition_2 ---------------------------------------------------
+		// 15. Conditition_2 ---------------------------------------------------
 			var txtInp_cond2 = document.createElement('input');
 				txtInp_cond2.setAttribute('type', 'text');
-				txtInp_cond2.setAttribute('id', INPUT_NAME_PREFIX + iteration + '_14');
+				txtInp_cond2.setAttribute('id', INPUT_NAME_PREFIX + iteration + '_15');
 				txtInp_cond2.setAttribute('size', '1');
 				txtInp_cond2.setAttribute('maxlength', '1');
 				txtInp_cond2.setAttribute('value', cond);
 				txtInp_cond2.style.color=txtcolor;
 				txtInp_cond2.style.fontSize="10px";
 				txtInp_cond2.style.width="1em";
-		// 15. Years Married ---------------------------------------------------
+		// 16. Years Married (or Yes if married in Census Year) ----------------
 			var txtInp_yrsm = document.createElement('input');
 				txtInp_yrsm.setAttribute('type', 'text');
-				txtInp_yrsm.setAttribute('id', INPUT_NAME_PREFIX + iteration + '_15');
+				txtInp_yrsm.setAttribute('id', INPUT_NAME_PREFIX + iteration + '_16');
 				txtInp_yrsm.setAttribute('size', '1');
 				txtInp_yrsm.setAttribute('maxlength', '2');
 				txtInp_yrsm.setAttribute('value', '');
 				txtInp_yrsm.style.color=txtcolor;
 				txtInp_yrsm.style.fontSize="10px";
 				txtInp_yrsm.style.width="1.4em";
-		// 16. Children Born Alive --------------------------------------------
+		// 17. Children Born Alive --------------------------------------------
 			var txtInp_chilB = document.createElement('input');
 				txtInp_chilB.setAttribute('type', 'text');
-				txtInp_chilB.setAttribute('id', INPUT_NAME_PREFIX + iteration + '_16');
+				txtInp_chilB.setAttribute('id', INPUT_NAME_PREFIX + iteration + '_17');
 				txtInp_chilB.setAttribute('size', '1');
 				txtInp_chilB.setAttribute('maxlength', '2');
 				txtInp_chilB.setAttribute('value', '');
 				txtInp_chilB.style.color=txtcolor;
 				txtInp_chilB.style.fontSize="10px";
 				txtInp_chilB.style.width="1.4em";
-		// 17. Children Still Living ------------------------------------------
+		// 18. Children Still Living ------------------------------------------
 			var txtInp_chilL = document.createElement('input');
 				txtInp_chilL.setAttribute('type', 'text');
-				txtInp_chilL.setAttribute('id', INPUT_NAME_PREFIX + iteration + '_17');
+				txtInp_chilL.setAttribute('id', INPUT_NAME_PREFIX + iteration + '_18');
 				txtInp_chilL.setAttribute('size', '1');
 				txtInp_chilL.setAttribute('maxlength', '2');
 				txtInp_chilL.setAttribute('value', '');
 				txtInp_chilL.style.color=txtcolor;
 				txtInp_chilL.style.fontSize="10px";
 				txtInp_chilL.style.width="1.4em";
-		// 18. Children who have Died ==---------------------------------------
+		// 19. Children who have Died ==---------------------------------------
 			var txtInp_chilD = document.createElement('input');
 				txtInp_chilD.setAttribute('type', 'text');
-				txtInp_chilD.setAttribute('id', INPUT_NAME_PREFIX + iteration + '_18');
+				txtInp_chilD.setAttribute('id', INPUT_NAME_PREFIX + iteration + '_19');
 				txtInp_chilD.setAttribute('size', '1');
 				txtInp_chilD.setAttribute('maxlength', '2');
 				txtInp_chilD.setAttribute('value', '');
 				txtInp_chilD.style.color=txtcolor;
 				txtInp_chilD.style.fontSize="10px";
 				txtInp_chilD.style.width="1.4em";
-		// 19. Age at first marriage -------------------------------------------
+		// 20. Age at first marriage -------------------------------------------
 			var txtInp_ageM = document.createElement('input');
 				txtInp_ageM.setAttribute('type', 'text');
-				txtInp_ageM.setAttribute('id', INPUT_NAME_PREFIX + iteration + '_19');
+				txtInp_ageM.setAttribute('id', INPUT_NAME_PREFIX + iteration + '_20');
 				txtInp_ageM.setAttribute('size', '1');
 				txtInp_ageM.setAttribute('maxlength', '2');
 				txtInp_ageM.setAttribute('value', ''); 
 				txtInp_ageM.style.color=txtcolor;
 				txtInp_ageM.style.fontSize="10px";
 				txtInp_ageM.style.width="1.4em";
-		// 20. Occupation_1 ----------------------------------------------------
+		// 21. Occupation_1 ----------------------------------------------------
 			var txtInp_occu = document.createElement('input');
 				txtInp_occu.setAttribute('type', 'text');
-				txtInp_occu.setAttribute('id', INPUT_NAME_PREFIX + iteration + '_20');
+				txtInp_occu.setAttribute('id', INPUT_NAME_PREFIX + iteration + '_21');
 				txtInp_occu.setAttribute('size', '22');
 				txtInp_occu.setAttribute('value', ''); 
 				txtInp_occu.style.color=txtcolor;
 				txtInp_occu.style.fontSize="10px";
-		// 21. Assets_2 -------------------------------------------
+		// 22. Assets_2 -------------------------------------------
 			var txtInp_assets2 = document.createElement('input');
 				txtInp_assets2.setAttribute('type', 'text');
-				txtInp_assets2.setAttribute('id', INPUT_NAME_PREFIX + iteration + '_21');
+				txtInp_assets2.setAttribute('id', INPUT_NAME_PREFIX + iteration + '_22');
 				txtInp_assets2.setAttribute('size', '7');
 				txtInp_assets2.setAttribute('maxlength', '9');
 				txtInp_assets2.setAttribute('value', '');
 				txtInp_assets2.style.color=txtcolor;
 				txtInp_assets2.style.fontSize="10px";
-		// 22. Birth Place_1 (Full format) ---------------------------------------
+		// 23. Birth Place_1 (Full format) ---------------------------------------
 			var txtInp_birthpl = document.createElement('input');
 				txtInp_birthpl.setAttribute('type', 'text');
-				txtInp_birthpl.setAttribute('id', INPUT_NAME_PREFIX + iteration + '_22');
+				txtInp_birthpl.setAttribute('id', INPUT_NAME_PREFIX + iteration + '_23');
 				txtInp_birthpl.setAttribute('size', '25');
 				txtInp_birthpl.setAttribute('value', birthpl); 
 				txtInp_birthpl.style.color=txtcolor;
 				txtInp_birthpl.style.fontSize="10px";
-		// 23. POB_1 Indi Birth Place_1 (Chapman format) ------------------------
+		// 24. Parentage - x-x = Father foreign born Y/N and Mother foreign born Y/N --
+			var txtInp_parent = document.createElement('input');
+				txtInp_parent.setAttribute('type', 'text');
+				txtInp_parent.setAttribute('id', INPUT_NAME_PREFIX + iteration + '_24');
+				txtInp_parent.setAttribute('size', '1');
+				txtInp_parent.setAttribute('maxlength', '3');
+				txtInp_parent.setAttribute('value', ''); 
+				txtInp_parent.style.color=txtcolor;
+				txtInp_parent.style.fontSize="10px";
+				txtInp_parent.style.width="1.8em";
+		// 25. Birth month Bmth_2) (if born in Census Year) ----------------------
+			var txtInp_bmth2 = document.createElement('input');
+				txtInp_bmth2.setAttribute('type', 'text');
+				txtInp_bmth2.setAttribute('id', INPUT_NAME_PREFIX + iteration + '_25');
+				txtInp_bmth2.setAttribute('size', '1');
+				txtInp_bmth2.setAttribute('maxlength', '3');
+				txtInp_bmth2.setAttribute('value', ''); 
+				txtInp_bmth2.style.color=txtcolor;
+				txtInp_bmth2.style.fontSize="10px";
+				txtInp_bmth2.style.width="1.8em";
+		// 26. Married month if married in Census Year ---------------------------
+			var txtInp_mmth = document.createElement('input');
+				txtInp_mmth.setAttribute('type', 'text');
+				txtInp_mmth.setAttribute('id', INPUT_NAME_PREFIX + iteration + '_26');
+				txtInp_mmth.setAttribute('size', '1');
+				txtInp_mmth.setAttribute('maxlength', '3');
+				txtInp_mmth.setAttribute('value', ''); 
+				txtInp_mmth.style.color=txtcolor;
+				txtInp_mmth.style.fontSize="10px";
+				txtInp_mmth.style.width="1.8em";
+		// 27. POB_1 Indi Birth Place_1 (Chapman format) ------------------------
 			var txtInp_ibirthpl = document.createElement('input');
 				txtInp_ibirthpl.setAttribute('type', 'text');
-				txtInp_ibirthpl.setAttribute('id', INPUT_NAME_PREFIX + iteration + '_23');
+				txtInp_ibirthpl.setAttribute('id', INPUT_NAME_PREFIX + iteration + '_27');
 				txtInp_ibirthpl.setAttribute('size', '1');
 				txtInp_ibirthpl.setAttribute('maxlength', '3');
 				txtInp_ibirthpl.setAttribute('value', ibirthpl); 
 				txtInp_ibirthpl.style.color=txtcolor;
 				txtInp_ibirthpl.style.fontSize="10px";
-				txtInp_ibirthpl.style.width="1.8em";
-		// 24. FPOB_1 Fathers Birth Place_1 (Chapman format) ---------------------
+				txtInp_ibirthpl.style.width="2em";
+		// 28. FPOB_1 Fathers Birth Place_1 (Chapman format) ---------------------
 			var txtInp_fbirthpl = document.createElement('input');
 				txtInp_fbirthpl.setAttribute('type', 'text');
-				txtInp_fbirthpl.setAttribute('id', INPUT_NAME_PREFIX + iteration + '_24');
+				txtInp_fbirthpl.setAttribute('id', INPUT_NAME_PREFIX + iteration + '_28');
 				txtInp_fbirthpl.setAttribute('size', '1');
 				txtInp_fbirthpl.setAttribute('maxlength', '3');
 				txtInp_fbirthpl.setAttribute('value', fbirthpl); 
 				txtInp_fbirthpl.style.color=txtcolor;
 				txtInp_fbirthpl.style.fontSize="10px";
-				txtInp_fbirthpl.style.width="1.8em";
-		// 25. FPOB_1 Mothers Birth Place_1 (Chapman format )---------------------
+				txtInp_fbirthpl.style.width="2em";
+		// 29. FPOB_1 Mothers Birth Place_1 (Chapman format )---------------------
 			var txtInp_mbirthpl = document.createElement('input');
 				txtInp_mbirthpl.setAttribute('type', 'text');
-				txtInp_mbirthpl.setAttribute('id', INPUT_NAME_PREFIX + iteration + '_25');
+				txtInp_mbirthpl.setAttribute('id', INPUT_NAME_PREFIX + iteration + '_29');
 				txtInp_mbirthpl.setAttribute('size', '1');
 				txtInp_mbirthpl.setAttribute('maxlength', '3');
 				txtInp_mbirthpl.setAttribute('value', mbirthpl); 
 				txtInp_mbirthpl.style.color=txtcolor;
 				txtInp_mbirthpl.style.fontSize="10px";
-				txtInp_mbirthpl.style.width="1.8em";
-		// 26. Years in USA ----------------------------------------------------
+				txtInp_mbirthpl.style.width="2em";
+		// 30. Years in USA ----------------------------------------------------
 			var txtInp_yrsUS = document.createElement('input');
 				txtInp_yrsUS.setAttribute('type', 'text');
-				txtInp_yrsUS.setAttribute('id', INPUT_NAME_PREFIX + iteration + '_26');
+				txtInp_yrsUS.setAttribute('id', INPUT_NAME_PREFIX + iteration + '_30');
 				txtInp_yrsUS.setAttribute('size', '1');
 				txtInp_yrsUS.setAttribute('maxlength', '2');
 				txtInp_yrsUS.setAttribute('value', ''); 
 				txtInp_yrsUS.style.color=txtcolor;
 				txtInp_yrsUS.style.fontSize="10px";
 				txtInp_yrsUS.style.width="1.4em";
-		// 27. Year of Immigration YOI_1 ----------------------------------------
+		// 31. Year of Immigration YOI_1 ----------------------------------------
 			var txtInp_yoi1 = document.createElement('input');
 				txtInp_yoi1.setAttribute('type', 'text');
-				txtInp_yoi1.setAttribute('id', INPUT_NAME_PREFIX + iteration + '_27');
+				txtInp_yoi1.setAttribute('id', INPUT_NAME_PREFIX + iteration + '_31');
 				txtInp_yoi1.setAttribute('size', '2');
 				txtInp_yoi1.setAttribute('maxlength', '4');
 				txtInp_yoi1.setAttribute('value', ''); 
 				txtInp_yoi1.style.color=txtcolor;
 				txtInp_yoi1.style.fontSize="10px";
-		// 28. Naturalized or Alien N-A_1 ---------------------------------------
+		// 32. Naturalized or Alien N-A_1 ---------------------------------------
 			var txtInp_na1 = document.createElement('input');
 				txtInp_na1.setAttribute('type', 'text');
-				txtInp_na1.setAttribute('id', INPUT_NAME_PREFIX + iteration + '_28');
+				txtInp_na1.setAttribute('id', INPUT_NAME_PREFIX + iteration + '_32');
 				txtInp_na1.setAttribute('size', '1');
 				txtInp_na1.setAttribute('maxlength', '1');
 				txtInp_na1.setAttribute('value', ''); 
 				txtInp_na1.style.color=txtcolor;
 				txtInp_na1.style.fontSize="10px";
 				txtInp_na1.style.width="1em";
-		// 29. Year of naturalization YON ---------------------------------------
+		// 33. Year of naturalization YON ---------------------------------------
 			var txtInp_yon = document.createElement('input');
 				txtInp_yon.setAttribute('type', 'text');
-				txtInp_yon.setAttribute('id', INPUT_NAME_PREFIX + iteration + '_29');
+				txtInp_yon.setAttribute('id', INPUT_NAME_PREFIX + iteration + '_33');
 				txtInp_yon.setAttribute('size', '2');
 				txtInp_yon.setAttribute('maxlength', '4');
 				txtInp_yon.setAttribute('value', ''); 
 				txtInp_yon.style.color=txtcolor;
 				txtInp_yon.style.fontSize="10px";
-		// 30. English spoken, or if not, other Language spoken Eng/Lang --------
+		// 34. English spoken, or if not, other Language spoken Eng/Lang --------
 			var txtInp_englang = document.createElement('input');
 				txtInp_englang.setAttribute('type', 'text');
-				txtInp_englang.setAttribute('id', INPUT_NAME_PREFIX + iteration + '_30');
+				txtInp_englang.setAttribute('id', INPUT_NAME_PREFIX + iteration + '_34');
 				txtInp_englang.setAttribute('size', '8');
 				txtInp_englang.setAttribute('maxlength', '10');
 				txtInp_englang.setAttribute('value', ''); 
 				txtInp_englang.style.color=txtcolor;
 				txtInp_englang.style.fontSize="10px";
-		// 31. Occupation_2 ----------------------------------------------------
+		// 35. Occupation_2 ----------------------------------------------------
 			var txtInp_occu2 = document.createElement('input');
 				txtInp_occu2.setAttribute('type', 'text');
-				txtInp_occu2.setAttribute('id', INPUT_NAME_PREFIX + iteration + '_31');
+				txtInp_occu2.setAttribute('id', INPUT_NAME_PREFIX + iteration + '_35');
 				txtInp_occu2.setAttribute('size', '22');
 				txtInp_occu2.setAttribute('value', ''); 
 				txtInp_occu2.style.color=txtcolor;
 				txtInp_occu2.style.fontSize="10px";
-		// 32. Health ----------------------------------------------------------
+		// 36. Health ----------------------------------------------------------
 			var txtInp_health = document.createElement('input');
 				txtInp_health.setAttribute('type', 'text');
-				txtInp_health.setAttribute('id', INPUT_NAME_PREFIX + iteration + '_32');
+				txtInp_health.setAttribute('id', INPUT_NAME_PREFIX + iteration + '_36');
 				txtInp_health.setAttribute('size', '3');
 				txtInp_health.setAttribute('maxlength', '5');
 				txtInp_health.setAttribute('value', ''); 
 				txtInp_health.style.color=txtcolor;
 				txtInp_health.style.fontSize="10px";
-		// 33. Industry_1 ------------------------------------------------------
+		// 37. Industry_1 ------------------------------------------------------
 			var txtInp_ind1 = document.createElement('input');
 				txtInp_ind1.setAttribute('type', 'text');
-				txtInp_ind1.setAttribute('id', INPUT_NAME_PREFIX + iteration + '_33');
+				txtInp_ind1.setAttribute('id', INPUT_NAME_PREFIX + iteration + '_37');
 				txtInp_ind1.setAttribute('size', '22');
 				txtInp_ind1.setAttribute('value', ''); 
 				txtInp_ind1.style.color=txtcolor;
 				txtInp_ind1.style.fontSize="10px";
-		// 34. Employ_1 --------------------------------------------------------
+		// 38. Employ_1 --------------------------------------------------------
 			var txtInp_emp1 = document.createElement('input');
 				txtInp_emp1.setAttribute('type', 'text');
-				txtInp_emp1.setAttribute('id', INPUT_NAME_PREFIX + iteration + '_34');
+				txtInp_emp1.setAttribute('id', INPUT_NAME_PREFIX + iteration + '_38');
 				txtInp_emp1.setAttribute('size', '12');
 				txtInp_emp1.setAttribute('value', ''); 
 				txtInp_emp1.style.color=txtcolor;
 				txtInp_emp1.style.fontSize="10px";
-		// 35. Employer EmR ----------------------------------------------------
+		// 39. Employer EmR ----------------------------------------------------
 			var txtInp_emR = document.createElement('input');
 				txtInp_emR.setAttribute('type', 'text');
-				txtInp_emR.setAttribute('id', INPUT_NAME_PREFIX + iteration + '_35');
+				txtInp_emR.setAttribute('id', INPUT_NAME_PREFIX + iteration + '_39');
 				txtInp_emR.setAttribute('size', '1');
 				txtInp_emR.setAttribute('maxlength', '1');
 				txtInp_emR.setAttribute('value', ''); 
 				txtInp_emR.style.color=txtcolor;
 				txtInp_emR.style.fontSize="10px";
 				txtInp_emR.style.width="1em";
-		// 36. Employed EmD ----------------------------------------------------
+		// 40. Employed EmD ----------------------------------------------------
 			var txtInp_emD = document.createElement('input');
 				txtInp_emD.setAttribute('type', 'text');
-				txtInp_emD.setAttribute('id', INPUT_NAME_PREFIX + iteration + '_36');
+				txtInp_emD.setAttribute('id', INPUT_NAME_PREFIX + iteration + '_40');
 				txtInp_emD.setAttribute('size', '1');
 				txtInp_emD.setAttribute('maxlength', '1');
 				txtInp_emD.setAttribute('value', ''); 
 				txtInp_emD.style.color=txtcolor;
 				txtInp_emD.style.fontSize="10px";
 				txtInp_emD.style.width="1em";
-		// 37. Employed at Home EmH --------------------------------------------
+		// 41. Months employed -------------------------------------------------
+			var txtInp_mnsE = document.createElement('input');
+				txtInp_mnsE.setAttribute('type', 'text');
+				txtInp_mnsE.setAttribute('id', INPUT_NAME_PREFIX + iteration + '_41');
+				txtInp_mnsE.setAttribute('size', '1');
+				txtInp_mnsE.setAttribute('maxlength', '2');
+				txtInp_mnsE.setAttribute('value', ''); 
+				txtInp_mnsE.style.color=txtcolor;
+				txtInp_mnsE.style.fontSize="10px";
+				txtInp_mnsE.style.width="1.4em";
+		// 42. Working at Home WH ----------------------------------------------
 			var txtInp_emH = document.createElement('input');
 				txtInp_emH.setAttribute('type', 'text');
-				txtInp_emH.setAttribute('id', INPUT_NAME_PREFIX + iteration + '_37');
+				txtInp_emH.setAttribute('id', INPUT_NAME_PREFIX + iteration + '_42');
 				txtInp_emH.setAttribute('size', '1');
 				txtInp_emH.setAttribute('maxlength', '1');
 				txtInp_emH.setAttribute('value', ''); 
 				txtInp_emH.style.color=txtcolor;
 				txtInp_emH.style.fontSize="10px";
 				txtInp_emH.style.width="1em";
-		// 38. Not Employed EmN ------------------------------------------------
+		// 43. Not Employed EmN ------------------------------------------------
 			var txtInp_emN = document.createElement('input');
 				txtInp_emN.setAttribute('type', 'text');
-				txtInp_emN.setAttribute('id', INPUT_NAME_PREFIX + iteration + '_38');
+				txtInp_emN.setAttribute('id', INPUT_NAME_PREFIX + iteration + '_43');
 				txtInp_emN.setAttribute('size', '1');
 				txtInp_emN.setAttribute('maxlength', '1');
 				txtInp_emN.setAttribute('value', ''); 
 				txtInp_emN.style.color=txtcolor;
 				txtInp_emN.style.fontSize="10px";
 				txtInp_emN.style.width="1em";
-		// 39. Education -------------------------------------------------------
+		// 44. Weeks unemployed ------------------------------------------------
+			var txtInp_wksU = document.createElement('input');
+				txtInp_wksU.setAttribute('type', 'text');
+				txtInp_wksU.setAttribute('id', INPUT_NAME_PREFIX + iteration + '_44');
+				txtInp_wksU.setAttribute('size', '1');
+				txtInp_wksU.setAttribute('maxlength', '2');
+				txtInp_wksU.setAttribute('value', ''); 
+				txtInp_wksU.style.color=txtcolor;
+				txtInp_wksU.style.fontSize="10px";
+				txtInp_wksU.style.width="1.4em";
+		// 45. Months unemployed -----------------------------------------------
+			var txtInp_mnsU = document.createElement('input');
+				txtInp_mnsU.setAttribute('type', 'text');
+				txtInp_mnsU.setAttribute('id', INPUT_NAME_PREFIX + iteration + '_45');
+				txtInp_mnsU.setAttribute('size', '1');
+				txtInp_mnsU.setAttribute('maxlength', '2');
+				txtInp_mnsU.setAttribute('value', ''); 
+				txtInp_mnsU.style.color=txtcolor;
+				txtInp_mnsU.style.fontSize="10px";
+				txtInp_mnsU.style.width="1.4em";
+		// 46. Education - xxx = School/Able to Read/Able to Write -------------
 			var txtInp_educ = document.createElement('input');
 				txtInp_educ.setAttribute('type', 'text');
-				txtInp_educ.setAttribute('id', INPUT_NAME_PREFIX + iteration + '_39');
+				txtInp_educ.setAttribute('id', INPUT_NAME_PREFIX + iteration + '_46');
 				txtInp_educ.setAttribute('size', '1');
 				txtInp_educ.setAttribute('maxlength', '3');
 				txtInp_educ.setAttribute('value', ''); 
 				txtInp_educ.style.color=txtcolor;
 				txtInp_educ.style.fontSize="10px";
 				txtInp_educ.style.width="1.8em";
-		// 40. English Spoken?_1 eng_1 -----------------------------------------
+		// 47. Education pre 1890 Census - xxx = School/Cannot Read/Cannot Write ----
+			var txtInp_educpre1890 = document.createElement('input');
+				txtInp_educpre1890.setAttribute('type', 'text');
+				txtInp_educpre1890.setAttribute('id', INPUT_NAME_PREFIX + iteration + '_47');
+				txtInp_educpre1890.setAttribute('size', '1');
+				txtInp_educpre1890.setAttribute('maxlength', '3');
+				txtInp_educpre1890.setAttribute('value', ''); 
+				txtInp_educpre1890.style.color=txtcolor;
+				txtInp_educpre1890.style.fontSize="10px";
+				txtInp_educpre1890.width="1.8em";
+		// 48. English Spoken?_1 eng_1 -----------------------------------------
 			var txtInp_eng1 = document.createElement('input');
 				txtInp_eng1.setAttribute('type', 'text');
-				txtInp_eng1.setAttribute('id', INPUT_NAME_PREFIX + iteration + '_40');
+				txtInp_eng1.setAttribute('id', INPUT_NAME_PREFIX + iteration + '_48');
 				txtInp_eng1.setAttribute('size', '1');
 				txtInp_eng1.setAttribute('maxlength', '1');
 				txtInp_eng1.setAttribute('value', ''); 
 				txtInp_eng1.style.color=txtcolor;
 				txtInp_eng1.style.fontSize="10px";
 				txtInp_eng1.style.width="1em";
-		// 41. Assets_3 --------------------------------------------------------
-			var txtInp_assets3 = document.createElement('input');
-				txtInp_assets3.setAttribute('type', 'text');
-				txtInp_assets3.setAttribute('id', INPUT_NAME_PREFIX + iteration + '_41');
-				txtInp_assets3.setAttribute('size', '7');
-				txtInp_assets3.setAttribute('maxlength', '9');
-				txtInp_assets3.setAttribute('value', '');
-				txtInp_assets3.style.color=txtcolor;
-				txtInp_assets3.style.fontSize="10px";
-		// 42. Birth Place_2 (full format) -------------------------------------
+		// 49. Home Ownership - x-x-x-xxxx = O/R-F/M-F/H-#### = Owned/Rented-Free/Mortgaged-Farm/House-Farm Schedule number ----
+			var txtInp_home = document.createElement('input');
+				txtInp_home.setAttribute('type', 'text');
+				txtInp_home.setAttribute('id', INPUT_NAME_PREFIX + iteration + '_49');
+				txtInp_home.setAttribute('size', '7');
+				txtInp_home.setAttribute('maxlength', '12');
+				txtInp_home.setAttribute('value', '');
+				txtInp_home.style.color=txtcolor;
+				txtInp_home.style.fontSize="10px";
+		// 50. Birth Place_2 (full format) -------------------------------------
 			var txtInp_birthpl2 = document.createElement('input');
 				txtInp_birthpl2.setAttribute('type', 'text');
-				txtInp_birthpl2.setAttribute('id', INPUT_NAME_PREFIX + iteration + '_42');
+				txtInp_birthpl2.setAttribute('id', INPUT_NAME_PREFIX + iteration + '_50');
 				txtInp_birthpl2.setAttribute('size', '25');
 				txtInp_birthpl2.setAttribute('value', birthpl); 
 				txtInp_birthpl2.style.color=txtcolor;
 				txtInp_birthpl2.style.fontSize="10px";
-		// 43. POB_2 Indi Birth Place_2 ----------------------------------------
+		// 51. POB_2 Indi Birth Place_2 ----------------------------------------
 			var txtInp_ibirthpl2 = document.createElement('input');
 				txtInp_ibirthpl2.setAttribute('type', 'text');
-				txtInp_ibirthpl2.setAttribute('id', INPUT_NAME_PREFIX + iteration + '_43');
+				txtInp_ibirthpl2.setAttribute('id', INPUT_NAME_PREFIX + iteration + '_51');
 				txtInp_ibirthpl2.setAttribute('size', '1');
 				txtInp_ibirthpl2.setAttribute('maxlength', '3');
 				txtInp_ibirthpl2.setAttribute('value', ibirthpl); 
 				txtInp_ibirthpl2.style.color=txtcolor;
 				txtInp_ibirthpl2.style.fontSize="10px";
-				txtInp_ibirthpl2.style.width="1.8em";
-		// 44. Born in Same Country BIC ----------------------------------------
+				txtInp_ibirthpl2.style.width="2em";
+		// 52. Born in Same Country BIC ----------------------------------------
 			var txtInp_bic = document.createElement('input');
 				txtInp_bic.setAttribute('type', 'text');
-				txtInp_bic.setAttribute('id', INPUT_NAME_PREFIX + iteration + '_44');
+				txtInp_bic.setAttribute('id', INPUT_NAME_PREFIX + iteration + '_52');
 				txtInp_bic.setAttribute('size', '1');
 				txtInp_bic.setAttribute('maxlength', '1');
-				txtInp_bic.setAttribute('value', fbirthpl); 
+				txtInp_bic.setAttribute('value', ''); 
 				txtInp_bic.style.color=txtcolor;
 				txtInp_bic.style.fontSize="10px";
 				txtInp_bic.style.width="1em";
-		// 45. Born outside England BOE ----------------------------------------
+		// 53. Born outside England BOE ----------------------------------------
 			var txtInp_boe = document.createElement('input');
 				txtInp_boe.setAttribute('type', 'text');
-				txtInp_boe.setAttribute('id', INPUT_NAME_PREFIX + iteration + '_45');
+				txtInp_boe.setAttribute('id', INPUT_NAME_PREFIX + iteration + '_53');
 				txtInp_boe.setAttribute('size', '1');
 				txtInp_boe.setAttribute('maxlength', '3');
-				txtInp_boe.setAttribute('value', fbirthpl); 
+				txtInp_boe.setAttribute('value', ''); 
 				txtInp_boe.style.color=txtcolor;
 				txtInp_boe.style.fontSize="10px";
-				txtInp_boe.style.width="1.8em";
-		// 46. FPOB_2 Birth Place_2 --------------------------------------------
+				txtInp_boe.style.width="2.2em";
+		// 54. FPOB_2 Birth Place_2 --------------------------------------------
 			var txtInp_fbirthpl2 = document.createElement('input');
 				txtInp_fbirthpl2.setAttribute('type', 'text');
-				txtInp_fbirthpl2.setAttribute('id', INPUT_NAME_PREFIX + iteration + '_46');
+				txtInp_fbirthpl2.setAttribute('id', INPUT_NAME_PREFIX + iteration + '_54');
 				txtInp_fbirthpl2.setAttribute('size', '1');
 				txtInp_fbirthpl2.setAttribute('maxlength', '3');
 				txtInp_fbirthpl2.setAttribute('value', fbirthpl); 
 				txtInp_fbirthpl2.style.color=txtcolor;
 				txtInp_fbirthpl2.style.fontSize="10px";
-				txtInp_fbirthpl2.style.width="1.8em";
-		// 47. MPOB_2 Birth Place_2 --------------------------------------------
+				txtInp_fbirthpl2.style.width="2em";
+		// 55. MPOB_2 Birth Place_2 --------------------------------------------
 			var txtInp_mbirthpl2 = document.createElement('input');
 				txtInp_mbirthpl2.setAttribute('type', 'text');
-				txtInp_mbirthpl2.setAttribute('id', INPUT_NAME_PREFIX + iteration + '_47');
+				txtInp_mbirthpl2.setAttribute('id', INPUT_NAME_PREFIX + iteration + '_55');
 				txtInp_mbirthpl2.setAttribute('size', '1');
 				txtInp_mbirthpl2.setAttribute('maxlength', '3');
 				txtInp_mbirthpl2.setAttribute('value', mbirthpl); 
 				txtInp_mbirthpl2.style.color=txtcolor;
 				txtInp_mbirthpl2.style.fontSize="10px";
-				txtInp_mbirthpl2.style.width="1.8em";
-		// 48. Mother Tongue ---------------------------------------------------
+				txtInp_mbirthpl2.style.width="2em";
+		// 56. Native Language -------------------------------------------------
 			var txtInp_lang = document.createElement('input');
 				txtInp_lang.setAttribute('type', 'text');
-				txtInp_lang.setAttribute('id', INPUT_NAME_PREFIX + iteration + '_48');
+				txtInp_lang.setAttribute('id', INPUT_NAME_PREFIX + iteration + '_56');
 				txtInp_lang.setAttribute('size', '8');
 				txtInp_lang.setAttribute('maxlength', '10');
 				txtInp_lang.setAttribute('value', ''); 
 				txtInp_lang.style.color=txtcolor;
 				txtInp_lang.style.fontSize="10px";
-		// 49. Year of Immigration YOI_2 ---------------------------------------
+		// 57. Year of Immigration YOI_2 ---------------------------------------
 			var txtInp_yoi2 = document.createElement('input');
 				txtInp_yoi2.setAttribute('type', 'text');
-				txtInp_yoi2.setAttribute('id', INPUT_NAME_PREFIX + iteration + '_49');
+				txtInp_yoi2.setAttribute('id', INPUT_NAME_PREFIX + iteration + '_57');
 				txtInp_yoi2.setAttribute('size', '2');
 				txtInp_yoi2.setAttribute('maxlength', '4');
 				txtInp_yoi2.setAttribute('value', ''); 
 				txtInp_yoi2.style.color=txtcolor;
 				txtInp_yoi2.style.fontSize="10px";
-		// 50. Naturalized or Alien N-A_2 --------------------------------------
+		// 58. Naturalized or Alien N-A_2 --------------------------------------
 			var txtInp_na2 = document.createElement('input');
 				txtInp_na2.setAttribute('type', 'text');
-				txtInp_na2.setAttribute('id', INPUT_NAME_PREFIX + iteration + '_50');
+				txtInp_na2.setAttribute('id', INPUT_NAME_PREFIX + iteration + '_58');
 				txtInp_na2.setAttribute('size', '1');
 				txtInp_na2.setAttribute('maxlength', '1');
 				txtInp_na2.setAttribute('value', ''); 
 				txtInp_na2.style.color=txtcolor;
 				txtInp_na2.style.fontSize="10px";
 				txtInp_na2.style.width="1em";
-		// 51. English Spoken?_2 eng_2 -----------------------------------------
+		// 59. English Spoken?_2 eng_2 -----------------------------------------
 			var txtInp_eng2 = document.createElement('input');
 				txtInp_eng2.setAttribute('type', 'text');
-				txtInp_eng2.setAttribute('id', INPUT_NAME_PREFIX + iteration + '_51');
+				txtInp_eng2.setAttribute('id', INPUT_NAME_PREFIX + iteration + '_59');
 				txtInp_eng2.setAttribute('size', '1');
 				txtInp_eng2.setAttribute('maxlength', '1');
 				txtInp_eng2.setAttribute('value', ''); 
 				txtInp_eng2.style.color=txtcolor;
 				txtInp_eng2.style.fontSize="10px";
 				txtInp_eng2.style.width="1em";
-		// 52. Occupation_3 ----------------------------------------------------
+		// 60. Occupation_3 ----------------------------------------------------
 			var txtInp_occu3 = document.createElement('input');
 				txtInp_occu3.setAttribute('type', 'text');
-				txtInp_occu3.setAttribute('id', INPUT_NAME_PREFIX + iteration + '_52');
+				txtInp_occu3.setAttribute('id', INPUT_NAME_PREFIX + iteration + '_60');
 				txtInp_occu3.setAttribute('size', '22');
 				txtInp_occu3.setAttribute('value', ''); 
 				txtInp_occu3.style.color=txtcolor;
 				txtInp_occu3.style.fontSize="10px";
-		// 53. Industry_2 -----------------------------------------------------
+		// 61. Industry_2 -----------------------------------------------------
 			var txtInp_ind2 = document.createElement('input');
 				txtInp_ind2.setAttribute('type', 'text');
-				txtInp_ind2.setAttribute('id', INPUT_NAME_PREFIX + iteration + '_53');
+				txtInp_ind2.setAttribute('id', INPUT_NAME_PREFIX + iteration + '_61');
 				txtInp_ind2.setAttribute('size', '22');
 				txtInp_ind2.setAttribute('value', ''); 
 				txtInp_ind2.style.color=txtcolor;
 				txtInp_ind2.style.fontSize="10px";
-		// 54. Employ_2 -------------------------------------------------------
+		// 62. Employ_2 -------------------------------------------------------
 			var txtInp_emp2 = document.createElement('input');
 				txtInp_emp2.setAttribute('type', 'text');
-				txtInp_emp2.setAttribute('id', INPUT_NAME_PREFIX + iteration + '_54');
+				txtInp_emp2.setAttribute('id', INPUT_NAME_PREFIX + iteration + '_62');
 				txtInp_emp2.setAttribute('size', '12');
 				txtInp_emp2.setAttribute('value', ''); 
 				txtInp_emp2.style.color=txtcolor;
 				txtInp_emp2.style.fontSize="10px";
-		// 55. Infirmaties ----------------------------------------------------
+		// 63. Infirmaties ----------------------------------------------------
 			var txtInp_infirm = document.createElement('input');
 				txtInp_infirm.setAttribute('type', 'text');
-				txtInp_infirm.setAttribute('id', INPUT_NAME_PREFIX + iteration + '_55');
+				txtInp_infirm.setAttribute('id', INPUT_NAME_PREFIX + iteration + '_63');
 				txtInp_infirm.setAttribute('size', '3');
 				txtInp_infirm.setAttribute('maxlength', '4');
 				txtInp_infirm.setAttribute('value', ''); 
 				txtInp_infirm.style.color=txtcolor;
 				txtInp_infirm.style.fontSize="10px";
 				txtInp_infirm.style.width="2.3em";
-		// 56. Veteran ? ------------------------------------------------------
+		// 64. Health / Situation = Disease-Infirmaties-Convict,Pauper etc ----
+			var txtInp_situ = document.createElement('input');
+				txtInp_situ.setAttribute('type', 'text');
+				txtInp_situ.setAttribute('id', INPUT_NAME_PREFIX + iteration + '_64');
+				txtInp_situ.setAttribute('size', '12');
+				txtInp_situ.setAttribute('value', ''); 
+				txtInp_situ.style.color=txtcolor;
+				txtInp_situ.style.fontSize="10px";
+		// 65. Veteran ? ------------------------------------------------------
 			var txtInp_vet = document.createElement('input');
 				txtInp_vet.setAttribute('type', 'text');
-				txtInp_vet.setAttribute('id', INPUT_NAME_PREFIX + iteration + '_56');
+				txtInp_vet.setAttribute('id', INPUT_NAME_PREFIX + iteration + '_65');
 				txtInp_vet.setAttribute('size', '1');
 				txtInp_vet.setAttribute('maxlength', '1');
 				txtInp_vet.setAttribute('value', ''); 
 				txtInp_vet.style.color=txtcolor;
 				txtInp_vet.style.fontSize="10px";
 				txtInp_vet.style.width="1em";
-		// 57. Delete Row Button ----------------------------------------------
+		// 66. War or Expedition ----------------------------------------------
+			var txtInp_war = document.createElement('input');
+				txtInp_war.setAttribute('type', 'text');
+				txtInp_war.setAttribute('id', INPUT_NAME_PREFIX + iteration + '_66');
+				txtInp_war.setAttribute('size', '8');
+				txtInp_war.setAttribute('value', ''); 
+				txtInp_war.style.color=txtcolor;
+				txtInp_war.style.fontSize="10px";
+		// 67. Infirmaties (Census 1910) - x-x = Blind (both eyes) Y/N - Deaf and dumb Y/N ----
+			var txtInp_infirm1910 = document.createElement('input');
+				txtInp_infirm1910.setAttribute('type', 'text');
+				txtInp_infirm1910.setAttribute('id', INPUT_NAME_PREFIX + iteration + '_67');
+				txtInp_infirm1910.setAttribute('size', '1');
+				txtInp_infirm1910.setAttribute('maxlength', '2');
+				txtInp_infirm1910.setAttribute('value', ''); 
+				txtInp_infirm1910.style.color=txtcolor;
+				txtInp_infirm1910.style.fontSize="10px";
+				txtInp_infirm1910.style.width="1.4em";
+				
+		// 68. Delete Row Button ----------------------------------------------
 			var btnEl = document.createElement('input');
 				btnEl.setAttribute('type', 'button');
 				btnEl.setAttribute('value', 'x');
 				btnEl.onclick = function () {deleteCurrentRow(this)};
-		// 58. Insert row Radio button ----------------------------------------
+		// 69. Insert row Radio button ----------------------------------------
 			var raEl;
 				try {
 					raEl = document.createElement('<input type="radio" name="' + RADIO_NAME + '" value="' + iteration + '">');
@@ -2057,7 +2120,7 @@ function addRowToTable(num, pid, nam, label, gend, cond, yob, age2, YMD, occu, b
 					raEl.setAttribute('name', RADIO_NAME );
 					raEl.setAttribute('value', iteration);
 				}
-		// 59. Item Number ----------------------------------------------------
+		// 70. Item Number ----------------------------------------------------
 			var txt_itemNo2 = document.createTextNode(iteration);
 		}
 		// Not visible but used for row re-order process ----------------------
@@ -2065,90 +2128,102 @@ function addRowToTable(num, pid, nam, label, gend, cond, yob, age2, YMD, occu, b
 				cbEl.type = "hidden";
 
 		// d. Append appropriate Cell elements to each cell ===================
-		cell_0.appendChild(txt_itemNo);			// Item Number
-		cell_1.appendChild(txtInp_pid);			// Indi ID
-		cell_2.appendChild(txtInp_nam);			// Name
-		cell_3.appendChild(txtInp_label);		// Relationship_1
-		cell_4.appendChild(txtInp_cond);		// Condition_1
-		cell_5.appendChild(txtInp_assets);		// Assets_1
-		cell_6.appendChild(txtInp_age);			// Age_1
-		cell_7.appendChild(txtInp_race);		// Race_1
-		cell_8.appendChild(txtInp_gend);		// Sex
-		cell_9.appendChild(txtInp_race2);		// Race_2
+		cell_[0].appendChild(txt_itemNo);			// Item Number
+		cell_[1].appendChild(txtInp_pid);			// Indi ID
+		cell_[2].appendChild(txtInp_nam);			// Name
+		cell_[3].appendChild(txtInp_label);			// Relationship_1
+		cell_[4].appendChild(txtInp_cond);			// Condition_1
+		cell_[5].appendChild(txtInp_tenure);		// Tenure
+		cell_[6].appendChild(txtInp_assets);		// Assets_1
+		cell_[7].appendChild(txtInp_age);			// Age_1
+		cell_[8].appendChild(txtInp_race);			// Race_1
+		cell_[9].appendChild(txtInp_gend);			// Sex
 		
-		cell_10.appendChild(txtInp_yob);		// DOB/YOB
-		cell_11.appendChild(txtInp_age2);		// Age_2
-		cell_12.appendChild(txtInp_bmth);		// Birth Month
-		cell_13.appendChild(txtInp_label2);		// Relationship_2
-		cell_14.appendChild(txtInp_cond2);		// Condition_2
-		cell_15.appendChild(txtInp_yrsm);		// Years Married
-		cell_16.appendChild(txtInp_chilB);		// Children Born Alive
-		cell_17.appendChild(txtInp_chilL);		// Children Still Living
-		cell_18.appendChild(txtInp_chilD);		// Children who have Died
-		cell_19.appendChild(txtInp_ageM);		// Age st first marriage
+		cell_[10].appendChild(txtInp_race2);		// Race_2
+		cell_[11].appendChild(txtInp_yob);			// DOB/YOB
+		cell_[12].appendChild(txtInp_age2);			// Age_2
+		cell_[13].appendChild(txtInp_bmth);			// Birth Month
+		cell_[14].appendChild(txtInp_label2);		// Relationship_2
+		cell_[15].appendChild(txtInp_cond2);		// Condition_2
+		cell_[16].appendChild(txtInp_yrsm);			// Years Married
+		cell_[17].appendChild(txtInp_chilB);		// Children Born Alive
+		cell_[18].appendChild(txtInp_chilL);		// Children Still Living
+		cell_[19].appendChild(txtInp_chilD);		// Children who have Died
 		
-		cell_20.appendChild(txtInp_occu);		// Occupation_1
-		cell_21.appendChild(txtInp_assets2);	// Assets_2
-		cell_22.appendChild(txtInp_birthpl);	// Place of Birth_1
-		cell_23.appendChild(txtInp_ibirthpl);	// Indis POB_1
-		cell_24.appendChild(txtInp_fbirthpl);	// Father FPOB_1
-		cell_25.appendChild(txtInp_mbirthpl);	// Mother MPOB_1
-		cell_26.appendChild(txtInp_yrsUS);		// Years in USA
-		cell_27.appendChild(txtInp_yoi1);		// Year of Immigration YOI_1
-		cell_28.appendChild(txtInp_na1);		// Naturalized or Alien N-A_1
-		cell_29.appendChild(txtInp_yon);		// Year of Naturalization YON
+		cell_[20].appendChild(txtInp_ageM);			// Age st first marriage
+		cell_[21].appendChild(txtInp_occu);			// Occupation_1
+		cell_[22].appendChild(txtInp_assets2);		// Assets_2
+		cell_[23].appendChild(txtInp_birthpl);		// Place of Birth_1
+		cell_[24].appendChild(txtInp_parent);		// Parentage
+		cell_[25].appendChild(txtInp_bmth2);		// Month if born in Census Year - bmth2
+		cell_[26].appendChild(txtInp_mmth);			// Month if married in Census Year
+		cell_[27].appendChild(txtInp_ibirthpl);		// Indis POB_1
+		cell_[28].appendChild(txtInp_fbirthpl);		// Father FPOB_1
+		cell_[29].appendChild(txtInp_mbirthpl);		// Mother MPOB_1
 		
-		cell_30.appendChild(txtInp_englang);	// English spoken, if not, Other Language spoken Eng/Lang
-		cell_31.appendChild(txtInp_occu2);		// Occupation_2
-		cell_32.appendChild(txtInp_health);		// Health - 5 parameters x--xx etc
-		cell_33.appendChild(txtInp_ind1);		// Industry ind_1
-		cell_34.appendChild(txtInp_emp1);		// Employ_1
-		cell_35.appendChild(txtInp_emR);		// Employer EmR
-		cell_36.appendChild(txtInp_emD);		// Employed EmD
-		cell_37.appendChild(txtInp_emH);		// Employed At Home EmH
-		cell_38.appendChild(txtInp_emN);		// Not Employed EmN
-		cell_39.appendChild(txtInp_educ);		// Education 3 parameters Sch-Read-Write  -xx
+		cell_[30].appendChild(txtInp_yrsUS);		// Years in USA
+		cell_[31].appendChild(txtInp_yoi1);			// Year of Immigration YOI_1
+		cell_[32].appendChild(txtInp_na1);			// Naturalized or Alien N-A_1
+		cell_[33].appendChild(txtInp_yon);			// Year of Naturalization YON
+		cell_[34].appendChild(txtInp_englang);		// English spoken, if not, Other Language spoken Eng/Lang
+		cell_[35].appendChild(txtInp_occu2);		// Occupation_2
+		cell_[36].appendChild(txtInp_health);		// Health - 5 parameters x--xx etc
+		cell_[37].appendChild(txtInp_ind1);			// Industry ind_1
+		cell_[38].appendChild(txtInp_emp1);			// Employ_1
+		cell_[39].appendChild(txtInp_emR);			// Employer EmR
 		
-		cell_40.appendChild(txtInp_eng1);		// English spoken Y/N  eng_1
-		cell_41.appendChild(txtInp_assets3);	// Assets_3
-		cell_42.appendChild(txtInp_birthpl2);	// Birth Place_2
-		cell_43.appendChild(txtInp_ibirthpl2);	// Indis POB_2
-		cell_44.appendChild(txtInp_bic);		// Born in County (UK)
-		cell_45.appendChild(txtInp_boe);		// Born outside England (UK)
-		cell_46.appendChild(txtInp_fbirthpl2);	// Fathers FPOB_2
-		cell_47.appendChild(txtInp_mbirthpl2);	// Mothers MPOB_2
-		cell_48.appendChild(txtInp_lang);		// Mother Tongue lang
-		cell_49.appendChild(txtInp_yoi2);		// Year of Immigration YOI_2
+		cell_[40].appendChild(txtInp_emD);			// Employed EmD
+		cell_[41].appendChild(txtInp_mnsE);			// Months employed during Census Year 
+		cell_[42].appendChild(txtInp_emH);			// Working At Home WH
+		cell_[43].appendChild(txtInp_emN);			// Not Employed EmN
+		cell_[44].appendChild(txtInp_wksU);			// Weeks unemployed during Census Year 
+		cell_[45].appendChild(txtInp_mnsU);			// Months unemployed during Census Year 
+		cell_[46].appendChild(txtInp_educ);			// Education 3 parameters Sch-Read-Write  -xx
+		cell_[47].appendChild(txtInp_educpre1890);	// Education (pre 1890 Census) - 3 parameters = Sch, Cannot Read, Cannot Write  -xx
+		cell_[48].appendChild(txtInp_eng1);			// English spoken Y/N  eng_1
+		cell_[49].appendChild(txtInp_home);			// Home Ownership x-x-x-xxxx = Owned/Rented - Free/Morgaged - Farm/House - Farm Sched #
 		
-		cell_50.appendChild(txtInp_na2);		// Naturalized or Alien N-A_2
-		cell_51.appendChild(txtInp_eng2);		// English spoken Y/N  eng_2
-		cell_52.appendChild(txtInp_occu3);		// Occupation_3
-		cell_53.appendChild(txtInp_ind2);		// Industry ind_2
-		cell_54.appendChild(txtInp_emp2);		// Employ_2
-		cell_55.appendChild(txtInp_infirm);		// Infirmaties - up to 5 parameters x--xx etc
-		cell_56.appendChild(txtInp_vet);		// Veteran ?
+		cell_[50].appendChild(txtInp_birthpl2);		// Birth Place_2
+		cell_[51].appendChild(txtInp_ibirthpl2);	// Indis POB_2
+		cell_[52].appendChild(txtInp_bic);			// Born in County (UK)
+		cell_[53].appendChild(txtInp_boe);			// Born outside England (UK)
+		cell_[54].appendChild(txtInp_fbirthpl2);	// Fathers FPOB_2
+		cell_[55].appendChild(txtInp_mbirthpl2);	// Mothers MPOB_2
+		cell_[56].appendChild(txtInp_lang);			// Mother Tongue lang
+		cell_[57].appendChild(txtInp_yoi2);			// Year of Immigration YOI_2
+		cell_[58].appendChild(txtInp_na2);			// Naturalized or Alien N-A_2
+		cell_[59].appendChild(txtInp_eng2);			// English spoken Y/N  eng_2
+		
+		cell_[60].appendChild(txtInp_occu3);		// Occupation_3
+		cell_[61].appendChild(txtInp_ind2);			// Industry ind_2
+		cell_[62].appendChild(txtInp_emp2);			// Employ_2
+		cell_[63].appendChild(txtInp_infirm);		// Infirmaties - up to 5 parameters x--xx etc
+		cell_[64].appendChild(txtInp_situ);			// Health Situation 1890 - Disease, Infimaties, Convict, Pauper etc
+		cell_[65].appendChild(txtInp_vet);			// Veteran ?
+		cell_[66].appendChild(txtInp_war);			// War or expedition 
+		cell_[67].appendChild(txtInp_infirm1910);	// Infirmaties - xx = Blind (both eyes) Y/N/-, Deaf and Dumb Y/N/-
 
 		if (iteration == 0) {
-			cell_tdel.appendChild(txtInp_tdel);	// Text Del
-			cell_tra.appendChild(txtInp_tra);	// Text Ins
+			cell_tdel.appendChild(txtInp_tdel);		// Text Del
+			cell_tra.appendChild(txtInp_tra);		// Text Ins
 		}else{
-			cell_del.appendChild(btnEl);		// Onclick = Delete Row
-			cell_ra.appendChild(raEl);			// Radio button used for inserting a row, rather than adding at end of table)
+			cell_del.appendChild(btnEl);			// Onclick = Delete Row
+			cell_ra.appendChild(raEl);				// Radio button used for inserting a row, rather than adding at end of table)
 		}
-		cell_59.appendChild(txt_itemNo2);		// Text Item Number
-		
+		cell_70.appendChild(txt_itemNo2);			// Text Item Number
 		
 		// Pass in the elements to be referenced later ===================
 		// Store the myRow object in each row
-		row.myRow = new myRowObject(	txt_itemNo, txtInp_pid, txtInp_nam, txtInp_label, txtInp_cond, txtInp_assets, txtInp_age, txtInp_race, txtInp_gend, txtInp_race2, 
-										txtInp_yob, txtInp_age2, txtInp_bmth, txtInp_label2, txtInp_cond2, txtInp_yrsm, txtInp_chilB, txtInp_chilL, txtInp_chilD, txtInp_ageM,
-										txtInp_occu, txtInp_assets2, txtInp_birthpl, txtInp_ibirthpl, txtInp_fbirthpl, txtInp_mbirthpl, txtInp_yrsUS, txtInp_yoi1, txtInp_na1, txtInp_yon, 
-										txtInp_englang, txtInp_occu2, txtInp_health, txtInp_ind1, txtInp_emp1, txtInp_emR, txtInp_emD, txtInp_emH, txtInp_emN, txtInp_educ, 
-										txtInp_eng1, txtInp_assets3, txtInp_birthpl2, txtInp_ibirthpl2, txtInp_bic, txtInp_boe, txtInp_fbirthpl2, txtInp_mbirthpl2, txtInp_lang, txtInp_yoi2, 
-										txtInp_na2, txtInp_eng2, txtInp_occu3, txtInp_ind2, txtInp_emp2, txtInp_infirm, txtInp_vet, 
+		row.myRow = new myRowObject(	txt_itemNo, txtInp_pid, txtInp_nam, txtInp_label, txtInp_cond, txtInp_tenure, txtInp_assets, txtInp_age, txtInp_race, txtInp_gend, 
+										txtInp_race2, txtInp_yob, txtInp_age2, txtInp_bmth, txtInp_label2, txtInp_cond2, txtInp_yrsm, txtInp_chilB, txtInp_chilL, txtInp_chilD, 
+										txtInp_ageM, txtInp_occu, txtInp_assets2, txtInp_birthpl, txtInp_parent, txtInp_bmth2, txtInp_mmth, txtInp_ibirthpl, txtInp_fbirthpl, txtInp_mbirthpl, 
+										txtInp_yrsUS, txtInp_yoi1, txtInp_na1, txtInp_yon, txtInp_englang, txtInp_occu2, txtInp_health, txtInp_ind1, txtInp_emp1, txtInp_emR, 
+										txtInp_emD, txtInp_mnsE, txtInp_emH, txtInp_emN, txtInp_wksU, txtInp_mnsU, txtInp_educ, txtInp_educpre1890, txtInp_eng1, txtInp_home,  
+										txtInp_birthpl2, txtInp_ibirthpl2, txtInp_bic, txtInp_boe, txtInp_fbirthpl2, txtInp_mbirthpl2, txtInp_lang, txtInp_yoi2, txtInp_na2, txtInp_eng2, 
+										txtInp_occu3, txtInp_ind2, txtInp_emp2, txtInp_infirm, txtInp_situ, txtInp_vet, txtInp_war, txtInp_infirm1910, 
 										cbEl, raEl, txt_itemNo2
 									);
-
+									
 	}
 }
 
@@ -2190,10 +2265,9 @@ function reorderRows(tbl, startingIndex) {
 		if (tbl.tBodies[0].rows[startingIndex]) {
 			var count = startingIndex + ROW_BASE;
 			for (var i=startingIndex; i<tbl.tBodies[0].rows.length; i++) {
-				
 				// CONFIG: next 2 lines are affected by myRowObject settings
 				tbl.tBodies[0].rows[i].myRow.zero.data		 = count; // text - (left column item number)
-				tbl.tBodies[0].rows[i].myRow.fiftynine.data	 = count; // text - (right column item number)
+				tbl.tBodies[0].rows[i].myRow.seventy.data	 = count; // text - (right column item number)
 				
 				// ------------------------------------
 				tbl.tBodies[0].rows[i].myRow.one.id				 = INPUT_NAME_PREFIX + count + '_1';  // input text
@@ -2257,6 +2331,18 @@ function reorderRows(tbl, startingIndex) {
 				tbl.tBodies[0].rows[i].myRow.fiftyfour.id		 = INPUT_NAME_PREFIX + count + '_54';  // input text
 				tbl.tBodies[0].rows[i].myRow.fiftyfive.id		 = INPUT_NAME_PREFIX + count + '_55';  // input text
 				tbl.tBodies[0].rows[i].myRow.fiftysix.id		 = INPUT_NAME_PREFIX + count + '_56';  // input text
+				tbl.tBodies[0].rows[i].myRow.fiftyseven.id		 = INPUT_NAME_PREFIX + count + '_57';  // input text
+				tbl.tBodies[0].rows[i].myRow.fiftyeight.id		 = INPUT_NAME_PREFIX + count + '_58';  // input text
+				tbl.tBodies[0].rows[i].myRow.fiftynine.id		 = INPUT_NAME_PREFIX + count + '_59';  // input text
+				
+				tbl.tBodies[0].rows[i].myRow.sixty.id			 = INPUT_NAME_PREFIX + count + '_60';  // input text
+				tbl.tBodies[0].rows[i].myRow.sixtyone.id		 = INPUT_NAME_PREFIX + count + '_61';  // input text
+				tbl.tBodies[0].rows[i].myRow.sixtytwo.id		 = INPUT_NAME_PREFIX + count + '_62';  // input text
+				tbl.tBodies[0].rows[i].myRow.sixtythree.id		 = INPUT_NAME_PREFIX + count + '_63';  // input text
+				tbl.tBodies[0].rows[i].myRow.sixtyfour.id		 = INPUT_NAME_PREFIX + count + '_64';  // input text
+				tbl.tBodies[0].rows[i].myRow.sixtyfive.id		 = INPUT_NAME_PREFIX + count + '_65';  // input text
+				tbl.tBodies[0].rows[i].myRow.sixtysix.id		 = INPUT_NAME_PREFIX + count + '_66';  // input text
+				tbl.tBodies[0].rows[i].myRow.sixtyseven.id		 = INPUT_NAME_PREFIX + count + '_67';  // input text
 				// ------------------------------------
 				
 				// ------------------------------------
@@ -2321,9 +2407,20 @@ function reorderRows(tbl, startingIndex) {
 				tbl.tBodies[0].rows[i].myRow.fiftyfour.name		 = INPUT_NAME_PREFIX + count + '_54';  // input text
 				tbl.tBodies[0].rows[i].myRow.fiftyfive.name		 = INPUT_NAME_PREFIX + count + '_55';  // input text
 				tbl.tBodies[0].rows[i].myRow.fiftysix.name		 = INPUT_NAME_PREFIX + count + '_56';  // input text
+				tbl.tBodies[0].rows[i].myRow.fiftyseven.name	 = INPUT_NAME_PREFIX + count + '_57';  // input text
+				tbl.tBodies[0].rows[i].myRow.fiftyeight.name	 = INPUT_NAME_PREFIX + count + '_58';  // input text
+				tbl.tBodies[0].rows[i].myRow.fiftynine.name		 = INPUT_NAME_PREFIX + count + '_59';  // input text
+				
+				tbl.tBodies[0].rows[i].myRow.sixty.name			 = INPUT_NAME_PREFIX + count + '_60';  // input text
+				tbl.tBodies[0].rows[i].myRow.sixtyone.name		 = INPUT_NAME_PREFIX + count + '_61';  // input text
+				tbl.tBodies[0].rows[i].myRow.sixtytwo.name		 = INPUT_NAME_PREFIX + count + '_62';  // input text
+				tbl.tBodies[0].rows[i].myRow.sixtythree.name	 = INPUT_NAME_PREFIX + count + '_63';  // input text
+				tbl.tBodies[0].rows[i].myRow.sixtyfour.name		 = INPUT_NAME_PREFIX + count + '_64';  // input text
+				tbl.tBodies[0].rows[i].myRow.sixtyfive.name		 = INPUT_NAME_PREFIX + count + '_65';  // input text
+				tbl.tBodies[0].rows[i].myRow.sixtysix.name		 = INPUT_NAME_PREFIX + count + '_66';  // input text
+				tbl.tBodies[0].rows[i].myRow.sixtyseven.name	 = INPUT_NAME_PREFIX + count + '_67';  // input text
 				
 				// ------------------------------------
-				
 				tbl.tBodies[0].rows[i].myRow.ra.value = count; // input radio
 				count++;
 			}
