@@ -58,7 +58,7 @@ else  {
 	$indirec = find_updated_record($pid);
 	$indirec = privatize_gedcom($indirec);
 }
-$indirec = preg_replace("/@(\w*)@/", "@<a href=\"gedrecord.php?pid=$1\">$1</a>@", $indirec);
+$indirec = preg_replace("/@(\w+)@/", "@<a href=\"gedrecord.php?pid=$1\">$1</a>@", $indirec);
 print "<pre>$indirec</pre>";
 print "</body></html>";
 
