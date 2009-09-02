@@ -397,6 +397,7 @@ global $pgv_lang, $TEXT_DIRECTION;
 				flip_27 = "";
 				flip_28 = "";
 				flip_29 = "";
+				flip_30 = "";
 				flip_31 = "";
 				flip_32 = "";
 				flip_35 = "";
@@ -409,7 +410,7 @@ global $pgv_lang, $TEXT_DIRECTION;
 				flip_3 = "";
 				flip_8 = "";
 				flip_9 = "";
-				flip_11 = "";
+			//	flip_11 = "";
 				flip_12 = "";
 				flip_15 = "";
 				flip_16 = "";
@@ -420,6 +421,7 @@ global $pgv_lang, $TEXT_DIRECTION;
 				flip_28 = "";
 				flip_29 = "";
 				flip_30 = "";
+				flip_32 = "";
 				flip_35 = "";
 				flip_38 = "";
 				flip_41 = "";
@@ -540,7 +542,7 @@ global $pgv_lang, $TEXT_DIRECTION;
 			cols_66[i].style.display = flip_66;
 			cols_67[i].style.display = flip_67;
 		}
-
+		
 	}
 	
 /*

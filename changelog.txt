@@ -10,6 +10,7 @@
 
 
 Version 4.2.x CA
+ - Changed: Fixed a few bugs in Census column hide/show algorithms (windmillway) 
  - Merged: Merge changes r6077- r6086 from the trunk. (windmillway)
  - Added: More columns for USA Census years. USA 1790-1840 years still left to do (windmillway)
  - Merged: Merge changes r6064- r6076 from the trunk. (windmillway)

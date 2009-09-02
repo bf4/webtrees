@@ -266,7 +266,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 									echo "S";													 // cond = Condition (Single)
 								}
 								?>", "<?php
-								print PrintReady($people["wife"]->getbirthyear());				 // yob = Year of Birth
+								print PrintReady($people["wife"]->getBirthYear());				 // yob = Year of Birth
 							?>", "<?php
 								print PrintReady($censyear-$people["wife"]->getbirthyear());	 //  age = Census Date minus YOB
 							?>", "<?php
