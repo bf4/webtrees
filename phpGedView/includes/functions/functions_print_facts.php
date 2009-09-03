@@ -1188,14 +1188,27 @@ function print_main_notes($factrec, $level, $pid, $linenum, $noedit=false) {
 			//-- print linked note records
 			if (isset($pgv_changes[$nid."_".$GEDCOM]) && $styleadd=="change_new") $noterec = find_updated_record($nid);
 			else $noterec = find_gedcom_record($nid);
-
 			$nt = preg_match("/0 @$nid@ NOTE (.*)/", $noterec, $n1match);
 			$text ="";
-			if ($nt>0) $text = preg_replace("/~~/", "<br />", trim($n1match[1]));
+			if ($nt>0) {
+				// If Census assistant installed, enable hotspot link on shared note title ---------------------
+				if (file_exists("modules/GEDFact_assistant/_CENS/census_note_decode.php")) {
+					$centitl  = str_replace("~~", "", trim($n1match[1]));
+					$centitl  = str_replace("<br />", "", $centitl);
+					$centitl  = "<a href=\"note.php?nid=$nid\">".$centitl."</a>";
+				}else{
+					$text = preg_replace("/~~/", "<br />", trim($n1match[1]));
+				}
+			}
 			$text .= get_cont(1, $noterec);
 			$text = expand_urls($text);
 			$text = PrintReady($text)." <br />\n";
+			// If Census assistant installed, and if Formatted Shared Note (using pipe "|" as delimiter) -------
+			if ( strstr($text, "|") && file_exists("modules/GEDFact_assistant/_CENS/census_note_decode.php") ) {
+				require 'modules/GEDFact_assistant/_CENS/census_note_decode.php';
+			}
 		}
+		
 		$align = "";
 		if (!empty($text)) {
 			if ($TEXT_DIRECTION=="rtl" && !hasRTLText($text) && hasLTRText($text)) $align=" align=\"left\"";
