@@ -1240,7 +1240,6 @@ function addRowToTable(num, pid, nam, label, gend, cond, yob, age2, YMD, occu, b
 					}
 					txtInp_pid.setAttribute('id', INPUT_NAME_PREFIX + iteration + '_1');
 					txtInp_pid.setAttribute('size', '4');
-					txtInp_pid.style.color=txtcolor;
 					txtInp_pid.style.fontSize="10px";
 				}else{
 					var txtInp_pid = document.createElement('div');
@@ -1248,7 +1247,6 @@ function addRowToTable(num, pid, nam, label, gend, cond, yob, age2, YMD, occu, b
 						txtInp_pid.innerHTML = pid;
 						txtInp_pid.setAttribute('type', 'text');
 						txtInp_pid.style.fontSize="11px";
-						txtInp_pid.style.color=txtcolor;
 				}
 		// 2. Full Name -----------------------------------------------------
 			var txtInp_nam = document.createElement('input');
