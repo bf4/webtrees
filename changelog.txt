@@ -10,6 +10,7 @@
 
 
 Version 4.2.x CA
+ - Merged: Merge changes r6086- r6094 from the trunk. (windmillway)
  - Changed: Removed some css colour inline items not required (windmillway)
  - Changed: Fixed a few bugs in Census column hide/show algorithms (windmillway) 
  - Merged: Merge changes r6077- r6086 from the trunk. (windmillway)
@@ -146,6 +147,8 @@ Version 4.2.x CA
  - Changed: Census Assistant Shared Note delimiter from ";" to "|" (windmillway)
 
 Version 4.2.3
+ - Fixed: [ 2848954 ] Incorrect page headers (canajun2eh)
+ - Fixed: [ 2844011 ] gedrecord.php 4462 minor issue (fisharebest)
  - Update: Updated readme.txt to highlight the necessity for PDO/mysql (windmillway)
  - Added: New statistics (wooc)
  - Fixed: [ 2833809 ] Cannot empty all the clipping cart (canajun2eh)

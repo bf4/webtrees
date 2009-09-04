@@ -47,7 +47,7 @@ switch ($action) {
 
 	case "editold" :
 	default :
-		print_header($pgv_lang["edit_lang_utility"]);
+		print_header($pgv_lang["config_lang_utility"]);
 }
 
 print PGV_JS_START;

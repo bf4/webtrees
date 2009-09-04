@@ -75,7 +75,7 @@ if (array_key_exists($ln, $configuredlanguages["gedcom"]) or
 $d_LangName = "lang_name_" . $ln;
 $sentHeader = false;    // Indicates whether HTML headers have been sent
 if ($action !="save" and $action != "toggleActive") {
-	print_simple_header($pgv_lang["config_lang_utility"]);
+	print_simple_header($pgv_lang["edit_lang_utility"]);
 	$sentHeader = true;
 
 	print "<script language=\"JavaScript\" type=\"text/javascript\">";
