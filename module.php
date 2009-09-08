@@ -26,6 +26,7 @@
  */
 
 require './config.php';
+require_once('includes/classes/class_module.php');
 
 // Simple mod system, based on the older phpnuke/postnuke
 define('PGV_MOD_SIMPLE', 1);
@@ -42,6 +43,20 @@ if(!isset($_REQUEST['mod']))
 		$_REQUEST['mod'] = $_REQUEST['name'];
 	}
 }
+//-- if not module specified then go to index.
+if (empty($_REQUEST['mod'])) {
+	header('Location: index.php');
+	exit;
+}
+
+//-- prevent access based on module access settings
+$modobj = PGVModule::getModuleByName($_REQUEST['mod']);
+if ($modobj && $modobj->getAccessLevel() < PGV_USER_ACCESS_LEVEL) {
+	header('Location: index.php');
+	exit;
+}
+
+
 if(file_exists('modules/'.$_REQUEST['mod'].'.php'))
 {
 	$modinfo = parse_ini_file('modules/'.$_REQUEST['mod'].'.php', true);

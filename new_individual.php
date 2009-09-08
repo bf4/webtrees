@@ -117,7 +117,35 @@ function resize_content_div(i) {
 		}
 	}
 	?>
-  });
+	enable_static_tab();
+	});
+    jQuery('#tabs').bind('tabsselect', function(event, ui) {
+        	if (ui.panel.id=='<?php echo $controller->static_tab->getName()?>') return false;
+    });
+	// static tab changes
+	<?php if ($controller->static_tab){?>
+	function enable_static_tab() {
+	    jQuery(".static_tab").css("float","right");
+	    jQuery(".static_tab_content").css("position", "absolute");
+	    jQuery(".static_tab_content").removeClass("ui-tabs-hide");
+	    jQuery(".static_tab_content").removeClass("ui-tabs-panel");
+	    jQuery(".static_tab_content").addClass("ui-corner-all");
+	    jQuery(".static_tab_content").css("z-index","1");
+		jQuery(".static_tab_content").css("top", "30px");
+		jQuery(".static_tab_content").css("right", "0px");
+		jQuery(".static_tab_content").css("left", "-120px");
+		jQuery(".static_tab_content").hide();
+	    jQuery(".static_tab").hover(
+	   		function(event) {
+	   	   		jQuery(".static_tab_content").show();
+	   		},
+	   		function(event) {
+	   			jQuery(".static_tab_content").hide();
+	   		}
+	   	);
+	}
+	enable_static_tab();
+   	<?php }?>
   });
 
 //]]>
@@ -128,12 +156,10 @@ function resize_content_div(i) {
 	float: left;
 	width: 99%;
 }
-#indi_small_blocks {
-	clear: none;
-	float: right;
-	width: 20%;
-	margin: 5px 5px 5px 5px;
+#tabs li {
+ padding-bottom: 0px;
 }
+
 </style>
 <div id="indi_main_blocks">
 <div id="indi_top">
@@ -265,18 +291,28 @@ foreach($controller->modules as $mod) {
 	$tabcount = 0; 
 	foreach($controller->modules as $mod) {
 		if ($mod!=$controller->static_tab && $mod->hasTab()) {
-		if ($tabcount==$controller->default_tab || !$mod->getTab()->canLoadAjax()) {?>
-			<li><a name="<?php echo $mod->getName(); ?>" href="#<?php echo $mod->getName()?>"><span><?php echo $pgv_lang[$mod->getName()]?></span></a></li>
-		<?php } else if ($mod->hasTab() && $mod->getTab() && ($mod->getTab()->hasContent() || PGV_USER_CAN_EDIT)) { ?>
-			<li><a name="<?php echo $mod->getName(); ?>" href="new_individual.php?action=ajax&amp;module=<?php echo $mod->getName()?>&amp;pid=<?php echo $controller->pid?>">
-				<span><?php echo $pgv_lang[$mod->getName()]?></span>
-				</a></li>
-		<?php } 
-		$tabcount++; 
+			if ($tabcount==$controller->default_tab || !$mod->getTab()->canLoadAjax()) {?>
+				<li><a name="<?php echo $mod->getName(); ?>" href="#<?php echo $mod->getName()?>"><span><?php echo $pgv_lang[$mod->getName()]?></span></a></li>
+			<?php } else if ($mod->hasTab() && $mod->getTab() && ($mod->getTab()->hasContent() || PGV_USER_CAN_EDIT)) { ?>
+				<li><a name="<?php echo $mod->getName(); ?>" href="new_individual.php?action=ajax&amp;module=<?php echo $mod->getName()?>&amp;pid=<?php echo $controller->pid?>">
+					<span><?php echo $pgv_lang[$mod->getName()]?></span>
+					</a></li>
+			<?php } 
+			$tabcount++; 
 		}
-	 } ?>
+	}
+	if ($controller->static_tab) {
+		?><li class="static_tab"><a name="<?php echo $controller->static_tab->getName(); ?>" href="#<?php echo $controller->static_tab->getName()?>"><span><?php echo $pgv_lang[$controller->static_tab->getName()]?></span></a>
+		<?php if ($controller->static_tab) { ?>
+<div class="static_tab_content" id="<?php echo $controller->static_tab->getName();?>">
+	<?php echo $controller->static_tab->getTab()->getContent(); ?>
+</div> <!-- static tab -->
+<?php } ?>
+		</li><?php 
+	} 
+	 ?>
 </ul>
-<table border="0" class="width100"><tr><td valign="top" id="subtab">
+
 <?php 
 $tabcount = 0; 
 foreach($controller->modules as $mod) {
@@ -289,8 +325,7 @@ foreach($controller->modules as $mod) {
 	$tabcount++; 
 	}
  } ?>
-</td><td valign="top" class="width20"><?php if ($controller->static_tab) echo $controller->static_tab->getTab()->getContent(); ?></td></tr></table>
-</div>
+</div> <!-- tabs -->
 </div> <!--  end column 1 -->
 <?php 
 echo PGV_JS_START;
