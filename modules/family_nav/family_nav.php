@@ -40,6 +40,10 @@ require_once 'includes/functions/functions_charts.php';
 
 class family_nav_Tab extends Tab {
 
+	public function getLinkUrl2() {
+		return parent::_getLinkUrl('new_individual.php?pid=');
+	}
+
 	public function hasContent() {
 		return true;
 	}
@@ -54,9 +58,9 @@ class family_nav_Tab extends Tab {
 		// ------------------------------------------------------------------------------
 
 		global $edit, $tabno, $mediacnt, $GEDCOM, $pid;
-$edit=$edit;
-global $show_full, $tabno;
-$show_full="1";
+		$edit=$edit;
+		global $show_full, $tabno;
+		$show_full="1";
 
 // Gets current clicked tab to set $tabno -----------
 if (isset($_COOKIE['lastclick'])) {
@@ -67,7 +71,7 @@ if (isset($_COOKIE['lastclick'])) {
 
 
 // Debug only -----------------------------------------
-// echo "Lastclick =" . $_COOKIE['lastclick'];
+//echo "Lastclick =" . $_COOKIE['lastclick'];
 //echo "<br />";
 //print "TAB =" . $tabno;
 
@@ -109,9 +113,14 @@ if (isset($_COOKIE['lastclick'])) {
 			<?php
 			if (isset($people["husb"])) {
 				$menu = new Menu("&nbsp;" . $people["husb"]->getLabel() . "&nbsp;". "\n");
-				$menu->addClass("", "", "submenu");
-				$slabel  = $this->print_pedigree_person_nav($people["husb"]->getXref(), 2, !$this->controller->isPrintPreview(), 0, $personcount++);
-				$slabel .= $parentlinks;;
+				// $menu->addClass("", "", "submenu");
+				if ($TEXT_DIRECTION=="ltr") { 
+					$menu->addClass("", "", "submenu flyout2");
+				}else{
+					$menu->addClass("", "", "submenu flyout2rtl");
+				}
+				$slabel  = "</a>".$this->print_pedigree_person_nav($people["husb"]->getXref(), 2, !$this->controller->isPrintPreview(), 0, $personcount++);
+				$slabel .= $parentlinks."<a>";
 				$submenu = new Menu($slabel);
 				$menu->addSubMenu($submenu);
 
@@ -120,14 +129,15 @@ if (isset($_COOKIE['lastclick'])) {
 				?>
 				<tr>
 					<td class="facts_label<?php print $styleadd; ?>" nowrap="nowrap">
-						<?php if ($PGV_MENUS_AS_LISTS) echo "<ul>\n";
+						<?php //if ($PGV_MENUS_AS_LISTS) echo "<ul>\n";
 						$menu->printMenu();
-						if ($PGV_MENUS_AS_LISTS) echo "</ul>\n";
+						//if ($PGV_MENUS_AS_LISTS) echo "</ul>\n";
 						?>
 					</td>
-					<td align="center" class="<?php print $this->controller->getPersonStyle($people["husb"]); ?>">
+					
+					<td nowrap="nowrap" class="<?php print $this->controller->getPersonStyle($people["husb"]);?>" align="center" >
 						<?php
-						print "<a href=\"".encode_url($people["husb"]->getLinkUrl())."\" onclick=\"return familyNavLoad('".$people['husb']->getLinkUrl()."');\">";
+						print "<a href=\"".encode_url($people["husb"]->getLinkUrl2())."\" onclick=\"return familyNavLoad('".$people['husb']->getLinkUrl2()."');\">";
 						print PrintReady($people["husb"]->getFullName());
 						print "<font size=\"1\"><br />" . $BirthYr . " - " . $DeathYr . "</font>";
 						print "</a>";
@@ -139,9 +149,14 @@ if (isset($_COOKIE['lastclick'])) {
 
 			if (isset($people["wife"])) {
 				$menu = new Menu("&nbsp;" . $people["wife"]->getLabel() . "&nbsp;". "\n");
-				$menu->addClass("", "", "submenu");
-				$slabel  = $this->print_pedigree_person_nav($people["wife"]->getXref(), 2, !$this->controller->isPrintPreview(), 0, $personcount++);
-				$slabel .= $parentlinks;;
+				//$menu->addClass("", "", "submenu");
+				if ($TEXT_DIRECTION=="ltr") { 
+					$menu->addClass("", "", "submenu flyout2");
+				}else{
+					$menu->addClass("", "", "submenu flyout2rtl");
+				}
+				$slabel  = "</a>".$this->print_pedigree_person_nav($people["wife"]->getXref(), 2, !$this->controller->isPrintPreview(), 0, $personcount++);
+				$slabel .= $parentlinks."<a>";
 				$submenu = new Menu($slabel);
 				$menu->addSubMenu($submenu);
 
@@ -155,9 +170,9 @@ if (isset($_COOKIE['lastclick'])) {
 						if ($PGV_MENUS_AS_LISTS) echo "</ul>\n";
 						?>
 					</td>
-					<td align="center" class="<?php print $this->controller->getPersonStyle($people["wife"]); ?>">
+					<td nowrap="nowrap" align="center" class="<?php print $this->controller->getPersonStyle($people["wife"]); ?>">
 						<?php
-						print "<a href=\"".encode_url($people["wife"]->getLinkUrl())."\" onclick=\"return familyNavLoad('".$people['wife']->getLinkUrl()."');\">";
+						print "<a href=\"".encode_url($people["wife"]->getLinkUrl2())."\" onclick=\"return familyNavLoad('".$people['wife']->getLinkUrl2()."');\">";
 						print PrintReady($people["wife"]->getFullName());
 						print "<font size=\"1\"><br />" . $BirthYr . " - " . $DeathYr . "</font>";
 						print "</a>";
@@ -173,9 +188,14 @@ if (isset($_COOKIE['lastclick'])) {
 				if ($pid == $child->getXref() ){
 				}else{
 					$menu = new Menu($child->getLabel() . "\n");
-					$menu->addClass("", "", "submenu");
-					$slabel  = $this->print_pedigree_person_nav($child->getXref(), 2, !$this->controller->isPrintPreview(), 0, $personcount++);
-					$slabel .= $spouselinks;
+				//	$menu->addClass("", "", "submenu");
+					if ($TEXT_DIRECTION=="ltr") { 
+						$menu->addClass("", "", "submenu flyout2");
+					}else{
+						$menu->addClass("", "", "submenu flyout2rtl");
+					}
+					$slabel  = "</a>".$this->print_pedigree_person_nav($child->getXref(), 2, !$this->controller->isPrintPreview(), 0, $personcount++);
+					$slabel .= $spouselinks."<a>";
 					$submenu = new Menu($slabel);
 					$menu->addSubMenu($submenu);
 				}
@@ -195,13 +215,13 @@ if (isset($_COOKIE['lastclick'])) {
 						}
 						?>
 						</td>
-						<td align="center" class="<?php print $this->controller->getPersonStyle($child); ?>">
+						<td nowrap="nowrap" align="center" class="<?php print $this->controller->getPersonStyle($child); ?>">
 							<?php
 							if ($pid == $child->getXref()) {
 								print PrintReady($child->getFullName());
 								print "<font size=\"1\"><br />" . $BirthYr . " - " . $DeathYr . "</font>";
 							}else{
-								print "<a href=\"".encode_url($child->getLinkUrl())."\" onclick=\"return familyNavLoad('".$child->getLinkUrl()."');\">";
+								print "<a href=\"".encode_url($child->getLinkUrl2())."\" onclick=\"return familyNavLoad('".$child->getLinkUrl2()."');\">";
 								print PrintReady($child->getFullName());
 								print "<font size=\"1\"><br />" . $BirthYr . " - " . $DeathYr . "</font>";
 								print "</a>";
@@ -244,9 +264,14 @@ if (isset($_COOKIE['lastclick'])) {
 				}else{
 					$menu->addLabel("&nbsp;" . $people["husb"]->getLabel() . "&nbsp;". "\n");
 				}
-				$menu->addClass("", "", "submenu");
-				$slabel  = $this->print_pedigree_person_nav($people["husb"]->getXref(), 2, !$this->controller->isPrintPreview(), 0, $personcount++);
-				$slabel .= $parentlinks;;
+				//$menu->addClass("", "", "submenu");
+				if ($TEXT_DIRECTION=="ltr") { 
+					$menu->addClass("", "", "submenu flyout2");
+				}else{
+					$menu->addClass("", "", "submenu flyout2rtl");
+				}
+				$slabel  = "</a>".$this->print_pedigree_person_nav($people["husb"]->getXref(), 2, !$this->controller->isPrintPreview(), 0, $personcount++);
+				$slabel .= $parentlinks."<a>";
 				$submenu = new Menu($slabel);
 				$menu->addSubMenu($submenu);
 
@@ -261,9 +286,9 @@ if (isset($_COOKIE['lastclick'])) {
 						if ($PGV_MENUS_AS_LISTS) echo "</ul>\n";
 						?>
 					</td>
-					<td align="center" class="<?php print $this->controller->getPersonStyle($people["husb"]); ?>" >
+					<td nowrap="nowrap" align="center" class="<?php print $this->controller->getPersonStyle($people["husb"]); ?>" >
 						<?php
-						print "<a href=\"".encode_url($people["husb"]->getLinkUrl())."\" onclick=\"return familyNavLoad('".$people['husb']->getLinkUrl()."');\">";
+						print "<a href=\"".encode_url($people["husb"]->getLinkUrl2())."\" onclick=\"return familyNavLoad('".$people['husb']->getLinkUrl2()."');\">";
 						print PrintReady($people["husb"]->getFullName());
 						print "<font size=\"1\"><br />" . $BirthYr . " - " . $DeathYr . "</font>";
 						print "</a>";
@@ -283,9 +308,14 @@ if (isset($_COOKIE['lastclick'])) {
 				}else{
 					$menu->addLabel("&nbsp;" . $people["wife"]->getLabel() . "&nbsp;". "\n");
 				}
-				$menu->addClass("", "", "submenu");
-				$slabel  = $this->print_pedigree_person_nav($people["wife"]->getXref(), 2, !$this->controller->isPrintPreview(), 0, $personcount++);
-				$slabel .= $parentlinks;;
+				//$menu->addClass("", "", "submenu");
+				if ($TEXT_DIRECTION=="ltr") { 
+					$menu->addClass("", "", "submenu flyout2");
+				}else{
+					$menu->addClass("", "", "submenu flyout2rtl");
+				}
+				$slabel  = "</a>".$this->print_pedigree_person_nav($people["wife"]->getXref(), 2, !$this->controller->isPrintPreview(), 0, $personcount++);
+				$slabel .= $parentlinks."<a>";
 				$submenu = new Menu($slabel);
 				$menu->addSubMenu($submenu);
 
@@ -299,9 +329,9 @@ if (isset($_COOKIE['lastclick'])) {
 						if ($PGV_MENUS_AS_LISTS) echo "</ul>\n";
 						?>
 					</td>
-					<td align="center" class="<?php print $this->controller->getPersonStyle($people["wife"]); ?>">
+					<td nowrap="nowrap" align="center" class="<?php print $this->controller->getPersonStyle($people["wife"]); ?>">
 						<?php
-						print "<a href=\"".encode_url($people["wife"]->getLinkUrl())."\" onclick=\"return familyNavLoad('".$people['wife']->getLinkUrl()."');\">";
+						print "<a href=\"".encode_url($people["wife"]->getLinkUrl2())."\" onclick=\"return familyNavLoad('".$people['wife']->getLinkUrl2()."');\">";
 						print PrintReady($people["wife"]->getFullName());
 						print "<font size=\"1\"><br />" . $BirthYr . " - " . $DeathYr . "</font>";
 						print "</a>";
@@ -316,9 +346,14 @@ if (isset($_COOKIE['lastclick'])) {
 				$elderdate = $family->getMarriageDate();
 				foreach($people["children"] as $key=>$child) {
 					$menu = new Menu($child->getLabel() . "\n");
-					$menu->addClass("", "", "submenu");
-					$slabel  = $this->print_pedigree_person_nav($child->getXref(), 2, !$this->controller->isPrintPreview(), 0, $personcount++);
-					$slabel .= $spouselinks;
+					//$menu->addClass("", "", "submenu");
+					if ($TEXT_DIRECTION=="ltr") { 
+						$menu->addClass("", "", "submenu flyout2");
+					}else{
+						$menu->addClass("", "", "submenu flyout2rtl");
+					}
+					$slabel  = "</a>".$this->print_pedigree_person_nav($child->getXref(), 2, !$this->controller->isPrintPreview(), 0, $personcount++);
+					$slabel .= $spouselinks."<a>";
 					$submenu = new Menu($slabel);
 					$menu->addSubMenu($submenu);
 
@@ -332,9 +367,9 @@ if (isset($_COOKIE['lastclick'])) {
 						if ($PGV_MENUS_AS_LISTS) echo "</ul>\n";
 						?>
 						</td>
-						<td align="center" class="<?php print $this->controller->getPersonStyle($child); ?>">
+						<td nowrap="nowrap" align="center" class="<?php print $this->controller->getPersonStyle($child); ?>">
 							<?php
-							print "<a href=\"".encode_url($child->getLinkUrl())."\" onclick=\"return familyNavLoad('".$child->getLinkUrl()."');\">";
+							print "<a href=\"".encode_url($child->getLinkUrl2())."\" onclick=\"return familyNavLoad('".$child->getLinkUrl2()."');\">";
 							print PrintReady($child->getFullName());
 							print "<font size=\"1\"><br />" . $BirthYr . " - " . $DeathYr . "</font>";
 							print "</a>";
@@ -373,9 +408,14 @@ if (isset($_COOKIE['lastclick'])) {
 			$styleadd = "";
 			if ( isset($people["husb"]) && $spousetag == 'HUSB' ) {
 				$menu = new Menu("&nbsp;" . $people["husb"]->getLabel() . "&nbsp;". "\n");
-				$menu->addClass("", "", "submenu");
-				$slabel  = $this->print_pedigree_person_nav($people["husb"]->getXref(), 2, !$this->controller->isPrintPreview(), 0, $personcount++);
-				$slabel .= $parentlinks;;
+				//$menu->addClass("", "", "submenu");
+				if ($TEXT_DIRECTION=="ltr") { 
+					$menu->addClass("", "", "submenu flyout2");
+				}else{
+					$menu->addClass("", "", "submenu flyout2rtl");
+				}
+				$slabel  = "</a>".$this->print_pedigree_person_nav($people["husb"]->getXref(), 2, !$this->controller->isPrintPreview(), 0, $personcount++);
+				$slabel .= $parentlinks."<a>";
 				$submenu = new Menu($slabel);
 				$menu->addSubMenu($submenu);
 
@@ -389,13 +429,13 @@ if (isset($_COOKIE['lastclick'])) {
 						if ($PGV_MENUS_AS_LISTS) echo "</ul>\n";
 						?>
 					</td>
-					<td align="center" class="<?php print $this->controller->getPersonStyle($people["husb"]); ?>">
+					<td nowrap="nowrap" align="center" class="<?php print $this->controller->getPersonStyle($people["husb"]); ?>">
 						<?php
 						if ($pid == $people["husb"]->getXref()) {
 							print PrintReady($people["husb"]->getFullName());
 							print "<font size=\"1\"><br />" . $BirthYr . " - " . $DeathYr . "</font>";
 						}else{
-							print "<a href=\"".encode_url($people["husb"]->getLinkUrl())."\" onclick=\"return familyNavLoad('".$people['husb']->getLinkUrl()."');\">";
+							print "<a href=\"".encode_url($people["husb"]->getLinkUrl2())."\" onclick=\"return familyNavLoad('".$people['husb']->getLinkUrl2()."');\">";
 							print PrintReady($people["husb"]->getFullName());
 							print "<font size=\"1\"><br />" . $BirthYr . " - " . $DeathYr . "</font>";
 							print "</a>";
@@ -408,9 +448,14 @@ if (isset($_COOKIE['lastclick'])) {
 
 			if ( isset($people["wife"]) && $spousetag == 'WIFE') {
 				$menu = new Menu("&nbsp;" . $people["wife"]->getLabel() . "&nbsp;". "\n");
-				$menu->addClass("", "", "submenu");
-				$slabel  = $this->print_pedigree_person_nav($people["wife"]->getXref(), 2, !$this->controller->isPrintPreview(), 0, $personcount++);
-				$slabel .= $parentlinks;
+				//$menu->addClass("", "", "submenu");
+				if ($TEXT_DIRECTION=="ltr") { 
+					$menu->addClass("", "", "submenu flyout2");
+				}else{
+					$menu->addClass("", "", "submenu flyout2rtl");
+				}
+				$slabel  = "</a>".$this->print_pedigree_person_nav($people["wife"]->getXref(), 2, !$this->controller->isPrintPreview(), 0, $personcount++);
+				$slabel .= $parentlinks."<a>";
 				$submenu = new Menu($slabel);
 				$menu->addSubMenu($submenu);
 
@@ -424,13 +469,13 @@ if (isset($_COOKIE['lastclick'])) {
 						if ($PGV_MENUS_AS_LISTS) echo "</ul>\n";
 						?>
 					</td>
-					<td align="center" class="<?php print $this->controller->getPersonStyle($people["wife"]); ?>">
+					<td nowrap="nowrap" align="center" class="<?php print $this->controller->getPersonStyle($people["wife"]); ?>">
 						<?php
 						if ($pid == $people["wife"]->getXref()) {
 							print PrintReady($people["wife"]->getFullName());
 							print "<font size=\"1\"><br />" . $BirthYr . " - " . $DeathYr . "</font>";
 						}else{
-							print "<a href=\"".encode_url($people["wife"]->getLinkUrl())."\" onclick=\"return familyNavLoad('".$people['wife']->getLinkUrl()."');\">";
+							print "<a href=\"".encode_url($people["wife"]->getLinkUrl2())."\" onclick=\"return familyNavLoad('".$people['wife']->getLinkUrl2()."');\">";
 							print PrintReady($people["wife"]->getFullName());
 							print "<font size=\"1\"><br />" . $BirthYr . " - " . $DeathYr . "</font>";
 							print "</a>";
@@ -445,9 +490,14 @@ if (isset($_COOKIE['lastclick'])) {
 			if (isset($people["children"])) {
 				foreach($people["children"] as $key=>$child) {
 					$menu = new Menu("&nbsp;" . $child->getLabel() . "&nbsp;". "\n");
-					$menu->addClass("", "", "submenu");
-					$slabel = $this->print_pedigree_person_nav($child->getXref(), 2, !$this->controller->isPrintPreview(), 0, $personcount++);
-					$slabel .= $spouselinks;
+					//$menu->addClass("", "", "submenu");
+					if ($TEXT_DIRECTION=="ltr") { 
+						$menu->addClass("", "", "submenu flyout2");
+					}else{
+						$menu->addClass("", "", "submenu flyout2rtl");
+					}
+					$slabel = "</a>".$this->print_pedigree_person_nav($child->getXref(), 2, !$this->controller->isPrintPreview(), 0, $personcount++);
+					$slabel .= $spouselinks."<a>";
 					$submenu = new Menu($slabel);
 					$menu->addSubmenu($submenu);
 
@@ -461,9 +511,9 @@ if (isset($_COOKIE['lastclick'])) {
 						if ($PGV_MENUS_AS_LISTS) echo "</ul>\n";
 						?>
 						</td>
-						<td align="center" class="<?php print $this->controller->getPersonStyle($child); ?>">
+						<td nowrap="nowrap" align="center" class="<?php print $this->controller->getPersonStyle($child); ?>">
 							<?php
-							print "<a href=\"".encode_url($child->getLinkUrl())."\" onclick=\"return familyNavLoad('".$child->getLinkUrl()."');\">";
+							print "<a href=\"".encode_url($child->getLinkUrl2())."\" onclick=\"return familyNavLoad('".$child->getLinkUrl2()."');\">";
 							print PrintReady($child->getFullName());
 							print "<font size=\"1\"><br />" . $BirthYr . " - " . $DeathYr . "</font>";
 							print "</a>";
@@ -487,16 +537,7 @@ if (isset($_COOKIE['lastclick'])) {
 		ob_end_clean();
 		return $out;
 	}
-	
-	/**
-* print the information for an individual chart box
-*
-* find and print a given individuals information for a pedigree chart
-* @param string $pid the Gedcom Xref ID of the   to print
-* @param int $style the style to print the box in, 1 for smaller boxes, 2 for larger boxes
-* @param boolean $show_famlink set to true to show the icons for the popup links and the zoomboxes
-* @param int $count on some charts it is important to keep a count of how many boxes were printed
-*/
+
 function print_pedigree_person_nav($pid, $style=1, $show_famlink=true, $count=0, $personcount="1") {
 	global $HIDE_LIVE_PEOPLE, $SHOW_LIVING_NAMES, $PRIV_PUBLIC, $factarray, $ZOOM_BOXES, $LINK_ICONS, $view, $SCRIPT_NAME, $GEDCOM;
 	global $pgv_lang, $MULTI_MEDIA, $SHOW_HIGHLIGHT_IMAGES, $bwidth, $bheight, $PEDIGREE_FULL_DETAILS, $SHOW_ID_NUMBERS, $SHOW_PEDIGREE_PLACES;
@@ -533,25 +574,14 @@ function print_pedigree_person_nav($pid, $style=1, $show_famlink=true, $count=0,
 	if ($person->canDisplayName()) {
 		if ($show_famlink && (empty($SEARCH_SPIDER))) {
 			if ($LINK_ICONS!="disabled") {
-				//-- draw a box for the family popup
-				if ($TEXT_DIRECTION=="rtl") {
-				$spouselinks .= "\n\t\t\t<div class=\"flyout\"><table class=\"person_box$isF flyoutrtl\"><tr><td class=\"nowrap rtl\" >";
-				$spouselinks .= "<b>" . $pgv_lang['family'] . "</b><br />";
-				$parentlinks .= "\n\t\t\t<div class=\"flyout\"><table class=\"person_box$isF flyoutrtl\"><tr><td class=\"nowrap rtl\" >";
-				$parentlinks .= "<b>" . $pgv_lang['parents'] . "</b><br />";
-				$step_parentlinks .= "\n\t\t\t<div class=\"flyout\"><table class=\"person_box$isF flyoutrtl\"><tr><td class=\"nowrap rtl\" >";
-				$step_parentlinks .= "<b>" . $pgv_lang['parents'] . "</b><br />";
-				}else{
-				$spouselinks .= "\n\t\t\t<div class=\"flyout\"><table class=\"person_box$isF flyout\"><tr><td class=\"nowrap ltr\" >";
-				$spouselinks .= "<b>" . $pgv_lang['family'] . "</b><br />";
-				$parentlinks .= "\n\t\t\t<div class=\"flyout\"><table class=\"person_box$isF flyout\" ><tr><td class=\"nowrap ltr\" >";
-				$parentlinks .= "<b>" . $pgv_lang['parents'] . "</b><br />";
-				$step_parentlinks .= "\n\t\t\t<div class=\"flyout\"><table class=\"person_box$isF flyout\" ><tr><td class=\"nowrap ltr\" >";
-				$step_parentlinks .= "<b>" . $pgv_lang['parents'] . "</b><br />";
-				}
-				$persons       = "";
-				$person_parent = "";
-				$person_step   = "";
+				//-- draw a box for the family flyout
+				$parentlinks 		.= "<span class=\"flyout4\"><b>".$pgv_lang['parents']."</b></span><br />";
+				$step_parentlinks 	.= "<span class=\"flyout4\"><b>".$pgv_lang['parents']."</b></span><br />";
+				$spouselinks 		.= "<span class=\"flyout4\"><b>".$pgv_lang['family']."</b></span><br />";
+				
+				$persons 			 = "";
+				$person_parent 		 = "";
+				$person_step 		 = "";
 
 
 
@@ -580,8 +610,8 @@ function print_pedigree_person_nav($pid, $style=1, $show_famlink=true, $count=0,
 								}else{
 									$title = $husb->getXref()." :".$pgv_lang["indi_info"];
 								}
-								$parentlinks .= "<a href=\"".encode_url($husb->getLinkUrl())."\" onclick=\"return familyNavLoad('".$husb->getLinkUrl()."');\">";
-								$parentlinks .= PrintReady($husb->getFullName());
+								$parentlinks .= "<a id=\"phusb\" href=\"".encode_url($husb->getLinkUrl2())."\" onclick=\"return familyNavLoad('".$husb->getLinkUrl2()."');\">";
+								$parentlinks .= "&nbsp;".PrintReady($husb->getFullName());
 								$parentlinks .= "</a>";
 								$parentlinks .= "<br />";
 								$natdad = "yes";
@@ -602,8 +632,8 @@ function print_pedigree_person_nav($pid, $style=1, $show_famlink=true, $count=0,
 								}else{
 									$title = $wife->getXref()." :".$pgv_lang["indi_info"];
 								}
-								$parentlinks .= "<a href=\"".encode_url($wife->getLinkUrl())."\" onclick=\"return familyNavLoad('".$wife->getLinkUrl()."');\">";
-								$parentlinks .= PrintReady($wife->getFullName());
+								$parentlinks .= "<a id=\"pwife\" href=\"".encode_url($wife->getLinkUrl2())."\" onclick=\"return familyNavLoad('".$wife->getLinkUrl2()."');\">";
+								$parentlinks .= "&nbsp;".PrintReady($wife->getFullName());
 								$parentlinks .= "</a>";
 								$parentlinks .= "<br />";
 								$natmom = "yes";
@@ -638,8 +668,8 @@ function print_pedigree_person_nav($pid, $style=1, $show_famlink=true, $count=0,
 									}else{
 										$title = $husb->getXref()." :".$pgv_lang["indi_info"];
 									}
-									$parentlinks .= "<a href=\"".encode_url($husb->getLinkUrl())."\" onclick=\"return familyNavLoad('".$husb->getLinkUrl()."');\">";
-									$parentlinks .= PrintReady($husb->getFullName());
+									$parentlinks .= "<a id=\"shusb\" href=\"".encode_url($husb->getLinkUrl2())."\" onclick=\"return familyNavLoad('".$husb->getLinkUrl2()."');\">";
+									$parentlinks .= "&nbsp;".PrintReady($husb->getFullName());
 									$parentlinks .= "</a>";
 									$parentlinks .= "<br />";
 								}
@@ -662,8 +692,8 @@ function print_pedigree_person_nav($pid, $style=1, $show_famlink=true, $count=0,
 									}else{
 										$title = $wife->getXref()." :".$pgv_lang["indi_info"];
 									}
-									$parentlinks .= "<a href=\"".encode_url($wife->getLinkUrl())."\" onclick=\"return familyNavLoad('".$wife->getLinkUrl()."');\">";
-									$parentlinks .= PrintReady($wife->getFullName());
+									$parentlinks .= "<a id=\"swife\" href=\"".encode_url($wife->getLinkUrl2())."\" onclick=\"return familyNavLoad('".$wife->getLinkUrl2()."');\">";
+									$parentlinks .= "&nbsp;".PrintReady($wife->getFullName());
 									$parentlinks .= "</a>";
 									$parentlinks .= "<br />";
 								}
@@ -693,9 +723,10 @@ function print_pedigree_person_nav($pid, $style=1, $show_famlink=true, $count=0,
 								}else{
 									$title = $spouse->getXref()." :".$pgv_lang["indi_info"];
 								}
-								$spouselinks .= "<a href=\"".encode_url($spouse->getLinkUrl())."\" onclick=\"return familyNavLoad('".$spouse->getLinkUrl()."');\">";
-								$spouselinks .= PrintReady($spouse->getFullName());
+								$spouselinks .= "<a id=\"spouse\" href=\"".encode_url($spouse->getLinkUrl2())."\" onclick=\"return familyNavLoad('".$spouse->getLinkUrl2()."');\">";
+								$spouselinks .= "&nbsp;".PrintReady($spouse->getFullName());
 								$spouselinks .= "</a>";
+								$spouselinks .= "<br />";
 								if ($spouse->getFullName() != "") {
 									$persons = "Yes";
 								}
@@ -707,8 +738,8 @@ function print_pedigree_person_nav($pid, $style=1, $show_famlink=true, $count=0,
 							if ($child) {
 								$persons="Yes";
 									$title = $pgv_lang["indi_info"].": ".$child->getXref();
-									$spouselinks .= "<li>";
-									$spouselinks .= "<a href=\"".encode_url($child->getLinkUrl())."\" onclick=\"return familyNavLoad('".$child->getLinkUrl()."');\">";
+									$spouselinks .= "<li id=\"flyout3\">";
+									$spouselinks .= "<a href=\"".encode_url($child->getLinkUrl2())."\" onclick=\"return familyNavLoad('".$child->getLinkUrl2()."');\">";
 									$spouselinks .= PrintReady($child->getFullName());
 									$spouselinks .= "</a>";
 									$spouselinks .= "</li>\n";
@@ -717,28 +748,22 @@ function print_pedigree_person_nav($pid, $style=1, $show_famlink=true, $count=0,
 						$spouselinks .= "</ul>";
 					}
 				}
-
+				
 				if ($persons != "Yes") {
-					$spouselinks  .= "(" . $pgv_lang['none'] . ")</td></tr></table>\n\t\t";
-				}else{
-					$spouselinks  .= "</td></tr></table></div>\n\t\t";
+					$spouselinks  .= "&nbsp;(".$pgv_lang['none'].")\n\t\t";
 				}
-
 				if ($person_parent != "Yes") {
-					$parentlinks .= "(" . $pgv_lang['unknown'] . ")</td></tr></table>\n\t\t";
-				}else{
-					$parentlinks .= "</td></tr></table></div>\n\t\t";
+					$parentlinks .= "&nbsp;(".$pgv_lang['unknown'].")\n\t\t";
 				}
-
 				if ($person_step != "Yes") {
-					$step_parentlinks .= "(" . $pgv_lang['unknown'] . ")</td></tr></table>\n\t\t";
-				}else{
-					$step_parentlinks .= "</td></tr></table></div>\n\t\t";
+					$step_parentlinks .= "&nbsp;(".$pgv_lang['unknown'].")\n\t\t";
 				}
+				
 			}
 		}
 	}
 }
-		// ==============================================================
+
+// ==============================================================
 }
 ?>

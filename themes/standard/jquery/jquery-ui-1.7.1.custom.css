@@ -4,8 +4,7 @@
 * Dual licensed under the MIT (MIT-LICENSE.txt) and GPL (GPL-LICENSE.txt) licenses.
 */
 
-/* Layout helpers
-----------------------------------*/
+/* Layout helpers ----------------------------------*/
 .ui-helper-hidden { display: none; }
 .ui-helper-hidden-accessible { position: absolute; left: -99999999px; }
 .ui-helper-reset { margin: 0; padding: 0; border: 0; outline: 0; line-height: 1.3; text-decoration: none; font-size: 100%; list-style: none; }
@@ -18,20 +17,17 @@
 .ui-helper-zfix { width: 100%; height: 100%; top: 0; left: 0; position: absolute; opacity: 0; filter:Alpha(Opacity=0); }
 
 
-/* Interaction Cues
-----------------------------------*/
+/* Interaction Cues ----------------------------------*/
 .ui-state-disabled { cursor: default !important; }
 
 
-/* Icons
-----------------------------------*/
+/* Icons ----------------------------------*/
 
 /* states and images */
 .ui-icon { display: block; text-indent: -99999px; overflow: hidden; background-repeat: no-repeat; }
 
 
-/* Misc visuals
-----------------------------------*/
+/* Misc visuals ----------------------------------*/
 
 /* Overlays */
 .ui-widget-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
@@ -44,8 +40,7 @@
 */
 
 
-/* Component containers
-----------------------------------*/
+/* Component containers ----------------------------------*/
 .ui-widget { font-family: Lucida Grande, Lucida Sans, Arial, sans-serif; font-size: 1.1em; }
 .ui-widget input, .ui-widget select, .ui-widget textarea, .ui-widget button { font-family: Lucida Grande, Lucida Sans, Arial, sans-serif; font-size: 1em; }
 .ui-widget-content { border: 1px solid #dddddd; background: #f9f9f9 url(images/ui-bg_highlight-hard_100_f9f9f9_1x100.png) 50% top repeat-x; color: #362b36; }
@@ -53,8 +48,7 @@
 .ui-widget-header { border: 1px solid #b2c7d7; background: #e7eef3 url(images/ui-bg_highlight-soft_100_e7eef3_1x100.png) 50% 50% repeat-x; color: #222222; font-weight: bold; }
 .ui-widget-header a { color: #222222; }
 
-/* Interaction states
-----------------------------------*/
+/* Interaction states ----------------------------------*/
 .ui-state-default, .ui-widget-content .ui-state-default { border: 1px solid #cccccc; background: #e6e6e6 url(images/ui-bg_glass_80_e6e6e6_1x400.png) 50% 50% repeat-x; font-weight: normal; color: #444444; outline: none; }
 .ui-state-default a, .ui-state-default a:link, .ui-state-default a:visited { color: #444444; text-decoration: none; outline: none; }
 .ui-state-hover, .ui-widget-content .ui-state-hover, .ui-state-focus, .ui-widget-content .ui-state-focus { border: 1px solid #b2c7d7; background: #f0f0f0 url(images/ui-bg_glass_100_f0f0f0_1x400.png) 50% 50% repeat-x; font-weight: normal; color: #0b5b98; outline: none; }
@@ -62,8 +56,7 @@
 .ui-state-active, .ui-widget-content .ui-state-active { border: 1px solid #2694e8; background: #99c2ff url(images/ui-bg_glass_50_99c2ff_1x400.png) 50% 50% repeat-x; font-weight: normal; color: #000000; outline: none; }
 .ui-state-active a, .ui-state-active a:link, .ui-state-active a:visited { color: #000000; outline: none; text-decoration: none; }
 
-/* Interaction Cues
-----------------------------------*/
+/* Interaction Cues ----------------------------------*/
 .ui-state-highlight, .ui-widget-content .ui-state-highlight {border: 1px solid #f9dd34; background: #fbf5d0 url(images/ui-bg_glass_55_fbf5d0_1x400.png) 50% 50% repeat-x; color: #363636; }
 .ui-state-highlight a, .ui-widget-content .ui-state-highlight a { color: #363636; }
 .ui-state-error, .ui-widget-content .ui-state-error {border: 1px solid #cd0a0a; background: #fef1ec url(images/ui-bg_glass_95_fef1ec_1x400.png) 50% 50% repeat-x; color: #cd0a0a; }
@@ -73,8 +66,7 @@
 .ui-priority-primary, .ui-widget-content .ui-priority-primary { font-weight: bold; }
 .ui-priority-secondary, .ui-widget-content .ui-priority-secondary { opacity: .7; filter:Alpha(Opacity=70); font-weight: normal; }
 
-/* Icons
-----------------------------------*/
+/* Icons ----------------------------------*/
 
 /* states and images */
 .ui-icon { width: 16px; height: 16px; background-image: url(images/ui-icons_222222_256x240.png); }
@@ -262,8 +254,7 @@
 .ui-icon-grip-diagonal-se { background-position: -80px -224px; }
 
 
-/* Misc visuals
-----------------------------------*/
+/* Misc visuals ----------------------------------*/
 
 /* Corner radius */
 .ui-corner-tl { -moz-border-radius-topleft: 3px; -webkit-border-top-left-radius: 3px; }
@@ -278,16 +269,18 @@
 
 /* Overlays */
 .ui-widget-overlay { background: #444444 url(images/ui-bg_diagonals-thick_15_444444_40x40.png) 50% 50% repeat; opacity: .30;filter:Alpha(Opacity=30); }
-.ui-widget-shadow { margin: 4px 0 0 4px; padding: 0px; background: #aaaaaa url(images/ui-bg_diagonals-small_0_aaaaaa_40x40.png) 50% 50% repeat; opacity: .30;filter:Alpha(Opacity=30); -moz-border-radius: 4px; -webkit-border-radius: 4px; }/* Accordion
-----------------------------------*/
+.ui-widget-shadow { margin: 4px 0 0 4px; padding: 0px; background: #aaaaaa url(images/ui-bg_diagonals-small_0_aaaaaa_40x40.png) 50% 50% repeat; opacity: .30;filter:Alpha(Opacity=30); -moz-border-radius: 4px; -webkit-border-radius: 4px; }
+
+/* Accordion ----------------------------------*/
 .ui-accordion .ui-accordion-header { cursor: pointer; position: relative; margin-top: 1px; zoom: 1; }
 .ui-accordion .ui-accordion-li-fix { display: inline; }
 .ui-accordion .ui-accordion-header-active { border-bottom: 0 !important; }
 .ui-accordion .ui-accordion-header a { display: block; font-size: 1em; padding: .5em .5em .5em 2.2em; }
 .ui-accordion .ui-accordion-header .ui-icon { position: absolute; left: .5em; top: 50%; margin-top: -8px; }
 .ui-accordion .ui-accordion-content { padding: 1em 2.2em; border-top: 0; margin-top: -2px; position: relative; top: 1px; margin-bottom: 2px; overflow: auto; display: none; }
-.ui-accordion .ui-accordion-content-active { display: block; }/* Datepicker
-----------------------------------*/
+.ui-accordion .ui-accordion-content-active { display: block; }
+
+/* Datepicker ----------------------------------*/
 .ui-datepicker { width: 17em; padding: .2em .2em 0; }
 .ui-datepicker .ui-datepicker-header { position:relative; padding:.2em 0; }
 .ui-datepicker .ui-datepicker-prev, .ui-datepicker .ui-datepicker-next { position:absolute; top: 2px; width: 1.8em; height: 1.8em; }
@@ -347,8 +340,9 @@
     left: -4px; /*must have*/
     width: 200px; /*must have*/
     height: 200px; /*must have*/
-}/* Dialog
-----------------------------------*/
+}
+
+/* Dialog ----------------------------------*/
 .ui-dialog { position: relative; padding: .2em; width: 300px; }
 .ui-dialog .ui-dialog-titlebar { padding: .5em .3em .3em 1em; position: relative;  }
 .ui-dialog .ui-dialog-title { float: left; margin: .1em 0 .2em; } 
@@ -360,11 +354,12 @@
 .ui-dialog .ui-dialog-buttonpane button { float: right; margin: .5em .4em .5em 0; cursor: pointer; padding: .2em .6em .3em .6em; line-height: 1.4em; width:auto; overflow:visible; }
 .ui-dialog .ui-resizable-se { width: 14px; height: 14px; right: 3px; bottom: 3px; }
 .ui-draggable .ui-dialog-titlebar { cursor: move; }
-/* Progressbar
-----------------------------------*/
+
+/* Progressbar ----------------------------------*/
 .ui-progressbar { height:2em; text-align: left; }
-.ui-progressbar .ui-progressbar-value {margin: -1px; height:100%; }/* Resizable
-----------------------------------*/
+.ui-progressbar .ui-progressbar-value {margin: -1px; height:100%; }
+
+/* Resizable ----------------------------------*/
 .ui-resizable { position: relative;}
 .ui-resizable-handle { position: absolute;font-size: 0.1px;z-index: 99999; display: block;}
 .ui-resizable-disabled .ui-resizable-handle, .ui-resizable-autohide .ui-resizable-handle { display: none; }
@@ -375,8 +370,9 @@
 .ui-resizable-se { cursor: se-resize; width: 12px; height: 12px; right: 1px; bottom: 1px; }
 .ui-resizable-sw { cursor: sw-resize; width: 9px; height: 9px; left: -5px; bottom: -5px; }
 .ui-resizable-nw { cursor: nw-resize; width: 9px; height: 9px; left: -5px; top: -5px; }
-.ui-resizable-ne { cursor: ne-resize; width: 9px; height: 9px; right: -5px; top: -5px;}/* Slider
-----------------------------------*/
+.ui-resizable-ne { cursor: ne-resize; width: 9px; height: 9px; right: -5px; top: -5px;}
+
+/* Slider ----------------------------------*/
 .ui-slider { position: relative; text-align: left; }
 .ui-slider .ui-slider-handle { position: absolute; z-index: 2; width: 1.2em; height: 1.2em; cursor: default; }
 .ui-slider .ui-slider-range { position: absolute; z-index: 1; font-size: .7em; display: block; border: 0; }
@@ -391,8 +387,9 @@
 .ui-slider-vertical .ui-slider-handle { left: -.3em; margin-left: 0; margin-bottom: -.6em; }
 .ui-slider-vertical .ui-slider-range { left: 0; width: 100%; }
 .ui-slider-vertical .ui-slider-range-min { bottom: 0; }
-.ui-slider-vertical .ui-slider-range-max { top: 0; }/* Tabs
-----------------------------------*/
+.ui-slider-vertical .ui-slider-range-max { top: 0; }
+
+/* Tabs ----------------------------------*/
 .ui-tabs { padding: .2em; zoom: 1; }
 .ui-tabs .ui-tabs-nav { list-style: none; position: relative; padding: .2em .2em 0; }
 .ui-tabs .ui-tabs-nav li { position: relative; float: left; border-bottom-width: 0 !important; margin: 0 .2em -1px 0; padding: 0; }

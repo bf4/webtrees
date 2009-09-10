@@ -1335,6 +1335,36 @@ margin-top: -20px;
 left: 210px;
 padding: 3px;
 }
+.flyout2 {
+color:#000000;
+text-align: left;
+margin-top: -10px;
+left: 85px;
+padding: 3px;
+}
+.flyout4 {
+color:#000000;
+text-align: left;
+margin-top: 0px;
+margin-left: -22px;
+padding: 3px;
+}
+#flyout3, #flyout3 a, #phusb, #pwife, #shusb, #swife, #spouse {
+background:none;
+border:none;
+text-decoration:none;
+text-align: left;
+margin-top: 0px;
+left: 0px;
+padding: 0px;
+}
+.flyout2rtl {
+color:#000000; 
+text-align: right;
+margin-top: -10px;
+right: 85px;
+padding: 3px;
+}
 /* End of Flyout Menu styles*/
 
 /* The following two overriding classes MUST appear at the end of the entire CSS file. */
@@ -1348,6 +1378,8 @@ padding: 3px;
 
 ul.clist {
 	list-style-image: none;
+	text-decoration:none;
+	color:#000000; 
 	margin: 0px;
 }
 

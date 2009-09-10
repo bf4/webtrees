@@ -62,7 +62,7 @@ function open_link_remote(pid){
 }
 
 function showchanges() {
-	window.location = '<?php echo $controller->indi->getLinkUrl(); ?>&show_changes=yes';
+	window.location = '<?php echo $controller->indi->getLinkUrl2(); ?>&show_changes=yes';
 }
 <?php } ?>
 
@@ -103,25 +103,31 @@ function resize_content_div(i) {
 	var $tabs = jQuery('#tabs');
     jQuery('#tabs').bind('tabsshow', function(event, ui) {
     	if ($tabs) selectedTab = $tabs.tabs('option', 'selected');
+//alert(selectedTab);
 	<?php
 	foreach($controller->modules as $mod) {
 		if ($mod->hasTab() && $mod->getTab()) {
 			echo $mod->getTab()->getJSCallbackAllTabs()."\n";
 			$modjs = $mod->getTab()->getJSCallback();
 			if (!empty($modjs)) {
-				echo 'if (ui.tab.name == "'.$mod->getName().'") {
-	'.$modjs.'
-}
-';
+				echo 'if (ui.tab.name == "'.$mod->getName().'") { '.$modjs.' }';
 			}
 		}
 	}
 	?>
 	enable_static_tab();
 	});
+	
+	// enable toggle for static nav tab --------------
     jQuery('#tabs').bind('tabsselect', function(event, ui) {
-        	if (ui.panel.id=='<?php echo $controller->static_tab->getName()?>') return false;
+//        	if (ui.panel.id=='<?php echo $controller->static_tab->getName()?>') return false;
+			if (ui.panel.id=='<?php echo $controller->static_tab->getName()?>') {
+				if (jQuery(".static_tab_content").css("display")=="none") jQuery(".static_tab_content").show();
+				else jQuery(".static_tab_content").hide();
+				return false;
+			}
     });
+	
 	// static tab changes
 	<?php if ($controller->static_tab){?>
 	function enable_static_tab() {
@@ -135,9 +141,9 @@ function resize_content_div(i) {
 		jQuery(".static_tab_content").css("right", "0px");
 		jQuery(".static_tab_content").css("left", "-120px");
 		jQuery(".static_tab_content").hide();
-	    jQuery(".static_tab").hover(
-	   		function(event) {
-	   	   		jQuery(".static_tab_content").show();
+	    jQuery(".static_tab").toggle(
+			function(event) {
+				jQuery(".static_tab_content").show();
 	   		},
 	   		function(event) {
 	   			jQuery(".static_tab_content").hide();
@@ -242,7 +248,7 @@ function resize_content_div(i) {
 		{
 			?><br />
 			<?php echo $pgv_lang["indi_is_remote"]; ?><!--<br />--><!--take this out if you want break the remote site and the fact that it was remote into two separate lines-->
-			<a href="<?php echo encode_url($controller->indi->getLinkUrl()); ?>"><?php echo $controller->indi->getLinkTitle(); ?></a>
+			<a href="<?php echo encode_url($controller->indi->getLinkUrl2()); ?>"><?php echo $controller->indi->getLinkTitle(); ?></a>
 			<?php
 		}
 		// if indivual is not a remote individual
