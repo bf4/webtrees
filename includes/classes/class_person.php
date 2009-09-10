@@ -1605,6 +1605,10 @@ class Person extends GedcomRecord {
 	public function getLinkUrl() {
 		return parent::_getLinkUrl('individual.php?pid=');
 	}
+	
+	public function getLinkUrl2() {
+		return parent::_getLinkUrl('new_individual.php?pid=');
+	}
 
 	// If this object has no name, what do we call it?
 	function getFallBackName() {

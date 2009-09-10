@@ -40,10 +40,6 @@ require_once 'includes/functions/functions_charts.php';
 
 class family_nav_Tab extends Tab {
 
-	public function getLinkUrl2() {
-		return parent::_getLinkUrl('new_individual.php?pid=');
-	}
-
 	public function hasContent() {
 		return true;
 	}
