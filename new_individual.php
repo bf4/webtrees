@@ -34,6 +34,8 @@ $showFull = ($PEDIGREE_FULL_DETAILS) ? 1 : 0;
 $controller=new IndividualController();
 $controller->init();
 
+define('PGV_JQUERY_LOADED', 1);
+
 // We have finished writing to $_SESSION, so release the lock
 session_write_close();
 print_header($controller->getPageTitle());
@@ -96,17 +98,30 @@ function resize_content_div(i) {
 <script type="text/javascript" src="js/jquery/jquery-ui-1.7.1.custom.min.js"></script>
 <script type="text/javascript">
 //<![CDATA[
-	var selectedTab = 0;
-	jQuery.noConflict();	
-	jQuery(document).ready(function(){
+var selectedTab = 0;
+
+function enable_static_tab() {
+    jQuery(".static_tab").css("float","right");
+    jQuery(".static_tab_content").css("position", "absolute");
+    jQuery(".static_tab_content").removeClass("ui-tabs-hide");
+    jQuery(".static_tab_content").removeClass("ui-tabs-panel");
+    jQuery(".static_tab_content").addClass("ui-corner-all");
+    jQuery(".static_tab_content").css("z-index","1");
+    var top = jQuery(".static_tab").offset().top+jQuery(".static_tab").height();
+	jQuery(".static_tab_content").css("top", top+"px");
+	jQuery(".static_tab_content").css("right", "0px");
+	jQuery(".static_tab_content").hide();
+}
+
+jQuery(document).ready(function(){
 	jQuery("#tabs").tabs({ cache: true });
 	var $tabs = jQuery('#tabs');
     jQuery('#tabs').bind('tabsshow', function(event, ui) {
     	if ($tabs) selectedTab = $tabs.tabs('option', 'selected');
-//alert(selectedTab);
+
 	<?php
 	foreach($controller->modules as $mod) {
-		if ($mod->hasTab() && $mod->getTab()) {
+		if ($mod!=$controller->static_tab && $mod->hasTab() && $mod->getTab()) {
 			echo $mod->getTab()->getJSCallbackAllTabs()."\n";
 			$modjs = $mod->getTab()->getJSCallback();
 			if (!empty($modjs)) {
@@ -115,44 +130,28 @@ function resize_content_div(i) {
 		}
 	}
 	?>
-	enable_static_tab();
+	<?php if ($controller->static_tab){ 
+		echo "enable_static_tab();";
+	}?>
 	});
-	
-	// enable toggle for static nav tab --------------
-    jQuery('#tabs').bind('tabsselect', function(event, ui) {
-//        	if (ui.panel.id=='<?php echo $controller->static_tab->getName()?>') return false;
-			if (ui.panel.id=='<?php echo $controller->static_tab->getName()?>') {
-				if (jQuery(".static_tab_content").css("display")=="none") jQuery(".static_tab_content").show();
-				else jQuery(".static_tab_content").hide();
-				return false;
-			}
-    });
-	
 	// static tab changes
 	<?php if ($controller->static_tab){?>
-	function enable_static_tab() {
-	    jQuery(".static_tab").css("float","right");
-	    jQuery(".static_tab_content").css("position", "absolute");
-	    jQuery(".static_tab_content").removeClass("ui-tabs-hide");
-	    jQuery(".static_tab_content").removeClass("ui-tabs-panel");
-	    jQuery(".static_tab_content").addClass("ui-corner-all");
-	    jQuery(".static_tab_content").css("z-index","1");
-		jQuery(".static_tab_content").css("top", "30px");
-		jQuery(".static_tab_content").css("right", "0px");
-		jQuery(".static_tab_content").css("left", "-120px");
-		jQuery(".static_tab_content").hide();
-	    jQuery(".static_tab").toggle(
-			function(event) {
-				jQuery(".static_tab_content").show();
-	   		},
-	   		function(event) {
-	   			jQuery(".static_tab_content").hide();
-	   		}
-	   	);
-	}
+    jQuery('#tabs').bind('tabsselect', function(event, ui) {
+        	if (ui.panel.id=='<?php echo $controller->static_tab->getName()?>') {
+        		if (jQuery(".static_tab_content").css("display")=="none") {
+            			jQuery(".static_tab_content").show();
+            			<?php echo $controller->static_tab->getTab()->getJSCallbackAllTabs()."\n";
+            			$modjs = $controller->static_tab->getTab()->getJSCallback();
+            			echo $modjs;
+            			?>
+        		}
+        		else jQuery(".static_tab_content").hide();
+            	return false;
+        	}
+    });
 	enable_static_tab();
    	<?php }?>
-  });
+});
 
 //]]>
   </script>
@@ -309,11 +308,6 @@ foreach($controller->modules as $mod) {
 	}
 	if ($controller->static_tab) {
 		?><li class="static_tab"><a name="<?php echo $controller->static_tab->getName(); ?>" href="#<?php echo $controller->static_tab->getName()?>"><span><?php echo $pgv_lang[$controller->static_tab->getName()]?></span></a>
-		<?php if ($controller->static_tab) { ?>
-<div class="static_tab_content" id="<?php echo $controller->static_tab->getName();?>">
-	<?php echo $controller->static_tab->getTab()->getContent(); ?>
-</div> <!-- static tab -->
-<?php } ?>
 		</li><?php 
 	} 
 	 ?>
@@ -332,6 +326,11 @@ foreach($controller->modules as $mod) {
 	}
  } ?>
 </div> <!-- tabs -->
+<?php if ($controller->static_tab) { ?>
+<div class="static_tab_content" id="<?php echo $controller->static_tab->getName();?>">
+	<?php echo $controller->static_tab->getTab()->getContent(); ?>
+</div> <!-- static tab -->
+<?php } ?>
 </div> <!--  end column 1 -->
 <?php 
 echo PGV_JS_START;

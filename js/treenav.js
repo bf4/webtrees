@@ -58,7 +58,7 @@ function NavTree(outerId, innerId, name, xref) {
 			this.innerPort.style.width = this.rootTable.offsetWidth + 'px';
 			this.innerPort.style.height = this.rootTable.offsetHeight + 'px';
 		}
-		var vlines = $('.vertline');
+		var vlines = jQuery('.vertline');
 		for(i=0; i<vlines.length; i++) {
 			id = vlines[i].id.substr(vlines[i].id.indexOf("_")+1);
 			outerParent = document.getElementById("ch_"+id);
@@ -85,7 +85,7 @@ function NavTree(outerId, innerId, name, xref) {
 			}
 		}
 		//-- parent lines
-		vlines = $('.pvertline');
+		vlines = jQuery('.pvertline');
 		for(i=0; i<vlines.length; i++) {
 			ids = vlines[i].id.split("_");
 			var y1 = 0;
@@ -114,21 +114,21 @@ function NavTree(outerId, innerId, name, xref) {
 			}
 		}
 		temp = this;
-		$(".person_box").hover(
+		jQuery(".person_box").hover(
 				function(event) {
 					if (temp.zoom>=-2) return false;
 					left=(event.clientX + document.documentElement.scrollLeft + 7)+"px";
 	  				top=(event.clientY + document.documentElement.scrollTop + 7)+"px";
-					innertext = $(this).html();
+					innertext = jQuery(this).html();
 					innertext=innertext.replace(/display: none;/gi, "display: inline;");
-					$("#zoomover").html(innertext);
-					$("#zoomover").addClass('person_boxNN');
-					$("#zoomover").css({left:left,top:top}).show();
+					jQuery("#zoomover").html(innertext);
+					jQuery("#zoomover").addClass('person_boxNN');
+					jQuery("#zoomover").css({left:left,top:top}).show();
 					event.preventDefault();
 				},
 				function(event) {
 					if (temp.zoom>=-2) return false;
-					$("#zoomover").hide();
+					jQuery("#zoomover").hide();
 					event.preventDefault();
 				}
 		);
