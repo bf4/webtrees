@@ -24,7 +24,7 @@
  *
  * @package PhpGedView
  * @subpackage Includes
- * @version $Id: family_nav.php 5681 2009-06-11 21:20:28Z windmillway $
+ * @version $Id$
  * @author Brian Holland
  */
 

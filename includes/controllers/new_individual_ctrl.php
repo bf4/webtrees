@@ -21,7 +21,7 @@
 *
 * @package PhpGedView
 * @subpackage Charts
-* @version $Id: individual_ctrl.php 5656 2009-06-04 20:06:47Z fisharebest $
+* @version $Id$
 */
 
 if (!defined('PGV_PHPGEDVIEW')) {

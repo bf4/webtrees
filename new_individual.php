@@ -23,7 +23,7 @@
 *
 * @package PhpGedView
 * @subpackage Charts
-* @version $Id: individual.php 5625 2009-05-31 16:20:32Z volschin $
+* @version $Id$
 */
 
 require './config.php';
