@@ -98,11 +98,14 @@ if (isset($_COOKIE['lastclick'])) {
 			?>
 			<tr>
 				<td style="padding-bottom: 4px;" align="center" colspan="2">
+				<br />
 				<?php
-				echo "<a href=\"family.php?famid=".$famid."\">";
-				//echo "<b>". $pgv_lang["parent_family"] ."&nbsp;&nbsp;(".$famid.")</b>";
+				echo "<a style=\"padding:0px; width:100%;\" href=\"family.php?famid=".$famid."\" onclick=\"return familyNavLoad('family.php?famid=".$famid."');\">";
 				echo "<b>".$pgv_lang["parent_family"]."&nbsp;&nbsp;</b><span class=\"age\">(".$famid.")</span>";
 				echo "</a>";
+				//echo "<a href=\"family.php?famid=".$famid."\">";
+				//echo "<b>".$pgv_lang["parent_family"]."&nbsp;&nbsp;</b><span class=\"age\">(".$famid.")</span>";
+				//echo "</a>";
 				?>
 				</td>
 			</tr>
@@ -124,16 +127,16 @@ if (isset($_COOKIE['lastclick'])) {
 				if (PrintReady($people["husb"]->getBirthYear()) == 0) { $BirthYr = ""; }else{ $BirthYr = PrintReady($people["husb"]->getBirthYear()); }
 				?>
 				<tr>
-					<td class="facts_label<?php print $styleadd; ?>" nowrap="nowrap">
-						<?php //if ($PGV_MENUS_AS_LISTS) echo "<ul>\n";
-						$menu->printMenu();
-						//if ($PGV_MENUS_AS_LISTS) echo "</ul>\n";
+					<td class="facts_label<?php print $styleadd; ?>" nowrap="nowrap" >
+						<?php if ($PGV_MENUS_AS_LISTS) echo "<ul>\n";
+							$menu->printMenu();
+						if ($PGV_MENUS_AS_LISTS) echo "</ul>\n";
 						?>
 					</td>
 					
-					<td nowrap="nowrap" class="<?php print $this->controller->getPersonStyle($people["husb"]);?>" align="center" >
+					<td nowrap="nowrap" class="<?php print $this->controller->getPersonStyle($people["husb"]);?>" align="center">
 						<?php
-						print "<a href=\"".encode_url($people["husb"]->getLinkUrl2())."\" onclick=\"return familyNavLoad('".$people['husb']->getLinkUrl2()."');\">";
+						print "<a style=\"padding:0px; width:100%;\" href=\"".encode_url($people["husb"]->getLinkUrl2())."\" onclick=\"return familyNavLoad('".$people['husb']->getLinkUrl2()."');\">";
 						print PrintReady($people["husb"]->getFullName());
 						print "<font size=\"1\"><br />" . $BirthYr . " - " . $DeathYr . "</font>";
 						print "</a>";
@@ -162,13 +165,13 @@ if (isset($_COOKIE['lastclick'])) {
 				<tr>
 					<td class="facts_label<?php print $styleadd; ?>">
 						<?php if ($PGV_MENUS_AS_LISTS) echo "<ul>\n";
-						$menu->printMenu();
+							$menu->printMenu();
 						if ($PGV_MENUS_AS_LISTS) echo "</ul>\n";
 						?>
 					</td>
 					<td nowrap="nowrap" align="center" class="<?php print $this->controller->getPersonStyle($people["wife"]); ?>">
 						<?php
-						print "<a href=\"".encode_url($people["wife"]->getLinkUrl2())."\" onclick=\"return familyNavLoad('".$people['wife']->getLinkUrl2()."');\">";
+						print "<a style=\"padding:0px; width:100%;\" href=\"".encode_url($people["wife"]->getLinkUrl2())."\" onclick=\"return familyNavLoad('".$people['wife']->getLinkUrl2()."');\">";
 						print PrintReady($people["wife"]->getFullName());
 						print "<font size=\"1\"><br />" . $BirthYr . " - " . $DeathYr . "</font>";
 						print "</a>";
@@ -183,7 +186,7 @@ if (isset($_COOKIE['lastclick'])) {
 				foreach($people["children"] as $key=>$child) {
 				if ($pid == $child->getXref() ){
 				}else{
-					$menu = new Menu($child->getLabel() . "\n");
+					$menu = new Menu("&nbsp;" . $child->getLabel() . "\n");
 				//	$menu->addClass("", "", "submenu");
 					if ($TEXT_DIRECTION=="ltr") { 
 						$menu->addClass("", "", "submenu flyout2");
@@ -214,10 +217,10 @@ if (isset($_COOKIE['lastclick'])) {
 						<td nowrap="nowrap" align="center" class="<?php print $this->controller->getPersonStyle($child); ?>">
 							<?php
 							if ($pid == $child->getXref()) {
-								print PrintReady($child->getFullName());
-								print "<font size=\"1\"><br />" . $BirthYr . " - " . $DeathYr . "</font>";
+								print "<span style=\"font: 12px tahoma, arial, helvetica, sans-serif;\">".PrintReady($child->getFullName())."</span>";
+								print "<br /><span style=\"font: 9px tahoma, arial, helvetica, sans-serif;\">" . $BirthYr . " - " . $DeathYr . "</span>";
 							}else{
-								print "<a href=\"".encode_url($child->getLinkUrl2())."\" onclick=\"return familyNavLoad('".$child->getLinkUrl2()."');\">";
+								print "<a style=\"padding:0px; width:100%;\" href=\"".encode_url($child->getLinkUrl2())."\" onclick=\"return familyNavLoad('".$child->getLinkUrl2()."');\">";
 								print PrintReady($child->getFullName());
 								print "<font size=\"1\"><br />" . $BirthYr . " - " . $DeathYr . "</font>";
 								print "</a>";
@@ -244,9 +247,12 @@ if (isset($_COOKIE['lastclick'])) {
 			<tr>
 				<td style="padding-bottom: 4px;" align="center" colspan="2">
 				<?php
-				echo "<a href=\"family.php?famid=".$famid."\">";
+				echo "<a style=\"padding:0px; width:100%;\" href=\"family.php?famid=".$famid."\" onclick=\"return familyNavLoad('family.php?famid=".$famid."');\">";
 				echo "<b>".$pgv_lang["step_parent_family"]."&nbsp;&nbsp;</b><span class=\"age\">(".$famid.")</span>";
 				echo "</a>";
+				//echo "<a href=\"family.php?famid=".$famid."\">";
+				//echo "<b>".$pgv_lang["step_parent_family"]."&nbsp;&nbsp;</b><span class=\"age\">(".$famid.")</span>";
+				//echo "</a>";
 				?>
 				</td>
 			</tr>
@@ -256,9 +262,9 @@ if (isset($_COOKIE['lastclick'])) {
 			if (isset($people["husb"]) ) {
 				$menu = new Menu();
 				if ($people["husb"]->getLabel() == ".") {
-					$menu->addLabel("&nbsp;" . $pgv_lang["stepdad"] . "&nbsp;". "\n");
+					$menu->addLabel($pgv_lang["stepdad"]."\n");
 				}else{
-					$menu->addLabel("&nbsp;" . $people["husb"]->getLabel() . "&nbsp;". "\n");
+					$menu->addLabel($people["husb"]->getLabel()."\n");
 				}
 				//$menu->addClass("", "", "submenu");
 				if ($TEXT_DIRECTION=="ltr") { 
@@ -284,7 +290,7 @@ if (isset($_COOKIE['lastclick'])) {
 					</td>
 					<td nowrap="nowrap" align="center" class="<?php print $this->controller->getPersonStyle($people["husb"]); ?>" >
 						<?php
-						print "<a href=\"".encode_url($people["husb"]->getLinkUrl2())."\" onclick=\"return familyNavLoad('".$people['husb']->getLinkUrl2()."');\">";
+						print "<a style=\"padding:0px; width:100%;\" href=\"".encode_url($people["husb"]->getLinkUrl2())."\" onclick=\"return familyNavLoad('".$people['husb']->getLinkUrl2()."');\">";
 						print PrintReady($people["husb"]->getFullName());
 						print "<font size=\"1\"><br />" . $BirthYr . " - " . $DeathYr . "</font>";
 						print "</a>";
@@ -300,9 +306,9 @@ if (isset($_COOKIE['lastclick'])) {
 			if (isset($people["wife"]) ) {
 				$menu = new Menu();
 				if ($people["wife"]->getLabel() == ".") {
-					$menu->addLabel("&nbsp;" . $pgv_lang["stepmom"] . "&nbsp;". "\n");
+					$menu->addLabel($pgv_lang["stepmom"]."\n");
 				}else{
-					$menu->addLabel("&nbsp;" . $people["wife"]->getLabel() . "&nbsp;". "\n");
+					$menu->addLabel($people["wife"]->getLabel()."\n");
 				}
 				//$menu->addClass("", "", "submenu");
 				if ($TEXT_DIRECTION=="ltr") { 
@@ -321,13 +327,13 @@ if (isset($_COOKIE['lastclick'])) {
 				<tr>
 					<td class="facts_label<?php print $styleadd; ?>" nowrap="nowrap">
 						<?php if ($PGV_MENUS_AS_LISTS) echo "<ul>\n";
-						$menu->printMenu();
+							$menu->printMenu();
 						if ($PGV_MENUS_AS_LISTS) echo "</ul>\n";
 						?>
 					</td>
 					<td nowrap="nowrap" align="center" class="<?php print $this->controller->getPersonStyle($people["wife"]); ?>">
 						<?php
-						print "<a href=\"".encode_url($people["wife"]->getLinkUrl2())."\" onclick=\"return familyNavLoad('".$people['wife']->getLinkUrl2()."');\">";
+						print "<a style=\"padding:0px; width:100%;\" href=\"".encode_url($people["wife"]->getLinkUrl2())."\" onclick=\"return familyNavLoad('".$people['wife']->getLinkUrl2()."');\">";
 						print PrintReady($people["wife"]->getFullName());
 						print "<font size=\"1\"><br />" . $BirthYr . " - " . $DeathYr . "</font>";
 						print "</a>";
@@ -341,7 +347,7 @@ if (isset($_COOKIE['lastclick'])) {
 			if (isset($people["children"])) {
 				$elderdate = $family->getMarriageDate();
 				foreach($people["children"] as $key=>$child) {
-					$menu = new Menu($child->getLabel() . "\n");
+					$menu = new Menu($child->getLabel()."\n");
 					//$menu->addClass("", "", "submenu");
 					if ($TEXT_DIRECTION=="ltr") { 
 						$menu->addClass("", "", "submenu flyout2");
@@ -359,13 +365,13 @@ if (isset($_COOKIE['lastclick'])) {
 					<tr>
 						<td class="facts_label<?php print $styleadd; ?>" nowrap="nowrap">
 						<?php if ($PGV_MENUS_AS_LISTS) echo "<ul>\n";
-						$menu->printMenu();
+							$menu->printMenu();
 						if ($PGV_MENUS_AS_LISTS) echo "</ul>\n";
 						?>
 						</td>
 						<td nowrap="nowrap" align="center" class="<?php print $this->controller->getPersonStyle($child); ?>">
 							<?php
-							print "<a href=\"".encode_url($child->getLinkUrl2())."\" onclick=\"return familyNavLoad('".$child->getLinkUrl2()."');\">";
+							print "<a style=\"padding:0px; width:100%;\" href=\"".encode_url($child->getLinkUrl2())."\" onclick=\"return familyNavLoad('".$child->getLinkUrl2()."');\">";
 							print PrintReady($child->getFullName());
 							print "<font size=\"1\"><br />" . $BirthYr . " - " . $DeathYr . "</font>";
 							print "</a>";
@@ -386,9 +392,12 @@ if (isset($_COOKIE['lastclick'])) {
 			<tr>
 				<td style="padding-bottom: 4px;" align="center" colspan="2">
 				<?php
-				echo "<a href=\"family.php?famid=".$famid."\">";
+				echo "<a style=\"padding:0px; width:100%;\" href=\"family.php?famid=".$famid."\" onclick=\"return familyNavLoad('family.php?famid=".$famid."');\">";
 				echo "<b>".$pgv_lang["immediate_family"]."&nbsp;&nbsp;</b><span class=\"age\">(".$famid.")</span>";
 				echo "</a>";
+				//echo "<a href=\"family.php?famid=".$famid."\">";
+				//echo "<b>".$pgv_lang["immediate_family"]."&nbsp;&nbsp;</b><span class=\"age\">(".$famid.")</span>";
+				//echo "</a>";
 				?>
 				</td>
 			</tr>
@@ -431,7 +440,7 @@ if (isset($_COOKIE['lastclick'])) {
 							print PrintReady($people["husb"]->getFullName());
 							print "<font size=\"1\"><br />" . $BirthYr . " - " . $DeathYr . "</font>";
 						}else{
-							print "<a href=\"".encode_url($people["husb"]->getLinkUrl2())."\" onclick=\"return familyNavLoad('".$people['husb']->getLinkUrl2()."');\">";
+							print "<a style=\"padding:0px; width:100%;\" href=\"".encode_url($people["husb"]->getLinkUrl2())."\" onclick=\"return familyNavLoad('".$people['husb']->getLinkUrl2()."');\">";
 							print PrintReady($people["husb"]->getFullName());
 							print "<font size=\"1\"><br />" . $BirthYr . " - " . $DeathYr . "</font>";
 							print "</a>";
@@ -471,7 +480,7 @@ if (isset($_COOKIE['lastclick'])) {
 							print PrintReady($people["wife"]->getFullName());
 							print "<font size=\"1\"><br />" . $BirthYr . " - " . $DeathYr . "</font>";
 						}else{
-							print "<a href=\"".encode_url($people["wife"]->getLinkUrl2())."\" onclick=\"return familyNavLoad('".$people['wife']->getLinkUrl2()."');\">";
+							print "<a style=\"padding:0px; width:100%;\" href=\"".encode_url($people["wife"]->getLinkUrl2())."\" onclick=\"return familyNavLoad('".$people['wife']->getLinkUrl2()."');\">";
 							print PrintReady($people["wife"]->getFullName());
 							print "<font size=\"1\"><br />" . $BirthYr . " - " . $DeathYr . "</font>";
 							print "</a>";
@@ -509,7 +518,7 @@ if (isset($_COOKIE['lastclick'])) {
 						</td>
 						<td nowrap="nowrap" align="center" class="<?php print $this->controller->getPersonStyle($child); ?>">
 							<?php
-							print "<a href=\"".encode_url($child->getLinkUrl2())."\" onclick=\"return familyNavLoad('".$child->getLinkUrl2()."');\">";
+							print "<a style=\"padding:0px; width:100%;\" href=\"".encode_url($child->getLinkUrl2())."\" onclick=\"return familyNavLoad('".$child->getLinkUrl2()."');\">";
 							print PrintReady($child->getFullName());
 							print "<font size=\"1\"><br />" . $BirthYr . " - " . $DeathYr . "</font>";
 							print "</a>";

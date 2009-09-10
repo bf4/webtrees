@@ -1391,6 +1391,10 @@ ul.clist {
 .statistics_chart{
 }
 
+.center2 {
+text-align: center;
+}
+
 .gchart{
 	border: solid #9ca3d4 1px;
 }
