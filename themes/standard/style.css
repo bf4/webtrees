@@ -1320,7 +1320,7 @@ a.showit:hover span {
 }
 /* End of Autocomplete styles*/
 
-/* Flyout menu Styles */
+/* Navigator and Flyout menu Styles */
 .flyout {
 color:#000000; 
 text-align: left;
@@ -1338,15 +1338,23 @@ padding: 3px;
 .flyout2 {
 color:#000000;
 text-align: left;
-margin-top: -10px;
-left: 85px;
+margin-top: -20px;
+left: 70px;
 padding: 3px;
+}
+/* navigator name and dob hover */
+.nam a:hover{
+color:#ff0000;
+}
+/* navigator fyout name hover */
+.flyout2 a:hover{
+color:#ff0000;
 }
 .flyout4 {
 color:#000000;
 text-align: left;
 margin-top: 0px;
-margin-left: -22px;
+margin-left: 0px;
 padding: 3px;
 }
 #flyout3, #flyout3 a, #phusb, #pwife, #shusb, #swife, #spouse {
@@ -1361,9 +1369,12 @@ padding: 0px;
 .flyout2rtl {
 color:#000000; 
 text-align: right;
-margin-top: -10px;
-right: 85px;
+margin-top: -20px;
+right: 0px;
 padding: 3px;
+}
+.flyout2rtl a:hover{
+color:#ff0000;
 }
 /* End of Flyout Menu styles*/
 
@@ -1382,7 +1393,6 @@ ul.clist {
 	color:#000000; 
 	margin: 0px;
 }
-
 .menu_separator img {
 	height: 3px;
 	width: 8em;

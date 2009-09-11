@@ -47,6 +47,8 @@ if (!$controller->indi->canDisplayName()) {
 }
 $linkToID=$controller->pid; // -- Tell addmedia.php what to link to
 
+$last_clicked=safe_get('tab');
+
 ?>
 
 <script language="JavaScript" type="text/javascript">
@@ -155,6 +157,7 @@ jQuery(document).ready(function(){
 
 //]]>
   </script>
+  
 <style>
 #indi_main_blocks {
 	clear: none;
@@ -164,8 +167,8 @@ jQuery(document).ready(function(){
 #tabs li {
  padding-bottom: 0px;
 }
-
 </style>
+
 <div id="indi_main_blocks">
 <div id="indi_top">
 		<table><tr><td>
