@@ -114,7 +114,7 @@ function enable_static_tab() {
 }
 
 jQuery(document).ready(function(){
-	jQuery("#tabs").tabs({ cache: true });
+	jQuery("#tabs").tabs({ cache: true, selected: <?php echo $controller->default_tab?> });
 	var $tabs = jQuery('#tabs');
     jQuery('#tabs').bind('tabsshow', function(event, ui) {
     	if ($tabs) selectedTab = $tabs.tabs('option', 'selected');

@@ -153,9 +153,6 @@ class IndividualControllerRoot extends BaseController {
 			}
 		}
 
-		//-- if the action is a research assistant action then default to the RA tab
-		if (strstr($this->action, 'ra_')!==false) $this->default_tab = 6;
-
 		//-- set the default tab from a request parameter
 		if (isset($_REQUEST['tab'])) {
 			$this->default_tab = $_REQUEST['tab'];
