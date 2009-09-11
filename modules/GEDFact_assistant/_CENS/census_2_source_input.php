@@ -119,6 +119,7 @@ global $pgv_lang, $TEXT_DIRECTION;
 
 		// Add or Remove columns ===========================
 		var cens_ctry = document.getElementById('censCtry').value;
+		
 		var cols_0 = document.getElementsByName('col_0');
 		var cols_1 = document.getElementsByName('col_1');
 		var cols_2 = document.getElementsByName('col_2');
