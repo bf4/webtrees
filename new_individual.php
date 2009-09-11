@@ -106,7 +106,7 @@ function enable_static_tab() {
     jQuery(".static_tab_content").removeClass("ui-tabs-hide");
     jQuery(".static_tab_content").removeClass("ui-tabs-panel");
     jQuery(".static_tab_content").addClass("ui-corner-all");
-    jQuery(".static_tab_content").css("z-index","1");
+    jQuery(".static_tab_content").css("z-index","100");
     var top = jQuery(".static_tab").offset().top+jQuery(".static_tab").height();
 	jQuery(".static_tab_content").css("top", top+"px");
 	jQuery(".static_tab_content").css("right", "0px");
@@ -297,9 +297,9 @@ foreach($controller->modules as $mod) {
 	foreach($controller->modules as $mod) {
 		if ($mod!=$controller->static_tab && $mod->hasTab()) {
 			if ($tabcount==$controller->default_tab || !$mod->getTab()->canLoadAjax()) {?>
-				<li><a name="<?php echo $mod->getName(); ?>" href="#<?php echo $mod->getName()?>"><span><?php echo $pgv_lang[$mod->getName()]?></span></a></li>
+				<li><a name="<?php echo $mod->getName(); ?>" title="<?php echo $mod->getName(); ?>" href="#<?php echo $mod->getName()?>"><span><?php echo $pgv_lang[$mod->getName()]?></span></a></li>
 			<?php } else if ($mod->hasTab() && $mod->getTab() && ($mod->getTab()->hasContent() || PGV_USER_CAN_EDIT)) { ?>
-				<li><a name="<?php echo $mod->getName(); ?>" href="new_individual.php?action=ajax&amp;module=<?php echo $mod->getName()?>&amp;pid=<?php echo $controller->pid?>">
+				<li><a name="<?php echo $mod->getName(); ?>" title="<?php echo $mod->getName(); ?>" href="new_individual.php?action=ajax&amp;module=<?php echo $mod->getName()?>&amp;pid=<?php echo $controller->pid?>">
 					<span><?php echo $pgv_lang[$mod->getName()]?></span>
 					</a></li>
 			<?php } 
