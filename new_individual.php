@@ -104,6 +104,7 @@ var selectedTab = 0;
 
 function enable_static_tab() {
     jQuery(".static_tab").css("float","right");
+		jQuery(".static_tab").css("margin-right","50px");
     jQuery(".static_tab_content").css("position", "absolute");
     jQuery(".static_tab_content").removeClass("ui-tabs-hide");
     jQuery(".static_tab_content").removeClass("ui-tabs-panel");
@@ -330,8 +331,10 @@ foreach($controller->modules as $mod) {
  } ?>
 </div> <!-- tabs -->
 <?php if ($controller->static_tab) { ?>
-<div class="static_tab_content" id="<?php echo $controller->static_tab->getName();?>">
-	<?php echo $controller->static_tab->getTab()->getContent(); ?>
+<div class="static_tab_content" style="position:relative; padding-left:5px; padding-right:5px; margin-top:2px; border:#c8c8c8 1px; border-style:none solid solid solid; margin-right:30px;" id="<?php echo $controller->static_tab->getName();?>">
+<!-- <div class="static_tab_content" id="<?php // echo $controller->static_tab->getName();?>">-->
+
+<?php echo $controller->static_tab->getTab()->getContent(); ?>
 </div> <!-- static tab -->
 <?php } ?>
 </div> <!--  end column 1 -->

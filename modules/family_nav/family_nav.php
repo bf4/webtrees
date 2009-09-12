@@ -524,6 +524,7 @@ class family_nav_Tab extends Tab {
 
 		}
 		echo "</table>";
+		echo "<br />";
 		
 		// -----------------------------------------------------------------------------
 		// }
@@ -756,7 +757,6 @@ function print_pedigree_person_nav($pid, $style=1, $show_famlink=true, $count=0,
 				if ($person_step != "Yes") {
 					$step_parentlinks .= "&nbsp;(".$pgv_lang['unknown'].")\n\t\t";
 				}
-				
 			}
 		}
 	}
