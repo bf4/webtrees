@@ -385,20 +385,19 @@ class MenuBar
 				$pids = array_unique($pids);
 				foreach ($pids as $key=>$pid) {
 					$person=Person::getInstance($pid);
-					if (($person && $pid!=$rootid) || empty($rootid) || !PGV_USER_ID) {
-						$link = "relationship.php?ged=".$GEDCOM;
-						if ($rootid  && $person) {
-							$link .= "&pid1={$pid}&pid2={$rootid}&pretty=2&followspouse=1";
-							$label = $pgv_lang["relationship_chart"].": ".PrintReady(strip_tags($person->getFullName()));
-							$submenu = new Menu($label, encode_url($link));
-						} else {
-							$submenu = new Menu($pgv_lang["relationship_chart"], encode_url($link));
-						}
-						if (!empty($PGV_IMAGES["relationship"]["small"]))
-							$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["relationship"]["small"]);
-						$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff", "", "icon_small_relationship");
-						$menu->addSubmenu($submenu);
+					$link = "relationship.php?ged=".$GEDCOM;
+					if ($rootid  && $person) {
+						$link .= "&pid1={$pid}&pid2={$rootid}&pretty=2&followspouse=1";
+						$label = $pgv_lang["relationship_chart"].": ".PrintReady(strip_tags($person->getFullName()));
+						$submenu = new Menu($label, encode_url($link));
+					} else {
+						if ($rootid) $link .= "&pid1=".$rootid;
+						$submenu = new Menu($pgv_lang["relationship_chart"], encode_url($link));
 					}
+					if (!empty($PGV_IMAGES["relationship"]["small"]))
+						$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["relationship"]["small"]);
+					$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff", "", "icon_small_relationship");
+					$menu->addSubmenu($submenu);
 				}
 				break;
 

@@ -442,6 +442,11 @@ a:hover .nameZoom {
 	height: 32px;
 }
 
+.menuitem_hover .icon {
+	width: 32px;
+	height: 32px;
+}
+
 .submenu .icon {
 	width: 25px;
 	height: 25px;
