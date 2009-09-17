@@ -352,6 +352,51 @@ class MenuBar
 					$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["timeline"]["small"]);
 				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff", "", "icon_small_timeline");
 				$menu->addSubmenu($submenu);
+				if (isset($controller) && !empty($controller->famid)) {
+					// Build a sortable list of submenu items and then sort it in localized name order
+					$menuList = array();
+					$menuList["parentTimeLine"] = $pgv_lang['parents_timeline'];
+					$menuList["childTimeLine"] = $pgv_lang['children_timeline'];
+					$menuList["familyTimeLine"] = $pgv_lang['family_timeline'];
+					asort($menuList);
+			
+					// Produce the submenus in localized name order
+					foreach($menuList as $menuType => $menuName) {
+						switch ($menuType) {
+						case "parentTimeLine":
+							// charts / parents_timeline
+							$submenu = new Menu($pgv_lang['parents_timeline'], encode_url('timeline.php?pids[0]='.$controller->getHusband().'&pids[1]='.$controller->getWife()));
+							if (!empty($PGV_IMAGES["timeline"]["small"])) {
+								$submenu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['timeline']['small']}");
+							}
+							$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}");
+							$menu->addSubmenu($submenu);
+							break;
+			
+						case "childTimeLine":
+							// charts / children_timeline
+							$submenu = new Menu($pgv_lang['children_timeline'], encode_url('timeline.php?'.$controller->getChildrenUrlTimeline()));
+							if (!empty($PGV_IMAGES["timeline"]["small"])) {
+								$submenu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['timeline']['small']}");
+							}
+							$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}");
+							$menu->addSubmenu($submenu);
+							break;
+			
+						case "familyTimeLine":
+							// charts / family_timeline
+							$submenu = new Menu($pgv_lang['family_timeline'], encode_url('timeline.php?pids[0]='.$controller->getHusband().'&pids[1]='.$controller->getWife().'&'.$controller->getChildrenUrlTimeline(2)));
+							if (!empty($PGV_IMAGES["timeline"]["small"])) {
+								$submenu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['timeline']['small']}");
+							}
+							$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}");
+							$menu->addSubmenu($submenu);
+							break;
+			
+						}
+					}
+				}
+				
 				break;
 
 			case "lifespan":

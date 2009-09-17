@@ -10,6 +10,8 @@
 
 
 Version 4.2.x CA
+ - Added FamilySearch module (yalnifj)
+ - Moved new_indi to now be the main indi page. (yalnifj)
  - Merged: Merge changes r6086- r6094 from the trunk. (windmillway)
  - Changed: Removed some css colour inline items not required (windmillway)
  - Changed: Fixed a few bugs in Census column hide/show algorithms (windmillway) 

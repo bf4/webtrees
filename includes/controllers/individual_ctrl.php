@@ -37,6 +37,7 @@ require_once 'includes/classes/class_menu.php';
 require_once 'includes/classes/class_person.php';
 require_once 'includes/classes/class_family.php';
 require_once 'includes/functions/functions_import.php';
+require_once 'includes/classes/class_module.php';
 
 $indifacts = array(); // -- array to store the fact records in for sorting and displaying
 $globalfacts = array();
@@ -84,7 +85,9 @@ class IndividualControllerRoot extends BaseController {
 	var $total_names = 0;
 	var $SEX_COUNT = 0;
 	var $sexarray = array();
-	var $tabarray = array("facts","notes","sources","media","relatives","tree","research","map","lightbox","spare","nav");
+	var $modules = array();
+	var $static_tab = null;
+	var $Fam_Navigator = 'YES';
 
 	/**
 	* constructor
@@ -129,10 +132,8 @@ class IndividualControllerRoot extends BaseController {
 					$newrec= $service->mergeGedcomRecord($remoteid, "0 @".$this->pid."@ INDI\n1 RFN ".$this->pid, false);
 					$indirec = $newrec;
 				}
-			} else if (isset($pgv_changes[$this->pid."_".$GEDCOM])){
-				$indirec = "0 @".$this->pid."@ INDI\n";
 			} else {
-				return false;
+				$indirec = "0 @".$this->pid."@ INDI\n";
 			}
 		}
 		//-- check for the user
@@ -152,15 +153,12 @@ class IndividualControllerRoot extends BaseController {
 			}
 		}
 
-		//-- if the action is a research assistant action then default to the RA tab
-		if (strstr($this->action, 'ra_')!==false) $this->default_tab = 6;
-
 		//-- set the default tab from a request parameter
 		if (isset($_REQUEST['tab'])) {
 			$this->default_tab = $_REQUEST['tab'];
 		}
 
-		if ($this->default_tab<-2 || $this->default_tab>9) $this->default_tab=0;
+		if ($this->default_tab<0 || $this->default_tab>9) $this->default_tab=0;
 
 		$this->indi = new Person($indirec, false);
 		$this->indi->ged_id=PGV_GED_ID; // This record is from a file
@@ -254,13 +252,43 @@ class IndividualControllerRoot extends BaseController {
 			}
 */
 		}
+		
+		// Use Show or Hide Navigator Cookie -----------
+		if (isset($_COOKIE['famnav'])) {
+			$this->Fam_Navigator=$_COOKIE['famnav'];
+		}else{
+			$this->Fam_Navigator="YES";
+		}
+		// Hide/Show the Family Navigator on this tab =========
+		if (isset($NAV_FACTS) && $NAV_FACTS=="SHOW" ) {
+			$this->Fam_Navigator="YES";
+		}else{
+			$this->Fam_Navigator="HIDE";
+		}
+		// ===============================================
+		
+		$this->modules = PGVModule::getActiveList('T');
+		uasort($this->modules, "PGVModule::compare_tab_order");
+		foreach($this->modules as $mod) {
+			if ($mod->hasTab()) {
+				$tab = $mod->getTab();
+				if ($tab) {
+					$tab->setController($this);
+					if ($this->static_tab==null) $this->static_tab = $mod;
+				}
+			}
+		}
 
 		//-- handle ajax calls
 		if ($this->action=="ajax") {
 			$tab = 0;
-			if (isset($_REQUEST['tab'])) $tab = $_REQUEST['tab']-1;
+			if (isset($_REQUEST['module'])) $tabname = $_REQUEST['module'];
 			header("Content-Type: text/html; charset=$CHARACTER_SET");//AJAX calls do not have the meta tag headers and need this set
-			$this->getTab($tab);
+			$mod = $this->modules[$tabname];
+			if ($mod) {
+				echo $mod->getTab()->getContent();
+			}
+			
 			//-- only get the requested tab and then exit
 			if (PGV_DEBUG_SQL) {
 				echo PGV_DB::getQueryLog();
@@ -316,14 +344,9 @@ class IndividualControllerRoot extends BaseController {
 	* @return string the title of the page to go in the <title> tags
 	*/
 	function getPageTitle() {
-		global $pgv_lang;
-		if ($this->indi) {
-			$name = $this->indi->getFullName();
-			return $name." - ".$this->indi->getXref()." - ".$pgv_lang["indi_info"];
-		}
-		else {
-			return $pgv_lang["unable_to_find_record"];
-		}
+		global $pgv_lang, $GEDCOM;
+		$name = $this->indi->getFullName();
+		return $name." - ".$this->indi->getXref()." - ".$pgv_lang["indi_info"];
 	}
 
 	/**
@@ -646,7 +669,7 @@ class IndividualControllerRoot extends BaseController {
 	* @return Menu
 	*/
 	function &getOtherMenu() {
-		global $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $THEME_DIR;
+		global $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM;
 		global $SHOW_GEDCOM_RECORD, $ENABLE_CLIPPINGS_CART, $pgv_lang;
 		if ($TEXT_DIRECTION=="rtl") $ff="_rtl";
 		else $ff="";
@@ -722,6 +745,7 @@ class IndividualControllerRoot extends BaseController {
 		$otherfacts = $this->indi->getOtherFacts();
 		return $otherfacts;
 	}
+	
 	/**
 	* get the person box stylesheet class
 	* for the given person
@@ -743,6 +767,7 @@ class IndividualControllerRoot extends BaseController {
 		}
 		return "person_box".$isf;
 	}
+	
 	/**
 	* build an array of Person that will be used to build a list
 	* of family members on the close relatives tab
@@ -981,1198 +1006,6 @@ class IndividualControllerRoot extends BaseController {
 		return $people;
 	}
 
-	/**
-	* print family header
-	* @param String family id
-	* @param String family label
-	* @return html table
-	*/
-	function printFamilyHeader($famid, $label) {
-		global $pgv_lang;
-		global $PGV_IMAGE_DIR, $PGV_IMAGES, $SHOW_ID_NUMBERS, $SEARCH_SPIDER;
-	?>
-		<table>
-			<tr>
-				<td><img src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES["cfamily"]["small"]; ?>" border="0" class="icon" alt="" /></td>
-				<td><span class="subheaders"><?php print PrintReady($label); ?></span>
-				<?php if ((!$this->isPrintPreview())&&(empty($SEARCH_SPIDER))) { ?>
-					- <a href="family.php?famid=<?php print $famid; ?>">[<?php print $pgv_lang["view_family"]; ?><?php if ($SHOW_ID_NUMBERS) print " " . getLRM() . "($famid)" . getLRM(); ?>]</a>
-				<?php }?>
-				</td>
-			</tr>
-		</table>
-	<?php
-	}
-
-	/**
-	* print parents informations
-	* @param Family family
-	* @param Array people
-	* @param String family type
-	* @return html table rows
-	*/
-	function printParentsRows(&$family, &$people, $type) {
-		global $personcount, $pgv_changes, $pgv_lang, $factarray;
-		global $PGV_IMAGE_DIR, $PGV_IMAGES;
-		global $lang_short_cut, $LANGUAGE;
-		$elderdate = "";
-		//-- new father/husband
-		$styleadd = "";
-		if (isset($people["newhusb"])) {
-			$styleadd = "red";
-			?>
-			<tr>
-				<td class="facts_labelblue"><?php print $people["newhusb"]->getLabel(); ?></td>
-				<td class="<?php print $this->getPersonStyle($people["newhusb"]); ?>">
-					<?php print_pedigree_person($people["newhusb"]->getXref(), 2, !$this->isPrintPreview(), 0, $personcount++); ?>
-				</td>
-			</tr>
-			<?php
-			$elderdate = $people["newhusb"]->getBirthDate();
-		}
-		//-- father/husband
-		if (isset($people["husb"])) {
-			?>
-			<tr>
-				<td class="facts_label<?php print $styleadd; ?>"><?php print $people["husb"]->getLabel(); ?></td>
-				<td class="<?php print $this->getPersonStyle($people["husb"]); ?>">
-					<?php print_pedigree_person($people["husb"]->getXref(), 2, !$this->isPrintPreview(), 0, $personcount++); ?>
-				</td>
-			</tr>
-			<?php
-			$elderdate = $people["husb"]->getBirthDate();
-		}
-		//-- missing father
-		if ($type=="parents" && !isset($people["husb"]) && !isset($people["newhusb"])) {
-			if (!$this->isPrintPreview() && PGV_USER_CAN_EDIT && $this->indi->canDisplayDetails()) {
-				?>
-				<tr>
-					<td class="facts_label"><?php print $pgv_lang["add_father"]; ?></td>
-					<td class="facts_value"><?php print_help_link("edit_add_parent_help", "qm"); ?> <a href="javascript <?php print $pgv_lang["add_father"]; ?>" onclick="return addnewparentfamily('<?php print $this->pid; ?>', 'HUSB', '<?php print $family->getXref(); ?>');"><?php print $pgv_lang["add_father"]; ?></a></td>
-				</tr>
-				<?php
-			}
-		}
-		//-- missing husband
-		if ($type=="spouse" && $this->indi->equals($people["wife"]) && !isset($people["husb"]) && !isset($people["newhusb"])) {
-			if (!$this->isPrintPreview() && PGV_USER_CAN_EDIT && $this->indi->canDisplayDetails()) {
-				?>
-				<tr>
-					<td class="facts_label"><?php print $pgv_lang["add_husb"]; ?></td>
-					<td class="facts_value"><a href="javascript:;" onclick="return addnewspouse('<?php print $family->getXref(); ?>', 'HUSB');"><?php print $pgv_lang["add_husb_to_family"]; ?></a></td>
-				</tr>
-				<?php
-			}
-		}
-		//-- new mother/wife
-		$styleadd = "";
-		if (isset($people["newwife"])) {
-			$styleadd = "red";
-			?>
-			<tr>
-				<td class="facts_labelblue"><?php print $people["newwife"]->getLabel($elderdate); ?></td>
-				<td class="<?php print $this->getPersonStyle($people["newwife"]); ?>">
-					<?php print_pedigree_person($people["newwife"]->getXref(), 2, !$this->isPrintPreview(), 0, $personcount++); ?>
-				</td>
-			</tr>
-			<?php
-		}
-		//-- mother/wife
-		if (isset($people["wife"])) {
-			?>
-			<tr>
-				<td class="facts_label<?php print $styleadd; ?>"><?php print $people["wife"]->getLabel($elderdate); ?></td>
-				<td class="<?php print $this->getPersonStyle($people["wife"]); ?>">
-					<?php print_pedigree_person($people["wife"]->getXref(), 2, !$this->isPrintPreview(), 0, $personcount++); ?>
-				</td>
-			</tr>
-			<?php
-		}
-		//-- missing mother
-		if ($type=="parents" && !isset($people["wife"]) && !isset($people["newwife"])) {
-			if (!$this->isPrintPreview() && PGV_USER_CAN_EDIT && $this->indi->canDisplayDetails()) {
-				?>
-				<tr>
-					<td class="facts_label"><?php print $pgv_lang["add_mother"]; ?></td>
-					<td class="facts_value"><?php print_help_link("edit_add_parent_help", "qm"); ?> <a href="javascript:;" onclick="return addnewparentfamily('<?php print $this->pid; ?>', 'WIFE', '<?php print $family->getXref(); ?>');"><?php print $pgv_lang["add_mother"]; ?></a></td>
-				</tr>
-				<?php
-			}
-		}
-		//-- missing wife
-		if ($type=="spouse" && $this->indi->equals($people["husb"]) && !isset($people["wife"]) && !isset($people["newwife"])) {
-			if (!$this->isPrintPreview() && PGV_USER_CAN_EDIT && $this->indi->canDisplayDetails()) {
-				?>
-				<tr>
-					<td class="facts_label"><?php print $pgv_lang["add_wife"]; ?></td>
-					<td class="facts_value"><a href="javascript:;" onclick="return addnewspouse('<?php print $family->getXref(); ?>', 'WIFE');"><?php print $pgv_lang["add_wife_to_family"]; ?></a></td>
-				</tr>
-				<?php
-			}
-		}
-		//-- marriage row
-		if ($family->getMarriageRecord()!="" || PGV_USER_CAN_EDIT) {
-			$styleadd = "";
-			$date = $family->getMarriageDate();
-			$place = $family->getMarriagePlace();
-			$famid = $family->getXref();
-			if (!$date && $this->show_changes && isset($pgv_changes[$famid."_".$GEDCOM])) {
-				$famrec = find_updated_record($famid);
-				$marrrec = get_sub_record(1, "1 MARR", $famrec);
-				if ($marrrec!=$family->getMarriageRecord()) {
-					$date = new GedcomDate(get_gedcom_value("MARR:DATE", 1, $marrrec, '', false));
-					$place = get_gedcom_value("MARR:PLAC", 1, $marrrec, '', false);
-					$styleadd = "blue";
-				}
-			}
-			?>
-			<tr>
-				<td class="facts_label"><br />
-				</td>
-				<td class="facts_value<?php print $styleadd ?>">
-					<?php //echo "<span class=\"details_label\">".$factarray["NCHI"].": </span>".$family->getNumberOfChildren()."<br />";?>
-					<?php if ($date && $date->isOK() || $place) {
-						$marr_type = "MARR_".strtoupper($family->getMarriageType());
-						if (isset($factarray[$marr_type])) echo "<span class=\"details_label\">".$factarray[$marr_type].": </span>";
-						else echo "<span class=\"details_label\">".$factarray["MARR"].": </span>".$family->getMarriageType();
-						if ($date) {
-							echo $date->Display(false);
-							if (!empty($place)) echo ' -- ';
-						}
-						if (!empty($place)) echo $place;
-					}
-					else if (get_sub_record(1, "1 _NMR", find_family_record($famid))) {
-						// Allow special processing for different languages
-						$func="fact_NMR_localisation_{$lang_short_cut[$LANGUAGE]}";
-						if (function_exists($func)) {
-							// Localise the _NMR facts
-							$func("_NMR", $famid);
-						}
-						echo $factarray["_NMR"];
-					}
-					else if (get_sub_record(1, "1 _NMAR", find_family_record($famid))) {
-						// Allow special processing for different languages
-						$func="fact_NMR_localisation_{$lang_short_cut[$LANGUAGE]}";
-						if (function_exists($func)) {
-							// Localise the _NMR facts
-							$func("_NMAR", $famid);
-						}
-						echo $factarray["_NMAR"];
-					}
-					else if ($family->getMarriageRecord()=="" && PGV_USER_CAN_EDIT) {
-						print "<a href=\"#\" onclick=\"return add_new_record('".$famid."', 'MARR');\">".$pgv_lang['add_marriage']."</a>";
-					}
-					else {
-						$factdetail = explode(' ', trim($family->getMarriageRecord()));
-						if ($family->getMarriageType())
-							$marr_type = "MARR_".strtoupper($family->getMarriageType());
-						else
-							$marr_type = "MARR";
-						if (isset($factarray[$marr_type])) {
-							if (isset($factdetail))
-								if (count($factdetail) == 3)
-									if (strtoupper($factdetail[2]) == "Y")
-										echo "<span class=\"details_label\">".$factarray[$marr_type].": </span>".$pgv_lang["yes"];
-									else if (strtoupper($factdetail[2]) == "N")
-										echo "<span class=\"details_label\">".$factarray[$marr_type].": </span>".$pgv_lang["no"];
-						}
-						else echo "<span class=\"details_label\">".$factarray["MARR"].": </span>".$family->getMarriageType();
-					}
-					?>
-				</td>
-			</tr>
-			<?php
-		}
-	}
-
-	/**
-	* print children informations
-	* @param Family family
-	* @param Array people
-	* @param String family type
-	* @return html table rows
-	*/
-	function printChildrenRows(&$family, &$people, $type) {
-		global $personcount, $pgv_lang, $factarray;
-		global $PGV_IMAGE_DIR, $PGV_IMAGES;
-		$elderdate = $family->getMarriageDate();
-		foreach($people["children"] as $key=>$child) {
-			$label = $child->getLabel();
-			if ($label[0]=='+')
-				$styleadd = "blue";
-			else if ($label[0]=='-')
-				$styleadd = "red";
-			else
-				$styleadd = "";
-			?>
-			<tr>
-				<td class="facts_label<?php print $styleadd; ?>"><?php if ($styleadd=="red") print $child->getLabel(); else print $child->getLabel($elderdate, $key+1); ?></td>
-				<td class="<?php print $this->getPersonStyle($child); ?>">
-				<?php
-				print_pedigree_person($child->getXref(), 2, !$this->isPrintPreview(), 0, $personcount++);
-				?>
-				</td>
-			</tr>
-			<?php
-			$elderdate = $child->getBirthDate();
-		}
-		if (isset($family) && !$this->isPrintPreview() && PGV_USER_CAN_EDIT && $this->indi->canDisplayDetails()) {
-			if ($type == "spouse") {
-				$action = "add_son_daughter";
-				$child_m = "son";
-				$child_f = "daughter";
-			}
-			else {
-				$action = "add_sibling";
-				$child_m = "brother";
-				$child_f = "sister";
-			}
-		?>
-			<tr>
-				<td class="facts_label">
-					<?php if (PGV_USER_CAN_EDIT && isset($people["children"][1])) {?>
-					<a href="javascript:;" onclick="reorder_children('<?php print $family->getXref(); ?>');tabswitch(5);"><img src="images/topdown.gif" alt="" border="0" /> <?php print $pgv_lang['reorder_children']; ?></a>
-					<?php }?>
-				</td>
-				<td class="facts_value"><?php print_help_link($action."_help", "qm"); ?>
-					<a href="javascript:;" onclick="return addnewchild('<?php print $family->getXref(); ?>');"><?php print $pgv_lang[$action]; ?></a>
-					<span style='white-space:nowrap;'>
-						<a href="javascript:;" onclick="return addnewchild('<?php print $family->getXref(); ?>','M');"><?php echo Person::sexImage('M', 'small', '', $pgv_lang[$child_m]); ?></a>
-						<a href="javascript:;" onclick="return addnewchild('<?php print $family->getXref(); ?>','F');"><?php echo Person::sexImage('F', 'small', '', $pgv_lang[$child_f]); ?></a>
-					</span>
-				</td>
-			</tr>
-			<?php
-		}
-	}
-
-	function getTab($tab) {
-
-// LB Fix for no googlemaps ==========================================================================
-
-		if (file_exists("modules/googlemap/defaultconfig.php")) {
-			$tab_array = array("facts","notes","sources","media","relatives","tree","research","map","lightbox","spare","nav");
-		}else{
-			$tab_array = array("facts","notes","sources","media","relatives","tree","research","lightbox","spare","nav");
-		}
-		$tabType = $tab_array[$tab];
-
-// ================================================================================================
-
-		switch($tabType) {
-			case "facts":
-				$this->print_facts_tab();
-				break;
-			case "notes":
-				$this->print_notes_tab();
-				break;
-			case "sources":
-				$this->print_sources_tab();
-				break;
-			case "media":
-				$this->print_media_tab();
-				break;
-			case "relatives":
-				$this->print_relatives_tab();
-				break;
-			case "research":
-				$this->print_research_tab();
-				break;
-			case "map":
-				$this->print_map_tab();
-				break;
-			case "lightbox":
-				$this->print_lightbox_tab();
-				break;
-			case "tree":
-				$this->print_tree_tab();
-				break;
-			case "spare":
-				$this->print_spare_tab();
-				break;
-			case "nav":
-				$this->print_navigator_tab();
-				break;
-			default:
-				print "No tab found";
-				break;
-		}
-	}
-
-	function print_facts_tab() {
-		global $FACT_COUNT, $CONTACT_EMAIL, $PGV_IMAGE_DIR, $PGV_IMAGES, $pgv_lang, $EXPAND_RELATIVES_EVENTS;
-		global $n_chil, $n_gchi, $n_ggch;
-		global $EXPAND_RELATIVES_EVENTS, $LANGUAGE, $lang_short_cut;
-		global $Fam_Navigator, $NAV_FACTS;
-
-		/*if (isset($_COOKIE['row_rela'])) $EXPAND_RELATIVES_EVENTS = ($_COOKIE['row_rela']);
-		if (isset($_COOKIE['row_histo'])) $EXPAND_HISTO_EVENTS = ($_COOKIE['row_histo']);
-		else*/ $EXPAND_HISTO_EVENTS = false;
-
-		//-- only need to add family facts on this tab
-		$this->indi->add_family_facts();
-
-		// Use Show or Hide Navigator Cookie -----------
-		if (isset($_COOKIE['famnav'])) {
-			$Fam_Navigator=$_COOKIE['famnav'];
-		}else{
-			$Fam_Navigator="YES";
-		}
-		// Hide/Show the Family Navigator on this tab =========
-		if (isset($NAV_FACTS) && $NAV_FACTS=="SHOW" ) {
-			$Fam_Navigator="YES";
-		}else{
-			$Fam_Navigator="HIDE";
-		}
-		// ===============================================
-
-		if ($Fam_Navigator=="YES") {
-			print "<table cellpadding=\"0\" ><tr><td valign=\"top\" width=\"100%\" >";
-		}
-
-		?>
-		<table class="facts_table" style="margin-top:-2px;" cellpadding="0">
-		<?php if (!$this->indi->canDisplayDetails()) {
-			print "<tr><td class=\"facts_value\" colspan=\"2\">";
-			print_privacy_error($CONTACT_EMAIL);
-			print "</td></tr>";
-		}
-		else {
-			$indifacts = $this->getIndiFacts();
-			if (count($indifacts)==0) {?>
-				<tr>
-					<td id="no_tab1" colspan="2" class="facts_value"><?php echo $pgv_lang["no_tab1"]?>
-					</td>
-				</tr>
-			<?php }?>
-			<tr id="row_top">
-				<td valign="top"></td>
-				<td class="descriptionbox rela">
-					<input id="checkbox_rela" type="checkbox" <?php if ($EXPAND_RELATIVES_EVENTS) echo " checked=\"checked\""?> onclick="toggleByClassName('TR', 'row_rela');" />
-					<label for="checkbox_rela"><?php echo $pgv_lang["relatives_events"]?></label>
-					<?php if (file_exists("languages/histo.".$lang_short_cut[$LANGUAGE].".php")) {?>
-						<input id="checkbox_histo" type="checkbox" <?php if ($EXPAND_HISTO_EVENTS) echo " checked=\"checked\""?> onclick="toggleByClassName('TR', 'row_histo');" />
-						<label for="checkbox_histo"><?php echo $pgv_lang["historical_facts"]?></label>
-					<?php }?>
-				</td>
-
-			</tr>
-			<?php
-			$yetdied=false;
-			$n_chil=1;
-			$n_gchi=1;
-			$n_ggch=1;
-			foreach ($indifacts as $key => $value) {
-				if ($value->getTag() == "DEAT") $yetdied = true;
-				if ($value->getTag() == "CREM") $yetdied = true;
-				if ($value->getTag() == "BURI") $yetdied = true;
-
-				if (!is_null($value->getFamilyId())) {
-					if (!$yetdied) {
-						print_fact($value);
-					}
-				}
-				else print_fact($value);
-				$FACT_COUNT++;
-			}
-		}
-		//-- new fact link
-		if ((!$this->isPrintPreview()) && PGV_USER_CAN_EDIT && ($this->indi->canDisplayDetails())) {
-			print_add_new_fact($this->pid, $indifacts, "INDI");
-		}
-		?>
-		</table>
-		<?php
-		// ==================== Start Details Tab Navigator ========================================
-		if ($Fam_Navigator=="YES") {
-			?>
-			</td>
-			<td valign="top">
-				<table class="optionbox" width="220px" cellpadding="0"><tr><td align="center">
-				<b><?php print $pgv_lang["view_fam_nav_details"]; ?></b><br /><br />
-				<?php include_once('includes/family_nav.php'); ?>
-				<br />
-				</td></tr></table>
-			</td></tr></table>
-			<?php
-		}
-		// ==================== End Details Tab Navigator ========================================= */
-		?>
-		<br />
-		<script language="JavaScript" type="text/javascript">
-		<!--
-		<?php
-		if (!$EXPAND_RELATIVES_EVENTS) print "toggleByClassName('TR', 'row_rela');\n";
-		if (!$EXPAND_HISTO_EVENTS) print "toggleByClassName('TR', 'row_histo');\n";
-		?>
-		//-->
-		</script>
-		<?php
-	}
-
-	function get_note_count() {
-		$ct = preg_match_all("/\d NOTE /", $this->indi->gedrec, $match, PREG_SET_ORDER);
-		foreach ($this->indi->getSpouseFamilies() as $k => $sfam)
-			$ct += preg_match("/\d NOTE /", $sfam->getGedcomRecord());
-		return $ct;
-	}
-
-	function print_notes_tab() {
-		global $pgv_lang, $factarray, $CONTACT_EMAIL, $FACT_COUNT;
-		global $SHOW_LEVEL2_NOTES;
-		global $Fam_Navigator, $NAV_NOTES;
-
-		//if (isset($_COOKIE['row_note2'])) $SHOW_LEVEL2_NOTES = ($_COOKIE['row_note2']);
-
-		// Use Show or Hide Navigator Cookie -----------
-		if (isset($_COOKIE['famnav'])) {
-			$Fam_Navigator=$_COOKIE['famnav'];
-		}else{
-			$Fam_Navigator="YES";
-		}
-		// Hide/Show the Family Navigator on this tab =========
-		if (isset($NAV_NOTES) && $NAV_NOTES=="SHOW" ) {
-			$Fam_Navigator="YES";
-		}else{
-			$Fam_Navigator="HIDE";
-		}
-		// ===============================================
-
-		if ($Fam_Navigator=="YES") {
-			print "<table cellpadding=\"0\" ><tr><td valign=\"top\" width=\"100%\" >";
-		}
-		?>
-		<table class="facts_table" >
-		<?php
-		if (!$this->indi->canDisplayDetails()) {
-			print "<tr><td class=\"facts_value\">";
-			print_privacy_error($CONTACT_EMAIL);
-			print "</td></tr>";
-		} else {
-		?>
-			<tr>
-				<td></td>
-				<td class="descriptionbox rela">
-					<input id="checkbox_note2" type="checkbox" <?php if ($SHOW_LEVEL2_NOTES) echo " checked=\"checked\""?> onclick="toggleByClassName('TR', 'row_note2');" />
-					<label for="checkbox_note2"><?php echo $pgv_lang["show_fact_notes"];?></label>
-					<?php print_help_link("show_fact_sources_help", "qm", "show_fact_notes");?>
-				</td>
-			</tr>
-			<?php
-			$otherfacts = $this->getOtherFacts();
-			foreach ($otherfacts as $key => $event) {
-				$fact = $event->getTag();
-				if ($fact=="NOTE") {
-					print_main_notes($event->getGedcomRecord(), 1, $this->pid, $event->getLineNumber());
-				}
-				$FACT_COUNT++;
-			}
-			// 2nd to 5th level notes/sources
-			$this->indi->add_family_facts(false);
-			foreach ($this->getIndiFacts() as $key => $factrec) {
-				for ($i=2; $i<6; $i++) {
-					print_main_notes($factrec->getGedcomRecord(), $i, $this->pid, $factrec->getLineNumber(), true);
-				}
-			}
-			if ($this->get_note_count()==0) print "<tr><td id=\"no_tab2\" colspan=\"2\" class=\"facts_value\">".$pgv_lang["no_tab2"]."</td></tr>\n";
-			//-- New Note Link
-			if (!$this->isPrintPreview() && PGV_USER_CAN_EDIT && $this->indi->canDisplayDetails()) {
-			?>
-				<tr>
-					<td class="facts_label"><?php print_help_link("add_note_help", "qm"); ?><?php echo $pgv_lang["add_note_lbl"]; ?></td>
-					<td class="facts_value"><a href="javascript:;" onclick="add_new_record('<?php echo $this->pid; ?>','NOTE'); return false;"><?php echo $pgv_lang["add_note"]; ?></a>
-					<br />
-					</td>
-				</tr>
-				<tr>
-					<td class="facts_label"><?php print_help_link("add_shared_note_help", "qm"); ?><?php echo $pgv_lang["add_shared_note_lbl"]; ?></td>
-					<td class="facts_value">
-					<a href="javascript:;" onclick="add_new_record('<?php echo $this->pid; ?>','SHARED_NOTE'); return false;"><?php echo $pgv_lang["add_shared_note"]; ?></a>
-					<br />
-					</td>
-				</tr>
-			<?php
-			}
-		}
-		?>
-		</table>
-		<br />
-
-		<?php
-		// ==================== Start Notes Tab Navigator ========================================
-		if ($Fam_Navigator=="YES") {
-			?>
-			</td>
-			<td valign="top">
-				<table class="optionbox" width="220px" cellpadding="0"><tr><td align="center">
-				<b><?php print $pgv_lang["view_fam_nav_notes"]; ?></b><br /><br />
-				<?php include_once('includes/family_nav.php'); ?>
-				<br />
-				</td></tr></table>
-			</td></tr></table>
-			<?php
-		}
-		// ==================== End Notes Tab Navigator =========================================
-		?>
-
-		<?php
-		if (!$SHOW_LEVEL2_NOTES) {
-		?>
-			<script language="JavaScript" type="text/javascript">
-			<!--
-			toggleByClassName('TR', 'row_note2');
-			//-->
-			</script>
-		<?php
-		}
-	}
-
-	function get_source_count() {
-		$ct = preg_match_all("/\d SOUR @(.*)@/", $this->indi->gedrec, $match, PREG_SET_ORDER);
-		foreach ($this->indi->getSpouseFamilies() as $k => $sfam)
-			$ct += preg_match("/\d SOUR /", $sfam->getGedcomRecord());
-		return $ct;
-	}
-
-	function print_sources_tab() {
-		global $CONTACT_EMAIL, $pgv_lang, $FACT_COUNT;
-		global $SHOW_LEVEL2_NOTES;
-		global $Fam_Navigator, $NAV_SOURCES;
-
-		/*if (isset($_COOKIE['row_sour2'])) $SHOW_LEVEL2_SOURCES = ($_COOKIE['row_sour2']);
-		else*/ $SHOW_LEVEL2_SOURCES = $SHOW_LEVEL2_NOTES;
-
-		// Use Show or Hide Navigator Cookie -----------
-		if (isset($_COOKIE['famnav'])) {
-			$Fam_Navigator=$_COOKIE['famnav'];
-		}else{
-			$Fam_Navigator="YES";
-		}
-		// Hide/Show the Family Navigator on this tab =========
-		if (isset($NAV_SOURCES) && $NAV_SOURCES=="SHOW" ) {
-			$Fam_Navigator="YES";
-		}else{
-			$Fam_Navigator="HIDE";
-		}
-		// ===============================================
-
-		if ($Fam_Navigator=="YES") {
-			print "<table cellpadding=\"0\" ><tr><td valign=\"top\" width=\"100%\" >";
-		}
-		?>
-		<table class="facts_table">
-		<?php
-		if (!$this->indi->canDisplayDetails()) {
-			print "<tr><td class=\"facts_value\">";
-			print_privacy_error($CONTACT_EMAIL);
-			print "</td></tr>";
-		} else {
-		?>
-			<tr>
-				<td></td>
-				<td class="descriptionbox rela">
-					<input id="checkbox_sour2" type="checkbox" <?php if ($SHOW_LEVEL2_SOURCES) echo " checked=\"checked\""?> onclick="toggleByClassName('TR', 'row_sour2');" />
-					<label for="checkbox_sour2"><?php echo $pgv_lang["show_fact_sources"];?></label>
-					<?php print_help_link("show_fact_sources_help", "qm", "show_fact_sources");?>
-				</td>
-			</tr>
-			<?php
-			$otheritems = $this->getOtherFacts();
-				foreach ($otheritems as $key => $event) {
-					if ($event->getTag()=="SOUR") print_main_sources($event->getGedcomRecord(), 1, $this->pid, $event->getLineNumber());
-				$FACT_COUNT++;
-			}
-		}
-			// 2nd level sources [ 1712181 ]
-			$this->indi->add_family_facts(false);
-			foreach ($this->getIndiFacts() as $key => $factrec) {
-					print_main_sources($factrec->getGedcomRecord(), 2, $this->pid, $factrec->getLineNumber(), true);
-			}
-			if ($this->get_source_count()==0) print "<tr><td id=\"no_tab3\" colspan=\"2\" class=\"facts_value\">".$pgv_lang["no_tab3"]."</td></tr>\n";
-			//-- New Source Link
-			if (!$this->isPrintPreview() && PGV_USER_CAN_EDIT && $this->indi->canDisplayDetails()) {
-			?>
-				<tr>
-					<td class="facts_label"><?php print_help_link("add_source_help", "qm"); ?><?php echo $pgv_lang["add_source_lbl"]; ?></td>
-					<td class="facts_value">
-					<a href="javascript:;" onclick="add_new_record('<?php echo $this->pid; ?>','SOUR'); return false;"><?php echo $pgv_lang["add_source"]; ?></a>
-					<br />
-					</td>
-				</tr>
-			<?php
-			}
-		?>
-		</table>
-		<br />
-
-		<?php
-		// ==================== Start Sources Tab Navigator ========================================
-		if ($Fam_Navigator=="YES") {
-			?>
-			</td>
-			<td valign="top">
-				<table class="optionbox" width="220px" cellpadding="0"><tr><td align="center">
-				<b><?php print $pgv_lang["view_fam_nav_sources"]; ?></b><br /><br />
-				<?php include_once('includes/family_nav.php'); ?>
-				<br />
-				</td></tr></table>
-			</td></tr></table>
-		<?php
-		}
-		// ==================== End Sources Tab Navigator =========================================
-		?>
-
-		<?php
-		if (!$SHOW_LEVEL2_SOURCES) {
-		?>
-			<script language="JavaScript" type="text/javascript">
-			<!--
-			toggleByClassName('TR', 'row_sour2');
-			//-->
-			</script>
-
-
-		<?php
-		}
-	}
-
-	/**
-	* get the number of media items for this person
-	* @return int
-	*/
-	function get_media_count() {
-		$ct = preg_match("/\d OBJE/", $this->indi->getGedcomRecord());
-		foreach ($this->indi->getSpouseFamilies() as $k=>$sfam)
-			$ct += preg_match("/\d OBJE/", $sfam->getGedcomRecord());
-		return $ct;
-	}
-
-	/**
-	* print the media tab
-	*/
-	function print_media_tab() {
-		global $CONTACT_EMAIL, $pgv_lang, $MULTI_MEDIA;
-		global $Fam_Navigator, $NAV_MEDIA;
-
-		// Use Show or Hide Navigator Cookie -----------
-		if (isset($_COOKIE['famnav'])) {
-			$Fam_Navigator=$_COOKIE['famnav'];
-		}else{
-			$Fam_Navigator="YES";
-		}
-		// Hide/Show the Family Navigator on this tab =========
-		if (isset($NAV_MEDIA) && $NAV_MEDIA=="SHOW" ) {
-			$Fam_Navigator="YES";
-		}else{
-			$Fam_Navigator="HIDE";
-		}
-		// ===============================================
-
-		if ($Fam_Navigator=="YES") {
-			print "<table cellpadding=\"0\" ><tr><td valign=\"top\" width=\"100%\" >";
-		}
-		?>
-		<table class="facts_table">
-		<?php
-		$media_found = false;
-		if (!$this->indi->canDisplayDetails()) {
-			print "<tr><td class=\"facts_value\">";
-			print_privacy_error($CONTACT_EMAIL);
-			print "</td></tr>";
-		}
-		else {
-			$media_found = print_main_media($this->pid, 0, true);
-			if (!$media_found) print "<tr><td id=\"no_tab4\" colspan=\"2\" class=\"facts_value\">".$pgv_lang["no_tab4"]."</td></tr>\n";
-			//-- New Media link
-			if (!$this->isPrintPreview() && PGV_USER_CAN_EDIT && $this->indi->canDisplayDetails()) {
-		?>
-				<tr>
-					<td class="facts_label"><?php print_help_link("add_media_help", "qm"); ?><?php print $pgv_lang["add_media_lbl"]; ?></td>
-					<td class="facts_value">
-						<a href="javascript:;" onclick="window.open('addmedia.php?action=showmediaform&linktoid=<?php print $this->pid; ?>', '_blank', 'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1'); return false;"> <?php echo $pgv_lang["add_media"]; ?></a><br />
-						<a href="javascript:;" onclick="window.open('inverselink.php?linktoid=<?php print $this->pid; ?>&linkto=person', '_blank', 'top=50,left=50,width=400,height=300,resizable=1,scrollbars=1'); return false;"><?php echo $pgv_lang["link_to_existing_media"]; ?></a>
-					</td>
-				</tr>
-			<?php
-			}
-		}
-		?>
-		</table>
-		<?php
-		// ==================== Start Media Tab Navigator ========================================
-		if ($Fam_Navigator=="YES") {
-			?>
-			</td>
-			<td valign="top">
-				<table class="optionbox" width="220px" cellpadding="0"><tr><td align="center">
-				<b><?php print $pgv_lang["view_fam_nav_media"]; ?></b><br /><br />
-				<?php include_once('includes/family_nav.php'); ?>
-				<br />
-				</td></tr></table>
-			</td></tr></table>
-			<?php
-		}
-		// ==================== End Media Tab Navigator =========================================
-		?>
-
-		<?php
-	}
-
-	function print_relatives_tab() {
-		global $pgv_lang, $factarray, $SHOW_ID_NUMBERS, $PGV_IMAGE_DIR, $PGV_IMAGES, $SHOW_AGE_DIFF;
-		global $pgv_changes, $GEDCOM, $ABBREVIATE_CHART_LABELS;
-		global $show_full, $personcount;
-
-		if (isset($show_full)) $saved_show_full = $show_full; // We always want to see full details here
-		$show_full = 1;
-
-		$saved_ABBREVIATE_CHART_LABELS = $ABBREVIATE_CHART_LABELS;
-		$ABBREVIATE_CHART_LABELS = false; // Override GEDCOM configuration
-
-		// Show or Hide Navigator -----------
-		if (isset($_COOKIE['famnav'])) {
-			$Fam_Navigator=$_COOKIE['famnav'];
-		}else{
-			$Fam_Navigator="YES";
-		}
-		if ($Fam_Navigator=="HIDE") {
-			print "<table border=\"0\" cellpadding=\"0\" width=\"100%\"><tr><td valign=\"top\" width=\"100%\" >";
-		}
-		//if (isset($_COOKIE['elderdate'])) $SHOW_AGE_DIFF = ($_COOKIE['elderdate']);
-		if (!$this->isPrintPreview()) {
-		?>
-		<table class="facts_table"><tr><td style="width:20%; padding:4px"></td><td class="descriptionbox rela">
-		<input id="checkbox_elder" type="checkbox" onclick="toggleByClassName('DIV', 'elderdate');" <?php if ($SHOW_AGE_DIFF) echo "checked=\"checked\"";?>/>
-		<label for="checkbox_elder"><?php print_help_link("age_differences_help", "qm"); print $pgv_lang['age_differences'] ?></label>
-		</td></tr></table>
-		<?php
-		}
-		$personcount=0;
-		$families = $this->indi->getChildFamilies();
-		if (count($families)==0) {
-			print "<span class=\"subheaders\">".$pgv_lang["relatives"]."</span>";
-			if (/**!$this->isPrintPreview() &&**/ PGV_USER_CAN_EDIT && $this->indi->canDisplayDetails()) {
-				?>
-				<table class="facts_table">
-					<tr>
-						<td class="facts_value"><?php print_help_link("edit_add_parent_help", "qm"); ?><a href="javascript:;" onclick="return addnewparent('<?php print $this->pid; ?>', 'HUSB');"><?php print $pgv_lang["add_father"]; ?></a></td>
-					</tr>
-					<tr>
-						<td class="facts_value"><?php print_help_link("edit_add_parent_help", "qm"); ?><a href="javascript:;" onclick="return addnewparent('<?php print $this->pid; ?>', 'WIFE');"><?php print $pgv_lang["add_mother"]; ?></a></td>
-					</tr>
-				</table>
-				<?php
-			}
-		}
-		//-- parent families
-		foreach($families as $famid=>$family) {
-			$people = $this->buildFamilyList($family, "parents");
-			$this->printFamilyHeader($famid, $this->indi->getChildFamilyLabel($family));
-			?>
-			<table class="facts_table">
-				<?php
-				$this->printParentsRows($family, $people, "parents");
-				$this->printChildrenRows($family, $people, "parents");
-				?>
-			</table>
-		<?php
-		}
-
-		//-- step families
-		foreach($this->indi->getStepFamilies() as $famid=>$family) {
-			$people = $this->buildFamilyList($family, "step");
-			$this->printFamilyHeader($famid, $this->indi->getStepFamilyLabel($family));
-			?>
-			<table class="facts_table">
-				<?php
-				$this->printParentsRows($family, $people, "step");
-				$this->printChildrenRows($family, $people, "step");
-				?>
-			</table>
-		<?php
-		}
-
-		//-- spouses and children
-		$families = $this->indi->getSpouseFamilies();
-		foreach($families as $famid=>$family) {
-			$people = $this->buildFamilyList($family, "spouse");
-			$this->printFamilyHeader($famid, $this->indi->getSpouseFamilyLabel($family));
-			?>
-			<table class="facts_table">
-				<?php
-				$this->printParentsRows($family, $people, "spouse");
-				$this->printChildrenRows($family, $people, "spouse");
-				?>
-			</table>
-		<?php
-		}
-
-		// ==================== Start Relatives Tab Navigator ========================================
-		if ($Fam_Navigator=="HIDE") {
-			?>
-			</td>
-			<td valign="top">
-				<table class="optionbox" width="220px" cellpadding="0"><tr><td align="center">
-					<b><?php print $pgv_lang["view_fam_nav_relatives"]; ?></b><br /><br />
-					<?php include_once('includes/family_nav.php'); ?>
-					<br />
-				</td></tr></table>
-			</td></tr></table>
-			<?php
-		}
-		// ==================== End Tree Tab Navigator =========================================
-
-		if ($personcount==0) print "<table><tr><td id=\"no_tab5\" colspan=\"2\" class=\"facts_value\">".$pgv_lang["no_tab5"]."</td></tr></table>\n";
-		?>
-		<script type="text/javascript">
-		<!--
-			<?php if (!$SHOW_AGE_DIFF) echo "toggleByClassName('DIV', 'elderdate');";?>
-		//-->
-		</script>
-		<br />
-		<?php
-		if (!$this->isPrintPreview() && PGV_USER_CAN_EDIT && $this->indi->canDisplayDetails()) {
-		?>
-		<table class="facts_table">
-		<?php if (count($families)>1) { ?>
-			<tr>
-				<td class="facts_value">
-				<?php print_help_link("reorder_families_help", "qm"); ?>
-				<a href="javascript:;" onclick="return reorder_families('<?php print $this->pid; ?>');"><?php print $pgv_lang["reorder_families"]; ?></a>
-				</td>
-			</tr>
-		<?php } ?>
-			<tr>
-				<td class="facts_value">
-				<?php print_help_link("link_child_help", "qm"); ?>
-				<a href="javascript:;" onclick="return add_famc('<?php print $this->pid; ?>');"><?php print $pgv_lang["link_as_child"]; ?></a>
-				</td>
-			</tr>
-			<?php if ($this->indi->getSex()!="F") { ?>
-			<tr>
-				<td class="facts_value">
-				<?php print_help_link("add_wife_help", "qm"); ?>
-				<a href="javascript:;" onclick="return addspouse('<?php print $this->pid; ?>','WIFE');"><?php print $pgv_lang["add_new_wife"]; ?></a>
-				</td>
-			</tr>
-			<tr>
-				<td class="facts_value">
-				<?php print_help_link("link_new_wife_help", "qm"); ?>
-				<a href="javascript:;" onclick="return linkspouse('<?php print $this->pid; ?>','WIFE');"><?php print $pgv_lang["link_new_wife"]; ?></a>
-				</td>
-			</tr>
-			<tr>
-				<td class="facts_value">
-				<?php print_help_link("link_new_husb_help", "qm"); ?>
-				<a href="javascript:;" onclick="return add_fams('<?php print $this->pid; ?>','HUSB');"><?php print $pgv_lang["link_as_husband"]; ?></a>
-				</td>
-			</tr>
-			<?php }
-			if ($this->indi->getSex()!="M") { ?>
-			<tr>
-				<td class="facts_value">
-				<?php print_help_link("add_husband_help", "qm"); ?>
-				<a href="javascript:;" onclick="return addspouse('<?php print $this->pid; ?>','HUSB');"><?php print $pgv_lang["add_new_husb"]; ?></a>
-				</td>
-			</tr>
-			<tr>
-				<td class="facts_value">
-				<?php print_help_link("link_husband_help", "qm"); ?>
-				<a href="javascript:;" onclick="return linkspouse('<?php print $this->pid; ?>','HUSB');"><?php print $pgv_lang["link_new_husb"]; ?></a>
-				</td>
-			</tr>
-			<tr>
-				<td class="facts_value">
-				<?php print_help_link("link_wife_help", "qm"); ?>
-				<a href="javascript:;" onclick="return add_fams('<?php print $this->pid; ?>','WIFE');"><?php print $pgv_lang["link_as_wife"]; ?></a>
-				</td>
-			</tr>
-			<?php } ?>
-<?php if (PGV_USER_CAN_ACCEPT) { // NOTE this function is restricted to ACCEPTORS because another bug prevents pending changes being shown on the close relatives tab of the indi page. Once that bug is fixed, this function can be opened up to all! ?>
-			<tr>
-				<td class="facts_value">
-				<?php print_help_link("add_opf_child_help", "qm"); ?>
-				<a href="javascript:;" onclick="return addopfchild('<?php print $this->pid; ?>','U');"><?php print $pgv_lang["add_opf_child"]; ?></a>
-				</td>
-			</tr>
-<?php } ?>
-			<?php if (PGV_USER_GEDCOM_ADMIN) { ?>
-			<tr>
-				<td class="facts_value">
-				<?php print_help_link("link_remote_help", "qm"); ?>
-				<a href="javascript:;" onclick="return open_link_remote('<?php print $this->pid; ?>');"><?php print $pgv_lang["link_remote"]; ?></a>
-				</td>
-			</tr>
-			<?php } ?>
-		</table>
-		<?php } ?>
-		<br />
-		<?php
-
-		$ABBREVIATE_CHART_LABELS = $saved_ABBREVIATE_CHART_LABELS; // Restore GEDCOM configuration
-		unset($show_full);
-		if (isset($saved_show_full)) $show_full = $saved_show_full;
-	}
-
-
-	function print_research_tab() {
-		global $pgv_lang, $SHOW_RESEARCH_ASSISTANT, $CONTACT_EMAIL, $GEDCOM, $INDEX_DIRECTORY, $factarray, $templefacts, $nondatefacts, $nonplacfacts;
-		global $LANGUAGE, $lang_short_cut;
-		if (file_exists("modules/research_assistant/research_assistant.php") && ($SHOW_RESEARCH_ASSISTANT>=PGV_USER_ACCESS_LEVEL)) {
-			if (!$this->indi->canDisplayDetails()) { ?>
-				<table class="facts_table">
-			<tr><td class="facts_value">
-			<?php print_privacy_error($CONTACT_EMAIL); ?>
-			</td></tr>
-			</table>
-			<br />
-			<?php
-			} else {
-				include_once 'modules/research_assistant/research_assistant.php';
-				$mod = new ra_functions();
-				$mod->init();
-				$out = $mod->tab($this->indi);
-				print $out;
-			}
-		}
-		else print "<table class=\"facts_table\"><tr><td id=\"no_tab6\" colspan=\"2\" class=\"facts_value\">".$pgv_lang["no_tab6"]."</td></tr></table>\n";
-	}
-
-	function print_map_tab() {
-		global $SEARCH_SPIDER, $SESSION_HIDE_GOOGLEMAP, $pgv_lang, $CONTACT_EMAIL, $PGV_IMAGE_DIR, $PGV_IMAGES;
-		global $LANGUAGE;
-		global $GOOGLEMAP_API_KEY, $GOOGLEMAP_MAP_TYPE, $GOOGLEMAP_MIN_ZOOM, $GOOGLEMAP_MAX_ZOOM, $GEDCOM;
-		global $GOOGLEMAP_XSIZE, $GOOGLEMAP_YSIZE, $pgv_lang, $factarray, $SHOW_LIVING_NAMES, $PRIV_PUBLIC;
-		global $GOOGLEMAP_ENABLED, $TEXT_DIRECTION, $GM_DEFAULT_TOP_VALUE, $GOOGLEMAP_COORD;
-		global $GM_MARKER_COLOR, $GM_MARKER_SIZE, $GM_PREFIX, $GM_POSTFIX, $GM_PRE_POST_MODE;
-
-		// Use Show or Hide Navigator Cookie -----------
-		if (isset($_COOKIE['famnav'])) {
-			$Fam_Navigator=$_COOKIE['famnav'];
-		}else{
-			$Fam_Navigator="YES";
-		}
-		// Hide the Family Navigator on this tab ==============
-		$Fam_Navigator="HIDE";
-		// ===============================================
-
-		// LB Fix if no googlemaps ========================================================
-		if (file_exists("modules/googlemap/googlemap.php")) {
-			include_once('modules/googlemap/googlemap.php');
-		}
-		// LB Fix in no googlemaps ========================================================
-
-		if ($GOOGLEMAP_ENABLED == "false") {
-			print "<table class=\"facts_table\">\n";
-			print "<tr><td colspan=\"2\" class=\"facts_value\">".$pgv_lang["gm_disabled"]."</td></tr>\n";
-			if (PGV_USER_IS_ADMIN) {
-				print "<tr><td align=\"center\" colspan=\"2\">\n";
-				print "<a href=\"".encode_url("module.php?mod=googlemap&pgvaction=editconfig")."\">".$pgv_lang["gm_manage"]."</a>";
-				print "</td></tr>\n";
-			}
-			print "\n\t</table>\n<br />";
-				?>
-					<script language="JavaScript" type="text/javascript">
-					<!--
-						tabstyles[5]='tab_cell_inactive_empty';
-						document.getElementById('pagetab5').className='tab_cell_inactive_empty';
-						document.getElementById("googlemap_left").innerHTML = document.getElementById("googlemap_content").innerHTML;
-						document.getElementById("googlemap_content").innerHTML = "";
-						function ResizeMap () {}
-						function SetMarkersAndBounds () {}
-					//-->
-					</script>
-				<?php
-			return;
-		} else {
-			$famids = array();
-			$families = $this->indi->getSpouseFamilies();
-			foreach($families as $famid=>$family) {
-				$famids[] = $family->getXref();
-			}
-				$this->indi->add_family_facts(false);
-				// LB Fix if no googlemaps ========================================================
-				if (file_exists("modules/googlemap/googlemap.php")) {
-					create_indiv_buttons();
-					build_indiv_map($this->getIndiFacts(), $famids);
-				}
-				// LB Fix if no googlemaps ========================================================
-		}
-		// ==================== Start Map Tab Navigator ========================================
-		if ($Fam_Navigator=="YES") {
-			?>
-			<table id="map_nav" class="optionbox" width="220px" cellpadding="0"><tr><td align="center">
-				<b><?php print $pgv_lang["view_fam_nav_map"]; ?></b><br /><br />
-				<?php include_once('includes/family_nav.php'); ?>
-				<br />
-			</td></tr></table>
-			<?php
-		}
-		// ==================== End Map Tab Navigator =========================================
-	}
-
-
-	function print_tree_tab() {
-
-		//-- nothing to do here
-		//-- the tree is already ajax enabled
-
-	/*
-		global $pgv_lang, $pgv_changes, $factarray, $view;
-		// Show or Hide Navigator -----------
-		if (isset($_COOKIE['famnav'])) {
-			$Fam_Navigator=$_COOKIE['famnav'];
-		}else{
-			$Fam_Navigator="YES";
-		}
-		// ==================== Start Tree Tab Navigator ========================================
-		if ($Fam_Navigator=="YES") {
-			?>
-			<table id="tree_nav" class="optionbox" width="220px" cellpadding=\"0\"><tr><td align="center">
-				<b><?php print $pgv_lang["view_fam_nav_tree"]; ?></b><br /><br />
-				<?php include_once('includes/family_nav.php'); ?>
-				<br />
-			</td></tr></table>
-			<?php
-		}
-		// ==================== End Tree Tab Navigator =========================================
-	*/
-
-	}
-
-
-	/** =================================================
-	* print the lightbox tab, ( which = getTab8() )
-	*/
-	function print_lightbox_tab() {
-		global $MULTI_MEDIA, $SHOW_ID_NUMBERS, $MEDIA_EXTERNAL;
-		global $pgv_lang, $pgv_changes, $factarray, $view;
-		global $GEDCOM, $MEDIATYPE, $pgv_changes;
-		global $WORD_WRAPPED_NOTES, $MEDIA_DIRECTORY, $PGV_IMAGE_DIR, $PGV_IMAGES, $TEXT_DIRECTION, $is_media;
-		global $cntm1, $cntm2, $cntm3, $cntm4, $t, $mgedrec ;
-		global $edit ;
-		global $CONTACT_EMAIL, $pid, $tabno;
-		global $Fam_Navigator, $NAV_ALBUM;
-
-		// Use Show or Hide Navigator Cookie -----------
-		if (isset($_COOKIE['famnav'])) {
-			$Fam_Navigator=$_COOKIE['famnav'];
-		}else{
-			$Fam_Navigator="YES";
-		}
-		// Hide/Show the Family Navigator on this tab =========
-		if (isset($NAV_ALBUM) && $NAV_ALBUM=="SHOW" ) {
-			$Fam_Navigator="YES";
-		}else{
-			$Fam_Navigator="HIDE";
-		}
-		// ===============================================
-
-		if ($Fam_Navigator=="YES") {
-			print "<table cellpadding=\"0\" ><tr><td valign=\"top\" width=\"100%\" >";
-		}
-
-		$media_found = false;
-		if (!$this->indi->canDisplayDetails()) {
-			print "<table class=\"facts_table\" cellpadding=\"0\">\n";
-			print "<tr><td class=\"facts_value\">";
-			print_privacy_error($CONTACT_EMAIL);
-			print "</td></tr>";
-			print "</table>";
-		}else{
-			if (file_exists("modules/lightbox/album.php")) {
-				include_once('modules/lightbox/album.php');
-			}
-		}
-
-		// ==================== Start Album Tab Navigator ========================================
-		if ($Fam_Navigator=="YES") {
-			?>
-			</td>
-			<td valign="top">
-				<table class="optionbox" width="220px" cellpadding="0"><tr><td align="center">
-				<b><?php print $pgv_lang["view_fam_nav_album"]; ?></b><br /><br />
-				<?php include_once('includes/family_nav.php'); ?>
-				<br />
-				</td></tr></table>
-			</td></tr></table>
-			<?php
-		}
-		// ==================== End Album Tab Navigator ========================================= */
-	}
-
-	/** =================================================
-	* print the spare tab, ( which = getTab9() )
-	*/
-	function print_spare_tab() {
-	/*
-		global $MULTI_MEDIA, $SHOW_ID_NUMBERS, $MEDIA_EXTERNAL;
-		global $pgv_lang, $pgv_changes, $factarray, $view;
-		global $GEDCOM, $MEDIATYPE;
-		global $WORD_WRAPPED_NOTES, $MEDIA_DIRECTORY, $PGV_IMAGE_DIR, $PGV_IMAGES, $TEXT_DIRECTION, $is_media;
-		global $mgedrec ;
-		global $CONTACT_EMAIL, $pid, $tabno;
-		global $Fam_Navigator, $NAV_SPARE;
-
-		// Show or Hide Navigator -----------
-		if (isset($_COOKIE['famnav'])) {
-			$Fam_Navigator=$_COOKIE['famnav'];
-		}else{
-			$Fam_Navigator="YES";
-		}
-		// Hide/Show the Family Navigator on this tab =========
-		if (isset($NAV_SPARE) && $NAV_SPARE=="SHOW" ) {
-			$Fam_Navigator="YES";
-		}else{
-			$Fam_Navigator="HIDE";
-		}
-		// ===============================================
-		if ($Fam_Navigator=="YES") {
-			print "<table cellpadding=\"0\" ><tr><td valign=\"top\" width=\"100%\" >";
-		}
-
-		if (!$this->indi->canDisplayDetails()) {
-			print "<table class=\"facts_table\" cellpadding=\"0\">\n";
-			print "<tr><td class=\"facts_value\">";
-			print_privacy_error($CONTACT_EMAIL);
-			print "</td></tr>";
-			print "</table>";
-		}else{
-			//if (file_exists("modules/lightbox/album.php")) {
-				//include_once('modules/lightbox/album.php');
-			print "<table class=\"facts_table\" cellpadding=\"0\">\n";
-			print "<tr><td class=\"facts_value\">";
-					echo "<h2><center>Spare Tab</center></h2>";
-					echo "<center>This is where the Spare Tab info goes</center>";
-					echo "<br />";
-					echo "<center>You will also need to write your own help (Top left of this div. It shows the Lightbox help for now)</center>";
-					echo "<br />";
-					echo "<center>For the moment Lightbox MUST be installed (I'll fix this later if necessary)</center>";
-					echo "<br />";
-					echo "<br />";
-			print "</td></tr>";
-			print "</table>";
-			//}
-		}
-
-		// ==================== Start Spare Tab Navigator ========================================
-		if ($Fam_Navigator=="YES") {
-			?>
-			</td>
-			<td valign="top">
-				<table class="optionbox" width="220px" cellpadding=\"0\"><tr><td align="center">
-				<b><?php print $pgv_lang["view_fam_nav_spare"]; ?></b><br /><br />
-				<?php include_once('includes/family_nav.php'); ?>
-				<br />
-				</td></tr></table>
-			</td></tr></table>
-			<?php
-		}
-		// ==================== End Spare Tab Navigator =========================================
-	*/
-	}
-
-
 // -----------------------------------------------------------------------------
 // Functions for GedFact Assistant
 // -----------------------------------------------------------------------------
@@ -2180,10 +1013,10 @@ class IndividualControllerRoot extends BaseController {
 	* include GedFact controller
 	*/
 	function census_assistant() {
-		require 'modules/GEDFact_assistant/_CENS/census_1_ctrl.php';
+		require 'modules/GEDFact_assistant/CENS/census_1_ctrl.php';
 	}
 	function medialink_assistant() {
-		require 'modules/GEDFact_assistant/_MEDIA/media_1_ctrl.php';
+		require 'modules/GEDFact_assistant/MEDIA/media_1_ctrl.php';
 	}
 // -----------------------------------------------------------------------------
 // End GedFact Assistant Functions

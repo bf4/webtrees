@@ -1607,7 +1607,7 @@ class Person extends GedcomRecord {
 	}
 	
 	public function getLinkUrl2() {
-		return parent::_getLinkUrl('new_individual.php?pid=');
+		return parent::_getLinkUrl('individual.php?pid=');
 	}
 
 	// If this object has no name, what do we call it?
