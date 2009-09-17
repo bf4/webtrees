@@ -890,6 +890,7 @@ function build_indiv_map($indifacts, $famids) {
 		echo "icon.iconAnchor = new GPoint(10, 34);";
 		echo "icon.infoWindowAnchor = new GPoint(5, 1);";
 
+		echo "\nmarkers.clear();\n";
 		$indexcounter = 0;
 		for ($j=1; $j<=$i; $j++) {
 			// Use @ because some installations give warnings (but not errors?) about UTF-8

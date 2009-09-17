@@ -153,7 +153,19 @@ jQuery(document).ready(function(){
         	}
     });
 	enable_static_tab();
-   	<?php }?>
+   	<?php }
+   	
+   	$tabcount = 0; 
+	foreach($controller->modules as $mod) {
+		if ($mod!=$controller->static_tab && $mod->hasTab()) {
+			if ($tabcount==$controller->default_tab || !$mod->getTab()->canLoadAjax()) {
+				$modjs = $mod->getTab()->getJSCallback();
+				echo $modjs."\n";
+			}
+			$tabcount++; 
+		}
+	}
+   	?>
 });
 
 //]]>
@@ -342,7 +354,6 @@ foreach($controller->modules as $mod) {
 </div> <!-- tabs -->
 <?php if ($controller->static_tab) { ?>
 <div class="static_tab_content" id="<?php echo $controller->static_tab->getName();?>">
-<!-- <div class="static_tab_content" id="<?php // echo $controller->static_tab->getName();?>">-->
 
 <?php echo $controller->static_tab->getTab()->getContent(); ?>
 </div> <!-- static tab -->
