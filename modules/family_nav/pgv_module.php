@@ -3,7 +3,7 @@ require_once("includes/classes/class_module.php");
 require_once("modules/family_nav/family_nav.php");
 
 global $pgv_lang;
-$pgv_lang['family_nav'] = $pgv_lang["view_fam_nav_details"];
+$pgv_lang['family_nav'] = $pgv_lang["fam_navigator"];
 
 class family_nav_PGVModule extends PGVModule {
 	protected $name = 'family_nav';

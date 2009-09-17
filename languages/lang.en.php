@@ -863,6 +863,7 @@ $pgv_lang["view_fam_nav_research"]	= "View Research for ...";
 $pgv_lang["view_fam_nav_map"]		= "View Map for ...";
 $pgv_lang["view_fam_nav_spare"]		= "View Spare-info for ...";
 $pgv_lang["navigator"]				= "Navigator";
+$pgv_lang["fam_navigator"]			= "Family Navigator";
 
 $pgv_lang["relationship_great"]		= "Great";
 $pgv_lang["relationship_chart"] 	= "Relationship Chart";

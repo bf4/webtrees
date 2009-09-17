@@ -43,6 +43,7 @@ VERSION 4.2.3
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change	codes and comments
 ----------------------------------------------------------------------------------------
++$pgv_lang["fam_navigator"]							17 Sep 2009				A
 *$pgv_lang["stat_7_marr"]							09 Aug 2009				w
 +$pgv_lang["stat_7_div"]							09 Aug 2009				A
 +$pgv_lang["with_sources"]							09 Aug 2009				A
