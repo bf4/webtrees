@@ -907,7 +907,7 @@ function print_main_sources($factrec, $level, $pid, $linenum, $noedit=false) {
 			if ($level==2) print "<tr class=\"row_sour2\">";
 			else print "<tr>";
 			print "<td class=\"descriptionbox";
-			if ($level==2) print " rela";
+			//if ($level==2) print " rela";
 			print " $styleadd center width20\">";
 			if ($level==1) echo "<img class=\"icon\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["source"]["small"]."\" alt=\"\" /><br />";
 			$temp = preg_match("/^\d (\w*)/", $factrec, $factname);

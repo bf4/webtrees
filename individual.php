@@ -98,12 +98,13 @@ function resize_content_div(i) {
 <link type="text/css" href="<?php echo PGV_THEME_DIR?>jquery/jquery-ui-1.7.1.custom.css" rel="Stylesheet" />
 <script type="text/javascript" src="js/jquery/jquery.min.js"></script>
 <script type="text/javascript" src="js/jquery/jquery-ui-1.7.1.custom.min.js"></script>
+<?php if ($TEXT_DIRECTION=='rtl') {?><link type="text/css" href="<?php echo PGV_THEME_DIR?>jquery/jquery_rtl.css" rel="Stylesheet" /><?php }?>
 <script type="text/javascript">
 //<![CDATA[
 var selectedTab = 0;
 
 function enable_static_tab() {
-    jQuery(".static_tab").css("float","right");
+    jQuery(".static_tab").css("float","<?php echo ($TEXT_DIRECTION=='rtl')? 'left':'right';?>");
 		jQuery(".static_tab").css("margin-right","50px");
     jQuery(".static_tab_content").css("position", "absolute");
     jQuery(".static_tab_content").removeClass("ui-tabs-hide");
@@ -112,7 +113,7 @@ function enable_static_tab() {
     jQuery(".static_tab_content").css("z-index","100");
     var top = jQuery(".static_tab").offset().top+jQuery(".static_tab").height();
 	jQuery(".static_tab_content").css("top", top+"px");
-	jQuery(".static_tab_content").css("right", "0px");
+	jQuery(".static_tab_content").css("<?php echo ($TEXT_DIRECTION=='rtl')? 'left':'right';?>", "0px");
 	jQuery(".static_tab_content").hide();
 }
 
@@ -172,11 +173,6 @@ jQuery(document).ready(function(){
   </script>
   
 <style>
-#indi_main_blocks {
-	clear: none;
-	float: left;
-	width: 99%;
-}
 #tabs li {
  padding-bottom: 0px;
 }
