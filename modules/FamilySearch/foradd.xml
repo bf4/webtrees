@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<familytree xmlns="https://api.familysearch.org/familytree/v2">
+	<persons>
+		<person tempId="I14">
+			<assertions>
+				<names>
+					<name>
+						<value type="Name">
+							<forms>
+								<form>
+									<fullText>Joseph John /FINLAY/</fullText>
+									<pieces>
+										<piece type="Given">
+											<value>Joseph John</value>
+										</piece>
+										<piece type="Family">
+											<value>FINLAY</value>
+										</piece>
+									</pieces>
+								</form>
+							</forms>
+						</value>
+					</name>
+				</names>
+				<genders>
+					<gender>
+						<value>
+							<type>Male</type>
+						</value>
+					</gender>
+				</genders>
+				<events>
+					<event>
+						<value type="Birth">
+							<date>
+								<normalized>30 March 1836</normalized>
+								<original>30 MAR 1836</original>
+							</date>
+							<place>
+								<original>, Donegal, Ireland</original>
+							</place>
+						</value>
+					</event>
+					<event>
+						<value type="Death">
+							<date>
+								<normalized>9 January 1919</normalized>
+								<original>9 JAN 1919</original>
+							</date>
+							<place>
+								<original>Kenton, Hardin, Ohio</original>
+							</place>
+						</value>
+					</event>
+					<event>
+						<value type="Burial">
+							<place>
+								<original>, Hardin, Ohio</original>
+							</place>
+						</value>
+					</event>
+					<event>
+						<value type="Other">
+							<title>Degree</title>
+						</value>
+					</event>
+					<event>
+						<value type="Other">
+							<title>Schooling</title>
+							<date>
+								<normalized>1865</normalized>
+								<original>1865 TO 1868</original>
+							</date>
+							<place>
+								<original>, , Ohio</original>
+							</place>
+						</value>
+					</event>
+					<event>
+						<value type="Immigration">
+							<date>
+								<normalized>1856</normalized>
+								<original>1856</original>
+							</date>
+							<place>
+								<original>St. John, New Brunswick, Canada</original>
+							</place>
+						</value>
+					</event>
+				</events>
+				<characteristics>
+					<characteristic>
+						<value type="Occupation">
+							<detail>Methodist Minister</detail>
+							<date>
+								<normalized>1868</normalized>
+								<original>1868 TO 1881</original>
+							</date>
+							<place>
+								<original>Kenton, Hardin, Ohio</original>
+							</place>
+						</value>
+					</characteristic>
+				</characteristics>
+			</assertions>
+		</person>
+	</persons>
+</familytree>

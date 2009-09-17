@@ -60,21 +60,26 @@ class page_menu_PGVModule extends PGVModule {
 		global $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $pgv_lang;
 		global $controller;
 
+		$menu = null;
 		if (empty($controller)) return null;
-		if (!method_exists($controller, 'getOtherMenu')) return null;	
 
 		if($TEXT_DIRECTION == 'rtl'){$ff = '_rtl';}else{$ff = '';}
 
-		$menu = $controller->getOtherMenu();
-		$menu->addClass('menuitem'.$ff, 'menuitem_hover'.$ff, 'submenu'.$ff, 'icon_large_gedcom');
-		$menu->addLabel($menu->label, 'down');
-		if (PGV_USER_CAN_EDIT) {
+		if (method_exists($controller, 'getOtherMenu')) {	
+			$menu = $controller->getOtherMenu();
+			$menu->addClass('menuitem'.$ff, 'menuitem_hover'.$ff, 'submenu'.$ff, 'icon_large_gedcom');
+			$menu->addLabel($menu->label, 'down');
+		}
+		if (PGV_USER_CAN_EDIT && method_exists($controller, 'getEditMenu')) {
 			$editmenu = $controller->getEditMenu();
-			$menu->addLabel($editmenu->label, 'down');
-			$menu->addIcon($editmenu->icon);
-			$menu->addSeparator();
-			foreach($editmenu->submenus as $sub) {
-				$menu->addSubMenu($sub);
+			if ($menu==null) $menu = $editmenu;
+			else {
+				$menu->addLabel($editmenu->label, 'down');
+				$menu->addIcon($editmenu->icon);
+				$menu->addSeparator();
+				foreach($editmenu->submenus as $sub) {
+					$menu->addSubMenu($sub);
+				}
 			}
 		}
 

@@ -1,0 +1,17 @@
+FS TODO
+
+Citations endpoint
+Notes endpoint
+
+SQL changes
+ALTER TABLE `phpgedview`.`pgv_dates` MODIFY COLUMN `d_gid` VARCHAR(40) NOT NULL;
+ALTER TABLE `phpgedview`.`pgv_families` MODIFY COLUMN `f_id` VARCHAR(40) NOT NULL;
+ALTER TABLE `phpgedview`.`pgv_individuals` MODIFY COLUMN `i_id` VARCHAR(40) NOT NULL;
+ALTER TABLE `phpgedview`.`pgv_link` MODIFY COLUMN `l_from` VARCHAR(40) NOT NULL;
+ALTER TABLE `phpgedview`.`pgv_media_mapping` MODIFY COLUMN `mm_gid` VARCHAR(40) NOT NULL;
+ALTER TABLE `phpgedview`.`pgv_name` MODIFY COLUMN `n_id` VARCHAR(40)  NOT NULL;
+ALTER TABLE `phpgedview`.`pgv_nextid` MODIFY COLUMN `ni_id` VARCHAR(40)  NOT NULL;
+ALTER TABLE `phpgedview`.`pgv_other` MODIFY COLUMN `o_id` VARCHAR(40)  NOT NULL;
+ALTER TABLE `phpgedview`.`pgv_placelinks` MODIFY COLUMN `pl_gid` VARCHAR(40)  NOT NULL;
+ALTER TABLE `phpgedview`.`pgv_remotelinks` MODIFY COLUMN `r_gid` VARCHAR(40)  NOT NULL;
+ALTER TABLE `phpgedview`.`pgv_sources` MODIFY COLUMN `s_id` VARCHAR(40)  NOT NULL;
