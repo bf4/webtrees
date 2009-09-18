@@ -203,7 +203,7 @@ function autocomplete_INDI($FILTER, $OPTION) {
 				}
 			}
 			// display
-			$data[$person->getXref()]=check_NN($person->getFullName());
+			$data[$person->getXref()]=$person->getFullName();
 			if ($OPTION && $event_date && $person->getBirthDate()->isOK()) {
 				$data[$person->getXref()].=" <span class=\"age\">(".$pgv_lang["age"]." ".$person->getBirthDate()->MinDate()->getAge(false, $event_jd).")</span>";
 			} else {
