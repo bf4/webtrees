@@ -1180,18 +1180,22 @@ case 'updateraw':
 //-- reconstruct the gedcom from the incoming fields and store it in the file
 case 'update':
 
-/*
 	global $cens_pids;
-	// $cens_pids is an array from the CENS GEDFact Assistant -----------
-	// $cens_pids = array($pid, 'I1', 'I2');  // ** This line is a Test only **
+	/* ----------------------------------------------------------------
+	 * $cens_pids is an array passed from the CENS GEDFact Assistant.
+	 * The array is a list of indi id's within the Census Transcription
+	 * This allows the array to "copy" the new CENS event to these id's
+	 * ----------------------------------------------------------------
+	*/
+	// $cens_pids = array($pid, 'I8', 'I1');  // ** This line is a Test only, do NOT uncomment **
 	if (!isset($cens_pids)){
 		$cens_pids = array($pid);
 	}else{
 		$cens_pids = $cens_pids;
+		$idnums="multi";
 	}
-*/
-//	// When $cens_pids is present, cycle through each individual concerned.
-//	foreach ($cens_pids as $pid) {
+	// Cycle through each individual concerned defined by $cens_pids array.
+	foreach ($cens_pids as $pid) {
 		if (isset($pid)) {
 			$gedrec = find_updated_record($pid);
 			if (empty($gedrec)) $gedrec = find_gedcom_record($pid);			
@@ -1199,8 +1203,9 @@ case 'update':
 			$gedrec = find_updated_record($famid);
 			if (empty($gedrec)) $gedrec = find_gedcom_record($famid);			
 		}
+		
 		if (PGV_DEBUG) {
-			phpinfo(INFO_VARIABLES);
+		//	phpinfo(INFO_VARIABLES);
 			echo "<pre>$gedrec</pre>";
 			echo "<br /><br />";
 		}
@@ -1234,86 +1239,20 @@ case 'update':
 				else $uploaded_files[] = "";
 			}
 		}
-//	} // end foreach $cens_pids  -------------
 	
-	$gedlines = explode("\n", trim($gedrec));
-	//-- for new facts set linenum to number of lines
-	if (!is_array($linenum)) {
-		if ($linenum=="new") $linenum = count($gedlines);
-		$newged = "";
-		for($i=0; $i<$linenum; $i++) {
-			$newged .= $gedlines[$i]."\n";
-		}
-		//-- for edits get the level from the line
-		if (isset($gedlines[$linenum])) {
-			$fields = explode(' ', $gedlines[$linenum]);
-			$glevel = $fields[0];
-			$i++;
-			while(($i<count($gedlines))&&($gedlines[$i]{0}>$glevel)) $i++;
-		}
-
-		if (!isset($glevels)) $glevels = array();
-		if (isset($_REQUEST['NAME'])) $NAME = $_REQUEST['NAME'];
-		if (isset($_REQUEST['TYPE'])) $TYPE = $_REQUEST['TYPE'];
-		if (isset($_REQUEST['NPFX'])) $NPFX = $_REQUEST['NPFX'];
-		if (isset($_REQUEST['GIVN'])) $GIVN = $_REQUEST['GIVN'];
-		if (isset($_REQUEST['NICK'])) $NICK = $_REQUEST['NICK'];
-		if (isset($_REQUEST['SPFX'])) $SPFX = $_REQUEST['SPFX'];
-		if (isset($_REQUEST['SURN'])) $SURN = $_REQUEST['SURN'];
-		if (isset($_REQUEST['NSFX'])) $NSFX = $_REQUEST['NSFX'];
-		if (isset($_REQUEST['ROMN'])) $ROMN = $_REQUEST['ROMN'];
-		if (isset($_REQUEST['FONE'])) $FONE = $_REQUEST['FONE'];
-		if (isset($_REQUEST['_HEB'])) $_HEB = $_REQUEST['_HEB'];
-		if (isset($_REQUEST['_AKA'])) $_AKA = $_REQUEST['_AKA'];
-		if (isset($_REQUEST['_MARNM'])) $_MARNM = $_REQUEST['_MARNM'];
-
-		if (!empty($NAME)) $newged .= "1 NAME $NAME\n";
-		if (!empty($TYPE)) $newged .= "2 TYPE $TYPE\n";
-		if (!empty($NPFX)) $newged .= "2 NPFX $NPFX\n";
-		if (!empty($GIVN)) $newged .= "2 GIVN $GIVN\n";
-		if (!empty($NICK)) $newged .= "2 NICK $NICK\n";
-		if (!empty($SPFX)) $newged .= "2 SPFX $SPFX\n";
-		if (!empty($SURN)) $newged .= "2 SURN $SURN\n";
-		if (!empty($NSFX)) $newged .= "2 NSFX $NSFX\n";
-
-		if (isset($_REQUEST['NOTE'])) $NOTE = $_REQUEST['NOTE'];
-		if (!empty($NOTE)) {
-			$newlines = preg_split("/\r?\n/",$NOTE,-1 );
-			for($k=0; $k<count($newlines); $k++) {
-				if ( $k==0 && count($newlines)>1) {
-					$gedlines[$k] = "0 @$pid@ NOTE $newlines[$k]\n";
-				} else {
-					$gedlines[$k] = " 1 CONT $newlines[$k]\n";
-				}
+		$gedlines = explode("\n", trim($gedrec));
+		//-- for new facts set linenum to number of lines
+		if (!is_array($linenum)) {
+			if ($linenum=="new" || $idnums=="multi") {
+				$linenum = count($gedlines);
 			}
-		}
-
-		//-- Refer to Bug [ 1329644 ] Add Married Name - Wrong Sequence
-		//-- _HEB/ROMN/FONE have to be before _AKA, even if _AKA exists in input and the others are now added
-		if (!empty($ROMN)) $newged .= "2 ROMN $ROMN\n";
-		if (!empty($FONE)) $newged .= "2 FONE $FONE\n";
-		if (!empty($_HEB)) $newged .= "2 _HEB $_HEB\n";
-
-		$newged = handle_updates($newged);
-
-		if (!empty($_AKA)) $newged .= "2 _AKA $_AKA\n";
-		if (!empty($_MARNM)) $newged .= "2 _MARNM $_MARNM\n";
-
-		while($i<count($gedlines)) {
-			$newged .= trim($gedlines[$i])."\n";
-			$i++;
-		}
-	}
-	else {
-		$newged = "";
-		$current = 0;
-		foreach ($linenum as $editline) {
-			for($i=$current; $i<$editline; $i++) {
+			$newged = "";
+			for($i=0; $i<$linenum; $i++) {
 				$newged .= $gedlines[$i]."\n";
 			}
 			//-- for edits get the level from the line
-			if (isset($gedlines[$editline])) {
-				$fields = explode(' ', $gedlines[$editline]);
+			if (isset($gedlines[$linenum])) {
+				$fields = explode(' ', $gedlines[$linenum]);
 				$glevel = $fields[0];
 				$i++;
 				while(($i<count($gedlines))&&($gedlines[$i]{0}>$glevel)) $i++;
@@ -1347,37 +1286,109 @@ case 'update':
 			if (!empty($NOTE)) {
 				$newlines = preg_split("/\r?\n/",$NOTE,-1 );
 				for($k=0; $k<count($newlines); $k++) {
-					if ($k==0 && count($newlines)>1) {
+					if ( $k==0 && count($newlines)>1) {
 						$gedlines[$k] = "0 @$pid@ NOTE $newlines[$k]\n";
 					} else {
 						$gedlines[$k] = " 1 CONT $newlines[$k]\n";
 					}
 				}
 			}
+
 			//-- Refer to Bug [ 1329644 ] Add Married Name - Wrong Sequence
 			//-- _HEB/ROMN/FONE have to be before _AKA, even if _AKA exists in input and the others are now added
 			if (!empty($ROMN)) $newged .= "2 ROMN $ROMN\n";
 			if (!empty($FONE)) $newged .= "2 FONE $FONE\n";
 			if (!empty($_HEB)) $newged .= "2 _HEB $_HEB\n";
 
+			$newged = handle_updates($newged);
+
 			if (!empty($_AKA)) $newged .= "2 _AKA $_AKA\n";
 			if (!empty($_MARNM)) $newged .= "2 _MARNM $_MARNM\n";
+
+			while($i<count($gedlines)) {
+				$newged .= trim($gedlines[$i])."\n";
+				$i++;
+			}
+		}
+		else {
+			$newged = "";
+			$current = 0;
+			foreach ($linenum as $editline) {
+				for($i=$current; $i<$editline; $i++) {
+					$newged .= $gedlines[$i]."\n";
+				}
+				//-- for edits get the level from the line
+				if (isset($gedlines[$editline])) {
+					$fields = explode(' ', $gedlines[$editline]);
+					$glevel = $fields[0];
+					$i++;
+					while(($i<count($gedlines))&&($gedlines[$i]{0}>$glevel)) $i++;
+				}
+
+				if (!isset($glevels)) $glevels = array();
+				if (isset($_REQUEST['NAME'])) $NAME = $_REQUEST['NAME'];
+				if (isset($_REQUEST['TYPE'])) $TYPE = $_REQUEST['TYPE'];
+				if (isset($_REQUEST['NPFX'])) $NPFX = $_REQUEST['NPFX'];
+				if (isset($_REQUEST['GIVN'])) $GIVN = $_REQUEST['GIVN'];
+				if (isset($_REQUEST['NICK'])) $NICK = $_REQUEST['NICK'];
+				if (isset($_REQUEST['SPFX'])) $SPFX = $_REQUEST['SPFX'];
+				if (isset($_REQUEST['SURN'])) $SURN = $_REQUEST['SURN'];
+				if (isset($_REQUEST['NSFX'])) $NSFX = $_REQUEST['NSFX'];
+				if (isset($_REQUEST['ROMN'])) $ROMN = $_REQUEST['ROMN'];
+				if (isset($_REQUEST['FONE'])) $FONE = $_REQUEST['FONE'];
+				if (isset($_REQUEST['_HEB'])) $_HEB = $_REQUEST['_HEB'];
+				if (isset($_REQUEST['_AKA'])) $_AKA = $_REQUEST['_AKA'];
+				if (isset($_REQUEST['_MARNM'])) $_MARNM = $_REQUEST['_MARNM'];
+
+				if (!empty($NAME)) $newged .= "1 NAME $NAME\n";
+				if (!empty($TYPE)) $newged .= "2 TYPE $TYPE\n";
+				if (!empty($NPFX)) $newged .= "2 NPFX $NPFX\n";
+				if (!empty($GIVN)) $newged .= "2 GIVN $GIVN\n";
+				if (!empty($NICK)) $newged .= "2 NICK $NICK\n";
+				if (!empty($SPFX)) $newged .= "2 SPFX $SPFX\n";
+				if (!empty($SURN)) $newged .= "2 SURN $SURN\n";
+				if (!empty($NSFX)) $newged .= "2 NSFX $NSFX\n";
+
+				if (isset($_REQUEST['NOTE'])) $NOTE = $_REQUEST['NOTE'];
+				if (!empty($NOTE)) {
+					$newlines = preg_split("/\r?\n/",$NOTE,-1 );
+					for($k=0; $k<count($newlines); $k++) {
+						if ($k==0 && count($newlines)>1) {
+							$gedlines[$k] = "0 @$pid@ NOTE $newlines[$k]\n";
+						} else {
+							$gedlines[$k] = " 1 CONT $newlines[$k]\n";
+						}
+					}
+				}
+				//-- Refer to Bug [ 1329644 ] Add Married Name - Wrong Sequence
+				//-- _HEB/ROMN/FONE have to be before _AKA, even if _AKA exists in input and the others are now added
+				if (!empty($ROMN)) $newged .= "2 ROMN $ROMN\n";
+				if (!empty($FONE)) $newged .= "2 FONE $FONE\n";
+				if (!empty($_HEB)) $newged .= "2 _HEB $_HEB\n";
+
+				if (!empty($_AKA)) $newged .= "2 _AKA $_AKA\n";
+				if (!empty($_MARNM)) $newged .= "2 _MARNM $_MARNM\n";
+				
+				$newged = handle_updates($newged);
+				$current = $editline;
+				break;
+			}
 			
-			$newged = handle_updates($newged);
-			$current = $editline;
-			break;
+		}
+		if (PGV_DEBUG) {
+			echo "<br /><br />";
+			echo "<pre>$newged</pre>";
+		}
+		if ($idnums=="multi") {
+			$success2 = (replace_gedrec($pid, $newged, $update_CHAN));
+		}else{
+			$success  = (replace_gedrec($pid, $newged, $update_CHAN));
+		}
+		if ($success2) {
+			echo "<br /><br />".$pgv_lang["update_successful"]." - ".$pid;
 		}
 		
-	}
-	if (PGV_DEBUG) {
-		echo "<br /><br />";
-		echo "<pre>$newged</pre>";
-	}
-
-	$success = (replace_gedrec($pid, $newged, $update_CHAN));
-	if ($success) {
-		echo "<br /><br />".$pgv_lang["update_successful"];
-	}
+	} // end foreach $cens_pids  -------------
 	break;
 //------------------------------------------------------------------------------
 case 'addchildaction':
