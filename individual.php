@@ -105,7 +105,9 @@ var selectedTab = 0;
 
 function enable_static_tab() {
     jQuery(".static_tab").css("float","<?php echo ($TEXT_DIRECTION=='rtl')? 'left':'right';?>");
-		jQuery(".static_tab").css("margin-right","50px");
+		jQuery(".static_tab").css("margin-right","1px");
+		jQuery(".static_tab").css("width","240px");
+		jQuery(".static_tab").css("border-color","#cccccc");
     jQuery(".static_tab_content").css("position", "absolute");
     jQuery(".static_tab_content").removeClass("ui-tabs-hide");
     jQuery(".static_tab_content").removeClass("ui-tabs-panel");
@@ -180,10 +182,8 @@ jQuery(document).ready(function(){
 	position:relative; 
 	padding-left:5px; 
 	padding-right:5px; 
-	margin-top:2px; 
 	border:#c8c8c8 1px; 
 	border-style:none solid solid solid; 
-	margin-right:30px;
 	display:none;
 }
 </style>

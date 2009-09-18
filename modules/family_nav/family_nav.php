@@ -69,8 +69,14 @@ class family_nav_Tab extends Tab {
 
 	echo PGV_JS_START;
 	echo 'function familyNavLoad(url) {
-		window.location = url+"&tab="+selectedTab;
-		return false;
+		if (selectedTab!="") {
+			window.location = url+"&tab="+selectedTab;
+			return false;
+		}else{
+			window.location = url+"&tab=0";
+			return false;
+		}
+
 	}
 	';
 	echo PGV_JS_END;
@@ -128,7 +134,7 @@ class family_nav_Tab extends Tab {
 						if ($PGV_MENUS_AS_LISTS) echo "</ul>\n";
 						?>
 					</td>
-					<td nowrap="nowrap" align="center" class="<?php print $this->controller->getPersonStyle($people["husb"]);?> nam">
+					<td align="center" class="<?php print $this->controller->getPersonStyle($people["husb"]);?> nam">
 						<?php
 						print "<a style=\"padding:0px; width:100%;\" href=\"".encode_url($people["husb"]->getLinkUrl2())."\" onclick=\"return familyNavLoad('".$people['husb']->getLinkUrl2()."');\">";
 						print PrintReady($people["husb"]->getFullName());
@@ -163,7 +169,7 @@ class family_nav_Tab extends Tab {
 						if ($PGV_MENUS_AS_LISTS) echo "</ul>\n";
 						?>
 					</td>
-					<td nowrap="nowrap" align="center" class="<?php print $this->controller->getPersonStyle($people["wife"]); ?> nam">
+					<td align="center" class="<?php print $this->controller->getPersonStyle($people["wife"]); ?> nam">
 						<?php
 						print "<a style=\"padding:0px; width:100%;\" href=\"".encode_url($people["wife"]->getLinkUrl2())."\" onclick=\"return familyNavLoad('".$people['wife']->getLinkUrl2()."');\">";
 						print PrintReady($people["wife"]->getFullName());
@@ -208,7 +214,7 @@ class family_nav_Tab extends Tab {
 						}
 						?>
 						</td>
-						<td nowrap="nowrap" align="center" class="<?php print $this->controller->getPersonStyle($child); ?> nam">
+						<td align="center" class="<?php print $this->controller->getPersonStyle($child); ?> nam">
 							<?php
 							if ($pid == $child->getXref()) {
 								print "<span style=\"font: 12px tahoma, arial, helvetica, sans-serif;\">".PrintReady($child->getFullName())."</span>";
@@ -282,7 +288,7 @@ class family_nav_Tab extends Tab {
 						if ($PGV_MENUS_AS_LISTS) echo "</ul>\n";
 						?>
 					</td>
-					<td nowrap="nowrap" align="center" class="<?php print $this->controller->getPersonStyle($people["husb"]); ?> nam">
+					<td align="center" class="<?php print $this->controller->getPersonStyle($people["husb"]); ?> nam">
 						<?php
 						print "<a style=\"padding:0px; width:100%;\" href=\"".encode_url($people["husb"]->getLinkUrl2())."\" onclick=\"return familyNavLoad('".$people['husb']->getLinkUrl2()."');\">";
 						print PrintReady($people["husb"]->getFullName());
@@ -325,7 +331,7 @@ class family_nav_Tab extends Tab {
 						if ($PGV_MENUS_AS_LISTS) echo "</ul>\n";
 						?>
 					</td>
-					<td nowrap="nowrap" align="center" class="<?php print $this->controller->getPersonStyle($people["wife"]); ?> nam">
+					<td align="center" class="<?php print $this->controller->getPersonStyle($people["wife"]); ?> nam">
 						<?php
 						print "<a style=\"padding:0px; width:100%;\" href=\"".encode_url($people["wife"]->getLinkUrl2())."\" onclick=\"return familyNavLoad('".$people['wife']->getLinkUrl2()."');\">";
 						print PrintReady($people["wife"]->getFullName());
@@ -363,7 +369,7 @@ class family_nav_Tab extends Tab {
 						if ($PGV_MENUS_AS_LISTS) echo "</ul>\n";
 						?>
 						</td>
-						<td nowrap="nowrap" align="center" class="<?php print $this->controller->getPersonStyle($child); ?> nam">
+						<td align="center" class="<?php print $this->controller->getPersonStyle($child); ?> nam">
 							<?php
 							print "<a style=\"padding:0px; width:100%;\" href=\"".encode_url($child->getLinkUrl2())."\" onclick=\"return familyNavLoad('".$child->getLinkUrl2()."');\">";
 							print PrintReady($child->getFullName());
@@ -428,7 +434,7 @@ class family_nav_Tab extends Tab {
 						if ($PGV_MENUS_AS_LISTS) echo "</ul>\n";
 						?>
 					</td>
-					<td nowrap="nowrap" align="center" class="<?php print $this->controller->getPersonStyle($people["husb"]); ?> nam">
+					<td align="center" class="<?php print $this->controller->getPersonStyle($people["husb"]); ?> nam">
 						<?php
 						if ($pid == $people["husb"]->getXref()) {
 							print PrintReady($people["husb"]->getFullName());
@@ -468,7 +474,7 @@ class family_nav_Tab extends Tab {
 						if ($PGV_MENUS_AS_LISTS) echo "</ul>\n";
 						?>
 					</td>
-					<td nowrap="nowrap" align="center" class="<?php print $this->controller->getPersonStyle($people["wife"]); ?> nam">
+					<td align="center" class="<?php print $this->controller->getPersonStyle($people["wife"]); ?> nam">
 						<?php
 						if ($pid == $people["wife"]->getXref()) {
 							print PrintReady($people["wife"]->getFullName());
@@ -510,7 +516,7 @@ class family_nav_Tab extends Tab {
 						if ($PGV_MENUS_AS_LISTS) echo "</ul>\n";
 						?>
 						</td>
-						<td nowrap="nowrap" align="center" class="<?php print $this->controller->getPersonStyle($child); ?> nam">
+						<td align="center" class="<?php print $this->controller->getPersonStyle($child); ?> nam">
 							<?php
 							print "<a style=\"padding:0px; width:100%;\" href=\"".encode_url($child->getLinkUrl2())."\" onclick=\"return familyNavLoad('".$child->getLinkUrl2()."');\">";
 							print PrintReady($child->getFullName());

@@ -185,7 +185,7 @@ include_once ('includes/media_reorder_count.php');
 			}else{
 			}
         }
-
+/*
 		//Album Reorder Media  ( If media exists and is greater than 1 item ) -----
 		if (PGV_USER_CAN_EDIT && $tot_med_ct>1) {
 			if ($LB_AL_HEAD_LINKS == "both") {
@@ -214,8 +214,8 @@ include_once ('includes/media_reorder_count.php');
 				//print "<td width=\"5%\">&nbsp;</td>";
 			}
 		}
+*/
 
-/*
 		//Popup Reorder Media ( If media exists and is greater than 1 item ) -----
 		if (PGV_USER_CAN_EDIT && $tot_med_ct>1) {
 			if ($LB_AL_HEAD_LINKS == "both") {
@@ -246,7 +246,7 @@ include_once ('includes/media_reorder_count.php');
 				print "\n";
 			}
 		}
-*/
+
 
 		if ($LB_AL_HEAD_LINKS == "icon" || (!PGV_USER_IS_ADMIN && !PGV_USER_CAN_EDIT)) {
 		print "</td>";

@@ -1393,6 +1393,47 @@ margin-top: -20px;
 left: 210px;
 padding: 3px;
 }
+.flyout2 {
+color:#ffffff;
+text-align: left;
+margin-top: -20px;
+left: 70px;
+padding: 3px;
+}
+/* navigator name and dob hover */
+.nam a:hover{
+color:#ff0000;
+}
+/* navigator fyout name hover */
+.flyout2 a:hover{
+color:#ff0000;
+}
+.flyout4 {
+color:#ffffff;
+text-align: left;
+margin-top: 0px;
+margin-left: 0px;
+padding: 3px;
+}
+#flyout3, #flyout3 a, #phusb, #pwife, #shusb, #swife, #spouse {
+background:none;
+border:none;
+text-decoration:none;
+text-align: left;
+margin-top: 0px;
+left: 0px;
+padding: 0px;
+}
+.flyout2rtl {
+color:#ffffff; 
+text-align: right;
+margin-top: -20px;
+right: 0px;
+padding: 3px;
+}
+.flyout2rtl a:hover{
+color:#ff0000;
+}
 /* End of Flyout Menu styles*/
 
 
