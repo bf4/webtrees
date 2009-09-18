@@ -1013,10 +1013,10 @@ class IndividualControllerRoot extends BaseController {
 	* include GedFact controller
 	*/
 	function census_assistant() {
-		require 'modules/GEDFact_assistant/CENS/census_1_ctrl.php';
+		require 'modules/GEDFact_assistant/_CENS/census_1_ctrl.php';
 	}
 	function medialink_assistant() {
-		require 'modules/GEDFact_assistant/MEDIA/media_1_ctrl.php';
+		require 'modules/GEDFact_assistant/_MEDIA/media_1_ctrl.php';
 	}
 // -----------------------------------------------------------------------------
 // End GedFact Assistant Functions
