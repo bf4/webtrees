@@ -248,6 +248,11 @@ function lightbox_print_media_row($rtype, $rowm, $pid) {
 				$submenu->addOnclick("return window.open('addmedia.php?action=editmedia&amp;pid={$rowm['m_media']}&amp;linktoid={$rowm['mm_gid']}', '_blank', 'top=50,left=50,width=600,height=700,resizable=1,scrollbars=1');");
 				$submenu->addClass($submenu_class, $submenu_hoverclass);
 				$menu->addSubMenu($submenu);
+				// Manage Links
+				$submenu = new Menu("&nbsp;&nbsp;" . $pgv_lang["add_or_remove_links"] . "&nbsp;&nbsp;", "#", "right");
+				$submenu->addOnclick("return window.open('inverselink.php?mediaid={$rowm['m_media']}&amp;linkto=manage', '_blank', 'top=50,left=50,width=570,height=650,resizable=1,scrollbars=1');");
+				$submenu->addClass($submenu_class, $submenu_hoverclass);
+				$menu->addSubMenu($submenu);
 				// Unlink Media
 				$submenu = new Menu("&nbsp;&nbsp;" . $pgv_lang["lb_unlinkmedia"] . "&nbsp;&nbsp;", "#", "right");
 				$submenu->addOnclick("return delete_record('$pid', 'OBJE', '".$rowm['m_media']."');");
