@@ -232,7 +232,7 @@ class UserMigrateControllerRoot extends BaseController {
 			foreach($GEDCOMS as $key => $gedcom) {
 
 				// Gedcom counters
-				if (file_exists($INDEX_DIRECTORY.$gedcom["gedcom"]."pgv_counters.php")) $this->flist[] = $INDEX_DIRECTORY.$gedcom["gedcom"]."pgv_counters.php";
+				if (file_exists($INDEX_DIRECTORY.$gedcom["gedcom"]."pgv_counters.txt")) $this->flist[] = $INDEX_DIRECTORY.$gedcom["gedcom"]."pgv_counters.txt";
 
 				// Gedcom searchlogs and changelogs
 				$dir_var = opendir ($INDEX_DIRECTORY);
