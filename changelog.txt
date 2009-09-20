@@ -10,6 +10,7 @@
 
 
 Version 4.2.x CA
+ - Modified theme css files for tab management (windmillway)
  - Merged: Merge changes r6095 - r6119 from the trunk. (windmillway)
  - Added FamilySearch module (yalnifj)
  - Moved new_indi to now be the main indi page. (yalnifj)
