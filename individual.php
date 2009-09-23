@@ -67,7 +67,7 @@ function open_link_remote(pid){
 }
 
 function showchanges() {
-	window.location = '<?php echo $controller->indi->getLinkUrl2(); ?>&show_changes=yes';
+	window.location = '<?php echo $controller->indi->getLinkUrl(); ?>&show_changes=yes';
 }
 <?php } ?>
 
@@ -252,7 +252,7 @@ jQuery(document).ready(function(){
 		{
 			?><br />
 			<?php echo $pgv_lang["indi_is_remote"]; ?><!--<br />--><!--take this out if you want break the remote site and the fact that it was remote into two separate lines-->
-			<a href="<?php echo encode_url($controller->indi->getLinkUrl2()); ?>"><?php echo $controller->indi->getLinkTitle(); ?></a>
+			<a href="<?php echo encode_url($controller->indi->getLinkUrl()); ?>"><?php echo $controller->indi->getLinkTitle(); ?></a>
 			<?php
 		}
 		// if indivual is not a remote individual
