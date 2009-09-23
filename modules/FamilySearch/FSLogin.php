@@ -36,4 +36,6 @@ function ajaxLogin(frm) {
 			value="<?php print $pgv_lang["login"]; ?>" />&nbsp;</td>
 	</tr>
 </table>
+To use the FamilySearch module, you must login with your FamilySearch username and password.  
+You can register for a FamilySearch username and password by going to <a href="https://new.familysearch.org" target="_blank">https://new.familysearch.org</a>
 </form>

@@ -34,6 +34,7 @@ $showFull = ($PEDIGREE_FULL_DETAILS) ? 1 : 0;
 $controller=new IndividualController();
 $controller->init();
 
+// tell tabs that use jquery that it is already loaded
 define('PGV_JQUERY_LOADED', 1);
 
 // We have finished writing to $_SESSION, so release the lock
@@ -105,17 +106,13 @@ var selectedTab = 0;
 
 function enable_static_tab() {
     jQuery(".static_tab").css("float","<?php echo ($TEXT_DIRECTION=='rtl')? 'left':'right';?>");
-		jQuery(".static_tab").css("margin-right","1px");
-		jQuery(".static_tab").css("width","240px");
-		jQuery(".static_tab").css("border-color","#cccccc");
-    jQuery(".static_tab_content").css("position", "absolute");
+	jQuery(".static_tab").addClass("static_tab_<?php echo $TEXT_DIRECTION;?>");
     jQuery(".static_tab_content").removeClass("ui-tabs-hide");
     jQuery(".static_tab_content").removeClass("ui-tabs-panel");
     jQuery(".static_tab_content").addClass("ui-corner-all");
-    jQuery(".static_tab_content").css("z-index","100");
     var top = jQuery(".static_tab").offset().top+jQuery(".static_tab").height();
 	jQuery(".static_tab_content").css("top", top+"px");
-	jQuery(".static_tab_content").css("<?php echo ($TEXT_DIRECTION=='rtl')? 'left':'right';?>", "0px");
+	jQuery(".static_tab_content").addClass("static_tab_content_<?php echo $TEXT_DIRECTION;?>");
 	jQuery(".static_tab_content").hide();
 }
 
@@ -173,20 +170,6 @@ jQuery(document).ready(function(){
 
 //]]>
   </script>
-  
-<style>
-#tabs li {
- padding-bottom: 0px;
-}
-.static_tab_content {
-	position:relative; 
-	padding-left:5px; 
-	padding-right:5px; 
-	border:#c8c8c8 1px; 
-	border-style:none solid solid solid; 
-	display:none;
-}
-</style>
 
 <div id="indi_main_blocks">
 <div id="indi_top">
