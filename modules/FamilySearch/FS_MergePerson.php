@@ -33,7 +33,6 @@
 //chdir('../../');
 require_once('config.php');
 require_once('modules/FamilySearch/RA_AutoMatch.php');
-require_once("modules/FamilySearch/FSAdd.php");
 require_once("includes/functions/functions_print_facts.php");
 
 if (!userGedcomAdmin(getUserName())) {
@@ -115,10 +114,12 @@ if ($action=='save') {
 			$deleteremote[] = $rfact;
 		} 
 	}
-	print "<pre>".$newlocal."</pre>";
+	//print "<pre>".$newlocal."</pre>";
 	if ($changedlocal) replace_gedrec($pid, $newlocal);
-	print "<pre>".$newremote."</pre>";
+	//print "<pre>".$newremote."</pre>";
 	$remotePerson = new Person($newremote);
+	print count($deleteremote)." ".count($copytoremote);
+	
 	$newXG = $matcher->updatePerson($FSID, $deleteremote, $copytoremote);
 	print $newXG;
 } // ------- end save action

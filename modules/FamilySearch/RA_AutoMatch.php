@@ -462,7 +462,7 @@ class RA_AutoMatch {
 	function updatePerson($fsid, $deleted, $copied) {
 		$xgperson = $this->getXMLGed()->getPerson($fsid);
 		$xml = $this->xmlHeader.'<persons>';
-		$xml .= '<person id="'.$fsid.'"><assertions><events>';
+		$xml .= '<person id="'.$fsid.'">';
 		$assertions = array();
 		foreach($deleted as $assertion) {
 			$xga = $this->getXMLGed()->convertGedcomEvent($assertion, $xgperson);
@@ -471,11 +471,9 @@ class RA_AutoMatch {
 		}
 		foreach($copied as $assertion) {
 			$xga = $this->getXMLGed()->convertGedcomEvent($assertion, $xgperson);
-			$assertions[] = $xga;
+			if ($xga) $assertions[] = $xga;
 		}
-		foreach($assertions as $assertion) {
-			$xml .= $assertion->toXml();
-		}
+		$xml .= XmlGedcom::assertionsToXml($assertions, true);
 		$xml .= '</assertions></person></persons>';
 		$xml .= $this->xmlFooter;
 		print "<pre>".htmlentities($xml)."</pre>";

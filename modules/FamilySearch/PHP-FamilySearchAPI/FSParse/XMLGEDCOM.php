@@ -365,7 +365,6 @@ class XmlGedcom {
 			$factrec = $factObj->getGedcomRecord();
 			$fact = $factObj->getTag();
 			if ($fact=='SSN') return null;
-				
 			/* XG_Event*/
 			$xmltype = array_search($fact, $eventHandler);
 			if ($xmltype!==false) {
@@ -595,6 +594,55 @@ class XmlGedcom {
 			}
 		}
 		return $gedcom;
+	}
+	
+	/**
+	 * Convert an array of assertions to XML for inclusion in a person update
+	 * @param $assertions
+	 * @param $forAdd
+	 * @return string
+	 */
+	static function assertionsToXml($assertions, $forAdd=false) {
+		$xml = "";
+		$xml.="<assertions>\n";
+		//-- names
+		$xml .= "<names>";
+		if(!empty($assertions)){
+			foreach($assertions as $assertion){
+				if ($assertion instanceof XG_Name) $xml.=$assertion->toXml($forAdd);
+			}
+		}
+		$xml .= "</names>";
+		$xml .= "<genders>";
+		if(!empty($assertions)){
+			foreach($assertions as $assertion){
+				if ($assertion instanceof XG_Gender) $xml.=$assertion->toXml($forAdd);
+			}
+		}
+		$xml .= "</genders>";
+		$xml .= "<events>";
+		if(!empty($assertions)){
+			foreach($assertions as $assertion){
+				if ($assertion instanceof XG_Event) $xml.=$assertion->toXml($forAdd);
+			}
+		}
+		$xml .= "</events>";
+		$xml .= "<characteristics>";
+		if(!empty($assertions)){
+			foreach($assertions as $assertion){
+				if ($assertion instanceof XG_Characteristic) $xml.=$assertion->toXml($forAdd);
+			}
+		}
+		$xml .= "</characteristics>";
+		$xml .= "<ordinances>";
+		if(!empty($assertions)){
+			foreach($assertions as $assertion){
+				if ($assertion instanceof XG_Ordinance) $xml.=$assertion->toXml($forAdd);
+			}
+		}
+		$xml .= "</ordinances>";
+		$xml.="</assertions>\n";
+		return $xml;
 	}
 
 	//main parser methods
@@ -1329,10 +1377,11 @@ class XG_Gender extends XG_Assertion{
 	function toXml($forAdd=false){
 		$xml='';
 		$xml.="<gender";
-		if (!$forAdd) {
+		if (!$forAdd || $this->isMarkedForDelete()) {
 			$xml.=" version=\"".$this->version."\" modified=\"".$this->modified."\" ";
 			$xml.="disputing=\"".($this->disputing==false?"false":"true")."\" contributor=\"".$this->contributor."\"";
 		}
+		if ($this->isMarkedForDelete()) $xml.=' action="Delete"';
 		$xml.=">\n";
 		if(!empty($this->citations)){
 			$xml.="<citations>\n";
@@ -1416,10 +1465,11 @@ class XG_Name extends XG_Assertion {
 
 	function toXml($forAdd=false){
 		$xml = "<name";
-		if (!$forAdd) {
+		if (!$forAdd || $this->isMarkedForDelete()) {
 			$xml.=" version=\"".$this->version."\" modified=\"".$this->modified."\" ";
 			$xml.="id=\"".$this->id."\" disputing=\"".($this->disputing==false?"false":"true")."\" contributor=\"".$this->contributor."\"";
 		}
+		if ($this->isMarkedForDelete()) $xml.=' action="Delete"';
 		$xml.=">\n";
 		if(!empty($this->citations)){
 			$xml.="<citations>\n";
@@ -1668,37 +1718,7 @@ class XG_Person extends XG_HasAssertions {
 			$xml .= "tempId=\"".$this->tempId."\"";
 		}
 		$xml .=">\n";
-		$xml.="<assertions>\n";
-		//-- names
-		$xml .= "<names>";
-		if(!empty($this->assertions)){
-			foreach($this->assertions as $assertion){
-				if ($assertion instanceof XG_Name) $xml.=$assertion->toXml($forAdd);
-			}
-		}
-		$xml .= "</names>";
-		$xml .= "<genders>";
-		if(!empty($this->assertions)){
-			foreach($this->assertions as $assertion){
-				if ($assertion instanceof XG_Gender) $xml.=$assertion->toXml($forAdd);
-			}
-		}
-		$xml .= "</genders>";
-		$xml .= "<events>";
-		if(!empty($this->assertions)){
-			foreach($this->assertions as $assertion){
-				if ($assertion instanceof XG_Event) $xml.=$assertion->toXml($forAdd);
-			}
-		}
-		$xml .= "</events>";
-		$xml .= "<characteristics>";
-		if(!empty($this->assertions)){
-			foreach($this->assertions as $assertion){
-				if ($assertion instanceof XG_Characteristic) $xml.=$assertion->toXml($forAdd);
-			}
-		}
-		$xml .= "</characteristics>";
-		$xml.="</assertions>\n";
+		$xml .= XmlGedcom::assertionsToXml($this->assertions, $forAdd);
 		$xml.="</person>\n";
 		return $xml;
 	}
@@ -2736,12 +2756,13 @@ class XG_Ordinance extends XG_Assertion{
 	function toXml($forAdd=false){
 		$xml='';
 		//-- ordinances cannot be added
-		if ($forAdd) return $xml;
+		//if ($forAdd) return $xml;
 		$xml.="<ordinance type=\"".$this->type."\" scope=\"".$this->scope."\"";
-		if (!$forAdd) {
+		if (!$forAdd || $this->isMarkedForDelete()) {
 			$xml.=" version=\"".$this->version."\" modified=\"".$this->modified."\" ";
 			$xml.="id=\"".$this->id."\" disputing=\"".($this->disputing==false?"false":"true")."\" contributor=\"".$this->contributor."\"";
 		}
+		if ($this->isMarkedForDelete()) $xml.=' action="Delete"';
 		$xml .=">\n";
 		if(!empty($this->citations)){
 			$xml.="<citations>\n";
@@ -2813,6 +2834,8 @@ class XG_Assertion {
 	}
 
 	function addRecordInfo($factrec, &$person_class){
+		$fsid = get_gedcom_value("_FSID", 2, $factrec, '', false);
+		if ($fsid) $this->setId($fsid);
 		$chanDate = get_gedcom_value("CHAN:DATE", 2, $factrec, '', false);
 		/* http://us2.php.net/manual/en/function.date.php  modified="2007-07-23T10:40:36.771-06:00"*/
 		/* c	ISO 8601 date (added in PHP 5)	2004-02-12T15:19:21+00:00 */
@@ -3467,10 +3490,11 @@ class XG_Characteristic extends XG_Assertion {
 	function toXml($forAdd=false){
 		$xml='';
 		$xml.="<characteristic";
-		if (!$forAdd) {
+		if (!$forAdd || $this->isMarkedForDelete()) {
 			$xml .=" version=\"".$this->version."\" ";
 			$xml.="modified=\"".$this->modified."\" id=\"".$this->id."\" disputing=\"".($this->disputing==false?"false":"true")."\" contributor=\"".$this->contributor."\"";
 		}
+		if ($this->isMarkedForDelete()) $xml.=' action="Delete"';
 		$xml.=">\n";
 		if(!empty($this->citations)){
 			$xml.="<citations>";
@@ -3567,10 +3591,11 @@ class XG_Fact extends XG_Assertion{
 		$xml='';
 		if ($forAdd && ($this->type=='Lineage' || !empty($this->parent) || !empty($this->spouse) || !empty($this->child))) return $xml;
 		$xml.="<fact type=\"".$this->type."\" scope=\"".$this->scope."\"";
-		if (!$forAdd) {
+		if (!$forAdd || $this->isMarkedForDelete()) {
 			$xml .=" version=\"".$this->version."\" ";
 			$xml.="modified=\"".$this->modified."\" id=\"".$this->id."\" disputing=\"".($this->disputing==false?"false":"true")."\" contributor=\"".$this->contributor."\"";
 		}
+		if ($this->isMarkedForDelete()) $xml.=' action="Delete"';
 		$xml.=">\n";
 		if(!empty($this->citations)){
 			$xml.="<citations>";
@@ -3806,6 +3831,7 @@ $eventHandler["marriage banns"]="MARB";
 $eventHandler["marriage contract"]="MARC";
 $eventHandler["marriage license"]="MARL";
 $eventHandler["other"]="EVEN";
+$eventHandler["census"]="CENS";
 
 global $factHandler;
 $factHandler["caste name"]="CAST";
@@ -3865,10 +3891,11 @@ class XG_Event extends XG_Assertion{
 		if ($forAdd && ($this->scope!='person' || !empty($this->spouse))) return '';
 		$xml.="<event";
 		if (!empty($this->scope) && $this->scope!="person") $xml .= " scope=\"".$this->scope."\"";
-		if (!$forAdd) {
+		if (!$forAdd || $this->isMarkedForDelete()) {
 			$xml.=" version=\"".$this->version."\" modified=\"".$this->modified."\" ";
 			$xml.="id=\"".$this->id."\" disputing=\"".($this->disputing==false?"false":"true")."\" contributor=\"".$this->contributor."\"";
 		}
+		if ($this->isMarkedForDelete()) $xml.=' action="Delete"';
 		$xml.=">\n";
 		if(!empty($this->citations)){
 			$xml.="<citations>\n";

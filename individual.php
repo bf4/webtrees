@@ -71,16 +71,6 @@ function showchanges() {
 }
 <?php } ?>
 
-function setfamnav() {
-	<?php if (isset($_COOKIE['famnav']) && $_COOKIE['famnav']=="YES" ) { ?>
-		document.cookie = "famnav=NO";
-	<?php }else{ ?>
-		document.cookie = "famnav=YES";
-	<?php } ?>
-	forceReloadFromServer = true;
-	window.location.reload(forceReloadFromServer);
-}
-
 // function is required by cloudy theme
 function resize_content_div(i) {
 	// check for container ..

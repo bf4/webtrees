@@ -45,13 +45,13 @@ if (empty($person)) {
 }
 else {
 	$adder = new RA_AutoMatch();
-	$fsid = $adder->addPerson($person)."<br />";
+	$fsid = $adder->addPerson($person);
 	$adder->addLink($person, $fsid);
 	print $person->getFullName();
 	?>
 	was successfully added.  This person's ID on the remote site is <?php print $fsid; ?><br /><br />
 	
-	<a href="module.php?mod=FamilySearch&amppgvaction=FS_Relatives&pid=<?php echo $pid;?>">Continue to Relatives</a>
+	<a href="module.php?mod=FamilySearch&amp;pgvaction=FS_Relatives&pid=<?php echo $pid;?>">Continue to Relatives</a>
 	<?php
 }
 
