@@ -1489,9 +1489,15 @@ ul.clist {
 	position: absolute;
 	z-index: 100;
 	left: 2px;
+	background: #458258; 
+	margin-top:-2px; 
+	margin-left:10px;
 }
 .static_tab_content_ltr {
 	position: absolute;
 	z-index: 100;
 	right: 2px;
+	background: #458258; 
+	margin-top:-2px; 
+	margin-right:10px;
 }

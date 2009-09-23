@@ -152,8 +152,8 @@ jQuery(document).ready(function(){
 				$modjs = $mod->getTab()->getJSCallback();
 				echo $modjs."\n";
 			}
-			$tabcount++; 
 		}
+		$tabcount++; 
 	}
    	?>
 });
@@ -298,8 +298,8 @@ foreach($controller->modules as $mod) {
 					<span><?php echo $pgv_lang[$mod->getName()]?></span>
 					</a></li>
 			<?php } 
-			$tabcount++; 
 		}
+		$tabcount++; 
 	}
 	if ($controller->static_tab) {
 		?><li class="ui-state-default ui-corner-top static_tab"><a name="<?php echo $controller->static_tab->getName(); ?>" href="#<?php echo $controller->static_tab->getName()?>"><span><?php echo $pgv_lang[$controller->static_tab->getName()]?></span></a>
@@ -317,8 +317,8 @@ foreach($controller->modules as $mod) {
 		<?php echo $mod->getTab()->getContent(); ?>
 	</div>	
 	<?php }
-	$tabcount++; 
 	}
+	$tabcount++; 
  } ?>
 </div> <!-- tabs -->
 <?php if ($controller->static_tab) { ?>
