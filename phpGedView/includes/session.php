@@ -74,6 +74,8 @@ define('PGV_REGEX_UNSAFE',   '[\x00-\xFF]*'); // Use with care and apply additio
 define('PGV_UTF8_BOM',    "\xEF\xBB\xBF"); // U+FEFF
 define('PGV_UTF8_LRM',    "\xE2\x80\x8E"); // U+200E
 define('PGV_UTF8_RLM',    "\xE2\x80\x8F"); // U+200F
+define('PGV_UTF8_LRO',    "\xE2\x80\xAD"); // U+202D  (Left to Right override: force everything following to LTR mode)
+define('PGV_UTF8_RLO',    "\xE2\x80\xAE"); // U+202E  (Right to Left override: force everything following to RTL mode)
 define('PGV_UTF8_MALE',   "\xE2\x99\x82"); // U+2642
 define('PGV_UTF8_FEMALE', "\xE2\x99\x80"); // U+2640
 

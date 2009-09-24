@@ -1121,7 +1121,7 @@ function print_note_record($text, $nlevel, $nrec, $textOnly=false, $return=false
 	if (!isset($EXPAND_NOTES)) $EXPAND_NOTES = $EXPAND_SOURCES; // FIXME
 	$elementID = "N-".floor(microtime()*1000000);
 	$text = trim($text);
-	
+
 	// Check if Shared Note and if so enable url link on title -------------------
 	if (eregi("0 @N([0-9])+@ NOTE", $nrec)) {
 		$centitl  = str_replace("~~", "", $text);
@@ -2595,12 +2595,12 @@ function DumpString($input) {
 		echo str_replace(" ", "&nbsp;", $thisLine)."<br />";
 
 		// Line 2: UTF8 character string
-		$thisLine = "  UTF8 ";
+		$thisLine = "  UTF8 " . PGV_UTF8_LRO;		// Force every char in this line to be LTR, even if it's normally RTL
 		for ($i=$pos; $i<($pos+$lineLength); $i++) {
-			if (ord(substr($UTF8[$i], 0, 1)) < 0x20) $thisLine .= getLRM() . " ";
-			else $thisLine .= getLRM() . $UTF8[$i];
+			if (ord(substr($UTF8[$i], 0, 1)) < 0x20) $thisLine .= " ";
+			else $thisLine .= $UTF8[$i];
 		}
-		echo str_replace(array(" ", PGV_UTF8_LRM, PGV_UTF8_RLM), array("&nbsp;", "&nbsp;", "&nbsp;"), $thisLine)."<br />";
+		echo str_replace(array("&", "<", " ", PGV_UTF8_LRM, PGV_UTF8_RLM), array("&amp;", "&lt;", "&nbsp;", "&nbsp;", "&nbsp;"), $thisLine)."<br />";
 
 		// Line 3:  First hexadecimal byte
 		$thisLine = "Byte 1 ";
