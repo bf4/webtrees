@@ -10,6 +10,8 @@
 
 
 Version 4.2.3
+ - Update: Performance of privacy calculations (fisharebest)
+ - Fixed: [ 2858324 ] SVN  error 8 on edit family popup (fisharebest)
  - Fixed: [ 2866474 ] Deleting a Task (fisharebest)
  - Fixed: [ 2844024 ] class_gedcomrecord.php 5784 (fisharebest)
  - Fixed: [ 2848954 ] Incorrect page headers (canajun2eh)
