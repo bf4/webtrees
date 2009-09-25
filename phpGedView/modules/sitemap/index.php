@@ -80,7 +80,7 @@ if ($action=="sendFiles") {
 	}
 
 	if (isset($indi_rec)) {
-		$statement=PGV_DB::prepare("SELECT i_id, i_gedcom FROM {$TBLPREFIX}individuals WHERE i_file=?")->execute(array(PGV_GED_ID));
+		$statement=PGV_DB::prepare("SELECT i_id, i_gedcom FROM {$TBLPREFIX}individuals WHERE i_file=?")->execute(array($index));
 		while ($row=$statement->fetch(PDO::FETCH_NUM)) {
 			echo "	<url>\n";
 			echo "		<loc>".$SERVER_URL."individual.php?pid=".$row[0]."&amp;ged=".urlencode($gedcom_name)."</loc>\n";
@@ -95,7 +95,7 @@ if ($action=="sendFiles") {
 	}
 
 	if (isset($fam_rec)) {
-		$statement=PGV_DB::prepare("SELECT f_id, f_gedcom FROM {$TBLPREFIX}families WHERE f_file=?")->execute(array(PGV_GED_ID));
+		$statement=PGV_DB::prepare("SELECT f_id, f_gedcom FROM {$TBLPREFIX}families WHERE f_file=?")->execute(array($index));
 		while ($row=$statement->fetch(PDO::FETCH_NUM)) {
 			echo "	<url>\n";
 			echo "		<loc>".$SERVER_URL."family.php?famid=".$row[0]."&amp;ged=".urlencode($gedcom_name)."</loc>\n";
@@ -110,7 +110,7 @@ if ($action=="sendFiles") {
 	}
 
 	if (isset($fam_lists)) {
-		foreach(get_indilist_salpha($SHOW_MARRIED_NAMES, true, PGV_GED_ID) as $letter) {
+		foreach(get_indilist_salpha($SHOW_MARRIED_NAMES, true, $index) as $letter) {
 			if ($letter!='@') {
 				echo "	<url>\n";
 				echo "		<loc>".$SERVER_URL."famlist.php?alpha=".urlencode($letter)."&amp;ged=".urlencode($gedcom_name)."</loc>\n";
@@ -122,7 +122,7 @@ if ($action=="sendFiles") {
 	}
 
 	if (isset($indi_lists)) {
-		foreach (get_indilist_salpha($SHOW_MARRIED_NAMES, false, PGV_GED_ID) as $letter) {
+		foreach (get_indilist_salpha($SHOW_MARRIED_NAMES, false, $index) as $letter) {
 			if ($letter!='@') {
 				echo "	<url>\n";
 				echo "		<loc>".$SERVER_URL."indilist.php?alpha=".urlencode($letter)."&amp;ged=".urlencode($gedcom_name)."</loc>\n";
