@@ -783,128 +783,94 @@ function privatize_gedcom($gedrec) {
 	global $pgv_lang, $factarray, $GEDCOM, $SHOW_PRIVATE_RELATIONSHIPS, $pgv_private_records;
 	global $global_facts, $person_facts;
 
-	$gt = preg_match("/0 @(.+)@ (.+)/", $gedrec, $gmatch);
-	if ($gt > 0) {
-		$gid = trim($gmatch[1]);
-		$type = trim($gmatch[2]);
-		$disp = displayDetailsById($gid, $type);
-		$pgv_private_records[$gid] = "";
-		//-- check if the whole record is private
-		if (!$disp) {
-			//-- check if name should be private
-			if (($type=="INDI")&&(!showLivingNameById($gid))) {
-				$newrec = "0 @".$gid."@ INDI\n";
-				$newrec .= "1 NAME " . $pgv_lang["private"] . "\n";
-				if ($SHOW_PRIVATE_RELATIONSHIPS) {
-					$fams = find_families_in_record($gedrec, "FAMS");
-					foreach($fams as $f=>$famid) {
-						$newrec .= "1 FAMS @$famid@\n";
+	if (preg_match('/^0 @('.PGV_REGEX_XREF.')@ ('.PGV_REGEX_TAG.')/', $gedrec, $match)) {
+		$gid = $match[1];
+		$type = $match[2];
+		if (displayDetailsById($gid, $type)) {
+			// The record is not private, but the individual facts may be.
+			if (
+				!strpos($gedrec, "\n2 RESN") &&
+				!isset($person_facts[$gid]) &&
+				!preg_match('/\n1 (?:'.implode('|', array_keys($global_facts)).')/', $gedrec)
+			) {
+				// Nothing to indicate fact privacy needed
+				return $gedrec;
+			}
+
+			$newrec="0 @{$gid}@ {$type}";
+			$private_record='';
+			// Check each of the sub facts for access
+			if (preg_match_all('/\n1 ('.PGV_REGEX_TAG.').*(?:\n[2-9].*)*/', $gedrec, $matches, PREG_SET_ORDER)) {
+				foreach ($matches as $match) {
+					if (($match[1]=='FACT' || $match[1]=='EVEN') && preg_match('/\n2 TYPE (\w+)/', $match[0], $tmatch) && array_key_exists($tmatch[1], $factarray)) {
+						$tag=$tmatch[1];
+					} else {
+						$tag=$match[1];
 					}
-					$fams = find_families_in_record($gedrec, "FAMC");
-					foreach($fams as $f=>$famid) {
-						$newrec .= "1 FAMC @$famid@\n";
+					if (!FactViewRestricted($gid, $match[0]) && showFact($tag, $gid) && showFactDetails($tag, $gid)) {
+						$newrec.=$match[0];
+					} else {
+						$private_record.=$match[0];
 					}
 				}
 			}
-			else if ($type=="SOUR") {
-				$newrec = "0 @".$gid."@ SOUR\n";
-				$newrec .= "1 TITL ".$pgv_lang["private"]."\n";
-			}
-			else {
-				$newrec = "0 @".$gid."@ $type\n";
-				if ($type=="INDI") {
-					// Find all Name records of all Name types for this individual
-					// A person can have, for instance, more than one 1 NAME record.  None of them should be privatized.
-					foreach (array('NAME', 'FONE', 'ROMN', '_HNM', '_HEB') as $nameFact) {
-						$factNum = 1;
-						while (true) {
-							$chil = trim(get_sub_record(1, "1 {$nameFact}", $gedrec, $factNum));
-							if (empty($chil)) break;
-							$newrec .= $chil."\n";
-							$factNum ++;
+			// Store the private data, so we can add it back in after an edit.
+			$pgv_private_records[$gid]=$private_record;
+			return $newrec;
+		} else {
+			// The whole record is private - although there are a few things we need to show.
+			switch($type) {
+			case 'INDI':
+				$newrec="0 @{$gid}@ INDI";
+				if (showLivingNameById($gid)) {
+					// Show all the NAME tags, including subtags
+					if (preg_match_all('/\n1 (NAME|_HNM).*(\n[2-9].*)*/', $gedrec, $matches, PREG_SET_ORDER)) {
+						foreach ($matches as $match) {
+							$newrec.=$match[0];
 						}
 					}
-					$chil = get_sub_record(1, "1 FAMC", $gedrec);
-					$i=1;
-					while (!empty($chil)) {
-						$newrec .= trim($chil)."\n";
-						$i++;
-						$chil = get_sub_record(1, "1 FAMC", $gedrec, $i);
-					}
-					$chil = get_sub_record(1, "1 FAMS", $gedrec);
-					$i=1;
-					while (!empty($chil)) {
-						$newrec .= trim($chil)."\n";
-						$i++;
-						$chil = get_sub_record(1, "1 FAMS", $gedrec, $i);
+				} else {
+					$newrec.="\n1 NAME {$pgv_lang['private']}";
+				}
+				// Just show the 1 FAMC/FAMS tag, not any subtags, which may contain private data
+				if (preg_match_all('/\n1 FAM[CS] @('.PGV_REGEX_XREF.')@/', $gedrec, $matches, PREG_SET_ORDER)) {
+					foreach ($matches as $match) {
+						if ($SHOW_PRIVATE_RELATIONSHIPS || displayDetailsById($match[1], 'FAM')) {
+							$newrec.=$match[0];
+						}
 					}
 				}
-				else if ($type=="SOUR") {
-					$chil = get_sub_record(1, "1 ABBR", $gedrec);
-					if (!empty($chil)) $newrec .= trim($chil)."\n";
-					$chil = get_sub_record(1, "1 TITL", $gedrec);
-					if (!empty($chil)) $newrec .= trim($chil)."\n";
+				// Don't privatize sex
+				if (preg_match('/\n1 SEX [MFU]/', $gedrec, $match)) {
+					$newrec.=$match[0];
 				}
-				else if ($type=="FAM") {
-					$chil = get_sub_record(1, "1 HUSB", $gedrec);
-					if (!empty($chil)) $newrec .= trim($chil)."\n";
-					$chil = get_sub_record(1, "1 WIFE", $gedrec);
-					if (!empty($chil)) $newrec .= trim($chil)."\n";
-					$chil = get_sub_record(1, "1 CHIL", $gedrec);
-					$i=1;
-					while (!empty($chil)) {
-						$newrec .= trim($chil)."\n";
-						$i++;
-						$chil = get_sub_record(1, "1 CHIL", $gedrec, $i);
+				$newrec .= "\n1 NOTE {$pgv_lang['person_private']}";
+				break;
+			case 'FAM':
+				$newrec="0 @{$gid}@ FAM";
+				// Just show the 1 CHIL/HUSB/WIFE tag, not any subtags, which may contain private data
+				if (preg_match_all('/\n1 (CHIL|HUSB|WIFE) @('.PGV_REGEX_XREF.')@/', $gedrec, $matches, PREG_SET_ORDER)) {
+					foreach ($matches as $match) {
+						if ($SHOW_PRIVATE_RELATIONSHIPS || displayDetailsById($match[1], 'INDI')) {
+							$newrec.=$match[0];
+						}
 					}
 				}
-			}
-			if ($type=="INDI") {
-				$newrec .= trim(get_sub_record(1, "1 SEX", $gedrec))."\n"; // do not privatize gender
-				$newrec .= "1 NOTE ".trim($pgv_lang["person_private"])."\n";
-			}
-			else if ($type=="FAM") $newrec .= "1 NOTE ".trim($pgv_lang["family_private"])."\n";
-			else if ($type=="OBJE") $newrec .= "1 NOTE ".trim($pgv_lang["media_private"])."\n";
-			else $newrec .= "1 NOTE ".trim($pgv_lang["private"])."\n";
-			//print $newrec;
-			$pgv_private_records[$gid] = $gedrec;
-			return $newrec;
-		}
-		else {
-			//-- check if we need to do any fact privacy checking
-			//---- check for RESN
-			$resn = false;
-			if (preg_match("/\d RESN/", $gedrec)) $resn = true;
-			//---- check for any person facts
-			$ppriv = isset($person_facts[$gid]);
-			//---- check for any global facts
-			$gpriv = false;
-			foreach($global_facts as $key=>$gfact) {
-				if (preg_match("/1 ".$key."/", $gedrec)>0) $gpriv = true;
-			}
-			//-- if no fact privacy then return the record
-			if (!$resn && !$ppriv && !$gpriv) return $gedrec;
-
-			$newrec = "0 @".$gid."@ $type\n";
-			//-- check all of the sub facts for access
-			$subs = get_all_subrecords($gedrec, "", false, false);
-			foreach($subs as $indexval => $sub) {
-				$ct = preg_match("/1 (\w+)/", $sub, $match);
-				if ($ct > 0) $type = trim($match[1]);
-				else $type="";
-				if (($type=='FACT' || $type=='EVEN') && preg_match('/2 TYPE (\w+)/', $sub, $match) && array_key_exists($match[1], $factarray)) {
-					$type=$match[1];
-				}
-				if (FactViewRestricted($gid, $sub)==false && showFact($type, $gid) && showFactDetails($type, $gid)) $newrec .= $sub;
-				else {
-					$pgv_private_records[$gid] .= $sub;
-				}
+				$newrec .= "\n1 NOTE {$pgv_lang['family_private']}";
+				break;
+			case 'SOUR':
+				$newrec="0 @{$gid}@ SOUR\n1 TITL {$pgv_lang['private']}";
+				break;
+			case 'OBJE':
+				$newrec="0 @{$gid}@ OBJE\n1 NOTE {$pgv_lang['media_private']}";
+				break;
+			default:
+				$newrec="0 @{$gid}@ {$type}\n1 NOTE {$pgv_lang['private']}";
 			}
 			return $newrec;
 		}
-	}
-	else {
-		//-- not a valid gedcom record
+	} else {
+		// Invalid gedcom record, so nothing to privatize.
 		return $gedrec;
 	}
 }
