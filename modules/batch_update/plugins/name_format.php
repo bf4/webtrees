@@ -32,18 +32,18 @@ if (!defined('PGV_PHPGEDVIEW')) {
 class plugin extends base_plugin {
 	static function doesRecordNeedUpdate($xref, $gedrec) {
 		return
-			preg_match('/^1\s+NAME\s+[^\/\r\n]*\/[^\/\r\n]*\r?$/m', $gedrec) ||
-			preg_match('/^1\s+NAME\s+[^\/\r\n]*[^\/ ]\//m', $gedrec);
+			preg_match('/^(?:1 NAME|2 _MARNM|2 _AKA) [^\/\n]*\/[^\/\n]*$/m', $gedrec) ||
+			preg_match('/^(?:1 NAME|2 _MARNM|2 _AKA) [^\/\n]*[^\/ ]\//m', $gedrec);
 	}
 
 	static function updateRecord($xref, $gedrec) {
 		return preg_replace(
 			array(
-				'/^(1\s+NAME\s+[^\/\r\n]*\/[^\/\r\n]*)(\r?)$/m',
-				'/^(1\s+NAME\s+[^\/\r\n]*[^\/ ])(\/)/m'
+				'/^((?:1 NAME|2 _MARNM|2 _AKA) [^\/\n]*\/[^\/\n]*)$/m',
+				'/^((?:1 NAME|2 _MARNM|2 _AKA) [^\/\n]*[^\/ ])(\/)/m'
 			),
 			array(
-				'$1/$2',
+				'$1/',
 				'$1 $2'
 			),
 			$gedrec
