@@ -10,6 +10,7 @@
 
 
 Version 4.2.3
+ - Fixed: [ 2857144 ] v4.2.2 sitemap files contain duplicate entries for multi-ged (fisharebest)
  - Fixed: [ 2827267 ] Fix name slashes and spaces of all types of names (fisharebest)
  - Update: Performance of privacy calculations (fisharebest)
  - Fixed: [ 2858324 ] SVN  error 8 on edit family popup (fisharebest)
