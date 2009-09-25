@@ -1406,6 +1406,7 @@ ul.clist {
 	border:#c8c8c8 1px; 
 	border-style:none solid solid solid; 
 	display:none;
+	background-color: #F1F5FF;
 }
 .static_tab_rtl {
 	float: left;

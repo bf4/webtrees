@@ -196,19 +196,21 @@ class RA_AutoMatch {
 		$fsid = $this->getFSID($person);
 		if ($fsid) {
 			$xgperson = $this->getXG_Person($fsid);
-			$out .= "<form action=\"module.php\" method=\"post\">
-			<input type=\"hidden\" name=\"mod\" value=\"FamilySearch\" />
-			<input type=\"hidden\" name=\"pid\" value=\"".$person->getXref()."\" />
-			<input type=\"hidden\" name=\"pgvaction\" value=\"FS_MergePerson\" /><br/><br/>
-			<table align=\"center\" border=\"0\">
-				<tr>
-				<td align=\"center\" class=\"topbottombar\" valign=\"top\" colspan=\"2\"><b>FamilySearch Link</b></td>
-				</tr>";
-			$out .= "<tr>";
-			$out .= "<td class=\"optionbox\">".$this->getPersonDetails($xgperson)."</td>";
-			$out .="<td align=\"center\" valign=\"middle\" class=\"optionbox\"><input type=\"hidden\" name=\"merge[]\" value=\"".$xgperson->getID()."\" /><input type=\"submit\" value=\"Merge\" /></td>";
-			$out .= "</tr>";
+			if ($xgperson) {
+				$out .= "<form action=\"module.php\" method=\"post\">
+				<input type=\"hidden\" name=\"mod\" value=\"FamilySearch\" />
+				<input type=\"hidden\" name=\"pid\" value=\"".$person->getXref()."\" />
+				<input type=\"hidden\" name=\"pgvaction\" value=\"FS_MergePerson\" /><br/><br/>
+				<table align=\"center\" border=\"0\">
+					<tr>
+					<td align=\"center\" class=\"topbottombar\" valign=\"top\" colspan=\"2\"><b>FamilySearch Link</b></td>
+					</tr>";
+				$out .= "<tr>";
+				$out .= "<td class=\"optionbox\">".$this->getPersonDetails($xgperson)."</td>";
+				$out .="<td align=\"center\" valign=\"middle\" class=\"optionbox\"><input type=\"hidden\" name=\"merge[]\" value=\"".$xgperson->getID()."\" /><input type=\"submit\" value=\"Merge\" /></td>";
+				$out .= "</tr>";
 			$out .= "</table></form>";
+			}
 		}
 		return $out;
 	}
@@ -220,6 +222,7 @@ class RA_AutoMatch {
 
 	function getPersonDetails(&$fsperson) {
 		global $factarray;
+		if (!$fsperson) debug_print_backtrace();
 		$sex = $fsperson->getGender()->getGender();
 		$birth = $fsperson->getBirthAssertion();
 		$death = $fsperson->getDeathAssertion();
@@ -290,13 +293,13 @@ class RA_AutoMatch {
 		$version_xml = $proxy->getPersonById(implode(",",$matches),'view=version');
 		$xmlGed = $this->getXMLGed();
 		$xmlGed->parseXml($version_xml);
-		$people = $xmlGed->getPersons();
 
 		$xmlRecord=$this->xmlHeader."<persons><person tempId=\"A\"><personas>";
 
 		// Loops through the people objects and builds the individual records as required by family search
-		foreach($people as $value)
+		foreach($matches as $match)
 		{
+			$value = $xmlGed->getPerson($match);
 			// <person ref="123456789" version="XXXXXXXXXXX"/> this is the format used to specify which records should be merged
 			$xmlRecord.="<persona id=\"".$value->getID()."\" version=\"".$value->getVersion()."\"/>";
 			$fsNumber=$value->getID();
@@ -304,11 +307,11 @@ class RA_AutoMatch {
 
 		$xmlRecord.="</personas></person></persons>"; // Closes out the XML record
 		$xmlRecord.=$this->xmlFooter;
-		//echo htmlentities($xmlRecord)."<p />"; //Placed here to aid in debugging the XML created and sent to FamilySearch // calls the function to create the XML document that is sent to FamilySearch for the merge.
+		echo htmlentities($xmlRecord)."<p />"; 
 		/**
-	 * Performs the actual merge operation and saves the results of the merge
-	 * so we can display if it occured or not.
-	 */
+		 * Performs the actual merge operation and saves the results of the merge
+		 * so we can display if it occured or not.
+		 */
 		$results=$proxy->mergePerson($xmlRecord);
 		$xmlGed->parseXml($results);
 		$persons = $xmlGed->getPersons();
@@ -430,14 +433,8 @@ class RA_AutoMatch {
 		$xml .= $this->xmlFooter;
 
 		//-- print for debugging
-		//		print "<b>Adding Person</b><br /><pre>".htmlentities($xml)."</pre>";
+		print "<b>Adding Person</b><br /><pre>".htmlentities($xml)."</pre>";
 
-
-//		$res = '<familytree xmlns="http://api.familysearch.org/familytree/v2" version="2.0.20090627.4357" statusMessage="OK" statusCode="200">
-//<persons>
-//<person version="65537" tempId="I14" id="KW3B-GLM"/>
-//</persons>
-//</familytree>';
 		//-- send the XML to familysearch
 		$res = $this->getProxy()->addPerson($xml);
 		//-- print the response for debugging
@@ -447,7 +444,108 @@ class RA_AutoMatch {
 		$ct = preg_match("/<person.*id=\"(.+)\"/", $res, $match);
 		if ($ct>0) {
 			$fsid = $match[1];
-			return $fsid;
+			//-- Try to add relationships to family members that are already in NFS
+			if (!empty($fsid)) {
+				$hasRelationships = false;
+				//-- Start the XML
+				$xml1 = $this->xmlHeader.'<persons>';
+				//-- Get the XML from the XG_Person object
+				$xml1 .= '<person id="'.$fsid.'">';
+				$xml1 .= '<relationships>';
+				
+				$xml2 = '</relationships>';
+				$xml2 .= '</person>';
+				$xml2 .= '</persons>';
+				$xml2 .= $this->xmlFooter;
+				//-- add relationships to parents
+				$famc = $person->getChildFamilies();
+				foreach($famc as $family) {
+					$father = $family->getHusband();
+					if ($father) {
+						$father_fsid = $this->getFSID($father);
+						if ($father_fsid) {
+							$hasRelationships = true;
+							$xml = $xml1.$this->getXMLGed()->getRelationshipXml($father_fsid, "parent").$xml2;
+							//-- print for debugging
+							//print "<b>Adding Relationships</b><br /><pre>".htmlentities($xml)."</pre>";
+									//-- send the XML to familysearch
+							$res = $this->getProxy()->addRelationship($fsid, "parent", $father_fsid, $xml);
+							//-- print the response for debugging
+							print "<b>Response</b><br /><pre>".htmlentities(preg_replace("/></",">\n<", $res))."</pre>";
+						}
+					}
+					$mother = $family->getWife();
+					if ($mother) {
+						$mother_fsid = $this->getFSID($mother);
+						if ($mother_fsid) {
+							$hasRelationships = true;
+							$xml = $xml1.$this->getXMLGed()->getRelationshipXml($mother_fsid, "parent").$xml2;
+							//-- print for debugging
+							//print "<b>Adding Relationships</b><br /><pre>".htmlentities($xml)."</pre>";
+									//-- send the XML to familysearch
+							$res = $this->getProxy()->addRelationship($fsid, "parent", $mother_fsid, $xml);
+							//-- print the response for debugging
+							print "<b>Response</b><br /><pre>".htmlentities(preg_replace("/></",">\n<", $res))."</pre>";
+						}
+					}
+				}
+				//-- add relationships to spouses and children
+				$fams = $person->getSpouseFamilies();
+				foreach($fams as $family) {
+					$spouse = $family->getSpouse($person);
+					if ($spouse) {
+						$spouse_fsid = $this->getFSID($spouse);
+						if ($spouse_fsid) {
+							$hasRelationships = true;
+							$xml = $xml1.'<spouse id="'.$spouse_fsid.'">
+					          <assertions>';
+							$xml .= '<events>';
+							$events = $family->getFacts();
+							$temp = null;
+							foreach($events as $event) {
+								$xg_event = $this->getXMLGed()->convertGedcomEvent($event, $temp);
+								if ($xg_event && $xg_event instanceof XG_Event) $xml .= $xg_event->toXml(true);
+							}
+					        $xml .= '</events>';
+					        $xml .= '<ordinances>';
+							$events = $family->getFacts();
+							foreach($events as $event) {
+								$xg_event = $this->getXMLGed()->convertGedcomEvent($event, $temp);
+								if ($xg_event && $xg_event instanceof XG_Ordinance) {
+									//-- only ordinances with places can be added
+									if ($xg_event->getPlace()!=null && $xg_event->getPlace()->getOriginal()!="") $xml .= $xg_event->toXml(true);
+								}
+							}
+					        $xml .= '</ordinances>';
+					        $xml .= '</assertions>
+					        </spouse>'.$xml2;
+					        //-- print for debugging
+							//print "<b>Adding Relationships</b><br /><pre>".htmlentities($xml)."</pre>";
+									//-- send the XML to familysearch
+							$res = $this->getProxy()->addRelationship($fsid, "spouse", $spouse_fsid, $xml);
+							//-- print the response for debugging
+							print "<b>Response</b><br /><pre>".htmlentities(preg_replace("/></",">\n<", $res))."</pre>";
+						}
+					}
+					foreach($family->getChildren() as $child) {
+						if ($child) {
+							$child_fsid = $this->getFSID($child);
+							if ($child_fsid) {
+								$hasRelationships = true;
+								$xml = $xml1.$this->getXMLGed()->getRelationshipXml($child_fsid, "child").$xml2;
+								//-- print for debugging
+								//print "<b>Adding Relationships</b><br /><pre>".htmlentities($xml)."</pre>";
+										//-- send the XML to familysearch
+								$res = $this->getProxy()->addRelationship($fsid, "child", $child_fsid, $xml);
+								//-- print the response for debugging
+								print "<b>Response</b><br /><pre>".htmlentities(preg_replace("/></",">\n<", $res))."</pre>";
+							}
+						}
+					}
+				}
+				
+				return $fsid;
+			}
 		}
 		return false;
 	}

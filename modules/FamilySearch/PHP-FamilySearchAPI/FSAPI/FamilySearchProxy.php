@@ -59,7 +59,8 @@ class FamilySearchProxy extends FamilySearchAPIClient {
 	'getName'	=>	'/familytree/v2/name?',
 	'matchById'		=>	'/familytree/v2/match/',
 	'matchByQuery'	=>	'/familytree/v2/match?',
-	'mergePerson' => '/familytree/v2/person/'
+	'mergePerson' => '/familytree/v2/person/',
+	'addRelationship' => '/familytree/v2/person/'
 	);
 
 	/**

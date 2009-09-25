@@ -62,7 +62,8 @@ class FamilySearchAPIClient {
 	'getName'	=>	'/familytree/v2/name?',
 	'matchById'		=>	'/familytree/v2/match/',
 	'matchByQuery'	=>	'/familytree/v2/match?',
-	'mergePerson' => '/familytree/v2/person/'
+	'mergePerson' => '/familytree/v2/person/',
+	'addRelationship' => '/familytree/v2/person/'
 	);
 
 	/**
@@ -342,6 +343,63 @@ class FamilySearchAPIClient {
 		$request->setMethod(HTTP_REQUEST_METHOD_POST);
 		$request->setBody($person);
 		//print "<br /><pre>".$request->_buildRequest()."</pre>\n";
+		//var_dump($request);
+
+		//send the request and return the xml
+		$request->sendRequest();
+
+		if($errorXML) 
+			return $request->getResponseBody();
+		else {
+			return $this->checkErrors($request->getResponseBody());
+		}
+
+	}
+	
+	/**
+	 * Add a relationship to a remote person
+	 * @see https://devnet.familysearch.org/docs/api-manual-reference-system/familytree-v2/examples/person.html/document_view
+	 * @param $fsid	the id of the person to add the relationship to
+	 * @param $type	the type of the relationship, (parent, child, spouse)
+	 * @param $relatedid	the id of the person being related to
+	 * @param $xml		the xml payload
+	 * @param $errorXML
+	 * @return string	the xml response
+	 */
+	function addRelationship($fsid, $type, $relatedid, $xml, $errorXML = true){
+		//-- check that we are loggedin
+		if (!$this->loggedin) {
+			$result = $this->authenticate($errorXML);
+			if (!$this->loggedin) return $result;
+		}
+
+		$this->hasError = false;
+		//check the current url
+		if(empty($this->url)  || !$this->loggedin){
+			$this->hasError = true;
+			return "connection string is not set or authentication required";
+		}
+
+		$con = '';
+		//build the connection string
+		$con = $this->url.$this->paths['addPerson'];
+		$con .= "/".$fsid."/".$type."/".$relatedid;
+		
+		$sep = '?';
+		if (strpos($con, $sep)!==false) $sep = "&";
+		
+		//-- add the session id
+		$con .= $sep.$this->SESSIONID_NAME."=".$this->sessionid;
+		//print $con ."\n";
+		
+		//create the request object
+		$request = new HTTP_Request();
+		$request->addHeader("User-Agent", $this->agent);
+		$request->addHeader("Content-Type", "text/xml");
+		$request->setURL($con);
+		$request->setMethod(HTTP_REQUEST_METHOD_POST);
+		$request->setBody($xml);
+		//print "<br /><pre>".htmlentities($request->_buildRequest())."</pre>\n";
 		//var_dump($request);
 
 		//send the request and return the xml

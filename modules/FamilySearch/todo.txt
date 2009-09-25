@@ -1,4 +1,5 @@
 FS TODO
+Have a version/date check on merge to show if there are recent changes
 
 Citations endpoint
 Notes endpoint

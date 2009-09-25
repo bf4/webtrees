@@ -1424,6 +1424,7 @@ text-align: center;
 	border:#c8c8c8 1px; 
 	border-style:none solid solid solid; 
 	display:none;
+	background-color: white;
 }
 .static_tab_rtl {
 	float: left;

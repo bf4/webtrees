@@ -188,7 +188,7 @@ function NavTree(outerId, innerId, name, xref) {
 		this.opennedBox[xref] = true;
 		
 		oXmlHttp = createXMLHttp();
-		link = "treenav.php?navAjax=1&jsname="+this.name+"&rootid="+xref+"&famid="+famid+"&details=1&zoom="+this.zoom;
+		link = "treenav.php?navAjax=1&jsname="+this.name+"&rootid="+xref+"&famid="+famid.replace("+", "%2B")+"&details=1&zoom="+this.zoom;
 		link = link + "&allSpouses="+this.allSpouses;
 		oXmlHttp.open("get", link, true);
 		this.callback = this.expandCallback;

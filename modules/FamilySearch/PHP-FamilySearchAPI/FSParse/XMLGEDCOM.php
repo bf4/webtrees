@@ -340,7 +340,7 @@ class XmlGedcom {
 		if ($factObj->getTag()=='NAME') {
 			$XGAssertion = new XG_Name();
 			$namerec = $factObj->getGedComRecord();
-			$XGAssertion->setPerson($NewXGPerson);
+			if ($NewXGPerson) $XGAssertion->setPerson($NewXGPerson);
 			$XGAssertion->addRecordInfo($namerec, $person_class);
 			$XGForm = new XG_Form();
 			$XGNamePiece = new XG_NamePieces();
@@ -359,7 +359,7 @@ class XmlGedcom {
 			if ($person_class->getSex()=="M") $XGAssertion->setGender("Male");
 			else if ($person_class->getSex()=="F") $XGAssertion->setGender("Female");
 			else $XGAssertion->setGender("Unknown");
-			$XGAssertion->setPerson($NewXGPerson);
+			if ($NewXGPerson) $XGAssertion->setPerson($NewXGPerson);
 			$XGAssertion->addRecordInfo($genderec, $person_class);
 		}
 			$factrec = $factObj->getGedcomRecord();
@@ -369,7 +369,7 @@ class XmlGedcom {
 			$xmltype = array_search($fact, $eventHandler);
 			if ($xmltype!==false) {
 				$XGAssertion = new XG_Event();
-				$XGAssertion->setPerson($NewXGPerson);
+				if ($NewXGPerson) $XGAssertion->setPerson($NewXGPerson);
 				$XGAssertion->addType($factrec, $person_class, $xmltype);
 				$XGAssertion->addDate($factrec, $person_class);
 				$XGAssertion->addPlace($factrec, $person_class);
@@ -384,7 +384,7 @@ class XmlGedcom {
 			$xmltype = array_search($fact, $ordinanceHandler);
 			if($xmltype!==false) {
 				$XGAssertion = new XG_Ordinance();
-				$XGAssertion->setPerson($NewXGPerson);
+				if ($NewXGPerson) $XGAssertion->setPerson($NewXGPerson);
 				$XGAssertion->addType($factrec, $person_class, $xmltype);
 				$XGAssertion->addDate($factrec, $person_class);
 				$XGAssertion->addPlace($factrec, $person_class);
@@ -399,7 +399,7 @@ class XmlGedcom {
 			$xmltype = array_search($fact, $factHandler);
 			if ($xmltype!==false) {
 				$XGAssertion = new XG_Characteristic();
-				$XGAssertion->setPerson($NewXGPerson);
+				if ($NewXGPerson) $XGAssertion->setPerson($NewXGPerson);
 				$XGAssertion->addType($factrec, $person_class, $xmltype);
 				$XGAssertion->addDate($factrec, $person_class);
 				$XGAssertion->addPlace($factrec, $person_class);
@@ -558,6 +558,31 @@ class XmlGedcom {
 		$this->persons[$NewXGPerson->getTempId()] = $NewXGPerson;
 		return $NewXGPerson;
 	}
+	
+	/**
+	 * Get XML to build a relationship between 2 people
+	 * @param string $fsid
+	 * @param string $type
+	 * @return string
+	 */
+	function getRelationshipXml($fsid, $type) {
+		$xml ='';
+		if (!empty($fsid)) {
+			$xml .= '<'.$type.' id="'.$fsid.'">
+	          <assertions>
+	            <characteristics>
+	              <characteristic>
+	                <value type="Other">
+	                  <title>'.$type.'</title>
+	                  <lineage>Biological</lineage>
+	                </value>
+	              </characteristic>
+	            </characteristics>
+	          </assertions>
+	        </'.$type.'>';
+		}
+		return $xml;
+	}
 
 	/**
 	 *  gets the GEDCOM for the fam record where person is a child as one solid string with linebreaks
@@ -637,7 +662,10 @@ class XmlGedcom {
 		$xml .= "<ordinances>";
 		if(!empty($assertions)){
 			foreach($assertions as $assertion){
-				if ($assertion instanceof XG_Ordinance) $xml.=$assertion->toXml($forAdd);
+				if ($assertion instanceof XG_Ordinance) {
+					//-- only ordinances with places can be added
+					if (!$forAdd || ($assertion->getPlace()!=null && $assertion->getPlace()->getOriginal()!="")) $xml.=$assertion->toXml($forAdd);
+				}
 			}
 		}
 		$xml .= "</ordinances>";
@@ -2622,7 +2650,7 @@ class XG_Ordinance extends XG_Assertion{
 	}
 
 	function setSpouse($value){
-		$this->person->addSpouse($value);
+		if ($this->person) $this->person->addSpouse($value);
 		$this->spouse=$value;
 	}
 
@@ -2757,10 +2785,10 @@ class XG_Ordinance extends XG_Assertion{
 		$xml='';
 		//-- ordinances cannot be added
 		//if ($forAdd) return $xml;
-		$xml.="<ordinance type=\"".$this->type."\" scope=\"".$this->scope."\"";
+		$xml.="<ordinance scope=\"".$this->scope."\"";
 		if (!$forAdd || $this->isMarkedForDelete()) {
 			$xml.=" version=\"".$this->version."\" modified=\"".$this->modified."\" ";
-			$xml.="id=\"".$this->id."\" disputing=\"".($this->disputing==false?"false":"true")."\" contributor=\"".$this->contributor."\"";
+			$xml.=" disputing=\"".($this->disputing==false?"false":"true")."\" contributor=\"".$this->contributor."\"";
 		}
 		if ($this->isMarkedForDelete()) $xml.=' action="Delete"';
 		$xml .=">\n";
@@ -2778,19 +2806,23 @@ class XG_Ordinance extends XG_Assertion{
 			}
 			$xml.="</notes>\n";
 		}
+		$xml .= "<value type=\"".$this->type."\"";
+		if (!empty($this->id)) $xml .= " id=\"".$this->id."\"";
+		$xml .= ">";
 		if(!empty($this->date))$xml.=$this->date->toXml();
 		if(!empty($this->place))$xml.=$this->place->toXml();
-		if(!empty($this->spouse)){
-			$xml.="<spouse role=\"".$this->spouse->getRole()."\" ref=\"".$this->spouse->getRef()."\" />\n";
-		}
-		foreach($this->parents as $parent) {
-			if (!empty($parent)) {
-				$xml .= "<parent ref=\"".$parent->getRef()."\" />\n";
-			}
-		}
+//		if(!empty($this->spouse)){
+//			$xml.="<spouse role=\"".$this->spouse->getRole()."\" ref=\"".$this->spouse->getRef()."\" />\n";
+//		}
+//		foreach($this->parents as $parent) {
+//			if (!empty($parent)) {
+//				$xml .= "<parent ref=\"".$parent->getRef()."\" />\n";
+//			}
+//		}
 		if (!empty($this->temple)) {
 			$xml .= "<temple>".$this->temple."</temple>\n";
 		}
+		$xml .="</value>";
 		$xml.="</ordinance>\n";
 		return $xml;
 	}
@@ -3492,7 +3524,7 @@ class XG_Characteristic extends XG_Assertion {
 		$xml.="<characteristic";
 		if (!$forAdd || $this->isMarkedForDelete()) {
 			$xml .=" version=\"".$this->version."\" ";
-			$xml.="modified=\"".$this->modified."\" id=\"".$this->id."\" disputing=\"".($this->disputing==false?"false":"true")."\" contributor=\"".$this->contributor."\"";
+			$xml.="modified=\"".$this->modified."\" disputing=\"".($this->disputing==false?"false":"true")."\" contributor=\"".$this->contributor."\"";
 		}
 		if ($this->isMarkedForDelete()) $xml.=' action="Delete"';
 		$xml.=">\n";
@@ -3512,7 +3544,9 @@ class XG_Characteristic extends XG_Assertion {
 			}
 			$xml.="</notes>\n";
 		}
-		$xml .= "<value type=\"".$this->type."\">";
+		$xml .= "<value type=\"".$this->type."\"";
+		if (!empty($this->id)) $xml .= " id=\"".$this->id."\"";
+		$xml .= ">";
 		if(!empty($this->detail)){
 			$xml.="<detail>".$this->detail."</detail>\n";
 		}
@@ -3893,7 +3927,7 @@ class XG_Event extends XG_Assertion{
 		if (!empty($this->scope) && $this->scope!="person") $xml .= " scope=\"".$this->scope."\"";
 		if (!$forAdd || $this->isMarkedForDelete()) {
 			$xml.=" version=\"".$this->version."\" modified=\"".$this->modified."\" ";
-			$xml.="id=\"".$this->id."\" disputing=\"".($this->disputing==false?"false":"true")."\" contributor=\"".$this->contributor."\"";
+			$xml.=" disputing=\"".($this->disputing==false?"false":"true")."\" contributor=\"".$this->contributor."\"";
 		}
 		if ($this->isMarkedForDelete()) $xml.=' action="Delete"';
 		$xml.=">\n";
@@ -3911,7 +3945,9 @@ class XG_Event extends XG_Assertion{
 			}
 			$xml.="</notes>\n";
 		}
-		$xml .= "<value type=\"".$this->type."\">";
+		$xml .= "<value type=\"".$this->type."\"";
+		if (!empty($this->id)) $xml .= " id=\"".$this->id."\"";
+		$xml .= ">";
 		if(!empty($this->title)) $xml .= "<title>".$this->title."</title>";
 		if(!empty($this->date))$xml.=$this->date->toXml();
 		if(!empty($this->place))$xml.=$this->place->toXml();
