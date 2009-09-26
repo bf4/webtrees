@@ -143,10 +143,10 @@ function MM(e) {
 			}
 			yearform = document.getElementById('yearform'+personnum);
 			ageform = document.getElementById('ageform'+personnum);
-			yearform.innerHTML = year+"      "+month+" <?php print get_first_letter($pgv_lang["month"]);?>   "+day+" <?php print get_first_letter($pgv_lang["day"]);?>";
+			yearform.innerHTML = year+"      "+month+" <?php print UTF8_substr($pgv_lang["month"], 0, 1);?>   "+day+" <?php print UTF8_substr($pgv_lang["day"], 0, 1);?>";
 			if (ba*yage>1 || ba*yage<-1 || ba*yage==0)
-				 ageform.innerHTML = (ba*yage)+" <?php print get_first_letter($pgv_lang["years"]);?>   "+(ba*mage)+" <?php print get_first_letter($pgv_lang["month"]);?>   "+(ba*dage)+" <?php print get_first_letter($pgv_lang["day"]);?>";
-			else ageform.innerHTML = (ba*yage)+" <?php print get_first_letter($pgv_lang["year"]);?>   "+(ba*mage)+" <?php print get_first_letter($pgv_lang["month"]);?>   "+(ba*dage)+" <?php print get_first_letter($pgv_lang["day"]);?>";
+				 ageform.innerHTML = (ba*yage)+" <?php print UTF8_substr($pgv_lang["years"], 0, 1);?>   "+(ba*mage)+" <?php print UTF8_substr($pgv_lang["month"], 0, 1);?>   "+(ba*dage)+" <?php print UTF8_substr($pgv_lang["day"], 0, 1);?>";
+			else ageform.innerHTML = (ba*yage)+" <?php print UTF8_substr($pgv_lang["year"], 0, 1);?>   "+(ba*mage)+" <?php print UTF8_substr($pgv_lang["month"], 0, 1);?>   "+(ba*dage)+" <?php print UTF8_substr($pgv_lang["day"], 0, 1);?>";
 			var line = document.getElementById('ageline'+personnum);
 			temp = newx-oldx;
 			if (textDirection=='rtl') temp = temp * -1;
