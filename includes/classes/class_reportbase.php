@@ -2161,9 +2161,9 @@ function PGVRGetPersonNameSHandler($attrs) {
 							$len += UTF8_strlen($words[$j]);
 						}
 						if ($len>$attrs["truncate"]) {
-							$first_letter = get_first_letter($words[$i]);
+							$first_letter = UTF8_substr($words[$i], 0, 1);
 							//do not show " of nick-names
-							if ($first_letter != '"') $name = get_first_letter($words[$i]).". ".$name;
+							if ($first_letter != '"') $name = UTF8_substr($words[$i], 0, 1).". ".$name;
 						}	
 						else $name = $words[$i]." ".$name;
 					}
@@ -2419,7 +2419,7 @@ function PGVRvarLetterSHandler($attrs) {
 		$var = preg_replace(array("/\[/","/\]/","/@fact/","/@desc/"), array("['","']",$tfact,$desc), $var);
 		eval("if (!empty(\$$var)) \$var = \$$var;");
 
-		$letter = get_first_letter($var);
+		$letter = UTF8_substr($var, 0, 1);
 		$currentElement->addText($letter);
 	}
 }

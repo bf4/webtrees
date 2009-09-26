@@ -98,7 +98,12 @@ if ($show_all=='yes') {
 	$url='famlist.php?show_all=yes';
 } elseif ($surname) {
 	$surname=UTF8_strtoupper($surname);
-	$alpha=get_first_letter($surname);
+	$alpha=UTF8_substr($surname, 0, 1);
+	foreach (db_collation_digraphs() as $from=>$to) {
+		if (strpos($surname, UTF8_strtoupper($to))===0) {
+			$alpha=UTF8_strtoupper($from);
+		}
+	}
 	$show_all='no';
 	$legend=$surname;
 	switch($falpha) {

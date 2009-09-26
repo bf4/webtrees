@@ -489,13 +489,13 @@ class LifespanControllerRoot extends BaseController {
 						$fact = $text[0];
 						$val = $text[1];
 						if (isset ($factAbbrev[$fact])) print $factAbbrev[$fact];
-						else print get_first_letter($val);
+						else print UTF8_substr($val, 0, 1);
 						print "</b><span>".PrintReady($val)."</span></a></div>";
 					}
 					$indiName = PrintReady(str_replace(array('<span class="starredname">', '</span>'), array('<u>', '</u>'), $value->getFullName()));
 					print "\n\t<table><tr>\n\t\t<td width=\"15\"><a class=\"showit\" href=\"#\"><b>";
 					if (isset ($factAbbrev["BIRT"])) print $factAbbrev["BIRT"];
-					else print get_first_letter($factarray["BIRT"]);
+					else print UTF8_substr($factarray["BIRT"], 0, 1);
 					if (!$birthReal) print "*";
 					print "</b><span>".$value->getSexImage().$indiName."<br/>".$factarray["BIRT"]." ".strip_tags($bdate->Display(false))." ".PrintReady($value->getBirthPlace())."</span></a></td>" .
 						"\n\t\t<td align=\"left\" width=\"100%\"><a href=\"".encode_url($value->getLinkUrl())."\">".$value->getSexImage().$indiName.":  $lifespan </a></td>" .
@@ -504,7 +504,7 @@ class LifespanControllerRoot extends BaseController {
 						if ($deathReal || $value->isDead()) {
 							print "<a class=\"showit\" href=\"#\"><b>";
 							if (isset ($factAbbrev["DEAT"])) print $factAbbrev["DEAT"];
-							else print get_first_letter($factarray["DEAT"]);
+							else print UTF8_substr($factarray["DEAT"], 0, 1);
 							if (!$deathReal) print "*";
 							print "</b><span>".$value->getSexImage().$indiName."<br/>".$factarray["DEAT"]." ".strip_tags($ddate->Display(false))." ".PrintReady($value->getDeathPlace())."</span></a>";
 						}
@@ -521,13 +521,13 @@ class LifespanControllerRoot extends BaseController {
 							$fact = $text[0];
 							$val = $text[1];
 							if (isset ($factAbbrev[$fact])) print $factAbbrev[$fact];
-							else print get_first_letter($val);
+							else print UTF8_substr($val, 0, 1);
 							print "</b><span>".PrintReady($val)."</span></a></div>";
 						}
 						$indiName = PrintReady(str_replace(array('<span class="starredname">', '</span>'), array('<u>', '</u>'), $value->getFullName()));
 						print "\n\t<table dir=\"ltr\"><tr>\n\t\t<td width=\"15\"><a class=\"showit\" href=\"#\"><b>";
 						if (isset ($factAbbrev["BIRT"])) print $factAbbrev["BIRT"];
-						else print get_first_letter($factarray["BIRT"]);
+						else print UTF8_substr($factarray["BIRT"], 0, 1);
 						if (!$birthReal) print "*";
 						print "</b><span>".$value->getSexImage().$indiName."<br/>".$factarray["BIRT"]." ".strip_tags($bdate->Display(false))." ".PrintReady($value->getBirthPlace())."</span></a></td>" .
 						"<td align=\"left\" width=\"100%\"><a href=\"".encode_url($value->getLinkUrl())."\">".$value->getSexImage().$indiName."</a></td>" .
@@ -536,7 +536,7 @@ class LifespanControllerRoot extends BaseController {
 							if ($deathReal || $value->isDead()) {
 								print "<a class=\"showit\" href=\"#\"><b>";
 								if (isset ($factAbbrev["DEAT"])) print $factAbbrev["DEAT"];
-								else print get_first_letter($factarray["DEAT"]);
+								else print UTF8_substr($factarray["DEAT"], 0, 1);
 								if (!$deathReal) print "*";
 								print "</b><span>".$value->getSexImage().$indiName."<br/>".$factarray["DEAT"]." ".strip_tags($ddate->Display(false))." ".PrintReady($value->getDeathPlace())."</span></a>";
 							}
@@ -549,7 +549,7 @@ class LifespanControllerRoot extends BaseController {
 						$indiName = PrintReady(str_replace(array('<span class="starredname">', '</span>'), array('<u>', '</u>'), $value->getFullName()));
 						print "<a class=\"showit\" href=\"".encode_url($value->getLinkUrl())."\"><b>";
 						if (isset ($factAbbrev["BIRT"])) print $factAbbrev["BIRT"];
-						else print get_first_letter($factarray["BIRT"]);
+						else print UTF8_substr($factarray["BIRT"], 0, 1);
 						if (!$birthReal) print "*";
 						print "</b><span>".$value->getSexImage().$indiName."<br/>".$factarray["BIRT"]." ".strip_tags($bdate->Display(false))." ".PrintReady($value->getBirthPlace())."<br/>";
 						foreach($eventinformation as $evtwidth=>$val){

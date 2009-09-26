@@ -297,7 +297,7 @@ class Event {
 
 		if ($abbreviate)
 			if (isset ($factAbbrev[$this->tag])) return $factAbbrev[$this->tag];
-			else return get_first_letter($this->label);
+			else return UTF8_substr($this->label, 0, 1);
 		else
 			return $this->label;
 	}

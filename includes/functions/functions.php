@@ -963,11 +963,11 @@ function get_gedcom_value($tag, $level, $gedrec, $truncate='', $convert=true) {
 			} else
 				if ($convert && $t=="SEX") {
 					if ($value=="M") {
-						$value = get_first_letter($pgv_lang["male"]);
+						$value = UTF8_substr($pgv_lang["male"], 0, 1);
 					} elseif ($value=="F") {
-						$value = get_first_letter($pgv_lang["female"]);
+						$value = UTF8_substr($pgv_lang["female"], 0, 1);
 					} else {
-						$value = get_first_letter($pgv_lang["unknown"]);
+						$value = UTF8_substr($pgv_lang["unknown"], 0, 1);
 					}
 				} else {
 					if (!empty($truncate)) {
