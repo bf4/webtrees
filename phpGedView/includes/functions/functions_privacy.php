@@ -791,7 +791,8 @@ function privatize_gedcom($gedrec) {
 			if (
 				!strpos($gedrec, "\n2 RESN") &&
 				!isset($person_facts[$gid]) &&
-				!preg_match('/\n1 (?:'.implode('|', array_keys($global_facts)).')/', $gedrec)
+				!preg_match('/\n1 (?:'.implode('|', array_keys($global_facts)).')/', $gedrec) &&
+				!preg_match('/\n2 TYPE (?:'.implode('|', array_keys($global_facts)).')/', $gedrec)
 			) {
 				// Nothing to indicate fact privacy needed
 				return $gedrec;
