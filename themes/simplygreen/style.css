@@ -1377,7 +1377,7 @@ a.showit:hover span {
 }
 /* End of Autocomplete styles*/
 
-/* Flyout menu Styles */
+/* Navigator & Flyout menu Styles */
 .flyout {
 color:#ffffff; 
 text-align: left;
@@ -1395,17 +1395,28 @@ padding: 3px;
 .flyout2 {
 color:#ffffff;
 text-align: left;
-margin-top: -20px;
-left: 70px;
+margin-top: -2px;
+left: 64px;
 padding: 3px;
 }
+.flyout2rtl {
+color:#ffffff; 
+text-align: right;
+margin-top: -2px;
+right: 64px;
+padding: 3px;
+}
+
 /* navigator name and dob hover */
 .nam a:hover{
-color:#ff0000;
+color:orange;
 }
-/* navigator fyout name hover */
+/* navigator flyout name hover */
 .flyout2 a:hover{
-color:#ff0000;
+color:orange;
+}
+.flyout2rtl a:hover{
+color:orange;
 }
 .flyout4 {
 color:#ffffff;
@@ -1422,16 +1433,6 @@ text-align: left;
 margin-top: 0px;
 left: 0px;
 padding: 0px;
-}
-.flyout2rtl {
-color:#ffffff; 
-text-align: right;
-margin-top: -20px;
-right: 0px;
-padding: 3px;
-}
-.flyout2rtl a:hover{
-color:#ff0000;
 }
 /* End of Flyout Menu styles*/
 
@@ -1465,17 +1466,24 @@ ul.clist {
 #tabs li {
  padding-bottom: 0px;
 }
+/*
 .static_tab_content {
 	position:relative; 
-	padding-left:5px; 
-	padding-right:5px; 
 	border:#c8c8c8 1px; 
 	border-style:none solid solid solid; 
 	display:none;
 }
+*/
+.nav_content {
+	width:240px;
+	background:#458258;
+	padding-left:5px;
+	padding-right:5px;
+	padding-top:3px;
+}
 .static_tab_rtl {
 	float: left;
-	margin-right: 1px;
+	margin-left: 1px;
 	width: 240px;
 	border-color: #cccccc;
 }
@@ -1488,16 +1496,16 @@ ul.clist {
 .static_tab_content_rtl {
 	position: absolute;
 	z-index: 100;
-	left: 2px;
+	left: 0px;
 	background: #458258; 
 	margin-top:-2px; 
-	margin-left:10px;
+	margin-left:13px;
 }
 .static_tab_content_ltr {
-	position: absolute;
+	position: absolute; 
 	z-index: 100;
-	right: 2px;
+	right: 0px; 
 	background: #458258; 
 	margin-top:-2px; 
-	margin-right:10px;
+	margin-right:15px;
 }

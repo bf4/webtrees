@@ -99,7 +99,7 @@ function enable_static_tab() {
 	jQuery(".static_tab").addClass("static_tab_<?php echo $TEXT_DIRECTION;?>");
     jQuery(".static_tab_content").removeClass("ui-tabs-hide");
     jQuery(".static_tab_content").removeClass("ui-tabs-panel");
-    jQuery(".static_tab_content").removeClass("ui-widget-content");
+    // jQuery(".static_tab_content").removeClass("ui-widget-content");
     jQuery(".static_tab_content").addClass("ui-corner-all");
     var top = jQuery(".static_tab").offset().top+jQuery(".static_tab").height();
 	jQuery(".static_tab_content").css("top", top+"px");

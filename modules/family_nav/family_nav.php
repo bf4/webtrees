@@ -81,9 +81,8 @@ class family_nav_Tab extends Tab {
 	';
 	echo PGV_JS_END;
 
-//     Start Family Nav Table ----------------------------
-		// echo "<table class=\"facts_table\" width='230' cellpadding=\"0\">";
-		echo "<table width='230' cellpadding=\"0\">";
+//    Start Family Nav Table ----------------------------
+		echo "<table class=\"nav_content\" cellpadding=\"0\">"; 
 		global $pgv_lang, $SHOW_ID_NUMBERS, $PGV_IMAGE_DIR, $PGV_IMAGES, $PGV_MENUS_AS_LISTS;
 		global $spouselinks, $parentlinks, $DeathYr, $BirthYr;
 		global $TEXT_DIRECTION;
@@ -98,8 +97,7 @@ class family_nav_Tab extends Tab {
 			$styleadd = "";
 			?>
 			<tr>
-				<td style="padding-bottom: 4px;" align="center" colspan="2">
-				<br />
+				<td style="padding-bottom:4px;" align="center" colspan="2">
 				<?php
 				echo "<a style=\"padding:0px; width:100%;\" href=\"family.php?famid=".$famid."\" onclick=\"return familyNavLoad('family.php?famid=".$famid."');\">";
 				echo "<b>".$pgv_lang["parent_family"]."&nbsp;&nbsp;</b><span class=\"age\">(".$famid.")</span>";
@@ -128,7 +126,7 @@ class family_nav_Tab extends Tab {
 				if (PrintReady($people["husb"]->getBirthYear()) == 0) { $BirthYr = ""; }else{ $BirthYr = PrintReady($people["husb"]->getBirthYear()); }
 				?>
 				<tr>
-					<td class="facts_label<?php print $styleadd; ?>" nowrap="nowrap" >
+					<td class="facts_label<?php print $styleadd; ?>" nowrap="nowrap" style="width:75px;">
 						<?php if ($PGV_MENUS_AS_LISTS) echo "<ul>\n";
 							$menu->printMenu();
 						if ($PGV_MENUS_AS_LISTS) echo "</ul>\n";
@@ -163,7 +161,7 @@ class family_nav_Tab extends Tab {
 				if (PrintReady($people["wife"]->getBirthYear()) == 0) { $BirthYr = ""; }else{ $BirthYr = PrintReady($people["wife"]->getBirthYear()); }
 				?>
 				<tr>
-					<td class="facts_label<?php print $styleadd; ?>">
+					<td class="facts_label<?php print $styleadd; ?>" nowrap="nowrap" style="width:75px;">
 						<?php if ($PGV_MENUS_AS_LISTS) echo "<ul>\n";
 							$menu->printMenu();
 						if ($PGV_MENUS_AS_LISTS) echo "</ul>\n";
@@ -203,7 +201,7 @@ class family_nav_Tab extends Tab {
 
 					?>
 					<tr>
-						<td class="facts_label<?php print $styleadd; ?>">
+						<td class="facts_label<?php print $styleadd; ?>" nowrap="nowrap" style="width:75px;">
 						<?php
 						if ($pid == $child->getXref() ) {
 							print $child->getLabel();
@@ -282,7 +280,7 @@ class family_nav_Tab extends Tab {
 				?>
 
 				<tr>
-					<td class="facts_label<?php print $styleadd; ?>" nowrap="nowrap">
+					<td class="facts_label<?php print $styleadd; ?>"  nowrap="nowrap" style="width:75px;">
 						<?php if ($PGV_MENUS_AS_LISTS) echo "<ul>\n";
 						$menu->printMenu();
 						if ($PGV_MENUS_AS_LISTS) echo "</ul>\n";
@@ -325,7 +323,7 @@ class family_nav_Tab extends Tab {
 				if (PrintReady($people["wife"]->getBirthYear()) == 0) { $BirthYr = ""; }else{ $BirthYr = PrintReady($people["wife"]->getBirthYear()); }
 				?>
 				<tr>
-					<td class="facts_label<?php print $styleadd; ?>" nowrap="nowrap">
+					<td class="facts_label<?php print $styleadd; ?>" nowrap="nowrap" style="width:75px;">
 						<?php if ($PGV_MENUS_AS_LISTS) echo "<ul>\n";
 							$menu->printMenu();
 						if ($PGV_MENUS_AS_LISTS) echo "</ul>\n";
@@ -363,7 +361,7 @@ class family_nav_Tab extends Tab {
 					if (PrintReady($child->getBirthYear()) == 0) { $BirthYr = ""; }else{ $BirthYr = PrintReady($child->getBirthYear()); }
 					?>
 					<tr>
-						<td class="facts_label<?php print $styleadd; ?>" nowrap="nowrap">
+						<td class="facts_label<?php print $styleadd; ?>" nowrap="nowrap" style="width:75px;">
 						<?php if ($PGV_MENUS_AS_LISTS) echo "<ul>\n";
 							$menu->printMenu();
 						if ($PGV_MENUS_AS_LISTS) echo "</ul>\n";
@@ -428,7 +426,7 @@ class family_nav_Tab extends Tab {
 				if (PrintReady($people["husb"]->getBirthYear()) == 0) { $BirthYr = ""; }else{ $BirthYr = PrintReady($people["husb"]->getBirthYear()); }
 				?>
 				<tr>
-					<td class="facts_label<?php print $styleadd; ?>" nowrap="nowrap">
+					<td class="facts_label<?php print $styleadd; ?>" nowrap="nowrap" style="width:75px;">
 						<?php if ($PGV_MENUS_AS_LISTS) echo "<ul>\n";
 						$menu->printMenu();
 						if ($PGV_MENUS_AS_LISTS) echo "</ul>\n";
@@ -468,7 +466,7 @@ class family_nav_Tab extends Tab {
 				if (PrintReady($people["wife"]->getBirthYear()) == 0) { $BirthYr = ""; }else{ $BirthYr = PrintReady($people["wife"]->getBirthYear()); }
 				?>
 				<tr>
-					<td class="facts_label<?php print $styleadd; ?>" nowrap="nowrap">
+					<td class="facts_label<?php print $styleadd; ?>" nowrap="nowrap" style="width:75px;">
 						<?php if ($PGV_MENUS_AS_LISTS) echo "<ul>\n";
 						$menu->printMenu();
 						if ($PGV_MENUS_AS_LISTS) echo "</ul>\n";
@@ -510,7 +508,7 @@ class family_nav_Tab extends Tab {
 					if (PrintReady($child->getBirthYear()) == 0) { $BirthYr = ""; }else{ $BirthYr = PrintReady($child->getBirthYear()); }
 					?>
 					<tr>
-						<td class="facts_label<?php print $styleadd; ?>" nowrap="nowrap">
+						<td class="facts_label<?php print $styleadd; ?>" nowrap="nowrap" style="width:75px;">
 						<?php if ($PGV_MENUS_AS_LISTS) echo "<ul>\n";
 						$menu->printMenu();
 						if ($PGV_MENUS_AS_LISTS) echo "</ul>\n";

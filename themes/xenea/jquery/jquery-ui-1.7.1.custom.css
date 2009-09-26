@@ -404,5 +404,11 @@
 .ui-tabs .ui-tabs-panel { padding: 1em 1.4em; display: block; border-width: 0; background: none; }
 .ui-tabs .ui-tabs-hide { display: none !important; }
 
-.static_tab_content { margin-top:-2px; margin-right:9px; }
 
+/* PGV Theme additions and changes ----------*/
+.ui-tabs .ui-tabs-nav 					 { padding: .5em .5em 0; border-color: #999999; } 
+.ui-tabs .ui-tabs-nav li 					 { margin: .1em .2em 0px 0; background: #E7EFFF; border-color: #999999; }
+.ui-tabs .ui-tabs-nav li a 					 { padding: .3em 1em .35em 1em;  }
+.ui-tabs-nav li.ui-tabs-selected 			 { padding-bottom: 0px; bottom: -1px; border-color: #555555; border-bottom-width: 0; background: white;}
+
+.static_tab_content 						 { border-style:none solid solid solid; background: #E7EFFF; border-color: #999999;}
