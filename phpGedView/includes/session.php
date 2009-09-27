@@ -72,12 +72,17 @@ define('PGV_REGEX_UNSAFE',   '[\x00-\xFF]*'); // Use with care and apply additio
 
 // UTF8 representation of various characters
 define('PGV_UTF8_BOM',    "\xEF\xBB\xBF"); // U+FEFF
-define('PGV_UTF8_LRM',    "\xE2\x80\x8E"); // U+200E
-define('PGV_UTF8_RLM',    "\xE2\x80\x8F"); // U+200F
-define('PGV_UTF8_LRO',    "\xE2\x80\xAD"); // U+202D  (Left to Right override: force everything following to LTR mode)
-define('PGV_UTF8_RLO',    "\xE2\x80\xAE"); // U+202E  (Right to Left override: force everything following to RTL mode)
 define('PGV_UTF8_MALE',   "\xE2\x99\x82"); // U+2642
 define('PGV_UTF8_FEMALE', "\xE2\x99\x80"); // U+2640
+
+// UTF8 control codes affecting the BiDirectional algorithm (see http://www.unicode.org/reports/tr9/)
+define('PGV_UTF8_LRM',    "\xE2\x80\x8E"); // U+200E  (Left to Right mark:  zero-width character with LTR directionality)
+define('PGV_UTF8_RLM',    "\xE2\x80\x8F"); // U+200F  (Right to Left mark:  zero-width character with RTL directionality)
+define('PGV_UTF8_LRO',    "\xE2\x80\xAD"); // U+202D  (Left to Right override: force everything following to LTR mode)
+define('PGV_UTF8_RLO',    "\xE2\x80\xAE"); // U+202E  (Right to Left override: force everything following to RTL mode)
+define('PGV_UTF8_LRE',    "\xE2\x80\xAA"); // U+202A  (Left to Right embedding: treat everything following as LTR text)
+define('PGV_UTF8_RLE',    "\xE2\x80\xAB"); // U+202B  (Right to Left embedding: treat everything following as RTL text)
+define('PGV_UTF8_PDF',    "\xE2\x80\xAC"); // U+202C  (Pop directional formatting: restore state prior to last LRO, RLO, LRE, RLE)
 
 // Alternatives to BMD events for lists, charts, etc.
 define('PGV_EVENTS_BIRT', 'BIRT|CHR|BAPM|_BRTM|ADOP');
