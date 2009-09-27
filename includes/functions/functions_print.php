@@ -2521,14 +2521,14 @@ function DumpString($input) {
 	if (empty($input)) return false;
 
 	$UTF8 = array();
-	$hex1L = "";
-	$hex1R = "";
-	$hex2L = "";
-	$hex2R = "";
-	$hex3L = "";
-	$hex3R = "";
-	$hex4L = "";
-	$hex4R = "";
+	$hex1L = '';
+	$hex1R = '';
+	$hex2L = '';
+	$hex2R = '';
+	$hex3L = '';
+	$hex3R = '';
+	$hex4L = '';
+	$hex4R = '';
 
 	$pos = 0;
 	while (true) {
@@ -2551,8 +2551,8 @@ function DumpString($input) {
 			$hex2L .= substr($byte, 0, 1);
 			$hex2R .= substr($byte, 1, 1);
 		} else {
-			$hex2L .= " ";
-			$hex2R .= " ";
+			$hex2L .= ' ';
+			$hex2R .= ' ';
 		}
 
 		if ($charLen > 2) {
@@ -2560,8 +2560,8 @@ function DumpString($input) {
 			$hex3L .= substr($byte, 0, 1);
 			$hex3R .= substr($byte, 1, 1);
 		} else {
-			$hex3L .= " ";
-			$hex3R .= " ";
+			$hex3L .= ' ';
+			$hex3R .= ' ';
 		}
 
 		if ($charLen > 3) {
@@ -2569,8 +2569,8 @@ function DumpString($input) {
 			$hex4L .= substr($byte, 0, 1);
 			$hex4R .= substr($byte, 1, 1);
 		} else {
-			$hex4L .= " ";
-			$hex4R .= " ";
+			$hex4L .= ' ';
+			$hex4R .= ' ';
 		}
 
 		$pos += $charLen;
@@ -2579,76 +2579,78 @@ function DumpString($input) {
 
 	$pos = 0;
 	$lastPos = count($UTF8);
-	$haveByte4 = (trim($hex4L)!="");
-	$haveByte3 = (trim($hex3L)!="");
-	$haveByte2 = (trim($hex2L)!="");
+	$haveByte4 = (trim($hex4L)!='');
+	$haveByte3 = (trim($hex3L)!='');
+	$haveByte2 = (trim($hex2L)!='');
 
 	// We're ready: now output everything
-	echo "<br /><code><span dir=\"ltr\">";
+	echo '<br /><code><span dir="ltr">';
 	while (true) {
 		$lineLength = $lastPos - $pos;
 		if ($lineLength>100) $lineLength = 100;
 
 		// Line 1: ruler
-		$thisLine = substr("      ".$pos, -6)." ";
-		$thisLine .= substr("........10........20........30........40........50........60........70........80........90.......100", 0, $lineLength);
-		echo str_replace(" ", "&nbsp;", $thisLine)."<br />";
+		$thisLine = substr('      '.$pos, -6).' ';
+		$thisLine .= substr('........10........20........30........40........50........60........70........80........90.......100', 0, $lineLength);
+		echo str_replace(' ', '&nbsp;', $thisLine), '<br />';
 
 		// Line 2: UTF8 character string
-		$thisLine = "  UTF8 " . PGV_UTF8_LRO;		// Force every char in this line to be LTR, even if it's normally RTL
+		$thisLine = '';
 		for ($i=$pos; $i<($pos+$lineLength); $i++) {
 			if (ord(substr($UTF8[$i], 0, 1)) < 0x20) $thisLine .= " ";
 			else $thisLine .= $UTF8[$i];
 		}
-		echo str_replace(array("&", "<", " ", PGV_UTF8_LRM, PGV_UTF8_RLM), array("&amp;", "&lt;", "&nbsp;", "&nbsp;", "&nbsp;"), $thisLine)."<br />";
+		$thisLine = str_replace(array('&', '<', ' '), array('&amp;', '&lt;', '&nbsp;'), $thisLine);
+		$thisLine = str_replace(array(PGV_UTF8_LRM, PGV_UTF8_RLM, PGV_UTF8_LRO, PGV_UTF8_RLO, PGV_UTF8_LRE, PGV_UTF8_RLE, PGV_UTF8_PDF), '&nbsp;', $thisLine);		// Remove BiDirectional control codes from text
+		echo '&nbsp;&nbsp;UTF8&nbsp;', PGV_UTF8_LRO, $thisLine, '<br />';
 
 		// Line 3:  First hexadecimal byte
-		$thisLine = "Byte 1 ";
+		$thisLine = 'Byte 1 ';
 		$thisLine .= substr($hex1L, $pos, $lineLength);
-		$thisLine .= "<br />";
-		$thisLine .= "       ";
+		$thisLine .= '<br />';
+		$thisLine .= '       ';
 		$thisLine .= substr($hex1R, $pos, $lineLength);
-		$thisLine .= "<br />";
-		echo str_replace(array(" ", "<br&nbsp;/>"), array("&nbsp;", "<br />"), $thisLine);
+		$thisLine .= '<br />';
+		echo str_replace(array(' ', '<br&nbsp;/>'), array('&nbsp;', '<br />'), $thisLine);
 
 		// Line 4:  Second hexadecimal byte
 		if ($haveByte2) {
-			$thisLine = "Byte 2 ";
+			$thisLine = 'Byte 2 ';
 			$thisLine .= substr($hex2L, $pos, $lineLength);
-			$thisLine .= "<br />";
-			$thisLine .= "       ";
+			$thisLine .= '<br />';
+			$thisLine .= '       ';
 			$thisLine .= substr($hex2R, $pos, $lineLength);
-			$thisLine .= "<br />";
-			echo str_replace(array(" ", "<br&nbsp;/>"), array("&nbsp;", "<br />"), $thisLine);
+			$thisLine .= '<br />';
+			echo str_replace(array(' ', '<br&nbsp;/>'), array('&nbsp;', '<br />'), $thisLine);
 		}
 
 		// Line 5:  Third hexadecimal byte
 		if ($haveByte3) {
-			$thisLine = "Byte 3 ";
+			$thisLine = 'Byte 3 ';
 			$thisLine .= substr($hex3L, $pos, $lineLength);
-			$thisLine .= "<br />";
-			$thisLine .= "       ";
+			$thisLine .= '<br />';
+			$thisLine .= '       ';
 			$thisLine .= substr($hex3R, $pos, $lineLength);
-			$thisLine .= "<br />";
-			echo str_replace(array(" ", "<br&nbsp;/>"), array("&nbsp;", "<br />"), $thisLine);
+			$thisLine .= '<br />';
+			echo str_replace(array(' ', '<br&nbsp;/>'), array('&nbsp;', '<br />'), $thisLine);
 		}
 
 		// Line 6:  Fourth hexadecimal byte
 		if ($haveByte4) {
-			$thisLine = "Byte 4 ";
+			$thisLine = 'Byte 4 ';
 			$thisLine .= substr($hex4L, $pos, $lineLength);
-			$thisLine .= "<br />";
-			$thisLine .= "       ";
+			$thisLine .= '<br />';
+			$thisLine .= '       ';
 			$thisLine .= substr($hex4R, $pos, $lineLength);
-			$thisLine .= "<br />";
-			echo str_replace(array(" ", "<br&nbsp;/>"), array("&nbsp;", "<br />"), $thisLine);
+			$thisLine .= '<br />';
+			echo str_replace(array(' ', '<br&nbsp;/>'), array('&nbsp;', '<br />'), $thisLine);
 		}
-		echo "<br />";
+		echo '<br />';
 		$pos += $lineLength;
 		if ($pos >= $lastPos) break;
 	}
 
-	echo "</span></code>";
+	echo '</span></code>';
 	return true;
 }
 ?>
