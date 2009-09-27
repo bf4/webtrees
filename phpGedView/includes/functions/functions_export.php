@@ -94,7 +94,9 @@ function reformat_record_export($rec) {
 * Create a header for a (newly-created or already-imported) gedcom file.
 */
 function gedcom_header($gedfile) {
-	global $CHARACTER_SET, $GEDCOMS, $pgv_lang, $TBLPREFIX;
+	global $CHARACTER_SET, $pgv_lang, $TBLPREFIX;
+
+	$ged_id=get_id_from_gedcom($gedfile);
 
 	// Default values for a new header
 	$HEAD="0 HEAD";
@@ -111,7 +113,7 @@ function gedcom_header($gedfile) {
 	$SUBM="\n1 SUBM @SUBM@\n0 @SUBM@ SUBM\n1 NAME ".PGV_USER_NAME; // The SUBM record is mandatory
 
 	// Preserve some values from the original header
-	if (isset($GEDCOMS[$gedfile]['imported']) && $GEDCOMS[$gedfile]['imported']) {
+	if (get_gedcom_setting($ged_id, 'imported')) {
 		$head=find_gedcom_record("HEAD");
 		if (preg_match("/\n1 CHAR .+/", $head, $match)) {
 			$CHAR=$match[0];
@@ -131,14 +133,14 @@ function gedcom_header($gedfile) {
 		// Link to SUBM/SUBN records, if they exist
 		$subn=
 			PGV_DB::prepare("SELECT o_id FROM ${TBLPREFIX}other WHERE o_type=? AND o_file=?")
-			->execute(array('SUBN', $GEDCOMS[$gedfile]["id"]))
+			->execute(array('SUBN', $ged_id))
 			->fetchOne();
 		if ($subn) {
 			$SUBN="\n1 SUBN @{$subn}@";
 		}
 		$subm=
 			PGV_DB::prepare("SELECT o_id FROM ${TBLPREFIX}other WHERE o_type=? AND o_file=?")
-			->execute(array('SUBM', $GEDCOMS[$gedfile]["id"]))
+			->execute(array('SUBM', $ged_id))
 			->fetchOne();
 		if ($subm) {
 			$SUBM="\n1 SUBM @{$subm}@";
@@ -250,12 +252,13 @@ function convert_media_path($rec, $path, $slashes) {
  *			'slashes':		what folder separators apply to media file paths?  (forward, backward)
  */
 function export_gedcom($gedcom, $gedout, $exportOptions) {
-	global $GEDCOMS, $GEDCOM, $pgv_lang, $CHARACTER_SET;
+	global $GEDCOM, $pgv_lang, $CHARACTER_SET;
 	global $TBLPREFIX;
 
 	// Temporarily switch to the specified GEDCOM
 	$oldGEDCOM = $GEDCOM;
 	$GEDCOM = $gedcom;
+	$ged_id=get_id_from_gedcom($gedcom);
 
 	$tempUserID = '#ExPoRt#';
 	if ($exportOptions['privatize']!='none') {
@@ -279,7 +282,7 @@ function export_gedcom($gedcom, $gedout, $exportOptions) {
 
 	$recs=
 		PGV_DB::prepare("SELECT i_gedcom FROM {$TBLPREFIX}individuals WHERE i_file=? AND i_id NOT LIKE ? ORDER BY i_id")
-		->execute(array($GEDCOMS[$gedcom]['id'], '%:%'))
+		->execute(array($ged_id, '%:%'))
 		->fetchOneColumn();
 	foreach ($recs as $rec) {
 		$rec=remove_custom_tags($rec, $exportOptions['noCustomTags']);
@@ -294,7 +297,7 @@ function export_gedcom($gedcom, $gedout, $exportOptions) {
 
 	$recs=
 		PGV_DB::prepare("SELECT f_gedcom FROM {$TBLPREFIX}families WHERE f_file=? AND f_id NOT LIKE ? ORDER BY f_id")
-		->execute(array($GEDCOMS[$gedcom]['id'], '%:%'))
+		->execute(array($ged_id, '%:%'))
 		->fetchOneColumn();
 	foreach ($recs as $rec) {
 		$rec=remove_custom_tags($rec, $exportOptions['noCustomTags']);
@@ -309,7 +312,7 @@ function export_gedcom($gedcom, $gedout, $exportOptions) {
 
 	$recs=
 		PGV_DB::prepare("SELECT s_gedcom FROM {$TBLPREFIX}sources WHERE s_file=? AND s_id NOT LIKE ? ORDER BY s_id")
-		->execute(array($GEDCOMS[$gedcom]['id'], '%:%'))
+		->execute(array($ged_id, '%:%'))
 		->fetchOneColumn();
 	foreach ($recs as $rec) {
 		$rec=remove_custom_tags($rec, $exportOptions['noCustomTags']);
@@ -324,7 +327,7 @@ function export_gedcom($gedcom, $gedout, $exportOptions) {
 
 	$recs=
 		PGV_DB::prepare("SELECT o_gedcom FROM {$TBLPREFIX}other WHERE o_file=? AND o_id NOT LIKE ? AND o_type!=? AND o_type!=? ORDER BY o_id")
-		->execute(array($GEDCOMS[$gedcom]['id'], '%:%', 'HEAD', 'TRLR'))
+		->execute(array($ged_id, '%:%', 'HEAD', 'TRLR'))
 		->fetchOneColumn();
 	foreach ($recs as $rec) {
 		$rec=remove_custom_tags($rec, $exportOptions['noCustomTags']);
@@ -339,7 +342,7 @@ function export_gedcom($gedcom, $gedout, $exportOptions) {
 
 	$recs=
 		PGV_DB::prepare("SELECT m_gedrec FROM {$TBLPREFIX}media WHERE m_gedfile=? AND m_media NOT LIKE ? ORDER BY m_media")
-		->execute(array($GEDCOMS[$gedcom]['id'], '%:%'))
+		->execute(array($ged_id, '%:%'))
 		->fetchOneColumn();
 	foreach ($recs as $rec) {
 		$rec = convert_media_path($rec, $exportOptions['path'], $exportOptions['slashes']);
@@ -378,12 +381,13 @@ function export_gedcom($gedcom, $gedout, $exportOptions) {
  *			'slashes':		what folder separators apply to media file paths?  (forward, backward)
  */
 function export_gramps($gedcom, $gedout, $exportOptions) {
-	global $GEDCOMS, $GEDCOM, $pgv_lang;
+	global $GEDCOM, $pgv_lang;
 	global $TBLPREFIX;
 
 	// Temporarily switch to the specified GEDCOM
 	$oldGEDCOM = $GEDCOM;
 	$GEDCOM = $gedcom;
+	$ged_id=get_id_from_gedcom($gedcom);
 
 	$tempUserID = '#ExPoRt#';
 	if ($exportOptions['privatize']!='none') {
@@ -400,7 +404,7 @@ function export_gramps($gedcom, $gedout, $exportOptions) {
 
 	$recs=
 		PGV_DB::prepare("SELECT i_id, i_gedcom FROM {$TBLPREFIX}individuals WHERE i_file=? AND i_id NOT LIKE ? ORDER BY i_id")
-		->execute(array($GEDCOMS[$gedcom]['id'], '%:%'))
+		->execute(array($ged_id, '%:%'))
 		->fetchAssoc();
 	foreach ($recs as $id=>$rec) {
 		$rec = remove_custom_tags($rec, $exportOptions['noCustomTags']);
@@ -410,7 +414,7 @@ function export_gramps($gedcom, $gedout, $exportOptions) {
 
 	$recs=
 		PGV_DB::prepare("SELECT f_id, f_gedcom FROM {$TBLPREFIX}families WHERE f_file=? AND f_id NOT LIKE ? ORDER BY f_id")
-		->execute(array($GEDCOMS[$gedcom]['id'], '%:%'))
+		->execute(array($ged_id, '%:%'))
 		->fetchAssoc();
 	foreach ($recs as $id=>$rec) {
 		$rec = remove_custom_tags($rec, $exportOptions['noCustomTags']);
@@ -420,7 +424,7 @@ function export_gramps($gedcom, $gedout, $exportOptions) {
 
 	$recs=
 		PGV_DB::prepare("SELECT s_id, s_gedcom FROM {$TBLPREFIX}sources WHERE s_file=? AND s_id NOT LIKE ? ORDER BY s_id")
-		->execute(array($GEDCOMS[$gedcom]['id'], '%:%'))
+		->execute(array($ged_id, '%:%'))
 		->fetchAssoc();
 	foreach ($recs as $id=>$rec) {
 		$rec = remove_custom_tags($rec, $exportOptions['noCustomTags']);
@@ -430,7 +434,7 @@ function export_gramps($gedcom, $gedout, $exportOptions) {
 
 	$recs=
 		PGV_DB::prepare("SELECT m_media, m_gedrec FROM {$TBLPREFIX}media WHERE m_gedfile=? AND m_media NOT LIKE ? ORDER BY m_media")
-		->execute(array($GEDCOMS[$gedcom]['id'], '%:%'))
+		->execute(array($ged_id, '%:%'))
 		->fetchAssoc();
 	foreach ($recs as $id=>$rec) {
 		$rec = convert_media_path($rec, $exportOptions['path'], $exportOptions['slashes']);
