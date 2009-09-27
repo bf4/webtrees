@@ -2025,23 +2025,21 @@ function get_next_id($table, $field) {
 /**
 * get a list of remote servers
 */
-function get_server_list(){
-	global $GEDCOM, $GEDCOMS, $TBLPREFIX, $sitelist;
+function get_server_list($ged_id=PGV_GED_ID){
+	global $TBLPREFIX;
 
 	$sitelist = array();
 
-	if (isset($GEDCOMS[$GEDCOM]) && check_for_import($GEDCOM)) {
-		$rows=PGV_DB::prepare("SELECT s_id, s_name, s_gedcom, s_file FROM {$TBLPREFIX}sources WHERE s_file=? AND s_dbid=? ORDER BY s_name")
-			->execute(array(PGV_GED_ID, 'Y'))
-			->fetchAll();
-		foreach ($rows as $row) {
-			$source = array();
-			$source["name"] = $row->s_name;
-			$source["gedcom"] = $row->s_gedcom;
-			$source["gedfile"] = $row->s_file;
-			$source["url"] = get_gedcom_value("URL", 1, $row->s_gedcom);
-			$sitelist[$row->s_id] = $source;
-		}
+	$rows=PGV_DB::prepare("SELECT s_id, s_name, s_gedcom, s_file FROM {$TBLPREFIX}sources WHERE s_file=? AND s_dbid=? ORDER BY s_name")
+		->execute(array($ged_id, 'Y'))
+		->fetchAll();
+	foreach ($rows as $row) {
+		$source = array();
+		$source["name"] = $row->s_name;
+		$source["gedcom"] = $row->s_gedcom;
+		$source["gedfile"] = $row->s_file;
+		$source["url"] = get_gedcom_value("URL", 1, $row->s_gedcom);
+		$sitelist[$row->s_id] = $source;
 	}
 
 	return $sitelist;
