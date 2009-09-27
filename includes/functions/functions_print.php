@@ -398,7 +398,7 @@ function print_header($title, $head="", $use_alternate_styles=true) {
 	global $HOME_SITE_URL, $HOME_SITE_TEXT, $SERVER_URL;
 	global $BROWSERTYPE, $SEARCH_SPIDER;
 	global $view, $cart;
-	global $CHARACTER_SET, $PGV_IMAGE_DIR, $GEDCOMS, $GEDCOM, $GEDCOM_TITLE, $CONTACT_EMAIL, $COMMON_NAMES_THRESHOLD, $INDEX_DIRECTORY;
+	global $CHARACTER_SET, $PGV_IMAGE_DIR, $GEDCOM, $GEDCOM_TITLE, $CONTACT_EMAIL, $COMMON_NAMES_THRESHOLD, $INDEX_DIRECTORY;
 	global $SCRIPT_NAME, $QUERY_STRING, $action, $query, $changelanguage,$theme_name;
 	global $FAVICON, $stylesheet, $print_stylesheet, $rtl_stylesheet, $headerfile, $toplinks, $THEME_DIR, $print_headerfile;
 	global $PGV_IMAGES, $TEXT_DIRECTION, $ONLOADFUNCTION,$REQUIRE_AUTHENTICATION, $SHOW_SOURCES, $ENABLE_RSS, $RSS_FORMAT;
@@ -436,9 +436,6 @@ function print_header($title, $head="", $use_alternate_styles=true) {
 		if ($RSS_FORMAT == "ATOM" || $RSS_FORMAT == "ATOM0.3"){
 			$applicationType = "application/atom+xml";
 		}
-		if(empty($GEDCOM_TITLE)){
-			$GEDCOM_TITLE = "RSS";
-		}
 	}
 	$javascript = '';
 	if (isset($changelanguage))
@@ -470,8 +467,12 @@ function print_header($title, $head="", $use_alternate_styles=true) {
 			$surnames = array();
 			$surnameList = '';
 		}
-		if ((empty($META_DESCRIPTION))&&(!empty($GEDCOM_TITLE))) $META_DESCRIPTION = $GEDCOM_TITLE;
-		if ((empty($META_PAGE_TOPIC))&&(!empty($GEDCOM_TITLE))) $META_PAGE_TOPIC = $GEDCOM_TITLE;
+		if (empty($META_DESCRIPTION)) {
+			$META_DESCRIPTION = $GEDCOM_TITLE;
+		}
+		if (empty($META_PAGE_TOPIC)) {
+			$META_PAGE_TOPIC = $GEDCOM_TITLE;
+		}
 
 		// Restrict good search engine spiders to the index page and the individual.php pages.
 		// Quick and dirty hack that will still leave some url only links in Google.
@@ -628,7 +629,7 @@ function print_simple_header($title) {
 // -- print the html to close the page
 function print_footer() {
 	global $pgv_lang, $view;
-	global $SHOW_STATS, $SCRIPT_NAME, $QUERY_STRING, $footerfile, $print_footerfile, $GEDCOMS, $ALLOW_CHANGE_GEDCOM, $printlink;
+	global $SHOW_STATS, $SCRIPT_NAME, $QUERY_STRING, $footerfile, $print_footerfile, $ALLOW_CHANGE_GEDCOM, $printlink;
 	global $PGV_IMAGE_DIR, $theme_name, $PGV_IMAGES, $TEXT_DIRECTION, $footer_count;
 
 	$view = safe_get('view');
@@ -1269,8 +1270,7 @@ function print_fact_notes($factrec, $level, $textOnly=false, $return=false) {
 * @author John Finlay
 */
 function print_gedcom_title_link($InHeader=FALSE) {
-	global $GEDCOMS, $GEDCOM, $GEDCOM_TITLE;
-	if ((count($GEDCOMS)==0)||(empty($GEDCOM))) return;
+	global $GEDCOM_TITLE;
 	echo "<a href=\"index.php?ctype=gedcom\" class=\"gedcomtitle\">".PrintReady($GEDCOM_TITLE, $InHeader)."</a>";
 }
 
@@ -1378,7 +1378,7 @@ loadLangFile('pgv_help');
 */
 function print_text($help, $level=0, $noprint=0){
 	global $pgv_lang, $factarray, $faqlist, $COMMON_NAMES_THRESHOLD;
-	global $INDEX_DIRECTORY, $GEDCOMS, $GEDCOM, $GEDCOM_TITLE, $LANGUAGE;
+	global $INDEX_DIRECTORY, $GEDCOM, $LANGUAGE;
 	global $GUESS_URL, $UpArrow, $DAYS_TO_SHOW_LIMIT, $MEDIA_DIRECTORY;
 	global $repeat, $thumbnail, $xref, $pid;
 
