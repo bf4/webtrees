@@ -109,7 +109,7 @@ class SearchControllerRoot extends BaseController {
 	 * Initialization function
 	 */
 	function init() {
-		global $pgv_lang, $ALLOW_CHANGE_GEDCOM, $GEDCOM, $GEDCOMS;
+		global $pgv_lang, $ALLOW_CHANGE_GEDCOM, $GEDCOM;
 
 		if ($this->action=='') {
 			$this->action='general';
@@ -155,17 +155,18 @@ class SearchControllerRoot extends BaseController {
 		}
 
 		// Retrieve the gedcoms to search in
-		if (($ALLOW_CHANGE_GEDCOM) && (count($GEDCOMS) > 1)) {
-			foreach ($GEDCOMS as $key => $gedarray) {
-				$str = preg_replace(array ("/\./", "/-/", "/ /"), array ("_", "_", "_"), $key);
+		$all_gedcoms=get_all_gedcoms();
+		if ($ALLOW_CHANGE_GEDCOM && count($all_gedcoms)>1) {
+			foreach ($all_gedcoms as $ged_id=>$gedcom) {
+				$str = preg_replace(array ("/\./", "/-/", "/ /"), array ("_", "_", "_"), $gedcom);
 				if (isset ($_REQUEST["$str"]) || isset ($this->topsearch)) {
-					$this->sgeds[] = $key;
+					$this->sgeds[$ged_id] = $gedcom;
 					$_REQUEST["$str"] = 'yes';
 				}
 			}
+		} else {
+			$this->sgeds[PGV_GED_ID] = $GEDCOM;
 		}
-		else
-		$this->sgeds[] = $GEDCOM;
 
 		// Retrieve the sites that can be searched
 		$this->Sites = get_server_list();
@@ -355,7 +356,7 @@ class SearchControllerRoot extends BaseController {
 	 * 	Gathers results for a general search
 	 */
 	function GeneralSearch() {
-		global $GEDCOM, $GEDCOMS;
+		global $GEDCOM;
 		$oldged = $GEDCOM;
 
 		// Split search terms into an array
@@ -372,22 +373,15 @@ class SearchControllerRoot extends BaseController {
 			$query=str_replace($match[0], '', $query);
 		}
 
-		// Get a list of gedcom IDs to search
-		// TODO: don't we already have this somewhere?
-		$ged_ids=array();
-		foreach ($this->sgeds as $gedcom) {
-			$ged_ids[]=get_id_from_gedcom($gedcom);
-		}
-
 		//-- perform the search
-		if ($query_terms && $ged_ids) {
+		if ($query_terms && $this->sgeds) {
 			// Write a log entry
 			$logstring = "Type: General<br />Query: ".$this->query;
 			AddToSearchlog($logstring, $this->sgeds);
 
 			// Search the indi's
 			if (isset ($this->srindi)) {
-				$this->myindilist=search_indis($query_terms, $ged_ids, 'AND', $this->tagfilter=='on');
+				$this->myindilist=search_indis($query_terms, array_keys($this->sgeds), 'AND', $this->tagfilter=='on');
 			} else {
 				$this->myindilist=array();
 			}
@@ -395,8 +389,8 @@ class SearchControllerRoot extends BaseController {
 			// Search the fams
 			if (isset ($this->srfams)) {
 				$this->myfamlist=array_merge(
-					search_fams($query_terms, $ged_ids, 'AND', $this->tagfilter=='on'),
-					search_fams_names($query_terms, $ged_ids, 'AND')
+					search_fams($query_terms, array_keys($this->sgeds), 'AND', $this->tagfilter=='on'),
+					search_fams_names($query_terms, array_keys($this->sgeds), 'AND')
 				);
 				$this->myfamlist=array_unique($this->myfamlist);
 			} else {
@@ -406,7 +400,7 @@ class SearchControllerRoot extends BaseController {
 			// Search the sources
 			if (isset ($this->srsour)) {
 				if (!empty ($this->query))
-				$this->mysourcelist=search_sources($query_terms, $ged_ids, 'AND', $this->tagfilter=='on');
+				$this->mysourcelist=search_sources($query_terms, array_keys($this->sgeds), 'AND', $this->tagfilter=='on');
 			} else {
 				$this->mysourcelist=array();
 			}
@@ -414,7 +408,7 @@ class SearchControllerRoot extends BaseController {
 			// Search the notes
 			if (isset ($this->srnote)) {
 				if (!empty ($this->query))
-				$this->mynotelist=search_notes($query_terms, $ged_ids, 'AND', $this->tagfilter=='on');
+				$this->mynotelist=search_notes($query_terms, array_keys($this->sgeds), 'AND', $this->tagfilter=='on');
 			} else {
 				$this->mynotelist=array();
 			}
@@ -625,15 +619,8 @@ class SearchControllerRoot extends BaseController {
 			$logstring .= "Year: ".$this->year."<br />";
 			AddToSearchlog($logstring, $this->sgeds);
 
-			// Get a list of gedcom IDs to search
-			// TODO: don't we already have this somewhere?
-			$ged_ids=array();
-			foreach ($this->sgeds as $gedcom) {
-				$ged_ids[]=get_id_from_gedcom($gedcom);
-			}
-
-			if ($ged_ids) {
-				$this->myindilist=search_indis_soundex($this->soundex, $this->lastname, $this->firstname, $this->place, $ged_ids);
+			if ($this->sgeds) {
+				$this->myindilist=search_indis_soundex($this->soundex, $this->lastname, $this->firstname, $this->place, array_keys($this->sgeds));
 			} else {
 				$this->myindilist=array();
 			}
@@ -736,7 +723,7 @@ class SearchControllerRoot extends BaseController {
 
 	function printResults() {
 		include_once ("includes/functions/functions_print_lists.php");
-		global $GEDCOM, $GEDCOMS, $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES, $pgv_lang, $global_facts;
+		global $GEDCOM, $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES, $pgv_lang, $global_facts;
 		//-- all privacy settings must be global if we are going to load up privacy files
 		global $SHOW_DEAD_PEOPLE,$SHOW_LIVING_NAMES,$SHOW_SOURCES,$MAX_ALIVE_AGE,$USE_RELATIONSHIP_PRIVACY,$MAX_RELATION_PATH_LENGTH;
 		global $CHECK_MARRIAGE_RELATIONS,$PRIVACY_BY_YEAR,$PRIVACY_BY_RESN,$SHOW_PRIVATE_RELATIONSHIPS,$person_privacy,$user_privacy;
@@ -749,7 +736,7 @@ class SearchControllerRoot extends BaseController {
 
 				$OLD_GEDCOM=$GEDCOM;
 				// Split individuals by gedcom
-				foreach ($this->sgeds as $gedcom) {
+				foreach ($this->sgeds as $ged_id=>$gedcom) {
 					$datalist = array();
 					foreach ($this->myindilist as $individual) {
 						if ($individual->getGedId()==get_id_from_gedcom($gedcom)) {
@@ -760,7 +747,7 @@ class SearchControllerRoot extends BaseController {
 						$somethingPrinted = true;
 						usort($datalist, array('GedcomRecord', 'Compare'));
 						$GEDCOM=$gedcom;
-						print_indi_table($datalist, $pgv_lang['individuals'].' : &laquo;'.$this->myquery.'&raquo; @ '.PrintReady($GEDCOMS[$gedcom]['title'], true));
+						print_indi_table($datalist, $pgv_lang['individuals'].' : &laquo;'.$this->myquery.'&raquo; @ '.PrintReady(get_gedcom_setting($ged_id, 'title'), true));
 					}
 				}
 				// Split families by gedcom
@@ -775,7 +762,7 @@ class SearchControllerRoot extends BaseController {
 						$somethingPrinted = true;
 						usort($datalist, array('GedcomRecord', 'Compare'));
 						$GEDCOM=$gedcom;
-						print_fam_table($datalist, $pgv_lang['families'].' : &laquo;'.$this->myquery.'&raquo; @ '.PrintReady($GEDCOMS[$gedcom]['title'], true));
+						print_fam_table($datalist, $pgv_lang['families'].' : &laquo;'.$this->myquery.'&raquo; @ '.PrintReady(get_gedcom_setting($ged_id, 'title'), true));
 					}
 				}
 				// Split sources by gedcom
@@ -790,7 +777,7 @@ class SearchControllerRoot extends BaseController {
 						$somethingPrinted = true;
 						usort($datalist, array('GedcomRecord', 'Compare'));
 						$GEDCOM=$gedcom;
-						print_sour_table($datalist, $pgv_lang['sources'].' : &laquo;'.$this->myquery.'&raquo; @ '.PrintReady($GEDCOMS[$gedcom]['title'], true));
+						print_sour_table($datalist, $pgv_lang['sources'].' : &laquo;'.$this->myquery.'&raquo; @ '.PrintReady(get_gedcom_setting($ged_id, 'title'), true));
 					}
 				}
 				// Split notes by gedcom
@@ -805,7 +792,7 @@ class SearchControllerRoot extends BaseController {
 						$somethingPrinted = true;
 						usort($datalist, array('GedcomRecord', 'Compare'));
 						$GEDCOM=$gedcom;
-						print_note_table($datalist, $pgv_lang['notes'].' : &laquo;'.$this->myquery.'&raquo; @ '.PrintReady($GEDCOMS[$gedcom]['title'], true));
+						print_note_table($datalist, $pgv_lang['notes'].' : &laquo;'.$this->myquery.'&raquo; @ '.PrintReady(get_gedcom_setting($ged_id, 'title'), true));
 					}
 				}
 				$GEDCOM=$OLD_GEDCOM;
