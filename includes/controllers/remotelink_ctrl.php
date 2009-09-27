@@ -82,7 +82,6 @@ class RemoteLinkController extends BaseController {
 		$this->person=Person::getInstance($this->pid);
 		$this->server_list=get_server_list();
 		$this->gedcom_list=get_all_gedcoms();
-		unset($this->gedcom_list[PGV_GED_ID]);
 
 		// Other input values come from the form
 		$this->form_txtPID           =safe_POST('txtPID', PGV_REGEX_XREF);
