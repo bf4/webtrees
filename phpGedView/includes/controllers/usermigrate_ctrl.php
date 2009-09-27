@@ -127,8 +127,7 @@ class UserMigrateControllerRoot extends BaseController {
 	 *
 	 */
 	function backup() {
-		global $INDEX_DIRECTORY, $GEDCOMS, $GEDCOM;
-		global $MEDIA_DIRECTORY, $USE_MEDIA_FIREWALL, $MEDIA_FIREWALL_ROOTDIR;
+		global $INDEX_DIRECTORY, $MEDIA_DIRECTORY, $USE_MEDIA_FIREWALL, $MEDIA_FIREWALL_ROOTDIR;
 
 		$this->flist = array();
 
@@ -167,24 +166,27 @@ class UserMigrateControllerRoot extends BaseController {
 			$exportOptions['noCustomTags'] = 'no';
 			$exportOptions['slashes'] = 'forward';
 
-			foreach($GEDCOMS as $key=>$gedcom) {
+			foreach (get_all_gedcoms() as $ged_id=>$ged_name) {
 				//-- load the gedcom configuration settings
-				require(get_config_file($key));
+				require get_config_file($ged_name);
 
 				if (isset($_POST["um_gedcoms"])) {
 					//-- backup the original gedcom file
-					if (file_exists($gedcom["path"])) $this->flist[] = $gedcom["path"];
+					$path=get_gedcom_setting($ged_id, 'path');
+					if (file_exists($path)) {
+						$this->flist[]=$path;
+					}
 
 					//-- recreate the GEDCOM file from the DB
 					//-- backup the DB in case of GEDCOM corruption
-					$gedname = $INDEX_DIRECTORY.$key.".bak";
-					$gedout = fopen(filename_decode($gedname), "wb");
+					$ged_name_bak = $INDEX_DIRECTORY.$ged_name.".bak";
+					$gedout = fopen(filename_decode($ged_name_bak), "wb");
 
 					$exportOptions['path'] = $MEDIA_DIRECTORY;
 
-					export_gedcom($key, $gedout, $exportOptions);
+					export_gedcom($ged_name, $gedout, $exportOptions);
 					fclose($gedout);
-					$this->flist[] = $gedname;
+					$this->flist[] = $ged_name_bak;
 				}
 
 				if (isset($_POST["um_media"])) {
@@ -207,7 +209,7 @@ class UserMigrateControllerRoot extends BaseController {
 			}
 
 			//-- restore the old configuration file
-			require(get_config_file($GEDCOM));
+			require get_config_file(PGV_GEDCOM);
 			$this->flist[] = $INDEX_DIRECTORY."pgv_changes.php";
 		}
 
@@ -217,27 +219,34 @@ class UserMigrateControllerRoot extends BaseController {
 			// Gedcoms file
 			if (file_exists($INDEX_DIRECTORY."gedcoms.php")) $this->flist[] = $INDEX_DIRECTORY."gedcoms.php";
 
-			foreach($GEDCOMS as $key => $gedcom) {
-
+			foreach (get_all_gedcoms() as $ged_id=>$ged_name) {
 				// Config files
-				if (file_exists($INDEX_DIRECTORY.$gedcom["gedcom"]."_conf.php")) $this->flist[] = $INDEX_DIRECTORY.$gedcom["gedcom"]."_conf.php";
+				$conf=get_gedcom_setting($ged_id, 'config');
+				if (file_exists($conf)) {
+					$this->flist[]=$conf;
+				}
 
 				// Privacy files
-				if (file_exists($INDEX_DIRECTORY.$gedcom["gedcom"]."_priv.php")) $this->flist[] = $INDEX_DIRECTORY.$gedcom["gedcom"]."_priv.php";
+				$privacy=get_gedcom_setting($ged_id, 'privacy');
+				if (file_exists($privacy)) {
+					$this->flist[]=$privacy;
+				}
 			}
 		}
 
 		// Backup logfiles and counters
 		if (isset($_POST["um_logs"])) {
-			foreach($GEDCOMS as $key => $gedcom) {
+			foreach (get_all_gedcoms() as $ged_id=>$ged_name) {
 
 				// Gedcom counters
-				if (file_exists($INDEX_DIRECTORY.$gedcom["gedcom"]."pgv_counters.txt")) $this->flist[] = $INDEX_DIRECTORY.$gedcom["gedcom"]."pgv_counters.txt";
+				if (file_exists($INDEX_DIRECTORY.$ged_name."pgv_counters.txt")) {
+					$this->flist[] = $INDEX_DIRECTORY.$ged_name."pgv_counters.txt";
+				}
 
 				// Gedcom searchlogs and changelogs
 				$dir_var = opendir ($INDEX_DIRECTORY);
 				while ($file = readdir ($dir_var)) {
-					if (strpos($file, ".log") > 0 && (strstr($file, "srch-".$gedcom["gedcom"]) !== false || strstr($file, "ged-".$gedcom["gedcom"]) !== false)) $this->flist[] = $INDEX_DIRECTORY.$file;
+					if (strpos($file, ".log") > 0 && (strstr($file, "srch-".$ged_name) !== false || strstr($file, "ged-".$ged_name) !== false)) $this->flist[] = $INDEX_DIRECTORY.$file;
 				}
 				closedir($dir_var);
 			}
@@ -279,7 +288,7 @@ class UserMigrateControllerRoot extends BaseController {
 	 *
 	 */
 	function import() {
-		global $INDEX_DIRECTORY, $TBLPREFIX, $pgv_lang, $GEDCOMS, $GEDCOM;
+		global $INDEX_DIRECTORY, $TBLPREFIX, $pgv_lang;
 
 		if ((file_exists($INDEX_DIRECTORY."authenticate.php")) == false) {
 			$this->impSuccess = false;
