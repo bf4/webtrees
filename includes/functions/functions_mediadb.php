@@ -174,27 +174,8 @@ function check_media_structure() {
 
 function get_medialist($currentdir = false, $directory = "", $linkonly = false, $random = false, $includeExternal = true) {
 	global $MEDIA_DIRECTORY_LEVELS, $BADMEDIA, $thumbdir, $TBLPREFIX, $MEDIATYPE;
-	global $level, $dirs, $ALLOW_CHANGE_GEDCOM, $GEDCOM, $GEDCOMS, $MEDIA_DIRECTORY;
+	global $level, $dirs, $ALLOW_CHANGE_GEDCOM, $MEDIA_DIRECTORY;
 	global $MEDIA_EXTERNAL, $pgv_changes, $USE_MEDIA_FIREWALL;
-
-	// Retrieve the gedcoms to search in
-	$sgeds = array ();
-	if (($ALLOW_CHANGE_GEDCOM) && (count($GEDCOMS) > 1)) {
-		foreach ($GEDCOMS as $key => $ged) {
-			$str = preg_replace(array (
-				"/\./",
-				"/-/",
-				"/ /"
-			), array (
-				"_",
-				"_",
-				"_"
-			), $key);
-			if (isset ($$str))
-				$sgeds[] = $key;
-		}
-	} else
-		$sgeds[] = $GEDCOM;
 
 	// Create the medialist array of media in the DB and on disk
 	// NOTE: Get the media in the DB
@@ -267,7 +248,7 @@ function get_medialist($currentdir = false, $directory = "", $linkonly = false, 
 	foreach ($pgv_changes as $changes) {
 		foreach ($changes as $change) {
 			while (true) {
-				if ($change["gedcom"] != $GEDCOM || $change["status"] != "submitted")
+				if ($change["gedcom"] != PGV_GEDCOM || $change["status"] != "submitted")
 					break;
 
 				$gedrec = $change['undo'];
@@ -288,7 +269,7 @@ function get_medialist($currentdir = false, $directory = "", $linkonly = false, 
 					$firstChar = "";
 					$restChar = $change["gid"];
 				}
-				$keyMediaList = $firstChar . substr("000000" . $restChar, -6) . "_" . $GEDCOMS[$GEDCOM]["id"];
+				$keyMediaList = $firstChar . substr("000000" . $restChar, -6) . "_" . PGV_GED_ID;
 				if (isset ($medialist[$keyMediaList])) {
 					$medialist[$keyMediaList]["CHANGE"] = $change["type"];
 					break;
@@ -403,11 +384,11 @@ function get_medialist($currentdir = false, $directory = "", $linkonly = false, 
 						$firstChar = "";
 						$restChar = $mediaId;
 					}
-					$keyMediaList = $firstChar . substr("000000" . $restChar, -6) . "_" . $GEDCOMS[$GEDCOM]["id"];
+					$keyMediaList = $firstChar . substr("000000" . $restChar, -6) . "_" . PGV_GED_ID;
 
 					// Add this GEDCOM ID to the link list of the media object
 					if (isset ($medialist[$keyMediaList])) {
-						$medialist[$keyMediaList]["LINKS"][$pid] = gedcom_record_type($pid, get_id_from_gedcom($GEDCOM));
+						$medialist[$keyMediaList]["LINKS"][$pid] = gedcom_record_type($pid, PGV_GED_ID);
 						$medialist[$keyMediaList]["LINKED"] = true;
 					}
 				}
@@ -1140,14 +1121,14 @@ function show_mediaUpload_form($URL='media.php', $showthumb=false) {
 * @param int    $line  The line number in the GEDCOM record where this media item belongs
 */
 function show_media_form($pid, $action = "newentry", $filename = "", $linktoid = "", $level = 1, $line = 0) {
-	global $GEDCOM, $pgv_lang, $factarray, $TEXT_DIRECTION, $GEDCOMS, $WORD_WRAPPED_NOTES, $ADVANCED_NAME_FACTS;
+	global $pgv_lang, $factarray, $TEXT_DIRECTION, $WORD_WRAPPED_NOTES, $ADVANCED_NAME_FACTS;
 	global $pgv_changes, $MEDIA_DIRECTORY_LEVELS, $MEDIA_DIRECTORY;
 	global $AUTO_GENERATE_THUMBS, $THUMBNAIL_WIDTH;
 
 	// NOTE: add a table and form to easily add new values to the table
 	print "<form method=\"post\" name=\"newmedia\" action=\"addmedia.php\" enctype=\"multipart/form-data\">\n";
 	print "<input type=\"hidden\" name=\"action\" value=\"$action\" />\n";
-	print "<input type=\"hidden\" name=\"ged\" value=\"$GEDCOM\" />\n";
+	print "<input type=\"hidden\" name=\"ged\" value=\"".PGV_GEDCOM."\" />\n";
 	print "<input type=\"hidden\" name=\"pid\" value=\"$pid\" />\n";
 	if (!empty($linktoid)) print "<input type=\"hidden\" name=\"linktoid\" value=\"$linktoid\" />\n";
 	print "<input type=\"hidden\" name=\"level\" value=\"$level\" />\n";
@@ -1170,10 +1151,10 @@ function show_media_form($pid, $action = "newentry", $filename = "", $linktoid =
 		print_findsource_link("gid");
 		print "<br /><sub>" . $pgv_lang["add_linkid_advice"] . "</sub></td></tr>\n";
 	}
-	if (isset ($pgv_changes[$pid . "_" . $GEDCOM]))
+	if (isset ($pgv_changes[$pid . "_" . PGV_GEDCOM]))
 		$gedrec = find_updated_record($pid);
 	else
-		if (gedcom_record_type($pid, get_id_from_gedcom($GEDCOM)) == "OBJE")
+		if (gedcom_record_type($pid, get_id_from_gedcom(PGV_GEDCOM)) == "OBJE")
 			$gedrec = find_media_record($pid);
 		else
 			$gedrec = "";
@@ -1648,7 +1629,7 @@ function get_media_id_from_file($filename){
 }
 //returns an array of rows from the database containing the Person ID's for the people associated with this picture
 function get_media_relations($mid){
-	global $GEDCOMS, $GEDCOM, $medialist;
+	global $medialist;
 
 	//-- check in the medialist cache first
 	$firstChar = substr($mid, 0, 1);
@@ -1657,7 +1638,7 @@ function get_media_relations($mid){
 		$firstChar = "";
 		$restChar = $mid;
 	}
-	$keyMediaList = $firstChar . substr("000000" . $restChar, -6) . "_" . $GEDCOMS[$GEDCOM]['id'];
+	$keyMediaList = $firstChar . substr("000000" . $restChar, -6) . "_" . PGV_GED_ID;
 	if (isset ($medialist[$keyMediaList]['LINKS'])) {
 		return $medialist[$keyMediaList]['LINKS'];
 	}
