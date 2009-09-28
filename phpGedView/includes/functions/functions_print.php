@@ -2584,34 +2584,31 @@ function DumpString($input) {
 		// Line 2: UTF8 character string
 		$thisLine = '';
 		for ($i=$pos; $i<($pos+$lineLength); $i++) {
-			if (ord(substr($UTF8[$i], 0, 1)) < 0x20) $thisLine .= "&nbsp;";
-			else {
+			if (ord(substr($UTF8[$i], 0, 1)) < 0x20) {
+				$thisChar = "&nbsp;";
+			} else {
 				$thisChar = $UTF8[$i];
-				$thisAlphabet = whatAlphabet($thisChar);
-				if ($thisAlphabet == 'hebrew' || $thisAlphabet == 'arabic') {
-					$thisLine .= PGV_UTF8_LRM;
-				} else {
-					switch ($thisChar) {
-					case '&':
-						$thisChar = '&amp;';
-						break;
-					case '<':
-						$thisChar = '&lt;';
-						break;
-					case ' ':
-					case PGV_UTF8_LRM:
-					case PGV_UTF8_RLM:
-					case PGV_UTF8_LRO:
-					case PGV_UTF8_RLO:
-					case PGV_UTF8_LRE:
-					case PGV_UTF8_RLE:
-					case PGV_UTF8_PDF:
-						$thisChar = '&nbsp;';
-						break;
-					}
+				switch ($thisChar) {
+				case '&':
+					$thisChar = '&amp;';
+					break;
+				case '<':
+					$thisChar = '&lt;';
+					break;
+				case ' ':
+				case PGV_UTF8_LRM:
+				case PGV_UTF8_RLM:
+				case PGV_UTF8_LRO:
+				case PGV_UTF8_RLO:
+				case PGV_UTF8_LRE:
+				case PGV_UTF8_RLE:
+				case PGV_UTF8_PDF:
+					$thisChar = '&nbsp;';
+					break;
 				}
-				$thisLine .= $thisChar;
 			}
+			$thisLine .= PGV_UTF8_LRM;
+			$thisLine .= $thisChar;
 		}
 		echo '&nbsp;&nbsp;UTF8&nbsp;', $thisLine, '<br />';
 
