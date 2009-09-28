@@ -85,7 +85,6 @@ class wordsearch
 				case 'topsurnames':
 				{
 					$listtitle = 'Common Surnames';
-					//$surnames = get_common_surnames_index($GEDCOM);
 					$surnames = get_common_surnames($config['top_surnames_number']);
 					$wordlist = array();
 					foreach($surnames as $surname)
