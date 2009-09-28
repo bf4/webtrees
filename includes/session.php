@@ -360,7 +360,6 @@ if (file_exists($INDEX_DIRECTORY."gedcoms.php")) {
 	$i=0;
 	foreach ($GEDCOMS as $key=>$gedcom) {
 		$i++;
-		$GEDCOMS[$key]["commonsurnames"] = stripslashes($gedcom["commonsurnames"]);
 		if (empty($GEDCOMS[$key]["id"])) {
 			$GEDCOMS[$key]["id"]=$i;
 		}

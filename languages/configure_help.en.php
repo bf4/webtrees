@@ -416,8 +416,6 @@ $pgv_lang["META_REVISIT"]		= "How often should crawlers revisit META tag";
 $pgv_lang["META_REVISIT_help"]	= "~#pgv_lang[META_REVISIT]#~<br /><br />The value to place in the Revisit meta tag in the HTML page header.  Some web crawlers ignore this value.<br />";
 $pgv_lang["META_KEYWORDS"]		= "Keywords META tag";
 $pgv_lang["META_KEYWORDS_help"]	= "~#pgv_lang[META_KEYWORDS]#~<br /><br />The value to place in the Keywords meta tag in the HTML page header.  Some search engines will use the Keywords meta tag to help index your page.<br /><br />The #pgv_lang[common_surnames]# list that appears in the #pgv_lang[gedcom_stats]# block on your Welcome page can also be added to anything you enter here.<br />";
-$pgv_lang["META_SURNAME_KEYWORDS"]		= "Add Most Common Surnames to Keywords META field";
-$pgv_lang["META_SURNAME_KEYWORDS_help"]	= "~#pgv_lang[META_SURNAME_KEYWORDS]#~<br /><br />With this option set to <b>Yes</b> the surnames from the #pgv_lang[common_surnames]# list will be added to the Keywords meta field.  This can help search engines better find your site.<br />";
 $pgv_lang["META_TITLE"]		= "Add to TITLE header tag";
 $pgv_lang["META_TITLE_help"]	=	"~#pgv_lang[META_TITLE]#~<br /><br />Anything on this line will be added to the TITLE tag in the HTML page header after the regular page title and before the PhpGedView credit.<br />";
 

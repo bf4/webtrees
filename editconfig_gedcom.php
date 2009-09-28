@@ -255,7 +255,6 @@ if ($action=="update") {
 	$COMMON_NAMES_THRESHOLD = $_POST["NEW_COMMON_NAMES_THRESHOLD"];
 	$COMMON_NAMES_ADD = $_POST["NEW_COMMON_NAMES_ADD"];
 	$COMMON_NAMES_REMOVE = $_POST["NEW_COMMON_NAMES_REMOVE"];
-	$gedarray["commonsurnames"] = "";
 	$GEDCOMS[$FILE] = $gedarray;
 	store_gedcoms();
 
@@ -340,7 +339,6 @@ if ($action=="update") {
 	$configtext = preg_replace('/\$META_PUBLISHER\s*=\s*".*";/', "\$META_PUBLISHER = \"".$_POST["NEW_META_PUBLISHER"]."\";", $configtext);
 	$configtext = preg_replace('/\$META_REVISIT\s*=\s*".*";/', "\$META_REVISIT = \"".$_POST["NEW_META_REVISIT"]."\";", $configtext);
 	$configtext = preg_replace('/\$META_ROBOTS\s*=\s*".*";/', "\$META_ROBOTS = \"".$_POST["NEW_META_ROBOTS"]."\";", $configtext);
-	$configtext = preg_replace('/\$META_SURNAME_KEYWORDS\s*=\s*.*;/', "\$META_SURNAME_KEYWORDS = ".$boolarray[$_POST["NEW_META_SURNAME_KEYWORDS"]].";", $configtext);
 	$configtext = preg_replace('/\$META_TITLE\s*=\s*".*";/', "\$META_TITLE = \"".$_POST["NEW_META_TITLE"]."\";", $configtext);
 	$configtext = preg_replace('/\$MULTI_MEDIA\s*=\s*.*;/', "\$MULTI_MEDIA = ".$boolarray[$_POST["NEW_MULTI_MEDIA"]].";", $configtext);
 	$configtext = preg_replace('/\$PEDIGREE_FULL_DETAILS\s*=\s*.*;/', "\$PEDIGREE_FULL_DETAILS = ".$boolarray[$_POST["NEW_PEDIGREE_FULL_DETAILS"]].";", $configtext);
@@ -2160,14 +2158,6 @@ print "&nbsp;<a href=\"javascript: ".$pgv_lang["meta_conf"]."\" onclick=\"expand
 	<tr>
 		<td class="descriptionbox wrap width20"><?php print_help_link("META_KEYWORDS_help", "qm", "META_KEYWORDS"); print $pgv_lang["META_KEYWORDS"]; ?></td>
 		<td class="optionbox"><input type="text" dir="ltr" name="NEW_META_KEYWORDS" value="<?php print $META_KEYWORDS; ?>" onfocus="getHelp('META_KEYWORDS_help');" tabindex="<?php $i++; print $i; ?>" size="75" /><br />
-		</td>
-	</tr>
-	<tr>
-		<td class="descriptionbox wrap width20"><?php print_help_link("META_SURNAME_KEYWORDS_help", "qm", "META_SURNAME_KEYWORDS"); print $pgv_lang["META_SURNAME_KEYWORDS"]; ?></td>
-		<td class="optionbox"><select name="NEW_META_SURNAME_KEYWORDS" tabindex="<?php $i++; print $i; ?>" onfocus="getHelp('META_SURNAME_KEYWORDS_help');">
-				<option value="yes" <?php if ($META_SURNAME_KEYWORDS) print "selected=\"selected\""; ?>><?php print $pgv_lang["yes"]; ?></option>
-				<option value="no" <?php if (!$META_SURNAME_KEYWORDS) print "selected=\"selected\""; ?>><?php print $pgv_lang["no"]; ?></option>
-			</select>
 		</td>
 	</tr>
 	<tr>
