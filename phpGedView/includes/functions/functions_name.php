@@ -38,25 +38,16 @@ define('PGV_FUNCTIONS_NAME_PHP', '');
  * @param int $min the number of times a surname must occur before it is added to the array
  */
 function get_common_surnames($min) {
-	global $GEDCOM, $CONFIGURED, $GEDCOMS, $COMMON_NAMES_ADD, $COMMON_NAMES_REMOVE, $pgv_lang, $HNN, $ANN;
+	global $COMMON_NAMES_ADD, $COMMON_NAMES_REMOVE;
 
-	$surnames = array();
-	if (!$CONFIGURED || !adminUserExists() || (count($GEDCOMS)==0) || (!check_for_import($GEDCOM))) return $surnames;
 	$surnames = get_top_surnames(100);
 	arsort($surnames);
 	$topsurns = array();
-	$i=0;
 	foreach($surnames as $indexval => $surname) {
-		$surname["name"] = trim($surname["name"]);
-		if (!empty($surname["name"])
-				&& stristr($surname["name"], "@N.N")===false
-				&& stristr($surname["name"], $HNN)===false
-				&& stristr($surname["name"], $ANN.",")===false
-				&& stristr($COMMON_NAMES_REMOVE, $surname["name"])===false ) {
+		if (!empty($surname["name"]) && stristr($COMMON_NAMES_REMOVE, $surname["name"])===false ) {
 			if ($surname["match"]>=$min) {
 				$topsurns[$surname["name"]] = $surname;
 			}
-			$i++;
 		}
 	}
 	$addnames = preg_split("/[,;] /", $COMMON_NAMES_ADD);
