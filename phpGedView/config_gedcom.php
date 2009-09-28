@@ -163,7 +163,6 @@ $META_ROBOTS		= "index, follow";		//-- instructions for robots
 $META_REVISIT		= "10 days";			//-- how often crawlers should reindex the site
 $META_KEYWORDS		= "ancestry, genealogy, pedigree tree";		//-- any aditional keywords, the most common surnames list will be appended to anything you put in
 $META_TITLE			= "";			//-- optional text that can be added to the html page <title></title> line
-$META_SURNAME_KEYWORDS	= true;		//-- option to use the most common surnames in the keywords field
 
 $CHART_BOX_TAGS		= "";		//-- optional comma seperated gedcom tags to show in chart boxes
 $USE_QUICK_UPDATE	= "1";		//-- who can use Quick Update: 0: nobody, 1: site admins, 2: GEDCOM admins, 3: editors

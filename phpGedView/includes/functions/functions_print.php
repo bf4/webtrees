@@ -402,7 +402,7 @@ function print_header($title, $head="", $use_alternate_styles=true) {
 	global $SCRIPT_NAME, $QUERY_STRING, $action, $query, $changelanguage,$theme_name;
 	global $FAVICON, $stylesheet, $print_stylesheet, $rtl_stylesheet, $headerfile, $toplinks, $THEME_DIR, $print_headerfile;
 	global $PGV_IMAGES, $TEXT_DIRECTION, $ONLOADFUNCTION,$REQUIRE_AUTHENTICATION, $SHOW_SOURCES, $ENABLE_RSS, $RSS_FORMAT;
-	global $META_AUTHOR, $META_PUBLISHER, $META_COPYRIGHT, $META_DESCRIPTION, $META_PAGE_TOPIC, $META_AUDIENCE, $META_PAGE_TYPE, $META_ROBOTS, $META_REVISIT, $META_KEYWORDS, $META_TITLE, $META_SURNAME_KEYWORDS;
+	global $META_AUTHOR, $META_PUBLISHER, $META_COPYRIGHT, $META_DESCRIPTION, $META_PAGE_TOPIC, $META_AUDIENCE, $META_PAGE_TYPE, $META_ROBOTS, $META_REVISIT, $META_KEYWORDS, $META_TITLE;
 
 	// If not on allowed list, dump the spider onto the redirect page.
 	// This kills recognized spiders in their tracks.
@@ -453,19 +453,6 @@ function print_header($title, $head="", $use_alternate_styles=true) {
 			if (empty($META_AUTHOR)) $META_AUTHOR = $cuserName;
 			if (empty($META_PUBLISHER)) $META_PUBLISHER = $cuserName;
 			if (empty($META_COPYRIGHT)) $META_COPYRIGHT = $cuserName;
-		}
-		if ($META_SURNAME_KEYWORDS) {
-			$surnames = get_common_surnames_index($GEDCOM);
-			$surnameList = '';
-			foreach($surnames as $surname=>$count) {
-				if ($surname != '?') {
-					$surnameList .= ', ';
-					$surnameList .= $surname;
-				}
-			}
-		} else {
-			$surnames = array();
-			$surnameList = '';
 		}
 		if (empty($META_DESCRIPTION)) {
 			$META_DESCRIPTION = $GEDCOM_TITLE;

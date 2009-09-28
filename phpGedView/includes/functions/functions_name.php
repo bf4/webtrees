@@ -31,27 +31,6 @@ if (!defined('PGV_PHPGEDVIEW')) {
 define('PGV_FUNCTIONS_NAME_PHP', '');
 
 /**
- * Get array of common surnames from index
- *
- * This function returns a simple array of the most common surnames
- * found in the individuals list.
- * @param int $min the number of times a surname must occur before it is added to the array
- */
-function get_common_surnames_index($ged) {
-	global $GEDCOMS;
-
-	if (empty($GEDCOMS[$ged]["commonsurnames"])) store_gedcoms();
-	$surnames = array();
-	if (empty($GEDCOMS[$ged]["commonsurnames"]) || ($GEDCOMS[$ged]["commonsurnames"]==",")) return $surnames;
-	$names = preg_split("/[,;]/", $GEDCOMS[$ged]["commonsurnames"]);
-	foreach($names as $indexval => $name) {
-		$name = trim($name);
-		if (!empty($name)) $surnames[$name]["name"] = stripslashes($name);
-	}
-	return $surnames;
-}
-
-/**
  * Get array of common surnames
  *
  * This function returns a simple array of the most common surnames

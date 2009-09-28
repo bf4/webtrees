@@ -398,7 +398,6 @@ function store_gedcoms() {
 		if (isset($GED["imported"])) {
 			$gedcomtext .= "\$gedarray[\"imported\"] = ".($GED["imported"]==false?'false':'true').";\n";
 		}
-		// TODO: Commonsurnames from an old gedcom are used
 		// TODO: Default GEDCOM is changed to last uploaded GEDCOM
 
 		// NOTE: Set the GEDCOM ID
@@ -411,18 +410,6 @@ function store_gedcoms() {
 		}
 
 		$gedcomtext .= "\$gedarray[\"id\"] = \"".$GED["id"]."\";\n";
-		if (empty($GED["commonsurnames"])) {
-			if ($GED["gedcom"]==$GEDCOM) {
-				$GED["commonsurnames"] = "";
-				$surnames = get_common_surnames($COMMON_NAMES_THRESHOLD);
-				foreach ($surnames as $indexval => $surname) {
-					$GED["commonsurnames"] .= $surname["name"].", ";
-				}
-			} else
-				$GED["commonsurnames"]="";
-		}
-		$geds[$GED["gedcom"]]["commonsurnames"] = $GED["commonsurnames"];
-		$gedcomtext .= "\$gedarray[\"commonsurnames\"] = \"".addslashes($GED["commonsurnames"])."\";\n";
 		$gedcomtext .= "\$GEDCOMS[\"".$GED["gedcom"]."\"] = \$gedarray;\n";
 	}
 	$GEDCOMS = $geds;
