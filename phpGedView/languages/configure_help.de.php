@@ -421,8 +421,6 @@ $pgv_lang["META_REVISIT"]				= "Bestimmt, wie oft Suchmaschinen die META Tags un
 $pgv_lang["META_REVISIT_help"]			= "~#pgv_lang[META_REVISIT]#~<br /><br />Der Wert für das META Tag Feld «Revisit» im HTML-Seitenkopf. Viele Suchmaschinen missachten diesen Wert.<br />";
 $pgv_lang["META_KEYWORDS"]				= "META Tag Keywords";
 $pgv_lang["META_KEYWORDS_help"]			= "~#pgv_lang[META_KEYWORDS]#~<br /><br />Der Wert für das META Tag Feld «Keywords» im HTML-Seitenkopf. Viele Suchmaschinen nutzen die Keyword-Meta-Tags zur Indizierung von Webseiten. Ihre Angabe hier wird ergänzt durch die Liste der häufigsten Nachnamen, so wie sie auf der Willkommens-Seite erscheint.<br />";
-$pgv_lang["META_SURNAME_KEYWORDS"]		= "Häufigst vorkommende Nachnamen dem «Keywords» META Feld hinzufügen";
-$pgv_lang["META_SURNAME_KEYWORDS_help"]	= "~#pgv_lang[META_SURNAME_KEYWORDS]#~<br /><br />Mit der Wahl <b>#pgv_lang[yes]#</b> werden Nachnamen der #pgv_lang[common_surnames]# Liste dem «Keywords» META Feld hinzugefügt.  Das kann Suchmaschinen helfen, Ihre Site besser zu finden oder zu durchsuchen.<br />";
 $pgv_lang["META_TITLE"]					= "Zur «TITLE» Kennung im Kopfbereich hinzufügen";
 $pgv_lang["META_TITLE_help"]			= "~#pgv_lang[META_TITLE]#~<br /><br />Was Sie hier eingeben wird in der TITLE-Kennung hinter dem regulären Seitentitel und vor dem PhpGedView-Hinweis eingefügt.<br />";
 
