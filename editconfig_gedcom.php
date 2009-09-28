@@ -116,7 +116,7 @@ if (isset($GEDCOMPATH)) {
 		$GEDFILENAME = preg_replace('/[\+\&\%\$@]/', "_", $GEDFILENAME);
 
 		// NOTE: When uploading a file check if it doesn't exist yet
-		if ($action=="replace" || (!isset($GEDCOMS[$GEDFILENAME]) && !file_exists($upload_path.$GEDFILENAME))) {
+		if ($action=="replace" || !in_array($GEDFILENAME, get_all_gedcoms()) && !file_exists($upload_path.$GEDFILENAME)) {
 			if (move_uploaded_file($_FILES['GEDCOMPATH']['tmp_name'], $upload_path.$GEDFILENAME)) {
 				AddToLog("Gedcom ".$path.$GEDFILENAME." uploaded");
 				$GEDCOMPATH = $upload_path.$GEDFILENAME;
@@ -648,10 +648,8 @@ if (!empty($error)) print "<span class=\"error\">".$error."</span>";
 	<tr>
 		<td colspan="2" class="facts_label"><?php
 		print "<h2>".$pgv_lang["gedconf_head"]." - ";
-		if (isset($ged)) {
-//			if ($TEXT_DIRECTION=="rtl") print getRLM() . "(".$GEDCOMS[$ged]["id"].")&nbsp;" . getRLM();
-//			else print "&nbsp;" . getLRM() . "(".$GEDCOMS[$ged]["id"].")" . getLRM();
-			if (isset($GEDCOMS[$ged])) print PrintReady($GEDCOMS[$ged]["title"]);
+		if (PGV_GED_ID) {
+			echo PrintReady(get_gedcom_setting(PGV_GED_ID, 'title'));
 		}
 		else if ($source == "add_form") print $pgv_lang["add_gedcom"];
 		else if ($source == "upload_form") print $pgv_lang["upload_gedcom"];
@@ -2197,7 +2195,7 @@ print "&nbsp;<a href=\"javascript: ".$pgv_lang["meta_conf"]."\" onclick=\"expand
 </table>
 </form>
 <br /><!--<?php if (isset($FILE) && !check_for_import($FILE)) print_text("return_editconfig_gedcom"); ?><br />-->
-<?php if (count($GEDCOMS)==0) { ?>
+<?php if (!PGV_GED_ID) { ?>
 <script language="JavaScript" type="text/javascript">
 	helpPopup('welcome_new_help');
 </script>
