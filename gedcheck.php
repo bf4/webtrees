@@ -127,14 +127,9 @@ if (!isset($_POST['action'])) {
 }
 
 // If we're checking a gedcom that is imported into the database, check that the file is synchronised
-if (in_array($ged, get_all_gedcoms())) {
-	require get_config_file($ged);
-	if (!$SYNC_GEDCOM_FILE && $ged=$GEDCOM) {
-		$ged_link='href="javascript:" onclick="window.open(\''.encode_url("export_gedcom.php?export={$ged}").'\', \'_blank\',\'left=50,top=50,width=500,height=500,resizable=1,scrollbars=1\');"';
-		echo '<div class="error">', print_text('gedcheck_sync',0,1);
-		echo '</div><hr/>';
-	}
-	require get_config_file(PGV_GEDCOM);
+if ($ged==PGV_GEDCOM && !$SYNC_GEDCOM_FILE) {
+	$ged_link='href="javascript:" onclick="window.open(\''.encode_url("export_gedcom.php?export={$ged}").'\', \'_blank\',\'left=50,top=50,width=500,height=500,resizable=1,scrollbars=1\');"';
+	echo '<div class="error">', print_text('gedcheck_sync',0,1), '</div><hr/>';
 }
 
 // Special cases.  Other facts link to themselves; SUBN, SUBN, OBJE, NOTE, REPO, SOUR
