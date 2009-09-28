@@ -335,29 +335,28 @@ function checkPrivacyByYear($pid) {
 function displayDetailsById($pid, $type = "INDI") {
 	global $PRIV_PUBLIC, $PRIV_USER, $PRIV_NONE, $PRIV_HIDE, $USE_RELATIONSHIP_PRIVACY, $CHECK_MARRIAGE_RELATIONS, $MAX_RELATION_PATH_LENGTH;
 	global $global_facts, $person_privacy, $user_privacy, $HIDE_LIVE_PEOPLE, $GEDCOM, $SHOW_DEAD_PEOPLE, $MAX_ALIVE_AGE, $PRIVACY_BY_YEAR;
-	global $PRIVACY_CHECKS, $PRIVACY_BY_RESN, $SHOW_SOURCES, $SHOW_LIVING_NAMES;
-	global $GEDCOMS, $INDEX_DIRECTORY;
+	global $PRIVACY_CHECKS, $PRIVACY_BY_RESN, $SHOW_SOURCES, $SHOW_LIVING_NAMES, $INDEX_DIRECTORY;
 
 	if ($_SESSION["pgv_user"]==PGV_USER_ID) {
 		// Normal operation
-		$pgv_GEDCOM				= PGV_GEDCOM;
-		$pgv_GED_ID				= PGV_GED_ID;
-		$pgv_USER_ID			= PGV_USER_ID;
-		$pgv_USER_NAME			= PGV_USER_NAME;
-		$pgv_USER_GEDCOM_ADMIN	= PGV_USER_GEDCOM_ADMIN;
-		$pgv_USER_CAN_ACCESS	= PGV_USER_CAN_ACCESS;
-		$pgv_USER_ACCESS_LEVEL	= PGV_USER_ACCESS_LEVEL;
-		$pgv_USER_GEDCOM_ID		= PGV_USER_GEDCOM_ID;
+		$pgv_GEDCOM            = PGV_GEDCOM;
+		$pgv_GED_ID            = PGV_GED_ID;
+		$pgv_USER_ID           = PGV_USER_ID;
+		$pgv_USER_NAME         = PGV_USER_NAME;
+		$pgv_USER_GEDCOM_ADMIN = PGV_USER_GEDCOM_ADMIN;
+		$pgv_USER_CAN_ACCESS   = PGV_USER_CAN_ACCESS;
+		$pgv_USER_ACCESS_LEVEL = PGV_USER_ACCESS_LEVEL;
+		$pgv_USER_GEDCOM_ID    = PGV_USER_GEDCOM_ID;
 	} else {
 		// We're in the middle of a Download -- get overriding information from cache
-		$pgv_GEDCOM				= $_SESSION["pgv_GEDCOM"];
-		$pgv_GED_ID				= $_SESSION["pgv_GED_ID"];
-		$pgv_USER_ID			= $_SESSION["pgv_USER_ID"];
-		$pgv_USER_NAME			= $_SESSION["pgv_USER_NAME"];
-		$pgv_USER_GEDCOM_ADMIN	= $_SESSION["pgv_USER_GEDCOM_ADMIN"];
-		$pgv_USER_CAN_ACCESS	= $_SESSION["pgv_USER_CAN_ACCESS"];
-		$pgv_USER_ACCESS_LEVEL	= $_SESSION["pgv_USER_ACCESS_LEVEL"];
-		$pgv_USER_GEDCOM_ID		= $_SESSION["pgv_USER_GEDCOM_ID"];
+		$pgv_GEDCOM            = $_SESSION["pgv_GEDCOM"];
+		$pgv_GED_ID            = $_SESSION["pgv_GED_ID"];
+		$pgv_USER_ID           = $_SESSION["pgv_USER_ID"];
+		$pgv_USER_NAME         = $_SESSION["pgv_USER_NAME"];
+		$pgv_USER_GEDCOM_ADMIN = $_SESSION["pgv_USER_GEDCOM_ADMIN"];
+		$pgv_USER_CAN_ACCESS   = $_SESSION["pgv_USER_CAN_ACCESS"];
+		$pgv_USER_ACCESS_LEVEL = $_SESSION["pgv_USER_ACCESS_LEVEL"];
+		$pgv_USER_GEDCOM_ID    = $_SESSION["pgv_USER_GEDCOM_ID"];
 	}
 
 	static $privacy_cache = array();
@@ -365,7 +364,7 @@ function displayDetailsById($pid, $type = "INDI") {
 	if (!$HIDE_LIVE_PEOPLE) return true;
 	if (empty($pid)) return true;
 
-	$pkey = $GEDCOMS[$GEDCOM]['id'].$pid;
+	$pkey = $GEDCOM.$pid;
 	//-- check if the privacy has been cached and use it
 	if (isset($privacy_cache[$pkey])) {
 		return $privacy_cache[$pkey];
