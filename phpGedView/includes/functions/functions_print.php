@@ -2584,12 +2584,36 @@ function DumpString($input) {
 		// Line 2: UTF8 character string
 		$thisLine = '';
 		for ($i=$pos; $i<($pos+$lineLength); $i++) {
-			if (ord(substr($UTF8[$i], 0, 1)) < 0x20) $thisLine .= " ";
-			else $thisLine .= $UTF8[$i];
+			if (ord(substr($UTF8[$i], 0, 1)) < 0x20) $thisLine .= "&nbsp;";
+			else {
+				$thisChar = $UTF8[$i];
+				$thisAlphabet = whatAlphabet($thisChar);
+				if ($thisAlphabet == 'hebrew' || $thisAlphabet == 'arabic') {
+					$thisLine .= PGV_UTF8_LRM;
+				} else {
+					switch ($thisChar) {
+					case '&':
+						$thisChar = '&amp;';
+						break;
+					case '<':
+						$thisChar = '&lt;';
+						break;
+					case ' ':
+					case PGV_UTF8_LRM:
+					case PGV_UTF8_RLM:
+					case PGV_UTF8_LRO:
+					case PGV_UTF8_RLO:
+					case PGV_UTF8_LRE:
+					case PGV_UTF8_RLE:
+					case PGV_UTF8_PDF:
+						$thisChar = '&nbsp;';
+						break;
+					}
+				}
+				$thisLine .= $thisChar;
+			}
 		}
-		$thisLine = str_replace(array('&', '<', ' '), array('&amp;', '&lt;', '&nbsp;'), $thisLine);
-		$thisLine = str_replace(array(PGV_UTF8_LRM, PGV_UTF8_RLM, PGV_UTF8_LRO, PGV_UTF8_RLO, PGV_UTF8_LRE, PGV_UTF8_RLE, PGV_UTF8_PDF), '&nbsp;', $thisLine);		// Remove BiDirectional control codes from text
-		echo '&nbsp;&nbsp;UTF8&nbsp;', PGV_UTF8_LRO, $thisLine, '<br />';
+		echo '&nbsp;&nbsp;UTF8&nbsp;', $thisLine, '<br />';
 
 		// Line 3:  First hexadecimal byte
 		$thisLine = 'Byte 1 ';
