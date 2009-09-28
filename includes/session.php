@@ -178,26 +178,29 @@ $includes_dir .= PATH_SEPARATOR.dirname($includes_dir);
 @ini_set('include_path', '.'.PATH_SEPARATOR.$includes_dir.PATH_SEPARATOR.$ini_include_path);
 unset($ini_include_path, $includes_dir); // destroy some variables for security reasons.
 
-set_magic_quotes_runtime(0);
-
-// magic_quotes_gpc can't be disabled at run-time, so clean them up as necessary.
-if (function_exists('get_magic_quotes_gpc') && get_magic_quotes_gpc() ||
-	ini_get('magic_quotes_sybase') && strtolower(ini_get('magic_quotes_sybase'))!='off') {
-	$in = array(&$_GET, &$_POST, &$_REQUEST, &$_COOKIE);
-	while (list($k,$v) = each($in)) {
-		foreach ($v as $key => $val) {
-			if (!is_array($val)) {
-				$in[$k][$key] = stripslashes($val);
-				continue;
-			}
-			$in[] =& $in[$k][$key];
-		}
-	}
-	unset($in);
-}
-
 if (version_compare(PHP_VERSION, PGV_REQUIRED_PHP_VERSION)<0) {
 	die ('<html><body><p style="color: red;">PhpGedView requires PHP version '.PGV_REQUIRED_PHP_VERSION.' or later.</p><p>Your server is running PHP version '.PHP_VERSION.'.  Please ask your server\'s Administrator to upgrade the PHP installation.</p></body></html>');
+}
+
+if (version_compare(PHP_VERSION, '6.0.0', '<')) {
+	// magic quotes were deprecated in PHP5.3.0 and removed in PHP6.0.0
+	set_magic_quotes_runtime(0);
+
+	// magic_quotes_gpc can't be disabled at run-time, so clean them up as necessary.
+	if (function_exists('get_magic_quotes_gpc') && get_magic_quotes_gpc() ||
+		ini_get('magic_quotes_sybase') && strtolower(ini_get('magic_quotes_sybase'))!='off') {
+		$in = array(&$_GET, &$_POST, &$_REQUEST, &$_COOKIE);
+		while (list($k,$v) = each($in)) {
+			foreach ($v as $key => $val) {
+				if (!is_array($val)) {
+					$in[$k][$key] = stripslashes($val);
+					continue;
+				}
+				$in[] =& $in[$k][$key];
+			}
+		}
+		unset($in);
+	}
 }
 
 /**
