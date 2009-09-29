@@ -2538,12 +2538,22 @@ function get_id_from_gedcom($ged_name) {
 
 function get_gedcom_setting($ged_id, $parameter) {
 	global $GEDCOMS;
-	$ged_id=get_gedcom_from_id($ged_id);
-	if (array_key_exists($ged_id, $GEDCOMS) && array_key_exists($parameter, $GEDCOMS[$ged_id])) {
-		return $GEDCOMS[get_gedcom_from_id($ged_id)][$parameter];
+	$ged_name=get_gedcom_from_id($ged_id);
+	if (array_key_exists($ged_name, $GEDCOMS) && array_key_exists($parameter, $GEDCOMS[$ged_name])) {
+		return $GEDCOMS[$ged_name][$parameter];
 	} else {
 		return null;
 	}
+}
+
+function set_gedcom_setting($ged_id, $parameter, $value) {
+	global $GEDCOMS;
+	$ged_name=get_gedcom_from_id($ged_id);
+	if (!array_key_exists($ged_name, $GEDCOMS)) {
+		$GEDCOMS[$ged_name]=array();
+	}
+	$GEDCOMS[$ged_name][$parameter]=$value;
+	store_gedcoms();
 }
 
 ////////////////////////////////////////////////////////////////////////////////
