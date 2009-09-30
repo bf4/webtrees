@@ -36,7 +36,6 @@ require_once 'includes/index_cache.php';
 require_once 'includes/classes/class_media.php';
 require_once 'includes/classes/class_mutex.php';
 require_once 'includes/functions/functions_lang.php';
-require_once 'includes/functions/functions_name.php';
 require_once 'includes/functions/functions_export.php';
 
 // Tidy up a gedcom record on import, so that we can access it consistently/efficiently.
