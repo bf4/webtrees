@@ -2607,10 +2607,11 @@ function DumpString($input) {
 					break;
 				}
 			}
-			$thisLine .= PGV_UTF8_LRM;
+//			$thisLine .= PGV_UTF8_LRM;
 			$thisLine .= $thisChar;
 		}
-		echo '&nbsp;&nbsp;UTF8&nbsp;', $thisLine, '<br />';
+//		echo '&nbsp;&nbsp;UTF8&nbsp;', $thisLine, '<br />';
+		echo '&nbsp;&nbsp;UTF8&nbsp;', PGV_UTF8_LRO, $thisLine, PGV_UTF8_PDF, '<br />';
 
 		// Line 3:  First hexadecimal byte
 		$thisLine = 'Byte 1 ';
