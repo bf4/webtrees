@@ -49,11 +49,6 @@ if (!PGV_USER_CAN_EDIT) {
 	exit;
 }
 
-if (isset($_SESSION["cookie_login"]) && $_SESSION["cookie_login"]==true) {
-	header("Location: ".encode_url("login.php?ged={$GEDCOM}&url=uploadmedia.php", false));
-	exit;
-}
-
 print_header($pgv_lang["upload_media"]);
 ?>
 <script language="JavaScript" type="text/javascript">

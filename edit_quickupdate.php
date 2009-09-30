@@ -32,10 +32,6 @@ require_once './includes/functions/functions_edit.php';
 
 loadLangFile("pgv_editor");
 
-if ($_SESSION["cookie_login"]) {
-	header("Location: login.php?type=simple&url=edit_interface.php");
-	exit;
-}
 if ((isset($_POST["preserve_last_changed"])) && ($_POST["preserve_last_changed"] == "on"))
 	$update_CHAN = false;
 else

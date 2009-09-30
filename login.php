@@ -155,12 +155,6 @@ if ($type=="full") print_header($pgv_lang["login_head"]);
 else print_simple_header($pgv_lang["login_head"]);
 print "<div class=\"center\">\n";
 
-if ($_SESSION["cookie_login"]) {
-	print "<div style=\"width:70%\" align=\"left\">\n";
-	print_text("cookie_login_help");
-	print "</div><br /><br />\n";
-}
-//if ($REQUIRE_AUTHENTICATION) {
 if ($WELCOME_TEXT_AUTH_MODE!="0") {
 	loadLangFile("pgv_help");
 	print "<table class=\"center width60 ".$TEXT_DIRECTION."\"><tr><td>";
@@ -221,12 +215,6 @@ $tab=0;		// initialize tab index
 				<td class="descriptionbox <?php print $TEXT_DIRECTION; ?> wrap width50"><?php print_help_link("password_help", "qm", "password"); print $pgv_lang["password"]; ?></td>
 				<td class="optionbox <?php print $TEXT_DIRECTION; ?>"><input type="password" tabindex="<?php echo ++$tab; ?>" name="password" size="20" class="formField" /></td>
 			</tr>
-			<?php if ($ALLOW_REMEMBER_ME) { ?>
-			<tr>
-				<td class="descriptionbox <?php print $TEXT_DIRECTION; ?> wrap width50"><?php print_help_link("remember_me_help", "qm", "remember_me"); ?><label for="remember"><?php print $pgv_lang["remember_me"]; ?></label></td>
-				<td class="optionbox <?php print $TEXT_DIRECTION; ?> "><input type="checkbox" tabindex="<?php echo ++$tab; ?>" id="remember" name="remember" value="yes" <?php if (!empty($_COOKIE["pgv_rem"])) print "checked=\"checked\""; ?> class="formField" /></td>
-			</tr>
-			<?php } ?>
 			<tr>
 				<td class="topbottombar" colspan="2">
 					<?php

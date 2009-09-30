@@ -64,12 +64,6 @@ class RemoteLinkController extends BaseController {
 
 	// Initialize the controller for the add remote link
 	function init() {
-		// Cannot edit with a "remember me" login.
-		if ($_SESSION["cookie_login"]) {
-			header('Location: '.encode_url("login.php?type=simple&url=".urlencode("edit_interface.php?".decode_url($QUERY_STRING)), false));
-			exit;
-		}
-
 		// Coming soon ???
 		$this->has_familysearch=file_exists('modules/FamilySearch/familySearchWrapper.php');
 		if ($this->has_familysearch) {;

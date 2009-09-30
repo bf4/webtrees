@@ -34,11 +34,6 @@ if (!PGV_USER_IS_ADMIN) {
 	exit;
 }
 
-if ($_SESSION["cookie_login"]) {
-	header("Location: ".encode_url("login.php?type=simple&ged={$GEDCOM}&url=".urlencode("dir_editor.php?".decode_url($QUERY_STRING)), false));
-	exit;
-}
-
 function full_rmdir( $dir )
 {
 	if ( !is_writable( $dir ) )
