@@ -646,31 +646,26 @@ function print_footer() {
 	if (PGV_DEBUG_SQL) {
 		echo PGV_DB::getQueryLog();
 	}
-        echo clustrmaps();
+	echo clustrmaps();
 	echo google_analytics();
 	echo '</body></html>';
 }
-// -- print the html to close the page
+
+// Page footer for popup/edit windows
 function print_simple_footer() {
-	global $pgv_lang;
-	global $start_time;
 	global $SHOW_STATS;
-	global $SCRIPT_NAME, $QUERY_STRING;
-	global $PGV_IMAGE_DIR, $PGV_IMAGES;
-	if (empty($SCRIPT_NAME)) {
-		$SCRIPT_NAME = $_SERVER["SCRIPT_NAME"];
-		$QUERY_STRING = $_SERVER["QUERY_STRING"];
+
+	if ($SHOW_STATS || PGV_DEBUG || PGV_DEBUG_SQL) {
+		echo '<div align="center">';
+		if ($SHOW_STATS || PGV_DEBUG) {
+			print_execution_stats();
+		}
+		if (PGV_DEBUG_SQL) {
+			echo PGV_DB::getQueryLog();
+		}
+		echo '</div>';
 	}
-	echo "<br /><br /><div align=\"center\" style=\"width: 99%;\">";
-	echo contact_links();
-	echo '<br /><a href="'.PGV_PHPGEDVIEW_URL.'" target="_blank"><img src="'.$PGV_IMAGE_DIR.'/'.$PGV_IMAGES['gedview']['other'].'" border="0" alt="'.PGV_PHPGEDVIEW . (PGV_USER_IS_ADMIN? (" - " .PGV_VERSION_TEXT): "") . '" title="'.PGV_PHPGEDVIEW . (PGV_USER_IS_ADMIN? (" - " .PGV_VERSION_TEXT): "") . '" /></a><br />';
-	if ($SHOW_STATS || PGV_DEBUG) {
-		print_execution_stats();
-	}
-	if (PGV_DEBUG_SQL) {
-		echo PGV_DB::getQueryLog();
-	}
-	echo "</div></body></html>";
+	echo '</body></html>';
 }
 
 // Generate code for google analytics
