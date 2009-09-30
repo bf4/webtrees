@@ -1420,3 +1420,8 @@ ul.clist {
 .gchart{
 	border: solid #094215 1px;
 }
+
+.execution_stats {
+	padding-top: 12px;
+	text-align: center;
+}
