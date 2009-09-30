@@ -2126,7 +2126,7 @@ function get_relationship($pid1, $pid2, $followspouse=true, $maxlength=0, $ignor
 			}
 			if (headers_sent()) {
 				print "\n<!-- Relationship $pid1-$pid2 NOT FOUND | Visited ".count($visited)." nodes | Required $count iterations.<br />\n";
-				print_execution_stats();
+				echo execution_stats();
 				print "-->\n";
 			}
 			$NODE_CACHE["$pid1-$pid2"] = "NOT FOUND";
@@ -2393,7 +2393,7 @@ function get_relationship($pid1, $pid2, $followspouse=true, $maxlength=0, $ignor
 	} //-- end while loop
 	if (headers_sent()) {
 		print "\n<!-- Relationship $pid1-$pid2 | Visited ".count($visited)." nodes | Required $count iterations.<br />\n";
-		print_execution_stats();
+		echo execution_stats();
 		print "-->\n";
 	}
 	return $resnode;

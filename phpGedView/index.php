@@ -279,7 +279,7 @@ if ($action=="ajax") {
 					ob_end_flush();
 				}
 				if (PGV_DEBUG) {
-					print_execution_stats();
+					echo execution_stats();
 				}
 				if (PGV_DEBUG_SQL) {
 					echo PGV_DB::getQueryLog();
@@ -382,7 +382,7 @@ if (count($ublocks["main"])!=0) {
 	echo '<script type="text/javascript">jQuery.noConflict();</script>';
 	foreach($ublocks["main"] as $bindex=>$block) {
 		if (PGV_DEBUG) {
-			print_execution_stats();
+			echo execution_stats();
 		}
 		if (array_key_exists($block[0], $PGV_BLOCKS) && !loadCachedBlock($block, "main".$bindex)) {
 			$url="index.php?action=ajax&block={$block[0]}&side=main&bindex={$bindex}&ctype={$ctype}";
@@ -416,7 +416,7 @@ if (count($ublocks["right"])!=0) {
 	}
 	foreach($ublocks["right"] as $bindex=>$block) {
 		if (PGV_DEBUG) {
-			print_execution_stats();
+			echo execution_stats();
 		}
 		if (array_key_exists($block[0], $PGV_BLOCKS) && !loadCachedBlock($block, "right".$bindex)) {
 			$url="index.php?action=ajax&block={$block[0]}&side=right&bindex={$bindex}&ctype={$ctype}";

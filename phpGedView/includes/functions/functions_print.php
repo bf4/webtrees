@@ -655,15 +655,11 @@ function print_footer() {
 function print_simple_footer() {
 	global $SHOW_STATS;
 
-	if ($SHOW_STATS || PGV_DEBUG || PGV_DEBUG_SQL) {
-		echo '<div align="center">';
-		if ($SHOW_STATS || PGV_DEBUG) {
-			print_execution_stats();
-		}
-		if (PGV_DEBUG_SQL) {
-			echo PGV_DB::getQueryLog();
-		}
-		echo '</div>';
+	if ($SHOW_STATS || PGV_DEBUG) {
+		echo execution_stats();
+	}
+	if (PGV_DEBUG_SQL) {
+		echo PGV_DB::getQueryLog();
 	}
 	echo '</body></html>';
 }
@@ -704,10 +700,10 @@ function clustrmaps() {
 *
 * prints out the execution time and the databse queries
 */
-function print_execution_stats() {
+function execution_stats() {
 	global $start_time, $pgv_lang, $PRIVACY_CHECKS;
 
-	printf("<div><br />{$pgv_lang['exec_time']} %.3f {$pgv_lang['sec']} {$pgv_lang['total_queries']} %d. {$pgv_lang['total_privacy_checks']} %d. {$pgv_lang['total_memory_usage']} %.0f KB.</div>",
+	return sprintf("<div class=\"execution_stats\">{$pgv_lang['exec_time']} %.3f {$pgv_lang['sec']} {$pgv_lang['total_queries']} %d. {$pgv_lang['total_privacy_checks']} %d. {$pgv_lang['total_memory_usage']} %.0f KB.</div>",
 		microtime(true)-$start_time,
 		PGV_DB::getQueryCount(),
 		$PRIVACY_CHECKS,
