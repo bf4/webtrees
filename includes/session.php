@@ -167,13 +167,6 @@ $CONFIG_VARS = array(
 	'COMMIT_COMMAND'
 	);
 
-//-- append our 'includes/' path to the include_path ini setting for ease of use.
-$ini_include_path = @ini_get('include_path');
-$includes_dir = dirname(@realpath(__FILE__));
-$includes_dir .= PATH_SEPARATOR.dirname($includes_dir);
-@ini_set('include_path', '.'.PATH_SEPARATOR.$includes_dir.PATH_SEPARATOR.$ini_include_path);
-unset($ini_include_path, $includes_dir); // destroy some variables for security reasons.
-
 if (version_compare(PHP_VERSION, PGV_REQUIRED_PHP_VERSION)<0) {
 	die ('<html><body><p style="color: red;">PhpGedView requires PHP version '.PGV_REQUIRED_PHP_VERSION.' or later.</p><p>Your server is running PHP version '.PHP_VERSION.'.  Please ask your server\'s Administrator to upgrade the PHP installation.</p></body></html>');
 }
