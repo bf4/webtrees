@@ -141,7 +141,6 @@ if (!empty($_SERVER["HTTP_USER_AGENT"])) {
 
 //-- list of critical configuration variables
 $CONFIG_VARS = array(
-	'PGV_DATABASE',
 	'DBTYPE',
 	'DBHOST',
 	'DBUSER',
