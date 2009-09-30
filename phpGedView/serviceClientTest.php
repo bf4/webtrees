@@ -87,12 +87,6 @@ print_r($s);
 //print_r($s);
 //
 /************* THE REST OF THESE SCHOULD RETURN SOAP FAULTS SINCE THEY'RE NOT ALLOWED   **********/
-//$s = $soap->getVar($result->SID, 'PGV_BASE_DIRECTORY');
-//print_r($s);
-//
-//$s = $soap->getVar($result->SID, 'PGV_DATABASE');
-//print_r($s);
-//
 //$s = $soap->getVar($result->SID, 'DBTYPE');
 //print_r($s);
 //
