@@ -153,7 +153,6 @@ $CONFIG_VARS = array(
 	'AUTHENTICATION_MODULE',
 	'USE_REGISTRATION_MODULE',
 	'ALLOW_USER_THEMES',
-	'ALLOW_REMEMBER_ME',
 	'ALLOW_CHANGE_GEDCOM',
 	'LOGFILE_CREATE',
 	'PGV_SESSION_SAVE_PATH',
@@ -225,7 +224,7 @@ if (isset($_REQUEST["CONFIG_VARS"])) $configOverride = true;
 //-- check if they are trying to hack
 if ($configOverride) {
 	if (!ini_get('register_globals') || strtolower(ini_get('register_globals'))=="off") {
-		require_once("includes/authentication.php");
+		require_once 'includes/authentication.php' ;
 		AddToLog("MSG>Configuration override detected; script terminated.");
 		AddToLog("UA>{$_SERVER["HTTP_USER_AGENT"]}<");
 		AddToLog("URI>{$_SERVER["REQUEST_URI"]}<");
@@ -236,11 +235,11 @@ if ($configOverride) {
 }
 
 //-- load file for language settings
-require_once( "includes/lang_settings_std.php");
+require_once 'includes/lang_settings_std.php';
 $Languages_Default = true;
 if (!strstr($_SERVER["REQUEST_URI"], "INDEX_DIRECTORY=") && file_exists($INDEX_DIRECTORY . "lang_settings.php")) {
 	$DefaultSettings = $language_settings; // Save default settings, so we can merge properly
-	require_once($INDEX_DIRECTORY . "lang_settings.php");
+	require_once "{$INDEX_DIRECTORY}lang_settings.php";
 	$ConfiguredSettings = $language_settings; // Save configured settings, same reason
 	$language_settings = array_merge($DefaultSettings, $ConfiguredSettings); // Copy new langs into config
 	// Now copy new language settings into existing configuration
@@ -305,8 +304,8 @@ if (empty($PGV_MEMORY_LIMIT)) $PGV_MEMORY_LIMIT = "32M";
 @ini_set('memory_limit', $PGV_MEMORY_LIMIT);
 
 //--load common functions
-require_once("includes/functions/functions.php");
-require_once("includes/functions/functions_name.php");
+require_once 'includes/functions/functions.php';
+require_once 'includes/functions/functions_name.php';
 //-- set the error handler
 $OLD_HANDLER = set_error_handler("pgv_error_handler");
 
@@ -334,11 +333,11 @@ if (isset($MANUAL_SESSION_START) && !empty($SID)) session_id($SID);
 @session_start();
 
 //-- load db specific functions
-require_once("includes/functions/functions_db.php");
+require_once 'includes/functions/functions_db.php';
 // -- load the authentication system, also logging
-require_once("includes/authentication.php");
+require_once 'includes/authentication.php';
 //-- load up the code to check for spiders
-require_once('includes/session_spider.php');
+require_once 'includes/session_spider.php';
 
 // Connect to the database
 require_once 'includes/classes/class_pgv_db.php';
@@ -357,8 +356,8 @@ try {
 }
 
 //-- import the gedcoms array
-if (file_exists($INDEX_DIRECTORY."gedcoms.php")) {
-	require_once($INDEX_DIRECTORY."gedcoms.php");
+if (file_exists("{$INDEX_DIRECTORY}gedcoms.php")) {
+	require_once "{$INDEX_DIRECTORY}gedcoms.php";
 	if (!is_array($GEDCOMS)) $GEDCOMS = array();
 	$i=0;
 	foreach ($GEDCOMS as $key=>$gedcom) {
@@ -381,7 +380,6 @@ if (file_exists($INDEX_DIRECTORY."gedcoms.php")) {
 	$GEDCOMS=array();
 }
 
-$logout=safe_GET_bool('logout');
 //-- try to set the active GEDCOM
 if (isset($_SESSION["GEDCOM"])) $GEDCOM = $_SESSION["GEDCOM"];
 if (isset($_REQUEST["GEDCOM"])) $GEDCOM = trim($_REQUEST["GEDCOM"]);
@@ -389,7 +387,7 @@ if (isset($_REQUEST["ged"])) $GEDCOM = trim($_REQUEST["ged"]);
 if (!empty($GEDCOM) && is_int($GEDCOM)) {
 	$GEDCOM=get_gedcom_from_id($GEDCOM);
 }
-if ($logout || empty($GEDCOM) || empty($GEDCOMS[$GEDCOM])) {
+if (empty($GEDCOM) || empty($GEDCOMS[$GEDCOM])) {
 	try {
 		$GEDCOM=get_site_setting('DEFAULT_GEDCOM');
 	} catch (PDOException $ex) {
@@ -504,8 +502,6 @@ foreach ($language_settings as $key => $value) {
 	$pgv_lang["lang_name_$key"] =$value["pgv_lang_self"];
 }
 
-if ($logout) unset($_SESSION["CLANGUAGE"]);  // user is about to log out
-
 // -- Determine which of PGV's supported languages is topmost in the browser's language list
 if ((!$CONFIGURED || empty($LANGUAGE) || $ENABLE_MULTI_LANGUAGE) && empty($_SESSION["CLANGUAGE"]) && empty($SEARCH_SPIDER)) {
 	$acceptLangs = 'en';
@@ -532,7 +528,7 @@ if (!$CONFIGURED || empty($LANGUAGE)) $LANGUAGE = $preferredLang;
 
 // -- If the user's profile specifies a preference, use that
 $thisUser = getUserId();
-if ($thisUser && !$logout) $LANGUAGE = get_user_setting($thisUser, 'language');
+if ($thisUser) $LANGUAGE = get_user_setting($thisUser, 'language');
 
 $deflang = $LANGUAGE;
 
@@ -557,23 +553,11 @@ if ($ENABLE_MULTI_LANGUAGE && empty($SEARCH_SPIDER)) {
 	}
 }
 
-require_once("includes/templecodes.php");  //-- load in the LDS temple code translations
+require_once 'includes/templecodes.php';  //-- load in the LDS temple code translations
 
 //-- load the privacy functions
 load_privacy_file(get_id_from_gedcom($GEDCOM));
-require_once("includes/functions/functions_privacy.php");
-
-//-----------------------------------
-//-- if user wishes to logout this is where we will do it
-if ($logout) {
-	userLogout(getUserId());
-	if ($REQUIRE_AUTHENTICATION) {
-		header("Location: {$SERVER_URL}");
-		exit;
-	}
-	// Logging out may change gedcom, so reload
-	load_privacy_file(get_id_from_gedcom($GEDCOM));
-}
+require_once 'includes/functions/functions_privacy.php';
 
 // Define some constants to save calculating the same value repeatedly.
 define('PGV_GEDCOM',            $GEDCOM);
@@ -590,6 +574,13 @@ define('PGV_USER_ACCESS_LEVEL', getUserAccessLevel(PGV_USER_ID, PGV_GED_ID));
 define('PGV_USER_GEDCOM_ID',    get_user_gedcom_setting(PGV_USER_ID, PGV_GED_ID, 'gedcomid'));
 define('PGV_USER_ROOT_ID',      get_user_gedcom_setting(PGV_USER_ID, PGV_GED_ID, 'rootid'));
 
+// If we are logged in, and logout=1 has been added to the URL, log out
+if (PGV_USER_ID && safe_GET_bool('logout')) {
+	userLogout(PGV_USER_ID);
+	header("Location: {$SERVER_URL}");
+	exit;
+}
+
 // Load all the language variables and language-specific functions
 loadLanguage($LANGUAGE, true);
 
@@ -602,7 +593,6 @@ $show_context_help = "";
 if (!empty($_REQUEST['show_context_help'])) $show_context_help = $_REQUEST['show_context_help'];
 if (!isset($_SESSION["show_context_help"])) $_SESSION["show_context_help"] = $SHOW_CONTEXT_HELP;
 if (!isset($_SESSION["pgv_user"])) $_SESSION["pgv_user"] = "";
-if (!isset($_SESSION["cookie_login"])) $_SESSION["cookie_login"] = false;
 if (isset($SHOW_CONTEXT_HELP) && $show_context_help==='yes') $_SESSION["show_context_help"] = true;
 if (isset($SHOW_CONTEXT_HELP) && $show_context_help==='no') $_SESSION["show_context_help"] = false;
 if (!isset($USE_THUMBS_MAIN)) $USE_THUMBS_MAIN = false;
@@ -669,8 +659,8 @@ if ((strstr($SCRIPT_NAME, "install.php")===false)
 	}
 
 	//-- load any editing changes
-	if (PGV_USER_CAN_EDIT && file_exists($INDEX_DIRECTORY."pgv_changes.php")) {
-		require_once($INDEX_DIRECTORY."pgv_changes.php");
+	if (PGV_USER_CAN_EDIT && file_exists("{$INDEX_DIRECTORY}pgv_changes.php")) {
+		require_once "{$INDEX_DIRECTORY}pgv_changes.php";
 	} else {
 		$pgv_changes = array();
 	}
@@ -705,10 +695,11 @@ if (isset($_SESSION["theme_dir"]))
 }
 
 if (empty($THEME_DIR)) $THEME_DIR="standard/";
-if (file_exists($THEME_DIR."theme.php")) require_once($THEME_DIR."theme.php");
-else {
+if (file_exists("{$THEME_DIR}theme.php")) {
+	require_once "{$THEME_DIR}theme.php";
+} else {
 	$THEME_DIR = "themes/standard/";
-	require_once($THEME_DIR."theme.php");
+	require_once "{$THEME_DIR}theme.php";
 }
 
 require './includes/hitcount.php'; //--load the hit counter

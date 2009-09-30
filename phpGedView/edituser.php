@@ -29,12 +29,6 @@ require './config.php';
 require './includes/functions/functions_print_lists.php';
 include './includes/functions/functions_edit.php';
 
-// cannot edit account using a cookie login - login with password first
-if (!PGV_USER_ID || $_SESSION['cookie_login']) {
-	header('Location: login.php?url=edituser.php');
-	exit;
-}
-
 // prevent users with editing account disabled from being able to edit their account
 if (get_user_setting(PGV_USER_ID, 'editaccount')!='Y') {
 	header('Location: index.php?ctype=user');

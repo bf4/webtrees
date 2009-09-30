@@ -43,6 +43,7 @@ VERSION 4.2.3
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 -----------------------------------------------------------------------------------------
+-$pgv_lang["ALLOW_REMEMBER_ME_help"]      30 Sep 2009       D
 -$pgv_lang["META_SURNAME_KEYWORDS"]		    27 Sep 2009       D
 -$pgv_lang["META_SURNAME_KEYWORDS_help"]  27 Sep 2009       D	
 *$pgv_lang["PGV_SMTP_HOST_help"]					10 Aug 2009				W

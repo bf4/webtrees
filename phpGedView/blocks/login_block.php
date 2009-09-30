@@ -45,7 +45,7 @@ $PGV_BLOCKS["print_login_block"]["config"]		= array("cache"=>0);
  * Prints a block allowing the user to login to the site directly from the portal
  */
 function print_login_block($block = true, $config="", $side, $index) {
-	global $pgv_lang, $GEDCOM, $SCRIPT_NAME, $QUERY_STRING, $USE_REGISTRATION_MODULE, $LOGIN_URL, $ALLOW_REMEMBER_ME;
+	global $pgv_lang, $GEDCOM, $SCRIPT_NAME, $QUERY_STRING, $USE_REGISTRATION_MODULE, $LOGIN_URL;
 	global $TEXT_DIRECTION;
 
 	if (PGV_USER_ID) {
@@ -106,23 +106,7 @@ function print_login_block($block = true, $config="", $side, $index) {
 		$content .= " class=\"{$TEXT_DIRECTION}\"><input type=\"password\" tabindex=\"{$i}\" name=\"password\"  size=\"20\" class=\"formField\" />";
 		$content .= "</td></tr>";
 
-		// Row 3: "Remember me" option
-		if ($ALLOW_REMEMBER_ME) {
-			$i++;
-			$content .= "<tr><td ";
-			$content .= write_align_with_textdir_check("right", true);
-			$content .= " class=\"{$TEXT_DIRECTION} wrap width50\">";
-			$content .= print_help_link("remember_me_help", "qm", "", false, true);
-			$content .= $pgv_lang["remember_me"]."</td>";
-			$content .= "<td ";
-			$content .= write_align_with_textdir_check("left", true);
-			$content .= " class=\"{$TEXT_DIRECTION}\"><input type=\"checkbox\" tabindex=\"{$i}\" name=\"remember\" value=\"yes\" class=\"formField\" ";
-			if (!empty($_COOKIE["pgv_rem"])) $content .= "checked=\"checked\" ";
-			$content .= "/>";
-			$content .= "</td></tr>";
-			}
-
-		// Row 4: "Login" link
+		// Row 3: "Login" link
 		$i++;
 		$content .= "<tr><td colspan=\"2\" class=\"center\">";
 		$content .= "<input type=\"submit\" tabindex=\"{$i}\" value=\"".$pgv_lang["login"]."\" />&nbsp;";
@@ -130,7 +114,7 @@ function print_login_block($block = true, $config="", $side, $index) {
 
 		if ($USE_REGISTRATION_MODULE) {
 
-			// Row 5: "Request Account" link
+			// Row 4: "Request Account" link
 			$i++;
 			$content .= "<tr><td ";
 			$content .= write_align_with_textdir_check("right", true);
@@ -145,7 +129,7 @@ function print_login_block($block = true, $config="", $side, $index) {
 			$content .= "</a>";
 			$content .= "</td></tr>";
 
-			// Row 6: "Lost Password" link
+			// Row 5: "Lost Password" link
 			$i++;
 			$content .= "<tr><td ";
 			$content .= write_align_with_textdir_check("right", true);
