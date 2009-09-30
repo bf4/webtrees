@@ -1451,3 +1451,8 @@ ul.clist {
 
 .gchart{
 }
+
+.execution_stats {
+	padding-top: 12px;
+	text-align: center;
+}
