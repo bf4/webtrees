@@ -40,7 +40,7 @@ include_once("includes/functions/functions_print_facts.php");
 
 	global $MULTI_MEDIA, $TBLPREFIX, $SHOW_ID_NUMBERS, $MEDIA_EXTERNAL;
 	global $pgv_lang, $pgv_changes, $factarray, $view;
-	global $GEDCOM, $MEDIATYPE, $pgv_changes;
+	global $MEDIATYPE, $pgv_changes;
 	global $WORD_WRAPPED_NOTES, $MEDIA_DIRECTORY, $PGV_IMAGE_DIR, $PGV_IMAGES, $TEXT_DIRECTION;
 	global $is_media, $cntm1, $cntm2, $cntm3, $cntm4, $t, $mgedrec;
 	global $edit, $tabno ;
@@ -66,7 +66,7 @@ include_once("includes/functions/functions_print_facts.php");
 	  print "\n";
 
       if (!showFact("OBJE", $pid)) return false;
-      if (!isset($pgv_changes[$pid."_".$GEDCOM])) $gedrec = find_gedcom_record($pid);
+      if (!isset($pgv_changes[$pid."_".PGV_GEDCOM])) $gedrec = find_gedcom_record($pid);
       else $gedrec = find_updated_record($pid);
 
 	//related=true means show related items
