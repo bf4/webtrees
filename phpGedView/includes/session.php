@@ -125,19 +125,6 @@ if (!isset($_SERVER['REQUEST_URI']))  {
 	}
 }
 
-// Determine browser type
-$BROWSERTYPE = "other";
-if (!empty($_SERVER["HTTP_USER_AGENT"])) {
-	if (stristr($_SERVER["HTTP_USER_AGENT"], "Opera"))
-		$BROWSERTYPE = "opera";
-	else if (stristr($_SERVER["HTTP_USER_AGENT"], "Netscape"))
-		$BROWSERTYPE = "netscape";
-	else if (stristr($_SERVER["HTTP_USER_AGENT"], "Gecko"))
-		$BROWSERTYPE = "mozilla";
-	else if (stristr($_SERVER["HTTP_USER_AGENT"], "MSIE"))
-		$BROWSERTYPE = "msie";
-}
-
 //-- list of critical configuration variables
 $CONFIG_VARS = array(
 	'DBTYPE',
@@ -322,6 +309,19 @@ try {
 	}
 } catch (PDOException $ex) {
 	// Can't connect to the DB?  We'll get redirected to install.php later.....
+}
+
+// Determine browser type
+$BROWSERTYPE = "other";
+if (!empty($_SERVER["HTTP_USER_AGENT"])) {
+	if (stristr($_SERVER["HTTP_USER_AGENT"], "Opera"))
+		$BROWSERTYPE = "opera";
+	else if (stristr($_SERVER["HTTP_USER_AGENT"], "Netscape"))
+		$BROWSERTYPE = "netscape";
+	else if (stristr($_SERVER["HTTP_USER_AGENT"], "Gecko"))
+		$BROWSERTYPE = "mozilla";
+	else if (stristr($_SERVER["HTTP_USER_AGENT"], "MSIE"))
+		$BROWSERTYPE = "msie";
 }
 
 //-- load up the code to check for spiders
