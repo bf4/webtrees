@@ -341,7 +341,8 @@ if (!empty($SCRIPT_NAME)) {
 session_set_cookie_params($date, $pgv_path);
 unset($date);
 unset($pgv_path);
-if (($PGV_SESSION_TIME>0)&&(function_exists('session_cache_expire'))) {
+
+if ($PGV_SESSION_TIME>0) {
 	session_cache_expire($PGV_SESSION_TIME/60);
 }
 if (!empty($PGV_SESSION_SAVE_PATH)) {
