@@ -34,7 +34,6 @@ $type    =safe_POST('type',     array('full', 'simple'));
 $action  =safe_POST('action');
 $username=safe_POST('username', PGV_REGEX_USERNAME);
 $password=safe_POST('password', PGV_REGEX_PASSWORD);
-$remember=safe_POST('remember', 'yes','no');
 $usertime=safe_POST('usertime');
 $pid     =safe_POST('pid',      PGV_REGEX_XREF);
 $ged     =safe_POST('ged',      get_all_gedcoms(), $GEDCOM);
@@ -111,8 +110,6 @@ if ($action=='login') {
 		if (substr($urlnew,-1,1)!="/") $urlnew .= "/";
 		$url = preg_replace("/logout=1/", "", $url);
 		$url = $urlnew . $url;
-		if ($remember=="yes") setcookie("pgv_rem", $username, time()+60*60*24*7);
-		else setcookie("pgv_rem", "", time()-60*60*24*7);
 
 		$url .= "&";	// Simplify the preg_replace following
 		$url = preg_replace("/(&|\?)ged=.*&/", "$1", html_entity_decode(rawurldecode($url),ENT_COMPAT,'UTF-8'));	// Remove any existing &ged= parameter
