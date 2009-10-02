@@ -327,6 +327,31 @@ if (!empty($_SERVER["HTTP_USER_AGENT"])) {
 //-- load up the code to check for spiders
 require 'includes/session_spider.php';
 
+//-- import the gedcoms array
+if (file_exists("{$INDEX_DIRECTORY}gedcoms.php")) {
+	require "{$INDEX_DIRECTORY}gedcoms.php";
+	if (!is_array($GEDCOMS)) $GEDCOMS = array();
+	$i=0;
+	foreach ($GEDCOMS as $key=>$gedcom) {
+		$i++;
+		if (empty($GEDCOMS[$key]["id"])) {
+			$GEDCOMS[$key]["id"]=$i;
+		}
+		if (empty($GEDCOMS[$key]["pgv_ver"])) {
+			$GEDCOMS[$key]["pgv_ver"]=PGV_VERSION;
+		}
+
+		// Force the gedcom to be re-imported if the code has been significantly upgraded
+		list($major1, $minor1)=explode('.', $GEDCOMS[$key]['pgv_ver']);
+		list($major2, $minor2)=explode('.', PGV_VERSION);
+		if ($major1!=$major2 || $minor1!=$minor2) {
+			$GEDCOMS[$key]["imported"]=false;
+		}
+	}
+} else {
+	$GEDCOMS=array();
+}
+
 //-- start the php session
 $time = time()+$PGV_SESSION_TIME;
 $date = date("D M j H:i:s T Y", $time);
@@ -352,31 +377,14 @@ if (isset($MANUAL_SESSION_START) && !empty($SID)) {
 	session_id($SID);
 }
 
-@session_start();
+session_start();
 
-//-- import the gedcoms array
-if (file_exists("{$INDEX_DIRECTORY}gedcoms.php")) {
-	require "{$INDEX_DIRECTORY}gedcoms.php";
-	if (!is_array($GEDCOMS)) $GEDCOMS = array();
-	$i=0;
-	foreach ($GEDCOMS as $key=>$gedcom) {
-		$i++;
-		if (empty($GEDCOMS[$key]["id"])) {
-			$GEDCOMS[$key]["id"]=$i;
-		}
-		if (empty($GEDCOMS[$key]["pgv_ver"])) {
-			$GEDCOMS[$key]["pgv_ver"]=PGV_VERSION;
-		}
-
-		// Force the gedcom to be re-imported if the code has been significantly upgraded
-		list($major1, $minor1)=explode('.', $GEDCOMS[$key]['pgv_ver']);
-		list($major2, $minor2)=explode('.', PGV_VERSION);
-		if ($major1!=$major2 || $minor1!=$minor2) {
-			$GEDCOMS[$key]["imported"]=false;
-		}
-	}
+if (!isset($_SESSION['initiated'])) {
+	// A new session, so prevent session fixation attacks by choosing a new PHPSESSID.
+	session_regenerate_id(true);
+	$_SESSION['initiated']=true;
 } else {
-	$GEDCOMS=array();
+	// An existing session
 }
 
 //-- try to set the active GEDCOM
