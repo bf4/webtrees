@@ -117,47 +117,31 @@ if (!isset($DBPORT)) {
 @ini_set('display_errors', '1');
 @error_reporting(0);
 
-// Microsoft IIS servers don't set REQUEST_URI, so generate it for them.
-if (!isset($_SERVER['REQUEST_URI']))  {
-	$_SERVER['REQUEST_URI']=substr($_SERVER['PHP_SELF'], 1);
-	if (isset($_SERVER['QUERY_STRING'])) {
-		$_SERVER['REQUEST_URI'].='?'.$_SERVER['QUERY_STRING'];
-	}
-}
-
-//-- list of critical configuration variables
-$CONFIG_VARS = array(
-	'DBTYPE',
-	'DBHOST',
-	'DBUSER',
-	'DBPASS',
-	'DBNAME',
-	'TBLPREFIX',
-	'INDEX_DIRECTORY',
-	'AUTHENTICATION_MODULE',
-	'USE_REGISTRATION_MODULE',
-	'ALLOW_USER_THEMES',
-	'ALLOW_CHANGE_GEDCOM',
-	'LOGFILE_CREATE',
-	'PGV_SESSION_SAVE_PATH',
-	'PGV_SESSION_TIME',
-	'GEDCOMS',
-	'SERVER_URL',
-	'LOGIN_URL',
-	'PGV_MEMORY_LIMIT',
-	'PGV_STORE_MESSAGES',
-	'PGV_SIMPLE_MAIL',
-	'CONFIGURED',
-	'MANUAL_SESSON_START',
-	'REQUIRE_ADMIN_AUTH_REGISTRATION',
-	'COMMIT_COMMAND'
-	);
-
-if (version_compare(PHP_VERSION, PGV_REQUIRED_PHP_VERSION)<0) {
-	die ('<html><body><p style="color: red;">PhpGedView requires PHP version '.PGV_REQUIRED_PHP_VERSION.' or later.</p><p>Your server is running PHP version '.PHP_VERSION.'.  Please ask your server\'s Administrator to upgrade the PHP installation.</p></body></html>');
-}
-
+// Check configuration issues that affect older versions of PHP
 if (version_compare(PHP_VERSION, '6.0.0', '<')) {
+	// PHP too old?
+	if (version_compare(PHP_VERSION, PGV_REQUIRED_PHP_VERSION)<0) {
+		die ('<html><body><p style="color: red;">PhpGedView requires PHP version '.PGV_REQUIRED_PHP_VERSION.' or later.</p><p>Your server is running PHP version '.PHP_VERSION.'.  Please ask your server\'s Administrator to upgrade the PHP installation.</p></body></html>');
+	}
+
+	// register_globals was deprecated in PHP5.3.0 and removed in PHP6.0.0
+	// For servers with this feature enabled in php.ini, check it is not being abused.
+	foreach (array(
+		'DBTYPE', 'DBHOST', 'DBUSER', 'DBPASS', 'DBNAME', 'TBLPREFIX',
+		'INDEX_DIRECTORY', 'AUTHENTICATION_MODULE', 'USE_REGISTRATION_MODULE',
+		'ALLOW_USER_THEMES', 'ALLOW_CHANGE_GEDCOM', 'LOGFILE_CREATE',
+		'PGV_SESSION_SAVE_PATH', 'PGV_SESSION_TIME',
+		'GEDCOMS', 'SERVER_URL', 'LOGIN_URL',
+		'PGV_MEMORY_LIMIT', 'PGV_STORE_MESSAGES', 'PGV_SIMPLE_MAIL',
+		'CONFIGURED', 'MANUAL_SESSON_START', 'REQUIRE_ADMIN_AUTH_REGISTRATION',
+		'COMMIT_COMMAND'
+	) as $var) {
+		if (isset($_REQUEST[$var])) {
+			header('HTTP/1.0 403 Forbidden');
+			die('Invalid request.');
+		}
+	}
+
 	// magic quotes were deprecated in PHP5.3.0 and removed in PHP6.0.0
 	set_magic_quotes_runtime(0);
 
@@ -178,36 +162,12 @@ if (version_compare(PHP_VERSION, '6.0.0', '<')) {
 	}
 }
 
-/**
- *  Check for configuration variable override.
- *
- *  Each incoming URI is checked to see whether it contains any mention of
- *  certain critical global variables that should not be changed, or that
- *  can only be changed within limits.
- */
-$configOverride = false;
-// Check for override of $CONFIG_VARS
-if (isset($_REQUEST["CONFIG_VARS"])) $configOverride = true;
-
-// $CONFIG_VARS is safe: now check for any in its list
-foreach($CONFIG_VARS as $VAR) {
-	if (isset($_REQUEST[$VAR])) {
-		$configOverride = true;
-		break ;
+// Microsoft IIS servers don't set REQUEST_URI, so generate it for them.
+if (!isset($_SERVER['REQUEST_URI']))  {
+	$_SERVER['REQUEST_URI']=substr($_SERVER['PHP_SELF'], 1);
+	if (isset($_SERVER['QUERY_STRING'])) {
+		$_SERVER['REQUEST_URI'].='?'.$_SERVER['QUERY_STRING'];
 	}
-}
-
-//-- check if they are trying to hack
-if ($configOverride) {
-	if (!ini_get('register_globals') || strtolower(ini_get('register_globals'))=="off") {
-		require 'includes/authentication.php' ;
-		AddToLog("MSG>Configuration override detected; script terminated.");
-		AddToLog("UA>{$_SERVER["HTTP_USER_AGENT"]}<");
-		AddToLog("URI>{$_SERVER["REQUEST_URI"]}<");
-	}
-	header("HTTP/1.0 403 Forbidden");
-	print "Hackers are not welcome here.";
-	exit;
 }
 
 //-- load file for language settings
