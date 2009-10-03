@@ -137,6 +137,12 @@ if (version_compare(PHP_VERSION, '6.0.0', '<')) {
 		'COMMIT_COMMAND'
 	) as $var) {
 		if (isset($_REQUEST[$var])) {
+			if (!ini_get('register_globals') || strtolower(ini_get('register_globals'))=="off") {
+				require_once("includes/authentication.php");
+				AddToLog("MSG>Configuration override detected; script terminated.");
+				AddToLog("UA>{$_SERVER["HTTP_USER_AGENT"]}<");
+				AddToLog("URI>{$_SERVER["REQUEST_URI"]}<");
+			}
 			header('HTTP/1.0 403 Forbidden');
 			die('Invalid request.');
 		}
