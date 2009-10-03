@@ -2391,7 +2391,7 @@ function PGVRvarSHandler($attrs) {
 		}
 		else {
 			$tfact = $fact;
-			if ($fact=="EVEN" || $fact=="FACT") $tfact = $type;
+			if (($fact=="EVEN" || $fact=="FACT") && is_string($type)) $tfact = $type;
 			$var = preg_replace(array("/\[/","/\]/","/@fact/","/@desc/"), array("['","']",$tfact,$desc), $var);
 			eval("if (!empty(\$$var)) \$var = \$$var;");
 			$match = array();
