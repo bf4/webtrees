@@ -400,6 +400,3 @@
 .ui-tabs .ui-tabs-panel { padding: 1em 1.4em; display: block; border-width: 0; background: none; }
 .ui-tabs .ui-tabs-hide { display: none !important; }
 
-/* PGV Theme additions and changes ----------*/
-.ui-tabs-nav li.ui-tabs-selected 			 { background: white; }
-.static_tab_content 						 { border-style:none solid solid solid; border-color: #c8c8c8 }
