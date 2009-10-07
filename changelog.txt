@@ -10,6 +10,7 @@
 
 
 Version 4.2.x CA
+ - Modified: Theme css relocation for all Tab management (jquery-ui) theme css files (windmillway) 
  - Added: Manage Links to Thumbnail drop Down Menu on Album Page (windmillway)
  - Modified theme css files for tab management (windmillway)
  - Merged: Merge changes r6095 - r6119 from the trunk. (windmillway)

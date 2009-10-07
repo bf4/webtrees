@@ -1,26 +1,26 @@
 /* jquery css THEME adjustments */
 
 /* Tabs --------------------------------*/
-.ui-widget-content 						 { color:white; background:none; border-color:#004025;  }
-.ui-widget-content a 					 { color:#bbffbb; }
+.ui-widget-content 						 { color:white; background:none; border-color:#002540;  }
+.ui-widget-content a 					 { color:#bbbbff; }
 .ui-widget-content a:hover 				 { color:orange; }
 
-.ui-tabs .ui-tabs-nav 					 { padding: .3em .3em 0 .3em; background:#65a278; border-color:#cccccc; }
-.ui-tabs .ui-tabs-nav li 					 { font-size:0.9em; bottom:-3px; margin:0em 0.3em 0 0; background:#458258; border-color:#004025; }
-.ui-tabs .ui-tabs-nav li a 					 { color:#bbffbb; padding: .2em .8em .2em .8em;  }
-.ui-tabs .ui-tabs-nav li:hover			 { color:orange; background: #256238;}
+.ui-tabs .ui-tabs-nav 					 { padding: .3em .3em 0 .3em; background:#253862; border-color:#cccccc; }
+.ui-tabs .ui-tabs-nav li 					 { font-size:0.9em; bottom:-3px; margin:0em 0.3em 0 0; background:#6578a2; border-color:#004025; }
+.ui-tabs .ui-tabs-nav li a 					 { color:#bbbbff; padding: .2em .8em .2em .8em;  }
+.ui-tabs .ui-tabs-nav li:hover			 { color:orange; background: #556892;}
 .ui-tabs .ui-tabs-nav li a:hover			 { color:orange;}
 
-.ui-tabs-nav li.ui-tabs-selected  	 		 { color:white; padding-top:2px; top:1px; bottom:0px; border-color: #cccccc; border-bottom-width: 0 !important; background:#004025;}
+.ui-tabs-nav li.ui-tabs-selected  	 		 { color:white; padding-top:2px; top:1px; bottom:0px; border-color: #cccccc; border-bottom-width: 0 !important; background:#002540;}
 .ui-tabs-nav li.ui-tabs-selected a	 		 { font-weight:600; color:white; }
-.ui-tabs-nav li.ui-tabs-selected a:hover	 { font-weight:600; color:white; background:#004025; }
-.ui-tabs-nav li.ui-tabs-selected:hover	 { background:#004025; }
-.ui-tabs .ui-tabs-panel	 				 { background:#004025; }
+.ui-tabs-nav li.ui-tabs-selected a:hover	 { font-weight:600; color:white; background:#002540; }
+.ui-tabs-nav li.ui-tabs-selected:hover	 { background:#002540; }
+.ui-tabs .ui-tabs-panel	 				 { background:#002540; }
 
 .static_tab_content  { 
 	border-color: black; 
 	border-style:none solid solid solid; 
-	background: #458258;
+	background: #6578a2;
 }
 .static_tab_ltr {
 	float: right;
@@ -32,7 +32,7 @@
 	position: absolute; 
 	z-index: 100;
 	right: 0px; 
-	background: #458258; 
+	background: #6578a2; 
 	margin-top:0px; 
 	margin-right:13px;
 }
@@ -46,7 +46,7 @@ color:orange;
 }
 .nav_content {
 	width:240px;
-	background:#458258;
+	background:#6578a2;
 	padding-left:5px;
 	padding-right:5px;
 	padding-top:3px;
