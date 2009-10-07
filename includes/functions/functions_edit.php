@@ -952,7 +952,7 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 				if (ip[i].value.indexOf('/')<0 && ip[i].value!='')
 					ip[i].value=ip[i].value.replace(/([^\s]+)\s*$/, "/$1/");
 			// Blank out temporary _MARNM_SURN
-			if (ip[i].id.indexOf("_MARNM_SURN")==0 && ip[i].value=='//')
+			if (ip[i].id.indexOf("_MARNM_SURN")==0)
 					ip[i].value='';
 			// Convert "xxx yyy" and "xxx y yyy" surnames to "xxx,yyy"
 			if ('<?php echo $SURNAME_TRADITION; ?>'=='spanish' || '<?php echo $SURNAME_TRADITION; ?>'=='portuguese')
