@@ -10,8 +10,8 @@
 .ui-tabs .ui-tabs-nav li a 					 { color: #bbffbb; padding: .2em 1em .25em 1em;  }
 .ui-tabs .ui-tabs-nav li a:hover			 { color: orange; }
 .ui-tabs-nav li.ui-tabs-selected  	 		 { color:white; padding-bottom: 0px; bottom: -1px; border-color: #cccccc; border-bottom-width: 0; background: #004025;}
-.ui-tabs-nav li.ui-tabs-selected a	 		 { font-weight:600; color: white; }
-.ui-tabs-nav li.ui-tabs-selected a:hover	 { font-weight:600; color: white; }
+.ui-tabs-nav li.ui-tabs-selected a	 		 { font-weight:500; color: white; }
+.ui-tabs-nav li.ui-tabs-selected a:hover	 { font-weight:500; color: white; }
 .ui-tabs .ui-tabs-panel	 				 { background: #004025; }
 
 .static_tab_content  { 
