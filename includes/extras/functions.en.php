@@ -144,7 +144,6 @@ function getRelationshipText_en($relationshipDescription, $node, $pid1, $pid2) {
 		}
 	}
 
-
 	if ($relationshipDescription != false) {
 		return strtolower($relationshipDescription);
 	}

@@ -33,7 +33,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 }
 
 // Added in VERSION 4.2.2
-$pgv_lang["TYPE__notinDB"]		= "Brak w bazie danych";
+$pgv_lang["TYPE__notinDB"]		= "Brak w bazie danych<br /><br />LUB<br /><br />Duplikat w pliku Gedcom";
 $pgv_lang["ROW_TYPE__notinDB"]	= $pgv_lang["TYPE__notinDB"];
 
 // Added in VERSION 4.1.6
