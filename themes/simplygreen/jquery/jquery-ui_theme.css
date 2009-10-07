@@ -1,11 +1,11 @@
 /* jquery css THEME adjustments */
 
 /* Tabs --------------------------------*/
-.ui-widget-content 						 { color: white; }
+.ui-widget-content 						 { color: white; background:none; border-color: #004025;  }
 .ui-widget-content a 					 { color: #bbffbb; }
 .ui-widget-content a:hover 				 { color: orange; }
 
-.ui-tabs .ui-tabs-nav 					 { padding: .5em .5em 0; background: #256238; border-color: #cccccc; }
+.ui-tabs .ui-tabs-nav 					 { padding: .5em .5em 0; background: #65a278; border-color: #cccccc; }
 .ui-tabs .ui-tabs-nav li 					 { margin: .1em .2em 0 0; background: #458258; border-color: #004025; }
 .ui-tabs .ui-tabs-nav li a 					 { color: #bbffbb; padding: .2em 1em .25em 1em;  }
 .ui-tabs .ui-tabs-nav li a:hover			 { color: orange; }
