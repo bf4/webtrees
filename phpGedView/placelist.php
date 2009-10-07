@@ -3,7 +3,7 @@
  * Displays a place hierachy
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team. All rights reserved.
+ * Copyright (C) 2002 to 2009  PGV Development Team. All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -149,8 +149,9 @@ if ($display=="hierarchy") {
 
 	print_help_link("ppp_levels_help", "qm");
 
-	if ($use_googlemap)
+	if ($use_googlemap) {
 		create_map();
+	}
 	else {
 		// show clickable map if found
 		echo "\n\t<br /><br />\n\t<table class=\"width90\"><tr><td class=\"center\">";
@@ -452,6 +453,6 @@ else {
 	print_help_link("ppp_default_form_help", "qm");
 }
 echo "<br /><br /></div>";
-print_footer();
 if ($use_googlemap && $display=="hierarchy") map_scripts($numfound, $level, $parent, $linklevels, $placelevels, $place_names);
+print_footer();
 ?>
