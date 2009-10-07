@@ -127,7 +127,7 @@ if ($action=='addBanned') {
 		}
 	} else $errorBanned = $pgv_lang["error_ban_server"];
 
-	require($INDEX_DIRECTORY."banned.php");		// Refresh the $banned list
+	if (file_exists($INDEX_DIRECTORY."banned.php")) require($INDEX_DIRECTORY."banned.php");		// Refresh the $banned list
 	$action = 'showForm';
 }
 
@@ -197,7 +197,7 @@ if ($action=='addSearch') {
 		}
 	} else $errorSearch = $pgv_lang["error_ban_server"];
 
-	require($INDEX_DIRECTORY."search_engines.php");		// refresh the $search_engines list
+	if (file_exists($INDEX_DIRECTORY."search_engines.php")) require($INDEX_DIRECTORY."search_engines.php");		// refresh the $search_engines list
 	$action = 'showForm';
 }
 
