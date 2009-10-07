@@ -1379,18 +1379,18 @@ a.showit:hover span {
 
 /* Flyout menu Styles */
 .flyout {
-color:#ffffff; 
-text-align: left;
-margin-top: -20px;
-right: 210px;
-padding: 3px;
+	color:#ffffff; 
+	text-align: left;
+	margin-top: -20px;
+	right: 210px;
+	padding: 3px;
 }
 .flyoutrtl {
-color:#ffffff; 
-text-align: right;
-margin-top: -20px;
-left: 210px;
-padding: 3px;
+	color:#ffffff; 
+	text-align: right;
+	margin-top: -20px;
+	left: 210px;
+	padding: 3px;
 }
 /* End of Flyout Menu styles*/
 
@@ -1413,11 +1413,12 @@ ul.clist {
 	width: 8em;
 }
 
-.statistics_chart{
+.statistics_chart {
 	background-color: #b7e3b5;
+	text-align: center;
 }
 
-.gchart{
+.gchart {
 	border: solid #094215 1px;
 }
 

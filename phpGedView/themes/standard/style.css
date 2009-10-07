@@ -1322,18 +1322,18 @@ a.showit:hover span {
 
 /* Flyout menu Styles */
 .flyout {
-color:#000000; 
-text-align: left;
-margin-top: -20px;
-right: 210px;
-padding: 3px;
+	color:#000000; 
+	text-align: left;
+	margin-top: -20px;
+	right: 210px;
+	padding: 3px;
 }
 .flyoutrtl {
-color:#000000; 
-text-align: right;
-margin-top: -20px;
-left: 210px;
-padding: 3px;
+	color:#000000; 
+	text-align: right;
+	margin-top: -20px;
+	left: 210px;
+	padding: 3px;
 }
 /* End of Flyout Menu styles*/
 
@@ -1356,10 +1356,11 @@ ul.clist {
 	width: 8em;
 }
 
-.statistics_chart{
+.statistics_chart {
+	text-align: center;
 }
 
-.gchart{
+.gchart {
 	border: solid #9ca3d4 1px;
 }
 
