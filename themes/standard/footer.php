@@ -45,7 +45,7 @@ echo "</div> <!-- closing div id=\"content\" -->";
 <br />
 <?php
 if ($SHOW_STATS || PGV_DEBUG) {
-	print_execution_stats();
+	echo execution_stats();
 }
 if (exists_pending_change()) {?>
 	<br />

@@ -63,19 +63,12 @@ class RemoteLinkController extends BaseController {
 
 	// Initialize the controller for the add remote link
 	function init() {
-		// Cannot edit with a "remember me" login.
-		if ($_SESSION["cookie_login"]) {
-			header('Location: '.encode_url("login.php?type=simple&url=".urlencode("edit_interface.php?".decode_url($QUERY_STRING)), false));
-			exit;
-		}
-
 		// The PID can come from a URL or a form
 		$this->pid=safe_REQUEST($_REQUEST, 'pid', PGV_REGEX_XREF);
 
 		$this->person=Person::getInstance($this->pid);
 		$this->server_list=get_server_list();
 		$this->gedcom_list=get_all_gedcoms();
-		unset($this->gedcom_list[PGV_GED_ID]);
 
 		// Other input values come from the form
 		$this->form_txtPID           =safe_POST('txtPID', PGV_REGEX_XREF);

@@ -220,7 +220,6 @@ switch($step) {
 		if (isset($_POST["NEW_PGV_SMTP_SSL"])) $_SESSION['install_config']['PGV_SMTP_SSL'] = $_POST["NEW_PGV_SMTP_SSL"];
 		if (isset($_POST["NEW_PGV_SMTP_FROM_NAME"])) $_SESSION['install_config']['PGV_SMTP_FROM_NAME'] = $_POST["NEW_PGV_SMTP_FROM_NAME"];
 		if (isset($_POST['NEW_ALLOW_USER_THEMES'])) $_SESSION['install_config']['ALLOW_USER_THEMES'] = $_POST['NEW_ALLOW_USER_THEMES']=="yes"?true:false;
-		if (isset($_POST['NEW_ALLOW_REMEMBER_ME'])) $_SESSION['install_config']['ALLOW_REMEMBER_ME'] = $_POST['NEW_ALLOW_REMEMBER_ME']=="yes"?true:false;
 		if (isset($_POST['NEW_LOGFILE_CREATE'])) $_SESSION['install_config']['LOGFILE_CREATE'] = $_POST['NEW_LOGFILE_CREATE'];
 		if (isset($_POST['NEW_SERVER_URL'])) {
 			$temp = trim($_POST['NEW_SERVER_URL']);
@@ -259,6 +258,12 @@ switch($step) {
 
 			$config_array = $_SESSION['install_config'];
 			$config_array['CONFIGURED'] = true;
+			
+			// Clear the SERVER_URL when it's identical to the calculated value
+			$GUESS_URL = stripslashes("http://".$_SERVER["SERVER_NAME"].dirname($SCRIPT_NAME)."/");
+			$config_array['SERVER_URL'] = rtrim(trim($config_array['SERVER_URL']),'/').'/';
+			if ($config_array['SERVER_URL'] == $GUESS_URL || $config_array['SERVER_URL'] == '/') $config_array['SERVER_URL'] = '';
+
 			$ret = update_site_config($config_array, $download);
 			if ($download && !is_array($ret)) {
 				ob_end_clean(); // discard html currently in output buffer
@@ -690,7 +695,7 @@ function printDBForm() {
 
 function printConfigForm(){
 	global $TEXT_DIRECTION, $PGV_STORE_MESSAGES, $USE_REGISTRATION_MODULE, $REQUIRE_ADMIN_AUTH_REGISTRATION;
-	global $ALLOW_CHANGE_GEDCOM, $PGV_SIMPLE_MAIL, $ALLOW_USER_THEMES, $ALLOW_REMEMBER_ME, $LOGFILE_CREATE, $SERVER_URL;
+	global $ALLOW_CHANGE_GEDCOM, $PGV_SIMPLE_MAIL, $ALLOW_USER_THEMES, $LOGFILE_CREATE, $SERVER_URL;
 	global $PGV_SMTP_ACTIVE, $PGV_SMTP_HOST, $PGV_SMTP_HELO, $PGV_SMTP_PORT, $PGV_SMTP_AUTH, $PGV_SMTP_AUTH_USER, $PGV_SMTP_AUTH_PASS, $PGV_SMTP_SSL, $PGV_SMTP_FROM_NAME;
 	global $LOGIN_URL, $SCRIPT_NAME, $PGV_SESSION_SAVE_PATH, $PGV_SESSION_TIME, $COMMIT_COMMAND, $PGV_MEMORY_LIMIT, $MAX_VIEWS;
 	global $MAX_VIEW_TIME, $INDEX_DIRECTORY;
@@ -704,7 +709,6 @@ function printConfigForm(){
 	if (isset($_SESSION['install_config']['REQUIRE_ADMIN_AUTH_REGISTRATION'])) $REQUIRE_ADMIN_AUTH_REGISTRATION = $_SESSION['install_config']['REQUIRE_ADMIN_AUTH_REGISTRATION'];
 	if (isset($_SESSION['install_config']['PGV_SIMPLE_MAIL'])) $PGV_SIMPLE_MAIL = $_SESSION['install_config']['PGV_SIMPLE_MAIL'];
 	if (isset($_SESSION['install_config']['ALLOW_USER_THEMES'])) $ALLOW_USER_THEMES = $_SESSION['install_config']['ALLOW_USER_THEMES'];
-	if (isset($_SESSION['install_config']['ALLOW_REMEMBER_ME'])) $ALLOW_REMEMBER_ME = $_SESSION['install_config']['ALLOW_REMEMBER_ME'];
 	if (isset($_SESSION['install_config']['LOGFILE_CREATE'])) $LOGFILE_CREATE = $_SESSION['install_config']['LOGFILE_CREATE'];
 	if (isset($_SESSION['install_config']['SERVER_URL'])) $SERVER_URL = $_SESSION['install_config']['SERVER_URL'];
 	if (isset($_SESSION['install_config']['LOGIN_URL'])) $LOGIN_URL = $_SESSION['install_config']['LOGIN_URL'];
@@ -788,15 +792,6 @@ function printConfigForm(){
 					</select>
 		 		</td>
 		 	</tr>
-		 	<tr>
-				<td class="descriptionbox wrap width30"><?php print_help_link("ALLOW_REMEMBER_ME_help", "qm", "ALLOW_REMEMBER_ME"); print $pgv_lang["ALLOW_REMEMBER_ME"];?></td>
-				<td class="optionbox">
-					<select name="NEW_ALLOW_REMEMBER_ME" tabindex="<?php $i++; print $i?>" onfocus="getHelp('ALLOW_REMEMBER_ME_help');">
-		 				<option value="yes" <?php if ($ALLOW_REMEMBER_ME) print "selected=\"selected\""; ?>><?php print $pgv_lang["yes"];?></option>
-		 				<option value="no" <?php if (!$ALLOW_REMEMBER_ME) print "selected=\"selected\""; ?>><?php print $pgv_lang["no"];?></option>
-					</select>
-				</td>
-			</tr>
 			<tr>
 				<td class="descriptionbox wrap width30"><?php print_help_link("ALLOW_USER_THEMES_help", "qm", "ALLOW_USER_THEMES"); print $pgv_lang["ALLOW_USER_THEMES"];?></td>
 				<td class="optionbox">

@@ -81,7 +81,9 @@ function date_localisation_pl(&$q1, &$d1, &$q2, &$d2, &$q3) {
 	// The qualifiers are simple translations
 	if (isset($pgv_lang[$q1]))
 		$q1=$pgv_lang[$q1];
-	if (isset($pgv_lang[$q2]))
+	if ($q2=="and")
+		$q2="a";
+	else if (isset($pgv_lang[$q2]))
 		$q2=$pgv_lang[$q2];
 }
 ////////////////////////////////////////////////////////////////////////////////

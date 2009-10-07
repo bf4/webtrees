@@ -1301,10 +1301,16 @@ ul.clist {
 }
 */
 
-.statistics_chart{
+.statistics_chart {
+	text-align: center;
 	text-align: center;
 }
 
-.gchart{
+.gchart {
 	border: solid black 1px;
+}
+
+.execution_stats {
+	padding-top: 12px;
+	text-align: center;
 }

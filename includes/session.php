@@ -36,8 +36,7 @@ define('PGV_VERSION_RELEASE', 'svn'); // 'svn', 'beta', 'rc1', '', etc.
 define('PGV_VERSION_TEXT',    trim(PGV_VERSION.' '.PGV_VERSION_RELEASE));
 define('PGV_PHPGEDVIEW_URL',  'http://www.phpgedview.net');
 define('PGV_PHPGEDVIEW_WIKI', 'http://wiki.phpgedview.net');
-define('PGV_REGISTRY_URL',    'http://registry.phpgedview.net/index.php');
-define('PGV_TRANSLATORS_URL', 'http://sourceforge.net/forum/forum.php?forum_id=294245');
+define('PGV_TRANSLATORS_URL', 'https://sourceforge.net/projects/phpgedview/forums/forum/294245');
 
 // Enable debugging output?
 define('PGV_DEBUG',       false);
@@ -72,10 +71,17 @@ define('PGV_REGEX_UNSAFE',   '[\x00-\xFF]*'); // Use with care and apply additio
 
 // UTF8 representation of various characters
 define('PGV_UTF8_BOM',    "\xEF\xBB\xBF"); // U+FEFF
-define('PGV_UTF8_LRM',    "\xE2\x80\x8E"); // U+200E
-define('PGV_UTF8_RLM',    "\xE2\x80\x8F"); // U+200F
 define('PGV_UTF8_MALE',   "\xE2\x99\x82"); // U+2642
 define('PGV_UTF8_FEMALE', "\xE2\x99\x80"); // U+2640
+
+// UTF8 control codes affecting the BiDirectional algorithm (see http://www.unicode.org/reports/tr9/)
+define('PGV_UTF8_LRM',    "\xE2\x80\x8E"); // U+200E  (Left to Right mark:  zero-width character with LTR directionality)
+define('PGV_UTF8_RLM',    "\xE2\x80\x8F"); // U+200F  (Right to Left mark:  zero-width character with RTL directionality)
+define('PGV_UTF8_LRO',    "\xE2\x80\xAD"); // U+202D  (Left to Right override: force everything following to LTR mode)
+define('PGV_UTF8_RLO',    "\xE2\x80\xAE"); // U+202E  (Right to Left override: force everything following to RTL mode)
+define('PGV_UTF8_LRE',    "\xE2\x80\xAA"); // U+202A  (Left to Right embedding: treat everything following as LTR text)
+define('PGV_UTF8_RLE',    "\xE2\x80\xAB"); // U+202B  (Right to Left embedding: treat everything following as RTL text)
+define('PGV_UTF8_PDF',    "\xE2\x80\xAC"); // U+202C  (Pop directional formatting: restore state prior to last LRO, RLO, LRE, RLE)
 
 // Alternatives to BMD events for lists, charts, etc.
 define('PGV_EVENTS_BIRT', 'BIRT|CHR|BAPM|_BRTM|ADOP');
@@ -111,6 +117,57 @@ if (!isset($DBPORT)) {
 @ini_set('display_errors', '1');
 @error_reporting(0);
 
+// Check configuration issues that affect older versions of PHP
+if (version_compare(PHP_VERSION, '6.0.0', '<')) {
+	// PHP too old?
+	if (version_compare(PHP_VERSION, PGV_REQUIRED_PHP_VERSION)<0) {
+		die ('<html><body><p style="color: red;">PhpGedView requires PHP version '.PGV_REQUIRED_PHP_VERSION.' or later.</p><p>Your server is running PHP version '.PHP_VERSION.'.  Please ask your server\'s Administrator to upgrade the PHP installation.</p></body></html>');
+	}
+
+	// register_globals was deprecated in PHP5.3.0 and removed in PHP6.0.0
+	// For servers with this feature enabled in php.ini, check it is not being abused.
+	foreach (array(
+		'DBTYPE', 'DBHOST', 'DBUSER', 'DBPASS', 'DBNAME', 'TBLPREFIX',
+		'INDEX_DIRECTORY', 'AUTHENTICATION_MODULE', 'USE_REGISTRATION_MODULE',
+		'ALLOW_USER_THEMES', 'ALLOW_CHANGE_GEDCOM', 'LOGFILE_CREATE',
+		'PGV_SESSION_SAVE_PATH', 'PGV_SESSION_TIME',
+		'GEDCOMS', 'SERVER_URL', 'LOGIN_URL',
+		'PGV_MEMORY_LIMIT', 'PGV_STORE_MESSAGES', 'PGV_SIMPLE_MAIL',
+		'CONFIGURED', 'MANUAL_SESSON_START', 'REQUIRE_ADMIN_AUTH_REGISTRATION',
+		'COMMIT_COMMAND'
+	) as $var) {
+		if (isset($_REQUEST[$var])) {
+			if (!ini_get('register_globals') || strtolower(ini_get('register_globals'))=="off") {
+				require_once("includes/authentication.php");
+				AddToLog("MSG>Configuration override detected; script terminated.");
+				AddToLog("UA>{$_SERVER["HTTP_USER_AGENT"]}<");
+				AddToLog("URI>{$_SERVER["REQUEST_URI"]}<");
+			}
+			header('HTTP/1.0 403 Forbidden');
+			die('Invalid request.');
+		}
+	}
+
+	// magic quotes were deprecated in PHP5.3.0 and removed in PHP6.0.0
+	set_magic_quotes_runtime(0);
+
+	// magic_quotes_gpc can't be disabled at run-time, so clean them up as necessary.
+	if (function_exists('get_magic_quotes_gpc') && get_magic_quotes_gpc() ||
+		ini_get('magic_quotes_sybase') && strtolower(ini_get('magic_quotes_sybase'))!='off') {
+		$in = array(&$_GET, &$_POST, &$_REQUEST, &$_COOKIE);
+		while (list($k,$v) = each($in)) {
+			foreach ($v as $key => $val) {
+				if (!is_array($val)) {
+					$in[$k][$key] = stripslashes($val);
+					continue;
+				}
+				$in[] =& $in[$k][$key];
+			}
+		}
+		unset($in);
+	}
+}
+
 // Microsoft IIS servers don't set REQUEST_URI, so generate it for them.
 if (!isset($_SERVER['REQUEST_URI']))  {
 	$_SERVER['REQUEST_URI']=substr($_SERVER['PHP_SELF'], 1);
@@ -119,118 +176,12 @@ if (!isset($_SERVER['REQUEST_URI']))  {
 	}
 }
 
-// Determine browser type
-$BROWSERTYPE = "other";
-if (!empty($_SERVER["HTTP_USER_AGENT"])) {
-	if (stristr($_SERVER["HTTP_USER_AGENT"], "Opera"))
-		$BROWSERTYPE = "opera";
-	else if (stristr($_SERVER["HTTP_USER_AGENT"], "Netscape"))
-		$BROWSERTYPE = "netscape";
-	else if (stristr($_SERVER["HTTP_USER_AGENT"], "Gecko"))
-		$BROWSERTYPE = "mozilla";
-	else if (stristr($_SERVER["HTTP_USER_AGENT"], "MSIE"))
-		$BROWSERTYPE = "msie";
-}
-
-//-- list of critical configuration variables
-$CONFIG_VARS = array(
-	'PGV_BASE_DIRECTORY',
-	'PGV_DATABASE',
-	'DBTYPE',
-	'DBHOST',
-	'DBUSER',
-	'DBPASS',
-	'DBNAME',
-	'TBLPREFIX',
-	'INDEX_DIRECTORY',
-	'AUTHENTICATION_MODULE',
-	'USE_REGISTRATION_MODULE',
-	'ALLOW_USER_THEMES',
-	'ALLOW_REMEMBER_ME',
-	'ALLOW_CHANGE_GEDCOM',
-	'LOGFILE_CREATE',
-	'PGV_SESSION_SAVE_PATH',
-	'PGV_SESSION_TIME',
-	'GEDCOMS',
-	'SERVER_URL',
-	'LOGIN_URL',
-	'PGV_MEMORY_LIMIT',
-	'PGV_STORE_MESSAGES',
-	'PGV_SIMPLE_MAIL',
-	'CONFIG_VERSION',
-	'CONFIGURED',
-	'MANUAL_SESSON_START',
-	'REQUIRE_ADMIN_AUTH_REGISTRATION',
-	'COMMIT_COMMAND'
-	);
-
-//-- append our 'includes/' path to the include_path ini setting for ease of use.
-$ini_include_path = @ini_get('include_path');
-$includes_dir = dirname(@realpath(__FILE__));
-$includes_dir .= PATH_SEPARATOR.dirname($includes_dir);
-@ini_set('include_path', '.'.PATH_SEPARATOR.$includes_dir.PATH_SEPARATOR.$ini_include_path);
-unset($ini_include_path, $includes_dir); // destroy some variables for security reasons.
-
-set_magic_quotes_runtime(0);
-
-// magic_quotes_gpc can't be disabled at run-time, so clean them up as necessary.
-if (function_exists('get_magic_quotes_gpc') && get_magic_quotes_gpc() ||
-	ini_get('magic_quotes_sybase') && strtolower(ini_get('magic_quotes_sybase'))!='off') {
-	$in = array(&$_GET, &$_POST, &$_REQUEST, &$_COOKIE);
-	while (list($k,$v) = each($in)) {
-		foreach ($v as $key => $val) {
-			if (!is_array($val)) {
-				$in[$k][$key] = stripslashes($val);
-				continue;
-			}
-			$in[] =& $in[$k][$key];
-		}
-	}
-	unset($in);
-}
-
-if (version_compare(PHP_VERSION, PGV_REQUIRED_PHP_VERSION)<0) {
-	die ('<html><body><p style="color: red;">PhpGedView requires PHP version '.PGV_REQUIRED_PHP_VERSION.' or later.</p><p>Your server is running PHP version '.PHP_VERSION.'.  Please ask your server\'s Administrator to upgrade the PHP installation.</p></body></html>');
-}
-
-/**
- *  Check for configuration variable override.
- *
- *  Each incoming URI is checked to see whether it contains any mention of
- *  certain critical global variables that should not be changed, or that
- *  can only be changed within limits.
- */
-$configOverride = false;
-	// Check for override of $CONFIG_VARS
-if (isset($_REQUEST["CONFIG_VARS"])) $configOverride = true;
-
-	// $CONFIG_VARS is safe: now check for any in its list
-	foreach($CONFIG_VARS as $VAR) {
-	if (isset($_REQUEST[$VAR])) {
-		$configOverride = true;
-		break ;
-	}
-}
-
-//-- check if they are trying to hack
-if ($configOverride) {
-	if (!ini_get('register_globals') || strtolower(ini_get('register_globals'))=="off") {
-		require_once("includes/authentication.php");
-		AddToLog("MSG>Configuration override detected; script terminated.");
-		AddToLog("UA>{$_SERVER["HTTP_USER_AGENT"]}<");
-		AddToLog("URI>{$_SERVER["REQUEST_URI"]}<");
-	}
-	header("HTTP/1.0 403 Forbidden");
-	print "Hackers are not welcome here.";
-	exit;
-}
-
 //-- load file for language settings
-require_once( "includes/lang_settings_std.php");
+require 'includes/lang_settings_std.php';
 $Languages_Default = true;
 if (!strstr($_SERVER["REQUEST_URI"], "INDEX_DIRECTORY=") && file_exists($INDEX_DIRECTORY . "lang_settings.php")) {
 	$DefaultSettings = $language_settings; // Save default settings, so we can merge properly
-	require_once($INDEX_DIRECTORY . "lang_settings.php");
+	require "{$INDEX_DIRECTORY}lang_settings.php";
 	$ConfiguredSettings = $language_settings; // Save configured settings, same reason
 	$language_settings = array_merge($DefaultSettings, $ConfiguredSettings); // Copy new langs into config
 	// Now copy new language settings into existing configuration
@@ -295,45 +246,25 @@ if (empty($PGV_MEMORY_LIMIT)) $PGV_MEMORY_LIMIT = "32M";
 @ini_set('memory_limit', $PGV_MEMORY_LIMIT);
 
 //--load common functions
-require_once("includes/functions/functions.php");
-require_once("includes/functions/functions_name.php");
+require 'includes/functions/functions.php';
+require 'includes/functions/functions_name.php';
 //-- set the error handler
-$OLD_HANDLER = set_error_handler("pgv_error_handler");
+set_error_handler("pgv_error_handler");
 
 //-- setup execution timer
 $start_time = microtime(true);
 
-//-- start the php session
-$time = time()+$PGV_SESSION_TIME;
-$date = date("D M j H:i:s T Y", $time);
-//-- set the path to the pgv site so that users cannot login on one site
-//-- and then automatically be logged in at another site on the same server
-$pgv_path = "/";
-if (!empty($SCRIPT_NAME)) {
-	$dirname = dirname($SCRIPT_NAME);
-	if (strstr($SERVER_URL, $dirname)!==false) $pgv_path = str_replace("\\", "/", $dirname);
-	unset($dirname);
-}
-session_set_cookie_params($date, $pgv_path);
-unset($date);
-unset($pgv_path);
-if (($PGV_SESSION_TIME>0)&&(function_exists('session_cache_expire'))) session_cache_expire($PGV_SESSION_TIME/60);
-if (!empty($PGV_SESSION_SAVE_PATH)) session_save_path($PGV_SESSION_SAVE_PATH);
-if (isset($MANUAL_SESSION_START) && !empty($SID)) session_id($SID);
-
-@session_start();
-
 //-- load db specific functions
-require_once("includes/functions/functions_db.php");
-// -- load the authentication system, also logging
-require_once("includes/authentication.php");
-//-- load up the code to check for spiders
-require_once('includes/session_spider.php');
+require 'includes/functions/functions_db.php';
 
+// -- load the authentication system, also logging
+require 'includes/authentication.php';
+ 
 // Connect to the database
-require_once 'includes/classes/class_pgv_db.php';
+require 'includes/classes/class_pgv_db.php';
 try {
-	$DBPASS=str_replace(array("\\\\", "\\\"", "\\\$"), array("\\", "\"", "\$"), $DBPASS); // remove escape codes before using PW
+	// remove escape codes before using PW
+	$DBPASS=str_replace(array("\\\\", "\\\"", "\\\$"), array("\\", "\"", "\$"), $DBPASS);
 	PGV_DB::createInstance($DBTYPE, $DBHOST, $DBPORT, $DBNAME, $DBUSER, $DBPASS, $DB_UTF8_COLLATION);
 	unset($DBUSER, $DBPASS);
 	try {
@@ -346,14 +277,29 @@ try {
 	// Can't connect to the DB?  We'll get redirected to install.php later.....
 }
 
+// Determine browser type
+$BROWSERTYPE = "other";
+if (!empty($_SERVER["HTTP_USER_AGENT"])) {
+	if (stristr($_SERVER["HTTP_USER_AGENT"], "Opera"))
+		$BROWSERTYPE = "opera";
+	else if (stristr($_SERVER["HTTP_USER_AGENT"], "Netscape"))
+		$BROWSERTYPE = "netscape";
+	else if (stristr($_SERVER["HTTP_USER_AGENT"], "Gecko"))
+		$BROWSERTYPE = "mozilla";
+	else if (stristr($_SERVER["HTTP_USER_AGENT"], "MSIE"))
+		$BROWSERTYPE = "msie";
+}
+
+//-- load up the code to check for spiders
+require 'includes/session_spider.php';
+
 //-- import the gedcoms array
-if (file_exists($INDEX_DIRECTORY."gedcoms.php")) {
-	require_once($INDEX_DIRECTORY."gedcoms.php");
+if (file_exists("{$INDEX_DIRECTORY}gedcoms.php")) {
+	require "{$INDEX_DIRECTORY}gedcoms.php";
 	if (!is_array($GEDCOMS)) $GEDCOMS = array();
 	$i=0;
 	foreach ($GEDCOMS as $key=>$gedcom) {
 		$i++;
-		$GEDCOMS[$key]["commonsurnames"] = stripslashes($gedcom["commonsurnames"]);
 		if (empty($GEDCOMS[$key]["id"])) {
 			$GEDCOMS[$key]["id"]=$i;
 		}
@@ -372,7 +318,41 @@ if (file_exists($INDEX_DIRECTORY."gedcoms.php")) {
 	$GEDCOMS=array();
 }
 
-$logout=safe_GET_bool('logout');
+//-- start the php session
+$time = time()+$PGV_SESSION_TIME;
+$date = date("D M j H:i:s T Y", $time);
+//-- set the path to the pgv site so that users cannot login on one site
+//-- and then automatically be logged in at another site on the same server
+$pgv_path = "/";
+if (!empty($SCRIPT_NAME)) {
+	$dirname = dirname($SCRIPT_NAME);
+	if (strstr($SERVER_URL, $dirname)!==false) $pgv_path = str_replace("\\", "/", $dirname);
+	unset($dirname);
+}
+session_set_cookie_params($date, $pgv_path);
+unset($date);
+unset($pgv_path);
+
+if ($PGV_SESSION_TIME>0) {
+	session_cache_expire($PGV_SESSION_TIME/60);
+}
+if (!empty($PGV_SESSION_SAVE_PATH)) {
+	session_save_path($PGV_SESSION_SAVE_PATH);
+}
+if (isset($MANUAL_SESSION_START) && !empty($SID)) {
+	session_id($SID);
+}
+
+session_start();
+
+if (!isset($_SESSION['initiated'])) {
+	// A new session, so prevent session fixation attacks by choosing a new PHPSESSID.
+	session_regenerate_id(true);
+	$_SESSION['initiated']=true;
+} else {
+	// An existing session
+}
+
 //-- try to set the active GEDCOM
 if (isset($_SESSION["GEDCOM"])) $GEDCOM = $_SESSION["GEDCOM"];
 if (isset($_REQUEST["GEDCOM"])) $GEDCOM = trim($_REQUEST["GEDCOM"]);
@@ -380,7 +360,7 @@ if (isset($_REQUEST["ged"])) $GEDCOM = trim($_REQUEST["ged"]);
 if (!empty($GEDCOM) && is_int($GEDCOM)) {
 	$GEDCOM=get_gedcom_from_id($GEDCOM);
 }
-if ($logout || empty($GEDCOM) || empty($GEDCOMS[$GEDCOM])) {
+if (empty($GEDCOM) || empty($GEDCOMS[$GEDCOM])) {
 	try {
 		$GEDCOM=get_site_setting('DEFAULT_GEDCOM');
 	} catch (PDOException $ex) {
@@ -409,20 +389,19 @@ $PRIV_HIDE   = PGV_PRIV_HIDE;
 /**
  * Load GEDCOM configuration
  */
-require_once 'config_gedcom.php';
-require_once get_config_file();
+require get_config_file();
 
 if (empty($PHPGEDVIEW_EMAIL)) {
 	$PHPGEDVIEW_EMAIL="phpgedview-noreply@".preg_replace("/^www\./i", "", $_SERVER["SERVER_NAME"]);
 }
 
-require_once 'includes/functions/functions_print.php';
-require_once 'includes/functions/functions_rtl.php';
+require 'includes/functions/functions_print.php';
+require 'includes/functions/functions_rtl.php';
 
 if ($MULTI_MEDIA) {
-	require_once 'includes/functions/functions_mediadb.php';
+	require 'includes/functions/functions_mediadb.php';
 }
-require_once 'includes/functions/functions_date.php';
+require 'includes/functions/functions_date.php';
 
 if (empty($PEDIGREE_GENERATIONS)) {
 	$PEDIGREE_GENERATIONS=$DEFAULT_PEDIGREE_GENERATIONS;
@@ -495,8 +474,6 @@ foreach ($language_settings as $key => $value) {
 	$pgv_lang["lang_name_$key"] =$value["pgv_lang_self"];
 }
 
-if ($logout) unset($_SESSION["CLANGUAGE"]);  // user is about to log out
-
 // -- Determine which of PGV's supported languages is topmost in the browser's language list
 if ((!$CONFIGURED || empty($LANGUAGE) || $ENABLE_MULTI_LANGUAGE) && empty($_SESSION["CLANGUAGE"]) && empty($SEARCH_SPIDER)) {
 	$acceptLangs = 'en';
@@ -523,7 +500,7 @@ if (!$CONFIGURED || empty($LANGUAGE)) $LANGUAGE = $preferredLang;
 
 // -- If the user's profile specifies a preference, use that
 $thisUser = getUserId();
-if ($thisUser && !$logout) $LANGUAGE = get_user_setting($thisUser, 'language');
+if ($thisUser) $LANGUAGE = get_user_setting($thisUser, 'language');
 
 $deflang = $LANGUAGE;
 
@@ -548,23 +525,11 @@ if ($ENABLE_MULTI_LANGUAGE && empty($SEARCH_SPIDER)) {
 	}
 }
 
-require_once("includes/templecodes.php");  //-- load in the LDS temple code translations
+require 'includes/templecodes.php';  //-- load in the LDS temple code translations
 
 //-- load the privacy functions
 load_privacy_file(get_id_from_gedcom($GEDCOM));
-require_once("includes/functions/functions_privacy.php");
-
-//-----------------------------------
-//-- if user wishes to logout this is where we will do it
-if ($logout) {
-	userLogout(getUserId());
-	if ($REQUIRE_AUTHENTICATION) {
-		header("Location: {$SERVER_URL}");
-		exit;
-	}
-	// Logging out may change gedcom, so reload
-	load_privacy_file(get_id_from_gedcom($GEDCOM));
-}
+require 'includes/functions/functions_privacy.php';
 
 // Define some constants to save calculating the same value repeatedly.
 define('PGV_GEDCOM',            $GEDCOM);
@@ -581,6 +546,13 @@ define('PGV_USER_ACCESS_LEVEL', getUserAccessLevel(PGV_USER_ID, PGV_GED_ID));
 define('PGV_USER_GEDCOM_ID',    get_user_gedcom_setting(PGV_USER_ID, PGV_GED_ID, 'gedcomid'));
 define('PGV_USER_ROOT_ID',      get_user_gedcom_setting(PGV_USER_ID, PGV_GED_ID, 'rootid'));
 
+// If we are logged in, and logout=1 has been added to the URL, log out
+if (PGV_USER_ID && safe_GET_bool('logout')) {
+	userLogout(PGV_USER_ID);
+	header("Location: {$SERVER_URL}");
+	exit;
+}
+
 // Load all the language variables and language-specific functions
 loadLanguage($LANGUAGE, true);
 
@@ -593,7 +565,6 @@ $show_context_help = "";
 if (!empty($_REQUEST['show_context_help'])) $show_context_help = $_REQUEST['show_context_help'];
 if (!isset($_SESSION["show_context_help"])) $_SESSION["show_context_help"] = $SHOW_CONTEXT_HELP;
 if (!isset($_SESSION["pgv_user"])) $_SESSION["pgv_user"] = "";
-if (!isset($_SESSION["cookie_login"])) $_SESSION["cookie_login"] = false;
 if (isset($SHOW_CONTEXT_HELP) && $show_context_help==='yes') $_SESSION["show_context_help"] = true;
 if (isset($SHOW_CONTEXT_HELP) && $show_context_help==='no') $_SESSION["show_context_help"] = false;
 if (!isset($USE_THUMBS_MAIN)) $USE_THUMBS_MAIN = false;
@@ -660,8 +631,8 @@ if ((strstr($SCRIPT_NAME, "install.php")===false)
 	}
 
 	//-- load any editing changes
-	if (PGV_USER_CAN_EDIT && file_exists($INDEX_DIRECTORY."pgv_changes.php")) {
-		require_once($INDEX_DIRECTORY."pgv_changes.php");
+	if (PGV_USER_CAN_EDIT && file_exists("{$INDEX_DIRECTORY}pgv_changes.php")) {
+		require "{$INDEX_DIRECTORY}pgv_changes.php";
 	} else {
 		$pgv_changes = array();
 	}
@@ -669,7 +640,6 @@ if ((strstr($SCRIPT_NAME, "install.php")===false)
 	if (empty($LOGIN_URL)) {
 		$LOGIN_URL = "login.php";
 	}
-
 }
 
 //-- load the user specific theme
@@ -687,20 +657,20 @@ if (PGV_DB::isConnected() && PGV_USER_ID && !isset($_REQUEST['logout'])) {
 	}
 }
 
-if (isset($_SESSION["theme_dir"]))
-{
+if (isset($_SESSION["theme_dir"])) {
 	$THEME_DIR = $_SESSION["theme_dir"];
 	if (PGV_USER_ID) {
 		if (get_user_setting(PGV_USER_ID, 'editaccount')=='Y') unset($_SESSION["theme_dir"]);
 	}
 }
 
-if (empty($THEME_DIR)) $THEME_DIR="standard/";
-if (file_exists($THEME_DIR."theme.php")) require_once($THEME_DIR."theme.php");
-else {
-	$THEME_DIR = "themes/standard/";
-	require_once($THEME_DIR."theme.php");
+if (empty($THEME_DIR)) {
+	$THEME_DIR="standard/";
 }
+if (!file_exists("{$THEME_DIR}theme.php")) {
+	$THEME_DIR = "themes/standard/";
+}
+require "{$THEME_DIR}theme.php";
 
 define('PGV_THEME_DIR', $THEME_DIR);
 

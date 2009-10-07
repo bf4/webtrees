@@ -450,7 +450,7 @@ if ($action=="filter") {
 						if (isset ($factAbbrev["BIRT"])) {
 							$born = $factAbbrev["BIRT"];
 						} else { 
-							$born = get_first_letter($factarray["BIRT"]);
+							$born = UTF8_substr($factarray["BIRT"], 0, 1);
 						}
 					} else {
 						$born = $factarray["BIRT"];

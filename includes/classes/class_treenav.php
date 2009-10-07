@@ -247,7 +247,7 @@ class TreeNav {
 		<div class="details1 indent">
 			<b><?php
 				if (isset ($factAbbrev["BIRT"])) print $factAbbrev["BIRT"];
-				else print get_first_letter($factarray['BIRT']);
+				else print UTF8_substr($factarray['BIRT'], 0, 1);
 				?>:</b>
 				<?php
 				echo $person->getBirthDate()->Display(), ' ', PrintReady($person->getBirthPlace());
@@ -256,7 +256,7 @@ class TreeNav {
 			<b><?php
 			if ($person->isDead()) {
 				if (isset ($factAbbrev["DEAT"])) print $factAbbrev["DEAT"];
-				else print get_first_letter($factarray['DEAT']);
+				else print UTF8_substr($factarray['DEAT'], 0, 1);
 				?>:</b>
 				<?php
 				echo $person->getDeathDate()->Display(), ' ', PrintReady($person->getDeathPlace());
@@ -279,7 +279,7 @@ class TreeNav {
 				<div class="details1 indent">
 				<b><?php
 					if (isset ($factAbbrev["BIRT"])) print $factAbbrev["BIRT"];
-					else print get_first_letter($factarray['BIRT']);
+					else print UTF8_substr($factarray['BIRT'], 0, 1);
 					?>:</b>
 				<?php
 				echo $spouse->getBirthDate()->Display(), ' ', PrintReady($spouse->getBirthPlace());
@@ -287,7 +287,7 @@ class TreeNav {
 				<br />
 				<b><?php
 					if (isset ($factAbbrev["MARR"])) print $factAbbrev["MARR"];
-					else print get_first_letter($factarray['MARR']);
+					else print UTF8_substr($factarray['MARR'], 0, 1);
 					?>:</b>
 				<?php
 					$mdate = $family->getMarriageDate();
@@ -302,7 +302,7 @@ class TreeNav {
 					if (isset ($factAbbrev["DEAT"])) {
 						echo $factAbbrev["DEAT"];
 					} else {
-						echo get_first_letter($factarray['DEAT']);
+						echo UTF8_substr($factarray['DEAT'], 0, 1);
 					}
 					?>:</b>
 					<?php

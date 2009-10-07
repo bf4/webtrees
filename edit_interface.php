@@ -30,11 +30,6 @@ require 'includes/functions/functions_edit.php';
 loadLangFile("pgv_country");
 uasort($countries, "stringsort");
 
-if ($_SESSION["cookie_login"]) {
-	header("Location: ".encode_url("login.php?type=simple&ged={$GEDCOM}&url=".urlencode("edit_interface.php?".decode_url($QUERY_STRING)), false));
-	exit;
-}
-
 // TODO work out whether to use GET/POST for these
 // TODO decide what (if any) validation is required on these parameters
 $action =safe_REQUEST($_REQUEST, 'action',  PGV_REGEX_UNSAFE);

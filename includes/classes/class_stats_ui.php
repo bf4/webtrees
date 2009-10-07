@@ -45,7 +45,7 @@ class stats_ui extends stats
 	static function _getFavorites($isged=true) {
 		global $GEDCOM, $pgv_lang;
 		global $pgv_lang, $factarray, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $ctype, $TEXT_DIRECTION, $INDEX_DIRECTORY;
-		global $show_full, $PEDIGREE_FULL_DETAILS, $BROWSERTYPE;
+		global $show_full, $PEDIGREE_FULL_DETAILS;
 
 		// Override GEDCOM configuration temporarily
 		if(isset($show_full)){$saveShowFull = $show_full;}

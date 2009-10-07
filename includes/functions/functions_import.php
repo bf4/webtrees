@@ -36,7 +36,6 @@ require_once 'includes/index_cache.php';
 require_once 'includes/classes/class_media.php';
 require_once 'includes/classes/class_mutex.php';
 require_once 'includes/functions/functions_lang.php';
-require_once 'includes/functions/functions_name.php';
 require_once 'includes/functions/functions_export.php';
 
 // Tidy up a gedcom record on import, so that we can access it consistently/efficiently.
@@ -571,8 +570,8 @@ function reformat_record_import($rec) {
 * @param boolean $update whether or not this is an updated record that has been accepted
 */
 function import_record($gedrec, $update) {
-	global $xtype, $TBLPREFIX, $GEDCOM_FILE, $FILE, $pgv_lang, $USE_RIN;
-	global $place_id, $WORD_WRAPPED_NOTES, $GEDCOMS, $MAX_IDS, $fpnewged, $GEDCOM, $GENERATE_UIDS;
+	global $xtype, $TBLPREFIX, $FILE, $pgv_lang, $USE_RIN;
+	global $GEDCOMS, $MAX_IDS, $fpnewged, $GEDCOM, $GENERATE_UIDS;
 
 	$FILE=$GEDCOM;
 

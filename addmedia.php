@@ -36,11 +36,6 @@ require './includes/functions/functions_edit.php';
 if (empty($ged)) $ged = $GEDCOM;
 $GEDCOM = $ged;
 
-if ($_SESSION["cookie_login"]) {
-	header('Location: '.encode_url("login.php?type=simple&ged={$GEDCOM}&url=addmedia.php", false));
-	exit;
-}
-
 // TODO use GET/POST, rather than $_REQUEST
 // TODO decide what validation is required on these input parameters
 $pid        =safe_REQUEST($_REQUEST, 'pid',         PGV_REGEX_XREF);

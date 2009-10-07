@@ -533,12 +533,19 @@ if ($verify == "validate_form") {
 
 	if ($import != true) {
 		require_once ("includes/functions/functions_tools.php");
-		if ($override == "yes") {
-			copy($bakfile, $GEDCOMS[$GEDFILENAME]["path"]);
-			if (file_exists($bakfile))
-			unlink($bakfile);
-			$bakfile = false;
-		}
+
+// I can't find a path through the code that arrives here with a non-empty value
+// for $bakfile.  In PHP5.2, copy() fails silently.  From PHP5.3, it gives an error.
+// The next block of code is almost certainly redundant.  FAB, 27-SEP-09.
+// If no problems are found in the next month or two, it can be deleted.
+		
+//		if ($override == "yes") {
+//			copy($bakfile, $GEDCOMS[$GEDFILENAME]["path"]);
+//			if (file_exists($bakfile))
+//			unlink($bakfile);
+//			$bakfile = false;
+//		}
+
 		$l_BOMcleanup = false;
 		$l_headcleanup = false;
 		$l_macfilecleanup = false;

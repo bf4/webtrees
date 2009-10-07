@@ -31,27 +31,6 @@ if (!defined('PGV_PHPGEDVIEW')) {
 define('PGV_FUNCTIONS_NAME_PHP', '');
 
 /**
- * Get array of common surnames from index
- *
- * This function returns a simple array of the most common surnames
- * found in the individuals list.
- * @param int $min the number of times a surname must occur before it is added to the array
- */
-function get_common_surnames_index($ged) {
-	global $GEDCOMS;
-
-	if (empty($GEDCOMS[$ged]["commonsurnames"])) store_gedcoms();
-	$surnames = array();
-	if (empty($GEDCOMS[$ged]["commonsurnames"]) || ($GEDCOMS[$ged]["commonsurnames"]==",")) return $surnames;
-	$names = preg_split("/[,;]/", $GEDCOMS[$ged]["commonsurnames"]);
-	foreach($names as $indexval => $name) {
-		$name = trim($name);
-		if (!empty($name)) $surnames[$name]["name"] = stripslashes($name);
-	}
-	return $surnames;
-}
-
-/**
  * Get array of common surnames
  *
  * This function returns a simple array of the most common surnames
@@ -59,25 +38,16 @@ function get_common_surnames_index($ged) {
  * @param int $min the number of times a surname must occur before it is added to the array
  */
 function get_common_surnames($min) {
-	global $GEDCOM, $CONFIGURED, $GEDCOMS, $COMMON_NAMES_ADD, $COMMON_NAMES_REMOVE, $pgv_lang, $HNN, $ANN;
+	global $COMMON_NAMES_ADD, $COMMON_NAMES_REMOVE;
 
-	$surnames = array();
-	if (!$CONFIGURED || !adminUserExists() || (count($GEDCOMS)==0) || (!check_for_import($GEDCOM))) return $surnames;
 	$surnames = get_top_surnames(100);
 	arsort($surnames);
 	$topsurns = array();
-	$i=0;
 	foreach($surnames as $indexval => $surname) {
-		$surname["name"] = trim($surname["name"]);
-		if (!empty($surname["name"])
-				&& stristr($surname["name"], "@N.N")===false
-				&& stristr($surname["name"], $HNN)===false
-				&& stristr($surname["name"], $ANN.",")===false
-				&& stristr($COMMON_NAMES_REMOVE, $surname["name"])===false ) {
+		if (!empty($surname["name"]) && stristr($COMMON_NAMES_REMOVE, $surname["name"])===false ) {
 			if ($surname["match"]>=$min) {
 				$topsurns[$surname["name"]] = $surname;
 			}
-			$i++;
 		}
 	}
 	$addnames = preg_split("/[,;] /", $COMMON_NAMES_ADD);
@@ -117,71 +87,6 @@ function strip_prefix($lastname){
 	if ($name=="") return $lastname;
 	return $name;
 }
-
-/**
- * get first letter
- *
- * get the first letter of a UTF-8 string
- * @param string $text	the text to get the first letter from
- * @return string 	the first letter UTF-8 encoded
- */
-function get_first_letter($text, $import=false) {
-	global $LANGUAGE, $CHARACTER_SET;
-	global $digraph, $trigraph, $quadgraph, $digraphAll, $trigraphAll, $quadgraphAll;
-
-	$danishFrom = array("AA", "Aa", "AE", "Ae", "OE", "Oe", "aa", "ae", "oe");
-	$danishTo   = array("Å", "Å", "Æ", "Æ", "Ø", "Ø", "å", "æ", "ø");
-
-	$text=trim(UTF8_strtoupper($text));
-	if (!$import) {
-		if ($LANGUAGE=="danish" || $LANGUAGE=="norwegian") {
-			$text = str_replace($danishFrom, $danishTo, $text);
-		}
-	}
-
-	$multiByte = false;
-	// Look for 4-byte combinations that should be treated as a single character
-	$letter = substr($text, 0, 4);
-	if ($import) {
-		if (isset($quadgraphAll[$letter])) $multiByte = true;
-	} else {
-		if (isset($quadgraph[$letter])) $multiByte = true;
-	}
-
-	if (!$multiByte) {
-		// 4-byte combination isn't listed: try 3-byte combination
-		$letter = substr($text, 0, 3);
-		if ($import) {
-			if (isset($trigraphAll[$letter])) $multiByte = true;
-		} else {
-			if (isset($trigraph[$letter])) $multiByte = true;
-		}
-	}
-
-	if (!$multiByte) {
-		// 3-byte combination isn't listed: try 2-byte combination
-		$letter = substr($text, 0, 2);
-		if ($import) {
-			if (isset($digraphAll[$letter])) $multiByte = true;
-		} else {
-			if (isset($digraph[$letter])) $multiByte = true;
-		}
-	}
-
-	if (!$multiByte) {
-		// All lists failed: try for a UTF8 character
-		$charLen = 1;
-		$letter = substr($text, 0, 1);
-		if ((ord($letter) & 0xE0) == 0xC0) $charLen = 2;		// 2-byte sequence
-		if ((ord($letter) & 0xF0) == 0xE0) $charLen = 3;		// 3-byte sequence
-		if ((ord($letter) & 0xF8) == 0xF0) $charLen = 4;		// 4-byte sequence
-		$letter = substr($text, 0, $charLen);
-	}
-        if ($letter=="/") $letter="@"; //where has @P.N. vanished from names with a null firstname?
-
-	return $letter;
-}
-
 
 /**
  * This function replaces @N.N. and @P.N. with the language specific translations

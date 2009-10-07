@@ -122,17 +122,14 @@ class ra_editfolder extends ra_form {
 				$errormsg = "";
 				//-- don't show a warning if we are adding a folder
 				if ($_REQUEST['action']!='addfolder') {
-				if($hastasks)
-				{
-					if($hasfolders){
-					$out.='<input type="button" value="'.$pgv_lang["delete"].'" onclick="window.location=\'module.php?mod=research_assistant&amp;action=deletefolder&amp;folderid='.$fr_id.'\';" />';
-					}
-						else {
-						$errormsg = $pgv_lang["has_folders"];
-					}
-				}
-				else{
-					$errormsg = $pgv_lang["has_tasks"];
+					if (!$hastasks) {
+						if (!$hasfolders) {
+						$out.='<input type="button" value="'.$pgv_lang["delete"].'" onclick="window.location=\'module.php?mod=research_assistant&amp;action=deletefolder&amp;folderid='.$fr_id.'\';" />';
+						} else {
+							$errormsg = $pgv_lang["has_folders"];
+						}
+					} else {
+						$errormsg = $pgv_lang["has_tasks"];
 					}
 				}
 				$out.='<input type="reset" value="'.$pgv_lang["reset"].'">';

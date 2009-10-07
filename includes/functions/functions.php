@@ -398,7 +398,6 @@ function store_gedcoms() {
 		if (isset($GED["imported"])) {
 			$gedcomtext .= "\$gedarray[\"imported\"] = ".($GED["imported"]==false?'false':'true').";\n";
 		}
-		// TODO: Commonsurnames from an old gedcom are used
 		// TODO: Default GEDCOM is changed to last uploaded GEDCOM
 
 		// NOTE: Set the GEDCOM ID
@@ -411,18 +410,6 @@ function store_gedcoms() {
 		}
 
 		$gedcomtext .= "\$gedarray[\"id\"] = \"".$GED["id"]."\";\n";
-		if (empty($GED["commonsurnames"])) {
-			if ($GED["gedcom"]==$GEDCOM) {
-				$GED["commonsurnames"] = "";
-				$surnames = get_common_surnames($COMMON_NAMES_THRESHOLD);
-				foreach ($surnames as $indexval => $surname) {
-					$GED["commonsurnames"] .= $surname["name"].", ";
-				}
-			} else
-				$GED["commonsurnames"]="";
-		}
-		$geds[$GED["gedcom"]]["commonsurnames"] = $GED["commonsurnames"];
-		$gedcomtext .= "\$gedarray[\"commonsurnames\"] = \"".addslashes($GED["commonsurnames"])."\";\n";
 		$gedcomtext .= "\$GEDCOMS[\"".$GED["gedcom"]."\"] = \$gedarray;\n";
 	}
 	$GEDCOMS = $geds;
@@ -963,11 +950,11 @@ function get_gedcom_value($tag, $level, $gedrec, $truncate='', $convert=true) {
 			} else
 				if ($convert && $t=="SEX") {
 					if ($value=="M") {
-						$value = get_first_letter($pgv_lang["male"]);
+						$value = UTF8_substr($pgv_lang["male"], 0, 1);
 					} elseif ($value=="F") {
-						$value = get_first_letter($pgv_lang["female"]);
+						$value = UTF8_substr($pgv_lang["female"], 0, 1);
 					} else {
-						$value = get_first_letter($pgv_lang["unknown"]);
+						$value = UTF8_substr($pgv_lang["unknown"], 0, 1);
 					}
 				} else {
 					if (!empty($truncate)) {
@@ -2139,7 +2126,7 @@ function get_relationship($pid1, $pid2, $followspouse=true, $maxlength=0, $ignor
 			}
 			if (headers_sent()) {
 				print "\n<!-- Relationship $pid1-$pid2 NOT FOUND | Visited ".count($visited)." nodes | Required $count iterations.<br />\n";
-				print_execution_stats();
+				echo execution_stats();
 				print "-->\n";
 			}
 			$NODE_CACHE["$pid1-$pid2"] = "NOT FOUND";
@@ -2406,7 +2393,7 @@ function get_relationship($pid1, $pid2, $followspouse=true, $maxlength=0, $ignor
 	} //-- end while loop
 	if (headers_sent()) {
 		print "\n<!-- Relationship $pid1-$pid2 | Visited ".count($visited)." nodes | Required $count iterations.<br />\n";
-		print_execution_stats();
+		echo execution_stats();
 		print "-->\n";
 	}
 	return $resnode;

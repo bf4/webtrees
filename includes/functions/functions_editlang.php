@@ -230,7 +230,6 @@ function read_complete_file_into_array($dFileName, $string_needle) {
 
 //-----------------------------------------------------------------
 function find_in_file($MsgNr, $dlang_file) {
-	global $PGV_BASE_DIRECTORY;
 	$openfilename =  $dlang_file;
 	$my_array = @file($openfilename);
 
@@ -245,8 +244,6 @@ function find_in_file($MsgNr, $dlang_file) {
 
 //-----------------------------------------------------------------
 function write_array_into_file($dFileName01, $writeArray, $add_new_message_at_line, $new_message_string) {
-	global $PGV_BASE_DIRECTORY;
-
 	$Filename =  $dFileName01;
 	LockFile($Filename);
 

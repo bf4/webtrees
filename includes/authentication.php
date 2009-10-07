@@ -63,8 +63,6 @@ function authenticateUser($user_name, $password, $basic=false) {
 				//-- reset the user's session
 				$_SESSION = array();
 				$_SESSION['pgv_user'] = $user_id;
-				// show that they have logged in with their password
-				$_SESSION['cookie_login'] = false;
 				AddToLog(($basic ? "Basic HTTP Authentication" :"Login"). " Successful");
 				return $user_id;
 			}
@@ -105,28 +103,14 @@ function basicHTTPAuthenticateUser() {
  * @param string $user_id	logout a specific user
  */
 function userLogout($user_id) {
-	global $GEDCOM;
-
 	if ($user_id) {
 		set_user_setting($user_id, 'loggedin', 'N');
 
 		AddToLog("Logout ".getUserName($user_id));
 
-		if ((isset($_SESSION['pgv_user']) && ($_SESSION['pgv_user']==$user_id)) || (isset($_COOKIE['pgv_rem'])&&$_COOKIE['pgv_rem']==$user_id)) {
-			if ($_SESSION['pgv_user']==$user_id) {
-				$_SESSION['pgv_user'] = "";
-				unset($_SESSION['pgv_user']);
-				if (isset($_SESSION["pgv_counter"]))
-					$tmphits = $_SESSION["pgv_counter"];
-				else
-					$tmphits = -1;
-				@session_destroy();
-				$_SESSION["gedcom"]=$GEDCOM;
-				$_SESSION["show_context_help"]="yes";
-				@setcookie("pgv_rem", "", -1000);
-				if ($tmphits>=0)
-					$_SESSION["pgv_counter"]=$tmphits; //set since it was set before so don't get double hits
-			}
+		// If we are logging ourself out, then end our session too.
+		if (isset($_SESSION['pgv_user']) && $_SESSION['pgv_user']==$user_id) {
+			session_destroy();
 		}
 	}
 }
@@ -157,34 +141,8 @@ function getUserName() {
 }
 
 function getUserId() {
-	global $ALLOW_REMEMBER_ME, $logout, $SERVER_URL;
-	//-- this section checks if the session exists and uses it to get the username
 	if (isset($_SESSION) && !empty($_SESSION['pgv_user'])) {
 		return $_SESSION['pgv_user'];
-	} elseif ($ALLOW_REMEMBER_ME) {
-		$tSERVER_URL = preg_replace(array("'https?://'", "'www.'", "'/$'"), array("","",""), $SERVER_URL);
-		if (empty($tSERVER_URL))
-			$tSERVER_URL = $SERVER_URL; 	// cannot assume we had a match.
-		if ((isset($_SERVER['HTTP_REFERER'])) && !empty($tSERVER_URL) && (stristr($_SERVER['HTTP_REFERER'],$tSERVER_URL)!==false))
-			$referrer_found=true;
-		if (!empty($_COOKIE["pgv_rem"])&& (empty($referrer_found)) && empty($logout)) {
-			if (!PGV_DB::isConnected()) {
-				return $_COOKIE["pgv_rem"];
-			} else {
-				$session_time=get_user_setting($_COOKIE['pgv_rem'], 'sessiontime');
-				if (is_null($session_time))
-					$session_time=0;
-				if (time() - $session_time < 60*60*24*7) {
-					$_SESSION['pgv_user'] = $_COOKIE['pgv_rem'];
-					$_SESSION['cookie_login'] = true;
-					return $_COOKIE['pgv_rem'];
-				} else {
-					return "";
-				}
-			}
-		} else {
-			return "";
-		}
 	} else {
 		return "";
 	}
@@ -198,11 +156,8 @@ function getUserId() {
  * to change the configuration files
  */
 function userIsAdmin($user_id=PGV_USER_ID) {
-	if (isset($_SESSION['cookie_login']) && $_SESSION['cookie_login']==true)
-		return false;
-
 	return get_user_setting($user_id, 'canadmin')=='Y';
-	}
+}
 
 /**
  * check if given username is an admin for the current gedcom
@@ -212,9 +167,6 @@ function userIsAdmin($user_id=PGV_USER_ID) {
  * to change the configuration files for the currently active gedcom
  */
 function userGedcomAdmin($user_id=PGV_USER_ID, $ged_id=PGV_GED_ID) {
-	if (isset($_SESSION['cookie_login']) && ($_SESSION['cookie_login']==true))
-		return false;
-
 	return userIsAdmin($user_id, $ged_id) || get_user_gedcom_setting($user_id, $ged_id, 'canedit')=='admin';
 }
 
@@ -266,9 +218,6 @@ function userCanEdit($user_id=PGV_USER_ID, $ged_id=PGV_GED_ID) {
  */
 function userCanAccept($user_id=PGV_USER_ID, $ged_id=PGV_GED_ID) {
 	global $ALLOW_EDIT_GEDCOM;
-
-	if (isset($_SESSION['cookie_login']) && ($_SESSION['cookie_login']==true))
-		return false;
 
 	// If we've disabled editing, an admin can still accept pending edits.
 	if (get_user_setting($user_id, 'canadmin')=='Y')

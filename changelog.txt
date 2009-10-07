@@ -10,6 +10,7 @@
 
 
 Version 4.2.x CA
+ - Merged: Merge changes r6120 - r6204 from the trunk. (windmillway)
  - Modified: Theme css relocation for all Tab management (jquery-ui) theme css files (windmillway) 
  - Added: Manage Links to Thumbnail drop Down Menu on Album Page (windmillway)
  - Modified theme css files for tab management (windmillway)
@@ -153,6 +154,15 @@ Version 4.2.x CA
  - Changed: Census Assistant Shared Note delimiter from ";" to "|" (windmillway)
 
 Version 4.2.3
+ - Fixed: [ 2865480 ] 4.2.2 Googlemaps, Place Hierarchy not display in Chrome (wooc)
+ - Fixed: [ 2871549 ] Re-named PGV folder requires manual edit of config.php (canajun2eh)
+ - Fixed: [ 2869455 ] Unable to delete a research assistant folder (patch by mmoreno)
+ - Added: [ 2843471 ] Remove "Remember me..." (fisharebest)
+ - Fixed: [ 2857144 ] v4.2.2 sitemap files contain duplicate entries for multi-ged (fisharebest)
+ - Fixed: [ 2827267 ] Fix name slashes and spaces of all types of names (fisharebest)
+ - Update: Performance of privacy calculations (fisharebest)
+ - Fixed: [ 2858324 ] SVN  error 8 on edit family popup (fisharebest)
+ - Fixed: [ 2866474 ] Deleting a Task (fisharebest)
  - Fixed: [ 2844024 ] class_gedcomrecord.php 5784 (fisharebest)
  - Fixed: [ 2848954 ] Incorrect page headers (canajun2eh)
  - Fixed: [ 2844011 ] gedrecord.php 4462 minor issue (fisharebest)

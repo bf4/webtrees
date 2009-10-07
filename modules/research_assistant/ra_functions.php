@@ -741,13 +741,13 @@ class ra_functions {
 
 		PGV_DB::prepare("DELETE FROM {$TBLPREFIX}tasks WHERE t_id=?")
 			->execute(array($taskid));
-		PGV_DB::prepare("DELETE FROM {$TBLPREFIX}comments WHERE t_id=?")
+		PGV_DB::prepare("DELETE FROM {$TBLPREFIX}comments WHERE c_t_id=?")
 			->execute(array($taskid));
-		PGV_DB::prepare("DELETE FROM {$TBLPREFIX}tasksource WHERE t_id=?")
+		PGV_DB::prepare("DELETE FROM {$TBLPREFIX}tasksource WHERE ts_t_id=?")
 			->execute(array($taskid));
-		PGV_DB::prepare("DELETE FROM {$TBLPREFIX}taskfacts WHERE t_id=?")
+		PGV_DB::prepare("DELETE FROM {$TBLPREFIX}taskfacts WHERE tf_t_id=?")
 			->execute(array($taskid));
-		PGV_DB::prepare("DELETE FROM {$TBLPREFIX}individualtask WHERE t_id=?")
+		PGV_DB::prepare("DELETE FROM {$TBLPREFIX}individualtask WHERE it_t_id=?")
 			->execute(array($taskid));
 	}
 	/**

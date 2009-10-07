@@ -186,7 +186,6 @@ $pgv_lang["admin_user_warnings"]	= "Co najmniej jedno konto użytkownika wygener
 $pgv_lang["admin_verification_waiting"] = "Konta użytkowników oczekują na zatwierdzenie przez administratora";
 $pgv_lang["administration"]			= "Administracja";
 $pgv_lang["ALLOW_CHANGE_GEDCOM"]	= "Zezwalaj na przełączanie pomiędzy plikami GEDCOM";
-$pgv_lang["ALLOW_REMEMBER_ME"]		= "Pokaż opcję <b>Zapamiętaj mnie</b> na stronie logowania";
 $pgv_lang["ALLOW_USER_THEMES"]		= "Zezwalaj użytkownikom wybierać własny motyw";
 $pgv_lang["ansi_encoding_detected"]	= "Wykryto kodowanie znaków w standardzie ANSI. PhpGedView działa najlepiej z plikami zakodowanymi w UTF-8.";
 $pgv_lang["ansi_to_utf8"]			= "Czy przekonwertować plik GEDCOM z ANSI do UTF-8?";

@@ -397,11 +397,11 @@ function print_header($title, $head="", $use_alternate_styles=true) {
 	global $HOME_SITE_URL, $HOME_SITE_TEXT, $SERVER_URL;
 	global $BROWSERTYPE, $SEARCH_SPIDER;
 	global $view, $cart;
-	global $CHARACTER_SET, $PGV_IMAGE_DIR, $GEDCOMS, $GEDCOM, $GEDCOM_TITLE, $CONTACT_EMAIL, $COMMON_NAMES_THRESHOLD, $INDEX_DIRECTORY;
+	global $CHARACTER_SET, $PGV_IMAGE_DIR, $GEDCOM, $GEDCOM_TITLE, $CONTACT_EMAIL, $COMMON_NAMES_THRESHOLD, $INDEX_DIRECTORY;
 	global $SCRIPT_NAME, $QUERY_STRING, $action, $query, $changelanguage,$theme_name;
 	global $FAVICON, $stylesheet, $print_stylesheet, $rtl_stylesheet, $headerfile, $toplinks, $print_headerfile;
 	global $PGV_IMAGES, $TEXT_DIRECTION, $ONLOADFUNCTION,$REQUIRE_AUTHENTICATION, $SHOW_SOURCES, $ENABLE_RSS, $RSS_FORMAT;
-	global $META_AUTHOR, $META_PUBLISHER, $META_COPYRIGHT, $META_DESCRIPTION, $META_PAGE_TOPIC, $META_AUDIENCE, $META_PAGE_TYPE, $META_ROBOTS, $META_REVISIT, $META_KEYWORDS, $META_TITLE, $META_SURNAME_KEYWORDS;
+	global $META_AUTHOR, $META_PUBLISHER, $META_COPYRIGHT, $META_DESCRIPTION, $META_PAGE_TOPIC, $META_AUDIENCE, $META_PAGE_TYPE, $META_ROBOTS, $META_REVISIT, $META_KEYWORDS, $META_TITLE;
 
 	// If not on allowed list, dump the spider onto the redirect page.
 	// This kills recognized spiders in their tracks.
@@ -435,9 +435,6 @@ function print_header($title, $head="", $use_alternate_styles=true) {
 		if ($RSS_FORMAT == "ATOM" || $RSS_FORMAT == "ATOM0.3"){
 			$applicationType = "application/atom+xml";
 		}
-		if(empty($GEDCOM_TITLE)){
-			$GEDCOM_TITLE = "RSS";
-		}
 	}
 	$javascript = '';
 	if (isset($changelanguage))
@@ -456,21 +453,12 @@ function print_header($title, $head="", $use_alternate_styles=true) {
 			if (empty($META_PUBLISHER)) $META_PUBLISHER = $cuserName;
 			if (empty($META_COPYRIGHT)) $META_COPYRIGHT = $cuserName;
 		}
-		if ($META_SURNAME_KEYWORDS) {
-			$surnames = get_common_surnames_index($GEDCOM);
-			$surnameList = '';
-			foreach($surnames as $surname=>$count) {
-				if ($surname != '?') {
-					$surnameList .= ', ';
-					$surnameList .= $surname;
-				}
-			}
-		} else {
-			$surnames = array();
-			$surnameList = '';
+		if (empty($META_DESCRIPTION)) {
+			$META_DESCRIPTION = $GEDCOM_TITLE;
 		}
-		if ((empty($META_DESCRIPTION))&&(!empty($GEDCOM_TITLE))) $META_DESCRIPTION = $GEDCOM_TITLE;
-		if ((empty($META_PAGE_TOPIC))&&(!empty($GEDCOM_TITLE))) $META_PAGE_TOPIC = $GEDCOM_TITLE;
+		if (empty($META_PAGE_TOPIC)) {
+			$META_PAGE_TOPIC = $GEDCOM_TITLE;
+		}
 
 		// Restrict good search engine spiders to the index page and the individual.php pages.
 		// Quick and dirty hack that will still leave some url only links in Google.
@@ -627,7 +615,7 @@ function print_simple_header($title) {
 // -- print the html to close the page
 function print_footer() {
 	global $pgv_lang, $view;
-	global $SHOW_STATS, $SCRIPT_NAME, $QUERY_STRING, $footerfile, $print_footerfile, $GEDCOMS, $ALLOW_CHANGE_GEDCOM, $printlink;
+	global $SHOW_STATS, $SCRIPT_NAME, $QUERY_STRING, $footerfile, $print_footerfile, $ALLOW_CHANGE_GEDCOM, $printlink;
 	global $PGV_IMAGE_DIR, $theme_name, $PGV_IMAGES, $TEXT_DIRECTION, $footer_count;
 
 	$view = safe_get('view');
@@ -657,31 +645,22 @@ function print_footer() {
 	if (PGV_DEBUG_SQL) {
 		echo PGV_DB::getQueryLog();
 	}
-        echo clustrmaps();
+	echo clustrmaps();
 	echo google_analytics();
 	echo '</body></html>';
 }
-// -- print the html to close the page
+
+// Page footer for popup/edit windows
 function print_simple_footer() {
-	global $pgv_lang;
-	global $start_time;
 	global $SHOW_STATS;
-	global $SCRIPT_NAME, $QUERY_STRING;
-	global $PGV_IMAGE_DIR, $PGV_IMAGES;
-	if (empty($SCRIPT_NAME)) {
-		$SCRIPT_NAME = $_SERVER["SCRIPT_NAME"];
-		$QUERY_STRING = $_SERVER["QUERY_STRING"];
-	}
-	echo "<br /><br /><div align=\"center\" style=\"width: 99%;\">";
-	echo contact_links();
-	echo '<br /><a href="'.PGV_PHPGEDVIEW_URL.'" target="_blank"><img src="'.$PGV_IMAGE_DIR.'/'.$PGV_IMAGES['gedview']['other'].'" border="0" alt="'.PGV_PHPGEDVIEW . (PGV_USER_IS_ADMIN? (" - " .PGV_VERSION_TEXT): "") . '" title="'.PGV_PHPGEDVIEW . (PGV_USER_IS_ADMIN? (" - " .PGV_VERSION_TEXT): "") . '" /></a><br />';
+
 	if ($SHOW_STATS || PGV_DEBUG) {
-		print_execution_stats();
+		echo execution_stats();
 	}
 	if (PGV_DEBUG_SQL) {
 		echo PGV_DB::getQueryLog();
 	}
-	echo "</div></body></html>";
+	echo '</body></html>';
 }
 
 // Generate code for google analytics
@@ -720,10 +699,10 @@ function clustrmaps() {
 *
 * prints out the execution time and the databse queries
 */
-function print_execution_stats() {
+function execution_stats() {
 	global $start_time, $pgv_lang, $PRIVACY_CHECKS;
 
-	printf("<div><br />{$pgv_lang['exec_time']} %.3f {$pgv_lang['sec']} {$pgv_lang['total_queries']} %d. {$pgv_lang['total_privacy_checks']} %d. {$pgv_lang['total_memory_usage']} %.0f KB.</div>",
+	return sprintf("<div class=\"execution_stats\">{$pgv_lang['exec_time']} %.3f {$pgv_lang['sec']} {$pgv_lang['total_queries']} %d. {$pgv_lang['total_privacy_checks']} %d. {$pgv_lang['total_memory_usage']} %.0f KB.</div>",
 		microtime(true)-$start_time,
 		PGV_DB::getQueryCount(),
 		$PRIVACY_CHECKS,
@@ -1120,7 +1099,7 @@ function print_note_record($text, $nlevel, $nrec, $textOnly=false, $return=false
 	if (!isset($EXPAND_NOTES)) $EXPAND_NOTES = $EXPAND_SOURCES; // FIXME
 	$elementID = "N-".floor(microtime()*1000000);
 	$text = trim($text);
-	
+
 	// Check if Shared Note and if so enable url link on title -------------------
 	if (eregi("0 @N([0-9])+@ NOTE", $nrec)) {
 		$centitl  = str_replace("~~", "", $text);
@@ -1268,8 +1247,7 @@ function print_fact_notes($factrec, $level, $textOnly=false, $return=false) {
 * @author John Finlay
 */
 function print_gedcom_title_link($InHeader=FALSE) {
-	global $GEDCOMS, $GEDCOM, $GEDCOM_TITLE;
-	if ((count($GEDCOMS)==0)||(empty($GEDCOM))) return;
+	global $GEDCOM_TITLE;
 	echo "<a href=\"index.php?ctype=gedcom\" class=\"gedcomtitle\">".PrintReady($GEDCOM_TITLE, $InHeader)."</a>";
 }
 
@@ -1382,7 +1360,7 @@ loadLangFile('pgv_help');
 */
 function print_text($help, $level=0, $noprint=0){
 	global $pgv_lang, $factarray, $faqlist, $COMMON_NAMES_THRESHOLD;
-	global $INDEX_DIRECTORY, $GEDCOMS, $GEDCOM, $GEDCOM_TITLE, $LANGUAGE;
+	global $INDEX_DIRECTORY, $GEDCOM, $LANGUAGE;
 	global $GUESS_URL, $UpArrow, $DAYS_TO_SHOW_LIMIT, $MEDIA_DIRECTORY;
 	global $repeat, $thumbnail, $xref, $pid;
 
@@ -2528,14 +2506,14 @@ function DumpString($input) {
 	if (empty($input)) return false;
 
 	$UTF8 = array();
-	$hex1L = "";
-	$hex1R = "";
-	$hex2L = "";
-	$hex2R = "";
-	$hex3L = "";
-	$hex3R = "";
-	$hex4L = "";
-	$hex4R = "";
+	$hex1L = '';
+	$hex1R = '';
+	$hex2L = '';
+	$hex2R = '';
+	$hex3L = '';
+	$hex3R = '';
+	$hex4L = '';
+	$hex4R = '';
 
 	$pos = 0;
 	while (true) {
@@ -2558,8 +2536,8 @@ function DumpString($input) {
 			$hex2L .= substr($byte, 0, 1);
 			$hex2R .= substr($byte, 1, 1);
 		} else {
-			$hex2L .= " ";
-			$hex2R .= " ";
+			$hex2L .= ' ';
+			$hex2R .= ' ';
 		}
 
 		if ($charLen > 2) {
@@ -2567,8 +2545,8 @@ function DumpString($input) {
 			$hex3L .= substr($byte, 0, 1);
 			$hex3R .= substr($byte, 1, 1);
 		} else {
-			$hex3L .= " ";
-			$hex3R .= " ";
+			$hex3L .= ' ';
+			$hex3R .= ' ';
 		}
 
 		if ($charLen > 3) {
@@ -2576,8 +2554,8 @@ function DumpString($input) {
 			$hex4L .= substr($byte, 0, 1);
 			$hex4R .= substr($byte, 1, 1);
 		} else {
-			$hex4L .= " ";
-			$hex4R .= " ";
+			$hex4L .= ' ';
+			$hex4R .= ' ';
 		}
 
 		$pos += $charLen;
@@ -2586,76 +2564,100 @@ function DumpString($input) {
 
 	$pos = 0;
 	$lastPos = count($UTF8);
-	$haveByte4 = (trim($hex4L)!="");
-	$haveByte3 = (trim($hex3L)!="");
-	$haveByte2 = (trim($hex2L)!="");
+	$haveByte4 = (trim($hex4L)!='');
+	$haveByte3 = (trim($hex3L)!='');
+	$haveByte2 = (trim($hex2L)!='');
 
 	// We're ready: now output everything
-	echo "<br /><code><span dir=\"ltr\">";
+	echo '<br /><code><span dir="ltr">';
 	while (true) {
 		$lineLength = $lastPos - $pos;
 		if ($lineLength>100) $lineLength = 100;
 
 		// Line 1: ruler
-		$thisLine = substr("      ".$pos, -6)." ";
-		$thisLine .= substr("........10........20........30........40........50........60........70........80........90.......100", 0, $lineLength);
-		echo str_replace(" ", "&nbsp;", $thisLine)."<br />";
+		$thisLine = substr('      '.$pos, -6).' ';
+		$thisLine .= substr('........10........20........30........40........50........60........70........80........90.......100', 0, $lineLength);
+		echo str_replace(' ', '&nbsp;', $thisLine), '<br />';
 
 		// Line 2: UTF8 character string
-		$thisLine = "  UTF8 ";
+		$thisLine = '';
 		for ($i=$pos; $i<($pos+$lineLength); $i++) {
-			if (ord(substr($UTF8[$i], 0, 1)) < 0x20) $thisLine .= getLRM() . " ";
-			else $thisLine .= getLRM() . $UTF8[$i];
+			if (ord(substr($UTF8[$i], 0, 1)) < 0x20) {
+				$thisChar = "&nbsp;";
+			} else {
+				$thisChar = $UTF8[$i];
+				switch ($thisChar) {
+				case '&':
+					$thisChar = '&amp;';
+					break;
+				case '<':
+					$thisChar = '&lt;';
+					break;
+				case ' ':
+				case PGV_UTF8_LRM:
+				case PGV_UTF8_RLM:
+				case PGV_UTF8_LRO:
+				case PGV_UTF8_RLO:
+				case PGV_UTF8_LRE:
+				case PGV_UTF8_RLE:
+				case PGV_UTF8_PDF:
+					$thisChar = '&nbsp;';
+					break;
+				}
+			}
+//			$thisLine .= PGV_UTF8_LRM;
+			$thisLine .= $thisChar;
 		}
-		echo str_replace(array(" ", PGV_UTF8_LRM, PGV_UTF8_RLM), array("&nbsp;", "&nbsp;", "&nbsp;"), $thisLine)."<br />";
+//		echo '&nbsp;&nbsp;UTF8&nbsp;', $thisLine, '<br />';
+		echo '&nbsp;&nbsp;UTF8&nbsp;', PGV_UTF8_LRO, $thisLine, PGV_UTF8_PDF, '<br />';
 
 		// Line 3:  First hexadecimal byte
-		$thisLine = "Byte 1 ";
+		$thisLine = 'Byte 1 ';
 		$thisLine .= substr($hex1L, $pos, $lineLength);
-		$thisLine .= "<br />";
-		$thisLine .= "       ";
+		$thisLine .= '<br />';
+		$thisLine .= '       ';
 		$thisLine .= substr($hex1R, $pos, $lineLength);
-		$thisLine .= "<br />";
-		echo str_replace(array(" ", "<br&nbsp;/>"), array("&nbsp;", "<br />"), $thisLine);
+		$thisLine .= '<br />';
+		echo str_replace(array(' ', '<br&nbsp;/>'), array('&nbsp;', '<br />'), $thisLine);
 
 		// Line 4:  Second hexadecimal byte
 		if ($haveByte2) {
-			$thisLine = "Byte 2 ";
+			$thisLine = 'Byte 2 ';
 			$thisLine .= substr($hex2L, $pos, $lineLength);
-			$thisLine .= "<br />";
-			$thisLine .= "       ";
+			$thisLine .= '<br />';
+			$thisLine .= '       ';
 			$thisLine .= substr($hex2R, $pos, $lineLength);
-			$thisLine .= "<br />";
-			echo str_replace(array(" ", "<br&nbsp;/>"), array("&nbsp;", "<br />"), $thisLine);
+			$thisLine .= '<br />';
+			echo str_replace(array(' ', '<br&nbsp;/>'), array('&nbsp;', '<br />'), $thisLine);
 		}
 
 		// Line 5:  Third hexadecimal byte
 		if ($haveByte3) {
-			$thisLine = "Byte 3 ";
+			$thisLine = 'Byte 3 ';
 			$thisLine .= substr($hex3L, $pos, $lineLength);
-			$thisLine .= "<br />";
-			$thisLine .= "       ";
+			$thisLine .= '<br />';
+			$thisLine .= '       ';
 			$thisLine .= substr($hex3R, $pos, $lineLength);
-			$thisLine .= "<br />";
-			echo str_replace(array(" ", "<br&nbsp;/>"), array("&nbsp;", "<br />"), $thisLine);
+			$thisLine .= '<br />';
+			echo str_replace(array(' ', '<br&nbsp;/>'), array('&nbsp;', '<br />'), $thisLine);
 		}
 
 		// Line 6:  Fourth hexadecimal byte
 		if ($haveByte4) {
-			$thisLine = "Byte 4 ";
+			$thisLine = 'Byte 4 ';
 			$thisLine .= substr($hex4L, $pos, $lineLength);
-			$thisLine .= "<br />";
-			$thisLine .= "       ";
+			$thisLine .= '<br />';
+			$thisLine .= '       ';
 			$thisLine .= substr($hex4R, $pos, $lineLength);
-			$thisLine .= "<br />";
-			echo str_replace(array(" ", "<br&nbsp;/>"), array("&nbsp;", "<br />"), $thisLine);
+			$thisLine .= '<br />';
+			echo str_replace(array(' ', '<br&nbsp;/>'), array('&nbsp;', '<br />'), $thisLine);
 		}
-		echo "<br />";
+		echo '<br />';
 		$pos += $lineLength;
 		if ($pos >= $lastPos) break;
 	}
 
-	echo "</span></code>";
+	echo '</span></code>';
 	return true;
 }
 ?>

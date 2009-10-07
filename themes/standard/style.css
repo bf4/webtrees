@@ -1346,7 +1346,8 @@ ul.clist {
 	width: 8em;
 }
 
-.statistics_chart{
+.statistics_chart {
+	text-align: center;
 	text-align: center;
 }
 

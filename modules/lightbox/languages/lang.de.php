@@ -35,6 +35,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 
 // Added in VERSION 4.2.2
 $pgv_lang["TYPE__notinDB"]			= "Nicht in der Datenbank vorhanden";
+$pgv_lang["TYPE__notinDB"]			= "Nicht in der Datenbank vorhanden<br /><br />ODER<br /><br />mehrfach in der GEDCOM-Datei vorhanden";
 $pgv_lang["ROW_TYPE__notinDB"]		= $pgv_lang["TYPE__notinDB"];
 
 

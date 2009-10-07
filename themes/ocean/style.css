@@ -1332,9 +1332,15 @@ ul.clist {
 	width: 8em;
 }
 
-.statistics_chart{
+.statistics_chart {
+	text-align: center;
 	text-align: center;
 }
 
-.gchart{
+.gchart {
+}
+
+.execution_stats {
+	padding-top: 12px;
+	text-align: center;
 }

@@ -166,15 +166,20 @@ function set_levelm($level, $parent) {
 }
 
 function create_map() {
-	global $GOOGLEMAP_PH_XSIZE, $GOOGLEMAP_PH_YSIZE, $GOOGLEMAP_MAP_TYPE, $TEXT_DIRECTION, $pgv_lang;
+	global $GOOGLEMAP_API_KEY, $GOOGLEMAP_PH_XSIZE, $GOOGLEMAP_PH_YSIZE, $GOOGLEMAP_MAP_TYPE, $TEXT_DIRECTION, $pgv_lang;
 	// create the map
 	//<!-- start of map display -->
 	echo "\n<br /><br />\n";
 	echo "<table class=\"width80\"><tr valign=\"top\"><td class=\"center\">";
 	echo "<div id=\"place_map\" style=\"border: 1px solid gray; width: ".$GOOGLEMAP_PH_XSIZE."px; height: ".$GOOGLEMAP_PH_YSIZE."px; ";
 	echo "background-image: url('images/loading.gif'); background-position: center; background-repeat: no-repeat; overflow: hidden;\"></div>";
-	echo "<table style=\"width: ".$GOOGLEMAP_PH_XSIZE."px\">";
+	?>
+	<!-- Start of map scripts -->
+	<script src="http://maps.google.com/maps?file=api&amp;v=2&amp;sensor=false&amp;key=<?php echo $GOOGLEMAP_API_KEY; ?>" type="text/javascript"></script>
+	<script src="modules/googlemap/pgvGoogleMap.js" type="text/javascript"></script>
+	<?php
 	if (PGV_USER_IS_ADMIN) {
+		echo "<table style=\"width: ".$GOOGLEMAP_PH_XSIZE."px\">";
 		echo "<tr><td align=\"left\">\n";
 		echo "<a href=\"module.php?mod=googlemap&amp;pgvaction=editconfig\">".$pgv_lang["gm_manage"]."</a>";
 		echo "</td>\n";
@@ -184,8 +189,8 @@ function create_map() {
 		echo "<td align=\"right\">\n";
 		echo "<a href=\"module.php?mod=googlemap&pgvaction=placecheck\">".$pgv_lang["placecheck"]."</a>";
 		echo "</td></tr>\n";
+		echo "</table>\n";
 	}
-	echo "</table>\n";
 	echo "</td><td style=\"margin-left:15; vertical-align: top;\">";
 }
 
@@ -296,12 +301,12 @@ function print_gm_markers($place2, $level, $parent, $levelm, $linklevels, $place
 			echo "var icon_type = new GIcon(G_DEFAULT_ICON);\n";
 		} else {
 			echo "var icon_type = new GIcon();\n";
-			echo "    icon_type.image = \"".$place2['icon']."\";\n";
-			echo "    icon_type.shadow = \"modules/googlemap/flag_shadow.png\";\n";
-			echo "    icon_type.iconSize = new GSize(25, 15);\n";
-			echo "    icon_type.shadowSize = new GSize(35, 45);\n";
-			echo "    icon_type.iconAnchor = new GPoint(1, 45);\n";
-			echo "    icon_type.infoWindowAnchor = new GPoint(5, 1);\n";
+			echo "	icon_type.image = \"".$place2['icon']."\";\n";
+			echo "	icon_type.shadow = \"modules/googlemap/flag_shadow.png\";\n";
+			echo "	icon_type.iconSize = new GSize(25, 15);\n";
+			echo "	icon_type.shadowSize = new GSize(35, 45);\n";
+			echo "	icon_type.iconAnchor = new GPoint(1, 45);\n";
+			echo "	icon_type.infoWindowAnchor = new GPoint(5, 1);\n";
 		}
 		echo "var point = new GLatLng({$lati},{$long});\n";
 		if ($lastlevel)
@@ -354,7 +359,6 @@ function print_gm_markers($place2, $level, $parent, $levelm, $linklevels, $place
 function create_buttons($numfound, $level) {
 	global $pgv_lang;
 	?>
-	</script>
 	<style type="text/css">
 	#map_type
 	{
@@ -392,8 +396,34 @@ function create_buttons($numfound, $level) {
 		background: #ddd;
 	}
 	</style>
-	<script type='text/javascript'>
-	<!--
+	<?php
+}
+
+function map_scripts($numfound, $level, $parent, $linklevels, $placelevels, $place_names) {
+	global $GOOGLEMAP_MAP_TYPE, $GM_MAX_NOF_LEVELS, $GOOGLEMAP_PH_WHEEL, $GOOGLEMAP_PH_CONTROLS, $pgv_lang;
+	?>
+	<?php echo create_buttons($numfound, $level);?>
+	<script type="text/javascript">
+	// <![CDATA[
+	if (window.attachEvent) {
+		window.attachEvent("onunload", function() {
+			GUnload();	  // Internet Explorer
+		});
+	} else {
+		window.addEventListener("unload", function() {
+			GUnload(); // Firefox and standard browsers
+		}, false);
+	}
+	if (GBrowserIsCompatible()) {
+	// Creates a marker whose info window displays the given name
+	function createMarker(point, html, icon, name)
+	{
+		var marker = new GMarker(point, {icon:icon, title:name});
+		// Show this markers name in the info window when it is clicked
+		GEvent.addListener(marker, "click", function() {marker.openInfoWindowHtml(html);});
+		return marker;
+	};
+
 	function Map_type() {}
 	Map_type.prototype = new GControl();
 
@@ -466,43 +496,12 @@ function create_buttons($numfound, $level) {
 		return list;
 	}
 
+	// create the map
 	Map_type.prototype.getDefaultPosition = function()
 	{
 		return new GControlPosition(G_ANCHOR_TOP_RIGHT, new GSize(2, 2));
 	}
 	var map_type;
-	<?php
-}
-
-function map_scripts($numfound, $level, $parent, $linklevels, $placelevels, $place_names) {
-	global $GOOGLEMAP_API_KEY, $GOOGLEMAP_MAP_TYPE, $GM_MAX_NOF_LEVELS, $GOOGLEMAP_PH_WHEEL, $GOOGLEMAP_PH_CONTROLS, $pgv_lang;
-	?>
-	<!-- Start of map scripts -->
-	<script src="http://maps.google.com/maps?file=api&amp;v=2&amp;sensor=false&amp;key=<?php echo $GOOGLEMAP_API_KEY; ?>" type="text/javascript"></script>
-	<script src="modules/googlemap/pgvGoogleMap.js" type="text/javascript"></script>
-	<script type="text/javascript">
-	// <![CDATA[
-	if (window.attachEvent) {
-		window.attachEvent("onunload", function() {
-			GUnload();      // Internet Explorer
-		});
-	} else {
-		window.addEventListener("unload", function() {
-			GUnload(); // Firefox and standard browsers
-		}, false);
-	}
-	<?php echo create_buttons($numfound, $level);?>
-	if (GBrowserIsCompatible()) {
-	// Creates a marker whose info window displays the given name
-	function createMarker(point, html, icon, name)
-	{
-		var marker = new GMarker(point, {icon:icon, title:name});
-		// Show this markers name in the info window when it is clicked
-		GEvent.addListener(marker, "click", function() {marker.openInfoWindowHtml(html);});
-		return marker;
-	};
-
-	// create the map
 	var place_map = new GMap2(document.getElementById("place_map"));
 	map_type = new Map_type();
 	place_map.addControl(map_type);
@@ -647,14 +646,13 @@ function map_scripts($numfound, $level, $parent, $linklevels, $placelevels, $pla
 		echo "place_map.setZoom(place_map.getBoundsZoomLevel(bounds));\n";
 	?>
 	} else {
-      alert("Sorry, the Google Maps API is not compatible with this browser");
+	  alert("Sorry, the Google Maps API is not compatible with this browser");
 	}
-    // This Javascript is based on code provided by the
-    // Blackpool Community Church Javascript Team
-    // http://www.commchurch.freeserve.co.uk/
-    // http://econym.googlepages.com/index.htm
+	// This Javascript is based on code provided by the
+	// Blackpool Community Church Javascript Team
+	// http://www.commchurch.freeserve.co.uk/
+	// http://econym.googlepages.com/index.htm
 	//]]>
-	//version 1.3
 	</script>
 	<?php
 }

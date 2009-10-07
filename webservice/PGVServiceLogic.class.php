@@ -88,18 +88,14 @@ class PGVServiceLogic extends GenealogyService {
 	 * @return string gedcom id that will be used
 	 **/
 	function default_gedcom($gedcom_id='') {
-		global $GEDCOMS, $GEDCOM;
+		global $GEDCOM;
 
-		if (is_array($GEDCOMS)) {
-			foreach ($GEDCOMS as $ged=>$gedarray) {
-				if ($gedcom_id === $ged) {
-
-					return $ged;
-			}
+		if (in_array($gedcom_id, get_all_gedcoms())) {
+			return $gedcom_id;
+		} else {
+			//return the first gedcom on the list if no gedcom was matched
+			return $GEDCOM;
 		}
-		}
-		//return the first gedcom on the list if no gedcom was matched
-		return $GEDCOM;
 	}
 
 	/**
@@ -172,29 +168,22 @@ class PGVServiceLogic extends GenealogyService {
 	 * @return array Information of the web service
 	 */
 	function postServiceInfo() {
-		global $GEDCOMS;
-		//addDebugLog("in getServiceInfo ".$GEDCOMS);
-		$return['compression'] = $this->getCompressionLibs();
-		$return['apiVersion'] = $this->service_version;
-		$return['server'] = PGV_PHPGEDVIEW.' '.PGV_VERSION_TEXT;
-
-		$gedcomlist = array();
-		$i = 0;
-		if (is_array($GEDCOMS)) {
-			//loop through the gedcoms available
-			foreach ($GEDCOMS as $ged=>$gedarray) {
-				$gedcominfo = array();
-				$gedcominfo['title'] = $gedarray["title"];
-				$gedcominfo['ID'] = $gedarray["gedcom"];
-				$gedcomlist[$i] = $gedcominfo;
-				//$gedcomlist[$i] = new SOAP_Value('item', '{urn:'.$this->__namespace.'}GedcomInfo', $gedcominfo);
-				$i++;
-			}
+		$gedcomlist=array();
+		foreach (get_all_gedcoms() as $ged_id=>$ged_name) {
+			$gedcomlist[]=array(
+				'title'=>get_gedcom_setting($ged_id, 'title'),
+				'ID'   =>$ged_name
+			);
 		}
-		//$return[0]['gedcoms'] = $gedcomlist;
-		$return['gedcoms'] = new SOAP_Value('gedcoms', '{urn:'.$this->__namespace.'}ArrayOfGedcomList', $gedcomlist);
-		$return = new SOAP_Value('result', '{urn:'.$this->__namespace.'}serviceInfoResult', $return);
-		return $return;
+
+		$data=array(
+			'compression' => $this->getCompressionLibs(),
+			'apiVersion'  => $this->service_version,
+			'server'      => PGV_PHPGEDVIEW.' '.PGV_VERSION_TEXT,
+			'gedcoms'     => new SOAP_Value('gedcoms', '{urn:'.$this->__namespace.'}ArrayOfGedcomList', $gedcomlist)
+		);
+
+		return new SOAP_Value('result', '{urn:'.$this->__namespace.'}serviceInfoResult', $data);
 	}
 
 	/**

@@ -1397,10 +1397,15 @@ ul.clist {
 	width: 8em;
 }
 
-.statistics_chart{
+.statistics_chart {
 	background-color: #fef1f1;
 	text-align: center;
 }
-.gchart{
+.gchart {
 	border: solid #420915 1px;
+}
+
+.execution_stats {
+	padding-top: 12px;
+	text-align: center;
 }

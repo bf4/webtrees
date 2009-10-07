@@ -110,9 +110,16 @@ foreach(get_all_users() as $user_id=>$user_name) {
 
 echo PGV_JS_START, 'function showchanges() {window.location.reload();}', PGV_JS_END;
 ?>
-<link type="text/css" href="<?php echo PGV_THEME_DIR?>jquery/jquery-ui-1.7.1.custom.css" rel="Stylesheet" />
+<!-- <link type="text/css" href="<?php echo PGV_THEME_DIR?>jquery/jquery-ui-1.7.1.custom.css" rel="Stylesheet" /> -->
 <script type="text/javascript" src="js/jquery/jquery.min.js"></script>
 <script type="text/javascript" src="js/jquery/jquery-ui-1.7.1.custom.min.js"></script>
+
+<link type="text/css" href="js/jquery/css/jquery-ui-1.7.1.custom.css" rel="Stylesheet" />
+<link type="text/css" href="<?php echo PGV_THEME_DIR?>jquery/jquery-ui_theme.css" rel="Stylesheet" />
+<?php if ($TEXT_DIRECTION=='rtl') {?>
+	<link type="text/css" href="<?php echo PGV_THEME_DIR?>jquery/jquery-ui_theme_rtl.css" rel="Stylesheet" />
+<?php }?>
+
 <script type="text/javascript">
 //<![CDATA[
   $(document).ready(function(){
@@ -145,9 +152,11 @@ echo PGV_JS_START, 'function showchanges() {window.location.reload();}', PGV_JS_
 				print "<br /><br />";
 			}
 		}
-		?></td>
+		?>
+		</td>
 	</tr>
-	
+
+
 	<tr><td colspan="2">
 	
 	<div id="tabs" class="width100">
@@ -186,11 +195,14 @@ echo PGV_JS_START, 'function showchanges() {window.location.reload();}', PGV_JS_
 					href="changelog.php" target="manual"
 					title="<?php print $pgv_lang["view_changelog"]; ?>"><?php print_text("changelog"); ?></a></td>
 			</tr>
+	<?php /*
 			<tr>
 				<td class="optionbox width50"><?php print_help_link("registry_help", "qm"); ?><a
 					href="<?php echo PGV_REGISTRY_URL; ?>" target="_blank"><?php print $pgv_lang["pgv_registry"];?></a></td>
 				<td class="optionbox width50">&nbsp;</td>
 			</tr>
+
+	*/ ?>
 		</table>
 	</div>
 	<div id="gedcom">
@@ -289,16 +301,17 @@ echo PGV_JS_START, 'function showchanges() {window.location.reload();}', PGV_JS_
 	</div>
 	<?php }
 	if (PGV_USER_IS_ADMIN || count($modules)>0) {?>
-	<div id="modules">
-	<table class="center <?php print $TEXT_DIRECTION ?> width100">
-	<tr>                                                                                                                                             
-            <td colspan="2" class="topbottombar" style="text-align:center; "><?php print $pgv_lang["module_admin"]; ?></td>                            
-    </tr>
-	<tr>
-		<td class="optionbox width50"><a href="module_admin.php"><?php print $pgv_lang["module_admin"]; ?></a></td>
-		<td class="optionbox width50"><!-- nothing here yet --></td>
-	</tr>
+		<div id="modules">
+		<table class="center <?php print $TEXT_DIRECTION ?> width100">
+			<tr>                                                                                                                                             
+				<td colspan="2" class="topbottombar" style="text-align:center; "><?php print $pgv_lang["module_admin"]; ?></td>                            
+			</tr>
+			<tr>
+				<td class="optionbox width50"><a href="module_admin.php"><?php print $pgv_lang["module_admin"]; ?></a></td>
+				<td class="optionbox width50"><!-- nothing here yet --></td>
+			</tr>
 	<?php
+	
 		$i = 0;
 		foreach($modules as $mod) {
 			$link = $mod->getConfigLink();
@@ -309,10 +322,28 @@ echo PGV_JS_START, 'function showchanges() {window.location.reload();}', PGV_JS_
 				if ($i % 2 ==0) echo '</tr>';
 			}
 		}
-	?>
-	</table>
+
+	}
+	
+/*
+		// BH ====== This should replace above, but cannot get it working yet (BH) ========================
+		if (file_exists("modules")) {
+			$rep = opendir('./modules/');
+			while ($file = readdir($rep)) {
+				if(($file <> ".") && ($file <> "..") && (is_dir('./modules/'.$file))) {
+					if (file_exists("modules/".$file."/admin-config.php")) {
+							require "modules/".$file."/admin-config.php";
+					}
+				}
+			}
+			closedir($rep);
+		}
+		// ================================================================================================
+*/
+
+?>
+		</table>
 	</div>
-	<?php } ?>
 </div>
 </td>
 </tr></table>
