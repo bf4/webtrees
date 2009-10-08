@@ -39,10 +39,11 @@ if (!defined('PGV_PHPGEDVIEW')) {
 global $mediatab,$LB_AL_HEAD_LINKS,$LB_AL_THUMB_LINKS,$LB_ML_THUMB_LINKS,$LB_SS_SPEED;
 global $LB_MUSIC_FILE,$LB_TRANSITION,$LB_URL_WIDTH,$LB_URL_HEIGHT,$GEDCOM,$LB_TT_BALLOON;
 
+/* ----------  No longer required due to Tab management -------------------------------------------------------
 $mediatab = "1";  					// Individual Page Media Tab
 										// Set to 	0	to hide Media Tab on Indi page from All Users,
 										// Set to 	1	to show Media Tab on Indi page to All Users,  [Default]
-
+*/
 
 $LB_AL_HEAD_LINKS = "both";			// Album Tab Page Header Links.
 										// Set to "icon"	to view icon links.

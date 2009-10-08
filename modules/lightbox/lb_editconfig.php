@@ -59,7 +59,7 @@ if (!PGV_USER_IS_ADMIN) {
 if ($action=="update" && !isset($security_user)) {
     $configtext = implode('', file("modules/lightbox/lb_defaultconfig.php"));
 
-    $configtext = preg_replace('/\$mediatab\s*=\s*".*";/', "\$mediatab = \"".$_POST["NEW_mediatab"]."\";", $configtext);
+    // $configtext = preg_replace('/\$mediatab\s*=\s*".*";/', "\$mediatab = \"".$_POST["NEW_mediatab"]."\";", $configtext);
     $configtext = preg_replace('/\$LB_AL_HEAD_LINKS\s*=\s*".*";/', "\$LB_AL_HEAD_LINKS = \"".$_POST["NEW_LB_AL_HEAD_LINKS"]."\";", $configtext);
     $configtext = preg_replace('/\$LB_AL_THUMB_LINKS\s*=\s*".*";/', "\$LB_AL_THUMB_LINKS = \"".$_POST["NEW_LB_AL_THUMB_LINKS"]."\";", $configtext);
     $configtext = preg_replace('/\$LB_TT_BALLOON\s*=\s*".*";/', "\$LB_TT_BALLOON = \"".$_POST["NEW_LB_TT_BALLOON"]."\";", $configtext);
@@ -115,6 +115,8 @@ $i = 0;
 
     <table class="facts_table">
 
+<?php /* 
+// -------------------------  No longer required due to Tab Management Feature ---------------------------------------------
     <tr >
 		<td class="descriptionbox" width="400"><?php print_help_link("mediatab_help", "qm", "mediatab"); ?><b><?php print $pgv_lang["mediatab"];?></b><br />&nbsp;&nbsp;&nbsp;&nbsp;<?php print $pgv_lang["lb_appearance"];?></td>
 		<td class="optionbox">
@@ -127,7 +129,8 @@ $i = 0;
     </tr>
 	<tr><td><br>
 	</td></tr>
-
+// ---------------------------------------------------------------------------------------------------------------------------
+*/ ?>
 
     <tr>
 		<td class="descriptionbox"><?php print_help_link("lb_al_head_links_help", "qm", "lb_al_head_links");?><b><?php print $pgv_lang["lb_al_head_links"];?></b><br />&nbsp;&nbsp;&nbsp;&nbsp;<?php print $pgv_lang["lb_linkAppearance"];?></td>
