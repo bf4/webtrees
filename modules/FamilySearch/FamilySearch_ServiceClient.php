@@ -129,7 +129,6 @@ class FamilySearch_ServiceClient extends ServiceClient {
 	function mergeGedcomRecord($xref, $localrec, $isStub=false, $firstLink=false) {
 		global $FILE, $GEDCOM, $indilist, $famlist, $sourcelist, $otherlist;
 		global $TBLPREFIX, $GEDCOMS, $pgv_changes;
-		
 		$FILE = $GEDCOM;
 		if (!$isStub) {
 			//$gedrec = find_gedcom_record($this->xref.":".$xref);
@@ -201,7 +200,7 @@ class FamilySearch_ServiceClient extends ServiceClient {
 //					if ($this->DEBUG) debug_print_backtrace();
 //					if ($this->DEBUG) print __LINE__."adding record to the database ".$localrec;
 					//-- update the last change time
-					$pos1 = strpos($localrec, "1 CHAN");
+		/*			$pos1 = strpos($localrec, "1 CHAN");
 					if ($pos1!==false) {
 						$pos2 = strpos($localrec, "\n1", $pos1+4);
 						if ($pos2===false) $pos2 = strlen($localrec);
@@ -219,7 +218,8 @@ class FamilySearch_ServiceClient extends ServiceClient {
 						$localrec .= $newgedrec;
 					}
 					update_record($localrec);
-				}
+					*/
+				} 
 			}
 		}
 		else {
@@ -267,7 +267,7 @@ class FamilySearch_ServiceClient extends ServiceClient {
 						$localrec .= $newgedrec;
 					}
 					if ($this->DEBUG) print __LINE__."adding record to the database ".$localrec;
-					update_record($localrec);
+					//update_record($localrec);
 				}
 				// If changes have been made to the remote record
 				else {
@@ -288,7 +288,7 @@ class FamilySearch_ServiceClient extends ServiceClient {
 						}
 						else {
 							if ($this->DEBUG) print __LINE__."adding record to the database ".$localrec;
-							update_record($localrec);
+							//update_record($localrec);
 						}
 					}
 				}

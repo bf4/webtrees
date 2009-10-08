@@ -521,7 +521,7 @@ class RA_AutoMatch {
 					        </spouse>'.$xml2;
 					        //-- print for debugging
 							//print "<b>Adding Relationships</b><br /><pre>".htmlentities($xml)."</pre>";
-									//-- send the XML to familysearch
+							//-- send the XML to familysearch
 							$res = $this->getProxy()->addRelationship($fsid, "spouse", $spouse_fsid, $xml);
 							//-- print the response for debugging
 							print "<b>Response</b><br /><pre>".htmlentities(preg_replace("/></",">\n<", $res))."</pre>";
@@ -546,6 +546,9 @@ class RA_AutoMatch {
 				
 				return $fsid;
 			}
+		}
+		else {
+			$this->getXMLGed()->parseXml($res);
 		}
 		return false;
 	}

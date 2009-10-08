@@ -109,6 +109,7 @@ class FamilySearchProxy extends FamilySearchAPIClient {
 		//create the request object
 		$params = array("timeout"=>$this->timeout, "readTimeout"=>$this->readTimeout);
 		$request = new HTTP_Request($con, $params);
+		$request->_useBrackets = false;
 		$request->addHeader("User-Agent", $this->agent);
 		$request->setBasicAuth($this->userName, $this->password);
 		$request->setURL($con);

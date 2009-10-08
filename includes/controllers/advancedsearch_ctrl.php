@@ -89,7 +89,7 @@ class AdvancedSearchController extends SearchController {
 			"NATU:DATE","NATU:PLAC","EMIG:DATE","EMIG:PLAC","IMMI:DATE","IMMI:PLAC",
 			"CENS:DATE","CENS:PLAC",
 			"CAST","DSCR",
-			"NATI","OCCU","RELI","TITL",
+			"NATI","OCCU","RELI","TITL","REFN",
 			"RESI","RESI:DATE","RESI:PLAC",
 			"NAME:NICK","NAME:_MARNM","NAME:_HEB","NAME:ROMN",
 			"FAMS:CENS:DATE","FAMS:CENS:PLAC","FAMS:DIV:DATE","FAMS:DIV:PLAC",

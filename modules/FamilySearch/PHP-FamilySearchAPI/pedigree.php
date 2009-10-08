@@ -37,7 +37,7 @@
  */
 
 ini_set('error_reporting', E_ALL);
-ini_set('include_path', ini_get('include_path').";./FSAPI");
+ini_set('include_path', ini_get('include_path').PATH_SEPARATOR."./FSAPI");
 
 include_once("FSAPI/FamilySearchProxy.php");
 include_once("FSParse/XMLGEDCOM.php");
@@ -45,8 +45,7 @@ include_once("FSParse/XMLGEDCOM.php");
 //set the username and password for familysearch
 $username = '';
 $password = '';
-//$url = 'http://ref.dev.usys.org';
-$url = 'https://apibeta.familysearch.org/';
+$url = 'http://www.dev.usys.org';
 $rootId = 'me';
 if (!empty($_REQUEST['rootId'])) $rootId = $_REQUEST['rootId'];
 

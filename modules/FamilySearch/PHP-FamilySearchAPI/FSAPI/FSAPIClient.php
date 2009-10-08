@@ -48,6 +48,9 @@ class FamilySearchAPIClient {
 	var $SESSIONID_NAME = "sessionId";
 	var $RETURN_TYPE = "unknown";
 	var $hasError;
+	var $maxRetries = 3;
+	var $currentRetries = 0;
+	var $autoThrottling = true;
 	
 	var $paths = array(
 	'login'		=>	'/identity/v1/login',
@@ -133,6 +136,42 @@ class FamilySearchAPIClient {
 	 */
 	function getReturnType() {
 		return $this->RETURN_TYPE;
+	}
+	
+	/**
+	 * Returns the number of times to attempt each request 
+	 *
+	 * @return int
+	 */
+	function getMaxRetries() {
+		return $this->maxRetries;
+	}
+	
+	/**
+	 * Set the maximum number of times to attemt a request before giving up
+	 *
+	 * @param int $retries
+	 */
+	function setMaxRetries($retries) {
+		$this->maxRetries = $retries;
+	}
+	
+	/**
+	 * Returns whether the proxy class will try to automatically handle throttling
+	 *
+	 * @return boolean
+	 */
+	function getAutoThrottling() {
+		return $this->autoThrottling;
+	}
+	
+	/**
+	 * Set whether this proxy will automatically try to handle throttling or return the error back to the client
+	 *
+	 * @param boolean $throttle
+	 */
+	function setAutoThrottline($throttle) {
+		$this->autoThrottling = $throttle;
 	}
 
 	/**
@@ -239,6 +278,7 @@ class FamilySearchAPIClient {
 	 * 		xml, default is true
 	 */
 	function getRequestData($id, $type, $query, $errorXML= true){
+
 		//-- check that we are loggedin
 		if (!$this->loggedin) {
 			$result = $this->authenticate($errorXML);
@@ -275,6 +315,7 @@ class FamilySearchAPIClient {
 
 		//create the request object
 		$request = new HTTP_Request();
+		$request->_useBrackets = false;
 		if (!empty($this->_cookies)||is_null($this->sessionid)) $request->setBasicAuth($this->userName, $this->password);
 		else if (!empty($this->_cookies)) {
 			foreach($this->_cookies as $c=>$cookie) {
@@ -284,16 +325,29 @@ class FamilySearchAPIClient {
 		$request->addHeader("User-Agent", $this->agent);
 		$request->setURL($con);
 		if ($this->DEBUG) print "<br /><pre>".$request->_buildRequest()."</pre>\n";
-
+//		print $con;
 		//send the request and return the xml
 		$request->sendRequest();
 		//print "Getting data at: ".$request->getUrl()."<br />\n";
 
 		if (is_null($this->_cookies)) $this->_cookies = $request->getResponseCookies();
 		$response = $request->getResponseBody();
+		//-- check if authenticated
 		if (preg_match("/error code=\"401\"/", $response) && isset($_SESSION['phpfsapi_sessionid'])) {
-			$this->authenticate($errorXML);
-			return $this->getRequestData($id, $type, $query, $errorXML);
+			if ($this->currentRetries < $this->maxRetries) {
+				$this->currentRetries++;
+				$this->authenticate($errorXML);
+				return $this->getRequestData($id, $type, $query, $errorXML);
+			}
+		}
+		else if (preg_match("/error code=\"503\"/", $response) && isset($_SESSION['phpfsapi_sessionid'])) {
+			if ($this->currentRetries < $this->maxRetries) {
+				$this->currentRetries++;
+				//-- wait 2 seconds and try again
+				print "throttled waiting... ";
+				sleep(2);
+				return $this->getRequestData($id, $type, $query, $errorXML);
+			}
 		}
 		if($errorXML) 
 			return $response;
@@ -337,6 +391,7 @@ class FamilySearchAPIClient {
 
 		//create the request object
 		$request = new HTTP_Request();
+		$request->_useBrackets = false;
 		$request->addHeader("User-Agent", $this->agent);
 		$request->addHeader("Content-Type", "text/xml");
 		$request->setURL($con);
@@ -452,6 +507,7 @@ class FamilySearchAPIClient {
 
 		//create the request object
 		$request = new HTTP_Request();
+		$request->_useBrackets = false;
 		if (is_null($this->_cookies)) $request->setBasicAuth($this->userName, $this->password);
 		else {
 			foreach($this->_cookies as $c=>$cookie) {
@@ -509,6 +565,7 @@ class FamilySearchAPIClient {
 
 		//create the request object
 		$request = new HTTP_Request();
+		$request->_useBrackets = false;
 		$request->addHeader("User-Agent", $this->agent);
 		$request->setURL($con);
 		if ($this->DEBUG) print "<br /><pre>".$request->_buildRequest()."</pre>\n";

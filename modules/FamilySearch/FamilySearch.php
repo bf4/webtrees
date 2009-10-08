@@ -37,6 +37,9 @@ class FamilySearch_Tab extends Tab {
 			}
 			catch(Exception $e) {
 				print "<b style=\"color:red;\">".$e->getMessage()."</b><br />";
+				if (strstr($e->getMessage(), "Not Found")!==false) {
+					$out = $matcher->generateResultsTable($this->controller->indi);
+				}
 			}
 			if (!empty($matcher->XMLGed->error)) {
 				if ($matcher->XMLGed->error->code==401) {

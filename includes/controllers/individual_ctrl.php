@@ -920,13 +920,13 @@ class IndividualControllerRoot extends BaseController {
 								if ($child->equals($newchild)) {
 									$found = true;
 									break;
-			}
-		}
-		}
+								}
+							}
+						}
 						if (!$found) $delchildren[] = $child;
 						else $merged_children[] = $child;
 					}
-			}
+				}
 				foreach($new_children as $key=>$newchild) {
 					if (!is_null($newchild)) {
 						$found = false;

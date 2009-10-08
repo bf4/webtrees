@@ -45,13 +45,26 @@ if (empty($person)) {
 }
 else {
 	$adder = new RA_AutoMatch();
+	try {
 	$fsid = $adder->addPerson($person);
+	} catch(Exception $e) {
+		print '<p class="error">'.$e->getMessage().'</p>';
+	} 
+	if (!empty($fsid)) {
 	$adder->addLink($person, $fsid);
 	print $person->getFullName();
 	?>
 	was successfully added.  This person's ID on the remote site is <?php print $fsid; ?><br /><br />
-	
+	<p>
 	<a href="module.php?mod=FamilySearch&amp;pgvaction=FS_Relatives&pid=<?php echo $pid;?>">Continue to Relatives</a>
+	</p>
+	<?php } else { ?>
+		<p class="error">There was an error adding this person to FamilySearch.</p>
+		<p class="error"><?php echo $adder->getXMLGed()->error->message?></p>
+	<?php } ?>
+	<p>
+	<a href="individual.php?pid=<?php echo $pid;?>">Go back to individual details for <?php echo $person->getFullName()?></a>
+	</p>
 	<?php
 }
 

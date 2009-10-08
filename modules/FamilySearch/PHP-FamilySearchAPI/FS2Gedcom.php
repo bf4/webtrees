@@ -25,7 +25,7 @@
  */
 
 ini_set('error_reporting', E_ALL);
-ini_set('include_path', ini_get('include_path').";./FSAPI");
+ini_set('include_path', ini_get('include_path').PATH_SEPARATOR."./FSAPI");
 
 include_once("FSAPI/FamilySearchProxy.php");
 include_once("FSParse/XMLGEDCOM.php");
@@ -45,9 +45,9 @@ $username = '';
 $password = '';
 // devkey can be set here or in a file called familysearchdev.key
 $devkey = '';
-//$url = 'http://ref.dev.usys.org';
-$url = 'https://apibeta.familysearch.org/';
-$id = 'me';
+$url = 'http://www.dev.usys.org';
+//$url = 'https://api.familysearch.org/';
+$id = 'KWCY-C74';
 if (!empty($_REQUEST['id'])) $id = $_REQUEST['id'];
 
 //-- check for authentication if a preset username and password were not provided
@@ -58,12 +58,13 @@ else {
 	$username = $_SERVER['PHP_AUTH_USER'];
 	$password = $_SERVER['PHP_AUTH_PW'];
 	$client = new FamilySearchProxy($url, $username, $password, $devkey);
+	$client->setAgent("PHP-FSAPI");
 	$client->authenticate();
 	if (empty($client->sessionid)) basicAuthentication();
 }
-
+$client->DEBUG=true;
 //-- create a proxy client class
-$xml = $client->getPersonById($id);
+$xml = $client->getPersonById($id, "&view=summary&view=information");
 $errors = $client->checkErrors($xml);
 if ($client->hasError) basicAuthentication();	
 

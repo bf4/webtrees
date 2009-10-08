@@ -162,7 +162,7 @@ class XmlGedcom {
 		}
 		if ($this->proxy!=null) {
 			$query = "families=$summary&events=$summary&children=all&properties=$summary&parents=$summary";
-			if ($summary=='all') $query.="&ordinances=all&names=all&genders=all&characteristics=all&properties=all&identifiers=all&contributor=all";
+			if ($summary=='all') $query.="&ordinances=all&names=all&genders=all&characteristics=all&identifiers=all&contributor=all";
 			$result = $this->proxy->getPersonById($id,$query);
 			//		print htmlentities($result);
 			$this->parseXml($result);
@@ -257,7 +257,7 @@ class XmlGedcom {
 			$id = substr($id, 1, strpos($id, '+', 2)-1);
 			//			print $id;
 		}
-		$person = $this->getPerson($id);
+		$person = $this->getPerson($id, "all");
 		if (!is_null($person)) {
 			$fams = $person->getFamCGedcom();
 			foreach($fams as $fam) {;
