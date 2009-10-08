@@ -8,7 +8,7 @@ class all_tab_Tab extends Tab {
 
 	public function getContent() {
 		
-		$out = "<div id=\"all_content\">HERE";
+		$out = "<div id=\"all_content\">";
 		$i = 0;
 		foreach($this->controller->modules as $mod) {
 			if ($mod->hasTab()) {
