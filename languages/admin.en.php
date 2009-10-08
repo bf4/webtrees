@@ -45,6 +45,8 @@ $pgv_lang["mod_admin_hasmenu"]	= "Menu?";
 $pgv_lang["mod_admin_access_level"]	= "Access Level";
 $pgv_lang["mod_admin_order"]	= "Order";
 $pgv_lang["mod_admin_config"]	= "Mod Settings";
+$pgv_lang["mod_admin_settings"]	= "Module Configuration Settings";
+
 
 $pgv_lang["enter_comment"]	= "You may enter a comment here.";
 $pgv_lang["upload_a_gedcom"] 		= "Upload a GEDCOM file";

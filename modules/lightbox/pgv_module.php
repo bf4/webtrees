@@ -13,9 +13,10 @@ if (isset($LANGUAGE)) {
 
 class lightbox_PGVModule extends PGVModule {
 	protected $name = 'lightbox';
-	protected $description = 'Adds a tab to the individual page which an alternate way to view and work with media.';
+	protected $description = 'Adds a tab (Album) to the individual page which an alternate way to view and work with media.';
 	protected $version = '4.2.2';
 	protected $pgvVersion = '4.2.2';
+	protected $configLink = 'module.php?mod=lightbox&pgvaction=lb_editconfig';
 	protected $_tab = null;
 
 	/**

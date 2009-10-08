@@ -265,7 +265,7 @@ $i = 0;
 			<?php if ($pid){ ?>
 				<INPUT TYPE="button" VALUE="<?php print $pgv_lang["lb_toAlbumPage"];?>" 		onclick="javascript:window.location='individual.php?pid=<?php echo $pid;?>&tab=<?php echo $tabno;?>&gedcom=<?php echo $GEDCOM;?>'" />
 			<?php }else{ ?>
-				<INPUT TYPE="button" VALUE="<?php print $pgv_lang["lb_toAdminConfigPage"];?>" 	onclick="javascript:window.location='admin.php'" />
+				<INPUT TYPE="button" VALUE="<?php print $pgv_lang["lb_toAdminConfigPage"];?>" 	onclick="javascript:window.location='admin.php#modules'" />
 			<?php } ?>
 			
 			</td>

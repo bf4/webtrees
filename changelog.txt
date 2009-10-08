@@ -10,6 +10,7 @@
 
 
 Version 4.2.x CA
+ - Fixed: Problem with Admin page. Added Lightbox to Module Administration Settings page. Minor css adjustments to Simplyxxx themes. (windmillway)
  - Merged: Merge changes r6120 - r6204 from the trunk. (windmillway)
  - Modified: Theme css relocation for all Tab management (jquery-ui) theme css files (windmillway) 
  - Added: Manage Links to Thumbnail drop Down Menu on Album Page (windmillway)

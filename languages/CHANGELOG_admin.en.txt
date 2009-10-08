@@ -39,6 +39,27 @@ Additional codes, to help Translators, follow the date as follows:
 
 The above list of codes may be amended as new situations arise.
 
+VERSION 4.2.3 CA Branch
+
+?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
+-----------------------------------------------------------------------------------------
++$pgv_lang["mod_admin_order"]						08 Oct 2009				A
++$pgv_lang["mod_admin_config"]						08 Oct 2009				A
++$pgv_lang["mod_admin_settings"]					08 Oct 2009				A
++$pgv_lang["module_admin"]							17 Jul 2009				A
++$pgv_lang['mod_admin_installed']					17 Jul 2009				A
++$pgv_lang['mod_admin_tabs']						17 Jul 2009				A
++$pgv_lang['mod_admin_menus']						17 Jul 2009				A
++$pgv_lang['mod_admin_intro']						17 Jul 2009				A
++$pgv_lang['mod_admin_active']						17 Jul 2009				A
++$pgv_lang['mod_admin_name']						17 Jul 2009				A
++$pgv_lang['mod_admin_description']					17 Jul 2009				A
++$pgv_lang['mod_admin_version']						17 Jul 2009				A
++$pgv_lang['mod_admin_hastab']						17 Jul 2009				A
++$pgv_lang['mod_admin_hasmenu']						17 Jul 2009				A
++$pgv_lang['mod_admin_access_level']				17 Jul 2009				A
+
+
 VERSION 4.2.3
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
@@ -51,19 +72,6 @@ VERSION 4.2.2
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 -----------------------------------------------------------------------------------------
-+$pgv_lang["module_admin"]                                              17 Jul 2009				A
-+$pgv_lang['mod_admin_installed']                                       17 Jul 2009				A
-+$pgv_lang['mod_admin_tabs']                                            17 Jul 2009				A
-+$pgv_lang['mod_admin_menus']						17 Jul 2009				A
-+$pgv_lang['mod_admin_intro']						17 Jul 2009				A
-+$pgv_lang['mod_admin_active']						17 Jul 2009				A
-+$pgv_lang['mod_admin_name']						17 Jul 2009				A
-+$pgv_lang['mod_admin_description']					17 Jul 2009				A
-+$pgv_lang['mod_admin_version']						17 Jul 2009				A
-+$pgv_lang['mod_admin_hastab']                                          17 Jul 2009				A
-+$pgv_lang['mod_admin_hasmenu']						17 Jul 2009				A
-+$pgv_lang['mod_admin_access_level']					17 Jul 2009				A
-
 -$pgv_lang["rootid"]								08 Jul 2009				A Moved to lang.en.php
 *$pgv_lang["search_add_links"]						20 Jun 2009				w
 *$pgv_lang["add_indi_to_link_list"]					20 Jun 2009				w
