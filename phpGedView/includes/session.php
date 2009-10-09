@@ -345,7 +345,7 @@ if (isset($MANUAL_SESSION_START) && !empty($SID)) {
 
 session_start();
 
-if (!isset($_SESSION['initiated'])) {
+if (!$SEARCH_SPIDER && !isset($_SESSION['initiated'])) {
 	// A new session, so prevent session fixation attacks by choosing a new PHPSESSID.
 	session_regenerate_id(true);
 	$_SESSION['initiated']=true;
