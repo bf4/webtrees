@@ -168,7 +168,10 @@ echo PGV_JS_START, 'function showchanges() {window.location.reload();}', PGV_JS_
 		<?php 
 		$modules = PGVModule::getActiveListAllGeds();
 		if (PGV_USER_IS_ADMIN || count($modules)>0) {?>
-			<li><a href="#modules"><span><?php echo $pgv_lang["module_admin"]?></span></a></li>
+		<!-- ---- MODIFIED BY BH ------------------------------------ -->
+			<!-- <li><a href="#modules"><span><?php // echo $pgv_lang["module_admin"]?></span></a></li> -->
+			<li><a href="#modules" onclick="window.location='module_admin.php';" ><span><?php echo $pgv_lang["module_admin"]?></span></a></li>
+		<!-- -------------------------------------------------------- -->
 		<?php } ?>
 	</ul>
 	<div id="info">
@@ -296,36 +299,57 @@ echo PGV_JS_START, 'function showchanges() {window.location.reload();}', PGV_JS_
 	</tr>
 	</table>
 	</div>
-	<?php }
-	if (PGV_USER_IS_ADMIN || count($modules)>0) {?>
+	<?php } 
+
+
+
+	if (PGV_USER_IS_ADMIN || count($modules)>0) { ?>
 	<div id="modules">
-	<table class="center <?php print $TEXT_DIRECTION ?> width100">
-	<tr>                                                                                                                                             
-        <td colspan="2" class="topbottombar" style="text-align:center; "><?php print $pgv_lang["module_admin"]; ?></td>                            
-    </tr>
-	<tr>
-		<td class="optionbox width50"><a href="module_admin.php"><?php print $pgv_lang["module_admin"]; ?></a></td>
-		<td class="optionbox width50"><!-- nothing here yet --></td>
-	</tr>
-	<tr>                                                                                                                                             
-        <td colspan="2" class="topbottombar" style="text-align:center; "><?php print $pgv_lang["mod_admin_settings"]; ?></td>                            
-    </tr>
+
 	<?php
-		$i = 0;
-		foreach($modules as $mod) {
-			$link = $mod->getConfigLink();
-			if ($link) {
-				if ($i % 2 ==0) echo '<tr>';
-				echo '<td class="optionbox width50"><a href="'.$link.'">'.$mod->getName().'</a></td>';
-				// echo '<td class="optionbox width50"><!-- nothing here yet --></td>';
-				$i++;
-				if ($i % 2 ==0) echo '</tr>';
-			}
-		}
+		// Added by BH ------------------------
+		echo $pgv_lang["loading"]." ....... "; 
+		// ------------------------------------
 	?>
-	</table>
+	
+	<?php /*
+	// --------------------------------
+	MODIFIED BY NIGEL (section removed) 
+	// --------------------------------
+		<table class="center <?php //print $TEXT_DIRECTION ?> width100">
+		<tr>                                                                                                                                             
+			<td colspan="2" class="topbottombar" style="text-align:center; "><?php //print $pgv_lang["module_admin"]; ?></td>                            
+		</tr>
+		<tr>
+			<td class="optionbox width50"><a href="module_admin.php"><?php //print $pgv_lang["module_admin"]; ?></a></td>
+			<td class="optionbox width50"><!-- nothing here yet --><!--</td>
+		</tr>
+		<tr>                                                                                                                                             
+			<td colspan="2" class="topbottombar" style="text-align:center; "><?php //print $pgv_lang["mod_admin_settings"]; ?></td>                            
+		</tr>
+		<?php /*
+			$i = 0;
+			foreach($modules as $mod) {
+				$link = $mod->getConfigLink();
+				if ($link) {
+					if ($i % 2 ==0) echo '<tr>';
+					echo '<td class="optionbox width50"><a href="'.$link.'">'.$mod->getName().'</a></td>';
+					// echo '<td class="optionbox width50"><!-- nothing here yet --></td>';
+					$i++;
+					if ($i % 2 ==0) echo '</tr>';
+				}
+			}
+			
+		?>
+		</table>
+	// ------------------------------------
+	// MODIFIED BY NIGEL (section remmoved) 
+	// ------------------------------------
+	*/ ?>
+
 	</div>
 	<?php } ?>
+
 </div>
 </td>
 </tr></table>

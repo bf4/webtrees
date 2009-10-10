@@ -37,12 +37,14 @@ global $lang_short_cut, $LANGUAGE, $reorder, $GEDCOM, $LB_AL_HEAD_LINKS;
 $reorder=safe_get('reorder', '1', '0');
 
 loadLangFile("lightbox:lang");
-
+/*
 if (!file_exists("modules/googlemap/defaultconfig.php")) {
 	$tabno = "7";
 }else{
 	$tabno = "8";
 }
+*/
+$tabno=safe_get('tab');
 
 // The following is temporary, until the handling of the Lightbox Help system
 // is adjusted to match the usual PhpGedView practice
@@ -75,6 +77,10 @@ if (!file_exists($lbHelpFile)) $lbHelpFile = "modules/lightbox/languages/help_te
 		"inverselink.php?linktoid=<?php print $pid; ?>&linkto=person", "win04", "resizable=1, scrollbars=1, top=50, HEIGHT=300, WIDTH=450 ");
 		win04.focus()
 	}
+	
+	function goto_config_lightbox() {
+		window.location = "module.php?mod=lightbox&pgvaction=lb_editconfig&pid=<?php print $pid; ?>&gedcom=<?php print $GEDCOM; ?>&tab="+selectedTab;
+	}
 -->
 </script>
 
@@ -105,17 +111,18 @@ include_once ('includes/media_reorder_count.php');
 		// Configuration
         if (PGV_USER_IS_ADMIN) {
 			if ($LB_AL_HEAD_LINKS == "both") {
-	            print "<td class=\"width15 center wrap\" valign=\"top\">";
-	            print "<a href=\"".encode_url("module.php?mod=lightbox&pgvaction=lb_editconfig&pid={$pid}&gedcom={$GEDCOM}")."\">";
+				print "<td class=\"width15 center wrap\" valign=\"top\">";
+				// print "<a href=\"".encode_url("module.php?mod=lightbox&pgvaction=lb_editconfig&pid={$pid}&gedcom={$GEDCOM}&tab=4")."\">";
+				print "<a href=\"javascript:goto_config_lightbox()\">";
 				print "<img src=\"modules/lightbox/images/image_edit.gif\" class=\"icon\" title=\"{$pgv_lang['configure_lightbox']}\" alt=\"{$pgv_lang['configure_lightbox']}\" /><br />" ;
 				print "" . $pgv_lang["configure_lightbox"] . "&nbsp;";
 				print "</a>";
 				print "</td>";
-	        //    print "<td width=\"5%\">&nbsp;</td>";
-	            print "\n";
+				// print "<td width=\"5%\">&nbsp;</td>";
+				print "\n";
 			}else if ($LB_AL_HEAD_LINKS == "text") {
-	            print "<td class=\"width15 center wrap\" valign=\"top\">";
-	            print "<a href=\"".encode_url("module.php?mod=lightbox&pgvaction=lb_editconfig&pid={$pid}")."\">";
+				print "<td class=\"width15 center wrap\" valign=\"top\">";
+				print "<a href=\"javascript:goto_config_lightbox()\">";
 				print "" . $pgv_lang["configure_lightbox"] . "&nbsp;";
 				print "</a>";
 				print "</td>";
@@ -123,7 +130,7 @@ include_once ('includes/media_reorder_count.php');
 	            print "\n";
 			}else if ($LB_AL_HEAD_LINKS == "icon") {
 				print "&nbsp;&nbsp;&nbsp;";
-	            print "<a href=\"".encode_url("module.php?mod=lightbox&pgvaction=lb_editconfig&pid={$pid}")."\">";
+	            print "<a href=\"javascript:goto_config_lightbox()\">";
 				print "<img src=\"modules/lightbox/images/image_edit.gif\" class=\"icon\" title=\"{$pgv_lang['configure_lightbox']}\" alt=\"{$pgv_lang['configure_lightbox']}\" />" ;
 				print "</a>";
 				print "\n";

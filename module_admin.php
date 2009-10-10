@@ -102,8 +102,12 @@ print_header($pgv_lang["module_admin"]);
 //]]>
   </script>
 <div align="center">
-<div class="width70">
+<div class="width75">
+
+<p><?php echo "<h2>".$pgv_lang["module_admin"]."</h2>"; ?></p>
 <p><?php echo $pgv_lang['mod_admin_intro']?></p>
+<p><input TYPE="button" VALUE="<?php echo $pgv_lang["ret_admin"];?>" onclick="javascript:window.location='admin.php'" /></p>
+
 <form method="post" action="module_admin.php"> 
 	<input type="hidden" name="action" value="update_mods" />
 

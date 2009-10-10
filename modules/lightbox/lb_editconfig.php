@@ -44,6 +44,13 @@ print_header($pgv_lang["configure_lightbox"]);
 require('modules/lightbox/lb_defaultconfig.php');
 if (file_exists('modules/lightbox/lb_config.php')) require('modules/lightbox/lb_config.php');
 
+$last_clicked=safe_get('tab');
+if ($last_clicked!="") {
+	$last_clicked = $last_clicked;
+}else{
+	$last_clicked = 0;
+}
+
 print "<span class=\"subheaders\">".$pgv_lang["configure_lightbox"]."</span>";
 print "<br /><br />";
 
@@ -266,9 +273,9 @@ $i = 0;
             <input type="reset" tabindex="<?php $i++; print $i?>" value="<?php print $pgv_lang["reset"];?>" />
             &nbsp;&nbsp;
 			<?php if ($pid){ ?>
-				<INPUT TYPE="button" VALUE="<?php print $pgv_lang["lb_toAlbumPage"];?>" 		onclick="javascript:window.location='individual.php?pid=<?php echo $pid;?>&tab=<?php echo $tabno;?>&gedcom=<?php echo $GEDCOM;?>'" />
+				<INPUT TYPE="button" VALUE="<?php print $pgv_lang["lb_toAlbumPage"];?>" 		onclick="javascript:window.location='individual.php?pid=<?php echo $pid;?>&gedcom=<?php echo $GEDCOM;?>&tab=<?php echo $last_clicked;?>'" />
 			<?php }else{ ?>
-				<INPUT TYPE="button" VALUE="<?php print $pgv_lang["lb_toAdminConfigPage"];?>" 	onclick="javascript:window.location='admin.php#modules'" />
+				<INPUT TYPE="button" VALUE="<?php print $pgv_lang["ret_module_admin"];?>" 	onclick="javascript:window.location='module_admin.php'" />
 			<?php } ?>
 			
 			</td>

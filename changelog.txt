@@ -10,6 +10,7 @@
 
 
 Version 4.2.x CA
+ - Modified: Admin Page "Module Administration Tab" link. Tidied up Lightbox config return button links. (windmillway)
  - Fixed: Problem with Admin page. Added Lightbox to Module Administration Settings page. Minor css adjustments to Simplyxxx themes. (windmillway)
  - Merged: Merge changes r6120 - r6204 from the trunk. (windmillway)
  - Modified: Theme css relocation for all Tab management (jquery-ui) theme css files (windmillway) 

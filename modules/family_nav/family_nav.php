@@ -58,30 +58,22 @@ class family_nav_Tab extends Tab {
 		global $show_full, $tabno;
 		$show_full="1";
 
-		$last_clicked=safe_get('tab');
-		?>
-		<script>
-		selectedTab="<?php echo $last_clicked; ?>";
-		</script>
-		<?php
-		
 		// =====================================================================
 
-	echo PGV_JS_START;
-	echo 'function familyNavLoad(url) {
-		if (selectedTab!="") {
-			window.location = url+"&tab="+selectedTab;
-			return false;
-		}else{
-			window.location = url+"&tab=0";
-			return false;
+		echo PGV_JS_START;
+		echo 'function familyNavLoad(url) {
+			if (selectedTab!="") {
+				window.location = url+"&tab="+selectedTab;
+				return false;
+			}else{
+				window.location = url+"&tab=0";
+				return false;
+			}
 		}
+		';
+		echo PGV_JS_END;
 
-	}
-	';
-	echo PGV_JS_END;
-
-//    Start Family Nav Table ----------------------------
+	 // Start Family Nav Table ----------------------------
 		echo "<table class=\"nav_content\" cellpadding=\"0\">"; 
 		global $pgv_lang, $SHOW_ID_NUMBERS, $PGV_IMAGE_DIR, $PGV_IMAGES, $PGV_MENUS_AS_LISTS;
 		global $spouselinks, $parentlinks, $DeathYr, $BirthYr;
@@ -536,11 +528,12 @@ class family_nav_Tab extends Tab {
 		// -----------------------------------------------------------------------------
 		// End Family Nav Table
 		// -----------------------------------------------------------------------------
-
+		
 		$out .= ob_get_contents();
 		ob_end_clean();
 		return $out;
-	}
+		
+	} // End public function getContent()
 
 function print_pedigree_person_nav($pid, $style=1, $show_famlink=true, $count=0, $personcount="1") {
 	global $HIDE_LIVE_PEOPLE, $SHOW_LIVING_NAMES, $PRIV_PUBLIC, $factarray, $ZOOM_BOXES, $LINK_ICONS, $view, $SCRIPT_NAME, $GEDCOM;

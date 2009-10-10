@@ -48,7 +48,7 @@ if (!$controller->indi->canDisplayName()) {
 }
 $linkToID=$controller->pid; // -- Tell addmedia.php what to link to
 
-$last_clicked=safe_get('tab');
+//$last_clicked=safe_get('tab');
 
 ?>
 
@@ -95,7 +95,13 @@ function resize_content_div(i) {
 <?php }?>
 <script type="text/javascript">
 //<![CDATA[
-var selectedTab = 0;
+
+var selectedTab="<?php echo safe_get('tab')?>";
+if (selectedTab != "" && selectedTab != "undefined" && selectedTab != null) {
+	var selectedTab = selectedTab;
+}else{
+	var selectedTab = 0;
+}
 
 function enable_static_tab() {
     jQuery(".static_tab").css("float","<?php echo ($TEXT_DIRECTION=='rtl')? 'left':'right';?>");

@@ -31,22 +31,23 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
-$pgv_lang["module_admin"]	= "Module Administration";
+$pgv_lang["module_admin"]			= "Module Administration";
 $pgv_lang["mod_admin_installed"]	= "Installed Modules";
-$pgv_lang["mod_admin_tabs"]	= "Manage Tabs";
-$pgv_lang["mod_admin_menus"]	= "Manage Menus";
-$pgv_lang["mod_admin_intro"]	= "Below is the list of all the modules installed in this instance of PhpGedView.  Modules are installed by placing them in the <i>modules</i> directory.  Here you can set the access level per GEDCOM for each module.  If a module includes tabs for the individual page or menus for the menu bar, you can also set the access level and order of each of them.";
-$pgv_lang["mod_admin_active"]	= "Active";
-$pgv_lang["mod_admin_name"]	= "Module Name";
+$pgv_lang["mod_admin_tabs"]			= "Manage Tabs";
+$pgv_lang["mod_admin_menus"]		= "Manage Menus";
+$pgv_lang["mod_admin_intro"]		= "Below is the list of all the modules installed in this instance of PhpGedView.  Modules are installed by placing them in the <i>modules</i> directory.  Here you can set the access level per GEDCOM for each module.  If a module includes tabs for the individual page or menus for the menu bar, you can also set the access level and order of each of them.";
+$pgv_lang["mod_admin_active"]		= "Active";
+$pgv_lang["mod_admin_name"]			= "Module Name";
 $pgv_lang["mod_admin_description"]	= "Description";
-$pgv_lang["mod_admin_version"]	= "Version / PGV";
-$pgv_lang["mod_admin_hastab"]	= "Tab?";
-$pgv_lang["mod_admin_hasmenu"]	= "Menu?";
+$pgv_lang["mod_admin_version"]		= "Version / PGV";
+$pgv_lang["mod_admin_hastab"]		= "Tab?";
+$pgv_lang["mod_admin_hasmenu"]		= "Menu?";
 $pgv_lang["mod_admin_access_level"]	= "Access Level";
-$pgv_lang["mod_admin_order"]	= "Order";
-$pgv_lang["mod_admin_config"]	= "Mod Settings";
-$pgv_lang["mod_admin_settings"]	= "Module Configuration Settings";
-
+$pgv_lang["mod_admin_order"]		= "Order";
+$pgv_lang["mod_admin_config"]		= "Mod Settings";
+$pgv_lang["mod_admin_settings"]		= "Module Configuration Settings";
+$pgv_lang["ret_module_admin"]		= "Return to Module Administration page";
+$pgv_lang["ret_admin"]				= "Return to Administration page";
 
 $pgv_lang["enter_comment"]	= "You may enter a comment here.";
 $pgv_lang["upload_a_gedcom"] 		= "Upload a GEDCOM file";
