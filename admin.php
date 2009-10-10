@@ -308,7 +308,7 @@ echo PGV_JS_START, 'function showchanges() {window.location.reload();}', PGV_JS_
 
 	<?php
 		// Added by BH ------------------------
-		echo $pgv_lang["loading"]." ....... "; 
+		echo $pgv_lang["loading"]; 
 		// ------------------------------------
 	?>
 	
