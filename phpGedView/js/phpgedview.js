@@ -522,6 +522,20 @@ function valid_date(datefield) {
 	datestr=datestr.replace(/^([\w ]+) ?- ?([\w ]+)$/, "BET $1 AND $2");
 	if (datestr.match(/^=([\d ()/+*-]+)$/)) datestr=eval(RegExp.$1);
 
+	// Americans frequently enter dates as SEPTEMBER 20, 1999
+	// No need to internationalise this, as this is an english-language issue
+	datestr=datestr.replace(/(JAN)(?:UARY)? (\d\d?)[, ]+(\d\d\d\d)/, "$2 $1 $3")
+	datestr=datestr.replace(/(FEB)(?:RUARY)? (\d\d?)[, ]+(\d\d\d\d)/, "$2 $1 $3")
+	datestr=datestr.replace(/(MAR)(?:CH)? (\d\d?)[, ]+(\d\d\d\d)/, "$2 $1 $3")
+	datestr=datestr.replace(/(APR)(?:IL)? (\d\d?)[, ]+(\d\d\d\d)/, "$2 $1 $3")
+	datestr=datestr.replace(/(MAY) (\d\d?)[, ]+(\d\d\d\d)/, "$2 $1 $3")
+	datestr=datestr.replace(/(JUN)(?:E)? (\d\d?)[, ]+(\d\d\d\d)/, "$2 $1 $3")
+	datestr=datestr.replace(/(JUL)(?:Y)? (\d\d?)[, ]+(\d\d\d\d)/, "$2 $1 $3")
+	datestr=datestr.replace(/(AUG)(?:UST)? (\d\d?)[, ]+(\d\d\d\d)/, "$2 $1 $3")
+	datestr=datestr.replace(/(SEP)(?:TEMBER)? (\d\d?)[, ]+(\d\d\d\d)/, "$2 $1 $3")
+	datestr=datestr.replace(/(OCT)(?:OBER)? (\d\d?)[, ]+(\d\d\d\d)/, "$2 $1 $3")
+	datestr=datestr.replace(/(DEC)(?:EMBER)? (\d\d?)[, ]+(\d\d\d\d)/, "$2 $1 $3")
+
 	// Apply leading zero to day numbers
 	datestr=datestr.replace(/(^| )(\d [A-Z]{3,5} \d{4})/, "$10$2");
 
