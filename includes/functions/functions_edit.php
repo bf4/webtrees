@@ -1191,7 +1191,11 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 		$rows=1;
 		$cols=12;
 		break;
-	case 'DATE': case 'TIME': case 'TYPE':
+	case 'DATE':
+		$rows=1;
+		$cols=30;
+		break;
+	case 'TIME': case 'TYPE':
 		$rows=1;
 		$cols=20;
 		break;
