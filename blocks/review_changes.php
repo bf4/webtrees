@@ -5,7 +5,7 @@
  * This block prints the changes that still need to be reviewed and accepted by an administrator
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
+ * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -80,7 +80,7 @@ function review_changes_block($block = true, $config="", $side, $index) {
 					$message["subject"] = $pgv_lang["review_changes_subject"];
 					$message["body"] = $pgv_lang["review_changes_body"];
 					$message["method"] = get_user_setting($user_id, 'contactmethod');
-					$message["url"] = basename($SCRIPT_NAME)."?".$QUERY_STRING;
+					$message["url"] = basename($SCRIPT_NAME)."?".html_entity_decode($QUERY_STRING);
 					$message["no_from"] = true;
 					addMessage($message);
 				}
