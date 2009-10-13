@@ -213,8 +213,5 @@ if (!self::table_exists("{$TBLPREFIX}mutex")) {
 	self::exec("CREATE INDEX {$TBLPREFIX}mutex_name ON {$TBLPREFIX}mutex (mx_name)");
 }
 
-// Allow custom authentication modules to alter these tables.
-checkTableExists();
-
 // Update the version to indicate sucess
 set_site_setting($schema_name, $next_version);
