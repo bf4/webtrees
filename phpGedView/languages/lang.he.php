@@ -556,8 +556,8 @@ $pgv_lang["source_downloaded_from"]	= "המקור הורד מהאתר:";
 $pgv_lang["enter_person_generations"] 	= "מספר דורות:";
 $pgv_lang["convertPath"]			= "המר נתיב המדיה ל-"; 
 $pgv_lang["convertSlashes"]			= "המר את המפרידים של תיקיית המדיה ל-"; 
-$pgv_lang["forwardSlashes"]			= "לוכסן קדמי";
-$pgv_lang["backSlashes"]			= "לוכסן אחורי";
+$pgv_lang["forwardSlashes"]			= "לוכסן קדמי : /";
+$pgv_lang["backSlashes"]			= "לוכסן אחורי : \\";
 
 //-- PLACELIST FILE MESSAGES
 $pgv_lang["connections"]		= "קשרים נמצאו למקום";
