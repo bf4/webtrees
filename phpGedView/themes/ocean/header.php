@@ -34,6 +34,7 @@ if (!defined('PGV_PHPGEDVIEW')) {
 <html xmlns="http://www.w3.org/1999/xhtml">
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=<?php echo $CHARACTER_SET; ?>" />
+		<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
 		<?php if ($FAVICON) { ?><link rel="shortcut icon" href="<?php echo $FAVICON; ?>" type="image/x-icon" /> <?php } ?>
 
 		<title><?php echo $title; ?></title>
