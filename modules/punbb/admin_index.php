@@ -50,13 +50,10 @@ if ($action == 'check_upgrade')
 	if ($latest_version == '')
 		message('Check for upgrade failed for unknown reasons.');
 
-	$cur_version = str_replace(array('.', 'dev', 'beta', ' '), '', strtolower($pun_config['o_cur_version']));
-	$cur_version = (strlen($cur_version) == 2) ? intval($cur_version) * 10 : intval($cur_version);
+	$latest_version = preg_replace('/(\.0)+(?!\.)|(\.0+$)/', '$2', $latest_version);
+	$cur_version = preg_replace('/(\.0)+(?!\.)|(\.0+$)/', '$2', $cur_version);
 
-	$latest_version = str_replace('.', '', strtolower($latest_version));
-	$latest_version = (strlen($latest_version) == 2) ? intval($latest_version) * 10 : intval($latest_version);
-
-	if ($cur_version >= $latest_version)
+	if (version_compare($cur_version, $latest_version, '>='))
 		message('You are running the latest version of PunBB.');
 	else
 		message('A new version of PunBB has been released. You can download the latest version at <a href="http://punbb.informer.com/">PunBB.Informer.Com</a>.');
