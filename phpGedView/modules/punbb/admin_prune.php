@@ -127,7 +127,7 @@ if (isset($_GET['action']) || isset($_POST['prune']) || isset($_POST['prune_comp
 			<form method="post" action="<?php genurl('admin_prune.php?action=foo', true, true)?>">
 				<div class="inform">
 					<input type="hidden" name="prune_days" value="<?php echo $prune_days ?>" />
-					<input type="hidden" name="prune_sticky" value="<?php echo $_POST['prune_sticky'] ?>" />
+					<input type="hidden" name="prune_sticky" value="<?php echo $prune_sticky ?>" />
 					<input type="hidden" name="prune_from" value="<?php echo $prune_from ?>" />
 					<fieldset>
 						<legend>Confirm prune posts</legend>
