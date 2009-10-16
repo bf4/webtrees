@@ -43,8 +43,25 @@ VERSION 4.2.3
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 -----------------------------------------------------------------------------------------
--$pgv_lang["pgv_registry"]              30 Sep 2009       D
--$pgv_lang["ALLOW_REMEMBER_ME"]         30 Sep 2009       D
++$pgv_lang["ret_admin"]								10 Oct 2009				A
++$pgv_lang["ret_module_admin"]						10 Oct 2009				A
++$pgv_lang["mod_admin_order"]						08 Oct 2009				A
++$pgv_lang["mod_admin_config"]						08 Oct 2009				A
++$pgv_lang["mod_admin_settings"]					08 Oct 2009				A
++$pgv_lang["module_admin"]							07 Oct 2009				A
++$pgv_lang['mod_admin_installed']					07 Oct 2009				A
++$pgv_lang['mod_admin_tabs']						07 Oct 2009				A
++$pgv_lang['mod_admin_menus']						07 Oct 2009				A
++$pgv_lang['mod_admin_intro']						07 Oct 2009				A
++$pgv_lang['mod_admin_active']						07 Oct 2009				A
++$pgv_lang['mod_admin_name']						07 Oct 2009				A
++$pgv_lang['mod_admin_description']					07 Oct 2009				A
++$pgv_lang['mod_admin_version']						07 Oct 2009				A
++$pgv_lang['mod_admin_hastab']						07 Oct 2009				A
++$pgv_lang['mod_admin_hasmenu']						07 Oct 2009				A
++$pgv_lang['mod_admin_access_level']				07 Oct 2009				A
+-$pgv_lang["pgv_registry"]              			30 Sep 2009       		D
+-$pgv_lang["ALLOW_REMEMBER_ME"]         			30 Sep 2009       		D
 *$pgv_lang["PGV_SMTP_SSL"]							10 Aug 2009				W
 
 VERSION 4.2.2
