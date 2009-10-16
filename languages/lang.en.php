@@ -31,14 +31,14 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
-$pgv_lang["gedcomid"]			= "GEDCOM INDI record ID";
-$pgv_lang["sortby"]				= "Sequence";
-$pgv_lang["exact"]				= "Exact";
-$pgv_lang["begins_with"]		= "Begins with";
-$pgv_lang["contains"]			= "Contains";
-$pgv_lang["sounds_like"]		= "Sounds like";
-$pgv_lang["advanced_search"] 	= "Advanced Search";
-$pgv_lang["more_fields"]		= "Add More Fields";
+$pgv_lang["gedcomid"]				= "GEDCOM INDI record ID";
+$pgv_lang["sortby"]					= "Sequence";
+$pgv_lang["exact"]					= "Exact";
+$pgv_lang["begins_with"]			= "Begins with";
+$pgv_lang["contains"]				= "Contains";
+$pgv_lang["sounds_like"]			= "Sounds like";
+$pgv_lang["advanced_search"] 		= "Advanced Search";
+$pgv_lang["more_fields"]			= "Add More Fields";
 $pgv_lang["install_step_8"] 		= "Get Started";
 $pgv_lang["parent_family"]			= "Parents Family";
 $pgv_lang["step_parent_family"]		= "Step-Parent Family";

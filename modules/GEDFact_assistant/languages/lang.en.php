@@ -41,6 +41,7 @@ $pgv_lang["cens_add_insert"]	= "Add/Insert Blank Row";
 
 
 // COMMON Census Parameters ================================================ 
+
 // ---- Header Titles ------------------------------------------------------
 $pgv_lang["header_Name"]		= "Name";			// Name		 -	 Name or Married Name
 $pgv_lang["header_Rela"]		= "Relation";		// Relation	 -	 Relation to Head of Household = Wife, Son, Daughter etc
@@ -60,6 +61,7 @@ $pgv_lang["header_EmD"]			= "EmD";			// EmD		 -	 Employed? - Y/N
 $pgv_lang["header_EmN"]			= "EmN";			// EmN		 -	 Unemployed? - Y/N
 $pgv_lang["header_Bplace"]		= "Birthplace";		// Bplace	 -	 Birthplace (Full)
 $pgv_lang["header_Infirm"]		= "Infirm";			// Infirm	 -	 Infirmaties - 1,2,3,4 (similar to Health)
+
 // ---- View Header Tooltip Messages ---------------------------------------
 $pgv_lang["tt_view_Name"]		= "Full Name or Married name if married";
 $pgv_lang["tt_view_Rela"]		= "Relationship to Head of Household";
@@ -78,6 +80,7 @@ $pgv_lang["tt_view_EmD"]		= "Employed?";
 $pgv_lang["tt_view_EmN"]		= "Unemployed?";
 $pgv_lang["tt_view_Bplace"]		= "Birthplace (Full format)";
 $pgv_lang["tt_view_Infirm"]		= "Infirmaties - 1.Deaf&Dumb, 2.Blind, 3.Lunatic, 4.Imbecile/feeble-minded";
+
 // ---- Edit Header Tooltip Messages ---------------------------------------
 $pgv_lang["tt_edit_Name"]		= "Full Name or Married name if married";
 $pgv_lang["tt_edit_Rela"]		= "Relationship to Head of Household - Head, Wife, Son etc";
@@ -99,16 +102,19 @@ $pgv_lang["tt_edit_Infirm"]		= "Infirmaties - 1234 - 1.Deaf&Dumb, 2.Blind, 3.Lun
 
 
 // UK ONLY Census parameters ===============================================
+
 // ---- Header Titles ------------------------------------------------------
 $pgv_lang["header_ChilD"]		= "ChD";			// ChilD	 -	 Children who have died - nn
 $pgv_lang["header_EmH"]			= "WH";				// EmH		 -	 Working at Home? - Y/N
 $pgv_lang["header_BIC"]			= "BIC";			// BIC		 -	 Born in County - Y/N = (UK 1841 only)
 $pgv_lang["header_BOE"]			= "BOE";			// BOE		 -	 Born outside England - SCO,IRE,WAL,FOR = (UK 1841 only)
+
 // ---- View Header Tooltip Messages ---------------------------------------
 $pgv_lang["tt_view_ChilD"]		= "Children who have died";
 $pgv_lang["tt_view_EmH"]		= "Working at Home?";
 $pgv_lang["tt_view_BIC"]		= "Born in County";
 $pgv_lang["tt_view_BOE"]		= "Born outside England";
+
 // ---- Edit Header Tooltip Messages ---------------------------------------
 $pgv_lang["tt_edit_ChilD"]		= "Children who have died - nn";
 $pgv_lang["tt_edit_EmH"]		= "Working at Home? - Y/N";
@@ -117,6 +123,7 @@ $pgv_lang["tt_edit_BOE"]		= "Born outside England - SCO,IRE,WAL,FOReign - (UK 18
 
 
 // USA ONLY Census parameters ==============================================
+
 // ---- Header Titles ------------------------------------------------------
 $pgv_lang["header_Asset"]		= "Assets";			// Asset	 -	 Assets - O or R-value or rent-Y-N = Owned or Rented, Value or Rent, Radio, Farm
 $pgv_lang["header_Race"]		= "Race";			// Race		 -	 Race or Color - B.W,M,A,I,C = Black, White, Mulatto, Asian, Indian, Chinese etc
@@ -146,6 +153,7 @@ $pgv_lang["header_Home"]		= "Home";			// Home		 - 	 x-x-x-xxxx = O/R-F/M-F/H-###
 $pgv_lang["header_Situ"]		= "Situ";			// Situation -	 Disease, Infimaty, Convict, Pauper etc
 $pgv_lang["header_War"]			= "War";			// War		 -	 War or Expedition
 $pgv_lang["header_Infirm1910"]	= "Infirm";			// Infirm	 -	 Whether blind, Whether Deaf and Dumb - xx - Y/N, Y/N
+
 // ---- View Header Tooltip Messages ----------------------------------------
 $pgv_lang["tt_view_Asset"]		= "Assets = Owned,Rented - Value,Rent - Radio - Farm";
 $pgv_lang["tt_view_Race"]		= "Race or Color - Black, White, Mulatto, Asian, Indian, Chinese etc";
@@ -176,6 +184,7 @@ $pgv_lang["tt_view_Home"]		= "Home Ownership - Owned/Rented-Free/Mortgaged-Farm/
 $pgv_lang["tt_view_Situ"]		= "Situation - Disease, Infirmaty, Convict, Pauper etc";
 $pgv_lang["tt_view_War"]		= "War or Expedition";
 $pgv_lang["tt_view_Infirm1910"]	= "Infirmaties - Whether blind, Whether Deaf and Dumb";
+
 // ---- Edit Header Tooltip Messages ----------------------------------------
 $pgv_lang["tt_edit_Asset"]		= "Assets = O,R - value,rent - Y,N,R - Y,N,F  =  Owned,Rented - Value,Rent - Radio - Farm";
 $pgv_lang["tt_edit_Race"]		= "Race or Color - B.W,M,A,I,C - Black, White, Mulatto, Asian, Indian, Chinese etc";
@@ -218,5 +227,11 @@ $pgv_lang["tt_edit_Infirm1910"]	= "Infirmaties - xx = Whether blind (both eyes) 
 // ---- Header Titles -------------------------------------------------------
 // ---- View Header Tooltip Messages ----------------------------------------
 // ---- Edit Header Tooltip Messages ----------------------------------------
+
+// OTHER COUNTRY only Census parameters =====================================
+// ---- Header Titles -------------------------------------------------------
+// ---- View Header Tooltip Messages ----------------------------------------
+// ---- Edit Header Tooltip Messages ----------------------------------------
+
 
 ?>
