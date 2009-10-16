@@ -257,9 +257,6 @@ $start_time = microtime(true);
 //-- load db specific functions
 require 'includes/functions/functions_db.php';
 
-// -- load the authentication system, also logging
-require 'includes/authentication.php';
- 
 // Connect to the database
 require 'includes/classes/class_pgv_db.php';
 try {
@@ -277,6 +274,9 @@ try {
 	// Can't connect to the DB?  We'll get redirected to install.php later.....
 }
 
+// -- load the authentication system, also logging
+require 'includes/authentication.php';
+ 
 // Determine browser type
 $BROWSERTYPE = "other";
 if (!empty($_SERVER["HTTP_USER_AGENT"])) {
@@ -345,7 +345,7 @@ if (isset($MANUAL_SESSION_START) && !empty($SID)) {
 
 session_start();
 
-if (!isset($_SESSION['initiated'])) {
+if (!$SEARCH_SPIDER && !isset($_SESSION['initiated'])) {
 	// A new session, so prevent session fixation attacks by choosing a new PHPSESSID.
 	session_regenerate_id(true);
 	$_SESSION['initiated']=true;

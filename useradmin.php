@@ -626,8 +626,12 @@ if ($action == "listusers") {
 			echo "\t<td class=\"optionbox wrap\">";
 			echo "<a href=\"".encode_url("useradmin.php?action=edituser&username={$user_name}&sort={$sort}&filter={$filter}&usrlang={$usrlang}&ged={$ged}")."\">".$pgv_lang["edit"]."</a></td>\n";
 			echo "\t<td class=\"optionbox wrap\">";
-			if ($user_id!=PGV_USER_ID) echo "<a href=\"javascript:;\" onclick=\"return message('".$user_name."');\">".$pgv_lang["message"]."</a>";
-			echo "</td>\n";
+			if ($user_id!=PGV_USER_ID && get_user_setting($user_id, 'contactmethod')!='none') {
+				echo "<a href=\"javascript:;\" onclick=\"return message('".$user_name."');\">".$pgv_lang["message"]."</a>";
+			} else {
+				echo '&nbsp;';
+			}
+			echo '</td>';
 		}
 		if (get_user_setting($user_id, "comment_exp")) {
 			if ((strtotime(get_user_setting($user_id, "comment_exp")) != "-1") && (strtotime(get_user_setting($user_id, "comment_exp")) < time("U"))) echo "\t<td class=\"optionbox red\">".$user_name;

@@ -33,6 +33,11 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
+// Added in VERSION 4.2.2
+$pgv_lang["TYPE__notinDB"]			= "Ei tietokannassa<br /><br />TAI<br /><br />Kaksi kertaa<br />Gedcomissa";
+$pgv_lang["ROW_TYPE__notinDB"]		= $pgv_lang["TYPE__notinDB"];
+
+
 // Added in VERSION 4.1.6
 $pgv_lang["lb_toAdminConfigPage"]	= "Palaa ylläpitosivulle";
 $pgv_lang["lb_manage"]				= "Hallitse Lightbox asetuksia";

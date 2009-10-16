@@ -1184,14 +1184,25 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 	// rows & cols
 	switch ($fact) {
 	case 'FORM':
-		$rows=1;
-		$cols=5;
+		if ($upperlevel=='OBJE') {
+			// FILE:FORM
+			$rows=1;
+			$cols=5;
+		} else {
+			// FACT:PLAC:FORM
+			$rows=1;
+			$cols=40;
+		}
 		break;
 	case 'LATI': case 'LONG': case 'NPFX': case 'SPFX': case 'NSFX':
 		$rows=1;
 		$cols=12;
 		break;
-	case 'DATE': case 'TIME': case 'TYPE':
+	case 'DATE':
+		$rows=1;
+		$cols=30;
+		break;
+	case 'TIME': case 'TYPE':
 		$rows=1;
 		$cols=20;
 		break;
@@ -1256,14 +1267,14 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 	if (!in_array($fact, $emptyfacts)) {
 		if ($fact=="DATE") {
 			print_help_link("def_gedcom_date_help", "qm", "date");
-		} else if ($fact=="RESN") {
+		} elseif ($fact=="FORM" && $upperlevel!='OBJE') {
+			print_help_link("PLAC_FORM_help", "qm");
+		} elseif ($fact=="RESN") {
 			print_help_link($fact."_help", "qm");
-		} else {
-			if ($fact=="NOTE" && $islink){
+		} elseif ($fact=="NOTE" && $islink){
 				print_help_link("edit_add_SHARED_NOTE_help", "qm");
-			} else {
-				print_help_link("edit_".$fact."_help", "qm");
-			}
+		} else {
+			print_help_link("edit_".$fact."_help", "qm");
 		}
 	}
 	if ($fact=="_AKAN" || $fact=="_AKA" || $fact=="ALIA") {
@@ -1697,7 +1708,7 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 	if ($readOnly=="") {
 		if ($fact=="SPFX") print_autopaste_link($element_id, $SPFX_accept);
 		if ($fact=="NSFX") print_autopaste_link($element_id, $NSFX_accept);
-		if ($fact=="FORM") print_autopaste_link($element_id, $FILE_FORM_accept, false, false);
+		if ($fact=="FORM" && $upperlevel=='OBJE') print_autopaste_link($element_id, $FILE_FORM_accept, false, false);
 	}
 
 	if ($noClose != "NOCLOSE") echo "</td></tr>\n";

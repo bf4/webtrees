@@ -537,7 +537,7 @@ class GedcomRecord {
 
 	// Static helper function to sort an array of objects by ID
 	static function CompareId($x, $y) {
-		return strcmp($x->getXref(), $y->getXref());
+		return strnatcasecmp($x->getXref(), $y->getXref());
 	}
 
 	// Static helper function to sort an array of objects by Change Date

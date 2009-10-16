@@ -137,8 +137,8 @@ function print_user_messages($block=true, $config="", $side, $index) {
 			$content .= "<option value=\"never_logged\">".$pgv_lang["broadcast_never_logged_in"]."</option>";
 			$content .= "<option value=\"last_6mo\">".$pgv_lang["broadcast_not_logged_6mo"]."</option>";
 		}
-		foreach(get_all_users() as $user_id=>$user_name) {
-			if ($user_id!=PGV_USER_ID && get_user_setting($user_id, 'verified_by_admin')=='yes') {
+		foreach (get_all_users() as $user_id=>$user_name) {
+			if ($user_id!=PGV_USER_ID && get_user_setting($user_id, 'verified_by_admin')=='yes' && get_user_setting($user_id, 'contactmethod')!='none') {
 				$content .= "<option value=\"".$user_id."\">".PrintReady(getUserFullName($user_id))." ";
 				if ($TEXT_DIRECTION=="ltr") {
 					$content .= stripLRMRLM(getLRM()." - ".$user_id.getLRM());

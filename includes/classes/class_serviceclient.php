@@ -108,6 +108,7 @@ class ServiceClient extends GedcomRecord {
 		if (!empty($this->SID)) return $this->SID;
 		if (is_null($this->soapClient)) {
 			if (!class_exists('SoapClient') || $this->client_type=='PEAR:SOAP') {
+
 				include_once('SOAP/Client.php');
 				//AddToLog('Using PEAR:SOAP library');
 				// get the wsdl and cache it
@@ -721,9 +722,8 @@ class ServiceClient extends GedcomRecord {
 	* @param boolean $firstLink is this the first time this record is being linked
 	*/
 	function mergeGedcomRecord($xref, $localrec, $isStub=false, $firstLink=false) {
-		global $FILE, $GEDCOM;
-		global $TBLPREFIX, $pgv_changes;
-		$FILE = $GEDCOM;
+		global $GEDCOM, $TBLPREFIX, $pgv_changes;
+
 		if (!$isStub) {
 			$gedrec = find_gedcom_record($this->xref.":".$xref);
 			if (!empty($gedrec)) $localrec = $gedrec;
