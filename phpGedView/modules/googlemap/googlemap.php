@@ -607,71 +607,73 @@ function build_indiv_map($indifacts, $famids) {
 				if ($famrec) {
 					$num = preg_match_all("/1\s*CHIL\s*@(.*)@/", $famrec, $smatch, PREG_SET_ORDER);
 					for($j=0; $j<$num; $j++) {
-						$srec = find_person_record($smatch[$j][1]);
-						if (empty($srec)) $srec = find_updated_record($smatch[$j][1]);
-						$birthrec = get_sub_record(1, "1 BIRT", $srec);
-						$placerec = get_sub_record(2, "2 PLAC", $birthrec);
-						if (!empty($placerec)) {
-							$ctd = preg_match("/\d DATE (.*)/", $birthrec, $matchd);
-							$ctla = preg_match("/\d LATI (.*)/", $placerec, $match1);
-							$ctlo = preg_match("/\d LONG (.*)/", $placerec, $match2);
-							if (($ctla>0) && ($ctlo>0)) {
-								if (displayDetailsById($smatch[$j][1])) {
-									$i = $i + 1;
-									$markers[$i]=array('index'=>'', 'tabindex'=>'', 'placed'=>'no');
-									if (strpos($srec, "1 SEX F")!==false) {
-										$markers[$i]["fact"] = $pgv_lang["daughter"];
-										$markers[$i]["class"]  = "person_boxF";
-									} else
-										if (strpos($srec, "1 SEX M")!==false) {
-											$markers[$i]["fact"] = $pgv_lang["son"];
-											$markers[$i]["class"]  = "person_box";
-										} else {
-											$markers[$i]["fact"]     = $factarray["CHIL"];
-											$markers[$i]["class"]    = "person_boxNN";
-										}
-									$markers[$i]["placerec"] = $placerec;
-									$match1[1] = trim($match1[1]);
-									$match2[1] = trim($match2[1]);
-									$markers[$i]["lati"] = str_replace(array('N', 'S', ','), array('', '-', '.'), $match1[1]);
-									$markers[$i]["lng"]  = str_replace(array('E', 'W', ','), array('', '-', '.'), $match2[1]);
-									if ($ctd > 0)
-										$markers[$i]["date"] = $matchd[1];
-									$markers[$i]["name"] = $smatch[$j][1];
-								}
-							} else {
-								if ($placelocation == true) {
-									$ctpl = preg_match("/\d PLAC (.*)/", $placerec, $match1);
-									$latlongval = get_lati_long_placelocation($match1[1]);
-									if ((count($latlongval) == 0) && (!empty($GM_DEFAULT_TOP_VALUE))) {
-										$latlongval = get_lati_long_placelocation($match1[1].", ".$GM_DEFAULT_TOP_VALUE);
-										if ((count($latlongval) != 0) && ($latlongval["level"] == 0)) {
-											$latlongval["lati"] = NULL;
-											$latlongval["long"] = NULL;
-										}
-									}
-									if ((count($latlongval) != 0) && ($latlongval["lati"] != NULL) && ($latlongval["long"] != NULL)) {
-										if (displayDetailsById($smatch[$j][1])) {
-											$i = $i + 1;
-											$markers[$i]=array('index'=>'', 'tabindex'=>'', 'placed'=>'no');
-											$markers[$i]["fact"]     = $factarray["CHIL"];
-											$markers[$i]["class"]    = "option_boxNN";
-											if (preg_match("/1 SEX F/", $srec)>0) {
-												$markers[$i]["fact"] = $pgv_lang["daughter"];
-												$markers[$i]["class"]  = "person_boxF";
-											}
-											if (preg_match("/1 SEX M/", $srec)>0) {
+						$person=Person::getInstance($smatch[$j][1]);
+						if ($person->canDisplayDetails()) {
+							$srec = find_person_record($smatch[$j][1]);
+							$birthrec = '';
+							$placerec = '';
+							foreach ($person->getAllFactsByType('BIRT') as $sEvent) {
+								$birthrec = $sEvent->getGedcomRecord();
+								$placerec = get_sub_record(2, "2 PLAC", $birthrec);
+								if (!empty($placerec)) {
+									$ctd = preg_match("/\d DATE (.*)/", $birthrec, $matchd);
+									$ctla = preg_match("/\d LATI (.*)/", $placerec, $match1);
+									$ctlo = preg_match("/\d LONG (.*)/", $placerec, $match2);
+									if (($ctla>0) && ($ctlo>0)) {
+										$i = $i + 1;
+										$markers[$i]=array('index'=>'', 'tabindex'=>'', 'placed'=>'no');
+										if (strpos($srec, "1 SEX F")!==false) {
+											$markers[$i]["fact"] = $pgv_lang["daughter"];
+											$markers[$i]["class"]  = "person_boxF";
+										} else
+											if (strpos($srec, "1 SEX M")!==false) {
 												$markers[$i]["fact"] = $pgv_lang["son"];
 												$markers[$i]["class"]  = "person_box";
+											} else {
+												$markers[$i]["fact"]     = $factarray["CHIL"];
+												$markers[$i]["class"]    = "person_boxNN";
 											}
-											$markers[$i]["icon"] = $latlongval["icon"];
-											$markers[$i]["placerec"] = $placerec;
-											if ($zoomLevel > $latlongval["zoom"]) $zoomLevel = $latlongval["zoom"];
-											$markers[$i]["lati"]     = str_replace(array('N', 'S', ','), array('', '-', '.'), $latlongval["lati"]);
-											$markers[$i]["lng"]      = str_replace(array('E', 'W', ','), array('', '-', '.'), $latlongval["long"]);
-											if ($ctd > 0)
-												$markers[$i]["date"] = $matchd[1];
-											$markers[$i]["name"]   = $smatch[$j][1];
+										$markers[$i]["placerec"] = $placerec;
+										$match1[1] = trim($match1[1]);
+										$match2[1] = trim($match2[1]);
+										$markers[$i]["lati"] = str_replace(array('N', 'S', ','), array('', '-', '.'), $match1[1]);
+										$markers[$i]["lng"]  = str_replace(array('E', 'W', ','), array('', '-', '.'), $match2[1]);
+										if ($ctd > 0)
+											$markers[$i]["date"] = $matchd[1];
+										$markers[$i]["name"] = $smatch[$j][1];
+									} else {
+										if ($placelocation == true) {
+											$ctpl = preg_match("/\d PLAC (.*)/", $placerec, $match1);
+											$latlongval = get_lati_long_placelocation($match1[1]);
+											if ((count($latlongval) == 0) && (!empty($GM_DEFAULT_TOP_VALUE))) {
+												$latlongval = get_lati_long_placelocation($match1[1].", ".$GM_DEFAULT_TOP_VALUE);
+												if ((count($latlongval) != 0) && ($latlongval["level"] == 0)) {
+													$latlongval["lati"] = NULL;
+													$latlongval["long"] = NULL;
+												}
+											}
+											if ((count($latlongval) != 0) && ($latlongval["lati"] != NULL) && ($latlongval["long"] != NULL)) {
+												$i = $i + 1;
+												$markers[$i]=array('index'=>'', 'tabindex'=>'', 'placed'=>'no');
+												$markers[$i]["fact"]     = $factarray["CHIL"];
+												$markers[$i]["class"]    = "option_boxNN";
+												if (preg_match("/1 SEX F/", $srec)>0) {
+													$markers[$i]["fact"] = $pgv_lang["daughter"];
+													$markers[$i]["class"]  = "person_boxF";
+												}
+												if (preg_match("/1 SEX M/", $srec)>0) {
+													$markers[$i]["fact"] = $pgv_lang["son"];
+													$markers[$i]["class"]  = "person_box";
+												}
+												$markers[$i]["icon"] = $latlongval["icon"];
+												$markers[$i]["placerec"] = $placerec;
+												if ($zoomLevel > $latlongval["zoom"]) $zoomLevel = $latlongval["zoom"];
+												$markers[$i]["lati"]     = str_replace(array('N', 'S', ','), array('', '-', '.'), $latlongval["lati"]);
+												$markers[$i]["lng"]      = str_replace(array('E', 'W', ','), array('', '-', '.'), $latlongval["long"]);
+												if ($ctd > 0)
+													$markers[$i]["date"] = $matchd[1];
+												$markers[$i]["name"]   = $smatch[$j][1];
+											}
 										}
 									}
 								}
