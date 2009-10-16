@@ -10,6 +10,8 @@
 
 
 Version 4.2.3
+ - Update: Prototype 1.6.1 and Script.aculo.us 1.8.3 (volschin)
+ - Update: Module for PunBB 1.2.22 (volschin)
  - Fixed: [ 2865480 ] 4.2.2 Googlemaps, Place Hierarchy not display in Chrome (wooc)
  - Fixed: [ 2871549 ] Re-named PGV folder requires manual edit of config.php (canajun2eh)
  - Fixed: [ 2869455 ] Unable to delete a research assistant folder (patch by mmoreno)
