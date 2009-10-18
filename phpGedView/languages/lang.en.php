@@ -1486,6 +1486,8 @@ $pgv_lang["son_of"]					= "son of";
 $pgv_lang["daughter_of"]			= "daughter of";
 $pgv_lang["child_of"]				= "Child of ";
 $pgv_lang["children_of"]			= "Children of ";
+$pgv_lang["descendancy_pronoun_m"]	= "He ";
+$pgv_lang["descendancy_pronoun_f"]	= "She ";
 
 $pgv_lang["family_group_report"]	= "Family Group Report";
 $pgv_lang["page"]					= "Page";

@@ -1,4 +1,5 @@
 <PGVReport access="PRIV_USER" icon="indis">
+<!-- $Id$ -->
 	<PGVRTitle><PGVRvar var="pgv_lang[individual_with_rela_report]" /></PGVRTitle>
 	<PGVRDescription>Prints an individual record report</PGVRDescription>
 	<PGVRInput name="pid" type="text" default="" lookup="INDI"><PGVRvar var="pgv_lang[enter_pid]"/></PGVRInput>
@@ -202,7 +203,7 @@
 										</PGVRFootnote>
 									</PGVRRepeatTag>
 								</PGVRif>
-								<PGVRText style="text"> ( <PGVRvar var="factarray[BIRT]"/>: <PGVRGedcomValue tag="BIRT:DATE"/> <PGVRGedcomValue tag="BIRT:PLAC"/> - <PGVRvar var="factarray[DEAT]"/>: <PGVRGedcomValue tag="DEAT:DATE"/> <PGVRGedcomValue tag="DEAT:PLAC"/> )</PGVRText>
+								<PGVRText style="text"> ( <PGVRvar var="factarray[BIRT]"/>: <PGVRGedcomValue tag="BIRT:DATE"/> <PGVRGedcomValue tag="BIRT:PLAC"/><PGVRGedcom id="DEAT"> - <PGVRvar var="factarray[DEAT]"/>: <PGVRGedcomValue tag="DEAT:DATE"/> <PGVRGedcomValue tag="DEAT:PLAC"/></PGVRGedcom> )</PGVRText>
 							</PGVRTextBox>
 						</PGVRGedcom>
 						<!-- mother -->
@@ -221,7 +222,7 @@
 										</PGVRFootnote>
 									</PGVRRepeatTag>
 								</PGVRif>
-								<PGVRText style="text"> ( <PGVRvar var="factarray[BIRT]"/>: <PGVRGedcomValue tag="BIRT:DATE"/> <PGVRGedcomValue tag="BIRT:PLAC"/> - <PGVRvar var="factarray[DEAT]"/>: <PGVRGedcomValue tag="DEAT:DATE"/> <PGVRGedcomValue tag="DEAT:PLAC"/> )</PGVRText>
+								<PGVRText style="text"> ( <PGVRvar var="factarray[BIRT]"/>: <PGVRGedcomValue tag="BIRT:DATE"/> <PGVRGedcomValue tag="BIRT:PLAC"/><PGVRGedcom id="DEAT"> - <PGVRvar var="factarray[DEAT]"/>: <PGVRGedcomValue tag="DEAT:DATE"/> <PGVRGedcomValue tag="DEAT:PLAC"/></PGVRGedcom> )</PGVRText>
 							</PGVRTextBox>
 						</PGVRGedcom>
 						<!-- siblings -->
@@ -244,7 +245,7 @@
 												</PGVRFootnote>
 											</PGVRRepeatTag>
 										</PGVRif>
-										<PGVRText style="text"> ( <PGVRvar var="factarray[BIRT]"/>: <PGVRGedcomValue tag="BIRT:DATE"/> <PGVRGedcomValue tag="BIRT:PLAC"/> - <PGVRvar var="factarray[DEAT]"/>: <PGVRGedcomValue tag="DEAT:DATE"/> <PGVRGedcomValue tag="DEAT:PLAC"/> )</PGVRText>
+										<PGVRText style="text"> ( <PGVRvar var="factarray[BIRT]"/>: <PGVRGedcomValue tag="BIRT:DATE"/> <PGVRGedcomValue tag="BIRT:PLAC"/><PGVRGedcom id="DEAT"> - <PGVRvar var="factarray[DEAT]"/>: <PGVRGedcomValue tag="DEAT:DATE"/> <PGVRGedcomValue tag="DEAT:PLAC"/></PGVRGedcom> )</PGVRText>
 									</PGVRTextBox>
 								</PGVRif>
 								<!-- Sister -->
@@ -263,7 +264,7 @@
 												</PGVRFootnote>
 											</PGVRRepeatTag>
 										</PGVRif>
-										<PGVRText style="text"> ( <PGVRvar var="factarray[BIRT]"/>: <PGVRGedcomValue tag="BIRT:DATE"/> <PGVRGedcomValue tag="BIRT:PLAC"/> - <PGVRvar var="factarray[DEAT]"/>: <PGVRGedcomValue tag="DEAT:DATE"/> <PGVRGedcomValue tag="DEAT:PLAC"/> )</PGVRText>
+										<PGVRText style="text"> ( <PGVRvar var="factarray[BIRT]"/>: <PGVRGedcomValue tag="BIRT:DATE"/> <PGVRGedcomValue tag="BIRT:PLAC"/><PGVRGedcom id="DEAT"> - <PGVRvar var="factarray[DEAT]"/>: <PGVRGedcomValue tag="DEAT:DATE"/> <PGVRGedcomValue tag="DEAT:PLAC"/></PGVRGedcom> )</PGVRText>
 									</PGVRTextBox>
 								</PGVRif>
 								<!-- Unknown gender for Sibling -->
@@ -282,7 +283,7 @@
 												</PGVRFootnote>
 											</PGVRRepeatTag>
 										</PGVRif>
-										<PGVRText style="text"> ( <PGVRvar var="factarray[BIRT]"/>: <PGVRGedcomValue tag="BIRT:DATE"/> <PGVRGedcomValue tag="BIRT:PLAC"/> - <PGVRvar var="factarray[DEAT]"/>: <PGVRGedcomValue tag="DEAT:DATE"/> <PGVRGedcomValue tag="DEAT:PLAC"/> )</PGVRText>
+										<PGVRText style="text"> ( <PGVRvar var="factarray[BIRT]"/>: <PGVRGedcomValue tag="BIRT:DATE"/> <PGVRGedcomValue tag="BIRT:PLAC"/><PGVRGedcom id="DEAT"> - <PGVRvar var="factarray[DEAT]"/>: <PGVRGedcomValue tag="DEAT:DATE"/> <PGVRGedcomValue tag="DEAT:PLAC"/></PGVRGedcom> )</PGVRText>
 									</PGVRTextBox>
 								</PGVRif>
 							</PGVRGedcom>
@@ -323,7 +324,7 @@
 											</PGVRFootnote>
 										</PGVRRepeatTag>
 									</PGVRif>
-									<PGVRText style="text"> ( <PGVRvar var="factarray[BIRT]"/>: <PGVRGedcomValue tag="BIRT:DATE"/> <PGVRGedcomValue tag="BIRT:PLAC"/> - <PGVRvar var="factarray[DEAT]"/>: <PGVRGedcomValue tag="DEAT:DATE"/> <PGVRGedcomValue tag="DEAT:PLAC"/> )</PGVRText>
+									<PGVRText style="text"> ( <PGVRvar var="factarray[BIRT]"/>: <PGVRGedcomValue tag="BIRT:DATE"/> <PGVRGedcomValue tag="BIRT:PLAC"/><PGVRGedcom id="DEAT"> - <PGVRvar var="factarray[DEAT]"/>: <PGVRGedcomValue tag="DEAT:DATE"/> <PGVRGedcomValue tag="DEAT:PLAC"/></PGVRGedcom> )</PGVRText>
 								</PGVRTextBox>
 							</PGVRif>
 							<!-- wife -->
@@ -342,7 +343,7 @@
 											</PGVRFootnote>
 										</PGVRRepeatTag>
 									</PGVRif>
-									<PGVRText style="text"> ( <PGVRvar var="factarray[BIRT]"/>: <PGVRGedcomValue tag="BIRT:DATE"/> <PGVRGedcomValue tag="BIRT:PLAC"/> - <PGVRvar var="factarray[DEAT]"/>: <PGVRGedcomValue tag="DEAT:DATE"/> <PGVRGedcomValue tag="DEAT:PLAC"/> )</PGVRText>
+									<PGVRText style="text"> ( <PGVRvar var="factarray[BIRT]"/>: <PGVRGedcomValue tag="BIRT:DATE"/> <PGVRGedcomValue tag="BIRT:PLAC"/><PGVRGedcom id="DEAT"> - <PGVRvar var="factarray[DEAT]"/>: <PGVRGedcomValue tag="DEAT:DATE"/> <PGVRGedcomValue tag="DEAT:PLAC"/></PGVRGedcom> )</PGVRText>
 								</PGVRTextBox>
 							</PGVRif>
 						</PGVRGedcom>
@@ -366,7 +367,7 @@
 												</PGVRFootnote>
 											</PGVRRepeatTag>
 										</PGVRif>
-										<PGVRText style="text"> ( <PGVRvar var="factarray[BIRT]"/>: <PGVRGedcomValue tag="BIRT:DATE"/> <PGVRGedcomValue tag="BIRT:PLAC"/> - <PGVRvar var="factarray[DEAT]"/>: <PGVRGedcomValue tag="DEAT:DATE"/> <PGVRGedcomValue tag="DEAT:PLAC"/> )</PGVRText>
+										<PGVRText style="text"> ( <PGVRvar var="factarray[BIRT]"/>: <PGVRGedcomValue tag="BIRT:DATE"/> <PGVRGedcomValue tag="BIRT:PLAC"/><PGVRGedcom id="DEAT"> - <PGVRvar var="factarray[DEAT]"/>: <PGVRGedcomValue tag="DEAT:DATE"/> <PGVRGedcomValue tag="DEAT:PLAC"/></PGVRGedcom> )</PGVRText>
 									</PGVRTextBox>
 								</PGVRif>
 								<!-- Daughter -->
@@ -385,7 +386,7 @@
 												</PGVRFootnote>
 											</PGVRRepeatTag>
 										</PGVRif>
-										<PGVRText style="text"> ( <PGVRvar var="factarray[BIRT]"/>: <PGVRGedcomValue tag="BIRT:DATE"/> <PGVRGedcomValue tag="BIRT:PLAC"/> - <PGVRvar var="factarray[DEAT]"/>: <PGVRGedcomValue tag="DEAT:DATE"/> <PGVRGedcomValue tag="DEAT:PLAC"/> )</PGVRText>
+										<PGVRText style="text"> ( <PGVRvar var="factarray[BIRT]"/>: <PGVRGedcomValue tag="BIRT:DATE"/> <PGVRGedcomValue tag="BIRT:PLAC"/><PGVRGedcom id="DEAT"> - <PGVRvar var="factarray[DEAT]"/>: <PGVRGedcomValue tag="DEAT:DATE"/> <PGVRGedcomValue tag="DEAT:PLAC"/></PGVRGedcom> )</PGVRText>
 									</PGVRTextBox>
 								</PGVRif>
 								<!-- Unknown gender for Child -->
@@ -404,7 +405,7 @@
 												</PGVRFootnote>
 											</PGVRRepeatTag>
 										</PGVRif>
-										<PGVRText style="text"> ( <PGVRvar var="factarray[BIRT]"/>: <PGVRGedcomValue tag="BIRT:DATE"/> <PGVRGedcomValue tag="BIRT:PLAC"/> - <PGVRvar var="factarray[DEAT]"/>: <PGVRGedcomValue tag="DEAT:DATE"/> <PGVRGedcomValue tag="DEAT:PLAC"/> )</PGVRText>
+										<PGVRText style="text"> ( <PGVRvar var="factarray[BIRT]"/>: <PGVRGedcomValue tag="BIRT:DATE"/> <PGVRGedcomValue tag="BIRT:PLAC"/><PGVRGedcom id="DEAT"> - <PGVRvar var="factarray[DEAT]"/>: <PGVRGedcomValue tag="DEAT:DATE"/> <PGVRGedcomValue tag="DEAT:PLAC"/></PGVRGedcom> )</PGVRText>
 									</PGVRTextBox>
 								</PGVRif>
 							</PGVRGedcom>
