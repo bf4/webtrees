@@ -570,10 +570,8 @@ function reformat_record_import($rec) {
 * @param boolean $update whether or not this is an updated record that has been accepted
 */
 function import_record($gedrec, $update) {
-	global $xtype, $TBLPREFIX, $FILE, $pgv_lang, $USE_RIN;
+	global $xtype, $TBLPREFIX, $pgv_lang, $USE_RIN;
 	global $GEDCOMS, $MAX_IDS, $fpnewged, $GEDCOM, $GENERATE_UIDS;
-
-	$FILE=$GEDCOM;
 
 	static $sql_insert_indi=null;
 	static $sql_insert_fam=null;
@@ -956,7 +954,7 @@ function update_names($xref, $ged_id, $record) {
 * @param int $count The count of OBJE records in the parent record
 */
 function insert_media($objrec, $objlevel, $update, $gid, $count) {
-	global $TBLPREFIX, $media_count, $GEDCOMS, $FILE, $found_ids, $fpnewged;
+	global $TBLPREFIX, $media_count, $GEDCOMS, $GEDCOM, $found_ids, $fpnewged;
 
 	static $sql_insert_media=null;
 	static $sql_insert_media_mapping=null;
@@ -997,7 +995,7 @@ function insert_media($objrec, $objlevel, $update, $gid, $count) {
 		$new_media = Media::in_obje_list($media);
 		if (!$new_media) {
 			//-- add it to the media database table
-			$sql_insert_media->execute(array(get_next_id('media', 'm_id'), $m_media, $media->ext, $media->title, $media->file, $GEDCOMS[$FILE]["id"], $objrec));
+			$sql_insert_media->execute(array(get_next_id('media', 'm_id'), $m_media, $media->ext, $media->title, $media->file, $GEDCOMS[$GEDCOM]["id"], $objrec));
 			$media_count++;
 			//-- if this is not an update then write it to the new gedcom file
 			if (!$update && !empty ($fpnewged)) {
@@ -1011,7 +1009,7 @@ function insert_media($objrec, $objlevel, $update, $gid, $count) {
 	}
 	if (isset($m_media)) {
 		//-- add the entry to the media_mapping table
-		$sql_insert_media_mapping->execute(array(get_next_id('media_mapping', 'mm_id'), $m_media, $gid, $count, $GEDCOMS[$FILE]['id'], $objref));
+		$sql_insert_media_mapping->execute(array(get_next_id('media_mapping', 'mm_id'), $m_media, $gid, $count, $GEDCOMS[$GEDCOM]['id'], $objref));
 		return $objref;
 	} else {
 		print "Media reference error ".$objrec;
@@ -1024,7 +1022,7 @@ function insert_media($objrec, $objlevel, $update, $gid, $count) {
 * @return string an updated record
 */
 function update_media($gid, $gedrec, $update = false) {
-	global $GEDCOMS, $FILE, $TBLPREFIX, $media_count, $found_ids;
+	global $GEDCOMS, $GEDCOM, $TBLPREFIX, $media_count, $found_ids;
 	global $zero_level_media, $fpnewged, $MAX_IDS, $keepmedia;
 
 	static $sql_insert_media=null;
@@ -1049,7 +1047,7 @@ function update_media($gid, $gedrec, $update = false) {
 		} else {
 			$MAX_IDS["OBJE"]=
 				PGV_DB::prepare("SELECT ni_id FROM {$TBLPREFIX}nextid WHERE ni_type=? AND ni_gedfile=?")
-				->execute(array('OBJE', $GEDCOMS[$FILE]['id']))
+				->execute(array('OBJE', $GEDCOMS[$GEDCOM]['id']))
 				->fetchOne();
 		}
 	}
@@ -1084,7 +1082,7 @@ function update_media($gid, $gedrec, $update = false) {
 		//--check if we already have a similar object
 		$new_media = Media::in_obje_list($media);
 		if (!$new_media) {
-			$sql_insert_media->execute(array($m_id, $new_m_media, $media->ext, $media->title, $media->file, $GEDCOMS[$FILE]["id"], $gedrec));
+			$sql_insert_media->execute(array($m_id, $new_m_media, $media->ext, $media->title, $media->file, $GEDCOMS[$GEDCOM]["id"], $gedrec));
 			$media_count++;
 		} else {
 			$new_m_media = $new_media;
@@ -1100,7 +1098,7 @@ function update_media($gid, $gedrec, $update = false) {
 	if ($keepmedia) {
 		$old_linked_media=
 			PGV_DB::prepare("SELECT mm_media, mm_gedrec FROM {$TBLPREFIX}media_mapping WHERE mm_gid=? AND mm_gedfile=?")
-			->execute(array($gid, $GEDCOMS[$FILE]['id']))
+			->execute(array($gid, $GEDCOMS[$GEDCOM]['id']))
 			->fetchAll(PDO::FETCH_NUM);
 	}
 
@@ -1187,7 +1185,7 @@ function update_media($gid, $gedrec, $update = false) {
 * delete a gedcom from the database
 *
 * deletes all of the imported data about a gedcom from the database
-* @param string $FILE the gedcom to remove from the database
+* @param string $ged_id the gedcom to remove from the database
 * @param boolean $keepmedia Whether or not to keep media and media links in the tables
 */
 function empty_database($ged_id, $keepmedia) {
@@ -1311,7 +1309,7 @@ function write_file() {
 * @param string $cid The change id of the record to accept
 */
 function accept_changes($cid) {
-	global $pgv_changes, $GEDCOM, $TBLPREFIX, $FILE, $GEDCOMS;
+	global $pgv_changes, $GEDCOM, $TBLPREFIX, $GEDCOM, $GEDCOMS;
 	global $INDEX_DIRECTORY, $SYNC_GEDCOM_FILE, $fcontents, $manual_save;
 
 	if (isset ($pgv_changes[$cid])) {
@@ -1320,7 +1318,6 @@ function accept_changes($cid) {
 		if ($GEDCOM != $change["gedcom"]) {
 			$GEDCOM = $change["gedcom"];
 		}
-		$FILE = $GEDCOM;
 		$gid = $change["gid"];
 		$gedrec = $change["undo"];
 		if (empty($gedrec)) {
@@ -1443,11 +1440,7 @@ function find_newline_string($haystack, $needle, $offset=0) {
 * @param string $gedrec
 */
 function update_record($gedrec, $delete = false) {
-	global $TBLPREFIX, $GEDCOM, $FILE;
-
-	if (empty ($FILE)) {
-		$FILE = $GEDCOM;
-	}
+	global $TBLPREFIX, $GEDCOM;
 
 	if (preg_match('/^0 @('.PGV_REGEX_XREF.')@ ('.PGV_REGEX_TAG.')/', $gedrec, $match)) {
 		list(,$gid, $type)=$match;
@@ -1456,7 +1449,7 @@ function update_record($gedrec, $delete = false) {
 		return false;
 	}
 
-	$ged_id=get_id_from_gedcom($FILE);
+	$ged_id=get_id_from_gedcom($GEDCOM);
 
 	// TODO deleting unlinked places can be done more efficiently in a single query
 	$placeids=

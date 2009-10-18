@@ -3175,13 +3175,9 @@ function CheckPageViews() {
  */
 function get_new_xref($type='INDI', $use_cache=false) {
 	global $fcontents, $SOURCE_ID_PREFIX, $REPO_ID_PREFIX, $pgv_changes, $GEDCOM, $TBLPREFIX, $GEDCOMS;
-	global $MEDIA_ID_PREFIX, $FAM_ID_PREFIX, $GEDCOM_ID_PREFIX, $FILE, $MAX_IDS;
+	global $MEDIA_ID_PREFIX, $FAM_ID_PREFIX, $GEDCOM_ID_PREFIX, $MAX_IDS;
 
-	//-- during online updates $FILE comes through as an array for some odd reason
-	if (!empty($FILE) && !is_array($FILE)) {
-		$gedid = $GEDCOMS[$FILE]["id"];
-	} else
-		$gedid = $GEDCOMS[$GEDCOM]["id"];
+	$gedid = $GEDCOMS[$GEDCOM]["id"];
 
 	$num = null;
 	//-- check if an id is stored in MAX_IDS used mainly during the import
