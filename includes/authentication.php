@@ -249,16 +249,6 @@ function adminUserExists() {
 	return admin_user_exists();
 }
 
-/**
- * check if the user database tables exist
- *
- * This is called after PGV creates/updates the user/message settings.
- * This allows a custom authentication module to alter/replace them,
- * create views, etc.
- */
-function checkTableExists() {
-}
-
 // Get the full name for a user
 function getUserFullName($user) {
 	global $NAME_REVERSE;
