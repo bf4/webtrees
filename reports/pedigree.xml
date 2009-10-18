@@ -2,7 +2,7 @@
 <!-- $Id$ -->
 	<PGVRDescription>Prints a pedigree chart in portrait mode</PGVRDescription>
 	<PGVRTitle><PGVRvar var="pgv_lang[pedigree_chart]" /> - <PGVRvar var="pgv_lang[portrait]" /></PGVRTitle>
-	<PGVRInput name="pid" lookup="INDI" type="text" default=""><PGVRvar var="pgv_lang[enter_pid]" />:</PGVRInput>
+	<PGVRInput name="pid" lookup="INDI" type="text" default=""><PGVRvar var="pgv_lang[enter_pid]" /></PGVRInput>
 	<PGVRInput name="pageSize" type="select" default="A4" options="letter,A3,A4,legal"><PGVRvar var="pgv_lang[page_size]" /></PGVRInput>
 	<PGVRInput name="fonts" type="select" default="dejavusans" options="arialunicid0,dejavusans,helvetica"><PGVRvar var="pgv_lang[font]"/></PGVRInput>
 	<PGVRStyle name="header" font="$fonts" size="18" />
@@ -43,8 +43,10 @@
 						<br /><PGVRvarLetter var="factarray[MARR]" />: <PGVRGedcomValue tag="MARR:DATE" truncate="28" />
 						<br /><PGVRvarLetter var="factarray[PLAC]" />: <PGVRGedcomValue tag="MARR:PLAC" truncate="28" />
 					</PGVRGedcom>
-					<br /><PGVRvarLetter var="factarray[DEAT]" />: <PGVRGedcomValue tag="DEAT:DATE" truncate="28" />
-					<br /><PGVRvarLetter var="factarray[PLAC]" />: <PGVRGedcomValue tag="DEAT:PLAC" truncate="28" />
+					<PGVRGedcom id="DEAT">
+							<br /><PGVRvarLetter var="factarray[DEAT]" />: <PGVRGedcomValue tag="DEAT:DATE" truncate="28" />
+							<br /><PGVRvarLetter var="factarray[PLAC]" />: <PGVRGedcomValue tag="DEAT:PLAC" truncate="28" />
+						</PGVRGedcom>
 				</PGVRText>
 			</PGVRTextBox>
 
@@ -60,8 +62,10 @@
 							<br /><PGVRvarLetter var="factarray[MARR]" />: <PGVRGedcomValue tag="MARR:DATE" truncate="28" />
 							<br /><PGVRvarLetter var="factarray[PLAC]" />: <PGVRGedcomValue tag="MARR:PLAC" truncate="28" />
 						</PGVRGedcom>
-						<br /><PGVRvarLetter var="factarray[DEAT]" />: <PGVRGedcomValue tag="DEAT:DATE" truncate="28" />
-						<br /><PGVRvarLetter var="factarray[PLAC]" />: <PGVRGedcomValue tag="DEAT:PLAC" truncate="28" />
+						<PGVRGedcom id="DEAT">
+							<br /><PGVRvarLetter var="factarray[DEAT]" />: <PGVRGedcomValue tag="DEAT:DATE" truncate="28" />
+							<br /><PGVRvarLetter var="factarray[PLAC]" />: <PGVRGedcomValue tag="DEAT:PLAC" truncate="28" />
+						</PGVRGedcom>
 					</PGVRText>
 				</PGVRGedcom>
 			</PGVRTextBox>
@@ -74,8 +78,10 @@
 				<PGVRGedcom id="@FAMC:@WIFE">
 					<PGVRText style="text"><PGVRvarLetter var="factarray[BIRT]" />: <PGVRGedcomValue tag="BIRT:DATE" truncate="28" />
 						<br /><PGVRvarLetter var="factarray[PLAC]" />: <PGVRGedcomValue tag="BIRT:PLAC" truncate="28" />
-						<br /><PGVRvarLetter var="factarray[DEAT]" />: <PGVRGedcomValue tag="DEAT:DATE" truncate="28" />
-						<br /><PGVRvarLetter var="factarray[PLAC]" />: <PGVRGedcomValue tag="DEAT:PLAC" truncate="28" />
+						<PGVRGedcom id="DEAT">
+							<br /><PGVRvarLetter var="factarray[DEAT]" />: <PGVRGedcomValue tag="DEAT:DATE" truncate="28" />
+							<br /><PGVRvarLetter var="factarray[PLAC]" />: <PGVRGedcomValue tag="DEAT:PLAC" truncate="28" />
+						</PGVRGedcom>
 					</PGVRText>
 				</PGVRGedcom>
 			</PGVRTextBox>
@@ -92,8 +98,10 @@
 							<br /><PGVRvarLetter var="factarray[MARR]" />: <PGVRGedcomValue tag="MARR:DATE" truncate="28" />
 							<br /><PGVRvarLetter var="factarray[PLAC]" />: <PGVRGedcomValue tag="MARR:PLAC" truncate="28" />
 						</PGVRGedcom>
-						<br /><PGVRvarLetter var="factarray[DEAT]" />: <PGVRGedcomValue tag="DEAT:DATE" truncate="28" />
-						<br /><PGVRvarLetter var="factarray[PLAC]" />: <PGVRGedcomValue tag="DEAT:PLAC" truncate="28" />
+						<PGVRGedcom id="DEAT">
+							<br /><PGVRvarLetter var="factarray[DEAT]" />: <PGVRGedcomValue tag="DEAT:DATE" truncate="28" />
+							<br /><PGVRvarLetter var="factarray[PLAC]" />: <PGVRGedcomValue tag="DEAT:PLAC" truncate="28" />
+						</PGVRGedcom>
 					</PGVRText>
 				</PGVRGedcom>
 			</PGVRTextBox>
@@ -106,8 +114,10 @@
 				<PGVRGedcom id="@FAMC:@HUSB:@FAMC:@WIFE">
 					<PGVRText style="text"><PGVRvarLetter var="factarray[BIRT]" />: <PGVRGedcomValue tag="BIRT:DATE" truncate="28" />
 						<br /><PGVRvarLetter var="factarray[PLAC]" />: <PGVRGedcomValue tag="BIRT:PLAC" truncate="28" />
-						<br /><PGVRvarLetter var="factarray[DEAT]" />: <PGVRGedcomValue tag="DEAT:DATE" truncate="28" />
-						<br /><PGVRvarLetter var="factarray[PLAC]" />: <PGVRGedcomValue tag="DEAT:PLAC" truncate="28" />
+						<PGVRGedcom id="DEAT">
+							<br /><PGVRvarLetter var="factarray[DEAT]" />: <PGVRGedcomValue tag="DEAT:DATE" truncate="28" />
+							<br /><PGVRvarLetter var="factarray[PLAC]" />: <PGVRGedcomValue tag="DEAT:PLAC" truncate="28" />
+						</PGVRGedcom>
 					</PGVRText>
 				</PGVRGedcom>
 			</PGVRTextBox>
@@ -125,8 +135,10 @@
 							<br /><PGVRvarLetter var="factarray[MARR]" />: <PGVRGedcomValue tag="MARR:DATE" truncate="28" />
 							<br /><PGVRvarLetter var="factarray[PLAC]" />: <PGVRGedcomValue tag="MARR:PLAC" truncate="28" />
 						</PGVRGedcom>
-						<br /><PGVRvarLetter var="factarray[DEAT]" />: <PGVRGedcomValue tag="DEAT:DATE" truncate="28" />
-						<br /><PGVRvarLetter var="factarray[PLAC]" />: <PGVRGedcomValue tag="DEAT:PLAC" truncate="28" />
+						<PGVRGedcom id="DEAT">
+							<br /><PGVRvarLetter var="factarray[DEAT]" />: <PGVRGedcomValue tag="DEAT:DATE" truncate="28" />
+							<br /><PGVRvarLetter var="factarray[PLAC]" />: <PGVRGedcomValue tag="DEAT:PLAC" truncate="28" />
+						</PGVRGedcom>
 					</PGVRText>
 				</PGVRGedcom>
 			</PGVRTextBox>
@@ -139,8 +151,10 @@
 				<PGVRGedcom id="@FAMC:@WIFE:@FAMC:@WIFE">
 					<PGVRText style="text"><PGVRvarLetter var="factarray[BIRT]" />: <PGVRGedcomValue tag="BIRT:DATE" truncate="28" />
 						<br /><PGVRvarLetter var="factarray[PLAC]" />: <PGVRGedcomValue tag="BIRT:PLAC" truncate="28" />
-						<br /><PGVRvarLetter var="factarray[DEAT]" />: <PGVRGedcomValue tag="DEAT:DATE" truncate="28" />
-						<br /><PGVRvarLetter var="factarray[PLAC]" />: <PGVRGedcomValue tag="DEAT:PLAC" truncate="28" />
+						<PGVRGedcom id="DEAT">
+							<br /><PGVRvarLetter var="factarray[DEAT]" />: <PGVRGedcomValue tag="DEAT:DATE" truncate="28" />
+							<br /><PGVRvarLetter var="factarray[PLAC]" />: <PGVRGedcomValue tag="DEAT:PLAC" truncate="28" />
+						</PGVRGedcom>
 					</PGVRText>
 				</PGVRGedcom>
 			</PGVRTextBox>
@@ -162,8 +176,10 @@
 							<br /><PGVRvarLetter var="factarray[MARR]" />: <PGVRGedcomValue tag="MARR:DATE" truncate="28" />
 							<br /><PGVRvarLetter var="factarray[PLAC]" />: <PGVRGedcomValue tag="MARR:PLAC" truncate="28" />
 						</PGVRGedcom>
-						<br /><PGVRvarLetter var="factarray[DEAT]" />: <PGVRGedcomValue tag="DEAT:DATE" truncate="28" />
-						<br /><PGVRvarLetter var="factarray[PLAC]" />: <PGVRGedcomValue tag="DEAT:PLAC" truncate="28" />
+						<PGVRGedcom id="DEAT">
+							<br /><PGVRvarLetter var="factarray[DEAT]" />: <PGVRGedcomValue tag="DEAT:DATE" truncate="28" />
+							<br /><PGVRvarLetter var="factarray[PLAC]" />: <PGVRGedcomValue tag="DEAT:PLAC" truncate="28" />
+						</PGVRGedcom>
 					</PGVRText>
 				</PGVRGedcom>
 			</PGVRTextBox>
@@ -176,8 +192,10 @@
 				<PGVRGedcom id="@FAMC:@HUSB:@FAMC:@HUSB:@FAMC:@WIFE">
 					<PGVRText style="text"><PGVRvarLetter var="factarray[BIRT]" />: <PGVRGedcomValue tag="BIRT:DATE" truncate="28" />
 						<br /><PGVRvarLetter var="factarray[PLAC]" />: <PGVRGedcomValue tag="BIRT:PLAC" truncate="28" />
-						<br /><PGVRvarLetter var="factarray[DEAT]" />: <PGVRGedcomValue tag="DEAT:DATE" truncate="28" />
-						<br /><PGVRvarLetter var="factarray[PLAC]" />: <PGVRGedcomValue tag="DEAT:PLAC" truncate="28" />
+						<PGVRGedcom id="DEAT">
+							<br /><PGVRvarLetter var="factarray[DEAT]" />: <PGVRGedcomValue tag="DEAT:DATE" truncate="28" />
+							<br /><PGVRvarLetter var="factarray[PLAC]" />: <PGVRGedcomValue tag="DEAT:PLAC" truncate="28" />
+						</PGVRGedcom>
 					</PGVRText>
 				</PGVRGedcom>
 			</PGVRTextBox>
@@ -197,8 +215,10 @@
 							<br /><PGVRvarLetter var="factarray[MARR]" />: <PGVRGedcomValue tag="MARR:DATE" truncate="28" />
 							<br /><PGVRvarLetter var="factarray[PLAC]" />: <PGVRGedcomValue tag="MARR:PLAC" truncate="28" />
 						</PGVRGedcom>
-						<br /><PGVRvarLetter var="factarray[DEAT]" />: <PGVRGedcomValue tag="DEAT:DATE" truncate="28" />
-						<br /><PGVRvarLetter var="factarray[PLAC]" />: <PGVRGedcomValue tag="DEAT:PLAC" truncate="28" />
+						<PGVRGedcom id="DEAT">
+							<br /><PGVRvarLetter var="factarray[DEAT]" />: <PGVRGedcomValue tag="DEAT:DATE" truncate="28" />
+							<br /><PGVRvarLetter var="factarray[PLAC]" />: <PGVRGedcomValue tag="DEAT:PLAC" truncate="28" />
+						</PGVRGedcom>
 					</PGVRText>
 				</PGVRGedcom>
 			</PGVRTextBox>
@@ -211,8 +231,10 @@
 				<PGVRGedcom id="@FAMC:@HUSB:@FAMC:@WIFE:@FAMC:@WIFE">
 					<PGVRText style="text"><PGVRvarLetter var="factarray[BIRT]" />: <PGVRGedcomValue tag="BIRT:DATE" truncate="28" />
 						<br /><PGVRvarLetter var="factarray[PLAC]" />: <PGVRGedcomValue tag="BIRT:PLAC" truncate="28" />
-						<br /><PGVRvarLetter var="factarray[DEAT]" />: <PGVRGedcomValue tag="DEAT:DATE" truncate="28" />
-						<br /><PGVRvarLetter var="factarray[PLAC]" />: <PGVRGedcomValue tag="DEAT:PLAC" truncate="28" />
+						<PGVRGedcom id="DEAT">
+							<br /><PGVRvarLetter var="factarray[DEAT]" />: <PGVRGedcomValue tag="DEAT:DATE" truncate="28" />
+							<br /><PGVRvarLetter var="factarray[PLAC]" />: <PGVRGedcomValue tag="DEAT:PLAC" truncate="28" />
+						</PGVRGedcom>
 					</PGVRText>
 				</PGVRGedcom>
 			</PGVRTextBox>
@@ -232,8 +254,10 @@
 							<br /><PGVRvarLetter var="factarray[MARR]" />: <PGVRGedcomValue tag="MARR:DATE" truncate="28" />
 							<br /><PGVRvarLetter var="factarray[PLAC]" />: <PGVRGedcomValue tag="MARR:PLAC" truncate="28" />
 						</PGVRGedcom>
-						<br /><PGVRvarLetter var="factarray[DEAT]" />: <PGVRGedcomValue tag="DEAT:DATE" truncate="28" />
-						<br /><PGVRvarLetter var="factarray[PLAC]" />: <PGVRGedcomValue tag="DEAT:PLAC" truncate="28" />
+						<PGVRGedcom id="DEAT">
+							<br /><PGVRvarLetter var="factarray[DEAT]" />: <PGVRGedcomValue tag="DEAT:DATE" truncate="28" />
+							<br /><PGVRvarLetter var="factarray[PLAC]" />: <PGVRGedcomValue tag="DEAT:PLAC" truncate="28" />
+						</PGVRGedcom>
 					</PGVRText>
 				</PGVRGedcom>
 			</PGVRTextBox>
@@ -246,8 +270,10 @@
 				<PGVRGedcom id="@FAMC:@WIFE:@FAMC:@HUSB:@FAMC:@WIFE">
 					<PGVRText style="text"><PGVRvarLetter var="factarray[BIRT]" />: <PGVRGedcomValue tag="BIRT:DATE" truncate="28" />
 						<br /><PGVRvarLetter var="factarray[PLAC]" />: <PGVRGedcomValue tag="BIRT:PLAC" truncate="28" />
-						<br /><PGVRvarLetter var="factarray[DEAT]" />: <PGVRGedcomValue tag="DEAT:DATE" truncate="28" />
-						<br /><PGVRvarLetter var="factarray[PLAC]" />: <PGVRGedcomValue tag="DEAT:PLAC" truncate="28" />
+						<PGVRGedcom id="DEAT">
+							<br /><PGVRvarLetter var="factarray[DEAT]" />: <PGVRGedcomValue tag="DEAT:DATE" truncate="28" />
+							<br /><PGVRvarLetter var="factarray[PLAC]" />: <PGVRGedcomValue tag="DEAT:PLAC" truncate="28" />
+						</PGVRGedcom>
 					</PGVRText>
 				</PGVRGedcom>
 			</PGVRTextBox>
@@ -267,8 +293,10 @@
 							<br /><PGVRvarLetter var="factarray[MARR]" />: <PGVRGedcomValue tag="MARR:DATE" truncate="28" />
 							<br /><PGVRvarLetter var="factarray[PLAC]" />: <PGVRGedcomValue tag="MARR:PLAC" truncate="28" />
 						</PGVRGedcom>
-						<br /><PGVRvarLetter var="factarray[DEAT]" />: <PGVRGedcomValue tag="DEAT:DATE" />
-						<br /><PGVRvarLetter var="factarray[PLAC]" />: <PGVRGedcomValue tag="DEAT:PLAC" />
+						<PGVRGedcom id="DEAT">
+							<br /><PGVRvarLetter var="factarray[DEAT]" />: <PGVRGedcomValue tag="DEAT:DATE" truncate="28" />
+							<br /><PGVRvarLetter var="factarray[PLAC]" />: <PGVRGedcomValue tag="DEAT:PLAC" truncate="28" />
+						</PGVRGedcom>
 					</PGVRText>
 				</PGVRGedcom>
 			</PGVRTextBox>
@@ -281,8 +309,10 @@
 				<PGVRGedcom id="@FAMC:@WIFE:@FAMC:@WIFE:@FAMC:@WIFE">
 					<PGVRText style="text"><PGVRvarLetter var="factarray[BIRT]" />: <PGVRGedcomValue tag="BIRT:DATE" truncate="28" />
 						<br /><PGVRvarLetter var="factarray[PLAC]" />: <PGVRGedcomValue tag="BIRT:PLAC" truncate="28" />
-						<br /><PGVRvarLetter var="factarray[DEAT]" />: <PGVRGedcomValue tag="DEAT:DATE" truncate="28" />
-						<br /><PGVRvarLetter var="factarray[PLAC]" />: <PGVRGedcomValue tag="DEAT:PLAC" truncate="28" />
+						<PGVRGedcom id="DEAT">
+							<br /><PGVRvarLetter var="factarray[DEAT]" />: <PGVRGedcomValue tag="DEAT:DATE" truncate="28" />
+							<br /><PGVRvarLetter var="factarray[PLAC]" />: <PGVRGedcomValue tag="DEAT:PLAC" truncate="28" />
+						</PGVRGedcom>
 					</PGVRText>
 				</PGVRGedcom>
 			</PGVRTextBox>
@@ -302,7 +332,9 @@
 						<PGVRGedcom id="@FAMS">
 							<br /><PGVRvarLetter var="factarray[MARR]" />: <PGVRGedcomValue tag="MARR:DATE" truncate="30" />
 						</PGVRGedcom>
-						<br /><PGVRvarLetter var="factarray[DEAT]" />: <PGVRGedcomValue tag="DEAT:DATE" truncate="30" />
+						<PGVRGedcom id="DEAT">
+							<br /><PGVRvarLetter var="factarray[DEAT]" />: <PGVRGedcomValue tag="DEAT:DATE" truncate="30" />
+						</PGVRGedcom>
 					</PGVRText>
 				</PGVRGedcom>
 			</PGVRTextBox>
@@ -314,7 +346,9 @@
 			<PGVRTextBox padding="0" width="135" height="10" align="left" left="460" top="90">
 				<PGVRGedcom id="@FAMC:@HUSB:@FAMC:@HUSB:@FAMC:@HUSB:@FAMC:@WIFE">
 					<PGVRText style="text"><PGVRvarLetter var="factarray[BIRT]" />: <PGVRGedcomValue tag="BIRT:DATE" truncate="30" />
-						<br /><PGVRvarLetter var="factarray[DEAT]" />: <PGVRGedcomValue tag="DEAT:DATE" truncate="30" />
+						<PGVRGedcom id="DEAT">
+							<br /><PGVRvarLetter var="factarray[DEAT]" />: <PGVRGedcomValue tag="DEAT:DATE" truncate="30" />
+						</PGVRGedcom>
 					</PGVRText>
 				</PGVRGedcom>
 			</PGVRTextBox>
@@ -332,7 +366,9 @@
 						<PGVRGedcom id="@FAMS">
 							<br /><PGVRvarLetter var="factarray[MARR]" />: <PGVRGedcomValue tag="MARR:DATE" truncate="30" />
 						</PGVRGedcom>
-						<br /><PGVRvarLetter var="factarray[DEAT]" />: <PGVRGedcomValue tag="DEAT:DATE" truncate="30" />
+						<PGVRGedcom id="DEAT">
+							<br /><PGVRvarLetter var="factarray[DEAT]" />: <PGVRGedcomValue tag="DEAT:DATE" truncate="30" />
+						</PGVRGedcom>
 					</PGVRText>
 				</PGVRGedcom>
 			</PGVRTextBox>
@@ -344,7 +380,9 @@
 			<PGVRTextBox padding="0" width="135" height="10" align="left" left="460" top="170">
 				<PGVRGedcom id="@FAMC:@HUSB:@FAMC:@HUSB:@FAMC:@WIFE:@FAMC:@WIFE">
 					<PGVRText style="text"><PGVRvarLetter var="factarray[BIRT]" />: <PGVRGedcomValue tag="BIRT:DATE" truncate="30" />
-						<br /><PGVRvarLetter var="factarray[DEAT]" />: <PGVRGedcomValue tag="DEAT:DATE" truncate="30" />
+						<PGVRGedcom id="DEAT">
+							<br /><PGVRvarLetter var="factarray[DEAT]" />: <PGVRGedcomValue tag="DEAT:DATE" truncate="30" />
+						</PGVRGedcom>
 					</PGVRText>
 				</PGVRGedcom>
 			</PGVRTextBox>
@@ -362,7 +400,9 @@
 						<PGVRGedcom id="@FAMS">
 							<br /><PGVRvarLetter var="factarray[MARR]" />: <PGVRGedcomValue tag="MARR:DATE" truncate="30" />
 						</PGVRGedcom>
-						<br /><PGVRvarLetter var="factarray[DEAT]" />: <PGVRGedcomValue tag="DEAT:DATE" truncate="30" />
+						<PGVRGedcom id="DEAT">
+							<br /><PGVRvarLetter var="factarray[DEAT]" />: <PGVRGedcomValue tag="DEAT:DATE" truncate="30" />
+						</PGVRGedcom>
 					</PGVRText>
 				</PGVRGedcom>
 			</PGVRTextBox>
@@ -374,7 +414,9 @@
 			<PGVRTextBox padding="0" width="135" height="10" align="left" left="460" top="250">
 				<PGVRGedcom id="@FAMC:@HUSB:@FAMC:@WIFE:@FAMC:@HUSB:@FAMC:@WIFE">
 					<PGVRText style="text"><PGVRvarLetter var="factarray[BIRT]" />: <PGVRGedcomValue tag="BIRT:DATE" truncate="30" />
-						<br /><PGVRvarLetter var="factarray[DEAT]" />: <PGVRGedcomValue tag="DEAT:DATE" truncate="30" />
+						<PGVRGedcom id="DEAT">
+							<br /><PGVRvarLetter var="factarray[DEAT]" />: <PGVRGedcomValue tag="DEAT:DATE" truncate="30" />
+						</PGVRGedcom>
 					</PGVRText>
 				</PGVRGedcom>
 			</PGVRTextBox>
@@ -392,7 +434,9 @@
 						<PGVRGedcom id="@FAMS">
 							<br /><PGVRvarLetter var="factarray[MARR]" />: <PGVRGedcomValue tag="MARR:DATE" truncate="30" />
 						</PGVRGedcom>
-						<br /><PGVRvarLetter var="factarray[DEAT]" />: <PGVRGedcomValue tag="DEAT:DATE" truncate="30" />
+						<PGVRGedcom id="DEAT">
+							<br /><PGVRvarLetter var="factarray[DEAT]" />: <PGVRGedcomValue tag="DEAT:DATE" truncate="30" />
+						</PGVRGedcom>
 					</PGVRText>
 				</PGVRGedcom>
 			</PGVRTextBox>
@@ -404,7 +448,9 @@
 			<PGVRTextBox padding="0" width="135" height="10" align="left" left="460" top="330">
 				<PGVRGedcom id="@FAMC:@HUSB:@FAMC:@WIFE:@FAMC:@WIFE:@FAMC:@WIFE">
 					<PGVRText style="text"><PGVRvarLetter var="factarray[BIRT]" />: <PGVRGedcomValue tag="BIRT:DATE" truncate="30" />
-						<br /><PGVRvarLetter var="factarray[DEAT]" />: <PGVRGedcomValue tag="DEAT:DATE" truncate="30" />
+						<PGVRGedcom id="DEAT">
+							<br /><PGVRvarLetter var="factarray[DEAT]" />: <PGVRGedcomValue tag="DEAT:DATE" truncate="30" />
+						</PGVRGedcom>
 					</PGVRText>
 				</PGVRGedcom>
 			</PGVRTextBox>
@@ -422,7 +468,9 @@
 						<PGVRGedcom id="@FAMS">
 							<br /><PGVRvarLetter var="factarray[MARR]" />: <PGVRGedcomValue tag="MARR:DATE" truncate="30" />
 						</PGVRGedcom>
-						<br /><PGVRvarLetter var="factarray[DEAT]" />: <PGVRGedcomValue tag="DEAT:DATE" truncate="30" />
+						<PGVRGedcom id="DEAT">
+							<br /><PGVRvarLetter var="factarray[DEAT]" />: <PGVRGedcomValue tag="DEAT:DATE" truncate="30" />
+						</PGVRGedcom>
 					</PGVRText>
 				</PGVRGedcom>
 			</PGVRTextBox>
@@ -434,7 +482,9 @@
 			<PGVRTextBox padding="0" width="135" height="10" align="left" left="460" top="410">
 				<PGVRGedcom id="@FAMC:@WIFE:@FAMC:@HUSB:@FAMC:@HUSB:@FAMC:@WIFE">
 					<PGVRText style="text"><PGVRvarLetter var="factarray[BIRT]" />: <PGVRGedcomValue tag="BIRT:DATE" truncate="30" />
-						<br /><PGVRvarLetter var="factarray[DEAT]" />: <PGVRGedcomValue tag="DEAT:DATE" truncate="30" />
+						<PGVRGedcom id="DEAT">
+							<br /><PGVRvarLetter var="factarray[DEAT]" />: <PGVRGedcomValue tag="DEAT:DATE" truncate="30" />
+						</PGVRGedcom>
 					</PGVRText>
 				</PGVRGedcom>
 			</PGVRTextBox>
@@ -452,7 +502,9 @@
 						<PGVRGedcom id="@FAMS">
 							<br /><PGVRvarLetter var="factarray[MARR]" />: <PGVRGedcomValue tag="MARR:DATE" truncate="30" />
 						</PGVRGedcom>
-						<br /><PGVRvarLetter var="factarray[DEAT]" />: <PGVRGedcomValue tag="DEAT:DATE" truncate="30" />
+						<PGVRGedcom id="DEAT">
+							<br /><PGVRvarLetter var="factarray[DEAT]" />: <PGVRGedcomValue tag="DEAT:DATE" truncate="30" />
+						</PGVRGedcom>
 					</PGVRText>
 				</PGVRGedcom>
 			</PGVRTextBox>
@@ -464,7 +516,9 @@
 			<PGVRTextBox padding="0" width="135" height="10" align="left" left="460" top="490">
 				<PGVRGedcom id="@FAMC:@WIFE:@FAMC:@HUSB:@FAMC:@WIFE:@FAMC:@WIFE">
 					<PGVRText style="text"><PGVRvarLetter var="factarray[BIRT]" />: <PGVRGedcomValue tag="BIRT:DATE" truncate="30" />
-						<br /><PGVRvarLetter var="factarray[DEAT]" />: <PGVRGedcomValue tag="DEAT:DATE" truncate="30" />
+						<PGVRGedcom id="DEAT">
+							<br /><PGVRvarLetter var="factarray[DEAT]" />: <PGVRGedcomValue tag="DEAT:DATE" truncate="30" />
+						</PGVRGedcom>
 					</PGVRText>
 				</PGVRGedcom>
 			</PGVRTextBox>
@@ -482,7 +536,9 @@
 						<PGVRGedcom id="@FAMS">
 							<br /><PGVRvarLetter var="factarray[MARR]" />: <PGVRGedcomValue tag="MARR:DATE" truncate="30" />
 						</PGVRGedcom>
-						<br /><PGVRvarLetter var="factarray[DEAT]" />: <PGVRGedcomValue tag="DEAT:DATE" truncate="30" />
+						<PGVRGedcom id="DEAT">
+							<br /><PGVRvarLetter var="factarray[DEAT]" />: <PGVRGedcomValue tag="DEAT:DATE" truncate="30" />
+						</PGVRGedcom>
 					</PGVRText>
 				</PGVRGedcom>
 			</PGVRTextBox>
@@ -494,7 +550,9 @@
 			<PGVRTextBox padding="0" width="135" height="10" align="left" left="460" top="570">
 				<PGVRGedcom id="@FAMC:@WIFE:@FAMC:@WIFE:@FAMC:@HUSB:@FAMC:@WIFE">
 					<PGVRText style="text"><PGVRvarLetter var="factarray[BIRT]" />: <PGVRGedcomValue tag="BIRT:DATE" truncate="30" />
-						<br /><PGVRvarLetter var="factarray[DEAT]" />: <PGVRGedcomValue tag="DEAT:DATE" truncate="30" />
+						<PGVRGedcom id="DEAT">
+							<br /><PGVRvarLetter var="factarray[DEAT]" />: <PGVRGedcomValue tag="DEAT:DATE" truncate="30" />
+						</PGVRGedcom>
 					</PGVRText>
 				</PGVRGedcom>
 			</PGVRTextBox>
@@ -512,7 +570,9 @@
 						<PGVRGedcom id="@FAMS">
 							<br /><PGVRvarLetter var="factarray[MARR]" />: <PGVRGedcomValue tag="MARR:DATE" truncate="30" />
 						</PGVRGedcom>
-						<br /><PGVRvarLetter var="factarray[DEAT]" />: <PGVRGedcomValue tag="DEAT:DATE" truncate="30" />
+						<PGVRGedcom id="DEAT">
+							<br /><PGVRvarLetter var="factarray[DEAT]" />: <PGVRGedcomValue tag="DEAT:DATE" truncate="30" />
+						</PGVRGedcom>
 					</PGVRText>
 				</PGVRGedcom>
 			</PGVRTextBox>
@@ -524,7 +584,9 @@
 			<PGVRTextBox padding="0" width="135" height="10" align="left" left="460" top="650">
 				<PGVRGedcom id="@FAMC:@WIFE:@FAMC:@WIFE:@FAMC:@WIFE:@FAMC:@WIFE">
 					<PGVRText style="text"><PGVRvarLetter var="factarray[BIRT]" />: <PGVRGedcomValue tag="BIRT:DATE" truncate="30" />
-						<br /><PGVRvarLetter var="factarray[DEAT]" />: <PGVRGedcomValue tag="DEAT:DATE" truncate="30" />
+						<PGVRGedcom id="DEAT">
+							<br /><PGVRvarLetter var="factarray[DEAT]" />: <PGVRGedcomValue tag="DEAT:DATE" truncate="30" />
+						</PGVRGedcom>
 					</PGVRText>
 				</PGVRGedcom>
 			</PGVRTextBox>

@@ -1,5 +1,5 @@
 <PGVReport access="PRIV_PUBLIC" icon="ancestry" language="english">
-	<!-- $Id$ -->
+<!-- $Id$ -->
 	<PGVRTitle><PGVRvar var="pgv_lang[ahnentafel_report]" /></PGVRTitle>
 	<PGVRDescription>Prints an Ahnentafel report for the selected individual</PGVRDescription>
 	<PGVRInput name="pid" lookup="INDI" type="text"><PGVRvar var="pgv_lang[enter_pid]" /></PGVRInput>

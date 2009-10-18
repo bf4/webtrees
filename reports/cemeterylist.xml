@@ -1,5 +1,5 @@
 <PGVReport access="PRIV_PUBLIC" icon="place">
-	<!-- $Id$ -->
+<!-- $Id$ -->
 	<PGVRTitle><PGVRvar var="pgv_lang[cemetery_report]" /></PGVRTitle>
 	<PGVRDescription>Prints a list of individuals burial places matching specific cemetery criteria</PGVRDescription>
 	<PGVRInput name="deathplace" lookup="PLAC" type="text"><PGVRvar var="pgv_lang[burialplace]" /> </PGVRInput>
@@ -37,7 +37,7 @@
 			<PGVRSetVar name="fill" value="" />
 			<PGVRif condition="$sortby=='DEAT:DATE'"><PGVRSetVar name="fill" value="#DDDDDD" /></PGVRif>
 			<PGVRTextBox bgcolor="$fill" border="1" width="$datewidth">
-				<PGVRText style="label"><PGVRvar var="factarray[DATE]" /></PGVRText>
+				<PGVRText style="label"><PGVRvar var="factarray[DEAT:DATE]" /></PGVRText>
 			</PGVRTextBox>
 			<!-- should print and sort by burial date -->
 

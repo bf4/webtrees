@@ -1,5 +1,5 @@
 <PGVReport access="PRIV_USER" icon="place">
-	<!-- $Id$ -->
+<!-- $Id$ -->
 	<PGVRDescription>Prints address labels</PGVRDescription>
 	<PGVRTitle><PGVRvar var="pgv_lang[address_labels]" /></PGVRTitle>
 	<PGVRInput name="address" type="text"><PGVRvar var="pgv_lang[filter_address]" /> </PGVRInput>

@@ -2411,15 +2411,19 @@ function PGVRvarSHandler($attrs) {
 * @param array $attrs an array of key value pairs for the attributes
 */
 function PGVRvarLetterSHandler($attrs) {
-	global $currentElement, $factarray, $fact, $desc;
+	global $currentElement, $factarray, $factAbbrev, $fact, $desc;
 
 	$var = $attrs["var"];
 	if (!empty($var)) {
-		$tfact = $fact;
-		$var = preg_replace(array("/\[/","/\]/","/@fact/","/@desc/"), array("['","']",$tfact,$desc), $var);
-		eval("if (!empty(\$$var)) \$var = \$$var;");
-
-		$letter = UTF8_substr($var, 0, 1);
+		$abbrev = substr(strrchr(substr($var, 0, -1), '['), 1);
+		if (isset ($factAbbrev[$abbrev])) {
+			$letter = $factAbbrev[$abbrev];
+		} else {
+			$tfact = $fact;
+			$var = preg_replace(array("/\[/","/\]/","/@fact/","/@desc/"), array("['","']",$tfact,$desc), $var);
+			eval("if (!empty(\$$var)) \$var = \$$var;");
+			$letter = UTF8_substr($var, 0, 1);
+		}
 		$currentElement->addText($letter);
 	}
 }

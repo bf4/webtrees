@@ -1,7 +1,8 @@
 <PGVReport access="PRIV_PUBLIC" icon="descendancy">
+<!-- $Id$ -->
 	<PGVRTitle><PGVRvar var="pgv_lang[descend_report]" /></PGVRTitle>
 	<PGVRDescription>Prints a descendant chart in portrait mode</PGVRDescription>
-	<PGVRInput name="pid" lookup="INDI" type="text" default=""><PGVRvar var="pgv_lang[enter_pid]" />:</PGVRInput>
+	<PGVRInput name="pid" lookup="INDI" type="text" default=""><PGVRvar var="pgv_lang[enter_pid]" /></PGVRInput>
 	<PGVRInput name="maxgen" type="select" options="3,4,5,6,7,8,9,*"><PGVRvar var="pgv_lang[generations]" /></PGVRInput>
 	<PGVRInput name="sources" type="checkbox" default="1"><PGVRvar var="pgv_lang[show_sources]" /></PGVRInput>
 	<PGVRInput name="pageSize" type="select" default="A4" options="letter,A3,A4,legal"><PGVRvar var="pgv_lang[page_size]" /></PGVRInput>
@@ -244,7 +245,7 @@
 											<PGVRGedcom id="BIRT">
 												<PGVRif condition="$printPronoun=='true'">
 													<PGVRSetVar name="printPeriod" value="true" />
-													<PGVRText style="label1">  <PGVRvar var="pgv_lang[ahnentafel_pronoun_f]" /></PGVRText>
+													<PGVRText style="label1">  <PGVRvar var="pgv_lang[descendancy_pronoun_f]" /></PGVRText>
 													<PGVRSetVar name="printPronoun" value="false" />
 												</PGVRif>
 												<PGVRSetVar name="birtExist" value="true" />
@@ -308,7 +309,7 @@
 											<PGVRGedcom id="BIRT">
 												<PGVRSetVar name="printPeriod" value="true" />
 												<PGVRif condition="$printPronoun=='true'">
-													<PGVRText style="label1">  <PGVRvar var="pgv_lang[ahnentafel_pronoun_m]" /></PGVRText>
+													<PGVRText style="label1">  <PGVRvar var="pgv_lang[descendancy_pronoun_m]" /></PGVRText>
 													<PGVRSetVar name="printPronoun" value="false" />
 												</PGVRif>
 												<PGVRSetVar name="birtExist" value="true" />
@@ -442,7 +443,7 @@
 												</PGVRRepeatTag>
 											</PGVRif>
 											<PGVRGedcom id="BIRT">
-												<PGVRText style="label1"> <PGVRvarLetter var="factarray[BIRT]" />:<PGVRGedcomValue tag="DATE" level="2"/>  <PGVRGedcomValue tag="PLAC" level="2"/></PGVRText>
+												<PGVRText style="label1"> <PGVRvarLetter var="factarray[BIRT]" />: <PGVRGedcomValue tag="DATE" level="2"/>  <PGVRGedcomValue tag="PLAC" level="2"/></PGVRText>
 											</PGVRGedcom>
 											<PGVRSetVar name="showMarraige" value="T" />
 											<PGVRRepeatTag tag="FAMS">
@@ -459,7 +460,7 @@
 												</PGVRif>
 												<PGVRRepeatTag tag="FAMS">
 													<PGVRGedcom id="@FAMS">
-														<PGVRText style="label1"> M: </PGVRText>
+														<PGVRText style="label1"> <PGVRvarLetter var="factarray[MARR]" />: </PGVRText>
 														<PGVRif condition="$gender=='male'">
 															<PGVRText style="name"><PGVRGetPersonName id="@WIFE" /></PGVRText>
 														</PGVRif>
