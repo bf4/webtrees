@@ -1305,9 +1305,8 @@ function exists_pending_change($user_id=PGV_USER_ID, $ged_id=PGV_GED_ID) {
  * @param string $indirec the gedcom record to look in
  * @return array an object array with indexes "thumb" and "file" for thumbnail and filename
  */
-function find_highlighted_object($pid, $indirec) {
-	global $MEDIA_DIRECTORY, $MEDIA_DIRECTORY_LEVELS, $PGV_IMAGE_DIR, $PGV_IMAGES, $MEDIA_EXTERNAL;
-	global $GEDCOMS, $GEDCOM, $TBLPREFIX;
+function find_highlighted_object($pid, $ged_id, $indirec) {
+	global $MEDIA_DIRECTORY, $MEDIA_DIRECTORY_LEVELS, $PGV_IMAGE_DIR, $PGV_IMAGES, $MEDIA_EXTERNAL, $TBLPREFIX;
 
 	if (!showFactDetails("OBJE", $pid)) {
 		return false;
@@ -1337,7 +1336,7 @@ function find_highlighted_object($pid, $indirec) {
 	//-- find all of the media items for a person
 	$media=
 		PGV_DB::prepare("SELECT m_media, m_file, m_gedrec, mm_gedrec FROM {$TBLPREFIX}media, {$TBLPREFIX}media_mapping WHERE m_media=mm_media AND m_gedfile=mm_gedfile AND m_gedfile=? AND mm_gid=? ORDER BY mm_order")
-		->execute(array($GEDCOMS[$GEDCOM]["id"], $pid))
+		->execute(array($ged_id, $pid))
 		->fetchAll(PDO::FETCH_NUM);
 
 	foreach ($media as $i=>$row) {
