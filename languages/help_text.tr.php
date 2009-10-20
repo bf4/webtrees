@@ -99,4 +99,18 @@ $pgv_lang["register_gedcomid_help"]	= "~#pgv_lang[gedcomid]#~<br /><br />Bu soya
 $pgv_lang["help_faq.php"] = "~Sıkça Sorulan Sorular~<br />#pgv_lang[text_faq_help]#<br />";
 
 $pgv_lang["help_clippings.php"]			= "~AİLE AĞACI KUPÜRÜ TAŞIMAK~<br />#pgv_lang[clip_cart]# bu aile soyağacının içinde size ait soyunuzu veya istediğiniz bölümleri (\"kupürleri\") kendi soyağacı programınızda kullanmanız için tek dosya içine zip formatında indirmenize izin veriyor. İndirilecek dosya GEDCOM formatında kaydedilecektir.<br /><ul><li>Kupürler nasıl alınır?<br />Bu gerçekten çok basittir. ID kimlik numaraları bilmiyorsanız (birey, aile veya kaynak) ikonları tıklatıp açılan sayfada isim girip aradığınızda detaylı bilgiler sayfada listelenecektir ve aradığınız ismi tıklayın. <b>#pgv_lang[add_to_cart]#</b> seçeneğinde göreceksiniz. Ekle butonu tıkladığınızda indirmeye eklemek için bir kaç seçenek sunacaktır. </li><li>Nasıl indirilir?<br /> Kupürleri taşıma alanına eklediğinizde <b>Şimdi İndir</b> linki göreceksiniz ve tıklayıp indirebileceksiniz. Talimatları ve linkleri izleyin.</li></ul><br />";
+$pgv_lang["edit_SEX_help"]			= "#pgv_lang[edit_sex_help]#";
+$pgv_lang["edit_NAME_help"]			= "#pgv_lang[edit_name_help]#";
+$pgv_lang["edit_GIVN_help"]			= "#pgv_lang[edit_given_name_help]#";
+$pgv_lang["edit_SURN_help"]			= "#pgv_lang[edit_surname_help]#";
+$pgv_lang["edit_NSFX_help"]			= "#pgv_lang[edit_suffix_help]#";
+$pgv_lang["start_admin_help"]			= "+++ Fazladan Admin bilgisine başla +++";
+$pgv_lang["end_admin_help"]			= "+++ Fazladan Admin bilgisi bitimi +++";
+$pgv_lang["multiple_help"]			= "<center>--- Bu çoklu sayfalar için yardım metnidir ---</center>";
+$pgv_lang["header_general_help"]		= "<div class=\"name_head\"><center><b>GENEL BİLGİ</b></center></div><br />";
+$pgv_lang["readme_help"]			= "Daha çok bilgi için <a href=\"readme.txt\" target=\"_blank\"><b>Readme.txt</b></a> okuyun.";
+$pgv_lang["menu_help_help"]			= "~Help Menu~<br />#pgv_lang[help_help_items]#";
+$pgv_lang["index_portal_head_help"]		= "<div class=\"name_head\"><center><b>HOŞ GELDİN SAYFA</b></center></div><br />";
+$pgv_lang["sortby_help"]			= "~#pgv_lang[sortby]#~<br />Sırada hangi listeyi görmek istiyorsanız seçin.<br /><br />";
+$pgv_lang["edit_ASSO_help"]		= "~#factarray[ASSO]#~<br /><br />Birleştirilecek GEDCOM ID girin.<br /><br />";
 ?>
