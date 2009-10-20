@@ -972,7 +972,7 @@ if ($stage == 1) {
 			//-- import anything that is not a blob
 			if (!preg_match("/\n1 BLOB/", $indirec)) {
 				try {
-					import_record(trim($indirec), false);
+					import_record(trim($indirec), $GEDCOMS[$GEDCOM]["id"], false);
 				} catch (PDOException $ex) {
 					// Import errors are likely to be caused by duplicate records.
 					// There is no safe way of handling these.  Just display them
