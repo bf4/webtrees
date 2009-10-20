@@ -1322,8 +1322,9 @@ function accept_changes($cid) {
 		if (empty($gedrec)) {
 			$gedrec = find_gedcom_record($gid);
 		}
+		$ged_id=get_id_from_gedcom($GEDCOM);
 
-		update_record($gedrec, $change["type"]=="delete");
+		update_record($gedrec, $ged_id, $change["type"]=="delete");
 
 		//-- write the changes back to the gedcom file
 		if ($SYNC_GEDCOM_FILE) {
@@ -1438,7 +1439,7 @@ function find_newline_string($haystack, $needle, $offset=0) {
 * update a record in the database
 * @param string $gedrec
 */
-function update_record($gedrec, $delete = false) {
+function update_record($gedrec, $ged_id, $delete) {
 	global $TBLPREFIX, $GEDCOM;
 
 	if (preg_match('/^0 @('.PGV_REGEX_XREF.')@ ('.PGV_REGEX_TAG.')/', $gedrec, $match)) {
@@ -1447,8 +1448,6 @@ function update_record($gedrec, $delete = false) {
 		print "ERROR: Invalid gedcom record.";
 		return false;
 	}
-
-	$ged_id=get_id_from_gedcom($GEDCOM);
 
 	// TODO deleting unlinked places can be done more efficiently in a single query
 	$placeids=
