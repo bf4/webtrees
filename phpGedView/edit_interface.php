@@ -106,7 +106,7 @@ if ($ENABLE_AUTOCOMPLETE) {
 }
 echo PGV_JS_START;
 ?>
-	var locale_date_format='<?php echo preg_replace('/[^DMY]/', '', $DATE_FORMAT); ?>';
+	var locale_date_format='<?php echo preg_replace('/[^DMY]/', '', str_replace(array('J', 'F'), array('D', 'M'), strtoupper($DATE_FORMAT))); ?>';
 
 	function findIndi(field, indiname) {
 		pastefield = field;
