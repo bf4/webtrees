@@ -20,7 +20,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  * @package PhpGedView
- * @author Adem GENÇ
+ * @author Adem GENÇ uzayuydu@gmail.com http://www.muttafi.com
  * @created 2007-11-19
  * @version $Id$
  */
