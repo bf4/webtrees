@@ -778,7 +778,7 @@ class ServiceClient extends GedcomRecord {
 					$localrec = $this->UpdateFamily($localrec,$gedrec);
 					replace_gedrec($pid,$localrec);
 				} else {
-					update_record($localrec);
+					update_record($localrec, get_id_from_gedcom($GEDCOM), false);
 				}
 			}
 		} else {
@@ -818,7 +818,7 @@ class ServiceClient extends GedcomRecord {
 						$newgedrec .= "2 _PGVU @".$this->xref."@";
 						$localrec .= $newgedrec;
 					}
-					update_record($localrec);
+					update_record($localrec, get_id_from_gedcom($GEDCOM), false);
 				}
 				// If changes have been made to the remote record
 				else {
@@ -835,7 +835,7 @@ class ServiceClient extends GedcomRecord {
 							$localrec = $this->UpdateFamily($localrec,$gedrec);
 							replace_gedrec($pid,$localrec);
 						} else {
-							update_record($localrec);
+							update_record($localrec, get_id_from_gedcom($GEDCOM), false);
 						}
 					}
 				}
