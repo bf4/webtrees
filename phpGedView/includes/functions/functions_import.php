@@ -1234,17 +1234,18 @@ function import_max_ids($ged_id, $MAX_IDS) {
 */
 function read_gedcom_file() {
 	global $fcontents;
-	global $GEDCOM, $GEDCOMS;
-	global $pgv_lang;
-	$fcontents = "";
-	if (isset($GEDCOMS[$GEDCOM])) {
+
+	if (PGV_GED_ID) {
+		$path=get_gedcom_setting(PGV_GED_ID, 'path');
 		//-- only allow one thread to write the file at a time
-		$mutex = new Mutex($GEDCOM);
+		$mutex = new Mutex(PGV_GEDCOM);
 		$mutex->Wait();
-		$fp = fopen($GEDCOMS[$GEDCOM]["path"], "r");
-		$fcontents = fread($fp, filesize($GEDCOMS[$GEDCOM]["path"]));
+		$fp = fopen($path, "r");
+		$fcontents = fread($fp, filesize($path));
 		fclose($fp);
 		$mutex->Release();
+	} else {
+		$fcontents = "";
 	}
 }
 
@@ -1252,7 +1253,7 @@ function read_gedcom_file() {
 //-- this function writes the $fcontents back to the
 //-- gedcom file
 function write_file() {
-	global $fcontents, $GEDCOMS, $GEDCOM, $INDEX_DIRECTORY;
+	global $fcontents;
 
 	if (empty($fcontents)) {
 		return;
@@ -1261,17 +1262,18 @@ function write_file() {
 		$fcontents.="0 TRLR\n";
 	}
 	//-- write the gedcom file
-	if (!is_writable($GEDCOMS[$GEDCOM]["path"])) {
+	$path=get_gedcom_setting(PGV_GED_ID, 'path');
+	if (!is_writable($path)) {
 		print "ERROR 5: GEDCOM file is not writable.  Unable to complete request.\n";
 		AddToChangeLog("ERROR 5: GEDCOM file is not writable.  Unable to complete request. ->" . PGV_USER_NAME ."<-");
 		return false;
 	}
 	//-- only allow one thread to write the file at a time
-	$mutex = new Mutex($GEDCOM);
+	$mutex = new Mutex(PGV_GEDCOM);
 	$mutex->Wait();
 	//-- what to do if file changed while waiting
 
-	$fp = fopen($GEDCOMS[$GEDCOM]["path"], "wb");
+	$fp = fopen($path, "wb");
 	if ($fp===false) {
 		print "ERROR 6: Unable to open GEDCOM file resource.  Unable to complete request.\n";
 		AddToChangeLog("ERROR 6: Unable to open GEDCOM file resource.  Unable to complete request. ->" . PGV_USER_NAME ."<-");
@@ -1293,8 +1295,8 @@ function write_file() {
 	fclose($fp);
 	//-- always release the mutex
 	$mutex->Release();
-	$logline = AddToLog($GEDCOMS[$GEDCOM]["path"]." updated");
-	check_in($logline, basename($GEDCOMS[$GEDCOM]["path"]), dirname($GEDCOMS[$GEDCOM]["path"]));
+	$logline = AddToLog($path." updated");
+	check_in($logline, basename($path), dirname($path));
 
 	return true;;
 }
@@ -1307,7 +1309,7 @@ function write_file() {
 */
 function accept_changes($cid) {
 	global $pgv_changes, $GEDCOM, $TBLPREFIX, $GEDCOM, $GEDCOMS;
-	global $INDEX_DIRECTORY, $SYNC_GEDCOM_FILE, $fcontents, $manual_save;
+	global $SYNC_GEDCOM_FILE, $fcontents, $manual_save;
 
 	if (isset ($pgv_changes[$cid])) {
 		$changes = $pgv_changes[$cid];
