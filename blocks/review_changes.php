@@ -50,16 +50,17 @@ $PGV_BLOCKS["review_changes_block"]["config"]		= array(
  */
 function review_changes_block($block = true, $config="", $side, $index) {
 	global $pgv_lang, $GEDCOM, $ctype, $SCRIPT_NAME, $QUERY_STRING, $factarray, $PGV_IMAGE_DIR, $PGV_IMAGES;
-	global $pgv_changes, $LAST_CHANGE_EMAIL, $TEXT_DIRECTION, $SHOW_SOURCES, $PGV_BLOCKS;
+	global $pgv_changes, $TEXT_DIRECTION, $SHOW_SOURCES, $PGV_BLOCKS;
 	global $PHPGEDVIEW_EMAIL;
 
 	if (empty($config)) $config = $PGV_BLOCKS["review_changes_block"]["config"];
 
 	if ($pgv_changes) {
-		if (!isset($LAST_CHANGE_EMAIL)) $LAST_CHANGE_EMAIL = 0;
 		//-- if the time difference from the last email is greater than 24 hours then send out another email
+		$LAST_CHANGE_EMAIL=get_site_setting('LAST_CHANGE_EMAIL');
 		if (time()-$LAST_CHANGE_EMAIL > (60*60*24*$config["days"])) {
 			$LAST_CHANGE_EMAIL = time();
+			set_site_setting('LAST_CHANGE_EMAIL', $LAST_CHANGE_EMAIL);
 			write_changes();
 			if ($config["sendmail"]=="yes") {
 				// Which users have pending changes?

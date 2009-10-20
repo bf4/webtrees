@@ -2674,16 +2674,13 @@ function get_relationship2($pid1, $pid2, $followspouse=true, $maxlength=0, $igno
  * @return bool true if successful false if there was an error
  */
 function write_changes() {
-	global $pgv_changes, $INDEX_DIRECTORY, $CONTACT_EMAIL, $LAST_CHANGE_EMAIL;
+	global $pgv_changes, $INDEX_DIRECTORY, $CONTACT_EMAIL;
 
 	//-- only allow 1 thread to write changes at a time
 	$mutex = new Mutex("pgv_changes");
 	$mutex->Wait();
-	//-- what to do if file changed while waiting
-	if (!isset($LAST_CHANGE_EMAIL))
-		$LAST_CHANGE_EMAIL = time();
 	//-- write the changes file
-	$changestext = "<?php\n\$LAST_CHANGE_EMAIL = $LAST_CHANGE_EMAIL;\n\$pgv_changes = array();\n";
+	$changestext = "<?php\n\$pgv_changes = array();\n";
 	foreach ($pgv_changes as $gid=>$changes) {
 		if (count($changes)>0) {
 			$changestext .= "\$pgv_changes[\"$gid\"] = array();\n";
