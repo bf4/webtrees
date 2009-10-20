@@ -1308,8 +1308,7 @@ function write_file() {
 * @param string $cid The change id of the record to accept
 */
 function accept_changes($cid) {
-	global $pgv_changes, $GEDCOM, $TBLPREFIX, $GEDCOM, $GEDCOMS;
-	global $SYNC_GEDCOM_FILE, $fcontents, $manual_save;
+	global $pgv_changes, $GEDCOM, $TBLPREFIX, $SYNC_GEDCOM_FILE, $fcontents, $manual_save;
 
 	if (isset ($pgv_changes[$cid])) {
 		$changes = $pgv_changes[$cid];
@@ -1411,7 +1410,7 @@ function accept_changes($cid) {
 			write_changes();
 		}
 		$logline = AddToLog("Accepted change $cid " . $change["type"] . " into database");
-		check_in($logline, $GEDCOM, dirname($GEDCOMS[$GEDCOM]['path']));
+		check_in($logline, $GEDCOM, dirname(get_gedcom_setting($ged_id, 'path')));
 		if (isset ($change["linkpid"])) {
 			accept_changes($change["linkpid"] . "_" . $GEDCOM);
 		}
