@@ -165,7 +165,7 @@ class Person extends GedcomRecord {
 	*/
 	function findHighlightedMedia() {
 		if (is_null($this->highlightedimage)) {
-			$this->highlightedimage = find_highlighted_object($this->xref, $this->gedrec);
+			$this->highlightedimage = find_highlighted_object($this->xref, $this->ged_id, $this->gedrec);
 		}
 		return $this->highlightedimage;
 	}

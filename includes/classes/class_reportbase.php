@@ -2843,7 +2843,7 @@ function PGVRHighlightedImageSHandler($attrs) {
 	if (!empty($attrs["height"])) $height = (int)$attrs["height"];
 
 	if (showFact("OBJE", $id)) {
-		$media = find_highlighted_object($id, $gedrec);
+		$media = find_highlighted_object($id, PGV_GED_ID, $gedrec);
 		if (!empty($media["file"])) {
 			if (preg_match("/(jpg)|(jpeg)|(png)$/i", $media["file"])>0) {
 				if (file_exists($media["file"])) {
