@@ -3173,7 +3173,7 @@ function get_new_xref($type='INDI', $use_cache=false) {
 	global $fcontents, $SOURCE_ID_PREFIX, $REPO_ID_PREFIX, $pgv_changes, $GEDCOM, $TBLPREFIX, $GEDCOMS;
 	global $MEDIA_ID_PREFIX, $FAM_ID_PREFIX, $GEDCOM_ID_PREFIX, $MAX_IDS;
 
-	$gedid = $GEDCOMS[$GEDCOM]["id"];
+	$ged_id = $GEDCOMS[$GEDCOM]["id"];
 
 	$num = null;
 	//-- check if an id is stored in MAX_IDS used mainly during the import
@@ -3186,7 +3186,7 @@ function get_new_xref($type='INDI', $use_cache=false) {
 		//-- check for the id in the nextid table
 		$num=
 			PGV_DB::prepare("SELECT ni_id FROM {$TBLPREFIX}nextid WHERE ni_type=? AND ni_gedfile=?")
-			->execute(array($type, $gedid))
+			->execute(array($type, $ged_id))
 			->fetchOne();
 
 		//-- the id was not found in the table so try and find it in the file
@@ -3208,7 +3208,7 @@ function get_new_xref($type='INDI', $use_cache=false) {
 		if (is_null($num)) {
 			$num = 1;
 			PGV_DB::prepare("INSERT INTO {$TBLPREFIX}nextid VALUES(?, ?, ?)")
-				->execute(array($num+1, $type, $gedid));
+				->execute(array($num+1, $type, $ged_id));
 		}
 	}
 
@@ -3253,7 +3253,7 @@ function get_new_xref($type='INDI', $use_cache=false) {
 	}
 	//-- update the next id number in the DB table
 	PGV_DB::prepare("UPDATE {$TBLPREFIX}nextid SET ni_id=? WHERE ni_type=? AND ni_gedfile=?")
-		->execute(array($num+1, $type, $gedid));
+		->execute(array($num+1, $type, $ged_id));
 	return $key;
 }
 
