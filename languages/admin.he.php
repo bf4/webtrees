@@ -30,6 +30,23 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	header('HTTP/1.0 403 Forbidden');
 	exit;
 }
+$pgv_lang["module_admin"]			= "ניהול מודולים";
+$pgv_lang["mod_admin_installed"]		= "מודולים שהותקנו";
+$pgv_lang["mod_admin_tabs"]		= "נהל חוצצים";
+$pgv_lang["mod_admin_menus"]		= "נהל תפריטים";
+$pgv_lang["mod_admin_intro"]		= "למטה תמצא את הרשימה של כל המודולים שהותקנו בהתקנה הזו של PhpGedView.  מודולים מותקנים בכך ששמים אותם בתיקיית <i>modules</i>.  כאן ניתן להגדיר את רמת ההרשאות לפי קובץ GEDCOM לכל מודול.  אם המודול כולל חוצצים בדף האישי או תפריטים בסרגל התפריטים, ניתן להגדיר גם את רמת הגישה והסדר של כל אחד מהם."
+$pgv_lang["mod_admin_active"]		= "פעיל";
+$pgv_lang["mod_admin_name"]		= "שם המודול";
+$pgv_lang["mod_admin_description"]		= "תאור";
+$pgv_lang["mod_admin_version"]		= "ורסיה / PGV";
+$pgv_lang["mod_admin_hastab"]		= "חוצץ?";
+$pgv_lang["mod_admin_hasmenu"]		= "תפריט?";
+$pgv_lang["mod_admin_access_level"]	= "רמת גישה";
+$pgv_lang["mod_admin_order"]		= "סדר";
+$pgv_lang["mod_admin_config"]		= "ערכי מודולים";
+$pgv_lang["mod_admin_settings"]		= "ערכי ההגדרות של המודול";
+$pgv_lang["ret_module_admin"]		= "חזור לדף ניהול המודולים";
+$pgv_lang["ret_admin"]			= "חזור לדף הניהול";
 
 $pgv_lang["enter_comment"]			= "כאן ניתן להכניס הערות.";
 $pgv_lang["upload_a_gedcom"] 		= "העלה קובץ GEDCOM";
@@ -37,7 +54,7 @@ $pgv_lang["start_entering"] 			= "התחל להכניס נתונים";
 $pgv_lang["add_gedcom_from_path"] 	= "הוסף GEDCOM מתיק";
 $pgv_lang["get_started_instructions"]		= "בחר באופציה מתחת כדי להתחיל להשתמש ב-PhpGedView";
 
-$pgv_lang["admin_users_exists"]		= "המשתמשים האדמיניסטרטיביים הבאים כבר קיימים:";
+$pgv_lang["admin_users_exists"]		= "המשתמשים המנהליים הבאים כבר קיימים:";
 $pgv_lang["install_step_1"] 			= "בדוק סביבה";
 $pgv_lang["install_step_2"] 			= "קשר מאגר מידע";
 $pgv_lang["install_step_3"] 			= "צור טבלאות";
@@ -51,7 +68,7 @@ $pgv_lang["adv_site_config"] 			= "מתקדם";
 $pgv_lang["config_not_saved"] 		= "הגדרותיך לא ישמרו<br />עד שלב 6";
 $pgv_lang["download_config"] 		= "הורד config.php";
 $pgv_lang["site_unavailable"] 			= "האתר אינו זמין כרגע";
-$pgv_lang["to_manage_users"] 		= "כדי לנהל משתמשים, השתמש בדף <a href=\"useradmin.php\">אדמיניסטרצית משתמשים</a>.";
+$pgv_lang["to_manage_users"] 		= "כדי לנהל משתמשים, השתמש בדף <a href=\"useradmin.php\">ניהול משתמשים</a>.";
 $pgv_lang["db_tables_created"] 		= "טבלאות מאגר המידע נוצרו בהצלחה";
 $pgv_lang["config_saved"] 			= "התצורה נשמרה בהצלחה";
 $pgv_lang["checking_errors"]			= "בודק שגיאות...";
