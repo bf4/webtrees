@@ -864,6 +864,8 @@ $pgv_lang["view_fam_nav_research"]	= "הצג מחקר עבור ...";
 $pgv_lang["view_fam_nav_map"]	= "הצג מפה עבור ...";
 $pgv_lang["view_fam_nav_spare"]	= "הצג נתונים חלופיים עבור ...";
 $pgv_lang["navigator"]			= "נווט";
+$pgv_lang["fam_navigator"]		= "נווט משפחה";
+
 $pgv_lang["relationship_great"]	= "Great"; //--@#@ ??
 $pgv_lang["relationship_chart"]	= "קירבה משפחתית";
 $pgv_lang["person1"]			= "אדם א'";
