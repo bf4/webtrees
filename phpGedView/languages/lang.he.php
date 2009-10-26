@@ -1486,6 +1486,8 @@ $pgv_lang["son_of"]			= "בן של";
 $pgv_lang["daughter_of"]		= "בת של";
 $pgv_lang["child_of"]			= "ילד/ה של ";
 $pgv_lang["children_of"]		= "ילדים של ";
+$pgv_lang["descendancy_pronoun_m"]	= "הוא ";
+$pgv_lang["descendancy_pronoun_f"]	= "היא ";
 
 $pgv_lang["family_group_report"]    	= "דו\"ח קבוצת המשפחה";
 $pgv_lang["page"]                   		= "דף";
