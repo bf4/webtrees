@@ -864,6 +864,7 @@ $pgv_lang["view_fam_nav_research"]		= "Zeige Forschungen über ...";
 $pgv_lang["view_fam_nav_map"]			= "Zeige Landkarte über ...";
 $pgv_lang["view_fam_nav_spare"]			= "Zeige andere Informationen über ...";
 $pgv_lang["navigator"]					= "Navigator";
+$pgv_lang["fam_navigator"]				= "Familien-Navigator";
 
 $pgv_lang["relationship_great"]			= "Ur";
 $pgv_lang["relationship_chart"]			= "Verwandtschaftsberechnung";
