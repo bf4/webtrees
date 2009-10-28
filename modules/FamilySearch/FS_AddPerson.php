@@ -28,7 +28,7 @@ include_once("includes/classes/class_person.php");
 require_once("modules/FamilySearch/config.php");
 include_once("modules/FamilySearch/RA_AutoMatch.php");
 
-if (!userGedcomAdmin(getUserName())) {
+if (!PGV_USER_CAN_EDIT) {
 	header('Location: index.php');
 	exit;
 }
@@ -56,7 +56,7 @@ else {
 	?>
 	was successfully added.  This person's ID on the remote site is <?php print $fsid; ?><br /><br />
 	<p>
-	<a href="module.php?mod=FamilySearch&amp;pgvaction=FS_Relatives&pid=<?php echo $pid;?>">Continue to Relatives</a>
+	<a href="module.php?mod=FamilySearch&amp;pgvaction=FS_Relatives&pid=<?php echo $pid;?>&fsid=<?php echo $fsid ?>">Continue to Relatives</a>
 	</p>
 	<?php } else { ?>
 		<p class="error">There was an error adding this person to FamilySearch.</p>

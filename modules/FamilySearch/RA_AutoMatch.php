@@ -544,6 +544,8 @@ class RA_AutoMatch {
 					}
 				}
 				
+				//TODO add notes
+				
 				return $fsid;
 			}
 		}
@@ -574,14 +576,17 @@ class RA_AutoMatch {
 			$xga = $this->getXMLGed()->convertGedcomEvent($assertion, $xgperson);
 			if ($xga) $assertions[] = $xga;
 		}
-		$xml .= XmlGedcom::assertionsToXml($assertions, true);
-		$xml .= '</assertions></person></persons>';
+//		print " ".count($assertions);
+		$axml = XmlGedcom::assertionsToXml($assertions, true);
+		if (empty($axml)) return $fsid;
+		$xml .= $axml;
+		$xml .= '</person></persons>';
 		$xml .= $this->xmlFooter;
-		print "<pre>".htmlentities($xml)."</pre>";
+	print "<pre>".htmlentities($xml)."</pre>";
 		//-- send the XML to familysearch
-		//$res = $this->getProxy()->addPerson($xml);
+		$res = $this->getProxy()->updatePerson($fsid, $xml);
 		//-- print the response for debugging
-		//print "<b>Response</b><br /><pre>".htmlentities(preg_replace("/></",">\n<", $res))."</pre>";
+	print "<b>Response</b><br /><pre>".htmlentities(preg_replace("/></",">\n<", $res))."</pre>";
 
 		//-- try to get the new familysearch id from the response
 		$ct = preg_match("/<person.*id=\"(.+)\"/", $res, $match);

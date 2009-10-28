@@ -36,6 +36,55 @@
  */
 define('GEDCOM_COMPLIANCE_LEVEL', 5.6);
 
+global $eventHandler;
+$eventHandler["adoption"]="ADOP";
+$eventHandler["adult christening"]="CHRA";
+$eventHandler["baptism"]="BAPM";
+$eventHandler["bar mitzvah"]="BARM";
+$eventHandler["bas mitzvah"]="BASM";
+$eventHandler["birth"]="BIRT";
+$eventHandler["blessing"]="BLES";
+$eventHandler["burial"]="BURI";
+$eventHandler["christening"]="CHR";
+$eventHandler["cremation"]="CREM";
+$eventHandler["death"]="DEAT";
+$eventHandler["graduation"]="GRAD";
+$eventHandler["immigration"]="IMMI";
+$eventHandler["military service"]="_MILI";
+$eventHandler["naturalization"]="NATU";
+$eventHandler["probate"]="PROB";
+$eventHandler["retirement"]="RETI";
+$eventHandler["will"]="WILL";
+$eventHandler["annulment"]="ANUL";
+$eventHandler["divorce"]="DIV";
+$eventHandler["divorce filing"]="DIVF";
+$eventHandler["marriage"]="MARR";
+$eventHandler["marriage banns"]="MARB";
+$eventHandler["marriage contract"]="MARC";
+$eventHandler["marriage license"]="MARL";
+$eventHandler["other"]="EVEN";
+$eventHandler["census"]="CENS";
+
+global $factHandler;
+$factHandler["caste name"]="CAST";
+$factHandler["national id"]="SSN";
+$factHandler["national origin"]="NATI";
+$factHandler["nobility title"]="TITL";
+$factHandler["occupation"]="OCCU";
+$factHandler["physical description"]="DSCR";
+$factHandler["race"]="NATI";
+$factHandler["religious affiliation"]="RELI";
+$factHandler["stillborn"]="STIL";
+$factHandler["common law marriage"]="_COML";
+//$factHandler["notes"]="NOTE";
+
+global $ordinanceHandler;
+$ordinanceHandler["baptism"] = "BAPL";
+$ordinanceHandler["confirmation"] = "CONL";
+$ordinanceHandler["endowment"] = "ENDL";
+$ordinanceHandler["sealing to spouse"] = "SLGS";
+$ordinanceHandler["sealing to parents"] = "SLGC";
+
 /**
  * This is the main class, all work is done through this
  * send it XML with parseXML($theXMLasAString)
@@ -362,51 +411,53 @@ class XmlGedcom {
 			if ($NewXGPerson) $XGAssertion->setPerson($NewXGPerson);
 			$XGAssertion->addRecordInfo($genderec, $person_class);
 		}
-			$factrec = $factObj->getGedcomRecord();
-			$fact = $factObj->getTag();
-			if ($fact=='SSN') return null;
-			/* XG_Event*/
-			$xmltype = array_search($fact, $eventHandler);
-			if ($xmltype!==false) {
-				$XGAssertion = new XG_Event();
-				if ($NewXGPerson) $XGAssertion->setPerson($NewXGPerson);
-				$XGAssertion->addType($factrec, $person_class, $xmltype);
-				$XGAssertion->addDate($factrec, $person_class);
-				$XGAssertion->addPlace($factrec, $person_class);
-				$XGAssertion->addSpouse($factrec, $person_class);
-				$XGAssertion->addScope($factrec, $person_class);
-				$XGAssertion->addTitle($factrec, $person_class);
-				$XGAssertion->addRecordInfo($factrec, $person_class);
-				$XGAssertion->setDescription($factObj->getDetail());
-			}
+		
+		
+		$factrec = $factObj->getGedcomRecord();
+		$fact = $factObj->getTag();
+		if ($fact=='SSN') return null;
+		/* XG_Event*/
+		$xmltype = array_search($fact, $eventHandler);
+		if ($xmltype!==false) {
+			$XGAssertion = new XG_Event();
+			if ($NewXGPerson) $XGAssertion->setPerson($NewXGPerson);
+			$XGAssertion->addType($factrec, $person_class, $xmltype);
+			$XGAssertion->addDate($factrec, $person_class);
+			$XGAssertion->addPlace($factrec, $person_class);
+			$XGAssertion->addSpouse($factrec, $person_class);
+			$XGAssertion->addScope($factrec, $person_class);
+			$XGAssertion->addTitle($factrec, $person_class);
+			$XGAssertion->addRecordInfo($factrec, $person_class);
+			$XGAssertion->setDescription($factObj->getDetail());
+		}
 
-			/* XG_Ordinance */
-			$xmltype = array_search($fact, $ordinanceHandler);
-			if($xmltype!==false) {
-				$XGAssertion = new XG_Ordinance();
-				if ($NewXGPerson) $XGAssertion->setPerson($NewXGPerson);
-				$XGAssertion->addType($factrec, $person_class, $xmltype);
-				$XGAssertion->addDate($factrec, $person_class);
-				$XGAssertion->addPlace($factrec, $person_class);
-				$XGAssertion->addSpouse($factrec, $person_class);
-				$XGAssertion->addScope($factrec, $person_class);
-				$temple = get_gedcom_value("TEMP", 2, $factrec, '', false);
-				$XGAssertion->setTemple($temple);
-				$XGAssertion->addRecordInfo($factrec, $person_class);
-			}
+		/* XG_Ordinance */
+		$xmltype = array_search($fact, $ordinanceHandler);
+		if($xmltype!==false) {
+			$XGAssertion = new XG_Ordinance();
+			if ($NewXGPerson) $XGAssertion->setPerson($NewXGPerson);
+			$XGAssertion->addType($factrec, $person_class, $xmltype);
+			$XGAssertion->addDate($factrec, $person_class);
+			$XGAssertion->addPlace($factrec, $person_class);
+			$XGAssertion->addSpouse($factrec, $person_class);
+			$XGAssertion->addScope($factrec, $person_class);
+			$temple = get_gedcom_value("TEMP", 2, $factrec, '', false);
+			$XGAssertion->setTemple($temple);
+			$XGAssertion->addRecordInfo($factrec, $person_class);
+		}
 
-			/* XG_Fact */
-			$xmltype = array_search($fact, $factHandler);
-			if ($xmltype!==false) {
-				$XGAssertion = new XG_Characteristic();
-				if ($NewXGPerson) $XGAssertion->setPerson($NewXGPerson);
-				$XGAssertion->addType($factrec, $person_class, $xmltype);
-				$XGAssertion->addDate($factrec, $person_class);
-				$XGAssertion->addPlace($factrec, $person_class);
-				$XGAssertion->addTitle($factrec, $person_class);
-				$XGAssertion->addRecordInfo($factrec, $person_class);
-				$XGAssertion->setDetail($factObj->getDetail());
-			}
+		/* XG_Fact */
+		$xmltype = array_search($fact, $factHandler);
+		if ($xmltype!==false) {
+			$XGAssertion = new XG_Characteristic();
+			if ($NewXGPerson) $XGAssertion->setPerson($NewXGPerson);
+			$XGAssertion->addType($factrec, $person_class, $xmltype);
+			$XGAssertion->addDate($factrec, $person_class);
+			$XGAssertion->addPlace($factrec, $person_class);
+			$XGAssertion->addTitle($factrec, $person_class);
+			$XGAssertion->addRecordInfo($factrec, $person_class);
+			$XGAssertion->setDetail($factObj->getDetail());
+		}
 		return $XGAssertion;
 	}
 
@@ -629,33 +680,58 @@ class XmlGedcom {
 	 */
 	static function assertionsToXml($assertions, $forAdd=false) {
 		$xml = "";
+		$count = 0;
 		$xml.="<assertions>\n";
 		//-- names
 		$xml .= "<names>";
 		if(!empty($assertions)){
 			foreach($assertions as $assertion){
-				if ($assertion instanceof XG_Name) $xml.=$assertion->toXml($forAdd);
+				if ($assertion instanceof XG_Name) {
+					$axml=$assertion->toXml($forAdd);
+					if (!empty($axml)) {
+						$count++;
+						$xml.=$axml;
+					}
+				}
 			}
 		}
 		$xml .= "</names>";
 		$xml .= "<genders>";
 		if(!empty($assertions)){
 			foreach($assertions as $assertion){
-				if ($assertion instanceof XG_Gender) $xml.=$assertion->toXml($forAdd);
+				if ($assertion instanceof XG_Gender) {
+					$axml.=$assertion->toXml($forAdd);
+					if (!empty($axml)) {
+						$count++;
+						$xml.=$axml;
+					}
+				}
 			}
 		}
 		$xml .= "</genders>";
 		$xml .= "<events>";
 		if(!empty($assertions)){
 			foreach($assertions as $assertion){
-				if ($assertion instanceof XG_Event) $xml.=$assertion->toXml($forAdd);
+				if ($assertion instanceof XG_Event) {
+					$axml.=$assertion->toXml($forAdd);
+					if (!empty($axml)) {
+						$count++;
+						$xml.=$axml;
+					}
+				}
 			}
 		}
 		$xml .= "</events>";
 		$xml .= "<characteristics>";
 		if(!empty($assertions)){
 			foreach($assertions as $assertion){
-				if ($assertion instanceof XG_Characteristic) $xml.=$assertion->toXml($forAdd);
+				if ($assertion instanceof XG_Characteristic) {
+					$axml.=$assertion->toXml($forAdd);
+					if (!empty($axml)) {
+						$count++;
+						$xml.=$axml;
+					}
+				}
 			}
 		}
 		$xml .= "</characteristics>";
@@ -664,13 +740,20 @@ class XmlGedcom {
 			foreach($assertions as $assertion){
 				if ($assertion instanceof XG_Ordinance) {
 					//-- only ordinances with places can be added
-					if (!$forAdd || ($assertion->getPlace()!=null && $assertion->getPlace()->getOriginal()!="")) $xml.=$assertion->toXml($forAdd);
+					if (!$forAdd || ($assertion->getPlace()!=null && $assertion->getPlace()->getOriginal()!="")) {
+						$axml.=$assertion->toXml($forAdd);
+						if (!empty($axml)) {
+							$count++;
+							$xml.=$axml;
+						}
+					}
 				}
 			}
 		}
 		$xml .= "</ordinances>";
 		$xml.="</assertions>\n";
-		return $xml;
+		if ($count>0) return $xml;
+		return '';
 	}
 
 	//main parser methods
@@ -2354,17 +2437,35 @@ class XG_Citation{
 /**
  *  a note about the information.
  */
-class XG_Note{
+class XG_Note extends XG_HasAssertions {
 
 	//Fields
 	var $note;
 	var $id;
 	var $tempId;
+	var $person;
+	var $submitter;
+	var $contributor;
 
 	function toXml(){
 		$xml='';
 		$xml.="<note id=\"".$this->id."\">";
-		$xml.=$this->note;
+		if (!empty($this->contributor)) $xml .= '<contributor id="'.$this->contributor.'" />';
+		if (!empty($this->submitter)) $xml .= '<submitter id="'.$this->submitter.'" />';
+		if (!empty($this->person)) $xml .= '<person id="'.$this->person->getRef().'" />';
+		foreach($this->assertions as $assertion) {
+			$xml .= '<assertion id="'.$assertion->getId().'" />';
+		}
+		foreach($this->parents as $parent) {
+			$xml .= '<parents id="'.$parent->getRef().'" />';
+		}
+		foreach($this->spouses as $spouse) {
+			$xml .= '<spouses id="'.$spouse->getRef().'" />';
+		}
+		foreach($this->children as $child) {
+			$xml .= '<child id="'.$chld->getRef().'" />';
+		}
+		$xml.="<text>".$this->note."</text>";
 		$xml.="\n</note>\n";
 		return $xml;
 	}
@@ -2394,6 +2495,13 @@ class XG_Note{
 	function setTempId($value){
 		$this->tempId=$value;
 	}
+	
+	function getPerson() { return $this->person; }
+	function setPerson($person) { $this->person = $person; }
+	function getSubmitter() { return $this->submitter; }
+	function setSubmitter($s) { $this->submitter = $s; }
+	function getContributor() { return $this->contributor; }
+	function setContributor($c) { $this->contributor = $c; }
 
 	/**
 	 * gets the GEDCOM snippet for this note
@@ -3838,54 +3946,6 @@ class XG_Fact extends XG_Assertion{
 	}
 }
 
-global $eventHandler;
-$eventHandler["adoption"]="ADOP";
-$eventHandler["adult christening"]="CHRA";
-$eventHandler["baptism"]="BAPM";
-$eventHandler["bar mitzvah"]="BARM";
-$eventHandler["bas mitzvah"]="BASM";
-$eventHandler["birth"]="BIRT";
-$eventHandler["blessing"]="BLES";
-$eventHandler["burial"]="BURI";
-$eventHandler["christening"]="CHR";
-$eventHandler["cremation"]="CREM";
-$eventHandler["death"]="DEAT";
-$eventHandler["graduation"]="GRAD";
-$eventHandler["immigration"]="IMMI";
-$eventHandler["military service"]="_MILI";
-$eventHandler["naturalization"]="NATU";
-$eventHandler["probate"]="PROB";
-$eventHandler["retirement"]="RETI";
-$eventHandler["will"]="WILL";
-$eventHandler["annulment"]="ANUL";
-$eventHandler["divorce"]="DIV";
-$eventHandler["divorce filing"]="DIVF";
-$eventHandler["marriage"]="MARR";
-$eventHandler["marriage banns"]="MARB";
-$eventHandler["marriage contract"]="MARC";
-$eventHandler["marriage license"]="MARL";
-$eventHandler["other"]="EVEN";
-$eventHandler["census"]="CENS";
-
-global $factHandler;
-$factHandler["caste name"]="CAST";
-$factHandler["national id"]="SSN";
-$factHandler["national origin"]="NATI";
-$factHandler["nobility title"]="TITL";
-$factHandler["occupation"]="OCCU";
-$factHandler["physical description"]="DSCR";
-$factHandler["race"]="NATI";
-$factHandler["religious affiliation"]="RELI";
-$factHandler["stillborn"]="STIL";
-$factHandler["common law marriage"]="_COML";
-$factHandler["notes"]="NOTE";
-
-global $ordinanceHandler;
-$ordinanceHandler["baptism"] = "BAPL";
-$ordinanceHandler["confirmation"] = "CONL";
-$ordinanceHandler["endowment"] = "ENDL";
-$ordinanceHandler["sealing to spouse"] = "SLGS";
-$ordinanceHandler["sealing to parents"] = "SLGC";
 
 /**
  * an event. Based off of the type of event and the description.

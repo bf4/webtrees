@@ -35,7 +35,7 @@ require_once('config.php');
 require_once('modules/FamilySearch/RA_AutoMatch.php');
 require_once("includes/functions/functions_print_facts.php");
 
-if (!userGedcomAdmin(getUserName())) {
+if (!PGV_USER_CAN_EDIT) {
 	header('Location: index.php');
 	exit;
 }
@@ -115,13 +115,32 @@ if ($action=='save') {
 		} 
 	}
 	//print "<pre>".$newlocal."</pre>";
-	if ($changedlocal) replace_gedrec($pid, $newlocal);
 	//print "<pre>".$newremote."</pre>";
 	$remotePerson = new Person($newremote);
-	print count($deleteremote)." ".count($copytoremote);
+	//print count($deleteremote)." ".count($copytoremote);
 	
 	$newXG = $matcher->updatePerson($FSID, $deleteremote, $copytoremote);
-	print $newXG;
+	//print $newXG;
+	if ($newXG != $FSID) {
+		$gedrec = preg_replace("/".$FSID."/", $newXG, $gedrec);
+		$changedlocal = true;
+	}
+	if ($changedlocal) replace_gedrec($pid, $newlocal);
+	if (!empty($newXG)) {
+		?>
+	<p><?php print $localPerson->getFullName();	?>
+	was successfully updated.  This person's ID on the remote site is <?php print $newXG; ?><br /></p>
+	<p>
+	<a href="module.php?mod=FamilySearch&amp;pgvaction=FS_Relatives&pid=<?php echo $pid;?>&fsid=<?php echo $newXG ?>">Continue to Relatives</a>
+	</p>
+	<?php } else { ?>
+		<p class="error">There was an error adding this person to FamilySearch.</p>
+		<p class="error"><?php echo $adder->getXMLGed()->error->message?></p>
+	<?php } ?>
+	<p>
+	<a href="individual.php?pid=<?php echo $pid;?>">Go back to individual details for <?php echo $localPerson->getFullName()?></a>
+	</p>
+	<?php 
 } // ------- end save action
 else {
 
@@ -140,6 +159,7 @@ if ($FS_CONFIG['family_search_copyall'] || !empty($_REQUEST['copyall'])) {
 		if (!$found) {
 			$copied[] = $lfact;
 			$remotefacts[] = $lfact;
+			$lfact->copied = true;
 		}
 	}
 	foreach($remotefacts as $rfact) {
@@ -155,6 +175,7 @@ if ($FS_CONFIG['family_search_copyall'] || !empty($_REQUEST['copyall'])) {
 		if (!$found) {
 			$copied[]=$rfact;
 			$localfacts[] = $rfact;
+			$rfact->copied = true;
 		}
 	}
 }
@@ -306,7 +327,7 @@ if ($FS_CONFIG['family_search_copyall'] || !empty($_REQUEST['copyall'])) {
 				echo $out;
 				$copyText = "Copy --&gt;";
 				$isCopied = '';
-				if (in_array($fact, $copied)) {
+				if (isset($fact->copied)) {
 					$copyText = "Don't Copy";
 					$isCopied = 'Y';
 				}
@@ -345,7 +366,7 @@ if ($FS_CONFIG['family_search_copyall'] || !empty($_REQUEST['copyall'])) {
 				echo "<tr title=\"{$tag}\" class=\"{$tag}\" id=\"{$rowid}\">";
 				$copyText = "&lt;-- Copy";
 				$isCopied = '';
-				if (!$fact->getValue("_FSID")) {
+				if (isset($fact->copied)) {
 					$copyText = "Don't Copy";
 					$isCopied = 'Y';
 				}

@@ -66,7 +66,8 @@ class FamilySearchAPIClient {
 	'matchById'		=>	'/familytree/v2/match/',
 	'matchByQuery'	=>	'/familytree/v2/match?',
 	'mergePerson' => '/familytree/v2/person/',
-	'addRelationship' => '/familytree/v2/person/'
+	'addRelationship' => '/familytree/v2/person/',
+	'note' => '/familytree/v2/note/'
 	);
 
 	/**
@@ -357,16 +358,15 @@ class FamilySearchAPIClient {
 	}
 
 	/**
-	 * Requests with insufficient elements or non-valid values will
-	 * generate error messages.
-	 * A success response will return the Person ID.
-	 * @param $person the person to be add
-	 * @param $errorXML if the return value contain errors, setting errorXML to 'false' will
-	 * 		return a message decribe the errors, if set to true, will return the error in
-	 * 		xml, default is true
+	 * Post data to family search url
+	 * This method is meant to be called by other methods
+	 * @param $data
+	 * @param $con
+	 * @param $errorXML
+	 * @return unknown_type
 	 */
-	function addPerson($person, $errorXML = true){
-		//-- check that we are loggedin
+	function postData($data, $con, $errorXML = true) {
+	//-- check that we are loggedin
 		if (!$this->loggedin) {
 			$result = $this->authenticate($errorXML);
 			if (!$this->loggedin) return $result;
@@ -379,10 +379,6 @@ class FamilySearchAPIClient {
 			return "connection string is not set or authentication required";
 		}
 
-		$con = '';
-		//build the connection string
-		$con = $this->url.$this->paths['addPerson'];
-		
 		$sep = '?';
 		if (strpos($con, $sep)!==false) $sep = "&";
 		
@@ -396,7 +392,7 @@ class FamilySearchAPIClient {
 		$request->addHeader("Content-Type", "text/xml");
 		$request->setURL($con);
 		$request->setMethod(HTTP_REQUEST_METHOD_POST);
-		$request->setBody($person);
+		$request->setBody($data);
 		//print "<br /><pre>".$request->_buildRequest()."</pre>\n";
 		//var_dump($request);
 
@@ -408,7 +404,29 @@ class FamilySearchAPIClient {
 		else {
 			return $this->checkErrors($request->getResponseBody());
 		}
+	}
 
+	/**
+	 * Requests with insufficient elements or non-valid values will
+	 * generate error messages.
+	 * A success response will return the Person ID.
+	 * @param $person the person to be add
+	 * @param $errorXML if the return value contain errors, setting errorXML to 'false' will
+	 * 		return a message decribe the errors, if set to true, will return the error in
+	 * 		xml, default is true
+	 */
+	function addPerson($person, $errorXML = true){
+		$con = '';
+		//build the connection string
+		$con = $this->url.$this->paths['addPerson'];
+		return $this->postData($person, $con, $errorXML);
+	}
+	
+	function addNote($note, $errorXML = true){
+		$con = '';
+		//build the connection string
+		$con = $this->url.$this->paths['note'];
+		return $this->postData($note, $con, $errorXML);
 	}
 	
 	/**
@@ -422,50 +440,12 @@ class FamilySearchAPIClient {
 	 * @return string	the xml response
 	 */
 	function addRelationship($fsid, $type, $relatedid, $xml, $errorXML = true){
-		//-- check that we are loggedin
-		if (!$this->loggedin) {
-			$result = $this->authenticate($errorXML);
-			if (!$this->loggedin) return $result;
-		}
-
-		$this->hasError = false;
-		//check the current url
-		if(empty($this->url)  || !$this->loggedin){
-			$this->hasError = true;
-			return "connection string is not set or authentication required";
-		}
-
 		$con = '';
 		//build the connection string
 		$con = $this->url.$this->paths['addPerson'];
 		$con .= "/".$fsid."/".$type."/".$relatedid;
 		
-		$sep = '?';
-		if (strpos($con, $sep)!==false) $sep = "&";
-		
-		//-- add the session id
-		$con .= $sep.$this->SESSIONID_NAME."=".$this->sessionid;
-		//print $con ."\n";
-		
-		//create the request object
-		$request = new HTTP_Request();
-		$request->addHeader("User-Agent", $this->agent);
-		$request->addHeader("Content-Type", "text/xml");
-		$request->setURL($con);
-		$request->setMethod(HTTP_REQUEST_METHOD_POST);
-		$request->setBody($xml);
-		//print "<br /><pre>".htmlentities($request->_buildRequest())."</pre>\n";
-		//var_dump($request);
-
-		//send the request and return the xml
-		$request->sendRequest();
-
-		if($errorXML) 
-			return $request->getResponseBody();
-		else {
-			return $this->checkErrors($request->getResponseBody());
-		}
-
+		return $this->postData($xml, $con, $errorXML);
 	}
 
 	/**
@@ -481,54 +461,11 @@ class FamilySearchAPIClient {
 	 * @return string	the XML response
 	 */
 	function updatePerson($id, $person, $errorXML = true){
-
-		//-- check that we are loggedin
-		if (!$this->loggedin) {
-			$result = $this->authenticate($errorXML);
-			if (!$this->loggedin) return $result;
-		}
-
-		$this->hasError = false;
-		//check the current url
-		if(empty($this->url)  || !$this->loggedin){
-			$this->hasError = true;
-			return "connection string is not set or authentication required";
-		}
-
 		$con = '';
 		//build the connection string
 		$con = $this->url.$this->paths['updatePersonById'].$id;
-		
-		$sep = '?';
-		if (strpos($con, $sep)!==false) $sep = "&";
-		
-		//-- add the session id
-		$con .= $sep.$this->SESSIONID_NAME."=".$this->sessionid;
 
-		//create the request object
-		$request = new HTTP_Request();
-		$request->_useBrackets = false;
-		if (is_null($this->_cookies)) $request->setBasicAuth($this->userName, $this->password);
-		else {
-			foreach($this->_cookies as $c=>$cookie) {
-				$request->addCookie($cookie['name'], $cookie['value']);
-			}
-		}
-		$request->addHeader("User-Agent", $this->agent);
-		$request->addHeader("Content-Type", "text/xml");
-		$request->setURL($con);
-		$request->setMethod(HTTP_REQUEST_METHOD_POST);
-		$request->setBody($person);
-		if ($this->DEBUG) print "<br /><pre>".$request->_buildRequest()."</pre>\n";
-
-		//send the request and return the xml
-		$request->sendRequest();
-
-		if($errorXML) 
-			return $request->getResponseBody();
-		else {
-			return $this->checkErrors($request->getResponseBody());
-		}
+		return $this->postData($person, $con, $errorXML);
 	}
 
 	/**

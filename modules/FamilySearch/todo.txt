@@ -2,7 +2,7 @@ FS TODO
 Have a version/date check on merge to show if there are recent changes
 
 Citations endpoint
-Notes endpoint
+Notes endpoint (partial)
 
 SQL changes
 ALTER TABLE `phpgedview`.`pgv_dates` MODIFY COLUMN `d_gid` VARCHAR(40) NOT NULL;
