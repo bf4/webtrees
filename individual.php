@@ -95,7 +95,6 @@ function resize_content_div(i) {
 <?php }?>
 <script type="text/javascript">
 //<![CDATA[
-
 var selectedTab="<?php echo safe_get('tab')?>";
 if (selectedTab != "" && selectedTab != "undefined" && selectedTab != null) {
 	var selectedTab = selectedTab;
@@ -120,7 +119,7 @@ jQuery(document).ready(function(){
 	jQuery("#tabs").tabs({ cache: true, selected: <?php echo $controller->default_tab?> });
 	var $tabs = jQuery('#tabs');
     jQuery('#tabs').bind('tabsshow', function(event, ui) {
-    	if ($tabs) selectedTab = $tabs.tabs('option', 'selected');
+    	if ($tabs) selectedTab = ui.tab.name;
 
 	<?php
 	foreach($controller->modules as $mod) {
@@ -158,12 +157,12 @@ jQuery(document).ready(function(){
    	$tabcount = 0; 
 	foreach($controller->modules as $mod) {
 		if ($mod!=$controller->static_tab && $mod->hasTab()) {
-			if ($tabcount==$controller->default_tab+1 || !$mod->getTab()->canLoadAjax()) {
+			if ($tabcount==$controller->default_tab || !$mod->getTab()->canLoadAjax()) {
 				$modjs = $mod->getTab()->getJSCallback();
 				echo $modjs."\n";
 			}
+			if ($mod->getTab()->hasContent()) $tabcount++; 
 		}
-		$tabcount++; 
 	}
    	?>
 });
@@ -301,15 +300,15 @@ foreach($controller->modules as $mod) {
 	$tabcount = 0; 
 	foreach($controller->modules as $mod) {
 		if ($mod!=$controller->static_tab && $mod->hasTab()) {
-			if ($tabcount==$controller->default_tab+1 || !$mod->getTab()->canLoadAjax()) {?>
+			if ($tabcount==$controller->default_tab || !$mod->getTab()->canLoadAjax()) {?>
 				<li class="ui-state-default ui-corner-top"><a name="<?php echo $mod->getName(); ?>" title="<?php echo $mod->getName(); ?>" href="#<?php echo $mod->getName()?>"><span><?php echo $pgv_lang[$mod->getName()]?></span></a></li>
 			<?php } else if ($mod->hasTab() && $mod->getTab() && ($mod->getTab()->hasContent() || PGV_USER_CAN_EDIT)) { ?>
 				<li class="ui-state-default ui-corner-top"><a name="<?php echo $mod->getName(); ?>" title="<?php echo $mod->getName(); ?>" href="individual.php?action=ajax&amp;module=<?php echo $mod->getName()?>&amp;pid=<?php echo $controller->pid?>">
 					<span><?php echo $pgv_lang[$mod->getName()]?></span>
 					</a></li>
 			<?php } 
+			if ($mod->getTab()->hasContent()) $tabcount++; 
 		}
-		$tabcount++; 
 	}
 	if ($controller->static_tab) {
 		?><li class="ui-state-default ui-corner-top static_tab"><a name="<?php echo $controller->static_tab->getName(); ?>" href="#<?php echo $controller->static_tab->getName()?>"><span><?php echo $pgv_lang[$controller->static_tab->getName()]?></span></a>
@@ -322,13 +321,13 @@ foreach($controller->modules as $mod) {
 $tabcount = 0; 
 foreach($controller->modules as $mod) {
 	if ($mod!=$controller->static_tab && $mod->hasTab()) {
-	if ($tabcount==$controller->default_tab+1 || !$mod->getTab()->canLoadAjax()) {?>
+	if ($tabcount==$controller->default_tab || !$mod->getTab()->canLoadAjax()) {?>
 	<div id="<?php echo $mod->getName()?>" class="ui-tabs-panel ui-widget-content ui-corner-bottom">
 		<?php echo $mod->getTab()->getContent(); ?>
 	</div>	
 	<?php }
+	if ($mod->getTab()->hasContent()) $tabcount++; 
 	}
-	$tabcount++; 
  } ?>
 </div> <!-- tabs -->
 <?php if ($controller->static_tab) { ?>

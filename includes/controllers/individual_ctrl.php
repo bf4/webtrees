@@ -267,18 +267,22 @@ class IndividualControllerRoot extends BaseController {
 		
 		$this->modules = PGVModule::getActiveList('T');
 		uasort($this->modules, "PGVModule::compare_tab_order");
+		$count = 0;
 		foreach($this->modules as $mod) {
 			if ($mod->hasTab()) {
 				$tab = $mod->getTab();
 				if ($tab) {
 					$tab->setController($this);
-					if ($this->static_tab==null) $this->static_tab = $mod;
+					if ($tab->hasContent()) {					
+						//-- convert default tab as name to number
+						if ($mod->getName()==$this->default_tab) $this->default_tab = $count-1;
+						if ($this->static_tab==null) $this->static_tab = $mod;
+						$count++;
+					}
 				}
 			}
 		}
-		
 		if ($this->default_tab<0 || $this->default_tab > count($this->modules)-1) $this->default_tab=0;
-
 		//-- handle ajax calls
 		if ($this->action=="ajax") {
 			$tab = 0;
