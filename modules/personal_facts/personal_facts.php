@@ -36,8 +36,8 @@ class personal_facts_Tab extends Tab {
 			<tr id="row_top">
 				<td valign="top"></td>
 				<td class="descriptionbox rela">
-					<input id="checkbox_rela" type="checkbox" <?php if ($EXPAND_RELATIVES_EVENTS) echo " checked=\"checked\""?> onclick="toggleByClassName('TR', 'row_rela');" />
-					<label for="checkbox_rela"><?php echo $pgv_lang["relatives_events"]?></label>
+					<input id="checkbox_rela_facts" type="checkbox" <?php if ($EXPAND_RELATIVES_EVENTS) echo " checked=\"checked\""?> onclick="toggleByClassName('TR', 'row_rela');" />
+					<label for="checkbox_rela_facts"><?php echo $pgv_lang["relatives_events"]?></label>
 					<?php if (file_exists("languages/histo.".$lang_short_cut[$LANGUAGE].".php")) {?>
 						<input id="checkbox_histo" type="checkbox" <?php if ($EXPAND_HISTO_EVENTS) echo " checked=\"checked\""?> onclick="toggleByClassName('TR', 'row_histo');" />
 						<label for="checkbox_histo"><?php echo $pgv_lang["historical_facts"]?></label>

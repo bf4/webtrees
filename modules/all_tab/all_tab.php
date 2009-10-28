@@ -12,7 +12,10 @@ class all_tab_Tab extends Tab {
 		$i = 0;
 		foreach($this->controller->modules as $mod) {
 			if ($mod->hasTab()) {
-				if ($i>0 && $mod->getName()!='all_tab') $out .= $mod->getTab()->getContent();
+				if ($i>0 && $mod->getName()!='all_tab') {
+					if ($mod->getName()!="tree" || $mod->getName()!="googlemap") $out .= preg_replace("/(id|for)=\"(\w+)\"/", "$1=\"all_$2\"", $mod->getTab()->getContent());
+					else $out .= preg_replace("/(id|for)=\"(\w+)\"/", "$1=\"all_$2\"", $mod->getTab()->getContent());
+				}
 				$i++;
 			}
 		}
