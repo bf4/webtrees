@@ -68,7 +68,7 @@ define('VAV_YOD', 'ױ');
  * Used to transform the Name string to simplify the "sounds like" table.
  * This is especially useful in Hebrew.
  *
- * Each array entry defines the "from" and "to" arguments of an ereg($from, $to, $text)
+ * Each array entry defines the "from" and "to" arguments of an preg($from, $to, $text)
  * function call to achieve the desired transformations.
  *
  * Note about the use of "\x01":
