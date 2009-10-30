@@ -2380,7 +2380,7 @@ function create_edit_form($gedrec, $linenum, $level0type) {
 	$glevel = $fields[0];
 	$level = $glevel;
 
-	if ($level!=1 && eregi("/@.*/@", trim($fields[1]))) {
+	if ($level!=1 && preg_match("/\/@.*\/@/i", trim($fields[1]))) {
 		echo "<span class=\"error\">".$pgv_lang["edit_concurrency_msg1"]."<br /><br />";
 		echo $pgv_lang["edit_concurrency_reload"]."</span>";
 		return;
@@ -2443,7 +2443,7 @@ function create_edit_form($gedrec, $linenum, $level0type) {
 		}
 
 		// Shared Note -------------
-		//if (eregi("@N.*@", $type)) {
+		//if (eregi("/@N.*@/i", $type)) {
 		//	$type="note";
 		//}
 

@@ -3730,19 +3730,19 @@ function mediaFileInfo($fileName, $thumbName, $mid, $name='', $notes='', $obeyVi
 	$result = array();
 
 	// -- Classify the incoming media file
-	if (eregi("^https?://", $fileName)) $type = "url_";
+	if (preg_match("/^https?:\/\//i", $fileName)) $type = "url_";
 	else $type = "local_";
-	if ((eregi("\.flv$", $fileName) || eregi("^https?://.*\.youtube\..*/watch\?", $fileName)) && is_dir('modules/JWplayer')) {
+	if ((preg_match("/\.flv$/i", $fileName) || preg_match("/^https?://.*\.youtube\..*/watch\?/i", $fileName)) && is_dir('modules/JWplayer')) {
 		$type .= "flv";
-	} else if (eregi("^https?://picasaweb*\.google\..*/.*/", $fileName)) {
+	} else if (preg_match("/^https?://picasaweb*\.google\..*/.*//i", $fileName)) {
 		$type .= "picasa";
-	} else if (eregi("\.(jpg|jpeg|gif|png)$", $fileName)) {
+	} else if (preg_match("/\.(jpg|jpeg|gif|png)$/i", $fileName)) {
 		$type .= "image";
-	} else if (eregi("\.(pdf|avi|txt)$", $fileName)) {
+	} else if (preg_match("/\.(pdf|avi|txt)$/i", $fileName)) {
 		$type .= "page";
-	} else if (eregi("\.mp3$", $fileName)) {
+	} else if (preg_match("/\.mp3$/i", $fileName)) {
 		$type .= "audio";
-	} else if (eregi("\.wmv$", $fileName)) {
+	} else if (preg_match("/\.wmv$/i", $fileName)) {
 		$type .= "wmv";
 	} else $type .= "other";
 	// $type is now: (url | local) _ (flv | picasa | image | page | audio | other)

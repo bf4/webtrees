@@ -228,18 +228,18 @@ $real = false;
 
 if($ua != "") {
 	foreach($real_browsers as $browser_check) {
-		if (eregi($browser_check, $ua)!==false) {
+		if (preg_match("/".$browser_check."/i", $ua)!==false) {
 			$real = true;
 			break;
 		}
 	}
 	// check for old Netscapes.
-	if (eregi("Mozilla/", $ua)) {
-		if (eregi("compatible", $ua)===false) {
-			if (eregi("\[..\]", $ua)!==false) {
+	if (preg_match("/Mozilla/i", $ua)) {
+		if (preg_match("/compatible/i", $ua)===false) {
+			if (preg_match("/\[..\]/i", $ua)!==false) {
 				$real = true;
 			}
-			if (eregi("Macintosh", $ua)!==false) {
+			if (preg_match("/Macintosh/i", $ua)!==false) {
 				$real = true;
 			}
 		}
@@ -255,11 +255,11 @@ else {
 if(!$real) {
 	$bot_name = $ua;
 	// strip out several common strings that clutter the User Agent.
-	$bot_name = eregi_replace("Mozilla\/... \(compatible;", "", $bot_name);
-	$bot_name = eregi_replace("Mozilla\/... ", "", $bot_name);
-	$bot_name = eregi_replace("Windows NT", "", $bot_name);
-	$bot_name = eregi_replace("Windows; U;", "", $bot_name);
-	$bot_name = eregi_replace("Windows", "", $bot_name);
+	$bot_name = preg_replace("/Mozilla\/... \(compatible;/i", "", $bot_name);
+	$bot_name = preg_replace("/Mozilla\/... /i", "", $bot_name);
+	$bot_name = preg_replace("/Windows NT/i", "", $bot_name);
+	$bot_name = preg_replace("/Windows; U;/i", "", $bot_name);
+	$bot_name = preg_replace("/Windows/i", "", $bot_name);
 
 	// Copy in characters, stripping out unwanteds until we are full, stopping at 70.
 	$y = 0;
@@ -337,7 +337,7 @@ $bots_not_allowed = array(
 );
 if (!empty($SEARCH_SPIDER)) {
 	foreach($bots_not_allowed as $place) {
-		if (eregi($place, $_SERVER['PHP_SELF'])) {
+		if (preg_match("/".$place."/i", $_SERVER['PHP_SELF'])) {
 			header("HTTP/1.0 403 Forbidden");
 			print "Sorry, this page is not available for search engine bots.";
 			exit;
