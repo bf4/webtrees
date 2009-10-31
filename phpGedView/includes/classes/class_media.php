@@ -350,13 +350,13 @@ class Media extends GedcomRecord {
 	}
 
 	// Get an array of structures containing all the names in the record
-	function getAllNames() {
+	public function getAllNames() {
 		if (strpos($this->gedrec, "\n1 TITL ")) {
 			// Earlier gedcom versions had level 1 titles
-			return parent::getAllNames('TITL', 1);
+			return $this->_getAllNames('TITL', 1);
 		} else {
 			// Later gedcom versions had level 2 titles
-			return parent::getAllNames('TITL', 2);
+			return $this->_getAllNames('TITL', 2);
 		}
 	}
 
