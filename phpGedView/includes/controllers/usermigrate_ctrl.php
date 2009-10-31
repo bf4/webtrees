@@ -392,7 +392,7 @@ class UserMigrateControllerRoot extends BaseController {
 
 			foreach($favorites as $newid => $favorite) {
 				$res = addFavorite($favorite);
-				if (!$res || DB::isError($res)) {
+				if (!$res) {
 					$this->errorMsg = "<span class=\"error\">Unable to update <i>Favorites</i> table.</span><br />\n";
 					return;
 				}
