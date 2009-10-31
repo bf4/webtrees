@@ -101,7 +101,7 @@ $linkToID=$controller->pid; // -- Tell addmedia.php what to link to
 						}
 					}
 			}
-			// Display summary birth/death info.  Note this info can come from various BIRT/CHR/BAPM/etc. records
+			// Display summary birth/death info.
 			$summary=$controller->indi->format_first_major_fact(PGV_EVENTS_BIRT, 2);
 			if (!($controller->indi->isDead())) {
 				// If alive display age
@@ -217,10 +217,9 @@ $linkToID=$controller->pid; // -- Tell addmedia.php what to link to
 		<?php } 
 			 } ?>
 	</td>
-	<td width="10"><br /></td>
 	</tr>
 	<tr>
-	<td valign="bottom" colspan="2">
+	<td valign="bottom" colspan="3">
 	<?php if ($controller->indi->isMarkedDeleted()) echo "<span class=\"error\">".$pgv_lang["record_marked_deleted"]."</span>"; ?>
 <script language="JavaScript" type="text/javascript">
 // <![CDATA[
@@ -442,15 +441,8 @@ if (file_exists('./modules/lightbox/album.php')) {
 <br />
 <?php
 }
-	echo "</td>";
-	echo "<td align=\"center\" valign=\"bottom\">";
-	// echo "<a href=\"javascript:;\" onclick=\" setfamnav(); return false;\" title=\"Navigator On/Off\" alt=\"\">&nbsp;&nbsp;";
-	// echo $pgv_lang["navigator"];
-	// echo "</a>";
-	echo "</td>";
-	echo "<td></td>";
-echo "</tr></table>";
 ?>
+</td></tr></table>
 <!-- ======================== Start Tab 0 individual page ============ Personal Facts and Details -->
 <?php
 if(empty($SEARCH_SPIDER))
