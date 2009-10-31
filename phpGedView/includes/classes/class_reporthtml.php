@@ -1149,7 +1149,7 @@ class PGVRTextHTML extends PGVRText {
 				$width = $html->getRemainingWidth();
 				// If text is wider then page width then wrap it
 				if ($html->GetStringWidth($temptext) > $width) {
-					$lines = split("\n", $temptext);
+					$lines = explode("\n", $temptext);
 					foreach ($lines as $line) {
 						print "<div style=\"position:absolute; top:".$startY."pt; ".$html->rtlalign.":".$startX."pt; width:".$width."pt;\">";
 						$line = $html->textWrap($line, $width);
