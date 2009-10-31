@@ -444,7 +444,6 @@ $TEXT_DIRECTION_array =array();
 $NAME_REVERSE_array   =array();
 
 foreach ($language_settings as $key => $value) {
-//	if (!isset($value['pgv_lang_self']) || !isset($value['pgv_language']) || !file_exists($value['pgv_language'])) continue;
 	if (!isset($value['pgv_lang_self']) || !isset($value['pgv_language'])) continue;
 	$languages[$key]            =$value["pgv_langname"];
 	$pgv_lang_use[$key]         =$value["pgv_lang_use"];
@@ -477,28 +476,24 @@ foreach ($language_settings as $key => $value) {
 }
 
 // -- Determine which of PGV's supported languages is topmost in the browser's language list
-if ((!$CONFIGURED || empty($LANGUAGE) || $ENABLE_MULTI_LANGUAGE) && empty($_SESSION["CLANGUAGE"]) && empty($SEARCH_SPIDER)) {
-	$acceptLangs = 'en';
-	if (isset($HTTP_ACCEPT_LANGUAGE)) $acceptLangs = $HTTP_ACCEPT_LANGUAGE;
-	else if (!empty($_SERVER['HTTP_ACCEPT_LANGUAGE'])) $acceptLangs = $_SERVER['HTTP_ACCEPT_LANGUAGE'];
+//if ((!$CONFIGURED || empty($LANGUAGE) || $ENABLE_MULTI_LANGUAGE) && empty($_SESSION["CLANGUAGE"]) && empty($SEARCH_SPIDER)) {
+if ((empty($LANGUAGE) || $ENABLE_MULTI_LANGUAGE) && empty($_SESSION["CLANGUAGE"]) && empty($SEARCH_SPIDER)) {
+	if (isset($HTTP_ACCEPT_LANGUAGE)) $browserLangPrefs = $HTTP_ACCEPT_LANGUAGE;
+	else if (!empty($_SERVER['HTTP_ACCEPT_LANGUAGE'])) $browserLangPrefs = $_SERVER['HTTP_ACCEPT_LANGUAGE'];
+	else $browserLangPrefs = 'en';
 	// Seach list of supported languages for this Browser's preferred page languages
-	$acceptLangsList = preg_split("/(,\s*)|(;\s*)/", $acceptLangs);
-	$preferredLang = '';
-	foreach ($acceptLangsList as $browserLang) {
+	$browserLangList = preg_split("/(,\s*)|(;\s*)/", $browserLangPrefs);
+	if (empty($LANGUAGE)) $LANGUAGE = 'english';		// Use English if we can't match any of the browser's preferred languages
+	foreach ($browserLangList as $browserLang) {
 		$browserLang = strtolower(trim($browserLang)).";";
 		foreach ($pgv_lang_use as $language => $active) {
-			if ($CONFIGURED && !$active) continue; // don't consider any language marked as "inactive"
+			if ($CONFIGURED && !$active) continue;	// Don't consider any language marked as "inactive"
 			if (strpos($lang_langcode[$language], $browserLang) === false) continue;
-			$preferredLang = $language; // we have a match
-			break;
+			$LANGUAGE = $language;	// We have a match
+			break 2;
 		}
-		if (!empty($preferredLang)) break; // no need to look further: a match was found
 	}
 }
-if (empty($preferredLang)) $preferredLang = 'english'; // If nothing matches, default to English
-
-// -- If the GEDCOM config doesn't specify a default, use the browser's topmost preference
-if (!$CONFIGURED || empty($LANGUAGE)) $LANGUAGE = $preferredLang;
 
 // -- If the user's profile specifies a preference, use that
 $thisUser = getUserId();
@@ -519,7 +514,7 @@ if (empty($SEARCH_SPIDER)) {
 if ($ENABLE_MULTI_LANGUAGE && empty($SEARCH_SPIDER)) {
 	if (isset($_REQUEST['changelanguage']) && strtolower($_REQUEST['changelanguage'])=='yes') {
 		if (!empty($_REQUEST['NEWLANGUAGE']) && isset($pgv_language[strtolower($_REQUEST['NEWLANGUAGE'])])) {
-			$LANGUAGE=strtolower($_REQUEST['NEWLANGUAGE']);
+			$LANGUAGE = strtolower($_REQUEST['NEWLANGUAGE']);
 			$_SESSION['CLANGUAGE'] = $LANGUAGE;
 			unset($_SESSION["upcoming_events"]);
 			unset($_SESSION["todays_events"]);
