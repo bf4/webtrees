@@ -88,7 +88,7 @@ function media_reorder_row($rtype, $rowm, $pid) {
 		//-- Thumbnail field
 		print "<img src=\"".$mediaInfo['thumb']."\" height=\"38\" border=\"0\" " ;
 
-		if ( preg_match("/1 SOUR/i",$rowm['m_gedrec'])) {
+		if ( preg_match("/1 SOUR/",$rowm['m_gedrec'])) {
 			print " alt=\"" . PrintReady($mediaTitle) . "\" title=\"" . PrintReady($mediaTitle) . "\nSource info available\" />";
 		}else{
 			print " alt=\"" . PrintReady($mediaTitle) . "\" title=\"" . PrintReady($mediaTitle) . "\" />";
