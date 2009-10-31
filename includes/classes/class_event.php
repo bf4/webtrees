@@ -474,8 +474,8 @@ class Event {
 				"SSN", "IDNO",
 				"TEMP",
 				"SLGC", "BAPL", "CONL", "ENDL", "SLGS",
-				"AFN", "REFN", "_PRMN", "REF", "RIN",
 				"ADDR", "PHON", "EMAIL", "_EMAIL", "EMAL", "FAX", "WWW", "URL", "_URL",
+				"AFN", "REFN", "_PRMN", "REF", "RIN", "_UID",
 				"CHAN", "_TODO"
 			));
 
