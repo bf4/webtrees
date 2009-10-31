@@ -3908,22 +3908,25 @@ function pathinfo_utf($path) {
 		return array('dirname'=>'', 'basename'=>'', 'extension'=>'', 'filename'=>'');
 	}
 	if (strpos($path, '/')!==false) {
-		$basename = end(explode('/', $path));
-		$dirname = substr($path, 0, strlen($path) - strlen($basename) - 1);
+		$tmp=explode('/', $path);
+		$basename=end($tmp);
+		$dirname=substr($path, 0, strlen($path) - strlen($basename) - 1);
 	} else if (strpos($path, '\\') !== false) {
-		$basename = end(explode('\\', $path));
-		$dirname = substr($path, 0, strlen($path) - strlen($basename) - 1);
+		$tmp=explode('\\', $path);
+		$basename=end($tmp);
+		$dirname=substr($path, 0, strlen($path) - strlen($basename) - 1);
 	} else {
-		$basename = $path;		// We have just a file name
-		$dirname = '.';       // For compatibility with pathinfo()
+		$basename=$path;		// We have just a file name
+		$dirname='.';       // For compatibility with pathinfo()
 	}
 
 	if (strpos($basename, '.')!==false) {
-		$extension = end(explode('.', $path));
-		$filename = substr($basename, 0, strlen($basename) - strlen($extension) - 1);
+		$tmp=explode('.', $path);
+		$extension=end($tmp);
+		$filename=substr($basename, 0, strlen($basename) - strlen($extension) - 1);
 	} else {
-		$extension = '';
-		$filename = $basename;
+		$extension='';
+		$filename=$basename;
 	}
 
 	return array('dirname'=>$dirname, 'basename'=>$basename, 'extension'=>$extension, 'filename'=>$filename);
