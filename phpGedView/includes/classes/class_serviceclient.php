@@ -880,9 +880,11 @@ class ServiceClient extends GedcomRecord {
 
 	/**
 	* get a singleton instance of this client
+	* Note: the $simple parameter is unused, but necessary, as we must have the same
+	* call signature as GedcomRecord::getInstance()
 	* @return ServiceClient
 	*/
-	static function &getInstance($id) {
+	static function &getInstance($id, $simple=true) {
 		global $PGV_SERVERS, $SERVER_URL, $GEDCOM;
 
 		if (isset($PGV_SERVERS[$id])) return $PGV_SERVERS[$id];
