@@ -10,6 +10,7 @@
 
 
 Version 4.2.3
+ - Fixed: [ 2825324 ] Source Tab Skips Sources on Names (fisharebest)
  - Fixed: [ 2879844 ] [4.2.3] General Search results (fisharebest)
  - Fixed: [ 2888957 ] SVN, DB import fails with samll letter to insert into n_sort (fisharebest)
  - Fixed: [ 2879600 ] Googlemaps ignores privacy rules (wooc)
