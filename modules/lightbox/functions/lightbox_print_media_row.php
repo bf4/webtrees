@@ -215,7 +215,7 @@ function lightbox_print_media_row($rtype, $rowm, $pid) {
 			$menu->addClass("", "", "submenu");
 
 			// View Notes
-			if (eregi("1 NOTE",$rowm['m_gedrec'])) {
+			if (strpos("\n1 NOTE",$rowm['m_gedrec'])) {
 				$submenu = new Menu("&nbsp;&nbsp;" . $pgv_lang["lb_viewnotes"] . "&nbsp;&nbsp;", "#", "right");
 				// Notes Tooltip ----------------------------------------------------
 				$sonclick  = "TipTog(";
@@ -237,7 +237,7 @@ function lightbox_print_media_row($rtype, $rowm, $pid) {
 			$submenu->addClass($submenu_class, $submenu_hoverclass);
 			$menu->addSubMenu($submenu);
 			//View Source
-			if (eregi("1 SOUR",$rowm['m_gedrec']) && displayDetailsById($sour, "SOUR")) {
+			if (strpos("\n1 SOUR",$rowm['m_gedrec']) && displayDetailsById($sour, "SOUR")) {
 				$submenu = new Menu("&nbsp;&nbsp;" . $pgv_lang["lb_viewsource"] . "&nbsp;&nbsp;", $SERVER_URL . "source.php?sid=" . $sour, "right");
 				$submenu->addClass($submenu_class, $submenu_hoverclass);
 				$menu->addSubMenu($submenu);
