@@ -38,10 +38,6 @@ require_once 'includes/classes/class_person.php';
 require_once 'includes/classes/class_family.php';
 require_once 'includes/functions/functions_import.php';
 
-$indifacts = array(); // -- array to store the fact records in for sorting and displaying
-$globalfacts = array();
-$otheritems = array(); //-- notes, sources, media objects
-$FACT_COUNT=0;
 // -- array of GEDCOM elements that will be found but should not be displayed
 $nonfacts[] = "FAMS";
 $nonfacts[] = "FAMC";
@@ -1300,7 +1296,7 @@ class IndividualControllerRoot extends BaseController {
 	}
 
 	function print_facts_tab() {
-		global $FACT_COUNT, $CONTACT_EMAIL, $PGV_IMAGE_DIR, $PGV_IMAGES, $pgv_lang, $EXPAND_RELATIVES_EVENTS;
+		global $CONTACT_EMAIL, $PGV_IMAGE_DIR, $PGV_IMAGES, $pgv_lang, $EXPAND_RELATIVES_EVENTS;
 		global $n_chil, $n_gchi, $n_ggch;
 		global $EXPAND_RELATIVES_EVENTS, $LANGUAGE, $lang_short_cut;
 		global $Fam_Navigator, $NAV_FACTS;
@@ -1373,7 +1369,6 @@ class IndividualControllerRoot extends BaseController {
 					}
 				}
 				else print_fact($value);
-				$FACT_COUNT++;
 			}
 		}
 		//-- new fact link
@@ -1418,7 +1413,7 @@ class IndividualControllerRoot extends BaseController {
 	}
 
 	function print_notes_tab() {
-		global $pgv_lang, $factarray, $CONTACT_EMAIL, $FACT_COUNT;
+		global $pgv_lang, $factarray, $CONTACT_EMAIL;
 		global $SHOW_LEVEL2_NOTES;
 		global $Fam_Navigator, $NAV_NOTES;
 
@@ -1465,7 +1460,6 @@ class IndividualControllerRoot extends BaseController {
 				if ($fact=="NOTE") {
 					print_main_notes($event->getGedcomRecord(), 1, $this->pid, $event->getLineNumber());
 				}
-				$FACT_COUNT++;
 			}
 			// 2nd to 5th level notes/sources
 			$this->indi->add_family_facts(false);
@@ -1535,7 +1529,7 @@ class IndividualControllerRoot extends BaseController {
 	}
 
 	function print_sources_tab() {
-		global $CONTACT_EMAIL, $pgv_lang, $FACT_COUNT;
+		global $CONTACT_EMAIL, $pgv_lang;
 		global $SHOW_LEVEL2_NOTES;
 		global $Fam_Navigator, $NAV_SOURCES;
 
@@ -1577,18 +1571,23 @@ class IndividualControllerRoot extends BaseController {
 				</td>
 			</tr>
 			<?php
-			$otheritems = $this->getOtherFacts();
-				foreach ($otheritems as $key => $event) {
-					if ($event->getTag()=="SOUR") print_main_sources($event->getGedcomRecord(), 1, $this->pid, $event->getLineNumber());
-				$FACT_COUNT++;
+			foreach ($this->getOtherFacts() as $key => $event) {
+				if ($event->getTag()=="SOUR") {
+					print_main_sources($event->getGedcomRecord(), 1, $this->pid, $event->getLineNumber());
+				}
 			}
 		}
 			// 2nd level sources [ 1712181 ]
 			$this->indi->add_family_facts(false);
-			foreach ($this->getIndiFacts() as $key => $factrec) {
-					print_main_sources($factrec->getGedcomRecord(), 2, $this->pid, $factrec->getLineNumber(), true);
+			foreach ($this->getGlobalFacts() as $key => $factrec) {
+				print_main_sources($factrec->getGedcomRecord(), 2, $this->pid, $factrec->getLineNumber(), true);
 			}
-			if ($this->get_source_count()==0) print "<tr><td id=\"no_tab3\" colspan=\"2\" class=\"facts_value\">".$pgv_lang["no_tab3"]."</td></tr>\n";
+			foreach ($this->getIndiFacts() as $key => $factrec) {
+				print_main_sources($factrec->getGedcomRecord(), 2, $this->pid, $factrec->getLineNumber(), true);
+			}
+			if ($this->get_source_count()==0) {
+				print "<tr><td id=\"no_tab3\" colspan=\"2\" class=\"facts_value\">".$pgv_lang["no_tab3"]."</td></tr>\n";
+			}
 			//-- New Source Link
 			if (!$this->isPrintPreview() && PGV_USER_CAN_EDIT && $this->indi->canDisplayDetails()) {
 			?>

@@ -95,7 +95,6 @@ $linkToID=$controller->pid; // -- Tell addmedia.php what to link to
 					if ($fact=="SEX") $controller->print_sex_record($value);
 					if ($fact=="NAME") $controller->print_name_record($value);
 						++$col;
-						$FACT_COUNT++;
 						if ($col==$maxcols) {
 							echo "</tr><tr>";
 							$col=0;

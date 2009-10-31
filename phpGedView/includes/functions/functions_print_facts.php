@@ -76,11 +76,10 @@ function print_fact(&$eventObj, $noedit=false) {
 	global $WORD_WRAPPED_NOTES;
 	global $TEXT_DIRECTION;
 	global $HIDE_GEDCOM_ERRORS, $SHOW_ID_NUMBERS, $SHOW_FACT_ICONS, $SHOW_MEDIA_FILENAME;
-	global $CONTACT_EMAIL, $view, $FACT_COUNT;
+	global $CONTACT_EMAIL, $view;
 	global $n_chil, $n_gchi, $n_ggch;
 	global $SEARCH_SPIDER;
 
-	$FACT_COUNT++;
 	$estimates = array("abt","aft","bef","est","cir");
 	$fact = $eventObj->getTag();
 	$rawEvent = $eventObj->getDetail();
