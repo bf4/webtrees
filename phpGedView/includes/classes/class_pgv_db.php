@@ -99,14 +99,7 @@ class PGV_DB {
 		}
 		// Check that the driver is loaded
 		if (!extension_loaded('pdo') || !in_array($DBTYPE, PDO::getAvailableDrivers())) {
-			// Try to load it dynamically.  This function is deprecated (should use php.ini),
-			// but for some users this may be the only option.
-			@dl('pdo.so');
-			@dl("pdo_{$DBTYPE}.so");
-			// ...and try again
-			if (!extension_loaded('pdo') || !in_array($DBTYPE, PDO::getAvailableDrivers())) {
-		 		trigger_error("PDO/{$DBTYPE} is not installed.", E_USER_ERROR);
-			}
+			trigger_error("PDO/{$DBTYPE} is not installed.", E_USER_ERROR);
 		}
 		// Create the underlying PDO object
 		switch ($DBTYPE) {
