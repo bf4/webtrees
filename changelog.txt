@@ -10,6 +10,7 @@
 
 
 Version 4.2.3
+ - Fixed: [ 2882104 ] Minor CSS detail (fisharebest)
  - Fixed: [ 2890031 ] SVN, User migration, wrong DB function (fisharebest)
  - Added: [ 2882125 ] Date sorting requests (fisharebest)
  - Fixed: [ 2818804 ] PHP 5.3 errors galore (fisharebest/volschin)
