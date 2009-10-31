@@ -651,10 +651,10 @@ function print_media_links($factrec, $level,$pid='') {
 				if ($isExternal || media_exists($thumbnail)) {
 
 					//LBox --------  change for Lightbox Album --------------------------------------------
-					if (file_exists("modules/lightbox/album.php") && eregi("\.(jpe?g|gif|png)$",$mainMedia)) {
+					if (file_exists("modules/lightbox/album.php") && preg_match("/\.(jpe?g|gif|png)$/i",$mainMedia)) {
 						$name = trim($row["m_titl"]);
 						print "<a href=\"" . $mainMedia . "\" rel=\"clearbox[general_1]\" rev=\"" . $media_id . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name, ENT_COMPAT, 'UTF-8')) . "\">" . "\n";
-					} else if (file_exists("modules/lightbox/album.php") && eregi("\.(pdf|avi|txt)$",$mainMedia)) {
+					} else if (file_exists("modules/lightbox/album.php") && preg_match("/\.(pdf|avi|txt)$/i",$mainMedia)) {
 						if (file_exists("modules/lightbox/lb_config.php")) {
 							include ('modules/lightbox/lb_config.php');
 						} else {
@@ -665,7 +665,7 @@ function print_media_links($factrec, $level,$pid='') {
 					// --------------------------------------------------------------------------------------
 					} else if ($USE_MEDIA_VIEWER) {
 						print "<a href=\"".encode_url("mediaviewer.php?mid={$media_id}")."\">";
-					} else if (eregi("\.(jpe?g|gif|png)$",$mainMedia)) {
+					} else if (preg_match("/\.(jpe?g|gif|png)$/i",$mainMedia)) {
 						print "<a href=\"javascript:;\" onclick=\"return openImage('".rawurlencode($mainMedia)."',$imgwidth, $imgheight);\">";
 					} else {
 						print "<a href=\"".encode_url("mediaviewer.php?mid={$media_id}")."\">";
@@ -1496,12 +1496,12 @@ function print_main_media_row($rtype, $rowm, $pid) {
 		$imgheight = $imgsize[1]+150;
 
 		// Check Filetype of media item ( URL, Local or Other )
-		if (eregi("^https?://", $rowm['m_file'])) $file_type = 'url_';
+		if (preg_match("/^https?:\/\//i", $rowm['m_file'])) $file_type = 'url_';
 		else $file_type = 'local_';
-		if (eregi("\.flv$", $rowm['m_file']) && file_exists('modules/JWplayer/flvVideo.php')) $file_type .= 'flv';
-		else if (eregi("\.(jpg|jpeg|gif|png)$", $rowm['m_file'])) $file_type .= 'image';
-		else if (eregi("\.(pdf|avi)$", $rowm['m_file'])) $file_type .= 'page';
-		else if (eregi("\.mp3$", $rowm['m_file'])) $file_type .= 'audio';
+		if (preg_match("/\.flv$/i", $rowm['m_file']) && file_exists('modules/JWplayer/flvVideo.php')) $file_type .= 'flv';
+		else if (preg_match("/\.(jpg|jpeg|gif|png)$/i", $rowm['m_file'])) $file_type .= 'image';
+		else if (preg_match("/\.(pdf|avi)$/i", $rowm['m_file'])) $file_type .= 'page';
+		else if (preg_match("/\.mp3$/i", $rowm['m_file'])) $file_type .= 'audio';
 		else $file_type = 'other';
 
 		//Get media item Notes
