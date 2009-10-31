@@ -1102,7 +1102,7 @@ function print_note_record($text, $nlevel, $nrec, $textOnly=false, $return=false
 	$text = trim($text);
 
 	// Check if Shared Note and if so enable url link on title -------------------
-	if (eregi("0 @N([0-9])+@ NOTE", $nrec)) {
+	if (preg_match('/^0 @'.PGV_REGEX_XREF.'@ NOTE/', $nrec)) {
 		$centitl  = str_replace("~~", "", $text);
 		$centitl  = str_replace("<br />", "", $centitl);
 		if (preg_match("/@N([0-9])+@/", $nrec, $match_nid)) {
@@ -1126,10 +1126,10 @@ function print_note_record($text, $nlevel, $nrec, $textOnly=false, $return=false
 	if (!empty($text) || !empty($centitl)) {
 		$text = PrintReady($text);
 		// Check if Formatted Shared Note (using pipe "|" as delimiter ) --------------------
-		if ( eregi("0 @N([0-9])+@ NOTE", $nrec) && strstr($text, "|") && file_exists("modules/GEDFact_assistant/_CENS/census_note_decode.php") ) {
+		if (preg_match('/^0 @'.PGV_REGEX_XREF.'@ NOTE/', $nrec) && strstr($text, "|") && file_exists("modules/GEDFact_assistant/_CENS/census_note_decode.php") ) {
 			require 'modules/GEDFact_assistant/_CENS/census_note_decode.php';
 		// Else if unformatted Shared Note --------------------------------------------------
-		}else if (eregi("0 @N([0-9])+@ NOTE", $nrec)) {
+		}else if (preg_match('/^0 @'.PGV_REGEX_XREF.'@ NOTE/', $nrec)) {
 			$text=$centitl.$text;
 		}
 		if ($textOnly) {
@@ -1149,7 +1149,7 @@ function print_note_record($text, $nlevel, $nrec, $textOnly=false, $return=false
 		}
 
 		// Check if Shared Note -----------------------------
-		if (eregi("0 @N.*@ NOTE", $nrec)) {
+		if (preg_match('/^0 @'.PGV_REGEX_XREF.'@ NOTE/', $nrec)) {
 			$data .= $pgv_lang["shared_note"].": </span> - ";
 		}else{
 			$data .= $pgv_lang["note"].": </span>";
