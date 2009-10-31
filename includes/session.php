@@ -149,22 +149,24 @@ if (version_compare(PHP_VERSION, '6.0.0', '<')) {
 	}
 
 	// magic quotes were deprecated in PHP5.3.0 and removed in PHP6.0.0
-	set_magic_quotes_runtime(0);
+	if (version_compare(PHP_VERSION, '5.3.0', '<')) {
+		set_magic_quotes_runtime(0);
 
-	// magic_quotes_gpc can't be disabled at run-time, so clean them up as necessary.
-	if (function_exists('get_magic_quotes_gpc') && get_magic_quotes_gpc() ||
-		ini_get('magic_quotes_sybase') && strtolower(ini_get('magic_quotes_sybase'))!='off') {
-		$in = array(&$_GET, &$_POST, &$_REQUEST, &$_COOKIE);
-		while (list($k,$v) = each($in)) {
-			foreach ($v as $key => $val) {
-				if (!is_array($val)) {
-					$in[$k][$key] = stripslashes($val);
-					continue;
+		// magic_quotes_gpc can't be disabled at run-time, so clean them up as necessary.
+		if (function_exists('get_magic_quotes_gpc') && get_magic_quotes_gpc() ||
+			ini_get('magic_quotes_sybase') && strtolower(ini_get('magic_quotes_sybase'))!='off') {
+			$in = array(&$_GET, &$_POST, &$_REQUEST, &$_COOKIE);
+			while (list($k,$v) = each($in)) {
+				foreach ($v as $key => $val) {
+					if (!is_array($val)) {
+						$in[$k][$key] = stripslashes($val);
+						continue;
+					}
+					$in[] =& $in[$k][$key];
 				}
-				$in[] =& $in[$k][$key];
 			}
+			unset($in);
 		}
-		unset($in);
 	}
 }
 
