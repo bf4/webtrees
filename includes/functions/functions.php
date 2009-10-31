@@ -3732,9 +3732,9 @@ function mediaFileInfo($fileName, $thumbName, $mid, $name='', $notes='', $obeyVi
 	// -- Classify the incoming media file
 	if (preg_match("/^https?:\/\//i", $fileName)) $type = "url_";
 	else $type = "local_";
-	if ((preg_match("/\.flv$/i", $fileName) || preg_match("/^https?://.*\.youtube\..*/watch\?/i", $fileName)) && is_dir('modules/JWplayer')) {
+	if ((preg_match("/\.flv$/i", $fileName) || preg_match("/^https?:\/\/.*\.youtube\..*\/watch\?/i", $fileName)) && is_dir('modules/JWplayer')) {
 		$type .= "flv";
-	} else if (preg_match("/^https?://picasaweb*\.google\..*/.*//i", $fileName)) {
+	} else if (preg_match("/^https?:\/\/picasaweb*\.google\..*\/.*\//i", $fileName)) {
 		$type .= "picasa";
 	} else if (preg_match("/\.(jpg|jpeg|gif|png)$/i", $fileName)) {
 		$type .= "image";
