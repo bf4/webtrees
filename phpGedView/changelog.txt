@@ -10,6 +10,7 @@
 
 
 Version 4.2.3
+ - Fixed: [ 2888957 ] SVN, DB import fails with samll letter to insert into n_sort (fisharebest)
  - Fixed: [ 2879600 ] Googlemaps ignores privacy rules (wooc)
  - Update: Prototype 1.6.1 and Script.aculo.us 1.8.3 (volschin)
  - Update: Module for PunBB 1.2.22 (volschin)
