@@ -170,7 +170,7 @@ function DMSoundex($name) {
 	// Apply special transformation rules to the input string
 	$name = UTF8_strtoupper($name);
 	foreach($transformNameTable as $transformRule) {
-		$name = ereg_replace($transformRule[0], $transformRule[1], $name);
+		$name = str_replace($transformRule[0], $transformRule[1], $name);
 	}
 
 	// Initialize
