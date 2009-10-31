@@ -110,10 +110,10 @@ class Note extends GedcomRecord {
 	}
 
 	// Get an array of structures containing all the names in the record
-	function getAllNames() {
+	public function getAllNames() {
 		// Uniquely, the NOTE objects have data in their level 0 record.
 		// Hence the REGEX passed in the second parameter
-		return parent::getAllNames('NOTE', "0 @".PGV_REGEX_XREF."@");
+		return $this->_getAllNames('NOTE', "0 @".PGV_REGEX_XREF."@");
 	}
 }
 ?>

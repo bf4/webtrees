@@ -432,7 +432,7 @@ class Family extends GedcomRecord {
 	}
 
 	// Get an array of structures containing all the names in the record
-	function getAllNames() {
+	public function getAllNames() {
 		if (is_null($this->_getAllNames)) {
 			$husb=$this->husb ? $this->husb : new Person('1 SEX M');
 			$wife=$this->wife ? $this->wife : new Person('1 SEX F');
