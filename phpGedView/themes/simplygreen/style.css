@@ -985,10 +985,6 @@ h4 {
 	background-color: #00dd00;
 }
 
-.nowrap {
-	white-space: nowrap;
-}
-
 .accesskeys {
 	width: 1px;
 	height: 1px;
@@ -1394,7 +1390,6 @@ a.showit:hover span {
 }
 /* End of Flyout Menu styles*/
 
-/* The following two overriding classes MUST appear at the end of the entire CSS file. */
 .nowrap {
 	white-space: nowrap;
 }
