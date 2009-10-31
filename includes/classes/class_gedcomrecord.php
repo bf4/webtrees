@@ -405,7 +405,7 @@ class GedcomRecord {
 			'type'=>$type,
 			'full'=>$value,
 			'list'=>$value,
-			'sort'=>preg_replace('/(\d+)/e', 'substr("000000000\\1", -10)', $value)
+			'sort'=>preg_replace('/([0-9]+)/e', 'substr("000000000\\1", -10)', $value)
 		);
 	}
 
