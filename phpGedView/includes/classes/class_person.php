@@ -625,7 +625,8 @@ class Person extends GedcomRecord {
 	* @return Person  this person's spouse
 	*/
 	function getCurrentSpouse() {
-		$family = end($this->getSpouseFamilies());
+		$tmp=$this->getSpouseFamilies();
+		$family = end($tmp);
 		if ($family) {
 			return $family->getSpouse($this);
 		} else {
