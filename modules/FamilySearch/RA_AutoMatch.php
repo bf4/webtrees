@@ -1,7 +1,6 @@
 <?php
 if (file_exists('modules/FamilySearch/config.php')) include_once('modules/FamilySearch/config.php');
 require_once("modules/FamilySearch/PHP-FamilySearchAPI/FSAPI/FamilySearchProxy.php");
-require_once("modules/FamilySearch/PHP-FamilySearchAPI/FSAPI/SearchParser.php");
 require_once("modules/FamilySearch/PHP-FamilySearchAPI/FSParse/XMLGEDCOM.php");
 require_once('includes/functions/functions_edit.php');
 

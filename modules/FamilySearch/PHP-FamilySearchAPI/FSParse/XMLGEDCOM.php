@@ -700,7 +700,7 @@ class XmlGedcom {
 		if(!empty($assertions)){
 			foreach($assertions as $assertion){
 				if ($assertion instanceof XG_Gender) {
-					$axml.=$assertion->toXml($forAdd);
+					$axml=$assertion->toXml($forAdd);
 					if (!empty($axml)) {
 						$count++;
 						$xml.=$axml;
@@ -713,7 +713,7 @@ class XmlGedcom {
 		if(!empty($assertions)){
 			foreach($assertions as $assertion){
 				if ($assertion instanceof XG_Event) {
-					$axml.=$assertion->toXml($forAdd);
+					$axml=$assertion->toXml($forAdd);
 					if (!empty($axml)) {
 						$count++;
 						$xml.=$axml;
@@ -726,7 +726,7 @@ class XmlGedcom {
 		if(!empty($assertions)){
 			foreach($assertions as $assertion){
 				if ($assertion instanceof XG_Characteristic) {
-					$axml.=$assertion->toXml($forAdd);
+					$axml=$assertion->toXml($forAdd);
 					if (!empty($axml)) {
 						$count++;
 						$xml.=$axml;
@@ -741,7 +741,7 @@ class XmlGedcom {
 				if ($assertion instanceof XG_Ordinance) {
 					//-- only ordinances with places can be added
 					if (!$forAdd || ($assertion->getPlace()!=null && $assertion->getPlace()->getOriginal()!="")) {
-						$axml.=$assertion->toXml($forAdd);
+						$axml=$assertion->toXml($forAdd);
 						if (!empty($axml)) {
 							$count++;
 							$xml.=$axml;

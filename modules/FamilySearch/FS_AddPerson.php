@@ -56,14 +56,14 @@ else {
 	?>
 	was successfully added.  This person's ID on the remote site is <?php print $fsid; ?><br /><br />
 	<p>
-	<a href="module.php?mod=FamilySearch&amp;pgvaction=FS_Relatives&pid=<?php echo $pid;?>&fsid=<?php echo $fsid ?>">Continue to Relatives</a>
+	<!-- <a href="module.php?mod=FamilySearch&amp;pgvaction=FS_Relatives&pid=<?php echo $pid;?>&fsid=<?php echo $fsid ?>">Continue to Relatives</a> -->
 	</p>
 	<?php } else { ?>
 		<p class="error">There was an error adding this person to FamilySearch.</p>
 		<p class="error"><?php echo $adder->getXMLGed()->error->message?></p>
 	<?php } ?>
 	<p>
-	<a href="individual.php?pid=<?php echo $pid;?>">Go back to individual details for <?php echo $person->getFullName()?></a>
+	<a href="individual.php?pid=<?php echo $pid;?>&amp;tab=FamilySearch">Go back to individual details for <?php echo $person->getFullName()?></a>
 	</p>
 	<?php
 }

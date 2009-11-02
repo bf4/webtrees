@@ -84,8 +84,8 @@ sort_facts($remotefacts);
 //print "<pre>".$remotePerson->getGedcomRecord()."</pre>";
 if ($action=='save') {
 	require_once("includes/functions/functions_edit.php");
-	$newlocal = $localPerson->getGedcomRecord();
-	$newremote = $remotePerson->getGedcomRecord();
+	$newlocal = trim($localPerson->getGedcomRecord());
+	$newremote = trim($remotePerson->getGedcomRecord());
 	$changedlocal = false;
 	$changedremote = false;
 	$copytoremote = array();
@@ -93,7 +93,7 @@ if ($action=='save') {
 	foreach($localfacts as $lfact) {
 		$id = $localPerson->getXref()."=".$lfact->getLineNumber();
 		if (!empty($_POST['copy='.$id])) {
-			$newremote.=$lfact->getGedcomRecord();
+			$newremote.="\r\n".$lfact->getGedcomRecord();
 			$changedremote = true;
 			$copytoremote[] = $lfact;
 		}
@@ -105,7 +105,7 @@ if ($action=='save') {
 	foreach($remotefacts as $rfact) {
 		$id = $remotePerson->getXref()."=".$rfact->getLineNumber();
 		if (!empty($_POST['copy='.$id])) {
-			$newlocal.=$rfact->getGedcomRecord();
+			$newlocal.="\r\n".$rfact->getGedcomRecord();
 			$changedlocal = true;
 		}
 		if (!empty($_POST['del='.$id])) {
@@ -121,8 +121,22 @@ if ($action=='save') {
 	
 	$newXG = $matcher->updatePerson($FSID, $deleteremote, $copytoremote);
 	//print $newXG;
-	if ($newXG != $FSID) {
-		$gedrec = preg_replace("/".$FSID."/", $newXG, $gedrec);
+	if (!empty($newXG)) {
+		$oldfsid = $matcher->getFSID($localPerson);
+		if (!empty($oldfsid)) {
+			$newlocal = preg_replace("/".$FSID."/", $newXG, $newlocal);
+		}
+		else {
+			$newlocal .= "\r\n1 REFN ".$newXG."\r\n2 TYPE FamilySearch";
+				
+			//-- add the RFN linkage
+			if ($FS_CONFIG['family_search_remotelink']) {
+				$serverID = $matcher->getServerId();
+				if (!empty($serverID)) {
+					$newlocal .= "\r\n1 RFN ".$serverID.":".$newXG;
+				}
+			}
+		}
 		$changedlocal = true;
 	}
 	if ($changedlocal) replace_gedrec($pid, $newlocal);
@@ -131,14 +145,14 @@ if ($action=='save') {
 	<p><?php print $localPerson->getFullName();	?>
 	was successfully updated.  This person's ID on the remote site is <?php print $newXG; ?><br /></p>
 	<p>
-	<a href="module.php?mod=FamilySearch&amp;pgvaction=FS_Relatives&pid=<?php echo $pid;?>&fsid=<?php echo $newXG ?>">Continue to Relatives</a>
+	<!-- <a href="module.php?mod=FamilySearch&amp;pgvaction=FS_Relatives&pid=<?php echo $pid;?>&fsid=<?php echo $newXG ?>">Continue to Relatives</a> -->
 	</p>
 	<?php } else { ?>
 		<p class="error">There was an error adding this person to FamilySearch.</p>
-		<p class="error"><?php echo $adder->getXMLGed()->error->message?></p>
+		<p class="error"><?php echo $matcher->getXMLGed()->error->message?></p>
 	<?php } ?>
 	<p>
-	<a href="individual.php?pid=<?php echo $pid;?>">Go back to individual details for <?php echo $localPerson->getFullName()?></a>
+	<a href="individual.php?pid=<?php echo $pid;?>&amp;tab=FamilySearch">Go back to individual details for <?php echo $localPerson->getFullName()?></a>
 	</p>
 	<?php 
 } // ------- end save action

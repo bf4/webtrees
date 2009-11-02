@@ -4,10 +4,15 @@ global $pgv_lang, $TEXT_DIRECTION;
 <script type="text/javascript">
 <!--
 function ajaxLogin(frm) {
-	username = frm.username.value;
-	password = frm.password.value;
-	jQuery("#tabs").tabs('url', selectedTab, 'individual.php?action=ajax&module=FamilySearch&pid=<?php echo $this->controller->pid?>&FSAction=login&username='+username+'&password='+password);
-	jQuery("#tabs").tabs('load', selectedTab);
+	try {
+		username = frm.username.value;
+		password = frm.password.value;
+		var stab = jQuery("#tabs").tabs('option', 'selected');
+		jQuery("#tabs").tabs('url', stab, 'individual.php?action=ajax&module=FamilySearch&pid=<?php echo $this->controller->pid?>&FSAction=login&username='+username+'&password='+password);
+		jQuery("#tabs").tabs('load', stab);
+	} catch(err) {
+		alert(err);
+	}
 	return false;
 }
 //-->

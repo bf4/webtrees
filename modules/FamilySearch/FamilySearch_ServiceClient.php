@@ -118,8 +118,95 @@ class FamilySearch_ServiceClient extends ServiceClient {
 		$gedcom = $this->xmlGed->getGedcomRecord($remoteid);
 		return $gedcom;
 	}
+	
+	function cacheRecordInDB($gedrec) {
+		global $TBLPREFIX, $GEDCOM, $GEDCOMS;
+		
+		static $sql_insert_indi=null;
+		static $sql_insert_fam=null;
+		static $sql_insert_sour=null;
+		static $sql_insert_other=null;
+		if (!$sql_insert_indi) {
+			$sql_insert_indi=PGV_DB::prepare(
+				"INSERT INTO {$TBLPREFIX}individuals (i_id, i_file, i_rin, i_isdead, i_sex, i_gedcom) VALUES (?,?,?,?,?,?)"
+			);
+			$sql_insert_fam=PGV_DB::prepare(
+				"INSERT INTO {$TBLPREFIX}families (f_id, f_file, f_husb, f_wife, f_chil, f_gedcom, f_numchil) VALUES (?,?,?,?,?,?,?)"
+			);
+			$sql_insert_sour=PGV_DB::prepare(
+				"INSERT INTO {$TBLPREFIX}sources (s_id, s_file, s_name, s_gedcom, s_dbid) VALUES (?,?,?,?,?)"
+			);
+			$sql_insert_other=PGV_DB::prepare(
+				"INSERT INTO {$TBLPREFIX}other (o_id, o_file, o_type, o_gedcom) VALUES (?,?,?,?)"
+			);
+		}
+		
+		// import different types of records
+		if (preg_match('/^0 @('.PGV_REGEX_XREF.')@ ('.PGV_REGEX_TAG.')/', $gedrec, $match) > 0) {
+			list(,$gid, $type)=$match;
+		} elseif (preg_match('/0 ('.PGV_REGEX_TAG.')/', $gedrec, $match)) {
+			$gid=$match[1];
+			$type=$match[1];
+		} else {
+			echo $pgv_lang['invalid_gedformat'], '<br /><pre>', $gedrec, '</pre>';
+			return;
+		}
+		
+		$ged_id=$GEDCOMS[$GEDCOM]["id"];
+		$xref  =$gid;
+		
+		switch ($type) {
+		case 'INDI':
+			$sex = 'U';
+			if (preg_match('/\n1 SEX (.)/', $gedrec, $match)) $sex = $match[1];
+			$sql_insert_indi->execute(array($xref, $ged_id, $xref, is_dead($gedrec, '', true), $sex, $gedrec));
+			break;
+		case 'FAM':
+			if (preg_match('/\n1 HUSB @('.PGV_REGEX_XREF.')@/', $gedrec, $match)) {
+				$husb=$match[1];
+			} else {
+				$husb='';
+			}
+			if (preg_match('/\n1 WIFE @('.PGV_REGEX_XREF.')@/', $gedrec, $match)) {
+				$wife=$match[1];
+			} else {
+				$wife='';
+			}
+			if ($nchi=preg_match_all('/\n1 CHIL @('.PGV_REGEX_XREF.')@/', $gedrec, $match)) {
+				$chil=implode(';', $match[1]).';';
+			} else {
+				$chil='';
+			}
+			if (preg_match('/\n1 NCHI (\d+)/', $gedrec, $match)) {
+				$nchi=max($nchi, $match[1]);
+			}
+			$sql_insert_fam->execute(array($xref, $ged_id, $husb, $wife, $chil, $gedrec, $nchi));
+			break;
+		case 'SOUR':
+			if (preg_match('/\n1 TITL (.+)/', $gedrec, $match)) {
+				$name=$match[1];
+			} elseif (preg_match('/\n1 ABBR (.+)/', $gedrec, $match)) {
+				$name=$match[1];
+			} else {
+				$name=$gid;
+			}
+			if (strpos($gedrec, "\n1 _DBID")) {
+				$_dbid='Y';
+			} else {
+				$_dbid=null;
+			}
+			$sql_insert_sour->execute(array($xref, $ged_id, $name, $gedrec, $_dbid));
+			break;
+		default:
+			if (substr($type, 0, 1)!='_') {
+				$sql_insert_other->execute(array($xref, $ged_id, $type, $gedrec));
+			}
+			break;
+		}
+			
+	}
 
-/**
+	/**
 	 * merge a local gedcom record with the information from the remote site
 	 * @param string $xref		the remote ID to merge with
 	 * @param string $localrec	the local gedcom record to merge the remote record with
@@ -160,7 +247,7 @@ class FamilySearch_ServiceClient extends ServiceClient {
 			if ($ct>0)
 			{
 				$pid = trim($match[1]);
-				replace_gedrec($pid,$localrec);
+				if (preg_match("/:/", $pid)==0) replace_gedrec($pid,$localrec);
 			}
 		}
 
@@ -193,14 +280,14 @@ class FamilySearch_ServiceClient extends ServiceClient {
 					include_once("includes/functions/functions_edit.php");
 					//$indilist[$localrec->getXref()]['gedcom']=$localrec;
 					$localrec = $this->UpdateFamily($localrec,$gedrec);
-					replace_gedrec($pid,$localrec);
+					if (preg_match("/:/", $pid)==0) replace_gedrec($pid,$localrec);
 				}
 				else {
 					// uncomment to cache in local database
 //					if ($this->DEBUG) debug_print_backtrace();
 //					if ($this->DEBUG) print __LINE__."adding record to the database ".$localrec;
 					//-- update the last change time
-		/*			$pos1 = strpos($localrec, "1 CHAN");
+					$pos1 = strpos($localrec, "1 CHAN");
 					if ($pos1!==false) {
 						$pos2 = strpos($localrec, "\n1", $pos1+4);
 						if ($pos2===false) $pos2 = strlen($localrec);
@@ -217,8 +304,8 @@ class FamilySearch_ServiceClient extends ServiceClient {
 						$newgedrec .= "2 _PGVU @".$this->xref."@";
 						$localrec .= $newgedrec;
 					}
-					update_record($localrec);
-					*/
+					$this->cacheRecordInDB($localrec);
+					
 				} 
 			}
 		}
@@ -267,7 +354,7 @@ class FamilySearch_ServiceClient extends ServiceClient {
 						$localrec .= $newgedrec;
 					}
 					if ($this->DEBUG) print __LINE__."adding record to the database ".$localrec;
-					//update_record($localrec);
+					$this->cacheRecordInDB($localrec);
 				}
 				// If changes have been made to the remote record
 				else {
@@ -284,11 +371,11 @@ class FamilySearch_ServiceClient extends ServiceClient {
 							include_once("includes/functions/functions_edit.php");
 							//$indilist[$localrec->getXref()]['gedcom']=$localrec;
 							$localrec = $this->UpdateFamily($localrec,$gedrec);
-							replace_gedrec($pid,$localrec);
+							if (preg_match("/:/", $pid)==0) replace_gedrec($pid,$localrec);
 						}
 						else {
 							if ($this->DEBUG) print __LINE__."adding record to the database ".$localrec;
-							//update_record($localrec);
+							$this->cacheRecordInDB($localrec);
 						}
 					}
 				}
