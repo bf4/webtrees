@@ -883,11 +883,11 @@ function print_sour_table($datalist, $legend=null) {
 		}
 		//-- Source name(s)
 		$tmp=$source->getFullName();
-		echo '<td class="list_value_wrap" align="', get_align($tmp), '"><a href="', $link_url, '" class="list_item name2">', PrintReady($tmp), '</a></td>';
+		echo '<td class="list_value_wrap" align="', get_align($tmp), '"><a href="', $link_url, '" class="list_item name2">', PrintReady(htmlspecialchars($tmp)), '</a></td>';
 		// alternate title in a new column
 		$tmp=$source->getAddName();
 		if ($tmp) {
-			echo '<td class="list_value_wrap t2" style="display:none;" align="', get_align($tmp), '"><a href="', $link_url, '" class="list_item">', PrintReady($tmp), '</a></td>';
+			echo '<td class="list_value_wrap t2" style="display:none;" align="', get_align($tmp), '"><a href="', $link_url, '" class="list_item">', PrintReady(htmlspecialchars($tmp)), '</a></td>';
 			$t2=true;
 		} else {
 			echo '<td class="list_value_wrap t2" style="display:none;">&nbsp;</td>';
@@ -895,7 +895,7 @@ function print_sour_table($datalist, $legend=null) {
 		//-- Author
 		$tmp=$source->getAuth();
 		if ($tmp) {
-			echo '<td class="list_value_wrap" align="', get_align($tmp), '"><a href="', $link_url, '" class="list_item">', PrintReady($tmp), '</a></td>';
+			echo '<td class="list_value_wrap" align="', get_align($tmp), '"><a href="', $link_url, '" class="list_item">', PrintReady(htmlspecialchars($tmp)), '</a></td>';
 		} else {
 			echo '<td class="list_value_wrap">&nbsp;</td>';
 		}
