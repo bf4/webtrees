@@ -1755,8 +1755,8 @@ class Person extends GedcomRecord {
 		} else {
 			$pos2=strrpos($full, '/');
 			$list=trim(substr($full, $pos1+1, $pos2-$pos1-1)).', '.substr($full, 0, $pos1).substr($full, $pos2+1);
-			$list=trim(str_replace(array('/', '  '), array('', ' '), $list));
-			$full=trim(str_replace(array('/', '  '), array('', ' '), $full));
+			$list=trim(str_replace(array('/', ' ,', '  '), array('', ',', ' '), $list));
+			$full=trim(str_replace(array('/', ' ,', '  '), array('', ',', ' '), $full));
 		}
 
 		// Need the "not known" place holders for the database
