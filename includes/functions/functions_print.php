@@ -1858,20 +1858,24 @@ function print_asso_rela_record($pid, $factrec, $linebr=false, $type='INDI') {
 *
 * @param string $pid child ID
 */
-function format_parents_age($pid) {
+function format_parents_age($pid, $birth_date=null) {
 	global $pgv_lang, $factarray, $SHOW_PARENTS_AGE;
 
 	$html='';
 	if ($SHOW_PARENTS_AGE) {
 		$person=Person::getInstance($pid);
 		$families=$person->getChildFamilies();
+		// Where an indi has multiple birth records, we need to know the
+		// date of it.  For person boxes, etc., use the default birth date.
+		if (is_null($birth_date)) {
+			$birth_date=$person->getBirthDate();
+		}
 		// Multiple sets of parents (e.g. adoption) cause complications, so ignore.
-		$birth_date=$person->getBirthDate();
 		if ($birth_date->isOK() && count($families)==1) {
 			$family=current($families);
 			// Allow for same-sex parents
 			foreach (array($family->getHusband(), $family->getWife()) as $parent) {
-				if ($parent && $age=GedcomDate::GetAgeYears($parent->getBirthDate(), $person->getBirthDate())) {
+				if ($parent && $age=GedcomDate::GetAgeYears($parent->getBirthDate(), $birth_date)) {
 					$deatdate=$parent->getDeathDate();
 					$class='';
 					switch ($parent->getSex()) {
@@ -1950,7 +1954,7 @@ function format_fact_date(&$eventObj, $anchor=false, $time=false) {
 		if (!is_null($person) && $person->getType()=='INDI') {
 			// age of parents at child birth
 			if ($fact=='BIRT') {
-				$html .= format_parents_age($person->getXref());
+				$html .= format_parents_age($person->getXref(), $date);
 			}
 			// age at event
 			else if ($fact!='CHAN' && $fact!='_TODO') {
