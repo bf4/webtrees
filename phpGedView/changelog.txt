@@ -10,6 +10,7 @@
 
 
 Version 4.2.3
+ - Fixed: [ 2890112 ] Shared Notes list doesn't display titles (4.2.3 svn) (fisharebest)
  - Fixed: [ 2891075 ] MINOR name display anomaly (fisharebest)
  - Fixed: [ 2891924 ] Another HTML rendering bug (fisharebest)
  - Fixed: [ 2891960 ] Date/age/death issue (fisharebest)
