@@ -460,6 +460,7 @@ $pgv_lang["family_private"]		= "Els detalls sobre aquesta família son privats i
 $pgv_lang["download"]               = "Polseu amb el botó dret (control-clic amb un Mac) als enllaços i seleccioneu 'Desa com' per a descarregar els arxius.";
 $pgv_lang["cart_is_empty"]          = "El cistell és buit.";
 $pgv_lang["id"]				= "ID";
+$pgv_lang["ID"]				= "ID";
 $pgv_lang["name_description"]       = "Nom / Descripció";
 $pgv_lang["remove"]			= "Elimina";
 $pgv_lang["empty_cart"]			= "Buida el cistell";

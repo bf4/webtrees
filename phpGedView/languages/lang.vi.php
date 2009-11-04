@@ -206,6 +206,7 @@ $pgv_lang["download"]				= "Nhấn bên phải (CTRL-Nhấn với máy Macintosh
 $pgv_lang["media_files"]			= "Tập Tin Môi Thể ám chỉ bởi GEDCOM này";
 $pgv_lang["cart_is_empty"]			= "Giỏ dữ liệu của bạn trống trơn.";
 $pgv_lang["id"] 					= "Nhận Diện";
+$pgv_lang["ID"] 					= "Nhận Diện";
 $pgv_lang["name_description"]		= "Tên / Diễn tả";
 $pgv_lang["remove"] 				= "Rút ra";
 $pgv_lang["empty_cart"] 			= "Giỏ Trống Trơn";

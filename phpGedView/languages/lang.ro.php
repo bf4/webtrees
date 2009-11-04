@@ -477,6 +477,7 @@ $pgv_lang["family_private"] 		= "Detaliile acestei familii sunt private. Detalii
 $pgv_lang["download"]				= "Daţi clic drept (control-click pe un Macintosh) pe linkurile de mai jos şi selectaţi &quot;Save target as&quot; pentru a downloada fişierele.";
 $pgv_lang["cart_is_empty"]			= "Coşul dumneavoastră de decupaje este gol.";
 $pgv_lang["id"] 					= "ID";
+$pgv_lang["ID"] 					= "ID";
 $pgv_lang["name_description"]		= "Nume / Descriere";
 $pgv_lang["remove"] 				= "Şterge";
 $pgv_lang["empty_cart"] 			= "Goleşte coşul";

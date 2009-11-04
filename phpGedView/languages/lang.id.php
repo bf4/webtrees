@@ -517,6 +517,7 @@ $pgv_lang["family_private"] 			= "Rincian tentang keluarga ini bersifat pribadi.
 $pgv_lang["download"]				= "Klik kanan (klik-kontrol pada Macintosh) pada pranala di bawah dan pilih &quot;Simpan target as&quot; untuk mengunduh berkas.";
 $pgv_lang["cart_is_empty"]			= "Bagan Kliping Anda kosong.";
 $pgv_lang["id"] 				= "ID";
+$pgv_lang["ID"] 				= "ID";
 $pgv_lang["name_description"]			= "Nama / Uraian";
 $pgv_lang["remove"] 				= "Buang";
 $pgv_lang["empty_cart"] 			= "Kosongkan Bagan";

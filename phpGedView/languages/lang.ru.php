@@ -223,6 +223,7 @@ $pgv_lang["download"]			= "Щелкните правой кнопкой мыши
 $pgv_lang["media_files"]		= "Фото/аудио/видео файлы, на которые ссылается этот файл GEDCOM";
 $pgv_lang["cart_is_empty"]		= "Ваша корзина пуста.";
 $pgv_lang["id"]				= "Идентификационный номер";
+$pgv_lang["ID"]				= "Идентификационный номер";
 $pgv_lang["name_description"]		= "Название / Описание";
 $pgv_lang["remove"]			= "Убрать";
 $pgv_lang["empty_cart"]			= "Освободить корзину";

@@ -43,6 +43,7 @@ VERSION 4.2.3
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change	codes and comments
 ----------------------------------------------------------------------------------------
++$pgv_lang["ID"]									03 Nov 2009				A
 +$pgv_lang["fam_navigator"]							27 Oct 2009				A		line 866 lang_en.php
 +$pgv_lang["descendancy_pronoun_m"]					18 Oct 2009				A
 +$pgv_lang["descendancy_pronoun_f"]					18 Oct 2009				A

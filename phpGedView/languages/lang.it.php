@@ -301,6 +301,7 @@ $pgv_lang["enter_report_values"]	= "Inserisci i valori del report";
 $pgv_lang["choose_report"]			= "Seleziona un report da lanciare";
 $pgv_lang["cart_is_empty"]   = "Il carrello ritagli dell'albero è vuoto.";
 $pgv_lang["id"]        = "ID";
+$pgv_lang["ID"]        = "ID";
 $pgv_lang["name_description"]  = "Nome / Descrizione";
 $pgv_lang["remove"]      = "Rimuovere";
 $pgv_lang["empty_cart"]    = "Carrello vuoto";

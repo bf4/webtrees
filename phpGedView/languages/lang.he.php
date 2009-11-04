@@ -545,6 +545,7 @@ $pgv_lang["media_private"] 		= "הפירוט של המדיה הזה פרטי. פ
 $pgv_lang["download"]		= "קליק ימני (קונטרול-קליק על מק) על הקישורים שמתחת ובחר \"Save Target As ...\" כדי להוריד הקבצים.";
 $pgv_lang["cart_is_empty"]		= "עגלת הגזרים שלך ריקה.";
 $pgv_lang["id"]				= "קוד זיהוי";
+$pgv_lang["ID"]				= "קוד זיהוי";
 $pgv_lang["name_description"]	= "שם / תאור";
 $pgv_lang["remove"]			= "הסר";
 $pgv_lang["empty_cart"]		= "רוקן עגלה";

@@ -239,6 +239,7 @@ $pgv_lang["download_file"]					= "Fájl letöltése #GLOBALS[whichFile]#";
 $pgv_lang["media_files"]					= "Ebben a GEDCOM-állományban az alábbi médiahivatkozások vannak";
 $pgv_lang["cart_is_empty"]					= "Az Ön Metsző kosara üres.";
 $pgv_lang["id"]							= "Azonosító";
+$pgv_lang["ID"]							= "Azonosító";
 $pgv_lang["name_description"]					= "Név / Leírás";
 $pgv_lang["remove"]						= "Eltávolítás";
 $pgv_lang["empty_cart"]						= "Üres kosár";
