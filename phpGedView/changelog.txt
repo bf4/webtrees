@@ -10,6 +10,7 @@
 
 
 Version 4.2.3
+ - Fixed: [ 2891960 ] Date/age/death issue (fisharebest)
  - Fixed: [ 2890679 ] Sorting sources (fisharebest)
  - Fixed: [ 2890066 ] PGV won't use browser's preferred language (canajun2eh)
  - Fixed: [ 2881979 ] Tab problem individual page (fisharebest/julianito)
