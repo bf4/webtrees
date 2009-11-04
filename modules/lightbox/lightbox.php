@@ -56,8 +56,6 @@ class lightbox_Tab extends media_Tab {
 				include_once('modules/lightbox/album.php');
 			}
 		}
-			
-		echo "</div>";
 		echo "</div>";
 
 		$out .= ob_get_contents();

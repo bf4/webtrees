@@ -1956,6 +1956,7 @@ function delete_gedcom($ged) {
 	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}placelinks    WHERE pl_file   =?")->execute(array($ged_id));
 	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}places        WHERE p_file    =?")->execute(array($ged_id));
 	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}sources       WHERE s_file    =?")->execute(array($ged_id));
+	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}module_privacy  WHERE mp_file =?")->execute(array($ged_id));
 
 	if (isset($pgv_changes)) {
 		//-- erase any of the changes

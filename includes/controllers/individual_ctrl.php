@@ -275,9 +275,9 @@ class IndividualControllerRoot extends BaseController {
 					$tab->setController($this);
 					if ($tab->hasContent() || PGV_USER_CAN_EDIT) {		
 						//-- convert default tab as name to number
-						if ($mod->getName()==$this->default_tab) $this->default_tab = $count-1;
+						if ($mod->getName()===$this->default_tab) $this->default_tab = $count;
 						if ($this->static_tab==null) $this->static_tab = $mod;
-						$count++;
+						else $count++;
 					}
 				}
 			}

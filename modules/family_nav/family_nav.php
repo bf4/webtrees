@@ -126,7 +126,7 @@ class family_nav_Tab extends Tab {
 					</td>
 					<td align="center" class="<?php print $this->controller->getPersonStyle($people["husb"]);?> nam">
 						<?php
-						print "<a style=\"padding:0px; width:100%;\" href=\"".encode_url($people["husb"]->getLinkUrl())."\" onclick=\"return familyNavLoad('".$people['husb']->getLinkUrl()."');\">";
+						print "<a style=\"padding:0px; width:100%;\" href=\"".encode_url($people["husb"]->getLinkUrl())."\" onclick=\"return familyNavLoad('".encode_url($people['husb']->getLinkUrl())."');\">";
 						print PrintReady($people["husb"]->getFullName());
 						print "<font size=\"1\"><br />" . $BirthYr . " - " . $DeathYr . "</font>";
 						print "</a>";
@@ -161,7 +161,7 @@ class family_nav_Tab extends Tab {
 					</td>
 					<td align="center" class="<?php print $this->controller->getPersonStyle($people["wife"]); ?> nam">
 						<?php
-						print "<a style=\"padding:0px; width:100%;\" href=\"".encode_url($people["wife"]->getLinkUrl())."\" onclick=\"return familyNavLoad('".$people['wife']->getLinkUrl()."');\">";
+						print "<a style=\"padding:0px; width:100%;\" href=\"".encode_url($people["wife"]->getLinkUrl())."\" onclick=\"return familyNavLoad('".encode_url($people['wife']->getLinkUrl())."');\">";
 						print PrintReady($people["wife"]->getFullName());
 						print "<font size=\"1\"><br />" . $BirthYr . " - " . $DeathYr . "</font>";
 						print "</a>";
@@ -210,7 +210,7 @@ class family_nav_Tab extends Tab {
 								print "<span style=\"font: 12px tahoma, arial, helvetica, sans-serif;\">".PrintReady($child->getFullName())."</span>";
 								print "<br /><span style=\"font: 9px tahoma, arial, helvetica, sans-serif;\">" . $BirthYr . " - " . $DeathYr . "</span>";
 							}else{
-								print "<a style=\"padding:0px; width:100%;\" href=\"".encode_url($child->getLinkUrl())."\" onclick=\"return familyNavLoad('".$child->getLinkUrl()."');\">";
+								print "<a style=\"padding:0px; width:100%;\" href=\"".encode_url($child->getLinkUrl())."\" onclick=\"return familyNavLoad('".encode_url($child->getLinkUrl())."');\">";
 								print PrintReady($child->getFullName());
 								print "<font size=\"1\"><br />" . $BirthYr . " - " . $DeathYr . "</font>";
 								print "</a>";
@@ -280,7 +280,7 @@ class family_nav_Tab extends Tab {
 					</td>
 					<td align="center" class="<?php print $this->controller->getPersonStyle($people["husb"]); ?> nam">
 						<?php
-						print "<a style=\"padding:0px; width:100%;\" href=\"".encode_url($people["husb"]->getLinkUrl())."\" onclick=\"return familyNavLoad('".$people['husb']->getLinkUrl()."');\">";
+						print "<a style=\"padding:0px; width:100%;\" href=\"".encode_url($people["husb"]->getLinkUrl())."\" onclick=\"return familyNavLoad('".encode_url($people['husb']->getLinkUrl())."');\">";
 						print PrintReady($people["husb"]->getFullName());
 						print "<font size=\"1\"><br />" . $BirthYr . " - " . $DeathYr . "</font>";
 						print "</a>";
@@ -323,7 +323,7 @@ class family_nav_Tab extends Tab {
 					</td>
 					<td align="center" class="<?php print $this->controller->getPersonStyle($people["wife"]); ?> nam">
 						<?php
-						print "<a style=\"padding:0px; width:100%;\" href=\"".encode_url($people["wife"]->getLinkUrl())."\" onclick=\"return familyNavLoad('".$people['wife']->getLinkUrl()."');\">";
+						print "<a style=\"padding:0px; width:100%;\" href=\"".encode_url($people["wife"]->getLinkUrl())."\" onclick=\"return familyNavLoad('".encode_url($people['wife']->getLinkUrl())."');\">";
 						print PrintReady($people["wife"]->getFullName());
 						print "<font size=\"1\"><br />" . $BirthYr . " - " . $DeathYr . "</font>";
 						print "</a>";
@@ -361,7 +361,7 @@ class family_nav_Tab extends Tab {
 						</td>
 						<td align="center" class="<?php print $this->controller->getPersonStyle($child); ?> nam">
 							<?php
-							print "<a style=\"padding:0px; width:100%;\" href=\"".encode_url($child->getLinkUrl())."\" onclick=\"return familyNavLoad('".$child->getLinkUrl()."');\">";
+							print "<a style=\"padding:0px; width:100%;\" href=\"".encode_url($child->getLinkUrl())."\" onclick=\"return familyNavLoad('".encode_url($child->getLinkUrl())."');\">";
 							print PrintReady($child->getFullName());
 							print "<font size=\"1\"><br />" . $BirthYr . " - " . $DeathYr . "</font>";
 							print "</a>";
@@ -430,7 +430,7 @@ class family_nav_Tab extends Tab {
 							print PrintReady($people["husb"]->getFullName());
 							print "<font size=\"1\"><br />" . $BirthYr . " - " . $DeathYr . "</font>";
 						}else{
-							print "<a style=\"padding:0px; width:100%;\" href=\"".encode_url($people["husb"]->getLinkUrl())."\" onclick=\"return familyNavLoad('".$people['husb']->getLinkUrl()."');\">";
+							print "<a style=\"padding:0px; width:100%;\" href=\"".encode_url($people["husb"]->getLinkUrl())."\" onclick=\"return familyNavLoad('".encode_url($people['husb']->getLinkUrl())."');\">";
 							print PrintReady($people["husb"]->getFullName());
 							print "<font size=\"1\"><br />" . $BirthYr . " - " . $DeathYr . "</font>";
 							print "</a>";
@@ -470,7 +470,7 @@ class family_nav_Tab extends Tab {
 							print PrintReady($people["wife"]->getFullName());
 							print "<font size=\"1\"><br />" . $BirthYr . " - " . $DeathYr . "</font>";
 						}else{
-							print "<a style=\"padding:0px; width:100%;\" href=\"".encode_url($people["wife"]->getLinkUrl())."\" onclick=\"return familyNavLoad('".$people['wife']->getLinkUrl()."');\">";
+							print "<a style=\"padding:0px; width:100%;\" href=\"".encode_url($people["wife"]->getLinkUrl())."\" onclick=\"return familyNavLoad('".encode_url($people['wife']->getLinkUrl())."');\">";
 							print PrintReady($people["wife"]->getFullName());
 							print "<font size=\"1\"><br />" . $BirthYr . " - " . $DeathYr . "</font>";
 							print "</a>";
@@ -508,7 +508,7 @@ class family_nav_Tab extends Tab {
 						</td>
 						<td align="center" class="<?php print $this->controller->getPersonStyle($child); ?> nam">
 							<?php
-							print "<a style=\"padding:0px; width:100%;\" href=\"".encode_url($child->getLinkUrl())."\" onclick=\"return familyNavLoad('".$child->getLinkUrl()."');\">";
+							print "<a style=\"padding:0px; width:100%;\" href=\"".encode_url($child->getLinkUrl())."\" onclick=\"return familyNavLoad('".encode_url($child->getLinkUrl())."');\">";
 							print PrintReady($child->getFullName());
 							print "<font size=\"1\"><br />" . $BirthYr . " - " . $DeathYr . "</font>";
 							print "</a>";
@@ -607,7 +607,7 @@ function print_pedigree_person_nav($pid, $style=1, $show_famlink=true, $count=0,
 								}else{
 									$title = $husb->getXref()." :".$pgv_lang["indi_info"];
 								}
-								$parentlinks .= "<a id=\"phusb\" href=\"".encode_url($husb->getLinkUrl())."\" onclick=\"return familyNavLoad('".$husb->getLinkUrl()."');\">";
+								$parentlinks .= "<a id=\"phusb\" href=\"".encode_url($husb->getLinkUrl())."\" onclick=\"return familyNavLoad('".encode_url($husb->getLinkUrl())."');\">";
 								$parentlinks .= "&nbsp;".PrintReady($husb->getFullName());
 								$parentlinks .= "</a>";
 								$parentlinks .= "<br />";
@@ -629,7 +629,7 @@ function print_pedigree_person_nav($pid, $style=1, $show_famlink=true, $count=0,
 								}else{
 									$title = $wife->getXref()." :".$pgv_lang["indi_info"];
 								}
-								$parentlinks .= "<a id=\"pwife\" href=\"".encode_url($wife->getLinkUrl())."\" onclick=\"return familyNavLoad('".$wife->getLinkUrl()."');\">";
+								$parentlinks .= "<a id=\"pwife\" href=\"".encode_url($wife->getLinkUrl())."\" onclick=\"return familyNavLoad('".encode_url($wife->getLinkUrl())."');\">";
 								$parentlinks .= "&nbsp;".PrintReady($wife->getFullName());
 								$parentlinks .= "</a>";
 								$parentlinks .= "<br />";
@@ -665,7 +665,7 @@ function print_pedigree_person_nav($pid, $style=1, $show_famlink=true, $count=0,
 									}else{
 										$title = $husb->getXref()." :".$pgv_lang["indi_info"];
 									}
-									$parentlinks .= "<a id=\"shusb\" href=\"".encode_url($husb->getLinkUrl())."\" onclick=\"return familyNavLoad('".$husb->getLinkUrl()."');\">";
+									$parentlinks .= "<a id=\"shusb\" href=\"".encode_url($husb->getLinkUrl())."\" onclick=\"return familyNavLoad('".encode_url($husb->getLinkUrl())."');\">";
 									$parentlinks .= "&nbsp;".PrintReady($husb->getFullName());
 									$parentlinks .= "</a>";
 									$parentlinks .= "<br />";
@@ -689,7 +689,7 @@ function print_pedigree_person_nav($pid, $style=1, $show_famlink=true, $count=0,
 									}else{
 										$title = $wife->getXref()." :".$pgv_lang["indi_info"];
 									}
-									$parentlinks .= "<a id=\"swife\" href=\"".encode_url($wife->getLinkUrl())."\" onclick=\"return familyNavLoad('".$wife->getLinkUrl()."');\">";
+									$parentlinks .= "<a id=\"swife\" href=\"".encode_url($wife->getLinkUrl())."\" onclick=\"return familyNavLoad('".encode_url($wife->getLinkUrl())."');\">";
 									$parentlinks .= "&nbsp;".PrintReady($wife->getFullName());
 									$parentlinks .= "</a>";
 									$parentlinks .= "<br />";
@@ -720,7 +720,7 @@ function print_pedigree_person_nav($pid, $style=1, $show_famlink=true, $count=0,
 								}else{
 									$title = $spouse->getXref()." :".$pgv_lang["indi_info"];
 								}
-								$spouselinks .= "<a id=\"spouse\" href=\"".encode_url($spouse->getLinkUrl())."\" onclick=\"return familyNavLoad('".$spouse->getLinkUrl()."');\">";
+								$spouselinks .= "<a id=\"spouse\" href=\"".encode_url($spouse->getLinkUrl())."\" onclick=\"return familyNavLoad('".encode_url($spouse->getLinkUrl())."');\">";
 								$spouselinks .= "&nbsp;".PrintReady($spouse->getFullName());
 								$spouselinks .= "</a>";
 								$spouselinks .= "<br />";
@@ -736,7 +736,7 @@ function print_pedigree_person_nav($pid, $style=1, $show_famlink=true, $count=0,
 								$persons="Yes";
 									$title = $pgv_lang["indi_info"].": ".$child->getXref();
 									$spouselinks .= "<li id=\"flyout3\">";
-									$spouselinks .= "<a href=\"".encode_url($child->getLinkUrl())."\" onclick=\"return familyNavLoad('".$child->getLinkUrl()."');\">";
+									$spouselinks .= "<a href=\"".encode_url($child->getLinkUrl())."\" onclick=\"return familyNavLoad('".encode_url($child->getLinkUrl())."');\">";
 									$spouselinks .= PrintReady($child->getFullName());
 									$spouselinks .= "</a>";
 									$spouselinks .= "</li>\n";

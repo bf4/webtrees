@@ -154,7 +154,7 @@ jQuery(document).ready(function(){
 	enable_static_tab();
    	<?php }
    	
-   	$tabcount = 0; 
+   	$tabcount = 0;
 	foreach($controller->modules as $mod) {
 		if ($mod!=$controller->static_tab && $mod->hasTab()) {
 			if ($tabcount==$controller->default_tab || !$mod->getTab()->canLoadAjax()) {
@@ -326,7 +326,7 @@ foreach($controller->modules as $mod) {
 		<?php echo $mod->getTab()->getContent(); ?>
 	</div>	
 	<?php }
-	if ($mod->getTab()->hasContent()) $tabcount++; 
+	if ($mod->getTab()->hasContent() || PGV_USER_CAN_EDIT) $tabcount++;
 	}
  } ?>
 </div> <!-- tabs -->
