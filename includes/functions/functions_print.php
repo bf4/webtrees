@@ -2024,7 +2024,7 @@ function format_fact_date(&$eventObj, $anchor=false, $time=false) {
 	// print gedcom ages
 	foreach (array($factarray['AGE']=>$fact_age, $pgv_lang['husband']=>$husb_age, $pgv_lang['wife']=>$wife_age) as $label=>$age) {
 		if ($age!='') {
-			$html.=' <span class="label">'.$label.'</span>: <span class="age">'.PrintReady(get_age_at_event($age, false)).'</span>';
+			$html.=' <span class="label">'.$label.':</span> <span class="age">'.PrintReady(get_age_at_event($age, false)).'</span>';
 		}
 	}
 	return $html;
