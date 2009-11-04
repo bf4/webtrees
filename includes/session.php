@@ -516,8 +516,6 @@ if ($ENABLE_MULTI_LANGUAGE && empty($SEARCH_SPIDER)) {
 		if (!empty($_REQUEST['NEWLANGUAGE']) && isset($pgv_language[strtolower($_REQUEST['NEWLANGUAGE'])])) {
 			$LANGUAGE = strtolower($_REQUEST['NEWLANGUAGE']);
 			$_SESSION['CLANGUAGE'] = $LANGUAGE;
-			unset($_SESSION["upcoming_events"]);
-			unset($_SESSION["todays_events"]);
 		}
 	}
 }
