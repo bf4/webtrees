@@ -518,6 +518,7 @@ $pgv_lang["family_private"]			= "Details van dit gezin zijn privé. Details van 
 $pgv_lang["download"]				= "Klik met uw rechter muisknop op de onderstaande koppelingen en selecteer \"Bewaar doel als\" om de bestanden te downloaden.";
 $pgv_lang["cart_is_empty"]			= "Uw knipselbak is leeg.";
 $pgv_lang["id"]						= "ID";
+$pgv_lang["ID"]						= "ID";
 $pgv_lang["name_description"]		= "Naam / Omschrijving";
 $pgv_lang["remove"]					= "Verwijderen";
 $pgv_lang["empty_cart"]				= "Maak bak leeg";

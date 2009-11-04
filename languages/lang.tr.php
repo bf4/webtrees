@@ -374,6 +374,7 @@ $pgv_lang["family_private"]		= "Bu ailenin detayları şahsidir. Kişisel detayl
 $pgv_lang["download"]			= "Yeni yaratılmış GEDCOM dosyasını yerel bilgisayarınıza indirebilmek için aşağıdaki bağlantıya farenin sağ tuşu ile basıp (MAC te Control-Click) \"Hedefi Farklı Kaydet...\" emrini seçin.";
 $pgv_lang["cart_is_empty"]		= "Kupür Taşıma Alanı Boştur";
 $pgv_lang["id"]				= "ID";
+$pgv_lang["ID"]				= "ID";
 $pgv_lang["name_description"]		= "İsim / Tanım";
 $pgv_lang["remove"]			= "Kaldır";
 $pgv_lang["empty_cart"]			= "Kupür Taşıma Alanı Boşalt";

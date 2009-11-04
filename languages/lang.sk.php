@@ -246,6 +246,7 @@ $pgv_lang["family_private"]		= "Podrobnosti o tejto rodine sú neverejné. Rodin
 $pgv_lang["download"]			= "Pre stiahnutie súborov kliknite pravým tlačítkom na odkazy dole a označte &quot;Uložiť cieľ ako&quot;.";
 $pgv_lang["cart_is_empty"]		= "Vaša Schránka výstrižkov je prázdna.";
 $pgv_lang["id"]				= "ID";
+$pgv_lang["ID"]				= "ID";
 $pgv_lang["name_description"]		= "Meno / Popis";
 $pgv_lang["remove"]			= "Odstrániť";
 $pgv_lang["empty_cart"]			= "Vyprázdniť schránku";

@@ -545,6 +545,7 @@ $pgv_lang["media_private"] 			= "Los detalles de este objeto audiovisual son pri
 $pgv_lang["download"]				= "Haga clic con el botón derecho (control-clic en un Mac) en los vínculos y seleccione \"Guardar como\" para descargar los archivos.";
 $pgv_lang["cart_is_empty"]			= "Su carrito está vacío.";
 $pgv_lang["id"] 					= "ID";
+$pgv_lang["ID"] 					= "ID";
 $pgv_lang["name_description"]		= "Nombre / Descripción";
 $pgv_lang["remove"] 				= "Borrar";
 $pgv_lang["empty_cart"] 			= "Vaciar carrito";

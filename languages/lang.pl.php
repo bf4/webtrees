@@ -542,6 +542,7 @@ $pgv_lang["media_private"]			= "Szczegółowe informacje o tych multimediach są
 $pgv_lang["download"]				= "Kliknij prawym przyciskiem (control-click na Mac'u) na odnośnikach poniżej i wybierz &quot;Zapisz element docelowy jako...&quot; aby pobrać pliki.";
 $pgv_lang["cart_is_empty"]			= "Brak wycinków.";
 $pgv_lang["id"]						= "ID";
+$pgv_lang["ID"]						= "ID";
 $pgv_lang["name_description"]		= "Nazwisko / Opis";
 $pgv_lang["remove"]					= "Usuń";
 $pgv_lang["empty_cart"]				= "Usuń wszystkie wycinki";

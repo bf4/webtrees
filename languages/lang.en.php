@@ -544,6 +544,7 @@ $pgv_lang["media_private"] 			= "Details about this media are private. Media det
 $pgv_lang["download"]				= "Right click (control-click on a Macintosh) on the links below and select &quot;Save target as&quot; to download the files.";
 $pgv_lang["cart_is_empty"]			= "Your Clippings Cart is empty.";
 $pgv_lang["id"] 					= "ID";
+$pgv_lang["ID"] 					= "ID";
 $pgv_lang["name_description"]		= "Name / Description";
 $pgv_lang["remove"] 				= "Remove";
 $pgv_lang["empty_cart"] 			= "Empty Cart";

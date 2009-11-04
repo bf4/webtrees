@@ -544,6 +544,7 @@ $pgv_lang["media_private"] 		= "Podrobnosti o medijskih datotekah so zasebne. Po
 $pgv_lang["download"]			= "Z desnim gumbom na miški klikni spodnje povezave in izberi &quot;Save target as&quot; za naložitev izbranih datotek.";
 $pgv_lang["cart_is_empty"]		= "Vaša košarice za izreze je prazna.";
 $pgv_lang["id"] 			= "ID-številka";
+$pgv_lang["ID"] 			= "ID-številka";
 $pgv_lang["name_description"]		= "Ime / Opis";
 $pgv_lang["remove"] 			= "Odstrani";
 $pgv_lang["empty_cart"] 		= "Izprazni košarico";

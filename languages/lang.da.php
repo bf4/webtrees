@@ -457,6 +457,7 @@ $pgv_lang["family_private"]		= "Data for denne familie er private. Familiære da
 $pgv_lang["download"]			= "Højreklik (control-klik på Mac) på linket nedenunder og vælg &quot;Gem som&quot; for at hente filerne.";
 $pgv_lang["cart_is_empty"]		= "Din udklipsholder er tom.";
 $pgv_lang["id"]					= "ID";
+$pgv_lang["ID"]					= "ID";
 $pgv_lang["name_description"]	= "Navn / beskrivelse";
 $pgv_lang["remove"]				= "Fjern";
 $pgv_lang["empty_cart"]			= "Tøm mappen";

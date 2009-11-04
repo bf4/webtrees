@@ -224,6 +224,7 @@ $pgv_lang["family_private"]		= "Detaljerna om familjen är privata. Familjedetal
 $pgv_lang["download"]			= "Högerklicka (control-click på en Mac) på länkarna under och välj &quot;Spara mål som&quot; för att ladda ner filerna.";
 $pgv_lang["cart_is_empty"]		= "Urklippskorgen för ditt släktträd är tom.";
 $pgv_lang["id"]					= "ID";
+$pgv_lang["ID"]					= "ID";
 $pgv_lang["name_description"]	= "Namn / Beskrivning";
 $pgv_lang["remove"]				= "Radera";
 $pgv_lang["empty_cart"]			= "Töm urklippskorgen";
