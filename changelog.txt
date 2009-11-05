@@ -10,6 +10,8 @@
 
 
 Version 4.2.x CA
+ - Changed: Removed Album tab thumbnail dropdown menu items "Manage links" and "Unlink Media" for editors. These are Admin functions only. (windmillway)
+ - Fixed: Various bugs with Tab Management (yalnifj)
  - Merged: Merge changes r6205 - r6236 from the trunk. (windmillway)
  - Modified: Admin Page "Module Administration Tab" link. Tidied up Lightbox config return button links. (windmillway)
  - Fixed: Problem with Admin page. Added Lightbox to Module Administration Settings page. Minor css adjustments to Simplyxxx themes. (windmillway)

@@ -215,7 +215,7 @@ function lightbox_print_media_row($rtype, $rowm, $pid) {
 			$menu->addClass("", "", "submenu");
 
 			// View Notes
-			if (eregi("1 NOTE",$rowm['m_gedrec'])) {
+			if (strpos("\n1 NOTE",$rowm['m_gedrec'])) {
 				$submenu = new Menu("&nbsp;&nbsp;" . $pgv_lang["lb_viewnotes"] . "&nbsp;&nbsp;", "#", "right");
 				// Notes Tooltip ----------------------------------------------------
 				$sonclick  = "TipTog(";
@@ -237,7 +237,7 @@ function lightbox_print_media_row($rtype, $rowm, $pid) {
 			$submenu->addClass($submenu_class, $submenu_hoverclass);
 			$menu->addSubMenu($submenu);
 			//View Source
-			if (eregi("1 SOUR",$rowm['m_gedrec']) && displayDetailsById($sour, "SOUR")) {
+			if (strpos("\n1 SOUR",$rowm['m_gedrec']) && displayDetailsById($sour, "SOUR")) {
 				$submenu = new Menu("&nbsp;&nbsp;" . $pgv_lang["lb_viewsource"] . "&nbsp;&nbsp;", $SERVER_URL . "source.php?sid=" . $sour, "right");
 				$submenu->addClass($submenu_class, $submenu_hoverclass);
 				$menu->addSubMenu($submenu);
@@ -248,16 +248,18 @@ function lightbox_print_media_row($rtype, $rowm, $pid) {
 				$submenu->addOnclick("return window.open('addmedia.php?action=editmedia&amp;pid={$rowm['m_media']}&amp;linktoid={$rowm['mm_gid']}', '_blank', 'top=50,left=50,width=600,height=700,resizable=1,scrollbars=1');");
 				$submenu->addClass($submenu_class, $submenu_hoverclass);
 				$menu->addSubMenu($submenu);
-				// Manage Links
-				$submenu = new Menu("&nbsp;&nbsp;" . $pgv_lang["add_or_remove_links"] . "&nbsp;&nbsp;", "#", "right");
-				$submenu->addOnclick("return window.open('inverselink.php?mediaid={$rowm['m_media']}&amp;linkto=manage', '_blank', 'top=50,left=50,width=570,height=650,resizable=1,scrollbars=1');");
-				$submenu->addClass($submenu_class, $submenu_hoverclass);
-				$menu->addSubMenu($submenu);
-				// Unlink Media
-				$submenu = new Menu("&nbsp;&nbsp;" . $pgv_lang["lb_unlinkmedia"] . "&nbsp;&nbsp;", "#", "right");
-				$submenu->addOnclick("return delete_record('$pid', 'OBJE', '".$rowm['m_media']."');");
-				$submenu->addClass($submenu_class, $submenu_hoverclass);
-				$menu->addSubMenu($submenu);
+				if (PGV_USER_IS_ADMIN) {
+					// Manage Links
+					$submenu = new Menu("&nbsp;&nbsp;" . $pgv_lang["add_or_remove_links"] . "&nbsp;&nbsp;", "#", "right");
+					$submenu->addOnclick("return window.open('inverselink.php?mediaid={$rowm['m_media']}&amp;linkto=manage', '_blank', 'top=50,left=50,width=570,height=650,resizable=1,scrollbars=1');");
+					$submenu->addClass($submenu_class, $submenu_hoverclass);
+					$menu->addSubMenu($submenu);
+					// Unlink Media
+					$submenu = new Menu("&nbsp;&nbsp;" . $pgv_lang["lb_unlinkmedia"] . "&nbsp;&nbsp;", "#", "right");
+					$submenu->addOnclick("return delete_record('$pid', 'OBJE', '".$rowm['m_media']."');");
+					$submenu->addClass($submenu_class, $submenu_hoverclass);
+					$menu->addSubMenu($submenu);
+				}
 			}
 		}
 
