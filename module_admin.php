@@ -87,6 +87,16 @@ if ($action=='update_mods') {
 
 print_header($pgv_lang["module_admin"]);
 ?>
+<style type="text/css">
+<!--
+.sortme {
+	cursor: move;
+}
+.sortme img {
+	cursor: pointer;
+}
+//-->
+</style>
 <script type="text/javascript" src="js/jquery/jquery.min.js"></script>
 <script type="text/javascript" src="js/jquery/jquery-ui-1.7.1.custom.min.js"></script>
 <link type="text/css" href="js/jquery/css/jquery-ui-1.7.1.custom.css" rel="Stylesheet" />
@@ -96,8 +106,64 @@ print_header($pgv_lang["module_admin"]);
 <?php }?>
 <script type="text/javascript">
 //<![CDATA[
+           
+  function reindexMods(id) {
+	  $('#'+id+' input').each(
+	  	function (index, value) {
+	    	value.value = index+1;
+	  	});
+  }
+  
   $(document).ready(function(){
+	//-- tabs
     $("#tabs").tabs();
+
+    //-- sortable menus and tabs tables
+    $("#menus_table, #tabs_table").sortable({items: '.sortme', forceHelperSize: true, forcePlaceholderSize: true, opacity: 0.7, cursor: 'move', axis: 'y'});
+
+    //-- update the order numbers after drag-n-drop sorting is complete
+    $('#menus_table').bind('sortupdate', function(event, ui) {
+			var id = $(this).attr('id');
+			reindexMods(id);  		
+  	  });
+
+    $('#tabs_table').bind('sortupdate', function(event, ui) {
+		var id = $(this).attr('id');
+		reindexMods(id);  		
+	  });
+    
+    //-- enable the arrows buttons
+    $(".uarrow").click(function() {
+        var curr = $(this).parent().parent().get(0);
+        var prev = $(curr).prev();
+        if (prev) $(prev).insertAfter(curr);
+        reindexMods('menus_table');
+        reindexMods('tabs_table');
+    });
+
+    $(".udarrow").click(function() {
+        var curr = $(this).parent().parent().get(0);
+        var prev = $(curr).parent().children().get(0);
+        if (prev) $(curr).insertBefore(prev);
+        reindexMods('menus_table');
+        reindexMods('tabs_table');
+    });
+
+    $(".darrow").click(function() {
+        var curr = $(this).parent().parent().get(0);
+        var next = $(curr).next();
+        if (next) $(next).insertBefore(curr);
+        reindexMods('menus_table');
+        reindexMods('tabs_table');
+    });
+
+    $(".ddarrow").click(function() {
+	    var curr = $(this).parent().parent().get(0);
+	    var prev = $(curr).parent().children(":last").get(0);
+	    if (prev) $(curr).insertAfter(prev);
+	    reindexMods('menus_table');
+	    reindexMods('tabs_table');
+	});
   });
 //]]>
   </script>
@@ -183,10 +249,16 @@ $order = 1;
 foreach($modules as $mod) {
 	if(!$mod->hasMenu()) continue;
 if ($mod->getMenuorder()==0) $mod->setMenuorder($order);
-	?><tr>
+	?><tr class="sortme">
 	<td class="list_value"><?php echo $mod->getName()?></td>
 	<td class="list_value_wrap"><?php echo $mod->getDescription()?></td>
-	<td class="list_value"><input type="text" size="5" value="<?php echo $order; ?>" name="menuorder-<?php echo $mod->getName() ?>" /></td>
+	<td class="list_value"><input type="text" size="5" value="<?php echo $order; ?>" name="menuorder-<?php echo $mod->getName() ?>" />
+		<br />
+		<img class="uarrow" src="<?php echo $PGV_IMAGE_DIR."/".$PGV_IMAGES["uarrow"]["other"];?>" border="0" title="move up" />
+		<img class="udarrow" src="<?php echo $PGV_IMAGE_DIR."/".$PGV_IMAGES["udarrow"]["other"];?>" border="0" title="move to top" />
+		<img class="darrow" src="<?php echo $PGV_IMAGE_DIR."/".$PGV_IMAGES["darrow"]["other"];?>" border="0" title="move down" />
+		<img class="ddarrow" src="<?php echo $PGV_IMAGE_DIR."/".$PGV_IMAGES["ddarrow"]["other"];?>" border="0" title="move to bottom" />
+	</td>
 	<td class="list_value_wrap">
 	  <table>
 	<?php
@@ -228,10 +300,16 @@ $order = 1;
 foreach($modules as $mod) {
 	if(!$mod->hasTab()) continue;
 	if ($mod->getTaborder()==0) $mod->setTaborder($order);
-	?><tr>
+	?><tr class="sortme">
 	<td class="list_value"><?php echo $mod->getName()?></td>
 	<td class="list_value_wrap"><?php echo $mod->getDescription()?></td>
-	<td class="list_value"><input type="text" size="5" value="<?php echo $order; ?>" name="taborder-<?php echo $mod->getName() ?>" /></td>
+	<td class="list_value"><input type="text" size="5" value="<?php echo $order; ?>" name="taborder-<?php echo $mod->getName() ?>" />
+		<br />
+		<img class="uarrow" src="<?php echo $PGV_IMAGE_DIR."/".$PGV_IMAGES["uarrow"]["other"];?>" border="0" title="move up" />
+		<img class="udarrow" src="<?php echo $PGV_IMAGE_DIR."/".$PGV_IMAGES["udarrow"]["other"];?>" border="0" title="move to top" />
+		<img class="darrow" src="<?php echo $PGV_IMAGE_DIR."/".$PGV_IMAGES["darrow"]["other"];?>" border="0" title="move down" />
+		<img class="ddarrow" src="<?php echo $PGV_IMAGE_DIR."/".$PGV_IMAGES["ddarrow"]["other"];?>" border="0" title="move to bottom" />
+	</td>
 	<td class="list_value_wrap">
 	<table>
 	<?php
