@@ -301,32 +301,7 @@ function getTop10Surnames() {
 	$dataArray[0] = str_replace("10", $numName, $pgv_lang["block_top10_title"]);
 	$dataArray[1] = time();
 
-	$surnames = get_top_surnames($numName);
-
-	// Insert from the "Add Names" list if not already in there
-	if ($COMMON_NAMES_ADD != "") {
-		$addnames = preg_split("/[,;] /", $COMMON_NAMES_ADD);
-		if (count($addnames)==0) $addnames[] = $COMMON_NAMES_ADD;
-		foreach($addnames as $indexval => $name) {
-			//$surname = UTF8_strtoupper($name);
-			$surname = $name;
-			if (!isset($surnames[$surname])) {
-				$surnames[$surname]["name"] = $name;
-				$surnames[$surname]["match"] = $COMMON_NAMES_THRESHOLD;
-			}
-		}
-	}
-
-	// Remove names found in the "Remove Names" list
-	if ($COMMON_NAMES_REMOVE != "") {
-		$delnames = preg_split("/[,;] /", $COMMON_NAMES_REMOVE);
-		if (count($delnames)==0) $delnames[] = $COMMON_NAMES_REMOVE;
-		foreach($delnames as $indexval => $name) {
-			//$surname = UTF8_strtoupper($name);
-			$surname = $name;
-			unset($surnames[$surname]);
-		}
-	}
+	$surnames = get_common_surnames($numName);
 
 	// Sort the list and save for future reference
 	uasort($surnames, "top_surname_sort");
