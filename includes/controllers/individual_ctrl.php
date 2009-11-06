@@ -39,10 +39,6 @@ require_once 'includes/classes/class_family.php';
 require_once 'includes/functions/functions_import.php';
 require_once 'includes/classes/class_module.php';
 
-$indifacts = array(); // -- array to store the fact records in for sorting and displaying
-$globalfacts = array();
-$otheritems = array(); //-- notes, sources, media objects
-$FACT_COUNT=0;
 // -- array of GEDCOM elements that will be found but should not be displayed
 $nonfacts[] = "FAMS";
 $nonfacts[] = "FAMC";

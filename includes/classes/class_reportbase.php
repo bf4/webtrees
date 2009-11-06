@@ -2411,15 +2411,19 @@ function PGVRvarSHandler($attrs) {
 * @param array $attrs an array of key value pairs for the attributes
 */
 function PGVRvarLetterSHandler($attrs) {
-	global $currentElement, $factarray, $fact, $desc;
+	global $currentElement, $factarray, $factAbbrev, $fact, $desc;
 
 	$var = $attrs["var"];
 	if (!empty($var)) {
-		$tfact = $fact;
-		$var = preg_replace(array("/\[/","/\]/","/@fact/","/@desc/"), array("['","']",$tfact,$desc), $var);
-		eval("if (!empty(\$$var)) \$var = \$$var;");
-
-		$letter = UTF8_substr($var, 0, 1);
+		$abbrev = substr(strrchr(substr($var, 0, -1), '['), 1);
+		if (isset ($factAbbrev[$abbrev])) {
+			$letter = $factAbbrev[$abbrev];
+		} else {
+			$tfact = $fact;
+			$var = preg_replace(array("/\[/","/\]/","/@fact/","/@desc/"), array("['","']",$tfact,$desc), $var);
+			eval("if (!empty(\$$var)) \$var = \$$var;");
+			$letter = UTF8_substr($var, 0, 1);
+		}
 		$currentElement->addText($letter);
 	}
 }
@@ -2839,7 +2843,7 @@ function PGVRHighlightedImageSHandler($attrs) {
 	if (!empty($attrs["height"])) $height = (int)$attrs["height"];
 
 	if (showFact("OBJE", $id)) {
-		$media = find_highlighted_object($id, $gedrec);
+		$media = find_highlighted_object($id, PGV_GED_ID, $gedrec);
 		if (!empty($media["file"])) {
 			if (preg_match("/(jpg)|(jpeg)|(png)$/i", $media["file"])>0) {
 				if (file_exists($media["file"])) {

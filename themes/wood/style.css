@@ -1101,10 +1101,6 @@ h4 {
 	background-color: yellow;
 }
 
-.nowrap {
-	white-space: nowrap;
-}
-
 .title {
 	font: 18pt tahoma, arial, helvetica, sans-serif;
 }
@@ -1493,7 +1489,6 @@ a.showit:hover span {
 }
 /* End of Autocomplete styles*/
 
-/* The following two overriding classes MUST appear at the end of the entire CSS file. */
 .nowrap {
 	white-space: nowrap;
 }

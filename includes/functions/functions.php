@@ -1305,9 +1305,8 @@ function exists_pending_change($user_id=PGV_USER_ID, $ged_id=PGV_GED_ID) {
  * @param string $indirec the gedcom record to look in
  * @return array an object array with indexes "thumb" and "file" for thumbnail and filename
  */
-function find_highlighted_object($pid, $indirec) {
-	global $MEDIA_DIRECTORY, $MEDIA_DIRECTORY_LEVELS, $PGV_IMAGE_DIR, $PGV_IMAGES, $MEDIA_EXTERNAL;
-	global $GEDCOMS, $GEDCOM, $TBLPREFIX;
+function find_highlighted_object($pid, $ged_id, $indirec) {
+	global $MEDIA_DIRECTORY, $MEDIA_DIRECTORY_LEVELS, $PGV_IMAGE_DIR, $PGV_IMAGES, $MEDIA_EXTERNAL, $TBLPREFIX;
 
 	if (!showFactDetails("OBJE", $pid)) {
 		return false;
@@ -1337,7 +1336,7 @@ function find_highlighted_object($pid, $indirec) {
 	//-- find all of the media items for a person
 	$media=
 		PGV_DB::prepare("SELECT m_media, m_file, m_gedrec, mm_gedrec FROM {$TBLPREFIX}media, {$TBLPREFIX}media_mapping WHERE m_media=mm_media AND m_gedfile=mm_gedfile AND m_gedfile=? AND mm_gid=? ORDER BY mm_order")
-		->execute(array($GEDCOMS[$GEDCOM]["id"], $pid))
+		->execute(array($ged_id, $pid))
 		->fetchAll(PDO::FETCH_NUM);
 
 	foreach ($media as $i=>$row) {
@@ -2674,16 +2673,13 @@ function get_relationship2($pid1, $pid2, $followspouse=true, $maxlength=0, $igno
  * @return bool true if successful false if there was an error
  */
 function write_changes() {
-	global $pgv_changes, $INDEX_DIRECTORY, $CONTACT_EMAIL, $LAST_CHANGE_EMAIL;
+	global $pgv_changes, $INDEX_DIRECTORY, $CONTACT_EMAIL;
 
 	//-- only allow 1 thread to write changes at a time
 	$mutex = new Mutex("pgv_changes");
 	$mutex->Wait();
-	//-- what to do if file changed while waiting
-	if (!isset($LAST_CHANGE_EMAIL))
-		$LAST_CHANGE_EMAIL = time();
 	//-- write the changes file
-	$changestext = "<?php\n\$LAST_CHANGE_EMAIL = $LAST_CHANGE_EMAIL;\n\$pgv_changes = array();\n";
+	$changestext = "<?php\n\$pgv_changes = array();\n";
 	foreach ($pgv_changes as $gid=>$changes) {
 		if (count($changes)>0) {
 			$changestext .= "\$pgv_changes[\"$gid\"] = array();\n";
@@ -3175,13 +3171,9 @@ function CheckPageViews() {
  */
 function get_new_xref($type='INDI', $use_cache=false) {
 	global $fcontents, $SOURCE_ID_PREFIX, $REPO_ID_PREFIX, $pgv_changes, $GEDCOM, $TBLPREFIX, $GEDCOMS;
-	global $MEDIA_ID_PREFIX, $FAM_ID_PREFIX, $GEDCOM_ID_PREFIX, $FILE, $MAX_IDS;
+	global $MEDIA_ID_PREFIX, $FAM_ID_PREFIX, $GEDCOM_ID_PREFIX, $MAX_IDS;
 
-	//-- during online updates $FILE comes through as an array for some odd reason
-	if (!empty($FILE) && !is_array($FILE)) {
-		$gedid = $GEDCOMS[$FILE]["id"];
-	} else
-		$gedid = $GEDCOMS[$GEDCOM]["id"];
+	$ged_id = $GEDCOMS[$GEDCOM]["id"];
 
 	$num = null;
 	//-- check if an id is stored in MAX_IDS used mainly during the import
@@ -3194,7 +3186,7 @@ function get_new_xref($type='INDI', $use_cache=false) {
 		//-- check for the id in the nextid table
 		$num=
 			PGV_DB::prepare("SELECT ni_id FROM {$TBLPREFIX}nextid WHERE ni_type=? AND ni_gedfile=?")
-			->execute(array($type, $gedid))
+			->execute(array($type, $ged_id))
 			->fetchOne();
 
 		//-- the id was not found in the table so try and find it in the file
@@ -3216,7 +3208,7 @@ function get_new_xref($type='INDI', $use_cache=false) {
 		if (is_null($num)) {
 			$num = 1;
 			PGV_DB::prepare("INSERT INTO {$TBLPREFIX}nextid VALUES(?, ?, ?)")
-				->execute(array($num+1, $type, $gedid));
+				->execute(array($num+1, $type, $ged_id));
 		}
 	}
 
@@ -3261,7 +3253,7 @@ function get_new_xref($type='INDI', $use_cache=false) {
 	}
 	//-- update the next id number in the DB table
 	PGV_DB::prepare("UPDATE {$TBLPREFIX}nextid SET ni_id=? WHERE ni_type=? AND ni_gedfile=?")
-		->execute(array($num+1, $type, $gedid));
+		->execute(array($num+1, $type, $ged_id));
 	return $key;
 }
 
@@ -3338,7 +3330,7 @@ function check_in($logline, $filename, $dirname, $bInsert = false) {
  */
 function loadLangFile($fileListNames="", $lang="") {
 	global $pgv_language, $confighelpfile, $helptextfile, $factsfile, $adminfile, $editorfile, $countryfile, $faqlistfile, $extrafile;
-	global $LANGUAGE, $lang_short_cut;
+	global $LANGUAGE, $lang_short_cut, $lng_codes, $lng_synonyms;
 	global $pgv_lang, $countries, $altCountryNames, $factarray, $factAbbrev, $faqlist;
 	if (empty($lang)) $lang=$LANGUAGE;
 	$allLists = "pgv_lang, pgv_confighelp, pgv_help, pgv_facts, pgv_admin, pgv_editor, pgv_country, pgv_faqlib";
@@ -3738,19 +3730,19 @@ function mediaFileInfo($fileName, $thumbName, $mid, $name='', $notes='', $obeyVi
 	$result = array();
 
 	// -- Classify the incoming media file
-	if (eregi("^https?://", $fileName)) $type = "url_";
+	if (preg_match("~^https?://~i", $fileName)) $type = "url_";
 	else $type = "local_";
-	if ((eregi("\.flv$", $fileName) || eregi("^https?://.*\.youtube\..*/watch\?", $fileName)) && is_dir('modules/JWplayer')) {
+	if ((preg_match("/\.flv$/i", $fileName) || preg_match("~^https?://.*\.youtube\..*/watch\?~i", $fileName)) && is_dir('modules/JWplayer')) {
 		$type .= "flv";
-	} else if (eregi("^https?://picasaweb*\.google\..*/.*/", $fileName)) {
+	} else if (preg_match("~^https?://picasaweb*\.google\..*/.*/~i", $fileName)) {
 		$type .= "picasa";
-	} else if (eregi("\.(jpg|jpeg|gif|png)$", $fileName)) {
+	} else if (preg_match("/\.(jpg|jpeg|gif|png)$/i", $fileName)) {
 		$type .= "image";
-	} else if (eregi("\.(pdf|avi|txt)$", $fileName)) {
+	} else if (preg_match("/\.(pdf|avi|txt)$/i", $fileName)) {
 		$type .= "page";
-	} else if (eregi("\.mp3$", $fileName)) {
+	} else if (preg_match("/\.mp3$/i", $fileName)) {
 		$type .= "audio";
-	} else if (eregi("\.wmv$", $fileName)) {
+	} else if (preg_match("/\.wmv$/i", $fileName)) {
 		$type .= "wmv";
 	} else $type .= "other";
 	// $type is now: (url | local) _ (flv | picasa | image | page | audio | other)
@@ -3916,22 +3908,25 @@ function pathinfo_utf($path) {
 		return array('dirname'=>'', 'basename'=>'', 'extension'=>'', 'filename'=>'');
 	}
 	if (strpos($path, '/')!==false) {
-		$basename = end(explode('/', $path));
-		$dirname = substr($path, 0, strlen($path) - strlen($basename) - 1);
+		$tmp=explode('/', $path);
+		$basename=end($tmp);
+		$dirname=substr($path, 0, strlen($path) - strlen($basename) - 1);
 	} else if (strpos($path, '\\') !== false) {
-		$basename = end(explode('\\', $path));
-		$dirname = substr($path, 0, strlen($path) - strlen($basename) - 1);
+		$tmp=explode('\\', $path);
+		$basename=end($tmp);
+		$dirname=substr($path, 0, strlen($path) - strlen($basename) - 1);
 	} else {
-		$basename = $path;		// We have just a file name
-		$dirname = '.';       // For compatibility with pathinfo()
+		$basename=$path;		// We have just a file name
+		$dirname='.';       // For compatibility with pathinfo()
 	}
 
 	if (strpos($basename, '.')!==false) {
-		$extension = end(explode('.', $path));
-		$filename = substr($basename, 0, strlen($basename) - strlen($extension) - 1);
+		$tmp=explode('.', $path);
+		$extension=end($tmp);
+		$filename=substr($basename, 0, strlen($basename) - strlen($extension) - 1);
 	} else {
-		$extension = '';
-		$filename = $basename;
+		$extension='';
+		$filename=$basename;
 	}
 
 	return array('dirname'=>$dirname, 'basename'=>$basename, 'extension'=>$extension, 'filename'=>$filename);

@@ -10,6 +10,7 @@
 
 
 Version 4.2.x CA
+ - Merged: Merge changes r6237 - r6303 from the trunk. (windmillway)
  - Changed: Removed Album tab thumbnail dropdown menu items "Manage links" and "Unlink Media" for editors. These are Admin functions only. (windmillway)
  - Fixed: Various bugs with Tab Management (yalnifj)
  - Merged: Merge changes r6205 - r6236 from the trunk. (windmillway)
@@ -159,6 +160,24 @@ Version 4.2.x CA
  - Changed: Census Assistant Shared Note delimiter from ";" to "|" (windmillway)
 
 Version 4.2.3
+ - Fixed: [ 2781212 ] Descendancy Chart - NCHI (fisharebest)
+ - Fixed: [ 2890112 ] Shared Notes list doesn't display titles (4.2.3 svn) (fisharebest)
+ - Fixed: [ 2891075 ] MINOR name display anomaly (fisharebest)
+ - Fixed: [ 2891924 ] Another HTML rendering bug (fisharebest)
+ - Fixed: [ 2891960 ] Date/age/death issue (fisharebest)
+ - Fixed: [ 2890679 ] Sorting sources (fisharebest)
+ - Fixed: [ 2890066 ] PGV won't use browser's preferred language (canajun2eh)
+ - Fixed: [ 2881979 ] Tab problem individual page (fisharebest/julianito)
+ - Fixed: [ 2882104 ] Minor CSS detail (fisharebest)
+ - Fixed: [ 2890031 ] SVN, User migration, wrong DB function (fisharebest)
+ - Added: [ 2882125 ] Date sorting requests (fisharebest)
+ - Fixed: [ 2818804 ] PHP 5.3 errors galore (fisharebest/volschin)
+ - Fixed: [ 2825324 ] Source Tab Skips Sources on Names (fisharebest)
+ - Fixed: [ 2879844 ] [4.2.3] General Search results (fisharebest)
+ - Fixed: [ 2888957 ] SVN, DB import fails with samll letter to insert into n_sort (fisharebest)
+ - Fixed: [ 2879600 ] Googlemaps ignores privacy rules (wooc)
+ - Update: Prototype 1.6.1 and Script.aculo.us 1.8.3 (volschin)
+ - Update: Module for PunBB 1.2.22 (volschin)
  - Fixed: [ 2865480 ] 4.2.2 Googlemaps, Place Hierarchy not display in Chrome (wooc)
  - Fixed: [ 2871549 ] Re-named PGV folder requires manual edit of config.php (canajun2eh)
  - Fixed: [ 2869455 ] Unable to delete a research assistant folder (patch by mmoreno)

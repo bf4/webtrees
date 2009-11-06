@@ -220,6 +220,7 @@ $pgv_lang["download"]			= "Pro stáhnutí souborů klikněte pravým tlačítkem
 $pgv_lang["media_files"]		= "V tomto GEDCOM souboru jsou reference na soubory médií.";
 $pgv_lang["cart_is_empty"]		= "Vaše Schránka výstřižků je prázdná.";
 $pgv_lang["id"]				= "ID";
+$pgv_lang["ID"]				= "ID";
 $pgv_lang["name_description"]		= "Jméno / Popis";
 $pgv_lang["remove"]			= "Odstranit";
 $pgv_lang["empty_cart"]			= "Vyprázdnit schránku";

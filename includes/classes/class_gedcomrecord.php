@@ -405,7 +405,7 @@ class GedcomRecord {
 			'type'=>$type,
 			'full'=>$value,
 			'list'=>$value,
-			'sort'=>preg_replace('/(\d+)/e', 'substr("000000000\\1", -10)', $value)
+			'sort'=>preg_replace('/([0-9]+)/e', 'substr("000000000\\1", -10)', $value)
 		);
 	}
 
@@ -418,7 +418,7 @@ class GedcomRecord {
 	// ['full'] = the name as specified in the record, e.g. "Vincent van Gogh" or "John Unknown"
 	// ['list'] = a version of the name as might appear in lists, e.g. "van Gogh, Vincent" or "Unknown, John"
 	// ['sort'] = a sortable version of the name (not for display), e.g. "Gogh, Vincent" or "@N.N., John"
-	function getAllNames($fact='!', $level=1) {
+	protected function _getAllNames($fact='!', $level=1) {
 		global $pgv_lang, $WORD_WRAPPED_NOTES;
 
 		if (is_null($this->_getAllNames)) {
@@ -443,6 +443,11 @@ class GedcomRecord {
 			}
 		}
 		return $this->_getAllNames;
+	}
+
+	// Derived classes should redefine this function, otherwise the object will have no name
+	public function getAllNames() {
+		return $this->_getAllNames('!', 1);
 	}
 
 	// If this object has no name, what do we call it?

@@ -682,7 +682,7 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 
 	// Handle any other NAME subfields that aren't included above (SOUR, NOTE, _CUSTOM, etc)
 	if ($namerec!="" && $namerec!="NEW") {
-		$gedlines = split("\n", $namerec); // -- find the number of lines in the record
+		$gedlines = explode("\n", $namerec); // -- find the number of lines in the record
 		$fields = explode(' ', $gedlines[0]);
 		$glevel = $fields[0];
 		$level = $glevel;
@@ -2371,7 +2371,7 @@ function create_edit_form($gedrec, $linenum, $level0type) {
 	// global $TEXT_DIRECTION, $TBLPREFIX, $DBHOST, $DBUSER, $DBPASS, $DBNAME, $SERVER_URL;
 
 	$tags=array();
-	$gedlines = split("\n", $gedrec); // -- find the number of lines in the record
+	$gedlines = explode("\n", $gedrec); // -- find the number of lines in the record
 	if (!isset($gedlines[$linenum])) {
 		echo "<span class=\"error\">".$pgv_lang["edit_concurrency_msg1"]."<br /><br />";
 		echo $pgv_lang["edit_concurrency_reload"]."</span>";
@@ -2381,7 +2381,7 @@ function create_edit_form($gedrec, $linenum, $level0type) {
 	$glevel = $fields[0];
 	$level = $glevel;
 
-	if ($level!=1 && eregi("/@.*/@", trim($fields[1]))) {
+	if ($level!=1 && preg_match("~/@.*/@~i", trim($fields[1]))) {
 		echo "<span class=\"error\">".$pgv_lang["edit_concurrency_msg1"]."<br /><br />";
 		echo $pgv_lang["edit_concurrency_reload"]."</span>";
 		return;
@@ -2444,7 +2444,7 @@ function create_edit_form($gedrec, $linenum, $level0type) {
 		}
 
 		// Shared Note -------------
-		//if (eregi("@N.*@", $type)) {
+		//if (eregi("/@N.*@/i", $type)) {
 		//	$type="note";
 		//}
 

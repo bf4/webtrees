@@ -84,6 +84,11 @@ foreach (get_all_users() as $user_id=>$user_name) {
 // Sort the Language table into localized language name order
 foreach ($pgv_language as $key => $value){
 	$d_LangName = "lang_name_".$key;
+	// If we've added a new language, but haven't defined its name in the current language,
+	// then display something to indicate what is required, rather than an error.
+	if (!array_key_exists($d_LangName, $pgv_lang)) {
+		$pgv_lang[$d_LangName]="\$pgv_lang['$d_LangName']";
+	}
 	$Sorted_Langs[$key] = $pgv_lang[$d_LangName];
 }
 asort($Sorted_Langs);
@@ -209,7 +214,7 @@ switch ($action) {
 			} else {
 				$d_LangName = "lang_name_" . $value;
 				print "<td class=\"facts_value\" style=\"text-align: center;\">";
-					print $pgv_lang[$d_LangName];
+				print $pgv_lang[$d_LangName];
 				print "</td>";
 				print "<td class=\"facts_value\" style=\"text-align: center;\">";
 					print "<input";

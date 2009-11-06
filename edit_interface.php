@@ -106,7 +106,7 @@ if ($ENABLE_AUTOCOMPLETE) {
 }
 echo PGV_JS_START;
 ?>
-	var locale_date_format='<?php echo preg_replace('/[^DMY]/', '', $DATE_FORMAT); ?>';
+	var locale_date_format='<?php echo preg_replace('/[^DMY]/', '', str_replace(array('J', 'F'), array('D', 'M'), strtoupper($DATE_FORMAT))); ?>';
 
 	function findIndi(field, indiname) {
 		pastefield = field;
@@ -954,7 +954,7 @@ case 'editsource':
 	echo "<br /><input type=\"submit\" value=\"".$pgv_lang["save"]."\" /><br />\n";
 
 	echo "<table class=\"facts_table\">";
-	$gedlines = split("\n", $gedrec); // -- find the number of lines in the record
+	$gedlines = explode("\n", $gedrec); // -- find the number of lines in the record
 	$uniquefacts = preg_split("/[, ;:]+/", $SOUR_FACTS_UNIQUE, -1, PREG_SPLIT_NO_EMPTY);
 	$usedfacts = array();
 	$lines = count($gedlines);
@@ -962,7 +962,7 @@ case 'editsource':
 		foreach ($uniquefacts as $fact) {
 			$gedrec.="\n1 ".$fact;
 		}
-		$gedlines = split("\n", $gedrec);
+		$gedlines = explode("\n", $gedrec);
 	}
 	for ($i=$linenum; $i<$lines; $i++) {
 		$fields = explode(' ', $gedlines[$i]);
@@ -2412,7 +2412,7 @@ case 'edit_family':
 	echo "<br /><input type=\"submit\" value=\"".$pgv_lang["save"]."\" /><br />\n";
 	echo "<table class=\"facts_table\">";
 
-	$gedlines = split("\n", $gedrec); // -- find the number of lines in the record
+	$gedlines = explode("\n", $gedrec); // -- find the number of lines in the record
 	$empty = true;
 	for ($i=$linenum; $i<count($gedlines); $i++) {
 		$fields = explode(' ', $gedlines[$i]);

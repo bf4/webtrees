@@ -227,6 +227,7 @@ $pgv_lang["download"]							= "Κάντε δεξί κλικ (control-κλικ σ
 $pgv_lang["media_files"]						= "Αρχεία Φωτογραφιών που αναφέρονται σε αυτό το αρχείο GEDCOM";
 $pgv_lang["cart_is_empty"]						= "Το καλάθι αποκομμάτων είναι άδειο.";
 $pgv_lang["id"]									= "Ταυτότητα (ID)";
+$pgv_lang["ID"]									= "Ταυτότητα (ID)";
 $pgv_lang["name_description"]					= "Όνομα / Περιγραφή";
 $pgv_lang["remove"]								= "Αφαίρεση";
 $pgv_lang["empty_cart"]							= "Άδειο καλάθι";

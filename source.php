@@ -70,7 +70,7 @@ echo '<table class="list_table"><tr><td>';
 if ($controller->accept_success) {
 	echo '<b>', $pgv_lang['accept_successful'], '</b><br />';
 }
-echo '<span class="name_head">', PrintReady($controller->source->getFullName());
+echo '<span class="name_head">', PrintReady(htmlspecialchars($controller->source->getFullName()));
 if ($SHOW_ID_NUMBERS) {
 	echo ' ', getLRM(), '(', $controller->sid, ')', getLRM(); 
 }

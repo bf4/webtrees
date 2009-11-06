@@ -782,9 +782,10 @@ function privatize_gedcom($gedrec) {
 	global $pgv_lang, $factarray, $GEDCOM, $SHOW_PRIVATE_RELATIONSHIPS, $pgv_private_records;
 	global $global_facts, $person_facts;
 
-	if (preg_match('/^0 @('.PGV_REGEX_XREF.')@ ('.PGV_REGEX_TAG.')/', $gedrec, $match)) {
+	if (preg_match('/^0 @('.PGV_REGEX_XREF.')@ ('.PGV_REGEX_TAG.')(.*)/', $gedrec, $match)) {
 		$gid = $match[1];
 		$type = $match[2];
+		$data = $match[3];
 		if (displayDetailsById($gid, $type)) {
 			// The record is not private, but the individual facts may be.
 			if (
@@ -797,7 +798,7 @@ function privatize_gedcom($gedrec) {
 				return $gedrec;
 			}
 
-			$newrec="0 @{$gid}@ {$type}";
+			$newrec="0 @{$gid}@ {$type}{$data}";
 			$private_record='';
 			// Check each of the sub facts for access
 			if (preg_match_all('/\n1 ('.PGV_REGEX_TAG.').*(?:\n[2-9].*)*/', $gedrec, $matches, PREG_SET_ORDER)) {

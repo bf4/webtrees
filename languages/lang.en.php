@@ -544,6 +544,7 @@ $pgv_lang["media_private"] 			= "Details about this media are private. Media det
 $pgv_lang["download"]				= "Right click (control-click on a Macintosh) on the links below and select &quot;Save target as&quot; to download the files.";
 $pgv_lang["cart_is_empty"]			= "Your Clippings Cart is empty.";
 $pgv_lang["id"] 					= "ID";
+$pgv_lang["ID"] 					= "ID";
 $pgv_lang["name_description"]		= "Name / Description";
 $pgv_lang["remove"] 				= "Remove";
 $pgv_lang["empty_cart"] 			= "Empty Cart";
@@ -1486,6 +1487,8 @@ $pgv_lang["son_of"]					= "son of";
 $pgv_lang["daughter_of"]			= "daughter of";
 $pgv_lang["child_of"]				= "Child of ";
 $pgv_lang["children_of"]			= "Children of ";
+$pgv_lang["descendancy_pronoun_m"]	= "He ";
+$pgv_lang["descendancy_pronoun_f"]	= "She ";
 
 $pgv_lang["family_group_report"]	= "Family Group Report";
 $pgv_lang["page"]					= "Page";

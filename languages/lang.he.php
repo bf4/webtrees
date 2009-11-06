@@ -545,6 +545,7 @@ $pgv_lang["media_private"] 		= "הפירוט של המדיה הזה פרטי. פ
 $pgv_lang["download"]		= "קליק ימני (קונטרול-קליק על מק) על הקישורים שמתחת ובחר \"Save Target As ...\" כדי להוריד הקבצים.";
 $pgv_lang["cart_is_empty"]		= "עגלת הגזרים שלך ריקה.";
 $pgv_lang["id"]				= "קוד זיהוי";
+$pgv_lang["ID"]				= "קוד זיהוי";
 $pgv_lang["name_description"]	= "שם / תאור";
 $pgv_lang["remove"]			= "הסר";
 $pgv_lang["empty_cart"]		= "רוקן עגלה";
@@ -864,6 +865,8 @@ $pgv_lang["view_fam_nav_research"]	= "הצג מחקר עבור ...";
 $pgv_lang["view_fam_nav_map"]	= "הצג מפה עבור ...";
 $pgv_lang["view_fam_nav_spare"]	= "הצג נתונים חלופיים עבור ...";
 $pgv_lang["navigator"]			= "נווט";
+$pgv_lang["fam_navigator"]		= "נווט משפחה";
+
 $pgv_lang["relationship_great"]	= "Great"; //--@#@ ??
 $pgv_lang["relationship_chart"]	= "קירבה משפחתית";
 $pgv_lang["person1"]			= "אדם א'";
@@ -1486,6 +1489,8 @@ $pgv_lang["son_of"]			= "בן של";
 $pgv_lang["daughter_of"]		= "בת של";
 $pgv_lang["child_of"]			= "ילד/ה של ";
 $pgv_lang["children_of"]		= "ילדים של ";
+$pgv_lang["descendancy_pronoun_m"]	= "הוא ";
+$pgv_lang["descendancy_pronoun_f"]	= "היא ";
 
 $pgv_lang["family_group_report"]    	= "דו\"ח קבוצת המשפחה";
 $pgv_lang["page"]                   		= "דף";

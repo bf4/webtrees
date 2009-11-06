@@ -224,6 +224,7 @@ $pgv_lang["download"]			= "用滑鼠右鍵單擊(控制點擊在Mac) 在連結�
 $pgv_lang["media_files"]		= "媒體文件參考在這GEDCOM";
 $pgv_lang["cart_is_empty"]		= "您的收集箱是空的。";
 $pgv_lang["id"]				= "代码";
+$pgv_lang["ID"]				= "代码";
 $pgv_lang["name_description"]		= "名字/說明";
 $pgv_lang["remove"]			= "去除";
 $pgv_lang["empty_cart"]			= "清空收集箱";

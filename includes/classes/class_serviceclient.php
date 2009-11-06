@@ -778,7 +778,7 @@ class ServiceClient extends GedcomRecord {
 					$localrec = $this->UpdateFamily($localrec,$gedrec);
 					replace_gedrec($pid,$localrec);
 				} else {
-					update_record($localrec);
+					update_record($localrec, get_id_from_gedcom($GEDCOM), false);
 				}
 			}
 		} else {
@@ -818,7 +818,7 @@ class ServiceClient extends GedcomRecord {
 						$newgedrec .= "2 _PGVU @".$this->xref."@";
 						$localrec .= $newgedrec;
 					}
-					update_record($localrec);
+					update_record($localrec, get_id_from_gedcom($GEDCOM), false);
 				}
 				// If changes have been made to the remote record
 				else {
@@ -835,7 +835,7 @@ class ServiceClient extends GedcomRecord {
 							$localrec = $this->UpdateFamily($localrec,$gedrec);
 							replace_gedrec($pid,$localrec);
 						} else {
-							update_record($localrec);
+							update_record($localrec, get_id_from_gedcom($GEDCOM), false);
 						}
 					}
 				}
@@ -880,9 +880,11 @@ class ServiceClient extends GedcomRecord {
 
 	/**
 	* get a singleton instance of this client
+	* Note: the $simple parameter is unused, but necessary, as we must have the same
+	* call signature as GedcomRecord::getInstance()
 	* @return ServiceClient
 	*/
-	static function &getInstance($id) {
+	static function &getInstance($id, $simple=true) {
 		global $PGV_SERVERS, $SERVER_URL, $GEDCOM;
 
 		if (isset($PGV_SERVERS[$id])) return $PGV_SERVERS[$id];

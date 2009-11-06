@@ -38,10 +38,6 @@ loadLangFile("pgv_confighelp");
 
 require_once 'includes/classes/class_person.php';
 
-$indifacts = array();			 // -- array to store the fact records in for sorting and displaying
-$globalfacts = array();
-$otheritems = array();			  //-- notes, sources, media objects
-$FACT_COUNT=0;
 // -- array of GEDCOM elements that will be found but should not be displayed
 $nonfacts[] = "FAMS";
 $nonfacts[] = "FAMC";
@@ -324,8 +320,17 @@ function print_family_descendancy(&$person, &$family, $depth) {
 		// children
 		$children = $family->getChildren();
 		print "<tr><td colspan=\"3\" class=\"details1\" >&nbsp;&nbsp;";
-		if (count($children)<1) print $pgv_lang["no_children"];
-		else print $factarray["NCHI"].": ".count($children);
+		if ($children) {
+			print $factarray["NCHI"].": ".count($children);
+		} else {
+			// Distinguish between no children (NCHI 0) and no recorded
+			// children (no CHIL records)
+			if (strpos($family->getGedcomRecord(), "\n1 NCHI 0")) {
+				print $factarray["NCHI"].": ".count($children);
+			} else {
+				print $pgv_lang["no_children"];
+			}
+		}
 		print "</td></tr></table>";
 		print "</li>\r\n";
 		if ($depth>0) foreach ($children as $child) {

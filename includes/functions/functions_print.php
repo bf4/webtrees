@@ -1101,7 +1101,7 @@ function print_note_record($text, $nlevel, $nrec, $textOnly=false, $return=false
 	$text = trim($text);
 
 	// Check if Shared Note and if so enable url link on title -------------------
-	if (eregi("0 @N([0-9])+@ NOTE", $nrec)) {
+	if (preg_match('/^0 @'.PGV_REGEX_XREF.'@ NOTE/', $nrec)) {
 		$centitl  = str_replace("~~", "", $text);
 		$centitl  = str_replace("<br />", "", $centitl);
 		if (preg_match("/@N([0-9])+@/", $nrec, $match_nid)) {
@@ -1125,10 +1125,10 @@ function print_note_record($text, $nlevel, $nrec, $textOnly=false, $return=false
 	if (!empty($text) || !empty($centitl)) {
 		$text = PrintReady($text);
 		// Check if Formatted Shared Note (using pipe "|" as delimiter ) --------------------
-		if ( eregi("0 @N([0-9])+@ NOTE", $nrec) && strstr($text, "|") && file_exists("modules/GEDFact_assistant/_CENS/census_note_decode.php") ) {
+		if (preg_match('/^0 @'.PGV_REGEX_XREF.'@ NOTE/', $nrec) && strstr($text, "|") && file_exists("modules/GEDFact_assistant/_CENS/census_note_decode.php") ) {
 			require 'modules/GEDFact_assistant/_CENS/census_note_decode.php';
 		// Else if unformatted Shared Note --------------------------------------------------
-		}else if (eregi("0 @N([0-9])+@ NOTE", $nrec)) {
+		}else if (preg_match('/^0 @'.PGV_REGEX_XREF.'@ NOTE/', $nrec)) {
 			$text=$centitl.$text;
 		}
 		if ($textOnly) {
@@ -1148,7 +1148,7 @@ function print_note_record($text, $nlevel, $nrec, $textOnly=false, $return=false
 		}
 
 		// Check if Shared Note -----------------------------
-		if (eregi("0 @N.*@ NOTE", $nrec)) {
+		if (preg_match('/^0 @'.PGV_REGEX_XREF.'@ NOTE/', $nrec)) {
 			$data .= $pgv_lang["shared_note"].": </span> - ";
 		}else{
 			$data .= $pgv_lang["note"].": </span>";
@@ -1862,7 +1862,7 @@ function print_asso_rela_record($pid, $factrec, $linebr=false, $type='INDI') {
 *
 * @param string $pid child ID
 */
-function format_parents_age($pid) {
+function format_parents_age($pid, $birth_date=null) {
 	global $pgv_lang, $factarray, $SHOW_PARENTS_AGE;
 
 	$html='';
@@ -1870,13 +1870,17 @@ function format_parents_age($pid) {
 		$person=Person::getInstance($pid);
 		if (!$person) return $html;
 		$families=$person->getChildFamilies();
+		// Where an indi has multiple birth records, we need to know the
+		// date of it.  For person boxes, etc., use the default birth date.
+		if (is_null($birth_date)) {
+			$birth_date=$person->getBirthDate();
+		}
 		// Multiple sets of parents (e.g. adoption) cause complications, so ignore.
-		$birth_date=$person->getBirthDate();
 		if ($birth_date->isOK() && count($families)==1) {
 			$family=current($families);
 			// Allow for same-sex parents
 			foreach (array($family->getHusband(), $family->getWife()) as $parent) {
-				if ($parent && $age=GedcomDate::GetAgeYears($parent->getBirthDate(), $person->getBirthDate())) {
+				if ($parent && $age=GedcomDate::GetAgeYears($parent->getBirthDate(), $birth_date)) {
 					$deatdate=$parent->getDeathDate();
 					$class='';
 					switch ($parent->getSex()) {
@@ -1955,7 +1959,7 @@ function format_fact_date(&$eventObj, $anchor=false, $time=false) {
 		if (!is_null($person) && $person->getType()=='INDI') {
 			// age of parents at child birth
 			if ($fact=='BIRT') {
-				$html .= format_parents_age($person->getXref());
+				$html .= format_parents_age($person->getXref(), $date);
 			}
 			// age at event
 			else if ($fact!='CHAN' && $fact!='_TODO') {
@@ -2025,7 +2029,7 @@ function format_fact_date(&$eventObj, $anchor=false, $time=false) {
 	// print gedcom ages
 	foreach (array($factarray['AGE']=>$fact_age, $pgv_lang['husband']=>$husb_age, $pgv_lang['wife']=>$wife_age) as $label=>$age) {
 		if ($age!='') {
-			$html.=' <span class="label">'.$label.'</span>: <span class="age">'.PrintReady(get_age_at_event($age, false)).'</span>';
+			$html.=' <span class="label">'.$label.':</span> <span class="age">'.PrintReady(get_age_at_event($age, false)).'</span>';
 		}
 	}
 	return $html;

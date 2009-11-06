@@ -305,7 +305,6 @@ function print_td_person($n) {
 	global $treeid, $PGV_IMAGE_DIR, $PGV_IMAGES, $pgv_lang;
 	global $TEXT_DIRECTION, $MULTI_MEDIA, $SHOW_HIGHLIGHT_IMAGES;
 	global $showids, $showthumbs;
-	global $GEDCOM;
 
 	$text = "";
 	$pid = $treeid[$n];
@@ -322,7 +321,7 @@ function print_td_person($n) {
 		$addname=$indi->getAddName();
 
 		if ($showthumbs && $MULTI_MEDIA && $SHOW_HIGHLIGHT_IMAGES && showFact("OBJE", $pid)) {
-			$object = find_highlighted_object($pid, $indi->gedrec);
+			$object = find_highlighted_object($pid, PGV_GED_ID, $indi->gedrec);
 			if (!empty($object)) {
 				$whichFile = thumb_or_main($object);	// Do we send the main image or a thumbnail?
 				$size = findImageSize($whichFile);
@@ -334,7 +333,7 @@ function print_td_person($n) {
 				$imgwidth = $imgsize[0]+50;
 				$imgheight = $imgsize[1]+150;
 				if ($MULTI_MEDIA && file_exists("modules/lightbox/album.php")) {
-					$text .= "<a href=\"" . $object["file"] . "\" rel=\"clearbox[general]\" rev=\"" . $object['mid'] . "::" . $GEDCOM . "::" . PrintReady(htmlspecialchars($name,ENT_QUOTES,'UTF-8')) . "\">" . "\n";
+					$text .= "<a href=\"" . $object["file"] . "\" rel=\"clearbox[general]\" rev=\"" . $object['mid'] . "::" . PGV_GEDCOM . "::" . PrintReady(htmlspecialchars($name,ENT_QUOTES,'UTF-8')) . "\">" . "\n";
 				} else {
 					$text .= "<a href=\"javascript:;\" onclick=\"return openImage('".rawurlencode($object["file"])."',$imgwidth, $imgheight);\">";
 				}

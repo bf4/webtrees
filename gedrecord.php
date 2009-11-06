@@ -46,20 +46,20 @@ if (!$SHOW_GEDCOM_RECORD && !PGV_USER_CAN_ACCEPT) {
 	exit;
 }
 
-$obj = GedcomRecord::getInstance($pid);
+$obj=GedcomRecord::getInstance($pid);
 
 if (is_null($obj) || !$obj->canDisplayDetails()) {
 	print_privacy_error($CONTACT_EMAIL);
 	print "</body></html>";
 	exit;
 }
-if (!isset($fromfile)) $indirec = $obj->getGedcomRecord();
-else  {
-	$indirec = find_updated_record($pid);
-	$indirec = privatize_gedcom($indirec);
+if (!isset($fromfile)) {
+	$indirec=$obj->getGedcomRecord();
+} else  {
+	$indirec=find_updated_record($pid);
+	$indirec=privatize_gedcom($indirec);
 }
-$indirec = preg_replace("/@(\w+)@/", "@<a href=\"gedrecord.php?pid=$1\">$1</a>@", $indirec);
+$indirec=htmlspecialchars($indirec);
+$indirec=preg_replace("/@(\w+)@/", "@<a href=\"gedrecord.php?pid=$1\">$1</a>@", $indirec);
 print "<pre>$indirec</pre>";
 print "</body></html>";
-
-?>

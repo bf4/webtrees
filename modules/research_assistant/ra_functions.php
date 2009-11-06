@@ -264,7 +264,7 @@ class ra_functions {
 
 			//gets each person that was changed and shows their name with a link to their individual page
 			if (isset($_REQUEST['personid'])) {
-			$thePeopleList=split(";",$_REQUEST['personid']);
+			$thePeopleList=explode(";",$_REQUEST['personid']);
 				foreach($thePeopleList as $i=>$pid) {
 					if(!empty($pid)) {
 							$person=Person::getInstance($pid);

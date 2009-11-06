@@ -414,6 +414,7 @@ $pgv_lang["download"]="Clique com o botão direito (control-click no Mac) nos li
 $pgv_lang["media_files"]="Mídias referenciadas neste GEDCOM";
 $pgv_lang["cart_is_empty"]="Seu carrinho de recortes está vazio.";
 $pgv_lang["id"]="ID";
+$pgv_lang["ID"]="ID";
 $pgv_lang["name_description"]="Nome / Descrição";
 $pgv_lang["remove"]="Remover";
 $pgv_lang["empty_cart"]="Esvaziar o carrinho";

@@ -119,8 +119,8 @@ class Source extends GedcomRecord {
 	}
 
 	// Get an array of structures containing all the names in the record
-	function getAllNames() {
-		return parent::getAllNames('TITL');
+	public function getAllNames() {
+		return $this->_getAllNames('TITL', 1);
 	}
 }
 ?>

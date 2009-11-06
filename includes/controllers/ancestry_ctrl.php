@@ -36,9 +36,6 @@ require_once 'includes/controllers/basecontrol.php';
 
 loadLangFile("pgv_confighelp");
 
-$indifacts = array();			 // -- array to store the fact records in for sorting and displaying
-$globalfacts = array();
-$otheritems = array();			  //-- notes, sources, media objects
 // -- array of GEDCOM elements that will be found but should not be displayed
 $nonfacts[] = "FAMS";
 $nonfacts[] = "FAMC";

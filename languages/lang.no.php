@@ -524,6 +524,7 @@ $pgv_lang["family_private"]		= "Data for denne familien er private. Familiære d
 $pgv_lang["download"]			= "Høyreklikk (control-click på Mac) på linken under og Velg \"Lagre som\" for å laste ned (download) filene.";
 $pgv_lang["cart_is_empty"]		= "<b>Utklippsmappen din er tom!</b>";
 $pgv_lang["id"]					= "ID";
+$pgv_lang["ID"]					= "ID";
 $pgv_lang["name_description"]	= "Navn / beskrivelse";
 $pgv_lang["remove"]				= "Fjern";
 $pgv_lang["empty_cart"]			= "Fjern alt i mappen";

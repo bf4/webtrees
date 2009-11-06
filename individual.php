@@ -212,14 +212,13 @@ jQuery(document).ready(function(){
 					if ($fact=="SEX") $controller->print_sex_record($value);
 					if ($fact=="NAME") $controller->print_name_record($value);
 						++$col;
-						$FACT_COUNT++;
 						if ($col==$maxcols) {
 							echo "</tr><tr>";
 							$col=0;
 						}
 					}
 			}
-			// Display summary birth/death info.  Note this info can come from various BIRT/CHR/BAPM/etc. records
+			// Display summary birth/death info.
 			$summary=$controller->indi->format_first_major_fact(PGV_EVENTS_BIRT, 2);
 			if (!($controller->indi->isDead())) {
 				// If alive display age

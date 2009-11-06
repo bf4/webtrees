@@ -827,7 +827,7 @@ function print_sour_table($datalist, $legend=null) {
 
 	echo '<fieldset><legend><img src="', $PGV_IMAGE_DIR, '/', $PGV_IMAGES['source']['small'], '" align="middle" alt="" /> ';
 	if ($legend) {
-		echo $legend;
+		echo htmlspecialchars($legend);
 	} else {
 		echo $pgv_lang['sources'];
 	}
@@ -884,11 +884,11 @@ function print_sour_table($datalist, $legend=null) {
 		}
 		//-- Source name(s)
 		$tmp=$source->getFullName();
-		echo '<td class="list_value_wrap" align="', get_align($tmp), '"><a href="', $link_url, '" class="list_item name2">', PrintReady($tmp), '</a></td>';
+		echo '<td class="list_value_wrap" align="', get_align($tmp), '"><a href="', $link_url, '" class="list_item name2">', PrintReady(htmlspecialchars($tmp)), '</a></td>';
 		// alternate title in a new column
 		$tmp=$source->getAddName();
 		if ($tmp) {
-			echo '<td class="list_value_wrap t2" style="display:none;" align="', get_align($tmp), '"><a href="', $link_url, '" class="list_item">', PrintReady($tmp), '</a></td>';
+			echo '<td class="list_value_wrap t2" style="display:none;" align="', get_align($tmp), '"><a href="', $link_url, '" class="list_item">', PrintReady(htmlspecialchars($tmp)), '</a></td>';
 			$t2=true;
 		} else {
 			echo '<td class="list_value_wrap t2" style="display:none;">&nbsp;</td>';
@@ -896,7 +896,7 @@ function print_sour_table($datalist, $legend=null) {
 		//-- Author
 		$tmp=$source->getAuth();
 		if ($tmp) {
-			echo '<td class="list_value_wrap" align="', get_align($tmp), '"><a href="', $link_url, '" class="list_item">', PrintReady($tmp), '</a></td>';
+			echo '<td class="list_value_wrap" align="', get_align($tmp), '"><a href="', $link_url, '" class="list_item">', PrintReady(htmlspecialchars($tmp)), '</a></td>';
 		} else {
 			echo '<td class="list_value_wrap">&nbsp;</td>';
 		}
@@ -1048,7 +1048,7 @@ function print_repo_table($repos, $legend='') {
 
 	echo '<fieldset><legend><img src="', $PGV_IMAGE_DIR, '/', $PGV_IMAGES['repository']['small'], '" align="middle" alt="" />';
 	if ($legend) {
-		echo $legend;
+		echo htmlspecialchars($legend);
 	} else {
 		echo $pgv_lang['repos_found'];
 	}
@@ -1075,10 +1075,10 @@ function print_repo_table($repos, $legend='') {
 			echo '<td class="list_value_wrap rela">', $repo->getXrefLink(), '</td>';
 		//-- Repository name(s)
 		$name = $repo->getFullName();
-		echo '<td class="list_value_wrap" align="', get_align($name), '"><a href="', encode_url($repo->getLinkUrl()), '" class="list_item name2">', PrintReady($name), '</a>';
+		echo '<td class="list_value_wrap" align="', get_align($name), '"><a href="', encode_url($repo->getLinkUrl()), '" class="list_item name2">', PrintReady(htmlspecialchars($name)), '</a>';
 		$addname=$repo->getAddName();
 		if ($addname) {
-			echo '<br /><a href="', encode_url($repo->getLinkUrl()), '" class="list_item">', PrintReady($addname), '</a>';
+			echo '<br /><a href="', encode_url($repo->getLinkUrl()), '" class="list_item">', PrintReady(htmlspecialchars($addname)), '</a>';
 		}
 		echo '</td>';
 		//-- Linked SOURces

@@ -165,7 +165,7 @@ class Person extends GedcomRecord {
 	*/
 	function findHighlightedMedia() {
 		if (is_null($this->highlightedimage)) {
-			$this->highlightedimage = find_highlighted_object($this->xref, $this->gedrec);
+			$this->highlightedimage = find_highlighted_object($this->xref, $this->ged_id, $this->gedrec);
 		}
 		return $this->highlightedimage;
 	}
@@ -625,7 +625,8 @@ class Person extends GedcomRecord {
 	* @return Person  this person's spouse
 	*/
 	function getCurrentSpouse() {
-		$family = end($this->getSpouseFamilies());
+		$tmp=$this->getSpouseFamilies();
+		$family = end($tmp);
 		if ($family) {
 			return $family->getSpouse($this);
 		} else {
@@ -1754,8 +1755,8 @@ class Person extends GedcomRecord {
 		} else {
 			$pos2=strrpos($full, '/');
 			$list=trim(substr($full, $pos1+1, $pos2-$pos1-1)).', '.substr($full, 0, $pos1).substr($full, $pos2+1);
-			$list=trim(str_replace(array('/', '  '), array('', ' '), $list));
-			$full=trim(str_replace(array('/', '  '), array('', ' '), $full));
+			$list=trim(str_replace(array('/', ' ,', '  '), array('', ',', ' '), $list));
+			$full=trim(str_replace(array('/', ' ,', '  '), array('', ',', ' '), $full));
 		}
 
 		// Need the "not known" place holders for the database
@@ -1822,8 +1823,8 @@ class Person extends GedcomRecord {
 	}
 
 	// Get an array of structures containing all the names in the record
-	function getAllNames() {
-		return parent::getAllNames('NAME');
+	public function getAllNames() {
+		return $this->_getAllNames('NAME', 1);
 	}
 
 	// Extra info to display when displaying this record in a list of

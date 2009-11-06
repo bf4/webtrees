@@ -751,7 +751,7 @@ class SearchControllerRoot extends BaseController {
 					}
 				}
 				// Split families by gedcom
-				foreach ($this->sgeds as $gedcom) {
+				foreach ($this->sgeds as $ged_id=>$gedcom) {
 					$datalist = array();
 					foreach ($this->myfamlist as $family) {
 						if ($family->getGedId()==get_id_from_gedcom($gedcom)) {
@@ -766,7 +766,7 @@ class SearchControllerRoot extends BaseController {
 					}
 				}
 				// Split sources by gedcom
-				foreach ($this->sgeds as $gedcom) {
+				foreach ($this->sgeds as $ged_id=>$gedcom) {
 					$datalist = array();
 					foreach ($this->mysourcelist as $source) {
 						if ($source->getGedId()==get_id_from_gedcom($gedcom)) {
@@ -781,7 +781,7 @@ class SearchControllerRoot extends BaseController {
 					}
 				}
 				// Split notes by gedcom
-				foreach ($this->sgeds as $gedcom) {
+				foreach ($this->sgeds as $ged_id=>$gedcom) {
 					$datalist = array();
 					foreach ($this->mynotelist as $note) {
 						if ($note->getGedId()==get_id_from_gedcom($gedcom)) {

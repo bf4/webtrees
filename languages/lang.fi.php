@@ -479,6 +479,7 @@ $pgv_lang["family_private"]		= "Tämän perheen tiedot ovat yksityisiä. Perheen
 $pgv_lang["download"]		= "Klikkaa hiiren oikealla napilla (tai control + klikkaus Mac-koneessa) alla olevaa linkkiä ja valitse &quot;Tallenna kohde nimellä&quot; ladataksesi tiedostot koneellesi.";
 $pgv_lang["cart_is_empty"]		= "Leikekorisi on tyhjä.";
 $pgv_lang["id"]				= "ID";
+$pgv_lang["ID"]				= "ID";
 $pgv_lang["name_description"]	= "Nimi / Kuvaus";
 $pgv_lang["remove"]			= "Poista        ";
 $pgv_lang["empty_cart"]		= "Tyhjennä leikekori";

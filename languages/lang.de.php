@@ -544,7 +544,8 @@ $pgv_lang["family_private"]				= "Details dieser Familie sind vertraulich.  Deta
 $pgv_lang["media_private"]				= "Details dieses Medienobjektes sind vertraulich. Details werden nicht gesammelt.";
 $pgv_lang["download"]					= "Klicken Sie mit der rechten Maustaste (beim Mac Control-Klick) auf den untenstehenden Link und wählen &quot;Ziel speichern unter&quot;, um den Sammelbehälter als GEDCOM Datei auf Ihren eigenen Computer zu übertragen (Download).";
 $pgv_lang["cart_is_empty"]				= "Ihr Sammelbehälter ist leer.";
-$pgv_lang["id"]							= "ID-Nummer";
+$pgv_lang["id"]							= "ID";
+$pgv_lang["ID"]							= "ID";
 $pgv_lang["name_description"]			= "Name / Beschreibung";
 $pgv_lang["remove"]						= "löschen";
 $pgv_lang["empty_cart"]					= "Sammelbehälter leeren";
@@ -864,6 +865,7 @@ $pgv_lang["view_fam_nav_research"]		= "Zeige Forschungen über ...";
 $pgv_lang["view_fam_nav_map"]			= "Zeige Landkarte über ...";
 $pgv_lang["view_fam_nav_spare"]			= "Zeige andere Informationen über ...";
 $pgv_lang["navigator"]					= "Navigator";
+$pgv_lang["fam_navigator"]				= "Familien-Navigator";
 
 $pgv_lang["relationship_great"]			= "Ur";
 $pgv_lang["relationship_chart"]			= "Verwandtschaftsberechnung";
@@ -1486,6 +1488,8 @@ $pgv_lang["son_of"]						= "Sohn von";
 $pgv_lang["daughter_of"]				= "Tochter von";
 $pgv_lang["child_of"]					= "Kind von ";
 $pgv_lang["children_of"]				= "Kinder von ";
+$pgv_lang["descendancy_pronoun_m"]		= "Er ";
+$pgv_lang["descendancy_pronoun_f"]		= "Sie ";
 
 $pgv_lang["family_group_report"]		= "Familienbericht";
 $pgv_lang["page"]						= "Seite";

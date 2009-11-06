@@ -127,11 +127,12 @@ if ($action == "new_lang") {
 	$flag = $new_shortcut.".gif";		// use short name if long name doesn't exist
 	} else $flag = "new.gif";				// default if neither a long nor a short name exist
 	$flagsfile[$ln] = "images/flags/" . $flag;
+	$v_flagsfile=$flagsfile[$ln];
 
 	$factsfile[$ln]    = "languages/facts.".$new_shortcut.".php";
-	$DATE_FORMAT_array[$ln]  = "D M Y";
-	$TIME_FORMAT_array[$ln]  = "g:i:sa";
-	$WEEK_START_array[$ln]  = "0";
+	$DATE_FORMAT_array[$ln]  = "j F Y";
+	$TIME_FORMAT_array[$ln]  = "h:i:s";
+	$WEEK_START_array[$ln]  = "1";
 	$TEXT_DIRECTION_array[$ln]  = "ltr";
 	$NAME_REVERSE_array[$ln]  = false;
 	$ALPHABET_upper[$ln]    = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -143,7 +144,6 @@ if ($action == "new_lang") {
 
 	$pgv_lang[$d_LangName]  = $lng_codes[$new_shortcut][0];
 }
-else if(empty($v_flagsfile) && isset($flagsfile[$ln])) $v_flagsfile=$flagsfile[$ln];
 
 if ($action != "save" && $action != "toggleActive") {
 	print "<script language=\"JavaScript\" type=\"text/javascript\">\n";
@@ -165,6 +165,11 @@ if ($action != "save" && $action != "toggleActive") {
 		print "<h2>" . $pgv_lang["add_new_language"] . "</h2>";
 	} else {
 		print "<h2>" . $pgv_lang["config_lang_utility"] . "</h2>";
+	}
+	// If we've added a new language, but haven't defined its name in the current language,
+	// then display something to indicate what is required, rather than an error.
+	if (!array_key_exists($d_LangName, $pgv_lang)) {
+		$pgv_lang[$d_LangName]="\$pgv_lang['$d_LangName']";
 	}
 	print "<div class=\"center\"><b>" . $pgv_lang[$d_LangName] . "</b></div>";
 
@@ -236,7 +241,9 @@ if ($action != "save" && $action != "toggleActive") {
 	print "</tr>";
 
 	print "<tr>";
-	if (!isset($v_flagsfile)) $v_flagsfile = $flagsfile[$ln];
+	if (!isset($v_flagsfile)) {
+		$v_flagsfile = $flagsfile[$ln];
+	}
 	print "<td class=\"facts_label\" >";
 	print_help_link("flagsfile_help", "qm");
 	print $pgv_lang["flagsfile"];
@@ -284,6 +291,7 @@ if ($action != "save" && $action != "toggleActive") {
 					break;
 				}
 			}
+			print '<input type="hidden" name="v_flagsfile" value="'.$v_flagsfile.'">';
 			print $flagfiles["file"][$i];
 		}
 	}
