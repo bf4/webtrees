@@ -299,8 +299,8 @@
 									<PGVRif condition="(@SEX=='U') || (@SEX=='')">
 										<PGVRText style="label1"><PGVRvar var="factarray[SEX]"/> <PGVRvar var="pgv_lang[stat_unknown]"/>  </PGVRText>
 									</PGVRif>
-									<PGVRif condition="$sources==1">
 									<PGVRText style="name"> <PGVRGetPersonName id="" /> </PGVRText>
+									<PGVRif condition="$sources==1">
 										<PGVRRepeatTag tag="SOUR">
 											<PGVRFootnote>
 												<PGVRGedcom id="@SOUR">
