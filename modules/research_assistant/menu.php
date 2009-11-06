@@ -49,8 +49,11 @@ class research_assistant_ModuleMenu {
 
 		//-- main search menu item
 		$menu = new Menu($pgv_lang["research_assistant"], "module.php?mod=research_assistant", "down");
-		if(!empty($PGV_IMAGES['menu_research']['large'])){$menu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['menu_research']['large']}");}
-		else $menu->addIcon("images/source.gif");
+		if (!empty($PGV_IMAGES['menu_research']['large'])) {
+			$menu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['menu_research']['large']}");
+		} else {
+			$menu->addIcon("images/source.gif");
+		}
 		$menu->addClass("menuitem$ff", "menuitem_hover$ff", "submenu$ff", "icon_large_menu_research");
 
 		//'My Tasks' ddl menu item

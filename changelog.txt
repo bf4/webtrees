@@ -10,6 +10,7 @@
 
 
 Version 4.2.3
+ - Fixed: [ 1782849 ] Minimal Theme - No text shown - Research Assistant top menu (fisharebest)
  - Fixed: [ 1390658 ] Ever Increasing URLs (e.g. login link) (fisharebest)
  - Fixed: [ 1922109 ] Limited entries in "Most Common Surnames" statistic (fisharebest)
  - Fixed: [ 2781212 ] Descendancy Chart - NCHI (fisharebest)
