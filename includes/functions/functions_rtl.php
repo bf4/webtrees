@@ -40,16 +40,6 @@ $SpecialNum  = array('0','1','2','3','4','5','6','7','8','9');
 $RTLOrd = array(215,216,217,218,219);
 
 
-/**
- * $HNN and $ANN are used in
- * RTLUndefined, check_NN, get_common_surnames, print_block_name_top10
- *
- */
-
-$HNN = "\x28\xd7\x9c\xd7\x90\x20\xd7\x99\xd7\x93\xd7\x95\xd7\xa2\x29";
-$ANN = "\x28\xd8\xba\xd9\x8a\xd8\xb1\x20\xd9\x85\xd8\xb9\xd8\xb1\xd9\x88\xd9\x81\x29";
-
-
 function getLRM(){
 	return "&lrm;";
 }
