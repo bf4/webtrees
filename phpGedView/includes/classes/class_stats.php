@@ -3245,15 +3245,8 @@ class stats {
 		return format_surname_list($surnames, ($type=='list' ? 1 : 2), $show_tot);
 	}
 
-	function getCommonSurname($show_tot=false) {
-		if ($show_tot) {
-			return get_top_surnames(0);
-		}
-		else {
-			foreach (array_keys(get_top_surnames(0)) as $surname) {
-				return $surname;
-			}
-		}
+	function getCommonSurname() {
+		return array_shift(array_keys(get_top_surnames($this->_ged_id, 1, 1)));
 	}
 
 	static function commonSurnames($params=array('','','alpha')) {return self::_commonSurnamesQuery('nolist', false, $params);}

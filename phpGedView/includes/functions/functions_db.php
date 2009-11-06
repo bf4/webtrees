@@ -1977,27 +1977,20 @@ function delete_gedcom($ged) {
 
 /**
 * get the top surnames
-* @param int $num how many surnames to return
+* @param int $ged_id	fetch surnames from this gedcom
+* @param int $min	only fetch surnames occuring this many times
+* @param int $max only fetch this number of surnames (0=all)
 * @return array
 */
-function get_top_surnames($num) {
+function get_top_surnames($ged_id, $min, $max) {
 	global $TBLPREFIX;
 
-	$rows=
-		PGV_DB::prepareLimit("SELECT COUNT(n_surname) AS count, n_surn FROM {$TBLPREFIX}name WHERE n_file=? AND n_type!=? AND n_surn NOT IN (?, ?, ?, ?) GROUP BY n_surn ORDER BY count DESC", $num+1)
-		->execute(array(PGV_GED_ID, '_MARNM', '@N.N.', '', '?', 'UNKNOWN'))
-		->fetchAll();
-
-	$surnames = array();
-	foreach ($rows as $row) {
-		if (isset($surnames[$row->n_surn]['match'])) {
-			$surnames[$row->n_surn]['match'] += $row->count;
-		} else {
-			$surnames[$row->n_surn]['name'] = $row->n_surn;
-			$surnames[$row->n_surn]['match'] = $row->count;
-		}
-	}
-	return $surnames;
+	// Use n_surn, rather than n_surname, as it is used to generate url's for
+	// the inid-list, etc.
+	return
+		PGV_DB::prepareLimit("SELECT n_surn, COUNT(n_surn) FROM {$TBLPREFIX}name WHERE n_file=? AND n_type!=? AND n_surn NOT IN (?, ?, ?, ?) GROUP BY n_surn HAVING COUNT(n_surn)>=? ORDER BY COUNT(n_surn) DESC", $max)
+		->execute(array($ged_id, '_MARNM', '@N.N.', '', '?', 'UNKNOWN', $min))
+		->fetchAssoc();
 }
 
 /**

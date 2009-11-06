@@ -10,6 +10,7 @@
 
 
 Version 4.2.3
+ - Fixed: [ 1922109 ] Limited entries in "Most Common Surnames" statistic (fisharebest)
  - Fixed: [ 2781212 ] Descendancy Chart - NCHI (fisharebest)
  - Fixed: [ 2890112 ] Shared Notes list doesn't display titles (4.2.3 svn) (fisharebest)
  - Fixed: [ 2891075 ] MINOR name display anomaly (fisharebest)
