@@ -1903,14 +1903,10 @@ function find_rin_id($rin) {
 * Does not delete the file from the file system
 * @param string $ged  the filename of the gedcom to delete
 */
-function delete_gedcom($ged) {
+function delete_gedcom($ged_id) {
 	global $TBLPREFIX, $pgv_changes, $GEDCOMS;
 
-	if (!isset($GEDCOMS[$ged])) {
-		return;
-	}
-
-	$ged_id=get_id_from_gedcom($ged);
+	$ged=get_gedcom_from_id($ged_id);
 
 	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}blocks        WHERE b_username=?")->execute(array($ged));
 	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}dates         WHERE d_file    =?")->execute(array($ged_id));

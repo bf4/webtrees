@@ -67,12 +67,14 @@ if (!PGV_USER_GEDCOM_ADMIN) {
 	header("Location: login.php?url=editgedcoms.php");
 	exit;
 }
+if ($action=="delete") {
+	delete_gedcom(PGV_GED_ID);
+	// Reload this page, otherwise the page header will still reference the now-deleted gedcom
+	header("Location: editgedcoms.php");
+}
+
 print_header($pgv_lang["gedcom_adm_head"]);
 print "<center>\n";
-if ($action=="delete") {
-	delete_gedcom($ged);
-	print "<br />".str_replace("#GED#", $ged, $pgv_lang["gedcom_deleted"])."<br />\n";
-}
 
 if (($action=="setdefault") && in_array($default_ged, get_all_gedcoms())) {
 	set_site_setting('DEFAULT_GEDCOM', $default_ged);
