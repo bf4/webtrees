@@ -86,9 +86,6 @@ function GetGEDFromZIP($zipfile, $extract=true) {
 
 loadLangFile("pgv_confighelp, pgv_help");
 
-// Remove slashes
-if (isset($_POST["NEW_COMMON_NAMES_ADD"])) $_POST["NEW_COMMON_NAMES_ADD"] = stripslashes($_POST["NEW_COMMON_NAMES_ADD"]);
-if (isset($_POST["NEW_COMMON_NAMES_REMOVE"])) $_POST["NEW_COMMON_NAMES_REMOVE"] = stripslashes($_POST["NEW_COMMON_NAMES_REMOVE"]);
 if (isset($_REQUEST['path'])) $path = $_REQUEST['path'];
 if (isset($_REQUEST['oldged'])) $oldged = $_REQUEST['oldged'];
 if (isset($_REQUEST['GEDFILENAME'])) $GEDFILENAME = $_REQUEST['GEDFILENAME'];

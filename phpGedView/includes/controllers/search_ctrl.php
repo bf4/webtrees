@@ -131,7 +131,7 @@ class SearchControllerRoot extends BaseController {
 				$this->query="";
 				$this->myquery="";
 			} else {
-				$this->query = stripslashes($_REQUEST["query"]);
+				$this->query = $_REQUEST["query"];
 				$this->myquery = htmlspecialchars($this->query,ENT_COMPAT,'UTF-8');
 			}
 		}

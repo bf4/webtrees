@@ -92,7 +92,6 @@ function check_NN($names) {
 	if (!is_array($names)){
 		$lang = whatLanguage($names);
 		$NN = $unknownNN[$lang];
-		$names = stripslashes($names);
 		$names = preg_replace(array("~ /~","~/,~","~/~"), array(" ", ",", " "), $names);
 		$names = preg_replace(array("/@N.N.?/","/@P.N.?/"), array($unknownNN[$lang],$unknownPN[$lang]), trim($names));
 		//-- underline names with a * at the end

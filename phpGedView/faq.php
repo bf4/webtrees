@@ -287,9 +287,9 @@ if ($action == "show") {
 					echo '</td>';
 				}
 				// NOTE: Print the header of the current item
-				$header = str_replace(array('&lt;', '&gt;'), array('<', '>'), stripslashes(print_text($data["header"]["text"], 0, 2)));
+				$header = str_replace(array('&lt;', '&gt;'), array('<', '>'), print_text($data["header"]["text"], 0, 2));
 				echo '<td class="list_label wrap">', $header, '</td></tr>';
-				$body = str_replace(array('&lt;', '&gt;'), array('<', '>'), stripslashes(print_text($data["body"]["text"], 0, 2)));
+				$body = str_replace(array('&lt;', '&gt;'), array('<', '>'), print_text($data["body"]["text"], 0, 2));
 				echo '<tr>';
 				// NOTE: Print the edit options of the current item
 				if (PGV_USER_GEDCOM_ADMIN && $adminedit) {

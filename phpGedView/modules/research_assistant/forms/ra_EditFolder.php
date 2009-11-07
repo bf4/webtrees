@@ -114,7 +114,7 @@ class ra_editfolder extends ra_form {
 
 				// Finish up
 				$out.='</select></td></tr>';
-				$out.='<tr><td class="optionbox">'.$pgv_lang['Folder_Description:'].'</td><td class="descriptionbox"><textarea name="folderDescription" cols="50" rows="10">'.PrintReady(stripslashes($fr_description)).'</textarea></td></tr>';
+				$out.='<tr><td class="optionbox">'.$pgv_lang['Folder_Description:'].'</td><td class="descriptionbox"><textarea name="folderDescription" cols="50" rows="10">'.PrintReady($fr_description).'</textarea></td></tr>';
 				$out.='<tr><td colspan="2"><input type="submit" value="'.$pgv_lang['add'].'" />';
 				//if task or folders exist inside this folder do not show the delete button
 				$hastasks = ra_functions::folder_hastasks($fr_id);

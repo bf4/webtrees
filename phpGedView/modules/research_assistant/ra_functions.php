@@ -642,7 +642,7 @@ class ra_functions {
 			$row=$this->get_top_folder($folderId);
 
 			$out = '<img src="modules/research_assistant/images/folder_blue_icon.gif" alt="Folder"></img>';
-			$out .= "<strong> ".PrintReady(stripslashes($row->fr_name))."</strong>";
+			$out .= "<strong> ".PrintReady($row->fr_name)."</strong>";
 		}
 
 		return $out;
@@ -680,7 +680,7 @@ class ra_functions {
 
 		foreach ($rows as $row) {
 			$out .= '<tr><td class="optionbox"><a href="module.php?mod=research_assistant&amp;action=viewtasks&amp;folderid='.$row->fr_id.'"><img src="modules/research_assistant/images/folder_blue_icon.gif" border="0" alt="Folder" style="vertical-align: middle;"></img> '.PrintReady($row->fr_name).'</a></td>
-					<td class="optionbox wrap"><br />'.nl2br(PrintReady(stripslashes($row->fr_description))).'</td>
+					<td class="optionbox wrap"><br />'.nl2br(PrintReady($row->fr_description)).'</td>
 					<td class="optionbox" align="center"><a href="module.php?mod=research_assistant&amp;action=editfolder&amp;folderid='.$row->fr_id.'">'.$pgv_lang["edit"].'</a></td></tr>';
 		}
 		$out .= '</table>';
