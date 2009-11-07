@@ -55,7 +55,7 @@ if ($gedcom) {
 }
 $GED_ID=get_id_from_gedcom($GEDCOM);
 
-if (!check_for_import($GEDCOM)) {
+if (!get_gedcom_setting($GED_ID, 'imported')) {
 	addDebugLog($action." ERROR 22: Gedcom [$GEDCOM] needs to be imported.");
 	print "ERROR 22: Gedcom [$GEDCOM] needs to be imported.\n";
 	exit;

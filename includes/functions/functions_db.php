@@ -34,35 +34,6 @@ if (!defined('PGV_PHPGEDVIEW')) {
 
 define('PGV_FUNCTIONS_DB_PHP', '');
 
-/**
-* check if a gedcom has been imported into the database
-*
-* this function checks the database to see if the given gedcom has been imported yet.
-* @param string $ged the filename of the gedcom to check for import
-* @return bool return true if the gedcom has been imported otherwise returns false
-*/
-function check_for_import($ged) {
-	global $TBLPREFIX, $GEDCOMS;
-
-	if (!PGV_DB::isConnected() || count($GEDCOMS)==0 || !isset($GEDCOMS[$ged])) {
-		return false;
-	}
-
-	if (!isset($GEDCOMS[$ged]["imported"])) {
-		try {
-			$GEDCOMS[$ged]["imported"]=(bool)
-				PGV_DB::prepare("SELECT count(i_id) FROM {$TBLPREFIX}individuals WHERE i_file=?")
-				->execute(array($GEDCOMS[$ged]["id"]))
-				->fetchOne();
-		} catch (PDOException $ex) {
-			$GEDCOMS[$ged]["imported"]=false;
-		}
-		store_gedcoms();
-	}
-
-	return $GEDCOMS[$ged]["imported"];
-}
-
 //-- gets the first record in the gedcom
 function get_first_xref($type, $ged_id=PGV_GED_ID) {
 	global $TBLPREFIX;
