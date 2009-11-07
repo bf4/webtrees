@@ -201,7 +201,7 @@ function lightbox_print_media_row($rtype, $rowm, $pid) {
 		// Continue menu construction
 		// If media file is missing from "media" directory, but is referenced in Gedcom
 		if (!media_exists($rowm['m_file']) && !media_exists($mainMedia)) {
-			$menu->addLabel("\n<img src=\"{$thumbnail}\" style=\"display:none;\" alt=\"\" title=\"\" />" . $pgv_lang['edit_media'] . "\n", "right");
+			$menu->addLabel("\n<img src=\"{$thumbnail}\" style=\"display:none;\" alt=\"\" title=\"\" />" . $pgv_lang["edit"]." (". $rowm["m_media"].")" . "\n", "right");
 		} else {
 			$menu->addLabel("\n<img src=\"{$thumbnail}\" style=\"display:none;\" alt=\"\" title=\"\" />" . PrintReady($mtitle) . "\n", "right");
 		}
