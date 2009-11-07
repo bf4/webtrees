@@ -61,11 +61,11 @@ function print_block_name_top10($block=true, $config="", $side, $index) {
 	}
 
 	// This next function is a bit out of date, and doesn't cope well with surname variants
-	$top_surnames=get_top_surnames($config["num"]-1);
+	$top_surnames=get_top_surnames(PGV_GED_ID, 1, $config["num"]);
 
 	$all_surnames=array();
-	foreach ($top_surnames as $top_surname) {
-		$all_surnames=array_merge($all_surnames, get_indilist_surns($top_surname['name'], '', false, false, PGV_GED_ID));
+	foreach (array_keys($top_surnames) as $top_surname) {
+		$all_surnames=array_merge($all_surnames, get_indilist_surns($top_surname, '', false, false, PGV_GED_ID));
 	}
 
 	// Insert from the "Add Names" list if not already in there

@@ -819,7 +819,14 @@ th {
 	height: 22px;
 }
 
+.sublinks_table .icon {
+	vertical-align: middle;
+	width: 25px;
+	height: 25px;
+}
+
 .submenu .icon {
+	vertical-align: middle;
 	width: 22px;
 	height: 22px;
 }

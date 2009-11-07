@@ -110,7 +110,7 @@ $menubar = new MenuBar();
 		foreach($menus as $m=>$menu) {
 			if($menu->link != "") {
 				print "\t<td width=\"7%\" valign=\"top\">\n";
-				$menu->addLabel("", "none");
+				$menu->addIcon(null);
 				$menu->printMenu();
 				print "\t</td>\n";
 			}

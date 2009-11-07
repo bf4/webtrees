@@ -10,6 +10,7 @@
 
 
 Version 4.2.x CA
+ - Merged: Merge changes r6304 - r6324 from the trunk. (windmillway)
  - Merged: Merge changes r6237 - r6303 from the trunk. (windmillway)
  - Changed: Removed Album tab thumbnail dropdown menu items "Manage links" and "Unlink Media" for editors. These are Admin functions only. (windmillway)
  - Fixed: Various bugs with Tab Management (yalnifj)
@@ -160,6 +161,12 @@ Version 4.2.x CA
  - Changed: Census Assistant Shared Note delimiter from ";" to "|" (windmillway)
 
 Version 4.2.3
+ - Update: is_dead() calculations now take account of non-gregorian dates
+ - Fixed: [ 1941711 ] Age at which to assume a person is dead Off By 1 Year (fisharebest)
+ - Fixed: [ 2033046 ] Misleading text for changes_present (fisharebest)
+ - Fixed: [ 1782849 ] Minimal Theme - No text shown - Research Assistant top menu (fisharebest)
+ - Fixed: [ 1390658 ] Ever Increasing URLs (e.g. login link) (fisharebest)
+ - Fixed: [ 1922109 ] Limited entries in "Most Common Surnames" statistic (fisharebest)
  - Fixed: [ 2781212 ] Descendancy Chart - NCHI (fisharebest)
  - Fixed: [ 2890112 ] Shared Notes list doesn't display titles (4.2.3 svn) (fisharebest)
  - Fixed: [ 2891075 ] MINOR name display anomaly (fisharebest)

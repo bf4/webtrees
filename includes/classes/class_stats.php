@@ -478,8 +478,13 @@ class stats {
 		$sizes = explode('x', $size);
 		$tot_fam = $this->totalFamilies();
 		$tot_sfam = $this->totalFamsWithSources();
-		$tot_fam_per = round(100 *  ($tot_fam-$tot_sfam) / $tot_fam, 2);
-		$tot_sfam_per = round(100 * $tot_sfam / $tot_fam, 2);
+		if ($tot_fam==0) {
+			$tot_fam_per = 100;
+			$tot_sfam_per = 100;
+		} else {
+			$tot_fam_per = round(100 *  ($tot_fam-$tot_sfam) / $tot_fam, 2);
+			$tot_sfam_per = round(100 * $tot_sfam / $tot_fam, 2);
+		}
 		$chd = self::_array_to_extended_encoding(array($tot_sfam_per, 100-$tot_sfam_per));
 		$chl =  $pgv_lang["with_sources"].' - '.round($tot_sfam_per,1).'%|'.
 				$pgv_lang["without_sources"].' - '.round($tot_fam_per,1).'%';
@@ -3245,15 +3250,9 @@ class stats {
 		return format_surname_list($surnames, ($type=='list' ? 1 : 2), $show_tot);
 	}
 
-	function getCommonSurname($show_tot=false) {
-		if ($show_tot) {
-			return get_top_surnames(0);
-		}
-		else {
-			foreach (array_keys(get_top_surnames(0)) as $surname) {
-				return $surname;
-			}
-		}
+	function getCommonSurname() {
+		$surnames=array_keys(get_top_surnames($this->_ged_id, 1, 1));
+		return array_shift($surnames);
 	}
 
 	static function commonSurnames($params=array('','','alpha')) {return self::_commonSurnamesQuery('nolist', false, $params);}

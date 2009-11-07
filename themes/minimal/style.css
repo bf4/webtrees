@@ -433,6 +433,7 @@ table.center{
 }
 
 .sublinks_table .icon {
+	vertical-align: middle;
 	width: 25px;
 	height: 25px;
 }
@@ -443,6 +444,7 @@ table.center{
 }
 
 .submenu .icon {
+	vertical-align: middle;
 	width: 25px;
 	height: 25px;
 }

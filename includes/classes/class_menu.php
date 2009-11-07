@@ -270,16 +270,12 @@ class Menu {
 			case "right":
 				$output .= $link;
 				$output .= $MenuIcon;
-				$output .= "</a>";
-				$output .= $link;
 				$output .= $this->label;
 				$output .= "</a>";
 				break;
 			case "left":
 				$output .= $link;
 				$output .= $this->label;
-				$output .= "</a>";
-				$output .= $link;
 				$output .= $MenuIcon;
 				$output .= "</a>";
 				break;

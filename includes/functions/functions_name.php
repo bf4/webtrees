@@ -40,36 +40,26 @@ define('PGV_FUNCTIONS_NAME_PHP', '');
 function get_common_surnames($min) {
 	global $COMMON_NAMES_ADD, $COMMON_NAMES_REMOVE;
 
-	$surnames = get_top_surnames(100);
-	arsort($surnames);
-	$topsurns = array();
-	foreach($surnames as $indexval => $surname) {
-		if (!empty($surname["name"]) && stristr($COMMON_NAMES_REMOVE, $surname["name"])===false ) {
-			if ($surname["match"]>=$min) {
-				$topsurns[$surname["name"]] = $surname;
-			}
+	$topsurns=get_top_surnames(PGV_GED_ID, $min, 0);
+	foreach (preg_split("/[,;] /", $COMMON_NAMES_ADD) as $surname) {
+		if (!array_key_exists($surname, $topsurns)) {
+			$topsurns[$surname]=$min;
 		}
 	}
-	$addnames = preg_split("/[,;] /", $COMMON_NAMES_ADD);
-	if ((count($addnames)==0) && (!empty($COMMON_NAMES_ADD))) $addnames[] = $COMMON_NAMES_ADD;
-	foreach($addnames as $indexval => $name) {
-		if (!empty($name)) {
-			$topsurns[$name]["name"] = $name;
-			$topsurns[$name]["match"] = $min;
-		}
-	}
-	$delnames = preg_split("/[,;] /", $COMMON_NAMES_REMOVE);
-	if ((count($delnames)==0) && (!empty($COMMON_NAMES_REMOVE))) $delnames[] = $COMMON_NAMES_REMOVE;
-	foreach($delnames as $indexval => $name) {
-		if (!empty($name)) {
-			unset($topsurns[$name]);
-		}
+	foreach (preg_split("/[,;] /", $COMMON_NAMES_REMOVE) as $surname) {
+		unset($topsurns[$surname]);
 	}
 
 	//-- check if we found some, else recurse
-	if (empty($topsurns) && $min>2) $topsurns = get_common_surnames($min/2);
-	uksort($topsurns, "stringsort");
-	return $topsurns;
+	if (empty($topsurns) && $min>2) {
+		return get_common_surnames($min/2);
+	} else {
+		uksort($topsurns, "stringsort");
+		foreach ($topsurns as $key=>$value) {
+			$topsurns[$key]=array('name'=>$key, 'match'=>$value);
+		}
+		return $topsurns;
+	}
 }
 
 /**

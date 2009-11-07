@@ -751,7 +751,11 @@ function print_user_links() {
 	} else {
 		$QUERY_STRING = normalize_query_string($QUERY_STRING.'&amp;logout=');
 		if (empty($SEARCH_SPIDER)) {
-			echo "<a href=\"$LOGIN_URL?url=".rawurlencode(basename($SCRIPT_NAME).decode_url(normalize_query_string($QUERY_STRING."&amp;ged=$GEDCOM")))."\" class=\"link\">".$pgv_lang["login"]."</a>";
+			if (basename($SCRIPT_NAME)=='login.php') {
+				echo "<a href=\"#\" class=\"link\">".$pgv_lang["login"]."</a>";
+			} else {
+				echo "<a href=\"$LOGIN_URL?url=".rawurlencode(basename($SCRIPT_NAME).decode_url(normalize_query_string($QUERY_STRING."&amp;ged=$GEDCOM")))."\" class=\"link\">".$pgv_lang["login"]."</a>";
+			}
 		}
 	}
 	echo "<br />";

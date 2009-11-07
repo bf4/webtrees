@@ -85,13 +85,8 @@ class wordsearch
 				case 'topsurnames':
 				{
 					$listtitle = 'Common Surnames';
-					$surnames = get_common_surnames($config['top_surnames_number']);
-					$wordlist = array();
-					foreach($surnames as $surname)
-					{
-						$wordlist[] = $surname['name'];
-					}
-					$wordlist = join(' ', $wordlist);
+					$surnames=get_top_surnames(PGV_GED_ID, $config['top_surnames_number'], 0);
+					$wordlist = implode(' ', array_keys($surnames));
 					break;
 				}
 			}
