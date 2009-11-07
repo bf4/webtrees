@@ -372,7 +372,7 @@ if (empty($GEDCOM) || empty($GEDCOMS[$GEDCOM])) {
 if ((empty($GEDCOM))&&(count($GEDCOMS)>0)) {
 	foreach($GEDCOMS as $ged_file=>$ged_array) {
 		$GEDCOM = $ged_file;
-		if (check_for_import($ged_file)) break;
+		if (get_gedcom_setting(get_id_from_gedcom($ged_file), 'imported')) break;
 	}
 }
 $_SESSION["GEDCOM"] = $GEDCOM;
@@ -570,7 +570,7 @@ if ((strstr($SCRIPT_NAME, "install.php")===false)
 		exit;
 	}
 
-	if ((count($GEDCOMS)==0)||(!check_for_import($GEDCOM))) {
+	if (count($GEDCOMS)==0 || !get_gedcom_setting(PGV_GED_ID, 'imported')) {
 		$scriptList = array("editconfig_gedcom.php", "help_text.php", "editconfig_help.php", "editgedcoms.php", "downloadgedcom.php", "uploadgedcom.php", "login.php", "admin.php", "config_download.php", "addnewgedcom.php", "validategedcom.php", "addmedia.php", "importgedcom.php", "client.php", "edit_privacy.php", "gedcheck.php", "printlog.php", "editlang.php", "editlang_edit.php" ,"useradmin.php", 'export_gedcom.php', 'edit_changes.php');
 		$inList = false;
 		foreach ($scriptList as $key => $listEntry) {

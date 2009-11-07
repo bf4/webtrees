@@ -605,7 +605,6 @@ if (!isset($GENERATE_UIDS)) $GENERATE_UIDS = false;
 $temp2 = $THEME_DIR;
 $THEME_DIR = $temp;
 $THEME_DIR = $temp2;
-// if (isset($FILE) && !check_for_import($FILE)) print "<span class=\"subheaders\">".$pgv_lang["step2"]." ".$pgv_lang["configure"]." + ".$pgv_lang["ged_gedcom"]."</span><br /><br />";
 if (!isset($NTHEME_DIR)) $NTHEME_DIR=$THEME_DIR;
 if (!isset($themeselect)) $themeselect="";
 if (!empty($error)) print "<span class=\"error\">".$error."</span>";
@@ -2191,7 +2190,7 @@ print "&nbsp;<a href=\"javascript: ".$pgv_lang["meta_conf"]."\" onclick=\"expand
 </td></tr>
 </table>
 </form>
-<br /><!--<?php if (isset($FILE) && !check_for_import($FILE)) print_text("return_editconfig_gedcom"); ?><br />-->
+<br />
 <?php if (!PGV_GED_ID) { ?>
 <script language="JavaScript" type="text/javascript">
 	helpPopup('welcome_new_help');

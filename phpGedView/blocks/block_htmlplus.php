@@ -75,7 +75,7 @@ function print_htmlplus_block($block=true, $config='', $side, $index) {
 		}
 		break;
 	default:
-		if (check_for_import($config['gedcom'])) {
+		if (get_gedcom_setting(get_gedcom_from_id($config['gedcom']), 'imported')) {
 			$GEDCOM = $config['gedcom'];
 		}
 		break;

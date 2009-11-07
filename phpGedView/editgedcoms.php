@@ -187,7 +187,7 @@ foreach (get_all_gedcoms() as $ged_id=>$ged_name) {
 
 		print "<td valign=\"top\">";		// Column 3  (Import action)
 		print "<a href=\"".encode_url("uploadgedcom.php?GEDFILENAME={$ged_name}&verify=verify_gedcom&action=add_form&import_existing=1")."\">".$pgv_lang["ged_import"]."</a>";
-		if (!check_for_import($ged_name)) {
+		if (!get_gedcom_setting($ged_id, 'imported')) {
 			print "<br /><span class=\"error\">".$pgv_lang["gedcom_not_imported"]."</span>";
 		}
 		print "&nbsp;&nbsp;";
