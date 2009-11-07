@@ -285,7 +285,7 @@ if ($action=='addServer') {
 */
 if ($action=='deleteServer') {
 	if (!empty($address)) {
-		$sid = stripslashes($address);
+		$sid = $address;
 
 		if (count_linked_indi($sid, 'SOUR', PGV_GED_ID) || count_linked_fam($sid, 'SOUR', PGV_GED_ID)) {
 			$errorDelete = $pgv_lang["error_remove_site_linked"];

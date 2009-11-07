@@ -227,7 +227,6 @@ global $pgv_lang;
 	
 	// Unlink records indicated by radio button =========
 	if (isset($exist_links) && $exist_links!="No_Values") {
-		$exist_links = stripslashes($exist_links);
 		$exist_links = substr($exist_links, 0, -1);
 		$rem_exist_links = (explode(", ", $exist_links));
 		foreach ($rem_exist_links as $remLinkId) {
@@ -248,7 +247,6 @@ global $pgv_lang;
 	
 	// Add new Links ====================================
 	if (isset($more_links) && $more_links!="No_Values" && $more_links!=",") {
-		$more_links = stripslashes($more_links);
 		$more_links = substr($more_links, 0, -1);
 		$add_more_links = (explode(", ", $more_links));
 		foreach ($add_more_links as $addLinkId) {

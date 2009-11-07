@@ -345,7 +345,7 @@ class UserMigrateControllerRoot extends BaseController {
 					set_user_setting($user_id, 'verified_by_admin',    $user["verified_by_admin"] ? 'yes' : 'no');
 					foreach (array('gedcomid', 'rootid', 'canedit') as $var) {
 						if ($user[$var]) {
-							foreach (unserialize(stripslashes($user[$var])) as $gedcom=>$id) {
+							foreach (unserialize($user[$var]) as $gedcom=>$id) {
 								set_user_gedcom_setting($user_id, $gedcom, $var, $id);
 							}
 						}

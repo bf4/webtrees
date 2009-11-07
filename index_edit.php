@@ -219,7 +219,7 @@ if ($action=="updateconfig") {
 		$config = $block[1];
 		foreach($PGV_BLOCKS[$block[0]]["config"] as $config_name=>$config_value) {
 			if (isset($_POST[$config_name])) {
-				$config[$config_name] = stripslashes($_POST[$config_name]);
+				$config[$config_name] = $_POST[$config_name];
 			}
 			else {
 				$config[$config_name] = "";

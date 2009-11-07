@@ -207,7 +207,7 @@ function confirm_prompt(text, commentid) {
 		<td class="optionbox">
 			<?php
 				// get title, given taskid
-				print '<input type="text" name="title" value="'.PrintReady(htmlspecialchars(stripslashes($task['t_title']))).'" size="50"/>';
+				print '<input type="text" name="title" value="'.PrintReady(htmlspecialchars($task['t_title'])).'" size="50"/>';
 			?>
 		</td>
 <!--FOLDER-->
@@ -253,7 +253,7 @@ function confirm_prompt(text, commentid) {
 			<?php
 				// get description, given taskid
 				print '<textarea name="desc" rows="3" cols="55">';
-				print PrintReady(htmlspecialchars(stripslashes($task['t_description'])));
+				print PrintReady(htmlspecialchars($task['t_description']));
 				print '</textarea>';
 			?>
 		</td>

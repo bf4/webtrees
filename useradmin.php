@@ -73,7 +73,7 @@ $user_theme              =safe_POST('user_theme',               $ALL_THEME_DIRS)
 $user_language           =safe_POST('user_language',            array_keys($pgv_language), $LANGUAGE);
 $new_contact_method      =safe_POST('new_contact_method',       $ALL_CONTACT_METHODS, $CONTACT_METHOD);
 $new_default_tab         =safe_POST('new_default_tab',          array_keys($ALL_DEFAULT_TABS), $GEDCOM_DEFAULT_TAB);
-$new_comment             =safe_POST('new_comment'               );
+$new_comment             =safe_POST('new_comment',              PGV_REGEX_UNSAFE);
 $new_comment_exp         =safe_POST('new_comment_exp'           );
 $new_max_relation_path   =safe_POST_integer('new_max_relation_path', 1, $MAX_RELATION_PATH_LENGTH, 2);
 $new_sync_gedcom         =safe_POST('new_sync_gedcom',          'Y',   'N');
@@ -492,7 +492,7 @@ if ($action=="edituser") {
 	</tr>
 	<tr>
 	<td class="descriptionbox wrap"><?php print_help_link("useradmin_comment_help", "qm", "comment"); echo $pgv_lang["comment"]; ?></td>
-	<td class="optionbox wrap"><textarea cols="50" rows="5" name="new_comment" tabindex="<?php echo ++$tab; ?>" ><?php $tmp = stripslashes(PrintReady(get_user_setting($user_id, 'comment'))); echo $tmp; ?></textarea></td>
+	<td class="optionbox wrap"><textarea cols="50" rows="5" name="new_comment" tabindex="<?php echo ++$tab; ?>" ><?php $tmp = PrintReady(get_user_setting($user_id, 'comment')); echo $tmp; ?></textarea></td>
 	</tr>
 	<tr>
 	<td class="descriptionbox wrap"><?php print_help_link("useradmin_comment_exp_help", "qm", "comment_exp"); echo $pgv_lang["comment_exp"]; ?></td>
@@ -639,7 +639,7 @@ if ($action == "listusers") {
 		}
 		else echo "\t<td class=\"optionbox wrap\">".$user_name;
 		if (get_user_setting($user_id, "comment")) {
-			$tempTitle = PrintReady(stripslashes(get_user_setting($user_id, "comment")));
+			$tempTitle = PrintReady(get_user_setting($user_id, "comment"));
 			echo "<br /><img class=\"adminicon\" align=\"top\" alt=\"{$tempTitle}\" title=\"{$tempTitle}\" src=\"{$PGV_IMAGE_DIR}/{$PGV_IMAGES['notes']['small']}\" />";
 		}
 		echo "</td>\n";

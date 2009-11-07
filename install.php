@@ -260,7 +260,7 @@ switch($step) {
 			$config_array['CONFIGURED'] = true;
 			
 			// Clear the SERVER_URL when it's identical to the calculated value
-			$GUESS_URL = stripslashes("http://".$_SERVER["SERVER_NAME"].dirname($SCRIPT_NAME)."/");
+			$GUESS_URL = "http://".$_SERVER["SERVER_NAME"].dirname($SCRIPT_NAME)."/";
 			if (!isset($config_array['SERVER_URL'])) $config_array['SERVER_URL'] = '';
 			$config_array['SERVER_URL'] = rtrim(trim($config_array['SERVER_URL']),'/').'/';
 			if ($config_array['SERVER_URL'] == $GUESS_URL || $config_array['SERVER_URL'] == '/') $config_array['SERVER_URL'] = '';
@@ -752,7 +752,7 @@ function printConfigForm(){
 				<td class="optionbox wrap"><input type="text" name="NEW_SERVER_URL" value="<?php print $SERVER_URL?>" dir="ltr" tabindex="<?php $i++; print $i?>" onfocus="getHelp('SERVER_URL_help');" size="50" />
 				<br /><?php
 					global $GUESS_URL;
-					$GUESS_URL = stripslashes("http://".$_SERVER["SERVER_NAME"].dirname($SCRIPT_NAME)."/");
+					$GUESS_URL = "http://".$_SERVER["SERVER_NAME"].dirname($SCRIPT_NAME)."/";
 					print_text("server_url_note");
 					?>
 				</td>

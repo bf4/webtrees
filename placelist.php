@@ -73,7 +73,7 @@ else {
 }
 // Remove slashes
 foreach ($parent as $p => $child){
-	$parent[$p] = stripLRMRLM(stripslashes($child));
+	$parent[$p] = stripLRMRLM($child);
 }
 
 if (!isset($level)) {

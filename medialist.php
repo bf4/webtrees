@@ -35,7 +35,7 @@ loadLangFile("lightbox:lang");
 $level = safe_GET("level","","0");
 $action = safe_GET('action');
 $filter = safe_GET('filter');
-$filter = stripLRMRLM(stripslashes($filter));
+$filter = stripLRMRLM($filter);
 $search = safe_GET('search');
 $sortby = safe_GET('sortby', 'file', 'title');
 $max = safe_GET('max', array('10', '20', '30', '40', '50', '75', '100', '125', '150', '200'), '20');

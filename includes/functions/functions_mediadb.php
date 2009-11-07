@@ -318,7 +318,7 @@ function get_medialist($currentdir = false, $directory = "", $linkonly = false, 
 				// And a few more blanks
 				if (empty($media["FILE"]))
 					break;
-				$fileName = check_media_depth(stripslashes($media["FILE"]), "NOTRUNC", "QUIET");
+				$fileName = check_media_depth($media["FILE"], "NOTRUNC", "QUIET");
 				if ($MEDIA_EXTERNAL && isFileExternal($media["FILE"])) {
 					$media["THUMB"] = $fileName;
 					$media["THUMBEXISTS"] = 1;  // 1 means external

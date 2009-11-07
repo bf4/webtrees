@@ -301,7 +301,7 @@ function delete_gedrec($gid, $linkpid='') {
 function check_gedcom($gedrec, $chan=true) {
 	global $pgv_lang;
 
-	$gedrec = trim(stripslashes(stripLRMRLM($gedrec)));
+	$gedrec = trim(stripLRMRLM($gedrec));
 
 	$ct = preg_match("/0 @(.*)@ (.*)/", $gedrec, $match);
 	if ($ct==0) {

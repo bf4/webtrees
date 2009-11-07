@@ -514,7 +514,7 @@ case "export" :
 		for ($z = 0, $zmax = sizeof($new_language_array); $z < $zmax; $z++) {
 			if ($new_language_array[$z][0] != "config_help" and $new_language_array[$z][0] != "welcome_help") {
 				fwrite($fp, "<li>");
-				fwrite($fp, stripslashes(print_text($new_language_array[$z][1],0,2))."<br /><br /></li>");
+				fwrite($fp, print_text($new_language_array[$z][1],0,2)."<br /><br /></li>");
 			}
 		}
 

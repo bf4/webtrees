@@ -386,7 +386,6 @@ function store_gedcoms() {
 			$GED["privacy"] = "privacy.php";
 		}
 		$GED["path"] = str_replace($INDEX_DIRECTORY, "\${INDEX_DIRECTORY}", $GED["path"]);
-		$GED["title"] = stripslashes($GED["title"]);
 		$GED["title"] = preg_replace("/\"/", "\\\"", $GED["title"]);
 		$gedcomtext .= "\$gedarray = array();\n";
 		$gedcomtext .= "\$gedarray[\"gedcom\"] = \"".$GED["gedcom"]."\";\n";
