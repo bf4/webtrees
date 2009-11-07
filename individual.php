@@ -102,8 +102,8 @@ if (selectedTab != "" && selectedTab != "undefined" && selectedTab != null) {
 	var selectedTab = 0;
 }
 
+var pinned = false;
 function enable_static_tab() {
-    jQuery(".static_tab").css("float","<?php echo ($TEXT_DIRECTION=='rtl')? 'left':'right';?>");
 	jQuery(".static_tab").addClass("static_tab_<?php echo $TEXT_DIRECTION;?>");
     jQuery(".static_tab_content").removeClass("ui-tabs-hide");
     jQuery(".static_tab_content").removeClass("ui-tabs-panel");
@@ -112,7 +112,7 @@ function enable_static_tab() {
     var top = jQuery(".static_tab").offset().top+jQuery(".static_tab").height();
 	jQuery(".static_tab_content").css("top", top+"px");
 	jQuery(".static_tab_content").addClass("static_tab_content_<?php echo $TEXT_DIRECTION;?>");
-	jQuery(".static_tab_content").hide();
+	if (!pinned) jQuery(".static_tab_content").hide();
 }
 
 jQuery(document).ready(function(){
@@ -139,19 +139,39 @@ jQuery(document).ready(function(){
 	// static tab changes
 	<?php if ($controller->static_tab){?>
     jQuery('#tabs').bind('tabsselect', function(event, ui) {
-        	if (ui.panel.id=='<?php echo $controller->static_tab->getName()?>') {
-        		if (jQuery(".static_tab_content").css("display")=="none") {
-            			jQuery(".static_tab_content").show();
-            			<?php echo $controller->static_tab->getTab()->getJSCallbackAllTabs()."\n";
-            			$modjs = $controller->static_tab->getTab()->getJSCallback();
-            			echo $modjs;
-            			?>
-        		}
-        		else jQuery(".static_tab_content").hide();
-            	return false;
+        	if (ui.panel.id=='<?php echo $controller->static_tab->getName();?>') {
+            	if (!pinned) {
+	        		if (jQuery(".static_tab_content").css("display")=="none") {
+	            			jQuery(".static_tab_content").show();
+	            			<?php echo $controller->static_tab->getTab()->getJSCallbackAllTabs()."\n";
+	            			$modjs = $controller->static_tab->getTab()->getJSCallback();
+	            			echo $modjs;
+	            			?>
+	        		}
+	        		else jQuery(".static_tab_content").hide();
+            	}
+	            return false;
         	}
     });
 	enable_static_tab();
+
+	jQuery('#pin').toggle(
+   		   	function() {
+   	   		   	jQuery('#pin img').attr('src', 'images/pin-in.png');
+   	   		   	jQuery('#tabs div').css('width', (jQuery('.static_tab').position().left-10)+'px');
+   	   		   	jQuery('.static_tab_content').show();
+	   	   		<?php echo $controller->static_tab->getTab()->getJSCallbackAllTabs()."\n";
+				$modjs = $controller->static_tab->getTab()->getJSCallback();
+				echo $modjs;
+				?>
+   	   		   	pinned = true;
+   		   	},
+   		   	function() {
+   		   		jQuery('#pin img').attr('src', 'images/pin-out.png');
+   		   		jQuery('#tabs div').css('width', '');
+   		   		jQuery('.static_tab_content').hide();
+   		   		pinned = false;
+   		   	});
    	<?php }
    	
    	$tabcount = 0;
@@ -169,7 +189,11 @@ jQuery(document).ready(function(){
 
 //]]>
   </script>
-
+<style type="text/css">
+#pin {
+	float: right;
+}
+</style>
 <div id="indi_main_blocks">
 <div id="indi_top">
 		<table><tr><td>
@@ -310,7 +334,11 @@ foreach($controller->modules as $mod) {
 		}
 	}
 	if ($controller->static_tab) {
-		?><li class="ui-state-default ui-corner-top static_tab"><a name="<?php echo $controller->static_tab->getName(); ?>" href="#<?php echo $controller->static_tab->getName()?>"><span><?php echo $pgv_lang[$controller->static_tab->getName()]?></span></a>
+		?><li class="ui-state-default ui-corner-top static_tab" style="float: <?php echo ($TEXT_DIRECTION=='rtl')? 'left':'right';?>">
+			<a name="<?php echo $controller->static_tab->getName(); ?>" href="#<?php echo $controller->static_tab->getName()?>">
+				<span><?php echo $pgv_lang[$controller->static_tab->getName()]?></span>
+			</a>
+			<a id="pin" href="#pin"><img src="images/pin-out.png" border="0" /></a>
 		</li><?php 
 	} 
 	 ?>
@@ -330,10 +358,10 @@ foreach($controller->modules as $mod) {
  } ?>
 </div> <!-- tabs -->
 <?php if ($controller->static_tab) { ?>
-<div class="static_tab_content" id="<?php echo $controller->static_tab->getName();?>">
-
+<div class="static_tab_content ui-corner-bottom ui-corner-all" id="<?php echo $controller->static_tab->getName();?>">
 <?php echo $controller->static_tab->getTab()->getContent(); ?>
-</div> <!-- static tab -->
+</div> 
+<!-- static tab -->
 <?php } ?>
 </div> <!--  end column 1 -->
 <?php 
