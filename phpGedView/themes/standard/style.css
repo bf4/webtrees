@@ -423,6 +423,7 @@ a:hover .nameZoom {
 }
 
 .sublinks_table .icon {
+	vertical-align: middle;
 	width: 25px;
 	height: 25px;
 }
@@ -433,6 +434,7 @@ a:hover .nameZoom {
 }
 
 .submenu .icon {
+	vertical-align: middle;
 	width: 25px;
 	height: 25px;
 }
