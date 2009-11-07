@@ -648,7 +648,7 @@ $pgv_lang["total_shared_notes"]			= "Total Shared Notes";
 $pgv_lang["invalid_gedformat"]		= "Invalid GEDCOM format";
 $pgv_lang["exec_time"]				= "Execution time:";
 $pgv_lang["unable_to_create_index"] = "Unable to create Index files.  Make sure Write permissions are set on the PhpGedView directory.  Permissions may be restored once Index files are written.";
-$pgv_lang["changes_present"]		= "The current GEDCOM has changes pending review.  If you continue this Import, these pending changes will be posted to the database immediately.  You should review the pending changes before continuing the Import.";
+$pgv_lang["changes_present"]		= "The current GEDCOM has changes pending review.  If you continue this Import, these pending changes will be discarded.  You should review the pending changes before continuing the Import.";
 $pgv_lang["sec"]					= "sec.";
 
 //-- INDIVIDUAL AND FAMILYLIST FILE MESSAGES
