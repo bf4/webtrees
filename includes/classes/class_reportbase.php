@@ -522,7 +522,7 @@ class PGVRElement {
 		return $this->text;
 	}
 
-	function setWrapWidth($width) {
+	function setWrapWidth($width, $cellwidth) {
 		return 0;
 	}
 
