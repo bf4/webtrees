@@ -18,7 +18,6 @@
 	<property name="module-googlemap.dir" value="${dist.dir}/PGV-Module-googlemap-${pgv.version}" />
 	<property name="module-jwplayer.dir" value="${dist.dir}/PGV-Module-jwplayer-${pgv.version}" />
 	<property name="module-lightbox.dir" value="${dist.dir}/PGV-Module-lightbox-${pgv.version}" />
-	<property name="module-phpsysinfo.dir" value="${dist.dir}/PGV-Module-phpsysinfo-${pgv.version}" />
 	<property name="module-punbb.dir" value="${dist.dir}/PGV-Module-punbb-${pgv.version}" />
 	<property name="module-research-assistant.dir" value="${dist.dir}/PGV-Module-research-assistant-${pgv.version}" />
 	<property name="module-sitemap.dir" value="${dist.dir}/PGV-Module-sitemap-${pgv.version}" />
@@ -99,8 +98,6 @@
 		<delete file="${module-jwplayer.dir}.zip" failonerror="false" />
 		<delete dir ="${module-lightbox.dir}" failonerror="false" />
 		<delete file="${module-lightbox.dir}.zip" failonerror="false" />
-		<delete dir ="${module-phpsysinfo.dir}" failonerror="false" />
-		<delete file="${module-phpsysinfo.dir}.zip" failonerror="false" />
 		<delete dir ="${module-punbb.dir}" failonerror="false" />
 		<delete file="${module-punbb.dir}.zip" failonerror="false" />
 		<delete dir ="${module-research-assistant.dir}" failonerror="false" />
@@ -261,14 +258,6 @@
 		</copy>
 	</target>
 
-	<target name="package-module-phpsysinfo">
-		<copy todir="${module-phpsysinfo.dir}">
-			<fileset dir="./modules/">
-				<include name="phpsysinfo*/**" />
-			</fileset>
-		</copy>
-	</target>
-
 	<target name="package-module-punbb">
 		<copy todir="${module-punbb.dir}">
 			<fileset dir="./modules/">
@@ -340,7 +329,7 @@
 	</target>
 
 	<target name="package"
-		depends="package-all, package-basic, package-lang, package-themes, package-modules-all, package-places, package-demo, package-module-cms-interface, package-module-batch-update, package-module-fckeditor, package-module-gallery2, package-module-gedfact-assistant, package-module-googlemap, package-module-jwplayer, package-module-lightbox, package-module-phpsysinfo, package-module-punbb, package-module-research-assistant, package-module-sitemap, package-module-slideshow, package-module-wordsearch">
+		depends="package-all, package-basic, package-lang, package-themes, package-modules-all, package-places, package-demo, package-module-cms-interface, package-module-batch-update, package-module-fckeditor, package-module-gallery2, package-module-gedfact-assistant, package-module-googlemap, package-module-jwplayer, package-module-lightbox, package-module-punbb, package-module-research-assistant, package-module-sitemap, package-module-slideshow, package-module-wordsearch">
 		<!--  default target which does everything -->
 	</target>
 	
@@ -360,7 +349,6 @@
 		<zip destfile="${module-googlemap.dir}.zip" basedir="${module-googlemap.dir}" update="true" />
 		<zip destfile="${module-jwplayer.dir}.zip" basedir="${module-jwplayer.dir}" update="true" />
 		<zip destfile="${module-lightbox.dir}.zip" basedir="${module-lightbox.dir}" update="true" />
-		<zip destfile="${module-phpsysinfo.dir}.zip" basedir="${module-phpsysinfo.dir}" update="true" />
 		<zip destfile="${module-punbb.dir}.zip" basedir="${module-punbb.dir}" update="true" />
 		<zip destfile="${module-research-assistant.dir}.zip" basedir="${module-research-assistant.dir}" update="true" />
 		<zip destfile="${module-sitemap.dir}.zip" basedir="${module-sitemap.dir}" update="true" />
