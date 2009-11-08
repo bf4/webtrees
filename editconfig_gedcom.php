@@ -103,11 +103,19 @@ if (isset($GEDCOMPATH)) {
 	$ctupload = count($_FILES);
 	if ($ctupload > 0) {
 		// NOTE: Extract the GEDCOM filename
-		if (!empty($path)) $GEDFILENAME = basename($path);
-		else $GEDFILENAME = $_FILES['GEDCOMPATH']['name'];
-		if ($path=="" || dirname($path) == ".") $upload_path = $INDEX_DIRECTORY;
-		else $upload_path = dirname($path)."/";
-		if (empty($GEDFILENAME)) $GEDFILENAME = $_FILES['GEDCOMPATH']['name'];
+		if (!empty($path)) {
+			$GEDFILENAME = basename($path);
+		} else {
+			$GEDFILENAME = $_FILES['GEDCOMPATH']['name'];
+		}
+		if ($path=="" || dirname($path) == ".") {
+			$upload_path = $INDEX_DIRECTORY;
+		} else {
+			$upload_path = dirname($path)."/";
+		}
+		if (empty($GEDFILENAME)) {
+			$GEDFILENAME = $_FILES['GEDCOMPATH']['name'];
+		}
 
 		//-- remove any funny characters from uploaded files
 		$GEDFILENAME = preg_replace('/[\+\&\%\$@]/', "_", $GEDFILENAME);
@@ -117,21 +125,16 @@ if (isset($GEDCOMPATH)) {
 			if (move_uploaded_file($_FILES['GEDCOMPATH']['tmp_name'], $upload_path.$GEDFILENAME)) {
 				AddToLog("Gedcom ".$path.$GEDFILENAME." uploaded");
 				$GEDCOMPATH = $upload_path.$GEDFILENAME;
-			}
-			else {
+			} else {
 				$error = print_text("upload_error",0,1)."<br />".file_upload_error_text($_FILES['GEDCOMPATH']['error']);
 				$action = "upload_form";
 			}
-		}
-		// NOTE: If the file exists we will make a backup file
-		else {
-			//print "file exists, create backup";
+		} else {
+			// NOTE: If the file exists we will make a backup file
 			if (move_uploaded_file($_FILES['GEDCOMPATH']['tmp_name'], $upload_path.$GEDFILENAME.".bak")) {
 				$bakfile = $upload_path.$GEDFILENAME.".bak";
 				$GEDCOMPATH = $upload_path.$GEDFILENAME;
-				//print $bakfile." ".$GEDCOMPATH;
-			}
-			else {
+			} else {
 				$error = print_text("upload_error",0,1)."<br />".file_upload_error_text($_FILES['GEDCOMPATH']['error']);
 				$action = "upload_form";
 			}
@@ -140,30 +143,34 @@ if (isset($GEDCOMPATH)) {
 	//-- check if there was an error during the upload
 	if (empty($error)) {
 		// NOTE: Extract the GEDCOM filename
-		if (!empty($path)) $GEDFILENAME = basename($path);
-		else $GEDFILENAME = basename($GEDCOMPATH);
+		if (!empty($path)) {
+			$GEDFILENAME = basename($path);
+		} else {
+			$GEDFILENAME = basename($GEDCOMPATH);
+		}
 		// NOTE: Check if the input contains a valid path otherwise check if there is one in the GEDCOMPATH
 		if (!is_dir($path)) {
-			if (!empty($path)) $parts = preg_split("/[\/\\\]/", $path);
-			else $parts = preg_split("/[\/\\\]/", $GEDCOMPATH);
+			if (!empty($path)) {
+				$parts = preg_split("/[\/\\\]/", $path);
+			} else {
+				$parts = preg_split("/[\/\\\]/", $GEDCOMPATH);
+			}
 			$path = "";
 			$ctparts = count($parts)-1;
-			if (count($parts) == 1) $path = $INDEX_DIRECTORY;
-			else {
+			if (count($parts) == 1) {
+				$path = $INDEX_DIRECTORY;
+			} else {
 				foreach ($parts as $key => $pathpart) {
 					if ($key < $ctparts) $path .= $pathpart."/";
 				}
 			}
 		}
 		// NOTE: Check if it is a zipfile
-		if (strstr(strtolower(trim($GEDFILENAME)), ".zip")==".zip") $GEDFILENAME = GetGEDFromZIP($path.$GEDFILENAME);
-		// NOTE: Check if there is an extension
-		//-- don't force the .ged extension
-		//-- if (strtolower(substr(trim($GEDFILENAME), -4)) != ".ged") $GEDFILENAME .= ".ged";
-
+		if (strstr(strtolower(trim($GEDFILENAME)), ".zip")==".zip") {
+			$GEDFILENAME = GetGEDFromZIP($path.$GEDFILENAME);
+		}
 		$ged = $GEDFILENAME;
-	}
-	else {
+	} else {
 		$action = "";
 	}
 }
@@ -174,23 +181,25 @@ if (isset($ged)) {
 			$path = "";
 			$parts = preg_split("/[\/\\\]/", $GEDCOMPATH);
 			$ctparts = count($parts)-1;
-			if (count($parts) == 1) $path = $INDEX_DIRECTORY;
-			else {
+			if (count($parts) == 1) {
+				$path = $INDEX_DIRECTORY;
+			} else {
 				foreach ($parts as $key => $pathpart) {
 					if ($key < $ctparts) $path .= $pathpart."/";
 				}
 			}
 		}
 		$GEDFILENAME = $ged;
-		if (!isset($gedcom_title)) $gedcom_title = $GEDCOMS[$ged]["title"];
+		if (!isset($gedcom_title)) {
+			$gedcom_title = $GEDCOMS[$ged]["title"];
+		}
 		$gedcom_config = $GEDCOMS[$ged]["config"];
 		$gedcom_privacy = $GEDCOMS[$ged]["privacy"];
 		$gedcom_id = $GEDCOMS[$ged]["id"];
 		$FILE = $ged;
 		$oldged = $ged;
 		$pgv_ver=$GEDCOMS[$ged]["pgv_ver"];
-	}
-	else {
+	} else {
 		if (empty($_POST["GEDCOMPATH"])) {
 			$GEDCOMPATH = "";
 			$gedcom_title = "";
@@ -213,12 +222,17 @@ if (isset($ged)) {
 $USERLANG = $LANGUAGE;
 $temp = $THEME_DIR;
 require($gedcom_config);
-if (!isset($_POST["GEDCOMLANG"])) $GEDCOMLANG = $LANGUAGE;
-else $GEDCOMLANG = $_POST["GEDCOMLANG"];
+if (!isset($_POST["GEDCOMLANG"])) {
+	$GEDCOMLANG = $LANGUAGE;
+} else {
+	$GEDCOMLANG = $_POST["GEDCOMLANG"];
+}
 $LANGUAGE = $USERLANG;
 $error_msg = "";
 
-if (!file_exists($path.$GEDFILENAME) && $source != "add_new_form") $action="add";
+if (!file_exists($path.$GEDFILENAME) && $source != "add_new_form") {
+	$action="add";
+}
 if ($action=="update") {
 	$errors = false;
 	$FILE=$GEDFILENAME;
@@ -231,21 +245,28 @@ if ($action=="update") {
 		if (copy($gedcom_privacy, $INDEX_DIRECTORY.$FILE."_priv.php")) {
 			$gedcom_privacy = "\${INDEX_DIRECTORY}".$FILE."_priv.php";
 		}
+	} else {
+		$gedcom_privacy = "\${INDEX_DIRECTORY}".$FILE."_priv.php";
 	}
-	else $gedcom_privacy = "\${INDEX_DIRECTORY}".$FILE."_priv.php";
 
 	$gedarray = array();
 	$gedarray["gedcom"] = $FILE;
 	$gedarray["config"] = $gedcom_config;
 	$gedarray["privacy"] = $gedcom_privacy;
-	if (!empty($gedcom_title)) $gedarray["title"] = $gedcom_title;
-	else if (!empty($_POST["gedcom_title"])) $gedarray["title"] = $_POST["gedcom_title"];
-	else $gedarray["title"] = str_replace("#GEDCOMFILE#", $GEDFILENAME, $pgv_lang["new_gedcom_title"]);
+	if (!empty($gedcom_title)) {
+		$gedarray["title"] = $gedcom_title;
+	} elseif (!empty($_POST["gedcom_title"])) {
+		$gedarray["title"] = $_POST["gedcom_title"];
+	} else {
+		$gedarray["title"] = str_replace("#GEDCOMFILE#", $GEDFILENAME, $pgv_lang["new_gedcom_title"]);
+	}
 	$gedarray["title"] = stripLRMRLM($gedarray["title"]);
 	$gedarray["path"] = $path.$GEDFILENAME;
 	$gedarray["id"] = $gedcom_id;
 	$gedarray["pgv_ver"] = $pgv_ver;
 	$gedarray["imported"] = get_gedcom_setting($gedcom_id, 'imported');
+	$GEDCOMS[$FILE] = $gedarray;
+	store_gedcoms();
 
 	// Check that add/remove common surnames are separated by [,;] blank
 	$_POST["NEW_COMMON_NAMES_REMOVE"] = preg_replace("/[,;]\b/", ", ", $_POST["NEW_COMMON_NAMES_REMOVE"]);
@@ -253,8 +274,6 @@ if ($action=="update") {
 	$COMMON_NAMES_THRESHOLD = $_POST["NEW_COMMON_NAMES_THRESHOLD"];
 	$COMMON_NAMES_ADD = $_POST["NEW_COMMON_NAMES_ADD"];
 	$COMMON_NAMES_REMOVE = $_POST["NEW_COMMON_NAMES_REMOVE"];
-	$GEDCOMS[$FILE] = $gedarray;
-	store_gedcoms();
 
 	require($INDEX_DIRECTORY."gedcoms.php");
 	$boolarray = array();
