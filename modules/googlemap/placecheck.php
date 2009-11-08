@@ -34,11 +34,11 @@ require 'googlemap.php'; // gives access to googlemap functions
 
 loadLangFile("googlemap:lang, googlemap:help_text");
 
-if (isset($_REQUEST['action']))		$action = $_REQUEST['action'];
-if (isset($_REQUEST['ged']))		$ged = $_REQUEST['ged'];
-if (isset($_REQUEST['openinnew']))	$openinnew = $_REQUEST['openinnew'];
-if (isset($_REQUEST['state']))		$state = $_REQUEST['state'];
-if (isset($_REQUEST['country']))	$country = $_REQUEST['country'];
+$action   =safe_POST     ('action'                                              );
+$gedcom_id=safe_POST     ('gedcom_id', array_keys(get_all_gedcoms()), PGV_GED_ID);
+$openinnew=safe_POST_bool('openinnew'                                           );
+$state    =safe_POST     ('state',     PGV_REGEX_UNSAFE,              'XYZ'     );
+$country  =safe_POST     ('country',   PGV_REGEX_UNSAFE,              'XYZ'     );
 
 // Must be an admin user to use this module
 if (!PGV_USER_GEDCOM_ADMIN) {
@@ -56,46 +56,8 @@ try {
 	die($ex);
 }
 
-// Scan all the gedcom directories for gedcom files
-$all_dirs=array($INDEX_DIRECTORY=>"");
-foreach (get_all_gedcoms() as $ged_id=>$gedcom) {
-	$all_dirs[dirname(get_gedcom_setting($ged_id, 'path'))."/"]="";
-}
+$target=$openinnew ? "target='_blank'" : "";
 
-$all_geds=array();
-foreach ($all_dirs as $key=>$value) {
-	$dir=opendir($key);
-	while ($file=readdir($dir))
-		if (!is_dir($key.$file) && is_readable($key.$file)) {
-			$h=fopen($key.$file, 'r');
-			if (preg_match('/0.*HEAD/i', fgets($h,255)))
-				$all_geds[$file]=$key.$file;
-			fclose($h);
-		}
-	closedir($dir);
-}
-if (count($all_geds)==0)
-	$all_geds[]='-';
-
-// Default values
-if (!isset($ged))
-	if (isset($GEDCOM) && array_key_exists($GEDCOM, $all_geds)) {
-		$ged=$GEDCOM;								// Current gedcom
-	}
-	else {
-		$tmp=array_keys($all_geds);
-		$ged=$tmp[0];								// First gedcom in directory
-	}
-
-if (!isset($openinnew)) $openinnew=0;				// Open links in same/new tab/window
-if (!isset($state))     $state='XYZ';
-if (!isset($country))   $country='XYZ';
-
-if ($openinnew==1) {
-	$target="target='_blank'";
-	$openinnew=0;
-}
-else $target="";
 echo "<div align=\"center\" style=\"width: 99%;\"><h1>".$pgv_lang["placecheck"]."</h1></div>";
 
 //Start of User Defined options
@@ -107,20 +69,21 @@ echo "<table align='left'>";
 echo "<tr><td colspan='2'class='descriptionbox' align='center'><strong>".$pgv_lang['placecheck_options']."</strong></td></tr>";
 //Option box to select gedcom
 echo "<tr><td class='descriptionbox'>{$pgv_lang["gedcom_file"]}</td>";
-echo "<td class='optionbox'><select name='ged'>";
-foreach ($all_geds as $key=>$value)
-	echo "<option value='$key'".($key==$ged?" selected='selected'":"").">$key</option>";
+echo "<td class='optionbox'><select name='gedcom_id'>";
+foreach (get_all_gedcoms() as $ged_id=>$gedcom) {
+	echo '<option value="', $ged_id, '"', $ged_id==$gedcom_id?' selected="selected"':'', '>', htmlspecialchars($gedcom),'</option>';
+}
 echo "</select></td></tr>";
 //Option box for 'Open in new window'
 echo "<tr><td class='descriptionbox'>{$pgv_lang["open_link"]}</td>";
 echo "<td class='optionbox'><select name='openinnew'>";
-echo "<option value='0' ".($openinnew==0?" selected='selected'":"").">{$pgv_lang["same_win"]}</option>";
-echo "<option value='1' ".($openinnew==1?" selected='selected'":"").">{$pgv_lang["new_win"]}</option>";
+echo "<option value='0' ".($openinnew?" selected='selected'":"").">{$pgv_lang["same_win"]}</option>";
+echo "<option value='1' ".($openinnew?" selected='selected'":"").">{$pgv_lang["new_win"]}</option>";
 echo "</select></td></tr>";
 //Option box to select top level place within Gedcom
 echo "<tr><td class='descriptionbox'>".$pgv_lang['placecheck_top']."</td>";
 echo "<td class='optionbox'><select name='country'>";
-echo "<option value='XYZ'selected='selected'>".$pgv_lang['placecheck_select1']."</option>";
+echo "<option value='XYZ' selected='selected'>".$pgv_lang['placecheck_select1']."</option>";
 echo "<option value='XYZ'>".$pgv_lang["all"]."</option>";
 $rows=
 	PGV_DB::prepare("SELECT pl_id, pl_place FROM {$TBLPREFIX}placelocation WHERE pl_level=0 ORDER BY pl_place")
@@ -190,211 +153,221 @@ echo "</form>";
 echo "</table>";
 echo "<hr />";
 
-// Do not run until user selects a gedcom/place/etc.
-// Instead, show some useful help info.
-if (!isset($action)) {
-	echo "<p>".$pgv_lang['placecheck_text']."</p><hr />";
-	print_footer();
-	exit();
-}
-
-//Identify gedcom file
-echo "<strong>".$pgv_lang['placecheck_head'].": </strong>".$ged."<br /><br />";
-//Select all '2 PLAC ' tags in the file and create array
-$handle=fopen($all_geds[$ged], 'r');
-$place_list=array();
-$i=0;
-while (($value=fgets($handle))!==false)
-	if (preg_match('/^2 PLAC ([^\r\n]+)/', $value, $match)) {
-		$place=$match[1];
-		if ($country=='XYZ') {
-			$place_list[$i]=$place;
+switch ($action) {
+case 'go':
+	//Identify gedcom file
+	echo "<strong>".$pgv_lang['placecheck_head'].": </strong>", htmlspecialchars(get_gedcom_setting($gedcom_id, 'title')), "<br /><br />";
+	//Select all '2 PLAC ' tags in the file and create array
+	$place_list=array();
+	$ged_data=PGV_DB::prepare("SELECT i_gedcom FROM {$TBLPREFIX}individuals WHERE i_gedcom LIKE ? AND i_file=?")
+		->execute(array("%\n2 PLAC %", $gedcom_id))
+		->fetchOneColumn();
+	foreach ($ged_data as $ged_datum) {
+		preg_match_all('/\n2 PLAC (.+)/', $ged_datum, $matches);
+		foreach ($matches[1] as $match) {
+			$place_list[$match]=true;
 		}
-		if (strpos($place, $country)!==false) {
-			if ($state=='XYZ') {
-				$place_list[$i]=$place;
-			}
-			if (strpos($place, $state)!==false) {
-				$place_list[$i]=$place;
-			}
-		}
-		$i++;
 	}
-
-//sort the array, limit to unique values, and count them
-$place_parts=array();
-$place_list=array_unique($place_list);
-usort($place_list, "stringsort");
-$i=count($place_list);
-
-//calculate maximum no. of levels to display
-$x=0;
-$max=0;
-while ($x<$i) {
-	$levels=explode(",", $place_list[$x]);
-	$parts=count($levels);
-	if ($parts>$max) $max=$parts;
-$x++;}
-$x=0;
-
-//scripts for edit, add and refresh
-?>
-<script language="JavaScript" type="text/javascript">
-<!--
-function edit_place_location(placeid) {
-	window.open('module.php?mod=googlemap&pgvaction=places_edit&action=update&placeid='+placeid+"&"+sessionname+"="+sessionid, '_blank', 'top=50,left=50,width=680,height=550,resizable=1,scrollbars=1');
-	return false;
-}
-
-function add_place_location(placeid) {
-	window.open('module.php?mod=googlemap&pgvaction=places_edit&action=add&placeid='+placeid+"&"+sessionname+"="+sessionid, '_blank', 'top=50,left=50,width=680,height=550,resizable=1,scrollbars=1');
-	return false;
-}
-function showchanges() {
-	window.location='<?php echo $_SERVER["REQUEST_URI"]; ?>&show_changes=yes';
-}
-
-var helpWin;
-function helpPopup(which) {
-	if ((!helpWin)||(helpWin.closed)) helpWin=window.open('module.php?mod=googlemap&pgvaction=editconfig_help&help='+which,'_blank','left=50,top=50,width=500,height=320,resizable=1,scrollbars=1');
-	else helpWin.location='modules/googlemap/editconfig_help.php?help='+which;
-	return false;
-}
-function getHelp(which) {
-	if ((helpWin)&&(!helpWin.closed)) helpWin.location='module.php?mod=googlemap&pgvaction=editconfig_help&help='+which;
-}
-
-function closeHelp() {
-	if (helpWin) helpWin.close();
-}
-
-//-->
-</script>
-<?php
-
-//start to produce the display table
-$cols=0;
-$span=$max*3+3;
-echo "<table class='facts_table' width='100%'><tr>";
-echo "<td rowspan='3' class='descriptionbox' align='center'><strong>".$pgv_lang['placecheck_gedheader']."</strong></td>";
-echo "<td class='descriptionbox' colspan='".$span."' align='center'><strong>".$pgv_lang['placecheck_gm_header']."</strong></td></tr>";
-echo "<tr>";
-while ($cols<$max) {
-	echo "<td class='descriptionbox' colspan='3' align='center'><strong>".PrintReady($pgv_lang['gm_level'])."&nbsp;".$cols."</strong></td>";
-	$cols++;
-}
-echo "</tr><tr>";
-$cols=0;
-while ($cols<$max) {
-	echo "<td class='descriptionbox' align='center'><strong>".$factarray["PLAC"]."</strong></td><td class='descriptionbox' align='center'><strong>".$pgv_lang["placecheck_lati"]."</strong><td class='descriptionbox' align='center'><strong>".$pgv_lang["placecheck_long"]."</strong></td></td>";
-	$cols++;
-}
-echo "</tr>";
-$countrows=0;
-while ($x<$i) {
-	$placestr="";
-	$levels=explode(",", $place_list[$x]);
-	$parts=count($levels);
-	$levels=array_reverse($levels);
-	$placestr.="<a href=\"placelist.php?action=show&amp;";
-	foreach($levels as $pindex=>$ppart) {
-		$ppart=urlencode(trim($ppart));
-		$placestr.="parent[$pindex]=".$ppart."&amp;";
+	$ged_data=PGV_DB::prepare("SELECT f_gedcom FROM {$TBLPREFIX}families WHERE f_gedcom LIKE ? AND f_file=?")
+		->execute(array("%\n2 PLAC %", $gedcom_id))
+		->fetchOneColumn();
+	foreach ($ged_data as $ged_datum) {
+		preg_match_all('/\n2 PLAC (.+)/', $ged_datum, $matches);
+		foreach ($matches[1] as $match) {
+			$place_list[$match]=true;
+		}
 	}
-	$placestr.="level=".count($levels);
-	$placestr.="\">".$place_list[$x]."</a>";
-	$gedplace="<tr><td class='facts_value'>".$placestr."</td>";
-	$z=0;
-	$y=0;
-	$id=0;
-	$level=0;
-	$matched[$x]=0;// used to exclude places where the gedcom place is matched at all levels
-	$mapstr_edit="<a href=\"javascript:;\" onclick=\"edit_place_location('";
-	$mapstr_add="<a href=\"javascript:;\" onclick=\"add_place_location('";
-	$mapstr3="";
-	$mapstr4="";
-	$mapstr5="')\" title='";
-	$mapstr6="' >";
-	$mapstr7="')\">";
-	$mapstr8="</a>";
-	while ($z<$parts) {
-		if ($levels[$z]==' ' || $levels[$z]=='')
-			$levels[$z]="unknown";// GoogleMap module uses "unknown" while GEDCOM uses , ,
+	// Unique list of places
+	$place_list=array_keys($place_list);
 
-		$levels[$z]=rtrim(ltrim($levels[$z]));
-
-		$placelist=create_possible_place_names($levels[$z], $z+1); // add the necessary prefix/postfix values to the place name
-		foreach ($placelist as $key=>$placename) {
-			$row=
-				PGV_DB::prepare("SELECT pl_id, pl_place, pl_long, pl_lati, pl_zoom FROM {$TBLPREFIX}placelocation WHERE pl_level=? AND pl_parent_id=? AND pl_place ".PGV_DB::$LIKE." ? ORDER BY pl_place")
-				->execute(array($z, $id, $placename))
-				->fetchOneRow(PDO::FETCH_ASSOC);
-			if (!empty($row['pl_id'])) {
-				$row['pl_placerequested']=$levels[$z]; // keep the actual place name that was requested so we can display that instead of what is in the db
-				break;
-			}
+	// Apply_filter
+	if ($country=='XYZ') {
+		$filter='.*$';
+	} else {
+		$filter=preg_quote($country).'$';
+		if ($state!='XYZ') {
+			$filter=preg_quote($state).', '.$filter;
 		}
-		if ($row['pl_id']!='') {
-			$id=$row['pl_id'];
-		}
-
-		if ($row['pl_place']!='') {
-			$placestr2=$mapstr_edit.$id."&amp;level=".$level.$mapstr3.$mapstr5.$pgv_lang["placecheck_zoom"].$row['pl_zoom'].$mapstr6.$row['pl_placerequested'].$mapstr8;
-			if ($row['pl_place']=='unknown')
-				$matched[$x]++;
-		} else {
-			if ($levels[$z]=="unknown") {
-				$placestr2=$mapstr_add.$id."&amp;level=".$level.$mapstr3.$mapstr7."<strong>".rtrim(ltrim($pgv_lang["pl_unknown"]))."</strong>".$mapstr8;$matched[$x]++;
-			} else {
-				$placestr2=$mapstr_add.$id."&amp;place_name=".urlencode($levels[$z])."&amp;level=".$level.$mapstr3.$mapstr7.'<span class="error">'.rtrim(ltrim($levels[$z])).'</span>'.$mapstr8;$matched[$x]++;
-			}
-		}
-		$plac[$z]="<td class='facts_value'>".$placestr2."</td>\n";
-		if ($row['pl_lati']=='0'){
-			$lati[$z]="<td class='facts_value error'><strong>".$row['pl_lati']."</strong></td>";
-		} else if ($row['pl_lati']!='') {
-			$lati[$z]="<td class='facts_value'>".$row['pl_lati']."</td>";
-		} else {
-			$lati[$z]="<td class='facts_value error' align='center'><strong>X</strong></td>";$matched[$x]++;
-		}
-		if ($row['pl_long']=='0'){
-			$long[$z]="<td class='facts_value error'><strong>".$row['pl_long']."</strong></td>";
-		} else if ($row['pl_long']!='') {
-			$long[$z]="<td class='facts_value'>".$row['pl_long']."</td>";
-		} else {
-			$long[$z]="<td class='facts_value error' align='center'><strong>X</strong></td>";$matched[$x]++;
-		}
-		$level++;
-		$mapstr3=$mapstr3."&amp;parent[".$z."]=".addslashes(PrintReady($row['pl_placerequested']));
-		$mapstr4=$mapstr4."&amp;parent[".$z."]=".addslashes(PrintReady(rtrim(ltrim($levels[$z]))));
-		$z++;
 	}
-	if ($matching==1) {
-		$matched[$x]=1;
+	$place_list=preg_grep('/'.$filter.'/', $place_list);
+	
+	//sort the array, limit to unique values, and count them
+	$place_parts=array();
+	usort($place_list, "stringsort");
+	$i=count($place_list);
+	
+	//calculate maximum no. of levels to display
+	$x=0;
+	$max=0;
+	while ($x<$i) {
+		$levels=explode(",", $place_list[$x]);
+		$parts=count($levels);
+		if ($parts>$max) $max=$parts;
+	$x++;}
+	$x=0;
+	
+	//scripts for edit, add and refresh
+	?>
+	<script language="JavaScript" type="text/javascript">
+	<!--
+	function edit_place_location(placeid) {
+		window.open('module.php?mod=googlemap&pgvaction=places_edit&action=update&placeid='+placeid+"&"+sessionname+"="+sessionid, '_blank', 'top=50,left=50,width=680,height=550,resizable=1,scrollbars=1');
+		return false;
 	}
-	if ($matched[$x]!=0) {
-		echo $gedplace;
+	
+	function add_place_location(placeid) {
+		window.open('module.php?mod=googlemap&pgvaction=places_edit&action=add&placeid='+placeid+"&"+sessionname+"="+sessionid, '_blank', 'top=50,left=50,width=680,height=550,resizable=1,scrollbars=1');
+		return false;
+	}
+	function showchanges() {
+		window.location='<?php echo $_SERVER["REQUEST_URI"]; ?>&show_changes=yes';
+	}
+	
+	var helpWin;
+	function helpPopup(which) {
+		if ((!helpWin)||(helpWin.closed)) helpWin=window.open('module.php?mod=googlemap&pgvaction=editconfig_help&help='+which,'_blank','left=50,top=50,width=500,height=320,resizable=1,scrollbars=1');
+		else helpWin.location='modules/googlemap/editconfig_help.php?help='+which;
+		return false;
+	}
+	function getHelp(which) {
+		if ((helpWin)&&(!helpWin.closed)) helpWin.location='module.php?mod=googlemap&pgvaction=editconfig_help&help='+which;
+	}
+	
+	function closeHelp() {
+		if (helpWin) helpWin.close();
+	}
+	
+	//-->
+	</script>
+	<?php
+	
+	//start to produce the display table
+	$cols=0;
+	$span=$max*3+3;
+	echo "<table class='facts_table' width='100%'><tr>";
+	echo "<td rowspan='3' class='descriptionbox' align='center'><strong>".$pgv_lang['placecheck_gedheader']."</strong></td>";
+	echo "<td class='descriptionbox' colspan='".$span."' align='center'><strong>".$pgv_lang['placecheck_gm_header']."</strong></td></tr>";
+	echo "<tr>";
+	while ($cols<$max) {
+		echo "<td class='descriptionbox' colspan='3' align='center'><strong>".PrintReady($pgv_lang['gm_level'])."&nbsp;".$cols."</strong></td>";
+		$cols++;
+	}
+	echo "</tr><tr>";
+	$cols=0;
+	while ($cols<$max) {
+		echo "<td class='descriptionbox' align='center'><strong>".$factarray["PLAC"]."</strong></td><td class='descriptionbox' align='center'><strong>".$pgv_lang["placecheck_lati"]."</strong><td class='descriptionbox' align='center'><strong>".$pgv_lang["placecheck_long"]."</strong></td></td>";
+		$cols++;
+	}
+	echo "</tr>";
+	$countrows=0;
+	while ($x<$i) {
+		$placestr="";
+		$levels=explode(",", $place_list[$x]);
+		$parts=count($levels);
+		$levels=array_reverse($levels);
+		$placestr.="<a href=\"placelist.php?action=show&amp;";
+		foreach($levels as $pindex=>$ppart) {
+			$ppart=urlencode(trim($ppart));
+			$placestr.="parent[$pindex]=".$ppart."&amp;";
+		}
+		$placestr.="level=".count($levels);
+		$placestr.="\">".$place_list[$x]."</a>";
+		$gedplace="<tr><td class='facts_value'>".$placestr."</td>";
 		$z=0;
-		while ($z<$max) {
-		if ($z<$parts) {
-			echo $plac[$z];
-			echo $lati[$z];
-			echo $long[$z];
-		} else {
-			echo "<td class='facts_value'>&nbsp;</td><td class='facts_value'>&nbsp;</td><td class='facts_value'>&nbsp;</td>";}
+		$y=0;
+		$id=0;
+		$level=0;
+		$matched[$x]=0;// used to exclude places where the gedcom place is matched at all levels
+		$mapstr_edit="<a href=\"javascript:;\" onclick=\"edit_place_location('";
+		$mapstr_add="<a href=\"javascript:;\" onclick=\"add_place_location('";
+		$mapstr3="";
+		$mapstr4="";
+		$mapstr5="')\" title='";
+		$mapstr6="' >";
+		$mapstr7="')\">";
+		$mapstr8="</a>";
+		while ($z<$parts) {
+			if ($levels[$z]==' ' || $levels[$z]=='')
+				$levels[$z]="unknown";// GoogleMap module uses "unknown" while GEDCOM uses , ,
+	
+			$levels[$z]=rtrim(ltrim($levels[$z]));
+	
+			$placelist=create_possible_place_names($levels[$z], $z+1); // add the necessary prefix/postfix values to the place name
+			foreach ($placelist as $key=>$placename) {
+				$row=
+					PGV_DB::prepare("SELECT pl_id, pl_place, pl_long, pl_lati, pl_zoom FROM {$TBLPREFIX}placelocation WHERE pl_level=? AND pl_parent_id=? AND pl_place ".PGV_DB::$LIKE." ? ORDER BY pl_place")
+					->execute(array($z, $id, $placename))
+					->fetchOneRow(PDO::FETCH_ASSOC);
+				if (!empty($row['pl_id'])) {
+					$row['pl_placerequested']=$levels[$z]; // keep the actual place name that was requested so we can display that instead of what is in the db
+					break;
+				}
+			}
+			if ($row['pl_id']!='') {
+				$id=$row['pl_id'];
+			}
+	
+			if ($row['pl_place']!='') {
+				$placestr2=$mapstr_edit.$id."&amp;level=".$level.$mapstr3.$mapstr5.$pgv_lang["placecheck_zoom"].$row['pl_zoom'].$mapstr6.$row['pl_placerequested'].$mapstr8;
+				if ($row['pl_place']=='unknown')
+					$matched[$x]++;
+			} else {
+				if ($levels[$z]=="unknown") {
+					$placestr2=$mapstr_add.$id."&amp;level=".$level.$mapstr3.$mapstr7."<strong>".rtrim(ltrim($pgv_lang["pl_unknown"]))."</strong>".$mapstr8;$matched[$x]++;
+				} else {
+					$placestr2=$mapstr_add.$id."&amp;place_name=".urlencode($levels[$z])."&amp;level=".$level.$mapstr3.$mapstr7.'<span class="error">'.rtrim(ltrim($levels[$z])).'</span>'.$mapstr8;$matched[$x]++;
+				}
+			}
+			$plac[$z]="<td class='facts_value'>".$placestr2."</td>\n";
+			if ($row['pl_lati']=='0'){
+				$lati[$z]="<td class='facts_value error'><strong>".$row['pl_lati']."</strong></td>";
+			} else if ($row['pl_lati']!='') {
+				$lati[$z]="<td class='facts_value'>".$row['pl_lati']."</td>";
+			} else {
+				$lati[$z]="<td class='facts_value error' align='center'><strong>X</strong></td>";$matched[$x]++;
+			}
+			if ($row['pl_long']=='0'){
+				$long[$z]="<td class='facts_value error'><strong>".$row['pl_long']."</strong></td>";
+			} else if ($row['pl_long']!='') {
+				$long[$z]="<td class='facts_value'>".$row['pl_long']."</td>";
+			} else {
+				$long[$z]="<td class='facts_value error' align='center'><strong>X</strong></td>";$matched[$x]++;
+			}
+			$level++;
+			$mapstr3=$mapstr3."&amp;parent[".$z."]=".addslashes(PrintReady($row['pl_placerequested']));
+			$mapstr4=$mapstr4."&amp;parent[".$z."]=".addslashes(PrintReady(rtrim(ltrim($levels[$z]))));
 			$z++;
 		}
-		echo "</tr>";
-		$countrows++;
+		if ($matching==1) {
+			$matched[$x]=1;
+		}
+		if ($matched[$x]!=0) {
+			echo $gedplace;
+			$z=0;
+			while ($z<$max) {
+			if ($z<$parts) {
+				echo $plac[$z];
+				echo $lati[$z];
+				echo $long[$z];
+			} else {
+				echo "<td class='facts_value'>&nbsp;</td><td class='facts_value'>&nbsp;</td><td class='facts_value'>&nbsp;</td>";}
+				$z++;
+			}
+			echo "</tr>";
+			$countrows++;
+		}
+		$x++;
 	}
-	$x++;
+	
+	// echo final row of table
+	echo "<tr><td colspan=\"2\" class=\"list_label\">".$pgv_lang['placecheck_unique'].": ".$countrows."</td></tr></table><br /><br />";
+	break;	
+default:
+	// Do not run until user selects a gedcom/place/etc.
+	// Instead, show some useful help info.
+	echo "<p>".$pgv_lang['placecheck_text']."</p><hr />";
+	break;	
 }
-
-// echo final row of table
-echo "<tr><td colspan=\"2\" class=\"list_label\">".$pgv_lang['placecheck_unique'].": ".$countrows."</td></tr></table><br /><br />";
-
-//Close the gedcom file
-fclose($handle);
 
 //echo footers
 echo "<hr />";
