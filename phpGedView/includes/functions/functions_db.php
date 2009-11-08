@@ -2491,7 +2491,16 @@ function get_id_from_gedcom($ged_name, $create=false) {
 					$ged_id=$gedarray['id'];
 				}
 			}
-			$GEDCOMS[$ged_name]=array();
+			$GEDCOMS[$ged_name]=array(
+				'gedcom'=>$ged_name,
+				'config'=>'',
+				'privacy'=>'',
+				'title'=>'',
+				'path'=>'',
+				'pgv_ver'=>'',
+				'id'=>'',
+				'imported'=>'',
+			);
 			return $ged_id+1;	
 		} else {
 			return null;

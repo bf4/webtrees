@@ -175,8 +175,9 @@ if (isset($GEDCOMPATH)) {
 	}
 }
 if (isset($ged)) {
-	if (isset($GEDCOMS[$ged])) {
-		$GEDCOMPATH = $GEDCOMS[$ged]["path"];
+	$ged_id=get_id_from_gedcom($ged);
+	if ($ged_id) {
+		$GEDCOMPATH = get_gedcom_setting($ged_id, 'path');
 		if (empty($path)) {
 			$path = "";
 			$parts = preg_split("/[\/\\\]/", $GEDCOMPATH);
@@ -191,10 +192,10 @@ if (isset($ged)) {
 		}
 		$GEDFILENAME = $ged;
 		if (!isset($gedcom_title)) {
-			$gedcom_title = $GEDCOMS[$ged]["title"];
+			$gedcom_title = get_gedcom_setting($ged_id, 'title');
 		}
-		$gedcom_config = $GEDCOMS[$ged]["config"];
-		$gedcom_privacy = $GEDCOMS[$ged]["privacy"];
+		$gedcom_config = get_gedcom_setting($ged_id, 'config');
+		$gedcom_privacy = get_gedcom_setting($ged_id, 'privacy');
 		$FILE = $ged;
 		$oldged = $ged;
 	} else {
@@ -252,7 +253,7 @@ if ($action=="update") {
 	}
 	
 	// Create the gedcom if it doesn't already exist
-	$ged_id=get_gedcom_from_id($FILE, true);
+	$ged_id=get_id_from_gedcom($FILE, true);
 	set_gedcom_setting($ged_id, 'gedcom',  $FILE);
 	set_gedcom_setting($ged_id, 'config',  $gedcom_config);
 	set_gedcom_setting($ged_id, 'privacy', $gedcom_privacy);
