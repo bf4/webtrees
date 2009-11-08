@@ -195,10 +195,8 @@ if (isset($ged)) {
 		}
 		$gedcom_config = $GEDCOMS[$ged]["config"];
 		$gedcom_privacy = $GEDCOMS[$ged]["privacy"];
-		$gedcom_id = $GEDCOMS[$ged]["id"];
 		$FILE = $ged;
 		$oldged = $ged;
-		$pgv_ver=$GEDCOMS[$ged]["pgv_ver"];
 	} else {
 		if (empty($_POST["GEDCOMPATH"])) {
 			$GEDCOMPATH = "";
@@ -206,18 +204,14 @@ if (isset($ged)) {
 		}
 		$gedcom_config = "config_gedcom.php";
 		$gedcom_privacy = "privacy.php";
-		$gedcom_id = "";
-		$pgv_ver=PGV_VERSION;
 	}
 } else {
 	$GEDCOMPATH = "";
 	$gedcom_title = "";
 	$gedcom_config = "config_gedcom.php";
 	$gedcom_privacy = "privacy.php";
-	$gedcom_id = "";
 	$path = "";
 	$GEDFILENAME = "";
-	$pgv_ver=PGV_VERSION;
 }
 $USERLANG = $LANGUAGE;
 $temp = $THEME_DIR;
@@ -249,24 +243,23 @@ if ($action=="update") {
 		$gedcom_privacy = "\${INDEX_DIRECTORY}".$FILE."_priv.php";
 	}
 
-	$gedarray = array();
-	$gedarray["gedcom"] = $FILE;
-	$gedarray["config"] = $gedcom_config;
-	$gedarray["privacy"] = $gedcom_privacy;
-	if (!empty($gedcom_title)) {
-		$gedarray["title"] = $gedcom_title;
-	} elseif (!empty($_POST["gedcom_title"])) {
-		$gedarray["title"] = $_POST["gedcom_title"];
-	} else {
-		$gedarray["title"] = str_replace("#GEDCOMFILE#", $GEDFILENAME, $pgv_lang["new_gedcom_title"]);
+	if (empty($gedcom_title)) {
+		if (!empty($_POST["gedcom_title"])) {
+			$gedcom_title=$_POST["gedcom_title"];
+		} else {
+			$gedcom_title=str_replace("#GEDCOMFILE#", $FILE, $pgv_lang["new_gedcom_title"]);
+		}
 	}
-	$gedarray["title"] = stripLRMRLM($gedarray["title"]);
-	$gedarray["path"] = $path.$GEDFILENAME;
-	$gedarray["id"] = $gedcom_id;
-	$gedarray["pgv_ver"] = $pgv_ver;
-	$gedarray["imported"] = get_gedcom_setting($gedcom_id, 'imported');
-	$GEDCOMS[$FILE] = $gedarray;
-	store_gedcoms();
+	
+	// Create the gedcom if it doesn't already exist
+	$ged_id=get_gedcom_from_id($FILE, true);
+	set_gedcom_setting($ged_id, 'gedcom',  $FILE);
+	set_gedcom_setting($ged_id, 'config',  $gedcom_config);
+	set_gedcom_setting($ged_id, 'privacy', $gedcom_privacy);
+	set_gedcom_setting($ged_id, 'title',   $gedcom_title);
+	set_gedcom_setting($ged_id, 'path',    $path.$GEDFILENAME);
+	set_gedcom_setting($ged_id, 'id',      $ged_id);
+	set_gedcom_setting($ged_id, 'pgv_ver', PGV_VERSION);
 
 	// Check that add/remove common surnames are separated by [,;] blank
 	$_POST["NEW_COMMON_NAMES_REMOVE"] = preg_replace("/[,;]\b/", ", ", $_POST["NEW_COMMON_NAMES_REMOVE"]);
