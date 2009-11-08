@@ -980,7 +980,7 @@ function insert_media($objrec, $objlevel, $update, $gid, $ged_id, $count) {
 	}
 	//-- handle embedded OBJE records
 	else {
-		$m_media = get_new_xref("OBJE", true);
+		$m_media = get_new_xref("OBJE", $ged_id, true);
 		$objref = subrecord_createobjectref($objrec, $objlevel, $m_media);
 
 		//-- restructure the record to be a linked record
