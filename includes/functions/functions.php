@@ -363,7 +363,6 @@ function store_gedcoms() {
 	$IN_STORE_GEDCOMS = true;
 	$mutex = new Mutex("gedcoms.php");
 	$mutex->Wait();
-	uasort($GEDCOMS, "gedcomsort");
 	$gedcomtext = "<?php\n//--START GEDCOM CONFIGURATIONS\n";
 	$gedcomtext .= "\$GEDCOMS = array();\n";
 	$maxid = 0;
@@ -379,6 +378,14 @@ function store_gedcoms() {
 	//-- keep a local copy in case another function tries to change $GEDCOMS
 	$geds = $GEDCOMS;
 	foreach ($geds as $indexval => $GED) {
+		if (!isset($GED['gedcom']))   $GED['gedcom']='';
+		if (!isset($GED['config']))   $GED['config']='';
+		if (!isset($GED['privacy']))  $GED['privacy']='';
+		if (!isset($GED['title']))    $GED['title']='';
+		if (!isset($GED['path']))     $GED['path']='';
+		if (!isset($GED['pgv_ver']))  $GED['pgv_ver']='';
+		if (!isset($GED['id']))       $GED['id']='';
+		if (!isset($GED['imported'])) $GED['imported']='';
 		$GED["config"] = str_replace($INDEX_DIRECTORY, "\${INDEX_DIRECTORY}", $GED["config"]);
 		if (isset($GED["privacy"])) {
 			$GED["privacy"] = str_replace($INDEX_DIRECTORY, "\${INDEX_DIRECTORY}", $GED["privacy"]);

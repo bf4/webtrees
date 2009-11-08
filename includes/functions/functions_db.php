@@ -2476,13 +2476,26 @@ function get_gedcom_from_id($ged_id) {
 	return $ged_id;
 }
 
-function get_id_from_gedcom($ged_name) {
+// Convert an (external) gedcom name to an (internal) gedcom ID.
+// Optionally create an entry for it if it does not exist.
+function get_id_from_gedcom($ged_name, $create=false) {
 	global $GEDCOMS;
 
 	if (array_key_exists($ged_name, $GEDCOMS)) {
 		return (int)$GEDCOMS[$ged_name]['id']; // Cast to (int) for safe use in SQL
 	} else {
-		return null;
+		if ($create) {
+			$ged_id=0;
+			foreach ($GEDCOMS as $gedarray) {
+				if ($gedarray['id']>$ged_id) {
+					$ged_id=$gedarray['id'];
+				}
+			}
+			$GEDCOMS[$ged_name]=array();
+			return $ged_id+1;	
+		} else {
+			return null;
+		}
 	}
 }
 
