@@ -68,7 +68,7 @@ if (!PGV_USER_GEDCOM_ADMIN) {
 	exit;
 }
 if ($action=="delete") {
-	delete_gedcom(PGV_GED_ID);
+	delete_gedcom(get_id_from_gedcom($ged));
 	// Reload this page, otherwise the page header will still reference the now-deleted gedcom
 	header("Location: editgedcoms.php");
 }
