@@ -3175,11 +3175,9 @@ function CheckPageViews() {
  * @param string $type	the type of record, defaults to 'INDI'
  * @return string
  */
-function get_new_xref($type='INDI', $use_cache=false) {
-	global $fcontents, $SOURCE_ID_PREFIX, $REPO_ID_PREFIX, $pgv_changes, $GEDCOM, $TBLPREFIX, $GEDCOMS;
+function get_new_xref($type='INDI', $ged_id=PGV_GED_ID, $use_cache=false) {
+	global $fcontents, $SOURCE_ID_PREFIX, $REPO_ID_PREFIX, $pgv_changes, $TBLPREFIX;
 	global $MEDIA_ID_PREFIX, $FAM_ID_PREFIX, $GEDCOM_ID_PREFIX, $MAX_IDS;
-
-	$ged_id = $GEDCOMS[$GEDCOM]["id"];
 
 	$num = null;
 	//-- check if an id is stored in MAX_IDS used mainly during the import
