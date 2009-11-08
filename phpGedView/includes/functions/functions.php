@@ -209,29 +209,22 @@ function file_upload_error_text($error_code) {
  * this function returns the path to the currently active GEDCOM configuration file
  * @return string path to gedcom.ged_conf.php configuration file
  */
-function get_config_file($ged="") {
-	global $GEDCOMS, $GEDCOM;
+function get_config_file($ged='') {
+	global $GEDCOM;
 
-	if (empty($ged)) {
-		$ged = $GEDCOM;
+	if ($ged) {
+		$ged_id=get_id_from_gedcom($ged);
+	} else {
+		$ged_id=get_id_from_gedcom($GEDCOM);
 	}
-	$config = "config_gedcom.php";
-	if (count($GEDCOMS)==0) {
+
+	$config=get_gedcom_setting($ged_id, 'config');
+
+	if (!file_exists($config)) {
+		return 'config_gedcom.php';
+	} else {
 		return $config;
 	}
-	if (!empty($GEDCOM) && isset($GEDCOMS[$GEDCOM])) {
-		$config = $GEDCOMS[$GEDCOM]["config"];
-	} else {
-		foreach ($GEDCOMS as $GEDCOM=>$gedarray) {
-			$_SESSION["GEDCOM"] = $GEDCOM;
-			$config = $gedarray["config"];
-			break;
-		}
-	}
-	if (!file_exists($config)) {
-		$config='config_gedcom.php';
-	}
-	return $config;
 }
 
 /**
@@ -287,34 +280,22 @@ function get_privacy_file_version($privfile) {
  * Get the path to the privacy file for the currently active GEDCOM
  * @return string path to the privacy file
  */
-function get_privacy_file() {
-	global $GEDCOMS, $GEDCOM;
+function get_privacy_file($ged='') {
+	global $GEDCOM;
 
-	$privfile = "privacy.php";
-	if (count($GEDCOMS)==0) {
-		$privfile = "privacy.php";
-	}
-	if (!empty($GEDCOM) && isset($GEDCOMS[$GEDCOM])) {
-		if (isset($GEDCOMS[$GEDCOM]["privacy"]) && file_exists($GEDCOMS[$GEDCOM]["privacy"])) {
-			$privfile = $GEDCOMS[$GEDCOM]["privacy"];
-		} else {
-			$privfile = "privacy.php";
-		}
+	if ($ged) {
+		$ged_id=get_id_from_gedcom($ged);
 	} else {
-		foreach ($GEDCOMS as $GEDCOM=>$gedarray) {
-			$_SESSION["GEDCOM"] = $GEDCOM;
-			if (isset($gedarray["privacy"]) && file_exists($gedarray["privacy"])) {
-				$privfile = $gedarray["privacy"];
-			} else {
-				$privfile = "privacy.php";
-			}
-		}
-	}
-	if (version_compare(get_privacy_file_version($privfile), PGV_REQUIRED_PRIVACY_VERSION)<0) {
-		$privfile = "privacy.php";
+		$ged_id=get_id_from_gedcom($GEDCOM);
 	}
 
-	return $privfile;
+	$privfile=get_gedcom_setting($ged_id, 'privacy');
+
+	if (!file_exists($privfile) || version_compare(get_privacy_file_version($privfile), PGV_REQUIRED_PRIVACY_VERSION)<0) {
+		return 'privacy.php';
+	} else {
+		return $privfile;
+	}
 }
 
 function load_privacy_file($ged_id=PGV_GED_ID) {
