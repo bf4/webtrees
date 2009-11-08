@@ -245,6 +245,7 @@ if ($action=="update") {
 	$gedarray["path"] = $path.$GEDFILENAME;
 	$gedarray["id"] = $gedcom_id;
 	$gedarray["pgv_ver"] = $pgv_ver;
+	$gedarray["imported"] = get_gedcom_setting($gedcom_id, 'imported');
 
 	// Check that add/remove common surnames are separated by [,;] blank
 	$_POST["NEW_COMMON_NAMES_REMOVE"] = preg_replace("/[,;]\b/", ", ", $_POST["NEW_COMMON_NAMES_REMOVE"]);
