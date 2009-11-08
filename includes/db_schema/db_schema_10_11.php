@@ -84,7 +84,7 @@ if (!self::table_exists("{$TBLPREFIX}module_privacy")) {
 }
 
 //-- get the gedcom ids from the database
-$gedids = PGV_DB::prepare("SELECT DISTINCT i_file from ${TBLPREFIX}individuals")->fetchOneColumn();
+$gedids=array_keys(get_all_gedcoms());
 
 //-- set the default tabs
 $default_tabs = array('family_nav', 'personal_facts', 'sources_tab', 'notes', 'media', 'lightbox', 'tree', 'googlemap', 'relatives', 'all_tab');
