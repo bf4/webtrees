@@ -210,7 +210,7 @@ function file_upload_error_text($error_code) {
  * @return string path to gedcom.ged_conf.php configuration file
  */
 function get_config_file($ged='') {
-	global $GEDCOM;
+	global $GEDCOM, $INDEX_DIRECTORY;
 
 	if ($ged) {
 		$ged_id=get_id_from_gedcom($ged);
@@ -219,6 +219,8 @@ function get_config_file($ged='') {
 	}
 
 	$config=get_gedcom_setting($ged_id, 'config');
+	// Compatibility with non-php based storage
+	$config=str_replace('${INDEX_DIRECTORY}', $INDEX_DIRECTORY, $config);
 
 	if (!file_exists($config)) {
 		return 'config_gedcom.php';
@@ -281,7 +283,7 @@ function get_privacy_file_version($privfile) {
  * @return string path to the privacy file
  */
 function get_privacy_file($ged='') {
-	global $GEDCOM;
+	global $GEDCOM, $INDEX_DIRECTORY;
 
 	if ($ged) {
 		$ged_id=get_id_from_gedcom($ged);
@@ -290,6 +292,8 @@ function get_privacy_file($ged='') {
 	}
 
 	$privfile=get_gedcom_setting($ged_id, 'privacy');
+	// Compatibility with non-php based storage
+	$privfile=str_replace('${INDEX_DIRECTORY}', $INDEX_DIRECTORY, $privfile);
 
 	if (!file_exists($privfile) || version_compare(get_privacy_file_version($privfile), PGV_REQUIRED_PRIVACY_VERSION)<0) {
 		return 'privacy.php';
@@ -312,7 +316,7 @@ function load_privacy_file($ged_id=PGV_GED_ID) {
 	require 'privacy.php';
 
 	// Load settings for the specified gedcom
-	$privacy_file=get_gedcom_setting($ged_id, 'privacy');
+	$privacy_file=get_privacy_file(get_gedcom_from_id($ged_id));
 	if (
 		$privacy_file &&
 		file_exists($privacy_file) &&
