@@ -10,6 +10,7 @@
 
 
 Version 4.2.x CA
+ - Changed: Fixed return to correct Tab after using lightbox configuration function from Album Tab Page (windmillway)
  - Merged: Merge changes r6304 - r6324 from the trunk. (windmillway)
  - Merged: Merge changes r6237 - r6303 from the trunk. (windmillway)
  - Changed: Removed Album tab thumbnail dropdown menu items "Manage links" and "Unlink Media" for editors. These are Admin functions only. (windmillway)

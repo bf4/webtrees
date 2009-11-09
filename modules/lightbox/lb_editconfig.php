@@ -273,7 +273,7 @@ $i = 0;
             <input type="reset" tabindex="<?php $i++; print $i?>" value="<?php print $pgv_lang["reset"];?>" />
             &nbsp;&nbsp;
 			<?php if ($pid){ ?>
-				<INPUT TYPE="button" VALUE="<?php print $pgv_lang["lb_toAlbumPage"];?>" 		onclick="javascript:window.location='individual.php?pid=<?php echo $pid;?>&gedcom=<?php echo $GEDCOM;?>&tab=<?php echo $last_clicked;?>'" />
+				<INPUT TYPE="button" VALUE="<?php print $pgv_lang["lb_toAlbumPage"];?>" 		onclick="javascript:window.location='individual.php?pid=<?php echo $pid;?>&gedcom=<?php echo $GEDCOM;?>&tab=lightbox'" />
 			<?php }else{ ?>
 				<INPUT TYPE="button" VALUE="<?php print $pgv_lang["ret_module_admin"];?>" 	onclick="javascript:window.location='module_admin.php'" />
 			<?php } ?>
