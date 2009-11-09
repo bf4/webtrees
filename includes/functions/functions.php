@@ -1088,8 +1088,6 @@ function get_cont($nlevel, $nrec, $tobr=true) {
  * @return array returns a two element array with indexes HUSB and WIFE for the parent ids
  */
 function find_parents($famid) {
-	global $pgv_lang;
-
 	$famrec = find_family_record($famid);
 	if (empty($famrec)) {
 		if (PGV_USER_CAN_EDIT) {
@@ -1113,8 +1111,6 @@ function find_parents($famid) {
  * @return array returns a two element array with indexes HUSB and WIFE for the parent ids
  */
 function find_parents_in_record($famrec) {
-	global $pgv_lang;
-
 	if (empty($famrec)) {
 		return false;
 	}
@@ -1145,8 +1141,6 @@ function find_parents_in_record($famrec) {
  * @return array
  */
 function find_children($famid, $me='') {
-	global $pgv_lang;
-
 	$famrec = find_family_record($famid);
 	if (empty($famrec)) {
 		if (PGV_USER_CAN_EDIT) {
@@ -1172,8 +1166,6 @@ function find_children($famid, $me='') {
  * @return array
  */
 function find_children_in_record($famrec, $me='') {
-	global $pgv_lang;
-
 	$children = array();
 	if (empty($famrec)) {
 		return $children;
