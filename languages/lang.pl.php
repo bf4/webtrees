@@ -647,7 +647,7 @@ $pgv_lang["total_shared_notes"]			= "Wszystkich notatek";
 $pgv_lang["invalid_gedformat"]		= "Nieprawidłowy format GEDCOM 5.5";
 $pgv_lang["exec_time"]				= "Czas wykonania:";
 $pgv_lang["unable_to_create_index"]	= "Utworzenie indeksu nie powiodło się. Upewnij się, że masz prawa zapisu w katalogu phpGedView. Uprawnienia mogą zostać przywrócone po utworzeniu indeksów.";
-$pgv_lang["changes_present"]		= "W tym pliku GEDCOM znajdują się zmiany czekające na zatwierdzenie. Jeżeli będziesz kontynuować import, wszystkie te zmiany zostaną automatycznie zatwierdzone i wpisane do bazy danych. Zaleca się przejrzeć wszystkie oczekujące zmiany przed importem pliku GEDCOM.";
+$pgv_lang["changes_present"]		= "W tym pliku GEDCOM znajdują się zmiany czekające na zatwierdzenie. Jeżeli będziesz kontynuować import, wszystkie te zmiany zostaną odrzucone. Zaleca się przejrzeć wszystkie oczekujące zmiany przed importem pliku GEDCOM.";
 $pgv_lang["sec"]					= "sek.";
 
 //-- INDIVIDUAL AND FAMILYLIST FILE MESSAGES
@@ -863,6 +863,7 @@ $pgv_lang["view_fam_nav_research"]	= "Zobacz Asystenta badań ...";
 $pgv_lang["view_fam_nav_map"]		= "Zobacz mapę ...";
 $pgv_lang["view_fam_nav_spare"]		= "Zobacz informacje ...";
 $pgv_lang["navigator"]				= "Nawigator";
+$pgv_lang["fam_navigator"]			= "Przewodnik";
 
 $pgv_lang["relationship_great"]		= "pra";
 $pgv_lang["relationship_chart"]		= "Diagram pokrewieństwa";
