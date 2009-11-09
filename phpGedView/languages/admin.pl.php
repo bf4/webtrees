@@ -30,6 +30,24 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
+$pgv_lang["module_admin"]			= "Zarządzanie modułami";
+$pgv_lang["mod_admin_installed"]	= "Zainstalowane moduły";
+$pgv_lang["mod_admin_tabs"]			= "Zarządzaj zakładkami";
+$pgv_lang["mod_admin_menus"]		= "Zarządzaj menu";
+$pgv_lang["mod_admin_intro"]		= "Poniżej znajduje się lista wszystkich modułów zainstalowanych w tej wersji PhpGedView. Moduły są instalowane poprzez zapisanie ich w katalogu <b>modules</b>. Tutaj można ustawić poziom dostępu dla każdego modułu w zależności od pliku GEDCOM. Jeśli moduł zawiera zakładki dla strony informacji o osobie lub obiekty menu można również ustwić poziom dostępu jak również ich kolejność.";
+$pgv_lang["mod_admin_active"]		= "Aktywny";
+$pgv_lang["mod_admin_name"]			= "Nazwa modułu";
+$pgv_lang["mod_admin_description"]	= "Opis";
+$pgv_lang["mod_admin_version"]		= "Wersja / PGV";
+$pgv_lang["mod_admin_hastab"]		= "Zakładka?";
+$pgv_lang["mod_admin_hasmenu"]		= "Menu?";
+$pgv_lang["mod_admin_access_level"]	= "Poziom dostępu";
+$pgv_lang["mod_admin_order"]		= "Kolejność";
+$pgv_lang["mod_admin_config"]		= "Konfiguracja";
+$pgv_lang["mod_admin_settings"]		= "Ustawienia konfiguracyjne modułu";
+$pgv_lang["ret_module_admin"]		= "Wróc do strony administracyjnej modułu";
+$pgv_lang["ret_admin"]				= "Wróć do strony administracyjnej";
+
 $pgv_lang["enter_comment"]			= "Tutaj można wprowadzić komentarz";
 $pgv_lang["upload_a_gedcom"]		= "Wgraj plik GEDCOM";
 $pgv_lang["start_entering"]			= "Rozpocznij wprowadzanie danych";
@@ -302,7 +320,6 @@ $pgv_lang["performing_validation"]	= "Sprawdzanie poprawności pliku GEDCOM...";
 $pgv_lang["pgsql"]					= "PostgreSQL";
 $pgv_lang["pgv_config_write_error"] = "Błąd! Nie można zapisywać do pliku konfiguracyjnego PhpGedView. Sprawdź uprawnienia pliku i katalogu i spróbuj ponownie.";
 $pgv_lang["PGV_MEMORY_LIMIT"]		= "Limit pamięci";
-$pgv_lang["pgv_registry"]			= "Zobacz inne strony korzystające z PHPGedView";
 $pgv_lang["PGV_SESSION_SAVE_PATH"]	= "Ścieżka zapisu sesji";
 $pgv_lang["PGV_SESSION_TIME"]		= "Wygaśnięcie sesji";
 $pgv_lang["PGV_SIMPLE_MAIL"]		= "Użyj prostych nagłówków w zewnętrznych wiadomościach";
