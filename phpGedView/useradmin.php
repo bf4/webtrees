@@ -523,9 +523,6 @@ if ($action == "listusers") {
 		case "sortllgn":
 			$users = get_all_users("desc","sessiontime");
 			break;
-		case "sortusername":
-			$users = get_all_users("asc","username");
-			break;
 		case "sortreg":
 			$users = get_all_users("desc","reg_timestamp");
 			break;
@@ -535,6 +532,7 @@ if ($action == "listusers") {
 		case "sortveradmin":
 			$users = get_all_users("asc","verified_by_admin");
 			break;
+		case "sortusername":
 		default:
 			$users = get_all_users("asc","username");
 			break;
