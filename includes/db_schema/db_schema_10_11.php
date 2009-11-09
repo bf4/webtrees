@@ -84,7 +84,9 @@ if (!self::table_exists("{$TBLPREFIX}module_privacy")) {
 }
 
 //-- get the gedcom ids from the database
-$gedids=array_keys(get_all_gedcoms());
+$gedids=
+	PGV_DB::prepare("SELECT DISTINCT i_file FROM ${TBLPREFIX}individuals i_file")
+	->fetchOneColumn();
 
 //-- set the default tabs
 foreach($gedids as $ged_id) {
