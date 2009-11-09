@@ -131,7 +131,7 @@ if ($ENABLE_AUTOCOMPLETE) require './js/autocomplete.js.htm';
 <table class="facts_table <?php print $TEXT_DIRECTION; ?>">
 	<tr>
 		<td colspan="2" class="facts_label"><?php
-			print "<h2>".$pgv_lang["edit_privacy_title"]." - ".PrintReady(strip_tags(get_gedcom_setting($ged, 'title'))). "</h2>";
+			print "<h2>".$pgv_lang["edit_privacy_title"]." - ".PrintReady(strip_tags(get_gedcom_setting(get_id_from_gedcom($ged), 'title'))). "</h2>";
 			print "(" . getLRM() . $PRIVACY_MODULE.")";
 			print "<br /><br /><a href=\"editgedcoms.php\"><b>";
 			print $pgv_lang["lang_back_manage_gedcoms"];
