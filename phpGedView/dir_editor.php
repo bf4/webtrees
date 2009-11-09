@@ -119,8 +119,14 @@ function warnuser(cbox) {
 		$locked_with_warning = array("lang_settings.php","pgv_changes.php");
 		//-- lock the GEDCOM and settings files
 		foreach(get_all_gedcoms() as $ged_id=>$ged_name){
-			$locked_by_context[] = str_replace($INDEX_DIRECTORY,"",get_gedcom_setting($ged_id, 'privacy'));
-			$locked_by_context[] = str_replace($INDEX_DIRECTORY,"",get_gedcom_setting($ged_id, 'config'));
+			$file=get_privacy_file($ged_name);
+			if ($file!='privacy.php') {
+				$locked_by_context[] = str_replace($INDEX_DIRECTORY, "", $file);
+			}
+			$file=get_config_file($ged_name);
+			if ($file!='config_gedcom.php') {
+				$locked_by_context[] = str_replace($INDEX_DIRECTORY, "", $file);
+			}
 		}
 		$dir = dir($INDEX_DIRECTORY);
 

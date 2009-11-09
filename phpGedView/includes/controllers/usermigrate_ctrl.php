@@ -220,15 +220,15 @@ class UserMigrateControllerRoot extends BaseController {
 			if (file_exists($INDEX_DIRECTORY."gedcoms.php")) $this->flist[] = $INDEX_DIRECTORY."gedcoms.php";
 
 			foreach (get_all_gedcoms() as $ged_id=>$ged_name) {
-				// Config files
-				$conf=get_gedcom_setting($ged_id, 'config');
-				if (file_exists($conf)) {
+				// Non-default config files
+				$conf=get_config_file($ged_name);
+				if ($conf!='config_gedcom.php') {
 					$this->flist[]=$conf;
 				}
 
-				// Privacy files
-				$privacy=get_gedcom_setting($ged_id, 'privacy');
-				if (file_exists($privacy)) {
+				// Non-default privacy file
+				$privacy=get_privacy_file($ged_name);
+				if ($privacy!='privacy.php') {
 					$this->flist[]=$privacy;
 				}
 			}
