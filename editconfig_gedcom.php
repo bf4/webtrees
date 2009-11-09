@@ -170,6 +170,7 @@ if (isset($GEDCOMPATH)) {
 		$action = "";
 	}
 }
+$new_ged = false;
 if (isset($ged)) {
 	if (isset($GEDCOMS[$ged])) {
 		$GEDCOMPATH = $GEDCOMS[$ged]["path"];
@@ -202,6 +203,7 @@ if (isset($ged)) {
 		$gedcom_privacy = "privacy.php";
 		$gedcom_id = "";
 		$pgv_ver=PGV_VERSION;
+		$new_ged = true;
 	}
 } else {
 	$GEDCOMPATH = "";
@@ -257,6 +259,11 @@ if ($action=="update") {
 	$COMMON_NAMES_REMOVE = $_POST["NEW_COMMON_NAMES_REMOVE"];
 	$GEDCOMS[$FILE] = $gedarray;
 	store_gedcoms();
+	$gedcom_id = get_id_from_gedcom($FILE);
+	if ($new_ged && $gedcom_id>0) {
+		PGVModule::setDefaultMenus($gedcom_id);
+		PGVModule::setDefaultTabs($gedcom_id);
+	}
 
 	require($INDEX_DIRECTORY."gedcoms.php");
 	$boolarray = array();
@@ -361,6 +368,7 @@ if ($action=="update") {
 	$configtext = preg_replace('/\$SEARCHLOG_CREATE\s*=\s*".*";/', "\$SEARCHLOG_CREATE = \"".$_POST["NEW_SEARCHLOG_CREATE"]."\";", $configtext);
 	$configtext = preg_replace('/\$SHOW_AGE_DIFF\s*=\s*.*;/', "\$SHOW_AGE_DIFF = ".$boolarray[$_POST["NEW_SHOW_AGE_DIFF"]].";", $configtext);
 	$configtext = preg_replace('/\$SHOW_CONTEXT_HELP\s*=\s*.*;/', "\$SHOW_CONTEXT_HELP = ".$boolarray[$_POST["NEW_SHOW_CONTEXT_HELP"]].";", $configtext);
+	$configtext = preg_replace('/\$DEFAULT_PIN_STATE\s*=\s*.*;/', "\$DEFAULT_PIN_STATE = ".$boolarray[$_POST["NEW_DEFAULT_PIN_STATE"]].";", $configtext);
 	$configtext = preg_replace('/\$SHOW_COUNTER\s*=\s*.*;/', "\$SHOW_COUNTER = ".$boolarray[$_POST["NEW_SHOW_COUNTER"]].";", $configtext);
 	$configtext = preg_replace('/\$SHOW_EMPTY_BOXES\s*=\s*.*;/', "\$SHOW_EMPTY_BOXES = ".$boolarray[$_POST["NEW_SHOW_EMPTY_BOXES"]].";", $configtext);
 	$configtext = preg_replace('/\$SHOW_FACT_ICONS\s*=\s*.*;/', "\$SHOW_FACT_ICONS = ".$boolarray[$_POST["NEW_SHOW_FACT_ICONS"]].";", $configtext);
@@ -1962,6 +1970,14 @@ print "&nbsp;<a href=\"javascript: ".$pgv_lang["useropt_conf"]."\" onclick=\"exp
 		<td class="optionbox"><select name="NEW_SHOW_CONTEXT_HELP" tabindex="<?php $i++; print $i; ?>" onfocus="getHelp('SHOW_CONTEXT_HELP_help');">
 				<option value="yes" <?php if ($SHOW_CONTEXT_HELP) print "selected=\"selected\""; ?>><?php print $pgv_lang["yes"]; ?></option>
 				<option value="no" <?php if (!$SHOW_CONTEXT_HELP) print "selected=\"selected\""; ?>><?php print $pgv_lang["no"]; ?></option>
+			</select>
+		</td>
+	</tr>
+	<tr>
+		<td class="descriptionbox wrap width20"><?php print_help_link("DEFAULT_PIN_STATE_help", "qm", "DEFAULT_PIN_STATE"); print $pgv_lang["DEFAULT_PIN_STATE"]; ?></td>
+		<td class="optionbox"><select name="NEW_DEFAULT_PIN_STATE" tabindex="<?php $i++; print $i; ?>" onfocus="getHelp('DEFAULT_PIN_STATE_help');">
+				<option value="yes" <?php if ($DEFAULT_PIN_STATE) print "selected=\"selected\""; ?>><?php print $pgv_lang["yes"]; ?></option>
+				<option value="no" <?php if (!$DEFAULT_PIN_STATE) print "selected=\"selected\""; ?>><?php print $pgv_lang["no"]; ?></option>
 			</select>
 		</td>
 	</tr>

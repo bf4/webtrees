@@ -405,9 +405,13 @@ function store_gedcoms() {
 			$GED["id"] = 1;
 		} elseif (!isset($GED["id"]) && $maxid > 0) {
 			$GED["id"] = $maxid;
+			$maxid++;
 		} elseif (empty($GED["id"])) {
 			$GED["id"] = $maxid;
+			$maxid++;
 		}
+		//-- update the id in the original array
+		$geds[$GED["gedcom"]]['id'] = $GED['id'];
 
 		$gedcomtext .= "\$gedarray[\"id\"] = \"".$GED["id"]."\";\n";
 		$gedcomtext .= "\$GEDCOMS[\"".$GED["gedcom"]."\"] = \$gedarray;\n";

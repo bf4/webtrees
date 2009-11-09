@@ -55,6 +55,9 @@ abstract class PGVModule {
 	protected $tab = null;
 	protected $configLink = null;
 
+	public static $default_tabs = array('family_nav', 'personal_facts', 'sources_tab', 'notes', 'media', 'lightbox', 'tree', 'googlemap', 'relatives', 'all_tab');
+	public static $default_menus = array('page_menu');
+
 	/**
 	 * Get an instance of the desired module class based on a db row
 	 * @param $row
@@ -148,14 +151,14 @@ abstract class PGVModule {
 	 * @return boolean
 	 */
 	public function hasMenu() { return false; }
-	
+
 	/**
 	 * does this module implement a menu
 	 * should be overidden in extending classes
 	 * @return boolean
 	 */
 	public function getConfigLink() { return $this->configLink; }
-	
+
 	/**
 	 * get the menu for this tab
 	 * should be overidden in extending classes
@@ -167,15 +170,15 @@ abstract class PGVModule {
 	 * @return Tab
 	 */
 	public function &getTab() { return null; }
-	
+
 	static function compare_tab_order(&$a, &$b) {
 		return $a->getTaborder() - $b->getTaborder();
 	}
-	
+
 	static function compare_menu_order(&$a, &$b) {
 		return $a->getMenuorder() - $b->getMenuorder();
 	}
-	
+
 	static function compare_name(&$a, &$b) {
 		return strcmp($a->getName(), $b->getName());
 	}
@@ -204,7 +207,7 @@ abstract class PGVModule {
 		}
 		return $modules;
 	}
-	
+
 	static function getActiveListAllGeds($access = PGV_USER_ACCESS_LEVEL) {
 		global $TBLPREFIX;
 
@@ -261,7 +264,7 @@ abstract class PGVModule {
 
 	static function getModuleByName($name) {
 		global $TBLPREFIX;
-		
+
 		$stmt = PGV_DB::prepare("SELECT * FROM {$TBLPREFIX}module JOIN {$TBLPREFIX}module_privacy ON mod_id=mp_mod_id WHERE mod_name=?");
 		$stmt->execute(array($name));
 		$row = $stmt->fetchOne();
@@ -285,7 +288,7 @@ abstract class PGVModule {
 
 	static function getById($id) {
 		global $TBLPREFIX;
-		
+
 		$stmt = PGV_DB::prepare("SELECT * FROM {$TBLPREFIX}module JOIN {$TBLPREFIX}module_privacy ON mod_id=mp_mod_id WHERE mod_id=?");
 		$stmt->execute(array($id));
 		$row = $stmt->fetchOne();
@@ -355,5 +358,40 @@ abstract class PGVModule {
 			}
 		}
 	}
+
+	static function setDefaultTabs($ged_id) {
+		$modules = PGVModule::getInstalledList();
+		$taborder = 1;
+		foreach(self::$default_tabs as $modname) {
+			if (isset($modules[$modname])) {
+				$mod = $modules[$modname];
+				if ($mod->hasTab()) {
+					$mod->setTaborder($taborder);
+					$mod->setAccessLevel(PGV_PRIV_PUBLIC, $ged_id);
+					$mod->setTabEnabled(PGV_PRIV_PUBLIC, $ged_id);
+					PGVModule::updateModule($mod);
+					$taborder++;
+				}
+			}
+		}
+	}
+
+	static function setDefaultMenus($ged_id) {
+		$modules = PGVModule::getInstalledList();
+		$taborder = 0;
+		foreach(self::$default_menus as $modname) {
+			if (isset($modules[$modname])) {
+				$mod = $modules[$modname];
+				if ($mod->hasMenu()) {
+					$mod->setMenuorder($taborder);
+					$mod->setAccessLevel(PGV_PRIV_PUBLIC, $ged_id);
+					$mod->setMenuEnabled(PGV_PRIV_PUBLIC, $ged_id);
+					PGVModule::updateModule($mod);
+					$taborder++;
+				}
+			}
+		}
+	}
+
 }
 ?>

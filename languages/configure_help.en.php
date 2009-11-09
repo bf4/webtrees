@@ -28,6 +28,9 @@ if (!defined('PGV_PHPGEDVIEW')) {
 	exit;
 }
 
+$pgv_lang["DEFAULT_PIN_STATE"]	= "Set the individual page static tab to pinned down by default";
+$pgv_lang["DEFAULT_PIN_STATE_help"]	= "On the individual page there is a static tab (normally the Family Navigator) which will toggle on or off which clicked on.  There is a 'pin' icon which allows the user to pin down the tab so that it always appears on the screen.  Setting this value to 'yes' will set the state of the static tab so that it is always pinned-down by default until the user changes it.";
+
 $pgv_lang["SHOW_LIST_PLACES"]	= "Place levels to show on lists";
 $pgv_lang["SHOW_LIST_PLACES_help"]	= "~#pgv_lang[SHOW_LIST_PLACES]#~<br /><br />This determines how much of the Place information is shown in the Place fields on lists.<br /><br />Setting the value to <b>9</b> will ensure that all Place information will be shown.  Setting the value to <b>0</b> (zero) will hide places completely.  Setting the value to <b>1</b> will show the topmost level, which is normally the country.  Setting it to <b>2</b> will show the topmost two levels.  The second topmost level, below the country, is often the state, province, or territory. Etc.<br />";
 

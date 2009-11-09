@@ -103,57 +103,11 @@ $show_full = "1";
 			<?php } ?>
 			</div>
 			<?php
-			if (empty($SEARCH_SPIDER) && !$controller->isPrintPreview()) :
-			?>
-		<?php if (!$PGV_MENUS_AS_LISTS) {?>
-			<table class="sublinks_table" cellspacing="4" cellpadding="0">
-				<tr>
-					<td class="list_label <?php print $TEXT_DIRECTION?>" colspan="4"><?php print $pgv_lang['fams_charts']?></td>
-				</tr>
-				<tr>
-					<td class="sublinks_cell <?php print $TEXT_DIRECTION?>">
-		<?php } else { ?>
-		<div id="optionsmenu" class="sublinks_table">
-			<div class="list_label <?php echo $TEXT_DIRECTION; ?>"><?php echo $pgv_lang["fams_charts"]; ?></div>
-				<ul class="sublinks_cell <?php echo $TEXT_DIRECTION; ?>">
-		<?php } 
-					$menu = $controller->getChartsMenu(); $menu->printMenu();
-					if (file_exists('reports/familygroup.xml')) :
-					?>
-				</<?php if (!$PGV_MENUS_AS_LISTS) {?>td><td<?php } else { ?>ul><ul<?php }?> class="sublinks_cell <?php echo $TEXT_DIRECTION; ?>">
-					<?php
-					//-- get reports menu from menubar
-					$menubar = new MenuBar(); $menu = $menubar->getReportsMenu("", $controller->getFamilyID()); $menu->printMenu();
-					//$menu = $controller->getReportsMenu();
-					//$menu->printMenu();
-					endif; // reports
-					if (PGV_USER_CAN_EDIT && ($controller->display)) :
-					?>
-				</<?php if (!$PGV_MENUS_AS_LISTS) {?>td><td<?php } else { ?>ul><ul<?php }?> class="sublinks_cell <?php echo $TEXT_DIRECTION; ?>">
-					<?php
-					$menu = $controller->getEditMenu();
-					$menu->printMenu();
-					endif; // edit_fam
-					if ($controller->display && ($SHOW_GEDCOM_RECORD || $ENABLE_CLIPPINGS_CART >= PGV_USER_ACCESS_LEVEL)) :
-					?>
-				</<?php if (!$PGV_MENUS_AS_LISTS) {?>td><td<?php } else { ?>ul><ul<?php }?> class="sublinks_cell <?php echo $TEXT_DIRECTION; ?>">
-					<?php
-					$menu = $controller->getOtherMenu();
-					$menu->printMenu();
-					endif; // other
-					?>
-		<?php if (!$PGV_MENUS_AS_LISTS) {?>
-					</td>
-				</tr>
-			</table>
-		<?php } else { ?>
-				</ul>
-		</div>
-		<?php } 
-				if ($controller->accept_success)
-				{
-					print "<b>".$pgv_lang["accept_successful"]."</b><br />";
-				}
+			if (empty($SEARCH_SPIDER) && !$controller->isPrintPreview()) : 
+			if ($controller->accept_success)
+			{
+				print "<b>".$pgv_lang["accept_successful"]."</b><br />";
+			}
 			endif;	// view != preview
 			?>
 		</td>

@@ -157,22 +157,27 @@ jQuery(document).ready(function(){
 
 	jQuery('#pin').toggle(
    		   	function() {
-   	   		   	jQuery('#pin img').attr('src', 'images/pin-in.png');
-   	   		   	jQuery('#tabs div').css('width', (jQuery('.static_tab').position().left-10)+'px');
+   	   		   	jQuery('#pin img').attr('src', '<?php echo $PGV_IMAGE_DIR.'/'.$PGV_IMAGES['pin-in']['other'];?>');
+   	   		   	jQuery('#tabs > div').css('width', (jQuery('.static_tab').position().left-40)+'px');
    	   		   	jQuery('.static_tab_content').show();
 	   	   		<?php echo $controller->static_tab->getTab()->getJSCallbackAllTabs()."\n";
 				$modjs = $controller->static_tab->getTab()->getJSCallback();
 				echo $modjs;
 				?>
    	   		   	pinned = true;
+   	   			jQuery.get('individual.php?pid=<?php echo $controller->pid;?>&action=ajax&pin=true');
    		   	},
    		   	function() {
-   		   		jQuery('#pin img').attr('src', 'images/pin-out.png');
+   		   		jQuery('#pin img').attr('src', '<?php echo $PGV_IMAGE_DIR.'/'.$PGV_IMAGES['pin-out']['other'];?>');
    		   		jQuery('#tabs div').css('width', '');
    		   		jQuery('.static_tab_content').hide();
    		   		pinned = false;
+   		   		jQuery.get('individual.php?pid=<?php echo $controller->pid;?>&action=ajax&pin=false');
    		   	});
-   	<?php }
+	   	<?php  if (isset($_SESSION['PGV_pin']) && $_SESSION['PGV_pin']) { ?>
+	   		jQuery('#pin').click();
+	   	<?php }
+   	}
    	
    	$tabcount = 0;
 	foreach($controller->modules as $mod) {
@@ -338,7 +343,7 @@ foreach($controller->modules as $mod) {
 			<a name="<?php echo $controller->static_tab->getName(); ?>" href="#<?php echo $controller->static_tab->getName()?>">
 				<span><?php echo $pgv_lang[$controller->static_tab->getName()]?></span>
 			</a>
-			<a id="pin" href="#pin"><img src="images/pin-out.png" border="0" /></a>
+			<a id="pin" href="#pin"><img src="<?php echo $PGV_IMAGE_DIR."/".$PGV_IMAGES['pin-out']['other'];?>" border="0" alt=""/></a>
 		</li><?php 
 	} 
 	 ?>

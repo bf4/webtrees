@@ -136,6 +136,8 @@ $PGV_IMAGES["vline"]["other"] = "vline.gif";
 $PGV_IMAGES["zoomin"]["other"] = "zoomin.gif";
 $PGV_IMAGES["zoomout"]["other"] = "zoomout.gif";
 $PGV_IMAGES["stop"]["other"] = "stop.gif";
+$PGV_IMAGES["pin-out"]["other"] = "pin-out.png";
+$PGV_IMAGES["pin-in"]["other"] = "pin-in.png";
 
 // - lifespan chart arrows
 $PGV_IMAGES["lsltarrow"]["other"] = "lsltarrow.gif";

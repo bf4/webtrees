@@ -87,41 +87,9 @@ if (!self::table_exists("{$TBLPREFIX}module_privacy")) {
 $gedids=array_keys(get_all_gedcoms());
 
 //-- set the default tabs
-$default_tabs = array('family_nav', 'personal_facts', 'sources_tab', 'notes', 'media', 'lightbox', 'tree', 'googlemap', 'relatives', 'all_tab');
-$modules = PGVModule::getInstalledList();
-$taborder = 1;
-foreach($default_tabs as $modname) {
-	if (isset($modules[$modname])) {
-		$mod = $modules[$modname];
-		if ($mod->hasTab()) {
-			$mod->setTaborder($taborder);
-			foreach($gedids as $ged_id) {
-				$mod->setAccessLevel(2, $ged_id);
-				$mod->setTabEnabled(2, $ged_id);
-			}
-			PGVModule::updateModule($mod);
-			$taborder++;
-		}
-	}
-}
-
-//-- set the default menus
-$default_tabs = array('page_menu');
-$modules = PGVModule::getInstalledList();
-$taborder = 0;
-foreach($default_tabs as $modname) {
-	if (isset($modules[$modname])) {
-		$mod = $modules[$modname];
-		if ($mod->hasMenu()) {
-			$mod->setMenuorder($taborder);
-			foreach($gedids as $ged_id) {
-				$mod->setAccessLevel(2, $ged_id);
-				$mod->setMenuEnabled(2, $ged_id);
-			}
-			PGVModule::updateModule($mod);
-			$taborder++;
-		}
-	}
+foreach($gedids as $ged_id) {
+	PGVModule::setDefaultTabs($ged_id);
+	PGVModule::setDefaultMenus($ged_id);
 }
 
 // Update the version to indicate sucess

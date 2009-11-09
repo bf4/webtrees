@@ -10,6 +10,7 @@
 
 
 Version 4.2.x CA
+ - Made static tab "pinnable" (yalnifj)
  - Changed: Fixed return to correct Tab after using lightbox configuration function from Album Tab Page (windmillway)
  - Merged: Merge changes r6304 - r6324 from the trunk. (windmillway)
  - Merged: Merge changes r6237 - r6303 from the trunk. (windmillway)
@@ -453,7 +454,7 @@ Version 4.2.0 2009-01-31
  - Added: Statistics : use Google Chart API instead jpgraph library (wooc)
  - Added: [ 2319821 ] Polish names -ski & -ska (fisharebest)
  - Fixed: [ 1786448 ] SVN1545 - searching for \\ causes Apache to crash (fisharebest)
- - Fixed: [ 1687548 ] 41b4 Search does not recognise multiple ÄäÖöÅå (fisharebest)
+ - Fixed: [ 1687548 ] 41b4 Search does not recognise multiple ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ (fisharebest)
  - Fixed: [ 2152304 ] [4030] Advanced Search (fisharebest)
  - Fixed: [ 2154987 ] [4017] ordinary search (fisharebest)
  - Fixed: [ 1992158 ] Search failed with polish letters (fisharebest)

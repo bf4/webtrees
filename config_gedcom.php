@@ -129,6 +129,7 @@ $WORD_WRAPPED_NOTES = false;			//-- some programs wrap notes at word boundaries 
 										//-- setting this to true will add a space between words where they are wrapped in the gedcom
 $GEDCOM_DEFAULT_TAB = "0";				//-- this setting controls which tab on the individual page should first be displayed to visitors
 
+$DEFAULT_PIN_STATE = false;				// Should the static tab default to pinned or not
 $SHOW_CONTEXT_HELP = true;				// show ? links on the page for contextual popup help
 $PHPGEDVIEW_EMAIL = "";			// -- "From:" address for automatically generated e-mails
 $CONTACT_EMAIL = "you@yourdomain.com";		// -- this is who the user should contact for more information

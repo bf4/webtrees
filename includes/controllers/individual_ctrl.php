@@ -97,7 +97,7 @@ class IndividualControllerRoot extends BaseController {
 	*/
 	function init() {
 		global $USE_RIN, $MAX_ALIVE_AGE, $GEDCOM, $GEDCOM_DEFAULT_TAB, $pgv_changes, $pgv_lang, $CHARACTER_SET;
-		global $USE_QUICK_UPDATE, $pid;
+		global $USE_QUICK_UPDATE, $DEFAULT_PIN_STATE, $pid;
 		global $Fam_Navigator;
 
 		$this->sexarray["M"] = $pgv_lang["male"];
@@ -247,20 +247,6 @@ class IndividualControllerRoot extends BaseController {
 */
 		}
 		
-		// Use Show or Hide Navigator Cookie -----------
-		if (isset($_COOKIE['famnav'])) {
-			$this->Fam_Navigator=$_COOKIE['famnav'];
-		}else{
-			$this->Fam_Navigator="YES";
-		}
-		// Hide/Show the Family Navigator on this tab =========
-		if (isset($NAV_FACTS) && $NAV_FACTS=="SHOW" ) {
-			$this->Fam_Navigator="YES";
-		}else{
-			$this->Fam_Navigator="HIDE";
-		}
-		// ===============================================
-		
 		$this->modules = PGVModule::getActiveList('T');
 		uasort($this->modules, "PGVModule::compare_tab_order");
 		$count = 0;
@@ -279,14 +265,25 @@ class IndividualControllerRoot extends BaseController {
 			}
 		}
 		if ($this->default_tab<0 || $this->default_tab > count($this->modules)-1) $this->default_tab=0;
+		
+		if (!isset($_SESSION['PGV_pin']) && $DEFAULT_PIN_STATE)
+			 $_SESSION['PGV_pin'] = true;
+			 
 		//-- handle ajax calls
 		if ($this->action=="ajax") {
 			$tab = 0;
-			if (isset($_REQUEST['module'])) $tabname = $_REQUEST['module'];
-			header("Content-Type: text/html; charset=$CHARACTER_SET");//AJAX calls do not have the meta tag headers and need this set
-			$mod = $this->modules[$tabname];
-			if ($mod) {
-				echo $mod->getTab()->getContent();
+			if (isset($_REQUEST['module'])) {
+				$tabname = $_REQUEST['module'];
+				header("Content-Type: text/html; charset=$CHARACTER_SET");//AJAX calls do not have the meta tag headers and need this set
+				$mod = $this->modules[$tabname];
+				if ($mod) {
+					echo $mod->getTab()->getContent();
+				}
+			}
+			
+			if (isset($_REQUEST['pin'])) {
+				if ($_REQUEST['pin']=='true') $_SESSION['PGV_pin'] = true;
+				else $_SESSION['PGV_pin'] = false;
 			}
 			
 			//-- only get the requested tab and then exit
