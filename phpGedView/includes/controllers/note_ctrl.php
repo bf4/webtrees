@@ -65,9 +65,9 @@ class NoteControllerRoot extends BaseController {
 
 		$this->nid = safe_GET_xref('nid');
 
-		$noterec = find_other_record($this->nid);
+		$noterec = find_other_record($this->nid, PGV_GED_ID);
 
-		if (isset($pgv_changes[$this->nid."_".$GEDCOM])){
+		if (isset($pgv_changes[$this->nid."_".PGV_GEDCOM])){
 			$noterec = "0 @".$this->nid."@ NOTE\n";
 		} else if (!$noterec) {
 			return false;
