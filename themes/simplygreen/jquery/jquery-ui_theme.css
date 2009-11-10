@@ -6,8 +6,8 @@
 .ui-widget-content a:hover 				 { color:orange; }
 
 .ui-tabs .ui-tabs-nav 					 { padding: .3em .3em 0 .3em; background:#65a278; border-color:#cccccc; }
-.ui-tabs .ui-tabs-nav li 					 { font-size:0.9em; bottom:-3px; margin:0em 0.3em 0 0; background:#458258; border-color:#004025; }
-.ui-tabs .ui-tabs-nav li a 					 { color:#bbffbb; padding: .2em .8em .2em .8em;  }
+.ui-tabs .ui-tabs-nav li 					 { font-size:0.9em; bottom:-3px; margin:0 0.15em 0 0.1em; background:#458258; border-color:#004025; }
+.ui-tabs .ui-tabs-nav li a 					 { color:#bbffbb; padding: .2em .2em .2em .2em;  }
 .ui-tabs .ui-tabs-nav li:hover			 { color:orange; background: #256238;}
 .ui-tabs .ui-tabs-nav li a:hover			 { color:orange;}
 
@@ -34,7 +34,7 @@
 	right: 0px; 
 	background: #458258; 
 	margin-top:0px; 
-	margin-right:13px;
+	margin-right:11px;
 }
 #tabs li.ui-tabs-selected {
  padding-bottom: 2px;
