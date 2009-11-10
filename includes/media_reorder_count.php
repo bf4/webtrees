@@ -34,7 +34,7 @@ define('PGV_MEDIA_REORDER_COUNT_PHP', '');
 
 // Find if indi and family associated media exists and then count them ( $tot_med_ct)  ===================================================
 // Check indi gedcom items
-$gedrec = find_gedcom_record($pid);
+$gedrec = find_gedcom_record($pid, PGV_GED_ID);
 $level=0;
 $regexp = "/OBJE @(.*)@/";
 $ct_indi = preg_match_all($regexp, $gedrec, $match, PREG_SET_ORDER);
