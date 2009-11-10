@@ -102,6 +102,8 @@ if (selectedTab != "" && selectedTab != "undefined" && selectedTab != null) {
 	var selectedTab = 0;
 }
 
+var tabCache = new Array();
+
 var pinned = false;
 function enable_static_tab() {
 	jQuery(".static_tab").addClass("static_tab_<?php echo $TEXT_DIRECTION;?>");
@@ -119,7 +121,8 @@ jQuery(document).ready(function(){
 	jQuery("#tabs").tabs({ cache: true, selected: <?php echo $controller->default_tab?> });
 	var $tabs = jQuery('#tabs');
     jQuery('#tabs').bind('tabsshow', function(event, ui) {
-    	if ($tabs) selectedTab = ui.tab.name;
+    	selectedTab = ui.tab.name;
+    	tabCache[selectedTab] = true;
 
 	<?php
 	foreach($controller->modules as $mod) {
@@ -158,7 +161,12 @@ jQuery(document).ready(function(){
 	jQuery('#pin').toggle(
    		   	function() {
    	   		   	jQuery('#pin img').attr('src', '<?php echo $PGV_IMAGE_DIR.'/'.$PGV_IMAGES['pin-in']['other'];?>');
-   	   		// 	jQuery('#tabs > div').css('width', (jQuery('.static_tab').position().left-40)+'px');
+   	   		   	var newwidth = jQuery('.static_tab').position().left-40;
+   	   		   	<?php if ($TEXT_DIRECTION=='rtl') {?>
+   	   		   	newwidth = jQuery('.static_tab').width() + 40;
+   	   			newwidth = jQuery('#tabs').width() - newwidth;
+   	   		   	<?php }?>
+   	   	//	 	jQuery('#tabs > div').css('width', newwidth+'px');
    	   		   	jQuery('.static_tab_content').show();
 	   	   		<?php echo $controller->static_tab->getTab()->getJSCallbackAllTabs()."\n";
 				$modjs = $controller->static_tab->getTab()->getJSCallback();
@@ -196,7 +204,7 @@ jQuery(document).ready(function(){
   </script>
 <style type="text/css">
 #pin {
-	float: right;
+	float: <?php echo $TEXT_DIRECTION=='rtl'?'left':'right';?>;
 }
 </style>
 <div id="indi_main_blocks">
