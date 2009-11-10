@@ -1971,11 +1971,11 @@ function gedcomsort($a, $b) {
  * @param int $path_to_find which path in the relationship to find, 0 is the shortest path, 1 is the next shortest path, etc
  */
 function get_relationship($pid1, $pid2, $followspouse=true, $maxlength=0, $ignore_cache=false, $path_to_find=0) {
-	global $TIME_LIMIT, $start_time, $pgv_lang, $NODE_CACHE, $NODE_CACHE_LENGTH, $USE_RELATIONSHIP_PRIVACY, $pgv_changes, $GEDCOM;
+	global $TIME_LIMIT, $start_time, $pgv_lang, $NODE_CACHE, $NODE_CACHE_LENGTH, $USE_RELATIONSHIP_PRIVACY, $pgv_changes;
 
 	$pid1 = strtoupper($pid1);
 	$pid2 = strtoupper($pid2);
-	if (isset($pgv_changes[$pid2."_".$GEDCOM]) && PGV_USER_CAN_EDIT)
+	if (isset($pgv_changes[$pid2."_".PGV_GEDCOM]) && PGV_USER_CAN_EDIT)
 		$indirec = find_updated_record($pid2, PGV_GED_ID);
 	else
 		$indirec = find_person_record($pid2, PGV_GED_ID);
@@ -1995,7 +1995,7 @@ function get_relationship($pid1, $pid2, $followspouse=true, $maxlength=0, $ignor
 			$famids[$i]=$match[$i][1];
 		}
 		foreach ($famids as $indexval => $fam) {
-			if (isset($pgv_changes[$fam."_".$GEDCOM]) && PGV_USER_CAN_EDIT)
+			if (isset($pgv_changes[$fam."_".PGV_GEDCOM]) && PGV_USER_CAN_EDIT)
 				$famrec = find_updated_record($fam, PGV_GED_ID);
 			else
 				$famrec = find_family_record($fam, PGV_GED_ID);
@@ -2045,7 +2045,7 @@ function get_relationship($pid1, $pid2, $followspouse=true, $maxlength=0, $ignor
 		$numfams = preg_match_all("/1\s*FAMS\s*@(.*)@/", $indirec, $fmatch, PREG_SET_ORDER);
 		for ($j=0; $j<$numfams; $j++) {
 			// Get the family record
-			if (isset($pgv_changes[$fmatch[$j][1]."_".$GEDCOM]) && PGV_USER_CAN_EDIT)
+			if (isset($pgv_changes[$fmatch[$j][1]."_".PGV_GEDCOM]) && PGV_USER_CAN_EDIT)
 				$famrec = find_updated_record($fmatch[$j][1], PGV_GED_ID);
 			else
 				$famrec = find_family_record($fmatch[$j][1], PGV_GED_ID);
@@ -2054,7 +2054,7 @@ function get_relationship($pid1, $pid2, $followspouse=true, $maxlength=0, $ignor
 			$ct = preg_match_all("/1 CHIL @(.*)@/", $famrec, $cmatch, PREG_SET_ORDER);
 			for ($i=0; $i<$ct; $i++) {
 				// Get each child's record
-				if (isset($pgv_changes[$cmatch[$i][1]."_".$GEDCOM]) && PGV_USER_CAN_EDIT)
+				if (isset($pgv_changes[$cmatch[$i][1]."_".PGV_GEDCOM]) && PGV_USER_CAN_EDIT)
 					$childrec = find_updated_record($cmatch[$i][1], PGV_GED_ID);
 				else
 					$childrec = find_person_record($cmatch[$i][1], PGV_GED_ID);
@@ -2146,7 +2146,7 @@ function get_relationship($pid1, $pid2, $followspouse=true, $maxlength=0, $ignor
 				$childh = 3;
 
 				//-- generate heuristic values based of the birthdates of the current node and p2
-				if (isset($pgv_changes[$node["pid"]."_".$GEDCOM]) && PGV_USER_CAN_EDIT)
+				if (isset($pgv_changes[$node["pid"]."_".PGV_GEDCOM]) && PGV_USER_CAN_EDIT)
 					$indirec = find_updated_record($node["pid"], PGV_GED_ID);
 				else
 					$indirec = find_person_record($node["pid"], PGV_GED_ID);
@@ -2225,7 +2225,7 @@ function get_relationship($pid1, $pid2, $followspouse=true, $maxlength=0, $ignor
 				}
 				foreach ($famids as $indexval => $fam) {
 					$visited[$fam] = true;
-					if (isset($pgv_changes[$fam."_".$GEDCOM]) && PGV_USER_CAN_EDIT)
+					if (isset($pgv_changes[$fam."_".PGV_GEDCOM]) && PGV_USER_CAN_EDIT)
 						$famrec = find_updated_record($fam, PGV_GED_ID);
 					else
 						$famrec = find_family_record($fam, PGV_GED_ID);
@@ -2303,7 +2303,7 @@ function get_relationship($pid1, $pid2, $followspouse=true, $maxlength=0, $ignor
 				}
 				foreach ($famids as $indexval => $fam) {
 					$visited[$fam] = true;
-					if (isset($pgv_changes[$fam."_".$GEDCOM]) && PGV_USER_CAN_EDIT)
+					if (isset($pgv_changes[$fam."_".PGV_GEDCOM]) && PGV_USER_CAN_EDIT)
 						$famrec = find_updated_record($fam, PGV_GED_ID);
 					else
 						$famrec = find_family_record($fam, PGV_GED_ID);
@@ -2419,7 +2419,7 @@ function get_relationship($pid1, $pid2, $followspouse=true, $maxlength=0, $ignor
 // This is a new/experimental version of get_relationship().  It is not used by any live
 // code.  It is here to allow certain users to test it.
 function get_relationship1($pid1, $pid2, $followspouse=true, $maxlength=0) {
-	global $pgv_changes, $GEDCOM, $TBLPREFIX;
+	global $pgv_changes, $TBLPREFIX;
 	static $RELA=null;
 	static $PATHS=null;
 
@@ -2436,7 +2436,7 @@ function get_relationship1($pid1, $pid2, $followspouse=true, $maxlength=0) {
 		}
 		foreach ($families as $f_id=>$family) {
 			// Include pending changes
-			if (PGV_USER_CAN_EDIT && isset($pgv_changes[$f_id."_".$GEDCOM])) {
+			if (PGV_USER_CAN_EDIT && isset($pgv_changes[$f_id."_".PGV_GEDCOM])) {
 				$famrec=find_updated_record($f_id, PGV_GED_ID);
 				$families[$f_id][0]=(preg_match('/1 HUSB @(.*)@/', $famrec, $match)) ? $match[1] : '';
 				$families[$f_id][1]=(preg_match('/1 WIFE @(.*)@/', $famrec, $match)) ? $match[1] : '';
@@ -2529,7 +2529,7 @@ function get_relationship1($pid1, $pid2, $followspouse=true, $maxlength=0) {
 }
 
 function get_relationship2($pid1, $pid2, $followspouse=true, $maxlength=0, $ignore_cache=false, $path_to_find=0) {
-	global $pgv_changes, $GEDCOM, $TBLPREFIX;
+	global $pgv_changes, PGV_GEDCOM, $TBLPREFIX;
 	static $RELA=null;
 	static $PATHS=null;
 
@@ -2546,7 +2546,7 @@ function get_relationship2($pid1, $pid2, $followspouse=true, $maxlength=0, $igno
 		}
 		foreach ($families as $f_id=>$family) {
 			// Include pending changes
-			if (PGV_USER_CAN_EDIT && isset($pgv_changes[$f_id."_".$GEDCOM])) {
+			if (PGV_USER_CAN_EDIT && isset($pgv_changes[$f_id."_".PGV_GEDCOM])) {
 				$famrec=find_updated_record($f_id, PGV_GED_ID);
 				$families[$f_id][0]=(preg_match('/1 HUSB @(.*)@/', $famrec, $match)) ? $match[1] : '';
 				$families[$f_id][1]=(preg_match('/1 WIFE @(.*)@/', $famrec, $match)) ? $match[1] : '';
