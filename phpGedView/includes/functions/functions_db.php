@@ -1162,7 +1162,7 @@ function search_indis_custom($join, $where, $order) {
 	}
 	// Switch privacy file if necessary
 	if ($GED_ID!=PGV_GED_ID) {
-		$GEDCOM=get_gedcom_from_id(PGV_GED_ID);
+		$GEDCOM=PGV_GEDCOM;
 		load_privacy_file(PGV_GED_ID);
 	}
 	return $list;
@@ -1191,7 +1191,7 @@ function search_fams_custom($join, $where, $order) {
 	}
 	// Switch privacy file if necessary
 	if ($GED_ID!=PGV_GED_ID) {
-		$GEDCOM=get_gedcom_from_id(PGV_GED_ID);
+		$GEDCOM=PGV_GEDCOM;
 		load_privacy_file(PGV_GED_ID);
 	}
 	return $list;
@@ -1261,7 +1261,7 @@ function search_indis($query, $geds, $match, $skip) {
 	}
 	// Switch privacy file if necessary
 	if ($GED_ID!=PGV_GED_ID) {
-		$GEDCOM=get_gedcom_from_id(PGV_GED_ID);
+		$GEDCOM=PGV_GEDCOM;
 		load_privacy_file(PGV_GED_ID);
 	}
 	return $list;
@@ -1316,7 +1316,7 @@ function search_indis_names($query, $geds, $match) {
 	}
 	// Switch privacy file if necessary
 	if ($GED_ID!=PGV_GED_ID) {
-		$GEDCOM=get_gedcom_from_id(PGV_GED_ID);
+		$GEDCOM=PGV_GEDCOM;
 		load_privacy_file(PGV_GED_ID);
 	}
 	return $list;
@@ -1392,7 +1392,7 @@ function search_indis_soundex($soundex, $lastname, $firstname, $place, $geds) {
 	}
 	// Switch privacy file if necessary
 	if ($GED_ID!=PGV_GED_ID) {
-		$GEDCOM=get_gedcom_from_id(PGV_GED_ID);
+		$GEDCOM=PGV_GEDCOM;
 		load_privacy_file(PGV_GED_ID);
 	}
 	return $list;
@@ -1558,7 +1558,7 @@ function search_fams($query, $geds, $match, $skip) {
 	}
 	// Switch privacy file if necessary
 	if ($GED_ID!=PGV_GED_ID) {
-		$GEDCOM=get_gedcom_from_id(PGV_GED_ID);
+		$GEDCOM=PGV_GEDCOM;
 		load_privacy_file(PGV_GED_ID);
 	}
 	return $list;
@@ -1608,7 +1608,7 @@ function search_fams_names($query, $geds, $match) {
 	}
 	// Switch privacy file if necessary
 	if ($GED_ID!=PGV_GED_ID) {
-		$GEDCOM=get_gedcom_from_id(PGV_GED_ID);
+		$GEDCOM=PGV_GEDCOM;
 		load_privacy_file(PGV_GED_ID);
 	}
 	return $list;
@@ -1678,7 +1678,7 @@ function search_sources($query, $geds, $match, $skip) {
 	}
 	// Switch privacy file if necessary
 	if ($GED_ID!=PGV_GED_ID) {
-		$GEDCOM=get_gedcom_from_id(PGV_GED_ID);
+		$GEDCOM=PGV_GEDCOM;
 		load_privacy_file(PGV_GED_ID);
 	}
 	return $list;
@@ -1748,7 +1748,7 @@ function search_notes($query, $geds, $match, $skip) {
 	}
 	// Switch privacy file if necessary
 	if ($GED_ID!=PGV_GED_ID) {
-		$GEDCOM=get_gedcom_from_id(PGV_GED_ID);
+		$GEDCOM=PGV_GEDCOM;
 		load_privacy_file(PGV_GED_ID);
 	}
 	return $list;
