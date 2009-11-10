@@ -658,7 +658,7 @@ function print_fam_table($datalist, $legend="", $option="") {
 			if ($marriage_dates[0]->gregorianYear()>=1550 && $marriage_dates[0]->gregorianYear()<2030) {
 				$marr_by_decade[floor($marriage_dates[0]->gregorianYear()/10)*10] .= $husb->getSex().$wife->getSex();
 			}
-		} else if (get_sub_record(1, "1 _NMR", find_family_record($family->getXref()))) {
+		} else if (get_sub_record(1, "1 _NMR", $family->getXref()->getGedcomRecord())) {
 			// Allow special processing for different languages
 			$func="fact_NMR_localisation_{$lang_short_cut[$LANGUAGE]}";
 			if (function_exists($func)) {
@@ -666,7 +666,7 @@ function print_fam_table($datalist, $legend="", $option="") {
 				$func("_NMR", $family->getXref());
 			}
 			echo '<div>', $factarray["_NMR"], '<a name="9999999"></a></div>';
-		} else if (get_sub_record(1, "1 _NMAR", find_family_record($family->getXref()))) {
+		} else if (get_sub_record(1, "1 _NMAR", $family->getXref()->getGedcomRecord())) {
 			// Allow special processing for different languages
 			$func="fact_NMR_localisation_{$lang_short_cut[$LANGUAGE]}";
 			if (function_exists($func)) {
