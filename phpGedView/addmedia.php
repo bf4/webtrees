@@ -33,9 +33,6 @@ require './config.php';
 require './includes/functions/functions_print_lists.php';
 require './includes/functions/functions_edit.php';
 
-if (empty($ged)) $ged = $GEDCOM;
-$GEDCOM = $ged;
-
 // TODO use GET/POST, rather than $_REQUEST
 // TODO decide what validation is required on these input parameters
 $pid        =safe_REQUEST($_REQUEST, 'pid',         PGV_REGEX_XREF);
@@ -62,8 +59,11 @@ print_simple_header($pgv_lang["add_media_tool"]);
 $disp = true;
 if (empty($pid) && !empty($mid)) $pid = $mid;
 if (!empty($pid)) {
-	if (!isset($pgv_changes[$pid."_".$GEDCOM])) $gedrec = find_media_record($pid);
-	else $gedrec = find_updated_record($pid);
+	if (!isset($pgv_changes[$pid."_".PGV_GEDCOM])) {
+		$gedrec = find_media_record($pid);
+	} else {
+		$gedrec = find_updated_record($pid);
+	}
 	$disp = displayDetailsById($pid, "OBJE");
 }
 if ($action=="update" || $action=="newentry") {
@@ -534,8 +534,11 @@ if ($action == "update") {
 		$text = array_merge(array($folder.$filename), $text);
 
 		if (!empty($pid)) {
-			if (!isset($pgv_changes[$pid."_".$GEDCOM])) $gedrec = find_gedcom_record($pid);
-			else $gedrec = find_updated_record($pid);
+			if (!isset($pgv_changes[$pid."_".PGV_GEDCOM])) {
+				$gedrec = find_gedcom_record($pid);
+			} else {
+				$gedrec = find_updated_record($pid);
+			}
 		}
 		$newrec = "0 @$pid@ OBJE\n";
 		$newrec = handle_updates($newrec);
@@ -546,7 +549,9 @@ if ($action == "update") {
 		//-- look for the old record media in the file
 		//-- if the old media record does not exist that means it was
 		//-- generated at import and we need to append it
-		if (replace_gedrec($pid, $newrec, $update_CHAN)) AddToChangeLog("Media ID ".$pid." successfully updated.");
+		if (replace_gedrec($pid, $newrec, $update_CHAN)) {
+			AddToChangeLog("Media ID ".$pid." successfully updated.");
+		}
 
 		if ($pid && $linktoid!="") {
 			$link = linkMedia($pid, $linktoid, $level);
