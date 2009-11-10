@@ -158,7 +158,7 @@ jQuery(document).ready(function(){
 	jQuery('#pin').toggle(
    		   	function() {
    	   		   	jQuery('#pin img').attr('src', '<?php echo $PGV_IMAGE_DIR.'/'.$PGV_IMAGES['pin-in']['other'];?>');
-   	   		   	jQuery('#tabs > div').css('width', (jQuery('.static_tab').position().left-40)+'px');
+   	   		// 	jQuery('#tabs > div').css('width', (jQuery('.static_tab').position().left-40)+'px');
    	   		   	jQuery('.static_tab_content').show();
 	   	   		<?php echo $controller->static_tab->getTab()->getJSCallbackAllTabs()."\n";
 				$modjs = $controller->static_tab->getTab()->getJSCallback();

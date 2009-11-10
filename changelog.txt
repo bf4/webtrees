@@ -10,6 +10,7 @@
 
 
 Version 4.2.x CA
+ - Removed Tab page content "shift" to left when pinning Navigator (windmillway)
  - "Narrowed" Tab spacing, and Tab title padding, on themes simplygreen, xenea, and wood (windmillway)
  - Made static tab "pinnable" (yalnifj)
  - Changed: Fixed return to correct Tab after using lightbox configuration function from Album Tab Page (windmillway)
