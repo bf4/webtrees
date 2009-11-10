@@ -848,12 +848,12 @@ function printConfigForm(){
 			<tr>
 				<td class="descriptionbox wrap width30"><?php print_help_link("MAX_VIEW_RATE_help", "qm", "MAX_VIEW_RATE"); print $pgv_lang["MAX_VIEW_RATE"];?></td>
 				<td class="optionbox wrap">
-					<input type="text" name="NEW_MAX_VIEWS" value="<?php print $MAX_VIEWS?>" tabindex="<?php $i++; print $i?>" onfocus="getHelp('MAX_VIEW_RATE_help');" />
+					<input type="text" size="5" name="NEW_MAX_VIEWS" value="<?php print $MAX_VIEWS?>" tabindex="<?php $i++; print $i?>" onfocus="getHelp('MAX_VIEW_RATE_help');" />
 					<?php
 						if ($TEXT_DIRECTION == "ltr") print $pgv_lang["page_views"];
 						else print $pgv_lang["seconds"];
 					?>
-					<input type="text" name="NEW_MAX_VIEW_TIME" value="<?php print $MAX_VIEW_TIME?>" tabindex="<?php $i++; print $i?>" onfocus="getHelp('MAX_VIEW_RATE_help');" />
+					<input type="text" size="5" name="NEW_MAX_VIEW_TIME" value="<?php print $MAX_VIEW_TIME?>" tabindex="<?php $i++; print $i?>" onfocus="getHelp('MAX_VIEW_RATE_help');" />
 					<?php
 						if ($TEXT_DIRECTION == "ltr") print $pgv_lang["seconds"];
 						else print $pgv_lang["page_views"];
