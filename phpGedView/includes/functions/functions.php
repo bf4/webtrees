@@ -2904,25 +2904,6 @@ function getfilesize($bytes) {
 }
 
 /**
- * split multi-ged keys and return either key or gedcom
- *
- * @param string $key		the multi-ged key to be split
- * @param string $type		either "id" or "ged", depending on what must be returned
- * @return string			either the key or the gedcom name
- */
-function splitkey($key, $type) {
-	$p1 = strpos($key,"[");
-	$id = substr($key,0,$p1);
-	if ($type == "id")
-		return $id;
-	$p2 = strpos($key,"]");
-	$ged = substr($key,$p1+1,$p2-$p1-1);
-	if ($ged>=1)
-		get_gedcom_from_id($ged);
-	return $ged;
-}
-
-/**
  * array merge function for PGV
  * the PHP array_merge function will reindex all numerical indexes
  * This function should only be used for associative arrays
