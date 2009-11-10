@@ -108,11 +108,11 @@ class IndividualControllerRoot extends BaseController {
 		$pid = $this->pid;
 
 		$this->default_tab = $GEDCOM_DEFAULT_TAB;
-		$indirec = find_person_record($this->pid);
+		$indirec = find_person_record($this->pid, PGV_GED_ID);
 
 		if ($USE_RIN && $indirec==false) {
 			$this->pid = find_rin_id($this->pid);
-			$indirec = find_person_record($this->pid);
+			$indirec = find_person_record($this->pid, PGV_GED_ID);
 		}
 		if (empty($indirec)) {
 			$ct = preg_match("/(\w+):(.+)/", $this->pid, $match);
@@ -190,7 +190,7 @@ class IndividualControllerRoot extends BaseController {
 		if ($this->show_changes && PGV_USER_CAN_EDIT) {
 			if (isset($pgv_changes[$this->pid."_".$GEDCOM])) {
 				//-- get the changed record from the file
-				$newrec = find_updated_record($this->pid);
+				$newrec = find_updated_record($this->pid, PGV_GED_ID);
 				//print("jkdsakjhdkjsadkjsakjdhsakd".$newrec);
 				$remoterfn = get_gedcom_value("RFN", 1, $newrec);
 			} else {
@@ -272,7 +272,7 @@ class IndividualControllerRoot extends BaseController {
 		global $GEDCOM;
 		if (PGV_USER_ID && !empty($_REQUEST["gid"])) {
 			$gid = strtoupper($_REQUEST["gid"]);
-			$indirec = find_person_record($gid);
+			$indirec = find_person_record($gid, PGV_GED_ID);
 			if ($indirec) {
 				$favorite = array();
 				$favorite["username"] = PGV_USER_NAME;
@@ -297,7 +297,7 @@ class IndividualControllerRoot extends BaseController {
 			$this->show_changes=false;
 			$this->accept_success=true;
 			//-- delete the record from the cache and refresh it
-			$indirec = find_person_record($this->pid);
+			$indirec = find_person_record($this->pid, PGV_GED_ID);
 			//-- check if we just deleted the record and redirect to index
 			if (empty($indirec)) {
 				header("Location: index.php?ctype=gedcom");
@@ -1113,7 +1113,7 @@ class IndividualControllerRoot extends BaseController {
 			$place = $family->getMarriagePlace();
 			$famid = $family->getXref();
 			if (!$date && $this->show_changes && isset($pgv_changes[$famid."_".$GEDCOM])) {
-				$famrec = find_updated_record($famid);
+				$famrec = find_updated_record($famid, PGV_GED_ID);
 				$marrrec = get_sub_record(1, "1 MARR", $famrec);
 				if ($marrrec!=$family->getMarriageRecord()) {
 					$date = new GedcomDate(get_gedcom_value("MARR:DATE", 1, $marrrec, '', false));
@@ -1137,7 +1137,7 @@ class IndividualControllerRoot extends BaseController {
 						}
 						if (!empty($place)) echo $place;
 					}
-					else if (get_sub_record(1, "1 _NMR", find_family_record($famid))) {
+					else if (get_sub_record(1, "1 _NMR", find_family_record($famid, PGV_GED_ID))) {
 						// Allow special processing for different languages
 						$func="fact_NMR_localisation_{$lang_short_cut[$LANGUAGE]}";
 						if (function_exists($func)) {
@@ -1146,7 +1146,7 @@ class IndividualControllerRoot extends BaseController {
 						}
 						echo $factarray["_NMR"];
 					}
-					else if (get_sub_record(1, "1 _NMAR", find_family_record($famid))) {
+					else if (get_sub_record(1, "1 _NMAR", find_family_record($famid, PGV_GED_ID))) {
 						// Allow special processing for different languages
 						$func="fact_NMR_localisation_{$lang_short_cut[$LANGUAGE]}";
 						if (function_exists($func)) {
