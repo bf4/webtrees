@@ -512,7 +512,7 @@ function print_submitter_info($sid) {
 function print_repository_record($sid) {
 	global $TEXT_DIRECTION;
 	global $GEDCOM;
-	$ged_id=get_id_from_gedcom();
+	$ged_id=get_id_from_gedcom($GEDCOM);
 	if (displayDetailsById($sid, "REPO")) {
 		$source = find_other_record($sid, $ged_id);
 		$ct = preg_match("/1 NAME (.*)/", $source, $match);
