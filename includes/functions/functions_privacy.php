@@ -899,36 +899,36 @@ function FactEditRestricted($pid, $factrec) {
 * @return int Allowed or not allowed
 */
 function FactViewRestricted($pid, $factrec) {
-	global $GEDCOM;
-
-	if ($_SESSION["pgv_user"]==PGV_USER_ID) {
+	if ($_SESSION['pgv_user']==PGV_USER_ID) {
 		// Normal operation
-		$pgv_GED_ID				= PGV_GED_ID;
-		$pgv_USER_GEDCOM_ADMIN	= PGV_USER_GEDCOM_ADMIN;
-		$pgv_USER_GEDCOM_ID		= PGV_USER_GEDCOM_ID;
+		$pgv_GED_ID           =PGV_GED_ID;
+		$pgv_USER_GEDCOM_ADMIN=PGV_USER_GEDCOM_ADMIN;
+		$pgv_USER_GEDCOM_ID   =PGV_USER_GEDCOM_ID;
 	} else {
 		// We're in the middle of a Download -- get overriding information from cache
-		$pgv_GED_ID				= $_SESSION["pgv_GED_ID"];
-		$pgv_USER_GEDCOM_ADMIN	= $_SESSION["pgv_USER_GEDCOM_ADMIN"];
-		$pgv_USER_GEDCOM_ID		= $_SESSION["pgv_USER_GEDCOM_ID"];
+		$pgv_GED_ID           =$_SESSION['pgv_GED_ID'];
+		$pgv_USER_GEDCOM_ADMIN=$_SESSION['pgv_USER_GEDCOM_ADMIN'];
+		$pgv_USER_GEDCOM_ID   =$_SESSION['pgv_USER_GEDCOM_ID'];
 	}
 
-	if (PGV_USER_GEDCOM_ADMIN) {
+	if ($pgv_USER_GEDCOM_ADMIN) {
 		return false;
 	}
 
-	if (preg_match("/2 RESN (.*)/", $factrec, $match)) {
+	if (preg_match('/2 RESN (.*)/', $factrec, $match)) {
 		$match[1] = strtolower(trim($match[1]));
-		if ($match[1] == "confidential") return true;
-		if ($match[1] == "privacy") {
-			$myindi=PGV_USER_GEDCOM_ID;
+		if ($match[1] == 'confidential') {
+			return true;
+		}
+		if ($match[1] == 'privacy') {
+			$myindi=$pgv_USER_GEDCOM_ID;
 			if ($myindi == $pid) {
 				return false;
 			}
-			if (gedcom_record_type($pid, PGV_GED_ID)=='FAM') {
+			if (gedcom_record_type($pid, $pgv_GED_ID)=='FAM') {
 				$famrec = find_family_record($pid);
 				$parents = find_parents_in_record($famrec);
-				if ($myindi == $parents["WIFE"] || $myindi == $parents["HUSB"]) {
+				if ($myindi == $parents['WIFE'] || $myindi == $parents['HUSB']) {
 					return false;
 				}
 			}
