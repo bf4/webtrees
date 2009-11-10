@@ -673,8 +673,8 @@ if (check_media_structure()) {
 			if ($xref != "") {
 				$links = get_media_relations($xref);
 				foreach($links as $pid=>$type) {
-					if (isset($pgv_changes[$pid."_".$GEDCOM])) $gedrec = find_updated_record($pid);
-					else $gedrec = find_gedcom_record($pid);
+					if (isset($pgv_changes[$pid."_".PGV_GEDCOM])) $gedrec = find_updated_record($pid, PGV_GED_ID);
+					else $gedrec = find_gedcom_record($pid, PGV_GED_ID);
 					$gedrec = remove_subrecord($gedrec, "OBJE", $xref, -1);
 					if (replace_gedrec($pid, $gedrec, true, $xref)) {
 						print_text("record_updated");
@@ -691,8 +691,8 @@ if (check_media_structure()) {
 
 				// Record changes to the Media object
 					//-- why do we accept changes just to delete the item?
-					accept_changes($xref."_".$GEDCOM);
-					$objerec = find_gedcom_record($xref);
+					accept_changes($xref."_".PGV_GEDCOM);
+					$objerec = find_gedcom_record($xref, PGV_GED_ID);
 
 					// Remove media object from gedcom
 					if (delete_gedrec($xref)) {

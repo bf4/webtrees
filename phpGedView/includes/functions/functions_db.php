@@ -908,11 +908,9 @@ function fetch_gedcom_record($xref, $ged_id) {
 * @param string $famid the unique gedcom xref id of the family record to retrieve
 * @return string the raw gedcom record is returned
 */
-function find_family_record($xref) {
-	global $TBLPREFIX, $GEDCOM;
+function find_family_record($xref, $ged_id) {
+	global $TBLPREFIX;
 	static $statement=null;
-
-	$ged_id=get_id_from_gedcom($GEDCOM);
 
 	if (is_null($statement)) {
 		$statement=PGV_DB::prepare(
@@ -929,11 +927,9 @@ function find_family_record($xref) {
 * @param string $pid the unique gedcom xref id of the individual record to retrieve
 * @return string the raw gedcom record is returned
 */
-function find_person_record($xref) {
-	global $TBLPREFIX, $GEDCOM;
+function find_person_record($xref, $ged_id) {
+	global $TBLPREFIX;
 	static $statement=null;
-
-	$ged_id=get_id_from_gedcom($GEDCOM);
 
 	if (is_null($statement)) {
 		$statement=PGV_DB::prepare(
@@ -950,11 +946,9 @@ function find_person_record($xref) {
 * @param string $sid the unique gedcom xref id of the source record to retrieve
 * @return string the raw gedcom record is returned
 */
-function find_source_record($xref) {
-	global $TBLPREFIX, $GEDCOM;
+function find_source_record($xref, $ged_id) {
+	global $TBLPREFIX;
 	static $statement=null;
-
-	$ged_id=get_id_from_gedcom($GEDCOM);
 
 	if (is_null($statement)) {
 		$statement=PGV_DB::prepare(
@@ -969,11 +963,9 @@ function find_source_record($xref) {
 * @param string $rid the record id
 * @param string $gedfile the gedcom file id
 */
-function find_other_record($xref) {
-	global $TBLPREFIX, $GEDCOM;
+function find_other_record($xref, $ged_id) {
+	global $TBLPREFIX;
 	static $statement=null;
-
-	$ged_id=get_id_from_gedcom($GEDCOM);
 
 	if (is_null($statement)) {
 		$statement=PGV_DB::prepare(
@@ -987,11 +979,9 @@ function find_other_record($xref) {
 * Find a media record by its ID
 * @param string $rid the record id
 */
-function find_media_record($xref) {
-	global $TBLPREFIX, $GEDCOM;
+function find_media_record($xref, $ged_id) {
+	global $TBLPREFIX;
 	static $statement=null;
-
-	$ged_id=get_id_from_gedcom($GEDCOM);
 
 	if (is_null($statement)) {
 		$statement=PGV_DB::prepare(
@@ -1009,7 +999,7 @@ function find_media_record($xref) {
 * @param string $gedfile [optional] the gedcomfile to search in
 * @return string the raw gedcom record is returned
 */
-function find_gedcom_record($xref, $gedfile='') {
+function find_gedcom_record($xref, $ged_id) {
 	global $TBLPREFIX, $GEDCOM, $DBTYPE;
 	static $statement1=null, $statement2=null;
 
@@ -1021,32 +1011,15 @@ function find_gedcom_record($xref, $gedfile='') {
 			"SELECT m_gedrec FROM {$TBLPREFIX}media       WHERE m_media=? AND m_gedfile=? UNION ALL ".
 			"SELECT o_gedcom FROM {$TBLPREFIX}other       WHERE o_id   =? AND o_file   =?"
 		);
-		if ($DBTYPE=='sqlite') {
-			// TODO: Temporary - until the final migration to sqlite3
-			$statement2=PGV_DB::prepare(
-				"SELECT i_gedcom FROM {$TBLPREFIX}individuals WHERE UPPER(i_id)   =UPPER(?) AND i_file   =? UNION ALL ".
-				"SELECT f_gedcom FROM {$TBLPREFIX}families    WHERE UPPER(f_id)   =UPPER(?) AND f_file   =? UNION ALL ".
-				"SELECT s_gedcom FROM {$TBLPREFIX}sources     WHERE UPPER(s_id)   =UPPER(?) AND s_file   =? UNION ALL ".
-				"SELECT m_gedrec FROM {$TBLPREFIX}media       WHERE UPPER(m_media)=UPPER(?) AND m_gedfile=? UNION ALL ".
-				"SELECT o_gedcom FROM {$TBLPREFIX}other       WHERE UPPER(o_id)   =UPPER(?) AND o_file   =?"
-			);
-		} else {
-			$statement2=PGV_DB::prepare(
-				"SELECT i_gedcom FROM {$TBLPREFIX}individuals WHERE i_id    ".PGV_DB::$LIKE." ? ESCAPE '@' AND i_file   =? UNION ALL ".
-				"SELECT f_gedcom FROM {$TBLPREFIX}families    WHERE f_id    ".PGV_DB::$LIKE." ? ESCAPE '@' AND f_file   =? UNION ALL ".
-				"SELECT s_gedcom FROM {$TBLPREFIX}sources     WHERE s_id    ".PGV_DB::$LIKE." ? ESCAPE '@' AND s_file   =? UNION ALL ".
-				"SELECT m_gedrec FROM {$TBLPREFIX}media       WHERE m_media ".PGV_DB::$LIKE." ? ESCAPE '@' AND m_gedfile=? UNION ALL ".
-				"SELECT o_gedcom FROM {$TBLPREFIX}other       WHERE o_id    ".PGV_DB::$LIKE." ? ESCAPE '@' AND o_file   =?"
-			);
-		}
+		$statement2=PGV_DB::prepare(
+			"SELECT i_gedcom FROM {$TBLPREFIX}individuals WHERE i_id    ".PGV_DB::$LIKE." ? ESCAPE '@' AND i_file   =? UNION ALL ".
+			"SELECT f_gedcom FROM {$TBLPREFIX}families    WHERE f_id    ".PGV_DB::$LIKE." ? ESCAPE '@' AND f_file   =? UNION ALL ".
+			"SELECT s_gedcom FROM {$TBLPREFIX}sources     WHERE s_id    ".PGV_DB::$LIKE." ? ESCAPE '@' AND s_file   =? UNION ALL ".
+			"SELECT m_gedrec FROM {$TBLPREFIX}media       WHERE m_media ".PGV_DB::$LIKE." ? ESCAPE '@' AND m_gedfile=? UNION ALL ".
+			"SELECT o_gedcom FROM {$TBLPREFIX}other       WHERE o_id    ".PGV_DB::$LIKE." ? ESCAPE '@' AND o_file   =?"
+		);
 	}
 	
-	if ($gedfile) {
-		$ged_id=get_id_from_gedcom($gedfile);
-	} else {
-		$ged_id=get_id_from_gedcom($GEDCOM);
-	}
-
 	// Exact match on xref?
 	$gedcom=$statement1->execute(array($xref, $ged_id, $xref, $ged_id, $xref, $ged_id, $xref, $ged_id, $xref, $ged_id))->fetchOne();
 	if (!$gedcom) {

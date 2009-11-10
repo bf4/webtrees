@@ -701,6 +701,9 @@ function get_sub_record($level, $tag, $gedrec, $num=1) {
  * @return array an array of the raw subrecords to return
  */
 function get_all_subrecords($gedrec, $ignore="", $families=true, $ApplyPriv=true) {
+	global $GEDCOM;
+	$ged_id=get_id_from_gedcom($GEDCOM);
+
 	$repeats = array();
 
 	$id = "";
@@ -751,7 +754,7 @@ function get_all_subrecords($gedrec, $ignore="", $families=true, $ApplyPriv=true
 		$ft = preg_match_all('/\n1 FAMS @('.PGV_REGEX_XREF.')@/', $gedrec, $fmatch, PREG_SET_ORDER);
 		for ($f=0; $f<$ft; $f++) {
 			$famid = $fmatch[$f][1];
-			$famrec = find_family_record($fmatch[$f][1]);
+			$famrec = find_family_record($fmatch[$f][1], $ged_id);
 			$parents = find_parents_in_record($famrec);
 			if ($id==$parents["HUSB"]) {
 				$spid = $parents["WIFE"];
@@ -806,6 +809,8 @@ function get_all_subrecords($gedrec, $ignore="", $families=true, $ApplyPriv=true
  */
 function get_gedcom_value($tag, $level, $gedrec, $truncate='', $convert=true) {
 	global $SHOW_PEDIGREE_PLACES, $pgv_lang;
+	global $GEDCOM;
+	$ged_id=get_id_from_gedcom($GEDCOM);
 
 	if (empty($gedrec)) {
 		return "";
@@ -860,20 +865,20 @@ function get_gedcom_value($tag, $level, $gedrec, $truncate='', $convert=true) {
 			case 'HUSB':
 			case 'WIFE':
 			case 'CHIL':
-				$subrec = find_person_record($match[1]);
+				$subrec = find_person_record($match[1], $ged_id);
 				break;
 			case 'FAMC':
 			case 'FAMS':
-				$subrec = find_family_record($match[1]);
+				$subrec = find_family_record($match[1], $ged_id);
 				break;
 			case 'SOUR':
-				$subrec = find_source_record($match[1]);
+				$subrec = find_source_record($match[1], $ged_id);
 				break;
 			case 'REPO':
-				$subrec = find_other_record($match[1]);
+				$subrec = find_other_record($match[1], $ged_id);
 				break;
 			default:
-				$subrec = find_gedcom_record($match[1]);
+				$subrec = find_gedcom_record($match[1], $ged_id);
 				break;
 			}
 			if ($subrec) {
@@ -1088,10 +1093,10 @@ function get_cont($nlevel, $nrec, $tobr=true) {
  * @return array returns a two element array with indexes HUSB and WIFE for the parent ids
  */
 function find_parents($famid) {
-	$famrec = find_family_record($famid);
+	$famrec = find_family_record($famid, PGV_GED_ID);
 	if (empty($famrec)) {
 		if (PGV_USER_CAN_EDIT) {
-			$famrec = find_updated_record($famid);
+			$famrec = find_updated_record($famid, PGV_GED_ID);
 			if (empty($famrec)) {
 				return false;
 			}
@@ -1141,10 +1146,10 @@ function find_parents_in_record($famrec) {
  * @return array
  */
 function find_children($famid, $me='') {
-	$famrec = find_family_record($famid);
+	$famrec = find_family_record($famid, PGV_GED_ID);
 	if (empty($famrec)) {
 		if (PGV_USER_CAN_EDIT) {
-			$famrec = find_updated_record($famid);
+			$famrec = find_updated_record($famid, PGV_GED_ID);
 			if (empty($famrec)) {
 				return false;
 			}
@@ -1190,7 +1195,7 @@ function find_children_in_record($famrec, $me='') {
  * @return array array of family ids
  */
 function find_family_ids($pid) {
-	$indirec=find_person_record($pid);
+	$indirec=find_person_record($pid, PGV_GED_ID);
 	return find_visible_families_in_record($indirec, "FAMC");
 }
 
@@ -1203,7 +1208,7 @@ function find_family_ids($pid) {
  * @return array array of family ids
  */
 function find_sfamily_ids($pid) {
-	$indirec=find_person_record($pid);
+	$indirec=find_person_record($pid, PGV_GED_ID);
 	return find_visible_families_in_record($indirec, "FAMS");
 }
 
@@ -1245,12 +1250,12 @@ function find_visible_families_in_record($indirec, $tag) {
  * @param string $gid	the id of the record to find
  * @param string $gedfile	the gedcom file to get the record from.. defaults to currently active gedcom
  */
-function find_updated_record($gid, $gedfile="") {
-	global $GEDCOM, $pgv_changes;
+function find_updated_record($gid, $ged_id) {
+	global $pgv_changes;
 
-	if (empty($gedfile)) {
-		$gedfile = $GEDCOM;
-	}
+	// NOTE: when changes are moved to database storage, they will be
+	// indexed by gedcom_id, not gedcom_name
+	$gedfile=get_gedcom_from_id($ged_id);
 
 	if (isset($pgv_changes[$gid."_".$gedfile])) {
 		$change = end($pgv_changes[$gid."_".$gedfile]);
@@ -1267,6 +1272,8 @@ function exists_pending_change($user_id=PGV_USER_ID, $ged_id=PGV_GED_ID) {
 		return false;
 	}
 
+	// NOTE: when changes are moved to database storage, they will be
+	// indexed by gedcom_id, not gedcom_name
 	$gedcom=get_gedcom_from_id($ged_id);
 	foreach ($pgv_changes as $pgv_change) {
 		if ($pgv_change[0]['gedcom']==$gedcom) {
@@ -1969,9 +1976,9 @@ function get_relationship($pid1, $pid2, $followspouse=true, $maxlength=0, $ignor
 	$pid1 = strtoupper($pid1);
 	$pid2 = strtoupper($pid2);
 	if (isset($pgv_changes[$pid2."_".$GEDCOM]) && PGV_USER_CAN_EDIT)
-		$indirec = find_updated_record($pid2);
+		$indirec = find_updated_record($pid2, PGV_GED_ID);
 	else
-		$indirec = find_person_record($pid2);
+		$indirec = find_person_record($pid2, PGV_GED_ID);
 	//-- check the cache
 	if ($USE_RELATIONSHIP_PRIVACY && !$ignore_cache) {
 		if (isset($NODE_CACHE["$pid1-$pid2"])) {
@@ -1989,9 +1996,9 @@ function get_relationship($pid1, $pid2, $followspouse=true, $maxlength=0, $ignor
 		}
 		foreach ($famids as $indexval => $fam) {
 			if (isset($pgv_changes[$fam."_".$GEDCOM]) && PGV_USER_CAN_EDIT)
-				$famrec = find_updated_record($fam);
+				$famrec = find_updated_record($fam, PGV_GED_ID);
 			else
-				$famrec = find_family_record($fam);
+				$famrec = find_family_record($fam, PGV_GED_ID);
 			$ct = preg_match_all("/1 CHIL @(.*)@/", $famrec, $match, PREG_SET_ORDER);
 			for ($i=0; $i<$ct; $i++) {
 				$child = $match[$i][1];
@@ -2039,18 +2046,18 @@ function get_relationship($pid1, $pid2, $followspouse=true, $maxlength=0, $ignor
 		for ($j=0; $j<$numfams; $j++) {
 			// Get the family record
 			if (isset($pgv_changes[$fmatch[$j][1]."_".$GEDCOM]) && PGV_USER_CAN_EDIT)
-				$famrec = find_updated_record($fmatch[$j][1]);
+				$famrec = find_updated_record($fmatch[$j][1], PGV_GED_ID);
 			else
-				$famrec = find_family_record($fmatch[$j][1]);
+				$famrec = find_family_record($fmatch[$j][1], PGV_GED_ID);
 
 			// Get the set of children
 			$ct = preg_match_all("/1 CHIL @(.*)@/", $famrec, $cmatch, PREG_SET_ORDER);
 			for ($i=0; $i<$ct; $i++) {
 				// Get each child's record
 				if (isset($pgv_changes[$cmatch[$i][1]."_".$GEDCOM]) && PGV_USER_CAN_EDIT)
-					$childrec = find_updated_record($cmatch[$i][1]);
+					$childrec = find_updated_record($cmatch[$i][1], PGV_GED_ID);
 				else
-					$childrec = find_person_record($cmatch[$i][1]);
+					$childrec = find_person_record($cmatch[$i][1], PGV_GED_ID);
 				$birthrec = get_sub_record(1, "1 BIRT", $childrec);
 				if ($birthrec!==false) {
 					$dct = preg_match("/2 DATE .*(\d\d\d\d)/", $birthrec, $bmatch);
@@ -2140,9 +2147,9 @@ function get_relationship($pid1, $pid2, $followspouse=true, $maxlength=0, $ignor
 
 				//-- generate heuristic values based of the birthdates of the current node and p2
 				if (isset($pgv_changes[$node["pid"]."_".$GEDCOM]) && PGV_USER_CAN_EDIT)
-					$indirec = find_updated_record($node["pid"]);
+					$indirec = find_updated_record($node["pid"], PGV_GED_ID);
 				else
-					$indirec = find_person_record($node["pid"]);
+					$indirec = find_person_record($node["pid"], PGV_GED_ID);
 				$byear1 = -1;
 				$birthrec = get_sub_record(1, "1 BIRT", $indirec);
 				if ($birthrec!==false) {
@@ -2219,9 +2226,9 @@ function get_relationship($pid1, $pid2, $followspouse=true, $maxlength=0, $ignor
 				foreach ($famids as $indexval => $fam) {
 					$visited[$fam] = true;
 					if (isset($pgv_changes[$fam."_".$GEDCOM]) && PGV_USER_CAN_EDIT)
-						$famrec = find_updated_record($fam);
+						$famrec = find_updated_record($fam, PGV_GED_ID);
 					else
-						$famrec = find_family_record($fam);
+						$famrec = find_family_record($fam, PGV_GED_ID);
 					$parents = find_parents_in_record($famrec);
 					if ((!empty($parents["HUSB"]))&&(!isset($visited[$parents["HUSB"]]))) {
 						$node1 = $node;
@@ -2297,9 +2304,9 @@ function get_relationship($pid1, $pid2, $followspouse=true, $maxlength=0, $ignor
 				foreach ($famids as $indexval => $fam) {
 					$visited[$fam] = true;
 					if (isset($pgv_changes[$fam."_".$GEDCOM]) && PGV_USER_CAN_EDIT)
-						$famrec = find_updated_record($fam);
+						$famrec = find_updated_record($fam, PGV_GED_ID);
 					else
-						$famrec = find_family_record($fam);
+						$famrec = find_family_record($fam, PGV_GED_ID);
 					if ($followspouse) {
 						$parents = find_parents_in_record($famrec);
 						if ((!empty($parents["HUSB"]))&&((!in_arrayr($parents["HUSB"], $node1))||(!isset($visited[$parents["HUSB"]])))) {
@@ -2430,7 +2437,7 @@ function get_relationship1($pid1, $pid2, $followspouse=true, $maxlength=0) {
 		foreach ($families as $f_id=>$family) {
 			// Include pending changes
 			if (PGV_USER_CAN_EDIT && isset($pgv_changes[$f_id."_".$GEDCOM])) {
-				$famrec=find_updated_record($f_id);
+				$famrec=find_updated_record($f_id, PGV_GED_ID);
 				$families[$f_id][0]=(preg_match('/1 HUSB @(.*)@/', $famrec, $match)) ? $match[1] : '';
 				$families[$f_id][1]=(preg_match('/1 WIFE @(.*)@/', $famrec, $match)) ? $match[1] : '';
 				$families[$f_id][2]=(preg_match_all('/1 CHIL @(.*)@/', $famrec, $match)) ? $match[1] : array();
@@ -2540,7 +2547,7 @@ function get_relationship2($pid1, $pid2, $followspouse=true, $maxlength=0, $igno
 		foreach ($families as $f_id=>$family) {
 			// Include pending changes
 			if (PGV_USER_CAN_EDIT && isset($pgv_changes[$f_id."_".$GEDCOM])) {
-				$famrec=find_updated_record($f_id);
+				$famrec=find_updated_record($f_id, PGV_GED_ID);
 				$families[$f_id][0]=(preg_match('/1 HUSB @(.*)@/', $famrec, $match)) ? $match[1] : '';
 				$families[$f_id][1]=(preg_match('/1 WIFE @(.*)@/', $famrec, $match)) ? $match[1] : '';
 				$families[$f_id][2]=(preg_match_all('/1 CHIL @(.*)@/', $famrec, $match)) ? $match[1] : array();
@@ -3218,7 +3225,7 @@ function get_new_xref($type='INDI', $ged_id=PGV_GED_ID, $use_cache=false) {
 	if ($num>=2147483647 || $num<=0) { // Popular databases are only 32 bits (signed)
 		$num=1;
 	}
-	while (find_gedcom_record($prefix.$num) || find_updated_record($prefix.$num)) {
+	while (find_gedcom_record($prefix.$num, $ged_id) || find_updated_record($prefix.$num, $ged_id)) {
 		++$num;
 		if ($num>=2147483647 || $num<=0) { // Popular databases are only 32 bits (signed)
 			$num=1;

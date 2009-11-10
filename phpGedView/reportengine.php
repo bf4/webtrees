@@ -70,13 +70,13 @@ $newvars = array();
 foreach($vars as $name=>$var) {
 	$newvars[$name]["id"] = $var;
 	if (!empty($type[$name]) && (($type[$name]=="INDI")||($type[$name]=="FAM")||($type[$name]=="SOUR"))) {
-		$gedcom = find_gedcom_record($var);
+		$gedcom = find_gedcom_record($var, PGV_GED_ID);
 		if (empty($gedcom)) $action="setup";
 		if ($type[$name]=="FAM") {
 			if (preg_match("/0 @.*@ INDI/", $gedcom)>0) {
 				$fams = find_sfamily_ids($var);
 				if (!empty($fams[0])) {
-					$gedcom = find_family_record($fams[0]);
+					$gedcom = find_family_record($fams[0], PGV_GED_ID);
 					if (!empty($gedcom)) $vars[$name] = $fams[0];
 					else $action="setup";
 				}

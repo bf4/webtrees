@@ -223,7 +223,7 @@ require_once("includes/classes/class_person.php");
 								//if the ID exists in the famlist set the record to that
 								else if (isset($famlist[$id]['gedcom'])) $record = $famlist[$id]['gedcom'];
 								//otherwise try and find the gedcom record of the ID
-								else $record = find_gedcom_record($id);
+								else $record = find_gedcom_record($id, PGV_GED_ID);
 							}
 						}
 					}

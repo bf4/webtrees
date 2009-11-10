@@ -93,7 +93,7 @@ function print_gedcom_stats($block = true, $config="", $side, $index) {
 	$stats=new stats($GEDCOM);
 
 	$content = "<b><a href=\"index.php?ctype=gedcom\">".PrintReady(strip_tags(get_gedcom_setting(PGV_GED_ID, 'title')))."</a></b><br />\n";
-	$head = find_gedcom_record("HEAD");
+	$head = find_gedcom_record("HEAD", PGV_GED_ID);
 	$ct=preg_match("/1 SOUR (.*)/", $head, $match);
 	if ($ct>0) {
 		$softrec = get_sub_record(1, "1 SOUR", $head);

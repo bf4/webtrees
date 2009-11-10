@@ -135,7 +135,7 @@ function getGedcomStats() {
 	$data = "";
 	$dataArray[0] = $pgv_lang["gedcom_stats"] . " - " . get_gedcom_setting(PGV_GED_ID, 'title');
 
-	$head = find_gedcom_record("HEAD");
+	$head = find_gedcom_record("HEAD", PGV_GED_ID);
 	$ct=preg_match("/1 SOUR (.*)/", $head, $match);
 	if ($ct>0) {
 		$softrec = get_sub_record(1, "1 SOUR", $head);
@@ -354,8 +354,8 @@ function getRecentChanges() {
 	if (count($changes)>0) {
 		$found_facts = array();
 		foreach($changes as $gid) {
-			$gedrec = find_gedcom_record($gid);
-			if (empty($gedrec)) $gedrec = find_updated_record($gid);
+			$gedrec = find_gedcom_record($gid, PGV_GED_ID);
+			if (empty($gedrec)) $gedrec = find_updated_record($gid, PGV_GED_ID);
 
 			if (!empty($gedrec)) {
 				$type = "INDI";
@@ -478,7 +478,7 @@ function getRandomMedia() {
 
 			if ($disp && count($links) != 0){
 				foreach($links as $key=>$type) {
-					$gedrec = find_gedcom_record($key);
+					$gedrec = find_gedcom_record($key, PGV_GED_ID);
 					$disp &= !empty($gedrec);
 					//-- source privacy is now available through the display details by id method
 					// $disp &= $type!="SOUR";

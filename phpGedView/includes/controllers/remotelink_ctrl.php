@@ -290,16 +290,16 @@ class RemoteLinkController extends BaseController {
 		$relation_type=$this->form_cbRelationship;
 		if ($serverID && $link_pid) {
 			if (isset($pgv_changes[$this->pid."_".$GEDCOM])) {
-				$indirec=find_updated_record($this->pid);
+				$indirec=find_updated_record($this->pid, PGV_GED_ID);
 			} else {
-				$indirec=find_person_record($this->pid);
+				$indirec=find_person_record($this->pid, PGV_GED_ID);
 			}
 	
 			switch ($relation_type) {
 			case "father":
 				$indistub="0 @new@ INDI\n1 SOUR @{$serverID}@\n2 PAGE {$link_pid}\n1 RFN {$serverID}:{$link_pid}";
 				$stub_id=append_gedrec($indistub, false);
-				$indistub=find_updated_record($stub_id);
+				$indistub=find_updated_record($stub_id, PGV_GED_ID);
 	
 				$gedcom_fam="0 @new@ FAM\n1 HUSB @{$stub_id}@\n1 CHIL @{$this->pid}@";
 				$fam_id=append_gedrec($gedcom_fam);
@@ -315,7 +315,7 @@ class RemoteLinkController extends BaseController {
 			case "mother":
 				$indistub="0 @new@ INDI\n1 SOUR @{$serverID}@\n2 PAGE {$link_pid}\n1 RFN {$serverID}:{$link_pid}";
 				$stub_id=append_gedrec($indistub, false);
-				$indistub=find_updated_record($stub_id);
+				$indistub=find_updated_record($stub_id, PGV_GED_ID);
 	
 				$gedcom_fam="0 @new@ FAM\n1 WIFE @{$stub_id}@\n1 CHIL @{$this->pid}@";
 				$fam_id=append_gedrec($gedcom_fam);
@@ -331,7 +331,7 @@ class RemoteLinkController extends BaseController {
 			case "husband":
 				$indistub="0 @new@ INDI\n1 SOUR @{$serverID}@\n2 PAGE {$link_pid}\n1 RFN {$serverID}:{$link_pid}";
 				$stub_id=append_gedrec($indistub, false);
-				$indistub=find_updated_record($stub_id);
+				$indistub=find_updated_record($stub_id, PGV_GED_ID);
 	
 				$gedcom_fam="0 @new@ FAM\n1 MARR Y\n1 WIFE @{$this->pid}@\n1 HUSB @{$stub_id}@\n";
 				$fam_id=append_gedrec($gedcom_fam);
@@ -347,7 +347,7 @@ class RemoteLinkController extends BaseController {
 			case "wife":
 				$indistub="0 @new@ INDI\n1 SOUR @{$serverID}@\n2 PAGE {$link_pid}\n1 RFN {$serverID}:{$link_pid}";
 				$stub_id=append_gedrec($indistub, false);
-				$indistub=find_updated_record($stub_id);
+				$indistub=find_updated_record($stub_id, PGV_GED_ID);
 
 				$gedcom_fam="0 @new@ FAM\n1 MARR Y\n1 WIFE @{$stub_id}@\n1 HUSB @{$this->pid}@";
 				$fam_id=append_gedrec($gedcom_fam);
@@ -364,7 +364,7 @@ class RemoteLinkController extends BaseController {
 			case "daughter":
 				$indistub="0 @new@ INDI\n1 SOUR @{$serverID}@\n2 PAGE {$link_pid}\n1 RFN {$serverID}:{$link_pid}";
 				$stub_id=append_gedrec($indistub, false);
-				$indistub=find_updated_record($stub_id);
+				$indistub=find_updated_record($stub_id, PGV_GED_ID);
 	
 				if (get_gedcom_value('SEX', 1, $indirec, '', false)=='F') {
 					$gedcom_fam="0 @new@ FAM\n1 WIFE @{$this->pid}@\n1 CHIL @{$stub_id}@";

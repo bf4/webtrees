@@ -332,7 +332,7 @@ class PGVServiceLogic extends GenealogyService {
 		$fams = find_families_in_record($gedrec, "FAMS");
 		$familyS = array();
 		foreach ($fams as $f=>$famid) {
-//			$famrec = find_family_record($famid);
+//			$famrec = find_family_record($famid, PGV_GED_ID);
 	//		$family = $this->createFamily($famid, $famrec, "item");
 			$familyS[] = $famid;
 		}
@@ -340,7 +340,7 @@ class PGVServiceLogic extends GenealogyService {
 		$famc = find_families_in_record($gedrec, "FAMC");
 		$familyC = array();
 		foreach ($famc as $f=>$famid) {
-			$famrec = find_family_record($famid);
+			$famrec = find_family_record($famid, PGV_GED_ID);
 //			$family = $this->createFamily($famid, $famrec, "item");
 			$familyC[] = $famid;
 		}
@@ -369,11 +369,11 @@ class PGVServiceLogic extends GenealogyService {
 				$xref1 = trim($xref1);
 				if (!empty($xref1)) {
 					if (isset($pgv_changes[$xref1."_".$GEDCOM])) {
-						$gedrec = find_updated_record($xref1);
+						$gedrec = find_updated_record($xref1, PGV_GED_ID);
 					}
 
 					if (empty($gedrec)) {
-						$gedrec = find_person_record($xref1);
+						$gedrec = find_person_record($xref1, PGV_GED_ID);
 					}
 
 					if (!empty($gedrec)) {
@@ -445,11 +445,11 @@ class PGVServiceLogic extends GenealogyService {
 				$xref1 = trim($xref1);
 				if (!empty($xref1)) {
 					if (isset($pgv_changes[$xref1."_".$GEDCOM])) {
-						$gedrec = find_updated_record($xref1);
+						$gedrec = find_updated_record($xref1, PGV_GED_ID);
 					}
 
 					if (empty($gedrec)) {
-						$gedrec = find_family_record($xref1);
+						$gedrec = find_family_record($xref1, PGV_GED_ID);
 					}
 
 					if (!empty($gedrec)) {
@@ -508,11 +508,11 @@ class PGVServiceLogic extends GenealogyService {
 				$xref1 = trim($xref1);
 				if (!empty($xref1)) {
 					if (isset($pgv_changes[$xref1."_".$GEDCOM])) {
-						$gedrec = find_updated_record($xref1);
+						$gedrec = find_updated_record($xref1, PGV_GED_ID);
 					}
 
 					if (empty($gedrec)) {
-						$gedrec = find_source_record($xref1);
+						$gedrec = find_source_record($xref1, PGV_GED_ID);
 					}
 
 					if (!empty($gedrec)) {
@@ -550,11 +550,11 @@ class PGVServiceLogic extends GenealogyService {
 				$xref1 = trim($xref1);
 				if (!empty($xref1)) {
 					if (isset($pgv_changes[$xref1."_".$GEDCOM])) {
-						$gedrec = find_updated_record($xref1);
+						$gedrec = find_updated_record($xref1, PGV_GED_ID);
 					}
 
 					if (empty($gedrec)) {
-						$gedrec = find_gedcom_record($xref1);
+						$gedrec = find_gedcom_record($xref1, PGV_GED_ID);
 					}
 
 					if (!empty($gedrec)) {
@@ -780,7 +780,7 @@ class PGVServiceLogic extends GenealogyService {
 
 	function postCheckUpdatesByID($SID,$RID,$lastUpdate) {
 		// Method call used to retrieve data by the Gedcom Id form PGV
-		$indirec = find_person_record($RID);
+		$indirec = find_person_record($RID, PGV_GED_ID);
 
 		if (!empty($indirec)) {
 			// MEthod call used to reteave data by the Person Created above by there gedcom id.

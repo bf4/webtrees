@@ -60,9 +60,9 @@ $disp = true;
 if (empty($pid) && !empty($mid)) $pid = $mid;
 if (!empty($pid)) {
 	if (!isset($pgv_changes[$pid."_".PGV_GEDCOM])) {
-		$gedrec = find_media_record($pid);
+		$gedrec = find_media_record($pid, PGV_GED_ID);
 	} else {
-		$gedrec = find_updated_record($pid);
+		$gedrec = find_updated_record($pid, PGV_GED_ID);
 	}
 	$disp = displayDetailsById($pid, "OBJE");
 }
@@ -535,9 +535,9 @@ if ($action == "update") {
 
 		if (!empty($pid)) {
 			if (!isset($pgv_changes[$pid."_".PGV_GEDCOM])) {
-				$gedrec = find_gedcom_record($pid);
+				$gedrec = find_gedcom_record($pid, PGV_GED_ID);
 			} else {
-				$gedrec = find_updated_record($pid);
+				$gedrec = find_updated_record($pid, PGV_GED_ID);
 			}
 		}
 		$newrec = "0 @$pid@ OBJE\n";
