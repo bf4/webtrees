@@ -2529,7 +2529,7 @@ function get_relationship1($pid1, $pid2, $followspouse=true, $maxlength=0) {
 }
 
 function get_relationship2($pid1, $pid2, $followspouse=true, $maxlength=0, $ignore_cache=false, $path_to_find=0) {
-	global $pgv_changes, PGV_GEDCOM, $TBLPREFIX;
+	global $pgv_changes, $TBLPREFIX;
 	static $RELA=null;
 	static $PATHS=null;
 
