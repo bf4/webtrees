@@ -1363,7 +1363,7 @@ loadLangFile('pgv_help');
 */
 function print_text($help, $level=0, $noprint=0){
 	global $pgv_lang, $factarray, $faqlist, $COMMON_NAMES_THRESHOLD;
-	global $INDEX_DIRECTORY, $GEDCOM, $LANGUAGE;
+	global $INDEX_DIRECTORY, $LANGUAGE;
 	global $GUESS_URL, $UpArrow, $DAYS_TO_SHOW_LIMIT, $MEDIA_DIRECTORY;
 	global $repeat, $thumbnail, $xref, $pid;
 
@@ -1426,6 +1426,7 @@ function print_text($help, $level=0, $noprint=0){
 	if ($level>0) return $sentence;
 	echo $sentence;
 }
+
 function print_help_index($help){
 	global $pgv_lang;
 	$sentence = $pgv_lang[$help];
@@ -1716,9 +1717,9 @@ function PrintReady($text, $InHeaders=false, $trim=true) {
 * @param string $linebr optional linebreak
 */
 function print_asso_rela_record($pid, $factrec, $linebr=false, $type='INDI') {
-	global $GEDCOM, $SHOW_ID_NUMBERS, $TEXT_DIRECTION, $pgv_lang, $factarray, $PGV_IMAGE_DIR, $PGV_IMAGES, $view;
+	global $SHOW_ID_NUMBERS, $TEXT_DIRECTION, $pgv_lang, $factarray, $PGV_IMAGE_DIR, $PGV_IMAGES, $view;
 	global $PEDIGREE_FULL_DETAILS, $LANGUAGE, $lang_short_cut;
-	$ged_id=get_id_from_gedcom($GEDCOM);
+
 	// get ASSOciate(s) ID(s)
 	$ct = preg_match_all("/\d ASSO @(.*)@/", $factrec, $match, PREG_SET_ORDER);
 	for ($i=0; $i<$ct; $i++) {
@@ -1786,11 +1787,11 @@ function print_asso_rela_record($pid, $factrec, $linebr=false, $type='INDI') {
 			else $rela = $factarray["RELA"]; // default
 
 		// ASSOciate ID link
-		$gedrec = find_gedcom_record($pid2, $ged_id);
+		$gedrec = find_gedcom_record($pid2, PGV_GED_ID);
 		if (strstr($gedrec, "@ INDI")!==false || strstr($gedrec, "@ SUBM")!==false) {
 			$record=GedcomRecord::getInstance($pid2);
 			$name=$record->getFullName();
-			echo "<a href=\"".encode_url("individual.php?pid={$pid2}&ged={$GEDCOM}")."\">" . PrintReady($name);
+			echo "<a href=\"".encode_url($record->getLinkUrl())."\">" . PrintReady($name);
 			if ($SHOW_ID_NUMBERS) {
 				echo "&nbsp;&nbsp;";
 				if ($TEXT_DIRECTION=="rtl") echo getRLM();
@@ -1824,16 +1825,16 @@ function print_asso_rela_record($pid, $factrec, $linebr=false, $type='INDI') {
 			// RELAtionship calculation : for a family print relationship to both spouses
 			if ($view!="preview" && !$autoRela) {
 				if ($type=='FAM') {
-					$famrec = find_family_record($pid, $ged_id);
+					$famrec = find_family_record($pid, PGV_GED_ID);
 					if ($famrec) {
 						$parents = find_parents_in_record($famrec);
 						$pid1 = $parents["HUSB"];
-						if ($pid1 && $pid1!=$pid2) echo " - <a href=\"".encode_url("relationship.php?show_full={$PEDIGREE_FULL_DETAILS}&pid1={$pid1}&pid2={$pid2}&pretty=2&followspouse=1&ged={$GEDCOM}")."\">[" . $pgv_lang["relationship_chart"] . "<img src=\"$PGV_IMAGE_DIR/" . $PGV_IMAGES["sex"]["small"] . "\" title=\"" . $pgv_lang["husband"] . "\" alt=\"" . $pgv_lang["husband"] . "\" class=\"gender_image\" />]</a>";
+						if ($pid1 && $pid1!=$pid2) echo " - <a href=\"".encode_url("relationship.php?show_full={$PEDIGREE_FULL_DETAILS}&pid1={$pid1}&pid2={$pid2}&pretty=2&followspouse=1&ged=".PGV_GED_ID)."\">[" . $pgv_lang["relationship_chart"] . "<img src=\"$PGV_IMAGE_DIR/" . $PGV_IMAGES["sex"]["small"] . "\" title=\"" . $pgv_lang["husband"] . "\" alt=\"" . $pgv_lang["husband"] . "\" class=\"gender_image\" />]</a>";
 						$pid1 = $parents["WIFE"];
-						if ($pid1 && $pid1!=$pid2) echo " - <a href=\"".encode_url("relationship.php?show_full={$PEDIGREE_FULL_DETAILS}&pid1={$pid1}&pid2={$pid2}&pretty=2&followspouse=1&ged={$GEDCOM}")."\">[" . $pgv_lang["relationship_chart"] . "<img src=\"$PGV_IMAGE_DIR/" . $PGV_IMAGES["sexf"]["small"] . "\" title=\"" . $pgv_lang["wife"] . "\" alt=\"" . $pgv_lang["wife"] . "\" class=\"gender_image\" />]</a>";
+						if ($pid1 && $pid1!=$pid2) echo " - <a href=\"".encode_url("relationship.php?show_full={$PEDIGREE_FULL_DETAILS}&pid1={$pid1}&pid2={$pid2}&pretty=2&followspouse=1&ged=".PGV_GED_ID)."\">[" . $pgv_lang["relationship_chart"] . "<img src=\"$PGV_IMAGE_DIR/" . $PGV_IMAGES["sexf"]["small"] . "\" title=\"" . $pgv_lang["wife"] . "\" alt=\"" . $pgv_lang["wife"] . "\" class=\"gender_image\" />]</a>";
 					}
 				}
-				else if ($pid!=$pid2 && $rela!="twin_sister") echo " - <a href=\"".encode_url("relationship.php?show_full={$PEDIGREE_FULL_DETAILS}&pid1={$pid}&pid2={$pid2}&pretty=2&followspouse=1&ged={$GEDCOM}")."\">[" . $pgv_lang["relationship_chart"] . "]</a>";
+				else if ($pid!=$pid2 && $rela!="twin_sister") echo " - <a href=\"".encode_url("relationship.php?show_full={$PEDIGREE_FULL_DETAILS}&pid1={$pid}&pid2={$pid2}&pretty=2&followspouse=1&ged=".PGV_GED_ID)."\">[" . $pgv_lang["relationship_chart"] . "]</a>";
 			}
 
 		}
