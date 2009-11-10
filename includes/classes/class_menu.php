@@ -216,7 +216,7 @@ class Menu {
 		$id = $menucount.rand();
 		if ($this->separator)
 		{
-			$output = "<div id=\"menu{$id}\" class=\"menu_separator\">"
+			$output = "<div id=\"menu{$id}\" class=\"menu_separator center\">"
 			."<img src=\"{$PGV_IMAGE_DIR}/{$PGV_IMAGES['hline']['other']}\" alt=\"\" />"
 			."</div>";
 			return $output;
