@@ -313,16 +313,17 @@ class batch_update {
 	// Get the current view of a record, allowing for pending changes
 	static function getLatestRecord($xref, $type) {
 		global $GEDCOM, $pgv_changes;
+		$ged_id=get_id_from_gedcom($GEDCOM);
 
 		if (isset($pgv_changes[$xref.'_'.$GEDCOM])) {
-			return find_updated_record($xref);
+			return find_updated_record($xref, $ged_id);
 		} else {
 			switch ($type) {
-			case 'INDI': return find_person_record($xref);
-			case 'FAM':  return find_family_record($xref);
-			case 'SOUR': return find_source_record($xref);
-			case 'OBJE': return find_media_record ($xref);
-			default:     return find_other_record ($xref);
+			case 'INDI': return find_person_record($xref, $ged_id);
+			case 'FAM':  return find_family_record($xref, $ged_id);
+			case 'SOUR': return find_source_record($xref, $ged_id);
+			case 'OBJE': return find_media_record ($xref, $ged_id);
+			default:     return find_other_record ($xref, $ged_id);
 			}
 		}
 	}

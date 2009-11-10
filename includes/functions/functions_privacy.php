@@ -71,6 +71,7 @@ if (!function_exists("is_dead")) {
 */
 function is_dead($indirec, $current_year='', $import=false) {
 	global $CHECK_CHILD_DATES, $MAX_ALIVE_AGE, $GEDCOM;
+	$ged_id=get_id_from_gedcom($GEDCOM);
 
 	if (preg_match('/^0 @('.PGV_REGEX_XREF.')@ INDI/', $indirec, $match)) {
 		$pid=$match[1];
@@ -120,7 +121,7 @@ function is_dead($indirec, $current_year='', $import=false) {
 			$parents=find_parents($famc_match);
 			if ($parents) {
 				if (!empty($parents['HUSB'])) {
-					preg_match_all('/\n2 DATE (.+)/', find_person_record($parents['HUSB']), $date_matches);
+					preg_match_all('/\n2 DATE (.+)/', find_person_record($parents['HUSB'], $ged_id), $date_matches);
 					foreach ($date_matches[1] as $date_match) {
 						$date=new GedcomDate($date_match);
 						$event_year=$date->gregorianYear();
@@ -131,7 +132,7 @@ function is_dead($indirec, $current_year='', $import=false) {
 					}
 				}
 				if (!empty($parents['WIFE'])) {
-					preg_match_all('/\n2 DATE (.+)/', find_person_record($parents['WIFE']), $date_matches);
+					preg_match_all('/\n2 DATE (.+)/', find_person_record($parents['WIFE'], $ged_id), $date_matches);
 					foreach ($date_matches[1] as $date_match) {
 						$date=new GedcomDate($date_match);
 						$event_year=$date->gregorianYear();
@@ -147,7 +148,7 @@ function is_dead($indirec, $current_year='', $import=false) {
 		// Check spouses
 		preg_match_all('/\n1 FAMS @('.PGV_REGEX_XREF.')@/', $indirec, $fams_matches);
 		foreach ($fams_matches[1] as $fams_match) {
-			$famrec=find_family_record($fams_match);
+			$famrec=find_family_record($fams_match, $ged_id);
 			// Check all marriage events
 			preg_match_all('/\n1 '.PGV_EVENTS_MARR.'(?:\n[2-9].+)*\n2 DATE (.+)/', $indirec, $date_matches);
 			foreach ($date_matches[1] as $date_match) {
@@ -166,7 +167,7 @@ function is_dead($indirec, $current_year='', $import=false) {
 				} else {
 					$spid = $parents['WIFE'];
 				}
-				preg_match_all('/\n2 DATE (.+)/', find_person_record($spid), $date_matches);
+				preg_match_all('/\n2 DATE (.+)/', find_person_record($spid, $ged_id), $date_matches);
 				foreach ($date_matches[1] as $date_match) {
 					$date=new GedcomDate($date_match);
 					$event_year=$date->gregorianYear();
@@ -179,7 +180,7 @@ function is_dead($indirec, $current_year='', $import=false) {
 			// Check child dates
 			preg_match_all('/\n1 CHIL @('.PGV_REGEX_XREF.')@/', $famrec, $chil_matches);
 			foreach ($chil_matches[1] as $chil_match) {
-				$childrec=find_person_record($chil_match);
+				$childrec=find_person_record($chil_match, $ged_id);
 				preg_match_all('/\n2 DATE (.+)/', $childrec, $date_matches);
 				// Assume children born after age of 15
 				foreach ($date_matches[1] as $date_match) {
@@ -192,9 +193,9 @@ function is_dead($indirec, $current_year='', $import=false) {
 				// Check grandchildren
 				preg_match_all('/\n1 FAMS @('.PGV_REGEX_XREF.')@/', $childrec, $fams2_matches);
 				foreach ($fams2_matches[1] as $fams2_match) {
-					preg_match_all('/\n1 CHIL @('.PGV_REGEX_XREF.')@/', find_family_record($fams2_match), $chil2_matches);
+					preg_match_all('/\n1 CHIL @('.PGV_REGEX_XREF.')@/', find_family_record($fams2_match, $ged_id), $chil2_matches);
 					foreach ($chil2_matches[1] as $chil2_match) {
-						$grandchildrec=find_person_record($chil2_match);
+						$grandchildrec=find_person_record($chil2_match, $ged_id);
 						preg_match_all('/\n2 DATE (.+)/', $childrec, $date_matches);
 						// Assume grandchildren born after age of 30
 						foreach ($date_matches[1] as $date_match) {
@@ -223,9 +224,11 @@ if (!function_exists("displayDetailsById")) {
 */
 function checkPrivacyByYear($pid) {
 	global $MAX_ALIVE_AGE;
+	global $GEDCOM;
+	$ged_id=get_id_from_gedcom($GEDCOM);
 
 	$cyear = date("Y");
-	$indirec = find_person_record($pid);
+	$indirec = find_person_record($pid, $ged_id);
 	//-- check death record
 	$deatrec = get_sub_record(1, "1 DEAT", $indirec);
 	$ct = preg_match("/2 DATE .*(\d\d\d\d).*/", $deatrec, $match);
@@ -239,7 +242,7 @@ function checkPrivacyByYear($pid) {
 	//-- check marriage records
 	$famids = find_families_in_record($indirec, "FAMS");
 	foreach($famids as $indexval => $famid) {
-		$famrec = find_family_record($famid);
+		$famrec = find_family_record($famid, $ged_id);
 		//-- check death record
 		$marrrec = get_sub_record(1, "1 MARR", $indirec);
 		$ct = preg_match("/2 DATE .*(\d\d\d\d).*/", $marrrec, $match);
@@ -286,6 +289,8 @@ function displayDetailsById($pid, $type = "INDI") {
 	global $PRIV_PUBLIC, $PRIV_USER, $PRIV_NONE, $PRIV_HIDE, $USE_RELATIONSHIP_PRIVACY, $CHECK_MARRIAGE_RELATIONS, $MAX_RELATION_PATH_LENGTH;
 	global $global_facts, $person_privacy, $user_privacy, $HIDE_LIVE_PEOPLE, $GEDCOM, $SHOW_DEAD_PEOPLE, $MAX_ALIVE_AGE, $PRIVACY_BY_YEAR;
 	global $PRIVACY_CHECKS, $PRIVACY_BY_RESN, $SHOW_SOURCES, $SHOW_LIVING_NAMES, $INDEX_DIRECTORY;
+	global $GEDCOM;
+	$ged_id=get_id_from_gedcom($GEDCOM);
 
 	if ($_SESSION["pgv_user"]==PGV_USER_ID) {
 		// Normal operation
@@ -376,7 +381,7 @@ function displayDetailsById($pid, $type = "INDI") {
 
 		//-- look for an Ancestral File RESN (restriction) tag
 		if (isset($PRIVACY_BY_RESN) && ($PRIVACY_BY_RESN==true)) {
-			$gedrec = find_gedcom_record($pid);
+			$gedrec = find_gedcom_record($pid, $ged_id);
 			$resn = get_gedcom_value("RESN", 1, $gedrec);
 			if (!empty($resn)) {
 				if ($resn == "confidential") $ret = false;
@@ -391,7 +396,7 @@ function displayDetailsById($pid, $type = "INDI") {
 
 		if ($pgv_USER_CAN_ACCESS) {
 			if ($type=="INDI") {
-				$gedrec = find_person_record($pid);
+				$gedrec = find_person_record($pid, $ged_id);
 				$isdead = is_dead($gedrec);
 				if ($USE_RELATIONSHIP_PRIVACY || get_user_setting($username, 'relationship_privacy')=="Y") {
 					if ($isdead) {
@@ -472,7 +477,7 @@ function displayDetailsById($pid, $type = "INDI") {
 
 	//-- look for an Ancestral File RESN (restriction) tag
 	if (isset($PRIVACY_BY_RESN) && ($PRIVACY_BY_RESN==true)) {
-		$gedrec = find_gedcom_record($pid);
+		$gedrec = find_gedcom_record($pid, $ged_id);
 		$resn = get_gedcom_value("RESN", 1, $gedrec);
 		if ($resn == "none") {
 			if ($cache_privacy) $privacy_cache[$pkey] = true;
@@ -494,7 +499,7 @@ function displayDetailsById($pid, $type = "INDI") {
 			}
 		}
 
-		$gedrec = find_person_record($pid);
+		$gedrec = find_person_record($pid, $ged_id);
 		$disp = is_dead($gedrec);
 		if ($disp) {
 			if ($SHOW_DEAD_PEOPLE>=$pgv_USER_ACCESS_LEVEL) {
@@ -538,7 +543,7 @@ function displayDetailsById($pid, $type = "INDI") {
 	if ($type=="SOUR") {
 		if ($SHOW_SOURCES>=$pgv_USER_ACCESS_LEVEL) {
 			$disp = true;
-			$sourcerec = find_source_record($pid);
+			$sourcerec = find_source_record($pid, $ged_id);
 			if (!empty($sourcerec)) {
 				$repoid = get_gedcom_value("REPO", 1, $sourcerec);
 				$disp = displayDetailsById($repoid, "REPO");
@@ -878,7 +883,7 @@ function FactEditRestricted($pid, $factrec) {
 				return false;
 			}
 			if (gedcom_record_type($pid, PGV_GED_ID)=='FAM') {
-				$famrec = find_family_record($pid);
+				$famrec = find_family_record($pid, PGV_GED_ID);
 				$parents = find_parents_in_record($famrec);
 				if ($myindi == $parents["HUSB"] || $myindi == $parents["WIFE"]) {
 					return false;
@@ -901,9 +906,9 @@ function FactEditRestricted($pid, $factrec) {
 function FactViewRestricted($pid, $factrec) {
 	if ($_SESSION['pgv_user']==PGV_USER_ID) {
 		// Normal operation
-		$pgv_GED_ID           =PGV_GED_ID;
-		$pgv_USER_GEDCOM_ADMIN=PGV_USER_GEDCOM_ADMIN;
-		$pgv_USER_GEDCOM_ID   =PGV_USER_GEDCOM_ID;
+		$pgv_GED_ID				= PGV_GED_ID;
+		$pgv_USER_GEDCOM_ADMIN	= PGV_USER_GEDCOM_ADMIN;
+		$pgv_USER_GEDCOM_ID		= PGV_USER_GEDCOM_ID;
 	} else {
 		// We're in the middle of a Download -- get overriding information from cache
 		$pgv_GED_ID           =$_SESSION['pgv_GED_ID'];
@@ -926,7 +931,7 @@ function FactViewRestricted($pid, $factrec) {
 				return false;
 			}
 			if (gedcom_record_type($pid, $pgv_GED_ID)=='FAM') {
-				$famrec = find_family_record($pid);
+				$famrec = find_family_record($pid, $pgv_GED_ID);
 				$parents = find_parents_in_record($famrec);
 				if ($myindi == $parents['WIFE'] || $myindi == $parents['HUSB']) {
 					return false;

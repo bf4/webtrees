@@ -1191,6 +1191,9 @@ function print_note_record($text, $nlevel, $nrec, $textOnly=false, $return=false
 function print_fact_notes($factrec, $level, $textOnly=false, $return=false) {
 	global $pgv_lang;
 	global $factarray;
+	global $GEDCOM;
+	$ged_id=get_id_from_gedcom();
+
 	$data = "";
 	$printDone = false;
 	$nlevel = $level+1;
@@ -1210,7 +1213,7 @@ function print_fact_notes($factrec, $level, $textOnly=false, $return=false) {
 		} else {
 			if (displayDetailsById($nmatch[1], "NOTE")) {
 				//-- print linked note records
-				$noterec = find_gedcom_record($nmatch[1]);
+				$noterec = find_gedcom_record($nmatch[1], $ged_id);
 				$nt = preg_match("/0 @$nmatch[1]@ NOTE (.*)/", $noterec, $n1match);
 				$closeSpan = print_note_record(($nt>0)?$n1match[1]:"", 1, $noterec, $textOnly, true);
 				$data .= $closeSpan;
@@ -1715,6 +1718,7 @@ function PrintReady($text, $InHeaders=false, $trim=true) {
 function print_asso_rela_record($pid, $factrec, $linebr=false, $type='INDI') {
 	global $GEDCOM, $SHOW_ID_NUMBERS, $TEXT_DIRECTION, $pgv_lang, $factarray, $PGV_IMAGE_DIR, $PGV_IMAGES, $view;
 	global $PEDIGREE_FULL_DETAILS, $LANGUAGE, $lang_short_cut;
+	$ged_id=get_id_from_gedcom($GEDCOM);
 	// get ASSOciate(s) ID(s)
 	$ct = preg_match_all("/\d ASSO @(.*)@/", $factrec, $match, PREG_SET_ORDER);
 	for ($i=0; $i<$ct; $i++) {
@@ -1782,7 +1786,7 @@ function print_asso_rela_record($pid, $factrec, $linebr=false, $type='INDI') {
 			else $rela = $factarray["RELA"]; // default
 
 		// ASSOciate ID link
-		$gedrec = find_gedcom_record($pid2);
+		$gedrec = find_gedcom_record($pid2, $ged_id);
 		if (strstr($gedrec, "@ INDI")!==false || strstr($gedrec, "@ SUBM")!==false) {
 			$record=GedcomRecord::getInstance($pid2);
 			$name=$record->getFullName();
@@ -1820,7 +1824,7 @@ function print_asso_rela_record($pid, $factrec, $linebr=false, $type='INDI') {
 			// RELAtionship calculation : for a family print relationship to both spouses
 			if ($view!="preview" && !$autoRela) {
 				if ($type=='FAM') {
-					$famrec = find_family_record($pid);
+					$famrec = find_family_record($pid, $ged_id);
 					if ($famrec) {
 						$parents = find_parents_in_record($famrec);
 						$pid1 = $parents["HUSB"];
@@ -1928,6 +1932,8 @@ function format_parents_age($pid, $birth_date=null) {
 */
 function format_fact_date(&$eventObj, $anchor=false, $time=false) {
 	global $factarray, $pgv_lang, $pid, $SEARCH_SPIDER;
+	global $GEDCOM;
+	$ged_id=get_id_from_gedcom($GEDCOM);
 
 	if (!is_object($eventObj)) pgv_error_handler(2, "Must use Event object", __FILE__, __LINE__);
 	$factrec = $eventObj->getGedcomRecord();
@@ -1993,7 +1999,7 @@ function format_fact_date(&$eventObj, $anchor=false, $time=false) {
 			}
 		}
 		else if (!is_null($person) && $person->getType()=='FAM') {
-			$indirec=find_person_record($pid);
+			$indirec=find_person_record($pid, $ged_id);
 			$indi=new Person($indirec);
 			$birth_date=$indi->getBirthDate();
 			$death_date=$indi->getDeathDate();
@@ -2471,6 +2477,8 @@ function print_findmedia_link($element_id, $choose="", $ged='', $asString=false)
 * @return string
 */
 function get_lds_glance($indirec) {
+	global $GEDCOM;
+	$ged_id=get_id_from_gedcom($GEDCOM);
 	$text = "";
 
 	$ord = get_sub_record(1, "1 BAPL", $indirec);
@@ -2482,7 +2490,7 @@ function get_lds_glance($indirec) {
 	$found = false;
 	$ct = preg_match_all("/1 FAMS @(.*)@/", $indirec, $match, PREG_SET_ORDER);
 	for($i=0; $i<$ct; $i++) {
-		$famrec = find_family_record($match[$i][1]);
+		$famrec = find_family_record($match[$i][1], $ged_id);
 		if ($famrec) {
 			$ord = get_sub_record(1, "1 SLGS", $famrec);
 			if ($ord) {

@@ -602,14 +602,14 @@ function build_indiv_map($indifacts, $famids) {
 		$hparents=false;
 		for($f=0; $f<count($famids); $f++) {
 			if (!empty($famids[$f])) {
-				$famrec = find_family_record($famids[$f]);
-				if (empty($famrec)) $famrec = find_updated_record($famids[$f]);
+				$famrec = find_family_record($famids[$f], PGV_GED_ID);
+				if (empty($famrec)) $famrec = find_updated_record($famids[$f], PGV_GED_ID);
 				if ($famrec) {
 					$num = preg_match_all("/1\s*CHIL\s*@(.*)@/", $famrec, $smatch, PREG_SET_ORDER);
 					for($j=0; $j<$num; $j++) {
 						$person=Person::getInstance($smatch[$j][1]);
 						if ($person->canDisplayDetails()) {
-							$srec = find_person_record($smatch[$j][1]);
+							$srec = find_person_record($smatch[$j][1], PGV_GED_ID);
 							$birthrec = '';
 							$placerec = '';
 							foreach ($person->getAllFactsByType('BIRT') as $sEvent) {

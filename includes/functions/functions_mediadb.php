@@ -373,7 +373,7 @@ function get_medialist($currentdir = false, $directory = "", $linkonly = false, 
 	$mediaObjects = array_unique($mediaObjects);
 	$changedRecords = array_unique($changedRecords);
 	foreach ($changedRecords as $pid) {
-		$gedrec = find_updated_record($pid);
+		$gedrec = find_updated_record($pid, PGV_GED_ID);
 		if ($gedrec) {
 			foreach ($mediaObjects as $mediaId) {
 				if (strpos($gedrec, "@" . $mediaId . "@")) {
@@ -1152,10 +1152,10 @@ function show_media_form($pid, $action = "newentry", $filename = "", $linktoid =
 		print "<br /><sub>" . $pgv_lang["add_linkid_advice"] . "</sub></td></tr>\n";
 	}
 	if (isset ($pgv_changes[$pid . "_" . PGV_GEDCOM]))
-		$gedrec = find_updated_record($pid);
+		$gedrec = find_updated_record($pid, PGV_GED_ID);
 	else
 		if (gedcom_record_type($pid, get_id_from_gedcom(PGV_GEDCOM)) == "OBJE")
-			$gedrec = find_media_record($pid);
+			$gedrec = find_media_record($pid, PGV_GED_ID);
 		else
 			$gedrec = "";
 

@@ -1318,10 +1318,10 @@ function accept_changes($cid) {
 		}
 		$gid = $change["gid"];
 		$gedrec = $change["undo"];
-		if (empty($gedrec)) {
-			$gedrec = find_gedcom_record($gid);
-		}
 		$ged_id=get_id_from_gedcom($GEDCOM);
+		if (empty($gedrec)) {
+			$gedrec = find_gedcom_record($gid, $ged_id);
+		}
 
 		update_record($gedrec, $ged_id, $change["type"]=="delete");
 

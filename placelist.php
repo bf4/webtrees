@@ -84,7 +84,7 @@ if ($level>count($parent)) $level = count($parent);
 if ($level<count($parent)) $level = 0;
 
 //-- extract the place form encoded in the gedcom
-$header = find_gedcom_record("HEAD");
+$header = find_gedcom_record("HEAD", PGV_GED_ID);
 $hasplaceform = strpos($header, "1 PLAC");
 
 //-- hierarchical display

@@ -128,9 +128,9 @@ case 'get':
 		$gedrecords="";
 		foreach ($xrefs as $xref1) {
 			if (!empty($xref1)) {
-				$gedrec=find_updated_record($xref1);
+				$gedrec=find_updated_record($xref1, $GED_ID);
 				if (!$gedrec) {
-					$gedrec=find_gedcom_record($xref1);
+					$gedrec=find_gedcom_record($xref1, $GED_ID);
 					if ($gedrec) {
 						preg_match("/0 @(.*)@ (.*)/", $gedrec, $match);
 						$type = trim($match[2]);
@@ -141,7 +141,7 @@ case 'get':
 						else if ($view=='version' || $view=='change') {
 							$chan = get_gedcom_value('CHAN', 1, $gedrec);
 							if (empty($chan)) {
-								$head = find_gedcom_record("HEAD");
+								$head = find_gedcom_record("HEAD", $GED_ID);
 								$head_date = get_sub_record(1, "1 DATE", $head);
 								$lines = explode("\n", $head_date);
 								$head_date = "";
@@ -252,9 +252,9 @@ case 'getnext':
 	$xref=safe_REQUEST($_REQUEST,'xref', PGV_REGEX_XREF);
 	if ($xref) {
 		$xref1 = get_next_xref($xref, $GED_ID);
-		$gedrec = find_updated_record($xref1);
+		$gedrec = find_updated_record($xref1, $GED_ID);
 		if (!$gedrec) {
-			$gedrec = find_gedcom_record($xref1);
+			$gedrec = find_gedcom_record($xref1, $GED_ID);
 		}
 		if (!displayDetailsById($xref1)) {
 			//-- do not have full access to this record, so privatize it
@@ -271,9 +271,9 @@ case 'getprev':
 	$xref=safe_REQUEST($_REQUEST,'xref', PGV_REGEX_XREF);
 	if ($xref) {
 		$xref1 = get_prev_xref($xref, $GED_ID);
-		$gedrec = find_updated_record($xref1);
+		$gedrec = find_updated_record($xref1, $GED_ID);
 		if (!$gedrec) {
-			$gedrec = find_gedcom_record($xref1);
+			$gedrec = find_gedcom_record($xref1, $GED_ID);
 		}
 		if (!displayDetailsById($xref1)) {
 			//-- do not have full access to this record, so privatize it

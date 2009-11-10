@@ -89,6 +89,7 @@ function print_family_parents($famid, $sosa = 0, $label="", $parid="", $gparid="
 	global $pbwidth, $pbheight;
 	global $PGV_IMAGE_DIR, $PGV_IMAGES;
 	global $show_changes, $pgv_changes, $GEDCOM;
+	$ged_id=get_id_from_gedcom($GEDCOM);
 
 	$family = Family::getInstance($famid);
 	if (is_null($family)) return;
@@ -110,7 +111,7 @@ function print_family_parents($famid, $sosa = 0, $label="", $parid="", $gparid="
 
 	// -- get the new record and parents if in editing show changes mode
 	if (PGV_USER_CAN_EDIT && isset($pgv_changes[$famid . "_" . $GEDCOM])) {
-		$newrec = find_updated_record($famid);
+		$newrec = find_updated_record($famid, $ged_id);
 		$newparents = find_parents_in_record($newrec);
 	}
 
@@ -265,6 +266,7 @@ function print_family_parents($famid, $sosa = 0, $label="", $parid="", $gparid="
 function print_family_children($famid, $childid = "", $sosa = 0, $label="", $personcount="1") {
 	global $pgv_lang, $factarray, $pbwidth, $pbheight, $view, $show_famlink, $show_cousins;
 	global $PGV_IMAGE_DIR, $PGV_IMAGES, $show_changes, $pgv_changes, $GEDCOM, $SHOW_ID_NUMBERS, $TEXT_DIRECTION;
+	$ged_id=get_id_from_gedcom($GEDCOM);
 
 	$family=Family::getInstance($famid);
 	$children=$family->getChildrenIds();
@@ -278,7 +280,7 @@ function print_family_children($famid, $childid = "", $sosa = 0, $label="", $per
 	$oldchildren = array();
 	if (PGV_USER_CAN_EDIT) {
 		if ((isset($_REQUEST['show_changes'])&&$_REQUEST['show_changes']=='yes') && (isset($pgv_changes[$famid . "_" . $GEDCOM]))) {
-			$newrec = find_updated_record($famid);
+			$newrec = find_updated_record($famid, $ged_id);
 			$ct = preg_match_all("/1 CHIL @(.*)@/", $newrec, $match, PREG_SET_ORDER);
 			if ($ct > 0) {
 				$oldchil = array();
@@ -341,7 +343,7 @@ function print_family_children($famid, $childid = "", $sosa = 0, $label="", $per
  						$divrec = "";
 						if (showFact("MARR", $famid)) {
 							// marriage date
-							$famrec = find_family_record($famid);
+							$famrec = find_family_record($famid, $ged_id);
 							$ct = preg_match("/2 DATE.*(\d\d\d\d)/", get_sub_record(1, "1 MARR", $famrec), $match);
 							if ($ct>0) print "<span class=\"date\">".trim($match[1])."</span>";
 							// divorce date
@@ -395,12 +397,12 @@ function print_family_children($famid, $childid = "", $sosa = 0, $label="", $per
 		print "<tr><td></td><td valign=\"top\" >";
 
 		$nchi = "";
-		if (isset($pgv_changes[$famid."_".$GEDCOM])) $famrec = find_updated_record($famid);
-		else $famrec = find_family_record($famid);
+		if (isset($pgv_changes[$famid."_".$GEDCOM])) $famrec = find_updated_record($famid, $ged_id);
+		else $famrec = find_family_record($famid, $ged_id);
 		$ct = preg_match("/1 NCHI (\w+)/", $famrec, $match);
 		if ($ct>0) $nchi = $match[1];
 		else {
-			$famrec = find_family_record($famid);
+			$famrec = find_family_record($famid, $ged_id);
 			$ct = preg_match("/1 NCHI (\w+)/", $famrec, $match);
 			if ($ct>0) $nchi = $match[1];
 		}
@@ -572,14 +574,14 @@ function print_sosa_family($famid, $childid, $sosa, $label="", $parid="", $gpari
 function check_rootid($rootid) {
 	global $PEDIGREE_ROOT_ID, $USE_RIN;
 	// -- if the $rootid is not already there then find the first person in the file and make him the root
-	if (!find_person_record($rootid)) {
-		if (find_person_record(PGV_USER_ROOT_ID)) {
+	if (!find_person_record($rootid, PGV_GED_ID)) {
+		if (find_person_record(PGV_USER_ROOT_ID, PGV_GED_ID)) {
 			$rootid=PGV_USER_ROOT_ID;
 		} else {
-			if (find_person_record(PGV_USER_GEDCOM_ID)) {
+			if (find_person_record(PGV_USER_GEDCOM_ID, PGV_GED_ID)) {
 				$rootid=PGV_USER_GEDCOM_ID;
 			} else {
-				if (find_person_record(trim($PEDIGREE_ROOT_ID))) {
+				if (find_person_record($PEDIGREE_ROOT_ID, PGV_GED_ID)) {
 					$rootid=trim($PEDIGREE_ROOT_ID);
 				} else {
 					$rootid=get_first_xref('INDI', PGV_GED_ID);
@@ -593,7 +595,7 @@ function check_rootid($rootid) {
 	}
 
 	if ($USE_RIN) {
-		$indirec = find_person_record($rootid);
+		$indirec = find_person_record($rootid, PGV_GED_ID);
 		if ($indirec == false) $rootid = find_rin_id($rootid);
 	}
 
@@ -852,6 +854,8 @@ function find_last_spouse($pid) {
 function print_cousins($famid, $personcount="1") {
 	global $show_full, $bheight, $bwidth;
 	global $PGV_IMAGE_DIR, $PGV_IMAGES, $pgv_lang, $TEXT_DIRECTION;
+	global $GEDCOM;
+	$ged_id=get_id_from_gedcom($GEDCOM);
 
 	$family=Family::getInstance($famid);
 	$fchildren=$family->getChildrenIds();
@@ -885,7 +889,7 @@ function print_cousins($famid, $personcount="1") {
 		print "</table>";
 	}
 	else {
-		$famrec = find_family_record($famid);
+		$famrec = find_family_record($famid, $ged_id);
 		$ct = preg_match("/1 NCHI (\w+)/", $famrec, $match);
 		if ($ct>0) $nchi = $match[1];
 		else $nchi = "";

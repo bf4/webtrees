@@ -65,7 +65,7 @@ function print_descendency($pid, $count) {
 	if (count($famids)>0) {
 		$firstkids = 0;
 		foreach($famids as $indexval => $famid) {
-			$famrec = find_family_record($famid);
+			$famrec = find_family_record($famid, PGV_GED_ID);
 			$ct = preg_match_all("/1 CHIL @(.*)@/", $famrec, $match, PREG_SET_ORDER);
 			if ($ct>0) {
 			print "<table cellspacing=\"0\" cellpadding=\"0\" border=\"0\">\n";
@@ -119,7 +119,7 @@ function print_descendency($pid, $count) {
 	//-- add offset divs to make things line up better
 	if ($show_spouse) {
 		foreach($famids as $indexval => $famid) {
-			$famrec = find_family_record($famid);
+			$famrec = find_family_record($famid, PGV_GED_ID);
 			if (!empty($famrec)) {
 				$marrec = get_sub_record(1, "1 MARR", $famrec);
 				if (!empty($marrec)) {
@@ -133,7 +133,7 @@ function print_descendency($pid, $count) {
 	// NOTE: If statement OK
 	if ($show_spouse) {
 		foreach($famids as $indexval => $famid) {
-			$famrec = find_family_record($famid);
+			$famrec = find_family_record($famid, PGV_GED_ID);
 			if (!empty($famrec)) {
 				$parents = find_parents_in_record($famrec);
 				$marrec = get_sub_record(1, "1 MARR", $famrec);
@@ -149,7 +149,7 @@ function print_descendency($pid, $count) {
 	}
 	// NOTE: If statement OK
 	if ($count==0) {
-		$indirec = find_person_record($pid);
+		$indirec = find_person_record($pid, PGV_GED_ID);
 		// NOTE: If statement OK
 		if (displayDetailsById($pid, 'INDI') || showLivingNameById($pid)) {
 			// -- print left arrow for decendants so that we can move down the tree
@@ -159,7 +159,7 @@ function print_descendency($pid, $count) {
 			$num=0;
 			// NOTE: For statement OK
 			for($f=0; $f<count($cfamids); $f++) {
-				$famrec = find_family_record($cfamids[$f]);
+				$famrec = find_family_record($cfamids[$f], PGV_GED_ID);
 				if ($famrec) {
 					$num += preg_match_all("/1\s*CHIL\s*@(.*)@/", $famrec, $smatch,PREG_SET_ORDER);
 				}
@@ -176,7 +176,7 @@ function print_descendency($pid, $count) {
 				print "\n\t\t<div id=\"childbox.$pid\" dir=\"".$TEXT_DIRECTION."\" style=\"width:".$bwidth."px; height:".$bheight."px; visibility: hidden;\">";
 				print "\n\t\t\t<table class=\"person_box\"><tr><td>";
 				for($f=0; $f<count($famids); $f++) {
-					$famrec = find_family_record(trim($famids[$f]));
+					$famrec = find_family_record(trim($famids[$f]), PGV_GED_ID);
 					if ($famrec) {
 						$parents = find_parents($famids[$f]);
 						if($parents) {
@@ -211,7 +211,7 @@ function print_descendency($pid, $count) {
 				}
 				//-- print the siblings
 				for($f=0; $f<count($cfamids); $f++) {
-					$famrec = find_family_record($cfamids[$f]);
+					$famrec = find_family_record($cfamids[$f], PGV_GED_ID);
 					if ($famrec) {
 						$parents = find_parents($cfamids[$f]);
 						if($parents) {
@@ -276,7 +276,7 @@ function max_descendency_generations($pid, $depth) {
 	$famids = find_sfamily_ids($pid);
 	$maxdc = $depth;
 	foreach($famids as $indexval => $famid) {
-		$famrec = find_family_record($famid);
+		$famrec = find_family_record($famid, PGV_GED_ID);
 		$ct = preg_match_all("/1 CHIL @(.*)@/", $famrec, $match, PREG_SET_ORDER);
 		for($i=0; $i<$ct; $i++) {
 			$chil = trim($match[$i][1]);
@@ -356,7 +356,7 @@ function print_family_book($pid, $descent)
 				print "<br /><br />\n";
 
 				foreach($famids as $indexval => $famid) {
-						$famrec = find_family_record($famid);
+						$famrec = find_family_record($famid, PGV_GED_ID);
 						$ct = preg_match_all("/1 CHIL @(.*)@/", $famrec, $match, PREG_SET_ORDER);
 						for($i=0; $i<$ct; $i++) {
 							$chil = trim($match[$i][1]);

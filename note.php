@@ -114,7 +114,7 @@ if (!$controller->isPrintPreview()) {
 echo '</td></tr><tr><td colspan="2"><table border="0" class="facts_table width100 center">';
 echo '<tr class="'.$TEXT_DIRECTION.'"><td><table class="width100">';
 	// Shared Note details ---------------------
-	$noterec = find_gedcom_record($controller->nid);
+	$noterec = find_gedcom_record($controller->nid, PGV_GED_ID);
 	$nt = preg_match("/0 @$controller->nid@ NOTE(.*)/", $noterec, $n1match);
 	if ($nt==1) {
 		$note = print_note_record("<br />".$n1match[1], 1, $noterec, false, true);

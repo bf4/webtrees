@@ -33,8 +33,10 @@ define('PGV_FUNCTIONS_PLACE_PHP', '');
 
 function get_plac_label() {
 	global $pgv_lang, $factarray;
+	global $GEDCOM;
+	$ged_id=get_id_from_gedcom($GEDCOM);
 
-	$HEAD = find_gedcom_record("HEAD");
+	$HEAD = find_gedcom_record("HEAD", $ged_id);
 	$HEAD_PLAC = get_sub_record(1, "1 PLAC", $HEAD);
 	$HEAD_PLAC_FORM = get_sub_record(1, "2 FORM", $HEAD_PLAC);
 	$HEAD_PLAC_FORM = substr($HEAD_PLAC_FORM, 7);

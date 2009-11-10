@@ -58,12 +58,10 @@ if ($action!="choose") {
 		print "<span class=\"error\">".$pgv_lang["same_ids"]."</span>\n";
 	}
 	else {
-		if (!isset($pgv_changes[$gid1."_".$GEDCOM])) $gedrec1 = find_gedcom_record($gid1);
-		else $gedrec1 = find_updated_record($gid1);
-		$GEDCOM=$ged2;
-		if (!isset($pgv_changes[$gid2."_".$ged2])) $gedrec2 = find_gedcom_record($gid2);
-		else $gedrec2 = find_updated_record($gid2);
-		$GEDCOM=$ged;
+		if (!isset($pgv_changes[$gid1."_".PGV_GEDCOM])) $gedrec1 = find_gedcom_record($gid1, PGV_GED_ID);
+		else $gedrec1 = find_updated_record($gid1, get_id_from_gedcom($GEDCOM));
+		if (!isset($pgv_changes[$gid2."_".$ged2])) $gedrec2 = find_gedcom_record($gid2, get_id_from_gedcom($ged2));
+		else $gedrec2 = find_updated_record($gid2, get_id_from_gedcom($ged2));
 
 		// Fetch the original XREF - may differ in case from the supplied value
 		$tmp=new Person($gedrec1); $gid1=$tmp->getXref();
@@ -174,8 +172,8 @@ if ($action!="choose") {
 						$ids=fetch_all_links($gid2, PGV_GED_ID);
 
 						foreach ($ids as $id) {
-							if (isset($pgv_changes[$id."_".$GEDCOM])) {
-								$record=find_updated_record($id);
+							if (isset($pgv_changes[$id."_".PGV_GEDCOM])) {
+								$record=find_updated_record($id, PGV_GED_ID);
 							} else {
 								$record=fetch_gedcom_record($id, PGV_GED_ID);
 								$record=$record['gedrec'];

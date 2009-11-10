@@ -266,7 +266,7 @@ function delete_gedrec($gid, $linkpid='') {
 		if ($change["type"]=="delete") return true;
 	}
 
-	$undo = find_gedcom_record($gid);
+	$undo = find_gedcom_record($gid, PGV_GED_ID);
 	if (empty($undo)) return false;
 		$change = array();
 		$change["gid"] = $gid;
@@ -495,17 +495,17 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 	if (empty($namerec)) {
 		// We'll need the parent's name to set the child's surname
 		if (isset($pgv_changes[$famid."_".$GEDCOM]))
-			$famrec=find_updated_record($famid);
+			$famrec=find_updated_record($famid, PGV_GED_ID);
 		else
-			$famrec=find_family_record($famid);
+			$famrec=find_family_record($famid, PGV_GED_ID);
 		$parents=find_parents_in_record($famrec);
-		$father_name=get_gedcom_value('NAME', 0, find_person_record($parents['HUSB']));
-		$mother_name=get_gedcom_value('NAME', 0, find_person_record($parents['WIFE']));
+		$father_name=get_gedcom_value('NAME', 0, find_person_record($parents['HUSB'], PGV_GED_ID));
+		$mother_name=get_gedcom_value('NAME', 0, find_person_record($parents['WIFE'], PGV_GED_ID));
 		// We'll need the spouse/child's name to set the spouse/parent's surname
 		if (isset($pgv_changes[$pid."_".$GEDCOM]))
-			$prec=find_updated_record($pid);
+			$prec=find_updated_record($pid, PGV_GED_ID);
 		else
-			$prec=find_person_record($pid);
+			$prec=find_person_record($pid, PGV_GED_ID);
 		$indi_name=get_gedcom_value('NAME', 0, $prec);
 		// Different cultures do surnames differently
 		switch ($SURNAME_TRADITION) {
@@ -2124,7 +2124,7 @@ function handle_updates($newged, $levelOverride="no") {
 				delete_gedrec($text[$j]);
 				$text[$j] = "";
 			} else {
-				$noterec = find_gedcom_record($text[$j]);
+				$noterec = find_gedcom_record($text[$j], PGV_GED_ID);
 				$newnote = "0 @$text[$j]@ NOTE\n";
 				$newline = "1 CONC ".rtrim(stripLRMRLM($NOTE[$text[$j]]));
 				$newnote .= breakConts($newline);
@@ -2258,9 +2258,9 @@ function linkMedia($mediaid, $linktoid, $level=1, $chan=true) {
 	if ($level!=1) return false; // Level 2 items get linked elsewhere
 	// find Indi, Family, or Source record to link to
 	if (isset($pgv_changes[$linktoid."_".$GEDCOM])) {
-		$gedrec = find_updated_record($linktoid);
+		$gedrec = find_updated_record($linktoid, PGV_GED_ID);
 	} else {
-		$gedrec = find_gedcom_record($linktoid);
+		$gedrec = find_gedcom_record($linktoid, PGV_GED_ID);
 	}
 
 	//-- check if we are re-editing an unaccepted link that is not already in the DB
@@ -2295,9 +2295,9 @@ function unlinkMedia($linktoid, $linenum, $mediaid, $level=1, $chan=true) {
 	if ($level!=1) return false; // Level 2 items get unlinked elsewhere (maybe ??)
 	// find Indi, Family, or Source record to unlink from
 	if (isset($pgv_changes[$linktoid."_".$GEDCOM])) {
-		$gedrec = find_updated_record($linktoid);
+		$gedrec = find_updated_record($linktoid, PGV_GED_ID);
 	} else {
-		$gedrec = find_gedcom_record($linktoid);
+		$gedrec = find_gedcom_record($linktoid, PGV_GED_ID);
 	}
 	
 	//-- when deleting/umlinking a media link
@@ -2635,14 +2635,14 @@ function delete_person($pid, $gedrec='') {
 		echo "<pre>$gedrec</pre>";
 	}
 
-	if (empty($gedrec)) $gedrec = find_person_record($pid);
+	if (empty($gedrec)) $gedrec = find_person_record($pid, PGV_GED_ID);
 	if (!empty($gedrec)) {
 		$success = true;
 		$ct = preg_match_all("/1 FAM. @(.*)@/", $gedrec, $match, PREG_SET_ORDER);
 		for($i=0; $i<$ct; $i++) {
 			$famid = $match[$i][1];
-			if (!isset($pgv_changes[$famid."_".$GEDCOM])) $famrec = find_gedcom_record($famid);
-			else $famrec = find_updated_record($famid);
+			if (!isset($pgv_changes[$famid."_".$GEDCOM])) $famrec = find_gedcom_record($famid, PGV_GED_ID);
+			else $famrec = find_updated_record($famid, PGV_GED_ID);
 			if (!empty($famrec)) {
 				$lines = explode("\n", $famrec);
 				$newfamrec = "";
@@ -2664,8 +2664,8 @@ function delete_person($pid, $gedrec='') {
 					for ($j=0; $j<$pt; $j++) {
 						$xref = $pmatch[$j][1];
 						if($xref!=$pid) {
-							if (!isset($pgv_changes[$xref."_".$GEDCOM])) $indirec = find_gedcom_record($xref);
-							else $indirec = find_updated_record($xref);
+							if (!isset($pgv_changes[$xref."_".$GEDCOM])) $indirec = find_gedcom_record($xref, PGV_GED_ID);
+							else $indirec = find_updated_record($xref, PGV_GED_ID);
 							$indirec = preg_replace("/1.*@$famid@.*/", "", $indirec);
 							if (PGV_DEBUG) {
 								echo "<pre>$indirec</pre>";
@@ -2695,7 +2695,7 @@ function delete_person($pid, $gedrec='') {
 function delete_family($pid, $gedrec='') {
 	// NOTE: $pgv_changes isn't a global.  Making it global appears to cause problems.
 	global $GEDCOM, $pgv_lang;
-	if (empty($gedrec)) $gedrec = find_family_record($pid);
+	if (empty($gedrec)) $gedrec = find_family_record($pid, PGV_GED_ID);
 	if (!empty($gedrec)) {
 		$success = true;
 		$ct = preg_match_all("/1 (\w+) @(.*)@/", $gedrec, $match, PREG_SET_ORDER);
@@ -2705,8 +2705,8 @@ function delete_family($pid, $gedrec='') {
 			if (PGV_DEBUG) {
 				echo $type." ".$id." ";
 			}
-			if (!isset($pgv_changes[$id."_".$GEDCOM])) $indirec = find_gedcom_record($id);
-			else $indirec = find_updated_record($id);
+			if (!isset($pgv_changes[$id."_".$GEDCOM])) $indirec = find_gedcom_record($id, PGV_GED_ID);
+			else $indirec = find_updated_record($id, PGV_GED_ID);
 			if (!empty($indirec)) {
 				$lines = explode("\n", $indirec);
 				$newindirec = "";

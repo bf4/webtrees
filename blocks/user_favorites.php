@@ -112,7 +112,7 @@ function print_user_favorites($block=true, $config="", $side, $index) {
 				$content .= "<br />".PrintReady($favorite["note"]);
 			} else {
 				require $INDEX_DIRECTORY.$GEDCOM."_conf.php";
-				$indirec = find_gedcom_record($favorite["gid"]);
+				$indirec = find_gedcom_record($favorite["gid"], PGV_GED_ID);
 				if ($favorite["type"]=="INDI") {
 					$content .= "<div id=\"box".$favorite["gid"].".0\" class=\"person_box";
 					if (preg_match("/1 SEX F/", $indirec)>0) $content .= "F";
