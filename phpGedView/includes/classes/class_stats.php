@@ -1714,8 +1714,8 @@ class stats {
 		return $top10;
 	}
 
-	function _averageLifespanQuery($sex='BOTH') {
-		global $TBLPREFIX;
+	function _averageLifespanQuery($sex='BOTH', $show_years=false) {
+		global $TBLPREFIX, $lang_short_cut, $LANGUAGE;
 		if ($sex == 'F') {
 			$sex_search = " AND i_sex='F'";
 		} elseif ($sex == 'M') {
@@ -1743,8 +1743,25 @@ class stats {
 				.$sex_search
 		, 1);
 		if (!isset($rows[0])) {return '';}
-		$row=$rows[0];
-		return PrintReady(floor($row['age']/365.25));
+		$row = $rows[0];
+		$age = $row['age'];
+		if ($show_years) {
+			$func = "age_localisation_{$lang_short_cut[$LANGUAGE]}";
+			if (!function_exists($func)) {
+				$func="DefaultAgeLocalisation";
+			}
+			if (floor($age/365.25)>0) {
+				$age = floor($age/365.25).'y';
+			} else if (floor($age/12)>0) {
+				$age = floor($age/12).'m';
+			} else {
+				$age = $age.'d';
+			}
+			$func($age, $show_years);
+			return $age;
+		} else {
+			return floor($age/365.25);
+		}
 	}
 
 	function statsAge($simple=true, $related='BIRT', $sex='BOTH', $year1=-1, $year2=-1, $params=null) {
@@ -1874,7 +1891,7 @@ class stats {
 	function topTenOldestAlive($params=null) {return $this->_topTenOldestAlive('nolist', 'BOTH', $params);}
 	function topTenOldestListAlive($params=null) {return $this->_topTenOldestAlive('list', 'BOTH', $params);}
 
-	function averageLifespan() {return $this->_averageLifespanQuery('BOTH');}
+	function averageLifespan($show_years=false) {return $this->_averageLifespanQuery('BOTH', $show_years);}
 
 	// Female Only
 
@@ -1887,7 +1904,7 @@ class stats {
 	function topTenOldestFemaleAlive($params=null) {return $this->_topTenOldestAlive('nolist', 'F', $params);}
 	function topTenOldestFemaleListAlive($params=null) {return $this->_topTenOldestAlive('list', 'F', $params);}
 
-	function averageLifespanFemale() {return $this->_averageLifespanQuery('F');}
+	function averageLifespanFemale($show_years=false) {return $this->_averageLifespanQuery('F', $show_years);}
 
 	// Male Only
 
@@ -1900,7 +1917,7 @@ class stats {
 	function topTenOldestMaleAlive($params=null) {return $this->_topTenOldestAlive('nolist', 'M', $params);}
 	function topTenOldestMaleListAlive($params=null) {return $this->_topTenOldestAlive('list', 'M', $params);}
 
-	function averageLifespanMale() {return $this->_averageLifespanQuery('M');}
+	function averageLifespanMale($show_years=false) {return $this->_averageLifespanQuery('M', $show_years);}
 
 ///////////////////////////////////////////////////////////////////////////////
 // Events                                                                    //
@@ -2015,8 +2032,8 @@ class stats {
 	/*
 	* Query the database for marriage tags.
 	*/
-	function _marriageQuery($type='full', $age_dir='ASC', $sex='F') {
-		global $TBLPREFIX, $pgv_lang;
+	function _marriageQuery($type='full', $age_dir='ASC', $sex='F', $show_years=false) {
+		global $TBLPREFIX, $pgv_lang, $lang_short_cut, $LANGUAGE;
 		if ($sex == 'F') {$sex_field = 'f_wife';}else{$sex_field = 'f_husb';}
 		if ($age_dir != 'ASC') {$age_dir = 'DESC';}
 		$rows=self::_runSQL(''
@@ -2063,7 +2080,24 @@ class stats {
 				$result="<a href=\"".$family->getLinkUrl()."\">".$person->getFullName().'</a>';
 				break;
 			case 'age':
-				$result=floor($row['age']/365.25);
+				$age = $row['age'];
+				if ($show_years) {
+					$func = "age_localisation_{$lang_short_cut[$LANGUAGE]}";
+					if (!function_exists($func)) {
+						$func="DefaultAgeLocalisation";
+					}
+					if (floor($age/365.25)>0) {
+						$age = floor($age/365.25).'y';
+					} else if (floor($age/12)>0) {
+						$age = floor($age/12).'m';
+					} else {
+						$age = $age.'d';
+					}
+					$func($age, $show_years);
+					$result = $age;
+				} else {
+					$result = floor($age/365.25);
+				}
 				break;
 		}
 		return str_replace('<a href="', '<a href="'.$this->_server_url, $result);
@@ -2094,8 +2128,7 @@ class stats {
 			.' GROUP BY'
 				.' family'
 			.' ORDER BY'
-				." age {$age_dir}"
-		,($total*3));
+				." age {$age_dir}");
 		$wrows=self::_runSQL(''
 			.' SELECT DISTINCT'
 				.' fam.f_id AS family,'
@@ -2117,8 +2150,7 @@ class stats {
 			.' GROUP BY'
 				.' family'
 			.' ORDER BY'
-				." age {$age_dir}"
-		,($total*3));
+				." age {$age_dir}");
 		$drows=self::_runSQL(''
 			.' SELECT DISTINCT'
 				.' fam.f_id AS family,'
@@ -2140,8 +2172,7 @@ class stats {
 			.' GROUP BY'
 				.' family'
 			.' ORDER BY'
-				." age {$age_dir}"
-		,($total*3));
+				." age {$age_dir}");
 		if (!isset($hrows) && !isset($wrows) && !isset($drows)) {return 0;}
 		$rows = array();
 		foreach ($drows as $family) {
@@ -2189,7 +2220,7 @@ class stats {
 						$top10[] = "<a href=\"".encode_url($family->getLinkUrl())."\">".PrintReady($family->getFullName())."</a> [".$age."]";
 					}
 				}
-				if (++$i==10) break;
+				if (++$i==$total) break;
 			}
 		}
 		if ($type == 'list') {
@@ -2281,8 +2312,8 @@ class stats {
 		return $top10;
 	}
 
-	function _parentsQuery($type='full', $age_dir='ASC', $sex='F') {
-		global $TBLPREFIX, $pgv_lang;
+	function _parentsQuery($type='full', $age_dir='ASC', $sex='F', $show_years=false) {
+		global $TBLPREFIX, $pgv_lang, $lang_short_cut, $LANGUAGE;
 		if ($sex == 'F') {$sex_field = 'WIFE';}else{$sex_field = 'HUSB';}
 		if ($age_dir != 'ASC') {$age_dir = 'DESC';}
 		$rows=self::_runSQL(''
@@ -2327,7 +2358,24 @@ class stats {
 				$result="<a href=\"".$person->getLinkUrl()."\">".$person->getFullName().'</a>';
 				break;
 			case 'age':
-				$result=floor($row['age']/365.25);
+				$age = $row['age'];
+				if ($show_years) {
+					$func = "age_localisation_{$lang_short_cut[$LANGUAGE]}";
+					if (!function_exists($func)) {
+						$func="DefaultAgeLocalisation";
+					}
+					if (floor($age/365.25)>0) {
+						$age = floor($age/365.25).'y';
+					} else if (floor($age/12)>0) {
+						$age = floor($age/12).'m';
+					} else {
+						$age = $age.'d';
+					}
+					$func($age, $show_years);
+					$result = $age;
+				} else {
+					$result = floor($age/365.25);
+				}
 				break;
 		}
 		return str_replace('<a href="', '<a href="'.$this->_server_url, $result);
@@ -2669,22 +2717,22 @@ class stats {
 	//
 	function youngestMarriageFemale() {return $this->_marriageQuery('full', 'ASC', 'F');}
 	function youngestMarriageFemaleName() {return $this->_marriageQuery('name', 'ASC', 'F');}
-	function youngestMarriageFemaleAge() {return $this->_marriageQuery('age', 'ASC', 'F');}
+	function youngestMarriageFemaleAge($show_years=false) {return $this->_marriageQuery('age', 'ASC', 'F', $show_years);}
 
 	function oldestMarriageFemale() {return $this->_marriageQuery('full', 'DESC', 'F');}
 	function oldestMarriageFemaleName() {return $this->_marriageQuery('name', 'DESC', 'F');}
-	function oldestMarriageFemaleAge() {return $this->_marriageQuery('age', 'DESC', 'F');}
+	function oldestMarriageFemaleAge($show_years=false) {return $this->_marriageQuery('age', 'DESC', 'F', $show_years);}
 
 	//
 	// Male only
 	//
 	function youngestMarriageMale() {return $this->_marriageQuery('full', 'ASC', 'M');}
 	function youngestMarriageMaleName() {return $this->_marriageQuery('name', 'ASC', 'M');}
-	function youngestMarriageMaleAge() {return $this->_marriageQuery('age', 'ASC', 'M');}
+	function youngestMarriageMaleAge($show_years=false) {return $this->_marriageQuery('age', 'ASC', 'M', $show_years);}
 
 	function oldestMarriageMale() {return $this->_marriageQuery('full', 'DESC', 'M');}
 	function oldestMarriageMaleName() {return $this->_marriageQuery('name', 'DESC', 'M');}
-	function oldestMarriageMaleAge() {return $this->_marriageQuery('age', 'DESC', 'M');}
+	function oldestMarriageMaleAge($show_years=false) {return $this->_marriageQuery('age', 'DESC', 'M', $show_years);}
 
 	function ageBetweenSpousesMF($params=null) {return $this->_ageBetweenSpousesQuery($type='nolist', $age_dir='DESC', $params=null);}
 	function ageBetweenSpousesMFList($params=null) {return $this->_ageBetweenSpousesQuery($type='list', $age_dir='DESC', $params=null);}
@@ -2707,22 +2755,22 @@ class stats {
 	//
 	function youngestMother() {return $this->_parentsQuery('full', 'ASC', 'F');}
 	function youngestMotherName() {return $this->_parentsQuery('name', 'ASC', 'F');}
-	function youngestMotherAge() {return $this->_parentsQuery('age', 'ASC', 'F');}
+	function youngestMotherAge($show_years=false) {return $this->_parentsQuery('age', 'ASC', 'F', $show_years);}
 
 	function oldestMother() {return $this->_parentsQuery('full', 'DESC', 'F');}
 	function oldestMotherName() {return $this->_parentsQuery('name', 'DESC', 'F');}
-	function oldestMotherAge() {return $this->_parentsQuery('age', 'DESC', 'F');}
+	function oldestMotherAge($show_years=false) {return $this->_parentsQuery('age', 'DESC', 'F', $show_years);}
 
 	//
 	// Father only
 	//
 	function youngestFather() {return $this->_parentsQuery('full', 'ASC', 'M');}
 	function youngestFatherName() {return $this->_parentsQuery('name', 'ASC', 'M');}
-	function youngestFatherAge() {return $this->_parentsQuery('age', 'ASC', 'M');}
+	function youngestFatherAge($show_years=false) {return $this->_parentsQuery('age', 'ASC', 'M', $show_years);}
 
 	function oldestFather() {return $this->_parentsQuery('full', 'DESC', 'M');}
 	function oldestFatherName() {return $this->_parentsQuery('name', 'DESC', 'M');}
-	function oldestFatherAge() {return $this->_parentsQuery('age', 'DESC', 'M');}
+	function oldestFatherAge($show_years=false) {return $this->_parentsQuery('age', 'DESC', 'M', $show_years);}
 
 ///////////////////////////////////////////////////////////////////////////////
 // Family Size                                                               //
@@ -3092,6 +3140,43 @@ class stats {
 		return $row['tot'];
 	}
 
+	
+	function noChildrenFamiliesList($type='list') {
+		global $TBLPREFIX, $TEXT_DIRECTION;
+		$rows=self::_runSQL(''
+			.' SELECT'
+				.' f_id AS family'
+			.' FROM'
+				." {$TBLPREFIX}families AS fam"
+			.' WHERE'
+				.' f_numchil = 0 AND'
+				." fam.f_file = {$this->_ged_id}");
+		if (!isset($rows[0])) {return '';}
+		$top10 = array();
+		foreach ($rows as $row) {
+			$family=Family::getInstance($row['family']);
+			if ($family->canDisplayDetails()) {
+				if ($type == 'list') {
+					$top10[] = "\t<li><a href=\"".encode_url($family->getLinkUrl())."\">".PrintReady($family->getFullName())."</a></li>\n";
+				} else {
+					$top10[] = "<a href=\"".encode_url($family->getLinkUrl())."\">".PrintReady($family->getFullName())."</a>";
+				}
+			}
+		}
+		if ($type == 'list') {
+			$top10=join("\n", $top10);
+		} else {
+			$top10 = join(';&nbsp; ', $top10);
+		}
+		if ($TEXT_DIRECTION == 'rtl') {
+			$top10 = str_replace(array('[', ']', '(', ')', '+'), array('&rlm;[', '&rlm;]', '&rlm;(', '&rlm;)', '&rlm;+'), $top10);
+		}
+		if ($type == 'list') {
+			return "<ul>\n{$top10}</ul>\n";
+		}
+		return $top10;
+	}
+
 	function chartNoChildrenFamilies($year1=-1, $year2=-1, $params=null) {
 		global $TBLPREFIX, $pgv_lang, $lang_short_cut, $LANGUAGE;
 
@@ -3301,7 +3386,7 @@ class stats {
 		$per = round(100 * ($tot_indi-$tot) / $tot_indi, 0);
 		$chd .= self::_array_to_extended_encoding($per);
 		$chl[] = $pgv_lang["other"].' - '.($tot_indi-$tot);
-		$chart_title .= $pgv_lang["other"].' ['.($tot_indi-$tot).']';
+		$chart_title .= PrintReady($pgv_lang["other"].' ['.($tot_indi-$tot).']');
 		$chl = join('|', $chl);
 		return "<img src=\"".encode_url("http://chart.apis.google.com/chart?cht=p3&amp;chd=e:{$chd}&amp;chs={$size}&amp;chco={$color_from},{$color_to}&amp;chf=bg,s,ffffff00&amp;chl={$chl}")."\" width=\"{$sizes[0]}\" height=\"{$sizes[1]}\" alt=\"".$chart_title."\" title=\"".$chart_title."\" />";
 	}
