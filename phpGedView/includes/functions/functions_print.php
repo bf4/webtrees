@@ -1192,7 +1192,7 @@ function print_fact_notes($factrec, $level, $textOnly=false, $return=false) {
 	global $pgv_lang;
 	global $factarray;
 	global $GEDCOM;
-	$ged_id=get_id_from_gedcom();
+	$ged_id=get_id_from_gedcom($GEDCOM);
 
 	$data = "";
 	$printDone = false;
