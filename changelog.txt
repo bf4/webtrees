@@ -10,6 +10,7 @@
 
 
 Version 4.2.x CA
+ - Re-added the Tab page content "shift", and fixed the "grey" background, when Navigator pinned. (windmillway)
  - Removed Tab page content "shift" to left when pinning Navigator (windmillway)
  - "Narrowed" Tab spacing, and Tab title padding, on themes simplygreen, xenea, and wood (windmillway)
  - Made static tab "pinnable" (yalnifj)

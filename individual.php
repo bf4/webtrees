@@ -165,8 +165,9 @@ jQuery(document).ready(function(){
    	   		   	<?php if ($TEXT_DIRECTION=='rtl') {?>
    	   		   	newwidth = jQuery('.static_tab').width() + 40;
    	   			newwidth = jQuery('#tabs').width() - newwidth;
-   	   		   	<?php }?>
-   	   	//	 	jQuery('#tabs > div').css('width', newwidth+'px');
+   	   		   	<?php } ?>
+				// --- NOTE: --- REM next line to avoid the "page shift" when Navigator is pinned. (Purely a preference choice)
+   	   		 	jQuery('#tabs > div').css('width', newwidth+'px');
    	   		   	jQuery('.static_tab_content').show();
 	   	   		<?php echo $controller->static_tab->getTab()->getJSCallbackAllTabs()."\n";
 				$modjs = $controller->static_tab->getTab()->getJSCallback();
