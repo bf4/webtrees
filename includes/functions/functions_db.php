@@ -1000,7 +1000,7 @@ function find_media_record($xref, $ged_id) {
 * @return string the raw gedcom record is returned
 */
 function find_gedcom_record($xref, $ged_id) {
-	global $TBLPREFIX, $GEDCOM, $DBTYPE;
+	global $TBLPREFIX;
 	static $statement1=null, $statement2=null;
 
 	if (is_null($statement1)) {
