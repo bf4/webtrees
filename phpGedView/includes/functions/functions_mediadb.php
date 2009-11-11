@@ -1533,7 +1533,7 @@ function findImageSize($file) {
 
 function PrintMediaLinks($links, $size = "small") {
 	;
-	global $TEXT_DIRECTION, $pgv_lang;
+	global $SHOW_ID_NUMBERS, $TEXT_DIRECTION, $pgv_lang;
 
 	if (count($links) == 0)
 		return false;
@@ -1599,16 +1599,21 @@ function PrintMediaLinks($links, $size = "small") {
 		echo ' -- ';
 		$name=$record->getFullname();
 		if (begRTLText($name) && $TEXT_DIRECTION == 'ltr') {
-			echo '('.$record->getXref().')&nbsp;&nbsp;';
+			if ($SHOW_ID_NUMBERS) {
+				echo '('.$record->getXref().')&nbsp;&nbsp;';
+			}
 			echo PrintReady($name);
 		} else {
-			echo PrintReady($name).'&nbsp;&nbsp;';
-			if ($TEXT_DIRECTION=='rtl') {
-				echo getRLM();
-			}
-			echo "(" . $record->getXref().')';
-			if ($TEXT_DIRECTION=='rtl') {
-				echo getRLM();
+			echo PrintReady($name);
+			if ($SHOW_ID_NUMBERS) {
+				echo '&nbsp;&nbsp;';
+				if ($TEXT_DIRECTION=='rtl') {
+					echo getRLM();
+				}
+				echo "(" . $record->getXref().')';
+				if ($TEXT_DIRECTION=='rtl') {
+					echo getRLM();
+				}
 			}
 		}
 		echo '</a>';
