@@ -178,7 +178,10 @@ if ($action=="update") {
 					$RESNS[$j]="";
 				}
 				if ((empty($DATES[$j]))&&(empty($PLACS[$j]))&&(empty($TEMPS[$j]))&&(empty($RESNS[$j]))) {
-					if (!empty($FMARRY)) $factrec = "1 MARR Y\n";
+					if (!in_array($fact, $typefacts)) $factrec = "1 $fact";
+					else $factrec = "1 EVEN\n2 TYPE $fact";
+					if (!empty($DESCS[$j])) $factrec .= " $DESCS[$j]\n";
+					else if (!empty($FMARRY)) $factrec = "1 MARR Y\n";
 					else if (!empty($FDIVY)) $factrec = "1 DIV Y\n";
 					else $factrec="";
 				}
