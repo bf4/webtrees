@@ -366,21 +366,20 @@ if ($ct>0) {
 			}
 		}
 
-			echo "<a href=\"mediaviewer.php?mid=".$media["XREF"]."\">";
+		echo "<a href=\"mediaviewer.php?mid=".$media["XREF"]."\">";
 
-			if (begRTLText($name) && $TEXT_DIRECTION=="ltr") {
-				if ($SHOW_ID_NUMBERS) {
-					echo "(".$media["XREF"].")&nbsp;&nbsp;&nbsp;";
-				}
-				echo "<b>".PrintReady($name)."</b>";
-			} else {
-				echo "<b>".PrintReady($name)."</b>";
-				if ($SHOW_ID_NUMBERS) {
-					echo "&nbsp;&nbsp;&nbsp;";
-					if ($TEXT_DIRECTION=="rtl") echo getRLM();
-					echo "(".$media["XREF"].")";
-					if ($TEXT_DIRECTION=="rtl") echo getRLM();
-				}
+		if (begRTLText($name) && $TEXT_DIRECTION=="ltr") {
+			if ($SHOW_ID_NUMBERS) {
+				echo "(".$media["XREF"].")&nbsp;&nbsp;&nbsp;";
+			}
+			echo "<b>".PrintReady($name)."</b>";
+		} else {
+			echo "<b>".PrintReady($name)."</b>";
+			if ($SHOW_ID_NUMBERS) {
+				echo "&nbsp;&nbsp;&nbsp;";
+				if ($TEXT_DIRECTION=="rtl") echo getRLM();
+				echo "(".$media["XREF"].")";
+				if ($TEXT_DIRECTION=="rtl") echo getRLM();
 			}
 		}
 		if ($showFile) {
