@@ -10,6 +10,7 @@
 
 
 Version 4.2.3
+ - Fixed: [ 2895822 ] SVN 6380 Fatal error class_stats.php (fisharebest)
  - Fixed: [ 2891461 ] Fault in the Quick add form (wooc)
  - Fixed: [ 1771095 ] Place Check - Index Directory (fisharebest)
  - Update: is_dead() calculations now take account of non-gregorian dates

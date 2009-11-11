@@ -282,12 +282,12 @@ class stats {
 		return $cache;
 	}
 
-	static function gedcomCreatedSoftware() {
+	function gedcomCreatedSoftware() {
 		$head=self::_gedcomHead();
 		return $head[0];
 	}
 
-	static function gedcomCreatedVersion() {
+	function gedcomCreatedVersion() {
 		$head=self::_gedcomHead();
 		// fix broken version string in Family Tree Maker
 		if (strstr($head[1], 'Family Tree Maker ')) {
