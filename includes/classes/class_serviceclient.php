@@ -886,10 +886,11 @@ class ServiceClient extends GedcomRecord {
 	*/
 	static function &getInstance($id, $simple=true) {
 		global $PGV_SERVERS, $SERVER_URL, $GEDCOM;
+		$ged_id=get_id_from_gedcom($GEDCOM);
 
 		if (isset($PGV_SERVERS[$id])) return $PGV_SERVERS[$id];
-		$gedrec = find_gedcom_record($id);
-		if (empty($gedrec)) $gedrec = find_updated_record($id);
+		$gedrec = find_gedcom_record($id, $ged_id);
+		if (empty($gedrec)) $gedrec = find_updated_record($id, $ged_id);
 		if (!empty($gedrec)) {
 			$url = get_gedcom_value("URL",1,$gedrec);
 			$gedfile = get_gedcom_value("_DBID", 1, $gedrec);
