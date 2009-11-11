@@ -243,7 +243,7 @@ class stats {
 
 	function gedcomTitle() {return PrintReady(get_gedcom_setting($this->_ged_id, 'title'));}
 
-	static function _gedcomHead() {
+	function _gedcomHead() {
 		$title = "";
 		$version = '';
 		$source = '';
@@ -251,7 +251,7 @@ class stats {
 		if (is_array($cache)) {
 			return $cache;
 		}
-		$head=find_other_record('HEAD');
+		$head=find_other_record('HEAD', $this->_ged_id);
 		$ct=preg_match("/1 SOUR (.*)/", $head, $match);
 		if ($ct > 0) {
 			$softrec=get_sub_record(1, '1 SOUR', $head);
@@ -302,10 +302,10 @@ class stats {
 		return $head[1];
 	}
 
-	static function gedcomDate() {
+	function gedcomDate() {
 		global $DATE_FORMAT;
 
-		$head=find_other_record('HEAD');
+		$head=find_other_record('HEAD', $this->_ged_id);
 		if (preg_match("/1 DATE (.+)/", $head, $match)) {
 			$date=new GedcomDate($match[1]);
 			return $date->Display(false, $DATE_FORMAT); // Override $PUBLIC_DATE_FORMAT
