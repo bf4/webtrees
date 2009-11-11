@@ -375,7 +375,7 @@ class MediaControllerRoot extends IndividualController{
 		else $facts[] = new Event("1 TYPE ".$pgv_lang["TYPE__other"]);
 
 		if (isset($pgv_changes[$this->pid."_".$GEDCOM]) && ($this->show_changes)) {
-			$newrec = find_updated_record($this->pid);
+			$newrec = find_updated_record($this->pid, PGV_GED_ID);
 			$newmedia = new Media($newrec);
 			$newfacts = $newmedia->getFacts($ignore);
 			if ($includeFileName) $newfacts[] = new Event("1 TYPE ".$pgv_lang["TYPE__".$mediaType]);
