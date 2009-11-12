@@ -199,7 +199,7 @@ foreach (get_all_gedcoms() as $ged_id=>$ged_name) {
 		echo '</td>';
 
 		print "<td valign=\"top\">";		// Column 5  (Delete action)
-		print "<a href=\"".encode_url("editgedcoms.php?action=delete&ged={$ged_name}")."\" onclick=\"return confirm('".$pgv_lang["confirm_gedcom_delete"]." ".preg_replace("/'/", "\'", $ged_name)."?');\">".$pgv_lang["delete"]."</a>";
+		print "<a href=\"".encode_url("editgedcoms.php?action=delete&ged={$ged_name}")."\" onclick=\"return confirm('".$pgv_lang["confirm_gedcom_delete"]." ".str_replace("'", "\'", $ged_name)."?');\">".$pgv_lang["delete"]."</a>";
 		print "&nbsp;&nbsp;";
 		print "</td>";
 

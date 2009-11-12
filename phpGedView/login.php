@@ -108,7 +108,7 @@ if ($action=='login') {
 
 		$urlnew = $SERVER_URL;
 		if (substr($urlnew,-1,1)!="/") $urlnew .= "/";
-		$url = preg_replace("/logout=1/", "", $url);
+		$url = str_replace("logout=1", "", $url);
 		$url = $urlnew . $url;
 
 		$url .= "&";	// Simplify the preg_replace following

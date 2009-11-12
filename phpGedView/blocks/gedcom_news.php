@@ -75,7 +75,7 @@ function print_gedcom_news($block = true, $config='', $side, $index)
 	if ($PGV_BLOCKS['print_gedcom_news']['canconfig']) {
 		if ($ctype=="gedcom" && PGV_USER_GEDCOM_ADMIN || $ctype=="user" && PGV_USER_ID) {
 			if ($ctype=="gedcom") {
-				$name = preg_replace("/'/", "\'", $GEDCOM);
+				$name = str_replace("'", "\'", $GEDCOM);
 			} else {
 				$name = PGV_USER_NAME;
 			}
@@ -113,7 +113,7 @@ function print_gedcom_news($block = true, $config='', $side, $index)
 		$ct = preg_match("/#(.+)#/", $newsTitle, $match);
 		if($ct > 0) {
 			if(isset($pgv_lang[$match[1]])) {
-				$newsTitle = preg_replace("/$match[0]/", $pgv_lang[$match[1]], $newsTitle);
+				$newsTitle = str_replace("$match[0]", $pgv_lang[$match[1]], $newsTitle);
 			}
 		}
 		$content .= "<span class=\"news_title\">".PrintReady($newsTitle)."</span><br />\n";
@@ -124,24 +124,24 @@ function print_gedcom_news($block = true, $config='', $side, $index)
 		$ct = preg_match("/#(.+)#/", $newsText, $match);
 		if($ct > 0) {
 			if(isset($pgv_lang[$match[1]])) {
-				$newsText = preg_replace("/{$match[0]}/", $pgv_lang[$match[1]], $newsText);
+				$newsText = str_replace("$match[0]", $pgv_lang[$match[1]], $newsText);
 			}
 		}
 		$ct = preg_match("/#(.+)#/", $newsText, $match);
 		if ($ct > 0) {
 			$varname = $match[1];
 			if (isset($pgv_lang[$varname])) {
-				$newsText = preg_replace("/{$match[0]}/", $pgv_lang[$varname], $newsText);
+				$newsText = str_replace("$match[0]", $pgv_lang[$varname], $newsText);
 			} else {
 				if (defined('PGV_'.$varname)) {
 					// e.g. global $VERSION is now constant PGV_VERSION
 					$varname='PGV_'.$varname;
 				}
 				if (defined($varname)) {
-					$newsText = preg_replace("/{$match[0]}/", constant($varname), $newsText);
+					$newsText = str_replace("$match[0]", constant($varname), $newsText);
 				} else {
 					if (isset($$varname)) {
-						$newsText = preg_replace("/{$match[0]}/", $$varname, $newsText);
+						$newsText = str_replace("$match[0]", $$varname, $newsText);
 					}
 				}
 			}
@@ -162,7 +162,7 @@ function print_gedcom_news($block = true, $config='', $side, $index)
 	}
 	$printedAddLink = false;
 	if (PGV_USER_GEDCOM_ADMIN) {
-		$content .= "<a href=\"javascript:;\" onclick=\"addnews('".preg_replace("/'/", "\'", $GEDCOM)."'); return false;\">".$pgv_lang["add_news"]."</a>";
+		$content .= "<a href=\"javascript:;\" onclick=\"addnews('".str_replace("'", "\'", $GEDCOM)."'); return false;\">".$pgv_lang["add_news"]."</a>";
 		$printedAddLink = true;
 	}
 	if ($config['limit'] == 'date' || $config['limit'] == 'count') {

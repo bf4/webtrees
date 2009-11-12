@@ -101,7 +101,7 @@ if(!loadCachedBlock($cacheControl, $rssStyle)){
 	//$feed->descriptionTruncSize = 500; // does not make sense to truncate HTML since it will result in unpredictable output
 	$feed->link = $SERVER_URL;
 	$syndURL = $SERVER_URL."rss.php?".$_SERVER['QUERY_STRING'];
-	$syndURL = preg_replace("/&/", "&amp;", $syndURL);
+	$syndURL = str_replace("&", "&amp;", $syndURL);
 	$feed->syndicationURL = $syndURL;
 
 	$feedDesc = str_replace("#GEDCOM_TITLE#", $feed->title, $pgv_lang["rss_descr"]);

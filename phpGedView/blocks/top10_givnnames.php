@@ -66,7 +66,7 @@ function print_block_givn_top10($block=true, $config="", $side, $index) {
 	$title = print_help_link("index_common_given_names_help", "qm","",false,true);
 	if ($PGV_BLOCKS["print_block_givn_top10"]["canconfig"]) {
 		if ($ctype=="gedcom" && PGV_USER_GEDCOM_ADMIN || $ctype=="user" && PGV_USER_ID) {
-			if ($ctype=="gedcom") $name = preg_replace("/'/", "\'", $GEDCOM);
+			if ($ctype=="gedcom") $name = str_replace("'", "\'", $GEDCOM);
 			else $name = PGV_USER_NAME;
 			$title .= "<a href=\"javascript: configure block\" onclick=\"window.open('".encode_url("index_edit.php?name={$name}&ctype={$ctype}&action=configure&side={$side}&index={$index}")."', '_blank', 'top=50,left=50,width=600,height=350,scrollbars=1,resizable=1'); return false;\">";
 			$title .= "<img class=\"adminicon\" src=\"$PGV_IMAGE_DIR/".$PGV_IMAGES["admin"]["small"]."\" width=\"15\" height=\"15\" border=\"0\" alt=\"".$pgv_lang["config_block"]."\" /></a>";
