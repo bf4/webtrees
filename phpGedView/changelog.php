@@ -39,8 +39,8 @@ $wait = @file_get_contents("changelog.local.txt");
 $text = $wait.$text;
 
 // disable HTML tags
-$text = preg_replace("/</", "&lt;", $text);
-$text = preg_replace("/>/", "&gt;", $text);
+$text = str_replace("<", "&lt;", $text);
+$text = str_replace(">", "&gt;", $text);
 
 // highlight search text (caseless)
 if (!empty($search)) {
@@ -59,7 +59,7 @@ $text = preg_replace("/(\d{6,7})\,/", "\\1 ,", $text);		// 1234567, ==> 1234567 
 $text = preg_replace("/ (\d{6,7}) /", " <a name=\\1 href=http://sourceforge.net/support/tracker.php?aid=\\1#innerframe>\\1</a> ", $text);
 
 $text = preg_replace("/ \(([-\w]{4,13})\)\r\n/", " (<a name=\\1 href=?search=\\1>\\1</a>)\r\n", $text);
-$text = preg_replace("/  /", " ", $text);
+$text = str_replace("  ", " ", $text);
 
 print "<pre>\n$text\n</pre>\n";
 ?>

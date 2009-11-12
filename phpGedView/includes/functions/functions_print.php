@@ -1110,7 +1110,7 @@ function print_note_record($text, $nlevel, $nrec, $textOnly=false, $return=false
 		$centitl  = str_replace("~~", "", $text);
 		$centitl  = str_replace("<br />", "", $centitl);
 		if (preg_match("/@N([0-9])+@/", $nrec, $match_nid)) {
-			$nid = preg_replace("/@/", "", $match_nid[0]);
+			$nid = str_replace("@", "", $match_nid[0]);
 			$centitl = "<a href=\"note.php?nid=$nid\">".$centitl."</a>";
 		}
 		if ($textOnly) {
@@ -1547,7 +1547,7 @@ function PrintReady($text, $InHeaders=false, $trim=true) {
 		$HighlightOK=false;
 	}
 	//-- convert all & to &amp;
-	$text = preg_replace("/&/", "&amp;", $text);
+	$text = str_replace("&", "&amp;", $text);
 	//$text = preg_replace(array("/&/","/</","/>/"), array("&amp;","&lt;","&gt;"), $text);
 	//-- make sure we didn't double convert existing HTML entities like so:  &foo; to &amp;foo;
 	$text = preg_replace("/&amp;(\w+);/", "&$1;", $text);

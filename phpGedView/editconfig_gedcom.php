@@ -571,7 +571,7 @@ if ($action=="update") {
 	}
 	foreach ($_POST as $key=>$value) {
 		if ($key != "path") {
-			$key=preg_replace("/NEW_/", "", $key);
+			$key=str_replace("NEW_", "", $key);
 			if ($value=='yes') $$key=true;
 			else if ($value=='no') $$key=false;
 			else $$key=$value;
@@ -921,7 +921,7 @@ print "&nbsp;<a href=\"javascript: ".$pgv_lang["gedcom_conf"]."\" onclick=\"expa
 	?>
 	<tr>
 		<td class="descriptionbox wrap width20"><?php print_help_link("gedcom_title_help", "qm", "gedcom_title", true); print print_text("gedcom_title"); ?></td>
-		<td class="optionbox"><input type="text" name="gedcom_title" dir="ltr" value="<?php print preg_replace("/\"/", "&quot;", PrintReady($gedcom_title)); ?>" size="40" tabindex="<?php $i++; print $i; ?>" onfocus="getHelp('gedcom_title_help');" /></td>
+		<td class="optionbox"><input type="text" name="gedcom_title" dir="ltr" value="<?php print str_replace("\"", "&quot;", PrintReady($gedcom_title)); ?>" size="40" tabindex="<?php $i++; print $i; ?>" onfocus="getHelp('gedcom_title_help');" /></td>
 	</tr>
 	<tr>
 		<td class="descriptionbox wrap width20">

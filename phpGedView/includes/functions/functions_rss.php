@@ -230,7 +230,7 @@ function getGedcomNews() {
 		$newsTitle = print_text($news["title"], 0, 2);
 		$ct = preg_match("/#(.+)#/", $newsTitle, $match);
 		if ($ct>0) {
-			if (isset($pgv_lang[$match[1]])) $newsTitle = preg_replace("/$match[0]/", $pgv_lang[$match[1]], $newsTitle);
+			if (isset($pgv_lang[$match[1]])) $newsTitle = str_replace($match[0], $pgv_lang[$match[1]], $newsTitle);
 		}
 		$itemArray[0] = $newsTitle;
 
@@ -240,23 +240,23 @@ function getGedcomNews() {
 		$newsText = print_text($news["text"], 0, 2);
 		$ct = preg_match("/#(.+)#/", $newsText, $match);
 		if ($ct>0) {
-			if (isset($pgv_lang[$match[1]])) $newsText = preg_replace("/$match[0]/", $pgv_lang[$match[1]], $newsText);
+			if (isset($pgv_lang[$match[1]])) $newsText = str_replace($match[0], $pgv_lang[$match[1]], $newsText);
 		}
 		$ct = preg_match("/#(.+)#/", $newsText, $match);
 		if ($ct>0) {
 			$varname = $match[1];
 			if (isset($pgv_lang[$varname])) {
-				$newsText = preg_replace("/{$match[0]}/", $pgv_lang[$varname], $newsText);
+				$newsText = str_replace($match[0], $pgv_lang[$varname], $newsText);
 			} else {
 				if (defined('PGV_'.$varname)) {
 					// e.g. global $VERSION is now constant PGV_VERSION
 					$varname='PGV_'.$varname;
 				}
 				if (defined($varname)) {
-					$newsText = preg_replace("/{$match[0]}/", constant($varname), $newsText);
+					$newsText = str_replace($match[0], constant($varname), $newsText);
 				} else {
 					if (isset($$varname)) {
-						$newsText = preg_replace("/{$match[0]}/", $$varname, $newsText);
+						$newsText = str_replace($match[0], $$varname, $newsText);
 					}
 				}
 			}

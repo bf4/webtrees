@@ -216,7 +216,7 @@ else if (!empty($_SERVER['SCRIPT_NAME'])) $SCRIPT_NAME=$_SERVER['SCRIPT_NAME'];
 $SCRIPT_NAME = preg_replace('~/+~', '/', $SCRIPT_NAME);
 if (!empty($_SERVER['QUERY_STRING'])) $QUERY_STRING = $_SERVER['QUERY_STRING'];
 else $QUERY_STRING='';
-$QUERY_STRING = preg_replace(array('/&/','/</'), array('&amp;','&lt;'), $QUERY_STRING);
+$QUERY_STRING = str_replace(array('&','<'), array('&amp;','&lt;'), $QUERY_STRING);
 $QUERY_STRING = preg_replace('/show_context_help=(no|yes)/', '', $QUERY_STRING);
 
 //-- if not configured then redirect to the configuration script
