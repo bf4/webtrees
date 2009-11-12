@@ -115,7 +115,7 @@ class Person extends GedcomRecord {
 
 			// If we didn't find the record in the database, it may be new/pending
 			if (!$data && PGV_USER_CAN_EDIT && isset($pgv_changes[$pid.'_'.$GEDCOM])) {
-				$data=find_updated_record($pid);
+				$data=find_updated_record($pid, $ged_id);
 				$fromfile=true;
 			}
 

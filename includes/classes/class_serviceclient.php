@@ -383,8 +383,8 @@ class ServiceClient extends GedcomRecord {
 		//print_r($Familylist);
 		$FamilyListReturn=$Familylist;
 
-		if (isset($pgv_changes[$Family1."_".$GEDCOM])) $famrec1 = find_updated_record($Family1);
-		else $famrec1 = find_family_record($Family1);
+		if (isset($pgv_changes[$Family1."_".$GEDCOM])) $famrec1 = find_updated_record($Family1, get_id_from_gedcom($GEDCOM));
+		else $famrec1 = find_family_record($Family1, get_id_from_gedcom($GEDCOM));
 
 		$ct = preg_match("/(\w+):(.+)/", $Family2, $match);
 		if ($ct>0) {
@@ -517,6 +517,8 @@ class ServiceClient extends GedcomRecord {
 	* Other wise it returns false.
 	*/
 	function CompairForUpdateFamily($family1,$family2) {
+		global $GEDCOM;
+
 		// Values used to calculate the Percent of likley hood that the family is the same.
 		$ChanceSameFamily=0.0;
 		$CountFamily1=0.0;
@@ -525,7 +527,7 @@ class ServiceClient extends GedcomRecord {
 
 		$firstTimeChildren=true;
 
-		$famrec1 = find_family_record($family1);
+		$famrec1 = find_family_record($family1, get_id_from_gedcom($GEDCOM));
 		$ct = preg_match("/(\w+):(.+)/", $family2, $match);
 		if ($ct>0) {
 			$servid = trim($match[1]);
@@ -725,7 +727,7 @@ class ServiceClient extends GedcomRecord {
 		global $GEDCOM, $TBLPREFIX, $pgv_changes;
 
 		if (!$isStub) {
-			$gedrec = find_gedcom_record($this->xref.":".$xref);
+			$gedrec = find_gedcom_record($this->xref.":".$xref, get_id_from_gedcom($GEDCOM));
 			if (!empty($gedrec)) $localrec = $gedrec;
 		}
 		//-- used to force an update on the first time linking a person
