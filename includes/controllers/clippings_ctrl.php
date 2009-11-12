@@ -268,7 +268,7 @@ class ClippingsControllerRoot extends BaseController {
 				else
 				$filetext .= "1 PLAC\n2 FORM " . "City, County, State/Province, Country" . "\n";
 				if ($convert == "yes") {
-					$filetext = preg_replace("/UTF-8/", "ANSI", $filetext);
+					$filetext = str_replace("UTF-8", "ANSI", $filetext);
 					$filetext = utf8_decode($filetext);
 				}
 

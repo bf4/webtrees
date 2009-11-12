@@ -625,7 +625,7 @@ function print_media_links($factrec, $level,$pid='') {
 	if (preg_match_all("/$level OBJE(.*)/", $factrec, $omatch, PREG_SET_ORDER) == 0) return;
 	$objectNum = 0;
 	while ($objectNum < count($omatch)) {
-		$media_id = preg_replace("/@/", "", trim($omatch[$objectNum][1]));
+		$media_id = str_replace("@", "", trim($omatch[$objectNum][1]));
 		if (displayDetailsById($media_id, "OBJE")) {
 			$row=
 				PGV_DB::prepare("SELECT m_titl, m_file, m_gedrec FROM {$TBLPREFIX}media where m_media=? AND m_gedfile=?")
