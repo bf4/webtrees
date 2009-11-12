@@ -186,7 +186,7 @@ class GEDownloadGedcom extends GrampsExport
 				$eSourceRef = $this->dom->createElement("sourceref");
 				if (($sourceHlink = $this->query_dom("./sources/source[@id = \"$sourceID\"]/@handle")) == null)
 				{
-					$tempRecord = find_source_record($sourceID);
+					$tempRecord = find_source_record($sourceID, PGV_GED_ID);
 					if($tempRecord == null || $tempRecord == "")
 					return;
 					$this->create_source($sourceID, $tempRecord);
@@ -245,7 +245,7 @@ class GEDownloadGedcom extends GrampsExport
 		$famid = get_gedcom_value($tag, 1, $personRec);
 		$handle = $famid;
 		$created = false;
-		$frec = find_family_record($famid);
+		$frec = find_family_record($famid, PGV_GED_ID);
 
 		$this->create_family($frec, $famid);
 
@@ -420,7 +420,7 @@ class GEDownloadGedcom extends GrampsExport
 				// Create an instance of person and look for their family record
 				$person = Person :: getInstance($clipping["id"]);
 				$famId = $person->getChildFamilyIds();
-				$famrec = find_family_record($famId[0]);
+				$famrec = find_family_record($famId[0], PGV_GED_ID);
 				$fid = $famId[0];
 				$handle = $this->query_dom("./families/family[@id=\"$fid\"]/@handle");
 				if ($handle == null) {

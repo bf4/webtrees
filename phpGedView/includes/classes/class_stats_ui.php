@@ -97,7 +97,7 @@ class stats_ui extends stats
 						switch($favorite['type']) {
 							case 'INDI':
 							{
-								$indirec = find_person_record($favorite['gid']);
+								$indirec = find_person_record($favorite['gid'], get_id_from_gedcom($GEDCOM));
 								$content .= "<div id=\"box{$favorite['gid']}.0\" class=\"person_box";
 								if(preg_match("/1 SEX F/", $indirec) > 0){$content .= 'F';}
 								elseif(preg_match("/1 SEX M/", $indirec) > 0){$content .= '';}

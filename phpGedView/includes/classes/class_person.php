@@ -867,7 +867,7 @@ class Person extends GedcomRecord {
 		}
 		if (PGV_USER_CAN_EDIT && $this->canDisplayDetails()) {
 			if (isset($pgv_changes[$this->xref."_".$GEDCOM])) {
-				$newrec = find_updated_record($this->xref);
+				$newrec = find_updated_record($this->xref, $this->ged_id);
 				if (!empty($newrec)) {
 					$new = new Person($newrec);
 					$new->setChanged(true);
@@ -1410,7 +1410,7 @@ class Person extends GedcomRecord {
 					$factrec.="\n".$sdate."\n".get_sub_record(2, '2 PLAC', $srec);
 					if (!$event->canShow()) $factrec .= "\n2 RESN privacy";
 					if ($associate->getType()=='FAM') {
-						$famrec = find_family_record($associate->getXref());
+						$famrec = find_family_record($associate->getXref(), $this->ged_id);
 						if ($famrec) {
 							$parents = find_parents_in_record($famrec);
 							if ($parents["HUSB"]) $factrec .= "\n2 ASSO @".$parents["HUSB"]."@"; //\n3 RELA ".$factarray[$fact];
