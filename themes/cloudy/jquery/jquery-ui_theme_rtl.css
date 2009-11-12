@@ -2,6 +2,7 @@
 
 /* Tabs --------------------------------*/
 .ui-tabs { direction: rtl; }
+
 .ui-tabs .ui-tabs-nav li.ui-tabs-selected,
 .ui-tabs .ui-tabs-nav li.ui-state-default {float: right; }
 .ui-tabs .ui-tabs-nav li a { float: right; }
@@ -12,13 +13,14 @@
 	width: 240px;
 	border-color: #cccccc;
 }
+
 .static_tab_content_rtl {
 	position: absolute;
 	z-index: 100;
 	left: 0px;
 	background: #eff8f8; 
 	margin-top:0px; 
-	margin-left:40px;
+	margin-left:41px;
 }
 
 /* Navigator & Flyout menu Styles ------*/

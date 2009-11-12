@@ -6,12 +6,12 @@
 .ui-widget-content a:hover 				 { color:black; }
 
 .ui-tabs .ui-tabs-nav 					 { padding: .3em .3em 0 .3em; border-color:#888888; background: #dddddd; }
-.ui-tabs .ui-tabs-nav li 					 { font-size:0.9em; bottom:-3px; margin:0em 0.3em 0 0; border-color:#888888; background: #efefef;}
-.ui-tabs .ui-tabs-nav li a 					 { color:#555555; padding: .2em .8em .2em .8em;  }
+.ui-tabs .ui-tabs-nav li 					 { font-size:1em; bottom:0px; margin:0 0.15em 0 0.1em; border-color:#888888; background: #efefef;}
+.ui-tabs .ui-tabs-nav li a 					 { color:#555555; padding: .2em .2em .2em .2em;  }
 .ui-tabs .ui-tabs-nav li:hover			 { color:black; background: #dfdfdf;}
 .ui-tabs .ui-tabs-nav li a:hover			 { color:black;}
 
-.ui-tabs-nav li.ui-tabs-selected  	 		 { color:black; padding-top:2px; top:1px; bottom:0px; border-color: #888888; border-bottom-width: 0 !important; background:#f8f8f8;}
+.ui-tabs-nav li.ui-tabs-selected  	 		 { color:black; padding-top:0px; top:1px; bottom:0px; border-color: #888888; border-bottom-width: 0 !important; background:#f8f8f8;}
 .ui-tabs-nav li.ui-tabs-selected a	 		 { font-weight:600; color:black; }
 .ui-tabs-nav li.ui-tabs-selected a:hover	 { font-weight:600; color:black; background:#f8f8f8; }
 .ui-tabs-nav li.ui-tabs-selected:hover	 { background:#f8f8f8; }
@@ -34,11 +34,9 @@
 	right: 0px; 
 	background: #efefef; 
 	margin-top:0px; 
-	margin-right:20px;
+	margin-right:19px;
 }
-#tabs li.ui-tabs-selected {
- padding-bottom: 1px;
-}
+
 
 /* Navigator & Flyout menu Styles --------*/
 .nam a:hover{
