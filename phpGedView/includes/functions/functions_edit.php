@@ -695,7 +695,7 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 					$text .= $fields[$j];
 				}
 				$iscont = false;
-				while(($i+1<count($gedlines))&&(preg_match("/".($level+1)." (CON[CT])\s?(.*)/", $gedlines[$i+1], $cmatch)>0)) {
+				while(($i+1<count($gedlines))&&(preg_match("/".($level+1)." (CON[CT]) ?(.*)/", $gedlines[$i+1], $cmatch)>0)) {
 					$iscont=true;
 					if ($cmatch[1]=="CONT") $text.="\n";
 					if ($WORD_WRAPPED_NOTES) $text .= " ";

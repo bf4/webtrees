@@ -1990,7 +1990,7 @@ function get_relationship($pid1, $pid2, $followspouse=true, $maxlength=0, $ignor
 		}
 		//-- check the cache for person 2's children
 		$famids = array();
-		$ct = preg_match_all("/1\sFAMS\s@(.*)@/", $indirec, $match, PREG_SET_ORDER);
+		$ct = preg_match_all("/1 FAMS @(.*)@/", $indirec, $match, PREG_SET_ORDER);
 		for ($i=0; $i<$ct; $i++) {
 			$famids[$i]=$match[$i][1];
 		}
@@ -2042,7 +2042,7 @@ function get_relationship($pid1, $pid2, $followspouse=true, $maxlength=0, $ignor
 			$byear2 = $match[1];
 	}
 	if ($byear2==-1) {
-		$numfams = preg_match_all("/1\s*FAMS\s*@(.*)@/", $indirec, $fmatch, PREG_SET_ORDER);
+		$numfams = preg_match_all("/1 FAMS @(.*)@/", $indirec, $fmatch, PREG_SET_ORDER);
 		for ($j=0; $j<$numfams; $j++) {
 			// Get the family record
 			if (isset($pgv_changes[$fmatch[$j][1]."_".PGV_GEDCOM]) && PGV_USER_CAN_EDIT)
@@ -2218,7 +2218,7 @@ function get_relationship($pid1, $pid2, $followspouse=true, $maxlength=0, $ignor
 				}
 				//-- check all parents and siblings of this node
 				$famids = array();
-				$ct = preg_match_all("/1\sFAMC\s@(.*)@/", $indirec, $match, PREG_SET_ORDER);
+				$ct = preg_match_all("/1 FAMC @(.*)@/", $indirec, $match, PREG_SET_ORDER);
 				for ($i=0; $i<$ct; $i++) {
 					if (!isset($visited[$match[$i][1]]))
 						$famids[$i]=$match[$i][1];
@@ -2297,7 +2297,7 @@ function get_relationship($pid1, $pid2, $followspouse=true, $maxlength=0, $ignor
 				}
 				//-- check all spouses and children of this node
 				$famids = array();
-				$ct = preg_match_all("/1\sFAMS\s@(.*)@/", $indirec, $match, PREG_SET_ORDER);
+				$ct = preg_match_all("/1 FAMS @(.*)@/", $indirec, $match, PREG_SET_ORDER);
 				for ($i=0; $i<$ct; $i++) {
 					$famids[$i]=$match[$i][1];
 				}

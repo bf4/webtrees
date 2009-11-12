@@ -1131,18 +1131,18 @@ function update_media($gid, $ged_id, $gedrec, $update = false) {
 				$objlevel = 0;
 				$inobj = false;
 			}
-			if (preg_match("/[1-9]\sOBJE\s@(.*)@/", $line, $match) != 0) {
+			if (preg_match("/[1-9] OBJE @(.*)@/", $line, $match) != 0) {
 					// NOTE: Set object level
 					$objlevel = $level;
 					$inobj = true;
 						$objrec = $line . "\n";
-			} elseif (preg_match("/[1-9]\sOBJE/", $line, $match)) {
+			} elseif (preg_match("/[1-9] OBJE/", $line, $match)) {
 				// NOTE: Set the details for the next media record
 				$objlevel = $level;
 				$inobj = true;
 					$objrec = $line . "\n";
 			} else {
-				$ct = preg_match("/(\d+)\s(\w+)(.*)/", $line, $match);
+				$ct = preg_match("/(\d+) (\w+)(.*)/", $line, $match);
 				if ($ct > 0) {
 					if ($inobj) {
 						$objrec .= $line . "\n";
