@@ -50,7 +50,7 @@ class GEClippings extends GrampsExport {
 		$handle = $this->query_dom("./families/family[@id=\"$famid\"]/@handle");
 		$created = false;
 		if ($handle == null && id_in_cart($famid)) {
-			$frec = find_family_record($famid);
+			$frec = find_family_record($famid, PGV_GED_ID);
 			/*
 			* If the family does not exist and their ID is in the clippings cart,
 			* you must create the family before you can query them in the dom to get
@@ -233,7 +233,7 @@ class GEClippings extends GrampsExport {
 				// Create an instance of person and look for their family record
 				$person = Person :: getInstance($clipping["id"]);
 				$famId = $person->getChildFamilyIds();
-				$famrec = find_family_record($famId[0]);
+				$famrec = find_family_record($famId[0], PGV_GED_ID);
 				$fid = $famId[0];
 				$handle = $this->query_dom("./families/family[@id=\"$fid\"]/@handle");
 				if ($handle == null && id_in_cart($fid)) {
@@ -432,7 +432,7 @@ class GEClippings extends GrampsExport {
 				$eSourceRef = $this->dom->createElement("sourceref");
 				$eSourceRef = $eParent->appendChild($eSourceRef);
 				if (($sourceHlink = $this->query_dom("./sources/source[@id = \"$sourceID\"]/@handle")) == null)
-					$this->create_source($sourceID, find_source_record($sourceID));
+					$this->create_source($sourceID, find_source_record($sourceID), PGV_GED_ID);
 
 				$eSourceRef->setAttribute("hlink", $this->query_dom("./sources/source[@id = \"$sourceID\"]/@handle"));
 

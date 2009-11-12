@@ -830,7 +830,7 @@ class ServiceClient extends GedcomRecord {
 					$ct=preg_match("/0 @(.*)@/", $localrec, $match);
 					if ($ct>0) {
 						$pid = trim($match[1]);
-						if (isset($pgv_changes[$pid."_".$GEDCOM])) $localrec = find_updated_record($pid);
+						if (isset($pgv_changes[$pid."_".$GEDCOM])) $localrec = find_updated_record($pid, get_id_from_gedcom($GEDCOM));
 						$localrec = $this->_merge($localrec, $gedrec);
 						if ($isStub) {
 							include_once("includes/functions/functions_edit.php");
