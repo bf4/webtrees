@@ -111,8 +111,8 @@ class FamilyRoot extends BaseController {
 
 		//-- if the user can edit and there are changes then get the new changes
 		if ($this->show_changes && PGV_USER_CAN_EDIT && isset($pgv_changes[$this->famid."_".$GEDCOM])) {
-			$newrec = find_updated_record($this->famid);
-			if (empty($newrec)) $newrec = find_family_record($this->famid);
+			$newrec = find_updated_record($this->famid, PGV_GED_ID);
+			if (empty($newrec)) $newrec = find_family_record($this->famid, PGV_GED_ID);
 			$this->difffam = new Family($newrec);
 			$this->difffam->setChanged(true);
 			$this->family->diffMerge($this->difffam);
@@ -130,7 +130,7 @@ class FamilyRoot extends BaseController {
 		//-- add favorites action
 		if ($this->action=='addfav' && !empty($_REQUEST['gid']) && PGV_USER_NAME) {
 			$_REQUEST['gid'] = strtoupper($_REQUEST['gid']);
-			$indirec = find_family_record($_REQUEST['gid']);
+			$indirec = find_family_record($_REQUEST['gid'], PGV_GED_ID);
 			if ($indirec) {
 				$favorite = array(
 					'username' => PGV_USER_NAME,
@@ -151,7 +151,7 @@ class FamilyRoot extends BaseController {
 					$this->show_changes = false;
 					$this->accept_success = true;
 					//-- check if we just deleted the record and redirect to index
-					$famrec = find_family_record($_REQUEST['famid']);
+					$famrec = find_family_record($_REQUEST['famid'], PGV_GED_ID);
 					if (empty($famrec)) {
 						header("Location: index.php?ctype=gedcom");
 						exit;

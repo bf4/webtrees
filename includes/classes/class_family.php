@@ -274,7 +274,7 @@ class Family extends GedcomRecord {
 		}
 		if (PGV_USER_CAN_EDIT && $this->canDisplayDetails()) {
 			if (isset($pgv_changes[$this->xref."_".$GEDCOM])) {
-				$newrec = find_updated_record($this->xref);
+				$newrec = find_updated_record($this->xref, $this->ged_id);
 				if (!empty($newrec)) {
 					$newfamily = new Family($newrec);
 					$newfamily->setChanged(true);
