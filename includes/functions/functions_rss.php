@@ -486,9 +486,9 @@ function getRandomMedia() {
 				}
 				if ($disp && $filter!="all") {
 					// Apply filter criteria
-					$ct = preg_match("/0\s(@.*@)\sOBJE/", $medialist[$value]["GEDCOM"], $match);
+					$ct = preg_match("/0 (@.*@) OBJE/", $medialist[$value]["GEDCOM"], $match);
 					$objectID = $match[1];
-					$ct2 = preg_match("/(\d)\sOBJE\s{$objectID}/", $gedrec, $match2);
+					$ct2 = preg_match("/(\d) OBJE {$objectID}/", $gedrec, $match2);
 					if ($ct2>0) {
 						$objectRefLevel = $match2[1];
 						if ($filter=="indi" && $objectRefLevel!="1") $disp = false;
