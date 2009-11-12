@@ -53,15 +53,15 @@ function print_html_block($block=true, $config="", $side, $index) {
 
 	$ct = preg_match("/#(.+)#/", $config["html"], $match);
 	if ($ct>0) {
-		if (isset($pgv_lang[$match[1]])) $config["html"] = preg_replace("/$match[0]/", $pgv_lang[$match[1]], $config["html"]);
+		if (isset($pgv_lang[$match[1]])) $config["html"] = str_replace($match[0], $pgv_lang[$match[1]], $config["html"]);
 	}
 	$ct = preg_match("/#(.+)#/", $config["html"], $match);
 	if ($ct>0) {
-		if (isset($pgv_lang[$match[1]])) $config["html"] = preg_replace("/$match[0]/", $pgv_lang[$match[1]], $config["html"]);
+		if (isset($pgv_lang[$match[1]])) $config["html"] = str_replace($match[0], $pgv_lang[$match[1]], $config["html"]);
 		$varname = $match[1];
 		if (!empty($$varname)) {
 			$value = $$varname;
-			$config["html"] = preg_replace("/$match[0]/", $value, $config["html"]);
+			$config["html"] = str_replace($match[0], $value, $config["html"]);
 		}
 	}
 	$content = $config["html"];
@@ -69,7 +69,7 @@ function print_html_block($block=true, $config="", $side, $index) {
 	if ($PGV_BLOCKS["print_html_block"]["canconfig"]) {
 		if ($ctype=="gedcom" && PGV_USER_GEDCOM_ADMIN || $ctype=="user" && PGV_USER_ID) {
 			if ($ctype=="gedcom") {
-				$name = preg_replace("/'/", "\'", $GEDCOM);
+				$name = str_replace("'", "\'", $GEDCOM);
 			} else {
 				$name = PGV_USER_NAME;
 			}
