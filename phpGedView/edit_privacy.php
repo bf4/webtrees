@@ -182,7 +182,7 @@ if ($action=="update") {
 		else $person_privacy_text .= "\$person_privacy['$key'] = ".$PRIVACY_CONSTANTS[$value].";\n";
 	}
 	if ($v_new_person_privacy_access_ID && $v_new_person_privacy_access_option) {
-		$gedobj = new GedcomRecord(find_gedcom_record($v_new_person_privacy_access_ID));
+		$gedobj = new GedcomRecord(find_gedcom_record($v_new_person_privacy_access_ID, PGV_GED_ID));
 		$v_new_person_privacy_access_ID = $gedobj->getXref();
 		if ($v_new_person_privacy_access_ID) $person_privacy_text .= "\$person_privacy['$v_new_person_privacy_access_ID'] = ".$v_new_person_privacy_access_option.";\n";
 	}
@@ -201,7 +201,7 @@ if ($action=="update") {
 		}
 	}
 	if ($v_new_user_privacy_username && $v_new_user_privacy_access_ID && $v_new_user_privacy_access_option) {
-		$gedobj = new GedcomRecord(find_gedcom_record($v_new_user_privacy_access_ID));
+		$gedobj = new GedcomRecord(find_gedcom_record($v_new_user_privacy_access_ID, PGV_GED_ID));
 		$v_new_user_privacy_access_ID = $gedobj->getXref();
 		if ($v_new_user_privacy_access_ID) $person_privacy_text .= "\$user_privacy['$v_new_user_privacy_username']['$v_new_user_privacy_access_ID'] = ".$v_new_user_privacy_access_option.";\n";
 	}
@@ -239,7 +239,7 @@ if ($action=="update") {
 		}
 	}
 	if ($v_new_person_facts_access_ID && $v_new_person_facts_abbr && $v_new_global_facts_choice && $v_new_global_facts_access_option) {
-		$gedobj = new GedcomRecord(find_gedcom_record($v_new_person_facts_access_ID));
+		$gedobj = new GedcomRecord(find_gedcom_record($v_new_person_facts_access_ID, PGV_GED_ID));
 		$v_new_person_facts_access_ID = $gedobj->getXref();
 		if ($v_new_person_facts_access_ID) $person_privacy_text .= "\$person_facts['$v_new_person_facts_access_ID']['$v_new_person_facts_abbr']['$v_new_person_facts_choice'] = ".$v_new_person_facts_access_option.";\n";
 	}

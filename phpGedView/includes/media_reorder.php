@@ -66,8 +66,8 @@ include_once("includes/functions/functions_print_facts.php");
 	  print "\n";
 
       if (!showFact("OBJE", $pid)) return false;
-      if (!isset($pgv_changes[$pid."_".PGV_GEDCOM])) $gedrec = find_gedcom_record($pid);
-      else $gedrec = find_updated_record($pid);
+      if (!isset($pgv_changes[$pid."_".PGV_GEDCOM])) $gedrec = find_gedcom_record($pid, PGV_GED_ID);
+      else $gedrec = find_updated_record($pid, PGV_GED_ID);
 
 	//related=true means show related items
 	$related="true";
