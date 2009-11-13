@@ -51,7 +51,7 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 		//id=document.getElementById('gid').value;
 		if (id.match("I")=="I" || id.match("i")=="i") {
 			id = id.toUpperCase();
-			winNav = window.open('edit_interface.php?action=addmedia_links&noteid=newnote&pid='+id, 'winNav', 'top=50,left=640,width=300,height=650,resizable=1,scrollbars=1');
+			winNav = window.open('edit_interface.php?action=addmedia_links&noteid=newnote&pid='+id, 'winNav', 'top=50,left=640,width=300,height=630,resizable=1,scrollbars=1');
 			if (window.focus) {winNav.focus();}
 		}else if (id.match("F")=="F") {
 			id = id.toUpperCase();
