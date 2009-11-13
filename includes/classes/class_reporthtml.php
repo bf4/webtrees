@@ -673,7 +673,7 @@ class PGVRCellHTML extends PGVRCell {
 		if ($html->getCurrentStyle() != $this->styleName) {
 			$html->setCurrentStyle($this->styleName);
 		}
-		$temptext = preg_replace("/#PAGENUM#/", $html->PageNo(), $this->text);
+		$temptext = str_replace("#PAGENUM#", $html->PageNo(), $this->text);
 
 		/**
 		* Keep the original values, use these local variables
@@ -906,7 +906,7 @@ class PGVRTextBoxHTML extends PGVRTextBox {
 					else {
 						// Checking if the PGVRText has the same style
 						if ($element->getStyleName() == $lastelement->getStyleName()) {
-							$lastelement->addText(preg_replace("/\n/", "<br />", $element->getValue()));
+							$lastelement->addText(str_replace("\n", "<br />", $element->getValue()));
 						}
 						else {
 							if (!empty($lastelement)) {
@@ -1135,7 +1135,7 @@ class PGVRTextHTML extends PGVRText {
 		if ($html->getCurrentStyle() != $this->styleName) {
 			$html->setCurrentStyle($this->styleName);
 		}
-		$temptext = preg_replace("/#PAGENUM#/", $html->PageNo(), $this->text);
+		$temptext = str_replace("#PAGENUM#", $html->PageNo(), $this->text);
 		// If any text at all
 		if (!empty($temptext)) {
 			// If called by an other element
@@ -1291,7 +1291,7 @@ class PGVRFootnoteHTML extends PGVRFootnote {
 		if ($html->getCurrentStyle()!=$this->styleName)
 			$html->setCurrentStyle($this->styleName);
 
-		$temptext = preg_replace("/#PAGENUM#/", $html->PageNo(), $this->text);
+		$temptext = str_replace("#PAGENUM#", $html->PageNo(), $this->text);
 
 		print "<a name=\"footnote".$this->num."\"><span class=\"footnote\">".$this->num.". ";
 		print nl2br(PrintReady($temptext, false, false));

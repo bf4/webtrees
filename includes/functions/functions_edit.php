@@ -120,8 +120,8 @@ function checkChangeTime($pid, $gedrec, $last_time) {
 		}
 	}
 	if (isset($_REQUEST['linenum']) && $changeTime!=0 && $last_time && $changeTime > $last_time) {
-		echo "<span class=\"error\">".preg_replace("/#PID#/", $pid, $pgv_lang["edit_concurrency_msg2"])."<br /><br />";
-		if (!empty($changeUser)) echo preg_replace(array("/#CHANGEUSER#/", "/#CHANGEDATE#/"), array($changeUser,date("d M Y H:i:s", $changeTime)), $pgv_lang["edit_concurrency_change"])."<br /><br />";
+		echo "<span class=\"error\">".str_replace("#PID#", $pid, $pgv_lang["edit_concurrency_msg2"])."<br /><br />";
+		if (!empty($changeUser)) echo str_replace(array("#CHANGEUSER#", "#CHANGEDATE#"), array($changeUser,date("d M Y H:i:s", $changeTime)), $pgv_lang["edit_concurrency_change"])."<br /><br />";
 		echo $pgv_lang["edit_concurrency_reload"]."</span>";
 		print_simple_footer();
 		exit;

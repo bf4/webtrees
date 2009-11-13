@@ -526,7 +526,7 @@ if ($controller->action == "general" || $controller->action == "soundex") {
 
 		$i = 0;
 		foreach ($all_gedcoms as $ged_id=>$gedcom) {
-			$str = preg_replace(array ("/\./", "/-/", "/ /"), array ("_", "_", "_"), $gedcom);
+			$str = str_replace(array (".", "-", " "), array ("_", "_", "_"), $gedcom);
 			$controller->inputFieldNames[] = "$str";
 			print "<input type=\"checkbox\" ";
 			if (isset ($_REQUEST["$str"]))

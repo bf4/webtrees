@@ -669,7 +669,7 @@ class PGVRCellPDF extends PGVRCell {
 		if (($pdf->getCurrentStyle()) != ($this->styleName)) {
 			$pdf->setCurrentStyle($this->styleName);
 		}
-		$temptext = preg_replace("/#PAGENUM#/", $pdf->PageNo(), $this->text);
+		$temptext = str_replace("#PAGENUM#", $pdf->PageNo(), $this->text);
 
 		// Indicates if the cell background must be painted (1) or transparent (0)
 		if ($this->fill == 1) {
@@ -846,7 +846,7 @@ class PGVRTextBoxPDF extends PGVRTextBox {
 					else {
 						// Checking if the PGVRText has the same style
 						if ($element->getStyleName() == $lastelement->getStyleName()) {
-							$lastelement->addText(preg_replace("/\n/", "<br />", $element->getValue()));
+							$lastelement->addText(str_replace("\n", "<br />", $element->getValue()));
 						}
 						else {
 							if (!empty($lastelement)) {
@@ -1102,7 +1102,7 @@ class PGVRTextPDF extends PGVRText {
 		if ($pdf->getCurrentStyle() != $this->styleName) {
 			$pdf->setCurrentStyle($this->styleName);
 		}
-		$temptext = preg_replace("/#PAGENUM#/", $pdf->PageNo(), $this->text);
+		$temptext = str_replace("#PAGENUM#", $pdf->PageNo(), $this->text);
 
 		// Paint the text color if set
 		if (!empty($this->color)) {
@@ -1248,7 +1248,7 @@ class PGVRFootnotePDF extends PGVRFootnote {
 		if ($pdf->getCurrentStyle() != $this->styleName) {
 			$pdf->setCurrentStyle($this->styleName);
 		}
-		$temptext = preg_replace("/#PAGENUM#/", $pdf->PageNo(), $this->text);
+		$temptext = str_replace("#PAGENUM#", $pdf->PageNo(), $this->text);
 		$pdf->SetLink($this->addlink, -1);
 		$pdf->Write($pdf->getCurrentStyleHeight(), $this->num.". ".$temptext."\n\n");
 	}

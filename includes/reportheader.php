@@ -103,7 +103,7 @@ function PGVRvarSHandler($attrs) {
 	if (!empty($var)) {
 		$tfact = $fact;
 		if ($fact=="EVEN") $tfact = $type;
-		$var = preg_replace(array("/\[/","/\]/","/@fact/","/@desc/"), array("['","']",$tfact,$desc), $var);
+		$var = str_replace(array("[","]","@fact","@desc"), array("['","']",$tfact,$desc), $var);
 		eval("if (!empty(\$$var)) \$var = \$$var;");
 		$ct = preg_match("/factarray\['(.*)'\]/", $var, $match);
 		if ($ct>0) $var = $match[1];

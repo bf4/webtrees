@@ -711,7 +711,7 @@ class ServiceClient extends GedcomRecord {
 			$ids_checked[$id]=true;
 			$gid=get_remote_id($id);
 			if ($gid)
-				$gedrec = preg_replace("/@".$id."@/", "@".$gid."@", $gedrec);
+				$gedrec = str_replace("@".$id."@", "@".$gid."@", $gedrec);
 			}
 			return $gedrec;
 		}

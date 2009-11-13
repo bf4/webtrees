@@ -51,9 +51,8 @@ function expand_urls($text) {
 	
 	return preg_replace_callback(
 		'/'.addcslashes("(?!>)$URL_REGEX(?!</a>)", '/').'/i',
-		create_function( // Insert <wbr/> codes into the replaced string
+		create_function( // Insert soft hyphens into the replaced string
 			'$m',
-//			'return "<a href=\"".$m[0]."\" target=\"blank\">".preg_replace("/\b/", "<wbr/>", $m[0])."</a>";'
 			'return "<a href=\"".$m[0]."\" target=\"blank\">".preg_replace("/\b/", "&shy;", $m[0])."</a>";'
 		),
 		preg_replace("/<(?!br)/i", "&lt;", $text) // no html except br

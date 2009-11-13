@@ -1312,7 +1312,7 @@ loadLangFile('pgv_help');
 				$output.=print_text($show_desc, 0, 1);
 			} else {
 				if (stristr($pgv_lang[$show_desc], "\"")) {
-					$output.=preg_replace('/\"/','\'',$pgv_lang[$show_desc]);
+					$output.=str_replace('\"','\'',$pgv_lang[$show_desc]);
 				} else {
 					$output.=strip_tags($pgv_lang[$show_desc]);
 				}
@@ -1412,7 +1412,7 @@ function print_text($help, $level=0, $noprint=0){
 	$ct = preg_match_all("/#([a-zA-Z0-9_.\-\[\]]+)#/", $sentence, $match, PREG_SET_ORDER);
 	for($i=0; $i<$ct; $i++) {
 		$value = "";
-		$newreplace = preg_replace(array("/\[/","/\]/"), array("['","']"), $match[$i][1]);
+		$newreplace = str_replace(array("[","]"), array("['","']"), $match[$i][1]);
 		if ($DEBUG_LANG) {
 			echo "[LANG_DEBUG] Embedded variable: ".$match[$i][1]."<br /><br />";
 		}
@@ -1445,12 +1445,12 @@ function print_help_index($help){
 		$mod_sentence = substr_replace($sentence, " ", $pos1, 1);
 		$pos2 = strpos($mod_sentence, "#");
 		$replace = substr($sentence, ($pos1+1), ($pos2-$pos1-1));
-		$sub = preg_replace(array("/pgv_lang\\[/","/\]/"), array("",""), $replace);
+		$sub = str_replace(array("pgv_lang[","]"), array("",""), $replace);
 		if (isset($pgv_lang[$sub])) {
 			$items = explode(',', $pgv_lang[$sub]);
 			$var = $pgv_lang[$items[1]];
 		}
-		$sub = preg_replace(array("/factarray\\[/","/\]/"), array("",""), $replace);
+		$sub = str_replace(array("factarray[","]"), array("",""), $replace);
 		if (isset($factarray[$sub])) {
 			$items = explode(',', $factarray[$sub]);
 			$var = $factarray[$items[1]];

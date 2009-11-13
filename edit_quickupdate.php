@@ -667,7 +667,7 @@ if ($action=="update") {
 		if (!empty($_REQUEST[$var])) $fcdel = $_REQUEST[$var];
 		else $fcdel = "";
 		if (!empty($fcdel)) {
-			$famrec = preg_replace("/1 CHIL @$fcdel@/", "", $famrec);
+			$famrec = str_replace("1 CHIL @$fcdel@", "", $famrec);
 			$famupdate = true;
 		}
 
@@ -1156,7 +1156,7 @@ if ($action=="update") {
 		if (isset($_REQUEST[$var])) $fcdel = $_REQUEST[$var];
 		else $fcdel = "";
 		if (!empty($fcdel)) {
-			$famrec = preg_replace("/1 CHIL @$fcdel@/", "", $famrec);
+			$famrec = str_replace("1 CHIL @$fcdel@", "", $famrec);
 			$famupdate = true;
 		}
 

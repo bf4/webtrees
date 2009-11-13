@@ -353,7 +353,7 @@ function xref_change($tag="RIN")
 			if($rt>0)
 			{
 				$name = trim($rmatch[1])." (".$xref.")";
-				$name = preg_replace("/\//","",$name);
+				$name = str_replace("/","",$name);
 			}
 			else
 				$name = $xref;
@@ -361,7 +361,7 @@ function xref_change($tag="RIN")
 			$rt = preg_match("/1 $tag (.*)/", $indirec, $rmatch);
 			if ($rt>0) {
 				$rin = trim($rmatch[1]);
-				$fcontents = preg_replace("/@$xref@/", "@$rin@", $fcontents);
+				$fcontents = str_replace("@$xref@", "@$rin@", $fcontents);
 //  			print "successfully set to $rin<br />\n";
 			}
 			else   print "<span class=\"error\">No $tag found in record<br /></span>\n";

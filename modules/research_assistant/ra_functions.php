@@ -750,7 +750,7 @@ class ra_functions {
 					if ($file != "." && $file != ".." && !is_dir($file) && (strstr($file, "ra_") === false)) {
 						// Setup pretty print for the users
 						$fileNoSpaces = preg_replace('/\s+/', '_', $file);
-						$fileSpaces = preg_replace('/_/', ' ', $file);
+						$fileSpaces = str_replace('_', ' ', $file);
 
 						// Print a link with all the information to connect a person and their data.
 						if ($links)
@@ -1736,7 +1736,7 @@ class ra_functions {
 			$percentage = sprintf("%.2f%%",$percentage * 100);
 
 			$tempOut = $pgv_lang["InferIndvBirthPlac"];
-			$tempOut = preg_replace("/%PERCENT%/",$percentage,$tempOut);
+			$tempOut = str_replace("%PERCENT%",$percentage,$tempOut);
 			return $tempOut;
 		}
 		if($fact == "DEAT:PLAC")
@@ -1745,7 +1745,7 @@ class ra_functions {
 			$percentage = sprintf("%.2f%%",$percentage * 100);
 
 			$tempOut = $pgv_lang["InferIndvDeathPlac"];
-			$tempOut = preg_replace("/%PERCENT%/",$percentage,$tempOut);
+			$tempOut = str_replace("%PERCENT%",$percentage,$tempOut);
 			return $tempOut;
 		}
 		if($fact == "SURN")
@@ -1753,7 +1753,7 @@ class ra_functions {
 			$percentage = sprintf("%.2f%%",$percentage * 100);
 
 			$tempOut = $pgv_lang["InferIndvSurn"];
-			$tempOut = preg_replace("/%PERCENT%/",$percentage,$tempOut);
+			$tempOut = str_replace("%PERCENT%",$percentage,$tempOut);
 			return $tempOut;
 		}
 		if($fact == "MARR:PLAC")
@@ -1762,7 +1762,7 @@ class ra_functions {
 			$percentage = sprintf("%.2f%%",$percentage * 100);
 
 			$tempOut = $pgv_lang["InferIndvMarriagePlace"];
-			$tempOut = preg_replace("/%PERCENT%/",$percentage,$tempOut);
+			$tempOut = str_replace("%PERCENT%",$percentage,$tempOut);
 			return $tempOut;
 		}
 		if($fact == "GIVN")
@@ -1771,7 +1771,7 @@ class ra_functions {
 			$percentage = sprintf("%.2f%%",$percentage * 100);
 
 			$tempOut = $pgv_lang["InferIndvGivn"];
-			$tempOut = preg_replace("/%PERCENT%/",$percentage,$tempOut);
+			$tempOut = str_replace("%PERCENT%",$percentage,$tempOut);
 			return $tempOut;
 		}
 	}

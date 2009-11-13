@@ -608,7 +608,7 @@ case 'linkfamaction':
 				//-- only continue if the old husb/wife is not the same as the current one
 				if ($spid!=$pid) {
 					//-- change a of the old ids to the new id
-					$famrec = preg_replace("/1 $famtag @$spid@/", "1 $famtag @$pid@", $famrec);
+					$famrec = str_replace("1 $famtag @$spid@", "1 $famtag @$pid@", $famrec);
 					if (PGV_DEBUG) {
 						echo "<pre>$famrec</pre>";
 					}
@@ -618,7 +618,7 @@ case 'linkfamaction':
 						if (!isset($pgv_changes[$spid."_".PGV_GEDCOM])) $srec = find_gedcom_record($spid, PGV_GED_ID);
 						else $srec = find_updated_record($spid, PGV_GED_ID);
 						if ($srec) {
-							$srec = preg_replace("/1 $itag @$famid@\s*/", "", $srec);
+							$srec = str_replace("1 $itag @$famid@", "", $srec);
 							if (PGV_DEBUG) {
 								echo "<pre>$srec</pre>";
 							}
