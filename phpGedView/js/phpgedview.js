@@ -247,20 +247,32 @@ var show = false;
 		var sbox_style = sbox.style;
 		if (show===true) {
 			sbox_style.display='block';
-			if (sbox_img) sbox_img.src = plusminus[1].src;
+			if (sbox_img) {
+				sbox_img.src = plusminus[1].src;
+				sbox_img.title = plusminus[1].title;
+			}
 		}
 		else if (show===false) {
 			sbox_style.display='none';
-			if (sbox_img) sbox_img.src = plusminus[0].src;
+			if (sbox_img) {
+				sbox_img.src = plusminus[0].src;
+				sbox_img.title = plusminus[0].title;
+			}
 		}
 		else {
 			if ((sbox_style.display=='none')||(sbox_style.display=='')) {
 				sbox_style.display='block';
-				if (sbox_img) sbox_img.src = plusminus[1].src;
+				if (sbox_img) {
+					sbox_img.src = plusminus[1].src;
+					sbox_img.title = plusminus[1].title;
+				}
 			}
 			else {
 				sbox_style.display='none';
-				if (sbox_img) sbox_img.src = plusminus[0].src;
+				if (sbox_img) {
+					sbox_img.src = plusminus[0].src;
+					sbox_img.title = plusminus[0].title;
+				}
 			}
 		}
 		//if (!lasttab) lasttab=0;
