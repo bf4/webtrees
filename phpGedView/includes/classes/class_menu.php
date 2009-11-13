@@ -264,7 +264,7 @@ class Menu {
 		}
 		$link .= "\">";
 		if ($this->icon !== null) {
-			$tempTitle = preg_replace("/\"/", '', $this->label);
+			$tempTitle = str_replace("\"", '', $this->label);
 			$MenuIcon = "<img id=\"menu{$id}_icon\" src=\"{$this->icon}\" class=\"icon\" alt=\"{$tempTitle}\" title=\"{$tempTitle}\" />";
 			switch ($this->labelpos) {
 			case "right":

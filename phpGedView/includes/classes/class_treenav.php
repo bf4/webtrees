@@ -79,7 +79,7 @@ class TreeNav {
 				$output = ob_get_clean();
 				$lines = preg_split("/\r?\n/", $output);
 				foreach($lines as $line)
-					print "document.writeln('".preg_replace("/'/", "\\'", $line)."');\n";
+					print "document.writeln('".str_replace("'", "\\'", $line)."');\n";
 				exit;
 			}
 			if (isset($_REQUEST['allSpouses'])) {

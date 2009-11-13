@@ -150,7 +150,7 @@ class SearchControllerRoot extends BaseController {
 
 		if (!$this->isPostBack) {
 			// Enable the default gedcom for search
-			$str = preg_replace(array ("/\./", "/-/", "/ /"), array ("_", "_", "_"), $GEDCOM);
+			$str = str_replace(array (".", "-", " "), array ("_", "_", "_"), $GEDCOM);
 			$_REQUEST["$str"] = $str;
 		}
 
@@ -158,7 +158,7 @@ class SearchControllerRoot extends BaseController {
 		$all_gedcoms=get_all_gedcoms();
 		if ($ALLOW_CHANGE_GEDCOM && count($all_gedcoms)>1) {
 			foreach ($all_gedcoms as $ged_id=>$gedcom) {
-				$str = preg_replace(array ("/\./", "/-/", "/ /"), array ("_", "_", "_"), $gedcom);
+				$str = str_replace(array (".", "-", " "), array ("_", "_", "_"), $gedcom);
 				if (isset ($_REQUEST["$str"]) || isset ($this->topsearch)) {
 					$this->sgeds[$ged_id] = $gedcom;
 					$_REQUEST["$str"] = 'yes';
@@ -339,7 +339,7 @@ class SearchControllerRoot extends BaseController {
 		$this->srindi = "yes";
 
 		// Enable the default gedcom for search
-		$str = preg_replace(array ("/\./", "/-/", "/ /"), array ("_", "_", "_"), $GEDCOM);
+		$str = str_replace(array (".", "-", " "), array ("_", "_", "_"), $GEDCOM);
 		$_REQUEST["$str"] = "yes";
 
 		// Then see if an ID is typed in. If so, we might want to jump there.
@@ -1022,7 +1022,7 @@ class SearchControllerRoot extends BaseController {
 		}
 		$tempURL .= "&resultsPageNum={$pageNum}";
 		foreach($this->sgeds as $i=>$key) {
-			$str = preg_replace(array ("/\./", "/-/", "/ /"), array ("_", "_", "_"), $key);
+			$str = str_replace(array (".", "-", " "), array ("_", "_", "_"), $key);
 			$tempURL .= "&{$str}=yes";
 		}
 		print encode_url($tempURL);

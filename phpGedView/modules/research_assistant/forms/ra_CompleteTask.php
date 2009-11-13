@@ -70,7 +70,7 @@ require_once 'modules/research_assistant/forms/ra_form.php';
             if (!empty($filenames[$i])  )
             {
                 $optVal=$filenames[$i];
-                if(!empty($_POST['commonFrm']) && $filenames[$i]==preg_replace('/_/', ' ', $_POST['commonFrm']))
+                if(!empty($_POST['commonFrm']) && $filenames[$i]==str_replace('_', ' ', $_POST['commonFrm']))
                 {
                 $out .= '<option value="'. preg_replace('/\s+/', '_',$optVal).'" selected="selected">'.$filenames[$i].'</option>';
                 }

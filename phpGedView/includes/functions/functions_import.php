@@ -975,7 +975,7 @@ function insert_media($objrec, $objlevel, $update, $gid, $ged_id, $count) {
 		$new_m_media = $old_m_media;
 		$m_media = $new_m_media;
 		if ($m_media != $old_m_media) {
-			$objref = preg_replace("/@$old_m_media@/", "@$m_media@", $objref);
+			$objref = str_replace("@$old_m_media@", "@$m_media@", $objref);
 		}
 	}
 	//-- handle embedded OBJE records
@@ -984,7 +984,7 @@ function insert_media($objrec, $objlevel, $update, $gid, $ged_id, $count) {
 		$objref = subrecord_createobjectref($objrec, $objlevel, $m_media);
 
 		//-- restructure the record to be a linked record
-		$objrec = preg_replace("/ OBJE/", " @" . $m_media . "@ OBJE", $objrec);
+		$objrec = str_replace(" OBJE", " @" . $m_media . "@ OBJE", $objrec);
 		//-- renumber the lines
 		$objrec = preg_replace("/^(\d+) /me", "($1-$objlevel).' '", $objrec);
 
@@ -1001,7 +1001,7 @@ function insert_media($objrec, $objlevel, $update, $gid, $ged_id, $count) {
 			}
 		} else {
 			//-- already added so update the local id
-			$objref = preg_replace("/@$m_media@/", "@$new_media@", $objref);
+			$objref = str_replace("@$m_media@", "@$new_media@", $objref);
 			$m_media = $new_media;
 		}
 	}
@@ -1074,7 +1074,7 @@ function update_media($gid, $ged_id, $gedrec, $update = false) {
 		**/
 		$new_m_media = $old_m_media;
 		//print "RECORD: old $old_m_media new $new_m_media<br />";
-		$gedrec = preg_replace("/@" . $old_m_media . "@/", "@" . $new_m_media . "@", $gedrec);
+		$gedrec = str_replace("@" . $old_m_media . "@", "@" . $new_m_media . "@", $gedrec);
 		$media = new Media($gedrec);
 		//--check if we already have a similar object
 		$new_media = Media::in_obje_list($media);

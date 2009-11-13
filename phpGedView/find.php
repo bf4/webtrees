@@ -634,7 +634,7 @@ if ($action=="filter") {
 				uasort($revplacelist, "stringsort");
 				echo "<td class=\"list_value_wrap $TEXT_DIRECTION\"><ul>";
 				foreach($revplacelist as $place) {
-					echo "<li><a href=\"javascript:;\" onclick=\"pasteid('".preg_replace(array("/'/",'/"/'), array("\'",'&quot;'), $place)."');\">".PrintReady($place)."</a></li>";
+					echo "<li><a href=\"javascript:;\" onclick=\"pasteid('".str_replace(array("'",'"'), array("\'",'&quot;'), $place)."');\">".PrintReady($place)."</a></li>";
 				}
 				echo "</ul></td></tr>";
 				echo "<tr><td class=\"list_label\">".$pgv_lang["total_places"]." ".$ctplace;
