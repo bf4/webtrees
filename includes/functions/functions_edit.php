@@ -98,12 +98,12 @@ function newConnection() {
 * @param string $gedrec The latest gedcom record to check the CHAN:DATE:TIME (auto accept)
 */
 function checkChangeTime($pid, $gedrec, $last_time) {
-	global $GEDCOM, $pgv_changes, $pgv_lang;
+	global $pgv_changes, $pgv_lang;
 	//-- check if the record changes since last access
 	$changeTime = 0;
 	$changeUser = "";
-	if (isset($pgv_changes[$pid."_".$GEDCOM])) {
-		$change = end($pgv_changes[$pid."_".$GEDCOM]);
+	if (isset($pgv_changes[$pid."_".PGV_GEDCOM])) {
+		$change = end($pgv_changes[$pid."_".PGV_GEDCOM]);
 		$changeTime = $change['time'];
 		$changeUser = $change['user'];
 	}
@@ -137,7 +137,7 @@ function checkChangeTime($pid, $gedrec, $last_time) {
 * @param string $linkpid Tells whether or not this record change is linked with the record change of another record identified by $linkpid
 */
 function replace_gedrec($gid, $gedrec, $chan=true, $linkpid='') {
-	global $fcontents, $GEDCOM, $pgv_changes, $manual_save, $pgv_private_records;
+	global $fcontents, $pgv_changes, $manual_save, $pgv_private_records;
 
 	$gid = strtoupper($gid);
 	//-- restore any data that was hidden during privatizing
@@ -164,23 +164,23 @@ function replace_gedrec($gid, $gedrec, $chan=true, $linkpid='') {
 				}
 				else {
 					AddToChangeLog("Warning: $oldgid was changed to $gid");
-					if (isset($pgv_changes[$oldgid."_".$GEDCOM])) unset($pgv_changes[$oldgid."_".$GEDCOM]);
+					if (isset($pgv_changes[$oldgid."_".PGV_GEDCOM])) unset($pgv_changes[$oldgid."_".PGV_GEDCOM]);
 				}
 			}
 		}
 
 			$change = array();
 			$change["gid"] = $gid;
-			$change["gedcom"] = $GEDCOM;
+			$change["gedcom"] = PGV_GEDCOM;
 			$change["type"] = "replace";
 			$change["status"] = "submitted";
 			$change["user"] = PGV_USER_NAME;
 			$change["time"] = time();
 			if (!empty($linkpid)) $change["linkpid"] = $linkpid;
 			$change["undo"] = reformat_record_import($gedrec);
-			if (!isset($pgv_changes[$gid."_".$GEDCOM])) $pgv_changes[$gid."_".$GEDCOM] = array();
+			if (!isset($pgv_changes[$gid."_".PGV_GEDCOM])) $pgv_changes[$gid."_".PGV_GEDCOM] = array();
 			else {
-				$lastchange = end($pgv_changes[$gid."_".$GEDCOM]);
+				$lastchange = end($pgv_changes[$gid."_".PGV_GEDCOM]);
 				if (!empty($lastchange)) {
 					//-- append recods should continue to be marked as append
 					if ($lastchange["type"]=="append") $change["type"] = "append";
@@ -191,10 +191,10 @@ function replace_gedrec($gid, $gedrec, $chan=true, $linkpid='') {
 					}
 				}
 			}
-			$pgv_changes[$gid."_".$GEDCOM][] = $change;
+			$pgv_changes[$gid."_".PGV_GEDCOM][] = $change;
 
 		if (PGV_USER_AUTO_ACCEPT) {
-			accept_changes($gid."_".$GEDCOM);
+			accept_changes($gid."_".PGV_GEDCOM);
 		} else {
 			write_changes();
 		}
@@ -214,7 +214,7 @@ function replace_gedrec($gid, $gedrec, $chan=true, $linkpid='') {
 //-- this function will append a new gedcom record at
 //-- the end of the gedcom file.
 function append_gedrec($gedrec, $chan=true, $linkpid='') {
-	global $fcontents, $GEDCOM, $pgv_changes, $manual_save;
+	global $fcontents, $pgv_changes, $manual_save;
 
 	if (($gedrec = check_gedcom($gedrec, $chan))!==false) {
 		$ct = preg_match("/0 @(".PGV_REGEX_XREF.")@ (".PGV_REGEX_TAG.")/", $gedrec, $match);
@@ -227,18 +227,18 @@ function append_gedrec($gedrec, $chan=true, $linkpid='') {
 
 		$change = array();
 		$change["gid"] = $xref;
-		$change["gedcom"] = $GEDCOM;
+		$change["gedcom"] = PGV_GEDCOM;
 		$change["type"] = "append";
 		$change["status"] = "submitted";
 		$change["user"] = PGV_USER_NAME;
 		$change["time"] = time();
 		if (!empty($linkpid)) $change["linkpid"] = $linkpid;
 		$change["undo"] = reformat_record_import($gedrec);
-		if (!isset($pgv_changes[$xref."_".$GEDCOM])) $pgv_changes[$xref."_".$GEDCOM] = array();
-		$pgv_changes[$xref."_".$GEDCOM][] = $change;
+		if (!isset($pgv_changes[$xref."_".PGV_GEDCOM])) $pgv_changes[$xref."_".PGV_GEDCOM] = array();
+		$pgv_changes[$xref."_".PGV_GEDCOM][] = $change;
 
 		if (PGV_USER_AUTO_ACCEPT) {
-			accept_changes($xref."_".$GEDCOM);
+			accept_changes($xref."_".PGV_GEDCOM);
 		} else {
 			write_changes();
 		}
@@ -258,30 +258,30 @@ function append_gedrec($gedrec, $chan=true, $linkpid='') {
 //-- this function will delete the gedcom record with
 //-- the given $gid
 function delete_gedrec($gid, $linkpid='') {
-	global $fcontents, $GEDCOM, $pgv_changes, $manual_save;
+	global $fcontents, $pgv_changes, $manual_save;
 
 	//-- first check if the record is not already deleted
-	if (isset($pgv_changes[$gid."_".$GEDCOM])) {
-		$change = end($pgv_changes[$gid."_".$GEDCOM]);
+	if (isset($pgv_changes[$gid."_".PGV_GEDCOM])) {
+		$change = end($pgv_changes[$gid."_".PGV_GEDCOM]);
 		if ($change["type"]=="delete") return true;
 	}
 
-	$undo = find_gedcom_record($gid);
+	$undo = find_gedcom_record($gid, PGV_GED_ID);
 	if (empty($undo)) return false;
 		$change = array();
 		$change["gid"] = $gid;
-		$change["gedcom"] = $GEDCOM;
+		$change["gedcom"] = PGV_GEDCOM;
 		$change["type"] = "delete";
 		$change["status"] = "submitted";
 		$change["user"] = PGV_USER_NAME;
 		$change["time"] = time();
 		if (!empty($linkpid)) $change["linkpid"] = $linkpid;
 		$change["undo"] = "";
-		if (!isset($pgv_changes[$gid."_".$GEDCOM])) $pgv_changes[$gid."_".$GEDCOM] = array();
-		$pgv_changes[$gid."_".$GEDCOM][] = $change;
+		if (!isset($pgv_changes[$gid."_".PGV_GEDCOM])) $pgv_changes[$gid."_".PGV_GEDCOM] = array();
+		$pgv_changes[$gid."_".PGV_GEDCOM][] = $change;
 
 	if (PGV_USER_AUTO_ACCEPT) {
-		accept_changes($gid."_".$GEDCOM);
+		accept_changes($gid."_".PGV_GEDCOM);
 	}
 	else {
 		write_changes();
@@ -301,7 +301,7 @@ function delete_gedrec($gid, $linkpid='') {
 function check_gedcom($gedrec, $chan=true) {
 	global $pgv_lang;
 
-	$gedrec = trim(stripslashes(stripLRMRLM($gedrec)));
+	$gedrec = trim(stripLRMRLM($gedrec));
 
 	$ct = preg_match("/0 @(.*)@ (.*)/", $gedrec, $match);
 	if ($ct==0) {
@@ -421,14 +421,11 @@ function remove_subline($oldrecord, $linenum) {
 * @return boolean true if undo successful
 */
 function undo_change($cid, $index) {
-	global $fcontents, $pgv_changes, $GEDCOM, $manual_save;
+	global $fcontents, $pgv_changes, $manual_save;
 
 	if (isset($pgv_changes[$cid])) {
 		$changes = $pgv_changes[$cid];
 		$change = $changes[$index];
-		if ($GEDCOM != $change["gedcom"]) {
-			$GEDCOM = $change["gedcom"];
-		}
 
 		if ($index==0) unset($pgv_changes[$cid]);
 		else {
@@ -454,7 +451,7 @@ function undo_change($cid, $index) {
 */
 function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag="CHIL", $sextag="") {
 	global $pgv_lang, $factarray, $pid, $PGV_IMAGE_DIR, $PGV_IMAGES, $WORD_WRAPPED_NOTES;
-	global $NPFX_accept, $SPFX_accept, $NSFX_accept, $FILE_FORM_accept, $GEDCOM, $NAME_REVERSE;
+	global $NPFX_accept, $SPFX_accept, $NSFX_accept, $FILE_FORM_accept, $NAME_REVERSE;
 	global $bdm, $TEXT_DIRECTION, $STANDARD_NAME_FACTS, $REVERSED_NAME_FACTS, $ADVANCED_NAME_FACTS, $ADVANCED_PLAC_FACTS, $SURNAME_TRADITION;
 	global $QUICK_REQUIRED_FACTS, $QUICK_REQUIRED_FAMFACTS;
 
@@ -494,18 +491,18 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 	// Inherit surname from parents, spouse or child
 	if (empty($namerec)) {
 		// We'll need the parent's name to set the child's surname
-		if (isset($pgv_changes[$famid."_".$GEDCOM]))
-			$famrec=find_updated_record($famid);
+		if (isset($pgv_changes[$famid."_".PGV_GEDCOM]))
+			$famrec=find_updated_record($famid, PGV_GED_ID);
 		else
-			$famrec=find_family_record($famid);
+			$famrec=find_family_record($famid, PGV_GED_ID);
 		$parents=find_parents_in_record($famrec);
-		$father_name=get_gedcom_value('NAME', 0, find_person_record($parents['HUSB']));
-		$mother_name=get_gedcom_value('NAME', 0, find_person_record($parents['WIFE']));
+		$father_name=get_gedcom_value('NAME', 0, find_person_record($parents['HUSB'], PGV_GED_ID));
+		$mother_name=get_gedcom_value('NAME', 0, find_person_record($parents['WIFE'], PGV_GED_ID));
 		// We'll need the spouse/child's name to set the spouse/parent's surname
-		if (isset($pgv_changes[$pid."_".$GEDCOM]))
-			$prec=find_updated_record($pid);
+		if (isset($pgv_changes[$pid."_".PGV_GEDCOM]))
+			$prec=find_updated_record($pid, PGV_GED_ID);
 		else
-			$prec=find_person_record($pid);
+			$prec=find_person_record($pid, PGV_GED_ID);
 		$indi_name=get_gedcom_value('NAME', 0, $prec);
 		// Different cultures do surnames differently
 		switch ($SURNAME_TRADITION) {
@@ -698,7 +695,7 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 					$text .= $fields[$j];
 				}
 				$iscont = false;
-				while(($i+1<count($gedlines))&&(preg_match("/".($level+1)." (CON[CT])\s?(.*)/", $gedlines[$i+1], $cmatch)>0)) {
+				while(($i+1<count($gedlines))&&(preg_match("/".($level+1)." (CON[CT]) ?(.*)/", $gedlines[$i+1], $cmatch)>0)) {
 					$iscont=true;
 					if ($cmatch[1]=="CONT") $text.="\n";
 					if ($WORD_WRAPPED_NOTES) $text .= " ";
@@ -1094,7 +1091,7 @@ function print_addnewsource_link($element_id) {
 */
 function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose="", $rowDisplay=true) {
 	global $factarray, $pgv_lang, $PGV_IMAGE_DIR, $PGV_IMAGES, $MEDIA_DIRECTORY, $TEMPLE_CODES;
-	global $assorela, $tags, $emptyfacts, $main_fact, $TEXT_DIRECTION, $pgv_changes, $GEDCOM;
+	global $assorela, $tags, $emptyfacts, $main_fact, $TEXT_DIRECTION, $pgv_changes;
 	global $NPFX_accept, $SPFX_accept, $NSFX_accept, $FILE_FORM_accept, $upload_count;
 	global $tabkey, $STATUS_CODES, $SPLIT_PLACES, $pid, $linkToID;
 	global $bdm, $PRIVACY_BY_RESN;
@@ -2125,7 +2122,7 @@ function handle_updates($newged, $levelOverride="no") {
 				delete_gedrec($text[$j]);
 				$text[$j] = "";
 			} else {
-				$noterec = find_gedcom_record($text[$j]);
+				$noterec = find_gedcom_record($text[$j], PGV_GED_ID);
 				$newnote = "0 @$text[$j]@ NOTE\n";
 				$newline = "1 CONC ".rtrim(stripLRMRLM($NOTE[$text[$j]]));
 				$newnote .= breakConts($newline);
@@ -2253,15 +2250,15 @@ function print_quick_resn($name) {
 * @return  bool success or failure
 */
 function linkMedia($mediaid, $linktoid, $level=1, $chan=true) {
-	global $GEDCOM, $pgv_lang, $pgv_changes;
+	global $pgv_lang, $pgv_changes;
 
 	if (empty($level)) $level = 1;
 	if ($level!=1) return false; // Level 2 items get linked elsewhere
 	// find Indi, Family, or Source record to link to
-	if (isset($pgv_changes[$linktoid."_".$GEDCOM])) {
-		$gedrec = find_updated_record($linktoid);
+	if (isset($pgv_changes[$linktoid."_".PGV_GEDCOM])) {
+		$gedrec = find_updated_record($linktoid, PGV_GED_ID);
 	} else {
-		$gedrec = find_gedcom_record($linktoid);
+		$gedrec = find_gedcom_record($linktoid, PGV_GED_ID);
 	}
 
 	//-- check if we are re-editing an unaccepted link that is not already in the DB
@@ -2290,15 +2287,15 @@ function linkMedia($mediaid, $linktoid, $level=1, $chan=true) {
 * @return  bool success or failure
 */
 function unlinkMedia($linktoid, $linenum, $mediaid, $level=1, $chan=true) {
-	global $GEDCOM, $pgv_lang, $pgv_changes;
+	global $pgv_lang, $pgv_changes;
 
 	if (empty($level)) $level = 1;
 	if ($level!=1) return false; // Level 2 items get unlinked elsewhere (maybe ??)
 	// find Indi, Family, or Source record to unlink from
-	if (isset($pgv_changes[$linktoid."_".$GEDCOM])) {
-		$gedrec = find_updated_record($linktoid);
+	if (isset($pgv_changes[$linktoid."_".PGV_GEDCOM])) {
+		$gedrec = find_updated_record($linktoid, PGV_GED_ID);
 	} else {
-		$gedrec = find_gedcom_record($linktoid);
+		$gedrec = find_gedcom_record($linktoid, PGV_GED_ID);
 	}
 	
 	//-- when deleting/umlinking a media link
@@ -2630,20 +2627,20 @@ function insert_missing_subtags($level1tag, $add_date=false)
 */
 function delete_person($pid, $gedrec='') {
 	// NOTE: $pgv_changes isn't a global.  Making it global appears to cause problems.
-	global $pgv_lang, $GEDCOM;
+	global $pgv_lang;
 	if (PGV_DEBUG) {
 		phpinfo(INFO_VARIABLES);
 		echo "<pre>$gedrec</pre>";
 	}
 
-	if (empty($gedrec)) $gedrec = find_person_record($pid);
+	if (empty($gedrec)) $gedrec = find_person_record($pid, PGV_GED_ID);
 	if (!empty($gedrec)) {
 		$success = true;
 		$ct = preg_match_all("/1 FAM. @(.*)@/", $gedrec, $match, PREG_SET_ORDER);
 		for($i=0; $i<$ct; $i++) {
 			$famid = $match[$i][1];
-			if (!isset($pgv_changes[$famid."_".$GEDCOM])) $famrec = find_gedcom_record($famid);
-			else $famrec = find_updated_record($famid);
+			if (!isset($pgv_changes[$famid."_".PGV_GEDCOM])) $famrec = find_gedcom_record($famid, PGV_GED_ID);
+			else $famrec = find_updated_record($famid, PGV_GED_ID);
 			if (!empty($famrec)) {
 				$lines = explode("\n", $famrec);
 				$newfamrec = "";
@@ -2665,8 +2662,8 @@ function delete_person($pid, $gedrec='') {
 					for ($j=0; $j<$pt; $j++) {
 						$xref = $pmatch[$j][1];
 						if($xref!=$pid) {
-							if (!isset($pgv_changes[$xref."_".$GEDCOM])) $indirec = find_gedcom_record($xref);
-							else $indirec = find_updated_record($xref);
+							if (!isset($pgv_changes[$xref."_".PGV_GEDCOM])) $indirec = find_gedcom_record($xref, PGV_GED_ID);
+							else $indirec = find_updated_record($xref, PGV_GED_ID);
 							$indirec = preg_replace("/1.*@$famid@.*/", "", $indirec);
 							if (PGV_DEBUG) {
 								echo "<pre>$indirec</pre>";
@@ -2695,8 +2692,8 @@ function delete_person($pid, $gedrec='') {
 */
 function delete_family($pid, $gedrec='') {
 	// NOTE: $pgv_changes isn't a global.  Making it global appears to cause problems.
-	global $GEDCOM, $pgv_lang;
-	if (empty($gedrec)) $gedrec = find_family_record($pid);
+	global $pgv_lang;
+	if (empty($gedrec)) $gedrec = find_family_record($pid, PGV_GED_ID);
 	if (!empty($gedrec)) {
 		$success = true;
 		$ct = preg_match_all("/1 (\w+) @(.*)@/", $gedrec, $match, PREG_SET_ORDER);
@@ -2706,8 +2703,8 @@ function delete_family($pid, $gedrec='') {
 			if (PGV_DEBUG) {
 				echo $type." ".$id." ";
 			}
-			if (!isset($pgv_changes[$id."_".$GEDCOM])) $indirec = find_gedcom_record($id);
-			else $indirec = find_updated_record($id);
+			if (!isset($pgv_changes[$id."_".PGV_GEDCOM])) $indirec = find_gedcom_record($id, PGV_GED_ID);
+			else $indirec = find_updated_record($id, PGV_GED_ID);
 			if (!empty($indirec)) {
 				$lines = explode("\n", $indirec);
 				$newindirec = "";

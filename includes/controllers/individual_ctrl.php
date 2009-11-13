@@ -111,11 +111,11 @@ class IndividualControllerRoot extends BaseController {
 		$pid = $this->pid;
 
 		$this->default_tab = $GEDCOM_DEFAULT_TAB;
-		$indirec = find_person_record($this->pid);
+		$indirec = find_person_record($this->pid, PGV_GED_ID);
 
 		if ($USE_RIN && $indirec==false) {
 			$this->pid = find_rin_id($this->pid);
-			$indirec = find_person_record($this->pid);
+			$indirec = find_person_record($this->pid, PGV_GED_ID);
 		}
 		if (empty($indirec)) {
 			$ct = preg_match("/(\w+):(.+)/", $this->pid, $match);
@@ -186,7 +186,7 @@ class IndividualControllerRoot extends BaseController {
 		if ($this->show_changes && PGV_USER_CAN_EDIT) {
 			if (isset($pgv_changes[$this->pid."_".$GEDCOM])) {
 				//-- get the changed record from the file
-				$newrec = find_updated_record($this->pid);
+				$newrec = find_updated_record($this->pid, PGV_GED_ID);
 				//print("jkdsakjhdkjsadkjsakjdhsakd".$newrec);
 				$remoterfn = get_gedcom_value("RFN", 1, $newrec);
 			} else {
@@ -237,8 +237,8 @@ class IndividualControllerRoot extends BaseController {
 					else {
 						$famids = array_merge(find_sfamily_ids($my_id), find_family_ids($my_id));
 						foreach($famids as $indexval => $famid) {
-							if (!isset($pgv_changes[$famid."_".$GEDCOM])) $famrec = find_family_record($famid);
-							else $famrec = find_updated_record($famid);
+							if (!isset($pgv_changes[$famid."_".$GEDCOM])) $famrec = find_family_record($famid, $this->ged_id);
+							else $famrec = find_updated_record($famid, $this->ged_id);
 							if (preg_match("/1 (HUSB|WIFE|CHIL) @$this->pid@/", $famrec)>0) $this->canedit=true;
 						}
 					}
@@ -301,7 +301,7 @@ class IndividualControllerRoot extends BaseController {
 		global $GEDCOM;
 		if (PGV_USER_ID && !empty($_REQUEST["gid"])) {
 			$gid = strtoupper($_REQUEST["gid"]);
-			$indirec = find_person_record($gid);
+			$indirec = find_person_record($gid, PGV_GED_ID);
 			if ($indirec) {
 				$favorite = array();
 				$favorite["username"] = PGV_USER_NAME;
@@ -326,7 +326,7 @@ class IndividualControllerRoot extends BaseController {
 			$this->show_changes=false;
 			$this->accept_success=true;
 			//-- delete the record from the cache and refresh it
-			$indirec = find_person_record($this->pid);
+			$indirec = find_person_record($this->pid, PGV_GED_ID);
 			//-- check if we just deleted the record and redirect to index
 			if (empty($indirec)) {
 				header("Location: index.php?ctype=gedcom");

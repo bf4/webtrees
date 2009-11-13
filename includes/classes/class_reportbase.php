@@ -522,7 +522,7 @@ class PGVRElement {
 		return $this->text;
 	}
 
-	function setWrapWidth($width) {
+	function setWrapWidth($width, $cellwidth) {
 		return 0;
 	}
 
@@ -1853,7 +1853,7 @@ function PGVRGedcomSHandler($attrs) {
 	$tags = explode(':', $tag);
 	$newgedrec = "";
 	if (count($tags)<2) {
-		$newgedrec = find_gedcom_record($attrs["id"]);
+		$newgedrec = find_gedcom_record($attrs["id"], PGV_GED_ID);
 	}
 	if (empty($newgedrec)) {
 		$tgedrec = $gedrec;
@@ -1864,7 +1864,7 @@ function PGVRGedcomSHandler($attrs) {
 			$ct = preg_match("/\\$(.+)/", $tag, $match);
 			if ($ct>0) {
 				if (isset($vars[$match[1]]["gedcom"])) $newgedrec = $vars[$match[1]]["gedcom"];
-				else $newgedrec = find_gedcom_record($match[1]);
+				else $newgedrec = find_gedcom_record($match[1], PGV_GED_ID);
 			}
 			else {
 				$ct = preg_match("/@(.+)/", $tag, $match);
@@ -1873,7 +1873,7 @@ function PGVRGedcomSHandler($attrs) {
 					//print $gt;
 					if ($gt > 0) {
 						//print "[".$gmatch[1]."]";
-						$newgedrec = find_gedcom_record($gmatch[1]);
+						$newgedrec = find_gedcom_record($gmatch[1], PGV_GED_ID);
 						//print $newgedrec;
 						$tgedrec = $newgedrec;
 					}
@@ -1884,7 +1884,7 @@ function PGVRGedcomSHandler($attrs) {
 					}
 				}
 				else {
-					//$newgedrec = find_gedcom_record($gmatch[1]);
+					//$newgedrec = find_gedcom_record($gmatch[1], PGV_GED_ID);
 					$temp = explode(' ', trim($tgedrec));
 					$level = $temp[0] + 1;
 					if (showFact($tag, $id)&&showFactDetails($tag,$id)) {
@@ -2918,7 +2918,7 @@ function PGVRImageSHandler($attrs) {
 	if ($file=="@FILE") {
 		$match = array();
 		$ct = preg_match("/\d OBJE @(.+)@/", $gedrec, $match);
-		if ($ct > 0) $orec = find_gedcom_record($match[1]);
+		if ($ct > 0) $orec = find_gedcom_record($match[1], PGV_GED_ID);
 		else $orec = $gedrec;
 		if (!empty($orec)) {
 			$fullpath = extract_fullpath($orec);

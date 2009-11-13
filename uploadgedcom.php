@@ -155,8 +155,7 @@ else if ($check == "add") {
 } else
 if ($check == "cancel_upload") {
 	if ($exists) {
-		unset ($GEDCOMS[$GEDFILENAME]);
-		store_gedcoms();
+		delete_gedcom(get_id_from_gedcom($GEDFILENAME));
 		if ($action == "add_new_form")
 		@ unlink($INDEX_DIRECTORY.$GEDFILENAME);
 	}
@@ -175,7 +174,7 @@ if ($cleanup_needed == "cleanup_needed" && $continue == $pgv_lang["del_proceed"]
 	require_once ("includes/functions/functions_tools.php");
 
 	$filechanged = false;
-	if (file_is_writeable($GEDCOMS[$GEDFILENAME]["path"]) && (file_exists($GEDCOMS[$GEDFILENAME]["path"]))) {
+	if (file_is_writeable(get_gedcom_setting(get_id_from_gedcom($GEDFILENAME), 'path')) && (file_exists(get_gedcom_setting(get_id_from_gedcom($GEDFILENAME), 'path')))) {
 		$l_BOMcleanup = false;
 		$l_headcleanup = false;
 		$l_macfilecleanup = false;
@@ -183,7 +182,7 @@ if ($cleanup_needed == "cleanup_needed" && $continue == $pgv_lang["del_proceed"]
 		$l_placecleanup = false;
 		$l_datecleanup = false;
 		$l_isansi = false;
-		$fp = fopen($GEDCOMS[$GEDFILENAME]["path"], "rb");
+		$fp = fopen(get_gedcom_setting(get_id_from_gedcom($GEDFILENAME), 'path'), "rb");
 		$fw = fopen($INDEX_DIRECTORY."/".$GEDFILENAME.".bak", "wb");
 		//-- read the gedcom and test it in 8KB chunks
 		while (!feof($fp)) {
@@ -245,7 +244,7 @@ if ($cleanup_needed == "cleanup_needed" && $continue == $pgv_lang["del_proceed"]
 		}
 		fclose($fp);
 		fclose($fw);
-		copy($INDEX_DIRECTORY."/".$GEDFILENAME.".bak", $GEDCOMS[$GEDFILENAME]["path"]);
+		copy($INDEX_DIRECTORY."/".$GEDFILENAME.".bak", get_gedcom_setting(get_id_from_gedcom($GEDFILENAME), 'path'));
 		$cleanup_needed = false;
 		$import = "true";
 	} else {
@@ -317,7 +316,7 @@ if ($action == "add_form") {
 	<td class="descriptionbox width20 wrap">
 	<?php print_help_link("gedcom_path_help", "qm","gedcom_path");?>
 	<?php print $pgv_lang["gedcom_file"]; ?></td>
-	<td class="optionbox"><input type="text" name="GEDFILENAME" value="<?php if (isset($GEDFILENAME) && strlen($GEDFILENAME) > 4) print $GEDCOMS[$GEDFILENAME]["path"]; ?>"
+	<td class="optionbox"><input type="text" name="GEDFILENAME" value="<?php if (isset($GEDFILENAME) && strlen($GEDFILENAME) > 4) print get_gedcom_setting(get_id_from_gedcom($GEDFILENAME), 'path'); ?>"
 					size="60" dir ="ltr" tabindex="<?php $i++; print $i?>"	<?php if ((!$no_upload && isset($GEDFILENAME)) && (empty($error))) print "disabled "; ?> />
 	</td>
 	</tr>
@@ -534,18 +533,6 @@ if ($verify == "validate_form") {
 	if ($import != true) {
 		require_once ("includes/functions/functions_tools.php");
 
-// I can't find a path through the code that arrives here with a non-empty value
-// for $bakfile.  In PHP5.2, copy() fails silently.  From PHP5.3, it gives an error.
-// The next block of code is almost certainly redundant.  FAB, 27-SEP-09.
-// If no problems are found in the next month or two, it can be deleted.
-		
-//		if ($override == "yes") {
-//			copy($bakfile, $GEDCOMS[$GEDFILENAME]["path"]);
-//			if (file_exists($bakfile))
-//			unlink($bakfile);
-//			$bakfile = false;
-//		}
-
 		$l_BOMcleanup = false;
 		$l_headcleanup = false;
 		$l_macfilecleanup = false;
@@ -553,7 +540,7 @@ if ($verify == "validate_form") {
 		$l_placecleanup = false;
 		$l_datecleanup = false;
 		$l_isansi = false;
-		$fp = fopen($GEDCOMS[$GEDFILENAME]["path"], "r");
+		$fp = fopen(get_gedcom_setting(get_id_from_gedcom($GEDFILENAME), 'path'), "r");
 
 		// TODO - there are two problems with this next block of code.  Firstly, by
 		// checking the file in chunks (rather than complete records), we won't spot
@@ -582,7 +569,7 @@ if ($verify == "validate_form") {
 		} else {
 			$cleanup_needed = true;
 			print "<input type=\"hidden\" name=\"cleanup_needed\" value=\"cleanup_needed\">";
-			if (!file_is_writeable($GEDCOMS[$GEDFILENAME]["path"]) && (file_exists($GEDCOMS[$GEDFILENAME]["path"]))) {
+			if (!file_is_writeable(get_gedcom_setting(get_id_from_gedcom($GEDFILENAME), 'path')) && (file_exists(get_gedcom_setting(get_id_from_gedcom($GEDFILENAME), 'path')))) {
 				print "<span class=\"error\">".str_replace("#GEDCOM#", $GEDCOM, $pgv_lang["error_header_write"])."</span>\n";
 				print "</td></tr>";
 			}
@@ -769,8 +756,7 @@ if ($import == true) {
 }
 
 if ($startimport == "true") {
-	$GEDCOMS[$ged]["imported"] = false;
-	store_gedcoms();
+	set_gedcom_setting(get_id_from_gedcom($ged), 'imported', false);
 
 	if (isset ($exectime)) {
 		$oldtime = time() - $exectime;
@@ -791,9 +777,9 @@ if ($startimport == "true") {
 			progress = document.getElementById("progress_header");
 			if (progress) progress.innerHTML = '<span class="error"><b><?php print $pgv_lang["import_complete"]; ?></b></span><br />'+exectext+' '+time+' <?php print $pgv_lang["sec"]; ?>';
 			progress = document.getElementById("link1");
-			if (progress) progress.innerHTML = '<a href="pedigree.php?ged=<?php print encode_url(preg_replace("/'/", "\'", $ged)); ?>">'+go_pedi+'</a>';
+			if (progress) progress.innerHTML = '<a href="pedigree.php?ged=<?php print encode_url(str_replace("'", "\'", $ged)); ?>">'+go_pedi+'</a>';
 			progress = document.getElementById("link2");
-			if (progress) progress.innerHTML = '<a href="index.php?ctype=gedcom&ged=<?php print encode_url(preg_replace("/'/", "\'", $ged)); ?>">'+go_welc+'</a>';
+			if (progress) progress.innerHTML = '<a href="index.php?ctype=gedcom&ged=<?php print encode_url(str_replace("'", "\'", $ged)); ?>">'+go_welc+'</a>';
 			progress = document.getElementById("link3");
 			if (progress) progress.innerHTML = '<a href="editgedcoms.php"><?php print $pgv_lang["manage_gedcoms"]; ?></a>';
 		}
@@ -852,14 +838,15 @@ if ($startimport == "true") {
 
 if (!isset ($stage))
 $stage = 0;
-if ((empty ($ged)) || (!isset ($GEDCOMS[$ged])))
-$ged = $GEDCOM;
+if ((empty ($ged)) || (!get_id_from_gedcom($ged))) {
+	$ged = $GEDCOM;
+}
 
 $temp = $THEME_DIR;
-$GEDCOM_FILE = $GEDCOMS[$ged]["path"];
+$GEDCOM_FILE = get_gedcom_setting(get_id_from_gedcom($ged), 'path');
 $FILE = $ged;
-$TITLE = $GEDCOMS[$ged]["title"];
-require ($GEDCOMS[$ged]["config"]);
+$TITLE = get_gedcom_setting(get_id_from_gedcom($ged), 'title');
+require get_config_file($ged);
 if ($LANGUAGE <> $_SESSION["CLANGUAGE"])
 $LANGUAGE = $_SESSION["CLANGUAGE"];
 
@@ -972,7 +959,7 @@ if ($stage == 1) {
 			//-- import anything that is not a blob
 			if (!preg_match("/\n1 BLOB/", $indirec)) {
 				try {
-					import_record(trim($indirec), $GEDCOMS[$GEDCOM]["id"], false);
+					import_record(trim($indirec), get_id_from_gedcom($GEDCOM), false);
 				} catch (PDOException $ex) {
 					// Import errors are likely to be caused by duplicate records.
 					// There is no safe way of handling these.  Just display them
@@ -1161,9 +1148,8 @@ if ($stage == 1) {
 	print "</td></tr></table>\n";
 	// NOTE: Finished Links
 	import_max_ids(get_id_from_gedcom($FILE), $MAX_IDS);
-	$GEDCOMS[$ged]["imported"] = true;
-	$GEDCOMS[$ged]["pgv_ver" ] = PGV_VERSION;
-	store_gedcoms();
+	set_gedcom_setting(get_id_from_gedcom($ged), 'imported', true);
+	set_gedcom_setting(get_id_from_gedcom($ged), 'pgv_ver', PGV_VERSION);
 	print "</td></tr>";
 
 	$record_count = 0;

@@ -75,7 +75,7 @@ function print_htmlplus_block($block=true, $config='', $side, $index) {
 		}
 		break;
 	default:
-		if (check_for_import($config['gedcom'])) {
+		if (get_gedcom_setting(get_gedcom_from_id($config['gedcom']), 'imported')) {
 			$GEDCOM = $config['gedcom'];
 		}
 		break;
@@ -144,7 +144,7 @@ function print_htmlplus_block($block=true, $config='', $side, $index) {
 		if ($PGV_BLOCKS['print_htmlplus_block']['canconfig']) {
 			if ($ctype=="gedcom" && PGV_USER_GEDCOM_ADMIN || $ctype=="user" && PGV_USER_ID) {
 				if ($ctype=="gedcom") {
-					$name = preg_replace("/'/", "\'", $GEDCOM);
+					$name = str_replace("'", "\'", $GEDCOM);
 				} else {
 					$name = PGV_USER_NAME;
 				}
@@ -160,7 +160,7 @@ function print_htmlplus_block($block=true, $config='', $side, $index) {
 	if ($config['title'] == '' && $PGV_BLOCKS['print_htmlplus_block']['canconfig']) {
 		if ($ctype=="gedcom" && PGV_USER_GEDCOM_ADMIN || $ctype=="user" && PGV_USER_ID) {
 			if ($ctype=="gedcom") {
-				$name = preg_replace("/'/", "\'", $GEDCOM);
+				$name = str_replace("'", "\'", $GEDCOM);
 			} else {
 				$name = PGV_USER_NAME;
 			}

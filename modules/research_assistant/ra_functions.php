@@ -55,25 +55,6 @@ $templefacts = array("SLGC","SLGS","BAPL","ENDL","CONL");
 $nonplacfacts = array("ENDL","NCHI","SLGC","SLGS","SSN","CHAN","_UID");
 $nondatefacts = array("ABBR","ADDR","AFN","AUTH","EMAIL","FAX","NAME","NCHI","NOTE","OBJE","PHON","PUBL","REFN","REPO","SEX","SOUR","SSN","TEXT","TITL","WWW","_EMAIL","_UID");
 
-if (!function_exists("find_updated_record")) {
-	/**
-	 * find and return an updated gedcom record
-	 * @param string $gid the id of the record to find
-	 * @param string $gedfile the gedcom file to get the record from.. defaults to currently active gedcom
-	 */
-	function find_updated_record($gid, $gedfile="") {
-		global $GEDCOM, $pgv_changes;
-
-		if (empty($gedfile)) $gedfile = $GEDCOM;
-
-		if (isset($pgv_changes[$gid."_".$gedfile])) {
-			$change = end($pgv_changes[$gid."_".$gedfile]);
-			return $change['undo'];
-		}
-		return "";
-	}
-}
-
 /**
  * trims a PLAC string to a certain depth for comparison purposes
  */
@@ -643,7 +624,7 @@ class ra_functions {
 			$row=$this->get_top_folder($folderId);
 
 			$out = '<img src="modules/research_assistant/images/folder_blue_icon.gif" alt="Folder"></img>';
-			$out .= "<strong> ".PrintReady(stripslashes($row->fr_name))."</strong>";
+			$out .= "<strong> ".PrintReady($row->fr_name)."</strong>";
 		}
 
 		return $out;
@@ -681,7 +662,7 @@ class ra_functions {
 
 		foreach ($rows as $row) {
 			$out .= '<tr><td class="optionbox"><a href="module.php?mod=research_assistant&amp;action=viewtasks&amp;folderid='.$row->fr_id.'"><img src="modules/research_assistant/images/folder_blue_icon.gif" border="0" alt="Folder" style="vertical-align: middle;"></img> '.PrintReady($row->fr_name).'</a></td>
-					<td class="optionbox wrap"><br />'.nl2br(PrintReady(stripslashes($row->fr_description))).'</td>
+					<td class="optionbox wrap"><br />'.nl2br(PrintReady($row->fr_description)).'</td>
 					<td class="optionbox" align="center"><a href="module.php?mod=research_assistant&amp;action=editfolder&amp;folderid='.$row->fr_id.'">'.$pgv_lang["edit"].'</a></td></tr>';
 		}
 		$out .= '</table>';

@@ -340,11 +340,14 @@ function macfile_cleanup()
 function xref_change($tag="RIN")
 {
 	global $fcontents;
+	global $GEDCOM;
+	$ged_id=get_id_from_gedcom($GEDCOM);
+
 	//-- find all of the XREFS in the file
 	$ct = preg_match_all("/0 @(.*)@ INDI/", $fcontents, $match, PREG_SET_ORDER);
 	for($i=0; $i<$ct; $i++) {
 		$xref = trim($match[$i][1]);
-		$indirec = find_updated_record($xref);
+		$indirec = find_updated_record($xref, $ged_id);
 		if ($indirec!==false) {
 			$rt = preg_match("/1 NAME (.*)/", $indirec, $rmatch);
 			if($rt>0)

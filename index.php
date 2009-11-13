@@ -122,7 +122,7 @@ if (PGV_USER_ID) {
 	//-- add favorites action
 	if ($action=="addfav" && !empty($gid)) {
 		$gid = strtoupper($gid);
-		$indirec = find_gedcom_record($gid);
+		$indirec = find_gedcom_record($gid, PGV_GED_ID);
 		$ct = preg_match("/0 @(.*)@ (.*)/", $indirec, $match);
 		if ($indirec && $ct>0) {
 			$favorite = array();

@@ -135,7 +135,7 @@ function getGedcomStats() {
 	$data = "";
 	$dataArray[0] = $pgv_lang["gedcom_stats"] . " - " . get_gedcom_setting(PGV_GED_ID, 'title');
 
-	$head = find_gedcom_record("HEAD");
+	$head = find_gedcom_record("HEAD", PGV_GED_ID);
 	$ct=preg_match("/1 SOUR (.*)/", $head, $match);
 	if ($ct>0) {
 		$softrec = get_sub_record(1, "1 SOUR", $head);
@@ -230,7 +230,7 @@ function getGedcomNews() {
 		$newsTitle = print_text($news["title"], 0, 2);
 		$ct = preg_match("/#(.+)#/", $newsTitle, $match);
 		if ($ct>0) {
-			if (isset($pgv_lang[$match[1]])) $newsTitle = preg_replace("/$match[0]/", $pgv_lang[$match[1]], $newsTitle);
+			if (isset($pgv_lang[$match[1]])) $newsTitle = str_replace($match[0], $pgv_lang[$match[1]], $newsTitle);
 		}
 		$itemArray[0] = $newsTitle;
 
@@ -240,23 +240,23 @@ function getGedcomNews() {
 		$newsText = print_text($news["text"], 0, 2);
 		$ct = preg_match("/#(.+)#/", $newsText, $match);
 		if ($ct>0) {
-			if (isset($pgv_lang[$match[1]])) $newsText = preg_replace("/$match[0]/", $pgv_lang[$match[1]], $newsText);
+			if (isset($pgv_lang[$match[1]])) $newsText = str_replace($match[0], $pgv_lang[$match[1]], $newsText);
 		}
 		$ct = preg_match("/#(.+)#/", $newsText, $match);
 		if ($ct>0) {
 			$varname = $match[1];
 			if (isset($pgv_lang[$varname])) {
-				$newsText = preg_replace("/{$match[0]}/", $pgv_lang[$varname], $newsText);
+				$newsText = str_replace($match[0], $pgv_lang[$varname], $newsText);
 			} else {
 				if (defined('PGV_'.$varname)) {
 					// e.g. global $VERSION is now constant PGV_VERSION
 					$varname='PGV_'.$varname;
 				}
 				if (defined($varname)) {
-					$newsText = preg_replace("/{$match[0]}/", constant($varname), $newsText);
+					$newsText = str_replace($match[0], constant($varname), $newsText);
 				} else {
 					if (isset($$varname)) {
-						$newsText = preg_replace("/{$match[0]}/", $$varname, $newsText);
+						$newsText = str_replace($match[0], $$varname, $newsText);
 					}
 				}
 			}
@@ -354,8 +354,8 @@ function getRecentChanges() {
 	if (count($changes)>0) {
 		$found_facts = array();
 		foreach($changes as $gid) {
-			$gedrec = find_gedcom_record($gid);
-			if (empty($gedrec)) $gedrec = find_updated_record($gid);
+			$gedrec = find_gedcom_record($gid, PGV_GED_ID);
+			if (empty($gedrec)) $gedrec = find_updated_record($gid, PGV_GED_ID);
 
 			if (!empty($gedrec)) {
 				$type = "INDI";
@@ -478,7 +478,7 @@ function getRandomMedia() {
 
 			if ($disp && count($links) != 0){
 				foreach($links as $key=>$type) {
-					$gedrec = find_gedcom_record($key);
+					$gedrec = find_gedcom_record($key, PGV_GED_ID);
 					$disp &= !empty($gedrec);
 					//-- source privacy is now available through the display details by id method
 					// $disp &= $type!="SOUR";
@@ -486,9 +486,9 @@ function getRandomMedia() {
 				}
 				if ($disp && $filter!="all") {
 					// Apply filter criteria
-					$ct = preg_match("/0\s(@.*@)\sOBJE/", $medialist[$value]["GEDCOM"], $match);
+					$ct = preg_match("/0 (@.*@) OBJE/", $medialist[$value]["GEDCOM"], $match);
 					$objectID = $match[1];
-					$ct2 = preg_match("/(\d)\sOBJE\s{$objectID}/", $gedrec, $match2);
+					$ct2 = preg_match("/(\d) OBJE {$objectID}/", $gedrec, $match2);
 					if ($ct2>0) {
 						$objectRefLevel = $match2[1];
 						if ($filter=="indi" && $objectRefLevel!="1") $disp = false;

@@ -97,7 +97,7 @@ class stats_ui extends stats
 						switch($favorite['type']) {
 							case 'INDI':
 							{
-								$indirec = find_person_record($favorite['gid']);
+								$indirec = find_person_record($favorite['gid'], get_id_from_gedcom($GEDCOM));
 								$content .= "<div id=\"box{$favorite['gid']}.0\" class=\"person_box";
 								if(preg_match("/1 SEX F/", $indirec) > 0){$content .= 'F';}
 								elseif(preg_match("/1 SEX M/", $indirec) > 0){$content .= '';}
@@ -329,7 +329,7 @@ class stats_ui extends stats
 			$ct = preg_match("/#(.+)#/", $news['title'], $match);
 			if($ct > 0) {
 				if(isset($pgv_lang[$match[1]])) {
-					$news['title'] = preg_replace("/$match[0]/", $pgv_lang[$match[1]], $news['title']);
+					$news['title'] = str_replace($match[0], $pgv_lang[$match[1]], $news['title']);
 				}
 			}
 			$content .= '<span class="news_title">'.PrintReady($news['title'])."</span><br />\n"
@@ -337,15 +337,15 @@ class stats_ui extends stats
 			;
 			if(preg_match("/#(.+)#/", $news['text'], $match)) {
 				if(isset($pgv_lang[$match[1]])) {
-					$news['text'] = preg_replace("/$match[0]/", $pgv_lang[$match[1]], $news['text']);
+					$news['text'] = str_replace($match[0], $pgv_lang[$match[1]], $news['text']);
 				}
 			}
 			if(preg_match("/#(.+)#/", $news['text'], $match)) {
 				if(isset($pgv_lang[$match[1]])) {
-					$news['text'] = preg_replace("/$match[0]/", $pgv_lang[$match[1]], $news['text']);
+					$news['text'] = str_replace($match[0], $pgv_lang[$match[1]], $news['text']);
 				}
 				if(isset($$match[1])) {
-					$news['text'] = preg_replace("/$match[0]/", $$match[1], $news['text']);
+					$news['text'] = str_replace($match[0], $$match[1], $news['text']);
 				}
 			}
 			$trans = array_flip(get_html_translation_table(HTML_SPECIALCHARS));
@@ -404,7 +404,7 @@ class stats_ui extends stats
 			$ct = preg_match("/#(.+)#/", $newsTitle, $match);
 			if($ct > 0) {
 				if(isset($pgv_lang[$match[1]])) {
-					$newsTitle = preg_replace("/$match[0]/", $pgv_lang[$match[1]], $newsTitle);
+					$newsTitle = str_replace($match[0], $pgv_lang[$match[1]], $newsTitle);
 				}
 			}
 			$content .= "<span class=\"news_title\">".PrintReady($newsTitle)."</span><br />\n";
@@ -415,14 +415,14 @@ class stats_ui extends stats
 			$ct = preg_match("/#(.+)#/", $newsText, $match);
 			if($ct > 0) {
 				if(isset($pgv_lang[$match[1]])) {
-					$newsText = preg_replace("/{$match[0]}/", $pgv_lang[$match[1]], $newsText);
+					$newsText = str_replace($match[0], $pgv_lang[$match[1]], $newsText);
 				}
 			}
 			$ct = preg_match("/#(.+)#/", $newsText, $match);
 			if($ct > 0) {
 				$varname = $match[1];
 				if(isset($pgv_lang[$varname])) {
-					$newsText = preg_replace("/{$match[0]}/", $pgv_lang[$varname], $newsText);
+					$newsText = str_replace($match[0], $pgv_lang[$varname], $newsText);
 				}
 				else {
 					if(defined('PGV_'.$varname)) {
@@ -430,11 +430,11 @@ class stats_ui extends stats
 						$varname='PGV_'.$varname;
 					}
 					if(defined($varname)) 	{
-						$newsText = preg_replace("/{$match[0]}/", constant($varname), $newsText);
+						$newsText = str_replace($match[0], constant($varname), $newsText);
 					}
 					else {
 						if(isset($$varname)) {
-							$newsText = preg_replace("/{$match[0]}/", $$varname, $newsText);
+							$newsText = str_replace($match[0], $$varname, $newsText);
 						}
 					}
 				}
@@ -456,7 +456,7 @@ class stats_ui extends stats
 		}
 		$printedAddLink = false;
 		if(PGV_USER_GEDCOM_ADMIN) {
-			$content .= "<a href=\"javascript:;\" onclick=\"addnews('".preg_replace("/'/", "\'", $GEDCOM)."'); return false;\">{$pgv_lang['add_news']}</a>";
+			$content .= "<a href=\"javascript:;\" onclick=\"addnews('".str_replace("'", "\'", $GEDCOM)."'); return false;\">{$pgv_lang['add_news']}</a>";
 			$printedAddLink = true;
 		}
 		if($limit == 'date' || $limit == 'count') {

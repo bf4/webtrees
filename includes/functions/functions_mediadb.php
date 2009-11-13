@@ -318,7 +318,7 @@ function get_medialist($currentdir = false, $directory = "", $linkonly = false, 
 				// And a few more blanks
 				if (empty($media["FILE"]))
 					break;
-				$fileName = check_media_depth(stripslashes($media["FILE"]), "NOTRUNC", "QUIET");
+				$fileName = check_media_depth($media["FILE"], "NOTRUNC", "QUIET");
 				if ($MEDIA_EXTERNAL && isFileExternal($media["FILE"])) {
 					$media["THUMB"] = $fileName;
 					$media["THUMBEXISTS"] = 1;  // 1 means external
@@ -373,7 +373,7 @@ function get_medialist($currentdir = false, $directory = "", $linkonly = false, 
 	$mediaObjects = array_unique($mediaObjects);
 	$changedRecords = array_unique($changedRecords);
 	foreach ($changedRecords as $pid) {
-		$gedrec = find_updated_record($pid);
+		$gedrec = find_updated_record($pid, PGV_GED_ID);
 		if ($gedrec) {
 			foreach ($mediaObjects as $mediaId) {
 				if (strpos($gedrec, "@" . $mediaId . "@")) {
@@ -1152,10 +1152,10 @@ function show_media_form($pid, $action = "newentry", $filename = "", $linktoid =
 		print "<br /><sub>" . $pgv_lang["add_linkid_advice"] . "</sub></td></tr>\n";
 	}
 	if (isset ($pgv_changes[$pid . "_" . PGV_GEDCOM]))
-		$gedrec = find_updated_record($pid);
+		$gedrec = find_updated_record($pid, PGV_GED_ID);
 	else
 		if (gedcom_record_type($pid, get_id_from_gedcom(PGV_GEDCOM)) == "OBJE")
-			$gedrec = find_media_record($pid);
+			$gedrec = find_media_record($pid, PGV_GED_ID);
 		else
 			$gedrec = "";
 
@@ -1533,7 +1533,7 @@ function findImageSize($file) {
 
 function PrintMediaLinks($links, $size = "small") {
 	;
-	global $TEXT_DIRECTION, $pgv_lang;
+	global $SHOW_ID_NUMBERS, $TEXT_DIRECTION, $pgv_lang;
 
 	if (count($links) == 0)
 		return false;
@@ -1599,16 +1599,21 @@ function PrintMediaLinks($links, $size = "small") {
 		echo ' -- ';
 		$name=$record->getFullname();
 		if (begRTLText($name) && $TEXT_DIRECTION == 'ltr') {
-			echo '('.$record->getXref().')&nbsp;&nbsp;';
+			if ($SHOW_ID_NUMBERS) {
+				echo '('.$record->getXref().')&nbsp;&nbsp;';
+			}
 			echo PrintReady($name);
 		} else {
-			echo PrintReady($name).'&nbsp;&nbsp;';
-			if ($TEXT_DIRECTION=='rtl') {
-				echo getRLM();
-			}
-			echo "(" . $record->getXref().')';
-			if ($TEXT_DIRECTION=='rtl') {
-				echo getRLM();
+			echo PrintReady($name);
+			if ($SHOW_ID_NUMBERS) {
+				echo '&nbsp;&nbsp;';
+				if ($TEXT_DIRECTION=='rtl') {
+					echo getRLM();
+				}
+				echo "(" . $record->getXref().')';
+				if ($TEXT_DIRECTION=='rtl') {
+					echo getRLM();
+				}
 			}
 		}
 		echo '</a>';

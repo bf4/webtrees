@@ -44,8 +44,8 @@ print "After getGedcomRecord<br />";
 //require_once('includes/classes/class_grampsexport.php');
 //$ge= new GrampsExport();
 //$ge->begin_xml();
-//$ge->create_family(find_family_record("F1"), "F1", 1);
-////$ge->create_person(find_person_record("I1"), "I1", 1);
+//$ge->create_family(find_family_record("F1", PGV_GED_ID), "F1", 1);
+////$ge->create_person(find_person_record("I1", PGV_GED_ID), "I1", 1);
 //$xml = $ge->dom->saveXML();
 //print htmlentities($xml);
 //

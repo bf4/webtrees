@@ -56,7 +56,7 @@ if (is_null($obj) || !$obj->canDisplayDetails()) {
 if (!isset($fromfile)) {
 	$indirec=$obj->getGedcomRecord();
 } else  {
-	$indirec=find_updated_record($pid);
+	$indirec=find_updated_record($pid, PGV_GED_ID);
 	$indirec=privatize_gedcom($indirec);
 }
 $indirec=htmlspecialchars($indirec);

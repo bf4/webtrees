@@ -123,7 +123,7 @@ class MediaControllerRoot extends IndividualController{
 		}
 		if (!empty($_REQUEST["gid"])) {
 			$gid = strtoupper($_REQUEST["gid"]);
-			$mediarec = find_media_record($gid);
+			$mediarec = find_media_record($gid, get_id_from_gedcom($GEDCOM));
 			if ($mediarec) {
 				$favorite = array();
 				$favorite["username"] = PGV_USER_NAME;
@@ -148,7 +148,7 @@ class MediaControllerRoot extends IndividualController{
 		if (accept_changes($this->pid."_".$GEDCOM)) {
 			$this->show_changes=false;
 			$this->accept_success=true;
-			$mediarec = find_media_record($this->pid);
+			$mediarec = find_media_record($this->pid, get_id_from_gedcom($GEDCOM));
 			//-- check if we just deleted the record and redirect to index
 			if (empty($mediarec)) {
 				header("Location: index.php?ctype=gedcom");
@@ -375,7 +375,7 @@ class MediaControllerRoot extends IndividualController{
 		else $facts[] = new Event("1 TYPE ".$pgv_lang["TYPE__other"]);
 
 		if (isset($pgv_changes[$this->pid."_".$GEDCOM]) && ($this->show_changes)) {
-			$newrec = find_updated_record($this->pid);
+			$newrec = find_updated_record($this->pid, PGV_GED_ID);
 			$newmedia = new Media($newrec);
 			$newfacts = $newmedia->getFacts($ignore);
 			if ($includeFileName) $newfacts[] = new Event("1 TYPE ".$pgv_lang["TYPE__".$mediaType]);

@@ -131,7 +131,7 @@ class SearchControllerRoot extends BaseController {
 				$this->query="";
 				$this->myquery="";
 			} else {
-				$this->query = stripslashes($_REQUEST["query"]);
+				$this->query = $_REQUEST["query"];
 				$this->myquery = htmlspecialchars($this->query,ENT_COMPAT,'UTF-8');
 			}
 		}
@@ -482,7 +482,7 @@ class SearchControllerRoot extends BaseController {
 		$name_tags[] = "_MARNM";
 		foreach($this->myindilist as $id=>$individual) {
 			if (isset($pgv_changes[$individual->getXref().'_'.$GEDCOM])) {
-				$indirec=find_updated_record($individual->getXref());
+				$indirec=find_updated_record($individual->getXref(), PGV_GED_ID);
 			} else {
 				$indirec=$individual->getGedcomRecord();
 			}
@@ -511,7 +511,7 @@ class SearchControllerRoot extends BaseController {
 
 		foreach($this->myfamlist as $id=>$family) {
 			if (isset($pgv_changes[$family->getXref().'_'.$GEDCOM])) {
-				$indirec=find_updated_record($family->getXref());
+				$indirec=find_updated_record($family->getXref(), PGV_GED_ID);
 			} else {
 				$indirec=$family->getGedcomRecord();
 			}
@@ -537,7 +537,7 @@ class SearchControllerRoot extends BaseController {
 
 		foreach ($this->mysourcelist as $id=>$source) {
 			if (isset($pgv_changes[$source->getXref().'_'.$GEDCOM])) {
-				$indirec=find_updated_record($source->getXref());
+				$indirec=find_updated_record($source->getXref(), PGV_GED_ID);
 			} else {
 				$indirec=$source->getGedcomRecord();
 			}
@@ -566,7 +566,7 @@ class SearchControllerRoot extends BaseController {
 
 		foreach ($this->mynotelist as $id=>$note) {
 			if (isset($pgv_changes[$note->getXref().'_'.$GEDCOM])) {
-				$indirec=find_updated_record($note->getXref());
+				$indirec=find_updated_record($note->getXref(), PGV_GED_ID);
 			} else {
 				$indirec=$note->getGedcomRecord();
 			}

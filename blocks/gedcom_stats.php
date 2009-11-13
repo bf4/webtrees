@@ -80,7 +80,7 @@ function print_gedcom_stats($block = true, $config="", $side, $index) {
 	if ($PGV_BLOCKS["print_gedcom_stats"]["canconfig"]) {
 		if ($ctype=="gedcom" && PGV_USER_GEDCOM_ADMIN || $ctype=="user" && PGV_USER_ID) {
 			if ($ctype=="gedcom") {
-				$name = preg_replace("/'/", "\'", $GEDCOM);
+				$name = str_replace("'", "\'", $GEDCOM);
 			} else {
 				$name = PGV_USER_NAME;
 			}
@@ -93,7 +93,7 @@ function print_gedcom_stats($block = true, $config="", $side, $index) {
 	$stats=new stats($GEDCOM);
 
 	$content = "<b><a href=\"index.php?ctype=gedcom\">".PrintReady(strip_tags(get_gedcom_setting(PGV_GED_ID, 'title')))."</a></b><br />\n";
-	$head = find_gedcom_record("HEAD");
+	$head = find_gedcom_record("HEAD", PGV_GED_ID);
 	$ct=preg_match("/1 SOUR (.*)/", $head, $match);
 	if ($ct>0) {
 		$softrec = get_sub_record(1, "1 SOUR", $head);
@@ -121,6 +121,8 @@ function print_gedcom_stats($block = true, $config="", $side, $index) {
 	$content .= "<table><tr><td valign=\"top\" class=\"width20\"><table cellspacing=\"1\" cellpadding=\"0\">";
 	if ($config["stat_indi"]=="yes") {
 		$content.='<tr><td class="facts_label">'.$pgv_lang["stat_individuals"].'</td><td class="facts_value"><div dir="rtl"><a href="'.encode_url("indilist.php?surname_sublist=no&ged={$GEDCOM}").'">'.$stats->totalIndividuals().'</a></div></td></tr>';
+		$content.='<tr><td class="facts_label">'.$pgv_lang["stat_males"].'</td><td class="facts_value"><div dir="rtl">'.$stats->totalSexMales().'<br />'.$stats->totalSexMalesPercentage().'%</div></td></tr>';
+		$content.='<tr><td class="facts_label">'.$pgv_lang["stat_females"].'</td><td class="facts_value"><div dir="rtl">'.$stats->totalSexFemales().'<br />'.$stats->totalSexFemalesPercentage().'%</div></td></tr>';
 	}
 	if ($config["stat_surname"]=="yes") {
 		$content .= '<tr><td class="facts_label">'.$pgv_lang["stat_surnames"].'</td><td class="facts_value"><div dir="rtl"><a href="'.encode_url("indilist.php?show_all=yes&surname_sublist=yes&ged={$GEDCOM}").'">'.$stats->totalSurnames().'</a></div></td></tr>';
@@ -195,7 +197,8 @@ function print_gedcom_stats($block = true, $config="", $side, $index) {
 	if ($config["stat_avg_life"]=="yes") {
 		$content .= '<tr><td class="facts_label">'. $pgv_lang["stat_avg_age_at_death"].'</td><td class="facts_value"><div dir="rtl">'.$stats->averageLifespan().'</div></td>';
 		if (!$block) {
-			$content .= '<td class="facts_value">&nbsp;</td>';
+			$content .= '<td class="facts_value">'.$pgv_lang["stat_males"].':&nbsp;'.$stats->averageLifespanMale();
+			$content .= '&nbsp;&nbsp;&nbsp;'.$pgv_lang["stat_females"].':&nbsp;'.$stats->averageLifespanFemale().'</td>';
 		}
 		$content .= '</tr>';
 	}

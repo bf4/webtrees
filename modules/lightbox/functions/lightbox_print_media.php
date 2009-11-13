@@ -56,10 +56,11 @@ function lightbox_print_media($pid, $level=1, $related=false, $kind=1, $noedit=f
 	global $action, $order, $order2, $rownum, $rownum1, $rownum2, $rownum3, $rownum4, $media_data, $sort_i;
 	
 	global $GEDCOM_ID_PREFIX;
+	$ged_id=get_id_from_gedcom($GEDCOM);
 
 	if (!showFact("OBJE", $pid)) return false;
-	if (!isset($pgv_changes[$pid."_".$GEDCOM])) $gedrec = find_gedcom_record($pid);
-	else $gedrec = find_updated_record($pid);
+	if (!isset($pgv_changes[$pid."_".$GEDCOM])) $gedrec = find_gedcom_record($pid, $ged_id);
+	else $gedrec = find_updated_record($pid, $ged_id);
 	$ids = array($pid);
 
 	//-- find all of the related ids
@@ -234,7 +235,7 @@ function lightbox_print_media($pid, $level=1, $related=false, $kind=1, $noedit=f
 			//-- if there is a change to this media item then get the
 			//-- updated media item and show it
 			if (isset($pgv_changes[$rowm["m_media"]."_".$GEDCOM][0]["gid"]) && $kind!=5  ) {
-				$newrec = find_updated_record($rowm["m_media"]);
+				$newrec = find_updated_record($rowm["m_media"], $ged_id);
 				$row = array();
 				$row['m_media'] = $rowm["m_media"];
 				$row['m_file'] = get_gedcom_value("FILE", 1, $newrec);
@@ -323,9 +324,9 @@ function lightbox_print_media($pid, $level=1, $related=false, $kind=1, $noedit=f
 						}
 					} else {
 						$row3 = array();
-						$newrec = find_updated_record($media_id);
+						$newrec = find_updated_record($media_id, $ged_id);
 						if (empty($newrec)) {
-							$newrec = find_media_record($media_id);
+							$newrec = find_media_record($media_id, $ged_id);
 						}
 						$row3['m_media'] = $media_id;
 						$row3['m_file'] = get_gedcom_value("FILE", 1, $newrec);

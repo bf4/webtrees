@@ -1109,7 +1109,7 @@ function print_note_record($text, $nlevel, $nrec, $textOnly=false, $return=false
 		$centitl  = str_replace("~~", "", $text);
 		$centitl  = str_replace("<br />", "", $centitl);
 		if (preg_match("/@N([0-9])+@/", $nrec, $match_nid)) {
-			$nid = preg_replace("/@/", "", $match_nid[0]);
+			$nid = str_replace("@", "", $match_nid[0]);
 			$centitl = "<a href=\"note.php?nid=$nid\">".$centitl."</a>";
 		}
 		if ($textOnly) {
@@ -1190,6 +1190,9 @@ function print_note_record($text, $nlevel, $nrec, $textOnly=false, $return=false
 function print_fact_notes($factrec, $level, $textOnly=false, $return=false) {
 	global $pgv_lang;
 	global $factarray;
+	global $GEDCOM;
+	$ged_id=get_id_from_gedcom($GEDCOM);
+
 	$data = "";
 	$printDone = false;
 	$nlevel = $level+1;
@@ -1209,7 +1212,7 @@ function print_fact_notes($factrec, $level, $textOnly=false, $return=false) {
 		} else {
 			if (displayDetailsById($nmatch[1], "NOTE")) {
 				//-- print linked note records
-				$noterec = find_gedcom_record($nmatch[1]);
+				$noterec = find_gedcom_record($nmatch[1], $ged_id);
 				$nt = preg_match("/0 @$nmatch[1]@ NOTE (.*)/", $noterec, $n1match);
 				$closeSpan = print_note_record(($nt>0)?$n1match[1]:"", 1, $noterec, $textOnly, true);
 				$data .= $closeSpan;
@@ -1364,7 +1367,7 @@ loadLangFile('pgv_help');
 */
 function print_text($help, $level=0, $noprint=0){
 	global $pgv_lang, $factarray, $faqlist, $COMMON_NAMES_THRESHOLD;
-	global $INDEX_DIRECTORY, $GEDCOM, $LANGUAGE;
+	global $INDEX_DIRECTORY, $LANGUAGE;
 	global $GUESS_URL, $UpArrow, $DAYS_TO_SHOW_LIMIT, $MEDIA_DIRECTORY;
 	global $repeat, $thumbnail, $xref, $pid;
 
@@ -1427,6 +1430,7 @@ function print_text($help, $level=0, $noprint=0){
 	if ($level>0) return $sentence;
 	echo $sentence;
 }
+
 function print_help_index($help){
 	global $pgv_lang;
 	$sentence = $pgv_lang[$help];
@@ -1547,7 +1551,7 @@ function PrintReady($text, $InHeaders=false, $trim=true) {
 		$HighlightOK=false;
 	}
 	//-- convert all & to &amp;
-	$text = preg_replace("/&/", "&amp;", $text);
+	$text = str_replace("&", "&amp;", $text);
 	//$text = preg_replace(array("/&/","/</","/>/"), array("&amp;","&lt;","&gt;"), $text);
 	//-- make sure we didn't double convert existing HTML entities like so:  &foo; to &amp;foo;
 	$text = preg_replace("/&amp;(\w+);/", "&$1;", $text);
@@ -1717,8 +1721,9 @@ function PrintReady($text, $InHeaders=false, $trim=true) {
 * @param string $linebr optional linebreak
 */
 function print_asso_rela_record($pid, $factrec, $linebr=false, $type='INDI') {
-	global $GEDCOM, $SHOW_ID_NUMBERS, $TEXT_DIRECTION, $pgv_lang, $factarray, $PGV_IMAGE_DIR, $PGV_IMAGES, $view;
+	global $SHOW_ID_NUMBERS, $TEXT_DIRECTION, $pgv_lang, $factarray, $PGV_IMAGE_DIR, $PGV_IMAGES, $view;
 	global $PEDIGREE_FULL_DETAILS, $LANGUAGE, $lang_short_cut;
+
 	// get ASSOciate(s) ID(s)
 	$ct = preg_match_all("/\d ASSO @(.*)@/", $factrec, $match, PREG_SET_ORDER);
 	for ($i=0; $i<$ct; $i++) {
@@ -1786,11 +1791,11 @@ function print_asso_rela_record($pid, $factrec, $linebr=false, $type='INDI') {
 			else $rela = $factarray["RELA"]; // default
 
 		// ASSOciate ID link
-		$gedrec = find_gedcom_record($pid2);
+		$gedrec = find_gedcom_record($pid2, PGV_GED_ID);
 		if (strstr($gedrec, "@ INDI")!==false || strstr($gedrec, "@ SUBM")!==false) {
 			$record=GedcomRecord::getInstance($pid2);
 			$name=$record->getFullName();
-			echo "<a href=\"".encode_url("individual.php?pid={$pid2}&ged={$GEDCOM}")."\">" . PrintReady($name);
+			echo "<a href=\"".encode_url($record->getLinkUrl())."\">" . PrintReady($name);
 			if ($SHOW_ID_NUMBERS) {
 				echo "&nbsp;&nbsp;";
 				if ($TEXT_DIRECTION=="rtl") echo getRLM();
@@ -1824,16 +1829,16 @@ function print_asso_rela_record($pid, $factrec, $linebr=false, $type='INDI') {
 			// RELAtionship calculation : for a family print relationship to both spouses
 			if ($view!="preview" && !$autoRela) {
 				if ($type=='FAM') {
-					$famrec = find_family_record($pid);
+					$famrec = find_family_record($pid, PGV_GED_ID);
 					if ($famrec) {
 						$parents = find_parents_in_record($famrec);
 						$pid1 = $parents["HUSB"];
-						if ($pid1 && $pid1!=$pid2) echo " - <a href=\"".encode_url("relationship.php?show_full={$PEDIGREE_FULL_DETAILS}&pid1={$pid1}&pid2={$pid2}&pretty=2&followspouse=1&ged={$GEDCOM}")."\">[" . $pgv_lang["relationship_chart"] . "<img src=\"$PGV_IMAGE_DIR/" . $PGV_IMAGES["sex"]["small"] . "\" title=\"" . $pgv_lang["husband"] . "\" alt=\"" . $pgv_lang["husband"] . "\" class=\"gender_image\" />]</a>";
+						if ($pid1 && $pid1!=$pid2) echo " - <a href=\"".encode_url("relationship.php?show_full={$PEDIGREE_FULL_DETAILS}&pid1={$pid1}&pid2={$pid2}&pretty=2&followspouse=1&ged=".PGV_GED_ID)."\">[" . $pgv_lang["relationship_chart"] . "<img src=\"$PGV_IMAGE_DIR/" . $PGV_IMAGES["sex"]["small"] . "\" title=\"" . $pgv_lang["husband"] . "\" alt=\"" . $pgv_lang["husband"] . "\" class=\"gender_image\" />]</a>";
 						$pid1 = $parents["WIFE"];
-						if ($pid1 && $pid1!=$pid2) echo " - <a href=\"".encode_url("relationship.php?show_full={$PEDIGREE_FULL_DETAILS}&pid1={$pid1}&pid2={$pid2}&pretty=2&followspouse=1&ged={$GEDCOM}")."\">[" . $pgv_lang["relationship_chart"] . "<img src=\"$PGV_IMAGE_DIR/" . $PGV_IMAGES["sexf"]["small"] . "\" title=\"" . $pgv_lang["wife"] . "\" alt=\"" . $pgv_lang["wife"] . "\" class=\"gender_image\" />]</a>";
+						if ($pid1 && $pid1!=$pid2) echo " - <a href=\"".encode_url("relationship.php?show_full={$PEDIGREE_FULL_DETAILS}&pid1={$pid1}&pid2={$pid2}&pretty=2&followspouse=1&ged=".PGV_GED_ID)."\">[" . $pgv_lang["relationship_chart"] . "<img src=\"$PGV_IMAGE_DIR/" . $PGV_IMAGES["sexf"]["small"] . "\" title=\"" . $pgv_lang["wife"] . "\" alt=\"" . $pgv_lang["wife"] . "\" class=\"gender_image\" />]</a>";
 					}
 				}
-				else if ($pid!=$pid2 && $rela!="twin_sister") echo " - <a href=\"".encode_url("relationship.php?show_full={$PEDIGREE_FULL_DETAILS}&pid1={$pid}&pid2={$pid2}&pretty=2&followspouse=1&ged={$GEDCOM}")."\">[" . $pgv_lang["relationship_chart"] . "]</a>";
+				else if ($pid!=$pid2 && $rela!="twin_sister") echo " - <a href=\"".encode_url("relationship.php?show_full={$PEDIGREE_FULL_DETAILS}&pid1={$pid}&pid2={$pid2}&pretty=2&followspouse=1&ged=".PGV_GED_ID)."\">[" . $pgv_lang["relationship_chart"] . "]</a>";
 			}
 
 		}
@@ -1933,6 +1938,8 @@ function format_parents_age($pid, $birth_date=null) {
 */
 function format_fact_date(&$eventObj, $anchor=false, $time=false) {
 	global $factarray, $pgv_lang, $pid, $SEARCH_SPIDER;
+	global $GEDCOM;
+	$ged_id=get_id_from_gedcom($GEDCOM);
 
 	if (!is_object($eventObj)) pgv_error_handler(2, "Must use Event object", __FILE__, __LINE__);
 	$factrec = $eventObj->getGedcomRecord();
@@ -1998,7 +2005,7 @@ function format_fact_date(&$eventObj, $anchor=false, $time=false) {
 			}
 		}
 		else if (!is_null($person) && $person->getType()=='FAM') {
-			$indirec=find_person_record($pid);
+			$indirec=find_person_record($pid, $ged_id);
 			$indi=new Person($indirec);
 			$birth_date=$indi->getBirthDate();
 			$death_date=$indi->getDeathDate();
@@ -2478,6 +2485,8 @@ function print_findmedia_link($element_id, $choose="", $ged='', $asString=false)
 * @return string
 */
 function get_lds_glance($indirec) {
+	global $GEDCOM;
+	$ged_id=get_id_from_gedcom($GEDCOM);
 	$text = "";
 
 	$ord = get_sub_record(1, "1 BAPL", $indirec);
@@ -2489,7 +2498,7 @@ function get_lds_glance($indirec) {
 	$found = false;
 	$ct = preg_match_all("/1 FAMS @(.*)@/", $indirec, $match, PREG_SET_ORDER);
 	for($i=0; $i<$ct; $i++) {
-		$famrec = find_family_record($match[$i][1]);
+		$famrec = find_family_record($match[$i][1], $ged_id);
 		if ($famrec) {
 			$ord = get_sub_record(1, "1 SLGS", $famrec);
 			if ($ord) {

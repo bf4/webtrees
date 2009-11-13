@@ -123,7 +123,7 @@ class Family extends GedcomRecord {
 
 			// If we didn't find the record in the database, it may be new/pending
 			if (!$data && PGV_USER_CAN_EDIT && isset($pgv_changes[$pid.'_'.$GEDCOM])) {
-				$data=find_updated_record($pid);
+				$data=find_updated_record($pid, $ged_id);
 				$fromfile=true;
 			}
 
@@ -274,7 +274,7 @@ class Family extends GedcomRecord {
 		}
 		if (PGV_USER_CAN_EDIT && $this->canDisplayDetails()) {
 			if (isset($pgv_changes[$this->xref."_".$GEDCOM])) {
-				$newrec = find_updated_record($this->xref);
+				$newrec = find_updated_record($this->xref, $this->ged_id);
 				if (!empty($newrec)) {
 					$newfamily = new Family($newrec);
 					$newfamily->setChanged(true);

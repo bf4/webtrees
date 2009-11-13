@@ -114,7 +114,7 @@ function gedcom_header($gedfile) {
 
 	// Preserve some values from the original header
 	if (get_gedcom_setting($ged_id, 'imported')) {
-		$head=find_gedcom_record("HEAD");
+		$head=find_gedcom_record("HEAD", $ged_id);
 		if (preg_match("/\n1 CHAR .+/", $head, $match)) {
 			$CHAR=$match[0];
 		}
@@ -272,7 +272,7 @@ function export_gedcom($gedcom, $gedout, $exportOptions) {
 
 	$head=gedcom_header($gedcom);
 	if ($exportOptions['toANSI']=="yes") {
-		$head=preg_replace("/UTF-8/", "ANSI", $head);
+		$head=str_replace("UTF-8", "ANSI", $head);
 		$head=utf8_decode($head);
 	}
 	$head=remove_custom_tags($head, $exportOptions['noCustomTags']);
@@ -473,12 +473,12 @@ function um_export($proceed) {
 				$value=($value=='yes');
 			}
 			if (!is_array($value)) {
-				$value=preg_replace('/"/', '\\"', $value);
+				$value=str_replace('"', '\\"', $value);
 				$authtext .="\$user[\"$ukey\"]='$value';\n";
 			} else {
 				$authtext .="\$user[\"$ukey\"]=array();\n";
 				foreach ($value as $subkey=>$subvalue) {
-					$subvalue=preg_replace('/"/', '\\"', $subvalue);
+					$subvalue=str_replace('"', '\\"', $subvalue);
 					$authtext .="\$user[\"$ukey\"][\"$subkey\"]='$subvalue';\n";
 				}
 			}

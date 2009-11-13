@@ -383,8 +383,8 @@ class ServiceClient extends GedcomRecord {
 		//print_r($Familylist);
 		$FamilyListReturn=$Familylist;
 
-		if (isset($pgv_changes[$Family1."_".$GEDCOM])) $famrec1 = find_updated_record($Family1);
-		else $famrec1 = find_family_record($Family1);
+		if (isset($pgv_changes[$Family1."_".$GEDCOM])) $famrec1 = find_updated_record($Family1, get_id_from_gedcom($GEDCOM));
+		else $famrec1 = find_family_record($Family1, get_id_from_gedcom($GEDCOM));
 
 		$ct = preg_match("/(\w+):(.+)/", $Family2, $match);
 		if ($ct>0) {
@@ -517,6 +517,8 @@ class ServiceClient extends GedcomRecord {
 	* Other wise it returns false.
 	*/
 	function CompairForUpdateFamily($family1,$family2) {
+		global $GEDCOM;
+
 		// Values used to calculate the Percent of likley hood that the family is the same.
 		$ChanceSameFamily=0.0;
 		$CountFamily1=0.0;
@@ -525,7 +527,7 @@ class ServiceClient extends GedcomRecord {
 
 		$firstTimeChildren=true;
 
-		$famrec1 = find_family_record($family1);
+		$famrec1 = find_family_record($family1, get_id_from_gedcom($GEDCOM));
 		$ct = preg_match("/(\w+):(.+)/", $family2, $match);
 		if ($ct>0) {
 			$servid = trim($match[1]);
@@ -725,7 +727,7 @@ class ServiceClient extends GedcomRecord {
 		global $GEDCOM, $TBLPREFIX, $pgv_changes;
 
 		if (!$isStub) {
-			$gedrec = find_gedcom_record($this->xref.":".$xref);
+			$gedrec = find_gedcom_record($this->xref.":".$xref, get_id_from_gedcom($GEDCOM));
 			if (!empty($gedrec)) $localrec = $gedrec;
 		}
 		//-- used to force an update on the first time linking a person
@@ -828,7 +830,7 @@ class ServiceClient extends GedcomRecord {
 					$ct=preg_match("/0 @(.*)@/", $localrec, $match);
 					if ($ct>0) {
 						$pid = trim($match[1]);
-						if (isset($pgv_changes[$pid."_".$GEDCOM])) $localrec = find_updated_record($pid);
+						if (isset($pgv_changes[$pid."_".$GEDCOM])) $localrec = find_updated_record($pid, get_id_from_gedcom($GEDCOM));
 						$localrec = $this->_merge($localrec, $gedrec);
 						if ($isStub) {
 							include_once("includes/functions/functions_edit.php");
@@ -886,10 +888,11 @@ class ServiceClient extends GedcomRecord {
 	*/
 	static function &getInstance($id, $simple=true) {
 		global $PGV_SERVERS, $SERVER_URL, $GEDCOM;
+		$ged_id=get_id_from_gedcom($GEDCOM);
 
 		if (isset($PGV_SERVERS[$id])) return $PGV_SERVERS[$id];
-		$gedrec = find_gedcom_record($id);
-		if (empty($gedrec)) $gedrec = find_updated_record($id);
+		$gedrec = find_gedcom_record($id, $ged_id);
+		if (empty($gedrec)) $gedrec = find_updated_record($id, $ged_id);
 		if (!empty($gedrec)) {
 			$url = get_gedcom_value("URL",1,$gedrec);
 			$gedfile = get_gedcom_value("_DBID", 1, $gedrec);

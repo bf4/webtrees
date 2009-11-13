@@ -3,7 +3,7 @@
  * UI for online updating of the config file.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2008  PGV Development Team.  All rights reserved.
+ * Copyright (C) 2002 to 2009  PGV Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,7 +24,6 @@
  * @author PGV Development Team
  * @package PhpGedView
  * @subpackage Admin
- * @see index/gedcoms.php
  * @version $Id$
  */
 
@@ -67,12 +66,14 @@ if (!PGV_USER_GEDCOM_ADMIN) {
 	header("Location: login.php?url=editgedcoms.php");
 	exit;
 }
+if ($action=="delete") {
+	delete_gedcom(get_id_from_gedcom($ged));
+	// Reload this page, otherwise the page header will still reference the now-deleted gedcom
+	header("Location: editgedcoms.php");
+}
+
 print_header($pgv_lang["gedcom_adm_head"]);
 print "<center>\n";
-if ($action=="delete") {
-	delete_gedcom($ged);
-	print "<br />".str_replace("#GED#", $ged, $pgv_lang["gedcom_deleted"])."<br />\n";
-}
 
 if (($action=="setdefault") && in_array($default_ged, get_all_gedcoms())) {
 	set_site_setting('DEFAULT_GEDCOM', $default_ged);
@@ -187,7 +188,7 @@ foreach (get_all_gedcoms() as $ged_id=>$ged_name) {
 
 		print "<td valign=\"top\">";		// Column 3  (Import action)
 		print "<a href=\"".encode_url("uploadgedcom.php?GEDFILENAME={$ged_name}&verify=verify_gedcom&action=add_form&import_existing=1")."\">".$pgv_lang["ged_import"]."</a>";
-		if (!check_for_import($ged_name)) {
+		if (!get_gedcom_setting($ged_id, 'imported')) {
 			print "<br /><span class=\"error\">".$pgv_lang["gedcom_not_imported"]."</span>";
 		}
 		print "&nbsp;&nbsp;";
@@ -198,7 +199,7 @@ foreach (get_all_gedcoms() as $ged_id=>$ged_name) {
 		echo '</td>';
 
 		print "<td valign=\"top\">";		// Column 5  (Delete action)
-		print "<a href=\"".encode_url("editgedcoms.php?action=delete&ged={$ged_name}")."\" onclick=\"return confirm('".$pgv_lang["confirm_gedcom_delete"]." ".preg_replace("/'/", "\'", $ged_name)."?');\">".$pgv_lang["delete"]."</a>";
+		print "<a href=\"".encode_url("editgedcoms.php?action=delete&ged={$ged_name}")."\" onclick=\"return confirm('".$pgv_lang["confirm_gedcom_delete"]." ".str_replace("'", "\'", $ged_name)."?');\">".$pgv_lang["delete"]."</a>";
 		print "&nbsp;&nbsp;";
 		print "</td>";
 

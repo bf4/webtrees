@@ -131,7 +131,7 @@ if ($ENABLE_AUTOCOMPLETE) require './js/autocomplete.js.htm';
 <table class="facts_table <?php print $TEXT_DIRECTION; ?>">
 	<tr>
 		<td colspan="2" class="facts_label"><?php
-			print "<h2>".$pgv_lang["edit_privacy_title"]." - ".PrintReady(strip_tags(get_gedcom_setting($ged, 'title'))). "</h2>";
+			print "<h2>".$pgv_lang["edit_privacy_title"]." - ".PrintReady(strip_tags(get_gedcom_setting(get_id_from_gedcom($ged), 'title'))). "</h2>";
 			print "(" . getLRM() . $PRIVACY_MODULE.")";
 			print "<br /><br /><a href=\"editgedcoms.php\"><b>";
 			print $pgv_lang["lang_back_manage_gedcoms"];
@@ -182,7 +182,7 @@ if ($action=="update") {
 		else $person_privacy_text .= "\$person_privacy['$key'] = ".$PRIVACY_CONSTANTS[$value].";\n";
 	}
 	if ($v_new_person_privacy_access_ID && $v_new_person_privacy_access_option) {
-		$gedobj = new GedcomRecord(find_gedcom_record($v_new_person_privacy_access_ID));
+		$gedobj = new GedcomRecord(find_gedcom_record($v_new_person_privacy_access_ID, PGV_GED_ID));
 		$v_new_person_privacy_access_ID = $gedobj->getXref();
 		if ($v_new_person_privacy_access_ID) $person_privacy_text .= "\$person_privacy['$v_new_person_privacy_access_ID'] = ".$v_new_person_privacy_access_option.";\n";
 	}
@@ -201,7 +201,7 @@ if ($action=="update") {
 		}
 	}
 	if ($v_new_user_privacy_username && $v_new_user_privacy_access_ID && $v_new_user_privacy_access_option) {
-		$gedobj = new GedcomRecord(find_gedcom_record($v_new_user_privacy_access_ID));
+		$gedobj = new GedcomRecord(find_gedcom_record($v_new_user_privacy_access_ID, PGV_GED_ID));
 		$v_new_user_privacy_access_ID = $gedobj->getXref();
 		if ($v_new_user_privacy_access_ID) $person_privacy_text .= "\$user_privacy['$v_new_user_privacy_username']['$v_new_user_privacy_access_ID'] = ".$v_new_user_privacy_access_option.";\n";
 	}
@@ -239,7 +239,7 @@ if ($action=="update") {
 		}
 	}
 	if ($v_new_person_facts_access_ID && $v_new_person_facts_abbr && $v_new_global_facts_choice && $v_new_global_facts_access_option) {
-		$gedobj = new GedcomRecord(find_gedcom_record($v_new_person_facts_access_ID));
+		$gedobj = new GedcomRecord(find_gedcom_record($v_new_person_facts_access_ID, PGV_GED_ID));
 		$v_new_person_facts_access_ID = $gedobj->getXref();
 		if ($v_new_person_facts_access_ID) $person_privacy_text .= "\$person_facts['$v_new_person_facts_access_ID']['$v_new_person_facts_abbr']['$v_new_person_facts_choice'] = ".$v_new_person_facts_access_option.";\n";
 	}

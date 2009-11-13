@@ -3,7 +3,7 @@
  * Provides media tab header for reorder media Items using drag and drop
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2008  PHPGedView Development Team.  All rights reserved.
+ * Copyright (C) 2009  PHPGedView Development Team.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -50,7 +50,7 @@ require_once("js/scriptaculous.js.htm");
 	// Find if indi and family associated media exists and then count them ( $tot_med_ct)
 	include ('includes/media_reorder_count.php');
 
-	$gedrec = find_gedcom_record($pid);
+	$gedrec = find_gedcom_record($pid, PGV_GED_ID);
 	$regexp = "/OBJE @(.*)@/";
 	$ct = preg_match_all($regexp, $gedrec, $match, PREG_SET_ORDER);
 

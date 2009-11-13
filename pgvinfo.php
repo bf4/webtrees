@@ -127,7 +127,7 @@ if ($action=="confighelp") {
 	for ($z = 0, $zmax = sizeof($new_language_array); $z < $zmax; $z++) {
 		if ($new_language_array[$z][0] != "config_help" and $new_language_array[$z][0] != "welcome_help") {
 			echo '<li>';
-			echo stripslashes(print_text($new_language_array[$z][1],0,2)) . "<br /><br /></li>\r\n";
+			echo print_text($new_language_array[$z][1],0,2) . "<br /><br /></li>\r\n";
 		}
 	}
 	echo '</ol>';

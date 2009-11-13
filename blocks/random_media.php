@@ -132,7 +132,7 @@ if ($MULTI_MEDIA) {
 				if ($disp && count($links) != 0){
 					/** link privacy allready checked in displayDetailsById
 					foreach($links as $key=>$type) {
-						$gedrec = find_gedcom_record($key);
+						$gedrec = find_gedcom_record($key, PGV_GED_ID);
 						$disp &= !empty($gedrec);
 						//-- source privacy is now available through the display details by id method
 						// $disp &= $type!="SOUR";
@@ -146,7 +146,7 @@ if ($MULTI_MEDIA) {
 						$objectID = $match[1];
 						//-- we could probably use the database for this filter
 						foreach($links as $key=>$type) {
-							$gedrec = find_gedcom_record($key);
+							$gedrec = find_gedcom_record($key, PGV_GED_ID);
 							$ct2 = preg_match("/(\d)\sOBJE\s{$objectID}/", $gedrec, $match2);
 							if ($ct2>0) {
 								$objectRefLevel = $match2[1];
@@ -180,7 +180,7 @@ if ($MULTI_MEDIA) {
 				if ($PGV_BLOCKS["print_random_media"]["canconfig"]) {
 					if ($ctype=="gedcom" && PGV_USER_GEDCOM_ADMIN || $ctype=="user" && PGV_USER_ID) {
 						if ($ctype=="gedcom") {
-							$name = preg_replace("/'/", "\'", $GEDCOM);
+							$name = str_replace("'", "\'", $GEDCOM);
 						} else {
 							$name = PGV_USER_NAME;
 						}

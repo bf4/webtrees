@@ -261,14 +261,14 @@ class ClippingsControllerRoot extends BaseController {
 				$ct = count($cart);
 				$filetext = "0 HEAD\n1 SOUR ".PGV_PHPGEDVIEW."\n2 NAME ".PGV_PHPGEDVIEW."\n2 VERS ".PGV_VERSION_TEXT."\n1 DEST DISKETTE\n1 DATE " . date("j M Y") . "\n2 TIME " . date("H:i:s") . "\n";
 				$filetext .= "1 GEDC\n2 VERS 5.5\n2 FORM LINEAGE-LINKED\n1 CHAR $CHARACTER_SET\n";
-				$head = find_gedcom_record("HEAD");
+				$head = find_gedcom_record("HEAD", PGV_GED_ID);
 				$placeform = trim(get_sub_record(1, "1 PLAC", $head));
 				if (!empty ($placeform))
 				$filetext .= $placeform . "\n";
 				else
 				$filetext .= "1 PLAC\n2 FORM " . "City, County, State/Province, Country" . "\n";
 				if ($convert == "yes") {
-					$filetext = preg_replace("/UTF-8/", "ANSI", $filetext);
+					$filetext = str_replace("UTF-8", "ANSI", $filetext);
 					$filetext = utf8_decode($filetext);
 				}
 
@@ -285,7 +285,7 @@ class ClippingsControllerRoot extends BaseController {
 				for ($i = 0; $i < $ct; $i++) {
 					$clipping = $cart[$i];
 					if ($clipping['gedcom'] == $GEDCOM) {
-						$record = find_gedcom_record($clipping['id']);
+						$record = find_gedcom_record($clipping['id'], PGV_GED_ID);
 						$savedRecord = $record;		// Save this for the "does this file exist" check
 						if ($clipping['type']=='obje') $record = convert_media_path($record, $this->conv_path, $this->conv_slashes);
 						$record = privatize_gedcom($record);
@@ -434,21 +434,21 @@ class ClippingsControllerRoot extends BaseController {
 
 					switch ($clipping['type']) {
 					case 'indi':
-						$rec = find_person_record($clipping['id']);
+						$rec = find_person_record($clipping['id'], PGV_GED_ID);
 						$rec = remove_custom_tags($rec, $remove);
 						if ($this->privatize_export!='none') $rec = privatize_gedcom($rec);
 						$gramps_Exp->create_person($rec, $clipping['id']);
 						break;
 
 					case 'fam':
-						$rec = find_family_record($clipping['id']);
+						$rec = find_family_record($clipping['id'], PGV_GED_ID);
 						$rec = remove_custom_tags($rec, $remove);
 						if ($this->privatize_export!='none') $rec = privatize_gedcom($rec);
 						$gramps_Exp->create_family($rec, $clipping['id']);
 						break;
 
 					case 'source':
-						$rec = find_source_record($clipping['id']);
+						$rec = find_source_record($clipping['id'], PGV_GED_ID);
 						$rec = remove_custom_tags($rec, $remove);
 						if ($this->privatize_export!='none') $rec = privatize_gedcom($rec);
 						$gramps_Exp->create_source($rec, $clipping['id']);
@@ -583,7 +583,7 @@ class ClippingsControllerRoot extends BaseController {
 			}
 			//-- look in the gedcom record for any linked SOUR, NOTE, or OBJE and also add them to the
 			//- clippings cart
-			$gedrec = find_gedcom_record($clipping['id']);
+			$gedrec = find_gedcom_record($clipping['id'], PGV_GED_ID);
 			if ($SHOW_SOURCES >= PGV_USER_ACCESS_LEVEL) {
 				$st = preg_match_all("/\d SOUR @(.*)@/", $gedrec, $match, PREG_SET_ORDER);
 				for ($i = 0; $i < $st; $i++) {
@@ -594,7 +594,7 @@ class ClippingsControllerRoot extends BaseController {
 					$clipping['gedcom'] = $GEDCOM;
 					$this->add_clipping($clipping);
 					// add REPO
-					$sourec = find_gedcom_record($match[$i][1]);
+					$sourec = find_gedcom_record($match[$i][1], PGV_GED_ID);
 					$rt = preg_match_all("/\d REPO @(.*)@/", $sourec, $rmatch, PREG_SET_ORDER);
 					for ($j = 0; $j < $rt; $j++) {
 						$clipping = array ();
@@ -633,7 +633,7 @@ class ClippingsControllerRoot extends BaseController {
 
 		if (!$famid)
 			return;
-		$famrec = find_family_record($famid);
+		$famrec = find_family_record($famid, PGV_GED_ID);
 		if ($famrec) {
 			$parents = find_parents_in_record($famrec);
 			if (!empty ($parents["HUSB"])) {
@@ -689,7 +689,7 @@ class ClippingsControllerRoot extends BaseController {
 			$clipping['id'] = $parents["WIFE"];
 			$this->add_clipping($clipping);
 		}
-		$famrec = find_family_record($famid);
+		$famrec = find_family_record($famid, PGV_GED_ID);
 		if ($famrec) {
 			$num = preg_match_all("/1\s*CHIL\s*@(.*)@/", $famrec, $smatch, PREG_SET_ORDER);
 			for ($i = 0; $i < $num; $i++) {
@@ -763,7 +763,7 @@ class ClippingsControllerRoot extends BaseController {
 							$ret = $this->add_clipping($clipping);
 							$this->add_ancestors_to_cart_families($parents["WIFE"], $level);
 						}
-						$famrec = find_family_record($famid);
+						$famrec = find_family_record($famid, PGV_GED_ID);
 						if ($famrec) {
 							$num = preg_match_all("/1\s*CHIL\s*@(.*)@/", $famrec, $smatch, PREG_SET_ORDER);
 							for ($i = 0; $i < $num; $i++) {

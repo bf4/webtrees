@@ -63,22 +63,22 @@ function print_user_news($block=true, $config="", $side, $index) {
 		$ct = preg_match("/#(.+)#/", $news["title"], $match);
 		if ($ct>0) {
 			if (isset($pgv_lang[$match[1]])) {
-				$news["title"] = preg_replace("/$match[0]/", $pgv_lang[$match[1]], $news["title"]);
+				$news["title"] = str_replace($match[0], $pgv_lang[$match[1]], $news["title"]);
 			}
 		}
 		$content .= "<span class=\"news_title\">".PrintReady($news["title"])."</span><br />";
 		$content .= "<span class=\"news_date\">".format_timestamp($news["date"])."</span><br /><br />";
 		if (preg_match("/#(.+)#/", $news["text"], $match)) {
 			if (isset($pgv_lang[$match[1]])) {
-				$news["text"] = preg_replace("/$match[0]/", $pgv_lang[$match[1]], $news["text"]);
+				$news["text"] = str_replace($match[0], $pgv_lang[$match[1]], $news["text"]);
 			}
 		}
 		if (preg_match("/#(.+)#/", $news["text"], $match)) {
 			if (isset($pgv_lang[$match[1]])) {
-				$news["text"] = preg_replace("/$match[0]/", $pgv_lang[$match[1]], $news["text"]);
+				$news["text"] = str_replace($match[0], $pgv_lang[$match[1]], $news["text"]);
 			}
 			if (isset($$match[1])) {
-				$news["text"] = preg_replace("/$match[0]/", $$match[1], $news["text"]);
+				$news["text"] = str_replace($match[0], $$match[1], $news["text"]);
 			}
 		}
 		$trans = get_html_translation_table(HTML_SPECIALCHARS);

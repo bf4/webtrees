@@ -260,7 +260,7 @@ switch($step) {
 			$config_array['CONFIGURED'] = true;
 			
 			// Clear the SERVER_URL when it's identical to the calculated value
-			$GUESS_URL = stripslashes("http://".$_SERVER["SERVER_NAME"].dirname($SCRIPT_NAME)."/");
+			$GUESS_URL = "http://".$_SERVER["SERVER_NAME"].dirname($SCRIPT_NAME)."/";
 			if (!isset($config_array['SERVER_URL'])) $config_array['SERVER_URL'] = '';
 			$config_array['SERVER_URL'] = rtrim(trim($config_array['SERVER_URL']),'/').'/';
 			if ($config_array['SERVER_URL'] == $GUESS_URL || $config_array['SERVER_URL'] == '/') $config_array['SERVER_URL'] = '';
@@ -765,7 +765,7 @@ function printConfigForm(){
 				<td class="optionbox wrap"><input type="text" name="NEW_SERVER_URL" value="<?php print $SERVER_URL?>" dir="ltr" tabindex="<?php $i++; print $i?>" onfocus="getHelp('SERVER_URL_help');" size="50" />
 				<br /><?php
 					global $GUESS_URL;
-					$GUESS_URL = stripslashes("http://".$_SERVER["SERVER_NAME"].dirname($SCRIPT_NAME)."/");
+					$GUESS_URL = "http://".$_SERVER["SERVER_NAME"].dirname($SCRIPT_NAME)."/";
 					print_text("server_url_note");
 					?>
 				</td>
@@ -859,12 +859,12 @@ function printConfigForm(){
 			<tr>
 				<td class="descriptionbox wrap width30"><?php print_help_link("MAX_VIEW_RATE_help", "qm", "MAX_VIEW_RATE"); print $pgv_lang["MAX_VIEW_RATE"];?></td>
 				<td class="optionbox wrap">
-					<input type="text" name="NEW_MAX_VIEWS" value="<?php print $MAX_VIEWS?>" tabindex="<?php $i++; print $i?>" onfocus="getHelp('MAX_VIEW_RATE_help');" />
+					<input type="text" size="5" name="NEW_MAX_VIEWS" value="<?php print $MAX_VIEWS?>" tabindex="<?php $i++; print $i?>" onfocus="getHelp('MAX_VIEW_RATE_help');" />
 					<?php
 						if ($TEXT_DIRECTION == "ltr") print $pgv_lang["page_views"];
 						else print $pgv_lang["seconds"];
 					?>
-					<input type="text" name="NEW_MAX_VIEW_TIME" value="<?php print $MAX_VIEW_TIME?>" tabindex="<?php $i++; print $i?>" onfocus="getHelp('MAX_VIEW_RATE_help');" />
+					<input type="text" size="5" name="NEW_MAX_VIEW_TIME" value="<?php print $MAX_VIEW_TIME?>" tabindex="<?php $i++; print $i?>" onfocus="getHelp('MAX_VIEW_RATE_help');" />
 					<?php
 						if ($TEXT_DIRECTION == "ltr") print $pgv_lang["seconds"];
 						else print $pgv_lang["page_views"];

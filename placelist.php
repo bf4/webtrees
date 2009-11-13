@@ -73,7 +73,7 @@ else {
 }
 // Remove slashes
 foreach ($parent as $p => $child){
-	$parent[$p] = stripLRMRLM(stripslashes($child));
+	$parent[$p] = stripLRMRLM($child);
 }
 
 if (!isset($level)) {
@@ -84,7 +84,7 @@ if ($level>count($parent)) $level = count($parent);
 if ($level<count($parent)) $level = 0;
 
 //-- extract the place form encoded in the gedcom
-$header = find_gedcom_record("HEAD");
+$header = find_gedcom_record("HEAD", PGV_GED_ID);
 $hasplaceform = strpos($header, "1 PLAC");
 
 //-- hierarchical display

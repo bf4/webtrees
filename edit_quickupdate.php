@@ -73,8 +73,8 @@ if (!PGV_USER_CAN_EDIT) {
 	$famids = pgv_array_merge(find_sfamily_ids(PGV_USER_GEDCOM_ID), find_family_ids(PGV_USER_GEDCOM_ID));
 	$related=false;
 	foreach ($famids as $famid) {
-		if (!isset($pgv_changes[$famid."_".$GEDCOM])) $famrec = find_family_record($famid);
-		else $famrec = find_updated_record($famid);
+		if (!isset($pgv_changes[$famid."_".PGV_GEDCOM])) $famrec = find_family_record($famid, PGV_GED_ID);
+		else $famrec = find_updated_record($famid, PGV_GED_ID);
 		if (preg_match("/1 (HUSB|WIFE|CHIL) @$pid@/", $famrec)) {
 			$related=true;
 			break;
@@ -88,8 +88,8 @@ if (!PGV_USER_CAN_EDIT) {
 }
 
 //-- find the latest gedrec for the individual
-if (!isset($pgv_changes[$pid."_".$GEDCOM])) $gedrec = find_gedcom_record($pid);
-else $gedrec = find_updated_record($pid);
+if (!isset($pgv_changes[$pid."_".PGV_GEDCOM])) $gedrec = find_gedcom_record($pid, PGV_GED_ID);
+else $gedrec = find_updated_record($pid, PGV_GED_ID);
 
 // Don't allow edits if the record has changed since the edit-link was created
 checkChangeTime($pid, $gedrec, safe_GET('accesstime', PGV_REGEX_INTEGER));
@@ -178,7 +178,10 @@ if ($action=="update") {
 					$RESNS[$j]="";
 				}
 				if ((empty($DATES[$j]))&&(empty($PLACS[$j]))&&(empty($TEMPS[$j]))&&(empty($RESNS[$j]))) {
-					if (!empty($FMARRY)) $factrec = "1 MARR Y\n";
+					if (!in_array($fact, $typefacts)) $factrec = "1 $fact";
+					else $factrec = "1 EVEN\n2 TYPE $fact";
+					if (!empty($DESCS[$j])) $factrec .= " $DESCS[$j]\n";
+					else if (!empty($FMARRY)) $factrec = "1 MARR Y\n";
 					else if (!empty($FDIVY)) $factrec = "1 DIV Y\n";
 					else $factrec="";
 				}
@@ -532,8 +535,8 @@ if ($action=="update") {
 	for($i=1; $i<=count($sfams); $i++) {
 		$famupdate = false;
 		$famid = $sfams[$i-1];
-		if (!isset($pgv_changes[$famid."_".$GEDCOM])) $famrec = find_family_record($famid);
-		else $famrec = find_updated_record($famid);
+		if (!isset($pgv_changes[$famid."_".PGV_GEDCOM])) $famrec = find_family_record($famid, PGV_GED_ID);
+		else $famrec = find_updated_record($famid, PGV_GED_ID);
 		$oldfamrec = $famrec;
 		$parents = find_parents($famid);
 		//-- update the spouse
@@ -652,8 +655,8 @@ if ($action=="update") {
 		if (!empty($CHIL[$i])) {
 			$famupdate = true;
 			$famrec .= "\n1 CHIL @".$CHIL[$i]."@";
-			if (!isset($pgv_changes[$CHIL[$i]."_".$GEDCOM])) $childrec = find_person_record($CHIL[$i]);
-			else $childrec = find_updated_record($CHIL[$i]);
+			if (!isset($pgv_changes[$CHIL[$i]."_".PGV_GEDCOM])) $childrec = find_person_record($CHIL[$i], PGV_GED_ID);
+			else $childrec = find_updated_record($CHIL[$i], PGV_GED_ID);
 			if (preg_match("/1 FAMC @$famid@/", $childrec)==0) {
 				$childrec = "\n1 FAMC @$famid@";
 				replace_gedrec($CHIL[$i], $childrec, $update_CHAN);
@@ -780,8 +783,8 @@ if ($action=="update") {
 		$newfamid = append_gedrec($famrec);
 
 		//-- add the new family id to the new spouse record
-		$spouserec = find_updated_record($xref);
-		if (empty($spouserec)) $spouserec = find_person_record($xref);
+		$spouserec = find_updated_record($xref, PGV_GED_ID);
+		if (empty($spouserec)) $spouserec = find_person_record($xref, PGV_GED_ID);
 		$spouserec .= "\n1 FAMS @$newfamid@\n";
 		replace_gedrec($xref, $spouserec, $update_CHAN);
 
@@ -863,8 +866,8 @@ if ($action=="update") {
 			$newfamid = append_gedrec($famrec);
 
 			//-- add the new family to the new child
-			$childrec = find_updated_record($cxref);
-			if (empty($childrec)) $childrec = find_person_record($cxref);
+			$childrec = find_updated_record($cxref, PGV_GED_ID);
+			if (empty($childrec)) $childrec = find_person_record($cxref, PGV_GED_ID);
 			$childrec .= "\n1 FAMC @$newfamid@\n";
 			replace_gedrec($cxref, $childrec, $update_CHAN);
 
@@ -876,8 +879,8 @@ if ($action=="update") {
 			$famrec .= "\n1 CHIL @$cxref@\n";
 
 			//-- add the family to the new child
-			$childrec = find_updated_record($cxref);
-			if (empty($childrec)) $childrec = find_person_record($cxref);
+			$childrec = find_updated_record($cxref, PGV_GED_ID);
+			if (empty($childrec)) $childrec = find_person_record($cxref, PGV_GED_ID);
 			$childrec .= "\n1 FAMC @$newfamid@\n";
 			replace_gedrec($cxref, $childrec, $update_CHAN);
 		}
@@ -896,8 +899,8 @@ if ($action=="update") {
 		$famid = $cfams[$j-1];
 		$famupdate = false;
 		if (!empty($famid)) {
-			if (!isset($pgv_changes[$famid."_".$GEDCOM])) $famrec = find_family_record($famid);
-			else $famrec = find_updated_record($famid);
+			if (!isset($pgv_changes[$famid."_".PGV_GEDCOM])) $famrec = find_family_record($famid, PGV_GED_ID);
+			else $famrec = find_updated_record($famid, PGV_GED_ID);
 			$oldfamrec = $famrec;
 		}
 		else {
@@ -984,8 +987,8 @@ if ($action=="update") {
 				$updated = true;
 			}
 			if (empty($oldfamrec)) {
-				$spouserec = find_updated_record($FATHER[$i]);
-				if (empty($spouserec)) $spouserec = find_person_record($FATHER[$i]);
+				$spouserec = find_updated_record($FATHER[$i], PGV_GED_ID);
+				if (empty($spouserec)) $spouserec = find_person_record($FATHER[$i], PGV_GED_ID);
 				$spouserec .= "\n1 FAMS @$famid@";
 				replace_gedrec($FATHER[$i], $spouserec, $update_CHAN);
 			}
@@ -1075,8 +1078,8 @@ if ($action=="update") {
 				$updated = true;
 			}
 			if (empty($oldfamrec)) {
-				$spouserec = find_updated_record($MOTHER[$i]);
-				if (empty($spouserec)) $spouserec = find_person_record($MOTHER[$i]);
+				$spouserec = find_updated_record($MOTHER[$i], PGV_GED_ID);
+				if (empty($spouserec)) $spouserec = find_person_record($MOTHER[$i], PGV_GED_ID);
 				$spouserec .= "\n1 FAMS @$famid@";
 				replace_gedrec($MOTHER[$i], $spouserec, $update_CHAN);
 			}
@@ -1140,8 +1143,8 @@ if ($action=="update") {
 				$updated = true;
 			}
 			$famrec .= "\n1 CHIL @".$CHIL[$i]."@";
-			if (!isset($pgv_changes[$CHIL[$i]."_".$GEDCOM])) $childrec = find_person_record($CHIL[$i]);
-			else $childrec = find_updated_record($CHIL[$i]);
+			if (!isset($pgv_changes[$CHIL[$i]."_".PGV_GEDCOM])) $childrec = find_person_record($CHIL[$i], PGV_GED_ID);
+			else $childrec = find_updated_record($CHIL[$i], PGV_GED_ID);
 			if (preg_match("/1 FAMC @$famid@/", $childrec)==0) {
 				$childrec = "\n1 FAMC @$famid@";
 				replace_gedrec($CHIL[$i], $childrec, $update_CHAN);
@@ -1503,8 +1506,8 @@ function checkform(frm) {
 		<?php
 		for($i=1; $i<=count($sfams); $i++) {
 			$famid = $sfams[$i-1];
-			if (!isset($pgv_changes[$famid."_".$GEDCOM])) $famrec = find_family_record($famid);
-			else $famrec = find_updated_record($famid);
+			if (!isset($pgv_changes[$famid."_".PGV_GEDCOM])) $famrec = find_family_record($famid, PGV_GED_ID);
+			else $famrec = find_updated_record($famid, PGV_GED_ID);
 			$parents = find_parents_in_record($famrec);
 			$spid = "";
 			if($parents) {
@@ -1841,8 +1844,8 @@ for($i=1; $i<=count($sfams); $i++) {
 	$famid = $sfams[$i-1];
 	$family=Family::getInstance($famid);
 	$famrec = $family->getGedcomRecord();
-	if (isset($pgv_changes[$famid."_".$GEDCOM])) {
-		$famrec = find_updated_record($famid);
+	if (isset($pgv_changes[$famid."_".PGV_GEDCOM])) {
+		$famrec = find_updated_record($famid, PGV_GED_ID);
 		$family = new Family($famrec);
 	}
 	echo $pgv_lang["family_with"]." ";
@@ -1854,7 +1857,7 @@ for($i=1; $i<=count($sfams); $i++) {
 	}
 	$person=Person::getInstance($spid);
 	if ($person) {
-		echo "<a href=\"#\" onclick=\"return quickEdit('".$person->getXref()."','','{$GEDCOM}');\">";
+		echo "<a href=\"#\" onclick=\"return quickEdit('".$person->getXref()."','','", PGV_GEDCOM, "');\">";
 		$name = PrintReady(stripLRMRLM($person->getFullName()));
 		if ($SHOW_ID_NUMBERS) $name .= PrintReady(" (".$person->getXref().")");
 		$name .= " [".$pgv_lang["edit"]."]";
@@ -2149,10 +2152,10 @@ $chil = find_children_in_record($famrec);
 					$name = $person->getFullName();
 					if ($SHOW_ID_NUMBERS) $name .= " (".$child.")";
 					$name .= " [".$pgv_lang["edit"]."]";
-					echo "<a href=\"#\" onclick=\"return quickEdit('".$child."','','{$GEDCOM}');\">";
+					echo "<a href=\"#\" onclick=\"return quickEdit('".$child."','','", PGV_GEDCOM, "');\">";
 					echo PrintReady(stripLRMRLM($name));
 					echo "</a>";
-					$childrec = find_person_record($child);
+					$childrec = find_person_record($child, PGV_GED_ID);
 					echo "</td>\n<td class=\"optionbox center\">";
 					if ($disp) {
 						$sex = $person->getSex();
@@ -2555,8 +2558,8 @@ for($j=1; $j<=count($cfams); $j++) {
 	$parents = find_parents($cfams[$j-1]);
 	$famid = $cfams[$j-1];
 	$family=Family::getInstance($famid);
-	if (!isset($pgv_changes[$famid."_".$GEDCOM])) $famrec = find_family_record($famid);
-	else $famrec = find_updated_record($famid);
+	if (!isset($pgv_changes[$famid."_".PGV_GEDCOM])) $famrec = find_family_record($famid, PGV_GED_ID);
+	else $famrec = find_updated_record($famid, PGV_GED_ID);
 
 	if ($family) $subrecords = $family->getFacts(array("HUSB","WIFE","CHIL"));
 	else $subrecords=array();
@@ -2598,7 +2601,7 @@ for($j=1; $j<=count($cfams); $j++) {
 		$ct = preg_match("~1 NAME.*/(.*)/~", $fatherrec, $match);
 		if ($ct>0) $child_surname = $match[1];
 		if ($person->getSex()=="F") $label = $pgv_lang["mother"];
-		echo "<a href=\"#\" onclick=\"return quickEdit('".$parents["HUSB"]."','','{$GEDCOM}');\">";
+		echo "<a href=\"#\" onclick=\"return quickEdit('".$parents["HUSB"]."','','", PGV_GEDCOM, "');\">";
 		$name = $person->getFullname();
 		if ($SHOW_ID_NUMBERS) $name .= " (".$parents["HUSB"].")";
 		$name .= " [".$pgv_lang["edit"]."]";
@@ -2733,7 +2736,7 @@ for($j=1; $j<=count($cfams); $j++) {
 	if ($person) {
 		$motherrec = $person->getGedcomRecord();
 		if ($person->getSex()=="M") $label = $pgv_lang["father"];
-		echo "<a href=\"#\" onclick=\"return quickEdit('".$parents["WIFE"]."','','{$GEDCOM}');\">";
+		echo "<a href=\"#\" onclick=\"return quickEdit('".$parents["WIFE"]."','','", PGV_GEDCOM, "');\">";
 		$name = $person->getFullName();
 		if ($SHOW_ID_NUMBERS) $name .= " (".$parents["WIFE"].")";
 		$name .= " [".$pgv_lang["edit"]."]";
@@ -3011,7 +3014,7 @@ $chil = find_children_in_record($famrec, $pid);
 			$name = $person->getFullName();
 			if ($SHOW_ID_NUMBERS) $name .= " (".$child.")";
 			$name .= " [".$pgv_lang["edit"]."]";
-			echo "<a href=\"#\" onclick=\"return quickEdit('".$child."','','{$GEDCOM}');\">";
+			echo "<a href=\"#\" onclick=\"return quickEdit('".$child."','','", PGV_GEDCOM, "');\">";
 			echo PrintReady(stripLRMRLM($name));
 			echo "</a>";
 			echo "</td>\n<td class=\"optionbox center\">";

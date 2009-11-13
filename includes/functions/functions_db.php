@@ -34,35 +34,6 @@ if (!defined('PGV_PHPGEDVIEW')) {
 
 define('PGV_FUNCTIONS_DB_PHP', '');
 
-/**
-* check if a gedcom has been imported into the database
-*
-* this function checks the database to see if the given gedcom has been imported yet.
-* @param string $ged the filename of the gedcom to check for import
-* @return bool return true if the gedcom has been imported otherwise returns false
-*/
-function check_for_import($ged) {
-	global $TBLPREFIX, $GEDCOMS;
-
-	if (!PGV_DB::isConnected() || count($GEDCOMS)==0 || !isset($GEDCOMS[$ged])) {
-		return false;
-	}
-
-	if (!isset($GEDCOMS[$ged]["imported"])) {
-		try {
-			$GEDCOMS[$ged]["imported"]=(bool)
-				PGV_DB::prepare("SELECT count(i_id) FROM {$TBLPREFIX}individuals WHERE i_file=?")
-				->execute(array($GEDCOMS[$ged]["id"]))
-				->fetchOne();
-		} catch (PDOException $ex) {
-			$GEDCOMS[$ged]["imported"]=false;
-		}
-		store_gedcoms();
-	}
-
-	return $GEDCOMS[$ged]["imported"];
-}
-
 //-- gets the first record in the gedcom
 function get_first_xref($type, $ged_id=PGV_GED_ID) {
 	global $TBLPREFIX;
@@ -937,11 +908,9 @@ function fetch_gedcom_record($xref, $ged_id) {
 * @param string $famid the unique gedcom xref id of the family record to retrieve
 * @return string the raw gedcom record is returned
 */
-function find_family_record($xref) {
-	global $TBLPREFIX, $GEDCOM;
+function find_family_record($xref, $ged_id) {
+	global $TBLPREFIX;
 	static $statement=null;
-
-	$ged_id=get_id_from_gedcom($GEDCOM);
 
 	if (is_null($statement)) {
 		$statement=PGV_DB::prepare(
@@ -958,11 +927,9 @@ function find_family_record($xref) {
 * @param string $pid the unique gedcom xref id of the individual record to retrieve
 * @return string the raw gedcom record is returned
 */
-function find_person_record($xref) {
-	global $TBLPREFIX, $GEDCOM;
+function find_person_record($xref, $ged_id) {
+	global $TBLPREFIX;
 	static $statement=null;
-
-	$ged_id=get_id_from_gedcom($GEDCOM);
 
 	if (is_null($statement)) {
 		$statement=PGV_DB::prepare(
@@ -979,11 +946,9 @@ function find_person_record($xref) {
 * @param string $sid the unique gedcom xref id of the source record to retrieve
 * @return string the raw gedcom record is returned
 */
-function find_source_record($xref) {
-	global $TBLPREFIX, $GEDCOM;
+function find_source_record($xref, $ged_id) {
+	global $TBLPREFIX;
 	static $statement=null;
-
-	$ged_id=get_id_from_gedcom($GEDCOM);
 
 	if (is_null($statement)) {
 		$statement=PGV_DB::prepare(
@@ -998,11 +963,9 @@ function find_source_record($xref) {
 * @param string $rid the record id
 * @param string $gedfile the gedcom file id
 */
-function find_other_record($xref) {
-	global $TBLPREFIX, $GEDCOM;
+function find_other_record($xref, $ged_id) {
+	global $TBLPREFIX;
 	static $statement=null;
-
-	$ged_id=get_id_from_gedcom($GEDCOM);
 
 	if (is_null($statement)) {
 		$statement=PGV_DB::prepare(
@@ -1016,11 +979,9 @@ function find_other_record($xref) {
 * Find a media record by its ID
 * @param string $rid the record id
 */
-function find_media_record($xref) {
-	global $TBLPREFIX, $GEDCOM;
+function find_media_record($xref, $ged_id) {
+	global $TBLPREFIX;
 	static $statement=null;
-
-	$ged_id=get_id_from_gedcom($GEDCOM);
 
 	if (is_null($statement)) {
 		$statement=PGV_DB::prepare(
@@ -1038,8 +999,8 @@ function find_media_record($xref) {
 * @param string $gedfile [optional] the gedcomfile to search in
 * @return string the raw gedcom record is returned
 */
-function find_gedcom_record($xref, $gedfile='') {
-	global $TBLPREFIX, $GEDCOM, $DBTYPE;
+function find_gedcom_record($xref, $ged_id) {
+	global $TBLPREFIX;
 	static $statement1=null, $statement2=null;
 
 	if (is_null($statement1)) {
@@ -1050,32 +1011,15 @@ function find_gedcom_record($xref, $gedfile='') {
 			"SELECT m_gedrec FROM {$TBLPREFIX}media       WHERE m_media=? AND m_gedfile=? UNION ALL ".
 			"SELECT o_gedcom FROM {$TBLPREFIX}other       WHERE o_id   =? AND o_file   =?"
 		);
-		if ($DBTYPE=='sqlite') {
-			// TODO: Temporary - until the final migration to sqlite3
-			$statement2=PGV_DB::prepare(
-				"SELECT i_gedcom FROM {$TBLPREFIX}individuals WHERE UPPER(i_id)   =UPPER(?) AND i_file   =? UNION ALL ".
-				"SELECT f_gedcom FROM {$TBLPREFIX}families    WHERE UPPER(f_id)   =UPPER(?) AND f_file   =? UNION ALL ".
-				"SELECT s_gedcom FROM {$TBLPREFIX}sources     WHERE UPPER(s_id)   =UPPER(?) AND s_file   =? UNION ALL ".
-				"SELECT m_gedrec FROM {$TBLPREFIX}media       WHERE UPPER(m_media)=UPPER(?) AND m_gedfile=? UNION ALL ".
-				"SELECT o_gedcom FROM {$TBLPREFIX}other       WHERE UPPER(o_id)   =UPPER(?) AND o_file   =?"
-			);
-		} else {
-			$statement2=PGV_DB::prepare(
-				"SELECT i_gedcom FROM {$TBLPREFIX}individuals WHERE i_id    ".PGV_DB::$LIKE." ? ESCAPE '@' AND i_file   =? UNION ALL ".
-				"SELECT f_gedcom FROM {$TBLPREFIX}families    WHERE f_id    ".PGV_DB::$LIKE." ? ESCAPE '@' AND f_file   =? UNION ALL ".
-				"SELECT s_gedcom FROM {$TBLPREFIX}sources     WHERE s_id    ".PGV_DB::$LIKE." ? ESCAPE '@' AND s_file   =? UNION ALL ".
-				"SELECT m_gedrec FROM {$TBLPREFIX}media       WHERE m_media ".PGV_DB::$LIKE." ? ESCAPE '@' AND m_gedfile=? UNION ALL ".
-				"SELECT o_gedcom FROM {$TBLPREFIX}other       WHERE o_id    ".PGV_DB::$LIKE." ? ESCAPE '@' AND o_file   =?"
-			);
-		}
+		$statement2=PGV_DB::prepare(
+			"SELECT i_gedcom FROM {$TBLPREFIX}individuals WHERE i_id    ".PGV_DB::$LIKE." ? ESCAPE '@' AND i_file   =? UNION ALL ".
+			"SELECT f_gedcom FROM {$TBLPREFIX}families    WHERE f_id    ".PGV_DB::$LIKE." ? ESCAPE '@' AND f_file   =? UNION ALL ".
+			"SELECT s_gedcom FROM {$TBLPREFIX}sources     WHERE s_id    ".PGV_DB::$LIKE." ? ESCAPE '@' AND s_file   =? UNION ALL ".
+			"SELECT m_gedrec FROM {$TBLPREFIX}media       WHERE m_media ".PGV_DB::$LIKE." ? ESCAPE '@' AND m_gedfile=? UNION ALL ".
+			"SELECT o_gedcom FROM {$TBLPREFIX}other       WHERE o_id    ".PGV_DB::$LIKE." ? ESCAPE '@' AND o_file   =?"
+		);
 	}
 	
-	if ($gedfile) {
-		$ged_id=get_id_from_gedcom($gedfile);
-	} else {
-		$ged_id=get_id_from_gedcom($GEDCOM);
-	}
-
 	// Exact match on xref?
 	$gedcom=$statement1->execute(array($xref, $ged_id, $xref, $ged_id, $xref, $ged_id, $xref, $ged_id, $xref, $ged_id))->fetchOne();
 	if (!$gedcom) {
@@ -1218,7 +1162,7 @@ function search_indis_custom($join, $where, $order) {
 	}
 	// Switch privacy file if necessary
 	if ($GED_ID!=PGV_GED_ID) {
-		$GEDCOM=get_gedcom_from_id(PGV_GED_ID);
+		$GEDCOM=PGV_GEDCOM;
 		load_privacy_file(PGV_GED_ID);
 	}
 	return $list;
@@ -1247,7 +1191,7 @@ function search_fams_custom($join, $where, $order) {
 	}
 	// Switch privacy file if necessary
 	if ($GED_ID!=PGV_GED_ID) {
-		$GEDCOM=get_gedcom_from_id(PGV_GED_ID);
+		$GEDCOM=PGV_GEDCOM;
 		load_privacy_file(PGV_GED_ID);
 	}
 	return $list;
@@ -1317,7 +1261,7 @@ function search_indis($query, $geds, $match, $skip) {
 	}
 	// Switch privacy file if necessary
 	if ($GED_ID!=PGV_GED_ID) {
-		$GEDCOM=get_gedcom_from_id(PGV_GED_ID);
+		$GEDCOM=PGV_GEDCOM;
 		load_privacy_file(PGV_GED_ID);
 	}
 	return $list;
@@ -1372,7 +1316,7 @@ function search_indis_names($query, $geds, $match) {
 	}
 	// Switch privacy file if necessary
 	if ($GED_ID!=PGV_GED_ID) {
-		$GEDCOM=get_gedcom_from_id(PGV_GED_ID);
+		$GEDCOM=PGV_GEDCOM;
 		load_privacy_file(PGV_GED_ID);
 	}
 	return $list;
@@ -1448,7 +1392,7 @@ function search_indis_soundex($soundex, $lastname, $firstname, $place, $geds) {
 	}
 	// Switch privacy file if necessary
 	if ($GED_ID!=PGV_GED_ID) {
-		$GEDCOM=get_gedcom_from_id(PGV_GED_ID);
+		$GEDCOM=PGV_GEDCOM;
 		load_privacy_file(PGV_GED_ID);
 	}
 	return $list;
@@ -1614,7 +1558,7 @@ function search_fams($query, $geds, $match, $skip) {
 	}
 	// Switch privacy file if necessary
 	if ($GED_ID!=PGV_GED_ID) {
-		$GEDCOM=get_gedcom_from_id(PGV_GED_ID);
+		$GEDCOM=PGV_GEDCOM;
 		load_privacy_file(PGV_GED_ID);
 	}
 	return $list;
@@ -1664,7 +1608,7 @@ function search_fams_names($query, $geds, $match) {
 	}
 	// Switch privacy file if necessary
 	if ($GED_ID!=PGV_GED_ID) {
-		$GEDCOM=get_gedcom_from_id(PGV_GED_ID);
+		$GEDCOM=PGV_GEDCOM;
 		load_privacy_file(PGV_GED_ID);
 	}
 	return $list;
@@ -1734,7 +1678,7 @@ function search_sources($query, $geds, $match, $skip) {
 	}
 	// Switch privacy file if necessary
 	if ($GED_ID!=PGV_GED_ID) {
-		$GEDCOM=get_gedcom_from_id(PGV_GED_ID);
+		$GEDCOM=PGV_GEDCOM;
 		load_privacy_file(PGV_GED_ID);
 	}
 	return $list;
@@ -1804,7 +1748,7 @@ function search_notes($query, $geds, $match, $skip) {
 	}
 	// Switch privacy file if necessary
 	if ($GED_ID!=PGV_GED_ID) {
-		$GEDCOM=get_gedcom_from_id(PGV_GED_ID);
+		$GEDCOM=PGV_GEDCOM;
 		load_privacy_file(PGV_GED_ID);
 	}
 	return $list;
@@ -1932,14 +1876,10 @@ function find_rin_id($rin) {
 * Does not delete the file from the file system
 * @param string $ged  the filename of the gedcom to delete
 */
-function delete_gedcom($ged) {
+function delete_gedcom($ged_id) {
 	global $TBLPREFIX, $pgv_changes, $GEDCOMS;
 
-	if (!isset($GEDCOMS[$ged])) {
-		return;
-	}
-
-	$ged_id=get_id_from_gedcom($ged);
+	$ged=get_gedcom_from_id($ged_id);
 
 	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}blocks        WHERE b_username=?")->execute(array($ged));
 	PGV_DB::prepare("DELETE FROM {$TBLPREFIX}dates         WHERE d_file    =?")->execute(array($ged_id));
@@ -2491,7 +2431,6 @@ function get_all_gedcoms() {
 	foreach ($GEDCOMS as $key=>$value) {
 		$gedcoms[$value['id']]=$key;
 	}
-	uasort($gedcoms, 'stringsort');
 	return $gedcoms;
 }
 
@@ -2510,13 +2449,35 @@ function get_gedcom_from_id($ged_id) {
 	return $ged_id;
 }
 
-function get_id_from_gedcom($ged_name) {
+// Convert an (external) gedcom name to an (internal) gedcom ID.
+// Optionally create an entry for it if it does not exist.
+function get_id_from_gedcom($ged_name, $create=false) {
 	global $GEDCOMS;
 
 	if (array_key_exists($ged_name, $GEDCOMS)) {
 		return (int)$GEDCOMS[$ged_name]['id']; // Cast to (int) for safe use in SQL
 	} else {
-		return null;
+		if ($create) {
+			$ged_id=0;
+			foreach ($GEDCOMS as $gedarray) {
+				if ($gedarray['id']>$ged_id) {
+					$ged_id=$gedarray['id'];
+				}
+			}
+			$GEDCOMS[$ged_name]=array(
+				'gedcom'=>$ged_name,
+				'config'=>'',
+				'privacy'=>'',
+				'title'=>'',
+				'path'=>'',
+				'pgv_ver'=>'',
+				'id'=>'',
+				'imported'=>'',
+			);
+			return $ged_id+1;	
+		} else {
+			return null;
+		}
 	}
 }
 

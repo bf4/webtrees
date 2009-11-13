@@ -219,7 +219,7 @@ if ($action=="updateconfig") {
 		$config = $block[1];
 		foreach($PGV_BLOCKS[$block[0]]["config"] as $config_name=>$config_value) {
 			if (isset($_POST[$config_name])) {
-				$config[$config_name] = stripslashes($_POST[$config_name]);
+				$config[$config_name] = $_POST[$config_name];
 			}
 			else {
 				$config[$config_name] = "";
@@ -416,9 +416,9 @@ else {
 	<?php
 	print "var block_descr = new Array();\n";
 	foreach($PGV_BLOCKS as $b=>$block) {
-		print "block_descr['$b'] = '".preg_replace("/'/", "\\'", print_text($block["descr"],0,1))."';\n";
+		print "block_descr['$b'] = '".str_replace("'", "\\'", print_text($block["descr"],0,1))."';\n";
 	}
-	print "block_descr['advice1'] = '".preg_replace("/'/", "\\'", print_text('index_edit_advice',0,1))."';\n";
+	print "block_descr['advice1'] = '".str_replace("'", "\\'", print_text('index_edit_advice',0,1))."';\n";
 	?>
 
 
@@ -571,7 +571,7 @@ else {
 	else {
 		print_help_link("block_default_index", "qm");
 	}
-	print "<input type=\"button\" value=\"".$pgv_lang["reset_default_blocks"]."\" onclick=\"window.location='index_edit.php?ctype=$ctype&amp;action=reset&amp;name=".preg_replace("/'/", "\'", $name)."';\" />\n";
+	print "<input type=\"button\" value=\"".$pgv_lang["reset_default_blocks"]."\" onclick=\"window.location='index_edit.php?ctype=$ctype&amp;action=reset&amp;name=".str_replace("'", "\'", $name)."';\" />\n";
 	print "&nbsp;&nbsp;";
 	print_help_link("click_here_help", "qm");
 	print "<input type=\"button\" value=\"".$pgv_lang["click_here"]."\" onclick=\"select_options(); save_form();\" />\n";
@@ -580,7 +580,7 @@ else {
 	if (PGV_USER_GEDCOM_ADMIN && $ctype!="user") {
 		print "<br />";
 		print_help_link("clear_cache_help", "qm");
-		print "<input type =\"button\" value=\"".$pgv_lang["clear_cache"]."\" onclick=\"window.location='index_edit.php?ctype=$ctype&amp;action=clearcache&amp;name=".preg_replace("/'/", "\'", $name)."';\" />";
+		print "<input type =\"button\" value=\"".$pgv_lang["clear_cache"]."\" onclick=\"window.location='index_edit.php?ctype=$ctype&amp;action=clearcache&amp;name=".str_replace("'", "\'", $name)."';\" />";
 	}
 	print "</td></tr></table>";
 	print "</form>\n";

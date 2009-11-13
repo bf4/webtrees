@@ -492,7 +492,9 @@ function print_fact(&$eventObj, $noedit=false) {
  * @param string $sid  the Gedcom Xref ID of the submitter to print
  */
 function print_submitter_info($sid) {
-	$srec = find_gedcom_record($sid);
+	global $GEDCOM;
+	$ged_id=get_id_from_gedcom();
+	$srec = find_gedcom_record($sid, $ged_id);
 	preg_match("/1 NAME (.*)/", $srec, $match);
 	// PAF creates REPO record without a name
 	// Check here if REPO NAME exists or not
@@ -509,8 +511,10 @@ function print_submitter_info($sid) {
  */
 function print_repository_record($sid) {
 	global $TEXT_DIRECTION;
+	global $GEDCOM;
+	$ged_id=get_id_from_gedcom($GEDCOM);
 	if (displayDetailsById($sid, "REPO")) {
-		$source = find_other_record($sid);
+		$source = find_other_record($sid, $ged_id);
 		$ct = preg_match("/1 NAME (.*)/", $source, $match);
 		if ($ct > 0) {
 			$ct2 = preg_match("/0 @(.*)@/", $source, $rmatch);
@@ -613,6 +617,7 @@ function print_media_links($factrec, $level,$pid='') {
 	global $pgv_lang, $factarray, $SEARCH_SPIDER, $view;
 	global $THUMBNAIL_WIDTH, $USE_MEDIA_VIEWER;
 	global $GEDCOM, $SHOW_ID_NUMBERS;
+	$ged_id=get_id_from_gedcom($GEDCOM);
 	if (!$MULTI_MEDIA) return;
 	$nlevel = $level+1;
 	if ($level==1) $size=50;
@@ -620,7 +625,7 @@ function print_media_links($factrec, $level,$pid='') {
 	if (preg_match_all("/$level OBJE(.*)/", $factrec, $omatch, PREG_SET_ORDER) == 0) return;
 	$objectNum = 0;
 	while ($objectNum < count($omatch)) {
-		$media_id = preg_replace("/@/", "", trim($omatch[$objectNum][1]));
+		$media_id = str_replace("@", "", trim($omatch[$objectNum][1]));
 		if (displayDetailsById($media_id, "OBJE")) {
 			$row=
 				PGV_DB::prepare("SELECT m_titl, m_file, m_gedrec FROM {$TBLPREFIX}media where m_media=? AND m_gedfile=?")
@@ -629,7 +634,7 @@ function print_media_links($factrec, $level,$pid='') {
 
 			// A new record, pending acceptance?
 			if (!$row && PGV_USER_CAN_EDIT) {
-				$mediarec = find_updated_record($media_id);
+				$mediarec = find_updated_record($media_id, $ged_id);
 				$row["m_file"] = get_gedcom_value("FILE", 1, $mediarec);
 				$row["m_titl"] = get_gedcom_value("TITL", 1, $mediarec);
 				if (empty($row["m_titl"])) $row["m_titl"] = get_gedcom_value("FILE:TITL", 1, $mediarec);
@@ -1106,6 +1111,7 @@ function print_main_notes($factrec, $level, $pid, $linenum, $noedit=false) {
 	global $PGV_IMAGE_DIR;
 	global $PGV_IMAGES;
 	global $TEXT_DIRECTION;
+	$ged_id=get_id_from_gedcom($GEDCOM);
 	$styleadd="";
 	$ct = preg_match("/PGV_NEW/", $factrec, $match);
 	if ($ct>0) $styleadd="change_new";
@@ -1185,8 +1191,8 @@ function print_main_notes($factrec, $level, $pid, $linenum, $noedit=false) {
 		}
 		else {
 			//-- print linked note records
-			if (isset($pgv_changes[$nid."_".$GEDCOM]) && $styleadd=="change_new") $noterec = find_updated_record($nid);
-			else $noterec = find_gedcom_record($nid);
+			if (isset($pgv_changes[$nid."_".$GEDCOM]) && $styleadd=="change_new") $noterec = find_updated_record($nid, $ged_id);
+			else $noterec = find_gedcom_record($nid, $ged_id);
 			$nt = preg_match("/0 @$nid@ NOTE (.*)/", $noterec, $n1match);
 			$text ="";
 			if ($nt>0) {
@@ -1240,10 +1246,11 @@ function print_main_notes($factrec, $level, $pid, $linenum, $noedit=false) {
  */
 function print_main_media($pid, $level=1, $related=false, $noedit=false) {
 	global $TBLPREFIX, $GEDCOM, $MEDIATYPE, $pgv_changes;
+	$ged_id=get_id_from_gedcom($GEDCOM);
 
 	if (!showFact("OBJE", $pid)) return false;
-	if (!isset($pgv_changes[$pid."_".$GEDCOM])) $gedrec = find_gedcom_record($pid);
-	else $gedrec = find_updated_record($pid);
+	if (!isset($pgv_changes[$pid."_".$GEDCOM])) $gedrec = find_gedcom_record($pid, $ged_id);
+	else $gedrec = find_updated_record($pid, $ged_id);
 	$ids = array($pid);
 
 	//-- find all of the related ids
@@ -1346,7 +1353,7 @@ function print_main_media($pid, $level=1, $related=false, $noedit=false) {
 		//-- if there is a change to this media item then get the
 		//-- updated media item and show it
 		if (isset($pgv_changes[$rowm["m_media"]."_".$GEDCOM])) {
-			$newrec = find_updated_record($rowm["m_media"]);
+			$newrec = find_updated_record($rowm["m_media"], $ged_id);
 			$row = array();
 			$row['m_media'] = $rowm["m_media"];
 			$row['m_file'] = get_gedcom_value("FILE", 1, $newrec);
@@ -1409,8 +1416,8 @@ function print_main_media($pid, $level=1, $related=false, $noedit=false) {
 				}
 			} else {
 				$row = array();
-				$newrec = find_updated_record($media_id);
-				if (empty($newrec)) $newrec = find_media_record($media_id);
+				$newrec = find_updated_record($media_id, $ged_id);
+				if (empty($newrec)) $newrec = find_media_record($media_id, $ged_id);
 				$row['m_media'] = $media_id;
 				$row['m_file'] = get_gedcom_value("FILE", 1, $newrec);
 				$row['m_titl'] = get_gedcom_value("TITL", 1, $newrec);

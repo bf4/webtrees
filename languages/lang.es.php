@@ -33,13 +33,13 @@ if (!defined('PGV_PHPGEDVIEW')) {
 }
 
 $pgv_lang["gedcomid"]				= "ID GEDCOM del registro de persona";
-$pgv_lang["sortby"]				= "Ordenar por";
-$pgv_lang["exact"]				= "Exacto";
-$pgv_lang["begins_with"]		= "Comienza por";
-$pgv_lang["contains"]			= "Contiene";
-$pgv_lang["sounds_like"]		= "Suena como";
-$pgv_lang["advanced_search"] 	= "Búsqueda avanzada";
-$pgv_lang["more_fields"]		= "Añadir más campos";
+$pgv_lang["sortby"]					= "Ordenar por";
+$pgv_lang["exact"]					= "Exacto";
+$pgv_lang["begins_with"]			= "Comienza por";
+$pgv_lang["contains"]				= "Contiene";
+$pgv_lang["sounds_like"]			= "Suena como";
+$pgv_lang["advanced_search"] 		= "Búsqueda avanzada";
+$pgv_lang["more_fields"]			= "Añadir más campos";
 $pgv_lang["install_step_8"] 		= "Comienzo";
 $pgv_lang["parent_family"]			= "Familia de los padres";
 $pgv_lang["step_parent_family"]		= "Familia del padrastro o madrastra";
@@ -649,7 +649,7 @@ $pgv_lang["total_shared_notes"]			= "Total notas compartidas";
 $pgv_lang["invalid_gedformat"]		= "Formato GEDCOM inválido";
 $pgv_lang["exec_time"]				= "Tiempo de ejecución:";
 $pgv_lang["unable_to_create_index"] = "No se pudo crear un archivo índice. Asegúrese de que los permisos de escritura están habilitados en el directorio de PhpGedView.  Es posiblem volver a cambiar los permisos una vez hayan sido escritos los archivos índice.";
-$pgv_lang["changes_present"]		= "Hay cambios pendientes de revisión en el GEDCOM actual.  Si prosigue con la Importación, los cambios pendientes se incorporarán a la base de datos inmediatamente. Debería revisar los cambios pendientes antes de proseguir con la Importación.";
+$pgv_lang["changes_present"]		= "Hay cambios pendientes de revisión en el GEDCOM actual.  Si prosigue con la Importación, los cambios pendientes se perderán. Debería revisar los cambios pendientes antes de proseguir con la importación.";
 $pgv_lang["sec"]					= "sec.";
 
 //-- INDIVIDUAL AND FAMILYLIST FILE MESSAGES
@@ -865,6 +865,7 @@ $pgv_lang["view_fam_nav_research"]	= "Ver investigación para ...";
 $pgv_lang["view_fam_nav_map"]		= "Ver mapa de ...";
 $pgv_lang["view_fam_nav_spare"]		= "Ver otra información de ...";
 $pgv_lang["navigator"]				= "Navegador";
+$pgv_lang["fam_navigator"]			= "Navegador de familias";
 
 // $pgv_lang["relationship_great"]		= "Great";
 $pgv_lang["relationship_chart"] 	= "Parentesco";
@@ -1487,6 +1488,8 @@ $pgv_lang["son_of"]					= "hijo de";
 $pgv_lang["daughter_of"]			= "hija de";
 $pgv_lang["child_of"]				= "Hijo/a de ";
 $pgv_lang["children_of"]			= "Hijos/as de ";
+$pgv_lang["descendancy_pronoun_m"]	= "Él ";
+$pgv_lang["descendancy_pronoun_f"]	= "Ella ";
 
 $pgv_lang["family_group_report"]	= "Informe de grupo familiar";
 $pgv_lang["page"]					= "Página";
@@ -1661,10 +1664,12 @@ $pgv_lang["witness"] = "Testigo";
 //-- statistics utility
 $pgv_lang["stat_create"]		= "Cree su propio gráfico";
 $pgv_lang["statutci"]			= "no se pudo crear el índice";
-$pgv_lang["statnnames"]         = "Total de personas";
-$pgv_lang["statnfam"]           = "Total de familias";
-$pgv_lang["statnmale"]          = "Total de hombres";
-$pgv_lang["statnfemale"]        = "Total de mujeres";
+$pgv_lang["statnnames"]			= "Total de personas";
+$pgv_lang["statnfam"]			= "Total de familias";
+$pgv_lang["statnmale"]			= "Total de hombres";
+$pgv_lang["statnfemale"]		= "Total de mujeres";
+// $pgv_lang["with_sources"]		= "With sources";
+$pgv_lang["without_sources"]	= "Sin fuentes";
 $pgv_lang["stat_sindi"]			= "Personas con fuentes";
 $pgv_lang["stat_sfam"]			= "Familias con fuentes";
 $pgv_lang["statvars"]			= "Rellene las siguientes variables para el gráfico";
@@ -1679,6 +1684,7 @@ $pgv_lang["stat_4_map"]			= "Matrimonio por país";
 $pgv_lang["stat_5_birth"]		= "Nacimientos por siglo";
 $pgv_lang["stat_6_death"]		= "Defunciones por siglo";
 $pgv_lang["stat_7_marr"]		= "Matrimonios por siglo";
+$pgv_lang["stat_7_div"]			= "Divorcios por siglo";
 $pgv_lang["stat_8_fam"]			= "Familias con fuentes";
 $pgv_lang["stat_9_indi"]		= "Personas con fuentes";
 $pgv_lang["stat_10_none"]		= "ninguno";
@@ -1721,14 +1727,15 @@ $pgv_lang["one_child"]			= "intervalo de un hijo";
 $pgv_lang["two_children"]		= "intervalo de dos hijos";
 $pgv_lang["statreset"]			= "reiniciar";
 $pgv_lang["statsubmit"]			= "mostrar el gráfico";
+$pgv_lang["stat_largest_families"] = "Mayores familias";
 
 //-- statisticsplot utility
 $pgv_lang["statistiek_list"]	= "Estadísticas";
-$pgv_lang["stpl"]			 	= "...";
+$pgv_lang["stpl"]				= "...";
 $pgv_lang["stplinfo"]			= "información para el gráfico:";
 $pgv_lang["stpltype"]			= "tipo:";
 $pgv_lang["stplnoim"]			= " no implementado:";
-$pgv_lang["stplmf"]			 	= " por sexo";
+$pgv_lang["stplmf"]				= " por sexo";
 $pgv_lang["stplipot"]			= " por período temporal";
 $pgv_lang["stplmonth"]			= "mes";
 $pgv_lang["stplnumbers"]		= "números";
@@ -1822,11 +1829,11 @@ $pgv_lang["preview"] =  "Vista preliminar";
 $pgv_lang["no_id"] = "¡No se ha indicado un ID de Pregunta Frecuente!";
 
 // Help search
-$pgv_lang["hs_title"] 			= "Buscar en los textos de ayuda";
-$pgv_lang["hs_search"] 			= "Buscar";
-$pgv_lang["hs_close"] 			= "Cerrar ventana";
-$pgv_lang["hs_results"] 		= "Resultados encontrados:";
-$pgv_lang["hs_keyword"] 		= "Buscar";
+$pgv_lang["hs_title"]			= "Buscar en los textos de ayuda";
+$pgv_lang["hs_search"]			= "Buscar";
+$pgv_lang["hs_close"]			= "Cerrar ventana";
+$pgv_lang["hs_results"]			= "Resultados encontrados:";
+$pgv_lang["hs_keyword"]			= "Buscar";
 $pgv_lang["hs_searchin"]		= "Buscar en";
 $pgv_lang["hs_searchuser"]		= "Ayuda de usuario";
 $pgv_lang["hs_searchmodules"]	= "Ayuda de los módulos";
@@ -1863,7 +1870,7 @@ $pgv_lang["TYPE__painting"] = "Pintura";
 $pgv_lang["TYPE__other"] = "Otro";
 
 //-- Other media suff
-$pgv_lang["view_slideshow"] 		= "Ver como presentación";
+$pgv_lang["view_slideshow"]			= "Ver como presentación";
 $pgv_lang["download_image"]			= "Descargar arhivo";
 $pgv_lang["no_media"]				= "No se encontró el objeto audiovisual";
 $pgv_lang["media_privacy"]			= "Las retricciones de privacidad no le permiten ver este elemento";

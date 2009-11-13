@@ -120,7 +120,6 @@ $pgv_lang["SHOW_SOURCES_help"]		= "~#pgv_lang[SHOW_SOURCES]#~<br /><br />Fija el
 $pgv_lang["REQUIRE_ADMIN_AUTH_REGISTRATION_help"]	= "~#pgv_lang[REQUIRE_ADMIN_AUTH_REGISTRATION]#~<br /><br />Si la opción <b>#pgv_lang[USE_REGISTRATION_MODULE]#</b> está activada este ajuste controla si el administrador debe aprobar el registro.<br /><br />Si se fija a <b>Sí</b> se requerirá que los nuevos usuarios primero verifiquen su dirección de correo electrónico y después sean aprobados por un administrador antes de poder entrar.  Con este ajuste fijado a <b>No</b>, la casilla <b>#pgv_lang[verified_by_admin]#</b> quedará marcada automáticamente en cuanto los usuarios verifiquen su cuenta, permitiéndoles de forma inmediata la entrada identificada sin intervención de un operador.<br />";
 $pgv_lang["SPLIT_PLACES"]		= "Partir lugares en modo edición";
 $pgv_lang["SPLIT_PLACES_help"]	= "~#pgv_lang[SPLIT_PLACES]#~<br /><br />Fije esto a <b>Sí</b> para partir cada lugar por las comas a subcampos para una más fácil edición.  Ejemplo :<br /><ol><li>Modo predeterminado<br /><u>Place</u>: Half Moon Bay, San Mateo, California, USA<br /><br /></li><li>Modo partido<br /><u>País</u>: USA<br /><u>Estado</u>: California<br/><u>Condado</u>: San Mateo<br/><u>Localidad</u>: Half Moon Bay</li></ol>";
-$pgv_lang["ALLOW_REMEMBER_ME_help"]	= "~#pgv_lang[ALLOW_REMEMBER_ME]#~<br /><br />Muchos sitios permiten a los usuarios elegir si desean ser recordados desde el mismo ordenador la próxima vez que visiten el sitio.  Activar esta opción pondrá una casilla <b>Recordarme</b> en la página de entrada.  Si se marca esta casilla, PhpGedView tiene permiso para almacenar una cookie en el equipo del usuario.  Esta cookie permitirá a PhpGedView recordar el usuario entre visitas desde el mismo equipo remoto.<br />";
 $pgv_lang["UNDERLINE_NAME_QUOTES"]		= "Subrayar nombres entrecomillados";
 $pgv_lang["UNDERLINE_NAME_QUOTES_help"]	= "~#pgv_lang[UNDERLINE_NAME_QUOTES]#~<br /><br />Muchos programas colocarán el nombre de pila preferido entre \"comillas\" en el GEDCOM.  El convenio habitual para esto es subrayar el nombre de pila preferido.  Activar esta opción convertirá los nombres entre comillas a &lt;span&gt; con una clase de \"starredname\".<br /><br />Por ejemplo, si el nombre en el GEDCOM fuera 1&nbsp;NAME&nbsp;Gustave&nbsp;\"Jean&nbsp;Paul\"&nbsp;Charles&nbsp;/Wilson/ activar esta opción cambiaría la parte del nombre entre comillas a &lt;span&nbsp;class=\"starredname\"&gt;Jean&nbsp;Paul&lt;/span&gt; para su presentación.  Dependiendo de otros ajustes, el navegador lo mostraría como <b>Gustave&nbsp;<u>Jean&nbsp;Paul</u>&nbsp;Charles&nbsp;Wilson</b> o <b>Wilson,&nbsp;Gustave&nbsp;<u>Jean&nbsp;Paul</u> Charles</b><br />";
 $pgv_lang["PRIVACY_BY_RESN"]		= "Utilizar la restricción de privacidad de GEDCOM (RESN)";
@@ -420,8 +419,6 @@ $pgv_lang["META_REVISIT"]		= "Etiqueta META Revisit";
 $pgv_lang["META_REVISIT_help"]	= "~#pgv_lang[META_REVISIT]#~<br /><br />El valor a colocar en la etiqueta meta Revisit en el encabezado de la página HTML.  Algunas arañas ignoran este valor.<br />";
 $pgv_lang["META_KEYWORDS"]		= "Etiqueta META Keywords";
 $pgv_lang["META_KEYWORDS_help"]	= "~#pgv_lang[META_KEYWORDS]#~<br /><br />El valor a colocar en la etiqueta meta Keywords en el encabezamiento HTML de la página.  Algunos motores de búsqueda utilizarán la etiqueta meta Keywords para para ayudar a indexar su página.<br /><br />La lista #pgv_lang[common_surnames]# que aparece en el bloque #pgv_lang[gedcom_stats]# de su página de Bienvenida puede añadirse también a cualquier cosa que introduzca aquí.<br />";
-$pgv_lang["META_SURNAME_KEYWORDS"]		= "Agregar los apellidos más corrientes al campo META Keywords";
-$pgv_lang["META_SURNAME_KEYWORDS_help"]	= "~#pgv_lang[META_SURNAME_KEYWORDS]#~<br /><br />Si se fija esta opción a <b>Sí</b> los apellidos de la lista #pgv_lang[common_surnames]# se añadirán al campo meta Keywords.  Esto puede ayudar a que los motores de búsqueda encuentren mejor su sitio.<br />";
 $pgv_lang["META_TITLE"]		= "Agregar a la etiqueta del encabezado TITLE";
 $pgv_lang["META_TITLE_help"]	=	"~#pgv_lang[META_TITLE]#~<br /><br />Cualquier cosa en esta línea se añadirá a la etiqueta TITLE en el encabezado de la página HTML detrás del título normal y antes de la referencia a PhpGedView.<br />";
 
@@ -573,6 +570,8 @@ $pgv_lang["lang_name_chinese"]		= "Chino";
 $pgv_lang["lang_name_danish"]		= "Danés";
 $pgv_lang["lang_name_dutch"]		= "Holandés";
 $pgv_lang["lang_name_english"]		= "Inglés";
+$pgv_lang["lang_name_english (uk)"]	= "Inglés (R.U.)";
+$pgv_lang["lang_name_english (us)"]	= "Inglés (EE.UU.)";
 $pgv_lang["lang_name_estonian"]		= "Estonio";
 $pgv_lang["lang_name_finnish"]		= "Finlandés";
 $pgv_lang["lang_name_french"]		= "Francés";

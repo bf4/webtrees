@@ -135,7 +135,7 @@ class GedcomRecord {
 
 			// If we didn't find the record in the database, it may be new/pending
 			if (!$data && PGV_USER_CAN_EDIT && isset($pgv_changes[$pid.'_'.$GEDCOM])) {
-				$data=find_updated_record($pid);
+				$data=find_updated_record($pid, $ged_id);
 				$fromfile=true;
 			}
 
@@ -274,7 +274,13 @@ class GedcomRecord {
 	}
 
 	protected function _getLinkUrl($link) {
-		$url = $link.$this->getXref().'&ged='.get_gedcom_from_id($this->ged_id);
+		if ($this->ged_id) {
+			// If the record was created from the database, we know the gedcom
+			$url = $link.$this->getXref().'&ged='.get_gedcom_from_id($this->ged_id);
+		} else {
+			// If the record was created from a text string, assume the current gedcom
+			$url = $link.$this->getXref().'&ged='.PGV_GEDCOM;
+		}
 		if ($this->isRemote()) {
 			list($servid, $aliaid)=explode(':', $this->rfn);
 			if ($aliaid && $servid) {

@@ -427,7 +427,7 @@ function addMessage($message) {
 		loadLanguage($from_lang);
 
 	//-- setup the message body for the "from" user
-	$email2 = stripslashes($message["body"]);
+	$email2 = $message["body"];
 	if (isset($message["from_name"]))
 		$email2 = $pgv_lang["message_from_name"]." ".$message["from_name"]."\r\n".$pgv_lang["message_from"]." ".$message["from_email"]."\r\n\r\n".$email2;
 	if (!empty($message["url"]))
@@ -435,32 +435,32 @@ function addMessage($message) {
 	$email2 .= "\r\n=--------------------------------------=\r\nIP ADDRESS: ".$_SERVER['REMOTE_ADDR']."\r\n";
 	$email2 .= "DNS LOOKUP: ".gethostbyaddr($_SERVER['REMOTE_ADDR'])."\r\n";
 	$email2 .= "LANGUAGE: $LANGUAGE\r\n";
-	$subject2 = "[".$pgv_lang["phpgedview_message"].($TEXT_DIRECTION=="ltr"?"] ":" [").stripslashes($message["subject"]);
+	$subject2 = "[".$pgv_lang["phpgedview_message"].($TEXT_DIRECTION=="ltr"?"] ":" [").$message["subject"];
 	$from ="";
 	if (!get_user_id($message["from"])) {
 		$from = $message["from"];
-		$email2 = $pgv_lang["message_email3"]."\r\n\r\n".stripslashes($email2);
+		$email2 = $pgv_lang["message_email3"]."\r\n\r\n".$email2;
 		$fromFullName = $message["from"];
 	} else {
 		$fromFullName = getUserFullName($message['from']);
 		if (!$PGV_SIMPLE_MAIL)
-			$from = hex4email(stripslashes($fromFullName),$CHARACTER_SET). " <".get_user_setting($message["from"], 'email').">";
+			$from = hex4email($fromFullName,$CHARACTER_SET). " <".get_user_setting($message["from"], 'email').">";
 		else
 			$from = get_user_setting($message["from"], 'email');
-		$email2 = $pgv_lang["message_email2"]."\r\n\r\n".stripslashes($email2);
+		$email2 = $pgv_lang["message_email2"]."\r\n\r\n".$email2;
 
 	}
 	if ($message["method"]!="messaging") {
-		$subject1 = "[".$pgv_lang["phpgedview_message"].($TEXT_DIRECTION=="ltr"?"] ":" [").stripslashes($message["subject"]);
+		$subject1 = "[".$pgv_lang["phpgedview_message"].($TEXT_DIRECTION=="ltr"?"] ":" [").$message["subject"];
 		if (!get_user_id($message["from"])) {
 			$email1 = $pgv_lang["message_email1"];
 			if (!empty($message["from_name"]))
-				$email1 .= $message["from_name"]."\r\n\r\n".stripslashes($message["body"]);
+				$email1 .= $message["from_name"]."\r\n\r\n".$message["body"];
 			else
-				$email1 .= $from."\r\n\r\n".stripslashes($message["body"]);
+				$email1 .= $from."\r\n\r\n".$message["body"];
 		} else {
 			$email1 = $pgv_lang["message_email1"];
-			$email1 .= stripslashes($fromFullName)."\r\n\r\n".stripslashes($message["body"]);
+			$email1 .= $fromFullName."\r\n\r\n".$message["body"];
 		}
 		if (!isset($message["no_from"])) {
 			if (stristr($from, $PHPGEDVIEW_EMAIL)){
@@ -498,16 +498,16 @@ function addMessage($message) {
 			->execute(array(get_next_id("messages", "m_id"), $message["from"], $message["to"], $message["subject"], $message["body"], $message["created"]));
 	}
 	if ($message["method"]!="messaging") {
-		$subject1 = "[".$pgv_lang["phpgedview_message"].($TEXT_DIRECTION=="ltr"?"] ":" [").stripslashes($message["subject"]);
+		$subject1 = "[".$pgv_lang["phpgedview_message"].($TEXT_DIRECTION=="ltr"?"] ":" [").$message["subject"];
 		if (!get_user_id($message["from"])) {
 			$email1 = $pgv_lang["message_email1"];
 			if (!empty($message["from_name"]))
-				$email1 .= $message["from_name"]."\r\n\r\n".stripslashes($message["body"]);
+				$email1 .= $message["from_name"]."\r\n\r\n".$message["body"];
 			else
-				$email1 .= $from."\r\n\r\n".stripslashes($message["body"]);
+				$email1 .= $from."\r\n\r\n".$message["body"];
 		} else {
 			$email1 = $pgv_lang["message_email1"];
-			$email1 .= stripslashes($fromFullName)."\r\n\r\n".stripslashes($message["body"]);
+			$email1 .= $fromFullName."\r\n\r\n".$message["body"];
 		}
 		if (!get_user_id($message["to"])) {
 			//-- the to user must be a valid user in the system before it will send any mails
@@ -515,7 +515,7 @@ function addMessage($message) {
 		} else {
 			$toFullName=getUserFullName($message['to']);
 			if (!$PGV_SIMPLE_MAIL)
-				$to = hex4email(stripslashes($toFullName),$CHARACTER_SET). " <".get_user_setting($message["to"], 'email').">";
+				$to = hex4email($toFullName, $CHARACTER_SET). " <".get_user_setting($message["to"], 'email').">";
 			else
 				$to = get_user_setting($message["to"], 'email');
 		}

@@ -65,7 +65,7 @@ function print_recent_changes($block=true, $config="", $side, $index) {
 	if ($PGV_BLOCKS["print_recent_changes"]["canconfig"]) {
 		if ($ctype=="gedcom" && PGV_USER_GEDCOM_ADMIN || $ctype=="user" && PGV_USER_ID) {
 			if ($ctype=="gedcom") {
-				$name = preg_replace("/'/", "\'", $GEDCOM);
+				$name = str_replace("'", "\'", $GEDCOM);
 			} else {
 				$name = PGV_USER_NAME;
 			}

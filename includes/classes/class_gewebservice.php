@@ -234,7 +234,7 @@ if (($nameRec = get_sub_record(1, "1 NAME", $personRec)) != null) {
 				// Create an instance of person and look for their family record
 				$person = Person :: getInstance($clipping["id"]);
 				$famId = $person->getChildFamilyIds();
-				$famrec = find_family_record($famId[0]);
+				$famrec = find_family_record($famId[0], PGV_GED_ID);
 				$fid = $famId[0];
 				$handle = $this->query_dom("./families/family[@id=\"$fid\"]/@handle");
 				if ($handle == null && id_in_cart($fid)) {
@@ -415,7 +415,7 @@ function create_family($frec, $fid) {
  */
 function create_record($fid)
 {
-	$gedrec = find_gedcom_record($fid);
+	$gedrec = find_gedcom_record($fid, PGV_GED_ID);
 	//0 @I1@ INDI - person
 	//0 @F1@ FAM - family
 	//0 @S1@ SOUR - source
@@ -503,13 +503,10 @@ function create_media($mediaRec, $mediaID, $level = 1)
 }
 	function create_mediaref($eParent, $sourcerefRec, $level,$done=1) {
 		$mediaId = get_gedcom_value("OBJE", $level, $sourcerefRec);
-		//print "Media ID ************ $mediaId";
 		$eMediaRef = $this->dom->createElement("objref");
 		$eMediaRef = $eParent->appendChild($eMediaRef);
 		$eMediaRef->setAttribute("hlink", $mediaId);
 		$eParent->appendChild($eMediaRef);
-		//		 $mediaRecord = find_gedcom_record($mediaId);
-		//               $this->create_media($mediaId,$mediaRecord);
 	}
 
 function create_sourceref($eParent, $sourcerefRec, $level,$done=1)
