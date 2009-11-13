@@ -519,8 +519,10 @@ function print_header($title, $head="", $use_alternate_styles=true) {
 		var plusminus = new Array();
 		plusminus[0] = new Image();
 		plusminus[0].src = "'.$PGV_IMAGE_DIR."/".$PGV_IMAGES["plus"]["other"].'";
+		plusminus[0].title = "'.$pgv_lang["show_details"].'";
 		plusminus[1] = new Image();
 		plusminus[1].src = "'.$PGV_IMAGE_DIR."/".$PGV_IMAGES["minus"]["other"].'";
+		plusminus[1].title = "'.$pgv_lang["hide_details"].'";
 		var zoominout = new Array();
 		zoominout[0] = new Image();
 		zoominout[0].src = "'.$PGV_IMAGE_DIR."/".$PGV_IMAGES["zoomin"]["other"].'";
@@ -656,7 +658,7 @@ function print_simple_footer() {
 	global $SHOW_STATS;
 
 	if ($SHOW_STATS || PGV_DEBUG) {
-		echo execution_stats();
+		echo '<br />',execution_stats();
 	}
 	if (PGV_DEBUG_SQL) {
 		echo PGV_DB::getQueryLog();
@@ -1149,7 +1151,9 @@ function print_note_record($text, $nlevel, $nrec, $textOnly=false, $return=false
 		$data .= "<br /><span class=\"label\">";
 		if ($brpos !== false) {
 			if ($EXPAND_NOTES) $plusminus="minus"; else $plusminus="plus";
-			$data .= "<a href=\"javascript:;\" onclick=\"expand_layer('$elementID'); return false;\"><img id=\"{$elementID}_img\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES[$plusminus]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"".$pgv_lang["show_details"]."\" title=\"".$pgv_lang["show_details"]."\" /></a> ";
+			$data .= "<a href=\"javascript:;\" onclick=\"expand_layer('$elementID'); return false;\"><img id=\"{$elementID}_img\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES[$plusminus]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"";
+			if ($plusminus=="plus") $data .= $pgv_lang["show_details"]."\" title=\"".$pgv_lang["show_details"]."\" /></a> ";
+			else $data .= $pgv_lang["hide_details"]."\" title=\"".$pgv_lang["hide_details"]."\" /></a> ";
 		}
 
 		// Check if Shared Note -----------------------------

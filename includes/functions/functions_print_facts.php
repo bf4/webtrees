@@ -573,7 +573,9 @@ function print_fact_sources($factrec, $level, $return=false) {
 			$data .= "\n\t\t<span class=\"label\">";
 			$elementID = $sid."-".floor(microtime()*1000000);
 			if ($EXPAND_SOURCES) $plusminus="minus"; else $plusminus="plus";
-			if ($lt>0) $data .= "<a href=\"javascript:;\" onclick=\"expand_layer('$elementID'); return false;\"><img id=\"{$elementID}_img\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES[$plusminus]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"".$pgv_lang["show_details"]."\" title=\"".$pgv_lang["show_details"]."\" /></a> ";
+			if ($lt>0) $data .= "<a href=\"javascript:;\" onclick=\"expand_layer('$elementID'); return false;\"><img id=\"{$elementID}_img\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES[$plusminus]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"";
+			if ($plusminus=="plus") $data .= $pgv_lang["show_details"]."\" title=\"".$pgv_lang["show_details"]."\" /></a> ";
+			else $data .= $pgv_lang["hide_details"]."\" title=\"".$pgv_lang["hide_details"]."\" /></a> ";
 			$data .= $pgv_lang["source"].":</span> <span class=\"field\">";
 			$source=Source::getInstance($sid);
 			if ($source) {
