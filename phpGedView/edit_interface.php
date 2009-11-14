@@ -563,7 +563,7 @@ case 'linkfamaction':
 		if ($famtag=="HUSB" || $famtag=="WIFE") $itag="FAMS";
 
 		//-- update the individual record for the person
-		if (preg_match("/1 $itag @$famid@/", $gedrec)==0) {
+		if (strpos($gedrec, "1 $itag @$famid@")===false) {
 			$gedrec .= "\n";
 			if ($itag=="FAMC") {
 				$pedigree="";
@@ -593,7 +593,7 @@ case 'linkfamaction':
 
 		//-- if it is adding a new child to a family
 		if ($famtag=="CHIL") {
-			if (preg_match("/1 $famtag @$pid@/", $famrec)==0) {
+			if (strpos($famrec, "1 $famtag @$pid@")===false) {
 				$famrec = trim($famrec) . "\n1 $famtag @$pid@\n";
 				replace_gedrec($famid, $famrec);
 			}
@@ -1732,8 +1732,7 @@ case 'addnewparentaction':
 		else $indirec = find_updated_record($pid, PGV_GED_ID);
 		$indirec = trim($indirec);
 		if ($indirec) {
-			$ct = preg_match("/1 FAMC @$famid@/", $indirec);
-			if ($ct==0) {
+			if (strpos($indirec, "1 FAMC @$famid@")===false) {
 				$indirec = trim($indirec) . "\n1 FAMC @$famid@\n";
 				if (PGV_DEBUG) {
 					echo "<pre>$indirec</pre>";
@@ -1953,7 +1952,7 @@ case 'reset_media_update': // Reset sort using popup
 	$lines = explode("\n", $gedrec);
 	$newgedrec = "";
 	for($i=0; $i<count($lines); $i++) {
-		if (preg_match("/1 _PGV_OBJS/", $lines[$i])==0) $newgedrec .= $lines[$i]."\n";
+		if (strpos($lines[$i], "1 _PGV_OBJS")===false) $newgedrec .= $lines[$i]."\n";
 	}
 		$success = (replace_gedrec($pid, $newgedrec));
 	if ($success) echo "<br />".$pgv_lang["update_successful"]."<br /><br />";
@@ -1968,7 +1967,7 @@ case 'reorder_media_update': // Update sort using popup
 	$lines = explode("\n", $gedrec);
 	$newgedrec = "";
 	for($i=0; $i<count($lines); $i++) {
-		if (preg_match("/1 _PGV_OBJS/", $lines[$i])==0) $newgedrec .= $lines[$i]."\n";
+		if (strpos($lines[$i], "1 _PGV_OBJS")===false) $newgedrec .= $lines[$i]."\n";
 	}
 	foreach($order1 as $m_media=>$num) {
 		$newgedrec .= "1 _PGV_OBJS @".$m_media."@\n";
@@ -1994,7 +1993,7 @@ case 'al_reset_media_update': // Reset sort using Album Page
 	$lines = explode("\n", $gedrec);
 	$newgedrec = "";
 	for($i=0; $i<count($lines); $i++) {
-		if (preg_match("/1 _PGV_OBJS/", $lines[$i])==0) $newgedrec .= $lines[$i]."\n";
+		if (strpos($lines[$i], "1 _PGV_OBJS")===false) $newgedrec .= $lines[$i]."\n";
 	}
 		$success = (replace_gedrec($pid, $newgedrec));
 	if ($success) echo "<br />".$pgv_lang["update_successful"]."<br /><br />";
@@ -2027,7 +2026,7 @@ case 'al_reorder_media_update': // Update sort using Album Page
 	$lines = explode("\n", $gedrec);
 	$newgedrec = "";
 	for($i=0; $i<count($lines); $i++) {
-		if (preg_match("/1 _PGV_OBJS/", $lines[$i])==0) $newgedrec .= $lines[$i]."\n";
+		if (strpos($lines[$i], "1 _PGV_OBJS")===false) $newgedrec .= $lines[$i]."\n";
 	}
 	foreach($order2 as $m_media=>$num) {
 		$newgedrec .= "1 _PGV_OBJS @".$m_media."@\n";
@@ -2257,7 +2256,7 @@ case 'changefamily_update':
 		else $gedrec .= "\n1 HUSB @$HUSB@\n";
 		if (isset($pgv_changes[$HUSB."_".PGV_GEDCOM])) $indirec = find_updated_record($HUSB, PGV_GED_ID);
 		else $indirec = find_person_record($HUSB, PGV_GED_ID);
-		if (!empty($indirec) && (preg_match("/1 FAMS @$famid@/", $indirec)==0)) {
+		if (!empty($indirec) && (strpos($indirec, "1 FAMS @$famid@")===false)) {
 			$indirec .= "\n1 FAMS @$famid@\n";
 			replace_gedrec($HUSB, $indirec);
 		}
@@ -2295,7 +2294,7 @@ case 'changefamily_update':
 		else $gedrec .= "\n1 WIFE @$WIFE@\n";
 		if (isset($pgv_changes[$WIFE."_".PGV_GEDCOM])) $indirec = find_updated_record($WIFE, PGV_GED_ID);
 		else $indirec = find_person_record($WIFE, PGV_GED_ID);
-		if (!empty($indirec) && (preg_match("/1 FAMS @$famid@/", $indirec)==0)) {
+		if (!empty($indirec) && (strpos($indirec, "1 FAMS @$famid@")===false)) {
 			$indirec .= "\n1 FAMS @$famid@\n";
 			replace_gedrec($WIFE, $indirec);
 		}
@@ -2334,12 +2333,12 @@ case 'changefamily_update':
 		$CHIL = $_REQUEST[$var];
 		if (!empty($CHIL)) {
 			$newchildren[] = $CHIL;
-			if (preg_match("/1 CHIL @$CHIL@/", $gedrec)==0) {
+			if (strpos($gedrec, "1 CHIL @$CHIL@")===false) {
 				$gedrec .= "\n1 CHIL @$CHIL@\n";
 				$updated = true;
 				if (isset($pgv_changes[$CHIL."_".PGV_GEDCOM])) $indirec = find_updated_record($CHIL, PGV_GED_ID);
 				else $indirec = find_person_record($CHIL, PGV_GED_ID);
-				if (!empty($indirec) && (preg_match("/1 FAMC @$famid@/", $indirec)==0)) {
+				if (!empty($indirec) && (strpos($indirec, "1 FAMC @$famid@")===false)) {
 					$indirec .= "\n1 FAMC @$famid@\n";
 					replace_gedrec($CHIL, $indirec);
 				}
@@ -2509,7 +2508,7 @@ case 'reorder_fams_update':
 	$lines = explode("\n", $gedrec);
 	$newgedrec = "";
 	for($i=0; $i<count($lines); $i++) {
-		if (preg_match("/1 FAMS/", $lines[$i])==0) $newgedrec .= $lines[$i]."\n";
+		if (strpos($lines[$i], "1 FAMS")===false) $newgedrec .= $lines[$i]."\n";
 	}
 	foreach($order as $famid=>$num) {
 		$newgedrec .= "1 FAMS @".$famid."@\n";

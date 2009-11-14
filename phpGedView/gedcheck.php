@@ -852,7 +852,7 @@ foreach ($gedfile as $num=>$value) {
 				$err=invalid($pgv_lang['level']);
 			elseif (!preg_match('/^[A-Z0-9_]{1,31}$/', $tag))
 				$err=invalid($pgv_lang['tag']);
-			elseif (!preg_match('/_/', $tmp)) {
+			elseif (strpos($tmp, '_')===false) {
 				if (!isset($CONTEXT[$tmp]))
 					$err=invalid($pgv_lang['tag']);
 			}
@@ -887,7 +887,7 @@ foreach ($gedfile as $num=>$value) {
 						$err=missing($full_sub_tag);
 
 			if ($err_level>=$warning && $err=='') { // WARNING CHECKS - data
-				if (!preg_match('/_/', $tmp) && !preg_match('/^'.$CONTEXT[$tmp].'$/i', $tag_data))
+				if ((strpos($tmp, '_')===false) && !preg_match('/^'.$CONTEXT[$tmp].'$/i', $tag_data))
 					$err=invalid($pgv_lang['data']);
 				elseif ($tag_level=='0' && $xref!='' && !isset($used_xrefs[$xref.$tag])) $err=$pgv_lang['noref'];
 					if ($err_level>=$info && $err=='') { // INFOMATIONAL CHECKS - spacing

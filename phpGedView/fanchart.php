@@ -209,8 +209,8 @@ function print_fan_chart($treeid, $fanw=640, $fandeg=270) {
 				else $bg=$bgcolorM;
 				if ($sosa==1) {
 					$bg=$bgcolor; // sex unknown
-					if (preg_match("/1 SEX F/", $indirec)>0) $bg=$bgcolorF;
-					else if (preg_match("/1 SEX M/", $indirec)>0) $bg=$bgcolorM;
+					if (strpos($indirec, "\n1 SEX F")!==false) $bg=$bgcolorF;
+					elseif (strpos($indirec, "\n1 SEX M")!==false) $bg=$bgcolorM;
 				}
 				ImageFilledArc($image, $cx, $cy, $rx, $rx, $deg1, $deg2, $bg, IMG_ARC_PIE);
 				$person =Person::getInstance($pid);

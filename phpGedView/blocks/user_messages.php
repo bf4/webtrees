@@ -119,7 +119,7 @@ function print_user_messages($block=true, $config="", $side, $index) {
 			$message["body"] = expand_urls($message["body"]);
 
 			$content .= PrintReady($message["body"])."<br /><br />";
-			if (preg_match("/RE:/", $message["subject"])==0) {
+			if (strpos($message["subject"], "RE:")===false) {
 				$message["subject"]="RE:".$message["subject"];
 			}
 			if ($user_id) {
