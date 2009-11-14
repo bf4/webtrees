@@ -128,7 +128,7 @@ require_once("includes/classes/class_person.php");
 					$record = getRecord($value['record'],$pid);
 
 					if (!empty($record)) {
-						if (preg_match("/SURN/", $value['comp'])) {
+						if (strpos($value['comp'], "SURN")!==false) {
 							$ct = preg_match("/0 @(.*)@/", $record, $match);
 							if ($ct>0) {
 								$gid = $match[1];
@@ -140,7 +140,7 @@ require_once("includes/classes/class_person.php");
 							}
 						}
 					}
-						else if (preg_match("/GIVN/", $value['comp'])) {
+						else if (strpos($value['comp'], "GIVN")!==false) {
 								$ct = preg_match("/0 @(.*)@/", $record, $match);
 								if ($ct>0) {
 									$gid = $match[1];

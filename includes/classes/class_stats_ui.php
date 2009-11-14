@@ -99,8 +99,8 @@ class stats_ui extends stats
 							{
 								$indirec = find_person_record($favorite['gid'], get_id_from_gedcom($GEDCOM));
 								$content .= "<div id=\"box{$favorite['gid']}.0\" class=\"person_box";
-								if(preg_match("/1 SEX F/", $indirec) > 0){$content .= 'F';}
-								elseif(preg_match("/1 SEX M/", $indirec) > 0){$content .= '';}
+								if(strpos($indirec, "\n1 SEX F")!==false){$content .= 'F';}
+								elseif(strpos($indirec, "\n1 SEX M")!==false){$content .= '';}
 								else{$content .= 'NN';}
 								$content .= "\">\n";
 								if($ctype == 'user' || PGV_USER_GEDCOM_ADMIN){$content .= $removeFavourite;}
@@ -269,7 +269,7 @@ class stats_ui extends stats
 				;
 				$message['body'] = expand_urls(nl2br(htmlspecialchars($message['body'],ENT_COMPAT,'UTF-8')));
 				$content .= PrintReady($message['body'])."<br />\n<br />\n";
-				if(preg_match("/RE:/", $message["subject"]) == 0) {
+				if(strpos($message["subject"], "RE:")===false) {
 					$message['subject'] = "RE:{$message['subject']}";
 				}
 				if($user_id) {

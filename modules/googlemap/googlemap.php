@@ -622,11 +622,11 @@ function build_indiv_map($indifacts, $famids) {
 									if (($ctla>0) && ($ctlo>0)) {
 										$i = $i + 1;
 										$markers[$i]=array('index'=>'', 'tabindex'=>'', 'placed'=>'no');
-										if (strpos($srec, "1 SEX F")!==false) {
+										if (strpos($srec, "\n1 SEX F")!==false) {
 											$markers[$i]["fact"] = $pgv_lang["daughter"];
 											$markers[$i]["class"]  = "person_boxF";
 										} else
-											if (strpos($srec, "1 SEX M")!==false) {
+											if (strpos($srec, "\n1 SEX M")!==false) {
 												$markers[$i]["fact"] = $pgv_lang["son"];
 												$markers[$i]["class"]  = "person_box";
 											} else {
@@ -657,11 +657,11 @@ function build_indiv_map($indifacts, $famids) {
 												$markers[$i]=array('index'=>'', 'tabindex'=>'', 'placed'=>'no');
 												$markers[$i]["fact"]     = $factarray["CHIL"];
 												$markers[$i]["class"]    = "option_boxNN";
-												if (preg_match("/1 SEX F/", $srec)>0) {
+												if (strpos($srec, "\n1 SEX F")!==false) {
 													$markers[$i]["fact"] = $pgv_lang["daughter"];
 													$markers[$i]["class"]  = "person_boxF";
 												}
-												if (preg_match("/1 SEX M/", $srec)>0) {
+												if (strpos($srec, "\n1 SEX M")!==false) {
 													$markers[$i]["fact"] = $pgv_lang["son"];
 													$markers[$i]["class"]  = "person_box";
 												}

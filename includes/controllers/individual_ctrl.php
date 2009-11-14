@@ -427,8 +427,8 @@ class IndividualControllerRoot extends BaseController {
 
 		$this->name_count++;
 		print "<td valign=\"top\"";
-		if (preg_match("/PGV_OLD/", $factrec)>0) print " class=\"namered\"";
-		if (preg_match("/PGV_NEW/", $factrec)>0) print " class=\"nameblue\"";
+		if (strpos($factrec, "PGV_OLD")!==false) print " class=\"namered\"";
+		if (strpos($factrec, "PGV_NEW")!==false) print " class=\"nameblue\"";
 		print ">";
 		if (!preg_match("/^2 (SURN)|(GIVN)/m", $factrec)) {
 			$dummy=new Person($factrec);
