@@ -186,14 +186,14 @@ class ServiceClient extends GedcomRecord {
 		$newrecs = array();
 		//-- make sure we don't get circular links
 		foreach($remoterecs as $ind2=>$subrec2) {
-			if (preg_match("/1 RFN/", $subrec2)==0) {
+			if (strpos($subrec2, "1 RFN")===false) {
 				$newrecs[] = $subrec2;
 			}
 		}
 
 		foreach($localrecs as $ind=>$subrec) {
 			$found = false;
-			if (preg_match("/1 CHAN/", $subrec)==0) {
+			if (strpos($subrec, "1 CHAN")===false) {
 				$subrec = trim($subrec);
 				$orig_subrec = $subrec;
 				$subrec = preg_replace("/\s+/", " ", $subrec);
@@ -446,7 +446,7 @@ class ServiceClient extends GedcomRecord {
 					}
 					if($found){
 						$childrec = $Child1->getGedcomRecord();
-						if (preg_match("/1 RFN ".$this->xref.":/", $childrec)==0) {
+						if (strpos($childrec, "1 RFN ".$this->xref.":")===false) {
 							$childrec .= "\n1 RFN ".$Child2->getXref();
 							//print "<br/> repalcing for child ".$Child1->getXref();
 							replace_gedrec($Child1->getXref(), $childrec);
@@ -462,7 +462,7 @@ class ServiceClient extends GedcomRecord {
 		}
 
 		//-- update the family record
-		if (preg_match("/1 RFN ".$this->xref.":/", $famrec1)==0) {
+		if (strpos($famrec1, "1 RFN ".$this->xref.":")===false) {
 			$famrec1 .= "\n1 RFN ".$family2->getXref();
 			$famupdated = true;
 		}
@@ -482,7 +482,7 @@ class ServiceClient extends GedcomRecord {
 		} elseif(!empty($father2)){
 			if($this->ComparePeople($father1,$father2)){
 				$fatherrec = $father1->getGedcomRecord();
-				if (preg_match("/1 RFN ".$this->xref.":/", $fatherrec)==0) {
+				if (strpos($fatherrec, "1 RFN ".$this->xref.":")===false) {
 					$fatherrec .= "\n1 RFN ".$father2->getXref();
 					//print "<br/> repalcing for father ".$father1->getXref();
 					replace_gedrec($father1->getXref(), $fatherrec);
@@ -501,7 +501,7 @@ class ServiceClient extends GedcomRecord {
 		} else if(!empty($mother2)){
 			if($this->ComparePeople($mother1,$mother2)){
 				$motherrec = $mother1->getGedcomRecord();
-				if (preg_match("/1 RFN ".$this->xref.":/", $motherrec)==0) {
+				if (strpos($motherrec, "1 RFN ".$this->xref.":")===false) {
 					$motherrec .= "\n1 RFN ".$mother2->getXref();
 					//print "<br/> repalcing for mother ".$mother1->getXref();
 					replace_gedrec($mother1->getXref(), $motherrec);

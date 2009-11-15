@@ -326,7 +326,7 @@ switch ($action) {
 			header("Location: index.php");
 			exit;
 		}
-		if (preg_match("/SUNTZU/i", $user_name) || preg_match("/SUNTZU/i", $user_email)) {
+		if ((stripos($user_name, "SUNTZU")!==false) || (stripos($user_email, "SUNTZU")!==false)) {
 			AddToLog("SUNTZU hacker");
 			print "Go Away!";
 			exit;

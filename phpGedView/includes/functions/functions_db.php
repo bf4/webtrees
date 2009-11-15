@@ -1847,7 +1847,7 @@ function find_place_list($place) {
 	if (!empty($place)) {
 		$found = array();
 		foreach ($placelist as $indexval => $pplace) {
-			if (preg_match("/$place/i", $pplace)>0) {
+			if (stripos($pplace, $place)!==false) {
 				$upperplace = UTF8_strtoupper($pplace);
 				if (!isset($found[$upperplace])) {
 					$found[$upperplace] = $pplace;

@@ -650,7 +650,7 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 		foreach ($match[1] as $tag)
 			$adv_name_fields[$tag]='';
 	// This is a custom tag, but PGV uses it extensively.
-	if ($SURNAME_TRADITION=='paternal' || $SURNAME_TRADITION=='polish' || preg_match('/2 _MARNM/', $namerec))
+	if ($SURNAME_TRADITION=='paternal' || $SURNAME_TRADITION=='polish' || (strpos($namerec, '2 _MARNM')!==false))
 		$adv_name_fields['_MARNM']='';
 
 	foreach ($adv_name_fields as $tag=>$dummy) {
@@ -2261,8 +2261,7 @@ function linkMedia($mediaid, $linktoid, $level=1, $chan=true) {
 	}
 
 	//-- check if we are re-editing an unaccepted link that is not already in the DB
-	$ct = preg_match("/1 OBJE @$mediaid@/", $gedrec);
-	if ($ct>0) return false;
+	if (strpos($gedrec, "1 OBJE @$mediaid@")!==false) return false;
 
 	if ($gedrec) {
 		$newrec = $gedrec."\n1 OBJE @".$mediaid."@";
@@ -2650,7 +2649,7 @@ function delete_person($pid, $gedrec='') {
 					else $level = 1;
 					//-- make sure we don't add any sublevel records
 					if ($level<=$lastlevel) $lastlevel = -1;
-					if ((preg_match("/@$pid@/", $line)==0) && ($lastlevel==-1)) $newfamrec .= $line."\n";
+					if ((strpos($line, "@$pid@")===false) && ($lastlevel==-1)) $newfamrec .= $line."\n";
 					else {
 						$lastlevel=$level;
 					}
@@ -2714,7 +2713,7 @@ function delete_family($pid, $gedrec='') {
 					else $level = 1;
 					//-- make sure we don't add any sublevel records
 					if ($level<=$lastlevel) $lastlevel = -1;
-					if ((preg_match("/@$pid@/", $line)==0) && ($lastlevel==-1)) $newindirec .= $line."\n";
+					if ((strpos($line, "@$pid@")===false) && ($lastlevel==-1)) $newindirec .= $line."\n";
 					else {
 						$lastlevel=$level;
 					}

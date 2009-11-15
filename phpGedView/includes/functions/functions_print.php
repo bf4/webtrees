@@ -198,37 +198,37 @@ function print_pedigree_person($pid, $style=1, $show_famlink=true, $count=0, $pe
 			if ($LINK_ICONS!="disabled") {
 				$click_link="javascript:;";
 				$whichChart="";
-				if (preg_match("/pedigree.php/", $SCRIPT_NAME)>0) {
+				if (strpos($SCRIPT_NAME, "pedigree.php")!==false) {
 					$click_link=encode_url("pedigree.php?rootid={$pid}&show_full={$PEDIGREE_FULL_DETAILS}&PEDIGREE_GENERATIONS={$OLD_PGENS}&talloffset={$talloffset}&ged={$GEDCOM}");
 					$whichChart="pedigree_chart";
 					$whichID=$pid;
 				}
 
-				if (preg_match("/hourglass.php/", $SCRIPT_NAME)>0) {
+				if (strpos($SCRIPT_NAME, "hourglass.php")!==false) {
 					$click_link=encode_url("hourglass.php?pid={$pid}&show_full={$PEDIGREE_FULL_DETAILS}&generations={$generations}&box_width={$box_width}&ged={$GEDCOM}");
 					$whichChart="hourglass_chart";
 					$whichID=$pid;
 				}
 
-				if (preg_match("/ancestry.php/", $SCRIPT_NAME)>0) {
+				if (strpos($SCRIPT_NAME, "ancestry.php")!==false) {
 					$click_link=encode_url("ancestry.php?rootid={$pid}&show_full={$PEDIGREE_FULL_DETAILS}&chart_style={$chart_style}&PEDIGREE_GENERATIONS={$OLD_PGENS}&box_width={$box_width}&ged={$GEDCOM}");
 					$whichChart="ancestry_chart";
 					$whichID=$pid;
 				}
 
-				if (preg_match("/descendancy.php/", $SCRIPT_NAME)>0) {
+				if (strpos($SCRIPT_NAME, "descendancy.php")!==false) {
 					$click_link=encode_url("descendancy.php?&show_full={$PEDIGREE_FULL_DETAILS}&pid={$pid}&agenerations={$generations}&box_width={$box_width}&ged={$GEDCOM}");
 					$whichChart="descend_chart";
 					$whichID=$pid;
 				}
 
-				if ((preg_match("/family.php/", $SCRIPT_NAME)>0)&&!empty($famid)) {
+				if ((strpos($SCRIPT_NAME, "family.php")!==false)&&(!empty($famid))) {
 					$click_link=encode_url("family.php?famid={$famid}&show_full=1&ged={$GEDCOM}");
 					$whichChart="familybook_chart";
 					$whichID=$famid;
 				}
 
-				if (preg_match("/individual.php/", $SCRIPT_NAME)>0) {
+				if (strpos($SCRIPT_NAME, "individual.php")!==false) {
 					$click_link=encode_url("individual.php?pid={$pid}&ged={$GEDCOM}");
 					$whichChart="indi_info";
 					$whichID=$pid;
@@ -312,8 +312,7 @@ function print_pedigree_person($pid, $style=1, $show_famlink=true, $count=0, $pe
 	$cssfacts = array("BIRT","CHR","DEAT","BURI","CREM","ADOP","BAPM","BARM","BASM","BLES","CHRA","CONF","FCOM","ORDN","NATU","EMIG","IMMI","CENS","PROB","WILL","GRAD","RETI","CAST","DSCR","EDUC","IDNO",
 	"NATI","NCHI","NMR","OCCU","PROP","RELI","RESI","SSN","TITL","BAPL","CONL","ENDL","SLGC","_MILI");
 	foreach($cssfacts as $indexval => $fact) {
-		$ct = preg_match("/1 $fact/", $indirec, $nmatch);
-		if ($ct>0) $classfacts .= " $fact";
+		if (strpos($indirec, "1 $fact")!==false) $classfacts .= " $fact";
 	}
 	if ($PEDIGREE_SHOW_GENDER)
 		$genderImage = " ".$person->getSexImage('small', "box-$boxID-gender");
@@ -1222,7 +1221,7 @@ function print_fact_notes($factrec, $level, $textOnly=false, $return=false) {
 				$closeSpan = print_note_record(($nt>0)?$n1match[1]:"", 1, $noterec, $textOnly, true);
 				$data .= $closeSpan;
 				if (!$textOnly) {
-					if (preg_match("/1 SOUR/", $noterec)>0) {
+					if (strpos($noterec, "1 SOUR")!==false) {
 						$data .= "<br />";
 						$data .= print_fact_sources($noterec, 1, true);
 					}
@@ -1230,7 +1229,7 @@ function print_fact_notes($factrec, $level, $textOnly=false, $return=false) {
 			}
 		}
 		if (!$textOnly) {
-			if (preg_match("/$nlevel SOUR/", $factrec)>0) {
+			if (strpos($factrec, "$nlevel SOUR")!==false) {
 				$data .= "<div class=\"indent\">";
 				$data .= print_fact_sources($nrec, $nlevel, true);
 				$data .= "</div>";

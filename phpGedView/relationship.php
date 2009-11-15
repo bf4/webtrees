@@ -117,8 +117,8 @@ function getRelationshipSentence($node, $pid1, $pid2) {
 	$person1 = find_person_record($pid1, PGV_GED_ID);
 	$person2 = find_person_record($pid2, PGV_GED_ID);
 	$mf = "NN";
-	if (preg_match("/1 SEX F/", $person2, $smatch)>0) $mf="F";
-	if (preg_match("/1 SEX M/", $person2, $smatch)>0) $mf="M";
+	if (strpos($person2, "1 SEX F")!==false) $mf="F";
+	if (strpos($person2, "1 SEX M")!==false) $mf="M";
 
 	// now look to see if we can find some text to describe the relationship
 	//check if relationship is parent
@@ -832,8 +832,8 @@ if ((!empty($pid1))&&(!empty($pid2))) {
 				$liney = $yoffset;
 				$mfstyle = "NN";
 				$indirec = find_person_record($pid, PGV_GED_ID);
-				if (preg_match("/1 SEX F/", $indirec, $smatch)>0) $mfstyle="F";
-				if (preg_match("/1 SEX M/", $indirec, $smatch)>0) $mfstyle="";
+				if (strpos($indirec, "1 SEX F")!==false) $mfstyle="F";
+				if (strpos($indirec, "1 SEX M")!==false) $mfstyle="";
 				$arrow_img = $PGV_IMAGE_DIR."/".$PGV_IMAGES["darrow"]["other"];
 				if (($node["relations"][$index]=="father")||($node["relations"][$index]=="mother")) {
 					$line = $PGV_IMAGES["vline"]["other"];

@@ -505,7 +505,7 @@ class IndividualControllerRoot extends BaseController {
 			echo Person::sexImage('U', 'small', '', $pgv_lang['unknown']);
 		}
 		if ($this->SEX_COUNT>1) {
-			if ((!$this->isPrintPreview()) && ($this->userCanEdit()) && (preg_match("/PGV_OLD/", $event->getGedComRecord())==0)) {
+			if ((!$this->isPrintPreview()) && ($this->userCanEdit()) && (strpos($event->getGedComRecord(), "PGV_OLD")===false)) {
 				if ($event->getLineNumber()=="new") {
 					print "<br /><a class=\"font9\" href=\"javascript:;\" onclick=\"add_new_record('".$this->pid."', 'SEX'); return false;\">".$pgv_lang["edit"]."</a>";
 				} else {
