@@ -1258,7 +1258,7 @@ function write_file() {
 	if (empty($fcontents)) {
 		return;
 	}
-	if (preg_match("/0 TRLR/", $fcontents)==0) {
+	if (strpos($fcontents, "0 TRLR")===false) {
 		$fcontents.="0 TRLR\n";
 	}
 	//-- write the gedcom file

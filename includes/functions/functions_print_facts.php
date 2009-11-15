@@ -96,10 +96,9 @@ function print_fact(&$eventObj, $noedit=false) {
 	if ($fact=="NOTE") return print_main_notes($factrec, 1, $pid, $linenum, $noedit);
 	if ($fact=="SOUR") return print_main_sources($factrec, 1, $pid, $linenum, $noedit);
 	$styleadd="";
-	$ct = preg_match("/PGV_NEW/", $factrec, $match);
-	if ($ct>0) $styleadd="change_new";
-	$ct = preg_match("/PGV_OLD/", $factrec, $match);
-	if ($ct>0) $styleadd="change_old";
+	if (strpos($factrec, "PGV_NEW")!==false) $styleadd="change_new";
+	if (strpos($factrec, "PGV_OLD")!==false) $styleadd="change_old";
+
 	if (($linenum<1) && (!empty($SEARCH_SPIDER)))  return; // don't add relatives for spiders.
 	if ($linenum<1) $styleadd="rela"; // not editable
 	if ($linenum==-1) $styleadd="histo"; // historical facts
@@ -896,10 +895,8 @@ function print_main_sources($factrec, $level, $pid, $linenum, $noedit=false) {
 
 	$nlevel = $level+1;
 	$styleadd="";
-	$ct = preg_match("/PGV_NEW/", $factrec, $match);
-	if ($ct>0) $styleadd="change_new";
-	$ct = preg_match("/PGV_OLD/", $factrec, $match);
-	if ($ct>0) $styleadd="change_old";
+	if (strpos($factrec, "PGV_NEW")!==false) $styleadd="change_new";
+	if (strpos($factrec, "PGV_OLD")!==false) $styleadd="change_old";
 	// -- find source for each fact
 	$ct = preg_match_all("/$level SOUR @(.*)@/", $factrec, $match, PREG_SET_ORDER);
 	$spos2 = 0;
@@ -1136,10 +1133,8 @@ function print_main_notes($factrec, $level, $pid, $linenum, $noedit=false) {
 	global $TEXT_DIRECTION;
 	$ged_id=get_id_from_gedcom($GEDCOM);
 	$styleadd="";
-	$ct = preg_match("/PGV_NEW/", $factrec, $match);
-	if ($ct>0) $styleadd="change_new";
-	$ct = preg_match("/PGV_OLD/", $factrec, $match);
-	if ($ct>0) $styleadd="change_old";
+	if (strpos($factrec, "PGV_NEW")!==false) $styleadd="change_new";
+	if (strpos($factrec, "PGV_OLD")!==false) $styleadd="change_old";
 	$nlevel = $level+1;
 	$ct = preg_match_all("/$level NOTE(.*)/", $factrec, $match, PREG_SET_ORDER);
 	for($j=0; $j<$ct; $j++) {

@@ -248,7 +248,7 @@ if ($action=='addServer') {
 		//-- check the existing server list
 		foreach ($remoteServers as $server) {
 			if (stristr($server['url'], $turl)) {
-				if (empty($gedcom_id) || preg_match("/_DBID $gedcom_id/", $server['gedcom'])) {
+				if (empty($gedcom_id) || (strpos($server['gedcom'], "_DBID $gedcom_id")!==false) {
 					$whichFile = $server['name'];
 					$errorServer = print_text("error_remote_duplicate",0,1);
 					break;
