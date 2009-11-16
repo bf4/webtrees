@@ -261,7 +261,7 @@ function print_fact(&$eventObj, $noedit=false) {
 		if ((showFactDetails($factref, $pid)) && (FactViewRestricted($pid, $factrec))) {
 			if (isset($resn_value)) {
 				echo "<img src=\"images/RESN_".$resn_value.".gif\" alt=\"".$pgv_lang[$resn_value]."\" title=\"".$pgv_lang[$resn_value]."\" />\n";
-				// print_help_link("RESN_help", "qm");
+				// print_help_link("RESN_help", "qm", "RESN_help_title");
 			}
 		}
 		if ((showFactDetails($factref, $pid)) && (!FactViewRestricted($pid, $factrec))) {
@@ -385,7 +385,7 @@ function print_fact(&$eventObj, $noedit=false) {
 			// -- Find RESN tag
 			if (isset($resn_value)) {
 				echo "<img src=\"images/RESN_".$resn_value.".gif\" alt=\"".$pgv_lang[$resn_value]."\" title=\"".$pgv_lang[$resn_value]."\" />\n";
-				print_help_link("RESN_help", "qm");
+				print_help_link("RESN_help", "qm", "RESN_help_title");
 			}
 			if (preg_match("/\n2 FAMC @(.+)@/", $factrec, $match)) {
 				echo "<br/><span class=\"label\">".$factarray["FAMC"].":</span> ";
