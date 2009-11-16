@@ -569,6 +569,7 @@ class TreeNav {
 	function drawPerson(&$person, $gen, $state, &$pfamily) {
 		global $SHOW_ID_NUMBERS, $PGV_IMAGE_DIR, $PGV_IMAGES, $TEXT_DIRECTION, $SERVER_URL;
 
+		$gen++;
 		if ($gen<0) {
 			return;
 		}
