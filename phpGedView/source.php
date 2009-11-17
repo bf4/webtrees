@@ -39,7 +39,7 @@ $linkToID=$controller->sid;
 
 print_header($controller->getPageTitle());
 
-// If LightBox installed ---------------------------------
+// LightBox
 if ($MULTI_MEDIA && file_exists('./modules/lightbox.php')) {
 	include './modules/lightbox/lb_defaultconfig.php';
 	if (file_exists('./modules/lightbox/lb_config.php')) {
@@ -48,6 +48,7 @@ if ($MULTI_MEDIA && file_exists('./modules/lightbox.php')) {
 	include './modules/lightbox/functions/lb_call_js.php';
 	loadLangFile('lightbox:lang');
 }
+
 if (!$controller->source){
 	echo "<b>".$pgv_lang["unable_to_find_record"]."</b><br /><br />";
 	print_footer();
@@ -72,7 +73,7 @@ if ($controller->accept_success) {
 }
 echo '<span class="name_head">', PrintReady(htmlspecialchars($controller->source->getFullName()));
 if ($SHOW_ID_NUMBERS) {
-	echo ' ', getLRM(), '(', $controller->sid, ')', getLRM(); 
+	echo ' ', getLRM(), '(', $controller->sid, ')', getLRM();
 }
 echo '</span><br /></td><td valign="top" class="noprint">';
 if (!$controller->isPrintPreview()) {
@@ -128,10 +129,10 @@ print_main_media($controller->sid);
 if (!$controller->isPrintPreview() && $controller->userCanEdit()) {
 	print_add_new_fact($controller->sid, $sourcefacts, 'SOUR');
 	// new media
-	echo '<tr><td class="descriptionbox">';
+	echo '<tr><td class="descriptionbox '.$TEXT_DIRECTION.'">';
 	print_help_link('add_media_help', 'qm', 'add_media_lbl');
 	echo $pgv_lang['add_media_lbl'] . '</td>';
-	echo '<td class="optionbox">';
+	echo '<td class="optionbox '.$TEXT_DIRECTION.'">';
 	echo '<a href="javascript: ', $pgv_lang['add_media_lbl'], '" onclick="window.open(\'addmedia.php?action=showmediaform&linktoid=', $controller->sid, '\', \'_blank\', \'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1\'); return false;">', $pgv_lang['add_media'], '</a>';
 	echo '<br />';
 	echo '<a href="javascript:;" onclick="window.open(\'inverselink.php?linktoid='.$controller->sid.'&linkto=source\', \'_blank\', \'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1\'); return false;">'.$pgv_lang['link_to_existing_media'].'</a>';
@@ -162,7 +163,7 @@ if ($controller->source->countLinkedMedia()) {
 	print_media_table($controller->source->fetchLinkedMedia(), $controller->source->getFullName());
 }
 
-// TO DO Shared Notes linked to this source
+// Shared Notes linked to this source
 if ($controller->source->countLinkedNotes()) {
 	print_note_table($controller->source->fetchLinkedNotes(), $controller->source->getFullName());
 }
