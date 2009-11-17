@@ -135,6 +135,8 @@ else {
 				case 'FAM':
 				case 'SOUR':
 				case 'OBJE':
+				case 'REPO':
+				case 'NOTE':
 					$output.='<a href="javascript:;" onclick="return show_diff(\''.encode_url($record->getLinkUrl().'&show_changes=yes').'\');">'.$pgv_lang['view_change_diff'].'</a> | ';
 					break;
 				}
