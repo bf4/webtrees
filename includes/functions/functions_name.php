@@ -47,7 +47,7 @@ function get_common_surnames($min) {
 		}
 	}
 	foreach (preg_split("/[,;] /", $COMMON_NAMES_REMOVE) as $surname) {
-		unset($topsurns[$surname]);
+		unset($topsurns[UTF8_strtoupper($surname)]);
 	}
 
 	//-- check if we found some, else recurse
