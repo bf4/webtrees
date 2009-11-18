@@ -10,6 +10,7 @@
 
 
 Version 4.2.3
+ - Fixed: [ 2898717 ] No AGE field in LDS GUIs (fisharebest)
  - Fixed: Extended javascript change for dates like 21.12.1880 also with a prefix like AFT (volschin)
  - Fixed: Wrong uppercase javascript change for date phrases in brackets (volschin)
  - Fixed: [ 2895822 ] SVN 6380 Fatal error class_stats.php (fisharebest)
