@@ -3065,7 +3065,16 @@ function PGVRListSHandler($attrs) {
 		foreach ($pgv_changes as $changes) {
 			$change=end($changes);
 			if ($change['gedcom']==$GEDCOM) {
-				$list[]=new GedcomRecord($change['undo']);
+				switch ($change['type']) {
+				case 'replace':
+					// Update - show the latest version of the record
+					$list[]=new GedcomRecord($change['undo']);
+					break;
+				case 'delete':
+					// Delete - show the last accepted version of the record
+					$list[]=GedcomRecord::getInstance($change['gid']);
+					break;
+				}
 			}
 		}
 		break;
