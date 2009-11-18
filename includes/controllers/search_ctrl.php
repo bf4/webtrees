@@ -200,6 +200,10 @@ class SearchControllerRoot extends BaseController {
 			$this->year="";
 			$this->myyear = "";
 		}
+		// Set the search result titles for soundex searches
+		if ($this->firstname || $this->lastname || $this->place) {
+			$this->myquery=htmlspecialchars(implode(' ', array($this->firstname, $this->lastname, $this->place)));
+		};
 
 		// vars use for multisite search
 		if (!empty ($_REQUEST["multiquery"])) {
