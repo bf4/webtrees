@@ -482,7 +482,7 @@ function print_header($title, $head="", $use_alternate_styles=true) {
 				$META_ROBOTS ="noindex,nofollow";
 			}
 		}
-		$javascript .='<script language="JavaScript" type="text/javascript">
+/*		$javascript .='<script language="JavaScript" type="text/javascript">
 	<!--
 	function hidePrint() {
 		var printlink = document.getElementById("printlink");
@@ -501,7 +501,7 @@ function print_header($title, $head="", $use_alternate_styles=true) {
 		}
 	}
 	//-->
-	</script>';
+	</script>'; */
 	}
 	$javascript.='<script language="JavaScript" type="text/javascript">
 		<!--
