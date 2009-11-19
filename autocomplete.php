@@ -114,6 +114,7 @@ if ($FORMAT=="json") {
 	}
 }
 
+
 /**
 * returns INDIviduals matching filter
 * @return Array of string
@@ -656,13 +657,6 @@ function autocomplete_PLAC($FILTER, $OPTION) {
 			}
 		}
 	} while ($repeat);
-
-	//-- filter
-	function place_ok($v) {
-		global $FILTER;
-		return (stripos($v, $FILTER)!==false);
-	}
-	$data = array_filter($data, "place_ok");
 
 	//-- no match => perform a geoNames query if enabled
 	if (empty($data) && $USE_GEONAMES) {
