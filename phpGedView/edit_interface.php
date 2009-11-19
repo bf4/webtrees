@@ -48,6 +48,8 @@ $option =safe_REQUEST($_REQUEST, 'option',  PGV_REGEX_UNSAFE);
 $assist =safe_REQUEST($_REQUEST, 'assist',  PGV_REGEX_UNSAFE);
 $noteid =safe_REQUEST($_REQUEST, 'noteid',  PGV_REGEX_UNSAFE);
 
+$pid_array =safe_REQUEST($_REQUEST, 'pid_array', PGV_REGEX_XREF);
+
 $update_CHAN=!safe_POST_bool('preserve_last_changed');
 
 $uploaded_files = array();
@@ -250,7 +252,7 @@ else if (!empty($famid)) {
 		checkChangeTime($famid, $gedrec, safe_GET('accesstime', PGV_REGEX_INTEGER));
 	}
 }
-else if (($action!="addchild")&&($action!="addchildaction")&&($action!="addnewsource")&&($action!="mod_edit_fact")&&($action!="addnewnote")&&($action!="addmedia_links")&&($action!="addnoteaction")) {
+else if (($action!="addchild")&&($action!="addchildaction")&&($action!="addnewsource")&&($action!="mod_edit_fact")&&($action!="addnewnote")&&($action!="addmedia_links")&&($action!="addnoteaction")&&($action!="addnoteaction_assisted")) {
 	echo "<span class=\"error\">The \$pid variable was empty. Unable to perform $action xxx.</span>";
 	print_simple_footer();
 	$disp = true;
@@ -814,37 +816,6 @@ case 'addnewnote':
 	break;
 
 //------------------------------------------------------------------------------
-//-- add new Shared Note
-case 'addnewnote_assisted':
-	echo PGV_JS_START;
-	?>
-		function check_form(frm) {
-			if (frm.TITL.value=="") {
-				alert('<?php echo $pgv_lang["must_provide"].$factarray["TITL"]; ?>');
-				frm.TITL.focus();
-				return false;
-			}
-			return true;
-		}
-	<?php
-	echo PGV_JS_END;
-	?>
-	<div class="center font11" style="width:100%;">
-		<b><?php echo $pgv_lang['create_shared_note']." using Assistant."; $tabkey = 1; ?></b>
-		<form method="post" action="edit_interface.php" onsubmit="return check_form(this);">
-			<input type="hidden" name="action" value="addnoteaction" />
-			<input type="hidden" name="noteid" value="newnote" />
-			<!-- <input type="hidden" name="pid" value="$pid" /> -->
-			<?php
-				include ('modules/GEDFact_assistant/CENS_ctrl.php');
-			?>
-		</form>
-	</div>
-	<div style="clear:both;"></div>
-	<?php
-	break;
-
-//------------------------------------------------------------------------------
 //-- create a shared note record from the incoming variables
 case 'addnoteaction':
 	if (PGV_DEBUG) {
@@ -911,6 +882,126 @@ case 'addnoteaction':
 	if ($xref) {
 		echo "<br /><br />\n".$pgv_lang["new_shared_note_created"]."<br /><br />";
 		echo "<a href=\"javascript://NOTE $xref\" onclick=\"openerpasteid('$xref'); return false;\">".$pgv_lang["paste_id_into_field"]." <b>$xref</b></a>\n";
+		echo "<br /><br /><br /><br />";
+		}
+	break;
+	
+//------------------------------------------------------------------------------
+//-- add new Shared Note using CA assistant
+case 'addnewnote_assisted':
+	if (isset($_REQUEST['pid'])) 		$pid		 = $_REQUEST['pid'];
+	global $pid;
+	
+	echo PGV_JS_START;
+	?>
+		function check_form(frm) {
+			if (frm.TITL.value=="") {
+				alert('<?php echo $pgv_lang["must_provide"].$factarray["TITL"]; ?>');
+				frm.TITL.focus();
+				return false;
+			}
+			return true;
+		}
+	<?php
+	echo PGV_JS_END;
+	?>
+	
+	<div class="center font11" style="width:100%;">
+		<b><?php echo $pgv_lang["create_shared_note_assisted"]; $tabkey = 1; ?></b>
+		<form method="post" action="edit_interface.php" onsubmit="return check_form(this);">
+			<input type="hidden" name="action" value="addnoteaction_assisted" />
+			<input type="hidden" name="noteid" value="newnote" />
+			<input id="pid_array" type="hidden" name="pid_array" value="none" />
+			<input id="pid" type="hidden" name="pid" value=<?php echo $pid; ?> />
+			<?php
+				include ('modules/GEDFact_assistant/CENS_ctrl.php');
+			?>
+		</form>
+	</div>
+	<div style="clear:both;"></div>
+	<?php
+	break;
+	
+//------------------------------------------------------------------------------
+//-- create a shared note record from the incoming variables
+case 'addnoteaction_assisted':
+	if (PGV_DEBUG) {
+		phpinfo(INFO_VARIABLES);
+	}
+	$newgedrec  = "0 @XREF@ NOTE\n";
+
+	if (isset($_REQUEST['EVEN'])) $EVEN = $_REQUEST['EVEN'];
+	if (!empty($EVEN) && count($EVEN)>0) {
+		$newgedrec .= "1 DATA\n";
+		$newgedrec .= "2 EVEN ".implode(",", $EVEN)."\n";
+		if (!empty($EVEN_DATE)) $newgedrec .= "3 DATE ".check_input_date($EVEN_DATE)."\n";
+		if (!empty($EVEN_PLAC)) $newgedrec .= "3 PLAC ".$EVEN_PLAC."\n";
+		if (!empty($AGNC))      $newgedrec .= "2 AGNC ".$AGNC."\n";
+	}
+	if (isset($_REQUEST['ABBR'])) $ABBR = $_REQUEST['ABBR'];
+	if (isset($_REQUEST['TITL'])) $TITL = $_REQUEST['TITL'];
+	if (isset($_REQUEST['DATE'])) $DATE = $_REQUEST['DATE'];
+	if (isset($_REQUEST['NOTE'])) $NOTE = $_REQUEST['NOTE'];
+	if (isset($_REQUEST['_HEB'])) $_HEB = $_REQUEST['_HEB'];
+	if (isset($_REQUEST['ROMN'])) $ROMN = $_REQUEST['ROMN'];
+	if (isset($_REQUEST['AUTH'])) $AUTH = $_REQUEST['AUTH'];
+	if (isset($_REQUEST['PUBL'])) $PUBL = $_REQUEST['PUBL'];
+	if (isset($_REQUEST['REPO'])) $REPO = $_REQUEST['REPO'];
+	if (isset($_REQUEST['CALN'])) $CALN = $_REQUEST['CALN'];
+	
+	if (isset($_REQUEST['pid_array'])) 	$pid_array	 = $_REQUEST['pid_array'];
+	if (isset($_REQUEST['pid'])) 		$pid		 = $_REQUEST['pid'];
+	
+	global $pid;
+
+	if (!empty($NOTE)) {
+		$newlines = preg_split("/\r?\n/",$NOTE,-1);
+		for($k=0; $k<count($newlines); $k++) {
+			if ( $k==0 && count($newlines)>1) {
+				$newgedrec = "0 @XREF@ NOTE $newlines[$k]\n";
+			}else if ( $k==0 ) {
+				$newgedrec = "0 @XREF@ NOTE $newlines[$k]\n1 CONT\n";
+			} else {
+				$newgedrec .= "1 CONT $newlines[$k]\n";
+			}
+		}
+	}
+
+	if (!empty($ABBR)) $newgedrec .= "1 ABBR $ABBR\n";
+	if (!empty($TITL)) {
+		// $newgedrec .= "1 TITL $TITL\n";
+		// $newgedrec .= "2 DATE $DATE\n";
+		if (!empty($_HEB)) $newgedrec .= "2 _HEB $_HEB\n";
+		if (!empty($ROMN)) $newgedrec .= "2 ROMN $ROMN\n";
+	}
+	if (!empty($AUTH)) $newgedrec .= "1 AUTH $AUTH\n";
+	if (!empty($PUBL)) {
+		$newlines = preg_split("/\r?\n/",$PUBL,-1,PREG_SPLIT_NO_EMPTY);
+		for($k=0; $k<count($newlines); $k++) {
+			if ( $k==0 ) $newgedrec .= "1 PUBL $newlines[$k]\n";
+			else $newgedrec .= "2 CONT $newlines[$k]\n";
+		}
+	}
+	if (!empty($NOTE)) {
+		//$newgedrec .= "1 NOTE @$NOTE@\n";
+		if (!empty($CALN)) $newgedrec .= "2 CALN $CALN\n";
+	}
+	if (PGV_DEBUG) {
+		echo "<pre>$newgedrec</pre>";
+	}
+	// $xref = "Test";
+	$xref = append_gedrec($newgedrec);
+	$link = "note.php?nid=$xref&show_changes=yes";
+	if ($xref) {
+		$closeparent="yes";
+		echo "<br /><br />\n".$pgv_lang["new_shared_note_created"]." (".$xref.")<br /><br />";
+		echo "<a href=\"javascript://NOTE $xref\" onclick=\"openerpasteid('$xref'); return false;\">".$pgv_lang["paste_id_into_field"]." <b>$xref</b></a>\n";
+		echo "<br /><br />";
+		echo "Census event will be linked to Indi id's: <br />". $pid_array;
+		echo "<br /><br />";
+		
+		echo "Base ID = " . $pid;
+		echo "<br /><br /><br /><br />";
 	}
 	break;
 	
@@ -1175,18 +1266,25 @@ case 'updateraw':
 //-- reconstruct the gedcom from the incoming fields and store it in the file
 case 'update':
 
-/*
 	global $cens_pids;
-	// $cens_pids is an array from the CENS GEDFact Assistant -----------
-	// $cens_pids = array($pid, 'I1', 'I2');  // ** This line is a Test only **
+	/* ----------------------------------------------------------------
+	 * $cens_pids is an array passed from the CENS GEDFact Assistant.
+	 * The array is a list of indi id's within the Census Transcription
+	 * This allows the array to "copy" the new CENS event to these id's
+	 * ----------------------------------------------------------------
+	*/
+	// ** The following line is a Test only, do NOT uncomment for now **
+	// $cens_pids = array($pid, 'I8', 'I1');
+	// ** --------------------------------------------------------------
+
 	if (!isset($cens_pids)){
 		$cens_pids = array($pid);
 	}else{
 		$cens_pids = $cens_pids;
+		$idnums="multi";
 	}
-*/
-//	// When $cens_pids is present, cycle through each individual concerned.
-//	foreach ($cens_pids as $pid) {
+	// Cycle through each individual concerned defined by $cens_pids array.
+	foreach ($cens_pids as $pid) {
 		if (isset($pid)) {
 			$gedrec = find_updated_record($pid, PGV_GED_ID);
 			if (empty($gedrec)) $gedrec = find_gedcom_record($pid, PGV_GED_ID);			
@@ -1194,6 +1292,7 @@ case 'update':
 			$gedrec = find_updated_record($famid, PGV_GED_ID);
 			if (empty($gedrec)) $gedrec = find_gedcom_record($famid, PGV_GED_ID);			
 		}
+		
 		if (PGV_DEBUG) {
 			phpinfo(INFO_VARIABLES);
 			echo "<pre>$gedrec</pre>";
@@ -1229,12 +1328,13 @@ case 'update':
 				else $uploaded_files[] = "";
 			}
 		}
-//	} // end foreach $cens_pids  -------------
 	
 	$gedlines = explode("\n", trim($gedrec));
 	//-- for new facts set linenum to number of lines
 	if (!is_array($linenum)) {
-		if ($linenum=="new") $linenum = count($gedlines);
+		if ($linenum=="new" || $idnums=="multi") {
+			$linenum = count($gedlines);
+		}
 		$newged = "";
 		for($i=0; $i<$linenum; $i++) {
 			$newged .= $gedlines[$i]."\n";
@@ -1364,15 +1464,20 @@ case 'update':
 		}
 		
 	}
-	if (PGV_DEBUG) {
-		echo "<br /><br />";
-		echo "<pre>$newged</pre>";
-	}
-
-	$success = (replace_gedrec($pid, $newged, $update_CHAN));
-	if ($success) {
-		echo "<br /><br />".$pgv_lang["update_successful"];
-	}
+		if (PGV_DEBUG) {
+			echo "<br /><br />";
+			echo "<pre>$newged</pre>";
+		}
+		if ($idnums=="multi") {
+			$success2 = (replace_gedrec($pid, $newged, $update_CHAN));
+		}else{
+			$success  = (replace_gedrec($pid, $newged, $update_CHAN));
+		}
+		if ($success2) {
+			echo "<br /><br />".$pgv_lang["update_successful"]." - ".$pid;
+		}
+		
+	} // end foreach $cens_pids  -------------
 	break;
 //------------------------------------------------------------------------------
 case 'addchildaction':
@@ -2556,6 +2661,9 @@ if ($success && $EDIT_AUTOCLOSE && !PGV_DEBUG) {
 if ($action == 'addmedia_links' || $action == 'addnewnote_assisted' ) {
 	// Do not print footer.
 	echo "<br /><div class=\"center\"><a href=\"javascript:;\" onclick=\"edit_close('{$link}');\">".$pgv_lang["close_window"]."</a></div>\n";
+}else if (isset($closeparent) && $closeparent=="yes" ) {
+	echo "<div class=\"center\"><a href=\"javascript:;\" onclick=\"edit_close('{$link}');window.opener.close();\">".$pgv_lang["close_window"]."</a></div><br />\n";
+	print_simple_footer();
 }else{
 	echo "<div class=\"center\"><a href=\"javascript:;\" onclick=\"edit_close('{$link}');\">".$pgv_lang["close_window"]."</a></div><br />\n";
 	print_simple_footer();
