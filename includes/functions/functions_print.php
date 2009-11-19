@@ -198,37 +198,37 @@ function print_pedigree_person($pid, $style=1, $show_famlink=true, $count=0, $pe
 			if ($LINK_ICONS!="disabled") {
 				$click_link="javascript:;";
 				$whichChart="";
-				if (preg_match("/pedigree.php/", $SCRIPT_NAME)>0) {
+				if (strpos($SCRIPT_NAME, "pedigree.php")!==false) {
 					$click_link=encode_url("pedigree.php?rootid={$pid}&show_full={$PEDIGREE_FULL_DETAILS}&PEDIGREE_GENERATIONS={$OLD_PGENS}&talloffset={$talloffset}&ged={$GEDCOM}");
 					$whichChart="pedigree_chart";
 					$whichID=$pid;
 				}
 
-				if (preg_match("/hourglass.php/", $SCRIPT_NAME)>0) {
+				if (strpos($SCRIPT_NAME, "hourglass.php")!==false) {
 					$click_link=encode_url("hourglass.php?pid={$pid}&show_full={$PEDIGREE_FULL_DETAILS}&generations={$generations}&box_width={$box_width}&ged={$GEDCOM}");
 					$whichChart="hourglass_chart";
 					$whichID=$pid;
 				}
 
-				if (preg_match("/ancestry.php/", $SCRIPT_NAME)>0) {
+				if (strpos($SCRIPT_NAME, "ancestry.php")!==false) {
 					$click_link=encode_url("ancestry.php?rootid={$pid}&show_full={$PEDIGREE_FULL_DETAILS}&chart_style={$chart_style}&PEDIGREE_GENERATIONS={$OLD_PGENS}&box_width={$box_width}&ged={$GEDCOM}");
 					$whichChart="ancestry_chart";
 					$whichID=$pid;
 				}
 
-				if (preg_match("/descendancy.php/", $SCRIPT_NAME)>0) {
+				if (strpos($SCRIPT_NAME, "descendancy.php")!==false) {
 					$click_link=encode_url("descendancy.php?&show_full={$PEDIGREE_FULL_DETAILS}&pid={$pid}&agenerations={$generations}&box_width={$box_width}&ged={$GEDCOM}");
 					$whichChart="descend_chart";
 					$whichID=$pid;
 				}
 
-				if ((preg_match("/family.php/", $SCRIPT_NAME)>0)&&!empty($famid)) {
+				if ((strpos($SCRIPT_NAME, "family.php")!==false)&&(!empty($famid))) {
 					$click_link=encode_url("family.php?famid={$famid}&show_full=1&ged={$GEDCOM}");
 					$whichChart="familybook_chart";
 					$whichID=$famid;
 				}
 
-				if (preg_match("/individual.php/", $SCRIPT_NAME)>0) {
+				if (strpos($SCRIPT_NAME, "individual.php")!==false) {
 					$click_link=encode_url("individual.php?pid={$pid}&ged={$GEDCOM}");
 					$whichChart="indi_info";
 					$whichID=$pid;
@@ -312,8 +312,7 @@ function print_pedigree_person($pid, $style=1, $show_famlink=true, $count=0, $pe
 	$cssfacts = array("BIRT","CHR","DEAT","BURI","CREM","ADOP","BAPM","BARM","BASM","BLES","CHRA","CONF","FCOM","ORDN","NATU","EMIG","IMMI","CENS","PROB","WILL","GRAD","RETI","CAST","DSCR","EDUC","IDNO",
 	"NATI","NCHI","NMR","OCCU","PROP","RELI","RESI","SSN","TITL","BAPL","CONL","ENDL","SLGC","_MILI");
 	foreach($cssfacts as $indexval => $fact) {
-		$ct = preg_match("/1 $fact/", $indirec, $nmatch);
-		if ($ct>0) $classfacts .= " $fact";
+		if (strpos($indirec, "1 $fact")!==false) $classfacts .= " $fact";
 	}
 	if ($PEDIGREE_SHOW_GENDER)
 		$genderImage = " ".$person->getSexImage('small', "box-$boxID-gender");
@@ -482,7 +481,7 @@ function print_header($title, $head="", $use_alternate_styles=true) {
 				$META_ROBOTS ="noindex,nofollow";
 			}
 		}
-		$javascript .='<script language="JavaScript" type="text/javascript">
+/*		$javascript .='<script language="JavaScript" type="text/javascript">
 	<!--
 	function hidePrint() {
 		var printlink = document.getElementById("printlink");
@@ -501,7 +500,7 @@ function print_header($title, $head="", $use_alternate_styles=true) {
 		}
 	}
 	//-->
-	</script>';
+	</script>'; */
 	}
 	$javascript.='<script language="JavaScript" type="text/javascript">
 		<!--
@@ -518,8 +517,10 @@ function print_header($title, $head="", $use_alternate_styles=true) {
 		var plusminus = new Array();
 		plusminus[0] = new Image();
 		plusminus[0].src = "'.$PGV_IMAGE_DIR."/".$PGV_IMAGES["plus"]["other"].'";
+		plusminus[0].title = "'.$pgv_lang["show_details"].'";
 		plusminus[1] = new Image();
 		plusminus[1].src = "'.$PGV_IMAGE_DIR."/".$PGV_IMAGES["minus"]["other"].'";
+		plusminus[1].title = "'.$pgv_lang["hide_details"].'";
 		var zoominout = new Array();
 		zoominout[0] = new Image();
 		zoominout[0].src = "'.$PGV_IMAGE_DIR."/".$PGV_IMAGES["zoomin"]["other"].'";
@@ -655,7 +656,7 @@ function print_simple_footer() {
 	global $SHOW_STATS;
 
 	if ($SHOW_STATS || PGV_DEBUG) {
-		echo execution_stats();
+		echo '<br />',execution_stats();
 	}
 	if (PGV_DEBUG_SQL) {
 		echo PGV_DB::getQueryLog();
@@ -1148,7 +1149,9 @@ function print_note_record($text, $nlevel, $nrec, $textOnly=false, $return=false
 		$data .= "<br /><span class=\"label\">";
 		if ($brpos !== false) {
 			if ($EXPAND_NOTES) $plusminus="minus"; else $plusminus="plus";
-			$data .= "<a href=\"javascript:;\" onclick=\"expand_layer('$elementID'); return false;\"><img id=\"{$elementID}_img\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES[$plusminus]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"".$pgv_lang["show_details"]."\" title=\"".$pgv_lang["show_details"]."\" /></a> ";
+			$data .= "<a href=\"javascript:;\" onclick=\"expand_layer('$elementID'); return false;\"><img id=\"{$elementID}_img\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES[$plusminus]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"";
+			if ($plusminus=="plus") $data .= $pgv_lang["show_details"]."\" title=\"".$pgv_lang["show_details"]."\" /></a> ";
+			else $data .= $pgv_lang["hide_details"]."\" title=\"".$pgv_lang["hide_details"]."\" /></a> ";
 		}
 
 		// Check if Shared Note -----------------------------
@@ -1217,7 +1220,7 @@ function print_fact_notes($factrec, $level, $textOnly=false, $return=false) {
 				$closeSpan = print_note_record(($nt>0)?$n1match[1]:"", 1, $noterec, $textOnly, true);
 				$data .= $closeSpan;
 				if (!$textOnly) {
-					if (preg_match("/1 SOUR/", $noterec)>0) {
+					if (strpos($noterec, "1 SOUR")!==false) {
 						$data .= "<br />";
 						$data .= print_fact_sources($noterec, 1, true);
 					}
@@ -1225,7 +1228,7 @@ function print_fact_notes($factrec, $level, $textOnly=false, $return=false) {
 			}
 		}
 		if (!$textOnly) {
-			if (preg_match("/$nlevel SOUR/", $factrec)>0) {
+			if (strpos($factrec, "$nlevel SOUR")!==false) {
 				$data .= "<div class=\"indent\">";
 				$data .= print_fact_sources($nrec, $nlevel, true);
 				$data .= "</div>";
@@ -1316,7 +1319,7 @@ loadLangFile('pgv_help');
 				$output.=print_text($show_desc, 0, 1);
 			} else {
 				if (stristr($pgv_lang[$show_desc], "\"")) {
-					$output.=preg_replace('/\"/','\'',$pgv_lang[$show_desc]);
+					$output.=str_replace('\"','\'',$pgv_lang[$show_desc]);
 				} else {
 					$output.=strip_tags($pgv_lang[$show_desc]);
 				}
@@ -1416,7 +1419,7 @@ function print_text($help, $level=0, $noprint=0){
 	$ct = preg_match_all("/#([a-zA-Z0-9_.\-\[\]]+)#/", $sentence, $match, PREG_SET_ORDER);
 	for($i=0; $i<$ct; $i++) {
 		$value = "";
-		$newreplace = preg_replace(array("/\[/","/\]/"), array("['","']"), $match[$i][1]);
+		$newreplace = str_replace(array("[","]"), array("['","']"), $match[$i][1]);
 		if ($DEBUG_LANG) {
 			echo "[LANG_DEBUG] Embedded variable: ".$match[$i][1]."<br /><br />";
 		}
@@ -1449,12 +1452,12 @@ function print_help_index($help){
 		$mod_sentence = substr_replace($sentence, " ", $pos1, 1);
 		$pos2 = strpos($mod_sentence, "#");
 		$replace = substr($sentence, ($pos1+1), ($pos2-$pos1-1));
-		$sub = preg_replace(array("/pgv_lang\\[/","/\]/"), array("",""), $replace);
+		$sub = str_replace(array("pgv_lang[","]"), array("",""), $replace);
 		if (isset($pgv_lang[$sub])) {
 			$items = explode(',', $pgv_lang[$sub]);
 			$var = $pgv_lang[$items[1]];
 		}
-		$sub = preg_replace(array("/factarray\\[/","/\]/"), array("",""), $replace);
+		$sub = str_replace(array("factarray[","]"), array("",""), $replace);
 		if (isset($factarray[$sub])) {
 			$items = explode(',', $factarray[$sub]);
 			$var = $factarray[$items[1]];

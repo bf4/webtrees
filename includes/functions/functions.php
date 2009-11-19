@@ -2013,8 +2013,7 @@ function get_relationship($pid1, $pid2, $followspouse=true, $maxlength=0, $ignor
 							if ($node1!="NOT FOUND") {
 								$node1["path"][] = $pid2;
 								$node1["pid"] = $pid2;
-								$ct = preg_match("/1 SEX F/", $indirec, $match);
-								if ($ct>0)
+								if (strpos($indirec, "1 SEX F")!==false)
 									$node1["relations"][] = "mother";
 								else
 									$node1["relations"][] = "father";

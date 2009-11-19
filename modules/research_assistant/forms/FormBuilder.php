@@ -221,23 +221,23 @@ class FormBuilder extends ra_form {
 		$temp = file_get_contents("modules/research_assistant/forms/FormBuilder/ra_GPLandHeaderPart.php");
 
 		//Replace the delimeters with the formname
-		$out = preg_replace("/%FORMNAME%/",$formName,$temp);
+		$out = str_replace("%FORMNAME%",$formName,$temp);
 
 		$tempForm = file_get_contents("modules/research_assistant/forms/FormBuilder/ra_SimpleCitationDummy.php");
-		$tempForm = preg_replace("/%FORMNAME%/",$formName,$tempForm);
+		$tempForm = str_replace("%FORMNAME%",$formName,$tempForm);
 
 		if($multiplePeople == "Y")
 		{
 			$out .= 'if (!isset($_REQUEST[\'numOfRows\'])) $_REQUEST[\'numOfRows\'] = count($this->getPeople());';
 			$out .= 'if ($_REQUEST[\'numOfRows\']<1) $_REQUEST[\'numOfRows\']=1;';
 			$out .= file_get_contents("modules/research_assistant/forms/FormBuilder/ra_MultiplePeople.php");
-			$out .= preg_replace("/%ADDCURLY%/","",$tempForm);
+			$out .= str_replace("%ADDCURLY%","",$tempForm);
 		}
 		else
 		{
 			$out .= 'if (!isset($_REQUEST[\'numOfRows\'])) $_REQUEST[\'numOfRows\'] = 1;';
 			$out .= 'if ($_REQUEST[\'numOfRows\']<1) $_REQUEST[\'numOfRows\']=1;';
-			$out .= preg_replace("/%ADDCURLY%/","}",$tempForm);
+			$out .= str_replace("%ADDCURLY%","}",$tempForm);
 		}
 
 
@@ -354,23 +354,23 @@ class FormBuilder extends ra_form {
 
 		$dispForm = file_get_contents("modules/research_assistant/forms/FormBuilder/display_form.php");
 
-		$dispForm = preg_replace("/%REPLACE%/",$formName,$dispForm);
+		$dispForm = str_replace("%REPLACE%",$formName,$dispForm);
 
-		$out .= preg_replace("/%DESCRIPTION%/",$_REQUEST['formDescription'],$dispForm);
+		$out .= str_replace("%DESCRIPTION%",$_REQUEST['formDescription'],$dispForm);
 
 		$step2 = file_get_contents("modules/research_assistant/forms/FormBuilder/step2.php");
 
-		$step2 = preg_replace("/%REPLACE%/",$formName,$step2);
+		$step2 = str_replace("%REPLACE%",$formName,$step2);
 
-		$out .= preg_replace("/%DESCRIPTION%/",$_REQUEST['formDescription'],$step2);
+		$out .= str_replace("%DESCRIPTION%",$_REQUEST['formDescription'],$step2);
 
 		$out .= $this->getEditFactsFormAndStep3();
 
 		$simpleCit = file_get_contents("modules/research_assistant/forms/FormBuilder/processSimpleCitation.php");
 
-		$simpleCit = preg_replace("/%FACTTYPE%/",$_REQUEST['factType'],$simpleCit);
+		$simpleCit = str_replace("%FACTTYPE%",$_REQUEST['factType'],$simpleCit);
 
-		$out .= preg_replace("/%FORMNAME%/", $formName, $simpleCit);
+		$out .= str_replace("%FORMNAME%", $formName, $simpleCit);
 
 		$out .= 'for($number = 0; $number < $_POST[\'numOfRows\']; $number++){';
 

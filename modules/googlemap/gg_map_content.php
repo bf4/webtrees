@@ -50,9 +50,9 @@
 			<?php
 		}else{
 			if(empty($SEARCH_SPIDER)) {
-				$tNew = preg_replace("/&HIDE_GOOGLEMAP=true/", "", $_SERVER["REQUEST_URI"]);
-				$tNew = preg_replace("/&HIDE_GOOGLEMAP=false/", "", $tNew);
-				$tNew = preg_replace("/&/", "&amp;", $tNew);
+				$tNew = str_replace("&HIDE_GOOGLEMAP=true", "", $_SERVER["REQUEST_URI"]);
+				$tNew = str_replace("&HIDE_GOOGLEMAP=false", "", $tNew);
+				$tNew = str_replace("&", "&amp;", $tNew);
 				if($SESSION_HIDE_GOOGLEMAP == "true") {
 					print "&nbsp;&nbsp;&nbsp;<span class=\"font9\"><a href=\"".$tNew."&amp;HIDE_GOOGLEMAP=false\">";
 					print "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["plus"]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"".$pgv_lang["activate"]."\" title=\"".$pgv_lang["activate"]."\" />";

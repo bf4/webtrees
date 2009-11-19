@@ -150,7 +150,7 @@ if ($action=="sendIndex") {
 	
 	if (isset($filenames)) {
 		foreach($filenames as $ged_index=>$ged_name) {
-			$xml_name = preg_replace("/\.ged/i",".xml", $ged_name);
+			$xml_name = str_ireplace(".ged",".xml", $ged_name);
 			echo "	<sitemap>\n";
 			echo "		<loc>".$SERVER_URL."SM_".$xml_name."</loc>\n";
 			echo "		<lastmod>".date("Y-m-d")."</lastmod>\n ";
@@ -204,7 +204,7 @@ if ($action=="generate") {
 	foreach (get_all_gedcoms() as $ged_id=>$gedcom) {
 		if (isset($_POST["GEDCOM_{$ged_id}"])) {
 			$filecounter += 1;
-			$sitemapFilename = "SM_".preg_replace("/\.ged/i",".xml",$gedcom);
+			$sitemapFilename = "SM_".str_ireplace(".ged",".xml",$gedcom);
 			echo "<tr><td class=\"optionbox\"><a href=\"module.php?mod=sitemap&action=sendFiles&index=".$ged_id."&gedcom_name=".$gedcom."&filename=".$sitemapFilename;
 			if (isset($_POST["welcome_page"])) echo "&welcome=true&welcome_priority=".$welcome_priority."&welcome_update=".$welcome_update;
 			if (isset($_POST["indi_recs"])) echo "&indi_rec=true&indirec_priority=".$indirec_priority."&indirec_update=".$indirec_update;

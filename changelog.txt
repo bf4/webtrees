@@ -10,6 +10,7 @@
 
 
 Version 4.2.x CA
+ - Merged: Merge changes r6394 - r6415 from the trunk. Changed placement of CENS assistant launch icon on "CENS add" window. (windmillway)
  - Merged: Merge changes r6325 - r6393 from the trunk. (windmillway)
  - Changed: All theme Tab spacing/padding now narrowed. Selected Tab height changed. ALL tabs now wrap gracefully.
  - Re-added the Tab page content "shift", and fixed the "grey" background, when Navigator pinned. (windmillway)
@@ -168,6 +169,9 @@ Version 4.2.x CA
  - Changed: Census Assistant Shared Note delimiter from ";" to "|" (windmillway)
 
 Version 4.2.3
+ - Fixed: [ 2898717 ] No AGE field in LDS GUIs (fisharebest)
+ - Fixed: Extended javascript change for dates like 21.12.1880 also with a prefix like AFT (volschin)
+ - Fixed: Wrong uppercase javascript change for date phrases in brackets (volschin)
  - Fixed: [ 2895822 ] SVN 6380 Fatal error class_stats.php (fisharebest)
  - Fixed: [ 2891461 ] Fault in the Quick add form (wooc)
  - Fixed: [ 1771095 ] Place Check - Index Directory (fisharebest)

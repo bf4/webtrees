@@ -158,7 +158,7 @@ if ((!empty($searchtext)) && strlen($searchtext)>1)  {
 		$helptxt = print_text($value,0,1);
 		// Remove hyperlinks
 		$helptxt = preg_replace("/<a[^<>]+>/", "", $helptxt);
-		$helptxt = preg_replace("/<\/a>/", "", $helptxt);
+		$helptxt = str_replace("</a>", "", $helptxt);
 		// Remove unresolved language variables
 		$helptxt = preg_replace("/#pgv[^#]+#/i", "", $helptxt);
 		// Save the original text for clean search
@@ -170,10 +170,8 @@ if ((!empty($searchtext)) && strlen($searchtext)>1)  {
 			// See if there is a case insensitive hit
 			if (strpos(UTF8_strtoupper($helptxtorg), UTF8_strtoupper($criterium))) {
 				// Set the search string for preg_replace, case insensitive
-				$srch = "/$criterium/i";
 				// The \\0 is for wrapping the existing string in the text with the span
-				$repl = "<span class=\"search_hit\">\\0</span>";
-				$helptxt = preg_replace($srch, $repl, $helptxt);
+				$helptxt = str_ireplace($criterium, "<span class=\"search_hit\">\\0</span>", $helptxt);
 				$cfound++;
 			}
 			else $cnotfound++;

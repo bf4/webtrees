@@ -1848,7 +1848,7 @@ function PGVRGedcomSHandler($attrs) {
 	}
 
 	$tag = $attrs["id"];
-	$tag = preg_replace("/@fact/", $fact, $tag);
+	$tag = str_replace("@fact", $fact, $tag);
 	//print "[$tag]";
 	$tags = explode(':', $tag);
 	$newgedrec = "";
@@ -2209,7 +2209,7 @@ function PGVRGedcomValueSHandler($attrs) {
 			$currentElement->addText($id);
 		}
 		else {
-			$tag = preg_replace("/@fact/", $fact, $tag);
+			$tag = str_replace("@fact", $fact, $tag);
 			if (empty($attrs["level"])) {
 				$temp = explode(' ', trim($gedrec));
 				$level = $temp[0];
@@ -2271,7 +2271,7 @@ function PGVRRepeatTagSHandler($attrs) {
 			$currentElement->addText($value);
 		}
 		else {
-			$tag = preg_replace("/@fact/", $fact, $tag);
+			$tag = str_replace("@fact", $fact, $tag);
 			$tags = explode(':', $tag);
 			$temp = explode(' ', trim($gedrec));
 			$level = $temp[0];
@@ -2392,7 +2392,7 @@ function PGVRvarSHandler($attrs) {
 		else {
 			$tfact = $fact;
 			if (($fact=="EVEN" || $fact=="FACT") && is_string($type)) $tfact = $type;
-			$var = preg_replace(array("/\[/","/\]/","/@fact/","/@desc/"), array("['","']",$tfact,$desc), $var);
+			$var = str_replace(array("[","]","@fact","@desc"), array("['","']",$tfact,$desc), $var);
 			eval("if (!empty(\$$var)) \$var = \$$var;");
 			$match = array();
 			$ct = preg_match("/factarray\['(.*)'\]/", $var, $match);
@@ -2420,7 +2420,7 @@ function PGVRvarLetterSHandler($attrs) {
 			$letter = $factAbbrev[$abbrev];
 		} else {
 			$tfact = $fact;
-			$var = preg_replace(array("/\[/","/\]/","/@fact/","/@desc/"), array("['","']",$tfact,$desc), $var);
+			$var = str_replace(array("[","]","@fact","@desc"), array("['","']",$tfact,$desc), $var);
 			eval("if (!empty(\$$var)) \$var = \$$var;");
 			$letter = UTF8_substr($var, 0, 1);
 		}
@@ -2609,7 +2609,7 @@ function PGVRSetVarSHandler($attrs) {
 			$gmatch = array();
 			$gt = preg_match("/\d $match[1] (.+)/", $gedrec, $gmatch);
 			if ($gt > 0) {
-				$value = preg_replace("/@/", "", trim($gmatch[1]));
+				$value = str_replace("@", "", trim($gmatch[1]));
 			}
 		}
 	}
@@ -2620,7 +2620,7 @@ function PGVRSetVarSHandler($attrs) {
 	}
 
 	if ((substr($value, 0, 10) == "\$pgv_lang[") || (substr($value, 0, 11) == "\$factarray[")) {
-		$var = preg_replace(array("/\[/","/\]/"), array("['","']"), $value);
+		$var = str_replace(array("[","]"), array("['","']"), $value);
 		eval("\$value = $var;");
 	}
 
@@ -2674,7 +2674,7 @@ function PGVRifSHandler($attrs) {
 	$vars['POSTAL_CODE']['id'] = $POSTAL_CODE;
 	$condition = $attrs["condition"];
 	$condition = preg_replace("/\\$(\w+)/", "\$vars[\"$1\"][\"id\"]", $condition);
-	$condition = preg_replace(array("/ LT /", "/ GT /"), array("<", ">"), $condition);
+	$condition = str_replace(array(" LT ", " GT "), array("<", ">"), $condition);
 	$match = array();
 	$ct = preg_match_all("/@([\w:\.]+)/", $condition, $match, PREG_SET_ORDER);
 	for($i=0; $i<$ct; $i++) {
@@ -2706,7 +2706,7 @@ function PGVRifSHandler($attrs) {
 			}
 			$value = "\"".preg_replace("/'/", "\\'", $value)."\"";
 		}
-		$condition = preg_replace("/@$id/", $value, $condition);
+		$condition = str_replace("@$id", $value, $condition);
 	}
 	$condition = "if ($condition) return true; else return false;";
 	$ret = @eval($condition);
@@ -3065,7 +3065,16 @@ function PGVRListSHandler($attrs) {
 		foreach ($pgv_changes as $changes) {
 			$change=end($changes);
 			if ($change['gedcom']==$GEDCOM) {
-				$list[]=new GedcomRecord($change['undo']);
+				switch ($change['type']) {
+				case 'replace':
+					// Update - show the latest version of the record
+					$list[]=new GedcomRecord($change['undo']);
+					break;
+				case 'delete':
+					// Delete - show the last accepted version of the record
+					$list[]=GedcomRecord::getInstance($change['gid']);
+					break;
+				}
 			}
 		}
 		break;
@@ -3161,9 +3170,9 @@ function PGVRListSHandler($attrs) {
 					}
 					else {
 						$ct = preg_match("/\d $id (.+)/", $gedrec, $match);
-						if ($ct>0) $value = "'".preg_replace("/@/", "", trim($match[1]))."'";
+						if ($ct>0) $value = "'".str_replace("@", "", trim($match[1]))."'";
 					}
-					$condition = preg_replace("/@$id/", $value, $condition);
+					$condition = str_replace("@$id", $value, $condition);
 				}
 				//-- handle regular expressions
 				$ct = preg_match("/([A-Z:]+)\s*([^\s]+)\s*(.+)/", $condition, $match);
@@ -3238,7 +3247,7 @@ function PGVRListSHandler($attrs) {
 					$v = get_gedcom_value($tag, 1, $value["gedcom"], '', false);
 					//-- check for EMAIL and _EMAIL (silly double gedcom standard :P)
 					if ($t=="EMAIL" && empty($v)) {
-						$tag = preg_replace("/EMAIL/", "_EMAIL", $tag);
+						$tag = str_replace("EMAIL", "_EMAIL", $tag);
 						$tags = explode(':', $tag);
 						$t = end($tags);
 						$v = get_sub_record(1, $tag, $value["gedcom"]);

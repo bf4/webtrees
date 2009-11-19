@@ -77,7 +77,7 @@ class TreeNav {
 				$output = ob_get_clean();
 				$lines = preg_split("/\r?\n/", $output);
 				foreach($lines as $line)
-					print "document.writeln('".preg_replace("/'/", "\\'", $line)."');\n";
+					print "document.writeln('".str_replace("'", "\\'", $line)."');\n";
 				exit;
 			}
 			if (isset($_REQUEST['allSpouses'])) {
@@ -527,6 +527,7 @@ class TreeNav {
 	function drawPerson(&$person, $gen, $state, &$pfamily) {
 		global $SHOW_ID_NUMBERS, $PGV_IMAGE_DIR, $PGV_IMAGES, $TEXT_DIRECTION, $SERVER_URL;
 
+		$gen++;
 		if ($gen<0) {
 			return;
 		}

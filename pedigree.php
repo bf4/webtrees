@@ -273,13 +273,6 @@ for($i=($controller->treesize-1); $i>=0; $i--) {
 			echo "\n\t\t\t</td><td width=\"100%\">";
 		}
 		else echo "<tr><td width=\"100%\">";
-		$mfstyle = "";
-		if (!empty($controller->treeid[$i])) {
-			$person = Person::getInstance($controller->treeid[$i]);
-			$indirec = $person->getGedcomRecord();
-			$ct = preg_match("/1 SEX F/", $indirec);
-			if ($ct>0) $mfstyle="F";
-		}
 		if (!isset($controller->treeid[$i])) $controller->treeid[$i] = false;
 		print_pedigree_person($controller->treeid[$i], 1, $controller->show_famlink, $iref, 1);
 		if (($curgen==1) && (count(find_family_ids($controller->treeid[$i]))>0) && $view!="preview") {

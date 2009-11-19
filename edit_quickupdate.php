@@ -285,7 +285,7 @@ if ($action=="update") {
 				else {
 					$namerec = preg_replace("/1 NAME.+/", "1 NAME $GIVN", $namerec);
 				}
-				if (preg_match("/2 GIVN/", $namerec)>0) $namerec = preg_replace("/2 GIVN.*/", "2 GIVN $GIVN\n", $namerec);
+				if (strpos($namerec, "2 GIVN")!==false) $namerec = preg_replace("/2 GIVN.*/", "2 GIVN $GIVN\n", $namerec);
 				else $namerec.="\n2 GIVN $GIVN";
 			}
 			if (isset($SURN)) {
@@ -299,12 +299,12 @@ if ($action=="update") {
 				if (preg_match("/2 SPFX (.*)/", $namerec, $match)>0) {
 					$SURN = str_replace(trim($match[1])." ", "", $SURN);
 				}
-				if (preg_match("/2 SURN/", $namerec)>0) $namerec = preg_replace("/2 SURN.*/", "2 SURN $SURN\n", $namerec);
+				if (strpos($namerec, "2 SURN")!==false) $namerec = preg_replace("/2 SURN.*/", "2 SURN $SURN\n", $namerec);
 				else $namerec.="\n2 SURN $SURN";
 			}
 			//-- update the married surname
 			if (isset($MRSURN) && !empty($MRSURN)) {
-				if (preg_match("/2 _MARNM/", $namerec)>0) $namerec = preg_replace("/2 _MARNM.*/", "2 _MARNM /$MRSURN/\n", $namerec);
+				if (strpos($namerec, "2 _MARNM")!==false) $namerec = preg_replace("/2 _MARNM.*/", "2 _MARNM /$MRSURN/\n", $namerec);
 				else $namerec.="\n2 _MARNM /$MRSURN/";
 			}
 			$pos1 = strpos($gedrec, "1 NAME");
@@ -340,7 +340,7 @@ if ($action=="update") {
 	if (isset($_REQUEST['HSURN'])) $HSURN = $_REQUEST['HSURN'];
 	if (isset($_REQUEST['HGIVN'])) $HGIVN = $_REQUEST['HGIVN'];
 	if (!empty($HSURN) || !empty($HGIVN)) {
-		if (preg_match("/2 _HEB/", $gedrec)>0) {
+		if (strpos($gedrec, "2 _HEB")!==false) {
 			if (!empty($HGIVN)) {
 				$gedrec = preg_replace("/2 _HEB.+\/(.*)\//", "2 _HEB $HGIVN /$1/", $gedrec);
 			}
@@ -362,7 +362,7 @@ if ($action=="update") {
 	if (isset($_REQUEST['RSURN'])) $RSURN = $_REQUEST['RSURN'];
 	if (isset($_REQUEST['RGIVN'])) $RGIVN = $_REQUEST['RGIVN'];
 	if (!empty($RSURN) || !empty($RGIVN)) {
-		if (preg_match("/2 ROMN/", $gedrec)>0) {
+		if (strpos($gedrec, "2 ROMN")!==false) {
 			if (!empty($RGIVN)) {
 				$gedrec = preg_replace("/2 ROMN.+\/(.*)\//", "2 ROMN $RGIVN /$1/", $gedrec);
 			}
@@ -657,7 +657,7 @@ if ($action=="update") {
 			$famrec .= "\n1 CHIL @".$CHIL[$i]."@";
 			if (!isset($pgv_changes[$CHIL[$i]."_".PGV_GEDCOM])) $childrec = find_person_record($CHIL[$i], PGV_GED_ID);
 			else $childrec = find_updated_record($CHIL[$i], PGV_GED_ID);
-			if (preg_match("/1 FAMC @$famid@/", $childrec)==0) {
+			if (strpos($childrec, "1 FAMC @$famid@")===false) {
 				$childrec = "\n1 FAMC @$famid@";
 				replace_gedrec($CHIL[$i], $childrec, $update_CHAN);
 			}
@@ -667,7 +667,7 @@ if ($action=="update") {
 		if (!empty($_REQUEST[$var])) $fcdel = $_REQUEST[$var];
 		else $fcdel = "";
 		if (!empty($fcdel)) {
-			$famrec = preg_replace("/1 CHIL @$fcdel@/", "", $famrec);
+			$famrec = str_replace("1 CHIL @$fcdel@", "", $famrec);
 			$famupdate = true;
 		}
 
@@ -799,7 +799,7 @@ if ($action=="update") {
 	if (!empty($MDATE)||!empty($MPLAC)||!empty($MARRY)) {
 		if (empty($newfamid)) {
 			$famrec = "0 @REF@ FAM\n";
-			if (preg_match("/1 SEX M/", $gedrec)>0) $famrec .= "1 HUSB @$pid@\n";
+			if (strpos($gedrec, "1 SEX M")!==false) $famrec .= "1 HUSB @$pid@\n";
 			else $famrec .= "1 WIFE @$pid@";
 			$newfamid = append_gedrec($famrec);
 			$gedrec .= "\n1 FAMS @$newfamid@";
@@ -860,7 +860,7 @@ if ($action=="update") {
 		//-- then use that id, otherwise create a new family
 		if (empty($newfamid)) {
 			$famrec = "0 @REF@ FAM\n";
-			if (preg_match("/1 SEX M/", $gedrec)>0) $famrec .= "1 HUSB @$pid@\n";
+			if (strpos($gedrec, "1 SEX M")!==false) $famrec .= "1 HUSB @$pid@\n";
 			else $famrec .= "1 WIFE @$pid@\n";
 			$famrec .= "1 CHIL @$cxref@\n";
 			$newfamid = append_gedrec($famrec);
@@ -1145,7 +1145,7 @@ if ($action=="update") {
 			$famrec .= "\n1 CHIL @".$CHIL[$i]."@";
 			if (!isset($pgv_changes[$CHIL[$i]."_".PGV_GEDCOM])) $childrec = find_person_record($CHIL[$i], PGV_GED_ID);
 			else $childrec = find_updated_record($CHIL[$i], PGV_GED_ID);
-			if (preg_match("/1 FAMC @$famid@/", $childrec)==0) {
+			if (strpos($childrec, "1 FAMC @$famid@")===false) {
 				$childrec = "\n1 FAMC @$famid@";
 				replace_gedrec($CHIL[$i], $childrec, $update_CHAN);
 			}
@@ -1156,7 +1156,7 @@ if ($action=="update") {
 		if (isset($_REQUEST[$var])) $fcdel = $_REQUEST[$var];
 		else $fcdel = "";
 		if (!empty($fcdel)) {
-			$famrec = preg_replace("/1 CHIL @$fcdel@/", "", $famrec);
+			$famrec = str_replace("1 CHIL @$fcdel@", "", $famrec);
 			$famupdate = true;
 		}
 
@@ -1527,7 +1527,7 @@ function checkform(frm) {
 		}
 		?>
 		<td id="pagetab<?php echo $i; ?>" class="tab_cell_inactive" onclick="switch_tab(<?php echo $i; ?>); return false;"><a href="javascript: <?php echo $pgv_lang["add_new_wife"];?>" onclick="switch_tab(<?php echo $i; ?>); return false;">
-		<?php if (preg_match("/1 SEX M/", $gedrec)>0) echo $pgv_lang["add_new_wife"]; else echo $pgv_lang["add_new_husb"]; ?></a></td>
+		<?php if (strpos($gedrec, "1 SEX M")!==false) echo $pgv_lang["add_new_wife"]; else echo $pgv_lang["add_new_husb"]; ?></a></td>
 		<?php
 		$i++;
 		for($j=1; $j<=count($cfams); $j++) {
@@ -1896,7 +1896,7 @@ for($i=1; $i<=count($sfams); $i++) {
 	</tr>
 <?php if (empty($spid)) { ?>
 <tr><td>&nbsp;</td></tr>
-<tr><td class="topbottombar" colspan="4"><?php print_help_link("quick_update_spouse_help", "qm"); if (preg_match("/1 SEX M/", $gedrec)>0) echo $pgv_lang["add_new_wife"]; else echo $pgv_lang["add_new_husb"];?></td></tr>
+<tr><td class="topbottombar" colspan="4"><?php print_help_link("quick_update_spouse_help", "qm"); if (strpos($gedrec, "1 SEX M")!==false) echo $pgv_lang["add_new_wife"]; else echo $pgv_lang["add_new_husb"];?></td></tr>
 <?php if ($NAME_REVERSE) { ?>
 <tr>
 	<td class="descriptionbox"><?php print_help_link("edit_surname_help", "qm"); echo $factarray["SURN"];?></td>
@@ -1969,9 +1969,9 @@ for($i=1; $i<=count($sfams); $i++) {
 	<td class="descriptionbox"><?php print_help_link("edit_sex_help", "qm"); echo $pgv_lang["sex"];?></td>
 	<td class="optionbox" colspan="3">
 		<select name="SSEX<?php echo $i; ?>" tabindex="<?php echo $tabkey; ?>">
-			<option value="M"<?php if (preg_match("/1 SEX F/", $gedrec)>0) echo " selected=\"selected\""; ?>><?php echo $pgv_lang["male"]; ?></option>
-			<option value="F"<?php if (preg_match("/1 SEX M/", $gedrec)>0) echo " selected=\"selected\""; ?>><?php echo $pgv_lang["female"]; ?></option>
-			<option value="U"<?php if (preg_match("/1 SEX U/", $gedrec)>0) echo " selected=\"selected\""; ?>><?php echo $pgv_lang["unknown"]; ?></option>
+			<option value="M"<?php if (strpos($gedrec, "1 SEX F")!==false) echo " selected=\"selected\""; ?>><?php echo $pgv_lang["male"]; ?></option>
+			<option value="F"<?php if (strpos($gedrec, "1 SEX M")!==false) echo " selected=\"selected\""; ?>><?php echo $pgv_lang["female"]; ?></option>
+			<option value="U"<?php if (strpos($gedrec, "1 SEX U")!==false) echo " selected=\"selected\""; ?>><?php echo $pgv_lang["unknown"]; ?></option>
 		</select>
 	<?php $tabkey++; ?>
 	</td>
@@ -2303,7 +2303,7 @@ if (empty($child_surname)) $child_surname = "";
 <?php
 // NOTE: New wife
 ?>
-<tr><td class="topbottombar" colspan="4"><?php print_help_link("quick_update_spouse_help", "qm"); if (preg_match("/1 SEX M/", $gedrec)>0) echo $pgv_lang["add_new_wife"]; else echo $pgv_lang["add_new_husb"]; ?></td></tr>
+<tr><td class="topbottombar" colspan="4"><?php print_help_link("quick_update_spouse_help", "qm"); if (strpos($gedrec, "1 SEX M")!==false) echo $pgv_lang["add_new_wife"]; else echo $pgv_lang["add_new_husb"]; ?></td></tr>
 <?php if ($NAME_REVERSE) { ?>
 <tr>
 	<td class="descriptionbox"><?php print_help_link("edit_surname_help", "qm"); echo $factarray["SURN"];?></td>
@@ -2376,9 +2376,9 @@ if (empty($child_surname)) $child_surname = "";
 	<td class="descriptionbox"><?php print_help_link("edit_sex_help", "qm"); echo $pgv_lang["sex"];?></td>
 	<td class="optionbox" colspan="3">
 		<select name="SSEX" tabindex="<?php echo $tabkey; ?>">
-			<option value="M"<?php if (preg_match("/1 SEX F/", $gedrec)>0) echo " selected=\"selected\""; ?>><?php echo $pgv_lang["male"]; ?></option>
-			<option value="F"<?php if (preg_match("/1 SEX M/", $gedrec)>0) echo " selected=\"selected\""; ?>><?php echo $pgv_lang["female"]; ?></option>
-			<option value="U"<?php if (preg_match("/1 SEX U/", $gedrec)>0) echo " selected=\"selected\""; ?>><?php echo $pgv_lang["unknown"]; ?></option>
+			<option value="M"<?php if (strpos($gedrec, "1 SEX F")!==false) echo " selected=\"selected\""; ?>><?php echo $pgv_lang["male"]; ?></option>
+			<option value="F"<?php if (strpos($gedrec, "1 SEX M")!==false) echo " selected=\"selected\""; ?>><?php echo $pgv_lang["female"]; ?></option>
+			<option value="U"<?php if (strpos($gedrec, "1 SEX U")!==false) echo " selected=\"selected\""; ?>><?php echo $pgv_lang["unknown"]; ?></option>
 		</select>
 	<?php $tabkey++; ?>
 	</td>

@@ -120,8 +120,8 @@ function getRelationshipText_en($relationshipDescription, $node, $pid1, $pid2) {
 	$person2 = find_person_record($_SESSION["pid2"], PGV_GED_ID);
 	$person1 = find_person_record($_SESSION["pid1"], PGV_GED_ID);
 	$mf = "NN";
-	if (preg_match("/1 SEX F/", $person2, $smatch)>0) $mf="F";
-	if (preg_match("/1 SEX M/", $person2, $smatch)>0) $mf="M";
+	if (strpos($person2, "1 SEX F")!==false) $mf="F";
+	elseif (strpos($person2, "1 SEX M")!==false) $mf="M";
 
 	//checks for nth cousin n times removed
 	if ($numberOfSpouses == 0 && $numberOfSiblings == 1 && $generationsYounger > 0 && $generationsOlder > 0 && ($generationsYounger != $generationsOlder)) {

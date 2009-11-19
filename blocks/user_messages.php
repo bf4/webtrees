@@ -92,8 +92,8 @@ function print_user_messages($block=true, $config="", $side, $index) {
 			$content .= "<tr>";
 			$content .= "<td class=\"list_value_wrap\"><input type=\"checkbox\" id=\"cb_message$key\" name=\"message_id[]\" value=\"$key\" /></td>";
 			$showmsg=preg_replace("/(\w)\/(\w)/","\$1/<span style=\"font-size:1px;\"> </span>\$2",PrintReady($message["subject"]));
-			$showmsg=preg_replace("/@/","@<span style=\"font-size:1px;\"> </span>",$showmsg);
-			$content .= "<td class=\"list_value_wrap\"><a href=\"javascript:;\" onclick=\"expand_layer('message$key'); return false;\"><b>".$showmsg."</b> <img id=\"message${key}_img\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["plus"]["other"]."\" border=\"0\" alt=\"\" title=\"\" /></a></td>";
+			$showmsg=str_replace("@","@<span style=\"font-size:1px;\"> </span>",$showmsg);
+			$content .= "<td class=\"list_value_wrap\"><a href=\"javascript:;\" onclick=\"expand_layer('message$key'); return false;\"><img id=\"message${key}_img\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["plus"]["other"]."\" border=\"0\" alt=\"".$pgv_lang["show_details"]."\" title=\"".$pgv_lang["show_details"]."\" /> <b>".$showmsg."</b></a></td>";
 			if (!empty($message["created"])) {
 				$time = strtotime($message["created"]);
 			} else {
@@ -110,7 +110,7 @@ function print_user_messages($block=true, $config="", $side, $index) {
 					$content .= " " . getRLM() . " - ".htmlspecialchars($user_id,ENT_COMPAT,'UTF-8') . getRLM();
 				}
 			} else {
-				$content .= "<a href=\"mailto:".$message["from"]."\">".preg_replace("/@/","@<span style=\"font-size:1px;\"> </span>",$message["from"])."</a>";
+				$content .= "<a href=\"mailto:".$message["from"]."\">".str_replace("@","@<span style=\"font-size:1px;\"> </span>",$message["from"])."</a>";
 			}
 			$content .= "</td>";
 			$content .= "</tr>";
@@ -119,7 +119,7 @@ function print_user_messages($block=true, $config="", $side, $index) {
 			$message["body"] = expand_urls($message["body"]);
 
 			$content .= PrintReady($message["body"])."<br /><br />";
-			if (preg_match("/RE:/", $message["subject"])==0) {
+			if (strpos($message["subject"], "RE:")===false) {
 				$message["subject"]="RE:".$message["subject"];
 			}
 			if ($user_id) {

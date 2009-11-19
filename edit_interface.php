@@ -48,6 +48,8 @@ $option =safe_REQUEST($_REQUEST, 'option',  PGV_REGEX_UNSAFE);
 $assist =safe_REQUEST($_REQUEST, 'assist',  PGV_REGEX_UNSAFE);
 $noteid =safe_REQUEST($_REQUEST, 'noteid',  PGV_REGEX_UNSAFE);
 
+$pid_array =safe_REQUEST($_REQUEST, 'pid_array', PGV_REGEX_XREF);
+
 $update_CHAN=!safe_POST_bool('preserve_last_changed');
 
 $uploaded_files = array();
@@ -250,7 +252,7 @@ else if (!empty($famid)) {
 		checkChangeTime($famid, $gedrec, safe_GET('accesstime', PGV_REGEX_INTEGER));
 	}
 }
-else if (($action!="addchild")&&($action!="addchildaction")&&($action!="addnewsource")&&($action!="mod_edit_fact")&&($action!="addnewnote")&&($action!="addmedia_links")&&($action!="addnoteaction")) {
+else if (($action!="addchild")&&($action!="addchildaction")&&($action!="addnewsource")&&($action!="mod_edit_fact")&&($action!="addnewnote")&&($action!="addmedia_links")&&($action!="addnoteaction")&&($action!="addnoteaction_assisted")) {
 	echo "<span class=\"error\">The \$pid variable was empty. Unable to perform $action xxx.</span>";
 	print_simple_footer();
 	$disp = true;
@@ -563,7 +565,7 @@ case 'linkfamaction':
 		if ($famtag=="HUSB" || $famtag=="WIFE") $itag="FAMS";
 
 		//-- update the individual record for the person
-		if (preg_match("/1 $itag @$famid@/", $gedrec)==0) {
+		if (strpos($gedrec, "1 $itag @$famid@")===false) {
 			$gedrec .= "\n";
 			if ($itag=="FAMC") {
 				$pedigree="";
@@ -593,7 +595,7 @@ case 'linkfamaction':
 
 		//-- if it is adding a new child to a family
 		if ($famtag=="CHIL") {
-			if (preg_match("/1 $famtag @$pid@/", $famrec)==0) {
+			if (strpos($famrec, "1 $famtag @$pid@")===false) {
 				$famrec = trim($famrec) . "\n1 $famtag @$pid@\n";
 				replace_gedrec($famid, $famrec);
 			}
@@ -608,7 +610,7 @@ case 'linkfamaction':
 				//-- only continue if the old husb/wife is not the same as the current one
 				if ($spid!=$pid) {
 					//-- change a of the old ids to the new id
-					$famrec = preg_replace("/1 $famtag @$spid@/", "1 $famtag @$pid@", $famrec);
+					$famrec = str_replace("1 $famtag @$spid@", "1 $famtag @$pid@", $famrec);
 					if (PGV_DEBUG) {
 						echo "<pre>$famrec</pre>";
 					}
@@ -618,7 +620,7 @@ case 'linkfamaction':
 						if (!isset($pgv_changes[$spid."_".PGV_GEDCOM])) $srec = find_gedcom_record($spid, PGV_GED_ID);
 						else $srec = find_updated_record($spid, PGV_GED_ID);
 						if ($srec) {
-							$srec = preg_replace("/1 $itag @$famid@\s*/", "", $srec);
+							$srec = str_replace("1 $itag @$famid@", "", $srec);
 							if (PGV_DEBUG) {
 								echo "<pre>$srec</pre>";
 							}
@@ -814,37 +816,6 @@ case 'addnewnote':
 	break;
 
 //------------------------------------------------------------------------------
-//-- add new Shared Note
-case 'addnewnote_assisted':
-	echo PGV_JS_START;
-	?>
-		function check_form(frm) {
-			if (frm.TITL.value=="") {
-				alert('<?php echo $pgv_lang["must_provide"].$factarray["TITL"]; ?>');
-				frm.TITL.focus();
-				return false;
-			}
-			return true;
-		}
-	<?php
-	echo PGV_JS_END;
-	?>
-	<div class="center font11" style="width:100%;">
-		<b><?php echo $pgv_lang['create_shared_note']." using Assistant."; $tabkey = 1; ?></b>
-		<form method="post" action="edit_interface.php" onsubmit="return check_form(this);">
-			<input type="hidden" name="action" value="addnoteaction" />
-			<input type="hidden" name="noteid" value="newnote" />
-			<!-- <input type="hidden" name="pid" value="$pid" /> -->
-			<?php
-				include ('modules/GEDFact_assistant/CENS_ctrl.php');
-			?>
-		</form>
-	</div>
-	<div style="clear:both;"></div>
-	<?php
-	break;
-
-//------------------------------------------------------------------------------
 //-- create a shared note record from the incoming variables
 case 'addnoteaction':
 	if (PGV_DEBUG) {
@@ -911,6 +882,128 @@ case 'addnoteaction':
 	if ($xref) {
 		echo "<br /><br />\n".$pgv_lang["new_shared_note_created"]."<br /><br />";
 		echo "<a href=\"javascript://NOTE $xref\" onclick=\"openerpasteid('$xref'); return false;\">".$pgv_lang["paste_id_into_field"]." <b>$xref</b></a>\n";
+		echo "<br /><br /><br /><br />";
+		}
+	break;
+	
+//------------------------------------------------------------------------------
+//-- add new Shared Note using CA assistant
+case 'addnewnote_assisted':
+	if (isset($_REQUEST['pid'])) 		$pid		 = $_REQUEST['pid'];
+	global $pid;
+	
+	echo PGV_JS_START;
+	?>
+		function check_form(frm) {
+			if (frm.TITL.value=="") {
+				alert('<?php echo $pgv_lang["must_provide"].$factarray["TITL"]; ?>');
+				frm.TITL.focus();
+				return false;
+			}
+			return true;
+		}
+	<?php
+	echo PGV_JS_END;
+	?>
+	
+	<div class="center font11" style="width:100%;">
+		<b><?php echo $pgv_lang["create_shared_note_assisted"]; $tabkey = 1; ?></b>
+		<form method="post" action="edit_interface.php" onsubmit="return check_form(this);">
+			<input type="hidden" name="action" value="addnoteaction_assisted" />
+			<input type="hidden" name="noteid" value="newnote" />
+			<input id="pid_array" type="hidden" name="pid_array" value="none" />
+			<input id="pid" type="hidden" name="pid" value=<?php echo $pid; ?> />
+			<?php
+				include ('modules/GEDFact_assistant/CENS_ctrl.php');
+			?>
+		</form>
+	</div>
+	<div style="clear:both;"></div>
+	<?php
+	break;
+	
+//------------------------------------------------------------------------------
+//-- create a shared note record from the incoming variables
+case 'addnoteaction_assisted':
+	if (PGV_DEBUG) {
+		phpinfo(INFO_VARIABLES);
+	}
+	$newgedrec  = "0 @XREF@ NOTE\n";
+
+	if (isset($_REQUEST['EVEN'])) $EVEN = $_REQUEST['EVEN'];
+	if (!empty($EVEN) && count($EVEN)>0) {
+		$newgedrec .= "1 DATA\n";
+		$newgedrec .= "2 EVEN ".implode(",", $EVEN)."\n";
+		if (!empty($EVEN_DATE)) $newgedrec .= "3 DATE ".check_input_date($EVEN_DATE)."\n";
+		if (!empty($EVEN_PLAC)) $newgedrec .= "3 PLAC ".$EVEN_PLAC."\n";
+		if (!empty($AGNC))      $newgedrec .= "2 AGNC ".$AGNC."\n";
+	}
+	if (isset($_REQUEST['ABBR'])) $ABBR = $_REQUEST['ABBR'];
+	if (isset($_REQUEST['TITL'])) $TITL = $_REQUEST['TITL'];
+	if (isset($_REQUEST['DATE'])) $DATE = $_REQUEST['DATE'];
+	if (isset($_REQUEST['NOTE'])) $NOTE = $_REQUEST['NOTE'];
+	if (isset($_REQUEST['_HEB'])) $_HEB = $_REQUEST['_HEB'];
+	if (isset($_REQUEST['ROMN'])) $ROMN = $_REQUEST['ROMN'];
+	if (isset($_REQUEST['AUTH'])) $AUTH = $_REQUEST['AUTH'];
+	if (isset($_REQUEST['PUBL'])) $PUBL = $_REQUEST['PUBL'];
+	if (isset($_REQUEST['REPO'])) $REPO = $_REQUEST['REPO'];
+	if (isset($_REQUEST['CALN'])) $CALN = $_REQUEST['CALN'];
+	
+	if (isset($_REQUEST['pid_array'])) 	$pid_array	 = $_REQUEST['pid_array'];
+	if (isset($_REQUEST['pid'])) 		$pid		 = $_REQUEST['pid'];
+	
+	global $pid;
+
+	if (!empty($NOTE)) {
+		$newlines = preg_split("/\r?\n/",$NOTE,-1);
+		for($k=0; $k<count($newlines); $k++) {
+			if ( $k==0 && count($newlines)>1) {
+				$newgedrec = "0 @XREF@ NOTE $newlines[$k]\n";
+			}else if ( $k==0 ) {
+				$newgedrec = "0 @XREF@ NOTE $newlines[$k]\n1 CONT\n";
+			} else {
+				$newgedrec .= "1 CONT $newlines[$k]\n";
+			}
+		}
+	}
+
+	if (!empty($ABBR)) $newgedrec .= "1 ABBR $ABBR\n";
+	if (!empty($TITL)) {
+		// $newgedrec .= "1 TITL $TITL\n";
+		// $newgedrec .= "2 DATE $DATE\n";
+		if (!empty($_HEB)) $newgedrec .= "2 _HEB $_HEB\n";
+		if (!empty($ROMN)) $newgedrec .= "2 ROMN $ROMN\n";
+	}
+	if (!empty($AUTH)) $newgedrec .= "1 AUTH $AUTH\n";
+	if (!empty($PUBL)) {
+		$newlines = preg_split("/\r?\n/",$PUBL,-1,PREG_SPLIT_NO_EMPTY);
+		for($k=0; $k<count($newlines); $k++) {
+			if ( $k==0 ) $newgedrec .= "1 PUBL $newlines[$k]\n";
+			else $newgedrec .= "2 CONT $newlines[$k]\n";
+		}
+	}
+	if (!empty($NOTE)) {
+		//$newgedrec .= "1 NOTE @$NOTE@\n";
+		if (!empty($CALN)) $newgedrec .= "2 CALN $CALN\n";
+	}
+	if (PGV_DEBUG) {
+		echo "<pre>$newgedrec</pre>";
+	}
+	// $xref = "Test";
+	$xref = append_gedrec($newgedrec);
+	$link = "note.php?nid=$xref&show_changes=yes";
+	if ($xref) {
+		$closeparent="yes";
+		echo "<br /><br />\n".$pgv_lang["new_shared_note_created"]." (".$xref.")<br /><br />";
+		echo "<a href=\"javascript://NOTE $xref\" onclick=\"openerpasteid('$xref'); return false;\">".$pgv_lang["paste_id_into_field"]." <b>$xref</b></a>\n";
+		echo "<br /><br /><br /><br />";
+		echo "--------------  The following lines are for info only at the moment -------------";
+		echo "<br /><br />";
+		echo " &nbsp;&nbsp;&nbsp; Census event will be linked to Indi id's: &nbsp;&nbsp;&nbsp;&nbsp; ". $pid_array;
+		echo "<br /><br />";
+		// echo "Base ID = " . $pid;
+		echo "---------------------------------------------------------------------------------------";
+		echo "<br /><br /><br /><br />";
 	}
 	break;
 	
@@ -1182,7 +1275,10 @@ case 'update':
 	 * This allows the array to "copy" the new CENS event to these id's
 	 * ----------------------------------------------------------------
 	*/
-	// $cens_pids = array($pid, 'I8', 'I1');  // ** This line is a Test only, do NOT uncomment **
+	// ** The following line is a Test only, do NOT uncomment for now **
+	// $cens_pids = array($pid, 'I8', 'I1');
+	// ** --------------------------------------------------------------
+
 	if (!isset($cens_pids)){
 		$cens_pids = array($pid);
 	}else{
@@ -1200,7 +1296,7 @@ case 'update':
 		}
 		
 		if (PGV_DEBUG) {
-		//	phpinfo(INFO_VARIABLES);
+			phpinfo(INFO_VARIABLES);
 			echo "<pre>$gedrec</pre>";
 			echo "<br /><br />";
 		}
@@ -1235,19 +1331,86 @@ case 'update':
 			}
 		}
 	
-		$gedlines = explode("\n", trim($gedrec));
-		//-- for new facts set linenum to number of lines
-		if (!is_array($linenum)) {
-			if ($linenum=="new" || $idnums=="multi") {
-				$linenum = count($gedlines);
+	$gedlines = explode("\n", trim($gedrec));
+	//-- for new facts set linenum to number of lines
+	if (!is_array($linenum)) {
+		if ($linenum=="new" || $idnums=="multi") {
+			$linenum = count($gedlines);
+		}
+		$newged = "";
+		for($i=0; $i<$linenum; $i++) {
+			$newged .= $gedlines[$i]."\n";
+		}
+		//-- for edits get the level from the line
+		if (isset($gedlines[$linenum])) {
+			$fields = explode(' ', $gedlines[$linenum]);
+			$glevel = $fields[0];
+			$i++;
+			while(($i<count($gedlines))&&($gedlines[$i]{0}>$glevel)) $i++;
+		}
+
+		if (!isset($glevels)) $glevels = array();
+		if (isset($_REQUEST['NAME'])) $NAME = $_REQUEST['NAME'];
+		if (isset($_REQUEST['TYPE'])) $TYPE = $_REQUEST['TYPE'];
+		if (isset($_REQUEST['NPFX'])) $NPFX = $_REQUEST['NPFX'];
+		if (isset($_REQUEST['GIVN'])) $GIVN = $_REQUEST['GIVN'];
+		if (isset($_REQUEST['NICK'])) $NICK = $_REQUEST['NICK'];
+		if (isset($_REQUEST['SPFX'])) $SPFX = $_REQUEST['SPFX'];
+		if (isset($_REQUEST['SURN'])) $SURN = $_REQUEST['SURN'];
+		if (isset($_REQUEST['NSFX'])) $NSFX = $_REQUEST['NSFX'];
+		if (isset($_REQUEST['ROMN'])) $ROMN = $_REQUEST['ROMN'];
+		if (isset($_REQUEST['FONE'])) $FONE = $_REQUEST['FONE'];
+		if (isset($_REQUEST['_HEB'])) $_HEB = $_REQUEST['_HEB'];
+		if (isset($_REQUEST['_AKA'])) $_AKA = $_REQUEST['_AKA'];
+		if (isset($_REQUEST['_MARNM'])) $_MARNM = $_REQUEST['_MARNM'];
+
+		if (!empty($NAME)) $newged .= "1 NAME $NAME\n";
+		if (!empty($TYPE)) $newged .= "2 TYPE $TYPE\n";
+		if (!empty($NPFX)) $newged .= "2 NPFX $NPFX\n";
+		if (!empty($GIVN)) $newged .= "2 GIVN $GIVN\n";
+		if (!empty($NICK)) $newged .= "2 NICK $NICK\n";
+		if (!empty($SPFX)) $newged .= "2 SPFX $SPFX\n";
+		if (!empty($SURN)) $newged .= "2 SURN $SURN\n";
+		if (!empty($NSFX)) $newged .= "2 NSFX $NSFX\n";
+
+		if (isset($_REQUEST['NOTE'])) $NOTE = $_REQUEST['NOTE'];
+		if (!empty($NOTE)) {
+			$newlines = preg_split("/\r?\n/",$NOTE,-1 );
+			for($k=0; $k<count($newlines); $k++) {
+				if ( $k==0 && count($newlines)>1) {
+					$gedlines[$k] = "0 @$pid@ NOTE $newlines[$k]\n";
+				} else {
+					$gedlines[$k] = " 1 CONT $newlines[$k]\n";
+				}
 			}
-			$newged = "";
-			for($i=0; $i<$linenum; $i++) {
+		}
+
+		//-- Refer to Bug [ 1329644 ] Add Married Name - Wrong Sequence
+		//-- _HEB/ROMN/FONE have to be before _AKA, even if _AKA exists in input and the others are now added
+		if (!empty($ROMN)) $newged .= "2 ROMN $ROMN\n";
+		if (!empty($FONE)) $newged .= "2 FONE $FONE\n";
+		if (!empty($_HEB)) $newged .= "2 _HEB $_HEB\n";
+
+		$newged = handle_updates($newged);
+
+		if (!empty($_AKA)) $newged .= "2 _AKA $_AKA\n";
+		if (!empty($_MARNM)) $newged .= "2 _MARNM $_MARNM\n";
+
+		while($i<count($gedlines)) {
+			$newged .= trim($gedlines[$i])."\n";
+			$i++;
+		}
+	}
+	else {
+		$newged = "";
+		$current = 0;
+		foreach ($linenum as $editline) {
+			for($i=$current; $i<$editline; $i++) {
 				$newged .= $gedlines[$i]."\n";
 			}
 			//-- for edits get the level from the line
-			if (isset($gedlines[$linenum])) {
-				$fields = explode(' ', $gedlines[$linenum]);
+			if (isset($gedlines[$editline])) {
+				$fields = explode(' ', $gedlines[$editline]);
 				$glevel = $fields[0];
 				$i++;
 				while(($i<count($gedlines))&&($gedlines[$i]{0}>$glevel)) $i++;
@@ -1281,95 +1444,28 @@ case 'update':
 			if (!empty($NOTE)) {
 				$newlines = preg_split("/\r?\n/",$NOTE,-1 );
 				for($k=0; $k<count($newlines); $k++) {
-					if ( $k==0 && count($newlines)>1) {
+					if ($k==0 && count($newlines)>1) {
 						$gedlines[$k] = "0 @$pid@ NOTE $newlines[$k]\n";
 					} else {
 						$gedlines[$k] = " 1 CONT $newlines[$k]\n";
 					}
 				}
 			}
-
 			//-- Refer to Bug [ 1329644 ] Add Married Name - Wrong Sequence
 			//-- _HEB/ROMN/FONE have to be before _AKA, even if _AKA exists in input and the others are now added
 			if (!empty($ROMN)) $newged .= "2 ROMN $ROMN\n";
 			if (!empty($FONE)) $newged .= "2 FONE $FONE\n";
 			if (!empty($_HEB)) $newged .= "2 _HEB $_HEB\n";
 
-			$newged = handle_updates($newged);
-
 			if (!empty($_AKA)) $newged .= "2 _AKA $_AKA\n";
 			if (!empty($_MARNM)) $newged .= "2 _MARNM $_MARNM\n";
-
-			while($i<count($gedlines)) {
-				$newged .= trim($gedlines[$i])."\n";
-				$i++;
-			}
-		}
-		else {
-			$newged = "";
-			$current = 0;
-			foreach ($linenum as $editline) {
-				for($i=$current; $i<$editline; $i++) {
-					$newged .= $gedlines[$i]."\n";
-				}
-				//-- for edits get the level from the line
-				if (isset($gedlines[$editline])) {
-					$fields = explode(' ', $gedlines[$editline]);
-					$glevel = $fields[0];
-					$i++;
-					while(($i<count($gedlines))&&($gedlines[$i]{0}>$glevel)) $i++;
-				}
-
-				if (!isset($glevels)) $glevels = array();
-				if (isset($_REQUEST['NAME'])) $NAME = $_REQUEST['NAME'];
-				if (isset($_REQUEST['TYPE'])) $TYPE = $_REQUEST['TYPE'];
-				if (isset($_REQUEST['NPFX'])) $NPFX = $_REQUEST['NPFX'];
-				if (isset($_REQUEST['GIVN'])) $GIVN = $_REQUEST['GIVN'];
-				if (isset($_REQUEST['NICK'])) $NICK = $_REQUEST['NICK'];
-				if (isset($_REQUEST['SPFX'])) $SPFX = $_REQUEST['SPFX'];
-				if (isset($_REQUEST['SURN'])) $SURN = $_REQUEST['SURN'];
-				if (isset($_REQUEST['NSFX'])) $NSFX = $_REQUEST['NSFX'];
-				if (isset($_REQUEST['ROMN'])) $ROMN = $_REQUEST['ROMN'];
-				if (isset($_REQUEST['FONE'])) $FONE = $_REQUEST['FONE'];
-				if (isset($_REQUEST['_HEB'])) $_HEB = $_REQUEST['_HEB'];
-				if (isset($_REQUEST['_AKA'])) $_AKA = $_REQUEST['_AKA'];
-				if (isset($_REQUEST['_MARNM'])) $_MARNM = $_REQUEST['_MARNM'];
-
-				if (!empty($NAME)) $newged .= "1 NAME $NAME\n";
-				if (!empty($TYPE)) $newged .= "2 TYPE $TYPE\n";
-				if (!empty($NPFX)) $newged .= "2 NPFX $NPFX\n";
-				if (!empty($GIVN)) $newged .= "2 GIVN $GIVN\n";
-				if (!empty($NICK)) $newged .= "2 NICK $NICK\n";
-				if (!empty($SPFX)) $newged .= "2 SPFX $SPFX\n";
-				if (!empty($SURN)) $newged .= "2 SURN $SURN\n";
-				if (!empty($NSFX)) $newged .= "2 NSFX $NSFX\n";
-
-				if (isset($_REQUEST['NOTE'])) $NOTE = $_REQUEST['NOTE'];
-				if (!empty($NOTE)) {
-					$newlines = preg_split("/\r?\n/",$NOTE,-1 );
-					for($k=0; $k<count($newlines); $k++) {
-						if ($k==0 && count($newlines)>1) {
-							$gedlines[$k] = "0 @$pid@ NOTE $newlines[$k]\n";
-						} else {
-							$gedlines[$k] = " 1 CONT $newlines[$k]\n";
-						}
-					}
-				}
-				//-- Refer to Bug [ 1329644 ] Add Married Name - Wrong Sequence
-				//-- _HEB/ROMN/FONE have to be before _AKA, even if _AKA exists in input and the others are now added
-				if (!empty($ROMN)) $newged .= "2 ROMN $ROMN\n";
-				if (!empty($FONE)) $newged .= "2 FONE $FONE\n";
-				if (!empty($_HEB)) $newged .= "2 _HEB $_HEB\n";
-
-				if (!empty($_AKA)) $newged .= "2 _AKA $_AKA\n";
-				if (!empty($_MARNM)) $newged .= "2 _MARNM $_MARNM\n";
-				
-				$newged = handle_updates($newged);
-				$current = $editline;
-				break;
-			}
 			
+			$newged = handle_updates($newged);
+			$current = $editline;
+			break;
 		}
+		
+	}
 		if (PGV_DEBUG) {
 			echo "<br /><br />";
 			echo "<pre>$newged</pre>";
@@ -1743,8 +1839,7 @@ case 'addnewparentaction':
 		else $indirec = find_updated_record($pid, PGV_GED_ID);
 		$indirec = trim($indirec);
 		if ($indirec) {
-			$ct = preg_match("/1 FAMC @$famid@/", $indirec);
-			if ($ct==0) {
+			if (strpos($indirec, "1 FAMC @$famid@")===false) {
 				$indirec = trim($indirec) . "\n1 FAMC @$famid@\n";
 				if (PGV_DEBUG) {
 					echo "<pre>$indirec</pre>";
@@ -1964,7 +2059,7 @@ case 'reset_media_update': // Reset sort using popup
 	$lines = explode("\n", $gedrec);
 	$newgedrec = "";
 	for($i=0; $i<count($lines); $i++) {
-		if (preg_match("/1 _PGV_OBJS/", $lines[$i])==0) $newgedrec .= $lines[$i]."\n";
+		if (strpos($lines[$i], "1 _PGV_OBJS")===false) $newgedrec .= $lines[$i]."\n";
 	}
 		$success = (replace_gedrec($pid, $newgedrec));
 	if ($success) echo "<br />".$pgv_lang["update_successful"]."<br /><br />";
@@ -1979,7 +2074,7 @@ case 'reorder_media_update': // Update sort using popup
 	$lines = explode("\n", $gedrec);
 	$newgedrec = "";
 	for($i=0; $i<count($lines); $i++) {
-		if (preg_match("/1 _PGV_OBJS/", $lines[$i])==0) $newgedrec .= $lines[$i]."\n";
+		if (strpos($lines[$i], "1 _PGV_OBJS")===false) $newgedrec .= $lines[$i]."\n";
 	}
 	foreach($order1 as $m_media=>$num) {
 		$newgedrec .= "1 _PGV_OBJS @".$m_media."@\n";
@@ -2005,7 +2100,7 @@ case 'al_reset_media_update': // Reset sort using Album Page
 	$lines = explode("\n", $gedrec);
 	$newgedrec = "";
 	for($i=0; $i<count($lines); $i++) {
-		if (preg_match("/1 _PGV_OBJS/", $lines[$i])==0) $newgedrec .= $lines[$i]."\n";
+		if (strpos($lines[$i], "1 _PGV_OBJS")===false) $newgedrec .= $lines[$i]."\n";
 	}
 		$success = (replace_gedrec($pid, $newgedrec));
 	if ($success) echo "<br />".$pgv_lang["update_successful"]."<br /><br />";
@@ -2038,7 +2133,7 @@ case 'al_reorder_media_update': // Update sort using Album Page
 	$lines = explode("\n", $gedrec);
 	$newgedrec = "";
 	for($i=0; $i<count($lines); $i++) {
-		if (preg_match("/1 _PGV_OBJS/", $lines[$i])==0) $newgedrec .= $lines[$i]."\n";
+		if (strpos($lines[$i], "1 _PGV_OBJS")===false) $newgedrec .= $lines[$i]."\n";
 	}
 	foreach($order2 as $m_media=>$num) {
 		$newgedrec .= "1 _PGV_OBJS @".$m_media."@\n";
@@ -2268,7 +2363,7 @@ case 'changefamily_update':
 		else $gedrec .= "\n1 HUSB @$HUSB@\n";
 		if (isset($pgv_changes[$HUSB."_".PGV_GEDCOM])) $indirec = find_updated_record($HUSB, PGV_GED_ID);
 		else $indirec = find_person_record($HUSB, PGV_GED_ID);
-		if (!empty($indirec) && (preg_match("/1 FAMS @$famid@/", $indirec)==0)) {
+		if (!empty($indirec) && (strpos($indirec, "1 FAMS @$famid@")===false)) {
 			$indirec .= "\n1 FAMS @$famid@\n";
 			replace_gedrec($HUSB, $indirec);
 		}
@@ -2306,7 +2401,7 @@ case 'changefamily_update':
 		else $gedrec .= "\n1 WIFE @$WIFE@\n";
 		if (isset($pgv_changes[$WIFE."_".PGV_GEDCOM])) $indirec = find_updated_record($WIFE, PGV_GED_ID);
 		else $indirec = find_person_record($WIFE, PGV_GED_ID);
-		if (!empty($indirec) && (preg_match("/1 FAMS @$famid@/", $indirec)==0)) {
+		if (!empty($indirec) && (strpos($indirec, "1 FAMS @$famid@")===false)) {
 			$indirec .= "\n1 FAMS @$famid@\n";
 			replace_gedrec($WIFE, $indirec);
 		}
@@ -2345,12 +2440,12 @@ case 'changefamily_update':
 		$CHIL = $_REQUEST[$var];
 		if (!empty($CHIL)) {
 			$newchildren[] = $CHIL;
-			if (preg_match("/1 CHIL @$CHIL@/", $gedrec)==0) {
+			if (strpos($gedrec, "1 CHIL @$CHIL@")===false) {
 				$gedrec .= "\n1 CHIL @$CHIL@\n";
 				$updated = true;
 				if (isset($pgv_changes[$CHIL."_".PGV_GEDCOM])) $indirec = find_updated_record($CHIL, PGV_GED_ID);
 				else $indirec = find_person_record($CHIL, PGV_GED_ID);
-				if (!empty($indirec) && (preg_match("/1 FAMC @$famid@/", $indirec)==0)) {
+				if (!empty($indirec) && (strpos($indirec, "1 FAMC @$famid@")===false)) {
 					$indirec .= "\n1 FAMC @$famid@\n";
 					replace_gedrec($CHIL, $indirec);
 				}
@@ -2520,7 +2615,7 @@ case 'reorder_fams_update':
 	$lines = explode("\n", $gedrec);
 	$newgedrec = "";
 	for($i=0; $i<count($lines); $i++) {
-		if (preg_match("/1 FAMS/", $lines[$i])==0) $newgedrec .= $lines[$i]."\n";
+		if (strpos($lines[$i], "1 FAMS")===false) $newgedrec .= $lines[$i]."\n";
 	}
 	foreach($order as $famid=>$num) {
 		$newgedrec .= "1 FAMS @".$famid."@\n";
@@ -2568,6 +2663,9 @@ if ($success && $EDIT_AUTOCLOSE && !PGV_DEBUG) {
 if ($action == 'addmedia_links' || $action == 'addnewnote_assisted' ) {
 	// Do not print footer.
 	echo "<br /><div class=\"center\"><a href=\"javascript:;\" onclick=\"edit_close('{$link}');\">".$pgv_lang["close_window"]."</a></div>\n";
+}else if (isset($closeparent) && $closeparent=="yes" ) {
+	echo "<div class=\"center\"><a href=\"javascript:;\" onclick=\"edit_close('{$link}');window.opener.close();\">".$pgv_lang["close_window"]."</a></div><br />\n";
+	print_simple_footer();
 }else{
 	echo "<div class=\"center\"><a href=\"javascript:;\" onclick=\"edit_close('{$link}');\">".$pgv_lang["close_window"]."</a></div><br />\n";
 	print_simple_footer();

@@ -957,7 +957,7 @@ if ($stage == 1) {
 			print "\n";
 
 			//-- import anything that is not a blob
-			if (!preg_match("/\n1 BLOB/", $indirec)) {
+			if (strpos($indirec, "\n1 BLOB")===false) {
 				try {
 					import_record(trim($indirec), get_id_from_gedcom($GEDCOM), false);
 				} catch (PDOException $ex) {

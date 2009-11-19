@@ -617,8 +617,9 @@ function thumbnail_file($filename, $generateThumb = true, $overwrite = false) {
 		if (!empty($thumbnail)) return $thumbnail;
 	}
 
-	if (!$generateThumb)
+	if (!$generateThumb && file_exists($thumbDir . $thumbName)) {
 		return $thumbDir . $thumbName;
+	}
 
 	if (!$overwrite && media_exists($thumbDir . $thumbName))
 		return $thumbDir . $thumbName;

@@ -110,8 +110,8 @@ function print_gedcom_favorites($block = true, $config="", $side, $index) {
 					if ($favorite["type"]=="INDI") {
 						$indirec = find_person_record($favorite["gid"], PGV_GED_ID);
 						$content .= "<div id=\"box".$favorite["gid"].".0\" class=\"person_box";
-						if (preg_match("/1 SEX F/", $indirec)>0) $content .= "F";
-						else if (preg_match("/1 SEX M/", $indirec)>0) $content .= "";
+						if (strpos($indirec, "\n1 SEX F")!==false) $content .= "F";
+						elseif (strpos($indirec, "\n1 SEX M")!==false) $content .= "";
 						else $content .= "NN";
 						$content .= "\">\n";
 						if ($ctype=="user" || PGV_USER_GEDCOM_ADMIN) $content .= $removeFavourite;

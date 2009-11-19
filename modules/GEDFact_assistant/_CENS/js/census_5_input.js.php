@@ -174,11 +174,31 @@ function preview() {
 	str += "\n";
 	str += ".start_formatted_area.";
 	
+	iid = "";
+
 	var tbl = document.getElementById('tblSample');
+	
 
 	for(var i=0; i<tbl.rows.length; i++){
 		var tr = tbl.rows[i];
 		var strRow = '';
+		
+		var pidList = '';
+
+		// ---------------------------------------------
+		
+		// Extract Indi id's from created list --------------------------------------
+		for(var y=1; y<tr.cells.length-3; y++) {
+			if ( y>=2 && y<=67) {
+					continue;
+			}else{
+				if (i!=0) {
+					pidList += (pidList==''?'':' ') + tr.cells[1].childNodes[0].value;
+				}
+			}
+		}
+		
+		// Extract required columns for display based on Country and Year -----------
 		if (NoteCtry.value=="UK") {
 			// UK 1921 or 1911 ===============
 			if (NoteYear.value=="1921" || NoteYear.value=="1911") {
@@ -366,16 +386,32 @@ function preview() {
 		}else{
 			// Other country stuff
 		}
+		
 		str += (str==''?'':'\n') + strRow;
+		if (i!=0) {
+			iid += (iid==''?'':'') + pidList + ', ';
+		}
+		
 	}
-
+	
+	// --- Debug only - alert indi id's found --------
+	//	if (i!=0) {
+	//		alert(iid);
+	//	}
+	
 	var mem = document.getElementById('NOTE');
 	if (Notes.value!="" && Notes.value!=null) {
 		mem.value = str + "\n.end_formatted_area.\n\nNotes:\n"+Notes.value;
 	} else {
 		mem.value = str + "\n.end_formatted_area.\n";
 	}
-}
+		
+	// ---- Create an array of Indi id's ----------
+	var mem21 = document.getElementById('pid_array');
+		mem21.value = iid.slice(0, -2);
+		
+} // ---- end function preview() -----
+
 
 window.onload=fillInRows;
 
@@ -591,6 +627,7 @@ function addRowToTable(num, pid, nam, label, gend, cond, yob, age2, YMD, occu, b
 				txt_itemNo.setAttribute('id', '.b.Item');
 				txt_itemNo.setAttribute('type', 'text');
 				txt_itemNo.style.fontSize="10px";
+				txt_itemNo.style.display="none";
 		// 1. Indi ID ---------------------------------------------------------
 			var txtInp_pid = document.createElement('div');
 				txtInp_pid.setAttribute('type', 'text');
@@ -598,8 +635,7 @@ function addRowToTable(num, pid, nam, label, gend, cond, yob, age2, YMD, occu, b
 				txtInp_pid.className= 'descriptionbox'; //Required for IE
 				txtInp_pid.style.fontSize="10px";
 				txtInp_pid.style.border='0px';
-				txtInp_pid.innerHTML = ' ID ';
-				txtInp_pid.setAttribute('id', '.b.Indi ID');
+				txtInp_pid.innerHTML = '<a href="#" alt="ID" title="ID"> ID </a>'; 
 		// 2. Name ------------------------------------------------------------
 			var txtInp_nam = document.createElement('div');
 				txtInp_nam.setAttribute('class', 'descriptionbox');
@@ -1227,26 +1263,33 @@ function addRowToTable(num, pid, nam, label, gend, cond, yob, age2, YMD, occu, b
 		// **D** Define Cell Elements =======================================
 			var txtcolor = "#0000FF";
 		// 0. Item Number ---------------------------------------------------
-			var txt_itemNo = document.createTextNode(iteration);
+			//var txt_itemNo = document.createTextNode();
+			var txt_itemNo = document.createElement('div');
+				txt_itemNo.style.display="none";
 		// 1. Indi ID -------------------------------------------------------
 				if ( pid == ''){
-					var txtInp_pid = document.createElement('input');
 					var txtcolor = "#000000";
-					txtInp_pid.setAttribute('type', 'checkbox');
-					if (txtInp_pid.checked!=''){
-						txtInp_pid.setAttribute('value', 'no');
-					}else{
-						txtInp_pid.setAttribute('value', 'add');
-					}
+					// This adds a checkbox for adding an indi id  .... to be implemented later
+						var txtInp_pid = document.createElement('input');
+						txtInp_pid.setAttribute('type', 'checkbox');
+						if (txtInp_pid.checked!=''){
+							txtInp_pid.setAttribute('value', 'no');
+						}else{
+							txtInp_pid.setAttribute('value', 'add');
+						}
+					// -------------------------------------------------------------------------
 					txtInp_pid.setAttribute('id', INPUT_NAME_PREFIX + iteration + '_1');
-					txtInp_pid.setAttribute('size', '4');
-					txtInp_pid.style.fontSize="10px";
+					txtInp_pid.setAttribute('size', '1');
+					txtInp_pid.style.fontSize="11px";
 				}else{
-					var txtInp_pid = document.createElement('div');
+					var txtInp_pid = document.createElement('input');
 						txtInp_pid.style.border='0px';
-						txtInp_pid.innerHTML = pid;
-						txtInp_pid.setAttribute('type', 'text');
-						txtInp_pid.style.fontSize="11px";
+						txtInp_pid.style.background='#9999ff';
+						// txtInp_pid.style.display='none'
+						txtInp_pid.setAttribute('id', INPUT_NAME_PREFIX + iteration + '_1');
+						txtInp_pid.setAttribute('value', pid);
+						txtInp_pid.setAttribute('size', '4');
+						txtInp_pid.style.fontSize="10px";
 				}
 		// 2. Full Name -----------------------------------------------------
 			var txtInp_nam = document.createElement('input');

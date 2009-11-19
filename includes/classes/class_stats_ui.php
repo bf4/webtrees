@@ -99,8 +99,8 @@ class stats_ui extends stats
 							{
 								$indirec = find_person_record($favorite['gid'], get_id_from_gedcom($GEDCOM));
 								$content .= "<div id=\"box{$favorite['gid']}.0\" class=\"person_box";
-								if(preg_match("/1 SEX F/", $indirec) > 0){$content .= 'F';}
-								elseif(preg_match("/1 SEX M/", $indirec) > 0){$content .= '';}
+								if(strpos($indirec, "\n1 SEX F")!==false){$content .= 'F';}
+								elseif(strpos($indirec, "\n1 SEX M")!==false){$content .= '';}
 								else{$content .= 'NN';}
 								$content .= "\">\n";
 								if($ctype == 'user' || PGV_USER_GEDCOM_ADMIN){$content .= $removeFavourite;}
@@ -246,7 +246,7 @@ class stats_ui extends stats
 				if(isset($message['id'])){$k = $message['id'];}
 				$content .= "<tr>\n<td class=\"list_value_wrap\"><input type=\"checkbox\" id=\"cb_message{$k}\" name=\"message_id[]\" value=\"{$k}\" /></td>\n";
 				$showmsg = preg_replace("/(\w)\/(\w)/","\$1/<span style=\"font-size:1px;\"> </span>\$2", PrintReady($message['subject']));
-				$showmsg = preg_replace("/@/","@<span style=\"font-size:1px;\"> </span>", $showmsg);
+				$showmsg = str_replace("@","@<span style=\"font-size:1px;\"> </span>", $showmsg);
 				$content .= "<td class=\"list_value_wrap\"><a href=\"javascript:;\" onclick=\"expand_layer('message{$k}'); return false;\"><b>{$showmsg}</b> <img id=\"message{$k}_img\" src=\"{$PGV_IMAGE_DIR}/{$PGV_IMAGES['plus']['other']}\" border=\"0\" alt=\"\" title=\"\" /></a></td>\n";
 				if(!empty($message['created'])){$t = strtotime($message['created']);}else{$t = time();}
 				$content .= '<td class="list_value_wrap">'.format_timestamp($t)."</td>\n".'<td class="list_value_wrap">';
@@ -261,7 +261,7 @@ class stats_ui extends stats
 					}
 				}
 				else {
-					$content .= "<a href=\"mailto:{$user_id}\">".preg_replace("/@/","@<span style=\"font-size:1px;\"> </span>", $user_id).'</a>';
+					$content .= "<a href=\"mailto:{$user_id}\">".str_replace("@","@<span style=\"font-size:1px;\"> </span>", $user_id).'</a>';
 				}
 				$content .= "</td>\n"
 					."</tr>\n"
@@ -269,7 +269,7 @@ class stats_ui extends stats
 				;
 				$message['body'] = expand_urls(nl2br(htmlspecialchars($message['body'],ENT_COMPAT,'UTF-8')));
 				$content .= PrintReady($message['body'])."<br />\n<br />\n";
-				if(preg_match("/RE:/", $message["subject"]) == 0) {
+				if(strpos($message["subject"], "RE:")===false) {
 					$message['subject'] = "RE:{$message['subject']}";
 				}
 				if($user_id) {

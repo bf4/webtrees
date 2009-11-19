@@ -42,7 +42,7 @@ print_header($controller->getPageTitle());
 // LightBox
 if ($MULTI_MEDIA && file_exists('./modules/lightbox.php')) {
 	include './modules/lightbox/lb_defaultconfig.php';
-	if (file_exists('modules/lightbox/lb_config.php')) {
+	if (file_exists('./modules/lightbox/lb_config.php')) {
 		include './modules/lightbox/lb_config.php';
 	}
 	include './modules/lightbox/functions/lb_call_js.php';
@@ -95,10 +95,10 @@ print_main_media($controller->rid);
 if (!$controller->isPrintPreview() && $controller->userCanEdit()) {
 	print_add_new_fact($controller->rid, $repositoryfacts, 'REPO');
 	// new media
-	echo '<tr><td class="descriptionbox">';
+	echo '<tr><td class="descriptionbox '.$TEXT_DIRECTION.'">';
 	print_help_link('add_media_help', 'qm', 'add_media_lbl');
 	echo $pgv_lang['add_media_lbl'] . '</td>';
-	echo '<td class="optionbox">';
+	echo '<td class="optionbox '.$TEXT_DIRECTION.'">';
 	echo '<a href="javascript: ', $pgv_lang['add_media_lbl'], '" onclick="window.open(\'addmedia.php?action=showmediaform&linktoid=', $controller->rid, '\', \'_blank\', \'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1\'); return false;">', $pgv_lang['add_media'], '</a>';
 	echo '<br />';
 	echo '<a href="javascript:;" onclick="window.open(\'inverselink.php?linktoid='.$controller->rid.'&linkto=repository\', \'_blank\', \'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1\'); return false;">'.$pgv_lang['link_to_existing_media'].'</a>';

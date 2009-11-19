@@ -39,6 +39,15 @@ Additional codes, to help Translators, follow the date as follows:
 
 The above list of codes may be amended as new situations arise.
 
+VERSION 4.2.3
+
+?$pgv_lang["whatever"]								dd Monthname, year		Change	codes and comments
+----------------------------------------------------------------------------------------
++$pgv_lang["edit_add_GEDFact_ASSISTED_help"]		18 Nov 2009				A
++$pgv_lang["RESN_help_title"]						16 Nov 2009				A
+*$pgv_lang["RESN_help"]								16 Nov 2009				w
+
+
 VERSION 4.2.2
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change	codes and comments

@@ -228,18 +228,18 @@ $real = false;
 
 if($ua != "") {
 	foreach($real_browsers as $browser_check) {
-		if (preg_match("/".$browser_check."/i", $ua)!==false) {
+		if (strpos($ua, $browser_check)!==false) {
 			$real = true;
 			break;
 		}
 	}
 	// check for old Netscapes.
-	if (preg_match("/Mozilla/i", $ua)) {
-		if (preg_match("/compatible/i", $ua)===false) {
+	if (strpos($ua, "Mozilla")!==false) {
+		if (strpos($ua, "compatible")===false) {
 			if (preg_match("/\[..\]/i", $ua)!==false) {
 				$real = true;
 			}
-			if (preg_match("/Macintosh/i", $ua)!==false) {
+			if (strpos($ua, "Macintosh")!==false) {
 				$real = true;
 			}
 		}
@@ -337,7 +337,7 @@ $bots_not_allowed = array(
 );
 if (!empty($SEARCH_SPIDER)) {
 	foreach($bots_not_allowed as $place) {
-		if (preg_match("/".$place."/i", $_SERVER['PHP_SELF'])) {
+		if (stripos($_SERVER['PHP_SELF'], $place)!==false) {
 			header("HTTP/1.0 403 Forbidden");
 			print "Sorry, this page is not available for search engine bots.";
 			exit;

@@ -208,7 +208,7 @@ if (isset($_GET["max"])) $max = $_GET["max"];
 $count = $max;
 if ($start+$count > $ct) $count = $ct-$start;
 
-echo "\n\t<div align=\"center\">".$ct." ".$pgv_lang["media_found"]." <br /><br />";
+echo "\n\t<div align=\"center\">".$pgv_lang["media_found"]." ".$ct." <br /><br />";
 if ($ct>0) {
 
 	$currentPage = ((int) ($start / $max)) + 1;
