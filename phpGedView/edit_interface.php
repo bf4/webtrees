@@ -1279,6 +1279,7 @@ case 'update':
 
 	if (!isset($cens_pids)){
 		$cens_pids = array($pid);
+		$idnums="";
 	}else{
 		$cens_pids = $cens_pids;
 		$idnums="multi";
@@ -1469,9 +1470,11 @@ case 'update':
 			echo "<pre>$newged</pre>";
 		}
 		if ($idnums=="multi") {
+			$success  = "";
 			$success2 = (replace_gedrec($pid, $newged, $update_CHAN));
 		}else{
 			$success  = (replace_gedrec($pid, $newged, $update_CHAN));
+			$success2 = "";
 		}
 		if ($success2) {
 			echo "<br /><br />".$pgv_lang["update_successful"]." - ".$pid;
