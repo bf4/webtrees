@@ -1034,7 +1034,7 @@ function print_addnewnote_link($element_id) {
 */
 function print_addnewnote_assisted_link($element_id) {
 	global $pgv_lang, $PGV_IMAGE_DIR, $PGV_IMAGES, $pid;
-	$text = $pgv_lang["create_shared_note_assisted"];
+	$text = $pgv_lang["add_new_event_assisted"];
 	if (isset($PGV_IMAGES["addnote"]["button"])) $Link = "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["addnote"]["button"]."\" alt=\"".$text."\" title=\"".$text."\" border=\"0\" align=\"middle\" />";
 	else $Link = $text;
 	echo "&nbsp;&nbsp;&nbsp;<a href=\"javascript:ADD;\" onclick=\"addnewnote_assisted(document.getElementById('", $element_id, "'), '", $pid, "' ); return false;\">";
@@ -1097,7 +1097,8 @@ function add_simple_tag($tag, $upperlevel='', $label='', $readOnly='', $noClose=
 	global $bdm, $PRIVACY_BY_RESN;
 	global $lang_short_cut, $LANGUAGE;
 	global $QUICK_REQUIRED_FACTS, $QUICK_REQUIRED_FAMFACTS, $PREFER_LEVEL2_SOURCES;
-
+	global $action;
+	
 	if (substr($tag, 0, strpos($tag, "PLAC"))) {
 		?>
 <script type="text/javascript">
@@ -1254,12 +1255,16 @@ function add_simple_tag($tag, $upperlevel='', $label='', $readOnly='', $noClose=
 	// label
 	$style='';
 	echo "<tr id=\"", $element_id, "_tr\" ";
-	if ($fact=="MAP" || $fact=="LATI" || $fact=="LONG") echo " style=\"display:none;\"";
+	if ($fact=="MAP" || $fact=="LATI" || $fact=="LONG") {
+		echo " style=\"display:none;\"";
+	}
 	echo " >\n";
-	if (in_array($fact, $subnamefacts) || $fact=="LATI" || $fact=="LONG")
-			echo "<td class=\"optionbox $TEXT_DIRECTION wrap width25\">";
-	else echo "<td class=\"descriptionbox $TEXT_DIRECTION wrap width25\">";
-
+	
+	if (in_array($fact, $subnamefacts) || $fact=="LATI" || $fact=="LONG") {
+		echo "<td class=\"optionbox $TEXT_DIRECTION wrap width25\">";
+	}else{
+		echo "<td class=\"descriptionbox $TEXT_DIRECTION wrap width25\">";
+	}
 	// help link
 	if (!in_array($fact, $emptyfacts)) {
 		if ($fact=="DATE") {
@@ -1269,7 +1274,11 @@ function add_simple_tag($tag, $upperlevel='', $label='', $readOnly='', $noClose=
 		} elseif ($fact=="RESN") {
 			print_help_link($fact."_help", "qm");
 		} elseif ($fact=="NOTE" && $islink){
+			if (file_exists('modules/GEDFact_assistant/_CENS/census_1_ctrl.php') && $pid && $label=="GEDFact Assistant") {
+				print_help_link("edit_add_GEDFact_ASSISTED_help", "qm");
+			}else{
 				print_help_link("edit_add_SHARED_NOTE_help", "qm");
+			}
 		} else {
 			print_help_link("edit_".$fact."_help", "qm");
 		}
@@ -1303,7 +1312,11 @@ function add_simple_tag($tag, $upperlevel='', $label='', $readOnly='', $noClose=
 		}
 	} else {
 		if ($fact=="NOTE" && $islink){
-			echo $pgv_lang["shared_note"];
+			if (file_exists('modules/GEDFact_assistant/_CENS/census_1_ctrl.php') && $pid && $label=="GEDFact Assistant") {
+				echo "GEDFact Assistant"; 
+			}else{
+				echo $pgv_lang["shared_note"];
+			}
 		} else if (isset($pgv_lang[$fact])) {
 			echo $pgv_lang[$fact];
 		} else if (isset($factarray[$fact])) {
@@ -1353,6 +1366,19 @@ function add_simple_tag($tag, $upperlevel='', $label='', $readOnly='', $noClose=
 			echo " onclick=\"if (this.checked) ", $element_id, ".value='Y'; else ", $element_id, ".value=''; \" />";
 			echo $pgv_lang["yes"];
 		}
+
+		// If GEDFAct_assistant/_CENS/ module exists && we are on the INDI page && action is ADD a new CENS event 
+		// Then show the add Shared note input field and the GEDFact assisted icon.
+		// If GEDFAct_assistant/_CENS/ module not installed  ... do not show 
+		if (file_exists('modules/GEDFact_assistant/_CENS/census_1_ctrl.php') && $pid && $fact=="CENS") {
+			$type_pid=GedcomRecord::getInstance($pid);
+			if ($type_pid->getType()=="INDI" && $action=="add" ) { 
+				add_simple_tag("2 SHARED_NOTE", "", "GEDFact Assistant");
+			}
+		}
+		// -----------------------------------------------------------------------------------------------------
+
+		
 	}
 	else if ($fact=="TEMP") {
 		echo "<select tabindex=\"", $tabkey, "\" name=\"", $element_name, "\" >\n";
@@ -1623,25 +1649,25 @@ function add_simple_tag($tag, $upperlevel='', $label='', $readOnly='', $noClose=
 		}
 
 		// Shared Notes Icons ========================================
-		// $record=GedcomRecord::getInstance($value);
 		if ($fact=="NOTE" && $islink) {
-			print_findnote_link($element_id);
-			print_addnewnote_link($element_id);
-			 if ($value!='') {
-				echo "&nbsp;&nbsp;&nbsp;";
-				print_editnote_link($value);
-			}
-			// If GEDFAct_assistant/_CENS/ module exists && we are on the INDI page 
-			// Then show the add Shared note assisted icon, if not  ... do not show 
-			if ($pid) {
+			// If GEDFAct_assistant/_CENS/ module exists && we are on the INDI page and the action is a GEDFact CENS assistant addition.
+			// Then show the add Shared note assisted icon, if not  ... show regular Shared note icons. 
+			if (file_exists('modules/GEDFact_assistant/_CENS/census_1_ctrl.php') && $action=="add" && $label=="GEDFact Assistant" && $pid) {
 				$type_pid=GedcomRecord::getInstance($pid);
-				if (file_exists('modules/GEDFact_assistant/_CENS/census_1_ctrl.php') && $type_pid->getType()=="INDI" ) { 
-					echo "&nbsp;&nbsp;&nbsp;";
+				if ($type_pid->getType()=="INDI" ) { 
+					echo "&nbsp;&nbsp;&nbsp;".$pgv_lang["create_shared_note_assisted"];
 					print_addnewnote_assisted_link($element_id);
 				}
+			}else{
+				print_findnote_link($element_id);
+				print_addnewnote_link($element_id);
+				if ($value!="") {
+					echo "&nbsp;&nbsp;&nbsp;";
+					print_editnote_link($value);
+				}
 			}
-		echo "<br />";
 		}
+		echo "<br />";
 		// ===========================================================
 
 		if ($fact=="OBJE") print_findmedia_link($element_id, "1media");
@@ -1681,18 +1707,6 @@ function add_simple_tag($tag, $upperlevel='', $label='', $readOnly='', $noClose=
 			}
 		}
 	}
-/*
-	if ($fact=="NOTE" && $islink && $value!='') {
-		include('includes/functions/functions_print_lists.php'); 
-		echo "<tr><td class=\"descriptionbox ", $TEXT_DIRECTION, " wrap width25\">";
-				print_help_link("edit_add_SHARED_NOTE_help", "qm");
-			//	echo $pgv_lang["admin_override"];
-			echo "Shared Note Links<br /><br />";
-		echo "</td><td class=\"optionbox wrap\">\n";
-			print_indi_list(fetch_linked_indi($value, "NOTE", "1"));
-		echo "</td></tr>\n";
-	}
-*/
 	// pastable values
 	if ($readOnly=='') {
 		if ($fact=="SPFX") print_autopaste_link($element_id, $SPFX_accept);
