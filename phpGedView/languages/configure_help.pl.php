@@ -367,9 +367,8 @@ $pgv_lang["CHECK_MARRIAGE_RELATIONS_help"]	= "~#pgv_lang[CHECK_MARRIAGE_RELATION
 $pgv_lang["SHOW_DEAD_PEOPLE"]		= "Pokaż zmarłych";
 $pgv_lang["SHOW_DEAD_PEOPLE_help"]		= "~#pgv_lang[SHOW_DEAD_PEOPLE]#~<br /><br />Ustawia poziom dostępu prywatności do danych wszystkich osób zmarłych.<br />";
 $pgv_lang["select_privacyfile_button"]		= "Wybierz plik prywatności";
-$pgv_lang["PRIVACY_BY_YEAR"]		= "Ogranicz prywatność wiekiem w momencie";
-$pgv_lang["PRIVACY_BY_YEAR_help"]	= "~#pgv_lang[PRIVACY_BY_YEAR]#~<br /><br />To ustawienie umożliwia ukrycie szczegółów osób stosując kryterium ich wieku w momencie zajścia określonego wydarzenia, niezależnie od tego, czy są to osoby żyjące, czy zmarłe.<br /><br />Używaj tego ustawienia w połączeniu z ustawieniem <b>#pgv_lang[MAX_ALIVE_AGE]#</b>. Na przykład jeśli ustawisz ten wiek na 100 i wybierzesz <b>Tak</b>, wszystkie osoby, żyjące lub nie, urodzone później, niż 100 lat temu, zostaną ukryte. Osoby, które pobrały się mniej niż 85 lat temu i osoby, które zmarły mniej niż 75 lat temu również zostałyby ukryte. Pamiętaj, że zastosowanie tej opcji może nieco spowolnić działanie systemu.<br /><br />Ustawia parametr \$PRIVACY_BY_YEAR w pliku <i><u>xxx</u>.GED_priv.php</i>.<br />";
-$pgv_lang["lang_edit_help"]			= "~#pgv_lang[translator_tools]#~<br /><br />Ta strona jest przeznaczona dla tłumaczy. Możesz tłumaczyć, porównywać i eksportować pliki językowe. Istnieje także możliwość określenia pochodzenia tekstu, wypisywanego przez PhpGedView.<br /><br />Masz do dyspozycji następujące opcje i narzędzia:<br />";
+$pgv_lang["PRIVACY_BY_YEAR"]		= "Ogranicz prywatność wiekiem w momencie wydarzenia";
+$pgv_lang["PRIVACY_BY_YEAR_help"]	= "~#pgv_lang[PRIVACY_BY_YEAR]#~<br /><br />To ustawienie umożliwia ukrycie szczegółów osób stosując kryterium ich wieku w momencie zajścia określonego wydarzenia, niezależnie od tego, czy są to osoby żyjące, czy zmarłe.<br /><br />Używaj tego ustawienia w połączeniu z ustawieniem <b>#pgv_lang[MAX_ALIVE_AGE]#</b>. Na przykład jeśli ustawisz ten wiek na 100 i wybierzesz <b>Tak</b>, wszystkie osoby, żyjące lub nie, urodzone później, niż 100 lat temu, zostaną ukryte. Osoby, które pobrały się mniej niż 85 lat temu i osoby, które zmarły mniej niż 75 lat temu również zostaną ukryte. Pamiętaj, że zastosowanie tej opcji może spowolnić działanie systemu.<br /><br />Ustawia parametr \$PRIVACY_BY_YEAR w pliku <i><u>xxx</u>.GED_priv.php</i>.<br />";
 
 // Google Translate
 $pgv_lang["google_translate"]	= "Tłumacz z Google";
@@ -379,8 +378,9 @@ $pgv_lang["commit_google"]		= "Zatwierdź zmiany w tłumaczeniu z Google";
 $pgv_lang["commit_google_help"]	= "~#pgv_lang[commit_google]#~<br /><br />Kliknięcie tego odnośnika spowoduje zapisanie wszystkich tłumaczeń przeprowadzonych za pomocą narzędzia Tłumacz Google do edytowanego pliku. Poniżej znajduje się pasek postępu zapisywania tłumaczeń do pliku.<br /><br />";
 
 //-- language edit utility
-$pgv_lang["edit_langdiff"]	= "Edytuj i konfiguruj pliki językowe";
-$pgv_lang["bom_check"]		= "Sprawdzanie znaku BOM (Byte Order Mark)";
+$pgv_lang["lang_edit_help"]		= "~#pgv_lang[translator_tools]#~<br /><br />Ta strona jest przeznaczona dla tłumaczy. Możesz tłumaczyć, porównywać i eksportować pliki językowe. Istnieje także możliwość określenia pochodzenia tekstu, wypisywanego przez PhpGedView.<br /><br />Masz do dyspozycji następujące opcje i narzędzia:<br />";
+$pgv_lang["edit_langdiff"]		= "Edytuj i konfiguruj pliki językowe";
+$pgv_lang["bom_check"]			= "Sprawdzanie znaku BOM (Byte Order Mark)";
 $pgv_lang["bom_check_help"]		= "~#pgv_lang[bom_check]#~<br /><br />#pgv_lang[bom_check_desc]#<br />";
 $pgv_lang["bom_check_desc"]		= "Sprawdzenie przeanalizuje wszystkie pliki językowe pod kątem występowania znaku BOM (Byte Order Mark). Wykryte znaki BOM zostaną usunięte. Znak BOM może powodować nieprawidłowe działanie w niektórych miejscach PhpGedView.";
 $pgv_lang["lang_debug"]			= "Wykrywanie usterek w treści pomocy";
