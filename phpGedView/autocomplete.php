@@ -693,7 +693,6 @@ function autocomplete_PLAC($FILTER, $OPTION) {
 		foreach ($data as $k=>$v) {
 			list($data[$k]) = explode(",", $v);
 		}
-		$data = array_filter($data, "place_ok");
 	}
 
 	return $data;
