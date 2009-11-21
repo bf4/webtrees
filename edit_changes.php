@@ -99,10 +99,12 @@ if ($action=="acceptall") {
 	$temp_changes = $pgv_changes;
 	//-- only save the file and changes once
 	$manual_save = true;
-	foreach($temp_changes as $cid=>$changes) {
-		for($i=0; $i<count($changes); $i++) {
-			$change = $changes[$i];
-			if ($change["gedcom"]==$ged) accept_changes($cid);
+	foreach ($temp_changes as $cid=>$changes) {
+		foreach ($changes as $change) {
+			if ($change['gedcom']==$ged) {
+				accept_changes($cid);
+				break;
+			}
 		}
 	}
 	if ($SYNC_GEDCOM_FILE) write_file();
