@@ -96,8 +96,11 @@ $assokeys = array(
 );
 $assorela = array();
 foreach ($assokeys as $indexval => $key) {
-	if (isset($pgv_lang["$key"])) $assorela["$key"] = $pgv_lang["$key"];
-	else $assorela["$key"] = "? $key";
+	if (isset($pgv_lang["$key"])) {
+		$assorela["$key"] = $pgv_lang["$key"];
+	} else {
+		$assorela["$key"] = "? $key";
+	}
 }
 uasort($assorela, "stringsort");
 
@@ -225,8 +228,11 @@ function checkFactEdit($gedrec) {
 
 if (!empty($pid)) {
 	if (($pid!="newsour") && ($pid!="newrepo") && ($noteid!="newnote")) {
-		if (!isset($pgv_changes[$pid."_".PGV_GEDCOM])) $gedrec = find_gedcom_record($pid, PGV_GED_ID);
-		else $gedrec = find_updated_record($pid, PGV_GED_ID);
+		if (!isset($pgv_changes[$pid."_".PGV_GEDCOM])) {
+			$gedrec = find_gedcom_record($pid, PGV_GED_ID);
+		} else {
+			$gedrec = find_updated_record($pid, PGV_GED_ID);
+		}
 		$ct = preg_match("/0 @$pid@ (.*)/", $gedrec, $match);
 		if ($ct>0) {
 			$type = trim($match[1]);
@@ -241,8 +247,11 @@ if (!empty($pid)) {
 }
 else if (!empty($famid)) {
 	if ($famid != "new") {
-		if (!isset($pgv_changes[$famid."_".PGV_GEDCOM])) $gedrec = find_gedcom_record($famid, PGV_GED_ID);
-		else $gedrec = find_updated_record($famid, PGV_GED_ID);
+		if (!isset($pgv_changes[$famid."_".PGV_GEDCOM])) {
+			$gedrec = find_gedcom_record($famid, PGV_GED_ID);
+		} else {
+			$gedrec = find_updated_record($famid, PGV_GED_ID);
+		}
 		$ct = preg_match("/0 @$famid@ (.*)/", $gedrec, $match);
 		if ($ct>0) {
 			$type = trim($match[1]);
@@ -266,14 +275,24 @@ if (!PGV_USER_CAN_EDIT || !$disp || !$ALLOW_EDIT_GEDCOM) {
 	//echo "gedrec: $gedrec<br />";
 	echo $pgv_lang["access_denied"];
 	//-- display messages as to why the editing access was denied
-	if (!PGV_USER_CAN_EDIT) echo "<br />".$pgv_lang["user_cannot_edit"];
-	if (!$ALLOW_EDIT_GEDCOM) echo "<br />".$pgv_lang["gedcom_editing_disabled"];
+	if (!PGV_USER_CAN_EDIT) {
+		echo "<br />".$pgv_lang["user_cannot_edit"];
+	}
+	if (!$ALLOW_EDIT_GEDCOM) {
+		echo "<br />".$pgv_lang["gedcom_editing_disabled"];
+	}
 	if (!$disp) {
 		echo "<br />".$pgv_lang["privacy_prevented_editing"];
-		if (!empty($pid)) echo "<br />".$pgv_lang["privacy_not_granted"]." pid $pid.";
-		if (!empty($famid)) echo "<br />".$pgv_lang["privacy_not_granted"]." famid $famid.";
+		if (!empty($pid)) {
+			echo "<br />".$pgv_lang["privacy_not_granted"]." pid $pid.";
+		}
+		if (!empty($famid)) {
+			echo "<br />".$pgv_lang["privacy_not_granted"]." famid $famid.";
+		}
 	}
-	if (empty($gedrec)) echo "<br /><span class=\"error\">".$pgv_lang["record_not_found"]."</span>";
+	if (empty($gedrec)) {
+		echo "<br /><span class=\"error\">".$pgv_lang["record_not_found"]."</span>";
+	}
 	echo "<br /><br /><div class=\"center\"><a href=\"javascript: ".$pgv_lang["close_window"]."\" onclick=\"window.close();\">".$pgv_lang["close_window"]."</a></div>\n";
 	print_simple_footer();
 	exit;
@@ -282,9 +301,13 @@ if (!PGV_USER_CAN_EDIT || !$disp || !$ALLOW_EDIT_GEDCOM) {
 //-- privatize the record so that line numbers etc. match what was in the display
 //-- data that is hidden because of privacy is stored in the $pgv_private_records array
 //-- any private data will be restored when the record is replaced
-if (isset($gedrec)) $gedrec = privatize_gedcom($gedrec);
+if (isset($gedrec)) {
+	$gedrec = privatize_gedcom($gedrec);
+}
 
-if (!isset($type)) $type="";
+if (!isset($type)) {
+	$type="";
+}
 $level0type = $type;
 if ($type=="INDI") {
 	$record=Person::getInstance($pid);
@@ -300,9 +323,13 @@ elseif ($type=="FAM") {
 } elseif ($type=="SOUR") {
 	$record=Source::getInstance($pid);
 	echo "<b>".PrintReady($record->getFullName())."&nbsp;&nbsp;&nbsp;";
-	if ($TEXT_DIRECTION=="rtl") echo getRLM();
+	if ($TEXT_DIRECTION=="rtl") {
+		echo getRLM();
+	}
 	echo "(".$pid.")";
-	if ($TEXT_DIRECTION=="rtl") echo getRLM();
+	if ($TEXT_DIRECTION=="rtl") {
+		echo getRLM();
+	}
 	echo "</b><br />";
 }
 
@@ -322,15 +349,20 @@ else if (strstr($action,"addspouse")) {
 }
 else if (strstr($action,"addnewparent")) {
 	print_help_link("edit_add_parent_help", "qm");
-	if ($famtag=="WIFE") echo "<b>".$pgv_lang["add_mother"]."</b>\n";
-	else echo "<b>".$pgv_lang["add_father"]."</b>\n";
+	if ($famtag=="WIFE") {
+		echo "<b>".$pgv_lang["add_mother"]."</b>\n";
+	} else {
+		echo "<b>".$pgv_lang["add_father"]."</b>\n";
+	}
 }
 else if (strstr($action,"addopfchild")) {
 	print_help_link("edit_add_child_help", "qm");
 	echo "<b>".$pgv_lang["add_opf_child"]."</b>";
 }
 else {
-	if (isset($factarray[$type])) echo "<b>".$factarray[$type]."</b>";
+	if (isset($factarray[$type])) {
+		echo "<b>".$factarray[$type]."</b>";
+	}
 }
 //------------------------------------------------------------------------------
 switch ($action) {
@@ -340,17 +372,26 @@ case 'delete':
 	}
 	if (!empty($linenum)) {
 		if ($linenum===0) {
-			if (delete_gedrec($pid)) echo $pgv_lang["gedrec_deleted"];
+			if (delete_gedrec($pid)) {
+				echo $pgv_lang["gedrec_deleted"];
+			}
 		}
 		else {
 			$mediaid='';
-			if (isset($_REQUEST['mediaid'])) $mediaid = $_REQUEST['mediaid'];
+			if (isset($_REQUEST['mediaid'])) {
+				$mediaid = $_REQUEST['mediaid'];
+			}
 			//-- when deleting a media link
 			//-- $linenum comes is an OBJE and the $mediaid to delete should be set
-			if (!is_numeric($linenum)) $newged = remove_subrecord($gedrec, $linenum, $mediaid);
-			else $newged = remove_subline($gedrec, $linenum);
+			if (!is_numeric($linenum)) {
+				$newged = remove_subrecord($gedrec, $linenum, $mediaid);
+			} else {
+				$newged = remove_subline($gedrec, $linenum);
+			}
 			$success = (replace_gedrec($pid, $newged));
-			if ($success) echo "<br /><br />".$pgv_lang["gedrec_deleted"];
+			if ($success) {
+				echo "<br /><br />".$pgv_lang["gedrec_deleted"];
+			}
 		}
 	}
 	break;
@@ -359,8 +400,12 @@ case 'delete':
 case 'editraw':
 	if (!checkFactEdit($gedrec)) {
 		echo "<br />".$pgv_lang["privacy_prevented_editing"];
-		if (!empty($pid)) echo "<br />".$pgv_lang["privacy_not_granted"]." pid $pid.";
-		if (!empty($famid)) echo "<br />".$pgv_lang["privacy_not_granted"]." famid $famid.";
+		if (!empty($pid)) {
+			echo "<br />".$pgv_lang["privacy_not_granted"]." pid $pid.";
+		}
+		if (!empty($famid)) {
+			echo "<br />".$pgv_lang["privacy_not_granted"]." famid $famid.";
+		}
 		print_simple_footer();
 		exit;
 	}
@@ -537,8 +582,11 @@ case 'linkspouse':
 	echo "<input type=\"hidden\" name=\"famtag\" value=\"$famtag\" />\n";
 	echo "<table class=\"facts_table\">";
 	echo "<tr><td class=\"facts_label\">";
-	if ($famtag=="WIFE") echo $pgv_lang["wife"];
-	else echo $pgv_lang["husband"];
+	if ($famtag=="WIFE") {
+		echo $pgv_lang["wife"];
+	} else {
+		echo $pgv_lang["husband"];
+	}
 	echo "</td>";
 	echo "<td class=\"facts_value\"><input id=\"spouseid\" type=\"text\" name=\"spid\" size=\"8\" /> ";
 	print_findindi_link("spouseid", "");
@@ -697,12 +745,12 @@ case 'addnewsource':
 				<td class="optionbox wrap"><select name="EVEN[]" multiple="multiple" size="5">
 					<?php
 					$parts = explode(',', $INDI_FACTS_ADD);
-					foreach($parts as $p=>$key) {
+					foreach ($parts as $p=>$key) {
 						?><option value="<?php echo $key; ?>"><?php echo $factarray[$key]. " ($key)"; ?></option>
 					<?php
 					}
 					$parts = explode(',', $FAM_FACTS_ADD);
-					foreach($parts as $p=>$key) {
+					foreach ($parts as $p=>$key) {
 						?><option value="<?php echo $key; ?>"><?php echo $factarray[$key]. " ($key)"; ?></option>
 					<?php
 					}
@@ -754,9 +802,12 @@ case 'addsourceaction':
 	if (!empty($AUTH)) $newgedrec .= "1 AUTH $AUTH\n";
 	if (!empty($PUBL)) {
 		$newlines = preg_split("/\r?\n/",$PUBL,-1,PREG_SPLIT_NO_EMPTY);
-		for($k=0; $k<count($newlines); $k++) {
-			if ( $k==0 ) $newgedrec .= "1 PUBL $newlines[$k]\n";
-			else $newgedrec .= "2 CONT $newlines[$k]\n";
+		foreach ($newlines as $k=>$line){
+			if ( $k==0 ) {
+				$newgedrec .= "1 PUBL $line\n";
+			} else {
+				$newgedrec .= "2 CONT $line\n";
+			}
 		}
 	}
 	if (!empty($REPO)) {
@@ -844,7 +895,7 @@ case 'addnoteaction':
 
 	if (!empty($NOTE)) {
 		$newlines = preg_split("/\r?\n/",$NOTE,-1);
-		for($k=0; $k<count($newlines); $k++) {
+		for ($k=0; $k<count($newlines); $k++) {
 			if ( $k==0 && count($newlines)>1) {
 				$newgedrec = "0 @XREF@ NOTE $newlines[$k]\n";
 			}else if ( $k==0 ) {
@@ -865,9 +916,12 @@ case 'addnoteaction':
 	if (!empty($AUTH)) $newgedrec .= "1 AUTH $AUTH\n";
 	if (!empty($PUBL)) {
 		$newlines = preg_split("/\r?\n/",$PUBL,-1,PREG_SPLIT_NO_EMPTY);
-		for($k=0; $k<count($newlines); $k++) {
-			if ( $k==0 ) $newgedrec .= "1 PUBL $newlines[$k]\n";
-			else $newgedrec .= "2 CONT $newlines[$k]\n";
+		foreach ($newlines as $k=>$line) {
+			if ( $k==0 ) {
+				$newgedrec .= "1 PUBL $line\n";
+			} else {
+				$newgedrec .= "2 CONT $line\n";
+			}
 		}
 	}
 	if (!empty($NOTE)) {
@@ -956,7 +1010,7 @@ case 'addnoteaction_assisted':
 
 	if (!empty($NOTE)) {
 		$newlines = preg_split("/\r?\n/",$NOTE,-1);
-		for($k=0; $k<count($newlines); $k++) {
+		for ($k=0; $k<count($newlines); $k++) {
 			if ( $k==0 && count($newlines)>1) {
 				$newgedrec = "0 @XREF@ NOTE $newlines[$k]\n";
 			}else if ( $k==0 ) {
@@ -977,9 +1031,12 @@ case 'addnoteaction_assisted':
 	if (!empty($AUTH)) $newgedrec .= "1 AUTH $AUTH\n";
 	if (!empty($PUBL)) {
 		$newlines = preg_split("/\r?\n/",$PUBL,-1,PREG_SPLIT_NO_EMPTY);
-		for($k=0; $k<count($newlines); $k++) {
-			if ( $k==0 ) $newgedrec .= "1 PUBL $newlines[$k]\n";
-			else $newgedrec .= "2 CONT $newlines[$k]\n";
+		foreach ($newlines as $k=>$line) {
+			if ( $k==0 ) {
+				$newgedrec .= "1 PUBL $line\n";
+			} else {
+				$newgedrec .= "2 CONT $line\n";
+			}
 		}
 	}
 	if (!empty($NOTE)) {
@@ -1230,9 +1287,12 @@ case 'addrepoaction':
 	}
 	if (!empty($ADDR)) {
 		$newlines = preg_split("/\r?\n/",$ADDR,-1,PREG_SPLIT_NO_EMPTY);
-		for($k=0; $k<count($newlines); $k++) {
-			if ( $k==0 ) $newgedrec .= "1 ADDR $newlines[$k]\n";
-			else $newgedrec .= "2 CONT $newlines[$k]\n";
+		foreach ($newlines as $k=>$line) {
+			if ( $k==0 ) {
+				$newgedrec .= "1 ADDR $line\n";
+			} else {
+				$newgedrec .= "2 CONT $line\n";
+			}
 		}
 	}
 	if (!empty($PHON)) $newgedrec .= "1 PHON $PHON\n";
@@ -1309,7 +1369,7 @@ case 'update':
 			$uploaded_files = array();
 			if (substr($folder,0,1) == "/") $folder = substr($folder,1);
 			if (substr($folder,-1,1) != "/") $folder .= "/";
-			foreach($_FILES as $upload) {
+			foreach ($_FILES as $upload) {
 				if (!empty($upload['tmp_name'])) {
 					if (!move_uploaded_file($upload['tmp_name'], $MEDIA_DIRECTORY.$folder.basename($upload['name']))) {
 						$error .= "<br />".$pgv_lang["upload_error"]."<br />".file_upload_error_text($upload['error']);
@@ -1337,7 +1397,7 @@ case 'update':
 			$linenum = count($gedlines);
 		}
 		$newged = "";
-		for($i=0; $i<$linenum; $i++) {
+		for ($i=0; $i<$linenum; $i++) {
 			$newged .= $gedlines[$i]."\n";
 		}
 		//-- for edits get the level from the line
@@ -1345,7 +1405,7 @@ case 'update':
 			$fields = explode(' ', $gedlines[$linenum]);
 			$glevel = $fields[0];
 			$i++;
-			while(($i<count($gedlines))&&($gedlines[$i]{0}>$glevel)) $i++;
+			while (($i<count($gedlines))&&($gedlines[$i]{0}>$glevel)) $i++;
 		}
 
 		if (!isset($glevels)) $glevels = array();
@@ -1375,7 +1435,7 @@ case 'update':
 		if (isset($_REQUEST['NOTE'])) $NOTE = $_REQUEST['NOTE'];
 		if (!empty($NOTE)) {
 			$newlines = preg_split("/\r?\n/",$NOTE,-1 );
-			for($k=0; $k<count($newlines); $k++) {
+			for ($k=0; $k<count($newlines); $k++) {
 				if ( $k==0 && count($newlines)>1) {
 					$gedlines[$k] = "0 @$pid@ NOTE $newlines[$k]\n";
 				} else {
@@ -1395,7 +1455,7 @@ case 'update':
 		if (!empty($_AKA)) $newged .= "2 _AKA $_AKA\n";
 		if (!empty($_MARNM)) $newged .= "2 _MARNM $_MARNM\n";
 
-		while($i<count($gedlines)) {
+		while ($i<count($gedlines)) {
 			$newged .= trim($gedlines[$i])."\n";
 			$i++;
 		}
@@ -1404,7 +1464,7 @@ case 'update':
 		$newged = "";
 		$current = 0;
 		foreach ($linenum as $editline) {
-			for($i=$current; $i<$editline; $i++) {
+			for ($i=$current; $i<$editline; $i++) {
 				$newged .= $gedlines[$i]."\n";
 			}
 			//-- for edits get the level from the line
@@ -1412,7 +1472,7 @@ case 'update':
 				$fields = explode(' ', $gedlines[$editline]);
 				$glevel = $fields[0];
 				$i++;
-				while(($i<count($gedlines))&&($gedlines[$i]{0}>$glevel)) $i++;
+				while (($i<count($gedlines))&&($gedlines[$i]{0}>$glevel)) $i++;
 			}
 
 			if (!isset($glevels)) $glevels = array();
@@ -1442,7 +1502,7 @@ case 'update':
 			if (isset($_REQUEST['NOTE'])) $NOTE = $_REQUEST['NOTE'];
 			if (!empty($NOTE)) {
 				$newlines = preg_split("/\r?\n/",$NOTE,-1 );
-				for($k=0; $k<count($newlines); $k++) {
+				for ($k=0; $k<count($newlines); $k++) {
 					if ($k==0 && count($newlines)>1) {
 						$gedlines[$k] = "0 @$pid@ NOTE $newlines[$k]\n";
 					} else {
@@ -1544,7 +1604,7 @@ case 'addchildaction':
 			if ($family->getUpdatedFamily()) $family = $family->getUpdatedFamily();
 			$gedrec = $family->gedrec;
 			$done = false;
-			foreach($family->getChildren() as $key=>$child) {
+			foreach ($family->getChildren() as $key=>$child) {
 				if (GedcomDate::Compare($newchild->getEstimatedBirthDate(), $child->getEstimatedBirthDate())<0) {
 					// new child is older : insert before
 					$gedrec = str_replace("1 CHIL @".$child->getXref()."@",
@@ -1957,7 +2017,7 @@ case 'deleterepo':
 			$newrec = "";
 			$skipline = false;
 			$glevel = 0;
-			foreach($lines as $indexval => $line) {
+			foreach ($lines as $indexval => $line) {
 				if ((preg_match("/^\d ".PGV_REGEX_TAG." @$pid@/", $line)==0)&&(!$skipline)) $newrec .= $line."\n";
 				else {
 					if (!$skipline) {
@@ -1991,7 +2051,7 @@ case 'editname':
 	$glevel = $fields[0];
 	$i = $linenum+1;
 	$namerec = $gedlines[$linenum];
-	while(($i<count($gedlines))&&($gedlines[$i]{0}>$glevel)) {
+	while (($i<count($gedlines))&&($gedlines[$i]{0}>$glevel)) {
 		$namerec.="\n".$gedlines[$i];
 		$i++;
 	}
@@ -2015,7 +2075,7 @@ case 'copy':
 		$glevel = $fields[0];
 		$i = $linenum+1;
 		$factrec = $gedlines[$linenum];
-		while(($i<count($gedlines))&&($gedlines[$i]{0}>$glevel)) {
+		while (($i<count($gedlines))&&($gedlines[$i]{0}>$glevel)) {
 			$factrec.="\n".$gedlines[$i];
 			$i++;
 		}
@@ -2059,10 +2119,12 @@ case 'reorder_media': // Sort page using Popup
 case 'reset_media_update': // Reset sort using popup
 	$lines = explode("\n", $gedrec);
 	$newgedrec = "";
-	for($i=0; $i<count($lines); $i++) {
-		if (strpos($lines[$i], "1 _PGV_OBJS")===false) $newgedrec .= $lines[$i]."\n";
+	foreach ($lines as $line) {
+		if (strpos($line, "1 _PGV_OBJS")===false) {
+			$newgedrec .= $line."\n";
+		}
 	}
-		$success = (replace_gedrec($pid, $newgedrec));
+	$success = (replace_gedrec($pid, $newgedrec));
 	if ($success) echo "<br />".$pgv_lang["update_successful"]."<br /><br />";
 	break;
 
@@ -2074,10 +2136,12 @@ case 'reorder_media_update': // Update sort using popup
 	if (isset($_REQUEST['order1'])) $order1 = $_REQUEST['order1'];
 	$lines = explode("\n", $gedrec);
 	$newgedrec = "";
-	for($i=0; $i<count($lines); $i++) {
-		if (strpos($lines[$i], "1 _PGV_OBJS")===false) $newgedrec .= $lines[$i]."\n";
+	foreach ($lines as $line) {
+		if (strpos($line, "1 _PGV_OBJS")===false) {
+			$newgedrec .= $line."\n";
+		}
 	}
-	foreach($order1 as $m_media=>$num) {
+	foreach ($order1 as $m_media=>$num) {
 		$newgedrec .= "1 _PGV_OBJS @".$m_media."@\n";
 	}
 	if (PGV_DEBUG) {
@@ -2100,10 +2164,12 @@ case 'reorder_media_update': // Update sort using popup
 case 'al_reset_media_update': // Reset sort using Album Page
 	$lines = explode("\n", $gedrec);
 	$newgedrec = "";
-	for($i=0; $i<count($lines); $i++) {
-		if (strpos($lines[$i], "1 _PGV_OBJS")===false) $newgedrec .= $lines[$i]."\n";
+	foreach ($lines as $line) {
+		if (strpos($line, "1 _PGV_OBJS")===false) {
+			$newgedrec .= $line."\n";
+		}
 	}
-		$success = (replace_gedrec($pid, $newgedrec));
+	$success = (replace_gedrec($pid, $newgedrec));
 	if ($success) echo "<br />".$pgv_lang["update_successful"]."<br /><br />";
 		if (!file_exists("modules/googlemap/defaultconfig.php")) {
 			$tabno = "7";
@@ -2124,7 +2190,7 @@ case 'al_reorder_media_update': // Update sort using Album Page
 
 	function SwapArray($Array){
 		$Values = array();
-		while(list($Key,$Val) = each($Array))
+		while (list($Key,$Val) = each($Array))
 			$Values[$Val] = $Key;
 		return $Values;
 	}
@@ -2133,10 +2199,12 @@ case 'al_reorder_media_update': // Update sort using Album Page
 
 	$lines = explode("\n", $gedrec);
 	$newgedrec = "";
-	for($i=0; $i<count($lines); $i++) {
-		if (strpos($lines[$i], "1 _PGV_OBJS")===false) $newgedrec .= $lines[$i]."\n";
+	foreach ($lines as $line) {
+		if (strpos($line, "1 _PGV_OBJS")===false) {
+			$newgedrec .= $line."\n";
+		}
 	}
-	foreach($order2 as $m_media=>$num) {
+	foreach ($order2 as $m_media=>$num) {
 		$newgedrec .= "1 _PGV_OBJS @".$m_media."@\n";
 	}
 	if (PGV_DEBUG) {
@@ -2190,7 +2258,7 @@ case 'reorder_children':
 			}
 			$i=0;
 			$show_full = 1; // Force details to show for each child
-			foreach($children as $id=>$child) {
+			foreach ($children as $id=>$child) {
 				echo "<li style=\"cursor:move;margin-bottom:2px;\"";
 				if (!in_array($id, $ids)) echo " class=\"facts_valueblue\"";
 				echo " id=\"li_$id\" >";
@@ -2235,7 +2303,7 @@ case 'changefamily':
 			if ($mother->getSex()=="M") $mother->setLabel($pgv_lang["father"]);
 			else $mother->setLabel($pgv_lang["mother"]);
 		}
-		for($i=0; $i<count($children); $i++) {
+		for ($i=0; $i<count($children); $i++) {
 			if (!is_null($children[$i])) {
 				if ($children[$i]->getSex()=="M") $children[$i]->setLabel($pgv_lang["son"]);
 				else if ($children[$i]->getSex()=="F") $children[$i]->setLabel($pgv_lang["daughter"]);
@@ -2317,7 +2385,7 @@ case 'changefamily':
 			</tr>
 			<?php
 			$i=0;
-			foreach($children as $key=>$child) {
+			foreach ($children as $key=>$child) {
 				if (!is_null($child)) {
 				?>
 			<tr>
@@ -2437,7 +2505,7 @@ case 'changefamily_update':
 	$i=0;
 	$var = "CHIL".$i;
 	$newchildren = array();
-	while(isset($_REQUEST[$var])) {
+	while (isset($_REQUEST[$var])) {
 		$CHIL = $_REQUEST[$var];
 		if (!empty($CHIL)) {
 			$newchildren[] = $CHIL;
@@ -2457,7 +2525,7 @@ case 'changefamily_update':
 	}
 
 	//-- remove the old children
-	foreach($children as $key=>$child) {
+	foreach ($children as $key=>$child) {
 		if (!is_null($child)) {
 			if (!in_array($child->getXref(), $newchildren)) {
 				//-- remove the CHIL link from the family record
@@ -2542,7 +2610,7 @@ case 'reorder_update':
 	asort($order);
 	reset($order);
 	$newgedrec = $gedrec;
-	foreach($order as $child=>$num) {
+	foreach ($order as $child=>$num) {
 		// move each child subrecord to the bottom, in the order specified
 		$subrec = get_sub_record(1, "1 CHIL @".$child."@", $gedrec);
 		$subrec = trim($subrec,"\n");
@@ -2577,7 +2645,7 @@ case 'reorder_fams':
 				uasort($fams, array('Family', 'CompareMarrDate'));
 			}
 			$i=0;
-			foreach($fams as $famid=>$family) {
+			foreach ($fams as $famid=>$family) {
 				echo "<li class=\"facts_value\" style=\"cursor:move;margin-bottom:2px;\" id=\"li_$famid\" >";
 				echo "<span class=\"name2\">".PrintReady($family->getFullName())."</span><br />";
 				echo $family->format_first_major_fact(PGV_EVENTS_MARR, 2);
@@ -2615,10 +2683,12 @@ case 'reorder_fams_update':
 	reset($order);
 	$lines = explode("\n", $gedrec);
 	$newgedrec = "";
-	for($i=0; $i<count($lines); $i++) {
-		if (strpos($lines[$i], "1 FAMS")===false) $newgedrec .= $lines[$i]."\n";
+	foreach ($lines as $line) {
+		if (strpos($line, "1 FAMS")===false) {
+			$newgedrec .= $line."\n";
+		}
 	}
-	foreach($order as $famid=>$num) {
+	foreach ($order as $famid=>$num) {
 		$newgedrec .= "1 FAMS @".$famid."@\n";
 	}
 	if (PGV_DEBUG) {
