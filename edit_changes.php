@@ -73,29 +73,28 @@ case 'accept':
 case 'undoall':
 	//-- alert that we only want to save the file and changes once
 	$manual_save = true;
-	$temp_changes = $pgv_changes;
-	foreach ($temp_changes as $cid=>$changes) {
-		$change = $changes[0];
-		if ($change['gedcom']==$ged) undo_change($cid, 0);
+	foreach ($pgv_changes as $cid=>$changes) {
+		if ($changes[0]['gedcom']==$ged) {
+			undo_change($cid, 0);
+		}
 	}
 	write_changes();
 	$manual_save = false;
 	echo '<b>', $pgv_lang['undo_successful'], '</b>';
 	break;
 case 'acceptall':
-	$temp_changes = $pgv_changes;
 	//-- only save the file and changes once
 	$manual_save = true;
-	foreach ($temp_changes as $cid=>$changes) {
+	foreach ($pgv_changes as $cid=>$changes) {
 		if ($changes[0]['gedcom']==$ged) {
 			accept_changes($cid);
 		}
 	}
+	write_changes();
+	$manual_save = false;
 	if ($SYNC_GEDCOM_FILE) {
 		write_file();
 	}
-	write_changes();
-	$manual_save = false;
 	echo '<b>', $pgv_lang['accept_successful'], '</b>';
 	break;
 }
