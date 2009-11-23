@@ -977,89 +977,9 @@ case 'addnewnote_assisted':
 	break;
 	
 //------------------------------------------------------------------------------
-//-- create a shared note record from the incoming variables
+//-- create a shared note census record from the incoming variables using GEDFact Assistant
 case 'addnoteaction_assisted':
-	if (PGV_DEBUG) {
-		phpinfo(INFO_VARIABLES);
-	}
-	$newgedrec  = "0 @XREF@ NOTE\n";
-
-	if (isset($_REQUEST['EVEN'])) $EVEN = $_REQUEST['EVEN'];
-	if (!empty($EVEN) && count($EVEN)>0) {
-		$newgedrec .= "1 DATA\n";
-		$newgedrec .= "2 EVEN ".implode(",", $EVEN)."\n";
-		if (!empty($EVEN_DATE)) $newgedrec .= "3 DATE ".check_input_date($EVEN_DATE)."\n";
-		if (!empty($EVEN_PLAC)) $newgedrec .= "3 PLAC ".$EVEN_PLAC."\n";
-		if (!empty($AGNC))      $newgedrec .= "2 AGNC ".$AGNC."\n";
-	}
-	if (isset($_REQUEST['ABBR'])) $ABBR = $_REQUEST['ABBR'];
-	if (isset($_REQUEST['TITL'])) $TITL = $_REQUEST['TITL'];
-	if (isset($_REQUEST['DATE'])) $DATE = $_REQUEST['DATE'];
-	if (isset($_REQUEST['NOTE'])) $NOTE = $_REQUEST['NOTE'];
-	if (isset($_REQUEST['_HEB'])) $_HEB = $_REQUEST['_HEB'];
-	if (isset($_REQUEST['ROMN'])) $ROMN = $_REQUEST['ROMN'];
-	if (isset($_REQUEST['AUTH'])) $AUTH = $_REQUEST['AUTH'];
-	if (isset($_REQUEST['PUBL'])) $PUBL = $_REQUEST['PUBL'];
-	if (isset($_REQUEST['REPO'])) $REPO = $_REQUEST['REPO'];
-	if (isset($_REQUEST['CALN'])) $CALN = $_REQUEST['CALN'];
-	
-	if (isset($_REQUEST['pid_array'])) 	$pid_array	 = $_REQUEST['pid_array'];
-	if (isset($_REQUEST['pid'])) 		$pid		 = $_REQUEST['pid'];
-	
-	global $pid;
-
-	if (!empty($NOTE)) {
-		$newlines = preg_split("/\r?\n/",$NOTE,-1);
-		for ($k=0; $k<count($newlines); $k++) {
-			if ( $k==0 && count($newlines)>1) {
-				$newgedrec = "0 @XREF@ NOTE $newlines[$k]\n";
-			}else if ( $k==0 ) {
-				$newgedrec = "0 @XREF@ NOTE $newlines[$k]\n1 CONT\n";
-			} else {
-				$newgedrec .= "1 CONT $newlines[$k]\n";
-			}
-		}
-	}
-
-	if (!empty($ABBR)) $newgedrec .= "1 ABBR $ABBR\n";
-	if (!empty($TITL)) {
-		// $newgedrec .= "1 TITL $TITL\n";
-		// $newgedrec .= "2 DATE $DATE\n";
-		if (!empty($_HEB)) $newgedrec .= "2 _HEB $_HEB\n";
-		if (!empty($ROMN)) $newgedrec .= "2 ROMN $ROMN\n";
-	}
-	if (!empty($AUTH)) $newgedrec .= "1 AUTH $AUTH\n";
-	if (!empty($PUBL)) {
-		$newlines = preg_split("/\r?\n/",$PUBL,-1,PREG_SPLIT_NO_EMPTY);
-		foreach ($newlines as $k=>$line) {
-			if ( $k==0 ) {
-				$newgedrec .= "1 PUBL $line\n";
-			} else {
-				$newgedrec .= "2 CONT $line\n";
-			}
-		}
-	}
-	if (!empty($NOTE)) {
-		//$newgedrec .= "1 NOTE @$NOTE@\n";
-		if (!empty($CALN)) $newgedrec .= "2 CALN $CALN\n";
-	}
-	if (PGV_DEBUG) {
-		echo "<pre>$newgedrec</pre>";
-	}
-	// $xref = "Test";
-	$xref = append_gedrec($newgedrec);
-	$link = "note.php?nid=$xref&show_changes=yes";
-	if ($xref) {
-		$closeparent="yes";
-		echo "<br /><br />\n".$pgv_lang["new_shared_note_created"]." (".$xref.")<br /><br />";
-		echo "<a href=\"javascript://NOTE $xref\" onclick=\"openerpasteid('$xref'); return false;\">".$pgv_lang["paste_id_into_field"]." <b>$xref</b></a>\n";
-		echo "<br /><br />";
-		echo "Census event will be linked to Indi id's: <br />". $pid_array;
-		echo "<br /><br />";
-		
-		echo "Base ID = " . $pid;
-		echo "<br /><br /><br /><br />";
-	}
+	include ('modules/GEDFact_assistant/_CENS/gedrec_append.php');
 	break;
 	
 //------------------------------------------------------------------------------
@@ -2000,6 +1920,9 @@ case 'deletefamily':
 case 'deletenote':
 case 'deletesource':
 case 'deleterepo':
+
+if (isset($_REQUEST['action'])) $action = $_REQUEST['action'];
+
 	if (PGV_DEBUG) {
 		phpinfo(INFO_VARIABLES);
 		echo "<pre>$gedrec</pre>";
@@ -2041,7 +1964,17 @@ case 'deleterepo':
 		if ($success) {
 			$success = $success && delete_gedrec($pid);
 		}
-		if ($success) echo "<br /><br />".$pgv_lang["gedrec_deleted"];
+		if ($success) {
+			echo "<br /><br />".$pgv_lang["gedrec_deleted"];
+			if ($action=="deletenote") {
+				$link="notelist.php";
+			}else if ($action=="deletesource") {
+				$link="sourcelist.php";
+			}else if ($action=="deleterepo") {
+				$link="repolist.php";
+			}
+		//	echo PGV_JS_START, "edit_close('{$link}');", PGV_JS_END;
+		}
 	}
 	break;
 //------------------------------------------------------------------------------
@@ -2714,13 +2647,20 @@ case 'mod_edit_fact':
 
 
 // Redirect to new record, if requested
-if (isset($_REQUEST['goto'])) $goto = $_REQUEST['goto'];
-if (isset($_REQUEST['link'])) $link = $_REQUEST['link'];
-if (empty($goto) || empty($link))
+/*
+if (isset($_REQUEST['goto'])) { 
+	$goto = $_REQUEST['goto'];
+}
+if (isset($_REQUEST['link'])) {
+	$link = $_REQUEST['link'];
+}
+*/
+if (empty($goto) && empty($link)) {
 	$link='';
-//------------------------------------------------------------------------------
-// autoclose window when update successful
-if ($success && $EDIT_AUTOCLOSE && !PGV_DEBUG) {
+}
+
+// autoclose window when update successful ========================================= 
+if ($success && $EDIT_AUTOCLOSE && !PGV_DEBUG ) {
 	echo PGV_JS_START;
 	if ($action=="copy") {
 		echo "window.close();";
