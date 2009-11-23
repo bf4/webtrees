@@ -179,6 +179,11 @@ if ($action!="choose") {
 								$record=$record['gedrec'];
 								echo $pgv_lang["updating_linked"]." {$id}<br />\n";
 								$newrec=str_replace("@$gid2@", "@$gid1@", $record);
+								$newrec=preg_replace(
+									'/(\n1.*@.+@.*(?:(?:\n[2-9].*)*))((?:\n1.*(?:\n[2-9].*)*)*\1)/',
+									'$2',
+									$newrec
+								);
 								replace_gedrec($id, $newrec);
 							}
 						}
