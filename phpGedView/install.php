@@ -316,43 +316,53 @@ switch($step) {
 		}
 		break;
 	case 7:
-		if (isset($_POST['pass1'])) {
-		if ($_POST['pass1']==$_POST['pass2']) {
-			if ($user_id=create_user($_POST['username'], crypt($_POST['pass1']))) {
-				set_user_setting($user_id, 'firstname',            $_POST['firstname']);
-				set_user_setting($user_id, 'lastname',             $_POST['lastname']);
-				set_user_setting($user_id, 'canadmin',             'Y');
-				set_user_setting($user_id, 'email',                $_POST['emailadress']);
-				set_user_setting($user_id, 'verified',             'yes');
-				set_user_setting($user_id, 'verified_by_admin',    'yes');
-				set_user_setting($user_id, 'language',             $LANGUAGE);
-				set_user_setting($user_id, 'reg_timestamp',        date('U'));
-				set_user_setting($user_id, 'loggedin',             'Y');
-				set_user_setting($user_id, 'sessiontime',          time());
-				set_user_setting($user_id, 'contactmethod',        'messaging2');
-				set_user_setting($user_id, 'visibleonline',        'Y');
-				set_user_setting($user_id, 'editaccount',          'Y');
-				set_user_setting($user_id, 'defaulttab',           '0');
-				set_user_setting($user_id, 'sync_gedcom',          'N');
-				set_user_setting($user_id, 'relationship_privacy', 'N');
-				set_user_setting($user_id, 'max_relation_path',    '2');
-				set_user_setting($user_id, 'auto_accept',          'N');
-				AddToLog(getUserName()." added user -> {$_POST['username']} <-");
+		$username =safe_POST('username', PGV_REGEX_USERNAME);
+		$pass1    =safe_POST('pass1', PGV_REGEX_PASSWORD);
+		$pass2    =safe_POST('pass2', PGV_REGEX_PASSWORD);
+		$email    =safe_POST('emailadress', PGV_REGEX_EMAIL);
+		$firstname=safe_POST('firstname');
+		$lastname =safe_POST('lastname');
+		if ($username && $pass1 && $firstname && $lastname) {
+			if ($pass1==$pass2) {
+				if ($user_id=create_user($username, crypt($pass1))) {
+					set_user_setting($user_id, 'firstname',            $firstname);
+					set_user_setting($user_id, 'lastname',             $lastname);
+					set_user_setting($user_id, 'canadmin',             'Y');
+					set_user_setting($user_id, 'email',                $email);
+					set_user_setting($user_id, 'verified',             'yes');
+					set_user_setting($user_id, 'verified_by_admin',    'yes');
+					set_user_setting($user_id, 'language',             $LANGUAGE);
+					set_user_setting($user_id, 'reg_timestamp',        date('U'));
+					set_user_setting($user_id, 'loggedin',             'Y');
+					set_user_setting($user_id, 'sessiontime',          time());
+					set_user_setting($user_id, 'contactmethod',        'messaging2');
+					set_user_setting($user_id, 'visibleonline',        'Y');
+					set_user_setting($user_id, 'editaccount',          'Y');
+					set_user_setting($user_id, 'defaulttab',           '0');
+					set_user_setting($user_id, 'sync_gedcom',          'N');
+					set_user_setting($user_id, 'relationship_privacy', 'N');
+					set_user_setting($user_id, 'max_relation_path',    '2');
+					set_user_setting($user_id, 'auto_accept',          'N');
+					AddToLog(getUserName()." added user -> {$username} <-");
 
-				$_SESSION["pgv_user"]=$user_id;
+					$_SESSION["pgv_user"]=$user_id;
+				} else {
+					$error['msg'] = $pgv_lang["user_create_error"];
+					$error['help'] = '';
+					$errors[] = $error;
+				}
 			} else {
-				$error['msg'] = $pgv_lang["user_create_error"];
+				$error['msg'] = $pgv_lang["password_mismatch"];
 				$error['help'] = '';
 				$errors[] = $error;
 			}
+			if (count($errors)==0) {
+				$step = 7;
+			}
 		} else {
-			$error['msg'] = $pgv_lang["password_mismatch"];
+			$error['msg'] = $pgv_lang["passwordlength"];
 			$error['help'] = '';
 			$errors[] = $error;
-		}
-		if (count($errors)==0) {
-			$step = 7;
-		}
 		}
 		break;
 	case 8:
