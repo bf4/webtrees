@@ -94,17 +94,21 @@ function is_dead($indirec, $current_year='', $import=false) {
 	preg_match_all('/\n1 '.PGV_EVENTS_DEAT.'(?:\n[2-9].+)*\n2 DATE (.+)/', $indirec, $date_matches);
 	foreach ($date_matches[1] as $date_match) {
 		$date=new GedcomDate($date_match);
-		$death_year=$date->gregorianYear();
-		return update_isdead($pid, PGV_GED_ID, $death_year<=$current_year);
+		if ($date->isOK()) {
+			$death_year=$date->gregorianYear();
+			return update_isdead($pid, PGV_GED_ID, $death_year<=$current_year);
+		}
 	}
 
 	// If any event occured more than $MAX_ALIVE_AGE years ago, then assume the person is dead
 	preg_match_all('/\n2 DATE (.+)/', $indirec, $date_matches);
 	foreach ($date_matches[1] as $date_match) {
 		$date=new GedcomDate($date_match);
-		$event_year=$date->gregorianYear();
-		if ($current_year-$event_year >= $MAX_ALIVE_AGE) {
-			return update_isdead($pid, PGV_GED_ID, true);
+		if ($date->isOK()) {
+			$event_year=$date->gregorianYear();
+			if ($current_year-$event_year >= $MAX_ALIVE_AGE) {
+				return update_isdead($pid, PGV_GED_ID, true);
+			}
 		}
 	}
 
@@ -124,10 +128,12 @@ function is_dead($indirec, $current_year='', $import=false) {
 					preg_match_all('/\n2 DATE (.+)/', find_person_record($parents['HUSB'], $ged_id), $date_matches);
 					foreach ($date_matches[1] as $date_match) {
 						$date=new GedcomDate($date_match);
-						$event_year=$date->gregorianYear();
-						// Assume fathers are no more than 40 years older than their children
-						if ($current_year-$event_year >= $MAX_ALIVE_AGE+40) {
-							return update_isdead($pid, PGV_GED_ID, true);
+						if ($date->isOK()) {
+							$event_year=$date->gregorianYear();
+							// Assume fathers are no more than 40 years older than their children
+							if ($current_year-$event_year >= $MAX_ALIVE_AGE+40) {
+								return update_isdead($pid, PGV_GED_ID, true);
+							}
 						}
 					}
 				}
@@ -135,10 +141,12 @@ function is_dead($indirec, $current_year='', $import=false) {
 					preg_match_all('/\n2 DATE (.+)/', find_person_record($parents['WIFE'], $ged_id), $date_matches);
 					foreach ($date_matches[1] as $date_match) {
 						$date=new GedcomDate($date_match);
-						$event_year=$date->gregorianYear();
-						// Assume fathers are no more than 40 years older than their children
-						if ($current_year-$event_year >= $MAX_ALIVE_AGE+40) {
-							return update_isdead($pid, PGV_GED_ID, true);
+						if ($date->isOK()) {
+							$event_year=$date->gregorianYear();
+							// Assume fathers are no more than 40 years older than their children
+							if ($current_year-$event_year >= $MAX_ALIVE_AGE+40) {
+								return update_isdead($pid, PGV_GED_ID, true);
+							}
 						}
 					}
 				}
@@ -153,10 +161,12 @@ function is_dead($indirec, $current_year='', $import=false) {
 			preg_match_all('/\n1 '.PGV_EVENTS_MARR.'(?:\n[2-9].+)*\n2 DATE (.+)/', $indirec, $date_matches);
 			foreach ($date_matches[1] as $date_match) {
 				$date=new GedcomDate($date_match);
-				$event_year=$date->gregorianYear();
-				// Assume marriage occurs after age of 10
-				if ($current_year-$event_year >= $MAX_ALIVE_AGE-10) {
-					return update_isdead($pid, PGV_GED_ID, true);
+				if ($date->isOK()) {
+					$event_year=$date->gregorianYear();
+					// Assume marriage occurs after age of 10
+					if ($current_year-$event_year >= $MAX_ALIVE_AGE-10) {
+						return update_isdead($pid, PGV_GED_ID, true);
+					}
 				}
 			}
 			// Check spouse dates
@@ -170,10 +180,12 @@ function is_dead($indirec, $current_year='', $import=false) {
 				preg_match_all('/\n2 DATE (.+)/', find_person_record($spid, $ged_id), $date_matches);
 				foreach ($date_matches[1] as $date_match) {
 					$date=new GedcomDate($date_match);
-					$event_year=$date->gregorianYear();
-					// Assume max age difference between spouses of 40 years
-					if ($current_year-$event_year >= $MAX_ALIVE_AGE+40) {
-						return update_isdead($pid, PGV_GED_ID, true);
+					if ($date->isOK()) {
+						$event_year=$date->gregorianYear();
+						// Assume max age difference between spouses of 40 years
+						if ($current_year-$event_year >= $MAX_ALIVE_AGE+40) {
+							return update_isdead($pid, PGV_GED_ID, true);
+						}
 					}
 				}
 			}
@@ -185,9 +197,11 @@ function is_dead($indirec, $current_year='', $import=false) {
 				// Assume children born after age of 15
 				foreach ($date_matches[1] as $date_match) {
 					$date=new GedcomDate($date_match);
-					$event_year=$date->gregorianYear();
-					if ($current_year-$event_year >= $MAX_ALIVE_AGE-15) {
-						return update_isdead($pid, PGV_GED_ID, true);
+					if ($date->isOK()) {
+						$event_year=$date->gregorianYear();
+						if ($current_year-$event_year >= $MAX_ALIVE_AGE-15) {
+							return update_isdead($pid, PGV_GED_ID, true);
+						}
 					}
 				}
 				// Check grandchildren
@@ -200,9 +214,11 @@ function is_dead($indirec, $current_year='', $import=false) {
 						// Assume grandchildren born after age of 30
 						foreach ($date_matches[1] as $date_match) {
 							$date=new GedcomDate($date_match);
-							$event_year=$date->gregorianYear();
-							if ($current_year-$event_year >= $MAX_ALIVE_AGE-30) {
-								return update_isdead($pid, PGV_GED_ID, true);
+							if ($date->isOK()) {
+								$event_year=$date->gregorianYear();
+								if ($current_year-$event_year >= $MAX_ALIVE_AGE-30) {
+									return update_isdead($pid, PGV_GED_ID, true);
+								}
 							}
 						}
 					}
