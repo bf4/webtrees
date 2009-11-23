@@ -10,6 +10,7 @@
 
 
 Version 4.2.3
+ - Fixed: [ 2840835 ] Checker reports warning if CONT tag value is all spaces (fisharebest)
  - Fixed: [ 2900966 ] batch update for death records (fisharebest)
  - Fixed: [ 2898717 ] No AGE field in LDS GUIs (fisharebest)
  - Fixed: Extended javascript change for dates like 21.12.1880 also with a prefix like AFT (volschin)

@@ -807,7 +807,7 @@ $num_lines=count($gedfile);
 if ($num_lines>0) $gedfile[0]=preg_replace('/^'.PGV_UTF8_BOM.'/', '', $gedfile[0]);
 $context=array('GEDCOM'); $curr_xref='';
 foreach ($gedfile as $num=>$value) {
-	preg_match('/^(\s*)(\d*)(\s*)(@[^@#]+@)?(\s*)(\S*)(\s*)(.*)/', $value, $match);
+	preg_match('/^(\s*)(\d*)(\s*)(@[^@#]+@)?(\s*)(\S*)(\s?)(.*)/', $value, $match);
 	$whitespace1=$match[1];
 	$tag_level  =$match[2];
 	$whitespace2=$match[3];
