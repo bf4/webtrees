@@ -10,6 +10,7 @@
 
 
 Version 4.2.3
+ - Fixed: [ 2881117 ] 4.2.2 Merge 2 Indis makes 2 clones in Fam record (fisharebest)
  - Fixed: [ 2840835 ] Checker reports warning if CONT tag value is all spaces (fisharebest)
  - Fixed: [ 2900966 ] batch update for death records (fisharebest)
  - Fixed: [ 2898717 ] No AGE field in LDS GUIs (fisharebest)
