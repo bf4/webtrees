@@ -10,6 +10,7 @@
 
 
 Version 4.2.x CA
+ - Add new file modules/GEDFact_assistant/_CENS/gedrec_append.php to handle census event copying to multiple indis. (Requires Trunk svn 6430) (windmillway)
  - Merged: Merge changes r6394 - r6415 from the trunk. Changed placement of CENS assistant launch icon on "CENS add" window. (windmillway)
  - Merged: Merge changes r6325 - r6393 from the trunk. (windmillway)
  - Changed: All theme Tab spacing/padding now narrowed. Selected Tab height changed. ALL tabs now wrap gracefully.
