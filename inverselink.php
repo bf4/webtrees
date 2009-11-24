@@ -89,7 +89,7 @@ if (PGV_USER_IS_ADMIN && $linkto=='manage' && file_exists('modules/GEDFact_assis
 			pastefield.value = value;
 		}
 
-		function paste_char(value,lang,mag) {
+		function paste_char(value, lang, mag) {
 			pastefield.value += value;
 			language_filter = lang;
 			magnify = mag;
@@ -111,7 +111,7 @@ if (PGV_USER_IS_ADMIN && $linkto=='manage' && file_exists('modules/GEDFact_assis
 		echo '<input type="hidden" name="ged" value="', $GEDCOM, '" />';
 		echo '<table class="facts_table center ', $TEXT_DIRECTION, '">';
 		echo '<tr><td class="topbottombar" colspan="2">';
-		print_help_link("add_media_linkid","qm", "link_media");
+		print_help_link("add_media_linkid", "qm", "link_media");
 		echo $pgv_lang["link_media"], ' ', $toitems, '</td></tr>';
 		echo '<tr><td class="descriptionbox width20 wrap">', $pgv_lang["media_id"], '</td>';
 		echo '<td class="optionbox wrap">';
@@ -131,7 +131,7 @@ if (PGV_USER_IS_ADMIN && $linkto=='manage' && file_exists('modules/GEDFact_assis
 			}
 		} else {
 			echo '<input type="text" name="mediaid" id="mediaid" size="5" />';
-			print_findmedia_link("mediaid","1media");
+			print_findmedia_link("mediaid", "1media");
 			echo "</td></tr>";
 		}
 		
@@ -139,11 +139,11 @@ if (PGV_USER_IS_ADMIN && $linkto=='manage' && file_exists('modules/GEDFact_assis
 		echo '<tr><td class="descriptionbox">';
 		
 		if ($linkto == "person") {
-			echo $pgv_lang["enter_pid"]."</td>";
+			echo $pgv_lang["enter_pid"], "</td>";
 			echo '<td class="optionbox wrap">';
 			if ($linktoid=="") {
 				 echo '<input class="pedigree_form" type="text" name="linktoid" id="linktopid" size="3" value="', $linktoid, '" />';
-				 print_findindi_link("linktopid","");
+				 print_findindi_link("linktopid", "");
 				
 			} else {
 				$record=Person::getInstance($linktoid);
@@ -170,7 +170,7 @@ if (PGV_USER_IS_ADMIN && $linkto=='manage' && file_exists('modules/GEDFact_assis
 		}
 		
 		if ($linkto == "source") {
-			echo $pgv_lang["source"]."</td>";
+			echo $pgv_lang["source"], "</td>";
 			echo '<td  class="optionbox wrap">';
 			if ($linktoid=="") {
 				echo '<input class="pedigree_form" type="text" name="linktoid" id="linktosid" size="3" value="', $linktoid, '" />';
@@ -184,7 +184,7 @@ if (PGV_USER_IS_ADMIN && $linkto=='manage' && file_exists('modules/GEDFact_assis
 			}
 		}
 		if ($linkto == "repository") {
-			echo $pgv_lang["repository"]."</td>";
+			echo $pgv_lang["repository"], "</td>";
 			echo '<td  class="optionbox wrap">';
 			if ($linktoid=="") {
 				echo '<input class="pedigree_form" type="text" name="linktoid" id="linktorid" size="3" value="', $linktoid, '" />';
@@ -199,7 +199,7 @@ if (PGV_USER_IS_ADMIN && $linkto=='manage' && file_exists('modules/GEDFact_assis
 		}
 		
 		if ($linkto == "note") {
-			echo $pgv_lang["shared_note"]."</td>";
+			echo $pgv_lang["shared_note"], "</td>";
 			echo '<td  class="optionbox wrap">';
 			if ($linktoid=="") {
 				echo '<input class="pedigree_form" type="text" name="linktoid" id="linktonid" size="3" value="', $linktoid, '" />';

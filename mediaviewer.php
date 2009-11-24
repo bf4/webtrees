@@ -45,7 +45,7 @@ $filename = $controller->getLocalFilename();
 print_header($controller->getPageTitle());
 
 if (!$controller->mediaobject){
-	echo "<b>".$pgv_lang["unable_to_find_record"]."</b><br /><br />";
+	echo "<b>", $pgv_lang["unable_to_find_record"], "</b><br /><br />";
 	print_footer();
 	exit;
 }
@@ -133,7 +133,7 @@ if ((!$controller->isPrintPreview())&&(empty($SEARCH_SPIDER))&&!empty($controlle
 					echo '<img src="', $mediaInfo['thumb'], '" border="0" align="', ($TEXT_DIRECTION=="rtl" ? "left":"right"), '" class="thumbnail"', $mediaInfo['width'];
 
 					// Finish off anchor and tooltips
-					print " alt=\"" . PrintReady(htmlspecialchars($name,ENT_COMPAT,'UTF-8')) . "\" title=\"" . PrintReady(htmlspecialchars($name,ENT_COMPAT,'UTF-8')) . "\" /></a>";
+					print " alt=\"" . PrintReady(htmlspecialchars($name, ENT_COMPAT, 'UTF-8')) . "\" title=\"" . PrintReady(htmlspecialchars($name, ENT_COMPAT, 'UTF-8')) . "\" /></a>";
 
 					// If download
 					if ($SHOW_MEDIA_DOWNLOAD) {
@@ -143,7 +143,7 @@ if ((!$controller->isPrintPreview())&&(empty($SEARCH_SPIDER))&&!empty($controlle
 				 // else the file is not external and does not exist
 				} else {
 					?>
-					<img src="<?php print $controller->mediaobject->getThumbnail(); ?>" border="0" width="100" alt="<?php print $controller->mediaobject->getFullName(); ?>" title="<?php print PrintReady(htmlspecialchars($controller->mediaobject->getFullName(),ENT_COMPAT,'UTF-8')); ?>" />
+					<img src="<?php print $controller->mediaobject->getThumbnail(); ?>" border="0" width="100" alt="<?php print $controller->mediaobject->getFullName(); ?>" title="<?php print PrintReady(htmlspecialchars($controller->mediaobject->getFullName(), ENT_COMPAT, 'UTF-8')); ?>" />
 					<span class="error">
 						<?php print $pgv_lang["file_not_found"];?>
 					</span>
@@ -210,7 +210,7 @@ function openImageView(){
 function show_gedcom_record(shownew) {
 	fromfile="";
 	if (shownew=="yes") fromfile='&fromfile=1';
-	var recwin = window.open("gedrecord.php?pid=<?php print $controller->pid; ?>"+fromfile, "_blank", "top=50,left=50,width=600,height=400,scrollbars=1,scrollable=1,resizable=1");
+	var recwin = window.open("gedrecord.php?pid=<?php print $controller->pid; ?>"+fromfile, "_blank", "top=50, left=50, width=600, height=400, scrollbars=1, scrollable=1, resizable=1");
 }
 
 function showchanges() {
@@ -218,7 +218,7 @@ function showchanges() {
 }
 
 function ilinkitem(mediaid, type) {
-	window.open('inverselink.php?mediaid='+mediaid+'&linkto='+type+'&'+sessionname+'='+sessionid, '_blank', 'top=50,left=50,width=570,height=630,resizable=1,scrollbars=1');
+	window.open('inverselink.php?mediaid='+mediaid+'&linkto='+type+'&'+sessionname+'='+sessionid, '_blank', 'top=50, left=50, width=570, height=630, resizable=1, scrollbars=1');
 	return false;
 }
 //-->

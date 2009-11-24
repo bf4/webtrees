@@ -44,7 +44,7 @@ print_simple_header($pgv_lang['review_changes']);
 <script language="JavaScript" type="text/javascript">
 <!--
 	function show_gedcom_record(xref) {
-		var recwin = window.open("gedrecord.php?fromfile=1&pid="+xref, "_blank", "top=50,left=50,width=600,height=400,scrollbars=1,scrollable=1,resizable=1");
+		var recwin = window.open("gedrecord.php?fromfile=1&pid="+xref, "_blank", "top=50, left=50, width=600, height=400, scrollbars=1, scrollable=1, resizable=1");
 	}
 	function showchanges() {
 		window.location = '<?php print $SCRIPT_NAME; ?>';
@@ -132,7 +132,7 @@ if (empty($pgv_changes)) {
 				$output .= "<td class=\"list_value $TEXT_DIRECTION\">&nbsp;</td>";
 			}
 			$output .= "<td class=\"list_value $TEXT_DIRECTION\"><b>".$pgv_lang[$change['type']]."</b></td>";
-			$output .= "<td class=\"list_value $TEXT_DIRECTION\"><a href=\"javascript:;\" onclick=\"return reply('".$change['user']."','".$pgv_lang['review_changes']."')\" alt=\"".$pgv_lang['message']."\">";
+			$output .= "<td class=\"list_value $TEXT_DIRECTION\"><a href=\"javascript:;\" onclick=\"return reply('".$change['user']."', '".$pgv_lang['review_changes']."')\" alt=\"".$pgv_lang['message']."\">";
 			if ($user_id=get_user_id($change['user'])) {
 				$output.=PrintReady(getUserFullName($user_id));
 			}
@@ -187,6 +187,6 @@ if (empty($pgv_changes)) {
 
 echo '</div>';
 
-echo "<br /><br /><center><a href=\"javascript:;\" onclick=\"if (window.opener.showchanges) window.opener.showchanges(); window.close();\">".$pgv_lang['close_window'].'</a><br /></center>';
+echo "<br /><br /><center><a href=\"javascript:;\" onclick=\"if (window.opener.showchanges) window.opener.showchanges(); window.close();\">", $pgv_lang['close_window'], '</a><br /></center>';
 print_simple_footer();
 ?>

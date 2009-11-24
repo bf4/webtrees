@@ -94,7 +94,7 @@ echo PGV_JS_START;
 	// Shared Notes =========================
 	function findnote(field) {
 		pastefield = field;
-		findwin = window.open('find.php?type=note', '_blank', 'left=50,top=50,width=600,height=520,resizable=1,scrollbars=1');
+		findwin = window.open('find.php?type=note', '_blank', 'left=50, top=50, width=600, height=520, resizable=1, scrollbars=1');
 		return false;
 	}
 	var language_filter, magnify;
@@ -108,15 +108,15 @@ echo PGV_JS_START;
 	function paste_id(value) {
 		pastefield.value = value;
 	}
-	function paste_char(value,lang,mag) {
+	function paste_char(value, lang, mag) {
 		pastefield.value += value;
 		language_filter = lang;
 		magnify = mag;
 	}
 	function checkpath(folder) {
 		value = folder.value;
-		if (value.substr(value.length-1,1) == "/") value = value.substr(0, value.length-1);
-		if (value.substr(0,1) == "/") value = value.substr(1, value.length-1);
+		if (value.substr(value.length-1, 1) == "/") value = value.substr(0, value.length-1);
+		if (value.substr(0, 1) == "/") value = value.substr(1, value.length-1);
 		result = value.split("/");
 		if (result.length > <?php print $MEDIA_DIRECTORY_LEVELS; ?>) {
 			alert('<?php print_text("max_media_depth"); ?>');
@@ -237,7 +237,7 @@ if ($action=="newentry") {
 						$thumbnail = $thumbFolderName.$mediaFile;
 						$okThumb = generate_thumbnail($folderName.$mediaFile, $thumbnail, "OVERWRITE");
 						if (!$okThumb) {
-							$error .= print_text("thumbgen_error",0,1);
+							$error .= print_text("thumbgen_error", 0, 1);
 						} else {
 							print_text("thumb_genned");
 							print "<br />";
@@ -287,11 +287,11 @@ if ($action=="newentry") {
 					$filename .= ".".$parts["extension"];
 				}
 			}
-			if (substr($folder,-1)!="/") $folder .= "/";
+			if (substr($folder, -1)!="/") $folder .= "/";
 			if ($folder=="/") $folder = "";
 			$folder = check_media_depth($folder."y.z", "BACK");
 			$folder = dirname($folder)."/";
-			if (substr($oldFolder,-1)!="/") $oldFolder .= "/";
+			if (substr($oldFolder, -1)!="/") $oldFolder .= "/";
 			if ($oldFolder=="/") $oldFolder = "";
 			$oldFolder = check_media_depth($oldFolder."y.z", "BACK");
 			$oldFolder = dirname($oldFolder)."/";
@@ -406,7 +406,7 @@ if ($action=="newentry") {
 			if ($link) {
 				AddToChangeLog("Media ID ".$media_id." successfully added to $linktoid.");
 			} else {
-				echo "<a href=\"javascript://OBJE $mediaid\" onclick=\"openerpasteid('$mediaid'); return false;\">".$pgv_lang["paste_id_into_field"]." <b>$mediaid</b></a><br /><br />\n";
+				echo "<a href=\"javascript://OBJE $mediaid\" onclick=\"openerpasteid('$mediaid'); return false;\">", $pgv_lang["paste_id_into_field"], " <b>$mediaid</b></a><br /><br />\n";
 				echo PGV_JS_START;
 				echo "openerpasteid('", $mediaid, "');";
 				echo PGV_JS_END;
@@ -439,11 +439,11 @@ if ($action == "update") {
 		}
 		if (!isset($folder) && isset($oldFolder)) $folder = $oldFolder;
 		$folder = trim($folder);
-		if (substr($folder,-1)!="/") $folder .= "/";
+		if (substr($folder, -1)!="/") $folder .= "/";
 		if ($folder=="/") $folder = "";
 		$folder = check_media_depth($folder."y.z", "BACK");
 		$folder = dirname($folder)."/";
-		if (substr($oldFolder,-1)!="/") $oldFolder .= "/";
+		if (substr($oldFolder, -1)!="/") $oldFolder .= "/";
 		if ($oldFolder=="/") $oldFolder = "";
 		$oldFolder = check_media_depth($oldFolder."y.z", "BACK");
 		$oldFolder = dirname($oldFolder)."/";

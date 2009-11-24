@@ -60,7 +60,7 @@ function GetGEDFromZIP($zipfile, $extract=true) {
 
 	// Determine the extract directory
 	$slpos = strrpos($zipfile, "/");
-	if (!$slpos) $slpos = strrpos($zipfile,"\\");
+	if (!$slpos) $slpos = strrpos($zipfile, "\\");
 	if ($slpos) $path = substr($zipfile, 0, $slpos+1);
 	else $path = $INDEX_DIRECTORY;
 	// Scan the files and return the first .ged found
@@ -126,7 +126,7 @@ if (isset($GEDCOMPATH)) {
 				AddToLog("Gedcom ".$path.$GEDFILENAME." uploaded");
 				$GEDCOMPATH = $upload_path.$GEDFILENAME;
 			} else {
-				$error = print_text("upload_error",0,1)."<br />".file_upload_error_text($_FILES['GEDCOMPATH']['error']);
+				$error = print_text("upload_error", 0, 1)."<br />".file_upload_error_text($_FILES['GEDCOMPATH']['error']);
 				$action = "upload_form";
 			}
 		} else {
@@ -135,7 +135,7 @@ if (isset($GEDCOMPATH)) {
 				$bakfile = $upload_path.$GEDFILENAME.".bak";
 				$GEDCOMPATH = $upload_path.$GEDFILENAME;
 			} else {
-				$error = print_text("upload_error",0,1)."<br />".file_upload_error_text($_FILES['GEDCOMPATH']['error']);
+				$error = print_text("upload_error", 0, 1)."<br />".file_upload_error_text($_FILES['GEDCOMPATH']['error']);
 				$action = "upload_form";
 			}
 		}
@@ -277,11 +277,11 @@ if ($action=="update") {
 	$boolarray[true]="true";
 	$configtext = implode('', file("config_gedcom.php"));
 
-	$_POST["NEW_MEDIA_DIRECTORY"] = preg_replace('/\\\/','/',$_POST["NEW_MEDIA_DIRECTORY"]);
+	$_POST["NEW_MEDIA_DIRECTORY"] = preg_replace('/\\\/', '/', $_POST["NEW_MEDIA_DIRECTORY"]);
 	$ct = preg_match("'/$'", $_POST["NEW_MEDIA_DIRECTORY"]);
 	if ($ct==0) $_POST["NEW_MEDIA_DIRECTORY"] .= "/";
-	if (substr($_POST["NEW_MEDIA_DIRECTORY"],0,2)=="./") $_POST["NEW_MEDIA_DIRECTORY"] = substr($_POST["NEW_MEDIA_DIRECTORY"],2);
-	if (preg_match("/.*[a-zA-Z]{1}:.*/",$_POST["NEW_MEDIA_DIRECTORY"])>0) $errors = true;
+	if (substr($_POST["NEW_MEDIA_DIRECTORY"], 0, 2)=="./") $_POST["NEW_MEDIA_DIRECTORY"] = substr($_POST["NEW_MEDIA_DIRECTORY"], 2);
+	if (preg_match("/.*[a-zA-Z]{1}:.*/", $_POST["NEW_MEDIA_DIRECTORY"])>0) $errors = true;
 	if (!isFileExternal($_POST["NEW_HOME_SITE_URL"])) $_POST["NEW_HOME_SITE_URL"] = "http://".$_POST["NEW_HOME_SITE_URL"];
 	$_POST["NEW_PEDIGREE_ROOT_ID"] = trim($_POST["NEW_PEDIGREE_ROOT_ID"]);
 	if ($_POST["NEW_DAYS_TO_SHOW_LIMIT"] < 1) $_POST["NEW_DAYS_TO_SHOW_LIMIT"] = 1;
@@ -484,14 +484,14 @@ if ($action=="update") {
 	$whichFile = $INDEX_DIRECTORY.$FILE."_conf.php";
 	if (!is_writable($whichFile)) {
 		$errors = true;
-		$error_msg .= "<span class=\"error\"><b>".print_text("gedcom_config_write_error",0,1)."</b></span><br />";
+		$error_msg .= "<span class=\"error\"><b>".print_text("gedcom_config_write_error", 0, 1)."</b></span><br />";
 		$_SESSION[$gedcom_config]=$configtext;
 		$error_msg .= "<br /><br /><a href=\"".encode_url("config_download.php?file={$gedcom_config}")."\">".$pgv_lang["download_gedconf"]."</a> ".$pgv_lang["upload_to_index"]."$INDEX_DIRECTORY<br /><br />\n";
 	}
 	$fp = @fopen($whichFile, "wb");
 	if (!$fp) {
 		$errors = true;
-		$error_msg .= "<span class=\"error\">".print_text("gedcom_config_write_error",0,1)."</span><br />\n";
+		$error_msg .= "<span class=\"error\">".print_text("gedcom_config_write_error", 0, 1)."</span><br />\n";
 	}
 	else {
 		fwrite($fp, $configtext);
@@ -533,7 +533,7 @@ if ($action=="update") {
 			$fp = @fopen($whichFile, "wb");
 			if (!$fp) {
 				$errors = true;
-				$error_msg .= "<span class=\"error\">".print_text("gedcom_config_write_error",0,1)."</span><br />\n";
+				$error_msg .= "<span class=\"error\">".print_text("gedcom_config_write_error", 0, 1)."</span><br />\n";
 			} else {
 				fwrite($fp, $httext);
 				fclose($fp);
@@ -554,7 +554,7 @@ if ($action=="update") {
 			$fp = @fopen($whichFile, "wb");
 			if (!$fp) {
 				$errors = true;
-				$error_msg .= "<span class=\"error\">".print_text("gedcom_config_write_error",0,1)."</span><br />\n";
+				$error_msg .= "<span class=\"error\">".print_text("gedcom_config_write_error", 0, 1)."</span><br />\n";
 			} else {
 				fwrite($fp, $httext);
 				fclose($fp);
@@ -627,7 +627,7 @@ if (!empty($error)) print "<span class=\"error\">".$error."</span>";
 <!--
 	var helpWin;
 	function helpPopup(which) {
-		if ((!helpWin)||(helpWin.closed)) helpWin = window.open('editconfig_help.php?help='+which,'_blank','left=50,top=50,width=500,height=320,resizable=1,scrollbars=1');
+		if ((!helpWin)||(helpWin.closed)) helpWin = window.open('editconfig_help.php?help='+which, '_blank', 'left=50, top=50, width=500, height=320, resizable=1, scrollbars=1');
 		else helpWin.location = 'editconfig_help.php?help='+which;
 		return false;
 	}
@@ -959,13 +959,13 @@ print "&nbsp;<a href=\"javascript: ".$pgv_lang["gedcom_conf"]."\" onclick=\"expa
 			// gedcom.  Otherwise there could be a mismatch between DB and FILE,
 			// or we could be uploading a new file, which we haven't seen yet.
 			if ($source=='') {
-				print_findindi_link("NEW_PEDIGREE_ROOT_ID","");
+				print_findindi_link("NEW_PEDIGREE_ROOT_ID", "");
 				if ($PEDIGREE_ROOT_ID) {
 					$person=Person::getInstance($PEDIGREE_ROOT_ID);
 					if ($person) {
 						echo ' <span class="list_item">', $person->getFullName(), ' ', $person->format_first_major_fact(PGV_EVENTS_BIRT, 1), '</span>';
 					} else {
-						echo ' <span class="error">'. $pgv_lang['unable_to_find_record']. '</span>';
+						echo ' <span class="error">', $pgv_lang['unable_to_find_record'], '</span>';
 					}
 				}
 			}
@@ -1138,7 +1138,7 @@ print "&nbsp;<a href=\"javascript: ".$pgv_lang["media_general_conf"]."\" onclick
 		<td class="descriptionbox wrap width20"><?php print_help_link("MEDIA_DIRECTORY_help", "qm", "MEDIA_DIRECTORY"); print $pgv_lang["MEDIA_DIRECTORY"]; ?></td>
 		<td class="optionbox"><input type="text" size="50" name="NEW_MEDIA_DIRECTORY" value="<?php print $MEDIA_DIRECTORY; ?>" dir="ltr" tabindex="<?php $i++; print $i; ?>" onfocus="getHelp('MEDIA_DIRECTORY_help');" />
 		<?php
-		if (preg_match("/.*[a-zA-Z]{1}:.*/",$MEDIA_DIRECTORY)>0) print "<span class=\"error\">".$pgv_lang["media_drive_letter"]."</span>\n";
+		if (preg_match("/.*[a-zA-Z]{1}:.*/", $MEDIA_DIRECTORY)>0) print "<span class=\"error\">".$pgv_lang["media_drive_letter"]."</span>\n";
 		?>
 		</td>
 	</tr>
@@ -1518,14 +1518,14 @@ print "&nbsp;<a href=\"javascript: ".$pgv_lang["displ_layout_conf"]."\" onclick=
 <?php
 $previous="_DEAT_";
 foreach ($factarray as $factkey=>$factlabel) {
-	$f6=substr($factkey,0,6);
+	$f6=substr($factkey, 0, 6);
 	if ($f6=="_BIRT_" or $f6=="_MARR_" or $f6=="_DEAT_" or $f6=="_FAMC_") {
 		if ($f6=="_BIRT_" or $f6=="_FAMC_") print "<tr>";
 		if ($f6=="_MARR_" and $previous!="_BIRT_") print "<tr><td>&nbsp;</td>";
 		if ($f6=="_DEAT_" and $previous=="_DEAT_") print "<tr><td>&nbsp;</td>";
 		if ($f6=="_DEAT_" and $previous!="_MARR_") print "<td>&nbsp;</td>";
 		print "\n<td><input type=\"checkbox\" name=\"SHOW_RELATIVES_EVENTS_checkbox\" value=\"".$factkey."\"";
-		if (strstr($SHOW_RELATIVES_EVENTS,$factkey)) print " checked=\"checked\"";
+		if (strstr($SHOW_RELATIVES_EVENTS, $factkey)) print " checked=\"checked\"";
 		print " onchange=\"var old=document.configform.NEW_SHOW_RELATIVES_EVENTS.value; if (this.checked) old+=','+this.value; else old=old.replace(/".$factkey."/g,''); old=old.replace(/[,]+/gi,','); old=old.replace(/^[,]/gi,''); old=old.replace(/[,]$/gi,''); document.configform.NEW_SHOW_RELATIVES_EVENTS.value=old\" ";
 		print " /> ".$factlabel."</td>";
 		if ($f6=="_DEAT_" || $f6=="_FAMC_") print "</tr>";
@@ -2116,7 +2116,7 @@ print "&nbsp;<a href=\"javascript: ".$pgv_lang["meta_conf"]."\" onclick=\"expand
 	</tr>
 	<tr>
 		<td class="descriptionbox wrap width20"><?php print_help_link("HOME_SITE_TEXT_help", "qm", "HOME_SITE_TEXT"); print $pgv_lang["HOME_SITE_TEXT"]; ?></td>
-		<td class="optionbox"><input type="text" dir="ltr" name="NEW_HOME_SITE_TEXT" value="<?php print htmlspecialchars($HOME_SITE_TEXT,ENT_COMPAT,'UTF-8'); ?>" size="50" tabindex="<?php $i++; print $i; ?>" onfocus="getHelp('HOME_SITE_TEXT_help');" /></td>
+		<td class="optionbox"><input type="text" dir="ltr" name="NEW_HOME_SITE_TEXT" value="<?php print htmlspecialchars($HOME_SITE_TEXT, ENT_COMPAT, 'UTF-8'); ?>" size="50" tabindex="<?php $i++; print $i; ?>" onfocus="getHelp('HOME_SITE_TEXT_help');" /></td>
 	</tr>
 	<tr>
 		<td class="descriptionbox wrap width20"><?php print_help_link("META_AUTHOR_help", "qm", "META_AUTHOR"); print $pgv_lang["META_AUTHOR"]; ?></td>

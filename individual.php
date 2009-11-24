@@ -42,7 +42,7 @@ global $USE_THUMBS_MAIN, $mediacnt, $tabno, $hitCount, $GOOGLEMAP_PH_CONTROLS;
 print_header($controller->getPageTitle());
 
 if (!$controller->indi){
-	echo "<b>".$pgv_lang["unable_to_find_record"]."</b><br /><br />";
+	echo "<b>", $pgv_lang["unable_to_find_record"], "</b><br /><br />";
 	print_footer();
 	exit;
 }
@@ -62,7 +62,7 @@ $linkToID=$controller->pid; // -- Tell addmedia.php what to link to
 		</td>
 	<?php } ?>
 	<td valign="top">
-		<?php if ((empty($SEARCH_SPIDER))&&($controller->accept_success)) echo "<b>".$pgv_lang["accept_successful"]."</b><br />"; ?>
+		<?php if ((empty($SEARCH_SPIDER))&&($controller->accept_success)) echo "<b>", $pgv_lang["accept_successful"], "</b><br />"; ?>
 		<span class="name_head">
 		<?php
 		if ($TEXT_DIRECTION=="rtl") echo "&nbsp;";
@@ -78,13 +78,13 @@ $linkToID=$controller->pid; // -- Tell addmedia.php what to link to
 			}
 		?>
 		</span><br />
-		<?php if (strlen($controller->indi->getAddName()) > 0) echo "<span class=\"name_head\">".PrintReady($controller->indi->getAddName())."</span><br />"; ?>
+		<?php if (strlen($controller->indi->getAddName()) > 0) echo "<span class=\"name_head\">", PrintReady($controller->indi->getAddName()), "</span><br />"; ?>
 		<?php if ($controller->indi->canDisplayDetails()) { ?>
 		<table><tr>
 		<?php
 			$col=0; $maxcols=7; // 4 with data and 3 spacers
 			$globalfacts=$controller->getGlobalFacts();
-			$nameSex = array('NAME','SEX');
+			$nameSex = array('NAME', 'SEX');
 			foreach ($globalfacts as $key=>$value) {
 				$fact = $value->getTag();
 				if (in_array($fact, $nameSex)) {
@@ -153,7 +153,7 @@ $linkToID=$controller->pid; // -- Tell addmedia.php what to link to
 			<?php
 				if (PGV_USER_GEDCOM_ID) {
 			?>
-			<a class="accesskeys" href="<?php echo "relationship.php?show_full=$showFull&amp;pid1=".PGV_USER_GEDCOM_ID."&amp;pid2=".$controller->pid;?>" title="<?php echo $pgv_lang["relationship_to_me"] ?>" tabindex="-1" accesskey="<?php echo $pgv_lang["accesskey_individual_relation_to_me"]; ?>"><?php echo $pgv_lang["relationship_to_me"] ?></a>
+			<a class="accesskeys" href="<?php echo "relationship.php?show_full=$showFull&amp;pid1=", PGV_USER_GEDCOM_ID, "&amp;pid2=", $controller->pid;?>" title="<?php echo $pgv_lang["relationship_to_me"] ?>" tabindex="-1" accesskey="<?php echo $pgv_lang["accesskey_individual_relation_to_me"]; ?>"><?php echo $pgv_lang["relationship_to_me"] ?></a>
 			<?php }
 			if ($controller->canShowGedcomRecord()) {
 			?>
@@ -220,18 +220,18 @@ $linkToID=$controller->pid; // -- Tell addmedia.php what to link to
 	</tr>
 	<tr>
 	<td valign="bottom" colspan="3">
-	<?php if ($controller->indi->isMarkedDeleted()) echo "<span class=\"error\">".$pgv_lang["record_marked_deleted"]."</span>"; ?>
+	<?php if ($controller->indi->isMarkedDeleted()) echo "<span class=\"error\">", $pgv_lang["record_marked_deleted"], "</span>"; ?>
 <script language="JavaScript" type="text/javascript">
 // <![CDATA[
 // javascript function to open a window with the raw gedcom in it
 function show_gedcom_record(shownew) {
 	fromfile="";
 	if (shownew=="yes") fromfile='&fromfile=1';
-	var recwin = window.open("gedrecord.php?pid=<?php echo $controller->pid; ?>"+fromfile, "_blank", "top=50,left=50,width=600,height=400,scrollbars=1,scrollable=1,resizable=1");
+	var recwin = window.open("gedrecord.php?pid=<?php echo $controller->pid; ?>"+fromfile, "_blank", "top=50, left=50, width=600,  height=400, scrollbars=1, scrollable=1, resizable=1");
 }
 <?php if (PGV_USER_CAN_EDIT) { ?>
 function open_link_remote(pid){
-	window.open("addremotelink.php?pid="+pid, "_blank", "top=50,left=50,width=600,height=500,scrollbars=1,scrollable=1,resizable=1");
+	window.open("addremotelink.php?pid="+pid, "_blank", "top=50, left=50, width=600, height=500, scrollbars=1, scrollable=1, resizable=1");
 	return false;
 }
 
@@ -258,11 +258,11 @@ if (file_exists("modules/lightbox/album.php")) {
 <!-- ================== End Additions for Lightbox Module ================== -->
 
 	<?php if (file_exists("modules/googlemap/defaultconfig.php")) {?>
-	var tabid = new Array('0', 'facts','notes','sources','media','relatives','tree','researchlog','googlemap','spare');
-	var loadedTabs = new Array(false,false,false,false,false,false,false,false,false,false);
+	var tabid = new Array('0', 'facts', 'notes', 'sources', 'media', 'relatives', 'tree', 'researchlog', 'googlemap', 'spare');
+	var loadedTabs = new Array(false, false, false, false, false, false, false, false, false, false);
 	<?php }else{?>
-	var tabid = new Array('0', 'facts','notes','sources','media','relatives','tree','researchlog','spare');
-	var loadedTabs = new Array(false,false,false,false,false,false,false,false,false);
+	var tabid = new Array('0', 'facts', 'notes', 'sources', 'media', 'relatives', 'tree', 'researchlog', 'spare');
+	var loadedTabs = new Array(false, false, false, false, false, false, false, false, false);
 	<?php }?>
 
 <!-- ====================== Added for Lightbox Module ===================== -->
@@ -284,16 +284,16 @@ function tempObj(tab, oXmlHttp) {
 					loadMap();
 					<?php if ($GOOGLEMAP_PH_CONTROLS != "false") {?>
 					// hide controls
-					GEvent.addListener(map,'mouseout',function()
+					GEvent.addListener(map, 'mouseout', function()
 					{
 						map.hideControls();
 					});
 					// show controls
-					GEvent.addListener(map,'mouseover',function()
+					GEvent.addListener(map, 'mouseover', function()
 					{
 						map.showControls();
 					});
-					GEvent.trigger(map,'mouseout');
+					GEvent.trigger(map, 'mouseout');
 					<?php
 					}
 					?>
@@ -401,7 +401,7 @@ function resize_content_div(i) {
 function loading_message() {
 	global $pgv_lang;
 	echo "<p style=\"margin: 20px 20px 20px 20px\">";
-	echo "<img src=\"images/loading.gif\" alt=\"".$pgv_lang["loading"]."\" title=\"".$pgv_lang["loading"]."\" />";
+	echo "<img src=\"images/loading.gif\" alt=\"", $pgv_lang["loading"], "\" title=\"", $pgv_lang["loading"], "\" />";
 	echo "</p>";
 }
 if ((!$controller->isPrintPreview())&&(empty($SEARCH_SPIDER))) {
@@ -449,7 +449,7 @@ if(empty($SEARCH_SPIDER))
 	echo "<div id=\"facts\" class=\"tab_page\" style=\"display:none;\" >";
 else
 	echo "<div id=\"facts\" class=\"tab_page\" style=\"display:block;\" >";
-echo "<span class=\"subheaders\">".$pgv_lang["personal_facts"]."</span><div id=\"facts_content\">";
+echo "<span class=\"subheaders\">", $pgv_lang["personal_facts"], "</span><div id=\"facts_content\">";
 if (($controller->default_tab==0)||(!empty($SEARCH_SPIDER))) $controller->getTab(0);
 else loading_message();
 ?>
@@ -462,11 +462,11 @@ if(empty($SEARCH_SPIDER))
 	echo "<div id=\"notes\" class=\"tab_page\" style=\"display:none;\" >";
 else
 	echo "<div id=\"notes\" class=\"tab_page\" style=\"display:block;\" >";
-echo "<span class=\"subheaders\">".$pgv_lang["notes"]."</span><div id=\"notes_content\">";
+echo "<span class=\"subheaders\">", $pgv_lang["notes"], "</span><div id=\"notes_content\">";
 if (($controller->default_tab==1)||(!empty($SEARCH_SPIDER))) $controller->getTab(1);
 else {
 	if ($controller->get_note_count()>0) loading_message();
-	else echo "<span id=\"no_tab2\">".$pgv_lang["no_tab2"]."</span>";
+	else echo "<span id=\"no_tab2\">", $pgv_lang["no_tab2"], "</span>";
 	}
 ?>
 </div>
@@ -479,11 +479,11 @@ if(empty($SEARCH_SPIDER))
 else
 	echo "<div id=\"sources\" class=\"tab_page\" style=\"display:block;\" >";
 if ($SHOW_SOURCES>=PGV_USER_ACCESS_LEVEL) {
-	echo "<span class=\"subheaders\">".$pgv_lang["ssourcess"]."</span><div id=\"sources_content\">";
+	echo "<span class=\"subheaders\">", $pgv_lang["ssourcess"], "</span><div id=\"sources_content\">";
 	if (($controller->default_tab==2)||(!empty($SEARCH_SPIDER))) $controller->getTab(2);
 	else {
 		if ($controller->get_source_count()>0) loading_message();
-		else echo "<span id=\"no_tab3\">".$pgv_lang["no_tab3"]."</span>";
+		else echo "<span id=\"no_tab3\">", $pgv_lang["no_tab3"], "</span>";
 	}
 	echo "</div>";
 }
@@ -497,7 +497,7 @@ if(empty($SEARCH_SPIDER))
 else
 	echo "<div id=\"media\" class=\"tab_page\" style=\"display:block;\" >";
 if ($MULTI_MEDIA) {
-	echo "<span class=\"subheaders\">".$pgv_lang["media"]."</span>";
+	echo "<span class=\"subheaders\">", $pgv_lang["media"], "</span>";
 	// For Reorder media ------------------------------------
 	if (PGV_USER_CAN_EDIT) {
 		echo "<center>";
@@ -509,7 +509,7 @@ if ($MULTI_MEDIA) {
 	if (($controller->default_tab==3)||(!empty($SEARCH_SPIDER))) $controller->getTab(3);
 	else {
 		if ($controller->get_media_count()>0) loading_message();
-		else echo "<span id=\"no_tab4\">".$pgv_lang["no_tab4"]."</span>";
+		else echo "<span id=\"no_tab4\">", $pgv_lang["no_tab4"], "</span>";
 	}
 	echo "</div>";
 }
@@ -540,10 +540,10 @@ if(empty($SEARCH_SPIDER)) {
 <?php
 	require_once './includes/classes/class_treenav.php';
 	if ($controller->default_tab==5) {
-		$inav = new TreeNav($controller->pid,'treetab');
+		$inav = new TreeNav($controller->pid, 'treetab');
 	}
 	else {
-		$inav = new TreeNav('none','treetab');
+		$inav = new TreeNav('none', 'treetab');
 	}
 	$inav->generations = 7;
 	$inav->zoomLevel = -1;
@@ -559,7 +559,7 @@ if(empty($SEARCH_SPIDER)) {
 // Only show this section if we are not talking to a search engine.
 if(empty($SEARCH_SPIDER)) {
 	echo "<div id=\"researchlog\" class=\"tab_page\" style=\"display:none;\" >";
-	echo "<span class=\"subheaders\">".$pgv_lang["research_assistant"]."</span>";
+	echo "<span class=\"subheaders\">", $pgv_lang["research_assistant"], "</span>";
 	echo "<div id=\"researchlog_content\">";
 
 	if (file_exists("modules/research_assistant/research_assistant.php") && ($SHOW_RESEARCH_ASSISTANT>=PGV_USER_ACCESS_LEVEL)) {
@@ -569,7 +569,7 @@ if(empty($SEARCH_SPIDER)) {
 		else loading_message();
 	}
 	else {
-		echo "<table class=\"facts_table\"><tr><td id=\"no_tab7\" colspan=\"2\" class=\"facts_value\">".$pgv_lang["no_tab6"]."</td></tr></table>";
+		echo "<table class=\"facts_table\"><tr><td id=\"no_tab7\" colspan=\"2\" class=\"facts_value\">", $pgv_lang["no_tab6"], "</td></tr></table>";
 	}
 	echo "</div>";
 	echo "</div>";
@@ -619,7 +619,7 @@ if(empty($SEARCH_SPIDER) && file_exists("modules/lightbox/album.php")) {
 				require_once 'modules/lightbox/functions/lb_head.php';
 			} else {
 				require_once 'modules/lightbox/functions/lb_head.php';
-				echo "<table class=\"facts_table\"><tr><td id=\"no_tab9\" colspan=\"2\" class=\"facts_value\">".$pgv_lang["no_tab4"]."</td></tr></table>";
+				echo "<table class=\"facts_table\"><tr><td id=\"no_tab9\" colspan=\"2\" class=\"facts_value\">", $pgv_lang["no_tab4"], "</td></tr></table>";
 			}
 		}else{
 			echo "<div id=\"lightbox2\" class=\"tab_page\" style=\"display:block; \" >";
@@ -692,12 +692,12 @@ echo PGV_JS_START;
 echo 'var catch_and_ignore; function paste_id(value) {catch_and_ignore = value;}';
 //-- make sure googlemap is reloaded
 if ($controller->default_tab==7) {
-	echo "loadedTabs[".($controller->default_tab+1)."] = false;";
+	echo "loadedTabs[", ($controller->default_tab+1), "] = false;";
 }
 if ($controller->isPrintPreview()) {
 	echo "tabswitch(0);";
 } else {
-	echo "tabswitch(". ($controller->default_tab+1) .");";
+	echo "tabswitch(", ($controller->default_tab+1) , ");";
 }
 if ($controller->default_tab==5) {
 	echo "treetab.sizeLines();";
@@ -709,7 +709,7 @@ echo PGV_JS_END;
 
 if ($SEARCH_SPIDER) {
 	if($SHOW_SPIDER_TAGLINE)
-		echo $pgv_lang["label_search_engine_detected"].": ".$SEARCH_SPIDER;
+		echo $pgv_lang["label_search_engine_detected"], ": ", $SEARCH_SPIDER;
 	echo "</div></body></html>";
 } else {
 	print_footer();
