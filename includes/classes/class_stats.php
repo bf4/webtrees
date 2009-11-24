@@ -2772,6 +2772,38 @@ class stats {
 	function oldestFatherName() {return $this->_parentsQuery('name', 'DESC', 'M');}
 	function oldestFatherAge($show_years=false) {return $this->_parentsQuery('age', 'DESC', 'M', $show_years);}
 
+	function totalMarriedMales() {
+		global $TBLPREFIX;
+
+		$rows = PGV_DB::prepare("SELECT f_gedcom AS ged, f_husb AS husb FROM ${TBLPREFIX}families WHERE f_file=?")
+				->execute(array($this->_ged_id))
+				->fetchAll();
+		$husb = array();
+		foreach ($rows as $row) {
+			$factrec = trim(get_sub_record(1, "1 MARR", $row->ged, 1));
+			if (!empty($factrec)) {
+				$husb[] = $row->husb."<br />";
+			}
+		}
+		return count(array_unique($husb));
+	}
+
+	function totalMarriedFemales() {
+		global $TBLPREFIX;
+
+		$rows = PGV_DB::prepare("SELECT f_gedcom AS ged, f_wife AS wife FROM ${TBLPREFIX}families WHERE f_file=?")
+				->execute(array($this->_ged_id))
+				->fetchAll();
+		$wife = array();
+		foreach ($rows as $row) {
+			$factrec = trim(get_sub_record(1, "1 MARR", $row->ged, 1));
+			if (!empty($factrec)) {
+				$wife[] = $row->wife."<br />";
+			}
+		}
+		return count(array_unique($wife));
+	}
+
 ///////////////////////////////////////////////////////////////////////////////
 // Family Size                                                               //
 ///////////////////////////////////////////////////////////////////////////////

@@ -28,11 +28,415 @@
  */
 
 require './config.php';
-
 require_once './includes/classes/class_stats.php';
-require_once './includes/functions/functions_places.php';
 
 print_header($pgv_lang["statistics"]);
+
+/*
+ * Initiate the stats object.
+ */
+$stats = new stats($GEDCOM);
+
+?>
+	<h3 class="center"><?php echo $pgv_lang["statistics"]; ?></h3>
+	<?php global $pgv_lang, $TEXT_DIRECTION, $PGV_THEME_DIR;
+	if ($TEXT_DIRECTION=='rtl') $align='right';
+	else $align='left';
+?>
+<script language="JavaScript" type="text/javascript">
+<!--
+var tab_count = 2;
+function switch_tab(tab) {
+	for(i=0; i<=tab_count+1; i++) {
+		var pagetab = document.getElementById('pagetab'+i);
+		var pagetabbottom = document.getElementById('pagetab'+i+'bottom');
+		var tabdiv = document.getElementById('tab'+i);
+		if (i==tab) {
+			pagetab.className='tab_cell_active';
+			tabdiv.style.display = 'block';
+			pagetabbottom.className='tab_active_bottom';
+		}
+		else {
+			pagetab.className='tab_cell_inactive';
+			tabdiv.style.display = 'none';
+			pagetabbottom.className='tab_inactive_bottom';
+		}
+	}
+}
+//-->
+</script>
+<table class="tabs_table center width90">
+	<tr>
+		<td id="pagetab0" class="tab_cell_active"><a href="javascript: <?php echo $pgv_lang["individuals"];?>" onclick="switch_tab(0); return false;"><?php echo $pgv_lang["individuals"];?></a></td>
+		<td id="pagetab1" class="tab_cell_inactive"><a href="javascript: <?php echo $pgv_lang["families"];?>" onclick="switch_tab(1); return false;"><?php echo $pgv_lang["families"];?></a></td>
+		<td id="pagetab2" class="tab_cell_inactive"><a href="javascript: <?php echo $pgv_lang["others"];?>" onclick="switch_tab(2); return false;"><?php echo $pgv_lang["others"];?></a></td>
+		<td id="pagetab3" class="tab_cell_inactive"><a href="javascript: <?php echo $pgv_lang["stat_own_charts"];?>" onclick="switch_tab(3); return false;"><?php echo $pgv_lang["stat_own_charts"];?></a></td>
+	</tr>
+	<tr>
+		<td id="pagetab0bottom" class="tab_active_bottom"><img src="<?php echo $PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"]; ?>" width="1" height="1" alt="" /></td>
+		<td id="pagetab1bottom" class="tab_inactive_bottom"><img src="<?php echo $PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"]; ?>" width="1" height="1" alt="" /></td>
+		<td id="pagetab2bottom" class="tab_inactive_bottom"><img src="<?php echo $PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"]; ?>" width="1" height="1" alt="" /></td>
+		<td id="pagetab3bottom" class="tab_inactive_bottom"><img src="<?php echo $PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"]; ?>" width="1" height="1" alt="" /></td>
+		<td class="tab_inactive_bottom_right" style="width:30%;"><img src="<?php echo $PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"]; ?>" width="1" height="1" alt="" /></td>
+	</tr>
+	<tr><td colspan="5">
+<div id="tab0" class="<?php echo $TEXT_DIRECTION; ?>">
+	<fieldset>
+		<legend><?php echo $pgv_lang["statnnames"],': ', $stats->totalIndividuals();?></legend>
+			<table class="facts_table">
+				<tr>
+					<td class="facts_label"><?php echo $pgv_lang["statnmale"];?></td>
+					<td class="facts_label"><?php echo $pgv_lang["statnfemale"];?></td>
+					<td class="facts_label"><?php echo $pgv_lang["statnliving"];?></td>
+					<td class="facts_label"><?php echo $pgv_lang["statndead"];?></td>
+				</tr>
+				<tr>
+					<td class="facts_value" align="center"><?php echo $stats->totalSexMales();?></td>
+					<td class="facts_value" align="center"><?php echo $stats->totalSexFemales();?></td>
+					<td class="facts_value" align="center"><?php echo $stats->totalLiving();?></td>
+					<td class="facts_value" align="center"><?php echo $stats->totalDeceased();?></td>
+				</tr>
+				<tr>
+					<td class="facts_value statistics_chart" colspan="2"><?php echo $stats->chartSex();?></td>
+					<td class="facts_value statistics_chart" colspan="2"><?php echo $stats->chartMortality();?></td>
+				</tr>
+			</table>
+			<br />
+			<div align="<?php echo $align;?>"><b><?php echo $pgv_lang["events"];?></b></div>
+			<table class="facts_table">
+				<tr>
+					<td class="facts_label"><?php echo $pgv_lang["stat_births"];?></td>
+					<td class="facts_label"><?php echo $pgv_lang["stat_deaths"];?></td>
+				</tr>
+				<tr>
+					<td class="facts_value" align="center"><?php echo $stats->totalBirths();?></td>
+					<td class="facts_value" align="center"><?php echo $stats->totalDeaths();?></td>
+				</tr>
+				<tr>
+					<td class="facts_label"><?php echo $pgv_lang["stat_5_birth"];?></td>
+					<td class="facts_label"><?php echo $pgv_lang["stat_6_death"];?></td>
+				</tr>
+				<tr>
+					<td class="facts_value statistics_chart"><?php echo $stats->statsBirth();?></td>
+					<td class="facts_value statistics_chart"><?php echo $stats->statsDeath();?></td>
+				</tr>
+				<tr>
+					<td class="facts_label"><?php echo $pgv_lang["stat_first_birth"];?></td>
+					<td class="facts_label"><?php echo $pgv_lang["stat_first_death"];?></td>
+				</tr>
+				<tr>
+					<td class="facts_value" align="<?php echo $align;?>"><?php echo $stats->firstBirth();?></td>
+					<td class="facts_value" align="<?php echo $align;?>"><?php echo $stats->firstDeath();?></td>
+				</tr>
+				<tr>
+					<td class="facts_label"><?php echo $pgv_lang["stat_last_birth"];?></td>
+					<td class="facts_label"><?php echo $pgv_lang["stat_last_death"];?></td>
+				</tr>
+				<tr>
+					<td class="facts_value" align="<?php echo $align;?>"><?php echo $stats->lastBirth();?></td>
+					<td class="facts_value" align="<?php echo $align;?>"><?php echo $stats->lastDeath();?></td>
+				</tr>
+			</table>
+			<br />
+			<div align="<?php echo $align;?>"><b><?php echo $pgv_lang["stat_lifespan"];?></b></div>
+			<table class="facts_table">
+				<tr>
+					<td class="facts_label"><?php echo $pgv_lang["stat_avg_age_at_death"];?></td>
+					<td class="facts_label"><?php echo $pgv_lang["stat_males"];?></td>
+					<td class="facts_label"><?php echo $pgv_lang["stat_females"];?></td>
+				</tr>
+				<tr>
+					<td class="facts_value" align="center"><?php echo $stats->averageLifespan(true);?></td>
+					<td class="facts_value" align="center"><?php echo $stats->averageLifespanMale(true);?></td>
+					<td class="facts_value" align="center"><?php echo $stats->averageLifespanFemale(true);?></td>
+				</tr>
+				<tr>
+					<td class="facts_value statistics_chart" colspan="3"><?php echo $stats->statsAge();?></td>
+				</tr>
+			</table>
+			<br />
+			<div align="<?php echo $align;?>"><b><?php echo $pgv_lang["stat_lived_longest"];?></b></div>
+			<table class="facts_table">
+				<tr>
+					<td class="facts_label"><?php echo $pgv_lang["males"];?></td>
+					<td class="facts_label"><?php echo $pgv_lang["females"];?></td>
+				</tr>
+				<tr>
+					<td class="facts_value" align="<?php echo $align;?>"><?php echo $stats->topTenOldestMaleList();?></td>
+					<td class="facts_value" align="<?php echo $align;?>"><?php echo $stats->topTenOldestFemaleList();?></td>
+				</tr>
+			</table>
+			<br />
+			<div align="<?php echo $align;?>"><b><?php echo $pgv_lang["stat_live_longest"];?></b></div>
+			<table class="facts_table">
+				<tr>
+					<td class="facts_label"><?php echo $pgv_lang["males"];?></td>
+					<td class="facts_label"><?php echo $pgv_lang["females"];?></td>
+				</tr>
+				<tr>
+					<td class="facts_value" align="<?php echo $align;?>"><?php echo $stats->topTenOldestMaleListAlive();?></td>
+					<td class="facts_value" align="<?php echo $align;?>"><?php echo $stats->topTenOldestFemaleListAlive();?></td>
+				</tr>
+			</table>
+			<br />
+			<div align="<?php echo $align;?>"><b><?php echo $pgv_lang["stat_names"];?></b></div>
+			<table class="facts_table">
+				<tr>
+					<td class="facts_label"><?php echo $pgv_lang["statnsurnames"];?></td>
+					<td class="facts_label"><?php echo $pgv_lang["statngivennames"];?></td>
+				</tr>
+				<tr>
+					<td class="facts_value" align="center"><?php echo $stats->totalSurnames();?></td>
+					<td class="facts_value" align="center"><?php echo $stats->totalGivennames();?></td>
+				</tr>
+				<tr>
+					<td class="facts_label"><?php echo $pgv_lang["top_surnames"];?></td>
+					<td class="facts_label"><?php echo $pgv_lang["top_givennames"];?></td>
+				</tr>
+				<tr>
+					<td class="facts_value statistics_chart"><?php echo $stats->chartCommonSurnames();?></td>
+					<td class="facts_value statistics_chart"><?php echo $stats->chartCommonGiven();?></td>
+				</tr>
+			</table>
+		</fieldset>
+	<br />
+</div>
+
+<div id="tab1" style="display: none;" class="<?php echo $TEXT_DIRECTION; ?>">
+	<fieldset>
+		<legend><?php echo $pgv_lang["statnfam"],': ', $stats->totalFamilies();?></legend>
+			<div align="<?php echo $align;?>"><b><?php echo $pgv_lang["events"];?></b></div>
+			<table class="facts_table">
+				<tr>
+					<td class="facts_label"><?php echo $pgv_lang["stat_marriages"];?></td>
+					<td class="facts_label"><?php echo $pgv_lang["stat_divorces"];?></td>
+				</tr>
+				<tr>
+					<td class="facts_value" align="center"><?php echo $stats->totalMarriages();?></td>
+					<td class="facts_value" align="center"><?php echo $stats->totalEventsDivorce();?></td>
+				</tr>
+				<tr>
+					<td class="facts_label"><?php echo $pgv_lang["stat_7_marr"];?></td>
+					<td class="facts_label"><?php echo $pgv_lang["stat_7_div"];?></td>
+				</tr>
+				<tr>
+					<td class="facts_value statistics_chart"><?php echo $stats->statsMarr();?></td>
+					<td class="facts_value statistics_chart"><?php echo $stats->statsDiv();?></td>
+				</tr>
+				<tr>
+					<td class="facts_label"><?php echo $pgv_lang["stat_first_marriage"];?></td>
+					<td class="facts_label"><?php echo $pgv_lang["stat_first_divorce"];?></td>
+				</tr>
+				<tr>
+					<td class="facts_value" align="<?php echo $align;?>"><?php echo $stats->firstMarriage();?></td>
+					<td class="facts_value" align="<?php echo $align;?>"><?php echo $stats->firstDivorce();?></td>
+				</tr>
+				<tr>
+					<td class="facts_label"><?php echo $pgv_lang["stat_last_marriage"];?></td>
+					<td class="facts_label"><?php echo $pgv_lang["stat_last_divorce"];?></td>
+				</tr>
+				<tr>
+					<td class="facts_value" align="<?php echo $align;?>"><?php echo $stats->lastMarriage();?></td>
+					<td class="facts_value" align="<?php echo $align;?>"><?php echo $stats->lastDivorce();?></td>
+				</tr>
+			</table>
+			<br />
+			<div align="<?php echo $align;?>"><b><?php echo $pgv_lang["stat_marr_age"];?></b></div>
+			<table class="facts_table">
+				<tr>
+					<td class="facts_label"><?php echo PrintReady($pgv_lang["stat_long_marr_age"]." - ".$stats->topAgeOfMarriage());?></td>
+					<td class="facts_label"><?php echo PrintReady($pgv_lang["stat_short_marr_age"]." - ".$stats->minAgeOfMarriage());?></td>
+				</tr>
+				<tr>
+					<td class="facts_value" align="<?php echo $align;?>"><?php echo $stats->topAgeOfMarriageFamily();?></td>
+					<td class="facts_value" align="<?php echo $align;?>"><?php echo $stats->minAgeOfMarriageFamily();?></td>
+				</tr>
+			</table>
+			<br />
+			<div align="<?php echo $align;?>"><b><?php echo $pgv_lang["stat_19_arm"];?></b></div>
+			<table class="facts_table">
+				<tr>
+					<td class="facts_label"><?php echo PrintReady($pgv_lang["stat_youngest_male"]." - ".$stats->youngestMarriageMaleAge(true));?></td>
+					<td class="facts_label"><?php echo PrintReady($pgv_lang["stat_youngest_female"]." - ".$stats->youngestMarriageFemaleAge(true));?></td>
+				</tr>
+				<tr>
+					<td class="facts_value" align="<?php echo $align;?>"><?php echo $stats->youngestMarriageMale();?></td>
+					<td class="facts_value" align="<?php echo $align;?>"><?php echo $stats->youngestMarriageFemale();?></td>
+				</tr>
+				<tr>
+					<td class="facts_label"><?php echo PrintReady($pgv_lang["stat_oldest_male"]." - ".$stats->oldestMarriageMaleAge(true));?></td>
+					<td class="facts_label"><?php echo PrintReady($pgv_lang["stat_oldest_female"]." - ".$stats->oldestMarriageFemaleAge(true));?></td>
+				</tr>
+				<tr>
+					<td class="facts_value" align="<?php echo $align;?>"><?php echo $stats->oldestMarriageMale();?></td>
+					<td class="facts_value" align="<?php echo $align;?>"><?php echo $stats->oldestMarriageFemale();?></td>
+				</tr>
+				<tr>
+					<td class="facts_value statistics_chart" colspan="2"><?php echo $stats->statsMarrAge();?></td>
+				</tr>
+			</table>
+			<br />
+			<div align="<?php echo $align;?>"><b><?php echo $pgv_lang["stat_childbirth_age"];?></b></div>
+			<table class="facts_table">
+				<tr>
+					<td class="facts_label"><?php echo PrintReady($pgv_lang["stat_youngest_father"]." - ".$stats->youngestFatherAge(true));?></td>
+					<td class="facts_label"><?php echo PrintReady($pgv_lang["stat_youngest_mother"]." - ".$stats->youngestMotherAge(true));?></td>
+				</tr>
+				<tr>
+					<td class="facts_value" align="<?php echo $align;?>"><?php echo $stats->youngestFather();?></td>
+					<td class="facts_value" align="<?php echo $align;?>"><?php echo $stats->youngestMother();?></td>
+				</tr>
+				<tr>
+					<td class="facts_label"><?php echo PrintReady($pgv_lang["stat_oldest_father"]." - ".$stats->oldestFatherAge(true));?></td>
+					<td class="facts_label"><?php echo PrintReady($pgv_lang["stat_oldest_mother"]." - ".$stats->oldestMotherAge(true));?></td>
+				</tr>
+				<tr>
+					<td class="facts_value" align="<?php echo $align;?>"><?php echo $stats->oldestFather();?></td>
+					<td class="facts_value" align="<?php echo $align;?>"><?php echo $stats->oldestMother();?></td>
+				</tr>
+			</table>
+			<br />
+			<div align="<?php echo $align;?>"><b><?php echo $pgv_lang["stat_children_in_fam"];?></b></div>
+			<table class="facts_table">
+				<tr>
+					<td class="facts_label"><?php echo $pgv_lang["stat_average_children"];?></td>
+					<td class="facts_label"><?php echo $pgv_lang["stat_22_fwok"];?></td>
+				</tr>
+				<tr>
+					<td class="facts_value" align="center"><?php echo $stats->averageChildren();?></td>
+					<td class="facts_value" align="center"><?php echo $stats->noChildrenFamilies();?></td>
+				</tr>
+				<tr>
+					<td class="facts_value statistics_chart"><?php echo $stats->statsChildren();?></td>
+					<td class="facts_value statistics_chart"><?php echo $stats->chartNoChildrenFamilies();?></td>
+				</tr>
+				<tr>
+					<td class="facts_label"><?php echo $pgv_lang["stat_largest_families"];?></td>
+					<td class="facts_label"><?php echo $pgv_lang["stat_largest_gfamilies"];?></td>
+				</tr>
+				<tr>
+					<td class="facts_value" align="<?php echo $align;?>"><?php echo $stats->topTenLargestFamilyList();?></td>
+					<td class="facts_value" align="<?php echo $align;?>"><?php echo $stats->topTenLargestGrandFamilyList();?></td>
+				</tr>
+				<tr>
+					<td class="facts_value statistics_chart" colspan="2"><?php echo $stats->chartLargestFamilies();?></td>
+				</tr>
+			</table>
+			<br />
+			<div align="<?php echo $align;?>"><b><?php echo $pgv_lang["stat_age_difference"];?></b></div>
+			<table class="facts_table">
+				<tr>
+					<td class="facts_label"><?php echo $pgv_lang["stat_age_siblings"];?></td>
+					<td class="facts_label"><?php echo $pgv_lang["stat_top_age_siblings"];?></td>
+				</tr>
+				<tr>
+					<td class="facts_value" align="<?php echo $align;?>"><?php echo $stats->topAgeBetweenSiblingsList();?></td>
+					<td class="facts_value" align="<?php echo $align;?>"><?php echo $stats->topAgeBetweenSiblingsFullName();?></td>
+				</tr>
+				<tr>
+					<td class="facts_label"><?php echo $pgv_lang["stat_age_mf_spouse"];?></td>
+					<td class="facts_label"><?php echo $pgv_lang["stat_age_fm_spouse"];?></td>
+				</tr>
+				<tr>
+					<td class="facts_value" align="<?php echo $align;?>"><?php echo $stats->ageBetweenSpousesMFList();?></td>
+					<td class="facts_value" align="<?php echo $align;?>"><?php echo $stats->ageBetweenSpousesFMList();?></td>
+				</tr>
+			</table>
+	</fieldset>
+	<br />
+</div>
+
+<div id="tab2" style="display: none;" class="<?php echo $TEXT_DIRECTION; ?>">
+	<fieldset>
+		<legend><?php echo $pgv_lang["stat_records"], ': ', $stats->totalRecords();?></legend>
+			<table class="facts_table">
+			<tr>
+				<td class="facts_label"><?php echo $pgv_lang["stat_media"];?></td>
+				<td class="facts_label"><?php echo $pgv_lang["stat_sources"];?></td>
+				<td class="facts_label"><?php echo $pgv_lang["stat_notes"];?></td>
+				<td class="facts_label"><?php echo $pgv_lang["stat_other"];?></td>
+			</tr>
+			<tr>
+				<td class="facts_value" align="center"><?php echo $stats->totalMedia();?></td>
+				<td class="facts_value" align="center"><?php echo $stats->totalSources();?></td>
+				<td class="facts_value" align="center"><?php echo $stats->totalNotes();?></td>
+				<td class="facts_value" align="center"><?php echo $stats->totalOtherRecords();?></td>
+			</tr>
+			</table>
+		</fieldset>
+		<fieldset>
+			<legend><?php echo $pgv_lang["stat_events"],': ', $stats->totalEvents();?></legend>
+			<table class="facts_table">
+			<tr>
+				<td class="facts_label"><?php echo $pgv_lang["stat_first_event"], ' - ', $stats->firstEventType();?></td>
+				<td class="facts_label"><?php echo $pgv_lang["stat_last_event"], ' - ', $stats->lastEventType();?></td>
+			</tr>
+			<tr>
+				<td class="facts_value" align="<?php echo $align;?>"><?php echo $stats->firstEvent();?></td>
+				<td class="facts_value" align="<?php echo $align;?>"><?php echo $stats->lastEvent();?></td>
+			</tr>
+			</table>
+		</fieldset>
+		<fieldset>
+			<legend><?php echo $pgv_lang["stat_media"],': ', $stats->totalMedia();?></legend>
+			<table class="facts_table">
+			<tr>
+				<td class="facts_label"><?php echo $pgv_lang["media"];?></td>
+			</tr>
+			<tr>
+				<td class="facts_value statistics_chart"><?php echo $stats->chartMedia();?></td>
+			</tr>
+			</table>
+		</fieldset>
+		<fieldset>
+			<legend><?php echo $pgv_lang["stat_sources"],': ', $stats->totalSources();?></legend>
+			<table class="facts_table">
+			<tr>
+				<td class="facts_label"><?php echo $pgv_lang["stat_9_indi"]; ?></td>
+				<td class="facts_label"><?php echo $pgv_lang["stat_8_fam"]; ?></td>
+			</tr>
+			<tr>
+				<td class="facts_value" align="center"><?php echo $stats->totalIndisWithSources();?></td>
+				<td class="facts_value" align="center"><?php echo $stats->totalFamsWithSources();?></td>
+			</tr>
+			<tr>
+				<td class="facts_value statistics_chart"><?php echo $stats->chartIndisWithSources();?></td>
+				<td class="facts_value statistics_chart"><?php echo $stats->chartFamsWithSources();?></td>
+			</tr>
+			</table>
+		</fieldset>
+		<fieldset>
+			<legend><?php echo $pgv_lang["stat_places"],': ', $stats->totalPlaces();?></legend>
+			<table class="facts_table">
+			<tr>
+				<td class="facts_label"><?php echo $pgv_lang["stat_birth_places"];?></td>
+				<td class="facts_label"><?php echo $pgv_lang["stat_death_places"];?></td>
+			</tr>
+			<tr>
+				<td class="facts_value" align="<?php echo $align;?>"><?php echo $stats->commonBirthPlacesList();?></td>
+				<td class="facts_value" align="<?php echo $align;?>"><?php echo $stats->commonDeathPlacesList();?></td>
+			</tr>
+			<tr>
+				<td class="facts_label"><?php echo $pgv_lang["stat_marriage_places"];?></td>
+				<td class="facts_label"><?php echo $pgv_lang["stat_countries"];?></td>
+			</tr>
+			<tr>
+				<td class="facts_value" align="<?php echo $align;?>"><?php echo $stats->commonMarriagePlacesList();?></td>
+				<td class="facts_value" align="<?php echo $align;?>"><?php echo $stats->commonCountriesList();?></td>
+			</tr>
+			<tr>
+				<td class="facts_value" colspan="2"><?php echo $stats->chartDistribution();?></td>
+			</tr>
+		</table>
+	</fieldset>
+	<br />
+</div>
+
+<div id="tab3" style="display: none;" class="<?php echo $TEXT_DIRECTION; ?>">
+	<fieldset>
+	<legend><?php echo $pgv_lang["stat_create"]; ?></legend>
+	<?php 
+require_once './includes/functions/functions_places.php';
 
 if ($ENABLE_AUTOCOMPLETE) require './js/autocomplete.js.htm';
 ?>
@@ -75,10 +479,6 @@ if ($ENABLE_AUTOCOMPLETE) require './js/autocomplete.js.htm';
 //-->
 </script>
 <?php
-/*
- * Initiate the stats object.
- */
-$stats = new stats($GEDCOM);
 
 if (!isset($_SESSION[$GEDCOM."nrpers"])) {
 	$nrpers = 0;
@@ -95,33 +495,12 @@ $_SESSION[$GEDCOM."nrfam"] = $stats->totalFamilies();
 $_SESSION[$GEDCOM."nrmale"] = $stats->totalSexMales();
 $_SESSION[$GEDCOM."nrfemale"] = $stats->totalSexFemales();
 
-
-$params[1] = "ffffff";
-$params[2] = "84beff";
-echo '<h2 class="center">', $pgv_lang['statistics'], '</h2>';
 echo "\n";
 echo '<form method="post" name="form" action="statisticsplot.php?action=newform">';
 echo "\n";
 echo '<input type="hidden" name="action" value="update" />';
 echo "\n";
-echo "<table width=\"100%\"><tr><td class=\"facts_label\">".$pgv_lang["statnmale"]."</td>";
-echo "<td class=\"facts_label\">".$pgv_lang["statnfemale"]."</td>";
-echo "<td class=\"facts_label\">".$pgv_lang["statnfam"]."</td>";
-echo "<td class=\"facts_label\">".$pgv_lang["statnnames"]."</td></tr>";
-echo "<tr><td class=\"facts_value\" align=\"center\">".$stats->totalSexMales()."</td>";
-echo "<td class=\"facts_value\" align=\"center\">".$stats->totalSexFemales()."</td>";
-echo "<td class=\"facts_value\" align=\"center\">".$stats->totalFamilies()."</td>";
-echo "<td class=\"facts_value\" align=\"center\">".$stats->totalIndividuals()."</td></tr>";
-echo "<tr><td class=\"facts_label\" colspan=\"2\">".$pgv_lang["statnnames"]."</td>";
-echo "<td class=\"facts_label\" colspan=\"2\">".$pgv_lang["statnnames"]."</td></tr>";
- echo "<tr><td class=\"facts_value statistics_chart\" colspan=\"2\" align=\"center\">".$stats->chartSex()."</td>";
- echo "<td class=\"facts_value statistics_chart\" colspan=\"2\" align=\"center\">".$stats->chartMortality()."</td></tr>";
-echo "<tr><td class=\"facts_label\" colspan=\"2\" >".$pgv_lang["stat_surnames"]."</td>";
-echo "<td class=\"facts_label\"colspan=\"2\">".$pgv_lang["stat_media"]."</td></tr>";
- echo "<tr><td class=\"facts_value statistics_chart\" colspan=\"2\" align=\"center\">".$stats->chartCommonSurnames($params)."</td>";
- echo "<td class=\"facts_value statistics_chart\" colspan=\"2\" align=\"center\">".$stats->chartMedia($params)."</td></tr>";
-echo "<tr><td class=\"facts_label\" colspan=\"4\">".$pgv_lang["stat_21_nok"]."</td></tr>";
- echo "<tr><td class=\"facts_value statistics_chart\" colspan=\"4\" align=\"center\">".$stats->chartLargestFamilies($params)."</td></tr>";
+echo "<table width=\"100%\">";
 
 if (!isset($plottype)) $plottype = 11;
 if (!isset($charttype)) $charttype = 1;
@@ -152,13 +531,9 @@ else {
 }
 
 ?>
-
 	<tr>
-		<td class="facts_label"><?php echo $pgv_lang["stat_create"] ?></td>
-		<td class="facts_value" colspan="3"><?php print_help_link("stat_help","qm","statistiek_list"); ?> <?php echo $pgv_lang["statvars"]; ?></td>
+		<td class="descriptionbox" colspan="4"><?php print_help_link("stat_help","qm","statistiek_list"); ?> <?php echo $pgv_lang["statvars"]; ?></td>
 	</tr>
-	</table>
-	<table width="100%">
 	<tr>
 	<td class="descriptionbox width25 wrap"><?php print_help_link("stat_help_x","qm","statistiek_list"); ?> <?php echo $pgv_lang["statlxa"]; ?> </td>
 	<td class="optionbox">
@@ -223,14 +598,6 @@ else {
 	if ($plottype == "3") echo " checked=\"checked\"";
 	echo " onclick=\"{statusHide('x_years'); statusHide('x_months'); statusHide('x_numbers'); statusShow('map_opt'); statusHide('chart_type'); statusHide('surname_opt');}";
 	echo "\" /><label for=\"stat_3\">".$pgv_lang["stat_3_map"]."</label><br />";
-	echo "<input type=\"radio\" id=\"stat_9\" name=\"x-as\" value=\"9\"";
-	if ($plottype == "9") echo " checked=\"checked\"";
-	echo " onclick=\"{statusHide('x_years'); statusHide('x_months'); statusHide('x_numbers'); statusHide('map_opt'); statusHide('axes'); statusHide('zyaxes');}";
-	echo "\" /><label for=\"stat_9\">".$pgv_lang["stat_9_indi"]."</label><br />";
-	echo "<input type=\"radio\" id=\"stat_8\" name=\"x-as\" value=\"8\"";
-	if ($plottype == "8") echo " checked=\"checked\"";
-	echo " onclick=\"{statusHide('x_years'); statusHide('x_months'); statusHide('x_numbers'); statusHide('map_opt'); statusHide('axes'); statusHide('zyaxes');}";
-	echo "\" /><label for=\"stat_8\">".$pgv_lang["stat_8_fam"]."</label><br />";
 	?>
 	<br />
 	<div id="x_years" style="display:none;">
@@ -393,7 +760,16 @@ else {
 $_SESSION["plottype"]=$plottype;
 $_SESSION["plotshow"]=$plotshow;
 $_SESSION["plotnp"]=$plotnp;
-
+?>
+	</fieldset>
+	<br />
+	</div>
+</div>
+</div>
+</td>
+</tr>
+</table>
+<?php
 echo "<br/><br/>";
 print_footer();
 ?>
