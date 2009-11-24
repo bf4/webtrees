@@ -43,7 +43,7 @@ print_simple_header($pgv_lang["edit_place_locations"]);
 
 if (!PGV_USER_IS_ADMIN) {
 	echo "<table class=\"facts_table\">\n";
-	echo "<tr><td colspan=\"2\" class=\"facts_value\">".$pgv_lang["gm_admin_error"];
+	echo "<tr><td colspan=\"2\" class=\"facts_value\">", $pgv_lang["gm_admin_error"];
 	echo "</td></tr></table>\n";
 	echo "<br /><br /><br />\n";
 	print_simple_footer();
@@ -144,7 +144,7 @@ if ($action=='addrecord' && PGV_USER_IS_ADMIN) {
 	if ($EDIT_AUTOCLOSE && !PGV_DEBUG) {
 		echo "\n<script type=\"text/javascript\">\n<!--\nedit_close();\n//-->\n</script>";
 	}
-	echo "<div class=\"center\"><a href=\"javascript:;\" onclick=\"edit_close();return false;\">".$pgv_lang["close_window"]."</a></div><br />\n";
+	echo "<div class=\"center\"><a href=\"javascript:;\" onclick=\"edit_close();return false;\">", $pgv_lang["close_window"], "</a></div><br />\n";
 	print_simple_footer();
 	exit;
 }
@@ -162,7 +162,7 @@ if ($action=='updaterecord' && PGV_USER_IS_ADMIN) {
 	if ($EDIT_AUTOCLOSE && !PGV_DEBUG) {
 		echo "\n<script type=\"text/javascript\">\n<!--\nedit_close();\n//-->\n</script>";
 	}
-	echo "<div class=\"center\"><a href=\"javascript:;\" onclick=\"edit_close();return false;\">".$pgv_lang["close_window"]."</a></div><br />\n";
+	echo "<div class=\"center\"><a href=\"javascript:;\" onclick=\"edit_close();return false;\">", $pgv_lang["close_window"], "</a></div><br />\n";
 	print_simple_footer();
 	exit;
 }
@@ -170,7 +170,7 @@ if ($action=='updaterecord' && PGV_USER_IS_ADMIN) {
 if ($action=="update") {
 	// --- find the place in the file
 	$row=
-		PGV_DB::prepare("SELECT pl_place,pl_lati,pl_long,pl_icon,pl_parent_id,pl_level,pl_zoom FROM {$TBLPREFIX}placelocation WHERE pl_id=?")
+		PGV_DB::prepare("SELECT pl_place, pl_lati, pl_long, pl_icon, pl_parent_id, pl_level, pl_zoom FROM {$TBLPREFIX}placelocation WHERE pl_id=?")
 		->execute(array($placeid))
 		->fetchOneRow();
 	$place_name = $row->pl_place;
@@ -198,7 +198,7 @@ if ($action=="update") {
 
 	do {
 		$row=
-			PGV_DB::prepare("SELECT pl_lati,pl_long,pl_parent_id,pl_zoom FROM {$TBLPREFIX}placelocation WHERE pl_id=?")
+			PGV_DB::prepare("SELECT pl_lati, pl_long, pl_parent_id, pl_zoom FROM {$TBLPREFIX}placelocation WHERE pl_id=?")
 			->execute(array($parent_id))
 			->fetchOneRow();
 		if (!$row) {
@@ -216,7 +216,7 @@ if ($action=="update") {
 
 	$success = false;
 
-	echo "<b>".str_replace("Unknown", $pgv_lang["pl_unknown"], PrintReady(implode(', ', array_reverse($where_am_i, true))))."</b><br />\n";
+	echo "<b>", str_replace("Unknown", $pgv_lang["pl_unknown"], PrintReady(implode(', ', array_reverse($where_am_i, true)))), "</b><br />\n";
 }
 
 if ($action=="add") {
@@ -232,7 +232,7 @@ if ($action=="add") {
 		$parent_id=$placeid;
 		do {
 			$row=
-				PGV_DB::prepare("SELECT pl_lati,pl_long,pl_parent_id,pl_zoom,pl_level FROM {$TBLPREFIX}placelocation WHERE pl_id=?")
+				PGV_DB::prepare("SELECT pl_lati, pl_long, pl_parent_id, pl_zoom, pl_level FROM {$TBLPREFIX}placelocation WHERE pl_id=?")
 				->execute(array($parent_id))
 				->fetchOneRow();
 			if ($row->pl_lati!==null && $row->pl_long!==null) {
@@ -262,10 +262,10 @@ if ($action=="add") {
 	$show_marker = false;
 	$success = false;
 
-	if (!isset($place_name) || $place_name=="") echo "<b>".$pgv_lang["pl_unknown"];
-	else echo "<b>".$place_name;
+	if (!isset($place_name) || $place_name=="") echo "<b>", $pgv_lang["pl_unknown"];
+	else echo "<b>", $place_name;
 	if (count($where_am_i)>0)
-		echo ", ".str_replace("Unknown", $pgv_lang["pl_unknown"], PrintReady(implode(', ', array_reverse($where_am_i, true))))."</b><br />\n";
+		echo ", ", str_replace("Unknown", $pgv_lang["pl_unknown"], PrintReady(implode(', ', array_reverse($where_am_i, true)))), "</b><br />\n";
 	echo "</b><br />";
 }
 
@@ -441,7 +441,7 @@ if ($action=="add") {
 			var map_type;
 			map_type = new Map_type();
 			map.addControl(map_type);
-			GEvent.addListener(map,'maptypechanged',function()
+			GEvent.addListener(map, 'maptypechanged', function()
 			{
 				map_type.refresh();
 			});
@@ -513,13 +513,13 @@ if ($action=="add") {
 						map.addOverlay(childplaces[i]);
 					}
 			}});
-			GEvent.addListener(map, "moveend",function() {
+			GEvent.addListener(map, "moveend", function() {
 				document.editplaces.NEW_ZOOM_FACTOR.value = map.getZoom();
 			});
 <?php if(($place_long == null) || ($place_lati == null)) { ?>
-			map.setCenter(new GLatLng( <?php echo $parent_lati.", ".$parent_long."), ".$zoomfactor;?>, G_NORMAL_MAP );
+			map.setCenter(new GLatLng( <?php echo $parent_lati, ", ", $parent_long, "), ", $zoomfactor;?>, G_NORMAL_MAP );
 <?php }else { ?>
-			map.setCenter(new GLatLng( <?php echo $place_lati.", ".$place_long."), ".$zoomfactor;?>, G_NORMAL_MAP );
+			map.setCenter(new GLatLng( <?php echo $place_lati, ", ", $place_long, "), ", $zoomfactor;?>, G_NORMAL_MAP );
 <?php } ?>
 
 <?php   if ($level < 3) { ?>
@@ -532,7 +532,7 @@ if ($action=="add") {
 			childicon.infoWindowAnchor = new GPoint(5, 1);
 <?php
 			$rows=
-				PGV_DB::prepare("SELECT pl_place,pl_lati,pl_long,pl_icon FROM {$TBLPREFIX}placelocation WHERE pl_parent_id=?")
+				PGV_DB::prepare("SELECT pl_place, pl_lati, pl_long, pl_icon FROM {$TBLPREFIX}placelocation WHERE pl_parent_id=?")
 				->execute(array($placeid))
 				->fetchAll();
 			$i = 0;
@@ -546,11 +546,11 @@ if ($action=="add") {
 					if ($pl_long >= 0) 		$row->pl_long = abs($pl_long);
 					else if ($pl_long < 0) 	$row->pl_long = "-".abs($pl_long);
 
-					echo "	 	 	 childplaces.push(new GMarker(new GLatLng(".$row->pl_lati.", ".$row->pl_long."), childicon));\n";
-					echo "			 GEvent.addListener(childplaces[".$i."], \"click\", function() {\n";
-					echo "             childplaces[".$i."].openInfoWindowHtml(\"<td width='100%'><div class='iwstyle' style='width: 250px;'><br />".addslashes($row->pl_place)."<br /><br /></div>\")});\n";
-					echo "	 	 	 map.addOverlay(childplaces[".$i."]);\n";
-					echo "	 	 	 bounds.extend(new GLatLng(".$row->pl_lati.", ".$row->pl_long."));\n";
+					echo "	 	 	 childplaces.push(new GMarker(new GLatLng(", $row->pl_lati, ", ", $row->pl_long, "), childicon));\n";
+					echo "			 GEvent.addListener(childplaces[", $i, "], \"click\", function() {\n";
+					echo "             childplaces[", $i, "].openInfoWindowHtml(\"<td width='100%'><div class='iwstyle' style='width: 250px;'><br />", addslashes($row->pl_place), "<br /><br /></div>\")});\n";
+					echo "	 	 	 map.addOverlay(childplaces[", $i, "]);\n";
+					echo "	 	 	 bounds.extend(new GLatLng(", $row->pl_lati, ", ", $row->pl_long, "));\n";
 					$i++;
 					echo "	 	 	 map.setCenter(bounds.getCenter());\n";
 				}
@@ -566,9 +566,9 @@ if ($action=="add") {
 					icon_type.shadowSize = new GSize(37, 34);
 					icon_type.iconAnchor = new GPoint(10, 34);
 					icon_type.infoWindowAnchor = new GPoint(5, 1);
-					map.addOverlay(new GMarker(new GLatLng(<?php echo $parent_lati.", ".$parent_long;?>), icon_type));
+					map.addOverlay(new GMarker(new GLatLng(<?php echo $parent_lati, ", ", $parent_long;?>), icon_type));
 <?php			} else { ?>
-					map.addOverlay(new GMarker(new GLatLng(<?php echo $place_lati.", ".$place_long;?>)));
+					map.addOverlay(new GMarker(new GLatLng(<?php echo $place_lati, ", ", $place_long;?>)));
 <?php			}
 			}
 			else { ?>
@@ -580,9 +580,9 @@ if ($action=="add") {
 			flagicon.iconAnchor = new GPoint(1, 45);
 			flagicon.infoWindowAnchor = new GPoint(5, 1);
 <?php	 	    if (($place_lati == null) || ($place_long == null)) {?>
-			map.addOverlay(new GMarker(new GLatLng(<?php echo $parent_lati.", ".$parent_long;?>), flagicon));
+			map.addOverlay(new GMarker(new GLatLng(<?php echo $parent_lati, ", ", $parent_long;?>), flagicon));
 <?php	 	    } else { ?>
-			map.addOverlay(new GMarker(new GLatLng(<?php echo $place_lati.", ".$place_long;?>), flagicon));
+			map.addOverlay(new GMarker(new GLatLng(<?php echo $place_lati, ", ", $place_long;?>), flagicon));
 <?php	 	    }
 			}
 		} ?>
@@ -640,7 +640,7 @@ if ($action=="add") {
 	}
 
 	function change_icon() {
-	window.open('module.php?mod=googlemap&pgvaction=flags&countrySelected=<?php echo $selected_country ?>', '_blank', 'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1');
+	window.open('module.php?mod=googlemap&pgvaction=flags&countrySelected=<?php echo $selected_country ?>', '_blank', 'top=50, left=50, width=600, height=500, resizable=1, scrollbars=1');
 	return false;
 	}
 
@@ -658,7 +658,7 @@ if ($action=="add") {
 		if(response.Placemark.length>0) {
 			for (i=0;i<response.Placemark.length;i++) {
 			place = response.Placemark[i];
-			point = new GLatLng(place.Point.coordinates[1],place.Point.coordinates[0]);
+			point = new GLatLng(place.Point.coordinates[1], place.Point.coordinates[0]);
 			var name = '<td width=\'100%\'><div class=\'iwstyle\' style=\'width: 250px;\'>' + place.address + '<br />' + '<b><?php echo $pgv_lang["pl_country"]?>:</b> ' + place.AddressDetails.Country.CountryNameCode;
 			var marker = createMarker(point, name, place.Point.coordinates);
 			map.addOverlay(marker);
@@ -673,13 +673,13 @@ if ($action=="add") {
 				if (zoomlevel > <?php echo $GOOGLEMAP_MAX_ZOOM;?>) zoomlevel = <?php echo $GOOGLEMAP_MAX_ZOOM;?>;
 
 			}
-			map.setCenter(bounds.getCenter(),zoomlevel);
+			map.setCenter(bounds.getCenter(), zoomlevel);
 		}
 	  }
 	 }
 
 	function showLocation_level(address) {
-		address += '<?php if ($level>0) echo ", ".addslashes(PrintReady(implode(', ', array_reverse($where_am_i, true))));?>';
+		address += '<?php if ($level>0) echo ", ", addslashes(PrintReady(implode(', ', array_reverse($where_am_i, true))));?>';
 		geocoder.getLocations(address, addAddressToMap);
 	}
 
@@ -690,7 +690,7 @@ if ($action=="add") {
 	function updatewholename() {
 	}
 
-	function paste_char(value,lang,mag) {
+	function paste_char(value, lang, mag) {
 		document.editplaces.NEW_PLACE_NAME.value += value;
 		language_filter = lang;
 		magnify = mag;
@@ -771,8 +771,8 @@ if ($action=="add") {
 		<td class="optionbox">
 			<select name="LATI_CONTROL" tabindex="<?php echo ++$i;?>" onchange="updateMap();">
 				<option value="" <?php if ($place_lati == null) echo " selected=\"selected\"";?>></option>
-				<option value="PL_N" <?php if ($place_lati > 0) echo " selected=\"selected\""; echo ">".$pgv_lang["pl_north_short"]; ?></option>
-				<option value="PL_S" <?php if ($place_lati < 0) echo " selected=\"selected\""; echo ">".$pgv_lang["pl_south_short"]; ?></option>
+				<option value="PL_N" <?php if ($place_lati > 0) echo " selected=\"selected\""; echo ">", $pgv_lang["pl_north_short"]; ?></option>
+				<option value="PL_S" <?php if ($place_lati < 0) echo " selected=\"selected\""; echo ">", $pgv_lang["pl_south_short"]; ?></option>
 			</select>
 			<input type="text" name="NEW_PLACE_LATI" value="<?php if ($place_lati != null) echo abs($place_lati);?>" size="20" tabindex="<?php echo ++$i;?>" onchange="updateMap();" /></td>
 	</tr>
@@ -781,8 +781,8 @@ if ($action=="add") {
 		<td class="optionbox">
 			<select name="LONG_CONTROL" tabindex="<?php echo ++$i;?>" onchange="updateMap();">
 				<option value="" <?php if ($place_long == null) echo " selected=\"selected\"";?>></option>
-				<option value="PL_E" <?php if ($place_long > 0) echo " selected=\"selected\""; echo ">".$pgv_lang["pl_east_short"]; ?></option>
-				<option value="PL_W" <?php if ($place_long < 0) echo " selected=\"selected\""; echo ">".$pgv_lang["pl_west_short"]; ?></option>
+				<option value="PL_E" <?php if ($place_long > 0) echo " selected=\"selected\""; echo ">", $pgv_lang["pl_east_short"]; ?></option>
+				<option value="PL_W" <?php if ($place_long < 0) echo " selected=\"selected\""; echo ">", $pgv_lang["pl_west_short"]; ?></option>
 			</select>
 			<input type="text" name="NEW_PLACE_LONG" value="<?php if ($place_long != null) echo abs($place_long);?>" size="20" tabindex="<?php echo ++$i;?>" onchange="updateMap();" /></td>
 	</tr>
@@ -811,7 +811,7 @@ if ($action=="add") {
 </form>
 <?php
 $link = 'module.php?mod=googlemap&pgvaction=places&parent='.$placeid;
-echo "<center><br /><br /><br /><a href=\"javascript:;\" onclick=\"edit_close('{$link}')\">".$pgv_lang["close_window"]."</a><br /></center>\n";
+echo "<center><br /><br /><br /><a href=\"javascript:;\" onclick=\"edit_close('{$link}')\">", $pgv_lang["close_window"], "</a><br /></center>\n";
 
 print_simple_footer();
 ?>

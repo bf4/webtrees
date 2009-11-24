@@ -90,7 +90,7 @@ global $pgv_lang;
 		pastefield.value = value;
 	}
 
-	function paste_char(value,lang,mag) {
+	function paste_char(value, lang, mag) {
 		pastefield.value += value;
 		language_filter = lang;
 		magnify = mag;
@@ -125,7 +125,7 @@ global $pgv_lang;
 	echo '<input type="hidden" name="ged" value="', $GEDCOM, '" />';
 	echo '<table class="facts_table center ', $TEXT_DIRECTION, '">';
 	echo '<tr><td class="topbottombar" colspan="2">';
-	print_help_link("add_media_linkid","qm", "link_media");
+	print_help_link("add_media_linkid", "qm", "link_media");
 	echo $pgv_lang["link_media"], ' ', $toitems, '</td></tr>';
 	echo '<tr><td class="descriptionbox width20 wrap">', $pgv_lang["media_id"], '</td>';
 	echo '<td class="optionbox wrap">';
@@ -180,7 +180,7 @@ global $pgv_lang;
 	echo '</td><td style=" padding-bottom:2px; vertical-align:middle">';
 		echo '&nbsp;';
 		if (isset($PGV_IMAGES["add"]["other"])) { 
-			echo '<a href="#"><img style="border-style:none;" src="', $PGV_IMAGE_DIR, '/', $PGV_IMAGES["add"]["other"],'" alt="', $pgv_lang['add'], ' "title="', $pgv_lang['add'], '" align="middle" name="addLink" value="" onClick="javascript:blankwin(); return false;" />';
+			echo '<a href="#"><img style="border-style:none;" src="', $PGV_IMAGE_DIR, '/', $PGV_IMAGES["add"]["other"], '" alt="', $pgv_lang['add'], ' "title="', $pgv_lang['add'], '" align="middle" name="addLink" value="" onClick="javascript:blankwin(); return false;" />';
 			} else {
 			echo '<button name="addLink" value="" type="button" onClick="javascript:blankwin(); return false;">', $pgv_lang["add"], '</button>';
 		}
@@ -200,11 +200,11 @@ global $pgv_lang;
 	echo '</td></tr>';
 	// Admin Option CHAN log update override =======================
 	if (PGV_USER_IS_ADMIN) {
-		echo "<tr><td class=\"descriptionbox ".$TEXT_DIRECTION." wrap width25\">";
+		echo "<tr><td class=\"descriptionbox ", $TEXT_DIRECTION, " wrap width25\">";
 		print_help_link("no_update_CHAN_help", "qm");
-		echo $pgv_lang["admin_override"]."</td><td class=\"optionbox wrap\">\n";
+		echo $pgv_lang["admin_override"], "</td><td class=\"optionbox wrap\">\n";
 		echo "<input type=\"checkbox\" name=\"preserve_last_changed\" value=\"no_change\"/ >\n";
-		echo $pgv_lang["no_update_CHANs"]."<br /><br />\n";
+		echo $pgv_lang["no_update_CHANs"], "<br /><br />\n";
 		echo "</td></tr>\n";
 	}
 	echo '</tr>';
@@ -223,7 +223,7 @@ global $pgv_lang;
 	
 } elseif ($action == "update" && $paramok) {
 
-	echo "<b>".$mediaid."</b><br/><br />";
+	echo "<b>", $mediaid, "</b><br/><br />";
 	
 	// Unlink records indicated by radio button =========
 	if (isset($exist_links) && $exist_links!="No_Values") {

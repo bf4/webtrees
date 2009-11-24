@@ -46,8 +46,8 @@ var myImages = new Array();	// The preview images
 		$file_type = mediaFileType($media['FILE']);
 		// Check to see if the item is a real image
 		if ($file_type=='local_image') {		
-	 		echo "Pic[$ix] = '".addcslashes(check_media_depth($media['FILE']), "'")."';\n";
-			echo "myImages[$ix] = '".addcslashes(thumbnail_file($media['FILE']), "'")."';\n";
+	 		echo "Pic[$ix] = '", addcslashes(check_media_depth($media['FILE']), "'"), "';\n";
+			echo "myImages[$ix] = '", addcslashes(thumbnail_file($media['FILE']), "'"), "';\n";
 			global $ix;
 	 		$ix++;
 		}

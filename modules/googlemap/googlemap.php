@@ -477,12 +477,12 @@ function build_indiv_map($indifacts, $famids) {
 
 	if ($GOOGLEMAP_ENABLED == "false") {
 		echo "<table class=\"facts_table\">\n";
-		echo "<tr><td colspan=\"2\" class=\"facts_value\">".$pgv_lang["gm_disabled"]."<script language=\"JavaScript\" type=\"text/javascript\">tabstyles[5]='tab_cell_inactive_empty'; document.getElementById('pagetab5').className='tab_cell_inactive_empty';</script></td></tr>\n";
+		echo "<tr><td colspan=\"2\" class=\"facts_value\">", $pgv_lang["gm_disabled"], "<script language=\"JavaScript\" type=\"text/javascript\">tabstyles[5]='tab_cell_inactive_empty'; document.getElementById('pagetab5').className='tab_cell_inactive_empty';</script></td></tr>\n";
 		echo "<script type=\"text/javascript\">\n";
 		echo "function ResizeMap ()\n{\n}\nfunction SetMarkersAndBounds ()\n{\n}\n</script>\n";
 		if (PGV_USER_IS_ADMIN) {
 			echo "<tr><td align=\"center\" colspan=\"2\">\n";
-			echo "<a href=\"module.php?mod=googlemap&pgvaction=editconfig\">".$pgv_lang["gm_manage"]."</a>";
+			echo "<a href=\"module.php?mod=googlemap&pgvaction=editconfig\">", $pgv_lang["gm_manage"], "</a>";
 			echo "</td></tr>\n";
 		}
 		echo "\n\t</table>\n<br />";
@@ -687,12 +687,12 @@ function build_indiv_map($indifacts, $famids) {
 
 	if ($i == 0) {
 		echo "<table class=\"facts_table\">\n";
-		echo "<tr><td colspan=\"2\" class=\"facts_value\">".$pgv_lang["no_gmtab"]."<script language=\"JavaScript\" type=\"text/javascript\">tabstyles[5]='tab_cell_inactive_empty'; document.getElementById('pagetab5').className='tab_cell_inactive_empty';</script></td></tr>\n";
+		echo "<tr><td colspan=\"2\" class=\"facts_value\">", $pgv_lang["no_gmtab"], "<script language=\"JavaScript\" type=\"text/javascript\">tabstyles[5]='tab_cell_inactive_empty'; document.getElementById('pagetab5').className='tab_cell_inactive_empty';</script></td></tr>\n";
 		echo "<script type=\"text/javascript\">\n";
 		echo "function ResizeMap ()\n{\n}\n</script>\n";
 		if (PGV_USER_IS_ADMIN) {
 			echo "<tr><td align=\"center\" colspan=\"2\">\n";
-			echo "<a href=\"module.php?mod=googlemap&pgvaction=editconfig\">".$pgv_lang["gm_manage"]."</a>";
+			echo "<a href=\"module.php?mod=googlemap&pgvaction=editconfig\">", $pgv_lang["gm_manage"], "</a>";
 			echo "</td></tr>\n";
 		}
 	} else {
@@ -732,18 +732,18 @@ function build_indiv_map($indifacts, $famids) {
 						echo "	Marker{$j}_flag.shadowSize = new GSize(37, 34);\n";
 						echo "	Marker{$j}_flag.iconAnchor = new GPoint(10, 34);\n";
 						echo "	Marker{$j}_flag.infoWindowAnchor = new GPoint(5, 1);\n";
-						echo "var Marker{$j} = new GMarker(new GLatLng(0, 0), {icon:Marker{$j}_flag, title:\"".addslashes($tooltip)."\"});\n";
+						echo "var Marker{$j} = new GMarker(new GLatLng(0, 0), {icon:Marker{$j}_flag, title:\"", addslashes($tooltip), "\"});\n";
 					} else if (empty($markers[$j]["icon"])) {
-						echo "var Marker{$j} = new GMarker(new GLatLng({$markers[$j]["lati"]}, {$markers[$j]["lng"]}), {icon:icon, title:\"".addslashes($tooltip)."\"});\n";
+						echo "var Marker{$j} = new GMarker(new GLatLng({$markers[$j]["lati"]}, {$markers[$j]["lng"]}), {icon:icon, title:\"", addslashes($tooltip), "\"});\n";
 					} else {
 						echo "var Marker{$j}_flag = new GIcon();\n";
-						echo "    Marker{$j}_flag.image = \"".$markers[$j]["icon"]."\";\n";
+						echo "    Marker{$j}_flag.image = \"", $markers[$j]["icon"], "\";\n";
 						echo "    Marker{$j}_flag.shadow = \"modules/googlemap/flag_shadow.png\";\n";
 						echo "    Marker{$j}_flag.iconSize = new GSize(25, 15);\n";
 						echo "    Marker{$j}_flag.shadowSize = new GSize(35, 45);\n";
 						echo "    Marker{$j}_flag.iconAnchor = new GPoint(1, 45);\n";
 						echo "    Marker{$j}_flag.infoWindowAnchor = new GPoint(5, 1);\n";
-						echo "var Marker{$j} = new GMarker(new GLatLng(".$markers[$j]["lati"].", ".$markers[$j]["lng"]."), {icon:Marker{$j}_flag, title:\"".addslashes($tooltip)."\"});\n";
+						echo "var Marker{$j} = new GMarker(new GLatLng(", $markers[$j]["lati"], ", ", $markers[$j]["lng"], "), {icon:Marker{$j}_flag, title:\"", addslashes($tooltip), "\"});\n";
 					}
 					echo "GEvent.addListener(Marker{$j}, \"click\", function() {\n";
 					echo "Marker{$j}.openInfoWindowHtml(\"<div class='iwstyle'>";
@@ -764,21 +764,21 @@ function build_indiv_map($indifacts, $famids) {
 					}
 					if (!empty($markers[$j]["date"])) {
 						$date=new GedcomDate($markers[$j]["date"]);
-						echo "<br />".addslashes($date->Display(true));
+						echo "<br />", addslashes($date->Display(true));
 					}
 					if (($markers[$j]["lati"] == NULL) || ($markers[$j]["lng"] == NULL) || (($markers[$j]["lati"] == "0") && ($markers[$j]["lng"] == "0"))) {
-						echo "<br /><br />".$pgv_lang["gm_no_coord"];
+						echo "<br /><br />", $pgv_lang["gm_no_coord"];
 						if (PGV_USER_IS_ADMIN)
-							echo '<br /><a href=\"module.php?mod=googlemap&pgvaction=places&display=inactive\">'.$pgv_lang["pl_edit"].'</a>';
+							echo '<br /><a href=\"module.php?mod=googlemap&pgvaction=places&display=inactive\">', $pgv_lang["pl_edit"], '</a>';
 						echo "\");\n";
 					}
 					else if ($GOOGLEMAP_COORD == "false"){
 						echo "\");\n";
 					} else {
 						echo "<br /><br />";
-						if ($markers[$j]["lati"]>'0'){echo "N".str_replace('-', '', $markers[$j]["lati"]);}else{ echo str_replace('-', 'S', $markers[$j]["lati"]);}
+						if ($markers[$j]["lati"]>'0'){echo "N", str_replace('-', '', $markers[$j]["lati"]);}else{ echo str_replace('-', 'S', $markers[$j]["lati"]);}
 						echo ", ";
-						if ($markers[$j]["lng"]>'0'){echo "E".str_replace('-', '', $markers[$j]["lng"]);}else{ echo str_replace('-', 'W', $markers[$j]["lng"]);}
+						if ($markers[$j]["lng"]>'0'){echo "E", str_replace('-', '', $markers[$j]["lng"]);}else{ echo str_replace('-', 'W', $markers[$j]["lng"]);}
 						echo "\");\n";
 					}
 					echo "});\n";
@@ -792,22 +792,22 @@ function build_indiv_map($indifacts, $famids) {
 					$markersindex = 0;
 					$markers[$j]["placed"] = "yes";
 					if (empty($markers[$j]["icon"])) {
-						echo "var Marker{$j}_{$markersindex} = new GMarker(new GLatLng(".$markers[$j]["lati"].", ".$markers[$j]["lng"]."), {icon:icon, title:\"".addslashes($tooltip)."\"});\n";
+						echo "var Marker{$j}_{$markersindex} = new GMarker(new GLatLng(", $markers[$j]["lati"], ", ", $markers[$j]["lng"], "), {icon:icon, title:\"", addslashes($tooltip), "\"});\n";
 					} else {
 						echo "var Marker{$j}_{$markersindex}_flag = new GIcon();\n";
-						echo "    Marker{$j}_{$markersindex}_flag.image = \"".$markers[$j]["icon"]."\";\n";
+						echo "    Marker{$j}_{$markersindex}_flag.image = \"", $markers[$j]["icon"], "\";\n";
 						echo "    Marker{$j}_{$markersindex}_flag.shadow = \"modules/googlemap/flag_shadow.png\";\n";
 						echo "    Marker{$j}_{$markersindex}_flag.iconSize = new GSize(25, 15);\n";
 						echo "    Marker{$j}_{$markersindex}_flag.shadowSize = new GSize(35, 45);\n";
 						echo "    Marker{$j}_{$markersindex}_flag.iconAnchor = new GPoint(1, 45);\n";
 						echo "    Marker{$j}_{$markersindex}_flag.infoWindowAnchor = new GPoint(5, 1);\n";
-						echo "var Marker{$j}_{$markersindex} = new GMarker(new GLatLng(".$markers[$j]["lati"].", ".$markers[$j]["lng"]."), {icon:Marker{$j}_{$markersindex}_flag, title:\"".addslashes($tooltip)."\"});\n";
+						echo "var Marker{$j}_{$markersindex} = new GMarker(new GLatLng(", $markers[$j]["lati"], ", ", $markers[$j]["lng"], "), {icon:Marker{$j}_{$markersindex}_flag, title:\"", addslashes($tooltip), "\"});\n";
 					}
 					echo "var Marker{$j}_{$markersindex}Info = [\n";
 					$markers[$j]["index"] = $indexcounter;
 					$markers[$j]["tabindex"] = $tabcounter;
 					$tabcounter = $tabcounter + 1;
-					echo "new GInfoWindowTab(\"".abbreviate($markers[$j]["fact"])."\", \"<div class='iwstyle'>".PrintReady($markers[$j]["fact"]);
+					echo "new GInfoWindowTab(\"", abbreviate($markers[$j]["fact"]), "\", \"<div class='iwstyle'>", PrintReady($markers[$j]["fact"]);
 					if (!empty($markers[$j]['info']))
 						echo ': ', addslashes($markers[$j]['info']);
 					if (!empty($markers[$j]["name"])) {
@@ -824,15 +824,15 @@ function build_indiv_map($indifacts, $famids) {
 					}
 					if (!empty($markers[$j]["date"])) {
 						$date=new GedcomDate($markers[$j]["date"]);
-						echo "<br />".addslashes($date->Display(true));
+						echo "<br />", addslashes($date->Display(true));
 					}
 					if ($GOOGLEMAP_COORD == "false"){
 						echo "\")";
 					} else {
 						echo "<br /><br />";
-						if ($markers[$j]["lati"]>='0'){echo "N".str_replace('-', '', $markers[$j]["lati"]);}else{ echo str_replace('-', 'S', $markers[$j]["lati"]);}
+						if ($markers[$j]["lati"]>='0'){echo "N", str_replace('-', '', $markers[$j]["lati"]);}else{ echo str_replace('-', 'S', $markers[$j]["lati"]);}
 						echo ", ";
-						if ($markers[$j]["lng"]>='0'){echo "E".str_replace('-', '', $markers[$j]["lng"]);}else{ echo str_replace('-', 'W', $markers[$j]["lng"]);}
+						if ($markers[$j]["lng"]>='0'){echo "E", str_replace('-', '', $markers[$j]["lng"]);}else{ echo str_replace('-', 'W', $markers[$j]["lng"]);}
 						echo "\")";
 					}
 					for($k=$j+1; $k<=$i; $k++) {
@@ -856,25 +856,25 @@ function build_indiv_map($indifacts, $famids) {
 								$markersindex = $markersindex + 1;
 
 								if (empty($markers[$j]["icon"])) {
-									echo "var Marker{$j}_{$markersindex} = new GMarker(new GLatLng(".($markers[$j]["lati"]-(0.0015*$markersindex)).", ".($markers[$j]["lng"]+(0.0025*$markersindex))."), {icon:icon, title:\"".addslashes($tooltip)."\"});\n";
+									echo "var Marker{$j}_{$markersindex} = new GMarker(new GLatLng(", ($markers[$j]["lati"]-(0.0015*$markersindex)), ", ", ($markers[$j]["lng"]+(0.0025*$markersindex)), "), {icon:icon, title:\"", addslashes($tooltip), "\"});\n";
 								} else {
 									echo "var Marker{$j}_{$markersindex}_flag = new GIcon();\n";
-									echo "    Marker{$j}_{$markersindex}_flag.image = \"".$markers[$j]["icon"]."\";\n";
+									echo "    Marker{$j}_{$markersindex}_flag.image = \"", $markers[$j]["icon"], "\";\n";
 									echo "    Marker{$j}_{$markersindex}_flag.shadow = \"modules/googlemap/flag_shadow.png\";\n";
 									echo "    Marker{$j}_{$markersindex}_flag.iconSize = new GSize(25, 15);\n";
 									echo "    Marker{$j}_{$markersindex}_flag.shadowSize = new GSize(35, 45);\n";
 									echo "    Marker{$j}_{$markersindex}_flag.iconAnchor = new GPoint(1, 45);\n";
 									echo "    Marker{$j}_{$markersindex}_flag.infoWindowAnchor = new GPoint(5, 1);\n";
-									echo "var Marker{$j}_{$markersindex} = new GMarker(new GLatLng(".($markers[$j]["lati"]-(0.0015*$markersindex)).", ".($markers[$j]["lng"]+(0.0025*$markersindex))."), {icon:Marker{$j}_{$markersindex}_flag, title:\"".addslashes($tooltip)."\"});\n";
+									echo "var Marker{$j}_{$markersindex} = new GMarker(new GLatLng(", ($markers[$j]["lati"]-(0.0015*$markersindex)), ", ", ($markers[$j]["lng"]+(0.0025*$markersindex)), "), {icon:Marker{$j}_{$markersindex}_flag, title:\"", addslashes($tooltip), "\"});\n";
 								}
 								echo "var Marker{$j}_{$markersindex}Info = [\n";
 							} else {
-								echo ",\n";
+								echo ", \n";
 							}
 							$markers[$k]["index"] = $indexcounter;
 							$markers[$k]["tabindex"] = $tabcounter;
 							$tabcounter = $tabcounter + 1;
-							echo "new GInfoWindowTab(\"".abbreviate($markers[$k]["fact"])."\", \"<div class='iwstyle'>".$markers[$k]["fact"];
+							echo "new GInfoWindowTab(\"", abbreviate($markers[$k]["fact"]), "\", \"<div class='iwstyle'>", $markers[$k]["fact"];
 							if (!empty($markers[$k]['info']))
 								echo ": {$markers[$k]['info']}";
 							if (!empty($markers[$k]["name"])) {
@@ -891,15 +891,15 @@ function build_indiv_map($indifacts, $famids) {
 							}
 							if (!empty($markers[$k]["date"])) {
 								$date=new GedcomDate($markers[$k]["date"]);
-								echo "<br />".addslashes($date->Display(true));
+								echo "<br />", addslashes($date->Display(true));
 							}
 							if ($GOOGLEMAP_COORD == "false"){
 								echo "\")";
 							} else {
 								echo "<br /><br />";
-								if ($markers[$j]["lati"]>='0'){echo "N".str_replace('-', '', $markers[$j]["lati"]);}else{ echo str_replace('-', 'S', $markers[$j]["lati"]);}
+								if ($markers[$j]["lati"]>='0'){echo "N", str_replace('-', '', $markers[$j]["lati"]);}else{ echo str_replace('-', 'S', $markers[$j]["lati"]);}
 								echo ", ";
-								if ($markers[$j]["lng"]>='0'){echo "E".str_replace('-', '', $markers[$j]["lng"]);}else{ echo str_replace('-', 'W', $markers[$j]["lng"]);}
+								if ($markers[$j]["lng"]>='0'){echo "E", str_replace('-', '', $markers[$j]["lng"]);}else{ echo str_replace('-', 'W', $markers[$j]["lng"]);}
 								echo "\")";
 							}
 						}
@@ -935,11 +935,11 @@ function build_indiv_map($indifacts, $famids) {
 			if (preg_match("/2 PLAC (.*)/", $marker["placerec"]) == 0) {
 				print_address_structure_map($marker["placerec"], 1);
 			} else {
-				echo print_fact_place_map($marker["placerec"])."<br />";
+				echo print_fact_place_map($marker["placerec"]), "<br />";
 			}
 			if (!empty($marker['date'])) {
 				$date=new GedcomDate($marker['date']);
-				echo $date->Display(true)."<br />";
+				echo $date->Display(true), "<br />";
 			}
 			echo "</td></tr>";
 		}
